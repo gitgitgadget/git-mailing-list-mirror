@@ -1,286 +1,159 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7564C4502B
-	for <git@vger.kernel.org>; Sat, 19 Apr 2025 18:43:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1D41DDA1B
+	for <git@vger.kernel.org>; Sat, 19 Apr 2025 21:54:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745088201; cv=none; b=V2Q0voH1tJxEhPD9/Rj9yTZ92LeXJ0VKQT1Bbt0BbLKM522IhObpL6h3pV+8lDZqj3Z4IlpgMCaQ1HE8JYHV4mzqtfm12OQcZ2WvItN0TcXAY+FahJxKUvM3cZetAwuAME0NJkSBIFTCnP5QCEKO0Dh5aqF0gqruOgEoMfPE+w0=
+	t=1745099684; cv=none; b=QvwdnpC5vIAHkP/Ss8sEB9fFNd8FWHueW6WcH70Z3fwau0pUDFTRNvMe9x8XHgKLaZMybvpcErW1Ytyw9kg0cVR6/HdR5Y7NullVc9AzpbIB0f//wUJs/erZv+t9Mmnm+gEKZlAP1tr9qwEgCIUz5Cehx1BV9YGCu5TdOoOK0t8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745088201; c=relaxed/simple;
-	bh=j6jShJ+IaNvfxv10VTA3ygcZBu2NllpIlvhxBvg4Q/g=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=oHJCY46XvfHbjiMG4U97an/6nVhO/0Ypy25cFP3QF8YHWuBXlroKmxc45Pe0LK6/x6OXZZINZzxVtqzinKkjHnPYCJGwkrpjTJOppACKj0df/M+hkJ4BMUww28IhGa1I5FwC5SKpOmu1fh2y8n78RtltEntGIo+mrO2EYf/cTm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJIEIRe6; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745099684; c=relaxed/simple;
+	bh=D0cAN2EsBsan5d7n09Me/mz6C1xOGIyLuKEsdlYMP30=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Mfhn7ECB4oZAHedP+HYztqrUk1m75YM7wSQY431UdYoqIXygsDDeo66DMrn9Jdn7+jJfJngeDQeWTCqO0BJTEgqL0Y54lmvHdtwb1/lUBCDvXqmwqeMWujxN8purvb/gO2kBXZ5iK1gSnNw0WcZa8JJT6YVbxHcA13Cuh6Nhdhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZUDW+ge+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=efs40a9L; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJIEIRe6"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-39d83782ef6so2684841f8f.0
-        for <git@vger.kernel.org>; Sat, 19 Apr 2025 11:43:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745088196; x=1745692996; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=IHBTGpFj5OPi1fJCR8tVkmvTDmoe9nmFXpcnlWnAaQ8=;
-        b=AJIEIRe6z8wWMXW5xylsZ3tgCM9cK6hqNc/hZH2/GtGRvXsgk6vBOrLCp/KqxtVcEH
-         jKq97wUWuRRKhVMjJaL1EW+BNspy8i9KxEiqZH72R5Kz/DZeUjylo4kL3Ry+4oNE7by6
-         f0UYosR/E0eD60WWE6nJNqhynffz+cJtbf0FgMAWfVnG0XHyq1i2uFyme0/uJUUvCMMe
-         2rUts3KoGpXbi8Wsv/s54P23TOYOz4oU3ICnKzIxAjaCoBj5IWBLNFUAZQ0oBBK/EXhf
-         aWoqK62+bISd7S1tjWCdbngp2kmDzgER1N/KMNporyE9FF4gleupaTxRr3aEr4LnGzUM
-         ho8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745088196; x=1745692996;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=IHBTGpFj5OPi1fJCR8tVkmvTDmoe9nmFXpcnlWnAaQ8=;
-        b=GoYGUl23aE7wrIpobJ35FRbJ1ZTrKpqQhPpl+Iagl1mvat3SKIvIwMaakiSCXUSfnw
-         2iX7ReFjgELc5VwyatF5bI1kkWlmWL4/RyQWsPxipYtmu/kL0lVq4fWLwmNC9jzR0bXJ
-         QhbuVnu7X/zYPSyCJa2V6zrxhI7BT3NH9gthOgNj/KREKZIeHZm0KTjTYXsgsA1Jb2v3
-         iWqsw9P/nwN6+vqwzLUYsAG4mgPX6R4ANy9EaRBG1z1yqD5o8m/E9dg+UOYJ/MP463dz
-         BddOYv6wLBgYbxIs+Ik030IJWmZmP768ytv9q+M2rk7t4+u6nPg/xdrn0GfHRvjHFBU4
-         Mkug==
-X-Gm-Message-State: AOJu0Ywgu9KsXlJ3gt/nNe4/AnKV1HeSX/d6UOVd35E7M3Wmea8t+YJT
-	HJ7Ifm+tY5MhG72vS06Mzn+lv9SMY6Mpz3gjXsJ5kYYOfJ0y3iFJfFZ0oQ==
-X-Gm-Gg: ASbGncvc+DQUz1Y/2+WKuhpy64T6I2rk7tKrjyLbakDkNyA2mb4ptZ6NqqmEBazkxdx
-	KY2NjGrBuktG1ZBXhzD72f3nvQQn7Erec3oyqizw393ZNc1uxbdXtkB8/3esh4RW+Mxzl6IOYu3
-	lmipk8q01Q2tWKwZkMJz+9mvnFweYXWcW6qvPVdQKMuQC7hn4U/cPFx1gALK2E4cFRO+H7FHc7z
-	S0sRoItPdcm2rMZKEJerMGHgLd7tY29itIo9JZ1ZI9/wvpQ2YRUd+4vOs19v+zqwGVpT2houUD+
-	GwQCApQCnuvZD0p/jSM8yAMZ1SJeywJvmw++gEh/UDXKHEzrj14C
-X-Google-Smtp-Source: AGHT+IGKxhCt9Vfp3onpoRbYKE6mvusYoFmv2QUSrXjkLZ3s4KgEOImjj1Urek4CbP49ZPBWJV9yZw==
-X-Received: by 2002:a5d:64ac:0:b0:391:3207:2e68 with SMTP id ffacd0b85a97d-39ef8ba561dmr5692652f8f.9.1745088195865;
-        Sat, 19 Apr 2025 11:43:15 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d6dfe4esm69568595e9.33.2025.04.19.11.43.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 19 Apr 2025 11:43:15 -0700 (PDT)
-Message-Id: <pull.1947.git.git.1745088194384.gitgitgadget@gmail.com>
-From: "jade via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 19 Apr 2025 18:43:14 +0000
-Subject: [PATCH] builtin/blame: ignore nonexistent ignore files
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZUDW+ge+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="efs40a9L"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 157081140173;
+	Sat, 19 Apr 2025 17:54:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Sat, 19 Apr 2025 17:54:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745099679; x=1745186079; bh=bMJV0qTCTh
+	OtratbcSnXgyy0bKB2cOXW+sKDaEZBH/0=; b=ZUDW+ge+ld9xJqxhpx+iEkoOlg
+	WlYg33jZ3IJdr4VS9BuQWLMhDAPyt+hLkWmNLHNUNpQotLq0keXx+uoGLvkJ6Oa5
+	2bJFjgfW8fnzl/5nYh5saLLJSlkq6XkeWkuTb7CqLgh/v+A4+xjl2/PxxLaximwS
+	05V2I+9S4sr+cJkvCQJW3QCqHWbLinbBvC4v10uFgVwXVzvWKsRxlbtiqn7dm3HS
+	PBN+rvZ9hw767P+cjfuHjiWHA7c96oomnPl9O+vT7czpEN00BRNHU0Ugwdeh4ZtO
+	tXFyVLLHRQtERDco5lF7yEi1diEg7B2O7YWhxxeGdmDVGccjTDZkvzvaYCtw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745099679; x=1745186079; bh=bMJV0qTCThOtratbcSnXgyy0bKB2cOXW+sK
+	DaEZBH/0=; b=efs40a9LrTZWeFhAW3w8/+gbmT2KSL1cmUUkIAba76dU/DQk5AY
+	5+ZcbQ6Oj01jw7BeRw1P+bu+6ivTCgZ1W6HNoVCnP/99BPCncM2hv65Zrqk0IMbK
+	aWbNij2m3KAjeaex75+K0RNVR4mJze2BMV2Db2R+STx46MqUt1x2q+k1iGw9Pcd1
+	7bIhx8Zn4DmBpQS7EhCdU/L7KTa/v9LpJOC4/hyLm+sESI9Tm3Pi94Rbi5FMOW0c
+	+f2YAu/Ji8k7nSd0gq6FPpgv9h+OI7x9B188CvsDbdrIER8KyLuQxn9z0ZI+dTtY
+	vW+pDlGAdyoBbTwNbdt8w8hYC97Hk2bjkhQ==
+X-ME-Sender: <xms:nxsEaPxcnOMkO8GZu1jaesHOvKYjL0sMMJaGZvjpgwFWBeVL8_heLw>
+    <xme:nxsEaHQbZO36AuM2LUoCiFDFaWWhx5PCesPrnInqiN5zf8CFNzHOUUfnBmA-yeZQC
+    jhrG8Mbx5EZKAsSTQ>
+X-ME-Received: <xmr:nxsEaJVAmuJr8zvbBLueGXnHcLJqf-4IO0JU8_W6Ajgl8zOC2xWlme1a2UQ7dDUl-KgT_8nIhc8_W14uCA4AYetf4CYjEojNbnZM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeeiudeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehsohhfthifrghrvgeslhhftghouggvrdgtrgdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:nxsEaJjJ8hUa7KlQeGk3GOsUN1Ol-Wlv9ytxNQmbFn8nm71D4P-EOA>
+    <xmx:nxsEaBAq4l1o0HZnk5s2OO6qmwSD5n3aE5oLje1RgHGu0ZmcUO00Wg>
+    <xmx:nxsEaCLlvFJAkrSSwNwIIEocLOMJDz0BzWNvGd-EgWh_uFR2DN3DyQ>
+    <xmx:nxsEaACtPxqYyqhP2znd1gyCK2ag7R0ReoStBrRW_Gs8pHxb3McNsQ>
+    <xmx:nxsEaJFl1L9cGlUEtesEiJzcNPz0xLQthaoIiG81lTFJS8euYPR6hMXW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 19 Apr 2025 17:54:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "jade via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  jade <software@lfcode.ca>
+Subject: Re: [PATCH] builtin/blame: ignore nonexistent ignore files
+In-Reply-To: <pull.1947.git.git.1745088194384.gitgitgadget@gmail.com> (jade
+	via GitGitGadget's message of "Sat, 19 Apr 2025 18:43:14 +0000")
+References: <pull.1947.git.git.1745088194384.gitgitgadget@gmail.com>
+Date: Sat, 19 Apr 2025 14:54:37 -0700
+Message-ID: <xmqqo6wr95r6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: jade <software@lfcode.ca>,
-    Jade Lovelace <software@lfcode.ca>
+Content-Type: text/plain
 
-From: Jade Lovelace <software@lfcode.ca>
+"jade via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-It's currently a problem to put blame.ignoreRevsFile in a global
-gitconfig, for example, to use the GitHub (and other) supported filename
-of .git-blame-ignore-revs by default if present in a repo, since the
-current implementation exits the process if it fails to open the file.
+> It's currently a problem to put blame.ignoreRevsFile in a global
+> gitconfig, for example, to use the GitHub (and other) supported filename
+> of .git-blame-ignore-revs by default if present in a repo, since the
+> current implementation exits the process if it fails to open the file.
 
-If we change this to ignore nonexistent files when specified in the
-config option (but NOT the command line, since the command line surely
-means to actually assert the files exist), this remains API compatible
-with old usages, while behaving properly when you want to ignore missing
-ones.
+Well, that is how it is designed to be used.  If the file you
+specify does not exist, it is likely you made a typo, which you
+would want to be told about.
 
-Because of this idea of putting .git-blame-ignore-revs in there, it
-doesn't seem to necessarily merit a warning, but maybe there should be
-one to be slightly less confusing if you make a typo?
+I however am somewhat sympathetic to the cause.  If the user had a
+way to tell Git that they know what they are doing, it would make
+sense in certain situations to allow the paths they specify, either
+from the command line or in the configuration files, to be optional,
+without triggering "no, there is no such file, perhaps you have a
+typo there?" error.
 
-Signed-off-by: Jade Lovelace <software@lfcode.ca>
----
-    blame: ignore nonexistent ignore files
+Having said all that, I am not interested in the design and
+implementaion presented in this patch at all, for many reasons.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1947%2Flf-%2Fjade%2Fignore-revs-ignore-missing-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1947/lf-/jade/ignore-revs-ignore-missing-v1
-Pull-Request: https://github.com/git/git/pull/1947
+ - The code essentially duplicates the loop that goes over the
+   specified files.
 
- Documentation/config/blame.adoc |  3 +++
- builtin/blame.c                 | 27 +++++++++++++++++++++++++--
- oidset.c                        | 17 ++++++++++++++---
- oidset.h                        | 10 ++++++++++
- t/t8013-blame-ignore-revs.sh    | 16 +++++++++++++++-
- 5 files changed, 67 insertions(+), 6 deletions(-)
+ - Unconditionally robbing the typo protection from existing users
+   who expect the command would refuse to start when they
+   misconfigure is not absolute no-no.  We would have some way for
+   the user to say "I am giving this path to be used, but this is
+   optional. Instead of failing, just pretend I didn't specify it if
+   it does not exist".
 
-diff --git a/Documentation/config/blame.adoc b/Documentation/config/blame.adoc
-index 4d047c17908..6dedc48069f 100644
---- a/Documentation/config/blame.adoc
-+++ b/Documentation/config/blame.adoc
-@@ -26,6 +26,9 @@ blame.ignoreRevsFile::
- 	`#` are ignored.  This option may be repeated multiple times.  Empty
- 	file names will reset the list of ignored revisions.  This option will
- 	be handled before the command line option `--ignore-revs-file`.
-++
-+If a file in this list does not exist, it is disregarded and the next files in
-+the list are processed as normal.
- 
- blame.markUnblamableLines::
- 	Mark lines that were changed by an ignored revision that we could not
-diff --git a/builtin/blame.c b/builtin/blame.c
-index c470654c7ec..90fa8d4107a 100644
---- a/builtin/blame.c
-+++ b/builtin/blame.c
-@@ -68,6 +68,9 @@ static int no_whole_file_rename;
- static int show_progress;
- static char repeated_meta_color[COLOR_MAXLEN];
- static int coloring_mode;
-+/* Ignore-revs files specified in the config file. Processed separately to be
-+ * able to ignore failing to open them. */
-+static struct string_list ignore_revs_config_file_list = STRING_LIST_INIT_DUP;
- static struct string_list ignore_revs_file_list = STRING_LIST_INIT_DUP;
- static int mark_unblamable_lines;
- static int mark_ignored_lines;
-@@ -731,7 +734,7 @@ static int git_blame_config(const char *var, const char *value,
- 		ret = git_config_pathname(&str, var, value);
- 		if (ret)
- 			return ret;
--		string_list_insert(&ignore_revs_file_list, str);
-+		string_list_insert(&ignore_revs_config_file_list, str);
- 		free(str);
- 		return 0;
- 	}
-@@ -848,6 +851,9 @@ static int peel_to_commit_oid(struct object_id *oid_ret, void *cbdata)
- }
- 
- static void build_ignorelist(struct blame_scoreboard *sb,
-+			     /* Ignore-revs files specified via the config,
-+			      * which are allowed to fail to open. */
-+			     struct string_list *ignore_revs_config_file_list,
- 			     struct string_list *ignore_revs_file_list,
- 			     struct string_list *ignore_rev_list)
- {
-@@ -855,6 +861,23 @@ static void build_ignorelist(struct blame_scoreboard *sb,
- 	struct object_id oid;
- 
- 	oidset_init(&sb->ignore_list, 0);
-+	for_each_string_list_item(i, ignore_revs_config_file_list) {
-+		if (!strcmp(i->string, ""))
-+			oidset_clear(&sb->ignore_list);
-+		else {
-+			FILE *fp = fopen(i->string, "r");
-+			if (!fp) {
-+				if (errno == ENOENT) continue;
-+				die("could not open blame.ignoreRevsFile file at %s", i->string);
-+			}
-+
-+			oidset_parse_filep_carefully(&sb->ignore_list, fp, i->string,
-+						    the_repository->hash_algo,
-+						    peel_to_commit_oid, sb);
-+
-+			fclose(fp);
-+		}
-+	}
- 	for_each_string_list_item(i, ignore_revs_file_list) {
- 		if (!strcmp(i->string, ""))
- 			oidset_clear(&sb->ignore_list);
-@@ -1119,7 +1142,7 @@ parse_done:
- 	sb.reverse = reverse;
- 	sb.repo = the_repository;
- 	sb.path = path;
--	build_ignorelist(&sb, &ignore_revs_file_list, &ignore_rev_list);
-+	build_ignorelist(&sb, &ignore_revs_config_file_list, &ignore_revs_file_list, &ignore_rev_list);
- 	string_list_clear(&ignore_revs_file_list, 0);
- 	string_list_clear(&ignore_rev_list, 0);
- 	setup_scoreboard(&sb, &o);
-diff --git a/oidset.c b/oidset.c
-index 8d36aef8dca..35958cbc3d6 100644
---- a/oidset.c
-+++ b/oidset.c
-@@ -59,12 +59,24 @@ void oidset_parse_file_carefully(struct oidset *set, const char *path,
- 				 oidset_parse_tweak_fn fn, void *cbdata)
- {
- 	FILE *fp;
--	struct strbuf sb = STRBUF_INIT;
--	struct object_id oid;
- 
- 	fp = fopen(path, "r");
- 	if (!fp)
- 		die("could not open object name list: %s", path);
-+
-+	oidset_parse_filep_carefully(set, fp, path, algop, fn, cbdata);
-+
-+	fclose(fp);
-+}
-+
-+void oidset_parse_filep_carefully(struct oidset *set, FILE *fp,
-+				 const char *path,
-+				 const struct git_hash_algo *algop,
-+				 oidset_parse_tweak_fn fn, void *cbdata)
-+{
-+	struct strbuf sb = STRBUF_INIT;
-+	struct object_id oid;
-+
- 	while (!strbuf_getline(&sb, fp)) {
- 		const char *p;
- 		const char *name;
-@@ -89,6 +101,5 @@ void oidset_parse_file_carefully(struct oidset *set, const char *path,
- 	}
- 	if (ferror(fp))
- 		die_errno("Could not read '%s'", path);
--	fclose(fp);
- 	strbuf_release(&sb);
- }
-diff --git a/oidset.h b/oidset.h
-index 0106b6f2787..f68aa8a3b0d 100644
---- a/oidset.h
-+++ b/oidset.h
-@@ -2,6 +2,7 @@
- #define OIDSET_H
- 
- #include "khash.h"
-+#include <stdio.h>
- 
- /**
-  * This API is similar to oid-array, in that it maintains a set of object ids
-@@ -93,6 +94,15 @@ void oidset_parse_file_carefully(struct oidset *set, const char *path,
- 				 const struct git_hash_algo *algop,
- 				 oidset_parse_tweak_fn fn, void *cbdata);
- 
-+/*
-+ * Same as oidset_parse_file_carefully, but is given a pre-opened file handle.
-+ * The given path is only used for diagnostics.
-+ */
-+void oidset_parse_filep_carefully(struct oidset *set, FILE *fp,
-+				 const char *path,
-+				 const struct git_hash_algo *algop,
-+				 oidset_parse_tweak_fn fn, void *cbdata);
-+
- struct oidset_iter {
- 	kh_oid_set_t *set;
- 	khiter_t iter;
-diff --git a/t/t8013-blame-ignore-revs.sh b/t/t8013-blame-ignore-revs.sh
-index 370b7681492..0456aaba9dd 100755
---- a/t/t8013-blame-ignore-revs.sh
-+++ b/t/t8013-blame-ignore-revs.sh
-@@ -1,4 +1,4 @@
--#!/bin/sh
-+#!/nix/store/cvlbhhrvzfkjl2hrrzhq3vr5gzan1r60-bash-interactive-5.2p37/bin/sh
- 
- test_description='ignore revisions when blaming'
- 
-@@ -116,6 +116,20 @@ test_expect_success ignore_revs_from_configs_and_files '
- 	test_cmp expect actual
- '
- 
-+# Ignore-revs from the config tolerates the file not existing
-+test_expect_success ignore_revs_config_file_nonexistent '
-+	git config --add blame.ignoreRevsFile nonexistent_ignore_file &&
-+	git blame --line-porcelain file --ignore-revs-file ignore_y >blame_raw &&
-+
-+	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 1/s/ .*//p" blame_raw >actual &&
-+	git rev-parse A >expect &&
-+	test_cmp expect actual &&
-+
-+	sed -ne "/^[0-9a-f][0-9a-f]* [0-9][0-9]* 2/s/ .*//p" blame_raw >actual &&
-+	git rev-parse B >expect &&
-+	test_cmp expect actual
-+'
-+
- # Override blame.ignoreRevsFile (ignore_x) with an empty string.  X should be
- # blamed now for lines 1 and 2, since we are no longer ignoring X.
- test_expect_success override_ignore_revs_file '
+ - Singling out the ignorefile configuration and treating it
+   differently from the command line option makes things
+   inconsistent.  Perhaps people may want to do
 
-base-commit: c152ae3ef50dc7bbbf5089571df5bba404a96e0d
--- 
-gitgitgadget
+    [alias] fooblame = blame --ignore-revs-file="foo"
+    [alias] barblame = blame --ignore-revs-file="bar"
+
+   instead of using a single configuration variable, and somehow
+   want to mark them to be "optional".
+
+ - The situation where users want to specify a pathname for a file
+   that is optional is not limited to blame.ignoreRevsFile.  Any
+   codepath that takes user-specified/specifiable pathname (or blob
+   object name) should benefit if we had a single consistent way to
+   tell Git that the path is optional.
+
+An alternative design that goes along the following lines may be
+more palatable:
+
+ - The way to spell for the users to specify a path that is
+   optional, either as the value of a command line option or a
+   configuration variable, is to prefix it with ":(optional)".  E.g.
+
+    [blame]
+	ignoreRevsFile = ":(optional).git-blame-ignore"
+
+    $ git blame --ignore-revs-file=":(optional).git-blame-ignore"
+
+ - For command line options, all commands that use parse-options API
+   would automatically benefit by updating parse-options.c and tweak
+   its handling of OPTION_FILENAME; when the specified string begins
+   with ":(optional)", you strip the prefix and see if the remainder
+   or the string names an existing file.  If it does, you use the
+   filename as the value of that command line option; otherwise you
+   pretend that the option didn't even exist on the command line.
+
+ - For configuration variables, you update git_config_pathname() to
+   do the same.
+
+Thanks.
