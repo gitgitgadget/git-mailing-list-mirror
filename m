@@ -1,747 +1,123 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBCB33398A
-	for <git@vger.kernel.org>; Sat, 19 Apr 2025 01:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D231448F2
+	for <git@vger.kernel.org>; Sat, 19 Apr 2025 03:54:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745025183; cv=none; b=dMhpjD8K5HuMbLWbwivDJyYFTQnTwTBdZgYLBUASmL9gJyx71am7EkctIYOSJ2xlU5ceu34S/jzSXEkh4hMU457PRqI7QQPxCEt4WAiAIWDVQHLELs7tlSBBbLYbd9RSdJwuvK6du7VI+/fa92eFy8m0S3XB7vYxo5kY+X6sud8=
+	t=1745034852; cv=none; b=MGIwAV5SDPYKWgSE5HsVbReoosvkIzRubGrKmaruIQdBRVxmoenjKdYxrjRmuU5ku7w1F0d+YawWQaT7nvKuN9mPL9+HMra9Nw35ABjwLWhXy6Dh21uU2rZVKBzZcEFbXfErNiWbTFV76Uds+8z5ZgaVA6m49+bvuf32OqARg4o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745025183; c=relaxed/simple;
-	bh=ptimcKDG3GWvUUhz/Qw5/zztrdG7T3KGM+D9x+li7RA=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=CIggVeYNt3lWhAFoJoMSu7h89OPeSKjHSKjGliRoag8Onzo+Mw8xf1JMvg7RH8Xdc+eOSXqF7yjSXQilx2cyp1ZOIOBqtcgNz4KXMzSyzM0WO2cagDA3FJFpNwiw5NmW1c9gYMisiDa3sb2EhGzhJStyKn6BBiOO/bH5I/NEisY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sB1dxGVv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TJuc/TEw; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745034852; c=relaxed/simple;
+	bh=7V4+PDLBUZk+CB3z7KSZCgcUoTOkt/zpURS6SKURD2U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mhD33PG978snW/rjs8p55ajgB6s3pMMy0yRJntl3wQRDzdoZRmLVz+Xm3/F7rdnod9X5wq+LinxeC4ryPgCU0A8zhBi9dXNnTHBJ+IA5d6vjL8OFK5XMI4l7EGeaS3OBk/Led+IL6V57XZPf6BJeYvRbhWqD2nL3t1rsuRTGh4Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ciBEijLJ; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sB1dxGVv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TJuc/TEw"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id B75A311401FD;
-	Fri, 18 Apr 2025 21:12:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 18 Apr 2025 21:12:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1745025178; x=1745111578; bh=xoMpNr2UKEsdc00PBPKMP4Cwg9xRl7B5
-	JK+lO0YQRIA=; b=sB1dxGVv6CUrt5p+TEp37CSBAqRE3yK5LHVwq3jGDlCZ6rIG
-	jK/zIllPXtaWftngIUqpeprYsfj8b8r6WWdsY9hcAyLkTHUAco5LWPr+AGEHNuT8
-	EPeqvPj3U7Wscq4dm6XjQvuKV/+j7Ua8530sgtRQbH9ZmZJYqasnaw/K5oDMhOD5
-	BWNo5ytikW1PFvEORE9rxNGTlA/NxJz1TBl66SIc4YGQ43e42mtPjKTE3XMgQz2D
-	hmDm23b0Of2xEu490eCrQtMOmIeYmfZGC/ZXjQvMGpjX1Bi5bR76GR7ImBPxkHBM
-	UwB9kVWEmorJxOR4r7XXugFvo4/7w7ueS3g94g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1745025178; x=
-	1745111578; bh=xoMpNr2UKEsdc00PBPKMP4Cwg9xRl7B5JK+lO0YQRIA=; b=T
-	Juc/TEw3cZLqL0Ay1aA5OCvUBW6yNhyWUzliRSZ/ZM0nfDwMJ8qUQDnghkb8camK
-	ZLcd6Xn0qAsKvBjnGjy+XeJJC4SUK48NFu+KdZd3QPoZ71z9gUc0xJRN76kWS7RW
-	1akQmC/jSSHQS2plnBeSQmvVUlitc7v/hDjNv7O1nYkyYYzuc5Eo7ph/HDhv8LwA
-	LoKyt675R3CR0lBCxSKlffiz2D3n4Td/YmcY/wXncn0jh7fpqoDjpvPMPo8rs9PN
-	LkaJXijNiH1vTA7+8B2xpiook77KyJLa6O10zGrkeQBWCGmIbWObUY5HT41VgeYz
-	EgSfgSIQ/GKnZdvPNp3NA==
-X-ME-Sender: <xms:mvgCaETT1kEBarqQHTnWlcUwhfVLBAPYi5S4sch2PTtWtKmDlDjx1A>
-    <xme:mvgCaBwo7QwIqWfqTVFSYWQqg0p36e7BANIjRdOFs3Fv1yrnDDp1ZWy7jUsKi8uJQ
-    qEMQW51nlRTann9vw>
-X-ME-Received: <xmr:mvgCaB2UM8wd2YuvajsSr59YN0c-pKT4zOkQiQs11pk1kXHAcU7K3cYzPfwCP_xGhkwge7GX6wYuMy5qD4KB6qgYPjOjmyXeKQwV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeefieejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptddtvd
-    ffleejvefhjeeigfelffefjefgfeegjeelheekffegiedvkedvkeeiledunecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglhgvshhouhhrtggvrdgtoh
-    hmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecuvehluhhsthgvrhfuihii
-    vgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtg
-    homhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlfihnsehlfihnrd
-    hnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:mvgCaICKpz6RS0t7mEYYK4qrRqMF9iBUrgZmHu6CR4cYg7fCuvHr3w>
-    <xmx:mvgCaNi8CB57gdV7aswiRrpy98pCj9XZO2gYFj_ARJttPEO_LjdiPQ>
-    <xmx:mvgCaEoUaYspFhaxexEimjY3zQgWikNgRBg-DqVh15zVObVyyaVdzA>
-    <xmx:mvgCaAixzRYbsHTWanJIP1T87ovx_Joo2gG4KrkCx-TsXEGeU_EyHw>
-    <xmx:mvgCaGao8_cjBP4rObItO9-gio4R700v06dqVR1XW03fnJBtQ7why0iL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 18 Apr 2025 21:12:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Apr 2025, #05; Fri, 18)
-X-master-at: 4bbb303af69990ccd05fe3a2eb58a1ce036f8220
-X-next-at: 37484f566f6a755843cc88c219327d2d99bd680f
-Date: Fri, 18 Apr 2025 18:12:56 -0700
-Message-ID: <xmqqzfgd7y3r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ciBEijLJ"
+Received: (qmail 21562 invoked by uid 109); 19 Apr 2025 03:54:09 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=7V4+PDLBUZk+CB3z7KSZCgcUoTOkt/zpURS6SKURD2U=; b=ciBEijLJI5LkJ1vVs1mX2pXW/VRkzYpfYi6bpN2OfseiSGFYtG9kJO90md8gtwUFvVkm5ZcJb/pqUejQiVsVTM1neIrdPFC2gyFLAMSoVpxcvs1am8vZRxT9aNryT1oO0Rhd5cbOkNfq62EFbv3q5U2TW0bTVoOhvjdHn755KaZEzsRvb4PKcpL1YF9Ltirl8U/G6aRzHLx8Bzb8nACByljzomUCMrOwyFn1FlN95WwO1kHuIF5Zd+zvi5A9MkNKNhXGvdReKJMZuLwJqg4xElkWISD+6FZVBprGrdpmlVAXi3uILRH/GPD96zBaw6IqsGrK8PU8bG5R/FgFCUD0wQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 19 Apr 2025 03:54:09 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12025 invoked by uid 111); 19 Apr 2025 03:54:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Apr 2025 23:54:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 18 Apr 2025 23:54:07 -0400
+From: Jeff King <peff@peff.net>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] perf: do allow `GIT_PERF_*` to be overridden again
+Message-ID: <20250419035407.GA93039@coredump.intra.peff.net>
+References: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[Graduated to 'master']
-
-* ab/environment-clean-header (2025-04-09) 1 commit
-  (merged to 'next' on 2025-04-09 at 845b92c7ef)
- + environment.h: remove unused variables
-
- Code clean-up.
- source: <2c547567-2b72-476c-9fc5-71cac050fa15@gmail.com>
-
-
-* ab/pathspec-sign-compare-workaround (2025-04-01) 1 commit
-  (merged to 'next' on 2025-04-08 at 875fb0e3ee)
- + pathspec: fix sign comparison warnings
-
- Some warnings from "-Wsign-compare" for pathspec.c have been
- squelched.
- source: <127c3010-4b23-436e-a07d-e6031e746113@gmail.com>
-
-
-* ab/rm-sign-compare (2025-03-29) 1 commit
-  (merged to 'next' on 2025-04-08 at bc1f98e81c)
- + rm: fix sign comparison warnings
-
- Some warnings from "-Wsign-compare" for builtin/rm.c have been
- squelched.
- source: <ecaaa968-f337-466b-b719-22ebb3587167@gmail.com>
-
-
-* cj/refname-avail-check-optim-typofix (2025-04-09) 1 commit
-  (merged to 'next' on 2025-04-09 at 95fe082872)
- + refs: fix duplicated word in comment
-
- Comment fix.
- source: <pull.1940.v2.git.git.1743857867327.gitgitgadget@gmail.com>
-
-
-* dd/sparse-glibc-workaround (2025-04-09) 1 commit
-  (merged to 'next' on 2025-04-09 at 14ee53c8e4)
- + sparse: ignore warning from new glibc headers
-
- Squelch false-positive from sparse.
- source: <a667da3985a0fe943cc0ff6ee8513d731d75a299.1721171853.git.congdanhqx@gmail.com>
-
-
-* en/merge-recursive-debug (2025-04-08) 8 commits
-  (merged to 'next' on 2025-04-09 at 555be94c73)
- + builtin/{merge,rebase,revert}: remove GIT_TEST_MERGE_ALGORITHM
- + tests: remove GIT_TEST_MERGE_ALGORITHM and test_expect_merge_algorithm
- + merge-recursive.[ch]: thoroughly debug these
- + merge, sequencer: switch recursive merges over to ort
- + sequencer: switch non-recursive merges over to ort
- + merge-ort: enable diff-algorithms other than histogram
- + builtin/merge-recursive: switch to using merge_ort_generic()
- + checkout: replace merge_trees() with merge_ort_nonrecursive()
-
- Remove remnants of the recursive merge strategy backend, which was
- superseded by the ort merge strategy.
- source: <pull.1898.v3.git.1744127322.gitgitgadget@gmail.com>
-
-
-* jk/fetch-follow-remote-head-fix (2025-04-09) 4 commits
-  (merged to 'next' on 2025-04-09 at 3071fce577)
- + fetch: make set_head() call easier to read
-  (merged to 'next' on 2025-04-07 at ba5ac342a5)
- + fetch: don't ask for remote HEAD if followRemoteHEAD is "never"
- + fetch: only respect followRemoteHEAD with configured refspecs
- + Merge branch 'jk/fetch-ref-prefix-cleanup' into jk/fetch-follow-remote-head-fix
-
- "git fetch [<remote>]" with only the configured fetch refspec
- should be the only thing to update refs/remotes/<remote>/HEAD,
- but the code was overly eager to do so in other cases.
- cf. <Z9n7myvpnDOWFWqt@nand.local>
- source: <20250318053905.GA2051217@coredump.intra.peff.net>
- source: <20250404085812.GA772404@coredump.intra.peff.net>
-
-
-* js/ci-fedora-gawk (2025-04-16) 1 commit
- + ci(pedantic): ensure that awk is installed
-
- Work around CI breakage due to fedora base image getting updated.
- source: <81209cfd-049e-c853-9c4a-2cf9803e56a4@gmx.de>
-
-
-* js/ci-github-update-ubuntu (2025-04-09) 1 commit
-  (merged to 'next' on 2025-04-09 at fae10a2b5b)
- + ci: upgrade `sparse` to supported build agents
-
- Adjust to the deprecation of use of Ubuntu 20.04 GitHub Actions CI.
- source: <77f82414-261c-d2bc-f911-ed3d4b06c86e@gmx.de>
-
-
-* jt/help-sha-backend-info-in-build-options (2025-04-07) 2 commits
-  (merged to 'next' on 2025-04-08 at 7389752293)
- + help: include unsafe SHA-1 build info in version
- + help: include SHA implementation in version info
-
- "git help --build-options" reports SHA-1 and SHA-256 backends used
- in the build.
- source: <20250403140529.497876-1-jltobler@gmail.com>
-
-
-* jt/ref-transaction-abort-fix (2025-03-21) 1 commit
-  (merged to 'next' on 2025-04-08 at b653d86941)
- + builtin/fetch: avoid aborting closed reference transaction
-
- A ref transaction corner case fix.
- cf. <Z-E2ns9VziejSLB2@pks.im>
- source: <20250321004437.505461-1-jltobler@gmail.com>
-
-
-* jt/rev-list-z (2025-03-21) 5 commits
-  (merged to 'next' on 2025-04-08 at e608ba85c1)
- + rev-list: support NUL-delimited --missing option
- + rev-list: support NUL-delimited --boundary option
- + rev-list: support delimiting objects with NUL bytes
- + rev-list: refactor early option parsing
- + rev-list: inline `show_object_with_name()` in `show_object()`
-
- "git rev-list" learns machine-parsable output format that delimits
- each field with NUL.
- source: <20250319183410.1225428-1-jltobler@gmail.com>
-
-
-* kn/blame-porcelain-unblamable (2025-04-07) 1 commit
-  (merged to 'next' on 2025-04-09 at 971ba23ba0)
- + blame: print unblamable and ignored commits in porcelain mode
-
- "git blame --porcelain" mode now talks about unblamable lines and
- lines that are blamed to an ignored commit.
- source: <20250403160326.120124-1-karthik.188@gmail.com>
-
-
-* kn/non-transactional-batch-updates (2025-04-08) 9 commits
-  (merged to 'next' on 2025-04-08 at de64e9c49e)
- + update-ref: add --batch-updates flag for stdin mode
- + refs: support rejection in batch updates during F/D checks
- + refs: implement batch reference update support
- + refs: introduce enum-based transaction error types
- + refs/reftable: extract code from the transaction preparation
- + refs/files: remove duplicate duplicates check
- + refs: move duplicate refname update check to generic layer
- + refs/files: remove redundant check in split_symref_update()
- + Merge branch 'ps/refname-avail-check-optim' into kn/non-transactional-batch-updates
-
- Updating multiple references have only been possible in all-or-none
- fashion with transactions, but it can be more efficient to batch
- multiple updates even when some of them are allowed to fail in a
- best-effort manner.  A new "best effort batches of updates" mode
- has been introduced.
- source: <20250408085120.614893-1-karthik.188@gmail.com>
-
-
-* ps/cat-file-filter-batch (2025-04-07) 12 commits
-  (merged to 'next' on 2025-04-08 at eb8dfb17ea)
- + builtin/cat-file: use bitmaps to efficiently filter by object type
- + builtin/cat-file: deduplicate logic to iterate over all objects
- + pack-bitmap: introduce function to check whether a pack is bitmapped
- + pack-bitmap: add function to iterate over filtered bitmapped objects
- + pack-bitmap: allow passing payloads to `show_reachable_fn()`
- + builtin/cat-file: support "object:type=" objects filter
- + builtin/cat-file: support "blob:limit=" objects filter
- + builtin/cat-file: support "blob:none" objects filter
- + builtin/cat-file: wire up an option to filter objects
- + builtin/cat-file: introduce function to report object status
- + builtin/cat-file: rename variable that tracks usage
- + Merge branch 'tb/incremental-midx-part-2' into ps/cat-file-filter-batch
-
- "git cat-file --batch" and friends learned to allow "--filter=" to
- omit certain objects, just like the transport layer does.
- source: <20250402-pks-cat-file-object-type-filter-v3-0-4da6bb21871c@pks.im>
-
-
-* ps/maintenance-reflog-expire (2025-04-08) 6 commits
-  (merged to 'next' on 2025-04-08 at 40d6884143)
- + builtin/maintenance: introduce "reflog-expire" task
- + builtin/gc: split out function to expire reflog entries
- + builtin/reflog: make functions regarding `reflog_expire_options` public
- + builtin/reflog: stop storing per-reflog expiry dates globally
- + builtin/reflog: stop storing default reflog expiry dates globally
- + reflog: rename `cmd_reflog_expire_cb` to `reflog_expire_options`
-
- "git maintenance" learns a new task to expire reflog entries.
- source: <20250408-pks-maintenance-reflog-expire-v2-0-1ad8634798b7@pks.im>
-
-
-* ps/misc-build-fixes (2025-04-01) 5 commits
-  (merged to 'next' on 2025-04-08 at 85693b6d96)
- + ci: use Visual Studio for win+meson job on GitHub Workflows
- + meson: distinguish build and target host binaries
- + meson: respect 'tests' build option in contrib
- + gitweb: fix generation of "gitweb.js"
- + meson: fix handling of '-Dcurl=auto'
-
- Random build fixes.
- cf. <CAOLa=ZQ8bTn-prAs2ycLdLLjVaLQL4GtLw_gFsvAcx_6j=MBjA@mail.gmail.com>
- source: <20250331-b4-pks-collect-build-fixes-v2-0-6b06136808f3@pks.im>
-
-
-* ps/refname-avail-check-optim (2025-04-09) 1 commit
-  (merged to 'next' on 2025-04-09 at 0d35104147)
- + refs/packed: fix BUG when seeking refs with UTF-8 characters
-
- Incorrect sorting of refs with bytes with high-bit set on platforms
- with signed char led to a BUG, which has been corrected.
- cf. <20250404205740.GA780449@coredump.intra.peff.net>
- source: <20250404-b4-pks-packed-backend-seek-with-utf8-v1-1-6ceb694e3bd7@pks.im>
-
-
-* ps/test-wo-perl-prereq (2025-04-07) 20 commits
-  (merged to 'next' on 2025-04-08 at 424e2eab23)
- + t5703: refactor test to not depend on Perl
- + t5316: refactor `max_chain()` to not depend on Perl
- + t0210: refactor trace2 scrubbing to not use Perl
- + t0021: refactor `generate_random_characters()` to not depend on Perl
- + t/lib-httpd: refactor "one-time-perl" CGI script to not depend on Perl
- + t/lib-t6000: refactor `name_from_description()` to not depend on Perl
- + t/lib-gpg: refactor `sanitize_pgp()` to not depend on Perl
- + t: refactor tests depending on Perl for textconv scripts
- + t: refactor tests depending on Perl to print data
- + t: refactor tests depending on Perl substitution operator
- + t: refactor tests depending on Perl transliteration operator
- + Makefile: stop requiring Perl when running tests
- + meson: stop requiring Perl when tests are enabled
- + t: adapt existing PERL prerequisites
- + t: introduce PERL_TEST_HELPERS prerequisite
- + t: adapt `test_readlink()` to not use Perl
- + t: adapt `test_copy_bytes()` to not use Perl
- + t: adapt character translation helpers to not use Perl
- + t: refactor environment sanitization to not use Perl
- + t: skip chain lint when PERL_PATH is unset
- (this branch is used by ps/fewer-perl.)
-
- "make test" used to have a hard dependency on (basic) Perl; tests
- have been rewritten help environment with NO_PERL test the build as
- much as possible.
- source: <20250403-b4-pks-t-perlless-v4-0-be20ac3db39a@pks.im>
-
-
-* sk/clar-trailer-urlmatch-norm-test (2025-03-04) 2 commits
-  (merged to 'next' on 2025-04-08 at 51cb3c8bce)
- + t/unit-tests: convert urlmatch-normalization test to clar
- + t/unit-tests: convert trailer test to use clar
-
- A few traditional unit tests have been rewritten to use the clar
- framework.
- cf. <xmqqzfi0pthr.fsf@gitster.g>
- cf. <Z_TAtJ9LEeHo2AQN@pks.im>
- source: <20250304113323.10564-1-kuforiji98@gmail.com>
-
-
-* ua/update-update-server-info (2025-04-08) 1 commit
-  (merged to 'next' on 2025-04-09 at f0d47e97b5)
- + builtin/update-server-info: remove unnecessary if statement
-
- Code simplification.
- source: <20250407195850.299348-2-usmanakinyemi202@gmail.com>
-
-
-* zy/send-email-error-handling (2025-04-07) 2 commits
-  (merged to 'next' on 2025-04-08 at d5a716a940)
- + send-email: finer-grained SMTP error handling
- + send-email: capture errors in an eval {} block
-
- Auth-related (and unrelated) error handling in send-email has been
- made more robust.
- source: <20250326075246.2612627-1-05ZYT30@gmail.com>
-
---------------------------------------------------
-[New Topics]
-
-* ds/doc-disable-hooks (2025-04-16) 1 commit
-  (merged to 'next' on 2025-04-18 at 4b543e57a5)
- + docs: document core.hooksPath=/dev/null
-
- Document the convention to disable hooks altogether by setting the
- hooksPath configuration variable to /dev/nulll
-
- Will merge to 'master'.
- source: <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
-
-
-* tb/midx-avoid-cruft-packs (2025-04-15) 9 commits
- - repack: exclude cruft pack(s) from the MIDX where possible
- - pack-objects: introduce '--stdin-packs=follow'
- - pack-objects: swap 'show_{object,commit}_pack_hint'
- - pack-objects: fix typo in 'show_object_pack_hint()'
- - pack-objects: perform name-hash traversal for unpacked objects
- - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
- - pack-objects: factor out handling '--stdin-packs'
- - pack-objects: limit scope in 'add_object_entry_from_pack()'
- - pack-objects: use standard option incompatibility functions
-
- "pack-objects" has been taught to avoid pointing into objects in
- cruft packs from midx.
-
- Comments?
- source: <cover.1744757204.git.me@ttaylorr.com>
-
-
-* tb/pack-bitmap-lookup-tables (2025-04-17) 4 commits
- - t/perf/lib-bitmap.sh: avoid test_perf during setup
- - t/perf: avoid testing bitmaps without lookup table
- - p5312: removed duplicate performance test script
- - pack-bitmap: write lookup table extension by default
-
- Enable lookup tables extension in pack bitmap (and midx bitmap) by
- default.
-
- Comments?
- source: <cover.1744924321.git.me@ttaylorr.com>
-
-
-* as/typofix-in-env-h-header (2025-04-18) 1 commit
- - environment: fix typo: 'setup_git_directory_gently'
-
- Typofix.
-
- Will merge to 'next'.
- source: <20250418185855.52950-1-abhijeet.nkt@gmaiil.com>
-
---------------------------------------------------
-[Cooking]
-
-* ps/meson-build-perf-bench (2025-04-14) 5 commits
- - meson: wire up benchmarking options
- - meson: wire up benchmarks
- - t/perf: fix benchmarks with out-of-tree builds
- - t/perf: use configured PERL_PATH
- - t/perf: fix benchmarks with alternate repo formats
-
- The build procedure based on Meson learned to drive the
- benchmarking tests.
-
- Comments?
- source: <20250414-pks-meson-benchmarks-v2-0-04377080a167@pks.im>
-
-
-* aw/t9811-modernize (2025-04-18) 2 commits
-  (merged to 'next' on 2025-04-18 at 37484f566f)
- + t9811: fix misconversion of tests
-  (merged to 'next' on 2025-04-16 at 53103e8873)
- + t9811: be more precise to check importing of tags
-
- Test updates.
-
- Will merge to 'master'.
- source: <20250416145939.24207-2-anthonywang03@icloud.com>
-
-
-* ps/fewer-perl (2025-04-16) 5 commits
- - Documentation: stop depending on Perl to generate command list
- - Documentation: stop depending on Perl to massage user manual
- - request-pull: stop depending on Perl
- - filter-branch: stop depending on Perl
- - Merge branch 'ps/test-wo-perl-prereq' into ps/fewer-perl
-
- Reduce requirement for Perl in our documentation build and a few
- scripts.
-
- Will merge to 'next'?
- source: <20250416-b4-pks-drop-perl-v2-0-bdd0492e9498@pks.im>
-
-
-* ps/parse-options-integers (2025-04-17) 7 commits
-  (merged to 'next' on 2025-04-18 at 30159c9252)
- + parse-options: detect mismatches in integer signedness
- + parse-options: introduce precision handling for `OPTION_UNSIGNED`
- + parse-options: introduce precision handling for `OPTION_INTEGER`
- + parse-options: rename `OPT_MAGNITUDE()` to `OPT_UNSIGNED()`
- + parse-options: support unit factors in `OPT_INTEGER()`
- + global: use designated initializers for options
- + parse: fix off-by-one for minimum signed values
-
- Update parse-options API to catch mistakes to pass address of an
- integral variable of a wrong type/size.
-
- Will merge to 'master'.
- source: <20250417-b4-pks-parse-options-integers-v4-0-9cbc76b61cfe@pks.im>
-
-
-* kn/bundle-dedup-optim (2025-04-08) 2 commits
-  (merged to 'next' on 2025-04-11 at 082f7c87e0)
- + bundle: fix non-linear performance scaling with refs
- + t6020: test for duplicate refnames in bundle creation
-
- Optimize the code to dedup references recorded in a bundle file.
-
- Will merge to 'master'.
- source: <20250408-488-generating-bundles-with-many-references-has-non-linear-performance-v2-0-0802fc36a23d@gmail.com>
-
-
-* kn/meson-hdr-check (2025-04-14) 5 commits
- . makefile/meson: add 'check-headers' as alias for 'hdr-check'
- . meson: add support for 'hdr-check'
- . meson: move headers definition from 'contrib/coccinelle'
- . coccinelle: meson: rename variables to be more specific
- . Merge branch 'es/meson-build-skip-coccinelle' into kn/meson-hdr-check
-
- Add an equivalent to "make hdr-check" target to meson based builds.
-
- Seems to break linux.meson CI job at GitHub Actions.
- cf. <xmqqy0w2o0l0.fsf@gitster.g>
- cf. <xmqqcyd99ipm.fsf@gitster.g>
- source: <20250414-505-wire-up-sparse-via-meson-v3-0-edc6e7f26745@gmail.com>
-
-
-* ps/object-file-cleanup (2025-04-15) 11 commits
-  (merged to 'next' on 2025-04-17 at 4f5b5725c6)
- + object-store: merge "object-store-ll.h" and "object-store.h"
- + object-store: remove global array of cached objects
- + object: split out functions relating to object store subsystem
- + object-file: drop `index_blob_stream()`
- + object-file: split up concerns of `HASH_*` flags
- + object-file: split out functions relating to object store subsystem
- + object-file: move `xmmap()` into "wrapper.c"
- + object-file: move `git_open_cloexec()` to "compat/open.c"
- + object-file: move `safe_create_leading_directories()` into "path.c"
- + object-file: move `mkdir_in_gitdir()` into "path.c"
- + Merge branch 'ps/object-wo-the-repository' into ps/object-file-cleanup
-
- Code clean-up.
-
- Will merge to 'master'.
- cf. <CABPp-BFGeJ6eANb_5m4KSWRY_r9KCWarzya_qMkQNchKD5Q=xg@mail.gmail.com>
- source: <20250415-pks-split-object-file-v3-0-6aa7db7ad7b0@pks.im>
-
-
-* rj/build-tweaks (2025-04-17) 13 commits
-  (merged to 'next' on 2025-04-18 at 0ad43d3038)
- + config.mak.uname: set CSPRNG_METHOD to getrandom on Linux
- + config.mak.uname: add arc4random to the cygwin build
- + config.mak.uname: add sysinfo() configuration for cygwin
- + builtin/gc.c: correct RAM calculation when using sysinfo
- + config.mak.uname: add clock_gettime() to the cygwin build
- + config.mak.uname: add HAVE_GETDELIM to the cygwin section
- + config.mak.uname: only set NO_REGEX on cygwin for v1.7
- + config.mak.uname: add a note about NO_STRLCPY for Linux
- + Makefile: remove NEEDS_LIBRT build variable
- + meson.build: set default help format to html on windows
- + meson.build: only set build variables for non-default values
- + Makefile: only set some BASIC_CFLAGS when RUNTIME_PREFIX is set
- + meson.build: remove -DCURL_DISABLE_TYPECHECK
-
- Various build tweaks, including CSPRNG selection on some platforms.
-
- Will merge to 'master'.
- source: <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
-
-
-* js/range-check-codeql-workaround (2025-03-28) 1 commit
-  (merged to 'next' on 2025-04-17 at 809b3c3f63)
- + read-cache: check range before dereferencing an array element
-
- Work around false positive from CodeQL checker.
-
- Will merge to 'master'.
- source: <73cae30129338cf219a810c3a2a78ef48d5637d0.1743073557.git.gitgitgadget@gmail.com>
-
-
-* pb/perf-test-fixes (2025-04-14) 3 commits
-  (merged to 'next' on 2025-04-15 at f911b5420a)
- + p7821: fix instructions for testing with threads
-  (merged to 'next' on 2025-04-08 at a8aaeee41e)
- + p9210: fix 'scalar clone' when running from a detached HEAD
- + p7821: fix test_perf invocation for prereqs
-
- "make perf" fixes.
-
- Will merge to 'master'.
- cf. <Z-pD1puYT87YKAd4@pks.im>
- cf. <Z_TAtJ9LEeHo2AQN@pks.im>
- source: <pull.1936.v2.git.git.1744481732.gitgitgadget@gmail.com>
-
-
-* pb/status-rebase-fixes (2025-03-28) 4 commits
- - wt-status: suggest 'git rebase --continue' to conclude 'merge' instruction
- - wt-status: also abbreviate 'merge' and 'fixup -C' lines during rebase
- - SQUASH??? - <CAPig+cS92W_gYuNsaTvQxiP3xBK7Wpg0__uVkgAU1x0OFJUZgQ@mail.gmail.com>
- - rebase -r: do create merge commit after empty resolution
-
- A few fixes around "git status" while "git rebase" is running,
- plus a corner case bug fix for "git rebase -r".
-
- Expecting a (small and hopefully final) clarifying reroll.
- cf. <c2f93d99-2f4d-ee6d-7087-42320c6df0f2@gmx.de>
- cf. <e9700234-324d-dc63-d91e-9b8f36fabc79@gmail.com>
- source: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
-
-
-* ja/doc-reset-mv-rm-markup-updates (2025-04-14) 7 commits
-  (merged to 'next' on 2025-04-15 at 0b19646642)
- + doc: add markup for characters in Guidelines
- + doc: fix asciidoctor synopsis processing of triple-dots
- + doc: convert git-mv to new documentation format
- + doc: move synopsis git-mv commands in the synopsis section
- + doc: convert git-rm to new documentation format
- + doc: fix synopsis analysis logic
- + doc: convert git-reset to new documentation format
-
- Doc mark-up updates.
-
- Will merge to 'master'.
- source: <pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
-
-
-* md/userdiff-bash-shell-function (2025-04-01) 1 commit
- - userdiff: extend Bash pattern to cover more shell function forms
-
- The userdiff pattern for shell scripts has been updated to cope
- with more bash-isms.
-
- Comments?
- source: <20250330134018.9662-2-dhar61595@gmail.com>
-
-
-* mh/left-right-limited (2025-04-01) 1 commit
-  (merged to 'next' on 2025-04-17 at 1976b29af9)
- + revision: fix --left/right-only use with unrelated histories
-
- "git log --{left,right}-only A...B", when A and B does not share
- any common ancestor, now behaves as expected.
-
- Will merge to 'master'.
- source: <20250330112850.2477673-1-m@lfurio.us>
-
-
-* ps/reftable-api-revamp (2025-04-07) 17 commits
- - reftable/table: move printing logic into test helper
- - reftable/constants: make block types part of the public interface
- - reftable/table: introduce iterator for table blocks
- - reftable/table: add `reftable_table` to the public interface
- - reftable/block: expose a generic iterator over reftable records
- - reftable/block: make block iterators reseekable
- - reftable/block: store block pointer in the block iterator
- - reftable/block: create public interface for reading blocks
- - git-zlib: use `struct z_stream_s` instead of typedef
- - reftable/block: rename `block_reader` to `reftable_block`
- - reftable/block: rename `block` to `block_data`
- - reftable/table: move reading block into block reader
- - reftable/block: simplify how we track restart points
- - reftable/blocksource: consolidate code into a single file
- - reftable/reader: rename data structure to "table"
- - reftable: fix formatting of the license header
- - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-api-revamp
-
- Overhaul of the reftable API.
-
- Will merge to 'next'?
- cf. <3okrcl7bdpy75hzyzpmrp7fluan4n3zvsroioq64id4a2kt3o4@fc6fetilb6y2>
- source: <20250407-pks-reftable-polishing-v2-0-316c4ff10571@pks.im>
-
-
-* sc/bundle-uri-use-all-refs-in-bundle (2025-03-18) 2 commits
- - bundle-uri: add test for bundle-uri clones with tags
- - bundle-uri: copy all bundle references ino the refs/bundle space
-
- Bundle-URI feature did not use refs recorded in the bundle other
- than normal branches as anchoring points to optimize the follow-up
- fetch during "git clone"; now it is told to utilize all.
-
- Needs more work on tests.
- cf. <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com>
- source: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
-
-
-* ds/path-walk-2 (2025-03-25) 13 commits
- - pack-objects: allow --shallow and --path-walk
- - path-walk: add new 'edge_aggressive' option
- - pack-objects: thread the path-based compression
- - pack-objects: refactor path-walk delta phase
- - scalar: enable path-walk during push via config
- - pack-objects: enable --path-walk via config
- - repack: add --path-walk option
- - t5538: add tests to confirm deltas in shallow pushes
- - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
- - p5313: add performance tests for --path-walk
- - pack-objects: update usage to match docs
- - pack-objects: add --path-walk option
- - pack-objects: extract should_attempt_deltas()
-
- "git pack-objects" learns to find delta bases from blobs at the
- same path, using the --path-walk API.
-
- Comments?
- source: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
-
-
-* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
- - diff: docs: Use --patch-{grep,modifies} over -G/-S
- - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
- - diff: test: Use --patch-{grep,modifies} over -G/-S
- - completion: Support --patch-{grep,modifies}
- - diff: --patch-{grep,modifies} arg names for -G and -S
- - docs: gitdiffcore: -G and -S: Use regex/string placeholders
- - diff: short help: Add -G and --pickaxe-grep
- - diff: short help: Correct -S description
- - diff: -G description: Correct copy/paste error
- - t/t4209-log-pickaxe: Naming typo: -G takes a regex
-
- The commands in the "diff" family learned longhands for "-S" and
- "-G" options.
-
- Expecting a reroll.
- source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
-
-
-* ej/cat-file-remote-object-info (2025-02-24) 8 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - t1006: split test utility functions into new "lib-cat-file.sh"
- - cat-file: add declaration of variable i inside its for loop
- - git-compat-util: add strtoul_ul() with error handling
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Expecting a reroll.
- cf. <CAN2LT1Cc-UaUpabqcGascicR3nk6ZdFythamKje33Orhy5WoNA@mail.gmail.com>
- source: <20250221190451.12536-1-eric.peijian@gmail.com>
-
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+
+On Fri, Apr 04, 2025 at 10:56:07AM +0000, Johannes Schindelin via GitGitGadget wrote:
+
+> However, in 4638e8806e3a (Makefile: use common template for
+> GIT-BUILD-OPTIONS, 2024-12-06), a subtle change of behavior was
+> introduced: Whereas before, a couple of build-time options (the
+> `GIT_PERF_*` ones included) were written to `GIT-BUILD-OPTIONS` only
+> when their values were non-empty. With this commit, they are also
+> written when they are empty.
+
+It doesn't look like Junio picked this up, so I wanted to chime in that
+this regression bit me today, too (specifically for GIT_PERF_LARGE_REPO,
+but also another variable which I'll detail in a moment).
+
+This is also the same issue that hit the interop suite discussed in:
+
+  https://lore.kernel.org/git/Z8IX2bMJe+V80idE@nand.local/
+
+(there I was a bit dismissive of it, because I think GIT_*_MAKE_OPTS
+would usually be set at build time, but for these other variables,
+they're almost always going to come from the environment).
+
+> Let's work around the original issue, i.e. let `GIT_PERF_*` environment
+> variables override what is recorded in `GIT-BUILD-OPTIONS`.
+
+I like this direction. It not only fixes the regression, but makes
+things generally behave more as I'd expect them to.
+
+I think it doesn't quite fix everything, though. I noticed that
+GIT_PERF_REPEAT_COUNT no longer correctly defaults to "3" when using the
+"run" script. And there are two problems here:
+
+  1. The "run" script itself sources GIT-BUILD-OPTIONS, so it would need
+     similar treatment.
+
+  2. But even if we did, that, in my case I am not setting
+     PERF_REPEAT_COUNT at all. So there is no local env variable that
+     we'd use to take precedence. The problem is in the way the "run"
+     script assigns defaults. If it sees an environment variable set
+     (whether actually from the environment or from GIT-BUILD-OPTIONS)
+     it accepts it as-is, rather than installing its fallback. So it
+     will never use its default of "3", and instead retain the blank
+     string (which, by a stroke of luck, does still cause it to run each
+     trial at least once).
+
+So I think we either need to rewrite the "run" script's fallback code,
+or teach the GIT-BUILD-OPTIONS writer to avoid mentioning unset
+variables (which is the real source of the problem in 4638e8806e3a).
+
+So...
+
+> Note that this is just the tip of the iceberg, there are a couple of
+> `GIT_TEST_*` options that may want a similar fix in `test-lib.sh`. Due
+> to time constraints on my side, this here patch focuses exclusively on
+> the `GIT_PERF_*` settings.
+
+...yes, this is definitely the tip of the iceberg. I don't mind doing
+this patch as an incremental step forward (and because it is an
+improvement in behavior even if 4638e8806e3a were reverted). But the
+issue is far from solved overall.
+
+> +# GIT-BUILD-OPTIONS, sourced by test-lib.sh, overwrites the `GIT_PERF_*`
+> +# values that are set by the user (if any). Let's stash them away as
+> +# `eval`-able assignments.
+> +git_perf_settings="$(env |
+> +	sed -n "/^GIT_PERF_/{
+> +		# escape all single-quotes in the value
+> +		s/'/'\\\\''/g
+> +		# turn this into an eval-able assignment
+> +		s/^\\([^=]*=\\)\\(.*\\)/\\1'\\2'/p
+> +	}")"
+
+The implementation here looks correct to me, including the quoting. The
+number of backslashes is a bit vomit-inducing, but I think unavoidable
+(we could put the sed command into single-quotes, but then you'd have to
+escape out of it to show the single-quotes you do need to mention).
+
+-Peff
