@@ -1,123 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f172.google.com (mail-qt1-f172.google.com [209.85.160.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2D231448F2
-	for <git@vger.kernel.org>; Sat, 19 Apr 2025 03:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 757D413C9D4
+	for <git@vger.kernel.org>; Sat, 19 Apr 2025 04:59:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745034852; cv=none; b=MGIwAV5SDPYKWgSE5HsVbReoosvkIzRubGrKmaruIQdBRVxmoenjKdYxrjRmuU5ku7w1F0d+YawWQaT7nvKuN9mPL9+HMra9Nw35ABjwLWhXy6Dh21uU2rZVKBzZcEFbXfErNiWbTFV76Uds+8z5ZgaVA6m49+bvuf32OqARg4o=
+	t=1745038799; cv=none; b=prrCsUPSIYYUv5dlecrijYQLr6lDcONmiEbOdT8Z7xU77ctZry6MfBKqgGSePSw19wk98cqCWIns2z9U9Pz21yLnANumvfcKJYbWA2WSe438qCJDhq8onf31dxlJHDvKX+g6E5VpF+RgMwWSUlpP4EEmget+Bro7+jS2oXGwQtQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745034852; c=relaxed/simple;
-	bh=7V4+PDLBUZk+CB3z7KSZCgcUoTOkt/zpURS6SKURD2U=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mhD33PG978snW/rjs8p55ajgB6s3pMMy0yRJntl3wQRDzdoZRmLVz+Xm3/F7rdnod9X5wq+LinxeC4ryPgCU0A8zhBi9dXNnTHBJ+IA5d6vjL8OFK5XMI4l7EGeaS3OBk/Led+IL6V57XZPf6BJeYvRbhWqD2nL3t1rsuRTGh4Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=ciBEijLJ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1745038799; c=relaxed/simple;
+	bh=ijXdUnosvBVG/o3sQ5fStoWTO5L7tCFHAxRh9NA9Uv8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Y8BgoIpUwP6Exm0FQt3MI4TiM0fKLqpslc+UtmNuDHk3g7z+HQihChuejwV5tk9cXppXkb4uDsSwv7v2BybypIvK4urzKIPZDfu4aoglXbWek84AXsWZOfjGiJMrfRE1ucWJr6Tfz7pxsk3My9+BQ0+9/gB6ub2pbUx0w1ibh1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eu7XYg8B; arc=none smtp.client-ip=209.85.160.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="ciBEijLJ"
-Received: (qmail 21562 invoked by uid 109); 19 Apr 2025 03:54:09 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=7V4+PDLBUZk+CB3z7KSZCgcUoTOkt/zpURS6SKURD2U=; b=ciBEijLJI5LkJ1vVs1mX2pXW/VRkzYpfYi6bpN2OfseiSGFYtG9kJO90md8gtwUFvVkm5ZcJb/pqUejQiVsVTM1neIrdPFC2gyFLAMSoVpxcvs1am8vZRxT9aNryT1oO0Rhd5cbOkNfq62EFbv3q5U2TW0bTVoOhvjdHn755KaZEzsRvb4PKcpL1YF9Ltirl8U/G6aRzHLx8Bzb8nACByljzomUCMrOwyFn1FlN95WwO1kHuIF5Zd+zvi5A9MkNKNhXGvdReKJMZuLwJqg4xElkWISD+6FZVBprGrdpmlVAXi3uILRH/GPD96zBaw6IqsGrK8PU8bG5R/FgFCUD0wQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 19 Apr 2025 03:54:09 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12025 invoked by uid 111); 19 Apr 2025 03:54:12 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 18 Apr 2025 23:54:12 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 18 Apr 2025 23:54:07 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] perf: do allow `GIT_PERF_*` to be overridden again
-Message-ID: <20250419035407.GA93039@coredump.intra.peff.net>
-References: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eu7XYg8B"
+Received: by mail-qt1-f172.google.com with SMTP id d75a77b69052e-47691d82bfbso45441971cf.0
+        for <git@vger.kernel.org>; Fri, 18 Apr 2025 21:59:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745038797; x=1745643597; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ijXdUnosvBVG/o3sQ5fStoWTO5L7tCFHAxRh9NA9Uv8=;
+        b=eu7XYg8BOP7QL0RzqeGlpvLwLOrHCyB2Fq2w7TkGiuLcjFGUfxMR78ZoSyxro6ZNCF
+         nX66IsU7SnghMjwKmL8uCQO5th23u4OWxT+vlHUnGEY41xVLrIUFydk4wypUd2xhYE4u
+         3Z5HiJLQerZa48CinHc+ymGFqRNAjcZvNCsZQ5dZtU27SQxO46XLR7+Wfb6Nnu5CQ8Uc
+         exO+iZElLnjZ9Q6hBrDj2E1D6Ibnl7a5nag2LyX8M8T8tQ6E8VnLGRPd5x2fUpIBz6eI
+         IJ0SEOQTryWAWffuK0hx9z0qglFDhfM702nNvzC1tBuSp6VbGAlj9TFABu9HahqQhNSl
+         BdzQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745038797; x=1745643597;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ijXdUnosvBVG/o3sQ5fStoWTO5L7tCFHAxRh9NA9Uv8=;
+        b=uWoMYPXPLWl4pFohAGN7jIY3tgSzXxdrO0mNP9xGqEBELVqV33FsA1psnxj/YFbHMA
+         hOsT0mV3wgI0OQF5GwsKv2NH1u5gB18H4OManpfUhJpQm9LdkASkagatJVfFgOXk8cdH
+         rO0ed4vo5Lh1NHeXhQSXvwvTdUaMa99sJtovkYKe2khgW9omebiILW38e+uLMerlMsUQ
+         kshO9lF4DyfKvi4kupVKKDA6it40H4kOAiJrxp0Q/EXDbwNVZF0/UkO7JNCQO9Zq1l8J
+         ro2faGEG2H0MPXwZd7qZi14PufQAuAzeNyGJSxMbhIm0p6LGVZALETpnjAfIfdGsQgDr
+         j7aA==
+X-Forwarded-Encrypted: i=1; AJvYcCUfXwyu6JAn9JUYD3+VcIbm7BXDpkKPVPyL8REwmOrsLB3Hqm+DgSrGYb/Dq43L1MBt8js=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzvOM9bPVHdSYRcbgv2ZGfvj5jRb6Ngb4GD9j7z9/VpIAVbKwJr
+	UStQO6DRZGOgIxj/levAj5C9J4/zrJ771Ln9JnzUiQ+mgz0wyTfrnlZASOhLsbpSuyXxWsePL+S
+	FNoi3W6GoVvIa1oGMzjgHL/yMcA0=
+X-Gm-Gg: ASbGncv5orSdRObi4UKqW0ypNNRB/QD160KD4SGz+Wu3oqi4brnzI4/9GODDIjbYEDs
+	fIsG/WHBzwLdwWzRmwsAwaOaF0kikPkIuXF74znjs20r9XXpL9cvL35/V7X2H/QbRogVsWHx2+B
+	+P7NVtbUch0KNi7T0OVW0UbPk+ZoRaBDK0szY72vqSLV6sSR5b8uE19hE=
+X-Google-Smtp-Source: AGHT+IHTrVh9J+OUy+h6funt7SD9GZR/aFCdEa7/0TbrcxAkyFWK8ynHIyYho4n/aTVqdhrW4hk7Vtrm5ixWEVSxgvo=
+X-Received: by 2002:a05:622a:1890:b0:476:964a:e335 with SMTP id
+ d75a77b69052e-47aec3c292amr75252661cf.24.1745038797199; Fri, 18 Apr 2025
+ 21:59:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
+ <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com>
+ <Z_7ekhsBzXK6LKuV@tapette.crustytoothpaste.net> <CA+rGoLfAidyuomeNym5WX8Bo7-jPcfHx35wDeZ7W2aorAN-B7g@mail.gmail.com>
+ <xmqqa58gjlnk.fsf@gitster.g> <CA+rGoLesZ3nSjruJ8_XRWVsFpMu8mo_4cCOdB-GFHU_qXkXDCQ@mail.gmail.com>
+ <717161C8-497D-42C7-8C10-AC112238EEFD@gmail.com> <xmqqcydchz9o.fsf@gitster.g>
+In-Reply-To: <xmqqcydchz9o.fsf@gitster.g>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Sat, 19 Apr 2025 10:29:46 +0530
+X-Gm-Features: ATxdqUFv5KBl5zDpkH_AdWTnyPWoI2OItzhkyxqWlcgyeyefonO_aO2UHJ0ARYQ
+Message-ID: <CA+rGoLes1u3LZiStmDPmh4iiUNzNY43KyYNdLadQU+cy1TCc4A@mail.gmail.com>
+Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
+	"brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, peff@peff.net, 
+	piotrsiupa@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, Apr 04, 2025 at 10:56:07AM +0000, Johannes Schindelin via GitGitGadget wrote:
+test_expect_success 'commit wildcard pathspec limits commit' '
+reset_git_repo &&
+git add . &&
+git commit --allow-empty -m "Test commit with * wildcard" -- "*" &&
+cat >expected_files <<-\EOF &&
+*
+**
+?
+[abc]
+a
+f*
+f**
+f?z
+foo*bar
+hello?world
+hello_world
+EOF
+git ls-tree -r --name-only HEAD > actual_files &&
+test_cmp expected_files actual_files
+'
 
-> However, in 4638e8806e3a (Makefile: use common template for
-> GIT-BUILD-OPTIONS, 2024-12-06), a subtle change of behavior was
-> introduced: Whereas before, a couple of build-time options (the
-> `GIT_PERF_*` ones included) were written to `GIT-BUILD-OPTIONS` only
-> when their values were non-empty. With this commit, they are also
-> written when they are empty.
 
-It doesn't look like Junio picked this up, so I wanted to chime in that
-this regression bit me today, too (specifically for GIT_PERF_LARGE_REPO,
-but also another variable which I'll detail in a moment).
+I get issues with these test cases,
+Specially at git ls-tree -r --name-only HEAD > actual_files
 
-This is also the same issue that hit the interop suite discussed in:
-
-  https://lore.kernel.org/git/Z8IX2bMJe+V80idE@nand.local/
-
-(there I was a bit dismissive of it, because I think GIT_*_MAKE_OPTS
-would usually be set at build time, but for these other variables,
-they're almost always going to come from the environment).
-
-> Let's work around the original issue, i.e. let `GIT_PERF_*` environment
-> variables override what is recorded in `GIT-BUILD-OPTIONS`.
-
-I like this direction. It not only fixes the regression, but makes
-things generally behave more as I'd expect them to.
-
-I think it doesn't quite fix everything, though. I noticed that
-GIT_PERF_REPEAT_COUNT no longer correctly defaults to "3" when using the
-"run" script. And there are two problems here:
-
-  1. The "run" script itself sources GIT-BUILD-OPTIONS, so it would need
-     similar treatment.
-
-  2. But even if we did, that, in my case I am not setting
-     PERF_REPEAT_COUNT at all. So there is no local env variable that
-     we'd use to take precedence. The problem is in the way the "run"
-     script assigns defaults. If it sees an environment variable set
-     (whether actually from the environment or from GIT-BUILD-OPTIONS)
-     it accepts it as-is, rather than installing its fallback. So it
-     will never use its default of "3", and instead retain the blank
-     string (which, by a stroke of luck, does still cause it to run each
-     trial at least once).
-
-So I think we either need to rewrite the "run" script's fallback code,
-or teach the GIT-BUILD-OPTIONS writer to avoid mentioning unset
-variables (which is the real source of the problem in 4638e8806e3a).
-
-So...
-
-> Note that this is just the tip of the iceberg, there are a couple of
-> `GIT_TEST_*` options that may want a similar fix in `test-lib.sh`. Due
-> to time constraints on my side, this here patch focuses exclusively on
-> the `GIT_PERF_*` settings.
-
-...yes, this is definitely the tip of the iceberg. I don't mind doing
-this patch as an incremental step forward (and because it is an
-improvement in behavior even if 4638e8806e3a were reverted). But the
-issue is far from solved overall.
-
-> +# GIT-BUILD-OPTIONS, sourced by test-lib.sh, overwrites the `GIT_PERF_*`
-> +# values that are set by the user (if any). Let's stash them away as
-> +# `eval`-able assignments.
-> +git_perf_settings="$(env |
-> +	sed -n "/^GIT_PERF_/{
-> +		# escape all single-quotes in the value
-> +		s/'/'\\\\''/g
-> +		# turn this into an eval-able assignment
-> +		s/^\\([^=]*=\\)\\(.*\\)/\\1'\\2'/p
-> +	}")"
-
-The implementation here looks correct to me, including the quoting. The
-number of backslashes is a bit vomit-inducing, but I think unavoidable
-(we could put the sed command into single-quotes, but then you'd have to
-escape out of it to show the single-quotes you do need to mention).
-
--Peff
+For some reason the test_cmp doesn't get resolved
+Is it a bad way to do? or is there a better way?
