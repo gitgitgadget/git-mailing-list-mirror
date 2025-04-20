@@ -1,135 +1,166 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CEC82110
-	for <git@vger.kernel.org>; Sun, 20 Apr 2025 10:00:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7E973987D
+	for <git@vger.kernel.org>; Sun, 20 Apr 2025 10:09:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745143241; cv=none; b=JolaMstmEvaPy4+79JafZZZbf+E3Be4UJYH5SI8nF8PW3GA7K/PePPsW+47jDaiSV38wb6dIvcmbcvqFZ3TCP06/1vFp9UL9GU0owLXeNG7zSvzTgB0z2GfT2ZBkjL5zWBGQYLjGgu3pI34Yq+kvNRaoOMxfonDlx/aB6XuCNDo=
+	t=1745143745; cv=none; b=ZVcIj0frjfxrtk17DWThQtyqvfndXVaeLVVjNotW2cVFCB5gnuFAvp4+NhQ1Odv9U210qF+Yqo8Gtrxec+hXczAQnGZYMDApZWseDCgWpn0m/yChuPu2tLrI3rJB5t6qY5oGY3JzJNP1G9mf2ANemXUCsALsB/g6Daf3bYUGfuM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745143241; c=relaxed/simple;
-	bh=Io5rAIJ4ajJyoZK3mkMoWVy/4QHhx9Mo542ZMMyoA9o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tmZKT1s8eS6n5Q79dvFNf5/lL7ARdqJbHc8/Lv4jTXEEKg3Gmsp17ZLoulLR2WRugqs0zRqM33QmkuhJZVJ3ahNlBbYn8EGcO8SWP6k8UVFgNScbIk4t+RTEhQstfYqUpMpPWzSZwcCtSih1CKm4tB+nJU7EHoAkLvU8t+ariIs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PTH4/7Bm; arc=none smtp.client-ip=209.85.218.44
+	s=arc-20240116; t=1745143745; c=relaxed/simple;
+	bh=1t5qL/lu8Fjh0OhaExBw1oKerQH3NwbUZbz+560iyfI=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GqQ5bfvNepEKnmRPKatUmOBUJM/uXbsaZYQCiHtrmNvhPXuTmjAKXD7wDrgwQ6UsaNZwPNu685Z1akY0ZbaDcXHfFp90PFN2jiVJ131C9lgzGRtqa5L+0jezwHPAAsrjoGLIUig+hYTRVKbKa4MFfR56aWH0/Ab5MOmoFW0Ql+A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i8ZxHS0S; arc=none smtp.client-ip=209.85.221.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PTH4/7Bm"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-abbb12bea54so477300466b.0
-        for <git@vger.kernel.org>; Sun, 20 Apr 2025 03:00:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i8ZxHS0S"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-52446b21cfdso1205032e0c.1
+        for <git@vger.kernel.org>; Sun, 20 Apr 2025 03:09:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745143237; x=1745748037; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=z9xcWSM/59T18EZwycAxQQiGSL1RXMkTnAXk5R3UAC0=;
-        b=PTH4/7BmT8t+wG1/Et9upBjLdKCcNDyQ1e55k3UMnF32vYOGb8YInKPCBl3+gCgy3D
-         Ae9eQ+1PH9rrW3N7F6SQeomjLaYFNuZVFERjnLeDBil2UT3brxvsayH8RUe+K+55J7Tm
-         C59UGr8MrNHVLBVGtivOAGQopEmUargkrv1cORzQjcLNqt88i+Kuu6qkmwQox85W/6xp
-         1BQyJ7hCzOCn/ujfpHvWQN64r6S8jZFttMjBvfnRE/cqcs5xPG/xfKpvS5WApod2qKy6
-         Q4jJx3C4eANSc++V21s7BEPtH6qocBI0xtRlKi75KzLlYdo8jb5NESg8Kzlx3tIwgeGN
-         c+rg==
+        d=gmail.com; s=20230601; t=1745143742; x=1745748542; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gMOZGO6M9NSTyZG7Hud2VfLxX74vAEmC4p67jRLSoKw=;
+        b=i8ZxHS0SpdOKQhdCnvql0dIoVQawkN5mMw2d5T8EJbrh3GQ0hZtsu1PnDDJo1GfWt9
+         sed5+oI/jeJWvEC0BdRKGTiJ+6Fc7av1zv8tJ5B5PsOCHvFl5N6PTlxW79xOCFJwHs5V
+         abDwwIQOu7moidYcYkNW72bBkt01KiLOTmPtgzhUbnWusE8UVVb9EuENlIKC1tLgdQi2
+         5kWO+xEWSilLprToapi0/m0Cbgbua40aRIcywTZZflvI7TgbHc8MNs7FazpIJgCsFnDC
+         ok2oeaVFf9g+gugB4/iePxAtvESS9iN9p9PnqQziUP+5O8z79XrhAqvjsOQQM0+MVaF2
+         o3rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745143237; x=1745748037;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=z9xcWSM/59T18EZwycAxQQiGSL1RXMkTnAXk5R3UAC0=;
-        b=stl+C1s8XECxzVPDJynrjs7Rxbs+6tK+D5JbW5MbIclD5lcqIvTxucsFL6r9tczK+z
-         fKxtOww8Qpdaz88a2rM0KZdJAykJNYeQN7nhgXVzKvONJiD3QeBpF2FsdjaL6eshoM9v
-         SebqR+AQlNFocBe+GZo0VTJ/HQZ9kZ1umu8P1zBvQVkE66xFNG94Apk7TP4qbfzAbEhI
-         hMyRFpUnYxuUdrxz1ke2nUReFcUMfpHIeRkAzAtz/GGSMVYbKDMKtnbZouTMQnFc4dsO
-         2yHTDx4gtldiRao8qjR4JnGGs75LUwhCkj4LaYo7fPvjjEYyj4hPK4daFn513rq5h93v
-         PG6g==
-X-Gm-Message-State: AOJu0YyfPUxesOca0i6z91JjQS4GtOHr2mmaYXBYLexHZBH+wIyKctTC
-	+PiCG6qE4ZOwoPMzqrhRbBRbX8t9AKQ+mTpH3zkx40lrBFnsEu7OZ9YU7Tt/3f8PlSmOa1C5Jny
-	vAiZv+wI6k/zQu1AQRMO03zaYGKQ+5A==
-X-Gm-Gg: ASbGnctVj81ks5ns+ifT3QFzdxY9tfg7+tBfHoWxCkZaCO7Q9F79isGnI3aw/DWP7ei
-	SdlqYMuYYQR6zbUDYt6Ji+p2gxhRAUigpOV/iItdQUF0/r7jBar5m2qT8ylj9EDo7wHlOutZuEw
-	GEWXGcPBilMZYLwnMMUBWZffII115k4myoVUODZEMnve3XO8PyUtAjHyVIUCUbh3BD
-X-Google-Smtp-Source: AGHT+IE3d0azuzAINC8X8CMmPKthQ5HspCAcviXOwAseCZXpVUav/EIY4WVwnqUv/rha1XbEKJTONdXvwm9kO6jpfCw=
-X-Received: by 2002:a17:907:868f:b0:acb:893:8c40 with SMTP id
- a640c23a62f3a-acb74b388edmr854745166b.19.1745143237364; Sun, 20 Apr 2025
- 03:00:37 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745143742; x=1745748542;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=gMOZGO6M9NSTyZG7Hud2VfLxX74vAEmC4p67jRLSoKw=;
+        b=B6gcq56Aih0r5fHdUOmuLLlTCAB6/9osphMV5aNBUPpq6e1fjlfzPW2Sgdc2oglJbx
+         nXj0w//QcNC21Uq4IdiUXrCFbY1BexVzgRXed6W8TuOkxzajpgz2dXdHIN78urT2Gjln
+         yanS/qcDxCOuiTJmc66vAwipgz0XFMPCSbLKMFgHkSMFtcyu4SyG2AXQu4PUygRyeSUh
+         S8zYcTDzyzHUJZb3Lwaw5IMM/id8xK0R9P6Q0KrwxarjiV0DumXzyinD5Of8SH7SRKLy
+         0Pe1DCcvyB51XEI+vnqgwynhsc/3jlCTdnS/YphBLZi4YIOq9ShfUzjLRraJNOoKCboC
+         tBTA==
+X-Forwarded-Encrypted: i=1; AJvYcCUF1FUojZ1KfL783F5LwdA/qWSovOWl6jvqUCsI2xVe1LbIjal1U9unV/9EYauJVJB2/Rg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwLdm4uQxfwfdejirWDasOnOWi7z+N4hhXea+bwZc/DL7GkUcVs
+	3DMlgSZy/kb3mz37IBVCu4PFSQAF7dJQXuZVUmw3Bv3sLCOJWVdqnc+LTwlgxKdHvKpelN/wI1q
+	S10J8yDVUSNlBsNwVzGdNO8WNDb8=
+X-Gm-Gg: ASbGncuYp4a0AvZwxK4syV4ZHA18TXptpxE7RVzEcVvERFd93d/rvqUu0F3VGxSwJ3b
+	Ugw7YeJH2yujsrkLKhMg5tIYuOP92Pffz29BcaBMzRNF6vZIffYmj5/6xQIxmQUWIE08zRI4dyd
+	UFx89h+qwN7qgLQ2mICqTSmbbrv/vRk3XRkJGT/IsqaMd9/MjZGVS32Os=
+X-Google-Smtp-Source: AGHT+IHccOoytlhE7o6jECOHhJXwwG+x9CacQbTrX8HAReZYy2hbpDueh4ZXNjyLdyYl4L+yHHy/3IhBdE0mLZG6LHQ=
+X-Received: by 2002:a05:6122:220e:b0:518:7ab7:afbb with SMTP id
+ 71dfb90a1353d-529254db694mr5539030e0c.8.1745143742569; Sun, 20 Apr 2025
+ 03:09:02 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 20 Apr 2025 06:09:01 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Sun, 20 Apr 2025 06:09:01 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <23493ec4-fd9f-44ae-a81a-8851e495b427@gmail.com>
+References: <20250414-505-wire-up-sparse-via-meson-v3-0-edc6e7f26745@gmail.com>
+ <20250414-505-wire-up-sparse-via-meson-v3-2-edc6e7f26745@gmail.com> <23493ec4-fd9f-44ae-a81a-8851e495b427@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250414-pks-meson-benchmarks-v2-0-04377080a167@pks.im> <20250414-pks-meson-benchmarks-v2-4-04377080a167@pks.im>
-In-Reply-To: <20250414-pks-meson-benchmarks-v2-4-04377080a167@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Sun, 20 Apr 2025 12:00:25 +0200
-X-Gm-Features: ATxdqUEOwBxJpTLBTm0Zm2kiZcArB691gRegcVM6aHPJFVrPPIkjQWYUkkghYD4
-Message-ID: <CAP8UFD2jKwYzmc40knXY7k+FQabjZbGTqs9fowF=-0OqfNYp_w@mail.gmail.com>
-Subject: Re: [PATCH v2 4/5] meson: wire up benchmarks
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+Date: Sun, 20 Apr 2025 06:09:01 -0400
+X-Gm-Features: ATxdqUGA_w5CnC4SMb5LIGAC25EyXxqWNLCNXqyVyHeD9_J2QQ-xJ-h9jtfKIDI
+Message-ID: <CAOLa=ZRchwJWQfLDCMASEe9RWMOKDQvTfXaKqO=Shy=jhWMNaQ@mail.gmail.com>
+Subject: Re: [PATCH v3 2/4] meson: move headers definition from 'contrib/coccinelle'
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: toon@iotcl.com, gitster@pobox.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000dbc3f0063332f072"
+
+--000000000000dbc3f0063332f072
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Apr 14, 2025 at 8:51=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> Hi Karthik
 >
-> Wire up benchmarks in Meson. The setup is mostly the same as how we wire
-> up our tests. The only difference is that benchmarks get wired up via
-> the `benchmark()` option instead of via `test()`, which gives them a bit
-> of special treatment:
+> On 14/04/2025 22:16, Karthik Nayak wrote:
+>> diff --git a/meson.build b/meson.build
+>> index e98cfa4909..3ca5d01071 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -633,6 +633,28 @@ builtin_sources = [
+>>     'builtin/write-tree.c',
+>>   ]
+>>
+>> +third_party_sources = [
 >
->   - Benchmarks never run in parallel.
+> This is not the fault of this patch but I found this name rather
+> confusing as it is not a list of sources but a list of exclude patterns.
+> Calling it "third_party_excludes" would be clearer to me at least.
 >
->   - Benchmarks aren't run by default when tests are executed.
+
+This seems to map what the Makefile has, but I would agree, that this
+should be renamed.
+
+>> +  ':!contrib',
+>> +  ':!compat/inet_ntop.c',
+>> +  ':!compat/inet_pton.c',
+>> +  ':!compat/nedmalloc',
+>> +  ':!compat/obstack.*',
+>> +  ':!compat/poll',
+>> +  ':!compat/regex',
+>> +  ':!sha1collisiondetection',
+>> +  ':!sha1dc',
+>> +  ':!t/unit-tests/clar',
+>> +  ':!t/unit-tests/clar',
 >
->   - Meson does not inject the `MALLOC_PERTURB` environment variable.
+> Again not a new problem but this line is a duplicate
 >
-> Using benchmarks is quite simple:
+
+Fair, considering we're touching these fields, I will add an additional
+commit to simply cleanup these two issues.
+
+>> +  ':!t/t[0-9][0-9][0-9][0-9]*',
+>> +]
+>> +
+>> +if git.found()
+>> +  headers = []
 >
->     ```
->     $ meson setup build
->     # Run all benchmarks.
->     $ meson test -C build --benchmark
->     # Run a specific benchmark.
->     $ meson test -C build --benchmark p0000-*
->     ```
-
-Instead of just here, I would have expected that something like this
-would appear towards the top of the top level meson.build file, maybe
-in a "Benchmarking" section, where there is the rest of the meson
-documentation for Git.
-
-> Other than that the usual command line arguments accepted when running
-> tests are also accepted when running benchmarks.
+> This is called "headers" but it is only really the subset of our headers
+> that we want to run static analysis on. Maybe we could call it
+> "headers_to_check" or something that makes it clearer what the list is for.
 >
-> Note that the benchmarking target is somewhat limited because it will
-> only run benchmarks for the current build. Other usecases, like running
-> benchmarks against multiple different versions of Git, are not currently
-> supported. Users should continue to use "t/perf/run" for those usecases.
 
-s/usecases/use cases/
+Agreed, will rename. Thanks!
 
-> The script should get extended at one point in time to support Meson,
-> but this is outside of the scope of this series.
+> Best Wishes
+>
+> Phillip
+>
+>> +  foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
+>> +    headers += header
+>> +  endforeach
+>> +endif
+>> +
+>>   if not get_option('breaking_changes')
+>>     builtin_sources += 'builtin/pack-redundant.c'
+>>   endif
+>>
 
-Fair enough.
+--000000000000dbc3f0063332f072
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 80be20c27d6f9174_0.1
 
-> +if time.found()
-> +  benchmark_environment =3D test_environment
-> +  benchmark_environment.set('GTIME', time.full_path())
-> +
-> +  foreach benchmark : benchmarks
-> +    benchmark(fs.stem(benchmark), shell,
-> +      args: [
-> +        fs.name(benchmark),
-> +      ],
-> +      workdir: meson.current_source_dir() / 'perf',
-> +      env: benchmark_environment,
-> +      depends: test_dependencies + bin_wrappers,
-> +      timeout: 0,
-> +    )
-> +  endforeach
-> +endif
-
-I wonder what happens when we run `meson test -C build --benchmark`
-but 'time' is not found.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nRXg3c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNnFSQy80OEcwc3NiWEhCenBBQTFMMjdNQUJPK0c5QQpRSS83NEFLNU5m
+TEE3VnplK2hySGJBdFlNNTZUUUozM3ptdytsbE02T28zdU1udEhDYnJJU2dvN0RrSi9kZkJ3Ck9z
+NE5rMFBZY3dRRzRma1ljM29lUlAyTEFwbURNUE9UNVJVeVBMWEMyWVFWQUJBczBGODNDOFpIV2hN
+OG5ZYm0KQzhxTE5pejFmUFk0NTJqazlxNWNkV2pGL3hBRTNiTTcxY0hINGtBWjJmanMrcTFybXpr
+SFEwM21JR1FTS3hpNAphT3Q5RnFpU0N2RXpPZ3BuU0h3WHg3NXY4RmVTM1NDTjNEaDh2N21rOVls
+aDJQa2Z6NjdVU0dMNllibUM3UnRQCmR2Q3dQaVFPSFJ3ZElDeVgzcU1EbEtVK2dPWE9DM1R5c29a
+SVpVNE5RV1FKelFZN1F3Z3M4aDhWdldsSFdwVEQKcHAvS3ZQcmpHNTNpaG1pekw0Ymp5ZXRhQVB5
+di9CSlYxRkN3REhhVUx5dm1OSWVYU3B1dlIwZGhxT0NpWWxDSwpGRHhFZk8zRFlsMnRVNVNqZGdv
+RVB0VG94bWJEczUyQjl6U2h1NUVNVnd3UE1ZR3BqWlQzRGp2VmtMdm1sMFl3CmdBdWJFTktYT0Ro
+RCtTQjhzYUd6bXdnM2I4VTBoZlhaWTM3cmZLMD0KPWxYcnYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000dbc3f0063332f072--
