@@ -1,65 +1,65 @@
-Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com [209.85.208.44])
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F01491E571B
-	for <git@vger.kernel.org>; Sun, 20 Apr 2025 13:19:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97A661E5B60
+	for <git@vger.kernel.org>; Sun, 20 Apr 2025 13:19:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745155180; cv=none; b=IXlSCXGlmb5ElhILU7FU6CYn7ac/SQhXzajol+7TEK4QoAX1K472iSCmKfPe4L2T5iexiqEcga+AWBH7YZa3rQ02xAfz+J1eNdb+BQwRSe2D2gx2Uvl9XowiKaXm6zjfLxvn/jB4xW7OmC6QxjCjhleRk0WXwcFJ5c6c7HHSrws=
+	t=1745155181; cv=none; b=bu0uWNm6TGsFqeyaZf9PB9nB4MuzeuXB6ZcmJQiYg3+I8GE2jttL6vLvtuOlADBZ8ol2F55tj+1lyNUPXB2imioqm79F9LX8phS/ypCvTqOFSuG/+mTqX8Ws9iMYI6cQ2E6fqOQk97tSdumuEO6TsJ3xselqlzYLTPerPtyReYo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745155180; c=relaxed/simple;
-	bh=7kVcuWgIrWUvJa1xqjcaHfpmGd73vsFMXJTLt3emX0o=;
+	s=arc-20240116; t=1745155181; c=relaxed/simple;
+	bh=QDZE6l/OQsFgvSHoUyZ9I1BGdvakPz5IH9yfpHvRbjs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jH98OW49XnpiyPufxBTTGbHcsvLJCewwD8u3g6llkPBzP32846hegVs1w9gcoXGryXcCq5nGWZ/lOE4JZGWDN48cg6ZcjrAGt1z/p3JlnpMXA6YS4d8/e0Vi1cfxYopk8ZstxcdhMtoebOADc9FbXrLW8QRtx1naZXdqVAgTloo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NRFf4TPN; arc=none smtp.client-ip=209.85.208.44
+	 In-Reply-To:To:Cc; b=Fx0/n+DRJ1rEnvez1CLxCHONThCJCa71nyjo7Af46S1YmhNxLAGOFSnNrVIrxGpTD3jUqhsSf+Db0DtoZwMWgrxn6euER49nkjfz8Kyzl2pjBpWNcgYzFGzYR+w8pPtRT/UrcOEBaPFN8sCx9aWkU9KjOwcobQwSm9a+rDlwfmI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lfYj07Ea; arc=none smtp.client-ip=209.85.218.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NRFf4TPN"
-Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5f620c5f7b9so3134378a12.2
-        for <git@vger.kernel.org>; Sun, 20 Apr 2025 06:19:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lfYj07Ea"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-aaf0f1adef8so583837066b.3
+        for <git@vger.kernel.org>; Sun, 20 Apr 2025 06:19:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745155177; x=1745759977; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745155178; x=1745759978; darn=vger.kernel.org;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=A/QnRHzqMoxjHFd3mI0dWBFcPsSwBJpyZP6TtPN4hYc=;
-        b=NRFf4TPNp8b1v/K8AwwCjn5A4O+mbFCvXOq/edvGX6SrsSswEc1YRIHa04/qseuACq
-         r1MmnF4gkmtJ0YrGFHcHEUervuVkTHcf46GaIFcxFWD2GfyiSvb0CWm6yzH4MctBY0/U
-         h3OvYjmEoP/EiP3bp8N2nDc4WUE1oUdcz07tj8dcrfvxxcB/YcDvXv6MaavS0QdtI+P3
-         ttDfCc9uNo4IAM8+X8t4WI53WJv3U9ZiKyP5MBJpcL12GAh4cpbfTnDYtjEm7UBTkZzA
-         mPr+lTkSweLdlHZfguV+6YMpR2fT4WykjYMEAyu3v0RKpgmJbtNFfV+LBQMImDvtREm1
-         vryw==
+        bh=hSNj/9wvxFkDNSWrUZRrDB5kxB/zNjDo3jSgTVS9RaE=;
+        b=lfYj07EamXsKT32TpFRkc3RmPzVK6AAwhlcpagl4aZXZrnOvVyB0UvK8kqcHYUmH2C
+         9THmDQ57aVq0SEFB1soB+uOeNCOVtj75RvKPwK8XidzmFIozLCy4Rz8PrzsbLsczVCT3
+         TumqYdPE9Avy/k33D0HvmtGv2Yb1YsYgezN50x/s4XlbqUeyiYQdYnGxJm9VE38y5/52
+         tpAXYki/5v12mX0h1sN8ljHEmkZu25QJQb4vjlD4Ek8uIt/oST3xzPmAeQ6mj57+3CAw
+         YM2SQrwQzJGpWH6FmNOhUgwi8ppa2PcEWCN7W8rm4OX22mGa0J03fM94GIo4OiE8XcQ7
+         Xzyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745155177; x=1745759977;
+        d=1e100.net; s=20230601; t=1745155178; x=1745759978;
         h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
          :mime-version:subject:date:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=A/QnRHzqMoxjHFd3mI0dWBFcPsSwBJpyZP6TtPN4hYc=;
-        b=jp1IVJBGOasDXH4vJsJM9WehB7833r02+1vCiwA6+Y8VXfDSujv3HGuzL6z5RIk6Rk
-         3+aDp5BiGE54pxy2uEciWiPYweM856bQUZkxXveVwnKUDWsvfmy39tX9OgKmCZy8ODCI
-         urSS4UsThioC4cn0LzkoXQpvwNUe57AGsdbh883OH49ER+ohyO36kfWdAb26y7vnIfMQ
-         WWx1314fQGInq4572nvDsN0kl03jXc+s4qNQJsi121bHqULyjd4B5AUg+zgCA+FYCcqp
-         eVJRnByUg/QISdgL496O23eiz3U3dIkd26kDRl2bFJd3oCERJN4syWkYt1duzZhLeNee
-         qAgg==
-X-Gm-Message-State: AOJu0YyZjI13JFg57c5OT//73whRFG3yR69Iz/1BUu4EFZ+HvFVVIczE
-	afnH1pmvd8gQMj6Zb+jRaJ3KHH5ow6VzLpDkM5r/EHcjZso3iTxk3ImKsw==
-X-Gm-Gg: ASbGncsIr7aRwF9OXE0oxCY2eIqS3hGozLszfCI38r59uiGhPmvLjP9/aRr/1n1y6Xc
-	vao2+dn+QhtP3QAGw+dKNWW3PUR/k143HbZyQDvqsxT4i9iy+lLfv7yg9xYBtL4FJdQ/wgeyt8+
-	0lNkmKGKFkA1G0eBLrFKeDetLCnAw/z3LskVdLwxAndE860PnX5IBDArQrtPCbwDCmBKEmgWse/
-	MLw0pLu7xltdJCCg6NHoLKYVEMM5fmtE4d+6Zr3wdTrokMdk4NkLdhnG83Axh31ts4U6Ruc6pkt
-	FOxEza+pVOEx+S6f9UiKvqJb3uswLkHzzfN6d1GnNkWNkfQ=
-X-Google-Smtp-Source: AGHT+IFyd4QpwlbvyzbGXUOf2XVyixbMmmZpot81nflBzpVBuGl20G2EoVUj7LYguNHaWJ/HAt3ppA==
-X-Received: by 2002:a17:907:3e9f:b0:ac7:e6bb:a0a1 with SMTP id a640c23a62f3a-acb74d655cemr800405966b.38.1745155176933;
-        Sun, 20 Apr 2025 06:19:36 -0700 (PDT)
+        bh=hSNj/9wvxFkDNSWrUZRrDB5kxB/zNjDo3jSgTVS9RaE=;
+        b=pCFDXXT1mUKUwdgpoSzcHsQHUjU3akkuFswiki+yKodZT8KynueeBTgA6xWz903WXM
+         fER6dxqUV7aa93qnB3Nl0tEln7A1BchF1YrmATI7e/YqrOrDdntvBvHCUsuhGd3ab9O1
+         BiMMS2EXO32FrSkWWTdIWxnISLjR4YYqnIxYDUYhSRggZ3U7+9Cn6lLKZNMjcj0ZtVHz
+         8YH1s7edCy3HW2TuIwWze2K7y44qQwzU6VeXSKHZ8XfxPE9IckmDs2qjgR7NDu5Su5pE
+         4qRJz+ZXHsP9YQp0F0Nw+YJPi/hsNhmh42dxbiPC7UWzLRNy7Ktk6OwV9pTBNrils+Sm
+         9pjA==
+X-Gm-Message-State: AOJu0YxUt0JDwZ+LANupG/3M7ANeMdEOC642DYh8Nuc77DWEzppZcaB/
+	aZG9yIlgZjLM4KMcSSZcjXt2XemE88TyU8UK9zUA8l2Po72Taxl4
+X-Gm-Gg: ASbGncseySA7rsD0V1Zc0kSe1newO68E4SlUynBwCKVws/mxn/PAxYsui+TLzRBoz8D
+	OYJCJbvRdcsISNoDcs9DXnYSbj0wOrn36Ho47ghjXf5X5ckEi+aPYODxp6ku24z4YHSjDpmn6l9
+	uRWLSMr+WEZQLHq2R8Cac63DOM2wsdKkxa13faAJpnxY5vP/+vP2Z41+t7Ex2SC31KwJp8r0x+r
+	OgDc5d8ccIuaesIkVzU4EA50/hdQtIwm9J//NPWlbFFivt1b34G9GKzQOR3wUzyqLrQGhpQ8LQ0
+	5HlijoKtAEjqYg5MR8/v7zxgEbw7JiKmPtVtoYnj/nZIw+Y=
+X-Google-Smtp-Source: AGHT+IFH4rjYdibCM7GJM2M4TdYHZQfdstnXBli4fU3n+OVlcoIMjvYmS0/chbzhc80Qf49BTUX44w==
+X-Received: by 2002:a17:907:3d8a:b0:ac7:150e:8013 with SMTP id a640c23a62f3a-acb74b1ce20mr867428766b.15.1745155177745;
+        Sun, 20 Apr 2025 06:19:37 -0700 (PDT)
 Received: from [127.0.0.2] ([2a02:2455:8268:bc00:7cb7:e0fd:4535:dd46])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb6eefc703sm397872566b.94.2025.04.20.06.19.36
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-acb6eefc703sm397872566b.94.2025.04.20.06.19.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 20 Apr 2025 06:19:36 -0700 (PDT)
+        Sun, 20 Apr 2025 06:19:37 -0700 (PDT)
 From: Karthik Nayak <karthik.188@gmail.com>
-Date: Sun, 20 Apr 2025 14:21:33 +0200
-Subject: [PATCH v4 1/5] coccinelle: meson: rename variables to be more
- specific
+Date: Sun, 20 Apr 2025 14:21:34 +0200
+Subject: [PATCH v4 2/5] meson: move headers definition from
+ 'contrib/coccinelle'
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,82 +68,117 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250420-505-wire-up-sparse-via-meson-v4-1-66e14134e822@gmail.com>
+Message-Id: <20250420-505-wire-up-sparse-via-meson-v4-2-66e14134e822@gmail.com>
 References: <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
 In-Reply-To: <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>, toon@iotcl.com, 
  gitster@pobox.com, phillip.wood123@gmail.com, ps@pks.im
 X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1987; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=7kVcuWgIrWUvJa1xqjcaHfpmGd73vsFMXJTLt3emX0o=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGgE9Ga4wMowcXVpCS7l284Kl9LPb+M0rPnkI
- mGsfFrmgFlIzYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoBPRmAAoJED7VnySO
- Rox/0qEL/AifVSye/ZzNWfaeThNxLANjzmhBVB3mackgJb5sR0KrCj0FlFP4Sqq6xmpy0n0MycW
- HLtu3oQYGu6qjHvbsorJTXhIdCsaBL6ep9DPoXa5gq/H4wXBN/HAbYWxKnMadypjUSs4/Azk37j
- mAhWQJ5ePSukVHPnPKUwsCEDkt3LCB4IF8ZrSlsqEjAvzuVRt9xDJ4vp94wy5D/HfxJow5fRQTL
- BMOtnKKvc5gdOym7VBZdoTYBW5rGIFl5HrmiLpx8lw2o8veE46/w/T55fFNTbnpzrsw+wiz9Yog
- jgSJZ3ExSdD+KxM9/ysFrdZ6K4BWQyyoHYdP2ViVkyVETrCTkD6MpAiweCube3khIICyXbMPRo8
- lo8UiqbxkfbAQttZbHv4NJH+hMsihbzPLREJ1Gh7iXxXIvIHCMBeOdFyZTLSn8+NYauQPiATvF4
- 2ImpomFqAeUFurD+9oGkEDVTtCQswGqzdY4ws5FDxL2ZXtZiqwQLVrjNg4fgGbx6e0iMwyU3T84
- sg=
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2993; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=QDZE6l/OQsFgvSHoUyZ9I1BGdvakPz5IH9yfpHvRbjs=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGgE9GYf/rp35efMWi97gs/0RmJCHSgZ1ZkrR
+ K1P3qrO7Xe2TYkBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoBPRmAAoJED7VnySO
+ Rox/ZroMAIOMhUIjUgg0QtURJ1lE4h+od2QBx6949zpccVJddaQjSM1KFCkc4dEW6uTDgSauvot
+ LU+m0lTztdIcnM0PJ0aXJk9w116vScapVHmMB3jqlxiiCbtl7IkxnTI3fLi/AXvz+GaxiH3/fJT
+ cidLaJChvmtvyBC2AHKWuZ3jVitjULDNpXS1T+niFoUgJCxbpA2YtgSrvotdNXjxVV6jDAgT3qt
+ nzTCMIXkfVq1UyY+IRdqb9zbOBNPz+voeQagwOjNvFc+LQ2LvkOKhHUBhPmz6HrU+qpYIyIAr+z
+ h7HJn2WvBFL5fj/PfiCYeaIxlnBKDdUf26/htG3qDAl9MWGUHwLLBs/tTTAbz6zdSsOfkdu+xSK
+ M43M1qqdCWXwWjN5ctjbz+1SuHdw7L9YvLIJZMkCiwxnBx5xD14p7iQcsxWr0RMvrAlevnpkd2E
+ gAhXpK/VdLGahw1ThiFxjDDUGnYLZxXSuuuMddsA1YIefHC31fRrhjg/QF03n8TEgm8dfQfoB94
+ +k=
 X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
  fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-In Meson, included subdirs export their variables to top level Meson
-builds. In 'contrib/coccinelle/meson.build', we define two such
-variables `sources` and `headers`. While these variables are specific to
-the checks in the 'contrib/coccinelle/' directory, they also pollute the
-top level 'meson.build'.
+The Meson build for coccinelle static analysis lists all headers to
+analyse. Due to the way Meson exports variables between subdirs, this
+variable is also available in the root Meson build.
 
-Rename them to be more specific, this ensures that they aren't
-mistakenly used in the upper levels and avoid variable name collisions.
+An upcoming commit, will add a new check complimenting 'hdr-check' in
+the Makefile. This would require the list of headers. So move the
+'coccinelle_headers' to the root Meson build and rename it to 'headers',
+remove the root path being appended to each header and retain that in
+the coccinelle Meson build since it is specific to the coccinelle build.
 
-While here, change the empty list denotation to be consistent with other
-places.
+Also move the 'third_party_sources' variable to the root Meson build
+since it is also a dependency for the 'headers' variable. This also
+makes it easier to understand as the variable is now propagated from the
+top level to the bottom.
 
 Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
 ---
- contrib/coccinelle/meson.build | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ contrib/coccinelle/meson.build | 17 +----------------
+ meson.build                    | 22 ++++++++++++++++++++++
+ 2 files changed, 23 insertions(+), 16 deletions(-)
 
 diff --git a/contrib/coccinelle/meson.build b/contrib/coccinelle/meson.build
-index ea054c924f..03ce52d752 100644
+index 03ce52d752..4f07824402 100644
 --- a/contrib/coccinelle/meson.build
 +++ b/contrib/coccinelle/meson.build
-@@ -55,18 +55,18 @@ concatenated_rules = custom_target(
-   capture: true,
- )
+@@ -8,21 +8,6 @@ if not spatch.found()
+   subdir_done()
+ endif
  
--sources = [ ]
-+coccinelle_sources = []
- foreach source : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.c', third_party_sources, check: true).stdout().split()
--  sources += source
-+  coccinelle_sources += source
+-third_party_sources = [
+-  ':!contrib',
+-  ':!compat/inet_ntop.c',
+-  ':!compat/inet_pton.c',
+-  ':!compat/nedmalloc',
+-  ':!compat/obstack.*',
+-  ':!compat/poll',
+-  ':!compat/regex',
+-  ':!sha1collisiondetection',
+-  ':!sha1dc',
+-  ':!t/unit-tests/clar',
+-  ':!t/unit-tests/clar',
+-  ':!t/t[0-9][0-9][0-9][0-9]*',
+-]
+-
+ rules = [
+   'array.cocci',
+   'commit.cocci',
+@@ -61,7 +46,7 @@ foreach source : run_command(git, '-C', meson.project_source_root(), 'ls-files',
  endforeach
  
--headers = [ ]
-+coccinelle_headers = []
- foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
--  headers += meson.project_source_root() / header
-+  coccinelle_headers += meson.project_source_root() / header
+ coccinelle_headers = []
+-foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
++foreach header : headers_to_check
+   coccinelle_headers += meson.project_source_root() / header
  endforeach
  
- patches = [ ]
--foreach source : sources
-+foreach source : coccinelle_sources
-   patches += custom_target(
-     command: [
-       spatch,
-@@ -78,7 +78,7 @@ foreach source : sources
-     input: meson.project_source_root() / source,
-     output: source.underscorify() + '.patch',
-     capture: true,
--    depend_files: headers,
-+    depend_files: coccinelle_headers,
-   )
- endforeach
+diff --git a/meson.build b/meson.build
+index e98cfa4909..66ee6fb096 100644
+--- a/meson.build
++++ b/meson.build
+@@ -633,6 +633,28 @@ builtin_sources = [
+   'builtin/write-tree.c',
+ ]
  
++third_party_sources = [
++  ':!contrib',
++  ':!compat/inet_ntop.c',
++  ':!compat/inet_pton.c',
++  ':!compat/nedmalloc',
++  ':!compat/obstack.*',
++  ':!compat/poll',
++  ':!compat/regex',
++  ':!sha1collisiondetection',
++  ':!sha1dc',
++  ':!t/unit-tests/clar',
++  ':!t/unit-tests/clar',
++  ':!t/t[0-9][0-9][0-9][0-9]*',
++]
++
++if git.found()
++  headers_to_check = []
++  foreach header : run_command(git, '-C', meson.project_source_root(), 'ls-files', '--deduplicate', '*.h', third_party_sources, check: true).stdout().split()
++    headers_to_check += header
++  endforeach
++endif
++
+ if not get_option('breaking_changes')
+   builtin_sources += 'builtin/pack-redundant.c'
+ endif
 
 -- 
 2.48.1
