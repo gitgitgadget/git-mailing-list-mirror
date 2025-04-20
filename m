@@ -1,84 +1,87 @@
 Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C9B64A11
-	for <git@vger.kernel.org>; Sun, 20 Apr 2025 21:05:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132C7524C
+	for <git@vger.kernel.org>; Sun, 20 Apr 2025 21:12:37 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745183145; cv=none; b=r+keDeICNkTvFSa52+uEFPPczo1hCyPnc6MIwwJqKjdcYouZI132dD/khCCyMG3wUY7KyoRHosXh5I8XgqGd/iPO/OIhTn2hHGYHQzfGNkYlcxM7bLwWN+B/TyUVpOSlVcteMnBVCd+wtsFdAaMMgD1/np9qQ6ZnTrZJAQ4CqoQ=
+	t=1745183560; cv=none; b=erQqxWVft+pd5x2E+ooCakXcMEI2YVGBOtXc8dmvDVX2yRvUUEV821nFwTO/KJ08q9JZ7xHJx46FIpxVS/08Nrsmy8m1Y70up48JLwZpjYBZxY4mF5+dr4o+vFPswYnCuAaEtrR38L7D9GYnyN4uEpcOWl3DkfI9ZFzn2zxPWXc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745183145; c=relaxed/simple;
-	bh=UH7iDeRLvK4tb4hCQAscemmdOF3Wr8QHWHG3Lb0ZBXw=;
+	s=arc-20240116; t=1745183560; c=relaxed/simple;
+	bh=SqX3qGp0uylfQCGW29ec5CVxhOTyhmOE7bQWMe1C4lA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PWITxvGKrqfpGCFZO5ZspUlzPPhmJFFdz96XlUaYu+c+lAJeIR5cXkTyVT8/KJxugiyk1yVfj6EdAImb9kmzzHW6TwAGaG9dgWXh/qq5QYRiRNO/wjmjxkkvZXLIb7Y3lof0bGzOvBjOKqoQP80JIXsYfUZMFjA9OBXEd6hUpDA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UP4vfRCT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VgZ/VXL6; arc=none smtp.client-ip=202.12.124.153
+	 MIME-Version:Content-Type; b=cZQuTBikiyTbX6RhWFHSDCFVnyAmUXNrlCW7ISZWYfCSV41yfziAf8WPW6jZ/1kzkXL4EXDhvhA/6eIZT4hhh6JU1OWCLQQR5KUSYHI+TvmoablGcUWFxyw4x+KqVz+hkkcYuqVY2R/knfa43LHbPUKJpDKUmShA2SEI0dmqyB8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Nx0Qm1fx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ck6xjwK+; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UP4vfRCT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VgZ/VXL6"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3FF8125401F0;
-	Sun, 20 Apr 2025 17:05:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Nx0Qm1fx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ck6xjwK+"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B28052540158;
+	Sun, 20 Apr 2025 17:12:36 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Sun, 20 Apr 2025 17:05:40 -0400
+  by phl-compute-08.internal (MEProxy); Sun, 20 Apr 2025 17:12:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745183140; x=1745269540; bh=3PtQ9BDRwR
-	z9eRO/IVQsyBSflNggdbQJKccWUfjmqjk=; b=UP4vfRCTB/+3z8cTj+EEaLP3r4
-	Fdb9LkY0YuHnojS9uz7ukV9wmLQAUGuKx9psFMCsHNq+HPE3kTOSyTfOI3DeWgVU
-	hIbfB8CYRJoRiOxn8R4ZB/SBpqvIYwX4PEEiQG2pyOAQFXD6ay6y10bMjJlY3FF1
-	8FdlelCkCRY9ygJI5DZ2fZPmB3roYdRi6vu9wd0vqmW0EN/A+sb8dyiQUk/tdZba
-	d6+ruJ5kRIpblfcJASSn/Zak5UCm4zKEH7jNikXhtDM6qmDdw2yibbwdIgYsKYmD
-	51bQwgp8NAtAsIsFoRjaZTfCHK27UnKQ9IY0ThQIlU021w2pVdc1laHwbrlg==
+	:subject:to:to; s=fm1; t=1745183556; x=1745269956; bh=XjrB7krSWP
+	bjwnoJ84mygxZ168w8FqMQFvffhjrR88E=; b=Nx0Qm1fx0uHtyoWxKMRfRF5VPI
+	AfhOAbJdRhpArsccjuzLu5etM4OUKdXQYEEa/egbrv298kD0Lq5YY0G9t3U4y2so
+	AdhmPdXdB0n1yXSzOveSCwJciAGb4+DHmmcbpTRmGGvnLFIpie9bHIgFD31yPRU7
+	8MHiE+hr/y81mWuSkdP7CSdJwGQyV9R3yhD0hCpuVyBlKqxltvBwdfUUXZO0XviH
+	f3daWMPrqfg9D98SEkX/PI+dFTznVMnHIudq6PvwVJrUshzL/aZYichJEqUEpccv
+	XvfQQmLYZEw69DBxO/yA+E4573taDM7/5mPiwyt4bR1CJ3b8kU425yuVkVqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745183140; x=1745269540; bh=3PtQ9BDRwRz9eRO/IVQsyBSflNggdbQJKcc
-	WUfjmqjk=; b=VgZ/VXL6u9Vgp2gZN4UcJV2YlylKZF42vxqZz2EId6ZEgDXdwde
-	EHpVkgawLLQrEHNARVHU16sKRIxTMHAcuTf5BLqOoDJnZnnnOJpZXuRzJwbJ3+oW
-	Rbh+mWHXnc3DvODGfjsXNrXaZnefLFg4xjZ9VZy0zLgHKeM4n+3rOtUYMVVkdITL
-	8CQGuCRZysqafnO+sjvEu2K40AEiSvP0BJjz3dTq4QrpqDMgiwD48NC2S0LuvNiZ
-	NZRIeOxL/ZmQsX2CEUY6rc4ifqUJEb263x0uxt9sMY+Vri/YQEmlfENF+1GYqNJE
-	ZD70o40GnP2HMvYU9dnWv/b17QbQQ6Rx6Ng==
-X-ME-Sender: <xms:o2EFaFYUvRqbYaV2Bm9K7432fIQJjR7u0FV8gfckmzxBeZ3-093M0w>
-    <xme:o2EFaMYIBd5KwMpeTAPGZopRZ9i-jCf_yU08IO36Ed7vw0eT2pAVHjT87bC39S4wL
-    ReCC_Q7_oBbpvJFzw>
-X-ME-Received: <xmr:o2EFaH_47s-RCnqoPHQNvvReIea3pkt_RLXVJnREiUv1q00t_m2l4lOaGZ4qvCKhlckVXq6N2Bd_pyz-HU1BNWhiS70BodCAwwpG>
+	1745183556; x=1745269956; bh=XjrB7krSWPbjwnoJ84mygxZ168w8FqMQFvf
+	fhjrR88E=; b=ck6xjwK+85nAN2IPA2+adpn4yWSfpirXzuphG4mxozrgO7Pp4aM
+	hrWzjWsFvt4fYBomxwHcc5klbzjP6UY/QvAKLAOVqXhG9zun9AMQNaiq7idAt8gv
+	0g+SKTqrz0C6gRkbC1RBB72nNmG8krNS52KH2S1ZECqRMcsVPHANSHm/s5N6E/Dp
+	oE5Xe25Kut70dhlKd06WwuduBJ6g7Ut6lUygtJ29SsLxyJz+qEEsABZzvTzWWs7h
+	Ttu24oNerKY1qvjb4oOd2IsfPsQ1vz0+Zsrf7UWfbPXdgwXRYvdIMOtI3O+kMitR
+	Ug+KFiHlPRI1FIA+NqoaG8yGR8Wxefc+DpQ==
+X-ME-Sender: <xms:RGMFaOMwZev8A6mbTyjnge9m7lWFKBM8Fy-s7p5FQCXJ9nufhcHr-Q>
+    <xme:RGMFaM_eO1dlr7RLqfDXdMX5m7-FjG910niH0Pf38DuY4WysVzRdtAydKfMlVYxYf
+    0nOiXZIeoFvjKMfMQ>
+X-ME-Received: <xmr:RGMFaFQw4M6dCXkexRvcyh4ROJPIPbX39zXl6IsAbX6V2h9iG47kFdQV1B_PXAPT7DDLv3JMdzWWA12n8ljfAxOWgVdCDP5nRpG8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvfeekleeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehmrghilhhinhhglhhishhtshesmhgrrhhkuhhsqdhrrggrsgdroh
-    hrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
-    nhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:o2EFaDpU-bfFOVxFUWRUKhpv3YOgmfPmIQJo5Lc49qrSsxIz0bxYLA>
-    <xmx:o2EFaAq9kISxqIwvEI2Op18T0wUDCaxUPoA4G6EJLcCIFoLG0mT4cw>
-    <xmx:o2EFaJQVlu0D-r287HQgnjnrYFwTVZKLQIX4js1dfS3MKA_DCz3vRw>
-    <xmx:o2EFaIq5V69EXvIgq1rT9FGv_GQOLX7bmEHtymXdFbr7YbY31cuiog>
-    <xmx:pGEFaMLrFLK2652SYL3uDpVAlQtC_lanGPWSUP2SXUf-07Td4TYen2UZ>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:RGMFaOt3MytOy_GZytvNXvcbhRr5EEvGcSAVmE_lknR99gg1mfvEdA>
+    <xmx:RGMFaGf1jjUHhjghHGhlKLZKPNHKOYTw46mKHApZ1xjhMNIyS5FfQg>
+    <xmx:RGMFaC2jM0zgbxag05yU4fcl9IUorhrYljQjL6zQyClqhsrgPVHS4A>
+    <xmx:RGMFaK95sLyMP6Z9kxsKtT4yuJoE9E4eRlZxjljRGdy0bU3_Os_ieg>
+    <xmx:RGMFaMgcTC291zHxQWxbRO49ekj9T6x4aFoxTAQWaG1Vd_PKNVKHEEFG>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 20 Apr 2025 17:05:39 -0400 (EDT)
+ 20 Apr 2025 17:12:35 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Markus Raab <mailinglists@markus-raab.org>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: unwanted interaction of git stash and cherry-pick --abort
-In-Reply-To: <95f731c2-ad2f-40cc-a7d9-85f52cc16389@markus-raab.org> (Markus
-	Raab's message of "Sun, 20 Apr 2025 15:48:24 +0200")
-References: <d8c1df4e-a4d7-4c4c-be44-b13de3d9ffea@markus-raab.org>
-	<aAT4kHFPEb5qwoMv@tapette.crustytoothpaste.net>
-	<95f731c2-ad2f-40cc-a7d9-85f52cc16389@markus-raab.org>
-Date: Sun, 20 Apr 2025 14:05:37 -0700
-Message-ID: <xmqqjz7e8rxa.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] perf: do allow `GIT_PERF_*` to be overridden again
+In-Reply-To: <20250419035407.GA93039@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 18 Apr 2025 23:54:07 -0400")
+References: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+	<20250419035407.GA93039@coredump.intra.peff.net>
+Date: Sun, 20 Apr 2025 14:12:34 -0700
+Message-ID: <xmqqfri28rlp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,92 +91,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Markus Raab <mailinglists@markus-raab.org> writes:
+Jeff King <peff@peff.net> writes:
 
-> Dear Brian,
+> On Fri, Apr 04, 2025 at 10:56:07AM +0000, Johannes Schindelin via GitGitGadget wrote:
 >
-> Thanks for the quick reply.
+>> However, in 4638e8806e3a (Makefile: use common template for
+>> GIT-BUILD-OPTIONS, 2024-12-06), a subtle change of behavior was
+>> introduced: Whereas before, a couple of build-time options (the
+>> `GIT_PERF_*` ones included) were written to `GIT-BUILD-OPTIONS` only
+>> when their values were non-empty. With this commit, they are also
+>> written when they are empty.
 >
-> Unfortunately, I forgot an essential line in my first e-mail, thus
-> I've resent my e-mail shortly later again.
->
-> To "fix" your shell script (make the files get lost), git stash pop
-> should be inserted before the last line:
->
-> ----
-> #!/bin/sh
->
-> git init-db --object-format=sha256
-> git commit --allow-empty -m +
-> oid=$(git rev-parse HEAD)
-> echo a > a
-> echo b > b
-> git add a b # some arbitrary files with content
-> git stash
-> git cherry-pick $oid
-> git stash pop
-> git cherry-pick --abort
-> ----
+> It doesn't look like Junio picked this up, so I wanted to chime in that
+> this regression bit me today, too (specifically for GIT_PERF_LARGE_REPO,
+> but also another variable which I'll detail in a moment).
 
-So, this is not limited to stash at all.
+This was lost in the cracks.  Thanks for bringing it back to our
+attention.  I think what happened was that I saw whack-a-mole aspect
+of the root cause, which makes this "the tip of the iceberg", and
+felt it was more sensible to wait before a real solution, like ...
 
-When you start "cherry-pick", which cannot complete without your
-help (most often, this happens when the cherry-picked change
-conflicts with what you have in the current commit), the command
-stops and gives control back.
+> So I think we either need to rewrite the "run" script's fallback code,
+> or teach the GIT-BUILD-OPTIONS writer to avoid mentioning unset
+> variables (which is the real source of the problem in 4638e8806e3a).
 
-At that point, it is up to you to do anything to bring your index
-into a shape that you desire the "cherry-picked" commit to have.
-You'd do so by editing working tree files (often with conflicts),
-creating new files, removing unneeded files, etc., and then updating
-your index with these changes, and then "cherry-pick --continue" to
-conclude.
+... this was raised.  And then I completely forgot about the topic,
+as nothing happened since then.
 
-Or, after mucking your working tree and index to "correct" the
-stalled "cherry-pick", you may decide that it is not a good idea to
-cherry-pick the commit after all.  You say "cherry-pick --abort" and
-you expect your index to be clean relative to HEAD, and working tree
-files also adjusted for it.  You may have edited existing working
-tree files, created new files, or removed files that you thought
-unneeded, before deciding that it is not a good idea to perform this
-cherry-pick.  And the way to ask Git to revert all of these changes
-you made to your index and your working tree file, and get you out
-of the "cherry-picking" state, is to run "cherry-pick --abort".
+> ...yes, this is definitely the tip of the iceberg. I don't mind doing
+> this patch as an incremental step forward (and because it is an
+> improvement in behavior even if 4638e8806e3a were reverted). But the
+> issue is far from solved overall.
 
-Instead of doing "git stash pop" there, you could have added
-arbitrary files with content, or edited working tree files, or
-any other changes manually, and "cherry-pick --abort" would have
-removed such changes to your index and your working tree files, just
-the same way.
+I do not mind it as an incremental band-aid.
 
-So there is nothing unexpected.
-
-There is another aspect in this story.
-
-"git stash pop" will remove the stash entry after updating your
-index and your working tree files, and unless you save them away
-elsewhere, if you make further changes to these files, there is no
-easy way to get that exact change you took out of the stash entry
-back.
-
-And this is not limited to "cherry-pick --abort".
-
-You can edit these files manually (totally outside of Git), remove
-them, or ask Git to give you a clean slate with "git reset --hard".
-
-So one lesson we can learn from this episode is
-
-    Never use "git stash pop" WHEN IT IS POSSIBLE YOU MAY LATER
-    CHANGE YOUR MIND.  "pop" applies and then drops the stash entry,
-    so what you will have in your index and working tree will become
-    the ONLY copy of the change you previously stashed.
-
-If you are in doubt, use "git stash apply" instead.  The stash entry
-will stay, so when you decide to get rid of the change you pulled
-out of the stash entry into the working tree, you can safely do so
-with "reset --hard" and nothing is lost.
-
-Of course, you need to remember at some point to drop the entry you
-no longer need with "git stash drop" if you take that approach.
-
-HTH.
+Thanks, all.
