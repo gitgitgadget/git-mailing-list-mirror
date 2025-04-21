@@ -1,146 +1,95 @@
-Received: from mail.markus-raab.org (mail.permaplant.net [95.217.75.161])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f46.google.com (mail-pj1-f46.google.com [209.85.216.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18A74A3C
-	for <git@vger.kernel.org>; Mon, 21 Apr 2025 05:38:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.217.75.161
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6861EA7D6
+	for <git@vger.kernel.org>; Mon, 21 Apr 2025 05:48:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745213900; cv=none; b=la+oX/x/Y3Lep/idA7fDv3rmzlV1W6X+tBrTLCZJdUMBc3rnpQeLwzQf+I6iXyZfeP+7sWz6TMz39NybQL24wr00t0njniWwGAhm81vEmIQfqLJ3prePxkuxzafHUx1cq6r6P3v2aSaMhnnlmiyf45nGbDu8xbiKSRHnp61YmlE=
+	t=1745214540; cv=none; b=TjQ3bpHtfYGWyNylcHG2b90n/qi6QLIb0/tzythfx1Zstq4yOOmRa4+Oq+fx8ZkY0asM4NBD9r1ZfOiTN+72DSF312h7TP7mr/mmwWPwnY7zAfJP1yceyy9rucfS0kVOaskGIJ5U/dWpcrrHSsdtRSXJ6aQA9vw2mmSUUJzSIcE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745213900; c=relaxed/simple;
-	bh=yGtNfNRVfcC+2Exve4xc2kFY8Jh8n57Oy/hDJjiwgnM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=PsPzCeMKR9T8SM64Mcq4rBixzoJObx2Kc5jmn/HPUq/HjxFqW7HvsB74jda4rwpcr27/5KKxX9+iplkkzGFswQcKyQMQTF9mu0aIJWjENXC2TnO5spn5DAJ5KCfSrtX5dIRxAo/TyWeRinwQldtNLdw0fHxM5Wo0HHiclojhmPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=markus-raab.org; spf=pass smtp.mailfrom=markus-raab.org; arc=none smtp.client-ip=95.217.75.161
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=markus-raab.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=markus-raab.org
-Received: from [192.168.1.2] (h082218105086.host.wavenet.at [82.218.105.86])
-	by mail.markus-raab.org (Postfix) with ESMTPSA id 36117CA1EA;
-	Mon, 21 Apr 2025 07:38:14 +0200 (CEST)
-Message-ID: <033e4524-d169-4003-9e2c-aa32797a67b5@markus-raab.org>
-Date: Mon, 21 Apr 2025 07:38:13 +0200
+	s=arc-20240116; t=1745214540; c=relaxed/simple;
+	bh=vjlgkoUVayj3ZD8VeorzV5jxOCFYbRTntfbTjPu3YPM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=IPUpncCihLLy55okg2s3ZyPjIM8VzwK2uC9dYV7iNADi3zuCAIvVU8X8IXnQrg2xNW7UVd8bzJdrJYjJv/fPwUDh9MwOWi209g+J4yKOlu9VNe6gMeRNiduTLeBJmOlKnLvbzoy+oRvDmEUZQCvuKmYcwnlkCO8JDmsYv7gTvgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gY++46bA; arc=none smtp.client-ip=209.85.216.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gY++46bA"
+Received: by mail-pj1-f46.google.com with SMTP id 98e67ed59e1d1-2ff6b9a7f91so426383a91.3
+        for <git@vger.kernel.org>; Sun, 20 Apr 2025 22:48:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745214538; x=1745819338; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=q5OQO60JMGT2niHTvIkWusngsNEUhEAS2IxecOiucNo=;
+        b=gY++46bAAXl6ITEXIPKwKtPsG25i5MpAiIIN3JOhWi3ivCgUFHqIRqqFUCrK3Wj/pl
+         pdbpJ32WAsYkvxM4HP9TbmcG88wBEkcws/dKjU0A+Y4mB6nszLGlp9kFnUdGfjpbWomp
+         9g2lFupv2GZWk8o70HCPKn/UBmnsFGXkENaNSAq1wnxMEq5o4H35xPzq9/9DZz7g3p6i
+         1NRQjILPA9UH49b27ekkrgmC/pFZrDVZ6cqIeOxbJHgCfBpcDzsNrF4YTHO7QjeK43SF
+         AcYtMmeL0lBmzVjvaXnJUkx2CNMiRUltJ2r2Spu5BHRmSo5q8AxyNSAoZBcRkF2AU/gz
+         4Iig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745214538; x=1745819338;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=q5OQO60JMGT2niHTvIkWusngsNEUhEAS2IxecOiucNo=;
+        b=azRZOZg+nOF/rQ2CIVYIuwOaBEgegsCn9mabcWkxwduapMrwtF7J1Falunh51o6EUY
+         f8gyH7k0uNsolQehSfKJeHMqaK+48ObLDM8o4CV7xajQ4zl2I4NQArihL16bTA6wpGdL
+         JCDBfpNh7uWzI87sj3FMfnw0+avY6sZVdWsBReVADLbmpXLJ31b4Z5UKQFdie4XKWeKc
+         0e+MA6uxU8LLwYeFduzSzbMPeumFkw/ShPWVtQR24OwZi8wKNEhMTf+00h55lF0WpAiY
+         9b+CWOSvSQN3YmoAwMM64q3zjA5d2DcgECqoWOZpJlaacmC65XjXFQN9cNOE5xp/leOu
+         +MdQ==
+X-Gm-Message-State: AOJu0YwMqGCWy2OwruPyA7r9O+E52gaCVvTz8sXhbbixTTldUpqeLXT4
+	6lhoI3jsH08Gth8U7g0E1/DAyeE42epzMXIR7YHjKga2jqH9VawPvCF2HmGg
+X-Gm-Gg: ASbGnctBvYeYq4SKEnVz86e4Cmkpp4Oakz4heOL9FNW8xOL4ZYcQHlwaIe7H2lXQbF5
+	qWHYmlLIO5zAgtM0JNXytu7DNLMETK/pjdnBx2Ic45akfpFZnPS56xnhAv80gE3SB6+927lSkcv
+	dqTvZh1Kv/VrampXs4tgpGeM0RAzCFcVywreco26kQgS6mlg4c1UdzZa1W0eWGzkmGaaQyXC2sJ
+	7+BN91EQad68hOaBtejp7Qr7dIkXcFJzgYrnhrVcA33ZeIBJKIowt3wS8k61Q209jBpLycgBcqV
+	9TwIKmn39kBr6LBKJ8xafCB27ZaH3qgq4qdw+edPRc2HC+tgHQb2lBGFcetFZ/hSjBqFhwU=
+X-Google-Smtp-Source: AGHT+IE2DNhVceFwV5fWbTm1uIpwk785zTaIZqrETccAB4yYXhh5L80Hjvu7YJxwPLaX7Oweay62rQ==
+X-Received: by 2002:a17:90b:3e85:b0:306:b6ae:4d7a with SMTP id 98e67ed59e1d1-3087bccb2c1mr5618898a91.3.1745214537805;
+        Sun, 20 Apr 2025 22:48:57 -0700 (PDT)
+Received: from localhost.localdomain ([185.153.179.23])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-3087dee8811sm5682010a91.5.2025.04.20.22.48.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 20 Apr 2025 22:48:57 -0700 (PDT)
+From: Josh Heinrichs <joshiheinrichs@gmail.com>
+To: git@vger.kernel.org
+Cc: Josh Heinrichs <joshiheinrichs@gmail.com>
+Subject: [PATCH 0/1] maintenance: fix launchctl calendar intervals
+Date: Sun, 20 Apr 2025 23:46:32 -0600
+Message-ID: <20250421054633.231069-1-joshiheinrichs@gmail.com>
+X-Mailer: git-send-email 2.47.2
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: unwanted interaction of git stash and cherry-pick --abort
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-References: <d8c1df4e-a4d7-4c4c-be44-b13de3d9ffea@markus-raab.org>
- <aAT4kHFPEb5qwoMv@tapette.crustytoothpaste.net>
- <95f731c2-ad2f-40cc-a7d9-85f52cc16389@markus-raab.org>
- <xmqqjz7e8rxa.fsf@gitster.g>
-Content-Language: en-US
-From: Markus Raab <mailinglists@markus-raab.org>
-In-Reply-To: <xmqqjz7e8rxa.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Dear maintainers,
+Hello!
 
-Am 20.04.25 um 23:05 schrieb Junio C Hamano:
-> Markus Raab <mailinglists@markus-raab.org> writes:
->> To "fix" your shell script (make the files get lost), git stash pop
->> should be inserted before the last line:
->>
->> ----
->> #!/bin/sh
->>
->> git init-db --object-format=sha256
->> git commit --allow-empty -m +
->> oid=$(git rev-parse HEAD)
->> echo a > a
->> echo b > b
->> git add a b # some arbitrary files with content
->> git stash
->> git cherry-pick $oid
->> git stash pop
->> git cherry-pick --abort
->> ----
-> 
-> So, this is not limited to stash at all.
+While working to add git maintenance support to home-manager[1] on
+macOS, I noticed that the calendar intervals are set up incorrectly for
+the launchctl scheduler. With the current settings daily jobs run on the
+first six days of the month, and weekly jobs run daily. I've confirmed
+this behaviour by manually shifting my system time around and checking
+the system logs. This seems mostly harmless, and I think git maintenance
+is somewhat niche, so I don't think we need to worry about proactively
+correcting existing launchd configurations somehow.
 
-Yes, it is just how I ran into it. It is neither limited to stash nor 
-cherry-pick --abort.
+[1] https://github.com/nix-community/home-manager 
 
-> When you start "cherry-pick", which cannot complete without your
-> help (most often, this happens when the cherry-picked change
-> conflicts with what you have in the current commit), the command
-> stops and gives control back.
+Josh Heinrichs (1):
+  maintenance: fix launchctl calendar intervals
 
-This is fine and expected.
+ builtin/gc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-> At that point, it is up to you to do anything to bring your index
-> into a shape that you desire the "cherry-picked" commit to have.
-> You'd do so by editing working tree files (often with conflicts),
-> creating new files, removing unneeded files, etc., and then updating
-> your index with these changes, and then "cherry-pick --continue" to
-> conclude.
-> 
-> Or, after mucking your working tree and index to "correct" the
-> stalled "cherry-pick", you may decide that it is not a good idea to
-> cherry-pick the commit after all.  You say "cherry-pick --abort" and
-> you expect your index to be clean relative to HEAD, and working tree
-> files also adjusted for it. 
 
-What I additionally would have hoped for (hence this bug report) was 
-some way to undo the "cherry-pick --abort". A "help for undoing" would 
-actually be helpful for many other operations, too.
-
-Actually, I later on found how to undo it, so you might also consider to 
-do nothing here.
-
-But if you want to become even more user friendly, you could also 
-consider to print a message which would help the user to recover the 
-state/files which might have been lost accidentally.
-
-E.g. "git rebase" could print which sha256 was the HEAD before rebase 
-and "cherry-pick --abort" could print how to recover the added files 
-that were reset etc.
-
-Or an alternative approach would be some "git recover-recent-files", 
-"git recover-recent-commits" etc. commands so that the user does not 
-have to fiddle manually in .git/objects. Similar to the "go back in 
-time" feature in vim (which I rarely use, though).
-
-> Instead of doing "git stash pop" there, you could have added
-> arbitrary files with content, or edited working tree files, or
-> any other changes manually, and "cherry-pick --abort" would have
-> removed such changes to your index and your working tree files, just
-> the same way.
-
-Yes, it is the same and I agree the main problem was in the front of the 
-keyboard. But things like this happen ;)
-
-> "git stash pop" will remove the stash entry after updating your
-> index and your working tree files, and unless you save them away
-> elsewhere, if you make further changes to these files, there is no
-> easy way to get that exact change you took out of the stash entry
-> back.
-
-Yes, so you could take my story as hint to improve the "undo-ability" of 
-git in such scenarios.
-
-> So one lesson we can learn from this episode is
-> 
->      Never use "git stash pop" WHEN IT IS POSSIBLE YOU MAY LATER
->      CHANGE YOUR MIND.  "pop" applies and then drops the stash entry,
->      so what you will have in your index and working tree will become
->      the ONLY copy of the change you previously stashed.
-
-Yeah, thanks to clearly state it.
-
-> Of course, you need to remember at some point to drop the entry you
-> no longer need with "git stash drop" if you take that approach.
-
-Exactly, also a failed "git stash pop" won't get removed, so there 
-easily accumulate "forgotten" things in git stashes. But much better to 
-have a bit less tidiness then lost files after "git gc". So I think the 
-behavior of "git stash pop" itself actually has good "undo-ability".
-
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
 -- 
-Best regards,
-Markus Raab
+2.47.2
+
