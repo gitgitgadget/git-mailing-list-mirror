@@ -1,67 +1,67 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CD4C1DC994
-	for <git@vger.kernel.org>; Mon, 21 Apr 2025 12:39:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32FAD265622
+	for <git@vger.kernel.org>; Mon, 21 Apr 2025 12:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745239160; cv=none; b=d562UuOuT5OF8vyjO5dOUN55od5VWumTXRO2aRJMvVP3jYz5WaBou9Q0maeX6BjpDnLZkaERlFNcj1KIBYkFK+DrES/xI62LQIeuYqSaINO+kqcjXzfQaskXvJOVO2k1PG4O77/D31XBPe8N198a8qy+SSYynhSGOuHKmr3OR3k=
+	t=1745239161; cv=none; b=ZWYS/uC0HRl99DIZBmjkVz6TMjjthSUwZapg8T9UaTMnG9foJGv2cuI8BRii3hVzwGNkpvakjrEjQ71+yStBPb0CVd+jTG63HN5hEZDcOLF1qOBN1DBvlFNaPo3JeG2P7wcI4PX1ytlfkFxoKZZdxm3ZVGiKbxewY7FJbGemmmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745239160; c=relaxed/simple;
-	bh=UNMvRrviKnl4JA+Z1N73oezsdoyKAzNauEQF9KpUpmw=;
+	s=arc-20240116; t=1745239161; c=relaxed/simple;
+	bh=Xu9RSpG1WMQaTiTFZDnF7EYfcuIZZX+l2sccObDjjho=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=LdYn2DtVKAjkd0kM+Rd6X9pb1Eb6xlO/iFheVg05bWDRIz81eAmgvTGc8P/i4WuFBO2kuiWlFmWZOGFOfUGn8YNaCU81/GvKn5NTkpPYxcIccyvJP9eHFt3dv8oggGeBFoBMOPuql+aUmoMfMKC8cjEbNxZTuIReYHzaCddG0jc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hPx1z4WA; arc=none smtp.client-ip=209.85.128.46
+	 MIME-Version:To:Cc; b=mQbj39oCBE92aB1oYmPuWfTYRfJg0yLWtLT7PmaX6AB3jQ+yz4zieLSB/KahlxNA2h+fDiK3GQRnzIExh9O3HexgBdx2YfBQzNdrbWGH9fP3RZqv9a8L7C1Ch41TiIxh+ZVNFT7nGdxe+hg52uKp5dcVXkTtSrK7i0yQ7rV0EhM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KPZT3HZO; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hPx1z4WA"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so35664075e9.1
-        for <git@vger.kernel.org>; Mon, 21 Apr 2025 05:39:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KPZT3HZO"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so42172805e9.1
+        for <git@vger.kernel.org>; Mon, 21 Apr 2025 05:39:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745239155; x=1745843955; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745239157; x=1745843957; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ALDsaaKQ+z7cPRtrQ/hykW85qBkozF9veFhA7c7NFFc=;
-        b=hPx1z4WA1CEdeb3o3AVe/dtU1t+u4NXTv4sxXDBYd0eawMfCgf8jh9AEh3tVaZAnZ3
-         nVbM3bg6aeWIgTOsqQlIxAciPMHz7kG69EmkwAzKtALRrl9D22qKUlClCqcjoiIBojWn
-         6aVyygLB4H1G0SlYCu7aesHpntF+6CFUqDMz2ZIRGOGz35lCOMnQ7QNpYHDOR+rSKb7x
-         cZ7mQpmoT006EI6v+hBMOmvedy7sFMDNlZNGx7xmIJ4yjlVc+eB2ftv4k6eYpDuk9XfH
-         PprD3nm+CmeETE8j0ChHIBCQo+057McitSQ/0Q33KPPjg2a4YbManpGh7MeKkgAMh5mf
-         j2dQ==
+        bh=2/NycDt33KhPH46BTbLRZ6lIFXXC9LkPFiqgGukX0RI=;
+        b=KPZT3HZOuDHZs+bl3/DoHihe3wau/XNYzUfPrrmh+c9bZyHipKX96Y0zIkYPJzxX1f
+         iCt+JSDzDwhDqLWamRvSo2rRZ5OMSNk9cyBaM/UovKtB0xDTf1n1zRlOmDAVjVgna15Q
+         yJuNSYA1XMx6pD3yQgcFRk37prp+PDh83zqQ2HtN8nFX9TadJpqnRVSokZ41Z4mLEdO6
+         6puADewErXB6U410tcO+DYj7rLI+IchZVjLVei2ND+GmaZaZQ2zEC4athBEzr5R14rQO
+         s4FTAqSLByaSV1uoxDyc8xS+BW9j6mJKH2/nTp1YfSo9bD/9IMuYKrscDmfzpr2a9XRt
+         cT2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745239155; x=1745843955;
+        d=1e100.net; s=20230601; t=1745239157; x=1745843957;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ALDsaaKQ+z7cPRtrQ/hykW85qBkozF9veFhA7c7NFFc=;
-        b=HmQm06nYpSEuElbDZkpbHyLHq6vHjEE6yYYZ0w4G1960rgSEKKoDExF8ze4NYjVMs/
-         9E6UBFkDFoiMk4irK3gtvkDGUh/lQjLSrHFEQz0V8QRc3Wgz2XAnNvYafIHx3+9RSo7V
-         CiqD/iTBH1kbm807YgUAwmFgbQEeVuLN5fzPdwFZTHOZMkiYQNwpnNZkjhPF56ozk4uv
-         3OjO3kM4AD83iPbS8USydvsRjesyNkLe4h92MgG5QGn3J+EqKt7zCSCxaPqyuH7aGdV6
-         eExHaauNiNOk5+lwacT236GM1Sl8V0Z2g31YhnFy4Rson4H+1nxOxDRtFIwbjn9hldEc
-         Dzww==
-X-Gm-Message-State: AOJu0YxlDLTkSqvmnzNUabRIOrld6M/Wlc9AdpKob+1Kk+Abt+RPqxBm
-	ucH1y5yqude0xQvfwJfpdSPFOxbjtYVdMkLCKca9XAU2zuj8P55btxmONw==
-X-Gm-Gg: ASbGncvQU+G3VsqsGffENc8+20SIwYTt/3eSfZZyqVYdrxmJZpIq/NuNVmXgWFoRUH/
-	9UvBqWPmqBlIofpcI8m53fsSnzw1Yb+25Yf3RBQe45SaD1hG9Mf8rc5e72Aub1RCU479IC7ACBd
-	+aAOYssn1H1cMpz50tIlq3Kr/Ywd8T19dDm0XMyIruqAK9i0k2+LYw7PAMVakk1hWYZnbeP4ZAA
-	4pekPvF2FKJUAIfCsSBWMIAFbD36eZXBLWPchrRlFnbfQrWgwPMd/37BZr9xN/YaLkFZO2zR339
-	dO5foJabjbxrLTw5o61gHNzshVlde4X090T1JaXRGg==
-X-Google-Smtp-Source: AGHT+IFN8rMz9foRQQbLp6a2lQiKl7ahFL1Sdh1KtC0LUSGE7ruByoYk8xaP8VlSNVvrJQj16cPoaA==
-X-Received: by 2002:a05:600c:1d02:b0:43d:fa59:af97 with SMTP id 5b1f17b1804b1-4406ac604c9mr96543205e9.32.1745239155332;
-        Mon, 21 Apr 2025 05:39:15 -0700 (PDT)
+        bh=2/NycDt33KhPH46BTbLRZ6lIFXXC9LkPFiqgGukX0RI=;
+        b=mBcCP/TSVJySOLfRPzVEDUkWxxn6cNVvz4VGrS03DdGIJyjo8lGJqWNtBk0Lk0wOBZ
+         3Eeyt7X9xLBCLY7IftaCRfb9AladZFVaQX5Mh+rAdqgQXFkcednInwlc4UvlU0Io772k
+         oGn4qUCMPpLsGVF+X79qOar6i8lIpOznOGqbnOMwHKYG8XOwRRxD5fbJADcmZ+R140LY
+         cgFIY3jxpRgLW7cyjkp8d+2JMecWPjhO7Y07+GvAx1j6qIQpMn+B1XTqfH7lPlKR+8Kw
+         YqzlVMJwS1BPz520qnIijErVgQ+RtGhf0awtJXUR5uWWRLzDBqnR4lxzHdWo0RfF33mp
+         LM5Q==
+X-Gm-Message-State: AOJu0Yxc60DO+BOyfASsJZYMVCEmW6h8e6oDwOiXzlgj3QJdUjcQ1uen
+	PVHrWKDyVwHkkKn5AHpiW/1s/Jq6/oZBY0YBzFSYk+IY8GnjowHqvnmQPA==
+X-Gm-Gg: ASbGncvYy+9x+wGr5PPRQgIiHpElQrWjZ9YKPU5nhw9I9kDVExUxm7Q49oAVZ+hPJ8B
+	y2vN69aRC3dFvrimg9m8Eh52Dzongj1jgA2GoweStZIv4QA7vG2GIhRSvwGzgl+Ize7B2uv8XPs
+	vBK7aQehUzmoB/aRYur2EX/ANnZL5Ih3BvfROHRuA91xD3z0AaXrg8+oYcwUoA0W0uOKT9rN/VJ
+	a2Mex2NTjReCS/B2SHgqwIOB0xqOmiLVOneVGf8lTzFiNbN46SFaT1/FJpSoDI98vscFQusqtS+
+	jwXDQc3t1AX5dG2+0eZ7UX6id7gna2my4piLZrJ+Cg==
+X-Google-Smtp-Source: AGHT+IHcHd+a8bV4gmGaRRWa9fA9CKiaC/Zmi5rNdIakAhYt1RKwsOe4XB2PgsjHMiCp6BZyWLHhOQ==
+X-Received: by 2002:a05:600c:1d06:b0:43d:98e7:38dc with SMTP id 5b1f17b1804b1-4406ab65fe7mr84066425e9.5.1745239157048;
+        Mon, 21 Apr 2025 05:39:17 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa4a4c37sm12025707f8f.98.2025.04.21.05.39.14
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d6db1b3sm134528085e9.29.2025.04.21.05.39.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Apr 2025 05:39:14 -0700 (PDT)
-Message-Id: <c89ead8eaba7f824d6a4828964f8384f60b17101.1745239150.git.gitgitgadget@gmail.com>
+        Mon, 21 Apr 2025 05:39:16 -0700 (PDT)
+Message-Id: <6ebc3ef57fd0455fc70c4a8531c7ed094d9cdaff.1745239150.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1904.git.1745239150.gitgitgadget@gmail.com>
 References: <pull.1904.git.1745239150.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 21 Apr 2025 12:39:08 +0000
-Subject: [PATCH 4/6] msvc: do handle builds on Windows/ARM64
+Date: Mon, 21 Apr 2025 12:39:10 +0000
+Subject: [PATCH 6/6] max_tree_depth: lower it for clangarm64 on Windows
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,36 +77,53 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Git for Windows/ARM64 settled on using `clang` to compile `git.exe`, and
-hence needs to run in a system where `MSYSTEM` is set to `CLANGARM64`
-and the prefix to use is `/clangarm64`.
+Just as in b64d78ad02ca (max_tree_depth: lower it for MSVC to avoid
+stack overflows, 2023-11-01), I encountered the same problem with the
+clang builds on Windows/ARM64.
 
-We already did that in the `MINGW` arm, i.e. for regular Git for Windows
-builds using MINGW GCC (or `clang`'s shim pretending to be GCC), now it
-is time to do the same in the MS Visual C part.
+The symptom is an exit code 127 when t6700 tries to verify that `git
+archive big` fails.
+
+This exit code is reserved on Unix/Linux to mean "command not found".
+Unfortunately in this case, it is the fall-back chosen by
+Cygwin's `pinfo::status_exit()` method when encountering
+the NSTATUS `STATUS_STACK_OVERFLOW`, see
+https://github.com/cygwin/cygwin/blob/cygwin-3.6.1/winsup/cygwin/pinfo.cc#L171
+
+I verified manually that the stack overflow always happens somewhere
+around tree depth 1403, therefore 1280 should be a safe bound in these
+instances.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ environment.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-diff --git a/config.mak.uname b/config.mak.uname
-index 6222d2c5a48..bd94f458088 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -432,7 +432,11 @@ ifeq ($(uname_S),Windows)
-         ifeq (MINGW32,$(MSYSTEM))
- 		prefix = /mingw32
-         else
--		prefix = /mingw64
-+		ifeq (CLANGARM64,$(MSYSTEM))
-+			prefix = /clangarm64
-+		else
-+			prefix = /mingw64
-+		endif
-         endif
- 	# Prepend MSVC 64-bit tool-chain to PATH.
- 	#
+diff --git a/environment.c b/environment.c
+index 9e4c7781be0..cc853950bb2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -82,9 +82,21 @@ int max_allowed_tree_depth =
+ 	 * the stack overflow can occur.
+ 	 */
+ 	512;
++#else
++#if defined(GIT_WINDOWS_NATIVE) && defined(__clang__) && defined(__aarch64__)
++	/*
++	 * Similar to Visual C, it seems that on Windows/ARM64 the clang-based
++	 * builds have a smaller stack space available. When running out of
++	 * that stack space, a `STATUS_STACK_OVERFLOW` is produced. When the
++	 * Git command was run from an MSYS2 Bash, this unfortunately results
++	 * in an exit code 127. Let's prevent that by lowering the maximal
++	 * tree depth; This value seems to be low enough.
++	 */
++	1280;
+ #else
+ 	2048;
+ #endif
++#endif
+ 
+ #ifndef PROTECT_HFS_DEFAULT
+ #define PROTECT_HFS_DEFAULT 0
 -- 
 gitgitgadget
-
