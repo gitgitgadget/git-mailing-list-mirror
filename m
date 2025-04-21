@@ -1,106 +1,123 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EB9A263F3A
-	for <git@vger.kernel.org>; Mon, 21 Apr 2025 12:41:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931B71A83F9
+	for <git@vger.kernel.org>; Mon, 21 Apr 2025 13:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745239305; cv=none; b=OJNn3mGGWzE1SLR4X1sWf7MFtorWwWxMZUnFBYvmWD1q2S8jNZLcMfYc3R1/RL9+W4eeVS4OssZmEt71qbfEitWs1b+DmxzS5j/ni5rvlBRT5Me4dwi4eitXny/qpZrTFaSQzIJa/mPBfwnJOZUX/nD+SdymuMILpafdo5Vi3nM=
+	t=1745242563; cv=none; b=Cc+6BOjWy9VbmeacQP/OomuexD2AywN62KP1VE5iRju7UUO6N6stYGKiY5tucx8SvB7dRvkaPENRonYmvTDQazePlPHEmuPDoBJKV2Tc3xcUgvwY3oCIDVOMkd6aGYZZ4/jSU/GDa7Z1AaUTIe/mHWXzryv7rmtIvO/yk49Dtko=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745239305; c=relaxed/simple;
-	bh=EfkkKWGbKsrMChDYtVIMnIyRwSsGqspU3wNts3ZPehY=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=jUO90Z4I46GSxVqDNp7HcN3PlzRQyntVDCxeF6HKo/E7wg/W1jkETJ8fUDww635X7pEmWOVl+NKMGT7xhMueSitovNENGLdORie/unahQacNRocfBiAeNVjVO+17lGlZzFHkh97CKPZircBJk5mYjPUOVSSXMfnJnGxmIU7xZtk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LUIxTcPc; arc=none smtp.client-ip=209.85.128.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745242563; c=relaxed/simple;
+	bh=we58/E6Hcgy42Fh9yGg8jJv1j/7si+1EMfiaBMAE9ig=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qPQsgHAmjmwguJxgAflLGwvyoXAKsujaf3IjHe3rqSReycVuAv5LiqB8CHB5HPQN77RKZ0JCZyIgTOFrPL9yIhLnD/POC/zYesxrvfVWnD/VEMSV3x914FbY7VW2YQLl5SWtsuWWz5OAouQxqVqlsurPTmS0jBz71vVFzS39GaQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L1aXhdq8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nFErRb5t; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LUIxTcPc"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so27159305e9.1
-        for <git@vger.kernel.org>; Mon, 21 Apr 2025 05:41:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745239302; x=1745844102; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=gc7xtrIyj7M0mkJ6eE7OY0115hOVp91VXkcyCHCNK2c=;
-        b=LUIxTcPc+GSC0MDYKzj9XPQl0qtIaB5eIL0GY3NRviU2o4tb++mRd6s+cZCzaWD7TK
-         KelvPRTkHBPQG9ccT/qI6B/DyZuv843D1Y9PVDZ54gtu3ZeEaiVIOvRYCkKI4fWp8dYl
-         r3Tpsf59xiGqMpUcdc6MksW9QdXfckSc4+PKHHEtTzgBZqvnriwcYsh+HTp2IndNFCL5
-         gNbGiPws3805bw2ANjkRmMoYh+1SaPof9b3fKFVDfilvXAFK7IoQWpTgki87dY2+04aY
-         AfP/pnC15bm5qtLieQQiguGM2pfTYnsVjQC3eI7FB4g2oW7UUon5OPEWL46UOLFcqsdP
-         GwgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745239302; x=1745844102;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gc7xtrIyj7M0mkJ6eE7OY0115hOVp91VXkcyCHCNK2c=;
-        b=MKSeZbH51IUhqvLUiVslssyGZiHdcMxThgbLD8GNYl+WEwWAqcIykkqD0bXlf/eYoD
-         7a8xIuQEO2Z+3hPmIzFrxmPtLE2mglMHXJjFr5nsD9FRPYBRbzPOKT98BZOWaiqvVCKL
-         iPB8nFgw5HGxBZZMYkcb1aV+IHqVpxd0za2aHecwmNYTfB6EfMsB0W2G5z5cfBk7hABs
-         EPYTrxewkZi3YhmJ5YhwDplhtgQFviNinjq1+94Ir286ciHOE1UXxWjMTNJZXOpOEjX/
-         uGZd4kRiIsdaV0dtuKS6d/d16t0tq6rzdsRosrweUcxbuKQ/DxSjbG389yAvSye2Ol+V
-         wmeA==
-X-Gm-Message-State: AOJu0YzK/6WHCI+AFV8LV4v9dI+wtr2acHr7BUkmdlTavsTbNuc+olHj
-	w69d17iXGVQDVyjWqIoIRKnFsi5gzAfPGqYSutwa4QaHECaS1dORFyUiJg==
-X-Gm-Gg: ASbGnct6A9GjHTj4E3b9lxtd848FKx2ZPXugibIbB5Ggti/j0HEQFwxwU4+tTlkXiO/
-	cjYrmbyuNmj8Mmbl33Hg2ogfru1sncOYvO8JO1eYu8lwRq/qvm80T/MX5dN0secyBMZXoT5m6LR
-	Ux6DfMxeYEU4g6oFOMe5y6F/oBtVVxFxoYxwwAkoDZ0CbqIY7yge5FTh38edVllJRmsmesQ7S/I
-	krc4M8+wuvJHIxsO+zMSye0d8CKTiBshZw8MIVxb+63AtGVkVFbwrrQVbYRMpTBfjwQaW3kCAdC
-	+uKfSxCB5Nj2LMSIB3CBSLYHy1B/zKnSe5NLQ4R5AA==
-X-Google-Smtp-Source: AGHT+IFmd8mBAGO2F16cpO0htNlvwFU2K6Eultea/NlJwxUKZx8tgiEapItJGqgq9iTmhhjVvMKMtw==
-X-Received: by 2002:a05:600c:4e52:b0:439:4b23:9e8e with SMTP id 5b1f17b1804b1-4406b1f1cbamr103074105e9.3.1745239301615;
-        Mon, 21 Apr 2025 05:41:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4406d5bbcb6sm131685705e9.18.2025.04.21.05.41.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 21 Apr 2025 05:41:41 -0700 (PDT)
-Message-Id: <pull.1948.git.git.1745239300668.gitgitgadget@gmail.com>
-From: "oneee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 21 Apr 2025 12:41:40 +0000
-Subject: [PATCH] doc: sparse-checkout: Fix list markers
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L1aXhdq8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nFErRb5t"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 65AAF1140216;
+	Mon, 21 Apr 2025 09:35:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 21 Apr 2025 09:35:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745242559; x=1745328959; bh=y0d/3kzzAH
+	KulLEJ42m4UEeQIoO/k/F1nCiV/j+GyZU=; b=L1aXhdq88tjxfPbveCozlbSpwu
+	aVd9ozBl/hR8T/kKJPtQo1hRTgTVpewJCqwZ6f1HEO0sXT++S0nPNkWR5fu3DylN
+	t3cY369+aSbzU0LLDePVOv2NZWlNsVok7r/AwWAVGh212pM3YROlaufSsaCiCAfB
+	or+8UQQOWIfCCTr8j1V0jaF2U6O1JYzouYZS+sFPNOG2gOGqEHciGjN5QxwWfI3E
+	W3IF78ZXeurQu8i4EvmjXeJi7oWHyx/hlask51qdHtL7l6kBVbyvVGeV1UoY5fFf
+	Q7n5e9yeTMAWm05QxLBQlYHG0RmTeTTbI3qGetSndiEEb6n5XSJQoaaB62Jw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745242559; x=1745328959; bh=y0d/3kzzAHKulLEJ42m4UEeQIoO/k/F1nCi
+	V/j+GyZU=; b=nFErRb5tt4qGq0LLNhKrGaw0Pj42J0UXn4IHhCfzO30lY1yeyNy
+	bZxxW737f7qpv3fTsnWaTLm7HY4oR0BQZwJiVttfASwURN5M6zC06XE0+pMciwGb
+	FoqHPFxCCJoGAbEldDq9xdv4iDkATJdtHKqYZsxEnMLiaLVuf6drF7hI1x991wYT
+	q+KGcdNlTNw+wYSO4AQVDqnkUvQ3kb7MWA65cH/Wv38sKKVfvtkVmRJZkjapnXrD
+	XMRffV/DHbWqOrMTUBviYtYZBSHXT2OfDqwQLBRZ9s7XqlEzvLDYPE8s9uSySuPG
+	Jw+JOdVjm/rYc8bYGlrezrshGj35Z6bxctg==
+X-ME-Sender: <xms:v0kGaILpjKyGT92jbWJn1dFhO6wU7aFZfRpjN1kLThk_XJIDlVKuag>
+    <xme:v0kGaIJUmFnS1pJWFiFCNVAks9ETmMHmYnMoPsatIgRyn6XFh4HPUVyz0ePFttkMc
+    gxLk6DkxKzIucxwUw>
+X-ME-Received: <xmr:v0kGaIsfAZ0ppu4la-IDMDW3-liv38yt4xz64EGQApsfgcuXaWdKRCT8k_h3dfoMfJ4lyhmulWW4y5DEtS70FSD9SXMWRklvFsFY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedtleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdffhfevleeufedtheelgfejfeegudek
+    ueeiveevteevffdvudfhudekhfeifeeknecuffhomhgrihhnpehgihhthhhusgdrsghloh
+    hgpdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
+    mhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtth
+    hopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgv
+    thesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrd
+    horhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidr
+    uggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:v0kGaFa82L5V7l8dp9b4e-YrcSfekfSXCSAewMEcNiUo-8UjO8yjlg>
+    <xmx:v0kGaPY4CWsSfGsZP5qW_rp4TywzoklZlEJlSabCrsYpixHWi2WYIA>
+    <xmx:v0kGaBDhyDOZvn-bHwAh6k31lyOROi05oblcEQQHAs-XdM2-B2vw1g>
+    <xmx:v0kGaFbFGVSrXUnarOtRQtSrUJVQ_Qvq519P2zBqwP5eTOp3wxHEeQ>
+    <xmx:v0kGaDG1jtSjJp2LQKukWsex1ZRyYE-lMZ0LOuh_vMDOe_8US7KRk1jw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 21 Apr 2025 09:35:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 0/6] Support Windows/ARM64
+In-Reply-To: <pull.1904.git.1745239150.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Mon, 21 Apr 2025 12:39:04
+	+0000")
+References: <pull.1904.git.1745239150.gitgitgadget@gmail.com>
+Date: Mon, 21 Apr 2025 06:35:57 -0700
+Message-ID: <xmqqcyd57i2q.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: oneee <kimww0306@gmail.com>,
-    onee-only <kimww0306@gmail.com>
+Content-Type: text/plain
 
-From: onee-only <kimww0306@gmail.com>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Changed the list markers from a mix of "(1)" and "(b)" to a
-consistent numeric format "(1)", "(2)" for clarity and consistency.
+> Git for Windows has started building artifacts for Windows/ARM64 since
+> v2.47.1 (November 25th 2024). Now that Windows/ARM64 GitHub Action runners
+> are available in public preview
+> [https://github.blog/changelog/2025-04-14-windows-arm64-hosted-runners-now-available-in-public-preview/]
+> at long last, it is high time to upstream the minimal set of patches to
+> build Git on Windows/ARM64 and pass the test suite.
+>
+> Dennis Ameling (2):
+>   bswap.h: add support for built-in bswap functions
+>   config.mak.uname: add support for clangarm64
+>
+> Johannes Schindelin (4):
+>   mingw: do not use nedmalloc on Windows/ARM64
+>   msvc: do handle builds on Windows/ARM64
+>   mingw(arm64): do move the `/etc/git*` location
+>   max_tree_depth: lower it for clangarm64 on Windows
+>
+>  compat/bswap.h   | 14 +++++++++++++-
+>  config.mak.uname | 18 ++++++++++++++----
+>  environment.c    | 12 ++++++++++++
+>  3 files changed, 39 insertions(+), 5 deletions(-)
+>
+>
+> base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1904%2Fdscho%2Fsupport-clangarm64-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1904/dscho/support-clangarm64-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1904
 
-Signed-off-by: onee-only <kimww0306@gmail.com>
----
-    doc: sparse-checkout: Fix list markers
+Will queue.  Thanks for a cleanly structured series.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1948%2Fonee-only%2Ffix-sparse-checkout-doc-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1948/onee-only/fix-sparse-checkout-doc-v1
-Pull-Request: https://github.com/git/git/pull/1948
-
- Documentation/technical/sparse-checkout.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/technical/sparse-checkout.adoc b/Documentation/technical/sparse-checkout.adoc
-index dc2e763bbec..8202172b70b 100644
---- a/Documentation/technical/sparse-checkout.adoc
-+++ b/Documentation/technical/sparse-checkout.adoc
-@@ -66,7 +66,7 @@ sparsity patterns: patterns from $GIT_DIR/info/sparse-checkout used to
- 	reasons: (1) users in cone mode specify directories rather than
- 	patterns (their directories are transformed into patterns, but
- 	users may think you are talking about non-cone mode if you use the
--	word "patterns"), and (b) the sparse specification might
-+	word "patterns"), and (2) the sparse specification might
- 	transiently differ in the working tree or index from the sparsity
- 	patterns (see "Sparse specification vs. sparsity patterns").
- 
-
-base-commit: 4bbb303af69990ccd05fe3a2eb58a1ce036f8220
--- 
-gitgitgadget
