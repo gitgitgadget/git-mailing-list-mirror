@@ -1,89 +1,92 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D8F1494A8
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 15:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F67714883F
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 15:49:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745336228; cv=none; b=XZcpHeQtCekYNUs/5nUyIJwVP71D1ImtJEH0zdRqzmyLhJdflc1YLi34WYqpszXJni0fQxQ2IITn1vkrDlo9XGG2mvi2LZaz1unTTfMafcqLgkmwbc3p41Nr9xq09OJsv9K1NOXE+J+ISSrAJqEM9pbytiX+bAljOw0xExyKszA=
+	t=1745336990; cv=none; b=EJwRDVCNRO5OuYuVZ7glrl9uR/dK1ckyvi/a/6cJDsGMeEV/EVV/Ehu6hP6jCjvCPSFpEP9LrJ6Tg6eZO9CAE/dBoJguwROVMQj5lhrsFNphzk7ysXjDNac2g+1TKLdWtAk0WlYathBvu0jlTi+vhmxqnfBOA0Q74DOhRfv9coo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745336228; c=relaxed/simple;
-	bh=vhHjKqQ9Dey+2N/uzC2hl24TdjLTBAMvQqe/rT8dvs4=;
+	s=arc-20240116; t=1745336990; c=relaxed/simple;
+	bh=fqbbUHEC7OqrED/NGRZAzc4OvsWrxwrDPUw2LdvKlSc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=CEdrh0d7QUXvN4mtz/kTnVv9rf6/DOTQ47ATxASYhbcdcARbOn2j5U2++5w/mBebg4g5uAuwZ3vnq87DBdjiJphilXKqBhP/uLOsNOKqzqXe5uS6tOR3N8J91nS6Px5XRZsmPoutei8LJ6bnOD7jicwjzLNjfZuEj1PDujAkMfs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W5z/Dcue; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PIZozH71; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=MCzHQsGQE4SJTEU/mLEGFtQ67HMWFynQKSaR3t7nwGfQjQGtKx3ipuY/6dF6KV9bBALaRyG3YJ/9rvx5wnHRCtf55mLoZxffIGGOFB0bpUn31POftm+XpkWHkF4lJEZSM8IXpSpC3zPPvNKUp4vw1xhzq7luiiPXd7cBNHzIga8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Oc+xbuKn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eDC8FJJu; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W5z/Dcue";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PIZozH71"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oc+xbuKn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eDC8FJJu"
 Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A2E471140247;
-	Tue, 22 Apr 2025 11:37:04 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id 1E8431380220;
+	Tue, 22 Apr 2025 11:49:47 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 11:37:04 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 11:49:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745336224; x=1745422624; bh=Kb7+zfommL
-	sifzh4HuSAAgHoGfFJH3v2CAb8mdEwgKw=; b=W5z/DcueLHRIlOmASS1snv0BWu
-	GFiPKgzvJ70bAEzjICfQlW/4yH5yAjiJlAwxVQaRSsOzNp55UuOm5cIuyCXZHwDS
-	YIMghWOedXwdhu4ooUZahFebgV89OJPjkfAdqxJOdc6LN9esq7fFeV+CnegokW7Q
-	2uwmIsOmjasknYhDsvD/Zk58KEgYss5nXt/sA+9iy+R4vldLByiBOESHgKpImuV5
-	SzHzBomDOXxX2W91Y+gPGkRWZ2bF0nOiKGS00HESz/fzWt0H9emjUiJPIe0iaSKx
-	Q+vGtqLgRMCbaZk220OcmnZX9/m4ww+Hm3vTDxwKF3REG2nYybiblRnkpLaQ==
+	:subject:to:to; s=fm1; t=1745336987; x=1745423387; bh=4aAlCpXG8c
+	G8m7D2LFgJH9RUErmlxxQOmsQW6OHNL9g=; b=Oc+xbuKn5cJ/Ho8MucTEalJPpp
+	albWm/iHnygau6IOvjH2dT4i20ugghJ8i/Mj0dhsFLGIH9iJfweRJ7+3FN96s/sE
+	M1VfCKzsPzaM1JfcVrKd4kNGEqbY25oiEJpeiA0zEumCqsMH6QH2GP5qT1RjYO/k
+	aLcAAed6jSHn026X04ITgyn8QB9tnnGx5VyhFnsMPdZUahZxY/MMLmuUfYy2x8Nx
+	zFT3VeL/BIQGmOI7XdYmnyYLbCdzp/wtr+KaKYQRKZwKkxnQFTOkZ1lIGYGcjznX
+	QTFAJWZiRRqGXn4g3OZdib2PaklzyEw3YIImUIBeIqLu8rQnB3VluOyKRJDA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745336224; x=1745422624; bh=Kb7+zfommLsifzh4HuSAAgHoGfFJH3v2CAb
-	8mdEwgKw=; b=PIZozH71V6GVPp6BjAkGnH/R23hH3Hea3ZPsiAXOf1HUzwBPaIt
-	TkJiga9XUkqRQP3dE1LOVTcUhPI1Y1Xpo9qOydZSPxMNKYThMJDyMGKlt6v4IbmZ
-	BrCwEqJtPkjNj0cpyDz8BLn2BKcWGee78K7vulpzBr6cmD6wyRSHLhyPb/VpWJwt
-	BtyCaRqWwCv2zoAAPbC1L6t8NLCsjOqjkqhibsbjZkq7PSRmM2DHARM0hFjhhZYk
-	eIm+HLEeT1/yb96HGVBqq63Z18Oy/orF+rbZF3JO0zSDY2nvoaICZtBtXlQgJlXV
-	2gYdco5rkEzN2oyWCm7ilnSZ1d/ORqdvSNA==
-X-ME-Sender: <xms:oLcHaH8CwOZA44y1_F-VlLAzqNT4phZ-42VHx6zdSuyeI4JpVd0p8A>
-    <xme:oLcHaDtGCXnKomR8nuXlj576ZBkrbBS1oYIT9WZtsfrMI4cRi_t31eJBE9UcKcqMH
-    HGK30pRSMH0Fn-25A>
-X-ME-Received: <xmr:oLcHaFBB0L2xNbrhVT9hl6meNB7g5gR7tLd8SUxoE73Oc7gm2qCt-jOP_jrtNtnwvPF8YyaRqX91npAsNFgo_c9N4pUSkbeGj_NO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeguddtucetufdoteggodetrf
+	1745336987; x=1745423387; bh=4aAlCpXG8cG8m7D2LFgJH9RUErmlxxQOmsQ
+	W6OHNL9g=; b=eDC8FJJuCjlGcWIEYvkeiJk3qzWtQE4Oy1Wrgm8NzNeGlvPUQLT
+	lYVd9hJBt8klrB4HutDNvYPYAEhONzBUQmHHFhlobyaVYWMCYHM8kJHAAESmmFRe
+	JfcFtHh4jeXu8AufstRJs4mVgeYtYA63bwarKD8dtoYUWd7DAOZljENLyuqyiAEl
+	udIEbLwMpUOJ+IKM/DKHbM4Wa81jciLKzuxiLjhVyTm1fJMvJjs/dIUaKdP2Xb9+
+	ouyBlhlnLrLcUMCG/K248HwJYBZymNSJJcIzSM48/XW6wkT7ZZJ0vCv1lvLoPib8
+	PTGOEMzddc7zB1JPKAjQZ7EOcA4IEXVOtew==
+X-ME-Sender: <xms:mroHaOO7kExJTuY5FRgRlcPE1ql8x0O24Aml-SGvy7_S6vTHVLZNIw>
+    <xme:mroHaM8NqPkQbFx2scQGqJuBbh81EleQDxqiG4B9RERYeeiZMN2vVAyFvtWa6mZza
+    dMasWpXyV3Mfs4lcQ>
+X-ME-Received: <xmr:mroHaFQzKn0z3Oi9hD4HPgDcpRIZE0QPmdKH3Z4sDlRU074PGYsOl6DV0VEK_BB2xu-gedxYIYUht4x5AWz4cD07lVIB5kFMlrhL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegudefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
-    ihhnsehgmhigrdguvgdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:oLcHaDcb_cYhvmKkYDfALG3UwBoCVuhlQv8TxqAM9Hr_WP-dc5lrHA>
-    <xmx:oLcHaMPELyWkW1d72AgSFIW03kJlwqKOdz4DbXtQ9Qroc0WISWukvQ>
-    <xmx:oLcHaFmVyL5LkhDijCMacDyY8G2sXk4zoxN0DwxgiwMRArznnhiD5w>
-    <xmx:oLcHaGseP8BTvZhNSnf_unnfvkl7ZrpzwrjJ0xC7xmmZz7POQGjEYA>
-    <xmx:oLcHaPQJDAetnLWOb0jz3AAAy1hIq8hSzDvF_wvqNbTgZ3fekm7vrht6>
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheplhgv
+    vhhrrghiphhhihhlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihl
+    ohhrrhdrtghomhdprhgtphhtthhopehmrghrthhinhhvohhniiesghhoohhglhgvrdgtoh
+    hmpdhrtghpthhtohepnhhitghosegtrhihphhtohhnvggtthhorhdrtghomhdprhgtphht
+    thhopegvkhgvmhhpihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mroHaOu-aKP5bO-Y9o4OzDD_IexfNrQBmhuWjT9vrpptxo-5hs7hKg>
+    <xmx:mroHaGcwCLYFUUyvjFtFrbZ4vGOA6eZ0dX-efm2fl7Fn0wG5J_r7Kw>
+    <xmx:mroHaC3C007R57uP-nLLQ2C95yD2J5LpSB9z3Og5TaAiDD3x6sob6Q>
+    <xmx:mroHaK-st0qzkbExFPjBT9gEna1ILOM-Yxxi56IXdRusPi0WNYj0tg>
+    <xmx:m7oHaOEOdNMaNHoOWonXn7_H9eTpquySD-X9ms0k8V2uHRZ9jAJAqMP6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 11:37:03 -0400 (EDT)
+ 22 Apr 2025 11:49:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
- Schindelin <johannes.schindelin@gmx.de>,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] perf: do allow `GIT_PERF_*` to be overridden again
-In-Reply-To: <20250422104125.GA1460472@coredump.intra.peff.net> (Jeff King's
-	message of "Tue, 22 Apr 2025 06:41:25 -0400")
-References: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
-	<20250419035407.GA93039@coredump.intra.peff.net>
-	<xmqqfri28rlp.fsf@gitster.g>
-	<20250422104125.GA1460472@coredump.intra.peff.net>
-Date: Tue, 22 Apr 2025 08:37:02 -0700
-Message-ID: <xmqqzfg8438h.fsf@gitster.g>
+Cc: Philippe Blain <levraiphilippeblain@gmail.com>,  Git mailing list
+ <git@vger.kernel.org>,  Taylor Blau <me@ttaylorr.com>,
+    "Martin von Zweigbergk" <martinvonz@google.com>,
+    Nico Williams <nico@cryptonector.com>,
+    Edwin Kempin <ekempin@google.com>,
+    "Elijah Newren" <newren@gmail.com>
+Subject: Re: [PATCH] p5332: drop "+" from --stdin-packs input
+In-Reply-To: <20250422111632.GA1855088@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 22 Apr 2025 07:16:32 -0400")
+References: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com>
+	<20250422111632.GA1855088@coredump.intra.peff.net>
+Date: Tue, 22 Apr 2025 08:49:45 -0700
+Message-ID: <xmqqv7qw42na.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,27 +98,56 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> The original patch in this thread did something like:
 >
->   git_perf_settings=$(...pull GIT_PERF_* from env...)
->    . ../test-lib.sh
->   eval "$git_perf_settings"
+> -- >8 --
+> Subject: [PATCH] p5332: drop "+" from --stdin-packs input
 >
-> That is, we stash away the environment, then load test-lib.sh, which
-> overwrites the environment, and then we restore (some of) the original
-> values.
+> This perf script creates a midx by running "git multi-pack-index write"
+> with the "--stdin-packs" option. We feed that stdin by running "find" on
+> .git/objects/pack, using sed to strip off everything but the basename.
 >
-> In that merge, the test-lib.sh inclusion is moved (and in fact is now
-> accompanied by an explicit inclusion of GIT-BUILD-OPTIONS), and we now
-> have:
+> But that sed invocation also does something peculiar: it adds a "+" to
+> the start of each pack name. This causes the multi-pack-index command to
+> barf. The modified name does not match any pack it knows about, so it
+> ends up with an empty list of packs to put in the midx. And thus nothing
+> matches the --preferred-pack option we pass, which causes it die().
 >
->    . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
->    . "$GIT_SOURCE_DIR"/t/test-lib.sh
->    git_perf_settings=$(...)
->    eval "$git_perf_settings"
+> The fix is to remove the extra "+" (which also lets us simplify the sed
+> invocation a bit, as it is now just stripping the leading directories).
 >
-> Which of course does nothing. We need to set $git_perf_settings before
-> those other source lines (and the eval must remain after them).
+> But that leaves the mystery of why it was ever there in the first place.
+> The answer is that an earlier iteration of the patch series had a
+> concept of "disjoint" packs in the midx. And one of its patches here:
+>
+>   https://lore.kernel.org/git/c52d7e7b27a9add4f58b8334db4fe4498af1c90f.1701198172.git.me@ttaylorr.com/
+>
+> taught read_packs_from_stdin() to treat a leading "+" as marking a
+> disjoint pack. But in the second version of the series, which was
+> ultimately merged, that disjoint concept went away, and the code to
+> parse "+" did likewise. The regular regression tests were adjusted to
+> match, but this case in t/perf was forgotten.
+>
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  t/perf/p5332-multi-pack-reuse.sh | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 
-Right.  Thanks.
+Thanks.  I wonder if we had some tools and mechanisms people were
+discussing to track changes on changsets, such a mishap could have
+been caught more easily.  [jc: random folks from that discussion
+CC'ed, just in case they are interested].
 
+>
+> diff --git a/t/perf/p5332-multi-pack-reuse.sh b/t/perf/p5332-multi-pack-reuse.sh
+> index d1c89a8b7d..0a2525db44 100755
+> --- a/t/perf/p5332-multi-pack-reuse.sh
+> +++ b/t/perf/p5332-multi-pack-reuse.sh
+> @@ -58,7 +58,7 @@ do
+>  	'
+>  
+>  	test_expect_success "setup bitmaps for $nr_packs-pack scenario" '
+> -		find $packdir -type f -name "*.idx" | sed -e "s/.*\/\(.*\)$/+\1/g" |
+> +		find $packdir -type f -name "*.idx" | sed -e "s/.*\///" |
+>  		git multi-pack-index write --stdin-packs --bitmap \
+>  			--preferred-pack="$(find_pack $(git rev-parse HEAD))"
+>  	'
