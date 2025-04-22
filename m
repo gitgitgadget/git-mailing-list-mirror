@@ -1,267 +1,120 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEF728F93E
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 14:55:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F02E9EEBB
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 15:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745333720; cv=none; b=EISycxhQPKhwMGqqBfMfQYBQj20mOly8CIgzasHMqj30iHzJHb3kk/P0/U+aAWq/RnFCm7CKPmrW4DKSfhRF/T4JJI54lIg/TqjDQRQjFAXu3QmpSuIwekSCsMm5OBX2wU1wu+TAgEsQ7yotuqjp+z1klqaZ06X4DJ6yMpRsIhU=
+	t=1745335070; cv=none; b=dxtIIrdIoQ3ZQGOeKMYn/2s6Poupkg3FMVoKQz05fKjebk95fGSZRPMJJugFYMxoRCnihT2HlVFJWikD1Ip30ZBn5o8KhorH4LMRjzopguvbTPBVFQiE1kaF+6DU3iGGAg0mA3fYgp6EpWEZPp/j7SSSMh/vSM2cY/R5yXn9SPY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745333720; c=relaxed/simple;
-	bh=fhiuW+AibUD8fPdhBqtNnav3U9hWqqkAxOxFsC5O1Gg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cqr2IdQmV1q+X0CAe7lyK6Ux22ORfaIi4DBlP3glvIknE4/JO5BTxBGF6Ks2YXn00eRfbUXP+qvV/R5pcRZ1pjyW1IkeYTOAz8J+CoEUqgiC44j8wYj9ZbTJ49QX2bz7709JWf00byGPZ2rKcJ4oZI1TjL+kz22AluBqgFwJRZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fRUnAY5v; arc=none smtp.client-ip=209.85.214.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745335070; c=relaxed/simple;
+	bh=JFYxlPKQDyWNgwDInOxSt4V/Gx3OVFdfnMUkmv7k0oU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=cIuSNbhO3JV4ujHg7fSkcBG/7UlKkRN+t9hSyy31nG1kTR4ShEH44ssdWV3M+DqGioGZOR8dkmGVLCQOdoPBeUanrRlr0Gwev3wKZvHBhJyyM4rDxXcj6fJFxUs1YBsMD3jUh5qxkYHe6Wt7LHBssOkm6aA8ZDnATA3CDCAg8j8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fR+aF8zR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uOAAqmz0; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fRUnAY5v"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-224171d6826so74132185ad.3
-        for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:55:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745333717; x=1745938517; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=JTYqsHcmq9SB3hXVY/jvQjzl7QwfZSyPO0u1Y7+LMMo=;
-        b=fRUnAY5v26lIEmyDBRBcBCJmRT45uslddnwirOkzKYZpTRt/ipWLzRD+TPcMW8yS/X
-         zZ+hJJeA3w3LFvVs7FFuqkTiDVkZzEeLpIJApgk5LvnJlA49cUFq6ku3/GWzKzBFcjKL
-         fSOIxzIh8PHshLIEODBG2NK0kWZQduDpshC02c/Uft4E6RHQYIS08TeoFIYAJBXvMTkh
-         H4apIqcfiErZwU0qRx7hLY443R4kIcUKxqdFsJz5wDDMdSAtAllgutGQeLefx1O+Sn/N
-         XaoJIGJDTxw1Gpc6zRlB1LJO/gGB+d1dLGg8Vlzq10nJH7DTztd/jVIXEmXfFdC16eob
-         GbCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745333717; x=1745938517;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=JTYqsHcmq9SB3hXVY/jvQjzl7QwfZSyPO0u1Y7+LMMo=;
-        b=dj7soMQvK9+sjsJe+WRj7eMv4fX1XLprr7DnhpHvdFMRqZ0WCVlkiFcr3uh52YskBe
-         LzqrpS0e9AXnkQf4CqOm9EtB2EIwnSQTEB2/yDnCnUf3J7WNB43bp1AiIfzvmqmfmTVx
-         X/xhIPscxH2Y7WMIY5Mq4ufS0FtFEy8QwBbVe1jL72CXtBWdumXm9MV9KozbF9HJzCQy
-         yACeP52ZAH101iUX+DRJ9lt97w3dBGN1eCMcdz2AIT6SFbyY1cxGs2UeLN58MaQI7qkM
-         B80deJRHH78Tz+E0Qiodv5Lnw9kfJMqogTqLpKGRE43bcR5rXmS8SNCEGMvASWTmF12U
-         3LfQ==
-X-Gm-Message-State: AOJu0YwsATOxT9gqmKUhZ3sjWyvNxLFR0IzeP8v7VnWmIAXpWYHb9Nwi
-	ZNCqKLbQqMrRIJebjWkMmUiL6H2YNDsu10I4T4O2UVD5VmrfnxGwvF7KYnjK
-X-Gm-Gg: ASbGncsD8dZcUhZ0r545HH6hhlfQdkDTXSeCBe7ANQcbDO94Mcvw0UpokJR/afbsWiq
-	YyN6E/ee3VT+UxIuAvazs31RfurFETSDasoT/gmh47gLIf/j0VjuHO6CZzDCoM0HoG3ERB3C/yY
-	ASAD0jErl7hF5wx+QgchatsyEG5EQsMsm32QW1//gNJ05xqvZ6cM7dqoQoR7SzxoOJMfOLBDoAo
-	4++UMvYFXzj7US+tk7/73tD2R29fJBdhj9H+6cG6d8QAOy5ChkBLviBxQ5n0FF5I11WeMFk05xY
-	O2g8I7xH9GSqUW5hGA9BsXFLYQ85UlSFpGEa
-X-Google-Smtp-Source: AGHT+IF4h/W6JJisVQ0rfPgfvGB1Jt6ivoGfhO9db4TXU5CZfHSwAyMNCbkcokXmp7iKCNF4B7ieJQ==
-X-Received: by 2002:a17:903:2c8:b0:223:5c33:56a8 with SMTP id d9443c01a7336-22c536042b9mr269545735ad.35.1745333716684;
-        Tue, 22 Apr 2025 07:55:16 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22c50bda4d3sm86346785ad.47.2025.04.22.07.55.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 22 Apr 2025 07:55:15 -0700 (PDT)
-Date: Tue, 22 Apr 2025 22:55:23 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 5/5] u-string-list: move "remove duplicates" test to
- "u-string-list.c"
-Message-ID: <aAet23peGs2OZUcn@ArchLinux>
-References: <aAetW0dan8S3Fljq@ArchLinux>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fR+aF8zR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uOAAqmz0"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E9E2B114026B;
+	Tue, 22 Apr 2025 11:17:46 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Tue, 22 Apr 2025 11:17:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745335066; x=1745421466; bh=J4aDa95sbf
+	eNgGT1DUx53B49N87cvURRyugauoOk4ts=; b=fR+aF8zR9m0wWBma9HZznjti6g
+	QpKWzk+/qXQwU55QcMJpdufmRDOOLx1NAY0t+6Zk6B/YEORCUQFUXUUdHpLNsBYg
+	YkqT0Joly5Epp9apwc0HGHarZ9oQ2YGSrDvn2poP268zpH1EA/lTt7wATduINlpD
+	us83QvozhfZiMQdMoawlKB6VsIuoVjbsMi7xex+fxQeMTJ7sfV+AnOFmWrhzC+et
+	MY0g7PrH057VH3pTvdrvYn0T5wFpi5gLpj+AE/TxYibxqJ6t2JB3s3hnkuAt+tYz
+	BcGxBZ8amdaYmCSAKv9lP61yiZenwaWlyZVAyiLuTPJzJMwj7NQez4cy3f8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745335066; x=1745421466; bh=J4aDa95sbfeNgGT1DUx53B49N87cvURRyug
+	auoOk4ts=; b=uOAAqmz0+7KjvVIccfrHCcWSn+u9xc9cLoOzf9DLyJdVtJV26KO
+	3cB7ip6vqQewnCvFPkZIVo4IXUOChdKCcd0TBQ25szD3gKg+2QwQMWP2ovV36Sb1
+	o36VF9LvRlEa/B2tYavg95escuVrXUo5XVnN1PtABQKb4Iyrf9rQOoXRDy/ndurl
+	ji80PWTI7V3p/uThojhXHrxb8PMbeP7xywtRY1esfq2mJapkgqzlFh3yRA7/sOlk
+	/NFI8kTWVRmAcvM+iIiFncFP0tHSchvlqJaJ02m0iZnOl+eRzvGSwQcEHZLWC8QV
+	6k27/KhOoSq6f8+U7OPJ76XmNJydT6B/+lQ==
+X-ME-Sender: <xms:GrMHaEaWwXnVq3E_upiD6YYqhiisjd7voPXBwUCNPEXbo2DEkF_9dw>
+    <xme:GrMHaPb77UiMFZ659U96-Cp1ybkza1D0ARGvVX0KnSMHuXrfgc0r-u67SiOR_hUfL
+    8QLzcFCWyFoSMAJYQ>
+X-ME-Received: <xmr:GrMHaO-j228GqUAT2ykZxs3Eut2kiWDiNH8uZ3TUToX4Xn8FUAHLIL05qUE0KGkF0mIqMlnQkt5FSLQ0eMxIthDLormA0j7uWMeF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegtdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshgrmhesgh
+    gvnhhtohhordhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:GrMHaOryBJ3VVBAJ7hy_QjZp1iLbrCqALNJK0E-3CqwT323AML259A>
+    <xmx:GrMHaPptVWWysybAy_O_EspB2JVfpBf6NyjBntNWxXrjtQ2bg7grqQ>
+    <xmx:GrMHaMQLjZWVooqbHARzJ_pjgVOwdo7K0WL5xSOKwetieeWrQ7ShjQ>
+    <xmx:GrMHaPqr7aiZlLdwqyTivcxB9LMqaJfrtQHZGwc3xraEynoeG5k81Q>
+    <xmx:GrMHaJ2INi9yaOyNng7hCbryVo-SauFF6DVaDk0f2_r9GUlGaZiUHf5->
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Apr 2025 11:17:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eli Schwartz <eschwartz@gentoo.org>,  git@vger.kernel.org,  Sam James
+ <sam@gentoo.org>
+Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
+ function checks
+In-Reply-To: <aAdFysi-n_5Aa4Au@pks.im> (Patrick Steinhardt's message of "Tue,
+	22 Apr 2025 09:31:22 +0200")
+References: <20250421175247.240971-1-eschwartz@gentoo.org>
+	<aAdFysi-n_5Aa4Au@pks.im>
+Date: Tue, 22 Apr 2025 08:17:45 -0700
+Message-ID: <xmqq4iyg5ip2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aAetW0dan8S3Fljq@ArchLinux>
+Content-Type: text/plain
 
-We use "test-tool string-list remove_duplicates" to test the
-"string_list_remove_duplicates" function. As we have introduced the unit
-test, we'd better remove the logic from shell script to C program to
-improve test speed and readability.
+Patrick Steinhardt <ps@pks.im> writes:
 
-As all the tests in shell script are removed, let's just delete the
-"t0063-string-list.sh" and update the "meson.build" file to align with
-this change.
+> Yeah, this is somewhat unfortunate indeed. I think in the long term we
+> might want to unify our approach so that we consistently use e.g.
+> `HAVE_SOME_FUNCTION` or `NO_SOME_FUNCTION`.
 
-Also we could simply remove "DISABLE_SIGN_COMPARE_WARNINGS" due to we
-have already deleted related code.
+Yes and no, because the intention, at least in the original form,
+was that HAVE_FOO is not necessarily !NO_FOO.  You cannot claim to
+HAVE_FOO on a system that does not have FOO, and expect the result
+to build and/or function, but you should be able to build with
+NO_FOO on a system that supports FOO and use an alternative
+implementation that does not rely on system-supplied FOO.  NO_MMAP
+and NO_REGEX comes to mind (I often have to build NO_REGEX locally
+when doing "make sparse", for example, to avoid warnings triggering
+on system headers, for example).
 
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- t/helper/test-string-list.c  | 39 -----------------------
- t/meson.build                |  1 -
- t/t0063-string-list.sh       | 27 ----------------
- t/unit-tests/u-string-list.c | 62 ++++++++++++++++++++++++++++++++++++
- 4 files changed, 62 insertions(+), 67 deletions(-)
- delete mode 100755 t/t0063-string-list.sh
+I suspect that majority of these feature symbols do not fall into
+the same category as NO_REGEX, i.e. the user/builder may choose to
+decline using the system-supplied one.  So for them this is a total
+overkill, but conceptually, building with feature FOO enabled should
+be done iff (HAVE_FOO && !NO_FOO).
 
-diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
-index 262b28c599..6be0cdb8e2 100644
---- a/t/helper/test-string-list.c
-+++ b/t/helper/test-string-list.c
-@@ -1,48 +1,9 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "test-tool.h"
- #include "strbuf.h"
- #include "string-list.h"
- 
--/*
-- * Parse an argument into a string list.  arg should either be a
-- * ':'-separated list of strings, or "-" to indicate an empty string
-- * list (as opposed to "", which indicates a string list containing a
-- * single empty string).  list->strdup_strings must be set.
-- */
--static void parse_string_list(struct string_list *list, const char *arg)
--{
--	if (!strcmp(arg, "-"))
--		return;
--
--	(void)string_list_split(list, arg, ':', -1);
--}
--
--static void write_list_compact(const struct string_list *list)
--{
--	int i;
--	if (!list->nr)
--		printf("-\n");
--	else {
--		printf("%s", list->items[0].string);
--		for (i = 1; i < list->nr; i++)
--			printf(":%s", list->items[i].string);
--		printf("\n");
--	}
--}
--
- int cmd__string_list(int argc, const char **argv)
- {
--	if (argc == 3 && !strcmp(argv[1], "remove_duplicates")) {
--		struct string_list list = STRING_LIST_INIT_DUP;
--
--		parse_string_list(&list, argv[2]);
--		string_list_remove_duplicates(&list, 0);
--		write_list_compact(&list);
--		string_list_clear(&list, 0);
--		return 0;
--	}
--
- 	if (argc == 2 && !strcmp(argv[1], "sort")) {
- 		struct string_list list = STRING_LIST_INIT_NODUP;
- 		struct strbuf sb = STRBUF_INIT;
-diff --git a/t/meson.build b/t/meson.build
-index 424e7e445f..25af09a8d4 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -124,7 +124,6 @@ integration_tests = [
-   't0060-path-utils.sh',
-   't0061-run-command.sh',
-   't0062-revision-walking.sh',
--  't0063-string-list.sh',
-   't0066-dir-iterator.sh',
-   't0067-parse_pathspec_file.sh',
-   't0068-for-each-repo.sh',
-diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
-deleted file mode 100755
-index 31fd62bba8..0000000000
---- a/t/t0063-string-list.sh
-+++ /dev/null
-@@ -1,27 +0,0 @@
--#!/bin/sh
--#
--# Copyright (c) 2012 Michael Haggerty
--#
--
--test_description='Test string list functionality'
--
--. ./test-lib.sh
--
--test_expect_success "test remove_duplicates" '
--	test "x-" = "x$(test-tool string-list remove_duplicates -)" &&
--	test "x" = "x$(test-tool string-list remove_duplicates "")" &&
--	test a = "$(test-tool string-list remove_duplicates a)" &&
--	test a = "$(test-tool string-list remove_duplicates a:a)" &&
--	test a = "$(test-tool string-list remove_duplicates a:a:a:a:a)" &&
--	test a:b = "$(test-tool string-list remove_duplicates a:b)" &&
--	test a:b = "$(test-tool string-list remove_duplicates a:a:b)" &&
--	test a:b = "$(test-tool string-list remove_duplicates a:b:b)" &&
--	test a:b:c = "$(test-tool string-list remove_duplicates a:b:c)" &&
--	test a:b:c = "$(test-tool string-list remove_duplicates a:a:b:c)" &&
--	test a:b:c = "$(test-tool string-list remove_duplicates a:b:b:c)" &&
--	test a:b:c = "$(test-tool string-list remove_duplicates a:b:c:c)" &&
--	test a:b:c = "$(test-tool string-list remove_duplicates a:a:b:b:c:c)" &&
--	test a:b:c = "$(test-tool string-list remove_duplicates a:a:a:b:b:b:c:c:c)"
--'
--
--test_done
-diff --git a/t/unit-tests/u-string-list.c b/t/unit-tests/u-string-list.c
-index e02a15ac04..a9fe5ade15 100644
---- a/t/unit-tests/u-string-list.c
-+++ b/t/unit-tests/u-string-list.c
-@@ -174,3 +174,65 @@ void test_string_list__filter(void)
- 	t_string_list_clear(&list, 0);
- 	t_string_list_clear(&expected_strings, 0);
- }
-+
-+static void t_string_list_remove_duplicates(struct string_list *list,
-+					    struct string_list *expected_strings)
-+{
-+	string_list_remove_duplicates(list, 0);
-+	t_check_string_list(list, expected_strings);
-+}
-+
-+void test_string_list__remove_duplicates(void)
-+{
-+	struct string_list expected_strings = STRING_LIST_INIT_DUP;
-+	struct string_list list = STRING_LIST_INIT_DUP;
-+
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "", NULL);
-+	t_create_string_list_dup(&expected_strings, 0, "", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", NULL);
-+
-+	t_create_string_list_dup(&list, 0, "a", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "a", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "a", "a", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", NULL);
-+
-+	t_create_string_list_dup(&list, 0, "a", "a", "b", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "b", "b", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&expected_strings, 0, "a", "b", "c", NULL);
-+
-+	t_create_string_list_dup(&list, 0, "a", "b", "c", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "a", "b", "c", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "b", "b", "c", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "b", "c", "c", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "a", "b", "b", "c", "c", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_create_string_list_dup(&list, 0, "a", "a", "a", "b", "b", "b",
-+				 "c", "c", "c", NULL);
-+	t_string_list_remove_duplicates(&list, &expected_strings);
-+
-+	t_string_list_clear(&list, 0);
-+	t_string_list_clear(&expected_strings, 0);
-+}
--- 
-2.49.0
-
+I do not mind changing the stance Makefile takes on HAVE/!NO
+division, and see us declare that from now on, even when
+auto-detection flips HAVE_FOO on, the way for the builder to decline
+use of FOO is to flip HAVE_FOO off manually.  I and others may need
+to tweak some scripts and figure out to pass !HAVE_REGEX instead of
+NO_REGEX when that happens, but that is a one-time cost to make
+things more consistent.
