@@ -1,149 +1,106 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFC8139D
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 00:58:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9391C2C18A
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 02:01:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745283533; cv=none; b=kZbNo4ksseuqOASCAO5qHlYSZxhPnCowjWlpGsN6y+ynK3kEe8pWDpO6AhdfraTYFjwGA+q3lHUSakmpCS10TQCWWQ4qIDKmIU9/O6ndNDQ2+JLf/lLhMyKKFut38RDnp+bmInfhupeiRMUwgon1xnN4DsJ1I6t0CPkCL1maBvg=
+	t=1745287290; cv=none; b=Rhsn8FMb6LM+C2lISPI2zPe770iDoGiPHq6wH9QdJYnxmDxVaTZeyFvGb1+fFSEKyeJQ8oN++AOb268NR5nDEKmE4+lfUC3oMfmTlpounpsa5d2/7gIs4Prb66IQVyCtFzi0F3tuWMNmV5RAlKWfocXaQ7oHpHQzjmrjYKsSWig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745283533; c=relaxed/simple;
-	bh=6WxJlWQ2S3Q3kTrXzNH+NeeH+L+JffReXfGLd1HSf7g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AYP/Y2AZ9eDEBIuVBs8mzF/fjOCO64DQ039UwCagOaGuYx0wiULpc/RWDwrIadj6AKMCgbEmTG+VsdeVG+gho4PN/jJ5Q+3m6baQsqFrvRKK/MCcyOWMOj5g765Zhqfoh5dET7zO5afj76lU6UmbDzULbNjot+ADroPg2eJON9w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 50AC2341707;
-	Tue, 22 Apr 2025 00:58:50 +0000 (UTC)
-Message-ID: <f68460ea-2754-466c-8078-ca51bcb291ac@gentoo.org>
-Date: Mon, 21 Apr 2025 20:58:47 -0400
+	s=arc-20240116; t=1745287290; c=relaxed/simple;
+	bh=Cmk8GWUpN6F5TOaOqwrjTEJ1x7CA0pmrfjdfwT19RRY=;
+	h=To:Cc:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=kEIySvAOkl7Can7avf0Nz6ZYEH7+dOfNTMCHaBsdNBKXw5aPGAHDP/pBAfVah2Zhx1f/XqZ4IGUMfkcuw0wz5WhuXqqQdLlLPcuxYpmfeTBPVA5/5rx28hdKaOqhbuJqI+faVzkNxpGuAGEAO2LMWJBb/DK083M9ifv65NBqJkM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YyOl1OgD; arc=none smtp.client-ip=209.85.222.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YyOl1OgD"
+Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c5675dec99so427353485a.0
+        for <git@vger.kernel.org>; Mon, 21 Apr 2025 19:01:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745287287; x=1745892087; darn=vger.kernel.org;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=iBbBMHEKiKJG3fJgVZBoG7s5b54oxvIS6Ed54iLxx70=;
+        b=YyOl1OgD1LhiLn6BvBWyM83KWeIhMwff5+KLtmLXpPvFJ18hSrCrU4ZqSpcnBQwcgQ
+         myjinYRA5mmrfLsZ8tChzBK53E9apfzXzi4AIT7QM3YAi7QMXL19A3XhFi4SofEjXVWy
+         gNJW4MtRVZEaxmkNXfJuXbTE5JaJ6hYBSFrC/otqOIQHPYLPtt2gzMvS5Rx3kIpRqcAb
+         WMRTQI8/NB6k+xotFmUVYQ9zJWgvh4wEAS7+i8oUH0dALrWNCZuTB99TUgHoO/c0djxU
+         tDo4AiISvmfI44htOk83P6FTA8M236CYRTieSlE3xc6E3dwgjEbosB/sSyko7RxBmBVP
+         2Bog==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745287287; x=1745892087;
+        h=content-transfer-encoding:content-language:mime-version:user-agent
+         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=iBbBMHEKiKJG3fJgVZBoG7s5b54oxvIS6Ed54iLxx70=;
+        b=hZxKyfk1WzUI+SodO7NyN86Z0hUAvvQS71ZJVwQ9u9gp7Y2QrDjVXFh/jVst3sNg5C
+         ECRJI+FW3MecGTkpv3MzNXSdUKSVoUv0/u0rPZHEI0Cz4KVYU0qk3nM544mPHWe7WYhr
+         VmO4CVdcfTrTfjgwvVJWzA/Rw7jncijjHk2F0uipWPncXgocfb8N0vIqYn/cZYZ3u3R2
+         VPSQff75v9LHNIs+tTH9LvwYIu+VQo6shBtjRj1dQ0YaWurHt6DxJnDOT4MbERdmo+M7
+         vJnLE5gkFheUoDWIp8pmXIBBvfp/8sNLGTIRm0VD4u1jOPeeVEkHB0MSlGxi4F2Xr4ts
+         thlQ==
+X-Gm-Message-State: AOJu0Yyy/rrZqTxW2RP6vGk7UuDkEXaO5L/2JFMoNjkcrcls/ntoLOoq
+	H+8GuOJfff4RESHYQoVfT6ABVTq1inuG4p+9RecvIS+/rlvD0T0d1x0bYA==
+X-Gm-Gg: ASbGncvfLe3zFaSy6g14/spkpJOf1zXS9z7KSvlrVvQ4NDi5m59DQ0erXf+jEtAfxSf
+	iW/c8/MIetjbL6gjuQRUcDH+oNthY+VpZR9ABwyY0cvrN04Js445mfmPqw9MGk/ZaamSokeq73T
+	tSo0Hz8iSUwE3cBbQMBjdi1EUqW+E0OwhkWp9c0QDonxQf5tly4xg43IWQJlYhgKPpTx/9qMtds
+	n0xJf7PjXh+IY59HQ2dsh+/qabKvjrokM8r9cjOcFLH/R6v36tqvba/EyqL0yHEAuDvE+gVF8Si
+	Qzqj17jToX0jNxk0hcButZvhqfl3icd+zyh1o/E7O36YlKardcLpTBh77gjD8fIz18kuOaTJaog
+	brSCiTXnRwYCIUeymCj/fJEiSS1RgvBYYG8g=
+X-Google-Smtp-Source: AGHT+IEnhWwE8YAblmO66vsqFl9Jn5a32wo7GR0yVu/Jo8SiFjDJ1p6wMA5Ss28yK0HwiC5AqqSthQ==
+X-Received: by 2002:a05:620a:4415:b0:7c5:6410:3a6 with SMTP id af79cd13be357-7c927fb6a1cmr2160664585a.27.1745287287129;
+        Mon, 21 Apr 2025 19:01:27 -0700 (PDT)
+Received: from ?IPv6:2606:6d00:11:958c:1f9:dd9:b9ac:d355? ([2606:6d00:11:958c:1f9:dd9:b9ac:d355])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c925a6e75dsm492836685a.16.2025.04.21.19.01.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 21 Apr 2025 19:01:26 -0700 (PDT)
+To: Git mailing list <git@vger.kernel.org>
+Cc: Taylor Blau <me@ttaylorr.com>
+From: Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: Test failure in p5332-multi-pack-reuse.sh
+Message-ID: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com>
+Date: Mon, 21 Apr 2025 22:01:25 -0400
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
+ Gecko/20100101 Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
- function checks
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
- Patrick Steinhardt <ps@pks.im>
-References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org>
- <xmqqh62h591v.fsf@gitster.g>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <xmqqh62h591v.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------DscdXFR0X0tUNjOb1toUmm2I"
+Content-Type: text/plain; charset=utf-8
+Content-Language: fr
+Content-Transfer-Encoding: 7bit
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------DscdXFR0X0tUNjOb1toUmm2I
-Content-Type: multipart/mixed; boundary="------------B9Cjf50uLu8DEz0l0g3aPMYc";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
- Patrick Steinhardt <ps@pks.im>
-Message-ID: <f68460ea-2754-466c-8078-ca51bcb291ac@gentoo.org>
-Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
- function checks
-References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org>
- <xmqqh62h591v.fsf@gitster.g>
-In-Reply-To: <xmqqh62h591v.fsf@gitster.g>
+Hi Taylor,
 
---------------B9Cjf50uLu8DEz0l0g3aPMYc
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+I noticed that p5332-multi-pack-reuse.sh, which you added in 
+ba47d88795 (t/perf: add performance tests for multi-pack reuse,
+2023-12-14) fails early on in the second test ("setup bitmaps for
+1-pack scenario"). Since perf tests run with '--immediate', I do not
+know if further tests in that file also fail. It is reproducible on macOS [1] as 
+well as Linux [2] (I don't know if these logs are public though).
 
-On 4/21/25 8:33 PM, Junio C Hamano wrote:
-> Eli Schwartz <eschwartz@gentoo.org> writes:
->=20
->> On 4/21/25 1:51 PM, Eli Schwartz wrote:
->>> This is repetitive logic. We either want to use some -lc function, or=
- if
->>> it is not available we define it as -DNO_XXX and usually (but not
->>> always) provide some custom compatibility impl instead.
->>>
->>> Checking the intent of each block when reading through the file is sl=
-ow
->>> and not very DRY. Switch to taking an array of checkable functions
->>> instead.
->>>
->>> Not all functions are straightforward to move, since different macro
->>> prefixes are used.
->>
->>
->> By the way, when reviewing this I was having a slightly hard time
->> figuring out which stuff belonged here... specifically, because of the=
+I also tested on Linux on version 2.44.0 which is the first release
+in which this test was added, and it also failed similarily.
 
->> differences in macro prefixes lead me to believe it's not always so
->> simple as "does it exist".
->=20
->=20
-> As there are non-zero number of meson related topics in flight, I'd
-> like to know where this new series is meant to apply, if you need
-> some of them before we can apply it, and what is the overall goal
-> this series has ("there is no theme, they are just random set of
-> changes to do such and such things" is perfectly acceptable answer).
->=20
-> And the best place to describe these things is in the cover letter
-> [PATCH 0/6] of the series.
+Sidenote: on GitHub CI, I could not demonstrate the failure on Linux
+because all Linux jobs run in containers, and the images we use do 
+not have Git installed, such that actions/checkout@v4 uses the GitHub
+API to download the repository instead of cloning it [3]. This leads 
+die_if_build_dir_not_repo from perf-lib.sh to fail with
+"No $GIT_PERF_REPO defined, and your build directory is not a repo" [4].
+We could fix that by installing the 'git' package before the 'actions/checkout'
+step, but we would need to account for the different package managers of 
+the distros we test on.
 
+Cheers,
 
-My apologies. There was no big theme other than that they were things I
-determined were relevant to more closely match the Makefile
-expectations, while investigating a badly worded report (in fact, a
-wholly uncommunicated :( local patch ) of git not building on Gentoo's
-Solaris environment ( https://wiki.gentoo.org/wiki/Project:Prefix )
+Philippe.
 
-e.g. I simplified the repetitive lists because it made it easier to do
-the followup patch adding a new check for getpagesize (which I needed,
-because it needed to be checked on Solaris).
-
-I think that I sort of subconsciously assumed that "if in doubt, assume
-it's independently developed against the current state of the master
-branch".
-
-I do not need any other series merged, I think it should apply to
-`master` independently of all of them. I can't see anything available in
-origin/master..origin/seen that would clash, at least.
-
-
---=20
-Eli Schwartz
-
---------------B9Cjf50uLu8DEz0l0g3aPMYc--
-
---------------DscdXFR0X0tUNjOb1toUmm2I
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaAbpxwUDAAAAAAAKCRCEp9ErcA0vV5fV
-AP4nZaSkd9XqsGhVP1fFjwN/Ppb+uANmcMxJo081i3qYRgEAlogCqxwghJDB3OvgnV1F81qCaP5D
-+GUAab1taVsUHQU=
-=M/i9
------END PGP SIGNATURE-----
-
---------------DscdXFR0X0tUNjOb1toUmm2I--
+[1] https://github.com/phil-blain/git/actions/runs/14580975799/job/40897421311#step:4:896
+[2] https://gitlab.com/phil-blain/git/-/jobs/9780586827#L2889
+[3] https://github.com/phil-blain/git/actions/runs/14580975799/job/40897421399#step:4:28
+[4] https://github.com/phil-blain/git/actions/runs/14580975799/job/40897421399#step:8:838
