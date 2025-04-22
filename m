@@ -1,57 +1,58 @@
-Received: from mail-ed1-f48.google.com (mail-ed1-f48.google.com [209.85.208.48])
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 468D21F0988
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 19:58:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA438DF49
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 20:03:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745351922; cv=none; b=AXvPYHsV6ZY9vuYdOyuCZqPIiwgc5Gh5HbBxU0QiBSjoUatFxDFCMqX698I//6VpO81x8/RDd++flcOTsoZbDtCQtqcorF4saGgF3lzoDNsvhLJtrVCZtLl6tlC3F4arY5PSS5VK6M37A6hLEnREy07GYJhMqFn+DDz5lLVPdwI=
+	t=1745352197; cv=none; b=oa/GMg+cgEZXjAUqJEf1zMSdfNGxFWxl8HvElO6f5oEAea9ke1PzuTXm4WDHt/0omdG/qxPjFKiFlf9odaQf8ztOFoIF1LpS84KuoTC0pa7CDREQ5zwCo/1DkXUXJhRWlS73F8UcvJ2gz5td8ftoFD/T+6W2mLprHXDDT4CCIyg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745351922; c=relaxed/simple;
-	bh=ghV9lknWLn5lRnO3nyYbf52jHHLFLxkyA9aa5N9U7Mo=;
+	s=arc-20240116; t=1745352197; c=relaxed/simple;
+	bh=RzUMPyRSi1XUObqMqWVqk8aYDPxkrieeJdW2qoicmoU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=PU6133r8fK/dTiF+Rfrga51soE9XiJoEpt72YoWSV/EP8+l+ejzEgwDSpIjKCZHmiI0H1v+KHuI3w8pzxzAAjbvITEQLd+y5PQuqtMsE1lvTR8BQwnI9PUT32tSNinkg9wKm15JGZIWNMYtHcMgqnZo0CP6G9iSQUJyLy1Lua7I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bZKSoqER; arc=none smtp.client-ip=209.85.208.48
+	 To:Cc:Content-Type; b=uFMCNO55U9/2Nu0j/trWcPiBJtCHdFOq1S79ycO59zvgm2y7wVP0zhuZKK8KUsCOflegWpaPg2hZIdRytlhy/xRxjUE7POKry8fFhIN/w+UWkDHnZs4sca9VJhURqoaWgu1wSn5G+6wGSi68XGOc7er/9rGpov7VoZXPcfkXVOw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hR89YEiB; arc=none smtp.client-ip=209.85.208.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bZKSoqER"
-Received: by mail-ed1-f48.google.com with SMTP id 4fb4d7f45d1cf-5ec9d24acfbso461984a12.0
-        for <git@vger.kernel.org>; Tue, 22 Apr 2025 12:58:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hR89YEiB"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-5e5c7d6b96fso9278690a12.3
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 13:03:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745351919; x=1745956719; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745352193; x=1745956993; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gEfCrxURUQSNmNWgZVokcVj4SP0LUKoUTwtXRRKwkLg=;
-        b=bZKSoqEReNmX0ngHcOmOMgb3qSIAYnbiXswUwNeZNbwsMwEm5KRZysWgKolCaE6KPf
-         DmaCmRi0fmoOJ4UxOaEgbsKXOzThgZ8ULW9pmDysOTUWzUdXXNV8R8oh2BvpfDt1D5hw
-         r/0S+5h+VcPHihgCNkbbOg+jLL58Yi9tZsQeyFwSE1ac89GO0A8f8eFh/SOfxmO/F+9B
-         WncOzKfIaQ3MH4+TlEy2fpzrDjFk0cHymh1DlFjd9myixDiYufrPakl6pn//Wq+n1+bc
-         t2M491diBdMIhwdOytfS+TJ/mXDk6eAMOEXK4rjTwr6K9pPwTWq2r9cx4B53hgw09X8l
-         5Mug==
+        bh=RzUMPyRSi1XUObqMqWVqk8aYDPxkrieeJdW2qoicmoU=;
+        b=hR89YEiBmZYLzHqRYqjWyTPsnoVPShU5jkjb//X/5pZyXqkXwPG+yl+m0ZFDrsHfxU
+         DlH1H/m8E8ru47bzp3Q4Hv4ZU0cf5Rdp4N9BC9fvj0XTLkyAj0K0jOT5lLf5ugVSrfR4
+         NraQ4oH9Ji730IiOzuWzax6T25T0q6rwApykGL2Wq98AkNZRNWMq1vuRWGErwcJpfnni
+         D3tEruMFHbLOcnr+Uw1d1nXpMKlJRTXDHClO5VW1C5ZFtBUKTGhFcMBrnNfLSvXFAUAQ
+         7uLJ/yLBONupT6RaPpRSb9G3/70vNYjDdj2/TDjnah7C7035Jf7e/X85pwv6Qfcmk18Y
+         1zkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745351919; x=1745956719;
+        d=1e100.net; s=20230601; t=1745352193; x=1745956993;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gEfCrxURUQSNmNWgZVokcVj4SP0LUKoUTwtXRRKwkLg=;
-        b=Ghz5GBj+eM9hvlYevCHfpRVuYrOHQozUQHW5scdccCkbN+PxoUqaa4Y+Uj5QJiq9QG
-         DZFfKmzKd2EBHKPKNdVHVpUMhqnv9DkPVi0w0KiDnrYdLbhvhqlMjUGVP83aj+Osh7H5
-         G8SLAw05r5JWVqAep0HkAw+IRhEogSyjAo1K7BLoZFmf/1PyBU2eXXFoRIdaN7ya8DHu
-         DGrzG+ESorvwvxjoWcdCYQmrTKoWLIjfB9c8Eq75KWcpCdx61BGfNEJmHOSwydCLeDh3
-         3OHNyEoKQaN4Dh+wYhXxh3eOnJ6cPp0+SvzbHt2fnoZbu+vWHH+Hy2nUO/8vokLkMx9I
-         8M4g==
-X-Gm-Message-State: AOJu0YxOqwah8fNjIA717ukAC+2mx/xbLzw2x5/0LM/RExLZfaUwOHzz
-	1r1ksJ0ZwaMnnEnl61yaPbSYjnTBarBJJKJ/55TMQ8vu8giJgWI3BAeLL3eM8Ljp9lrnX1kqPkZ
-	xS/GmBP5nY76BmxVIrhdeEca6Cp4=
-X-Gm-Gg: ASbGncvuJBky6Fp8UUaNi9BehqTz7gSSJJ28MJppLD7vauTsHqkjMkgFo0PZvrVjraG
-	MXQRVmWfdkvlZ7Aj530nw2SalvJUx0LoG3PKmgfwk9A5hUDJWK9wXnyDBqGbZpKTRl1N8SC5nqm
-	iEeuSoOAMJcVbpzHygXfRW85o1QruN0pbyQ068lGVRCN7y1W10Uzm780o=
-X-Google-Smtp-Source: AGHT+IFWbGXIosRIVHHXn3W9/opZy7VhtJmmuqPuH6bnPLj5q30Fr+giV/JIozIIMvf8ZVd9YfbhFaHtElBKNlc0oxE=
-X-Received: by 2002:a05:6402:234f:b0:5e0:6332:9af0 with SMTP id
- 4fb4d7f45d1cf-5f6cf46b0f8mr249112a12.14.1745351919245; Tue, 22 Apr 2025
- 12:58:39 -0700 (PDT)
+        bh=RzUMPyRSi1XUObqMqWVqk8aYDPxkrieeJdW2qoicmoU=;
+        b=Na9FLimAFKefUEs+hOzqzQjUdeWqv1Wu8M2G+pS7rWdiOqOxt9ZgphAmoXr6fOUhVg
+         Ppyw7nESYym7PrIR0LUWnVZEEEYbt2dGZGLyico+nep2bgotp0xgVoVte2MEJtzhbpi1
+         4D8mnlno7Yd2+4fhF7+tFTJlFaXlXQdWnGzIqZW0t2Q8Zx84b//oJ7q3hfZ7cfF9g3Uy
+         jzE65yTbLJQ+RUJRL0mPlYuf1QxHgYZH1OtruqugqXVQDG9b0evi7dfu9RQW96PkFbJR
+         58BCooEKLsIJPRHwshgOhRxe6PdXh7SZqwY/xVIT90YyVkEJFBZ5pUSh1EQGnqgP9A8P
+         /hzg==
+X-Forwarded-Encrypted: i=1; AJvYcCUQ/Q4i1ymUA//2w49veK+X/Eu8EJTz8d/eBWOdlWKQycS94kheMaVt7GSpnbYP00RWxyk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxB5tTuIiDcxVn1V+xGJu9sZgShmJdyrLz92IsnwvYBNyGMlRY1
+	jhm2SdiVmRZdpwy9JNpgxEIAtlIDaVDLb+zxAGyngNks9MvRf4+YkushHR2MeV94Szb8ndYiyaQ
+	2HuVGxQlBHfw2iVNvt/VSYS276A4=
+X-Gm-Gg: ASbGncuC8jexW1IgqoyeGXX0U9tBTDAHQVQFV0lCCqmbDwpJLhV6PcQWJ0yczGCqKSd
+	sBsk65aM8bKHBnPx9jFop28q5osErfoqGwvARKWA/ytBonpgkfVcp6f/TkyCUzys755QEGINPaT
+	I3LpAR956ZVd2L/8cJeNXD2Yd70L8TDnZ7LXe1vT1BPDlCRIL9iKLJ4PWa3+fI7eQ4Sw==
+X-Google-Smtp-Source: AGHT+IEJgH21niWKkonFXesO7bnn+BE8VHpFjhPPotttMj2VtnqdEWamD+4STDGwRlmUKqb3yf6FHW5zRbEROCmvgkc=
+X-Received: by 2002:a05:6402:3552:b0:5f1:e466:660 with SMTP id
+ 4fb4d7f45d1cf-5f62851ef46mr14065908a12.5.1745352193050; Tue, 22 Apr 2025
+ 13:03:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,59 +62,87 @@ MIME-Version: 1.0
 References: <20250205030642.95252-1-ben.knoble+github@gmail.com>
  <xmqqbjvgr11y.fsf@gitster.g> <CALnO6CA_vF4huxMx6jSS4SVjS4+EO9K16Msco-vMUDzSoYRDOg@mail.gmail.com>
  <xmqq34gsp9tr.fsf@gitster.g> <CALnO6CC71A_Bn+RhyXfmhiNCn2vFGJ+WCs8+dAnpQvGFyNZyfA@mail.gmail.com>
-In-Reply-To: <CALnO6CC71A_Bn+RhyXfmhiNCn2vFGJ+WCs8+dAnpQvGFyNZyfA@mail.gmail.com>
+ <CAMMLpeQvJUZJuwvK-H=M_FFedpgazGOPH=7wvPCg3U8RrxEtkA@mail.gmail.com>
+ <CALnO6CDZ=rq_eZESzi++VFk081ddosHMpKQV4QHNFJbnsOMAzg@mail.gmail.com> <CAMMLpeSgSTU+SVeU6A_9LJvjVbho+QC8HpNQtKJvFic98xKvJQ@mail.gmail.com>
+In-Reply-To: <CAMMLpeSgSTU+SVeU6A_9LJvjVbho+QC8HpNQtKJvFic98xKvJQ@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 22 Apr 2025 15:58:28 -0400
-X-Gm-Features: ATxdqUEMcTvmVjkiK9qs54EGsZAO_L6nNoGQHWhB4349cAbNutdimtQrZstE03M
-Message-ID: <CALnO6CBi-c9U-UskTzjNBH+k8VQybdSshYgs+A3_DRH-iz7zHA@mail.gmail.com>
+Date: Tue, 22 Apr 2025 16:03:02 -0400
+X-Gm-Features: ATxdqUHRGAk3249D8D3zs-8qx3vXhN73c-WDcyKiFSQvGUyg_7RTB6vcajJeBxo
+Message-ID: <CALnO6CDb8_V9T3o+ON-8BZHcuf83UNGp23zxJKMc-rcGY=M1iA@mail.gmail.com>
 Subject: Re: [PATCH] pull: allow branch.<name>.rebase to override pull.ff=only
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Alex Henrie <alexhenrie24@gmail.com>, 
+To: Alex Henrie <alexhenrie24@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, 
 	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
 	Felipe Contreras <felipe.contreras@gmail.com>, Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, Feb 5, 2025 at 4:14=E2=80=AFPM D. Ben Knoble
-<ben.knoble+github@gmail.com> wrote:
->
-> On Wed, Feb 5, 2025 at 12:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com=
+On Tue, Feb 11, 2025 at 1:56=E2=80=AFAM Alex Henrie <alexhenrie24@gmail.com=
 > wrote:
-> >
-> > "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
-> >
-> > >> So, I dunno.
+[snip]
+> > > On Wed, Feb 5, 2025 at 2:14=E2=80=AFPM D. Ben Knoble
+> > > <ben.knoble+github@gmail.com> wrote:
 > > >
-> > > Agreed that if pull.ff=3Donly is supposed to override all other optio=
-ns
-> > > (except those on the command-line), this might be wrong. And `git pul=
-l
-> > > --rebase` works in the scenario I described.
+> > > > Is there, then, an existing combination that means roughly to treat
+> > > > `git pull` with no other options like this:
+> > > > - if not rebasing, forbid merging and be equivalent to --ff-only
+> > > > - if rebasing is requested (because of branch.name.rebase or --reba=
+se
+> > > > or =E2=80=A6?), allow it
+> > >
+> > > I think what we're missing is a branch.<name>.ffOnly option to make a
+> > > particular branch fast-forward only. Such an option would be
+> > > especially useful for the master branch, but you could set it on all
+> > > of your branches except the ones that you want to rebase. We could
+> > > even have a branch.autoSetupFfOnly option to turn on ffOnly
+> > > automatically for new branches.
 > >
-> > Yeah, I view --ff-only as a safety measure for the user to say "my
-> > workflow is to make sure I do not have anything locally cooking on
-> > my branch when integrating with the other side, and stop me if I
-> > somehow made a mistake".  If rebase or other options override, the
-> > folks in the rebasing camp, unlike in the merging camp, cannot
-> > benefit from such safety measure, which worries me.
+> > That is probably something that is missing, and might solve the
+> > problem, but I don't know that these in particular are something I
+> > need (read: want to implement).
+> >
+> > How do you (and Junio, and others) feel about
+> > pull.ff=3DonlyUnlessOverridden? The meaning would be "like --ff-only
+> > except when branch.<name>.rebase says otherwise."
+> >
+> > The name of the value can be workshopped (I initially thought of
+> > "override" as a short value, but it may be too short to convey its
+> > intended meaning). Perhaps "onlyOr[Branch]Rebase"?
+> >
+> > I think this would be a smaller change that meets my needs without
+> > changing the meaning of ff=3Donly.
 >
-> Is there, then, an existing combination that means roughly to treat
-> `git pull` with no other options like this:
-> - if not rebasing, forbid merging and be equivalent to --ff-only
-> - if rebasing is requested (because of branch.name.rebase or --rebase
-> or =E2=80=A6?), allow it
+> In my opinion, the matrix of which pull options override which pull
+> options is already too hard to understand. Rather than add a new
+> dimension to pull.ff, I would much prefer to fill in the gap that is
+> the lack of a per-branch fast-forward setting. It might be more work
+> in the short term, but it's an investment:
+> pull.ff=3DonlyUnlessOverridden would only address your particular use
+> case, but a per-branch setting could address many others. For example,
+> the user could set branch.autoSetupRebase=3Dtrue to make every branch
+> rebase by default, but override it with branch.master.ff=3Donly to make
+> the master branch fast-forward only. Or the user could have
+> branch.<name>.rebase set to either true or false as appropriate for
+> each branch, but temporarily set branch.<name>.ff=3Donly when they are
+> in the middle of work on a branch and don't want to accidentally bring
+> in upstream changes that would interrupt their work.
 >
-> In other words, something like a pull.merge=3Dff (or ff-only) meaning to
-> apply the rules I've attempted to describe, in which case I would
-> leave pull.ff unset?
+> If you think that you can write the patch to implement
+> pull.ff=3DonlyUnlessOverridden on your own, I think you're capable of
+> implementing branch.<name>.ff=3D(true|false|only) and
+> branch.autoSetupFf=3D(true|false|only). Use the code for the existing
+> branch.<name>.rebase and branch.autoSetupRebase options as a guide,
+> and people like me are available on the mailing list to support you.
 >
-> I suppose pull.rebase=3Dtrue is close, but is not quite the same for me
-> (I'd like to be warned when this would imply a non-fast-forward for a
-> main branch, though the "rebasing" logs might be sufficient)=E2=80=A6
+> -Alex
 
-FWIW, I found some tests that indicate, to me, that I should use
-pull.rebase=3Dtrue (or merges) + branch.<name>.rebase=3Dfalse for the case
-I described: https://github.com/git/git/blob/08bdfd453584e489d5a551aecbdcb7=
-7584e1b958/t/t5520-pull.sh#L505-L514
+I actually did start working on this by first writing documentation; I
+got about as far as saying that branch.<name>.rebase overrides
+branch.<name>.ff when pulling unless it is only and that
+branch.<name>.ff overrides merge.ff before I realized that I was
+constructing a complex decision-matrix of how config and CLI options
+affect what happens, and it's already overwhelming enough=E2=80=A6
 
-So it turns out my itch was already scratched.
+It would actually be nice to spell out the matrix somewhere, but I can
+do that in a blog post if I ever find time. I'll leave it to others to
+increase the complexity of that matrix :)
