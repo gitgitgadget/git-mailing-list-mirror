@@ -1,35 +1,35 @@
-Received: from out-178.mta1.migadu.com (out-178.mta1.migadu.com [95.215.58.178])
+Received: from out-188.mta1.migadu.com (out-188.mta1.migadu.com [95.215.58.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50A51ACED5
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 17:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20B461E1C22
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 17:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.188
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745344019; cv=none; b=P3I908Ps1OFv+FL/Wx/HF4d+3oI3hmVNmrs95PX5AYtbRl08EQSMLXLHncW+mLvKMi2hLvpukUkxVHMTt/AdZNzzgbeAYY6yfS0QCU2q1ceBk2hFmXN2i17KmEB5/eH/Fsx4aERRB0xh3UwKR3Hi2LUId9USHiaBeYbp6E/4bFQ=
+	t=1745344022; cv=none; b=kV8UGM0WLhlFa/ewAZeI0t+moTzjk577dmsXBLEu2HN35+zVBy/eloJ2/9RL6NHhjEQTm7J97UV69rVzOFw7HLYliExYYNQbG6WwTWG4hQkVt2hh3Yysg6LF/tlV/YkTvj1CsILZL82FLQszlNT/PD8y2GoD2owcpA7Rt28hwJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745344019; c=relaxed/simple;
-	bh=TaEoNCPZl6XrnFzaDhHue13edlLc2ZcxwjDTUb0O0As=;
+	s=arc-20240116; t=1745344022; c=relaxed/simple;
+	bh=DpiYteQE5D4IxRv/lPNVRQ1kxmg+Pp3ob3FPoeI/ZhI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=unGrs0DZZfHeIRTDTmaq6Q033mEPTTUIQbb4xYHrQFsrYfDmR9AyxEd7F+BssAuRQ9nDfHy6dvC5PQcHzPSiXpgzF+/64PSVxUzrlhLqwaVyHjCvG54Dl323akvfE0xDR0p03C2zP8deUDcKzjrjGinBDv0Aitbp0O6E50ghN7E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=U4KOwgy2; arc=none smtp.client-ip=95.215.58.178
+	 In-Reply-To:To:Cc; b=Tk6VjwCw6AFgBAYH3nWzY3x4NcQVBXpHIbZ4C8cMSTtoclBq+IDtaX5BtygbFyiVryOPyy+xXrGH/RxSTJu5MUrGYjZcccl9FO2hDtfjpEj5nCrkDrA68FeAcKFu3k3Q+G0ny++M6dlmq1O7pnyONOmloECDA8hCsY8i9SzUf1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=B1ibLsr1; arc=none smtp.client-ip=95.215.58.188
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="U4KOwgy2"
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="B1ibLsr1"
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
-	t=1745344014;
+	t=1745344017;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=g13xwIZ8vZ0kWV4yLvXZzIFa0Y4bh64TOXGGiPdHr5E=;
-	b=U4KOwgy2JmuUngtYLcf7rSIxmZHqW7bYf0zPw6hG8qDALbT9e6coTuSeDtFboHcq0kkPe8
-	p6+33HsFLfhZoIvgSz+3xjLbs+sb2KtIGc6hPXotaEIaiXIXLcCogl+FLwd6sXPg2OcYyb
-	f6HYpmCygKz9Haye+Nzmeg63wl/LcN0=
+	bh=Sq61O8niaHYRbixYdtTXCBdwYy7EHemY0CMnROCi+yo=;
+	b=B1ibLsr1dw9RborccZo75JDF1Ro8ezla4PE2MZ5bndQHbf+rbGOrdhQWL6YwJCpLoL1WLO
+	/Xu0wdfO2Uj7E7c9rYHOOiJQ46aCg/m3BZM1qy3IA7oMEjKNP6GIqZTJBRCijGjSAa8KGm
+	rjpo5VWQxRUX1S9IWSdeaX+qJ6DVMJg=
 From: Toon Claes <toon@iotcl.com>
-Date: Tue, 22 Apr 2025 19:46:25 +0200
-Subject: [PATCH RFC 2/5] t/perf: add blame-tree perf script
+Date: Tue, 22 Apr 2025 19:46:26 +0200
+Subject: [PATCH RFC 3/5] blame-tree: use Bloom filters when available
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -38,7 +38,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250422-toon-new-blame-tree-v1-2-fdb51b8a394a@iotcl.com>
+Message-Id: <20250422-toon-new-blame-tree-v1-3-fdb51b8a394a@iotcl.com>
 References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
 In-Reply-To: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
 To: git@vger.kernel.org
@@ -46,116 +46,152 @@ Cc: Jeff King <peff@peff.net>, Taylor Blau <me@ttaylorr.com>,
  Derrick Stolee <stolee@gmail.com>, Toon Claes <toon@iotcl.com>
 X-Migadu-Flow: FLOW_OUT
 
-From: Jeff King <peff@peff.net>
+From: Taylor Blau <me@ttaylorr.com>
 
-This just runs some simple blame-tree's. We already test correctness in
-the regular suite, so this is just about finding performance regressions
-from one version to another.
+Our 'git blame-tree' performs a revision walk, and computes a diff at
+each point in the walk to figure out whether a given revision changed
+any of the paths it considers interesting.
+
+When changed-path Bloom filters are available, we can avoid computing
+many such diffs. Before computing a diff, we first check if any of the
+remaining paths of interest were possibly changed at a given commit by
+consulting its Bloom filter. If any of them are, we are resigned to
+compute the diff.
+
+If none of those queries returned "maybe", we know that the given commit
+doesn't contain any changed paths which are interesting to us. So, we
+can avoid computing it in this case.
+
+This results in a substantial performance speed-up in common cases of
+'git blame-tree'. In the kernel, here is the before and after (all times
+computed with best-of-five):
+
+With commit-graphs (but no Bloom filters):
+
+    real	0m5.133s
+    user	0m4.942s
+    sys	0m0.180s
+
+...and with Bloom filters:
+
+    real	0m0.936s
+    user	0m0.842s
+    sys	0m0.092s
+
+These times are with my development-version of Git, so it's compiled
+without optimizations. Compiling instead with `-O3`, the results look
+even better:
+
+    real	0m0.754s
+    user	0m0.661s
+    sys	0m0.092s
 
 Signed-off-by: Toon Claes <toon@iotcl.com>
 ---
- t/perf/p8020-blame-tree.sh | 21 +++++++++++++++++++++
- t/t8020-blame-tree.sh      | 19 ++++++++++---------
- 2 files changed, 31 insertions(+), 9 deletions(-)
+ blame-tree.c | 44 ++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/t/perf/p8020-blame-tree.sh b/t/perf/p8020-blame-tree.sh
-new file mode 100755
-index 0000000000..6c4c2a369e
---- /dev/null
-+++ b/t/perf/p8020-blame-tree.sh
-@@ -0,0 +1,21 @@
-+#!/bin/sh
+diff --git a/blame-tree.c b/blame-tree.c
+index ce57db2cfc..47354557a7 100644
+--- a/blame-tree.c
++++ b/blame-tree.c
+@@ -7,11 +7,15 @@
+ #include "revision.h"
+ #include "repository.h"
+ #include "log-tree.h"
++#include "dir.h"
++#include "commit-graph.h"
++#include "bloom.h"
+ 
+ struct blame_tree_entry {
+ 	struct hashmap_entry hashent;
+ 	struct object_id oid;
+ 	struct commit *commit;
++	struct bloom_key key;
+ 	const char path[FLEX_ARRAY];
+ };
+ 
+@@ -28,6 +32,9 @@ static void add_from_diff(struct diff_queue_struct *q,
+ 
+ 		FLEX_ALLOC_STR(ent, path, path);
+ 		oidcpy(&ent->oid, &p->two->oid);
++		if (bt->rev.bloom_filter_settings)
++			fill_bloom_key(path, strlen(path), &ent->key,
++				       bt->rev.bloom_filter_settings);
+ 		hashmap_entry_init(&ent->hashent, strhash(ent->path));
+ 		hashmap_add(&bt->paths, &ent->hashent);
+ 	}
+@@ -92,12 +99,21 @@ void blame_tree_init(struct blame_tree *bt,
+ 	if (setup_revisions(argc, argv, &bt->rev, NULL) > 1)
+ 		die(_("unknown blame-tree argument: %s"), argv[1]);
+ 
++	(void)generation_numbers_enabled(bt->rev.repo);
++	bt->rev.bloom_filter_settings = get_bloom_filter_settings(bt->rev.repo);
 +
-+test_description='blame-tree perf tests'
-+. ./perf-lib.sh
-+
-+test_perf_default_repo
-+
-+test_perf 'top-level blame-tree' '
-+	git blame-tree HEAD
-+'
-+
-+test_perf 'top-level recursive blame-tree' '
-+	git blame-tree -r HEAD
-+'
-+
-+test_perf 'subdir blame-tree' '
-+	path=$(git ls-tree HEAD | grep ^040000 | head -n 1 | cut -f2)
-+	git blame-tree -r HEAD -- "$path"
-+'
-+
-+test_done
-diff --git a/t/t8020-blame-tree.sh b/t/t8020-blame-tree.sh
-index c11876c210..6a1db7efaa 100755
---- a/t/t8020-blame-tree.sh
-+++ b/t/t8020-blame-tree.sh
-@@ -43,7 +43,7 @@ check_blame() {
+ 	if (add_from_revs(bt) < 0)
+ 		die(_("unable to setup blame-tree"));
  }
  
- test_expect_success 'blame recursive' '
--	check_blame --recursive <<-\EOF
-+	check_blame -r <<-\EOF
- 	1 file
- 	2 a/file
- 	3 a/b/file
-@@ -51,7 +51,7 @@ test_expect_success 'blame recursive' '
- '
+ void blame_tree_release(struct blame_tree *bt)
+ {
++	struct hashmap_iter iter;
++	struct blame_tree_entry *ent;
++
++	hashmap_for_each_entry(&bt->paths, &iter, ent, hashent) {
++		clear_bloom_key(&ent->key);
++	}
+ 	hashmap_clear_and_free(&bt->paths, struct blame_tree_entry, hashent);
+ 	release_revisions(&bt->rev);
+ }
+@@ -137,6 +153,7 @@ static void mark_path(const char *path, const struct object_id *oid,
+ 		data->callback(path, data->commit, data->callback_data);
  
- test_expect_success 'blame non-recursive' '
--	check_blame --no-recursive <<-\EOF
-+	check_blame <<-\EOF
- 	1 file
- 	3 a
- 	EOF
-@@ -64,40 +64,41 @@ test_expect_success 'blame subdir' '
- '
+ 	hashmap_remove(data->paths, &ent->hashent, path);
++	clear_bloom_key(&ent->key);
+ 	free(ent);
+ }
  
- test_expect_success 'blame subdir recursive' '
--	check_blame --recursive a <<-\EOF
-+	check_blame -r a <<-\EOF
- 	2 a/file
- 	3 a/b/file
- 	EOF
- '
+@@ -180,6 +197,30 @@ static void blame_diff(struct diff_queue_struct *q,
+ 	}
+ }
  
- test_expect_success 'blame from non-HEAD commit' '
--	check_blame --no-recursive HEAD^ <<-\EOF
-+	check_blame HEAD^ <<-\EOF
- 	1 file
- 	2 a
- 	EOF
- '
++static int maybe_changed_path(struct blame_tree *bt, struct commit *origin)
++{
++	struct bloom_filter *filter;
++	struct blame_tree_entry *e;
++	struct hashmap_iter iter;
++
++	if (!bt->rev.bloom_filter_settings)
++		return 1;
++
++	if (commit_graph_generation(origin) == GENERATION_NUMBER_INFINITY)
++		return 1;
++
++	filter = get_bloom_filter(bt->rev.repo, origin);
++	if (!filter)
++		return 1;
++
++	hashmap_for_each_entry(&bt->paths, &iter, e, hashent) {
++		if (bloom_filter_contains(filter, &e->key,
++					  bt->rev.bloom_filter_settings))
++			return 1;
++	}
++	return 0;
++}
++
+ int blame_tree_run(struct blame_tree *bt, blame_tree_callback cb, void *cbdata)
+ {
+ 	struct blame_tree_callback_data data;
+@@ -199,6 +240,9 @@ int blame_tree_run(struct blame_tree *bt, blame_tree_callback cb, void *cbdata)
+ 		if (!data.commit)
+ 			break;
  
- test_expect_success 'blame from subdir defaults to root' '
--	check_blame -C a --no-recursive <<-\EOF
-+	check_blame -C a <<-\EOF
- 	1 file
- 	3 a
- 	EOF
- '
- 
- test_expect_success 'blame from subdir uses relative pathspecs' '
--	check_blame -C a --recursive b <<-\EOF
-+	check_blame -C a -r b <<-\EOF
- 	3 a/b/file
- 	EOF
- '
- 
--test_expect_failure 'limit blame traversal by count' '
--	check_blame --no-recursive -1 <<-\EOF
-+test_expect_success 'limit blame traversal by count' '
-+	check_blame <<-\EOF
- 	3 a
-+	^2 file
- 	EOF
- '
- 
- test_expect_success 'limit blame traversal by commit' '
--	check_blame --no-recursive HEAD~2..HEAD <<-\EOF
-+	check_blame HEAD~2..HEAD <<-\EOF
- 	3 a
- 	^1 file
- 	EOF
++		if (!maybe_changed_path(bt, data.commit))
++			continue;
++
+ 		if (data.commit->object.flags & BOUNDARY) {
+ 			diff_tree_oid(bt->rev.repo->hash_algo->empty_tree,
+ 				       &data.commit->object.oid,
 
 -- 
 2.49.0.rc2
