@@ -1,140 +1,190 @@
 Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947641AE875
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 20:07:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22C41297A49
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 20:17:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745352441; cv=none; b=qekQPgjWj6TusgSBgHmjuCW89lNvZU1Or1mfwwyZlDNhdUYeBQiL0L1b0CX1tT9qyPhmooOX4aKDsu+BUq4aqsImvWpCi0CGmZbqJql9/KBi80KgVp9kC1hmnBKxNjwIXRlhkcTmEde3lET49mHUiC2UMULIZSFAa47/bgKrO0I=
+	t=1745353038; cv=none; b=Qzavxy8GjNk/kgQkWoc1Fb3/H+c5V1gSGgtD0h/bzf3DbqzIlPYqeIoL963pcOsEvkRkoeCYVt75wYTxVeMMKCG+ogT598d0xrGyulEP79IUPBUWgwnY/Y4ONGWQPYx9TNzt4/q2cicNVWtQg51/j+qE/ZU9cKmBbzQ6e0hPqXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745352441; c=relaxed/simple;
-	bh=JPfGr+NGer4Ot5NFrsp2KQNWVx/M4zS41qbgq9aM2BE=;
+	s=arc-20240116; t=1745353038; c=relaxed/simple;
+	bh=zlHlNFObEubwCbGdy8pRZV+5a5SZ/dT/GumKqFCA/08=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=nEqfXcKhnxN6Fk47Ho5rgebSwDAx4HjYWjUH+bIX0JlLbwMaBcNapFpuE+kAS0JbWjvBDU/TnbY4FRqpsRTB+8GFqZkDyZewz0ApDHYn9aojN+2vZ0D1QdPvFOHyihqSimcmbojEwKk5rq9+4ci9Aags034QjE3ggbeBIJoKdWw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dr5PFU7I; arc=none smtp.client-ip=209.85.208.52
+	 To:Cc:Content-Type; b=kGZkJdRiQc6VV5DX9VA0InX3yUf2h5OTJ5H9UHu5bxzlwPP13VRcJiFp/z1VSfVnJzOp3TeFAh4hsxbl0Ztia70jBvMHEmtWZ8c2PxLVIa15XcEcedwN+z1h+CQMg87QCwvM3rjb4TQeYDRa/z8qdkHsosMIL/Y6lEbOKFhuXX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=COla+lWF; arc=none smtp.client-ip=209.85.208.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dr5PFU7I"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5e5dce099f4so6894753a12.1
-        for <git@vger.kernel.org>; Tue, 22 Apr 2025 13:07:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="COla+lWF"
+Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5f6222c6c4cso7772569a12.1
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 13:17:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745352437; x=1745957237; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1745353034; x=1745957834; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jkjpajAPyOSCsXsZo2GIvArSEQkz11cDpwktT1Ntfxo=;
-        b=dr5PFU7IaZF/lvGwn3lXchs2YnC5KWnFkZBDpSH09/DImbohUKamiRj8oBvW+B2n17
-         lBPuudUE+mYj+QF63eEgJoFujOyN/o09UyxZV4IMHdhy2MS9kyvPMYf7IPCVQk4Zysmb
-         lUBE3msDA4zerw8NbjFcCeIf2fa6HvZfPSwnrzE5UvPnoPYK3u1w9iLH00bVApErvM/Y
-         +b+8QA8Qw/GIYsHW3VmovlMos7Hwfn4DIdMfcJhqn/iQzQ4mLU+VR+qwty1oiZCm7fs0
-         rD4YN7XxN/Zgo5ylPlu+VmlICf/sva4SZdNGrS7Y0+H46eERMBaML2iPhRxGks0nm5Rh
-         Ne9A==
+        bh=QOP4ZycpkHGmNicxcmysrMkRcoPkpl9/OIUdMjG/dF8=;
+        b=COla+lWFWdao/bbNs9ASXnL54Lf43VrGq+W5PHvE950/Zp7JA6GSN96pVsigJa18vt
+         7NmXqeYnoovUEeruXc5bNwH+S7OEsfQzyhfM6DibjlcnlL3cQSSqftkISNpbLbvB167V
+         G1zS3dL0WSf8REtFcqn4druHGvTPKm6Qpc2PBwI+NElIJRKeXz4VaeyltZsxN4Nc5DuF
+         Ai1XvntxAVJIjgh0I7c0L/YKTfFxMyCUAaoQ+xx4hOLC3GUhCT4MID1zdi/kqOh2hsMT
+         VDXN5muHoLW4V5wtnN7VlUi4/MmHqThiPTqk3j827gVl9s7GoLamWxE6a0JWNG7TZl6b
+         bQoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745352437; x=1745957237;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1745353034; x=1745957834;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jkjpajAPyOSCsXsZo2GIvArSEQkz11cDpwktT1Ntfxo=;
-        b=MB8ZhO748TFG4X7A+bf38LA2NwagSVH+tkIMoZrvmGk0HEeQwppD+zfuaRPUwnJb5e
-         Mlqw3Ugdkh+NRN+QyhDTT5yCQRlw5cy9M4OiolPYZihH85LEQji1FhC+Ea9m8SMGhYks
-         ibF5/JCkRxQVFavLvanWsNStH/sGX+LxMcW6JBIYEMhTC4otfZkTF1hNnntsBxPKZ2/I
-         SkGZzqqIg1Vx+id+p5HPPr9LRwkjlbgzWznm2PNuIfysqLQm9aTu+G61U11ddbm1idOP
-         ej/yUQDklaAb1ZMHdl86v+o7/Ub4pPgMzSHlCyd4vMcjl0zbIS96o1PRuljRpdWKTkFZ
-         SNjQ==
-X-Gm-Message-State: AOJu0Ywd7QtjiJDdZ3Ltj45lJ8FrnOV7h0QgcChTsc+RozEYf2Tg8EYv
-	Uv37HSfclJTi7zES49ZoPFyNr3ec2dJOD7vpA2okCOdE+r1fstWtjoiZJhYYzU2TdIdO2xy39l+
-	QnWeOCsg4KqqceD3fSB7VFqi+3FX7+rtdoy53BQ==
-X-Gm-Gg: ASbGncsgwTYrbRDp3rxu1NIYu629tjdzb9Vv1yYPiYOWxoLOkhOwRZtCXAmboFBNTxF
-	j2gytQpe58PQUo10aqOrpdP1qlHb8m2/6QhOf2Gz3tI0V9pdjE7zc0Ox52mS0gfR62rti6TskFS
-	EXunQzq5KTWquuH4GlCospdV7g00alY7fwO3pSsgLtUuQuOf0Sp7rC+5mtKyC3VixRAw==
-X-Google-Smtp-Source: AGHT+IHiqPbVIlrsFvkSBFHpX1b/HMRYXHJfnZdhonqmlQzfMu27f+uoV5mWL8bTop6QN9vmTx++0rqs9p8LXzdtewQ=
-X-Received: by 2002:a05:6402:268c:b0:5f6:c5e3:fa9b with SMTP id
- 4fb4d7f45d1cf-5f6c5e3fc38mr2393692a12.7.1745352437060; Tue, 22 Apr 2025
- 13:07:17 -0700 (PDT)
+        bh=QOP4ZycpkHGmNicxcmysrMkRcoPkpl9/OIUdMjG/dF8=;
+        b=HUwDtSz7WAD+qfyT8nLj6AUipVYIZB19X2RuD2azrEUHxCmslJiX5cG5GKrYpoX/M5
+         y2z1nTviszFCvO1jFjaTeRCM/IGnoGR123RO+D0TrACFBvjh07LwL7yl+tHbqaUHezzk
+         jAOtSqUlSGFncRUJIAzIU0in371L4TiKMHnpgvY5jjbpNg/u28NyKEQ6x5e/9XJo0St6
+         FxhL80E7rpZyrWPliHDN5+efbRw3GWnjWwQhVAQYqadR6ZwdGfAqvjHI8tSII1VAGL77
+         h5pqsm8Kl4RripBHBGDKgNbbRBdycg4LfZUFyrI9kB5FoOHihMLv9p1R32HX5JD/zL4t
+         Gw4A==
+X-Forwarded-Encrypted: i=1; AJvYcCUPCnAbsDy4QTefSFF0oooxCXAnidOOtVjXuRzwEVMsA5sInzdTziO1yarS62HcymjNKak=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXN1DB3qhWZqlNNbcT6LFboG8vM4Z5aHwhIHKZDxYxR4estgb1
+	A25aRG214nD8+g1QAxsYLG1NyjFG5QSnF+3acojcD9ejMFOC+z8m+JFRH+j/B57ubGpXsUMetJG
+	HM8MpSs1vuugtdsW7SQJ7UmK0hsc=
+X-Gm-Gg: ASbGncvNTlJo7KR5JhZ6q0k02aebtQKbwZm7rijusVHCSB5R1fOk8mkgj+E6Q5J2feN
+	/oki6KR8loUHEO19VPRxz1mnY369CaxSrzCEt3Bt3FXTIPtc/o2ztE5RIHugRzzkzILTT9B67Bm
+	E3Gna4neQXapBkpLDK0S5X7gWDS3+eJEYX9xiXi6mWH3LhUbNUUEsxq/4=
+X-Google-Smtp-Source: AGHT+IFawLlhbEGOz3NihKJJoWtf2Y/I+mbX+W20DQ6psew1be2D+lHR7s5bsqur/atVZ39Y7FS5W/hqz6BPZUN80oA=
+X-Received: by 2002:a05:6402:2111:b0:5ec:c990:b578 with SMTP id
+ 4fb4d7f45d1cf-5f62855ada7mr15234368a12.19.1745353034293; Tue, 22 Apr 2025
+ 13:17:14 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250205030642.95252-1-ben.knoble+github@gmail.com>
- <xmqqbjvgr11y.fsf@gitster.g> <CALnO6CA_vF4huxMx6jSS4SVjS4+EO9K16Msco-vMUDzSoYRDOg@mail.gmail.com>
- <xmqq34gsp9tr.fsf@gitster.g> <CALnO6CC71A_Bn+RhyXfmhiNCn2vFGJ+WCs8+dAnpQvGFyNZyfA@mail.gmail.com>
- <CALnO6CBi-c9U-UskTzjNBH+k8VQybdSshYgs+A3_DRH-iz7zHA@mail.gmail.com> <CALnO6CDq5BRogPCcDozTi1NEYL6nCoEDaNkFdq2+1V6vVRy=1g@mail.gmail.com>
-In-Reply-To: <CALnO6CDq5BRogPCcDozTi1NEYL6nCoEDaNkFdq2+1V6vVRy=1g@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 22 Apr 2025 16:07:05 -0400
-X-Gm-Features: ATxdqUHPwTm0bP9I45O8Jo9ZiMa5wdqmeR4R7KnMkY-F4jhvVpNk9602PGaKt8g
-Message-ID: <CALnO6CCMP5qS0f8oMyjav03CzT1AYSCiVCex1C7nqqxg=k7g-w@mail.gmail.com>
-Subject: Re: [PATCH] pull: allow branch.<name>.rebase to override pull.ff=only
-To: git@vger.kernel.org
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby> <20250408125521.GA17892@mit.edu>
+ <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
+ <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com> <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
+In-Reply-To: <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Tue, 22 Apr 2025 16:17:03 -0400
+X-Gm-Features: ATxdqUGg4duAo_M8wpRD7MAG6PCWcP2gui9ALfFvtCaAH24XVCXcTroK9hKTdIw
+Message-ID: <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+To: Remo Senekowitsch <remo@buenzli.dev>
+Cc: Nico Williams <nico@cryptonector.com>, "Theodore Ts'o" <tytso@mit.edu>, 
+	Junio C Hamano <gitster@pobox.com>, Martin von Zweigbergk <martinvonz@google.com>, 
+	Git Mailing List <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, 
+	Scott Chacon <scott@gitbutler.com>, "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, Apr 22, 2025 at 4:05=E2=80=AFPM D. Ben Knoble
-<ben.knoble+github@gmail.com> wrote:
+On Wed, Apr 16, 2025 at 7:36=E2=80=AFAM Remo Senekowitsch <remo@buenzli.dev=
+> wrote:
 >
-> On Tue, Apr 22, 2025 at 3:58=E2=80=AFPM D. Ben Knoble
-> <ben.knoble+github@gmail.com> wrote:
+> On Mon Apr 14, 2025 at 9:54 PM CEST, D. Ben Knoble wrote:
+> > On Wed, Apr 9, 2025 at 12:56=E2=80=AFPM Nico Williams <nico@cryptonecto=
+r.com> wrote:
+> >> Let's nail down the semantics of these change ID headers.  Here is a
+> >> proposal to bang on:
+> >>
+> >>  - change IDs get preserved on cherry-pick and on `pick`s in rebases
+> >>
+> >>  - users can manually remove or change these change IDs, naturally,
+> >>    though generall they would not
+> >>
+> >>  - the actual change IDs are either free-form or they are URIs -- pick
+> >>    one, but if they are URIs they should be URIs to CRs, and approved
+> >>    CRs should perhaps have links to integration reports etc.
 > >
-> > On Wed, Feb 5, 2025 at 4:14=E2=80=AFPM D. Ben Knoble
-> > <ben.knoble+github@gmail.com> wrote:
-> > >
-> > > On Wed, Feb 5, 2025 at 12:42=E2=80=AFPM Junio C Hamano <gitster@pobox=
-.com> wrote:
-> > > >
-> > > > "D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
-> > > >
-> > > > >> So, I dunno.
-> > > > >
-> > > > > Agreed that if pull.ff=3Donly is supposed to override all other o=
-ptions
-> > > > > (except those on the command-line), this might be wrong. And `git=
- pull
-> > > > > --rebase` works in the scenario I described.
-> > > >
-> > > > Yeah, I view --ff-only as a safety measure for the user to say "my
-> > > > workflow is to make sure I do not have anything locally cooking on
-> > > > my branch when integrating with the other side, and stop me if I
-> > > > somehow made a mistake".  If rebase or other options override, the
-> > > > folks in the rebasing camp, unlike in the merging camp, cannot
-> > > > benefit from such safety measure, which worries me.
-> > >
-> > > Is there, then, an existing combination that means roughly to treat
-> > > `git pull` with no other options like this:
-> > > - if not rebasing, forbid merging and be equivalent to --ff-only
-> > > - if rebasing is requested (because of branch.name.rebase or --rebase
-> > > or =E2=80=A6?), allow it
-> > >
-> > > In other words, something like a pull.merge=3Dff (or ff-only) meaning=
- to
-> > > apply the rules I've attempted to describe, in which case I would
-> > > leave pull.ff unset?
-> > >
-> > > I suppose pull.rebase=3Dtrue is close, but is not quite the same for =
-me
-> > > (I'd like to be warned when this would imply a non-fast-forward for a
-> > > main branch, though the "rebasing" logs might be sufficient)=E2=80=A6
+> > Using URIs [to code reviews] looks to me like it makes some
+> > assumptions about what creates or consumes these headers, right?
+> > Especially since the URI should point to a code review=E2=80=A6 Is ther=
+e a way
+> > to do that which is downstream-agnostic?
 > >
-> > FWIW, I found some tests that indicate, to me, that I should use
-> > pull.rebase=3Dtrue (or merges) + branch.<name>.rebase=3Dfalse for the c=
-ase
-> > I described: https://github.com/git/git/blob/08bdfd453584e489d5a551aecb=
-dcb77584e1b958/t/t5520-pull.sh#L505-L514
+> > Further, and maybe this is my ignorance of Gerrit showing: how would
+> > you attach a URI to a local commit when authoring it? You don't have
+> > the review URI when running `git commit`, do you? (Maybe I
+> > misunderstood; I'm seeing an odd chicken-egg problem here.)
 > >
-> > So it turns out my itch was already scratched.
+> > Which begs another question: what/who applies the initial change ID to
+> > a commit and when?
 >
-> I left out the commit reference, whose message described what I think
-> I originally wanted:
->
-> > my main or master branch is typically fast-forward only, while I want m=
-y
-> > topic branches to be rebased; preferably, all of those things happen
-> > for just "git pull."
+> These are all great questions, which the originally proposed format
+> (fixed-width reverse-hex) has answers to. I think a URI would be
+> strictly worse.
 
-Since I apparently hit Send too fast, dropped the CC list to just add
-the reference I repeatedly forgot to paste:
+Well, I think we still missed "what/who applies the initial change ID
+to a commit and when."
 
-6b37dff17f (pull: introduce a pull.rebase option to enable --rebase, 2011-1=
-1-06)
+But the treatment below is something I agree with and failed to
+convey, I think: namely, URIs seem to encode too much
+"unportable"/"specific" information in Git. I feel like the current
+design is not really "tool-agnostic" as much as "built on a universal
+core." That seems valuable and prone to more longevity.
+
+>
+> * Using a reverse-hex ID makes no assumptions about what consumes these
+>   headers. There can be multiple different consumers which treat the ID
+>   differently with different URI schemes.
+>
+> * Attaching a reverse-hex ID to a local commit when authoring it is
+>   trivial: you generate it randomly.
+>
+> This is one of those cases where being maximally restrictive about the
+> format will enable maximal flexibility downstream.
+>
+> One example: GitHub has a URL scheme that looks like this:
+> github.com/org/repo/compare/<ref1>..<ref2>
+>
+> This doesn't work if the refs contain slashes, as branches sometimes do
+> (e.g. feat/foo, username/bar). If the change-id is a URI, this type of
+> URL scheme doesn't work reliably.
+>
+> That is not to say we should design the change-id around GitHub, it's
+> just an example how making the format more free-form (URI is more
+> free-form than fixed-width reverse-hex) makes it more difficult to get
+> stuff working downstream.
+>
+> And lastly, laser-etching the URI scheme of one particular tool into
+> your commit history means the history is at great risk of degrading
+> over time. URI schemes change, domains change, tools become outdated
+> and are replaced.
+>
+> Adding some ephemeral configuration to a tool that constructs a URI out
+> of a reverse-hex ID on the other hand is trivial.
+
+Yep.
+
+> > PS This discussion feels somewhat related to the classic GitHub
+> > problem of not presenting interdiffs/range-diffs: GitHub shows a
+> > too-flat source diff on force-pushes. Perhaps better web UI tooling
+> > about interdiff review (which I think is one of the things Gerrit
+> > does/wants to do?) makes change IDs less necessary, since interdiffs
+> > help connect evolutions of commits?
+>
+> I think it's the other way around: Building a code review UI built on
+> git and centered around interdiffs today is _hard_, that's why we don't
+> have it yet. Adding change-ids to commits will make it much easier,
+> paving the way for these tools to be implemented.
+>
+> Remo
+
+Fair point, although GitHub's detection of force-pushes makes me think
+it could split a PR into versions at that point, cross-link backwards
+and forwards by one version (from the force-push detection), show
+range-diffs between versions based on the target branch of the merge,
+and even follow the cross-links to show an overall sequence of
+versions.
+
+But I don't work there, so presumably it's harder than that :)
+
+I sincerely hope to make it easier if it's really that hard! And,
+though my opinion matters little, I'm having a hard time piercing the
+conversation to see a "universal core" that solves the desired
+problem. Maybe I'm not reading carefully enough, and maybe a summary
+would help. I greatly appreciated the work of previous folks to
+summarize the current thread status.
+
+--=20
+D. Ben Knoble
