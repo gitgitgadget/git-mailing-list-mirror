@@ -1,311 +1,171 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20FAD2980CB
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 18:53:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE3E438382
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 18:56:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745347998; cv=none; b=XOAtFBbJNxO6Cn+fDqt7SornbGKHgT3vDy1wuT+x8fnpOD+CQ5J86WkIDbIfE9ddGtaqD3sidpvQNjmNfy6oCgiHUgMB70xChqMJI0E2c8jTHVSyBel4EABKLbkZxpejNiFMUQlk6RPTBetdcjBYElZ14jQtmfxICKm9qCH4I+4=
+	t=1745348174; cv=none; b=FF1J49hB1VCsGjQAEHk9Iey6Rix1ls7uH6qfk0Xlhi+N0nFjftwSf4sfXcdF2NwxLb43ZWxVwbMf/TnrtN+lp1xhfpX68NsJx/Kj+Scex3ZvhyHpbvVJPV0etRsjZFpyQt2XCBQsX+FogWr+2Qprc3iXt9LtoLzEI//gofWVtgE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745347998; c=relaxed/simple;
-	bh=kE+jwEP71fguLt1KbSyRizI79lJlaPuBeSAkYA7Yjjk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=diLI0LQlsKtqEGIHo5vUGjhc7nngn3SejJIWIisfnzzbwwbA3nP9v/kdQWX2wr50fW5RJNGehQ2oL4N7SHK4YOjSzJkAr3k+40r02V5u4nm8aK0BSlLdr3H554rQUe/uviFjzwnO8wx/MwS9LY1EQjdqpNdRu4+ao2wIUdPjy4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MNdr06RD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=q5qk45gw; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745348174; c=relaxed/simple;
+	bh=CwaAaalf7tQ39Q7EBVMgLn2CQYF3cYm5aZoUyAUPSIA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=AjMa5mlo4WuLOypf+Ir4yz+FVkxPzcAqc7pDNA+43S5S/fPTW5wBjxLLyEKAITJ4O0Eogj50i5rbny2yzsjAFqSa4ijGronKHN+YRg7EHw/adp5eM/XIUs5EJp02owhDAftVZbZQ0RB1Pnot7Gw8bDzEcdBL+/HuS4BIZLQ/wr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O+MRF6KD; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MNdr06RD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="q5qk45gw"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 007F825401A2;
-	Tue, 22 Apr 2025 14:53:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Apr 2025 14:53:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745347992; x=1745434392; bh=GUpsasMyEW
-	yOfTYT1StDcjdPCzQexTMNYJHdqqM57Ss=; b=MNdr06RD8em26E6YqiMMr/cmPN
-	rcvm8uBAl7sUq70XIXlfXSJIcwGjW+e1cNejyov3qhs4r+2bZVRbIYyinOHSocch
-	g3aWL7NdkwO7kdq64oALEFnnk2Zw5oJKX/vXVTevz67GqdRUg3SZt8jy4GfqQ/j+
-	+HLqDuNwbS3ndHgB4+Sma88vrPTn4V2rr/9/kK58umsjcOLFPXWQrhVUSg9D4mAH
-	X2NmHidV5iNVOW/R7Vac/LKXZKkc7Qu2YY1jEFauDMIYmdT84FSALO5VbsIuCy6z
-	YEypXUc9ULEH43DFRTxUHjn1ZCHWXM5P9RI0mSvs21WTp+jks6AlshW0t+tA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745347992; x=1745434392; bh=GUpsasMyEWyOfTYT1StDcjdPCzQexTMNYJH
-	dqqM57Ss=; b=q5qk45gw9Ufy/h/NqsRQAS/gfSUWeK2fXftzpzh4twLTgtRIXzb
-	Np4+8PcwepRkxfhbZUtUFz2Pfbf/SwXfHfl+5WBzoNPxfCOgAyXWx7nh8HPCa1ue
-	uL+wJ+C7PGr2RIa4N0QnUGb7qBtF3yHZ53q4xerxYH31grzHBBLG1yOir8CUSEtV
-	ONy0jsi3iI6zcE9DHC40kkn6lDejGOreiCOG6F3iw+NA8zd7cs2BGihtKGYbgfeT
-	P9nqVx8G6MjQ93/wZa6G1tGY/65YREcqIUhCjitkgcsFpUlvjP706dy9S+GPmRyK
-	2LfJzvkNPROK+BihzYNke9FaeQ6GmVk/A7w==
-X-ME-Sender: <xms:mOUHaJErbWaNUzyRGLs6w06bw6GPHwawpdhSCK8oTxpZSM7cZ-ZfPQ>
-    <xme:mOUHaOXuQeFwKXaBOALgB0ZYufoQGrU4Gyxbfh79vZdN--D58j8LF7DXwthG-Yhy0
-    Qblq8PpaFN07xx-vA>
-X-ME-Received: <xmr:mOUHaLLNMO4zXSHPzmELcQVeZzyWvgrc9Kjg_ojmGYz2EHiVizoWaEtiVdnp9Ip3kDGAvok8g5HREuZ-uWjgs8t-fUrk2NvrK8uO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeghedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
-    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhutggrshhsvghikh
-    hiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehpihhothhrshhiuhhprgesghhmrghilhdrtghomhdprhgtph
-    htthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mOUHaPHskIQaPh6o4c89ihkY-GHuOKch_tzACSQ_N4QCl5KPctw1ig>
-    <xmx:mOUHaPUsBU8i1Y0qzW5fPl-1RLfEnKM-SqR5LpNNnsJkxyzbpQgq9A>
-    <xmx:mOUHaKPeWrTXOn5HSkYD_hVxfq7QngFZp0q09ZWB-UcTS3G91qDCTQ>
-    <xmx:mOUHaO3OmHlFVNWIkK1ckXhpfIthsGrA50JjAXUopVh0dFyNXAUqCg>
-    <xmx:mOUHaCpJN-Kb_V13x11r_Vn0ZMK8bBSbBdG6_IcYxtLMnSvsPTQYYnKA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 14:53:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  lucasseikioshiro@gmail.com,  peff@peff.net,
-  piotrsiupa@gmail.com,  sandals@crustytoothpaste.net
-Subject: Re: [PATCH v2] Dir: Fix and test wildcard pathspec handling
-In-Reply-To: <20250422160547.577524-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Tue, 22 Apr 2025 21:35:47 +0530")
-References: <20250422160547.577524-1-jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 22 Apr 2025 11:53:10 -0700
-Message-ID: <xmqqecxk3u5l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O+MRF6KD"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5240b014f47so2125202e0c.1
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 11:56:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745348172; x=1745952972; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LUFNZfMdSWHVyq0PhkQTU/6dpChmFpKwvHp2+7NfawA=;
+        b=O+MRF6KDScbWDOBJrl5voe1MjpegTs3c/cpTLp/MnPQRR4d9GccLkqqIGlLUFQrqId
+         GJDAja1N7CUzPQsBMOXwXwacpq9OX27XzIKGiJ9jEMWCGk3CsYUVfLP2cuhE3hQQg4sO
+         4PcqfaEkU2+B7OG6gwR2SNw6XsFDtGrpZiwG9DBaTPR1yzYNdxdQRhUMv0TaX3ctvm0f
+         0Lb1KQKuvr+Rv+t5wM3d9icW4T+nwvlxyJ7Ae15lShLBKSBTsYJMjylR8EV0Btv3vu5S
+         OCreQD8PeE4iTYZCmO3F+4J4ldjR+8buPSpPsoAJXN4WvDgtXxfxCwYOlBmQDwwUKzc5
+         kwiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745348172; x=1745952972;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LUFNZfMdSWHVyq0PhkQTU/6dpChmFpKwvHp2+7NfawA=;
+        b=iJirHgxjGKDsrG/HsRoTABRIDNhVkZElPccOeVYV/yKHJvBDjIsg9qVjl9KlODT83U
+         YdtkxCXr2G6GfOJOT822wAUJF/A2JpzdaX4U+89D3yGJhgqANt0eJ3xwXcYB2FXLTyeC
+         HIG31mN0L7S8rCV0ax/yZEzdG7S36AQd6rfM3IJYmqP1oXQZ6ZoPINSqXK4AK+OTaIue
+         4vhZfP10GCbOX41VglRzjojoGzadshiqjhjjBd4Fl5w5XZfq65kFb5Dl9Uxhttx7pwGc
+         vY15auo5dIQuMEHNU37LthjsaL6Wv8EL2MYcicSZ4J+oi+8EMgsjNxanNJhI5tOwAfuy
+         Na3A==
+X-Gm-Message-State: AOJu0YwTIqMJiGYTkquoVvYRswtYRWrURuG2p9A4X1V5CrCt+67OW+6Y
+	NqJAvuno6WxYpog2po+9udiMn5AGn5mDj9rY1X3icY0/OcoFZ7a01negfDPrvm1bdlmfJrzZG3s
+	ibwyGKewx1+7AMBq99eM6yY9ZHO4=
+X-Gm-Gg: ASbGncvWjJcafMcSe27Jj98SmpOFU0LnjYgCN2MIZ5gJ+uiSKQcHs9ItIXY3dqlx4fX
+	nrAkG8xiGO+YQ78VhXZuLqQ4zxDBs6wfN5K2ffyiJSzNbYbFZPbc50O4SMIVY8qFcfYzVpXLicq
+	yQxar8xAbpTFZbMREjLqBNRxUWdnksIikNaJ13WK6Nq4fj+QzbQNBc1rHs
+X-Google-Smtp-Source: AGHT+IHG/Y7P2SN3gKi4IeBbOrGnu6fU/0LHP0BPVTBm9XYTsk1uBeh2q76zvAl0Vlfn8WhrYK+PHxYODmSqqa4cGWE=
+X-Received: by 2002:a05:6102:298e:b0:4c4:dead:59a3 with SMTP id
+ ada2fe7eead31-4cb800b75d1mr9984798137.2.1745348171681; Tue, 22 Apr 2025
+ 11:56:11 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Apr 2025 14:56:11 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Apr 2025 14:56:10 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <17c2eb4f-e291-4189-9846-0f42bdead01d@gmail.com>
+References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
+ <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
+ <xmqqh62i6jli.fsf@gitster.g> <8b380da4-8d27-4efe-85fd-3bb599188fe9@gmail.com>
+ <CAOLa=ZSR=7TEWLHa-wzBB4x+4+-BH3UC3G7s24Bc26JH63QKOA@mail.gmail.com> <17c2eb4f-e291-4189-9846-0f42bdead01d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Date: Tue, 22 Apr 2025 14:56:10 -0400
+X-Gm-Features: ATxdqUGi1a5LQyAGkvGhii4LWXh3bJMPSOSh33aLhWvrFmCTAnoSZB6tNlqTPXE
+Message-ID: <CAOLa=ZSi5FuhpaAiGn5OydLUXhkWC9VrkOvXKwTeP=9S2uhKgQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] meson: add corresponding target for Makefile's hdr-check
+To: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000c877ff06336289fe"
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+--000000000000c877ff06336289fe
+Content-Type: text/plain; charset="UTF-8"
 
-> Subject: Re: [PATCH v2] Dir: Fix and test wildcard pathspec handling
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Subject: dir.c: literal match with wildcard in pathspec should still glob
+> Hi Karthik
+>
+> On 21/04/2025 16:33, Karthik Nayak wrote:
+>
+> Thanks for putting this together, I've left a couple of code comments below.
+>
+>>      Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+>> index 37541f3d10..a09fcf4d72 100644
+>> --- a/.github/workflows/main.yml
+>> +++ b/.github/workflows/main.yml
+>> @@ -414,6 +414,16 @@ jobs:
+>>       - name: prepare libc6 for actions
+>>         if: matrix.vector.jobname == 'linux32'
+>>         run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
+>> +    - name: install git in container
+>> +      run: |
+>> +        if [ -f /etc/alpine-release ]; then
+>> +          apk update && apk add --no-cache git
+>> +        elif [ -f /etc/almalinux-release ] || [ -f /etc/redhat-release ]; then
+>> +           dnf -y install git
+>> +        else
+>> +          apt -q update && apt -q -y install git
+>> +        fi
+>> +        git config --global --add safe.directory "$GITHUB_WORKSPACE"
+>
+> I'd be tempted to check for which package manager to use by using
+> `command -v`. That way the only distribution specific knowledge we need
+> is the package manager and we don't have to worry about the names of the
+> various release files in /etc.
+>
+> 	if command -v git
+> 	then
+> 		: nothing to do
+> 	elif command -v apk
+> 	then
+> 		apk add git
+> 	elif command -v dnf
+> 	then
+> 		dnf -y install git
+> 	else
+> 		apt-get -q -y install git
+> 	fi
+>
+> The commands above omit anything that updates the package cache as we do
+> that anyway in install-dependencies.sh and we only really care about
+> getting some version of git installed here. It also uses apt-get to
+> match what we do in install-dependencies.sh
+>
 
-or something?  "Fix" implies something may have been broken and the
-change was an attempt to correct it, but otherwise it does not say
-anything about what was wrong and how it was improved.
+Seems like this is a no-go, since apt-get fails [1] without first
+updating the package cache. So I'm going to do that for all the
+commands, which should also ensure that the package cache update in
+'install-dependencies.sh' is mostly a no-op.
 
+[1]: https://github.com/gitgitgadget/git/actions/runs/14598683520/job/40951070359?pr=1905
 
+> I also wonder if we should ditch the checkout action and use something like
+>
+>      git clone --depth=1 --single-branch ${GITHUB_REF_NAME} \
+> 	${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git
+>
+> so that we know we will be building from a git repository.
+>
+> Best Wishes
+>
+> Phillip
 
+--000000000000c877ff06336289fe
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: d42408f847823e19_0.1
 
-> Ensure wildcards expand, even with literal file match.
-> Fixes 'git add f*' skipping files like 'foo' if 'f*' exists.
-
-The usual way to compose a log message of this project is to
-
- - Give an observation on how the current system work in the present
-   tense (so no need to say "Currently X is Y", just "X is Y"), and
-   discuss what you perceive as a problem in it.
-
- - Propose a solution (optional---often, problem description
-   trivially leads to an obvious solution in reader's minds).
-
- - Give commands to the codebase to "become like so".
-
-in this order.  In the above, a clear problem description, an
-observation on how the current behaviour is not what you want to
-see, is missing.
-
-    With a path with wildcard characters, e.g. 'f*o', exists in the
-    working tree, "git add -- 'f*o'" stops after happily finding
-    that there is 'f*o' and adding it to the index, without
-    realizing there may be other paths, e.g. 'foooo', that may match
-    the given pathspec.
-
-    This is because dir.c:do_match_pathspec() disables further
-    matches with pathspec when it finds an exact match.
-
-or something.  The first paragraph gives end-user visible behaviour
-(so that readers can try it at home if they wanted to), and then you
-add a bit of explanation of the reason why it happens in the current
-code.
-
-Then it would be rather obvious how to correct it, so you probably
-do not have to repeat what you did in the code in the log message in
-this case.
-
-> Use 'f\*' to add the literal.
-
-The proposed log message is not a place to give an introductory
-shell syntax lesson to your readers.
-
-Remember, what you _did_ in the patch can be read by readers.  What
-they may need help reading your patch is _why_ you did them, which
-may not be obvious at times.  For example,
-
-> Tests added for add and commit where dir.c logic applies.
-
-your readers can see you only covered "add" and "commit" in the new
-tests, but they cannot read your mind to find out why you did not
-add tests for, say, "git rm f\*".  If you want to say this line, it
-should explain how add and commit are affected by the code (and
-possibly, how other commands are not affected, but that is
-optional).
-
-> Skips windows specific test.
-
-Again, from the code we can read the test runs only on platforms
-that can do FUNNYNAMES (not necessarily Windows-specific).  If you
-want to say this line, it should explain why.
-
-    As some file systems are incapable of holding files with
-    wildcard letters in their names, guard the whole test script
-    with FUNNYNAMES prerequisite.
-
-or something.
-
-To those who have been intimately following the discussion, it often
-is understandable without some of the above, but we are not writing
-for those who review the patches.  We are primarily writing for future
-readers of "git log" who are not aware of the review discussion we
-have on list, so we should give something to prepare them by setting
-the stage and stating the objective first, before going into how the
-patch solved it.
-
-> reported-by: piotrsiupa <piotrsiupa@gmail.com>
-> Mentored-by: Jeff King <peff@peff.net>
-> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-
-Unless this is part of a project done as some mentorship program
-like GSoC and Outreachy, Helped-by: would be more appropriate.  It
-is not like Peff is assigned as your mentor for working on this
-particular "fix wildcard" project, is it?
-
-> -		if (seen && seen[i] == MATCHED_EXACTLY)
-> +		if (seen && seen[i] == MATCHED_EXACTLY &&
-> +			ps->items[i].nowildcard_len == ps->items[i].len)
->  			continue;
-
-We usually align the first letter of this second line with the first
-letter of the same expression (i.e. "seen"), so this looks a bit
-unconventionally indented, but the logic is correct, it seems.  If
-the entire pathspec is without wildcard, then there is no reason to
-spend more cycles to look for more matches, but otherwise, we may
-find other paths that may match, so we do not continue and perform
-the rest of the loop.
-
-OK.
-
-> diff --git a/t/t6137-pathspec-wildcards-literal.sh b/t/t6137-pathspec-wildcards-literal.sh
-> new file mode 100755
-> index 0000000000..abf837bf6c
-> --- /dev/null
-> +++ b/t/t6137-pathspec-wildcards-literal.sh
-> @@ -0,0 +1,282 @@
-> +#!/bin/sh
-> +
-> +test_description='test wildcards and literals with various git commands'
-> +
-> +. ./test-lib.sh
-> +
-> +test_have_prereq FUNNYNAMES || {
-> +    skip_all='skipping: needs FUNNYNAMES (non-Windows only)'
-> +    test_done
-> +}
-
-Do not do 4-space indentation.  We indent with HT (tab).
-
-cf. Documentation/CodingGuidelines
-
-> +reset_git_repo () {
-> +    rm -rf .git &&
-> +    git init &&
-> +    rm -rf "actual_files" "expected_files"
-
-If you have the habit of using "-r" unnecessarily, lose it.
-
-	rm -f actual_files expected_files
-
-Also it is easier to readers if you leave these "obviously literal"
-names without quoted.
-
-> +}
-> +
-> +end_test_properly() {
-
-Style.
-
-
-> +    cd .. &&
-> +    rm -rf "testdir"
-> +}
-> +
-> +
-> +test_expect_success 'setup' '
-> +    mkdir testdir &&
-> +    cd testdir &&
-> +    touch "*" "?" "[abc]" "f*" "f?z" "a" &&
-> +    touch "**" "foo*bar" "hello?world" "f**" "hello_world" &&
-> +    git init
-> +'
-
-This is a bad pattern.  What happens if any of the statements failed
-before or after you did "cd testdir"?  The next and subsequent test
-may or may not run inside "testdir".  The call to end_test at the end
-would then go one level up (usually leading you to the t/ directory)
-and try to clean things up there, which is not what you want.
-
-> +test_expect_success 'check * wildcard in git add' '
-> +    git init &&
-
-In the previous you did "init".  What is the reason why you do
-another in the same directory?
-
-Rather, do things perhaps like this?
-
-	git init test-add-asterisk &&
-	(
-		cd test-add-asterisk &&
-                prepare_test_files &&
-		git add \* &&
-		cat >expect <<-\EOF &&
-		*
-		**
-		?
-		...
-		EOF
-		git ls-files >actual &&
-		test_cmp expect actual
-	)
-
-That way, each test will be more independent from other tests.
-
-Also unless you have to test with large quantity of data and want to
-remove them from the disk as soon as you are done, do not sprinkle
-your test with unnecessary "remove the repository and test data"
-code.  It is easier when tests do break if you leave them be.
-
-Also notice the use of "-" prefix to cause the leading tabs stripped
-from the HERE-DOC lines, and quoting of EOF (here I used \EOF for
-brevity and because it is customary to do so but you could use "EOF"
-or 'EOF') that causes the HERE-DOC text to taken literally.  They
-are both conventions used in this project to make the here-doc text
-easier to read.
-
-The prepare_test_files helper may do
-
-	prepare_test_files () {
-		for f in "*" "?" "[abc]" "f*" ...
-		do
-			>"$f" || return
-		done
-	}	
-
-I'll stop here.
-
-Thanks.
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nSDVra1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOEpaQy85RW8waitET0ZDZEpmRzJGZjErcStnK2NCTQpIcVMyK01XVWZ6
+QUhMQnhYSEtTVFVwYW5rcmFCNkZ3anNtUDZ0REhDSUROM0NnbmJQbkM0NlkyOWZzVVUzeVd4ClQ0
+dnh1VldKdWZuaS9semlaWEN6RTZsWE4wSndxQXFXZDFIRDlFNUhZTnpJNUg2cFo1WklwRVhXMzJO
+ZDNORG0KSXRSMjdLRVgzTXQzVENJU2NPdXJubTBMbzlhTUVZbC9SbmVScnc1OTBTejhjZ2xrUkJM
+QUNrbzR4eVdMZm5QdApCTTNMR1FxT3Y3Skl1Q2p1UGhpM1o2MTVsZ0YrTE55ZEVrRnVPNElzbGVp
+Ymp5TUxuT05XdFFmUlZCWUhKZTdjCk1jVzJGeDN0SG1qaFhJMkk5NEU0SkVzU2tsamkva1llWW5H
+VC9JZW83enc4K0VMd2dQc1RGVUlWdjhFNm9IdmgKcVBYcGp4R3ppRVJoMHVVWTRUbmc1L2FoTWxx
+aThVWTcvOFFJZ3JBRmx0MmdodlorUk02ekI3MHM0OG5hKy80RgpOQ0dFVy9MUmRmd2ttQytZRnJh
+b2Y0UmRVYmZjWUlIdVM1dGMvSWZTdzJBRUl2RTE4WEg3SGlDUFNtK0ZvZFFmCkE5S1orNDYwMmpD
+YmZWdTVrM00zVTlTR0N5UjROQ3VjS3dDUzJBUT0KPVlIcGYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000c877ff06336289fe--
