@@ -1,104 +1,73 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6EF2C1E2A
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 20:30:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C782BF3EF
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 20:33:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745353825; cv=none; b=htgGB/TPOxw2hKoGkvGwg/BeLi99jBIVfcMEDKmyKaOLvrXiAaAXpHLRmcVBh8KwTyKmQeYBFM/sDAwrB+iwC79G6SRQuK+aG74GvfvVm4s/B65lJXZXNkN+mvHH+ycDa4dCHp9m+DObFJEg6mes7wnD0EPz0gPPThEKd66ui/M=
+	t=1745354039; cv=none; b=mPr6VuyIz1Ubph0yAkNJOCTKJIP+zHbr23SUX+72lzRLHsKBn6c+OJ1cKhebXG+pSG8wfo5sCnY4DGTe0dR0GwaR7I0jCF8yfhlWM1O4rk1ZJ7NKshWFV9sjvkr5P4iuqMD2kfAkcoMzcR9XjfkGlSUMLuW5McmNnh9zKgEe5UI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745353825; c=relaxed/simple;
-	bh=7R4SxEXYi6+zFkFl0ExZ89fdxdNxOK6Gy1x10owjb0g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=enPQIvcM0uobxEakFQCGOb+1V4zygjXC3q37F2I8flafBj3yz78lZuiHSpvWZgpEwakuDlumNTpxz2q9rNch7sdRKCo5vPuVE0McyX7NmUOH2s3CcqUPDiL+cqQGY41s/gNk962ePqewxnO7Ggdqn3umlQhH9YTkgnZtLqDdUe4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LBkhYp+g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=xnsuJu8T; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LBkhYp+g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="xnsuJu8T"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5AC0411401CD;
-	Tue, 22 Apr 2025 16:30:21 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 22 Apr 2025 16:30:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745353821; x=1745440221; bh=7R4SxEXYi6
-	+zFkFl0ExZ89fdxdNxOK6Gy1x10owjb0g=; b=LBkhYp+gkPa1HtLf425yG+tWX3
-	v2mLpzbXLBJBCz1xyoIytsNrarmxRkvXtIbkx7fW9WRlb6A6ucEc97WTMplyDvTJ
-	eRw/wqlpOawIIgKxtFZvo7mX1VTt0TgyZyabSRmvxxLVOujotnGAUwx+IqF0UuOD
-	LDZBFcV0xVI5Eqf3i/3UhumM8WLrGoS81Q5pWEO15Syjvt56C16xL4t6eQnJm3m6
-	hjZc+jTJaQdaOZoHxqT07iCMAAF38jQixlKz6lICe+dC6N7mvfOHAd+K+sr6tENK
-	CAKV8OHiq4JQX4ERa5AAnPP5SLuRqDg9/YnyPnO8+6nBT/qWjZuhRjCsZJEQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745353821; x=1745440221; bh=7R4SxEXYi6+zFkFl0ExZ89fdxdNxOK6Gy1x
-	10owjb0g=; b=xnsuJu8TN6o/jWWbvAE8RkoxS8xJtZxeWrTZa/2gBTCq7+J2U6t
-	BVPHrkJdwfv3EQfKVG7BlE3PW5Qs47LoXMzO41k9dkeupvGgBpLh4LrRm30Q2DEj
-	jKFy1H3jY/NA93t4MkkA2YRZtne2SztWMhWz0Qt/1EOOEjLkwxOABjWOnNkOys3v
-	WVHYeP+eyaHzTdThhcNQslgJdGCUuuP9pnUkJV3FGIo8nJu9syYfCUqkBQdhfEbL
-	J8pZZd8H67KNbOKhpOu9gtDqcXcj//ZhjZoUOv5hNGvF9Iu8NDkZby/4GLQFIyh+
-	bOsLsKjpp2EaySPFYA5//PDHV6/g+KGZPTA==
-X-ME-Sender: <xms:XfwHaGE9BOprOH1pkQtINliWs3QXrR0j9u0KdwzKI2EIWsnuHHR2kQ>
-    <xme:XfwHaHVkVW75ffNDYRUQOScKM9bn_3u3XdvuTwe7cu0ZmNLV-zftpAp1gfT-qTac4
-    30ZSIRJHQ54UFyVEA>
-X-ME-Received: <xmr:XfwHaAI82buvYFg71T37aX82HGL8jfGyo62hSgiZpIDzXvQoCIE0A-mbYXBfxuyXj9-AqOlvn2rg7ZHFqIjncwZwMFiqTqaDXe9_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegjedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhhuhgssehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:XfwHaAHFI3rhGIzc7WAPaz4GBTrLwDGN1OG8sMZP9gq802_FbQmLdQ>
-    <xmx:XfwHaMWLadu17lLGJ4pKhpKBrkeOW6HenSMmdA_aoBLasatV7_Vjlw>
-    <xmx:XfwHaDMdBnDQ_vknuTqTFwrT4JmoNHxkyFPGuLCvajOCd0xU2dPr1w>
-    <xmx:XfwHaD3Sd8iUtVIyu4BtxvJOl8SkdgRQCkfTCWMMm19nL3zsaf5p3w>
-    <xmx:XfwHaHAUii9DWr7qQQ0Q9aIOVOgVY4CX9nTfVMpfeyrCbYRJhV0qgvOd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 16:30:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] pull: allow branch.<name>.rebase to override pull.ff=only
-In-Reply-To: <CALnO6CCMP5qS0f8oMyjav03CzT1AYSCiVCex1C7nqqxg=k7g-w@mail.gmail.com>
-	(D. Ben Knoble's message of "Tue, 22 Apr 2025 16:07:05 -0400")
-References: <20250205030642.95252-1-ben.knoble+github@gmail.com>
-	<xmqqbjvgr11y.fsf@gitster.g>
-	<CALnO6CA_vF4huxMx6jSS4SVjS4+EO9K16Msco-vMUDzSoYRDOg@mail.gmail.com>
-	<xmqq34gsp9tr.fsf@gitster.g>
-	<CALnO6CC71A_Bn+RhyXfmhiNCn2vFGJ+WCs8+dAnpQvGFyNZyfA@mail.gmail.com>
-	<CALnO6CBi-c9U-UskTzjNBH+k8VQybdSshYgs+A3_DRH-iz7zHA@mail.gmail.com>
-	<CALnO6CDq5BRogPCcDozTi1NEYL6nCoEDaNkFdq2+1V6vVRy=1g@mail.gmail.com>
-	<CALnO6CCMP5qS0f8oMyjav03CzT1AYSCiVCex1C7nqqxg=k7g-w@mail.gmail.com>
-Date: Tue, 22 Apr 2025 13:30:19 -0700
-Message-ID: <xmqq7c3c3pno.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1745354039; c=relaxed/simple;
+	bh=24jAAkPGmhS4RYecjCX/vpvgdvMf/oBkAVgXLGvUUTo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=RIL6uHcJ4T2mqNFBVsMFuieWj8DBKCKszJBuK4hj0FyQpEqrBUsosnuK1AvcxyNdSh2swwSHy0jK5Uzsa8RgN0w4RM4iiApXJkNyaKkiifNdr+RfNWf+Ex4sk5t9bjbK+FOFDAEn865Q33VOSLBOoG+3JbUYC8n7qKInoGmYoXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp3.bon.at (unknown [192.168.181.107])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4ZhtLd0m1Kz7QWpL
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 21:57:29 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4ZhtLT0Bb2zRnmF;
+	Tue, 22 Apr 2025 21:57:20 +0200 (CEST)
+Message-ID: <a736beec-2e9b-4ae2-a611-2a1187042bcf@kdbg.org>
+Date: Tue, 22 Apr 2025 21:57:20 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: Verifying data integrity of two git repositories
+To: Akash S <akashs@commvault.com>
+References: <SA1PR19MB7013FAD97E5E89B56AD7BF04C0BB2@SA1PR19MB7013.namprd19.prod.outlook.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+In-Reply-To: <SA1PR19MB7013FAD97E5E89B56AD7BF04C0BB2@SA1PR19MB7013.namprd19.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
+Am 22.04.25 um 09:19 schrieb Akash S:
+> ii) There is only 1 branch master in both repos and the last commit
+> id of both master branches are matching (read an article that data
+> integrity can be checked like this also since git also works like
+> Blockchain)
+> 
+> 	iii) git fsck --full in both repos,  both gave the same output: 
+> 
+> 		Checking object directories: 100% (256/256), done.
+> 		Checking objects: 100% (10793794/10793794), done.
+> 		Checking connectivity: 10793794, done.
 
->> > So it turns out my itch was already scratched.
->> ...
->> I left out the commit reference, whose message described what I think
->> I originally wanted:
->
-> 6b37dff17f (pull: introduce a pull.rebase option to enable --rebase, 2011-11-06)
+The facts that no errors were reported and that the commit ids are
+identical are sufficient evidence that both repositories are identical.
 
-Good to know that your itch was already scratched ;-)
+> But original repo on disk had this extra line in the end (which the
+> remote bare on disk did not display)
+> 
+> 		Verifying commits in commit graph: 100% (1351940/1351940), done.
+
+A commit graph is an optional data structure. Its absence doesn't
+invalidate the repository.
+
+> Why is there a change in size? Also how do I validate if two repos
+> are the same or not?
+Most likely, the two repositories have been packed in different manners.
+This has no bearing on the validity of the repository at all as long as
+`git fsck --full` reports no error. The different sizes should not worry
+you.
+
+-- Hannes
+
