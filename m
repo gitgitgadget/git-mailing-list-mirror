@@ -1,122 +1,149 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7D236124
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 00:33:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFC8139D
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 00:58:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745282034; cv=none; b=iFpijfgio4g4B+ZC5U7KAKZ+efhR2i6zpVD8cEGB1c+CRan7WAhEyBzF88jDRk8T3pO1yKH3KxLAZf8qe6cdlTXnCQVexfhXIn2jvjWBmn/BF3NtEPNteghZ8RomIt6pjSDGsc5LisJD4Zzk80F5sKyLNCk5ntsjNFZzEVJp1f8=
+	t=1745283533; cv=none; b=kZbNo4ksseuqOASCAO5qHlYSZxhPnCowjWlpGsN6y+ynK3kEe8pWDpO6AhdfraTYFjwGA+q3lHUSakmpCS10TQCWWQ4qIDKmIU9/O6ndNDQ2+JLf/lLhMyKKFut38RDnp+bmInfhupeiRMUwgon1xnN4DsJ1I6t0CPkCL1maBvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745282034; c=relaxed/simple;
-	bh=sYGl0+Zd8KL9kxL6j3Mps+IGMzQLBmhqVlnSqqe+Ts0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UBgY85SpCHRbPfDb8JpwPsT/S5/06W+AnAsI67RhzT+U2rs0Zu5tazworBSUf7kRcXkhkAb+ST4d+eL1cOhKEp04va73RT8RMPyQpnzRa7ysRzKIdc+66RMn+YX302VUhT+jLqT0z/U2g0fBWhoPi3jFxHmeO1tW6btJ3S3pTXw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ldoniznl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kIgbRPOJ; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ldoniznl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kIgbRPOJ"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id A931B25401EB;
-	Mon, 21 Apr 2025 20:33:50 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 21 Apr 2025 20:33:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745282030; x=1745368430; bh=Nq6DLi8VP7
-	zSBmd/dlmuoYm+2+nca7xgC0nhuaYuuMI=; b=ldoniznlZ5s5bxiqRbdjYZIKBd
-	Ve1E4BG1N1HziY9TIntAijs2cTP0KohBslg2bdEdf+eJVfhpWtERDFYcgORr+S8o
-	mwvtnAQTAb4qwn2xmJ1OLrMdHwwuZUaG8qmX+PcGOa7h4Qz5I5gy06rAJEXyWXlm
-	4FzynInn03uyRoixK3+untrCSWxpySpHF3bTOdVddo7ap7dg5EZdxrwHaII7jg8O
-	KBLQZlouRaYzZNrbVktAwdIinTQYtH1HkkT3NTdDjchh0fnJPFzKPJmq3B3Lpa1u
-	9RJ6rQYLcIUtBTCMc7JxfhcfjfWVXi5r/41jB4vKSocyimgQFgnYkMLnfsMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745282030; x=1745368430; bh=Nq6DLi8VP7zSBmd/dlmuoYm+2+nca7xgC0n
-	huaYuuMI=; b=kIgbRPOJKFKDwseDNZ6AW3Ims8ZU/3srS2PZls5tc5h2ge6+03I
-	r3DeoDs5cRscgKUn0piL4CBBsilhRDg4y0CdTcI7xFw9U8VPCg+a+gOyAvHwdh2V
-	CjfN4CXiTLeRpGNzqOJHnJcAISRCfWPPSKyrug/lrvaHp8xP2I7ww00TLj1a3cVr
-	edx8a3PUCfAIkHH9IohNt5SLahkvfQAnqPscu3+njFx6M/AOCeTiU1w2z2UpUHpP
-	T/6/vqQyUqb/EcdEh76IwQK1BdX7SjwJ1fLqqSv0tKv468jeRLsLwe5Xe1cxaL8/
-	+Xz29M2FFK0ekdY8PGTsfiONf4E6E/Ju9QA==
-X-ME-Sender: <xms:7uMGaEsCGQlS3-KT2CLVmANwXP6-3eEN4Z8cWtp_lWf4cNHTHf7ANQ>
-    <xme:7uMGaBd4z8Z22JAnfoJqZYLfHvoPISIhw-DgHzV2cKua1iYcO9Rt0riJF1gSdxtjy
-    dknL7DRKfF-9iWYuA>
-X-ME-Received: <xmr:7uMGaPwjz6qYonxf5FP-kwuVGyJOIxVMNFXxGs2AGExcFomVMpI3OMABcCx-jseyTM1bWk3quVoHYfvWYFepOscKi_rbxGSV4bj->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedvfedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrh
-    htiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhope
-    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:7uMGaHMmus2YsS1EXJyJV-oPt3vBjdd9h3vx0cfsat_zxDBQFYJlGw>
-    <xmx:7uMGaE91FT8RD28PsVKx07ChE2vngu1EDlwYLXKZudOPd6DDllwlmg>
-    <xmx:7uMGaPWIQkuO4coLS0ELFEOUaeGEFDSlGDn4tqaHQD9TQOsiluXMkA>
-    <xmx:7uMGaNf_2fwlkZZ4cFVJcXBpP0yz4GDWtGNYrnB6hMtf9i2C9its-Q>
-    <xmx:7uMGaF68gpeV7-I4Z4OU356a98Jx9XFlFiGa-V0aMOhE7KfJjJfOEtX2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Apr 2025 20:33:49 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: git@vger.kernel.org,  Sam James <sam@gentoo.org>,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
- function checks
-In-Reply-To: <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org> (Eli Schwartz's
-	message of "Mon, 21 Apr 2025 16:04:30 -0400")
-References: <20250421175247.240971-1-eschwartz@gentoo.org>
-	<83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org>
-Date: Mon, 21 Apr 2025 17:33:48 -0700
-Message-ID: <xmqqh62h591v.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1745283533; c=relaxed/simple;
+	bh=6WxJlWQ2S3Q3kTrXzNH+NeeH+L+JffReXfGLd1HSf7g=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=AYP/Y2AZ9eDEBIuVBs8mzF/fjOCO64DQ039UwCagOaGuYx0wiULpc/RWDwrIadj6AKMCgbEmTG+VsdeVG+gho4PN/jJ5Q+3m6baQsqFrvRKK/MCcyOWMOj5g765Zhqfoh5dET7zO5afj76lU6UmbDzULbNjot+ADroPg2eJON9w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 50AC2341707;
+	Tue, 22 Apr 2025 00:58:50 +0000 (UTC)
+Message-ID: <f68460ea-2754-466c-8078-ca51bcb291ac@gentoo.org>
+Date: Mon, 21 Apr 2025 20:58:47 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
+ function checks
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
+ Patrick Steinhardt <ps@pks.im>
+References: <20250421175247.240971-1-eschwartz@gentoo.org>
+ <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org>
+ <xmqqh62h591v.fsf@gitster.g>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <xmqqh62h591v.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------DscdXFR0X0tUNjOb1toUmm2I"
 
-Eli Schwartz <eschwartz@gentoo.org> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------DscdXFR0X0tUNjOb1toUmm2I
+Content-Type: multipart/mixed; boundary="------------B9Cjf50uLu8DEz0l0g3aPMYc";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
+ Patrick Steinhardt <ps@pks.im>
+Message-ID: <f68460ea-2754-466c-8078-ca51bcb291ac@gentoo.org>
+Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
+ function checks
+References: <20250421175247.240971-1-eschwartz@gentoo.org>
+ <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org>
+ <xmqqh62h591v.fsf@gitster.g>
+In-Reply-To: <xmqqh62h591v.fsf@gitster.g>
 
-> On 4/21/25 1:51 PM, Eli Schwartz wrote:
->> This is repetitive logic. We either want to use some -lc function, or if
->> it is not available we define it as -DNO_XXX and usually (but not
->> always) provide some custom compatibility impl instead.
->> 
->> Checking the intent of each block when reading through the file is slow
->> and not very DRY. Switch to taking an array of checkable functions
->> instead.
->> 
->> Not all functions are straightforward to move, since different macro
->> prefixes are used.
->
->
-> By the way, when reviewing this I was having a slightly hard time
-> figuring out which stuff belonged here... specifically, because of the
-> differences in macro prefixes lead me to believe it's not always so
-> simple as "does it exist".
+--------------B9Cjf50uLu8DEz0l0g3aPMYc
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+
+On 4/21/25 8:33 PM, Junio C Hamano wrote:
+> Eli Schwartz <eschwartz@gentoo.org> writes:
+>=20
+>> On 4/21/25 1:51 PM, Eli Schwartz wrote:
+>>> This is repetitive logic. We either want to use some -lc function, or=
+ if
+>>> it is not available we define it as -DNO_XXX and usually (but not
+>>> always) provide some custom compatibility impl instead.
+>>>
+>>> Checking the intent of each block when reading through the file is sl=
+ow
+>>> and not very DRY. Switch to taking an array of checkable functions
+>>> instead.
+>>>
+>>> Not all functions are straightforward to move, since different macro
+>>> prefixes are used.
+>>
+>>
+>> By the way, when reviewing this I was having a slightly hard time
+>> figuring out which stuff belonged here... specifically, because of the=
+
+>> differences in macro prefixes lead me to believe it's not always so
+>> simple as "does it exist".
+>=20
+>=20
+> As there are non-zero number of meson related topics in flight, I'd
+> like to know where this new series is meant to apply, if you need
+> some of them before we can apply it, and what is the overall goal
+> this series has ("there is no theme, they are just random set of
+> changes to do such and such things" is perfectly acceptable answer).
+>=20
+> And the best place to describe these things is in the cover letter
+> [PATCH 0/6] of the series.
 
 
-As there are non-zero number of meson related topics in flight, I'd
-like to know where this new series is meant to apply, if you need
-some of them before we can apply it, and what is the overall goal
-this series has ("there is no theme, they are just random set of
-changes to do such and such things" is perfectly acceptable answer).
+My apologies. There was no big theme other than that they were things I
+determined were relevant to more closely match the Makefile
+expectations, while investigating a badly worded report (in fact, a
+wholly uncommunicated :( local patch ) of git not building on Gentoo's
+Solaris environment ( https://wiki.gentoo.org/wiki/Project:Prefix )
 
-And the best place to describe these things is in the cover letter
-[PATCH 0/6] of the series.
+e.g. I simplified the repetitive lists because it made it easier to do
+the followup patch adding a new check for getpagesize (which I needed,
+because it needed to be checked on Solaris).
 
-Thanks.
+I think that I sort of subconsciously assumed that "if in doubt, assume
+it's independently developed against the current state of the master
+branch".
+
+I do not need any other series merged, I think it should apply to
+`master` independently of all of them. I can't see anything available in
+origin/master..origin/seen that would clash, at least.
+
+
+--=20
+Eli Schwartz
+
+--------------B9Cjf50uLu8DEz0l0g3aPMYc--
+
+--------------DscdXFR0X0tUNjOb1toUmm2I
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaAbpxwUDAAAAAAAKCRCEp9ErcA0vV5fV
+AP4nZaSkd9XqsGhVP1fFjwN/Ppb+uANmcMxJo081i3qYRgEAlogCqxwghJDB3OvgnV1F81qCaP5D
++GUAab1taVsUHQU=
+=M/i9
+-----END PGP SIGNATURE-----
+
+--------------DscdXFR0X0tUNjOb1toUmm2I--
