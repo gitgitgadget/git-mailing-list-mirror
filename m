@@ -1,154 +1,104 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B0A92857D1
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 14:50:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98A3F28EA63
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 14:53:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745333436; cv=none; b=K8+ixwmdXJEfvXqfxi3VuF9yxzUAuAY4AQ7rG2+QNvcvOydsfDkE/wlwny/rq0/Fxk/8G2CWaVpLtMnVh+I5Cup7xLyoBtDqGDFX8ltVaN6SE2uiL8d49G5D87SNKbd7TauevIyq9YoqZgkl4liu3VpK+aLradW7Dc7fMKj1YtQ=
+	t=1745333592; cv=none; b=gdQ1GHoUFnS3pnijgCATGG5xmxGkMM8sY4QymaxNhBfAyY90PVbuIQsA0USrsyCPDdplI6b0ux/35+8PDtq/rYWHahW923AW+VcYuXE5ct955obMGQjmUoxJiaUGnWxFuTCYLdhHSlIEbEmFbVkDWUDRlCxlf3KSgJ0jErDntCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745333436; c=relaxed/simple;
-	bh=zQAwBvRXExVQQb2iHgcGHDLnhi6utdThTx7l7ny5qds=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=obqD7z35c0ydXwrgwVf5K7WhhrbKWwuFccbPvNL52TiqQYHHpyiNSb55Drwl0Al0t7lyC+g1uiKiTuKJfxixrhey7N688D8l2NUQ9tXJ4FLQg32D5szfpbmnIdfFYkBprpUb7sOUWnn1O5M8WRYRzzi7Nr3vB4dHv+TYC4G5OHQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KwA4MFup; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=j4dXLCzl; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745333592; c=relaxed/simple;
+	bh=pGivLqgxWYawi07cxIyCKacjE18vKVERGBUY1BDmnWQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=ajRPX8aYKIwHeajcLajKrgMhTGrwcz70M1lUleREnJcU1jiefq0NEgULgro+qbNEQnrmPPKWDRPU38L1MDGAmfaQxYmz9Ieqyp1QpqHKZVcHEm29DVDUZKJ1BDlVCobJHfor7U+C9Swr6KGt3QxxSWmO7CqeiLJRZ5yTWjzX2/s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BGsqboZz; arc=none smtp.client-ip=209.85.214.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KwA4MFup";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="j4dXLCzl"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0B9AC13803F2;
-	Tue, 22 Apr 2025 10:50:33 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 10:50:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745333433; x=1745419833; bh=NC+qn4GKaZ
-	EdTU7yET03AQ5VgKCnXa63kIp6FjcqxE8=; b=KwA4MFupfbuJeCIturqUv1Rxoz
-	xEMF5ROvpKVkw3xPvQzzu5RLpTsk16R0Aq4NbAXSEFGjRYhonBEabTML48KTg7CV
-	p65iIAiw0flSgMG5ULfU8KDomgK8hRd00D/djSk/K0n3RomRa4ZaQyxEkqqe3hJZ
-	8qOkEeBoK10MJdGggWKUMLcAXjqxU7l8a8dp2gevHhh3KiGnO01tL/i9yn8HO1nh
-	OqMyYiVK5Sv0q8QJqdg/GtpiCrLpHaxAQSqYfQMiReVZfCtU+B+ul8nOXyykgrRF
-	C1zDH4ZrqVX5wsGtrymkcnMv68ckIb/E8qKRnNyb/mXmki4XnhUtS8WiBSDQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745333433; x=1745419833; bh=NC+qn4GKaZEdTU7yET03AQ5VgKCnXa63kIp
-	6FjcqxE8=; b=j4dXLCzl1+LoAxx53DvDZou55oxKbD2o4lBtiXIcxWvM0UEbSE4
-	eMQ8TX7pszBkbwRer4CkpK1aga5Fl6RcteCXtZ/0t6la5IujMmAfuB2wyR3J0mkJ
-	15Xk+PLaHYBpX/hShYmzis6Ktmv0VxGQzIE/rA8l/SRavCDAaqcKZDQ8a/GXhR8R
-	vGfJmzJ0s1Z9VdTGUrfSO1urqVPRAVZsXM2zhDnz5s7lAgFokDz5cS2ud1i7PjoF
-	rgvCeQsIu7J9lTgZF4Kx0n5oWEhhs5T5d9z4QTd0r1bXO4j3P6CzIXb00BPw24CV
-	v1VG8fCc0GCxWQTUzvbD9n4kaYDUWAQlWgA==
-X-ME-Sender: <xms:uKwHaBSBfhVWY5jrJm1lhsEHDuYPjSLu9CpuUM3MP2flDmd3wYHJzw>
-    <xme:uKwHaKwJO22yn4HWuPKrWx5xxKpzz-rPK-UmAdZ2Gw7-JlwGbc4xn9rDOBhqxUpZN
-    GU1WE_AxzQkPvQpag>
-X-ME-Received: <xmr:uKwHaG3-w5aGFT5JHrq4v1mNolqH47VzE8zA6bsN9FKRjQnbEnE8-M-lNgx8j761uVAVIZTenNl20rVozjat8-VDEQo8QxfXYGsp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegtdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhephfehkeehtdfgheffvddugfdtjeefffet
-    geetfefhfeevieduheeukeetfedtkeeknecuffhomhgrihhnpehgihhtlhgrsgdrtghomh
-    dpghhithhhuhgsrdgtohhmpdhvvggtthhorhdrtggtnecuvehluhhsthgvrhfuihiivgep
-    tdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomh
-    dpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhs
-    sehpkhhsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    eprghnthhhohhnhiifrghnghehudefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:uKwHaJCuaJ-s7dmscydBkvy_mkPAghRzFY5LLmUW8cDcewqEpRYFiA>
-    <xmx:uKwHaKh3a_UZWXQ1YjidcC4mpGvH2Kh9K6CJgKG81Xc0EEF-AunVTA>
-    <xmx:uKwHaNp-CYzoMX8iib0jOlYl70SYUHoR2geBI_-RXW427JDiyZM4rQ>
-    <xmx:uKwHaFhwmJf8O7o0EXgVme185rrKtEgF7WCAu91kXuDqeGghDIHDAA>
-    <xmx:uawHaA9TCgE25lY92p8nKxBNNk3zmJuYDLnxHRovkkRSjJWVRo9nTjnn>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 10:50:32 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  Anthony Wang <anthonywang513@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: aw/t9811-modernize, was Re: What's cooking in git.git (Apr
- 2025, #04; Tue, 15)
-In-Reply-To: <aActb3dB-r3s69h6@pks.im> (Patrick Steinhardt's message of "Tue,
-	22 Apr 2025 07:47:27 +0200")
-References: <xmqqbjsxkn6x.fsf@gitster.g>
-	<20250418213531.GA89733@coredump.intra.peff.net>
-	<xmqqtt6l9mlj.fsf@gitster.g> <xmqqmscd9mbl.fsf@gitster.g>
-	<20250418215723.GA91116@coredump.intra.peff.net>
-	<aActb3dB-r3s69h6@pks.im>
-Date: Tue, 22 Apr 2025 07:50:30 -0700
-Message-ID: <xmqq8qns5jyh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BGsqboZz"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2279915e06eso54302425ad.1
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:53:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745333589; x=1745938389; darn=vger.kernel.org;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=W8lRnQSU3O6dthqSHDd7eSHWNSIHYSEvJldBOGB13to=;
+        b=BGsqboZzpD8VzrnYqjpXKvhXFx5GnUEz7icR6qZq+QD6AUwbneGpMwBiF2Otpkj3n0
+         +bSqKATzDnHBwXRpcMtAXoMBuCVakiuWG+qREvGGqIxTz5Xsi8Pske5flKjKWPyv43tF
+         koyBjEgJyVPN5JT6DbLYF5+Fyjp6nZsZ4UW94AxmjVu7SQDLtz/GXXs2pOPnrlx4LWhc
+         n1pzZvlA/zJQTvJc51atbM4CUoRGXDWkwHj/jiVVp6CPZD7HBu0HOKV5hkMLPq+tsGfZ
+         ce77ztY/NpE8DuBjOcLC389tNYQO6Eu2aNbtswlpszZNrzZMy6s4qI59RyTHIBeGnGdH
+         Cp9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745333589; x=1745938389;
+        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=W8lRnQSU3O6dthqSHDd7eSHWNSIHYSEvJldBOGB13to=;
+        b=EVkbPo/lwXGr1usWhW2RXAKAprQjc1Eb0b0GZq2I1GLrWXx0BRGv4H9dK6dbfYUg+Y
+         yFiad+RbcWk+z3ffEpKl+mkQud1klXdD5Q7oOftG1dxSPlKSqVM6ss9qBE/FsWFPImpC
+         F2AyGqQrO/fLiYW/7Q5TvFG0XEQs9kZITosK3FkLdBeHDVmcFu49tIzlqcL0JwGJS3im
+         JTFz86E9Kh2Kr+EGkozHRd0ezqzsP6H8Y2EFESCAb2ppvuqfQgSj3uuMP7s1zGMt0Xm7
+         H9I/4p5LZQpGiTuxgncb0edPlyVgiBCI4lccvImzdnFyTLN7Xf3jL2gIc1x8HRcTWrA6
+         hSvw==
+X-Gm-Message-State: AOJu0YwGspR1hqM6LdrilsZPJoVv9sNNU/buDMdSNJHd7zziHmspsQWA
+	B7cFNxlPzh6tHp9FSYXqEo88WrdZAmTBwd6cZw8h8WZywhp/xNseksf7W/ZW
+X-Gm-Gg: ASbGncvLhS8Uz+RB5fw+pzbtraJkPzZn8RleXPLBI9SxiKnZqRx9mJqT5qt+0QRpM2g
+	H2ibK/CXKh/2Y80hXbZMeWatfGeP2BkRIFYtTbVPri9xRQopYSN4PduHtewcDsOddizvLEvFdmM
+	BLWW+TlbQ76MoMcLQR4p/rI1mvyP8Nz9URtQwGfaMtIrH2F8d4mOGEFaFdwoNJc9Ojy1JQST9yH
+	OGLzG1I+jwVfAOEm3JfFir51lp9zQjntV4cMp0B05zJp5gTCdTshz5+IuFyQh4phSnYWjv/y4kw
+	vmM1KpVxOZF91dY2k9NnwlpIwi90+LuFCKlz
+X-Google-Smtp-Source: AGHT+IFm4D5aoHeZ6myvZhgMNsf7uF+/on04vN6tObU9NVFI3k+Wfl1SRf364yLog2rj/kKtzNhb9g==
+X-Received: by 2002:a17:903:19f0:b0:21f:68ae:56e3 with SMTP id d9443c01a7336-22c5360dc9bmr235714485ad.39.1745333589338;
+        Tue, 22 Apr 2025 07:53:09 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22c50fda1a5sm86408135ad.230.2025.04.22.07.53.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Apr 2025 07:53:08 -0700 (PDT)
+Date: Tue, 22 Apr 2025 22:53:15 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 0/5] enhance "string_list" code and test
+Message-ID: <aAetW0dan8S3Fljq@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi all:
 
-> I think the issue is where we put the resulting binaries: they get put
-> into "$HOME/path", but the problem is that "$HOME" is different between
-> "install-dependencies.sh" and "run-build-and-tests.sh" because the
-> latter is executed as unprivileged user.
+During I study and learn the Git source code, I have found something
+which could be improved for "string_list".
 
-Yuck.  Thanks for a clealy written explanation and the change.
+And this patch mainly enhances the "string_list" code and test.
 
-Will queue.
+    1. For code, I mainly fix sign compare warnings.
+    2. For test, I move the shell script to clar based unit test.
 
->
-> Something like the below (untested) patch should fix this.
->
-> Patrick
->
-> [1]: https://gitlab.com/gitlab-org/git/-/jobs/9760840184#L4002
-> [2]: https://github.com/git/git/actions/runs/14526556290/job/40759119217#step:8:1814
-> [3]: https://github.com/git/git/actions/runs/14526556290/job/40759119217#step:5:2190
->
-> -- >8 --
->
-> Subject: [PATCH] ci: fix p4d executable not being found on GitHub Actions
->
-> Our tests for git-p4(1) depend on the p4d(1) and p4(1) executables to
-> exist. As we require specific versions of those binaries which typically
-> aren't available on common distributions, we install them manually via
-> "ci/install-dependencies.sh".
->
-> This script will put the binaries into "$CUSTOM_PATH", which gets
-> defined by "ci/lib.sh" -- if not explicitly overridden, its value will
-> be set to "$HOME/path". This causes issues though when running our tests
-> as unprivileged user, as we do both in GitLab CI and GitHub Actions,
-> because "$HOME" will be different when installing dependencies and when
-> running the tests. Consequently, the downloaded binaries will not be
-> found unless "$CUSTOM_PATH" is overridden to a common location.
->
-> We already do this for GitLab CI, where it points to "/custom". Let's do
-> the same for GitHub Actions so that Perforce-based tests are executed
-> again.
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  .github/workflows/main.yml | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-> index 83ca8e4182b..412a9a5107b 100644
-> --- a/.github/workflows/main.yml
-> +++ b/.github/workflows/main.yml
-> @@ -408,6 +408,7 @@ jobs:
->        jobname: ${{matrix.vector.jobname}}
->        CC: ${{matrix.vector.cc}}
->        CI_JOB_IMAGE: ${{matrix.vector.image}}
-> +      CUSTOM_PATH: /custom
->      runs-on: ubuntu-latest
->      container: ${{matrix.vector.image}}
->      steps:
+Thanks,
+Jialuo
+
+shejialuo (5):
+  string-list: fix sign compare warnings
+  u-string-list: move "test_split" into "u-string-list.c"
+  u-string-list: move "test_split_in_place" to "u-string-list.c"
+  u-string-list: move "filter string" test to "u-string-list.c"
+  u-string-list: move "remove duplicates" test to "u-string-list.c"
+
+ Makefile                     |   1 +
+ string-list.c                |  30 ++---
+ t/helper/test-string-list.c  |  96 --------------
+ t/meson.build                |   2 +-
+ t/t0063-string-list.sh       | 142 ---------------------
+ t/unit-tests/u-string-list.c | 238 +++++++++++++++++++++++++++++++++++
+ 6 files changed, 253 insertions(+), 256 deletions(-)
+ delete mode 100755 t/t0063-string-list.sh
+ create mode 100644 t/unit-tests/u-string-list.c
+
+-- 
+2.49.0
+
