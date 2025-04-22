@@ -1,160 +1,135 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E9F51CAA79
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:49:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95934F510
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745308184; cv=none; b=jJ8MxfixOlWM6Zg0PfTrLBDtmcLHwIcWlhXsBk/ET+Gc6IrKY/4PsKDo4q9iH8y5u5NITzIi1qxiyrb43s4pZi0tyDzLYoiwbtuZWMPYiMQ/YE7hVmO2BvDVKpsYBnjv+NE07La93d2L8NXZg+3tOSdfpdLqW3XJ0TabN9T8BKM=
+	t=1745308417; cv=none; b=VPyc4YsZCAtG+LQFo1OkgpAikzzdtatwBCU/Tw8/21/I9KsWhCnJjCzC2stHr2ynIwD5y/D7I7PvktY+FP31ZcIntYpOjjAW3WyUBAIPUciYltxwU2c94CTekshk+wkmSYA3Jc3WP+BNGVWMvb3IBAsWT0Kh1hGdvjr03hkOSWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745308184; c=relaxed/simple;
-	bh=qeqvMVDsXZuoInzMRgZiuGxBN5PQlpzO+BRyebJeb84=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=q5jPHQ2BBAAzcaFrnpel7q55+dpp1/Bn7yR15Br6wxfxJ7S1L0x/t9OHXbfSC2h18CXnRxSYay1lm9Uf0kQzKayBOsAqYQ7uAw9Z8CtyB4DShtpW9NrG6ZPOlsP1JGIW60KZFHyCDdPgj+jXGpsjnw+5v8x+VBV1UDYJZpeHRtU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=O3ZE/iYY; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1745308417; c=relaxed/simple;
+	bh=KVi1qIYD1TglQPzSH+OYLuZK8N/IMvadwpSPFN+Qit8=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=O33euO6iOJWaEfHyi2TrkN+pAEkx1RNu9kWeo/MduxMJSQ1/PO+2uW7f2SF0z1AwxhYtW/SV/4RW3aS2VpO7UaGJkoPPnNKT555Pw1TVNFa1siCcWx3/3OleqXXsONjRma5jiGVIqvTbvNwi7ucuC+wS8/e0iQYVXDHs1tCR5Qs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lvNg50+m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MFZVQyKW; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="O3ZE/iYY"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1745308180; x=1745912980;
-	i=johannes.schindelin@gmx.de;
-	bh=29bjZR6P6Pa93qdPyVS7p00betFm8WM68r5CalqGazw=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=O3ZE/iYYY6+oijHRc1DPc87VcQnGN607J6VYn39VyFDOzHk9XZAuuded97X72s7m
-	 OTFafCResPlfa7iN82qP6ufBmL+T8t6TyRoPKUZgmOQGUzFMzAUDkFHunfpRWhVJr
-	 Wt6XBjxZOH/NitvouFXgfj5dVA+eorwM7azhIeShM7wyCnRhCdVc+Tgiolv5I6sRA
-	 uIAzCWmPpn0r7DudXVCBRgXyCJk9GY0Xz7eiz+AVIhFWjrQ3YRIYZo5UNhnoh27fQ
-	 RrgpGNTzMMXgA+fhBLxjAIZqoN+ZAcO8W5w75iMHYgGkBN3UjGDlXi5agTefZi+Bw
-	 XFDa1nhPslC1uREq4g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([167.220.208.53]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M89Kr-1uAj152IOB-00Bz0p; Tue, 22
- Apr 2025 09:49:40 +0200
-Date: Tue, 22 Apr 2025 09:49:40 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Re: [PATCH 6/6] max_tree_depth: lower it for clangarm64 on Windows
-In-Reply-To: <aAdImbydzMUkCFqB@pks.im>
-Message-ID: <17780ada-bb64-c780-939f-0702f53dd3ca@gmx.de>
-References: <pull.1904.git.1745239150.gitgitgadget@gmail.com> <6ebc3ef57fd0455fc70c4a8531c7ed094d9cdaff.1745239150.git.gitgitgadget@gmail.com> <aAdImbydzMUkCFqB@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lvNg50+m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MFZVQyKW"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id 73D57114019F;
+	Tue, 22 Apr 2025 03:53:34 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-07.internal (MEProxy); Tue, 22 Apr 2025 03:53:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1745308414;
+	 x=1745394814; bh=sgwfGAQrG5OPBUU7fvc99620mjzauzYeH8T0GiFqQHo=; b=
+	lvNg50+m/FKFA7olq8YePHalVURy7jfi7EKzl/sFRQwTguXaQ6Os3E9TvTMZxM5z
+	UcLzqykTpyKbDnETBGUj88DCmBxd+gvMxBUQBSWppA9Je8z6TRFSbRBQHnMAMPtu
+	NttpolpoyOWleF0C3m7NAwlGE4eUeaRPA4ANI+T9xUCWCyi97k896addXsI5BPsc
+	ENtCq6/CHOOUHWTOGcnbY8dt6rTq9kxO1+ETtKvD6LX0hdulBbrXByFgt3ZkzbL1
+	XREGuBe7ebu0qpzZ8HdCTSn3YxNAWlGvn6Lnd0VLFBZSxX7zZ3gS5jF23rZ66zaM
+	XOIkzaSJ+xsPbnwSPNN6Ug==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1745308414; x=
+	1745394814; bh=sgwfGAQrG5OPBUU7fvc99620mjzauzYeH8T0GiFqQHo=; b=M
+	FZVQyKWzt+9HUKbNUwXswHrbWjIXkrl/I23qaSfajoHhcc/MrZSqWSa+IjcPvbW3
+	7XnxHtM/gCEdTwIklL7V8AaFRc3+oETdAe4/kU5LWbIFVOD6ok5BQzEhqNd2YFIC
+	tPvCxKECyzIRzg2N2iHy/lFxv3XVuKkS36zhnVcH9aFg/cofH/gwH8XolGilAt/9
+	Qvn5FN51wjrKrLH5of3D9dEiIt2hpjDTqCurj909Jc26CzG/yz2YFMnpbzPGTSAB
+	lEnHxtzT0h5smaHkz5C5JseX+w4KSBlAyeBArUXkUpCdskIbDuAdQ7MqiDnHRbsY
+	XZyVcF6qeid9CSD4KWelA==
+X-ME-Sender: <xms:_UoHaOiETTiIZ96KMw0Yv5BR7XLjF90fvQ_PHt1wW3FpCCfp3kmxKw>
+    <xme:_UoHaPAiQJx2mDr2A_zAbGobJYTyI3ev5F2MGSDAaM9towAEOAF4gHt3ZFYcOJmIa
+    6Ba38x25XGIByiHzQ>
+X-ME-Received: <xmr:_UoHaGHYUnOQG7-jYS3lMCleuJY4iO6GmrwWdwhC_ZFAqsvp8ZbdxIKfsEV2k9KiwZaRwqbKawfesfIsigtwGT9sgwvHGVMt8BUeHYIvbts>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefudekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeetheffvddtleettdetueeukedugeettedutdeg
+    ueeukeetheefueevvdeitddtveenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    eptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    tghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgt
+    ohhm
+X-ME-Proxy: <xmx:_UoHaHSz_GSD-JpaDKxvXE6CDCe0ml1_Mp31hHz1p-MVq_gSVHd75A>
+    <xmx:_UoHaLxkBkwAr937EzMQL_0bFW8FOI3VrMFiv9G6H3rETAkYf4jltA>
+    <xmx:_UoHaF5ocINrMvKe0rXECA6gZCgbUg9aWwKVHT9xWFjJfVXgg2mC8g>
+    <xmx:_UoHaIx15iEwX2996FsGrjDVyZh_fKUw_0GRW6cJEJ9vC4lcVbSLfA>
+    <xmx:_koHaJ263BGnLG6CmHaIkF-87hgRd4VggeyK8NMOylWpM70Y8M92x9EL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Apr 2025 03:53:32 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id edee782d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Apr 2025 07:53:30 +0000 (UTC)
+Date: Tue, 22 Apr 2025 09:53:26 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH v3 0/5] meson: wire up support for benchmarks
+Message-ID: <aAdK9gnXOO3ERq7w@pks.im>
+References: <20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im>
+ <20250422-pks-meson-benchmarks-v3-0-7aad68bac6fd@pks.im>
+ <CAP8UFD3Nr_f7WSzjv4AEKzH9Kpsf6soOd+VSO9ng=-ZSws6P3g@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:OiOEl7PoznwdBLLLxYAzwhXXX0Vtt5AdF8VuiWMNc4dwzmZ2fH9
- oolhbrENjdGREXoH2r0bn6ELBNjExVAzglTdj7Ci6QXhM/arkJJL4d5BbpIKhGlo6+4FMlS
- gOBnIrAomqTWqF16hTMsDXsCF11YSf+La7FV7bQSDgZrw794hzo6rnc8UA2LfQbi9bO5xLU
- qpap3NHYB9pHHMo1sKWXQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:EJX2kee8WrI=;9p7UKioD+WIOdQgkwWRT4WYDt73
- 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
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAP8UFD3Nr_f7WSzjv4AEKzH9Kpsf6soOd+VSO9ng=-ZSws6P3g@mail.gmail.com>
 
-Hi Patrick,
+On Tue, Apr 22, 2025 at 09:27:57AM +0200, Christian Couder wrote:
+> On Tue, Apr 22, 2025 at 8:50 AM Patrick Steinhardt <ps@pks.im> wrote:
+> >
+> > Hi,
+> >
+> > this small patch series implements support for running our benchmarks in
+> > "t/perf" via Meson. The series does not aim to replace "t/perf/run",
+> > which is more fully-featured and allows running benchmarks against
+> > multiple different trees. Instead, this series only allows running the
+> > benchmarks against the current tree. Users are thus expected to continue
+> > using "t/perf/run" for more advanced usecases.
+> >
+> > Changes in v2:
+> >   - Adapt "aggregate.perl" to use a "/usr/bin/env perl" shebang.
+> >   - Link to v1: https://lore.kernel.org/r/20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im
+> >
+> > Changes in v3:
+> >   - Document how to run benchmarks in "meson.build".
+> >   - Expand the message for the commit that enables out-of-tree
+> >     benchmarking.
+> >   - Link to v2: https://lore.kernel.org/r/20250414-pks-meson-benchmarks-v2-0-04377080a167@pks.im
+> 
+> In https://lore.kernel.org/git/CAP8UFD2jKwYzmc40knXY7k+FQabjZbGTqs9fowF=-0OqfNYp_w@mail.gmail.com/
+> I wrote:
+> 
+> "I wonder what happens when we run `meson test -C build --benchmark`
+> but 'time' is not found."
+> 
+> because I wasn't sure if it would just do nothing in that case which
+> might not be very user friendly.
 
-On Tue, 22 Apr 2025, Patrick Steinhardt wrote:
+Ah, sorry, forgot to answer that question. What Meson does in that case
+is to print "No tests defined". We could help improve usability a bit by
+printing benchmarks as part of the auto-detected features after setup of
+the build directory has finished. That would make it more discoverable
+that benchmarks have been disabled.
 
-> On Mon, Apr 21, 2025 at 12:39:10PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > diff --git a/environment.c b/environment.c
-> > index 9e4c7781be0..cc853950bb2 100644
-> > --- a/environment.c
-> > +++ b/environment.c
-> > @@ -82,9 +82,21 @@ int max_allowed_tree_depth =3D
-> >  	 * the stack overflow can occur.
-> >  	 */
-> >  	512;
-> > +#else
-> > +#if defined(GIT_WINDOWS_NATIVE) && defined(__clang__) && defined(__aa=
-rch64__)
->=20
-> Tiny nit, only because it puzzled me for a second: this should probably
-> be `#elif`.
-
-I will change it.
-
-> > +	/*
-> > +	 * Similar to Visual C, it seems that on Windows/ARM64 the clang-bas=
-ed
-> > +	 * builds have a smaller stack space available. When running out of
-> > +	 * that stack space, a `STATUS_STACK_OVERFLOW` is produced. When the
-> > +	 * Git command was run from an MSYS2 Bash, this unfortunately result=
-s
-> > +	 * in an exit code 127. Let's prevent that by lowering the maximal
-> > +	 * tree depth; This value seems to be low enough.
-> > +	 */
-> > +	1280;
-> >  #else
-> >  	2048;
-> >  #endif
-> > +#endif
->=20
-> Hm. This whole construct feels rather awful, if you ask me. Instead of
-> papering over the issue it would be nice if we eventually fixed the root
-> cause, which is that we use recursion on a data structure that has an
-> unbounded depth in theory.
-
-True.
-
-It is also quite awful that I cannot find a way to represent
-`STATUS_STACK_OVERFLOW` by anything else than exit code 127, which always
-misleads me into thinking that an executable or a DLL might be missing.
-But I did not find any.
-
-> Anyway, that is clearly outside of the scope of this patch series, so
-> the bandaid is good enough for now.
-
-True enough!
-
-Thank you,
-Johannes
+Patrick
