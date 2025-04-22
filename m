@@ -1,54 +1,54 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4F71D516F
-	for <git@vger.kernel.org>; Mon, 21 Apr 2025 23:33:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF7D236124
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 00:33:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745278442; cv=none; b=YDs42rbtFOxYmx5MzbYH+sIYU6JSra34dMlicNSKFVZuynrFiBXpx+0nII6trYxLKQLOGaHS5/iX1MeLjmFmR/O/gsoD9W3B/ydgulhOHOWxKQaT1xlSz3dzP7SslH/vT+poTqfbsJBg+bBlRy3yiEdytCCJZZ/NPkR+ZUVGt0A=
+	t=1745282034; cv=none; b=iFpijfgio4g4B+ZC5U7KAKZ+efhR2i6zpVD8cEGB1c+CRan7WAhEyBzF88jDRk8T3pO1yKH3KxLAZf8qe6cdlTXnCQVexfhXIn2jvjWBmn/BF3NtEPNteghZ8RomIt6pjSDGsc5LisJD4Zzk80F5sKyLNCk5ntsjNFZzEVJp1f8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745278442; c=relaxed/simple;
-	bh=wwrROWXcnXHK9143LjjCSi1e0lwGcVNvuuZTlcoxp60=;
+	s=arc-20240116; t=1745282034; c=relaxed/simple;
+	bh=sYGl0+Zd8KL9kxL6j3Mps+IGMzQLBmhqVlnSqqe+Ts0=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZmVCTLJloIcAcxeNt16O1jq3POtuBcO418pNtxQfMFCFbXftNkJyHdgKYrogNNg7mCCCtm2qfGIfl95PGKvQJDRbFTjax1CCzTHYZoONZ3IILV/1+sG0j4OK/fJIg6MSFyyQThX1s7NUWGhuSHDmad080HZs85xKHrQHVOkBmck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Uw+Ip84M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=h2c89cLZ; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=UBgY85SpCHRbPfDb8JpwPsT/S5/06W+AnAsI67RhzT+U2rs0Zu5tazworBSUf7kRcXkhkAb+ST4d+eL1cOhKEp04va73RT8RMPyQpnzRa7ysRzKIdc+66RMn+YX302VUhT+jLqT0z/U2g0fBWhoPi3jFxHmeO1tW6btJ3S3pTXw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ldoniznl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kIgbRPOJ; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Uw+Ip84M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="h2c89cLZ"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ldoniznl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kIgbRPOJ"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 46ADA11401A4;
-	Mon, 21 Apr 2025 19:33:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 21 Apr 2025 19:33:58 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A931B25401EB;
+	Mon, 21 Apr 2025 20:33:50 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 21 Apr 2025 20:33:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745278438; x=1745364838; bh=kWVwriV1lx
-	2loYwI32BFiyM4FPi9QTT/22fzQcz2pEs=; b=Uw+Ip84MRn5mosTG6ZI9esdsBK
-	4Ai0tR9rL8W/z1+fYfX+oaB5wT/td3ccEnZtO3JMgN2eyB3Vgt3hBXLqaTBKxo1Q
-	yBI+Ho+VOyglHy7BGwubs03RW2m32gyJy4lzuizjzidDbuMqNreo5WInA3o2il5S
-	4AxQiVdH1+UoiqU5yQVIVWRfpTpCn2n8kE5pxlmoKO9MvrL4QQ9kC+vzf7OaZuv4
-	jCAbjBzk9F1MBxAQUstEWG/I5Ia9Ghm/rWfeYtVBoR6nw0CF04NT2k5AgKapUyQj
-	JCa02FVOP37wCg9MQqm0FbHh9j4nUAJDnvtflKFObhkrUO4OTzfo1n3u5jpw==
+	:subject:to:to; s=fm1; t=1745282030; x=1745368430; bh=Nq6DLi8VP7
+	zSBmd/dlmuoYm+2+nca7xgC0nhuaYuuMI=; b=ldoniznlZ5s5bxiqRbdjYZIKBd
+	Ve1E4BG1N1HziY9TIntAijs2cTP0KohBslg2bdEdf+eJVfhpWtERDFYcgORr+S8o
+	mwvtnAQTAb4qwn2xmJ1OLrMdHwwuZUaG8qmX+PcGOa7h4Qz5I5gy06rAJEXyWXlm
+	4FzynInn03uyRoixK3+untrCSWxpySpHF3bTOdVddo7ap7dg5EZdxrwHaII7jg8O
+	KBLQZlouRaYzZNrbVktAwdIinTQYtH1HkkT3NTdDjchh0fnJPFzKPJmq3B3Lpa1u
+	9RJ6rQYLcIUtBTCMc7JxfhcfjfWVXi5r/41jB4vKSocyimgQFgnYkMLnfsMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745278438; x=1745364838; bh=kWVwriV1lx2loYwI32BFiyM4FPi9QTT/22f
-	zQcz2pEs=; b=h2c89cLZtKppc5FGUjxaGGZqET35eRHHhDb5e/y03nhAX06NtkY
-	yCITBJEee2N6+WxCmZWOG4FLdVI6onJsv+gEAfsGJIxd4whAnE7PyYHJpIU+LUPn
-	GD5ERj84DZVA84Xrlhgx3lV3I7EHDeCxOfJGON6mC3qWq6FvF54iOKbTHCv71PAM
-	RxJGTA3gRSM4Dnxkomj8lRU80EaZeNuZfvlaNCeFP7J9Ik5FRBiStuKHO0DEpa+c
-	wsPw/BTlEq+12ci7PRyz17FzGy1fPOjOQyi+nzTJT9dpBSnJvleizyVL+bgj4hA1
-	BXI19Lg8a4sZ/DXa6Mn/V7TNQPizEpN7Mgg==
-X-ME-Sender: <xms:5dUGaFpMpwZEZeBqVRtP1hXlcTeFkaf7fdxEMt5y9ku0Tw_yyizjiw>
-    <xme:5dUGaHp6wtovShU7EPqoxaOf6Vfc-6FN-aMgIDrf5MIc20pR8CaG2Io6LwTX6WjYw
-    dKkRoaKjhPXilJQ_Q>
-X-ME-Received: <xmr:5dUGaCMasIo8iEABuhbyq8pFesQU_eJ8wzdjlNkhAiL55ldbr5lvJVgf-fsKUyoQ1q5YUC0HWMovHx_VO0YEow2xixodZ0feRg68>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedvudekucetufdoteggodetrf
+	1745282030; x=1745368430; bh=Nq6DLi8VP7zSBmd/dlmuoYm+2+nca7xgC0n
+	huaYuuMI=; b=kIgbRPOJKFKDwseDNZ6AW3Ims8ZU/3srS2PZls5tc5h2ge6+03I
+	r3DeoDs5cRscgKUn0piL4CBBsilhRDg4y0CdTcI7xFw9U8VPCg+a+gOyAvHwdh2V
+	CjfN4CXiTLeRpGNzqOJHnJcAISRCfWPPSKyrug/lrvaHp8xP2I7ww00TLj1a3cVr
+	edx8a3PUCfAIkHH9IohNt5SLahkvfQAnqPscu3+njFx6M/AOCeTiU1w2z2UpUHpP
+	T/6/vqQyUqb/EcdEh76IwQK1BdX7SjwJ1fLqqSv0tKv468jeRLsLwe5Xe1cxaL8/
+	+Xz29M2FFK0ekdY8PGTsfiONf4E6E/Ju9QA==
+X-ME-Sender: <xms:7uMGaEsCGQlS3-KT2CLVmANwXP6-3eEN4Z8cWtp_lWf4cNHTHf7ANQ>
+    <xme:7uMGaBd4z8Z22JAnfoJqZYLfHvoPISIhw-DgHzV2cKua1iYcO9Rt0riJF1gSdxtjy
+    dknL7DRKfF-9iWYuA>
+X-ME-Received: <xmr:7uMGaPwjz6qYonxf5FP-kwuVGyJOIxVMNFXxGs2AGExcFomVMpI3OMABcCx-jseyTM1bWk3quVoHYfvWYFepOscKi_rbxGSV4bj->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedvfedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,35 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedvudekucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougdu
-    vdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:5dUGaA7_nfvA54t691nl3QM4Gj0I7-vH4E7twJN8zJt4ROBanSDeDQ>
-    <xmx:5dUGaE7xl5YJcTc2VCcUzA431xiD_-l-d_BC2NeoKXB6A1jTaER8ug>
-    <xmx:5dUGaIhuTDqw1VL-HWfRBIeCblnK0tag3Ros5iEjUzl1l4H5U9qQZQ>
-    <xmx:5dUGaG7R1sVoNw-efkKFAnJ3nAirIkdfx8QpVYVPV5fgtxPf0K2Luw>
-    <xmx:5tUGaHfNvqxHt1yvOeMyug4lfdyZsT7PWH_fdN6t_hv6r9meVWtswKD6>
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrh
+    htiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhope
+    hpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:7uMGaHMmus2YsS1EXJyJV-oPt3vBjdd9h3vx0cfsat_zxDBQFYJlGw>
+    <xmx:7uMGaE91FT8RD28PsVKx07ChE2vngu1EDlwYLXKZudOPd6DDllwlmg>
+    <xmx:7uMGaPWIQkuO4coLS0ELFEOUaeGEFDSlGDn4tqaHQD9TQOsiluXMkA>
+    <xmx:7uMGaNf_2fwlkZZ4cFVJcXBpP0yz4GDWtGNYrnB6hMtf9i2C9its-Q>
+    <xmx:7uMGaF68gpeV7-I4Z4OU356a98Jx9XFlFiGa-V0aMOhE7KfJjJfOEtX2>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 21 Apr 2025 19:33:57 -0400 (EDT)
+ 21 Apr 2025 20:33:49 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
-  toon@iotcl.com,  ps@pks.im
-Subject: Re: [PATCH v4 0/5] meson: add corresponding target for Makefile's
- hdr-check
-In-Reply-To: <CAOLa=ZSa-qQzi3iWPF+M5a4EsvGiQFX=2Ca=vzuqwSLWWXSw+g@mail.gmail.com>
-	(Karthik Nayak's message of "Mon, 21 Apr 2025 16:08:46 -0400")
-References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
-	<20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
-	<xmqqh62i6jli.fsf@gitster.g>
-	<8b380da4-8d27-4efe-85fd-3bb599188fe9@gmail.com>
-	<xmqq8qnt7c9w.fsf@gitster.g>
-	<CAOLa=ZSa-qQzi3iWPF+M5a4EsvGiQFX=2Ca=vzuqwSLWWXSw+g@mail.gmail.com>
-Date: Mon, 21 Apr 2025 16:33:55 -0700
-Message-ID: <xmqqldrt5bto.fsf@gitster.g>
+To: Eli Schwartz <eschwartz@gentoo.org>
+Cc: git@vger.kernel.org,  Sam James <sam@gentoo.org>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
+ function checks
+In-Reply-To: <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org> (Eli Schwartz's
+	message of "Mon, 21 Apr 2025 16:04:30 -0400")
+References: <20250421175247.240971-1-eschwartz@gentoo.org>
+	<83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org>
+Date: Mon, 21 Apr 2025 17:33:48 -0700
+Message-ID: <xmqqh62h591v.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,41 +89,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Eli Schwartz <eschwartz@gentoo.org> writes:
 
-> Step #1, clones the repository, since the `git` executable isn't present
-> at this step, it uses GitHub's REST API to obtain a tar of the
-> repository.
+> On 4/21/25 1:51 PM, Eli Schwartz wrote:
+>> This is repetitive logic. We either want to use some -lc function, or if
+>> it is not available we define it as -DNO_XXX and usually (but not
+>> always) provide some custom compatibility impl instead.
+>> 
+>> Checking the intent of each block when reading through the file is slow
+>> and not very DRY. Switch to taking an array of checkable functions
+>> instead.
+>> 
+>> Not all functions are straightforward to move, since different macro
+>> prefixes are used.
 >
-> Step #2, installs all dependencies, which includes the `git` executable.
 >
-> Step #3, sets up the build, which includes setting up meson in the meson
-> job. At this point the `git` executable is present, so within meson
-> `git.found()` would be true. As such we run 'git ls-files' as part of my
-> patch series, but since the repository doesn't contain the `.git`
-> folder, the command fails.
->
-> So like Phillip mentioned, we need to ensure that the `git` executable
-> is present before step #1.
->
-> I hope that makes sense.
+> By the way, when reviewing this I was having a slightly hard time
+> figuring out which stuff belonged here... specifically, because of the
+> differences in macro prefixes lead me to believe it's not always so
+> simple as "does it exist".
 
-Please roll that into the appropriate commit log message for the fix
-you'd send out, so the next person who wonders why this topic broke
-the CI does not have to ask the same question.
 
-Would it make sense to just swap the order, then?  Our sources are
-meant to be buildable from either release tarballs (which is created
-by "make dist") or a repository (with .git), but from the analysis
-of Phillip and you, it sounds like the CI environment has been
-building and testing from a "git archive HEAD" output extracted as a
-tarball, which is *not* something any real users build from.  Making
-sure that building from release tarballs works is a good thing to
-ensure in CI, because all our developers are testing in their own
-repository (with .git) so we wouldn't easily notice ourselves if we
-broke the build procedure in such a way that it would somehow
-require say "git describe" or "git ls-files" to work.
+As there are non-zero number of meson related topics in flight, I'd
+like to know where this new series is meant to apply, if you need
+some of them before we can apply it, and what is the overall goal
+this series has ("there is no theme, they are just random set of
+changes to do such and such things" is perfectly acceptable answer).
+
+And the best place to describe these things is in the cover letter
+[PATCH 0/6] of the series.
 
 Thanks.
-
-
