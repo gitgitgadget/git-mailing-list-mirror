@@ -1,106 +1,106 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9391C2C18A
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 02:01:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E211728382
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 04:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745287290; cv=none; b=Rhsn8FMb6LM+C2lISPI2zPe770iDoGiPHq6wH9QdJYnxmDxVaTZeyFvGb1+fFSEKyeJQ8oN++AOb268NR5nDEKmE4+lfUC3oMfmTlpounpsa5d2/7gIs4Prb66IQVyCtFzi0F3tuWMNmV5RAlKWfocXaQ7oHpHQzjmrjYKsSWig=
+	t=1745294779; cv=none; b=uiFAJA9OO8yMA6IIqOXqGS3x8ik/b01IkHLM9FkT6WhvOR9RlEqNDqT32yA4vpAh2nlC5eIRu+cKPzVpdFIMqfEX4vWOBThlJgaqjZu3GHwiSUrXiokQvWmFPEz8LHgBRSrvjDkwKQzCP12JbNnKNfLuR6AGLkkdXmtxQavS7qk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745287290; c=relaxed/simple;
-	bh=Cmk8GWUpN6F5TOaOqwrjTEJ1x7CA0pmrfjdfwT19RRY=;
-	h=To:Cc:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=kEIySvAOkl7Can7avf0Nz6ZYEH7+dOfNTMCHaBsdNBKXw5aPGAHDP/pBAfVah2Zhx1f/XqZ4IGUMfkcuw0wz5WhuXqqQdLlLPcuxYpmfeTBPVA5/5rx28hdKaOqhbuJqI+faVzkNxpGuAGEAO2LMWJBb/DK083M9ifv65NBqJkM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YyOl1OgD; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745294779; c=relaxed/simple;
+	bh=+4hS/Tu8rWvETSWTxGyoWVs3TyDdT+DGVpncyBQBC50=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=O43UjC1iV6rBAkVNGi9V2JG/bLqAWQEFpl3ZBihGVgtosMY/BK2LCYLURKrcJuhXgKRLn/6LxFl093aG/3ITo9StpI5MbR5ZTa6MrEasUhVrdVHppQl/O7Ge9aIq9Q6/Bxp7CMApMq/WhBjxeiycEfaAV3qWAesnpVuUw1bzrbs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WjKjIDn4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E0cOCQfW; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YyOl1OgD"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c5675dec99so427353485a.0
-        for <git@vger.kernel.org>; Mon, 21 Apr 2025 19:01:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745287287; x=1745892087; darn=vger.kernel.org;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iBbBMHEKiKJG3fJgVZBoG7s5b54oxvIS6Ed54iLxx70=;
-        b=YyOl1OgD1LhiLn6BvBWyM83KWeIhMwff5+KLtmLXpPvFJ18hSrCrU4ZqSpcnBQwcgQ
-         myjinYRA5mmrfLsZ8tChzBK53E9apfzXzi4AIT7QM3YAi7QMXL19A3XhFi4SofEjXVWy
-         gNJW4MtRVZEaxmkNXfJuXbTE5JaJ6hYBSFrC/otqOIQHPYLPtt2gzMvS5Rx3kIpRqcAb
-         WMRTQI8/NB6k+xotFmUVYQ9zJWgvh4wEAS7+i8oUH0dALrWNCZuTB99TUgHoO/c0djxU
-         tDo4AiISvmfI44htOk83P6FTA8M236CYRTieSlE3xc6E3dwgjEbosB/sSyko7RxBmBVP
-         2Bog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745287287; x=1745892087;
-        h=content-transfer-encoding:content-language:mime-version:user-agent
-         :date:message-id:subject:from:cc:to:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=iBbBMHEKiKJG3fJgVZBoG7s5b54oxvIS6Ed54iLxx70=;
-        b=hZxKyfk1WzUI+SodO7NyN86Z0hUAvvQS71ZJVwQ9u9gp7Y2QrDjVXFh/jVst3sNg5C
-         ECRJI+FW3MecGTkpv3MzNXSdUKSVoUv0/u0rPZHEI0Cz4KVYU0qk3nM544mPHWe7WYhr
-         VmO4CVdcfTrTfjgwvVJWzA/Rw7jncijjHk2F0uipWPncXgocfb8N0vIqYn/cZYZ3u3R2
-         VPSQff75v9LHNIs+tTH9LvwYIu+VQo6shBtjRj1dQ0YaWurHt6DxJnDOT4MbERdmo+M7
-         vJnLE5gkFheUoDWIp8pmXIBBvfp/8sNLGTIRm0VD4u1jOPeeVEkHB0MSlGxi4F2Xr4ts
-         thlQ==
-X-Gm-Message-State: AOJu0Yyy/rrZqTxW2RP6vGk7UuDkEXaO5L/2JFMoNjkcrcls/ntoLOoq
-	H+8GuOJfff4RESHYQoVfT6ABVTq1inuG4p+9RecvIS+/rlvD0T0d1x0bYA==
-X-Gm-Gg: ASbGncvfLe3zFaSy6g14/spkpJOf1zXS9z7KSvlrVvQ4NDi5m59DQ0erXf+jEtAfxSf
-	iW/c8/MIetjbL6gjuQRUcDH+oNthY+VpZR9ABwyY0cvrN04Js445mfmPqw9MGk/ZaamSokeq73T
-	tSo0Hz8iSUwE3cBbQMBjdi1EUqW+E0OwhkWp9c0QDonxQf5tly4xg43IWQJlYhgKPpTx/9qMtds
-	n0xJf7PjXh+IY59HQ2dsh+/qabKvjrokM8r9cjOcFLH/R6v36tqvba/EyqL0yHEAuDvE+gVF8Si
-	Qzqj17jToX0jNxk0hcButZvhqfl3icd+zyh1o/E7O36YlKardcLpTBh77gjD8fIz18kuOaTJaog
-	brSCiTXnRwYCIUeymCj/fJEiSS1RgvBYYG8g=
-X-Google-Smtp-Source: AGHT+IEnhWwE8YAblmO66vsqFl9Jn5a32wo7GR0yVu/Jo8SiFjDJ1p6wMA5Ss28yK0HwiC5AqqSthQ==
-X-Received: by 2002:a05:620a:4415:b0:7c5:6410:3a6 with SMTP id af79cd13be357-7c927fb6a1cmr2160664585a.27.1745287287129;
-        Mon, 21 Apr 2025 19:01:27 -0700 (PDT)
-Received: from ?IPv6:2606:6d00:11:958c:1f9:dd9:b9ac:d355? ([2606:6d00:11:958c:1f9:dd9:b9ac:d355])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7c925a6e75dsm492836685a.16.2025.04.21.19.01.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 21 Apr 2025 19:01:26 -0700 (PDT)
-To: Git mailing list <git@vger.kernel.org>
-Cc: Taylor Blau <me@ttaylorr.com>
-From: Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Test failure in p5332-multi-pack-reuse.sh
-Message-ID: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com>
-Date: Mon, 21 Apr 2025 22:01:25 -0400
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.11; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WjKjIDn4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E0cOCQfW"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 83E56254021B;
+	Tue, 22 Apr 2025 00:06:14 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 00:06:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745294774; x=1745381174; bh=d+efj2BrPt
+	uEVJZ5+1JczYpuYQbTIaP9lWE2nWgm2MU=; b=WjKjIDn43EgNO7wypbdaR3p+vd
+	ihu09R07OfGMvIEIrhevh6V1SSeS4DTjP2leI0UqS0pYLrF//9evFLWpOQYBr90a
+	NNsgsvv2zuUzyDKsz2V876R3lnaND11BgIt00wmKfwyL2Tg4mACwlpUXmg6+dcAB
+	8xTREbO2v6PMyXa8R56cz+N4A2DlyFn1SSFvAdQNTckdsyDNKSocIVGMogcGjwn9
+	O+HIMZwDsM9Gcb8ggJvykaV+a5JfK1F78pRtiPmBLYKZerAn27SSHMBQjb0MFYVN
+	1vXpM9WfpyiOGV7E396uVVgurLU5Bv6BXOu1U9D0lxI9rIPzbtpQQDHuctag==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745294774; x=1745381174; bh=d+efj2BrPtuEVJZ5+1JczYpuYQbTIaP9lWE
+	2nWgm2MU=; b=E0cOCQfWFlXyy8j6/6ZLdBUBj17w5aabxmrUyC06cbH47dNH4PR
+	k+CGOmA3tpPQeFVwnBXTEwf5HG59rDQ0H9bs1nqxXxwbFM0CcPgIZf+rh6evfUDi
+	6VHedT9PIQ04KVu1gzd+cDtMiLdXTjNoOW7/Qr0nX6gK6PGI5BO4XxUvtYSqtnrS
+	X3DH7UL/3YqN05iNyxaXgeJbn3Ex/pNBaylDc0PJPo6g7Y/dF2xRyCUkps1HjfHN
+	hjL8B2GBPG08hvLvEBuQUyOc5Le2B9CihHQlQKH2PVfl4v8uvqrkujj0cV3T5Lku
+	x1FAhsdAtwz5gHlO/65q2rt4Y8KhtlzR4Vw==
+X-ME-Sender: <xms:thUHaCbCGFXtGrX5eLgcdsoNns5htLEVGFcksALtNX5oVkAgWwq60A>
+    <xme:thUHaFbq9rBZAXuJ6YkkwM6yNQnx6AOa5mn_xnbs8OogOvwo_N0Adg1f3RDkLfU_u
+    AozvZ-cwmy5jRWSkg>
+X-ME-Received: <xmr:thUHaM9iU8LW2ndb6oH5Vymj5N_BkEC1fhkqisXplBxkeKB382vOutGpotv7DjKQFKCGaaPilyWz9ELLduwlHIv5MUTKDROhIbjY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgedvjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvvhhrrghiph
+    hhihhlihhpphgvsghlrghinhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtg
+    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:thUHaEp4_oXGsZbf65U39VsC5NgaJX80l9eEsva6JlPrpq35uhlk2A>
+    <xmx:thUHaNp35_mSa8YngJMOpAiQ9eeSgeYopCkvPz0iCVQqcWhZ9eySqA>
+    <xmx:thUHaCSAGmeAcKT_-T4TeQA3ntNojPEXmY0p3YKg1i0Mgo2n60vOfQ>
+    <xmx:thUHaNp4NoHHdvb-l7oqCmBB3-ruMrT6-y74ArkwULKAtGf0EdrQSA>
+    <xmx:thUHaL7K6ORyBo0kQSGZvXfzGylqkQQZFJR9S4tH0Tev-_q7uyaXigZb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Apr 2025 00:06:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Philippe Blain <levraiphilippeblain@gmail.com>
+Cc: Git mailing list <git@vger.kernel.org>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: Test failure in p5332-multi-pack-reuse.sh
+In-Reply-To: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com> (Philippe
+	Blain's message of "Mon, 21 Apr 2025 22:01:25 -0400")
+References: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com>
+Date: Mon, 21 Apr 2025 21:06:12 -0700
+Message-ID: <xmqqcyd46dsb.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Language: fr
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-Hi Taylor,
+Philippe Blain <levraiphilippeblain@gmail.com> writes:
 
-I noticed that p5332-multi-pack-reuse.sh, which you added in 
-ba47d88795 (t/perf: add performance tests for multi-pack reuse,
-2023-12-14) fails early on in the second test ("setup bitmaps for
-1-pack scenario"). Since perf tests run with '--immediate', I do not
-know if further tests in that file also fail. It is reproducible on macOS [1] as 
-well as Linux [2] (I don't know if these logs are public though).
+> Sidenote: on GitHub CI, I could not demonstrate the failure on Linux
+> because all Linux jobs run in containers, and the images we use do 
+> not have Git installed, such that actions/checkout@v4 uses the GitHub
+> API to download the repository instead of cloning it [3]. This leads 
+> die_if_build_dir_not_repo from perf-lib.sh to fail with
+> "No $GIT_PERF_REPO defined, and your build directory is not a repo" [4].
+> We could fix that by installing the 'git' package before the 'actions/checkout'
+> step, but we would need to account for the different package managers of 
+> the distros we test on.
 
-I also tested on Linux on version 2.44.0 which is the first release
-in which this test was added, and it also failed similarily.
+Not limited to this topic, but wouldn't it make more sense to first
+run install-dependencies (including "/usr/bin/git") and then invoke
+the actions/checkout thing, I have to wonder.  We were bitten by a
+separate topic due to the same issue quite recently.
 
-Sidenote: on GitHub CI, I could not demonstrate the failure on Linux
-because all Linux jobs run in containers, and the images we use do 
-not have Git installed, such that actions/checkout@v4 uses the GitHub
-API to download the repository instead of cloning it [3]. This leads 
-die_if_build_dir_not_repo from perf-lib.sh to fail with
-"No $GIT_PERF_REPO defined, and your build directory is not a repo" [4].
-We could fix that by installing the 'git' package before the 'actions/checkout'
-step, but we would need to account for the different package managers of 
-the distros we test on.
-
-Cheers,
-
-Philippe.
-
-[1] https://github.com/phil-blain/git/actions/runs/14580975799/job/40897421311#step:4:896
-[2] https://gitlab.com/phil-blain/git/-/jobs/9780586827#L2889
-[3] https://github.com/phil-blain/git/actions/runs/14580975799/job/40897421399#step:4:28
-[4] https://github.com/phil-blain/git/actions/runs/14580975799/job/40897421399#step:8:838
+Thanks.
