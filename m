@@ -1,92 +1,94 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5603238C06
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 06:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000CD10A3E
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:02:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745305055; cv=none; b=L+MUfV6HESesHIZKJ1I0Q/9arzguUAkFUK25/xjIBpmRVMlDv5N3wtfP9LVt2XppmrgWx5YQLnKv11G1j0Kulr/dB2pJzFkk/J66yBHySsdGUAcKJ0XGZ61hbuVMdVsKL4/LSQDOBqfqCFat6S6Hv4UzCRiB0PcaQEMTwHxzu64=
+	t=1745305374; cv=none; b=PY7fqqKK8j+GNF3m3hC+dAeivT8+CjnqeWsLz+JikoU1HjNez75f1dSRJ5VDAafreUgzUMG4ByhzWBCsLRdn8kcFJiiazeSQhmz3RTxsaJJP6npt/S0YaDK3bqcqfwggBpK2bNrs6j6chasrZ4t9s+63bwdfgiT9jGlehFGn6KA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745305055; c=relaxed/simple;
-	bh=66mdQmAfzx498a71Vtl24H9vmTFj0CwCMBOxQujx26I=;
+	s=arc-20240116; t=1745305374; c=relaxed/simple;
+	bh=GT81iTTkt81GaPRwFcwRfAwDE7j6ol3lfylTbFYq2BU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BeLa7v+rhHTBIf5zElaTiEZzXMHP5vx0sfw5ZdWW+WLxvj3pJh3JVj0xCpDf+tUS0OM54xssAd3/0dVF500bQUsf9Vbrq660rP+pQtidqsJOfgf73kZZs/ghF4CxcPzxepehXWSgF8VwjtpKz3ehF5js1Ldy6pgEljWQKNTWREg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fVlE8qia; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bqydC0YQ; arc=none smtp.client-ip=202.12.124.151
+	 Content-Type:Content-Disposition:In-Reply-To; b=epAuTCjfBxyH8AezbV5QtsOjx/x8WCLfLDpuCKK1HylVdnTqpVX/FLWqHPOU/8LDzrufhCThRtV9rHL8iOhe7IhsbRZdP73RqLu22vn3iC+pFG1FCs/3bY1ZkaLXawTLRYo4w1d/nKU+uJpDaFSFnqAMVoW0bMI15NJtha37v/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qQ+OuSEi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=En3d6BnG; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fVlE8qia";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bqydC0YQ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id E6D541140189;
-	Tue, 22 Apr 2025 02:57:32 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 22 Apr 2025 02:57:33 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qQ+OuSEi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="En3d6BnG"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.stl.internal (Postfix) with ESMTP id EAE2B1140195;
+	Tue, 22 Apr 2025 03:02:51 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-07.internal (MEProxy); Tue, 22 Apr 2025 03:02:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745305052; x=1745391452; bh=0ky/qiSGiF
-	xU+OORy9/4Qks622/aS3Ed856RrvLPf8E=; b=fVlE8qia81FwFCYF5lqVeOLXfb
-	LMq3ajbhL0+6G93NpIBRgwPf1OG5+IgfW9R9U73O9Caps1QwHEmizD8DrdHi7tTf
-	ulsUeQ9GCQ6itoxIBoauoQCqzaTBTEXHUVADVxwYrHTQ+9w/dub6ko9Tk/8QNRw/
-	FUxg/3LqgPxxtexekVFYbdlxm/7ILpTI7nLa3YqFmOSJDW+LcqJdl7Ga7+YDstFP
-	GBwDFp6iuZ6lKe2GpsLLV7UOtMuFDgAMOCwO9FQLQvGiMe6Wk4pdxsr4LXUwFDyN
-	IAPuUxEpHdiuSMn6FtFuKERwnwZnpBBPHjggow988L5rjkEOxc5kZNWd3NgA==
+	:subject:to:to; s=fm2; t=1745305371; x=1745391771; bh=zP3iSn4fP3
+	fmzC8dX3cKXoh7KXKES7hbG375nZGG05Q=; b=qQ+OuSEiizWkrxF4zC/j0I+Dbt
+	Gwr5kz+sPd3W8uKDaIhxyODNNUm861usRLpyWiQ+7LpgrcAYCDbmm5h9QJyss0kY
+	Qvv4/SvNGFCqadS+AubD8xzzbYjE2LvA2TOoxHiDh1OhbRTp7gADOmrZoCYoSMrG
+	GhOlcQLi14JIivv6rGb7Wxxa0/OCJF0i16XsGrt+O7C0NDnJGs3f4jo96kkBoHxJ
+	OB5nXdFo/T5+jrk1w/1NPl2QerIZFY7Bv/sBFjujOW29qljAQVv7Tk07GgOrexvZ
+	3FmPucYv4PUDnje3zscQGqj/qKDiWbbaazzNy9QlC6YOKfDgs+h9IHCFXmfA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745305052; x=1745391452; bh=0ky/qiSGiFxU+OORy9/4Qks622/aS3Ed856
-	RrvLPf8E=; b=bqydC0YQ5gQdqnnn2kQmdFuIeCkCbv4iQmR1WrG2+SmqnLBSotM
-	WRqociHC2ybjUJQTWCoInx9Cv8oWqQUByER20C42/zIteYUKsWe/7OASUnwlr1rU
-	T/ymQRtRjQ8yHGwtNT0tCeN5QNZBLtfVzNoXXvK8fuD2L1Psrxj4VxbTdfLiMPoA
-	Ap5uhob1yYHnhOi5aCMeMdJVbvKlt40ROS2+NeMAbvwFe5bMLrWF6vBo8hV8naqr
-	d/MIxRPhrV0+G83zKWzwHxdrb13khu6MxIg/CHnBpmfu/+u2NALhWWgdEaLseFVG
-	+Osy4lKFil3geWRHmCaDaykaf/8C1IFOxLQ==
-X-ME-Sender: <xms:3D0HaHsDKbhhX-uXJXSbxP9kDCjZYR_aad5vF3fUcMRK7QLwrcWymQ>
-    <xme:3D0HaIcZ8WmUMTej-x1OJbmcyJgUBKsuNBT0wX-u7wMIsbztq9t08m2ESYQ3e39PW
-    4oS6ck7d8ZAexK-NA>
-X-ME-Received: <xmr:3D0HaKyAa0rN_crf8OWN6EjRTy2yCt3lbetjLBXVn66pZ5XAzIgY62IVvfrPjB3ncdvvNoUnEZVZP5eqLQa50W6WXc7VGDDoFzpMaFnxnm4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeftdeiucetufdoteggodetrf
+	1745305371; x=1745391771; bh=zP3iSn4fP3fmzC8dX3cKXoh7KXKES7hbG37
+	5nZGG05Q=; b=En3d6BnGqL+XOCONRH2K7lKnzLw7cYCGDselO4jR+MNNjkhmZiY
+	kijEsNPUk/eSK8szIvoooCKy43KBFmhNP/CZ6okn/eWZgVJt+4Ro4QbYDWQjDGCf
+	J0GUPjMJjYY6f8YvNSkiOljQeT4BD6OOB1fHuyD69kQcCitH6L6eLVjVNs1LyOh+
+	orMZ5UFZyZNrd3LfbxnIVinylTghIOyyGaCRdVjO+bPfrJevZLMvf2HVhAcBnn0v
+	9LUrNSajvpkkP3rLxPBHIeJ/6bqpoxqVJm1qGDxfAdCjMWkfnThPoaDTirW01cqx
+	Vs6Y7AYdEAewjEyg9NheDczNE6RFcUd4WEg==
+X-ME-Sender: <xms:Gz8HaGF8Tj80XzjesCImBYCATZ-NE4cRfD4R04WSkpgLDySftxBW9g>
+    <xme:Gz8HaHU3jIdubWliR9oYCLCu3RgUfYD9m-uR8txDgvsGaJRFqO28CuOuneoe0XU5j
+    8698JWru_2evqMrYw>
+X-ME-Received: <xmr:Gz8HaAITwz0yml2YGSEXwjadMI_cVygIQT0h4Jl_cIaQEXL-vstS40ZAnrPZ0iqfrY6MZ6dKko8s3WgmdMvnf-7d_fM1z93CDPxEZ-jzwTE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeftdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehphhhilhhl
-    ihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:3D0HaGO901D0XRg6Cbs-bv_TLwwkSrV8Uu2K_Ilr1n-C6tJLX2oH5w>
-    <xmx:3D0HaH9Z1lNNkkZn6SszjZwNsl44tqU7ZJKw_vcUMwY2T-kXRbEz8g>
-    <xmx:3D0HaGXRpmrS1MlugEz7BZbni0VwYM_C_LpBSj25K6x6ilgpse34Sg>
-    <xmx:3D0HaId34VoT5ee71Wl_muUlBcZQ3H6P4k9bL3IsM0sk0JyZ-akQMQ>
-    <xmx:3D0HaIfB2DIvllB-qk8JLxYSdE568WCseJgNFTBeB-EjV40KCM3jP7cQ>
+    gvnhhtshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgu
+    rhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkh
+    cuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhep
+    jeevhfejudehgfffhfehkeeiveduieffkeehfeehveeuheehuedtieevfeffieejnecuff
+    homhgrihhnpehgihhthhhusgdrihhopdhgihhthhhusgdrtghomhenucevlhhushhtvghr
+    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
+    gprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhs
+    thhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhih
+    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgr
+    rhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtsehsfhgtohhnshgvrhhvrghntgihrdhorhhg
+    pdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhhhigrmhhthhgrkhhk
+    rghrtddtudesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:Gz8HaAFQ3hX56p9UfB5K35txoZ2fnDiAzqNaCr2na6Cbbhb0gvyg6A>
+    <xmx:Gz8HaMW6uOaJuE-MjYx2AMLO0FBBXPrFg_GPZrHAlHjx_ap0cwvvMw>
+    <xmx:Gz8HaDMg97hWVAWdJOfTX4sZYQ6hko9PEuVTbvLFOcRH5dUT6ev7VQ>
+    <xmx:Gz8HaD0ZyCNw2O6fIlJyyFCTbNJSKwQXTn0Ga300agf_2a5CFEDzoA>
+    <xmx:Gz8HaE6vwMRCQSu2PqV0CxWxPiK_fK_45gayKNeOV3NPea0xvvChQr5E>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 02:57:31 -0400 (EDT)
+ 22 Apr 2025 03:02:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7152650d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 22 Apr 2025 06:57:29 +0000 (UTC)
-Date: Tue, 22 Apr 2025 08:57:28 +0200
+	by mail (OpenSMTPD) with ESMTPSA id bdc97d79 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Apr 2025 07:02:47 +0000 (UTC)
+Date: Tue, 22 Apr 2025 09:02:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: phillip.wood@dunelm.org.uk
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	toon@iotcl.com
-Subject: Re: [PATCH v4 0/5] meson: add corresponding target for Makefile's
- hdr-check
-Message-ID: <aAc92C53K2y-ijxA@pks.im>
-References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
- <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
- <xmqqh62i6jli.fsf@gitster.g>
- <8b380da4-8d27-4efe-85fd-3bb599188fe9@gmail.com>
- <xmqq8qnt7c9w.fsf@gitster.g>
- <3389d086-4e6e-4896-94dd-9f62d7c4f2df@gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git <git@vger.kernel.org>,
+	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Jialuo She <shejialuo@gmail.com>,
+	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git at SFC <git@sfconservancy.org>
+Subject: Re: AI guidelines for mentoring programs (like GSoC and Outreachy)
+Message-ID: <aAc_Fp7HFXydrHkq@pks.im>
+References: <CAP8UFD37_qsTjM97GK2EOWHteqoUKdwxjKS-SU629H2LnbTTtA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,50 +97,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3389d086-4e6e-4896-94dd-9f62d7c4f2df@gmail.com>
+In-Reply-To: <CAP8UFD37_qsTjM97GK2EOWHteqoUKdwxjKS-SU629H2LnbTTtA@mail.gmail.com>
 
-On Mon, Apr 21, 2025 at 07:54:16PM +0100, Phillip Wood wrote:
-> 
-> 
-> On 21/04/2025 16:41, Junio C Hamano wrote:
-> > Phillip Wood <phillip.wood123@gmail.com> writes:
-> > 
-> > > "git ls-files" is complaining that there isn't a git
-> > > repository. Looking at the output of the checkout action (reproduced
-> > > below) it appears it is extracting a tarball rather than using "git
-> > > clone" because git is not available. I don't know what the best way to
-> > > fix that is - I guess we could run "apt-get install git" before
-> > > calling the checkout action.
-> > 
-> > Interesting.  The use of actions/checkout@v4 is nothing new in
-> > Karthik's series and we haven't seen this issue come up.  What's so
-> > different with this particular series, I have to wonder...
-> 
-> Good Question. Looking at contrib/coccinelle/meson.build which is where the
-> invocation of "git ls-files" has been moved from it starts with
-> 
->     coccinelle_opt = get_option('coccinelle').require(
->       fs.exists(meson.project_source_root() / '.git'),
->       error_message: 'coccinelle can only be run from a git checkout',
->     )
-> 
-> I think it is probably fine to skip checking our headers and running
-> coccinelle when we don't have a git repository but we should ensure the
-> meson build can still be configured in that case by skipping those targets.
+Hi Chris,
 
-Agreed. We should from my perspective just disable those targets when
-we either don't have Git or when the source tree is not a Git directory.
+On Tue, Apr 15, 2025 at 11:21:53AM +0200, Christian Couder wrote:
+> Hi everyone,
+> 
+> We now have a new "AI guidelines" on
+> https://git.github.io/General-Application-Information/ following some
+> discussions between GSoC 2025 potential mentors and org admins by
+> email and on https://github.com/git/git.github.io/pull/771.
+> 
+> We came up relatively quickly with these guidelines because this year
+> 71 out of 79 proposals we received for the GSoC 2025 were spammy and
+> very often AI generated. This is a significant increase compared to
+> previous years. I remember that a few years ago there were less than a
+> dozen spammy proposals. We also received some AI generated spam
+> patches and emails to our personal email addresses.
+> 
+> Other organizations participating in the GSoC 2025 also received an
+> increasing amount of such spam, and organizations which documented
+> some guidelines against it said they receive less of it. A large
+> amount of discussion has happened on the GSoC mentors list about this.
 
-> The Makefile falls back to using "find" if "git ls-files" fails which is
-> another option.
+Yeah, it's been a bit of a pain this year indeed. Thanks for creating
+the AI guidelines, let's hope it improves the situation.
 
-We could do that, but I wonder whether it's really worth the additional
-complexity this introduces. I would expect that almost all users of
-those targets would always have a Git repository available anyway. It is
-very likely that for example a distributor of Git would run
-"check-headers" or "coccicheck".
+> Let us know if you have an opinion about this, or if you think that
+> the whole Git project should have AI guidelines.
 
-Our CI is a bit of an outlier here, but that should be a comparatively
-easy fix, I assume.
+We (you and I) have discussed this internally and got to the conclusion
+that it's not needed for the Git project as a whole at the current point
+in time. We haven't yet seen any obvious issues with AI-generated
+patches on the mailing list, so it would probably be premature to worry
+about it now already. We can and should reevaluate though in case we
+ever see an uptick of slop.
+
+I'm of course happy to hear differing opinions.
 
 Patrick
