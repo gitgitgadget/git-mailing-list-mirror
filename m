@@ -1,188 +1,121 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52572280CD2
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 15:36:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7D8F1494A8
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 15:37:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745336172; cv=none; b=o1AAsB16INFDsuGbxvDbRaiY4RdW4sk9FSZXrIdVM/81rKIlHSQAvJtqcGJk7NNfY8iNVD2s2mO0dhBz2yGt6A1+QNH6je6QtEOuOFoydMXzObge5MgNBELuX5BR9G+n0EO3fsxdgPrqXGB1A/LMCyot53o410lcWbOeATmefPQ=
+	t=1745336228; cv=none; b=XZcpHeQtCekYNUs/5nUyIJwVP71D1ImtJEH0zdRqzmyLhJdflc1YLi34WYqpszXJni0fQxQ2IITn1vkrDlo9XGG2mvi2LZaz1unTTfMafcqLgkmwbc3p41Nr9xq09OJsv9K1NOXE+J+ISSrAJqEM9pbytiX+bAljOw0xExyKszA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745336172; c=relaxed/simple;
-	bh=WG4P1l16xQCj/xbZbH9XoVkv8unUvQ7fS3S0YCIl988=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=NjsAKfkGGpGepxuYh94qioRoVIvs+hU/vM/e7GPihfRcCKB72zHNKantZt807VCAcf5YKs1PmhtYx+Vns94QJ35YaNnJDkLqr6e5iP0vVJ1zVaph1QF9QR1YurKb82PkWlE4dua5mHvmMjyMQHV7tBCoo8VYWqDGcJEASo0+95A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3DCE6340DF9;
-	Tue, 22 Apr 2025 15:36:09 +0000 (UTC)
-Message-ID: <590d0daa-59ac-44f3-b277-e3e83ad1add5@gentoo.org>
-Date: Tue, 22 Apr 2025 11:36:06 -0400
+	s=arc-20240116; t=1745336228; c=relaxed/simple;
+	bh=vhHjKqQ9Dey+2N/uzC2hl24TdjLTBAMvQqe/rT8dvs4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=CEdrh0d7QUXvN4mtz/kTnVv9rf6/DOTQ47ATxASYhbcdcARbOn2j5U2++5w/mBebg4g5uAuwZ3vnq87DBdjiJphilXKqBhP/uLOsNOKqzqXe5uS6tOR3N8J91nS6Px5XRZsmPoutei8LJ6bnOD7jicwjzLNjfZuEj1PDujAkMfs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=W5z/Dcue; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PIZozH71; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="W5z/Dcue";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PIZozH71"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A2E471140247;
+	Tue, 22 Apr 2025 11:37:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 11:37:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745336224; x=1745422624; bh=Kb7+zfommL
+	sifzh4HuSAAgHoGfFJH3v2CAb8mdEwgKw=; b=W5z/DcueLHRIlOmASS1snv0BWu
+	GFiPKgzvJ70bAEzjICfQlW/4yH5yAjiJlAwxVQaRSsOzNp55UuOm5cIuyCXZHwDS
+	YIMghWOedXwdhu4ooUZahFebgV89OJPjkfAdqxJOdc6LN9esq7fFeV+CnegokW7Q
+	2uwmIsOmjasknYhDsvD/Zk58KEgYss5nXt/sA+9iy+R4vldLByiBOESHgKpImuV5
+	SzHzBomDOXxX2W91Y+gPGkRWZ2bF0nOiKGS00HESz/fzWt0H9emjUiJPIe0iaSKx
+	Q+vGtqLgRMCbaZk220OcmnZX9/m4ww+Hm3vTDxwKF3REG2nYybiblRnkpLaQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745336224; x=1745422624; bh=Kb7+zfommLsifzh4HuSAAgHoGfFJH3v2CAb
+	8mdEwgKw=; b=PIZozH71V6GVPp6BjAkGnH/R23hH3Hea3ZPsiAXOf1HUzwBPaIt
+	TkJiga9XUkqRQP3dE1LOVTcUhPI1Y1Xpo9qOydZSPxMNKYThMJDyMGKlt6v4IbmZ
+	BrCwEqJtPkjNj0cpyDz8BLn2BKcWGee78K7vulpzBr6cmD6wyRSHLhyPb/VpWJwt
+	BtyCaRqWwCv2zoAAPbC1L6t8NLCsjOqjkqhibsbjZkq7PSRmM2DHARM0hFjhhZYk
+	eIm+HLEeT1/yb96HGVBqq63Z18Oy/orF+rbZF3JO0zSDY2nvoaICZtBtXlQgJlXV
+	2gYdco5rkEzN2oyWCm7ilnSZ1d/ORqdvSNA==
+X-ME-Sender: <xms:oLcHaH8CwOZA44y1_F-VlLAzqNT4phZ-42VHx6zdSuyeI4JpVd0p8A>
+    <xme:oLcHaDtGCXnKomR8nuXlj576ZBkrbBS1oYIT9WZtsfrMI4cRi_t31eJBE9UcKcqMH
+    HGK30pRSMH0Fn-25A>
+X-ME-Received: <xmr:oLcHaFBB0L2xNbrhVT9hl6meNB7g5gR7tLd8SUxoE73Oc7gm2qCt-jOP_jrtNtnwvPF8YyaRqX91npAsNFgo_c9N4pUSkbeGj_NO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeguddtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
+    ihhnsehgmhigrdguvgdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:oLcHaDcb_cYhvmKkYDfALG3UwBoCVuhlQv8TxqAM9Hr_WP-dc5lrHA>
+    <xmx:oLcHaMPELyWkW1d72AgSFIW03kJlwqKOdz4DbXtQ9Qroc0WISWukvQ>
+    <xmx:oLcHaFmVyL5LkhDijCMacDyY8G2sXk4zoxN0DwxgiwMRArznnhiD5w>
+    <xmx:oLcHaGseP8BTvZhNSnf_unnfvkl7ZrpzwrjJ0xC7xmmZz7POQGjEYA>
+    <xmx:oLcHaPQJDAetnLWOb0jz3AAAy1hIq8hSzDvF_wvqNbTgZ3fekm7vrht6>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Apr 2025 11:37:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>,  Taylor Blau <me@ttaylorr.com>
+Subject: Re: [PATCH] perf: do allow `GIT_PERF_*` to be overridden again
+In-Reply-To: <20250422104125.GA1460472@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 22 Apr 2025 06:41:25 -0400")
+References: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+	<20250419035407.GA93039@coredump.intra.peff.net>
+	<xmqqfri28rlp.fsf@gitster.g>
+	<20250422104125.GA1460472@coredump.intra.peff.net>
+Date: Tue, 22 Apr 2025 08:37:02 -0700
+Message-ID: <xmqqzfg8438h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
- function checks
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
- Junio C Hamano <gitster@pobox.com>
-References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org> <aAdF4DzFCZ3uOJCx@pks.im>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <aAdF4DzFCZ3uOJCx@pks.im>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------0zUDZ4tT8jxw9tm4mb30S8E7"
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------0zUDZ4tT8jxw9tm4mb30S8E7
-Content-Type: multipart/mixed; boundary="------------JfbU0ZCusM1zACF98S3ix8GB";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
- Junio C Hamano <gitster@pobox.com>
-Message-ID: <590d0daa-59ac-44f3-b277-e3e83ad1add5@gentoo.org>
-Subject: Re: [PATCH 1/6] meson: simplify and parameterize various standard
- function checks
-References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <83d9fda5-8399-47fb-87b2-a8b376cf1625@gentoo.org> <aAdF4DzFCZ3uOJCx@pks.im>
-In-Reply-To: <aAdF4DzFCZ3uOJCx@pks.im>
+Jeff King <peff@peff.net> writes:
 
---------------JfbU0ZCusM1zACF98S3ix8GB
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> The original patch in this thread did something like:
+>
+>   git_perf_settings=$(...pull GIT_PERF_* from env...)
+>    . ../test-lib.sh
+>   eval "$git_perf_settings"
+>
+> That is, we stash away the environment, then load test-lib.sh, which
+> overwrites the environment, and then we restore (some of) the original
+> values.
+>
+> In that merge, the test-lib.sh inclusion is moved (and in fact is now
+> accompanied by an explicit inclusion of GIT-BUILD-OPTIONS), and we now
+> have:
+>
+>    . "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
+>    . "$GIT_SOURCE_DIR"/t/test-lib.sh
+>    git_perf_settings=$(...)
+>    eval "$git_perf_settings"
+>
+> Which of course does nothing. We need to set $git_perf_settings before
+> those other source lines (and the eval must remain after them).
 
-On 4/22/25 3:31 AM, Patrick Steinhardt wrote:
-> On Mon, Apr 21, 2025 at 04:04:30PM -0400, Eli Schwartz wrote:
->> On 4/21/25 1:51 PM, Eli Schwartz wrote:
->>> diff --git a/meson.build b/meson.build
->>> index c47cb79af0..6c147c22a4 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -1322,45 +1339,15 @@ if not compiler.has_function('strtoumax')
->>>    ]
->>>  endif
->>> =20
->>> -if not compiler.has_function('strtoull')
->>> -  libgit_c_args +=3D '-DNO_STRTOULL'
->>> -endif
->>> -
->>> -if not compiler.has_function('setenv')
->>> -  libgit_c_args +=3D '-DNO_SETENV'
->>> -  libgit_sources +=3D 'compat/setenv.c'
->>> -endif
->>> -
->>>  if not compiler.has_function('qsort')
->>>    libgit_c_args +=3D '-DINTERNAL_QSORT'
->>>  endif
->>>  libgit_sources +=3D 'compat/qsort_s.c'
->>
->>
->> ... for example, the Makefile says here:
->>
->>
->> # Define INTERNAL_QSORT to use Git's implementation of qsort(), which
->> # is a simplified version of the merge sort used in glibc. This is
->> # recommended if Git triggers O(n^2) behavior in your platform's
->> # qsort().
->>
->> cmake unconditionally defines it (???)
->=20
-> Our CMake build instructions shouldn't be treated as canonical source o=
-f
-> truth. They're good enough for some usecases, but they are not as
-> feature complete as any of Makefile/autoconf/Meson.
+Right.  Thanks.
 
-
-=2E.. yes, which is why I'm using it as a springboard to ask questions? :=
-)
-
-My working theory is it unconditionally defines it because this is the
-correct behavior on Windows, and the cmake files were primarily written
-to be used on Windows, which leads us to...
-
-
->> config.mak.uname says:
->>
->> - AIX:
->>   INTERNAL_QSORT =3D UnfortunatelyYes
->>
->>   Seems to date back to commit 377d9c409ffe0f0d994b929aeb94716139207b9=
-d.
->>   "Unfortunate" indeed.
->>
->>
->> - MinGW:
->>   INTERNAL_QSORT =3D YesPlease
->>
->>   Windows claims to have a qsort but perhaps it is very slow and bes
->>   avoided?
->>
->> We should probably stop *checking* for qsort and simply encode the
->> platforms we know are slow and automatically skip it there. Can I get
->> confirmation regarding Windows? :)
-
-
-=2E.. this. config.mak.uname's mingw case appears to agree with my theory=
-
-about the motivations for the cmake file.
-
-
-> I'd rather prefer to try and detect this generically instead of adding
-> more platform-specific configuration. It is way simpler to maintain, an=
-d
-> if we ever see that things don't work well on a specific platform we ma=
-y
-> still reconsider at that point in time.
-
-
-Okay but, how do we generically detect that a platform triggers the
-Makefile advice "recommended if Git triggers O(n^2) behavior in your
-platform's qsort()"? I'm not sure how to write a compile-time check for
-this.
-
-It's easy to write a compile-time check for whether a function exists,
-but it seems to have been an error that meson assumes some platforms
-will not provide the function, as that was never the intent of Git's
-support for internal qsort.
-
-
---=20
-Eli Schwartz
-
---------------JfbU0ZCusM1zACF98S3ix8GB--
-
---------------0zUDZ4tT8jxw9tm4mb30S8E7
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaAe3ZgUDAAAAAAAKCRCEp9ErcA0vV6aM
-AQC4TIM9QTc7jY19h5hLjo6rIT7yz/ahglSOsWJ7aMq87QD8D+kYAFqLrk0a4rgrF7rvKwHaZUZK
-D1/ovgK9AD8H1Q8=
-=9GLW
------END PGP SIGNATURE-----
-
---------------0zUDZ4tT8jxw9tm4mb30S8E7--
