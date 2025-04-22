@@ -1,155 +1,171 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9BE2283CA4
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 13:53:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 526E8280CFC
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 14:10:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745330038; cv=none; b=YyIEY61fprs0D1BpkG8LlrqR/HelY9P+pEgdt6NEPdxd1GSdRSMGEzx+FbXVGRkcQq0zKnUcjisHjWIaibdj8/q8xZezs83uy5LgQZ8qLILoOquUGJ3EEYU2WiUxduhTTNP+baJ+/vNIRejTOkiWNbckwIA0O6fpXcTL5KcyjjI=
+	t=1745331033; cv=none; b=VB/RCZrNGq+cCtsDHCiRH9Yh6E1rKbTDNh64G8EIsWijHnzn5svC/899qqD48lqhctV7J7RSAES43D1CkkLryVB8rycSR1dBIJi99Hp0OwcyRTHxawlCyoT8ZtbuEYIGsc07ZE+r0po1pNIUCtWtZduPV++yv1NARydf2ikPl2M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745330038; c=relaxed/simple;
-	bh=Ngf19GSF51peiyZih9RBxRAw+RY+NDFzsDt6Y7xRINU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BCeMikSnmVmb1GQU/vIadPWv+V4lx/2OFcwXvkZ9x9qvqa1qFf83G+D21GmGG5sxa7Sb4D80WLSEf+pCPTw/S4fbu1u+AKYOMNuc/L25GAEIP5xpGKDpBQOae0fBD6zTXtTKmaL57eQ3Ja0qTarCQfy8d7hMPRSRTWfhYoSmFcA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=KHJtJBOg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lA53y8zB; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745331033; c=relaxed/simple;
+	bh=pe72oIyVbUnaAuBwpYEqzwkSbw2OwpZaM0O8NP33Y9o=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iu76fQaTYpqDffx6g3FokEmJVZDF1WgWfykKuaz2ICS9VmXZje4f/NiePTHnmqmRAU31k4sLYo3aGKoxtaA19dZVymhaesDMrCDj+86TOYp0FWPTUzsTz9GJmWxT7fmLBGJzzby4WdTtZK37hfzMVub5xAuGne1OR4eVv42TH7k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BcU7Geel; arc=none smtp.client-ip=209.85.221.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="KHJtJBOg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lA53y8zB"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id AAC64114005B;
-	Tue, 22 Apr 2025 09:53:53 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Tue, 22 Apr 2025 09:53:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745330033; x=1745416433; bh=h/scdoJfeN
-	IWguGynboc2axaB7bWQB66UsZwDeKV/sc=; b=KHJtJBOgbRUcn76SadDSoYqQQV
-	RXFhV6reTxaNwj+/LO2vgq337FDNIsbNbOqygfInTpvCb9UEaJ2EAsNaPy7ik+CD
-	v1xaBCjOZ+7lwqoRj+TyPsrgcZ/dYa+pqDut+MIK+QZe3Qjv6hdEvu7mo0pPbqo2
-	KwhvCO23QItp3dBpcfLZQU69bVHtls7YW52NP2zeDtLrEyzkkrEzc1jzDxyImVnX
-	CtBUxkphuLvgt8ACIpYsCMHs21DmvBwAH6KgGl62HSQan8yLISJDK8eyaJAwvcRq
-	VpRfX98OXcywXEr09LP94xjWkwrYdtPdEfcKuYjTmecZIjfCFZpmWDsLNtKQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745330033; x=1745416433; bh=h/scdoJfeNIWguGynboc2axaB7bWQB66UsZ
-	wDeKV/sc=; b=lA53y8zBgTBIUfge0zCUgN34kH+HOoA3fVNhN60uNj9SrUYE1qM
-	N7guQuVZp0negCK2SQ0JZqfBmcuMl2pm+yB6CZLIKp1WBs/ZozD1wN7gqAKiw2ZQ
-	H+q7C7P4TLvpZDdhqN7qIlgu34oIaJ+doIQV+HdRWVKRin7AMxEK6vyiJPz0b7ll
-	I6RbqBfta1plOwx0zFxDP8CUdMAH2G8w9N8qL/EoghtFKhlLZQvKh3/vNfuK1nlK
-	a4swCq5V2/bT/YlpNE0Aag1NbPUEUSmRAAk7ujCLw+BuBTiw1PGdKuabQ8VggE0i
-	H1qi0dyaIkKQYKgely6gfkT1CNDdjUzGJNg==
-X-ME-Sender: <xms:cZ8HaA8RmVRPbMcPNY6spE51dK0yiXL-alT-vpdXMJ3Gv2678mjlgA>
-    <xme:cZ8HaIvZSY5ezYw2R2Dno_FdHR0ARLjDmxJyW_KxpeSI_8P7StOKNgDyb-iqityXq
-    xu4SLWNwHWm9JqXHA>
-X-ME-Received: <xmr:cZ8HaGDaaPxouplaQoovaNZdo3Lh3uEXlNDJMGMC6NHqOQlIJuSd65tzTHdw9M_R1ldEtKISdmCvCVm6sJFQZ29NkuwE88v4wdxZT0Rc0qc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepudevueehvdfgleelvedvtdduhefgvddutddtffeg
-    gfekffdvheejieeggfekkeehnecuffhomhgrihhnpeguvggsihgrnhdrohhrghdpkhgvrh
-    hnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtph
-    houhhtpdhrtghpthhtohepphhrrghnrghvrdhpjeesihgsmhdrtghomhdprhgtphhtthho
-    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:cZ8HaAenOoLsHi1vtBXn054-OCHuqAvs3932Qz4bZiMY1Ei55ScLDA>
-    <xmx:cZ8HaFMswW3sJSKTSJExeiA9ek5wHo7kroA76vC5SQamrssgpQ1jCw>
-    <xmx:cZ8HaKkNfaAvgSMY-OOagLF__gnn3M8qGQkHYfapQ_wF0dhEGfAuyQ>
-    <xmx:cZ8HaHs47kdDVrsp_bPWcjL4Hs2vzJsTZHE-hpcYvSg-eJhUksMW8Q>
-    <xmx:cZ8HaM_eTsPfKj_yY7FZA_SFQgU2jBbiXQyHoG1zwE_zpLvmJ4JnZAy3>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 09:53:52 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 77151500 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 22 Apr 2025 13:53:50 +0000 (UTC)
-Date: Tue, 22 Apr 2025 15:53:49 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Pranav P <pranav.p7@ibm.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: [BUG]: backfill min batch size test case failure on s390x
-Message-ID: <aAefbU-MmY_734oB@pks.im>
-References: <BY5PR15MB35396BEBCAB2C559080F08C6A0BB2@BY5PR15MB3539.namprd15.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BcU7Geel"
+Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-525b44b7720so1992982e0c.0
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:10:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745331031; x=1745935831; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ET0BwqRldZk9TXticKlTrg8kQouRAE2zn9w8zSs/Yh0=;
+        b=BcU7GeelopmN+qUnGM6BOSywVB0lUz12xoZNrlPEs5K/VJrN3T5UgJ+PT5XAmLmwJs
+         e4nCwruCXTFJm7afX1fTcFF1AK5ionKnAQ+dNbBlzmYNUgRX9XWq9xIhd9W4l/5yiuSh
+         aNEUOAcuGD3X+MU2fC4FUv1y55ufeIdNTl7aQHL0oXEXD44tu6wUjmPQ8QdYTSljufBK
+         E/yQxBrUdNq1emdXOg/CCbksvg7RVSdUdlck+MYvUMy59P0FzEs+MZM2I5RjfxCJttZX
+         B/t6jSAyBseKLTxTmcDMWJkbA+H7E+rORaSrHKH29/hXvJhUjyZnADnBcKA+jopcm3Td
+         b/wg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745331031; x=1745935831;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ET0BwqRldZk9TXticKlTrg8kQouRAE2zn9w8zSs/Yh0=;
+        b=DsVoglFYtsNJGHgBx4iNbVftekBq4T0Cug1MGRbDSoJJTKP6Z2wKhEClzkqzko5Nr1
+         gafB1bxf/Ua4r+7HJdnS8dp6LvyD0+sb2ygUg06jcdDNdWXXvUeTaue9tg3cU40cLJ6G
+         Z/uGwiPvVanPCZsogjil80R8JE7K64JnJXeybSpE3hoNGZumP4LtT5oL9X2GkTh8+4Xj
+         9vPb2A2NfXuhQ2kZQn4KKYIwcZQT+N6QC5ImXYVL/o4tdUpC0+OId5oXfzqNVwax+VFm
+         3758CBqWTKTLJOMzy3pUgVfMnAXWBCmfakWh6fT+EFhOxos0s3Y+DQn/CDyRCLIxxDme
+         3f3Q==
+X-Gm-Message-State: AOJu0YwizOB6ltAhxIUaWG2qUwCdxcIeaWsHrpWayXCfYFU1TIi3tj0J
+	BIRT8mHpKGb7Ei5Y9aOLq6IpslLy0xNzPWMfWip0xJ25aqDtjZSxRd7YRIlUZ0YEcft4oN1aSS/
+	HkfWz8wVyqYYNvgiMKnzUpOZwKeY=
+X-Gm-Gg: ASbGncvAo+/Ol63Bh7NlbKx8xLbf8fecrn7BbYR/kMEKaG9MWLxM8mZhws0aXRTAMSj
+	311buhduhfA1ESOEkuxsA4v6kyQrpQdopkfP0YsjNsmP58vy2tP16KXSnrqtN9VI+eZ+yC1g4qR
+	TEE3P9SqszQJwwzGGjCFhPLheyqANy05bdea5ytbdYtC1K18tIJs4OEgVFAkvegFIrtJM=
+X-Google-Smtp-Source: AGHT+IEe6jygSPK310C0CPSUPNrtGbEzYFS6r/Ey9fSurxZJLQ+UQI//xFn0BbbF9/wtQkjSEZ1nLfIz5AX2GTcWXjo=
+X-Received: by 2002:a05:6122:3c53:b0:527:c550:c06b with SMTP id
+ 71dfb90a1353d-529254a2a51mr10183753e0c.6.1745331030950; Tue, 22 Apr 2025
+ 07:10:30 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Apr 2025 10:10:29 -0400
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 22 Apr 2025 10:10:29 -0400
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <17c2eb4f-e291-4189-9846-0f42bdead01d@gmail.com>
+References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
+ <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
+ <xmqqh62i6jli.fsf@gitster.g> <8b380da4-8d27-4efe-85fd-3bb599188fe9@gmail.com>
+ <CAOLa=ZSR=7TEWLHa-wzBB4x+4+-BH3UC3G7s24Bc26JH63QKOA@mail.gmail.com> <17c2eb4f-e291-4189-9846-0f42bdead01d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <BY5PR15MB35396BEBCAB2C559080F08C6A0BB2@BY5PR15MB3539.namprd15.prod.outlook.com>
+Date: Tue, 22 Apr 2025 10:10:29 -0400
+X-Gm-Features: ATxdqUHAp54VKazvTGs2ocBG_Jwy0GO3eVedyKw8ckthqxLwosnfJhSJCwWXp_4
+Message-ID: <CAOLa=ZRmwnjytxoqG0fJWXFjaZcGQ9g=PFmx9N5Thuq64C24GQ@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] meson: add corresponding target for Makefile's hdr-check
+To: Phillip Wood <phillip.wood123@gmail.com>, phillip.wood@dunelm.org.uk, 
+	Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="0000000000001dacab06335e8cf5"
 
-Hi,
+--0000000000001dacab06335e8cf5
+Content-Type: text/plain; charset="UTF-8"
 
-On Tue, Apr 22, 2025 at 12:31:18PM +0000, Pranav P wrote:
-> Hi,
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> Hi Karthik
 >
-> When running `make test` on an s390x machine in Debian it is failing on 'do partial clone 2, backfill min batch size'
-> Reference: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1102106
+> On 21/04/2025 16:33, Karthik Nayak wrote:
 >
-> After processing the command line arguments structure member min_batch_size should have had the value 20
+> Thanks for putting this together, I've left a couple of code comments below.
 >
-> Instead of having the value 20 (--min-batch-size=20) it was having a very large value
+>>      Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>>
+>> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+>> index 37541f3d10..a09fcf4d72 100644
+>> --- a/.github/workflows/main.yml
+>> +++ b/.github/workflows/main.yml
+>> @@ -414,6 +414,16 @@ jobs:
+>>       - name: prepare libc6 for actions
+>>         if: matrix.vector.jobname == 'linux32'
+>>         run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
+>> +    - name: install git in container
+>> +      run: |
+>> +        if [ -f /etc/alpine-release ]; then
+>> +          apk update && apk add --no-cache git
+>> +        elif [ -f /etc/almalinux-release ] || [ -f /etc/redhat-release ]; then
+>> +           dnf -y install git
+>> +        else
+>> +          apt -q update && apt -q -y install git
+>> +        fi
+>> +        git config --global --add safe.directory "$GITHUB_WORKSPACE"
 >
-> min_batch_size in `struct backfill_context` is of type `size_t` and since in the function cmd_backfill, in the
-> options struct it is passed on to OPT_INTEGER, which eventually causes
+> I'd be tempted to check for which package manager to use by using
+> `command -v`. That way the only distribution specific knowledge we need
+> is the package manager and we don't have to worry about the names of the
+> various release files in /etc.
 >
-> ```
-> *(int *)opt->value = strtol(arg, (char **)&s, 10);
-> ```
-> in parse-options.c line 188. This is writing the data in the first 4 bytes of min_batch_size and on big endian
-> systems this will lead min_batch_size to be a big number. This issue is immediately visible in little endian systems.
+> 	if command -v git
+> 	then
+> 		: nothing to do
+> 	elif command -v apk
+> 	then
+> 		apk add git
+> 	elif command -v dnf
+> 	then
+> 		dnf -y install git
+> 	else
+> 		apt-get -q -y install git
+> 	fi
 >
-> Changing OPT_INTEGER to OPT_MAGNITUDE seems to be working on x86 and s390x
-
-Yup, indeed.
-
-> ```
-> diff --git a/builtin/backfill.c b/builtin/backfill.c
-> index 18f9701487..33e1ea2f84 100644
-> --- a/builtin/backfill.c
-> +++ b/builtin/backfill.c
-> @@ -123,7 +123,7 @@ int cmd_backfill(int argc, const char **argv, const char *prefix, struct reposit
->                 .sparse = 0,
->         };
->         struct option options[] = {
-> -               OPT_MAGNITUDE(0, "min-batch-size", &ctx.min_batch_size,
-> +               OPT_INTEGER(0, "min-batch-size", &ctx.min_batch_size,
->                             N_("Minimum number of objects to request at a time")),
->                 OPT_BOOL(0, "sparse", &ctx.sparse,
->                          N_("Restrict the missing objects to the current sparse-checkout")),
-> ```
+> The commands above omit anything that updates the package cache as we do
+> that anyway in install-dependencies.sh and we only really care about
+> getting some version of git installed here. It also uses apt-get to
+> match what we do in install-dependencies.sh
 >
-> But on systems where size_t which not be unsigned long, this might lead to an issue.
-> So, one other suggestion I have is to change the data type of min_batch_size from size_t to int. But I am not able to
-> determine whether a practical upper bound for min_batch_size would exceed what an int variable can store.
-> With that clarification, I can a raise patch for the issue.
 
-True, as well. Overall the current state is a bit unfortunate because
-it's so easy to get this wrong, and the compiler won't even spit out a
-warning.
+Yeah this makes sense, we don't have to worry about specific
+distributions.
 
-> I am fairly new to opensource and was following the `git bugreport`. So I am extremely sorry for any lack of clarity in the report.
+> I also wonder if we should ditch the checkout action and use something like
+>
+>      git clone --depth=1 --single-branch ${GITHUB_REF_NAME} \
+> 	${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}.git
+>
+> so that we know we will be building from a git repository.
+>
 
-No need to be sorry, this bug report contains all the details we'd need
-and is of quite high quality :) The only thing is that we've already got
-this bug reported via [1].
+Possibly, but I'll leave this out as I feel we're already straying from
+the topic now. Let me know if you feel strongly about it.
 
-The underlying issue is addressed via [2], which has already been merged
-to `next`. It also fixes the underlying issue you observed with
-different integer widths as well as with signedness.
+> Best Wishes
+>
+> Phillip
 
-Thanks!
+--0000000000001dacab06335e8cf5
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: aac859cbfc070bdb_0.1
 
-Patrick
-
-[1]: https://lore.kernel.org/git/89257ab82cd60d135cce02d51eacee7ec35c1c37.camel@physik.fu-berlin.de/
-[2]: https://lore.kernel.org/git/20250401-b4-pks-parse-options-integers-v1-0-a628ad40c3b4@pks.im/
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nSG8xQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNUQ3Qy80dTQzQ3hmUUJ5QU9VNkpocG1oZDJoejhJRQppUmduaDI5Tklk
+TURxajVRV0tEWUhqTmt3aW9paWx1SzkxUWFlc1pNQnV2amEvckZxanRGSTRoeS9NVlNBOUJ4CmE3
+bnY4OVlHVXlzRG5FV1Rjb1lFV2VKT25MbUxkVGNlYVczYmJpbkhnNGFhaFdUcHIrUUE5MnZnd3Y4
+YzB0a1UKYml3WUhkcFFTRThseHBEME9hUk15U3BBNWpRU0xUZ3M3ejVYenBIamx4cGlvMnJSb2Nx
+dlVUTHE2dndOZGlHUgozcmFCWHNWV2lEMDZUemt6OUxEYlZOdTBodTN1WVZLc0hSV012bjVKdVEw
+NEs1dlMzNUdhdXgzYzRXNzlocXhBCkFHTUtCWXpmYkEzQlVTUjFmc0tZdFhXbDU3UzF5eU5KNHkx
+YlFud0VNMmUreC9DVHVKK2k3bkpnbU5EYlJFOFYKK0xMMHZzRjcxWVlPb3NpT3BqdENvVG56YkFM
+K2x4OHRiWFJTTjhiZnBtZlZFZ2tCVGtpOEc5LzE4bE05R0JtUApiNEs3SFRDUkd4ZGRaMWh5Q29T
+d0tNc0Jqd1UyTUFEWVpKbVE1OEcvZ0orRy82RmhOWlNlZlREcXhjQUtUSEtpCm02aEYvZTc2Y2E4
+WTFXMzJKUk9wZTVtRnd2eGlzYThOeG1zb0hraz0KPXRMSDEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000001dacab06335e8cf5--
