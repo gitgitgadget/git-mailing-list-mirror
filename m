@@ -1,159 +1,197 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22F9118A6AB
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 08:17:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409841EB9FA
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 08:36:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745309838; cv=none; b=HS0dChOPTecwJdhsykG1a8z03Mp09iqhj3zuIdgxA8aPZteZhCnYazG7Q/rrhC6QGY5gi92WVFnQHWZYcci7tbZc1jexhllewPkLlpP6qyaVmY5jdIxA1qUyPYoCwyBhz/TpUeUNOeLVsR2HfVO/P646JOBirs3vtRvfKI1lyuM=
+	t=1745310983; cv=none; b=Hx+AeA4UN8Myd6r4HtpDNM6B1iebofbhfrTWi+yvbWX0F6tvc2kJHXPZzd6mXSoatuBOpUHad9Gp3UqEoPZ9ltDFNgRPDjo2ukyRWDGJkcVL6I79dgV1x7NdXbmH0Rewf9RH6qxOUKFYDRkJ8g8UEtGHXkc8joTDzGSOKfltNVw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745309838; c=relaxed/simple;
-	bh=JYNMSR249WnQzb6RCRQhPhdxC09g5Q8nYrNqLNTMeGA=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=u8e4v150YX+ZAkRk0m44A/m5gzmbWmI28SjGp7lt247wTbJVmSYIuQuxSYDPi+a3ObkJd9dov0hf3A/nTKSiXmYWcW6sgXjxuu8qZ2evwNUiU6I8q19+0z8Fo602peVcXyWLzrXe7m02dtiC1e1zeQvp6RuougZFx0HEwv7ZAK8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=ZEh4OldR; arc=none smtp.client-ip=212.227.15.18
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1745310983; c=relaxed/simple;
+	bh=9Zbqcb+IbJo+RQtmiRA8E3ayjuc8ON1AquT5eLuQy6I=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:
+	 In-Reply-To:References:To:Cc; b=u6BxCWAcZo5vVNFKPT5j4qKAJ+z6n+/ifopHrtsxAgBxjVF0bseBf2k0CjNsDg+HrSX3lAQTufP8GjcgzyuTyCCLUdUxtd1r/C79Gu1MEd0865QrX5yupTUnKZKTdljC2ak7RJGXzpkDwSdIHyD9Axeea5alHIOr6oDiMAHLvcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Yh8dqVvi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=m5CAYPRY; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="ZEh4OldR"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1745309830; x=1745914630;
-	i=johannes.schindelin@gmx.de;
-	bh=jGEhRJGUkXJzM9qE5gft36TtRKghI/8Eco0o3JsGj4Q=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=ZEh4OldRnPd3LIhvjFpcTjfeMlSF82Njsq898n8S8lqcQpbiHjmDjK6GWNSTP0f5
-	 +1UGQbMir+w1e22Fc7TjkM0ONFMYqVUpICYzJZnYOcs80p7lLEbO9fDMf8mFlHqI/
-	 jbe48I1DKhJaxscitrYSKYGgRmPdbPd1kYsJmnvQvp9hTb2YL0gW09V1qOenudF81
-	 jxvYYT7NkQDvf4y3KlnVotjhXD0SPLwvHvUp6tdev0zgF7bNUoXcNPvTMFkgetBkw
-	 z6Ax7rRkPg69Z5HQ9i1iSKPhL2FXlR0w5r/qkD87EGdBDic1j/jHQ0YZai3PwSS5y
-	 7UAjTJ2PuIsfLeUYsw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([167.220.208.53]) by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1MD9T1-1uFhXL05Kr-00791r; Tue, 22
- Apr 2025 10:17:10 +0200
-Date: Tue, 22 Apr 2025 10:17:09 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Patrick Steinhardt <ps@pks.im>
-cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
-    git@vger.kernel.org
-Subject: Dropping nedmalloc support? was Re: [PATCH 3/6] mingw: do not use
- nedmalloc on Windows/ARM64
-In-Reply-To: <aAdIlq8Np8LpahLS@pks.im>
-Message-ID: <00fd3145-b3d2-ddab-466d-d06fd27298ec@gmx.de>
-References: <pull.1904.git.1745239150.gitgitgadget@gmail.com> <6c2e17eca68b143eff7b33d195bc66a486471547.1745239150.git.gitgitgadget@gmail.com> <aAdIlq8Np8LpahLS@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Yh8dqVvi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="m5CAYPRY"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1EA242540099;
+	Tue, 22 Apr 2025 04:36:20 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 22 Apr 2025 04:36:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1745310979;
+	 x=1745397379; bh=Dzwm5DyCmoNX+wT6bjD6XQJHYqboHhGOjxESufYFhmU=; b=
+	Yh8dqVviDKUq3xXCLDwH1Hk/bqtV2SHCXNxSHrNbfW5sCyRKycyC9kJbsvwcO/NL
+	JlwsIpMkWjNLswuGJSvUkewxC2o26/S8PYId/v/x3rp4tOmLk+D1BQm97Feml4uC
+	QqHHNF8ZyU+BuYjhqAGnNTLa9NNlbfoIVk52WCbfg2L8/zBnm5QxHq1dKk6JQstt
+	0kYIrrEGBmj0yb2fm1Jl7ZHATkLdjMzzc672YeHIpiAK/QO0Jfha2iBisMtoAPad
+	QCU7zxkt/o5WGwCIyebW0kovU/UpCM3Lj6lb6hssfCHXk+t5Celq2eziHPRfIwiT
+	ErqGpqiSderTsBbm3mFhWA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1745310979; x=
+	1745397379; bh=Dzwm5DyCmoNX+wT6bjD6XQJHYqboHhGOjxESufYFhmU=; b=m
+	5CAYPRYCXPMSkdtrTXhr2wWB4UmwS0uE/VQyOowea3bosbiUds8WzXdbMKtG1K+U
+	zotdwaVMg7zYsPclGYmwm2tB+xLn0lrHfxRWdsSuIZXWCPEBE4VIlkQYxstTPnI2
+	xSaREATG5JnLaXIoEwzXrnQfEeqt968XPgm1k7x7tv4HfTk6tshx0rHrI/SCDfCp
+	Qw5LyAaF7cWod8KllnYTy/X3clXJaYcWA2DPV556w0gN62sMBC0w7U7V7oyLXEmh
+	VuOrqkybUunfy1hbxN3duCLYEiaNoW4p+nQClOqzc5sWn7VZFtuunteQhzdW3IYi
+	IYEdsG5dtgX1v78yXGg7Q==
+X-ME-Sender: <xms:A1UHaABZ1s6QfmbL2yxe2_ap-PD118hq4aDUBJIcT57ogyE7d2I2RQ>
+    <xme:A1UHaCgBMPlpxORPN9R0Tuh7OemO35bdw-IlyW1Bokjokb0gVWQ_9MmFXlPOB2JGX
+    kRM27Fh_6QIfW9b3Q>
+X-ME-Received: <xmr:A1UHaDnGuvI8ZAIQjcPZ5vWOUd7vBSsAaONE0fgYT5vTnqHPWNG2bRYCzKEgJsrFE_CR-wvHM7KYgdk5xNV3KCTZon_edXT9pJNK49NW__I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefvdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfgjfhfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeeiuddvvdefgeduhfetgeeuffejlefhkeehfeek
+    teeuteelhedutdeifeektedtieenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepthhmiiesphho
+    sghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehlihhs
+    thhsodhgihhtsegrkhhshhgrhidrihhs
+X-ME-Proxy: <xmx:A1UHaGwIDZcRE2E6vVUuHldQ0dQPs-hyvk_D4NhFMNjqcZgVOlZRdQ>
+    <xmx:A1UHaFRi8a2MUQrhi8rm3ngfKuHWCidkbFEH2j32A5Z_aT0zW48UWg>
+    <xmx:A1UHaBbydOwX2fmyWCj4pZN_PDZXjqUnTjeZtDfzj2nphfSYXyCFcg>
+    <xmx:A1UHaORoMHKJ1pvJ48nCxXtEDFsfbGrwb4El38B1Gz3FH8cWu6zuEw>
+    <xmx:A1UHaE9kwKh6D9t4pJ5KESn5RxaTwiw-jP0KZksvQRo8eUvS2kSTF-Zm>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 22 Apr 2025 04:36:18 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 69a69c68 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Apr 2025 08:36:16 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Tue, 22 Apr 2025 10:36:11 +0200
+Subject: [PATCH v2] contrib/completion: install Bash completion
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:G/3PuMemEAW4syCzNKlyky1y4wxtm2FPZfgG5CWlxedT1TdvW8S
- WlYFpAsQyVEsY0iMIqaO7ZjAV9NbvWSXXrQj1kPS2j/6D+ASwvdbb4P8DwjaPVYApC0iApE
- udqpV5ZlOcBIDSEqQPkcIizpeNM86d3qtKHqgwW+vMktPNciX9Fpnvq+HtvivZFCk1o8/Yy
- PUfPvi/9RJ8DKkZQxZktg==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:hh1qGgO1JJg=;z94EqeHCAJDYwrK+MgApYUQXRXi
- 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
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250422-b4-pks-meson-install-completions-v2-1-ab29d399bc6c@pks.im>
+X-B4-Tracking: v=1; b=H4sIAPpUB2gC/5WNQQ6CMBBFr0Jm7RjatAFdeQ/DosWpTISWdAjRE
+ O5u5QYu38//728glJkErtUGmVYWTrGAPlXQDy4+CflRGHStbW3qBr3B+SU4kaSIHGVx44h9mua
+ RlrIVJGutDsqR9gGKZs4U+H1c3LvCA8uS8ud4XNUv/UO+KlTYuoZ86y+6Nf5W+meeoNv3/Qvhu
+ 9jLzQAAAA==
+X-Change-ID: 20250407-b4-pks-meson-install-completions-e5552f1ae2bf
+In-Reply-To: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
+References: <20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im>
+To: git@vger.kernel.org
+Cc: Akshay Hegde <lists+git@akshay.is>, Todd Zullinger <tmz@pobox.com>, 
+ Junio C Hamano <gitster@pobox.com>, Eli Schwartz <eschwartz@gentoo.org>
+X-Mailer: b4 0.14.2
 
-Hi Patrick,
+The shell completion scripts in "contrib/completion" are being tested,
+but none of our build systems support installing them. This is somewhat
+confusing for Meson, where users can explicitly enable building these
+scripts via `-Dcontrib=completion`. This option only controlls whether
+the completions are built and tested against, where "building" is a bit
+of an euphemism for "copying them into the build directory".
 
-On Tue, 22 Apr 2025, Patrick Steinhardt wrote:
+Teach both our Makefile and Meson to install our Bash completion script.
+For now, this is the only completion script that we're installing given
+that Bash completions "just work" with a canonical well-known location
+nowadays. Other completion scripts, like for example the one for zsh,
+don't have a well-known location and/or require extra steps by the user
+to make them available. As such, we skip installing these scripts for
+now, but we may do so in the future if we ever figure out a proper way
+to do this.
 
-> On Mon, Apr 21, 2025 at 12:39:07PM +0000, Johannes Schindelin via GitGit=
-Gadget wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >=20
-> > It does not compile there, and seeing as nedmalloc has been pretty muc=
-h
-> > unmaintained since at least November 2017, as per
-> > https://github.com/ned14/nedmalloc/issues/20#issuecomment-343432314,
-> > there is also no hope that any fixes will materialize there.
->=20
-> This kind of raises the question whether we want to keep on maintaining
-> nedmalloc in our codebase at all. Is there any strong reason to have it?
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
 
-To the contrary, There is a very strong reason to drop it: nedmalloc is
-unmaintained.
+this patch is a result from the discussion at [1]. Thanks!
 
-There is just a teeny tiny blocker before it can be dropped, though:
+Changes in v2:
+ - Only install Bash completion for now.
+ - Also install Bash completion via our Makefile.
+ - Link to v1: https://lore.kernel.org/r/20250407-b4-pks-meson-install-completions-v1-1-8a7eb8b9284b@pks.im
 
-$ git grep -n USE_NED_ALLOCATOR upstream/master -- ':(exclude)Makefile'
-upstream/master:config.mak.uname:478:   # USE_NED_ALLOCATOR =3D YesPlease
-upstream/master:config.mak.uname:741:   USE_NED_ALLOCATOR =3D YesPlease
-upstream/master:contrib/buildsystems/CMakeLists.txt:258:                  =
-              USE_NED_ALLOCATOR OVERRIDE_STRDUP MMAP_PREVENTS_DELETE USE_W=
-IN32_MMAP
+Patrick
 
-The commented-out one is the MSVC build (I had experimental Git for
-Windows patches to enable nedmalloc even in MSVC builds, which I abandoned
-in favor of https://github.com/git-for-windows/git/pull/4580 to enable
-mimalloc in MSVC builds, but I abandoned that effort, too, because Git
-decided to favor Meson over first-class MSVC support and I decided to
-focus on avoiding to have my time wasted by the Git project).
+[1]: <Z-uLqQd7QHZq-tB7@akshay.is>
+---
+ Makefile                       |  6 ++++++
+ contrib/completion/meson.build | 18 ++++++++++++++++++
+ 2 files changed, 24 insertions(+)
 
-As you are quite aware (because it caused plenty of trouble with your
-reftable patch series), Git for Windows switched to mimalloc quite a while
-ago (https://github.com/microsoft/mimalloc).
+diff --git a/Makefile b/Makefile
+index ac32d2d0bda..118592414b5 100644
+--- a/Makefile
++++ b/Makefile
+@@ -618,6 +618,7 @@ prefix = $(HOME)
+ bindir = $(prefix)/bin
+ mandir = $(prefix)/share/man
+ infodir = $(prefix)/share/info
++bash_completion_dir = $(prefix)/share/bash-completion/completions
+ gitexecdir = libexec/git-core
+ mergetoolsdir = $(gitexecdir)/mergetools
+ sharedir = $(prefix)/share
+@@ -2321,6 +2322,7 @@ bindir_relative_SQ = $(subst ','\'',$(bindir_relative))
+ mandir_SQ = $(subst ','\'',$(mandir))
+ mandir_relative_SQ = $(subst ','\'',$(mandir_relative))
+ infodir_relative_SQ = $(subst ','\'',$(infodir_relative))
++bash_completion_dir_SQ = $(subst ','\'',$(bash_completion_dir))
+ perllibdir_SQ = $(subst ','\'',$(perllibdir))
+ localedir_SQ = $(subst ','\'',$(localedir))
+ localedir_relative_SQ = $(subst ','\'',$(localedir_relative))
+@@ -3565,6 +3567,10 @@ endif
+ ifneq (,$X)
+ 	$(foreach p,$(patsubst %$X,%,$(filter %$X,$(ALL_COMMANDS_TO_INSTALL) $(OTHER_PROGRAMS))), test '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p' -ef '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p$X' || $(RM) '$(DESTDIR_SQ)$(gitexec_instdir_SQ)/$p';)
+ endif
++ifndef NO_BASH_COMPLETION
++	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(bash_completion_dir_SQ)' && \
++	$(INSTALL) -m 644 contrib/completion/git-completion.bash '$(DESTDIR_SQ)$(bash_completion_dir_SQ)/git'
++endif
+ 
+ 	bindir=$$(cd '$(DESTDIR_SQ)$(bindir_SQ)' && pwd) && \
+ 	execdir=$$(cd '$(DESTDIR_SQ)$(gitexec_instdir_SQ)' && pwd) && \
+diff --git a/contrib/completion/meson.build b/contrib/completion/meson.build
+index 3a9ddab5940..576125b083d 100644
+--- a/contrib/completion/meson.build
++++ b/contrib/completion/meson.build
+@@ -14,3 +14,21 @@ foreach script : [
+     )
+   endif
+ endforeach
++
++# We have to discern between the test dependency and the installed file. Our
++# tests assume the completion scripts to have the same name as the in-tree
++# files, but the installed filenames need to match the executable's basename.
++if meson.version().version_compare('>=1.3.0')
++  fs.copyfile('git-completion.bash', 'git',
++    install: true,
++    install_dir: get_option('datadir') / 'bash-completion/completions',
++  )
++else
++  configure_file(
++    input: 'git-completion.bash',
++    output: 'git',
++    copy: true,
++    install: true,
++    install_dir: get_option('datadir') / 'bash-completion/completions',
++  )
++endif
 
-When I switched Git for Windows to mimalloc, I did (re-)run a couple of
-performance tests to see whether having a custom allocator is still
-necessary, and from my (unfortunately too vague) recollection, Windows
-11's default allocator seems to have performed quite well in comparison.
-Which is in stark contrast to the results of the performance tests I ran
-when originally integrating nedmalloc. So: In theory, Git for Windows
-could drop building with a custom allocator, iff it wasn't for older
-Windows version that are still supported.
+---
+base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
+change-id: 20250407-b4-pks-meson-install-completions-e5552f1ae2bf
 
-Which means that I would like to upstream the vendored-in mimalloc first,
-with the patch to use it when building on Windows by default, before
-dropping nedmalloc from Git's source code.
-
-Ciao,
-Johannes
