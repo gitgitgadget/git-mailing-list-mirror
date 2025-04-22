@@ -1,53 +1,53 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B15C1DDC07
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:31:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA571EB1B7
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:31:35 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745307094; cv=none; b=E4ujRLdgYJ7vMVvM252/bEkaYlVrju5unGLdCYSZH8QsOiz632vH6MNjidUsDRC0pdFXo2+zNoLMvnL/7Z/4jNBaGiFNQCrtG9d1r+pTASTQ6r810q/lmP9qWboJNTXgUhzwsLKyrKckngPE/ulRHynGegOmSPioD5H+WfVgNDM=
+	t=1745307097; cv=none; b=t6R9+P/ZQq1ijMrNeyqVhD/ZvLYj64DXa6f8qIdjW9MauzI2jwm2OCU5FvY3x6gxt+VfAH7uSbePOS7yzRZu8UWAZxnujVGn0+LXy6r4xQG/W9fOOerYr3acwBuSoyDoCFHrPpwxGbYwUekYxGPFgA9HkfxfpmLA1nJS/q2h5Ac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745307094; c=relaxed/simple;
-	bh=Re3/fgbPk37gl916szsL2z//yrtSqt/IkNx51O4sLT0=;
+	s=arc-20240116; t=1745307097; c=relaxed/simple;
+	bh=93K0vDHY1uNez2UVPUJfoZ33W1BxYRMcnVljsDaKsOw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R4jIDhWYBGzNh0S1AKaeiCAk0NassswKExb9z/3U50ihxBJruk3SHn5XwfR//svSjrJOqwsslxgnf7tBmtM9quHDiJw0rQneYB4PMvy2OZe90HdtMisFusBQ01eDOFZyd3FZ8JzOX7RTdWJ1SkVFsUZGuDJZETwX2xB8wwypkKk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=J1roQUdt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=trfaKhpL; arc=none smtp.client-ip=202.12.124.158
+	 Content-Type:Content-Disposition:In-Reply-To; b=HvQKiYLwKLLVc9MBtEKlwTb3Oiajk6EXTLSVICowKViFMiFZDOTPE+h5w4G9iVesJ9Y2A587hSgElY8JmMUHXy80aKpwIR6JS2IQ7V1jjOFrxejgNryocjU6StueALSBtiPRtSVfLMqxY2gI9ZHUgrx0+0OUlpSSt3AQaOA7AEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cb1qKS0D; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wod//1/v; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="J1roQUdt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="trfaKhpL"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 95A2B25401B0;
-	Tue, 22 Apr 2025 03:31:31 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cb1qKS0D";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wod//1/v"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 09ABF25401C6;
+	Tue, 22 Apr 2025 03:31:35 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 22 Apr 2025 03:31:31 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 22 Apr 2025 03:31:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745307091; x=1745393491; bh=3ThWadb5Yh
-	252e54C35N1TLzK7awsi1ATjZA30m7F2s=; b=J1roQUdts5CzdYlqXEI8IpfhV0
-	W1/fsxwuW9Ouypft53xUf+rp731aKiJk5dR16K0S2ECAmVubVgt5dqQ0iUr44PCL
-	L1s5Iy+2nq+LV44gcfx/H7Qw53TCiL97gikNcI5rFPIg6ibdO3TQdYA93Zo1izfU
-	Bcj/bp8T59EluCdmwy82kgr8zdkTRwCauln5f2gBzL0b5T/qsBIlmYb0qZ1tg90d
-	RCa7g/Pdg4oWK3tC+A002DMCKb9nVU5tMNM6JQ67/azCHb3jImhn8OetsHgm6Wgf
-	NC5/NTuXgOHxGI4LcgyKIqPkO7XGpb2InwQp1oWxQnEO2+rtUkxna5gYhEFQ==
+	:subject:to:to; s=fm2; t=1745307094; x=1745393494; bh=ryAhsqI3Op
+	G+P+DWenzrIPbKClCVON5+/0UrBmMSEHQ=; b=cb1qKS0DzFRNp+z+YNAThSKCIw
+	V8JIFPJVxE2oMPYrAgZDQNrcT7u0hWnrgUHgvuu30cPnuyy7Ih7jJUz3x7Cks13m
+	vsONvkAXJXDTdZz6A0EAow3jvEab2Uz3sSg3FhADwgPog6LEtfZO7EYh9Uoj1bIr
+	7JiTJHEyb9IcsMQaLAozglB27nSwJdxaUACjFF+u/Kzh6VnxcEid74VLBMmB7rp3
+	rnrvoXKLaZqbSK9GdTt8hK7Pv+PGg92fSZWTMhdY4TlgjTx/eulr2v/ypBCHC7R3
+	k9syuxG4JYd9/yQd1DHfiCoNOsfq7tiTKSXLP+K/3LaLdCFPo+5eURcu3nhQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745307091; x=1745393491; bh=3ThWadb5Yh252e54C35N1TLzK7awsi1ATjZ
-	A30m7F2s=; b=trfaKhpL/UBubnkNeok51ewocqRqAckds1ohIjqQnPDk1SwMRdk
-	AGt9p5hnFXr5rGjK5j120awWd+rXdKpnrJE3LhDFZHNAo248KHfb5Pjcvl3yr5Hc
-	ImsX0LK2wDJa2SqIauxZ7vhltKby4vVoQhkOHRFIwd94mOyiBNLCr0fUsW/AsnMo
-	VK/apMgvOUxFig/EE++JDs2HlSKf+6R+BA+AHV3ZzRSZdU6pwufOW0GTi6wy5FVC
-	Dd5KuVMgNUFbjJ05f3Bhl+8THd6thbTdkyEKYNmNI6m84SBxo5B9HCkPzOjpaLpp
-	a44oCjKLh2o7y8oUQI8YtX2O/2xiZ12mNsQ==
-X-ME-Sender: <xms:00UHaGMDMCSAb7s2aT4Kx866s8iYUl0lkKna8HFWVnxjWfVZEFAxgQ>
-    <xme:00UHaE9_tsz7jESe3PF7xe9NP_kxyfVA2j5njR7otW1HpjBNWXbstiqoeEoctzTHw
-    AxfEdEf0QGaNj5C8Q>
-X-ME-Received: <xmr:00UHaNSGSfYbbdHQpRqmlCCSY2HbNyJS9N261B0LEGoc0CJuqC7D5B6_nMMbNb2ryRQ80VmwIMWF05Y63sHXb0mz41QId68nU_ns9H-0dEk>
+	1745307094; x=1745393494; bh=ryAhsqI3OpG+P+DWenzrIPbKClCVON5+/0U
+	rBmMSEHQ=; b=Wod//1/vV0Zr5w7Es8f50hQJHbaUdsMT5EHTApHbIggXnLJUuCI
+	ViUFizWzBhpOCJsdVmxZ7yp+mrWAsWtwiiiSGYaMU0dwXmpthWo6wrpuisSYUe+F
+	sp5zxZrAriA2r2R7Og4HkPqB8wwFAERGWAaqOqdXX/2Dpuz0V+4ZWwU/cVQVA070
+	Ln77t+psNl43Gnh/9hwIJCED9lslK7iH5nRiuDKWaChjg9OmopTbpr39+n3psSzq
+	2vfchSpQMy0HZwjSAxURlITyBVJ+IX14YA5k1DvpmmaXUqK1V0o6Wg416O3pTLWT
+	jl9wAHYfBY5gHstGoIz6WFouVMWcPz80JeQ==
+X-ME-Sender: <xms:1kUHaCKY4PYvKm1izd6n1EMQ63LhVL0o1KnJpB4JDFaC5lkT4La6oA>
+    <xme:1kUHaKJunelrCraKUxbAyCB5x396o1oRlxFhB3vUdHCy4_ml534ez87TWmpnGDc9E
+    Yo8mO2ydH8mr4BQwQ>
+X-ME-Received: <xmr:1kUHaCv_JVoQo7evowly1L8AdtEsif-DPFxe_qzoKsqN8K8SoNq1tTxRR9hzArCGELDwqsJmy1iCh-1QuNwSD9aR1s8UoaLOVXZg1auV_5Y>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefudegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -56,28 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefudegucetufdote
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpth
-    htohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:00UHaGtMxFT_fDzqkF8BfofAbFwaEWTIbta2aJ5Gb5TNsEJb5X6P7Q>
-    <xmx:00UHaOdvJO3jUx5k8s-3mqrECNoz6eOWod1hb0DFlKLlTVOUvleO6g>
-    <xmx:00UHaK3L57BaKaLgsgMz5csRV_tAhdA902S_TxQk0itR5LiZo9_l7A>
-    <xmx:00UHaC-4yM9PW5cA2ELuAtEhRRNPpBCMEP8z6chwe3WuuzwXVZrJig>
-    <xmx:00UHaFBJ_MZeVkHD2j3a5Fe1aMDnAqujn5SLMTnm0ZLBy0BB4hzBS4B0>
+    pehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorh
+    hgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehsrghmsehgvghnthhoohdrohhrgh
+X-ME-Proxy: <xmx:1kUHaHaz9U8inJyQ2YlYWsyOPLOzS1lE88EppbPSvZj3ZmFSR6kcuw>
+    <xmx:1kUHaJYx5ctkRIlyqEflmr3ocIi5QOI0KgjhzSCI36iJZhg2fPS1cA>
+    <xmx:1kUHaDB9UQYE1ljVj6x2yIZMSVY0uf_9u_8hyZ43J9KtJx_vJLfhjw>
+    <xmx:1kUHaPb-CGIOysi6d3iNB8EABvxpqdzBztUbXvQkRjZCMbmBTI4Uag>
+    <xmx:1kUHaHuX72zz1Cln_JQ-cbLwnaSYvciWdE5soDGwadLot8ZKibu4XM10>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 03:31:30 -0400 (EDT)
+ 22 Apr 2025 03:31:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e251fdb8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 22 Apr 2025 07:31:30 +0000 (UTC)
-Date: Tue, 22 Apr 2025 09:31:29 +0200
+	by mail (OpenSMTPD) with ESMTPSA id fb7297e1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Apr 2025 07:31:33 +0000 (UTC)
+Date: Tue, 22 Apr 2025 09:31:32 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Eli Schwartz <eschwartz@gentoo.org>
 Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>
-Subject: Re: [PATCH 2/6] meson: check for getpagesize before using it
-Message-ID: <aAdF0XH2evrJ4ZQL@pks.im>
+Subject: Re: [PATCH 3/6] meson: do a full usage-based compile check for
+ sysinfo
+Message-ID: <aAdF1MvGJcqfpI4p@pks.im>
 References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <20250421175247.240971-2-eschwartz@gentoo.org>
+ <20250421175247.240971-3-eschwartz@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,28 +87,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250421175247.240971-2-eschwartz@gentoo.org>
+In-Reply-To: <20250421175247.240971-3-eschwartz@gentoo.org>
 
-On Mon, Apr 21, 2025 at 01:51:46PM -0400, Eli Schwartz wrote:
-> It is deprecated and removed in SUS v3 / POSIX 2001, so various systems
-> may not include it. Solaris, in particular, carefully refrains from
-> defining it except inside of a maze of `#ifdef` to make sure you have
-> kept your nose clean and only used it in code that *targets* SUS v2 or
-> earlier.
-> 
-> config.mak.uname defines this automatically, though only for QNX.
+On Mon, Apr 21, 2025 at 01:51:47PM -0400, Eli Schwartz wrote:
+> diff --git a/meson.build b/meson.build
+> index f5d9ffcd7f..8037e536dd 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -1058,10 +1058,6 @@ if compiler.has_header('alloca.h')
+>    libgit_c_args += '-DHAVE_ALLOCA_H'
+>  endif
+>  
+> -if compiler.has_header('sys/sysinfo.h')
+> -  libgit_c_args += '-DHAVE_SYSINFO'
+> -endif
+> -
+>  # Windows has libgen.h and a basename implementation, but we still need our own
+>  # implementation to threat things like drive prefixes specially.
+>  if host_machine.system() == 'windows' or not compiler.has_header('libgen.h')
+> @@ -1272,6 +1268,10 @@ if host_machine.system() != 'windows'
+>    endif
+>  endif
+>  
+> +if compiler.has_member('struct sysinfo', 'totalram', prefix: '#include <sys/sysinfo.h>')
+> +  libgit_c_args += '-DHAVE_SYSINFO'
+> +endif
 
-Ah, interesting. I mostly went by our autoconf infrastructure when
-converting the checks, which didn't have a check for `getpagesize()`
-either. We might want to teach autoconf to check for this function while
-at it.
-
-In all honesty though, I rather hope that we're soon in a state where we
-can just drop autoconf altogether in favor of Meson. The only two
-blockers I'm aware of are wiring up git-gui and gitk. The former project
-has already been adapted upstream, the latter is still in review. But
-once those have landed, we should be ready to mark Meson as stable and
-then we can start deprecating autoconf unless there are good reasons not
-to do so.
+Makes sense. We do have c9a51775a36 (builtin/gc.c: correct RAM
+calculation when using sysinfo, 2025-04-17) in flight which also causes
+us to use `struct sysinfo::mem_unit`. But I think it's fine to check for
+only one of the members here.
 
 Patrick
