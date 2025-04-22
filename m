@@ -1,139 +1,105 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 000CD10A3E
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:02:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70E5610A3E
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:19:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745305374; cv=none; b=PY7fqqKK8j+GNF3m3hC+dAeivT8+CjnqeWsLz+JikoU1HjNez75f1dSRJ5VDAafreUgzUMG4ByhzWBCsLRdn8kcFJiiazeSQhmz3RTxsaJJP6npt/S0YaDK3bqcqfwggBpK2bNrs6j6chasrZ4t9s+63bwdfgiT9jGlehFGn6KA=
+	t=1745306356; cv=none; b=WOoNN1Pe4dPDMSu8RihNv9/8sxvUYi3TkK4gc8svx8gOmC19hfSOmbCsfnIV3yzbkz/zB39hsBLsB86Nv2w8D605jSa0yI4j/m1TFoja353bAGnz6S2SubHnPUQXDTEPajG4K2sL/eDckpCRMt282A91Mta9zz9Ddn0iM1GEpyw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745305374; c=relaxed/simple;
-	bh=GT81iTTkt81GaPRwFcwRfAwDE7j6ol3lfylTbFYq2BU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=epAuTCjfBxyH8AezbV5QtsOjx/x8WCLfLDpuCKK1HylVdnTqpVX/FLWqHPOU/8LDzrufhCThRtV9rHL8iOhe7IhsbRZdP73RqLu22vn3iC+pFG1FCs/3bY1ZkaLXawTLRYo4w1d/nKU+uJpDaFSFnqAMVoW0bMI15NJtha37v/o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qQ+OuSEi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=En3d6BnG; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745306356; c=relaxed/simple;
+	bh=nD5OM/C9tp1rKleCCCYkyo2/OPz381qP/FIXULZcNx4=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=Rm1ncI/ifb42lW4nQL1Jcea1wbNra3PuBPs/7Ect/0j3M+bRi7MKT8xSxjWgGHRS0GoeIIByj0AH0ogV4fYsRWslTrmFTpzRwdwZi9OrnHE1CoF8BWMoBwQ5IOAucEFMxgvcx3PQ8Ffc0HaBkd/1d+EUCo/hz9clQgUcsCONscU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LNflPgmz; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qQ+OuSEi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="En3d6BnG"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.stl.internal (Postfix) with ESMTP id EAE2B1140195;
-	Tue, 22 Apr 2025 03:02:51 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-07.internal (MEProxy); Tue, 22 Apr 2025 03:02:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745305371; x=1745391771; bh=zP3iSn4fP3
-	fmzC8dX3cKXoh7KXKES7hbG375nZGG05Q=; b=qQ+OuSEiizWkrxF4zC/j0I+Dbt
-	Gwr5kz+sPd3W8uKDaIhxyODNNUm861usRLpyWiQ+7LpgrcAYCDbmm5h9QJyss0kY
-	Qvv4/SvNGFCqadS+AubD8xzzbYjE2LvA2TOoxHiDh1OhbRTp7gADOmrZoCYoSMrG
-	GhOlcQLi14JIivv6rGb7Wxxa0/OCJF0i16XsGrt+O7C0NDnJGs3f4jo96kkBoHxJ
-	OB5nXdFo/T5+jrk1w/1NPl2QerIZFY7Bv/sBFjujOW29qljAQVv7Tk07GgOrexvZ
-	3FmPucYv4PUDnje3zscQGqj/qKDiWbbaazzNy9QlC6YOKfDgs+h9IHCFXmfA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745305371; x=1745391771; bh=zP3iSn4fP3fmzC8dX3cKXoh7KXKES7hbG37
-	5nZGG05Q=; b=En3d6BnGqL+XOCONRH2K7lKnzLw7cYCGDselO4jR+MNNjkhmZiY
-	kijEsNPUk/eSK8szIvoooCKy43KBFmhNP/CZ6okn/eWZgVJt+4Ro4QbYDWQjDGCf
-	J0GUPjMJjYY6f8YvNSkiOljQeT4BD6OOB1fHuyD69kQcCitH6L6eLVjVNs1LyOh+
-	orMZ5UFZyZNrd3LfbxnIVinylTghIOyyGaCRdVjO+bPfrJevZLMvf2HVhAcBnn0v
-	9LUrNSajvpkkP3rLxPBHIeJ/6bqpoxqVJm1qGDxfAdCjMWkfnThPoaDTirW01cqx
-	Vs6Y7AYdEAewjEyg9NheDczNE6RFcUd4WEg==
-X-ME-Sender: <xms:Gz8HaGF8Tj80XzjesCImBYCATZ-NE4cRfD4R04WSkpgLDySftxBW9g>
-    <xme:Gz8HaHU3jIdubWliR9oYCLCu3RgUfYD9m-uR8txDgvsGaJRFqO28CuOuneoe0XU5j
-    8698JWru_2evqMrYw>
-X-ME-Received: <xmr:Gz8HaAITwz0yml2YGSEXwjadMI_cVygIQT0h4Jl_cIaQEXL-vstS40ZAnrPZ0iqfrY6MZ6dKko8s3WgmdMvnf-7d_fM1z93CDPxEZ-jzwTE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeftdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgu
-    rhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkh
-    cuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhep
-    jeevhfejudehgfffhfehkeeiveduieffkeehfeehveeuheehuedtieevfeffieejnecuff
-    homhgrihhnpehgihhthhhusgdrihhopdhgihhthhhusgdrtghomhenucevlhhushhtvghr
-    ufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsg
-    gprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhs
-    thhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhih
-    hkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhgrrghrthhitgdrshhivhgr
-    rhgrrghmsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehgihhtsehsfhgtohhnshgvrhhvrghntgihrdhorhhg
-    pdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhhhigrmhhthhgrkhhk
-    rghrtddtudesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:Gz8HaAFQ3hX56p9UfB5K35txoZ2fnDiAzqNaCr2na6Cbbhb0gvyg6A>
-    <xmx:Gz8HaMW6uOaJuE-MjYx2AMLO0FBBXPrFg_GPZrHAlHjx_ap0cwvvMw>
-    <xmx:Gz8HaDMg97hWVAWdJOfTX4sZYQ6hko9PEuVTbvLFOcRH5dUT6ev7VQ>
-    <xmx:Gz8HaD0ZyCNw2O6fIlJyyFCTbNJSKwQXTn0Ga300agf_2a5CFEDzoA>
-    <xmx:Gz8HaE6vwMRCQSu2PqV0CxWxPiK_fK_45gayKNeOV3NPea0xvvChQr5E>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 03:02:49 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bdc97d79 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 22 Apr 2025 07:02:47 +0000 (UTC)
-Date: Tue, 22 Apr 2025 09:02:46 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git <git@vger.kernel.org>,
-	Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Jialuo She <shejialuo@gmail.com>,
-	Ghanshyam Thakkar <shyamthakkar001@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git at SFC <git@sfconservancy.org>
-Subject: Re: AI guidelines for mentoring programs (like GSoC and Outreachy)
-Message-ID: <aAc_Fp7HFXydrHkq@pks.im>
-References: <CAP8UFD37_qsTjM97GK2EOWHteqoUKdwxjKS-SU629H2LnbTTtA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LNflPgmz"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cfba466b2so48125765e9.3
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 00:19:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745306352; x=1745911152; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pJ54l6nv9LFmsuMlgRdfOlRp7wA+6ej85ckUuIwJrIk=;
+        b=LNflPgmzyXvZ0owzGB/S9u9AbZXHbKWUUcZoGDqOSTuMsfucxXuE4wRDPpzaPHaSP5
+         uOYHxwA4xd1/x1kF4MB8Z2i4hTNLkxf1xs3N3CTjcaUOFRchirbR9MaRERFL56hp12lY
+         VvS0ckJbWpHKHr/7bHiDYbPoGcILF+fzmShauM5gQWUsrrrsiwPhVfeZCPtcfGlTlg71
+         FiZ9X4AKaegh7uwiKaXpTV8V4E4N/viPXbVL/UlxfVdxU5QpIPN2FJ3DhKN0ICE93tCn
+         1U70Fl8VwnhPfP73+HGVS0V1TNtD5Mfw1Rs80JbRF41nWniWoAcIYnUYYrHu85FANj5h
+         8V7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745306352; x=1745911152;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pJ54l6nv9LFmsuMlgRdfOlRp7wA+6ej85ckUuIwJrIk=;
+        b=kzv7cadKY12DBKnwQNtpoX6kjzVk+oSo2lBH3ijaYaLLOLeRnMb7skGHBJiGXOq3WK
+         vXzhNW0z15fBWVdNOSDqGutIn6cm9n4Ao0pxGExTthp7X87grS4vCsA4R8TrlYnb6Siy
+         D5w5vx3sc3w199CRzK3ReV8s8Vk2HQ6nTxXhaVUJTjOHQaW6K8vPHeCXhaMzCzwBCorr
+         HIbEpwF59eXKNKLVONc5Y9K3pKcAzcEcnPjSw2iktZzv8521TGuw4gq8rSvBmLEknLDg
+         HxlG85nsIADZ6UvvjBL18RSo7P9TRNZxWiFiGYzmLw2g4lxD5uQTkf7Xk+LEk1M8TGb8
+         7Bwg==
+X-Gm-Message-State: AOJu0YwB63NZ+OzUamurviLQpN/d+MmNSKcURAzbrei3yVKv7ej2m4+P
+	jmP1DUK7bzU3pVTBy8OWV6lfnNB0m6aviD3Eorqo8OG6pCOmXhmCQ85R2Q==
+X-Gm-Gg: ASbGnctFLtG5ZsAxktr+nrQx88BQftbjTyCvN9CMAPL6KtAm+Wxc4mgga6RFrRnkTGn
+	lh88Lx5nTmjF5QO3In1Z5dyE9I2ZkBcKMNCLYHLHwWvBo2NL+oW3jy/ps92OPc6DR0EagMPClMo
+	FJ1g6IhBmKHcVIF49hVMxNqByiRy1oC2L/Pvbeku5kmZelqfENpSd1+MjmH8qqr4bhuI7yjVsXC
+	QclbQHVmJW0WN6qV0mSababs+oJEmOpWpd9epDvvrK1Dco1HtdLs2pu0d+QHfJV/DpGRVE1r23z
+	Co/McUWRIzeEc6ohzA58xO8TPmU3HZcEh4pFqZmMmw==
+X-Google-Smtp-Source: AGHT+IHFchoxe/HpzZSFWVnkySokP9zS/1q4zaaTpqxZbArT98s1dO4NSPCWqKo9qR9m0P++6fYBNQ==
+X-Received: by 2002:a5d:598c:0:b0:39c:13fd:e2fa with SMTP id ffacd0b85a97d-39efba685a7mr10272328f8f.28.1745306352060;
+        Tue, 22 Apr 2025 00:19:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-39efa493145sm14093080f8f.71.2025.04.22.00.19.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Apr 2025 00:19:11 -0700 (PDT)
+Message-Id: <pull.1949.git.git.1745306351.gitgitgadget@gmail.com>
+From: "Aditya Garg via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 22 Apr 2025 07:19:08 +0000
+Subject: [PATCH 0/2] Ad support for Oauth2 and fix message-id bug in outlook
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAP8UFD37_qsTjM97GK2EOWHteqoUKdwxjKS-SU629H2LnbTTtA@mail.gmail.com>
+To: git@vger.kernel.org
+Cc: M Hickford <mirth.hickford@gmail.com>,
+    Julian Swagemakers <julian@swagemakers.org>,
+    sandals@crustytoothpaste.net,
+    Shengyu Qu <wiagn233@outlook.com>,
+    Aditya Garg <gargaditya08@live.com>
 
-Hi Chris,
+This pull request introduces 2 changes:
 
-On Tue, Apr 15, 2025 at 11:21:53AM +0200, Christian Couder wrote:
-> Hi everyone,
-> 
-> We now have a new "AI guidelines" on
-> https://git.github.io/General-Application-Information/ following some
-> discussions between GSoC 2025 potential mentors and org admins by
-> email and on https://github.com/git/git.github.io/pull/771.
-> 
-> We came up relatively quickly with these guidelines because this year
-> 71 out of 79 proposals we received for the GSoC 2025 were spammy and
-> very often AI generated. This is a significant increase compared to
-> previous years. I remember that a few years ago there were less than a
-> dozen spammy proposals. We also received some AI generated spam
-> patches and emails to our personal email addresses.
-> 
-> Other organizations participating in the GSoC 2025 also received an
-> increasing amount of such spam, and organizations which documented
-> some guidelines against it said they receive less of it. A large
-> amount of discussion has happened on the GSoC mentors list about this.
+ 1. It adds support for Oauth2 authentication, which is now compulsory my
+    Microsoft. This patch has been rebased to the latest version from the
+    original version at
+    https://lore.kernel.org/git/20250125190131.48717-1-julian@swagemakers.org/
 
-Yeah, it's been a bit of a pain this year indeed. Thanks for creating
-the AI guidelines, let's hope it improves the situation.
+ 2. The second patch makes the script reply to the message id set by the
+    outlook, since outlook has its own proprietary way to handle message
+    ids, and does not allow user to set their own. As a result, threads were
+    breaking.
 
-> Let us know if you have an opinion about this, or if you think that
-> the whole Git project should have AI guidelines.
+Aditya Garg (1):
+  send-email: retrieve Message-ID from outlook SMTP server
 
-We (you and I) have discussed this internally and got to the conclusion
-that it's not needed for the Git project as a whole at the current point
-in time. We haven't yet seen any obvious issues with AI-generated
-patches on the mailing list, so it would probably be premature to worry
-about it now already. We can and should reevaluate though in case we
-ever see an uptick of slop.
+Julian Swagemakers (1):
+  send-email: implement SMTP bearer authentication
 
-I'm of course happy to hear differing opinions.
+ Documentation/git-send-email.adoc |  5 ++-
+ git-send-email.perl               | 75 ++++++++++++++++++++++++++++++-
+ 2 files changed, 78 insertions(+), 2 deletions(-)
 
-Patrick
+
+base-commit: 4bbb303af69990ccd05fe3a2eb58a1ce036f8220
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1949%2FAdityaGarg8%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1949/AdityaGarg8/master-v1
+Pull-Request: https://github.com/git/git/pull/1949
+-- 
+gitgitgadget
