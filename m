@@ -1,107 +1,409 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C575628F954
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 15:56:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FFE227C859
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 16:05:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745337407; cv=none; b=SDSn90pVo+wB1SM4AHDfatb4SmqMiLPBtt+BsikcydIflHZLsfwnHRC+ze31JuMzuxbtuKLYEN0S9qby3i9c1hURSzA8/Y0GOw7sNuh4kno1m2egEuWsKr1+XGmbYAzBM3qrZTacZzIXmOkChgh3Vr1N99+H6Hpk2mXQrMtb1dk=
+	t=1745337960; cv=none; b=edcfHbqbmx57fVMZov+vwsLYdREZC9h7rgkRldLuhV4PFMuorvXIDpix2rofMGAA3vUeSezsQonpk6LQQLiohTZ2JfsA/UuG5g8Xpjvldba63DfDGbV6/U/jriqvwelvcR/THLO1KKSalbYTocJlYrQGOPaJeXV6tAH9AQrqpYc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745337407; c=relaxed/simple;
-	bh=yNr2oGS6iK+CJoVYWQbrn0j3q5SadvtcSjsyC0MJYgw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aDihKNURmuNwq2XHrAf/cludTStFMXIBOY06vqvQEEGcVwtfJO7rFqV7cV7H7++V2DQsuFCjhs4fVmG4+MoOsW7+s3UP8ej+/CN8dEvACRI+skbUX+6TkbnaCv3NSDEda6VCEHdo4pE3X4TCZXgWAO44AbpF1WaHV/widiggBAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cjXjDwNF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dnuvpAgX; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745337960; c=relaxed/simple;
+	bh=mRJ8GHObicFkPFUNn+guMAPTjVBlTz9Y+ke1wNkA+TM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=FcgRa0r+RBGPRehiXYGTMaNjrP3/Pmi7Ws2ijncZTnyAMsyhnleT0OFfYAutYxNFW9reU3M0PEckZaFyykzUZ3EbLvijyIgs6TZyOq+Dxc7FiZxA7nOpZDZ7XgTndFA5/Zhn9JR8OkMAR0FyppoR2UIKpbN8cRkcpbH6MuYnRcg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cIqADKFw; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cjXjDwNF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dnuvpAgX"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id B75EF1380207;
-	Tue, 22 Apr 2025 11:56:44 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Apr 2025 11:56:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745337404; x=1745423804; bh=CRwufZ0cAm
-	qsDYhzEssgN81LZkAXFGS4RmWt+gbvN8A=; b=cjXjDwNFNxOnRrBGzIIgtalZQI
-	Kv9rA51jTZwVEZBGrGpcQw+9GjtUB/lKt3tq4F6q5txWH6fAWqb993dyFJfzUf33
-	1QCCkQKZ/n6me5OM9otztAC3Tpqy5x4vBkBPbbdzY40OOayuqCBZB6L0auBPUIjC
-	VdvvCY5At+PJkFQsE59nMUhjmJo4q+xg76YiXpMB6HbvCbLwKdBI+5Dgidn82M4V
-	Www/9T/3BUo1g1YnZ8MJl6OybXJbq31yFXAD0jhAcMeRt4H0Kyr6eun8A7K/6ibH
-	QmyYtGGSrWorBdtlMFRCHnq6uJDr6c6Rp9/9xg2N0HtY8/dHzMbaE+nHbODQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745337404; x=1745423804; bh=CRwufZ0cAmqsDYhzEssgN81LZkAXFGS4RmW
-	t+gbvN8A=; b=dnuvpAgXMogo8bj+K59G/CazPLTMbh4oofFsKbH8pWf2UlSsouk
-	p+x+Jg34ptDYXoiotug4g1ndxFSUiNlQcjUZHSo2lAr+yM28WbfEybSQ1hcIEfiQ
-	zM/6dcRESlyEU5CohxlDB/LQj2EmCFkt4q6XH42Xx1LBF211tEXqGNqtQq4B7Y/N
-	3srt9G4DohLGw9XGXIwHebcGby9XzV959fdX128tRCfk3CN5f//PA05BxK5emxDm
-	fTFJcSaCPS8+Nerispxsl0DcdCxvLNToDXx2HegnuyBeq1ePEh3Rk5t+58tEn0ZZ
-	Y+vc1YCoSEgxEa4uAnThahPQBuRDJWu8IQg==
-X-ME-Sender: <xms:PLwHaNpyugHPTcwEk_gAa_DtCMwMV05h_R5zL0P1Qr1K6sNfXS7xKA>
-    <xme:PLwHaPregHRNePV_oaIdurzwvOTlgvlw5cHx6GTbpl__p1YD8nYW6vSjUM-wKARD3
-    aGrwcclN0dEx07hNQ>
-X-ME-Received: <xmr:PLwHaKPkC7XBbCw2luKyLGwicT7pAIWu50eZzhaxMnW29dpGo0Hs0mt0wW0-6k6HzTkYvMClHWbqds1OUb_i7LRaNnnOUEAhWywz>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougdu
-    vdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehp
-    shesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PLwHaI43oiq-kD0b3iLj9vVfDXEjuO2rKuYHe98rfMh9wmLqarYB3A>
-    <xmx:PLwHaM7_Jnxr7ECkhEX_n2v0S1eqz4ZIxbmvICXjU-uEzwRpkCWlVw>
-    <xmx:PLwHaAibPN0B7ODSA61inuztNRmWvD_ODI84KAdIQfxVGzj6BLJP9g>
-    <xmx:PLwHaO7DFPQcf0WVDbebg0vBOkPmOf9XOmiupaPeT1RgzDhYXnHBvQ>
-    <xmx:PLwHaPez8VlWXoxu129vnQm5jmhJ3-jOZIR1mvPG_QkehZSMahbUnmOF>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 11:56:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@vger.kernel.org,
-  toon@iotcl.com,  ps@pks.im
-Subject: Re: [PATCH v4 0/5] meson: add corresponding target for Makefile's
- hdr-check
-In-Reply-To: <CAOLa=ZSSdp4KBHAviudJm=H+bP0aqru=LN2=4hsYsqyM7zLMgw@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 22 Apr 2025 05:11:04 -0400")
-References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
-	<20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
-	<xmqqh62i6jli.fsf@gitster.g>
-	<8b380da4-8d27-4efe-85fd-3bb599188fe9@gmail.com>
-	<xmqq8qnt7c9w.fsf@gitster.g>
-	<CAOLa=ZSa-qQzi3iWPF+M5a4EsvGiQFX=2Ca=vzuqwSLWWXSw+g@mail.gmail.com>
-	<xmqqldrt5bto.fsf@gitster.g>
-	<CAOLa=ZSSdp4KBHAviudJm=H+bP0aqru=LN2=4hsYsqyM7zLMgw@mail.gmail.com>
-Date: Tue, 22 Apr 2025 08:56:42 -0700
-Message-ID: <xmqqmsc842bp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cIqADKFw"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-73c17c770a7so6854776b3a.2
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 09:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745337957; x=1745942757; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=gXQRsgp72pNf23fx2pu77oJhK494XE16/HiqaBV5/y0=;
+        b=cIqADKFwh6TmmcAz6P6U4o/j0cNliZx+pHHUUFB2SSwkGwYZYgRjl7u0ndPRqZ+DGt
+         v84SgRlaIUOpQLVIvTNoZ8kSf8M/7hKsa983B5Bv2t3aiufIAbnroGmekZFoqjFCd6Rj
+         Vk2uD4vzxzkSRWA6xs4UI7ys5MvOfu+w0fONG9y0H1v79ZGg9Bmdh1f1EpZSmRP1av33
+         FO1E9GH2ZezmqrbV8A6UQW59hxJffe1TADb2GqWjAwzkqwsEZonDRdIKDYrURyNpVO9N
+         b3kVe17cqVEYWjYBow/djFE/r+kswlfLmbHoEzX5Cz597saFXey5y7ZPSihbQha0ii1w
+         iBJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745337957; x=1745942757;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=gXQRsgp72pNf23fx2pu77oJhK494XE16/HiqaBV5/y0=;
+        b=pm7pTupL53hlGqB68HereTJ20iwKpVhsBvJpFonc3od2XX6EKYjJh1E2YzO+SH4RuI
+         OFn67e+6gxZ4EOj7HCTDvaQIg0NCGBIEhptRELyl7IGQtWZlV9xIwQDQEq5mPznEGYW4
+         L6jwffLLH9G3ufaLsVjgoeQbV2uQGjCMFUA+ROYXpV0FqWsOTDPRVhaeyW4fZFTjtE3l
+         sWuumd/r1TD1TZpxiBBGjNvd7uwj3z1hBctobTt7CL4GeuJbiJ2BZ1m3JL6vcjklpFsR
+         SGZwB9nsVg5zWTchdXyQPe1nU+i2NOM9n3q88eCn5JuLL96qVVN5wjdUaQuZrQAMI++0
+         ZarA==
+X-Gm-Message-State: AOJu0Yy83df/R7sJswpyxuB601anoKOsC1xmclrVe67HGiWuqKyTe112
+	bIO4PoqCUnvPWjvc/hd+A3v7awzHtot9Rz60GXywevtb2+n/VZLUOcko+w==
+X-Gm-Gg: ASbGncuoKUjTflA+pKr9HDL6cwJBJAEwmaDLVNHmEJg1RLHQnqAjzgHCbw/K7A8jwH5
+	kdCOlt1QqwWZgUwixOFIt4GBSjJMEF0ivDmQtG6xnUNKKARbE75BIclOlI+2v+qCzUk12jcobXp
+	1gEWWlh6vzVll9IarL/oiVXEiWGhDILjDau+RHIisEQ39cy2cmeSko3yNtVMWHEMFDT1RAdwJQ0
+	GffiZDI8UVZscxJ1k+NxXW/0ApHqy4bqV9NU+cp+7eX7CkFt9bglazeWfjsNbxuxdkNk2MdSZbH
+	5S3vM+hE6s18wAI4mLvm8JKKqM+/QrY1Ulr4vKSVVQwH9kchj8ZwJd5aIg==
+X-Google-Smtp-Source: AGHT+IFXnULzg0v+dK9+NmnVVBA0X9Km3yfd2+ylsxymaDzXHRz3h1aygCwRTkfGRkvE/jz9eJTNhA==
+X-Received: by 2002:a05:6a00:2e84:b0:736:baa0:2acd with SMTP id d2e1a72fcca58-73dc15c4883mr21414969b3a.20.1745337957338;
+        Tue, 22 Apr 2025 09:05:57 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:5522:eab2:4cba:30d0])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-73dbf8e3cfasm8781981b3a.40.2025.04.22.09.05.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 22 Apr 2025 09:05:56 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	lucasseikioshiro@gmail.com,
+	peff@peff.net,
+	piotrsiupa@gmail.com,
+	sandals@crustytoothpaste.net,
+	jayatheerthkulkarni2005@gmail.com
+Subject: [PATCH v2] Dir: Fix and test wildcard pathspec handling
+Date: Tue, 22 Apr 2025 21:35:47 +0530
+Message-ID: <20250422160547.577524-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.0.223.ga3111b2db4.dirty
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
+Ensure wildcards expand, even with literal file match.
+Fixes 'git add f*' skipping files like 'foo' if 'f*' exists.
+Use 'f\*' to add the literal.
+Tests added for add and commit where dir.c logic applies.
+Skips windows specific test.
 
->> Would it make sense to just swap the order, then?
->
-> Unfortunately not, this is a chicken-egg problem. The dependencies are
-> installed by 'ci/install-dependencies.sh', which are not present until
-> the source is available.
+reported-by: piotrsiupa <piotrsiupa@gmail.com>
+Mentored-by: Jeff King <peff@peff.net>
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ dir.c                                 |   3 +-
+ t/meson.build                         |   1 +
+ t/t6137-pathspec-wildcards-literal.sh | 282 ++++++++++++++++++++++++++
+ 3 files changed, 285 insertions(+), 1 deletion(-)
+ create mode 100755 t/t6137-pathspec-wildcards-literal.sh
 
-Ah, of course.  Thanks.
+diff --git a/dir.c b/dir.c
+index 28b0e03feb..9405fee83a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -519,7 +519,8 @@ static int do_match_pathspec(struct index_state *istate,
+ 		    ( exclude && !(ps->items[i].magic & PATHSPEC_EXCLUDE)))
+ 			continue;
+ 
+-		if (seen && seen[i] == MATCHED_EXACTLY)
++		if (seen && seen[i] == MATCHED_EXACTLY &&
++			ps->items[i].nowildcard_len == ps->items[i].len)
+ 			continue;
+ 		/*
+ 		 * Make exclude patterns optional and never report
+diff --git a/t/meson.build b/t/meson.build
+index bfb744e886..61285852e9 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -788,6 +788,7 @@ integration_tests = [
+   't6134-pathspec-in-submodule.sh',
+   't6135-pathspec-with-attrs.sh',
+   't6136-pathspec-in-bare.sh',
++  't6137-pathspec-wildcards-literal.sh',
+   't6200-fmt-merge-msg.sh',
+   't6300-for-each-ref.sh',
+   't6301-for-each-ref-errors.sh',
+diff --git a/t/t6137-pathspec-wildcards-literal.sh b/t/t6137-pathspec-wildcards-literal.sh
+new file mode 100755
+index 0000000000..abf837bf6c
+--- /dev/null
++++ b/t/t6137-pathspec-wildcards-literal.sh
+@@ -0,0 +1,282 @@
++#!/bin/sh
++
++test_description='test wildcards and literals with various git commands'
++
++. ./test-lib.sh
++
++test_have_prereq FUNNYNAMES || {
++    skip_all='skipping: needs FUNNYNAMES (non-Windows only)'
++    test_done
++}
++
++reset_git_repo () {
++    rm -rf .git &&
++    git init &&
++    rm -rf "actual_files" "expected_files"
++}
++
++end_test_properly() {
++    cd .. &&
++    rm -rf "testdir"
++}
++
++
++test_expect_success 'setup' '
++    mkdir testdir &&
++    cd testdir &&
++    touch "*" "?" "[abc]" "f*" "f?z" "a" &&
++    touch "**" "foo*bar" "hello?world" "f**" "hello_world" &&
++    git init
++'
++
++test_expect_success 'check * wildcard in git add' '
++    git init &&
++    git add "*" &&
++    cat >expected_files <<EOF &&
++*
++**
++?
++[abc]
++a
++f*
++f**
++f?z
++foo*bar
++hello?world
++hello_world
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check \* literal in git add' '
++    reset_git_repo &&
++    git add "\*" &&
++    cat >expected_files <<EOF &&
++*
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check f* wildcard in git add' '
++    reset_git_repo &&
++    git add "f*" &&
++    cat >expected_files <<EOF &&
++f*
++f**
++f?z
++foo*bar
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check f\* literal in git add' '
++    reset_git_repo &&
++    git add "f\*" &&
++    cat >expected_files <<EOF &&
++f*
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check f** wildcard in git add' '
++    reset_git_repo &&
++    git add "f**" &&
++    cat >expected_files <<EOF &&
++f*
++f**
++f?z
++foo*bar
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check f\*\* literal in git add' '
++    reset_git_repo &&
++    git add "f\*\*" &&
++    cat >expected_files <<EOF &&
++f**
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check ? wildcard in git add' '
++    reset_git_repo &&
++    git add "?" &&
++    cat >expected_files <<EOF &&
++*
++?
++a
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check \? literal in git add' '
++    reset_git_repo &&
++    git add "\?" &&
++    cat >expected_files <<EOF &&
++?
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check hello?world wildcard in git add' '
++    reset_git_repo &&
++    git add "hello?world" &&
++    cat >expected_files <<EOF &&
++hello?world
++hello_world
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'check hello\?world literal in git add' '
++    reset_git_repo &&
++    git add "hello\?world" &&
++    cat >expected_files <<EOF &&
++hello?world
++EOF
++    git ls-files >actual_files &&
++    test_cmp expected_files actual_files
++'
++
++test_expect_success 'commit: wildcard *' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "*" &&
++    cat >expected_files <<-\EOF &&
++*
++**
++?
++[abc]
++a
++f*
++f**
++f?z
++foo*bar
++hello?world
++hello_world
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: literal *' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "\*" &&
++    cat >expected_files <<-\EOF &&
++*
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: wildcard f*' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "f*" &&
++    cat >expected_files <<-\EOF &&
++f*
++f**
++f?z
++foo*bar
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: literal f\*' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "f\*" &&
++    cat >expected_files <<-\EOF &&
++f*
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: wildcard pathspec limits commit' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "f**" &&
++    cat >expected_files <<-\EOF &&
++f*
++f**
++f?z
++foo*bar
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: literal f\*\*' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "f\*\*" &&
++    cat >expected_files <<-\EOF &&
++f**
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: wildcard ?' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "?" &&
++    cat >expected_files <<-\EOF &&
++*
++?
++a
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'commit: literal \?' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "\?" &&
++    cat >expected_files <<-\EOF &&
++?
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'check hello?world wildcard in git commit' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "hello?world" &&
++    cat >expected_files <<-\EOF &&
++hello?world
++hello_world
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++test_expect_success 'check hello\?world literal in git commit' '
++    reset_git_repo &&
++    git add . &&
++    git commit --allow-empty -m "Test" -- "hello\?world" &&
++    cat >expected_files <<-\EOF &&
++hello?world
++EOF
++    git ls-tree -r --name-only HEAD > actual_files &&
++    test_cmp expected_files actual_files 
++'
++
++end_test_properly
++
++test_done
+-- 
+2.49.0.223.ga3111b2db4.dirty
+
