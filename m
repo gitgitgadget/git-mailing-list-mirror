@@ -1,157 +1,126 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F00242D73
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 21:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD1E244676
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 21:24:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745355744; cv=none; b=ovSpMgJQMI2Yl4Vg8P0efQJXvU7g1rs10vo4JAqqQ1AawuKV5B8cC8K6aq8NYydy8nqD17d9aXun469LGIYFOPiJcYiMUb2ZZTvAivlCrxUbFl83T5QuFb1KU0NIk7dQ3OjGUbF7hTsskXT8478fCUGfB7HJtoCUOB9mKVPtJIQ=
+	t=1745357061; cv=none; b=ER6dnaqKy/ahEbSeHojev/XawshKqIwqTviPrJpE8oBi4Tz18pweW4kJkMt2BfORflbSG+Nf/FpPLHE+/GeUTfjRehmsmqyoqGORTrf778kw5SZYjsGpKN87NM/xmv70z2BhB6xW5mr7DU3Xb9WKJ8ZS+I3tKBUc69D/1O+pFag=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745355744; c=relaxed/simple;
-	bh=nnbxpLbxk+KTd0lzzVTnLQrbVi0ZCylVzQd5821zTeg=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tU05imMbM+lawOItFzuEgCdqSCdMoQ42RadMZlS4jCMRtvtFppo7o+LQGqlPcEfz7EFsAocvUksfs72IJXvkIPl6vmG6JlwKj1GUpTRmuS1EGEB++Cc4ZhkiyXIcHyBqmn/2AYJNzcwwu01pGU1ePWgXVUTjogCOFdkoudZJU6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YAIlwlnP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bz8fLRQJ; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745357061; c=relaxed/simple;
+	bh=h9GypwafKqq6mxoR9QjJ7u5KWebz3UAmhgmxUcNo878=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=QJo8skurBm/oRV1yLSkdrKYzLXmA3zSX9CRI20VuMSX3lzc/CmMWUjFcHWr94Bmp7ItsdbSEAkHr0h73ep6CXxxRx8icKmOeZop+iLlqncFfH93g+5vsEHwRoICgJ0kZVvKeaZ0x6TYHyfIlugUdMXeLsHJQs99eJR79vehQAZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JxzoW0XN; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YAIlwlnP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bz8fLRQJ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5A6992540191;
-	Tue, 22 Apr 2025 17:02:20 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 22 Apr 2025 17:02:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745355740; x=1745442140; bh=yZjjF0I9zw
-	PiNS4BowGudS0f3Sb/qylp8okkiZLq7ZY=; b=YAIlwlnPSsYVXgs9LWP8Gxt+Oc
-	5ls96HZnySD/CeDC+BkchkRWArXC3GWEhG6H3jxYhfzV1zjtfS6PHYQy+d/DFM7R
-	lI2JgktIxDd9tqnljIylEDVhoIB+I5ilkl/TUzKfD/nHUT4iO9ePh+fjGoEyhlKj
-	ENYAMKnAD3vD19nNa1OTllRvsiBDu9CHk+E9r59dPyIhnf2UQeztti1OSvBtJF3V
-	idDNkbvC3Zuex7QCf1VqCag8Mhibok+faCEU4QRs0X9IphJMC7NNokt5OZK2MRYo
-	8RkS/XK+9Ztwa+t9fzGyyzFXheeCXXJbPTea1xYKBzMBYCJZUP5PL/OYpJXA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745355740; x=1745442140; bh=yZjjF0I9zwPiNS4BowGudS0f3Sb/qylp8ok
-	kiZLq7ZY=; b=Bz8fLRQJss/sdv16wim0GTlfRwrIq7dXZhM7FEW049gzHonG+X6
-	9f/XaXLZXDnQKkfo3EUayy3ZpJxpkl+ifZ4Zq6zW5zfdxdtj/aDqXHr4YmiuNaOD
-	OGQjrHIL0gZNkWG8k3N0nowYuwMeBwDJ52ZJREezumI5Xa902iOd7hzdRPZHjO+n
-	3KTnR3cxjJ+GusR/mzcd77cyW/c57fyx0NGVkoA003yaW7rYIF8zZmtC1/KofcGd
-	EnZpXUviDopSPBXpd6sWCby3M4hBTkRqwsToJSdW0K5VdEWjeAUIrhh/420VmrQ2
-	bBp1Yc2LukfBaE2jO7BViPjyhb/ga8VAP8w==
-X-ME-Sender: <xms:2wMIaHo3nkxxElhSFr_QW9_x7Rr3LoskKrvwwTHprS-sVXIvfhh3hw>
-    <xme:2wMIaBpXo_0F7OFYxxA4q74-9iPYUI1tFpmb8_dgr6ji9ozsNNjLvgOfS6mzEVYWI
-    q5AznxkIBHG356r1w>
-X-ME-Received: <xmr:2wMIaEPKJY68d3LMVX7aIoR6Wgi2WY7wVawz6K2r3cMP_tl5w6GV45sLVOYKlkWNbhmooLHcWXREURXC8YrF00eAl-6zz75u4HWu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegjeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlh
-    huohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2wMIaK68dk7CaG-c8VDswfVToouc6t7oHVFMaxNJFLsiDIAdxPPy3g>
-    <xmx:2wMIaG5uvibIMsTZU6S4rZFwXDv4ED1xqxvET5gTW515kNC-omboJA>
-    <xmx:2wMIaCh1mkgLMR9ePws1Jh6VD0eGEMC0odwymyLpa_pJ5cdB4n4gbA>
-    <xmx:2wMIaI5jg9KgTcE32Gml2oxcaYyc0i3onbbxeGUs5flokpfdaUquFQ>
-    <xmx:3AMIaMF8KEqR8DsAWrvSkBvhsF0n57UIBtMTCK6Gk93pI8NZB9MlL3Dw>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 17:02:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH 1/5] string-list: fix sign compare warnings
-In-Reply-To: <aAett8cJuDJ_FSdw@ArchLinux> (shejialuo@gmail.com's message of
-	"Tue, 22 Apr 2025 22:54:47 +0800")
-References: <aAetW0dan8S3Fljq@ArchLinux> <aAett8cJuDJ_FSdw@ArchLinux>
-Date: Tue, 22 Apr 2025 14:02:18 -0700
-Message-ID: <xmqqy0vr3o6d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JxzoW0XN"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-22d95f0dda4so25195725ad.2
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 14:24:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745357058; x=1745961858; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=xfvYcRR5cwZZLbVYbk4sBASK5oc/dXzAd/BW+SydCr4=;
+        b=JxzoW0XNJBaiqmCXNMA6rIvnH3x+IhFs/uIjYFMZLLR88lq4neioQNElUg97PLPe6X
+         O79AH/t9rV7Sw2FaxGvWChPjpr8rbD/XrfiOkTz8bwIY+uDwNsO2n2cnSYuhlVqEyVKU
+         OaoEHZ22FqLOA6+tml9ILRCGk6MKDoTu8WRAohbUUxO4j5YL0GhglfmVsDld+pKUwBez
+         1eDMcgOxBd6t4wPdPfbAvpABLJT7ojXAKlU/rlqhcnzpGyzOFKO3wiDf8oHMiR1dqXRu
+         MCFPYSUO7Z+BBBPMbdvmkAhDSkY14JJ4deH5iv5/t1L0NU058fJzQ4t0BvgrpspKuUHm
+         3srQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745357058; x=1745961858;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xfvYcRR5cwZZLbVYbk4sBASK5oc/dXzAd/BW+SydCr4=;
+        b=kg+kLTY9B1/VCK3SIPC6BZEPVAg6lqFGoJjbOWQm3XMwWvwXmLMJH/JeB4cwSHDfT8
+         4enwI38pqLvG8cRxe7Z4ur6yJ+xiqzdhbzZ9chmsvQe/t2jUYSiqzibbLTiSboNo5wc0
+         TYk8f7IT52Jl1AX3J3+Ko/Q4n5N3ENPEgkFGBHrVE3hU5ZTPkUiLMhdCjEfEB5b9T9Pr
+         DxDmtIEcAxxwiI2oLr08nXUYa1yQz6ZQ5D5rp0cMEF4qfF5ecx864g4sbFBnMZjM6Cb6
+         HfcPuCNc7T/Ip5ZspRXEy5aWoYhTjcVPJd8Qm/V126SEZWAgo6TtcmcscVXMWuesFiDk
+         S7Hg==
+X-Gm-Message-State: AOJu0YyeliLjDiVxnNXy06V3KgvIy7LwQ+Fg00ENctyRpm106+xdqrcK
+	llQgDlTuCsB0s2IK3prqqmPV2FfKjSt+/CxdBJuc1OUFFWhRFRENiYNt9g==
+X-Gm-Gg: ASbGncuwzO4wkBhWWIFKLaGquQeLdFh95azPTVOIbB5DtWKm+IuxIOCrKXK34YLcBxP
+	Ckaolir/YcpsdsBtPOzUKqy6iAuwPT4+IE2HNPafmYatJtuAnB5fsrPinM4h/wPS/cO0XVsny6u
+	8fVVRTQUjL+iBMS572wtGCNNa7TLkRXcJ8KTTl7BhealmL5pbHlQpscX/M0ropLGxZhtQPaeTG4
+	A0lMPSihvGFuwedvE5f7Wu4ziDJ9V5CQkWw+HvhipiskJP2YZkFE2bNxyXCUnp7Mdwcuo4L0zmC
+	wPkjRGejHK2ISz1eFVYceO5oBvT4ZLhA+jOczfF1nDXry8ju1W3eVfr37/t1RGUJwSyCwABzJmy
+	zo9I=
+X-Google-Smtp-Source: AGHT+IFI/to8Ju/rWyzlbRZY07iMIwIGy64IYgI/gW56ewgY3aYJBOBi6VKlvoQIH3Dwn9BIVcSMzA==
+X-Received: by 2002:a17:902:e5cf:b0:220:d078:eb33 with SMTP id d9443c01a7336-22c536195bdmr256079245ad.36.1745357057550;
+        Tue, 22 Apr 2025 14:24:17 -0700 (PDT)
+Received: from smtpclient.apple ([2804:14c:32:97e3:2ca3:dc92:5416:e6c6])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22c50ed12absm90261045ad.207.2025.04.22.14.24.15
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 22 Apr 2025 14:24:17 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [GSoC PATCH] json-writer: add docstrings to jw_* functions
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <xmqq7c3hb4cj.fsf@gitster.g>
+Date: Tue, 22 Apr 2025 18:24:03 -0300
+Cc: git@vger.kernel.org,
+ jeffhostetler@github.com
+Content-Transfer-Encoding: 7bit
+Message-Id: <EE721541-8445-40EF-9AAD-ED88B3961546@gmail.com>
+References: <20250418165651.14125-1-lucasseikioshiro@gmail.com>
+ <xmqq7c3hb4cj.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-shejialuo <shejialuo@gmail.com> writes:
 
-> However, for "string-list.c::add_entry" function, we compare the `index`
-> of the `int` type with the `list->nr` of unsigned type. It seems that
-> we could just simply convert the type of `index` from `int` to
-> `size_t`. But actually this is a correct behavior.
+> But such an array can be embedded as a sub data structure in another
+> json-writer with array-sub-jw or object-sub-jw and once it is done,
+> it is not "top-level" at all.
 
-Sorry, but I am lost by the last sentence.
+Hmmmmm... Perhaps it would be better to replace it by something like
+"the main data structure" instead of "top-level structure"?
 
-"this" that is a correct behavior refers to...?  That the incoming
-parameter insert_at and the local variable index are both of signed
-integer?
+> Perhaps it may be beneficial to give an overview of the API design,
+> at the beginning of the file (in other words, not a per-function
+> comment, but a comment covers the whole json-writer API), to outline
+> the concepts and philosophy the json-writer takes to build json
+> objects, perhaps?
 
-> We would set the `index` value by checking whether `insert_at` is -1.
-> If not, we would set `index` to be `insert_at`, otherwise we would use
-> "get_entry_index` to find the inserted position.
+The beginning of json_writer.h already provides a good overview of
+what it does, but not exactly to the functions. It also provides a
+reference to its associated test (which can be used as examples), but
+yeah, it is not exactly an API overview.
 
-To rephrase the above (simply because the above is literal English
-translation from what C says), the caller either can pass -1 to mean
-"find an appropriate location in the list to keep it sorted", or an
-index into the list->items[] array to specify exactly where the item
-should be inserted.
+> - json_writer is to build a "collection", which is either an object
+>   or an array.  An object is a set of key-value pair where keys are
+>   always strings and values can be of various types (including
+>   objects and arrays).  An array is an ordered set of values, which
+>   can be of various types (including objects and arrays).
 
-Naturally, insert_at must be either -1 (auto), or between 0
-(i.e. the candidate is smaller than anything in the list) and
-list->nr (i.e. the candidate is larger than everything in the list)
-inclusive.  Any other value is invalid.  I think that is a more
-appropriate thing to say than ...
+I think the already existing description covers those higher-level
+aspects well enough.
 
-> What if the caller passes a negative value except "-1", the compiler
-> would convert the `index` to be a positive value which would make the
-> `if` statement be false to avoid moving array. However, we would
-> definitely encounter trouble when setting the inserted item.
+> or something along that line, perhaps?
 
-... this paragraph.  Not moving is _not_ avoiding problem, so it is
-immaterial.  The lack of valid range check before using the index
-is.
+I liked it, and I'm working on it. But still, wouldn't it be nice
+to have descriptions on each function? An overview like that is
+enough for me for understanding most functions, but some are not so
+clear (e.g. jw_array_argc_argv and jw_array_argv). Or, to not
+being too verbose and repetitive only focusing in the less obvious
+ones?
 
-> And we only call "add_entry" in "string_list_insert" function, and we
-> simply pass "-1" for "insert_at" parameter. So, we never use this
-> parameter to insert element in a user specified position. Let's delete
-> this parameter. If there is any requirement later, we may use a better
-> way to do this. And then we could safely convert the index to be
-> `size_t` when comparing.
+Thanks again, Junio!
 
-Good.  As we only use the "auto" setting with this code now, as long
-as get_entry_index() returns a value between 0 and list->nr, the
-lack of such range checking in the original code no longer is an
-issue.
+PS: I'm cc'ing the e-mail address of Jeff Hostetler provided in
+the latest commit created by him, since the first message couldn't
+be delivered. He was the author of json_writer and I sent the patch
+cc'ing the e-mail from the commit that introduced it.
 
-Having said that, in the longer run, get_entry_index() would want to
-return size_t simply because it is returning a value between 0 and
-list->nr, whose type is size_t.   left/mid/right variables also need
-to become size_t and the loop initialization may have to be tweaked
-(since the current code strangely starts left with -1 which would
-never be the index into the array), but fixing that should probably
-make the loop easier to read, which is a bonus.
 
-And add_entry(), since it needs to do the usual -1-pos dance to
-indicate where things would have been returned, would return
-ssize_t---or better yet, it can just turned into returning size_t
-with an extra out parameter (just like the exact_match out parameter
-get_entry_index() has) to indicate if we already had the same item
-in the list already.  It is perfectly fine to leave it outside the
-scope of this series, but if you are tweaking all the callers of
-add_entry() anyway in this step, you may want to bite the bullet and
-just go all the way.
 
-Thanks.
