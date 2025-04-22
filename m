@@ -1,116 +1,178 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from mout-p-201.mailbox.org (mout-p-201.mailbox.org [80.241.56.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D18125CC4F
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 22:20:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46F8D2C10A4
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 22:24:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745360454; cv=none; b=l0QCpErFBiIwTLolGwV7BYvLPECQf+7gfgH4jr1NBZVJ8rDvRTjHt2lB4zdPPfvTVv1RQvsYEjSkaspRqykBLiWI2QukYxerbKR6KsQUdbuf7t9n+xT/xvHxofjBSK6zvKPsEok8NNUe4dZCxmOO/aXBsuxxWmsY/zf3I20NyXQ=
+	t=1745360655; cv=none; b=F48q6utyMJVDnFiZrPtpflkI5YQd4HKyltLOOrf2E5DJ2GWyDdTQGy7ANVl20sxSUISqRFgtgOqw+pGk2+20GbljVwgiTGlQvDiQgYDwznOL3pRC0536q3RuO3J0Et9yNtF9Daah8zaW8RN3m6PM/ynJANPSMoDLha9LPpCgwAo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745360454; c=relaxed/simple;
-	bh=XuCoj0XTMRgBV4L+upuRQ6HkLVJnZLkbhxEmEkHSSvw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YL/POGRaeZYVZJJ76itPRmASMwi2UKYc2afEqh6nkTuziz7VqpiYJ1WOc/1aaKAGAj9mpVBmbvQA7AeLofQsEKD6zCVAQ5Xvwn8HrUSmluN+FuHA4IXqUm4TZCNKY+m11SjdohrZVAj8q9Pbv5d2ytzafSpUl2sHj6WEWSEoRus=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LIgFisXu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lhWFipl/; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LIgFisXu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lhWFipl/"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 47ABF25401C8;
-	Tue, 22 Apr 2025 18:20:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 22 Apr 2025 18:20:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745360451; x=1745446851; bh=/cYOxkZRuN
-	JWaG+QVCrlrSqpUYhnSNEU/azEHSFk4T4=; b=LIgFisXunZqwOguwyZQbgHQoqr
-	4DoiDjXp8eckrt3XpqXDiUdfWrD8/4nplgJaI4z0JBr7y/R06ZJ9rHZeGTOsExa8
-	7scGVaxs4qFm3zsTsDEf13dgYtycyHUF9phLYIxr6/yTxfZoAyst/Qv6uYoQt3S4
-	3ip8vdQ2b055DWaS8KWTSbpRoru8OP7dcjh3abneUWwtQHY1Ef2rpKjyHm+rPf4M
-	DPwfQTg0nJxsFWqORAFsFQksXUHpvbLHiQ0BBnEUwhBM/uWvKUAymYtu64Mmr/hw
-	4q38QBUv/ZGUN90vOkVlDdlTMpVe/jFJD9KO2dO8FatIbgliI1VSu7f4QV4A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745360451; x=1745446851; bh=/cYOxkZRuNJWaG+QVCrlrSqpUYhnSNEU/az
-	EHSFk4T4=; b=lhWFipl/KvoO9/U9sGfc5Ofh/+KC+iaZq4obY6++3TtbuG/K7Zq
-	42IsmQWVVZjXdY6JSjXaUmUBNDm4CvCuaeAInv3+LA7XKqIQ5sMA57eXtukoW+10
-	xHGwTSnFjsjCtieWC6KnAEEk1ZfRXPet3OmxljMKgEBrSYAqrAJGpjX4h6eBBSSY
-	M5SnVdz52jYzF1JAhDjGGbh0hlaBtrjfkYeimxk1drZXewjEwwpH1FjpLnawIqQD
-	an2L5bQawV/UYv1oENEmU19DPrFKIGcLo2OIkqrNpK7k9wsPGa0nYO4Gy2BLOvyG
-	XuEuW6ztI/+N5YusVNUjn3/0PTDG8F/E1dA==
-X-ME-Sender: <xms:QhYIaDOuEZ1d5vUJ-DP5NKED2Fq25aGNaj6lUN_3OjZR4M6zMqy4yA>
-    <xme:QhYIaN8ZA9wu9ntgn1c3yHZEWPrM-sMZZqvhLy6BY0ZfC94dTxvWvNv1-uJs-lJDU
-    Y9TsmCO8ryPI26-Rw>
-X-ME-Received: <xmr:QhYIaCS2hKlnrvAS7qKzfn57Q35qBCJ-Vf9DTmdSFQgN0uv3y7X77HqHvRCOWLFjEnJelaC_RZthZ00w3ZKIWNCd6085_Ly3XP8N>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeegledvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguih
-    hthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghm
-    rghkvghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpd
-    hrtghpthhtohepfihirghgnhdvfeefsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohep
-    ghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:QxYIaHtROc8kaQ6GCO6IJWnSzeER0DLI0x6_cHMW_9vZw6f2Ooj_qQ>
-    <xmx:QxYIaLf3Q74UUxgfQb7MQbbRBkz5oq--AraRHIGxiGbTi8j3nMtgfw>
-    <xmx:QxYIaD1_GaOnWICD4Gweuu2smHs3Tycke79Aq-gn6b5-A6AGj0nRFw>
-    <xmx:QxYIaH-MBf83mFXjC3b0GfMSsnPVtakAE89V8IZGoFCB0zc9Xflt7A>
-    <xmx:QxYIaDaTEfgmYOLirwth1VFKa8c2dGFHpSohPaTZqLkxjE8Gh1byiTml>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 18:20:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Julian Swagemakers <julian@swagemakers.org>,  git@vger.kernel.org,  M
- Hickford <mirth.hickford@gmail.com>,  sandals@crustytoothpaste.net,
-  Shengyu Qu <wiagn233@outlook.com>
-Subject: Re: [PATCH v3 3/3] send-email: add option to generate passswords
- like OAuth2 tokens
-In-Reply-To: <PN3PR01MB9597813722A475923ED1C036B8BB2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Tue, 22 Apr 2025 15:23:21 +0000")
-References: <PN3PR01MB95975C7925B6395DEC46F9EAB8BB2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597813722A475923ED1C036B8BB2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Tue, 22 Apr 2025 15:20:49 -0700
-Message-ID: <xmqqh62f3kji.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1745360655; c=relaxed/simple;
+	bh=22+RisyivQHf6tKnqceWWk5xH1g/XeiFOtko2EFRHUE=;
+	h=Mime-Version:Content-Type:Date:Message-Id:Cc:Subject:From:To:
+	 References:In-Reply-To; b=TqKGg6A5ll5pi9bsJnX0ZyGKndguAOp9Q1nkjDQT+81ALhC+lGBMiLKdtVUzu7X6BHLdz2uWhrvXX5hatqLCsXMBLKtY9fcnbTeqh+PmpuW3sWsNKJdoVT6cOhLi30qfY93Re6sTMXHi5suiLWB5rgFUt0b3YUU/fhiVNiyVRqQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev; spf=pass smtp.mailfrom=buenzli.dev; arc=none smtp.client-ip=80.241.56.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=buenzli.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=buenzli.dev
+Received: from smtp1.mailbox.org (smtp1.mailbox.org [IPv6:2001:67c:2050:b231:465::1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-201.mailbox.org (Postfix) with ESMTPS id 4Zhxbs2Y2pz9tgL;
+	Wed, 23 Apr 2025 00:24:09 +0200 (CEST)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Wed, 23 Apr 2025 00:24:06 +0200
+Message-Id: <D9DIPNY431IJ.23DG6UL5CIQJ@buenzli.dev>
+Cc: "Nico Williams" <nico@cryptonector.com>, "Theodore Ts'o"
+ <tytso@mit.edu>, "Junio C Hamano" <gitster@pobox.com>, "Martin von
+ Zweigbergk" <martinvonz@google.com>, "Git Mailing List"
+ <git@vger.kernel.org>, "Edwin Kempin" <ekempin@google.com>, "Scott Chacon"
+ <scott@gitbutler.com>, "philipmetzger@bluewin.ch"
+ <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+From: "Remo Senekowitsch" <remo@buenzli.dev>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com> <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby> <20250408125521.GA17892@mit.edu> <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby> <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com> <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev> <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+In-Reply-To: <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+X-Rspamd-Queue-Id: 4Zhxbs2Y2pz9tgL
 
-Aditya Garg <gargaditya08@live.com> writes:
+On Tue Apr 22, 2025 at 10:17 PM CEST, D. Ben Knoble wrote:
+> On Wed, Apr 16, 2025 at 7:36=E2=80=AFAM Remo Senekowitsch <remo@buenzli.d=
+ev> wrote:
+>>
+>> On Mon Apr 14, 2025 at 9:54 PM CEST, D. Ben Knoble wrote:
+>> > On Wed, Apr 9, 2025 at 12:56=E2=80=AFPM Nico Williams <nico@cryptonect=
+or.com> wrote:
+>> >> Let's nail down the semantics of these change ID headers.  Here is a
+>> >> proposal to bang on:
+>> >>
+>> >>  - change IDs get preserved on cherry-pick and on `pick`s in rebases
+>> >>
+>> >>  - users can manually remove or change these change IDs, naturally,
+>> >>    though generall they would not
+>> >>
+>> >>  - the actual change IDs are either free-form or they are URIs -- pic=
+k
+>> >>    one, but if they are URIs they should be URIs to CRs, and approved
+>> >>    CRs should perhaps have links to integration reports etc.
+>> >
+>> > Using URIs [to code reviews] looks to me like it makes some
+>> > assumptions about what creates or consumes these headers, right?
+>> > Especially since the URI should point to a code review=E2=80=A6 Is the=
+re a way
+>> > to do that which is downstream-agnostic?
+>> >
+>> > Further, and maybe this is my ignorance of Gerrit showing: how would
+>> > you attach a URI to a local commit when authoring it? You don't have
+>> > the review URI when running `git commit`, do you? (Maybe I
+>> > misunderstood; I'm seeing an odd chicken-egg problem here.)
+>> >
+>> > Which begs another question: what/who applies the initial change ID to
+>> > a commit and when?
+>>
+>> These are all great questions, which the originally proposed format
+>> (fixed-width reverse-hex) has answers to. I think a URI would be
+>> strictly worse.
+>
+> Well, I think we still missed "what/who applies the initial change ID
+> to a commit and when."
 
-> +--smtp-passeval[=<command>]::
-> +	Generate password or OAuth2 token for SMTP AUTH. The argument is
-> +	optional. If specified, it will use the output of any password
-> +	or OAuth2 token generated using the command specified.
-> ++
-> +Note that it will override any existing password specified using
-> +`--smtp-user` or a `sendemail.smtpUser`.
+The tool that creates the commit, when it creates the commit. In the
+context of this discussion, that's Git or Jujutsu. If the commit is
+brand new, generate the change-id randomly. If it's the "spiritual
+successor" of another commit, use that commit's change-id.
 
-If the argument is optional, we should explain what the behaviour is
-when the optional argument is omitted, as well as how the given
-argument is used.  You are doing only the latter, but not the former.
+Btw. since the thread was started, the implementation in Jujutsu has
+been completed and I've been pushing commits with the change-id header
+to various remotes for a while now. It works well. Forges can start
+taking advantage of it. (I hope I find time to help work on that.)
 
-Shouldn't the "command" be mandatory, if the option is used?  I do
-not quite see how these invocations
+> But the treatment below is something I agree with and failed to
+> convey, I think: namely, URIs seem to encode too much
+> "unportable"/"specific" information in Git. I feel like the current
+> design is not really "tool-agnostic" as much as "built on a universal
+> core." That seems valuable and prone to more longevity.
+>
+>>
+>> * Using a reverse-hex ID makes no assumptions about what consumes these
+>>   headers. There can be multiple different consumers which treat the ID
+>>   differently with different URI schemes.
+>>
+>> * Attaching a reverse-hex ID to a local commit when authoring it is
+>>   trivial: you generate it randomly.
+>>
+>> This is one of those cases where being maximally restrictive about the
+>> format will enable maximal flexibility downstream.
+>>
+>> One example: GitHub has a URL scheme that looks like this:
+>> github.com/org/repo/compare/<ref1>..<ref2>
+>>
+>> This doesn't work if the refs contain slashes, as branches sometimes do
+>> (e.g. feat/foo, username/bar). If the change-id is a URI, this type of
+>> URL scheme doesn't work reliably.
+>>
+>> That is not to say we should design the change-id around GitHub, it's
+>> just an example how making the format more free-form (URI is more
+>> free-form than fixed-width reverse-hex) makes it more difficult to get
+>> stuff working downstream.
+>>
+>> And lastly, laser-etching the URI scheme of one particular tool into
+>> your commit history means the history is at great risk of degrading
+>> over time. URI schemes change, domains change, tools become outdated
+>> and are replaced.
+>>
+>> Adding some ephemeral configuration to a tool that constructs a URI out
+>> of a reverse-hex ID on the other hand is trivial.
+>
+> Yep.
+>
+>> > PS This discussion feels somewhat related to the classic GitHub
+>> > problem of not presenting interdiffs/range-diffs: GitHub shows a
+>> > too-flat source diff on force-pushes. Perhaps better web UI tooling
+>> > about interdiff review (which I think is one of the things Gerrit
+>> > does/wants to do?) makes change IDs less necessary, since interdiffs
+>> > help connect evolutions of commits?
+>>
+>> I think it's the other way around: Building a code review UI built on
+>> git and centered around interdiffs today is _hard_, that's why we don't
+>> have it yet. Adding change-ids to commits will make it much easier,
+>> paving the way for these tools to be implemented.
+>
+> Fair point, although GitHub's detection of force-pushes makes me think
+> it could split a PR into versions at that point, cross-link backwards
+> and forwards by one version (from the force-push detection), show
+> range-diffs between versions based on the target branch of the merge,
+> and even follow the cross-links to show an overall sequence of
+> versions.
+>
+> But I don't work there, so presumably it's harder than that :)
 
-	git-send-email ... --smtp-passeval ...
-	git-send-email ... --smtp-passeval= ...
+I agree that forges still have a lot of potential to improve their code
+review UIs even without change-ids. But tracking individual patches
+across force-pushes is not as easy as calling git range-diff. Its
+manpage says the output is not stable for machines to read and the
+algorithm it uses has cubic runtime complexity. Not something I'd want
+to use on my backend if the user controls the input. So the next best
+thing is to reimplement it using cheaper (but worse) heuristics. The
+author timestamp would probably be a good start. But at that point,
+you're looking at a lot of work for what users will perceive as an
+unreliable and inconsistent experience.
 
-that do not specify the command to be used is useful.
+> I sincerely hope to make it easier if it's really that hard! And,
+> though my opinion matters little, I'm having a hard time piercing the
+> conversation to see a "universal core" that solves the desired
+> problem. Maybe I'm not reading carefully enough, and maybe a summary
+> would help. I greatly appreciated the work of previous folks to
+> summarize the current thread status.
+
+--
+Best regards,
+Remo
