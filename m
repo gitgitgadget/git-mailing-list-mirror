@@ -1,83 +1,84 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C4C81DDC07
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:31:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D506B1EBFFC
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 07:31:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745307100; cv=none; b=Sj61ZXEuGcZWJiKWqxHqJpX7SNijw+pWDAYKa+UehAkya3SO4FHGNUti/GmPcqhf8tC8DWu3kfS6fN79Z3xxcO2IOlLbz/xcpZoL/IIzLq7rw+cvdHgPwEZLGozxgqX2n3wAKrP8yh/wxHUvLL7LxFoIdSI1ecHgIf1nfbn5LxY=
+	t=1745307103; cv=none; b=QU80ST4SJOCe9GQRTAyc/N/naQkvC2mL2r+4d6NOcOaY2kkfLUc7AEx9pMkSUaGBcMSftlztWm9LVne5lTjVKkYVNJh1ZUHcyzK/6Sj3Ay1eqVAt16sU53u/jysmyqhDZTMg/g7Ytcf4OTOODO/cPupOC7vd24NaCpyPOMH3xHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745307100; c=relaxed/simple;
-	bh=ROkCISew3Mc60nszVaymzjyD6apzSvv4KhsAskF0RbQ=;
+	s=arc-20240116; t=1745307103; c=relaxed/simple;
+	bh=/f2ixQXqZFHDZwE8wctOS+KUEis16dlQjlKwrNyyz3E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GoHr4gdohfrJJoLdzMCuGW/EfTFhqRvye79WmoiMug/O5CCJOvykXQSC480ZrwcOTANHRZzKJC/ggCC12xgbflcOAo1IX+oWoLtE8/ypApVHxumk6xGH9G89RlKJ+lCfDJKlc0XcHC9yHwFvZA/o9t5jpMkavNYM3n2gKjCmN8g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OXtLMYrD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZChTnDpg; arc=none smtp.client-ip=202.12.124.144
+	 Content-Type:Content-Disposition:In-Reply-To; b=A09vOKz1uRvTJ2g3wuFmXpVLCCanX/CKbotSrndoe/V74fGJIlatmxOTQKY5dP5G8F2lW/2jtApNwqXRPQbWhQ1x2SYp+AwZdbkcNqFPWtdE4OE1RKNHCUtEVI8Yt8ylvhS66FAkZDQBaJDrByAdBT9zU49EdI2TUyRg7YsnkN0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I0nrUJOy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=s8J9Sn1y; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OXtLMYrD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZChTnDpg"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 71BAF1140171;
-	Tue, 22 Apr 2025 03:31:37 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I0nrUJOy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="s8J9Sn1y"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id DA3E625401BD;
+	Tue, 22 Apr 2025 03:31:40 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 03:31:37 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 22 Apr 2025 03:31:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745307097; x=1745393497; bh=PS1DMtCP79
-	JYmD8VwPFO0e5D3rlBS/4pxYjb6BzM4ek=; b=OXtLMYrDVUleS363Fj4G+LHdvW
-	fk3Zo/Q6XtJsDNBzhR3mVlYKGeVTDcK+qrddouV8OBWOKrN4uTvGAR/zro6tdeYH
-	fsuLT407PTqiKbbNEgOEedbVzupFk/HwZAQsf/JcYOewl9GmHs/sPLHrN+gWo9uf
-	R4L19giKcjA+G8M+MsfjOQdrhVVCRM9j6vOUt4qFNB9cQE6x7abFr46RzfCtIQoi
-	rFh7iSz1LDO4YlL1Rh1Ujxp0QuzLfIN2EvJmq6tjYB1DqOc4l6iwPEY0vuLVdEW9
-	DGzHPzrRK10fKgDzRR1CbOIK2RhHV0RfzJz7A9/fpGe0Cccm7dieOtPgOFbA==
+	:subject:to:to; s=fm2; t=1745307100; x=1745393500; bh=bybEmJ12vk
+	M2ATOXtrLTyH02zzkYb0DCZUf/Kacageg=; b=I0nrUJOy9U0oXTBd6lUDS1oJOn
+	jU6INteXLwrUsi+HDiY82fQrb1VcOwPoG71TjQQ+junhKh2mRtwFmdDfi9HgKTGD
+	Bwhb7Z25ofjCakaDeN1DyC02K9VQmQt0I6vMaFN1xso760w7Kpauyo9LGGA61neB
+	PofzzkZjz33mLEyKpQP0f73ueMYUFW3YB37Wr79XEHsOp9e1n0qKgeZ0tUzk3J+z
+	evSt95HS6PkGAtCM1/zjeO+upHS+pyIki4DHdkKlvATkaPEV0JamnbcoOgqYNURW
+	/dTX+4itAhhL30gUEeUAOvsDKhbsG0WCdi4c5XNLeg+UkXcKdmcvKEIS2fpw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745307097; x=1745393497; bh=PS1DMtCP79JYmD8VwPFO0e5D3rlBS/4pxYj
-	b6BzM4ek=; b=ZChTnDpg+HSTn7tiSuVcr6MX+3SLfDx4P9x0iqp2NJ/Vmm7Vm3p
-	b+O6Sja7YZKI/70Nq8iy0DlN79zuMSUS3KW34FW0soz93BQzmkkhhOJD7b2EE7FQ
-	mR0+L2+sPqkDVHEw2B2GHPrtaJIMcXC6OpLlki0dSfQWle3HgyNVCcdrterHz3BV
-	50J7ksJOfoet3PjZz0AAmo9arrMgNlYp7VOG3WuDyXaNzzBSsw1yarfZPsL6czmm
-	pGpVteOWELHmJ3/AtZ4F7ongSLzsjmdo5YbmDempJ7mvm4RUcfVrCzQ4tnOHmvKs
-	04fmJUNJNtu3fPqmVMo3HKk4UhUsmyIlI2w==
-X-ME-Sender: <xms:2UUHaH9YyufKV3oH0C2OlcVD8j6OLmd0MAN_E_39JLqeuRF9253uUA>
-    <xme:2UUHaDvks3ubuY-RynwajJg_Vru3TF1535gqHeVgxtX2YB3Ftc4aHKBe67sUO1yQ1
-    oTDEUNKhlDVW7kt6A>
-X-ME-Received: <xmr:2UUHaFCHadLJXTQWQaUItGrbtxd0vUMdDB4nmtCk22w1aS4hdhjpc--AA7Y-Z_kfponKTCMI99aMP6N93uz_j4VD4WREqzV2evb_Yg9VuCM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefudefucetufdoteggodetrf
+	1745307100; x=1745393500; bh=bybEmJ12vkM2ATOXtrLTyH02zzkYb0DCZUf
+	/Kacageg=; b=s8J9Sn1yttSkdCK4IEYzj8bBOnvc+3mCs4U+VRVV2+sSHCTnoQs
+	rdgt5SVlfsj9cwsMwjizaOb52V17OTBPxn1xyAxvp6kKZ55kSy5kNnk+8DHqwpAM
+	zT8vtscikzZhytJDPol3vIzHLGTZmEM2GuKB7A9F9VrTVu/BJGUobkEUF5fcsb6b
+	YHX2ScZ6co8tHYGp1Ga7xk6mXvy4q1sxV0kJa59NZC0aA789bJHi/BkwjBOEZMlV
+	aI7UyfpkdhY/nUwAgwcNBagylCyFlApu2WsBt9IyXF03IZKE2eHSOtBURyQ9hQfe
+	7i5oKUveqxOoJkzuH82aXKuCN2c8lN201rQ==
+X-ME-Sender: <xms:3EUHaCzA1ZhlxTq-NFtgHouGsW17qnPyL6p_q2bQ7B5EQOPaqHFv1A>
+    <xme:3EUHaOR2MLZuwyAWLirg4dzcdrke6nagdLVSrQxQ1OcN86yau1zh7bVa-FSxqFohu
+    Evex2_0j0rJmJRXJA>
+X-ME-Received: <xmr:3EUHaEXPA2d3-9PHCYWhw5jdgRqsVyI39jODTS7BvvZuQZW8SXyUaD9THwDecUgsaNR_uUIyZab44n1hu3vNc_F_YmgBm85Fpm6nfgplkqk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeefudegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorh
-    hgpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:2UUHaDfpI8k79RIjZrzG3SHK3WisdRTgrDjI7q09wcYwYxnyhxr5PQ>
-    <xmx:2UUHaMN6ydR4I9aVPWWdxaslHbjvnNjL6-UkGQe57RTAtPjhrul0uQ>
-    <xmx:2UUHaFkTv2TuVElhmpNDScqBZBNtqFtDbBkqhxhriHqqy4T8smlu6A>
-    <xmx:2UUHaGvEZgdXkXy0hHgapbAS2DeN7iAsAyPvTwQbu1ieFi2wVYNt9A>
-    <xmx:2UUHaJxe7aElV232OK4d0GZ1D3O_qfh_wlLwwnwO0cOl75fl-CRSLBfH>
+    pehsmhhtphhouhhtpdhrtghpthhtohepshgrmhesghgvnhhtohhordhorhhgpdhrtghpth
+    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhif
+    rghrthiisehgvghnthhoohdrohhrgh
+X-ME-Proxy: <xmx:3EUHaIiqVncHaOzch-JwXWFSMlGogj3zV4mfRLC2oQRzo1RD3nhF1g>
+    <xmx:3EUHaECQwA61XJwjxX4MZvboy-MMBqFZv-pDDXVsm8zhOYkKGu_tew>
+    <xmx:3EUHaJKHfUX0cn4uSKgTht5-QUewkHQnJZkvJrre_oebU4OgQlN7Bw>
+    <xmx:3EUHaLB2dWdPFjl4fBit-LyLiX6BETge4TshsQvS73woDbOIehnLgQ>
+    <xmx:3EUHaE0XNu6NL-ppLgsAltI6wf_lufzDByI8-Fjxomik7OCC3rpCeNky>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 03:31:36 -0400 (EDT)
+ 22 Apr 2025 03:31:39 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b9af0613 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 22 Apr 2025 07:31:36 +0000 (UTC)
-Date: Tue, 22 Apr 2025 09:31:35 +0200
+	by mail (OpenSMTPD) with ESMTPSA id fa6c1118 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 22 Apr 2025 07:31:39 +0000 (UTC)
+Date: Tue, 22 Apr 2025 09:31:38 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Eli Schwartz <eschwartz@gentoo.org>
 Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>
-Subject: Re: [PATCH 4/6] meson: add a couple missing networking dependencies
-Message-ID: <aAdF138y9wPD-G_t@pks.im>
+Subject: Re: [PATCH 5/6] meson: fix typo in function check that prevented
+ checking for hstrerror
+Message-ID: <aAdF2tBnLihgx8zX@pks.im>
 References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <20250421175247.240971-4-eschwartz@gentoo.org>
+ <20250421175247.240971-5-eschwartz@gentoo.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,44 +87,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250421175247.240971-4-eschwartz@gentoo.org>
+In-Reply-To: <20250421175247.240971-5-eschwartz@gentoo.org>
 
-On Mon, Apr 21, 2025 at 01:51:48PM -0400, Eli Schwartz wrote:
-> As evidenced in config.mak.uname and configure.ac, there are various
-> possible scenarios where these libraries are default-enabled in the
-> build, which mainly boils down to: SunOS. -lresolv is simply not the
-> only library that, when it exists, probably needs to be linked to for
-> networking.
+On Mon, Apr 21, 2025 at 01:51:49PM -0400, Eli Schwartz wrote:
+> Nowhere in the codebase do we otherwise check for strerror. Nowhere in
+> the codebase do we make use of -DNO_STRERROR. `strerror` is not a
+> networking function at all.
 > 
-> Check for and add -lnsl -lsocket as well.
+> We do utilize `hstrerror` though, which is a networking function we
+> should have been checking here.
 > 
 > Signed-off-by: Eli Schwartz <eschwartz@gentoo.org>
 > ---
->  meson.build | 9 +++++----
->  1 file changed, 5 insertions(+), 4 deletions(-)
+>  meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 > diff --git a/meson.build b/meson.build
-> index 8037e536dd..8fad10379a 100644
+> index 8fad10379a..1b7e55756b 100644
 > --- a/meson.build
 > +++ b/meson.build
-> @@ -1080,10 +1080,11 @@ if host_machine.system() == 'windows'
->      networking_dependencies += winsock
->    endif
->  else
-> -  libresolv = compiler.find_library('resolv', required: false)
-> -  if libresolv.found()
-> -    networking_dependencies += libresolv
-> -  endif
-> +  networking_dependencies += [
-> +    compiler.find_library('nsl', required: false),
-> +    compiler.find_library('resolv', required: false),
-> +    compiler.find_library('socket', required: false),
-> +  ]
+> @@ -1088,7 +1088,7 @@ else
 >  endif
 >  libgit_dependencies += networking_dependencies
+>  
+> -foreach symbol : ['inet_ntop', 'inet_pton', 'strerror']
+> +foreach symbol : ['inet_ntop', 'inet_pton', 'hstrerror']
+>    if not compiler.has_function(symbol, dependencies: networking_dependencies)
+>      libgit_c_args += '-DNO_' + symbol.to_upper()
+>    endif
 
-Fair. We could extend this check to verify which combination of
-libraries we actually require to make desired functions available. But
-I'm not sure whether that would really be worth the effort.
+Good catch and obviously correct, thanks!
 
 Patrick
