@@ -1,126 +1,87 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6334127BF69
-	for <git@vger.kernel.org>; Tue, 22 Apr 2025 11:16:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014051F03C9
+	for <git@vger.kernel.org>; Tue, 22 Apr 2025 11:58:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745320596; cv=none; b=L72jGSFO9RlzTS3ZSeyOr1rSh98WayKemGoipvszU4YaVf141gZiaGWdSk1YNGhJliMh/dfoww6SzZvZUXH5tu10MLhhbMTuLqRV7lO8kQfEMxE0BuMcvuWBgzPv8MAd56xOXNBrr0EoDSnOJ3Ygf6leGYj2mQqdKld1rjXOdhM=
+	t=1745323088; cv=none; b=OIkKYdhnwRZQr8RwR9074dipEbN805llKIfZNtgO/3KXNlwA1XOy8WBSJYCsWx7GUmT0z7UW4oSY1Wk7NBcnuHl5Kj+8BTA0ujFOFNoaS9xP9lD2hX+O2aECJcVA9zoQkggefn5vB24mvlDE2tljkwht5FpuXVO/HmUr5YuAD5k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745320596; c=relaxed/simple;
-	bh=Hi9k3Jneh1sYV0UnRtlDZOPKh0ZIJ+oBnbtXlw6EekE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=t/eDNv1vtxggqg/d/0VdBckC2TNGR1ybQS+FFPuEENlOOtSrDqH3C6+k6EkwUj2qO0f5Spu0eo5tcvUx39rwzYbametIYKb14D3Z/dzf1tc9X6tKkkUluVtst/eCBilIWN7K7o/lw9b9CQNP3Q3WAydoBK+X5iZvYgo8rWFxzFE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=LAxc6M02; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1745323088; c=relaxed/simple;
+	bh=L4ShAv5Jj3G+GV1R1fm4fp3Fl09zjs4ncxOl0MYwDjc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pkN06JqSi7cF29CHSISCXJGpsI2Zb9MW/xjYsyu2OeTXvXNIZGYjhzRVxk8DPGQLimAHUWHxq1j+EZSseCan6KRSsybGwfig4QA3n4dK6pEeI6HzVDToBUNXp2kg5B8PlkNM7m8JusQ9jNTi8peAJfZO6STH3QZESUBGIqjKfP4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iq/hwQqu; arc=none smtp.client-ip=209.85.160.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="LAxc6M02"
-Received: (qmail 18691 invoked by uid 109); 22 Apr 2025 11:16:33 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Hi9k3Jneh1sYV0UnRtlDZOPKh0ZIJ+oBnbtXlw6EekE=; b=LAxc6M02dv6NuCYqWLliXhsIi7dPOjoQ3i3cr9oliizzKnJquasBwJU/QgH3IkWxgHnMy7ecm0J3sf7KYmGpxauUH6oUEudsT8nYBWkOSuXUu69RCuQxpUGFy5inYu/D45dXsjDFpEnV6OdihfvZ4c6VyVYXbeP4heb637eRna7ObWYPZFR9wr8DZJLNzhTo0ezNUD7DME78g8Vvm4RetIPTPtXbBosExG1jphJVP93oCge9g2nVPKMjmSl+MpLB9WnSppxZ1tG0L4JmVAK472cBDhPwyCXgh1B2zjKqpfwZdikiollz2RJ4uhPxvMBidicn4pgPIeVLdW27Hk8XOA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 22 Apr 2025 11:16:33 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 700 invoked by uid 111); 22 Apr 2025 11:16:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 22 Apr 2025 07:16:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 22 Apr 2025 07:16:32 -0400
-From: Jeff King <peff@peff.net>
-To: Philippe Blain <levraiphilippeblain@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: [PATCH] p5332: drop "+" from --stdin-packs input
-Message-ID: <20250422111632.GA1855088@coredump.intra.peff.net>
-References: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iq/hwQqu"
+Received: by mail-qt1-f181.google.com with SMTP id d75a77b69052e-476ae781d21so53068781cf.3
+        for <git@vger.kernel.org>; Tue, 22 Apr 2025 04:58:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745323086; x=1745927886; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=L4ShAv5Jj3G+GV1R1fm4fp3Fl09zjs4ncxOl0MYwDjc=;
+        b=iq/hwQqusl9Zxa7P7PMaUotOAGpb87gys8ycda6S210E63D4U3M3YGk0gusEwX4cww
+         c/ITd+J+C1mGLBIfxryZLsoi5EXonwezm4InL4KlNZn8tB2jqf+FsIxKr/yeTy2FCulT
+         mAbeYUNXoWKnzZbMqB3zMyzetOGmGCWS4S9+oRNSE53SdOxjWFqDhKQLXLe3S2qBVn5W
+         wdIXVT1YgptbioNtUxoj6M6xibgyXhMj8zOfjEIMzMhczKnvQseiJuHUNFvPWGzS8kJP
+         KIg7s+IjHAI5S4pFkI9CT7at9m3oPgObdw38V9y9dVhH0uVHzGfHt/Hoc3zqXtSSkOPg
+         pIGw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745323086; x=1745927886;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=L4ShAv5Jj3G+GV1R1fm4fp3Fl09zjs4ncxOl0MYwDjc=;
+        b=ac/qZ9A7K6ADnB0BG+GN0DSRj4vbBL9sfcQC6DTQvME80llRuRd/Jy1YUZLg+U4oHE
+         Odbb7JWRaFj2aaus3JGIMcdcWm8KeclnxvZdBCWXOjE78V5T9KqBNu1uuwPXdOGbzut9
+         GKKO/SEhEceVU2cH8d8f+PUagNs45xxdm7BAXWtFg9+PIoiviMYaAQxfywXAJCgU5I1b
+         gv9LWwdlLFP5jatNlfSbuqkQ0rCqBaij8Q7AIZMKuE7YCz+QgcYTMv/p+8VHrgsLdxSm
+         xgJDka/R3C4YFl/iEdxacmITTQWnkWOU2jVV6NJhuoDGFeLF9Q0sUHorWB2S/bH/tvdC
+         o0Cw==
+X-Forwarded-Encrypted: i=1; AJvYcCUAmFlF1/QMmnZ64yjagZFFQMiTIRqQUE3ZNKJKDO24Fo156kHzdsBx08hteUvlIsCLjgs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzYHBdd6hC2eM3wAi1RZ5CwCuVn0C2O8W/dN1Ykp2i2Vwy29CYW
+	frOSI8anXB3WzjH9r3Vj9RWDffXgJ6DcnirRpHK34UYr00dSSYpRJRxKxv/9TXjlxA77A9kWDar
+	Vu4S1HFgnJcJhsF/cg4egntSqFV0=
+X-Gm-Gg: ASbGncvZUuqknjiekOC8qTt1dH3b3zLY0GUoqtar9HchZzi019yxE1kLt0pZkf5bNLS
+	KooPs0S2g89jqeHsRjN6zu5gWeGhTiMHuw42cHKJzj8mrhA6BfHmxtCSHO9JcC6eZD9nhIX+ikj
+	RjfXoI7ecc6lFHvl+jqnM9QECflMV3jvlnouuUl3QN5RxhMgEJZ+DuQsTBil6AEpX4VA==
+X-Google-Smtp-Source: AGHT+IH4yqD0zrPkJt5PwbljrR/aKdIpCt1gNcJvMRr25iUUNmRvRYs8Zyer9ihngZNLr0fgTN3p9lDnwXHyr8Humu0=
+X-Received: by 2002:ac8:5ac7:0:b0:476:903c:822e with SMTP id
+ d75a77b69052e-47aec410d36mr306307281cf.27.1745323085793; Tue, 22 Apr 2025
+ 04:58:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <292ae7a3-2aad-1f22-2afe-739ec921d6b7@gmail.com>
+References: <20250412094607.236382-2-jayatheerthkulkarni2005@gmail.com>
+ <20250412174051.780148-1-jayatheerthkulkarni2005@gmail.com>
+ <Z_7ekhsBzXK6LKuV@tapette.crustytoothpaste.net> <CA+rGoLfAidyuomeNym5WX8Bo7-jPcfHx35wDeZ7W2aorAN-B7g@mail.gmail.com>
+ <xmqqa58gjlnk.fsf@gitster.g> <CA+rGoLesZ3nSjruJ8_XRWVsFpMu8mo_4cCOdB-GFHU_qXkXDCQ@mail.gmail.com>
+ <717161C8-497D-42C7-8C10-AC112238EEFD@gmail.com> <xmqqcydchz9o.fsf@gitster.g>
+ <CA+rGoLes1u3LZiStmDPmh4iiUNzNY43KyYNdLadQU+cy1TCc4A@mail.gmail.com> <9200B571-071D-4BBF-B5E3-886B5CCFB89A@gmail.com>
+In-Reply-To: <9200B571-071D-4BBF-B5E3-886B5CCFB89A@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 22 Apr 2025 17:27:54 +0530
+X-Gm-Features: ATxdqUEjqtdLTWtVrl4XkkJLDPm1XKptO7H8TjUHTJPcvk6aZHZObeEpSaQli5M
+Message-ID: <CA+rGoLe+K-yE5e6TgVOPbtpqinXrg7+k-thDBVTCtimzrWaG8A@mail.gmail.com>
+Subject: Re: [PATCH] t3706: Add test for wildcard vs literal pathspec
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org, 
+	peff@peff.net, piotrsiupa@gmail.com
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Apr 21, 2025 at 10:01:25PM -0400, Philippe Blain wrote:
+Hey Lucas
 
-> I noticed that p5332-multi-pack-reuse.sh, which you added in 
-> ba47d88795 (t/perf: add performance tests for multi-pack reuse,
-> 2023-12-14) fails early on in the second test ("setup bitmaps for
-> 1-pack scenario"). Since perf tests run with '--immediate', I do not
-> know if further tests in that file also fail. It is reproducible on macOS [1] as 
-> well as Linux [2] (I don't know if these logs are public though).
-> 
-> I also tested on Linux on version 2.44.0 which is the first release
-> in which this test was added, and it also failed similarily.
+Thank you for the -v tag advice,
+found the problem
 
-I think the patch below is probably the right solution. With it I got
-the output I'd expect (multi-pack reuse with many packs yields a CPU
-speedup at the cost of increased size):
+Fixing and sending patch as soon as possible
 
-  Test                                                            this tree
-  ----------------------------------------------------------------------------------
-  5332.3: clone for 1-pack scenario (single-pack reuse)           6.66(37.73+0.19)
-  5332.4: clone size for 1-pack scenario (single-pack reuse)               117.0M
-  5332.5: clone for 1-pack scenario (multi-pack reuse)            6.89(38.71+0.25)
-  5332.6: clone size for 1-pack scenario (multi-pack reuse)                117.0M
-  5332.9: clone for 10-pack scenario (single-pack reuse)          5.67(35.65+0.37)
-  5332.10: clone size for 10-pack scenario (single-pack reuse)             125.1M
-  5332.11: clone for 10-pack scenario (multi-pack reuse)          2.47(5.71+0.15)
-  5332.12: clone size for 10-pack scenario (multi-pack reuse)              134.3M
-  5332.15: clone for 100-pack scenario (single-pack reuse)        14.50(130.54+0.55)
-  5332.16: clone size for 100-pack scenario (single-pack reuse)            224.2M
-  5332.17: clone for 100-pack scenario (multi-pack reuse)         3.34(3.69+0.18)
-  5332.18: clone size for 100-pack scenario (multi-pack reuse)             307.3M
+Sorry for the late emails
 
--- >8 --
-Subject: [PATCH] p5332: drop "+" from --stdin-packs input
-
-This perf script creates a midx by running "git multi-pack-index write"
-with the "--stdin-packs" option. We feed that stdin by running "find" on
-.git/objects/pack, using sed to strip off everything but the basename.
-
-But that sed invocation also does something peculiar: it adds a "+" to
-the start of each pack name. This causes the multi-pack-index command to
-barf. The modified name does not match any pack it knows about, so it
-ends up with an empty list of packs to put in the midx. And thus nothing
-matches the --preferred-pack option we pass, which causes it die().
-
-The fix is to remove the extra "+" (which also lets us simplify the sed
-invocation a bit, as it is now just stripping the leading directories).
-
-But that leaves the mystery of why it was ever there in the first place.
-The answer is that an earlier iteration of the patch series had a
-concept of "disjoint" packs in the midx. And one of its patches here:
-
-  https://lore.kernel.org/git/c52d7e7b27a9add4f58b8334db4fe4498af1c90f.1701198172.git.me@ttaylorr.com/
-
-taught read_packs_from_stdin() to treat a leading "+" as marking a
-disjoint pack. But in the second version of the series, which was
-ultimately merged, that disjoint concept went away, and the code to
-parse "+" did likewise. The regular regression tests were adjusted to
-match, but this case in t/perf was forgotten.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- t/perf/p5332-multi-pack-reuse.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/t/perf/p5332-multi-pack-reuse.sh b/t/perf/p5332-multi-pack-reuse.sh
-index d1c89a8b7d..0a2525db44 100755
---- a/t/perf/p5332-multi-pack-reuse.sh
-+++ b/t/perf/p5332-multi-pack-reuse.sh
-@@ -58,7 +58,7 @@ do
- 	'
- 
- 	test_expect_success "setup bitmaps for $nr_packs-pack scenario" '
--		find $packdir -type f -name "*.idx" | sed -e "s/.*\/\(.*\)$/+\1/g" |
-+		find $packdir -type f -name "*.idx" | sed -e "s/.*\///" |
- 		git multi-pack-index write --stdin-packs --bitmap \
- 			--preferred-pack="$(find_pack $(git rev-parse HEAD))"
- 	'
--- 
-2.49.0.682.g886cb1c59a
-
+exams on head : \
