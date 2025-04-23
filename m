@@ -1,83 +1,81 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E422212B04
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 11:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2857B242D66
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 11:57:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745409206; cv=none; b=QBYLZoWymN/4uk1fPE47IQyG1ZQSjoEXcCmVzeWf+LLorIjiqH4mXOhhRFGSj4syovvYiGb7Cv1gp+GXmt31AVhD1MyFbno+esBwD7n3yCFi5NZab66HnNHECzTe0dCmtmKbqLodBDk+bkIAp04lpUtWK5PYsOPG3xhP+MzEbMs=
+	t=1745409434; cv=none; b=mJEcZBDyabZCkoH2v2knQ9nPVkNrK9XXaujg+4yjOsxEvyHtcwaS774fERPDM0efa3+ssaCUzl4ArlnE8it7QQ/LRb4JY9i+eKGoevn+GQxhARkgWydIHbfSYyRxfDBkfFwzxMzoYnqM7b0+Rv0fCsp6Jz8deQ1BEtkhuASfDlw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745409206; c=relaxed/simple;
-	bh=umcSsde7lMOsV88AHw/pm+1E0/etWz48a1O4LCwehlA=;
+	s=arc-20240116; t=1745409434; c=relaxed/simple;
+	bh=HG+ndd/1GMHAhSDZFlRpWOyQzAGVDIp5eZqk0O43U8g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oKnxE1ePf68Mql7oQVDPe7SyEWH7WloRXLGmHr8ZG9Wd9aILu+RNIgO4baLE1o/Ox0MAh/JOgjjpDBwfo9vBCOwQOPVVDBf/Qmp8FIX5iDt1x8qRQ1KXcXl8NcJqJ3/f1zrk9wSg3+Kus2NzeWuhV3harV0qsg2iJ3X11UKvwlg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ErFPZxPa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=idTjWVbz; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=RvxCwm1BDLj/Tqyrd5JK1ii6GPqy9pJ5SSB2MKHJyIUKCOxGgSheHosb204Qwsk5OSv+Uik4kgHii8U6ZwCo1JYoNUEZREzr0KVPS9r6GhPV5FDdFeSHPLmSxE87TOOS9y/qycDukusdstb3yRAXOqPA+inMw3jVZo3q0R+98Pk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j9bsQVwL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vkGaZPhV; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ErFPZxPa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="idTjWVbz"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 60A8011402AE;
-	Wed, 23 Apr 2025 07:53:22 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Wed, 23 Apr 2025 07:53:22 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j9bsQVwL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vkGaZPhV"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 17A7E1380505;
+	Wed, 23 Apr 2025 07:57:11 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Apr 2025 07:57:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745409202; x=1745495602; bh=9e4Gokht3S
-	svKGPlD1YJLW+MAS5/ua14tE4dytqDd6I=; b=ErFPZxPaEjlJtqShb46C1COkv+
-	R3BrJ7n4KxNfun9ln7rDRRgndJFHaGMgNJeTVSG4dUlmqcxo633aU0zicqJsLcmM
-	50/a99FlBT9mb2R6PT93PPAXz2kg85GT97hm4bEsoHi4aL08DDBl2E/SYiTj2p0M
-	Avw4zWrk0F7zQ+xumjsYOKpmPyr0AjaUlGyETA3HXuMd2LlExwSkF/u0nA/b342r
-	PyGUIy9EA/EneqMNPRBSfixtJP6Nn4ot0J0ps6q0pjKstdL/uHljrIfa/IgGKLWR
-	qO4SRGXmg05OKvLAzbAVCP6G2Mb63+jV2Op25+wmSZNG7mPG+KqwT+gB8Ztg==
+	:subject:to:to; s=fm2; t=1745409431; x=1745495831; bh=7pr0NRAjFe
+	e/nfugiQ+C7nTIBpSvOsLLij+CCSJXslc=; b=j9bsQVwLH3AalfaeD07o6xAtN5
+	0555pvBzIzNKBl67R/5auq2Hh7Vhf1gUaadnHBR1+TlPt0KIFjjEO+VrzmBJoTtj
+	bS8JP/YcCT33xY6Jc1fVZbS0/NFnMkqNAOqiFLDvO6Vo+RhDIjwl6NPEdEYi5kKx
+	gwfZ0Dbf58qjFxs01SjLTOdhmuE+NByBlmoV9E/V/sYbI0BxgiPnrXRL86H60etR
+	ZBmn+g3z2Nw+bO8inJbb+RbY+9nJ8pOZtWcFKLxHP3+MavV3AwQX12rL/sucmanj
+	mIgAk9BOEsOabxJsofHKyShoGm5fv+1PLN0ZrfUYcB4K5LqgPvw+EE+rJ8tQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745409202; x=1745495602; bh=9e4Gokht3SsvKGPlD1YJLW+MAS5/ua14tE4
-	dytqDd6I=; b=idTjWVbzO4q3xnNdp8W1s3jObdmFCDan1Ve45hNeRYDUmeEofza
-	w/A7QQT1mSP0AiHbaonrGWeyQPjvnFzXOgbdW0gsgU9Ti8KOhBKbcNempDHeTf3V
-	rwY2wdCweOBOqJ6jrpoQ708g+3snLoNoshfddVweKsLc22YYy5wlrhmo3caKAzCC
-	qI50FciRVvVK5zwbaukzyzk0HMX8NAvDo4eb2Wt3oG84Hev4j3lEHhJwzF9C8d3Z
-	uSvPGZg6EEu4147AHqth/feaJ8QggC9goYfbomiGGOQDgkn7JXPuCevO4Myj2ujm
-	/5n6NPoRZeuRppH7oUYXbBfFxkkkeZ/Bo+A==
-X-ME-Sender: <xms:stQIaFHoDk3NDZDXkDHAoXHDXfZOp9jUqNacCAfhwCQ2LE5_d_hEpQ>
-    <xme:stQIaKXMs-R_1SQ1N2qrQ_BXjp-JrXGPstY6vdgdb6f9ieE5PGJjX0Wsw15Qp4QbL
-    oxZZ1LqQunEp8Jttw>
-X-ME-Received: <xmr:stQIaHK45p_oCoqA3eD0etGC2URMry5nncMFrBnTWE2EuqEA3DZ37n2eqM6R0k0m4WMOgvSKfEktu1yMl2JEFGBZkpRXOeJDiIjyrM_bJQ>
+	1745409431; x=1745495831; bh=7pr0NRAjFee/nfugiQ+C7nTIBpSvOsLLij+
+	CCSJXslc=; b=vkGaZPhVJoZhACBYk5tT9exrgFuwZFB6ctCwB9b/TMXSEqUrpYp
+	sAWVHPcoek4zQPwvGw3p4cmIT7t+dK/yZXNgcDglx3DLe7eP3EYV/Pddqkf3IsI2
+	ykRxoqr/SXASP0duQKBy12BzWwfc9kT8Kz5mMG+K0PQeXGfHoRPqlVpJWA1aCkao
+	BsxB0jQGHOi23QFQDf2LPJeA38efjiuufw2c6Dl9je1JTvHbvp5I4iU75sXwQQra
+	J7+qarbcrhImGFcUHsk1OClvNKnbgfsNOK7FVQb9GnNx1z6+Ow0zzG6L4UL26EYA
+	VcYZ19+/iYfmlP25l4TPjMk4QqZMZiVWAyQ==
+X-ME-Sender: <xms:ltUIaEuRcJsCOL1c76vJ-Va_lJtU5iMi9IbxmJZP9PVoKJumOkU0Uw>
+    <xme:ltUIaBdbkZSFj7PvTiBFZyc1J0kfZkmz99EX9wR5CAKaHU4Cf6-SwTgTA2hR0AEMJ
+    n7Pupek9wb30ii70w>
+X-ME-Received: <xmr:ltUIaPzKTrzypqDzvL5bUyo9MDNXxfkhPlZVbUoEpsNKLwATufkm4fbUtQDCZZB1e5YmWR8_9YckbQAvDKcamkUj5kw_y5UKtou8h2d1Yw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeiheefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
     fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
-    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehshhgv
-    jhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:stQIaLFg7og1THHl6Hstfvf6c-clIFkdJAx8K3UKwv0TH0FIc7m7Xg>
-    <xmx:stQIaLX1zVUKYYSGIEXXZMdNh3bWV81IO5Zqooz3RAsbLUgvT6wVTw>
-    <xmx:stQIaGPYNI20Vt6Tfu_Or2Eya5lj1rDlkgImRNH5vPdR5xPoTC9HAQ>
-    <xmx:stQIaK2lymGsref7A_1WPfHb-rGQZjqIAO_QeqD5eL8J44J1s_m0BA>
-    <xmx:stQIaCwbAyi49VTKCElmyAMTTl0SKiCIw3EqA9l8SIRac_ayJeAUB906>
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeegjeeigf
+    ekfefhffegledvueeiveduudeikeejfefhjeefieejkeduffekfeehieenucffohhmrghi
+    nheprggujhhushhtmhgvnhhtshdrphhsnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:ltUIaHNBHuWnCw6UTKEbR6QKRMLOH8gDl1mYLwLgNJmAe0hnLbLt_w>
+    <xmx:ltUIaE_09giCLyS5gn5UJzVHUFw5KOc8yg2q6YB-x6ofHhD6UcEB7w>
+    <xmx:ltUIaPWbX-zvFXXFV_U1mRmLRvhNKFGT27SawXqWqgpSZXdUdZaIqA>
+    <xmx:ltUIaNcWTTn6Jon0YQ8UIkzxpZt4e89Ff2MxCL5Kz2iP2ukH8orw7w>
+    <xmx:l9UIaAstd1uwihzAtAuAFYLdgU-WtkcSainqbBMKnDah9bCzUsOMa4yB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Apr 2025 07:53:21 -0400 (EDT)
+ 23 Apr 2025 07:57:10 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9a469480 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 23 Apr 2025 11:53:20 +0000 (UTC)
-Date: Wed, 23 Apr 2025 13:53:19 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 7a09baa4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 23 Apr 2025 11:57:09 +0000 (UTC)
+Date: Wed, 23 Apr 2025 13:57:08 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/5] u-string-list: move "remove duplicates" test to
- "u-string-list.c"
-Message-ID: <aAjUr5AY9gTCpVlS@pks.im>
-References: <aAetW0dan8S3Fljq@ArchLinux>
- <aAet23peGs2OZUcn@ArchLinux>
+Subject: Re: What's cooking in git.git (Apr 2025, #06; Tue, 22)
+Message-ID: <aAjVlMoBZxuo8YZH@pks.im>
+References: <xmqqselz1tl2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,72 +84,67 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aAet23peGs2OZUcn@ArchLinux>
+In-Reply-To: <xmqqselz1tl2.fsf@gitster.g>
 
-On Tue, Apr 22, 2025 at 10:55:23PM +0800, shejialuo wrote:
-> diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
-> index 262b28c599..6be0cdb8e2 100644
-> --- a/t/helper/test-string-list.c
-> +++ b/t/helper/test-string-list.c
-> @@ -1,48 +1,9 @@
-> -#define DISABLE_SIGN_COMPARE_WARNINGS
-> -
->  #include "test-tool.h"
->  #include "strbuf.h"
->  #include "string-list.h"
->  
-> -/*
-> - * Parse an argument into a string list.  arg should either be a
-> - * ':'-separated list of strings, or "-" to indicate an empty string
-> - * list (as opposed to "", which indicates a string list containing a
-> - * single empty string).  list->strdup_strings must be set.
-> - */
-> -static void parse_string_list(struct string_list *list, const char *arg)
-> -{
-> -	if (!strcmp(arg, "-"))
-> -		return;
-> -
-> -	(void)string_list_split(list, arg, ':', -1);
-> -}
-> -
-> -static void write_list_compact(const struct string_list *list)
-> -{
-> -	int i;
-> -	if (!list->nr)
-> -		printf("-\n");
-> -	else {
-> -		printf("%s", list->items[0].string);
-> -		for (i = 1; i < list->nr; i++)
-> -			printf(":%s", list->items[i].string);
-> -		printf("\n");
-> -	}
-> -}
-> -
->  int cmd__string_list(int argc, const char **argv)
->  {
-> -	if (argc == 3 && !strcmp(argv[1], "remove_duplicates")) {
-> -		struct string_list list = STRING_LIST_INIT_DUP;
-> -
-> -		parse_string_list(&list, argv[2]);
-> -		string_list_remove_duplicates(&list, 0);
-> -		write_list_compact(&list);
-> -		string_list_clear(&list, 0);
-> -		return 0;
-> -	}
-> -
->  	if (argc == 2 && !strcmp(argv[1], "sort")) {
->  		struct string_list list = STRING_LIST_INIT_NODUP;
->  		struct strbuf sb = STRBUF_INIT;
+On Tue, Apr 22, 2025 at 07:48:25PM -0700, Junio C Hamano wrote:
+> * es/meson-cleanup (2025-04-21) 6 commits
+>  - meson: only check for missing networking syms on non-Windows; add compat impls
+>  - meson: fix typo in function check that prevented checking for hstrerror
+>  - meson: add a couple missing networking dependencies
+>  - meson: do a full usage-based compile check for sysinfo
+>  - meson: check for getpagesize before using it
+>  - meson: simplify and parameterize various standard function checks
+> 
+>  Code clean-up for meson-based build infrastructure.
+> 
+>  Comments?
+>  source: <20250421175247.240971-6-eschwartz@gentoo.org>
 
-I'm a bit surprised that the patch series stops after this patch given
-that the only remaining subcommand is "sort". Is there a specific reason
-why you don't also convert that function? If you did we could declare
-victory by deleting the whole "test-helper string-list" subcommand.
+I had a couple of comments, but overall this looks almost ready to go
+for me. I do expect a reroll with a couple of small adjustments.
 
-It seems that the only reason is p0071, where we benchmark performance
-of sorting. I dunno... that one is of course not a good fit for our unit
-testing framework. But it's a bit sad that we cannot remove the whole
-infra only because of a performance test that nobody ever runs in the
-first place.
+> * ps/fewer-perl (2025-04-16) 5 commits
+>  - Documentation: stop depending on Perl to generate command list
+>  - Documentation: stop depending on Perl to massage user manual
+>  - request-pull: stop depending on Perl
+>  - filter-branch: stop depending on Perl
+>  - Merge branch 'ps/test-wo-perl-prereq' into ps/fewer-perl
+> 
+>  Reduce requirement for Perl in our documentation build and a few
+>  scripts.
+> 
+>  Will merge to 'next'?
+>  source: <20250416-b4-pks-drop-perl-v2-0-bdd0492e9498@pks.im>
+
+Fine with me, I don't plan for another reroll for now.
+
+> * ps/reftable-api-revamp (2025-04-07) 17 commits
+>  - reftable/table: move printing logic into test helper
+>  - reftable/constants: make block types part of the public interface
+>  - reftable/table: introduce iterator for table blocks
+>  - reftable/table: add `reftable_table` to the public interface
+>  - reftable/block: expose a generic iterator over reftable records
+>  - reftable/block: make block iterators reseekable
+>  - reftable/block: store block pointer in the block iterator
+>  - reftable/block: create public interface for reading blocks
+>  - git-zlib: use `struct z_stream_s` instead of typedef
+>  - reftable/block: rename `block_reader` to `reftable_block`
+>  - reftable/block: rename `block` to `block_data`
+>  - reftable/table: move reading block into block reader
+>  - reftable/block: simplify how we track restart points
+>  - reftable/blocksource: consolidate code into a single file
+>  - reftable/reader: rename data structure to "table"
+>  - reftable: fix formatting of the license header
+>  - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-api-revamp
+> 
+>  Overhaul of the reftable API.
+> 
+>  Will merge to 'next'?
+>  cf. <3okrcl7bdpy75hzyzpmrp7fluan4n3zvsroioq64id4a2kt3o4@fc6fetilb6y2>
+>  source: <20250407-pks-reftable-polishing-v2-0-316c4ff10571@pks.im>
+
+It's been cooking for a while already, and I have addressed all feedback
+I received. So from my point of view this can be merged so that we can
+finally start working on `git refs verify` for the reftable backend :)
 
 Patrick
