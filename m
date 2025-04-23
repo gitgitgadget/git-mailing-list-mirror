@@ -1,168 +1,153 @@
-Received: from black.banana.relay.mailchannels.net (black.banana.relay.mailchannels.net [23.83.217.19])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094B228F531
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 18:59:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.217.19
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745434776; cv=pass; b=l21oygyKIFuqapCRKlQJnlpmMke+oU2vVd1IUJosGBYALhAdVNw+zmb7fEXwBdojKctnN7BAXpKWh0KZb0h/isRDhdNCY3eyXck88tZmOx8nXj1oZ953mU90YdL8HuN6nWS8oNFQFdUKvbaXDUSuPIIo9SMOmzgkkqX/XWepyeE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745434776; c=relaxed/simple;
-	bh=Xt3uUQo8Ww5ePVrvK66r68YiGWyJtTGyehifyIoBR+A=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nF5HxZTCOo5jDP/1vga611chSRS4NMeFacvRwGq6w5rIi03DyNz8wMkyCXei5X+UT+8XQWJDulOu/1YndArl0GgK+rA2Jfuyb6EIpAI8vWc9qY7xgFXwWK6HflDzRLT1cREm2zTMJDCqSjUHqwaIFBx7ezKB8zUCBuGts1+NbKc=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=kF8HqLqT; arc=pass smtp.client-ip=23.83.217.19
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5C4293B5B
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 19:03:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745435036; cv=none; b=roC9l26LyG4JtlTEX0Jp84P1etzbROV756yQB15nZX4eB0TKFvUENW33xVFro1ZSfKMNRY3dMhbfVT23X/hOrdZ0+kT4aSaCFVfC3/IVCxbhafQqpx2J6toOaTC9KcDKMtFiRhDYW7IIJLp6ie3naWyXAJ5d4ftIKCMszp5wqIw=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745435036; c=relaxed/simple;
+	bh=6qfYdSQ8AqLRo97AvSsi5GoH3eEg11ZmFt0hxaXWhlI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZmA4550qcVWw2Ggd9mf4Fb479K7nXlDIWti7w2VHJAxXKJlam+cRbOoDbnoUsknfyFL92qi4g3RSaFFhlaop6CWlqlabGWLNNQkgvfXdE9EGe76PKr1PMNKM0zk9LjGbA+cqzCT9DIARQx/zpVWF+da522Wd6SFvxr0/i5Yg4t8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DWc4TdBe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=egxrRbuc; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="kF8HqLqT"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 2BF2922FC1;
-	Wed, 23 Apr 2025 18:59:33 +0000 (UTC)
-Received: from pdx1-sub0-mail-a316.dreamhost.com (100-113-64-21.trex-nlb.outbound.svc.cluster.local [100.113.64.21])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id A5B8A23C56;
-	Wed, 23 Apr 2025 18:59:32 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1745434772; a=rsa-sha256;
-	cv=none;
-	b=mjOwBZI4Azdls1FN8KflU7tah5A3lyp2xxHsmZnU864Tzzc6DrfX0eIokAB4X/zzs5ZTfD
-	A4N7ElyrwlUeuyZEfVeddMS67qvhHVk44x4wdj92YAzK5agPL1s+apB6ufx5GAc4ddEbLs
-	lycKtoO+DHbUSTP0u0JHqyFejUPII8Vkn+6Bv1ULJBd42hbQrpj07iQnubdRwlgwDDOLMT
-	MFYgJ8Nw3EA8XOOGgulJ5h3QQqo/ewcFbcLCqu0H3Z7E8m+vA2znyZ4JIcCP28aI1W+SPU
-	GKrYKNg9SA76dyPI4XUimWfSj626jwcQaM1UPs3Q/2UnBSwq2IO3v5DE2UYX1w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1745434772;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=mtz9UoCQnSjUCQ4KNdjyLwUFX3nFLameEoBVzw/VG6U=;
-	b=dUb+HtKMIAf3/RCJQ2WLWJ4SbBszr3PcsD7EeKAw1WKYr3vezMnYL48RdpCBOqwGZPBsrt
-	a+z4MBppnKzUnUbZ9OQWCmV+TeKVFLCotYwNm9gj174Z8bjkdUrvjvGiIRbUTLNj3NQykP
-	0RLLWycLH1+r90bVEvcNzaF9INLrCuge0MezhYgMgo26F6OsAH0WYinpzf4/fBuUQsYO5d
-	mZYIr8mZOh+HdVo5yqMcuPl4FS+1jBgr/dyr3R4Xnc+8A5d+rkxnNEhRXsUo30TxwGSnYV
-	B/dixfkR+Miq1BRbG5GEnVFXwgXzNOZgcOxaZhK+vqL4OYlWzwVSBON+NqEu0g==
-ARC-Authentication-Results: i=1;
-	rspamd-5cfcf5665-q67w8;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Bad
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Oafish-White: 26b976431909c2f4_1745434772962_190441919
-X-MC-Loop-Signature: 1745434772962:3735667830
-X-MC-Ingress-Time: 1745434772962
-Received: from pdx1-sub0-mail-a316.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.113.64.21 (trex/7.0.3);
-	Wed, 23 Apr 2025 18:59:32 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a316.dreamhost.com (Postfix) with ESMTPSA id 4ZjT1H3H4Fz7f;
-	Wed, 23 Apr 2025 11:59:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1745434772;
-	bh=mtz9UoCQnSjUCQ4KNdjyLwUFX3nFLameEoBVzw/VG6U=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=kF8HqLqTYkZjBnIzTHaTEbOj0ptjAMuWGKnPfgZi5rdg+cpmYowgFJ15l7zJRe/Q9
-	 Csep7KnwfBhX7cyBNzN9OBs4Em1iaJmKTcPKmuC4Ao8gRvx5bItBVB7kdmJSfXQK8l
-	 s8mNFsLQGIT3u4M+XNs9/WJY7NSjVG5UYpIQTTOGDLhCakQPKMYEPfsk+zSqVdocQH
-	 RZp7XAFBrMNDgo/TzZ741oi6v+Md6d+1wM0vxRUjOBE2sVUdPdRdUXDJeBQw8fTiBK
-	 xMJAKTM5MrcVcKBZUorE/Hjx1KJqcig7a1Wc8OHXDYRryu7ghojc0kaeJTqp6w1Qas
-	 ndfbotfUHiOWw==
-Date: Wed, 23 Apr 2025 13:59:29 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Toon Claes <toon@iotcl.com>
-Cc: Remo Senekowitsch <remo@buenzli.dev>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Theodore Ts'o <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: How GitLab does/doesn't need change IDs (was Re: Semantics of
- change IDs)
-Message-ID: <aAk4kf2EM9pXaHZG@ubby>
-References: <Z/VGYrrVZYQ13TLj@ubby>
- <20250409121924.GA148735@mit.edu>
- <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
- <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <aAgWytQNqtLzg2TU@ubby>
- <D9DLAQTMJYU6.RJLLVMQZOICK@buenzli.dev>
- <aAg4JR+rCDqO5ljV@ubby>
- <87cyd3f306.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DWc4TdBe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="egxrRbuc"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id AE56F11401BE;
+	Wed, 23 Apr 2025 15:03:52 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Wed, 23 Apr 2025 15:03:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745435032; x=1745521432; bh=Y/AAEsQ8ax
+	3d49W2dQ95dZmnYZcY8sqH//POztBtdDA=; b=DWc4TdBeLRZ9s3GYtKynt1xCmG
+	0J1ZBnRemKgBkJCpjwjTX3YrLp5kQv19irfQD+NoEJxAuHryKYwmLxys1DKOXSk9
+	7KAx4ONIh0Buxek/cGwkU56FTMwku7AuHFtj2PPt/TEMMpiqEeQACHNtWQeebtP1
+	yzO7P00t3QCjve2dMGy0j7LCibSELmdud0HjaQPUPDj4XivYnERpOVCMQvZ6Yp/T
+	B5mNJvucHlNMDOgzlDrZPYgHRlYpGDhrlB6mDVpfTfhfNBcSzWgA6BIfDrQ5RLHn
+	RIkrj2sZ5vcx6KjRereoR1+qsdtxtCYQCgAo52r1Rk/Z2BzhDRQvhedqTuBQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745435032; x=1745521432; bh=Y/AAEsQ8ax3d49W2dQ95dZmnYZcY8sqH//P
+	OztBtdDA=; b=egxrRbuc+5+6nKtxJ8icjJ7PlYPzWG9N+EOOE4lh/og0rPqbbb+
+	+WdkyKFcdga+i0p2thSg7h3uPyQG+YU8U/IPYD6su6KLKh9lEwNfE7or+IWJlycN
+	ksoTlNsMWImLiiupwWdClsneyhxAD07aoYc+5Vv3qKb2omHhMUsF+BaJzDl656LI
+	ek/1wsSw5mqZAtUMF2BO3TjCJkyKVVcxifzbCNoZA3xATXEktgirwbHLzndwA+C1
+	BUBlSuFnD/1cEIJ1NoqJAtlPzVNwYYs54nhKSRf7ON0jrF1QqpoW0wqDQfUsJGrr
+	G3P734xuUZjS3mafpF3l6uob03MhqSNXUPg==
+X-ME-Sender: <xms:mDkJaCMN3HKaNE1eS1yTNPJROoTZoD1kweMe0CF1jmcMNpfRG8cIMw>
+    <xme:mDkJaA8muVlmzJo-Vet8fDdU4mxGxfNwIknhMyGCJoWacBTP8s9BzBUe2VsDKurOV
+    oPnSjamamajCNY4sg>
+X-ME-Received: <xmr:mDkJaJQGO5vFbowukrBhq7Q30-kK9TFtqm9toSngHu-AhoQS_qhPoW_-H7ZKUnvLn-UEFHj9lAUfDywJuRkbk573yXcQ098_UGUH>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeejfeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguih
+    hthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghm
+    rghkvghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhr
+    tghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpd
+    hrtghpthhtohepfihirghgnhdvfeefsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohep
+    ghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:mDkJaCsxXs1_Fzm0uwEE1_xfOI_5tQuB0qE-_LTRn6EGgN5OzorXMw>
+    <xmx:mDkJaKdVL-vUDze4CX0oA0JROynJF_GflvErLB5WKC7IrreCnwgsoQ>
+    <xmx:mDkJaG0e9vIvz7qKtIHEk-A_6NBr84hAjGLBpBfB-WjoHbYDeSoB8w>
+    <xmx:mDkJaO9zOpeidjHYfyMEQ6f9EFDI1Pv7BoytxOmePbeEo8kPQLKISQ>
+    <xmx:mDkJaAqaKvIYoAAQti1NiS6IR4vmdT_JQ3aINIh7Pa7mIartQNr-9FDb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Apr 2025 15:03:51 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: Julian Swagemakers <julian@swagemakers.org>,  git@vger.kernel.org,  M
+ Hickford <mirth.hickford@gmail.com>,  sandals@crustytoothpaste.net,
+  Shengyu Qu <wiagn233@outlook.com>
+Subject: Re: [PATCH v4 3/3] send-email: add option to generate passswords
+ like OAuth2 tokens
+In-Reply-To: <PN3PR01MB9597B50EF69AD097C594F844B8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Wed, 23 Apr 2025 12:19:47 +0000")
+References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597B50EF69AD097C594F844B8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 23 Apr 2025 12:03:50 -0700
+Message-ID: <xmqqwmbaya21.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87cyd3f306.fsf@iotcl.com>
+Content-Type: text/plain
 
-On Wed, Apr 23, 2025 at 02:58:49PM +0200, Toon Claes wrote:
-> Nico Williams <nico@cryptonector.com> writes:
-> 
-> At GitLab we keep track of the commit IDs a branch has been (maybe only
-> if there is a Merge Request for that branch, I'm not sure). [...]
+Aditya Garg <gargaditya08@live.com> writes:
 
-Do you mean "we keep track of the commit _hashes_ a branch has _seen_"?
-But it can't be commit hashes, and there's no commit IDs, so GL could be
-assigning synthetic, internal commit IDs based on commit similarity,
-which proves Junio's and Theodore's point that similarity checking can
-be enough.
+> @@ -230,6 +230,14 @@ or on the command line. If a username has been specified (with
+>  specified (with `--smtp-pass` or `sendemail.smtpPass`), then
+>  a password is obtained using 'git-credential'.
+>  
+> +--smtp-passeval[=<command>]::
 
-> > The point is that GL demonstrates that these things can be done.  And I
-> > don't see how a change ID would have helped GL much except in cases
-> > where one re-does all the commits with different subject lines etc, but
-> > leaves the actual patches mostly the same.  Now it does happen that I
-> > split and squash commits, but it's rare that I completely redo them.
-> 
-> That's because GL stores history about a branch ref (outside the Git
-> object/ref database). If you don't do that, you can't. Having a
-> Change-Id embedded in the commit, retains that information in Git's DB.
+Lose the pair of [] that marks the value optional.  Compare it with,
+say, --smtp-user that is described as:
 
-I.e., GL has an internal reflog on the server side.  I've sometimes
-wished that I could push and fetch reflogs (or subsets thereof anyways).
+    --smtp-user=<user>::
+            Username for SMTP-AUTH. Default is ...
 
-When doing code reviews I use [local, obv.] reflogs to see the diffs
-between an earlier version of a branch that I fetched and reviewed
-earlier and the latest that I just fetched and am reviewing, and
-generally I don't need to see any other versions I never fetched, but
-occasionally I've wished I could fetch those other versions, but since
-there are no server-side refs for them, I can't.  [Or maybe I'm about to
-learn of some feature I didn't know about :)]
+because they are defined in %options (below) in a similar way, like
+so:
 
-I agree that change IDs / commit IDs in commit headers can help one keep
-track of versions of a branch w/o a server-side reflog, but how would
-you keep track of their chnronology?  I.e., how do you know which is
-version 1, which is version 2, .., and which is version N-1?  (Version N
-being the head of the branch.)  If you don't index these then finding
-them is a full table scan, and if you index them then you've implemented
-a server-side reflog.
+>  		    "smtp-user=s" => \$smtp_authuser,
+>  		    "smtp-pass:s" => \$smtp_authpass,
+> +		    "smtp-passeval=s" => \$smtp_authpasseval,
+>  		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
 
-Which makes me think that all that's needed for a good CR tool here is
-a) a server-side reflog, b) similarity checking for commits.  (a)
-doesn't seem like a radical idea (that can be implemented with server
-side hooks), and (b) is also not radical given that file rename / copy
-operations are detected by Git using similarity checking already.
+taking a string value =s that is not optional.
 
-From a UI/UX perspective not having to take extra steps to get those
-change IDs into the commits is nice and user-friendly.
+> +	Generate password like OAuth2 token for SMTP AUTH. If specified,
+> +	it will use the output of the command specified as a password for
+> +	authentication.
+> ++
 
-So I've come around to not wanting a change ID header :)  For the back-
-and forward-port use-case having commit subject conventions that make
-use of "ticket IDs" or similar is a 90% solution that many users have
-been living with for decades.
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index a18e978e22..cafb9aa43b 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -59,6 +59,8 @@ sub usage {
+>      --smtp-server-port      <int>  * Outgoing SMTP server port.
+>      --smtp-user             <str>  * Username for SMTP-AUTH.
+>      --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
+> +    --smtp-passeval         <str>  * Path to script or a command to generate
+> +                                     password like OAuth2 token for SMTP-AUTH.
+>      --smtp-encryption       <str>  * tls or ssl; anything else disables.
+>      --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
+>      --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
 
-Nico
--- 
+Looking good.
+
+> +	# If smtpPassEval is set, run the user specified command to get the password
+> +	if (defined $smtp_authpasseval) {
+> +		printf __("Executing token generating script: %s\n"), $smtp_authpasseval;
+> +		chomp(my $generated_password = `$smtp_authpasseval 2>&1`);
+
+How careful do we need to protect ourselves against a bad value in
+this variable (like "rm -rf $HOME; password-command") ?  Are we OK
+with trusting that the command line and the configuration file are
+not under control of an attacker?  I am assuming it is OK, but you
+folks have thought about this code path much longer than I have, so
+I thought I should ask just to make sure.
+
+Thanks.
