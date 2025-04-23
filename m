@@ -1,208 +1,116 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31971280CFF
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 17:39:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE5AA28CF79
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 17:40:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745429982; cv=none; b=Mx0oGnAtWHMU5/jaXy7++F7bzM81lIG2Nmk6wu4L2cF4CD3AvpC5sqWF391Pv0oMrNZ2AR8EXuFecqkYtwYwzSl9d14TsSbDKFGJPgUn9V8+qf6smNf+OHosNhnb2vUoORrmssbHN5J/yF//PC96e1nvYWsvsvKBBKu//ZlZ1HQ=
+	t=1745430009; cv=none; b=BlOqT1R2ztbL2f1yB+gGOm/5VZlSK5bwniTzJlK7kUiV/8WGVfDUlqToxtXVBScqpnpbAKbSiuB4dTa4wXDdsHuXjyPF8PRKQprjDWl8CQ47VsWoSWVF7Fh5SRDROafONnFkqGnsxABXFQ4NzP66kwHwNkj6l4X4N3J+C8GMHRc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745429982; c=relaxed/simple;
-	bh=wiy/+vFcaH6vZfsVZI15noDNOuybch2IC3jFEe5iAfU=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SoL6VZnB//iJ1i4KottEoo22NASBCNOtjkbtcuGYkXKMarOkQKKyt4ttuzqt7urjwzqIoN2hKU4LfnRCPCB4Qhd9WAtG5JkW63gKZ6m8Csf/fyqyX0aulu5hu5qAYdvgpEqJCY7oZUDdCUWLyyn3w9XagbDv0PFVHC0uWrBFMrU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WQ9UdbrI; arc=none smtp.client-ip=209.85.221.181
+	s=arc-20240116; t=1745430009; c=relaxed/simple;
+	bh=JYHRRCtRXLFjsglCRSOld2D9tXkquWoFVUmJ9tpXJgI=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ULR8qlRIllou63i4+vZK7GBrRBR79DVT7sTS+0cQe8aZp0dFZ440kWveNHyaSxX1+Y8nMtFccM7MiLtek2YQhwsdG6h6WIjNf6saAipTTskvEN9lRGxpdrz/ejsBuEh8fb+DqjbnGpi5b+44IgZJjkhy54JJfKc28leJzOY59ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HGFFHBzS; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WQ9UdbrI"
-Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-52934f4fb23so87439e0c.1
-        for <git@vger.kernel.org>; Wed, 23 Apr 2025 10:39:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HGFFHBzS"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-440685d6afcso1253755e9.0
+        for <git@vger.kernel.org>; Wed, 23 Apr 2025 10:40:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745429980; x=1746034780; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=BdZmLOkrPw/DH1tQm8H1/ijICuNwga62KtXl4Rq1rgs=;
-        b=WQ9UdbrIUniedqqM+ZQIbnGO6LsqZ9CscWeQ1pcvuba+5OUf2keFd7yeZ/ZgeglTyp
-         XoJhtXCLmEOi2g9OmpwNXihUc0ljEI2BP+682Bjo7yjfDFSM6oSgIMlU5AthCYPzCrB+
-         fW6jvpvyPp5cx2pQBUedQrWRlUCwQYsYykQtnpIrSpD24GXcEpUh07SAU3JUDsJU7a3J
-         078Qa/yc32rzCcSyPqOQviyZLyHqQiKF9YFnNahE6A+nILzZa5Bo5Fp/fWh00+VQ+3pm
-         QPfyX/1TD3AFudXfmUoCZ7EdMrYxA0HV9xibah2eCIsw6+jvvi3h2HcK5BQEyx0LPY67
-         vaxw==
+        d=gmail.com; s=20230601; t=1745430006; x=1746034806; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=jBDP5xBDuyTCtQuE7LRQKs3WGE6zDj7czIp7nW32bqg=;
+        b=HGFFHBzSa5iBSrFsDUDOOnXMqpFacnBUQTWtC8e2QlEJh8FLb56zGa/Y3mo/6KDGcz
+         lmYLmB3YHRabmDbI2lxrK4Vv3nXjY9Px5IvIIJMwHwsWL5p+HjO0OUe0IZCVoH9mXH+S
+         JmuGlHh87LydIIeSbeGWIhN6h/8sMCZdzsK989kfJcgjce6qE5aWv5ezpPqoTrIBFAWf
+         xNrKW2OeowpZ3gE987wkPbkjj8agJEsCpnE7BV69niy/spyQ7JoN0vAbuF86C+2T60rN
+         cd3QCOpddXFJWacGWlreTVhV14Z6NfAcQLQ/yCWPbvMhygIfxkw1ukk3ywZXjQpuQRlC
+         rzIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745429980; x=1746034780;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=BdZmLOkrPw/DH1tQm8H1/ijICuNwga62KtXl4Rq1rgs=;
-        b=q3IIv44iPwCKiCEZHtZAuCSSOP4RB0sRxf3EuHxkX6ACMC+xAXV68MwY9ZLvugyaKj
-         FStENhbpNQ4Ms+/diguNR8P51SE2CPfYq4OzpYDb/H1BTz6ikgcpXGAFXzscBU49SMWV
-         hSwg2B8L8nV+rG+/d+TPetNxjh+CYtAer/KNMZXu87ckkkdPrQxeY+/3vsS/usQiFULL
-         9qmG4lAzE5p/QmEUQIXJwI641D+TZrCUGu03jZk4qqmGVmdJ9gZxq1SfoIE9KzfSEZA4
-         uznclVdBnnoUE2KXpohLVMZor21fgAxjI/ZHsfcG9dX5q+NkepGtWTuMjTGzK0ofXdWH
-         hmxA==
-X-Forwarded-Encrypted: i=1; AJvYcCXSDbAE+68HbcMRrKp9xu3oZSGvV+1PXpB330iEriOUHGLu0+jw7tQBlbN2AT53bKtLPW4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxEVZGPLPU6Yd+OahI0gWc/o3PtoPi1fvT23nosVVVQTW+J7MO/
-	i1mQNvQtCWpUdYTj3K8RzxVwb16PYTw/YOCQG+oAK0SA9yNVtGPguuvpuQuJZ8CkWJI4S5VWloT
-	Djaz7QoCGTQdQwNt/zB+c+q8Ux5w=
-X-Gm-Gg: ASbGncuP0/LlhdzqbRBZ4Jpz5yqJXBx6JwpnX0B+xCACbKdSR9rbA2rdQKz3w8g9/Ng
-	penBhXLAkD7yl55fGh04xvIGnfy7IxzWwa27o9bgretrOP9pxSXlx3NgNtwAqtk6kH+NNqXG6dW
-	iIGB2a/K2tIoPWtvqZRArTzNOqjIZ9ctmTwJMaSFYk3XWGtREuH2MKaVLBKUFaILPTUBE=
-X-Google-Smtp-Source: AGHT+IFgMxQtVuwVuuBdz7L+vi6AGIuGo7Ib2zTvvcxE7EpmsjS9wGPjMLkbDW83VkMY/lwALiKq7YO4+8cOZ9m36VE=
-X-Received: by 2002:a05:6122:2527:b0:520:62ce:98ed with SMTP id
- 71dfb90a1353d-52a76b421bfmr262398e0c.6.1745429979856; Wed, 23 Apr 2025
- 10:39:39 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 23 Apr 2025 10:39:39 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 23 Apr 2025 10:39:39 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <3607a937-9795-4348-981e-dce92203c6d7@gmail.com>
-References: <20250423-505-wire-up-sparse-via-meson-v5-0-d1e2be4b2078@gmail.com>
- <20250423-505-wire-up-sparse-via-meson-v5-1-d1e2be4b2078@gmail.com> <3607a937-9795-4348-981e-dce92203c6d7@gmail.com>
+        d=1e100.net; s=20230601; t=1745430006; x=1746034806;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jBDP5xBDuyTCtQuE7LRQKs3WGE6zDj7czIp7nW32bqg=;
+        b=aDvgYiPnuwrr5HhpJS+1Ut7cUb4H7xCE9YhHM45EdMissOyMXbM1vz1r7ByPmnxYt7
+         UE+NhuQ4fyLjp8L6MOvacUnNYx8TxkWN/mApIrX6PAhVKlG7G/Ipe1sR0mw1EniU/zMR
+         bOEUFC+6P05yNVz0gERlqPGbXH28bYyNKjaRFHYVBk1jlyF1bzUyH8KxG1vxuHe2kprV
+         GRnYdDxKci50eWnDO79Qzkt2f+g0nQvabeQ+mC5mZ7FqxUBy8yhccjgCeTwDa2vDvctV
+         hzJh+jFH+68Bq25YtFfwd7ewKOfIfO+2M3Iun/8dltACE16TeoUicUa2hqxsvIMSKDyM
+         cglg==
+X-Gm-Message-State: AOJu0Yz7CBmk/JRelMFEtDDCFDmRYfOqr/L4DeakaK9AgrAibNIYhql0
+	qRemlPwh6T8JuApW6MFM91gZUhBU1OfyGaXUXAZQNGr3/DwjuGmr4s9Pdw==
+X-Gm-Gg: ASbGnctcK5aZWnkiFSECxzt35zf/l7NM9xD9+4+ZKKC/sUQG3p+vRkkkwJnPbCBNYCC
+	+zVyx7Us/n5LCcRifEu5l75QBmsdMQiaS/3MgyLqpsauxKNJpp7ND4u3YQxGwCHiRhQzF6qZgfG
+	siB5/bfoMSx2BdufipZCEopUo3PhAyzQ81I7N0vUE4cVxNipb74moHk34JFXQzXPzr0WjB8dASQ
+	5UCOd9N6XemdVLeq1F8hMzfv4dQiShdxvQXM5Kfvq8/tuzcauPJmfeWaXmxcS6mRNSEPyTnGBP1
+	7G1Dk6hUEA4mC3lbqHEvvurTAVzfYeKii6HsI2i6sA==
+X-Google-Smtp-Source: AGHT+IEVjrNxEHf+CVpl7gxSOuWOMbvmVeClNklEo7UK0RUc59la2cY8ht52T7N/2X+1zxlukQb2EA==
+X-Received: by 2002:a05:600c:3d86:b0:43d:762:e0c4 with SMTP id 5b1f17b1804b1-4406ac103bdmr158981875e9.27.1745430005374;
+        Wed, 23 Apr 2025 10:40:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-44092dbf7bbsm32464005e9.35.2025.04.23.10.40.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Apr 2025 10:40:04 -0700 (PDT)
+Message-Id: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 23 Apr 2025 17:40:01 +0000
+Subject: [PATCH 0/3] Fix REF_DELTA chain bug in 'git index-pack'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 23 Apr 2025 10:39:39 -0700
-X-Gm-Features: ATxdqUH1MBPOQCjDLURFjTpHdlOhwU2esJgvi8VEvJhSsdnAFR7gSxi-qRGTyQA
-Message-ID: <CAOLa=ZQJZ0L2wONYJo_JNKSDHHRWQ-sOTuA34FLLgzzZPnHdqg@mail.gmail.com>
-Subject: Re: [PATCH v5 1/6] ci/github: install git before checking out the repository
-To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
-Cc: toon@iotcl.com, gitster@pobox.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000ee1bb1063375955c"
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    peff@peff.net,
+    Derrick Stolee <stolee@gmail.com>
 
---000000000000ee1bb1063375955c
-Content-Type: text/plain; charset="UTF-8"
+When fetching content from a remote, 'git index-pack' processes the packfile
+content, storing a packfile appropriate for on-disk storage and a pack-index
+helping to perform random-access into that packfile. To help with
+compression, the packfile sent over the wire can use REF_DELTAs in addition
+to OFS_DELTAs to refer to objects that are already known to exist in the
+client's repository. REF_DELTAs can also refer to objects within the
+packfile, though this is not typically done.
 
-phillip.wood123@gmail.com writes:
+Because this inter-pack REF_DELTA is not a typical data shape, a latent bug
+has been waiting that causes 'git index-pack' to die() even on legitimate
+packfile content that it could resolve.
 
-> Hi Karthik
->
-> This looks good, I've left a few comments about the wording of the
-> commit message but I wouldn't worry too much unless you end up
-> re-rolling for some other reason.
->
-> On 23/04/2025 09:15, Karthik Nayak wrote:
->> The GitHub's CI workflow uses 'actions/checkout@v4' to checkout the
->
-> We don't need "The" here
->
+This series resolves this problem while also creating a test helper for
+constructing packfiles with specific objects represented in specific types
+of deltas and in a given order. This should make it easier to create test
+cases like this in the future instead of updating t/lib-pack.sh through
+other means.
 
-Yeah, I think we can remove it.
+Thanks, -Stolee
 
->> repository. This action defaults to using the GitHub REST API to obtain
->
-> I'd maybe say "falls back" rather than "defaults"
->
+Derrick Stolee (3):
+  test-tool: add pack-deltas helper
+  t5309: create failing test for 'git index-pack'
+  index-pack: allow revisiting REF_DELTA chains
 
-Right!
+ Makefile                     |   1 +
+ builtin/index-pack.c         |  58 ++++++++-------
+ t/helper/meson.build         |   1 +
+ t/helper/test-pack-deltas.c  | 140 +++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c         |   1 +
+ t/helper/test-tool.h         |   1 +
+ t/t5309-pack-delta-cycles.sh |  36 ++++++++-
+ 7 files changed, 210 insertions(+), 28 deletions(-)
+ create mode 100644 t/helper/test-pack-deltas.c
 
->> the repository if the `git` executable isn't available.
->>
->> The step to build Git in the GitHub workflow can be summarized as:
->>
->>    ...
->>    - uses: actions/checkout@v4 #1
->>    - run: ci/install-dependencies.sh #2
->>    ...
->>    - run: sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh #3
->>    ...
->>
->> Step #1, clones the repository, since the `git` executable isn't present
->
-> It would be more accurate to say that it tries to clone the repository -
-> if we fall back to extracting a tarball then we're not cloning.
->
 
-Yes indeed.
-
->> at this step, it uses GitHub's REST API to obtain a tar of the
->> repository.
->>
->> Step #2, installs all dependencies, which includes the `git` executable.
->>
->> Step #3, sets up the build, which includes setting up meson in the meson
->> job. At this point the `git` executable is present.
->>
->> This means while the `git` executable is present, the repository doesn't
->> contain the '.git' folder.
->
-> I'd maybe say "source tree" instead of "repository" as it isn't a
-> repository without a ".git" directory.
->
-
-Good point.
-
->> To keep both the CI's (GitLab and GitHub)
->> behavior consistent and to ensure that the build is performed on a
->> real-world scenario, install `git` before the repository is checked out.
->> This ensures that 'actions/checkout@v4' will clone the repository
->> instead of using a tarball. We also update the package cache while
->> installing `git`, this is because some distros will fail to locate the
->> package without updating the cache.
->
-> Nice explanation, the code changes look good
->
-
-Thanks for the review. I'll add it locally to my tree. That way if I end
-up with a new version, It'll incorporate these changes.
-
-> Thanks
->
-> Phillip
->
->> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>   .github/workflows/main.yml | 14 ++++++++++++++
->>   1 file changed, 14 insertions(+)
->>
->> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
->> index 37541f3d10..e9112b3a64 100644
->> --- a/.github/workflows/main.yml
->> +++ b/.github/workflows/main.yml
->> @@ -414,6 +414,20 @@ jobs:
->>       - name: prepare libc6 for actions
->>         if: matrix.vector.jobname == 'linux32'
->>         run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
->> +    - name: install git in container
->> +      run: |
->> +        if command -v git
->> +        then
->> +          : # nothing to do
->> +        elif command -v apk
->> +        then
->> +          apk add --update git
->> +        elif command -v dnf
->> +        then
->> +          dnf -yq update && dnf -yq install git
->> +        else
->> +          apt-get -q update && apt-get -q -y install git
->> +        fi
->>       - uses: actions/checkout@v4
->>       - run: ci/install-dependencies.sh
->>       - run: useradd builder --create-home
->>
-
---000000000000ee1bb1063375955c
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 59dd5aebbeae0132_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nSkpka1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMW5WQy8wV0p2QTEvQWx5SmZUeFFKdkhDT3ZGcEFSSAp1V1NMUXlKdDdJ
-eCs0NjRoZC9EOXZqU0JFSDZVRmZkb1I4SEpsZVBUVThKT3lla2szZEljM2JaTEoyUTBvamg5CldG
-SDd0a1FPZFl6SkFBbjcwRW5oeTF0Q29jelFoRE15T3VCTHVIK25RQlZZK0FyVmIvdEZSR2xnS2xw
-ajdnK3AKU3lMZ253UVpnYVozSjhvMVZuN05lRnpkWVIrY0l4R3UvVVVkZnc4cGZWTEFwK0xxMVZN
-QjhrWFdtdDRSNFlJWgplWkxpZ0V4TkwwT29TVHRaM1hhKzhDWDZwd0Uvb0tuY2d2Ny9sSi9paHV5
-bHF0UW1rdzFwRGY0Nnh6N1o2bmdoCnp6bTNVakFWMnNYOWRJM3lMQ0J6ZFd1dkpaTm1IZXpvR2VI
-M29JNGVOYTlPK0g4MmlLUktVeTNjOHZpeXYrM0wKUld1RWFiK2JoN0I1ekxyVk0wcE4xVThtblJk
-bUZEbTJTcTRJZXZSb0IrSGpIeXZwa1gxMXB4bkZLcVJXdGJudwpya3RKMWRiVjZ1cTNkTno3a2J0
-czhMekpPMWp2a2xrUEk5VzdYMnFPT2kzRTB4azhETlp5VlFFOXdPWGFENlM1ClBGOVJEREhTdUtL
-SGR1OWUycDFOalJNL0UzaTU5MHNIeHVzaHBObz0KPWE3MXAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000ee1bb1063375955c--
+base-commit: 4bbb303af69990ccd05fe3a2eb58a1ce036f8220
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1906%2Fderrickstolee%2Findex-pack-ref-deltas-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1906/derrickstolee/index-pack-ref-deltas-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1906
+-- 
+gitgitgadget
