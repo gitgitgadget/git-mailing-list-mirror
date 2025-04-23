@@ -1,158 +1,138 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E84D26F45F
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 07:48:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803DE265CD3
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 08:01:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745394518; cv=none; b=TmgxDkRVIaHaWXq+KmLpbajZbXrryRc29eMuRdCgfcbUQfdYNuqoBFOmjrPuf3063dABAmGbBDB2Vx12YRwjw1XgJQbRXqPrN0qsxIFkbbsOyZp5t6rYq8BzO88Zct8/nEFhprdLDU/nYlgrWeH6gyZ9ucvoEvEilcmNmvWjuIY=
+	t=1745395314; cv=none; b=GkrFtozrHtGjNN00nmVjOrQft9U+uj/K2Q5SxQ1OJUVynj2iA7YNlsLf3T2xkqAYhiA2HR+Jdb69nNQ/Q0fKZhCcaQ7Zgx6kU/6ARrdh9mDCRtbV7RajH7XTQEG+MdWikWr1uFqdeUQoKJSYsx8oCoJoBNGuL2DgM7HAq+y/If0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745394518; c=relaxed/simple;
-	bh=DTvIGeAqYKaoIODKitoEPhn+InOi7TLOyGxFauN5Wng=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=jlk6EuePFSA394pjc9YsA6XOn0Ob4V3DDijX5zh6sNTmSUPjarPtD4HG6ZCawfjP6Dr2VDd47Rld0o3PN3LuD4HCEw9NT2KptIai7tLFLxTJn17N+aM1xDQws6zAHfto1WyoQ+UxeQwCTsvgeLzJLArR+07GCDLh74kAvJTK3tA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JCHOqHKW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hL/+1WYj; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745395314; c=relaxed/simple;
+	bh=nx4NW5H/+8KOt7YWQ4m9QF76B0t6YuTUOGb3uuuiDHo=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SAXI8wwrrOJqOQTkIBv4ZHLZpUQwZv3IAXGk0sHkGuqKxnDejLggO8Shpp5usCbzcfx+gtuFJ/KUBN9dzwGIU8nS4SdZLAwg0le26UIWdwFyKygcZDOyPQ9cp99UQ1h/wDVtYqYTEAkcuJCxxHxkRTQvdz0WCBbQ6UHyCRbUst8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cu2+VWBg; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JCHOqHKW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hL/+1WYj"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2515A13801A0
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 03:48:36 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Wed, 23 Apr 2025 03:48:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1745394516;
-	 x=1745480916; bh=DTkAGtZJJLWXA8zhGTR+ew/+MigYWjQWiYAcevIhS3Y=; b=
-	JCHOqHKWYW5+CuwK3idISZ4ZpH/Vt9EWuc/5PbouqmR4zSQ3boiuvqy6HadT8ek5
-	W+297h7NeA7gT3NIRwPwYkVuzllDSAAnDfcLo5MaZWLcg/jjdspA+gnJtCiZMACm
-	hYszWTh6G3OXe1V7d0dhm8Hil+5UBlsHdtYKffF672DODIGi2gLJQIbiuu90fYhx
-	WUCbDLLQ3nieA8bFEpt8xdJ1rITKZiDsP60wruLVV5RkQpF3Xne+RbFrgKHtGQ8C
-	ZBv43bE3mQgipoIwsm58LZcEBvY22K/3swWZDqJJ49Muv7s1n+PFdxdht/Rgkbcd
-	w9AtwGbhx/wZ+rwP58q1dg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1745394516; x=
-	1745480916; bh=DTkAGtZJJLWXA8zhGTR+ew/+MigYWjQWiYAcevIhS3Y=; b=h
-	L/+1WYjaG6eDF67rYlqfENeOpXs6T9Ac2pTMSuH2CaY8pvY0XUJJYSgRanrbhW59
-	4144rNsLgY8czeFoVhuq4ANUSabdAyARyvAtezJ07/K5YK+/UNP5Y3PQeYvnG65A
-	kx5eKDMb+h8E+Z2BF8qvJ4qEEXc4gcQiqyrU0pO7BLGyivSlrVFy5AljfjfHJUXO
-	5qziB4iMV5PpTzYs2jRJ8IZceYvNPuFBcmubWUDNWQkhqytPsCwLKVVNkEs56jW2
-	ILibHYcwu9pyl8XbjttUqR5/gSuxfUraKNPf8eHghy3/y+Bf9QKwH9OpMDTBRHr7
-	fXJG7bRtDg0xCJLkvDZ5g==
-X-ME-Sender: <xms:VJsIaDrsyVKF4C7uIWQusHvU0E5U3A2FBmBXKrwXntdE9whnqtwEUw>
-    <xme:VJsIaNrMowOkNqeR3GOIFskXTcfQ5GKvIkahD-cjPG_SoRDQKh0YF3z3J-iZu3CUh
-    qUs_2-MmMLYKmuf9Q>
-X-ME-Received: <xmr:VJsIaANtIpMGOEkLF80ZrNImjwqR1yWKYg2qAHGhEaoYth5qQcQ0SmEVLrOX_jNP2ZDKCpJ5DFHiH0DDRbx85IVc_oXByPjrjwSXFPtZSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeitdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
-    fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
-    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
-    dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
-    thgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-    dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:VJsIaG6IQPF05rFS277kpY1ctxyx37S3vPRgPWHu4xFYxjRaR3Ra0A>
-    <xmx:VJsIaC6vuBiNDiVQ5rIlbhIKtK3Ws1OeTF6nZZk3A3qAcUCJqmpyQQ>
-    <xmx:VJsIaOiGVFeNi8wWthNHRteEZdno8dSVCHpr3HKZyj8iXN_i7mnmMg>
-    <xmx:VJsIaE5yryC2666oX2Hs9goWnjW3UkHhhBYpRqct_sqTOrhIB-jARA>
-    <xmx:VJsIaLGgYPEeS5uiMSGgWfxRbkZtmpgBd69Uett5DobrQV1rzCRcI4u8>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Wed, 23 Apr 2025 03:48:35 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5cb0005b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
-	for <git@vger.kernel.org>;
-	Wed, 23 Apr 2025 07:48:34 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 23 Apr 2025 09:48:23 +0200
-Subject: [PATCH 13/13] object-store: drop `repo_has_object_file()`
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cu2+VWBg"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43cfdc2c8c9so33961975e9.2
+        for <git@vger.kernel.org>; Wed, 23 Apr 2025 01:01:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745395310; x=1746000110; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=sJDKLUefEcApRTWDD8AnXnPNOK5IIxfPfym9DwV2T/0=;
+        b=cu2+VWBgTgeQS7xqau5kuv2FIRxoujxsP+8H0aJFlKQ98hKLce96nChWeb13xTT5hh
+         tyyYKzd0TxhsyOpOwWEP3npdZU7Br6LF44sSqXlsbyQdQLNYgF0UTx+cEFcRhziXO/rh
+         UbM3xGFHoYEHW97NkwS8UFtHX7hzyPHL1HCkRy/koXytI/Xg28PXdBJ79LiFNLl3Wpty
+         8Clo8pv1mVQswtw2Uq0k2/GTLm/4u6RLv0eiysI2IPHMek5cyatg3RTfA+mJlLrFs4+M
+         a3lf+EFq5ZxJIBYMp40+/FeLYkbqPgCrpLIW2Flo2VzA1V6UA8VKDR9ydbc0lgbgASoW
+         ItBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745395310; x=1746000110;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=sJDKLUefEcApRTWDD8AnXnPNOK5IIxfPfym9DwV2T/0=;
+        b=G/FuiPhry/g07/BBJNXSY0UPXCdm75B7m1APQ2Ue8W08qRXyCZ+L4r88tqXb4A6EXV
+         W6kFwGtpWcfUFyNoqnK+998hnNel2qS8GH8zxwS1wwEVgkBzTJ+hshuyo7w7yDMs4wex
+         n2LLvy9JQvJjpz0n1tXFbDKZSB+EoQJ0rVtKIzn1/w5NbznmjEIuT4zBLJpu0bYBGZc1
+         pqTt5Ss8rtzbs8EhcvaFQ2LE2Aci1zFf/pVqVJ9isIkK6O0a8VRqm5vOC/zxcCyBGa8N
+         QtiHYcxjIoxeAUz05wpTgC8eUTFNd09iGH3roOQk50+dWAvg7LUc07iZUSYz5INY9zME
+         Vgsg==
+X-Gm-Message-State: AOJu0Ywz35VUAuQV94B80J5GtixdWWc30JQtIso/nAdDmMz9rGpo1M70
+	bkUtdWcK6iIRgNYfjQ8xSoDGSpymQYnLp/hDy8GG7HCXYQIcNqKri/CLgg==
+X-Gm-Gg: ASbGncuQBRV5GQxA6ZLUyTaL2O6AJ11I9RsnY1/iFIdcM/QfS+AEpvBuppXeV6vDhCm
+	Bp0swo3kU17JsS1oOxNB8ARac408JZVH6a1HmTOR467U/ZAAuFX2BCmj6YHdxuBVdpRLcfnLjQh
+	0g+YiAZiO8qDnZ53nYO42N73uttRPJ/evc/AuZEugS00fHQifT5mpzdzoq0YV+MQs5NIzaMMHPH
+	D7Hb8sB0/9d3rbpqN4Rss+bdPJYIFUpjlc0CxR1MRs0bh5bpiWcWKL+uBRxDYTj4Keh1VPtLKec
+	J9kXRnSj3XCOtabBF82zAZn7X/SB2oJUcT+CVEc7Jg==
+X-Google-Smtp-Source: AGHT+IFt+G5luFt3oIs++rdkaC+xD8G5dvaxxsUpa3d3QdRQqvuvn9b/Bj2fLF2LapZAlvxSDlMT9g==
+X-Received: by 2002:a05:600c:4706:b0:43d:79:ae1b with SMTP id 5b1f17b1804b1-4406ab96b35mr166749285e9.14.1745395310092;
+        Wed, 23 Apr 2025 01:01:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-44092d22f69sm16027085e9.10.2025.04.23.01.01.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 23 Apr 2025 01:01:49 -0700 (PDT)
+Message-Id: <pull.1904.v2.git.1745395308.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1904.git.1745239150.gitgitgadget@gmail.com>
+References: <pull.1904.git.1745239150.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 23 Apr 2025 08:01:42 +0000
+Subject: [PATCH v2 0/6] Support Windows/ARM64
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250423-pks-object-store-cleanups-v1-13-81f8411a5d08@pks.im>
-References: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
-In-Reply-To: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
 To: git@vger.kernel.org
-Cc: 
-X-Mailer: b4 0.14.2
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
 
-In the preceding commits we have converted all users of
-`repo_has_object_file()` and its `_with_flags()` variant to instead use
-`has_object()`. Drop these functions.
+Git for Windows has started building artifacts for Windows/ARM64 since
+v2.47.1 (November 25th 2024). Now that Windows/ARM64 GitHub Action runners
+are available in public preview
+[https://github.blog/changelog/2025-04-14-windows-arm64-hosted-runners-now-available-in-public-preview/]
+at long last, it is high time to upstream the minimal set of patches to
+build Git on Windows/ARM64 and pass the test suite.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-store.c | 14 --------------
- object-store.h | 17 -----------------
- 2 files changed, 31 deletions(-)
+Changes since v1:
 
-diff --git a/object-store.c b/object-store.c
-index 2db34804e8f..2f51d0e3b03 100644
---- a/object-store.c
-+++ b/object-store.c
-@@ -949,20 +949,6 @@ int has_object(struct repository *r, const struct object_id *oid,
- 	return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
- }
- 
--int repo_has_object_file_with_flags(struct repository *r,
--				    const struct object_id *oid, int flags)
--{
--	if (!startup_info->have_repository)
--		return 0;
--	return oid_object_info_extended(r, oid, NULL, flags) >= 0;
--}
--
--int repo_has_object_file(struct repository *r,
--			 const struct object_id *oid)
--{
--	return repo_has_object_file_with_flags(r, oid, 0);
--}
--
- void assert_oid_type(const struct object_id *oid, enum object_type expect)
- {
- 	enum object_type type = oid_object_info(the_repository, oid, NULL);
-diff --git a/object-store.h b/object-store.h
-index c6055376f49..2330374990b 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -280,23 +280,6 @@ enum {
- int has_object(struct repository *r, const struct object_id *oid,
- 	       unsigned flags);
- 
--/*
-- * These macros and functions are deprecated. If checking existence for an
-- * object that is likely to be missing and/or whose absence is relatively
-- * inconsequential (or is consequential but the caller is prepared to handle
-- * it), use has_object(), which has better defaults (no lazy fetch in a partial
-- * clone and no rechecking of packed storage). In the unlikely event that a
-- * caller needs to assert existence of an object that it fully expects to
-- * exist, and wants to trigger a lazy fetch in a partial clone, use
-- * oid_object_info_extended() with a NULL struct object_info.
-- *
-- * These functions can be removed once all callers have migrated to
-- * has_object() and/or oid_object_info_extended().
-- */
--int repo_has_object_file(struct repository *r, const struct object_id *oid);
--int repo_has_object_file_with_flags(struct repository *r,
--				    const struct object_id *oid, int flags);
--
- void assert_oid_type(const struct object_id *oid, enum object_type expect);
- 
- /*
+ * Replaced an #else #if construct by an #elif one.
+
+Dennis Ameling (2):
+  bswap.h: add support for built-in bswap functions
+  config.mak.uname: add support for clangarm64
+
+Johannes Schindelin (4):
+  mingw: do not use nedmalloc on Windows/ARM64
+  msvc: do handle builds on Windows/ARM64
+  mingw(arm64): do move the `/etc/git*` location
+  max_tree_depth: lower it for clangarm64 on Windows
+
+ compat/bswap.h   | 14 +++++++++++++-
+ config.mak.uname | 18 ++++++++++++++----
+ environment.c    | 10 ++++++++++
+ 3 files changed, 37 insertions(+), 5 deletions(-)
+
+
+base-commit: 683c54c999c301c2cd6f715c411407c413b1d84e
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1904%2Fdscho%2Fsupport-clangarm64-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1904/dscho/support-clangarm64-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1904
+
+Range-diff vs v1:
+
+ 1:  b89f39cbac6 = 1:  b89f39cbac6 bswap.h: add support for built-in bswap functions
+ 2:  2feeadb0d3f = 2:  2feeadb0d3f config.mak.uname: add support for clangarm64
+ 3:  6c2e17eca68 = 3:  6c2e17eca68 mingw: do not use nedmalloc on Windows/ARM64
+ 4:  c89ead8eaba = 4:  c89ead8eaba msvc: do handle builds on Windows/ARM64
+ 5:  939bcb0dc63 = 5:  939bcb0dc63 mingw(arm64): do move the `/etc/git*` location
+ 6:  6ebc3ef57fd ! 6:  e0e78bd5131 max_tree_depth: lower it for clangarm64 on Windows
+     @@ environment.c: int max_allowed_tree_depth =
+       	 * the stack overflow can occur.
+       	 */
+       	512;
+     -+#else
+     -+#if defined(GIT_WINDOWS_NATIVE) && defined(__clang__) && defined(__aarch64__)
+     ++#elif defined(GIT_WINDOWS_NATIVE) && defined(__clang__) && defined(__aarch64__)
+      +	/*
+      +	 * Similar to Visual C, it seems that on Windows/ARM64 the clang-based
+      +	 * builds have a smaller stack space available. When running out of
+     @@ environment.c: int max_allowed_tree_depth =
+       #else
+       	2048;
+       #endif
+     -+#endif
+     - 
+     - #ifndef PROTECT_HFS_DEFAULT
+     - #define PROTECT_HFS_DEFAULT 0
 
 -- 
-2.49.0.901.g37484f566f.dirty
-
+gitgitgadget
