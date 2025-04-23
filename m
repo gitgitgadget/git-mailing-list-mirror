@@ -1,598 +1,170 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010007.outbound.protection.outlook.com [52.103.68.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C86F4A06
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 02:48:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745376512; cv=none; b=gTcLezPX4NFIGi+T3lfx00SKnT40PDGNipQ6JaYGo4t3eAf3fZiPa/63wK87Y5hTx9/U8hoakO+DZOSiGha8thF4QN+DHD8NFseVzFJlOYKkwIBuoYj/GyovciibkZ0/FlZgop1r3Sk9yKuxFYD3B5wapqPoqraDdgwuLtf+Sao=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745376512; c=relaxed/simple;
-	bh=R23rQwtOBpqh5JwOxAYjNYtcIvtTu9Hjd949sh0AvnU=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=RPsbqwD3RWFPl2YJFr+Z2GUA/nrpXbJqsX1DOqUHHugjL71Arfs967B4lFmaf6ZJh/4USeQE5yho/lHBfhl1CoV2g/tR3OXK2vZcJepkqhsRJFXfQp99nEiC6ddKzEpITkP9sHRVvf8KOttsIgoMmUJGa72+gt6QTItlnDEa7Cg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EPeI9X/y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JyJLSvje; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5B2D179BF
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 03:11:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.7
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745377868; cv=fail; b=ECr0RrSNANEv6EanKK+l3LbFom0HPCMq1v8gWJ3Aq1ZtL5lxVA5vyekdDQjUeGdiTabTJMs8PlgGuTMWYlKVxKZuFSbgUg+Zje0HW/bQd6C77ny7BeWBKZKXZWaXwwo3tTwHr0asnOtpsklS+5w8blz6C8gdvuGn3qkRcxVoB+0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745377868; c=relaxed/simple;
+	bh=cFiZLUpybe0RRK4uU+yX3k01tDrZSd4c9l1OQ8O4U5g=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=qQoHPQONaL7kSB7/Mt4GR/3VYdeoiBOgpLXyxVI685c2VwukER8fxJm+c13eWF0Vgq1k2lRQjNjXZCkS8VYHUDfHXkaZirVDVseQZh6rBzjGEZwYHvx6lgkzbzT+r74HZT69gMUujomAxhwVFxhGvOyWN4Z8vIn/QpzNxe9tNao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=aZGmzXi8; arc=fail smtp.client-ip=52.103.68.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EPeI9X/y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JyJLSvje"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1E91811401D0;
-	Tue, 22 Apr 2025 22:48:28 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 22 Apr 2025 22:48:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm1;
-	 t=1745376507; x=1745462907; bh=KQoPsPOJFbcRxNe/oxSsNuzBiI1UXeFS
-	7BUL5PUxkDE=; b=EPeI9X/ykPK4mriRs2o8/mdrDMDWp5WXSr8pBpy/1eK5RwkU
-	dYSlgbiHKTEh3dXIsX9EaO7rwmwa5Fapc5YBLK5xw6/JwHe9p+2SeOx9PgZa2anq
-	jA5RcErpR3kVGzimRMS9O5XfhA1PRumxw8OcuxpPJW0DsMGLDFVcoWNVJP16ik+u
-	EnoO7i5JpLf9S2UjQuqMAxG3fholnXKqkjVhsLDIZO1bJkeuhAdyhJVgg7hXR/Be
-	UDmQ7xO6u12EafF3kV9+ieUjVb7aaxyrv1kiqVuB1Iy2Hi1o2LpeADF6y3lYo8Gy
-	g11ODssLWeozkZ8mKshITiOEKQVsGVesaE2cBQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=1745376507; x=
-	1745462907; bh=KQoPsPOJFbcRxNe/oxSsNuzBiI1UXeFS7BUL5PUxkDE=; b=J
-	yJLSvjeAhl6WUxWSNF811oQilf1kw4DElsZSGnGNcR6xEsbTE6sazz7mhYcUXbDw
-	8DXRJ0ftZbRg6+GgewQ3cbOb70HShWPAsslnB55KlgcLeFEKss/Fs/lGh0iV/iXT
-	AJOSGZ4ewgJFEYhtWhk3S1TJ5HdE722PbdxftA5ICqVRXpg+svA6B8RC5D/jwrfC
-	8ZQbtqDSFHyW3/kqIqFxWESzVly/IImE++Sz5JpX42uBfuSGFeg9xwe/8sgo254K
-	sn8qosB01+pVrWHq+6cbloKyPiNfgR2t4vM7+T1BMh/cw2k0cO0hfP0/P+fF4bWJ
-	fUgReN9KpsLlpClM8kU+Q==
-X-ME-Sender: <xms:-1QIaMJJPapT41Uzu867rOD450QCH7fgdJTBRyo2f5ssWNZ7GhMP3w>
-    <xme:-1QIaMLPKg9Ee9UTVM0T_QmubGfeHQBXwCoi-xpGxTq-ETSU_i-Gu2NlHeLOU_bK3
-    qpxUeT-JY-dN4sGSg>
-X-ME-Received: <xmr:-1QIaMsZG6Y2kszYvFPqb7ik6TpJjs1uGIj3bNbwIeHLieLZEIE3O1lQYbY7vfeAc33FL7aztpokw9I7GU00sgVzFP-Sd0iHKZFA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeehgeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffuc
-    dluddtmdenucfjughrpefhvffufffkfgggtgesthdtredttdertdenucfhrhhomheplfhu
-    nhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecugg
-    ftrfgrthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfeegjeelheekffegiedv
-    kedvkeeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhooh
-    hglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhm
-    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
-    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
-    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
-    gidrtghomh
-X-ME-Proxy: <xmx:-1QIaJbJvShtrVfHTxbiFkv4L3O2pUgOzVQtz2MzOZ61LaxJ9RQsJA>
-    <xmx:-1QIaDZddwJlxLzRyzm0w4NXjOXIDlGLSRdy4Wz8JjcOYwGqTEes3Q>
-    <xmx:-1QIaFDQP40O6AM0n6SzbD-4vjwAMV4BSD8RWCfOUCNaYGfxbLoKTA>
-    <xmx:-1QIaJYjsVWaqPrMkfOWp-Bi-8hZP3J604CZSv29sq0Ljo0Q8YHlzw>
-    <xmx:-1QIaNx1m2oBlnfFPqtijHR4p91kHWNqdWvpBi4BIj3ahg-wAbSwq6jf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 22 Apr 2025 22:48:27 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: What's cooking in git.git (Apr 2025, #06; Tue, 22)
-X-master-at: 4bbb303af69990ccd05fe3a2eb58a1ce036f8220
-X-next-at: 1f30a19c024a1458e9fb9991a929dcc38b1157d4
-Date: Tue, 22 Apr 2025 19:48:25 -0700
-Message-ID: <xmqqselz1tl2.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="aZGmzXi8"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Ptdw3yzPFFKZFMp1S2jQd+idfRRlBB/TZFoOZMDsnY0YViWa7G7q+tPlH8DUDn0lMnAajtgWG9WntZU2A5rxhvSZ2tmw6MMa6fDCovsXYeFE3l5FGCeQVBb6ISo/BkghNAuo9Mei7GBrS/davbI+Q42vyPuGWSr8+KV+EScF1sYSnIzBqGam/RdgH9QPwxXftrey2YiXPZLGCD0WG73GskT9JvozkPNPBhj32+6XC97uohhj3QxTD3T42uC1P0AUo6mDmzJPKd++2shT9zxX0phHWZJ2cPj1mRbAKIuJRiDZtklPY+awUHDL0+JtG3UbVs66+BJdOm0n+z9NV+rJNQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=cFiZLUpybe0RRK4uU+yX3k01tDrZSd4c9l1OQ8O4U5g=;
+ b=eMncLdq9iKp5yqrmUu0QU0eyc1aCS0TSZp3O/rVlgRygtSqITvid9kQvOXKlB922ZCPNvKf8bLEhiZqYsnWB76tV2ZDdLn8yCsifUbFGooHLxYGfUZCMrDk9nlS89vg5M3x0iI/3fr5tD/oSzP3x14e4juwQlEgvMtKqkgLHqdw33yBu6nde+7otcRzy+dvolfaEbhCiyW3ftu6dgzOvNZapsDUleyL35QUN3PwDnfzaGSHIzoJxUjzJ0GuZEW117VIfDEEivBPP+7zyLxO37AtIbOwpGqqB8NT3ok09BzDhm5xxWhoIPrPWiZnLseZyvcrkiFIxgsSQJhHTspP/6A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cFiZLUpybe0RRK4uU+yX3k01tDrZSd4c9l1OQ8O4U5g=;
+ b=aZGmzXi8f78S7HUC5O+9YDGgjc92YOjUPKGVnLRjfcnf1jIBnIyR87ou0ulTqAw5Fg4LjHlMack8AuP3mWct+Yz8+Ml815EBBwTB7Yj30VbXVcC27tczeAKhSa23XZmudW/ZrlHvuC1jeLE5iv9MuIQV9t2eSOm/wTmlH27Sjw7kg52/pjMu9WMxWOgJni1wOnralC+YlZTHcYGRwTxf2q/GbFVjxxAOIKb4hO8vrOBcRAgACrqyzOOsEeYhvMeyGDaM9lUPCzteMuPcF13JZL5V+FQ6oIDTANX+tLxMW3pKd5v0tvc0c7PygKP9LW+B7Sa3pnobjtCdb2IstEB21g==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by MA0PR01MB10281.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:12b::6) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8655.34; Wed, 23 Apr
+ 2025 03:10:59 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8655.031; Wed, 23 Apr 2025
+ 03:10:59 +0000
+From: Aditya Garg <gargaditya08@live.com>
+To: Junio C Hamano <gitster@pobox.com>
+CC: Julian Swagemakers <julian@swagemakers.org>, "git@vger.kernel.org"
+	<git@vger.kernel.org>, M Hickford <mirth.hickford@gmail.com>,
+	"sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>, Shengyu Qu
+	<wiagn233@outlook.com>
+Subject: Re: [PATCH v3 3/3] send-email: add option to generate passswords like
+ OAuth2 tokens
+Thread-Topic: [PATCH v3 3/3] send-email: add option to generate passswords
+ like OAuth2 tokens
+Thread-Index: AQHbs5rts6lnrA+/ukC7rPEkGmAB+bOwQmzPgABRCJU=
+Date: Wed, 23 Apr 2025 03:10:58 +0000
+Message-ID:
+ <PN3PR01MB95972EA90559852F9F8328C3B8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+References:
+ <PN3PR01MB95975C7925B6395DEC46F9EAB8BB2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597813722A475923ED1C036B8BB2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <xmqqh62f3kji.fsf@gitster.g>
+In-Reply-To: <xmqqh62f3kji.fsf@gitster.g>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|MA0PR01MB10281:EE_
+x-ms-office365-filtering-correlation-id: 558a0368-4043-49c5-8f17-08dd82147884
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|6072599003|7092599003|19110799003|15080799006|8060799006|461199028|8062599003|19061999003|440099028|3412199025|19111999003|102099032;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?V2Z2dHZCSkpoTXljRXMrM21MY0lKa0cwRWgydnpVYTJsUCtzUTBMZmpiUU0w?=
+ =?utf-8?B?VzhFcDVPblFIcmVvb3NjeHE4dHF0WVYrRFY3YkswUjIzNUpwUWU4VVdCR1k4?=
+ =?utf-8?B?Y0ZPWnZBYS9nNStZSDhaVHdXUGNieTl6OWhsK3gwOTJ4ckhUSzNkRXBPbStu?=
+ =?utf-8?B?Zk9GNmFwQlFaU3hVbkY2ZWYyM08yNlloblE0ZXVsa3VYOFJFbStIZ2pNMzB6?=
+ =?utf-8?B?U2YzN1FUYmJZSmFVNlRHOXpDcHlQQmsvU1VmY3FpQjQ5S21xV2FtL0FnZDVW?=
+ =?utf-8?B?bmsvTVRhb0NSTTFpajUrelh1NkVpUkNwaURrVlEvcENXV1Z6MUFXYzZ3UURI?=
+ =?utf-8?B?K09hc1czbGtoeXA0RU9keVprZkJ1c3BmZms1VW1ET0dxMWdwckYzemoxdlVL?=
+ =?utf-8?B?U1NCY1Z0MzZNWjh1S2NyMkQ2OW0yejV4anh2eEFFakhhWTlxZC9XTnlhVmt6?=
+ =?utf-8?B?Nk5KdEFIYkJmSHJZNlQ5Z3hFMHZhaGU4R005b0tqSzVMclc5Nm1Rdy9JeVFz?=
+ =?utf-8?B?ZlNzdkpCd0hoRXU0TEJ1bXBkQXlnYXEwWWdpWjlwMExxZHQzWExRNHZlVXRr?=
+ =?utf-8?B?bVdDNHJ6Zk4xRk5vMVpBU2ZCb0Nyb1dKREh1Rjl2MDZwWXpYM1dFQllFWFdL?=
+ =?utf-8?B?bnFpaUVRb2cya2xmWmVCRDlac0FZa29jV0NIbXhGZ1A4REhhRkV5NVVMNWFi?=
+ =?utf-8?B?VVM0eEZ5Z3NBMWRGN0pMeW9venZOMlAyOFJIYzFUMWt1aytjWndzMFo3NVBH?=
+ =?utf-8?B?NmZ3SmpXdXA4bFM5aEhieCtKcUZkNXUwd3NKeW1yU1pYS1l5eUtnaktMbHBm?=
+ =?utf-8?B?Q1dpU2dWTW9UVldYbU4xTkYrK3paQU9LeFJoVkJnMExWVzdDaVhZbGhWQmk4?=
+ =?utf-8?B?OGkzbW51Rmg3YTJEdm1HclBTQ00zT3hLNENSYW5WNGFQRURvdDJqc243QURk?=
+ =?utf-8?B?M01wOG5WYmVyWkp3djQvZ2RIU0dsalRZb0kvU3lXcW9uSWxDMEU1bWE3cE1v?=
+ =?utf-8?B?OXlxN1pFR3JFQ1daL1p1RWl4YVlnUTErRFd0ajFvbVFnQlhGcXU1eHptMmxo?=
+ =?utf-8?B?NmdkUEZHampoVENLQllDbGtRcnl1WGxxNnRYSmplV3IvaTdkMzlWZFNRNFFO?=
+ =?utf-8?B?WDRxTkJ6YmM4ZEFtWXdTU2dTcG1meWR3SFNVMHo1SXZtU25remtKdkxNdnBU?=
+ =?utf-8?B?NkhERUJndSthcktGbGpkMFk2ckFaazBVWnBFSGlWYXJjWTFaTzJSR1ZibjJC?=
+ =?utf-8?B?NmtWVHBGc3oxRWM4VUlWMGpnTFJUWDBVUTM2VitFWEU1eUVNaGRnSzdyUlFi?=
+ =?utf-8?B?bXhzVm5IME80TUVUVmtPVm1ubkVKK2JlQTkydjl4eFhpc3QwVG9ZdHpNMzlj?=
+ =?utf-8?B?UnFqZ3gvbjNmaG45U1dNMlRjV3NQYUliWG1nMjVXYW95UEpWTEF5Q29FWWlL?=
+ =?utf-8?B?QnR0djlPcXh6RStrdzRlVEZFZy9nOHhuVDFiVEZ6MVFsQzZSN3BGcW1yWldQ?=
+ =?utf-8?B?OWV1bHRXc2VuYVBjQ1pES3dTV0IvdENMSWk0ZVlyOGRrVEpPc0V0QWdiNzVF?=
+ =?utf-8?B?dHdxVzk4S21OTlFNS1owY2FkZE5VbzlDM1Zyb0tNVUJYT2lNUzh5a1JmTXoz?=
+ =?utf-8?B?ZkZvaVBhSzFFWHBDMnN0ZXRnN2ZSSlE9PQ==?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?S2J5K1BVVVNKU0tSdmFSY2ZwQnNsQXhoc0pNK2ZvcTdLb2ZFem5PNzdLUlBG?=
+ =?utf-8?B?ZUhEdW82ZkFGL2s3a1dJOGozc3NMbStlcFdTODhML3YydFhpWkhEQnU0WDdr?=
+ =?utf-8?B?T0Q2K3lBYi8vd25VenV2WTZEVDczSmNZTG1FNzhJRUpiWFRWWTM2cmRyai85?=
+ =?utf-8?B?eWZmNHNmbVpFTEY5VnhXQnpWa2hlQ2FuMjFqV1cvY3V0bWQ0UEVnY0hUVVBE?=
+ =?utf-8?B?R25RejYrRjhzM3NXVVM3OG5UMmhNSTNaTlFaekZlNTdTQzBuaFdsbGRZRTVy?=
+ =?utf-8?B?a1IxRlhFd0NxNDZZby9EcHpxRDJnTlgvZnFVV0diQkxtbXRLNHozWjY3VVUr?=
+ =?utf-8?B?cm05cEsrYVo2dG9NQlRGZ1ZXRFgzNHV5YkZtMEZSZkpTdEpqeTJiT0lGS2x3?=
+ =?utf-8?B?NHR2cy9kUWx0STJTNE54ZzJKc1NsUDNnMVlZR1ZaVTM3bFlyWWduc1AweVha?=
+ =?utf-8?B?VjB6NFhQR1lDd1cwOWdhQVpZYVI2cDRFdEJFTWllSEhTS3BKQ0tjOVFIWFhw?=
+ =?utf-8?B?clZ2Nk9wdnVSRC81SEcrZHhpRzBFbkRWRE9SeDd5cHl6ZzVrL2FZd3lOcjdJ?=
+ =?utf-8?B?cHZ3bmcwaWxvRC8yWmVSOTkzRnNJSW94N3hkejVocTIwNnYxRlZUT1Z6WjdF?=
+ =?utf-8?B?YXlwRmovT0VOOFMvUHJNVUFhOVh6MEN3djgxUHJvNEhmeVpERkN4bHFRZDhs?=
+ =?utf-8?B?cTJzRm5EVitndlNxYkpyeGcxbUtOWXlubWhJZGxrdE40QnRGSUhsQkJwQjdm?=
+ =?utf-8?B?LzNDczEwajdGdStJVUJ5MGJvR3M5cldZNC91a01pekd0WmJOellNK09zS0x6?=
+ =?utf-8?B?YU9hTndCa2trMng0YWs1UkFXTEZ2SjdXNlhFUUhxN1VnUFhWclBDa25Lelc1?=
+ =?utf-8?B?WTV2SFMxbDUybGxmVU85OVkwVlhnaUZUa2xPczlSVHJuT0U0UVFway9wUEFu?=
+ =?utf-8?B?T3Vhc2NFZ1BhdW9CT0hkRnlHT01aUU9nMWZocXpXZ0FQamNMcEdjajh2VTJv?=
+ =?utf-8?B?VXViVnhzNW1ncW1Vb0R3VXVjaGk3ZkptckVuN3VpRUhuZ0FqYjF5bng3MnBW?=
+ =?utf-8?B?QmJ5b2JPeGh3Uzk2bVZBK2ZjWjRIZGI2Sk5LVE1GWndKNmtyS0RSM3dseFRR?=
+ =?utf-8?B?SzBJRUZ6cHplbEpOZGRZUS9TelF3ODhQT0pzeTlydWxraDdlNTJIQzNTNmx6?=
+ =?utf-8?B?bVFtc0RPeFJ3RndSWkFMZms5VjlrbGovUnN6VTM4TXRnWERiWUZ4Q3JFbjR5?=
+ =?utf-8?B?ZjByNkZsQS9xM25NQmhPd2Z4Z0YvRlNtTUFycERsUi9CZnJNdVB4bE1aeXlX?=
+ =?utf-8?B?M2V0T2paU3JxYW0xWEU5UUdjK3BoWTRYN283NTBjandLNjkrSTE4U2xYbVhx?=
+ =?utf-8?B?WkErOVYwbVhGZFh1M25ubm8vbStsTVFFMDk2SE1ObUR5b2dxbHFJLzRDWXIy?=
+ =?utf-8?B?am5MZVlLWjlZL2Uwa29RWVFJcnBHVURsa0pZNGlzbjRTMzFiSDNaUGd3ODJw?=
+ =?utf-8?B?ejYvaGVOTUEyZitzZUVpQ0kwdFBMeVV3Qk9YZEZkSFN5eDZpMzdmNWhLTHZU?=
+ =?utf-8?B?WHVCMkF2VURxQ2lyT09BYTE5NkdpVVNNYkF5aFc0MllFTng0SDRucWx3UUcr?=
+ =?utf-8?B?MDNIa2dGOVdLSU5Ua3VKaU5SYzE4bkp4dFFaYUFTT3lqK0tvcTNBaUhWYU11?=
+ =?utf-8?B?L2pVeVphT0ZyVVprRzZ0elpYSytZYUZOTFJKSXNoS3NLdEkxbElDbUJUYWFa?=
+ =?utf-8?Q?7EyIPdaebOoVJ8OstA=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-Here are the topics that have been cooking in my tree.  Commits
-prefixed with '+' are in 'next' (being in 'next' is a sign that a
-topic is stable enough to be used and are candidate to be in a
-future release).  Commits prefixed with '-' are only in 'seen', and
-aren't considered "accepted" at all and may be annotated with an URL
-to a message that raises issues but they are no means exhaustive.  A
-topic without enough support may be discarded after a long period of
-no activity (of course they can be resubmit when new interests
-arise).
-
-Copies of the source code to Git live in many repositories, and the
-following is a list of the ones I push into or their mirrors.  Some
-repositories have only a subset of branches.
-
-With maint, master, next, seen, todo:
-
-	git://git.kernel.org/pub/scm/git/git.git/
-	git://repo.or.cz/alt-git.git/
-	https://kernel.googlesource.com/pub/scm/git/git/
-	https://github.com/git/git/
-	https://gitlab.com/git-scm/git/
-
-With all the integration branches and topics broken out:
-
-	https://github.com/gitster/git/
-
-Even though the preformatted documentation in HTML and man format
-are not sources, they are published in these repositories for
-convenience (replace "htmldocs" with "manpages" for the manual
-pages):
-
-	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
-	https://github.com/gitster/git-htmldocs.git/
-
-Release tarballs are available at:
-
-	https://www.kernel.org/pub/software/scm/git/
-
---------------------------------------------------
-[New Topics]
-
-* js/git-perf-env-override (2025-04-20) 1 commit
-  (merged to 'next' on 2025-04-22 at 77ea361791)
- + perf: do allow `GIT_PERF_*` to be overridden again
-
- Developer support fix..
-
- Will merge to 'master'.
- source: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
-
-
-* ua/call-repo-config-with-possibly-null-repository (2025-04-20) 2 commits
-  (merged to 'next' on 2025-04-22 at 1f30a19c02)
- + builtin/difftool: remove unnecessary if statement
- + builtin/add: remove unnecessary if statement
-
- Since a call to repo_config() can be called with repo set to NULL
- these days, a command that is marked as RUN_SETUP in the builtin
- command table does not have to check repo with NULL before making
- the call.
-
- Will merge to 'master'.
- source: <20250420025501.183290-1-usmanakinyemi202@gmail.com>
-
-
-* az/tighten-string-array-constness (2025-04-21) 1 commit
- - global: mark usage strings and string tables const
-
- Code clean-up.
-
- Will merge to 'next'.
- source: <daj53eijkqzsjy5cvuxchea4qm3pbiu673ehetihfffyvwzhgs@tarta.nabijaczleweli.xyz>
-
-
-* es/meson-cleanup (2025-04-21) 6 commits
- - meson: only check for missing networking syms on non-Windows; add compat impls
- - meson: fix typo in function check that prevented checking for hstrerror
- - meson: add a couple missing networking dependencies
- - meson: do a full usage-based compile check for sysinfo
- - meson: check for getpagesize before using it
- - meson: simplify and parameterize various standard function checks
-
- Code clean-up for meson-based build infrastructure.
-
- Comments?
- source: <20250421175247.240971-6-eschwartz@gentoo.org>
-
-
-* jh/gc-launchctl-schedule-fix (2025-04-21) 1 commit
- - maintenance: fix launchctl calendar intervals
-
- Fix for scheduled maintenance tasks on platforms using launchctl.
-
- Will merge to 'next'.
- source: <20250421054633.231069-2-joshiheinrichs@gmail.com>
-
-
-* js/windows-arm64 (2025-04-21) 6 commits
- - max_tree_depth: lower it for clangarm64 on Windows
- - mingw(arm64): do move the `/etc/git*` location
- - msvc: do handle builds on Windows/ARM64
- - mingw: do not use nedmalloc on Windows/ARM64
- - config.mak.uname: add support for clangarm64
- - bswap.h: add support for built-in bswap functions
-
- Update to arm64 Windows port.
-
- Will merge to 'next'.
- source: <pull.1904.git.1745239150.gitgitgadget@gmail.com>
-
-
-* jk/p5332-testfix (2025-04-22) 1 commit
- - p5332: drop "+" from --stdin-packs input
-
- A test fix.
-
- Will merge to 'next'.
- source: <20250422111632.GA1855088@coredump.intra.peff.net>
-
-
-* lo/remove-log-reencode-from-rev-info (2025-04-22) 1 commit
- - revision: remove log_reencode field from rev_info
-
- Code clean-up.
-
- Will merge to 'next'.
- source: <20250422213133.18685-1-lucasseikioshiro@gmail.com>
-
-
-* ps/ci-resurrect-p4-on-github (2025-04-22) 1 commit
- - ci: fix p4d executable not being found on GitHub Actions
-
- CI fix.
-
- Will merge to 'next'.
- source: <aActb3dB-r3s69h6@pks.im>
-
-
-* ps/install-bash-completion (2025-04-22) 1 commit
- - contrib/completion: install Bash completion
-
- Build update to install bash (but not zsh) completion script.
-
- Will merge to 'next'.
- source: <20250422-b4-pks-meson-install-completions-v2-1-ab29d399bc6c@pks.im>
-
-
-* sj/string-list-typefix (2025-04-22) 5 commits
- - u-string-list: move "remove duplicates" test to "u-string-list.c"
- - u-string-list: move "filter string" test to "u-string-list.c"
- - u-string-list: move "test_split_in_place" to "u-string-list.c"
- - u-string-list: move "test_split" into "u-string-list.c"
- - string-list: fix sign compare warnings
-
- Code and test clean-up around string-list API.
-
- Comments?
- source: <aAetW0dan8S3Fljq@ArchLinux>
-
---------------------------------------------------
-[Cooking]
-
-* ds/doc-disable-hooks (2025-04-16) 1 commit
-  (merged to 'next' on 2025-04-18 at 4b543e57a5)
- + docs: document core.hooksPath=/dev/null
-
- Document the convention to disable hooks altogether by setting the
- hooksPath configuration variable to /dev/nulll
-
- Will merge to 'master'.
- source: <pull.1899.v2.git.1744818135435.gitgitgadget@gmail.com>
-
-
-* tb/midx-avoid-cruft-packs (2025-04-15) 9 commits
- - repack: exclude cruft pack(s) from the MIDX where possible
- - pack-objects: introduce '--stdin-packs=follow'
- - pack-objects: swap 'show_{object,commit}_pack_hint'
- - pack-objects: fix typo in 'show_object_pack_hint()'
- - pack-objects: perform name-hash traversal for unpacked objects
- - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
- - pack-objects: factor out handling '--stdin-packs'
- - pack-objects: limit scope in 'add_object_entry_from_pack()'
- - pack-objects: use standard option incompatibility functions
-
- "pack-objects" has been taught to avoid pointing into objects in
- cruft packs from midx.
-
- Comments?
- source: <cover.1744757204.git.me@ttaylorr.com>
-
-
-* tb/pack-bitmap-lookup-tables (2025-04-17) 4 commits
- - t/perf/lib-bitmap.sh: avoid test_perf during setup
- - t/perf: avoid testing bitmaps without lookup table
- - p5312: removed duplicate performance test script
- - pack-bitmap: write lookup table extension by default
-
- Enable lookup tables extension in pack bitmap (and midx bitmap) by
- default.
-
- Comments?
- source: <cover.1744924321.git.me@ttaylorr.com>
-
-
-* as/typofix-in-env-h-header (2025-04-18) 1 commit
- - environment: fix typo: 'setup_git_directory_gently'
-
- Typofix.
-
- Will merge to 'next'.
- source: <20250418185855.52950-1-abhijeet.nkt@gmaiil.com>
-
-
-* ps/meson-build-perf-bench (2025-04-22) 5 commits
- - meson: wire up benchmarking options
- - meson: wire up benchmarks
- - t/perf: fix benchmarks with out-of-tree builds
- - t/perf: use configured PERL_PATH
- - t/perf: fix benchmarks with alternate repo formats
-
- The build procedure based on Meson learned to drive the
- benchmarking tests.
-
- Comments?
- source: <20250422-pks-meson-benchmarks-v3-0-7aad68bac6fd@pks.im>
-
-
-* aw/t9811-modernize (2025-04-18) 2 commits
-  (merged to 'next' on 2025-04-18 at 37484f566f)
- + t9811: fix misconversion of tests
-  (merged to 'next' on 2025-04-16 at 53103e8873)
- + t9811: be more precise to check importing of tags
-
- Test updates.
-
- Will merge to 'master'.
- source: <20250416145939.24207-2-anthonywang03@icloud.com>
-
-
-* ps/fewer-perl (2025-04-16) 5 commits
- - Documentation: stop depending on Perl to generate command list
- - Documentation: stop depending on Perl to massage user manual
- - request-pull: stop depending on Perl
- - filter-branch: stop depending on Perl
- - Merge branch 'ps/test-wo-perl-prereq' into ps/fewer-perl
-
- Reduce requirement for Perl in our documentation build and a few
- scripts.
-
- Will merge to 'next'?
- source: <20250416-b4-pks-drop-perl-v2-0-bdd0492e9498@pks.im>
-
-
-* ps/parse-options-integers (2025-04-17) 7 commits
-  (merged to 'next' on 2025-04-18 at 30159c9252)
- + parse-options: detect mismatches in integer signedness
- + parse-options: introduce precision handling for `OPTION_UNSIGNED`
- + parse-options: introduce precision handling for `OPTION_INTEGER`
- + parse-options: rename `OPT_MAGNITUDE()` to `OPT_UNSIGNED()`
- + parse-options: support unit factors in `OPT_INTEGER()`
- + global: use designated initializers for options
- + parse: fix off-by-one for minimum signed values
-
- Update parse-options API to catch mistakes to pass address of an
- integral variable of a wrong type/size.
-
- Will merge to 'master'.
- source: <20250417-b4-pks-parse-options-integers-v4-0-9cbc76b61cfe@pks.im>
-
-
-* kn/bundle-dedup-optim (2025-04-08) 2 commits
-  (merged to 'next' on 2025-04-11 at 082f7c87e0)
- + bundle: fix non-linear performance scaling with refs
- + t6020: test for duplicate refnames in bundle creation
-
- Optimize the code to dedup references recorded in a bundle file.
-
- Will merge to 'master'.
- source: <20250408-488-generating-bundles-with-many-references-has-non-linear-performance-v2-0-0802fc36a23d@gmail.com>
-
-
-* kn/meson-hdr-check (2025-04-20) 6 commits
- . makefile/meson: add 'check-headers' as alias for 'hdr-check'
- . meson: add support for 'hdr-check'
- . meson: rename 'third_party_sources' to 'third_party_excludes'
- . meson: move headers definition from 'contrib/coccinelle'
- . coccinelle: meson: rename variables to be more specific
- . Merge branch 'es/meson-build-skip-coccinelle' into kn/meson-hdr-check
-
- Add an equivalent to "make hdr-check" target to meson based builds.
-
- Seems to break linux.meson CI job.
- cf. https://github.com/git/git/actions/runs/14563669225/job/40850047961
- source: <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
-
-
-* ps/object-file-cleanup (2025-04-15) 11 commits
-  (merged to 'next' on 2025-04-17 at 4f5b5725c6)
- + object-store: merge "object-store-ll.h" and "object-store.h"
- + object-store: remove global array of cached objects
- + object: split out functions relating to object store subsystem
- + object-file: drop `index_blob_stream()`
- + object-file: split up concerns of `HASH_*` flags
- + object-file: split out functions relating to object store subsystem
- + object-file: move `xmmap()` into "wrapper.c"
- + object-file: move `git_open_cloexec()` to "compat/open.c"
- + object-file: move `safe_create_leading_directories()` into "path.c"
- + object-file: move `mkdir_in_gitdir()` into "path.c"
- + Merge branch 'ps/object-wo-the-repository' into ps/object-file-cleanup
-
- Code clean-up.
-
- Will merge to 'master'.
- cf. <CABPp-BFGeJ6eANb_5m4KSWRY_r9KCWarzya_qMkQNchKD5Q=xg@mail.gmail.com>
- source: <20250415-pks-split-object-file-v3-0-6aa7db7ad7b0@pks.im>
-
-
-* rj/build-tweaks (2025-04-17) 13 commits
-  (merged to 'next' on 2025-04-18 at 0ad43d3038)
- + config.mak.uname: set CSPRNG_METHOD to getrandom on Linux
- + config.mak.uname: add arc4random to the cygwin build
- + config.mak.uname: add sysinfo() configuration for cygwin
- + builtin/gc.c: correct RAM calculation when using sysinfo
- + config.mak.uname: add clock_gettime() to the cygwin build
- + config.mak.uname: add HAVE_GETDELIM to the cygwin section
- + config.mak.uname: only set NO_REGEX on cygwin for v1.7
- + config.mak.uname: add a note about NO_STRLCPY for Linux
- + Makefile: remove NEEDS_LIBRT build variable
- + meson.build: set default help format to html on windows
- + meson.build: only set build variables for non-default values
- + Makefile: only set some BASIC_CFLAGS when RUNTIME_PREFIX is set
- + meson.build: remove -DCURL_DISABLE_TYPECHECK
-
- Various build tweaks, including CSPRNG selection on some platforms.
-
- Will merge to 'master'.
- source: <20250416231835.2492562-1-ramsay@ramsayjones.plus.com>
-
-
-* js/range-check-codeql-workaround (2025-03-28) 1 commit
-  (merged to 'next' on 2025-04-17 at 809b3c3f63)
- + read-cache: check range before dereferencing an array element
-
- Work around false positive from CodeQL checker.
-
- Will merge to 'master'.
- source: <73cae30129338cf219a810c3a2a78ef48d5637d0.1743073557.git.gitgitgadget@gmail.com>
-
-
-* pb/perf-test-fixes (2025-04-14) 3 commits
-  (merged to 'next' on 2025-04-15 at f911b5420a)
- + p7821: fix instructions for testing with threads
-  (merged to 'next' on 2025-04-08 at a8aaeee41e)
- + p9210: fix 'scalar clone' when running from a detached HEAD
- + p7821: fix test_perf invocation for prereqs
-
- "make perf" fixes.
-
- Will merge to 'master'.
- cf. <Z-pD1puYT87YKAd4@pks.im>
- cf. <Z_TAtJ9LEeHo2AQN@pks.im>
- source: <pull.1936.v2.git.git.1744481732.gitgitgadget@gmail.com>
-
-
-* pb/status-rebase-fixes (2025-03-28) 4 commits
- - wt-status: suggest 'git rebase --continue' to conclude 'merge' instruction
- - wt-status: also abbreviate 'merge' and 'fixup -C' lines during rebase
- - SQUASH??? - <CAPig+cS92W_gYuNsaTvQxiP3xBK7Wpg0__uVkgAU1x0OFJUZgQ@mail.gmail.com>
- - rebase -r: do create merge commit after empty resolution
-
- A few fixes around "git status" while "git rebase" is running,
- plus a corner case bug fix for "git rebase -r".
-
- Expecting a (small and hopefully final) clarifying reroll.
- cf. <c2f93d99-2f4d-ee6d-7087-42320c6df0f2@gmx.de>
- cf. <e9700234-324d-dc63-d91e-9b8f36fabc79@gmail.com>
- source: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
-
-
-* ja/doc-reset-mv-rm-markup-updates (2025-04-14) 7 commits
-  (merged to 'next' on 2025-04-15 at 0b19646642)
- + doc: add markup for characters in Guidelines
- + doc: fix asciidoctor synopsis processing of triple-dots
- + doc: convert git-mv to new documentation format
- + doc: move synopsis git-mv commands in the synopsis section
- + doc: convert git-rm to new documentation format
- + doc: fix synopsis analysis logic
- + doc: convert git-reset to new documentation format
-
- Doc mark-up updates.
-
- Will merge to 'master'.
- source: <pull.1896.v2.git.1744460450.gitgitgadget@gmail.com>
-
-
-* md/userdiff-bash-shell-function (2025-04-01) 1 commit
- - userdiff: extend Bash pattern to cover more shell function forms
-
- The userdiff pattern for shell scripts has been updated to cope
- with more bash-isms.
-
- Comments?
- source: <20250330134018.9662-2-dhar61595@gmail.com>
-
-
-* mh/left-right-limited (2025-04-01) 1 commit
-  (merged to 'next' on 2025-04-17 at 1976b29af9)
- + revision: fix --left/right-only use with unrelated histories
-
- "git log --{left,right}-only A...B", when A and B does not share
- any common ancestor, now behaves as expected.
-
- Will merge to 'master'.
- source: <20250330112850.2477673-1-m@lfurio.us>
-
-
-* ps/reftable-api-revamp (2025-04-07) 17 commits
- - reftable/table: move printing logic into test helper
- - reftable/constants: make block types part of the public interface
- - reftable/table: introduce iterator for table blocks
- - reftable/table: add `reftable_table` to the public interface
- - reftable/block: expose a generic iterator over reftable records
- - reftable/block: make block iterators reseekable
- - reftable/block: store block pointer in the block iterator
- - reftable/block: create public interface for reading blocks
- - git-zlib: use `struct z_stream_s` instead of typedef
- - reftable/block: rename `block_reader` to `reftable_block`
- - reftable/block: rename `block` to `block_data`
- - reftable/table: move reading block into block reader
- - reftable/block: simplify how we track restart points
- - reftable/blocksource: consolidate code into a single file
- - reftable/reader: rename data structure to "table"
- - reftable: fix formatting of the license header
- - Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-api-revamp
-
- Overhaul of the reftable API.
-
- Will merge to 'next'?
- cf. <3okrcl7bdpy75hzyzpmrp7fluan4n3zvsroioq64id4a2kt3o4@fc6fetilb6y2>
- source: <20250407-pks-reftable-polishing-v2-0-316c4ff10571@pks.im>
-
-
-* sc/bundle-uri-use-all-refs-in-bundle (2025-03-18) 2 commits
- - bundle-uri: add test for bundle-uri clones with tags
- - bundle-uri: copy all bundle references ino the refs/bundle space
-
- Bundle-URI feature did not use refs recorded in the bundle other
- than normal branches as anchoring points to optimize the follow-up
- fetch during "git clone"; now it is told to utilize all.
-
- Needs more work on tests.
- cf. <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com>
- source: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
-
-
-* ds/path-walk-2 (2025-03-25) 13 commits
- - pack-objects: allow --shallow and --path-walk
- - path-walk: add new 'edge_aggressive' option
- - pack-objects: thread the path-based compression
- - pack-objects: refactor path-walk delta phase
- - scalar: enable path-walk during push via config
- - pack-objects: enable --path-walk via config
- - repack: add --path-walk option
- - t5538: add tests to confirm deltas in shallow pushes
- - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
- - p5313: add performance tests for --path-walk
- - pack-objects: update usage to match docs
- - pack-objects: add --path-walk option
- - pack-objects: extract should_attempt_deltas()
-
- "git pack-objects" learns to find delta bases from blobs at the
- same path, using the --path-walk API.
-
- Comments?
- source: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
-
-
-* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
- - diff: docs: Use --patch-{grep,modifies} over -G/-S
- - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
- - diff: test: Use --patch-{grep,modifies} over -G/-S
- - completion: Support --patch-{grep,modifies}
- - diff: --patch-{grep,modifies} arg names for -G and -S
- - docs: gitdiffcore: -G and -S: Use regex/string placeholders
- - diff: short help: Add -G and --pickaxe-grep
- - diff: short help: Correct -S description
- - diff: -G description: Correct copy/paste error
- - t/t4209-log-pickaxe: Naming typo: -G takes a regex
-
- The commands in the "diff" family learned longhands for "-S" and
- "-G" options.
-
- Expecting a reroll.
- source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
-
-
-* ej/cat-file-remote-object-info (2025-02-24) 8 commits
- - cat-file: add remote-object-info to batch-command
- - transport: add client support for object-info
- - serve: advertise object-info feature
- - fetch-pack: move fetch initialization
- - fetch-pack: refactor packet writing
- - t1006: split test utility functions into new "lib-cat-file.sh"
- - cat-file: add declaration of variable i inside its for loop
- - git-compat-util: add strtoul_ul() with error handling
-
- "git cat-file --batch" and friends can optionally ask a remote
- server about objects it does not have.
-
- Expecting a reroll.
- cf. <CAN2LT1Cc-UaUpabqcGascicR3nk6ZdFythamKje33Orhy5WoNA@mail.gmail.com>
- source: <20250221190451.12536-1-eric.peijian@gmail.com>
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 558a0368-4043-49c5-8f17-08dd82147884
+X-MS-Exchange-CrossTenant-originalarrivaltime: 23 Apr 2025 03:10:58.8771
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB10281
+
+DQoNCj4gT24gMjMgQXByIDIwMjUsIGF0IDM6NTDigK9BTSwgSnVuaW8gQyBIYW1hbm8gPGdpdHN0
+ZXJAcG9ib3guY29tPiB3cm90ZToNCj4gDQo+IO+7v0FkaXR5YSBHYXJnIDxnYXJnYWRpdHlhMDhA
+bGl2ZS5jb20+IHdyaXRlczoNCj4gDQo+PiArLS1zbXRwLXBhc3NldmFsWz08Y29tbWFuZD5dOjoN
+Cj4+ICsgICAgR2VuZXJhdGUgcGFzc3dvcmQgb3IgT0F1dGgyIHRva2VuIGZvciBTTVRQIEFVVEgu
+IFRoZSBhcmd1bWVudCBpcw0KPj4gKyAgICBvcHRpb25hbC4gSWYgc3BlY2lmaWVkLCBpdCB3aWxs
+IHVzZSB0aGUgb3V0cHV0IG9mIGFueSBwYXNzd29yZA0KPj4gKyAgICBvciBPQXV0aDIgdG9rZW4g
+Z2VuZXJhdGVkIHVzaW5nIHRoZSBjb21tYW5kIHNwZWNpZmllZC4NCj4+ICsrDQo+PiArTm90ZSB0
+aGF0IGl0IHdpbGwgb3ZlcnJpZGUgYW55IGV4aXN0aW5nIHBhc3N3b3JkIHNwZWNpZmllZCB1c2lu
+Zw0KPj4gK2AtLXNtdHAtdXNlcmAgb3IgYSBgc2VuZGVtYWlsLnNtdHBVc2VyYC4NCj4gDQo+IElm
+IHRoZSBhcmd1bWVudCBpcyBvcHRpb25hbCwgd2Ugc2hvdWxkIGV4cGxhaW4gd2hhdCB0aGUgYmVo
+YXZpb3VyIGlzDQo+IHdoZW4gdGhlIG9wdGlvbmFsIGFyZ3VtZW50IGlzIG9taXR0ZWQsIGFzIHdl
+bGwgYXMgaG93IHRoZSBnaXZlbg0KPiBhcmd1bWVudCBpcyB1c2VkLiAgWW91IGFyZSBkb2luZyBv
+bmx5IHRoZSBsYXR0ZXIsIGJ1dCBub3QgdGhlIGZvcm1lci4NCj4gDQoNCkFyZ3VtZW50IGlzIG5v
+dCBvcHRpb25hbC4gSXQncyBhIGxlZnQgb3ZlciBsaW5lIEkgaGFkIGNvcGllZCBmcm9tIGFib3Zl
+IGZvciB0aGUgc2FrZSBvZiBmb3JtYXR0aW5nLiBNeSBiYWQgaGVyZS4NCg0KPiBTaG91bGRuJ3Qg
+dGhlICJjb21tYW5kIiBiZSBtYW5kYXRvcnksIGlmIHRoZSBvcHRpb24gaXMgdXNlZD8gIEkgZG8N
+Cj4gbm90IHF1aXRlIHNlZSBob3cgdGhlc2UgaW52b2NhdGlvbnMNCj4gDQo+ICAgIGdpdC1zZW5k
+LWVtYWlsIC4uLiAtLXNtdHAtcGFzc2V2YWwgLi4uDQo+ICAgIGdpdC1zZW5kLWVtYWlsIC4uLiAt
+LXNtdHAtcGFzc2V2YWw9IC4uLg0KPiANCj4gdGhhdCBkbyBub3Qgc3BlY2lmeSB0aGUgY29tbWFu
+ZCB0byBiZSB1c2VkIGlzIHVzZWZ1bC4NCg==
