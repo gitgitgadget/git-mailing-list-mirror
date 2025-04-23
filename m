@@ -1,122 +1,179 @@
-Received: from bee.aspen.relay.mailchannels.net (bee.aspen.relay.mailchannels.net [23.83.221.14])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81BCA28F1
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 07:08:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.221.14
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745392135; cv=pass; b=NNqQiZzPnhJ51wyk90zddSprXmNbpRV9uz9fLvgP3HaDtDkIJPCT6oPISQ/ZGoeQLbT+l9P2IEWorReQEYjr30pVRTYRsQnl1wFk+osLLYcDnl+XcAIRLgwazKQ04HwjNqIhnGlWSYy//ydcdD/nwHsMgO9a6zWr44DYzTH75hs=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745392135; c=relaxed/simple;
-	bh=XzuWSz+k+l76kumFfe8oWZKqBwVzSSTDStJKnREtm+0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ibGtKmzIQvisFVT+82/FxtMtXTGs6nAg83GN4SBVkrdmm8LmiHqTUygkWULEqQ4WqK0pS4A9TbQhlRmDPj4MqzbiU25brz1WjfcZiRzigwWHEUdQsUDqALuLiFj1QVGqZgpnodv97ddiAefB2FE5fDBCLklonnwL/4CN2tdHkn4=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=RGw1V611; arc=pass smtp.client-ip=23.83.221.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE7B26A081
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 07:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745394509; cv=none; b=Rodahxzoyb6fKfnaGdYC1JX0JPtb5tLtkBEJOS6iRacz+TxGtdXuDnK4YxLMxhYX2uJvYIv2dLJEgtcwVMrbLALK0hGG/CknpiTAHD3l9luZeRjMwSiHXsN8FuGiVKUffQD3lDtxkSbJIP44ix67FqRvJOJcy97YBxNcMwS4+Hs=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745394509; c=relaxed/simple;
+	bh=nAxXJlBjshwVYV1aNJzkB/AyX6SU9jJCzc6aFZ8Pzo8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=FInc/CMS7Kt1buH1HrTVuKqSiozT67JiOjyHEuNT2Ds2eeYHjYIY3PMjrhGRbszntglLwpVBBwxSBznTsql/rGBpN7Jfd/mw1G/4ofNGbZJJ61XrAueEBbMDhpZKBC5SFYsEPz5JNHkoxoBoH/nI6EmMFu8IqWdYcftVZMarlkA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fY8a8aEU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EZv6FjKk; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="RGw1V611"
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-Received: from relay.mailchannels.net (localhost [127.0.0.1])
-	by relay.mailchannels.net (Postfix) with ESMTP id 7D80844808;
-	Wed, 23 Apr 2025 04:47:14 +0000 (UTC)
-Received: from pdx1-sub0-mail-a251.dreamhost.com (100-113-55-196.trex-nlb.outbound.svc.cluster.local [100.113.55.196])
-	(Authenticated sender: dreamhost)
-	by relay.mailchannels.net (Postfix) with ESMTPA id 07A5C44EB7;
-	Wed, 23 Apr 2025 04:47:14 +0000 (UTC)
-ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1745383634; a=rsa-sha256;
-	cv=none;
-	b=3kKg+2Q5bIBbVE7LJA3ovBeRrfgJM8knKvyK64orB1o/cLF+XePS2p0KnGTJvY1pj1Tuvn
-	j4+SffuHtJToX4OTL4TO3+zmOLCOOQL5ccJKgzPr7f02eYmSpONOcWOspncAyOh7AoDXS5
-	O/A6U+lsKVIlWAhC+qhQoz2G9ETOTVhHtXdkGkUZ0M/CD1dsI2NT7+IbvsxehICSQJCWfF
-	LInnq3b8yOBgrkBaU6oPmxQnsX3/d4Yv6ReoSi+Kc88kDc0Q7yT1bALuORjm3HH1K0s7hO
-	atkO9vAkWvC2h7LfwHq4HVrUNdiLcb2ZuKJXZsCzbeqI5lwODZt6GrD/gEun9Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mailchannels.net;
-	s=arc-2022; t=1745383634;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references:dkim-signature;
-	bh=R8x/WuU24RjnbJd/U63k7afw2ymXk9UKTMMD1r/UiBA=;
-	b=jKKhqEaM8EFQMS/UAzv+YsnEigGBtIXhnPoR0kB7HhTnrMflfirklVdaOYAlUVZIcizgWI
-	i5hdMP8EGZz/NTOv89wLQLdSNGtPK3XzkVyI0Ht0iOW9+J6darAtlhVHOrc9qMh4bav3pF
-	4vafex2J9PlKzBsW9x9wKT2nvY4xil30OtDxDdA4Pti2UwVEbiKLtpSgy+qY44zq7eMy2C
-	uc+HmAhsMmJIbl2z9s3pH7EBihFORw801wH8ePSj6gJumau/Gqkcs9HyIKXFQX2Dis4joj
-	EtIvuV/Q5ay97hMlUGTBVQiMyvMFvsMMEDb51ZHM6NbSDG2rdR+oZBbrUBIQKg==
-ARC-Authentication-Results: i=1;
-	rspamd-5cfcf5665-kj6cg;
-	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
-X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
-X-MC-Relay: Bad
-X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
-X-MailChannels-Auth-Id: dreamhost
-X-Well-Made-Gusty: 5461d76107e31352_1745383634292_4106831385
-X-MC-Loop-Signature: 1745383634292:3443649520
-X-MC-Ingress-Time: 1745383634292
-Received: from pdx1-sub0-mail-a251.dreamhost.com (pop.dreamhost.com
- [64.90.62.162])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
-	by 100.113.55.196 (trex/7.0.3);
-	Wed, 23 Apr 2025 04:47:14 +0000
-Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: nico@cryptonector.com)
-	by pdx1-sub0-mail-a251.dreamhost.com (Postfix) with ESMTPSA id 4Zj65r6fYSzBD;
-	Tue, 22 Apr 2025 21:47:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
-	s=dreamhost; t=1745383633;
-	bh=R8x/WuU24RjnbJd/U63k7afw2ymXk9UKTMMD1r/UiBA=;
-	h=Date:From:To:Cc:Subject:Content-Type;
-	b=RGw1V611/jeU0xgjAA4PsyU7x0/RUSzYY6bXASfNZMFCnudIxzGFuereC4bQObQjo
-	 t7L3cBM5PeI+FYeQFWB4tAEMYa6ciCbopxTSkkFGnpuF8B/QOIKxa2tmFkodQ42aCe
-	 j+XZQAzGJzXIYhUoSGe/xp4Zgsf4fiJJ0vAzVoV2a1tyZSQI/FUhNGaoDxJih0VNWm
-	 QdITrx9UK1jKD3acTCCunAqW5DXILKLPiPlcc7tjxCRGu6gLqNLY5TEfKdlKbaS0/O
-	 sQTi+1VNY/TIYYsLWy0Up6pqex+12tBKSAKu1cLRJr4zZ2xKGm0hBKi4WrgJI5xG0L
-	 WjlqFjMt0VyMQ==
-Date: Tue, 22 Apr 2025 23:47:10 -0500
-From: Nico Williams <nico@cryptonector.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Remo Senekowitsch <remo@buenzli.dev>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Theodore Ts'o <tytso@mit.edu>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-Message-ID: <aAhwzs62VPZrWr7+@ubby>
-References: <20250409121924.GA148735@mit.edu>
- <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
- <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <D9DIPNY431IJ.23DG6UL5CIQJ@buenzli.dev>
- <xmqq8qnr3jji.fsf@gitster.g>
- <aAgdauFt/mdCY+GZ@ubby>
- <xmqqy0vr21vq.fsf@gitster.g>
- <aAg8HN6sgFu4mj1/@ubby>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fY8a8aEU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EZv6FjKk"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 814701140106
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 03:48:25 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Wed, 23 Apr 2025 03:48:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1745394505; x=1745480905; bh=AueUhr3hVN
+	FOzAM3GxXyCqY4XtR09ORp9AFx54K9WCU=; b=fY8a8aEUyoRjhHeDJ+3VoUE/Uk
+	V8wpisJJ17WvnETXUMc2D7fIaZwA/5urwpUWYQ+knk+idCEIA6hgN+4G55Rp/ZTK
+	iD65Sqv+6H9rIi7g66tL+1aOTNcI0tslC/he6fS/niioO99h3IgDgExwDj7zrieS
+	vlhyUXkTMZzX8JhkPS6D/tVnHYRE+9303KlE1pabOGxzw7gw+rvN5CbDjDGp1L9s
+	l/vgKhIRbeZvWavYVnPXZodcMLclBKXnKchHgsKsJThQ6LzDRw04MqBuFnUGyliD
+	3Xmd/9ioMkgWbAPgoUbqXfH43WQVkDbJzAigm8capdM/yzHujSC6MCrnxCcw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm2; t=1745394505; x=1745480905; bh=AueUhr3hVNFOzAM3GxXyCqY4XtR0
+	9ORp9AFx54K9WCU=; b=EZv6FjKka6kT5AcRsABrRktKAGsUxISorclMsVdLYK7T
+	+pyglw0phcJVdYrufF94tQFS3UdGtHduXVYQ0kOwyMn/RuU36AyvMz5PLBMWSR3M
+	qb/h3aBrG/qtPrgYaW9nV97tS7kBRSa0K8f1AUdsq+9ukMMF2rP7xKQa0EWx+AgP
+	KX7YCQt36Zn+9g8eNLlZh5WERwq9eKNEHMbjCMCaSQnqERm+RWUX/G+XRwqWk5HJ
+	SIP+mUN4FEoyJrZQSGp8pogwYRPVPe8nzUcSJr3cabeMPsCOTqVGcfweaEcILpoM
+	RSttcpmc4XWJDCNaF4MVcWYBr9aC9PCTHZnADBgCsQ==
+X-ME-Sender: <xms:SZsIaN9Yp6Uk6Q1U6qEkkfoTNCWbclnDcXxHFDXgKQx4PMhWCl6pSw>
+    <xme:SZsIaBtNo3nv4nYne6k3net-hgNKIrBu7iTlLZwzXRxAjTwBewPiijs2QLxtViySE
+    dR2DQsfS_Xve4cg_A>
+X-ME-Received: <xmr:SZsIaLBuEvh5QSTla3vDGkWCCjFM3_eVXqzbfR90Qti-8rUSzIVjVWCwADM4qbNRPiT03gZLTmnu55V4bzjq-bLKSYwvqZf4Vp-QF_F5hA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeeitdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhuf
+    ffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektd
+    etieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:SZsIaBetbh6EaVG7lM4TJx_mJpEc5GEO_Ugbdu34gZwEkFQwZToOXg>
+    <xmx:SZsIaCMhGiQWVpdVrcei5lqiEfxTVv3uX656x4TuC4L_7lESOct36w>
+    <xmx:SZsIaDkqEECKzjLhgkcI_irWyX_HIMoYHEkRTUu2AkZA-_HlNLhKWg>
+    <xmx:SZsIaMvB-pknQ9S_N6gwwkHYAlBFNLr4juR0hiXHs5tMwUGSZSAgHQ>
+    <xmx:SZsIaJpB9cKsBT2RPhygFjscm0q1ov09n9j-KPn7RPEI2m71Oeq0_cV->
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Wed, 23 Apr 2025 03:48:24 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2e996df3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	for <git@vger.kernel.org>;
+	Wed, 23 Apr 2025 07:48:22 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH 00/13] object-store: a handful of cleanups
+Date: Wed, 23 Apr 2025 09:48:10 +0200
+Message-Id: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aAg8HN6sgFu4mj1/@ubby>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIADqbCGgC/x3MQQqDMBBA0auEWXcgCcaAVyldxDjqtJKEjJaCe
+ HdDl2/x/wlClUlgUCdU+rJwTg3moSCuIS2EPDWD1dbpzlosH8E8vinuKHuuhHGjkI4i6EKvvde
+ mM85B60ulmX//9/N1XTdXFHsMawAAAA==
+X-Change-ID: 20250422-pks-object-store-cleanups-5a6077014155
+To: git@vger.kernel.org
+Cc: 
+X-Mailer: b4 0.14.2
 
-On Tue, Apr 22, 2025 at 08:02:20PM -0500, Nico Williams wrote:
-> But remember that proponents want change IDs to not quite be unique,
-> since the point is that they tie multiple different versions of a commit
-> series together for the purpose of code review.  In the end, when the
-> code review is completed and approved then the change ID might be unique
-> again, but then cherry-picking onto other branches for forward- or
-> back-porting might render them non-unique again.
+Hi,
 
-Ah, right, the thing about change IDs getting copied to new commits when
-cherry-picking was my suggestion.  I stand by it, but it's not what
-others are proposing.
+this patch series contains a handful of cleanups to the object store
+subsystem:
+
+  - A couple of definitions are moved out of "object-store.h" as they
+    belong to other subsystems.
+
+  - Some functions are dropped and/or renamed.
+
+  - The biggest part is the removal of `repo_has_object_file()`. This
+    function and its `_with_flags()` variant are marked as deprecated,
+    with the replacement being `has_object()`. The benefit of that
+    function is that it doesn't reload packfiles and doesn't fetch
+    promisor objects by default so that it becomes more explicit when
+    one really wants to do so.
+
+These cleanups are in preparation for getting rid of `the_repository` in
+"object-store.c".
+
+The patch series is built on top of 4bbb303af69 (The seventh batch,
+2025-04-17) with ps/object-file-cleanup at 68cd492a3e6 (object-store:
+merge "object-store-ll.h" and "object-store.h", 2025-04-15) merged into
+it.
+
+Thanks!
+
+Patrick
+
+---
+Patrick Steinhardt (13):
+      object-store: move `struct packed_git` into "packfile.h"
+      object-store: drop `loose_object_path()`
+      object-store: move and rename `odb_pack_keep()`
+      object-store: move function declarations to their respective subsystems
+      object-store: allow fetching objects via `has_object()`
+      treewide: trivial conversions of `repo_has_object_file()`
+      builtin/index-pack: don't fetch promised objects for collision check
+      builtin/show-ref: don't fetch objects when printing refs
+      refs: don't fetch promisor objects in `ref_resolves_to_object()`
+      http-walker: don't fetch objects via promisor remotes
+      list-objects: clarify how promised blobs are excluded
+      bulk-checkin: don't fetch promised objects on write
+      object-store: drop `repo_has_object_file()`
+
+ builtin/cat-file.c       |   3 +-
+ builtin/clone.c          |   4 +-
+ builtin/count-objects.c  |   2 +-
+ builtin/fast-import.c    |   3 +-
+ builtin/fetch.c          |  15 ++--
+ builtin/gc.c             |   2 +-
+ builtin/index-pack.c     |   6 +-
+ builtin/receive-pack.c   |   4 +-
+ builtin/remote.c         |   3 +-
+ builtin/show-ref.c       |   2 +-
+ builtin/unpack-objects.c |   3 +-
+ bulk-checkin.c           |   2 +-
+ cache-tree.c             |  13 +++-
+ fetch-pack.c             |   7 +-
+ http-push.c              |  11 ++-
+ http-walker.c            |   7 +-
+ http.c                   |   4 +-
+ list-objects.c           |   3 +-
+ notes.c                  |   3 +-
+ object-file.c            |   4 +-
+ object-file.h            |  77 +++++++++++++++++++
+ object-name.c            |   2 +-
+ object-store.c           |  44 ++---------
+ object-store.h           | 191 +++--------------------------------------------
+ pack-objects.h           |   1 +
+ packfile.h               |  78 ++++++++++++++++++-
+ path.c                   |  14 ++++
+ path.h                   |   7 ++
+ prune-packed.c           |   2 +-
+ reachable.c              |   2 +-
+ reflog.c                 |   3 +-
+ refs.c                   |   2 +-
+ remote.c                 |   2 +-
+ send-pack.c              |   5 +-
+ shallow.c                |   9 ++-
+ upload-pack.c            |   3 +-
+ walker.c                 |   3 +-
+ 37 files changed, 265 insertions(+), 281 deletions(-)
+
+
+---
+base-commit: ca819c0751cedd1713334882e4c83687f8478a54
+change-id: 20250422-pks-object-store-cleanups-5a6077014155
+
