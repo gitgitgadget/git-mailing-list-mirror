@@ -1,159 +1,156 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9ED19D081
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 19:32:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6849028CF7C
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 19:37:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745436733; cv=none; b=oXOG1XezYa8DEYsBw9lyCXnf7wkOMBwc4l+nTjVLSlGYD/ehjK1F1leDn5abSDXHNZXFIrASVM3rf5SpGgv4QpRmsw0S5/qpxzrppVBy4SBF0qMsWrs3V7zNdSDpox0PKkJvirwW80KRE/RoNKAi0r/a4peGNu260IUiTViaVQQ=
+	t=1745437042; cv=none; b=pEwDKovgrys4V+afJ9nbm+MEjSCSz4yyQkJon4Z7oS7yRpr+gisppIKa69eA5cKTwFFeBohcfQGIxeuUMDWrYY/ARU/ztb5M2xbhQfD5C4Y++vUXYh/r1otRHzQkdL0ZuTItoYVFlFb7hAr+Oq1+ISYChy9EiRXXWQXTmi05rps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745436733; c=relaxed/simple;
-	bh=c+JmoQ/kK4r6FMGycuYkCUmeww6gHss41D2g48Tz+Zo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=a2m8MTAASjXPCCpKdGyp77VDT+Jq6LKvAdHqf4+qwlfFBgGLL7PhOO6co6fCMIOMYgIq4sOX+s7Hn6yh+jSVNTFlYyOZtTlhm5EuI6aMgOF3wbDTDPZDvf9fL23LPLc2oXGJDvARb76thxjm/WIKqYydwE9XwT4B7whldjB6MUQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FGO5Ci+i; arc=none smtp.client-ip=209.85.219.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745437042; c=relaxed/simple;
+	bh=h72GAKzP6wK0y+pPMg04puOUHFbDH8T0HbUIsNdayEM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=POB/gHpUltCKpg5PkSihzoJi6uK+AsRGp4U4e8yysxTONSlhZgNWp2fJtun4dduNfnTkzggAkab5hUxr//ZGgX0GRRp6ZuaZpl6MBb69zd2cUAzXqnwLZsEXUr3iUeh8XtfjXoR85TKtZR31yFAaCwybozZQpGiufJ27TGSxY7c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HoacIcCl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PAj75MX7; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FGO5Ci+i"
-Received: by mail-yb1-f178.google.com with SMTP id 3f1490d57ef6-e6deb3eb7dbso163290276.0
-        for <git@vger.kernel.org>; Wed, 23 Apr 2025 12:32:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745436730; x=1746041530; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=OgIzDX+fXb+shi/my1s8bqnC/E5FEiztebN06PiWNz4=;
-        b=FGO5Ci+igWyHhD/vhcJFeFfKw5GAD2kIAZ6YYFDTZ1jIDlouweG/VvYCH1pQFYxw8T
-         yzXkMVhwCAijBHFjuybghZLMsujJthrrmIFsfZWqdBnXsrpO+ho8QLc24NXDkwROrcHa
-         DwvYJ1gCYi3Ryqlwuf7SyMVUL9AwFiTX0pEp9MLTuR9D3sRuU20sciADlQoha/HcHz3i
-         iDnsJtfLWxg1suv7jALeMbx3l0VESzEVZCCEj/M3pFWIYuhTk6iJGzcxorcpc2pv9wXg
-         XuSxcpvfxoWEf0Xht1IvC0o2PXqpmTNI0+fZrSJJiuF5qzGTh2D/pYE/bcJHC94kEDc3
-         vO3w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745436730; x=1746041530;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OgIzDX+fXb+shi/my1s8bqnC/E5FEiztebN06PiWNz4=;
-        b=WZQ9r46esRuFD3LeBIpjMt4EBnXoIWYiw/fH6BTqEffH9IyYisRmAI7GaZmkbsSOnj
-         9nP2VxlZOlAy0KKR2dECAB0NNJm16IMGmeYShD1J5b2krbvWT/OMxPdRbgHJYY/iHmAz
-         Ogd7PcUsu9iLV8h3tiqEOHWk7Bgnb5YBz+XsktN7zEIr/Q0ITN0jildIdhx7maurmAaD
-         o5wR5Mj7yfqE6ZBvAnpKUPnH0lJQamMXnKXWk7cQ4ozoEohoDlrxCsHJFA2Ok+pppprf
-         asI4WFNJtUizCmbC/sL67pb1ecSb4spt18lOO/TEapKFJ7+VaAeK2xYwboKVYERPa+Ax
-         G49A==
-X-Gm-Message-State: AOJu0YwD2XcBnX060tc/gkPNk/ikSoiLWGxdfuKHM3ezsjCvqsvCJxtW
-	2aS8nh+zyAhKmJbFPycUS5gebaNbN85zt+/RtX09F0RkuPs+5Tid
-X-Gm-Gg: ASbGnctMnhG0QAFUFNUz3dkazfvNwEpP+p9pwUndcDlzCGqJxVHmBljREU6HTcYhwiZ
-	mxqjfatK5WIHMVeFCdkX97cLQCcOuto9ntWlI0oVHKSGbO9lTpzcPd3o5Nq34HFYClFo6v+tr5v
-	vRnOVh6vWyBc+W69ye3KTNgcjWQLQd43S6ZDcqQwAfzkutyNS49aRUvGzeqOPkhQWRfcz6jPs8U
-	a0J7EtxIZK6TpUCu2KvYVPmQSYf28V5oNQMDI13JT5qe5iXBIEiqdOguhYY6AEOyc8DIXshAn0a
-	kuYHlFT/Vi0TlaZlvQU1UazqqbbKSHiFdUwStsK/lO9CSWaCEgov7peS4UiVMT9+9CHIklEKuoO
-	3jAtznqEIcFhESFTD
-X-Google-Smtp-Source: AGHT+IEw2jY6iHJI0883nCT0NHlNxNRwbnrVCD2KfnZhis8dVSehM9RVHcGUwzzyypdqeCiHtXgqDg==
-X-Received: by 2002:a05:690c:883:b0:6fd:2062:c8a2 with SMTP id 00721157ae682-7083ebfe076mr1450747b3.11.1745436730533;
-        Wed, 23 Apr 2025 12:32:10 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:a542:402d:78ab:7227? ([2600:1700:60ba:9810:a542:402d:78ab:7227])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-706ca53bc90sm30976317b3.83.2025.04.23.12.32.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 12:32:10 -0700 (PDT)
-Message-ID: <460cd77b-2b49-4159-bac5-0fd4fb655f84@gmail.com>
-Date: Wed, 23 Apr 2025 15:32:09 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HoacIcCl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PAj75MX7"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 56E92114021B;
+	Wed, 23 Apr 2025 15:37:19 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Apr 2025 15:37:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745437039; x=1745523439; bh=GtwdiJH3OF
+	jsmPnUx+E3OFzU3+ABqdNSBo8UXg9rFVI=; b=HoacIcClksBK7er8BeLxcza5aF
+	YGT8lS6EvRFWJBOo4qDF++Ms614GBxcuHgisBjTr/B9sTx06+Hcnk4rinMUZrgJ5
+	pq+Y8/H8BeBqZCU9B3OHCsGi5wjQSP25nldKIf7xaidI+dTxl6ZYDu0DokBNSVLA
+	pcn00wxqjURvymJ0idjkmxk91r1uG61TzRjfGDkPfKROTs5ocXP4NIjWz/FlQ5U0
+	jdE/m6yUip6Pr4Xcz3L0mZlggnK18iAoxuKl0+6aH8p5Y/WRQF4Pfi8U0odM4lkQ
+	ZasABNW6z8Y4dtOpRsyvd0lDkAvKy2e1b8VE8T44BI6pOG3wDlQtd97QeyCg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745437039; x=1745523439; bh=GtwdiJH3OFjsmPnUx+E3OFzU3+ABqdNSBo8
+	UXg9rFVI=; b=PAj75MX7SVzgvJJLbpLAgQee6IgMj+uMN5b299lZaMN4S6ihulu
+	ffihoH1OKU7VdaH+ILWKYh8hmn1XmU729PS4RlKE5kgExB70C6yTzbgWa9TOizSO
+	cbGX6nWxx/Nur97dznR6sRM24vWKm76dsv2vZzads68yVyLvn4j96Bg4foBFTS1F
+	AaJGnXsGtFA6YZiKifccXZuny8ZL/qWR5ooTEwXJzeoRDEYiWxB0r47jlaY6lCIs
+	H6SKZ582sCFc5KzNjuFfkJq9uj3jIfdkG4mZNu1KJAieXp8b5Vqz4XkVy1B6vcf6
+	vi9cUfj2jYOUdAz4wgIdPvHNK5eb0066LVA==
+X-ME-Sender: <xms:b0EJaEB-rwcjSgg-mudT2lXtdZJXnAe6xdEN-6-NTC65-wMhWg_31w>
+    <xme:b0EJaGhdHBxPbEwKb1AyVxxBBt-Uj8nfxWRpwpNyhjcleTzHTlRZ5B2qsn0HOeq8l
+    FUfhXupAVKhshw6-Q>
+X-ME-Received: <xmr:b0EJaHmNP7ddSvyzah04Rdlxf666uUg7ke--JPzFz6gjvHnD4rBZiIfZr55AUALmNHlbB2yeJlTmCIiwaaYaXGyL3X3vL7TXw-qQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeejgeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:b0EJaKxemb2ROjf8jRV_lredHKN0nnrzgUIAhxKUezj4J0EKtZY_Gg>
+    <xmx:b0EJaJSbLzCULGJH_IU63x6ORdiz1tOTY9RYgOQ-oLh21gmYz-of9g>
+    <xmx:b0EJaFbSYo-p4dZGM1tNrQm0BRobHgpuOPB9_GaA3H6boWd88pKXuw>
+    <xmx:b0EJaCRk8sNfNQ5x_urVrE5hjd5G-SdDojHcljpAeydLjBA5y_UI5w>
+    <xmx:b0EJaKuF0Qqosuw-fgqgI3PE9U27Rzg1YXf0W2j3_lHYzkURtALmSbxC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Apr 2025 15:37:18 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 2/3] t5309: create failing test for 'git index-pack'
+In-Reply-To: <a9430447641ff3b3f519abc0960b6741fd7df700.1745430004.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Wed, 23 Apr 2025
+	17:40:03 +0000")
+References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+	<a9430447641ff3b3f519abc0960b6741fd7df700.1745430004.git.gitgitgadget@gmail.com>
+Date: Wed, 23 Apr 2025 12:37:17 -0700
+Message-ID: <xmqqfrhyy8ia.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
- <5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
- <xmqqmsc6y911.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqmsc6y911.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 4/23/2025 3:26 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> When trying to demonstrate certain behavior in tests, it can be helpful
->> to create packfiles that have specific delta structures. 'git
->> pack-objects' uses various algorithms to select deltas based on their
->> compression rates, but that does not always demonstrate all possible
->> packfile shapes. This becomes especially important when wanting to test
->> 'git index-pack' and its ability to parse certain pack shapes.
->>
->> We have prior art in t/lib-pack.sh, where certain delta structures are
->> produced by manually writing certain opaque pack contents. However,
->> producing these script updates is cumbersome and difficult to do as a
->> contributor.
->>
->> Instead, create a new test-tool, 'test-tool pack-deltas', that reads a
->> list of instructions for which objects to include in a packfile and how
->> those objects should be written in delta form.
->>
->> At the moment, this only supports REF_DELTAs as those are the kinds of
->> deltas needed to exercise a bug in 'git index-pack'.
-> 
-> Wonderful writing.  I agree with the destination where this effort
-> wants to go, including the decision that starting with ref-delta
-> only is a good enough first step.
-> 
-> As to the implementation, I was a tiny little bit bummed to see
-> that, even though it does share the code with the real pack-objects
-> code paths to compute delta data by calling diff_delta(), and to
-> write per-object header by calling encode_in_pack_object_header(),
-> it has its own compression loop that does not even do an error
-> checking after calling into zlib deflate machinery.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I could strengthen these options to help folks more quickly understand
-potential failures as being part of the pack write instead of them
-failing during the later pack read.
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> This new test demonstrates some behavior where a valid packfile is being
+> rejected by the Git client due to the order in which it is resolving
+> REF_DELTAs.
+>
+> The thin packfile has a REF_DELTA chain A->B->C where C is not included
+> in the packfile. However, the client repository contains both C and B
+> already. Thus, 'git index-pack' is able to resolve A before resolving B.
 
-> Perhaps that is unavoidable due to the code structure of the
-> production code.
+In order to reconstitute A, B is needed (which recipient has), and
+in order to reconstitute B, C is needed (which recipient also has).
 
-I briefly considered extracting some code out of builtin/pack-objects.c
-but it relies heavily on globals and context that I won't have in this
-helper. I'm open to suggestions for how I can safely share more code,
-but my initial attempt required too much refactoring to be worth it.
+The index-pack sees delta based on B to recreate A; it should be
+able to reconstitute A using B that already exists.
 
-I am grateful for the amount of code from pack-write.c that I _was_
-able to reuse.
+OK.
 
->> +static const char usage_str[] = "test-tool pack-deltas <n>";
->> ...
->> +int cmd__pack_deltas(int argc, const char **argv)
->> +{
->> +	int N;
->> +	struct hashfile *f;
->> +	struct strbuf line = STRBUF_INIT;
->> +
->> +	if (argc != 2) {
->> +		usage(usage_str);
->> +		return -1;
->> +	}
->> +
->> +	N = atoi(argv[1]);
-> 
-> It somewhat looks strange to see an uppercase N used as a variable
-> name.  Together with the usage string, how about renaming "N" and
-> "n" after "number of objects", e.g.
-> 
-> 	test-tool pack-deltas <num-objects>
-> 	int num_objects;
-> 
-> or something?
+> When resolving B, it then attempts to resolve any other REF_DELTAs that
+> are pointing to B as a base. This "revisits" A and complains as if there
+> is a cycle, but it did not actually detect a cycle.
 
-I definitely should have used a better name here. Thanks.
+That's interesting.
 
--Stolee
+> +test_expect_failure 'index-pack works with thin pack A->B->C with B on disk' '
+> +	git init server &&
+> +	(
+> +		cd server &&
+> +		test_commit_bulk 4
+> +	) &&
+> +
+> +	A=$(git -C server rev-parse HEAD^{tree}) &&
+> +	B=$(git -C server rev-parse HEAD~1^{tree}) &&
+> +	C=$(git -C server rev-parse HEAD~2^{tree}) &&
+> +	git -C server reset --hard HEAD~1 &&
+> +
+> +	cat >in <<-EOF &&
+> +	REF_DELTA $A $B
+> +	REF_DELTA $B $C
+> +	EOF
+> +
+> +	test-tool -C server pack-deltas 2 <in >thin.pack &&
 
+This is minor, but I somehow find it easier to follow without the
+temporary file, i.e.
+
+	test-tool -C server pack-deltas 2 >thin.pack <<-EOF &&
+	REF_DELTA $A $B
+	REF_DELTA $B $C
+	EOF
+
+> +	git clone "file://$(pwd)/server" client &&
+
+This truly loses A from the resulting "client" repository, but the
+history still can reach B and C.
+
+> +	(
+> +		cd client &&
+> +		git index-pack --fix-thin --stdin <../thin.pack
+> +	)
+> +'
+
+Makes sense.
