@@ -1,85 +1,89 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6849028CF7C
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 19:37:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809C2223DFB
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 20:04:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745437042; cv=none; b=pEwDKovgrys4V+afJ9nbm+MEjSCSz4yyQkJon4Z7oS7yRpr+gisppIKa69eA5cKTwFFeBohcfQGIxeuUMDWrYY/ARU/ztb5M2xbhQfD5C4Y++vUXYh/r1otRHzQkdL0ZuTItoYVFlFb7hAr+Oq1+ISYChy9EiRXXWQXTmi05rps=
+	t=1745438683; cv=none; b=ZCiQtjgRacgDZRPmla3yh0W2fkkeDTMfkYQ2Mh6rL3+coI7bF8CUXnOKa1WVG/Q2m/+AXH3lng2Oknj0bqsRaTUkLOA4NfUl8CsM3xz+0+4rjhwhdw6XlrohpNjNafV3o3XhHPtWsEPdv1jbtd3/w53RI7WOHbPH6QLElXPZqU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745437042; c=relaxed/simple;
-	bh=h72GAKzP6wK0y+pPMg04puOUHFbDH8T0HbUIsNdayEM=;
+	s=arc-20240116; t=1745438683; c=relaxed/simple;
+	bh=hOQ5mrsnq9ndmTk5zjT9VxqlHeJzXFFQ29tDU2zKhME=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=POB/gHpUltCKpg5PkSihzoJi6uK+AsRGp4U4e8yysxTONSlhZgNWp2fJtun4dduNfnTkzggAkab5hUxr//ZGgX0GRRp6ZuaZpl6MBb69zd2cUAzXqnwLZsEXUr3iUeh8XtfjXoR85TKtZR31yFAaCwybozZQpGiufJ27TGSxY7c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HoacIcCl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PAj75MX7; arc=none smtp.client-ip=103.168.172.154
+	 MIME-Version:Content-Type; b=UsVc+gbZbjO13BP1y0rPXKv7KA7PtqfLP29De/fCy5quTJAhwaa6OQI9GSRuPnZxKZUgiio9pFeZRDzUP7LJVwRYxMvLXEnM3SVWv2f5rnyo/bGt1hQ0ylowhJX6hCACWUdYtcJn/k5rc8AEJ3JvSmVefnWYt+YtEUR9b0pZeHE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M4VJkwUk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZJeiKO+h; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HoacIcCl";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PAj75MX7"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 56E92114021B;
-	Wed, 23 Apr 2025 15:37:19 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 23 Apr 2025 15:37:19 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M4VJkwUk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZJeiKO+h"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7DD281380196;
+	Wed, 23 Apr 2025 16:04:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-08.internal (MEProxy); Wed, 23 Apr 2025 16:04:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1745437039; x=1745523439; bh=GtwdiJH3OF
-	jsmPnUx+E3OFzU3+ABqdNSBo8UXg9rFVI=; b=HoacIcClksBK7er8BeLxcza5aF
-	YGT8lS6EvRFWJBOo4qDF++Ms614GBxcuHgisBjTr/B9sTx06+Hcnk4rinMUZrgJ5
-	pq+Y8/H8BeBqZCU9B3OHCsGi5wjQSP25nldKIf7xaidI+dTxl6ZYDu0DokBNSVLA
-	pcn00wxqjURvymJ0idjkmxk91r1uG61TzRjfGDkPfKROTs5ocXP4NIjWz/FlQ5U0
-	jdE/m6yUip6Pr4Xcz3L0mZlggnK18iAoxuKl0+6aH8p5Y/WRQF4Pfi8U0odM4lkQ
-	ZasABNW6z8Y4dtOpRsyvd0lDkAvKy2e1b8VE8T44BI6pOG3wDlQtd97QeyCg==
+	:subject:to:to; s=fm1; t=1745438679; x=1745525079; bh=hOQ5mrsnq9
+	ndmTk5zjT9VxqlHeJzXFFQ29tDU2zKhME=; b=M4VJkwUk6MvuLLZz2KcRgILPyC
+	b7EGOrdriAalm0iTIin4pR5GswAvobbv6bIziVZHlAdRqharlSFkA0Q7SlbmSxPt
+	elCFryj8+U09RtE/Mvga2f59afxVkGbOOA1yQ3S4GU5V8zKrMruCXZjueI+d3ZSg
+	NgBfZEZqok0CVaDEEQ5S4jEjbMm/B59YsdkX8ddm7axDVz5lz0ELb3WGxdTr4tkx
+	gs+JkjKeOz7SXdVQHo7XkN8ocO1WL2ySEEhw09x4rwXzOp4D0N97pL/ZIwxVl2lF
+	97f7kEj7+EVWgLgZOO39LICI6yjVBas66vVohQqsYOouur6I0D7IDmY3c90g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
-	1745437039; x=1745523439; bh=GtwdiJH3OFjsmPnUx+E3OFzU3+ABqdNSBo8
-	UXg9rFVI=; b=PAj75MX7SVzgvJJLbpLAgQee6IgMj+uMN5b299lZaMN4S6ihulu
-	ffihoH1OKU7VdaH+ILWKYh8hmn1XmU729PS4RlKE5kgExB70C6yTzbgWa9TOizSO
-	cbGX6nWxx/Nur97dznR6sRM24vWKm76dsv2vZzads68yVyLvn4j96Bg4foBFTS1F
-	AaJGnXsGtFA6YZiKifccXZuny8ZL/qWR5ooTEwXJzeoRDEYiWxB0r47jlaY6lCIs
-	H6SKZ582sCFc5KzNjuFfkJq9uj3jIfdkG4mZNu1KJAieXp8b5Vqz4XkVy1B6vcf6
-	vi9cUfj2jYOUdAz4wgIdPvHNK5eb0066LVA==
-X-ME-Sender: <xms:b0EJaEB-rwcjSgg-mudT2lXtdZJXnAe6xdEN-6-NTC65-wMhWg_31w>
-    <xme:b0EJaGhdHBxPbEwKb1AyVxxBBt-Uj8nfxWRpwpNyhjcleTzHTlRZ5B2qsn0HOeq8l
-    FUfhXupAVKhshw6-Q>
-X-ME-Received: <xmr:b0EJaHmNP7ddSvyzah04Rdlxf666uUg7ke--JPzFz6gjvHnD4rBZiIfZr55AUALmNHlbB2yeJlTmCIiwaaYaXGyL3X3vL7TXw-qQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeejgeehucetufdoteggodetrf
+	1745438679; x=1745525079; bh=hOQ5mrsnq9ndmTk5zjT9VxqlHeJzXFFQ29t
+	DU2zKhME=; b=ZJeiKO+hAdz0WSdwyDOixHsIyRVkzvsa2Swi5GPwdIlNHyLuEqU
+	lXCOYYj6Q9GDEw4ui8/G4Fvrw47GSFZSPLA4vRC+M2dgcOO0qjCmSKKz/NX990r4
+	bGyrcjMGxT89pKVyvxRge7LR5n5wrlnkm0THhpAKqsSBEy0/LnWOMHEhXcyPfbGo
+	6Ju/6sLHXG1QEqFHOR1Y82ubhWpS033GwWuwzt6lksmXa5P9n0zqqahYNNEODDEQ
+	tACF8DY//iLKhEQdG340hDZWQY5UMb8E+c6XW1zz/AzxKD8H+RHmIBAp0HRjTwkN
+	UNxTZqmoLOOS1K4HrkNnSaL7rDqEzRMk63A==
+X-ME-Sender: <xms:1kcJaPHhDj14N24C4u9vtzKdSRGVzb02eHEDHahjTXPF5qC3rjxASw>
+    <xme:1kcJaMXVdu5E1Uy5pTxxbHBntIzdeQDSm3fsALolaQhmYFHupUscknLUfrvk8qpWg
+    NPp9KZjZy56CJ1PjQ>
+X-ME-Received: <xmr:1kcJaBJbpCun4XJpgLwtAoYJ-gkXm0-dRGlGHbaVHsReKVt6_lvk6S34S2EjX91mhkR_xgql0udQtsNmsEZIaTG3hmZSZJPaZUNJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeejheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:b0EJaKxemb2ROjf8jRV_lredHKN0nnrzgUIAhxKUezj4J0EKtZY_Gg>
-    <xmx:b0EJaJSbLzCULGJH_IU63x6ORdiz1tOTY9RYgOQ-oLh21gmYz-of9g>
-    <xmx:b0EJaFbSYo-p4dZGM1tNrQm0BRobHgpuOPB9_GaA3H6boWd88pKXuw>
-    <xmx:b0EJaCRk8sNfNQ5x_urVrE5hjd5G-SdDojHcljpAeydLjBA5y_UI5w>
-    <xmx:b0EJaKuF0Qqosuw-fgqgI3PE9U27Rzg1YXf0W2j3_lHYzkURtALmSbxC>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
+    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgt
+    ohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhn
+    sehiohhttghlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1kcJaNFeSBQcNiczuR7HKaIgvHYymBYJ6qJQcJc9DUu1y0lgao4uxw>
+    <xmx:1kcJaFXp74q-uufwGHPlZLVP5yOW4QIr0f3oxcerpudgJoZR6cW89g>
+    <xmx:1kcJaINTCwXYRzU1KW2pifXVbDNj42PRAeouKXIks8SL90y2Q6S3fQ>
+    <xmx:1kcJaE3SO1yDWTzgACOXJLfV0AvIEO7zFvTfiu1kxFgeMd-ZjBtG-g>
+    <xmx:10cJaI5pPJ4a5PMfZFcVEWageR-Xi7P-tcGJePfgb7vsBxvFXTgAsvCA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 23 Apr 2025 15:37:18 -0400 (EDT)
+ 23 Apr 2025 16:04:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 2/3] t5309: create failing test for 'git index-pack'
-In-Reply-To: <a9430447641ff3b3f519abc0960b6741fd7df700.1745430004.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 23 Apr 2025
-	17:40:03 +0000")
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
-	<a9430447641ff3b3f519abc0960b6741fd7df700.1745430004.git.gitgitgadget@gmail.com>
-Date: Wed, 23 Apr 2025 12:37:17 -0700
-Message-ID: <xmqqfrhyy8ia.fsf@gitster.g>
+To: phillip.wood123@gmail.com
+Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
+  toon@iotcl.com,  ps@pks.im
+Subject: Re: [PATCH v5 0/6] meson: add corresponding target for Makefile's
+ hdr-check
+In-Reply-To: <xmqqtt6ezshm.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	23 Apr 2025 10:40:21 -0700")
+References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
+	<20250423-505-wire-up-sparse-via-meson-v5-0-d1e2be4b2078@gmail.com>
+	<8a907622-a975-4f9c-86b3-54b8f5447709@gmail.com>
+	<xmqqtt6ezshm.fsf@gitster.g>
+Date: Wed, 23 Apr 2025 13:04:36 -0700
+Message-ID: <xmqqv7quwsob.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,68 +93,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> From: Derrick Stolee <stolee@gmail.com>
+> phillip.wood123@gmail.com writes:
 >
-> This new test demonstrates some behavior where a valid packfile is being
-> rejected by the Git client due to the order in which it is resolving
-> REF_DELTAs.
+>> Hi Karthik
+>>
+>> This looks good, I've left a couple of comments but I don't think
+>> there is anything that necessitates a re-roll.
+>>
+>> Thanks
+>>
+>> Phillip
 >
-> The thin packfile has a REF_DELTA chain A->B->C where C is not included
-> in the packfile. However, the client repository contains both C and B
-> already. Thus, 'git index-pack' is able to resolve A before resolving B.
+> Thanks, I think the first one that stops us from using tarball
+> extract may have the biggest impact on the CI, and might reveal
+> some other bugs (like "this test used to be skipped because it did
+> not run in a tarball extract, but now this is run and fails"), which
+> may cause us to scramble to fix them, but I think that would be a
+> good thing in the longer term.
 
-In order to reconstitute A, B is needed (which recipient has), and
-in order to reconstitute B, C is needed (which recipient also has).
+As it takes quite a lot of time to do full integration of the day,
+during which time GitHub CI is idle, I pushed this branch alone as
+if it were the tip of 'seen', and it seems that quite a lot of CI
+jobs are now broken,
 
-The index-pack sees delta based on B to recreate A; it should be
-able to reconstitute A using B that already exists.
+https://github.com/git/git/actions/runs/14624509129/
 
-OK.
+with "Process completed with exit code 8." at the end of
+ci/install-dependencies.sh step.
 
-> When resolving B, it then attempts to resolve any other REF_DELTAs that
-> are pointing to B as a base. This "revisits" A and complains as if there
-> is a cycle, but it did not actually detect a cycle.
 
-That's interesting.
-
-> +test_expect_failure 'index-pack works with thin pack A->B->C with B on disk' '
-> +	git init server &&
-> +	(
-> +		cd server &&
-> +		test_commit_bulk 4
-> +	) &&
-> +
-> +	A=$(git -C server rev-parse HEAD^{tree}) &&
-> +	B=$(git -C server rev-parse HEAD~1^{tree}) &&
-> +	C=$(git -C server rev-parse HEAD~2^{tree}) &&
-> +	git -C server reset --hard HEAD~1 &&
-> +
-> +	cat >in <<-EOF &&
-> +	REF_DELTA $A $B
-> +	REF_DELTA $B $C
-> +	EOF
-> +
-> +	test-tool -C server pack-deltas 2 <in >thin.pack &&
-
-This is minor, but I somehow find it easier to follow without the
-temporary file, i.e.
-
-	test-tool -C server pack-deltas 2 >thin.pack <<-EOF &&
-	REF_DELTA $A $B
-	REF_DELTA $B $C
-	EOF
-
-> +	git clone "file://$(pwd)/server" client &&
-
-This truly loses A from the resulting "client" repository, but the
-history still can reach B and C.
-
-> +	(
-> +		cd client &&
-> +		git index-pack --fix-thin --stdin <../thin.pack
-> +	)
-> +'
-
-Makes sense.
