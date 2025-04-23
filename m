@@ -1,65 +1,65 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5DCE223DC5
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 10:04:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FC6223DC5
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 10:04:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745402683; cv=none; b=DTxZJ4atSt3HMgSE4M+djm+aqaGO/gwNC6T2rY8lravFc/42ok895+NoWZda8obrjSZpToqiNHdVVscDPSKc3dv9+Vk4WsmCe75hmPA2HG6P3bDox+9/GBZ049Uvp14rDFxd9qAoyHTK3P2AhYiKo2L/ABPCoLLUvA/ZfQjaX58=
+	t=1745402693; cv=none; b=QtpU90JPu0TyLRG2Gaso5hjGJ2AWCHDZGuCdAkadfpJ+Hvy5rGy352Fpzb+exwnulX+yHL0VPBH9YlipF5Ww69r5thap3s9NyTbEoaiKOx7P72RTyrwra8Fq4prDqZbMtouDP0D4HwSE/yVXue6G59YYlreeMBh4ioOPKVlt4yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745402683; c=relaxed/simple;
-	bh=c1jWWFocYYbUQPpoqvrGITjjpAsodpGW+8vUfudAxBQ=;
+	s=arc-20240116; t=1745402693; c=relaxed/simple;
+	bh=UcvYPwPqec/XpubRGIt1HD0xDTwlFldFZQ4t5XKbThs=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=H2fEveEp9xSb0aEq0H36qsFrc9/uyx693pM774Azt39IA8G+LtARWPkDf6WRcvfo5WitxYUFsGDCbJcOF0UYsNre/2EwJnrT/ZyH6W5/8y1QOqr8d/F7iosnyNQhoOakaQzGjTYUH6ezZV5z44jtIK/2WP6Zm7u7WO9zABCj+ig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IgJjPDir; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:Content-Type; b=VmQ9sHnnpEA22ZbVwBPAuh0cr71GEyn813lf8Npe5Xk+Nf6FSQnZfWhky8SFnLb4NGQggu5fOwOTmJ97TvVxwvBxrLWFHUWypYLtBC+K6mZ+988/22Yg+fZ7qVFf2a4LHZS2WEtWwWKSqh4yK+mNihpZsPqbAr7gmOjF8mz+DGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lr9/6Cws; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IgJjPDir"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cf58eea0fso29786635e9.0
-        for <git@vger.kernel.org>; Wed, 23 Apr 2025 03:04:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lr9/6Cws"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso39248075e9.3
+        for <git@vger.kernel.org>; Wed, 23 Apr 2025 03:04:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745402679; x=1746007479; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745402689; x=1746007489; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=RKRIPK9mLN9sR1PlGfqapFlexh9jSKJXsVplNoYcozA=;
-        b=IgJjPDir9mKd7RuqknUYYHBv/NirPLh59HO6IeMG5hV/sjVnCpzmPX4XpNzoul6UjY
-         6BIm+C9JueaeuEMHJXSYr20YVD8Vv3mhifIfwp2jisQj4z+xhMk7UhB9mcnFNSnxEXyR
-         moO7Ya90VkM1cttzNboWxt+eP3wYZQImv9K4Tk67fzzxgclxxdCq0b7R/5qX9gMUmJ5R
-         +vgxm6Cut9aZkNx/jIEGau3ahnFtq7UcU7uMZM7LyivIwzYSeSxpLNU7EqRWPnzccViO
-         EPhixbkXVEds+Drags+n146V4NSVCAftqAurPtwRMjQxC0MwtloSUqGCG29Tc6WG9w/e
-         +0jQ==
+        bh=H+K7kb5zKJcg2UB67ZcacfXMKxyZiigB05Ur4aT7Adc=;
+        b=lr9/6Cws1mHZ0sR4Is8e+wLZDoeyKUJPqgec57F/DamaVtfiRMAE8IkgCH/Zv2ZA3Y
+         rWOnHDc4H5Z18OxhgVXycEktzeWpCM93ruQtEJGA9BaIfXdF6rnADbzix+H+p/8KcpK4
+         dCgfpiRWmvyHUJlRuUOb5DNxqQ05fV8GfZy7HRSfqV0AjIv6QYN28ZRGOQiotmq0IQxe
+         0F/KUP5w44cEY93O+h3gmv8vb9lPIZAwJMdRMjX6GY64f9oIhrk4pS7Mu/emBp9IJQVN
+         GTg00teBjBzZucsnUSWVAvaBuW8G+gCNc5eHnMxzyszYysVlsxAXQnlStUuhJYU3JBD1
+         ZUKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745402679; x=1746007479;
+        d=1e100.net; s=20230601; t=1745402689; x=1746007489;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=RKRIPK9mLN9sR1PlGfqapFlexh9jSKJXsVplNoYcozA=;
-        b=W88nnQX5IkgHUj9X82IS2ERs6zVmviDoyk77Opmx50xDjemQUaTFcOfKO9YEZ0f7f+
-         p4JnJqoNWM+aThunvtCse+Y9OU7RCQ0iBvasPA0DnArrOd+FuyTnrwcaWDMKaZsT8q8L
-         mvQkhhVZ3YQCt0W29NPMlzZnQ33miTjVKj/WuF7q5uPJ9OEYXZPLb/mC5yD/GRDYBRCw
-         a0Tq5LIl4jobozxFXedl9a05Of39p3lC7/GuVYHcA8/nqJQ0BsT0Ay1D/pqt1yIWnusH
-         zIOIl4FQWfR33Dn3X6BhZ5s6jSdg9G99RYfKDgfihMKMb/wHqWM79RUPnh7fZGIULCrl
-         uMAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWLS5Xm4tq79YqWd2eWglydJmxBkMiSIhVOA2Q2RJTB2OWfsVud12F6mEkqtML0Bg6Jbwk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyToXdH/vvRcT6deF49jxMQe5UBQpSc+Y/3mm++Ne+Rb3X50yWE
-	HxRcz29CS/ALrqG7twwX4kh8uWQfMEgR8k85NejG7uElfukBKcYs
-X-Gm-Gg: ASbGncvlZuaINi3P6+51C64gplGvqC7MQJpGo1NarFMry270CMfz6quO2lX2pIHh5wS
-	g1yfdmr+0unfVxiHyWRJluMATF+XXqTd8E9IPaIeNjab9UoFw21rCRA2FtSOGDDU5BVEZD1gm4I
-	Nc/+TwSnLjOce0pUl2XS/ki3o4DUtG9mer/Oseh2V9Xgs5F15s71JGEkNkTHK/PspvhLjHUTh79
-	8ipTAfr/RIqWGeNIWS4ARjmfO0sYSJsVDBFHdMsX6ngxix+SjtjyRgye/KhjAEocqpoQw6dPDtC
-	szyevMVA4Qw1N/FC0xD38vdHvJ2DPtilj3kW0g4e5tbtbe2JeCI1Tfs86bZ8ymCTKHzBQ0qsL0y
-	uV9mkot+6NJsWA8BZ
-X-Google-Smtp-Source: AGHT+IFU2lYdIzUa6DzueBBWnb0MRVPQjxfYZlWps8nUkHW/pV+BxYaWNJq9kz3Hs+fNQp2Kofz2yQ==
-X-Received: by 2002:a05:600c:5023:b0:43c:fa0e:4713 with SMTP id 5b1f17b1804b1-4406ab7efadmr193013255e9.2.1745402678502;
-        Wed, 23 Apr 2025 03:04:38 -0700 (PDT)
+        bh=H+K7kb5zKJcg2UB67ZcacfXMKxyZiigB05Ur4aT7Adc=;
+        b=Jt4W7NFWCa6D1DM+/hyhkZKdHO9QpCnp3lpXH0aOhNtLBZR5ZpyJ4VUgrc2QNWY14N
+         hLKNnu0GAg53l1tLPrARaHsxDWPOqOAEZzE0vTEzuB4qz20joxrcrVEMKeGnFd1E/MrV
+         sJprCcKj2flXxlQg+RaIwaLVdjgs7x8h6gw/kCSU4BmoA/PPCWiIRJ07acbyswp28jjU
+         nMIVXrs6MhNTPKuVBUd4aPbhU5jLWSk6E2nhJoGnRWytJMHuJpLq2YG1eJL5IOyn9ypC
+         DoIry994GXDNrPXOdiirpu/gzFa5pue3hSyN7k8lim/PVnM0ad+bl3sGGcbOJu/8a28p
+         jzog==
+X-Forwarded-Encrypted: i=1; AJvYcCUXXz+zhNR11l9liF8Rwc4c/uaa0G4BcwCXBxPPbW7cWfV586WUnp7qwSPcRel8myNvlmQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YydG3mykIoHOf10HPM/jHfSI53HSLGPxR0xJsUic4eROjSrgj7e
+	FmvUJlPiJcUt+c3+2ZIAtqUGcHvuHFmgC4pAgfO4DTqBiKOEtWoP
+X-Gm-Gg: ASbGncuBH4TyARZSKZ0chV6j4TMGiZOtxbW5kOUW28+73t8uLKPMoMmJS4MxvcDhj2p
+	olbt1akeZK3C4NXiDoLFJBsVyJVPW2GJAjt+KYTOLOrTitQPi6rO5ULk+sSBOlBRHYt2HZEGNMK
+	WSkaLKc35nwGVI7Eduxw2O4H9A2SS0L5MJV5HGZMBC92ZTm7ZVt4qZYSbzCagoOX+Aw9MQOoiI4
+	ivou5Bi5DuMMwQXISj4eUHztGL2CsJm/65AE3HM5QJHjxy4/DOxfTGb/koxz+h+ULvwJ7sFXbcn
+	PB9yIfy3DKA63mjpKv50p5sncosikHoev368OdP1swKcr65OBRc2swXFjAzx/s1hiay/3Ub+OpV
+	YXszYvcjPARFgindX
+X-Google-Smtp-Source: AGHT+IH6iWqFDgd6WppKfdP37Jn6PpGean+RSS2sEzl0MlLwHqXAo5BIXbiQuhGDf0nJqn4NRPtFxw==
+X-Received: by 2002:a05:600c:1e26:b0:43c:e2dd:98ea with SMTP id 5b1f17b1804b1-4406abffbe9mr149140365e9.22.1745402689331;
+        Wed, 23 Apr 2025 03:04:49 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-44092d2eea0sm20054275e9.22.2025.04.23.03.04.37
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-44092db2a5dsm20299475e9.25.2025.04.23.03.04.48
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 03:04:38 -0700 (PDT)
-Message-ID: <1996b081-2684-49e0-a99d-28f22063b4b6@gmail.com>
-Date: Wed, 23 Apr 2025 11:04:37 +0100
+        Wed, 23 Apr 2025 03:04:48 -0700 (PDT)
+Message-ID: <895a796e-86ab-4b9f-b480-ca749312601f@gmail.com>
+Date: Wed, 23 Apr 2025 11:04:48 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,43 +72,65 @@ Reply-To: phillip.wood@dunelm.org.uk
 Subject: Re: [PATCH v4 0/5] meson: add corresponding target for Makefile's
  hdr-check
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
- toon@iotcl.com, ps@pks.im
+Cc: Karthik Nayak <karthik.188@gmail.com>, phillip.wood@dunelm.org.uk,
+ git@vger.kernel.org, toon@iotcl.com, ps@pks.im
 References: <20250408-505-wire-up-sparse-via-meson-v1-0-17476e5cea3f@gmail.com>
  <20250420-505-wire-up-sparse-via-meson-v4-0-66e14134e822@gmail.com>
  <xmqqh62i6jli.fsf@gitster.g> <8b380da4-8d27-4efe-85fd-3bb599188fe9@gmail.com>
- <xmqq8qnt7c9w.fsf@gitster.g> <3389d086-4e6e-4896-94dd-9f62d7c4f2df@gmail.com>
- <xmqqplh55ju3.fsf@gitster.g>
+ <CAOLa=ZSR=7TEWLHa-wzBB4x+4+-BH3UC3G7s24Bc26JH63QKOA@mail.gmail.com>
+ <17c2eb4f-e291-4189-9846-0f42bdead01d@gmail.com> <xmqqr01k42cx.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <xmqqplh55ju3.fsf@gitster.g>
+In-Reply-To: <xmqqr01k42cx.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 21/04/2025 21:40, Junio C Hamano wrote:
+On 22/04/2025 16:55, Junio C Hamano wrote:
 > Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> Yuck.  I somehow thought that CI jobs are always using a git
-> checkout, not tarball extract (after all, that is what
-> actions/checkout implies to me X-<). 
+>> I'd be tempted to check for which package manager to use by using
+>> `command -v`. That way the only distribution specific knowledge we
+>> need is the package manager and we don't have to worry about the names
+>> of the various release files in /etc.
+>>
+>> 	if command -v git
+>> 	then
+>> 		: nothing to do
+>> 	elif command -v apk
+>> 	then
+>> 		apk add git
+>> 	elif command -v dnf
+>> 	then
+>> 		dnf -y install git
+>> 	else
+>> 		apt-get -q -y install git
+>> 	fi
+> 
+> OK.  "command -v" should be portable enough these days (in the past
+> people used "type" and yelled at by portability sherriff).  And
+> having one command line per package manager should be simpler than
+> having one command line per distro, provided if two distros that
+> share the same package manager name the "git" package the same way.
+> We had trouble with "awk" recently ;-)
 
-That's what I'd assumed as well, I was quite surprised when I realized 
-the "checkout" action was actually unpacking a tarball
+Oh, I'd not thought that different distributions might have different 
+package names for git. We already have a few uses of "command -v" in our 
+tests and ci scripts so I don't think using it here should be an issue.
+
+> Curious that we do not check the availability of apt-get here (or
+> just "apt").
+It is a lazy way of erroring out if we add a new image that uses a 
+different package manager to the matrix and forget to update the list 
+here. We could instead check for apt-get and add an else clause that 
+prints a proper message.
 
 Best Wishes
 
 Phillip
 
-> Of course it is good to
-> automatically ensure that our tarball extracts are buildable, but
-> the way tarballs are built upon release is probably different from
-> how these tarballs are made automatically (*), so in that sense not
-> building from a repository but building from "git archive" extract
-> is not doing anybody a service.
+>> The commands above omit anything that updates the package cache as we
+>> do that anyway in install-dependencies.sh and we only really care
+>> about getting some version of git installed here. It also uses apt-get
+>> to match what we do in install-dependencies.sh
 > 
-> 
-> [Footnote]
-> 
->   * "make dist" is how a release tarball is built for this project,
->     not "git archive dist.tar HEAD".
-> 
+> OK.
 
