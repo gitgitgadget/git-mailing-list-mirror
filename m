@@ -1,42 +1,43 @@
 Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011037.outbound.protection.outlook.com [52.103.67.37])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BDE1C5D59
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 12:29:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFFA620B1F4
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 12:29:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.37
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745411361; cv=fail; b=WZtIb+R2qLWWSiIncwNuHD9NRNarOb6HJUmShnurv+nJqgF6pSdvLmcftF0OMz7hL0vx+8M+5yHHw9HT6DYRgqZWMXP9FTXmNtakP+HNy+g1bm1LJUsP7xEz+gM7fb7uEEKlRjXW0E6xMbt12ckGiJn4J2PT2s3QziZYjyR4YIM=
+	t=1745411364; cv=fail; b=pHyvSkzQHSPfTC5qLx0hRoyv5wBmkcakfeZj20AN/shl0OBdqSUnLbl4cSI2a1vD+dAb5fAoasstor3O6fgtVCNviH1Q10VPkqz5FyFEnj6CgJ5U71f9CzHPjUpN6SkDFI/m7a7gpFlFepwVQV0GZWc3plyb1cBmVPdIvYjsdU4=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745411361; c=relaxed/simple;
-	bh=oFkRf4f7+lMERq/PxdOVw4Ogt837Ec4VaEOAQ6/6nfA=;
-	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=F1tBWQqRyXcTVcPAtpSHaUjN2uSgqGjdKWX8Hdg4R8KgNBM7crnJf7q0GUi1bXsUEI0Yr4Q7E3LqFlnLgTx8JZs9/zcHYUt48MMfehx6YryyWCHM/7cfZAZvASI4KF9HSZyaw897/T/DF4REBY+pnfX5Wq8idle75BZFw4v3VDY=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=hwmgbAkJ; arc=fail smtp.client-ip=52.103.67.37
+	s=arc-20240116; t=1745411364; c=relaxed/simple;
+	bh=Uhofx1yVK+E42A9CXBhyp55BFvMP9fYRaMplPqYd2NI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=VzOG7M77KTeOwL3L9Gi4zhtGiEweJ773m7aj3VzI2pq37XevJAr9NRoe8KmZaTT/TiVNWXTh2z/jdzbHXh1TcPnuAXZBT1/y7AzaaykDQFWNT+CGhMzZfb+4S5Yhd3YGiVuxUMfzMpIFkt8b5fQwpXs0SrM+NdBazrUY9X//9IQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=Ni/d7vQt; arc=fail smtp.client-ip=52.103.67.37
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="hwmgbAkJ"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="Ni/d7vQt"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MmproTNS4BJ50c02FlFLq5ohO/1nyt65SJexVLu6E82elleVFPGEcr+WOBTzYfJq4UwbO++OwUZYfxCLgC84pAg+Cke8aJ9ZMmqDLLnzMks6/pEard5yHvA566wbQ6LyIFP4/CfY/pVAshmeV2P/fhlfYs3ueLscdttgzF/+XCXixvNQ1Gp+8dTbj/KXU+dnaVh70DtZOLF8P2t2XJzxSEcudN3JwcYVXBTzmmoWINAMH3XhDAqSQMUkYDCZffVck1GCSI4QAdhuLHdFHkZ+ZndW264ere1JoCD3R9+ehqEE4irgKiJ/wy7KmPmtdnNP5nKugpiNAypWI1b139uWew==
+ b=aqjptFWwHp4grW+G6hkfYC8grtcQmtLduq6bYGAZ5pT1SD6sFQrM/6phTaZMj6RvuwCjhHc9g7mmnTFUJ7EFvqHnD4cXDDNkoFcLVqxh+H/odTL4Iw6QOALFBnIeSahzJ/DI2SNF2JzgaSy2pb/O7g95kHgLU0o2GSom6HzRK6NPHvp+8pbllf6pweszAVILEkrSPzpCQyvXzMJEBiFuJlrQKifPdMpTSTKs7LYmNhZutHKm44COmjIW9z2t+PnJQaaiT1tHLC/NgeZai636Oqy5KESkjB9gvGitAsVtFEsHcQQ90a+L+gQuXety8Bkm0cdza/Mbal3DHx6DloOn6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+OVf1JK8T0cTVyjr7bEeCFx9C/elP23ZYqhyLaKFutA=;
- b=NmZe+cq0N4v1f77sQwwlce6Ef3oLuyfwFqwui77k/u6lJL3K2fHgQuW9U1qsua07NJCmf3LoztToaboxW6uyPlpVcjDhRwFZn9AYC+0VK/mGjjsKVnj5dhVIp6YZiMsHLZEZ2PjbsyfEk2RlwVWSK3MRh6un6FqVt98LWyJP4r375VjVrIAfTa8eNl9X4c2wS0rKUWNCya+1YWoUtoNb6edQyAv+NPvtHtWWb5WnwVLTak6rj8vj8Q5QffZUy6wfjACG3vTF7Zqw2V7ZQzOzZkmg9TnMLld2qRzf6M9ZCei0C0LHSZdogZrfuJTav+rRda+ViWIEjNSgS/U/EBcWAA==
+ bh=kNonkeecgGJCbjNLETv7W3bv8zrpISlB9cueXuTzaLI=;
+ b=ZgQZz7+bCZyvLkrmzXlehzgTdr0nen/nmaNIn4rYO3qmeVR3gRp4uAdBXFR9M+SxXEEVR909CWBh/fgSVWv5nUPdZ1i5FJQ+PzCWnRKBcnmkJwuNvhEXbqC+xDLiRt1M3OBO/AwPPc0EyLAMA64JaRZg0Ry9nVH2zB7l2RpDVSzVJEYFUyljQdmiB2MvjvvD3DgSq2zok+UylgBBPfTVRQU4+PktJDVBIpBws+Zg/3oenWVO4rcsde75pA/AFO55hOl8n786NsKCDPKusKp4374ix1fSmrhDLOzYvztl35/Zf0h4f07w4CR+KRNLsKpAEwmDvcmIy7uoJQulgcjH7Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+OVf1JK8T0cTVyjr7bEeCFx9C/elP23ZYqhyLaKFutA=;
- b=hwmgbAkJmo8nF/dQFok8defUBSYechPJURoLGNQMoPljPxxJK/cgL0KZvGB3bLBTFss2b/+/Yki/BEzJ0fvP483r50Msr/8NqgcjCMu2K7xF2MWLjrDk6qIw4YvrzAQmWri39DFMUYNHrAuXG3a5H5GDXol4wbQuupMedRqemrJLbjEX5esKGmL8U+kpAg2GeIbZWkwMjRIByj0VwYMQ6sCAycpILakQr+cxPUBvVMpVZen1Gb9vvwU3n+HZ5ml5VUxcv62/9VnXepM8NPn6Rrpe5WoxdJhSi0QQwC0ebqa2qtx5smRQgxh7JjTJKTvjZjiPcO+qPDYU93GENAv2PA==
+ bh=kNonkeecgGJCbjNLETv7W3bv8zrpISlB9cueXuTzaLI=;
+ b=Ni/d7vQteEQSjtx3Ght/ZNhzpaECC/bxZYQkcxzkXvg863kKhooHv82t4+Veh2TWoZs+RoH3mOL/aNl7FbaTBRfHTJl4/9ZGlI4UZmBKnsciI/QFQYRr5yIsPeuMJjx79jNo8WzEHVfaMF2lHPdTycG7V7b9veNwmeX9gd+k1M2oLgpkNVFNtRj4Pm6Q3aqTZW0nW7zix/I78LWqEam/R/tZUn7qE4Ai+13HRpCyg/LTQub714S4JepvqOSX/AmrCt4EvBwrHvEXnQsDrC0T0ttc4X/f5NLxEUhG4fPUqWI1cg8HHzYAT4IorMTtB+DM9K9hLOqz5wx3umaalinkew==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PN3PR01MB7143.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:ae::7) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.23; Wed, 23 Apr
- 2025 12:29:11 +0000
+ 2025 12:29:13 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8655.031; Wed, 23 Apr 2025
- 12:29:11 +0000
+ 12:29:12 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Julian Swagemakers <julian@swagemakers.org>,
 	git@vger.kernel.org,
@@ -44,18 +45,20 @@ To: Julian Swagemakers <julian@swagemakers.org>,
 Cc: M Hickford <mirth.hickford@gmail.com>,
 	sandals@crustytoothpaste.net,
 	Shengyu Qu <wiagn233@outlook.com>
-Subject: [PATCH v4 0/3] send-email: add oauth2 support and fix outlook breaking threads
-Date: Wed, 23 Apr 2025 12:19:44 +0000
+Subject: [PATCH v4 1/3] send-email: implement SMTP bearer authentication
+Date: Wed, 23 Apr 2025 12:19:45 +0000
 Message-ID:
- <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597776CB37BE7B05A7ADD80B8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email @GIT_VERSION@
+In-Reply-To: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: PN3PR01CA0113.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:96::18) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250423122903.43547-1-gargaditya08@live.com>
+ <20250423122903.43547-2-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,62 +68,62 @@ MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PR01MB7143:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5c38be2e-d0e5-4837-c77e-08dd82627350
+X-MS-Office365-Filtering-Correlation-Id: a283ec8e-7f68-461b-19ce-08dd82627380
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|5062599005|8060799006|19110799003|5072599009|15080799006|7092599003|10035399004|3412199025|440099028|4302099013|1602099012;
+	BCL:0;ARA:14566002|461199028|8060799006|19110799003|5072599009|15080799006|7092599003|10035399004|3412199025|440099028|4302099013|41001999003|19111999003|1602099012;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?bnlvsvtpLCWqJ8aWDPPAU9b55GfmAH5SfYkwoKzlAhxzAzFJoV/nns2X6bYP?=
- =?us-ascii?Q?38Gzl5pTyhE0u7zYwIe591hmVYDJ/fPa3aplqA1gyi8elPAyglP9Nt//Y4jk?=
- =?us-ascii?Q?5WfcZTUl6WeLI8dqGDJuQd+0HmyZi9R2SuVSTt6qQi5ysiSnMjjAJgVHBz+D?=
- =?us-ascii?Q?g1OiP8KbBtXGG7ejqlTh6aUa8RxVEDVjbCi5R0WSu4Fy1eWhcOxxoCX0bDzg?=
- =?us-ascii?Q?UWyTfc3tgKgjznD6XUFLxIByAWMidQ0/ekigCivjipLBZVL/JNBA9jiOZdQf?=
- =?us-ascii?Q?1vrC1EV1Qikb0Xxik6QgUmhGgwwJVdBMKmDzOMgM243o4UUV1vxBgaoa5bAU?=
- =?us-ascii?Q?VrMU6rn2HKao4Zp4nC7sGvCgJw0aF0F3LpT2kBw4wDANNkb9Y7WXy/zKdJ4V?=
- =?us-ascii?Q?8v83c6wy7xh6Ld0ZaRmUn+8OcGYn6mRlFmIA/vtVXudr2CVS4RTuovOferHc?=
- =?us-ascii?Q?0Q1MXyokSbqAD3iGsSGV1unMFaGEwj3GSGL+AGYGBFtKLbqumQuaf6DGKVJB?=
- =?us-ascii?Q?fMY8qKmdXylybYgdvi5CLR08+yub+86/vqC9Ib+MQAXAtrvrVJuVP5vIyt7I?=
- =?us-ascii?Q?R8fO2MdR3b6w1B3vftMrWHcehwTGq1tJcKAYQlaSis+AH+mgsOUin6neWEE6?=
- =?us-ascii?Q?8CABehg2IgbUJIcxDu+/BXvg34eMbQ6Cc6kjnajnAWcRno3C06u/GgAawV5z?=
- =?us-ascii?Q?uXvzsauQAtyuIv2jOdtpiFzxYg4km4tvgZAQdKIqYJ1qvsM/Unr0n5cui7/T?=
- =?us-ascii?Q?dLkvzcd+2Ouugq1Re0LNJ4zjCbnbyW1cI6g19X+rcrUHj5azBDA0kYlSQyDC?=
- =?us-ascii?Q?ubJs7RNp/BWrwvy04mTx7C1RSmw4cmHOOWddwxIYjHhq2oHZ43/QOqCFylyx?=
- =?us-ascii?Q?pQGwL4cZsW66R+YsRmEYF2Jhyetg0naJViVD3tm58IdstB//eCzgP0wpIwdK?=
- =?us-ascii?Q?c1dOsHAdQkbvq9Se+MLWVZswBgux5lHjNr6e0l4Td6IGqc0rfkyBDOwA6Rd2?=
- =?us-ascii?Q?6M33RMbwk5JkZfiiIIqPiYlZSZdp+YdmZs+RZabmzcwpJ/27glbjr3OcIttC?=
- =?us-ascii?Q?7fw0mfA04McrXthNS0xP1NOw77IRtjgONEcNWuJx/IrpWIBw7yFV8JeBBVUO?=
- =?us-ascii?Q?4IFOS3UYrJu0KPYnpdjuZNiSZYIZYZW2T2zaEQERJlIRd5eGXJRhFofl8utX?=
- =?us-ascii?Q?XvbYz0r9tpF6f7CbkNQlTMxTtPtjawOSLedAZQY0+igUs6fihkK46Wa7FzCr?=
- =?us-ascii?Q?c0/C84gGGmra0WHW7v0i2LyUTMswMMFandwPE+X9gAUdlZptk+m/+DxBAddN?=
- =?us-ascii?Q?cNY=3D?=
+	=?us-ascii?Q?O9AjqFDfHDhbEQqLfJiYKLV4RvduW6Q1pVST+x+oakV6vNlR8uQqdWHO4B37?=
+ =?us-ascii?Q?FPXyRDEY8r5nnZCFbpfMgTt1ym4YI51F0V1GCppkFEJbOf58P8+d639/o+H6?=
+ =?us-ascii?Q?vrfP2en37zbjEdqUhFv6pqQix9Qd+8/7mqy+oQN42j/rl/EzqVWg1GgZral6?=
+ =?us-ascii?Q?Yjrp83qLi/RKYSBJcIyU4J025jN3Vy6Fx9Ue/D6A7AgBWq0+zamfV2PzN+y+?=
+ =?us-ascii?Q?Wty+u+kiCJqmsPwDVEiKGcFUJypcEs+r6qjQhZjq+E938XMVpPDl6E4s7SYm?=
+ =?us-ascii?Q?AipDOpASFu5Gxf0+UT3sdRbcJS4lfS47VgqY+AKr2hRF29s+5DkHro0vg7Yd?=
+ =?us-ascii?Q?oysEZXW04DHBxoEEIR0iArQ1/elxHpe0RujGimo/IZ+uQPzCawRCm9BF7NzX?=
+ =?us-ascii?Q?mDSFgvwwwIQP/je+z0SN47yhICbVMpja7nlxX3b1QB33wfNyYK6c+GVgImxY?=
+ =?us-ascii?Q?cuH+/cz2223rl4OPiayykmVSpt94sX4yT6B90BmPqlrShEMjSI6edVcqmTyo?=
+ =?us-ascii?Q?YYx5Adk2n7OxAS85JEcK/lsjcpIq9fOEPgFy3M5R7Y71dY6T+SdNU8DG0K1b?=
+ =?us-ascii?Q?AG8kWF+K9YiXabVddz2MHqmlEudIP+kfZUMDQOC/FMOsfUTSSs0XAo9a0/vu?=
+ =?us-ascii?Q?ARtNzahU+z6Ttv810KfE+hfX798SoyLoeJvBxfu3zn7XJGZ55DE85y8Px9iY?=
+ =?us-ascii?Q?CpVgUptmGigB7JQczTLm4UTCnpz7Mr3PKXsNAt4QiGp6dXmzfJQ4ulMnrp+W?=
+ =?us-ascii?Q?PAj9/AajVHzQdYxQ46GuzfgXzWz48/SlTPei3PLIFmoDWAZNdlcQkVkmwIAf?=
+ =?us-ascii?Q?eyeJA6VWFKUXH//w82BW8yxss6Fr3vcuGF0Vb05XU6UYVeQmvvkZMW0gsXmU?=
+ =?us-ascii?Q?FJajiDiq03Nzxf9Fv/VXmwXOg5vmoq2jR2v5mQpML9DmBtqgXVAZMYXARTMP?=
+ =?us-ascii?Q?S+/Pse68oyR9RQ/EevMPQ5nJxFmIhz16cFgLZpZIifly6o0z76HSZ68Fxo0z?=
+ =?us-ascii?Q?HWYylMV4bHgCkGTGgwPoqIQXVIMeAxmUMn1692EymHuUv2nNHq5o6QFhJH7Y?=
+ =?us-ascii?Q?TXL0Hb6KiMH7qNk7Ma66/ffSVno7Dtk9f1ccmMso2i3KDVzglvNbUjhmRmvq?=
+ =?us-ascii?Q?spceo2UsIOqwYD5jzpuzN75lMCHrtwH9TRBfIR8gX/2gIsQzGL/0kUsb14js?=
+ =?us-ascii?Q?d1qY14JdyHQO3kioJPnwjNAZTvdJzePWZWbLOtYCpypUHWgTFRQQLfYDpY3X?=
+ =?us-ascii?Q?yekXBV4Aul6A0DaL90Eap/qeFqlgrDIt/6IDrRfK0sqaHvW6egZZLdC+5Rn0?=
+ =?us-ascii?Q?CRs=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?BvxveNRe0slvR8zwn9Y45gV4JuqGFf2ozu8Ca1IWKnEfPYpi8o6zFlFjwR35?=
- =?us-ascii?Q?lIY92Snt3XJT0S8nRTBJs4p7JANL58bkwZtOFSMWyzyzl3+bVF746IEaa2WQ?=
- =?us-ascii?Q?RW3U3LIYOJkR3F3DR25khJ7KzdGMVjR6RyBjIOkaNs2UspUrx3J7b0CEfrrA?=
- =?us-ascii?Q?GanIk97BozU3sFlPLJDotSAKQU/fe9HOkaNMqTwtSnYhdFEvd1UQRMbpH0qR?=
- =?us-ascii?Q?zVzdTbw9KaBkfdlEONXQGhrkqzc+CfV8QhljiuH3y1zhGUjzWO3qROENwbdd?=
- =?us-ascii?Q?ewfKgcBpiLgih2FeX0cJupvfY4ZlWuCcN2VPT/yxyA67UlefAAZiVbYgDWLd?=
- =?us-ascii?Q?l5SrCJ5UFM1PfdSf4bn3f4ZDgkCslEQjUkoi14MSLgMkGHglcmpauIma8zN8?=
- =?us-ascii?Q?sLy6AnxOYduW0cvul/CMXFhnS9kjEuY9nSHzNYHCdcI2nZwHln/GgxiAjoBX?=
- =?us-ascii?Q?xPJkGV6CRwZS/K6Ojrvrnb4rfmzUXvAoBy8aquBR58fR9wVkKr9X7BAGUq/g?=
- =?us-ascii?Q?QecXbyk8uGB1FBgdO/dZAhOq+nfg5WDkE+c/fkdSV224Dd7utqg9A6Cc8dT5?=
- =?us-ascii?Q?E0nUJd0GOiaJ3npOXkPFmhqZY0kkexhieh561IjP/CBygnEAMS1C/5+NQ1Ps?=
- =?us-ascii?Q?Nsmm1YqgQSOg9P9IMZFdZ87QGaAQ7/9/HuZyB2cixkWqUm0zrJWDtnTYeVT+?=
- =?us-ascii?Q?wb0CJSKnL1Vd8oQQ6YvfxCLKIoEe7zVo0ymq9AzS66ycHBy5onY/g5dRV259?=
- =?us-ascii?Q?BRIBk3Esd3lAXxlDCcl92p39HjhmMLBDoPZR/lGyi0CFQZUUOHXFAIWBEd0s?=
- =?us-ascii?Q?q+TZZNz1H+CaYTAIVcyXLFtHZminrCFcCQfIL5/I4A+INVAY6XWx6DfrUjun?=
- =?us-ascii?Q?caeCbUsOhus2HGe42bMe0Ep4XDaw6k92BLxnbZHXDziISnXEcoXORjxFdMYH?=
- =?us-ascii?Q?q2Bxgo5YgBZ6Qr1X48qbMwEPMjX8UjJdLp8vaEHz9WdBkmj5VnPsJa/tVCgj?=
- =?us-ascii?Q?f0o6siCvNnVJC7zbctiH4gl2jhoibHH6Dw9NeINo6mjoBKE1Tzvan0rWKWFF?=
- =?us-ascii?Q?ZHOGbgDzzQkqGLMoTn6DkHyp2jy7Ux6i0io+Iwm/5ipWqx37bd9kRDyr/TQt?=
- =?us-ascii?Q?X6zSFKMJmJ/KAxrm7bzYdKD7JRP77seIAjxAJd+DevWvJtUN456h/0SXqZSN?=
- =?us-ascii?Q?PHFnCZLsHbMrZ3ZSiq/F+lTlAWdoz4/O/rumnJBiYkfS/OJaj7zQVJbU/Ck?=
+	=?us-ascii?Q?sN8H9cnxABOXRN7kwVzYaXpVaeNh0mFnp8mhmwkTv8aWr4cCz6f+Z4SN1Jm/?=
+ =?us-ascii?Q?ujuP5+a/tKZOjovt1R/0OIsQKljEStwzgjAF2BJ5BFlmRn89xBcEgtOWAM6G?=
+ =?us-ascii?Q?0oG6OpTSR9L3XHvjEEjpdTmVgfBWYrgpZkf/R0u8NqpBxVb7EPau4j+Weyob?=
+ =?us-ascii?Q?pqqBAdXfYqVzYtfAO65+TMMwXuIWWLlI79NXt0mrnC+uRooQaMXbbIyJnHnz?=
+ =?us-ascii?Q?3K1Xt1CQJBQO9COpYgWTiNjguIte3+xHb26avVtSHAbtfVKRXePQeg448xX/?=
+ =?us-ascii?Q?2W2Y9b7tl1JRj/4xcD5wlLc+6RAuz+Z6ybHfFmbTQSahzxxSmP6cac2tisyU?=
+ =?us-ascii?Q?/vURRQ8Bs51c07nqwMVjYWNGHsSSnY5VqDW/IKOpfwDaHO4WfN0/pv1TGBmm?=
+ =?us-ascii?Q?kBrz6McpBCNNYtuRFwO5A4cUBZzTf8nX5iiBY4kiGvqbKdiNNoZ0dlI5Gi1t?=
+ =?us-ascii?Q?xauDxsBgclsq0XpyxnXQqc4V6PV82dD/dPytGfY9OAlju1iR7ze2lgehxSLV?=
+ =?us-ascii?Q?wCJS7uutBbSvFFUnYiFs5y6gf7xGDMkF7HgRPTa661+yO7/Ape9FDKFcupVV?=
+ =?us-ascii?Q?BfnaeJYXXJuisEVgZSD3y7XlE+Dae2RgFncyJpAVRoDWEN1/M/nzTHv7faHM?=
+ =?us-ascii?Q?/s48hLbdEMXht67QbFJWT92xgolXXIMnDhTHFPJivjfopLvwvY31z+8Gt3vD?=
+ =?us-ascii?Q?NcAZKgp83A+QEIB4qH4fyROnfCgBKd9hMtQFxlsvDbqxaG4KxpYWEHdZwCLu?=
+ =?us-ascii?Q?+7bLxVpt38QzrwW5O196GyEMoFNmf3Me0QwP413GGfJXnMIUwLYGMiyl7RH7?=
+ =?us-ascii?Q?Pjm1xSee0T608GDoz5/B/ugC60XbblD9dJjH7OkmyLZWGtaH0xo3EkdTkKpC?=
+ =?us-ascii?Q?e516Dl5l4fEU/LBBdQPlnSs9a97KFrgrxlXUNxJbo6Gu/w4ABPm0a+lp6Ecs?=
+ =?us-ascii?Q?BIOXny6sTvaA2CK/u3ehbOWwdcrHD19dHhl5EISxK+Tt/fC35pqzN4X9nfqW?=
+ =?us-ascii?Q?MTTJIFediK2r1nhafyjaqbmaXuYpLSRpyhW4kSbZFSn5jimbDLlc+jp2Q5xL?=
+ =?us-ascii?Q?zX6YYiTggSMrsk8k+FhcUWQ8VKJj0BrVRFbG60cS3shPA71nWs3SiJQiHG9s?=
+ =?us-ascii?Q?Gb4WF9vRbN4n7hbCI5LAAyEvV7wWVj8CBvIADcmMgT/sBDIoUqhFEoiPV3IQ?=
+ =?us-ascii?Q?lvZ0+OCmw+EIVi2ayA6ab0O2pkwCdixUT57O3BfL+9bogfNNfbYGmrkWDEY?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c38be2e-d0e5-4837-c77e-08dd82627350
+X-MS-Exchange-CrossTenant-Network-Message-Id: a283ec8e-7f68-461b-19ce-08dd82627380
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2025 12:29:11.2169
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 Apr 2025 12:29:11.4798
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -128,49 +131,147 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB7143
 
-Hi all!
+From: Julian Swagemakers <julian@swagemakers.org>
 
-This patch series includes three changes:
+Manually send SMTP AUTH command for auth type OAUTHBEARER and XOAUTH2.
+This is necessary since they are currently not supported by the Perls
+Authen::SASL module.
 
-1. It adds support for Oauth2 authentication, which is now compulsory by Microsoft.
-   This patch has been rebased to the latest version from the original version
-   at https://lore.kernel.org/git/20250125190131.48717-1-julian@swagemakers.org/
+The bearer token needs to be passed in as the password. This can be done
+with git-credential-oauth[0] after minor modifications[1]. Which will
+allow using git send-email with Gmail and oauth2 authentication:
 
-2. The second patch makes the script reply to the message id set by the outlook,
-   since outlook has its own proprietary way to handle message ids,
-   and does not allow user to set their own. As a result, threads were breaking.
+    [credential]
+        helper = cache --timeout 7200    # two hours
+        helper = oauth
+    [sendemail]
+        smtpEncryption = tls
+        smtpServer = smtp.gmail.com
+        smtpUser = example@gmail.com
+        smtpServerPort = 587
+        smtpauth = OAUTHBEARER
 
-3. The final patch adds a new option to generate passwords like OAuth2 tokens.
-   This is useful for users who want to use a script which generates tokens for
-   OAuth2 authentication.
+As well as Office 365 accounts:
 
-Detailed description of each patch has been done in the respective patches
+    [credential]
+        helper = cache --timeout 7200   # two hours
+        helper = oauth
+    [sendemail]
+        smtpEncryption = tls
+        smtpServer = smtp.office365.com
+        smtpUser = example@example.com
+        smtpServerPort = 587
+        smtpauth = XOAUTH2
 
-BTW, I am sending this series using the patched send-email by these patches from
-Outlook!
+[0] https://github.com/hickford/git-credential-oauth
+[1] https://github.com/hickford/git-credential-oauth/issues/48
 
-v2:
-- Fix errors flagged by the CI
+Tested-by: M Hickford <mirth.hickford@gmail.com>
+Signed-off-by: Julian Swagemakers <julian@swagemakers.org>
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ Documentation/git-send-email.adoc |  5 ++-
+ git-send-email.perl               | 64 ++++++++++++++++++++++++++++++-
+ 2 files changed, 67 insertions(+), 2 deletions(-)
 
-v3:
-- Add third patch to generate passwords like OAuth2 tokens
-
-v4:
-- Make log message of the second patch more clear.
-- Change "Outlook: Retrieved Message-ID:" to "Outlook reassigned Message-ID to:"
-- Update documentation for smtp-passeval.
-
-Aditya Garg (2):
-  send-email: retrieve Message-ID from outlook SMTP server
-  send-email: add option to generate passswords like OAuth2 tokens
-
-Julian Swagemakers (1):
-  send-email: implement SMTP bearer authentication
-
- Documentation/git-send-email.adoc | 13 +++-
- git-send-email.perl               | 99 ++++++++++++++++++++++++++++++-
- 2 files changed, 110 insertions(+), 2 deletions(-)
-
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+index 7f223db42d..1bf75c060d 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -213,7 +213,10 @@ SMTP server and if it is supported by the utilized SASL library, the mechanism
+ is used for authentication. If neither 'sendemail.smtpAuth' nor `--smtp-auth`
+ is specified, all mechanisms supported by the SASL library can be used. The
+ special value 'none' maybe specified to completely disable authentication
+-independently of `--smtp-user`
++independently of `--smtp-user`. Specifying `OAUTHBEARER` or `XOAUTH2` will
++bypass SASL negotiation and force bearer authentication. In this case the
++bearer token must be provided with `--smtp-pass` or using a credential helper
++and `--smtp-encryption=tls` must be set.
+ 
+ --smtp-pass[=<password>]::
+ 	Password for SMTP-AUTH. The argument is optional: If no
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 1f613fa979..a6cafda29c 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1398,6 +1398,63 @@ sub smtp_host_string {
+ 	}
+ }
+ 
++sub generate_oauthbearer_string {
++	# This will generate the oauthbearer string used for authentication.
++	#
++	# "n,a=" {User} ",^Ahost=" {Host} "^Aport=" {Port} "^Aauth=Bearer " {Access Token} "^A^A
++	#
++	# The first part `n,a=" {User} ",` is the gs2 header described in RFC5801.
++	# * gs2-cb-flag `n` -> client does not support CB
++	# * gs2-authzid `a=" {User} "`
++	#
++	# The second part are key value pairs containing host, port and auth as
++	# described in RFC7628.
++	#
++	# https://datatracker.ietf.org/doc/html/rfc5801
++	# https://datatracker.ietf.org/doc/html/rfc7628
++	my $username = shift;
++	my $token = shift;
++	return "n,a=$username,\001port=$smtp_server_port\001auth=Bearer $token\001\001";
++}
++
++sub generate_xoauth2_string {
++	# "user=" {User} "^Aauth=Bearer " {Access Token} "^A^A"
++	# https://developers.google.com/gmail/imap/xoauth2-protocol#initial_client_response
++	my $username = shift;
++	my $token = shift;
++	return "user=$username\001auth=Bearer $token\001\001";
++}
++
++sub smtp_bearer_auth {
++	my $username = shift;
++	my $token = shift;
++	my $auth_string;
++	if ($smtp_encryption ne "tls") {
++		# As described in RFC7628 TLS is required and will be enforced
++		# at this point.
++		#
++		# https://datatracker.ietf.org/doc/html/rfc7628#section-3
++		die sprintf(__("For %s TLS is required."), $smtp_auth);
++	}
++	if ($smtp_auth eq "OAUTHBEARER") {
++		$auth_string = generate_oauthbearer_string($username, $token);
++	} elsif ($smtp_auth eq "XOAUTH2") {
++		$auth_string = generate_xoauth2_string($username, $token);
++	}
++	my $encoded_auth_string = MIME::Base64::encode($auth_string, "");
++	$smtp->command("AUTH $smtp_auth $encoded_auth_string\r\n");
++	use Net::Cmd qw(CMD_OK);
++	if ($smtp->response() == CMD_OK){
++		return 1;
++	} else {
++		# Send dummy request on authentication failure according to rfc7628.
++		# https://datatracker.ietf.org/doc/html/rfc7628#section-3.2.3
++		$smtp->command(MIME::Base64::encode("\001"));
++		$smtp->response();
++		return 0;
++	}
++}
++
+ # Returns 1 if authentication succeeded or was not necessary
+ # (smtp_user was not specified), and 0 otherwise.
+ 
+@@ -1436,7 +1493,12 @@ sub smtp_auth_maybe {
+ 
+ 		# catch all SMTP auth error in a unified eval block
+ 		eval {
+-			if ($smtp_auth) {
++			if (defined $smtp_auth && ($smtp_auth eq "OAUTHBEARER" || $smtp_auth eq "XOAUTH2")) {
++				# Since Authen:SASL does not support XOAUTH2 nor OAUTHBEARER we will
++				# manually authenticate for these types. The password field should
++				# contain the auth token at this point.
++				$result = smtp_bearer_auth($cred->{'username'}, $cred->{'password'});
++			} elsif ($smtp_auth) {
+ 				my $sasl = Authen::SASL->new(
+ 					mechanism => $smtp_auth,
+ 					callback => {
 -- 
 2.49.0
 
