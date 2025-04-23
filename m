@@ -1,124 +1,208 @@
-Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FD4E13B797
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 17:20:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31971280CFF
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 17:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745428821; cv=none; b=oJq5lwdYsmhA1z1TVVYlA6VOyMlLy34Wxv4qEZbtkgrMIqWYlVtE7qQadKZw1MyZ20+mkS+7pjQh9CxLk9njwZLmTG5UYQTCzemgE6DlHagN4n09HyKdUcl6fufrdWc9UumNt3BdUyd4Yx0H2+6/otnOvr+pyzucDqL/tfOMdpg=
+	t=1745429982; cv=none; b=Mx0oGnAtWHMU5/jaXy7++F7bzM81lIG2Nmk6wu4L2cF4CD3AvpC5sqWF391Pv0oMrNZ2AR8EXuFecqkYtwYwzSl9d14TsSbDKFGJPgUn9V8+qf6smNf+OHosNhnb2vUoORrmssbHN5J/yF//PC96e1nvYWsvsvKBBKu//ZlZ1HQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745428821; c=relaxed/simple;
-	bh=AVQnpgLSoSEvMNMv1W1aux30FksW1N2hCgpGQ2POapU=;
+	s=arc-20240116; t=1745429982; c=relaxed/simple;
+	bh=wiy/+vFcaH6vZfsVZI15noDNOuybch2IC3jFEe5iAfU=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Content-Type; b=nhgI5/b4JMgKDx867ALrinpJT/P9oSVDdkNjVajcafv/NPgjusNs/QZ2TbCy1HNEqb8ZI9jlPkDESJrtIxCgjEACFxQW/B7axjhlzMXREgbSuKfFHMGFT6sLhhCSXLVFrhQf+I5c2KdzYaHgLmS2NRDW+2V0kMTdqnehNwSiszA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FlUvH/7/; arc=none smtp.client-ip=209.85.221.176
+	 To:Cc:Content-Type; b=SoL6VZnB//iJ1i4KottEoo22NASBCNOtjkbtcuGYkXKMarOkQKKyt4ttuzqt7urjwzqIoN2hKU4LfnRCPCB4Qhd9WAtG5JkW63gKZ6m8Csf/fyqyX0aulu5hu5qAYdvgpEqJCY7oZUDdCUWLyyn3w9XagbDv0PFVHC0uWrBFMrU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WQ9UdbrI; arc=none smtp.client-ip=209.85.221.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FlUvH/7/"
-Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-523ffbe0dbcso81067e0c.0
-        for <git@vger.kernel.org>; Wed, 23 Apr 2025 10:20:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WQ9UdbrI"
+Received: by mail-vk1-f181.google.com with SMTP id 71dfb90a1353d-52934f4fb23so87439e0c.1
+        for <git@vger.kernel.org>; Wed, 23 Apr 2025 10:39:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745428819; x=1746033619; darn=vger.kernel.org;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=cJ+Bfkl/njVgRrZ426nmD61X8l0tZnXi/4N8EiGMo2w=;
-        b=FlUvH/7/8Mqw2Nhb0e/oB4AIwdkmZZb+LmyrLLT8ZsP7Q5AmR+5dELZDMIhqHOr0Pf
-         23yN+vZd/z1FzNb0ADkYmY/ppAb2VwfOonjOSeUVko12f3IjT07f3QpsUsTJ2TM9KK7R
-         E2+bMMeOdV07vRJ5iJ7zqmii3/gnAxBa4nYm6B5xVrLzght0WnOQJ4j/GyoLIhcnDDzm
-         f1NqXJFvUtzvwolSAozjMpoQhK4hCS57qc8BgFLkA1SVaKUBZdqVVBUi9YCtlElVamJP
-         1icbYFb5qfcb4k0/3nbGkkcVQptAlzrEFfFNCpUrWnuF+lPUdGROxArlCTDNU+soUfML
-         7Vfw==
+        d=gmail.com; s=20230601; t=1745429980; x=1746034780; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=BdZmLOkrPw/DH1tQm8H1/ijICuNwga62KtXl4Rq1rgs=;
+        b=WQ9UdbrIUniedqqM+ZQIbnGO6LsqZ9CscWeQ1pcvuba+5OUf2keFd7yeZ/ZgeglTyp
+         XoJhtXCLmEOi2g9OmpwNXihUc0ljEI2BP+682Bjo7yjfDFSM6oSgIMlU5AthCYPzCrB+
+         fW6jvpvyPp5cx2pQBUedQrWRlUCwQYsYykQtnpIrSpD24GXcEpUh07SAU3JUDsJU7a3J
+         078Qa/yc32rzCcSyPqOQviyZLyHqQiKF9YFnNahE6A+nILzZa5Bo5Fp/fWh00+VQ+3pm
+         QPfyX/1TD3AFudXfmUoCZ7EdMrYxA0HV9xibah2eCIsw6+jvvi3h2HcK5BQEyx0LPY67
+         vaxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745428819; x=1746033619;
-        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=cJ+Bfkl/njVgRrZ426nmD61X8l0tZnXi/4N8EiGMo2w=;
-        b=XYzeKVJGnvlIGjFzWlkqKCpEB11Epa+2cCrc/TD4p0cWwlp0nw5AlrZ10NweqUGlTj
-         Dqxsf5rp2Xnf3mUMTSnQm34U0szoXkR8X5BSvPJUQ+Ksnv+t7DEZ7wHpo+P24ANjYp5G
-         ifrWL1oY5rrVLpB6ggonIZKeIdz8poQ5Ahj91KxE1WQGKZrhoSXaUHYFAbePqmfIhc/A
-         ji2cLVRN01tA1KcSdkwinq3Dn75Z/O313/sj9wctb/4ZeXa0ChSS6KEriknG4XKvbXM0
-         du7ifYjOF5qCQElP0I0+LPOWYokzyjjLyTmmkX9abTKCuynu648GEFXHa7CCLoEWIxO/
-         0+8A==
-X-Forwarded-Encrypted: i=1; AJvYcCWHzwlyteBWXCIWzk1uAZeFD1Eo/e7rizv/QcPfdzofzro1LM4ASytzvh96VMUvS7mPOos=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzUwmKv64tSdBHbNhHqtDc8DgdmRJ2sY2lLU1mdBy6+/w48/D+k
-	2MRa6JzVAZJ5Ud8nqAaIuyA8mgKAEI1m9FpA8c0lmnzERpQG0oFxbLZMlnTAO7ychmtx1xsdIBA
-	gLs+HDxJouWggDLvktf3CW8bkwPnY2bK7
-X-Gm-Gg: ASbGncsF4HEUgBZ0WokEUjYrJebga6+nfYEtF9b9Kk9rlO+bRgS1Exrpsn6kvqblFlo
-	r9xAUnuFAh3BBs+E8gZEYqsKwR0z9Dz3jbALVPYAsGKWi3c183l1Dqzai4H1vrsrubXcD8plvfT
-	5JMIOSUZJus3r727xB69A8/4Zel3rUISK5gTq7Dp7QIn6lMJT9S7NmRhQw
-X-Google-Smtp-Source: AGHT+IHqWLO7qrKEwpOxOs+OpjfGBH9mgVXtWh+Nq24WEShjO42iJnt3/atyfo9022ANn3cYLes0hg20JTWHgw+2Wnw=
-X-Received: by 2002:a05:6122:3d0c:b0:520:63e6:79d1 with SMTP id
- 71dfb90a1353d-52a76b89884mr120132e0c.10.1745428818866; Wed, 23 Apr 2025
- 10:20:18 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1745429980; x=1746034780;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=BdZmLOkrPw/DH1tQm8H1/ijICuNwga62KtXl4Rq1rgs=;
+        b=q3IIv44iPwCKiCEZHtZAuCSSOP4RB0sRxf3EuHxkX6ACMC+xAXV68MwY9ZLvugyaKj
+         FStENhbpNQ4Ms+/diguNR8P51SE2CPfYq4OzpYDb/H1BTz6ikgcpXGAFXzscBU49SMWV
+         hSwg2B8L8nV+rG+/d+TPetNxjh+CYtAer/KNMZXu87ckkkdPrQxeY+/3vsS/usQiFULL
+         9qmG4lAzE5p/QmEUQIXJwI641D+TZrCUGu03jZk4qqmGVmdJ9gZxq1SfoIE9KzfSEZA4
+         uznclVdBnnoUE2KXpohLVMZor21fgAxjI/ZHsfcG9dX5q+NkepGtWTuMjTGzK0ofXdWH
+         hmxA==
+X-Forwarded-Encrypted: i=1; AJvYcCXSDbAE+68HbcMRrKp9xu3oZSGvV+1PXpB330iEriOUHGLu0+jw7tQBlbN2AT53bKtLPW4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxEVZGPLPU6Yd+OahI0gWc/o3PtoPi1fvT23nosVVVQTW+J7MO/
+	i1mQNvQtCWpUdYTj3K8RzxVwb16PYTw/YOCQG+oAK0SA9yNVtGPguuvpuQuJZ8CkWJI4S5VWloT
+	Djaz7QoCGTQdQwNt/zB+c+q8Ux5w=
+X-Gm-Gg: ASbGncuP0/LlhdzqbRBZ4Jpz5yqJXBx6JwpnX0B+xCACbKdSR9rbA2rdQKz3w8g9/Ng
+	penBhXLAkD7yl55fGh04xvIGnfy7IxzWwa27o9bgretrOP9pxSXlx3NgNtwAqtk6kH+NNqXG6dW
+	iIGB2a/K2tIoPWtvqZRArTzNOqjIZ9ctmTwJMaSFYk3XWGtREuH2MKaVLBKUFaILPTUBE=
+X-Google-Smtp-Source: AGHT+IFgMxQtVuwVuuBdz7L+vi6AGIuGo7Ib2zTvvcxE7EpmsjS9wGPjMLkbDW83VkMY/lwALiKq7YO4+8cOZ9m36VE=
+X-Received: by 2002:a05:6122:2527:b0:520:62ce:98ed with SMTP id
+ 71dfb90a1353d-52a76b421bfmr262398e0c.6.1745429979856; Wed, 23 Apr 2025
+ 10:39:39 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 23 Apr 2025 10:20:18 -0700
+ HTTPREST; Wed, 23 Apr 2025 10:39:39 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 23 Apr 2025 10:20:18 -0700
+ HTTPREST; Wed, 23 Apr 2025 10:39:39 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
-References: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
+In-Reply-To: <3607a937-9795-4348-981e-dce92203c6d7@gmail.com>
+References: <20250423-505-wire-up-sparse-via-meson-v5-0-d1e2be4b2078@gmail.com>
+ <20250423-505-wire-up-sparse-via-meson-v5-1-d1e2be4b2078@gmail.com> <3607a937-9795-4348-981e-dce92203c6d7@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Wed, 23 Apr 2025 10:20:18 -0700
-X-Gm-Features: ATxdqUFCMNchiiJJVgi7ObpJpHoK5oqAtrXBpyERJrw7yzCSQKY9E9Ezn7XTA50
-Message-ID: <CAOLa=ZQ45v33yj2bUNrN6ZJYawR2KVyjHAtsY0RZ58fkhkTbSw@mail.gmail.com>
-Subject: Re: [PATCH 00/13] object-store: a handful of cleanups
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000bad468063375505f"
+Date: Wed, 23 Apr 2025 10:39:39 -0700
+X-Gm-Features: ATxdqUH1MBPOQCjDLURFjTpHdlOhwU2esJgvi8VEvJhSsdnAFR7gSxi-qRGTyQA
+Message-ID: <CAOLa=ZQJZ0L2wONYJo_JNKSDHHRWQ-sOTuA34FLLgzzZPnHdqg@mail.gmail.com>
+Subject: Re: [PATCH v5 1/6] ci/github: install git before checking out the repository
+To: phillip.wood@dunelm.org.uk, git@vger.kernel.org
+Cc: toon@iotcl.com, gitster@pobox.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000ee1bb1063375955c"
 
---000000000000bad468063375505f
+--000000000000ee1bb1063375955c
 Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
+phillip.wood123@gmail.com writes:
 
-> Hi,
+> Hi Karthik
 >
-> this patch series contains a handful of cleanups to the object store
-> subsystem:
+> This looks good, I've left a few comments about the wording of the
+> commit message but I wouldn't worry too much unless you end up
+> re-rolling for some other reason.
 >
->   - A couple of definitions are moved out of "object-store.h" as they
->     belong to other subsystems.
+> On 23/04/2025 09:15, Karthik Nayak wrote:
+>> The GitHub's CI workflow uses 'actions/checkout@v4' to checkout the
 >
->   - Some functions are dropped and/or renamed.
->
->   - The biggest part is the removal of `repo_has_object_file()`. This
->     function and its `_with_flags()` variant are marked as deprecated,
->     with the replacement being `has_object()`. The benefit of that
->     function is that it doesn't reload packfiles and doesn't fetch
->     promisor objects by default so that it becomes more explicit when
->     one really wants to do so.
->
-> These cleanups are in preparation for getting rid of `the_repository` in
-> "object-store.c".
+> We don't need "The" here
 >
 
-Apart from the few nits I mentioned, the series looks great! I must say
-the split of commits was really nice to go through :)
+Yeah, I think we can remove it.
 
-[snip]
+>> repository. This action defaults to using the GitHub REST API to obtain
+>
+> I'd maybe say "falls back" rather than "defaults"
+>
 
---000000000000bad468063375505f
+Right!
+
+>> the repository if the `git` executable isn't available.
+>>
+>> The step to build Git in the GitHub workflow can be summarized as:
+>>
+>>    ...
+>>    - uses: actions/checkout@v4 #1
+>>    - run: ci/install-dependencies.sh #2
+>>    ...
+>>    - run: sudo --preserve-env --set-home --user=builder ci/run-build-and-tests.sh #3
+>>    ...
+>>
+>> Step #1, clones the repository, since the `git` executable isn't present
+>
+> It would be more accurate to say that it tries to clone the repository -
+> if we fall back to extracting a tarball then we're not cloning.
+>
+
+Yes indeed.
+
+>> at this step, it uses GitHub's REST API to obtain a tar of the
+>> repository.
+>>
+>> Step #2, installs all dependencies, which includes the `git` executable.
+>>
+>> Step #3, sets up the build, which includes setting up meson in the meson
+>> job. At this point the `git` executable is present.
+>>
+>> This means while the `git` executable is present, the repository doesn't
+>> contain the '.git' folder.
+>
+> I'd maybe say "source tree" instead of "repository" as it isn't a
+> repository without a ".git" directory.
+>
+
+Good point.
+
+>> To keep both the CI's (GitLab and GitHub)
+>> behavior consistent and to ensure that the build is performed on a
+>> real-world scenario, install `git` before the repository is checked out.
+>> This ensures that 'actions/checkout@v4' will clone the repository
+>> instead of using a tarball. We also update the package cache while
+>> installing `git`, this is because some distros will fail to locate the
+>> package without updating the cache.
+>
+> Nice explanation, the code changes look good
+>
+
+Thanks for the review. I'll add it locally to my tree. That way if I end
+up with a new version, It'll incorporate these changes.
+
+> Thanks
+>
+> Phillip
+>
+>> Helped-by: Phillip Wood <phillip.wood123@gmail.com>
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>   .github/workflows/main.yml | 14 ++++++++++++++
+>>   1 file changed, 14 insertions(+)
+>>
+>> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+>> index 37541f3d10..e9112b3a64 100644
+>> --- a/.github/workflows/main.yml
+>> +++ b/.github/workflows/main.yml
+>> @@ -414,6 +414,20 @@ jobs:
+>>       - name: prepare libc6 for actions
+>>         if: matrix.vector.jobname == 'linux32'
+>>         run: apt -q update && apt -q -y install libc6-amd64 lib64stdc++6
+>> +    - name: install git in container
+>> +      run: |
+>> +        if command -v git
+>> +        then
+>> +          : # nothing to do
+>> +        elif command -v apk
+>> +        then
+>> +          apk add --update git
+>> +        elif command -v dnf
+>> +        then
+>> +          dnf -yq update && dnf -yq install git
+>> +        else
+>> +          apt-get -q update && apt-get -q -y install git
+>> +        fi
+>>       - uses: actions/checkout@v4
+>>       - run: ci/install-dependencies.sh
+>>       - run: useradd builder --create-home
+>>
+
+--000000000000ee1bb1063375955c
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: f26580f4be6d3f26_0.1
+X-Attachment-Id: 59dd5aebbeae0132_0.1
 
 LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nSklWQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mODZ0Qy8wV0pZdWVKclBWT052V28yRms5VVZqY3FKeQoraTJVQ3FBdXpw
-cFNKRFU5ZFJrWFkwRXpnL3QwZHU1OVlkd0Y4dExIQXhpcVYweWM5aVJwTTNEZWNVWjRlVk92Cnkv
-dnozVUJVSGZ0SVVRTEd2cU5BZW1hTzZvVkFkN0NUS0VCRFpLUzA0M1RlVWlGRUR0TXFYaUt4MjNy
-alRXNkoKK3RyNFdQcnZZUjBxT3NOK1piRFlpbERvcjBtVlRCaFdwZzEvR216T2hqQ2YrVTRHTU9J
-MzhVaEdKK2xva2RuWgpQMDZwVUFOSjN5ZGlHQ1p0MTZ2eXFucTlueXVMSi9kZHdLTkJ2bWd3b3Mw
-eUFnS0VVMEp3OTdpUnovdDBHZXY3CnBqcVJLa1dLTlZ2eGJhZ0plV0NuNEhGNThsSVlxa1BONlp1
-aFZZYnJaVGNTT0orTnA2eDJ4eDNSYm5Ybm9sY2cKZEdSY29BQ2xLdUtRbVRhZlBHQi9xeVdEbFp2
-NHI5QTRkVUQwQ1RRRDBFTFJOZ0tWL3lTQko3Mk15VmVWcGZPSQp3Yk1scnlMU2lXd2ZnZDdwQWxR
-RWNmUVpTalRKZElWa3M1QWVxODFXcVBsMW5ka2FRRHlHQlFTNXlqa1llVU9YClh6djN3YmQzTUhC
-L3ZlYXZJeGptS0xia0F6VnJPQXpFMVFHSEFsaz0KPUhyZFcKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nSkpka1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMW5WQy8wV0p2QTEvQWx5SmZUeFFKdkhDT3ZGcEFSSAp1V1NMUXlKdDdJ
+eCs0NjRoZC9EOXZqU0JFSDZVRmZkb1I4SEpsZVBUVThKT3lla2szZEljM2JaTEoyUTBvamg5CldG
+SDd0a1FPZFl6SkFBbjcwRW5oeTF0Q29jelFoRE15T3VCTHVIK25RQlZZK0FyVmIvdEZSR2xnS2xw
+ajdnK3AKU3lMZ253UVpnYVozSjhvMVZuN05lRnpkWVIrY0l4R3UvVVVkZnc4cGZWTEFwK0xxMVZN
+QjhrWFdtdDRSNFlJWgplWkxpZ0V4TkwwT29TVHRaM1hhKzhDWDZwd0Uvb0tuY2d2Ny9sSi9paHV5
+bHF0UW1rdzFwRGY0Nnh6N1o2bmdoCnp6bTNVakFWMnNYOWRJM3lMQ0J6ZFd1dkpaTm1IZXpvR2VI
+M29JNGVOYTlPK0g4MmlLUktVeTNjOHZpeXYrM0wKUld1RWFiK2JoN0I1ekxyVk0wcE4xVThtblJk
+bUZEbTJTcTRJZXZSb0IrSGpIeXZwa1gxMXB4bkZLcVJXdGJudwpya3RKMWRiVjZ1cTNkTno3a2J0
+czhMekpPMWp2a2xrUEk5VzdYMnFPT2kzRTB4azhETlp5VlFFOXdPWGFENlM1ClBGOVJEREhTdUtL
+SGR1OWUycDFOalJNL0UzaTU5MHNIeHVzaHBObz0KPWE3MXAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---000000000000bad468063375505f--
+--000000000000ee1bb1063375955c--
