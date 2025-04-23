@@ -1,100 +1,154 @@
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F03D28EA52
-	for <git@vger.kernel.org>; Wed, 23 Apr 2025 19:25:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF80728CF7C
+	for <git@vger.kernel.org>; Wed, 23 Apr 2025 19:26:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745436315; cv=none; b=Ycp9m1vO/ZShZfXI1iYh3zIWgDngl7m0gwyH+aEehD0aShbR8QoGATwxonn9EP2byOHFIP5KuSqhGbryShqmh+Z1ScHashWjl/8jXJThHZ1Y0UZ5sqRQdfdRsIC4bja04tShPKdQQhd2Fbhaoc0cU3J/8C8AiEDw8w0uRN2wJqo=
+	t=1745436368; cv=none; b=C9swu8hk1ZrhHsuUr1Obqkmw+VXpuwzUAL7t9lmzypm0p6r2THgN61R+bBuJPPRucjdoYTwc+UvLII36brtlK24KtXL9NaBMSee4egRHFuFeG5opD2swyWve8aB6F+cRW+u+Q3eB8vNwuYfaFDxZ1uAbUhMcbuqYt6QS0b+B8Gc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745436315; c=relaxed/simple;
-	bh=eoTAExLuow+/qjUqlKSb9a0Glk9JPKWtVBkZv3a1KPo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=lx5jv+Z4re/lG1ORg+NYBK/jhF+2cJzLyapQwTgHc1B/9xOGZ8io+2muNjcI1Px9fe5+mjbIIvKhk/edG071akBi1iJsnUPEiUnyNHhNXfjcpiShP8syXlKcPVk00/01VYY3wz3/6l/pGp3NlwXj7V//uuZ6P7mKt8LW8TpVcnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bgESqD4r; arc=none smtp.client-ip=209.85.219.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745436368; c=relaxed/simple;
+	bh=yWhr01ykw1b4tno/zkPBR07uV38s/dLmf/exEYF+T4s=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=P3mEO/0n7OHiySxGKP8r4pIROIR7BA4xjaj1zI/6VqNg5WvboEpDbnkDM/AxnjBOx3gxYigktZRpo8udfxE5lj0sEuJc+IF9u+cQkhJDShPqDdLQigR4lMf7/ZDRqNfJ+OQksXSJFS1YspO+jfZceu3k3af28pPGpHStYzBTzpw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=njhP1QI7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rJQ/5VJH; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bgESqD4r"
-Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e573136107bso122519276.3
-        for <git@vger.kernel.org>; Wed, 23 Apr 2025 12:25:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745436312; x=1746041112; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=717/NJbccQ4twDKRSv2T75WExAJtXgNE/v3j7vMys5U=;
-        b=bgESqD4rBs/bCGPnAidEGpdB5HmYA12rXO8031CRkUW6i+Eca5ALj1SsiDmqvkE+Za
-         iYYX66seML9D9+aT4JS92/EIQ4l6RrMkLsCrtKLchuD24FggFB5/Z0TjR5qF6UcDQFpm
-         yh4wBT4aL3sl2mXocFAO8EHQO9bV2415YjaZVbTufnRW2nysL1NB+20EPlX/eA4dmwoU
-         9FVtGxIYifeLvAm7X1GbHpo7DDJFkakkjwXTqAL0Q3dnUhTg/un9DmH8m2rHMROohhaZ
-         1QbDvb0mvMaPhO+QCbXSEuEwCTsCOQdBjeXvQ6fu5y7XfEyfAuZvaopNKTQTvcFDVtoI
-         OGog==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745436312; x=1746041112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=717/NJbccQ4twDKRSv2T75WExAJtXgNE/v3j7vMys5U=;
-        b=qYqn27vMvPhBk1UlwefEnUQTw4hKKJIuc+SlHCIf3qaBjR06kcCwozs3bQr0U1YAxy
-         euNJh/ZDbHv90siiNt0JXWV+Wy5irj2u2roz1R25/Myr0Rjavmxl5O4eKWxbLTEG5ZOK
-         U6pP2bMcSGBFUMMh5KoFNZyYytnRZ717kn+Xed9B2+SdtTN5usFl7OxwoBxNJvthYKFx
-         u0HeYS4A5cwsRvSxrujjVUw4nlOVbq5YFeBP0rblhFlglJz4lBbafZLUzLVrXNbgOkkX
-         KHmIJYiPiIdH5T87AYMaLt5+773RpLKw6eyau5CHRXPOW7/MZhKVj8HZ018ycpGUqKaH
-         lDMg==
-X-Gm-Message-State: AOJu0YzqIgB3t1ydH40gak6BJvIiKZ8WY03GHPxhDo9zcbE69mUNVRDC
-	7SKuPksMe5MBx9cdoqQTzOkdVL1d+vNxMBVx10yYyOpfBFMlrcWd
-X-Gm-Gg: ASbGncunaJnhd43Q8Ci1x5CJRZTHDQ5Cto9vIzSTUzYz7snwP4tJGb+HeDImZgwkYj5
-	pdk2XgYNvRmKQR76mid/FtHXOzyIUhpSzR76zCL6hFV3Dumuei1SdxvpST4gzirmElZN4QlmoRD
-	FVLT8W+QDFWKVi5gwUURMgVm6/Jmb51PJ8g/88eaaQO/M7qCRQrE6Wh5DCtAOte8LXxtFaCBAPp
-	bWwbpRstkgSlPWzZ6KIZRFvFjJ+fip+df5k1gQpmRK4pUGa76BlEgbqr3D8pj324gVGwy3GwLal
-	aCipqnzMDYBP41kIWX65/Z1Ahp9bPX8DShFGyJq2zWr9nCz14D9ovUbhdys9rDzDAui+4lFFJaO
-	k3F660HtTWwX9oAT4
-X-Google-Smtp-Source: AGHT+IHVOojo3QA10KVruEjyXT153IXKywu+4R2LB8rfho/PjdOpRS517aExRpe7HbVJ/1UUmV4GJw==
-X-Received: by 2002:a05:6902:2501:b0:e6d:deb9:637a with SMTP id 3f1490d57ef6-e730356807amr77149276.17.1745436312250;
-        Wed, 23 Apr 2025 12:25:12 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:a542:402d:78ab:7227? ([2600:1700:60ba:9810:a542:402d:78ab:7227])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e729e960940sm2668366276.15.2025.04.23.12.25.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 23 Apr 2025 12:25:11 -0700 (PDT)
-Message-ID: <d5cdcfe0-5dd1-46ed-9860-a9949bd6b3b5@gmail.com>
-Date: Wed, 23 Apr 2025 15:25:11 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="njhP1QI7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rJQ/5VJH"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id CDA2E13801B8;
+	Wed, 23 Apr 2025 15:26:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 23 Apr 2025 15:26:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1745436364; x=1745522764; bh=sLyuTDBWY6
+	73osTNN1oj5M8uSlvolFA87K6K84HXENI=; b=njhP1QI76tf9rQXnc+K4LJoPCp
+	yDFyl/Wf2YZmUkpVoigATQMULtToxv3LDgGCojDwRU9dvjiG+wtjHjniwFgXfbSR
+	KhARJf/jxqlZyGQAK18AnwOhk7MJTjR6UAPePay5zgEj1urtWo1fGod3TzARai8A
+	L+BR5liUIEnIbr0kxDe3SwAMM0Q6RcN4YEeStDONJjRvlg8gDscyVLhRT1l4AMjp
+	ZyZRXBV0FhssHiysxtfmPkq7PKWsFDIzUN7sv66SzH3E/eVBlJBpFptj/iA9T8ZR
+	5Ve4ghZF2Qlmqjt6GOWfiCFt/4940GmoYZRrxDkn29MtQgFjb1GR9JCZDvDQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm2; t=
+	1745436364; x=1745522764; bh=sLyuTDBWY673osTNN1oj5M8uSlvolFA87K6
+	K84HXENI=; b=rJQ/5VJHYgoZ+NgN7to2FOdtTKHLOu9myGQn7hACO6nxwxCd21t
+	5jQKj8YvNBNLd446bpRPsiYlE0X+sl7YLGWcLsf2o9AFplfpsYVlvuAqz0lMslHX
+	sA0aNQPPbTFiTT5jgKmWWuNG7LuURJ4Px/W37E3tVNyBS6ViNIho9hXzWTZAVcVn
+	VQdySZrSVgSRfnDc2ITzZHAsv0AAJpmRmGaRDU1xAmv7HO2/jTnWQiMyonj80d+N
+	6Jeele7mSdXYtkLssF8h6ohCUbJP1itCNNPTDcBYRzu+ZYu4ukonhrTKzNKkZPYb
+	djT3BajfUJedqIYmdyBjMOMNm4JAz0tCAWQ==
+X-ME-Sender: <xms:zD4JaHxohOdVSC_FHPmLX-7JU7VTRfkzABNjHdcvwehigDY_cBOH2w>
+    <xme:zD4JaPQAhqs44vV5E7FF2oVs-aQ3Si1DjPO4iOne8OLq6t6PDNlp7U6wz7DZ1EuTy
+    g-JqEzuhRtgeSEahg>
+X-ME-Received: <xmr:zD4JaBX4Od1kTq8Idc5ih4ZV8MKskg1uzHWzbRy1qHt52SSfEjXMK1NKMNn3cDkp_fbkpfXc6MTbABS9JV0-vv0hECxIWmRjMEBm>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvgeejgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:zD4JaBjr0HSA7etrPmJcRP1_2O6nq3kk0gh3l_7NSw9HmNab5iEVeA>
+    <xmx:zD4JaJBtjzbWVRhhqfylbk2YvsZmZ-7LfcEml8X51usu1qDXD12-kg>
+    <xmx:zD4JaKKiJ3lNYLI0LIVZyJ37V_bD1qvhbJVHXTJjJZEflmVenwPeJA>
+    <xmx:zD4JaIBc8w1UYuaQdne8J_IJpyISzvBsoa9EcANULfTh8rODf9mXuw>
+    <xmx:zD4JaJfSLRNjWRg2GyhoWrKOmQTUgT5tFRCv3xsXgAnZhCN-dzOdbLKw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 23 Apr 2025 15:26:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  peff@peff.net,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
+In-Reply-To: <5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Wed, 23 Apr 2025
+	17:40:02 +0000")
+References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+	<5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
+Date: Wed, 23 Apr 2025 12:26:02 -0700
+Message-ID: <xmqqmsc6y911.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] maintenance: fix launchctl calendar intervals
-To: Junio C Hamano <gitster@pobox.com>,
- Josh Heinrichs <joshiheinrichs@gmail.com>
-Cc: git@vger.kernel.org
-References: <20250421054633.231069-1-joshiheinrichs@gmail.com>
- <20250421054633.231069-2-joshiheinrichs@gmail.com>
- <xmqq1ptl76oh.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq1ptl76oh.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 4/21/2025 1:42 PM, Junio C Hamano wrote:
-> Josh Heinrichs <joshiheinrichs@gmail.com> writes:
-> 
->> When using the launchctl scheduler, the weekly job runs daily, and the
->> daily job runs on the first six days of each month. This appears to be
->> due to specifying "Day" in the calendar intervals, which according to
->> launchd.plist(5) is for specifying days of the month rather than days of
->> the week. The behaviour of running a job on the 0th day is undocumented,
->> but in my testing appears to be the same as not specifying "Day" in the
->> calendar interval, in which case the job will run daily.
->>
->> Use "Weekday" in the calendar intervals, which is the correct way to
->> schedule jobs to run on specific days of the week.
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Wow, good find! Thank you for submitting a fix for this issue.
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> When trying to demonstrate certain behavior in tests, it can be helpful
+> to create packfiles that have specific delta structures. 'git
+> pack-objects' uses various algorithms to select deltas based on their
+> compression rates, but that does not always demonstrate all possible
+> packfile shapes. This becomes especially important when wanting to test
+> 'git index-pack' and its ability to parse certain pack shapes.
+>
+> We have prior art in t/lib-pack.sh, where certain delta structures are
+> produced by manually writing certain opaque pack contents. However,
+> producing these script updates is cumbersome and difficult to do as a
+> contributor.
+>
+> Instead, create a new test-tool, 'test-tool pack-deltas', that reads a
+> list of instructions for which objects to include in a packfile and how
+> those objects should be written in delta form.
+>
+> At the moment, this only supports REF_DELTAs as those are the kinds of
+> deltas needed to exercise a bug in 'git index-pack'.
 
-Thanks,
--Stolee
+Wonderful writing.  I agree with the destination where this effort
+wants to go, including the decision that starting with ref-delta
+only is a good enough first step.
+
+As to the implementation, I was a tiny little bit bummed to see
+that, even though it does share the code with the real pack-objects
+code paths to compute delta data by calling diff_delta(), and to
+write per-object header by calling encode_in_pack_object_header(),
+it has its own compression loop that does not even do an error
+checking after calling into zlib deflate machinery.
+
+Perhaps that is unavoidable due to the code structure of the
+production code.
+
+> +static const char usage_str[] = "test-tool pack-deltas <n>";
+> ...
+> +int cmd__pack_deltas(int argc, const char **argv)
+> +{
+> +	int N;
+> +	struct hashfile *f;
+> +	struct strbuf line = STRBUF_INIT;
+> +
+> +	if (argc != 2) {
+> +		usage(usage_str);
+> +		return -1;
+> +	}
+> +
+> +	N = atoi(argv[1]);
+
+It somewhat looks strange to see an uppercase N used as a variable
+name.  Together with the usage string, how about renaming "N" and
+"n" after "number of objects", e.g.
+
+	test-tool pack-deltas <num-objects>
+	int num_objects;
+
+or something?
+
+Other than that, looking very good.
 
