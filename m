@@ -1,156 +1,160 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48EA1F09B1
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 12:56:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC2127B51C
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 12:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745499395; cv=none; b=afqXYnfIzqxi0MmSwH65tS7AWEcrXOxMsae8ngFLYliphD3lQhMqEWl13lI0k1lYm7yHCEkfhd407/RARvOiMkOZiPmc22kqAgHyvMQ6NNoToT5W5dBb+TdIzZ2X3NVw3T5xJjNhlaHJPng+H6tuntWUNoqSJLPlvj/B6hsQN1k=
+	t=1745499488; cv=none; b=DR9RH3e1HLT0hVu8fjQfLQtE2UO5ZbOerIuyv+AjNP9y3d68g9Pl0+ayFjaNMeUEl7xLT3b+oR3GdVVHkoUbuVG0siYTxR3rXVab3Ys7VU3WESe2BNAe3kYBuayR1+sxc9DfrZ8tcO+HRnLkpVoP5Ni1X7Z71z96yKY+78rTr6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745499395; c=relaxed/simple;
-	bh=lJpAzQ7OX2xJ9vGC7nKYLaOOAMFMHpDeJ41VZpZsiCQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ANaJr38gUJdlGPm2eP4ELWUgvKmk6VMia+Lbliy2L40GlyOKN51/rqps4+raIvBeBm+mSAh+Ko0D9Wc4BZ5+/haWyGdkdeA/VNmhidL0/jJv7bBdFuMkH5X6Dbk7AOnSDy6kiCh2jvocxN0it7kt76Fkgbzyno3RBX4fHgUXp1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrN2YdWl; arc=none smtp.client-ip=209.85.214.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745499488; c=relaxed/simple;
+	bh=Xbqv2KhJpMegeilPkZGAYGc+ll9v49EI76SUms4e0cY=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=R1Buyt+5n1HrbCKlalIcD+HxrnOmX86LMJC6UeivZvL4SCx6CPQheaQ1KkkUUcWLP8BfJDx28kt/HZVs2CctpoRSQnsG79YL5eWIwnXpWnIGKQ9A37j4ZGTcez+EZpkq/tL4Hc/Hh2dzCI9gTcWlndhSpsl+ZRXDDKcG9hsF1gY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=PZm4XuLQ; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrN2YdWl"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-227d6b530d8so10015825ad.3
-        for <git@vger.kernel.org>; Thu, 24 Apr 2025 05:56:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745499393; x=1746104193; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=827vkfO6NtYTr71YbC0uRS9GnNzybcT/ZbLiDo7BFAs=;
-        b=TrN2YdWlKWYj3zzWLchgIIwkGYoN/QxOV7PCpZyXvZZ5kXLIi7f5vPyRtLL3Pvo/om
-         flO2FQRxwPjm5bjZw17gR+C52j0+5awIN8a/IAAR3XV/GodsruhqLSOEg0bvhL6njVJo
-         ZffUmeIPtd5lPdUKe7ef7hsyXSBJ1O3UD6ajLcwAs/PlZrmxBSoCmIZKwF8TlSTgw1VF
-         iVzpNe4GV3Rsz3RyJhowuTQgTIuRGB1JTsEIlxiSA31vy8nUMZtNF4ZgMtsC2GRYWUXU
-         x4m+7CzAa/p0YtUtOcG7N2rjh6Cawwto1cgGvxLpCr4vY4wl5HbfgNzqIhhtf/F9BVFL
-         GBbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745499393; x=1746104193;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=827vkfO6NtYTr71YbC0uRS9GnNzybcT/ZbLiDo7BFAs=;
-        b=PnYEm5wVLLBALkUGOzm045lH/sdgzLqwqCH5YaQN/nkqUQV7PIbzBr0ImxvquwBbfN
-         NVHxMpL/fgJSLmj+E+BVcigX/aHI3Zsn0tEvtXkd1FD4HW8FtDJABiVpuw4r1+VLeS6C
-         naMgKIFsX5GHcvm7bmPG20de65lF6+9lLG/YeBK1+XZTHJPg9MAdV8VG7//Axne4DXG/
-         QjwOgktvExbry6ZtagwzecRFHz6D5J3b+AUVjvS9YwbFCS4LBLG/vdFU03cj+7Z8QRHg
-         PKUzUZuPa92AyRstA7oGBsE6xT2T+6TxzKVmHra4oI3P8oe5PnpVkk969hOub7bYiUvf
-         AUpA==
-X-Gm-Message-State: AOJu0Yzx2gk61zhWPerMXVX4NC/8b5wMbfUm8EpfNjJMm3UszKFpOlI2
-	X3NEe6gYvpvjof7BbNQsR0PTO3zAzFOqUlcoB6HdIgIjVvLifUHg
-X-Gm-Gg: ASbGncvEYTevELB5M920VYKNTA+TDDBtp1Eipx9OfAY1A9I7m34+Mbgs3AwHHhND0+6
-	WQBJTWzLv+LPvhKyRbPPkByFyAUte01pjqAhLGIAgjD8qfkc7jLR2Ae4pSVVAZ+7ak0zeSpyJ6w
-	iGhEswvcyxVLCkYtB4YSVEt/4BsXq9sbobZ9/deLxyIj5cE7xDWVIILMJqdT207cx5UD/ULBx1n
-	Ij+/IsnqzjfE5e61NoSHnWn/BrWHdisg0XOSvoy171rjsek+Kt1z0orYL2pSwGNWg5QomXjtVnT
-	Ta3F5TIar3FSotpRO73O5moHvds+SAK6HCG/
-X-Google-Smtp-Source: AGHT+IF6+I5TXoTrVRJ7N7bQFT6xU1R8P7AQx69akCDi10mL7p+4N2VtZM9qrHtDIucc98l5arGcTA==
-X-Received: by 2002:a17:902:f54a:b0:223:65dc:4580 with SMTP id d9443c01a7336-22db3dea005mr34072135ad.52.1745499392814;
-        Thu, 24 Apr 2025 05:56:32 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22db4d76f56sm12414555ad.9.2025.04.24.05.56.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 05:56:31 -0700 (PDT)
-Date: Thu, 24 Apr 2025 20:56:42 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 5/5] u-string-list: move "remove duplicates" test to
- "u-string-list.c"
-Message-ID: <aAo1CvpcXYfNonTF@ArchLinux>
-References: <aAetW0dan8S3Fljq@ArchLinux>
- <aAet23peGs2OZUcn@ArchLinux>
- <aAjUr5AY9gTCpVlS@pks.im>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="PZm4XuLQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1745499479; x=1746104279;
+	i=johannes.schindelin@gmx.de;
+	bh=Yf0Ruhu0JjwuwTIC5HHiU4dvbNCiqWTmF3VfAktJzSQ=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=PZm4XuLQhOOOteyCpvOpFxtBNBVanNmutHv5QobCYp9jvaBk0DoCWZSrPcz83IcP
+	 GojsSDxcLPEpZ7CtI6cGFUGs5qtiyTCJ0SupomJyVsKBdPIQ/Jy0FxlP6lSi94pMm
+	 qw2uq1wdFqxAyHGX9tmsQnK4dxyHhdZDL0XPJ4CJBJWDQHFZBm0sEGZABpsMuvkBA
+	 rQ24PuGPk2cdszbykChcQkm40fhcM66AcwpILvhkXoStWpDUDH2sdlrc0cIV/11vY
+	 +s13t7NurWycpMUsA/dbrhxulK4Bzfl6sjLQZwczic8fQ0Za6j85zZWbuFPfeAWdv
+	 9OW6+ThzZsk+CF/pxg==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([167.220.208.93]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MQe5k-1uUXCb0Gnu-00UTFC; Thu, 24
+ Apr 2025 14:57:59 +0200
+Date: Thu, 24 Apr 2025 14:57:56 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: =?UTF-8?Q?=E5=BC=B5=E7=A7=80=E7=A9=8E_KITTY?= <kittychang@cathayholdings.com.tw>
+cc: "git@vger.kernel.org" <git@vger.kernel.org>, 
+    =?UTF-8?Q?=E9=96=A2=E8=A9=A9=E7=A9=8E_VANESSA?= <VanessaKuang@cathayholdings.com.tw>
+Subject: Re: Get support
+In-Reply-To: <202504160735.53G7ZjeU083840@365mse01.symphox.net>
+Message-ID: <dc58a9ce-3d02-bb52-bfe1-7427333d6128@gmx.de>
+References: <1744786449-14024-mlmmj-0f30ebef@vger.kernel.org> <202504160735.53G7ZjeU083840@365mse01.symphox.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aAjUr5AY9gTCpVlS@pks.im>
+Content-Type: multipart/mixed; boundary="8323328-1376473283-1745499479=:96"
+X-Provags-ID: V03:K1:6HdupC5s75l5GuxouakaMx33UHsP3oSfGT+W4JZvplVsC43uhcq
+ vQ9Iow/aRm7LTAnd8bQnd44FQX00W4/7HnBN9CfsijLkQW41hI6E1BAse/0VLg46gj+EcOr
+ 2opjLbH8DsWy/mLZVOqmxiI5omhtvPoOp8eeOTGQIyT6LClQaBLWQ2tCna7I0F3iY1b0MPx
+ VioUt9UfKCi2shbKqolsQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:QEqixOYS4vI=;4rt7yUMKHbfLAbRu+/Iyo6M6QAA
+ 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
+ Q==
 
-On Wed, Apr 23, 2025 at 01:53:19PM +0200, Patrick Steinhardt wrote:
-> On Tue, Apr 22, 2025 at 10:55:23PM +0800, shejialuo wrote:
-> > diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
-> > index 262b28c599..6be0cdb8e2 100644
-> > --- a/t/helper/test-string-list.c
-> > +++ b/t/helper/test-string-list.c
-> > @@ -1,48 +1,9 @@
-> > -#define DISABLE_SIGN_COMPARE_WARNINGS
-> > -
-> >  #include "test-tool.h"
-> >  #include "strbuf.h"
-> >  #include "string-list.h"
-> >  
-> > -/*
-> > - * Parse an argument into a string list.  arg should either be a
-> > - * ':'-separated list of strings, or "-" to indicate an empty string
-> > - * list (as opposed to "", which indicates a string list containing a
-> > - * single empty string).  list->strdup_strings must be set.
-> > - */
-> > -static void parse_string_list(struct string_list *list, const char *arg)
-> > -{
-> > -	if (!strcmp(arg, "-"))
-> > -		return;
-> > -
-> > -	(void)string_list_split(list, arg, ':', -1);
-> > -}
-> > -
-> > -static void write_list_compact(const struct string_list *list)
-> > -{
-> > -	int i;
-> > -	if (!list->nr)
-> > -		printf("-\n");
-> > -	else {
-> > -		printf("%s", list->items[0].string);
-> > -		for (i = 1; i < list->nr; i++)
-> > -			printf(":%s", list->items[i].string);
-> > -		printf("\n");
-> > -	}
-> > -}
-> > -
-> >  int cmd__string_list(int argc, const char **argv)
-> >  {
-> > -	if (argc == 3 && !strcmp(argv[1], "remove_duplicates")) {
-> > -		struct string_list list = STRING_LIST_INIT_DUP;
-> > -
-> > -		parse_string_list(&list, argv[2]);
-> > -		string_list_remove_duplicates(&list, 0);
-> > -		write_list_compact(&list);
-> > -		string_list_clear(&list, 0);
-> > -		return 0;
-> > -	}
-> > -
-> >  	if (argc == 2 && !strcmp(argv[1], "sort")) {
-> >  		struct string_list list = STRING_LIST_INIT_NODUP;
-> >  		struct strbuf sb = STRBUF_INIT;
-> 
-> I'm a bit surprised that the patch series stops after this patch given
-> that the only remaining subcommand is "sort". Is there a specific reason
-> why you don't also convert that function? If you did we could declare
-> victory by deleting the whole "test-helper string-list" subcommand.
-> 
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Actually I also want to delete the whole file. However, as you have said
-as following shows:
+--8323328-1376473283-1745499479=:96
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-> It seems that the only reason is p0071, where we benchmark performance
-> of sorting. I dunno... that one is of course not a good fit for our unit
-> testing framework. But it's a bit sad that we cannot remove the whole
-> infra only because of a performance test that nobody ever runs in the
-> first place.
-> 
+Hi Kitty,
 
-I think we should delete the whole file. I'll find out a way to do this.
-It's wired that we keep the "test-helper string-list".
+On Wed, 16 Apr 2025, =E5=BC=B5=E7=A7=80=E7=A9=8E KITTY wrote:
 
-> Patrick
+> Hi git support,
+>=20
+> We have problem =E2=80=98cloning repos from AzureDevOps via SourceTree o=
+r via command line.=E2=80=99
+> We guess this is a Microsoft issue before, but later we find that this i=
+ssue comes with specific git version. (Microsoft case: 2412240040000772)
+>=20
+> Different git version got different result.
+>=20
+> Git for Windows v2.30.2-rc0.windows.1 ~ 2.43 ---> Clone success
+>=20
+> Git for Windows v2.44.0-rc0.windows.1 or above ---> Clone failed
+>=20
+>=20
+> To prevent git version 2.30.2~2.43 from reaching EOL, we need to know ho=
+w to successfully clone repos after upgrading git version to 2.44 or above=
+.
+> Any suggestion is appreciate.
+>=20
+> The Error Message:
+>=20
+> ----clone by Sourcetree----
+> git -c filter.lfs.smudge=3D -c filter.lfs.required=3Dfalse -c diff.mnemo=
+nicprefix=3Dfalse -c core.quotepath=3Dfalse --no-optional-locks clone --br=
+anch develop https://cfhdevops@dev.azure.com/cfhdevops/IT-CBooking/_git/ca=
+thaymeetingroom "\\CFHVDIFSVIP\CFH_VDI_UserData$\00904813.CFHDOM\My Docume=
+nts\cathaymeetingroom"
+> Cloning into '\\CFHVDIFSVIP\CFH_VDI_UserData$\00904813.CFHDOM\My Documen=
+ts\cathaymeetingroom'...
+> error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0 =
+Completed with errors, see above.
+>=20
+> ----clone by command line ----
+> $ git clone https://cfhdevops@dev.azure.com/cfhdevops/IT-Contract/_git/I=
+T-Contract
+> Cloning into 'IT-Contract'...
+> remote: Azure Repos
+> remote: Found 10 objects to send. (25 ms)
+> error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 0 =
+Unpacking objects: 100% (10/10), 2.18 GiB | 6.12 MiB/s, done.
 
-Thanks,
-Jialuo
+Could you try with `git -c http.sslbackend=3Dschannel clone ...`?
+
+Ciao,
+Johannes
+
+--8323328-1376473283-1745499479=:96--
