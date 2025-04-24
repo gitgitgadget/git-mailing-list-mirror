@@ -1,354 +1,126 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D46B218858
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 20:39:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99C78238166
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 20:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745527174; cv=none; b=M3WdUKCMA/VVurSCfW4o5G3LPO/j5ErgGg/BG62pNcP8rZI8Y8LnH38LvCF+XgiN8jjeiGtmy18bb9dF5tbowUuyFBvvzKxNDTuK0EwxeZxXY4Uu9nHnwNmL/A2eyBJ4Q5VhZeLUr2CI90Bt/iHK0g3CDmCYKh0R9gULuz+EhJs=
+	t=1745528191; cv=none; b=K+7RiZeLiWYQ3eLI9CUCiefkAi6+mRAitwfk7bcrwB6EM8P6bSojs2dQ/DcO8wYobf7JN8c4XrCrgJOYDaAk3zRjZ51jWRtdCV0fBUqqRkSXTgT4pcldvqfTLyQqnKZ3YVbchLFOKOUB0wec2xJbWZTSMe5JG/ZAMVYidhMCJNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745527174; c=relaxed/simple;
-	bh=yscpfRW2oI0aDbE+zyGVgqV+Kj6WpKF1gpKFKQF+jyQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=oc56np/j2L4kdE2pKgdd/cLRZwV+JRqwFfE9doOwr+GOVZ2Fzbu1aT0eSGEk4Mo09rzMUVCiALxdZzF2nhkMev9hfoaYy9YfG6OIATLpQoFQdelHpc60km/ZAApTiG96wuFZCDFyLjkxW4c3uyl5PNJrnD4RaoW51bw0VllF8ZU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LrmFPL0x; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745528191; c=relaxed/simple;
+	bh=BEPWp6BP7TuWN+hlY+ABD6nfQNdD1d8oVJTu82HSz3E=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aahE9scLgAFnaynv9nF5uPVW4sME1X/ZBzvG8ZFVB1h62m8QmT11JhPApGmg4KGY/MT2FKFZShGtCy5nzKu8cCFp5PLD4FXdIlNQ4kjnHSelHnqpVN+lNWbbbtuU9iWRv6LuXRlcPKylvC/1HTTmqp98Nxba6UvF7rsk6Uo69So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D42SLmRe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=M1o460Df; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LrmFPL0x"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39c0dfba946so1101816f8f.3
-        for <git@vger.kernel.org>; Thu, 24 Apr 2025 13:39:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745527170; x=1746131970; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=hvvBuIg2Nroj2q67Kkc6E4ZgT2HxolAn8cCdm6D74sI=;
-        b=LrmFPL0xjXIRR+qAQ9J0NSpkUPI3tMitmy8HjG4MVD0QiKok6j3uJ6C7JuTJrZC8rH
-         oyeuqaYsFAehAh2tAYsb5bt3aHYnYlwCI73uVdTNFfwlYToxpCBKLznN/uM+l7zczW8z
-         7/BKoRMQBo3snWD3G2IjjkntS01HjmUmC1EE9+mQMVGhAqMQlewQHjzoL0RO1//JuiGS
-         5/Kjw3U5N8C86Nabme3mN1Qey3bm7X6ByzAq+MBYkmkVUnR9K+rVl6ea2XHGE6UYmifA
-         L0GbFiKlazsGEx6nuEbM6X1h0fShPOnBwhOonsUiZEO20FVxkBjxC1KwbI7JEPgsAMbk
-         goqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745527170; x=1746131970;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hvvBuIg2Nroj2q67Kkc6E4ZgT2HxolAn8cCdm6D74sI=;
-        b=V79KCVgcy4FHsomWj1qCyM8pd1+u7Sz+3MjAYNffWi+TyqFNG9asqBUMgJA8erIJam
-         54M65Qok5M+Lh1zRpWZshqDfAk1ve5UpkS7Iw/Un2GQn6Yce6LJCA8eyzaDCIO9B0M1a
-         3T0HOaXbdPW7iCj6xWtlu/tj0HaKdo1+4/XMWa+GyrcmyxDrXzuLZfMk+rD5a9bGl0eW
-         XBLP70H3WH3WyY1p/ZbtPLlBqOqvLOzlccSbJJydep4g5JorNrqpFp50+vNN1f+aaLma
-         aq3g4Nc5DX+YSGTrMwDLsV6hT+mX0fXiGguxlKFhmbD/3SsyC6YyD3cSIh131urJim6y
-         gYmQ==
-X-Gm-Message-State: AOJu0YyrvsHIkqQgV3UtLDdOX7EAIYRE+bJBZuCjL6z02/F6+LFBmeDW
-	IesnWhg05SOStJHpqVJc40yWyJZK4UJoC0luh3p3NIzvdZvzXFUCIrU7xg==
-X-Gm-Gg: ASbGncv0jyCsEZA34PvDdbU/7/zIFA6x4J7H0OiyC3nPbGD7B++GdSMRhP00Gp/ZrYH
-	lH8izwObufrL4I+DMo/czRWE63KGAISpOD0nExZP+jX3fZAbTkJcv3B1yn0IJdY+V+rZguq+CLY
-	rFSlwp58PdiEgp6/FaY05oW7u/tgKedMS5ZigTP1lxpj6Cb8PGcNkicRjvB7KgJ4GYbq8u5Fb6y
-	74kwDEpgDvWWjAnQQQ525DCDOqu8W7LWNvQxRbhqYew6vy8R1KZceMd9JQ0aUP11Mcs7oszWFcu
-	tewr/qqaD4TeNIavRGcLK98jLWrqfnDo+wI2bUhqxXmqgaM544rgGVdnfDEWjAVqsJdK8OH0syX
-	Q5A==
-X-Google-Smtp-Source: AGHT+IE2V8nNO/t0dDuMDatkmxV/449Czw2s3PJCv8YpIUBqX3+e5VokP4ZQYQgyOKrpajWXGiOcjg==
-X-Received: by 2002:a05:6000:240b:b0:3a0:6f92:ef7c with SMTP id ffacd0b85a97d-3a072a7e904mr529111f8f.17.1745527169658;
-        Thu, 24 Apr 2025 13:39:29 -0700 (PDT)
-Received: from christian--20230123--2G7D3.lan ([2001:861:2074:39a0:fb42:b8e0:37e4:2de3])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073ca497esm319108f8f.24.2025.04.24.13.39.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 24 Apr 2025 13:39:28 -0700 (PDT)
-From: Christian Couder <christian.couder@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <christian.couder@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH] fast-(import|export): improve on the signature algorithm name
-Date: Thu, 24 Apr 2025 22:39:04 +0200
-Message-ID: <20250424203904.909777-1-christian.couder@gmail.com>
-X-Mailer: git-send-email 2.49.0.392.g2fa1c74b07
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D42SLmRe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="M1o460Df"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 72AF21380411;
+	Thu, 24 Apr 2025 16:56:27 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 24 Apr 2025 16:56:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745528187; x=1745614587; bh=OTvakfK8qH
+	ArpCq76vu3khiRpcUKGNuozK3D0ybwfwk=; b=D42SLmReVhapcIiv5mEFwXHr/l
+	NwPdB9lNmr47O4eby7rB/RiuXwQuSY0LVMlS/CeCpGpFGngsmlUrDWA5ZqDn/uv7
+	AOY3jSPkMRDDqSx82lVBHJbfgGIX2xIPEuGFlhCt3cvksgKzid9vtQVTvdlVs8U5
+	Pg34HcFz5GLNxIImKVDk5rwuQkLnsMpY79TTDIEAP70KwFVIyjfWfv6nNzmVuRih
+	p4YB3UImJSb9gf41x21xNT72j4C6+S+CR+eG0AK6/CQDYDeRLGZ/pguRnjaVNLv3
+	EOra1s+QssoUMm+TAeGwMal9/sadZukk9epX4B5a8zpEXz/eQbxTiBVfPY+A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745528187; x=1745614587; bh=OTvakfK8qHArpCq76vu3khiRpcUKGNuozK3
+	D0ybwfwk=; b=M1o460DfpnGyd5mtDNv716O6H6Ol3ES4bgeuSMwXWN7cvP4lvkW
+	KRtwX3eoQzN8YVTCiQdfilEpNIbzX7xgmQG12mi8f1DdgmLIcX3oBSSGnZeI9rHs
+	pdOAkjdyU2aj9wwAEe+Dh3SaIAtgkxsWGFKY+QZlhjiCsk3eaOQw6VLerwaB9IdY
+	kSsDFEyjD+o9L3Cjs5Hmi9W0Rw+67ZpQFbVrZIX2DV1a18Dej517Vl2BiAVQYwJT
+	wV22PI1lT14+gWYG+wzJZ0hfVXANI5tcp6yvV5Un60G8lHcJvByUhmlPd4No722/
+	jHSN9FP077qtaUUFz/hTKdzCdn82Y7MWn1A==
+X-ME-Sender: <xms:e6UKaIZBpO5xRWPj-o8AhbTDZQ-kl9SKBzJg3B7IvcYcg0nnzjjIKQ>
+    <xme:e6UKaDZmTBIBxC3FMRN2bhHrV4ZANuu4CBbuKv7Mq7x9mzsKgWnJ818JWLJ7BeJJa
+    MTRCkHB9vEEwWnZKQ>
+X-ME-Received: <xmr:e6UKaC9hhHMaWSMA9sh4GqJbFbLjmIsZkcFtHQVjpsYNZdf-T8x5YMI82Y50xguWjOd46w5M2RwzAQV11zvwASpird-jUkaphNZF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedtgeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:e6UKaCoH5bxvrQyx_09XE1iArh-GtirbtaEurtYUop7lmybb4O7yxA>
+    <xmx:e6UKaDqN73QWiVaYGZ_8iukfEYcmEB-Y2gGPlYwzOdogw0q6g4W55g>
+    <xmx:e6UKaATaPwFB69C3HH1-u4nUBIJNrOww7h4or2g3wcFdPuO2v_ihTA>
+    <xmx:e6UKaDr9XMwwn0G9c8KU_tLQNnEn72qO2-LCZV4lyjly3HC3AqZ1kg>
+    <xmx:e6UKaGl5mPi-0fhAIpPobq5xKY6ba0X_jtd3wQpbyvsip587_OiJiLUu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Apr 2025 16:56:26 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  peff@peff.net
+Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
+In-Reply-To: <9999f7f2-759a-4721-a4d0-6d3bdeb17b25@gmail.com> (Derrick
+	Stolee's message of "Thu, 24 Apr 2025 16:06:58 -0400")
+References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+	<5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
+	<xmqq34dxuz21.fsf@gitster.g>
+	<9999f7f2-759a-4721-a4d0-6d3bdeb17b25@gmail.com>
+Date: Thu, 24 Apr 2025 13:56:25 -0700
+Message-ID: <xmqqy0vpth1i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-A recent commit, d9cb0e6ff8 (fast-export, fast-import: add support for
-signed-commits, 2025-03-10), added support for signed commits.
+Derrick Stolee <stolee@gmail.com> writes:
 
-However, when processing signatures `git fast-export` outputs "gpgsig
-sha1" not just when it encounters an OpenPGP SHA-1 signature, but also
-when it encounters an SSH or X.509 signature. This is not very
-informative to say the least, and this might prevent tools that process
-the output from easily and properly handling signatures.
+> On 4/24/2025 3:41 PM, Junio C Hamano wrote:
+>> I needed this to make
+>> 
+>> $ SANITIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=true make
+>> $ cd t && sh t5309-pack-delta-cycles.sh
+>> 
+>> pass.
+>> --- >8 ------ >8 ------ >8 ---
+>> Subject: [PATCH] fixup! test-tool: add pack-deltas helper
+>> 
+>>  t/helper/test-pack-deltas.c | 1 +
+>>  1 file changed, 1 insertion(+)
+>> 
+>> diff --git a/t/helper/test-pack-deltas.c b/t/helper/test-pack-deltas.c
+>> index db7d1c3cd1..c8e837ea06 100644
+>> --- a/t/helper/test-pack-deltas.c
+>> +++ b/t/helper/test-pack-deltas.c
+>> @@ -122,6 +122,7 @@ int cmd__pack_deltas(int argc, const char **argv)
+>>  			if (get_oid_hex(base_oid_str, &base_oid))
+>>  				die("invalid object: %s", base_oid_str);
+>>  		}
+>> +		string_list_clear(&items, 0);
+>
+> Thanks. I'll make sure to apply it. My GGG PR validation was broken
+> top-to-bottom due to other environmental issues so I had not seen
+> this failure myself.
 
-Let's improve on that by reusing the existing code from
-"gpg-interface.{c,h}" to detect the signature algorithm, and then put
-the signature algorithm name (like "openpgp", "x509" or "ssh") instead
-of "sha1" in the output. If we can't detect the signature algorithm we
-will use "unknown". It might be a signature added by an external tool
-and we should likely keep it.
+I squashed this in so unless there are other things you need to
+change, this alone does not make it necessary to reroll the series.
 
-Similarly on the `git fast-import` side, let's use the existing code
-from "gpg-interface.{c,h}" to check if a signature algorithm name is
-valid. In case of an "unknown" signature algorithm name, we will warn
-but still keep it. Future work might implement several options to let
-users deal with it in different ways, and might implement checking
-known signatures too.
-
-Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
----
-
-This is a follow up from cc/signed-fast-export-import that was merged
-by 01d17c0530 (Merge branch 'cc/signed-fast-export-import', 2025-03-29)
-and introduced the support for signed commits.
-
-The format that this series implemented was lacking a bit, so the goal
-with this patch is to improve it and handle signed commits a bit more
-consistently in the code base. It also shows in the tests and in our
-documentation that SSH and X.509 signatures are supported.
-
- Documentation/git-fast-export.adoc |  5 +++
- Documentation/git-fast-import.adoc | 15 +++++++-
- builtin/fast-export.c              |  8 ++--
- builtin/fast-import.c              | 14 ++++---
- gpg-interface.c                    | 11 ++++++
- gpg-interface.h                    | 10 +++++
- t/t9350-fast-export.sh             | 60 +++++++++++++++++++++++++++++-
- 7 files changed, 112 insertions(+), 11 deletions(-)
-
-diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-export.adoc
-index 413a527496..d03aeca781 100644
---- a/Documentation/git-fast-export.adoc
-+++ b/Documentation/git-fast-export.adoc
-@@ -54,6 +54,11 @@ of tools that call 'git fast-export' but do not yet support
- '--signed-commits', you may set the environment variable
- 'FAST_EXPORT_SIGNED_COMMITS_NOABORT=1' in order to change the default
- from 'abort' to 'warn-strip'.
-++
-+When exported, signature starts with "gpgsig <alg>" where <alg> is the
-+signature algorithm name as identified by Git (e.g. "openpgp", "x509",
-+"ssh", or "sha256" for SHA-256 OpenPGP signatures), or "unknown" for
-+signatures that can't be identified.
- 
- --tag-of-filtered-object=(abort|drop|rewrite)::
- 	Specify how to handle tags whose tagged object is filtered out.
-diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
-index 7b107f5e8e..50b6d2cc1d 100644
---- a/Documentation/git-fast-import.adoc
-+++ b/Documentation/git-fast-import.adoc
-@@ -521,7 +521,20 @@ The optional `gpgsig` command is used to include a PGP/GPG signature
- that signs the commit data.
- 
- Here <alg> specifies which hashing algorithm is used for this
--signature, either `sha1` or `sha256`.
-+signature. Current valid values are:
-+
-+* "openpgp" for SHA-1 OpenPGP signatures,
-+
-+* "sha256" for SHA-256 OpenPGP signatures,
-+
-+* "x509" for X.509 (GPGSM) signatures,
-+
-+* "ssh", for SSH signatures,
-+
-+* "unknown" for signatures that can't be identified (a warning is
-+  emitted).
-+
-+Signatures are not yet checked in the current implementation though.
- 
- `encoding`
- ^^^^^^^^^^
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 170126d41a..d00f02dc74 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -29,6 +29,7 @@
- #include "quote.h"
- #include "remote.h"
- #include "blob.h"
-+#include "gpg-interface.h"
- 
- static const char *fast_export_usage[] = {
- 	N_("git fast-export [<rev-list-opts>]"),
-@@ -700,9 +701,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
- 	}
- 
- 	if (*commit_buffer_cursor == '\n') {
--		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
--			signature_alg = "sha1";
--		else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
-+		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor))) {
-+			const char *name = get_signature_name(signature);
-+			signature_alg = name ? name : "unknown";
-+		} else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
- 			signature_alg = "sha256";
- 	}
- 
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 63880b595c..59e991a03c 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -29,6 +29,7 @@
- #include "commit-reach.h"
- #include "khash.h"
- #include "date.h"
-+#include "gpg-interface.h"
- 
- #define PACK_ID_BITS 16
- #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
-@@ -2830,12 +2831,15 @@ static void parse_new_commit(const char *arg)
- 			"encoding %s\n",
- 			encoding);
- 	if (sig_alg) {
--		if (!strcmp(sig_alg, "sha1"))
--			strbuf_addstr(&new_data, "gpgsig ");
--		else if (!strcmp(sig_alg, "sha256"))
-+		if (!strcmp(sig_alg, "sha256"))
- 			strbuf_addstr(&new_data, "gpgsig-sha256 ");
--		else
--			die("Expected gpgsig algorithm sha1 or sha256, got %s", sig_alg);
-+		else if (valid_signature_name(sig_alg))
-+			strbuf_addstr(&new_data, "gpgsig ");
-+		else if (!strcmp(sig_alg, "unknown")) {
-+			warning("Unknown gpgsig algorithm name!");
-+			strbuf_addstr(&new_data, "gpgsig ");
-+		} else
-+			die("Invalid gpgsig algorithm name, got '%s'", sig_alg);
- 		string_list_split_in_place(&siglines, sig.buf, "\n", -1);
- 		strbuf_add_separated_string_list(&new_data, "\n ", &siglines);
- 		strbuf_addch(&new_data, '\n');
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 0896458de5..dc6ea904d0 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -144,6 +144,17 @@ static struct gpg_format *get_format_by_sig(const char *sig)
- 	return NULL;
- }
- 
-+const char *get_signature_name(const char *buf)
-+{
-+	struct gpg_format *format = get_format_by_sig(buf);
-+	return format ? format->name : NULL;
-+}
-+
-+int valid_signature_name(const char *name)
-+{
-+	return (get_format_by_name(name) != NULL);
-+}
-+
- void signature_check_clear(struct signature_check *sigc)
- {
- 	FREE_AND_NULL(sigc->payload);
-diff --git a/gpg-interface.h b/gpg-interface.h
-index e09f12e8d0..332707facc 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -47,6 +47,16 @@ struct signature_check {
- 
- void signature_check_clear(struct signature_check *sigc);
- 
-+/*
-+ * Return the name of the signature (like "openpgp", "x509" or "ssh").
-+ */
-+const char *get_signature_name(const char *buf);
-+
-+/*
-+ * Is the signature name valid (like "openpgp", "x509" or "ssh").
-+ */
-+int valid_signature_name(const char *name);
-+
- /*
-  * Look at a GPG signed tag object.  If such a signature exists, store it in
-  * signature and the signed content in payload.  Return 1 if a signature was
-diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-index dda9e7c3e7..2e2c83d153 100755
---- a/t/t9350-fast-export.sh
-+++ b/t/t9350-fast-export.sh
-@@ -326,7 +326,7 @@ test_expect_success GPG 'signed-commits=abort' '
- test_expect_success GPG 'signed-commits=verbatim' '
- 
- 	git fast-export --signed-commits=verbatim --reencode=no commit-signing >output &&
--	grep "^gpgsig sha" output &&
-+	grep "^gpgsig openpgp" output &&
- 	grep "encoding ISO-8859-1" output &&
- 	(
- 		cd new &&
-@@ -340,7 +340,7 @@ test_expect_success GPG 'signed-commits=verbatim' '
- test_expect_success GPG 'signed-commits=warn-verbatim' '
- 
- 	git fast-export --signed-commits=warn-verbatim --reencode=no commit-signing >output 2>err &&
--	grep "^gpgsig sha" output &&
-+	grep "^gpgsig openpgp" output &&
- 	grep "encoding ISO-8859-1" output &&
- 	test -s err &&
- 	(
-@@ -381,6 +381,62 @@ test_expect_success GPG 'signed-commits=warn-strip' '
- 
- '
- 
-+test_expect_success GPGSM 'setup x509 signed commit' '
-+
-+	git checkout -b x509-signing main &&
-+	test_config gpg.format x509 &&
-+	test_config user.signingkey $GIT_COMMITTER_EMAIL &&
-+	echo "x509 content" >file_for_x509 &&
-+	git add file_for_x509 &&
-+	git commit -S -m "X.509 signed commit" &&
-+	X509_COMMIT=$(git rev-parse --verify HEAD) &&
-+	git checkout main
-+
-+'
-+
-+test_expect_success GPGSM 'x509 signature identified' '
-+
-+	git fast-export --signed-commits=verbatim --reencode=no x509-signing >output 2>err &&
-+	grep "^gpgsig x509" output &&
-+	test ! -s err &&
-+	(
-+		cd new &&
-+		git fast-import &&
-+		STRIPPED=$(git rev-parse --verify refs/heads/x509-signing) &&
-+		test $X509_COMMIT = $STRIPPED
-+	) <output &&
-+	test_might_fail git update-ref -d refs/heads/x509-signing
-+
-+'
-+
-+test_expect_success GPGSSH 'setup ssh signed commit' '
-+
-+	git checkout -b ssh-signing main &&
-+	test_config gpg.format ssh &&
-+	test_config user.signingkey "${GPGSSH_KEY_PRIMARY}" &&
-+	echo "ssh content" >file_for_ssh &&
-+	git add file_for_ssh &&
-+	git commit -S -m "SSH signed commit" &&
-+	SSH_COMMIT=$(git rev-parse --verify HEAD) &&
-+	git checkout main
-+
-+'
-+
-+test_expect_success GPGSSH 'ssh signature identified' '
-+
-+	git fast-export --signed-commits=verbatim --reencode=no ssh-signing >output 2>err &&
-+	grep "^gpgsig ssh" output &&
-+	test ! -s err &&
-+	(
-+		cd new &&
-+		git fast-import &&
-+		STRIPPED=$(git rev-parse --verify refs/heads/ssh-signing) &&
-+		test "$SSH_COMMIT" = "$STRIPPED"
-+	) <output &&
-+	test_might_fail git update-ref -d refs/heads/ssh-signing
-+
-+'
-+
- test_expect_success 'setup submodule' '
- 
- 	test_config_global protocol.file.allow always &&
--- 
-2.49.0.392.g2fa1c74b07
-
+Thanks.
