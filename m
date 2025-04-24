@@ -1,132 +1,108 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45ACE1FDD
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 22:14:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC9519DF4A
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 22:32:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745532844; cv=none; b=fZ5OsZ4Xeq0cn7VDiGPxBlUBpD9c6vxVmThbkX1kY/Rv4Gfjh0G5XG+9gqFS4Xpn4MysNEnWtlxiD8Ouyoy48jOSKZF/DuP2tvRmfirMLjCognzpp2p1HTB3N8OaRWvcj5QLFjxPuVPERQcDO1L6rvQyoMO1r2OAa87PS+FaiPk=
+	t=1745533956; cv=none; b=R2PGhdD3Fm9bTwO6wXKp5ZIh4RTyy2FGN9TE/ngrpLvv+e4XEcQvd5aQ2ZssDF9OHhKf5FhU7Ec8P7nSyaAnDbg0IZ7Ik17J03pbSmh7B91n1elGRO1vZOmEJfqQnGE6rw0c6xZt4V/IQdh9ajIdy1yi/klY2YiLJHuwTD1+0Qw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745532844; c=relaxed/simple;
-	bh=TX2i4hK2Xm7etXvAGavn9mu2cFt+PSxfZVnewLNqHLs=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ghfsUGOwDbPvt7/S4bNhl33gtZgFpHddvOT6iQt3F7fVSU6uIKDvAtENHEHDTArE3nU8eN/YNb0Ia9QCyjsL1VQE4k1kVf8afCuIVZgVcVcDLeCcm8YYEb5um3I0F6FseXQlZwV8v3Cd0JMzg/wWp4oMLxpKw/3gLStRE2ahzsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N30ijuby; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MMN+9dQ6; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745533956; c=relaxed/simple;
+	bh=XuR1SSXn/+Ou3cywxOEEHeyUnbHA4aaK5AX9Nas7a8U=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=bvAnNV+KVJRcLh6kahj+kEXHKpgWLlZfAZ77PaJ/8a5Hj4J8upCoOby71BprKyXVl05rYA8WhgzhgIy5tPhr3DXP0Cx5/KSpUA1TNhJr36BDpWrARAWV4Jpp0e2IiQ1791xrmfePXQ+D0kV4VyLlFZDwAzGbyHwvKJ5qbRQuT2A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=lRXFyd2i; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N30ijuby";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MMN+9dQ6"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6049A1140237;
-	Thu, 24 Apr 2025 18:14:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 24 Apr 2025 18:14:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1745532840; x=1745619240; bh=rLvxTLWMvXYmiftuk1rLRQ5/UTZO80l1
-	T4mjnBvXis4=; b=N30ijubynbwSaHnY4V/Ls0njn4JDgg0N7AGNgTUgrjRTO3Yo
-	Tbv08CgMRVFk18W0r51wurBCxSsBzRKdHkBcFAj5Ei7cALQXh9iedSU58cCiqVS3
-	fAVUWYY0W5nK97ihVKUjhwX9nwY6YW8rKGafRxS19SHZEi2mQ/83PutVJp6wyqDa
-	d08bZ9SPSP38t3hq4zcoaIUoPhdWHAQmJaGToIxofJ1LPUXvk/Kprws9szBAvZQV
-	5g7e8fhATFmc7f1W0gvTwon53n8QUR14kEDKyJ/UAYufIuQgYtmmKap9oW3Jo1+m
-	q+4R68//IQl4maE7KwbYtVv8iz/2iqJsrbgL1g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745532840; x=
-	1745619240; bh=rLvxTLWMvXYmiftuk1rLRQ5/UTZO80l1T4mjnBvXis4=; b=M
-	MN+9dQ6rwJVzGlVVaun+Q4U8W20pl5m0U2CnJkNEvNxsAcpj1IjaZGxEgYbHJwS6
-	jaNxHZz3QAbuLecvp43vaYIqc3GvG0v8HcxpyDNXT3D4xyBidjcReMdhYzbco0Jn
-	BUSh0KixgoxhgrdF/tAoT8qZG2M8ZEHNFssjH58fVvktrpYEdZ4RJVVU572IE8JM
-	nxNCe9g7W/JJrPlTauqwtbv8OTxnd6ZPZ+PPS38Cgr9JeQZpPmxxX/+Mb4bIBSwl
-	YM46PE//tuSPpjmg4bhqzM9OPO+oltZAHTz2cxhJSPVIajm6rwJ1/5aNETRY7sHP
-	F55dVV9TC3KkrtMvUk6fA==
-X-ME-Sender: <xms:qLcKaAJ2urUkglVlo3E3IMEyZS_PIbEmiUw5pMZdhGfDLJW47GnQsQ>
-    <xme:qLcKaAInOLTfNy9mXhQMjoKF6hQF7Ce9Q4Nz6tzMoOSbn3s08ppmUI3Wrmu4SwV9b
-    gxEFDRypZ52_IjzwA>
-X-ME-Received: <xmr:qLcKaAvALNgmVkDzEXsb5gnSqAWekgPlCKVo_JXp7hT8rjR83cu25tpZH11oG38-KA-39KyM49VxPVYxDN9l73wviiLopE0tQM6l>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedtieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptddtle
-    ekvdejjedvfeevhfdtteeiieekieevteejteffuedvtdeljeeiteettdehnecuffhomhgr
-    ihhnpegvtghlihhpshgvshhtrghtuhhsrdhiohdpthhophhitgdrtghipdhinhhsthgrlh
-    hlqdguvghpvghnuggvnhgtihgvshdrshhhpdgvtghlihhpshgvrdhorhhgnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:qLcKaNYSnxjznVSKQ5QC5iFy2PxOzd3kklcI2jVobnii8Dv4lQ2f9A>
-    <xmx:qLcKaHYNM5RSLr8eOjQBDvKX1BKc6UUBEr1DUKFzKwD8Dou2ohKFBA>
-    <xmx:qLcKaJBbgzUH6pNqUggCDiCUjskW1Ovp8yy3UPzrP0nci1WgoE_svA>
-    <xmx:qLcKaNbtjojRL-GO2Z2iSD9Y37lbrrmW1lGoBTPf8_J69bpL87A3og>
-    <xmx:qLcKaEK5_IPkwNIZkHMQTgtcHhG2-RUGuy546JyVsEWFxi-fm1BT98p_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Apr 2025 18:13:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="lRXFyd2i"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1745533952;
+	bh=XuR1SSXn/+Ou3cywxOEEHeyUnbHA4aaK5AX9Nas7a8U=;
+	h=Date:From:To:Subject:Content-Type:Content-Disposition:From:
+	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+	b=lRXFyd2iBiY2ztTUxcNQ7Nmo3izC4Ixi5Aidmfbv8gw/Bx7Wao7IFT+oBgQMtV2HF
+	 W7XvQGZ+7OX3sZ29MXu7az3Tz2yHPbE6gHBS0LMzWQmmBrehrcp/vNfZNUWOLiNN4+
+	 JrORLHmWKnR+8/UwtD41lOr+tb3P3P8mOO/WFxI6rG3736DjsT03F52P2En6pflTqv
+	 vhvrleaXjVu9QfvyfZZ4HY07B1TTm1fXSireic6DFwyBisE/3EwjJ/K0c3zq5IrsGo
+	 tqXSjPSzELWmjvfBok14Sjpec98e1g+a1FyPGoLf7PkSNKAw70HgrEuwNTOyP540Og
+	 VnVUuBRgnh8OGAL+sKeNAb7gg1nYnC52QqQeR6/8kbNx9r7ttMp5Rg2bPvrM30nVwF
+	 TIZ69mOjjeYWo5Zp3ySPxP9rxEdGbKdc20t0USujvjmMJFFJHttgHTDlay42/dV71k
+	 4r8sO2nERFuUGvy+atTGiB/0cSYuw3hPxCImJmpulXN84ZIkJZL
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id CF29F20107
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 22:32:32 +0000 (UTC)
+Date: Thu, 24 Apr 2025 22:32:31 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: git@vger.kernel.org
-Subject: repo.eclipse.org outage breaking all our linux CI jobs
-Date: Thu, 24 Apr 2025 15:13:58 -0700
-Message-ID: <xmqqfrhxtdg9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Acceptability of replacing .git internals with symlinks
+Message-ID: <aAq7_7pFTToMPX48@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	git@vger.kernel.org
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="OhfusFqUiGoj/qOl"
+Content-Disposition: inline
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-As https://www.eclipsestatus.io/ reports there is no ETA for
-recovery, and due to the failure of downloading JGit material in an
-early stage of our CI jobs, our linux CI jobs are all failing, I am
-very tempted to apply the following to 'maint' immediately and
-propagate it all the way up to 'master', 'next', and 'seen'.
 
-I would very very much appreciate additional thoughts and advices by
-anybody more involved in JGit community and more clueful than I am
-on the situation.
+--OhfusFqUiGoj/qOl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Anyway, what is somewhat funny is that at the end of this script,
-there is an attempt to notice and report the lack of jgit (as well
-as p4 and lfs) but still continuing:
+Git LFS has gotten a couple of bug reports[0][1] about it failing when
+some of the innards of the `.git` directory are replaced with symlinks.
+This happens because the Android `repo` tool creates repositories this
+way; why that is, I don't know.
 
-	...
-        if type jgit >/dev/null 2>&1
-        then
-                echo "$(tput setaf 6)JGit Version$(tput sgr0)"
-                jgit version
-        else
-                echo >&2 "WARNING: JGit wasn't installed, see above for clues why"
-        fi
+I know _part_ of the problem for Git LFS is due to the fact that some
+operations are run under, say, `.git/objects`, and if that's a symlink
+then the path canonicalization puts the directory elsewhere and the
+`.git` directory detection fails.  I don't know if that's all of the
+problem, or just part of it.
 
-        end_group "Install dependencies"
+My inquiry here is whether we consider it acceptable for tools to create
+symlinks from Git internals in this way and whether this is a thing that
+should be fixed or not.  I haven't tested with alternate Git
+implementations, such as JGit, Game of Trees, dulwich, libgit2, or
+others, so I don't know how gracefully they handle this.  I will assume
+for the sake of discussion that the symlinks can be created successfully
+without elevated permissions and the OS and file system are fully
+functional in this regard.
 
-but because ci/lib.sh does "set -e", we fail way before we hit this
-code.  I am tempted to suggest we remove that "set -e" as a long
-term maintainability improvement measure, but that is a separate
-topic.
+I know symlinking the `hooks` directory is common and semi-suppported,
+but I don't know how we feel about other directories, such as `objects`.
 
- ci/install-dependencies.sh | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+If we _do_ want to support this, then we should probably add some tests
+for it, and if we don't, then we may want to add advice or diagnostics
+to discourage this behaviour.
 
-diff --git c/ci/install-dependencies.sh w/ci/install-dependencies.sh
-index be9ba5e30a..4dda5db7e5 100755
---- c/ci/install-dependencies.sh
-+++ w/ci/install-dependencies.sh
-@@ -74,8 +74,9 @@ ubuntu-*|i386/ubuntu-*|debian-*)
- 			-C "$CUSTOM_PATH" --strip-components=1 "git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs"
- 		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz"
- 
--		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit"
--		chmod a+x "$CUSTOM_PATH/jgit"
-+		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit" &&
-+		chmod a+x "$CUSTOM_PATH/jgit" ||
-+		echo >&2 "JGit download failed, but we do not care and keep going"
- 		;;
- 	esac
- 	;;
+[0] https://github.com/git-lfs/git-lfs/issues/5426
+[1] https://github.com/git-lfs/git-lfs/issues/603
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--OhfusFqUiGoj/qOl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgKu/8JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ55eWqHLmQicyrgH1dN1mi93xztSne2cAl4KEbkF78c9
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAAU3AP9TcIowzje4kVGeILWC9ni8TQj5
+eGv9IDGYnNSJS2qUqgEAtYLbt0qLSbY2knG9STIx4yV93dxBWCnCZNwZbWl9IQ8=
+=G4J1
+-----END PGP SIGNATURE-----
+
+--OhfusFqUiGoj/qOl--
