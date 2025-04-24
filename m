@@ -1,159 +1,156 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010005.outbound.protection.outlook.com [52.103.68.5])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1543D2701AA
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 12:53:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.5
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745499214; cv=fail; b=KHnO06S69YFm4IssAgAn2saP466VQhFo/fJPpeu3WE3TeUju9u1UtDokEFxzNU1l2XDZfP1jJdkk2ZJO1jOr4yW959WDFjLxEti8kWiD1w3hSRfSusavfURC/okvEUTUeyyyjWcZQe3fd6bBz0YF48/S9GWZFB/A2/l2mzhBLKg=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745499214; c=relaxed/simple;
-	bh=P4CJGNYlJlyYTIqUperZXB9Zb1vnm2jJBng94qgN1WY=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=FNldFUq4JL0KngAhtEjVaCjUHJ+MGJguYYGxRM1BFMtWDTzfuO9CWpH8clB4NMDPGS3gAEv6Q6fS1FpBZtp9hFaIlqK7eriDqkK9cdM/OxPD44B2q0jKeIwjqapr25fqMNFZYyH/X9EKuaS1xz+EUi3v1n50oRUy2IHy7kPhluA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=j6SRCNH3; arc=fail smtp.client-ip=52.103.68.5
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48EA1F09B1
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 12:56:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745499395; cv=none; b=afqXYnfIzqxi0MmSwH65tS7AWEcrXOxMsae8ngFLYliphD3lQhMqEWl13lI0k1lYm7yHCEkfhd407/RARvOiMkOZiPmc22kqAgHyvMQ6NNoToT5W5dBb+TdIzZ2X3NVw3T5xJjNhlaHJPng+H6tuntWUNoqSJLPlvj/B6hsQN1k=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745499395; c=relaxed/simple;
+	bh=lJpAzQ7OX2xJ9vGC7nKYLaOOAMFMHpDeJ41VZpZsiCQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ANaJr38gUJdlGPm2eP4ELWUgvKmk6VMia+Lbliy2L40GlyOKN51/rqps4+raIvBeBm+mSAh+Ko0D9Wc4BZ5+/haWyGdkdeA/VNmhidL0/jJv7bBdFuMkH5X6Dbk7AOnSDy6kiCh2jvocxN0it7kt76Fkgbzyno3RBX4fHgUXp1M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TrN2YdWl; arc=none smtp.client-ip=209.85.214.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="j6SRCNH3"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sPd9WsgzBGmQ7iNrGVeLbh6P1LEWAnbOxoHB2gzmcxKLUrPFzh52EQDyqTFPfwJfVmFFMmZwOjUGkZrhQHoURPYfF62HJVBrG5BKcDI7EmzebvQMCP8z+yKXNUXJqeWX29LYSL+yHkYrvX+Jo8FdadH14OZVpCdJ7HD55Se8ey6hicDcR4Rs8Yc8PJi0n6ZByWu/tVCMq9P+JDObkPJwIuNurk/uqxyt2cwPtSBSWgzT1UaI3lAhq26cODAid359x94wrcrcucvQRXfoVkYqNfAYuUnhQtZz+YX4MAvoce/JkPN+M5rGueoqu/tdugH/Coyj6Z+Lcvxisg5zTiRFWw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=we2MXFe/OY1HWlhLRpx+odiBdvV6WyAloF6ip8IGsKQ=;
- b=ESfi5dtevLLo4JSjjxywGMyHBBEFz3c59z6VilnC6fK0bu1LnBdLdF/Ap7F6mMSvqe6Bg7R7DRHKY60xYxnijQSrThpg8OjB9Cb7b08QB+mPiyU3hwu9S7paBx2znlIrYK2OI069PL3tiopE+kS85kBsQkqkYQTDoPYjquGl85FXMPDkNGNzk6jAggpc68sd1yViAcr2K6yv0wnLQVsHXI5YChfUxNtveU6NB0x3a9x6LWXXmcnH6rzCRfgDAkurrXaCwuvT8r6BKybANR+ohIX+ueY4+zD/UZC7bMcwwJ0LRJMBQK3bHYZcedu0ZYcgPgoBKKA1SToQNY2Gt87Lkw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=we2MXFe/OY1HWlhLRpx+odiBdvV6WyAloF6ip8IGsKQ=;
- b=j6SRCNH3xKCgrwm3opkYxXLIJAe0nibaMfRRttLXqQ9cRhoOtApb17VLwPcz17MexAngSc6bTe/w5IJLY/Di3mYcUzALknDWyhKwe/PbQl3Lzm9uRGPdbHFTFybNXyxxPqcWSEwcjq+HLrKzTA33qcVUWclMniGw5EdvD4sqcxpinevp2nVJa37abmpgJcTrRnzy4F4NLQO7I3H4hDwi1BgZ6Djtu9G87Byr1pBfmgzKogw1eWbejyppykdfuzislCcfINBcrCB9xTyVy1S+VzxbhZRvVjGUuO5RUyzu2c3W1bmkSeoxuFHEMk4Ci73VvWSKsnvlI3J4E9mupQkY6Q==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MA0PR01MB8018.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:8d::13) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.26; Thu, 24 Apr
- 2025 12:53:25 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8655.038; Thu, 24 Apr 2025
- 12:53:25 +0000
-Message-ID:
- <PN3PR01MB9597932FB4B19DE2038AA26EB8852@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 24 Apr 2025 18:23:22 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 3/3] send-email: add option to generate passswords like
- OAuth2 tokens
-To: Julian Swagemakers <julian@swagemakers.org>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>
-Cc: M Hickford <mirth.hickford@gmail.com>, sandals@crustytoothpaste.net,
- Shengyu Qu <wiagn233@outlook.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Erik Huelsmann <ehuels@gmail.com>
-References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN0PR01MB95884F106749628745FDFBB7B8852@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
- <PN0PR01MB958856EC9FB1E4F73A738746B8852@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
- <D9EVAF38Q1KJ.24J34ET29VPTI@swagemakers.org>
-Content-Language: en-US
-From: Aditya Garg <gargaditya08@live.com>
-In-Reply-To: <D9EVAF38Q1KJ.24J34ET29VPTI@swagemakers.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0034.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:273::7) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <bb073dc7-2bf0-4f03-b487-2eaabd2bf928@live.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TrN2YdWl"
+Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-227d6b530d8so10015825ad.3
+        for <git@vger.kernel.org>; Thu, 24 Apr 2025 05:56:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745499393; x=1746104193; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=827vkfO6NtYTr71YbC0uRS9GnNzybcT/ZbLiDo7BFAs=;
+        b=TrN2YdWlKWYj3zzWLchgIIwkGYoN/QxOV7PCpZyXvZZ5kXLIi7f5vPyRtLL3Pvo/om
+         flO2FQRxwPjm5bjZw17gR+C52j0+5awIN8a/IAAR3XV/GodsruhqLSOEg0bvhL6njVJo
+         ZffUmeIPtd5lPdUKe7ef7hsyXSBJ1O3UD6ajLcwAs/PlZrmxBSoCmIZKwF8TlSTgw1VF
+         iVzpNe4GV3Rsz3RyJhowuTQgTIuRGB1JTsEIlxiSA31vy8nUMZtNF4ZgMtsC2GRYWUXU
+         x4m+7CzAa/p0YtUtOcG7N2rjh6Cawwto1cgGvxLpCr4vY4wl5HbfgNzqIhhtf/F9BVFL
+         GBbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745499393; x=1746104193;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=827vkfO6NtYTr71YbC0uRS9GnNzybcT/ZbLiDo7BFAs=;
+        b=PnYEm5wVLLBALkUGOzm045lH/sdgzLqwqCH5YaQN/nkqUQV7PIbzBr0ImxvquwBbfN
+         NVHxMpL/fgJSLmj+E+BVcigX/aHI3Zsn0tEvtXkd1FD4HW8FtDJABiVpuw4r1+VLeS6C
+         naMgKIFsX5GHcvm7bmPG20de65lF6+9lLG/YeBK1+XZTHJPg9MAdV8VG7//Axne4DXG/
+         QjwOgktvExbry6ZtagwzecRFHz6D5J3b+AUVjvS9YwbFCS4LBLG/vdFU03cj+7Z8QRHg
+         PKUzUZuPa92AyRstA7oGBsE6xT2T+6TxzKVmHra4oI3P8oe5PnpVkk969hOub7bYiUvf
+         AUpA==
+X-Gm-Message-State: AOJu0Yzx2gk61zhWPerMXVX4NC/8b5wMbfUm8EpfNjJMm3UszKFpOlI2
+	X3NEe6gYvpvjof7BbNQsR0PTO3zAzFOqUlcoB6HdIgIjVvLifUHg
+X-Gm-Gg: ASbGncvEYTevELB5M920VYKNTA+TDDBtp1Eipx9OfAY1A9I7m34+Mbgs3AwHHhND0+6
+	WQBJTWzLv+LPvhKyRbPPkByFyAUte01pjqAhLGIAgjD8qfkc7jLR2Ae4pSVVAZ+7ak0zeSpyJ6w
+	iGhEswvcyxVLCkYtB4YSVEt/4BsXq9sbobZ9/deLxyIj5cE7xDWVIILMJqdT207cx5UD/ULBx1n
+	Ij+/IsnqzjfE5e61NoSHnWn/BrWHdisg0XOSvoy171rjsek+Kt1z0orYL2pSwGNWg5QomXjtVnT
+	Ta3F5TIar3FSotpRO73O5moHvds+SAK6HCG/
+X-Google-Smtp-Source: AGHT+IF6+I5TXoTrVRJ7N7bQFT6xU1R8P7AQx69akCDi10mL7p+4N2VtZM9qrHtDIucc98l5arGcTA==
+X-Received: by 2002:a17:902:f54a:b0:223:65dc:4580 with SMTP id d9443c01a7336-22db3dea005mr34072135ad.52.1745499392814;
+        Thu, 24 Apr 2025 05:56:32 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22db4d76f56sm12414555ad.9.2025.04.24.05.56.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 05:56:31 -0700 (PDT)
+Date: Thu, 24 Apr 2025 20:56:42 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 5/5] u-string-list: move "remove duplicates" test to
+ "u-string-list.c"
+Message-ID: <aAo1CvpcXYfNonTF@ArchLinux>
+References: <aAetW0dan8S3Fljq@ArchLinux>
+ <aAet23peGs2OZUcn@ArchLinux>
+ <aAjUr5AY9gTCpVlS@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB8018:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0e16509a-e061-45bd-01aa-08dd832f0073
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|15080799006|5072599009|8060799006|19110799003|6090799003|7092599003|461199028|440099028|3412199025|19061999003|19111999003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?MWpmQW5jeTArVHRkcDA2RFU0dG5xZVBYRmQwU2dTSmhIdVJrUmE5YmtRQWpu?=
- =?utf-8?B?MThBczVOcHd4Qk1sVkQxWkdsQ2pJVDFvbmNlYzFNTmtnQkJyN29oaVlGOThV?=
- =?utf-8?B?c2l4NVh3VFdtZG1TbDB0cllOUjVUT1huN2NCZmhyUjdFVFdScU83Y2hZQlFx?=
- =?utf-8?B?ZnIwR3ByQkJ6RXJQYWxYYnJjVUFpVlZxRmRvQXUyNWNTVmV2Y29uYzN3bC9i?=
- =?utf-8?B?b2crdUtVeXAxOGcvSVpOUkpiY1RuYk10MmZDRkd5aEIyNkN4ZGFkN1p6NjA5?=
- =?utf-8?B?U1YzSTJySURKeWNMQjgrc1ZqK24xRTZzUjM1bFgzY1FYakpqNEF2TWIxMVlB?=
- =?utf-8?B?TU4xNXljaVdHUHQrZThmWU1zOHVnRWNRZS9UV2VERVk5SFFzQ3FRUi92NXJU?=
- =?utf-8?B?a3RRVjdubDFvU3BMajNrajJ5eHpqVFJkajF5VThBd3lXQW1ISWlqRCs4dDNx?=
- =?utf-8?B?Y09iNXpTd1dXbFFzcFBDWEJjTDhBUS8yY01uZHlvcEUzUUdoM3BvOHI0aEJH?=
- =?utf-8?B?NDF0anF3RTlnUnBnRTlWRGRneDN1ZkR2NnZYQnY4RzlsY0ZVWTZSTjBhL3hr?=
- =?utf-8?B?QkhMd2ZZK1QxczVmZW50MG1pcE5VZlJGUkJFcU5xaXlYMW90c0xmY2lpWjIw?=
- =?utf-8?B?OERhajZHYUozR1krL2xRUlhnMlh6cTVuakFrZXhVSkh3SjdSUmxYT0pPd1lJ?=
- =?utf-8?B?OFkwK25BRndBdENZeXhrQzFaNUdEV0Ywb0x2UnovVUtTbHR1aVcwejl5K3h4?=
- =?utf-8?B?TEMzWExMbndEMlFSSVRsTkxKRGkrYnB3UkdvekI1bTJlY2pqNHFYVFM3dHUx?=
- =?utf-8?B?Ui9sbzFsRC9oTUs0SGVQdG8wQlh4RlNsNkdsekc5MnJTb0ZkdHlvc0MzMUN3?=
- =?utf-8?B?TlRIVU0rWEF3TC9Dc3E4S29iaWx5QnFDYmlPYk96S1dSTWxMWERnK2NDcVBl?=
- =?utf-8?B?OFpNcUhqVG1NYWdWY3QxaFFHMys0d3JjYkxXb0p1bkh5MGcrTjdId1ArSmhB?=
- =?utf-8?B?VDdMZ3hiYmhuZURFR0s5cElTY0lOeGpDSXRzOUJhMnBTLzc5QkhLaU8rVXVw?=
- =?utf-8?B?N0VSbFhXbDhEZU9abTN5OVh5Q2hBd2RwTlJuN2hYNDZJRGRWNFNYdGd5L2lB?=
- =?utf-8?B?RktQLzZrdEx4VFB4elY2dUE5WWVvSERZNkJwUzFXbUg2ZUVuMlJRVHJrQ1dB?=
- =?utf-8?B?VUM3dklrVVdGZFpDbCs5MzZXSXlGd1BCWmlMeGJhdXB4cWJpNE1MZUZNYmY2?=
- =?utf-8?B?V2xQMlZLYmVOaTJuMFd3Ym4yK3cydXh4U1V3b2Iwd2N0bjRLQ2FZRURiMjFE?=
- =?utf-8?B?ZVZOZUNaU0h0OHRMZkJBMldwTVlnWWg2N3d5cVVIdzFPcHJmQnZZejMxbk85?=
- =?utf-8?B?WjlDYXUyOW8yajZQT3F4am1HVW15SzRyRTlUZkpHRzV3UExwY3lDSytjNWRO?=
- =?utf-8?B?SXg2YlE5am5OOGdzSjVmM2lIdVFkMkZPSG1pK253bFI1MnR0SGN1SWVBWkkw?=
- =?utf-8?B?Y0J0d3JyU1E3TmtwdWxtOVkwOU9vNnBpYzkvSEM1aUpnWGJ3WGQrNmNLMWRW?=
- =?utf-8?Q?9pMdW5g/3Td4ZQMbEQOFXlkhRHieGJSKeaiJxuDrzVktNL?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?TEZaV0JXTnBxdjB0SHRDdjlVTjlFZWFXUWlleng1SWtNNldDWFc0WVhnN1lj?=
- =?utf-8?B?empobnZQcFhxY0ZsWVNQR3FGaUVDam1KekZHZTBKNW1YK0Vkeis1QTBsTEln?=
- =?utf-8?B?cnFLekVGQVNHV2F5MEowRTNaOFRreHlhaEI4bGgzRFdreXorWjFRTTdGSEZZ?=
- =?utf-8?B?c2FpOVkvQ0laWkI2N1ZONW5DbitaM3RPZ0NPUC9pUEtrUU1ycHF6UGxuWll4?=
- =?utf-8?B?dEtLNHNUa2dvQmNuMlBSRlo4TzFJd0hZK1IyMzdYVys4ZTNCL053M1lmNzFx?=
- =?utf-8?B?aHUrdkZTVXludlNwbGJkQWVXaTNmeG1rR1phQlNKb3dyd3pyMnBpbG91dkFz?=
- =?utf-8?B?VVpmc2RLMkIxOUdWZzNRcG5WNG9HbzFkTEJ6NUNVVXAvdnRjT042cHk4YlMr?=
- =?utf-8?B?MUZnQkJPdStzcHA3eUM0bWYvM01NZVpPWG9MV0ZKeHJNTEFaRmR2dmJBMWF0?=
- =?utf-8?B?cUltNUlMTnh5WU14dHFPL0tOWUFua2ZhUzB2Lzgxd3NVQThBcm5Rck1rdEg0?=
- =?utf-8?B?d2RjNUp3WTJLRVlwMUFIeEhIQW12U2VLWmJlckFMMWRQbElLYVRtVUdVQkg2?=
- =?utf-8?B?QnZxek9McjFxclpnZk1jLzBHYTdlVkJ0Uy9FNkdKb1BaNDE2dWcvd1dLMG5B?=
- =?utf-8?B?NHIyR2lFazRFN1VVcmFpZ2xZczFoaUFyZS9QL0h5a21iUUo3WnRkVEorNnhF?=
- =?utf-8?B?c1lwdUZ4S2NIRlhjdUZ1RTlCS2tSOUkxa1J2OTQxbmowUkQxb2RHZmp6Wk9j?=
- =?utf-8?B?bDRMc09NYWRKQ0c1OWoyOE5LelRIUEF3RjBTRndBaG1tN3pEbEI3VEF4WnM0?=
- =?utf-8?B?MEhHajhRK0RwLzN6cWliSEo1eGFzOVh1VDVtWWIxejl2dzJyVS8zK21CaG5V?=
- =?utf-8?B?WWJhdkhXTVJRT0hhZ1F2SnhDWGI3NzB4M0JGanpDY1I4N1VnNTZ3a3dWV3NH?=
- =?utf-8?B?MWhVaGdIaVU1Nzd5SHR1eDF2cWxIQzlTT21UVGVDZUJtTlNzc242Vk52dE1k?=
- =?utf-8?B?OGtTUDBXUWZQckxxREhwYW1pTTMzMnJtejE1dTRNemR3VGRIQXRoUGV0K0tq?=
- =?utf-8?B?NlpOYloyM0JxeGFxSEs2eTdRaFJmaHJnSDlaTzhlY0RKSlFXRi8rcDJGZzc1?=
- =?utf-8?B?Z2RDUGlOektuVi8xT1RqZGpTRjZ6ellJYVNpL2xqM1BnZWUrVS9NcUxjL05R?=
- =?utf-8?B?SUR4TGQ3VHNEVWJqK3FQT1BnQWFlRjBja1pHclkvdHBnRGI5Z2liWEpITm5J?=
- =?utf-8?B?WTJqazJZTWxST0JUbVpQSEF6NWZ6eGMzelRvUXFuc0hXNTlWaEQ5VEhEUm1X?=
- =?utf-8?B?K1R1NklpVVJYNlMwZ0JZaHJvQ09mQXNOL3p6V05wMG9FSndkWVBZSnNkaXNq?=
- =?utf-8?B?OW9YcmFNUnV1OE5NRmVScGV3bnNXZ0RONkFCOHowL1ZwRnQ5RTZsa2ZiSlJh?=
- =?utf-8?B?TVNTREgxVzRyMGhhVUpHaUJlbVFFckJFL29UTjZwOFJEa2RGZmFJcU9MV3d3?=
- =?utf-8?B?OHJQblhJdC85VjNyYUl6MXNJQkF6cis5VVRUYWdEZytkRURHZDJENGNrTHZn?=
- =?utf-8?B?OFVxUE05Y0FmbXpPZ3JVRTlsZi9qaW9zdm9odnl4QjFQUHF2VXZiL1AvTUpz?=
- =?utf-8?B?RTFweDV6SWtpOWJkNXFKYkJoRFJJcHN4aVQrL21BWGRMdEZJdER3UjB5OGxB?=
- =?utf-8?B?dUVibjFyV0VvVlZtUTVqd0ZoZGdUOFdKay9mb0dNWXNTQnlOaGh4WFV6MjFY?=
- =?utf-8?Q?qizc1MK/UI34e2pmdByX1zMckYwPMqAYQM2sQVO?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0e16509a-e061-45bd-01aa-08dd832f0073
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 24 Apr 2025 12:53:25.3979
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB8018
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aAjUr5AY9gTCpVlS@pks.im>
 
-> Something like:
+On Wed, Apr 23, 2025 at 01:53:19PM +0200, Patrick Steinhardt wrote:
+> On Tue, Apr 22, 2025 at 10:55:23PM +0800, shejialuo wrote:
+> > diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
+> > index 262b28c599..6be0cdb8e2 100644
+> > --- a/t/helper/test-string-list.c
+> > +++ b/t/helper/test-string-list.c
+> > @@ -1,48 +1,9 @@
+> > -#define DISABLE_SIGN_COMPARE_WARNINGS
+> > -
+> >  #include "test-tool.h"
+> >  #include "strbuf.h"
+> >  #include "string-list.h"
+> >  
+> > -/*
+> > - * Parse an argument into a string list.  arg should either be a
+> > - * ':'-separated list of strings, or "-" to indicate an empty string
+> > - * list (as opposed to "", which indicates a string list containing a
+> > - * single empty string).  list->strdup_strings must be set.
+> > - */
+> > -static void parse_string_list(struct string_list *list, const char *arg)
+> > -{
+> > -	if (!strcmp(arg, "-"))
+> > -		return;
+> > -
+> > -	(void)string_list_split(list, arg, ':', -1);
+> > -}
+> > -
+> > -static void write_list_compact(const struct string_list *list)
+> > -{
+> > -	int i;
+> > -	if (!list->nr)
+> > -		printf("-\n");
+> > -	else {
+> > -		printf("%s", list->items[0].string);
+> > -		for (i = 1; i < list->nr; i++)
+> > -			printf(":%s", list->items[i].string);
+> > -		printf("\n");
+> > -	}
+> > -}
+> > -
+> >  int cmd__string_list(int argc, const char **argv)
+> >  {
+> > -	if (argc == 3 && !strcmp(argv[1], "remove_duplicates")) {
+> > -		struct string_list list = STRING_LIST_INIT_DUP;
+> > -
+> > -		parse_string_list(&list, argv[2]);
+> > -		string_list_remove_duplicates(&list, 0);
+> > -		write_list_compact(&list);
+> > -		string_list_clear(&list, 0);
+> > -		return 0;
+> > -	}
+> > -
+> >  	if (argc == 2 && !strcmp(argv[1], "sort")) {
+> >  		struct string_list list = STRING_LIST_INIT_NODUP;
+> >  		struct strbuf sb = STRBUF_INIT;
 > 
->     [credential "smtp://smtp.office365.com:587"]
->         username = someone@outlook.com
->         helper = "!f() { test \"$1\" = get && echo \"password=$(cd /workspaces/codespaces-blank/M365-IMAP && python3 ./refresh_token.py)\"; }; f"
+> I'm a bit surprised that the patch series stops after this patch given
+> that the only remaining subcommand is "sort". Is there a specific reason
+> why you don't also convert that function? If you did we could declare
+> victory by deleting the whole "test-helper string-list" subcommand.
+> 
 
-Interesting, and this works too!. I wasn't aware of this.
+Actually I also want to delete the whole file. However, as you have said
+as following shows:
 
-Junio, I can drop the third patch if you want.
+> It seems that the only reason is p0071, where we benchmark performance
+> of sorting. I dunno... that one is of course not a good fit for our unit
+> testing framework. But it's a bit sad that we cannot remove the whole
+> infra only because of a performance test that nobody ever runs in the
+> first place.
+> 
+
+I think we should delete the whole file. I'll find out a way to do this.
+It's wired that we keep the "test-helper string-list".
+
+> Patrick
+
+Thanks,
+Jialuo
