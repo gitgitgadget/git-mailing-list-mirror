@@ -1,221 +1,265 @@
-Received: from CY4PR02CU008.outbound.protection.outlook.com (mail-westcentralusazon11021110.outbound.protection.outlook.com [40.93.199.110])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 865762580E7
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 20:57:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.93.199.110
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745528269; cv=fail; b=XFBYt15RRhLYqe/LOsqieUaz1Qtam5xFhIFX02w3OGM8ZfEHVEMU75Z1BUAtCAhrF4zWgibMtiEbe/gUGCAn0m7YbYZlCXHveDWoTGdxguf4U4Slh35IBmU7xoROZAl56SxDUuCAI1k6t8XADkEPtC420hA4oCEftiQEWHAfUKY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745528269; c=relaxed/simple;
-	bh=Y7wNJuptELKsCtffZO5RvVOvKEXxbL8UGOraw20ZoN8=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=KmI3McKRYDkx/zwwevpttf5N4ZmliXZNMUfkOpg4AjutwHXac2iYLRcDXJHAnDddUBze9QKJhQXb2WHNn/B3LHOLG9W1GxTL75gSkCPx7OSkbAVUr66OBpNoAziTGw34/SkNX8jnasvIzh6eHSZfxaayN8uDBZ6K8746t1epTiw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com; spf=pass smtp.mailfrom=microsoft.com; dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b=Saf97Vm0; arc=fail smtp.client-ip=40.93.199.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=microsoft.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=microsoft.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4553718DF8D
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 21:19:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745529598; cv=none; b=jNvgKfUMuVrWj+qT0f8C4UHLqUAE/nClsR70ZNKCRYkIC2PI1eLshpjgriSlbGiQNsAwut/IDWztCjEszjH7IdRk9htL8wyELD0Q3SvPHVL2G8ACukEO4JeYNDe0IwbIlsxMTay37GZvKul8FJGY16LlVaGPL/0h8TOcNNPtUWk=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745529598; c=relaxed/simple;
+	bh=pSzCx5N0nph3s0x7XuP7mYhFNPqGF6itw9yd5szsbgE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s6/VZH8TzXQ2pHbvZd1g3fIHHEVRI2mn8vRPoray039//C2TfI8n9kAhlBDsGGTF5670ViU5sCRE/WoysFHsNIsYTce4iUNS7BlpKZMeG/acRjwGlHPQ0jebFJDGQWWNcdS1BUIF2GDvkfdb/TS5CFdTHikN9tRFclpCed0hVJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WREcLLa/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LCfDMJ/r; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=microsoft.com header.i=@microsoft.com header.b="Saf97Vm0"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PVd9wQ/ZmPVIFaMtbH2HwzQJYz2j5zNdf0b5G129JJokMW4grE8OmoUQCXHOiJmdUK6Dp54EcKesKY0yQj0WGm0vjFADP6ixzJZZE0ME7lDk+kfF67GMdVrcSE+mtB0WXoDLt2sDQNC4y6hYWgoQG9hs1+HQs29pzkxF1jIq0YT5ewFC5bUWsFYflcT+PA8AxPJNIHAce6QUy7Nj/J/Oh81GICGbM+PpXC3NITaep0wRryLOsL0b5UvYvZA5YCQwdIkij1SXpUiPBa9UOJ5TT2lQrRldg7LyPVh0pWmo6uGQNu096k/dvY2EVFe2yhIOi2KtUu8DQVFFRozlASGt4g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=PphRFMlmRQlLcPlzc4VuQfuvMnPA5hziT3O+YkG2CAs=;
- b=RYMH5aOYEK7bwuClDAw4okG9tCdvO6vwBcQ4hJBtgsp8zIKc3TxdoZCT1J/kahYzifxHLhWtaVACraasQbviI8q9ba429y3YLhMpTENZ/gK3uJSEx3yrVRIlOkiIiXDEsVyuG7WKpY0r0WlnP8WTzXKPHLUa0tlB7wrCJW40B2U+Q2iYjx5xiPRxfnbgRiv8Njzl2ll4+JgLswvlh0cb2ZGN1ErRrMIu+GnmjTALi5ewHCa76hUFFHU4NasHhat3uHtAmjEgUeNzYZumArE/tg7LB4GZVLntswQrmrMLuDwTT6Wr+HPRZExzO/VcENA9EVQPKFcs88L2oruPZTj3bw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microsoft.com; dmarc=pass action=none
- header.from=microsoft.com; dkim=pass header.d=microsoft.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=PphRFMlmRQlLcPlzc4VuQfuvMnPA5hziT3O+YkG2CAs=;
- b=Saf97Vm0PDs3vdBY9w6JT/U4I+YtkhgSra7rHDxikad+0lLkl6dPNGHIWVUNXJWI1rvjtUzhaeWZEnBHN9R019/C/RX/QXVlNTSOHXMxeNG8DckBuxISBVQ0/IV0KBsWL98aZxlR5EvvaZN8WGeX5fB3Bkaw4TSFvHkb+t9PWoU=
-Received: from SJ1PR21MB3504.namprd21.prod.outlook.com (2603:10b6:a03:454::7)
- by DM4PR21MB4619.namprd21.prod.outlook.com (2603:10b6:8:244::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.26; Thu, 24 Apr
- 2025 20:57:43 +0000
-Received: from SJ1PR21MB3504.namprd21.prod.outlook.com
- ([fe80::58b1:aa59:d15e:4171]) by SJ1PR21MB3504.namprd21.prod.outlook.com
- ([fe80::58b1:aa59:d15e:4171%7]) with mapi id 15.20.8699.005; Thu, 24 Apr 2025
- 20:57:43 +0000
-From: Sam Harwell <Sam.Harwell@microsoft.com>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Potential bug in for-each-ref handling of fetch/push refspec
-Thread-Topic: Potential bug in for-each-ref handling of fetch/push refspec
-Thread-Index: AQHbtVsiuviLI7U+HUeCWJxjjDhSWQ==
-Date: Thu, 24 Apr 2025 20:57:43 +0000
-Message-ID:
- <SJ1PR21MB3504FBA7658CA100C90387F6F9852@SJ1PR21MB3504.namprd21.prod.outlook.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-msip_labels:
- MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Enabled=True;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SiteId=72f988bf-86f1-41af-91ab-2d7cd011db47;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_SetDate=2025-04-24T20:57:40.182Z;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Name=General;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_ContentBits=0;MSIP_Label_f42aa342-8706-4288-bd11-ebb85995028c_Method=Standard;
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=microsoft.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR21MB3504:EE_|DM4PR21MB4619:EE_
-x-ms-office365-filtering-correlation-id: e722be18-1bb7-43b9-90ee-08dd8372a871
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|1800799024|376014|38070700018;
-x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?84OT6e/1rYQu+KU8kAUlH8HBehMmh0EZpyqz/zWDgLXwwNqQT0dSLZBigT?=
- =?iso-8859-1?Q?VzfzVAZDcRoBPReznrlDvAo5jWdIplZNfFOHFd2TEPGL9c5+qBChEZBg+D?=
- =?iso-8859-1?Q?AUVF4MtuyGJhJGVsrQWUIVrqrmUneb29gAnahrt1/H1Nku8ghQM/5c+vv0?=
- =?iso-8859-1?Q?PRqX4gGjUO6FhM4rJo10mddOlt606JHzvTqLmlAcJxd5nn5h0U7ryuYic+?=
- =?iso-8859-1?Q?vjYDDt3EGybVOy3ovzVNA1ll+3ypLM/8mCiH6UPWc25gukMRzME+Q8G8HE?=
- =?iso-8859-1?Q?lNhFA7sz7AQClOvvV3bKuSXVMIpIsDTRIoqfnHcnZaeZRDYRCb3Ow4ttaQ?=
- =?iso-8859-1?Q?zb9voh8q9QjvyS2hF/8xpWKMHlBUCEnwnqwu6w3DZFXT5JxCcmNr/beXM+?=
- =?iso-8859-1?Q?WXocsAUUZdN2fw5ONIkp80dradRME9+YVEIdqqSEzW8Q/GHLRyiVyCYr9Y?=
- =?iso-8859-1?Q?UGenz7ZjjlXTokw8oV/UI/4niZFwAqad2eAGJ/A+P36Zec+1sk7fihGX3d?=
- =?iso-8859-1?Q?fBz6cXtRiqJX1SBuap87mcTrz3J9QJ0zJdSnOLQZ2Ffmw7Ge63kmhfiZhl?=
- =?iso-8859-1?Q?PvrEZqgnQspTds98Y+ZEaftRFhahALqu9BOlqokQzcCqeIn/vA21Cx1rNL?=
- =?iso-8859-1?Q?5Z/lLU4YErtdQHskXmBcJJzRBdxDoFwbVpM+yBWqXpLREOi6mN4F9+fZt4?=
- =?iso-8859-1?Q?CbxKzs9Iufb/rci5lupEnZQe+ASCHQoS4zlXrcRKA3MG6+iGpN5ZO71F0I?=
- =?iso-8859-1?Q?v1bmysqIVKIL6mkaQ2gVdbShrM3ktg2jZnQ9AslKyFRu0j4gLOQX5Szb37?=
- =?iso-8859-1?Q?LJZkqJHdKYfo0D9NY8mISzduWAQGpuROmSxijZShFNdgMsRueMob+l+Gv2?=
- =?iso-8859-1?Q?Zoc/+38XMzBmzSAWDWWLboKqtg1GgUMU803h2XsRZD2E/2HQGvbgIgPyol?=
- =?iso-8859-1?Q?wvF1tgAvoAUC4v2ieHCdP53xFNK+33Y1/MWmU0jvUD8kqC4JoIZcoO9/Jc?=
- =?iso-8859-1?Q?w8KiihbWu2wG2T9vYjEgcjy8ein85gbA6kJSDuBSqbFY2ZinSOylxr1kAs?=
- =?iso-8859-1?Q?JbcmRzHOs0QeroS/soNMCq1KbVYlCxfJ+XvMYCh2z4jplc5jxKEILsivzk?=
- =?iso-8859-1?Q?Uq5uWc0YnFEXoI5Hl8v5gYAC/wUM+7kHU6tH8810lQPXYP074/s1hUJLyN?=
- =?iso-8859-1?Q?5+aM+U07gW7t3Q78H4QpI0oTDSbGUG0gSzqz/Tt+wMmJivFAERmzq06H1p?=
- =?iso-8859-1?Q?SC1DCx/D7T3OFwnj95oUgGgZaengRP6FmiZJgpilFrLcOe4oKTNT7lOgA2?=
- =?iso-8859-1?Q?/XZ3tSvWYxLfvOFi7a0N2f73Whtjz7eUsRLKW4okt+LcpMgwFsv9diCtq/?=
- =?iso-8859-1?Q?v7tiBOXqMIwzRdDlT18urlcioZzVHW1yfnNRwUa+QjiPOMOWmL6B4w/t9s?=
- =?iso-8859-1?Q?9+g48O12m6I6M+hRWkwFU6Qga3yil9Mu4KGiVUJKwrhVSPQswhaUS3D9Yn?=
- =?iso-8859-1?Q?QxpLksVMKDCKOddyVqj0AXz6+e0DOeGJF/S6AqgsynvQ=3D=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR21MB3504.namprd21.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?gsWzCIr8IED3ROww/EUVooHkWd4O5hUUWZ+hOVUzNriXj0ZxF37KpEUzBL?=
- =?iso-8859-1?Q?6u1L7EauZWLCVW1LNEKRt+WUNV5vZkJu7a7UGd+BhjJN8m/Mys6SZQSX4J?=
- =?iso-8859-1?Q?iStjn7VSo4xFFujvnyv9JOmfoWP2ekWLGfwq5zOzK/LIsmHVsFytuXARHF?=
- =?iso-8859-1?Q?wMiSGFUyELZ4tAePZQpp+w1NcZjYYZNE3paYJbLf3sqXJUYEiaq0SYXlDY?=
- =?iso-8859-1?Q?l6IReqHXasSU5E6063shmKiWZT+zN9euliu29sFjja410zlin+xpPpxEtG?=
- =?iso-8859-1?Q?C0WgKI9w266HWUtAGrP/UD2orlG00wcWYDt34nENrhaul63GoKVDvFsBdU?=
- =?iso-8859-1?Q?8UZxNjPrnUfqrVywWcSSwy8wE2b/aPtoa35onlVRU6RZNuntrYjEQHyWYr?=
- =?iso-8859-1?Q?SN9h8efKvtukUZ/QBis9mksLdYb+CR4NHnYPNyTTo+wsj1+Mt/Xz01qfPR?=
- =?iso-8859-1?Q?OZddFHzl645gUxLGgSAfigancZdI5cdZ0uDqY4ruLVOqAYilb2wToiylKT?=
- =?iso-8859-1?Q?oN/hTZ3enAn3/LnszX4sEqh2jsPvqcbG5WjB9MfmFuGxiDTDujDcy7ZymN?=
- =?iso-8859-1?Q?VZRWMafSo1Eb0Ioq1jdM3o1ejgNXiDpMo7qpWicI6uwwbDrkVx7egFqBL9?=
- =?iso-8859-1?Q?kU13DdD4RJzbE/6N555+9ItVzLoYjWCj8ehfbx7kArv+SiD5wZC1oKyW43?=
- =?iso-8859-1?Q?2f62oc2jrLR+q/CvIx9k7Zm+1/UaNJhoC72DsBkMD2Lzqq/LDEVnSoKpNE?=
- =?iso-8859-1?Q?IcBfPnPFrH3OCRra348TfZXNWGfSS1KHr0d4Y4RlsS7tCbStxCRGG4saEL?=
- =?iso-8859-1?Q?u33pEA0QXgMVfts6PwRU8tEtJAEHtDPOYLwGtABRxqGGX1M0+iIMBU+I5K?=
- =?iso-8859-1?Q?hmn01MyuzVkuKPcSSO3kHhgpaXJf4sBrM86xepnEzfuSJPrcM0dypN5y/J?=
- =?iso-8859-1?Q?ycbuLSYwzxOoGl3WyJdtliED48n7lCgqmnXVwyJtsVjXtuZdZSFWy6soqL?=
- =?iso-8859-1?Q?eTw35ONbGR+WpnuSYIDRtvS+1k0qzmWGDSscJDOPsq+5y6gGa/qu2kGHlD?=
- =?iso-8859-1?Q?f/4SobxPxrcoo+4NyhoQJxAdXWCxLUJRFE9lxc8oAW2oZSpA5MTEEr8x0j?=
- =?iso-8859-1?Q?mytNonyskUVwwn7tuBOvaN9gQseaDXpD8L7IkOIzEkCxJyA6x6ytdKXyl7?=
- =?iso-8859-1?Q?uPxK/Tcr8c0Qlz6GugyPmZC0JTzFEfRoJVpv3rnhvSZ9qS0MKmjOv6vr6q?=
- =?iso-8859-1?Q?NamRPstO3xQOe8EKobt2hWAK/kHZ6FrBwHfL1aK7P9Y76wGIR1k59LtRP0?=
- =?iso-8859-1?Q?YFPk+StIcG4x5uSDOJFXkvbhYj/NrYQ07mulzEiCgS1MaAcd8E3scUtum4?=
- =?iso-8859-1?Q?LJBIwiUvsSmUfAMXFCb8sw3J6TA9y5WkQqvTr2xuWYwysVDcJmAcjeS3M4?=
- =?iso-8859-1?Q?SiETTj2vyf/jzMFuCVFL0xCUAU54/wczihHvIzHxD4SjUwGEu5ADjtZAYp?=
- =?iso-8859-1?Q?I4ZeAmI3v4syg2Z/cFYxb2V+HfG0RX7JZ/zsKgEey6376fbq6fwGBLCcXz?=
- =?iso-8859-1?Q?V5eWBreRwhQzXRRqJzHdJPx3l/6/dhlW1kEZdtuo3km9vJQObyfRWaqAB0?=
- =?iso-8859-1?Q?EBVz1A5CvchdynIhfBGMpk0Q19mm5tIQR3?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WREcLLa/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LCfDMJ/r"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2E1781140200;
+	Thu, 24 Apr 2025 17:19:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Thu, 24 Apr 2025 17:19:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745529595; x=1745615995; bh=D6BmDuLg3Y
+	7R3mICtz78u/KWVOxq2SdloCKuiITYJTY=; b=WREcLLa/YetxKd883VFcov4gjA
+	uzvU6cqYas/L5XMFsbHH5SrxiAAQyiKfjHhlKwELzkk6fhmYvV301628yl5eNqKC
+	aPqF+iNJNrGvvcRMW3cStnv34iv/sBxauBP3dbCJ5oPfztO1/aYgK1T5VN/pTdFj
+	1GA9PF97gWtv4NcxTOnKNck9c5auNaRaQv+Xb4uW6SKe83x29eyXOZrWiyIAuFAW
+	4KFgjrFwtBzBX18f8Qy0DK5YymPe5hYUvLiVOIm7MXxjhFC37hPorEqlbJgoH82i
+	tksW7puqv2/Z9tr0VZZjnBvi+rkLOl5md92oHScaBqFvMaJXz3iKWpISa0cw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745529595; x=1745615995; bh=D6BmDuLg3Y7R3mICtz78u/KWVOxq2SdloCK
+	uiITYJTY=; b=LCfDMJ/rAcTNkEyZJefYnoEJDIADlNaR6MG3VDjSORW54wOZ8yG
+	ROv1HbF/eNHU66L1u+5dx5MFAB//9psnHreFDs0P4pReYhdmV0DlxRSBrlZW30QH
+	5d64cJMh949rsSCMmxxfJFGKaWkecUbHUTS8EETnxemkVTXO9yct0qgSEIs003yj
+	6t6aJ/y/JZYA8R380oDuOU8p9dGXzTGBFm1Ybiq5nk3wYFkrdNZ4twG3uVb79Fom
+	urNsiCwgiCW4zymj8hDDEQUYUg4XqfmlkL9d6l/MAMOSuKDv5llFrKzAJ8ZBON1Q
+	FVommYPPNFd7I7yeep7KTknmK9Bx8lQEm+Q==
+X-ME-Sender: <xms:-qoKaAKSFTdWkcynJw_z5OcSWFpMKsIFdJdhOaH65hRjCsIcNC0F2w>
+    <xme:-qoKaAITK3NtAKwLoVQMI4zdBZLWbhiY1dNBgRKdZSuePctnwpxvZpjxYj7zaFpTN
+    XFmTthfAgEJhWG-vA>
+X-ME-Received: <xmr:-qoKaAs8o_Xxd7EuduU-x2HLFAsIiHLaOhD-kxa-SuejK2hLYuGqaAYbcPetlNak_9RRUxZxa3LW3973vzLIr9u9b5R_isW19EiA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedtheefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffgffkfggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdetkedtteduveeludekheffudehvdeu
+    udffvdethfeileetgfduheffhfegtdevnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishhtih
+    grnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
+    epnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
+    nhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrd
+    guvgdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhr
+    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-qoKaNbeeWd4504HwtwxL8zXqgF2p9dDmEOCnyxH1tjRk89Eoi9RAg>
+    <xmx:-qoKaHbpo8r2NXJ82PxjyGwnshgzXM8kw-sJCjasKQjLtQKRcvatug>
+    <xmx:-qoKaJAHOZn2KhcMfgtvHZR0M7sRaXSERDB22yiAb4via0vJAQ6yCQ>
+    <xmx:-qoKaNYpccWvywS6tZI_m5FimJ_HGy5slj1pMLdWP28cqdQ89TTI6w>
+    <xmx:-6oKaHpgOSEQAkRy8SPT4o-XMP0ZZF-91cIeneC0RDPKSCll4yEJLBpo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 24 Apr 2025 17:19:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Elijah Newren
+ <newren@gmail.com>,  Jeff King <peff@peff.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] fast-(import|export): improve on the signature
+ algorithm name
+In-Reply-To: <20250424203904.909777-1-christian.couder@gmail.com> (Christian
+	Couder's message of "Thu, 24 Apr 2025 22:39:04 +0200")
+References: <20250424203904.909777-1-christian.couder@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
+Date: Thu, 24 Apr 2025 14:19:52 -0700
+Message-ID: <xmqqselxtfyf.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: microsoft.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR21MB3504.namprd21.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e722be18-1bb7-43b9-90ee-08dd8372a871
-X-MS-Exchange-CrossTenant-originalarrivaltime: 24 Apr 2025 20:57:43.1695
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 72f988bf-86f1-41af-91ab-2d7cd011db47
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: H/Gng4BL4jovtQjNu2VlJ7REddq+uqcFOjE95ITDpn08YWuafeCMszQZgWGjfDmBpwolv15Ror6cedw9SfF0QA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR21MB4619
+Content-Type: text/plain
 
-Thank you for filling out a Git bug report!=0A=
-Please answer the following questions to help us understand your issue.=0A=
-=0A=
-What did you do before the bug happened? (Steps to reproduce your issue)=0A=
-=0A=
-I attempted to use fetch and push refspec to make an Azure DevOps repositor=
-y (no forks) behave more like a GitHub contributor model (with forks). For =
-example, the 'main' and 'rel/*' branches are considered upstream, and 'dev/=
-user/branch' is the format used by each user for working branches. Here's a=
-n example configuration showing three remotes: 1) origin maps every local b=
-ranch 'name' to remote branch 'dev/sharwell/name'; 2) devdiv does not renam=
-e branches but restricts the view to just main and rel/*; 3) partner maps l=
-ocal branch 'name' to 'dev/partner/name', representing the work done by use=
-rname partner.=0A=
-=0A=
-[remote "origin"]=0A=
-	url =3D https://path/to/repo=0A=
-	fetch =3D +refs/heads/dev/sharwell/*:refs/remotes/origin/*=0A=
-	push =3D refs/heads/*:refs/heads/dev/sharwell/*=0A=
-[remote "devdiv"]=0A=
-	url =3D https://path/to/repo=0A=
-	fetch =3D +refs/heads/main:refs/remotes/devdiv/main=0A=
-	fetch =3D +refs/heads/rel/*:refs/remotes/devdiv/rel/*=0A=
-[remote "partner"]=0A=
-	url =3D https://path/to/repo=0A=
-	fetch =3D +refs/heads/dev/partner/*:refs/remotes/partner/*=0A=
-	push =3D refs/heads/*:refs/heads/dev/partner/*=0A=
-=0A=
-What did you expect to happen? (Expected behavior)=0A=
-=0A=
-I expected get-for-each-ref to consider refspecs for newly-created local br=
-anches than are not pushed. For example, consider the following command:=0A=
-=0A=
-git for-each-ref --format=3D"%(push:track,nobracket)::%(upstream:track,nobr=
-acket)::%(push)::%(upstream)::%(refname:short)" refs/heads/newLocalBranch=
-=0A=
-=0A=
-I expected this to print out:=0A=
-=0A=
-::::::::newLocalBranch=0A=
-=0A=
-What happened instead? (Actual behavior)=0A=
-=0A=
-The command printed out:=0A=
-=0A=
-gone::::refs/remotes/origin/newLocalBranch::::newLocalBranch=0A=
-=0A=
-What's different between what you expected and what actually happened?=0A=
-=0A=
-The command printed 'gone' instead of the empty string for '%(push:track,no=
-bracket)'.=0A=
-The command printed 'refs/remotes/origin/newLocalBranch' instead of the emp=
-ty string for '%(push)'.=0A=
-=0A=
-Anything else you want to add:=0A=
-=0A=
-Please review the rest of the bug report below.=0A=
-You can delete any lines you don't wish to share.=0A=
-=0A=
-=0A=
-[System Info]=0A=
-git version:=0A=
-git version 2.49.0.windows.1=0A=
-cpu: x86_64=0A=
-built from commit: cca1f38702730b35f52c29efd62864b85e85ddcc=0A=
-sizeof-long: 4=0A=
-sizeof-size_t: 8=0A=
-shell-path: D:/git-sdk-64-build-installers/usr/bin/sh=0A=
-feature: fsmonitor--daemon=0A=
-libcurl: 8.12.1=0A=
-OpenSSL: OpenSSL 3.2.4 11 Feb 2025=0A=
-zlib: 1.3.1=0A=
-uname: Windows 10.0 26100 =0A=
-compiler info: gnuc: 14.2=0A=
-libc info: no libc information available=0A=
-$SHELL (typically, interactive shell): <unset>=0A=
-=0A=
-=0A=
-[Enabled Hooks]=0A=
+Christian Couder <christian.couder@gmail.com> writes:
+
+> A recent commit, d9cb0e6ff8 (fast-export, fast-import: add support for
+> signed-commits, 2025-03-10), added support for signed commits.
+>
+> However, when processing signatures `git fast-export` outputs "gpgsig
+> sha1" not just when it encounters an OpenPGP SHA-1 signature, but also
+> when it encounters an SSH or X.509 signature. This is not very
+> informative to say the least, and this might prevent tools that process
+> the output from easily and properly handling signatures.
+>
+> Let's improve on that by reusing the existing code from
+> "gpg-interface.{c,h}" to detect the signature algorithm, and then put
+> the signature algorithm name (like "openpgp", "x509" or "ssh") instead
+> of "sha1" in the output. If we can't detect the signature algorithm we
+> will use "unknown". It might be a signature added by an external tool
+> and we should likely keep it.
+>
+> Similarly on the `git fast-import` side, let's use the existing code
+> from "gpg-interface.{c,h}" to check if a signature algorithm name is
+> valid. In case of an "unknown" signature algorithm name, we will warn
+> but still keep it. Future work might implement several options to let
+> users deal with it in different ways, and might implement checking
+> known signatures too.
+>
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>
+> This is a follow up from cc/signed-fast-export-import that was merged
+> by 01d17c0530 (Merge branch 'cc/signed-fast-export-import', 2025-03-29)
+> and introduced the support for signed commits.
+>
+> The format that this series implemented was lacking a bit, so the goal
+> with this patch is to improve it and handle signed commits a bit more
+> consistently in the code base. It also shows in the tests and in our
+> documentation that SSH and X.509 signatures are supported.
+
+Thanks.
+
+It is a bit surprising and slightly sad that nobody bothered to
+report/complain about the brokenness until the original author
+follows up one month later X-<.  Nobody but the original author is
+using this feature?  I would have expected that use of signed
+commits were of high demand and many more people were actively
+interested in the topic.
+
+>  '--signed-commits', you may set the environment variable
+>  'FAST_EXPORT_SIGNED_COMMITS_NOABORT=1' in order to change the default
+>  from 'abort' to 'warn-strip'.
+> ++
+> +When exported, signature starts with "gpgsig <alg>" where <alg> is the
+> +signature algorithm name as identified by Git (e.g. "openpgp", "x509",
+> +"ssh", or "sha256" for SHA-256 OpenPGP signatures), or "unknown" for
+> +signatures that can't be identified.
+
+Nice to see these enumerated.  As we are not opening the choices of
+"algorithms" up to end-users by allowing custom signature routines
+to be plugged in, configured, or hooked into the system, it may make
+sense to make it clear that we will keep a canonical and exhausitve
+list here, by saying "one of these:" followed by a bulleted list, 
+instead of a parenthesized examples (e.g.), like you did in the
+other documentation below.  Or perhaps refer to the other document
+from here so that we do not have to keep two lists in sync?
+
+> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-import.adoc
+> index 7b107f5e8e..50b6d2cc1d 100644
+> --- a/Documentation/git-fast-import.adoc
+> +++ b/Documentation/git-fast-import.adoc
+> @@ -521,7 +521,20 @@ The optional `gpgsig` command is used to include a PGP/GPG signature
+>  that signs the commit data.
+>  
+>  Here <alg> specifies which hashing algorithm is used for this
+> -signature, either `sha1` or `sha256`.
+> +signature. Current valid values are:
+> +
+> +* "openpgp" for SHA-1 OpenPGP signatures,
+> +
+> +* "sha256" for SHA-256 OpenPGP signatures,
+> +
+> +* "x509" for X.509 (GPGSM) signatures,
+> +
+> +* "ssh", for SSH signatures,
+> +
+> +* "unknown" for signatures that can't be identified (a warning is
+> +  emitted).
+> +
+> +Signatures are not yet checked in the current implementation though.
+
+Excellent.
+
+> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+> index 170126d41a..d00f02dc74 100644
+> --- a/builtin/fast-export.c
+> +++ b/builtin/fast-export.c
+> @@ -29,6 +29,7 @@
+>  #include "quote.h"
+>  #include "remote.h"
+>  #include "blob.h"
+> +#include "gpg-interface.h"
+>  
+>  static const char *fast_export_usage[] = {
+>  	N_("git fast-export [<rev-list-opts>]"),
+> @@ -700,9 +701,10 @@ static void handle_commit(struct commit *commit, struct rev_info *rev,
+>  	}
+>  
+>  	if (*commit_buffer_cursor == '\n') {
+> -		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor)))
+> -			signature_alg = "sha1";
+> -		else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
+> +		if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig", &commit_buffer_cursor))) {
+> +			const char *name = get_signature_name(signature);
+> +			signature_alg = name ? name : "unknown";
+> +		} else if ((signature = find_commit_multiline_header(commit_buffer_cursor + 1, "gpgsig-sha256", &commit_buffer_cursor)))
+>  			signature_alg = "sha256";
+
+The original is bad enough but can we do something to these overly
+long lines?
+
+>  	}
+>  
+> diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+> index 63880b595c..59e991a03c 100644
+> --- a/builtin/fast-import.c
+> +++ b/builtin/fast-import.c
+> @@ -29,6 +29,7 @@
+>  #include "commit-reach.h"
+>  #include "khash.h"
+>  #include "date.h"
+> +#include "gpg-interface.h"
+>  
+>  #define PACK_ID_BITS 16
+>  #define MAX_PACK_ID ((1<<PACK_ID_BITS)-1)
+> @@ -2830,12 +2831,15 @@ static void parse_new_commit(const char *arg)
+>  			"encoding %s\n",
+>  			encoding);
+>  	if (sig_alg) {
+> -		if (!strcmp(sig_alg, "sha1"))
+> -			strbuf_addstr(&new_data, "gpgsig ");
+> -		else if (!strcmp(sig_alg, "sha256"))
+> +		if (!strcmp(sig_alg, "sha256"))
+>  			strbuf_addstr(&new_data, "gpgsig-sha256 ");
+> -		else
+> -			die("Expected gpgsig algorithm sha1 or sha256, got %s", sig_alg);
+> +		else if (valid_signature_name(sig_alg))
+> +			strbuf_addstr(&new_data, "gpgsig ");
+> +		else if (!strcmp(sig_alg, "unknown")) {
+> +			warning("Unknown gpgsig algorithm name!");
+> +			strbuf_addstr(&new_data, "gpgsig ");
+> +		} else
+> +			die("Invalid gpgsig algorithm name, got '%s'", sig_alg);
+
+Hmph, we used to have special cases for sha1 and sha256 but now we
+can handle sha1 with a more generic "valid_signature_name()" logic?
+And yet we need to still special case sha256?  Not that I trust the
+old code all that much and take deviations from the patterns in the
+old code as a sign of something not right...
+
+The fast-export stream produced by the code with d9cb0e6f
+(fast-export, fast-import: add support for signed-commits,
+2025-03-10) used to identify a signature algorithm "sha1", but this
+new version of fast-import lost the support for it, and will barf
+when seeing such an existing fast-export stream?  I am not sure what
+is going on around this code.
+
+I am not so worried about the other case, where the stream produced
+by fast-export contained in this version may or may not be readable
+by an older version of fast-import.
+
+I am puzzled enough, so I'll stop here for now.
+
+Thanks.
