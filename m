@@ -1,91 +1,81 @@
 Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03BA5224B13
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 22:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EA1921FF2C
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 23:05:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745535538; cv=none; b=o6wLM5TeKgi85uvn5Zpq5NXUuCAbVXjwCoWjE+29YsFun0MHRvnMdo0cVjMHru4D8lcNLzmrQLBq1OgMuF0QclxURyn5TAeHKJ8w9oUmSl3z5+3Z82P9uCZbjDvd6sbYZS7lz0MpBdY035UMJ3TUtMGGftjdkZ3ekjnKwwV32BM=
+	t=1745535951; cv=none; b=RRVktt/dp1iCMgiO7RPGf0DfaD7560FfEAC5RhzTx1yCmEyfR1YfX/k+TfwSC8jk5lW5+HaMS0Kj2vWNQXDOR8YKUegfaNUXgCsurwIOsIDyn8FeYBSalgejYxSr7Syxtgq/4o3HY1Ln1pvFxQOXqDIIHAnhLpdA/DGSJ5wCoAs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745535538; c=relaxed/simple;
-	bh=AyDELlykiPsC2coQ12izOKatmsFjdV5cccy8b0NtnOw=;
+	s=arc-20240116; t=1745535951; c=relaxed/simple;
+	bh=pMsM+GFQrtC4kF+sGoPIUylbF9Qv+S7eZG4sXG0zNwA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Vg/DJ7iyJy5OLi+qdBDIGPwBWW3ORjUd0g86hQmSdPr0Ye37HmO7s9msXrAF7rsg5b7MAoagRAaYGQ10p213fp72/8OdLCOF/uiAPoph45gIGL9lXKxTyzJDjojn8dlIGDaelE4ZckJIvtcyD4J+aWrE6PPaAfwOZHyQ3MyPh0I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hASYzwhJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hTV0mM7u; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=DvIrqXXBQyD1395xi9Qnqvl6AmSHfj+uyCCGwLM4R8EgTCe+SBTXB3FL2akKe4jwlvLwMRR9HXqOFQmLB05YE1vHtvTaylaXv12Ip1Dn4iIbz0xvLfQd4YSgb04f4glor7wcikRSZe6E84QnMeQTB+NraL5W5U8aeVaV3UdUXQA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U9ts+JV7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vsqKN2Fy; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hASYzwhJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hTV0mM7u"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U9ts+JV7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vsqKN2Fy"
 Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E2EE813801B0;
-	Thu, 24 Apr 2025 18:58:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 24 Apr 2025 18:58:53 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id F075E13801F1;
+	Thu, 24 Apr 2025 19:05:47 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Thu, 24 Apr 2025 19:05:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745535533; x=1745621933; bh=UZxipyDDM2
-	xmQ9vKg7xKDlkngoeBWKSfT+HujAT/oeQ=; b=hASYzwhJ0D8uU8TwYAGEEKfLVl
-	zCSuwtTvK5NuQRf88IAAzONgQ5tNAZHsaFoiJy/l9C98N6DDhlDDAQ597kbhYg8e
-	4BPExgIFw4DLPbvdYl8dMsVm0OG1rGYXkhMPZyY2KvA7nm0ykuWihaSRSyBVWjMd
-	dheDcHpwHhQ1tgks2GG2GLhJ1eh3N+sEPgatafLGOS7MgHq4qQvl8R+1REOn607+
-	DvjozDl0CU78YiHn7FAWsb/mC8UlQTcDsR8gow44qf9uyChlz2iQNSsZDxKHk3zT
-	yu7D6WPjNILY5QzpZ6lvRp+LRirPNkgRneXhUdCzXTo0QEDHjtZokdOIF9oQ==
+	:subject:to:to; s=fm2; t=1745535947; x=1745622347; bh=lOl8OxxPpD
+	TkZc3bg4DEy5mivwDbn+ChShoMoO0CjfM=; b=U9ts+JV7garLE3OCRd6+p/47cw
+	dT6IFjZuG1XnNvch479GzY/Nr0RuSCQvPi7bza4uudDBCmB0B574s5zHScS+/vn2
+	kvMoKUYI1RHUIbs6BCCw0hP7E9YKyeCkkCmtObwiekKb4jBhIWf+8IWXbQrszUdp
+	aRqVYGw7XCXNUCCTqZtnhu6lDiK5b0aBloqFp/e1nJVC9z6Ol0uoM67KXgT2gR6G
+	RStN9HplKIvGutrhJWC8bPF8eFwv4FG2xiW5AFxiUd7ZaAIXJ5aBI+jIrs1FhqLb
+	QaZtdOaFf6gLEL+y5vhJ7rfS5uBdlBQMU2iNNspL2oEM2OvQqjPz6c8N7Mww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745535533; x=1745621933; bh=UZxipyDDM2xmQ9vKg7xKDlkngoeBWKSfT+H
-	ujAT/oeQ=; b=hTV0mM7ukQpsj8HOsMRlxCBebvTuJ9uWTaT/u9+g73v8RKcA+qn
-	KFZfVa0fAtRSezrvNB+TYq8KIWhdL0U1mkRVjsuhtlM++cm3UyBpQ62qIeD+N4oW
-	CDkMvH819MLh38pPoQqVI/M+ylqshHUkIWoEQ7pQvTOPxP0Gs6YpMARZoMutqKrw
-	vQc1rY8b0TGNWGTPbYNt5AFC224vqC6NqxGX4Zn/qfFbghglTTceV+l4vGyI3D9I
-	iW1gm+qjN5PTVK6LzSAbaon4V1oloIeTMsESyxNgPamwQSDgLJ3mF0qOFVJqsxHB
-	JaSqMQVRATMasZpBatulsDHXbaOHkm8rIlw==
-X-ME-Sender: <xms:LcIKaDFpN7qsKaE287KY4NFdiNst47ie_d2s-ttxH1ScUCL5QdsCVA>
-    <xme:LcIKaAXsO9GBwi2EvTa6bO49h49wGnOsY1w5dGTQu_2gKUSX16Yne13iNgXw6kBgR
-    PIo1ZkzmKo6bXbb1g>
-X-ME-Received: <xmr:LcIKaFJUjM4nJ6KcUeKOKiYAZeypWzibd8IsWvPR4Dc5vYzKrlt1CGipatwyZF5CozVIvgEQt37bnt5npTGIcaAb73fszrUCLh6n>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedtjedvucetufdoteggodetrf
+	1745535947; x=1745622347; bh=lOl8OxxPpDTkZc3bg4DEy5mivwDbn+ChSho
+	MoO0CjfM=; b=vsqKN2Fyx/8bUFpKLBuORGu18Z4XPxWLgzEOPwWJhxyuuXDjXXa
+	cinEEf+BAkeDthI0r+dfQvVeVsOFiweARuySNPFfo9RGuw7QFLlh//HQCPsa9wRM
+	oeMyi6eCRm4vp9KEIU+0HEUhPj2tKM1tdffaCF0AduJ2MabMPpjUgWoc2YwnpD6X
+	1O9MnraOsisomrN4DC9ExsTr0XUwsR3Bk3sCZaW5SdOEaqaHqe1yrYbvDiMZt5rQ
+	YI6+IybUHKJ+iOdwJalhhQLp26wW5x/UO4xp85oLNjMwNYCfLPMWPUfry/N42gNw
+	7Pfno/0qdSdeEnfFz474aXaUA8bZ0DwwEew==
+X-ME-Sender: <xms:y8MKaBQ7Mh7n3VBo1yW0VoZLqNG5GiNnB-N07jXc4hkSmAow8u2e8Q>
+    <xme:y8MKaKw73RIKrNVIxjBwCFyzH27dCdg8paK03AknOoMuZ6ymho_t9Ecmfa0j7WWSi
+    e-gzlzRvsk9Kd_-Yg>
+X-ME-Received: <xmr:y8MKaG1Iv-3CUc3KZ6BPMZLFnPtmisTngxdxlAZgD2yHkgKd8yvLbXkylrePhPeKCiCSufLcW5IvHh-g0GeCUXgb_vu7Jy6yRXGA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedtjeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrd
-    guvgdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LcIKaBH__CGZKCmV_a1nADyF1ZHt601tGVOy3tJN4bwIlGY-0uZyzA>
-    <xmx:LcIKaJWk0eOwjjzW_DyqrJ8CJa8sBV0b9KqobgGYDTIt0TrwAYxdvA>
-    <xmx:LcIKaMONY8qUwp7SBzpQ1Djeh64iTvKF1V1Mtzr3_CSJ4wnB61YaYQ>
-    <xmx:LcIKaI0fItoLt_WWpfnnUGMbejjJw5_i5JosHLRmZWXDlOtgr79hSw>
-    <xmx:LcIKaAzI8hYX5kjFVGWju-i5pFtzjxhSV3ptziOE4YmIQTjPN43liePl>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnh
+    gvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:y8MKaJAw46TFGfYwW0ntaPJXRPBExzIwqzHjzQyKRuH94V-B6KhFLg>
+    <xmx:y8MKaKjRYDM9dyHejBQmAXN7Mrl99XSeXA1pxlPVsIIsqzUR7-ebIw>
+    <xmx:y8MKaNrQXFRq-wlP6_5DN39PsngCzlSi13zVjxvQkrEjLAbU1gsjIA>
+    <xmx:y8MKaFhavlaylpF5_lThFfMGgVCFuXtuldYLZeGp3bJK6Rx6k11Xnw>
+    <xmx:y8MKaHZnYpvUPhkrcPKvnxgKaP17WdOGRjoAS5Z6QMe00IZFDEHHO33a>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 24 Apr 2025 18:58:53 -0400 (EDT)
+ 24 Apr 2025 19:05:47 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Christian Couder <christian.couder@gmail.com>,  git@vger.kernel.org,
-  Patrick Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  Johannes
- Schindelin <Johannes.Schindelin@gmx.de>,  Christian Couder
- <chriscool@tuxfamily.org>
-Subject: Re: [PATCH] fast-(import|export): improve on the signature
- algorithm name
-In-Reply-To: <CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
-	(Elijah Newren's message of "Thu, 24 Apr 2025 14:59:01 -0700")
-References: <20250424203904.909777-1-christian.couder@gmail.com>
-	<xmqqselxtfyf.fsf@gitster.g>
-	<CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
-Date: Thu, 24 Apr 2025 15:58:51 -0700
-Message-ID: <xmqq1pthtbdg.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org
+Subject: Re: Acceptability of replacing .git internals with symlinks
+In-Reply-To: <aAq7_7pFTToMPX48@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 24 Apr 2025 22:32:31 +0000")
+References: <aAq7_7pFTToMPX48@tapette.crustytoothpaste.net>
+Date: Thu, 24 Apr 2025 16:05:46 -0700
+Message-ID: <xmqqwmb9rwhh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,29 +85,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Elijah Newren <newren@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
->> The fast-export stream produced by the code with d9cb0e6f
->> (fast-export, fast-import: add support for signed-commits,
->> 2025-03-10) used to identify a signature algorithm "sha1", but this
->> new version of fast-import lost the support for it, and will barf
->> when seeing such an existing fast-export stream?  I am not sure what
->> is going on around this code.
->>
->> I am not so worried about the other case, where the stream produced
->> by fast-export contained in this version may or may not be readable
->> by an older version of fast-import.
->
-> I certainly can't answer anything here as I know little about
-> signatures, but your comment brought up a different question for me:
-> Given that d9cb0e6ff8b3 (fast-export, fast-import: add support for
-> signed-commits, 2025-03-10) isn't part of any release (not even a
-> release candidate), do we need to have backward compatibility with
-> that version?
+> I know symlinking the `hooks` directory is common and semi-suppported,
+> but I don't know how we feel about other directories, such as `objects`.
 
-I think we will lose all the credibility if we said "that's not in
-an official release, so we are free to break early adopters", once
-something is in 'master'.  As some corp environment are know to run
-'next' and indeed we do encourage more folks to do so so that we can
-catch breakages before they escape to 'master', I actually am equally
-worried about things in 'next'.
+I do not know how widely it is used, but the git-new-workdir script
+we ship in contrib/workdir/ does make symlinks from a new directory
+whose name is ".git" into subdirectories of an existing $GIT_DIR/ to
+pretend as if the "new-workdir" is a separate Git repository, that
+happens to share many files and directories like config, refs,
+objects, etc.
+
+I do not think we ever intended to support ".git" itself being a
+symbolic link to ".git" directory owned by another repository.  We
+do have ".git" that is a regular file for multiple worktree support,
+but that is totally different from "just making a symlink for the
+whole hierarchy".
+
+> If we _do_ want to support this, then we should probably add some tests
+> for it, and if we don't, then we may want to add advice or diagnostics
+> to discourage this behaviour.
+
+100% agreed.
