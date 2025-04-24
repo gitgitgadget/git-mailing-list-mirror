@@ -1,111 +1,124 @@
-Received: from mail-yw1-f171.google.com (mail-yw1-f171.google.com [209.85.128.171])
+Received: from mail-oi1-f170.google.com (mail-oi1-f170.google.com [209.85.167.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9A7A1F3BBF
-	for <git@vger.kernel.org>; Thu, 24 Apr 2025 20:07:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B2E1F2BA4
+	for <git@vger.kernel.org>; Thu, 24 Apr 2025 20:22:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745525224; cv=none; b=qoPNuEKbYciSvvAjwYpJBA7m3rHxyPxInpe+OmiRKEBR3B9Fhmf4QaiixgLUglTQPi7krfefXWVhme3j6foPamQaVVforASlc7tWoTDj9z3iYsD2uwrB70z01sqoSTglqY8MdH6nRJyBpTeUZW22L96nAwun6Qvni7RvFMoBFUA=
+	t=1745526160; cv=none; b=myFKre4EvuLUEiEcgpGahhive5oQYsjq1xEvOPfVuOJqHWC1xgeSpb1fHbxjpm82tXgLwDB7SJm6pDC3qPX1RaNCkJO0W3jpPzfKBNEDzqT4Npt0TSP+prj4d4rqEKUJ17GgWaT9j87sAThNkurW/m+rgtbRquN3t8X5oYIFl9s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745525224; c=relaxed/simple;
-	bh=pE5o1hg9mtglHe2ddfQ7bHeVEOMDd1u5FCDceEHUPmo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mcqtBy3orPQ2NPemQynlljNcWGU3qvcDQJnJJsT0kRoFJ9jD20Ja4UisP01yNMvh21paJfEiYzgR8T7YNm42WcvbyIxFOn536G3EELPp7mwJIWtMSOym+gIDSYIF0HgVvB9aHieJ91QExjI/bbEPI8bM2BpZIie5Nx8bQJSiBe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y3+zWtPN; arc=none smtp.client-ip=209.85.128.171
+	s=arc-20240116; t=1745526160; c=relaxed/simple;
+	bh=DL/QfRzrsnwDsxgC8NpjAbumHMky9KUGTMLt//VxrOU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=e96j72gARMACiqff+ZKIMLj4mc3WpjKZzKpCzm5st3+gtZgb4v3km30hISHX4svL0BQQwkzvPGUIdQ0v405pv5vk7CNdXnZt9hm2/RosfO5R47Gng/IfaYeUM9To5WCTzFJCAeZ15nKeBF5yCOzUbRzVpEl1OBCc5OdsGbGlCnQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dtA2mC6G; arc=none smtp.client-ip=209.85.167.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y3+zWtPN"
-Received: by mail-yw1-f171.google.com with SMTP id 00721157ae682-6ff4faf858cso11820567b3.2
-        for <git@vger.kernel.org>; Thu, 24 Apr 2025 13:07:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dtA2mC6G"
+Received: by mail-oi1-f170.google.com with SMTP id 5614622812f47-3feaedb531dso387485b6e.3
+        for <git@vger.kernel.org>; Thu, 24 Apr 2025 13:22:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745525222; x=1746130022; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HWJl7jhItFABCt0bioJKBDS7eCatG6w6IeCCHJIB7dY=;
-        b=Y3+zWtPNuXf8LQxjwz7LAJW+t9oXKTtD2WZCJfKTWCnFA/DfM3M1Cmqs2o3edY2Rhs
-         6joxY0YBfxN3BE0CS4xS0WxzEZ8cGvFHScacawPh4IMbWAIlpv/ORRqjUkTUTJRUYLZ1
-         n5d9OsrNNffoKNB3FF9JBNmPaOBDS2saa5qcr5cyOdqVE+HyeLgT1GQrWw+FkF9B7idi
-         abaFJI9+zdpeqvB+qgwZxe6/MFtGYu0RMLjD8ExK6oiFL448/wA2Phy4Ve29qZuJj+pS
-         iioPGV23b5LcjlVuvzAvKpZ1brtQYsM6wNU8NPR+Sg1dd81yU/UE4P15narv2p4YIgva
-         Nzsw==
+        d=gmail.com; s=20230601; t=1745526157; x=1746130957; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LvY1Wca8274Nb8ZAEszBzA0Sw9PfoAf5n/rpvn2y+Ig=;
+        b=dtA2mC6Gl6T3TGXTuoWDE9auEklxa9xv+l5cme40SpUU/KNZFuSVnoAFVUuSpQRa2B
+         KtYHOYyKAp+mGTXWNLJDgR63UdzggJTxXhUNWvlhjOAzKV7pHHt/G0IlP8hGaddTPm/S
+         oJBfEosuwDhd1NauLbyolrahqvCqVKSXTxypDkSxuEA+kq95AahV6wcZzlESFBN3IJs5
+         adgjJgCGHVy1DyGdefVdZoBGUlCHb85n5y7sBc32mYK09yoS2cs6twR4RZdnRAHJHEMT
+         BewJcLngghIqA9x14wKon27ewLCrOG5RqE/aPstfmFGe+YfqEbqAITCJsjCq+YmZnGvq
+         wTXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745525222; x=1746130022;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HWJl7jhItFABCt0bioJKBDS7eCatG6w6IeCCHJIB7dY=;
-        b=LB7wPhPonocpzumXTm5xP6e0i4KLKvnJ0msxuFcg0RCYZKudgfcelW3zjOAii3kFne
-         W6A93IduRXXnSWF6PUvicJtIVZTCa5b7Es+2zvxiqe3YXbeLf1JCAxQ9b7nRTgWP8Va6
-         nfgvn3qf+B99JYKhx01MMBfu1RZo1yAP0WvFefWLsQsdpNPBVX/eJHxJw/lmtdjfSfq2
-         UPcq595VJEiJP0Ynn1soE+xqr2TvX3AgFcQq7W+fK21f0ujVU1A5PQhLfj4qjSub3Upq
-         3cJThIRyngv4qU9nB/vdXTiDLXJ83lcmevQ5QzGpx0S/e1dCtk824fk51cpISYnFePKH
-         50dA==
-X-Gm-Message-State: AOJu0YzrW9zonh2jrQBCId3f5ISJVEmTIvBaskexBFgAz87hE3Rync5x
-	pz6HG68z4PmlC+ZXPHYu1skQUSR8hjDwnxLAqkSPZ9gui618y83S
-X-Gm-Gg: ASbGncvh4sloiFflbMTFdpVcUokABwAfIPhd1RvyHZeeSfRvWMDwyV3ryocr1Lnf2xd
-	0E5iBjS9nbrP4kywA9efIVqeso0Ml6mwqOiH+iR8TE2oOG5Bzmu7JrLtbAHMjCDw0Sg1LFLmUmo
-	A9mhmglILpajNnBmUxZ6c7Bnfb2ptY2b7m37MADIu0dgXZ6nWtvDSXhKkW2B/XKcqKrozd9F8Zy
-	rZFp6dkL3IVqJU6e3PP3aDwKogpxGhsGHeKES8X+Tw7HSs4fTA4utuqzznH0zYxsqpW70aeCslw
-	yn/btK3DzX+wn1weCHNte7ZIpooTrhqmAFjkf/154TYLA2Ih88JF1hgPhzK3745vR1YJ+iLC6aN
-	TUBjMNldMGfF5n14T
-X-Google-Smtp-Source: AGHT+IFs8+wVPemSk0bGIdatI/0CZlW0OX4K5rzY44fKWk/aubSIqBy+oK4dL3el4hV4vMGMd6kSUg==
-X-Received: by 2002:a05:690c:6c0c:b0:6fd:3d37:99ce with SMTP id 00721157ae682-7084eed7b5amr17847017b3.17.1745525221791;
-        Thu, 24 Apr 2025 13:07:01 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:f47b:26f6:e1cb:3462? ([2600:1700:60ba:9810:f47b:26f6:e1cb:3462])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-70841acb279sm5008907b3.92.2025.04.24.13.07.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 24 Apr 2025 13:07:01 -0700 (PDT)
-Message-ID: <9999f7f2-759a-4721-a4d0-6d3bdeb17b25@gmail.com>
-Date: Thu, 24 Apr 2025 16:06:58 -0400
+        d=1e100.net; s=20230601; t=1745526157; x=1746130957;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LvY1Wca8274Nb8ZAEszBzA0Sw9PfoAf5n/rpvn2y+Ig=;
+        b=L9kzTePKbN6afkhVy3Zjmv0Fus6+qw8nP40t07p6s+7ySQaK/r4snQwSvib/UW/vEs
+         paGljZsD2iIcEccZGN4pekk3zWJXTe9UTYCWnhC0VIQsglFaenplp81MA84KXPIlErOS
+         L3RX6+mrJgN4Pitfn07u67Zbux9poF3bf2R8r2nfVzOYS51BhBRbEfrWj1iYPbE5cLnK
+         g0VdSpB68LpWh0z67p0nkIIxCaZbY9EQ+Bt3MNMcvMe0T4k528TkXOON9Rkl8UBr7y/t
+         /q/GT+P5C8EOkDaqVNVlq5H/6Uu8xsqTWaOMjWGpZvKszogxQAVe9JXe3wE6QwhNX4Vr
+         MuVg==
+X-Gm-Message-State: AOJu0YzObr50JVfQpdTe7wxRFulK10uO/pm/wZixsr4uh5q81e7BZ3xJ
+	Z/0CcxrKVmVwFve/1HTRS727uXPL1Nz8jfT3eus6LQMhe0XwthxR
+X-Gm-Gg: ASbGncvUFRDPJKDNbTkvaJdcHcXOLX3uLM37QgKHzyMtcsiHvpfEwD0lI8US6c7AjFa
+	zq7Dwz+KncmjItpeRuRR1f+gVuRxjzIWURT1m5GKZcan+L6izCMmDZMOyfXN0RXrBWBXGqtQMzW
+	fLlXFTxH0kX615NoZNDOZP8MCcISHHEHKQl5L1fMUi///Purs4FXORzacpat/43r0CLpg8qlGP8
+	ZUg6pJOzQ2BVEexDFkI37Z4QFqrpy1b4n98S+Qh0ytzDT+aRrDfa31wgulvA+4dX4HiA8PJE1QG
+	yzQcNtR4YtmoOYSAiEESef+YA40uBtlDHg==
+X-Google-Smtp-Source: AGHT+IG0Dp1Z4VuYDUXDYeOUA/lUzMfLz+JdnM89atUfzJokHKVbgXNy1TkOmFzGzecZNoaMmMR48g==
+X-Received: by 2002:a05:6808:6b96:b0:3fb:e9f1:8620 with SMTP id 5614622812f47-401f11726b0mr534120b6e.2.1745526157299;
+        Thu, 24 Apr 2025 13:22:37 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-60646862ee9sm398839eaf.4.2025.04.24.13.22.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 24 Apr 2025 13:22:36 -0700 (PDT)
+Date: Thu, 24 Apr 2025 15:18:29 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Peter Seiderer <ps.report@gmx.net>
+Subject: Re: [PATCH 2/2] meson: prefer POSIX-specified shell path
+Message-ID: <m2egcx4i2nezlwlyioofnz4srjgbyhb4dkyrpi5crnt5uwuvy3@a7tbji5lrnvn>
+References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
+ <20250424-pks-meson-posix-shell-v1-2-45e06ee4b6ad@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, peff@peff.net
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
- <5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
- <xmqq34dxuz21.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq34dxuz21.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250424-pks-meson-posix-shell-v1-2-45e06ee4b6ad@pks.im>
 
-On 4/24/2025 3:41 PM, Junio C Hamano wrote:
-> I needed this to make
-> 
-> $ SANITIZE=leak GIT_TEST_PASSING_SANITIZE_LEAK=true make
-> $ cd t && sh t5309-pack-delta-cycles.sh
-> 
-> pass.
-> --- >8 ------ >8 ------ >8 ---
-> Subject: [PATCH] fixup! test-tool: add pack-deltas helper
-> 
->  t/helper/test-pack-deltas.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/t/helper/test-pack-deltas.c b/t/helper/test-pack-deltas.c
-> index db7d1c3cd1..c8e837ea06 100644
-> --- a/t/helper/test-pack-deltas.c
-> +++ b/t/helper/test-pack-deltas.c
-> @@ -122,6 +122,7 @@ int cmd__pack_deltas(int argc, const char **argv)
->  			if (get_oid_hex(base_oid_str, &base_oid))
->  				die("invalid object: %s", base_oid_str);
->  		}
-> +		string_list_clear(&items, 0);
+On 25/04/24 03:38PM, Patrick Steinhardt wrote:
+> Meson detects the path of the target shell via `find_program("sh")`,
+> which essentially does a lookup via `PATH`. This may easily lead to a
+> subtly-broken Git distribution when the build host has its shell in a
+> non-standard location that the target host doesn't know about.
 
-Thanks. I'll make sure to apply it. My GGG PR validation was broken
-top-to-bottom due to other environmental issues so I had not seen
-this failure myself.
+Ok, so we run into this issue if the shell path picked up from the build
+host's $PATH doesn't exist on the target host. Makes sense.
 
-Thanks,
--Stolee
+> Fix the issue by appending "/bin" to the custom program path, which
+> causes us to prefer "/bin/sh" over a `PATH` lookup. As this location is
+> specified by POSIX this should make us pick a better default shell path
+> on all POSIX-compliant systems.
 
+So if the build host has "/bin/sh", but the target host doesn't we would
+still have an issue, but that is still probably a better default. I
+guess now $PATH would only be used as the fallback if the build host is
+even most non-standard.
+
+> Note that we intentionally append, not prepend, to the custom program
+> path. This is because the program path can be configured by the user via
+> the `-Dsane_tool_path=` build option, which should take precedence over
+> any defaults we pick for the user.
+
+IIUC, then the order precedence is "program_path", "/bin", and finally
+$PATH. That makes sense.
+
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  meson.build | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/meson.build b/meson.build
+> index 8f04534c7ff..1db768380bd 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -236,7 +236,7 @@ sed = find_program('sed', dirs: program_path, native: true)
+>  shell = find_program('sh', dirs: program_path, native: true)
+>  tar = find_program('tar', dirs: program_path, native: true)
+>  
+> -target_shell = find_program('sh', dirs: program_path, native: false)
+> +target_shell = find_program('sh', dirs: program_path + [ '/bin' ], native: false)
+
+It might be nice to leave a comment explaining the ordering intent.
+
+>  # Sanity-check that programs required for the build exist.
+>  foreach tool : ['cat', 'cut', 'grep', 'sort', 'tr', 'uname']
+
+-Justin
