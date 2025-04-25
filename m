@@ -1,157 +1,187 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DAE81253949
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 13:53:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7154D252914
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 14:11:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745589229; cv=none; b=PTNWvsxThaZidki9WM8VOBbaWiaR3mAoCNV5UMDW7tD3cNCSLlKSfvNRMMipHRulsbn/RdK2d7apXNYxtTsI2ffIsrbVz4R22T3S45gUwXHU+GyyHxAJbOCZCaTNvL++lkZ7iGvnkBFgcGJljwoH5hRhQAfCTRjx406sYq/8awE=
+	t=1745590296; cv=none; b=W7w1mqOPEIyy7KmEwEtA3lTE4IyV1BgfYbWnt6Q8aQ85/8/CSi+EeGXobw9Wchk9Xf0YP0NnsJ+ObDowBwntMZzjEwx6C/u6ZDo+oGcq2D+9ivGiWCdT1mfT7MOQ1GYshjZWVGDdaluynhEaP8wbQCgyTshHISSaZfVBtkFDIl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745589229; c=relaxed/simple;
-	bh=2Uy7yvB65zsYrGjWrYBdo4f4gCAbSWdNDktaTE3IbZk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=qwY3WKbGdjtEd0wAzpXtLAZqJ48MMLD6NPYIceh+/uJwr3HQXbNmmHXyQHAuoTIsXb/kYfQUU1zTTy+JS8ydSFZXJSsIUB9DvPIJ8680axn3bjRulxqxgSFM4U6B48tHccCGnoT7mZ+ezSRwtPmTzJ9PthWJdJ28wTqNiHgzoOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MCOYn+DR; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745590296; c=relaxed/simple;
+	bh=jzw2SqKOdgyw0AAZE93DhBfubMkPI8EPzNC3isYp5O8=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=ZY/yiKcvl3uQm1YxCz/1aZK0sroQAQ9NfHHQ3wFbyhdw1Dw3CAuO2P+LYgVeJajWIZb2UDdb0hDHVD7f1rxv8b6XJf/xlvj6srVdVGJ9gGA7cJOzTed0IlTWkYHvqt0HiG2NP4gnPM+EGcjsqCrpB4f3DuOjGceruTVzRPnShOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yJmB2elC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DEPt18ts; arc=none smtp.client-ip=202.12.124.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MCOYn+DR"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso13095875e9.3
-        for <git@vger.kernel.org>; Fri, 25 Apr 2025 06:53:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745589226; x=1746194026; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=rKk8dbwcwRPv+V9UfhAvpwPgrVs4TDle2ebfpfAvJng=;
-        b=MCOYn+DRGL8WZQjlt5Ag7klBg/Cvz5n7HGmatBMuGsE2h7xYgUbJ0vV2lQ6OSBwzG1
-         q4cvnAZtGVLDkcKKVwTGf5kTFkpEEK31eGeSLTwRS6uGX1S7yu3wRZLd58zfpovFzKgj
-         vojcV4CuZOsis6jGmfK4YzbFkIicuPbQCqZUGEgd5cW10jwDQ5vn92eDNaeH9NkxPguq
-         Jq7KpqvAvIEZ0Iso03plag5YCmgLj6Z0X2vCukFzRbmtzBMqIhN9InyRqUKTZ6QV1JxX
-         ZvpU2ZMInlaBiCf68RZAT+7uwvUe7mG3xq533RRLYFBzpVLizC9EbcsRLV+AeGOYjJ2A
-         Se1w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745589226; x=1746194026;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rKk8dbwcwRPv+V9UfhAvpwPgrVs4TDle2ebfpfAvJng=;
-        b=YehWqudbqgvAE+7YrCSMHUR67sdcCmgzxzEIhMjUjW7+EeJCmbHQgWA3t3W4NVCkmj
-         mSFNHfqF6v5m1XYkKqvgaQ2W6B1aK35EHyJtyfy6mbBNB5KcxhOXeu9lEH3/D6bIVpAk
-         1RrZhwMXt9EpaS+6UG6ZT5ipLTIoaFeeN1OmisiVqCa4/cr9z7IefsvylJKL+KCp2UTZ
-         eYL/+AMH7eAy5nGwlK8e2a+M6YBn3tFvX2FhQjDjb43VsxqbOnAKpP8yrTvvjQ67JG96
-         1VQa3X+zlhPQlx2AbfXOzKXsykOc5Jtu9noAoHrqyeUN8eR6tNTSWkhha+Agpeoqu0CV
-         cwvw==
-X-Forwarded-Encrypted: i=1; AJvYcCUp3/RwSqlj2zsaeGVca1eTUKd9jW/JnNJb0LrD4g7eXXnnRANh0U3OlRAcfA5Qw5BB2Ao=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw2Sd0bA9hPlDbwbimbI6cbbCFZk4CpJH5oYlFRGzgumqEOYH9a
-	43fdEpePhXZSToLcIoV7Rwl+4lGh7BSIPlvZZ/H1HzuRLrA+uzNa
-X-Gm-Gg: ASbGncv3e2aXbkCRrw5XS1OP9MftxyW2nhVTMLkhjbJFcJ1EIzGOCdtnuA2s3pprg/z
-	z3ve4B+ate0Uzuv10DtuNl/WF+Nsn+vDfbBVyg7L2ZE+cEJrbA+wVMhYTtE/i4JmQn5UIqpVPtP
-	Id2zJv/SdQuVCOOyXTdKnkfpUzZiEjZjKgZlNcpKEcQGsMz/0qFg+uzAJdQMF8eyMVB1FKuXRAO
-	tf63jKx3OW3ZufC94Q1+pMpi0VRPouCGVpMLUH2ciGE5tC2BTdQCAmwt6IDY9xdKeS3ZeuUkLbj
-	xdH8IesSWL3yYRQRHqmJeyOi/0Vfu67QZSHBbIsiqIsZoSFWtQiwMU8mRBPXasb3Di5JHaCNywW
-	kGHsafS2zyJBIh1a7
-X-Google-Smtp-Source: AGHT+IENU5Di+VW3ZunA+1CfIR8ptWkb5RnDB6SWIzF7cq7gvVVbSLpqVVyKKTHtO8o1RceVhVnruQ==
-X-Received: by 2002:a05:600c:19cf:b0:43d:cc9:b09d with SMTP id 5b1f17b1804b1-440a66abe47mr16300405e9.20.1745589225749;
-        Fri, 25 Apr 2025 06:53:45 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-440a5287a94sm26267915e9.0.2025.04.25.06.53.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Apr 2025 06:53:45 -0700 (PDT)
-Message-ID: <ce33a9ad-e931-4408-92ec-1a898e908c36@gmail.com>
-Date: Fri, 25 Apr 2025 14:53:44 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yJmB2elC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DEPt18ts"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 4703B114007C;
+	Fri, 25 Apr 2025 10:11:32 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Fri, 25 Apr 2025 10:11:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1745590292;
+	 x=1745676692; bh=6lsCbnnca7efJJRnx8/hCUndGuZrTF5i9cKZrt3LfAg=; b=
+	yJmB2elC6k9gN6zvhjH9uubc3jQ8aPcJtKlp3kOjLPwIGX60ai8vI/LJhPZisvUr
+	wupj63uep7STInek/FDatLKkeT4E5x8JL9fY2AUx+mwiIhTZhrtac8Q3McqYN94o
+	ujPDU5SnQ0wOhxHo6e/nj9zm1Q0A3xuQ6h2pEO1s+k2iR//AuuP9PiQgMq133g8K
+	xXdKidWxy5Sg0kr9bWwO3wWxR5bRODArMFSqB3RHj1oO5Yd0SsMA4kLfA+VhjOtO
+	GXMu4FuDxzZsnmgv9wkGys9VICs06eu9HttTJJLnF4CpUCEMqI+6PxmjblYd41+8
+	GgRMBIYgFvtOlFQgZyw6eQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745590292; x=
+	1745676692; bh=6lsCbnnca7efJJRnx8/hCUndGuZrTF5i9cKZrt3LfAg=; b=D
+	EPt18tsNbMPPIRh5zY7Qk7YQ5+LWCosnohNub/b+kvqKXTLsr+NyE39Sxc4GO/3Y
+	3Y1egqV+UudbIX6+oG2m04E1cSwqu7Sc8Dts/dTTpnRXjZyrg72Netw5mmrqXTFV
+	0N4L9qk9ePWIafXGxkJ1tQCgmc3HYRIu5lk6DGCI4og63wiqEPqikTnQz4Ng5jY5
+	T9bhYtsrw8/kqETkbTW/JAXdHAqdHZtjOD/dahm22WpPHttvuFLZZEWBfN4N5wBG
+	YLoBLBJ3ZDdnk0n7idvggweWchnoR+T5FW17DFxOeAlT0ZOhuDtqoJnfEAMYRN7X
+	ymGppZ6QMMqmYHA9TpXMg==
+X-ME-Sender: <xms:E5gLaMEzI8o3lenkxCAxhAWGbpMntWahnEKQJD31BnMQi79OS8qXzQ>
+    <xme:E5gLaFWLXg3KPVzDLK5EaO1p2PDDoP51QwOwmkWAtsJkX2tN1wrTqZet50iMr6g7u
+    tCH43RdowmUKQJ3SQ>
+X-ME-Received: <xmr:E5gLaGIJLMLiUMrnfeiIyhJJ4BCeTv7gQwMHcHSevwR8zlnjKGVN-5Hlg81nX03Bi2ln3GFrBBh3WSe_0DpV2HnDcKu7RQjD63NPSp6g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvheegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffufffkgggtgfgjfhfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeetueeuhefhhfeitdeuhedttdeikeeftdduhedt
+    heefhfegffevgeegtdfhheeuvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhht
+    iiesghgvnhhtohhordhorhhgpdhrtghpthhtohepphhsrdhrvghpohhrthesghhmgidrnh
+    gvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:E5gLaOF2aSQ-0SCFpJIMpaQIbQ7GxIpjhwFwveZhT0Iaw2d6xqjYjQ>
+    <xmx:E5gLaCWIZTM0rPkfXlR8_bKg2t3yGnVxQXc3ujBScxdqeM7RB3sRig>
+    <xmx:E5gLaBPSjjPUBoFAVE2GwFel6Hwmbaz7xSkekXhZcaqXt5ZdTNIpjg>
+    <xmx:E5gLaJ0Vrtre1BkFzWrYeCQcOTj20CCtT2KiGgGYJ9n0nuVvLOxVUg>
+    <xmx:FJgLaI8HlS0ac8xokbwQePySSb5g3yWmH_61QRtHYxo6nuk4Z9fvTvjE>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Apr 2025 10:11:30 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2e3aff8e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 25 Apr 2025 14:11:29 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v3 0/2] meson: prefer '/bin/sh' over PATH lookup
+Date: Fri, 25 Apr 2025 16:11:27 +0200
+Message-Id: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v4 0/2] bundle-uri: copy all bundle references ino the
- refs/bundle space
-To: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
- Toon Claes <toon@iotcl.com>, Scott Chacon <schacon@gmail.com>
-References: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
- <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA+YC2gC/4XNQQ6CMBAF0KuYrh3TlrYJrryHcQF0kIlAScc0G
+ MLdLSyMG+PyT/5/swjGSMjifFhExERMYcyhOB5E01XjHYF8zkJLbaXRBqYHw4AcRpgC0wzcYd+
+ DKV2pnMqlxoq8nSK2NO/u9ZZzR/wM8bW/SWq7/hOTAgnGonSIpnaVv+TeiQaxcUl/E/YXoTPRe
+ t84pQurVP0h1nV9AzJiVrr6AAAA
+X-Change-ID: 20250424-pks-meson-posix-shell-4969161025c5
+In-Reply-To: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
+References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
+To: git@vger.kernel.org
+Cc: Peter Seiderer <ps.report@gmx.net>, Junio C Hamano <gitster@pobox.com>, 
+ Eli Schwartz <eschwartz@gentoo.org>, Justin Tobler <jltobler@gmail.com>
+X-Mailer: b4 0.14.2
 
-Hi Scott
+Hi,
 
-On 25/04/2025 14:17, Scott Chacon via GitGitGadget wrote:
-> Updated the test with Taylor's patch.
+at GitLab, we recently got a couple of bug reports about Git not being
+able to find its shell anymore. The root cause is that with Meson we
+have started to look up the shell via PATH, which may exist on the build
+host, but not on the target host. We have worked around this issue with
+a cross file:
 
-Thanks for updating the test, unfortunately the documentation update 
-mentioned in [1] to ensure the refspec in the documentation matches the 
-changes in this series seems to have been overlooked.
+    $ cat >cross.ini <<-EOF
+    [binaries]
+    sh = '/bin/sh'
+    EOF
+    $ meson setup build --cross-file=./cross.ini
 
-Best Wishes
+But this made me remember the report from Peter [1] that Debian also
+faced this issue. So I decided to address the issue in Meson directly by
+preferring `/bin/sh` over a PATH-based lookup.
 
-Phillip
+Changes in v2:
+  - Simplify how we generate the summary.
+  - Add a comment to explain ordering of the program path.
+  - Link to v1: https://lore.kernel.org/r/20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im
 
-[1] 
-https://lore.kernel.org/git/56d8bd34-1301-40d6-8151-f85fb1d7560b@gmail.com/
+Changes in v3:
+  - Stop claiming that "/bin/sh" is a POSIX-compliant path.
+  - Link to v2: https://lore.kernel.org/r/20250425-pks-meson-posix-shell-v2-0-fddc6123511b@pks.im
 
->> bundle-uri: copy all bundle references ino the refs/bundle space
->> bundle-uri: update bundle clone tests with new refspec path
-> 
-> Scott Chacon (2):
->    bundle-uri: copy all bundle references ino the refs/bundle space
->    bundle-uri: add test for bundle-uri clones with tags
-> 
->   bundle-uri.c                |   2 +-
->   t/t5558-clone-bundle-uri.sh | 202 +++++++++++++++++++++---------------
->   2 files changed, 117 insertions(+), 87 deletions(-)
-> 
-> 
-> base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v4
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v4
-> Pull-Request: https://github.com/git/git/pull/1897
-> 
-> Range-diff vs v3:
-> 
->   1:  2ccbfdcc2dc = 1:  6957ee2fed2 bundle-uri: copy all bundle references ino the refs/bundle space
->   2:  d148b14c390 ! 2:  d9a114915a3 bundle-uri: add test for bundle-uri clones with tags
->       @@ Commit message
->            bundle-uri: add test for bundle-uri clones with tags
->        
->            The change to the bundle-uri unbundling refspec now includes tags, so this
->       -    adds a simple test to make sure that tags in a bundle are properly added to
->       -    the cloned repository and will be included in ref negotiation with the
->       -    subsequent fetch.
->       +    adds a very, very simple test to make sure that tags in a bundle are
->       +    properly added to the cloned repository and will be included in ref
->       +    negotiation with the subsequent fetch. ok, now it's right. christ.
->        
->            Signed-off-by: Scott Chacon <schacon@gmail.com>
->        
->       @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with file:// bundle' '
->        +test_expect_success 'clone with tags bundle' '
->        +	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
->        +		clone-from-tags clone-tags-path &&
->       -+	git -C clone-tags-path for-each-ref --format="%(refname)" >refs &&
->       -+	grep "refs/bundles/tags/" refs >actual &&
->       -+	cat >expect <<-\EOF &&
->       -+	refs/bundles/tags/A
->       -+	refs/bundles/tags/B
->       -+	refs/bundles/tags/tag-A
->       -+	EOF
->       ++
->       ++	git -C clone-from-tags for-each-ref --format="%(refname:lstrip=1)" \
->       ++		>expect &&
->       ++	git -C clone-tags-path for-each-ref --format="%(refname:lstrip=2)" \
->       ++		refs/bundles >actual &&
->       ++
->        +	test_cmp expect actual
->        +'
->        +
-> 
+Thanks!
+
+Patrick
+
+[1]: <20250209133027.64a865aa@gmx.net>
+
+---
+Patrick Steinhardt (2):
+      meson: report detected runtime executable paths
+      meson: prefer shell at "/bin/sh"
+
+ meson.build | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+Range-diff versus v2:
+
+1:  e749055ac00 = 1:  750aa492d76 meson: report detected runtime executable paths
+2:  159a05d3533 ! 2:  d6417ba5ff6 meson: prefer POSIX-specified shell path
+    @@ Metadata
+     Author: Patrick Steinhardt <ps@pks.im>
+     
+      ## Commit message ##
+    -    meson: prefer POSIX-specified shell path
+    +    meson: prefer shell at "/bin/sh"
+     
+         Meson detects the path of the target shell via `find_program("sh")`,
+         which essentially does a lookup via `PATH`. This may easily lead to a
+         subtly-broken Git distribution when the build host has its shell in a
+    -    non-standard location that the target host doesn't know about.
+    +    location that the target host doesn't know about.
+     
+         Fix the issue by appending "/bin" to the custom program path, which
+    -    causes us to prefer "/bin/sh" over a `PATH` lookup. As this location is
+    -    specified by POSIX this should make us pick a better default shell path
+    -    on all POSIX-compliant systems.
+    +    causes us to prefer "/bin/sh" over a `PATH`-based lookup. While
+    +    "/bin/sh" isn't standardized, this path tends to work alright on Linux
+    +    and BSD distributions. Furthermore, "/bin/sh" is also the path we pick
+    +    in our Makefile by default, which further demonstrates that this shell
+    +    fulfills our needs.
+     
+         Note that we intentionally append, not prepend, to the custom program
+         path. This is because the program path can be configured by the user via
+    @@ meson.build: sed = find_program('sed', dirs: program_path, native: true)
+      
+     -target_shell = find_program('sh', dirs: program_path, native: false)
+     +# Detect the target shell that is used by Git at runtime. Note that we prefer
+    -+# '/bin/sh' over a PATH-based lookup given that '/bin/sh' is the location
+    -+# specified by POSIX. This lookup can be overridden via `program_path`.
+    ++# "/bin/sh" over a PATH-based lookup, which provides a working shell on most
+    ++# supported systems. This path is also the default shell path used by our
+    ++# Makefile. This lookup can be overridden via `program_path`.
+     +target_shell = find_program('sh', dirs: program_path + [ '/bin' ], native: false)
+      
+      # Sanity-check that programs required for the build exist.
+
+---
+base-commit: a2955b34f48265d240ab8c7deb0a929ec2d65fd0
+change-id: 20250424-pks-meson-posix-shell-4969161025c5
 
