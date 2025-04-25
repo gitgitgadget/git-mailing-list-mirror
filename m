@@ -1,156 +1,139 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81072153C7
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 13:15:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB9D5695
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 13:17:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745586904; cv=none; b=JxWuUhCDYzlkJ67hXrbsD/rL9xudwJMGLXwPnYsmSNp+gMeHm8S78u9xVrz87k3ICoj5OajmqtyQffkSEGYL3O6J3XIoQdIGkA5xoowKQ0RXCX9b2p+MDjVNLkdgy6JS+kwxqnvBsj8W2f3lIufmyZif6PL+2Vmq7Bk5SOA7POU=
+	t=1745587073; cv=none; b=TyxQI6fK3kMUjHnQvtqPfCXm5VBs95D568rxfDoWVh07xTfonN/lY0BIgYR2hJQ7r+cQpjlkoQJiqlW2uU3afBr/LlWzlv8jHUY1T3fSfLgNA5jhW1SEDDfSuOeMeww+z6fmB2RVb8c/mpjMyLUEEDX2kQ3t0tM/vLOlMfaD+YA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745586904; c=relaxed/simple;
-	bh=0BjWUP6RJI5ujuQXYPYXkeqxCucE1MA4yYmgxeo1Z94=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XM9awFbm5gtK67Z38Ih12midXCt1PuxMdkQ1TPrqZSIUa7/jC0bBEutdcwNORtXrzXre58Ddvkf1kXQltZEtEg/JZY5IIVOH3daA0PJQz0PhbSQ+oFXYq1fkCbaEcIZckUi7zvdyM4yo/oxaPlLxwfq0ETOVIflZZzQyMnDohgU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IR/b4+Cl; arc=none smtp.client-ip=209.85.208.182
+	s=arc-20240116; t=1745587073; c=relaxed/simple;
+	bh=kdYRGE33lchQVXEES9AOnHn5L20rvOcJNethJAyqJHw=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=YiOIcGxAstqKWDyLEC297o/76IIm3BAwfxk0+Wn1IMVd3ccybwBpoWYIuVJTwGd0sQ528nH5jCZu7zYNDQWPmiX1kKuVaSOdeKil0uuobyk94sHZiuMN+532rR5gI2I7aOqcZz04wx2vmF/suB4LM5N6iA+1szwZOagDAVRMsTI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dDAq7kKp; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IR/b4+Cl"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-30bee278c2aso35137151fa.0
-        for <git@vger.kernel.org>; Fri, 25 Apr 2025 06:15:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dDAq7kKp"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cf0d787eeso25658625e9.3
+        for <git@vger.kernel.org>; Fri, 25 Apr 2025 06:17:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745586901; x=1746191701; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1745587069; x=1746191869; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7VYiPGsxLN1r6ArRSlALAkeQDt9SAdtFUbsx59h3E0A=;
-        b=IR/b4+Cls9PxxITzNe04U95+VjvBhfi0/sFW3OuQwYDs4J49NHl0GyQzc49do/m0mX
-         nTP08rJmwC20O8AwO1w+m34cXNdZ2Dhrip0+vbHfHPvZOcdXZOIWXRGtJJ+GrP2XjqtZ
-         RcTvKGEWV9nSA0mU01xQD7IWqA4ItSC5PaZ8PnSeMWWpp2HqUazPnxqXGLiajKYDRhR9
-         WkwqwBn0y5fyECJcu05jR35gxuXfbKMQO7E23fBKBVMR0pMfNRxhE11k1hVqIexso5t2
-         mQJPHKJq0gQyTSslp5jsrwFmkuf1PYvbjLk+0qQWlw1kPnnUZoFYWZj/eZPMRnhXJ3Ab
-         2mYg==
+        bh=5zxtEDLS7/9UVnTGxcccHPdavcx3yzwHsNV8Q+ps5jE=;
+        b=dDAq7kKpzhp9SUKLt2wn/SNyAA/v3J6JL3TbwcJerJnUBIrhFJYTXEWhoqBuPoPLz5
+         Of+TQnJjX2q8ySfmtRhJobghrEcb/4cJS4CCp4lglfJF4c3wDdvfQtWm+1SWVQ7FjPam
+         G3fpjXnv/Vwkgm/ma/Y106AQQvs35O/IO65kPnCTnIMN50f65KMszb8qWB0TJayW3o4d
+         0t1ZUyKFA7ifRU25C7c9nSFMG6mADN+ATiA/j2qRz1Hw5X4vwBaux90fwFliyaRHor0p
+         2iiFD8K/kIpS6sPn6vsVh2v2gSYInMBO81L6HoYhqKdUruSVVBHG1VnbvlzlvyO4iQIp
+         q/Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745586901; x=1746191701;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1745587069; x=1746191869;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=7VYiPGsxLN1r6ArRSlALAkeQDt9SAdtFUbsx59h3E0A=;
-        b=o03sTLFotGcvcAefhdLsh7ExAZ/WiCG7FDrmmglw+TiDHzZE6/RbE4I6xKsYjaVQNA
-         9IIn7ggU7ptcjomXhUUzClpchTgzdCQiwBF+WFWz6GuRzXpfV0Ui3FyOy4aIiBU7bnfx
-         PqZEIvy37tiEISfqI5XpqbkpsFGOKyENsT+GGsVeOoiGncn/cykQnHxc4wTf8y+MkmVb
-         UMvoL0MjjfSfFhITrkn5XkTDKUQB+CrQpmHoCYUpLB7nEy+gRpkOedhiAd/rakAqwip+
-         YrZToIrWmoIKnFRW8skwGDGV0IXdMmO33pjbqpyq2U1bGW7D0CTs7NUjIY3RWpAKOouz
-         x/5Q==
-X-Forwarded-Encrypted: i=1; AJvYcCW6ZnNgOSozqqdnW/dzzFhdn8FFC+KTsM/dxOY3/U4ng5tvyjQZuJjsezsMngc2pZX91SU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzQ5RTAaEH5sC3kqNnt/6mzHJF2217NI5ebvqqNC2LuJsQ6UnzG
-	TqO9mUijVB76sSkVr9iGSmztwtUvXsS+2velb0UM5jB/HJcamVfxnUstkjZXuY7r/8XZSoS68nN
-	CwzQIljgXNWc66Aah0xdMHtdyTqk=
-X-Gm-Gg: ASbGncvrODulf4NSs9LsnJkmAskJIzJSatnMKhfZ7IiNY4MEp0TuzcZkGM4+xylR7QP
-	9+CESCOBuIT8vIWL5sHBAfrN00BnulN6sP+yKTPYDSywXLaEgmRDNXONfLCD7LZ8flkfptpcq1f
-	W7Q0GAiUXriQmP/Vns9RBJQBU=
-X-Google-Smtp-Source: AGHT+IHANtSaev8pepz0iMIg/ZNmdpbPxeQ1BeX2LyEXIWHAwjXbUlFX4Mhv30VLgnhPdyx0jCOgUaweHXP1TN6RGwY=
-X-Received: by 2002:a2e:b890:0:b0:30b:e73e:e472 with SMTP id
- 38308e7fff4ca-317cde05778mr20068251fa.14.1745586900649; Fri, 25 Apr 2025
- 06:15:00 -0700 (PDT)
+        bh=5zxtEDLS7/9UVnTGxcccHPdavcx3yzwHsNV8Q+ps5jE=;
+        b=USm5JgPhjWcJ+v8/l3oUFVauUgCh184Y4hJfbRv1KcXTruHVdYPysPo5GPpjh0OHly
+         mwp9gS0xjDUU7HE+TFeoy6bXE6aDzsXYlWXGkbr0ROLz/5orLUjzyVSHWI9a77dW8+sX
+         mHxZfYIugGqX+eBCIgLGKrrQslotw1T9VpcRbIlH7hb0OEICgyqR73C5qgsQ4GzoDPBF
+         7jBGsvCAU7vIEchRLedS3ZM5I3IxqbHJm0u6XX/A4km7rcVerMGm3Zc4cJp16rM3HXdK
+         UjkNwK/Ni4gakSsVUiv503TdMaBkdgfuZlzGI8Np47wd3cgPHRjcPlHtroZS2tjUUb4A
+         sipw==
+X-Gm-Message-State: AOJu0Ywtq51PxnPX4fd21LVuwMHjF7L2YTywLH0bWXBlHrb+fQotfhGO
+	OCHvDTFCGe/nJJbx2jEC9T4VeNby6xL+CH0k0L9LKVjtTmSBKv/VL2YOQw==
+X-Gm-Gg: ASbGncseaqI27SQq2HUIuf/OHibT7uiXSYJmk/44IVT7U+HGWlm+urX6Dr62rU8H5YS
+	d/wtat/a/3rKNMgtQwLn98hLBxJ1ZB7oD72WjmayF8XwtYa3h/Vxix+vuJXHQ/Z2x9S1kbuKngX
+	sfhqz1rJW7obcwBBbj979rtjcJfC8VF/yOBNaRjBPDhTX9s2Y1DBP227tO1HOoxw58hH+Pikx/3
+	2Szljy5aE09Sf+g0sYIeiRR6LHqhkVvD+QPkmmYxc2HmMhmYy4zpfgsYhSAphNOh37F1nAUI5XV
+	wwCBaHQuElE9xsqFxWPCGQ1j8p3nl9cKWlk2GM9Nhw==
+X-Google-Smtp-Source: AGHT+IE32R3zDD5CPYj7Rq4GDejFaFQOyQvkoqvl0gXZln1PiTZdKg+sYMxAO/wF5jv4oQW/4F/8Xw==
+X-Received: by 2002:a05:6000:2283:b0:391:4889:5045 with SMTP id ffacd0b85a97d-3a074f398d8mr1749730f8f.36.1745587069328;
+        Fri, 25 Apr 2025 06:17:49 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8cc74sm2413105f8f.11.2025.04.25.06.17.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Apr 2025 06:17:48 -0700 (PDT)
+Message-Id: <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
+References: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
+From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 25 Apr 2025 13:17:45 +0000
+Subject: [PATCH v4 0/2] bundle-uri: copy all bundle references ino the refs/bundle space
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1897.v2.git.git.1740825238.gitgitgadget@gmail.com>
- <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com> <d148b14c390f74e86bfa14c05e9e186fdcecbeb8.1742312173.git.gitgitgadget@gmail.com>
- <e4244e04-d2f3-43ab-88cf-58d9804731b8@gmail.com> <Z9sD63+d+EQKSMXM@nand.local>
- <87cydf541c.fsf@iotcl.com>
-In-Reply-To: <87cydf541c.fsf@iotcl.com>
-From: Scott Chacon <schacon@gmail.com>
-Date: Fri, 25 Apr 2025 09:14:48 -0400
-X-Gm-Features: ATxdqUF1oiw5PQMQoEehBwg3VSbQD3NswcZyT5tieuVZ475DvANKkD6m7k9yPM8
-Message-ID: <CAP2yMaJZU2nmKezHvePaHQ780SXSvcemoDGL+n65f8yv4N+VJA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] bundle-uri: add test for bundle-uri clones with tags
-To: Toon Claes <toon@iotcl.com>
-Cc: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>, Taylor Blau <me@ttaylorr.com>, phillip.wood@dunelm.org.uk, 
-	git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Taylor Blau <me@ttaylorr.com>,
+    Toon Claes <toon@iotcl.com>,
+    Scott Chacon <schacon@gmail.com>
 
-Hey Toon,
+Updated the test with Taylor's patch.
 
-So, I got a bit thrown by Junio's message as I'm not sure how to even
-approach writing that test case. I had a bit of a time figuring out
-the testing structure enough to even write the tests I did.
+> bundle-uri: copy all bundle references ino the refs/bundle space
+> bundle-uri: update bundle clone tests with new refspec path
 
-I updated my series with Taylor's patch and I'll resubmit it. Beyond
-that I may need someone else to help me with more complicated testing
-needs if more work is to be done.
+Scott Chacon (2):
+  bundle-uri: copy all bundle references ino the refs/bundle space
+  bundle-uri: add test for bundle-uri clones with tags
 
-Thanks,
-Scott
+ bundle-uri.c                |   2 +-
+ t/t5558-clone-bundle-uri.sh | 202 +++++++++++++++++++++---------------
+ 2 files changed, 117 insertions(+), 87 deletions(-)
 
 
-On Mon, Apr 14, 2025 at 8:19=E2=80=AFAM Toon Claes <toon@iotcl.com> wrote:
->
-> Taylor Blau <me@ttaylorr.com> writes:
->
-> > I think we should be testing that all of the refs we expect to have mad=
-e
-> > it over actually did so. This diff (applied on top of your series) does
-> > that:
-> >
-> > --- 8< ---
-> > diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-> > index b1276ba295..9b211a626b 100755
-> > --- a/t/t5558-clone-bundle-uri.sh
-> > +++ b/t/t5558-clone-bundle-uri.sh
-> > @@ -128,13 +128,12 @@ test_expect_success 'create bundle with tags' '
-> >  test_expect_success 'clone with tags bundle' '
-> >       git clone --bundle-uri=3D"clone-from-tags/ALL.bundle" \
-> >               clone-from-tags clone-tags-path &&
-> > -     git -C clone-tags-path for-each-ref --format=3D"%(refname)" >refs=
- &&
-> > -     grep "refs/bundles/tags/" refs >actual &&
-> > -     cat >expect <<-\EOF &&
-> > -     refs/bundles/tags/A
-> > -     refs/bundles/tags/B
-> > -     refs/bundles/tags/tag-A
-> > -     EOF
-> > +
-> > +     git -C clone-from-tags for-each-ref --format=3D"%(refname:lstrip=
-=3D1)" \
-> > +             >expect &&
-> > +     git -C clone-tags-path for-each-ref --format=3D"%(refname:lstrip=
-=3D2)" \
-> > +             refs/bundles >actual &&
-> > +
-> >       test_cmp expect actual
-> >  '
-> > --- >8 ---
-> >
-> > While writing the above, I wasn't quite sure how to follow the test
-> > setup. It looks like it creates the following structure:
-> >
-> >     $ git log --oneline --graph
-> >     * d9df450 (HEAD -> base, tag: B) B
-> >     * 0ddfaf1 (tag: tag-A, tag: A) A
-> >
-> > , which we could do with just:
-> >
-> >     test_commit A &&
-> >     test_commit B
-> >
-> > But even then, I don't think we really need to have more than one tag
-> > here to exercise this functionality. So I think it would be fine to
-> > simplify the test to just create a single tag, which a simple
-> > "test_commit A" should do.
->
-> Hi Scott,
->
-> Are you planning to pick up this patch series again? I think it would be
-> really valuable to get this merged. The patch by Taylor above might be
-> worth integrating, other than that I think it should be good to go.
->
-> Let me know if I can provide any help.
->
-> --
-> Toon
+base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v4
+Pull-Request: https://github.com/git/git/pull/1897
+
+Range-diff vs v3:
+
+ 1:  2ccbfdcc2dc = 1:  6957ee2fed2 bundle-uri: copy all bundle references ino the refs/bundle space
+ 2:  d148b14c390 ! 2:  d9a114915a3 bundle-uri: add test for bundle-uri clones with tags
+     @@ Commit message
+          bundle-uri: add test for bundle-uri clones with tags
+      
+          The change to the bundle-uri unbundling refspec now includes tags, so this
+     -    adds a simple test to make sure that tags in a bundle are properly added to
+     -    the cloned repository and will be included in ref negotiation with the
+     -    subsequent fetch.
+     +    adds a very, very simple test to make sure that tags in a bundle are
+     +    properly added to the cloned repository and will be included in ref
+     +    negotiation with the subsequent fetch. ok, now it's right. christ.
+      
+          Signed-off-by: Scott Chacon <schacon@gmail.com>
+      
+     @@ t/t5558-clone-bundle-uri.sh: test_expect_success 'clone with file:// bundle' '
+      +test_expect_success 'clone with tags bundle' '
+      +	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
+      +		clone-from-tags clone-tags-path &&
+     -+	git -C clone-tags-path for-each-ref --format="%(refname)" >refs &&
+     -+	grep "refs/bundles/tags/" refs >actual &&
+     -+	cat >expect <<-\EOF &&
+     -+	refs/bundles/tags/A
+     -+	refs/bundles/tags/B
+     -+	refs/bundles/tags/tag-A
+     -+	EOF
+     ++
+     ++	git -C clone-from-tags for-each-ref --format="%(refname:lstrip=1)" \
+     ++		>expect &&
+     ++	git -C clone-tags-path for-each-ref --format="%(refname:lstrip=2)" \
+     ++		refs/bundles >actual &&
+     ++
+      +	test_cmp expect actual
+      +'
+      +
+
+-- 
+gitgitgadget
