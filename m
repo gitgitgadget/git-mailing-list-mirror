@@ -1,187 +1,138 @@
-Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011030.outbound.protection.outlook.com [52.103.68.30])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905741E5B7B
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 19:08:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.30
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745608116; cv=fail; b=Q4wtifEWCipjEODB4BhmvJ/76Yn9DnNhyZljHLiUTWP5oh0ua4porKb+BVlgALSjCl9DkD/wIVGH9BVIxAHT++B1Ul+8WL+0XljN9qMN4XMLaJ675z1qkch1s49mKQtA0XHUhUH4EY4M2HcWEIaNCQvoMAEpqXRlI2/XdQtDTsY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745608116; c=relaxed/simple;
-	bh=jeq9Em7l8KUOy969BGhGhpZ+QjftIKnKVXrevkj0LpQ=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=U4aaXDMgQ16m8KIILMGfXva3vRBgteMzfKIJIPk55uzk6TLuf6da+kwwckZWCOAAPaOwPsMinv32Xwh2m16t78E/JqZHD/+9D2iuj0unJjvewmV5A79kY0Zh/B+S4j8uRGNyeeJMzxJ32wF//Qj/JiZz6JSNHVebHh2oea+xs54=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=s6fn6dA7; arc=fail smtp.client-ip=52.103.68.30
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910762192F3
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 19:28:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745609284; cv=none; b=B8Kxd4iGCY/qwjhIeGpjdlHJNcqfjOKsiOmkFwstencg6niB4grFi05FmcB7jsX8bTlfMSsnkcnxwwNQER7nslgJBqGj23l6IijSg0T+wvHqd4gCotooKcD8ahTjXuv+0WmC1R2Ct0dDrLx1GetqNDs/G78H9crJvf4wAW3RKww=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745609284; c=relaxed/simple;
+	bh=TU3R0HD9l/GGk6b2ec09bmNYe2TilE9yjYmmxcbS4hA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Ao3ykSkBAk2lDSk3Ac0rzeUN7JzzlP5hhCzZKf8eKXYu1oGPORSF94DFJb8WA1Zrc/nHQ0ngJLSS7hEk7TCwBjIIFsfY/h+N2Uv0FE7ikWiZINP4XPyCDnLtLmakRPaaJ1CNVEAh+gZqAAhS3lQbTA/pC5BjFYbXfQsh0kgZARs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YuEJwKbT; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="s6fn6dA7"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=H+hqBs8piHPzEcf+P2/GIVXe7WR7Bq6c8byx3MuxWzwHEa0oYOccFzTiKv4Ee45QbAjgi3qYn1a68+qYjf6LoVrIjXmMxJj+OjsFdldsY4KfZ0qdZ/s4C/c2V8YocQDikJRrT+NaI3c5Ef4MvSDRN9FemUcPXCsqOIzJQ+eZKqrsX8p4FVbQlCEZ9rm5/FZeXN0np3VtEk/FHVIle1XHd9jI0LQMfw+Lc7Hsz/i7laTm0XSoHr2nGN+Kmaaif14YjGPHZSU325Oi2JEYELIHJ6iz4vRKP6+JkU3SoUXtklCEerNNsj0giu7oh7X4WHBBtuuM6plBf6E7FrNTfs6Q+g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rbT9zFSpwyVpMcpKq+WNMLj1ADydwq59Q0LELKZ27z0=;
- b=p376lfyY2nJerMWYcReX8uMQYw3Ko0VIUe2gZTf5IzCT31i5K1wqyXYuUQQaYKacHxeXzxTVLd4rfuLBPgbVCpaKQnUMvHWg+rwrjr6rCN/uursGtwtTDUH//YCuyoJHvF1DZOVBipCzVqwof16qj96U5gWt7fF3Rha5S1N2GRENTjcPvfntEhxNRPTAKf3yq1NO+ViJIneJ6nDBhkt1FPCU5Rvy4VlWgh+MBcYldPftOV2578EyYJrNFPLyoGldlNBn1U11g/sJWhDzdG96oBZunM+hQJditJNX0eUE/TapY3yoyBxV9GqFXY6vExttHaIiGIMTpU+3gIALKIt48A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rbT9zFSpwyVpMcpKq+WNMLj1ADydwq59Q0LELKZ27z0=;
- b=s6fn6dA7UWpGwy9ZXtqoyHqX9UcxFPd/fWHFC/P8K1B0xqHEwT0KY7cmlFN7iPViPHmQHn62Q6oEQ72SAOhPSd/KaLYKn9YjIOc6l20rQZD7PjYpEQfr2SbRpN/OwIFEuQVz55/Dixmw0WH5FCCZdrFOkvcsBdc9e8riqFVAKPvFkCAq6AeFuxPKS0lnSWOnBUbwM71FQYCp4rJmzjwOLDlG/jhuyAmWnaAPpLIKjvX+2lD0HZlzZwV/vBDT2BnGwlpsgzfkPLmLtQc4J/jBHB+tlybwmzVgTYgsCJsVKlY4o9ot96+QYGAxYLaU0FTZl3eQtD2dlrbQunUH+KYS8g==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN2PR01MB8995.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:15e::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Fri, 25 Apr
- 2025 19:08:26 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8655.038; Fri, 25 Apr 2025
- 19:08:26 +0000
-Message-ID:
- <PN3PR01MB9597693A0419435C31606636B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Sat, 26 Apr 2025 00:38:23 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/1] send-email: retrieve Message-ID from outlook SMTP
- server
-To: Erik Huelsmann <ehuels@gmail.com>, Junio C Hamano <gitster@pobox.com>
-Cc: Julian Swagemakers <julian@swagemakers.org>, git@vger.kernel.org,
- M Hickford <mirth.hickford@gmail.com>, sandals@crustytoothpaste.net,
- Shengyu Qu <wiagn233@outlook.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB95973F4B26A8CE2BF17A3AB1B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597A549B8A6752F2F828266B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597D4949EF555E2A96CE745B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <CACOoB6irNaLLsRRf-aEsRbAmnvLJPFhDGnD0j_D9fY_ZbgAL6w@mail.gmail.com>
- <xmqqtt6ctbim.fsf@gitster.g>
- <CACOoB6hh_jWqC3pxiVVAkKN9+mPVUeUodKqFRmMe_Da65a6Bdw@mail.gmail.com>
-Content-Language: en-US
-From: Aditya Garg <gargaditya08@live.com>
-In-Reply-To: <CACOoB6hh_jWqC3pxiVVAkKN9+mPVUeUodKqFRmMe_Da65a6Bdw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YuEJwKbT"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43d07ca6a80so11719175e9.1
+        for <git@vger.kernel.org>; Fri, 25 Apr 2025 12:28:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745609280; x=1746214080; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Hk5GjnT7yk7e7jfxcfKurFpfhKCSBgPMGCueAbJk0Hk=;
+        b=YuEJwKbT7hBW8Bz1/IXs8ODuJu6mzPKZH3e2z1NJ12t6dkQeKEo4rxGr/PhCbqvIAQ
+         bpqVormhCB0nMQtxHzwWaVBcDZpidJKPXOtc6KdKsRYGi0X6aMRzc3YN9Awgs/ukKHS+
+         5gf6pw2n/sVPOToMQsGaROoiMoX4KEq+2Yox8r7GZdx3vZKQjdd1UPFVqFSEDwrn2oB4
+         jCK2VmFMaYphQ9kuFPNhmrz3CJZXOXJ5ZakH4quiETmulDC6KEWZwUs2ImTx2IX/plwQ
+         q0O/1iH5yVIf/QwTUX8t4A3q6Nd56E6vV99dIBYkuwk/ULimDoONl4/a0NVlnUr61yvE
+         A0GQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745609280; x=1746214080;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Hk5GjnT7yk7e7jfxcfKurFpfhKCSBgPMGCueAbJk0Hk=;
+        b=LF8bfBxNM3ReDdP3QQ7VUHcCnD7lr0q46g7BnEiz6DxDOyPy2ecQn19y17i4berkv8
+         vz6tTjNFhX3zzPwj5BMHqevr9Es1SogZm2sGSzB9XhE/JaGZlpj/XFzgdK1aw4VIwGVB
+         gpfTbOHZ3a9zVRsuhDkvaGwCcoC63xOXXSRKdGn+xGfBZ6nguGtt4ehQeeZYHSPREn7n
+         snljihVGor3lhq0NzKgJp9C1sO2edlxEAGywmiYe94LtvfsRmdHDz+XJi0fAnYpPMyPM
+         LBPkphA7vTDKxu5xPwaW54TWh9/+5gMHvJwZa2pCa9wX2dt+uuHWjdXFh2W1kK3CDpAR
+         kG+g==
+X-Gm-Message-State: AOJu0Yx0oDerKUl4oNHx1bcvavn8LZsI8eX+Mnv1V8LDINyzWol4RGCz
+	kH6gWzU4ZDoDeInSr0fwdwZHIMPPDQOhdMSPakNlyZ9gZWn0asgH4FmzEA==
+X-Gm-Gg: ASbGncsu+AxgmYOhTWMG3r3wvkTnxvm+uF/l7na+JxOuoYaW4YuWeg4sMOR8YtFqOI8
+	hb91ZvweG7K41/9HNYkihqIltJCL+leUvtcEnQgn2p92UnoiRCed/ZtPfF3lGR39JwbjZPO0fM9
+	tqiAOb+jbRBjmg9VoSbvv0coPCe3IvaAeHzGUD+CHW+dLmPLdsbA/hmiN5+Ez5Sh1T6oT47tZmp
+	EVfYrrzxHhiNPOPy0yWufhcb+Itwc9E8YdB+wQmYMHlxKpWqO5aXKPG0A2BIaN63qemkWeTX4rM
+	jQHpUa0lltM5YBa9+rqJaCoHVebhI/uH/Tr3iTSg7g==
+X-Google-Smtp-Source: AGHT+IFNmn/9SY4EgSlcrMAMR/H+GHvIIFxGLT4+jZy+OPPf0J9xWKYNNFs9QdFC8eIfcJ/9benotA==
+X-Received: by 2002:a05:600c:3b25:b0:43d:a90:9f1 with SMTP id 5b1f17b1804b1-440ab77d33cmr4316095e9.6.1745609280059;
+        Fri, 25 Apr 2025 12:28:00 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-440a531072csm33853085e9.18.2025.04.25.12.27.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 25 Apr 2025 12:27:59 -0700 (PDT)
+Message-Id: <pull.1897.v6.git.git.1745609278.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1897.v5.git.git.1745607965.gitgitgadget@gmail.com>
+References: <pull.1897.v5.git.git.1745607965.gitgitgadget@gmail.com>
+From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 25 Apr 2025 19:27:56 +0000
+Subject: [PATCH v6 0/2] bundle-uri: copy all bundle references ino the refs/bundle space
+Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PN4P287CA0126.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:2b2::9) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <de58e5d2-ecdf-424a-a7f3-4fe1a2529e03@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN2PR01MB8995:EE_
-X-MS-Office365-Filtering-Correlation-Id: 0e3cc5f9-662f-4563-b6b9-08dd842c8e94
-X-MS-Exchange-SLBlob-MailProps:
-	laRBL560oLQowKaVx7aWRf9b2EXVRKJlE/zJN0Yhm7N+IQgWbLHEAzVSXfJOsD1vzXyke2VkD2M6J5KBf55VZdevOSMF0+XpZsCAvfiaEAYUcn8H8STlLE7E5b04aHS8UyUAHKcvJypNGjZp8EO4qKlop20PVnkXSLuX6Yn9lxXXr43u8VZk2Q7u790J4X3niifxKexzXS2s3h0xnRYVfqToMJNrmWIXdEOdZP1Ui5e19hkyaEwWouqKNrQJhoGGUlFTSFfKpmq8ykQRvFltdpGsxyxiWSlUS4kndfoD05bgd6n5uDcncbGB6gkmI+mTLAauLb7ictnkuSUtic7T/JWHIhApvTalhoq9nfEGBS3OMMPM68pFP6OPAhklN32OsumDsnIC9ID4R78AyeTFKhZ7/DuTfiaDmpAIdnaWDdqEUYlL2ILaHQnFYauzOga7Ns/fva9oW4TYHGhOtYRyXuAzyzHeykOjmFn3zon7rteViBgKC4a+m0v9w92Mo+h4aM+4PRL3bZrdu1B56OGHMBJTMPGcgX2VZOxo4EgcAVbPBh9wvvb6/4sUCEu5DZX52bQyqfKBg8eOYEiDcU6A5APscp1xyosU/fugg6KAzDvDBj4t428zPna3l3qVJo4Vr2sGN1+6nHqMTLO1pKXL5AakTOW+lvyh0liTH9yO+dHMa8ivGGe/1xyrMgSYJk9wX56+ZLijy9/kKiHFrlIa5wlirendd735GMfNS8meEIlotX6rF6/51A5gVPYRn4DeO8pV8aHp80T8mKBeonwnHsXXo+gG5Kbu
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|6090799003|15080799006|7092599003|461199028|8060799006|19110799003|10035399004|440099028|3412199025|41001999003;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?cmE1MzFPUjlqWmdIK1I2ZCtiTDhJYkwxb1VsVkw0UjV1VmkzV1Q2OGVUcnJD?=
- =?utf-8?B?MjRhSkRoMm9XTkRURnhXNEpqSmVabVB5NFhNdFNpaTBERHRKRGtrVGpTQk9l?=
- =?utf-8?B?OXB0OWRKcENaUDU0WGdVKytOekwvcGYzWVJub29kU0tmYVZ1cXNOL2VoVDJU?=
- =?utf-8?B?QVcxUThOZWxBSEdQTkNUelE2TUk5ZmxUTFo2cnZudjNjU1Q2QWJJcjg0WldG?=
- =?utf-8?B?clc0ejE3c20vL0hCMlp3SVRwWWJNSGlxbHlVVlFkT1dNVXg5UUJpampiMy9T?=
- =?utf-8?B?TlJwODVXbmt4eXNHQS9obTFyWndYMjVvYWJ1MCtKUnBzYTZ4bkVaWGpoMHEx?=
- =?utf-8?B?SWdVZXB0MUp6SHZsQlZ0QW1wR3kxeUhkNk5IVHlBR2NYODNGKzVsRjZyaVJH?=
- =?utf-8?B?ZWUyRG5ZSWhJYUtKbXAxc0tuZzlJYU9JbE9QejMwMVdQUWxObGNIM1pHSEpL?=
- =?utf-8?B?QVVpWE0yT0RIdXQ0MzJiTWE4d1JMRzdKVCtTMGhWdkVwQThWUUhZZ01NanJS?=
- =?utf-8?B?alN0eWw5Z3JkWkNPWk54N1AzcE1TSU4vK05razJ0cStFSSt2VXdSa284d04y?=
- =?utf-8?B?UU41RzZ2ZG5tZ3E4TVFoWDRidi9pK2M0Um85eUIvSEdCS1A1bGsyUUFoV3NX?=
- =?utf-8?B?TDR6L3cycjNyMmVrSnIzak5BUTlYU0xENk9lNkpFUzVCLzZkYmIvdWJYM3Ba?=
- =?utf-8?B?ZHo5YURNZG1CUFFPYS9vdmRoRVRqRXZBRFBiOXVlekh0ZnRISVdzTTBhbGU3?=
- =?utf-8?B?ZW42SjU0WUZaSFJtVEs0c1RScy9JTTJDRHlOYWdZME9KU2xnMmJVNUFySURn?=
- =?utf-8?B?UzAyc2tlSUpodDhySzYyU2JOS2dUOTFwMGFCTEh4eWJjcWk5Wjc1Uk15L3o5?=
- =?utf-8?B?RzJUeThXblpINWxQT2prY1E1TzRwa3NsQjEvbGxhdmRkbnpxZ1FHVmdlTm9u?=
- =?utf-8?B?ZWtKUC94bzFpdnU2T2x2d1F1T3pYeTFmQVZseWJjRjI0WlhTMUpRNzNSS255?=
- =?utf-8?B?UUNna0FxTkN3RkNFaG9WR1JmTVhRNm5XMStFWjlpYXJhRWt6eSs3V1BuYThk?=
- =?utf-8?B?Y1BTRTJEaWdSZ1QzelNncEVDTHIwblBBSjAzaGZpaFVxODNKeXdyNjQyOUFZ?=
- =?utf-8?B?UVhKWTdxT0czM0tKVGcvY2tUQXBSNk1MY1cyODZzQmZnYmVOOVVnbnM3RGRC?=
- =?utf-8?B?SWYvNmdVL2tiOXo0bThkbVBNdlNlK29DZFV5UU02b3dEU3UyT1RIR1JOZHE1?=
- =?utf-8?B?UkRnMkNOQjgwV2hIaEN2NU1FM1R0VU9WK2E5dUpWemdlbHdqZnB5RWNMY2FY?=
- =?utf-8?B?Z1k3QzRoUFlQUWtJWldqRVI0WFZ1bitpMzI1TTRkQTR6REVyZHpLSVRrMlNi?=
- =?utf-8?B?b2RyQVQrNE12cjRSR0JRQnhCUzlsbk5FYjI5WGZXeUFrSUVjNVJ2RlhlMGdx?=
- =?utf-8?B?MW0zQnlaY25zSkcvd1ZWdmFmSTFBTnRnYWlOeTg2b0w0M2xsTjh2UCtLVi8z?=
- =?utf-8?B?M0wxZ3N3ek4yV1lCNnBhMWJYVDUvWE5sbGVMeGlqM1ViS0pOc3lreFNDSVFS?=
- =?utf-8?B?S1dlOXMyL3d5dExBMHBDbEUwNHhrUWFxbGEzVWZ6UGhPSjBZd2VpWnhHcWg4?=
- =?utf-8?B?WnV5R0lwZWRzWHRJdkttR1VpdWRhNGc9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?SlBTdktSdEZHSTQ3L0xLTHM5dHdRRWJxSGx4RW1DeGI4QitSNmM5YmtPNDVM?=
- =?utf-8?B?OUEvdHA5RzBLMFhRNVhSN2tmSDVaeHh2UGtSNXJGVERzU0pHVnJuSzU0cVlX?=
- =?utf-8?B?cGRTZ1YxYjNzRnh5NmpQVDNkVGl1YmZKREhNVWtlTTVQOTJGWENjVmVpaVdy?=
- =?utf-8?B?VlpISkcvbVAwMGtGOHJYRlVGOU8vc3FLWHMzZFdlaS9KYktaQUlwZ050NXU1?=
- =?utf-8?B?VktUNWozTnZ1eHEvWkU4WTJZYUN6ZE5zNUVGMk1nNXlUUTA5TVBvczIyUU9m?=
- =?utf-8?B?WENwUXFiMnkwR1FVK1VDcW5iZ1RNZ1pDQng0YStwN0JNNEh6K3huSUNCdHRX?=
- =?utf-8?B?d1kwUGw2dU5WS0FhaTNSc2Jmbnp0ekMvdDd3cUdlbUdTWlkybk9TMTNVWENy?=
- =?utf-8?B?c1M4bkNqWEcvL0pnV3h6S2VGZTFSTHR1K290SC8zQTU2anF1TDQ3czJzS0Y2?=
- =?utf-8?B?ZjBqVFFaTmlua0lHQkswTUJaTk9jbE1FTVpWdTJaYU9oT1lMOTVnM3NvWnRW?=
- =?utf-8?B?amlxcGFXaUN1K1NvT1Z4c0tzdFYwTSs0Nkl6MVIvME5Yd044ZmhuSkJZUG1m?=
- =?utf-8?B?ZjVjazErd2NqSXFTWjA1ZU5ocGtCM3FnYzY2T0dzY2NYYjNjUWNCWjg5bkNO?=
- =?utf-8?B?bDY3aWtHQW1TQVBHcGg3QXpRMUc2KzQyaTlKY3JVdEh1Y3E2TUkwZjNvTFAw?=
- =?utf-8?B?UDQ2aEUwL29ldkJpNklReW1NeGdMT21DdjRIRzgrc3M3MEVqYkFnNURoUmR2?=
- =?utf-8?B?NjkxVm1ZY3VvVnNGeTNubUxobkhEeUtzTVJHYVN1QXNDQVp5SE9mbllUWG05?=
- =?utf-8?B?N0d3akxhTUZTN0NMUTVwMUlObFJSWXd4Z3ZZa1BmdUNnN1VMSTA3R0hqOVYy?=
- =?utf-8?B?cUNiM1FTaUc5SDJ1TTBEazF5YlZWbEh5WFpXdk9TR1c1NEFBcjc1TVpLK1FX?=
- =?utf-8?B?WVkzL2dIRjNBZDdVQk1WL2EvY3d1Qk5OY1dFUnU3b0lPc3Vvc0dGTnNOOFda?=
- =?utf-8?B?Vzl1eDQ2TmtNamMwVjdGWjA4U3JmV1BaUGhySXFPQ0pUYzBBQnVBaytrMEZz?=
- =?utf-8?B?dVZUK3hyaW5ud2VSQnJNQ3NNT0M4MUhUU2VGaU5SOWZVcG1rbXN4S3hXaTdP?=
- =?utf-8?B?dFVJREsvZHBUdkpoRW16UXMrSkl5MlNXaWc0ZnFjN3Z5QWYyeE1TaW9RWXNw?=
- =?utf-8?B?SHh0ZXdidkNnUVU1QlFzQ2Q4RnQzOXZIOFU1NFpMc3NuSitYVkViaDlQSWY4?=
- =?utf-8?B?U0VTUHBZRHlyamVpL08yN2UrWlhjQUx6TTRhbk9jbjRxZnBwdVNsbWppdnB3?=
- =?utf-8?B?R2NWMHFqS3RSU1d5SHBhS0VLNEc1RENLVkg1TG1LMUZCaFQrQ2toTWtDa1U1?=
- =?utf-8?B?SFYzS2xuY3lPWWRxeTlSWHE0T1RwU2xXUU1tYld1aW5iblY2QWJsaFozU1Fx?=
- =?utf-8?B?eDYrdnBpbG1jdUdLb2VvRCtuQVJFSlREVTN4eEc5Mm91L29EVkNGU2FtL1ZO?=
- =?utf-8?B?ckFGT3JZK2ptZEdSTGFsL1daZklIb2pIUTJwcG16bDR4NVJlbzNjai9nTyt6?=
- =?utf-8?B?ZlZRUW1sOGdkT1o0blpTaDFZR1lyMU50VWhGNXd6d3IzTXl4d3orK1d1OEQx?=
- =?utf-8?B?U3VZY2pTMmowZW94d1ZyR1R3bHIvUWk2Rk5KeUo4dzBrc0J6QjlzNVBZZXVC?=
- =?utf-8?B?eXVYSHdFNW1ORk9Ya1gyRS9QWGFBek1WSmtSV0xLVER3QktqcHFBSHVFZ3Bq?=
- =?utf-8?Q?iNMyvmug/At3Kot8Es=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 0e3cc5f9-662f-4563-b6b9-08dd842c8e94
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2025 19:08:26.5783
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB8995
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Taylor Blau <me@ttaylorr.com>,
+    Toon Claes <toon@iotcl.com>,
+    Scott Chacon <schacon@gmail.com>
+
+Edit the documentation to update the refspec and remove the untrue statement
+that it can be configured.
+
+> bundle-uri: copy all bundle references ino the refs/bundle space
+> bundle-uri: update bundle clone tests with new refspec path
+
+Scott Chacon (2):
+  bundle-uri: copy all bundle references ino the refs/bundle space
+  bundle-uri: add test for bundle-uri clones with tags
+
+ Documentation/technical/bundle-uri.adoc |  14 +-
+ bundle-uri.c                            |   2 +-
+ t/t5558-clone-bundle-uri.sh             | 202 ++++++++++++++----------
+ 3 files changed, 124 insertions(+), 94 deletions(-)
 
 
+base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v6
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v6
+Pull-Request: https://github.com/git/git/pull/1897
 
-On 26-04-2025 12:35 am, Erik Huelsmann wrote:
-> On Fri, Apr 25, 2025 at 7:08 PM Junio C Hamano <gitster@pobox.com> wrote:
-> 
->>>> Authen::SASL now finally supports XOAUTH2 and OAUTHBEARER thanks to Erik
->>>> and Julian! (Link: https://github.com/gbarr/perl-authen-sasl/commit/958a3aa165d30cf4e3cbb36dc45306de627aa13f)
->>>
->>> And it's official: https://metacpan.org/release/EHUELS/Authen-SASL-2.1800
->>
->> Wonderful.
->>
->> We tend to, however, try to cater to those whose distros are slow to
->> adjust to upstream changes.  What's the ETA for the updated module
->> to major distros?
-> 
-> To be honest, I have *no* idea. I think Debian is stabilizing Trixie
-> now, so maybe it's in the one that will be after that (in 2 years?).
-> 
-> You could however decide to support XOAUTH2 and OAUTHBEARER only when
-> they are available? Then you don't need to increase the minimum
-> library requirement: there's no API difference between 2.1700 (the
-> current version until today) and 2.1800 (the newly released version).
-> So if you were to probe existence of Authen::SASL::Perl::XOAUTH2
-> and/or Authen::SASL::Perl::OAUTHBEARER, you could conditionally
-> disable the feature if the probe fails. (Using "eval { require
-> Authen::SASL::Perl::XOAUTH2; 1 }" should do what you need: return
-> false if the probe fails; true if it succeeds.)
+Range-diff vs v5:
 
-Even if we modify the send-email script, distros slow to adjust
-will also not update this so soon :). Its more of a wait and watch thing tbh.
+ 1:  6957ee2fed2 ! 1:  d6ec5c87b43 bundle-uri: copy all bundle references ino the refs/bundle space
+     @@ Commit message
+      
+          Signed-off-by: Scott Chacon <schacon@gmail.com>
+      
+     + ## Documentation/technical/bundle-uri.adoc ##
+     +@@ Documentation/technical/bundle-uri.adoc: will interact with bundle URIs according to the following flow:
+     +    are present in the client repository. If some are missing, then the
+     +    client delays unbundling until other bundles have been unbundled,
+     +    making those OIDs present. When all required OIDs are present, the
+     +-   client unbundles that data using a refspec. The default refspec is
+     +-   `+refs/heads/*:refs/bundles/*`, but this can be configured. These refs
+     +-   are stored so that later `git fetch` negotiations can communicate each
+     +-   bundled ref as a `have`, reducing the size of the fetch over the Git
+     +-   protocol. To allow pruning refs from this ref namespace, Git may
+     +-   introduce a numbered namespace (such as `refs/bundles/<i>/*`) such that
+     +-   stale bundle refs can be deleted.
+     ++   client unbundles that data using a refspec. The refspec used is
+     ++   `+refs/*:refs/bundles/*`. These refs are stored so that later 
+     ++   `git fetch` negotiations can communicate each bundled ref as a `have`,
+     ++   reducing the size of the fetch over the Git protocol. To allow pruning
+     ++   refs from this ref namespace, Git may introduce a numbered namespace
+     ++   (such as `refs/bundles/<i>/*`) such that stale bundle refs can be
+     ++   deleted.
+     + 
+     + 3. If the file is instead a bundle list, then the client inspects the
+     +    `bundle.mode` to see if the list is of the `all` or `any` form.
+     +
+       ## bundle-uri.c ##
+      @@ bundle-uri.c: static int unbundle_from_file(struct repository *r, const char *file)
+       		const char *branch_name;
+ 2:  ec5d629f32b = 2:  825d2b01eae bundle-uri: add test for bundle-uri clones with tags
 
+-- 
+gitgitgadget
