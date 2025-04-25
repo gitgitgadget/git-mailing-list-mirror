@@ -1,141 +1,105 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81609216E2B
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 08:01:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F285417736
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 08:06:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745568075; cv=none; b=GUrxalQUHMQouAw6N/cJuyolvr0W3iDC/JPd4jUXomgfPwdMgvUqV3bJXuFRd1QRFb0M1Dqw/smhvduICUpOP3nZnDrSGWCXTK0EOfIePIi1xrCFFPO94zTZIO5tIz1k7YEOSmb7Yz1sKo5OXYrBlv0NmQgCSoB5rvRMFeahkbg=
+	t=1745568388; cv=none; b=u2SEpP4sx+aw1sxVcRGfIpYwJOWVuXtdxptL5cMT/OU7ijecB9UM3Ict3Xv4CzlIkAdtQV2XbshIoH8eDJGJJxRSRlluFkNQ6gNuOZSBak8W+Lc3GMLwErtNSrTXQtylKOUNg0EoS08fVbGOV25M0jtV8Xl5xm8totpmN+n8hvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745568075; c=relaxed/simple;
-	bh=UOHrBsgQ7TeYVQa72jsYOth3OEFRFkV6x2GP02j4kQc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=oDP1rql1lRyUN0TBmqaUxRY3WN3CoOj5WH16JGRUZbdLdJUjQT156uW2F36iEKJAn0UNO9paIJnZex2qxZ6XHAujVFvewZ61VDeii/B7DJz6FBNtW5yTTs5A9HbF1y/2o8jmaYvwqkd+VrWlhPMWMvZbwM6ZaAybystmmsQS0IY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=B9W6Sqd3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uMO647/S; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745568388; c=relaxed/simple;
+	bh=X68NMoUu8oc/q+aybPd1ISvtiCxMpyO45ryL9uR/hyI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=T3BJC1m3xfNoGswCzXOTuk0D9a8D8QSa8IUZum2b1zThcLKKEFXRPgRxeS3hvjJpCoxb13zDkIzAPobjhwxDnzwTCWXjdkhb7x3igBBboCWDd9nffw835vmLZLjnYvJPrqTB3Wyk3c4GLRpkSsi1taGtcc2gDgLg7ycmWwb91VE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9wJG9pl; arc=none smtp.client-ip=209.85.218.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="B9W6Sqd3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uMO647/S"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5BEA71380143;
-	Fri, 25 Apr 2025 04:01:12 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 25 Apr 2025 04:01:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1745568072;
-	 x=1745654472; bh=yn/jY4GRpBJxCfQyu64IBLRcQ4YxeZnt/U4NkpbJbGo=; b=
-	B9W6Sqd3ivmKYTMbXqaJRzsaBuCrkAOfPFGsX9lXdZVMZkWmed8dSQzZhTwJy6Tr
-	Lux2NEGkC1ta7dDknXxDpfZQFgyoZ/xngKVMAVPuGOJmNp9Al4AbFuMT2IVeQ13Q
-	J/V+uDSy0BbzEjBq6daG3biyC3F1DsoOKLn2BoSZIEylUJJlFZnpPSwZ/xqhbmy8
-	iJ6IhcMXx/ccOMeDrxmE1RG6bqm6WwP2JtXhgrsMZ3HVNQduxrHJjq1pFDcklFt6
-	TVgKqeOZOGRcVRNQO/Nf93IkgBVlkL++7JmHMwF+Gs0i3t1q+VsoO4NrgtYx0eg+
-	pacNQgVwJHv4+mMHiu8STg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745568072; x=
-	1745654472; bh=yn/jY4GRpBJxCfQyu64IBLRcQ4YxeZnt/U4NkpbJbGo=; b=u
-	MO647/SuG+wvwtA/FqqOPrtqddghjp1tdu5zkJICrWfrJ/UrRGi+wHSW6BlMbZaF
-	PpTE2CBfXO0wRaNfopo6/Ptn+5E2Ev5v1j7fF6KdePRf4fIcU5KTRsumAtQ65GHN
-	00V2mTbFArEFanjJhWk92P3TT2X08KZJn78oo99wcRspzlUKEBIAeuhp2X8qPeSW
-	Sqb/o//0Gm5CZ9fA5vMay/vkuDFx+6l513YZLIVw4cpFEPQks/jJUku3fWAUT5W9
-	Nzm7ocIZOKt/wUNmREcRJ/hRABgzu41p/gKG6P5fQYEyWjsu0iWIQrGaL3qrcz9T
-	XiwpPI6wst/wsUGSZf9iw==
-X-ME-Sender: <xms:SEELaPWHu7N6THwTK-HrLZuuvRrcrcNfNtRTwnWxqdOWDUv_6_OGoA>
-    <xme:SEELaHkd0RaKUebyUQzNhGexYibZKY1GqhK4Basb3a7Gop0KnRYl3ritgMimo_A8u
-    1AHglFqqCQJkuK2nA>
-X-ME-Received: <xmr:SEELaLaacKiC8KOtC1huoc_Mj6dsQoeo9_7zpuKwkm5dSvlw_4YZ13VAG3SJ50qYzB7BMEG19fPmskWg-MZzhKH6WgaW5Gkf5mR-QiRN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedukedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhish
-    htihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehi
-    ohhttghlrdgtohhm
-X-ME-Proxy: <xmx:SEELaKXPnJu2ZMUZ_mHyc-oWM6NN1yVuIw-673GPqviRctTUNynsVg>
-    <xmx:SEELaJlrsuKvN8eDkL7mDvH6fxRXUtNBUTmnAiHBHlxAgq_SGVYt_g>
-    <xmx:SEELaHfilTLwyf2Jyi5j_iD2I6A6CtdwbHOHJBIxrNTPXS1_ppuucw>
-    <xmx:SEELaDHomZ3UqumKuyJLEwazaPSb1RP-SFjtieFq_UglayTqinLwEw>
-    <xmx:SEELaALzBJ9s4opc2t2vJIE8Tf7Nw1HuJXrOxYW_FY8W7pf0vtVIxqAv>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 04:01:10 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fcafb8c8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 25 Apr 2025 08:01:09 +0000 (UTC)
-Date: Fri, 25 Apr 2025 10:01:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v4 4/5] meson: wire up benchmarks
-Message-ID: <aAtBQ67Vveg1f598@pks.im>
-References: <20250425-pks-meson-benchmarks-v4-0-6b89555052c3@pks.im>
- <20250425-pks-meson-benchmarks-v4-4-6b89555052c3@pks.im>
- <CAP8UFD0rq7Z=6PUPyPZOXaKyXzbWW7Eb0rDfoTxrd7k4Qo8ciQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9wJG9pl"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ac345bd8e13so279780866b.0
+        for <git@vger.kernel.org>; Fri, 25 Apr 2025 01:06:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745568385; x=1746173185; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8Nzi8+JEZlPCAZEI31F2nE/1vvpm6am/z3tyvIBixsY=;
+        b=X9wJG9plbe4LAci4IPtG8w8ZiZUacm9Gu/Ez7wuIxAP5itr1cATAXIeHwe1krXF9Qa
+         5Uvp17YI0G7tOmdx/aB07NP6AKoy8DZibk0d9wV568HVjwHqkwGikfD3Wz684kGjXPrz
+         v8DmMCxWUhYpAdu5NgG8Z5nEU8ewRa0+CFEMVUan+VAIsI7BY1SHDmm3N+2TGo2SCWBp
+         0SO3gWMP2cUqvxgk3CW+J46FQg8fQn83qqfpxlos6OSJmE+Mkulmp8J+zri1ddRbhUus
+         AwS34XfnhOWqZOljblPmAQzkHEkL7SDx9AIYttzHDwvCwj1rkY7uxfNBbWy9yvud7phH
+         3vBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745568385; x=1746173185;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8Nzi8+JEZlPCAZEI31F2nE/1vvpm6am/z3tyvIBixsY=;
+        b=a/URsJcDxwM1rca7nIy2rrQkM9jzIxXlzICEAP8TewbmaBFl6nYpMdM4DuJCwIOZvX
+         Bddy/L7FCVLzaLs0uKxrJOwenKxwaUlU+1dmA0lkFvcCAK24zaVLyW5lD92Xi/XpzsAo
+         buDtgZcSyRydkS9mrsi776hQJgS6qmJ8Z2dTAAFQUUJ/nLWNLp1EExBcdt5ckJVjr+bT
+         g+spRnt6tzLbT4o5GcjPebD6PGxkypabwfpIU1s2OiR53Fugy8iYE8Ie9mVsstSsWMuq
+         I2Xk/tmMFhe148ovkQCnLYV1IAI9DBXFHoyxheShKmvyR8vPArAM7YSrS27QQWcVB1vd
+         tqZQ==
+X-Gm-Message-State: AOJu0Yx0GwFb8A0pnZnTKjeQ3dOfTYELbTVg255B3TnnGoEn9jt0qYMa
+	XueVfBs2+WDZjOd9IUNyK/Ec041sUrHgiiwIKM3KNOVsNFojHkO5JwaYVETGF8iEP1VQxOsoGyb
+	PDY7PJYd0jVWLsS7j4MdpW+KKrT4=
+X-Gm-Gg: ASbGncu7TI6NdDuaS6XWSMV8k5QkdDnVBJcoqbXX+NoJmdUrGWAsJ5MrEhTFtbjMS1V
+	o6JbulGDQKtNhEu7pvU4hMKUfyIMq9IHBqTFgBAIxLMxpsLKylf6pEkKayVfQ9jI62sAXmcJgmn
+	Tf807vhnBym/OFc7G+mTZJDNnsnuVpxEEVkXELPvw0oH5PLOGWm0KNBA==
+X-Google-Smtp-Source: AGHT+IFWlnyastrmJv+Ffvp4UdI4Mpz3NsFgfrNtBYqWUDVFNJKl31hfaXpIB3yq/OLKG/ufofoxPwZvd6NVS1UB1Ds=
+X-Received: by 2002:a17:907:2dab:b0:ac6:fec7:34dd with SMTP id
+ a640c23a62f3a-ace713fb7d0mr124442166b.52.1745568384858; Fri, 25 Apr 2025
+ 01:06:24 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD0rq7Z=6PUPyPZOXaKyXzbWW7Eb0rDfoTxrd7k4Qo8ciQ@mail.gmail.com>
+References: <20250331-pks-meson-benchmarks-v1-0-b2ace85616a3@pks.im> <20250425-pks-meson-benchmarks-v4-0-6b89555052c3@pks.im>
+In-Reply-To: <20250425-pks-meson-benchmarks-v4-0-6b89555052c3@pks.im>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 25 Apr 2025 10:06:12 +0200
+X-Gm-Features: ATxdqUFepPQWNeQD8hJw4hpvCWhoP_pggxfjxsjs6zEQ6sD45LiA9FqgPGj6i7Q
+Message-ID: <CAP8UFD1ovdQdfvLMvfPi8fz5S82n+8mfjK7ECqoQUMW2p-khjA@mail.gmail.com>
+Subject: Re: [PATCH v4 0/5] meson: wire up support for benchmarks
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 25, 2025 at 09:57:33AM +0200, Christian Couder wrote:
-> On Fri, Apr 25, 2025 at 9:28 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > Wire up benchmarks in Meson. The setup is mostly the same as how we wire
-> > up our tests. The only difference is that benchmarks get wired up via
-> > the `benchmark()` option instead of via `test()`, which gives them a bit
-> > of special treatment:
-> >
-> >   - Benchmarks never run in parallel.
-> >
-> >   - Benchmarks aren't run by default when tests are executed.
-> >
-> >   - Meson does not inject the `MALLOC_PERTURB` environment variable.
-> 
-> [...]
-> 
-> > diff --git a/meson.build b/meson.build
-> > index 410bbf93dad..2cd05a9b1ba 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -70,6 +70,12 @@
-> >  #      # Execute single test interactively such that features like `debug ()` work.
-> >  #      $ meson test -i --test-args='-ix' t1400-update-ref
-> >  #
-> > +#      # Execute all benchmarks.
-> > +#      $ meson test -i --benchmark
-> > +#
-> > +#      # Execute single benchmark.
-> > +#      $ meson test -i --benchmark p0000-*
-> > +#
-> >  #   Test execution is parallelized by default and scales with the number of
-> >  #   processor cores available. You can change the number of processes by passing
-> >  #   the `-jN` flag to `meson test`.
-> 
-> Doesn't the above give the impression that benchmarks are also
-> parallelized by default while the commit message says they are not?
+On Fri, Apr 25, 2025 at 9:28=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 
-To me it doesn't because it talks about test execution, not benchmark
-execution. The comments for each of the invocations also discern between
-tests and benchmarks. I'm happy to hear about alternative ways to word
-this though.
+> Changes in v4:
+>   - The patch series was rebased on top of f65182a99e5 (The ninth batch,
+>     2025-04-24). This is due to a conflict with ps/test-wo-perl-prereq.
+>   - Introduce a 'benchmarks' option. This allows developers to require
+>     benchmarks as desired. By default, we auto-detect whether the host
+>     system has all dependencies available and enable or disable them
+>     accordingly.
 
-Patrick
+Nice!
+
+>   - Report whether or not benchmarks are enabled via `summary()`.
+>   - Our benchmarks depend on Perl, so add this dependency accordingly.
+
+Nice too!
+
+[...]
+
+> Range-diff versus v3:
+>
+> 1:  2375a16c2c0 =3D 1:  174804805c2 t/perf: fix benchmarks with alternate=
+ repo formats
+> 2:  69782035246 =3D 2:  41faa3d9b3b t/perf: use configured PERL_PATH
+> 3:  cca40e9dd0e =3D 3:  87ea3ab1a45 t/perf: fix benchmarks with out-of-tr=
+ee builds
+
+In https://lore.kernel.org/git/aAc8f52rJ8ATncVc@pks.im/ you said you
+would try to paraphrase some explanations about how GIT_BUILD_DIR is
+computed, but it looks like there aren't any changes in the patch
+since the previous version :-(
