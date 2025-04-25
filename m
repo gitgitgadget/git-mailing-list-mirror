@@ -1,137 +1,129 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41BCB25395A
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 14:11:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27D278F4B
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 14:39:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745590299; cv=none; b=fMbz21kmAU7J2Z3j/CiuLo/6Zu5Y3I546xf8FDbJ75rBGzmpncKvsWLr+dkfdwdLJNGaDsDrgEghvkWb7xJy7oNHoHVMTce5uK/slvvf3ZpkhT8WCfYsm1W7o/HoRYi6krjDqeMLPWRy9UaVZ75YNMdvsMtH+zlioXwEatJUAHw=
+	t=1745591983; cv=none; b=dTfQl7JfVIvlK4wixxIZBHlXJGsG2mtgTFdhWKwQOFcleU+Wc8S7DDNadUIzHKnsZjDmAf24QOdrY25e9DBKxJ0WTrXZrao0UVQ5bILMZYVaP/xRMvzNz1zx+SZhMWx5vLtigklX8a2UZqBbHcw7UQ1KtBDAWW04fd4jMwmVnuU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745590299; c=relaxed/simple;
-	bh=g9joRVD5XTGuETwyNLefIzd6wIt/N0u79CFq53M+SMo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=QFPC+asG+6DOEJl9pG7frocbsEOopePPaH6GknZkH0w5Pi1FxAAHVU7lgmH1jl/MZxzAI9nSej24jhuKanZX8aEnrPBwNp3A8OQv6FTxK/IrOyU9JY34yA/oFz6bcbGLSUfBCBO6z4LE/V7LNom4V+i5ZO305HJrMv4ALJzJ+rI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eTc51stf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k2a9QzZ7; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745591983; c=relaxed/simple;
+	bh=t0/j55JittF8rURWUR/X/KIduz6A3mQNXARr8I2B2EA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=YquVUBjIrIsYIJ0PtpCGi4s/oD1VTFj0imHJeSgGe6Jlcqi8Pfzg6znIz6N+dw/rX2Hf9V2XHkQd8rckGMFVeJvo2nmR4Akhp/6flr8BMiURQdG+q5AeE8xmld25lTGL9l+q/ABwFxEe0auFkyJRAmY7fh50SnSfHorC/zyjIeM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SaRbbhG1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vkcq+iug; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eTc51stf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k2a9QzZ7"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id ABF1F254010C;
-	Fri, 25 Apr 2025 10:11:35 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 25 Apr 2025 10:11:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1745590295;
-	 x=1745676695; bh=Nj2ylXZ/MnYe9sD4FZGaD2wJtfUUJsqYhHu1/yMpsns=; b=
-	eTc51stfD8le2nuH8OTJ/XFcOLZlvP8Eb0p5+flijVE+ZfBh75wD2XkM/XVhyrBB
-	S1umm68DOKticB1s3a2IUFbWmqXAkUaq0W1bXdKuyF0RsaO6AcG6yLgnPWJpvufU
-	LOFkCf4rpnLp8NnJpwazuFQRf/2/+2nFvvd8dsNMGZHDqAb2iuGn7KzSXd1acQPX
-	W5vNNjUtlnVIwZDVKVTamzoVSWtRFXFOi3efGYb9rTprAhmvZDk/yMOrVeQ/ZWyg
-	U49A2rxg/vH7s2nsaHy1vpjTsnJsGcrZ2AU9Nx0Gyi7CpC3K9Ct4tXnjUXKyEYlH
-	/hsWcGqZ9rfGSX7EyNJTwQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SaRbbhG1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vkcq+iug"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B7E09254026E;
+	Fri, 25 Apr 2025 10:39:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 25 Apr 2025 10:39:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745591979; x=1745678379; bh=RuhHv+m29U
+	NmwbmiW1t58hnWYP3v1BOy1zItdQx4Q2Y=; b=SaRbbhG1Y/1HmonUaJb7eWYn7J
+	MUPJA18O6DG1HJtFSsu7QK3xuR6hcNNgFV0U1Gk6oiCnHpPodnjINIGoi1Y+85Lx
+	jREGiogapsBsqb0NwX1j3P5kBfKwzkhlTm6HtoxcqzuEM0YLAEhDh0NQPVRqIlz4
+	i1Uh4nRbSXIwWrwWGmYl9cWSqlTkxaO6bRadLnmkeURhCV0oEVJOb5Py1HxLMld+
+	30cM4oql81WIr87Xoa0LlTzz8R85PnQxPSqGZfrDfCq+g0bPBOk4yd6fm0+1Fh5/
+	7RL9ueBVYRLhTbIbvVd5nsd/wb1D7zIElxuKfbin+Z6CGTzWG1FXRZZAl4Ow==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745590295; x=
-	1745676695; bh=Nj2ylXZ/MnYe9sD4FZGaD2wJtfUUJsqYhHu1/yMpsns=; b=k
-	2a9QzZ7SusDKud4wMMw+y9gy5LJpNX0LEsMIEfwuCkfaN3c1aeQVKw5ZXLjwBGFQ
-	yXlMr0cvweKCDSFFMfcfBnrcQlDY7wRk+HicoelQZ8o4kfu6rLd3gSJ2pm0Wk8D/
-	4cYUu284jis/di0xzBksKXAgH8uoRZKfNXywSioZZ2no384HPiofkW6rq/eX7fJW
-	e8oXW7GHXw7nBRTG2O42MxPSua8B3rKKqx4dE3SLSP9ZTthjaZVVgvNZaF/fona0
-	DupWrxDkHMk7oqthdXlMzBUfQ3qyhLE+JJ691ciQcOISmV3rnUKPMRo2jCTpNiyR
-	eAq5wGc6YpPUKkkKbYXlg==
-X-ME-Sender: <xms:F5gLaMOqFfMWs_PvUa_tznGhrCsFg7XyCjNRgQcOIxInG_3leXCY9g>
-    <xme:F5gLaC8DX8Wl4kgwF7B_B59B6NFjp_sXSx6x9goxHHqs1xyfy6qKapwV2LK-MSjcA
-    RGd0mr5dA1jtNhUIQ>
-X-ME-Received: <xmr:F5gLaDTtBA_Ajlkf53nLSQ_cEtGX1Gvnxfi17jpm8Yj8hJq80sAKIP9ZcneQPn5By_2Bdj6TbOg4iLEQQx0FmWAtYagPLm2Dsx1cR1ye>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvheegucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745591979; x=1745678379; bh=RuhHv+m29UNmwbmiW1t58hnWYP3v1BOy1zI
+	tdQx4Q2Y=; b=Vkcq+iugOAgyTjTmzPWirxwWhPinpVy1xgWZft0D5//kvNt7Grw
+	37QekhJtcCxF0ZfKAkdSYkyD8Av1ELS8dnRLhOt3IKQQ0xEsf+/PoeFvdTuddRGx
+	BV1GKyn8VV8cppU+Of+n6teCCZF732vMrWteJpHFGAtTmDhU3f5PTt38uipVrZoT
+	1bhqD1+OkWrecm+GHzZHtCstiPVesWxKd2Kv6O6YSLDCb5hgwAVcILPHt38FJ/NE
+	BNqjv7Zudt/EICZDddfbRBD173pLTKJ5p+H4GkcBLQHsLTx4FN8TYg9aptdsK4Fx
+	J0LtHE/FygI885QgD7msVj/uZIMVp1s1XJw==
+X-ME-Sender: <xms:q54LaML5AK8zV9zixGZ0WGD7ock9r9-SafuUlP6A3tiGGQMDK5oTQw>
+    <xme:q54LaMK_nCbnH6AYN85Be7kKMjMyTIINIYXkuDWOIPOtt-SGzldvdUQYqNUfGjSBy
+    BmfvVdBE_CFrsXG3w>
+X-ME-Received: <xmr:q54LaMtJPj8t31N5hQ9FhznOtvjUi5qVXWMVD-q2aa_9q3YhJyBAAd11O9spIJAWoNH3mUCjrc2zQX-4GXRtNuoiLDpnag1R2cC6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedviedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdroh
-    hrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrh
-    esghhmrghilhdrtghomhdprhgtphhtthhopehpshdrrhgvphhorhhtsehgmhigrdhnvght
-X-ME-Proxy: <xmx:F5gLaEsjCdv81smnsdXuH-9mJcQSyHIeiPp3zi8xG7BptsuulP7Qcg>
-    <xmx:F5gLaEctAUiy_pIwi7G_3dRcyz6sBLHclK4SR7VUA4mRlym5ZqTH0g>
-    <xmx:F5gLaI2tiIcYbaK0BCUILHJ74Dkw-wfw2REnXy7e_B7yWNfjRd04Vg>
-    <xmx:F5gLaI8kuDeSSuIiA4a-8v0Gu_BvMYz2ktkw-sZ9VtbqAJkwfe2GhQ>
-    <xmx:F5gLaI-0Bm708F_eSCKu6-MBATC2NqpVCq_Y9APfYRKGw51GCRhaMnPL>
-Feedback-ID: i197146af:Fastmail
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:q54LaJY52Tk-vaWaxjpxg4Gx04GkPaZFY1hhg59Bg_d7O6ZnRspaow>
+    <xmx:q54LaDYNxjH558g-SB6DmRGnQSG3C9jA24BhRXqPTQBRVTNbrj3xmA>
+    <xmx:q54LaFDA4KMxbVUHxyw4uISNWNpzaW4dDNcK_C3WRsYFhmDPobPEkA>
+    <xmx:q54LaJZT18-e0y5--PO9-gM15xKByQMewpfLuECqtqxe_7lnnTue7A>
+    <xmx:q54LaLq4VlOmjaXdZDIdFk9CqNDXPZyraqDYFWbS59enCF_x-1rYcaih>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 10:11:34 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6118ce3e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 25 Apr 2025 14:11:31 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 25 Apr 2025 16:11:29 +0200
-Subject: [PATCH v3 2/2] meson: prefer shell at "/bin/sh"
+ 25 Apr 2025 10:39:39 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] ci: skip unavailable external software
+In-Reply-To: <aAtdsURaaxYO7pVt@pks.im> (Patrick Steinhardt's message of "Fri,
+	25 Apr 2025 12:02:25 +0200")
+References: <xmqqfrhxtdg9.fsf@gitster.g> <xmqqmsc5rw94.fsf@gitster.g>
+	<aAsNUYUKJZbrMCf2@pks.im> <xmqqh62cwoya.fsf@gitster.g>
+	<aAtdsURaaxYO7pVt@pks.im>
+Date: Fri, 25 Apr 2025 07:39:37 -0700
+Message-ID: <xmqqv7qsuwye.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250425-pks-meson-posix-shell-v3-2-01607a2e9334@pks.im>
-References: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
-In-Reply-To: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
-To: git@vger.kernel.org
-Cc: Peter Seiderer <ps.report@gmx.net>, Junio C Hamano <gitster@pobox.com>, 
- Eli Schwartz <eschwartz@gentoo.org>, Justin Tobler <jltobler@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain
 
-Meson detects the path of the target shell via `find_program("sh")`,
-which essentially does a lookup via `PATH`. This may easily lead to a
-subtly-broken Git distribution when the build host has its shell in a
-location that the target host doesn't know about.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Fix the issue by appending "/bin" to the custom program path, which
-causes us to prefer "/bin/sh" over a `PATH`-based lookup. While
-"/bin/sh" isn't standardized, this path tends to work alright on Linux
-and BSD distributions. Furthermore, "/bin/sh" is also the path we pick
-in our Makefile by default, which further demonstrates that this shell
-fulfills our needs.
+> But shouldn't the failing wget cause an error, too? So the `|| { }`
+> cleanup branch would execute in that case and we can prune the empty
+> file there. So in other words, shouldn't the following work alright?
+>
+>     if wget --output-document=...
+>     then
+>         massage output
+>     else
+>         rm output
+>     fi
+>
+> Or am I still missing the obvious?
 
-Note that we intentionally append, not prepend, to the custom program
-path. This is because the program path can be configured by the user via
-the `-Dsane_tool_path=` build option, which should take precedence over
-any defaults we pick for the user.
+While the above "works", what is "obvious" is that it is way too
+verbose and the merit of going verbose is dubious, especially given
+that the reason that trigger the argument to favor the above
+construct over the more concise
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- meson.build | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+	wget && massage || rm
 
-diff --git a/meson.build b/meson.build
-index a180c66ee69..6a90310a2ca 100644
---- a/meson.build
-+++ b/meson.build
-@@ -236,7 +236,11 @@ sed = find_program('sed', dirs: program_path, native: true)
- shell = find_program('sh', dirs: program_path, native: true)
- tar = find_program('tar', dirs: program_path, native: true)
- 
--target_shell = find_program('sh', dirs: program_path, native: false)
-+# Detect the target shell that is used by Git at runtime. Note that we prefer
-+# "/bin/sh" over a PATH-based lookup, which provides a working shell on most
-+# supported systems. This path is also the default shell path used by our
-+# Makefile. This lookup can be overridden via `program_path`.
-+target_shell = find_program('sh', dirs: program_path + [ '/bin' ], native: false)
- 
- # Sanity-check that programs required for the build exist.
- foreach tool : ['cat', 'cut', 'grep', 'sort', 'tr', 'uname']
+is "massage part should never fail".
 
--- 
-2.49.0.901.g37484f566f.dirty
+We do want to notice a failure in something, if that something is
+what should never fail, don't we?  Not necessarily so!
 
+Our CI jobs are not in the business of checking and ensuring wget or
+chmod keeps working.  If either of them fail, the more important
+part is its practical impact to the rest of the CI job---resulting
+"jgit" file is harmful to be left on disk and needs to be removed.
+
+Another to think about this is to imagine if we are having this
+conversation, had "wget" had (just like its --output-document
+argument) a "--chmod" argument.  (wget && massage) as a unit is
+conceptually a single "download the jgit binary" in this case, and
+if either of them fail, we failed to download it.
+
+So, yes, either would "work", but I do not think longhand is
+warranted in this case.
