@@ -1,106 +1,116 @@
-Received: from mail-ej1-f53.google.com (mail-ej1-f53.google.com [209.85.218.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DE1717AE1D
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 10:17:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27BF423FC49
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 10:49:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745576248; cv=none; b=lDhawIG6pe4fRICSSXQ4S+wO/q2YIfvt35JtvRml0DqNppOrt0gpA0ZQs6KXeczSpD4XRgObNbYtAv5/PxiPpnJZRul7Ze7kFwVM1mJvlg7cB0TdNxhywPcLhi9yAglKnE4JgIomXP+T4SZ2uzB4SgMc53JrxSGyYXJ83V5e9LI=
+	t=1745578162; cv=none; b=VS8GHlWrncLEnHHiWZ7Z+qxIQrKSD1F7dHSgBKOULZSpp9zzTkUue9l36jE9DLw7LnMdSXdudKanra84J714KecBZnhu6GanRqYrp4GAi/CAhEyIzXNRvVSLH+LK5zePp61zOush1msh1Rbkr93Wmm3wQ4MteBfCNMxhYJUO28Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745576248; c=relaxed/simple;
-	bh=fFqx4BPMwEt2UdbpXRITj9YBGcwSg2u/VZnh8WjX2HY=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=f+miTtDVMxctzBXbwm8khiUW7qcrfW39ZnD/KsSux/Wb5RHJXWfJ4SGyHIyStps1xjYQjJvLP0FMiUxyKAbxbkSR25gmayqiot374zJRQDBsYIeowYsEUVEKGESPeluRSwUWYpDCx55Lw2S15I24Aw+/90l1meTKMcYmEa0e8/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=efhuNjE4; arc=none smtp.client-ip=209.85.218.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745578162; c=relaxed/simple;
+	bh=S+gD3tdJgcgq+ux0hrTFc3IMaZKSmKMfYBdzkRFVmlo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TybQ6oIc7mT/KUdreeqvyqshvHdG9eYV1on7koklWdZgcIajvNIc3qz9zkJChV/TH5d2xM10MYhka1r/3RBPzlJ5fbBfKiXOUJe+npvqExdT9GIt4Glh1NaX3V7Nu0E5yDwBk6ofVjTZ3PjI5dyApDIb+ml0jrW32/+WQay3kxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fmAZVwSN; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="efhuNjE4"
-Received: by mail-ej1-f53.google.com with SMTP id a640c23a62f3a-aaecf50578eso315152366b.2
-        for <git@vger.kernel.org>; Fri, 25 Apr 2025 03:17:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745576244; x=1746181044; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xit7V3hGFQXukM/Glp/Lzh+n0JrbWvc1mkAEzqJrEgk=;
-        b=efhuNjE497gdCxQgaHhn59BPoT9D4FyPIu2zdmE6rvlGW1es+mBwDp4BcHbVjQ0Zhq
-         3Qdz5hG3pgTC22579dMi0w+O/gcUxkqHCZrJAde5mHd5dBwnlpNqTJRMyJG3SytMWggj
-         jwsxOTYJJnirrGriY8rmsyjFvM44O6eNIqTsJfu58oA5ZWsaQetPU7vKWRZmQ4J8mkYM
-         BtQX+y4osvnoEhq/gng0EPci2WaicNnZ9wS/lmvggL0Hr90knwyQMJPEaC5LC9CKsVpr
-         RO6ud418ftVV6AB72MNMU3VG7wF2xru0a9n0GQYPF4EHPiAIdyBRYtAQURf2Fl18ookI
-         MSbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745576244; x=1746181044;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xit7V3hGFQXukM/Glp/Lzh+n0JrbWvc1mkAEzqJrEgk=;
-        b=M69xSGhA569EImePcNFGv3yf4j9hl9uQV04I/NGnleJ6EKeS1At5blSAzGL/Sy1M4O
-         vxSM0MB0PZAmwsn5igaWw1StLDKivrbMMsdvyQsSIdFDWZSb9hl7dZ1ajANwH5K9iWqm
-         tQ5kVC583DFyIYIAzl7IeOtjTUyrCS9zljOiOXV+MxpO83TkD1/znw8WFQnXDHeLCSMO
-         c8Wz+kaw30CNhoMp/cifimhfHWXLmk5nxkukr1lY8OUFKPw+x96S9zUOQwREmbTaFe9+
-         EWPyhfbHj8WBmgQwXhAmUfZY5TIAiWckA90Zu9i5inFBU/SJAqVBtMO0+MjxmSkA7asy
-         J3UQ==
-X-Gm-Message-State: AOJu0Yx337C08ml987cfhfJBvsoE9spXs16maBKW2u1pxvPKGgTJIFuY
-	LozShpLkqOSHlHrHFrHKev3k/6wI1eydShSKdEZ8RcrwM24c7BIXoUCG
-X-Gm-Gg: ASbGncso+gJ1BVG443m644aaxMf6AkFNqwrpyBa0zIwKJZEjlg0vC1SL4ncl5PfD+Xi
-	J/sZxgxBJbLuh6knYXWomtLI6TCvE/kjtMOY0gve3Dgt469h4spKUUqCGA36gv+sgbMC39oezVQ
-	2pEZJyHDhEulXXZN4K244AJ7uOstLcsScE1eAelaQyVoOhFXWMhMNIHLxlgpA/Kkxp+0eu30yny
-	hSuQs3/zdzKYSBkmhqYP+F3Plu2T5PsR50yTZ9YiLYYnzKlQgj0eGHebdwG5x3EVumulVV3c8D/
-	elHj58jaoQqVuNVJNtKQbHEiOsFNyK4FIBnsrfobBEWIs+MltMca7Bp/bwt7uOMI5rhmkxumzzs
-	RI8Ug4GoRzIZTXR2RnDK5HaVTMmDmPolxi+Il6rz1b33tzTO+PciGjQuNSQ==
-X-Google-Smtp-Source: AGHT+IHKXoXFNdVL3OSNLM5EINQD+aUj/21yGlVLSeyjWddNv/Et639EqYTtpIJhmzqBzPnsbny4vw==
-X-Received: by 2002:a17:906:d54a:b0:ac8:179a:42f5 with SMTP id a640c23a62f3a-ace7108a276mr161763866b.14.1745576244194;
-        Fri, 25 Apr 2025 03:17:24 -0700 (PDT)
-Received: from ?IPV6:2a02:a46c:6903:0:cfff:fe6:73ac:966f? (2a02-a46c-6903-0-cfff-fe6-73ac-966f.fixed6.kpn.net. [2a02:a46c:6903:0:cfff:fe6:73ac:966f])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ace6e41c898sm112891666b.7.2025.04.25.03.17.23
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 25 Apr 2025 03:17:23 -0700 (PDT)
-Message-ID: <bb6192bc-4217-4e68-b6a7-c6aab395c3ec@gmail.com>
-Date: Fri, 25 Apr 2025 12:17:22 +0200
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fmAZVwSN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1745578152;
+	bh=S+gD3tdJgcgq+ux0hrTFc3IMaZKSmKMfYBdzkRFVmlo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=fmAZVwSN41sIe46kY5vWysVoUZ7LWWigvlkQeDKIFK1QO0rfy7AmLBV0mMgEbdwMe
+	 2lhIUKVfH9k6GRowbAvL1WxUr3r3kwYqR5VSJl0XnudT37HBgyLS800IIpZpwMX0ya
+	 aNd6Y3XArtGI6ZD+EHRU5Jovdpe/MZQREY17evFqOQpMPbwVVqH2Iu7MAvLOVeFCp5
+	 /PWMmljcNql8f0c1ibK0T/jyfOQdPU4EBSm/0HpOBAz4cOU1Dh0RCFilYmVnUCMiTj
+	 ZJB1tXJ52YZy3l1sj3xh8Rj4z2i2biN0Kj4QVdg+txD4T4XK34GlzQhBPbqKAOWQ+g
+	 ACm2/o5aEPF5QReRLKQA3ceqtBUJUbEPHbCOrRgaDCgfk0QNJ4t3+hg0bfrMqRoZ1/
+	 Q5tMr33bC9y5VGO/DyEmUjszkfXIuxJqf9HYpTvxXUMv/bHt2k2nLrC+gz31kY+9Rx
+	 l5t8jY0Ipyi3KT5rs3b9lvvAh1gbMnhPuOpF90KwVibMJ2sefQT
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:d5c6:e1bb:f3a5:7a20])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0089120114;
+	Fri, 25 Apr 2025 10:49:11 +0000 (UTC)
+Date: Fri, 25 Apr 2025 10:49:10 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Peter Seiderer <ps.report@gmx.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v2 2/2] meson: prefer POSIX-specified shell path
+Message-ID: <aAtopiMkJpF2RdjG@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
+	Peter Seiderer <ps.report@gmx.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	Justin Tobler <jltobler@gmail.com>
+References: <20250425-pks-meson-posix-shell-v2-0-fddc6123511b@pks.im>
+ <20250425-pks-meson-posix-shell-v2-2-fddc6123511b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/3] send-email: implement SMTP bearer authentication
-To: Aditya Garg <gargaditya08@live.com>,
- Julian Swagemakers <julian@swagemakers.org>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
- M Hickford <mirth.hickford@gmail.com>, sandals@crustytoothpaste.net,
- Shengyu Qu <wiagn233@outlook.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN0PR01MB95884F106749628745FDFBB7B8852@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
- <PN0PR01MB95880D1DC65D0356F93B0C55B8852@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
- <CACOoB6jE=DgpYYaudhqTVDRd2SCz++aog7QYwTQs6-MAD8dBuw@mail.gmail.com>
- <PN3PR01MB9597922F495805CA728A0B31B8852@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <D9FI2S0NSC40.28VZMYOR6M8DO@swagemakers.org>
- <PN3PR01MB95973DC8D1505AC041263F0EB8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Language: en-US
-From: Erik Hulsmann <ehuels@gmail.com>
-In-Reply-To: <PN3PR01MB95973DC8D1505AC041263F0EB8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-
-Hi Aditya, Julian,
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="gSGnO/frsapWRZFe"
+Content-Disposition: inline
+In-Reply-To: <20250425-pks-meson-posix-shell-v2-2-fddc6123511b@pks.im>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-On 25-04-2025 11:45, Aditya Garg wrote:
->> Aditya, do you want to create a pull request on perl-authen-sasl, or
->> should I?
-> I've sent a PR here: https://github.com/gbarr/perl-authen-sasl/pull/19
-Thanks for the contribution!
+--gSGnO/frsapWRZFe
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I've reviewed the PR and added some improvement suggestions as well as 
-some questions. Good to see XOAUTH2 move forward!
+On 2025-04-25 at 05:47:45, Patrick Steinhardt wrote:
+> Meson detects the path of the target shell via `find_program("sh")`,
+> which essentially does a lookup via `PATH`. This may easily lead to a
+> subtly-broken Git distribution when the build host has its shell in a
+> non-standard location that the target host doesn't know about.
+>=20
+> Fix the issue by appending "/bin" to the custom program path, which
+> causes us to prefer "/bin/sh" over a `PATH` lookup. As this location is
+> specified by POSIX this should make us pick a better default shell path
+> on all POSIX-compliant systems.
 
+Can you provide a citation for that?  I don't see that in the POSIX
+1003.1-2024 directory structure document[0].  More specifically, I think
+there are some proprietary Unix systems where `/bin/sh` is the original
+Bourne shell and is not POSIX compliant and some other path is the
+POSIX-compliant `sh`.
 
-Regards,
+I'll also point out that we require more than POSIX compliance in that
+we require `local`, so even if `/bin/sh` is POSIX compliant, that
+doesn't mean that it's suitable for Git.  `/bin/sh` meets our needs on
+all the Linux distros I'm aware of, plus the BSDs, but if it were AT&T
+ksh, that would not meet our needs since it doesn't support `local`,
+even though it's POSIX compliant.
 
+[0] https://pubs.opengroup.org/onlinepubs/9799919799/basedefs/V1_chap10.html
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Erik.
+--gSGnO/frsapWRZFe
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgLaKYJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ0ub0BNKpxm/Il3NLUhRqcL/Wry5czjFg8msbYSjFhkb
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAADayAPwIyOp5MYur0cMvZ1sDVz1ap+8M
+K6NfpAQpqxTmIC6nngEAlvkMgYWlePopE3cZIb4qRg8s6vlrlCW7e3Oj03PJ6Aw=
+=pkRj
+-----END PGP SIGNATURE-----
+
+--gSGnO/frsapWRZFe--
