@@ -1,53 +1,53 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F27D278F4B
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 14:39:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41EC22472A6
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 14:41:52 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745591983; cv=none; b=dTfQl7JfVIvlK4wixxIZBHlXJGsG2mtgTFdhWKwQOFcleU+Wc8S7DDNadUIzHKnsZjDmAf24QOdrY25e9DBKxJ0WTrXZrao0UVQ5bILMZYVaP/xRMvzNz1zx+SZhMWx5vLtigklX8a2UZqBbHcw7UQ1KtBDAWW04fd4jMwmVnuU=
+	t=1745592114; cv=none; b=exwnEUHuJ2LYD1GlOX+v5L45CKR+XfJFHO91kpCJgISUfXwBjPVqyeku6X6Xk4QQbSadhTnRVcCLSy9fcRKOd1WgFUCJuruKieAi9CGLheVqgnxULWh2AAx53dmSTFGOjH4m6W7c1B3GgAOxikFzFiOtLDpr2+AW8GV4zL9DYec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745591983; c=relaxed/simple;
-	bh=t0/j55JittF8rURWUR/X/KIduz6A3mQNXARr8I2B2EA=;
+	s=arc-20240116; t=1745592114; c=relaxed/simple;
+	bh=AjehKgr8xdNDL3gLBBRz8CpEVC/TdoFt9NAIz7bPBHg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YquVUBjIrIsYIJ0PtpCGi4s/oD1VTFj0imHJeSgGe6Jlcqi8Pfzg6znIz6N+dw/rX2Hf9V2XHkQd8rckGMFVeJvo2nmR4Akhp/6flr8BMiURQdG+q5AeE8xmld25lTGL9l+q/ABwFxEe0auFkyJRAmY7fh50SnSfHorC/zyjIeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SaRbbhG1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Vkcq+iug; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=oFSC9eT9brr4WlblUvswFdSy6nnQ9tsFs3YHIFmgrby0D3C2HYZfjUqj9FKCqJMvyMINb1SgYeoccBqf6wLYMGS65BmhwvmAeOSadZz9aLCh3pfELkDu2X1jsofyGSICB4zxhqdTIdTe6NZYM/Z69pAvUXZjGDOuy4SM52tnkgw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SmXR3Tp7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gL/6CSRf; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SaRbbhG1";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Vkcq+iug"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B7E09254026E;
-	Fri, 25 Apr 2025 10:39:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SmXR3Tp7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gL/6CSRf"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3E8E625401DF;
+	Fri, 25 Apr 2025 10:41:51 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 25 Apr 2025 10:39:39 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 25 Apr 2025 10:41:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745591979; x=1745678379; bh=RuhHv+m29U
-	NmwbmiW1t58hnWYP3v1BOy1zItdQx4Q2Y=; b=SaRbbhG1Y/1HmonUaJb7eWYn7J
-	MUPJA18O6DG1HJtFSsu7QK3xuR6hcNNgFV0U1Gk6oiCnHpPodnjINIGoi1Y+85Lx
-	jREGiogapsBsqb0NwX1j3P5kBfKwzkhlTm6HtoxcqzuEM0YLAEhDh0NQPVRqIlz4
-	i1Uh4nRbSXIwWrwWGmYl9cWSqlTkxaO6bRadLnmkeURhCV0oEVJOb5Py1HxLMld+
-	30cM4oql81WIr87Xoa0LlTzz8R85PnQxPSqGZfrDfCq+g0bPBOk4yd6fm0+1Fh5/
-	7RL9ueBVYRLhTbIbvVd5nsd/wb1D7zIElxuKfbin+Z6CGTzWG1FXRZZAl4Ow==
+	:subject:to:to; s=fm2; t=1745592111; x=1745678511; bh=c3Fk28B0Nb
+	gTedc+pZtJ2huB28Xk1ZP/qlBY6UDc53s=; b=SmXR3Tp7P6db7uEIQe/dYTeHMi
+	WQLIQS5oKgqSYq9HzkkqeODul862gCwq3nk1Uh4aC5ioL+p5IvnthfGJgl26/OcH
+	6vG8G3PWVI+TxW/fBgzsbqdrJ5Aw+hw+6lFp00Zy8ZyVfatxyQVouy7UwXeLNj7y
+	Q8OXPqou/burFMilyllpC4mFVS0pb/L9w/htKBDJg0+IDjLkY0BAMRv+sKRXqssE
+	ewMLQ7SUYR4QNh902LSiea/nHczpOIfsJe4v3gecd5MWcGHv0s3o2PEeNYwoI2IZ
+	oWLoD1hDxRc35N8LdKrAVQmvV003UbdTEEIiUouy55WrXF4Hje5xNLLq0c8g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745591979; x=1745678379; bh=RuhHv+m29UNmwbmiW1t58hnWYP3v1BOy1zI
-	tdQx4Q2Y=; b=Vkcq+iugOAgyTjTmzPWirxwWhPinpVy1xgWZft0D5//kvNt7Grw
-	37QekhJtcCxF0ZfKAkdSYkyD8Av1ELS8dnRLhOt3IKQQ0xEsf+/PoeFvdTuddRGx
-	BV1GKyn8VV8cppU+Of+n6teCCZF732vMrWteJpHFGAtTmDhU3f5PTt38uipVrZoT
-	1bhqD1+OkWrecm+GHzZHtCstiPVesWxKd2Kv6O6YSLDCb5hgwAVcILPHt38FJ/NE
-	BNqjv7Zudt/EICZDddfbRBD173pLTKJ5p+H4GkcBLQHsLTx4FN8TYg9aptdsK4Fx
-	J0LtHE/FygI885QgD7msVj/uZIMVp1s1XJw==
-X-ME-Sender: <xms:q54LaML5AK8zV9zixGZ0WGD7ock9r9-SafuUlP6A3tiGGQMDK5oTQw>
-    <xme:q54LaMK_nCbnH6AYN85Be7kKMjMyTIINIYXkuDWOIPOtt-SGzldvdUQYqNUfGjSBy
-    BmfvVdBE_CFrsXG3w>
-X-ME-Received: <xmr:q54LaMtJPj8t31N5hQ9FhznOtvjUi5qVXWMVD-q2aa_9q3YhJyBAAd11O9spIJAWoNH3mUCjrc2zQX-4GXRtNuoiLDpnag1R2cC6>
+	1745592111; x=1745678511; bh=c3Fk28B0NbgTedc+pZtJ2huB28Xk1ZP/qlB
+	Y6UDc53s=; b=gL/6CSRfx8gFMvcXNYfWZm5+JEsI9q68vaQsYBLvMudAMeS3DKA
+	hMOryaL6oXb2Q2dux5xEWSLX9QN36Lpob9+JTMd0hX6/fjEMpopnd642tTVcpR0/
+	JrLBictjKzdbP1yHjuUdCnO1F7OJctxuFvH4xEO833zXw0nJlEzjpjtvAaLmTsru
+	kv+tDLyzLGTysdJC2ResY3yjdKzhs+7nHt8VLBchrym08uMy3ThsUZR2C+mquHFb
+	i639bjxtTqsf2KuWDdQ/ni6uHQwYS/ZA61m215VAgIGAKDDmLTRzq+z7tRe0yztP
+	wKtuVTIh6OzK34YDHtz8oMZ4MQFjStgFHXg==
+X-ME-Sender: <xms:Lp8LaJl5nsZWMQOxiOddmrb5peO0KNO4aTcjOP03Gwo2k9KCXiHbpQ>
+    <xme:Lp8LaE1YuwEMSKxizFafAahiPXzwLDhRgisVzQFD9UcfPYkwl_URdUfBBbJBthImh
+    tDAPQlBXk3U5WCazw>
+X-ME-Received: <xmr:Lp8LaPoedjJR55Vp5T8_XUv-m0d51HgTFA2Q9OUf5Qtzcvvds5Xnpk2y56xbK6me072PGXcJyvWOHBQv-wjvaL-Ws94T9FXeaduG>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedviedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -56,28 +56,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedviedtucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:q54LaJY52Tk-vaWaxjpxg4Gx04GkPaZFY1hhg59Bg_d7O6ZnRspaow>
-    <xmx:q54LaDYNxjH558g-SB6DmRGnQSG3C9jA24BhRXqPTQBRVTNbrj3xmA>
-    <xmx:q54LaFDA4KMxbVUHxyw4uISNWNpzaW4dDNcK_C3WRsYFhmDPobPEkA>
-    <xmx:q54LaJZT18-e0y5--PO9-gM15xKByQMewpfLuECqtqxe_7lnnTue7A>
-    <xmx:q54LaLq4VlOmjaXdZDIdFk9CqNDXPZyraqDYFWbS59enCF_x-1rYcaih>
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvg
+    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Lp8LaJk4ezvoMA8QzwsbnPMobtQBrvVFHK7X8mHbHVABpXB0N3blPg>
+    <xmx:Lp8LaH1ToB_kPuQltTU50NvTvifVjbPlSQq3PitTR1JnfVFBhwWAQg>
+    <xmx:Lp8LaIt2aGCD9I_blAR8BbMJm9f_ecsmBsCj3yOxtxX0-LUeCaIyKQ>
+    <xmx:Lp8LaLXsvCtCYbSR6pgoWHj6EGOnAxr2dyoVPozx_hXUrEnvKdXepw>
+    <xmx:L58LaIrIAA9pGX1g5_Z2yPuFwIiMghyCe08nTemcKsgpKdXznDqRGajm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 10:39:39 -0400 (EDT)
+ 25 Apr 2025 10:41:50 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
 Subject: Re: [PATCH] ci: skip unavailable external software
-In-Reply-To: <aAtdsURaaxYO7pVt@pks.im> (Patrick Steinhardt's message of "Fri,
-	25 Apr 2025 12:02:25 +0200")
+In-Reply-To: <a80a320b-80ca-3d61-a4a2-f2528e7ca053@gmx.de> (Johannes
+	Schindelin's message of "Fri, 25 Apr 2025 14:01:20 +0200 (CEST)")
 References: <xmqqfrhxtdg9.fsf@gitster.g> <xmqqmsc5rw94.fsf@gitster.g>
-	<aAsNUYUKJZbrMCf2@pks.im> <xmqqh62cwoya.fsf@gitster.g>
-	<aAtdsURaaxYO7pVt@pks.im>
-Date: Fri, 25 Apr 2025 07:39:37 -0700
-Message-ID: <xmqqv7qsuwye.fsf@gitster.g>
+	<aAsNUYUKJZbrMCf2@pks.im>
+	<a80a320b-80ca-3d61-a4a2-f2528e7ca053@gmx.de>
+Date: Fri, 25 Apr 2025 07:41:49 -0700
+Message-ID: <xmqqr01guwuq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,43 +88,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> But shouldn't the failing wget cause an error, too? So the `|| { }`
-> cleanup branch would execute in that case and we can prune the empty
-> file there. So in other words, shouldn't the following work alright?
->
->     if wget --output-document=...
->     then
->         massage output
->     else
->         rm output
->     fi
->
-> Or am I still missing the obvious?
+> That is true. It would probably also make sense to mark the message as a
+> `::warning::` on GitHub (and the equivalent on GitLab), so that it is
+> shown a bit more prominently in the CI summary.
 
-While the above "works", what is "obvious" is that it is way too
-verbose and the merit of going verbose is dubious, especially given
-that the reason that trigger the argument to favor the above
-construct over the more concise
+::warning:: may be a good idea, but I actually think we should
+remove the message when we say "ah wget && chmod failed, so let's
+remove".  At the end of the same script, there already is "ah jgit
+is not there, so let's warn" code exists (and it would falsely say
+"jgit file exists but cannot be executed" and take the whole thing
+down if we do not remove after a failed download).  The ::warning::
+should belong there.
 
-	wget && massage || rm
-
-is "massage part should never fail".
-
-We do want to notice a failure in something, if that something is
-what should never fail, don't we?  Not necessarily so!
-
-Our CI jobs are not in the business of checking and ensuring wget or
-chmod keeps working.  If either of them fail, the more important
-part is its practical impact to the rest of the CI job---resulting
-"jgit" file is harmful to be left on disk and needs to be removed.
-
-Another to think about this is to imagine if we are having this
-conversation, had "wget" had (just like its --output-document
-argument) a "--chmod" argument.  (wget && massage) as a unit is
-conceptually a single "download the jgit binary" in this case, and
-if either of them fail, we failed to download it.
-
-So, yes, either would "work", but I do not think longhand is
-warranted in this case.
+Thanks.
