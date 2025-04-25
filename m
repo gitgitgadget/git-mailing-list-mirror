@@ -1,531 +1,187 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011030.outbound.protection.outlook.com [52.103.68.30])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944D4219313
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 19:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745607972; cv=none; b=qAdnc31OT5CUDE+OsI231Y4bT9k0HxfdqjE+ThyIR3TnfQFtPvESrdNiYVfU0zldMSK6QX56uVww0Bb75YvW+ywOJoG3GPpe+T5Ro/5mmwdgv4pUttBRpGSaxvQ7NE9nGDtszpdDzc1oZOXYHp+eXWR3wgY5quQqxjs618eSdG0=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745607972; c=relaxed/simple;
-	bh=e4cmo86n8nDiuszDyN4FsuJnvE5NcL9pUv0mgW7OGlg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=sOrIbdLYkMD269N0LvHC3RuLExhXT5oeheMeaftXwx/QR5p4zK3vglnk7kaFZaj/yGIh7UXN/ARHungoCwL8AF+VYfb2JJjrfIYi4C97J5KykD9WVLIv+Dv9keUDjTlXFh2Ki2x9yr3nxriMHlTuxC1bEefJ7/eOatYNsdWViog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hkRb63fS; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905741E5B7B
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 19:08:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.30
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745608116; cv=fail; b=Q4wtifEWCipjEODB4BhmvJ/76Yn9DnNhyZljHLiUTWP5oh0ua4porKb+BVlgALSjCl9DkD/wIVGH9BVIxAHT++B1Ul+8WL+0XljN9qMN4XMLaJ675z1qkch1s49mKQtA0XHUhUH4EY4M2HcWEIaNCQvoMAEpqXRlI2/XdQtDTsY=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745608116; c=relaxed/simple;
+	bh=jeq9Em7l8KUOy969BGhGhpZ+QjftIKnKVXrevkj0LpQ=;
+	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=U4aaXDMgQ16m8KIILMGfXva3vRBgteMzfKIJIPk55uzk6TLuf6da+kwwckZWCOAAPaOwPsMinv32Xwh2m16t78E/JqZHD/+9D2iuj0unJjvewmV5A79kY0Zh/B+S4j8uRGNyeeJMzxJ32wF//Qj/JiZz6JSNHVebHh2oea+xs54=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=s6fn6dA7; arc=fail smtp.client-ip=52.103.68.30
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkRb63fS"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39c266c2dd5so2729423f8f.3
-        for <git@vger.kernel.org>; Fri, 25 Apr 2025 12:06:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745607967; x=1746212767; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ef/sHKB3s9E8tyYCAfO6CgIV0OAxuAu29oidyyNDeEg=;
-        b=hkRb63fSxpLlGSCHKrPoUEdX7pKCtOtS2Pjh7s1H3m0ykcxzxSkQRZLKF0+Lg0iIrq
-         1M11Ynyaf2XWdz53zPWweob3y9YvTxY2ShpobZQQYU7W78dsGyVVooUiWFNXAxoIRQoW
-         ZH3bZQKB3CSAlRbOEm2ffVkmlBZe/80Nroaq208+2cgtW34UCqUT8YimxncfA5AAnZSy
-         7F0Zmy2WguV36kPvdi5T1QuZNNbNqM0Rt4Pz6CZX3PdwkX+D1qAGOyp1HmvCXY4NpKzT
-         f2s6eh3X91hkbvi3zwNNRFDJW42nCjTXZPrKzkaK0dIGT2wCm6ZUn+MMxpuHLx/Bsvvf
-         Q5gQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745607967; x=1746212767;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ef/sHKB3s9E8tyYCAfO6CgIV0OAxuAu29oidyyNDeEg=;
-        b=cJGtbLEm/t1AD+j7vkuPMB3Rmw74TPG+TzHBW2x141hbchVDtoxi2f5p5OBOpv7gvW
-         jV+zwHYWLYwcBVJ/j/kYDSWBNl/pCAH5TMpHsHwNaOoDdWjkAu2O9OwoezN52dH5N9Pv
-         x04mGaPwCznQQg3dN19bPBJiIjvmvURmwDaPqHe5S5cD4uLfU4l9vIomteFa/4GilPtd
-         4goVKkQbZIm6ySOxgvC4fVaQvzAGO6WW1QFstdl6Z2FMKMiqiuzMZEfosT61VMkH72C2
-         Pz8Oy3Og0U9spZvKQFzLpuBHQDwGYZvooWyAt/lg8a7EPNbWrnusZor5/Tpy7qwVC9Fc
-         bt5Q==
-X-Gm-Message-State: AOJu0YzhrJcYO/Mw0HDJSLYpi8p2N7BJ5ie6WZaGE8B8T8E0kWpie6cS
-	BaNHPAHrhs4SL6hY4gnd1y4ywjeN4QAErs8kS8hcPmDKElfG1OZjWaSMsQ==
-X-Gm-Gg: ASbGncvYyRZfk6XrsA/s40VTVCsj3mvxBnPvj0qmUw7WcX1B9t1odbPoNl1NC/KRliz
-	61f2bP4XfZhXMFoOC4T/xehDszFzWgFUJZY/BpapEPAAPnm3jbVQQDYzBIamk/sdYSwyjpm1isc
-	UQLDhQiIAx0qlbWHV5trkYvlzstnN4AhYxtM3IOVVtdAvWDRCQpFLLpYxfyrJUPGbovIobRItz5
-	/GrALNrVi7bbkowJh5og7WTdXy5ffonTE9nfLRxua//IkbzFRnD4/ijyyVxBAl8VqRjkS5rUcBx
-	kJfZEctReOm0SngpisUwW32zdjb4yYe3jjnY6QdBUw==
-X-Google-Smtp-Source: AGHT+IH4/opE4q70V98Uuh2oOdw8/blXCLpu5bSOavqZ45zpSpqu1i2UesDOLdSpCjOipntxmPfJyQ==
-X-Received: by 2002:a05:6000:4029:b0:391:466f:314e with SMTP id ffacd0b85a97d-3a074e2e6aemr2894211f8f.16.1745607967063;
-        Fri, 25 Apr 2025 12:06:07 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8c7fesm3145405f8f.6.2025.04.25.12.06.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 12:06:06 -0700 (PDT)
-Message-Id: <6957ee2fed2f04ad7cd02e5785eb89a1a55f81f5.1745607965.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1897.v5.git.git.1745607965.gitgitgadget@gmail.com>
-References: <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
-	<pull.1897.v5.git.git.1745607965.gitgitgadget@gmail.com>
-From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 25 Apr 2025 19:06:04 +0000
-Subject: [PATCH v5 1/2] bundle-uri: copy all bundle references ino the
- refs/bundle space
-Fcc: Sent
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="s6fn6dA7"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=H+hqBs8piHPzEcf+P2/GIVXe7WR7Bq6c8byx3MuxWzwHEa0oYOccFzTiKv4Ee45QbAjgi3qYn1a68+qYjf6LoVrIjXmMxJj+OjsFdldsY4KfZ0qdZ/s4C/c2V8YocQDikJRrT+NaI3c5Ef4MvSDRN9FemUcPXCsqOIzJQ+eZKqrsX8p4FVbQlCEZ9rm5/FZeXN0np3VtEk/FHVIle1XHd9jI0LQMfw+Lc7Hsz/i7laTm0XSoHr2nGN+Kmaaif14YjGPHZSU325Oi2JEYELIHJ6iz4vRKP6+JkU3SoUXtklCEerNNsj0giu7oh7X4WHBBtuuM6plBf6E7FrNTfs6Q+g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=rbT9zFSpwyVpMcpKq+WNMLj1ADydwq59Q0LELKZ27z0=;
+ b=p376lfyY2nJerMWYcReX8uMQYw3Ko0VIUe2gZTf5IzCT31i5K1wqyXYuUQQaYKacHxeXzxTVLd4rfuLBPgbVCpaKQnUMvHWg+rwrjr6rCN/uursGtwtTDUH//YCuyoJHvF1DZOVBipCzVqwof16qj96U5gWt7fF3Rha5S1N2GRENTjcPvfntEhxNRPTAKf3yq1NO+ViJIneJ6nDBhkt1FPCU5Rvy4VlWgh+MBcYldPftOV2578EyYJrNFPLyoGldlNBn1U11g/sJWhDzdG96oBZunM+hQJditJNX0eUE/TapY3yoyBxV9GqFXY6vExttHaIiGIMTpU+3gIALKIt48A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=rbT9zFSpwyVpMcpKq+WNMLj1ADydwq59Q0LELKZ27z0=;
+ b=s6fn6dA7UWpGwy9ZXtqoyHqX9UcxFPd/fWHFC/P8K1B0xqHEwT0KY7cmlFN7iPViPHmQHn62Q6oEQ72SAOhPSd/KaLYKn9YjIOc6l20rQZD7PjYpEQfr2SbRpN/OwIFEuQVz55/Dixmw0WH5FCCZdrFOkvcsBdc9e8riqFVAKPvFkCAq6AeFuxPKS0lnSWOnBUbwM71FQYCp4rJmzjwOLDlG/jhuyAmWnaAPpLIKjvX+2lD0HZlzZwV/vBDT2BnGwlpsgzfkPLmLtQc4J/jBHB+tlybwmzVgTYgsCJsVKlY4o9ot96+QYGAxYLaU0FTZl3eQtD2dlrbQunUH+KYS8g==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by PN2PR01MB8995.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:15e::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.27; Fri, 25 Apr
+ 2025 19:08:26 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8655.038; Fri, 25 Apr 2025
+ 19:08:26 +0000
+Message-ID:
+ <PN3PR01MB9597693A0419435C31606636B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Sat, 26 Apr 2025 00:38:23 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/1] send-email: retrieve Message-ID from outlook SMTP
+ server
+To: Erik Huelsmann <ehuels@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Cc: Julian Swagemakers <julian@swagemakers.org>, git@vger.kernel.org,
+ M Hickford <mirth.hickford@gmail.com>, sandals@crustytoothpaste.net,
+ Shengyu Qu <wiagn233@outlook.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB95973F4B26A8CE2BF17A3AB1B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597A549B8A6752F2F828266B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597D4949EF555E2A96CE745B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <CACOoB6irNaLLsRRf-aEsRbAmnvLJPFhDGnD0j_D9fY_ZbgAL6w@mail.gmail.com>
+ <xmqqtt6ctbim.fsf@gitster.g>
+ <CACOoB6hh_jWqC3pxiVVAkKN9+mPVUeUodKqFRmMe_Da65a6Bdw@mail.gmail.com>
+Content-Language: en-US
+From: Aditya Garg <gargaditya08@live.com>
+In-Reply-To: <CACOoB6hh_jWqC3pxiVVAkKN9+mPVUeUodKqFRmMe_Da65a6Bdw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PN4P287CA0126.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:c01:2b2::9) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID:
+ <de58e5d2-ecdf-424a-a7f3-4fe1a2529e03@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Taylor Blau <me@ttaylorr.com>,
-    Toon Claes <toon@iotcl.com>,
-    Scott Chacon <schacon@gmail.com>,
-    Scott Chacon <schacon@gmail.com>
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN2PR01MB8995:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0e3cc5f9-662f-4563-b6b9-08dd842c8e94
+X-MS-Exchange-SLBlob-MailProps:
+	laRBL560oLQowKaVx7aWRf9b2EXVRKJlE/zJN0Yhm7N+IQgWbLHEAzVSXfJOsD1vzXyke2VkD2M6J5KBf55VZdevOSMF0+XpZsCAvfiaEAYUcn8H8STlLE7E5b04aHS8UyUAHKcvJypNGjZp8EO4qKlop20PVnkXSLuX6Yn9lxXXr43u8VZk2Q7u790J4X3niifxKexzXS2s3h0xnRYVfqToMJNrmWIXdEOdZP1Ui5e19hkyaEwWouqKNrQJhoGGUlFTSFfKpmq8ykQRvFltdpGsxyxiWSlUS4kndfoD05bgd6n5uDcncbGB6gkmI+mTLAauLb7ictnkuSUtic7T/JWHIhApvTalhoq9nfEGBS3OMMPM68pFP6OPAhklN32OsumDsnIC9ID4R78AyeTFKhZ7/DuTfiaDmpAIdnaWDdqEUYlL2ILaHQnFYauzOga7Ns/fva9oW4TYHGhOtYRyXuAzyzHeykOjmFn3zon7rteViBgKC4a+m0v9w92Mo+h4aM+4PRL3bZrdu1B56OGHMBJTMPGcgX2VZOxo4EgcAVbPBh9wvvb6/4sUCEu5DZX52bQyqfKBg8eOYEiDcU6A5APscp1xyosU/fugg6KAzDvDBj4t428zPna3l3qVJo4Vr2sGN1+6nHqMTLO1pKXL5AakTOW+lvyh0liTH9yO+dHMa8ivGGe/1xyrMgSYJk9wX56+ZLijy9/kKiHFrlIa5wlirendd735GMfNS8meEIlotX6rF6/51A5gVPYRn4DeO8pV8aHp80T8mKBeonwnHsXXo+gG5Kbu
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|5072599009|6090799003|15080799006|7092599003|461199028|8060799006|19110799003|10035399004|440099028|3412199025|41001999003;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?cmE1MzFPUjlqWmdIK1I2ZCtiTDhJYkwxb1VsVkw0UjV1VmkzV1Q2OGVUcnJD?=
+ =?utf-8?B?MjRhSkRoMm9XTkRURnhXNEpqSmVabVB5NFhNdFNpaTBERHRKRGtrVGpTQk9l?=
+ =?utf-8?B?OXB0OWRKcENaUDU0WGdVKytOekwvcGYzWVJub29kU0tmYVZ1cXNOL2VoVDJU?=
+ =?utf-8?B?QVcxUThOZWxBSEdQTkNUelE2TUk5ZmxUTFo2cnZudjNjU1Q2QWJJcjg0WldG?=
+ =?utf-8?B?clc0ejE3c20vL0hCMlp3SVRwWWJNSGlxbHlVVlFkT1dNVXg5UUJpampiMy9T?=
+ =?utf-8?B?TlJwODVXbmt4eXNHQS9obTFyWndYMjVvYWJ1MCtKUnBzYTZ4bkVaWGpoMHEx?=
+ =?utf-8?B?SWdVZXB0MUp6SHZsQlZ0QW1wR3kxeUhkNk5IVHlBR2NYODNGKzVsRjZyaVJH?=
+ =?utf-8?B?ZWUyRG5ZSWhJYUtKbXAxc0tuZzlJYU9JbE9QejMwMVdQUWxObGNIM1pHSEpL?=
+ =?utf-8?B?QVVpWE0yT0RIdXQ0MzJiTWE4d1JMRzdKVCtTMGhWdkVwQThWUUhZZ01NanJS?=
+ =?utf-8?B?alN0eWw5Z3JkWkNPWk54N1AzcE1TSU4vK05razJ0cStFSSt2VXdSa284d04y?=
+ =?utf-8?B?UU41RzZ2ZG5tZ3E4TVFoWDRidi9pK2M0Um85eUIvSEdCS1A1bGsyUUFoV3NX?=
+ =?utf-8?B?TDR6L3cycjNyMmVrSnIzak5BUTlYU0xENk9lNkpFUzVCLzZkYmIvdWJYM3Ba?=
+ =?utf-8?B?ZHo5YURNZG1CUFFPYS9vdmRoRVRqRXZBRFBiOXVlekh0ZnRISVdzTTBhbGU3?=
+ =?utf-8?B?ZW42SjU0WUZaSFJtVEs0c1RScy9JTTJDRHlOYWdZME9KU2xnMmJVNUFySURn?=
+ =?utf-8?B?UzAyc2tlSUpodDhySzYyU2JOS2dUOTFwMGFCTEh4eWJjcWk5Wjc1Uk15L3o5?=
+ =?utf-8?B?RzJUeThXblpINWxQT2prY1E1TzRwa3NsQjEvbGxhdmRkbnpxZ1FHVmdlTm9u?=
+ =?utf-8?B?ZWtKUC94bzFpdnU2T2x2d1F1T3pYeTFmQVZseWJjRjI0WlhTMUpRNzNSS255?=
+ =?utf-8?B?UUNna0FxTkN3RkNFaG9WR1JmTVhRNm5XMStFWjlpYXJhRWt6eSs3V1BuYThk?=
+ =?utf-8?B?Y1BTRTJEaWdSZ1QzelNncEVDTHIwblBBSjAzaGZpaFVxODNKeXdyNjQyOUFZ?=
+ =?utf-8?B?UVhKWTdxT0czM0tKVGcvY2tUQXBSNk1MY1cyODZzQmZnYmVOOVVnbnM3RGRC?=
+ =?utf-8?B?SWYvNmdVL2tiOXo0bThkbVBNdlNlK29DZFV5UU02b3dEU3UyT1RIR1JOZHE1?=
+ =?utf-8?B?UkRnMkNOQjgwV2hIaEN2NU1FM1R0VU9WK2E5dUpWemdlbHdqZnB5RWNMY2FY?=
+ =?utf-8?B?Z1k3QzRoUFlQUWtJWldqRVI0WFZ1bitpMzI1TTRkQTR6REVyZHpLSVRrMlNi?=
+ =?utf-8?B?b2RyQVQrNE12cjRSR0JRQnhCUzlsbk5FYjI5WGZXeUFrSUVjNVJ2RlhlMGdx?=
+ =?utf-8?B?MW0zQnlaY25zSkcvd1ZWdmFmSTFBTnRnYWlOeTg2b0w0M2xsTjh2UCtLVi8z?=
+ =?utf-8?B?M0wxZ3N3ek4yV1lCNnBhMWJYVDUvWE5sbGVMeGlqM1ViS0pOc3lreFNDSVFS?=
+ =?utf-8?B?S1dlOXMyL3d5dExBMHBDbEUwNHhrUWFxbGEzVWZ6UGhPSjBZd2VpWnhHcWg4?=
+ =?utf-8?B?WnV5R0lwZWRzWHRJdkttR1VpdWRhNGc9PQ==?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?SlBTdktSdEZHSTQ3L0xLTHM5dHdRRWJxSGx4RW1DeGI4QitSNmM5YmtPNDVM?=
+ =?utf-8?B?OUEvdHA5RzBLMFhRNVhSN2tmSDVaeHh2UGtSNXJGVERzU0pHVnJuSzU0cVlX?=
+ =?utf-8?B?cGRTZ1YxYjNzRnh5NmpQVDNkVGl1YmZKREhNVWtlTTVQOTJGWENjVmVpaVdy?=
+ =?utf-8?B?VlpISkcvbVAwMGtGOHJYRlVGOU8vc3FLWHMzZFdlaS9KYktaQUlwZ050NXU1?=
+ =?utf-8?B?VktUNWozTnZ1eHEvWkU4WTJZYUN6ZE5zNUVGMk1nNXlUUTA5TVBvczIyUU9m?=
+ =?utf-8?B?WENwUXFiMnkwR1FVK1VDcW5iZ1RNZ1pDQng0YStwN0JNNEh6K3huSUNCdHRX?=
+ =?utf-8?B?d1kwUGw2dU5WS0FhaTNSc2Jmbnp0ekMvdDd3cUdlbUdTWlkybk9TMTNVWENy?=
+ =?utf-8?B?c1M4bkNqWEcvL0pnV3h6S2VGZTFSTHR1K290SC8zQTU2anF1TDQ3czJzS0Y2?=
+ =?utf-8?B?ZjBqVFFaTmlua0lHQkswTUJaTk9jbE1FTVpWdTJaYU9oT1lMOTVnM3NvWnRW?=
+ =?utf-8?B?amlxcGFXaUN1K1NvT1Z4c0tzdFYwTSs0Nkl6MVIvME5Yd044ZmhuSkJZUG1m?=
+ =?utf-8?B?ZjVjazErd2NqSXFTWjA1ZU5ocGtCM3FnYzY2T0dzY2NYYjNjUWNCWjg5bkNO?=
+ =?utf-8?B?bDY3aWtHQW1TQVBHcGg3QXpRMUc2KzQyaTlKY3JVdEh1Y3E2TUkwZjNvTFAw?=
+ =?utf-8?B?UDQ2aEUwL29ldkJpNklReW1NeGdMT21DdjRIRzgrc3M3MEVqYkFnNURoUmR2?=
+ =?utf-8?B?NjkxVm1ZY3VvVnNGeTNubUxobkhEeUtzTVJHYVN1QXNDQVp5SE9mbllUWG05?=
+ =?utf-8?B?N0d3akxhTUZTN0NMUTVwMUlObFJSWXd4Z3ZZa1BmdUNnN1VMSTA3R0hqOVYy?=
+ =?utf-8?B?cUNiM1FTaUc5SDJ1TTBEazF5YlZWbEh5WFpXdk9TR1c1NEFBcjc1TVpLK1FX?=
+ =?utf-8?B?WVkzL2dIRjNBZDdVQk1WL2EvY3d1Qk5OY1dFUnU3b0lPc3Vvc0dGTnNOOFda?=
+ =?utf-8?B?Vzl1eDQ2TmtNamMwVjdGWjA4U3JmV1BaUGhySXFPQ0pUYzBBQnVBaytrMEZz?=
+ =?utf-8?B?dVZUK3hyaW5ud2VSQnJNQ3NNT0M4MUhUU2VGaU5SOWZVcG1rbXN4S3hXaTdP?=
+ =?utf-8?B?dFVJREsvZHBUdkpoRW16UXMrSkl5MlNXaWc0ZnFjN3Z5QWYyeE1TaW9RWXNw?=
+ =?utf-8?B?SHh0ZXdidkNnUVU1QlFzQ2Q4RnQzOXZIOFU1NFpMc3NuSitYVkViaDlQSWY4?=
+ =?utf-8?B?U0VTUHBZRHlyamVpL08yN2UrWlhjQUx6TTRhbk9jbjRxZnBwdVNsbWppdnB3?=
+ =?utf-8?B?R2NWMHFqS3RSU1d5SHBhS0VLNEc1RENLVkg1TG1LMUZCaFQrQ2toTWtDa1U1?=
+ =?utf-8?B?SFYzS2xuY3lPWWRxeTlSWHE0T1RwU2xXUU1tYld1aW5iblY2QWJsaFozU1Fx?=
+ =?utf-8?B?eDYrdnBpbG1jdUdLb2VvRCtuQVJFSlREVTN4eEc5Mm91L29EVkNGU2FtL1ZO?=
+ =?utf-8?B?ckFGT3JZK2ptZEdSTGFsL1daZklIb2pIUTJwcG16bDR4NVJlbzNjai9nTyt6?=
+ =?utf-8?B?ZlZRUW1sOGdkT1o0blpTaDFZR1lyMU50VWhGNXd6d3IzTXl4d3orK1d1OEQx?=
+ =?utf-8?B?U3VZY2pTMmowZW94d1ZyR1R3bHIvUWk2Rk5KeUo4dzBrc0J6QjlzNVBZZXVC?=
+ =?utf-8?B?eXVYSHdFNW1ORk9Ya1gyRS9QWGFBek1WSmtSV0xLVER3QktqcHFBSHVFZ3Bq?=
+ =?utf-8?Q?iNMyvmug/At3Kot8Es=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0e3cc5f9-662f-4563-b6b9-08dd842c8e94
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 25 Apr 2025 19:08:26.5783
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB8995
 
-From: Scott Chacon <schacon@gmail.com>
 
-When downloading bundles via the bundle-uri functionality, we only copy the
-references from refs/heads into the refs/bundle space. I'm not sure why this
-refspec is hardcoded to be so limited, but it makes the ref negotiation on
-the subsequent fetch suboptimal, since it won't use objects that are
-referenced outside of the current heads of the bundled repository.
 
-This change to copy everything in refs/ in the bundle to refs/bundles/
-significantly helps the subsequent fetch, since nearly all the references
-are now included in the negotiation.
+On 26-04-2025 12:35 am, Erik Huelsmann wrote:
+> On Fri, Apr 25, 2025 at 7:08 PM Junio C Hamano <gitster@pobox.com> wrote:
+> 
+>>>> Authen::SASL now finally supports XOAUTH2 and OAUTHBEARER thanks to Erik
+>>>> and Julian! (Link: https://github.com/gbarr/perl-authen-sasl/commit/958a3aa165d30cf4e3cbb36dc45306de627aa13f)
+>>>
+>>> And it's official: https://metacpan.org/release/EHUELS/Authen-SASL-2.1800
+>>
+>> Wonderful.
+>>
+>> We tend to, however, try to cater to those whose distros are slow to
+>> adjust to upstream changes.  What's the ETA for the updated module
+>> to major distros?
+> 
+> To be honest, I have *no* idea. I think Debian is stabilizing Trixie
+> now, so maybe it's in the one that will be after that (in 2 years?).
+> 
+> You could however decide to support XOAUTH2 and OAUTHBEARER only when
+> they are available? Then you don't need to increase the minimum
+> library requirement: there's no API difference between 2.1700 (the
+> current version until today) and 2.1800 (the newly released version).
+> So if you were to probe existence of Authen::SASL::Perl::XOAUTH2
+> and/or Authen::SASL::Perl::OAUTHBEARER, you could conditionally
+> disable the feature if the probe fails. (Using "eval { require
+> Authen::SASL::Perl::XOAUTH2; 1 }" should do what you need: return
+> false if the probe fails; true if it succeeds.)
 
-The update to the bundle-uri unbundling refspec puts all the heads from a
-bundle file into refs/bundle/heads instead of directly into refs/bundle/ so
-the tests also need to be updated to look in the new heirarchy.
-
-Signed-off-by: Scott Chacon <schacon@gmail.com>
----
- bundle-uri.c                |   2 +-
- t/t5558-clone-bundle-uri.sh | 172 ++++++++++++++++++------------------
- 2 files changed, 87 insertions(+), 87 deletions(-)
-
-diff --git a/bundle-uri.c b/bundle-uri.c
-index 96d2ba726d9..dc120664d1e 100644
---- a/bundle-uri.c
-+++ b/bundle-uri.c
-@@ -403,7 +403,7 @@ static int unbundle_from_file(struct repository *r, const char *file)
- 		const char *branch_name;
- 		int has_old;
- 
--		if (!skip_prefix(refname->string, "refs/heads/", &branch_name))
-+		if (!skip_prefix(refname->string, "refs/", &branch_name))
- 			continue;
- 
- 		strbuf_setlen(&bundle_ref, bundle_prefix_len);
-diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 3816ed5058d..33a7009e9a2 100755
---- a/t/t5558-clone-bundle-uri.sh
-+++ b/t/t5558-clone-bundle-uri.sh
-@@ -58,7 +58,7 @@ test_expect_success 'create bundle' '
- test_expect_success 'clone with path bundle' '
- 	git clone --bundle-uri="clone-from/B.bundle" \
- 		clone-from clone-path &&
--	git -C clone-path rev-parse refs/bundles/topic >actual &&
-+	git -C clone-path rev-parse refs/bundles/heads/topic >actual &&
- 	git -C clone-from rev-parse topic >expect &&
- 	test_cmp expect actual
- '
-@@ -68,9 +68,9 @@ test_expect_success 'clone with bundle that has bad header' '
- 	git clone --bundle-uri="clone-from/bad-header.bundle" \
- 		clone-from clone-bad-header 2>err &&
- 	commit_b=$(git -C clone-from rev-parse B) &&
--	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
-+	test_grep "trying to write ref '\''refs/bundles/heads/topic'\'' with nonexistent object $commit_b" err &&
- 	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
--	test_grep ! "refs/bundles/" refs
-+	test_grep ! "refs/bundles/heads/" refs
- '
- 
- test_expect_success 'clone with bundle that has bad object' '
-@@ -78,8 +78,8 @@ test_expect_success 'clone with bundle that has bad object' '
- 	git clone --bundle-uri="clone-from/bad-object.bundle" \
- 		clone-from clone-bad-object-no-fsck &&
- 	git -C clone-bad-object-no-fsck for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
--	test_write_lines refs/bundles/bad >expect &&
-+	grep "refs/bundles/heads/" refs >actual &&
-+	test_write_lines refs/bundles/heads/bad >expect &&
- 	test_cmp expect actual &&
- 
- 	# Unbundle fails with fsckObjects set true, but clone can still proceed.
-@@ -87,14 +87,14 @@ test_expect_success 'clone with bundle that has bad object' '
- 		clone-from clone-bad-object-fsck 2>err &&
- 	test_grep "missingEmail" err &&
- 	git -C clone-bad-object-fsck for-each-ref --format="%(refname)" >refs &&
--	test_grep ! "refs/bundles/" refs
-+	test_grep ! "refs/bundles/heads/" refs
- '
- 
- test_expect_success 'clone with path bundle and non-default hash' '
- 	test_when_finished "rm -rf clone-path-non-default-hash" &&
- 	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="clone-from/B.bundle" \
- 		clone-from clone-path-non-default-hash &&
--	git -C clone-path-non-default-hash rev-parse refs/bundles/topic >actual &&
-+	git -C clone-path-non-default-hash rev-parse refs/bundles/heads/topic >actual &&
- 	git -C clone-from rev-parse topic >expect &&
- 	test_cmp expect actual
- '
-@@ -102,7 +102,7 @@ test_expect_success 'clone with path bundle and non-default hash' '
- test_expect_success 'clone with file:// bundle' '
- 	git clone --bundle-uri="file://$(pwd)/clone-from/B.bundle" \
- 		clone-from clone-file &&
--	git -C clone-file rev-parse refs/bundles/topic >actual &&
-+	git -C clone-file rev-parse refs/bundles/heads/topic >actual &&
- 	git -C clone-from rev-parse topic >expect &&
- 	test_cmp expect actual
- '
-@@ -173,12 +173,12 @@ test_expect_success 'clone bundle list (file, no heuristic)' '
- 	git -C clone-list-file cat-file --batch-check <oids &&
- 
- 	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/merge
--	refs/bundles/right
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/merge
-+	refs/bundles/heads/right
- 	EOF
- 	test_cmp expect actual
- '
-@@ -220,10 +220,10 @@ test_expect_success 'clone bundle list (file, all mode, some failures)' '
- 	git -C clone-all-some cat-file --batch-check <oids &&
- 
- 	git -C clone-all-some for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
- 	EOF
- 	test_cmp expect actual
- '
-@@ -253,7 +253,7 @@ test_expect_success 'clone bundle list (file, all mode, all failures)' '
- 	git -C clone-all-fail cat-file --batch-check <oids &&
- 
- 	git -C clone-all-fail for-each-ref --format="%(refname)" >refs &&
--	! grep "refs/bundles/" refs
-+	! grep "refs/bundles/heads/" refs
- '
- 
- test_expect_success 'clone bundle list (file, any mode)' '
-@@ -282,9 +282,9 @@ test_expect_success 'clone bundle list (file, any mode)' '
- 	git -C clone-any-file cat-file --batch-check <oids &&
- 
- 	git -C clone-any-file for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
-+	refs/bundles/heads/base
- 	EOF
- 	test_cmp expect actual
- '
-@@ -313,7 +313,7 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
- 	git -C clone-any-fail cat-file --batch-check <oids &&
- 
- 	git -C clone-any-fail for-each-ref --format="%(refname)" >refs &&
--	! grep "refs/bundles/" refs
-+	! grep "refs/bundles/heads/" refs
- '
- 
- test_expect_success 'negotiation: bundle with part of wanted commits' '
-@@ -322,10 +322,10 @@ test_expect_success 'negotiation: bundle with part of wanted commits' '
- 	git clone --no-local --bundle-uri="clone-from/A.bundle" \
- 		clone-from nego-bundle-part &&
- 	git -C nego-bundle-part for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
--	test_write_lines refs/bundles/topic >expect &&
-+	grep "refs/bundles/heads/" refs >actual &&
-+	test_write_lines refs/bundles/heads/topic >expect &&
- 	test_cmp expect actual &&
--	# Ensure that refs/bundles/topic are sent as "have".
-+	# Ensure that refs/bundles/heads/topic are sent as "have".
- 	tip=$(git -C clone-from rev-parse A) &&
- 	test_grep "clone> have $tip" trace-packet.txt
- '
-@@ -337,8 +337,8 @@ test_expect_success 'negotiation: bundle with all wanted commits' '
- 		--bundle-uri="clone-from/B.bundle" \
- 		clone-from nego-bundle-all &&
- 	git -C nego-bundle-all for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
--	test_write_lines refs/bundles/topic >expect &&
-+	grep "refs/bundles/heads/" refs >actual &&
-+	test_write_lines refs/bundles/heads/topic >expect &&
- 	test_cmp expect actual &&
- 	# We already have all needed commits so no "want" needed.
- 	test_grep ! "clone> want " trace-packet.txt
-@@ -363,13 +363,13 @@ test_expect_success 'negotiation: bundle list (no heuristic)' '
- 		clone-from nego-bundle-list-no-heuristic &&
- 
- 	git -C nego-bundle-list-no-heuristic for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
- 	EOF
- 	test_cmp expect actual &&
--	tip=$(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left) &&
-+	tip=$(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/heads/left) &&
- 	test_grep "clone> have $tip" trace-packet.txt
- '
- 
-@@ -395,13 +395,13 @@ test_expect_success 'negotiation: bundle list (creationToken)' '
- 		clone-from nego-bundle-list-heuristic &&
- 
- 	git -C nego-bundle-list-heuristic for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
- 	EOF
- 	test_cmp expect actual &&
--	tip=$(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left) &&
-+	tip=$(git -C nego-bundle-list-heuristic rev-parse refs/bundles/heads/left) &&
- 	test_grep "clone> have $tip" trace-packet.txt
- '
- 
-@@ -428,10 +428,10 @@ test_expect_success 'negotiation: bundle list with all wanted commits' '
- 		clone-from nego-bundle-list-all &&
- 
- 	git -C nego-bundle-list-all for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
- 	EOF
- 	test_cmp expect actual &&
- 	# We already have all needed commits so no "want" needed.
-@@ -465,7 +465,7 @@ test_expect_success 'clone HTTP bundle' '
- 
- 	git clone --bundle-uri="$HTTPD_URL/B.bundle" \
- 		"$HTTPD_URL/smart/fetch.git" clone-http &&
--	git -C clone-http rev-parse refs/bundles/topic >actual &&
-+	git -C clone-http rev-parse refs/bundles/heads/topic >actual &&
- 	git -C clone-from rev-parse topic >expect &&
- 	test_cmp expect actual &&
- 
-@@ -476,7 +476,7 @@ test_expect_success 'clone HTTP bundle with non-default hash' '
- 	test_when_finished "rm -rf clone-http-non-default-hash" &&
- 	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="$HTTPD_URL/B.bundle" \
- 		"$HTTPD_URL/smart/fetch.git" clone-http-non-default-hash &&
--	git -C clone-http-non-default-hash rev-parse refs/bundles/topic >actual &&
-+	git -C clone-http-non-default-hash rev-parse refs/bundles/heads/topic >actual &&
- 	git -C clone-from rev-parse topic >expect &&
- 	test_cmp expect actual
- '
-@@ -553,12 +553,12 @@ test_expect_success 'clone bundle list (HTTP, any mode)' '
- 	git -C clone-any-http cat-file --batch-check <oids &&
- 
- 	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
--	grep "refs/bundles/" refs >actual &&
-+	grep "refs/bundles/heads/" refs >actual &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/merge
--	refs/bundles/right
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/merge
-+	refs/bundles/heads/right
- 	EOF
- 	test_cmp expect actual
- '
-@@ -641,9 +641,9 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
- 	test_cmp expect actual &&
- 
- 	# We now have only one bundle ref.
--	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
-+	refs/bundles/heads/base
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -679,13 +679,13 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
- 	test_cmp expect actual &&
- 
- 	# We now have all bundle refs.
--	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/merge
--	refs/bundles/right
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/merge
-+	refs/bundles/heads/right
- 	EOF
- 	test_cmp expect refs
- '
-@@ -721,9 +721,9 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
- 	test_cmp expect actual &&
- 
- 	# only received base ref from bundle-1
--	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
-+	refs/bundles/heads/base
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -749,10 +749,10 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
- 	test_cmp expect actual &&
- 
- 	# received left from bundle-2
--	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -795,12 +795,12 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
- 
- 	# received merge ref from bundle-4, but right is missing
- 	# because we did not download bundle-3.
--	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 
- 	cat >expect <<-\EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/merge
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/merge
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -862,7 +862,7 @@ test_expect_success 'creationToken heuristic with failed downloads (clone)' '
- 	test_cmp expect actual &&
- 
- 	# All bundles failed to unbundle
--	git -C download-1 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C download-1 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	test_must_be_empty refs &&
- 
- 	# Case 2: middle bundle does not exist, only two bundles can unbundle
-@@ -909,10 +909,10 @@ test_expect_success 'creationToken heuristic with failed downloads (clone)' '
- 	test_cmp expect actual &&
- 
- 	# bundle-1 and bundle-3 could unbundle, but bundle-4 could not
--	git -C download-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C download-2 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-EOF &&
--	refs/bundles/base
--	refs/bundles/right
-+	refs/bundles/heads/base
-+	refs/bundles/heads/right
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -961,11 +961,11 @@ test_expect_success 'creationToken heuristic with failed downloads (clone)' '
- 	test_cmp expect actual &&
- 
- 	# fake.bundle did not unbundle, but the others did.
--	git -C download-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C download-3 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/right
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/right
- 	EOF
- 	test_cmp expect refs
- '
-@@ -1083,15 +1083,15 @@ test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
- 	test_cmp expect actual &&
- 
- 	# Check which bundles have unbundled by refs
--	git -C fetch-1 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C fetch-1 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/lefter
--	refs/bundles/merge
--	refs/bundles/right
--	refs/bundles/righter
--	refs/bundles/top
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/lefter
-+	refs/bundles/heads/merge
-+	refs/bundles/heads/right
-+	refs/bundles/heads/righter
-+	refs/bundles/heads/top
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -1144,12 +1144,12 @@ test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
- 	test_cmp expect actual &&
- 
- 	# Check which bundles have unbundled by refs
--	git -C fetch-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C fetch-2 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/merge
--	refs/bundles/right
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/merge
-+	refs/bundles/heads/right
- 	EOF
- 	test_cmp expect refs &&
- 
-@@ -1204,13 +1204,13 @@ test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
- 	test_cmp expect actual &&
- 
- 	# Check which bundles have unbundled by refs
--	git -C fetch-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
-+	git -C fetch-3 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
- 	cat >expect <<-EOF &&
--	refs/bundles/base
--	refs/bundles/left
--	refs/bundles/lefter
--	refs/bundles/right
--	refs/bundles/righter
-+	refs/bundles/heads/base
-+	refs/bundles/heads/left
-+	refs/bundles/heads/lefter
-+	refs/bundles/heads/right
-+	refs/bundles/heads/righter
- 	EOF
- 	test_cmp expect refs
- '
--- 
-gitgitgadget
+Even if we modify the send-email script, distros slow to adjust
+will also not update this so soon :). Its more of a wait and watch thing tbh.
 
