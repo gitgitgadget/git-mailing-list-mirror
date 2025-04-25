@@ -1,81 +1,84 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4111B288CA1
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 15:38:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38FAF28A1CF
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 15:38:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745595514; cv=none; b=m8XUorYbpMvFQSLRfvYsHBvfKAcPmAgqbonoQ1mD0IB6czr6HgHaQkuRL8qW2aPO51iBHquolpGmY+iiPSQt2Xl3kAm+k3PywVDRqNfNtFbjL3MNcm3pAdSeG0+rlZwMt8laBhTzliMjH72as/rKw/XeJYKkcZ/30Gr8EHEzQi4=
+	t=1745595516; cv=none; b=fns1vlmTbXR12lO/4udLetsBZgJyXbzXZv98nADsL+QeIuf77RPNyxGekL8Kx0Xg3a+219iaoMoO/iApOgTU7qnR0Xj4KeIp8MLEQctZucfLqeqZ4OWvebc5Lkj1rWRw6C5JwZCNsGNvVRsd0du1PpmcPWXBFiPXptjdTuxyjHA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745595514; c=relaxed/simple;
-	bh=0fVKn5P8l1LI6PXkC0/bLPgGn+yJuCpZUIROHRfrm+E=;
+	s=arc-20240116; t=1745595516; c=relaxed/simple;
+	bh=pVad7BxgXte/cEvJiTxOUc8qnf13rS7MgIXwKpAai2s=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Z3VyJg5a7AfCWVyaVivyzFc8fIthxpXJlFVEIXTbG7jtscqQkVxwHxAdDnhCUAd94A6V+oEngIMs1gEEAaSzalVT1qcVv6TzIElT2V0U+tPVSrE04gAH2B7VwC8TU39F5iwvMZoe6s3TAr1KfvLfQZGJdPsP3EqvLYvW/1ssW50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M30kcyE8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mK8TDo/Q; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version; b=QnLaYPtC3O9t2yIGSlQeQovPR0jhWEJVdJuCZPv30HAEBpSXw0YNO6cCbqVaD/AoOiawYkUUc+6SQq9KTukFihf+O6gtRrgJAh95WfdsBGj1z7sLGZ+OYbHgig15vL+AtGFI65kS+b6w+FgK1j7KR5oflLWXEPMF4agziPuivGo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Oyg5GhW9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oxi5yr9r; arc=none smtp.client-ip=202.12.124.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M30kcyE8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mK8TDo/Q"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4B369254025B;
-	Fri, 25 Apr 2025 11:38:31 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 25 Apr 2025 11:38:31 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oyg5GhW9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oxi5yr9r"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3753F114021F;
+	Fri, 25 Apr 2025 11:38:33 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 25 Apr 2025 11:38:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1745595511; x=
-	1745681911; bh=++xRvRH4fjo7ZWdG4rlyReWenICTkGgRU+/GwrD8gy0=; b=M
-	30kcyE8K09najW90HbfeaMuQl+PVOfpZHo66KpgXYDMCjy4VaGLXJQWxOvd5/6l/
-	+FoFnvvkeR2ud2en6iAod2LLXCf5s0fEE2dc1wUhJXqjoF+nYCcJudRXq3Ka/GiH
-	RAnWaSWltTmikUf0+HWupsaA3x+n0i+jyEbshV5LaPuDQus8Y3EaJWsiKt8XawKd
-	LRN0ByRyJXBmjNS14g5mXFO0iDIzM/bcCMCxSKGB2NfIiafWuwLizIfA3TK5SIY4
-	3rKOU/hwsBDsEBvHnAr0YoxmdN9VVd5mh7otYT+ozA2l5o5LeW9o9GmcfmtQoEy/
-	uOSxVYlVzb6gZJt3Pdelw==
+	:reply-to:subject:subject:to:to; s=fm2; t=1745595513; x=
+	1745681913; bh=nQux5zSL06VIEOP+BOzLk384XI3G3dZEnuxeOfQDtl8=; b=O
+	yg5GhW9ioZKznrP9tcUaVC7M+ewq9YJanKT6N8rPobxST6JZwUBW7brkLFIecI/1
+	ys3U8oxwPyvUXBf101aRchoJhmohbcXz86y/22JGpM/SP35X9lLs/nK2LtVmlTHF
+	2OyYPOTbKQnGqZckaPO0hai9zC/SPLYVP7ENov4QWorPvWT9WYn3WjFYhs4/9QgU
+	Ke4AYwPRh/Kj/RSl2bySIFCyZ6iAhFIaIwPkjC4abO+FBQnE7ljbULjR7WL6KMDg
+	EiCzu9BMwmplQUi5+IPNZF6L4CEK7YXvHqniwPM97Pxu++BVh2Aoa/yEzBn5Bz0T
+	F6RP7y36usbU23kHjCR6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1745595511; x=1745681911; bh=+
-	+xRvRH4fjo7ZWdG4rlyReWenICTkGgRU+/GwrD8gy0=; b=mK8TDo/Q996klJcw8
-	CppMJ6xCN9YfyVEkSnOYROvZrtWveJDK+bRJj1LWSlb4cYAYlMGXt4SeciLr03ex
-	PCwm5avAoQxQEk6fQV/Y7WcZbQIUc1uk44imhxsuUHEKBGeSFWFGweBC6EfrWjeR
-	8Tm6FX/dUw4Tt1NiY4jrhRCQ9IVGyq691NBDyWviWCAGDYNpPbTX+XH76beGes0u
-	zwnU4pt5+WihYzsh90/Yz52RpKf1ynfdTwIwmImCdj+h2iqTI7xWVySZO1NAqGWX
-	9e4DHIXZ/iy+2nua54gOdZ+zyTkhFcD/YRW/CETaS1nBYVOkBwpsF7SMz2FrqehA
-	CYjBg==
-X-ME-Sender: <xms:dqwLaL8av3s6DMdS89zFjNKJPD3alCum3BriuLIjtUp-RrOtc5ZngQ>
-    <xme:dqwLaHsZcPTUXWEWf6X2vMicv7lDNTNXDlUyeglgZ3EpY0xxW3rSomk_m2d25YIgG
-    wu635PZaAijYQHjuA>
-X-ME-Received: <xmr:dqwLaJCzY-lBaig8Ony3kv1zBn0auzYC7NWJyVo52XXteeErYM1fCGwVhh3ZbwSRTQE96HV3nSC39stD8hs5an7M2tWCv6_qYTdZ>
+	:x-me-sender:x-sasl-enc; s=fm3; t=1745595513; x=1745681913; bh=n
+	Qux5zSL06VIEOP+BOzLk384XI3G3dZEnuxeOfQDtl8=; b=oxi5yr9rc90cKNPf5
+	cBfKD+lvZAr8ifSyh9aly2cCCLbRPeN1MiDdgQjsz1VYVb0elcc9Jm2yqeLeeciT
+	LITVzMrHMdNJiXkwmgpZ/97hcDW+QYK+rcavEN0ehoHao9XcIpBnRTURyzy+c84/
+	3VVLPGZj+Oq209uVgZmmvAQp6FEyGR5V7r4AEHyKdWgYkIt7NX+CN4XLxmnWpIDt
+	fGCF9ea4ln/df9xqBc/hslDC96loRgoHN/S5wyBW8y+/JpY3Gj4DTqYLIKTU/G6W
+	xHLHpHDR2KG45EpxGZleC6JBYTeMlRkDgacS/3H1yb6xEGPWn6+9xH48vCzHpT3y
+	lrfwg==
+X-ME-Sender: <xms:eKwLaLGkydEV_tRhZcyFpVaD4RmDfRJ2W6Z25yoq9_wUQ7Wv6RZH-g>
+    <xme:eKwLaIVB9BXR4CBZL9x6apvPatHI_uAgvZ_KLI2oE_Ieqi8lrrWbS2FASLU6j963-
+    BB6vd_x59fhgV6wIw>
+X-ME-Received: <xmr:eKwLaNK72X_fmbSnakj1FSZsp4768DimE4Oc6t5yfWeOdGMIoNcztxf2D-qoBREO08HJChIdle3DgBwaF6Yn5pQaCoc_GwmLW9di>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvjedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredt
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdfflefhueetgfektedthfduleffudet
-    leefieeulefhvdduieeukefhtddvudeknecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhgu
-    vghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:d6wLaHdAaqBLlq4RvlnKeff6kH4cm08AvnZJ5lC_laUxPYeUxXilUg>
-    <xmx:d6wLaAMhIJ9w29b0ah1JkjaQccUBh_rsqFQ7vNVU58tNM23y6ktoLA>
-    <xmx:d6wLaJlcASjwLAOIAOxjyh3UPPnjxi-7uDPakrXiuhQaGe92FvWaow>
-    <xmx:d6wLaKt0b79_VUKPtIbGN5KY1mZF1Gd6lTrF9ZVjYN47HL6N6uTglw>
-    <xmx:d6wLaEPI9S5ErIrSFsQMQM0dTi7kk9QoMTtSq36o5BV3lS3A6jbV335b>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdejuddtudekffehieduteevhfdvhfel
+    geejteduffehhfegleeftdejfeejvdejnecuffhomhgrihhnpegvtghlihhpshgvrdhorh
+    hgpdhpvghrfhhorhgtvgdrtghomhdpghhithhhuhgsrdgtohhmpddvtddvfeduuddvledu
+    geehtddqrhdrshhhpdhmrghvvghnrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenuc
+    frrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgs
+    pghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhi
+    nhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrd
+    gtohhm
+X-ME-Proxy: <xmx:eKwLaJEQ75RmKYod2HuJnqKCv8Ne7Z2pKUkbtaiCaiZwTo9hzPHt2A>
+    <xmx:eawLaBUYnHLgR8XZ1ZaRylLDN6m7qD4mjK4wAC3ABa9x1wOLqQvw-Q>
+    <xmx:eawLaEO7W_SYdT_mcP0Pg_1q7RgGydowcxezDVDPpXVSJ_eaJK0I5Q>
+    <xmx:eawLaA1_rqN8bdyBtGlCh_HoPWlARhL4ZQ0Pt8YlW-YeVsCtdHNjhQ>
+    <xmx:eawLaGKX16woGPhj_08L3oz6bG57HsyVejQR9GMIRpdufjFe8sAJPdmr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 11:38:30 -0400 (EDT)
+ 25 Apr 2025 11:38:32 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: [PATCH 1/2] ci: update the message for unavailble third-party software
-Date: Fri, 25 Apr 2025 08:38:26 -0700
-Message-ID: <20250425153827.147585-2-gitster@pobox.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: [PATCH 2/2] ci: download JGit from maven, not eclipse.org
+Date: Fri, 25 Apr 2025 08:38:27 -0700
+Message-ID: <20250425153827.147585-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-564-g9a5a794ec8
 In-Reply-To: <20250425153827.147585-1-gitster@pobox.com>
 References: <xmqqr01guwuq.fsf@gitster.g>
@@ -88,85 +91,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-An earlier fix added an extra message immediately after failing to
-download a third-party package.  But near the end of the script,
-their availability is checked again and given a message.
+As Matthias Sohn, JGit maintainer, recommends, update the JGit
+download link from repo.eclipse.org to a one in maven.org
 
-Remove the new ones added with a recent fix, as they are redundant.
-If we were to add more places to download these software (e.g. for
-other platforms we currently do not download them on), the existing
-warnning near the end of the script will also trigger.
-
-While at it, as Dscho suggests, rewrite the WARNING: label on the
-warning message to ::warning::, which presumably should be shown a
-bit more prominently in the CI summary.
-
-Suggested-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- ci/install-dependencies.sh | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ ci/install-dependencies.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/ci/install-dependencies.sh b/ci/install-dependencies.sh
-index e51304c3b0..be20271d3c 100755
+index be20271d3c..d9004ab24f 100755
 --- a/ci/install-dependencies.sh
 +++ b/ci/install-dependencies.sh
-@@ -71,7 +71,6 @@ ubuntu-*|i386/ubuntu-*|debian-*)
- 		chmod a+x "$CUSTOM_PATH/p4d" "$CUSTOM_PATH/p4" || {
- 			rm -f "$CUSTOM_PATH/p4"
- 			rm -f "$CUSTOM_PATH/p4d"
--			echo >&2 "P4 download (optional) failed"
- 		}
+@@ -9,7 +9,7 @@ begin_group "Install dependencies"
  
- 		wget --quiet \
-@@ -79,16 +78,12 @@ ubuntu-*|i386/ubuntu-*|debian-*)
- 		tar -xzf "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" \
- 			-C "$CUSTOM_PATH" --strip-components=1 \
- 			"git-lfs-$LINUX_GIT_LFS_VERSION/git-lfs" &&
--		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" || {
--			rm -f "$CUSTOM_PATH/git-lfs"
--			echo >&2 "LFS download (optional) failed"
--		}
-+		rm "git-lfs-linux-amd64-$LINUX_GIT_LFS_VERSION.tar.gz" ||
-+		rm -f "$CUSTOM_PATH/git-lfs"
+ P4WHENCE=https://cdist2.perforce.com/perforce/r23.2
+ LFSWHENCE=https://github.com/github/git-lfs/releases/download/v$LINUX_GIT_LFS_VERSION
+-JGITWHENCE=https://repo.eclipse.org/content/groups/releases//org/eclipse/jgit/org.eclipse.jgit.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.202311291450-r.sh
++JGITWHENCE=https://repo1.maven.org/maven2/org/eclipse/jgit/org.eclipse.jgit.pgm/6.8.0.202311291450-r/org.eclipse.jgit.pgm-6.8.0.202311291450-r.sh
  
- 		wget --quiet "$JGITWHENCE" --output-document="$CUSTOM_PATH/jgit" &&
--		chmod a+x "$CUSTOM_PATH/jgit" || {
--			rm -f "$CUSTOM_PATH/jgit"
--			echo >&2 "JGit download (optional) failed"
--		}
-+		chmod a+x "$CUSTOM_PATH/jgit" ||
-+		rm -f "$CUSTOM_PATH/jgit"
- 		;;
- 	esac
- 	;;
-@@ -151,7 +146,7 @@ then
- 	echo "$(tput setaf 6)Perforce Client Version$(tput sgr0)"
- 	p4 -V
- else
--	echo >&2 "WARNING: perforce wasn't installed, see above for clues why"
-+	echo >&2 "::warning:: perforce wasn't installed, see above for clues why"
- fi
- 
- if type git-lfs >/dev/null 2>&1
-@@ -159,7 +154,7 @@ then
- 	echo "$(tput setaf 6)Git-LFS Version$(tput sgr0)"
- 	git-lfs version
- else
--	echo >&2 "WARNING: git-lfs wasn't installed, see above for clues why"
-+	echo >&2 "::warning:: git-lfs wasn't installed, see above for clues why"
- fi
- 
- if type jgit >/dev/null 2>&1
-@@ -167,7 +162,7 @@ then
- 	echo "$(tput setaf 6)JGit Version$(tput sgr0)"
- 	jgit version
- else
--	echo >&2 "WARNING: JGit wasn't installed, see above for clues why"
-+	echo >&2 "::warning:: JGit wasn't installed, see above for clues why"
- fi
- 
- end_group "Install dependencies"
+ # Make sudo a no-op and execute the command directly when running as root.
+ # While using sudo would be fine on most platforms when we are root already,
 -- 
 2.49.0-564-g9a5a794ec8
 
