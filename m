@@ -1,55 +1,55 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3537230BFB
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 07:29:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E862231A23
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 07:29:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745566172; cv=none; b=aYUUnjnEBNThoJFjt/bhcPFMeIOfhPXm/fGLnOA9Osas/9Gn/L+6Vfs/1JcVDxW1+ePGYgs/KsKrJw6BFxRx98bwoeCT4of90dlCkvmkKiVhsAXAF+NTNIDDzc2tlT6V3Par0h/mGZyPS8GqkS1BKgOkmIfYy16QjSmjfQi+2Ug=
+	t=1745566173; cv=none; b=sgVw+eAkB0XjIXdCqUCNZJFcsOoT6MytTs58/P4+a7pU5fKiZDXLCPrayh0mVms0QICTyQvleaLzm7xta975xENHqX2CV8VMcze19JszplPd69vjZFLG8v0oTt9HNU110yTl56A0SQhFaWaIbV9gTRINHCqJPpGqo31zeFtb2+k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745566172; c=relaxed/simple;
-	bh=T3c/5snmX2y8U9Kn4BsaiBzbUk53t5V2GI7XHl/kyIM=;
+	s=arc-20240116; t=1745566173; c=relaxed/simple;
+	bh=PfLWjNVjqt8cR3d7KwIG/+X2Bzvlb3hVJOTfKwu6ooU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uWzX6OtpOM54J+mAblDlllhNMJWtqXbujocHOVXFbxBC3irARfdM6p2NGEzCrPFN9bQoPcch1+bM7ZgrNl+MgezltRSlQpmUj6Kj331ZQIKO+nziC6Mg0iinBa2B23yPlKHET9alTI/x7ppoVoENFUGP29km0K1/qiopgu3IlFI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WoH7qfjK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lZKrlJf9; arc=none smtp.client-ip=103.168.172.148
+	 In-Reply-To:To:Cc; b=lSL79ehXa7J9aPjJN5BFLa78IWVotIPZUMWvftdXQcYs0MGO17RP6YCrFq/FMORxH6dl9r/bMip7CFrkcUh9aDQZKz8w1kko9o0mG55V0m4h45OYaf6EYhT0RMIBzxl3XRhhQMBb+fzvwOsOsIV5EbqSpcjhzB2cftX1TMieGIM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fz05wsHA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Bpxc5LTh; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WoH7qfjK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lZKrlJf9"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id E479313801E7
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 03:29:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fz05wsHA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Bpxc5LTh"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A794911401FF
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 03:29:30 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 25 Apr 2025 03:29:29 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 25 Apr 2025 03:29:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1745566169;
-	 x=1745652569; bh=360FWdDvfi5JHIUMrZj8zsmNOF2I2+loAPIKw5GiCb4=; b=
-	WoH7qfjKCDTF6UmF/Zx002ndLIpF7lpM2DQdz9OeJUNMcO1uXqF2OEBneNS99ez6
-	VFjnuP0hVF/PI0f97xjw2XbFIkMb8G/Kug03wZ9f3BCDUfYfVkYKGSHudPcKlFjo
-	RvCmYkbciSXYbVf0XPqtlyFEsGRo5le6+o425duE6PYAA7wGrlEZLSJsluy5Ayx/
-	weTPbwPJO10nzVTJcYQ8Xk/J1LFghubHkZUTNVfU1wnOr6c79sOMWKXZeCqkE6S7
-	iVijESu2orOBP5HYhuSgjBsKCODRGESxjQDvvmHq4dlnJ4ihHvFXy9euRSBPTM+C
-	xZxd0T0J+zU4MSX/y/ciXA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1745566170;
+	 x=1745652570; bh=SAsoC40dG95dOyENmCxxItcI2Q/KK9Ex7sUsY3quEac=; b=
+	fz05wsHAEZP0zSa0JLG8Wp/C/IvlcHahrFZP783oszfMWcGPDrmylX08oF1j6d+v
+	9KLunhUf+thEQ09N7Ku2VT2uH1fZbf2y48AoA4UeVf5l+X1tYpSaorTmcKzwoMrm
+	GAlCHtSy7hDE+E/jqfDKozg8aGcfqoU0AusAsDlaUMPPg9DHEExrCDknuVpca/Wv
+	z13LXStrgDIlEgFDli61jnxpqGHfbfmbFLpTBj9zqiAKjmbOFc7s/W5EzO3v/AVv
+	/WEqGgVshnhCa4vZv1a5+3dm9xrhcBVulF0yoHLA1xjVYIOPDIXJka2usVml3x5/
+	AMpAc5e5BRb9Ywt0lbEo4w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745566169; x=
-	1745652569; bh=360FWdDvfi5JHIUMrZj8zsmNOF2I2+loAPIKw5GiCb4=; b=l
-	ZKrlJf9V2xV57pSRkL1O4B5jGWVB/s1RXlJPE1hKZACaZZtfxKT0OBR1O6BjUZ58
-	433uBkOh4sj7+KROmuG55xSI9RzgcEVlMNqIAgWZW7Me3uMsfYub6I/uz+b3vKl/
-	ej+kQ8L3WfsZKxuSMjzzGb4p34YEF8BeTqDdslJJa1A2BqbJq9liOdgNTo40ZK4a
-	/cAc4MVGr0jD+KO3eeMkVt2kvjj/ktKCJbIVLAbDXCTy/PDl7DymVEXK43+Q+IFv
-	cUtjrTmnng+CZSd6tKI6uUrCzFrl9auYiG4VRYYeqy6CP58WYgObhwDx5L+QaDYx
-	IO85QoqKPSHgNDpYDnvUQ==
-X-ME-Sender: <xms:2TkLaP2TlI1u0tc6zobuo96GLYJ0ZXXMUPDkzShbgmtEvOte1yxqKw>
-    <xme:2TkLaOFsauANXiW9lmdqQHu6ba_HtdCCCiM5WWVs6idW3ByL_N-9xtSTuHpqnpu1L
-    uhLYQp_XJ2dHJZNrQ>
-X-ME-Received: <xmr:2TkLaP7Z7p-YcCVi9t80nczFxtTZK9TQ47WWHoXT3UTWV6rlU0iB0EZQf8ENbtp9nwcYBU8jOeRI_RBgZB2DmYuqAOoXwqDUERzINO6E>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745566170; x=
+	1745652570; bh=SAsoC40dG95dOyENmCxxItcI2Q/KK9Ex7sUsY3quEac=; b=B
+	pxc5LThMrX6kzxdpjUWMBjlZibmCNmCxJ+1uvCz6oNwkvPoUo3Li9eZmVZJRRvq2
+	BJpWiONOQ9yFDO7dFWoeQmj4TI/xWBi+hVwMjfx9ZZx3qmzEueD7TQ3DxqQ1QbiF
+	ZZdC5l1X0RIGdVMiZyXNm3Up6Qp+0uVPKizTRiaeo9+TLGRmRY9YLxj7fsdZbW28
+	4j77l7XpBiFKJv5bP+IQFUsAx9sotrhRE5s1XNjQ5vNUfzPWKV1klt6CBvXW5JcS
+	NYnW/Y4OaXb7iojvsoqxRhY9E/8D6yPDn4uHwEzstrTaH2AmGILKlMRY6I/Jpvt3
+	yagNNXdAtl47BjEWauZQQ==
+X-ME-Sender: <xms:2jkLaJMWO3mNv52O24uPpOfJvTdgRQqZXAWq9XZDEEVNqLiVbpBMyw>
+    <xme:2jkLaL_K6kWhN9efsPMp29clR6mMjOlz_fBqtEdNGrb0ZUkmRGxG1I2Mzp3sIlhVw
+    v2hpBquCX_WVLRFWw>
+X-ME-Received: <xmr:2jkLaIRFlDigL5x88ccMPJDKkuaE7k-z8Elrrn6RiHY5sFKhMY7RAVSc3UTWopthDEKLTtrS0PLNIQIvmFSoFvThQuCZiHoT-N8FqzUE>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedujeegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
@@ -59,22 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedujeegucetufdote
     thgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
     dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:2TkLaE1xmC_0rRdV_aKEziglIytFe3HBA_43Hq-CrDOMsSr6Y4ROaA>
-    <xmx:2TkLaCEw864X-gnnqYhqcWm-TOI3ueECkHd7KbMTFCEjvBH581xcgQ>
-    <xmx:2TkLaF_AG3iJUFV1lu48G7kdLPU_3z80hKjYj2EiFJ3MIFgrFcGoXw>
-    <xmx:2TkLaPnT1z7xFwlAhphFKxZjaCmjWZVKv6eDOHGZYvo47OZI_nqyig>
-    <xmx:2TkLaFB_kJpsEI8r86K81wEw5wzA_JGXLvKaCHSOrL2TkozOPoz4aA8t>
+X-ME-Proxy: <xmx:2jkLaFudKSARyzcQpM-oADCQdt2akqLKuPB7YkWmOmPomXKdgFLWLg>
+    <xmx:2jkLaBeGP0vKO0pzl9UWIImkMsZEQkuC3lhmnI2wAix5teHZlLFkbA>
+    <xmx:2jkLaB1enyxCscFQMcGhoO4q-EcxcLkOoRI6l_hXbm9EUkk-9_YuoQ>
+    <xmx:2jkLaN-xwokM8mxmtxBbg93_NARwrNwgxv_nTkdsWSg1RD6-5j7nKA>
+    <xmx:2jkLaN7KHAh2GiYxfzoJIa-1q7-AEKgBSKWCgVpsdvFkmAL-6U_cY4v8>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Fri, 25 Apr 2025 03:29:29 -0400 (EDT)
+ <git@vger.kernel.org>; Fri, 25 Apr 2025 03:29:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b10afeb2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 35659e8a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Fri, 25 Apr 2025 07:29:28 +0000 (UTC)
+	Fri, 25 Apr 2025 07:29:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 25 Apr 2025 09:29:22 +0200
-Subject: [PATCH 6/7] builtin/gc: move rerere garbage collection into
- separate function
+Date: Fri, 25 Apr 2025 09:29:23 +0200
+Subject: [PATCH 7/7] builtin/maintenance: introduce "rerere-gc" task
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,63 +82,126 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250425-pks-maintenance-missing-tasks-v1-6-972ed6ab2c0d@pks.im>
+Message-Id: <20250425-pks-maintenance-missing-tasks-v1-7-972ed6ab2c0d@pks.im>
 References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
 In-Reply-To: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Move garbage collection of cached rerere entries into a separate
-function. This prepares us for a subsequent commit where we introduce a
-new "rerere-gc" task for git-maintenance(1).
+While git-gc(1) knows to garbage collect the rerere cache,
+git-maintenance(1) does not yet have a task for this cleanup. Introduce
+a new "rerere-gc" task to plug this gap.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 16 +++++++++++-----
- 1 file changed, 11 insertions(+), 5 deletions(-)
+ Documentation/git-maintenance.adoc |  4 ++++
+ builtin/gc.c                       | 27 +++++++++++++++++++++++++++
+ t/t7900-maintenance.sh             | 17 +++++++++++++++++
+ 3 files changed, 48 insertions(+)
 
+diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
+index 6f085a9cf8c..931f3e02e85 100644
+--- a/Documentation/git-maintenance.adoc
++++ b/Documentation/git-maintenance.adoc
+@@ -166,6 +166,10 @@ reflog-expire::
+ 	The `reflog-expire` task deletes any entries in the reflog older than the
+ 	expiry threshold. See linkgit:git-reflog[1] for more information.
+ 
++rerere-gc::
++	The `rerere-gc` task invokes garbage collection for stale entries in
++	the rerere cache. See linkgit:git-rerere[1] for more information.
++
+ worktree-prune::
+ 	The `worktree-prune` task deletes stale or broken worktrees. See
+ 	linkit:git-worktree[1] for more information.
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 46c64c852dc..a0816bcf302 100644
+index a0816bcf302..d19449b33d4 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -375,6 +375,15 @@ static int worktree_prune_condition(struct gc_config *cfg)
- 	return should_prune;
+@@ -16,6 +16,7 @@
+ #include "builtin.h"
+ #include "abspath.h"
+ #include "date.h"
++#include "dir.h"
+ #include "environment.h"
+ #include "hex.h"
+ #include "config.h"
+@@ -384,6 +385,26 @@ static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts UNUSED,
+ 	return run_command(&rerere_cmd);
  }
  
-+static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts UNUSED,
-+				      struct gc_config *cfg UNUSED)
++static int rerere_gc_condition(struct gc_config *cfg UNUSED)
 +{
-+	struct child_process rerere_cmd = CHILD_PROCESS_INIT;
-+	rerere_cmd.git_cmd = 1;
-+	strvec_pushl(&rerere_cmd.args, "rerere", "gc", NULL);
-+	return run_command(&rerere_cmd);
++	struct strbuf path = STRBUF_INIT;
++	int should_gc = 0;
++	DIR *dir;
++
++	/* Skip garbage collecting the rerere cache in case rerere is disabled. */
++	repo_git_path_replace(the_repository, &path, "rr-cache");
++
++	dir = opendir(path.buf);
++	if (!dir)
++		goto out;
++	should_gc = !!readdir_skip_dot_and_dotdot(dir);
++
++out:
++	strbuf_release(&path);
++	closedir(dir);
++	return should_gc;
 +}
 +
  static int too_many_loose_objects(struct gc_config *cfg)
  {
  	/*
-@@ -771,7 +780,6 @@ int cmd_gc(int argc,
- 	int daemonized = 0;
- 	int keep_largest_pack = -1;
- 	timestamp_t dummy;
--	struct child_process rerere_cmd = CHILD_PROCESS_INIT;
- 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
- 	struct gc_config cfg = GC_CONFIG_INIT;
- 	const char *prune_expire_sentinel = "sentinel";
-@@ -948,10 +956,8 @@ int cmd_gc(int argc,
- 	    maintenance_task_worktree_prune(&opts, &cfg))
- 		die(FAILED_RUN, "worktree");
+@@ -1491,6 +1512,7 @@ enum maintenance_task_label {
+ 	TASK_PACK_REFS,
+ 	TASK_REFLOG_EXPIRE,
+ 	TASK_WORKTREE_PRUNE,
++	TASK_RERERE_GC,
  
--	rerere_cmd.git_cmd = 1;
--	strvec_pushl(&rerere_cmd.args, "rerere", "gc", NULL);
--	if (run_command(&rerere_cmd))
--		die(FAILED_RUN, rerere_cmd.args.v[0]);
-+	if (maintenance_task_rerere_gc(&opts, &cfg))
-+		die(FAILED_RUN, "rerere");
+ 	/* Leave as final value */
+ 	TASK__COUNT
+@@ -1537,6 +1559,11 @@ static struct maintenance_task tasks[] = {
+ 		maintenance_task_worktree_prune,
+ 		worktree_prune_condition,
+ 	},
++	[TASK_RERERE_GC] = {
++		"rerere-gc",
++		maintenance_task_rerere_gc,
++		rerere_gc_condition,
++	},
+ };
  
- 	report_garbage = report_pack_garbage;
- 	reprepare_packed_git(the_repository);
+ static int compare_tasks_by_selection(const void *a_, const void *b_)
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index d21feda271f..9cc52f28ca4 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -510,6 +510,23 @@ test_expect_success 'worktree-prune task --auto only prunes with prunable worktr
+ 	test_subcommand git worktree prune --expire 3.months.ago <worktree-prune-auto.txt
+ '
+ 
++test_expect_success 'rerere-gc task' '
++	GIT_TRACE2_EVENT="$(pwd)/rerere-gc.txt" \
++		git maintenance run --task=rerere-gc &&
++	test_subcommand git rerere gc <rerere-gc.txt
++'
++
++test_expect_success 'rerere-gc task --auto only prunes with existing rr-cache dir' '
++	mkdir .git/rr-cache &&
++	GIT_TRACE2_EVENT="$(pwd)/rerere-gc-auto.txt" \
++		git maintenance run --auto --task=rerere-gc &&
++	test_subcommand ! git rerere gc <rerere-gc-auto.txt &&
++	: >.git/rr-cache/entry &&
++	GIT_TRACE2_EVENT="$(pwd)/rerere-gc-auto.txt" \
++		git maintenance run --auto --task=rerere-gc &&
++	test_subcommand git rerere gc <rerere-gc-auto.txt
++'
++
+ test_expect_success '--auto and --schedule incompatible' '
+ 	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
+ 	test_grep "at most one" err
 
 -- 
 2.49.0.901.g37484f566f.dirty
