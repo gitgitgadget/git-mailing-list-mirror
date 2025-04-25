@@ -1,150 +1,130 @@
-Received: from mail-lf1-f52.google.com (mail-lf1-f52.google.com [209.85.167.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E9A912E5B
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 16:32:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D29AA1A00ED
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 16:34:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745598741; cv=none; b=fFLm5a5VV9y3joagS3ju6PNow/ZL3HPAgjNB2Z2Q8snSEieM/RtJOO9mbKcvh2T0KEN71HEuxqzX1ljsafAE2VxeOx9g7FXg4lvmKmBp98TvfGLv4EEt1u1FO7q6O/CPwTa1V3RqLvZo2MEQDMtY3+QfXItlfCz1qVONrw9nhAs=
+	t=1745598898; cv=none; b=oe4fj4CwBSa9dEF7I4pqd3lk4XeuU0yRz8ZaqkdNbAMa7S/abTYRB63cXZ2X9f17Q0rc1zTryZ19S+RNqR3wFS0vZjxZDAMEHMHZ7wVgH69CQxOW30MyShzDk4URvSvf5mwpyb2kbkKNk1S1vRixrIwlS+2lw6unKbMvesTJ/CI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745598741; c=relaxed/simple;
-	bh=/UMBTlGNSGblBC1psyDV09Fu1cO53Gz+2aN1BvsiP9M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o0uFNWU26AGzBl3SUJ2EfgYVDVrx7upMAD7ACs/8RSL3X+YuLBOY4ZqRb+duiCyAo+y+ySX1pp5wE+DsyNXKOzHNy7Hc4nQYK1v8lyDTX9OFtfhNA6WfLr1yS6FSlVHYtMZG+99rN5RaFLV54nXXgdAFTEwV0Ozs9lN62vdoD4E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kfcxSaAU; arc=none smtp.client-ip=209.85.167.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745598898; c=relaxed/simple;
+	bh=NzVwqWcDzRiSUbFMTvDs3moi0pV2vl4lmXvdPPfEafo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Go7nxTY21lMVX4IyMxtraoShEjLUZPLRr9d+mn+NjODafpFQPRDqXvyWHe4cIo5K9mE3+Ipwb1v7NZzIVu0hgqlgrF/+oPxrss/8HqzeRVlYqkGMomR3ReSr9bTsFS0RvLhfb1HNFIadw/2lyq8V09bTlu/VBHzu8KUCp0eQHWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EZcMsCGo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FzNk0IUT; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kfcxSaAU"
-Received: by mail-lf1-f52.google.com with SMTP id 2adb3069b0e04-54afb5fcebaso2747638e87.3
-        for <git@vger.kernel.org>; Fri, 25 Apr 2025 09:32:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745598736; x=1746203536; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ftdyMbv7fZsWRmFBmxz4qO7ELIEADQ7weh9QkGtzghg=;
-        b=kfcxSaAUxBuKddgnMcRc7lHIWxzZ+SJVhSI7xFeXiWUYsMEvXiwdXor2eEIAF0Id31
-         qMa7cv7dCAOaiTrBTGz6OH9fJSKi9llIh0ixE/GCG7C+MuefqwiQRv4XYVftD8N/S2jH
-         mrVzfSW2d8i31qsIwVTr7iEPFoiJMz+PEMCODtLS5rzrEMUICZnecHQu4PdIve5Zi6JO
-         HWYLwvFwWhDH+QaZXrsWJSTPA/bRs+57Gsi4+yu6+IRWpU2Nj16zNrRDG/ZHQMp7msm4
-         5dqSH9z5N6kmIkF96qroYEq15ZJUi4FDeF0ezqr5NW/7v3JTJORmUthfcs649pndaMuy
-         jCTw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745598736; x=1746203536;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ftdyMbv7fZsWRmFBmxz4qO7ELIEADQ7weh9QkGtzghg=;
-        b=hQJX4epfdel00klHHeWOa71zauDtBqU8hnBlCBuTk7mJVJMMwpMdI6W6NAZtJUrtbq
-         M8ZV+XFe38fIQifA8kpMM6MUal+m7kZxIxKgP1BsGvhyUn+LG7vrqV6L2u6NqfUmBhun
-         DBulA+DRq9rgGz4BqvpV/KaUVEcdBOJ4Aqr3nI1ohEAJvaBjWgB1W+S981aEd1vAu6dR
-         QIARKW1b7FaYg9X6t4JT5tCDdhDOH8ctauP/FMXFz4xsuSZXU6gwCTbfHKh+ZtzD6yrv
-         OlXoyO+8EeeMwEJ4BMPzDVHax3/PqtOlYXGxQdFX5nTVwZVonYfRGWxy78rDcqHY2Aut
-         IN1g==
-X-Gm-Message-State: AOJu0Yx2Z3fQQRr+RfSOxwscvVWDkmT4gco+wEOqnWrulkDQ2xnfc5qT
-	tDOztmu6PoMr1agyUbmBBlmSsAmooAE95812TVjgE4+nLG/3CEf8i6NRvgjrjZOfT0U+On8yd7T
-	1YB9yCr+Sq9pQbu3YxKKTvxFHP3pAw4qoBDqpEQ==
-X-Gm-Gg: ASbGncsl+w67830ckthQrvQsT85GBfq8dwXvbIMjpVoKZKIVl6yXOFIW5yu8xRcIdpy
-	vbYB2+pW3JGs29l1eLlmw+FrTbOhQCGll6JtEkEto98X3khQKKVmiBNMcIRlcHKgBKNFJSZHVd+
-	49b5zHYNmM15nRNfVXWXHb0J8VgD20d/OxpjnZbso=
-X-Google-Smtp-Source: AGHT+IHSlxhjoJLtyZ80ZpBwTUpKANOxfAyu2EydfBkBG+0WtMv90aIAhbPphYXHY1ad5WdBmKi3tBP4ZeiXK6AyytE=
-X-Received: by 2002:a05:6512:400d:b0:549:8d07:ff0d with SMTP id
- 2adb3069b0e04-54e8cc0bd76mr993481e87.45.1745598735963; Fri, 25 Apr 2025
- 09:32:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EZcMsCGo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FzNk0IUT"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id A518011401CA;
+	Fri, 25 Apr 2025 12:34:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 25 Apr 2025 12:34:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745598895; x=1745685295; bh=X4lM8Qkfnu
+	QiuV/AJPBB13jdhP3/Uomg+NpvdKFsgkk=; b=EZcMsCGozvaDn6VpxHK8/tA4MT
+	7YuG8j7Df76+mSkVpytQ4MXpHhzQQYUWA+rUFhZVVBdAGTDFBYmEHJia8H3U3wiw
+	azbt/CQwFv13H06I/+99fvrJSx1GRwBNWbwb9o0F1baqtpQrEhA7r80tLXXZZ6P2
+	nM/z/kdAkj1ZFfxy9fLUXLhi8Lu7d/FjB5RyEmkmGvd69YulXCJbW+7CCOGz2fRo
+	Ud0MnrmytiWhZ0NqZZwegtmw9CDtXWy//ZG5T6qlMTn5OXZYsIon+Cj0OTd9L4au
+	FsuNaZmiel84LW4O2GXusNPeTF5gVCNS1UyjPS0yd7hdM8V3yHDAS3M700lQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745598895; x=1745685295; bh=X4lM8QkfnuQiuV/AJPBB13jdhP3/Uomg+Np
+	vdKFsgkk=; b=FzNk0IUT2RrMMgxHXfk2JkujBpEnuxTFOHrdY30mTSfru3fDaiF
+	2LBGRUA16WYhrcpfqiM7hBRFAX/GD5zajXfrDcssH+f1j2vrpKVIw4hctmgPd3wW
+	P4QY2Q6v2BlXgx5hGO7/YgK4S3Luq+uaBJoyn4b/BXCI51DmMTS77qOAIdTcHWN1
+	LfoJJ4KxK4q6UGblr/a3Ry8pji/deC8ruajhfP5clMnXnuuUUMzF+KhVYEJno/Se
+	Y8JEXuEhOqZvJF8tVYcaAhgOhwZLqgUc3PrWezGhrh6S3yZjuO3rlqDsFujmq92K
+	XscRmxDwRN8cqYOPTEpXFOQ/fHQy7OuyfLQ==
+X-ME-Sender: <xms:r7kLaMoa_0xcRPgzZniNFHibZ99o6topYHRE7ep1IypGuaM1Cr9RIA>
+    <xme:r7kLaCoA3iBinZNq-Z9ItfR7HZKx4kdTNWYZl_fqT7ql-epR4_p09m1svpRcEpvVH
+    wg7zzrXzDoypyWwzw>
+X-ME-Received: <xmr:r7kLaBMmxPy1MWu7vwiV0wT8mgTVMCjguQICdob6GGMn-J-oyAKi6Fvmi-fDDIejvhpmpUr3eBdao65EzaNovCX1UTn6zXl7FYsC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvkeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhsrdhrvg
+    hpohhrthesghhmgidrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:r7kLaD60ILJ0fz9-mmmo1HQjMpuT7dIqin74Or9bQ_HCsMyxSzCVAA>
+    <xmx:r7kLaL42SGNwNVO4CSgbjUthyuqXmJPdK-smuv2DAiYw6nfWSr4FeA>
+    <xmx:r7kLaDif_OLXkjQfMuup8dTloY5A01XVPNVVxpi2IQ_XhCN_Osf9oA>
+    <xmx:r7kLaF6s2WbU_-IopDthl3fUDjYuyeUnu0AOD1Qy_6I5a7E2oxE1Dg>
+    <xmx:r7kLaDAMBetQxMV4CGhH4fdHFITf2P0hOwNJ27p00dmvucGSFbiFLGBy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Apr 2025 12:34:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eli Schwartz <eschwartz@gentoo.org>,  git@vger.kernel.org,  Peter
+ Seiderer <ps.report@gmx.net>
+Subject: Re: [PATCH 1/2] meson: report detected runtime executable paths
+In-Reply-To: <aAsbwvtKTiZFRnXM@pks.im> (Patrick Steinhardt's message of "Fri,
+	25 Apr 2025 07:21:06 +0200")
+References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
+	<20250424-pks-meson-posix-shell-v1-1-45e06ee4b6ad@pks.im>
+	<43e86c8f-904b-4572-b84d-009c203fda11@gentoo.org>
+	<aAsbwvtKTiZFRnXM@pks.im>
+Date: Fri, 25 Apr 2025 09:34:53 -0700
+Message-ID: <xmqq7c38urma.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
- <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com> <d9a114915a30281518d6e411ee01aefa670139ad.1745587067.git.gitgitgadget@gmail.com>
-In-Reply-To: <d9a114915a30281518d6e411ee01aefa670139ad.1745587067.git.gitgitgadget@gmail.com>
-From: Scott Chacon <schacon@gmail.com>
-Date: Fri, 25 Apr 2025 12:32:04 -0400
-X-Gm-Features: ATxdqUH4bMWw1N73nXhBqWsWruDQN-Cp-jZYp_ob8Vj_bz9ZFTiJfBSTfZ483WU
-Message-ID: <CAP2yMaKkYdoQRJ3tH_PNrDtmw5NGfsBe6DmCYs1wwZdkAkGQDQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] bundle-uri: add test for bundle-uri clones with tags
-To: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
-	Phillip Wood <phillip.wood123@gmail.com>, Taylor Blau <me@ttaylorr.com>, Toon Claes <toon@iotcl.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Whoops. I'm seriously sorry for the coda on this updated commit
-message. I was testing out a different thing for something totally
-unrelated and was just adding random text to the end of the message
-that made me laugh. I didn't mean to submit this as the message after
-coming back to it after a few weeks. I promise this wasn't on purpose.
-(I'm not very good at Git)
+Patrick Steinhardt <ps@pks.im> writes:
 
-Related to the code change though, there was a comment that the
-message didn't match the patch somehow, but I'm afraid I don't
-understand how. Other than the cheeky mistaken addendum, it seems to
-me that the message still describes the new tests, no?
+> On Thu, Apr 24, 2025 at 08:45:44PM -0400, Eli Schwartz wrote:
+>> On 4/24/25 9:38 AM, Patrick Steinhardt wrote:
+>> > diff --git a/meson.build b/meson.build
+>> > index c47cb79af08..8f04534c7ff 100644
+>> > --- a/meson.build
+>> > +++ b/meson.build
+>> > @@ -2080,3 +2080,9 @@ summary({
+>> >    'sha256': sha256_backend,
+>> >    'zlib': zlib_backend,
+>> >  }, section: 'Backends')
+>> > +
+>> > +summary({
+>> > +  'perl': target_perl.found() ? target_perl.full_path() : 'none',
+>> > +  'python': target_python.found() ? target_python.full_path() : 'none',
+>> > +  'shell': target_shell.full_path(),
+>> > +}, section: 'Runtime executable paths')
+>> 
+>> summary({
+>>   'perl': target_perl,
+>>   'python': target_python,
+>>   'shell': target_shell,
+>> }, section: 'Runtime executable paths')
+>> 
+>> 
+>> No need to check if they are found. Meson will print the full_path()
+>> already, if it is found, and if it is not found, it will print "NO" in
+>> its standard color code (red) for things-that-are-missing.
+>
+> Oh, that's much nicer indeed. Thanks!
 
-Scott
+That is a lot more pleasant to the eyes.
+
+Thanks for working well together.
 
 
-On Fri, Apr 25, 2025 at 9:17=E2=80=AFAM Scott Chacon via GitGitGadget
-<gitgitgadget@gmail.com> wrote:
->
-> From: Scott Chacon <schacon@gmail.com>
->
-> The change to the bundle-uri unbundling refspec now includes tags, so thi=
-s
-> adds a very, very simple test to make sure that tags in a bundle are
-> properly added to the cloned repository and will be included in ref
-> negotiation with the subsequent fetch. ok, now it's right. christ.
->
-> Signed-off-by: Scott Chacon <schacon@gmail.com>
-> ---
->  t/t5558-clone-bundle-uri.sh | 30 ++++++++++++++++++++++++++++++
->  1 file changed, 30 insertions(+)
->
-> diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-> index 33a7009e9a2..9b211a626bd 100755
-> --- a/t/t5558-clone-bundle-uri.sh
-> +++ b/t/t5558-clone-bundle-uri.sh
-> @@ -107,6 +107,36 @@ test_expect_success 'clone with file:// bundle' '
->         test_cmp expect actual
->  '
->
-> +test_expect_success 'create bundle with tags' '
-> +       git init clone-from-tags &&
-> +       (
-> +               cd clone-from-tags &&
-> +               git checkout -b base &&
-> +               git checkout -b topic &&
-> +
-> +               test_commit A &&
-> +               git tag tag-A &&
-> +               git checkout -b base &&
-> +               git branch -d topic &&
-> +               test_commit B &&
-> +
-> +               git bundle create ALL.bundle --all &&
-> +               git bundle verify ALL.bundle
-> +       )
-> +'
-> +
-> +test_expect_success 'clone with tags bundle' '
-> +       git clone --bundle-uri=3D"clone-from-tags/ALL.bundle" \
-> +               clone-from-tags clone-tags-path &&
-> +
-> +       git -C clone-from-tags for-each-ref --format=3D"%(refname:lstrip=
-=3D1)" \
-> +               >expect &&
-> +       git -C clone-tags-path for-each-ref --format=3D"%(refname:lstrip=
-=3D2)" \
-> +               refs/bundles >actual &&
-> +
-> +       test_cmp expect actual
-> +'
-> +
->  # To get interesting tests for bundle lists, we need to construct a
->  # somewhat-interesting commit history.
->  #
-> --
-> gitgitgadget
