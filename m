@@ -1,124 +1,158 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C8CC25E446
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 15:05:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1CAD281501
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 15:18:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745593523; cv=none; b=YoNAS3EwVEeNSvU+r3h/ctmMA5nY6dnyjCdP8ynLqLUV1Ly2Rc4L4R7ByUd4gpgs39lAsa3aeavXqZZDYc436pheLs02E07m+S3yNPUbt4NOC/QLkLu3CcOr1DEhfTNloZ5ZDzOhQTPJHY+K4lxMP/JMpmME8riKgMHFivYL9Uk=
+	t=1745594288; cv=none; b=cP2koFLatSJXp7Gb3vhFPJnubawiFfNxOTeH5hh+9lsA1BYg6+KGeRmAFKlxhkQTVvrOqYcErQheL13rl+McK39oX8D9BSAaneZg5WpmeHuJ1znLzEfjbMVp+rVqg9BF0M0dtXMZTyeYaJYM3MAuiPSg52mGUvt/Gisfb0TSZ18=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745593523; c=relaxed/simple;
-	bh=eimRLCw9maLe63hJX41k3q4ALEw4kfNOWstac1TkNG4=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=HtwtBKQFmSqZvs5UP3FVH6LN8GFVpAL3zNSEKCkAgWFyf0k8N5eXBrgALUvX6iTd6ZdX0SxswWZNqenwI6/3gBCiAO15j6S52jLI+I3psujSw4PCRoHGRnKTNzEgzzw+hVFwuMOCt9nzJs4z7BlMUH4vpoD7WuMCp4zrXaWsIGc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dOq7GIvw; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745594288; c=relaxed/simple;
+	bh=NJpmFp6tlIBDAgIWLpoCTHcXgTDyIPIYCQ4NO1mb8ec=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ZrLNIGAQstqqq8KL4ahjpYwziyYNeAX/4WP/mLWVZGu5njKIjE2Uv4HHG2Qwph8GZFu/Im5fdFgxa8F957TQ3vInQrqNYRELVqCvDnPKF8+DlVa5lPa45+TQBgr0xQm4LZr9S0DDzXhjnf0MI8iex2MyvgfzsGG5BJEwE6Tmpoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e0mUGXKc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UKQqZXD1; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dOq7GIvw"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cf848528aso16647255e9.2
-        for <git@vger.kernel.org>; Fri, 25 Apr 2025 08:05:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745593519; x=1746198319; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=2rIyzWRPqaI/QldH3XVG05dPLRCDWvN5MB6/72/wQLk=;
-        b=dOq7GIvwASq3x8eglpkrcGeSvlAZgocymBvirwHXEMEkT4+p1ePkIYOyqV+W1URwiZ
-         L7PxkTwKcMiM9jgMpmALWZ9BjHfffu9ubQ5BgGEYhT3JeWw/YYQZ6uh44vTrVBCHnxBo
-         a6QKolOPxyPGdeV7AVC3vB5Can5gHVKIZGY01+dJnFMjuWErDvYIJSlhenDylad21McF
-         pxurJ1X0dZD2abxuqIDnzOHQ4l8HJakuWPajfal6uUKjB1zqcw3hNji2wLv5gW4jGvtn
-         XZITdEInsOettkZsCMNf1FCJwsAIWdQtfQLSKjX3F258+DL++Jn3C3iGe54lTVwvv3Te
-         MQMw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745593519; x=1746198319;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2rIyzWRPqaI/QldH3XVG05dPLRCDWvN5MB6/72/wQLk=;
-        b=HZUERjprn5wVuPFELUW02VvfWnxo6YyggPydRLxPFroxY2Jbi6GtGwJs9TnV/1MypD
-         VRkFLPsJwUPrRnBvPjCw/2ePZj9G6SOWx+T6I8vRGUr4S4g0zRSMF1Eh+h3/78vZqLvj
-         yo0BSJ/Zj4t9Md69t1fcP81wk1vqsOgFZHRPe4DiBF5L32XcTUkT4MGNyHcfz5qaTLIP
-         tVBIIHYX/dIfWik4rC7r5qIFmqgpFf5lXdVEHbxQ6I+eRze7SAFmLb8vk3E544Q5sv09
-         tLaaTv1a9YSfMlv+UurDpU/O5ctuyypgZ9pmqTJ80oVTAY/uFqFEqFkIRjksZwBCb3MF
-         GZUg==
-X-Gm-Message-State: AOJu0Yzdv1DraWLmUO/iTsJnOT+ei0ElpJHFqaHDd6Hg6HyYEcYNC0rq
-	nZ9jBiYsn0V01W1SQvSd9Di3Kr6nmcnj8GgatXorp+F3fEnMlpyT/IOdiQ==
-X-Gm-Gg: ASbGncuHjjsCvSJhJIIYeEAfQlvBw7GR42gQpBtGpWafKvoJ4Yl7iD0p7hmydLdmi20
-	2NcF33KACmYIMEwjivjLJQdFIrtgY4FeZCKHl1koA90rfUVRqsrN3hCj3pAz7T3Z9Yxn1w44Kk6
-	w381YGd2cgdSUEYbDDl6Y1U/wRYydQ9Kk8juhd6ZteE4EA60ZpbPqjSuB1dNRUuQm13YUSQwm23
-	uNCTvxc8KS7biDIRt1/psQEJvL29ur1uEaNBcu1mVvb5M6nzQ8IvzXWSFYZdC+ffXmIWrv9RJwo
-	5wnB+QJy1hj9nzwwH9txdUl1mHq1T+Qma3X7SmImJ+3B40Op5mj4
-X-Google-Smtp-Source: AGHT+IGke0vhUuzOyJDjhnmNE/jqM7joglCNAK+KuR/iF7Itev4asV72a72qF92/hXR7tfjt7P4F4g==
-X-Received: by 2002:a05:600c:3d87:b0:43d:745a:5a50 with SMTP id 5b1f17b1804b1-440aa428c9cmr6839975e9.19.1745593517002;
-        Fri, 25 Apr 2025 08:05:17 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-440a5310a1csm27539675e9.20.2025.04.25.08.05.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 08:05:16 -0700 (PDT)
-Message-Id: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 25 Apr 2025 15:05:15 +0000
-Subject: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv hangs
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e0mUGXKc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UKQqZXD1"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id E99B61140122;
+	Fri, 25 Apr 2025 11:18:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 25 Apr 2025 11:18:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745594284; x=1745680684; bh=TDgOdvO1jN
+	wzmzJ1L0vCqeaQsaGFGUXS4XomR2wziOQ=; b=e0mUGXKcPhpkCzOgYnewqRkvQ4
+	eJgRgpB8PllhirdbXKACmD32pklYmgdpTo0KIQB19korIrgiKxspKEnijQrBKj+l
+	MoKqitpMa0igfTMFyShXgQ0PkiyUqo2oXPCpg/ga2k8jhdj/rDUwYSIATypiW6SN
+	VIKxqyk9fIkgPsS/GgWH9CyC6pmR/d5TSo7bnGqPqPSt5RQZPXrVsPgB59WQtDvL
+	KibpR/d/H7wsIFYrQPUuGM3/6byDK7X2BhPRb7QgOJ2FCcv/D1kymldRHxyVPT/5
+	McNloyJf2LPFKTFTZEjuqi2ithzLXIdXBKl+EUX2ZftrrKmUvy2ZzxuJ3XkQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745594284; x=1745680684; bh=TDgOdvO1jNwzmzJ1L0vCqeaQsaGFGUXS4Xo
+	mR2wziOQ=; b=UKQqZXD1HLdjCN+DtS+d+iIYux/fyE3MqaWoGJOMUnDHWq2DX7F
+	+Brjy8Wq3m30iMY9BzGi37yv/BBErlAyTO9tkwCLC09uZBq0k/j9X+g+0rnqdQ2b
+	ne6fDrb2YnKwgNpMiaUAJCN15Z0GKxneFErtrjBEJ51d6N6HZRJCh3Blkm7CAAD3
+	crOBqwD8Y8ca+be+oPjgcItC8IuekgFBlu7Xo7sfGZFWzLwPcrS7okRLUrSMc6bw
+	top1rvbGoTp61F4CD1UHgIpPSO36LBcxsxkHhxWIt+EOEQmEZeuogJFzWKqJWUfU
+	tFf/dyDRtKOz7UtnIK3F1M0Ub5lT+V7VarA==
+X-ME-Sender: <xms:rKcLaK6xkltaJkhSc4oMQE0NJfEd7JNroTTCZ70vMA0b2ruslEZN4Q>
+    <xme:rKcLaD4XdsH97LG8eJEX0VnK6wOY_6p8XiZVAXV8NZ9MjBbA8eRLM7vTyKZodFfIR
+    zYw4kSgfhwZqCh3KQ>
+X-ME-Received: <xmr:rKcLaJfxsaAMrAZXvv79Bjiwfpqw-69gD628xruHXtYcEeyiZEFuT9hoq_HI6u4G99DXpG6XYVr0_oGw3XNdzdcqsiiMrzWmLDl8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
+    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepph
+    hssehpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhn
+    sehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:rKcLaHLz6DhS7yvCO1lNctWGsumdZcFRp83WpFAZX1sxq98HnRJ_Jw>
+    <xmx:rKcLaOLXQws73vRMeI8YeYRrI3cPB0xheImg3isHGxX28fSFSPAz_A>
+    <xmx:rKcLaIyTFkHyRmx3U1z9jAgFBAvgOat3qoICeU73ZMZZArUVZhJA2Q>
+    <xmx:rKcLaCIs2t7qrqxJWePvW9iHusWwLe-AlfNgfyh3ticldAQVuVhcnw>
+    <xmx:rKcLaCsNU0iKoO8sLTMdKr6eP5Uboo0XSr3GxIRSFqOono16KEKzPOZD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 25 Apr 2025 11:18:03 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv
+ hangs
+In-Reply-To: <pull.1908.git.1745593515875.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Fri, 25 Apr 2025 15:05:15
+	+0000")
+References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+Date: Fri, 25 Apr 2025 08:18:02 -0700
+Message-ID: <xmqqmsc4uv6d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
 
-Since switching to `--vsenv`, the t7001-mv test consistently times out
-after six hours in the CI builds on GitHub. This kind of waste is
-inconsistent with my values.
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+>
+> Since switching to `--vsenv`, the t7001-mv test consistently times out
+> after six hours in the CI builds on GitHub. This kind of waste is
+> inconsistent with my values.
 
-The reason for this timeout is the test case 'nonsense mv triggers
-assertion failure and partially updated index' in t7001-mv (which is
-not even a regression test, but instead merely demonstrates a bug that
-someone thought someone else should fix at some time). As the name
-suggests, it triggers an assertion. The problem with this is that an
-assertion on Windows, at least when run in Debug mode, will open a modal
-dialog that patiently awaits some buttons to be clicked. Which never
-happens in automated builds.
+With mine too and I would presume everybody else's.  I've been
+annoyed for a long time by one of those sharded Meson-Win test jobs
+that hang around until timeout.
 
-The solution is straight-forward: Just like the `win+VS` job already did
-in forever, build in Release mode (where that modal assertion dialog is
-never shown).
+Thank you very much for addressing the issue.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
-    ci(win+Meson): build in Release mode, avoiding t7001-mv hangs
-    
-    I was surprised to find this issue today, and that this had not been
-    addressed yet.
+> The reason for this timeout is the test case 'nonsense mv triggers
+> assertion failure and partially updated index' in t7001-mv (which is
+> not even a regression test, but instead merely demonstrates a bug that
+> someone thought someone else should fix at some time). As the name
+> suggests, it triggers an assertion. The problem with this is that an
+> assertion on Windows, at least when run in Debug mode, will open a modal
+> dialog that patiently awaits some buttons to be clicked. Which never
+> happens in automated builds.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1908%2Fdscho%2Fdont-let-win%2BMeson-hang-in-t7001-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1908/dscho/dont-let-win+Meson-hang-in-t7001-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1908
+Interesting.
 
- .github/workflows/main.yml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+So another viable fix (no, I am not suggesting a counter-proposal,
+but asking a pure question to see if I understand the issue
+correctly) is to rewrite "assert(cond)" to "if (cond) BUG(...)"
+or something like that, so that it truly fails?
 
-diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
-index 83ca8e4182b..275240be5dc 100644
---- a/.github/workflows/main.yml
-+++ b/.github/workflows/main.yml
-@@ -265,7 +265,7 @@ jobs:
-       run: pip install meson ninja
-     - name: Setup
-       shell: pwsh
--      run: meson setup build --vsenv -Dperl=disabled -Dcredential_helpers=wincred
-+      run: meson setup build --vsenv -Dbuildtype=release -Dperl=disabled -Dcredential_helpers=wincred
-     - name: Compile
-       shell: pwsh
-       run: meson compile -C build
+> The solution is straight-forward: Just like the `win+VS` job already did
+> in forever, build in Release mode (where that modal assertion dialog is
+> never shown).
 
-base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
--- 
-gitgitgadget
+OK.
+
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>     ci(win+Meson): build in Release mode, avoiding t7001-mv hangs
+>     
+>     I was surprised to find this issue today, and that this had not been
+>     addressed yet.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1908%2Fdscho%2Fdont-let-win%2BMeson-hang-in-t7001-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1908/dscho/dont-let-win+Meson-hang-in-t7001-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1908
+>
+>  .github/workflows/main.yml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+> index 83ca8e4182b..275240be5dc 100644
+> --- a/.github/workflows/main.yml
+> +++ b/.github/workflows/main.yml
+> @@ -265,7 +265,7 @@ jobs:
+>        run: pip install meson ninja
+>      - name: Setup
+>        shell: pwsh
+> -      run: meson setup build --vsenv -Dperl=disabled -Dcredential_helpers=wincred
+> +      run: meson setup build --vsenv -Dbuildtype=release -Dperl=disabled -Dcredential_helpers=wincred
+>      - name: Compile
+>        shell: pwsh
+>        run: meson compile -C build
+>
+> base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
