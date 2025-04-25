@@ -1,55 +1,55 @@
 Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5047E236A88
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 07:09:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21910238152
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 07:09:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745564952; cv=none; b=AVkMN67x0PDc/NmiSfcwaBYNeZ3ZKZRsT6lUeN5RxW2nizLyPKqvtic99Es8uO6NJ9EAp4w5lSGZkQREe2vtU4ilrNdvARpyI5bcRs6ICfpXQ8no0MkDPdIl9CC1lnW3YVjuz8g9H3oFjz2/YEIGaSUFQKlmIHUH2KUXzb4zHv0=
+	t=1745564953; cv=none; b=gpwivRE2a4cyjbVNr4qg0eSJLRP/F71PSw77WLqxOaFmNsKu9P2AS14fYwzo0BGKGtds7H7Xyag4/XSbElCdmCG5wEV2rKRWhgMelDzIvBZESKQ7AGYfB/qY3mYvRJ/u33FywXnfJtQeDDEQcb3QUgk0txlMDmZBIgIh4XJyOwI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745564952; c=relaxed/simple;
-	bh=slrkkFxbhUbEUYS+PFyqaVpTqu5mFcx70IwVhbFmEeo=;
+	s=arc-20240116; t=1745564953; c=relaxed/simple;
+	bh=DTvIGeAqYKaoIODKitoEPhn+InOi7TLOyGxFauN5Wng=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=KFZMX3fvXW8eCEUfTc8rNh2tkftyGto0hJzvhy7wgNt/QLj2oT2ryaWnKWjiklpjZHBd1TS/01gAw6TC0YNb3fHcmbOnT7bg/4P/tZGBHX1v+HeOlmTsb0REBGIlgtOHJDp9yxsz6sb/epXfhdhsOyvGANb8xg2YpCdZmAhHUMg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GA86EBWu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ITWP4Yar; arc=none smtp.client-ip=103.168.172.159
+	 In-Reply-To:To:Cc; b=DY5eIl9Gb7wrAPYpaXPr8SSylguEpD1cN8OhjAjvW6xue8zIn18Y4N9jGksvLATFjs01M5nWTZO9IE/0yJn/JaM/CWmSTHuz3qm2zWnZ2AhMKVc3YJv8+nURjlGEHRUe0OAOeAexTC1kyb6LaKrlNFSCYWsDs2x2gHalg1UkcJg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=StmpP01z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KqW9E9hr; arc=none smtp.client-ip=103.168.172.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GA86EBWu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ITWP4Yar"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="StmpP01z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KqW9E9hr"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 63AC111401EC;
-	Fri, 25 Apr 2025 03:09:09 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5150F11401DD;
+	Fri, 25 Apr 2025 03:09:10 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-01.internal (MEProxy); Fri, 25 Apr 2025 03:09:09 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 25 Apr 2025 03:09:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1745564949;
-	 x=1745651349; bh=2NIsQ+MN61S2KePeadISMk75sRLSb7H5z9zQUUl0nJY=; b=
-	GA86EBWuVNaFkLWNIlkpbGLXnYXznwXg+OdO3arWi10ec8EBkWE4xSlecKQWKcCQ
-	GpSqfsASuvfU0CuTQf6oNC71XSjdEjytv3so4IRPgzU0VuITWcCIPdnzQfwJ4oH/
-	mZlivYRgDcBRaw+ZZBF309vKzl3cDsxJZ3JBE0COobqVol8FZXjp4+lAOaJz/kxm
-	r3eudBl55yzEea5Omd1ajuFPbLZm4hjMOFtJjHnIYhrFqk0Lv4fktcB4xb+CY2P7
-	BwBmsJDZEim7hHrJzxjR3jOA+FMq2zrBK5M3oLBwqHpHki6bsBTOb2byDq9e+0kG
-	EXfou91E0REhlblEQBU4tQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1745564950;
+	 x=1745651350; bh=DTkAGtZJJLWXA8zhGTR+ew/+MigYWjQWiYAcevIhS3Y=; b=
+	StmpP01zXG9GdTiRIx7ESQ3fCsd7uGeinUF/7G8TRXUcSeezHQw+DFQXkgEm4p5i
+	eeCmLVjwqXx8Gk4Cx1zDHlrUFq7rgG3HPbREBklNiWMU0ntMXuUmePCu7WLcVNeM
+	qZRwbEvvf5og9NWQOGofMy59yX3DS0qAaoOexxJf46ePJe0bhhdTz8vKf3U/1OaB
+	A9nReIXN0n860yrC7d3ppnG0RmCh/O7eEMNSX8Cx8DgzE7kWsu6CTGR/UJdPakAO
+	GZUW0pILGSFeDBzcPe793E6J+YEQ44uQEf5+Pw3YmVr4oCJIH7ThevLwbRmB75E2
+	guBzgqLkmy6OkVJffZorRA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745564949; x=
-	1745651349; bh=2NIsQ+MN61S2KePeadISMk75sRLSb7H5z9zQUUl0nJY=; b=I
-	TWP4YarVQyybV4uEgXibWFmUvxXwSdXaMKFozZ642Gkqc+85xrc6ENpFdMWbtKfZ
-	QGZtyawN1fhBFvKZHG07mKHk9IfmEwJGEY4VecX6xoQCsBLfFcjRgK5p1M20xJBR
-	Zwt+I8Ekje+/A6AaW2PnIkKKKgf3RPYNXdxFCIwMgtrOJMZ1A8JwbnMPleqtmPvG
-	MeDzcxXz9LZhD0Nf3/FCuDCjBwY4lnR5URZhmlpkdQfxqlGKrFAABdIHZU/5ZC0b
-	rbTdXSCyHNeOu/2kLb9hg6w14R9/P7fJcqVQ3eN4GwjSIUl5cRjoiUY/l/yQdQBt
-	pQ/5JLJfVKdZdo1mLfeHw==
-X-ME-Sender: <xms:FTULaFaC4Z2J6PWCj7ZMIaBJjmUBbQ9gB7TkiyRG9VRWkcXwAtXr7w>
-    <xme:FTULaMbeW9d8NjOsXuvk5RBErjz3GXOwWEZFjZzXcJ8AW-lSAn6uCLoXuAYfB-Z24
-    Bx3ye1Ih3S3V2LVvg>
-X-ME-Received: <xmr:FTULaH8WLEYTUIFM2Fe_FNONsCFf6AXQ2LfT-VIww1HkZb-eFCVVllXv4SisgSupz53Qkz0L25kS7Sras49z4C56Vq8ebJrDAr2Ewnb2>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745564950; x=
+	1745651350; bh=DTkAGtZJJLWXA8zhGTR+ew/+MigYWjQWiYAcevIhS3Y=; b=K
+	qW9E9hrp/3rr7ZUg431m5ee1a/BDN52CemN6717HHMXDQdqjiw1LMowG8z6NO892
+	nW9Mrm7bpHuf3NgQHj91+++vV+PTpe/NZdKDblGD+NlGZ+GMhtCs2fFtIIqWxaoE
+	pYr6vr+yCsTPoKmd8Ke0ICqk7HsYpzuZEoi9YexPpKA2y8EP5oYM/zVzS95XSRB3
+	K6Rzxzai8GZ6kejNA65fuPJLKVo5d9F6g5LAtSqbn4L8dXOmA4uN4bBJgVIpArkn
+	4pMDkP9LzebYwJh9x/+6Hm6qWmTG3ndObLJUGZ6PQMs+8FuLB/EMITsQlPy6MBxr
+	bs0C8sjIcudn3cSDObKaA==
+X-ME-Sender: <xms:FjULaBp8qKzZu52m4ObWLWj-Ls8ze_k-fnJDJa56UlhK9BLWf6LfDQ>
+    <xme:FjULaDpPKh_sCQsW85TACBlLnShjNO7XPNv6wa5yg9X5CY3LAAe1pJok1_7Cr8PjZ
+    Nir2c1FFOzGQAzYXw>
+X-ME-Received: <xmr:FjULaOMvCpVb0zfHpnXx7GxCKeJQi5VLr3jwEN4TQ8Xp8Rv8tTtI8ctVEZ8nJKz6b0GWkk7TKX7UWjdwBY60TBkmDmc5DWgWI3hwqfwU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedujedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -60,21 +60,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedujedtucetufdote
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
     gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:FTULaDoa86BmOR69qkRcmdMsBoswLFGC-86-1s2TGKBtBYJ2CbxJ0Q>
-    <xmx:FTULaAoLzqb9Zlia21abeKIntkDS9PQ6Nxr9o8EVbr-oB0g1qbWEvg>
-    <xmx:FTULaJRLxH0IzhXW-ONgSkzZdQo1-UoEq1HonT75K4_9f9Srr-qxgQ>
-    <xmx:FTULaIq3iF9oXCDdsVxi79m1xHdnVfTndBL5gMK2FMMBnaEgGOkMJw>
-    <xmx:FTULaIENmX293tQxNBMQ_SI3zmeYMAOh7StTv2SpwApv0O1laBIp2njb>
+X-ME-Proxy: <xmx:FjULaM7Bg-BKwiq4HJpKMnqwAps-Ar-ClYS8Zke9BnODHkqTqL9hYQ>
+    <xmx:FjULaA5dZIIdb0ds8X2pcR5PimbkP7-XWPddY91rygS8-OK3VhZ0Cg>
+    <xmx:FjULaEjPJB6mlgALCjYnI9bsY6-FcLon0iNMjgFIFA-ukO4pZvS4sA>
+    <xmx:FjULaC6D5OAErT3E-HsxsxP-mQrqPDCWgpkKfP2wshZgkktKawf1xA>
+    <xmx:FjULaIUDy440dvytRwlqGXynyI5aMEzR787GX0vwjheFXlUt-LpMaWNu>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 03:09:08 -0400 (EDT)
+ 25 Apr 2025 03:09:09 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bc3db023 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 25 Apr 2025 07:09:08 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 735a1ef6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 25 Apr 2025 07:09:09 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 25 Apr 2025 09:09:03 +0200
-Subject: [PATCH v2 12/13] bulk-checkin: don't fetch promised objects on
- write
+Date: Fri, 25 Apr 2025 09:09:04 +0200
+Subject: [PATCH v2 13/13] object-store: drop `repo_has_object_file()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,69 +82,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250425-pks-object-store-cleanups-v2-12-63f1695b7700@pks.im>
+Message-Id: <20250425-pks-object-store-cleanups-v2-13-63f1695b7700@pks.im>
 References: <20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im>
 In-Reply-To: <20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im>
 To: git@vger.kernel.org
 Cc: Karthik Nayak <karthik.188@gmail.com>
 X-Mailer: b4 0.14.2
 
-When writing objects via the bulk-checkin subsystem we first try to
-figure out whether an object already exists in the repository before we
-append it to the packfile. This check uses `repo_has_object_file()`,
-which knows to fetch promised objects by default. As such, if we were
-about to write an object that is promised, we'd fetch the object via the
-promisor and then skip writing it. This behaviour doesn't seem sensible:
-it should be significantly faster to take the locally-written object
-instead of faulting in objects from the promisor remote.
-
-There is one counter-argument here: it could be that the bulk-checkin
-mechanism will end up writing an object to disk whose content collides
-with the object in the promisor remote. The local repository and its
-promisor remote would now have two objects with different contents but
-the same name. But the resulting behaviour would be wrong both when we
-prefer the fetched object, and also when prefering the written object:
-
-  - When we prefer the written object we will now see a different world
-    compared to everyone else who has the promised object.
-
-  - When we prefer the fetched object we will end up with an object that
-    is different compared to what the user just asked us to write. This
-    seems even worse compared to the first scenario.
-
-In an ideal world, we would protect against this by fetching the
-promised object and then performing a collision check. But this feels
-exceedingly expensive and ultimately rather pointless, as more common
-writing paths like `write_loose_object()` don't protect against this
-scenario either. And in any case we're talking about a local user that
-has write access to the repository anyway, so if they want to do any
-kind of mischieve they already can.
-
-Change the behaviour so that we don't fault in the object via the
-promisor remote. We shouldn't have to worry about hash collisions too
-much (yet) as the mechanism is only used during local writes anyway. And
-even if there was a collision, prefering local data that we were just
-asked to write over data controlled by a potentially untrusted remote
-feels like the better failure mode.
+In the preceding commits we have converted all users of
+`repo_has_object_file()` and its `_with_flags()` variant to instead use
+`has_object()`. Drop these functions.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- bulk-checkin.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ object-store.c | 14 --------------
+ object-store.h | 17 -----------------
+ 2 files changed, 31 deletions(-)
 
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index c31c31b18d8..b182c456d69 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -130,7 +130,7 @@ static void flush_batch_fsync(void)
- static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
- {
- 	/* The object may already exist in the repository */
--	if (repo_has_object_file(the_repository, oid))
-+	if (has_object(the_repository, oid, HAS_OBJECT_RECHECK_PACKED))
- 		return 1;
+diff --git a/object-store.c b/object-store.c
+index 2db34804e8f..2f51d0e3b03 100644
+--- a/object-store.c
++++ b/object-store.c
+@@ -949,20 +949,6 @@ int has_object(struct repository *r, const struct object_id *oid,
+ 	return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
+ }
  
- 	/* Might want to keep the list sorted */
+-int repo_has_object_file_with_flags(struct repository *r,
+-				    const struct object_id *oid, int flags)
+-{
+-	if (!startup_info->have_repository)
+-		return 0;
+-	return oid_object_info_extended(r, oid, NULL, flags) >= 0;
+-}
+-
+-int repo_has_object_file(struct repository *r,
+-			 const struct object_id *oid)
+-{
+-	return repo_has_object_file_with_flags(r, oid, 0);
+-}
+-
+ void assert_oid_type(const struct object_id *oid, enum object_type expect)
+ {
+ 	enum object_type type = oid_object_info(the_repository, oid, NULL);
+diff --git a/object-store.h b/object-store.h
+index c6055376f49..2330374990b 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -280,23 +280,6 @@ enum {
+ int has_object(struct repository *r, const struct object_id *oid,
+ 	       unsigned flags);
+ 
+-/*
+- * These macros and functions are deprecated. If checking existence for an
+- * object that is likely to be missing and/or whose absence is relatively
+- * inconsequential (or is consequential but the caller is prepared to handle
+- * it), use has_object(), which has better defaults (no lazy fetch in a partial
+- * clone and no rechecking of packed storage). In the unlikely event that a
+- * caller needs to assert existence of an object that it fully expects to
+- * exist, and wants to trigger a lazy fetch in a partial clone, use
+- * oid_object_info_extended() with a NULL struct object_info.
+- *
+- * These functions can be removed once all callers have migrated to
+- * has_object() and/or oid_object_info_extended().
+- */
+-int repo_has_object_file(struct repository *r, const struct object_id *oid);
+-int repo_has_object_file_with_flags(struct repository *r,
+-				    const struct object_id *oid, int flags);
+-
+ void assert_oid_type(const struct object_id *oid, enum object_type expect);
+ 
+ /*
 
 -- 
 2.49.0.901.g37484f566f.dirty
