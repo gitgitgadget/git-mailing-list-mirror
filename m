@@ -1,85 +1,84 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E36234963
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 09:53:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BF031EA7CA
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 10:02:29 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745574806; cv=none; b=VlT+whR6efYCVR05ZWXeZ7UcOC9kJVJIrmbQmhDgNY1ywSmcdLyhSIR0Of/nhMzd+ggVIZFckxF/7ikZfBFma+BPRGLi2qpS+P5AG2pc11KIcqHVPDgJsegyscIIBYlD0QOIsy9gOdoHRmR+r6YLcIMxVW/LmbXhrLK72GYXPA0=
+	t=1745575351; cv=none; b=UIa60S8auyV89ol2IZrOYOkI3NkY+y0m2qGuJ/gu3sKm4AYMU64M60bwdcZaX/lKWXSdSoO53DIGDhQJ983ViNRUm78NxTDNgxyhI4MH471LOoCpGzjmKIrtrRiTMs2fRk1kJ8I3LpNhdjC0Y5nK2SUWtkH8XsJ9e60PJZX4cdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745574806; c=relaxed/simple;
-	bh=vFemvByYEYt3sCVtVipyBRYZPFafCS7d0Uyc26eeAes=;
+	s=arc-20240116; t=1745575351; c=relaxed/simple;
+	bh=o1Rzr488QTvmCiOkyQLWWQc/QkjbTS3BUWnFDxA7gbY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=V8K4ngs8Tijy7dbAAbwGmomQV4CprdOT2CUrfhZW55BW3s0/tp3np/2FQ7O38EE9pNeR4eCMkYcKz/kOXWIVMOf//erS6iGgovujkSkxScghn8Vs5UXljkHYD7nNxOM2cp4juRaFTP9gTM0apbviIJjR8yD6NTs8qvXv8VUHALE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=REum3IAw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eeeurN8B; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=rlmmucSV4Y/5ettJMmKV9Su4pARa2VrV0YrI9Ad0FB88ZN8aWmOR55nCgs2C6IsNHWpFZYlEMDQWoMmFvjlGAmv5W/aMeLBKHWcKfo+SjNUVw1rSjwI9hWmKDFpXRj5cOJ8QoWjtVavmPAPy8b21DKG7zBITOLhw2qV1f6jNq2U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BSTDeNUO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vjs2BYDG; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="REum3IAw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eeeurN8B"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id BC8DB13803EF;
-	Fri, 25 Apr 2025 05:53:23 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 25 Apr 2025 05:53:23 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BSTDeNUO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vjs2BYDG"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 83748138015C;
+	Fri, 25 Apr 2025 06:02:28 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 25 Apr 2025 06:02:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1745574803; x=1745661203; bh=iruC9GSGVz
-	qYi3ER4DkyXPYEzb4kjcoUZWohUhbwYr4=; b=REum3IAw34UGeZ4ATudNQpK015
-	Kyt1AMlI3PNFBisYetOD/nHxroA03JXLTXfiFlbfUx0zn7sranwTFvqW434052iC
-	xWJCIKubTUy6KThxc2lyuPB2soXxAV6LcZrpVDs2IgwDW2och9jM4X6CyGxEPGph
-	7b5WjPGiiqeouC6cs8LRtjq7N7TNjkbUwaXG9r7Aryaq/oCbHTBncUaY0p7wa63P
-	qyScRyLbO2HWazlioxIXda6dHMipvVyW0qeKCwrbAI8wtNgzoWt0ofxlhnRJHJkA
-	7ytv6ZUayuZ2yW6+MtmF0dWRWbjRI7U0PbGlwlyk9fs50W8VzLiuAlhYV4gQ==
+	:subject:to:to; s=fm3; t=1745575348; x=1745661748; bh=XBJnpE3AZV
+	2GX4WMZ83zlcPPpxDa1sa2CusgkeWm7ek=; b=BSTDeNUOaUWhXSpzkG94gBYlv/
+	OS1tPUlE0oWEbN2XMyTfCRQgM8GrN/rn1AzJVB5K6A7vYu43vKSQldeajjThnICv
+	+c+CSvrB8vsu2KRAMtKEri0QsPHoIo0nLGLZ0yAABYK8uxmEqIER9/CBIGEciOcf
+	xg3OT1zl9Frw/uayQLWkvID34Kq+hI7GDNHPVE7Ui9I5oLeiLi6Mo8mB4nVywJMh
+	QWwgyVeF3jbGbW0o1cbdn3vkq4sE9yilFiq4Ht32l2yJmG2RJK8YMrKTvlLssFPH
+	keYb3j73Ix5F1HX3AC4WG6Q5Go0NyeibR7vF2es0FHZJuG0qxj2aI5Fkm+bA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745574803; x=1745661203; bh=iruC9GSGVzqYi3ER4DkyXPYEzb4kjcoUZWo
-	hUhbwYr4=; b=eeeurN8BZ4ZmOmfXLg5joK+aq9J551aqg+xoEp/f81f1xnPwlx6
-	gfpWX9vXpfTz23N/hr1QiIaWyZ9fte/TEVIlu32keuS5fnoc2/5f+ldW/pJXtws7
-	FA2O55d2kW0P3xDnoqdZ/v0uuK9SSA1d8gcas5etu+vgfzrMzB0C9ONcwDah+PbN
-	Y7jneP5dR4JPnG3l3vpP2jhNQAoU+3Xbz81/CERJSnbT0Ldn0Ffdtd6D9e1lNgW2
-	X7lqsH9NtOEWDe1NZSGRvGiUaCdpgANkPLBCvYC5/RLIWDg7hOfouG3Xud4gXVJE
-	wsnAYFKMnxmKxxvY+imBQdZ2f/W4bKkUJ5A==
-X-ME-Sender: <xms:k1sLaCqrnLD__Vw5E9XXdazkgMqnCH0MMj65Q_HLHJ83bhzO7LTOsQ>
-    <xme:k1sLaAq5KnOOMJSDU0FMh-9fBt8-lJ3G6Zrz2MmCz495f3v9hCB29JXzhhhfcAwZt
-    8g5Ia4aW2Y_XMDVJA>
-X-ME-Received: <xmr:k1sLaHMdCKRhzSD6uIdweR7eqIYqCoL7QpFESX0Fns4vhIrD8DE1KnsteGZY-gH38L5n1v1zCHN-pc33CEPKJj-cwOv4ldX2i5k0C4SG>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvtdefucetufdoteggodetrf
+	1745575348; x=1745661748; bh=XBJnpE3AZV2GX4WMZ83zlcPPpxDa1sa2Cus
+	gkeWm7ek=; b=vjs2BYDGii0vM/0Y7cj45Lv3ddDwNMkRoPcYCl1AAY5kw4armkc
+	KrghovOFE+bQr5SA99oCYQdBWcktAElf/FyN0CPqyCsYr7eUVF/VQEAcBtwgKp9i
+	y9w+7A9mvwpFIdG+TmNZU+/2MtNFphG9zJGyZqjjrQy2X4dbclKhMwBlqW7dxK+2
+	k0aiM0u7trKtjx4FJLdlkLZ3ux4QKpm8TZoX8fQXQ4qvHk63qeGNAiPtC8i1U6Fy
+	ZlVjOiqy97/kK0fAMAF61RFnLHYrZe9llNev6BUTKrb/DRGucZiCl+0I1GonifC+
+	bba18Bz2ArybuubwEhM4j5sA2fQwyloPkHw==
+X-ME-Sender: <xms:tF0LaHHmjoxxPtXna3z7WmLXuYGqg_zXxHGhI2ZsL9slgFsuPtKI0w>
+    <xme:tF0LaEXAA_KXnaHHkMHpC-2cqFpkr2BDPtRUFWsI6NWl8RrD0lcwTF2XUEXM_1N2n
+    1A2M8WT_7iEhM99aw>
+X-ME-Received: <xmr:tF0LaJIzU3fq10JIFhbavAdwlai6X5f5qTKvMELC_g_Hku2mjNTCwVQEPX09QYdHahnPTnQURBudeTftiGzbwHUh584VfKOj8PZ4FKLL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthho
-    pehsrghmsehgvghnthhoohdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
-    igrdgtohhm
-X-ME-Proxy: <xmx:k1sLaB5I0UbOVWUDyLeTJlg6C6wOqTc7Kd3SZkK3QDr2o09cfYgwEQ>
-    <xmx:k1sLaB5t0uk8pTLyRu64_e_Mwg2lj8iLp_T_07oJVZoZ9TqIWjNxtQ>
-    <xmx:k1sLaBgGMLloUeEzx5e1raZuZIBl4ZkLUIEFPi2gpdwrAdp_uaPB-Q>
-    <xmx:k1sLaL65qd8GnfB8rNDpIA4DbvMS0R3cAenPi2eH7RmX7Yt5vSIVmw>
-    <xmx:k1sLaNHAgCWGk3BH-KRtup5t_byXvcMpMVUGXn3DML9bjB2a2Jv4rEQQ>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:tF0LaFGNPfqiKnAlCKBZXi29MHEa0NgkBZ0GiIoeNZlimfihVgetGQ>
+    <xmx:tF0LaNW1G5odD00AAmatz71zqz68lAm006QzIHyahpceDVVC2uqZDQ>
+    <xmx:tF0LaANmbFpxAGWvSA7Yt_gL6g3eX1t4ejUMyrg9fMEM1JSWaymVfQ>
+    <xmx:tF0LaM2yL_szr2YM28dwYADheg-K5jAl-ufpmXVWNDABRv4mT8Zx-A>
+    <xmx:tF0LaDENlQqhuAUf7ctviAFJk4ZOPEkGL_cxADkMDdHuoRmZOzpV6J97>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 05:53:22 -0400 (EDT)
+ 25 Apr 2025 06:02:27 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 26c5b2d0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 25 Apr 2025 09:53:21 +0000 (UTC)
-Date: Fri, 25 Apr 2025 11:53:20 +0200
+	by mail (OpenSMTPD) with ESMTPSA id f8a5ff6a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 25 Apr 2025 10:02:26 +0000 (UTC)
+Date: Fri, 25 Apr 2025 12:02:25 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: git@vger.kernel.org, Sam James <sam@gentoo.org>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 0/6] meson: miscellaneous system detection fixes
-Message-ID: <aAtbkJiL9Xp_1Dpr@pks.im>
-References: <20250421175247.240971-1-eschwartz@gentoo.org>
- <20250425053345.17288-1-eschwartz@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] ci: skip unavailable external software
+Message-ID: <aAtdsURaaxYO7pVt@pks.im>
+References: <xmqqfrhxtdg9.fsf@gitster.g>
+ <xmqqmsc5rw94.fsf@gitster.g>
+ <aAsNUYUKJZbrMCf2@pks.im>
+ <xmqqh62cwoya.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,17 +87,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250425053345.17288-1-eschwartz@gentoo.org>
+In-Reply-To: <xmqqh62cwoya.fsf@gitster.g>
 
-On Fri, Apr 25, 2025 at 01:25:39AM -0400, Eli Schwartz wrote:
-> Principally motivated to handle an issue where these were failing to
-> detect the system properly, on Solaris.
+On Fri, Apr 25, 2025 at 02:49:33AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> Changes:
+> > I think it would be preferable to only handle failure of wget as chmod
+> > shouldn't ever fail if wget was successful. The same is true for the
+> > other downloads -- let's be as strict as possible but allow failure of
+> > those actions that depend on the network.
 > 
-> v2: getpagesize check moved to !windows
-> v3: style fixes, pass source files in
+> You may think so (as I thought so too before hitting a snag or two) ;-).
+> 
+> The thing is, failing "wget --output-document" leaves an empty file,
+> and an empty file does not still cause "if type jgit; then" to take
+> the "else" clause, and the invocation of "jgit version" would fail,
+> taking the whole thing out, due to the "set -e" thing.
 
-This looks as expected to me now. Thanks for working on it!
+But shouldn't the failing wget cause an error, too? So the `|| { }`
+cleanup branch would execute in that case and we can prune the empty
+file there. So in other words, shouldn't the following work alright?
+
+    if wget --output-document=...
+    then
+        massage output
+    else
+        rm output
+    fi
+
+Or am I still missing the obvious?
 
 Patrick
