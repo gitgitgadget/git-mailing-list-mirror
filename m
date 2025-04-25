@@ -1,68 +1,69 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2802621B19D
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944D4219313
 	for <git@vger.kernel.org>; Fri, 25 Apr 2025 19:06:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745607971; cv=none; b=LH3Acwdt4lKT6tWmnGeQtR7AzNxyMmlTsqxgW1OwM2jPxbw7DfYbP9/wBfCs6KlaX2J8OrWlpWP996yrgqlxH9aiHcl/QcP5VHCOQgjp5+HFsuI9BB8ptHrI1FFqAKhdjrSvm+ddYIAPlfnsxZWZJ5P8P4XMUzHjyh50u/TLShg=
+	t=1745607972; cv=none; b=qAdnc31OT5CUDE+OsI231Y4bT9k0HxfdqjE+ThyIR3TnfQFtPvESrdNiYVfU0zldMSK6QX56uVww0Bb75YvW+ywOJoG3GPpe+T5Ro/5mmwdgv4pUttBRpGSaxvQ7NE9nGDtszpdDzc1oZOXYHp+eXWR3wgY5quQqxjs618eSdG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745607971; c=relaxed/simple;
-	bh=rKspNOZGOF6mzjS6qp/ub6nCoTopmkghzR6IP3p6I4I=;
+	s=arc-20240116; t=1745607972; c=relaxed/simple;
+	bh=e4cmo86n8nDiuszDyN4FsuJnvE5NcL9pUv0mgW7OGlg=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=bKyKJEueRiPszGtZEdxIhnApnyOxwRRZ/QLaqBm+/FzsdtZ+RHZXZ6wS5wTYOsJWDo1k1qmGEtQovIy6/eJwpURTImeRZ22oLpf1hUbiW7yyP2Hlz2sh7TmHTlPVO57ml9XX9xS+ukvnakCvNwDDgZwm5+XzbWEK7V9IWkpTstM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EQW+surx; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version:To:Cc; b=sOrIbdLYkMD269N0LvHC3RuLExhXT5oeheMeaftXwx/QR5p4zK3vglnk7kaFZaj/yGIh7UXN/ARHungoCwL8AF+VYfb2JJjrfIYi4C97J5KykD9WVLIv+Dv9keUDjTlXFh2Ki2x9yr3nxriMHlTuxC1bEefJ7/eOatYNsdWViog=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hkRb63fS; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EQW+surx"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-39c1efc4577so1501904f8f.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hkRb63fS"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39c266c2dd5so2729423f8f.3
         for <git@vger.kernel.org>; Fri, 25 Apr 2025 12:06:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745607968; x=1746212768; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745607967; x=1746212767; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3w9gi8XtIeR1ASKoTPMrWsnh8ZDiItl92o1ibqPDMog=;
-        b=EQW+surxNPx15OMwGCDhnaXdHCiAGAytIV1Z0wWyXbDXFpXQDosIIdCeW3O0ctlyVC
-         iGBRNTkKLck2eRlkifc75W1w6kpB2aAd+NGjtHq7DXTnkU0jwP4XDW8ydB3+4rl2YGXW
-         4lztV5wC3cB4uvWpEzqpkdWIJ8iNvokHwqgrqZ7FawtQld+TJeyOOjKM5a95aQlnWFsj
-         xlavV+DQ6/lhAse7kvnQPIC116MuJDKrRt8mpOuloTX419Sai2KMBkTixMPsC+9najeA
-         SSyltTdjgAekm5jnHNtvoZqaoMXbHS8b638SLvfyym7lpvTuFxQDCKA+JWUQVr67lVhz
-         LdVw==
+        bh=ef/sHKB3s9E8tyYCAfO6CgIV0OAxuAu29oidyyNDeEg=;
+        b=hkRb63fSxpLlGSCHKrPoUEdX7pKCtOtS2Pjh7s1H3m0ykcxzxSkQRZLKF0+Lg0iIrq
+         1M11Ynyaf2XWdz53zPWweob3y9YvTxY2ShpobZQQYU7W78dsGyVVooUiWFNXAxoIRQoW
+         ZH3bZQKB3CSAlRbOEm2ffVkmlBZe/80Nroaq208+2cgtW34UCqUT8YimxncfA5AAnZSy
+         7F0Zmy2WguV36kPvdi5T1QuZNNbNqM0Rt4Pz6CZX3PdwkX+D1qAGOyp1HmvCXY4NpKzT
+         f2s6eh3X91hkbvi3zwNNRFDJW42nCjTXZPrKzkaK0dIGT2wCm6ZUn+MMxpuHLx/Bsvvf
+         Q5gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745607968; x=1746212768;
+        d=1e100.net; s=20230601; t=1745607967; x=1746212767;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3w9gi8XtIeR1ASKoTPMrWsnh8ZDiItl92o1ibqPDMog=;
-        b=jGYjI4QbcFkJAZsMydZgahhQjbJFp8HsdmIcGb0zngN+7FSnz5k8cJxpifR6PuJzDd
-         k6lhnrGcF5jx9fZbLzShtC0GLMd2bEJfh3WRcroe5/o3vim2aZA78gMI5KKZb9RtTfcS
-         axHfZKfWA1/Akl3pzpVs9rv8CApXV24sKYX4ZGlORD5UDE9Dff7nAabS6ph5T+i7qwP/
-         5/GrgYdWpnjrH4RyyMjbjwCpN7SN71OSGkBqcFFV4hVqcbqScXw0DmC8/3Y+EAmiiM48
-         ciqz+yLxVGZzFrVQ9ULt2hHpGgXV6TJQUmj63qL9IiYR8dfDTe46jsZU07g1km20eNzS
-         8A/w==
-X-Gm-Message-State: AOJu0Ywl27tKU6W+Q42m2O19pziaptgI1ItGqS8yOWRgWBVtmBMr0GO/
-	pJtHF4V77weTcdgA2A07G7wXq73LCMvSEeDI7br+etR/d2p919n74ctSqg==
-X-Gm-Gg: ASbGnctS5+AQomjGWi8aYNYFYPIk7FMwJmob4RSZQIgy7aic/6YrWL7MafEAUA6qycn
-	Np+/PZqj1Y/MFcgsIPhD/a9kC7ZYTzZo8H7JHnaCyi1J7d/OYMEfKSSuJkSEz3TD0iIh1S36GsT
-	mvdSkT7PsAjCbDK3BmIdqWgBD0t87g7VMIDiSm7a/r3C5d0a/7r78wInH0Whnyw1EzQs/k2uaBd
-	Mo55w/intAeu6TisyCZOmy9M+urzexJ28sN//Bo3nzXo4F2Co3pC5BburvXaPIR2QGygrUv3JVl
-	pmA8ur2fIfOGJYEgNX+KAXE3hgj8idbODbF8O5Gtxg==
-X-Google-Smtp-Source: AGHT+IFVuMsi3rS5AsbPbi17HQ8gukdABvQPUbLpylNlgiHQxfCRB/tLXoHb200vmqvydpWLPTMfZQ==
-X-Received: by 2002:a5d:59a7:0:b0:39f:efb:c2f6 with SMTP id ffacd0b85a97d-3a074e3e6a8mr3463339f8f.33.1745607967933;
+        bh=ef/sHKB3s9E8tyYCAfO6CgIV0OAxuAu29oidyyNDeEg=;
+        b=cJGtbLEm/t1AD+j7vkuPMB3Rmw74TPG+TzHBW2x141hbchVDtoxi2f5p5OBOpv7gvW
+         jV+zwHYWLYwcBVJ/j/kYDSWBNl/pCAH5TMpHsHwNaOoDdWjkAu2O9OwoezN52dH5N9Pv
+         x04mGaPwCznQQg3dN19bPBJiIjvmvURmwDaPqHe5S5cD4uLfU4l9vIomteFa/4GilPtd
+         4goVKkQbZIm6ySOxgvC4fVaQvzAGO6WW1QFstdl6Z2FMKMiqiuzMZEfosT61VMkH72C2
+         Pz8Oy3Og0U9spZvKQFzLpuBHQDwGYZvooWyAt/lg8a7EPNbWrnusZor5/Tpy7qwVC9Fc
+         bt5Q==
+X-Gm-Message-State: AOJu0YzhrJcYO/Mw0HDJSLYpi8p2N7BJ5ie6WZaGE8B8T8E0kWpie6cS
+	BaNHPAHrhs4SL6hY4gnd1y4ywjeN4QAErs8kS8hcPmDKElfG1OZjWaSMsQ==
+X-Gm-Gg: ASbGncvYyRZfk6XrsA/s40VTVCsj3mvxBnPvj0qmUw7WcX1B9t1odbPoNl1NC/KRliz
+	61f2bP4XfZhXMFoOC4T/xehDszFzWgFUJZY/BpapEPAAPnm3jbVQQDYzBIamk/sdYSwyjpm1isc
+	UQLDhQiIAx0qlbWHV5trkYvlzstnN4AhYxtM3IOVVtdAvWDRCQpFLLpYxfyrJUPGbovIobRItz5
+	/GrALNrVi7bbkowJh5og7WTdXy5ffonTE9nfLRxua//IkbzFRnD4/ijyyVxBAl8VqRjkS5rUcBx
+	kJfZEctReOm0SngpisUwW32zdjb4yYe3jjnY6QdBUw==
+X-Google-Smtp-Source: AGHT+IH4/opE4q70V98Uuh2oOdw8/blXCLpu5bSOavqZ45zpSpqu1i2UesDOLdSpCjOipntxmPfJyQ==
+X-Received: by 2002:a05:6000:4029:b0:391:466f:314e with SMTP id ffacd0b85a97d-3a074e2e6aemr2894211f8f.16.1745607967063;
         Fri, 25 Apr 2025 12:06:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2ad112sm65107145e9.24.2025.04.25.12.06.07
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8c7fesm3145405f8f.6.2025.04.25.12.06.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 25 Apr 2025 12:06:07 -0700 (PDT)
-Message-Id: <ec5d629f32befd4243e3a6a112cb818f211f147c.1745607965.git.gitgitgadget@gmail.com>
+        Fri, 25 Apr 2025 12:06:06 -0700 (PDT)
+Message-Id: <6957ee2fed2f04ad7cd02e5785eb89a1a55f81f5.1745607965.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1897.v5.git.git.1745607965.gitgitgadget@gmail.com>
 References: <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
 	<pull.1897.v5.git.git.1745607965.gitgitgadget@gmail.com>
 From: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 25 Apr 2025 19:06:05 +0000
-Subject: [PATCH v5 2/2] bundle-uri: add test for bundle-uri clones with tags
+Date: Fri, 25 Apr 2025 19:06:04 +0000
+Subject: [PATCH v5 1/2] bundle-uri: copy all bundle references ino the
+ refs/bundle space
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -82,56 +83,449 @@ Cc: Derrick Stolee <stolee@gmail.com>,
 
 From: Scott Chacon <schacon@gmail.com>
 
-The change to the bundle-uri unbundling refspec now includes tags, so this
-adds a very, very simple test to make sure that tags in a bundle are
-properly added to the cloned repository and will be included in ref
-negotiation with the subsequent fetch.
+When downloading bundles via the bundle-uri functionality, we only copy the
+references from refs/heads into the refs/bundle space. I'm not sure why this
+refspec is hardcoded to be so limited, but it makes the ref negotiation on
+the subsequent fetch suboptimal, since it won't use objects that are
+referenced outside of the current heads of the bundled repository.
+
+This change to copy everything in refs/ in the bundle to refs/bundles/
+significantly helps the subsequent fetch, since nearly all the references
+are now included in the negotiation.
+
+The update to the bundle-uri unbundling refspec puts all the heads from a
+bundle file into refs/bundle/heads instead of directly into refs/bundle/ so
+the tests also need to be updated to look in the new heirarchy.
 
 Signed-off-by: Scott Chacon <schacon@gmail.com>
 ---
- t/t5558-clone-bundle-uri.sh | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ bundle-uri.c                |   2 +-
+ t/t5558-clone-bundle-uri.sh | 172 ++++++++++++++++++------------------
+ 2 files changed, 87 insertions(+), 87 deletions(-)
 
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 96d2ba726d9..dc120664d1e 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -403,7 +403,7 @@ static int unbundle_from_file(struct repository *r, const char *file)
+ 		const char *branch_name;
+ 		int has_old;
+ 
+-		if (!skip_prefix(refname->string, "refs/heads/", &branch_name))
++		if (!skip_prefix(refname->string, "refs/", &branch_name))
+ 			continue;
+ 
+ 		strbuf_setlen(&bundle_ref, bundle_prefix_len);
 diff --git a/t/t5558-clone-bundle-uri.sh b/t/t5558-clone-bundle-uri.sh
-index 33a7009e9a2..9b211a626bd 100755
+index 3816ed5058d..33a7009e9a2 100755
 --- a/t/t5558-clone-bundle-uri.sh
 +++ b/t/t5558-clone-bundle-uri.sh
-@@ -107,6 +107,36 @@ test_expect_success 'clone with file:// bundle' '
+@@ -58,7 +58,7 @@ test_expect_success 'create bundle' '
+ test_expect_success 'clone with path bundle' '
+ 	git clone --bundle-uri="clone-from/B.bundle" \
+ 		clone-from clone-path &&
+-	git -C clone-path rev-parse refs/bundles/topic >actual &&
++	git -C clone-path rev-parse refs/bundles/heads/topic >actual &&
+ 	git -C clone-from rev-parse topic >expect &&
  	test_cmp expect actual
  '
+@@ -68,9 +68,9 @@ test_expect_success 'clone with bundle that has bad header' '
+ 	git clone --bundle-uri="clone-from/bad-header.bundle" \
+ 		clone-from clone-bad-header 2>err &&
+ 	commit_b=$(git -C clone-from rev-parse B) &&
+-	test_grep "trying to write ref '\''refs/bundles/topic'\'' with nonexistent object $commit_b" err &&
++	test_grep "trying to write ref '\''refs/bundles/heads/topic'\'' with nonexistent object $commit_b" err &&
+ 	git -C clone-bad-header for-each-ref --format="%(refname)" >refs &&
+-	test_grep ! "refs/bundles/" refs
++	test_grep ! "refs/bundles/heads/" refs
+ '
  
-+test_expect_success 'create bundle with tags' '
-+	git init clone-from-tags &&
-+	(
-+		cd clone-from-tags &&
-+		git checkout -b base &&
-+		git checkout -b topic &&
-+
-+		test_commit A &&
-+		git tag tag-A &&
-+		git checkout -b base &&
-+		git branch -d topic &&
-+		test_commit B &&
-+
-+		git bundle create ALL.bundle --all &&
-+		git bundle verify ALL.bundle
-+	)
-+'
-+
-+test_expect_success 'clone with tags bundle' '
-+	git clone --bundle-uri="clone-from-tags/ALL.bundle" \
-+		clone-from-tags clone-tags-path &&
-+
-+	git -C clone-from-tags for-each-ref --format="%(refname:lstrip=1)" \
-+		>expect &&
-+	git -C clone-tags-path for-each-ref --format="%(refname:lstrip=2)" \
-+		refs/bundles >actual &&
-+
-+	test_cmp expect actual
-+'
-+
- # To get interesting tests for bundle lists, we need to construct a
- # somewhat-interesting commit history.
- #
+ test_expect_success 'clone with bundle that has bad object' '
+@@ -78,8 +78,8 @@ test_expect_success 'clone with bundle that has bad object' '
+ 	git clone --bundle-uri="clone-from/bad-object.bundle" \
+ 		clone-from clone-bad-object-no-fsck &&
+ 	git -C clone-bad-object-no-fsck for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
+-	test_write_lines refs/bundles/bad >expect &&
++	grep "refs/bundles/heads/" refs >actual &&
++	test_write_lines refs/bundles/heads/bad >expect &&
+ 	test_cmp expect actual &&
+ 
+ 	# Unbundle fails with fsckObjects set true, but clone can still proceed.
+@@ -87,14 +87,14 @@ test_expect_success 'clone with bundle that has bad object' '
+ 		clone-from clone-bad-object-fsck 2>err &&
+ 	test_grep "missingEmail" err &&
+ 	git -C clone-bad-object-fsck for-each-ref --format="%(refname)" >refs &&
+-	test_grep ! "refs/bundles/" refs
++	test_grep ! "refs/bundles/heads/" refs
+ '
+ 
+ test_expect_success 'clone with path bundle and non-default hash' '
+ 	test_when_finished "rm -rf clone-path-non-default-hash" &&
+ 	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="clone-from/B.bundle" \
+ 		clone-from clone-path-non-default-hash &&
+-	git -C clone-path-non-default-hash rev-parse refs/bundles/topic >actual &&
++	git -C clone-path-non-default-hash rev-parse refs/bundles/heads/topic >actual &&
+ 	git -C clone-from rev-parse topic >expect &&
+ 	test_cmp expect actual
+ '
+@@ -102,7 +102,7 @@ test_expect_success 'clone with path bundle and non-default hash' '
+ test_expect_success 'clone with file:// bundle' '
+ 	git clone --bundle-uri="file://$(pwd)/clone-from/B.bundle" \
+ 		clone-from clone-file &&
+-	git -C clone-file rev-parse refs/bundles/topic >actual &&
++	git -C clone-file rev-parse refs/bundles/heads/topic >actual &&
+ 	git -C clone-from rev-parse topic >expect &&
+ 	test_cmp expect actual
+ '
+@@ -173,12 +173,12 @@ test_expect_success 'clone bundle list (file, no heuristic)' '
+ 	git -C clone-list-file cat-file --batch-check <oids &&
+ 
+ 	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/merge
+-	refs/bundles/right
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/merge
++	refs/bundles/heads/right
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -220,10 +220,10 @@ test_expect_success 'clone bundle list (file, all mode, some failures)' '
+ 	git -C clone-all-some cat-file --batch-check <oids &&
+ 
+ 	git -C clone-all-some for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
++	refs/bundles/heads/base
++	refs/bundles/heads/left
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -253,7 +253,7 @@ test_expect_success 'clone bundle list (file, all mode, all failures)' '
+ 	git -C clone-all-fail cat-file --batch-check <oids &&
+ 
+ 	git -C clone-all-fail for-each-ref --format="%(refname)" >refs &&
+-	! grep "refs/bundles/" refs
++	! grep "refs/bundles/heads/" refs
+ '
+ 
+ test_expect_success 'clone bundle list (file, any mode)' '
+@@ -282,9 +282,9 @@ test_expect_success 'clone bundle list (file, any mode)' '
+ 	git -C clone-any-file cat-file --batch-check <oids &&
+ 
+ 	git -C clone-any-file for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
++	refs/bundles/heads/base
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -313,7 +313,7 @@ test_expect_success 'clone bundle list (file, any mode, all failures)' '
+ 	git -C clone-any-fail cat-file --batch-check <oids &&
+ 
+ 	git -C clone-any-fail for-each-ref --format="%(refname)" >refs &&
+-	! grep "refs/bundles/" refs
++	! grep "refs/bundles/heads/" refs
+ '
+ 
+ test_expect_success 'negotiation: bundle with part of wanted commits' '
+@@ -322,10 +322,10 @@ test_expect_success 'negotiation: bundle with part of wanted commits' '
+ 	git clone --no-local --bundle-uri="clone-from/A.bundle" \
+ 		clone-from nego-bundle-part &&
+ 	git -C nego-bundle-part for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
+-	test_write_lines refs/bundles/topic >expect &&
++	grep "refs/bundles/heads/" refs >actual &&
++	test_write_lines refs/bundles/heads/topic >expect &&
+ 	test_cmp expect actual &&
+-	# Ensure that refs/bundles/topic are sent as "have".
++	# Ensure that refs/bundles/heads/topic are sent as "have".
+ 	tip=$(git -C clone-from rev-parse A) &&
+ 	test_grep "clone> have $tip" trace-packet.txt
+ '
+@@ -337,8 +337,8 @@ test_expect_success 'negotiation: bundle with all wanted commits' '
+ 		--bundle-uri="clone-from/B.bundle" \
+ 		clone-from nego-bundle-all &&
+ 	git -C nego-bundle-all for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
+-	test_write_lines refs/bundles/topic >expect &&
++	grep "refs/bundles/heads/" refs >actual &&
++	test_write_lines refs/bundles/heads/topic >expect &&
+ 	test_cmp expect actual &&
+ 	# We already have all needed commits so no "want" needed.
+ 	test_grep ! "clone> want " trace-packet.txt
+@@ -363,13 +363,13 @@ test_expect_success 'negotiation: bundle list (no heuristic)' '
+ 		clone-from nego-bundle-list-no-heuristic &&
+ 
+ 	git -C nego-bundle-list-no-heuristic for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
++	refs/bundles/heads/base
++	refs/bundles/heads/left
+ 	EOF
+ 	test_cmp expect actual &&
+-	tip=$(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/left) &&
++	tip=$(git -C nego-bundle-list-no-heuristic rev-parse refs/bundles/heads/left) &&
+ 	test_grep "clone> have $tip" trace-packet.txt
+ '
+ 
+@@ -395,13 +395,13 @@ test_expect_success 'negotiation: bundle list (creationToken)' '
+ 		clone-from nego-bundle-list-heuristic &&
+ 
+ 	git -C nego-bundle-list-heuristic for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
++	refs/bundles/heads/base
++	refs/bundles/heads/left
+ 	EOF
+ 	test_cmp expect actual &&
+-	tip=$(git -C nego-bundle-list-heuristic rev-parse refs/bundles/left) &&
++	tip=$(git -C nego-bundle-list-heuristic rev-parse refs/bundles/heads/left) &&
+ 	test_grep "clone> have $tip" trace-packet.txt
+ '
+ 
+@@ -428,10 +428,10 @@ test_expect_success 'negotiation: bundle list with all wanted commits' '
+ 		clone-from nego-bundle-list-all &&
+ 
+ 	git -C nego-bundle-list-all for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
++	refs/bundles/heads/base
++	refs/bundles/heads/left
+ 	EOF
+ 	test_cmp expect actual &&
+ 	# We already have all needed commits so no "want" needed.
+@@ -465,7 +465,7 @@ test_expect_success 'clone HTTP bundle' '
+ 
+ 	git clone --bundle-uri="$HTTPD_URL/B.bundle" \
+ 		"$HTTPD_URL/smart/fetch.git" clone-http &&
+-	git -C clone-http rev-parse refs/bundles/topic >actual &&
++	git -C clone-http rev-parse refs/bundles/heads/topic >actual &&
+ 	git -C clone-from rev-parse topic >expect &&
+ 	test_cmp expect actual &&
+ 
+@@ -476,7 +476,7 @@ test_expect_success 'clone HTTP bundle with non-default hash' '
+ 	test_when_finished "rm -rf clone-http-non-default-hash" &&
+ 	GIT_DEFAULT_HASH=sha256 git clone --bundle-uri="$HTTPD_URL/B.bundle" \
+ 		"$HTTPD_URL/smart/fetch.git" clone-http-non-default-hash &&
+-	git -C clone-http-non-default-hash rev-parse refs/bundles/topic >actual &&
++	git -C clone-http-non-default-hash rev-parse refs/bundles/heads/topic >actual &&
+ 	git -C clone-from rev-parse topic >expect &&
+ 	test_cmp expect actual
+ '
+@@ -553,12 +553,12 @@ test_expect_success 'clone bundle list (HTTP, any mode)' '
+ 	git -C clone-any-http cat-file --batch-check <oids &&
+ 
+ 	git -C clone-list-file for-each-ref --format="%(refname)" >refs &&
+-	grep "refs/bundles/" refs >actual &&
++	grep "refs/bundles/heads/" refs >actual &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/merge
+-	refs/bundles/right
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/merge
++	refs/bundles/heads/right
+ 	EOF
+ 	test_cmp expect actual
+ '
+@@ -641,9 +641,9 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
+ 	test_cmp expect actual &&
+ 
+ 	# We now have only one bundle ref.
+-	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
++	refs/bundles/heads/base
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -679,13 +679,13 @@ test_expect_success 'clone incomplete bundle list (http, creationToken)' '
+ 	test_cmp expect actual &&
+ 
+ 	# We now have all bundle refs.
+-	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C clone-token-http for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/merge
+-	refs/bundles/right
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/merge
++	refs/bundles/heads/right
+ 	EOF
+ 	test_cmp expect refs
+ '
+@@ -721,9 +721,9 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 	test_cmp expect actual &&
+ 
+ 	# only received base ref from bundle-1
+-	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
++	refs/bundles/heads/base
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -749,10 +749,10 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 	test_cmp expect actual &&
+ 
+ 	# received left from bundle-2
+-	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
++	refs/bundles/heads/base
++	refs/bundles/heads/left
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -795,12 +795,12 @@ test_expect_success 'http clone with bundle.heuristic creates fetch.bundleURI' '
+ 
+ 	# received merge ref from bundle-4, but right is missing
+ 	# because we did not download bundle-3.
+-	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C fetch-http-4 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 
+ 	cat >expect <<-\EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/merge
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/merge
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -862,7 +862,7 @@ test_expect_success 'creationToken heuristic with failed downloads (clone)' '
+ 	test_cmp expect actual &&
+ 
+ 	# All bundles failed to unbundle
+-	git -C download-1 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C download-1 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	test_must_be_empty refs &&
+ 
+ 	# Case 2: middle bundle does not exist, only two bundles can unbundle
+@@ -909,10 +909,10 @@ test_expect_success 'creationToken heuristic with failed downloads (clone)' '
+ 	test_cmp expect actual &&
+ 
+ 	# bundle-1 and bundle-3 could unbundle, but bundle-4 could not
+-	git -C download-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C download-2 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-EOF &&
+-	refs/bundles/base
+-	refs/bundles/right
++	refs/bundles/heads/base
++	refs/bundles/heads/right
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -961,11 +961,11 @@ test_expect_success 'creationToken heuristic with failed downloads (clone)' '
+ 	test_cmp expect actual &&
+ 
+ 	# fake.bundle did not unbundle, but the others did.
+-	git -C download-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C download-3 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/right
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/right
+ 	EOF
+ 	test_cmp expect refs
+ '
+@@ -1083,15 +1083,15 @@ test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
+ 	test_cmp expect actual &&
+ 
+ 	# Check which bundles have unbundled by refs
+-	git -C fetch-1 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C fetch-1 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/lefter
+-	refs/bundles/merge
+-	refs/bundles/right
+-	refs/bundles/righter
+-	refs/bundles/top
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/lefter
++	refs/bundles/heads/merge
++	refs/bundles/heads/right
++	refs/bundles/heads/righter
++	refs/bundles/heads/top
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -1144,12 +1144,12 @@ test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
+ 	test_cmp expect actual &&
+ 
+ 	# Check which bundles have unbundled by refs
+-	git -C fetch-2 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C fetch-2 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/merge
+-	refs/bundles/right
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/merge
++	refs/bundles/heads/right
+ 	EOF
+ 	test_cmp expect refs &&
+ 
+@@ -1204,13 +1204,13 @@ test_expect_success 'creationToken heuristic with failed downloads (fetch)' '
+ 	test_cmp expect actual &&
+ 
+ 	# Check which bundles have unbundled by refs
+-	git -C fetch-3 for-each-ref --format="%(refname)" "refs/bundles/*" >refs &&
++	git -C fetch-3 for-each-ref --format="%(refname)" "refs/bundles/heads/*" >refs &&
+ 	cat >expect <<-EOF &&
+-	refs/bundles/base
+-	refs/bundles/left
+-	refs/bundles/lefter
+-	refs/bundles/right
+-	refs/bundles/righter
++	refs/bundles/heads/base
++	refs/bundles/heads/left
++	refs/bundles/heads/lefter
++	refs/bundles/heads/right
++	refs/bundles/heads/righter
+ 	EOF
+ 	test_cmp expect refs
+ '
 -- 
 gitgitgadget
+
