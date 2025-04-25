@@ -1,176 +1,150 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C052719E7FA
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 17:23:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB25F1A2545
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 18:07:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745601797; cv=none; b=BD5E4SNRWoaxJ3skym4CjpPbwwIR9lSKK9XeAQofxsLuVboOzssxLATHjleut/+Phz2Wt87OevnEjPC/TV7TNNs5BVruXB1G1t/CvLM5JeK1i60iMBaof3zXQzuICcExPNhIQxitw6Dsa7kHq9sAJ8WTN7mqnnVWF6o7XzzblIs=
+	t=1745604445; cv=none; b=OJi1ZibG2ijxjjSNz0SIOjXt1KEgXsSYhYQfTAPBWoEQ/eLYGLkHylE4MPgqTJIgnVVqMbdEt+x2+ewxt2IJvSGQCY4uZD/kJPTuc28sjgPvn3k2tRUvO+dAGv/rPBtD+yYPsblasIY4vlJ6rAEFEZt0sLw2r82N6xUN4dcJT7k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745601797; c=relaxed/simple;
-	bh=58sOyG7kroc6ljSZdXQDK2f/sj0Lay+dSG85Jex726o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XOe5fPcVzEF4DgueQ9uEfJtoZL8/qvP+xDi7bEkEuQHWTxRKGtVCRL1hN2AED58YtFMsq294AQsSKgAolyRtTvlnkZRwUr3CT9aS144wwybfrDzvJvnOsoddofgun+hfiwHcyNZfd/PD5wTHlzEprBAGBbf1K94NOuuSoo5jCaw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=htfY6jSn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V9QqwISx; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="htfY6jSn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V9QqwISx"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 754061140194;
-	Fri, 25 Apr 2025 13:23:13 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 25 Apr 2025 13:23:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745601793; x=1745688193; bh=l3gez0ma7P
-	JPU8qnjQ+JkAPiC+qwIxYJXSNdfB8KvS8=; b=htfY6jSn7cASBEPHxHtwzGrQAU
-	cS1UE81vpku5a4YoztPcU9XG4nndKjoj+sZZv3DDN8iODMjU7MRuz37BebGAKBMa
-	1hXfgoYsWeeZHsYbMYoLOmzspwLvCVYKtcpzmgyiKCWU+599P8543156nyCVm+fQ
-	DFYDnFToyKIvvtx5VXP9LAD30XalRzMwIVIR+rmmlnfysB32nOs5GKgyATVZz1mD
-	LaRFLTIGVoOE/Fi+Nub1nzudiqDnllJAUwg/c7lg+pux5qX28FeXmkzws54HXaR+
-	UFSziqWJXpPF88WexANDlPFgVdThB8AVTLtOLFVA8knZ97/6MnkLtwnqrA2A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745601793; x=1745688193; bh=l3gez0ma7PJPU8qnjQ+JkAPiC+qwIxYJXSN
-	dfB8KvS8=; b=V9QqwISxZB9jf9sJODUTTRsDEMDL+at+1AIqCV43uWCmXr19IEJ
-	cXWhUV79e07z4DpwbEAfV5iBHumIHVHPzRgURnh2Lts5j/KW4o+Pr1osDaw4pELA
-	WsZY38O+5gWb6n9Sq+8r3P7FgINObhUMtuaizoq6Fdt0QpqsiPQw6p2SMN5//+sz
-	NUA4k8MaqWP8TZbnOiyX/5imX1uHWkQqeLSRZrZEG7OnjG/D8ZFKdtLh9f5m5tnP
-	mhhmFe5xRRkoZWasZR8AGafERq3VHneokp9q5KmQ2OtWsBUqMH7/rIgDif1nzNhi
-	QtiI255icVeNDQie6uE0+5kmJ5//Zyzh9xA==
-X-ME-Sender: <xms:AcULaLQJy65NDNMWJ-me5Bg2ttGrPWm43omRyDUjqRjM3-PEW2dYaw>
-    <xme:AcULaMz1EClpYyZzH-HghGJgeMJUb4b06FPK10JzR85RxHQJE1v3cg0hu6adsyrQk
-    6NxB5Icyzw0ZMcC1A>
-X-ME-Received: <xmr:AcULaA1IfjAebP-TguYkEI4xNCqm21-Udecy6c0yzhLccbujw55UvQLZtsQcYPxFxkmp6Itl23hPiJdrIIOmPNCFf_owFx-zJ5i8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvledvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepteehtedvleehgeethfdtvdevkeejhefg
-    ueevfefgffduveevteeuleegieetffejnecuffhomhgrihhnpehofhhfihgtvgefieehrd
-    gtohhmpdhouhhtlhhoohhkrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihht
-    higrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrg
-    hkvghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhr
-    tghpthhtohepfihirghgnhdvfeefsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepgh
-    hrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepvghh
-    uhgvlhhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:AcULaLDHXxEfMZ_CjEyVYnen-pYhMwSYOGvJ8sjvsefW-irNWtENPQ>
-    <xmx:AcULaEjqs2WXE3wKwRhH48zRyCX4wQYCktTf8wwPjZ43RQ6oBBXzag>
-    <xmx:AcULaPoMXt39OEEKRF37xdgKIfK3DLyUjIJTHFPuzYVbLeTQkGC5tg>
-    <xmx:AcULaPizyfXdjteBk7BD09P_AQ3_vZJG3bbGc2cE4NxM_EdwIgiweg>
-    <xmx:AcULaPz0BDKanF6BIQ3ulJdTgV4ovInzjZlAD7nr6RcVtXteReeQQKkC>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 13:23:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Julian Swagemakers <julian@swagemakers.org>,
-    git@vger.kernel.org,
-    M Hickford <mirth.hickford@gmail.com>,
-    sandals@crustytoothpaste.net,
-    Shengyu Qu <wiagn233@outlook.com>,
-    Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-    Erik Huelsmann <ehuels@gmail.com>
-Subject: Re: [PATCH v6 1/1] send-email: retrieve Message-ID from outlook
- SMTP server
-In-Reply-To: <PN3PR01MB9597A549B8A6752F2F828266B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Fri, 25 Apr 2025 10:09:09 +0000")
-References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB95973F4B26A8CE2BF17A3AB1B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597A549B8A6752F2F828266B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Fri, 25 Apr 2025 10:23:11 -0700
-Message-ID: <xmqqikmstatc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1745604445; c=relaxed/simple;
+	bh=S2bxWgctTQfzxKtRSFemxdOkHNYRkK5XCDeQ2vwkgqw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=k7T7G1D0RBVxrEL77k5yHI65odb+91FFACgvch5e2bHWxH9VQVllxhmK12qDZgTvD1P9+fqi3e4eHlicd2MPxo4e06kkWKsbygbMpoUlhO8qciGAQEWLOXZ45+XWF1VIhOUeqxzsRM7XpxatUJeZdZiod2Z+Uh6it49sslZAZ44=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id C62EF3417BD;
+	Fri, 25 Apr 2025 18:07:22 +0000 (UTC)
+Message-ID: <06e57780-9f59-4166-81d3-9cd0c1c66b7e@gentoo.org>
+Date: Fri, 25 Apr 2025 14:07:18 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 2/2] meson: prefer shell at "/bin/sh"
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Peter Seiderer <ps.report@gmx.net>,
+ Justin Tobler <jltobler@gmail.com>
+References: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
+ <20250425-pks-meson-posix-shell-v3-2-01607a2e9334@pks.im>
+ <xmqqy0votbns.fsf@gitster.g>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <xmqqy0votbns.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------RN14eCtd1OsFFD1xTvor75Z0"
 
-Aditya Garg <gargaditya08@live.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------RN14eCtd1OsFFD1xTvor75Z0
+Content-Type: multipart/mixed; boundary="------------g7U14vnXlozfV88ODpC5Tsti";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Peter Seiderer <ps.report@gmx.net>,
+ Justin Tobler <jltobler@gmail.com>
+Message-ID: <06e57780-9f59-4166-81d3-9cd0c1c66b7e@gentoo.org>
+Subject: Re: [PATCH v3 2/2] meson: prefer shell at "/bin/sh"
+References: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
+ <20250425-pks-meson-posix-shell-v3-2-01607a2e9334@pks.im>
+ <xmqqy0votbns.fsf@gitster.g>
+In-Reply-To: <xmqqy0votbns.fsf@gitster.g>
 
-> +sub is_outlook {
-> +	my ($host) = @_;
-> +	return ($host eq 'smtp.office365.com' || $host eq 'smtp-mail.outlook.com');
-> +}
+--------------g7U14vnXlozfV88ODpC5Tsti
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-There were a few messages that raised concerns with respect to
-on-prem installations of Outlook based servers, where the hostname
-cannot be used to tell if we need this message-id tweaking.
+On 4/25/25 1:04 PM, Junio C Hamano wrote:
+> Now I am showing my ignorance, but does this support folks whose
+> shell are not spelled "sh" (like "/usr/local/bin/dash"), and more
+> importantly, if it does not, shouldn't we be using a mechanism that
+> does?  I think -Dsane_tool_path=3D/usr/local/bin would help with the
+> leading directory path, but I suspect that find_program() does not
+> help specifying "dash" to be used as our target_shell (or host
+> shell), or "perl5" as our perl.
+>=20
+> Of course, this "my sh is called dash" can be left totally outside
+> of the topic of these two patches.
 
-The following is a completely untested patch, but it should be
-sufficient to illustrate how simple it would be to support an
-option to do so, if we cared about the issue enough.
 
-Will queue your patch _without_ this tweak, at least for now.
+POSIX does not require a specific absolute file path for "sh", but it
+does mandate that you have a shell and its name is "sh", whichever
+directory it may be found in.
 
-Thanks.
+There is (most of the time) not actually a program called "sh". Various
+different programs may provide a symlink "sh", pointing to their own shel=
+l:
 
- git-send-email.perl | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+- GNU Bash (bash)
+- Korn Shell (ksh93)
+- Policy-compliant Ordinary Shell (Debian `posh`)
+- Almquist Shell (ash)
+- Debian Almquist Shell (dash)
+- busybox
+- MirBSD Korn Shell (mksh)
 
-diff --git c/git-send-email.perl w/git-send-email.perl
-index 618474916e..dff3d861e4 100755
---- c/git-send-email.perl
-+++ w/git-send-email.perl
-@@ -60,6 +60,7 @@ sub usage {
-     --smtp-user             <str>  * Username for SMTP-AUTH.
-     --smtp-pass             <str>  * Password for SMTP-AUTH; not necessary.
-     --smtp-encryption       <str>  * tls or ssl; anything else disables.
-+    --smtp-outlook-id-tweak <0|1>  * The server munges Message-ID.
-     --smtp-ssl                     * Deprecated. Use '--smtp-encryption ssl'.
-     --smtp-ssl-cert-path    <str>  * Path to ca-certificates (either directory or file).
-                                      Pass an empty string to disable certificate
-@@ -290,6 +291,7 @@ sub do_edit {
- my $mailmap = 0;
- my $target_xfer_encoding = 'auto';
- my $forbid_sendmail_variables = 1;
-+my $outlook_id_tweak = -1; # we need to tell --no-opt and lack of it
- 
- my %config_bool_settings = (
-     "thread" => \$thread,
-@@ -305,6 +307,7 @@ sub do_edit {
-     "xmailer" => \$use_xmailer,
-     "forbidsendmailvariables" => \$forbid_sendmail_variables,
-     "mailmap" => \$mailmap,
-+    "outlookidtweak" => \$outlook_id_tweak,
- );
- 
- my %config_settings = (
-@@ -518,6 +521,7 @@ sub config_regexp {
- 		    "smtp-pass:s" => \$smtp_authpass,
- 		    "smtp-ssl" => sub { $smtp_encryption = 'ssl' },
- 		    "smtp-encryption=s" => \$smtp_encryption,
-+		    "smtp-outlook-id-tweak!" => \$outlook_id_tweak,
- 		    "smtp-ssl-cert-path=s" => \$smtp_ssl_cert_path,
- 		    "smtp-debug:i" => \$debug_net_smtp,
- 		    "smtp-domain:s" => \$smtp_domain,
-@@ -1576,7 +1580,13 @@ sub gen_header {
- 
- sub is_outlook {
- 	my ($host) = @_;
--	return ($host eq 'smtp.office365.com' || $host eq 'smtp-mail.outlook.com');
-+
-+	if ($outlook_id_tweak < 0) {
-+		$outlook_id_tweak = 
-+		    ($host eq 'smtp.office365.com' ||
-+		     $host eq 'smtp-mail.outlook.com') ? 1 : 0;
-+	}
-+	return $outlook_id_tweak;
- }
- 
- # Prepares the email, then asks the user what to do.
+(Commercial Unixes will tend to have a unique "sh" program without an
+actual name, just called "$UNIX sh".)
+
+You can call them by either name, but the general rule is that when
+running an interactive command prompt you probably have your specific
+favorite whereas when running a script you just need something that
+complies with the POSIX spec. It's common to install dash as the /bin/sh
+because it is faster than GNU Bash due to supporting much less.
+
+There cannot be anyone who has a sh that is not spelled "sh", there are
+only people who have multiple options, one of which has been assigned to
+the name "sh".
+
+If it is desirable for Git to allow people to experiment with different
+shells for the git internal scripts, that is one thing (though I don't
+think it's particularly useful). But there's no need to worry about
+people that don't have an "sh". They have to.
+
+Even on Solaris where /bin/sh is a non-POSIX shell that cannot run our
+scripts, that is a backwards compatibility requirement and they expect
+you to add /usr/xpg4/bin to the front of $PATH for applications that use
+POSIX, while leaving the "broken forever" version in /bin to be used by
+legacy pre-1990s applications that may still exist and haven't been
+updated in well over 30 years and counting. The "sh" in $PATH at
+/usr/xpg4/bin/sh is a POSIX-compliant shell. It even has the `local`
+vendor extension.
+
+
+--=20
+Eli Schwartz
+
+--------------g7U14vnXlozfV88ODpC5Tsti--
+
+--------------RN14eCtd1OsFFD1xTvor75Z0
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaAvPVwUDAAAAAAAKCRCEp9ErcA0vV322
+AP9lqc1L7SeC8NFs+T97kUwRbruOYscvftz3t+KO/9tyIQD+JMy14/Hqc0p7iJg414tMCm7ewHvZ
+2yknweqQt7sqqg8=
+=aKKW
+-----END PGP SIGNATURE-----
+
+--------------RN14eCtd1OsFFD1xTvor75Z0--
