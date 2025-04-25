@@ -1,54 +1,54 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5F1E199939
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 16:53:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 618731DE3C3
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 17:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745600005; cv=none; b=l2QDBVuUbSsLp8ID9ZWjb4TI2s4FBQhru4OYm20vko0Cnm/QCHmlplr/EuvVsfIxmEB7j/WKYAZ+HYtBxXSFkFrA+ZEELO2uH51ItEEocGc5t6OaXODrTiU3DXSZJmr0nz27X6EEFxPHxDoXBmlODGZzwiQWxWfrjHMXjIPRo6w=
+	t=1745600704; cv=none; b=IeFuWorAI+2YzaeLux5voqHunJ7Auxpd2QSmEHRY9FIvr3ci6dmt1uNGH4D5E+12EDg0EjoK8jewA4ZCOTtQ61hMt76my0ApbeThZqjhIA8FsfGDSoINcdiadSRu5MQZQ9jrjN8my9CrrYNwR+RAt74tY5hQR4Kf4g2PZcwHP1I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745600005; c=relaxed/simple;
-	bh=RFPdUQSJmwyU2jJjpUlDE49NlsxwHvldFtJqW7YpXss=;
+	s=arc-20240116; t=1745600704; c=relaxed/simple;
+	bh=TgozoHAAuhRUoahXdPg59HylTXhPNeCJya2ZdD0zPcA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KENlZ0bAyHY2bTNwY99DX9UzY8limifjGEM0anxEQH4quNkJf+HTe92e7t+m7nKb31IlQYp9yg4jSwMs5QYdNYm4kYgFrKpWK6boG7Ij3xhFx86I+t5F60ZtNyDIABycYK3RsvUDizgqAIR+iOf6idF0Y6eAWy2zbhhpovK4XHg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Qa+95Nm9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RQA5du9G; arc=none smtp.client-ip=202.12.124.145
+	 MIME-Version:Content-Type; b=kALAgux373R0NUvaVQaX9Skg+pZQEIXw9AObymeubPYf4qqdTz3craZjAq6crcmaPHqSXPXU7dlR+KZOsj3g8Ng7TsdPl7DhKLp+ca8zwEOHsFuMwZOH0Y6FE8akryHDW8j3iGLNg5zklayvzTx91whEZO6kKck5R6z9GXbk5Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=imUwZiSx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uGqamrgP; arc=none smtp.client-ip=202.12.124.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Qa+95Nm9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RQA5du9G"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id A680911401E8;
-	Fri, 25 Apr 2025 12:53:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="imUwZiSx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uGqamrgP"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6C8C0254018F;
+	Fri, 25 Apr 2025 13:04:58 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Fri, 25 Apr 2025 12:53:22 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 25 Apr 2025 13:04:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745600002; x=1745686402; bh=RFPdUQSJmw
-	yU2jJjpUlDE49NlsxwHvldFtJqW7YpXss=; b=Qa+95Nm97SQ9cO2tGlXzFEm5hr
-	7WrqDz4t+c7A8Y81ssWi9kkQ5Gxd4NnIXlELCRY8Aw2AT8ZE8Xy4Pn+RUUzEugtJ
-	p54d2OBYLM96AAxUcBwxsjhSMw5AoUExCu7INJ+td1bIHP4XQQnB3klLkjlxhz6G
-	vkjoNeacfe6WCMPaSOqBZ467ccrQHQ6zmPF8TFwTO/5QoB0OLeJ8iMKCn9gpIRXP
-	hyyc6Pk70S/F5YB7rVfHibT6zl/jId7FNcIKR7F8iU82dbuqLS+9KL63S03It7oo
-	6wJq7NvrD7p6LXgaxI+31jaleg8UhbEqpIeqG/Wf7+0KNhqadZAooA+h5FXA==
+	:subject:to:to; s=fm2; t=1745600697; x=1745687097; bh=0EjwIVhKBk
+	utKUaA8WqbbPGW96amMLXP/IjFtXpEbZo=; b=imUwZiSxideWjHydsBF9Il/qXG
+	4YNlK74XQbUbyHikIOw/70vaHRRMtvoT4Ogsa9F9gbhyrcMooDnGelTABIdezTPf
+	//mdJvnSuBmKqzVnSK/ZDnLBDggCft7n5JyfGO9yByio9BnVjrHnJAm6Svl9PxWf
+	6M3Y1eNWf91ONUHZZppVGpQQvblmY5x0OWbVgMYS4vcckcs5LEJDV2LPoZBvP7p8
+	7aEBsXjzCGZfERkNKMTZJPM1H8A8DdwSExXqlRzPD2zRcgzn7/GbT9TR+L3X/X+V
+	KqETtJ0yysZdbpUr/rADJtx3RrwtMrqvehWkAMpQH2XScvN2Bugcuj3JGRgg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745600002; x=1745686402; bh=RFPdUQSJmwyU2jJjpUlDE49NlsxwHvldFtJ
-	qW7YpXss=; b=RQA5du9GwW0CcShUn8FVKxaThuGUmKQqlQ/MFfE1ZIaj+jNsnAI
-	zGRwgV7No3exm0YetF0ZTecykI7PPX4ulRnOuz1u8ZcIOVoKywVoa31WUGpOA+tp
-	PWe09jqgnBxtVR1KnQolJpOTTlA9MIEh2g3RZmPh3bofIJHKaEI389dN2m5lVudH
-	eild0BrhNOCTBsXZxgB2uj5jVu1HU0xzC2nm6dPO0kEY/Ezn169uh50UwnJ1nPIt
-	QN6rK/oN+DPuzQ7RVVIzlN21KqJLYdhwLdLAfa4MLD5Js0ZvFE+IugxlbQ0ZakFm
-	gRRtgVWv6QebPpMYvw1eIIVgAdFOJe59XyA==
-X-ME-Sender: <xms:Ab4LaCJj0bpFh9nBaPbbzTV_SbzR52OCKw5fo5SCozo6ZTQweUZB7w>
-    <xme:Ab4LaKLdhdHCWIQNAsY4j73XVgtDOTDCgmVRUNomXMqyayVkbNyKA87W6MY-C9Ka8
-    RH-J4z9yAHdsgSyBA>
-X-ME-Received: <xmr:Ab4LaCtC1z8_ttbzc0yorO6YikqJdStwtEuxwpkrtgpVQhiCPveilxkyBgSRujKH0dc_O0fNO9peJshQry0_FpY_SMJcDcgRdXuv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvkeejucetufdoteggodetrf
+	1745600697; x=1745687097; bh=0EjwIVhKBkutKUaA8WqbbPGW96amMLXP/Ij
+	FtXpEbZo=; b=uGqamrgPFl1nHgq3OSMDxuK2fNZHoed7r5sVK9OdjC9c4fXMJha
+	+2ETF8biVu+MS1nZ5wFFyfyPNJaUCVtG4oJgP9kiLr/yu2ufAk6Rvb+Wkw7hCmm1
+	DPDYgL6L0/jqL3tErQcOHujst76KVX7aYkoVfvbS83YvYb7qGn2SozzKRZ1ZCSO9
+	u0eUbbroxqFZ5hnQpyczDHe3gsFsWAErtTFdwl5pcHGvZN1McgjkI2DyK8BeYIG+
+	UAyI1whtwhZHRdMDn1ys2y1fc5euEMGE9FlqgFEvkV0HLVJCc/LQfZJWEw15zmuS
+	0r2MdulubngNzKo8+eDR1Hqy5Gyyse76vTw==
+X-ME-Sender: <xms:uMALaCWkA9JFo8HgLBTlNY8jEDh9FgiMARiH8XyJvRJ9cGriaUU1MQ>
+    <xme:uMALaOk9GGEbtE0iJ8hv0h5_hXoF2bW1umzSK0hDtbeKy1P4vt-hH0wKKaMhrUNLD
+    CAkf0um2yPIBL2kAA>
+X-ME-Received: <xmr:uMALaGYKHjd7Z_e29MIpPnX0IcbRcuJtzkTETPIM_4RI_GDWjYmeaN6bQdr-tTq1Fbh-myR4adB87X2syjsoDRtIZp7cF6qdbCTW>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvkeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,36 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvhedvkeejucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlh
-    drtghomhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Ar4LaHY6oSKb06HFlywZsbcJvSi1kqvH4Oinl1huJJ9QTXFdt-bebw>
-    <xmx:Ar4LaJasNw6jHIQwXYbzwan5JpXREmxxr_E0UZpWratJ1D1vHPOLSg>
-    <xmx:Ar4LaDDc8cGqegDycegAsSVBmOKQ3ix4NLYQvoJVUJI7f8W-hWYvuw>
-    <xmx:Ar4LaPZxq-4HJ8cKrxVccUrwRrhtyOXVdWQPKTJf3hGLnG0oezDOkw>
-    <xmx:Ar4LaMntG95NjUKa0YJ7wTf3X2_XQRaFkFIQTYc1WGp2uP1f0EDD5s8K>
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepphhsrdhrvghpohhrthesghhmgidrnhgvthdprhgtphhtthhopegvshgthhifrghrth
+    iisehgvghnthhoohdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:uMALaJV9DcSF9Q14gmcgJ9NUviSeuEP6djlboyiBhHyjPB1IkM-5AA>
+    <xmx:uMALaMkaMtCYK-qRoNC6CbTadk4KpIU46_9rIKRhhqq9sw_GBAPfvQ>
+    <xmx:uMALaOeZmCkE_Q4lEfs7EDqgmf3O2SdzeeuS0bsEjVXSzZhd0SRt_g>
+    <xmx:uMALaOGi0HWuL5q9nBwGwKY31KdCDeKYbbxMAeh7y7fHMU18OGrz1A>
+    <xmx:ucALaBPbQkvNmVnaovq6MfJGdq-PmFIHTWPHUQITGM8LKiKKro4TA2eL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 12:53:21 -0400 (EDT)
+ 25 Apr 2025 13:04:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Taylor Blau
- <me@ttaylorr.com>,  Toon Claes <toon@iotcl.com>,  Scott Chacon
- <schacon@gmail.com>
-Subject: Re: [PATCH v4 0/2] bundle-uri: copy all bundle references ino the
- refs/bundle space
-In-Reply-To: <ce33a9ad-e931-4408-92ec-1a898e908c36@gmail.com> (Phillip Wood's
-	message of "Fri, 25 Apr 2025 14:53:44 +0100")
-References: <pull.1897.v3.git.git.1742312173.gitgitgadget@gmail.com>
-	<pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
-	<ce33a9ad-e931-4408-92ec-1a898e908c36@gmail.com>
-Date: Fri, 25 Apr 2025 09:53:20 -0700
-Message-ID: <xmqq34dwuqrj.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Peter Seiderer <ps.report@gmx.net>,  Eli Schwartz
+ <eschwartz@gentoo.org>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 2/2] meson: prefer shell at "/bin/sh"
+In-Reply-To: <20250425-pks-meson-posix-shell-v3-2-01607a2e9334@pks.im>
+	(Patrick Steinhardt's message of "Fri, 25 Apr 2025 16:11:29 +0200")
+References: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
+	<20250425-pks-meson-posix-shell-v3-2-01607a2e9334@pks.im>
+Date: Fri, 25 Apr 2025 10:04:55 -0700
+Message-ID: <xmqqy0votbns.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,19 +89,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Hi Scott
+> Meson detects the path of the target shell via `find_program("sh")`,
+> which essentially does a lookup via `PATH`. This may easily lead to a
+> subtly-broken Git distribution when the build host has its shell in a
+> location that the target host doesn't know about.
 >
-> On 25/04/2025 14:17, Scott Chacon via GitGitGadget wrote:
->> Updated the test with Taylor's patch.
+> Fix the issue by appending "/bin" to the custom program path, which
+> causes us to prefer "/bin/sh" over a `PATH`-based lookup. While
+> "/bin/sh" isn't standardized, this path tends to work alright on Linux
+> and BSD distributions. Furthermore, "/bin/sh" is also the path we pick
+> in our Makefile by default, which further demonstrates that this shell
+> fulfills our needs.
 >
-> Thanks for updating the test, unfortunately the documentation update
-> mentioned in [1] to ensure the refspec in the documentation matches
-> the changes in this series seems to have been overlooked.
+> Note that we intentionally append, not prepend, to the custom program
+> path. This is because the program path can be configured by the user via
+> the `-Dsane_tool_path=` build option, which should take precedence over
+> any defaults we pick for the user.
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  meson.build | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
 
-Thanks for carefully keeping track of the progress of the topic.
+Looking good.
 
-Will replace what I've queued with this iteration.
+> diff --git a/meson.build b/meson.build
+> index a180c66ee69..6a90310a2ca 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -236,7 +236,11 @@ sed = find_program('sed', dirs: program_path, native: true)
+>  shell = find_program('sh', dirs: program_path, native: true)
+>  tar = find_program('tar', dirs: program_path, native: true)
+>  
+> -target_shell = find_program('sh', dirs: program_path, native: false)
+> +# Detect the target shell that is used by Git at runtime. Note that we prefer
+> +# "/bin/sh" over a PATH-based lookup, which provides a working shell on most
+> +# supported systems. This path is also the default shell path used by our
+> +# Makefile. This lookup can be overridden via `program_path`.
+> +target_shell = find_program('sh', dirs: program_path + [ '/bin' ], native: false)
 
-Thanks, both.
+I wonder if we should be a bit more friendly to beginners (either
+'meson' beginner or a newcomer to the project who are not yet
+familiar with how our meson.build files are written), than saying
+"via 'program_path'" by referring to "-Dsane_tool_path=", possibly
+even with an example.
+
+Now I am showing my ignorance, but does this support folks whose
+shell are not spelled "sh" (like "/usr/local/bin/dash"), and more
+importantly, if it does not, shouldn't we be using a mechanism that
+does?  I think -Dsane_tool_path=/usr/local/bin would help with the
+leading directory path, but I suspect that find_program() does not
+help specifying "dash" to be used as our target_shell (or host
+shell), or "perl5" as our perl.
+
+Of course, this "my sh is called dash" can be left totally outside
+of the topic of these two patches.
+
+Thanks.
