@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BA2625569
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 00:20:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1E3635968
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 00:20:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745540456; cv=none; b=n6/Y1N9TacT6ofYsMtIvI1Z9ngr/WbuMH4xDhYYiN9vuIn/yb8EqZTphob/CqdrDAt/rV4yyaUNUSu8w2XBSi/K/lYVu3HruT4zplhfwRmZq97QoktA5ctWSMeONPzGf3e/hMPpkFrw+Kr+xxWDz6+qf/KN3aTqXafQDbrru/IA=
+	t=1745540458; cv=none; b=Y5KuK9u0x9oHpD7SW12M37LneEdylK6nXngbEErsIg4vIULVvYwuK7rtjJi9MQXOi/nIS2YCMWmQIpxpPlW4yqrewiNt9zMFfIiFb2qIsz0AHYMovIA5J5NsvXsbRkRj2SEUxWMrYtIUgqV0gw8eFnQkEIrhbiaJGN101QMwr9Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745540456; c=relaxed/simple;
-	bh=yloAfB7RGO6eo3+L/iKFPFVQ4fcFqfV+Se5tk+aJ5ng=;
+	s=arc-20240116; t=1745540458; c=relaxed/simple;
+	bh=qoe3fYoWe5CuQKO/9ylIyzA/3kyZuTNcfZv8rlMPzLU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=n9yPqqZd+gY1arr2QFvipxmUqdLYsNe3jlEUO8xf6r90d+mswqlYitf1qqoGRic61IT2QtMjnPmTefK9iHKwD20LHMKxAAx4uhmQarTdZrPTb858qE+jgwrwy5VM2SKt0Hje92L9JxGJvggqpvaykDWftK8MLRlJFwdCdZ/8GeM=
+	 MIME-Version; b=XSH+95xcwispwWTO6FLY92xTJ1WoQrhOCykdswWux7YeUIuT1Q7jcywxFn8cCMPUMaI3I9HB0OPWy9UupWgFXY9jNIlD23zJaGahygwh+gWFKyr/+zuUZBaKOopA4Y95lq2UrdpLVFLnlFrukh3H6Gsr7In8ylegXtzRHzNxWMo=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,16 +19,16 @@ Received: from acleverhostname.lan (unknown [IPv6:2603:6011:3f0:6f00::12ac])
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: eschwartz@gentoo.org)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 3BF88342FB5;
-	Fri, 25 Apr 2025 00:20:53 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id D942A342FB2;
+	Fri, 25 Apr 2025 00:20:54 +0000 (UTC)
 From: Eli Schwartz <eschwartz@gentoo.org>
 To: git@vger.kernel.org
 Cc: Sam James <sam@gentoo.org>,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 4/6] meson: add a couple missing networking dependencies
-Date: Thu, 24 Apr 2025 20:13:33 -0400
-Message-ID: <20250425002017.246985-5-eschwartz@gentoo.org>
+Subject: [PATCH v2 6/6] meson: only check for missing networking syms on non-Windows; add compat impls
+Date: Thu, 24 Apr 2025 20:13:35 -0400
+Message-ID: <20250425002017.246985-7-eschwartz@gentoo.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250425002017.246985-1-eschwartz@gentoo.org>
 References: <20250421175247.240971-1-eschwartz@gentoo.org>
@@ -41,39 +41,49 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-As evidenced in config.mak.uname and configure.ac, there are various
-possible scenarios where these libraries are default-enabled in the
-build, which mainly boils down to: SunOS. -lresolv is simply not the
-only library that, when it exists, probably needs to be linked to for
-networking.
+These are added in the Makefile, but not in meson. They probably won't
+work well on systems without them.
 
-Check for and add -lnsl -lsocket as well.
+CMake adds them, but only on non-Windows. Actually, it only performs
+compiler checks for hstrerror, but excludes that check on Windows with
+the note that it is "incompatible with the Windows build". This seems to
+be misleading -- it is not incompatible, it simply doesn't exist. Still,
+the compat version should not be used.
+
+I interpret this cmake logic to mean we shouldn't even be checking for
+symbol availability on Windows. In addition to making it simple to add
+compat definitions, this also probably shaves off a second or two of
+configure time on Windows as no compiler check needs to be performed.
 
 Signed-off-by: Eli Schwartz <eschwartz@gentoo.org>
 ---
- meson.build | 9 +++++----
- 1 file changed, 5 insertions(+), 4 deletions(-)
+ meson.build | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index ea0722a216..ff65d36cac 100644
+index 7927c54dc3..59a7782da0 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1080,10 +1080,11 @@ if host_machine.system() == 'windows'
-     networking_dependencies += winsock
-   endif
- else
--  libresolv = compiler.find_library('resolv', required: false)
--  if libresolv.found()
--    networking_dependencies += libresolv
--  endif
-+  networking_dependencies += [
-+    compiler.find_library('nsl', required: false),
-+    compiler.find_library('resolv', required: false),
-+    compiler.find_library('socket', required: false),
-+  ]
+@@ -1088,11 +1088,14 @@ else
  endif
  libgit_dependencies += networking_dependencies
  
+-foreach symbol : ['inet_ntop', 'inet_pton', 'hstrerror']
+-  if not compiler.has_function(symbol, dependencies: networking_dependencies)
+-    libgit_c_args += '-DNO_' + symbol.to_upper()
+-  endif
+-endforeach
++if host_machine.system() != 'windows'
++  foreach symbol : ['inet_ntop', 'inet_pton', 'hstrerror']
++    if not compiler.has_function(symbol, dependencies: networking_dependencies)
++      libgit_c_args += '-DNO_' + symbol.to_upper()
++      libgit_sources += 'compat/' + symbol + '.c'
++    endif
++  endforeach
++endif
+ 
+ has_ipv6 = compiler.has_function('getaddrinfo', dependencies: networking_dependencies)
+ if not has_ipv6
 -- 
 2.49.0
 
