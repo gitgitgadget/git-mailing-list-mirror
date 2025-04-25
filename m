@@ -1,102 +1,133 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7221419E7FA
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 20:42:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4614F218EA7
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 22:15:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745613778; cv=none; b=o4JYIzdXg3uVh25Nmd9KVOBdBFlMNx1UK8KsI4DreSCnXZ7GFBgGIdZrQsORtXwVDD4BmXkhiqh8Iao13rL5jXuhhOV6QhOH4VrV4+IUERjuV3h1REcyhXWMqesJvTir8eFqb/5e5srGtrEjVd2I0p2Xnor7/XTf5Pa4Oc4OsEE=
+	t=1745619361; cv=none; b=Wq/AoC4QZabV4gdeL+v6AvlK3Ga7jJNT0rPE3tShvCDfrcqcC1W2GEPR6vGdCHgw3T/Y4dH6LaIGS7pf8O5NXnK/CIItwAHC88kRGhs4QeJrWNfK/6tA/jtNihrwkv8aUF0Ywvq4HvOe92zZi1O5E63PuaHXNc0aE2NMDXBTumU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745613778; c=relaxed/simple;
-	bh=6Dqm9L+0DiOvJwg2HYvPadjGxU1QTzg+e6YxeLWFCFI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d6DLbcOfRu/Ly6oP8h0ux0zrN4cl8Tx59MBULuqOOFFDyqtMxLv1Y7VSeI4nIL4j2GzhZH6mHbxqDztOBogC1vo7fWM98s49TiSAgTf/jWPzvvM/GP6H4IHVJwHaFBY8//VAjMfOjG9Tc5DZ3GMPUSsRrzrlofXcy39HBW6y3P4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ClI6lVzA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MxzFYvBK; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745619361; c=relaxed/simple;
+	bh=I0nIm78lYnY45U63d6ckoE/pCPoe8w36Dl495t308K8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=pepFP6s+UFJubLWQlt7snPrb5vm2QjGNF6IGeSgkaDIqjezv5hISgZSGcLKmR1WcE7qIVKsrWeN6HPDog9znmM5I4jPc2tZvThe5jlwc9jeMtcfYaeRyim1rmqm1dKFUS01KROCEjpfTs+EabOoX2AsRMv1A6eaFT32BMZQuuIY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VpCCsQoH; arc=none smtp.client-ip=209.85.219.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ClI6lVzA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MxzFYvBK"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1F823254023C;
-	Fri, 25 Apr 2025 16:42:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 25 Apr 2025 16:42:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745613774; x=1745700174; bh=jocwUPVoiN
-	J1paGO+d4UuWy3NHUZV58R2rzX5wfn7Fs=; b=ClI6lVzAMzoloKHw1L0p2F1zT7
-	FtAkkpX4MgKu96D/h8ZD4Rw15vlvpO7Yq8eqEjHIax7OzXMViYeIEJmLnW5uEFoy
-	/JY9weq3+OBauyJD5wxRzT0jETXLru5EL/5yIF6We281/onEzVj5cHMj6ljdOtoe
-	WfVlJaAAwtbyx1KWJBUWi9PWhyztpPggkcQwz7xiH0RXQ7SXGpZFx8RKXmVQKWxO
-	4YSamzptFEyVnQxaKHiOK/0NOhdIBPaHS1o8c7tOcsgK4OyvCamJBMb3empfBIvE
-	NjSxrQY9QZqRaEMb/q5uiCIeILYKstLBzEOGj938aCo4NRXWNzuFx2+6KoyQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745613774; x=1745700174; bh=jocwUPVoiNJ1paGO+d4UuWy3NHUZV58R2rz
-	X5wfn7Fs=; b=MxzFYvBKrGOZfKiRkWYmno+9WRJayWAs66cFA+kcjoX7EYbon7U
-	dujAfn0sIIDkKGVZkgKIOfwctQlaFsbqdXvUI6+HjlB/gl2aR0o1a4A7M1ZI4Eh3
-	7bha6kkmlK3rZ4hOEugOYFKnKlryA4modPDFnGM+lfBr+1rHt8o5PFd7kp9zqKrO
-	jab1EyXhjA6H65YpnG04WMF7pdU30g5Ubtjy9Sq5zmsP32xs4MF2iTf5/F5nrtSV
-	rGmdj09mcALl4Vlb8YA4YrRgf/YxKTaqG3B4akaMiO5/usLhyfJ9kAVgvfbvzU60
-	loidpOGmBnMJXA2Zt+s5QPYxbSVhflckqmQ==
-X-ME-Sender: <xms:zvMLaMBbh1v8PuKNUOmDyW09YNbBceUfq2YaSofl9IJoKZrmm8O7AA>
-    <xme:zvMLaOisBvIMYXaPL-Pop0Ag8vGm5MNBUIZUQBVWG2f8CmgY4YpyuWxu_V2KRAVy2
-    ex2ss3nK0MPkgaJZQ>
-X-ME-Received: <xmr:zvMLaPlmcJmXbcNaFB2_Svbuk1AlSpvRJBOfWDpsFS2Bf4ItJ9YXTbNMgaXTzlRQyCBz-l6QS_DzmyavtQ84QLyRbLsJEwpqTttm>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvheeffedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlh
-    drtghomhdprhgtphhtthhopehstghhrggtohhnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:zvMLaCz6znG8r6j3nuc8n8Nxf0zfV8gSGQdUuYH9H9KnM56G_4Kx3w>
-    <xmx:zvMLaBTRt26c3ukgWdB7sT5CSngYt8DLnVkg8lN21AfAZrPEVtDdRw>
-    <xmx:zvMLaNaZcuGGggouZrFaNwNjCVgEOjV7KM1OsxrMx3TEldSfm7k9iw>
-    <xmx:zvMLaKRV58sK5nBd28pjSicAISyeGXq5jAijY8o1sBCe4WvvhpzIMw>
-    <xmx:zvMLaFcahgIjunwM5BHmJhep-nB_Ic0g9SJprUpgmblDumG3l5rKBari>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 16:42:53 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>,  Taylor Blau <me@ttaylorr.com>,  Toon Claes
- <toon@iotcl.com>,  Scott Chacon <schacon@gmail.com>
-Subject: Re: [PATCH v7 0/2] bundle-uri: copy all bundle references ino the
- refs/bundle space
-In-Reply-To: <pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com> (Scott
-	Chacon via GitGitGadget's message of "Fri, 25 Apr 2025 19:33:07
-	+0000")
-References: <pull.1897.v6.git.git.1745609278.gitgitgadget@gmail.com>
-	<pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com>
-Date: Fri, 25 Apr 2025 13:42:52 -0700
-Message-ID: <xmqq8qnot1kj.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VpCCsQoH"
+Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6f0ad744811so20499056d6.1
+        for <git@vger.kernel.org>; Fri, 25 Apr 2025 15:15:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745619359; x=1746224159; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=I0nIm78lYnY45U63d6ckoE/pCPoe8w36Dl495t308K8=;
+        b=VpCCsQoH1g3bqBsnEckTp2jNIyYj21bFraS2b/vclxyhkOzJJSrdXowR0wHDWlbpSs
+         e7ONfEKteyhzQQAjDRiTpz6O9J+JoZXl+nCAzUabGuG7plRbY/N0M++YJwWvZmUQOHcx
+         ftRFPAxbaLFUiLoQlGBXnAORtSajmpnrjHwCEDBUTT+qUOh0erq97u02RHTD8sCtvqjE
+         ORH6yrOOerQ1LnhLo2fgHf+W+Qmu+hqibnI/eH8zYbcuPP1BM0xZzUSRGJqSZZQHaSCb
+         18eVbnapHz1C5gc17oVheXH4J6E7lbr5sFaQt3I0Jj651jCZjKK8o3t8YXmySYkGz27r
+         DNYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745619359; x=1746224159;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=I0nIm78lYnY45U63d6ckoE/pCPoe8w36Dl495t308K8=;
+        b=NPJkRy4O6F4evjjZ6D7w+VHFqKzpybG8Pw80h1SB+1C95iX/6vFRrGDU7C6+YJF/2e
+         0wlJALpx94r2jlre1O8sNVuOLIqeRpvpGHlucO5abjfkqUdBDllymOlxa0clIwlX2+G5
+         kh/0V9kUdJqhhBObSe286/oEX9SOCxJv03dpBHAw42TxD+wruFOrreAhziQR5u9T0ypX
+         0Kxl9HDzzYNlk+5OM24duLpfS6WmHyeVkKAJy08tIqfKgABWaK0JeAHJ/ubQBa4GT4fe
+         AhycPpSH84ORPnXBHA+UX6ue/K/dGpgHdy8LYV07+9iOJDvkuSD/BuqogACE80E16SaT
+         04vg==
+X-Gm-Message-State: AOJu0YyMZCSQ6XwCjmy3MZCJuNmxfE0WJm9RUA5NuaMLFM5taqxB7TeG
+	Y2cqw7NR16YHqrWI//w/s1DZBhOXz2OJ/oGsap78H7ZF5NBinToBQxoiq1BXoZZnCRkG1YKCvM5
+	sWr9esKNzi0KO/A2Nj0KtqvpBb7VXGQ==
+X-Gm-Gg: ASbGncuXBhQcSpV5aGh/nKXl46fMuOYroRSppQtXdOHfAInzfX9bVV/xedKZNeFEPym
+	3paRXTTBJJKh3/6n7namNsZMzqVesOIr/X79m+hbGxpX15uXtV4ivqCzimvaVxRuPFF7A4mWPOH
+	lKqXUwbPSrLc7YRpbIol5H8Q==
+X-Google-Smtp-Source: AGHT+IFGitQRTV7N31CTbQH0RsUIaSDIiu0HkJz6HR/+Mp54psrGZcdNaQX7kHQSxYgTLbyzNeRbKcLnsdU2BA86jJ4=
+X-Received: by 2002:a05:6214:629:b0:6ed:1637:442d with SMTP id
+ 6a1803df08f44-6f4cb9be09dmr67888736d6.10.1745619358923; Fri, 25 Apr 2025
+ 15:15:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CA+7SsOdTiAocj7ZTV=OVw0tyKJxZ-H+m5S8soPfFy6zW=1ddzg@mail.gmail.com>
+ <ceb84ea7-6359-63c4-e02b-418d9d313b06@gmx.de>
+In-Reply-To: <ceb84ea7-6359-63c4-e02b-418d9d313b06@gmx.de>
+From: Junio Luan Pereira <junioluanutfrma@gmail.com>
+Date: Fri, 25 Apr 2025 19:15:47 -0300
+X-Gm-Features: ATxdqUHehPlfWeFDQM9PEhlvy_42oXSIReTo4jS-s6axW2OJgE_s9d5AlcQs3bY
+Message-ID: <CA+7SsOd9jtjQT+zg8XttA-bfONG2Jpkg4uBTTdys87e_jEX1pw@mail.gmail.com>
+Subject: Re: Error on using git update-git-for-windows
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Scott Chacon via GitGitGadget" <gitgitgadget@gmail.com> writes:
+I discovered that the problem lies in the schannel feature of the curl
+binary. More specifically, the problem is not in the curl itself, but
+in the feature "Safe Web" from Norton Antivirus in my PC that, in some
+way, blocks any attempt of curl to access sites with a public key
+validated by "Let's Encrypt". Turning off the Safe Web makes
+everything work properly.
 
-> Sorry everyone for the noise. There was a whitespace issue the tests
-> complained about, hopefully this fixes it.
+I am no expert, but an AI I used suggested that replacing the curl
+executable by one without the schannel feature would solve the
+problem, but I was unable to do this.
 
-Thanks for being thorough.  Will replace.
+Based on this, I believe this issue can be considered solved.
+
+Sincerely
+
+Em qui., 24 de abr. de 2025 =C3=A0s 10:05, Johannes Schindelin
+<Johannes.Schindelin@gmx.de> escreveu:
+>
+> Hi Junio,
+>
+> On Wed, 9 Apr 2025, Junio Luan Pereira wrote:
+>
+> > I am using git-for-windows on a windows 11 laptop with the Brazilian
+> > Portuguese language.
+> >
+> > Recently, an error occur every time I execute the git
+> > update-git-for-windows in the following way:
+> >
+> > $ git update-git-for-windows
+> > curl: (35) schannel: next InitializeSecurityContext failed:
+> > CRYPT_E_NO_REVOCATION_CHECK (0x80092012) - A fun=EF=BF=BD=EF=BF=BDo de =
+revoga=EF=BF=BD=EF=BF=BDo n=EF=BF=BDo
+> > p=EF=BF=BDde verificar a revoga=EF=BF=BD=EF=BF=BDo do certificado.
+>
+> This command is implemented as a Unix shell script:
+>
+> https://github.com/git-for-windows/build-extra/blob/HEAD/git-extra/git-up=
+date-git-for-windows
+>
+> Could you edit (in elevated mode!) the file at
+> `C:\Program Files\Git\mingw64\bin\git-update-git-for-windows` and add the
+> `--ssl-revoke-best-effort` option (for a full explanation, see
+> https://curl.se/docs/manpage.html#--ssl-revoke-best-effort) to the two
+> `curl` invocations in that script, and then try it again?
+>
+> Thank you,
+> Johannes
+>
+> >
+> > Reinstalling completely the program apparently does not work.
+> >
+> > Is this some kind of bug on git-for-windows? Was it reported? Should
+> > it be reported?
+> >
+> > PS: I have no knowledge of programming, developing or debugging git.
+> > Ask me in case more information is needed.
+> >
+> > Sincerely
+> >
+> >
