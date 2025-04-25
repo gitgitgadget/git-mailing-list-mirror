@@ -1,16 +1,16 @@
 Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2155C8CE
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 00:20:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493C74A1A
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 00:20:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745540454; cv=none; b=PrFwEINoqKnBcAtNmMPZ/sfAL1AkAGK8vt5IDuqODnDXABxscX54ym4JjCjdVLn+0I2rhFA8NGt741uX5u8YiqxBs6TjjCyZOM66kUJO1IARn2OKQTgLr2LHBy67FPw2cobqydt8Dr1lP5rl3z/Q2duKsFWyRZ9Z6G2EZZbEUko=
+	t=1745540454; cv=none; b=AX2wYcX1/Qo6PqbopKkv89/2D0Yx/KXD7kYofFSS2nrqDTxgwoV23GMguGLcOx3qSlbENl7at8ocgh7TEwEBBMxFURnH+vzs8vwwKefKUcL4DK9f8A7pERZT7igJBygucdeCg9HK2yZeNTC8hH52lq2nLvQ3m1coEyZIrDP6czQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1745540454; c=relaxed/simple;
-	bh=DFxPcOALEyjvYtALP4hGmudQUVjQR1qrqZf4tzdE6jY=;
+	bh=CYtIAzx7ecQ0Oxu0NREL0ZkID9mdEKKP2zBDWoO2UvQ=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=QkFqB3Pyld9RAyvZnrRWXBZdBkxLzY5NNmAsvPgvm76rvdp1Cli5mUABjnqPdQYBCQuRHAzQN4mhN4cecJVTyy+pXfC8ro8xeDXQcz1pGBOHwtpRKYYGIPxYBXUDHoxlFkRUSH76+krh2QXECjocbBTjz1VvrRfwKziz/EC74EM=
+	 MIME-Version; b=Dy8nK5puFA3eQJgSrRsmEmdgNssNTW7E55iuuJTczobbzok4ON89nAzF+5phgoT4V0Gemeggp0uOROhkVi3Kb3ny0rN1hi7PDr8jUHLo2jKI1Jb7Y/GJzjUckHixznDf24VE5IkgGJeNDoeYsEuA3ZBYCZUDEEYqtuyugMi56sc=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
@@ -19,16 +19,16 @@ Received: from acleverhostname.lan (unknown [IPv6:2603:6011:3f0:6f00::12ac])
 	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
 	(No client certificate requested)
 	(Authenticated sender: eschwartz@gentoo.org)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 92B55342FB2;
-	Fri, 25 Apr 2025 00:20:51 +0000 (UTC)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 6988F342FA4;
+	Fri, 25 Apr 2025 00:20:52 +0000 (UTC)
 From: Eli Schwartz <eschwartz@gentoo.org>
 To: git@vger.kernel.org
 Cc: Sam James <sam@gentoo.org>,
 	Patrick Steinhardt <ps@pks.im>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2 2/6] meson: check for getpagesize before using it
-Date: Thu, 24 Apr 2025 20:13:31 -0400
-Message-ID: <20250425002017.246985-3-eschwartz@gentoo.org>
+Subject: [PATCH v2 3/6] meson: do a full usage-based compile check for sysinfo
+Date: Thu, 24 Apr 2025 20:13:32 -0400
+Message-ID: <20250425002017.246985-4-eschwartz@gentoo.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250425002017.246985-1-eschwartz@gentoo.org>
 References: <20250421175247.240971-1-eschwartz@gentoo.org>
@@ -41,35 +41,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-It is deprecated and removed in SUS v3 / POSIX 2001, so various systems
-may not include it. Solaris, in particular, carefully refrains from
-defining it except inside of a maze of `#ifdef` to make sure you have
-kept your nose clean and only used it in code that *targets* SUS v2 or
-earlier.
+On Solaris, sys/sysinfo.h is a completely different file and doesn't
+resemble the linux file at all. There is also a sysinfo() function, but
+it takes a totally different call signature, which asks for:
 
-config.mak.uname defines this automatically, though only for QNX.
+- the field you wish to receive
+- a `char *buf` to copy the data to
+
+and is very useful IFF you want to know, say, the hardware provider. Or,
+get *specific* fields from uname(2).
+
+https://docs.oracle.com/cd/E86824_01/html/E54765/sysinfo-2.html
+
+It is surely possible to do this manually via `sysconf(3)` without the
+nice API. I can't find anything more direct. Either way, I'm not very
+attached to Solaris, so someone who cares can add it. Either way, it's
+wrong to assume that sysinfo.h contains what we are looking for.
+
+Check that sysinfo.h defines the struct we actually utilize in
+builtins/gc.c, which will correctly fail on systems that don't have it.
 
 Signed-off-by: Eli Schwartz <eschwartz@gentoo.org>
 ---
-
-v2: add this only for !windows
-
- meson.build | 2 ++
- 1 file changed, 2 insertions(+)
+ meson.build | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/meson.build b/meson.build
-index 6c147c22a4..29c188af99 100644
+index 29c188af99..ea0722a216 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -1309,6 +1309,8 @@ else
-     'mmap',
-     # unsetenv is provided by compat/mingw.c.
-     'unsetenv',
-+    # no compat, is provided by compat/mingw.c
-+    'getpagesize',
-   ]
+@@ -1058,10 +1058,6 @@ if compiler.has_header('alloca.h')
+   libgit_c_args += '-DHAVE_ALLOCA_H'
  endif
  
+-if compiler.has_header('sys/sysinfo.h')
+-  libgit_c_args += '-DHAVE_SYSINFO'
+-endif
+-
+ # Windows has libgen.h and a basename implementation, but we still need our own
+ # implementation to threat things like drive prefixes specially.
+ if host_machine.system() == 'windows' or not compiler.has_header('libgen.h')
+@@ -1272,6 +1268,10 @@ if host_machine.system() != 'windows'
+   endif
+ endif
+ 
++if compiler.has_member('struct sysinfo', 'totalram', prefix: '#include <sys/sysinfo.h>')
++  libgit_c_args += '-DHAVE_SYSINFO'
++endif
++
+ if compiler.has_member('struct stat', 'st_mtimespec.tv_nsec', prefix: '#include <sys/stat.h>')
+   libgit_c_args += '-DUSE_ST_TIMESPEC'
+ elif not compiler.has_member('struct stat', 'st_mtim.tv_nsec', prefix: '#include <sys/stat.h>')
 -- 
 2.49.0
 
