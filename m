@@ -1,84 +1,82 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C69E199EBB
-	for <git@vger.kernel.org>; Fri, 25 Apr 2025 07:05:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A777317A31C
+	for <git@vger.kernel.org>; Fri, 25 Apr 2025 07:07:04 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745564706; cv=none; b=mSXDKoGOr/NDbwglC85kMja2m431WaajfUa7VwEUuCyqKBMBRC3jPdTRinQwF5+RkN+ZDad/DhrZVwMZoGftvCoMM4EOd5Nls9Dz0SEoPNmyGvUCJoVHoBp24siZpwMFZc9X90OHcEkydzFq2eW3cSrc3DwWM8+CfLr88cklCBA=
+	t=1745564826; cv=none; b=Jnuu+oVVYtbHCofpRu88h7YVXiEH+Kp/K4sOUtmkzXv//SBOlQEmxs/1c5nOeCKG3dLMUQ+Oym5mRnvMFF/ekUBf4x7zky3DV0x5DAQyli+rdmpgnusrtOw1A+qZUBZs/OEuNhIrgn81mh1vEcKxELhoTJwSclrk914mcgex9Lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745564706; c=relaxed/simple;
-	bh=P9cgrfGMbnOwFRtj+5LVhNoZEHCCqaTlkfsayvQyzQc=;
+	s=arc-20240116; t=1745564826; c=relaxed/simple;
+	bh=CKAhHTgNi52IMFEyYxAjwUCXqDubsvyd0M96xHe92A0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U5y99GwOlH0cE9BPsjB7PzkMDmuoDMwIYHu7y1PbVoW1DXeNMGy+0uwZ4KTjlUyJmJrb5iotC0yt0/QMuqWW8ABsY9bWvSm20eIilcuP7dfPguBsdy+5iOj6sBoRGAZHbjV5/m+mE3AL3hXhzXe61/XEIT0Avg6oHpD05u2usyA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ND3uZrSm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f5pa2ZqP; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=sBkEA1VKxpnK7dLODOarek062h9o8+gv8rwOg3QqwtBe3q2C3L+O61wWwGrLICfBY9YNaCzEnEgIgTGfCdN44YLkYL21jZXnd5cGpZ3p1mkEDwpMRynE+PH/br9zM6PKTanQlvAQzRh/O0O/Ai6sE+Tt8+e8hSPihJCvaE2XZx0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QVEdMwKp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C2BfoV67; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ND3uZrSm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f5pa2ZqP"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QVEdMwKp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C2BfoV67"
 Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 49A0413801BB;
-	Fri, 25 Apr 2025 03:05:03 -0400 (EDT)
+	by mailfout.phl.internal (Postfix) with ESMTP id B73D11380201;
+	Fri, 25 Apr 2025 03:07:03 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 25 Apr 2025 03:05:03 -0400
+  by phl-compute-04.internal (MEProxy); Fri, 25 Apr 2025 03:07:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1745564703; x=1745651103; bh=oct5uWeIEp
-	cZJ6rYjaEWlIzib6jW3nw0un29+JJwQus=; b=ND3uZrSmDkNvQimG8Wrh1Cai+0
-	04u4u46mzxtX1P9J2DhPmxaVlozYjAjUDimn4cPOgHuUuphis9cIBDgfd4qNzglp
-	r2ViMjaK1cBADZnsfKgaDveIkfXFbQhNOvm85O471eZJtZHhKi2FzMam3EsBtlvy
-	uGkZsvsQf3B4vPZgpPtwIGklJJzz1zebnFLFYqVrjaClQnFVS6ZiE575nGjp74Ys
-	7zbZYkiaRP63BiE0eIo/4Ta1snZTV+btO6bv8nVZRl45jB3MgGTyZGCImQ39Oz7n
-	LPHrgGRYr8H2PQ29I0qYMPfjX5e31ISLgM6mcF7ouPyTHysS8KaTSDc80avw==
+	:subject:to:to; s=fm3; t=1745564823; x=1745651223; bh=zjXZ+DziGH
+	9F7wVmblz2H6BjkECHMluMG8582pP5dig=; b=QVEdMwKpjcHemijAUaCuEg1HNu
+	Fo+rXAAZPlb+4dQqIqIBHvQ+kZZz26IHkC0FJgr+XJ+zTPLyyLBobaqU5yJYZc3X
+	zBW+p1KyhMOTePx/OaOIK3R23GIeBKB3PVa3BPXbHKh6dOcNHAp4QtEj9DGKf+7/
+	Qh8aQjoBU9JG+aNpbwv4dhrrFgWFKkGGJjOLzCQPSht4LLUOXmyLStd4JuIjpHfJ
+	h3w2hY/sKTLwbnHjmQdw9yeL9WsV6o7lMvcz7vbke00exEZ8gXTkhuzqvm+M1fH4
+	9/wCz8QCS49Mo0FTrpVKnE7M+sptYLUFNccuIcIgfpTu0SP318BQEgqV8zjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745564703; x=1745651103; bh=oct5uWeIEpcZJ6rYjaEWlIzib6jW3nw0un2
-	9+JJwQus=; b=f5pa2ZqPKIefr4skivgx68A/sgu4jeZ/3LsONCIZbpFz5R0ijVJ
-	bfjLkjuo/J0I7Xql35HFyPpkyBxBxfPpfP6RXU08ihO7WA7rILvkQExAtfOmOa1Y
-	bbSrbUj/NjiabdaIXUruA7YhfR6m7qtTwdwbSfuowh4Gp8ExNTbrgUUpo8P3Nzs7
-	9L97CVt81ZapQyeqH/Z1hUmKiBr+Wv4ftEak+wziyf9lakUQnpFCmMKZp1hFrDUZ
-	JUPrHLGvbnCRjsqduIMkGu3H1dClA6BR4Nwjy0pRdXD3r7ykujRrzKJlLrWLbVFK
-	fWaax4g870TEfLGrfmwHmtDFiu9B3m8DpwA==
-X-ME-Sender: <xms:HzQLaA6n8XjfIiyuHd2tOgXSHosI3bdE0R9KowLqcDtMM8RkO2CC3g>
-    <xme:HzQLaB7R2Afc41yehX9UbPfUoc5DH4naSCE7bBJGzuvsUv9PW43O4j2IbBS2RhVoH
-    bAB2o160O0YC042ag>
-X-ME-Received: <xmr:HzQLaPdVOub2zAM8L9o0BVoMStAkL1YJ3F7YzeWNEN8TbLnGeUBwOMV31GOe9RRzwR3pBe7_1XEgNmOlLucpfkAJcri_MTiK1mBjqYbT>
+	1745564823; x=1745651223; bh=zjXZ+DziGH9F7wVmblz2H6BjkECHMluMG85
+	82pP5dig=; b=C2BfoV67qRADw79clkPIbA6P0lUVBQTnMyHaGhxOiU9PO45FVSm
+	cUiyjvZno8L04BouFsZ6UpbtfxNKx7KeCMCcwycXs5dUOX22XSVOtMke1jXVYWAo
+	k+VzEeZSMkOIkDbwjdCl3gNExe0oDqwIeoy+6vWg2XMH9GOzq8vv6RwW3YZgdV1S
+	4IEf+pdb0svgbmarqVFn3RqVRZC7Ru8/HLeQ8cAl5UTd04cZWLsBnPZ+Z6zhTG+v
+	hxVHZfS4/qg+KtS0BTorb6+6b+EpArVhkc5Wrv0cUynrIXxL9h95d8elX3jtCfYI
+	hQGG2rRFBHcSiRW0H0IO1l2SwFv51dwY8iQ==
+X-ME-Sender: <xms:lzQLaAQmKd_XtrNY81j6NSxduips3h84HtwzjNaY6L1iB7OXwFl5RQ>
+    <xme:lzQLaNzjUsiY5k0kShetznNOXq8UiVoPKk3aPhWIUwEdu0pe-O3mSDnOrEPqgmgkY
+    1SGDijoHLP7vPMRoA>
+X-ME-Received: <xmr:lzQLaN0EM5LdghZlrGvMyX9ZgsuTEEY512lqTBooVcKqvJlskXtvQZ7qZav_aVyGm6UlmKTmiqynwhcTeU0c_ueDCw48fhy8NfAy1Lju>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvheduieelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:HzQLaFLwqSaLEQja2ExFRuX2UTtYo4PjnGoCEFKYUa9yth-KF4BuFw>
-    <xmx:HzQLaELDIAiFf710NW7nmFEWrjajAm6wMl_RIpk8aVKvUZrt8RUCyg>
-    <xmx:HzQLaGwLH6PhChFR5EiwBEC8Cnv_NkB5-cHIN0JY17zBEMTmfs_lKQ>
-    <xmx:HzQLaIJ2qPp-XnaHeCP34FgPonraanJC4vbnKUrDO2x2EGb88XIMpA>
-    <xmx:HzQLaOi_DcH_HNkem_ShxBrw2U-vecpHXRBdbVMsX8lDER37ZvlrM_5j>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:lzQLaEAMt3zIqXa_mwbC1fbKnEjjIdlYvqCqSbCAWaFfb99693aCwQ>
+    <xmx:lzQLaJh7NZYRuaEr2Q6cx-v6fwrCZuTGWOECAr0gN1LF-GOkKnyPlQ>
+    <xmx:lzQLaArM1kIxws_IExVh4Grx5HrMN7vi9ZuWAFrnC5kQpJlkV8jQrg>
+    <xmx:lzQLaMhtm6iXiQ9nK_qKfZsK33ZRn8HanDvVufyJyhNEx2-QhZ1i7w>
+    <xmx:lzQLaA-8Duhmz9HCtCZ7NP0uDiP0_zHTMbFnw15naeWx4CWcQ3Lyesor>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 25 Apr 2025 03:05:02 -0400 (EDT)
+ 25 Apr 2025 03:07:02 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 285d46a9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 25 Apr 2025 07:05:00 +0000 (UTC)
-Date: Fri, 25 Apr 2025 09:04:55 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 70604ba7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 25 Apr 2025 07:07:02 +0000 (UTC)
+Date: Fri, 25 Apr 2025 09:07:00 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/13] builtin/index-pack: don't fetch promised objects
- for collision check
-Message-ID: <aAs0F58Hlpn6WI6b@pks.im>
+Subject: Re: [PATCH 00/13] object-store: a handful of cleanups
+Message-ID: <aAs0lFpGqL6_a-y2@pks.im>
 References: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
- <20250423-pks-object-store-cleanups-v1-7-81f8411a5d08@pks.im>
- <CAOLa=ZQh+agLJYEGWU2O2=iRnJy94y9Cud3XRVaGVHC4YdbBZw@mail.gmail.com>
+ <CAOLa=ZQ45v33yj2bUNrN6ZJYawR2KVyjHAtsY0RZ58fkhkTbSw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,60 +85,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZQh+agLJYEGWU2O2=iRnJy94y9Cud3XRVaGVHC4YdbBZw@mail.gmail.com>
+In-Reply-To: <CAOLa=ZQ45v33yj2bUNrN6ZJYawR2KVyjHAtsY0RZ58fkhkTbSw@mail.gmail.com>
 
-On Wed, Apr 23, 2025 at 10:08:05AM -0700, Karthik Nayak wrote:
+On Wed, Apr 23, 2025 at 10:20:18AM -0700, Karthik Nayak wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Any packed objects indexed via git-index-pack(1) are subject to a
-> > collision check. This collision check has the intent to determine
-> > whether we already have an object with the same object ID, but different
-> > contents in the repository.
+> > Hi,
 > >
-> > The check whether the collision check is really needed is performed via
-> > `repo_has_object_file_with_flags(..., OBJECT_INFO_QUICK)`. \
+> > this patch series contains a handful of cleanups to the object store
+> > subsystem:
 > >
-> 
-> Nit: this was a little confusing at first, until I saw the code. So what
-> this means is that the collision check is only performed, iff
-> `repo_has_object_file_with_flags(...)` returns true.
-> 
-> I think the confusing part was 'is performed via', perhaps:
-> 
->   The collision check is only performed, if
->   repo_has_object_file_with_flags(..., OBJECT_INFO_QUICK) returns a
->   truthy value.
-> 
-> But it is okay as is too!
-
-Will rephrase.
-
-> > But unless
-> > explicitly told otherwise via `OBJECT_INFO_SKIP_FETCH_OBJECT`, this
-> > function will also cause us to fetch the object ID in case it is part of
-> > a promisor pack. As such, we may end up fetching the object only to
-> > check whether the fetched object and the object that we're indexing have
-> > the same content.
+> >   - A couple of definitions are moved out of "object-store.h" as they
+> >     belong to other subsystems.
+> >
+> >   - Some functions are dropped and/or renamed.
+> >
+> >   - The biggest part is the removal of `repo_has_object_file()`. This
+> >     function and its `_with_flags()` variant are marked as deprecated,
+> >     with the replacement being `has_object()`. The benefit of that
+> >     function is that it doesn't reload packfiles and doesn't fetch
+> >     promisor objects by default so that it becomes more explicit when
+> >     one really wants to do so.
+> >
+> > These cleanups are in preparation for getting rid of `the_repository` in
+> > "object-store.c".
 > >
 > 
-> So us fetching the object is pointless, since we only care about the
-> 'does it exist' part and not really what it contains. In that case,
-> shouldn't this be s/same content/same oid/?
+> Apart from the few nits I mentioned, the series looks great! I must say
+> the split of commits was really nice to go through :)
 
-No, it really checks for the same content. It basically verifies that
-any pair of objects that:
-
-  - Exist in the packfile that we're currently indexing.
-  - And preexists in the local repository.
-
-Actually have the same content.
-
-The weird part is that we also do this for objects that don't yet exist
-in the repository, but which are promised to us. This causes us to fetch
-them first only to verify that the fetched promised object has the same
-content as the packfile. And given that git-index-pack(1) would usually
-run after a fetch, we end up verifying that the fetched object obtained
-from the promisor is the same as the fetched object obtained from the
-packfile. Which ultimately seems rather dubious to me.
+Thanks for your review!
 
 Patrick
