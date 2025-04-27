@@ -1,69 +1,69 @@
 Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C77231C695
-	for <git@vger.kernel.org>; Sun, 27 Apr 2025 18:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4CD1C695
+	for <git@vger.kernel.org>; Sun, 27 Apr 2025 18:54:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745780085; cv=none; b=PT0vxh4pXuJPq+BR9Fwi3cGmDoUQZKcGsOG0tkJ/C2ICbpeiXXm8Ji/XikNVsRiqyrfg1bzIZWeMrFNRPYCrCjwwsIrzsDKkKY5gkBgmQYMjh4vFgH6nQGmp/KUMCtMQTfhGGqx5pfNiY9/BH/AKJmYK5rwOhrCk6lA81cSWGUk=
+	t=1745780093; cv=none; b=j0ZUBxvowG5c+NgwI9mAdIQj0OfFCShqvPoNzHPBgkJfNmsVeXQuTSins8GVL8gO+CNRvVB6m+sCjc+flTpCKCrobUvYpAnoO0AuoxXjxrPGZWK1p1013FKi0OTqgslQ3QN96fmblGk0B/VitUXS91Ciyxip7p2DU0bxy5vdU8c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745780085; c=relaxed/simple;
-	bh=0+QYtYzdEGCGBUzB4OchahPlrVMPZDFKHLKc/XT5T+g=;
+	s=arc-20240116; t=1745780093; c=relaxed/simple;
+	bh=p8sN3EqF+SXAUUtCtEuoN9mfd4LwrIRlASef/Z5GP/0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=AGAXoLlRlNw2hHfcxQxsv2YugKHy+3SsTLKrInMgNm1SlcmaibzI+nGvKeGkkr68Cst7kkQWEOyNJVgcvGEAR5485nhJVfBmRIiVdtzUQ25l1mOkvD3tWRC0us2rOBLcl8bwpatKg4Jz4BrnLeGD4TqV+BSfkSldKB5mRecNUr4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UJbhUIF5; arc=none smtp.client-ip=209.85.221.42
+	 MIME-Version; b=hWR/W47eeol2K0HKgO+kBWoAXSmmUB1O4IEfGabE666zi5ppiAMYwll4H32jovjnCV8FUHPg24lVmBh6SnUc+qkmvnKDlCfJllQ6djwah6pB6wq12NgRIBxKLxTv7i7WlYIWjYjuBJt2H11jpLgglzTy7BDz0cdDhNTGuiWwzts=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fAJus5UR; arc=none smtp.client-ip=209.85.221.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UJbhUIF5"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-39c13fa05ebso2584091f8f.0
-        for <git@vger.kernel.org>; Sun, 27 Apr 2025 11:54:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fAJus5UR"
+Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-39c266c1389so2819298f8f.1
+        for <git@vger.kernel.org>; Sun, 27 Apr 2025 11:54:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745780081; x=1746384881; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745780088; x=1746384888; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DRXbYLsFylBEtuQqmK+7NIh+sNiHxv2rR15IfxW1aOU=;
-        b=UJbhUIF5rGY8BA2a2HUPoNtCBcQ/hYP9yPZQHJy8OAgeRDTUeJyWF3kcU44CDjhECr
-         2yP/ZN1Yt8Uq0MARKTcCvEpfD1UuDkgXr5M2uFAQo8YI9GUQfjn7sltJeZrrTyTi1gk1
-         me5RbG+T1BMH2nobHy/4AMDGfocVKgIP4fm6AfQIpKmk40q+9hgitHLftwpqyK4U91Pu
-         s//Pk0hLzNh8nvBr9thD+RScvHQ0KLH3CmEkn0k7FyNhioFo6kyBaD13yTnrMtDvGvPY
-         DfOhXmYoRzoV+gXpVfvSOVcp7wpFiGjlDTiWtn5DygOm1+FtPamiQCwGQwWjpQBD9K1b
-         eODQ==
+        bh=P49r1vAW02yfCNK3CM4J21Rx1VhVtMq8XXpw2XRCuuw=;
+        b=fAJus5URfPJZ8LkXqdMx4zaD1Nkc/0uCJ0ECpHQN62j/d6U1/92sE6Zvg/hRVL61mx
+         Nhx7F8cM/9+F3zSJGo2YOZGnCXiHVk7cf4ACahyS9oOAiSWKbsrMe8W0inTLeJyiXbbf
+         jn/IDCQN6Yxy96iPlCxFG4jUej/x82UugH8gl0DE+ByjRhh3oCVH5BT+AQe7KvYY4iU/
+         oC7WtgVR3ig5KwRcxnUJX2Px/1YnFJXQe7e8NkdjaqX26NkdC21Qwh/Tza5fU8K4iC2c
+         VqAisozZ/8Qtz5wwwZYc7SfRqHDHNbjqMdmk95AcT+RSnp0HgwLFMoYl9iP6ximx/LYx
+         RN7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745780081; x=1746384881;
+        d=1e100.net; s=20230601; t=1745780088; x=1746384888;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DRXbYLsFylBEtuQqmK+7NIh+sNiHxv2rR15IfxW1aOU=;
-        b=cl5YZ/pXrzw2l9SdOLz/GWv7am7xEnn93tmrcWKwKohs5vjfz+rZAqft1iDCFaSM8U
-         m/3SQtRY7dyxgVrJezc1w1HMldT1Q1M5UnmhCTEzm1NY5KzqeWkKW52Pb9jIRW5QpknU
-         xJ+Lh7cldWlS0L+75x9dtR6ylNB3QvkDc/YdeR26XNT7g244wIyX32GGU14Fnlx2J3OR
-         +DhjqOxQ/mjGceIpSBPuDbKROQ3bDmHgVbLyovmcOnY9B3UUev3WlVZKYM/l++qh7MsB
-         TG8BdnNELXe7cDs/9JU+H9+2Va/oN3/snWGaQzScXFc1PnwE68AZYRFsd1y6WdCUg0P/
-         OptA==
-X-Gm-Message-State: AOJu0Yy23UtT077HEO3KC7llq/vJNQdn0qBa79DKdPzozu+BfprZuVOe
-	ERsfpEPaHXKiU+6f61jOf131GUNzRTfW7fHDsIYMdemfbBRsGsD02H4BK6ykFM5fxg==
-X-Gm-Gg: ASbGncsaZxUk3uzXovUSsd9glfb1GBczsHIUZ1uWlOPEvjCjVeOn3wQwQKBxJ06pAsd
-	b9JVZxcqCpgO4+K9HwJP0jRoUcg5EmJLLjR3NjTd2xyVz/uxjV4WtTzAdbm9rPoQxUfk/QA55dv
-	x9DAsp5YvAfaBu/0lV4AWXpQZVW6OQ4lTFoFJvS+rc0CemNHgFxLtnQ7Anh3ldDAQvIX5obCIj8
-	xeJBqfRGTzGnGtC4jsdrhdleBBfzOIB1JBJPI42MNx79z+tBMdE3pmpbbcjzemWqjqfLCzTMvTF
-	JaVtmbcnQ06tRO4cX5BE5LPseHLXAr//tgTa
-X-Google-Smtp-Source: AGHT+IH17+hPWoPEqJMbJzJfL/Q6NI24omISQrfFCE0epWr11BBse6Mh7bXa5QI0KIXkmr1WcWJejw==
-X-Received: by 2002:a05:6000:2584:b0:39e:f641:c43 with SMTP id ffacd0b85a97d-3a07adb233dmr4659962f8f.53.1745780080939;
-        Sun, 27 Apr 2025 11:54:40 -0700 (PDT)
+        bh=P49r1vAW02yfCNK3CM4J21Rx1VhVtMq8XXpw2XRCuuw=;
+        b=KtZvTJYLS/G3avcsq8EveHCteABeWDV6pyQhqrG8R7wIw45APyiLS7FxfAokpLSRMA
+         2JYg2ggSz/MZim0sHRlicm7Ilsh0HQNJk0a9blVtcofVPoU2ft7bzCZZJ5xuwZ+p/5mw
+         GA7HE68I+9Uc1WBLPxzLsmdD3k1mKyZ9ABQ5qjJYODu9O/sffYNuV5UEo+ltNtmI9XcS
+         pIav+QR7otktlkBSTHayhaRi2lIlzxNGfX5ZSRmFsjKta1LYKIswfAs/ewsDVgPLyYrG
+         yYzsEaok1Q37mq5Vr83isxp2MzQmyydLc152UqE/rHqJ0pSoR6ozOIjLFn/wdLpFOc3d
+         MN9g==
+X-Gm-Message-State: AOJu0YzT+1I5fAJbtl8TfZOxWkbAdYNs7KHfDzZ1ub0eX0cVvoq+u1T3
+	wcFeq787GCTIwH4oTpJjB5aXFA5wLbUaKPbkSm+2+jyCZ1t5U91f9+URqGOhv0Bn/g==
+X-Gm-Gg: ASbGnctCbBCEYAnKi1L3Hf0du5E+xkUM6H0OXj7nu94R5/vrUCuBhmU+h5rexrSmpn7
+	P0feAa2wu+Us6rGEZ7AVfcN7B0OCIXif4ztEoFcbgqwebskuEZObz6QIwAr5Ms7YGuMJtLYznKp
+	N4iunjUxA4xB086HWTANceH949Evb952WetIJfdrWwu5wh0keqd7i5GTVFSCa4XLCkuAD5cm7CY
+	0wwHTKH3zpXH86Zt2+0YVjAhHnAFVqyudXi2Aj9YYVgbxjZH8xCdxrsjAMKvzyJ4bK9YZOIlh10
+	uH+OUjWW98aFS3XNma1mzZxww2RrY95AypBb
+X-Google-Smtp-Source: AGHT+IHYJa2t6ayN4zjKlVPEWcZeqpFz9CjkcUGNvJ2o5Uqrp28vehALLs0+9g/KDdxjOE461kq/gw==
+X-Received: by 2002:a05:6000:4203:b0:39c:2665:2bfc with SMTP id ffacd0b85a97d-3a074f4930amr7192889f8f.52.1745780087907;
+        Sun, 27 Apr 2025 11:54:47 -0700 (PDT)
 Received: from localhost.localdomain ([105.113.116.170])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8cc74sm9150175f8f.11.2025.04.27.11.54.38
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073c8cc74sm9150175f8f.11.2025.04.27.11.54.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 27 Apr 2025 11:54:40 -0700 (PDT)
+        Sun, 27 Apr 2025 11:54:47 -0700 (PDT)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH 3/9] t/unit-tests: convert reftable block test to use clar
-Date: Sun, 27 Apr 2025 19:53:45 +0100
-Message-ID: <20250427185351.82520-4-kuforiji98@gmail.com>
+Subject: [PATCH 4/9] t/unit-tests: convert reftable merged test to use clar
+Date: Sun, 27 Apr 2025 19:53:46 +0100
+Message-ID: <20250427185351.82520-5-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250427185351.82520-1-kuforiji98@gmail.com>
 References: <20250427185351.82520-1-kuforiji98@gmail.com>
@@ -75,65 +75,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt reftable block test file to use clar testing framework by using
+Adapt reftable merged test file to use clar testing framework by using
 clar assertions where necessary.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                        |   2 +-
- t/meson.build                   |   2 +-
- t/unit-tests/t-reftable-block.c | 383 --------------------------------
- t/unit-tests/u-reftable-block.c | 373 +++++++++++++++++++++++++++++++
- 4 files changed, 375 insertions(+), 385 deletions(-)
- delete mode 100644 t/unit-tests/t-reftable-block.c
- create mode 100644 t/unit-tests/u-reftable-block.c
+ Makefile                         |   2 +-
+ t/meson.build                    |   2 +-
+ t/unit-tests/t-reftable-merged.c | 546 -------------------------------
+ t/unit-tests/u-reftable-merged.c | 515 +++++++++++++++++++++++++++++
+ 4 files changed, 517 insertions(+), 548 deletions(-)
+ delete mode 100644 t/unit-tests/t-reftable-merged.c
+ create mode 100644 t/unit-tests/u-reftable-merged.c
 
 diff --git a/Makefile b/Makefile
-index 07e37bd1f3..3fc012f86a 100644
+index 3fc012f86a..a7a519ac81 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1363,6 +1363,7 @@ CLAR_TEST_SUITES += u-oidmap
- CLAR_TEST_SUITES += u-oidtree
+@@ -1364,6 +1364,7 @@ CLAR_TEST_SUITES += u-oidtree
  CLAR_TEST_SUITES += u-prio-queue
  CLAR_TEST_SUITES += u-reftable-basics
-+CLAR_TEST_SUITES += u-reftable-block
+ CLAR_TEST_SUITES += u-reftable-block
++CLAR_TEST_SUITES += u-reftable-merged
  CLAR_TEST_SUITES += u-reftable-tree
  CLAR_TEST_SUITES += u-strbuf
  CLAR_TEST_SUITES += u-strcmp-offset
-@@ -1376,7 +1377,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
+@@ -1377,7 +1378,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  
--UNIT_TEST_PROGRAMS += t-reftable-block
- UNIT_TEST_PROGRAMS += t-reftable-merged
+-UNIT_TEST_PROGRAMS += t-reftable-merged
  UNIT_TEST_PROGRAMS += t-reftable-pq
  UNIT_TEST_PROGRAMS += t-reftable-reader
+ UNIT_TEST_PROGRAMS += t-reftable-readwrite
 diff --git a/t/meson.build b/t/meson.build
-index 9add1b3d8b..eb9e69eb27 100644
+index eb9e69eb27..a4210dc561 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -9,6 +9,7 @@ clar_test_suites = [
-   'unit-tests/u-oidtree.c',
+@@ -10,6 +10,7 @@ clar_test_suites = [
    'unit-tests/u-prio-queue.c',
    'unit-tests/u-reftable-basics.c',
-+  'unit-tests/u-reftable-block.c',
+   'unit-tests/u-reftable-block.c',
++  'unit-tests/u-reftable-merged.c',
    'unit-tests/u-reftable-tree.c',
    'unit-tests/u-strbuf.c',
    'unit-tests/u-strcmp-offset.c',
-@@ -56,7 +57,6 @@ clar_unit_tests = executable('unit-tests',
+@@ -57,7 +58,6 @@ clar_unit_tests = executable('unit-tests',
  test('unit-tests', clar_unit_tests)
  
  unit_test_programs = [
--  'unit-tests/t-reftable-block.c',
-   'unit-tests/t-reftable-merged.c',
+-  'unit-tests/t-reftable-merged.c',
    'unit-tests/t-reftable-pq.c',
    'unit-tests/t-reftable-reader.c',
-diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+   'unit-tests/t-reftable-readwrite.c',
+diff --git a/t/unit-tests/t-reftable-merged.c b/t/unit-tests/t-reftable-merged.c
 deleted file mode 100644
-index 22040aeefa..0000000000
---- a/t/unit-tests/t-reftable-block.c
+index 60836f80d6..0000000000
+--- a/t/unit-tests/t-reftable-merged.c
 +++ /dev/null
-@@ -1,383 +0,0 @@
+@@ -1,546 +0,0 @@
 -/*
 -Copyright 2020 Google LLC
 -
@@ -143,386 +143,549 @@ index 22040aeefa..0000000000
 -*/
 -
 -#include "test-lib.h"
--#include "reftable/block.h"
+-#include "lib-reftable.h"
 -#include "reftable/blocksource.h"
 -#include "reftable/constants.h"
+-#include "reftable/merged.h"
+-#include "reftable/reader.h"
 -#include "reftable/reftable-error.h"
--#include "strbuf.h"
+-#include "reftable/reftable-merged.h"
+-#include "reftable/reftable-writer.h"
 -
--static void t_ref_block_read_write(void)
+-static struct reftable_merged_table *
+-merged_table_from_records(struct reftable_ref_record **refs,
+-			  struct reftable_block_source **source,
+-			  struct reftable_reader ***readers, const size_t *sizes,
+-			  struct reftable_buf *buf, const size_t n)
 -{
--	const int header_off = 21; /* random */
--	struct reftable_record recs[30];
--	const size_t N = ARRAY_SIZE(recs);
--	const size_t block_size = 1024;
--	struct reftable_block block = { 0 };
--	struct block_writer bw = {
--		.last_key = REFTABLE_BUF_INIT,
+-	struct reftable_merged_table *mt = NULL;
+-	struct reftable_write_options opts = {
+-		.block_size = 256,
 -	};
--	struct reftable_record rec = {
--		.type = BLOCK_TYPE_REF,
--	};
--	size_t i = 0;
--	int ret;
--	struct block_reader br = { 0 };
--	struct block_iter it = BLOCK_ITER_INIT;
--	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+-	int err;
 -
--	REFTABLE_CALLOC_ARRAY(block.data, block_size);
--	check(block.data != NULL);
--	block.len = block_size;
--	block_source_from_buf(&block.source ,&buf);
--	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
--				header_off, hash_size(REFTABLE_HASH_SHA1));
--	check(!ret);
+-	REFTABLE_CALLOC_ARRAY(*readers, n);
+-	check(*readers != NULL);
+-	REFTABLE_CALLOC_ARRAY(*source, n);
+-	check(*source != NULL);
 -
--	rec.u.ref.refname = (char *) "";
--	rec.u.ref.value_type = REFTABLE_REF_DELETION;
--	ret = block_writer_add(&bw, &rec);
--	check_int(ret, ==, REFTABLE_API_ERROR);
+-	for (size_t i = 0; i < n; i++) {
+-		t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
+-		block_source_from_buf(&(*source)[i], &buf[i]);
 -
--	for (i = 0; i < N; i++) {
--		rec.u.ref.refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
--		rec.u.ref.value_type = REFTABLE_REF_VAL1;
--		memset(rec.u.ref.value.val1, i, REFTABLE_HASH_SIZE_SHA1);
--
--		recs[i] = rec;
--		ret = block_writer_add(&bw, &rec);
--		rec.u.ref.refname = NULL;
--		rec.u.ref.value_type = REFTABLE_REF_DELETION;
--		check_int(ret, ==, 0);
+-		err = reftable_reader_new(&(*readers)[i], &(*source)[i],
+-					  "name");
+-		check(!err);
 -	}
 -
--	ret = block_writer_finish(&bw);
--	check_int(ret, >, 0);
--
--	block_writer_release(&bw);
--
--	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
--
--	block_iter_seek_start(&it, &br);
--
--	for (i = 0; ; i++) {
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, >=, 0);
--		if (ret > 0) {
--			check_int(i, ==, N);
--			break;
--		}
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
--		reftable_record_key(&recs[i], &want);
--
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--
--		want.len--;
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	block_reader_release(&br);
--	block_iter_close(&it);
--	reftable_record_release(&rec);
--	reftable_block_done(&br.block);
--	reftable_buf_release(&want);
--	reftable_buf_release(&buf);
--	for (i = 0; i < N; i++)
--		reftable_record_release(&recs[i]);
+-	err = reftable_merged_table_new(&mt, *readers, n, REFTABLE_HASH_SHA1);
+-	check(!err);
+-	return mt;
 -}
 -
--static void t_log_block_read_write(void)
+-static void readers_destroy(struct reftable_reader **readers, const size_t n)
 -{
--	const int header_off = 21;
--	struct reftable_record recs[30];
--	const size_t N = ARRAY_SIZE(recs);
--	const size_t block_size = 2048;
--	struct reftable_block block = { 0 };
--	struct block_writer bw = {
--		.last_key = REFTABLE_BUF_INIT,
--	};
--	struct reftable_record rec = {
--		.type = BLOCK_TYPE_LOG,
--	};
--	size_t i = 0;
--	int ret;
--	struct block_reader br = { 0 };
--	struct block_iter it = BLOCK_ITER_INIT;
--	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
--
--	REFTABLE_CALLOC_ARRAY(block.data, block_size);
--	check(block.data != NULL);
--	block.len = block_size;
--	block_source_from_buf(&block.source ,&buf);
--	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
--				header_off, hash_size(REFTABLE_HASH_SHA1));
--	check(!ret);
--
--	for (i = 0; i < N; i++) {
--		rec.u.log.refname = xstrfmt("branch%02"PRIuMAX , (uintmax_t)i);
--		rec.u.log.update_index = i;
--		rec.u.log.value_type = REFTABLE_LOG_UPDATE;
--
--		recs[i] = rec;
--		ret = block_writer_add(&bw, &rec);
--		rec.u.log.refname = NULL;
--		rec.u.log.value_type = REFTABLE_LOG_DELETION;
--		check_int(ret, ==, 0);
--	}
--
--	ret = block_writer_finish(&bw);
--	check_int(ret, >, 0);
--
--	block_writer_release(&bw);
--
--	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
--
--	block_iter_seek_start(&it, &br);
--
--	for (i = 0; ; i++) {
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, >=, 0);
--		if (ret > 0) {
--			check_int(i, ==, N);
--			break;
--		}
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
--		reftable_buf_reset(&want);
--		check(!reftable_buf_addstr(&want, recs[i].u.log.refname));
--
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--
--		want.len--;
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	block_reader_release(&br);
--	block_iter_close(&it);
--	reftable_record_release(&rec);
--	reftable_block_done(&br.block);
--	reftable_buf_release(&want);
--	reftable_buf_release(&buf);
--	for (i = 0; i < N; i++)
--		reftable_record_release(&recs[i]);
+-	for (size_t i = 0; i < n; i++)
+-		reftable_reader_decref(readers[i]);
+-	reftable_free(readers);
 -}
 -
--static void t_obj_block_read_write(void)
+-static void t_merged_single_record(void)
 -{
--	const int header_off = 21;
--	struct reftable_record recs[30];
--	const size_t N = ARRAY_SIZE(recs);
--	const size_t block_size = 1024;
--	struct reftable_block block = { 0 };
--	struct block_writer bw = {
--		.last_key = REFTABLE_BUF_INIT,
--	};
--	struct reftable_record rec = {
--		.type = BLOCK_TYPE_OBJ,
--	};
--	size_t i = 0;
--	int ret;
--	struct block_reader br = { 0 };
--	struct block_iter it = BLOCK_ITER_INIT;
--	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+-	struct reftable_ref_record r1[] = { {
+-		.refname = (char *) "b",
+-		.update_index = 1,
+-		.value_type = REFTABLE_REF_VAL1,
+-		.value.val1 = { 1, 2, 3, 0 },
+-	} };
+-	struct reftable_ref_record r2[] = { {
+-		.refname = (char *) "a",
+-		.update_index = 2,
+-		.value_type = REFTABLE_REF_DELETION,
+-	} };
+-	struct reftable_ref_record r3[] = { {
+-		.refname = (char *) "c",
+-		.update_index = 3,
+-		.value_type = REFTABLE_REF_DELETION,
+-	} };
 -
--	REFTABLE_CALLOC_ARRAY(block.data, block_size);
--	check(block.data != NULL);
--	block.len = block_size;
--	block_source_from_buf(&block.source, &buf);
--	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
--				header_off, hash_size(REFTABLE_HASH_SHA1));
--	check(!ret);
+-	struct reftable_ref_record *refs[] = { r1, r2, r3 };
+-	size_t sizes[] = { ARRAY_SIZE(r1), ARRAY_SIZE(r2), ARRAY_SIZE(r3) };
+-	struct reftable_buf bufs[3] = { REFTABLE_BUF_INIT, REFTABLE_BUF_INIT, REFTABLE_BUF_INIT };
+-	struct reftable_block_source *bs = NULL;
+-	struct reftable_reader **readers = NULL;
+-	struct reftable_merged_table *mt =
+-		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
+-	struct reftable_ref_record ref = { 0 };
+-	struct reftable_iterator it = { 0 };
+-	int err;
 -
--	for (i = 0; i < N; i++) {
--		uint8_t bytes[] = { i, i + 1, i + 2, i + 3, i + 5 }, *allocated;
--		DUP_ARRAY(allocated, bytes, ARRAY_SIZE(bytes));
+-	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+-	check(!err);
+-	err = reftable_iterator_seek_ref(&it, "a");
+-	check(!err);
 -
--		rec.u.obj.hash_prefix = allocated;
--		rec.u.obj.hash_prefix_len = 5;
--
--		recs[i] = rec;
--		ret = block_writer_add(&bw, &rec);
--		rec.u.obj.hash_prefix = NULL;
--		rec.u.obj.hash_prefix_len = 0;
--		check_int(ret, ==, 0);
--	}
--
--	ret = block_writer_finish(&bw);
--	check_int(ret, >, 0);
--
--	block_writer_release(&bw);
--
--	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
--
--	block_iter_seek_start(&it, &br);
--
--	for (i = 0; ; i++) {
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, >=, 0);
--		if (ret > 0) {
--			check_int(i, ==, N);
--			break;
--		}
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
--		reftable_record_key(&recs[i], &want);
--
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	block_reader_release(&br);
--	block_iter_close(&it);
--	reftable_record_release(&rec);
--	reftable_block_done(&br.block);
--	reftable_buf_release(&want);
--	reftable_buf_release(&buf);
--	for (i = 0; i < N; i++)
--		reftable_record_release(&recs[i]);
+-	err = reftable_iterator_next_ref(&it, &ref);
+-	check(!err);
+-	check(reftable_ref_record_equal(&r2[0], &ref, REFTABLE_HASH_SIZE_SHA1));
+-	reftable_ref_record_release(&ref);
+-	reftable_iterator_destroy(&it);
+-	readers_destroy(readers, 3);
+-	reftable_merged_table_free(mt);
+-	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
+-		reftable_buf_release(&bufs[i]);
+-	reftable_free(bs);
 -}
 -
--static void t_index_block_read_write(void)
+-static void t_merged_refs(void)
 -{
--	const int header_off = 21;
--	struct reftable_record recs[30];
--	const size_t N = ARRAY_SIZE(recs);
--	const size_t block_size = 1024;
--	struct reftable_block block = { 0 };
--	struct block_writer bw = {
--		.last_key = REFTABLE_BUF_INIT,
--	};
--	struct reftable_record rec = {
--		.type = BLOCK_TYPE_INDEX,
--		.u.idx.last_key = REFTABLE_BUF_INIT,
--	};
--	size_t i = 0;
--	int ret;
--	struct block_reader br = { 0 };
--	struct block_iter it = BLOCK_ITER_INIT;
--	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
--
--	REFTABLE_CALLOC_ARRAY(block.data, block_size);
--	check(block.data != NULL);
--	block.len = block_size;
--	block_source_from_buf(&block.source, &buf);
--	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
--				header_off, hash_size(REFTABLE_HASH_SHA1));
--	check(!ret);
--
--	for (i = 0; i < N; i++) {
--		char buf[128];
--
--		snprintf(buf, sizeof(buf), "branch%02"PRIuMAX, (uintmax_t)i);
--
--		reftable_buf_init(&recs[i].u.idx.last_key);
--		recs[i].type = BLOCK_TYPE_INDEX;
--		check(!reftable_buf_addstr(&recs[i].u.idx.last_key, buf));
--		recs[i].u.idx.offset = i;
--
--		ret = block_writer_add(&bw, &recs[i]);
--		check_int(ret, ==, 0);
--	}
--
--	ret = block_writer_finish(&bw);
--	check_int(ret, >, 0);
--
--	block_writer_release(&bw);
--
--	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
--
--	block_iter_seek_start(&it, &br);
--
--	for (i = 0; ; i++) {
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, >=, 0);
--		if (ret > 0) {
--			check_int(i, ==, N);
--			break;
+-	struct reftable_ref_record r1[] = {
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 1 },
+-		},
+-		{
+-			.refname = (char *) "b",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 1 },
+-		},
+-		{
+-			.refname = (char *) "c",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 1 },
 -		}
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	};
+-	struct reftable_ref_record r2[] = { {
+-		.refname = (char *) "a",
+-		.update_index = 2,
+-		.value_type = REFTABLE_REF_DELETION,
+-	} };
+-	struct reftable_ref_record r3[] = {
+-		{
+-			.refname = (char *) "c",
+-			.update_index = 3,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 2 },
+-		},
+-		{
+-			.refname = (char *) "d",
+-			.update_index = 3,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 1 },
+-		},
+-	};
+-
+-	struct reftable_ref_record *want[] = {
+-		&r2[0],
+-		&r1[1],
+-		&r3[0],
+-		&r3[1],
+-	};
+-
+-	struct reftable_ref_record *refs[] = { r1, r2, r3 };
+-	size_t sizes[3] = { ARRAY_SIZE(r1), ARRAY_SIZE(r2), ARRAY_SIZE(r3) };
+-	struct reftable_buf bufs[3] = { REFTABLE_BUF_INIT, REFTABLE_BUF_INIT, REFTABLE_BUF_INIT };
+-	struct reftable_block_source *bs = NULL;
+-	struct reftable_reader **readers = NULL;
+-	struct reftable_merged_table *mt =
+-		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
+-	struct reftable_iterator it = { 0 };
+-	int err;
+-	struct reftable_ref_record *out = NULL;
+-	size_t len = 0;
+-	size_t cap = 0;
+-	size_t i;
+-
+-	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+-	check(!err);
+-	err = reftable_iterator_seek_ref(&it, "a");
+-	check(!err);
+-	check_int(reftable_merged_table_hash_id(mt), ==, REFTABLE_HASH_SHA1);
+-	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
+-	check_int(reftable_merged_table_max_update_index(mt), ==, 3);
+-
+-	while (len < 100) { /* cap loops/recursion. */
+-		struct reftable_ref_record ref = { 0 };
+-		int err = reftable_iterator_next_ref(&it, &ref);
+-		if (err > 0)
+-			break;
+-
+-		check(!REFTABLE_ALLOC_GROW(out, len + 1, cap));
+-		out[len++] = ref;
 -	}
+-	reftable_iterator_destroy(&it);
 -
--	for (i = 0; i < N; i++) {
--		block_iter_reset(&it);
--		reftable_record_key(&recs[i], &want);
+-	check_int(ARRAY_SIZE(want), ==, len);
+-	for (i = 0; i < len; i++)
+-		check(reftable_ref_record_equal(want[i], &out[i],
+-						 REFTABLE_HASH_SIZE_SHA1));
+-	for (i = 0; i < len; i++)
+-		reftable_ref_record_release(&out[i]);
+-	reftable_free(out);
 -
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--
--		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
--
--		want.len--;
--		ret = block_iter_seek_key(&it, &br, &want);
--		check_int(ret, ==, 0);
--
--		ret = block_iter_next(&it, &rec);
--		check_int(ret, ==, 0);
--		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1));
--	}
--
--	block_reader_release(&br);
--	block_iter_close(&it);
--	reftable_record_release(&rec);
--	reftable_block_done(&br.block);
--	reftable_buf_release(&want);
--	reftable_buf_release(&buf);
--	for (i = 0; i < N; i++)
--		reftable_record_release(&recs[i]);
+-	for (i = 0; i < 3; i++)
+-		reftable_buf_release(&bufs[i]);
+-	readers_destroy(readers, 3);
+-	reftable_merged_table_free(mt);
+-	reftable_free(bs);
 -}
+-
+-static void t_merged_seek_multiple_times(void)
+-{
+-	struct reftable_ref_record r1[] = {
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 1 },
+-		},
+-		{
+-			.refname = (char *) "c",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 2 },
+-		}
+-	};
+-	struct reftable_ref_record r2[] = {
+-		{
+-			.refname = (char *) "b",
+-			.update_index = 2,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 3 },
+-		},
+-		{
+-			.refname = (char *) "d",
+-			.update_index = 2,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 4 },
+-		},
+-	};
+-	struct reftable_ref_record *refs[] = {
+-		r1, r2,
+-	};
+-	size_t sizes[] = {
+-		ARRAY_SIZE(r1), ARRAY_SIZE(r2),
+-	};
+-	struct reftable_buf bufs[] = {
+-		REFTABLE_BUF_INIT, REFTABLE_BUF_INIT,
+-	};
+-	struct reftable_block_source *sources = NULL;
+-	struct reftable_reader **readers = NULL;
+-	struct reftable_ref_record rec = { 0 };
+-	struct reftable_iterator it = { 0 };
+-	struct reftable_merged_table *mt;
+-
+-	mt = merged_table_from_records(refs, &sources, &readers, sizes, bufs, 2);
+-	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+-
+-	for (size_t i = 0; i < 5; i++) {
+-		int err = reftable_iterator_seek_ref(&it, "c");
+-		check(!err);
+-
+-		err = reftable_iterator_next_ref(&it, &rec);
+-		check(!err);
+-		err = reftable_ref_record_equal(&rec, &r1[1], REFTABLE_HASH_SIZE_SHA1);
+-		check(err == 1);
+-
+-		err = reftable_iterator_next_ref(&it, &rec);
+-		check(!err);
+-		err = reftable_ref_record_equal(&rec, &r2[1], REFTABLE_HASH_SIZE_SHA1);
+-		check(err == 1);
+-
+-		err = reftable_iterator_next_ref(&it, &rec);
+-		check(err > 0);
+-	}
+-
+-	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
+-		reftable_buf_release(&bufs[i]);
+-	readers_destroy(readers, ARRAY_SIZE(refs));
+-	reftable_ref_record_release(&rec);
+-	reftable_iterator_destroy(&it);
+-	reftable_merged_table_free(mt);
+-	reftable_free(sources);
+-}
+-
+-static void t_merged_seek_multiple_times_without_draining(void)
+-{
+-	struct reftable_ref_record r1[] = {
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 1 },
+-		},
+-		{
+-			.refname = (char *) "c",
+-			.update_index = 1,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 2 },
+-		}
+-	};
+-	struct reftable_ref_record r2[] = {
+-		{
+-			.refname = (char *) "b",
+-			.update_index = 2,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 3 },
+-		},
+-		{
+-			.refname = (char *) "d",
+-			.update_index = 2,
+-			.value_type = REFTABLE_REF_VAL1,
+-			.value.val1 = { 4 },
+-		},
+-	};
+-	struct reftable_ref_record *refs[] = {
+-		r1, r2,
+-	};
+-	size_t sizes[] = {
+-		ARRAY_SIZE(r1), ARRAY_SIZE(r2),
+-	};
+-	struct reftable_buf bufs[] = {
+-		REFTABLE_BUF_INIT, REFTABLE_BUF_INIT,
+-	};
+-	struct reftable_block_source *sources = NULL;
+-	struct reftable_reader **readers = NULL;
+-	struct reftable_ref_record rec = { 0 };
+-	struct reftable_iterator it = { 0 };
+-	struct reftable_merged_table *mt;
+-	int err;
+-
+-	mt = merged_table_from_records(refs, &sources, &readers, sizes, bufs, 2);
+-	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
+-
+-	err = reftable_iterator_seek_ref(&it, "b");
+-	check(!err);
+-	err = reftable_iterator_next_ref(&it, &rec);
+-	check(!err);
+-	err = reftable_ref_record_equal(&rec, &r2[0], REFTABLE_HASH_SIZE_SHA1);
+-	check(err == 1);
+-
+-	err = reftable_iterator_seek_ref(&it, "a");
+-	check(!err);
+-	err = reftable_iterator_next_ref(&it, &rec);
+-	check(!err);
+-	err = reftable_ref_record_equal(&rec, &r1[0], REFTABLE_HASH_SIZE_SHA1);
+-	check(err == 1);
+-
+-	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
+-		reftable_buf_release(&bufs[i]);
+-	readers_destroy(readers, ARRAY_SIZE(refs));
+-	reftable_ref_record_release(&rec);
+-	reftable_iterator_destroy(&it);
+-	reftable_merged_table_free(mt);
+-	reftable_free(sources);
+-}
+-
+-static struct reftable_merged_table *
+-merged_table_from_log_records(struct reftable_log_record **logs,
+-			      struct reftable_block_source **source,
+-			      struct reftable_reader ***readers, const size_t *sizes,
+-			      struct reftable_buf *buf, const size_t n)
+-{
+-	struct reftable_merged_table *mt = NULL;
+-	struct reftable_write_options opts = {
+-		.block_size = 256,
+-		.exact_log_message = 1,
+-	};
+-	int err;
+-
+-	REFTABLE_CALLOC_ARRAY(*readers, n);
+-	check(*readers != NULL);
+-	REFTABLE_CALLOC_ARRAY(*source, n);
+-	check(*source != NULL);
+-
+-	for (size_t i = 0; i < n; i++) {
+-		t_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
+-		block_source_from_buf(&(*source)[i], &buf[i]);
+-
+-		err = reftable_reader_new(&(*readers)[i], &(*source)[i],
+-					  "name");
+-		check(!err);
+-	}
+-
+-	err = reftable_merged_table_new(&mt, *readers, n, REFTABLE_HASH_SHA1);
+-	check(!err);
+-	return mt;
+-}
+-
+-static void t_merged_logs(void)
+-{
+-	struct reftable_log_record r1[] = {
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 2,
+-			.value_type = REFTABLE_LOG_UPDATE,
+-			.value.update = {
+-				.old_hash = { 2 },
+-				/* deletion */
+-				.name = (char *) "jane doe",
+-				.email = (char *) "jane@invalid",
+-				.message = (char *) "message2",
+-			}
+-		},
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 1,
+-			.value_type = REFTABLE_LOG_UPDATE,
+-			.value.update = {
+-				.old_hash = { 1 },
+-				.new_hash = { 2 },
+-				.name = (char *) "jane doe",
+-				.email = (char *) "jane@invalid",
+-				.message = (char *) "message1",
+-			}
+-		},
+-	};
+-	struct reftable_log_record r2[] = {
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 3,
+-			.value_type = REFTABLE_LOG_UPDATE,
+-			.value.update = {
+-				.new_hash = { 3 },
+-				.name = (char *) "jane doe",
+-				.email = (char *) "jane@invalid",
+-				.message = (char *) "message3",
+-			}
+-		},
+-	};
+-	struct reftable_log_record r3[] = {
+-		{
+-			.refname = (char *) "a",
+-			.update_index = 2,
+-			.value_type = REFTABLE_LOG_DELETION,
+-		},
+-	};
+-	struct reftable_log_record *want[] = {
+-		&r2[0],
+-		&r3[0],
+-		&r1[1],
+-	};
+-
+-	struct reftable_log_record *logs[] = { r1, r2, r3 };
+-	size_t sizes[3] = { ARRAY_SIZE(r1), ARRAY_SIZE(r2), ARRAY_SIZE(r3) };
+-	struct reftable_buf bufs[3] = { REFTABLE_BUF_INIT, REFTABLE_BUF_INIT, REFTABLE_BUF_INIT };
+-	struct reftable_block_source *bs = NULL;
+-	struct reftable_reader **readers = NULL;
+-	struct reftable_merged_table *mt = merged_table_from_log_records(
+-		logs, &bs, &readers, sizes, bufs, 3);
+-	struct reftable_iterator it = { 0 };
+-	int err;
+-	struct reftable_log_record *out = NULL;
+-	size_t len = 0;
+-	size_t cap = 0;
+-	size_t i;
+-
+-	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
+-	check(!err);
+-	err = reftable_iterator_seek_log(&it, "a");
+-	check(!err);
+-	check_int(reftable_merged_table_hash_id(mt), ==, REFTABLE_HASH_SHA1);
+-	check_int(reftable_merged_table_min_update_index(mt), ==, 1);
+-	check_int(reftable_merged_table_max_update_index(mt), ==, 3);
+-
+-	while (len < 100) { /* cap loops/recursion. */
+-		struct reftable_log_record log = { 0 };
+-		int err = reftable_iterator_next_log(&it, &log);
+-		if (err > 0)
+-			break;
+-
+-		check(!REFTABLE_ALLOC_GROW(out, len + 1, cap));
+-		out[len++] = log;
+-	}
+-	reftable_iterator_destroy(&it);
+-
+-	check_int(ARRAY_SIZE(want), ==, len);
+-	for (i = 0; i < len; i++)
+-		check(reftable_log_record_equal(want[i], &out[i],
+-						 REFTABLE_HASH_SIZE_SHA1));
+-
+-	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG);
+-	check(!err);
+-	err = reftable_iterator_seek_log_at(&it, "a", 2);
+-	check(!err);
+-	reftable_log_record_release(&out[0]);
+-	err = reftable_iterator_next_log(&it, &out[0]);
+-	check(!err);
+-	check(reftable_log_record_equal(&out[0], &r3[0], REFTABLE_HASH_SIZE_SHA1));
+-	reftable_iterator_destroy(&it);
+-
+-	for (i = 0; i < len; i++)
+-		reftable_log_record_release(&out[i]);
+-	reftable_free(out);
+-
+-	for (i = 0; i < 3; i++)
+-		reftable_buf_release(&bufs[i]);
+-	readers_destroy(readers, 3);
+-	reftable_merged_table_free(mt);
+-	reftable_free(bs);
+-}
+-
+-static void t_default_write_opts(void)
+-{
+-	struct reftable_write_options opts = { 0 };
+-	struct reftable_buf buf = REFTABLE_BUF_INIT;
+-	struct reftable_writer *w = t_reftable_strbuf_writer(&buf, &opts);
+-	struct reftable_ref_record rec = {
+-		.refname = (char *) "master",
+-		.update_index = 1,
+-	};
+-	int err;
+-	struct reftable_block_source source = { 0 };
+-	uint32_t hash_id;
+-	struct reftable_reader *rd = NULL;
+-	struct reftable_merged_table *merged = NULL;
+-
+-	reftable_writer_set_limits(w, 1, 1);
+-
+-	err = reftable_writer_add_ref(w, &rec);
+-	check(!err);
+-
+-	err = reftable_writer_close(w);
+-	check(!err);
+-	reftable_writer_free(w);
+-
+-	block_source_from_buf(&source, &buf);
+-
+-	err = reftable_reader_new(&rd, &source, "filename");
+-	check(!err);
+-
+-	hash_id = reftable_reader_hash_id(rd);
+-	check_int(hash_id, ==, REFTABLE_HASH_SHA1);
+-
+-	err = reftable_merged_table_new(&merged, &rd, 1, REFTABLE_HASH_SHA256);
+-	check_int(err, ==, REFTABLE_FORMAT_ERROR);
+-	err = reftable_merged_table_new(&merged, &rd, 1, REFTABLE_HASH_SHA1);
+-	check(!err);
+-
+-	reftable_reader_decref(rd);
+-	reftable_merged_table_free(merged);
+-	reftable_buf_release(&buf);
+-}
+-
 -
 -int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
 -{
--	TEST(t_index_block_read_write(), "read-write operations on index blocks work");
--	TEST(t_log_block_read_write(), "read-write operations on log blocks work");
--	TEST(t_obj_block_read_write(), "read-write operations on obj blocks work");
--	TEST(t_ref_block_read_write(), "read-write operations on ref blocks work");
+-	TEST(t_default_write_opts(), "merged table with default write opts");
+-	TEST(t_merged_logs(), "merged table with multiple log updates for same ref");
+-	TEST(t_merged_refs(), "merged table with multiple updates to same ref");
+-	TEST(t_merged_seek_multiple_times(), "merged table can seek multiple times");
+-	TEST(t_merged_seek_multiple_times_without_draining(), "merged table can seek multiple times without draining");
+-	TEST(t_merged_single_record(), "ref occurring in only one record can be fetched");
 -
 -	return test_done();
 -}
-diff --git a/t/unit-tests/u-reftable-block.c b/t/unit-tests/u-reftable-block.c
+diff --git a/t/unit-tests/u-reftable-merged.c b/t/unit-tests/u-reftable-merged.c
 new file mode 100644
-index 0000000000..af24901230
+index 0000000000..48c8f9f6b5
 --- /dev/null
-+++ b/t/unit-tests/u-reftable-block.c
-@@ -0,0 +1,373 @@
++++ b/t/unit-tests/u-reftable-merged.c
+@@ -0,0 +1,515 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -532,369 +695,511 @@ index 0000000000..af24901230
 +*/
 +
 +#include "unit-test.h"
-+#include "reftable/block.h"
++#include "lib-reftable.h"
 +#include "reftable/blocksource.h"
 +#include "reftable/constants.h"
++#include "reftable/merged.h"
++#include "reftable/reader.h"
 +#include "reftable/reftable-error.h"
-+#include "strbuf.h"
++#include "reftable/reftable-merged.h"
++#include "reftable/reftable-writer.h"
 +
-+void test_reftable_block__index_read_write(void)
++static struct reftable_merged_table *
++merged_table_from_records(struct reftable_ref_record **refs,
++			  struct reftable_block_source **source,
++			  struct reftable_reader ***readers, const size_t *sizes,
++			  struct reftable_buf *buf, const size_t n)
 +{
-+	const int header_off = 21; /* random */
-+	struct reftable_record recs[30];
-+	const size_t N = ARRAY_SIZE(recs);
-+	const size_t block_size = 1024;
-+	struct reftable_block block = { 0 };
-+	struct block_writer bw = {
-+		.last_key = REFTABLE_BUF_INIT,
++	struct reftable_merged_table *mt = NULL;
++	struct reftable_write_options opts = {
++		.block_size = 256,
 +	};
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_REF,
-+	};
-+	size_t i = 0;
-+	int ret;
-+	struct block_reader br = { 0 };
-+	struct block_iter it = BLOCK_ITER_INIT;
-+	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
++	int err;
 +
-+	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	cl_assert(block.data != NULL);
-+	block.len = block_size;
-+	block_source_from_buf(&block.source ,&buf);
-+	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
-+				header_off, hash_size(REFTABLE_HASH_SHA1));
-+	cl_assert(ret == 0);
++	REFTABLE_CALLOC_ARRAY(*readers, n);
++	cl_assert(*readers != NULL);
++	REFTABLE_CALLOC_ARRAY(*source, n);
++	cl_assert(*source != NULL);
 +
-+	rec.u.ref.refname = (char *) "";
-+	rec.u.ref.value_type = REFTABLE_REF_DELETION;
-+	ret = block_writer_add(&bw, &rec);
-+	cl_assert_equal_i(ret, REFTABLE_API_ERROR);
++	for (size_t i = 0; i < n; i++) {
++		cl_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
++		block_source_from_buf(&(*source)[i], &buf[i]);
 +
-+	for (i = 0; i < N; i++) {
-+		rec.u.ref.refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
-+		rec.u.ref.value_type = REFTABLE_REF_VAL1;
-+		memset(rec.u.ref.value.val1, i, REFTABLE_HASH_SIZE_SHA1);
-+
-+		recs[i] = rec;
-+		ret = block_writer_add(&bw, &rec);
-+		rec.u.ref.refname = NULL;
-+		rec.u.ref.value_type = REFTABLE_REF_DELETION;
-+		cl_assert_equal_i(ret, 0);
++		err = reftable_reader_new(&(*readers)[i], &(*source)[i],
++					  "name");
++		cl_assert(err == 0);
 +	}
 +
-+	ret = block_writer_finish(&bw);
-+	cl_assert(ret > 0);
-+
-+	block_writer_release(&bw);
-+
-+	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
-+
-+	block_iter_seek_start(&it, &br);
-+
-+	for (i = 0; ; i++) {
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert(ret >= 0);
-+		if (ret > 0) {
-+			cl_assert_equal_i(i, N);
-+			break;
-+		}
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+	}
-+
-+	for (i = 0; i < N; i++) {
-+		block_iter_reset(&it);
-+		reftable_record_key(&recs[i], &want);
-+
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
-+
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
-+
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+
-+		want.len--;
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
-+
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
-+		cl_assert_equal_i(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+	}
-+
-+	block_reader_release(&br);
-+	block_iter_close(&it);
-+	reftable_record_release(&rec);
-+	reftable_block_done(&br.block);
-+	reftable_buf_release(&want);
-+	reftable_buf_release(&buf);
-+	for (i = 0; i < N; i++)
-+		reftable_record_release(&recs[i]);
++	err = reftable_merged_table_new(&mt, *readers, n, REFTABLE_HASH_SHA1);
++	cl_assert(err == 0);
++	return mt;
 +}
 +
-+void test_reftable_block__log_read_write(void)
++static void readers_destroy(struct reftable_reader **readers, const size_t n)
 +{
-+	const int header_off = 21;
-+	struct reftable_record recs[30];
-+	const size_t N = ARRAY_SIZE(recs);
-+	const size_t block_size = 2048;
-+	struct reftable_block block = { 0 };
-+	struct block_writer bw = {
-+		.last_key = REFTABLE_BUF_INIT,
-+	};
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_LOG,
-+	};
-+	size_t i = 0;
-+	int ret;
-+	struct block_reader br = { 0 };
-+	struct block_iter it = BLOCK_ITER_INIT;
-+	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
-+
-+	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	cl_assert(block.data != NULL);
-+	block.len = block_size;
-+	block_source_from_buf(&block.source ,&buf);
-+	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
-+				header_off, hash_size(REFTABLE_HASH_SHA1));
-+	cl_assert(ret == 0);
-+
-+	for (i = 0; i < N; i++) {
-+		rec.u.log.refname = xstrfmt("branch%02"PRIuMAX , (uintmax_t)i);
-+		rec.u.log.update_index = i;
-+		rec.u.log.value_type = REFTABLE_LOG_UPDATE;
-+
-+		recs[i] = rec;
-+		ret = block_writer_add(&bw, &rec);
-+		rec.u.log.refname = NULL;
-+		rec.u.log.value_type = REFTABLE_LOG_DELETION;
-+		cl_assert_equal_i(ret, 0);
-+	}
-+
-+	ret = block_writer_finish(&bw);
-+	cl_assert(ret > 0);
-+
-+	block_writer_release(&bw);
-+
-+	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
-+
-+	block_iter_seek_start(&it, &br);
-+
-+	for (i = 0; ; i++) {
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert(ret >= 0);
-+		if (ret > 0) {
-+			cl_assert_equal_i(i, N);
-+			break;
-+		}
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+	}
-+
-+	for (i = 0; i < N; i++) {
-+		block_iter_reset(&it);
-+		reftable_buf_reset(&want);
-+		cl_assert(reftable_buf_addstr(&want, recs[i].u.log.refname) == 0);
-+
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
-+
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
-+
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+
-+		want.len--;
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
-+
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
-+		cl_assert_equal_i(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+	}
-+
-+	block_reader_release(&br);
-+	block_iter_close(&it);
-+	reftable_record_release(&rec);
-+	reftable_block_done(&br.block);
-+	reftable_buf_release(&want);
-+	reftable_buf_release(&buf);
-+	for (i = 0; i < N; i++)
-+		reftable_record_release(&recs[i]);
++	for (size_t i = 0; i < n; i++)
++		reftable_reader_decref(readers[i]);
++	reftable_free(readers);
 +}
 +
-+void test_reftable_block__obj_read_write(void)
++void test_reftable_merged__merged_single_record(void)
 +{
-+	const int header_off = 21;
-+	struct reftable_record recs[30];
-+	const size_t N = ARRAY_SIZE(recs);
-+	const size_t block_size = 1024;
-+	struct reftable_block block = { 0 };
-+	struct block_writer bw = {
-+		.last_key = REFTABLE_BUF_INIT,
-+	};
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_OBJ,
-+	};
-+	size_t i = 0;
-+	int ret;
-+	struct block_reader br = { 0 };
-+	struct block_iter it = BLOCK_ITER_INIT;
-+	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
++	struct reftable_ref_record r1[] = { {
++		.refname = (char *) "b",
++		.update_index = 1,
++		.value_type = REFTABLE_REF_VAL1,
++		.value.val1 = { 1, 2, 3, 0 },
++	} };
++	struct reftable_ref_record r2[] = { {
++		.refname = (char *) "a",
++		.update_index = 2,
++		.value_type = REFTABLE_REF_DELETION,
++	} };
++	struct reftable_ref_record r3[] = { {
++		.refname = (char *) "c",
++		.update_index = 3,
++		.value_type = REFTABLE_REF_DELETION,
++	} };
 +
-+	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	cl_assert(block.data != NULL);
-+	block.len = block_size;
-+	block_source_from_buf(&block.source, &buf);
-+	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
-+				header_off, hash_size(REFTABLE_HASH_SHA1));
-+	cl_assert(ret == 0);
++	struct reftable_ref_record *refs[] = { r1, r2, r3 };
++	size_t sizes[] = { ARRAY_SIZE(r1), ARRAY_SIZE(r2), ARRAY_SIZE(r3) };
++	struct reftable_buf bufs[3] = { REFTABLE_BUF_INIT, REFTABLE_BUF_INIT, REFTABLE_BUF_INIT };
++	struct reftable_block_source *bs = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_merged_table *mt =
++		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
++	struct reftable_ref_record ref = { 0 };
++	struct reftable_iterator it = { 0 };
++	int err;
 +
-+	for (i = 0; i < N; i++) {
-+		uint8_t bytes[] = { i, i + 1, i + 2, i + 3, i + 5 }, *allocated;
-+		DUP_ARRAY(allocated, bytes, ARRAY_SIZE(bytes));
++	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
++	cl_assert(err == 0);
++	err = reftable_iterator_seek_ref(&it, "a");
++	cl_assert(err == 0);
 +
-+		rec.u.obj.hash_prefix = allocated;
-+		rec.u.obj.hash_prefix_len = 5;
-+
-+		recs[i] = rec;
-+		ret = block_writer_add(&bw, &rec);
-+		rec.u.obj.hash_prefix = NULL;
-+		rec.u.obj.hash_prefix_len = 0;
-+		cl_assert_equal_i(ret, 0);
-+	}
-+
-+	ret = block_writer_finish(&bw);
-+	cl_assert(ret > 0);
-+
-+	block_writer_release(&bw);
-+
-+	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
-+
-+	block_iter_seek_start(&it, &br);
-+
-+	for (i = 0; ; i++) {
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert(ret >= 0);
-+		if (ret > 0) {
-+			cl_assert_equal_i(i, N);
-+			break;
-+		}
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+	}
-+
-+	for (i = 0; i < N; i++) {
-+		block_iter_reset(&it);
-+		reftable_record_key(&recs[i], &want);
-+
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
-+
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
-+
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
-+	}
-+
-+	block_reader_release(&br);
-+	block_iter_close(&it);
-+	reftable_record_release(&rec);
-+	reftable_block_done(&br.block);
-+	reftable_buf_release(&want);
-+	reftable_buf_release(&buf);
-+	for (i = 0; i < N; i++)
-+		reftable_record_release(&recs[i]);
++	err = reftable_iterator_next_ref(&it, &ref);
++	cl_assert(err == 0);
++	cl_assert(reftable_ref_record_equal(&r2[0], &ref, REFTABLE_HASH_SIZE_SHA1) != 0);
++	reftable_ref_record_release(&ref);
++	reftable_iterator_destroy(&it);
++	readers_destroy(readers, 3);
++	reftable_merged_table_free(mt);
++	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
++		reftable_buf_release(&bufs[i]);
++	reftable_free(bs);
 +}
 +
-+void test_reftable_block__ref_read_write(void)
++void test_reftable_merged__merged_refs(void)
 +{
-+	const int header_off = 21;
-+	struct reftable_record recs[30];
-+	const size_t N = ARRAY_SIZE(recs);
-+	const size_t block_size = 1024;
-+	struct reftable_block block = { 0 };
-+	struct block_writer bw = {
-+		.last_key = REFTABLE_BUF_INIT,
-+	};
-+	struct reftable_record rec = {
-+		.type = BLOCK_TYPE_INDEX,
-+		.u.idx.last_key = REFTABLE_BUF_INIT,
-+	};
-+	size_t i = 0;
-+	int ret;
-+	struct block_reader br = { 0 };
-+	struct block_iter it = BLOCK_ITER_INIT;
-+	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
-+
-+	REFTABLE_CALLOC_ARRAY(block.data, block_size);
-+	cl_assert(block.data != NULL);
-+	block.len = block_size;
-+	block_source_from_buf(&block.source, &buf);
-+	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
-+				header_off, hash_size(REFTABLE_HASH_SHA1));
-+	cl_assert(ret == 0);
-+
-+	for (i = 0; i < N; i++) {
-+		char buf[128];
-+
-+		snprintf(buf, sizeof(buf), "branch%02"PRIuMAX, (uintmax_t)i);
-+
-+		reftable_buf_init(&recs[i].u.idx.last_key);
-+		recs[i].type = BLOCK_TYPE_INDEX;
-+		cl_assert(reftable_buf_addstr(&recs[i].u.idx.last_key, buf) == 0);
-+		recs[i].u.idx.offset = i;
-+
-+		ret = block_writer_add(&bw, &recs[i]);
-+		cl_assert_equal_i(ret, 0);
-+	}
-+
-+	ret = block_writer_finish(&bw);
-+	cl_assert(ret > 0);
-+
-+	block_writer_release(&bw);
-+
-+	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
-+
-+	block_iter_seek_start(&it, &br);
-+
-+	for (i = 0; ; i++) {
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert(ret >= 0);
-+		if (ret > 0) {
-+			cl_assert_equal_i(i, N);
-+			break;
++	struct reftable_ref_record r1[] = {
++		{
++			.refname = (char *) "a",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 1 },
++		},
++		{
++			.refname = (char *) "b",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 1 },
++		},
++		{
++			.refname = (char *) "c",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 1 },
 +		}
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	};
++	struct reftable_ref_record r2[] = { {
++		.refname = (char *) "a",
++		.update_index = 2,
++		.value_type = REFTABLE_REF_DELETION,
++	} };
++	struct reftable_ref_record r3[] = {
++		{
++			.refname = (char *) "c",
++			.update_index = 3,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 2 },
++		},
++		{
++			.refname = (char *) "d",
++			.update_index = 3,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 1 },
++		},
++	};
++
++	struct reftable_ref_record *want[] = {
++		&r2[0],
++		&r1[1],
++		&r3[0],
++		&r3[1],
++	};
++
++	struct reftable_ref_record *refs[] = { r1, r2, r3 };
++	size_t sizes[3] = { ARRAY_SIZE(r1), ARRAY_SIZE(r2), ARRAY_SIZE(r3) };
++	struct reftable_buf bufs[3] = { REFTABLE_BUF_INIT, REFTABLE_BUF_INIT, REFTABLE_BUF_INIT };
++	struct reftable_block_source *bs = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_merged_table *mt =
++		merged_table_from_records(refs, &bs, &readers, sizes, bufs, 3);
++	struct reftable_iterator it = { 0 };
++	int err;
++	struct reftable_ref_record *out = NULL;
++	size_t len = 0;
++	size_t cap = 0;
++	size_t i;
++
++	err = merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
++	cl_assert(err == 0);
++	err = reftable_iterator_seek_ref(&it, "a");
++	cl_assert(err == 0);
++	cl_assert_equal_i(reftable_merged_table_hash_id(mt), REFTABLE_HASH_SHA1);
++	cl_assert_equal_i(reftable_merged_table_min_update_index(mt), 1);
++	cl_assert_equal_i(reftable_merged_table_max_update_index(mt), 3);
++
++	while (len < 100) { /* cap loops/recursion. */
++		struct reftable_ref_record ref = { 0 };
++		int err = reftable_iterator_next_ref(&it, &ref);
++		if (err > 0)
++			break;
++
++		cl_assert(REFTABLE_ALLOC_GROW(out, len + 1, cap) == 0);
++		out[len++] = ref;
++	}
++	reftable_iterator_destroy(&it);
++
++	cl_assert_equal_i(ARRAY_SIZE(want), len);
++	for (i = 0; i < len; i++)
++		cl_assert(reftable_ref_record_equal(want[i], &out[i],
++											REFTABLE_HASH_SIZE_SHA1) != 0);
++	for (i = 0; i < len; i++)
++		reftable_ref_record_release(&out[i]);
++	reftable_free(out);
++
++	for (i = 0; i < 3; i++)
++		reftable_buf_release(&bufs[i]);
++	readers_destroy(readers, 3);
++	reftable_merged_table_free(mt);
++	reftable_free(bs);
++}
++
++void test_reftable_merged__merged_seek_multiple_times(void)
++{
++	struct reftable_ref_record r1[] = {
++		{
++			.refname = (char *) "a",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 1 },
++		},
++		{
++			.refname = (char *) "c",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 2 },
++		}
++	};
++	struct reftable_ref_record r2[] = {
++		{
++			.refname = (char *) "b",
++			.update_index = 2,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 3 },
++		},
++		{
++			.refname = (char *) "d",
++			.update_index = 2,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 4 },
++		},
++	};
++	struct reftable_ref_record *refs[] = {
++		r1, r2,
++	};
++	size_t sizes[] = {
++		ARRAY_SIZE(r1), ARRAY_SIZE(r2),
++	};
++	struct reftable_buf bufs[] = {
++		REFTABLE_BUF_INIT, REFTABLE_BUF_INIT,
++	};
++	struct reftable_block_source *sources = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_ref_record rec = { 0 };
++	struct reftable_iterator it = { 0 };
++	struct reftable_merged_table *mt;
++
++	mt = merged_table_from_records(refs, &sources, &readers, sizes, bufs, 2);
++	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
++
++	for (size_t i = 0; i < 5; i++) {
++		int err = reftable_iterator_seek_ref(&it, "c");
++		cl_assert(err == 0);
++
++		cl_assert(reftable_iterator_next_ref(&it, &rec) == 0);
++		cl_assert_equal_i(reftable_ref_record_equal(&rec, &r1[1],
++													REFTABLE_HASH_SIZE_SHA1), 1);
++
++		cl_assert(reftable_iterator_next_ref(&it, &rec) == 0);
++		cl_assert_equal_i(reftable_ref_record_equal(&rec, &r2[1],
++													REFTABLE_HASH_SIZE_SHA1), 1);
++
++		cl_assert(reftable_iterator_next_ref(&it, &rec) > 0);
 +	}
 +
-+	for (i = 0; i < N; i++) {
-+		block_iter_reset(&it);
-+		reftable_record_key(&recs[i], &want);
++	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
++		reftable_buf_release(&bufs[i]);
++	readers_destroy(readers, ARRAY_SIZE(refs));
++	reftable_ref_record_release(&rec);
++	reftable_iterator_destroy(&it);
++	reftable_merged_table_free(mt);
++	reftable_free(sources);
++}
 +
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
++void test_reftable_merged__merged_seek_multiple_times_no_drain(void)
++{
++	struct reftable_ref_record r1[] = {
++		{
++			.refname = (char *) "a",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 1 },
++		},
++		{
++			.refname = (char *) "c",
++			.update_index = 1,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 2 },
++		}
++	};
++	struct reftable_ref_record r2[] = {
++		{
++			.refname = (char *) "b",
++			.update_index = 2,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 3 },
++		},
++		{
++			.refname = (char *) "d",
++			.update_index = 2,
++			.value_type = REFTABLE_REF_VAL1,
++			.value.val1 = { 4 },
++		},
++	};
++	struct reftable_ref_record *refs[] = {
++		r1, r2,
++	};
++	size_t sizes[] = {
++		ARRAY_SIZE(r1), ARRAY_SIZE(r2),
++	};
++	struct reftable_buf bufs[] = {
++		REFTABLE_BUF_INIT, REFTABLE_BUF_INIT,
++	};
++	struct reftable_block_source *sources = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_ref_record rec = { 0 };
++	struct reftable_iterator it = { 0 };
++	struct reftable_merged_table *mt;
 +
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
++	mt = merged_table_from_records(refs, &sources, &readers, sizes, bufs, 2);
++	merged_table_init_iter(mt, &it, BLOCK_TYPE_REF);
 +
-+		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	cl_assert(reftable_iterator_seek_ref(&it, "b") == 0);
++	cl_assert(reftable_iterator_next_ref(&it, &rec) == 0);
++	cl_assert_equal_i(reftable_ref_record_equal(&rec, &r2[0],
++												REFTABLE_HASH_SIZE_SHA1), 1);
 +
-+		want.len--;
-+		ret = block_iter_seek_key(&it, &br, &want);
-+		cl_assert_equal_i(ret, 0);
++	cl_assert(reftable_iterator_seek_ref(&it, "a") == 0);
++	cl_assert(reftable_iterator_next_ref(&it, &rec) == 0);
++	cl_assert_equal_i(reftable_ref_record_equal(&rec, &r1[0],
++												REFTABLE_HASH_SIZE_SHA1), 1);
 +
-+		ret = block_iter_next(&it, &rec);
-+		cl_assert_equal_i(ret, 0);
-+		cl_assert_equal_i(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	for (size_t i = 0; i < ARRAY_SIZE(bufs); i++)
++		reftable_buf_release(&bufs[i]);
++	readers_destroy(readers, ARRAY_SIZE(refs));
++	reftable_ref_record_release(&rec);
++	reftable_iterator_destroy(&it);
++	reftable_merged_table_free(mt);
++	reftable_free(sources);
++}
++
++static struct reftable_merged_table *
++merged_table_from_log_records(struct reftable_log_record **logs,
++			      struct reftable_block_source **source,
++			      struct reftable_reader ***readers, const size_t *sizes,
++			      struct reftable_buf *buf, const size_t n)
++{
++	struct reftable_merged_table *mt = NULL;
++	struct reftable_write_options opts = {
++		.block_size = 256,
++		.exact_log_message = 1,
++	};
++	int err;
++
++	REFTABLE_CALLOC_ARRAY(*readers, n);
++	cl_assert(*readers != NULL);
++	REFTABLE_CALLOC_ARRAY(*source, n);
++	cl_assert(*source != NULL);
++
++	for (size_t i = 0; i < n; i++) {
++		cl_reftable_write_to_buf(&buf[i], NULL, 0, logs[i], sizes[i], &opts);
++		block_source_from_buf(&(*source)[i], &buf[i]);
++
++		err = reftable_reader_new(&(*readers)[i], &(*source)[i],
++					  "name");
++		cl_assert(err == 0);
 +	}
 +
-+	block_reader_release(&br);
-+	block_iter_close(&it);
-+	reftable_record_release(&rec);
-+	reftable_block_done(&br.block);
-+	reftable_buf_release(&want);
++	cl_assert(reftable_merged_table_new(&mt, *readers, n, REFTABLE_HASH_SHA1) == 0);
++	return mt;
++}
++
++void test_reftable_merged__merged_logs(void)
++{
++	struct reftable_log_record r1[] = {
++		{
++			.refname = (char *) "a",
++			.update_index = 2,
++			.value_type = REFTABLE_LOG_UPDATE,
++			.value.update = {
++				.old_hash = { 2 },
++				/* deletion */
++				.name = (char *) "jane doe",
++				.email = (char *) "jane@invalid",
++				.message = (char *) "message2",
++			}
++		},
++		{
++			.refname = (char *) "a",
++			.update_index = 1,
++			.value_type = REFTABLE_LOG_UPDATE,
++			.value.update = {
++				.old_hash = { 1 },
++				.new_hash = { 2 },
++				.name = (char *) "jane doe",
++				.email = (char *) "jane@invalid",
++				.message = (char *) "message1",
++			}
++		},
++	};
++	struct reftable_log_record r2[] = {
++		{
++			.refname = (char *) "a",
++			.update_index = 3,
++			.value_type = REFTABLE_LOG_UPDATE,
++			.value.update = {
++				.new_hash = { 3 },
++				.name = (char *) "jane doe",
++				.email = (char *) "jane@invalid",
++				.message = (char *) "message3",
++			}
++		},
++	};
++	struct reftable_log_record r3[] = {
++		{
++			.refname = (char *) "a",
++			.update_index = 2,
++			.value_type = REFTABLE_LOG_DELETION,
++		},
++	};
++	struct reftable_log_record *want[] = {
++		&r2[0],
++		&r3[0],
++		&r1[1],
++	};
++
++	struct reftable_log_record *logs[] = { r1, r2, r3 };
++	size_t sizes[3] = { ARRAY_SIZE(r1), ARRAY_SIZE(r2), ARRAY_SIZE(r3) };
++	struct reftable_buf bufs[3] = { REFTABLE_BUF_INIT, REFTABLE_BUF_INIT, REFTABLE_BUF_INIT };
++	struct reftable_block_source *bs = NULL;
++	struct reftable_reader **readers = NULL;
++	struct reftable_merged_table *mt = merged_table_from_log_records(
++		logs, &bs, &readers, sizes, bufs, 3);
++	struct reftable_iterator it = { 0 };
++	struct reftable_log_record *out = NULL;
++	size_t len = 0;
++	size_t cap = 0;
++	size_t i;
++
++	cl_assert(merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG) == 0);
++	cl_assert(reftable_iterator_seek_log(&it, "a") == 0);
++	cl_assert_equal_i(reftable_merged_table_hash_id(mt), REFTABLE_HASH_SHA1);
++	cl_assert_equal_i(reftable_merged_table_min_update_index(mt), 1);
++	cl_assert_equal_i(reftable_merged_table_max_update_index(mt), 3);
++
++	while (len < 100) { /* cap loops/recursion. */
++		struct reftable_log_record log = { 0 };
++		int err = reftable_iterator_next_log(&it, &log);
++		if (err > 0)
++			break;
++
++		cl_assert(REFTABLE_ALLOC_GROW(out, len + 1, cap) == 0);
++		out[len++] = log;
++	}
++	reftable_iterator_destroy(&it);
++
++	cl_assert_equal_i(ARRAY_SIZE(want), len);
++	for (i = 0; i < len; i++)
++		cl_assert(reftable_log_record_equal(want[i], &out[i],
++											REFTABLE_HASH_SIZE_SHA1) != 0);
++
++	cl_assert(merged_table_init_iter(mt, &it, BLOCK_TYPE_LOG) == 0);
++	cl_assert(reftable_iterator_seek_log_at(&it, "a", 2) == 0);
++	reftable_log_record_release(&out[0]);
++	cl_assert(reftable_iterator_next_log(&it, &out[0]) == 0);
++	cl_assert(reftable_log_record_equal(&out[0], &r3[0],
++										REFTABLE_HASH_SIZE_SHA1) != 0);
++	reftable_iterator_destroy(&it);
++
++	for (i = 0; i < len; i++)
++		reftable_log_record_release(&out[i]);
++	reftable_free(out);
++
++	for (i = 0; i < 3; i++)
++		reftable_buf_release(&bufs[i]);
++	readers_destroy(readers, 3);
++	reftable_merged_table_free(mt);
++	reftable_free(bs);
++}
++
++void test_reftable_merged__default_write_opts(void)
++{
++	struct reftable_write_options opts = { 0 };
++	struct reftable_buf buf = REFTABLE_BUF_INIT;
++	struct reftable_writer *w = cl_reftable_strbuf_writer(&buf, &opts);
++	struct reftable_ref_record rec = {
++		.refname = (char *) "master",
++		.update_index = 1,
++	};
++	int err;
++	struct reftable_block_source source = { 0 };
++	uint32_t hash_id;
++	struct reftable_reader *rd = NULL;
++	struct reftable_merged_table *merged = NULL;
++
++	reftable_writer_set_limits(w, 1, 1);
++
++	cl_assert(reftable_writer_add_ref(w, &rec) == 0);
++
++	cl_assert(reftable_writer_close(w) == 0);
++	reftable_writer_free(w);
++
++	block_source_from_buf(&source, &buf);
++
++	cl_assert(reftable_reader_new(&rd, &source, "filename") == 0);
++
++	hash_id = reftable_reader_hash_id(rd);
++	cl_assert_equal_i(hash_id, REFTABLE_HASH_SHA1);
++
++	err = reftable_merged_table_new(&merged, &rd, 1, REFTABLE_HASH_SHA256);
++	cl_assert_equal_i(err, REFTABLE_FORMAT_ERROR);
++	cl_assert(reftable_merged_table_new(&merged, &rd, 1, REFTABLE_HASH_SHA1) == 0);
++
++	reftable_reader_decref(rd);
++	reftable_merged_table_free(merged);
 +	reftable_buf_release(&buf);
-+	for (i = 0; i < N; i++)
-+		reftable_record_release(&recs[i]);
 +}
 -- 
 2.43.0
