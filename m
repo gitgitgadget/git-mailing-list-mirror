@@ -1,180 +1,98 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 963521A2390
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 07:33:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8BD1DF735
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 07:41:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745825614; cv=none; b=i/J87sE4gdm+Wxmsvs3KqlTWS11AIJv3uYabPgECXv6hBCAY87zYAJzqv03++Grjnb9pqYU3OJz8+sej7yRxVcNZJmIyShmvQlgdQMxlCKuXBhCSyqYJd4AUoEaiIR+qbm31PEG3Ms0JJRhm6e8QzWoYSeaQ5lw9uXo2OScg5bU=
+	t=1745826089; cv=none; b=ouG2wxkUSO3OBITctDVAL7Fxg9VtWcZ0PcGXoB8UCcFppR5RhHf9LF8Q8cOGHpcRuSckWlBHZqW9VmBe1cxocMuaIbKRupCORQLsX7atMo7WmkNbiu9mEC7If/eRurCrKv/TFFQEAFrGz5JivUD+i2BPrhSrTE4FSRpM5T0S7F8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745825614; c=relaxed/simple;
-	bh=JStIzKmNRhCAK14lAeBu7DwNTqHm39nBd+C2KzURP40=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=s1+7Z/GJxmfl86zPGK9tm0BNwS1RJ7Ac7hiAEVMnC3Zbeib32p+k6YkOlkOUs5oZDDyuIlOqurscrbvDl1JtAvmlI5broPqzwp4lbhroHsErD7jMZzOd95SJWffSKAlJe2Qdpwj5BFy2TNux6Gmf4RKxTdkPCymRFlIejmzuoUE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hkDsxtna; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=l25WbFDh; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745826089; c=relaxed/simple;
+	bh=lmQszGdp+nBMr0UB4Be5n2I+ru4+PbRtcAi6+OTgtug=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=ixR1a2mMj3oXiEvQMwAlDNuD2UiaFIvtD4MxCcQU5UvGYdmsHoD9MEUvEFx1IJ1RqXn8gQ5LgMXnrHAfFb8RENmtMMaZ9GExBHsphXDo4iIp9D5iizIAe5d3B9fNFxkn0AIqTUwSKbznv7TRVy8nc9Uln6EzVfv+SAFnapQ037c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NoMdMhn/; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hkDsxtna";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="l25WbFDh"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 93CC513801C2;
-	Mon, 28 Apr 2025 03:33:31 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-09.internal (MEProxy); Mon, 28 Apr 2025 03:33:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1745825611; x=1745912011; bh=7s8R7yQvEG
-	0P/QHxiwW4AKY1EwfQgjd3D5cejSyPCX8=; b=hkDsxtnaXDoBF7jN2QGePes/z1
-	CwnCHussWy5V3+iE5PqVvLVewzmd4NWzS94EM2G878L+n7BWxiqR/UH5jgHtwW+f
-	pfBVIs0eo26naZo1s3j0OyBJC9jZSc25lak5V8dyt4IMQ6WhaQ2AjFGfUbwDnM0e
-	XCDvr5mn16/rGFH/obOHJCfYzds9aScYa5QhFoyN3kH9ldSOtr1tWlZewaDhYUXF
-	4bV/aIT+vktbqTltFgYKhT/oHBgLv+qoy2wJuJMTNf1dw1RzQkUVUPOU5SYSwDf2
-	Dp+lS0TBJfIycGrnZ+mSD7eoGhay6qhZq67djd+pYkhCtOnAFVT9GwhbXoWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745825611; x=1745912011; bh=7s8R7yQvEG0P/QHxiwW4AKY1EwfQgjd3D5c
-	ejSyPCX8=; b=l25WbFDhodbYS3aKF7YkKdk4cN7Fd3CDpbpM9Ym6AkniofffGK+
-	0Hkyu4h3eV/ZgmFA0DhOjfuFrqzRtKW2VZlq0ZJInrqXocTzAfhR995TtxCpSmVq
-	WLO+Q5566SYrwa3yBpSFsLlphxCE3L7rPy8Tw7T9XH2hfvu7ZuZS/qBe8GD9VJ75
-	L2/rus88J2HmsjXL3NcjvCIWgPZhV7idYnAmeIzx5u62XAphYZu9M1dSxzVEtr0H
-	CpxVL3SOEUi1rS01xXC4rgpx8UIM1fd+lxWAEaKnyFqAuXZt57bbBhtSYjoknOem
-	EDgjY6B9uQl3b2jkhCuukI02zo3CwAoTOxw==
-X-ME-Sender: <xms:Sy8PaK3TYo7Pc6mx2KU16I6joANc3oR0iQQ84Sycda91mxAQA9FeGg>
-    <xme:Sy8PaNGqs9uBcWMVZKIWbwzk8KbC1ShboHz1dKkz8kaClcXQnJl1vo83suRtT7z4T
-    HjJ3NLP2JbKKAWfDg>
-X-ME-Received: <xmr:Sy8PaC7ZA6VIxX_ZYCyG5s0Or_tpyIYubICcQewzjoLHpl8H_QtJxG6B4vKLHdZOSKP3LbazskRI5SiTROdPeoUw-xgdJ6bbKUUAu0jNVT10>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedtfeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpedtiedvhf
-    eghfdtgefhgfehhfduudegfeejffeuleeugfetheekkefhkeeijefgueenucffohhmrghi
-    nheprhgvrhholhhlrdgvshdprhgvrhholhhlrdhpshdprhgvrgguhidrkhhnnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehp
-    ohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Sy8PaL04Dhe8SYVSAUESb3CoocPVTY4NgULS6SUp9E2wry18LQ6qJg>
-    <xmx:Sy8PaNG6hwjcR0SqRTC9p9HQRjxmiUa6FFQrHTS2Iq1hFiag41klzw>
-    <xmx:Sy8PaE_tNIslyQXrFiIDiAJMz_GQ188bkGPrvMUr8_WEdXkKw1p-FQ>
-    <xmx:Sy8PaCmWL4ypxDxY9DZEA-APo4DF_wXXmmmH-eQdbTeQpONVZCDUGw>
-    <xmx:Sy8PaG1IdH0dCnPSP9TeKCdxPV97wo7vftgu4SziRjpSUzSis94UTjr7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 03:33:30 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e389f86b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 28 Apr 2025 07:33:29 +0000 (UTC)
-Date: Mon, 28 Apr 2025 09:33:28 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: What's cooking in git.git (Apr 2025, #07; Thu, 24)
-Message-ID: <aA8vSPKdznjzBf6W@pks.im>
-References: <xmqqbjskwkbm.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NoMdMhn/"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5efe8d9eb1eso3858257a12.0
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 00:41:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745826086; x=1746430886; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lmQszGdp+nBMr0UB4Be5n2I+ru4+PbRtcAi6+OTgtug=;
+        b=NoMdMhn/2UeEgDeOTPXbJ4wWoMkGsVRyvY9gBcJYVrZogkUtEI0RxXPqyyF8Vh8qB/
+         T9kBhVK9dEy2XTfTLs336XiKU6+e92bEnaLB0ddvHJ1EOyVUBvsjI46xTLg56vfeMPRy
+         WDBFDGW7NUnNQ5XecqQUEIpOY5UEqAu1VbY6aLd7nTyA5aPg++VjD2zplnO03Xr6izhX
+         6nm0uox1XGsVPMTtv5JE3WZXHQ6Sti9tupJUfpcOulolw0xZCG3PL3lfRWHfdUKAivtB
+         1H4kjiq/zbFVX8qiGefVu8MaNS2S9JWNvzayxD61co0PJ/wJc7ndMOzuXqhikob/7wwA
+         myFg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745826086; x=1746430886;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=lmQszGdp+nBMr0UB4Be5n2I+ru4+PbRtcAi6+OTgtug=;
+        b=mUV8NZlXb8fszqThkox3M5MTzVySEq1HKF1Pe4S4JcTf7OXmZYcBxMSZcpYnxodf7l
+         wzma6nfBJjc3q5rcsgSx/7/vPJBeBVPCroA37DnQ7Wh/rx4RtV9CwPAfHQPp698IiYoC
+         uScDAn6KzZNKaZpVYFFZ0s5noQ4nobSI3npDkhFVjlrbYCVL3KsrBHIPuHnfJJpfjDYX
+         Im4BSiPMwjRri1rSDQ/kiUzFXuo0d/rKxAcMUWsXyJDue3LaUEw0H4i/VFMjnbtkiu9I
+         iaGMmi6cDuh5roZ+Z03ehZKaEh7Pb5eog+ErICsJmYWmBuv4IgCXWofUxXPzi5Tp6hD7
+         YNCA==
+X-Gm-Message-State: AOJu0YwCXIgLx6dLRy/lbIISV0syKYMuP3ZrKiQkwgXqedHw1mc/R7uq
+	uKmU00i/+I6Y7gM/dPzOacMHpD5GR1QcjC7CZGsz81Q49w92NfrDmbNyp7NYrULNG+kmPNI6Ydx
+	/6fSpnCggX88hXVRlDb/546tuwCNdMghN
+X-Gm-Gg: ASbGnctwIZVCj0DQMCjJXoUpg7Xv+wmMgupRVK1G2g8AJE8dflspVqB9Sg6bsJXlzsi
+	4Jl9G7blYlTax/L2g3Xt31LfPWbwqQDadZcgoeSSqEkY3ldhjxsMrTr5CU7ec3WmMG2dAZKwUxc
+	1PtvuX68R4+kLGFlM8TZ6bl+H7kjULIznZILaAFWgecP3ruOcQ3DKMzlKADnazz5Wvkw==
+X-Google-Smtp-Source: AGHT+IHZZ5URwkjfKAgQ5OVHkK0ajG6H7njsXf0WoBslqVAtYMTUUgT9DC4Q34hSYtk9tjbyy/SVy4RdD54NtV6vE6k=
+X-Received: by 2002:a05:6402:3490:b0:5e5:854d:4d17 with SMTP id
+ 4fb4d7f45d1cf-5f6ef1f7f96mr13043203a12.11.1745826085912; Mon, 28 Apr 2025
+ 00:41:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqbjskwkbm.fsf@gitster.g>
+References: <02671927-2e65-4bd3-904b-b564849d1fa5@engmark.name>
+In-Reply-To: <02671927-2e65-4bd3-904b-b564849d1fa5@engmark.name>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Mon, 28 Apr 2025 09:41:13 +0200
+X-Gm-Features: ATxdqUG17StiLD0_XORvKozgr_HtX5lIrC3Fq7FVf8ppPAMrci7NdNzvHHIuBB0
+Message-ID: <CAP8UFD1fzLjNdrhv8yuGJmjKsJRU0kaa4rtV=ur+3CMYZD2wzA@mail.gmail.com>
+Subject: Re: Workflow for bisecting with test in a branch
+To: Victor Engmark <victor@engmark.name>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, Apr 25, 2025 at 04:29:33AM -0700, Junio C Hamano wrote:
-> * dd/meson-perl-custom-path (2025-04-24) 1 commit
->  - meson: allow customize perl installation path
-> 
->  Meson-based build framework update.
-> 
->  Comments?
->  source: <80a2a6ce7c6b05323cf931cdc20d4decb6270002.1745507677.git.congdanhqx@gmail.com>
+On Sun, Apr 27, 2025 at 10:18=E2=80=AFAM Victor Engmark <victor@engmark.nam=
+e> wrote:
+>
+> I'd like to bisect using a test I've written in a different branch from
+> the one I'm bisecting. But to do `git bisect run ./test.bash` I have to
+> keep the new test file and an old test suite file the same during the
+> whole `bisect` process. This turned out pretty cumbersome:
 
-I had two pedantic comments regarding formatting and wording, but other
-than that this patch looks good to me. I expect a minor reroll.
+[...]
 
-> * es/meson-cleanup (2025-04-24) 6 commits
->  - meson: only check for missing networking syms on non-Windows; add compat impls
->  - meson: fix typo in function check that prevented checking for hstrerror
->  - meson: add a couple missing networking dependencies
->  - meson: do a full usage-based compile check for sysinfo
->  - meson: check for getpagesize before using it
->  - meson: simplify and parameterize various standard function checks
-> 
->  Code clean-up for meson-based build infrastructure.
-> 
->  Ready?
->  source: <20250425002017.246985-1-eschwartz@gentoo.org>
+> Is there a more streamlined way to achieve the same thing, that is,
+> forcing some checked-in files to not change while bisecting?
 
-Yeah, I'm happy with the rerolled version.
+You could perhaps use worktrees (see
+https://git-scm.com/docs/git-worktree) to have a separate worktree
+with the checked-in files that shouldn't change, while performing the
+bisection and building in the main worktree. If all the needed files
+and directories are properly set up on the separate worktree, you
+could copy them over using a single `cp -a ...` command.
 
-> * js/windows-arm64 (2025-04-23) 6 commits
->  - max_tree_depth: lower it for clangarm64 on Windows
->  - mingw(arm64): do move the `/etc/git*` location
->  - msvc: do handle builds on Windows/ARM64
->  - mingw: do not use nedmalloc on Windows/ARM64
->  - config.mak.uname: add support for clangarm64
->  - bswap.h: add support for built-in bswap functions
-> 
->  Update to arm64 Windows port.
-> 
->  Will merge to 'next'?
->  source: <pull.1904.v2.git.1745395308.gitgitgadget@gmail.com>
+Also I think that conceptually it's more the responsibility of your
+build and test system, rather than the SCM, to provide you with clean,
+out of source builds and tests.
 
-The only comments I had on v1 have been addressed by Dscho, so this
-looks good to me.
-
-> * sj/string-list-typefix (2025-04-22) 5 commits
->  - u-string-list: move "remove duplicates" test to "u-string-list.c"
->  - u-string-list: move "filter string" test to "u-string-list.c"
->  - u-string-list: move "test_split_in_place" to "u-string-list.c"
->  - u-string-list: move "test_split" into "u-string-list.c"
->  - string-list: fix sign compare warnings
-> 
->  Code and test clean-up around string-list API.
-> 
->  Comments?
->  source: <aAetW0dan8S3Fljq@ArchLinux>
-
-I have reviewed this series and expect another reroll.
-
-> * ps/meson-build-perf-bench (2025-04-22) 5 commits
->  - meson: wire up benchmarking options
->  - meson: wire up benchmarks
->  - t/perf: fix benchmarks with out-of-tree builds
->  - t/perf: use configured PERL_PATH
->  - t/perf: fix benchmarks with alternate repo formats
-> 
->  The build procedure based on Meson learned to drive the
->  benchmarking tests.
-> 
->  Comments?
->  source: <20250422-pks-meson-benchmarks-v3-0-7aad68bac6fd@pks.im>
-
-I have another minor clarification for our Meson usage queued locally.
-Let me just flush out this revision and then this should hopefully be
-ready.
-
-> * kn/meson-hdr-check (2025-04-23) 7 commits
->  - makefile/meson: add 'check-headers' as alias for 'hdr-check'
->  - meson: add support for 'hdr-check'
->  - meson: rename 'third_party_sources' to 'third_party_excludes'
->  - meson: move headers definition from 'contrib/coccinelle'
->  - coccinelle: meson: rename variables to be more specific
->  - ci/github: install git before checking out the repository
->  - Merge branch 'es/meson-build-skip-coccinelle' into kn/meson-hdr-check
-> 
->  Add an equivalent to "make hdr-check" target to meson based builds.
-> 
->  Will merge to 'next'?
->  source: <20250423-505-wire-up-sparse-via-meson-v5-0-d1e2be4b2078@gmail.com>
-
-I'm happy with this version.
-
-Patrick
+Best,
+Christian.
