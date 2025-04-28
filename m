@@ -1,81 +1,81 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EB817BCE
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7FEB190057
 	for <git@vger.kernel.org>; Mon, 28 Apr 2025 07:30:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745825459; cv=none; b=ToCP9tNDp+QXaSzc2mWSmSJXH9wcYZShYES457CHZIaQ7CihFWwushwbtHWb+Jv4VrNl01Ba/NLSgWYsp6IlB+R5zhiYf03NIHE9cCzxghXjB12crHmFuSKPBlkcrLJlvInmSBZ7UJOsSddM23nzcvlW5evTAhruXHW8+G6yUhY=
+	t=1745825459; cv=none; b=L/Ia4xa/kQ2Idtkco3xkv2GFB9cXgMzoL6ztFq4NK55fN4bJQ7XDpAv7I4y5+XPeQMCigOetGn6HauD7Eas8CWS2jRea7NXcgI1fsyVP3OOdBs9kuKYddRgX7jdSjHgaPlu/NvBLsjx/2x0jwqylZV3IePyweoBW4o8f+/DVoWM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1745825459; c=relaxed/simple;
-	bh=W3g65cPMrQxn09A7JpkRVjfKi2jETDD0rXtBLTnOpSI=;
+	bh=neYrfJ4783CuAiur7SpoxyTFy0wj9jp/vUnYbTfL6nE=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=J2KVhWJj8Fj9ZzBlmjpb9SDtJUSmwhTb9pcUM8EID3TEUaZ/lFRlKsTYyZudqYIAfM2YCQRKiotxLow9vX9k3zgDYED33I04cwPyHZyyTEhT3nhL1gsRzVTrZ0w+wASChz4169wIpf3yWruq4ZkJaFtsg1sICKm30/6Hd1SiMOc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bgkxXb37; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UF+R21b8; arc=none smtp.client-ip=103.168.172.155
+	 In-Reply-To:To:Cc; b=th4LfETy8Y8yOkCSd50nhwIsb2Eq5LABtTwI1X9CPhQKhO9BV+KK10AqHV41iInz54AJvltoBUexazDjP6oFf5CBk0zIvTZkBTUmF/qLynIXMvkkb8ATWPNGhp2RmRR2T0xcLpuHJUGaGNU5GMY04E8m/g1f+kGhzzB9cgmJNdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i+qL29+l; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bPvpxUDd; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bgkxXb37";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UF+R21b8"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6B17D114024B;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i+qL29+l";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bPvpxUDd"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id DB492138013A;
 	Mon, 28 Apr 2025 03:30:56 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Mon, 28 Apr 2025 03:30:56 -0400
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Mon, 28 Apr 2025 03:30:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1745825456;
-	 x=1745911856; bh=HnzqoGZKZOTMaIS5NBlqLtw2y/aq4TIm9N/lssVZhC4=; b=
-	bgkxXb37gTWOUDpzm1UCTeCRHXFrnr2AfdMVrWufZGCWGqKqF+e6c8RFQgLgdfZU
-	LtsggMT5JouWmVzh1j1RaXUkudXXzz+PEXsSuzmw9Rkx7Lw9VsN5FCKVMzukPQCP
-	i9Hbj2mWF75QbG2gwBBd64QQ6hKkkNhfHWVALnCMrggrwh7PVf9j2NdXKyM45gQS
-	rv0qnaq81ggQGeDlJKiCvYYOsX+PEba5QoVjcwmmNiBBNvRscTmlOrTjIWvcJhhF
-	3mq2LLBGQW/aPnVMKRwK5jApsQMb7FYl3rP0wE39cIez/GkR6Ct6UiybXqJ0rTsw
-	f2Os3ywFMa19z6DFYNgWbg==
+	 x=1745911856; bh=acfbb3zNsv6QsUWYfKbTUXsoDwnXp9Oic++uluOdjBE=; b=
+	i+qL29+lax5jWEgRWphX3Et7uNLle8ztxutx/o0xbWuDgSVhTH1r3R78rfO1oqTP
+	D60i7hVoFNpI/J5BAsUWOr4I0y6IVBV700ZL+bsB521w/RS4y5b4e903mTfoHZno
+	AL9ewuDBDtQntyNI4hEfVcZKPwRpMq0Au8nDq7ez9ss5VObON20XZTXsLdLbxJ8t
+	An/7XeNp4xExCBYlTiaVarSS6uXmVyVmb6huJLBlJZmNU4l0Goju1KZaLxoanuM6
+	diAc8NN+4vxtLf3OWt3W0zN1Tuj7L65f/fxc9hHQ/Yu7YkAXJU7nEO6NwPSpJA//
+	J9Uv4nFjmhd+10KVIfZImQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745825456; x=
-	1745911856; bh=HnzqoGZKZOTMaIS5NBlqLtw2y/aq4TIm9N/lssVZhC4=; b=U
-	F+R21b8LxM2I43v8ynnZ/GjjiWgkfdLeWWGaTN/ClpRpkyVvbyn2xGPUzlZiEKBr
-	fx+EzqHhRrSNs+3HS65we8qHOeoMc+wliKs2UNiMd3HADDHtH35++14IUY6ahpZk
-	O2yVKOKzDaXKWn3MbI6CrgtnJAsa+WqVFthmuGvVjS49mZnSqmb/HPbrp9w6mggY
-	l/tLvD30o6CsrVLfcJoWsAirjuAOn4Wm96AeOxWRYi7y0DL4jUftyeCl0fXYgDxA
-	pJyOJYbAvu5A0psTZ0XzuP7+uywG5pn8Q2BWUlmOaqsuiFG2t1lSISBeGVSTSVNT
-	MpENg7QOsS7BJ0YeQXL6w==
-X-ME-Sender: <xms:sC4PaNSULY0DqaLDZ1ZvxujMg9KlAjxQSFLGRBvdXL78oGpStqxAuw>
-    <xme:sC4PaGzyhGPK0M5N7JByEFhXf4nbFa95CptzTB5mTj8zOmJcZ6rEgC49XUwSbJsdW
-    kRW067zckVsMHqMaw>
-X-ME-Received: <xmr:sC4PaC2YWOwhO526tvbByN4Su3DGg-KmmR-0an_omvojmqhSL8O870A8ds6TcwElDX4-znbT4t6rCziTXbyvXA4DppnJbtoMhQpFZNijM-t2>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedtfeehucetufdoteggodetrf
+	1745911856; bh=acfbb3zNsv6QsUWYfKbTUXsoDwnXp9Oic++uluOdjBE=; b=b
+	PvpxUDdF9niCWqtI0Yt/px6RfIZo3ZCXPcxLUITlrKXOe1eM3TqzokH/8DenIdOx
+	vNSPrpcutKX/VbURqBR2FiumLfnLT+FY7zZOzG/U8cIpfzZIZivAZy69r9dPBd+t
+	4eL43IyobUnCg2HMYDZ6Ku5FxF/sY49UKPUFRuTj2Qz78Q2VIK2W+hFq8VopNGF3
+	D7111zC738R3e6waWOtoJzqwdyZPB9RzoxVOsgROpeZioSqJFtkA1T9dSbekz/kN
+	vgT3qo9Pkb93HJJ2Pmoz7SF6DNjNBEuYeg9ER1LUg/BRvmqSs0AtWL+7nmyd34hT
+	N0UqcBUK3lKXTLcUlBKXw==
+X-ME-Sender: <xms:sC4PaJRQTgKsG0eh7BOSrGnNzMGId9BwvU_rTDZEyx3_dEbUQh9woQ>
+    <xme:sC4PaCxjI0CIXfBdOqqNpzAG98ou91wdQeJcOqmaO2N3kP8e8_uvfDow5RrKCIkly
+    X9UfpVWmT0x0xZktw>
+X-ME-Received: <xmr:sC4PaO0ZG6Z5855dJKGHzJ0IFtEd3koGIuN01cYhMHh0-gtOAuVylO6cHJOlJAY7iEkZuL0UmZ0yVMhuOLblFPWgeh837BMMBq16ZkFp8ed2>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedtfeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegt
-    hhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorhhgpdhrtghpthhtohepthhoohhnse
-    hiohhttghlrdgtohhm
-X-ME-Proxy: <xmx:sC4PaFCl0M5NftrTOUzpMBLSUU7kMjP98Ok2FvdrjtlCADIRRPaY3A>
-    <xmx:sC4PaGgHYIWQO5Ry5skiaVBhv1HoGHtK58jzJ3If8UrafSIw5HoiqA>
-    <xmx:sC4PaJozUZVHYzOtL8YBGFa2ruaepIYAjzPXa8eTRURtHEOTGt-f_g>
-    <xmx:sC4PaBjmhBjUtX8ijRoSSG02IGQ_RQe0pHhF4OAZuk4PkZZDncKg_g>
-    <xmx:sC4PaMFg2MotpA22Ox1rn9WeMZfM72io6OWssTYPvx2m9XhzV5C_criG>
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeht
+    ohhonhesihhothgtlhdrtghomhdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfh
+    grmhhilhihrdhorhhg
+X-ME-Proxy: <xmx:sC4PaBBkNMQDgUBrhx_8NOla_VpXZXZFTpthAFHEilSthzI3mewX_w>
+    <xmx:sC4PaCi_OPfyrIuF20xi0hY8nMgqBNS9CYWWAs2n-_02Brgq1jLsng>
+    <xmx:sC4PaFrwrahzTf7z-gGwwn3oVtgWIxImqwE9fTAKD-fluLL6m4D-Ig>
+    <xmx:sC4PaNjDlSlRf2kaTnYAD_V1BmQ2VSPLSlhsEvFl804xoPQnc21ZYA>
+    <xmx:sC4PaL8uvReWj4dXcxgMyEPw6Oo5PK0E9fajv6YT5Hw9wm1MHg9scMeb>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  28 Apr 2025 03:30:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b3923f6e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 28 Apr 2025 07:30:53 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 92a0aa2e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 28 Apr 2025 07:30:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 28 Apr 2025 09:30:47 +0200
-Subject: [PATCH v5 2/5] t/perf: use configured PERL_PATH
+Date: Mon, 28 Apr 2025 09:30:48 +0200
+Subject: [PATCH v5 3/5] t/perf: fix benchmarks with out-of-tree builds
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250428-pks-meson-benchmarks-v5-2-5010dd014d1d@pks.im>
+Message-Id: <20250428-pks-meson-benchmarks-v5-3-5010dd014d1d@pks.im>
 References: <20250428-pks-meson-benchmarks-v5-0-5010dd014d1d@pks.im>
 In-Reply-To: <20250428-pks-meson-benchmarks-v5-0-5010dd014d1d@pks.im>
 To: git@vger.kernel.org
@@ -92,78 +92,77 @@ Cc: Toon Claes <toon@iotcl.com>, Junio C Hamano <gitster@pobox.com>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-Our benchmarks use a couple of Perl scripts to compute results. These
-Perl scripts get executed directly, and as the shebang is hardcoded to
-"/usr/bin/perl" this will fail on any system where the Perl interpreter
-is located in a different path.
+The "perf-lib.sh" script is sourced by all of our benchmarking suites to
+make available common infrastructure. The script assumes that build and
+source directory are the same, which works for our Makefile. But the
+assumption breaks with both CMake and Meson, where the build directory
+can be located in an arbitrary place.
 
-Our build infrastructure already lets users configure the location of
-Perl, which ultimately gets written into the GIT-BUILD-OPTIONS file.
-This file is being sourced by "test-lib.sh", and consequently we already
-have the "PERL_PATH" variable available that contains its configured
-location.
+Adapt the script so that it works with out-of-tree builds. Most
+importantly, this requires us to figure out the location of the build
+directory:
 
-Use "PERL_PATH" to execute Perl scripts, which makes them work on more
-esoteric systems like NixOS. Furthermore, adapt the shebang to use
-env(1) to execute Perl so that users who have Perl in PATH, but in a
-non-standard location can execute the script directly.
+  - When running benchmarks via our Makefile the build directory is the
+    same as the source directory. We already know to derive the test
+    directory ("t/") via `$(pwd)/..`, which works because we chdir into
+    "t/perf" before executing benchmarks. We can thus derive the build
+    directory by appending another "/.." to that path.
+
+  - When running benchmarks via Meson the build directory is located at
+    an arbitrary location. The build system thus has to make the path
+    known by exporting the `GIT_BUILD_DIR` environment variable.
+
+This change prepares us for wiring up benchmarks in Meson.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/perf/aggregate.perl | 2 +-
- t/perf/perf-lib.sh    | 4 ++--
- t/perf/run            | 4 ++--
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ t/perf/perf-lib.sh | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/t/perf/aggregate.perl b/t/perf/aggregate.perl
-index 575d2000cc1..1791c7528a9 100755
---- a/t/perf/aggregate.perl
-+++ b/t/perf/aggregate.perl
-@@ -1,4 +1,4 @@
--#!/usr/bin/perl
-+#!/usr/bin/env perl
- 
- use lib '../../perl/build/lib';
- use strict;
 diff --git a/t/perf/perf-lib.sh b/t/perf/perf-lib.sh
-index 1a9a51ca3cc..4173eee4def 100644
+index 4173eee4def..5406557b7ca 100644
 --- a/t/perf/perf-lib.sh
 +++ b/t/perf/perf-lib.sh
-@@ -276,7 +276,7 @@ test_perf_ () {
- 	else
- 		test_ok_ "$1"
- 	fi
--	"$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".result
-+	"$PERL_PATH" "$TEST_DIRECTORY"/perf/min_time.perl test_time.* >"$base".result
- 	rm test_time.*
- }
+@@ -25,7 +25,29 @@ TEST_OUTPUT_DIRECTORY=$(pwd)
+ TEST_NO_CREATE_REPO=t
+ TEST_NO_MALLOC_CHECK=t
  
-@@ -324,7 +324,7 @@ test_at_end_hook_ () {
+-. ../test-lib.sh
++# While test-lib.sh computes the build directory for us, we also have to do the
++# same thing in order to locate the script via GIT-BUILD-OPTIONS in the first
++# place.
++GIT_BUILD_DIR="${GIT_BUILD_DIR:-$TEST_DIRECTORY/..}"
++if test -f "$GIT_BUILD_DIR/GIT-BUILD-DIR"
++then
++	GIT_BUILD_DIR="$(cat "$GIT_BUILD_DIR/GIT-BUILD-DIR")" || exit 1
++	# On Windows, we must convert Windows paths lest they contain a colon
++	case "$(uname -s)" in
++	*MINGW*)
++		GIT_BUILD_DIR="$(cygpath -au "$GIT_BUILD_DIR")"
++		;;
++	esac
++fi
++
++if test ! -f "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
++then
++	echo >&2 'error: GIT-BUILD-OPTIONS missing (has Git been built?).'
++	exit 1
++fi
++
++. "$GIT_BUILD_DIR"/GIT-BUILD-OPTIONS
++. "$GIT_SOURCE_DIR"/t/test-lib.sh
+ 
+ unset GIT_CONFIG_NOSYSTEM
+ GIT_CONFIG_SYSTEM="$TEST_DIRECTORY/perf/config"
+@@ -324,7 +346,7 @@ test_at_end_hook_ () {
  	if test -z "$GIT_PERF_AGGREGATING_LATER"; then
  		(
  			cd "$TEST_DIRECTORY"/perf &&
--			./aggregate.perl --results-dir="$TEST_RESULTS_DIR" $(basename "$0")
-+			"$PERL_PATH" ./aggregate.perl --results-dir="$TEST_RESULTS_DIR" $(basename "$0")
+-			"$PERL_PATH" ./aggregate.perl --results-dir="$TEST_RESULTS_DIR" $(basename "$0")
++			"$PERL_PATH" "$GIT_SOURCE_DIR"/t/perf/aggregate.perl --results-dir="$TEST_RESULTS_DIR" $(basename "$0")
  		)
  	fi
  }
-diff --git a/t/perf/run b/t/perf/run
-index 486ead21980..073bcb2afff 100755
---- a/t/perf/run
-+++ b/t/perf/run
-@@ -192,10 +192,10 @@ run_subsection () {
- 
- 	if test -z "$GIT_PERF_SEND_TO_CODESPEED"
- 	then
--		./aggregate.perl --results-dir="$TEST_RESULTS_DIR" $codespeed_opt "$@"
-+		"$PERL_PATH" ./aggregate.perl --results-dir="$TEST_RESULTS_DIR" $codespeed_opt "$@"
- 	else
- 		json_res_file=""$TEST_RESULTS_DIR"/$GIT_PERF_SUBSECTION/aggregate.json"
--		./aggregate.perl --results-dir="$TEST_RESULTS_DIR" --codespeed "$@" | tee "$json_res_file"
-+		"$PERL_PATH" ./aggregate.perl --results-dir="$TEST_RESULTS_DIR" --codespeed "$@" | tee "$json_res_file"
- 		send_data_url="$GIT_PERF_SEND_TO_CODESPEED/result/add/json/"
- 		curl -v --request POST --data-urlencode "json=$(cat "$json_res_file")" "$send_data_url"
- 	fi
 
 -- 
 2.49.0.967.g6a0df3ecc3.dirty
