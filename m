@@ -1,96 +1,88 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 359BA2CCC0
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 16:52:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77071AD3E1
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 17:01:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745859134; cv=none; b=LK08KP1g1n245vLg++lZxSM0kaToB0nx6tfXQI2tyuhp+DiMn4dnE7+1GNSKLRDRiv8b8u8+p2qeBeA8kpBXlbf2mv372c/24ZvQqovi42DEcpV3T0wtk7nrXTL8Rb78gWdW2Xyu8FIi+s/Ze+7QKMKqAdDXP7WFWUnn5jPpGmc=
+	t=1745859700; cv=none; b=mlRC9VXMOV3KDs0H38+eFVz5zDtaC+/vFTPcdMx7BhMmYWWOCJ1T0Ax9zbkgHsyOUyzcjeJFOW99j8QiChtA7Kx6DYFpRTlvFPmQXDFN5DepeSAqDYEsjgbxciF72RAcb8ytjQO9l5627F8AHGD9DPWhjyvu6Ms7oFdb70R0iC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745859134; c=relaxed/simple;
-	bh=O6VIHf3kZLyNT1wqm97sFJAGj3AjCs7IHwRMB3Y9iyo=;
+	s=arc-20240116; t=1745859700; c=relaxed/simple;
+	bh=1oslylPDJZ3ehFo90zprCFVKpUFbixUUB54i+yp3/DM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jo+m9CkoB1z1HfXHb+bjP0FIBZpkO1NKzA1R1y1IdgjRwkcpATgc5VAsBnFsAwvu3yMhVxXTibdrXl1bPseBZUCzn2pCY9r/vZXSPODZUyVLuBHz3HK6ZWFFP3+8sr82Eev6hS9aF9thsBYsGpqEptmfJ6rTH5H2oz7DFkcPLo0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b5Mty0+I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MbVPa5cV; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=KlPYWp5xUkqmqH8fyYp9JiXAH2xkViuT5Po7102xIhrtUyBl5aYRFQtT2ndFb2GKSSckGiRypYSYGTYAQ+KTq08RsX7nntRl/53alxc1cMFmCfpB5vnSNM1K36YkSAyVvSZ3BIWK6crQx0XqbCMLTkhrvcM3eHZ1w6uWisHCM/8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f2Hgvulh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fBKMUDox; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b5Mty0+I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MbVPa5cV"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id DC077114021A;
-	Mon, 28 Apr 2025 12:52:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 28 Apr 2025 12:52:11 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f2Hgvulh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fBKMUDox"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F02BB254022B;
+	Mon, 28 Apr 2025 13:01:36 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 28 Apr 2025 13:01:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745859130; x=1745945530; bh=qau3fUXCuq
-	aSz2PEcacZDAs/7dW9Nwy2J1cCuHgw5Ho=; b=b5Mty0+I2/ELN1Emc1WMf3N9io
-	dFGFFJRKFn0FKK0AtF2Vux8+4Gj6FP9O8NUqeKRdSyxQY4t0fVSV/vkJb/50EISO
-	Moqdtlly1lPHpsis6o6hMXSt+KoAbXIrM6alEo5QByjjuLqp7CYm5NG0DH2Hzk18
-	4ajLxf0WhJB3ierC9AgQNkbPjmEAx2zi72azrr019zJ4VsmfPkr8x1qq80thGcVX
-	sZtRUnbwW/W+lu6QOWTeSMX0h3oe/v+BqoQx5uXGQ6CH3e8jy3BufREJAOfAA76c
-	n3pvb/QphayFyA/mbAobI4EYJYnZ6djP7a7CoiVY3X4RDwrWYw7rhZO2DArg==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1745859696;
+	 x=1745946096; bh=7dlieUNpcXiNar6I0/on3OG2YdRMDvQIhVWLaPXzfL8=; b=
+	f2HgvulhZxK4ZrLuQ4e78BddyHL9cRPCo8qYu9Hj6FJYwdu3AuOehqa4qVssmLuK
+	sPvuQ5CpqI1IQuknYmOlphbnbcrASd9/08zBF8nHdo09NiPLxK4R1z30TafAHd38
+	0DDhqy60eRHtrH1bdNqM6crbhQtbgsismIBm9a2ml5T5WJqdU7fjypNns60UPLOS
+	+4H0Z9FHTXDbwvdfRCqilMwz6MIw08Y4fnIUWTl9MHrL8/Ab2yqUUDEf/9g6viD+
+	wB7WObbUbq0SWU2DwsagGetVn0M+RmeH3fbvc134ZovaArjtZfwvaqCduwlYz7KN
+	vkEx48XHeU781aYmlKGZaA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745859130; x=1745945530; bh=qau3fUXCuqaSz2PEcacZDAs/7dW9Nwy2J1c
-	CuHgw5Ho=; b=MbVPa5cV9CiAPYf9LSJ1Q5ij7JfO9SU5rNXFyMRT9ssaS8lpkr7
-	5laDDsdikL3qncNwrrx1TB1Qu6NNilfhGzt7uxCIBL8sOoEc/zeV02UbIioKZWcF
-	WDStlC3zBbGR1fl56+YDnXR8oI26JTHsj954t2i15jFHcMaJ+OD+2xiCVIKcFQLP
-	sFKePOCOvYLJp2PTof7vlKIAeymXNaF5EUzyb9sFNUIo/zI5yQPAuJjVw/RqHqAL
-	j6k7ice9xf6QP78F1EdpN7MvpYE/o7KV8jNAdeSbCSVCtBch9VoC8SbO4PGnjYEd
-	xovf1XrNq+5giZ54YXOMKzZC39tcMoKxqlA==
-X-ME-Sender: <xms:OrIPaDq_869oqZDkhycyfzVCR_KUST75nwj19dIPYJEwmwySQ31Wkw>
-    <xme:OrIPaNqjBMZYMP-w_9AsYlH_oDQ4b49o-vYM5po55l6r-LZ1cfRikRt8qUNhkv_wx
-    xxQwGNPEfLUOlLu9Q>
-X-ME-Received: <xmr:OrIPaAP4h4vlYWqwj_mgUzhay__e7SuQRpBQwM2C1SqME02pymDIEetm7j3QfmXl73dfxhDd7enS9aKjrhJgER_VPzOlAjFMutEX>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedugeejucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745859696; x=
+	1745946096; bh=7dlieUNpcXiNar6I0/on3OG2YdRMDvQIhVWLaPXzfL8=; b=f
+	BKMUDox+HIsA5qiAFHxb6RZDo9wP7T1DSc5G8DlKwnTAtg/SsiwWcq1wmNW8+m//
+	GLTuvu1ju3F6L0SsV7ewSoxVgJjLDkiZyLC5TXzgy+vu6SgsGJyCV2m1pYjzRilT
+	UcrPrMgsxmDLwUteRC/5GXTWkqcn45mP3rZ9/EyPMZBQq8slyidjYaHNDg2QoO2J
+	m6mm2la96jkfhkTsbFvKW+UAH7gf3UzTm3aPrw4aSx0tSWqvTQa9xPGzB4GVuU4T
+	EfWv+zJqb/ldZJYEEPjmqqMSrqWqTFtknbcParwwX9Pj++vIAZUDCexViCjH672I
+	H2tqMpn+JV8mYPcZHPDsg==
+X-ME-Sender: <xms:cLQPaBLFa4z057r-jwTj85TmB6doaWUyh6hO20y95hh1jcIHvHPCZQ>
+    <xme:cLQPaNIwfy3_O6MwrpNIY7KecL2OMg0zFbbUA6pLi72krZ5mC4wuOH63rOct8xJKv
+    miDI0HO0MzM9SxgHA>
+X-ME-Received: <xmr:cLQPaJvN_Llz3nOAf3pn5wFamkIEjgbZgnoULxRSGE7-VUMPHnp8qQVILq-PL3qyq1p7aD4a7q1T_9lZ8ZzIUfDmIvgmMsY4_p2E>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedugeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepueffveeifffhuddufeehvdelgfdtgeff
-    teevueefieekffetfeefuefgueeufeefnecuffhomhgrihhnpehofhhfihgtvgefieehrd
-    gtohhmpdhouhhtlhhoohhkrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihht
-    higrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrg
-    hkvghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhr
-    tghpthhtohepfihirghgnhdvfeefsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepgh
-    hrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtohepvghh
-    uhgvlhhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:OrIPaG63XhMLOJqw8bzjDtCFV8hpVhGiIUCQyZPPCycvokxRkJvQcQ>
-    <xmx:OrIPaC6yzBHqH69XCEWztt16T9X9kugfMttaPyRwlMlT8uHFyhfh8Q>
-    <xmx:OrIPaOjNiyPQKYb4IELTOnKOzTQgR5EPAxH6Wd2ZiNo5DLKCXIWV1w>
-    <xmx:OrIPaE6tAjIoBGB3kx6jo8-08OEupaaDxSoc2szAeA0_gu-11MYdLg>
-    <xmx:OrIPaKpQs0hYnm0C06RNT-QDEtKKWZEt1WhbZ49jtun9EJ9efizY4sDI>
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhtedvjeehudehgeelheefieevtdeg
+    leefvdfftdevtdduffeikeeiieejvdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorh
+    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
+    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmh
+    htphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhi
+    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhi
+    nhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cLQPaCY5JIsJCeslozrWJuhgVLdu56rYGuOiNpUZWiXFu2S0JlJivQ>
+    <xmx:cLQPaIY9EKm1XWT_l0Fi58W4GO2zbd33VdWQC4AyZt10FHEtLxjBhA>
+    <xmx:cLQPaGAyn_9yAf_YBQkRqEdJU0toKgaGCD96xgH-ZDnJsns99gNHHg>
+    <xmx:cLQPaGZEKAHK_BINI8xpnwYsToETvoGOFQk2yws6_t9mH7XBep5BjQ>
+    <xmx:cLQPaN8QcPs-oJ8PwE6PfcgBy51xRGxho-ZJCvhj7QCezO9qgv3fJN4T>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 12:52:09 -0400 (EDT)
+ 28 Apr 2025 13:01:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Julian Swagemakers <julian@swagemakers.org>,  git@vger.kernel.org,  M
- Hickford <mirth.hickford@gmail.com>,  sandals@crustytoothpaste.net,
-  Shengyu Qu <wiagn233@outlook.com>,  Greg Kroah-Hartman
- <gregkh@linuxfoundation.org>,  Erik Huelsmann <ehuels@gmail.com>
-Subject: Re: [PATCH v6 1/1] send-email: retrieve Message-ID from outlook
- SMTP server
-In-Reply-To: <PN3PR01MB95973B932F4961FFFA9786CBB8872@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Sat, 26 Apr 2025 14:06:59 +0530")
-References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB95973F4B26A8CE2BF17A3AB1B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597A549B8A6752F2F828266B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqqikmstatc.fsf@gitster.g>
-	<PN3PR01MB95973B932F4961FFFA9786CBB8872@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 28 Apr 2025 09:52:08 -0700
-Message-ID: <xmqqfrhsdy9z.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv
+ hangs
+In-Reply-To: <aA8ymUzWM2t0QkFP@pks.im> (Patrick Steinhardt's message of "Mon,
+	28 Apr 2025 09:47:37 +0200")
+References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+	<xmqqmsc4uv6d.fsf@gitster.g> <aA8ymUzWM2t0QkFP@pks.im>
+Date: Mon, 28 Apr 2025 10:01:34 -0700
+Message-ID: <xmqq8qnkdxu9.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -98,76 +90,58 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Aditya Garg <gargaditya08@live.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I tested this patch and it works well. I've added some docs as
-> well and it now looks like the one below.
+>> > The reason for this timeout is the test case 'nonsense mv triggers
+>> > assertion failure and partially updated index' in t7001-mv (which is
+>> > not even a regression test, but instead merely demonstrates a bug that
+>> > someone thought someone else should fix at some time). As the name
+>> > suggests, it triggers an assertion. The problem with this is that an
+>> > assertion on Windows, at least when run in Debug mode, will open a modal
+>> > dialog that patiently awaits some buttons to be clicked. Which never
+>> > happens in automated builds.
+>> 
+>> Interesting.
+>> 
+>> So another viable fix (no, I am not suggesting a counter-proposal,
+>> but asking a pure question to see if I understand the issue
+>> correctly) is to rewrite "assert(cond)" to "if (cond) BUG(...)"
+>> or something like that, so that it truly fails?
 >
-> --->8---
-> From e06ccabb5a0cef100e50e2b9d6d3c0a1769bda59 Mon Sep 17 00:00:00 2001
-> From: Aditya Garg <gargaditya08@live.com>
-> Date: Sat, 26 Apr 2025 08:25:25 +0000
-> Subject: [PATCH] send-email: add --[no-]smtp-outlook-id-tweak option
->
-> From: Junio C Hamano <gitster@pobox.com>
->
-> Add an option to allow users to specifically enable or disable
-> retrieving the Message-ID from the Outlook SMTP server. This can be
-> for other hosts mimicking the behaviour of Outlook, or for users who set
-> a custom domain to be a CNAME for the Outlook SMTP server.
->
-> Co-authored-by: Aditya Garg <gargaditya08@live.com>
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> ---
+> On the surface this sounds like a reasonable thing to do, but I don't
+> have enough context to be really able to tell.
 
-Take the authorship yourself.  My involvement is at most Helped-by:
-level, I would think.
+Interesting again ;-) I didn't realize that it was a fairly recent
+development.  0fcd473f (t7001: add failure test which triggers
+assertion, 2024-10-22) is what adds the questionable test.
 
-> @@ -290,6 +292,7 @@ sub do_edit {
+And I do agree with Dscho's assessment that this is "show a bug
+without bothering to fix it", which is not what we usually take
+without first exploring how involved the necessary fix would be.
 
->  my $mailmap = 0;
->  my $target_xfer_encoding = 'auto';
->  my $forbid_sendmail_variables = 1;
-> +my $outlook_id_tweak = -1;
+I wonder in what bad status would a production build that simply
+disabled the assert() is leaving the resulting repository.
 
-These lines we see around here are all in a section of variable
-enumeration titled:
+Quoting from the last part of my response [*] to the initial report
+that eventually turned into the test after 9 months:
 
-    # Variables with corresponding config settings & hardcoded defaults
+ [*] https://lore.kernel.org/git/xmqqil47obnw.fsf@gitster.g/
 
-I think this "-1" deserves a bit of an explanation.  It is neither
-true or false (and Perl's "is this true?" check on that particular
-value would say "true", but that is not how we want it to be taken
-and we special case -1 ourselves in the code).
+---- snip snap ----
+Thanks for reporting, Kristoffer.
 
-Alternatively perhaps we could initialize it to 'auto' (without any
-extra comment here) and then ... 
+Any takers?
 
->  sub is_outlook {
->  	my ($host) = @_;
-> -	return ($host eq 'smtp.office365.com' || $host eq 'smtp-mail.outlook.com');
-> +	if ($outlook_id_tweak < 0) {
-
-... change this to "eq 'auto'"?  Then the value would be
-self-evident.
-
-> +		$outlook_id_tweak =
-> +			($host eq 'smtp.office365.com' ||
-> +			 $host eq 'smtp-mail.outlook.com') ? 1 : 0;
-> +	}	return $outlook_id_tweak;
->  }
-
-Somebody in the near-by thread mentioned that we could enable it
-always (and if we do not find a replaced message-id where Outlook
-may place one, we keep the original message-id we assigned), but I
-personally think it is a poor design taste.  We do not know what a
-random SMTP server implementation would do in that response, and all
-we examined with any care during this discussion is how an Outlook
-server responds.  Once we find a server that gives a random string
-there that is not the replacement message-id at all, we would need a
-separate knob to opt out of the feature---so let's not go there.
-
-Thanks.
-
+$ git shortlog --since=3.years -s -n -e --no-merges v2.43.0 builtin/mv.c
+    15	Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
+    10	Elijah Newren <newren@gmail.com>
+     5	Ævar Arnfjörð Bjarmason <avarab@gmail.com>
+     2	Junio C Hamano <gitster@pobox.com>
+     1	Andrzej Hunt <ajrhunt@google.com>
+     1	Calvin Wan <calvinwan@google.com>
+     1	Derrick Stolee <stolee@gmail.com>
+     1	Sebastian Thiel <sebastian.thiel@icloud.com>
+     1	Torsten Bögershausen <tboegi@web.de>
