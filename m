@@ -1,91 +1,84 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FADF6A33F
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 20:47:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218626F073
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 21:40:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745873245; cv=none; b=rLHi1ohKW9OVDbEIIZpRDFFx3BVGT+oV/tTw7s/JcwpoViNY6Szy8EwnCBTQS+9c1pNUBmIlExpla5ioMLTtoF5H5k032hhh/DT0yz0hoPCbJKBO92kDDLdQXWzjGxxSTrcbT/JH42X7dL6V4sUv5TpQszcR/P7JjZZ1ithy1pM=
+	t=1745876432; cv=none; b=JHhiIiddjBgp/WNl7cJxz3qE67pNh9clObMTRK6yLZS4grZbAdgc+Fsy700M/nG7XMZ9J0Z8fKX3i4hvuDt17AT2TLzOEzFH2aFd5uhPFaYt/jd/WDgIDVEmUqVHQSeQrI3OWgGx9Sh0uuspjC0HaraQ2L8+8uq4PwcBhHdufbA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745873245; c=relaxed/simple;
-	bh=ip/dIbf9LBdTnf2K7lmA7ZQALGrBC0tObEP4vRGIgxI=;
+	s=arc-20240116; t=1745876432; c=relaxed/simple;
+	bh=w2IE+gENLdr1X9A5Og/Qitp1HAUAj+t13XMe1FPKU8k=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FSsU6fG2ptVasQ+JS2E6aacrf8iNwXt6R7xfY1I34Snn+shfxS2uL+OgxmZOZuJsE4Mcvaq4Xt8pUrJoROzite/kV4Uenfk8WhigD3vqIM+MdXFzr77dO4DSxqivpJdpYzeQdWhAT5qbV+lZkshvE0T1cQc5N7PFILJ/thgZknE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XSH19j9X; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uHkJ9bu4; arc=none smtp.client-ip=103.168.172.145
+	 MIME-Version:Content-Type; b=B3hpLS3uD/SBi7BAiUNZe9PXHZ95SjLubm4peHrW0btXzLSD38m5gRP8uOrGvNCAj3mk+vmYTZKa5u39kl9izHvjdEdS5e0rIxUpT96ixPetOvd7qCAyIHNL1H3geP2auRYuYKvKJIRqeqh23QBt32zAADp0yTDrN+OAwhEwzFQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GKwya++M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KmvoqLbO; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XSH19j9X";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uHkJ9bu4"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 402F1138085B;
-	Mon, 28 Apr 2025 16:47:22 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GKwya++M";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KmvoqLbO"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 21A8511402B5;
+	Mon, 28 Apr 2025 17:40:29 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 28 Apr 2025 16:47:22 -0400
+  by phl-compute-06.internal (MEProxy); Mon, 28 Apr 2025 17:40:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745873242; x=1745959642; bh=1WUIWph+Xb
-	LcbGRGU6O9+twF4m/2JH9NTGwe7a6QXjU=; b=XSH19j9Xawog5Mhp7WrenvQj3G
-	KVxw4eVhV1s2L+Qw14xj5loC+OIptyntk17gRaWvvttFgcAjKaumYGybgRa7j1P8
-	6RdtxSC3qQQVdU0ypEsGf1oahZKv6iol+8Nrz5E/mIc7F3nhfo5gVYlI5uRXMQkx
-	Gvhzbuc/DlVQtM2XDEToqzpS4v8xruF86KgAIgYC/PkY1duYSkJevEShsIBqeeZy
-	P1JqYHxRqQb/v3Q0SHCTbf6hN45ginZz7NLCLlOnti2srf/rSiHdmUkXhhh7yRXw
-	O9IlLqlizJVEquxgjpw6ZWOqtrxCKgfE4Qs7gcNr8FqI1CKW4DOOcsUKUk/Q==
+	:subject:to:to; s=fm2; t=1745876429; x=1745962829; bh=XEO/D0I7Ph
+	8lI/V+bdMRH8otnCaEvnYsMR0hVJwKHlY=; b=GKwya++MzKRmURCcJXcwSMLY7+
+	hWnD6IV98zU4ud4QXmoUSNCYiOdLPMVMAekCZA19uO90i960r6ozOFEUaub1Mnwi
+	W3v4M5rAUJ+YSbwqYS9ATkgA/YpgWhWYN+EIyAacvOeKJSVfahdgvxCF6DAdxEUz
+	5FJkG2tTQ0lKzZMuS54HXN2CDYj6bGTAyDEPNH0+SjcdsP60BzmgniZMACaDvQoh
+	NSXT9zYsPcFmbz9J2hDn9ePYEZaZi8fdANO6Fyn9L3QMUyxgTB2nDIaaT+mxJ8CZ
+	i701oqeYuElRIL7YVUIhKcbUOlHmCTw6qVGjaFUAq2HBAuUnHG0IlqQ3iLCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745873242; x=1745959642; bh=1WUIWph+XbLcbGRGU6O9+twF4m/2JH9NTGw
-	e7a6QXjU=; b=uHkJ9bu4uBoS4hrSsSPyEgvtK3+HK6H9h77lyZtxQaisVXLRIxv
-	yVqaLaCVjL85otfU1fZUOzqRH5tkbotjMM9/Oy9Ng+ysbwovTMnwHpizzigHsSy/
-	SAxvQypX/MQLqOXZgWjp8j0pEaNOQXlgrqTgclPHl1+qXfDym/Gu5I9l5DSKth+x
-	Ztx1zk4PpXq03C/RmIQVljrbtF015XkAAJs6LcuVFwIbshgWsxwZ97ql8ZTolHhb
-	9GiA45RmFhc+U5xfCm5C0/yZh3dPn0l6/pp1OP0VaBoR/ZHCunrKRyBOCQxbQR4n
-	TYnnR18CpadB71Lmp68lUrZlYNZJSY8imFg==
-X-ME-Sender: <xms:WekPaGTE16d7T16jB0TKrcziuPAkttKtCf_kWEwx-HYtT9GUicW0Fg>
-    <xme:WekPaLySdl1u5zGMpiF2qu_GVvskOa4q0xQ1TAcm2OztDhUViF83flpi189BEFKnm
-    ZlvCovHwn2wHkM6tw>
-X-ME-Received: <xmr:WekPaD26AZiM-vwIo-nTYyOOQIJ8psvBsSabkWCHolcjBhWGIdE12rAcXpOwgTIVHb5eIS7cBgwqpKtEwxNC44grIzzbVvQk9NKf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieduleegucetufdoteggodetrf
+	1745876429; x=1745962829; bh=XEO/D0I7Ph8lI/V+bdMRH8otnCaEvnYsMR0
+	hVJwKHlY=; b=KmvoqLbOHTa+oDLLO5MGwIisPw0oQV0jUZxo3rZAMYf3dgvjUm8
+	esFKeRdNc1+IG3hhvjpnAV+OzPqSRvRAJfZgUr0OLe08xJj7kDnIV3df5IZI5zUD
+	5GHZkN8hfcWpMs/S3WaPqwfVAWVW1K2Cx/2rq682xbH/4X5IdEPb1lcr4R6HnDGk
+	CP5QchX3TvUeBVi4Sgg4ftpLWmwAj0tOp2lw1uwY9KruMRWcxjSi5Tp9rAI02ajp
+	c+VG7js7TiygDh+uoAqRbYZnqZF0LxPnOTwjI9E4xQmJabytkbdd/tgiv/WiD347
+	CThkxtW2E6jJ2tXltVmaSkwT6Q98vFeFsKg==
+X-ME-Sender: <xms:zPUPaCpys8z-eJqHynLP85-ijFQAnMIr1xF2knDSvgTzDvMQpuouZg>
+    <xme:zPUPaAp0p1PIIPQPaEj3onLglFWFNXPlouOzGQY7_lVScS-x7hbp3e1JdTS5XHaEQ
+    rdpTeKAwxtAvDtxig>
+X-ME-Received: <xmr:zPUPaHO8Ja3mjuegLABoIBf5Iom332m4NMLV2YEaok9pR6_hqo2ir8mamh1dNdYBr9F22gOrXwICJvsNGB4qJhzSzJsrjezfNAUd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedvtdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepueffveeifffhuddufeehvdelgfdtgeff
-    teevueefieekffetfeefuefgueeufeefnecuffhomhgrihhnpehofhhfihgtvgefieehrd
-    gtohhmpdhouhhtlhhoohhkrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
-    hpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguihht
-    higrtdeksehlihhvvgdrtghomhdprhgtphhtthhopegvhhhuvghlshesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhrvghgkhhhsehlihhnuhigfhhouhhnuggrthhiohhnrdhorhhgpdhrtghpthhtoh
-    epjhhulhhirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpdhrtghpthhtohepmhhirhht
-    hhdrhhhitghkfhhorhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepfihirghgnhdv
-    feefsehouhhtlhhoohhkrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:WekPaCCGLiFygs1FsYwd1N-TJl7qHjuI41y_4DmJDfJlaBvGRei_vg>
-    <xmx:WekPaPifE4_7VIysECcjrkGgUk3Y2aCf62kH8BY_OtxBsDv67nwlLw>
-    <xmx:WekPaOqImpaXaiJ0gDjjHMKF97nk3zcSNNcx7ztPMPQ95pMewEKKrw>
-    <xmx:WekPaCgZJI2fPr5JL9UbmrRgKJqJ1tsdKoZDXcQfxFlvx_gsTyfIug>
-    <xmx:WukPaOyWvU4tjZ2NNVY1acJUtUkjt_kNh2esXxPd9YN8Bc-tFUDUi2y5>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zfUPaB77R1ljRgxIJ3iGypVBf8ucdKg-_EVYI_3uB8L-0axvY3ySGA>
+    <xmx:zfUPaB6kLm8P6ZOumzOMUVpiMb8UrRG4jt_VwDdzNltSg4ewzaDD_g>
+    <xmx:zfUPaBhx3Q4ZqSUQg2pYC3yuVSIh8GEr5Y5hsKZX5vUM7vV-ipRrFA>
+    <xmx:zfUPaL5IoszDXGk9oc-q7wB9mp2lFtv9Nn8Y8h42DOY_xQ_ZvUmtLg>
+    <xmx:zfUPaPEKi31D5R4rSJFLDmmWWOIxNdUS63-8qruMo-Qdszfow_2bsHxZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 16:47:21 -0400 (EDT)
+ 28 Apr 2025 17:40:28 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: ehuels@gmail.com,  git@vger.kernel.org,  gregkh@linuxfoundation.org,
-  julian@swagemakers.org,  mirth.hickford@gmail.com,
-  sandals@crustytoothpaste.net,  wiagn233@outlook.com
-Subject: Re: [PATCH v2] send-email: add --smtp-outlook-id-tweak option
-In-Reply-To: <PN3PR01MB9597D897A65B4B59BA6FA93CB8812@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Mon, 28 Apr 2025 17:57:15 +0000")
-References: <PN3PR01MB9597DA8661D1AFDF4C927A11B8812@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597D897A65B4B59BA6FA93CB8812@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 28 Apr 2025 13:47:19 -0700
-Message-ID: <xmqqh628au94.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 06/13] treewide: trivial conversions of
+ `repo_has_object_file()`
+In-Reply-To: <20250425-pks-object-store-cleanups-v2-6-63f1695b7700@pks.im>
+	(Patrick Steinhardt's message of "Fri, 25 Apr 2025 09:08:57 +0200")
+References: <20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im>
+	<20250425-pks-object-store-cleanups-v2-6-63f1695b7700@pks.im>
+Date: Mon, 28 Apr 2025 14:40:27 -0700
+Message-ID: <xmqq7c34arsk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,54 +88,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aditya Garg <gargaditya08@live.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Add an option to allow users to specifically enable or disable
-> retrieving the Message-ID from the Outlook SMTP server. This can be used
-> for other hosts mimicking the behaviour of Outlook, or for users who set
-> a custom domain to be a CNAME for the Outlook SMTP server.
->
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> ---
-> v2: Replace tab with spaces in "outlookidtweak" => \$outlook_id_tweak,
+> As the comment of `repo_has_object_file()` and its `_with_flags()`
+> variant tells us, these functions are considered to be deprecated in
+> favor of `has_object()`. The benefit of the replacement is better
+> defaults: it doesn't fetch missing objects via promisor remotes, and
+> neither does it reload packfiles if an object wasn't found by default.
 
-Good eyes ;-)
+The reason why the "better default" being "better" is not clear to
+readers of this paragraph.
 
-> +--smtp-outlook-id-tweak=(always|never|auto)::
-> +	Outlook servers discard the Message-ID sent via email and assign a
-> +	new random Message-ID, thus breaking threads.
-> ++
-> +--
-> +- 'auto' will attempt to retrieve the ID from the server only if the SMTP
-> +  server is 'smtp.office365.com' or 'smtp-mail.outlook.com'.
-> +- 'always' will attempt to retrieve the ID from the server irrespective of
-> +  the SMTP server being used. Use only if Microsoft is your email provider.
-> +- 'never' will disable this tweak irrespective of theSMTP server being used.
+It would be better if too many places need to pass an extra flag to
+disable lazy fetching in the current code, for example, in which
+case we would instead have fewer very selected places that would
+pass an extra flag to lazily fetch (or even better, see has_object()
+fail and then invoke a lazy fetch themselves) while majority of
+places would just work with the plain vanilla local repository state
+without having to worry about lazy fetching at all.  Without
+explaining why it is a "better default", it is a bit hard to justify
+"the benefit of the replacement".
 
-It is a shame that this is not just a simple boolean.  Those who
-expect 'true' to kick in would be disappointed to find that their
-'true' means the same thing as 'auto'.
-
-If I were designing this feature, I would rather make it say:
-
-    --[no-]outlook-message-id-fix::
-
-	Outlook servers [DO THIS].  Giving this option reads the
-	message-id assigned by the Outlook server and use it as the
-	In-Reply-To message ID for subsequent messages.  Without the
-	option, connections to only ... and ... automatically gets
-	this tweak.  Pass `--no-outlook-message-id-fix` to disable
-	the fix even for these hosts.
-
-and make the implementation behave that way.
-
-Note that this is a command line option that is specific to
-git-send-email, so I omitted "smtp" from the name and instead
-replaced 'id' with 'message-id' to make it more explicit what
-gets munged.
-
-But I do not care too deeply either way.  Let me queue the patch
-as-is for now.
-
-Thanks.
+This is common to this and the previous step.
