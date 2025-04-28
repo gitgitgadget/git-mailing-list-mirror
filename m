@@ -1,88 +1,89 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77071AD3E1
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 17:01:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCBBE289352
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 17:05:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745859700; cv=none; b=mlRC9VXMOV3KDs0H38+eFVz5zDtaC+/vFTPcdMx7BhMmYWWOCJ1T0Ax9zbkgHsyOUyzcjeJFOW99j8QiChtA7Kx6DYFpRTlvFPmQXDFN5DepeSAqDYEsjgbxciF72RAcb8ytjQO9l5627F8AHGD9DPWhjyvu6Ms7oFdb70R0iC0=
+	t=1745859923; cv=none; b=OMOQVY+cd06N4BXo7GiwmF9P1VUkF+B61taTSSaiMYo/3Ms74vj5XLpwTHOluuYGCE17qczTbq9R5GgIsedHsX/2OnOQmn1D76RnrQRwJHXqFeDfmAMxrboZzB5LcWpCJMt4tbl1My/I0wLBDYrrUN86M94Phg4fugniDLLzI4Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745859700; c=relaxed/simple;
-	bh=1oslylPDJZ3ehFo90zprCFVKpUFbixUUB54i+yp3/DM=;
+	s=arc-20240116; t=1745859923; c=relaxed/simple;
+	bh=soKlRNJwtM88BIYvyH1jbpd/TlIOXtAvO962T9FodhM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KlPYWp5xUkqmqH8fyYp9JiXAH2xkViuT5Po7102xIhrtUyBl5aYRFQtT2ndFb2GKSSckGiRypYSYGTYAQ+KTq08RsX7nntRl/53alxc1cMFmCfpB5vnSNM1K36YkSAyVvSZ3BIWK6crQx0XqbCMLTkhrvcM3eHZ1w6uWisHCM/8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f2Hgvulh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fBKMUDox; arc=none smtp.client-ip=202.12.124.156
+	 MIME-Version:Content-Type; b=Yc28XgjSQ15zScAd7x+XDtQQGeDhcuK7dAaiT5HxkdugPxrQCyNLoRbyWthPISBPCdbpYpGVNRKSBjqU0NllYV4t5gbyiCj69VZLwfrw9vdHpbQMCslZFO3wV0RjZUDA6nJz20JemC1G0finfx/urfcaz6Hc9u3986/22zmMLgg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cS0K59DN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NyWFIs47; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f2Hgvulh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fBKMUDox"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F02BB254022B;
-	Mon, 28 Apr 2025 13:01:36 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 28 Apr 2025 13:01:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cS0K59DN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NyWFIs47"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id C4AF01140213;
+	Mon, 28 Apr 2025 13:05:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 28 Apr 2025 13:05:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1745859696;
-	 x=1745946096; bh=7dlieUNpcXiNar6I0/on3OG2YdRMDvQIhVWLaPXzfL8=; b=
-	f2HgvulhZxK4ZrLuQ4e78BddyHL9cRPCo8qYu9Hj6FJYwdu3AuOehqa4qVssmLuK
-	sPvuQ5CpqI1IQuknYmOlphbnbcrASd9/08zBF8nHdo09NiPLxK4R1z30TafAHd38
-	0DDhqy60eRHtrH1bdNqM6crbhQtbgsismIBm9a2ml5T5WJqdU7fjypNns60UPLOS
-	+4H0Z9FHTXDbwvdfRCqilMwz6MIw08Y4fnIUWTl9MHrL8/Ab2yqUUDEf/9g6viD+
-	wB7WObbUbq0SWU2DwsagGetVn0M+RmeH3fbvc134ZovaArjtZfwvaqCduwlYz7KN
-	vkEx48XHeU781aYmlKGZaA==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1745859920;
+	 x=1745946320; bh=6kap4rHg2sypvPvLFRN9YmUR24EAYj2Rh6vN2fymIyg=; b=
+	cS0K59DNaKrg4VlYwDzeMa7eTCGEHUB0Ori8Fre00KX90X4U2f0pH43wWE9AKp+d
+	jzKkCakQQOo4ZwiSwtmj4rHbQcWufGvCT0JnS77LReoBm19zmGYK/dNzt96Q0Drc
+	0orHTRU7IwXwCpG0M6AIOrM5MCtwgssxZVmv8uX3g2+a36Z4yhc4/HzfIASb6viF
+	BKW+Y1O9vFXfSqzL7wHPSnYqUGq31kPVjuTnExOWd8V2gQFw/IJsuUkDrFDHol35
+	onF4aHblcCQRr/WB2KQQYwH00bb6wx/udhcbRKrADf3ba9za5Xf0YnzWs7B+NsC2
+	/3yX5DrznJtuW6gF+9N9IQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745859696; x=
-	1745946096; bh=7dlieUNpcXiNar6I0/on3OG2YdRMDvQIhVWLaPXzfL8=; b=f
-	BKMUDox+HIsA5qiAFHxb6RZDo9wP7T1DSc5G8DlKwnTAtg/SsiwWcq1wmNW8+m//
-	GLTuvu1ju3F6L0SsV7ewSoxVgJjLDkiZyLC5TXzgy+vu6SgsGJyCV2m1pYjzRilT
-	UcrPrMgsxmDLwUteRC/5GXTWkqcn45mP3rZ9/EyPMZBQq8slyidjYaHNDg2QoO2J
-	m6mm2la96jkfhkTsbFvKW+UAH7gf3UzTm3aPrw4aSx0tSWqvTQa9xPGzB4GVuU4T
-	EfWv+zJqb/ldZJYEEPjmqqMSrqWqTFtknbcParwwX9Pj++vIAZUDCexViCjH672I
-	H2tqMpn+JV8mYPcZHPDsg==
-X-ME-Sender: <xms:cLQPaBLFa4z057r-jwTj85TmB6doaWUyh6hO20y95hh1jcIHvHPCZQ>
-    <xme:cLQPaNIwfy3_O6MwrpNIY7KecL2OMg0zFbbUA6pLi72krZ5mC4wuOH63rOct8xJKv
-    miDI0HO0MzM9SxgHA>
-X-ME-Received: <xmr:cLQPaJvN_Llz3nOAf3pn5wFamkIEjgbZgnoULxRSGE7-VUMPHnp8qQVILq-PL3qyq1p7aD4a7q1T_9lZ8ZzIUfDmIvgmMsY4_p2E>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedugeelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745859920; x=
+	1745946320; bh=6kap4rHg2sypvPvLFRN9YmUR24EAYj2Rh6vN2fymIyg=; b=N
+	yWFIs477BvYScJxSIqGnO06pBmRLN9oDDkk3ikugjYeEa4G10v4ZLiTKzaJ8vwAW
+	Gdk2d9JuiKYFwwiumCTwMeEoDTZO8KBxyWA5K42euGUjSz10MmMOgccGWKoJMIzQ
+	bwOdLyhz2wOuKxxS9lU2Pa+IQICjzSOzbt3g2EYyBgHWe0PyVnjPYmcpkFAh0140
+	iggjZJ7y5lt7jz6LCU4PIVELkgaPqHFaW5HVYxhN3dnSJjygyCJT1qD/yI6gE1Pp
+	/3AM1ojsho5b9fexe18CpLgZVon3hSXkTus4DxPHiVIRsiN34Hf/jX8xJHuIyiNs
+	ZEb6p39U2k6bjynl4/Phw==
+X-ME-Sender: <xms:T7UPaAXjYCn4SDBkeBFNAczHvGmVLZSIckJZ6iQANkrj0ib4s1MQjw>
+    <xme:T7UPaElDyZBZnBF3mDxavAgZvX-ThL8uGUtkPhQQ8vFTBTw8JaFSdap_I6AKPoORj
+    xL-4s0HeBPTXSNxyA>
+X-ME-Received: <xmr:T7UPaEaU0cSHS0ZMwtymww6cVM5C8zs0elfH-XJURFdR3kECJkXAf7_N5Ida7-sTUdxogcM0HyZuKZct5UnrMMBGp7Zjz2FqE7oo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieduhedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
     reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpefhtedvjeehudehgeelheefieevtdeg
-    leefvdfftdevtdduffeikeeiieejvdelhfenucffohhmrghinhepkhgvrhhnvghlrdhorh
-    hgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
-    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmh
-    htphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtghhi
-    thhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhi
-    nhesghhmgidruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:cLQPaCY5JIsJCeslozrWJuhgVLdu56rYGuOiNpUZWiXFu2S0JlJivQ>
-    <xmx:cLQPaIY9EKm1XWT_l0Fi58W4GO2zbd33VdWQC4AyZt10FHEtLxjBhA>
-    <xmx:cLQPaGAyn_9yAf_YBQkRqEdJU0toKgaGCD96xgH-ZDnJsns99gNHHg>
-    <xmx:cLQPaGZEKAHK_BINI8xpnwYsToETvoGOFQk2yws6_t9mH7XBep5BjQ>
-    <xmx:cLQPaN8QcPs-oJ8PwE6PfcgBy51xRGxho-ZJCvhj7QCezO9qgv3fJN4T>
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnrdhglhhoug
+    hnhiestggrmhhpuhhsrdhlmhhurdguvgdprhgtphhtthhopehphhhilhhlihhprdifohho
+    ugesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhes
+    ghhmgidruggvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:T7UPaPVx3sFR6TnEw6_guMFa4T4JCI86mnM-fU7kI8aR2uY6R7juFw>
+    <xmx:T7UPaKlnOCaQb6itxoDL9WkYsz8iUwixxfBe-lv4O4Wg144ynCW_IA>
+    <xmx:T7UPaEeV2JEodMo2dmZ5ZYdEkC_SDSi0q55HPdrgcD-u4eBJ5szR_w>
+    <xmx:T7UPaMHqZlG97S6DLq-Gnw4tixevX92zqoe8KkJNhSNCBzZGdSXRWA>
+    <xmx:ULUPaLK5NiJOg6l08xSZG6kZFgpGAj0ahyfQTBKOCKSaQhqXvdVH40AO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 13:01:36 -0400 (EDT)
+ 28 Apr 2025 13:05:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv
- hangs
-In-Reply-To: <aA8ymUzWM2t0QkFP@pks.im> (Patrick Steinhardt's message of "Mon,
-	28 Apr 2025 09:47:37 +0200")
-References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
-	<xmqqmsc4uv6d.fsf@gitster.g> <aA8ymUzWM2t0QkFP@pks.im>
-Date: Mon, 28 Apr 2025 10:01:34 -0700
-Message-ID: <xmqq8qnkdxu9.fsf@gitster.g>
+To: Niels Glodny <n.glodny@campus.lmu.de>
+Cc: phillip.wood@dunelm.org.uk,  git@vger.kernel.org,
+  johannes.schindelin@gmx.de,  peff@peff.net
+Subject: Re: [PATCH] xdiff: disable cleanup_records heuristic with --minimal
+In-Reply-To: <f3140b32-5a25-448b-a99c-1604f6237cb8@campus.lmu.de> (Niels
+	Glodny's message of "Sun, 27 Apr 2025 23:44:21 +0200")
+References: <20250425155951.1227700-1-n.glodny@campus.lmu.de>
+	<23078e29-8f1f-4eb3-be71-7ef419252bab@gmail.com>
+	<f3140b32-5a25-448b-a99c-1604f6237cb8@campus.lmu.de>
+Date: Mon, 28 Apr 2025 10:05:17 -0700
+Message-ID: <xmqq4iy8dxo2.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,55 +94,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Niels Glodny <n.glodny@campus.lmu.de> writes:
 
->> > The reason for this timeout is the test case 'nonsense mv triggers
->> > assertion failure and partially updated index' in t7001-mv (which is
->> > not even a regression test, but instead merely demonstrates a bug that
->> > someone thought someone else should fix at some time). As the name
->> > suggests, it triggers an assertion. The problem with this is that an
->> > assertion on Windows, at least when run in Debug mode, will open a modal
->> > dialog that patiently awaits some buttons to be clicked. Which never
->> > happens in automated builds.
->> 
->> Interesting.
->> 
->> So another viable fix (no, I am not suggesting a counter-proposal,
->> but asking a pure question to see if I understand the issue
->> correctly) is to rewrite "assert(cond)" to "if (cond) BUG(...)"
->> or something like that, so that it truly fails?
+> Hi Phillip,
 >
-> On the surface this sounds like a reasonable thing to do, but I don't
-> have enough context to be really able to tell.
+> thank you for your detailed comments.
+>
+>> Have you got any numbers for the performance change?
+>
+> I have been using "git log -p -3000 --minimal > /dev/null", as in
+> p4000-diff-algorithms.sh. With this patch, I get
+>
+>   Time (mean ± σ):      2.363 s ±  0.023 s (25 runs)
+>
+> Without this patch, I get
+>
+>   Time (mean ± σ):      2.362 s ±  0.035 s  (25 runs)
+>
+> So the difference is well within the margin of error. It doesn't
+> look like it has any measurable impact on performance.
 
-Interesting again ;-) I didn't realize that it was a fairly recent
-development.  0fcd473f (t7001: add failure test which triggers
-assertion, 2024-10-22) is what adds the questionable test.
+That is an excellent observation and result.  It should be added to
+the proposed commit log message, if not already.  The commit log is
+where you answer questions, similar to what were raised during
+review by your reviewers, that future readers of "git log -p" would
+have about your change.  For them you won't be easily available to
+answer their questions, and that is why we stress on the need for
+well-written commit log messages.
 
-And I do agree with Dscho's assessment that this is "show a bug
-without bothering to fix it", which is not what we usually take
-without first exploring how involved the necessary fix would be.
-
-I wonder in what bad status would a production build that simply
-disabled the assert() is leaving the resulting repository.
-
-Quoting from the last part of my response [*] to the initial report
-that eventually turned into the test after 9 months:
-
- [*] https://lore.kernel.org/git/xmqqil47obnw.fsf@gitster.g/
-
----- snip snap ----
-Thanks for reporting, Kristoffer.
-
-Any takers?
-
-$ git shortlog --since=3.years -s -n -e --no-merges v2.43.0 builtin/mv.c
-    15	Shaoxuan Yuan <shaoxuan.yuan02@gmail.com>
-    10	Elijah Newren <newren@gmail.com>
-     5	Ævar Arnfjörð Bjarmason <avarab@gmail.com>
-     2	Junio C Hamano <gitster@pobox.com>
-     1	Andrzej Hunt <ajrhunt@google.com>
-     1	Calvin Wan <calvinwan@google.com>
-     1	Derrick Stolee <stolee@gmail.com>
-     1	Sebastian Thiel <sebastian.thiel@icloud.com>
-     1	Torsten Bögershausen <tboegi@web.de>
+Thanks.
