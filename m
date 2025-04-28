@@ -1,200 +1,177 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91F0B27A107
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 19:42:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A212E1D8DE1
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 19:48:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745869337; cv=none; b=kOdAGYKO6Z9ZvVG5kvRgvtO/2iYLuN2zf2Sf5HdeMoWbXogrylqhWLUQVL4qZTVrQSiET7iALvLnoGtwtXgqKHgrXJRdrPKRuasSGS/1SP89Vp5yJeQFW43wnaTpu03nxw8P328QVnyEXozW3nVB/UvlSlr6nvmoVL7+P1nu0yo=
+	t=1745869707; cv=none; b=YOkjf7fuq5184FegSPmmX7+cRAn0WIOrRzex2H/K9CLU2oScVsWfyji3+Hh/23KLhpTpQIGHi8i5hdRYboPYQMEOwOx1TomatmyROcd/4aeo9AV1G8ZknZKpAXpk4mXib+MifgK4DjKmi2XR76AasLAcsUpzy9FBTxjbB2mNRJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745869337; c=relaxed/simple;
-	bh=99lkuQRfIAFnXT4B8F5zYqbxeE+I01+yZGybWYaJ7WM=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=naudMYzKKZRTv+V7wQRu3grqmYT83i9twIjUW2KEGLjmDek6e+K+8OXEKxSl7floaQCN/mtbVMYdWu/xcLUusN6ZpVAfsipFedE0UtEFsY5NmfpNWteXCp5gEl6+j7MWDSO1iCXmwVNFtje4uZcWsArnXg0TjqCAJy6wOF5J3gQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=VkxPjC/L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EmlQKjIu; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1745869707; c=relaxed/simple;
+	bh=UbdToYBzCaIjzmJuisVuRCQLucvjLYP9k6xq+jra2SM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=njgX1Ava7UfqSgCh/+GrQ/JJPamK1Qe3OQYXYEPfoZ8zVvu33gwQBYysFY6dWcXL8GK8WKQGUs8TKq/hQ7I9AEriVkEmqKrYBCtiXVxKJzZnhThELOrw+H1Bs9hyB0w/ZminCf1oa0f/PB0AjgaRmVwQFETK3/IM1oGFUEOdTpM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y4mkdauu; arc=none smtp.client-ip=209.85.221.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="VkxPjC/L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EmlQKjIu"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 9DE261140259;
-	Mon, 28 Apr 2025 15:42:13 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 28 Apr 2025 15:42:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:message-id:mime-version
-	:reply-to:subject:subject:to:to; s=fm2; t=1745869333; x=
-	1745955733; bh=SYUPydMPeqbedAquVXnSI32OOjvymIWls85XsFd2FT4=; b=V
-	kxPjC/LoSd+DfZqEukw/Hi6gonlIyOHvBkwY9rgiA8j4lGNYtKEd7x1bGVdz+bK6
-	Lrdo9pY3PS45Y3xhuxa73hUJsq4POO9lXSpXs2goA5zeXPwBsv/6aUcsiFxLXpYX
-	7DHTreLu/t+mH8GT8kFjIrDXIOR/swjhnv/AikxbjD4X1JUBAYFlFXgTJ3YLXO8Z
-	vAtwD1rDd2QQECDq5h16odO83HBv1eKu9Jq4U0OD8elXR4lTMCpT98H3CRNNKPGx
-	G4JApJsARzFnEkZpASzx/fSZWO7AJm1RmXrBZjJnD662xP1RMqwKNwzg3Q7JzI0J
-	iNQeJRZJtoNpafE0xBe0A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1745869333; x=1745955733; bh=SYUPydMPeqbedAquVXnSI32OOjvy
-	mIWls85XsFd2FT4=; b=EmlQKjIuRK3C9J38e4c3HMuH/aIbuJEn4+21ltCC+Lxe
-	n52p4xWncgaZU20XEZtaIKrXkXmqvEsSopcLaSBURVwoidjRpshK8jppcC+i7k1H
-	jMCF/vIGlhVV0bN8DhoKfJib4vbLFSoVosbDghjXPmQ+wkgupVA8fYaafHmQ0lGf
-	NDYZSSUtzAmDOTUy/squUEgHyPZemb8oFyG82rMOOSNiljWNy8zzD3EB3eW5Xt8i
-	ysAKC7qjpmyqO7CL2IbaVzWRPowfTSlbFsZF2Z8jPq7GSsQLrh6v3r8pRDDXnVpz
-	PFpTJy6KyMskyeP6/VJExgBQob8ayninWxUcju8oKw==
-X-ME-Sender: <xms:FdoPaBvPoF8ulwBSYNOcbgf8Zn7VOxLZ_dWTJQHe6u8OIxfeNDziUzs>
-    <xme:FdoPaKeMZNB5ewBCWhkcx-glyBzWmIgHGAElQySIl8ot3lCEWqv6ag_uweiQiwsuE
-    wiPQ20Tw9LwjHArUg>
-X-ME-Received: <xmr:FdoPaExFgoRkKnQeoz9B1tWP1KWsq6cWo4bFgpz39UJkxhgV81gO3_b5OVgESJ7OlYSuDr82NPGSQFwlIYq_8VrihCwv6AD0Ug4rU0G6U3Qazk-sWMUFVRVNyg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedukeduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufffkffogggtgfesthekredtredtjeenucfhrhhomhepmfhrihhsthhofhhfvghrucfj
-    rghughhssggrkhhkuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtf
-    frrghtthgvrhhnpefgvdehgfffkefgieehiedvteffleekhfehiedtjefhlefhhfekvedu
-    hfelkedvieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgt
-    ohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgv
-X-ME-Proxy: <xmx:FdoPaIM1rYSt5x2UHx7R3VkIVIqOxWvKlXLwJjoNkh7HIEtN_9xLlQ>
-    <xmx:FdoPaB8_20Z4kRAGcU9GgkHI22kqTahl6o0K6mGZRiTnaHsh0K5k4Q>
-    <xmx:FdoPaIVWirm-CurwfPJvEC5j2jhVAAcz4EqzpZ8l6JAWwhZIv8j4TA>
-    <xmx:FdoPaCfm29RjzxCRnuQfv9uyG9-KGXAzmV9WW0sFyA2YbQYJpOqZ7g>
-    <xmx:FdoPaCKvmKERKcfYYkvGdPbnZoyBxWvkKer8kVAauhB-PKHwHoZyG_Jz>
-Feedback-ID: i2671468f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 15:42:11 -0400 (EDT)
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
-To: git@vger.kernel.org
-Cc: phillip.wood123@gmail.com,
-	code@khaugsbakk.name
-Subject: [BUG] rebase: can write reflog with uninit. `action` string
-Date: Mon, 28 Apr 2025 21:40:43 +0200
-Message-ID: <20250428194048.149348-1-code@khaugsbakk.name>
-X-Mailer: git-send-email 2.49.0.459.gf65182a99e5
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y4mkdauu"
+Received: by mail-vk1-f169.google.com with SMTP id 71dfb90a1353d-523f721bc63so6396685e0c.0
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 12:48:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745869704; x=1746474504; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LaPFrPgdrBHr87mIo5Nlm99WIvj5W7MiiyXGrAvtK2k=;
+        b=Y4mkdauuPw16kDzRxQ/EA6hIhJBJ5GQp2Cwh6/mCgS8t9GbzzCYM6RQ8Sq0fpFjQZC
+         lSQytP4hpVAZQDC6oIZ5MRu+t6l35ohmdCfifsnEDOi7f8mdrkO9sq+5ukXTBsgIfqaZ
+         o5T0P/wn428JPMsCdEHpOgiWxsvpCDeHVnAeFf7Pou4P1paeoMymgnvHwgZBfzfLkaFU
+         yBKz35+FwIP9E75MZFAXHiaM96sHmp7vgXwX3OH46boKnaAdyRNQWvAuevyCRHA/8QlX
+         l5ESmYgAFMGuju13P62nU447Y3fVqr5yIPVqNpZ6/XLNiKWuifmD+IzB4/P5HjZtcyF1
+         AJDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745869704; x=1746474504;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=LaPFrPgdrBHr87mIo5Nlm99WIvj5W7MiiyXGrAvtK2k=;
+        b=hNSaLTUOXQwY2x+6uv8fxNc6cHAoE2IVXpDIBs4mr1g3nQefroAyZYfEG2HauUFp0V
+         HvfskOx7MY1CCV6aQsMxpI/GjM+YcH/4GFajc0W6AdySQ7LyDo+x6YspnW2D8ulV4zuG
+         narrlteipg3L6cnOrZBSlXoDYzC8GEQQcxx06Q9M01PfuGu9LHlwpKR69YtbmEChlla+
+         mGloa6VzleeZDX+Ly+0w6cEn7rRudzD7lF/jYPnk3+n5LF0GLA62PWLMdShm25NtSeqU
+         mXVxL/bvi3ngfAoW6uYaGjSKGYrgvkVoBv2Bzj+A6Es9CtTtu1v8Y5+jcKrxQpuID4NN
+         64gw==
+X-Gm-Message-State: AOJu0Yz39P5gLqufcacOXdn0aphT1FxpVD+9FUeNcQ/ZtJtLND1kuiCw
+	A2BNjnej6Qj0PPUqFQnZCrgTxmJ6dHrNleZGWjdhoYHiQ/37qSJGjZobneQsCSJOeIlX/uU45ru
+	IG2LtACZgh2pi0IfWUOieHzH0z2w=
+X-Gm-Gg: ASbGncuEw2LNUPD/183giJtHC7SCnZcxEBK9c+ZwZWJ6rJKx7jWCbh62tn9PeJsJlAJ
+	TV3TjgjWmwtwmf59IWghF9LVwl9KhhqICr9RYIZlkE1Y3f5wYsQmRisjVafnMlt5wwowID6YPxU
+	etD2VcWYAueWUJ+U/bT2g/QHonjg62q0TWtpbO7pjg3xJrYAwfSfJFODrU
+X-Google-Smtp-Source: AGHT+IFoqls4zpN3+s0TmP/5Gjlfm1dnJPW5E+N51Ik6Sq+IlgPs5+7cN4R9QjJQXwuUuxDrLjFpK38jqfDJjYLaF1U=
+X-Received: by 2002:a05:6122:884:b0:523:771e:8b81 with SMTP id
+ 71dfb90a1353d-52abf80f793mr407113e0c.7.1745869704395; Mon, 28 Apr 2025
+ 12:48:24 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 28 Apr 2025 19:48:23 +0000
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 28 Apr 2025 19:48:23 +0000
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aAs0F58Hlpn6WI6b@pks.im>
+References: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
+ <20250423-pks-object-store-cleanups-v1-7-81f8411a5d08@pks.im>
+ <CAOLa=ZQh+agLJYEGWU2O2=iRnJy94y9Cud3XRVaGVHC4YdbBZw@mail.gmail.com> <aAs0F58Hlpn6WI6b@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Date: Mon, 28 Apr 2025 19:48:23 +0000
+X-Gm-Features: ATxdqUHpLZoDVLmMicADuakrzWawe_lUZTQ86iKeOgUp44yOBqlxcTpf_746J4U
+Message-ID: <CAOLa=ZQy=OrWkqUTS+t_fAYj2w--1Fy=n7=gdJTHFhebNAZCnA@mail.gmail.com>
+Subject: Re: [PATCH 07/13] builtin/index-pack: don't fetch promised objects
+ for collision check
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000008e1e120633dbf78e"
 
-From: code@khaugsbakk.name
+--0000000000008e1e120633dbf78e
+Content-Type: text/plain; charset="UTF-8"
 
-We did `git rebase --rebase-merges` on a branch with merge commits.  Including
-back merges.  The reflog after that showed some weird symbols for
-certain merge commits (only merges):
+Patrick Steinhardt <ps@pks.im> writes:
 
-    e9c962f2ea0 HEAD@{8}: <binary>�: Merged in <branch> (pull request #4441)
+> On Wed, Apr 23, 2025 at 10:08:05AM -0700, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>> > Any packed objects indexed via git-index-pack(1) are subject to a
+>> > collision check. This collision check has the intent to determine
+>> > whether we already have an object with the same object ID, but different
+>> > contents in the repository.
+>> >
+>> > The check whether the collision check is really needed is performed via
+>> > `repo_has_object_file_with_flags(..., OBJECT_INFO_QUICK)`. \
+>> >
+>>
+>> Nit: this was a little confusing at first, until I saw the code. So what
+>> this means is that the collision check is only performed, iff
+>> `repo_has_object_file_with_flags(...)` returns true.
+>>
+>> I think the confusing part was 'is performed via', perhaps:
+>>
+>>   The collision check is only performed, if
+>>   repo_has_object_file_with_flags(..., OBJECT_INFO_QUICK) returns a
+>>   truthy value.
+>>
+>> But it is okay as is too!
+>
+> Will rephrase.
+>
+>> > But unless
+>> > explicitly told otherwise via `OBJECT_INFO_SKIP_FETCH_OBJECT`, this
+>> > function will also cause us to fetch the object ID in case it is part of
+>> > a promisor pack. As such, we may end up fetching the object only to
+>> > check whether the fetched object and the object that we're indexing have
+>> > the same content.
+>> >
+>>
+>> So us fetching the object is pointless, since we only care about the
+>> 'does it exist' part and not really what it contains. In that case,
+>> shouldn't this be s/same content/same oid/?
+>
+> No, it really checks for the same content. It basically verifies that
+> any pair of objects that:
+>
+>   - Exist in the packfile that we're currently indexing.
+>   - And preexists in the local repository.
+>
+> Actually have the same content.
+>
 
-Some merge commits were normal.
+Okay this makes sense, if they do have the same content, this is not
+a collision. It is simply a duplicate.
 
-No backmerges were affected.
+> The weird part is that we also do this for objects that don't yet exist
+> in the repository, but which are promised to us. This causes us to fetch
+> them first only to verify that the fetched promised object has the same
+> content as the packfile. And given that git-index-pack(1) would usually
+> run after a fetch, we end up verifying that the fetched object obtained
+> from the promisor is the same as the fetched object obtained from the
+> packfile. Which ultimately seems rather dubious to me.
+>
 
-We have a main branch.  This other branch was created from the main
-branch.  It had been kept up to date with backmerges.  Then someone did
-a rebase on it once it was supposed to go into the main branch soonish.
+To clarify, the flow currently (simplified) is:
 
-It looks like the string is uninit.  The values are different each time.
+1. We check if a collision test is required, by checking if the new OID
+already exists in the repository.
+2. If collision test is required.
+   a. Fetch and check the object type.
+   b. Read the old object data.
+   c. Compare the new object data and the old object data.
+   d. Collision detected if there is a mismatch.
 
-§ Bisection
+Currently, we fetch for promisor objects in #1, which is unnecessary
+because we simply want to know if the object exists in the repository.
+The actual check in #2.b would still fetch the promisor object (if that
+flow is taken).
 
-Bisects to d188a60d722 (sequencer: stop exporting GIT_REFLOG_ACTION,
-2022-11-09).
+> Patrick
 
-§ Reproduction on latest code
+--0000000000008e1e120633dbf78e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e9be0dc3351c8329_0.1
 
-Reproduced on `master`, on f65182a99e5 (The ninth batch, 2025-04-24).
-
-§ Gdb
-
-This is the backtrace when I get the apparently uninit. string:
-
-```
-#0  run_git_commit (defmsg=0x555555babe70 "<repo path>/MERGE_MSG", opts=0x7fffffffc070, flags=0) at sequencer.c:1158
-#1  0x00005555558740d9 in do_merge (r=0x555555a67020 <the_repo>, commit=0x555555b75cb0,
-    arg=0x555555b2164d "<branch stuff> # Merged in <branch> { (pull request #4464)\nlabel branch-point-9\npick 4026b5ced849724bd3857283b6ad50c8609b6d33 only sh"..., arg_len=125, flags=0, check_todo=0x7fffffffb1e0, opts=0x7fffffffc070) at sequencer.c:4380
-#2  0x0000555555876629 in pick_commits (r=0x555555a67020 <the_repo>, todo_list=0x7fffffffbf50, opts=0x7fffffffc070) at sequencer.c:5048
-#3  0x0000555555877eeb in sequencer_continue (r=0x555555a67020 <the_repo>, opts=0x7fffffffc070) at sequencer.c:5480
-#4  0x000055555563a491 in run_sequencer_rebase (opts=0x7fffffffc330) at builtin/rebase.c:369
-#5  0x000055555563bc74 in run_specific_rebase (opts=0x7fffffffc330) at builtin/rebase.c:746
-#6  0x000055555563fe2a in cmd_rebase (argc=0, argv=0x555555a73890, prefix=0x0, repo=0x555555a67020 <the_repo>) at builtin/rebase.c:1878
-#7  0x0000555555574c0d in run_builtin (p=0x555555a34908 <commands+2280>, argc=2, argv=0x555555a73890, repo=0x555555a67020 <the_repo>) at git.c:480
-#8  0x00005555555750ca in handle_builtin (args=0x7fffffffd8a0) at git.c:743
-#9  0x000055555557538c in run_argv (args=0x7fffffffd8a0) at git.c:810
-#10 0x00005555555759e2 in cmd_main (argc=2, argv=0x7fffffffda30) at git.c:950
-#11 0x000055555569b0c3 in main (argc=5, argv=0x7fffffffda18) at common-main.c:9
-```
-
-§ No reproduction script
-
-I was unable to reproduce with a simple repo. setup.  I tried:
-
-1. Creating a side branch which had a merge
-2. The side branch conflicted with the other branch
-3. Rebased with `--rebase-merges`
-
------
-
-Normal bugreport questionaire follows.
-
------
-
-    Thank you for filling out a Git bug report!
-    Please answer the following questions to help us understand your issue.
-
-    What did you do before the bug happened? (Steps to reproduce your issue)
-
-`git rebase --rebase-merges` on a branch with merge commits.  Including
-back merges.
-
-    What did you expect to happen? (Expected behavior)
-
-Normal “action” string for the reflog like for example `continue`:
-
-    3f90f6ab14d (HEAD -> <branch>) HEAD@{1}: rebase (continue): Merged in <branch> (pull request #4507)
-
-What happened instead? (Actual behavior)
-
-The “action” (or whatever it is) string is arbitrary bytes.  Like some
-uninit. memory.
-
-```
-e9c962f2ea0 HEAD@{8}: <binary>�: Merged in <branch> (pull request #4441)
-```
-
-    What's different between what you expected and what actually happened?
-
-Apparently uninit. string.
-
-     Anything else you want to add:
-
-     Please review the rest of the bug report below.
-     You can delete any lines you don't wish to share.
-
-
-[System Info]
-git version:
-git version 2.49.0.459.gf65182a99e5
-cpu: x86_64
-built from commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 7.81.0
-OpenSSL: OpenSSL 3.0.2 15 Mar 2022
-zlib: 1.2.11
-SHA-1: SHA1_DC
-SHA-256: SHA256_BLK
-uname: Linux 6.8.0-58-generic #60~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Mar 28 16:09:21 UTC 2 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Enabled Hooks]
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nUDI0WVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMkppQy80K1E0OHd0b2cxWnRDRVhCS2Jib3huNDl4Rwo2bWo5aWRuRnpK
+cHlTVnpPM0JuRkxOejgvUyt4cTg1eTJqTXRwY01raWZwRWFPNW82T3dnbGxQczhnNUh2OUFtCm9Y
+MnY0dGtlZm0vNHVaS3NmVzZ2WTF0TlBTK0RrcWttaTNWVGRzbC9KcFVEbCtWTTJGQ0JZZHNIWjdZ
+aEJ5WlQKc3d1SkZIM3NRVzdQOTBnVGxac3p5cDMzQTlOd3lEd2t6dWdDYlBlLzJEU2xlYVcyaWta
+WDhhYlcyYzhuVmo3KwpwOVlYWjNVbFFNZGNCaWIxbE1zS2ZzNzZDNmFRK0ZxRUNBc2lSaFp0MG1L
+Y1V2d01vZHJXTDhSQmZKenJTSkQrClBGdFE5Rm5IUk9vYkt0ckFoeENkYThTVXRwZHJYdmhVdVZu
+QXBseCsraTZwY054TU1wcnBTa0lJNTVia3JRVzUKY25FdGlPenlVamJ4c1RnTlp2VHE2K3RIMFI5
+YmxwZG9YVlFkbk41ZHdrMVYzcDJSaG85Mm1BbmxxRkUyVnJzeApnUkZ2VDB1TG94cFNMTnVLbTRB
+ZjMwOXJLWktNWjd3cWNOL2ladXUvcXZYTFdqUUxEemJZTmNVaXZJUjJPSWNLClpHbCs3ZUY4Z2pN
+SVpEZzZDemFoTUV6d1hZT3F3Y3laOTBjMEp5az0KPUJqQWUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000008e1e120633dbf78e--
