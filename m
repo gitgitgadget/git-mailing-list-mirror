@@ -1,107 +1,120 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6B52135AC
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 22:40:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D910223C9
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 22:55:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745880032; cv=none; b=RLH808asrh3FfHwLoknj8VR7tw20/5ycbQ89f3aJKTQo3XteWwRlaOUqeHjGl2fUnJv8F5OhmJJpwVMbYes20xf7EpeEbiKbhwp+AXtSob0C7+bQnkF2LjnrxdW44fQBl4HNOelyXV1NByUogBSDrfu0BIxJoXuniqECwF4sRt0=
+	t=1745880920; cv=none; b=lU6DtHmaVZHGAN8udqlfbvMQ/+kFUrPGHCyM+giWIWSpFZJ2Zv0DR1kn9oGPY/LKiKHwvyD56xtilY/ITNTtkv2yAYvNkN9qll+zq3Cn1u1rT8f1LT87YbccP08LDCL6THEfBYuNCrBIXDphbw7sf8giDrMKxjRL0+pZLINSGH8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745880032; c=relaxed/simple;
-	bh=G5c6LjT0X61flw5w7dkvhW3NFDMcWgmXgNXw1fqOUr8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=WpkFn9DuXzaQd5O7FfF4r4cT4ZD6fXKqqrtNaVWhon7pM4VnNQg0IC7EkEThyFlhjeSpGiQINwkVkwsPefsEyKPlVOrU9CkM6DxGHjoqWQPZbkuoWKeAFbu4LENIse8gJe0mpIxarkz5rmy5Rpqdfs/19jV0+QNbBBFo5DXdZDs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cFqvvHPY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kBW98CgA; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745880920; c=relaxed/simple;
+	bh=0PjrNXQhZAjTGccM2hKrPEM/K1MQ4oCf3/DRdfVyQJA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=jQQtf5ZcfFMvzH9WVXpKXjC06X7ALFXuWeu1RgVk2vCaLX465ejEZf1+di2gctD7kgVc2kjYinAHvhUA6QUt8ShrLHD8lA/2xEt7QTg03QcMbWpweImlAZSrySfAlrgYnmeAS3hnYNmQTJWNhhhFNuurOyjnVL0SGNN0B2xdkP8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=applied.co; spf=pass smtp.mailfrom=applied.co; dkim=pass (2048-bit key) header.d=applied.co header.i=@applied.co header.b=zQdiX/HS; arc=none smtp.client-ip=209.85.215.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=applied.co
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=applied.co
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cFqvvHPY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kBW98CgA"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 06CC113808C2;
-	Mon, 28 Apr 2025 18:40:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 28 Apr 2025 18:40:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745880029; x=1745966429; bh=oXAtUD3e9H
-	iwfUZe2E0N45NN4A6lwuxsYlI4S8+jEKY=; b=cFqvvHPYfukdDdFjbhbqPwa2ff
-	Jz+SUtfI9wZQEhF+ZWFlNJIy3VYvoqwWJU17f4peINOG0pOEVIoMUIaFfTTfK7b+
-	AossbpKrODSEpyb29cY0f1Q+WO4iij6PW0NqjK/pkH4u2s6nNsSnBrhEqcYY2Qmk
-	Gwd8I19eraofsfMLDejjUS5TEsMiRMZ8SijiGT31huXPABvfwoiC9qfSOi1YLOIB
-	9l0V/OvdMz4tVevsHjEhWbveJZR6fl3A5qZkQiU+gsSeNBp6roQhjLlCCIglJxEd
-	t4F8cGLzKVutnNX/UoTpbYCUUTq/PVe5ZUe+C9KranpVCQ5VAMFFAgDle/Cg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745880029; x=1745966429; bh=oXAtUD3e9HiwfUZe2E0N45NN4A6lwuxsYlI
-	4S8+jEKY=; b=kBW98CgAqciyGEeaZJKUasE2+dwvAxeW6f3C17SviBZtdDCgxoA
-	h3Bomvv0zlTDnmbTRKKmcVvXpduEl+FHfWs3E6knFj6QtikqbDJwmyC9/MOMwPLl
-	YUYXLKa1CN9VhiFjiBNd8IWIuVIdauJn6uM++Zvzjs4CL7ibe6oC535QTuvlgcxy
-	l04uEn7dFDMbgnMITgWh+3TuunCQ8mwbeXhZKTGoSz11plAE5RvHk94kdKnEh0/x
-	+dpsCOS2nfEsILbfaKQBAvkGDqpaSAFNAKpNHsuIM6BgFHFhbxIDprF5OTOzB3QU
-	Pa8S9eQpjr2KWbgBVpgOpwKbZd9HX6lsaNQ==
-X-ME-Sender: <xms:3AMQaNJps_LIom9WSWCNL1geUw6W_bKqFVaU0SxEqnVoplq56Me_nQ>
-    <xme:3AMQaJLWBHn-3XmXau2emyct2Bm_GFrT90fDIXdpRvqbm3T9S-n06nEvshpoHXo43
-    pIe5W9eVhba0qjB5A>
-X-ME-Received: <xmr:3AMQaFvgzkFIcHghAy4REhLsDJjCLNRHF6V41VhSDL_CYet7iHlksmdTIHUBaKFDlviZOwhEU1obwk-7kQymlg5ZtE3nnx3DVqRu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedvudejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghl
-    ihhnsehgmhigrdguvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3AMQaOa0buX20tYtEOQPZBXoPeRAUwBmvgRa4P--ExErbFagKbj5uA>
-    <xmx:3AMQaEZu9ZrbFEPza-B5hgv6Vo5IOoVBOjxNpdhWK5b7WEZJ9nIMig>
-    <xmx:3AMQaCB0AVkKQTK5rBxn6q26tm8ExlKGrphi2O_-Jr4Sdkvh5rINgA>
-    <xmx:3AMQaCbDEHQnQ2BHsUVHbDq8UOojklJ_K79GUuME66mEeRinShcplw>
-    <xmx:3QMQaFk0dhL8oZJqeyoLmGhNJLFSWq5SBAnYAhYCfNx49GMAg9bOBIa9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 18:40:28 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  peff@peff.net,  Patrick Steinhardt <ps@pks.im>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Derrick Stolee
- <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/3] Fix REF_DELTA chain bug in 'git index-pack'
-In-Reply-To: <pull.1906.v2.git.1745871885.gitgitgadget@gmail.com> (Derrick
-	Stolee via GitGitGadget's message of "Mon, 28 Apr 2025 20:24:42
-	+0000")
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
-	<pull.1906.v2.git.1745871885.gitgitgadget@gmail.com>
-Date: Mon, 28 Apr 2025 15:40:26 -0700
-Message-ID: <xmqqecxbap0l.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=applied.co header.i=@applied.co header.b="zQdiX/HS"
+Received: by mail-pg1-f176.google.com with SMTP id 41be03b00d2f7-af51596da56so4566359a12.0
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 15:55:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=applied.co; s=google; t=1745880917; x=1746485717; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=0PjrNXQhZAjTGccM2hKrPEM/K1MQ4oCf3/DRdfVyQJA=;
+        b=zQdiX/HSAPun9yXL3F3+XVuOAoS1jbM8Ybs1LDLSux7QoNfX/aJ1dxD3J//O6vXgR3
+         8LfNyFfO6Cukkqaj4F6rioG/wx8XfkyFSyY7PS0rAXyWlXJQidlRo8C8Iw7Z+ITuGi7Q
+         wzTBSNNqwzcRwWh9Fk1/Q5QKyyQBz9ZPxh+X4iySxQPtqOe+zTVN/UmWDTRNQcb+tBgm
+         OXxOf83iDKEDEI/EBZlFXpELRsNgyd/AeUSQLPKGeiT4k91qwjZmgHVbZNO7C4e1Vj8G
+         3FqAfoOGND8kTTqR/sYRq3WhoJYHY4cx20RGQP0qvIkBFdPxeU7QNYvRrksjDY3IqARf
+         9Vtw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745880917; x=1746485717;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=0PjrNXQhZAjTGccM2hKrPEM/K1MQ4oCf3/DRdfVyQJA=;
+        b=uyati/L/wA2VwVLQwOshKBDzcsnNAjQDetrEgk9O+W1Y3rk6u/jv9keCr9/UzG7UtK
+         oLzks5Ggz80hEYdPbDVtaFIaJN0Mt+mXIh+85PkYVwFV/SW1N/RT0618TGW6Fbc1N6TH
+         Bjh9Hxm6RrENpUj9LBzN7kDbhOZqsf+Vk4FWlc6R+PChM7fJT5oTZgOvf3vthadDKbpN
+         p7kLm6LPweRsYkhIjSdjLsTU6i2LwpuNt2QsTsyOIpXfXquIFLL1t7AdFpjUa/3iZcyF
+         OVYoV20eFs7Ik5/2lUQZXZIIUGFdfLnVPodGLXtY/DDEaUk5Li0UVbE2Trv3wYWxYcYG
+         4ijQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVI3sXR/KCRNI4pDEjZKa7ceZIb/EjLrohuT0QXrRi4GjtTGLXJRQU61JPV8y7sFLyXgf4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxKn/Ejy6RZwDpzFyj3RBeDXP8956yKoOwiZwpKh8HKEtXm2SxK
+	93C7OFTzTd+flOspxn8krnzC9Zry+oPDg+/hsIqdP4aQYMcyREWIe8gh+qOeZJuXwmYFZAAUMsf
+	FnsKuNrNCRuqNxwZXtE08fnJUbA3BtuJ2EGPYhw==
+X-Gm-Gg: ASbGncusM4WzLcxz+7D2Gc63fg3mNj3TQKeojfQEojcrpr3TuDMEujXPS8Mft4eJHGm
+	U26AMLL6eZHZz42oJaBAZxTGtdrnaahCg3N1mv4I6FShUnClsaoAcr1kDMl8BII+V3zGylJctOw
+	Oic66hc7KemkVX4pwaIw==
+X-Google-Smtp-Source: AGHT+IFSQDzXywO7JaMiy9nxpnPIIBQHEk0iMftg2MO5m+wnKkf4aogml2qf8S58RPbCRsf4Nf+BdKqllIQnxiW0CxQ=
+X-Received: by 2002:a17:90a:d644:b0:2ee:e317:69ab with SMTP id
+ 98e67ed59e1d1-30a214ba934mr2657135a91.0.1745880916735; Mon, 28 Apr 2025
+ 15:55:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CABPp-BFiLURYmELQ1omyPJ+49cVxk1h4rPYj42zMwGUW-NUUGQ@mail.gmail.com>
+ <20250428192320.3595509-1-jonathantanmy@google.com>
+In-Reply-To: <20250428192320.3595509-1-jonathantanmy@google.com>
+From: Nik Garza <nikolas@applied.co>
+Date: Mon, 28 Apr 2025 15:55:05 -0700
+X-Gm-Features: ATxdqUH2PBz135oXFfDalgacFPI-CCF-5zFNvOAOOVpWv_ZXXqxLoLRotYTDsvc
+Message-ID: <CA+ODqj34b2DsvjxGgVb=jSaTUNYRh_nNtaCzCx8QiJ8QFsRecA@mail.gmail.com>
+Subject: Re: bug report - BUG: builtin/pack-objects.c:4310: should_include_obj
+ should only be called on existing objects
+To: Jonathan Tan <jonathantanmy@google.com>
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, Jamison Lahman <jl@applied.co>, 
+	Jack Zhang <jack@applied.co>, Michael Diamond <diamond@applied.co>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Resending....
 
-> Updates in V2
-> =============
+I haven't been able to define a repro case unfortunately. The error
+surfaces randomly in our CI infrastructure. I'll take a look at some
+of the failures we have seen and try to come up with a repro. Will add
+a test if I can find something.
+
+On Mon, Apr 28, 2025 at 12:23=E2=80=AFPM Jonathan Tan <jonathantanmy@google=
+.com> wrote:
 >
->  * Fixed a memory leak in the test helper.
->  * The test helper has a better CLI that makes use of the parse-options
->    library.
->  * The test script skips the in file and instead feeds the input directly to
->    the test helper.
+> Elijah Newren <newren@gmail.com> writes:
+> > Cc'ing the author of that commit for his comments.
+>
+> I took a look. I'm not sure why I made the assumption that
+> should_include_obj() would only ever be called on objects in the repo
+> - in process_tree() in list-objects.c, the case of a missing object is
+> handled only after should_include_obj() is called. Looking back at the
+> earliest mention of this on the list [1] I don't see any clues either.
+>
+> In any case, the fix is probably to change it so that
+> should_include_obj() returns 0 if the object is absent.
+>
+> Having said that, I couldn't come up with a test that exercises this
+> failure mode. Nik, do you have a minimal repo that reproduces this
+> error? If yes, if you could contribute a test in the form of the 'after
+> fetching descendants of non-promisor commits, gc works' test in t5616,
+> that would help prevent regressions in the future.
+>
+> [1] https://lore.kernel.org/git/fb2c202591b466eea33b4585e47b70e9086603bb.=
+1729549127.git.jonathantanmy@google.com/
 
-Everything in the changes relative to the previous iteration looked
-quite sane.  Will replace.  Thanks.
+
+
+--=20
+
+Nikolas Garza
+
+Software Engineer
+
+nikolas@applied.co
+
+(209) 499-1193
+
+Applied Intuition, Inc.
