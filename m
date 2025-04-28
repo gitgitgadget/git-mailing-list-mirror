@@ -1,126 +1,109 @@
-Received: from mail-yw1-f178.google.com (mail-yw1-f178.google.com [209.85.128.178])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A05256D
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 15:22:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64A17279785
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 15:56:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745853738; cv=none; b=LJjTVTWbnllP3To0WHugMSgXHJ0OfwBjlC4D0MN9CF+JEKuWFAMlDd0rOTemi8cTLEUNh4mKsjOZIF6CujRdbmC0O2UJ6XqVtkvKmVlPuAJsKVepOfLrGGMTBPykfw8uRbgh1kLLkA1NXTRuXHykHfoLHacOapfpHHL0fdVe1z4=
+	t=1745855779; cv=none; b=Rh4sJVpjMy3SGy0XsYNpUpw7wxVBj9cuj7Qa9Yef8H3+AzqCOe6twpo4W3zcfEpGhBt/P9WHNQlGZx80j4jxnIMJQOAxI60kGhvC2R4AuzJo7NQ3Zi47uAwjLqrK/wWdNNEjUlotKL+wWgxt8pBE1eCaTOWmevuk35moTf++0jI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745853738; c=relaxed/simple;
-	bh=SFk8v78g7fzynKl8+CjLg6apJSOIe12wDAXwX7f2mR8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=DE8Yd7oPEl6i2PRN0l/p/hL6S8VIZby4k11JAzB+yH+gsJolSEcKudptpT0USX2o3jbhjT0cWD8043fLCI8j5yxo1AFEOXFv+qM56V/I3amjuobmthEH+IKu2nOkjHSmvraezldyKzmWoJkQ0iiczRwntaAqusTFaIPotwBTDxA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VIapObLJ; arc=none smtp.client-ip=209.85.128.178
+	s=arc-20240116; t=1745855779; c=relaxed/simple;
+	bh=n8yOlKFM9WYlc52wAf0goD8rGOovEWh2IDj1dNH+Lck=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=kd6AMkvd3rQf/Qp/0X4JhLOgKPmcFYvAQSJu0BJFdHFEK4pYuo+ie3+xY7VwMcSKe9Yv0xJHyQB4r7Ru2Pj8RZPZMxZzA0UKMdAbr7DDmxHhWp43mYUfPG1iKMuYk7DECJo31giyKAk1j2AnHrLkYPET+Iwp6xhHRngLBQO+Qd8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Hk2gUwje; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VIapObLJ"
-Received: by mail-yw1-f178.google.com with SMTP id 00721157ae682-6ff37565232so38489277b3.3
-        for <git@vger.kernel.org>; Mon, 28 Apr 2025 08:22:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Hk2gUwje"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-39c30d9085aso3644138f8f.1
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 08:56:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745853735; x=1746458535; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=guu84NZauHChpFneJ6LDTWjR8/lq4Qpn77kSdP3eshM=;
-        b=VIapObLJ/mChwllXLUQqF9oxoIveiSLk9XmMHF0sOQhWwy3aeuGvC8NiCIzj+3QXIF
-         rY0sIn+mfqQ4hM7wn3IIVEyWby96xJ0UMXKr2DJRnc/ZkOLFpiO/z9iUeO1yJY5TJjSp
-         M69ma/ZQ2JPk4FkDBmNuyaysSlzJDdlzVd2fZc2hOScbQuayySz9tzB0a5O/JMF/hP/u
-         3jJ49l7dGCUY9DLTzCDRLtKeZPG79HPvs4FkQBZVLu9kWcgu6H5PGWQe+wAIBdyJQVr1
-         thGMut6B4KQdkdHG33ik+rpy3+rw6sWXUHnl6WVfmGC7rRa4c94kokSTEtsJg8UgbWjk
-         AiXw==
+        d=gmail.com; s=20230601; t=1745855774; x=1746460574; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zHtSJSu9AWi7kVN4UiHi7ShpApRn7C0GUPB9sOm5lr8=;
+        b=Hk2gUwje/FycS34WAILif2YEBt0CKUVxZCO5eR4wW9IYgG58/HYkEGsaBV9TuCJ4p+
+         3JUAMl9MK1K7xH3p41BCnIosPVKhjxQF/XniQkKPBbeq6cvABXSy3LQ0dwEvZ5WmCjyx
+         KI8dSBTyCehUP7HqMS5cZu5tV3PnYKGGZK2hPsV0CQhUGZb0FHyLyeAi8rlAMXqrlju7
+         VjdaXqHyQjwlYLrWVgaVhtrKnwPi5qbFjT3WGMyUx23gLbIrYD1ujD5H4Ln1KKLWTWoG
+         OV4QYjawmtSiT4LYQDe/TnlmlF09x8BzZMe5cpcyVZc0ZQz6BNEoAsGuCbkhinZ4YNdn
+         tUtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745853735; x=1746458535;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=guu84NZauHChpFneJ6LDTWjR8/lq4Qpn77kSdP3eshM=;
-        b=bnWtqnCtANldJ5CjGPKCqqFKiXnaMyaHYhIPKE16G2ixNx4DDszmIE++VRy0uJX76V
-         idEEoSdfnCoc5wbvu1TgjFReqmJ3/t1MWk0H89wEeKR6LDwieGxgps4iCfE3FxBHUXMU
-         TRZA4R5ChvMKunkyGDKKMlP1fR4tLlFmXRaF0AEsDLYfaqvzQWn+LSuh+/ibJ8jrx98y
-         4s+k0ysvX4Z1Q+LBBP9TU8VThZ6QT+PnukRBsnwopTTxO/e9x0qLLn5CbckNdo8Ps8r9
-         F/JN7hMUF4n527ZDPEL+6UxzVjLZLjCn6S9uy6fwBu0EY2V72zpxKDrq8ysYKh74ALis
-         K6KQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUkBS0u5G+s/Z2viS9RaFcJwWKolKBD+zLNKa7CxEm3QwkoPz7wUkmgMiLcy4FPy9pVaAk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw4S/Yj1tf/hP5R17B4lJ/EGeuhJuIRtty1jeoLTafCRr7sntOs
-	XpAXmdx/tpE6lgzRr37V6QYJWXpDIIMWIRJo+qH4FAOidoae9kZX
-X-Gm-Gg: ASbGncscm7vm6GREl8PeYfQyvPHXTnmzz1Mzs9pstEVEMwJrUnsrmvsgUc66YIKevpe
-	dl8WogfexwPpF6xTLYU+HPjgIJBZw/VuhpKSnYqKZ2bLI1f+M7sGeF4RUJHgDbbff29+EYkyzWU
-	THbDHXl5h6S5guHkTjmCNHkBgBKxOZ+0hW2lTyg5U8yldO98Rv/2xM35dLH2SnwfKtL3aaFIvqQ
-	8ikpXkU5cIzAEqMsko3ORBG/QeT9D/D8AoK5mTLXVAsmawH/1McNjqrFbPeYkOQ2IBJVM48Uhqe
-	nIQ7itHqxjLguS47htHOo6E4+GP2yVGsPx4hpPCZeIEj35JzERF0No6Nu6EGVrP+u8nNIgeBZkJ
-	0/agdhHCNtJVkMeei
-X-Google-Smtp-Source: AGHT+IE8FSSMwbS6FsOGwFd20cZ+XS+sWdtW1InJzcCCbghg7+h+Llji2kwbSbMdO0PGFc+5orxPYw==
-X-Received: by 2002:a05:690c:ed6:b0:703:b30d:3e2b with SMTP id 00721157ae682-70854117711mr164936077b3.20.1745853735200;
-        Mon, 28 Apr 2025 08:22:15 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:2567:30ad:ba54:9d4f? ([2600:1700:60ba:9810:2567:30ad:ba54:9d4f])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-70841acb31asm24534607b3.69.2025.04.28.08.22.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 28 Apr 2025 08:22:14 -0700 (PDT)
-Message-ID: <275808ae-7126-4a24-b5f3-283ea8023f5f@gmail.com>
-Date: Mon, 28 Apr 2025 11:22:13 -0400
+        d=1e100.net; s=20230601; t=1745855774; x=1746460574;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zHtSJSu9AWi7kVN4UiHi7ShpApRn7C0GUPB9sOm5lr8=;
+        b=mMrA++YSJxoTVPUUTDFgbSMJdOQsdr57YMUWu5V+iozS1JOW9eGoI8nxEFNRcHMdVC
+         ZyK40j/tBpHEnNzOYBV3Ylwe3MdEI1WKXgzBEkmU4fEWgVUpydViAmIe7S39D61tyAeV
+         D94/lDVYhVtNKL91cIkVTkYcVSHGZaUu2BUyjCse5aUjYPEOtMCCRsMaNvhkJq1vbZaZ
+         zNoBual7oWdaZb3WcSQIkpjd9DaexKloG2tjAG/Ewytsr8GsPjE543J5K1xS7xQYTF0Z
+         mJ6guaXUu/Jetr5U7djsLHTIaZeYPbCVlFxA9FajJGqWriPSfBryuLfxuwLE7qtsxeRa
+         i2Fw==
+X-Gm-Message-State: AOJu0YwvPQVfKHKX3IyGLd20XVWVRALUakI0PVmZKMDE1dM4gs+fle1O
+	C+fKAK+Q3mDLTVw1nsvqESe6seMp2vD1E3nyFeG6d1im9HjOTqHemTZ+aw==
+X-Gm-Gg: ASbGnctA0P7d+FxpqOlH0kDeh3sTEx5deADgesX8Ip83lsyRJDytBIRIwiIowZq1qZb
+	Y6GqCxL4uZNuVvV5K654n5u1K64HU8xAu7l6Y2wfR3e+mqjJFD2wRzc6B5PZYQJLYXO8DsKT8Fk
+	Cra03clNY12V5X6Mij6oMBsUZElbIF4aKI0CkM90LBCDxK4DBSpltiE2zk1GcWz9CwYnr0Pq85D
+	KxAKdr9NCqzbsDIbnymE+rFIJCtgB5/frrD/hNaQm75lJrGDdYUr+syyubJpnI4PHb0cbd0we/t
+	SS1PbwKUcFLg6YtB1JGbBgjl/RBfbpTkqijxr5eTBQ==
+X-Google-Smtp-Source: AGHT+IGYksSNlwUrj0FXS5oac5sC/iP0yBWww4ZEfaOhwpL0q7j+1Rwuuu8jWh1FNPTmKS2QUZe3iQ==
+X-Received: by 2002:a05:6000:1ac9:b0:3a0:82b4:f220 with SMTP id ffacd0b85a97d-3a082b4f240mr4390015f8f.41.1745855774282;
+        Mon, 28 Apr 2025 08:56:14 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073cbed98sm11297030f8f.48.2025.04.28.08.56.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Apr 2025 08:56:13 -0700 (PDT)
+Message-Id: <pull.1909.git.1745855773.gitgitgadget@gmail.com>
+From: "Christoph Sommer via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 28 Apr 2025 15:56:10 +0000
+Subject: [PATCH 0/3] gitk: small quality of life improvements for themed Tk
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, peff@peff.net
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
- <5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
- <aAsQwSfr-YvS2Mvh@pks.im> <090ef16f-42a7-8de6-a79e-5a1958e2c103@gmx.de>
- <aAtZuU6Qqfag6OHj@pks.im> <xmqqbjskurz5.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqbjskurz5.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Johannes Sixt <j6t@kdbg.org>,
+    Christoph Sommer <sommer@cms-labs.org>
 
-On 4/25/2025 12:27 PM, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->>>> Is there a reason why we don't use `parse_options()` here? It might make
->>>> this tool easier to use and extend going forward, and we wouldn't have
->>>> to care about invalid arguments. Right now, we silently accept a
->>>> non-integer argument and do the wrong thing.
->>>
->>> I think that `parse_options()` would be overkill here because:
->>>
->>> - This is a _mandatory_ argument, not an optional one.
->>>
->>> - The required data type is `uint32_t`, and `parse_options()` has no
->>>   support for that.
->>
->> Support for that has been merged just this week via 2bc5414c411 (Merge
->> branch 'ps/parse-options-integers', 2025-04-24).
+These three closely related patches build on
+https://lore.kernel.org/git/pull.1835.git.1733767737.gitgitgadget@gmail.com
+to:
 
-The thing that confused me even with those changes is that this is a
-_positional_ argument and we don't have a way to say "parse the 1st
-positional argument into an integer".
+ 1. also allow changing text wrapping preferences for users that do not use
+    themed Tk (that is, users that have turned the "use themed widgets"
+    preference off);
+ 2. no longer change the background color when using themed Tk (the default)
+    as - at least on the platforms I tried - most widgets and the main
+    window do not change their background color anyhow, whereas some widgets
+    do, leading to a messy looking UI where different widgets seemingly
+    assume different background colors; and
+ 3. use the now-available uicolor preference to draw a "sash" (grab handle)
+    between the many panes of the main window when using themed Tk; on the
+    platforms I tried, themed Tk was both the default and it was not
+    rendering any sash, thus requiring users to guess where to click to
+    resize window panes. Manually setting uicolor to a platform-dependent
+    color (see https://www.tcl-lang.org/man/tcl/TkCmd/colors.htm#M4) in the
+    config file works to get sashes that automatically adapt to light mode
+    and dark mode.
 
->>> But you do have a good point in that we may want to validate the data type
->>> (even if technically, this is not a user-facing program, it's a test
->>> helper that is used under tight control by Git's own test suite).
->>>
->>> Consequently, I would suggest this fixup instead:
->>
->> But in any case, I'd be equally fine with your suggestion.
-> 
-> Yeah, I think we clearly showed our "it's just test helper, whose
-> callers are supposed to know what they are doing" attitude, but with
-> proper helpers, it is not too much additional effort to do the right
-> thing.
+Christoph Sommer (3):
+  gitk: fix text wrapping preferences for unthemed tk
+  gitk: do not set fg/bg color scheme for themed Tk
+  gitk: on themed tk, use uicolor to draw a sash between panes
 
-But with this philosophy in mind I can change the CLI to be of the form
-"--num-objects <n>" to use the parse-options feature. This should make
-things more extensible in the future.
+ gitk-git/gitk | 60 +++++++++++++++++++++++++++++++++++++++++++++------
+ 1 file changed, 53 insertions(+), 7 deletions(-)
 
-Thanks,
--Stolee
 
+base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1909%2Fsommer%2Fmaster-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1909/sommer/master-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1909
+-- 
+gitgitgadget
