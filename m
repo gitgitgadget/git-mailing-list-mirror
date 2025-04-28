@@ -1,112 +1,129 @@
-Received: from mail-lj1-f177.google.com (mail-lj1-f177.google.com [209.85.208.177])
+Received: from layka.disroot.org (layka.disroot.org [178.21.23.139])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEAD05CB8
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 04:04:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D96FF3FB1B
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 04:16:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.21.23.139
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745813071; cv=none; b=rsZMAO5Ur/AymkJ/DHiAUblszflSQLNbPVYbf+NL3m2WZ/zuB0xGxn1u+fbnPRmrC/ZQClwF1kyDmp0pQyq2gXEI6tkylhV1/dDTVp85fC61sKfF36N+3J/esNZsBm2QXAiSu3SkmNxxeuJqsi0D9Qf4WJOaPkB4JTj+CNr3Q+A=
+	t=1745813785; cv=none; b=Ds4jnLS8C4ZHk57aVTxWJFBA4l3QPhwEw+yrLDy22UBegOV/h70FS3l/16dn+EIk4X3SPp8+phx3vIoc8bEwcL1WstZB4zf472fswYIrdo3XQihPznUNHR7GMKAXYHzPyqpKTgPtec3JD8jR6eAe+YyOUhtfMHWT6nyF4ff1uiA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745813071; c=relaxed/simple;
-	bh=5HrsBJgKQKoZTnSTgFGo0lk5Y+ORa7VnBRrDMbCuYtk=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=KJ+/GUi9yHMuTHxaumnyzx7E+4WPxdSWM+YVUfkM8y50JkcqcRp2N8kn1f26Pt3qDeWOGsdSxmTbYidQkyl3WMrWM3iZjcwsFlA6qwCvRcFYU/WQRWDLjkm/N3k8DSfon35Vi5vf21aNF9M7BPRoplRq5ktojqVR8XonZar627Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fEw/pZcq; arc=none smtp.client-ip=209.85.208.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745813785; c=relaxed/simple;
+	bh=zGyZ7L95loZz4h+mwqks4ow9U6kex4YBfXdGHsOG9Mc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Epkw+ym4sPJavTk2X8MKJD4FHk6vP+I6LjgQFwoqhQFaRzihmSLRk7W7O+0yS4oUmN2Eo32FvSNTDS+VwSXoMdAvHmlgOFD1nnCyOsqEro8l/qRJwCWeLdbmNrScDlIPX6ypP7uNUN4yD0CmwN3/WddQ9yRnBjQzJNMMZ244z+M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org; spf=pass smtp.mailfrom=disroot.org; dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b=OYfixT0f; arc=none smtp.client-ip=178.21.23.139
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=disroot.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=disroot.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fEw/pZcq"
-Received: by mail-lj1-f177.google.com with SMTP id 38308e7fff4ca-3105ef2a06cso43107021fa.2
-        for <git@vger.kernel.org>; Sun, 27 Apr 2025 21:04:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745813067; x=1746417867; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=5HrsBJgKQKoZTnSTgFGo0lk5Y+ORa7VnBRrDMbCuYtk=;
-        b=fEw/pZcq+gGbp1Bqg7o9CAa4QeeJBree6jLKhxYQ85k6md1/vm7uoVr14TZ9XJ4upV
-         Xtw2UGZAmt48mr9GHl5EoKMlKzlShpuZL3HpTRB9Eg9oJF5lW8GCWiuJtz41/mApWt9r
-         aQv4XdkW19iD+p12fyQWD4rpVUdhz0IL+BGIykgNmxWGBL74lEVLOUi5MwP1tgZC7quA
-         Ta5+XKlDuCXWqo+S5EquXWqYREWCOAAf9dbGUKHLh+nIysfd7uVnkKPsZt9kvNeptjTq
-         +azYkG/xc49l8T2uG7BKMUGVPyKqRsqqTNzRC+X9AMu5UZQF/DCvln6BOlZirTszXH7N
-         m9Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745813067; x=1746417867;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=5HrsBJgKQKoZTnSTgFGo0lk5Y+ORa7VnBRrDMbCuYtk=;
-        b=FH3RJmD6JIUq4V9qYFO+R3ex++BzgAYOjv5CTjSeY/DA16/wrMC1QyWAJTS/UTI2Fg
-         s7HMnVkU/HtX2JhGqRZQq3GGHkmpXKo9zALpIfBwLSdJvwcXJLTwClotxBRnna9Lmyr2
-         ssbne0sptJwSd19nmd7QvsuwRlaFocUovvXvUt1SWNers6R82dOwIdPo0sU+uOO2Tk93
-         sHYieDSt7uZKQSANN9uWpitJotrgrhhueGl5RY0JkJjnr/Qs/IkEdgrTqxFijqBgOYF3
-         i6KjxfN5foKv1u1zAOZ88qrRplusK8kI6cJloh44F033TaB2fI6BR3PWwspoN8GgIob/
-         5XjQ==
-X-Gm-Message-State: AOJu0YwIYph3lQHULNgQ1aQ8fbsvseVNaOcvIKaPoL5cS7/3shSbDF59
-	cXcbgK/7fAQTchxC4CpzMhxWagMC95QpqomCVEcDVAMeW9nm7TpTGVHhGXw+ii4R/JMuXSkowQ7
-	let8Sc9UjJs9eWN9c0V3k0P4FDtPE9pYEcnE=
-X-Gm-Gg: ASbGncteFBlG0YTf0BW/6gNARg56+z1SdOg58PuPbsyp2uol5zRJz03ZWB9um7Oqq1W
-	ln6HVmCFwKe5FfLClvFOYB9sebW6eWWa/90wZDRx5JeLMqQ6iNz+RyJLJVKAZC/sTRu3Tzh96MO
-	xZkBpZVnCnNJb8tuaXe/M2Ew==
-X-Google-Smtp-Source: AGHT+IFjmO+f+Gci0PkLruLTyBrv0MpC9I46JtGe0/fHQHtEXAhAmsE+tIEAmhMHn3MJUe/SoUd6BYBOwVfVu2Y9fjc=
-X-Received: by 2002:a2e:b8ca:0:b0:30b:aabf:fc4 with SMTP id
- 38308e7fff4ca-31906e30783mr32052361fa.21.1745813066664; Sun, 27 Apr 2025
- 21:04:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=disroot.org header.i=@disroot.org header.b="OYfixT0f"
+Received: from mail01.disroot.lan (localhost [127.0.0.1])
+	by disroot.org (Postfix) with ESMTP id 90DEC25DA2;
+	Mon, 28 Apr 2025 06:16:13 +0200 (CEST)
+X-Virus-Scanned: SPAM Filter at disroot.org
+Received: from layka.disroot.org ([127.0.0.1])
+ by localhost (disroot.org [127.0.0.1]) (amavis, port 10024) with ESMTP
+ id i2eJdMGLrlpv; Mon, 28 Apr 2025 06:16:12 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=disroot.org; s=mail;
+	t=1745813772; bh=zGyZ7L95loZz4h+mwqks4ow9U6kex4YBfXdGHsOG9Mc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=OYfixT0fdNt+V8gyx66Q4IgZ3Y+BmW3mX+3aFGDcq3f7XlUzjFpREyaPCzLBduh3+
+	 L8h99tVE97Exz0q0ctx2tf7dUkEItqQRno6xETDUQLTUichNum7jKOy0HLxK9y4syY
+	 WycY4cvXKWvjaQ5gTVZ19dNad+oU8t1DdoIuhg7ZD7ONtSijByOSMMnDcj9pqDjTg0
+	 sldOHML4PxYrz+FhvjtiNtKmRAoICh/cfKPHfGT59/lfHGPinBkbtyqyWqT0yGKLKf
+	 omnTT0VAEaWer3C4+bYtJ89NkbWPVAAtP3Bk7khT0f5rTxrUB8QIhmRz6X6aDNT9pM
+	 HYhb5pkZBETOA==
+Date: Mon, 28 Apr 2025 04:16:00 +0000
+From: Yao Zi <ziyao@disroot.org>
+To: Aditya Garg <gargaditya08@live.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Julian Swagemakers <julian@swagemakers.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	M Hickford <mirth.hickford@gmail.com>, sandals@crustytoothpaste.net,
+	Shengyu Qu <wiagn233@outlook.com>,
+	Erik Huelsmann <ehuels@gmail.com>
+Subject: Re: [PATCH v5 2/3] send-email: retrieve Message-ID from outlook SMTP
+ server
+Message-ID: <aA8BAP-4VM84TRmM@pie>
+References: <PN3PR01MB9597A83D537E3AE96144227EB8BA2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN0PR01MB95884F106749628745FDFBB7B8852@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
+ <PN0PR01MB9588861EB2B9589C8BA6A8EBB8852@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
+ <2025042437-photo-header-2d0d@gregkh>
+ <aA0h5t0M2XZLUtvi@pie.lan>
+ <PN0PR01MB95888DC7CF57D9E8376B1985B8862@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Pavel Pavlov <pavlov.pavel@gmail.com>
-Date: Mon, 28 Apr 2025 06:04:14 +0200
-X-Gm-Features: ATxdqUFKSWI6DgpRd-FYorK3HMN5f_sgIFC6mSJ1hq5HlA16sgDYPmju12-bbQc
-Message-ID: <CAG_s-qqdzzB=ft4ibymVNfx8o0puFDTOnuwtHrvwgEyUP8Mfig@mail.gmail.com>
-Subject: Shallow checkout of submodules
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <PN0PR01MB95888DC7CF57D9E8376B1985B8862@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
 
-Hi,
+On Mon, Apr 28, 2025 at 01:35:32AM +0530, Aditya Garg wrote:
+> > Not only Outlook comes with such quirk, AFAIK the mail service that
+> > Tencent provides for personal usage does as well. I don't think it's a
+> > good idea to hardcode the problematic providers.
+> > 
+> > Not sure whether similar ideas have been proposed earlier: since this
+> > quirk affects only following e-mails but not the coverletter which
+> > doesn't have a In-reply-to field, is it possible to detect the quirk
+> > with the response of sending the coverletter by comparing the desired
+> > Message-ID and the one in response? We could throw a warning and
+> > automatically fixes following mails if the bad case really happens.
+> 
+> From what I understand, what you want here is, that
+> 
+> 1. Irrespective of the email provider, I use the logic I am using for each mail.
+> 2. I extract the message-id, and compare it with the intended one.
+> 3. Give a warning and fix it.
 
-I've noticed that in some cases shallow checkout of submodules checks
-out the entire history (and takes longer to fetch and make much larger
-size repo).
+Yes.
 
-I created two repos to show the issue.
-https://github.com/pps83/submodule-test-ok
-https://github.com/pps83/submodule-test-bad
+> But, no. Outlook luckily shows the message ID in its response, and is there in
+> $smtp->message. In fact you can see the whole server response here:
+> 
+> https://github.com/marlam/msmtp/issues/190#issuecomment-2794784869
+> 
+> Now say I use this logic with gmail. The $smtp->message in gmail is similar to
+> outlook, but has 2 main differences:
+> 
+> 1. The angular brackets <> are missing.
+> 2. There is no message id! Rather it has a random string of numbers and letters
+>    that I also am not aware of what they mean.
+> 
+> So, different providers have different ways, to respond.
 
-Both are effectively identical: a readme file with a shallow submodule.
-submodule-test-ok links to
-https://github.com/pps83/brotli-master-min/tree/1e6f9b4b4c98f6f99ba9a860cbb982346631df80
-submodule-test-bad links to
-https://github.com/pps83/brotli-master/tree/1e6f9b4b4c98f6f99ba9a860cbb982346631df80
+Thanks for explaining this, it's really not that simple as my first
+glance. With the explanation, hardcoding the provider seems pretty
+reasonable to me.
 
-Note, the hashes are identical (repos are different
-`brotli-master-min` vs `brotli-master`).
+> What does Tencent do? Have you tried to log the SMTP messages?
 
-If you checkout submodule-test-bad
-```
-git clone https://github.com/pps83/submodule-test-bad.git
-cd submodule-test-bad
-time git submodule update --progress --init --force
-cd ..
-```
-entire `submodule-test-bad` is 34MB and takes a long time to fetch (if
-you are in some remote location with slow internet).
+Sadly no. I don't really use their services but just have seen guys hit
+by the same problem.
 
-If you checkout submodule-test-ok
-```
-git clone https://github.com/pps83/submodule-test-ok.git
-cd submodule-test-ok
-time git submodule update --progress --init --force
-cd ..
-```
-entire `submodule-test-ok` is only 2.9MB and takes a second to fetch.
-At the end the only difference is in the `.git` folders, while
-contents of these two repos are identical.
+> In any case I don't find any way to automatically determine this. And I certainly
+> don't think we can poke into receiver's email to see what message id they got.
+> 
+> I also don't know how corporates work. Is the SMTP server for them the same ultimately?
+> Or are they using some Azure server?
+> 
+> Tbh Microsoft does not like following standards with Outlook. It doesn't even support
+> OAUTHBEARER which is supposed to be the standard, rather uses Google's XOAUTH2. So why
+> not hardcode? Do you have any other solution?> 
+> > This could avoid a broken thread for newcomers and should play well with
+> > an option introduced together for specifying dedicated behaviour.
+> > 
+> >> thanks,
+> >>
+> >> greg k-h
+> > 
+> > Please Cc me on future updates of the series, thank you Aditya.
+> > 
+> > Best regards,
+> > Yao Zi
+> 
 
-Not sure if that's a git issue, or github. But the issue happens
-because of the default branch settings in the repo. In short, shallow
-checkout of a submodule from a non-default branch on github results in
-a full checkout.
-
-Thanks,
-Pavel
+Thanks for the fix,
+Yao Zi
