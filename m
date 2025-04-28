@@ -1,133 +1,126 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B459D28F51C
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 09:32:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620E91C1F0D
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 10:30:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745832743; cv=none; b=gsUwYxAf+Mojj752NTPZbNkoqKOFWVCOvfd6QTMaczvN6ZCIVewT9/lRYcQ7XPjcF/aUB2QWNMtuRxgu1ZgTGEwkRqDUntMPGUcU7JZKko18RPPdLFT2uwU3RXgTaDPkPbekBYHa1a2kO8kNXke0B0kcGDKFaArb4FpdSLvo4Xw=
+	t=1745836229; cv=none; b=fcsq/E/VTD9p+oDl3j1czE4kkErxysrqKfFY3pTHoL9ANEg2eL4E78dsDOH7Cl+fblTnWv0M5F6Qp+kMTLbaYGmT5LXrLc6aj0/uLhWxdR/hdc99jH1uvYlUuvlnXyxitEros7QPK4xN0cnHnjvLRRORf6OyP5Lc9F2GIdu9BUs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745832743; c=relaxed/simple;
-	bh=ppjN8j0xOF+6d3SSo/oHXYhaySZn1x8XtbrEBVlqXmo=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=L/AcQ+Bvm2GOQCZ0dAK8i+aUfLZ9QjdUnw6zkmUZqo0WozgVN+66SO62vdcsZBr0h0SRhcIL1CpMQL+utAK53am8K2Phoe4P8cy0q9F6SV6Z0FVuUymtjgm65fyMvqf0hd2KTSB7KAhGGj+2E8lE+Infej6dGDeTWL/FNbl8NWI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mJLctmD3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZOFZNOur; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745836229; c=relaxed/simple;
+	bh=YY440FcVSE4uiML9+ny+puHy8WM1A+2v/jAbJILxi0I=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Df3yBNzAOX5e/pCED+RFoAAoDCpt1WPyauMAhUTOzcgGKpcWQxjpy0I7l9ndd3xUpTxcx7re1f9jJwJ+WFLfEJP/HjN0S2B/SDgceut0ZA5AvozIQA5OUSzOYemiEZE77CW432H+xxWPjmiSowzcu8tBQ9RrtG22SPtNLOapK/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jTdy12vy; arc=none smtp.client-ip=209.85.210.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mJLctmD3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZOFZNOur"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 81F831140101;
-	Mon, 28 Apr 2025 05:32:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 28 Apr 2025 05:32:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1745832739; x=1745919139; bh=/YqhCeKuH6
-	7g6YyX5ljGwOOb1xjSNy3bPgTHJPerBg4=; b=mJLctmD3LgXP2EHNqt5eZrWO5m
-	UZanqFGdr4fvpBnO/K7cP3QmzYoS1R9VbKeLsxLPumQkZTGo51xgMJyFDmxUxaUd
-	f8z8loVS9y013Hn7LE2XaeV6eVQAJ4tZWbXG+7gfQLkYO64mZWN6mHiKJBbdN4is
-	a4Lw0K8h+a6FEdPzr0uXh+elpl+xmHD96eW2p8oTx8SjfC/TRSVrgOomMsYVjY7c
-	j2PzeS+kPkp3o2Lni5vdMpxlw/aPJJa00e6symPIMMbhsBlQX0poMlRQ1n0gffED
-	KFERWaUvXTWyg1U66rt893lwiuH2t9HIkkQYlCDK97LJQ4cQAVxtaTIc3HYQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1745832739; x=1745919139; bh=/YqhCeKuH67g6YyX5ljGwOOb1xjS
-	Ny3bPgTHJPerBg4=; b=ZOFZNOurC+2q8YmWGVMUMEeP9hXr5uc3j+oUGJeQeohw
-	OMA0oyIMWAIwiahsApVBFd/cl0BpyCHZqDzCulChpDZixRx7VMp9VTMwpVatm2aP
-	4MNVDA3OyahglXBRzwW7tAYSEkq0rQmqGUsVMZIVYWd6R5H9ZQK0OafWe2yZ60nn
-	4No27oLpicJ7P1RwIdRsvt7YI6UrwciToco7wl+dnRkRjA2riPjW7zVsYWb0sNB0
-	Qxj1GXPy5dnQcvM3Y99uathwuZnt7dHS8xcpQQI/vZZeFO6WovzR7/4InJbv9w5D
-	1Ct6Azm8fWfas3PD6AIHdvD+9Sj/NVOj/4xv5581XA==
-X-ME-Sender: <xms:I0sPaBmih_2fyp0Nt5vC_urENDA_yseT5re3MqT8m-BWOL7dg_dexw>
-    <xme:I0sPaM2WZDNcaC0hS3rJDlYNeAmaV-dQy1UlcdhKtMpSKrdptBaEEftStjE0jwReF
-    1tvdL3Seydsf_KO_w>
-X-ME-Received: <xmr:I0sPaHq7rAMBI7uAnwfFghVfwzMSKVVK29qQaP79e-AzoQUhGCSTs4SKqA4fi-hf-SFNE-hNVl65pCAhV__sapKEM3a0T7R_inMPNAZW2SiM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedtheelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkffvvefosehtjeertdertdej
-    necuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrih
-    hmqeenucggtffrrghtthgvrhhnpedvgedvleejvdefkeetieejheelledtvefgteffffeu
-    vddtvddtffeikefhvedvgfenucffohhmrghinhepghhithhlrggsrdgtohhmnecuvehluh
-    hsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhi
-    mhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepgh
-    hithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinh
-    esghhmgidruggv
-X-ME-Proxy: <xmx:I0sPaBnbVqZ-1kdnV8NgZhzms6Mj8N3CvEQsS7Udltk3FRYsJBS8CQ>
-    <xmx:I0sPaP2DI8EDdeb4toUnkeCCstGDeAX4xN0Gl6jMrKoLjwiIEJ7R7g>
-    <xmx:I0sPaAsd17gs39CzkweVD19BJ9hFEiEiWOrXAxFQnltXcC6I5hTfJg>
-    <xmx:I0sPaDXRcLowzVC1JBXjhbB2qWL3Ileyj1DZIiKmo5fZfpV3vr1fNg>
-    <xmx:I0sPaBWPBcGjkdFQngu0mnQWYMwr8fLlTHo2ivK0_MStZDQbwPi-RQXh>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 05:32:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 29f2b862 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 28 Apr 2025 09:32:16 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 28 Apr 2025 11:32:12 +0200
-Subject: [PATCH] gitlab-ci: always run MSVC-based Meson job
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jTdy12vy"
+Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-73bb647eb23so3745279b3a.0
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 03:30:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745836227; x=1746441027; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=knMPKhSsHn3odw43oGxFm8xEhmu/20IDcGioMOCgAhE=;
+        b=jTdy12vydXibqtV1CDoiKJJLxwLMWUnNQNw3K5dysQBbAwzM4zFojGMuRujq+q39SG
+         P8soan5KjygMqRPFyF7Z2OQhx+rasQvCaoMAI7zu6rtXOeGXqkI103zraRym8H3IruRJ
+         7KzJTGGCOw4zfYRK7atVoijQJtc1nUxTbnNzGZh7/QXAx8cIPYrhvAUbF5lS3YF9P+LE
+         XuNWg2fMHGWtgh3jAztUuL4ickrQoYGMntL3hvjU7UMqQ7o+GSEi1xM4x5wUvqoc2Eva
+         /XJ4i7vnS6y5u20IiJxPmYuhgcJuEiTL2Io2B8/02OhdCdgJcVMZsneWVMK59Wtg3zqX
+         7vDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745836227; x=1746441027;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=knMPKhSsHn3odw43oGxFm8xEhmu/20IDcGioMOCgAhE=;
+        b=YI3Xd9IK5h7mkeUEdjBzKVc6P/Fv7toTTTtVqa4+KR/ec2KNvHJQrXcUKEA1dqLSDG
+         Pn51JGYPDAX/WcSimpLRrvBUMjdkOLd647PdIKwmOU1jzvRhevaO85ScBn7ANYrq2WGz
+         mgclduBWa45RPvZD/gz/fqul4xR+I4kkgvibJtR0HY8iqKGXAnutD0n4I7VlhpmAi1p9
+         eQk7Kb6fYsV69GgJBiFJFqnkFC4MuofHzb0W3L4bOnI+6Ypr+kaf3eeGMPFVdNJjoy7R
+         QAJAwUaY7ix7dFmPITNKbeZMmsU8WRGyRvWERMiNsgLnWXSwA7F1vz5cA6Aslxyqjto+
+         pqDg==
+X-Forwarded-Encrypted: i=1; AJvYcCUOEUPUWRj1CqLvX9LFA3p/NQXdpDFLloRSByVU03VuR4u8zKpC6L9RhImma6t/+ELaAhk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyvHoOsbugTehYiquJB/bqziPMpgldsJ4vbyu24O4ISGCqrtyIP
+	eLiQ68icnKarS7BkBptUsmZptYDvU6u8aGc/r3SWhu3gYFNQJGoz
+X-Gm-Gg: ASbGnctI4fd2Ef6aVJXWAjQDwlqFxnzhvzyv/aH9l51MuvMBCTaiwkwKnk2N2r2Zai9
+	k4B90cNYdaaalSYrrFS++llhyzOxaiYvPgcq36Gv9Gzjro4hI8Jv6luVk3Nzz45kob1bCeg29xZ
+	1e8iIHGLNUgEPogu+VV0ArwJ2iZme0ZWTjkSCanCPGAPhWgbkhBarF1tuP4HW3WRPRKly+MlWsO
+	jr+u8UjFXl7rntpzAprEbKz1YBmb744NW4r81w34B+GqiRAzUaZ5FCUShWDa/ZvMcCpetbg0CP/
+	m3xkBZ+kKep2HA6kkbq6NGdP6meMcnRedGdO
+X-Google-Smtp-Source: AGHT+IFsZ8nv6K0taxu+1sHb9CAR+1qmoU9BhSdARPwobMYfm2gbQEmjR/01B4u10WVj02lMDbw+Zg==
+X-Received: by 2002:a05:6a20:9f9a:b0:1f5:6c7b:8920 with SMTP id adf61e73a8af0-2046a3eec69mr10645875637.9.1745836227553;
+        Mon, 28 Apr 2025 03:30:27 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b1cf3921092sm1904261a12.25.2025.04.28.03.30.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Apr 2025 03:30:26 -0700 (PDT)
+Date: Mon, 28 Apr 2025 18:30:41 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Subject: Re: repo.eclipse.org outage breaking all our linux CI jobs
+Message-ID: <aA9Y0fp2crq_izqP@ArchLinux>
+References: <xmqqfrhxtdg9.fsf@gitster.g>
+ <aAui8hrhm1qAxGcU@ArchLinux>
+ <xmqqikmsuv2e.fsf@gitster.g>
+ <aAzp49aUREpSsCrZ@ArchLinux>
+ <aA8k6XLM1Mt37Oq-@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250428-pks-gitlab-ci-execute-win-meson-v1-1-f68683552b9e@pks.im>
-X-B4-Tracking: v=1; b=H4sIABtLD2gC/x3NQQqDMBBG4avIrDsQg9LoVaSLNP7qYBslY1tBv
- Luhy2/z3kGKJFBqi4MSvqKyxIzyVlCYfBzB0meTNbY2lXW8zsqjbC//5CCMHeGzgX8S+Q1dIqO
- umsYN/m5cSbmyJgyy/w/d4zwvRRcr7XEAAAA=
-X-Change-ID: 20250428-pks-gitlab-ci-execute-win-meson-e54998fa7081
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aA8k6XLM1Mt37Oq-@pks.im>
 
-With 7304bd2bc39 (ci: wire up Visual Studio build with Meson,
-2025-01-22) we have introduced a CI job that builds and tests Git with
-Microsoft Visual Studio via Meson. This job is only being executed by
-default on GitHub Workflows though -- on GitLab CI it is marked as a
-"manual" job, so the developer has to actively trigger these jobs.
+On Mon, Apr 28, 2025 at 08:49:13AM +0200, Patrick Steinhardt wrote:
+> On Sat, Apr 26, 2025 at 10:12:51PM +0800, shejialuo wrote:
+> > On Fri, Apr 25, 2025 at 08:20:25AM -0700, Junio C Hamano wrote:
+> > > shejialuo <shejialuo@gmail.com> writes:
+> > > 
+> > > > I want to know whether we should use the "cache" mechanism of CI for
+> > > > these third-party softwares? I somehow feel strange that we would
+> > > > download these softwares in every CI.
+> > > 
+> > > It also feels wasteful to me that the CI jobs need to do a full
+> > > install-dependencies.sh over and over, instead of running it once
+> > > (per platform type), dumping the state, and let all the other jobs
+> > > on the same platform type to restart from that state ;-).
+> > 
+> > That's right. I'll investigate how to implement this.
+> 
+> It would be nice if we could adapt the Linux-based jobs to use
+> pre-seeded Docker images. The idea would be that those images are only
+> built once and then used by later steps of the pipeline. In theory, this
+> could even be extended so that we only rebuild images as-needed when
+> something changes so that the images are reused for multiple pipelines.
+> 
 
-The consequence of this split is that any breakage specific to this job
-is only noticed by developers who mainly work with GitHub. Let's improve
-this situation by also running the job by default on GitLab CI.
+I agree that it would be better if we provide pre-built container image.
+But there is only one problem, which platform we should upload to? I
+somehow know that github container registry is free for public
+repository.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-As proposed in [1]. A test run of this pipeline can be found at [2].
-Thanks!
+So, we may just push the image into github container registry. However,
+I am not a member of the Git organization. So, I need a help from ones
+who have the access.
 
-Patrick
+> Another big benefit would be that this results in a fully-reproducible
+> environment for developers that can in theory be uploaded to a container
+> registry. So if you see that something fails only with a specific job
+> image, you can now trivially fetch that image and try to reproduce the
+> issue in the exact same image as CI used.
+> 
 
-[1]: <aA8ymUzWM2t0QkFP@pks.im>
-[2]: https://gitlab.com/gitlab-org/git/-/merge_requests/349
----
- .gitlab-ci.yml | 1 -
- 1 file changed, 1 deletion(-)
+That's right, we could easily set up the development environment to
+replicate the problem without setting up the environment in our own
+machine step by step.
 
-diff --git a/.gitlab-ci.yml b/.gitlab-ci.yml
-index 4798b283745..bb6d5b976cd 100644
---- a/.gitlab-ci.yml
-+++ b/.gitlab-ci.yml
-@@ -173,7 +173,6 @@ build:msvc-meson:
- test:msvc-meson:
-   extends: .msvc-meson
-   stage: test
--  when: manual
-   timeout: 6h
-   needs:
-     - job: "build:msvc-meson"
+> Patrick
 
----
-base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
-change-id: 20250428-pks-gitlab-ci-execute-win-meson-e54998fa7081
-
+Thanks,
+Jialuo
