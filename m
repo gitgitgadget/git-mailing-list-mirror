@@ -1,147 +1,211 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9528322F3B0
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 20:12:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0A4C1F3BAC
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 20:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745871123; cv=none; b=Gk42+rmd355K8SO/ISK49hWudhDvqYuq52V8UTWJUsT2z6B1MVvgqgWfNjtsMuTo1QkHCXgn5DAwsu3HZYQwMtpD9XFiZ8KHlA/06mdBXKYJjdH1rL+jlhcP+HCPL1y1dRdvyyk8SX1rYQqOpu1RCFzXVG4LufKicZreXsYX5O0=
+	t=1745871890; cv=none; b=e8H+3S4cFQ+ouR57TNqMzHv5pQ+BNLeWE/XF0vVPdLl4PIXMF7IRTiHdG0Rsx1bOqncqSYjHCAtKuZgli+XaIhhpnzhoHkPconsID9tbwKcPqvRgFyH/7ChMNhERoNbpfISWyNOBpzIaOBVbn3z7FuR83GBbxngm4IeSs37gEy4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745871123; c=relaxed/simple;
-	bh=Zv2aeq8VgESKfn+kRAU9Q4amrkq5zPMZJ7M42HMrmZ4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=fe/nUlaLCS0W0IuDXsjoqlQwOQhsRdh11ajmUUWRHI5fP8fBS6UaVlgCwvmoyVv4Lgo0rGzI6ufgkYMzoNIl2R/fBwdC2UuF29Egr+uf39r50Rh3mFYU01sj/R79L+BKxEx0SxAB07ADP1PLMHaTdihapmeLOFZ9KFIxwz6Cpbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JxJhEXHL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=alR2jstJ; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745871890; c=relaxed/simple;
+	bh=NUK/xhcm9wjTljyS/PYfGn4MbC29XszaSKJ5jVC/7D8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Pk+7mJ7x79Q44hJQqHbDViSb2PEHOy4DQWuG96Es95ylkd7r9ZwlHzgyvfZwLw8P589+HBO04DEyvAuhbXSYA/ZNQeOnAndAcugS3nHg1xxyVBsx1wbgMzRaN9cs2kRv27jLI1SuIVHr3Pptdm9MtQz+VisOoluIH18z/TP5OFw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GmLDdoA4; arc=none smtp.client-ip=209.85.221.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JxJhEXHL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="alR2jstJ"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9EDE6114027B;
-	Mon, 28 Apr 2025 16:11:59 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 28 Apr 2025 16:11:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
-	 t=1745871119; x=1745957519; bh=cPXruV2Fc1hrLNNphjmVHHQbN8XGPOEf
-	wrDGo7GV35g=; b=JxJhEXHL6dCKdlQWx1h3T1m7wjsebNTKsdfT0wX9W25YzGBx
-	lB3q9fzY+WfOCmC7Y8ai1u1TJc+FnfRBzmwDJh3h7PrzXMYlCf41mluku5v5xGzb
-	g+JGO7N1w456K1iqF5giBths0hRkrletJD90F7ov0xaBPIbKrCQUo8gw+N65l76H
-	2nVb/YKJuMwZ5dN/LJcnc2BNpbTbOY7A4rcTg5XwLVdQhfigsXx67QEO8qZBNbQP
-	R2ALcHXXZ4m8Zm38Lh2sJ8VyyVwUz++NdsUvjLCbPHPPptelPV7JfivukZ4EZHTr
-	5pFdUJ0jZJni3+8dX5Ut/F+gAAasOvXdFmU+Gw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:message-id
-	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745871119; x=
-	1745957519; bh=cPXruV2Fc1hrLNNphjmVHHQbN8XGPOEfwrDGo7GV35g=; b=a
-	lR2jstJzUym+HpQE1r+4Em2DDOPfgXRXt4NRwEsHWGSsY2UXN46NxK67nZNj4pkc
-	XN/ixJGCpRpV2DCroPzjomI70eTNWiUltE3KQn+uEcE2QRx00jpOLoFkM8NrmWuT
-	wMY37Nkc2s2x9GQJIg7CJatGy7DtXb2WII+PaNe0W7kdZ6Vrh16zrX0BDONAmX8+
-	xY1ZoMkKdsH4wE6NZ6izJf30jM2rSgdV/4lYEjiAlzd4Y489/nYwssEc16bITVKt
-	8yht7/LKGdu8TpmktkctznA5o8y52LvBsCUTLPjRiNHOh7gc+puyXKhMRataNcjV
-	AmNh5j5Y65iTp79/iAFYQ==
-X-ME-Sender: <xms:D-EPaKOK5xMl2X6hfAzhlp-qJTRvtZAJhUxI2SW7H4whDASWGZF6BA>
-    <xme:D-EPaI-VXvA_zOCWbL7Y2Sz60A9m2b5A5m1pgZoFYwKu9zmeiXMV2vqmG-Eqq3lw8
-    CD0W-SfU_ScqPEjow>
-X-ME-Received: <xmr:D-EPaBSA2Cu8lGJpaoQNDR_iBK1dZkJH--g2NW8K_00Xv_zyQnSk65Z9rzyDMPq2C19OqBxhDrboGrnazSed-rjeAvldleOpUZHt>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedukeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
-    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepledvfe
-    dtfedtkeefueevlefgleetieeuffffkefhgfekveehkefhgfetjefhffegnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
-    hosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
-    htshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:D-EPaKvsk937ZgnFHHq91-gLhpIgGSAdcNfmsjmhzGZJzuqXkNbA_A>
-    <xmx:D-EPaCcrhfLoPzfDnwtaKjimJxW8n7ll9Fby7iUnrFjOW3Necn-x1A>
-    <xmx:D-EPaO0FUwJRKSOgTxbeNUUhTjUqNr4P-Yb3ZQfHbQyl0UA0WEq9YA>
-    <xmx:D-EPaG8FxgPbTySFJmlpcIogMoT4ZdeLKwoUZoGBHGgGU628nr8ziQ>
-    <xmx:D-EPaGOyXaGT2gDGnuHV9EZLwY5RzZhM8394KRd61ZMpjHL1XcnkazWE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 16:11:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: response to "git branch -f foo origin/foo"
-Date: Mon, 28 Apr 2025 13:11:57 -0700
-Message-ID: <xmqq4iy8cagi.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GmLDdoA4"
+Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39ee5ac4321so5607396f8f.1
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 13:24:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745871887; x=1746476687; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tePCQV3hxkzYN9D5WiMq9e4t9p01f8JiMygqK8n0a50=;
+        b=GmLDdoA43sKQq2ROina3DUgCfpVbRw8GkCw1lrallvknWjT7bijngyTHHQxZ6n1t69
+         HG0SOKDkqowKsZk7rwdkE8QKws6nWvboOLS5fKTYGuiM1XYtXFvwGTOr9aS5PN5QUGKa
+         Nb5H2LoWnU9VopbNnhZ619n1+MwEXEr00WVf2A2e3NCr1mQrHNdJeVBfr+CXKvEfHyrl
+         kznengZJbwZo0lLyPzQVQhiSKxwFYEsNSlsF1KDrsTAqXbIldkjZKt9PSlr/s19dfvYE
+         TMfx32Obxu48Q75LbiTtoU5l3UzQpOWLjLrsjKntBA+xRPApm/TPEWyLalFVGylpnROA
+         sqgA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745871887; x=1746476687;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tePCQV3hxkzYN9D5WiMq9e4t9p01f8JiMygqK8n0a50=;
+        b=aJQyV5hkPcLAaAIVUnNJp1u3Q72J1tU7R6xQv778L8/QInMEm9piKp+F+w+Q75e7mK
+         dfDKHEL44TaMxkNAy/psotiaBHT46HaIs8Gz41bMawQF4Y47GYu2NMZ61Ts7l95yqDbu
+         zuEjKLvWln5KRY/YBzgfKa0PnEQ34A/KpbulNE36INWaTmhfAY0xYTR3ke/vRr0wKklQ
+         4TZpbU79CzDyXrlVR5O8PVmdNAPEe934oUZg79Rqh06hIKcMajM/m/xxxC52Ze1Tbryo
+         5+IzvSeUsQ9g+zZuUeF0LUYDvlvXfgmnqPvjd6tFulaDTgddUpMAJ+rsvgKrBAk27NRt
+         hfGg==
+X-Gm-Message-State: AOJu0YxfMJYaNyr0Gm25JPdkGQHDvPPmyOewESKd+2Rqf5H2ZoXOmYNN
+	QdOYb9wkkAqLBM/Dwkm6ZhsHzx6HG/kt65zOrjXGZXCypNgy3wz/C5aJZg==
+X-Gm-Gg: ASbGnctAGyWDWsjxmAdahHxfMM1TCm4zPqnR6U2enY0PBDuLvUrCEyoEK2lxUGvlHO9
+	8OugaVHMJYU7tcHw+Wq+ZD+xz1bgxGHz/z7kv42hS8NJvGAE/dx6utUbG9I2/YZEgPqH6N4Xrfp
+	8XD8VrPGdTa+IQ4+xpP84a8LDH5gYSgzb9lj8IMyvO8es5n774wNVoqBWVuJDt6dNA+EHredjRA
+	Ta+H7SM/+lYgmEm8vqI/e+Favmk1vNBdgB8f8JSvvQxJ+QyugkCjRtv+IkR+gE5HTNYEESlEMkZ
+	6pE/jual0RGXZdBZVbEfmUvV8pHvzrNnLNpCliJw4LOnhUwN4lCX
+X-Google-Smtp-Source: AGHT+IHQE8xW/wyZJ7JSReUB7lWZ5UdFUR8XsUTd4xWqNaUoFSsUE6FnuFwVKgC0GYvV8I8IoB8s0g==
+X-Received: by 2002:a05:6000:420b:b0:3a0:83a2:1e79 with SMTP id ffacd0b85a97d-3a0891abe5dmr842818f8f.11.1745871886518;
+        Mon, 28 Apr 2025 13:24:46 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073ca4cbcsm11851042f8f.25.2025.04.28.13.24.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 28 Apr 2025 13:24:46 -0700 (PDT)
+Message-Id: <pull.1906.v2.git.1745871885.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 28 Apr 2025 20:24:42 +0000
+Subject: [PATCH v2 0/3] Fix REF_DELTA chain bug in 'git index-pack'
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    peff@peff.net,
+    Patrick Steinhardt <ps@pks.im>,
+    Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+    Derrick Stolee <stolee@gmail.com>
 
-When 'X' is a new branch I am creating to automatically (as the
-default for branch.autoSetupMerge is true these days) track the
-corresponding branch at the upstream, this output ...
+When fetching content from a remote, 'git index-pack' processes the packfile
+content, storing a packfile appropriate for on-disk storage and a pack-index
+helping to perform random-access into that packfile. To help with
+compression, the packfile sent over the wire can use REF_DELTAs in addition
+to OFS_DELTAs to refer to objects that are already known to exist in the
+client's repository. REF_DELTAs can also refer to objects within the
+packfile, though this is not typically done.
 
-    $ git branch [-f] X origin/X
-    branch 'X' set up to track 'origin/X'.
+Because this inter-pack REF_DELTA is not a typical data shape, a latent bug
+has been waiting that causes 'git index-pack' to die() even on legitimate
+packfile content that it could resolve.
 
-... from the command, with or without -f, makes perfect sense.
+This series resolves this problem while also creating a test helper for
+constructing packfiles with specific objects represented in specific types
+of deltas and in a given order. This should make it easier to create test
+cases like this in the future instead of updating t/lib-pack.sh through
+other means.
 
-It also makes sense if we reset the tip of 'X' to a slightly older
-commit on the branch, i.e. after doing the above, running
 
-    $ git branch -f X origin/X~4
+Updates in V2
+=============
 
-does not say anything.  The branch is still set up to track
-origin/X after doing the above two operations.
+ * Fixed a memory leak in the test helper.
+ * The test helper has a better CLI that makes use of the parse-options
+   library.
+ * The test script skips the in file and instead feeds the input directly to
+   the test helper.
 
-However, after doing these, and 'X' is _already_ tracking its
-corresponding branch at the upstream, resetting the branch with '-f'
-again will give us the same message as the first one:
+Thanks, -Stolee
 
-    $ git branch -f X origin/X
-    branch 'X' set up to track 'origin/X'.
+Derrick Stolee (3):
+  test-tool: add pack-deltas helper
+  t5309: create failing test for 'git index-pack'
+  index-pack: allow revisiting REF_DELTA chains
 
-and I think it is wrong for at least two reasons:
+ Makefile                     |   1 +
+ builtin/index-pack.c         |  58 ++++++++------
+ t/helper/meson.build         |   1 +
+ t/helper/test-pack-deltas.c  | 148 +++++++++++++++++++++++++++++++++++
+ t/helper/test-tool.c         |   1 +
+ t/helper/test-tool.h         |   1 +
+ t/t5309-pack-delta-cycles.sh |  34 +++++++-
+ 7 files changed, 216 insertions(+), 28 deletions(-)
+ create mode 100644 t/helper/test-pack-deltas.c
 
- * Does it make sense to say "set up to track" in this case?  If X
-   used to be set to track nothing or some other branch, and if we
-   changed the tracking information with the command, the existing
-   message may make sense, but otherwise, I would say the current
-   message is useless, and it is unnecessarily frustrating, because
-   those who see the message may start to wonder what it was set to
-   track before, but at that point, that information is long lost.
 
- * "git branch -f" on an existing branch is done to repoint the
-   branch to point at some commit, which may or may not be the same
-   one as before.  If the starting point happens to be a
-   remote-tracking branch (like "origin/X"), it also may set up a
-   tracking information as well, and as the first point argued, it
-   may make sense to report the tracking information _if_ it
-   changed.  But pointing the branch tip at a different commit is a
-   change that is also, if not more, report-worthy event.
+base-commit: 4bbb303af69990ccd05fe3a2eb58a1ce036f8220
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1906%2Fderrickstolee%2Findex-pack-ref-deltas-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1906/derrickstolee/index-pack-ref-deltas-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1906
 
-Suggesitons.
+Range-diff vs v1:
 
- - We should change the condition under which the "branch X set up
-   to track origin/X" message is given.  We should limit it only to
-   the case where X did *NOT* track origin/X, and we made X to track
-   origin/X in this invocation of the command.
+ 1:  5d4beb202d6 ! 1:  41aac8e782f test-tool: add pack-deltas helper
+     @@ t/helper/test-pack-deltas.c (new)
+      +#include "hex.h"
+      +#include "pack.h"
+      +#include "pack-objects.h"
+     ++#include "parse-options.h"
+      +#include "setup.h"
+      +#include "strbuf.h"
+      +#include "string-list.h"
+      +
+     -+static const char usage_str[] = "test-tool pack-deltas <n>";
+     ++static const char *usage_str[] = {
+     ++	"test-tool pack-deltas --num-objects <num-objects>",
+     ++	NULL
+     ++};
+      +
+      +static unsigned long do_compress(void **pptr, unsigned long size)
+      +{
+     @@ t/helper/test-pack-deltas.c (new)
+      +
+      +int cmd__pack_deltas(int argc, const char **argv)
+      +{
+     -+	int N;
+     ++	int num_objects = -1;
+      +	struct hashfile *f;
+      +	struct strbuf line = STRBUF_INIT;
+     ++	struct option options[] = {
+     ++		OPT_INTEGER('n', "num-objects", &num_objects, N_("the number of objects to write")),
+     ++		OPT_END()
+     ++	};
+      +
+     -+	if (argc != 2) {
+     -+		usage(usage_str);
+     -+		return -1;
+     -+	}
+     ++	argc = parse_options(argc, argv, NULL,
+     ++			     options, usage_str, 0);
+      +
+     -+	N = atoi(argv[1]);
+     ++	if (argc || num_objects < 0)
+     ++		usage_with_options(usage_str, options);
+      +
+      +	setup_git_directory();
+      +
+      +	f = hashfd(the_repository->hash_algo, 1, "<stdout>");
+     -+	write_pack_header(f, N);
+     ++	write_pack_header(f, num_objects);
+      +
+      +	/* Read each line from stdin into 'line' */
+      +	while (strbuf_getline_lf(&line, stdin) != EOF) {
+     @@ t/helper/test-pack-deltas.c (new)
+      +			if (get_oid_hex(base_oid_str, &base_oid))
+      +				die("invalid object: %s", base_oid_str);
+      +		}
+     ++		string_list_clear(&items, 0);
+      +
+      +		if (!strcmp(type_str, "REF_DELTA"))
+      +			write_ref_delta(f, &content_oid, &base_oid);
+ 2:  a9430447641 ! 2:  53a990e69ea t5309: create failing test for 'git index-pack'
+     @@ t/t5309-pack-delta-cycles.sh: test_expect_success 'failover to a duplicate objec
+      +	C=$(git -C server rev-parse HEAD~2^{tree}) &&
+      +	git -C server reset --hard HEAD~1 &&
+      +
+     -+	cat >in <<-EOF &&
+     ++	test-tool -C server pack-deltas --num-objects=2 >thin.pack <<-EOF &&
+      +	REF_DELTA $A $B
+      +	REF_DELTA $B $C
+      +	EOF
+      +
+     -+	test-tool -C server pack-deltas 2 <in >thin.pack &&
+     -+
+      +	git clone "file://$(pwd)/server" client &&
+      +	(
+      +		cd client &&
+ 3:  27d36402fe9 = 3:  1358039b2f3 index-pack: allow revisiting REF_DELTA chains
 
- - We may want to extend the "branch X set up to track origin/X"
-   message so that the message mentions what X used to track, or the
-   fact that X tracked nothing.
-
- - We should give another message when "git branch -f X" resets the
-   commit an existing branch X points at.  Unlike "what was X
-   tracking?" that is forever lost (hence the previous suggestion),
-   what X used to point at can be found out as X@{1}, so it is not
-   necessary to give the exact commit, but the fact that the branch
-   existed already may be significant (especially if you habitually
-   use "branch -f X" whether X exists or not).  Taking inspirations
-   from "git checkout -B X origin/X" that says "Switched to and
-   reset branch 'X'", perhaps "Reset branch 'X'" may be a good place
-   to stop.
-
-Comments?  Takers?
+-- 
+gitgitgadget
