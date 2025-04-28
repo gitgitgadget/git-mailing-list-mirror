@@ -1,116 +1,135 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8AC5294A1A
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 18:44:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C58B296150
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 18:59:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745865853; cv=none; b=jih1IrbBjsHQDXB8UCgDhprgusCxyhxy+kNXk4vzLfHBYilbDLIAzh256rotS4aow7P3+JVL13dwQpWCDyAWpODEgS6pCx+D9jgamhKDUcjv8pl7U3MgBojb2ynsZc3tqXxXFfPyCJ+QY2gbjIIVIyo2T4V9v3VJtHr708kFyyM=
+	t=1745866766; cv=none; b=DaHcCQgaJc1Wco/Hle25LdjlmbaU4G0Rb9Q0OsvdlckGOhU8bCu8TSdC18cEfKxeAJvrel/2i/bv4sdhdgX44AFo6Pz1s+szAD06Kw3gX4L6vxMf8JJprsoq6J2JRGI99C4nYsE/hSdTKb3+UZlOi7KXt2bPcncNELHsn6PwiM4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745865853; c=relaxed/simple;
-	bh=eQVljCx4b+Uvr5VB6imjYUVMbUV4k3NOgMDttukuklA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pe0O7aJrIO96qzPHc1NA2nLM5XQURJpU97n0xVo0kA2SQN2KssdEy+kMJNL15izOtECoJecn1ENVr8CRv4WW06sdMaXX5+tky9i87Wh0P8teuUTLQ7a8+eBeIkE24mGAI0F2HPRf7BkJh60zWqVh2EXY8DRiHhQaKZLK4abE5es=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b50VDA9+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Paxa8v7K; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745866766; c=relaxed/simple;
+	bh=C2wbUrL+Y+dH0waNCAsSPFEUwQ5QP1CNRQPYUzMi2Tg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=t1tM2KdykCoDmpGm0smZ+qWwwfXHSct/SbOTMtbpNREexmPLdqA26AxlgCR2voVOeQqfhn5cIM636PoQImjRfdJdFOYnmodS9LnEofy1F06EJluBxr7k+mQnh7cTdQStIEnchd1YeLN/7Oxtom/fvGK+sEehM2IL7eJ3c3yl3Es=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e+PjDQOb; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b50VDA9+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Paxa8v7K"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id C5463138096F;
-	Mon, 28 Apr 2025 14:44:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 28 Apr 2025 14:44:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745865850; x=1745952250; bh=/ebzLoE59x
-	usbv7xfvkLrIGUgg2+a8o2QuF/J0eue1Q=; b=b50VDA9+DcfJ7Df9MqANV5Z/Zh
-	crUgUFLTuSE8a0FgMgWPahBgrPeBJ6VD8ku5hKkgxM8fjlwI1WTSndgUF6gXxxfq
-	hKxivYVlvvVQTepq2tA2RwkFhCvFWUREbXb+1FAqbXeBkBjzWiES+hwVfhwtPbSb
-	bs9tYu76Y7+QXL2Aw87gX5GFzJuEuX2D7O/B0R4PnHPsF/GcWAWGcNeylGSvTws4
-	VedTopXWlwcDNYjXrbFzzbepZg57YGF9xymABfBUxLtAtzrBlPczoPv47LAjgYlf
-	giq3BKKWndRJ5pF7cS9YdfZnI6G17ybVBYcP0RGrEN1tlh0fbSdDrA69CjlQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745865850; x=1745952250; bh=/ebzLoE59xusbv7xfvkLrIGUgg2+a8o2QuF
-	/J0eue1Q=; b=Paxa8v7KIEeAvjvODSnSuh9NEd0HZsENf1GhyREc5IT6cQsWTLK
-	LzrOm5h3E2CJ1Bak5Ky3nb5+nOddhctEGPLfLA1Y9Gw8qQQd23wBYZg+4nQaEsXT
-	xEuOUqULCeMUvU3F5BKj+Du5LLcjco4SwHej4yW5GuTWDa7ngqMLDEpEoaz5LHZd
-	ol4cSJUiR4Yey8pWmQseUMMMgF75X5IZ3Tn6yemAydUv5NaBDN2eXEvfhuLrYiYR
-	2NhGRpQ52LTK6HCyK5U8gOMz9RXot7c3wEtDL8eZ0mCvrA0tyCpAdgNiFbTHmnDV
-	yim3wEHqOAn9eJU2Oyd556NXtpXX2OhjpvA==
-X-ME-Sender: <xms:eswPaMGeCnyIFdb9Fxwi5q1ZtzILHm238wVtoeU4oGUBb6KCKCwezQ>
-    <xme:eswPaFUaCVuWpc0j9T3qAnaReL7QkwFLeBxaWtxcprCakgZXWFYdhn0ZkffoJi4wD
-    HrJvRCVFk956kf20Q>
-X-ME-Received: <xmr:eswPaGLsROTnhpPfueK3UiqR8exaMtH-i-NCr3catD8_B-w6LxG1zdXEG860YzizXy3ZxYUfxEt6JY_quLMMfcqu-izX8Sp4I5sr>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedujedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvg
-    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhi
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:eswPaOEd9Ei9GUu-Qje9tC60mHYjijGUeBSHH4DopCF60z9wZ5OYKQ>
-    <xmx:eswPaCWjeEhbWIrsJcS_9VBdRfXDH1ZR4OEj6AUyWIeHKH_g2pWLNA>
-    <xmx:eswPaBNR8zqG_o5KLYjGJqzFoF0yeProSigxFLSEUepnViNlb7DQfA>
-    <xmx:eswPaJ0okl5PG2YHEBo3RO35d83v0aKMvakYq9FwSJSLKCgNuGj_pQ>
-    <xmx:eswPaPKTVeLh7wDaTZBOc0E-0ww5nnudO1m40lra4v-qinkJP-8lD-Px>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 28 Apr 2025 14:44:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH] gitlab-ci: always run MSVC-based Meson job
-In-Reply-To: <56a0f8fd-7568-b579-1ff3-e0b088b53345@gmx.de> (Johannes
-	Schindelin's message of "Mon, 28 Apr 2025 12:59:17 +0200 (CEST)")
-References: <20250428-pks-gitlab-ci-execute-win-meson-v1-1-f68683552b9e@pks.im>
-	<56a0f8fd-7568-b579-1ff3-e0b088b53345@gmx.de>
-Date: Mon, 28 Apr 2025 11:44:08 -0700
-Message-ID: <xmqqv7qoceiv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e+PjDQOb"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-707d02aca67so43608977b3.2
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 11:59:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745866764; x=1746471564; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Uh81WdT/7dbR6pCECgyMPe4mzAZtiN9Ch+3vGzkiwoA=;
+        b=e+PjDQObHesQ9uHjvWXWVhyV19WbDdIN1IMRX0cv054B56yK6xoMwGb9v4llAV/8yP
+         ObxMt6hTb5KNeyJOGWx3KUh1d16pHTxyXKcL0qEbcYdPerXeheyu+KMU3yZx/I43VRGz
+         yZtBA7AaZ2zWwhFVvo5RUYQ6vOBDULwLMSPmu+rGHjh3zvW/KHwPVSGio4oIOVxGGy4F
+         Tnq1uHRdVpl20cHb9fdPQc8gSVO35SyZAKByzyAZu1p37ZLXDTwLh2HsPvi4yI2eDLZf
+         Yp6wb1wRQQiH8cQR1Q2/suh1UZJbh77WKZF42UbDphnKYyNozuM1PBpKiqIEeGumdyUM
+         v6Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745866764; x=1746471564;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Uh81WdT/7dbR6pCECgyMPe4mzAZtiN9Ch+3vGzkiwoA=;
+        b=Hv+10M2YhtqnHPRTGyEEErX8KyZeGaspH4SGNkr12foHq/cIVzVyeFnUK+s0wH15vK
+         rbns1ksLkky5CmZyePct+Y654OLVAoZAca+JHU4S9Ha2ipylTCsUB+SBzDelTiWsCldG
+         Zk/orqlBb56857jVBOxEcbt9d4zUdFo2ujKzaCQpNCzG4O3tq78yy28+EM/2BUMFx8te
+         SXbqUYpo9mPVIUU0hW9Ne9m8WSls0DrRPGu2TFaHy/YG1redTO4JD5fBzJIHZVHucGcn
+         Qi7ylR0+oqeW9GRpySxAvg+M0VLiWL8n7ReKLN7bYP+gAG6DV3p9CjnRRliuP52fg6tw
+         SwIA==
+X-Forwarded-Encrypted: i=1; AJvYcCWJS0VzhkYPVl0xPb1BHFrAKXYBhiozZbH2G8oLYMzTyQL6YCDCLhZ+3qRvA8zdS93QmF0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzRxOrXKWNlaQCTzymlUdHAFioZnH/JSIAXv7NBjlNNW4WlHeXX
+	FohgEwcYVstPGM6CBUZC1Xwr4jvzKHQVmubQbXjXRTXW/Cm5lpllnzCshQ==
+X-Gm-Gg: ASbGncsOW1ReudYagxHBza6QLl/5oKotXmROSyu37Kw4uc3hmoY6pRa+GyY9wnRLGXF
+	Ubyz04RTJ10yQ9/hTytPI672poOswwxuqBV5sjGH/Npp6+wAZztukzuU6MZ6qyeD7P7uGdL14oQ
+	B7ovCcjqIECrA0mG5YlwMIDCnqPCdheHFNrvWAUn9JZaHg15/OCL4v7MrZaP9Zv4qCY5Bfcr0Ul
+	3YICaKmlzywIMDeQt2hjWitzGrQ8g2hcAmabMxxdzcKeaDLGBXp1rn3K9A4b/l2Baa2i54GLOT3
+	hbyCL7yeOORGrbz7Nmqk96Z59l+70HgioHCSuSKd81Ar1QFIlQOQdT6AURIT5wus7igWcHnKKsd
+	+CLsDRrZPeIkmHBWW
+X-Google-Smtp-Source: AGHT+IEtaneNNrqnVdPDEVKnu0uMrA/BPDnMOj1dQLvPmtKDQ8K0PfVjgejzgY788KKfsFUG9Od5ag==
+X-Received: by 2002:a05:690c:d1b:b0:6f9:af1f:fdd0 with SMTP id 00721157ae682-7089b436858mr2075127b3.31.1745866763956;
+        Mon, 28 Apr 2025 11:59:23 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:2567:30ad:ba54:9d4f? ([2600:1700:60ba:9810:2567:30ad:ba54:9d4f])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-70841aec6d5sm25590607b3.108.2025.04.28.11.59.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 28 Apr 2025 11:59:23 -0700 (PDT)
+Message-ID: <6df25bf2-6df1-4c3a-9061-e3297dec38ab@gmail.com>
+Date: Mon, 28 Apr 2025 14:59:22 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, peff@peff.net
+References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+ <5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
+ <aAsQwSfr-YvS2Mvh@pks.im> <090ef16f-42a7-8de6-a79e-5a1958e2c103@gmx.de>
+ <aAtZuU6Qqfag6OHj@pks.im> <xmqqbjskurz5.fsf@gitster.g>
+ <275808ae-7126-4a24-b5f3-283ea8023f5f@gmail.com> <xmqqmsc0dyyf.fsf@gitster.g>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <xmqqmsc0dyyf.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+On 4/28/2025 12:37 PM, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+>>> Yeah, I think we clearly showed our "it's just test helper, whose
+>>> callers are supposed to know what they are doing" attitude, but with
+>>> proper helpers, it is not too much additional effort to do the right
+>>> thing.
+>>
+>> But with this philosophy in mind I can change the CLI to be of the form
+>> "--num-objects <n>" to use the parse-options feature. This should make
+>> things more extensible in the future.
+> 
+> True.  If we are aiming to deliver this to end-user's hands in some
+> future, I agree that we want to make it extensible, make it dtrt
+> without being told, and make it harder to give wrong input. 
 
-> .... From my
-> point of view, Git is spending way more compute than is warranted. The way
-> Git's CI builds are set up, in many cases a single regression will cause
-> many tests/jobs to fail, and that indicates to me that Git's CI definition
-> (and even Git's test suite) contains too many redundant parts.
+I'm not focused on usability, but instead on faster development cycles
+if more advanced options are required in the future. I'll happily take
+some extra time now to help those who come after.
 
-While I also feel frustrated by watching paint dry after pushing
-day's integration results out, and often seeing that multiple CI
-jobs fail due to the same breakage in 'seen' I do feel if there are
-ways to avoid such waste, I do not think of a good way to do so [*].
-Are there some concrete proposals?
+> If we
+> are going in that direction [*], I suspect this should not be a
+> separate and independent input---rather, shouldn't the tool already
+> _know_ what objects it placed in the resulting output stream, and
+> should be able to _count_ that number by itself? 
 
-Thanks.
+This makes sense as a feature, except that we need to write the number
+of objects present in a packfile in its header. If we wanted to avoid
+the argument, then we'd need to load the data into a list before
+starting to write the packfile. By taking the count in advance, the
+implementation is simpler.
 
-[Footnote]
+> One thing it lets
+> us do to have this as a separate number is to create an invalid pack
+> stream where the header gives a wrong number, and as a test tool,
+> that may trump the convenience of not having to give the number
+> explicitly.
+But also, this allows generating bad packfiles which is a bonus.
+A very good point. 
+> Another thing we may want to add to the tool is to give it a mode
+> that either (1) refuses to place the same object in a single pack
+> stream more than once, or (2) warn when it happens.  The latter
+> would be useful to create an invalid pack stream for testing.
 
- * For example, if gitlab-ci and github-ci run the same CI jobs on
-   the same exact revision of Git using the same exact docker image,
-   if there is no reason to expect one to succeed and one to fail,
-   perhaps we can drop one and keep the other?  Or perhaps we pick a
-   single representative job and only after it passes start other
-   jobs?  None of the tweaks along these lines I can think of feel
-   satisfying to me.
+Noted for potential future expansion.
 
+Thanks,
+-Stolee
 
