@@ -1,112 +1,136 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC1C82797B1
-	for <git@vger.kernel.org>; Mon, 28 Apr 2025 15:56:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E45A20ED
+	for <git@vger.kernel.org>; Mon, 28 Apr 2025 16:37:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745855782; cv=none; b=atsJ/0/IXfGQ+eYmJV9UxIXSleaDlZ85ObSmuXvyU37qZc1c/Hf2rLxCrBEiUDHfr9dv6wddre47A0HUApP5+VgycYw3eFHCAGc2X+sTaU5fJMUM+aBFGAAxM6QAw+AL4L6ZgcTk5Eqbuykji05dl8HhtqyBY1YJwV9KZeEXrWY=
+	t=1745858255; cv=none; b=tAGI+caf/MBXSMoPaFmdGnqqvk1rWmsr1cPEMj55pZvYqzNDf4qBvm6pJu59E53jRS5uHK/TGj5qV9do8sXt4pn2Eo9OHWn0YBLOCTwI7dpXNiug53YGFC2Df0K/fQtXTCvEvpw84HAwOWhUw8wnwe+L2N3X15YDCb8fyS3HBao=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745855782; c=relaxed/simple;
-	bh=XH17vX7KKk/jgRKBI/hnHjn46mpb9uEufTU4pEWs4oU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=EKNBrnQKU1/hjJv5th5dZlNaVk1iDwTvNfGVTBanNDdQKhBgkFPORy8wmyDtywHNtpZ0OERpm8PLI8LJnpuGXtaO1Ch8oxDhwYMz9/ZijA7PQV320mNYZMtM3fPrLBwwYnMFGjt4WSnaskXtgyFpUCPHCzeAaRtW66EeRtEJ/zA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bR7TlQjK; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745858255; c=relaxed/simple;
+	bh=OCX0cMTHr1f/DvbCC3YW++mVsfyS2EzPH7TIvxwzdMY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RQKBqZIdBz+1TCGqEVKGdaelHAVi20GPmiJZNhMUQmuelJW5HwhOAQRt2+lqtge8/69dAKpsJ0MyP2mmj0ctEQYbG/fUZiwSeTRsLiPBgmlLNKVkhX0aMj8RsTJrp33mo/KJrn1Qc2nrVlloOmUnb/CHWW7EyUEsoxMZ6VF4HXo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OV+8VqJ9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bEnal/hC; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bR7TlQjK"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43cef035a3bso35731465e9.1
-        for <git@vger.kernel.org>; Mon, 28 Apr 2025 08:56:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745855776; x=1746460576; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=25EYEqfkSMU9yZMikfmO3ALZ3AYuzPoYAusjfi8Bugo=;
-        b=bR7TlQjKSNO6zYrW31zUDGFof+A8Xnk6AJ96tcxvBilTbWjx6/dNOZXwZ5+w6/EPNJ
-         WD2DUaKfPNpai79iNq+OfbZN7mWiaMPEr7RPYXdpmHWzj0BlSbOKcDfEi+7nCadrcCRt
-         j7bSC80u7jm7uM9+NOqO4KYtANvkgxjALl6nLN7EFM696+vXlDDBSEF/qo8O0v1mZlaP
-         ncA1gS8O1orycZ8rauKfdj7ZNbHReqoCG5wwVh/zgPn5MNWkqyZ7GXxUOmb2Fp2nEoNi
-         a2cjburfkE1Ay3aOBdVnRKLt3es1oJLR9RYuANipMR+lWnNfdx8mqligOjlcrMcqnJMF
-         J2aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745855776; x=1746460576;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=25EYEqfkSMU9yZMikfmO3ALZ3AYuzPoYAusjfi8Bugo=;
-        b=aL8vlz6iCUzYvoBHtNbHKbVZIOraF/TRfaQpO6UsJxruOf04hhNjDmlNQmLfaTXn9i
-         PS4v9dHJMdgbi/vqyQteAKe0QQ/VswDTonKb1Y1vxYUyahGPDsVy2AUgdcL1LUVlmgYV
-         +x/i/jJM4/wOZp9lQEASs+yGO6khI1xyi1diKfK+9cIM1GVqtstqNI3yXUX1OqHlE25u
-         5B1b6vAC9CIAPWCaZqVWw2wwayNRTcU/DhZC5deET070dyzbJOHPuAOytaPWQcF7tM3Z
-         N7aAWMZS4xH/QnjnxAaZ2k8kBMxsb1ohG2cxsNIozjujEz+IT1MS39aYfItc6dC/DM/x
-         VcAg==
-X-Gm-Message-State: AOJu0Yy04t5AWr+SC59e1lZ3Db3NWcZt+OY8JyY/qjRnFJvcICU0I3eD
-	EyBsddq1MUsUmNv+uOTGsv9MnW9qp6xSCLFMZddnwi+tSEU/qjzD3amHgg==
-X-Gm-Gg: ASbGncv6UMWS9qNBFWBgnHYNiGkQH5Cd5X8FXOAoEoXiOCcAJlJkjmki1su4o5XxDCR
-	vD6JvNjsUoxJ8QnRy5iM+gV/t+Gzb6sjWm4p4woe0uTqOKiyK/lhlvUd3VThhAbFQEV4C7tM4te
-	pnkLRDkz2GbZiz9i9/4uktubCyFj34/IUW4stdJdxudBpWtB+CSaj1rG5VTthODnpNDG3DXMlhF
-	XoZnkh59+TdPWw5XasPeKPSEowlnAOmB5EWgAp/kR+eueMFE5oVyNt6McEHRzYpp9IyW80iUjo9
-	OfH6EHX76gjbRmKT4dVDeqlI8iyZgq1UMVzSFIrMaFnDJ5lX+a9E
-X-Google-Smtp-Source: AGHT+IGValz7DxmTlbSUd9RwKQR1pP+Xc+yabhx3nrB3cdQkDdm5igMuHZVvlwCxHgyOWMuCnkrPOA==
-X-Received: by 2002:a05:600c:1d20:b0:43d:ea:51d2 with SMTP id 5b1f17b1804b1-440ab7b279fmr84812005e9.14.1745855776347;
-        Mon, 28 Apr 2025 08:56:16 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e46869sm11532195f8f.72.2025.04.28.08.56.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 28 Apr 2025 08:56:15 -0700 (PDT)
-Message-Id: <abe92305dcca8ebece332454004b6611ce2efd5a.1745855773.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1909.git.1745855773.gitgitgadget@gmail.com>
-References: <pull.1909.git.1745855773.gitgitgadget@gmail.com>
-From: "Christoph Sommer via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 28 Apr 2025 15:56:12 +0000
-Subject: [PATCH 2/3] gitk: do not set fg/bg color scheme for themed Tk
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OV+8VqJ9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bEnal/hC"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id C1D732540277;
+	Mon, 28 Apr 2025 12:37:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 28 Apr 2025 12:37:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745858250; x=1745944650; bh=NIDi6Ypkf8
+	GuHEr959HevA3TD6j7GV/snhSdOAWO0I8=; b=OV+8VqJ9MT8zqczeHQ5No3KPDo
+	uafz20/1lAsJZUjx9bYa0tt1YVnNOz78nRFH32LeAevQ28GTs5vW7Duh8RXDzb4D
+	OdoQnkEjIBzXqhldfrSyPwLFr2Mi/nSmQgw/cTEDj3pTMhw/oimEFL7x7Bp6wm1N
+	P5aIZ+KEdazUjv3MLpPIEl2M8uCkXs4oaMKrsetrjvFzTM2OSZg9lCt/QiPKUHby
+	yc7JPH+6yl3ZlqmLH3uL4fheHbKP7iOGRmZdMO5Y7BDgAqdj8yL1ZpffjO15C3Oe
+	ge9qcZHj//XSiZ99E6zjpnWjpYdGBfWcnrRGl25FxlfLQJduhHe1apeevS5w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745858250; x=1745944650; bh=NIDi6Ypkf8GuHEr959HevA3TD6j7GV/snhS
+	dOAWO0I8=; b=bEnal/hCccDjUMWSLTU2kMImvNYZC6F4tKzJZHugz1IF6Xqrcgm
+	px46jSXfTWLb1R5do14zUqa19BbiJ9gXBmshX6auZtLL6aT4DsaKPLYFlvZk1C66
+	s68/aFiXYX75TR6pdV4JhgO4b/JLoVQWBIG86sNOtY2WF2fopyCEipJYsGD3tJ1p
+	CBR286XcQ3xh6JdVfbjAC0pGGEYGtJ6vMYhqFnqq/GSLeuJ5nIFPoBJukDHjlGGW
+	vmcd0nAZJXQDDXyAfEC1VBPyLB+A3zWTNs1ZhGOZdsmwTEEGkIuThXr6SS3lBQBL
+	CYgDuO74xXhRPpkzmMlc98r8MrV1/UNwJSg==
+X-ME-Sender: <xms:yq4PaEbKRD23WrTYXWGT2odnF214S1Ju2BtEyYiw6KwHuDK8j3R3bw>
+    <xme:yq4PaPYfg1iNZR8WH5jGK7UQ2fkADvPLT6PnX9LQ9YXLaoKydUZMonZk3BWsPLH9A
+    BFlRvgo0bwchDWLPg>
+X-ME-Received: <xmr:yq4PaO_3s0CpaaS6iFVG6wbivDMx6RwAMjVshWbLeby-o3iUrGYvoWbTqBGDlbWdbeF4d-5NKoNY-qPzI_DdjBl_oxiS5DMxinBM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddviedugeegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehj
+    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprh
+    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:yq4PaOq2mFTp4OhFamcX45i8BJaew1ahPQwTNTBSikQ-TfWPlfryaA>
+    <xmx:yq4PaPrhVwHDRigEH_kyuSmJuEKlcYYNTbpWtLb-AgsEoNZknX70mg>
+    <xmx:yq4PaMRv0CYpCzmP-LoPfTRP9Y_bbt9b-QXiYJefIgU0ZdzpM2UDCA>
+    <xmx:yq4PaPo_dz7_rnQPF4IWSvZZ3V9jvn01aQHJp07PWjvKnhHwLux5PA>
+    <xmx:yq4PaH0mtcuhobQCovZCuaNzwOKfScPlb25ptL_R-FWHCbmmM9NikAlF>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 28 Apr 2025 12:37:29 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Derrick Stolee via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  peff@peff.net
+Subject: Re: [PATCH 1/3] test-tool: add pack-deltas helper
+In-Reply-To: <275808ae-7126-4a24-b5f3-283ea8023f5f@gmail.com> (Derrick
+	Stolee's message of "Mon, 28 Apr 2025 11:22:13 -0400")
+References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
+	<5d4beb202d6ed842de72928462a10a4f5faa2718.1745430004.git.gitgitgadget@gmail.com>
+	<aAsQwSfr-YvS2Mvh@pks.im>
+	<090ef16f-42a7-8de6-a79e-5a1958e2c103@gmx.de>
+	<aAtZuU6Qqfag6OHj@pks.im> <xmqqbjskurz5.fsf@gitster.g>
+	<275808ae-7126-4a24-b5f3-283ea8023f5f@gmail.com>
+Date: Mon, 28 Apr 2025 09:37:28 -0700
+Message-ID: <xmqqmsc0dyyf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Sixt <j6t@kdbg.org>,
-    Christoph Sommer <sommer@cms-labs.org>,
-    Christoph Sommer <sommer@cms-labs.org>
+Content-Type: text/plain
 
-From: Christoph Sommer <sommer@cms-labs.org>
+Derrick Stolee <stolee@gmail.com> writes:
 
-Ignore the uicolor preference not just for win32, but also whenever
-themed Tk is used. On themed Tk it was frequently only changing the
-background of only a few select widgets rather than everything -
-and the default uicolor was frequently not the background color that
-themed Tk used for its widgets, resulting in a messy looking UI
-(mostly light gray, with random widgets surrounded by darker gray borders)
+>> Yeah, I think we clearly showed our "it's just test helper, whose
+>> callers are supposed to know what they are doing" attitude, but with
+>> proper helpers, it is not too much additional effort to do the right
+>> thing.
+>
+> But with this philosophy in mind I can change the CLI to be of the form
+> "--num-objects <n>" to use the parse-options feature. This should make
+> things more extensible in the future.
 
-Signed-off-by: Christoph Sommer <sommer@cms-labs.org>
----
- gitk-git/gitk | 6 ++++++
- 1 file changed, 6 insertions(+)
+True.  If we are aiming to deliver this to end-user's hands in some
+future, I agree that we want to make it extensible, make it dtrt
+without being told, and make it harder to give wrong input.  If we
+are going in that direction [*], I suspect this should not be a
+separate and independent input---rather, shouldn't the tool already
+_know_ what objects it placed in the resulting output stream, and
+should be able to _count_ that number by itself?  One thing it lets
+us do to have this as a separate number is to create an invalid pack
+stream where the header gives a wrong number, and as a test tool,
+that may trump the convenience of not having to give the number
+explicitly.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 8cb17f39d41..da7507af360 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -11991,6 +11991,12 @@ proc setselbg {c} {
- # radiobuttons look bad.  This chooses white for selectColor if the
- # background color is light, or black if it is dark.
- proc setui {c} {
-+    global use_ttk
-+
-+    if {$use_ttk} {
-+        return
-+    }
-+
-     if {[tk windowingsystem] eq "win32"} { return }
-     set bg [winfo rgb . $c]
-     set selc black
--- 
-gitgitgadget
+Another thing we may want to add to the tool is to give it a mode
+that either (1) refuses to place the same object in a single pack
+stream more than once, or (2) warn when it happens.  The latter
+would be useful to create an invalid pack stream for testing.
 
+Thanks.
+
+
+[Footnote]
+
+* ... which I would welcome as the project manager, even though
+  personally I find that 'it is just test helper' attitude
+  attractive.  Not everybody in this project is experienced enough
+  to understand the 'it is just test helper, let's not spend too
+  much effort on it' attitude and elements in the code there should
+  not be blindly copied and pasted to production part of the system.
