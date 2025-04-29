@@ -1,160 +1,130 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D78FB279780
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 07:52:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6BC29DB7E
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 09:00:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745913152; cv=none; b=KHqtUK2QSncehOpypxAuW8iXloVjPN7CJa3DOoyjAnLuLzLiMaM2wyZIZxajMz4F19xySqkJlKRVZzeqi1T3z6/N6JiOhq3iNY4kov+xg8e00aDA+5+YxJ0Ox96o20cUJrvxLCXFX3QHzRKUAKgWBBwyoa7LYDenMLsJXK0mTdI=
+	t=1745917225; cv=none; b=X3mutwxMjTkyTSwYRxXAnl5V0eS7uBgBmBIlVtynyYEuZn9n5xwCpV5CvN1tpYIEsaPT0T84z+3qAv0Wnor/aMqEj5d0mgqi8tn+qKBamKaK4UyNCafVpcdFnDpIDGPy7tQW17m155bH/E9g6+NR0N0Ekj4yHHPUuoc4XcqU+Y4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745913152; c=relaxed/simple;
-	bh=sG9IXpVZ+/hrnDEWJP1JguwBa32C6eQK1r1xLkeGq8E=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=YCq8xl/7EXK/FWQGDY4ILTM1JrKTGIOKfxMZSWNRPfNMEuUj9Tj5mDiBz/ZdzWMNkg7FXfRkUZjXZeacDTLKnf9juf2V7yMY5M/khtwYc3bFXJlpffyBl2H8Ylyw0KAOA55hDLSTXfTWilg+a+JhKXlqFjk7r5DPedkZ9oCfw1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Qyn6sNlT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KLkFHw/3; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745917225; c=relaxed/simple;
+	bh=Oosm5hOxAs/WSs6OpHqNgqiJSUZc9/0OQb1twEjB+lc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=U3rfkQiDNFZaUz6bH8TpxOQPNsmmkuJxBBLk9xQyImrdkVNLAdzqip1oTLpq12PxXL3WkKCrAFc6lI0SS/MVGa+wrGzkI9Ye7XI6aoS1v8b8xkDfLV2PVA7UxowdG3h2SkV+QCkecFgUtFvN+CFwfKs22SW3G4T1MW2xWxBFv6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GF3hNYkN; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Qyn6sNlT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KLkFHw/3"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2D49D1380516;
-	Tue, 29 Apr 2025 03:52:30 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 29 Apr 2025 03:52:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1745913150;
-	 x=1745999550; bh=ixnmdmqMQslMltCSLZPd8ZtwFGjrEtd5U3/EmzTQE4M=; b=
-	Qyn6sNlTurdjhDOig/WHlj6ICGFanpIUfIWOTMXSP5quFGd/gBCJATib6FgJ3AjR
-	bEOuj3Idi30ddw1s5U/3WzZ/qb/5AhjmVe8UBNkvfS8MENIuou2u+vKIU4LlaLfj
-	63L2geJEbEue7F3R49Ogp905wK1T97jyGFgBV8SMRQM3smNLF+uza0MM4EmhygDv
-	nxlbDfVjDO+uj6ppqs7ET3Lxo88z9DWRhP+4xaFOJbCQl0CWwRYBwSgX/asEY5Wv
-	0Mc0mfU9u2kVyKVaCYECE1Aimgh3lVJtUcYWtsL4q92+K5L81Wbn8oFrR2Xf5qyA
-	atmyYw7ouIDE5/HgjZOsMA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745913150; x=
-	1745999550; bh=ixnmdmqMQslMltCSLZPd8ZtwFGjrEtd5U3/EmzTQE4M=; b=K
-	LkFHw/3BPStkO1LRnYOWcp8wFtRvtYI74BT4FpaE1JMD04ZU313qlSzk0pG8P6WE
-	ZF9l/ExyTyxgXM0ENPcaF96xmFOsT6t8/Ta83egkrDJqMEd8yw9IKk0bz1LrypNb
-	XSafS87zluEuJFRujCUKQp2dP1loNnScCvxgORKT0zRHBvis7PM7GlF60+DQaLjk
-	t5IxExRe11J44Vu/mIQ+D+3TDHm6l1EyAui6z1IDcKULDX8nYNtv39/Gr5GS6Mxd
-	6d28hGTvbCFX/YJnjAVvn/OWHDh4DZraN2KF0TCq5t5Prt+XyKBgjOeJPzcaa8aR
-	GbJoa4GdyToCwyZG/eZsQ==
-X-ME-Sender: <xms:PoUQaN6BkM9tjAbnpYHnECZ4d2vcNR2H0FPyTkjJjM5kYblJa9Yvwg>
-    <xme:PoUQaK7b0rnzXINupd4uHLObHH5tUd-sqxGNYNB-R-K_C0Y5Bbqf6dJjO_gboOYem
-    qrwuG-G55emV-W1yQ>
-X-ME-Received: <xmr:PoUQaEc17u9WPpjOho3a75GfKKrfKEGrsu_V0jJHAxlbuXa6jvUq6d40QdiJxLVjgu3TARsIXMVNsruCMA9BH6FBJ4fi3cUlpylBn2DDUYk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieefvdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PoUQaGLloSCVx3WLqrMRZB-IX0g80fF71kPDE-Q1yOe4_eeKp3WU1Q>
-    <xmx:PoUQaBJ7oAeW2PUfQVdnsZbeItZSIO1to7LwJRCrWNpuFc8_8R7sqw>
-    <xmx:PoUQaPwuZf9ti2ZziG2ogAquQVnfmJ9ugvwZ5X1L8MUwEr16yI7QUQ>
-    <xmx:PoUQaNL6OPEfruHePmNXrbl0pQaOy3T6d5dft1JLgiIpTVaXLLlRBA>
-    <xmx:PoUQaOls9uQgJEqXcQLytxlPwrGdcvAm7I8wbZial2OtzMLkOiOavbFl>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 03:52:29 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 12df889c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Apr 2025 07:52:23 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 29 Apr 2025 09:52:21 +0200
-Subject: [PATCH v3 7/7] object-store: drop `repo_has_object_file()`
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GF3hNYkN"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso27991925e9.3
+        for <git@vger.kernel.org>; Tue, 29 Apr 2025 02:00:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745917221; x=1746522021; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=k8laCAudJ3QeIigzRAKXMXeLmFt6d9ElHOK/LA0mZjM=;
+        b=GF3hNYkNDnOStPRpSde3NmEiaBOrEBIgL74ZB7mvZcbEGhPyK5mVJRmXXwPDChlF8B
+         tUyeR9mp+T/b14YOPQpS37jpkybswSHiM3dLoBB5YAUI5U/WhKzyq41oBZQ7/cl0zkCk
+         gl+57FnnXKr2poz1yHQXoIYPx+4os4IzqXTvTXn5O2RYJdUBRPdM7NlyGVfwjrxxwNX/
+         MFtz/KyGqvPSSjrPDarmNRuSPgxEA24ytmk0hW9xouHS1lCrAOraXBi0y0qRfSWUcE5Q
+         3o1qrmJ29FP6G6R0SgnH7TgD09fp2eCQgA72prHfh7OWfApEdUdXNmQLfdIzHP+0JQYH
+         Olkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745917221; x=1746522021;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k8laCAudJ3QeIigzRAKXMXeLmFt6d9ElHOK/LA0mZjM=;
+        b=Y3OYlzQyRj5eao8jz3y4gxaEuO4+SmfRIIHoI+I95QNBEVY9rDOQr0mfu4cXCF1UU3
+         migfvUnxDNIVdqYdECCAYuvz/ZDl5MjIUwOgIugIwqvtW9yEKiBjd/XXODAiGa8a4zzL
+         yHXcDp9HB2n3COsT1UFIu1i/b6mEJcdDLuvgtGkRFnyeB77N9XeJ0E2doCL5zZmBSZx+
+         nqMuVAfMb9WK69ZRlY/bDunJEGIdOCUxwUSMQy2MZMWqrgExLV+IsqHmcSW9SU7TwDux
+         ySGWNc6RINrurZI5m54rcjZVZerCPDtIgyAGPQ+sXecaaq1qjt2edM5/1ikQxsmE7fWO
+         +jCg==
+X-Forwarded-Encrypted: i=1; AJvYcCXW/SgmZFc15ecvSy84poxPGGR/p3eQbAUj85n8xKoRwgy6dSFpTc3Cv5/QxLtc1F3A/gk=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yy8wR7kOqGnfqh/K/qKUSoQAPe5CCvfTgMKJivblJwb2Vdi5wKN
+	BP1+YcpmF1VVmK1K1Yrqd3s9PNFy7dMbD0PdYDFNlpsv7IfgT7E27N/JmQ==
+X-Gm-Gg: ASbGncvbDWBerfZLD7dgndn7IHCEyvxNw6NrCYnSrNOsJ0NrBR7VqOsdT7yVySvODW+
+	dJ7rjU2bgbv2+GNnxJtfGb121313H1k77Vy/mCR77iFrqBEZe3bBAX0uibDOIIwP3+tIFwR8703
+	dTyDVLRvHMyVuvHGaGdIF1OdaQZcmEJaG+CWKQ7vTlB+9mjggsTU4b7ocHzDibKjyaRIAQVZsyH
+	LWRYme4ihK59AhL5aDPLWNt0CwMIiiHlkTxGtIE2xdObUqFmjLaTYPG12Zwhj056Tkp+LW9lP96
+	g3D6sdsaODodUVnECZ1QXgmr115GXYn56Ec2+WMMGvTs2dBCuq3rB+PJKFeCgj2RBey8dSabodz
+	u3aIOc9EIsl42Ce4v
+X-Google-Smtp-Source: AGHT+IFcQd1iKDfj9I6Hr960yWess4WXuyuypL2hX9VbhGIhBh7wQpvlUj7Lf3dPh5l6H7Hwa1Qx1g==
+X-Received: by 2002:a05:600c:468a:b0:43d:ac5:11ed with SMTP id 5b1f17b1804b1-441ad4e58cemr14319735e9.24.1745917221339;
+        Tue, 29 Apr 2025 02:00:21 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2abdf7sm181001355e9.19.2025.04.29.02.00.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Apr 2025 02:00:20 -0700 (PDT)
+Message-ID: <d71b3fc1-d2fc-436d-876c-0bd1475a88ce@gmail.com>
+Date: Tue, 29 Apr 2025 10:00:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v7 0/2] bundle-uri: copy all bundle references ino the
+ refs/bundle space
+To: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
+ Toon Claes <toon@iotcl.com>, Scott Chacon <schacon@gmail.com>
+References: <pull.1897.v6.git.git.1745609278.gitgitgadget@gmail.com>
+ <pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250429-pks-object-store-cleanups-v3-7-42902bad09a1@pks.im>
-References: <20250429-pks-object-store-cleanups-v3-0-42902bad09a1@pks.im>
-In-Reply-To: <20250429-pks-object-store-cleanups-v3-0-42902bad09a1@pks.im>
-To: git@vger.kernel.org
-Cc: Karthik Nayak <karthik.188@gmail.com>, 
- Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
 
-In the preceding commits we have converted all users of
-`repo_has_object_file()` and its `_with_flags()` variant to instead use
-`has_object()`. Drop these functions.
+Hi Scott
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- object-store.c | 14 --------------
- object-store.h | 17 -----------------
- 2 files changed, 31 deletions(-)
+Thank you for updating the documentation. This version looks good to me
 
-diff --git a/object-store.c b/object-store.c
-index 2db34804e8f..2f51d0e3b03 100644
---- a/object-store.c
-+++ b/object-store.c
-@@ -949,20 +949,6 @@ int has_object(struct repository *r, const struct object_id *oid,
- 	return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
- }
- 
--int repo_has_object_file_with_flags(struct repository *r,
--				    const struct object_id *oid, int flags)
--{
--	if (!startup_info->have_repository)
--		return 0;
--	return oid_object_info_extended(r, oid, NULL, flags) >= 0;
--}
--
--int repo_has_object_file(struct repository *r,
--			 const struct object_id *oid)
--{
--	return repo_has_object_file_with_flags(r, oid, 0);
--}
--
- void assert_oid_type(const struct object_id *oid, enum object_type expect)
- {
- 	enum object_type type = oid_object_info(the_repository, oid, NULL);
-diff --git a/object-store.h b/object-store.h
-index f0e111464c2..c2fe5a19605 100644
---- a/object-store.h
-+++ b/object-store.h
-@@ -276,23 +276,6 @@ enum {
- int has_object(struct repository *r, const struct object_id *oid,
- 	       unsigned flags);
- 
--/*
-- * These macros and functions are deprecated. If checking existence for an
-- * object that is likely to be missing and/or whose absence is relatively
-- * inconsequential (or is consequential but the caller is prepared to handle
-- * it), use has_object(), which has better defaults (no lazy fetch in a partial
-- * clone and no rechecking of packed storage). In the unlikely event that a
-- * caller needs to assert existence of an object that it fully expects to
-- * exist, and wants to trigger a lazy fetch in a partial clone, use
-- * oid_object_info_extended() with a NULL struct object_info.
-- *
-- * These functions can be removed once all callers have migrated to
-- * has_object() and/or oid_object_info_extended().
-- */
--int repo_has_object_file(struct repository *r, const struct object_id *oid);
--int repo_has_object_file_with_flags(struct repository *r,
--				    const struct object_id *oid, int flags);
--
- void assert_oid_type(const struct object_id *oid, enum object_type expect);
- 
- /*
+Thanks
 
--- 
-2.49.0.967.g6a0df3ecc3.dirty
+Phillip
+
+On 25/04/2025 20:33, Scott Chacon via GitGitGadget wrote:
+> Sorry everyone for the noise. There was a whitespace issue the tests
+> complained about, hopefully this fixes it.
+> 
+>> bundle-uri: copy all bundle references ino the refs/bundle space
+>> bundle-uri: update bundle clone tests with new refspec path
+> 
+> Scott Chacon (2):
+>    bundle-uri: copy all bundle references ino the refs/bundle space
+>    bundle-uri: add test for bundle-uri clones with tags
+> 
+>   Documentation/technical/bundle-uri.adoc |  14 +-
+>   bundle-uri.c                            |   2 +-
+>   t/t5558-clone-bundle-uri.sh             | 202 ++++++++++++++----------
+>   3 files changed, 124 insertions(+), 94 deletions(-)
+> 
+> 
+> base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v7
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v7
+> Pull-Request: https://github.com/git/git/pull/1897
+> 
+> Range-diff vs v6:
+> 
+>   1:  d6ec5c87b43 ! 1:  1cbf0787d49 bundle-uri: copy all bundle references ino the refs/bundle space
+>       @@ Documentation/technical/bundle-uri.adoc: will interact with bundle URIs accordin
+>        -   introduce a numbered namespace (such as `refs/bundles/<i>/*`) such that
+>        -   stale bundle refs can be deleted.
+>        +   client unbundles that data using a refspec. The refspec used is
+>       -+   `+refs/*:refs/bundles/*`. These refs are stored so that later
+>       ++   `+refs/*:refs/bundles/*`. These refs are stored so that later
+>        +   `git fetch` negotiations can communicate each bundled ref as a `have`,
+>        +   reducing the size of the fetch over the Git protocol. To allow pruning
+>        +   refs from this ref namespace, Git may introduce a numbered namespace
+>   2:  825d2b01eae = 2:  7f36484e267 bundle-uri: add test for bundle-uri clones with tags
+> 
 
