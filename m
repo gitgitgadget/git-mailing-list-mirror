@@ -1,169 +1,175 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010011.outbound.protection.outlook.com [52.103.67.11])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E979428399
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 11:00:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.11
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745924444; cv=fail; b=kB6b8gixIiQabCruTvlAC8JT18jJavr6yrIJSD0iq9OUoqm1JGczIQc7YnvJtBVNfGjpyxwdyQWQOyujllr8Y7i778SXm8NflDeHnjswftHMbA5yNkAJ9N/65kLqkLr2jUoiT6xr7hk9NjxcPBGCerMHJcuBWCczfPR+5hJWciY=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745924444; c=relaxed/simple;
-	bh=66bJ5DMpazf7+3g7xdNmnrBht2E7sdtSp3/386FXWDo=;
-	h=Message-ID:Date:Subject:From:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=T4bsQmLFglxdsB6Pgm/Hh1HP6LKBdcaM58sHf7V9guGprn0h4WLiedx8+59KJhxFTvUeNpZSE3CFvX0Uh3yJUruwXAaE4vnDrXJDZukF4KY0nSd5Da9e1jOAC/HWuMcsH6wFgF0u5TyBAQ6bRsRneX9XvMWCwVL8VyGzBRvW9Fo=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=mDdQ6bPz; arc=fail smtp.client-ip=52.103.67.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2A5329DB99
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 11:38:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1745926685; cv=none; b=vE816IbsuIIR6dOzqm9dh/WSP/OwV2/IF+Yb3UmsJWCwkvHxzZOwxOMVrjVsGpuh8aGHop4YfaBJUQePqAwPIGjRb9k6CG5qy3k7WPQXkPu+qnhbOrnmKdUZvw9Ys8+OwCb7180JF9GRuPfk2VT2JsEZ9UFfp//yYBTPO8im9f8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1745926685; c=relaxed/simple;
+	bh=7nZ6d7ogkjAGGQp1M5Jbu12vVn0OpGw3saGqFJCyFGA=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=rS0L/j4hHDILFCMGuwUbThMzZtW5k/6BEg+JHwZAO6Twj+sCER4JUFmsoZqURCvtrnPNeGK3Y67m9seDdjfsn5n//HEhHbm6+dmyEScAvO+lm4w0vx6T//fsukApgAVSpMqUHOK9XIhFhOxnfkYikLX2FyO5yRn0iWyn5XvsteU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TpDsC7j0; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="mDdQ6bPz"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=i1EsqtKM0pYyffb5y2uBDd27npi3zjk/Kf+VxZIZoNtYEc2Z6inaEAtXDBjDyHlUZtw4bOFkZkKUXsaypW8qCotzsKus3XY9QSJ428fk/7rgCfE3kkNo7W/vRNG7fH7NRqjpUHJy1B5TQvGRagpP1bfGcZj14HSQ8wtctfC5FQQ8pIKAyBjCFzw/PkdjR1q7sdJJ+1HF6Kx1T2XMm5w0adj22mSMmgMR6LfrJHKhyjG597EpZX+FNnunW4EDN0slkjMJDVrPGPhxOmzIipkLUEpHFa4zBNID3ulGD35/oblmVZJ9L68Cd5YKh5vn4DKmQUpypYDFhyLhNiv56D7KUw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=A9rprrw1RmLhFDtAcHCOQAAMK84tyrKxyFU3fShjUuI=;
- b=EC2VH/r7UAVbe6r+eDYnSOuUWo03AwjwSzsfG9cHJ5TLeKeQCUFSNOHSSxOiPE0AJdyKaNLj2P24DvgtuA2ZJQtFVTFNOlvPcA22wvZ0Wtu2YUIcpV4Slz0nXHUNf9e6YzzThsuMkxyz57ibEc8PmMO5GlGM7V7QGD5WqxUauoMzuE05pVhZ6rDkuOxF9S2dM8np/fVbKJHQuqIQaMt1JUQgdpcFsZRhAhf70mlVa4gFpT/6Px5kWFsgGJ7Yw8ZlBNGNqD326ESY+O7fiUARHU1ecJKT/J5Spg4IieFLDQV9+FlZ6hBp8+xZogNiJO/ocGArw4rxNcnyKpOQ2GQYmg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=A9rprrw1RmLhFDtAcHCOQAAMK84tyrKxyFU3fShjUuI=;
- b=mDdQ6bPzEojfx9Rrp61oJmx2Nb0++scbU+8ClXUT/3ADec3dsqEelNij12ZB14xh6BIhAMf9W/yBWUIb+M/jsvObkPPo22uuz3aZWcp2syINJFS6qSUrm/dzRryypLHhJBssjLDAXK1ipZWU+CxUHJjguW6B2CdYdwQslkLCorY9Yc/9b8ELD+NiG/UM609vV89aZlk1O7NBCoEhFJocztHA/NVLdWH3axRS369w34u9t0k+6WQzO4mvzft4PdQ3dNoikanOsN6zjYmN8qzKFFLInd1IOqxHNSq5HEGXebbHS6RThLiO0fXrMmvhzHYk7ebB8RS9ZdRMhlvB6Xm1uw==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN3PR01MB9743.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:170::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.31; Tue, 29 Apr
- 2025 11:00:37 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8678.028; Tue, 29 Apr 2025
- 11:00:37 +0000
-Message-ID:
- <PN3PR01MB9597BA68242D6229F2662F97B8802@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Tue, 29 Apr 2025 16:30:34 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] send-email: add --[no-]outlook-id-fix option
-From: Aditya Garg <gargaditya08@live.com>
-To: Julian Swagemakers <julian@swagemakers.org>, git@vger.kernel.org,
- Junio C Hamano <gitster@pobox.com>
-Cc: M Hickford <mirth.hickford@gmail.com>, sandals@crustytoothpaste.net,
- Shengyu Qu <wiagn233@outlook.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Erik Huelsmann <ehuels@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
- Yao Zi <ziyao@disroot.org>
-References: <PN3PR01MB9597DA8661D1AFDF4C927A11B8812@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597274E541169BDB8DC4297B8802@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Language: en-US
-In-Reply-To: <PN3PR01MB9597274E541169BDB8DC4297B8802@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TpDsC7j0"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43ede096d73so39879075e9.2
+        for <git@vger.kernel.org>; Tue, 29 Apr 2025 04:38:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745926681; x=1746531481; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gvHvwCr1h+3qbSnmK1qvOg6IJ9rWVgKE+wqMfHCKKA0=;
+        b=TpDsC7j0GhRTVaRCPrVUjS4ZSigM0cZpUsC7kvE/J/doyjABIKI272vFbAZqpDmNgy
+         pSaD7qghZMufDD2xbV+AUjJTkN+A/wkmR4d7pr5jrLWX6WiaeHbHHvA/Hi0uKC2tnu8M
+         S9gEmkQiu+si1FywKJc4mXFerKi2lku5133PbgQUhJgkUDlxANqwGOsdX1TcBQblNI6m
+         oilONKX9kRcBgQEEfi6/Ncwf9KdHeqtoJSCPN5A8NdhBzbwyUDkdTMMEqGGZq4QynanT
+         iBwGs+aVI5ilqJaAvabMr4g3f9clEi/U0U4ZSmLjaH6yP6Cm89+PKEmubb1XDhza45Bm
+         w2zA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745926681; x=1746531481;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gvHvwCr1h+3qbSnmK1qvOg6IJ9rWVgKE+wqMfHCKKA0=;
+        b=HAEYpopjN/JiRIdlsTp4hqpNv/ubRbY0boOnbFwaXf8j6lzdfoLGDdQwGp+2QVYHz7
+         FYHSUbSg9dNeXJjUhqfJRsUNnKFAmzm1DgbZ9ZE7CCzjUD3SE2mnVyMsiADb1lMm29yX
+         y9AR6nf7l6iyg74ocnOfSlwZdNV8t3qoamPtzM0XbJuHiHCE4m6Nd99vkvkLl+5ezXD5
+         /41YBHVKUm10YZCwjKwuEm5PcEdoLFufqcJC+Knw0vTwSrSv+Zh2ND4f0vzedepWYWTS
+         AAq+T6BHZFe4gvvT/CeKh2kMjasZiyPZ684b5JSwqVDmslpgtO7YAFNmgi18C1K2xNCr
+         dWGg==
+X-Gm-Message-State: AOJu0YzdFf8wO64F4cWuNq7Qkl4ixf6aE9wqsxXDi6zpuTMOUJG2Jh9C
+	sRlxWnWxjkg9bi+z1fW4YKstSHzqlYa/A0BhRdZQptE9hH9vyZEH0wuzVw==
+X-Gm-Gg: ASbGncs7lpgkCm2mg23zqDlB3Xs2ebMVrXUuGri2x/afh2Thou+1NkxMfWHMkDoB+Fd
+	Xe9otxUbb5S6fmQ21oJgk/6Ey0RrqhhPAKlZS9pRnz6UVatXtjoa993bmzSNSFCmJ6RxhnJhL2D
+	iyNtafq1kKuxJ9sxJl7atdb0y439gp/cBdFhx6EeZ7aZmKyZ6jjdKo5S+wQdI22ypH+YjEX1u9A
+	bOHDPh1f/NlqBRtZtF/siFWmT8vtXHm9dHkhnBwhIDigTPYPcj5TAzAgI8iqmhFkxIFakGsvwEK
+	yH2xxmSVAMbQAmN6W8a/rFbdpPr6Y7uVob00OxQSOw==
+X-Google-Smtp-Source: AGHT+IFU7qhGa4QLb0pW9fZQIUTRNvm/8CUgyCY7A3ZBXSNL5WFJhCA4cM9j5/7nxKkGaJ+Ss06aMg==
+X-Received: by 2002:a05:600c:348b:b0:43d:54a:221c with SMTP id 5b1f17b1804b1-441ac861d66mr31889875e9.18.1745926681045;
+        Tue, 29 Apr 2025 04:38:01 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2a2386sm190069015e9.14.2025.04.29.04.38.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 04:38:00 -0700 (PDT)
+Message-Id: <pull.1887.v3.git.1745926679028.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
+References: <pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
+From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 29 Apr 2025 11:37:58 +0000
+Subject: [PATCH v3] diff: check range before dereferencing an array element
+Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0024.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:26e::15) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <de5c8cc1-e006-441c-852f-d32c7ac1d27e@live.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PR01MB9743:EE_
-X-MS-Office365-Filtering-Correlation-Id: 50302bdd-5568-4c0b-4ff3-08dd870d128d
-X-MS-Exchange-SLBlob-MailProps:
-	7qh87CJt6y1ZnXZw9s8oIeZlMXmhQCjQYbyJW/9Q9bC1mTbWotkJ4S/tgzCdWObQ06pL2asrv0YfSwC6OjI5pfbwJ8jchxHUyMaU5MyEAsb2O/GCPYfNb8Pk1ZpRSQB8+E7+m863aeSudFA6/d7elhwQQd2QIIXz4ujpxy/2nJ0iD2k1XjMPe/H6lJONAOdWuQY8wpDtEpO+m9UXNCQmKKnTx660GjUbEE3wNwtcN1HCmnVNVqCSLQNey2nOjIjQ5VMrPAbI96svKDUBtx9hpuY9vRP8SBGkToIcuwlQ2l5qlH+w7zpnk9pWuRKIbTwNeC0jg7IVp/Pr5VR6SOi7nXVuRi//TwJXUnA2aDXKQ3LrVUcEoTjeipB2NfrHr03a+DdrW35vM3eE1yMH2NhzXm8lNEp6o7TvhzEVnxE5DNoUzOFiBDzKQVhFrTU5eTgD80Kc4bbv6pIhEQ5e9O6tTmi7hlMYEF1BtSBoPfWo+CX8qz8/RcKcDW7rxbMHNoa0iP5r7VZD7iSZu/grVoWLHxeQ+rs2nDsXDWYHXPUShpb9EgadH7FpzdvkTZxvYffDuPUKXl7X2BzgnFkSHXPNE1yfpj8AhnrUcgsshwSzS7oGw4b70JF1srWj/Cd889NL+NTs8xoQ/EplQc8kMHVgjynuNqPRp+P7/ETp5rMt6qqQCqsKygIW6tYEPvcAF8R2Wj4IRtAN8KH8jR+SrXBgkgE4wQUZ+TZyTH604xoByRF3oTDRfQv/kX7uug7A3pru
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|6090799003|461199028|19110799003|7092599003|8060799006|5072599009|15080799006|10035399004|4302099013|440099028|3412199025|1602099012;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?K2tFWU12eWJxTjV0bHBlcFpKeXJsaWp4d3BETzBuV0QxbmNEcWYwdFpIQ0VE?=
- =?utf-8?B?SlhIRTBzaVFTeFlTa2JpSUNSbUNZWlR0dDFmbFFuUjg5Z0Z3RXBqSzFrWnU2?=
- =?utf-8?B?RzdtclhKbXJuV0NMVk1UYlFuL1dDWG9waHdtaUczNXVkVXU4eVhra3ZTMjZ6?=
- =?utf-8?B?TytDQ0FsYi9ORmh0NUVaK0h2OS9RUjgrUXZtTGgyTUs4b1JITzRUNm9CVFFr?=
- =?utf-8?B?cnE4bmhnbnFGNDdsdm01ZWdRdnNDVjNxVHRuTXRIcEFqRVQ3WURvRFFLc2ho?=
- =?utf-8?B?M3E4Mnd1bU4vekpkbmVJZFR3cTNYYjdBQWF0M3dPOThadW5rL1Y3RlgvNnVO?=
- =?utf-8?B?YVU1QUVjbjE4Rk9zYUZraGc3Nnh1L1VtUHU1dHc4VFlaRk9tek9MOWpWeUpI?=
- =?utf-8?B?RVNGTmJmVDdZRnppQTN4bkFmclZtc3dXcUtWMFRoQ3dOTU55MTQ2aGEwVGZE?=
- =?utf-8?B?NDhHbUk0amtCUlRISUtSYXFiN0NnSlJDWFAxa0NvOGFZMG1Ub0N6TGFieUps?=
- =?utf-8?B?SDFUeWRCeGpJQlh1aHVXYWdsUUNjOHd3VWIxUDV0dUFiVnZLakI4RTRRZkE4?=
- =?utf-8?B?VVdwbHQveUpod1BmckJxQjh0cTdXcjgvT0VkNTRPcW1kMFFiR1k3U25wRVE5?=
- =?utf-8?B?TjNLazgycjVIVHhsd0JPajFnZHkxcjRweEN3akhRR0FkNW42R3lYdk15eVdM?=
- =?utf-8?B?YWhlWG05clVkbXYzZWxzcHVZaEpEbG82NUVjNEpvZHYrRU0xTktPTDhvMnpI?=
- =?utf-8?B?eUt0UDRaQnVvYVpydEJRd1VabEZpU01Jc0RLbEJ4VVJLTC83WnFSRU8zWGpk?=
- =?utf-8?B?b3FIMDY1SjZMbjlhMnBLVEovdnBNM0V4MStENXhJVlh6ak1yMTAxQmRkQVFj?=
- =?utf-8?B?WWlFZ3craVhmd1lwdmU1RXoyZVZ4aS9hVHJBWWs0ZmpPVWZnTkJZSGViK1hm?=
- =?utf-8?B?QklacjRFWThwemppUzRXcXpRWW9TRVE2dWJtemhnQkdvOVdFTldyTjU0cnha?=
- =?utf-8?B?SkNpc0pVUElOVkFST3FqcHlyelBjckxZVlF6MmFlVzNxS0xGUHY3T0t4N3VL?=
- =?utf-8?B?azd2R1R4T1hPUDNxNDlaN2loS0t6WS9wTURjOVhEMXJndTFmem5LN0NYUmw2?=
- =?utf-8?B?dHdhQko4ZUozVVNOUWVKVzg5UElIMHd2VGJ4WTREcEpkR2RzYjZsUFhiNHpL?=
- =?utf-8?B?RFFsVzJmVnE4dExOQ254dDExTWZHQ1dQU1VxNmpkNzMwRUp5WEIwUXpUU3RZ?=
- =?utf-8?B?YjkwcWZldmFvRG5ZaFJTSHlJenNQR1ZTRnJNSGJXNzJDUVdCSy9hbEMwTElK?=
- =?utf-8?B?VUpBZnhSM0dZYUlmaEx4WGN1TkkydUtjZ0R3QTRNdXY3aVp3d1RQZUVzZC9M?=
- =?utf-8?B?WTZNVEE2a1lGZ3lROHFJcDdlbjlhWVFFZDZJMXdqQ29mdkEyRHBuMXVYaW5a?=
- =?utf-8?B?NFh3WkRiYTdpU3lSdmYrTkd6ZjdJczBWTjFjQnZ4bkl3dUVDWU1yK1I5WDVi?=
- =?utf-8?B?ZCtWc2NRL2NqMURnUndsM3ZnT1lSM2hGT2NrbGtoT3I5R3hVeVY3LzJ1Q3dY?=
- =?utf-8?B?eFVJeW42bzNyRTlxeFZCcHVVWWZaazZEL29ua1k3UGpBa0J4TmxUdW9rOVNC?=
- =?utf-8?B?eERFQWg3MFVEMkZReExwU1lEL1ZoTTRpZEpIZFRLblMzUzFVejFQQmJ2V3Zx?=
- =?utf-8?B?U3VBdG5mZ09uYllWNklDdW1OZEhCKzRUWmxmdWx6cFozZldQclc2SjlleG41?=
- =?utf-8?Q?qisDpGyRh0l349xUkk=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?Wm9aWjFYSkFhVTROWGFLVVJTMG1tOXlya2N4ZDJLcGlWMnN0YU9vSklNSjIw?=
- =?utf-8?B?b21CUEdnTFNULzh5NEU1T25oRUlnMkR4QWZSTndIcWlHUmgrNGl0YllvLzh1?=
- =?utf-8?B?VFdsRzd2TWlnT2tuTklCd1IxYTNrRzNGcTc5VWRUdVVuRTdyRGxGOUJjaUJs?=
- =?utf-8?B?WWFWUWYwb3NKd3Q2dnpWQXFVMDhOQVBhditmeTcvL2QyTVdMSFV4Nlp4QXVF?=
- =?utf-8?B?eE12REdnSzUwN3U5RTVZeUJQck01b2MxNjExRjhhWmJvaUFvNVBJbmtlc0VO?=
- =?utf-8?B?UEFDWExUanZ0QTFmTGxFV21DejBENDFkU3RKTks5L0ZFUEppVTlwUFNHYWcr?=
- =?utf-8?B?SmZiUWFsaGZraE5sM05OUXNLdi95NGdqd3NGWGhhMmlYSWZjd2UvanVlQlV5?=
- =?utf-8?B?OVBsdmVFaXh1SkY2bDdSVDA5T1ZWcTBhcExycm5nWHJSSUNnRFQwcGU3VHJC?=
- =?utf-8?B?UWVpRmR6RU1Mc05xY1ROWXN3VmFyL1JYTVZ4VitrRCtOUjc5dm5nNENlNWpR?=
- =?utf-8?B?RnJHdDFjTU5BcVN3WmxxWG51V2dRUEtUUHprRExYWFhUdURrenNGTXBtZzdt?=
- =?utf-8?B?NEFvZnNZQU5EM0srNFdhM3hTWDlGK2V1NWI3MnRiV0ZnR1hoUVZ4d2Y0RW5N?=
- =?utf-8?B?OC8zLytZdEpCZk9Ea1dRZWcyOUppYTk2aTBsN2gzaml5ak1zNjB3RmVhZlhp?=
- =?utf-8?B?Q1JLV3cvc3VVR3Q0Rit1TXNhb2JXb3FNUkdCU29jUTA5QVVsN0EzaEkySGph?=
- =?utf-8?B?OEhBdmlpRnlSbUFNR1d4dkt3WTFGRUpZVHVNdStyNkJZdXJWbUVYTXkvNGFR?=
- =?utf-8?B?K1h3M2tGa3VPZU9jUzZoZG40cGEzVVJsM1BSS2pLSlJvV09MUWtuNTB4aHYw?=
- =?utf-8?B?TTNXcGdQVXN5cE5zckRZSU8xOWk0aFJSVzZuWkQ2a3dNTHFGcE9VWEJmYzFt?=
- =?utf-8?B?SUhQWGltYVFpY1BDYXEySnNWbTJiNGkvcDQwNTBMZklJeTBYbkVTcGdlYUQz?=
- =?utf-8?B?aFRVeUtRbDhvcWpvdjZOazdxVk5nODhGNnVsZ0xxakI5Ukd2NEJLbWl4b0Ix?=
- =?utf-8?B?elNuT09HQWZUZ1RHTnYvUmllbDA3OVk5ZmgvL2FkN1psa0FkTzJBL3YyMElv?=
- =?utf-8?B?dUdObmE3R3NrU3M1amc5WHJ1TTBaNXI0TWd4eFVTTjAyNWtmcU9lS0JBSkd1?=
- =?utf-8?B?eWlhV28rQ1lmL1VnVmI5S3p0TU85RmpOWlZEY05sVDhVWDYzUEh1TzI1cnF1?=
- =?utf-8?B?cGpBZC85eExTalk1NUsxVXJzTXhFRjlISHhrbHRaOFMrLzhjejgwaVRsR2Uz?=
- =?utf-8?B?SGRrRnlpZWlsQW40YVBlc29lemUxYjc4SkdGOHExNzJpY09vUVZURjFQdHlM?=
- =?utf-8?B?WEgrRDl6U2dhTlVlU09idEQ2TEErZnc3U2VHY0F5dXg3VE9ESW80ZWhlTisw?=
- =?utf-8?B?SjhHZllvSmlWZThlQzhINS9xT3VXbHNyZzliS0hwMnd2b0hwWVR3d0hYZCta?=
- =?utf-8?B?aHF5MjgyUUhpT2JsRjNEVmUvd2lWTW1FYzJsWHM3VS9tM3VpZG5GYzVyTG40?=
- =?utf-8?B?RXl5NlZoT0RkYjN5d1VYRDR5V3hENTZnY3A4alpobVU0SUxFWU5EZnVyWVBh?=
- =?utf-8?B?NVBlbjlTeFQrSnZuKzV1cGcvOW94cFIzWWozemkxV2pVODdqSVpMUHJ3M0V2?=
- =?utf-8?B?Z25mY2VwMGlRdUpIT2xWL2pWZU5zclNLWHpZejRDNlhWVEtHU3NNQmhabWRs?=
- =?utf-8?Q?mCm5Bt2sQYSHWy6ZTSUMdABmnWZtswuHLYspoW+?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 50302bdd-5568-4c0b-4ff3-08dd870d128d
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 Apr 2025 11:00:37.4147
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB9743
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>,
+    Johannes Schindelin <johannes.schindelin@gmx.de>
+
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
+
+Before accessing an array element at a given index, it should be
+verified that the index is within the desired bounds, not afterwards,
+otherwise it may not make sense to even access the array element in the
+first place. This is the point of CodeQL's
+`cpp/offset-use-before-range-check` rule.
+
+This CodeQL rule unfortunately is also triggered by the
+`fill_es_indent_data()` code, even though the condition `off < len - 1`
+does not even need to guarantee that the offset is in bounds (`s` points
+to a NUL-terminated string, for which `s[off] == '\r'` would fail before
+running out of bounds).
+
+Let's work around this rare false positive to help us use an otherwise
+mostly useful tool is a worthy thing to do.
+
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+---
+    Range-check array index before access
+    
+    If we want to check the range of an array index, it makes much more
+    sense to do it before accessing the corresponding array element, not
+    afterwards.
+    
+    There are two more instances of this in the clar code, fixes for which I
+    offer in https://github.com/clar-test/clar/pull/115.
+    
+    Changes since v2:
+    
+     * Rebased on top of js/range-check-codeql-workaround.
+     * Rephrased the commit message.
+    
+    Changes since v1:
+    
+     * Clarified in the commit message of the second patch that this
+       range-check technically was already right before the array access it
+       wants to guard, but that it still makes sense to move that
+       range-check to the beginning of the loop condition.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1887%2Fdscho%2Frange-check-array-index-before-access-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1887/dscho/range-check-array-index-before-access-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1887
+
+Range-diff vs v2:
+
+ 1:  ddfb44ed924 ! 1:  3c6e2647863 diff: check range before dereferencing an array element
+     @@ Metadata
+       ## Commit message ##
+          diff: check range before dereferencing an array element
+      
+     -    Before accessing an array element at a given index, we should make sure
+     -    that the index is within the desired bounds, not afterwards, otherwise
+     -    it may not make sense to even access the array element in the first
+     -    place.
+     +    Before accessing an array element at a given index, it should be
+     +    verified that the index is within the desired bounds, not afterwards,
+     +    otherwise it may not make sense to even access the array element in the
+     +    first place. This is the point of CodeQL's
+     +    `cpp/offset-use-before-range-check` rule.
+      
+     -    Pointed out by CodeQL's `cpp/offset-use-before-range-check` rule.
+     +    This CodeQL rule unfortunately is also triggered by the
+     +    `fill_es_indent_data()` code, even though the condition `off < len - 1`
+     +    does not even need to guarantee that the offset is in bounds (`s` points
+     +    to a NUL-terminated string, for which `s[off] == '\r'` would fail before
+     +    running out of bounds).
+     +
+     +    Let's work around this rare false positive to help us use an otherwise
+     +    mostly useful tool is a worthy thing to do.
+      
+          Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+      
+ 2:  73cae301293 < -:  ----------- read-cache: check range before dereferencing an array element
 
 
+ diff.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-On 29-04-2025 04:22 pm, Aditya Garg wrote:
-> Add an option to allow users to specifically enable or disable
-> retrieving the Message-ID from the Outlook SMTP server. This can be used
-> for other hosts mimicking the behaviour of Outlook, or for users who set
-> a custom domain to be a CNAME for the Outlook SMTP server.
-> 
-> Helped-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> ---
+diff --git a/diff.c b/diff.c
+index c89c15d98e0..18ba3060460 100644
+--- a/diff.c
++++ b/diff.c
+@@ -892,7 +892,7 @@ static void fill_es_indent_data(struct emitted_diff_symbol *es)
+ 
+ 	/* skip any \v \f \r at start of indentation */
+ 	while (s[off] == '\f' || s[off] == '\v' ||
+-	       (s[off] == '\r' && off < len - 1))
++	       (off < len - 1 && s[off] == '\r'))
+ 		off++;
+ 
+ 	/* calculate the visual width of indentation */
 
-BTW, I am not sure whether I need to send this patch in this thread too. It
-is a bug fix, which I encountered with my adventures with git send-email.
-
-Link: https://lore.kernel.org/git/PN0PR01MB9588EBBF200EA002E558D4E0B8872@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM/
+base-commit: 0f558141ed3b93b393151367b9569446cd24caab
+-- 
+gitgitgadget
