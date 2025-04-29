@@ -1,69 +1,69 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E6D2B2DA
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 17:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1588253949
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 17:53:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745949223; cv=none; b=uoAMGbCon1O/Wc+SYM9ZHf5LG1N1WdZZvgfrJ1tL3VQGxl5UWbQrMHYikUtOv8p0hmRGns9Eu9XFj2xKJYaVsnisr3j29AFE384B2Pj9X+RfiBT3XrP2voRAgrZb3PTwF/PrZ0uVUL4k3uqeJS4ELicTRAZgLkYazJZas05WWlw=
+	t=1745949228; cv=none; b=htfyAH0yHufuIZH+SezVSYmWncyBynRve+lZK2JEHNQRXRipqD53AfrQMyu6CbHRXTcpV3QGXSRP9ZTGNiOtwKld3qdGqqoFStu26w0g5dZrvZefXJOwcmQOKaN+22qWH2bCwVAiqSDBKZARSIdjq/J5LAd+MQlX4/H8FqkgmHQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745949223; c=relaxed/simple;
-	bh=q3uGrDcAXXxd+5ht59WbPHHqMp8V5BPD4M0QMrQDphc=;
+	s=arc-20240116; t=1745949228; c=relaxed/simple;
+	bh=5cM3ecwQ1SkOPejhQ61jaXjpw7bJEGXNMD65m22rQAY=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=nbJTjKbvhVRzJIkw97EnOAsDF3kjCO76MZlD3Toj9b+pYXBi9B+ZUk1kVF2TX8IfCd/1Mo7HeI3wg90TMUFXgTu3OxCIl+UFVH3m3RKQiBy0g9Ji0hM3x3EL2rIk1MKp2exGgdCOpiBWFSNG2VTHG/eGynBhYK9wnN19WcTzPiE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CBEIF3iS; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=Nq2FF3qgEZaPZNXGh7xvhKL3PI4riEgh9XBMSNeamB5WxIWjF6ZHrnmrKtwr+QlGEiALyelsbZ1OxGotxuSvpdc/cAnrRsigL95utzlNDSwb44FT8P2+l4WTThOl9aFsmYilYL/unXCaRr5Pf8g4TGY0dtDBzJOf0i8QoERpP5g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EysKVEE2; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CBEIF3iS"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3913b539aabso3471324f8f.2
-        for <git@vger.kernel.org>; Tue, 29 Apr 2025 10:53:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EysKVEE2"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-39c30d9085aso4655406f8f.1
+        for <git@vger.kernel.org>; Tue, 29 Apr 2025 10:53:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745949219; x=1746554019; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745949224; x=1746554024; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=BxgRYOxI2MbvbCYg7EQ5daRFUpIA8e8EZjInb5s88XU=;
-        b=CBEIF3iSjpN9A+Bh5yiFSap5BDwCjoFAzrSDAsULDzqBAIo7kADyiTGTqArnvSZe2w
-         FMPijJsBANKxK7rPMrEWFiDH1J3mq3pIciocdlRdgZHZNbkQjhz4PJi2FQHextdUBKD0
-         L2Td+MeKRnlHehseAZB/W0lj8hHc+lYI1nzZA5VIZkvyA9GKcDN5UzUJm0oD5cT88rP1
-         n3s+i9YcbaVH7EzuTtRblKYMmSu7liKrJcBkHloZGqiPOcjokgAogG6NuHGE+qzl2n8g
-         JMgVhG3v5ux3T6h9RIBQT4PGHDVTeDdgOjv1rYq0hZaFbstCULiaFk5wUS7mt5Smauk9
-         bI8g==
+        bh=L+SyYg+t+ZFpF+ucxXLTfF5NTk0n2//bZ9EWgFgN4v0=;
+        b=EysKVEE2j2uZbi+gShuDeQgDVmSt0jhJ+dgptMrA69wAny1TqJMTqXzVtzN8V5RTzn
+         NyyEpWkZglO2brcTMUR+BG8voolE4QRWzrO8Ibep1vtLqS0ulnVYa++YqpJXEB2otRMR
+         eXOJNBK6cUykrNOHBkCPPbTSO3qf2cAk1L7DluwvXPaIejfK3ZdxQCnYK15c8OVfN9QR
+         ITeNsYc6Hc/K4Xnx6au5GlbsXyVLD3TwazAtTHI1Y3a6L4nGFOk2nHmZlPxXtx+WQsoc
+         LHRHr04zIIU61CmhUAoz4FNOzzSa/Y6neVeoS0MqTZJXnXOuKp7Pa8BFoa1+0n4m5YNe
+         IIrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745949219; x=1746554019;
+        d=1e100.net; s=20230601; t=1745949224; x=1746554024;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=BxgRYOxI2MbvbCYg7EQ5daRFUpIA8e8EZjInb5s88XU=;
-        b=hbllTWVWhyhMyktASFS+shYTbgjfZY43Id2vPKzaTw5TJRgIlr4/pyhc/xA7adOp8g
-         TTRPp1c/69h3lRwTwCKPNFUPaQnhDUUEfclAD7XMDkNeRj0W07/CSCw9UTgs19j0BAkc
-         v6Usyx28Fzgp0JBf5pP8VEW5awnvzCJUUmx/MDhdG//+c+Uq/jM69lcH/97bOfV8FY4d
-         hcB68deieGhia2WQ3+wCPspmdJ/GxKk6Yk1Ulzp5PwmTKLg6RBHMomDL7UkjTEj1JBTk
-         lu8VgbMC3K1pdQTMd9cH+tdyZYOcc18xpERm2E15iD8uW0nSl2bNmBw6+M6BqXDRw71x
-         7vyg==
-X-Gm-Message-State: AOJu0Yxn1CCYdbwobIXciHw/AdmGFI129C37Sl3AJtoxogsMy+7jyH+v
-	dBMgFrtscqjk/yxUVOa/c2AzcgMTzRYx8lKZapCzsNAgJ395BbToaZxiypq9xcSfBA==
-X-Gm-Gg: ASbGncuMUCmVEnU/vL3XKcz1e3ioNjbRSV3XSR1pM8W3LMKseX3lUQktH0jDFtSNdel
-	sbBo/L5AirkdMVzaIbtmRyW9M2StGVES5/Ruojw86EKqHv0k3TsGx+4pC5cAj8RtyRJoUMY9P9A
-	zzS+APSsFt4QTe8HvPdzXJR0EtvDka2efRPPJfu4qiqSr3boZ0o3V3bR6mLNcKcFKkp+hvJ5Xfh
-	2/BZYRT5/od15o7SmsnzfgrLkoHRt+TNQDX8fbumWfnHHuKpVV+YEa3o84AEmQ7YBtBJPFCrELm
-	ML57XBg79v4+Cl+gK2dumHXsI6NokoFMAf0=
-X-Google-Smtp-Source: AGHT+IEBJckvJvSLGFdQCIsVriMglNIBLv0Ez+7hSKDW1vFCKy3xIp357W9ChCK6udoZAXJrv26wTQ==
-X-Received: by 2002:a5d:47c5:0:b0:39c:30c9:822 with SMTP id ffacd0b85a97d-3a08f77c202mr240454f8f.30.1745949219355;
-        Tue, 29 Apr 2025 10:53:39 -0700 (PDT)
+        bh=L+SyYg+t+ZFpF+ucxXLTfF5NTk0n2//bZ9EWgFgN4v0=;
+        b=cWiSD4f/Ps8swH4kwFhVLKVDf90fZHIIVg8RbQ7iC3NCfuGwymJ6CVxX+x6gLn8XeF
+         yg0/sAAolaVcPHeNE89AtKyvZpf/naSlvfTNrqOlsY9WC6fZv0IbyeXcCYsh002eCoVH
+         v7z+Erd/jyRtoUg+WugRdho417PaOZTeX3w2iY0Nzm5TJZb3s8FDqRUS1/j2BTh9Y9gM
+         isbBmOZIj4YOALG+GUtFYA7NqMy+wJIrnc8nMuvmPirWGmCHX+vI93xfbpqt+mpQLGIl
+         aSrOx7TwXs9JW/CD16ThKzXR2t9ohVwDW5+7Gxy0hYt1i/nLHg3lmAc0eCFv2SZe3VsO
+         EfCg==
+X-Gm-Message-State: AOJu0YzSEp5wMaYwV4VWDwDRD72fl/3HAGWFKuVaAQqKLWWB/jNgvS/A
+	VhzlJBBGpCoa48GrLet7l95JkTgpg/tpCeR6pqPfixmcPQeLaw31mdMvLliIJ+dEYg==
+X-Gm-Gg: ASbGncu4xQgz7jjrIlXfDVDs8SI3HpOITdSnn+GiK1kpxXuy7z0oXG+0J/fb6ywd8cz
+	DwMzCKqgOB8YR1m4WQGOcMG5DWrksiG4Bq24qo9oW2Bq5xG4YcpqyUhIShFjdIaBrn5Vu9VwhMe
+	6zwPMyECgAvfDwI5qhyolUn1iIK+zQaXhldRYtjq5bFJ3Q5IcVnxVMgOOY2gzptYBxqNXe3P7YP
+	jyD2rBdx76CC2jt+HlaWBuqiwf4SPQFfxq2SfggRCX0dT6mm9XeILLT1xtJgcNZGc5wv8UO/nvP
+	/a3U0CoTB1AMXCIucp7idgksoGm5YXDndnM=
+X-Google-Smtp-Source: AGHT+IHAqoEMoRSQGRmR/bA3j/HGV3Is9rTcsHTAUcc4bidZ7iKoEQvFhljj+NHK6qX51jYZCkki1w==
+X-Received: by 2002:a05:6000:18a7:b0:39c:2688:6edd with SMTP id ffacd0b85a97d-3a08f766bc4mr279321f8f.15.1745949223744;
+        Tue, 29 Apr 2025 10:53:43 -0700 (PDT)
 Received: from localhost.localdomain ([105.113.85.121])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073ca511asm14261782f8f.26.2025.04.29.10.53.37
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073ca511asm14261782f8f.26.2025.04.29.10.53.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 10:53:38 -0700 (PDT)
+        Tue, 29 Apr 2025 10:53:43 -0700 (PDT)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v2 02/10] t/unit-tests: convert reftable basics test to use clar test framework
-Date: Tue, 29 Apr 2025 18:52:54 +0100
-Message-ID: <20250429175302.23724-3-kuforiji98@gmail.com>
+Subject: [PATCH v2 03/10] t/unit-tests: convert reftable block test to use clar
+Date: Tue, 29 Apr 2025 18:52:55 +0100
+Message-ID: <20250429175302.23724-4-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250429175302.23724-1-kuforiji98@gmail.com>
 References: <20250429175302.23724-1-kuforiji98@gmail.com>
@@ -75,66 +75,65 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt reftable basics test file to clar by using clar assertions
-where necessary.Break up test edge case to improve modularity and
-clarity.
+Adapt reftable block test file to use clar testing framework by using
+clar assertions where necessary.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                         |   2 +-
- t/meson.build                    |   2 +-
- t/unit-tests/t-reftable-basics.c | 219 -------------------------------
- t/unit-tests/u-reftable-basics.c | 195 +++++++++++++++++++++++++++
- 4 files changed, 197 insertions(+), 221 deletions(-)
- delete mode 100644 t/unit-tests/t-reftable-basics.c
- create mode 100644 t/unit-tests/u-reftable-basics.c
+ Makefile                        |   2 +-
+ t/meson.build                   |   2 +-
+ t/unit-tests/t-reftable-block.c | 383 --------------------------------
+ t/unit-tests/u-reftable-block.c | 373 +++++++++++++++++++++++++++++++
+ 4 files changed, 375 insertions(+), 385 deletions(-)
+ delete mode 100644 t/unit-tests/t-reftable-block.c
+ create mode 100644 t/unit-tests/u-reftable-block.c
 
 diff --git a/Makefile b/Makefile
-index 13f9062a05..7b12bb078c 100644
+index 7b12bb078c..239c575dad 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1362,6 +1362,7 @@ CLAR_TEST_SUITES += u-oid-array
- CLAR_TEST_SUITES += u-oidmap
+@@ -1363,6 +1363,7 @@ CLAR_TEST_SUITES += u-oidmap
  CLAR_TEST_SUITES += u-oidtree
  CLAR_TEST_SUITES += u-prio-queue
-+CLAR_TEST_SUITES += u-reftable-basics
+ CLAR_TEST_SUITES += u-reftable-basics
++CLAR_TEST_SUITES += u-reftable-block
  CLAR_TEST_SUITES += u-reftable-tree
  CLAR_TEST_SUITES += u-strbuf
  CLAR_TEST_SUITES += u-strcmp-offset
-@@ -1374,7 +1375,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
+@@ -1375,7 +1376,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
  
--UNIT_TEST_PROGRAMS += t-reftable-basics
- UNIT_TEST_PROGRAMS += t-reftable-block
+-UNIT_TEST_PROGRAMS += t-reftable-block
  UNIT_TEST_PROGRAMS += t-reftable-merged
  UNIT_TEST_PROGRAMS += t-reftable-pq
+ UNIT_TEST_PROGRAMS += t-reftable-reader
 diff --git a/t/meson.build b/t/meson.build
-index bfb744e886..8a42b595d9 100644
+index 8a42b595d9..e0d723e74b 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -8,6 +8,7 @@ clar_test_suites = [
-   'unit-tests/u-oidmap.c',
+@@ -9,6 +9,7 @@ clar_test_suites = [
    'unit-tests/u-oidtree.c',
    'unit-tests/u-prio-queue.c',
-+  'unit-tests/u-reftable-basics.c',
+   'unit-tests/u-reftable-basics.c',
++  'unit-tests/u-reftable-block.c',
    'unit-tests/u-reftable-tree.c',
    'unit-tests/u-strbuf.c',
    'unit-tests/u-strcmp-offset.c',
-@@ -54,7 +55,6 @@ clar_unit_tests = executable('unit-tests',
+@@ -55,7 +56,6 @@ clar_unit_tests = executable('unit-tests',
  test('unit-tests', clar_unit_tests)
  
  unit_test_programs = [
--  'unit-tests/t-reftable-basics.c',
-   'unit-tests/t-reftable-block.c',
+-  'unit-tests/t-reftable-block.c',
    'unit-tests/t-reftable-merged.c',
    'unit-tests/t-reftable-pq.c',
-diff --git a/t/unit-tests/t-reftable-basics.c b/t/unit-tests/t-reftable-basics.c
+   'unit-tests/t-reftable-reader.c',
+diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
 deleted file mode 100644
-index c9e751e49e..0000000000
---- a/t/unit-tests/t-reftable-basics.c
+index 22040aeefa..0000000000
+--- a/t/unit-tests/t-reftable-block.c
 +++ /dev/null
-@@ -1,219 +0,0 @@
+@@ -1,383 +0,0 @@
 -/*
 -Copyright 2020 Google LLC
 -
@@ -144,222 +143,386 @@ index c9e751e49e..0000000000
 -*/
 -
 -#include "test-lib.h"
--#include "reftable/basics.h"
+-#include "reftable/block.h"
+-#include "reftable/blocksource.h"
+-#include "reftable/constants.h"
+-#include "reftable/reftable-error.h"
+-#include "strbuf.h"
 -
--struct integer_needle_lesseq_args {
--	int needle;
--	int *haystack;
--};
--
--static int integer_needle_lesseq(size_t i, void *_args)
+-static void t_ref_block_read_write(void)
 -{
--	struct integer_needle_lesseq_args *args = _args;
--	return args->needle <= args->haystack[i];
+-	const int header_off = 21; /* random */
+-	struct reftable_record recs[30];
+-	const size_t N = ARRAY_SIZE(recs);
+-	const size_t block_size = 1024;
+-	struct reftable_block block = { 0 };
+-	struct block_writer bw = {
+-		.last_key = REFTABLE_BUF_INIT,
+-	};
+-	struct reftable_record rec = {
+-		.type = BLOCK_TYPE_REF,
+-	};
+-	size_t i = 0;
+-	int ret;
+-	struct block_reader br = { 0 };
+-	struct block_iter it = BLOCK_ITER_INIT;
+-	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+-
+-	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+-	check(block.data != NULL);
+-	block.len = block_size;
+-	block_source_from_buf(&block.source ,&buf);
+-	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
+-				header_off, hash_size(REFTABLE_HASH_SHA1));
+-	check(!ret);
+-
+-	rec.u.ref.refname = (char *) "";
+-	rec.u.ref.value_type = REFTABLE_REF_DELETION;
+-	ret = block_writer_add(&bw, &rec);
+-	check_int(ret, ==, REFTABLE_API_ERROR);
+-
+-	for (i = 0; i < N; i++) {
+-		rec.u.ref.refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
+-		rec.u.ref.value_type = REFTABLE_REF_VAL1;
+-		memset(rec.u.ref.value.val1, i, REFTABLE_HASH_SIZE_SHA1);
+-
+-		recs[i] = rec;
+-		ret = block_writer_add(&bw, &rec);
+-		rec.u.ref.refname = NULL;
+-		rec.u.ref.value_type = REFTABLE_REF_DELETION;
+-		check_int(ret, ==, 0);
+-	}
+-
+-	ret = block_writer_finish(&bw);
+-	check_int(ret, >, 0);
+-
+-	block_writer_release(&bw);
+-
+-	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
+-
+-	block_iter_seek_start(&it, &br);
+-
+-	for (i = 0; ; i++) {
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, >=, 0);
+-		if (ret > 0) {
+-			check_int(i, ==, N);
+-			break;
+-		}
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	for (i = 0; i < N; i++) {
+-		block_iter_reset(&it);
+-		reftable_record_key(&recs[i], &want);
+-
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-
+-		want.len--;
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	block_reader_release(&br);
+-	block_iter_close(&it);
+-	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
+-	reftable_buf_release(&want);
+-	reftable_buf_release(&buf);
+-	for (i = 0; i < N; i++)
+-		reftable_record_release(&recs[i]);
 -}
 -
--static void *realloc_stub(void *p UNUSED, size_t size UNUSED)
+-static void t_log_block_read_write(void)
 -{
--	return NULL;
+-	const int header_off = 21;
+-	struct reftable_record recs[30];
+-	const size_t N = ARRAY_SIZE(recs);
+-	const size_t block_size = 2048;
+-	struct reftable_block block = { 0 };
+-	struct block_writer bw = {
+-		.last_key = REFTABLE_BUF_INIT,
+-	};
+-	struct reftable_record rec = {
+-		.type = BLOCK_TYPE_LOG,
+-	};
+-	size_t i = 0;
+-	int ret;
+-	struct block_reader br = { 0 };
+-	struct block_iter it = BLOCK_ITER_INIT;
+-	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+-
+-	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+-	check(block.data != NULL);
+-	block.len = block_size;
+-	block_source_from_buf(&block.source ,&buf);
+-	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
+-				header_off, hash_size(REFTABLE_HASH_SHA1));
+-	check(!ret);
+-
+-	for (i = 0; i < N; i++) {
+-		rec.u.log.refname = xstrfmt("branch%02"PRIuMAX , (uintmax_t)i);
+-		rec.u.log.update_index = i;
+-		rec.u.log.value_type = REFTABLE_LOG_UPDATE;
+-
+-		recs[i] = rec;
+-		ret = block_writer_add(&bw, &rec);
+-		rec.u.log.refname = NULL;
+-		rec.u.log.value_type = REFTABLE_LOG_DELETION;
+-		check_int(ret, ==, 0);
+-	}
+-
+-	ret = block_writer_finish(&bw);
+-	check_int(ret, >, 0);
+-
+-	block_writer_release(&bw);
+-
+-	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
+-
+-	block_iter_seek_start(&it, &br);
+-
+-	for (i = 0; ; i++) {
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, >=, 0);
+-		if (ret > 0) {
+-			check_int(i, ==, N);
+-			break;
+-		}
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	for (i = 0; i < N; i++) {
+-		block_iter_reset(&it);
+-		reftable_buf_reset(&want);
+-		check(!reftable_buf_addstr(&want, recs[i].u.log.refname));
+-
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-
+-		want.len--;
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	block_reader_release(&br);
+-	block_iter_close(&it);
+-	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
+-	reftable_buf_release(&want);
+-	reftable_buf_release(&buf);
+-	for (i = 0; i < N; i++)
+-		reftable_record_release(&recs[i]);
+-}
+-
+-static void t_obj_block_read_write(void)
+-{
+-	const int header_off = 21;
+-	struct reftable_record recs[30];
+-	const size_t N = ARRAY_SIZE(recs);
+-	const size_t block_size = 1024;
+-	struct reftable_block block = { 0 };
+-	struct block_writer bw = {
+-		.last_key = REFTABLE_BUF_INIT,
+-	};
+-	struct reftable_record rec = {
+-		.type = BLOCK_TYPE_OBJ,
+-	};
+-	size_t i = 0;
+-	int ret;
+-	struct block_reader br = { 0 };
+-	struct block_iter it = BLOCK_ITER_INIT;
+-	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+-
+-	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+-	check(block.data != NULL);
+-	block.len = block_size;
+-	block_source_from_buf(&block.source, &buf);
+-	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
+-				header_off, hash_size(REFTABLE_HASH_SHA1));
+-	check(!ret);
+-
+-	for (i = 0; i < N; i++) {
+-		uint8_t bytes[] = { i, i + 1, i + 2, i + 3, i + 5 }, *allocated;
+-		DUP_ARRAY(allocated, bytes, ARRAY_SIZE(bytes));
+-
+-		rec.u.obj.hash_prefix = allocated;
+-		rec.u.obj.hash_prefix_len = 5;
+-
+-		recs[i] = rec;
+-		ret = block_writer_add(&bw, &rec);
+-		rec.u.obj.hash_prefix = NULL;
+-		rec.u.obj.hash_prefix_len = 0;
+-		check_int(ret, ==, 0);
+-	}
+-
+-	ret = block_writer_finish(&bw);
+-	check_int(ret, >, 0);
+-
+-	block_writer_release(&bw);
+-
+-	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
+-
+-	block_iter_seek_start(&it, &br);
+-
+-	for (i = 0; ; i++) {
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, >=, 0);
+-		if (ret > 0) {
+-			check_int(i, ==, N);
+-			break;
+-		}
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	for (i = 0; i < N; i++) {
+-		block_iter_reset(&it);
+-		reftable_record_key(&recs[i], &want);
+-
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	block_reader_release(&br);
+-	block_iter_close(&it);
+-	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
+-	reftable_buf_release(&want);
+-	reftable_buf_release(&buf);
+-	for (i = 0; i < N; i++)
+-		reftable_record_release(&recs[i]);
+-}
+-
+-static void t_index_block_read_write(void)
+-{
+-	const int header_off = 21;
+-	struct reftable_record recs[30];
+-	const size_t N = ARRAY_SIZE(recs);
+-	const size_t block_size = 1024;
+-	struct reftable_block block = { 0 };
+-	struct block_writer bw = {
+-		.last_key = REFTABLE_BUF_INIT,
+-	};
+-	struct reftable_record rec = {
+-		.type = BLOCK_TYPE_INDEX,
+-		.u.idx.last_key = REFTABLE_BUF_INIT,
+-	};
+-	size_t i = 0;
+-	int ret;
+-	struct block_reader br = { 0 };
+-	struct block_iter it = BLOCK_ITER_INIT;
+-	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+-
+-	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+-	check(block.data != NULL);
+-	block.len = block_size;
+-	block_source_from_buf(&block.source, &buf);
+-	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
+-				header_off, hash_size(REFTABLE_HASH_SHA1));
+-	check(!ret);
+-
+-	for (i = 0; i < N; i++) {
+-		char buf[128];
+-
+-		snprintf(buf, sizeof(buf), "branch%02"PRIuMAX, (uintmax_t)i);
+-
+-		reftable_buf_init(&recs[i].u.idx.last_key);
+-		recs[i].type = BLOCK_TYPE_INDEX;
+-		check(!reftable_buf_addstr(&recs[i].u.idx.last_key, buf));
+-		recs[i].u.idx.offset = i;
+-
+-		ret = block_writer_add(&bw, &recs[i]);
+-		check_int(ret, ==, 0);
+-	}
+-
+-	ret = block_writer_finish(&bw);
+-	check_int(ret, >, 0);
+-
+-	block_writer_release(&bw);
+-
+-	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
+-
+-	block_iter_seek_start(&it, &br);
+-
+-	for (i = 0; ; i++) {
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, >=, 0);
+-		if (ret > 0) {
+-			check_int(i, ==, N);
+-			break;
+-		}
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	for (i = 0; i < N; i++) {
+-		block_iter_reset(&it);
+-		reftable_record_key(&recs[i], &want);
+-
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-
+-		check(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1));
+-
+-		want.len--;
+-		ret = block_iter_seek_key(&it, &br, &want);
+-		check_int(ret, ==, 0);
+-
+-		ret = block_iter_next(&it, &rec);
+-		check_int(ret, ==, 0);
+-		check(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1));
+-	}
+-
+-	block_reader_release(&br);
+-	block_iter_close(&it);
+-	reftable_record_release(&rec);
+-	reftable_block_done(&br.block);
+-	reftable_buf_release(&want);
+-	reftable_buf_release(&buf);
+-	for (i = 0; i < N; i++)
+-		reftable_record_release(&recs[i]);
 -}
 -
 -int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
 -{
--	if_test ("binary search with binsearch works") {
--		int haystack[] = { 2, 4, 6, 8, 10 };
--		struct {
--			int needle;
--			size_t expected_idx;
--		} testcases[] = {
--			{-9000, 0},
--			{-1, 0},
--			{0, 0},
--			{2, 0},
--			{3, 1},
--			{4, 1},
--			{7, 3},
--			{9, 4},
--			{10, 4},
--			{11, 5},
--			{9000, 5},
--		};
--
--		for (size_t i = 0; i < ARRAY_SIZE(testcases); i++) {
--			struct integer_needle_lesseq_args args = {
--				.haystack = haystack,
--				.needle = testcases[i].needle,
--			};
--			size_t idx;
--
--			idx = binsearch(ARRAY_SIZE(haystack),
--					&integer_needle_lesseq, &args);
--			check_int(idx, ==, testcases[i].expected_idx);
--		}
--	}
--
--	if_test ("names_length returns size of a NULL-terminated string array") {
--		const char *a[] = { "a", "b", NULL };
--		check_int(names_length(a), ==, 2);
--	}
--
--	if_test ("names_equal compares NULL-terminated string arrays") {
--		const char *a[] = { "a", "b", "c", NULL };
--		const char *b[] = { "a", "b", "d", NULL };
--		const char *c[] = { "a", "b", NULL };
--
--		check(names_equal(a, a));
--		check(!names_equal(a, b));
--		check(!names_equal(a, c));
--	}
--
--	if_test ("parse_names works for basic input") {
--		char in1[] = "line\n";
--		char in2[] = "a\nb\nc";
--		char **out = parse_names(in1, strlen(in1));
--		check(out != NULL);
--		check_str(out[0], "line");
--		check(!out[1]);
--		free_names(out);
--
--		out = parse_names(in2, strlen(in2));
--		check(out != NULL);
--		check_str(out[0], "a");
--		check_str(out[1], "b");
--		check_str(out[2], "c");
--		check(!out[3]);
--		free_names(out);
--	}
--
--	if_test ("parse_names drops empty string") {
--		char in[] = "a\n\nb\n";
--		char **out = parse_names(in, strlen(in));
--		check(out != NULL);
--		check_str(out[0], "a");
--		/* simply '\n' should be dropped as empty string */
--		check_str(out[1], "b");
--		check(!out[2]);
--		free_names(out);
--	}
--
--	if_test ("common_prefix_size works") {
--		struct reftable_buf a = REFTABLE_BUF_INIT;
--		struct reftable_buf b = REFTABLE_BUF_INIT;
--		struct {
--			const char *a, *b;
--			int want;
--		} cases[] = {
--			{"abcdef", "abc", 3},
--			{ "abc", "ab", 2 },
--			{ "", "abc", 0 },
--			{ "abc", "abd", 2 },
--			{ "abc", "pqr", 0 },
--		};
--
--		for (size_t i = 0; i < ARRAY_SIZE(cases); i++) {
--			check(!reftable_buf_addstr(&a, cases[i].a));
--			check(!reftable_buf_addstr(&b, cases[i].b));
--			check_uint(common_prefix_size(&a, &b), ==, cases[i].want);
--			reftable_buf_reset(&a);
--			reftable_buf_reset(&b);
--		}
--		reftable_buf_release(&a);
--		reftable_buf_release(&b);
--	}
--
--	if_test ("reftable_put_be64 and reftable_get_be64 work") {
--		uint64_t in = 0x1122334455667788;
--		uint8_t dest[8];
--		uint64_t out;
--		reftable_put_be64(dest, in);
--		out = reftable_get_be64(dest);
--		check_int(in, ==, out);
--	}
--
--	if_test ("reftable_put_be32 and reftable_get_be32 work") {
--		uint32_t in = 0x11223344;
--		uint8_t dest[4];
--		uint32_t out;
--		reftable_put_be32(dest, in);
--		out = reftable_get_be32(dest);
--		check_int(in, ==, out);
--	}
--
--	if_test ("reftable_put_be24 and reftable_get_be24 work") {
--		uint32_t in = 0x112233;
--		uint8_t dest[3];
--		uint32_t out;
--		reftable_put_be24(dest, in);
--		out = reftable_get_be24(dest);
--		check_int(in, ==, out);
--	}
--
--	if_test ("put_be16 and get_be16 work") {
--		uint32_t in = 0xfef1;
--		uint8_t dest[3];
--		uint32_t out;
--		reftable_put_be16(dest, in);
--		out = reftable_get_be16(dest);
--		check_int(in, ==, out);
--	}
--
--	if_test ("REFTABLE_ALLOC_GROW works") {
--		int *arr = NULL, *old_arr;
--		size_t alloc = 0, old_alloc;
--
--		check(!REFTABLE_ALLOC_GROW(arr, 1, alloc));
--		check(arr != NULL);
--		check_uint(alloc, >=, 1);
--		arr[0] = 42;
--
--		old_alloc = alloc;
--		old_arr = arr;
--		reftable_set_alloc(NULL, realloc_stub, NULL);
--		check(REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
--		check(arr == old_arr);
--		check_uint(alloc, ==, old_alloc);
--
--		old_alloc = alloc;
--		reftable_set_alloc(NULL, NULL, NULL);
--		check(!REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
--		check(arr != NULL);
--		check_uint(alloc, >, old_alloc);
--		arr[alloc - 1] = 42;
--
--		reftable_free(arr);
--	}
--
--	if_test ("REFTABLE_ALLOC_GROW_OR_NULL works") {
--		int *arr = NULL;
--		size_t alloc = 0, old_alloc;
--
--		REFTABLE_ALLOC_GROW_OR_NULL(arr, 1, alloc);
--		check(arr != NULL);
--		check_uint(alloc, >=, 1);
--		arr[0] = 42;
--
--		old_alloc = alloc;
--		REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
--		check(arr != NULL);
--		check_uint(alloc, >, old_alloc);
--		arr[alloc - 1] = 42;
--
--		old_alloc = alloc;
--		reftable_set_alloc(NULL, realloc_stub, NULL);
--		REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
--		check(arr == NULL);
--		check_uint(alloc, ==, 0);
--		reftable_set_alloc(NULL, NULL, NULL);
--
--		reftable_free(arr);
--	}
+-	TEST(t_index_block_read_write(), "read-write operations on index blocks work");
+-	TEST(t_log_block_read_write(), "read-write operations on log blocks work");
+-	TEST(t_obj_block_read_write(), "read-write operations on obj blocks work");
+-	TEST(t_ref_block_read_write(), "read-write operations on ref blocks work");
 -
 -	return test_done();
 -}
-diff --git a/t/unit-tests/u-reftable-basics.c b/t/unit-tests/u-reftable-basics.c
+diff --git a/t/unit-tests/u-reftable-block.c b/t/unit-tests/u-reftable-block.c
 new file mode 100644
-index 0000000000..63dd568faf
+index 0000000000..af24901230
 --- /dev/null
-+++ b/t/unit-tests/u-reftable-basics.c
-@@ -0,0 +1,195 @@
++++ b/t/unit-tests/u-reftable-block.c
+@@ -0,0 +1,373 @@
 +/*
 +Copyright 2020 Google LLC
 +
@@ -369,191 +532,369 @@ index 0000000000..63dd568faf
 +*/
 +
 +#include "unit-test.h"
-+#include "reftable/basics.h"
++#include "reftable/block.h"
++#include "reftable/blocksource.h"
++#include "reftable/constants.h"
++#include "reftable/reftable-error.h"
++#include "strbuf.h"
 +
-+struct integer_needle_lesseq_args {
-+	int needle;
-+	int *haystack;
-+};
-+
-+static int integer_needle_lesseq(size_t i, void *_args)
++void test_reftable_block__index_read_write(void)
 +{
-+	struct integer_needle_lesseq_args *args = _args;
-+	return args->needle <= args->haystack[i];
-+}
-+
-+static void *realloc_stub(void *p UNUSED, size_t size UNUSED)
-+{
-+	return NULL;
-+}
-+
-+void test_reftable_basics__binsearch(void)
-+{
-+	int haystack[] = { 2, 4, 6, 8, 10 };
-+	struct {
-+		int needle;
-+		size_t expected_idx;
-+	} testcases[] = {
-+		{-9000, 0},
-+		{-1, 0},
-+		{0, 0},
-+		{2, 0},
-+		{3, 1},
-+		{4, 1},
-+		{7, 3},
-+		{9, 4},
-+		{10, 4},
-+		{11, 5},
-+		{9000, 5},
++	const int header_off = 21; /* random */
++	struct reftable_record recs[30];
++	const size_t N = ARRAY_SIZE(recs);
++	const size_t block_size = 1024;
++	struct reftable_block block = { 0 };
++	struct block_writer bw = {
++		.last_key = REFTABLE_BUF_INIT,
 +	};
++	struct reftable_record rec = {
++		.type = BLOCK_TYPE_REF,
++	};
++	size_t i = 0;
++	int ret;
++	struct block_reader br = { 0 };
++	struct block_iter it = BLOCK_ITER_INIT;
++	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
 +
-+	for (size_t i = 0; i < ARRAY_SIZE(testcases); i++) {
-+		struct integer_needle_lesseq_args args = {
-+			.haystack = haystack,
-+			.needle = testcases[i].needle,
-+		};
-+		size_t idx;
++	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	cl_assert(block.data != NULL);
++	block.len = block_size;
++	block_source_from_buf(&block.source ,&buf);
++	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
++				header_off, hash_size(REFTABLE_HASH_SHA1));
++	cl_assert(ret == 0);
 +
-+		idx = binsearch(ARRAY_SIZE(haystack),
-+				&integer_needle_lesseq, &args);
-+		cl_assert_equal_i(idx, testcases[i].expected_idx);
++	rec.u.ref.refname = (char *) "";
++	rec.u.ref.value_type = REFTABLE_REF_DELETION;
++	ret = block_writer_add(&bw, &rec);
++	cl_assert_equal_i(ret, REFTABLE_API_ERROR);
++
++	for (i = 0; i < N; i++) {
++		rec.u.ref.refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
++		rec.u.ref.value_type = REFTABLE_REF_VAL1;
++		memset(rec.u.ref.value.val1, i, REFTABLE_HASH_SIZE_SHA1);
++
++		recs[i] = rec;
++		ret = block_writer_add(&bw, &rec);
++		rec.u.ref.refname = NULL;
++		rec.u.ref.value_type = REFTABLE_REF_DELETION;
++		cl_assert_equal_i(ret, 0);
 +	}
 +
-+}
++	ret = block_writer_finish(&bw);
++	cl_assert(ret > 0);
 +
-+void test_reftable_basics__names_length(void)
-+{
-+	const char *a[] = { "a", "b", NULL };
-+	cl_assert_equal_i(names_length(a), 2);
-+}
++	block_writer_release(&bw);
 +
-+void test_reftable_basics__names_equal(void)
-+{
-+	const char *a[] = { "a", "b", "c", NULL };
-+	const char *b[] = { "a", "b", "d", NULL };
-+	const char *c[] = { "a", "b", NULL };
++	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
 +
-+	cl_assert(names_equal(a, a));
-+	cl_assert(!names_equal(a, b));
-+	cl_assert(!names_equal(a, c));
-+}
++	block_iter_seek_start(&it, &br);
 +
-+void test_reftable_basics__parse_names(void)
-+{
-+	char in1[] = "line\n";
-+	char in2[] = "a\nb\nc";
-+	char **out = parse_names(in1, strlen(in1));
-+	cl_assert(out != NULL);
-+	cl_assert_equal_s(out[0], "line");
-+	cl_assert(!out[1]);
-+	free_names(out);
-+
-+	out = parse_names(in2, strlen(in2));
-+	cl_assert(out != NULL);
-+	cl_assert_equal_s(out[0], "a");
-+	cl_assert_equal_s(out[1], "b");
-+	cl_assert_equal_s(out[2], "c");
-+	cl_assert(!out[3]);
-+	free_names(out);
-+}
-+
-+void test_reftable_basics__common_prefix_size(void)
-+{
-+	struct reftable_buf a = REFTABLE_BUF_INIT;
-+	struct reftable_buf b = REFTABLE_BUF_INIT;
-+	struct {
-+		const char *a, *b;
-+		int want;
-+	} cases[] = {
-+		{"abcdef", "abc", 3},
-+		{ "abc", "ab", 2 },
-+		{ "", "abc", 0 },
-+		{ "abc", "abd", 2 },
-+		{ "abc", "pqr", 0 },
-+	};
-+
-+	for (size_t i = 0; i < ARRAY_SIZE(cases); i++) {
-+		reftable_buf_reset(&a);
-+		reftable_buf_reset(&b);
-+		cl_assert_equal_i(reftable_buf_addstr(&a, cases[i].a), 0);
-+		cl_assert_equal_i(reftable_buf_addstr(&b, cases[i].b), 0);
-+		cl_assert_equal_i(common_prefix_size(&a, &b), cases[i].want);
++	for (i = 0; ; i++) {
++		ret = block_iter_next(&it, &rec);
++		cl_assert(ret >= 0);
++		if (ret > 0) {
++			cl_assert_equal_i(i, N);
++			break;
++		}
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
 +	}
-+	reftable_buf_release(&a);
-+	reftable_buf_release(&b);
++
++	for (i = 0; i < N; i++) {
++		block_iter_reset(&it);
++		reftable_record_key(&recs[i], &want);
++
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++
++		want.len--;
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++		cl_assert_equal_i(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	block_reader_release(&br);
++	block_iter_close(&it);
++	reftable_record_release(&rec);
++	reftable_block_done(&br.block);
++	reftable_buf_release(&want);
++	reftable_buf_release(&buf);
++	for (i = 0; i < N; i++)
++		reftable_record_release(&recs[i]);
 +}
 +
-+void test_reftable_basics__put_get_be24(void)
++void test_reftable_block__log_read_write(void)
 +{
-+	uint32_t in = 0x112233;
-+	uint8_t dest[3];
-+	uint32_t out;
-+	reftable_put_be24(dest, in);
-+	out = reftable_get_be24(dest);
-+	cl_assert_equal_i(in, out);
++	const int header_off = 21;
++	struct reftable_record recs[30];
++	const size_t N = ARRAY_SIZE(recs);
++	const size_t block_size = 2048;
++	struct reftable_block block = { 0 };
++	struct block_writer bw = {
++		.last_key = REFTABLE_BUF_INIT,
++	};
++	struct reftable_record rec = {
++		.type = BLOCK_TYPE_LOG,
++	};
++	size_t i = 0;
++	int ret;
++	struct block_reader br = { 0 };
++	struct block_iter it = BLOCK_ITER_INIT;
++	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
++
++	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	cl_assert(block.data != NULL);
++	block.len = block_size;
++	block_source_from_buf(&block.source ,&buf);
++	ret = block_writer_init(&bw, BLOCK_TYPE_LOG, block.data, block_size,
++				header_off, hash_size(REFTABLE_HASH_SHA1));
++	cl_assert(ret == 0);
++
++	for (i = 0; i < N; i++) {
++		rec.u.log.refname = xstrfmt("branch%02"PRIuMAX , (uintmax_t)i);
++		rec.u.log.update_index = i;
++		rec.u.log.value_type = REFTABLE_LOG_UPDATE;
++
++		recs[i] = rec;
++		ret = block_writer_add(&bw, &rec);
++		rec.u.log.refname = NULL;
++		rec.u.log.value_type = REFTABLE_LOG_DELETION;
++		cl_assert_equal_i(ret, 0);
++	}
++
++	ret = block_writer_finish(&bw);
++	cl_assert(ret > 0);
++
++	block_writer_release(&bw);
++
++	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
++
++	block_iter_seek_start(&it, &br);
++
++	for (i = 0; ; i++) {
++		ret = block_iter_next(&it, &rec);
++		cl_assert(ret >= 0);
++		if (ret > 0) {
++			cl_assert_equal_i(i, N);
++			break;
++		}
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	for (i = 0; i < N; i++) {
++		block_iter_reset(&it);
++		reftable_buf_reset(&want);
++		cl_assert(reftable_buf_addstr(&want, recs[i].u.log.refname) == 0);
++
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++
++		want.len--;
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++		cl_assert_equal_i(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	block_reader_release(&br);
++	block_iter_close(&it);
++	reftable_record_release(&rec);
++	reftable_block_done(&br.block);
++	reftable_buf_release(&want);
++	reftable_buf_release(&buf);
++	for (i = 0; i < N; i++)
++		reftable_record_release(&recs[i]);
 +}
 +
-+void test_reftable_basics__put_get_be16(void)
++void test_reftable_block__obj_read_write(void)
 +{
-+	uint32_t in = 0xfef1;
-+	uint8_t dest[3];
-+	uint32_t out;
-+	reftable_put_be16(dest, in);
-+	out = reftable_get_be16(dest);
-+	cl_assert_equal_i(in, out);
++	const int header_off = 21;
++	struct reftable_record recs[30];
++	const size_t N = ARRAY_SIZE(recs);
++	const size_t block_size = 1024;
++	struct reftable_block block = { 0 };
++	struct block_writer bw = {
++		.last_key = REFTABLE_BUF_INIT,
++	};
++	struct reftable_record rec = {
++		.type = BLOCK_TYPE_OBJ,
++	};
++	size_t i = 0;
++	int ret;
++	struct block_reader br = { 0 };
++	struct block_iter it = BLOCK_ITER_INIT;
++	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
++
++	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	cl_assert(block.data != NULL);
++	block.len = block_size;
++	block_source_from_buf(&block.source, &buf);
++	ret = block_writer_init(&bw, BLOCK_TYPE_OBJ, block.data, block_size,
++				header_off, hash_size(REFTABLE_HASH_SHA1));
++	cl_assert(ret == 0);
++
++	for (i = 0; i < N; i++) {
++		uint8_t bytes[] = { i, i + 1, i + 2, i + 3, i + 5 }, *allocated;
++		DUP_ARRAY(allocated, bytes, ARRAY_SIZE(bytes));
++
++		rec.u.obj.hash_prefix = allocated;
++		rec.u.obj.hash_prefix_len = 5;
++
++		recs[i] = rec;
++		ret = block_writer_add(&bw, &rec);
++		rec.u.obj.hash_prefix = NULL;
++		rec.u.obj.hash_prefix_len = 0;
++		cl_assert_equal_i(ret, 0);
++	}
++
++	ret = block_writer_finish(&bw);
++	cl_assert(ret > 0);
++
++	block_writer_release(&bw);
++
++	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
++
++	block_iter_seek_start(&it, &br);
++
++	for (i = 0; ; i++) {
++		ret = block_iter_next(&it, &rec);
++		cl_assert(ret >= 0);
++		if (ret > 0) {
++			cl_assert_equal_i(i, N);
++			break;
++		}
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	for (i = 0; i < N; i++) {
++		block_iter_reset(&it);
++		reftable_record_key(&recs[i], &want);
++
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	block_reader_release(&br);
++	block_iter_close(&it);
++	reftable_record_release(&rec);
++	reftable_block_done(&br.block);
++	reftable_buf_release(&want);
++	reftable_buf_release(&buf);
++	for (i = 0; i < N; i++)
++		reftable_record_release(&recs[i]);
 +}
 +
-+void test_reftable_basics__grow_alloc(void)
++void test_reftable_block__ref_read_write(void)
 +{
-+	int *arr = NULL, *old_arr;
-+	size_t alloc = 0, old_alloc;
++	const int header_off = 21;
++	struct reftable_record recs[30];
++	const size_t N = ARRAY_SIZE(recs);
++	const size_t block_size = 1024;
++	struct reftable_block block = { 0 };
++	struct block_writer bw = {
++		.last_key = REFTABLE_BUF_INIT,
++	};
++	struct reftable_record rec = {
++		.type = BLOCK_TYPE_INDEX,
++		.u.idx.last_key = REFTABLE_BUF_INIT,
++	};
++	size_t i = 0;
++	int ret;
++	struct block_reader br = { 0 };
++	struct block_iter it = BLOCK_ITER_INIT;
++	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
 +
-+	cl_assert_equal_i(REFTABLE_ALLOC_GROW(arr, 1, alloc), 0);
-+	cl_assert(arr != NULL);
-+	cl_assert(alloc >= 1);
-+	arr[0] = 42;
++	REFTABLE_CALLOC_ARRAY(block.data, block_size);
++	cl_assert(block.data != NULL);
++	block.len = block_size;
++	block_source_from_buf(&block.source, &buf);
++	ret = block_writer_init(&bw, BLOCK_TYPE_INDEX, block.data, block_size,
++				header_off, hash_size(REFTABLE_HASH_SHA1));
++	cl_assert(ret == 0);
 +
-+	old_alloc = alloc;
-+	old_arr = arr;
-+	reftable_set_alloc(NULL, realloc_stub, NULL);
-+	cl_assert(REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc));
-+	cl_assert(arr == old_arr);
-+	cl_assert_equal_i(alloc, old_alloc);
++	for (i = 0; i < N; i++) {
++		char buf[128];
 +
-+	old_alloc = alloc;
-+	reftable_set_alloc(NULL, NULL, NULL);
-+	cl_assert_equal_i(REFTABLE_ALLOC_GROW(arr, old_alloc + 1, alloc), 0);
-+	cl_assert(arr != NULL);
-+	cl_assert(alloc > old_alloc);
-+	arr[alloc - 1] = 42;
++		snprintf(buf, sizeof(buf), "branch%02"PRIuMAX, (uintmax_t)i);
 +
-+	reftable_free(arr);
-+}
++		reftable_buf_init(&recs[i].u.idx.last_key);
++		recs[i].type = BLOCK_TYPE_INDEX;
++		cl_assert(reftable_buf_addstr(&recs[i].u.idx.last_key, buf) == 0);
++		recs[i].u.idx.offset = i;
 +
-+void test_reftable_basics__grow_alloc_or_null(void)
-+{
-+	int *arr = NULL;
-+	size_t alloc = 0, old_alloc;
++		ret = block_writer_add(&bw, &recs[i]);
++		cl_assert_equal_i(ret, 0);
++	}
 +
-+	REFTABLE_ALLOC_GROW_OR_NULL(arr, 1, alloc);
-+	cl_assert(arr != NULL);
-+	cl_assert(alloc >= 1);
-+	arr[0] = 42;
++	ret = block_writer_finish(&bw);
++	cl_assert(ret > 0);
 +
-+	old_alloc = alloc;
-+	REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
-+	cl_assert(arr != NULL);
-+	cl_assert(alloc > old_alloc);
-+	arr[alloc - 1] = 42;
++	block_writer_release(&bw);
 +
-+	old_alloc = alloc;
-+	reftable_set_alloc(NULL, realloc_stub, NULL);
-+	REFTABLE_ALLOC_GROW_OR_NULL(arr, old_alloc + 1, alloc);
-+	cl_assert(arr == NULL);
-+	cl_assert_equal_i(alloc, 0);
-+	reftable_set_alloc(NULL, NULL, NULL);
++	block_reader_init(&br, &block, header_off, block_size, REFTABLE_HASH_SIZE_SHA1);
 +
-+	reftable_free(arr);
++	block_iter_seek_start(&it, &br);
++
++	for (i = 0; ; i++) {
++		ret = block_iter_next(&it, &rec);
++		cl_assert(ret >= 0);
++		if (ret > 0) {
++			cl_assert_equal_i(i, N);
++			break;
++		}
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	for (i = 0; i < N; i++) {
++		block_iter_reset(&it);
++		reftable_record_key(&recs[i], &want);
++
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++
++		cl_assert_equal_i(reftable_record_equal(&recs[i], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++
++		want.len--;
++		ret = block_iter_seek_key(&it, &br, &want);
++		cl_assert_equal_i(ret, 0);
++
++		ret = block_iter_next(&it, &rec);
++		cl_assert_equal_i(ret, 0);
++		cl_assert_equal_i(reftable_record_equal(&recs[10 * (i / 10)], &rec, REFTABLE_HASH_SIZE_SHA1), 1);
++	}
++
++	block_reader_release(&br);
++	block_iter_close(&it);
++	reftable_record_release(&rec);
++	reftable_block_done(&br.block);
++	reftable_buf_release(&want);
++	reftable_buf_release(&buf);
++	for (i = 0; i < N; i++)
++		reftable_record_release(&recs[i]);
 +}
 -- 
 2.43.0
