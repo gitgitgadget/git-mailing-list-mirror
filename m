@@ -1,204 +1,103 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F831227B81
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 20:48:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DEB926982C
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 20:57:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745959704; cv=none; b=cdnlauX9o+J6c/U5tAEYD/LBcCQckrA33LZIgdooKGHNZjenk2CNad3PNtsdu1QoB8hcfkxbkNshIxmsHUtyqSpk8SekmEyvf9KLWIdVCOq8QDkvQwi65c2SCp3h0AbdttO4fi0Nw1uPgg30ZJ7tNnm1bBWR7fCDLC6OEFuj5dc=
+	t=1745960277; cv=none; b=QhUeHJNHPT39vJ/aG0H+EI4al3QR3HqIuuvLFEKigPkJ/YpADdO9bjoM4+ApxpZnPiWx9n4wV4vgvVDCEl6ufkY4ihLbeRQ03WmvycX3WyZ4wALJMEc/zGPUuTj4/0FNlLig2+sR9EX5RWwER1kCGt/wjLq4b0al4X+RLxmFHnc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745959704; c=relaxed/simple;
-	bh=BpE+WCL2EG43KSnqh/RrHFdR8GQc4mkvbMMHW7gGyk0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K6W7tIA1kEEk6CIGDwg2hlQ9mXMsaTltuAG0qeQNM3qm8sgR7+oUnj4emRuNUQuptrQrG+PCE9HMY6H5/OL9SJXETTFiEz3sMhuP2V6ndwc8bIm4YrUwZct/bVw2uJt3zfPlYdKzL4MjoprhKY2jHk9oMecHOc/2ccRbbCOuL1M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pK9y+cjH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nX+xq6d1; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745960277; c=relaxed/simple;
+	bh=T0gqy5ifQu1aDYq6NhhpPxMKQNCIR7EOGKT2azHypIw=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=LMh7uOFmZSfTTTiEhf4KIjQmF1OO+yKzfPrTB7rF5LNq4YBh0u0hRM6OxE290aUbhPlCFa/EakcJ6ofQ9fPnG2sGR3QYztHiaoNg3OEsVhjkzLyMEqt7AU7BE2icwe3YWK6OEQsCrBYrzAbtTgvelDQgbiZhA7JVQG2A7JkmVaM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=Ly7rN8Z0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ovFwZphV; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pK9y+cjH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nX+xq6d1"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 3D112114025A;
-	Tue, 29 Apr 2025 16:48:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Tue, 29 Apr 2025 16:48:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745959700; x=1746046100; bh=FcZ1+fO+t2
-	0ibc/8R5uh0Orty8dB/K9GQNyvDgg0w8M=; b=pK9y+cjHAtzjc1fscEKP6OLIWE
-	O7Dsq7+X/0CXVoNHZ/YzSdYAhC7dMoK7CYcKEDfhwRn7wH/ssINA8/Jp4VaEdTOU
-	ln+UAXkrI2XWfcrqL7wdN8RsnlZLbcX5JpOU4Uo/R5sBvxYzL53iR1F8vvegfnst
-	va+zlnBGW7o7+y+l8dICJgjpegJD1gtQdIuadFTgLJ0eQZZPghgzgeTKQ33benY5
-	HoSJPmIeQkzcJjWxyBL6u10MAEVRqQjUb0+OGTKtfvXF1pB13pK9ksBNGWoh5K/+
-	oDZfoKUyO1fx7+eU0ZFoGhUv7s79mqdzKVdmT7z0ePtO0FyilAlhh0ov1qsA==
+	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="Ly7rN8Z0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ovFwZphV"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 019BB25401D1;
+	Tue, 29 Apr 2025 16:57:52 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-09.internal (MEProxy); Tue, 29 Apr 2025 16:57:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
+	 h=cc:cc:content-transfer-encoding:content-type:content-type
+	:date:date:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
+	 t=1745960272; x=1746046672; bh=T0gqy5ifQu1aDYq6NhhpPxMKQNCIR7EO
+	GKT2azHypIw=; b=Ly7rN8Z0faTBMfgv1js+Xmthzh3qP4daeIC4YBTbBuR/1XSh
+	i9/VK1JZokZOMQC5t3ybr/rnrN3tJhWDsX+h58sXHgwlz4ka4ca8GrgItCQ83uz0
+	X0mK0Yf5HB5XXUIhk0pL5Vi0czt811SGut/9oH2hKiV/6Z9MdBVjxVlrCwunJx+k
+	NV2rBLWuLa5jhjo1du0r/dbUmAjIwG1IHnoHdIXBq0zQHe23MwPw4tglVxGS6QTi
+	0ZmtxMrpnQS+pY0XC1MbwP5GFZMb9I2Bo0v/mR6uUP5mS6AqJdqKX8mJtmK5vGXo
+	PspFWbgO/YytGAPIR2/DLd2WpHOr/YJi+RkTgA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745959700; x=1746046100; bh=FcZ1+fO+t20ibc/8R5uh0Orty8dB/K9GQNy
-	vDgg0w8M=; b=nX+xq6d1anDkwwVZy+yQpHfiSAQX4cwAh8ulkUYRdO1FhcBW172
-	Fh3+iAXSC/owruBas55phJOA75t95/xCdUtFkfa2WlDNkbX5z++KywHdgUgKUL/e
-	vU17dh6QsTvHgBdacrNweSuj6XD82/2zlJy4/F7vRg/NvRmkJDbAhC2kKKFTrlpn
-	Ah22yBI3O62+eE9liYq2vZX2hp8m68GbNAAYxnHpAojUozUsGOk4EhBq6dkSh6Zp
-	3kd4qCA6IF39g7/1UR0hdM2nDvyxqxY+ZVdIOv0g82mrkc8txSNuGXtAnGOiesuq
-	2cuQpo1xrH1HttrkBXm1loqNPYGPytx9QUQ==
-X-ME-Sender: <xms:EzsRaNmUtaRTjMHR2bJdkdnlbY6ma015QhFqjSJlNi4iMH9zmyvZ7w>
-    <xme:EzsRaI1yDfMFv6djiHH_Nm82reLkxIuzy79wOY9ebU-Nrk2i2u9GXDH0olgGn_cpa
-    6UcMi19Nyn2qwSb4g>
-X-ME-Received: <xmr:EzsRaDrMAGks02OucPUQ417Db-CQPCkjLJxX5d3yV7zfeqKUrNw7A3A-26_3ZCBh3Y8iNAAkbU2Wm66jhq_H2rc5a4ef5W4kaH1_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegkedvucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1745960272; x=
+	1746046672; bh=T0gqy5ifQu1aDYq6NhhpPxMKQNCIR7EOGKT2azHypIw=; b=o
+	vFwZphV8fW4KGo8iIA19MUJ/fMsprmub/pi3rz1EZkV9FRiBsN658zRp9X1WE419
+	GJbHZAs8116MqIGNT5zn2e2AgXirx36dElQLXWMDFljW6x5jwBecJmqYs+B7e3jr
+	SRSd23+N2ajZI/8WrmzFPTOj1t8Ikby2/tJvzAKvyXCYQip+7yFAxJzkaVZ3yGP+
+	MBr6/KPfL7PLsQ+Myk8UGBSNqUkBQDAVL2ZHqWhZqW0AakYZa1jIkcLbIbXUDuP6
+	3vGAzIcr2YbmSblaPUzFYEOWdiSjrWtkUE6pAKpn6kbBc7346MEIxGTwFKmX4P2X
+	bbGUH5wZolySonY2+rKiQ==
+X-ME-Sender: <xms:UD0RaOVCXZy0rSYXrxMQPi91pDdxHFwb9Q0aZPR-yTRsHWLsoTBRK5Y>
+    <xme:UD0RaKlV4eZJbXQ5qgY4ohRBCHBMPvSJxy-oZALYWjMsHYUP8BFMeiTOgGfgEsYvJ
+    yvk7BwRdtJiLgKtBQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhs
-    thgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:FDsRaNl8LkOvv3-q0EfbZGVCuOM_gqSdhPK8tHXmOw9ulZ_91fOOKQ>
-    <xmx:FDsRaL3iReGKnlO7zFs6--t51RqMNcUI8WekZViwmLCxO8fU4n-1sg>
-    <xmx:FDsRaMv0mSFsOhikeUapS2bIAtwRpkbVC8Lf-4ACC4UAcLY9MckZdg>
-    <xmx:FDsRaPUtPcjLe-u6BQmgmoTfle51p58ZuIjlc8cH-PLv14kUubwKeQ>
-    <xmx:FDsRaBIVDTvEELbuB4EP1QOb5P4wLp-Y7yAfL8Yk70FYHV7D5HThf4Of>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 16:48:19 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv
- hangs
-In-Reply-To: <aBDD-NeN2YoQbU9S@pks.im> (Patrick Steinhardt's message of "Tue,
-	29 Apr 2025 14:20:08 +0200")
-References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
-	<xmqqmsc4uv6d.fsf@gitster.g> <aA8ymUzWM2t0QkFP@pks.im>
-	<xmqq8qnkdxu9.fsf@gitster.g> <aBDD-NeN2YoQbU9S@pks.im>
-Date: Tue, 29 Apr 2025 13:48:18 -0700
-Message-ID: <xmqqplgu4ru5.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertder
+    tddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoegtoh
+    guvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgrthhtvghrnhepteekfedu
+    hefhleefgfeuiedvleelvdejgedujefgheejtddtveelgfelkeeiveevnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhg
+    shgsrghkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuth
+    dprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphht
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtth
+    hopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdr
+    ohhrgh
+X-ME-Proxy: <xmx:UD0RaCanEz7dYfULLZDCI8uAL_RmQ_xTPGZwkBnbVWmKarcdrjzYVQ>
+    <xmx:UD0RaFW7dWZh4zMF6XqjqurrKZ1TFDWg1JnTsVqgObET5v6f2AJGkg>
+    <xmx:UD0RaInlDguY4lTuMFKDHsjbYK_q6bq_vFrZ_jj0riO3GpOsfAkaEw>
+    <xmx:UD0RaKdtwwByNwwE8SupOz6msELEcILDAU4am2a3TssBqAREtjHvWw>
+    <xmx:UD0RaHFQnNAu7ZYL6GiTFF8YZnkQIIADHkJzb8Mi9RWSZx30O_jET4kB>
+Feedback-ID: i2671468f:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 7EFC9780069; Tue, 29 Apr 2025 16:57:52 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+X-ThreadId: Tca5bdeaf935be78b
+Date: Tue, 29 Apr 2025 22:57:29 +0200
+From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
+To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: "Patrick Steinhardt" <ps@pks.im>,
+ "Johannes Schindelin" <johannes.schindelin@gmx.de>
+Message-Id: <527d6cd3-185c-47c6-8c02-7e023b6dcba3@app.fastmail.com>
+In-Reply-To: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv hangs
 Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Fri, Apr 25, 2025, at 17:05, Johannes Schindelin via GitGitGadget wrote:
+> The reason for this timeout is the test case 'nonsense mv triggers
+> assertion failure and partially updated index' in t7001-mv (which is
+> not even a regression test, but instead merely demonstrates a bug that
+> someone thought someone else should fix at some time). As the name
+> suggests, it triggers an assertion. The problem with this is that an
+> assertion on Windows, at least when run in Debug mode, will open a modal
+> dialog that patiently awaits some buttons to be clicked. Which never
+> happens in automated builds.
 
-> @@ -213,6 +228,8 @@ int cmd_mv(int argc,
->  	struct cache_entry *ce;
->  	struct string_list only_match_skip_worktree = STRING_LIST_INIT_DUP;
->  	struct string_list dirty_paths = STRING_LIST_INIT_DUP;
-> +	struct hashmap moved_dirs = HASHMAP_INIT(pathmap_cmp, NULL);
-> +	struct strbuf pathbuf = STRBUF_INIT;
->  	int ret;
->  
->  	git_config(git_default_config, NULL);
-> @@ -331,11 +348,17 @@ int cmd_mv(int argc,
->  
->  dir_check:
->  		if (S_ISDIR(st.st_mode)) {
-> +			struct pathmap_entry *entry;
->  			char *dst_with_slash;
->  			size_t dst_with_slash_len;
->  			int j, n;
->  			int first = index_name_pos(the_repository->index, src, length), last;
->  
-> +			entry = xmalloc(sizeof(*entry));
-> +			entry->path = src;
-> +			hashmap_entry_init(&entry->ent, fspathhash(src));
-> +			hashmap_add(&moved_dirs, &entry->ent);
-> +
-
-OK, this collects in moved_dirs the directories that will get moved.
-And then a separate loop, ...
-
-> +	for (i = 0; i < argc; i++) {
-> +		const char *slash_pos;
-> +
-> +		strbuf_addstr(&pathbuf, sources.v[i]);
-
-Shouldn't there be a call to strbuf_reset(&pathbuf) before doing
-this?
-
-> +		slash_pos = strrchr(pathbuf.buf, '/');
-
-And start from the deepest directory, going one level up per
-iteration, ...
-
-> +		while (slash_pos > pathbuf.buf) {
-> +			struct pathmap_entry needle;
-> +
-> +			strbuf_setlen(&pathbuf, slash_pos - pathbuf.buf);
-> +
-> +			needle.path = pathbuf.buf;
-> +			hashmap_entry_init(&needle.ent, fspathhash(pathbuf.buf));
-
-... see if the path being moved falls within that subdirectory.
-
-> +			if (!hashmap_get_entry(&moved_dirs, &needle, ent, NULL))
-> +				continue;
-
-If there is no overlap, we need to do anything special.
-
-> +			if (!ignore_errors)
-> +				die(_("cannot move both parent directory '%s' and its child '%s'"),
-> +				    pathbuf.buf, sources.v[i]);
-
-Otherwise we are in trouble.
-
-> +			if (--argc > 0) {
-> +				int n = argc - i;
-> +				strvec_remove(&sources, i);
-> +				strvec_remove(&destinations, i);
-> +				MOVE_ARRAY(modes + i, modes + i + 1, n);
-> +				MOVE_ARRAY(submodule_gitfiles + i,
-> +					   submodule_gitfiles + i + 1, n);
-> +				i--;
-> +				break;
-> +			}
-
-So with
-
-	$ git mv a/ a/b x y z/
-
-then a/ is left in the argv[]/sources[]/destinations[] arrays, and
-upon inspecting a/b, we come here and in order to ignore a/b, we
-shift it out; the resulting arrays would have a/, x, and y being
-moved to z/.
-
-It somehow feels troubling that it would lead to a different result
-if I give a morally equivalent arguments, i.e.
-
-	$ git mv a/b a/ x y z/
-
-where a/b survives and a/ gets omitted.
-
-One thing that came to my mind (without concrete "here is the right
-way to solve it" that I am myself convinced) is this.
-
- * Should this code path even have its own ignore-errors handling?
-   "git mv a b z/", when 'a' does not exist, may ignore 'a' and move
-   only 'b', which may make sense.  But the original command line in
-   that case is a plausibly correct one if there weren't missing or
-   unmovable paths.  The command line "git mv a/ a/b z/" seems to
-   fall into a different category (aka "total nonsense"); no matter
-   how you fix the items in your working tree files, you cannot make
-   it plausibly correct.
-
-
-a totally unrelated tangent that made me scratch my head while
-reading the original ocde is the dest_paths variable.  It is never
-used as a collection to hold potentially multiple paths; it is a
-strvec only to be able to call internel_prefix_pathspec() with, and
-used only once with only one element in the vector.  At least it
-should lose the plural 's' suffix to unconfuse its readers, I would
-think.
+Sorry for the trouble.
