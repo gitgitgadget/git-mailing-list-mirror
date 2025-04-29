@@ -1,151 +1,120 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1FF275878
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 06:15:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F482777E2
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 06:47:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745907359; cv=none; b=Y3iA5SnQyFsM2yMRdEdJ4PXskNQc4ujeHbg9H/7zAGTBiL5vGWK0SOjJsSuaabq4gW0rbzHtA/Y8W2yPbi8sKX7eypUsYUhKk4Kz7IRH29X1gpFmliOV4svm7WS8Z17uXOmWGbmttHqzKybHPWmBAQ34MnVqa5Ls+QAvLKFx9cI=
+	t=1745909224; cv=none; b=oCIM8EWLxEGiLPlScR3hlfFIQ9jZ8vAmnMWfIRYVL3STCVukYe0hbFYQzQtlVnaDO0QuQb5WpWv63ehpBJnUSqUDzCbzmGCwbHYy6OUB1XYyS+Ro8mqBQdHQDslde2oE4P+LL/Of2kFBMA7Zjza5GB6DiGnsOTuT8nYkizbmrO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745907359; c=relaxed/simple;
-	bh=bzbNNUs6CvaHugCT1K6YPt2HlBZZYfh1kRPBE0k+irk=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eHPiVczrrZa4wBoi2pBFV+2PMGAb2jMOFiZCgUObYV9a/bzEJM3Q0+CgEpVD5TpqbOODGf3KGar6tu5SmQ6EHchdUple6ucqJJLPJEUuxhugcxEOvyp5msrYGiVs33P5W2DTi1b5QdSVBLRaqBBEYP6cxX8TcMAvnOypVsSUoNw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aVSSgbEu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=C5t6OVE5; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1745909224; c=relaxed/simple;
+	bh=Y22LUbY4HOpubOnJ59EFTBL+xOpT01VYkw+SbIY+nlg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LjqYgcR/xdJrAZBZswuTsFAptd7fyq+dOqjrU/Z81SCb/DlmmMIo2l9lbQGl7iiiU2/Dib7yy7EBMTqUr+ddE3XIRtdfnVA2fnLFz4hifI/qg+6QBFJkhPtjRfWO9HOKgeljlxSH069BRQyBt8YbKlSPUfUGpOUppQsQIbCGLUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=arujvI0c; arc=none smtp.client-ip=209.85.128.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aVSSgbEu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="C5t6OVE5"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6B71E114022C;
-	Tue, 29 Apr 2025 02:15:56 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 29 Apr 2025 02:15:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1745907356; x=1745993756; bh=de1p+L5aEc
-	+tW0cGCfTqxFr8rEhWCXB2Bfqin8a19DE=; b=aVSSgbEucanEAmuGqJKmFc3TLO
-	r/2gVL3VxZyx4yKKTiiFGUZ3932hpqGIjTFL7nsjNn3JSv+fwIiFWaSpgZmlGpoa
-	USJOfbXssjM+xBV8lsOOCz7anIFCT7f5c92nJSlvCDqwsIW3Qhb4HC0BRASMrKB2
-	/ocnvtQ31iPz4D99jaUUjSQSekiSw46m+46NM3WiQrJpVzMzdL1N4wkS8fwM16Ax
-	niEsThPPMwyahDRHveWnLDcQU3RORNmA2hoGLSYcOPTLe9d9iTKl7CryhlqrZtoC
-	MPXlbHSIm2kVckkWn3fZcUb7twRrs+ICQlL//cxjSFoN7ltYwj8RHzjGQreQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745907356; x=1745993756; bh=de1p+L5aEc+tW0cGCfTqxFr8rEhWCXB2Bfq
-	in8a19DE=; b=C5t6OVE5gXI4myZ3FzyQiqo3ncx2CvyZhtDQAEzDXcGcq1Mx5Ys
-	YivX1RbecG2CBGDKePD1Q5xjRvxc6GCGgws33d7lNB1Ws/CmwwxbGGKfSDiNL6wQ
-	ZHhYxV91eFZuzZDiPlWSqKdpQTdV0xpM3vCfSiKuV95+Rs2brpXxgWzA4XKMK0qd
-	jLSu4nW+GFLxnVeA4nbhSxBKJxwgwgnG5mYoswPGUF5gxfGKBO6qoH6Bk1p5pQn3
-	YO45pZR3Olb4FAjrSZAV3qadZqoPBZWvQPvTwzCR/VWLhIlSCUKNKwmEviCj607s
-	n5GQ/cN37UVjOq5Z6WiOF3VC3h+ZptEJ2kQ==
-X-ME-Sender: <xms:nG4QaMFONe_ph5My7Mc6JX5Egd-MlZbCVhgXFiPGYW_n0f0_SEqrHQ>
-    <xme:nG4QaFUKVv50XeCsqVH7YOxiTeaUztJ7nq29kwxiXF69DPTK02GwBCZWrlOJrETWM
-    GiukCPwl847bgLZrA>
-X-ME-Received: <xmr:nG4QaGIcp8vlKFVmxnX_9zku04BG4DauRWpqCDITFfWTb_hTW3s7jWX1712vjF0PjBCNx2gJXqNSF8WuQVstItTD9XygtjBCsYYtF7__k64>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeftdelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:nG4QaOGN4kQnFppJQWPj5KUxNHjdm66JomdOQsVQgvkfyune8Aom1g>
-    <xmx:nG4QaCVTngWc_k6DDzYsGs5Wk42xa6n_2e9ljNN9cdmRAnt10FEjuQ>
-    <xmx:nG4QaBNBH-A-TAMkdHHlTUfWvvYQjr78bBun8fe-QCxZ5YKLfAdCGg>
-    <xmx:nG4QaJ1Y52u5Nywanj7XaUCKLz9DG9htd8L-A9_6DV5aXCzuoRRn0A>
-    <xmx:nG4QaFDSwHYEB7NKLCU2KaEP3jc_UKV2GGzH_l8pZamux2pFYLG-g1lX>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 02:15:55 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e9f1d325 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Apr 2025 06:15:50 +0000 (UTC)
-Date: Tue, 29 Apr 2025 08:15:54 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
-Subject: Re: [PATCH v2 07/13] builtin/index-pack: don't fetch promised
- objects for collision check
-Message-ID: <aBBumhDhWoR9LEb3@pks.im>
-References: <20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im>
- <20250425-pks-object-store-cleanups-v2-7-63f1695b7700@pks.im>
- <xmqq34dsarhv.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="arujvI0c"
+Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7080dd5fe92so46765967b3.3
+        for <git@vger.kernel.org>; Mon, 28 Apr 2025 23:47:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745909221; x=1746514021; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=3Gt33JNk51OEdgfW49F/EJsu0SPRx58lIxlUxOH59HU=;
+        b=arujvI0cdX8Sj0WQJc8TnjhVC7VRo6kge4kgyTTlciW0r3my7wztJ0ie3xfBLL06fr
+         3fU7/n3eLwkDO87kXXK7Fale7a4O/1/dNd7zkk1jn+tjzMSTQX3GLaWRQKmDSCmD1rCc
+         s8KYYlWrOh8lc8RPkbhSmQWCAc0oFXyRiItc+yig+8aviNWEfLixafta6YmZv8magu4a
+         Ah+ougq8W6hd3LCnkMXzpQ3mxYkLoVFBh2pYcizNeN6Q7xaIUtkw6LUbah1Kqvpw4kjB
+         /VPfaz2v3CiIayV8tAM7kVtW1s1YnztO3Oz4kM1A00/oEc0Lbjpzu0/snJWA4S40WwzH
+         bZ7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745909221; x=1746514021;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=3Gt33JNk51OEdgfW49F/EJsu0SPRx58lIxlUxOH59HU=;
+        b=pfqRt54Nl/pQR2hO4WC/7aIJy/XvPj1+bydN1WC5+/kRLRaIQ1glsArKxImGuynpS1
+         iKQYLqv4301NNdiWpad8pKU1DnaaKNdFxknx2fP6Txpm4MmOvTdEmNO2K4hhrgEV0K7u
+         HDcHOdD+gSHkPtbulw8JSIXUoGpaGWIhRq5EVoPlyMSfigF0q76jYjtG1JaPtARPe/u5
+         2houuimFVlAO3Yj80IEue5Gi/m99qCY+rT4OdZ4JNg0qLOo+hKkqAuvfDsuIA5tnxp/3
+         1HmglGoHR12VDP5O+jwXo/mbLfhwA9f23P1M/IHSh6MnzbsMPvf7JsDOD3TP01qlwHcZ
+         7+uA==
+X-Gm-Message-State: AOJu0Yy6q7y3/dOXCnHXnCXt8a/t859WDbowqtg1BMJBMuTygWQ6pztF
+	Q6KXOVzhjrRHQmvWC6NQCRLu3Z0Ia6eL0bIB87Q4R8zx+pHJCLjAbFRHD8A3kDpFwsO+iMNTmJt
+	Yr7O6VvkLwvEcgRaGUHDCsk7NzChpGMaTkb2+HxTH
+X-Gm-Gg: ASbGncsmdCqtqQMQfCgzIFHx1Nap9mYgtuCFAsYN6KuMunz8FaI0WWxAXH2hD3QPQvO
+	X8oyqBYVstCN0JxrL5tfew9sOCCQ1LAorNdas60WyWizINBm3ncWHOQT7ONQuA4AIElmWb3hPXi
+	Ulf4RNB3BJCHlMckAqh+wNg7g=
+X-Google-Smtp-Source: AGHT+IFixfTlvm3PGTzyJWLx27C0oD/0NOm2foQgS8YCeqROzPDOWQR1a4ssWMjk1FkOVfIN6vqxQDrLE4gMBF5kQJE=
+X-Received: by 2002:a05:690c:6f8c:b0:703:aea2:6bbb with SMTP id
+ 00721157ae682-70899778c52mr37651217b3.31.1745909221140; Mon, 28 Apr 2025
+ 23:47:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq34dsarhv.fsf@gitster.g>
+References: <20250427185351.82520-1-kuforiji98@gmail.com> <20250427185351.82520-2-kuforiji98@gmail.com>
+ <xmqqa57zamuw.fsf@gitster.g>
+In-Reply-To: <xmqqa57zamuw.fsf@gitster.g>
+From: Seyi Chamber <kuforiji98@gmail.com>
+Date: Tue, 29 Apr 2025 07:46:50 +0100
+X-Gm-Features: ATxdqUEQvI0BS1RLhkBML5hIWcuVo_scDZvMJ8N0EdlxgE5LVfZEVxwzXrUjcws
+Message-ID: <CAGedMtfwA2vqOFxjLnusvFNcwKpTCLq38bZYBz-9cpzFmbhUdQ@mail.gmail.com>
+Subject: Re: [PATCH 1/9] t/unit-tests: adapt lib-reftable{c,h} helper
+ functions to clar
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk
+Content-Type: text/plain; charset="UTF-8"
 
-On Mon, Apr 28, 2025 at 02:46:52PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Any packed objects indexed via git-index-pack(1) are subject to a
-> > collision check. This collision check has the intent to determine
-> > whether we already have an object with the same object ID, but different
-> > contents in the repository.
+On Tue, 29 Apr 2025 at 00:27, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Seyi Kuforiji <kuforiji98@gmail.com> writes:
+>
+> > Helper functions defined in `t/unit-tests/lib-reftable.{c,h}` are
+> > required for the reftable-related test files to run efficeintly. In the
+> > current implementation these functions are designed to conform with our
+> > homegrown unit-testing structure. So in other to convert the reftable
+> > test files, there is need for a clar specific implementation of these
+> > helper functions.
 > >
-> > The check whether the collision check is really needed is only performed
-> > in case `repo_has_object_file_with_flags(..., OBJECT_INFO_QUICK)` tells
-> > us that the object exists. But unless explicitly told otherwise by
-> > passing `OBJECT_INFO_SKIP_FETCH_OBJECT`, this function will also cause
-> > us to fetch the object in case it is part of a promisor pack. As such,
-> > we may end up fetching the object only to check whether the fetched
-> > object and the object that we're indexing have the same content.
+> > type cast `for (size_t i = 0; i < (size_t)stats->ref_stats.blocks; i++)`
+> > Adapt functions in lib-reftable.{c,h} to use clar. These functions
+> > conform with the clar testing framework and become available for all
+> > reftable-related test files implemented using the clar testing
+> > framework, which requires them. This will be used by subsequent commits.
 > >
-> > This behaviour is highly dubious and more likely than not unintended.
-> > Fix it by converting to `has_object()`, which knows to neither reload
-> > packfiles nor to fetch promisor objects by default.
-> 
-> It is unclear why you thing it is highly dubious from reading the
-> above paragraph three times, though.
-> 
-> Is it that if we are suspicious of the incoming pack data we are
-> indexing, we should also not be too trusting of the object that our
-> promisor remote would be giving us?  To put it in reverse, our
-> attitude being "we trust the first copy of object we saw", which
-> translates to "we trust where we explicitly clone and fetch from" in
-> the traditional world without lazy fetching, if somebody else we are
-> explicitly fetching from offers us an object that the promisor
-> remote would give us, we just do not bother if they are the same
-> because it is not like we trust our promisor more than we trust the
-> current counterpart we are fetching from?
+> > Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
+> > ---
+> >  Makefile                    |  4 ++--
+> >  t/meson.build               |  4 ++--
+> >  t/unit-tests/lib-reftable.c | 26 +++++++++++++-------------
+> >  t/unit-tests/lib-reftable.h |  6 +++---
+> >  4 files changed, 20 insertions(+), 20 deletions(-)
+>
+> With this step (and nothing else, as this is the first patch in the
+> series) applied to 'master', I see tons of these errors:
+>
+>     CC t/unit-tests/t-reftable-merged.o
+> t/unit-tests/t-reftable-merged.c: In function 'merged_table_from_records':
+> t/unit-tests/t-reftable-merged.c:37:17: error: implicit declaration of function 't_reftable_write_to_buf'; did you mean 'cl_reftable_write_to_buf'? [-Wimplicit-function-declaration]
+>    37 |                 t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
+>       |                 ^~~~~~~~~~~~~~~~~~~~~~~
+>       |                 cl_reftable_write_to_buf
+>
 
-Yes, exactly. When we don't have an object locally we don't have a trust
-anchor for verifying that contents of the object look as expected. So
-there are only two ways to do this:
+Hi Junio,
 
-  - Use a trust-on-first-use model. We trust the object we obtain
-    initially and from thereon we start to treat it as the "correct"
-    object and verify incoming objects with the same ID against it.
+Yes, that is expected, as there are `reftable` test files that depend
+on the old function names. I navigated this by temporarily porting the
+functions into the `t/unit-tests/unit-test{c,h}` file to convert the
+files and moved them back as soon as I was done converting them. Would
+it be better to leave them in `t/unit-tests/unit-test{c,h}` and then
+create a final patch that migrates them into the
+`t/unit-tests/lib-reftable{c,h} file?
 
-  - We only trust what everyone agrees one. In that case though we
-    really should be cross-verifying with _all_ remotes, not only with
-    the promisor remote.
-
-Right now we do neither, but we end up treating the promisor as "more
-trusted" than any of the other remotes.
-
-I think it's completely unintentional that we end up fetching the object
-from the promisor to perform a collision check against the packfile we
-are about to index. It is highly likely that the promisor remote and the
-remote that we're fetching from are the same anyway, so all this does is
-to waste resources.
-
-Anyway, I'll evict these patches from this series. I think a couple of
-the sites are broken, but for now I care more about the bigger picture.
-
-Patrick
+Thanks
+Seyi
