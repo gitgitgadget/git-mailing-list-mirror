@@ -1,113 +1,117 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD1F81EB1BB
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 15:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5DDB322A4F1
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 15:45:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745941462; cv=none; b=InIBFwnLewbVwffmYhI+Iu1NQgpdmA+zdrNhQQAhPziPgD1MAtrAN9Hb+TPsj4Rp/v7V8qc5t+572nszd8IOUr9Z66Sjps+Lo1bQ2amg5myMosatqj8ZYqyvYsJ4PGcUDLEQ5iJM2k/RMSLVSEGWMJdoSLDaM1y9p/brijUifLs=
+	t=1745941509; cv=none; b=UyzP54jrZTTOC80zY5TAfCQPBQBY6oypV2EPhj+/TmM8Z5+PI6Rkwu8Ek1ETjwBvYgXvDm6fzqHzhcYRB//vP3PU8LJ82Ynb0E1In9bDlxxbKmmOTv726ro6DI9Zg+F9kCIBVvPi5dV93DFr7YIMYubm4gCEscmuJ+zmPem2EkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745941462; c=relaxed/simple;
-	bh=eljUaZKW/CuFYYssV5ovSlWX178m2aw66tiGtDDN02w=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=K0ZqXFivFc4ih2M0iLWnLpR/Wh5gdvPL/jBfhcr21wpv/qpf6FUUcjKljYLe9CmTeReLOxE3TngeYFTa0336XbOQ+qKM498l+0xQKx6mVwmUWInazcFetPAog59al1X3kgrkW6x82JGS3VheBlI2Ol4pcsHMugeZ54MJXzOrLqc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XMVp1n7M; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IuI4fnH7; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1745941509; c=relaxed/simple;
+	bh=+8/VtSkOIaB22QPl1liVtXzx3b5TTTXxUxe6bFixuJk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=L9rmTyltbOpcFzJzCdkmiey4CyCY0UvBQ3lYJf8RzAYLvC6DI9FJyhMBxakF05mhlCz5bfgUrjxWwHnU0ghvSwcOBilv2Q02GhRh/dtLPdJe6CBOR9f5z9ePWket2TGiPglcNm+wQ7wBJhWu5esMcXhoIBknRZuMfIDJW+xH4dE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XaOo/Jye; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XMVp1n7M";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IuI4fnH7"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id D875913801DA;
-	Tue, 29 Apr 2025 11:44:18 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 29 Apr 2025 11:44:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745941458; x=1746027858; bh=qc71feiIcH
-	w35GIHUXTdxc/Z+k7e8WqAT8Dbz7ge/k0=; b=XMVp1n7MwSAhWv0bQBSpK1yCZZ
-	BgWMmghXt6LGoQF/tvOGvwLzvJ5LCT/dXVWYUf1jDSyrN9XxnMlFz2T5OQ0F6rAh
-	jen0uCVmBPK9v9xcWM+WfoFdN0Gu3R7wPCcGnb/RSmRUSF5YS6/Vh2ndZKMgAVc5
-	cvGOeYakjB/ej2aSNA0vIKk4OfzuRtMGQWcw0aHdL1QqlIXJdC0U+/6JU64Jfrju
-	+4GVaqrursYYH20T5G39LWD4Ulsqt64mu++mjx913gekN7XwqJweom31keUFSzLu
-	/F4cZqJVcYQP3OZosFzxG/RC9KFtbMG1H+u69rp8N/pVy8+kRQraGxkxi2bw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745941458; x=1746027858; bh=qc71feiIcHw35GIHUXTdxc/Z+k7e8WqAT8D
-	bz7ge/k0=; b=IuI4fnH7jvBPeIJO+es+gEp+oZvw7I6OoMpxlGaXAzkn5awhxgo
-	O73ALJDscW19K7EmvNnBzn2G5vupXjoBfkjnXeYPF+qxBqSsj9ZmdYINgmuhbe1J
-	UQN5YHHMlaCaIEmsc7JLn2iFK0LT/duEoUtLxJwB3REBrsUOsA9RBt9pC3QFX391
-	0yhI9jlyG2DHidgSvjLTgp5PTzT/Lr/XYDV+fkGwEvTwvyJTwhjLReh8Rml5XGoR
-	oBzMCFUAGqLy218seNYGpCe9kqFTLCYJpjJxtQcjIQkO7LwlaeMkxDOS5x9xv/0/
-	9Q32gLyUhCaTwcxqsaThQmKANLujJR2TgTA==
-X-ME-Sender: <xms:0vMQaC1tvs_wBYbgzOT0oe0HgCTwmfbxOiWy5mz7557KWZzLuozeEg>
-    <xme:0vMQaFEGnX1NBEkflWy8IUoBnOjf7dphYhtvZHnegZRK8UJaiEkvXe_kHm_adYeVd
-    wcPOWpG7Vlpsvr3gQ>
-X-ME-Received: <xmr:0vMQaK7OlJcKcB7R9KFrzOtlT6qXhoegDgTtZJuzHUKdQ8dcuKBjZrprC4zyYoka-Ygkey91hwB4rS3jcS9LkwQqifvKVWFG1QuO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphht
-    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllh
-    hiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0vMQaD3AV-2Xjk9VyUssZihunumeznqfq3w1B-0K8TFT-nvFKpZpog>
-    <xmx:0vMQaFFskz-u2AHsRuQYH7wRFKNsVdPWtgdibAJgT1Afdof3lv8_TA>
-    <xmx:0vMQaM-AqB6z9lWBjfylY-tZLl6Pm2MInLJpA4NZOogAA5PNa7_RVw>
-    <xmx:0vMQaKlj6iQzCvc_uLrp83rbL-x84Ac25Oogf50kqtkhBePw7cLeTg>
-    <xmx:0vMQaJOSJ-EgOOwNymWQ-RvBXNFC0OAD4a1kL6voJtzqa233-J3cWqzG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 11:44:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Seyi Chamber <kuforiji98@gmail.com>,  git@vger.kernel.org,
-  phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/9] t/unit-tests: adapt lib-reftable{c,h} helper
- functions to clar
-In-Reply-To: <aBB6vHl5Gmtva7b3@pks.im> (Patrick Steinhardt's message of "Tue,
-	29 Apr 2025 09:07:40 +0200")
-References: <20250427185351.82520-1-kuforiji98@gmail.com>
-	<20250427185351.82520-2-kuforiji98@gmail.com>
-	<xmqqa57zamuw.fsf@gitster.g>
-	<CAGedMtfwA2vqOFxjLnusvFNcwKpTCLq38bZYBz-9cpzFmbhUdQ@mail.gmail.com>
-	<aBB6vHl5Gmtva7b3@pks.im>
-Date: Tue, 29 Apr 2025 08:44:16 -0700
-Message-ID: <xmqqtt677z1r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XaOo/Jye"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-39c0dfba946so4536655f8f.3
+        for <git@vger.kernel.org>; Tue, 29 Apr 2025 08:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745941505; x=1746546305; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=QtDZkc88tLQNUufYh59jfP5v87UtxA4ti2mo3Drcuj0=;
+        b=XaOo/JyeEwaXTcRXa9UGa7gWlGKFdaZAgw02UhKfNdNTJoH1Ra3MINoZEzePwP1Bch
+         oIZx6hFZW3JY+UUTBGJbTi2oEzkde43PL8hmrD18FUnjbGL7l2roeQ887nESbgEoAaE0
+         QJ4oue+wN5mjZWe3cfRpG+6Q8x8Jm1ZT8aDb0s4COa6IVFvvKHuLTbLC0odVzSJmqf4u
+         8nKJ6xbIPt8fY+IrjlGNZck705sY+e+Yqgch7aTI/BTkV9Fnms2jq2uSyKQI4CKaVEsr
+         4R7dGVmoXkYwAqp/liGCv8ae/HA85JEHKz/xmV3J4vhsohjgvJIqvzGPr8Vjohel5DCl
+         35Sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745941505; x=1746546305;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=QtDZkc88tLQNUufYh59jfP5v87UtxA4ti2mo3Drcuj0=;
+        b=mzpgzpKAsK34cyUcDHgohEUsRz3yuBwoq1WbQ7dGGVsgAPtkH3GLH0FXUUSsKtxIfp
+         uFQ3KmlgTgsBUEK6OwhMoX2oUImPp9HKIgB260AY9T9F2vgAswfezcniAYNbS4Syq+yn
+         w0OWrjTwyN4bAIWkoBFfmuhMeHU+bFUzFYtgcaCrfiow7g4AP7dmRiUmd5zUzVmPwbFc
+         9rudNnVkLy+471di67pzsjWRwBrxRcMdJBDm4J+8UXmdvfV32HhMgPlMT+qYNv6HlJBC
+         De9afVjETL7wOTgh8xVYWwj1JAUu8C0ga6EScCj4ffvXjZtpIxENzLTIc+3Uob1MnKQi
+         e/7w==
+X-Gm-Message-State: AOJu0Yz+ECxt8K1Bqcnai93ymRZOhHuKxAnZUUobW9Obw7aUoD4mtYvi
+	dtcXuL5XcCXsYaZNFDn4SH2HvUWSXOw6EKtUzNBCvx/MGRKHxgiZ2unj+A==
+X-Gm-Gg: ASbGncuTgAOEoAEz02c3QASKs5chBW/Y/Wc1D0OxakshTWTIRkouYBfMIHZVaGcozFR
+	h1chpqN4uo/6YH++tDIhdlUUqoHVF8NegrfxPc8QY2YQTve5q2eQB9wSMMS8FcQVNaBoOTaiPeX
+	k2NqyBP29xFAf1RLLvhniPEKHQfEHQ1uWSLEpywrMAeszk9YK21WpMLr8qTAnFcb9biQopZR1PW
+	8SGle5RZCAGM7lkOxppKLFqcPn2nfMj17Up1P0vYdLLyWUqqj4OVR0nVRlJrv1luX4JgTMQlg09
+	jw3Apuofq5+OH/t3e04xGHAcxWc4QW1XfCGjNOI9WXlZ4qZjnLVv
+X-Google-Smtp-Source: AGHT+IE0lfuXhN+I8PnqR22JDlupQbRXEF0R/J/p0US9n5in+oJOl1f/7iI5ffbf8YE2hOpKIqff6A==
+X-Received: by 2002:a05:6000:2902:b0:3a0:88e5:dbb2 with SMTP id ffacd0b85a97d-3a088e5dc64mr3702340f8f.11.1745941505021;
+        Tue, 29 Apr 2025 08:45:05 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2d8154sm191885115e9.30.2025.04.29.08.45.04
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 29 Apr 2025 08:45:04 -0700 (PDT)
+Message-Id: <pull.1912.git.1745941503913.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 29 Apr 2025 15:45:03 +0000
+Subject: [PATCH] tree-walk.h: fix incorrect API comment
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> We do want the Git history to be fully bisectable so that it is easy for
-> contributors to find out where a specific bug has been introduced. And
-> for the history to be bisectable, we must ensure that every single
-> commit builds and passes our test suite. You can do that e.g. via `git
-> rebase $BASE_COMMIT -x 'make -j$(nproc) test`, which builds and tests
-> every single commit in your commit series.
->
-> So yes, this should be adapted so that the initial commit introduces the
-> new helpers without removing the old helpers yet so that the unit tests
-> that haven't yet been converted continue to build and test just fine.
+When commit 50ddb089ff68 (tree-walk.c: remove the_repo from
+get_tree_entry(), 2019-06-27) added an extra parameter to
+get_tree_entry(), it did not fix the ordering comment about the meaning
+of the parameters.  Rather than just changing "third"->"fourth" and
+"fourth"->"fifth", give the paramemters meaningful names (or actually,
+just take the existing names from the get_tree_entry() definition in the
+tree-walk.c file) and strike the comment.
 
-I started writing the same and thought somebody else may have
-already responded, and found yours.  Very well said.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    tree-walk.h: fix incorrect API comment
 
-Thanks for spelling out the expectations we have in this project and
-explaining how to achieve that goal.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1912%2Fnewren%2Ffix-tree-walk-api-comment-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1912/newren/fix-tree-walk-api-comment-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1912
+
+ tree-walk.h | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
+
+diff --git a/tree-walk.h b/tree-walk.h
+index aaea689f9ae..226b535f085 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -177,10 +177,11 @@ struct traverse_info {
+ 
+ /**
+  * Find an entry in a tree given a pathname and the sha1 of a tree to
+- * search. Returns 0 if the entry is found and -1 otherwise. The third
+- * and fourth parameters are set to the entry's sha1 and mode respectively.
++ * search. Returns 0 if the entry is found and -1 otherwise.
+  */
+-int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
++int get_tree_entry(struct repository *repo, const struct object_id *tree_oid,
++		   const char *name, struct object_id *oid,
++		   unsigned short *mode);
+ 
+ /**
+  * Generate the full pathname of a tree entry based from the root of the
+
+base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+-- 
+gitgitgadget
