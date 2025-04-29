@@ -1,83 +1,84 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152C424113C
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 16:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEA9221719
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 16:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945288; cv=none; b=kKXekbCofLf3aSs8qBcDF51rjAJRJdOTNJJLxfum7oRKgk4LcoEj/OFx9Ukmu3o1a0hdzb5dJjYxK8SSwijweLtEct75PXS8fjy54kSnl0yHEbjICMraMWMl7ggLwacBueemUZ3XzvBD5SSvFeYhDtwY5rs3Bow7YYnHdkEmzEY=
+	t=1745945723; cv=none; b=dh1Ylwk72I2lfdiQ8FdcnENxTHAr3Mwn/oBRaiGkg1DSB8q4g+1Ms8LHhtaR9O6kJ1t1iySExKTunTgOhTIsNZce56et1pL4hoRinuClheXFrsKzDXd8Zi2En7+TysZSJXLd8I3mslkqX+HJNTnTphEd/P65dGlam+rU4ZjF4g4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945288; c=relaxed/simple;
-	bh=9wGKkmXGKed2XILM3UH5RUoGQ2NGzgEL8N+dBxqc9iw=;
+	s=arc-20240116; t=1745945723; c=relaxed/simple;
+	bh=fy8syY7lEdwp7gzpjHnnMJEImJbxlhzbP/AFUQvDuAk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S5f1H0ztE1gAHS4A06NJ178J3Hh2lGH4IfKyYUtdkBlM7fQmLW9VJXlsD+8ib4YfSIQ7xBFO5o4rbUT7/B7QPtZWon+NgG0sydOtx5Og3EQG/HJMgb1u7V2UJBUNHRwzW8Gwj1YXbr/8liNpqJXc8Kwk5/vOT0Luy1xYZOq0EzE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FEN3HJAZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=U32vXABw; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version:Content-Type; b=EXWSPYe75k3WfAuZuKUTphHUcoo/y0aMB/QPGeOTeIIlGXZT/zTYKGO5Gid63621bjDvUx+LGkcDXSXURKEF7BAwV0r+jrCxnDdwhQkYmgUmNaC56GvF6uXzGliNH+hfJ3Un4pIEqBMVmMx1qcUg4Vg6ZuIhNjd6de7NsKgicRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fsu32pMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YhHwes95; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FEN3HJAZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="U32vXABw"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 054C51140235;
-	Tue, 29 Apr 2025 12:48:04 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fsu32pMf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YhHwes95"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5A2A213808C1;
+	Tue, 29 Apr 2025 12:55:20 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Tue, 29 Apr 2025 12:48:04 -0400
+  by phl-compute-12.internal (MEProxy); Tue, 29 Apr 2025 12:55:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745945284; x=1746031684; bh=f5c3QyWPl1
-	U39ir4RtV5PM00zUttaMJCLVQIqYe28AY=; b=FEN3HJAZY0imOwsD/1ijRRvtCY
-	B4d6H7Oo4OjP/S+rhKuoDWHkDVy+gLjir2WMCUjMHYL6WOPG4xnhTbWlG+98DRcy
-	/pfiJTKuBpiqQEnw8+zy2N1FV5QbMc+7KfKm3YgDQvNDmd08DJu6jKDGphXStdcB
-	fGkdfi+Tu8OoYv9zfkF+4K5to0iS8riyRy1H5rwYnJ57IZqbMQmghgefzVl9d+Qz
-	/UrQ/0voip7pZxp4Hge8b230bOUo2kA/03dXIpVOuwHNTwx6GiMigckxm4inNMlW
-	czEJFnUoWV9sozcEUD4c6cch0/7rd0H/ztkv4wF0j0TH0KjAbtx6Xc3TF3Qg==
+	:subject:to:to; s=fm2; t=1745945720; x=1746032120; bh=rentAgwz8s
+	vLQYs/UA6i8Yriv0BwWatSiezKBfOS1Ao=; b=Fsu32pMfULUAduY+OMQwALeBna
+	x6r/lhb2uQ9Wmyfrk+TQ/ahASH6Qu9c8kmnIM4HAvozkuJZ8jT58Q7TFWIJLklMk
+	sHCdKV737bRmZv+G3H6KT1GgMd/Fo8sIP1dK1xe6TGU5DKcfjTWGfuldjiubK7jF
+	KDAI6NL2Fw5egSw4qsIJLZL+cB3sVzljeOlUCcbehwLj/53keFVDT7IiDZdSl4Zo
+	lWs2JobLC9dk+x2Kakgd+k0LqBwD/LXOMcXGzabdDOqNob1hTctF15UeEz/mtdAg
+	5g8d6bo2b+3k2OH6jBYmF94e17356nvZWr+HNqVUKB3/R4rvTx+YqMMjUyNg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745945284; x=1746031684; bh=f5c3QyWPl1U39ir4RtV5PM00zUttaMJCLVQ
-	IqYe28AY=; b=U32vXABwO1CzI+V128kEquoMEiaIGmgAPv/H3GqL7bh7EdVOMyO
-	RqNTYdzI2LDiG6FwtRdugfua/xQwHXDciDXwSE7PGTFAGE56qa9wd6mixBFfb8ui
-	MPRTwUseABqcKoEaX2dui4hJdMdb1vahmL5xnYNthn0ZLG7KC7mg7CBJFW78PO3+
-	CMqYEFuaNsbNWOEmdwd36eHQT6hbPsoV/xobo2IgT5t4CqQXAEZ1hVz70bs1GsL5
-	NWeap+HFpEb7BbrDBSfpwfUEPCZEH9IHkmS274ibyb/WVoeJdsRpjISDgBy0IXrx
-	JuLrLAGCSnETxvflRNx6BNWhrshgZo4fruQ==
-X-ME-Sender: <xms:wwIRaLXNKxFE1GeLx9zDrVcMmEpH7iXIxwxkIrAxqJJtScC7VRnqRg>
-    <xme:wwIRaDlQSYtr4qKN7wxLR5QMIjSzkzy2qqyYaPRQTSbyVsOXuhXyUPD3-QrL8x0WA
-    veamRUT2ba5heIwkw>
-X-ME-Received: <xmr:wwIRaHa2NoYHCeuPZIyy3So8z9p2vPSlOzPxCV3zua6H-Mhl6CBEPY7WCmAZmJFv3vDgNPAfiSh1T3iMEnvDlL8ANgR8yuPVqe6I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegfeefucetufdoteggodetrf
+	1745945720; x=1746032120; bh=rentAgwz8svLQYs/UA6i8Yriv0BwWatSiez
+	KBfOS1Ao=; b=YhHwes95S7+dotd7J4ikMjqRYBx5IVpb/cdrlrQlsoYZs4V1cNz
+	ZWTDKUq+BXEwKYIfN2HnxwtigdU8UHDXeNypRvqAObHioGX655Ljeu+oI6sRvDrW
+	6va41Qei53aVAydlyqJdBlbn+HSj9FCU+tNXVCRHjanaHkv3PgEdnR7+BTtS5ol4
+	u8NhyK2YUrFOs/sWmJ/WJB4VKNdbJLinNuSp6yAcyV+wFT5vHYRzJULo6zqMnlMQ
+	qL2wMX4LmYQ+wUax3dgurquCULAwqZTIer7EqKonNZY2TqkCT6w4iIiU9fNe5D90
+	jMPIRf7WlIWtHcn8XfUCfdWiOcNR+YPml4g==
+X-ME-Sender: <xms:eAQRaLZ7lKkxYfxsDjDaOashWvRm8oWr3BJMYFqlinBTwBhTMB9EgQ>
+    <xme:eAQRaKZMHMN8hThavLwEMHOy1imqZYH4yWpV__ub-YyaYrCbtfdep20eVOHTkux_h
+    foOT0k8-RSErb_S4A>
+X-ME-Received: <xmr:eAQRaN8eUhQdNqJ_ScI9Qaqq2raBjF1glfJgBtMYmHokxXdC8K_AtFV_-rckI_4635EKfmkCgo9t7giNZwc6_KqaF7KG-9tNIPYP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegfeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepgfeigfdvgfffieelkefffeejheehvddt
-    keektdfhuddvhfeljeeujeevgffhtdfhnecuffhomhgrihhnpehsthgrtghkohhvvghrfh
-    hlohifrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
-    rhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvohhnmhhitghhrghlrghkieesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:wwIRaGUg5Rqo6xrnmUowrVd1ymAmIQK4RdhMMpVi2K3Hz2lIdC8ZUw>
-    <xmx:wwIRaFlNCf7LY-W2r5tBwDBCRIJ092wTYvlky9IUOeMS8StnMkeFhQ>
-    <xmx:wwIRaDeBZoLYM-uyFSUT1v2W1EPwBGDAe5892CvpojbJ3msMVlOLzg>
-    <xmx:wwIRaPH_DeFrOhQLCmjHLBcFytYpF8UZwGtsHfsgRH3JCRZz7mLrOg>
-    <xmx:wwIRaDTd7D0AhKLuzCItH-TiI2Bo1jhnXTVOizSBW6c0OGsGu2ln8Ojj>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:eAQRaBrrKotdxFhYMAwUOaoCdE_wPYTnjWuAqZ1QejZmrZhP6vgVZQ>
+    <xmx:eAQRaGo6u1SQPBr7E1N3LEXsMRKsXIVUmTIV70l8HHgBcukeMIirnQ>
+    <xmx:eAQRaHS30ZAdLHOFLV_SHskSi4t1e8bWDQVD4fPi-QEmKunrF0hhtA>
+    <xmx:eAQRaOrlqj0cNYpQwRQdUlfHjZvbQZIkpxrte5xijYC0e1RL2GBPCg>
+    <xmx:eAQRaF0sNrVGMvmatAjrU6gvF97umL4v9g8H06_v6ApvZCLSTK2oAN8f>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 12:48:03 -0400 (EDT)
+ 29 Apr 2025 12:55:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Leon Michalak <leonmichalak6@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Discussion for interactive --patch commands to get --unified
- support
-In-Reply-To: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
-	(Leon Michalak's message of "Tue, 29 Apr 2025 10:16:15 +0100")
-References: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
-Date: Tue, 29 Apr 2025 09:48:02 -0700
-Message-ID: <xmqq34dq7w3h.fsf@gitster.g>
+To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH] hashmap: ensure hashmaps are reusable after
+ hashmap_clear()
+In-Reply-To: <pull.1911.git.1745941663160.gitgitgadget@gmail.com> (Elijah
+	Newren via GitGitGadget's message of "Tue, 29 Apr 2025 15:47:43
+	+0000")
+References: <pull.1911.git.1745941663160.gitgitgadget@gmail.com>
+Date: Tue, 29 Apr 2025 09:55:18 -0700
+Message-ID: <xmqqwmb26h6x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,51 +88,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Leon Michalak <leonmichalak6@gmail.com> writes:
+"Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> As I've grown to use and appreciate these features even more, I have
-> noticed and been bothered that `git add --patch` doesn't have a (easy)
-> way of configuring how many context lines you see. There is a
-> stackoverflow post
-> (https://stackoverflow.com/questions/6711670/git-show-more-context-when-using-git-add-i-or-git-add-e)
-> which mentions you can do `GIT_DIFF_OPTS=-u<number> git add -p` which
-> does work however isn't very user friendly or convenient.
+> From: Elijah Newren <newren@gmail.com>
+>
+> In the series merged at bf0a430f70b5 (Merge branch 'en/strmap',
+> 2020-11-21), strmap was built on top of hashmap and hashmap was extended
+> in a few ways to support strmap and be more generally useful.  One of
+> the extensions was that hashmap_partial_clear() was introduced to allow
+> reuse of the hashmap without freeing the table.  Peff believed that it
+> also made sense to introduce a hashmap_clear() which freed everything
+> while allowing reuse.
+>
+> I added hashmap_clear(), but in doing so, overlooked the fact that for
+> a hashmap to be reusable, it needs a defined cmpfn and data (the
+> HASHMAP_INIT macro requires these fields as parameters, for example).
+> So, if we want the hashmap to be reusable, we shouldn't zero out those
+> fields.  We probably also shouldn't zero out do_count_items.  (We could
+> zero out grow_at and shrink_at, but whether we zero those or not is
+> irrelevant as they'll be automatically updated whenever a new entry is
+> inserted.)
+>
+> Since clearing is associated with freeing map->table, and the only thing
+> required for consistency after freeing map->table is zeroing tablesize
+> and private_size, let's only zero those fields out.
 
-If it is only to specify how many context lines to ask for the diff
-machinery when preparing the initial patch that is presented in the
-"add -p" UI, it should be fairly easy.
+Makes sense.  Thanks for finding and fixing.
 
-I would expect that development of such a feature would progress
-roughly in the following order.
+I do not think we want to patch all the way down to Git 2.30, ...
 
- - Define "struct add_p_opt {}" that has one "unsigned int" member,
-   which is the unified context length, probably in add-interactive.h;
+> diff --git a/hashmap.c b/hashmap.c
+> index ee45ef00852..a711377853f 100644
+> --- a/hashmap.c
+> +++ b/hashmap.c
+> @@ -205,8 +205,9 @@ void hashmap_clear_(struct hashmap *map, ssize_t entry_offset)
+>  		return;
+>  	if (entry_offset >= 0)  /* called by hashmap_clear_and_free */
+>  		free_individual_entries(map, entry_offset);
+> -	free(map->table);
+> -	memset(map, 0, sizeof(*map));
+> +	FREE_AND_NULL(map->table);
+> +	map->tablesize = 0;
+> +	map->private_size = 0;
+>  }
+>  
+>  struct hashmap_entry *hashmap_get(const struct hashmap *map,
+>
+> base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
 
- - Teach add-interactive.c:run_add_p() to take an extra parameter of
-   type "struct add_p_opt *opt";
+... but this part of the code has been fairly quiet and the patch
+applies very cleanly.  So I'll apply on top of bf0a430f7 and merge
+the result---anybody maintaining Git for their LTS distro can then
+merge it to their favorite ancient maintenance track ;-)
 
- - Teach builtin/add.c to take -U<n> argument, make sure to make it
-   an error when '-p' or '-i' is not given and -U<n> is.  Pass it in
-   that new parameter when calling run_add_p() you modified above.
+Thanks.
 
- - Do the same for builtin/{checkout,reset,stash}.c where they also
-   call run_add_p().
 
- - Add a new command (sits next to "add untracked", "patch", "diff",
-   etc.) to set -U<n> in add-interactive.c:run_add_i(), so that the
-   default context length of 3 can be overridden before choosing
-   "patch" or "diff" commands in "git add -i".
 
-Because we generate diff once, and then let the end-user dice and
-slice freely, without keeping track of the correspondence between
-what the original diff looked like and the current diff that is a
-result of end-user dicing and slicing, I think extending the context
-length on demand (i.e. "I started an 'add -p' session, chose a few
-hunks, edited a handful hunks, and then realized that this single
-hunk I want to see a bit more context") is _significantly_ harder.
-The current code structure is simply not designed for it.
-
-It would take a significant rewrite to allow you to say "OK, let me
-regenerate the diff with wider context (this is the easy part) and
-find the hunk with larger context that corresponds with the hunk you
-are talking about (harder)".
