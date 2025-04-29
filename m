@@ -1,66 +1,66 @@
 Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E6BC29DB7E
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 09:00:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28FE521504F
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 09:00:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745917225; cv=none; b=X3mutwxMjTkyTSwYRxXAnl5V0eS7uBgBmBIlVtynyYEuZn9n5xwCpV5CvN1tpYIEsaPT0T84z+3qAv0Wnor/aMqEj5d0mgqi8tn+qKBamKaK4UyNCafVpcdFnDpIDGPy7tQW17m155bH/E9g6+NR0N0Ekj4yHHPUuoc4XcqU+Y4=
+	t=1745917244; cv=none; b=rnS15ojCDlZWDu0eW1Mx4QTgyP7wrfzPb8JoWNqyvAKXyhXV7e6CQdrNa1+jeaNltyAypGrDGur6yKE8kVqYJtvzZXuH2CdvEBntgN+izTErHr3WylwIdKWT98WqThCTCIaaVPDemZh91IhDB0vgpwgA79IKODPrq90fco3of6s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745917225; c=relaxed/simple;
-	bh=Oosm5hOxAs/WSs6OpHqNgqiJSUZc9/0OQb1twEjB+lc=;
+	s=arc-20240116; t=1745917244; c=relaxed/simple;
+	bh=eoBaGS6svbTLFAXDjQZTqtywYw6C8qRiK91y/4pwdPM=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=U3rfkQiDNFZaUz6bH8TpxOQPNsmmkuJxBBLk9xQyImrdkVNLAdzqip1oTLpq12PxXL3WkKCrAFc6lI0SS/MVGa+wrGzkI9Ye7XI6aoS1v8b8xkDfLV2PVA7UxowdG3h2SkV+QCkecFgUtFvN+CFwfKs22SW3G4T1MW2xWxBFv6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GF3hNYkN; arc=none smtp.client-ip=209.85.128.47
+	 In-Reply-To:Content-Type; b=P27Z3fN3YLfZ9LHPL6v+6zSmEZgRooqzZgOMD1Ex/p+EK+G2/cyZjoMosSNxBzVmtCsJxskWaFd9zLni357gHVNOGkrVg+FEIqvoZlqVrhTZ1TePQ4FpHXAFRfWPa4Ek7nJZhPXV7xxwRG7CUjnQ5hGeAVHy55qO+o2ZEUdJ1eI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VRSfrgDT; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GF3hNYkN"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cec5cd73bso27991925e9.3
-        for <git@vger.kernel.org>; Tue, 29 Apr 2025 02:00:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VRSfrgDT"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cf58eea0fso24842705e9.0
+        for <git@vger.kernel.org>; Tue, 29 Apr 2025 02:00:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745917221; x=1746522021; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1745917240; x=1746522040; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=k8laCAudJ3QeIigzRAKXMXeLmFt6d9ElHOK/LA0mZjM=;
-        b=GF3hNYkNDnOStPRpSde3NmEiaBOrEBIgL74ZB7mvZcbEGhPyK5mVJRmXXwPDChlF8B
-         tUyeR9mp+T/b14YOPQpS37jpkybswSHiM3dLoBB5YAUI5U/WhKzyq41oBZQ7/cl0zkCk
-         gl+57FnnXKr2poz1yHQXoIYPx+4os4IzqXTvTXn5O2RYJdUBRPdM7NlyGVfwjrxxwNX/
-         MFtz/KyGqvPSSjrPDarmNRuSPgxEA24ytmk0hW9xouHS1lCrAOraXBi0y0qRfSWUcE5Q
-         3o1qrmJ29FP6G6R0SgnH7TgD09fp2eCQgA72prHfh7OWfApEdUdXNmQLfdIzHP+0JQYH
-         Olkw==
+        bh=Vyqt3axIN62R+0r1vdHgGXAJjzJnWiqAxHeOrURjAUg=;
+        b=VRSfrgDTHnPxSncRJwQh5k6I7q14W1IHJdI0owF0TZAI+ui9kpJP/T40K3O+NPhENl
+         oNS+0VSNS/UZxeqYG9uaX4nC/8B53KLGusG2B2BuPCdF3zvhR/ICBCcp/0OpfSpMEHe9
+         cakqEuVvw8piui4tf3ijwUIiQ35Lzo5YWI3jEgYbwudwua0Ft2hdNOJmttQK0vankUU8
+         KFrSIz3kaos/FkS7bwVowQSyi+tBFCH1Ub5kh0SSXcI7LAeB8bGO/aRqx/sjwhXrjpPl
+         snUMm59L8YcBUsqXAkumwn75uC7Gi5TGcZkboAfh91ogBAFgIcEMRAnUXvN3TUE8ITS/
+         GdQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745917221; x=1746522021;
+        d=1e100.net; s=20230601; t=1745917240; x=1746522040;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=k8laCAudJ3QeIigzRAKXMXeLmFt6d9ElHOK/LA0mZjM=;
-        b=Y3OYlzQyRj5eao8jz3y4gxaEuO4+SmfRIIHoI+I95QNBEVY9rDOQr0mfu4cXCF1UU3
-         migfvUnxDNIVdqYdECCAYuvz/ZDl5MjIUwOgIugIwqvtW9yEKiBjd/XXODAiGa8a4zzL
-         yHXcDp9HB2n3COsT1UFIu1i/b6mEJcdDLuvgtGkRFnyeB77N9XeJ0E2doCL5zZmBSZx+
-         nqMuVAfMb9WK69ZRlY/bDunJEGIdOCUxwUSMQy2MZMWqrgExLV+IsqHmcSW9SU7TwDux
-         ySGWNc6RINrurZI5m54rcjZVZerCPDtIgyAGPQ+sXecaaq1qjt2edM5/1ikQxsmE7fWO
-         +jCg==
-X-Forwarded-Encrypted: i=1; AJvYcCXW/SgmZFc15ecvSy84poxPGGR/p3eQbAUj85n8xKoRwgy6dSFpTc3Cv5/QxLtc1F3A/gk=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy8wR7kOqGnfqh/K/qKUSoQAPe5CCvfTgMKJivblJwb2Vdi5wKN
-	BP1+YcpmF1VVmK1K1Yrqd3s9PNFy7dMbD0PdYDFNlpsv7IfgT7E27N/JmQ==
-X-Gm-Gg: ASbGncvbDWBerfZLD7dgndn7IHCEyvxNw6NrCYnSrNOsJ0NrBR7VqOsdT7yVySvODW+
-	dJ7rjU2bgbv2+GNnxJtfGb121313H1k77Vy/mCR77iFrqBEZe3bBAX0uibDOIIwP3+tIFwR8703
-	dTyDVLRvHMyVuvHGaGdIF1OdaQZcmEJaG+CWKQ7vTlB+9mjggsTU4b7ocHzDibKjyaRIAQVZsyH
-	LWRYme4ihK59AhL5aDPLWNt0CwMIiiHlkTxGtIE2xdObUqFmjLaTYPG12Zwhj056Tkp+LW9lP96
-	g3D6sdsaODodUVnECZ1QXgmr115GXYn56Ec2+WMMGvTs2dBCuq3rB+PJKFeCgj2RBey8dSabodz
-	u3aIOc9EIsl42Ce4v
-X-Google-Smtp-Source: AGHT+IFcQd1iKDfj9I6Hr960yWess4WXuyuypL2hX9VbhGIhBh7wQpvlUj7Lf3dPh5l6H7Hwa1Qx1g==
-X-Received: by 2002:a05:600c:468a:b0:43d:ac5:11ed with SMTP id 5b1f17b1804b1-441ad4e58cemr14319735e9.24.1745917221339;
-        Tue, 29 Apr 2025 02:00:21 -0700 (PDT)
+        bh=Vyqt3axIN62R+0r1vdHgGXAJjzJnWiqAxHeOrURjAUg=;
+        b=KbCYovlUaj36jQ0m2RnAH95Ky4P3tZhVeNh5tQaavpZ3VYOznEFS551LhI9/x8+d2U
+         mZ4yd6yL1+Px2dXSmnbS4pDapOIT9zOfYewXKmnkL49dtU4LNtHh1fozLjwApNPC5QeI
+         d51l+ETUMcboF2DPbjqAtTGtOhSNE7vV8Mbuzcty00d3IUOKzYRgUdr23/iIPkQ8o03/
+         itlQzPxk6FRycZnUgJo1JKVkRtw6CCVtijmypseQq9d6Juv5CH6hQfIWqaxp5aTaja2K
+         2jk+EfvlOOeliNmS+/7yJsiV0gm8y6vGx5AISzD8VCy9JdevLvoamP5wrqdObSgdDE5k
+         yphg==
+X-Forwarded-Encrypted: i=1; AJvYcCVhMO5t906/jhujdUpAKQhV71M4ZTfsYw8IMWGpTSxMGFP8v8pd8CLRCR8Co7MR/iwQwBg=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz34FBF9riDwNI+VUCDKPrGWoOKna6bKr1E1NNBJsy3X/QwKqnb
+	r3Z+aXajIyMAMrnPpnnq5HiM9KnSrPivpKlUU7G2PkH4tsn9kgq5
+X-Gm-Gg: ASbGncvUDuRUMTDNohqbJOQhmlaEzut5C2r3leEEUD55n0H5SNCOvJdkstXqDbkEoZD
+	ILsdaPeOahU9YR9vkVoOsO0HNkdAV2AU8j/gyPFFurF8T9uCmjr3WEqUpmblB35Nce0NWfMqwk3
+	hScm6v4WxxzUVOaOn4ssfAckjurUP+n1Q+gtYqonMY6MVURY5Y9kY2fz/QGQpKK1LV45YTv7r1z
+	4KEDeYjjR3zhZM+GjF8p7jvQgthPeHLumQfixMnGWKAWIaLHNkEGQlpdzDcyrn/2WfB6hYccTUW
+	Y8gE19fGheCpNmCQ8uIF2wzoRUC6wk8ToO50H7amecB5vKgYAbAClYuNWjVxBEwz1I3Bdt5Hit9
+	VDC64JaqJyxyMY+JiZafck+81OqQ=
+X-Google-Smtp-Source: AGHT+IH4Uw4RGnwLGVNgC0tUTH8yKoSyiZuFystm+oLOBild1V94W+mAEo6ZUse28z/j/2OmRgQPOg==
+X-Received: by 2002:a05:600c:3b95:b0:43b:cb12:ba6d with SMTP id 5b1f17b1804b1-441ac8cdd6cmr18488295e9.3.1745917240298;
+        Tue, 29 Apr 2025 02:00:40 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2abdf7sm181001355e9.19.2025.04.29.02.00.20
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-4409d2abf73sm182054625e9.20.2025.04.29.02.00.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 02:00:20 -0700 (PDT)
-Message-ID: <d71b3fc1-d2fc-436d-876c-0bd1475a88ce@gmail.com>
-Date: Tue, 29 Apr 2025 10:00:13 +0100
+        Tue, 29 Apr 2025 02:00:39 -0700 (PDT)
+Message-ID: <10aed56b-8036-4458-97ad-7fa319b18f10@gmail.com>
+Date: Tue, 29 Apr 2025 10:00:32 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,62 +69,110 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v7 0/2] bundle-uri: copy all bundle references ino the
- refs/bundle space
-To: Scott Chacon via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>,
- Toon Claes <toon@iotcl.com>, Scott Chacon <schacon@gmail.com>
-References: <pull.1897.v6.git.git.1745609278.gitgitgadget@gmail.com>
- <pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com>
+Subject: Re: [PATCH v2] xdiff: disable cleanup_records heuristic with
+ --minimal
+To: Niels Glodny <n.glodny@campus.lmu.de>, git@vger.kernel.org
+Cc: johannes.schindelin@gmx.de, peff@peff.net, phillip.wood@dunelm.org.uk
+References: <20250425155951.1227700-1-n.glodny@campus.lmu.de>
+ <20250427220653.2325573-1-n.glodny@campus.lmu.de>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com>
+In-Reply-To: <20250427220653.2325573-1-n.glodny@campus.lmu.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Scott
+Hi Niels
 
-Thank you for updating the documentation. This version looks good to me
+On 27/04/2025 23:06, Niels Glodny wrote:
+> The cleanup_records function marks some lines as changed before running
+> the actual diff algorithm. For most lines, this is a good performance
+> optimization, but it also marks lines that are surrounded by many
+> changed lines as changed as well. This can cause redundant changes and
+> longer-than-necessary diffs.
+> 
+> Whether this results in better-looking diffs is subjective. However, the
+> --minimal flag explicitly requests the shortest possible diff.
+> 
+> A performance impact of this is not measurable, and it results in
+> shorter diffs in about 1.3% of diffs in Git's history.
+
+Thanks for re-rolling, the changes all look good to me. As Junio said it 
+would be helpful to put the performance numbers in the commit message.
 
 Thanks
 
 Phillip
 
-On 25/04/2025 20:33, Scott Chacon via GitGitGadget wrote:
-> Sorry everyone for the noise. There was a whitespace issue the tests
-> complained about, hopefully this fixes it.
+> Signed-off-by: Niels Glodny <n.glodny@campus.lmu.de>
+> ---
+>   t/meson.build           |  1 +
+>   t/t4071-diff-minimal.sh | 14 ++++++++++++++
+>   xdiff/xprepare.c        |  5 +++--
+>   3 files changed, 18 insertions(+), 2 deletions(-)
+>   create mode 100755 t/t4071-diff-minimal.sh
 > 
->> bundle-uri: copy all bundle references ino the refs/bundle space
->> bundle-uri: update bundle clone tests with new refspec path
-> 
-> Scott Chacon (2):
->    bundle-uri: copy all bundle references ino the refs/bundle space
->    bundle-uri: add test for bundle-uri clones with tags
-> 
->   Documentation/technical/bundle-uri.adoc |  14 +-
->   bundle-uri.c                            |   2 +-
->   t/t5558-clone-bundle-uri.sh             | 202 ++++++++++++++----------
->   3 files changed, 124 insertions(+), 94 deletions(-)
-> 
+> diff --git a/t/meson.build b/t/meson.build
+> index bfb744e886..8f2e9d2c50 100644
+> --- a/t/meson.build
+> +++ b/t/meson.build
+> @@ -501,6 +501,7 @@ integration_tests = [
+>     't4068-diff-symmetric-merge-base.sh',
+>     't4069-remerge-diff.sh',
+>     't4070-diff-pairs.sh',
+> +  't4071-diff-minimal.sh',
+>     't4100-apply-stat.sh',
+>     't4101-apply-nonl.sh',
+>     't4102-apply-rename.sh',
+> diff --git a/t/t4071-diff-minimal.sh b/t/t4071-diff-minimal.sh
+> new file mode 100755
+> index 0000000000..4c484dadfb
+> --- /dev/null
+> +++ b/t/t4071-diff-minimal.sh
+> @@ -0,0 +1,14 @@
+> +#!/bin/sh
+> +
+> +test_description='minimal diff algorithm'
+> +
+> +. ./test-lib.sh
+> +
+> +test_expect_success 'minimal diff should not mark changes between changed lines' '
+> +	test_write_lines x x x x >pre &&
+> +	test_write_lines x x x A B C D x E F G >post &&
+> +	test_expect_code 1 git diff --no-index --minimal pre post >diff &&
+> +	test_grep ! ^[+-]x diff
+> +'
+> +
+> +test_done
+> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
+> index c84549f6c5..e1d4017b2d 100644
+> --- a/xdiff/xprepare.c
+> +++ b/xdiff/xprepare.c
+> @@ -368,6 +368,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   	xrecord_t **recs;
+>   	xdlclass_t *rcrec;
+>   	char *dis, *dis1, *dis2;
+> +	int need_min = !!(cf->flags & XDF_NEED_MINIMAL);
+>   
+>   	if (!XDL_CALLOC_ARRAY(dis, xdf1->nrec + xdf2->nrec + 2))
+>   		return -1;
+> @@ -379,7 +380,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   	for (i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart]; i <= xdf1->dend; i++, recs++) {
+>   		rcrec = cf->rcrecs[(*recs)->ha];
+>   		nm = rcrec ? rcrec->len2 : 0;
+> -		dis1[i] = (nm == 0) ? 0: (nm >= mlim) ? 2: 1;
+> +		dis1[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
+>   	}
+>   
+>   	if ((mlim = xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIMIT)
+> @@ -387,7 +388,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
+>   	for (i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart]; i <= xdf2->dend; i++, recs++) {
+>   		rcrec = cf->rcrecs[(*recs)->ha];
+>   		nm = rcrec ? rcrec->len1 : 0;
+> -		dis2[i] = (nm == 0) ? 0: (nm >= mlim) ? 2: 1;
+> +		dis2[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
+>   	}
+>   
+>   	for (nreff = 0, i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
 > 
 > base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1897%2Fschacon%2Fsc-more-bundle-refs-v7
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1897/schacon/sc-more-bundle-refs-v7
-> Pull-Request: https://github.com/git/git/pull/1897
-> 
-> Range-diff vs v6:
-> 
->   1:  d6ec5c87b43 ! 1:  1cbf0787d49 bundle-uri: copy all bundle references ino the refs/bundle space
->       @@ Documentation/technical/bundle-uri.adoc: will interact with bundle URIs accordin
->        -   introduce a numbered namespace (such as `refs/bundles/<i>/*`) such that
->        -   stale bundle refs can be deleted.
->        +   client unbundles that data using a refspec. The refspec used is
->       -+   `+refs/*:refs/bundles/*`. These refs are stored so that later
->       ++   `+refs/*:refs/bundles/*`. These refs are stored so that later
->        +   `git fetch` negotiations can communicate each bundled ref as a `have`,
->        +   reducing the size of the fetch over the Git protocol. To allow pruning
->        +   refs from this ref namespace, Git may introduce a numbered namespace
->   2:  825d2b01eae = 2:  7f36484e267 bundle-uri: add test for bundle-uri clones with tags
-> 
 
