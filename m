@@ -1,154 +1,117 @@
-Received: from mail-lj1-f182.google.com (mail-lj1-f182.google.com [209.85.208.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D38253F28
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 19:36:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C0281C6B4
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 19:39:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745955367; cv=none; b=clWLdTqA2NXg5pRAMzwHiIjPH2OX6tdY510PszcBgj2vP0jWD9KelXJCmtI/Ie+And2V/Ms8UKFpt3bGbeErrtB1dvjZV3HPkvX9CjsILje+taXDYkxTVUltCVlWPL7PQZaFpzkBamEk7nCfWEENnum8PrvNcBGT2f9IYkARpXY=
+	t=1745955587; cv=none; b=tIuAsARakPK+wqIxJtK6/mGRl062+ET98dP3AJn6QqvaC0IMQhDWN3hskKFSDkaCSv6k2vbFS9aj1iCarhrm5TT3sLoWHCIjcSagBP+imRJQyyIauOTkcRy5l2/DriLW9OCF/+1vXBkMO0x5m2iXuNvmXcs0k4g+TOoKbNTK1Sk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745955367; c=relaxed/simple;
-	bh=mTRNjQFeNOI887VJiO5kJMv3IsmoJCB7aUfiLq2Cl/8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UY7pkS48Nb+pjzE2CrRq5eEkhnky8pOkevFn+QUbj/RUSTxOqHUUFhTDpR2+67tPs/WZQPlQEpYPJUUtmJ2uM+7Fa6tlIRJWEPxgiRFeWu2o3OSuf522JKmuHfxffaV5faJN8t9mEPLInFYFFdXAJ5TiAMZbRpa4suwSNJ3+1Og=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz; spf=pass smtp.mailfrom=klerks.biz; dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b=TychVbLj; arc=none smtp.client-ip=209.85.208.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=klerks.biz
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=klerks.biz
+	s=arc-20240116; t=1745955587; c=relaxed/simple;
+	bh=Yq5Dpr6EIC5cZT2IQ3xS/y6By+MaatQ0W+7Dr71w53M=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q5OTbjTGNS/Cv1VRSk3jew+v+az9XFKnKjHQOrVwIbTftGoKQXsN18e7RlvGBHSi1oMeLRWlkNr9M3TSEl+PGWFJitgjND5JFp/fcRdUOqzalR7rDGDvmFNg5DV7pS/PBxxGz/QYJAxT3vGn9KgFWjSV/Ka0+PTJ/YKFgpX0PA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L/b6soMs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sHvAx6+w; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=klerks.biz header.i=@klerks.biz header.b="TychVbLj"
-Received: by mail-lj1-f182.google.com with SMTP id 38308e7fff4ca-310447fe59aso73078391fa.0
-        for <git@vger.kernel.org>; Tue, 29 Apr 2025 12:36:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=klerks.biz; s=google; t=1745955363; x=1746560163; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Ty3zRCdTLWw5gAgivOWOPq/ObTFCQBZ9/D3CcRJvjbw=;
-        b=TychVbLjLJ1W/AmfYGVa5tcWm99ZpMsbK4NTXpyTwvd4qa234e5dl7W2GRrgsLsc1D
-         bgClWgUoY3reVIhAr9Abw/v/e3ATMEYaIzxTYX4sZpcIlKBc6NqJAziRGfKyXrrrthBG
-         IQBETIKAhiEpWwEOL/FbWpiQCIA9I0D6n1l7w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745955363; x=1746560163;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Ty3zRCdTLWw5gAgivOWOPq/ObTFCQBZ9/D3CcRJvjbw=;
-        b=rTtvJL7DwH3lyAB0iOXLMKa9v6RZLltOXcSaWOb3ka4dNNhsOsSF7Xg2egTK3uMoDp
-         Hl/4cMxYxDcXyw2y3GcdXkrqsKYdU/ZECywzPdFoIqxMg5LiF4QrncY42iZLpQ67pZOo
-         OQWJQWJ67RVRmKVtQKBCJKe4IBxSAjArIGp//H14hSx7smvASkEdVbz67oVf12XLtL7s
-         Fp+U/FsgLsTmNICRFjVsNNiGS6E2jCn/qhXzzYZXnh/QVUwrqzOiDgw/qb4OBxLWrpTa
-         BwNOnbebv46w/45P7fl/UgzoAFol4ntWgf8uYYwSmDP3Qrq4yWofwASP5jaXdveKdz7J
-         Ctqw==
-X-Forwarded-Encrypted: i=1; AJvYcCUjgDTlilM0DTCkFnyU8Pzo9DAj2PHBO1D7dSexl/cHoAMP5uu0SUQyUQ4a0r4Mu+0uLuc=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yym30bRuEMeL8yuE9etahS6J46o93Vj4d1adTqUZmkSoQX5kDzr
-	01KrhXi/TNjkV1UtvdKr9irDvdDez0a/dC6jJubW4uxt3GkptXezgSNu6OvgA6Bnq+NbmNCgrj1
-	MZUDgCdBSLeWk9Itnt2uiDrMnYHxnIyT0jy5U
-X-Gm-Gg: ASbGncuop2XGkr6aiuyFrAWzGx9KBSAWgsCz2vfZQEZG61w9ze5H/CYhbz6cJcIlc3J
-	pGHCsa8SGuDhDfH+WKKdSnxuu8ApVLeG4FwUfxp+rtZWVVJz8YAL/nJizOp8EIL1hpqqnzjHL3k
-	brxKB25YRw5/WMhN2cJQ==
-X-Google-Smtp-Source: AGHT+IG0q3aTobTxuKHe/t2YXJcfOE37LBHr+jo3wEsU3gP6B3f0AnBAgZl8tPzxmeIlstbbPr6AwgF4TQfnAcL+MzY=
-X-Received: by 2002:a05:651c:312a:b0:31a:4906:fcfb with SMTP id
- 38308e7fff4ca-31e69a2cba4mr1277241fa.7.1745955363197; Tue, 29 Apr 2025
- 12:36:03 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L/b6soMs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sHvAx6+w"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id EE83C138019D;
+	Tue, 29 Apr 2025 15:39:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 29 Apr 2025 15:39:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745955583; x=1746041983; bh=Yq5Dpr6EIC
+	5cZT2IQ3xS/y6By+MaatQ0W+7Dr71w53M=; b=L/b6soMsImyEAkjV5Qd16oRMUH
+	yZ2dpHh9sIa4MfNCDsJcWP/EtV70UiWA/lrzpBUp/ZTucEpGNff7Erm6mme89ll1
+	xyQPC9C6K5Ds2Swxb6iMEdVvkLD9DUCsaFXr2oGzJdiIB0W78xEmLBfajqdyfjxF
+	D0CwRNM8rrr5wmxwWYpVq5KhJVg1n6GAWpp21qKWTUVTJSOzD3CaNSwOWOuEkdAq
+	7QTVQhUXMkn1oOtAkLh8tClrsUnJHs6wtZxOs3n5WsMwDW/WkWRkdePZFfm17qkZ
+	+YL5WGXHpW0ahP/wIJJezgn9byiGn/eKU9u2YeGjv1+8WyPoStPOQOJbvtiw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745955583; x=1746041983; bh=Yq5Dpr6EIC5cZT2IQ3xS/y6By+MaatQ0W+7
+	Dr71w53M=; b=sHvAx6+w2acJmbGKiv8PsYdfPtrs6cd3hv+dSY0VNc7UrrH3tka
+	BXlVrEKLZee68L9igpTa2RtLEVUKfwGeYDXhwi9muFx3t79BXHJvSf2unDu9fiBN
+	zM2GpIcuC6Aw5lRQyAk3SVEuD6VwxK4VgBHYeUHl57RQO7qinBpaRVYOWLwZreQ3
+	bUD5RwPuqqNornsvujaUo4e0SrVIC3jozjWxfsPg/eqWbWg9IHWNTe0/PN2mg0ea
+	hDKMLGK2uKJ3q7m4Ug/Lc68q89sN7zTHAqT67b6hIOe8/Z5/zP17COjCjIv1FN1g
+	X+np38xv7sRlrYi3MwggbVqa+DZq+vmG3jw==
+X-ME-Sender: <xms:_yoRaMK6Am5vUOabwjEEOCkDYkaLlwD3GGx1HmnqRtszRtUcgXFO1w>
+    <xme:_yoRaMLswfmHIa21p1J_QPKOjiMvtKP5VLuAq0i6WeRBV2rEU6QjPbNhGVXeN60xw
+    2j9W-X13LavjAYVsA>
+X-ME-Received: <xmr:_yoRaMtygAioPJG3hviaanedWyPMrPYff-3IzN4qtGbnD_sWcfEYIMInq--ffSJhP8S8FQJ8x-iRrHso11A1At24P1vxVCzTw5MQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehj
+    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:_yoRaJau2ieH5yXZ9ARMRaE9CytC9wn4ZonFmXG28yjWSFZVZk6RtA>
+    <xmx:_yoRaDbegrM80Bhqh5f1UK3zQlYrGrjP9ZTPxHZfPsJMryACGndSbQ>
+    <xmx:_yoRaFC9CzFd1DyuN93yXNBTWB1khctLqA6fYoMbHl4f6ExRiMh-kA>
+    <xmx:_yoRaJYMc8bgfADF8HLa2s2j1XPA5glur84K_BDoC3ZuM8PHWTaiHA>
+    <xmx:_yoRaM7yi6KqgBBOddjtsOn6doWhdO7ZWFoQnLAfrvNizsIkn2Sr11pd>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 15:39:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Phillip Wood
+ <phillip.wood123@gmail.com>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3] diff: check range before dereferencing an array element
+In-Reply-To: <pull.1887.v3.git.1745926679028.gitgitgadget@gmail.com> (Johannes
+	Schindelin via GitGitGadget's message of "Tue, 29 Apr 2025 11:37:58
+	+0000")
+References: <pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
+	<pull.1887.v3.git.1745926679028.gitgitgadget@gmail.com>
+Date: Tue, 29 Apr 2025 12:39:41 -0700
+Message-ID: <xmqqcycu69ky.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1903.git.1745651452869.gitgitgadget@gmail.com>
- <aBCt8YrqJ7IM0ld6@pks.im> <xmqqh6266c1c.fsf@gitster.g>
-In-Reply-To: <xmqqh6266c1c.fsf@gitster.g>
-From: Tao Klerks <tao@klerks.biz>
-Date: Tue, 29 Apr 2025 21:35:52 +0200
-X-Gm-Features: ATxdqUHYEOhJiCCGRDKYuapBhYagy-sh7KtKJRg25gc7LvyiIgiUimgj9lvExX4
-Message-ID: <CAPMMpohgEXVPHKCQtvc-zLC35qtY+qJ9WgQO_quOgUG01eyTOw@mail.gmail.com>
-Subject: Re: [PATCH] replace-refs: fix support of qualified replace ref paths
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Tao Klerks via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Apr 29, 2025 at 8:46=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
+writes:
+
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> Patrick Steinhardt <ps@pks.im> writes:
+> Before accessing an array element at a given index, it should be
+> verified that the index is within the desired bounds, not afterwards,
+> otherwise it may not make sense to even access the array element in the
+> first place. This is the point of CodeQL's
+> `cpp/offset-use-before-range-check` rule.
 >
-> > I wonder whether this really was an intentional choice or whether it is
-> > simply a bug that led to useful behaviour.
-
-I don't know that for sure either - although the fact that we *do*
-already have sanity checks against multiple replace refs targeting the
-same object id leads me to believe it was intentionally allowed.
-
-I tried to explain why this is useful, and why it should be *better*
-supported, in the change description: *without* this behavior, replace
-refs cannot be "namespaced" - they are always inherently an
-undifferentiated pile, and that in turn makes *sharing* of replace
-refs completely impractical.
-
+> This CodeQL rule unfortunately is also triggered by the
+> `fill_es_indent_data()` code, even though the condition `off < len - 1`
+> does not even need to guarantee that the offset is in bounds (`s` points
+> to a NUL-terminated string, for which `s[off] == '\r'` would fail before
+> running out of bounds).
 >
-> ... where the "funny" replace refs are honored in some but not all
-> situations, it also can be argued that it is highly unlikely anybody
-> sane is actually depending on this "feature", so such a tightening
-> may not hurt too much.
+> Let's work around this rare false positive to help us use an otherwise
+> mostly useful tool is a worthy thing to do.
 
-Well, I guess my sanity can be reasonably questioned, but it would
-certainly hurt me and my thousand plus users - we use replace refs to
-keep nice tidy squash-based history by default, but allow for
-different types of "deep blame" by setting up one or more fetch
-refspecs that map into "refs/replace/SOMETHING/*"
+Thanks. I have almost forgotten about this one. The above
+explanation works very well.
 
->
-> The reason why I would slightly prefer tightening the rule, rather
-> than making the loophole even larger by adjusting the code for "the
-> commit decoration process", is what it means to have two different
-> replacement objects for the same object, which would naturally be
-> prevented from happening if we did not allow extra levels in the
-> middle.
-
-This is already accounted for with a hard error: If you end up with
-duplicate replace ref targets, many operations fail with a clear
-error. Clean up your replace refs and you're off to the races again.
-
-> Would one always consistently trump the other?  When a
-> filesystem rebalances, would we just pick one at randomly based
-> purely on the first one readdir() happened to return?  It smells
-> to lead to nothing but a confused mess.
-
-Reasonable concern, but already addressed.
-
->
-> Maybe the answer is "don't do it, then".  The same answer, however,
-> can be given for creating any extra level between refs/replace and
-> the object name itself, so...  I dunno.
-
-The same answer should probably not be given: One behavior is
-*useful*, and one is not.
-
->
-> > If we can agree that this is something that we want we should definitel=
-y
-> > amend git-replace(1) to document this new format.
-
-I will (propose to) do so.
-
-> >
-> > Which raises the question: is this something that we want? Are there an=
-y
-> > arguments that would speak against loosening the format of replace refs
-> > now?
-
-My point here is that it's *not* a loosening - this "loose" behavior
-already exists, it works, it is useful, and there are people using it.
-At least my thousand users. All I'm proposing here is to show them
-less spurious warnings when they run a log with --decorate.
-
->
-> "What if refs/replace/{a,b,c}/$name point at different objects?"
-> would be a solid reason why we shouldn't do this, but I personally
-> do not feel too strongly about it, as "don't do it, then" may be a
-> reasonable answer for such an insane scenario.
-
-That is indeed the current outcome: don't do it or you get a hard (but
-nondestructive) error. You can then of course fix it and you're set.
