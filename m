@@ -1,74 +1,121 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5932459E7
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 22:09:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 313566F073
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 22:37:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745964577; cv=none; b=gyoOeXY7G/BwZ/Hhv0V+UT7cvwMYZ9F76kzvj6yf/oIBNy+LPl5fyHj5MfXWZelrMLGbw6DO19MAsAwj4mnuT8ZBHjKc5AEUr7peJ0LXS3cDYSGcPeH5g3d0FcthVoYS74LUkg6XgJ9nblMMmKzyGLOUa8uE7IoDg1nUNTTJZ+4=
+	t=1745966262; cv=none; b=fmznECr+tyhyp/iDPOD5zbJSCMzNJ3PVsAhvZT6UIgLkYsbf8HRG71FvEzBNnGJ8OTloKUnSa8pUhOQaCA5YaSmjVxD8Dp9hUWUyi/ssblp3To2wOLFskzCNC/vCjfPF6DW33HGDofMMD+6MADT0eWNEBBTLOXrZvoECnbMLa/Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745964577; c=relaxed/simple;
-	bh=ECv7TT5PfGrvpRCAzef7LHzTwnce8I6fMeTPKeViPFQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=D9jTnCz1oMBnz2MF8IYvXkbtA9lIGLeZs+3lpLzk09ITissUKGDmrS16uZTNQdMdxoqOYClOvv6xgMQTKhV1LvWze3yYYThl4vBitRKmdfILLvqjh286BPk25YJaV+OsIlLXdY1eNHVlfz4+UwL/V2Dnt1zMzVtQurv3SwGlQ8I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Necl7FpU; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1745966262; c=relaxed/simple;
+	bh=Xa+GwpbhD3sh6LHJZGsxGdoDvwWXmVT3kX6AM81/lXk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KFJQvENSe/pyWts0ip4hFXfPrpJUA07BI2836BcRiQJgZok06/JzKRerjeMnF1SBBBzvBkYsMuSud5PPL74nVXg+uEta6J+OgLKp1ZlDXce8H6Je5VmdZJXHDnwwtMB3HJUBBEp/kBv0Vg+cIEzLvXXRIHv4wnKHOecFwaUKEQQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QILcXjUG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HiBWtaKY; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Necl7FpU"
-Received: (qmail 8681 invoked by uid 109); 29 Apr 2025 22:09:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ECv7TT5PfGrvpRCAzef7LHzTwnce8I6fMeTPKeViPFQ=; b=Necl7FpUlyRfiFzWEKOL+5GBGVSbMP9Ctt/wGsZnd2nNJoPjpTmQCxNVf6esJT5Z0UNf5oyuRs/cxAY8xU+RwC1GCtfbYJq6s0k+4lUhacQqsmGDu45oRENEchnNr6BTnI35zzOAep7Cq4aoyLGQAEOnDoFADcq0vhATxTbJ7xCBm9b+lile/vbrmaxs2A2YTHkqWPHXuJogA14ORz7qRqepuBe/DOO6rFvvKE+ATDV5Dvmih2bDDSA70/97uCsBxkeK5hHPywm943iFxLQcZ3R2zFc72Zd2MRjd5p0Ue6EPeD0xxzP85oAz6Mi48RMTek4WBGCvCsnutrqPcJizOA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Tue, 29 Apr 2025 22:09:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 13722 invoked by uid 111); 29 Apr 2025 22:09:36 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Tue, 29 Apr 2025 18:09:36 -0400
-Authentication-Results: peff.net; auth=none
-Date: Tue, 29 Apr 2025 18:09:33 -0400
-From: Jeff King <peff@peff.net>
-To: Leon Michalak <leonmichalak6@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Discussion for interactive --patch commands to get --unified
- support
-Message-ID: <20250429220933.GC36727@coredump.intra.peff.net>
-References: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QILcXjUG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HiBWtaKY"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1A7B11380863;
+	Tue, 29 Apr 2025 18:37:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 29 Apr 2025 18:37:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745966258; x=1746052658; bh=k15S2hdBow
+	Q0cRFF4W07/eyxO8+xrxCOOCthudtNmzY=; b=QILcXjUG9Exs9QM0xABGp8PJz6
+	iyQyGC+fOgMTfXccYEA56X2yEZbT5A6uWP7lH+sMfFvdjrtprel+U2QzbJizSMst
+	DSw8JlmT8Gno32bkTn7bY7Jfaae4+apBYbXufNvxC1vehSDtKQVke2HE1l4wcD4V
+	qvzBfYsLum06uyAsnnf0JwPiRH7/pkZQu2Gk5FvNVeuMAwukMEVuNcF7yQaSVeKm
+	ffB0aoQ9B6pk1p74JaKHDjLeGr/8tuJ1d8rvgcgscxG7dcO7Fgi8IakKBAGeEsaX
+	jrAWNdSK7Ta0zJbRSrjgGXL+Y9vRgxsS368WYB89SGJdlqaZ5DUVWf0evdJg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745966258; x=1746052658; bh=k15S2hdBowQ0cRFF4W07/eyxO8+xrxCOOCt
+	hudtNmzY=; b=HiBWtaKYZwTDk5u3VWjoqd6FuP33gI6fvo4xI9xoAC9mv/zozpx
+	pO+9gs34ffsyH3GAo0qikZbtNSjNg9ckWJ3j4xxQ2yW76UVYJrZkXTzRNQt5o05/
+	l8AdRIesEuhGBZwypi0KVdRJ43uqFGbdWU6C4urSJFnA0rnhGoUjgL/J7l5QA7ik
+	Ij5RPvZrLxnDvjaI/0s7sCJK4ur/YxF+4g+qVihgzljq+2T4oGYbnXI0/cIMaX52
+	kUkQsozkKROqKNRI7gTYcQvO92AUkjQY/Q5kZW264XdaCetUOnksMVkSF8q+XOEH
+	SansE0Jej5hADfJO2hR7lSkRZuuyYXdNRGg==
+X-ME-Sender: <xms:sVQRaNrnRWLjZv9rh2cMnAZboj_jF58yS4MaZ0k9RtPJsnVyx5m69A>
+    <xme:sVQRaPqv_7YXf3-rhWRfp7TA6NlUeaT9siIl-aF1HD5oQV0vPm7-AoEMFs-Z_H3uT
+    m_dy71BBiacIfyv3w>
+X-ME-Received: <xmr:sVQRaKPh0KB5y9cftlEHrKvw0LUNC1BqvOZvyfB9G6VTapJRz5vtpm_FMM03rxYTSB70CXLRcAcx42CmsX-t4oh997pVjFQatxBn>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieehtdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehj
+    ohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:sVQRaI7wz8S1e5Z8XbZVedmvNh2QE-mTLmB7iKsigeEsTuALlGR7bQ>
+    <xmx:sVQRaM7E1MGbDfT4IcVPPtCPO8P8GH4p-OPBYRphzEqevKg5K2cPYQ>
+    <xmx:sVQRaAh8N0OUHqaI07WnQqye4BQ7n5B6SoreDLWsdJuTZw7WTG8LPA>
+    <xmx:sVQRaO6QDDIQSjV2DrIYFmVFvkq6rTPWeNZjfkZToVa_ObgANfHNhw>
+    <xmx:slQRaGYYV5FfqHD3rm417IgdnvTM-UbvbgG_2ub7SYukxs1FmM7_-p_8>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 18:37:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v3] diff: check range before dereferencing an array element
+In-Reply-To: <20250429215847.GB36727@coredump.intra.peff.net> (Jeff King's
+	message of "Tue, 29 Apr 2025 17:58:47 -0400")
+References: <pull.1887.v2.git.1743073557.gitgitgadget@gmail.com>
+	<pull.1887.v3.git.1745926679028.gitgitgadget@gmail.com>
+	<20250429215847.GB36727@coredump.intra.peff.net>
+Date: Tue, 29 Apr 2025 15:37:35 -0700
+Message-ID: <xmqqldri4ms0.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
+Content-Type: text/plain
 
-On Tue, Apr 29, 2025 at 10:16:15AM +0100, Leon Michalak wrote:
+Jeff King <peff@peff.net> writes:
 
-> - make `diff.context` setting extend to the interactive patch commands
-> (not sure how a change like this would be welcomed considering it
-> could change users command outputs seemingly out of nowhere)
-> - add an `interactive.context` setting that would work like the
-> existing `diff.context` setting but apply only to the interactive
-> patch commands
+>> @@ -892,7 +892,7 @@ static void fill_es_indent_data(struct emitted_diff_symbol *es)
+>>  
+>>  	/* skip any \v \f \r at start of indentation */
+>>  	while (s[off] == '\f' || s[off] == '\v' ||
+>> -	       (s[off] == '\r' && off < len - 1))
+>> +	       (off < len - 1 && s[off] == '\r'))
+>>  		off++;
+>
+> ...since the same pattern exists for the other s[off] checks, is it
+> worth future-proofing this like:
+>
+>   while (off < len - 1 &&
+>          (s[off] == '\f' || s[off] == '\v' || s[off] == '\r')
+>
+> ?
 
-In my opinion it would be fine to respect diff.context (and probably
-diff.interhunkcontext[1]) by default. Though it does change the command
-output, the interactive output is by definition user-facing, so we
-shouldn't be breaking scripts. And we already respect other porcelain
-level config like colorizing.
+But doesn't it change the semantics?
 
-I think the only reason we don't already do so is that the interactive
-code is built around the plumbing commands, which conservatively avoid
-various config options. So the calling code has to explicitly check the
-config itself.
+s[off] == '\f', even if off is at the end of the string, i.e. (off
+== len - 1), must trigger the off++ increment.
 
--Peff
-
-[1] Looking at git_diff_ui_config(), which are all the options read by
-    porcelain git-diff but not by plumbing git-diff-files, etc, there
-    may be other config in the same boat. E.g., I'd guess that people
-    with diff.colormoved set would appreciate seeing that effect in the
-    colorized versions we show. But I think it is OK to just consider
-    diff.context for now, and see if anybody ever cares enough about
-    other options to look into them.
+On the other hand, CR that is the part of CRLF at the end of line is
+*not* treated like other funny whitespace control characters.  This
+"is off not at the end of line, if so check CR" comparison is about
+that.
