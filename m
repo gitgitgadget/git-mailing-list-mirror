@@ -1,54 +1,54 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AEA9221719
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 16:55:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6E982459E0
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 17:01:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745945723; cv=none; b=dh1Ylwk72I2lfdiQ8FdcnENxTHAr3Mwn/oBRaiGkg1DSB8q4g+1Ms8LHhtaR9O6kJ1t1iySExKTunTgOhTIsNZce56et1pL4hoRinuClheXFrsKzDXd8Zi2En7+TysZSJXLd8I3mslkqX+HJNTnTphEd/P65dGlam+rU4ZjF4g4=
+	t=1745946086; cv=none; b=g9yRhYs9p0Ri8dMZMvz3JyPwb1pCoyxO+AkN/7rn3v5NsH1hMUUE+3IJWjgU3UuiwiT3rPcAJToTG0hoKn1KSobQIR/q19aUvOtI0KBuhni4U02ZnOo/3gJlTa3VNPjV4G74p+b6SYdZyjHHO5D8NJXb2r/2z1LrAWDvMv4JuRM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745945723; c=relaxed/simple;
-	bh=fy8syY7lEdwp7gzpjHnnMJEImJbxlhzbP/AFUQvDuAk=;
+	s=arc-20240116; t=1745946086; c=relaxed/simple;
+	bh=7P1zhqvyxeADd132WZimmPJcqotJkf1vh+GKIKelcDI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EXWSPYe75k3WfAuZuKUTphHUcoo/y0aMB/QPGeOTeIIlGXZT/zTYKGO5Gid63621bjDvUx+LGkcDXSXURKEF7BAwV0r+jrCxnDdwhQkYmgUmNaC56GvF6uXzGliNH+hfJ3Un4pIEqBMVmMx1qcUg4Vg6ZuIhNjd6de7NsKgicRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Fsu32pMf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YhHwes95; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=sx98hgRJcqgD6PZPxFc73HYBfpItlGLeS719ICjH90tvG/UdgJWwX7I6KpcHUjD0ZE/IVAJgb+GMqiiwYyLAIABCoKJRIkUO/hnAMRI9h6nrrAp1Dd+2DA8je5d0DJU1JlA53iOHv/FUGYQ2i3+Y3Uh25d7zBTaxzo9p72L83xc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S1hGcjBQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rZEhG7rd; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Fsu32pMf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YhHwes95"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5A2A213808C1;
-	Tue, 29 Apr 2025 12:55:20 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-12.internal (MEProxy); Tue, 29 Apr 2025 12:55:20 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S1hGcjBQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rZEhG7rd"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id C05201380155;
+	Tue, 29 Apr 2025 13:01:22 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Tue, 29 Apr 2025 13:01:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1745945720; x=1746032120; bh=rentAgwz8s
-	vLQYs/UA6i8Yriv0BwWatSiezKBfOS1Ao=; b=Fsu32pMfULUAduY+OMQwALeBna
-	x6r/lhb2uQ9Wmyfrk+TQ/ahASH6Qu9c8kmnIM4HAvozkuJZ8jT58Q7TFWIJLklMk
-	sHCdKV737bRmZv+G3H6KT1GgMd/Fo8sIP1dK1xe6TGU5DKcfjTWGfuldjiubK7jF
-	KDAI6NL2Fw5egSw4qsIJLZL+cB3sVzljeOlUCcbehwLj/53keFVDT7IiDZdSl4Zo
-	lWs2JobLC9dk+x2Kakgd+k0LqBwD/LXOMcXGzabdDOqNob1hTctF15UeEz/mtdAg
-	5g8d6bo2b+3k2OH6jBYmF94e17356nvZWr+HNqVUKB3/R4rvTx+YqMMjUyNg==
+	:subject:to:to; s=fm2; t=1745946082; x=1746032482; bh=YDhezVznz/
+	icJ8bDUet4bAVG9QnGaeO3D/mrBBQjL8w=; b=S1hGcjBQi1KgzN57biR6gQ9ji5
+	f0loFTIX2ICbFn49e192nizCnKGboQ+DwjfR+MiiOgSDuElhKbKXj7i3ZYQPD8wE
+	CHwZ9UXoZTxy6Wuh/lgy9fBKK/nyEe2Ll1QLus9JeqwCz7YCdLT4DA95Ctu/LFr/
+	+lRrGXuzgDspjBy7fj6hfGSEVJmWQD7EeYSqG8d6pfBThMkO2RXUG2aHcFl962Vh
+	QatQV7MX+3gdh5vWOXG8aV8KwiMjuq6uvldAGiXZ+FpR8g1wxJVro3/NLkXap0uS
+	DpPdhJvviw52b6bHVzu4vuoPBrBk1XnJ7IXFljqdaK9Ta2ukVXWS8eoCEcZg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745945720; x=1746032120; bh=rentAgwz8svLQYs/UA6i8Yriv0BwWatSiez
-	KBfOS1Ao=; b=YhHwes95S7+dotd7J4ikMjqRYBx5IVpb/cdrlrQlsoYZs4V1cNz
-	ZWTDKUq+BXEwKYIfN2HnxwtigdU8UHDXeNypRvqAObHioGX655Ljeu+oI6sRvDrW
-	6va41Qei53aVAydlyqJdBlbn+HSj9FCU+tNXVCRHjanaHkv3PgEdnR7+BTtS5ol4
-	u8NhyK2YUrFOs/sWmJ/WJB4VKNdbJLinNuSp6yAcyV+wFT5vHYRzJULo6zqMnlMQ
-	qL2wMX4LmYQ+wUax3dgurquCULAwqZTIer7EqKonNZY2TqkCT6w4iIiU9fNe5D90
-	jMPIRf7WlIWtHcn8XfUCfdWiOcNR+YPml4g==
-X-ME-Sender: <xms:eAQRaLZ7lKkxYfxsDjDaOashWvRm8oWr3BJMYFqlinBTwBhTMB9EgQ>
-    <xme:eAQRaKZMHMN8hThavLwEMHOy1imqZYH4yWpV__ub-YyaYrCbtfdep20eVOHTkux_h
-    foOT0k8-RSErb_S4A>
-X-ME-Received: <xmr:eAQRaN8eUhQdNqJ_ScI9Qaqq2raBjF1glfJgBtMYmHokxXdC8K_AtFV_-rckI_4635EKfmkCgo9t7giNZwc6_KqaF7KG-9tNIPYP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegfeehucetufdoteggodetrf
+	1745946082; x=1746032482; bh=YDhezVznz/icJ8bDUet4bAVG9QnGaeO3D/m
+	rBBQjL8w=; b=rZEhG7rdDost7rcn06K8ieuS1mJSRPa/k0yUmGN0ec+HL0H0jTV
+	Q7zKNPtGAqmAATuavfLHV7vR9JBjI+CbqTcbzihDwsqYW7Ie1kxQvMcDbxNp8ySi
+	DvBQOfVuWbhVnmAD9maJHgT8eY2XhYJYtdi7EwhFCGkmOhninGgHpL37xcpg75kA
+	dl+JW4EcEpH4lwa/j1xEG4AyReFDhwIF5T5TF1u4/m/4bUSf+fmemac2ZnjDkwPB
+	BeWB5xKU35odsHvLec+YQUORV6gCiixlvJlRnCLDqrjMXntqRkbzUkJga1F7dl8E
+	MhXJqci+PD1GFFJAt/GMXQozzEiO1+YredQ==
+X-ME-Sender: <xms:4gURaAEIYRy33rTLw2MaRB_Yo3CYkKDsNHNG6CgYMywc_2j4z8QHhA>
+    <xme:4gURaJVqY8kYZpJSEHbwD2xMgAE3f8PIVummdFzNWB14r796aexg4yztgcFToDKbL
+    lT7thtL-aF-VCkJqg>
+X-ME-Received: <xmr:4gURaKKX0n_C6UPi1nXxrLCj1srtfoeVM9VO5R92dNFSWoltTjy0Blkj8sWZzeyiVNg5qpit_j2NUhjndT2QwO3EB3jxL0t4A5FF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegfeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -60,25 +60,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegfeehucetufdote
     grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
     nhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
     htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:eAQRaBrrKotdxFhYMAwUOaoCdE_wPYTnjWuAqZ1QejZmrZhP6vgVZQ>
-    <xmx:eAQRaGo6u1SQPBr7E1N3LEXsMRKsXIVUmTIV70l8HHgBcukeMIirnQ>
-    <xmx:eAQRaHS30ZAdLHOFLV_SHskSi4t1e8bWDQVD4fPi-QEmKunrF0hhtA>
-    <xmx:eAQRaOrlqj0cNYpQwRQdUlfHjZvbQZIkpxrte5xijYC0e1RL2GBPCg>
-    <xmx:eAQRaF0sNrVGMvmatAjrU6gvF97umL4v9g8H06_v6ApvZCLSTK2oAN8f>
+X-ME-Proxy: <xmx:4gURaCGIISsytYK8lfssRjWcSVbHEZbsW3ffgI3pw04K9PoHNQQ7iA>
+    <xmx:4gURaGVgRNZhab19R3LdbxFXWz-XluBcrV7hM-2eX50v5ZDCXn1MEA>
+    <xmx:4gURaFNlup2BlhmAW_G6wr62huRLbtHgGW_r5_P3uQ0HJJT-YxboRQ>
+    <xmx:4gURaN1Hh3RZu6LlUMxV1yAKPC3mgrSPL32y_DAFmQYvjJkKeOjNYw>
+    <xmx:4gURaOAWGcC14MYGYfYCmay3sVVmPPI9_qcs3ZTuW1bgSHHca-ybO1LD>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 12:55:19 -0400 (EDT)
+ 29 Apr 2025 13:01:22 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH] hashmap: ensure hashmaps are reusable after
- hashmap_clear()
-In-Reply-To: <pull.1911.git.1745941663160.gitgitgadget@gmail.com> (Elijah
-	Newren via GitGitGadget's message of "Tue, 29 Apr 2025 15:47:43
+Subject: Re: [PATCH] tree-walk.h: fix incorrect API comment
+In-Reply-To: <pull.1912.git.1745941503913.gitgitgadget@gmail.com> (Elijah
+	Newren via GitGitGadget's message of "Tue, 29 Apr 2025 15:45:03
 	+0000")
-References: <pull.1911.git.1745941663160.gitgitgadget@gmail.com>
-Date: Tue, 29 Apr 2025 09:55:18 -0700
-Message-ID: <xmqqwmb26h6x.fsf@gitster.g>
+References: <pull.1912.git.1745941503913.gitgitgadget@gmail.com>
+Date: Tue, 29 Apr 2025 10:01:21 -0700
+Message-ID: <xmqqr01a6gwu.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,56 +91,38 @@ Content-Type: text/plain
 
 > From: Elijah Newren <newren@gmail.com>
 >
-> In the series merged at bf0a430f70b5 (Merge branch 'en/strmap',
-> 2020-11-21), strmap was built on top of hashmap and hashmap was extended
-> in a few ways to support strmap and be more generally useful.  One of
-> the extensions was that hashmap_partial_clear() was introduced to allow
-> reuse of the hashmap without freeing the table.  Peff believed that it
-> also made sense to introduce a hashmap_clear() which freed everything
-> while allowing reuse.
->
-> I added hashmap_clear(), but in doing so, overlooked the fact that for
-> a hashmap to be reusable, it needs a defined cmpfn and data (the
-> HASHMAP_INIT macro requires these fields as parameters, for example).
-> So, if we want the hashmap to be reusable, we shouldn't zero out those
-> fields.  We probably also shouldn't zero out do_count_items.  (We could
-> zero out grow_at and shrink_at, but whether we zero those or not is
-> irrelevant as they'll be automatically updated whenever a new entry is
-> inserted.)
->
-> Since clearing is associated with freeing map->table, and the only thing
-> required for consistency after freeing map->table is zeroing tablesize
-> and private_size, let's only zero those fields out.
+> When commit 50ddb089ff68 (tree-walk.c: remove the_repo from
+> get_tree_entry(), 2019-06-27) added an extra parameter to
+> get_tree_entry(), it did not fix the ordering comment about the meaning
+> of the parameters.  Rather than just changing "third"->"fourth" and
+> "fourth"->"fifth", give the paramemters meaningful names (or actually,
+> just take the existing names from the get_tree_entry() definition in the
+> tree-walk.c file) and strike the comment.
 
-Makes sense.  Thanks for finding and fixing.
+Please drop "and strike the comment" part.  The "oid" and "mode"
+being out-parameters is significant for callers.
 
-I do not think we want to patch all the way down to Git 2.30, ...
-
-> diff --git a/hashmap.c b/hashmap.c
-> index ee45ef00852..a711377853f 100644
-> --- a/hashmap.c
-> +++ b/hashmap.c
-> @@ -205,8 +205,9 @@ void hashmap_clear_(struct hashmap *map, ssize_t entry_offset)
->  		return;
->  	if (entry_offset >= 0)  /* called by hashmap_clear_and_free */
->  		free_individual_entries(map, entry_offset);
-> -	free(map->table);
-> -	memset(map, 0, sizeof(*map));
-> +	FREE_AND_NULL(map->table);
-> +	map->tablesize = 0;
-> +	map->private_size = 0;
->  }
+>  /**
+>   * Find an entry in a tree given a pathname and the sha1 of a tree to
+> - * search. Returns 0 if the entry is found and -1 otherwise. The third
+> - * and fourth parameters are set to the entry's sha1 and mode respectively.
+> + * search. Returns 0 if the entry is found and -1 otherwise.
+>   */
+> -int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
+> +int get_tree_entry(struct repository *repo, const struct object_id *tree_oid,
+> +		   const char *name, struct object_id *oid,
+> +		   unsigned short *mode);
 >  
->  struct hashmap_entry *hashmap_get(const struct hashmap *map,
+>  /**
+>   * Generate the full pathname of a tree entry based from the root of the
 >
 > base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
 
-... but this part of the code has been fairly quiet and the patch
-applies very cleanly.  So I'll apply on top of bf0a430f7 and merge
-the result---anybody maintaining Git for their LTS distro can then
-merge it to their favorite ancient maintenance track ;-)
+	Find an entry with the "name" in a tree object "tree_oid",
+	and return the the object name and the mode of the found
+	entry via the "oid" and the "mode" parameters.  Return 0 if
+	the entry is found, and -1 otherwise.
+
+or something, perhaps.
 
 Thanks.
-
-
-
