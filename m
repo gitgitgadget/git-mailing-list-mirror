@@ -1,89 +1,85 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8771BE65
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 05:33:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D35C2798F5
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 06:15:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745904824; cv=none; b=Em82bC6CP9R9Iyv/uBpj0lxnKsN7C2Xqpyz5zW67UsJK7tnkyWZ47BcCoHbSREZO9J6Bwgtpglfe7WicxsKk1mEeATJg157dlLTylpd4eNAEOJNFzXz6Tp1OPyVDZG+EfMSPRgz97d4/tTKeL2EXbYNgSDVzqBMP8V76oAum05E=
+	t=1745907356; cv=none; b=sVToLmJYd9WGGeGPRmukrq8kZBGdjahqGG++398i69lxhTnQIzrX0KMkRIcw8IgpWgCJcv1MranydahVmSy52bcYjsa8Bl5mKGBh/Djv/98fEeULi6D70Nb9+8tJzDkQlggQ6WsN8EKub9Zb3jlPeqBcJaUowUc4lwcfXoGntGI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745904824; c=relaxed/simple;
-	bh=kY3kGrl760sHKl8BSssEis0Loz9X9MFOq2qeXS9Ya8U=;
+	s=arc-20240116; t=1745907356; c=relaxed/simple;
+	bh=9Ncq5vJTYnF6rZ+3h5j3MPO+gqtwP4/ZWpvax+w+Uno=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=hNGYuSGzp9CmzQjXT0uJerWFW2YoqmcorAd4Xsl0kaNEHmOdBY/MO+fD/5wGFckMY4DSFYawvMNw7uwqwbrpu65PCLv+y07YdtcDxPPt+oR3UbCREEf0OIWNLg+pi842SZB4P3XOAs9YprQYKN+1SSUwKzmr3bTG0ca7OpRN5u8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rZ48mAoM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oW1OpA4B; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=IBoqVVHccLDNbtUH1g9VXUjHTV7BQU5D/qwB0fWKnm/EaUroVsd1g0i45CyzQ2TkfoRcN8UhYI90roCgjnhP251Z85+T5kP1Kt5udBJf/jQxUrCivd7Xh99NGlSyJVOfk+KUH9Nwi2iHLL8gR7oBmVQRUA6b+KI+Qgen1uHaMf8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=cRoUouBY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sk2LKVY8; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rZ48mAoM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oW1OpA4B"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9F945138011C;
-	Tue, 29 Apr 2025 01:33:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="cRoUouBY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sk2LKVY8"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6436513801CB;
+	Tue, 29 Apr 2025 02:15:53 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Tue, 29 Apr 2025 01:33:39 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 29 Apr 2025 02:15:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1745904819; x=1745991219; bh=nZJB88WDi6
-	J73xAFrBJ0YJ3JRYIYWdIWDIauUr85ekM=; b=rZ48mAoMJIJ4x0bU354vDc90Tf
-	p9KWo/Y/k1tuyNXVtN2lU7gSqN8SrqtqCxBXGq8i+kt7Rj0oTAYxzwxE0aA2z6PL
-	82Qb3uivffMyRJHGqQI13FYStX4e0wj4KcBg99WOhqDlAS+oSlI/oZOiI/o4oKlB
-	mdEy4EqZZ9Y3G+oVuarbBJKJ/0wdLdEzllG1oAuYjR24W9N+ItuUudbW9g2jf6JG
-	T6asF6k4HmMg+2atwfJuEb7FUbXw0bpoGDiocwmc4GaCu8ks9OZ5PRIy3QLSdhGM
-	EHdedriTC4lBu9ssE+7HYtu3NSfbOIOCrl0Lk6jp5JZA9iMakyRlkGvvDI6Q==
+	:subject:to:to; s=fm3; t=1745907353; x=1745993753; bh=6F0Xbxv1Ve
+	8G+Is4RtQYhdyr+6/OaO5Z6xGgFd+a/LU=; b=cRoUouBYawK/aPaa0hCXv7sA7X
+	eXGHeN1TZRUK29od5gb0vgMU1knud+yuqlxqbwz/tmk2bK6IFZH21q4XNTOPLXqM
+	9NvtYE4NZ+1YgSMDDF9ly98aC/szA54RpNcQWbf8t2sLssRH82ca+IUOEgmjmpTH
+	j2kc5OiW7Kc/4GG6uXKZPMoDkQqS+4ct2pvFh8bNKM87OZprpFehcrNJLSknuaxW
+	90BNDn/vC3Ucdvc1wqAqK2HudW+BO03uJk9xdOddelRVblAUL9RDld1L0vm48aFF
+	Mpj37cfj94pVC807UoBrDP68lt0+XV1ywjKkhTaCM6KquF0FHV89+P/PA+YQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745904819; x=1745991219; bh=nZJB88WDi6J73xAFrBJ0YJ3JRYIYWdIWDIa
-	uUr85ekM=; b=oW1OpA4BvJzGgdAdCin3S6oj6bB89Qh9WUlIpdWU1rZke22y8ri
-	BDl4MSq9CYEsBTPgFL0LYyi1tMBU9/JSWod3+s48j/SHmhEfUmeyTchGHfcxBE+S
-	bAEV2MBVlp9vrRw4kYWcCc5gsdaKTlwc2XhSMLO2rsXcjm/NXi4E4utakr3NZ8xA
-	guZJJlKaH5gYtVTF2QSN5m2dfDO+5crS9MBvk8gVoPGCHe2w4nAmOQmQvI0KEaXf
-	Mjn9UEN4NwJB1sJI+2IN7sVmv+F8/ttG4EgIwxzxX2uYRuX30usiMzciurrLoqi1
-	PTHSIP7Hcttpk1tcqSOs94M+I0DZ3RSlGdQ==
-X-ME-Sender: <xms:s2QQaEfk-KkuXJpp2Uvkkjrz-H4DTzD9DpdUTs0mGjLKIfAQvvvbhg>
-    <xme:s2QQaGMYe0fj9GMMiTIM4TawEv4przg7yjED7exPK_y71J3V4FUm_Fm7I0jBI601t
-    8uB2j6D6OD7rl65zw>
-X-ME-Received: <xmr:s2QQaFis9lNbc8FgIYHbnf47_F9pdrrRvzX0BRm6qRITReTxakrxl3iije2sqwWVHCyDx1raV3FMs3zoUxC96YGnJ_5wuj8VpF9iMrTh7qM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeftddtucetufdoteggodetrf
+	1745907353; x=1745993753; bh=6F0Xbxv1Ve8G+Is4RtQYhdyr+6/OaO5Z6xG
+	gFd+a/LU=; b=sk2LKVY8Yych84F0qNxJ9i69ED1FNULwnPEFb/HiNo8EsULi6zu
+	IunTioVQ3mnSJWU2uSW110zZ71iAKLnrvZ631ulyGJTS7t2ARC3UxCn/oRtHEZlB
+	HhrJ5mKXNCx50oJy3JBvLUOyG+rRI6U/3qVZPC3swZoVL12p84K3DemKgPt0gusy
+	k69R1LVg3N6aM7cVLqexc/0J96kixMGGHIz7Tb9mDVFhHtUkA2Xn4M69eCOA+AEO
+	Z23G6n4Y2niR27vuQyIeU9d72ZetjImPiaEMMW7CDXHZXpB1zGqZYI78GaLj55mv
+	CUz8iPAEPknDWzH8jaKCCdDdlD6e892Y0xw==
+X-ME-Sender: <xms:mW4QaCcMR1M7BWO175RSYr3QwlSogyZhtPFTsib2NEk5jX_VYnE-lg>
+    <xme:mW4QaMNSFZjmhIniit-DwU0AW4wyHReoZR63DftJZG7JgtXs3AefEVgaaOl-9EN8A
+    sgGOPNdhjOGTOoqjg>
+X-ME-Received: <xmr:mW4QaDjHk0YbMSeW-dpQz7V__d5dTNP0oHAGuyF1Xj_gK2tWVbaNGZopOIKixheixENzKRIcSLWJn4NCpx7N23uGw5QBqeXRT2Ioq6wdrRI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeftdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
-    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
-    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
-X-ME-Proxy: <xmx:s2QQaJ_d4dRhLa1R2B7Sm_LOtnTOl9dRlDfy2-ovilrxW8JxsMCHeg>
-    <xmx:s2QQaAv7H_4LNqGp2IizjwYtbb0FpfHDPL_Jom91AMiiMiAb-U8Nug>
-    <xmx:s2QQaAFiNGj-VMEo0wSg1rJaDDVG_onJr0gAFwAY5ZodzBZYp4KPag>
-    <xmx:s2QQaPMx5BedadjVPXF3ST9vAA3cMY1m6DmX0N4sPeqb97H9uHH7Kw>
-    <xmx:s2QQaMPQWx7ddd4O1tC4_QUhftNWts4I8zVb7KXXGHZKF74P2Zx31qSl>
+    himheqnecuggftrfgrthhtvghrnhepjedttdegffekudejjeegudehgfehtdfgtdeiudel
+    ueelgfeuteehledugeeuueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:mW4QaP-Oa05uLg5PZm1g3eQU8lv4wljQHEE_uqtZNRMROO9bJ1oX9Q>
+    <xmx:mW4QaOvAnDeQQ_j7tkVkPh53YzjmtTGNUE1ivVcn_3QCtM9qunN1-A>
+    <xmx:mW4QaGHim6bod8VE3snJtrvZ_GlUjtJrLzJcdYXJszT_QIQ4Lm9ykw>
+    <xmx:mW4QaNMazD_VQWR45v99alPh6CtiQjiZYYcUVsRPppVURDLhnWmZAw>
+    <xmx:mW4QaD6wF1TPs4oRG8V1kumCdJPAYw5jmtFBZGQ9c51uBW46SEwyc3GP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 29 Apr 2025 01:33:38 -0400 (EDT)
+ 29 Apr 2025 02:15:52 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1e782e77 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 29 Apr 2025 05:33:31 +0000 (UTC)
-Date: Tue, 29 Apr 2025 07:33:31 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 98a4c70f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Apr 2025 06:15:46 +0000 (UTC)
+Date: Tue, 29 Apr 2025 08:15:46 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, peff@peff.net,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/3] Fix REF_DELTA chain bug in 'git index-pack'
-Message-ID: <aBBkq_WQGHziC9is@pks.im>
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
- <pull.1906.v2.git.1745871885.gitgitgadget@gmail.com>
- <xmqqecxbap0l.fsf@gitster.g>
+Cc: git@vger.kernel.org, Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 12/13] bulk-checkin: don't fetch promised objects on
+ write
+Message-ID: <aBBukgbWZRRLgnLl@pks.im>
+References: <20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im>
+ <20250425-pks-object-store-cleanups-v2-12-63f1695b7700@pks.im>
+ <xmqqikmo9bzc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -92,24 +88,37 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqecxbap0l.fsf@gitster.g>
+In-Reply-To: <xmqqikmo9bzc.fsf@gitster.g>
 
-On Mon, Apr 28, 2025 at 03:40:26PM -0700, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Mon, Apr 28, 2025 at 03:07:19PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Updates in V2
-> > =============
-> >
-> >  * Fixed a memory leak in the test helper.
-> >  * The test helper has a better CLI that makes use of the parse-options
-> >    library.
-> >  * The test script skips the in file and instead feeds the input directly to
-> >    the test helper.
+> > In an ideal world, we would protect against this by fetching the
+> > promised object and then performing a collision check. But this feels
+> > exceedingly expensive and ultimately rather pointless, as more common
+> > writing paths like `write_loose_object()` don't protect against this
+> > scenario either.
 > 
-> Everything in the changes relative to the previous iteration looked
-> quite sane.  Will replace.  Thanks.
+> When writing loose object, wouldn't collision check kick in, and
+> didn't we compare "existing (not here but virtually here due to
+> promisor)" object and what write_loose_object() tried to create, at
+> least before this series which may (or may not; I lost track) have
+> disabled that check?
+> 
+> I think the overall goal of deprecating the function with long name
+> with another function with a short-and-sweet name with different
+> default is a worthy thing, and while I do agree with "as we are
+> replacing function with another with different default, we need to
+> pass different flags to keep the same behaviour" early parts of the
+> series, I am not sure about these latter steps.
 
-Seconded, the range-diff looks as expected and addresses my comments.
-Thanks!
+Yeah, to be honest I wasn't totally sure whether to include these steps
+myself as I anticipated that they will lead to discussions that derail
+my original goal, which is to clean up the interfaces in the object
+subsystem. I decided to go with these where I thought that my train of
+thought is reasonable, but given your comments I'll probably just drop
+those patches.
+
+We can still adapt these callsites in the future as needed.
 
 Patrick
