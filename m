@@ -1,125 +1,101 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1437B25334C
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 20:02:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10C8F262FD9
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 20:07:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745956943; cv=none; b=oAeoylmKU/PJmdShXuKIITerPxPO6xOcLMmxcywgQOV+Ve5es4HhB9vBv/ICP7mDMlPjz6baPWYMim3IwH3cSg/q5zYbhTqcL6isOMy7++YzgLx3sbzBq2EiNAE08gQfEo120haDqqKzFuG2Gvc8O4EZU2isIlzXNcq+CiE0TRw=
+	t=1745957261; cv=none; b=ovftfKktaOoYMA8dpo/Jxi5AWE4lRKXsFLO4GuSDk7VaLdYHIIW60vw7K8vEQ8qJXxzwZt9FDsDPPtp1S3HdQFVdVcYmzO2UUXLIlzYs32sT2HKOXuogfYc/LfpzD+Qj9WAogFDKTRM1OMhJKFAik6hav/pRI6b780xKzymR5uk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745956943; c=relaxed/simple;
-	bh=iyQN1mer6JXDm8CMQs1dB/l/vlwKX2skMTOv+LntCO0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=kZcZPInTjGLonpcHyFDt3avy+Fah148hj8l0Q52jqxj5bDspAmNG9jpzzdxDVVz0hsF7QXvgSelP3o3V6mkZxSdwtT9vsJUNrP3cmmUllI8Fp3lDein5e7LJpxAMZoSnO39dmAIX576RMO98PDf+4rc+pE81/q1/DScbbHvub6Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LtLPhi8e; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745957261; c=relaxed/simple;
+	bh=S7IGjI4ecRt/V//uPPmxtukU2gmAkd66j/Dhxc9EIeQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Mkdp8ls5TSsfIZJ8DlmLRAde0R4DEUEBZZYGMco6LUrSt3o5a9Y7BGt6qhrIX4KHWA62KAfj9J/JOhywvk2O8ibmjEU9EK8DayKcYEpf8PYQxRye3tX3GCg6Tn0aE5RtyMMZNsIJi8Z1OlS2nwsNZ7R2RHOqvRd1RZ6k/SVJR5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nkQKNB/5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jAWJjQ+Z; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LtLPhi8e"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-70427fb838cso53745247b3.2
-        for <git@vger.kernel.org>; Tue, 29 Apr 2025 13:02:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745956941; x=1746561741; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=Mw9MoYfErjRn6pXrkIumWnDGweYpxqf+c3cxYGapy1o=;
-        b=LtLPhi8eoSrt2KQZINP1GCL+QMEJyveI4btZ/oKWp+cS08Xd/vVdws72eYXXztQK33
-         33yVxV9YqwTGJWViw9M0okBcuVV4AMnuJyfGPzv56hp/kY1bH+M0Yjg3TbjtdSviJxmo
-         2CGrdhzwnXVf/RDf1/LPTvydZsM8ZE9cjWwv9mwGK7ozAzmh2PqBlqz8zCOF/28RV0kb
-         ojlA5xV4jETwxDHuRMEqv1fGfn4sQvNzLB7sgfB//Ik5eg4SjoismOjcScWhW0nijd2k
-         8ReVl3Tjfq30q3mUbIWBrwuW4cXGndxUyj8EEV0smAxYwTsVDBoxHJZRFVV/Ly8XOjqa
-         fkEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745956941; x=1746561741;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mw9MoYfErjRn6pXrkIumWnDGweYpxqf+c3cxYGapy1o=;
-        b=LkuQFRRnOqKPcGd4TGx1oqytgjt4R8FNq8z67xgd5qnx4O30x9X7mgjDmr40E4NV1Q
-         Fc1Navwjx3DKF6amMlh/6gXYS8qgtpsgbHw4HeCLrGW74ABw4MY0MHJsa1JoUqPMOTRv
-         89aGUJ8k4qjPWhzNE7KDNna1LjozM/1WUMzUh886k1snTfoPtSyurOhWlDf5FdaNrfsQ
-         LXEgRHFfk14Z0wUfzuSr/Ro7bSgjody5ExcTUJ+34G5XUJNaf7I+LXU1qkMPZjWwbhko
-         3Rh9l3BDSa7jRMHNkMfckoUWv8abMCFPjLYtAasti7trYT5myFm+2o/O4i31NZSzCYII
-         VvAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUq/fNbCwHlz0rj9NAWCDiHTgtbPDoTxQVtWvDl1B6gJFW915ZFY9zLwK8g6lTumHWcwFE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxHAyoUtfaGDMqRxonWiMnyuY+lqqShC6lL4O1XxIBRWtKtrjS4
-	V/ID7tX/HJiJTEgzLJIvCiFoqXSvZe8Y5V0xghRv0V9AUvAD1d+PcNxOEA==
-X-Gm-Gg: ASbGnctpRGz5oBwNTOnrD/dQCZA1vs2RMD710AJnThS5W62WrdD12dsMFM5TpUrkdld
-	KZmTiiIx9Ezjyk4vB1ixRbgCmuLAPPvk/eBbhLMNl1P9KWxFfQlj7U37crepBMyHBPwGhtQfXyf
-	85eK4lh2eRDJe1KLY8rGb8nRzH63LPpLBxXy/18+Zioz5d6dk0r8XEM5SRG0Mh8YE3GSj89KbIr
-	7EPVJ0DBopk/vn50lpiL/BLHxSuD60ID4+OzCXEyUC4z9hKBZkS0SeQ/H0kXa4u0ATrULYs4CV1
-	klHG3IJZiGyY/WF7zEVgaIGHXanXxfrI2RGgb0zHajgerb+tepPKeZDAjlcVNS4WwacZUDk1IgY
-	6KYEpvsEAkPW8oMwQ
-X-Google-Smtp-Source: AGHT+IEkc9tqKuw4s25bEkUAM+Hu83XWdX1NDSSOZGcxHKyLQ/lft4etRopuq1uZhy6UBoeW1v5Wvg==
-X-Received: by 2002:a05:690c:64c1:b0:708:16b0:59c3 with SMTP id 00721157ae682-708abe467a3mr10877407b3.33.1745956940820;
-        Tue, 29 Apr 2025 13:02:20 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:ad95:6981:343a:ce99? ([2600:1700:60ba:9810:ad95:6981:343a:ce99])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-708ad0f5d7dsm314437b3.114.2025.04.29.13.02.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 29 Apr 2025 13:02:20 -0700 (PDT)
-Message-ID: <3cc1ef7b-40d5-4802-9bf9-ff28824ce563@gmail.com>
-Date: Tue, 29 Apr 2025 16:02:18 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nkQKNB/5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jAWJjQ+Z"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F089F114029D;
+	Tue, 29 Apr 2025 16:07:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 29 Apr 2025 16:07:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745957257; x=1746043657; bh=KoE58IJuEm
+	gIR2LDW0/lyXquq5HKMaKCqGBI3C+4qIU=; b=nkQKNB/5MBfNQUGqnEqDlG1Owz
+	quKpCU2WndjvnzcVif0lQ1fh22qM1fOowIHH6cj8RIejEs7ZPZtNxSNTfw4E3TNm
+	bnVlEXxfoIuzo+sSup+SKpajjLR1EF7bFDBm/00hHrrPM7ejnd975ZAHJeet6KSw
+	6V+56qkN5/4bgmBWFBIDLg1MCuI+tr9nz7HM0z9ntVJgvJ/nFCerysdWukUhgDHc
+	4ZOYT9g94+HPho/pAAEMgBwSTBWO47p7DXdcaCR7SGjvsbEBQx083xnrVzTNID29
+	OzADURBVsnTu/EqLyVfO3FydosnjH0WBOi84/S3dqQM/0fTLX3y5bdWmq6fw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745957257; x=1746043657; bh=KoE58IJuEmgIR2LDW0/lyXquq5HKMaKCqGB
+	I3C+4qIU=; b=jAWJjQ+Z3BmY3eUhLOHocs8F+k3lYW64RitffwP90nX7WWPnNhp
+	O89Y3gbL1UPvJEuIN5qmJbto89/LaVUllvm0FKjyHh/25/oMuuEtOvFuDOdqQp52
+	QUO8kDdIiFwtmI7asRgniADV8Fk5VLePCm1mkVAL52pATZs3bdPXXEqE2efy0OLO
+	B7OFQEkppZT+1LO4JE+OJNx9s54GdAvPEmR/gDdt2nY6uXRZ/80BXPBgcDGCZeLy
+	haPMrwQhwInlf6bWd9IAVciJj1evr+hdtxtY4JT1MosaSDkyC1gQb+yGy3OXa/lJ
+	Sb26cTo6VMRa0KLrBEVAS+aqLw1OcAwFxrg==
+X-ME-Sender: <xms:iTERaKR4jGxePdP93FaaBbEmh-dT28tRVjg0GZ1T_seKmCwiLvPErg>
+    <xme:iTERaPzRWCPqMQ6AewX6CVAL31YgJGQZp1coNjTLvTohsxqWCuu1mdEGx2VyCUXMw
+    z0K4PbykeycdHJ1_Q>
+X-ME-Received: <xmr:iTERaH0oKu1-9BoxKH37-BXCVvMRfWta0X40zYLuktRlhkuSIy6b6VztbJZJ8iMX0Q69nSIJmeAv0vxOuq1lIMvZMx-mGC0jrDKP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegjeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:iTERaGD3ctmfHSsXGHqpHSnnD86bZfDR_AMjwIDF6C7V4s_sP6EEdQ>
+    <xmx:iTERaDhY92jWhN1aOWf5iungUBbPtoWYktK5xzuTATX8rv_8ahYZzQ>
+    <xmx:iTERaCp8GU8V9pjvGttug8woGI8usCoqIMcBd-pDdJx86G9PyvDl5g>
+    <xmx:iTERaGgrvegNVaQHwxLPJkZaneyuGkqr7DAxkG-R7Q_fUhTAWTUUKQ>
+    <xmx:iTERaHsngYBhMLEHLSaeKKrGEiTPc-rXmNUagl3jNIUfNhwTMbNmETWE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 16:07:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v3 0/7] object-store: a handful of cleanups
+In-Reply-To: <20250429-pks-object-store-cleanups-v3-0-42902bad09a1@pks.im>
+	(Patrick Steinhardt's message of "Tue, 29 Apr 2025 09:52:14 +0200")
+References: <20250423-pks-object-store-cleanups-v1-0-81f8411a5d08@pks.im>
+	<20250429-pks-object-store-cleanups-v3-0-42902bad09a1@pks.im>
+Date: Tue, 29 Apr 2025 13:07:36 -0700
+Message-ID: <xmqq8qni68af.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] builtin/maintenance: implement missing tasks compared
- to git-gc(1)
-To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
-References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 4/25/2025 3:29 AM, Patrick Steinhardt wrote:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> Right now, git-maintenance(1) still executes git-gc(1). With these last
-> gaps plugged though we can in theory fully replace git-gc(1) with finer
-> grained tasks without losing any functionality. The benefit is that it
-> becomes possible for users to have finer-grained control over what
-> exactly the maintenance does.
-> 
-> This patch series doesn't do that yet, but only implements whatever is
-> needed to get there.
+> Changes in v3:
+>   - Move around `hash_object_file()`, which I missed in previous
+>     iterations.
+>   - Don't try to fix up callsites where we end up fetching promised
+>     objects. This patch series now only does a trivial 1:1 conversion.
+>   - Clarify why we're sunsetting `repo_has_object_file()`.
+>   - Link to v2: https://lore.kernel.org/r/20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im
 
-Thanks for putting this together. I think this is a noble goal, allowing
-users and system administrators more options to fine-tune the best ways to
-optimize their repos.
+Thanks for a quick reroll.  I think these are all good.
 
-I wonder if any of these fine-grained steps would be valuable to add to
-the default background maintenance schedule (perhaps as a follow-up)?
-
-> Patrick Steinhardt (7):
->       builtin/gc: fix indentation of `cmd_gc()` parameters
->       builtin/gc: remove global variables where it trivial to do
-
-These first two patches are simple cleanups. Thanks for isolating them.
-
->       builtin/gc: move pruning of worktrees into a separate function
-
-This is a nice refactor with a clean method body extraction.
-
->       worktree: expose function to retrieve worktree names
-
-This one is a bit messier, but still really good as it makes the
-prune_worktrees() method in builtin/worktree.c less complicated. There's
-just no way to make the removal of those variables look clean.
-
->       builtin/maintenance: introduce "worktree-prune" task
-
-This is where we start getting into new behavior. More comments on the
-patch itself.
-
->       builtin/gc: move rerere garbage collection into separate function
->       builtin/maintenance: introduce "rerere-gc" task
-
-These are a nice one-two punch for this new task.
-
-Thanks,
--Stolee
