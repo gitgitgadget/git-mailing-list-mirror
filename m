@@ -1,122 +1,158 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com [209.85.219.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D33A51C6B4
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 19:40:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24897082D
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 20:02:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745955642; cv=none; b=iEvB7ZyCHOKcnbiS450gscEAGtUwPRjJzFQy4YBZodCXt95aZgeLstC1PDvyI7YPXTJqZxxJRVF/StsqXqMnW1ceiWJtLezMdImlGVXXs3otZPb2/6f/POpzkdCuF+nflKBxQOHhsImq9HJgoSe4jK2VUJ7WhrKDRma7cgOELb4=
+	t=1745956927; cv=none; b=RBX8t3bF78+hTPS5ij62BUdRuaHWl5cO21cXuJWBx5nqTRBuJOwgEnWNINrhjC6SKoIGcd4kzlezfHUnXZHXYWBDmZrRPR/EIm+V7w9XTtiHe1+Q7NJ5YPPGG7F/dqNtRPx6MeRVFM3zFk1GFToEsM/AziBs80NAOufaLOtjl9o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745955642; c=relaxed/simple;
-	bh=Otd3dTh7m3PfJm4DIRRR6cE14UW0hUAd4s0JIcZb4n4=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=Cw6ktahbQEJudqcd+GKBUgG56Uz2td/4OC2yQNoehoFUrEtjickkoFF4wtA7xEUQSUwPMj63juufWwjaZEWv/H7udhEwYviD3nrMSaZZVesIqGUf/IcFdyvt/bbrZDiJ9dmoy1AcvNLGgOLYi82RnXPbFRr6F4/wkhT1Ofn14FY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=OMe3Pdns; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EDIpr5kq; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1745956927; c=relaxed/simple;
+	bh=yr2VJhrPrFRwOhtIjyGC1EZ6Yd/72Csn2LGGXKzlCfQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=rz7Iz/Rtqdl1dyjTmx5JK0owBKz0xXZtYrSzrmmFj23I+JvOqFl+3x5yIyzsOSKThfdXLdt3p/Au8uh2/tHcYnPEbM+MZIFFz/oIqHdLwkKZSd/fyKSDjDMrhO+t6I5qYDAHS1EQhjC2ajiErK1vHw8EYlILI5/e1t4hlqZOiFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Sf7bt15L; arc=none smtp.client-ip=209.85.219.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="OMe3Pdns";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EDIpr5kq"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E378025401BE;
-	Tue, 29 Apr 2025 15:40:38 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Tue, 29 Apr 2025 15:40:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1745955638;
-	 x=1746042038; bh=Eh2n2Ygt8IrGRv1wyUJ/DiBr+WRrh6gRkIxayzr77QU=; b=
-	OMe3Pdnsb1INUTEiy+kjOZpZW2v6fLaRc4DAcj0GtuM32soTnjG4hSHUY0rdc6ZA
-	O7vr6KA7h9IeSXDwHlwAGqkpSABLPSmP+82n8x2sGTmBPwpeSG6s7ChfsrG3xpia
-	Bdy66rclrPUtX0BVEjTv4ldRZKyseA+t7IZOcDEqXmA1z8cFX94V6My2CSVBdY3y
-	Jol9G8vo8dUU7AUWhjs3AD6n+y5WtCGtOiFML4jTFGP+Y2U3UmI3F8LIX/mX09KU
-	Q1C/43qOKvUTT/fKOEOQN0nr4cJLvbnf8mp1PWh/swBWP/llBR5X26PjMclcAQEM
-	IwUzj1QQUCrJobbrE6+W/Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1745955638; x=1746042038; bh=E
-	h2n2Ygt8IrGRv1wyUJ/DiBr+WRrh6gRkIxayzr77QU=; b=EDIpr5kqP44JWMk1g
-	Ym4pTHYMe4bMN2gsye3Y8chEK5NAXVUATEy5og96F+e6x7ZQzq7Kdxupqky8VzCJ
-	kjTKVLnb7U9u+IObQ6rWnDKLQJzFAXBmMt7W5LUk+KgGSZN0HdeNT3DE/5R6f0Lo
-	t1inMuLM9zhpvs3DB5JrFuruab+lhSVnp39kKsHVNA3SvvaVQPme681sXURmnTKW
-	mN0H11XfdGnOlkRm+6DmdyZVgKyuwJyyOAvPMhZQvNDJpqQm1JGVF+pdEUkA2vBP
-	+5+44YyTEJv+NzTapUp4pQ3HAebHKNIXBMjiXl48inUX8wyT5QcqYSpu4MT78iuW
-	IMQuQ==
-X-ME-Sender: <xms:NisRaH7aSp5R8fED0wuCpJSHaBFRGkit1tyzuauxdc24ku8pXtGG0Yc>
-    <xme:NisRaM5XSp6k5vxuWDY2IugRlOIJOVordO2qG8cjSvN8Ccsfdu6Fu0YphJrSb3JJR
-    GJgG6clxLBp1iBvyw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegieekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepofggfffhvffkjghfufgtgfesthhqredtredt
-    jeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghoug
-    gvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpefggfefudet
-    udevledvffehleetvdehueeftdegieektdekieegtddufeeujedtvdenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhs
-    sggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:NisRaOfO0r07AMYU6EZz-RmyrItiilOK0w_hLVoBcY56j51QaMbOuw>
-    <xmx:NisRaIIOfYzlEJk3fDcGBprnAXP6DB4ZGlI1cjGVni0Iu-6D8zTKSA>
-    <xmx:NisRaLK9Y4RTT4QLW1qTnlQBAT2AXScRehIeqxgM2xJOoey1iP3u-Q>
-    <xmx:NisRaBxN5LePoczbChEMQEm8tWz6F656WPcDg6x4nbk1GQ1k13bOJg>
-    <xmx:NisRaIjjWz4aadFYUGwGkuTEg54ySMXqJQJwGg3NCKpeV2KL-02eVj-9>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 4881478006A; Tue, 29 Apr 2025 15:40:38 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Sf7bt15L"
+Received: by mail-yb1-f174.google.com with SMTP id 3f1490d57ef6-e72bb146baeso5349400276.3
+        for <git@vger.kernel.org>; Tue, 29 Apr 2025 13:02:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1745956925; x=1746561725; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=yTakVStmHfRT7bCe+q4CdV7HHFO0vZZ+QxMMG1BmCGo=;
+        b=Sf7bt15L4+jrKKBcnrOfYDoUGNdLyIMGkOcyHfFBXzFg1ITmYDEatx1gFkdpoEpyub
+         TsC5v0z70GaWopgcXt+VOm/Uw3yCXZJmO8xq8OXDXgrFKlT7wZdFJ8gMmve87UksAYoK
+         O08T1DJNbu44f3lJTVbIzYlRrn2oOwa+UVk5xPANDViG7P/aMIH4OQPC6JiOqdvRr1U/
+         Fn1FV1LyP9Wu2OYt1bfimrlol4W9cq8bvKQKw/Flcf/mzeXb8DufhY4/lY+al88+U5uo
+         yKyTpZZPPQKev0C/VaSeI43NbIInxcElmSdqjPbT1eMKf4LflW1npyJdTMM+jofP9ADG
+         YgGQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1745956925; x=1746561725;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yTakVStmHfRT7bCe+q4CdV7HHFO0vZZ+QxMMG1BmCGo=;
+        b=AxYG5t+c2Hh9wNWOR2Ab6EKA51T4SwJsNlxrdGuFARspw/E//Djkcx86Fe7zWLEeC+
+         KlwfNuRXqlHfEY3sW+Bxee9fEzYv9nM0x6BK9/qmnsKbcfyuwfSCVwu7gjgjHI+nsfZK
+         AHoXRxeV7Fy03xbfNbTEguWj9vdyaR8XcHqkdKIllDzN6sKohY/NN9sjdOOJ1OjEoD/a
+         5Ni1L51zNpGPoxsUOVbfhiaZt6KM3GlKWC9ImFPg5gsqehNB0fyd8UtWsWSOiQYnDnNq
+         ilSMlsgH2CDyoqo9jYl0pNRqkAbKlKTRoXjGIGoYquxvJYCf4ZrGntlYECLEg3+0guNI
+         6CkA==
+X-Forwarded-Encrypted: i=1; AJvYcCUz5t7YX8Hc5+S8vpLhM2tZYjdTGYNEq91CAH/MAz2EayV2CGQLplcfwTHEblr59sj9KJE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz7JGV+4j2OkZkcWOsQ+Rm4kyGdg8JIT/NIg/RrI8NPFXTjLoGk
+	/mZgqmHL4ZbKixJBuDFadgYQMd4XYqmnetOhGgiK8b/OIw6prducQ6HrOQ==
+X-Gm-Gg: ASbGnct8YezfO9h9TrNzzzNuDKdMipa3dNJV0BqMyJQ1mKWJbqLievPOY2nhvxVblNb
+	XuhH5Yhwno8AcXcnauz85RPuj/O6JwbL4aHYuKa30p8FKEkCsUubUFVtchbRnGtuFiesR/E+RQh
+	0b33MDE0WJfKVugLM2G3DSVnNHUkeOsGaxSAER4LGurIm7cKMjnGUV1V17l6CWmsYiO9p39ot2O
+	RDXo0BZAFWHzH8rq1DsV6hEqcPqrxTmboxVhcG16RJMVMSZInq2o6p3uyCbyL7pODIOgeWuthGi
+	p240yYqnCioJLlxpFmize9X3JV4WatuWm5ezPnDZNa1x00PC1ERhflunUzREAvIc0LTKzY2ZS7m
+	rmuNcOCQMABiiapdh
+X-Google-Smtp-Source: AGHT+IEraDwEv4DSUSd/3syVuRv0DdcZtQB6WjIS34Kp/STw4tc8wfrfOAkCICQHRPH0QAeFzS22XQ==
+X-Received: by 2002:a05:6902:490d:b0:e73:1907:a9d9 with SMTP id 3f1490d57ef6-e73ea21124dmr822600276.2.1745956924677;
+        Tue, 29 Apr 2025 13:02:04 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:ad95:6981:343a:ce99? ([2600:1700:60ba:9810:ad95:6981:343a:ce99])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e73fae69200sm29639276.16.2025.04.29.13.02.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 29 Apr 2025 13:02:04 -0700 (PDT)
+Message-ID: <c629f845-180f-4ecb-949f-a99f184f812d@gmail.com>
+Date: Tue, 29 Apr 2025 16:02:03 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T9ccdcf6233d5601f
-Date: Tue, 29 Apr 2025 21:40:13 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Message-Id: <fbc97d6a-2022-4a64-a2ba-5a7255cd81a6@app.fastmail.com>
-In-Reply-To: <ce0f41e4-7d90-4398-a0e9-e8ba69791e57@gmail.com>
-References: <20250428194048.149348-1-code@khaugsbakk.name>
- <ce0f41e4-7d90-4398-a0e9-e8ba69791e57@gmail.com>
-Subject: Re: [BUG] rebase: can write reflog with uninit. `action` string
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/7] builtin/maintenance: introduce "worktree-prune" task
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
+ <20250425-pks-maintenance-missing-tasks-v1-5-972ed6ab2c0d@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20250425-pks-maintenance-missing-tasks-v1-5-972ed6ab2c0d@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Hi Phillip
+On 4/25/2025 3:29 AM, Patrick Steinhardt wrote:
+> While git-gc(1) knows to prune stale worktrees, git-maintenance(1) does
+> not yet have a task for this cleanup. Introduce a new "worktree-prune"
+> task to plug this gap.
 
-On Tue, Apr 29, 2025, at 11:22, Phillip Wood wrote:
->> #0  run_git_commit (defmsg=3D0x555555babe70 "<repo path>/MERGE_MSG", =
-opts=3D0x7fffffffc070, flags=3D0) at sequencer.c:1158
->
-> Thanks for the backtrace. It would be useful to know what's stored in
-> opts->ctx->reflog_message at this point if it's not too much trouble
-> please can you run "print *opts" and "print *opts->ctx" here.
+I initially thought that this could merge down into patch 3 (move pruning
+of worktrees into a separate function), but...
 
-Today I ran on f65182a99e5 (The ninth batch, 2025-04-24) at
-sequencer.c:1148.  I was never able to reproduce this
-`opts->ctx->reflog_message` having a weird value with GDB today.  The
-reflog was also fine.
+> +static int worktree_prune_condition(struct gc_config *cfg)
+> +{
+> +	struct strvec worktrees = STRVEC_INIT;
+> +	struct strbuf reason = STRBUF_INIT;
+> +	timestamp_t expiry_date;
+> +	int should_prune = 0;
+> +
+> +	if (parse_expiry_date(cfg->prune_worktrees_expire, &expiry_date) ||
+> +	    get_worktree_names(the_repository, &worktrees) < 0)
+> +		goto out;
+> +
+> +	for (size_t i = 0; i < worktrees.nr; i++) {
+> +		char *wtpath;
+> +
+> +		strbuf_reset(&reason);
+> +		if (should_prune_worktree(worktrees.v[i], &reason, &wtpath, expiry_date)) {
+> +			should_prune = 1;
+> +			goto out;
+> +		}
+> +		free(wtpath);
+> +	}
+> +
+> +out:
+> +	strvec_clear(&worktrees);
+> +	strbuf_release(&reason);
+> +	return should_prune;
+> +}
+> +
 
-Then I ran without GDB and I got the weird reflog that I expected.
+...this implementation is new and nice to have in a separate patch. I
+initially wondered if this condition needed to exist in the maintenance
+builtin or could be relied upon by the 'git worktree prune' command that
+is called by this implementation.
 
-So I don=E2=80=99t know what `*opts` or `*opts->ctx` looks like here.  B=
-ut I did
-find just two minutes ago some old notes about `ctx->reflog_message`:
+If we are trying to match the behavior of 'git gc --auto', then it was
+running 'git worktree prune --expire...' every time that the generic
+--auto condition was satisfied. But when 'git maintenance run --auto' is
+executed, each task is checked to see if it should run. If we can avoid a
+child process startup, then that is very valuable (especially on Windows
+where process creation is expensive).
 
-```
-Thread 1 "git" hit Breakpoint 1, run_git_commit (defmsg=3D0x555555babe70=
- "<merge msg path>", opts=3D0x7fffffffc070, flags=3D0) at sequencer.c:11=
-58
-1158		strvec_pushf(&cmd.env, GIT_REFLOG_ACTION "=3D%s", ctx->reflog_mess=
-age);
-@(gdb) p ctx->reflog_message
-$23 =3D 0x555555ba0d50 "\250y\267UUU"
-@(gdb)
-```
+So I think this is a good approach. Similar thoughts apply to patch 7. No
+code change is needed.
 
-It=E2=80=99s line 1158 because of my debug code apparently.
+> +test_expect_success 'worktree-prune task' '
+> +	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" \
+> +		git maintenance run --task=worktree-prune &&
+> +	test_subcommand git worktree prune --expire 3.months.ago <worktree-prune.txt
+> +'
+> +
+> +test_expect_success 'worktree-prune task --auto only prunes with prunable worktree' '
+> +	GIT_TRACE2_EVENT="$(pwd)/worktree-prune-auto.txt" \
+> +		git maintenance run --auto --task=worktree-prune &&
+> +	test_subcommand ! git worktree prune --expire 3.months.ago <worktree-prune-auto.txt &&
+> +	mkdir .git/worktrees &&
+> +	: >.git/worktrees/abc &&
+> +	GIT_TRACE2_EVENT="$(pwd)/worktree-prune-auto.txt" \
+> +		git maintenance run --auto --task=worktree-prune &&
+> +	test_subcommand git worktree prune --expire 3.months.ago <worktree-prune-auto.txt
+> +'
+> +
+>  test_expect_success '--auto and --schedule incompatible' '
+>  	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
+>  	test_grep "at most one" err
+
+It may be good to double-check that the gc.worktreePruneExpire config value
+is being used here, especially since the prune condition is operating on
+that value.
+
+Thanks,
+-Stolee
