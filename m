@@ -1,131 +1,118 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD5121CFFD
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 15:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CE822594
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 15:25:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745939583; cv=none; b=I9wDRaOJ+CBk2uXAEvpTFw0KqR2T2n3xXEfKeztJhB2e5OsdXf7SHjGls4WgEpKU3jwYfujp4vfrMh+RbT8sbdEifI/MC6Z25cQAYEZpY4T/Ab+QLOLp2MbrFMb0+wBnITi6r7UvlzM5E/FAjtUXq794AY91VhwgwtA10LcmHfc=
+	t=1745940338; cv=none; b=u2HifOwvf0jLR9XGqUB2vDhu37FDP6alIcYTGokq1iOLLqH+zkWhSYPV08Q16LCtlS6E8rokWuWiBmPdYBYOKpqlwKb5ym+hTnStU2OniqUZh+4z1T3pXtAxv7LB3Fp4mbIvV+7WDETm/Q3w02Vm5kiFbJOpEX1nmol/HVg+uOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745939583; c=relaxed/simple;
-	bh=qAs35rkmfKFOFvhoG5BCbDW6Qz2tF1oVGwv2uLMBrAY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=mzi+HcwNqdDpiED5PXoqJTQsB2HDTEyRTvvQ45c4QobzsvZ4UiPSqmOzvY8Z6jK83oY9KyCXaOrtP/g3IxyUp3NnCQ0w5sTVwAtOQO5Pn0VDQ++wOyUeqzGYzLAdjx+J3JSCu1bU5WuJ7BgF7GG9G9n15IHFxX1VMdW2jPss2Aw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RAxXSokm; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745940338; c=relaxed/simple;
+	bh=e4XsNxoMNRnL6fk156y71LDl6zUi8Xv5XfcCpwB/i9A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RZ77n0nYePwWz9FKXuehw++nxtYYEK5xJA90ISdEWFFC2Gmm7UrZfHp2+g9HXqOr9Shn9dTN8fwrVQRxswc/9QxnioxMflC2DBN5u8Xhv+G2VkOly4JpTLWGlrj3yWraT66mDo7numn8WzJJP4ypJuz+WnX2phgQshUZuYEAdMk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jq4kXZ1z; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t09RZVhe; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RAxXSokm"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5f6fb95f431so9001973a12.0
-        for <git@vger.kernel.org>; Tue, 29 Apr 2025 08:13:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745939579; x=1746544379; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rs2l1h7BZP7fytyZm9WdZaOUUh+eCY6J8LEQ9pBfKZ0=;
-        b=RAxXSokmaTE4fqnuFOFrZFY+4xmTdXXh0CHKsxTKc+clek/REfp5VLZM7dkQ3usObG
-         XOOJVtA2sb4NkALKuxF4G2BivpW5gyDMV0mVhGGENLJymgCYkBXTqJV4JIlJlwYbU3/p
-         K1c/x83LGO8gzurdqZH6uOSDyC58wt4r4hyS/9PysC9KMMPaYC/pgx00wopK9nC9XMH2
-         3+06OCt8GVRMS9Enl6TayUlLIc7FGsfXHVyrE73q7fCLeRru3Hy01wrWBc1OcGFTfOBU
-         gBfQDMd0PH8FJvnLZ3bkXp3VwiMalVvZjiYT+SOsmK/R46BVCson59cB+Af2fjQbH3W6
-         t6AQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745939579; x=1746544379;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=rs2l1h7BZP7fytyZm9WdZaOUUh+eCY6J8LEQ9pBfKZ0=;
-        b=MDu7bEKduXM50crwKaAeJCRWNYOOD6jCS7/yXqncSEEklt95BAS4TfrdTLqnZvJIQy
-         HleUQTkGi48VJi3DLyR50sZeg4tV2ZJ+owGavEbs+MiK4XnWR6zb0cJhIHdUYLJNSusB
-         8Oc7gYwFzcaLbJatksV3oD4di3Ti5uWm2ZTyS0rm9sIAP90hnx1hEuXO4pgdJkUKj5oM
-         bZdbWPTlMxHsRuA6EdJetYeAyXUfGaeJSnH0VQsN2HUjOlJN4PRBIsDg2NpolqflZRfS
-         2KUP/n151diaGicPUPHBNKQtZumYCV27KawTVNhhoidM9pvMnZZ2IB7WpYAS+JJkNtj9
-         3kdQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXlK0AsgD6D8Ap4RJuUCG2rV19QlFnl6j5C/xZbZ3t/pgjsLgAw9Xi3A+hMgBTT7MRk2MQ=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yx/T/fmebQmIS41+FUoOGQ88PcSAgSw3oyYFDih3llXK70vp6mu
-	reIqKxfi2nwKRWJgd/VxQvUhO85riZlLoQpnRlfRShaVeBsOJ02M4VvvMnHSR2HA6aFJm5hh0/i
-	lq4Fln2wQbwNZDm5fXAbTCMGt9AA=
-X-Gm-Gg: ASbGncuuxS4VriXrQ5cikTHzRMiUhb58XOI5vKRs1XB3x9naqrgU7EpPqzAkqKkAQsd
-	KL2ktdO7nxp7j655rN/F5RgcNiBrnJ4OR73YlmtyhygrD+T/dljL/7bh4+okUkB48e0e9o5CHUg
-	QZGVunGKR13L1CH2HfcggDPMEkDuS90q1w+96/j56zuoou6+YJylevqA==
-X-Google-Smtp-Source: AGHT+IHH41fMWydFveMjGe38nRfg0evaHGrSMA6Y3pw+faugYwOHHR1JZX2YIXsz0/iuICTlZ1CRPMiRfMuUnr0LUIo=
-X-Received: by 2002:a05:6402:5112:b0:5ed:bab5:3093 with SMTP id
- 4fb4d7f45d1cf-5f839b24397mr3432394a12.16.1745939579309; Tue, 29 Apr 2025
- 08:12:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jq4kXZ1z";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t09RZVhe"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1289913801C8;
+	Tue, 29 Apr 2025 11:25:34 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Tue, 29 Apr 2025 11:25:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745940334; x=1746026734; bh=E1Gsg3LmuK
+	4HwB+h/6MEcO1Ym4QdmGYedzb5BNk++T4=; b=jq4kXZ1zGmR1ZreLkMfA/gfSn3
+	JifzHy2bFRMv6oW1Pac3bSVfMJPWeyYLeAbu9sF06qBv5RuOp7tu7xoZfjjkIjAR
+	tgLYU4kaB1M93/PuQAHr03WszWDz0bkDz435o87hLd7s4i3dioO7pBZkYK177y0M
+	9HWkVbiQ5C3mJujKqKwCJi8z2W+7vyFDDkI8pneGoshdoC5uB8uS8BxVmWIVUrNn
+	1T9OMvrdDUoG68U8ajFvPzsWUUzVNROXtYYgxyYCqWVtcqQikqgH03fuWr+7Xe4g
+	4psLGwfhhZn+u6wGczpq4CyTpaY+mDFOQHatglBdo6HBrHo8R3PBkO09Rk4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745940334; x=1746026734; bh=E1Gsg3LmuK4HwB+h/6MEcO1Ym4QdmGYedzb
+	5BNk++T4=; b=t09RZVhev//mXP0FUUh17yAaB1DcLk3SIR1Vw1B7yRpUSQ1P/Xz
+	WQbekL4qV4F7mJdS9yTNXFBkBfw+gtAsIe/6PMPR0IuAwk0AYk2ZOgpOaTi+mK9D
+	ic/N9NGt5P9LjwTeA2RDDgYn0Aj4lfQTZlMarAk7xD32KOCtfExGKw6oNHf6vDN7
+	aUMkV3a+sB50vA9ADg74VWmRQAzO0ydcvEHJHmnQyqo3ACjtMezGeba2cA6HiHPx
+	JNXMCTeeqsvV5pU1IoVKkD33jY/vwlVah5VCDLSHJTgpOQS1q+GDE9QjNaw6g4WK
+	ulDyMPJ3Ni3lPUUTXHQOKqYWvhgwklUVNrA==
+X-ME-Sender: <xms:be8QaGw-0DjUHJYpET43Aqj58V-5uHraMEKsVXiQXVexNiSvYe6s6Q>
+    <xme:be8QaCS4RcQmf42r_eAMWbIQjq5vpiOS-lHYZri-0jFGr0e5pkWzUvKsBPEvfi7uL
+    y5q4dKM5EKYc18jdA>
+X-ME-Received: <xmr:be8QaIUXsCWl23K4fPnVmO4lJ-LyYfhdcTDSjmL9mxjSwaw_eit18arnILyB-hz7gimx6HJt39ctDmq7c19CJPBMOCTEhm4dfkLF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegudejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:be8QaMjtmoqqhut0UtH9Ns14cKhjlzmsBkT88TF-e8tKHucaws9B_w>
+    <xmx:be8QaICyPBYMhdUZZCJrOjK2ymQsfC6l1gN2rQEUAGQZpG6CFj7Etw>
+    <xmx:be8QaNKcHQ-ljYoEyooHbAnbL-0Ysz_8ZeUhuD7Fd-_Vk77adHeVgQ>
+    <xmx:be8QaPACtiqiC5-xQicyl49I2YKvJlQu9haJ-bwKM28Bwt2uynaFHQ>
+    <xmx:bu8QaIMwHf4jxaow3UR0PZnzZQz6UuhMg2t6jC5A1_bdSj6-TLqK_V0g>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 11:25:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [PATCH v2 12/13] bulk-checkin: don't fetch promised objects on
+ write
+In-Reply-To: <aBBukgbWZRRLgnLl@pks.im> (Patrick Steinhardt's message of "Tue,
+	29 Apr 2025 08:15:46 +0200")
+References: <20250425-pks-object-store-cleanups-v2-0-63f1695b7700@pks.im>
+	<20250425-pks-object-store-cleanups-v2-12-63f1695b7700@pks.im>
+	<xmqqikmo9bzc.fsf@gitster.g> <aBBukgbWZRRLgnLl@pks.im>
+Date: Tue, 29 Apr 2025 08:25:31 -0700
+Message-ID: <xmqq5xin9ehg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250414160343.2216312-1-christian.couder@gmail.com>
- <20250414160343.2216312-4-christian.couder@gmail.com> <xmqq34eapfhk.fsf@gitster.g>
- <aAdr2Q9jthNV699i@pks.im>
-In-Reply-To: <aAdr2Q9jthNV699i@pks.im>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 29 Apr 2025 17:12:46 +0200
-X-Gm-Features: ATxdqUHCPZvGBfaAFxWYEhbgECJC8SDff03gO27fhDLl--SL2y8Kt7JEyPsuU2I
-Message-ID: <CAP8UFD0UzX1-WsLzo0R6mND_dTpF6hPgD97Wvg4h3fqXO5-Bmg@mail.gmail.com>
-Subject: Re: [PATCH 3/4] promisor-remote: allow a server to advertise extra fields
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>, 
-	Karthik Nayak <karthik.188@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, Apr 22, 2025 at 12:13=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wro=
-te:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I agree that we should properly specify which fields are accepted and
-> what their respective format as well as semantics would be. Otherwise,
-> without such a definition, hosting sites may eventually end up with
-> slightly incompatible semantics. I also don't expect that there should
-> be all that many fields.
-
-Yeah, I have done that in the next version where only
-"partialCloneFilter" and "token" are accepted and are documented.
-
-> This raises a question though: what would happen if a field was
-> advertised that the client doesn't understand? Should the client simply
-> ignore such a field?
-
-Yes, for backward compatibility we need them to ignore fields they
-don't understand.
-
-> Should they bail out?
-
-No, this would prevent clients that are a bit old but could work with
-a server to just not be able to work anymore as soon as the server
-tries new features.
-
-> I think we need to also think
-> about this edge case and specify client-side behaviour. I think in the
-> end, both ways would be rather limiting:
+> Yeah, to be honest I wasn't totally sure whether to include these steps
+> myself as I anticipated that they will lead to discussions that derail
+> my original goal, which is to clean up the interfaces in the object
+> subsystem. I decided to go with these where I thought that my train of
+> thought is reasonable, but given your comments I'll probably just drop
+> those patches.
 >
->   - If we simply ignored all unknown fields our hands might be bound if
->     we ever had to introduce changes that aren't backwards compatible.
+> We can still adapt these callsites in the future as needed.
 
-Yeah, but that still leaves backward compatible changes as OK.
+It is probably why among our past rewrites and refactors, successful
+ones started with a rewrite faithful to the original, treating
+semantic improvements as a set of separate topics on top.  I think
+some semantic-improvement steps like the http walker one make sense,
+but even for them, others may give us some reasons why it is not a
+good idea to cause me change my mind.  On the other hand, steps I
+thought whose semantic changes were undesirable may turn out to be
+benign (they unquestionably will improve the performance of the call
+path; it was quesitonable to me if they still gave us correct
+results).  So let's give people some time to evaluate.  I'd consider
+these "improved behaviour" changes as "to be discarded by default,
+unless there are strong supporting arguments why the specific
+semantic changes are good" material.
 
->   - If we always bail out on an unknown field our hands would be bound
->     equally, as we cannot ever introduce a new field.
+Thanks.
 
-Yeah, that's worse.
-
-> Which raises the question whether we need to be able to dynamically
-> figure out fields. This could be in the form of capability negotiation
-> or protocol versions.
-
-There is no real negotiation. The server advertises some remotes and
-associated fields, and the client just accepts some of these remotes
-or not. We would need a separate protocol capability if we wanted a
-real capability negotiation.
-
-> But in any case, I think we need to have something
-> ready so that we can change behaviour depending on which features are
-> supported by a client.
-
-If the client ignores fields it doesn't know, a server can provide
-both some fields for old clients and new fields for new clients. Then
-the client itself will be able to use what looks best for itself.
