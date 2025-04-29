@@ -1,140 +1,137 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADFB23D2A3
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 15:47:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 689B421C9EE
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 15:57:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745941668; cv=none; b=lirb7c0Qlt3G9t+TUXktcuLwjmsLxhe/6VrnGuQY7qKKxrHcazgDLmDwnYgRf9pyCZXCpNjcLMrGf3CurreRRUnBZKWo9qt33yc5vS3J/2Vy9mcE6tuP3YHQCRr7tAnBSz5MDhapjyW4anx/xVgKIQOPogNzV1Mg98U7MuCfXaQ=
+	t=1745942257; cv=none; b=V/9gk1lhDGyIJKcNpY0Qvg9ejJsSXEjQ8HWyO+2FYYPAHDx+QEx165COx2P1IdyaZO9l04p230aSYI87MnJRYPj28xfeKdlzt06GGttdxLzaNla3uq0Af4pmRaj6NBSLy6hr/rp3eUa2YB4zGs6oLTjB0EnempS2dZfG5flj5Ss=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745941668; c=relaxed/simple;
-	bh=4Tl1KdnBapSAulVZB9DgOoMTYv3wjVf/WNaUeymsLKk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=CYvVV8w4YaN4xVLCDDfZ9TLKXB9qip3mPfqijnjUH4rJ15zJNlk/HCPa9yCdLy439sBHfjBsli9x2oy9Wf71QICgkUjtM9LL2UBH4ii+a/HIxIFiO4zkyLE2JR/nBKvL0j1qhB+pI80J31Y/v/HCWe1q8eX+V4wt8vtwVo4pEc0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iyvux2BW; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745942257; c=relaxed/simple;
+	bh=psQdVli4kUg1ENCtKOvk7fvnwd5Rg9S1o9EtBSYkDGw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=AchKIjYougKZxVTelkvfK5NHHML3maMfv9PrnklYdp0+8azo9Dt3vmlREab3jIR2KRJch7bN6LeluUs+HLHdp04hzE0Me7Tp/PjFa/Jcf0/45l8cx5R3dE8LRSQ7rjZjIVqNL8cVtRBctV2VmTzs+7SGYaXzdoL1eEMqcIKc88s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XWX6r2Lu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GmqAnCjg; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iyvux2BW"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-39ac9aea656so7150052f8f.3
-        for <git@vger.kernel.org>; Tue, 29 Apr 2025 08:47:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745941664; x=1746546464; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Np7/PSW28sQ9U1V77OZQc3bTmBBjKY0+v6ur+mzYNIg=;
-        b=iyvux2BWHM8IfDcRh+6m+Otzhkc/wptHgh0dOgxbY5VPCMzisMao4E8Y5ciX2MHgNA
-         rbeYZPWa2os+m0o67CXUNBC1hnO03knm/Ca/xhyvC/B7NWSt3jWEGeslDAwh+2VM/3Rt
-         OjihHF/KkykJVoMfyHM2BS1Xj6YqZVH3LswBeuDaHzwpTmdIsimqssFrkvJfiLG6fTFI
-         2wVELJtDX01pCoXhBPvx7SvJjOxF4hnVJkvZSbj60W2vevPucelvsQUrwC/JnPfdVQDA
-         0aFM5uTPNHT6vH9JdTniCbB1dw0ZelSWCWcop34W2mH4/B/Ikc/vM/wEBsHoAt3hEAwp
-         6g0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745941664; x=1746546464;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Np7/PSW28sQ9U1V77OZQc3bTmBBjKY0+v6ur+mzYNIg=;
-        b=d+CSQeLOXpYb/RRg9hfKK8Tbb0KLcEhs90ryhQ8JuXhOCB9d7UCWom4NuCGXc4NE18
-         mYw25/hkcPxV1xX3D3lfIjOmmsiKUhgzLYmFgKt/qdeuRyrxKkr64RRuy1IxKUVgdBDR
-         kF9XXmS4KWAGegkPaZoGH5qMjulPDMKv0BXeZovwYl/NASIuRg4folG8TaT9hFGmQDCv
-         jWs/1zndMF8Sb7NKAlNY7xE0LQ9OLTRh8TOZDqNdnZAQOSSfPaixufdDGA3IZ5zzNBIP
-         h3hJRLDtqkVAKiVw8fafa9Hd3kyylBrGcayVq2BhUaR7vmhK2pxWebjVQht2xWkYB6K4
-         zVzQ==
-X-Gm-Message-State: AOJu0YxxQ/VOduNOzuSx8X1ae2ay6k89tq3xMxnYdGoeehtfEqQ16Kwt
-	gCIw+mDrrHvQ6xiJjL+4AxVOOIq7p1ITTQZ0mp2tS80KsSE1vWZBAXUm8Q==
-X-Gm-Gg: ASbGncs7BLY8XPRWjAeniGBxHjVTwr846Wg+aHVVQ5OGagTc68NChvgHYTSzdZaNq27
-	jtKrfOO+XyA5f8BP90FpPPS6URyFJ08367xDb44lIpLqw6Mo98CdkvQT9Vp0+yZUnk42KNfv9b2
-	InAfd1OA6yEEgOG3B0E+UNL2fH6mLBrInbIofnCGNnEMmz1hwGm4NvFrBMQcGSkziYUZR37fVC9
-	9yn1EvTlor4/EmzXyrqHxraZ9Evb//TkOQWi5dB7CnWywCXkuCLiyu3ITz7fSlRTpDSjkmKHcDB
-	PEqJ5DXYn6QqpeEs7Zy+/e9LisO+Q2dnGig5rSUZYw==
-X-Google-Smtp-Source: AGHT+IE5JD6G0jU3ndcWNs3DsrzK4L0FXhzylqm5BM2b94ITwvO8p+eUF1RKpCHf0sy3K9ivaTV+gA==
-X-Received: by 2002:a05:6000:40c9:b0:3a0:830a:3d63 with SMTP id ffacd0b85a97d-3a0890a518fmr4422210f8f.9.1745941664187;
-        Tue, 29 Apr 2025 08:47:44 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a073e5da02sm14391448f8f.93.2025.04.29.08.47.43
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 29 Apr 2025 08:47:43 -0700 (PDT)
-Message-Id: <pull.1911.git.1745941663160.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 29 Apr 2025 15:47:43 +0000
-Subject: [PATCH] hashmap: ensure hashmaps are reusable after hashmap_clear()
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XWX6r2Lu";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GmqAnCjg"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 6C69713801F1;
+	Tue, 29 Apr 2025 11:57:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Tue, 29 Apr 2025 11:57:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1745942254; x=1746028654; bh=Zwqy4UtHDz
+	X2uPu1zi9V7NYgBjMbb7ozlgXLILNYnuI=; b=XWX6r2Lud+HuSV2b/8X+QxoRPM
+	MpJVbReoGKJFGeIiOCskzrdqJddY2SLQyQf+reVgGk2Y9Ubagf4PiRbZIPLMuuCw
+	yIP4RHVgBrciY2wrLKWuWKUXc6WC5/WOma0IDXpWENZJmT9/Sv4mYnMWg2BrzXyQ
+	mErpiEB4qLNmXv5ykLVO3HoSwTLeaRpzGvnnHglUboifHVvNqUzRwtlXMTRE7dJD
+	wmSUl0vxRPY2PjyzTZ+7/UTjP0oUaOgcxRNufYSe5RCpWyZmppDzh8iK5Q6IW+9M
+	DYmmGpPp4AWUaBpbMAwvx986p1WWMbCOZgYAUjhBJIsw7PYOrpQgtiDOqJRw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745942254; x=1746028654; bh=Zwqy4UtHDzX2uPu1zi9V7NYgBjMbb7ozlgX
+	LILNYnuI=; b=GmqAnCjgZc54S9Xd1yXUj+AkpHCT7irJivjCM8kdmmT6pO9GX62
+	jB1J6ZKJWfcdgKjDB2B5+5yqbD/PJ1Lxx1B5ZFXOAhFrg2swM4D/zv2jJ3ubhF33
+	L9Su1SjlEQq05ECM+9CUgRLvf0nsNJtrNjF9lkf+akYF8QC85cCC4biBkcV4SOkF
+	A5EJF5uxmfOLgGBt6iODpNAikbuSzIdndQBki5XqQTYktqSDYfGhYNucb5FlRE0L
+	xg7JLzwMa9RJ4zYH1/4p7YFej4v9pWZnI1EWH2oKuYfDA5P9E4JBIliuGNUUwR4q
+	OHlmx4M+nkHjeSpyNxzSmUbJ7eEEC+E9xzQ==
+X-ME-Sender: <xms:7fYQaITuIjwE1KA-vX6p9WUHIffj_SrzH0v0yitzc6b0VAYVf-w__A>
+    <xme:7fYQaFxC0J5DC2VB2P3-0g2Q83gvKvbFSaVewuB4uVvfaFl-pj-fpgLoMAojBN9n0
+    BRyaLV3WidKvsLvNQ>
+X-ME-Received: <xmr:7fYQaF1Be6b9FdFcx2ROWzIID-JYOitsvArzvTFWonuzrw467R7VGFNFeDB3g4sxy1lynfnP_mrWXKz8UFY8G5UW_GP-HskSB18a>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieegvdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepueffveeifffhuddufeehvdelgfdtgeff
+    teevueefieekffetfeefuefgueeufeefnecuffhomhgrihhnpehofhhfihgtvgefieehrd
+    gtohhmpdhouhhtlhhoohhkrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtg
+    hpthhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgrghrghgrughi
+    thihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmh
+    grkhgvrhhsrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhrugesghhmrghilhdrtghomhdprh
+    gtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdp
+    rhgtphhtthhopeifihgrghhnvdeffeesohhuthhlohhokhdrtghomhdprhgtphhtthhope
+    hgrhgvghhkhheslhhinhhugihfohhunhgurghtihhonhdrohhrghdprhgtphhtthhopegv
+    hhhuvghlshesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunh
+    hshhhinhgvtghordgtohhm
+X-ME-Proxy: <xmx:7fYQaMDO08vgDybAieRwvGjcw5htQYrgcS2LaHnKoluR1FvOAn9-mg>
+    <xmx:7fYQaBhMM2oNFvvlPZqEnmJC33-WKQtY4hlW2M4pjdj9F-xPjBGj3A>
+    <xmx:7fYQaIqSO8X_l0Z7bfsSnYT5ldlyB4dZh3bGHbr_pHsqjbtQj6jqSg>
+    <xmx:7fYQaEjy2rV2q2Oentj_nVsRrL-bTwOY_BYv1Qo63qcNHffLwrO84w>
+    <xmx:7vYQaG4GPIC48cru13SJWr1X9hOJRvhf82FR4q2KaI9ANiWHAERXfgBu>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 11:57:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: Julian Swagemakers <julian@swagemakers.org>,  git@vger.kernel.org,  M
+ Hickford <mirth.hickford@gmail.com>,  sandals@crustytoothpaste.net,
+  Shengyu Qu <wiagn233@outlook.com>,  Greg Kroah-Hartman
+ <gregkh@linuxfoundation.org>,  Erik Huelsmann <ehuels@gmail.com>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Yao Zi <ziyao@disroot.org>
+Subject: Re: [PATCH v3] send-email: add --[no-]outlook-id-fix option
+In-Reply-To: <PN3PR01MB9597274E541169BDB8DC4297B8802@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Tue, 29 Apr 2025 10:52:47 +0000")
+References: <PN3PR01MB9597DA8661D1AFDF4C927A11B8812@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597274E541169BDB8DC4297B8802@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Tue, 29 Apr 2025 08:57:31 -0700
+Message-ID: <xmqqikmn7yfo.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 
-From: Elijah Newren <newren@gmail.com>
+Aditya Garg <gargaditya08@live.com> writes:
 
-In the series merged at bf0a430f70b5 (Merge branch 'en/strmap',
-2020-11-21), strmap was built on top of hashmap and hashmap was extended
-in a few ways to support strmap and be more generally useful.  One of
-the extensions was that hashmap_partial_clear() was introduced to allow
-reuse of the hashmap without freeing the table.  Peff believed that it
-also made sense to introduce a hashmap_clear() which freed everything
-while allowing reuse.
+> +    --[no-]outlook-id-fix          * This server munges Message-ID. Retrieve it from
+> +                                     the server.
 
-I added hashmap_clear(), but in doing so, overlooked the fact that for
-a hashmap to be reusable, it needs a defined cmpfn and data (the
-HASHMAP_INIT macro requires these fields as parameters, for example).
-So, if we want the hashmap to be reusable, we shouldn't zero out those
-fields.  We probably also shouldn't zero out do_count_items.  (We could
-zero out grow_at and shrink_at, but whether we zero those or not is
-irrelevant as they'll be automatically updated whenever a new entry is
-inserted.)
+We know how to retrieve the new message-id only from Outlook server,
+but I fear that the above does not convey it (unless we count the
+substring "outlook" in the option name).  I came up with
 
-Since clearing is associated with freeing map->table, and the only thing
-required for consistency after freeing map->table is zeroing tablesize
-and private_size, let's only zero those fields out.
+    --[no-]outlook-id-fix          * The smtp host is an Outlook server that
+                                     munges the Message-ID.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    hashmap: ensure hashmaps are reusable after hashmap_clear()
-    
-    Ran into a NULL pointer dereference of cmpfn a few months ago when
-    trying to reuse one of {strmap, strset, strintmap} (don't remember which
-    one) after calling the relevant ${TYPE}_clear() variant, and tracked the
-    NULL pointer back to hashmap_clear(). Turned out to not be relevant to
-    those patches because I ended up not needing to reuse the map after all,
-    but I kept a note to myself to send in a fix.
-    
-    I was surprised this wasn't a bug we were already hitting somewhere, but
-    I looked through the codebase and it appears that the only time we
-    attempt to reuse a hashmap after clearing is when we specifically use
-    hashmap_partial_clear(). So, this is just a latent bug waiting as a trap
-    for someone.
+as a replacement, but I am not sure if it is much better.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1911%2Fnewren%2Ffix-hashmap-clear-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1911/newren/fix-hashmap-clear-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1911
+> -    --no-smtp-auth                   Disable SMTP authentication. Shorthand for
+> +    --no-smtp-auth                 * Disable SMTP authentication. Shorthand for
+>                                       `--smtp-auth=none`
 
- hashmap.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Good eyes.
 
-diff --git a/hashmap.c b/hashmap.c
-index ee45ef00852..a711377853f 100644
---- a/hashmap.c
-+++ b/hashmap.c
-@@ -205,8 +205,9 @@ void hashmap_clear_(struct hashmap *map, ssize_t entry_offset)
- 		return;
- 	if (entry_offset >= 0)  /* called by hashmap_clear_and_free */
- 		free_individual_entries(map, entry_offset);
--	free(map->table);
--	memset(map, 0, sizeof(*map));
-+	FREE_AND_NULL(map->table);
-+	map->tablesize = 0;
-+	map->private_size = 0;
- }
- 
- struct hashmap_entry *hashmap_get(const struct hashmap *map,
+As long as it is mentioned in the proposed log message, it is OK to
+make such a small and unrelated correction "while at it".
 
-base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
--- 
-gitgitgadget
+    $ git log -p --grep=While.at.it
+
+will find many existing examples.
+
+>  sub is_outlook {
+>  	my ($host) = @_;
+> -	return ($host eq 'smtp.office365.com' || $host eq 'smtp-mail.outlook.com');
+> +	if ($outlook_id_fix eq 'auto') {
+> +		$outlook_id_fix =
+> +			($host eq 'smtp.office365.com' ||
+> +			 $host eq 'smtp-mail.outlook.com') ? 1 : 0;
+> +	}	return $outlook_id_fix;
+
+No syntax error here, but let's have the final "return $outlook_id_fix;"
+on its own line after "if (...) { ... }" statement.
