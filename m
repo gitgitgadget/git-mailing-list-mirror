@@ -1,120 +1,131 @@
-Received: from mail-yw1-f169.google.com (mail-yw1-f169.google.com [209.85.128.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70F482777E2
-	for <git@vger.kernel.org>; Tue, 29 Apr 2025 06:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D59013A3F7
+	for <git@vger.kernel.org>; Tue, 29 Apr 2025 07:07:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745909224; cv=none; b=oCIM8EWLxEGiLPlScR3hlfFIQ9jZ8vAmnMWfIRYVL3STCVukYe0hbFYQzQtlVnaDO0QuQb5WpWv63ehpBJnUSqUDzCbzmGCwbHYy6OUB1XYyS+Ro8mqBQdHQDslde2oE4P+LL/Of2kFBMA7Zjza5GB6DiGnsOTuT8nYkizbmrO4=
+	t=1745910467; cv=none; b=ClEJAk8BMb57rIO+8wGGBxONgi4LEaKg4YxwiTCz99J7EdMs7ODZySWWUp6HU5OtFw0Jx8GsYI1lKs13RQLB1wXEEwC7VDuKyKRP8Lyjt/QXdEu8wRBf4njSZWz5uPgflAS/zC3n1928cFt0TViR6o35qZ13fu+IIykaTQ82T0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745909224; c=relaxed/simple;
-	bh=Y22LUbY4HOpubOnJ59EFTBL+xOpT01VYkw+SbIY+nlg=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LjqYgcR/xdJrAZBZswuTsFAptd7fyq+dOqjrU/Z81SCb/DlmmMIo2l9lbQGl7iiiU2/Dib7yy7EBMTqUr+ddE3XIRtdfnVA2fnLFz4hifI/qg+6QBFJkhPtjRfWO9HOKgeljlxSH069BRQyBt8YbKlSPUfUGpOUppQsQIbCGLUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=arujvI0c; arc=none smtp.client-ip=209.85.128.169
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1745910467; c=relaxed/simple;
+	bh=NrsOuM7q2CTSZt3UsTJ4jx9ieaM72lecc6Zh+DUv4oo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=h+eO6dxrBFCAHVh/P65eJ+hXEAyMWTM4VX0MHSOFS6fAuztzpQMwccGbEpRQH5ZKKdOrUfFfmGk6QgTBq4v5MvKehtKkAup6REVsi2UR0W0Lw5ZwJW2hT68v+OTgfEjY6Xcjgjw73XyddGZrXT0tJ/JuC5Oi6FYG4Y5euB5qWC0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=YM8bPjQ8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bVWejP8R; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="arujvI0c"
-Received: by mail-yw1-f169.google.com with SMTP id 00721157ae682-7080dd5fe92so46765967b3.3
-        for <git@vger.kernel.org>; Mon, 28 Apr 2025 23:47:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1745909221; x=1746514021; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=3Gt33JNk51OEdgfW49F/EJsu0SPRx58lIxlUxOH59HU=;
-        b=arujvI0cdX8Sj0WQJc8TnjhVC7VRo6kge4kgyTTlciW0r3my7wztJ0ie3xfBLL06fr
-         3fU7/n3eLwkDO87kXXK7Fale7a4O/1/dNd7zkk1jn+tjzMSTQX3GLaWRQKmDSCmD1rCc
-         s8KYYlWrOh8lc8RPkbhSmQWCAc0oFXyRiItc+yig+8aviNWEfLixafta6YmZv8magu4a
-         Ah+ougq8W6hd3LCnkMXzpQ3mxYkLoVFBh2pYcizNeN6Q7xaIUtkw6LUbah1Kqvpw4kjB
-         /VPfaz2v3CiIayV8tAM7kVtW1s1YnztO3Oz4kM1A00/oEc0Lbjpzu0/snJWA4S40WwzH
-         bZ7A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1745909221; x=1746514021;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=3Gt33JNk51OEdgfW49F/EJsu0SPRx58lIxlUxOH59HU=;
-        b=pfqRt54Nl/pQR2hO4WC/7aIJy/XvPj1+bydN1WC5+/kRLRaIQ1glsArKxImGuynpS1
-         iKQYLqv4301NNdiWpad8pKU1DnaaKNdFxknx2fP6Txpm4MmOvTdEmNO2K4hhrgEV0K7u
-         HDcHOdD+gSHkPtbulw8JSIXUoGpaGWIhRq5EVoPlyMSfigF0q76jYjtG1JaPtARPe/u5
-         2houuimFVlAO3Yj80IEue5Gi/m99qCY+rT4OdZ4JNg0qLOo+hKkqAuvfDsuIA5tnxp/3
-         1HmglGoHR12VDP5O+jwXo/mbLfhwA9f23P1M/IHSh6MnzbsMPvf7JsDOD3TP01qlwHcZ
-         7+uA==
-X-Gm-Message-State: AOJu0Yy6q7y3/dOXCnHXnCXt8a/t859WDbowqtg1BMJBMuTygWQ6pztF
-	Q6KXOVzhjrRHQmvWC6NQCRLu3Z0Ia6eL0bIB87Q4R8zx+pHJCLjAbFRHD8A3kDpFwsO+iMNTmJt
-	Yr7O6VvkLwvEcgRaGUHDCsk7NzChpGMaTkb2+HxTH
-X-Gm-Gg: ASbGncsmdCqtqQMQfCgzIFHx1Nap9mYgtuCFAsYN6KuMunz8FaI0WWxAXH2hD3QPQvO
-	X8oyqBYVstCN0JxrL5tfew9sOCCQ1LAorNdas60WyWizINBm3ncWHOQT7ONQuA4AIElmWb3hPXi
-	Ulf4RNB3BJCHlMckAqh+wNg7g=
-X-Google-Smtp-Source: AGHT+IFixfTlvm3PGTzyJWLx27C0oD/0NOm2foQgS8YCeqROzPDOWQR1a4ssWMjk1FkOVfIN6vqxQDrLE4gMBF5kQJE=
-X-Received: by 2002:a05:690c:6f8c:b0:703:aea2:6bbb with SMTP id
- 00721157ae682-70899778c52mr37651217b3.31.1745909221140; Mon, 28 Apr 2025
- 23:47:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="YM8bPjQ8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bVWejP8R"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B5D4D11401EC;
+	Tue, 29 Apr 2025 03:07:43 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 29 Apr 2025 03:07:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1745910463; x=1745996863; bh=RGmL8vnt/l
+	FDLcSYt4tMKxZg7hSMYT/R7qbpRTDZWMs=; b=YM8bPjQ8vz3LWbrxRl/ymFSkwi
+	N5WSoqz54yPHSlkJp7hX7DGbFoAZlNjAz1EQStsZIPPLxHtKKoQ+7ywQBZsT3nc4
+	MZhlXoEyOHTfD8xYIwafg5fuWOQg/uDgNIwEAG0fdxEBCngaFmL0HCt1kNmaIFV8
+	if/I6+L4vTmu2A8jqIPA5vQYcjXlNYsQImD9Xu0yJW5VsBscU8wo1b+rhAgTIwbs
+	OvZVWlZd/TcDLzN6pzKsRftDtXI8Dt/Vhu/UkyJw3m1rE++FfhPPT+/kqU5fPwh6
+	Yks3y5e0KB0j3g2BayyadBN7hus5KXI7z1pW+AeQKBZdyxYs3c0Y25WQVw8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1745910463; x=1745996863; bh=RGmL8vnt/lFDLcSYt4tMKxZg7hSMYT/R7qb
+	pRTDZWMs=; b=bVWejP8R8EG77I5zo8p2gjxmgn+ze3UAG6aIKzhVZKj6/ZBo1+G
+	dIeYU86FM4R7R6FBfituxmYlGrf8WKn/0uR6+nDSb8obRSlcpHqgYIWoKhPdifvc
+	MP9RoMvNSW50QiP8VyhnCnWxZmz/vdJDE8rOczPWB3niw598PnG1SOUuNA9VJpHU
+	Y8AveNR12FiCe4ENtioUwUK0P1XaVfZgFpiIxnsLCCM2Dbj4Npz8YAVLAMZ2GGQt
+	rOyAIym7ntJRcTktyu4N/Ln9cTh6pwhCewYmx2/eI74rzUs3S3msDNOk6MnyzSXi
+	ISFYBT/BH4ONBPixz4ouxZmaGC7ex3g3E0A==
+X-ME-Sender: <xms:v3oQaHO43Tl58wFQHorH7GfXvo6i3jcmjJmEGo0vMNvu1NLN4kHQ0Q>
+    <xme:v3oQaB_3GOMo7heXOQQ81IozmznVTU_f5VNOsaUN2nIEoETXVrICjiI_-OKsRK1wm
+    VcFpH74gtv0TXxm8Q>
+X-ME-Received: <xmr:v3oQaGRqm8mXDyzlz8Nsvt2Zn-WLgwnoOclVDA-AkbXrRbP7sqXfPkSJWRy2_E1zGU7R6nXXb5c1AgGi8_d-hOxyw4Xgv9c7_VEnMPeMsZU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieefudekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehphhhi
+    lhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehkuhhfoh
+    hrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:v3oQaLuQ1YloKwLN9JPwCa3vXIsjKd5TxS4amzE3MBbt69g8t3Cu7g>
+    <xmx:v3oQaPdlnmKWJ7IgoCww31Wg3sz7hhW2IURLpeBLYv3PXBoyBw1WSA>
+    <xmx:v3oQaH3wp_-jiKqeCVK9z4yU3EkJtDDDt9YkdbopkVUZDO2owI0NaA>
+    <xmx:v3oQaL9Ea0iYGRz-nTjsAiU5D_E5uaDpLd8tvAV1GEuteBNL7JjzXA>
+    <xmx:v3oQaLxKvX503MmeMAAmVaYE4ZUSfoClxbRiRyyJR3jbEdpjEQkrGjTQ>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 29 Apr 2025 03:07:42 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 05700606 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 29 Apr 2025 07:07:35 +0000 (UTC)
+Date: Tue, 29 Apr 2025 09:07:40 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Seyi Chamber <kuforiji98@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/9] t/unit-tests: adapt lib-reftable{c,h} helper
+ functions to clar
+Message-ID: <aBB6vHl5Gmtva7b3@pks.im>
+References: <20250427185351.82520-1-kuforiji98@gmail.com>
+ <20250427185351.82520-2-kuforiji98@gmail.com>
+ <xmqqa57zamuw.fsf@gitster.g>
+ <CAGedMtfwA2vqOFxjLnusvFNcwKpTCLq38bZYBz-9cpzFmbhUdQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250427185351.82520-1-kuforiji98@gmail.com> <20250427185351.82520-2-kuforiji98@gmail.com>
- <xmqqa57zamuw.fsf@gitster.g>
-In-Reply-To: <xmqqa57zamuw.fsf@gitster.g>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Tue, 29 Apr 2025 07:46:50 +0100
-X-Gm-Features: ATxdqUEQvI0BS1RLhkBML5hIWcuVo_scDZvMJ8N0EdlxgE5LVfZEVxwzXrUjcws
-Message-ID: <CAGedMtfwA2vqOFxjLnusvFNcwKpTCLq38bZYBz-9cpzFmbhUdQ@mail.gmail.com>
-Subject: Re: [PATCH 1/9] t/unit-tests: adapt lib-reftable{c,h} helper
- functions to clar
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, ps@pks.im, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGedMtfwA2vqOFxjLnusvFNcwKpTCLq38bZYBz-9cpzFmbhUdQ@mail.gmail.com>
 
-On Tue, 29 Apr 2025 at 00:27, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Seyi Kuforiji <kuforiji98@gmail.com> writes:
->
-> > Helper functions defined in `t/unit-tests/lib-reftable.{c,h}` are
-> > required for the reftable-related test files to run efficeintly. In the
-> > current implementation these functions are designed to conform with our
-> > homegrown unit-testing structure. So in other to convert the reftable
-> > test files, there is need for a clar specific implementation of these
-> > helper functions.
+On Tue, Apr 29, 2025 at 07:46:50AM +0100, Seyi Chamber wrote:
+> On Tue, 29 Apr 2025 at 00:27, Junio C Hamano <gitster@pobox.com> wrote:
+> > With this step (and nothing else, as this is the first patch in the
+> > series) applied to 'master', I see tons of these errors:
 > >
-> > type cast `for (size_t i = 0; i < (size_t)stats->ref_stats.blocks; i++)`
-> > Adapt functions in lib-reftable.{c,h} to use clar. These functions
-> > conform with the clar testing framework and become available for all
-> > reftable-related test files implemented using the clar testing
-> > framework, which requires them. This will be used by subsequent commits.
+> >     CC t/unit-tests/t-reftable-merged.o
+> > t/unit-tests/t-reftable-merged.c: In function 'merged_table_from_records':
+> > t/unit-tests/t-reftable-merged.c:37:17: error: implicit declaration of function 't_reftable_write_to_buf'; did you mean 'cl_reftable_write_to_buf'? [-Wimplicit-function-declaration]
+> >    37 |                 t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
+> >       |                 ^~~~~~~~~~~~~~~~~~~~~~~
+> >       |                 cl_reftable_write_to_buf
 > >
-> > Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
-> > ---
-> >  Makefile                    |  4 ++--
-> >  t/meson.build               |  4 ++--
-> >  t/unit-tests/lib-reftable.c | 26 +++++++++++++-------------
-> >  t/unit-tests/lib-reftable.h |  6 +++---
-> >  4 files changed, 20 insertions(+), 20 deletions(-)
->
-> With this step (and nothing else, as this is the first patch in the
-> series) applied to 'master', I see tons of these errors:
->
->     CC t/unit-tests/t-reftable-merged.o
-> t/unit-tests/t-reftable-merged.c: In function 'merged_table_from_records':
-> t/unit-tests/t-reftable-merged.c:37:17: error: implicit declaration of function 't_reftable_write_to_buf'; did you mean 'cl_reftable_write_to_buf'? [-Wimplicit-function-declaration]
->    37 |                 t_reftable_write_to_buf(&buf[i], refs[i], sizes[i], NULL, 0, &opts);
->       |                 ^~~~~~~~~~~~~~~~~~~~~~~
->       |                 cl_reftable_write_to_buf
->
+> 
+> Hi Junio,
+> 
+> Yes, that is expected, as there are `reftable` test files that depend
+> on the old function names. I navigated this by temporarily porting the
+> functions into the `t/unit-tests/unit-test{c,h}` file to convert the
+> files and moved them back as soon as I was done converting them. Would
+> it be better to leave them in `t/unit-tests/unit-test{c,h}` and then
+> create a final patch that migrates them into the
+> `t/unit-tests/lib-reftable{c,h} file?
 
-Hi Junio,
+We do want the Git history to be fully bisectable so that it is easy for
+contributors to find out where a specific bug has been introduced. And
+for the history to be bisectable, we must ensure that every single
+commit builds and passes our test suite. You can do that e.g. via `git
+rebase $BASE_COMMIT -x 'make -j$(nproc) test`, which builds and tests
+every single commit in your commit series.
 
-Yes, that is expected, as there are `reftable` test files that depend
-on the old function names. I navigated this by temporarily porting the
-functions into the `t/unit-tests/unit-test{c,h}` file to convert the
-files and moved them back as soon as I was done converting them. Would
-it be better to leave them in `t/unit-tests/unit-test{c,h}` and then
-create a final patch that migrates them into the
-`t/unit-tests/lib-reftable{c,h} file?
+So yes, this should be adapted so that the initial commit introduces the
+new helpers without removing the old helpers yet so that the unit tests
+that haven't yet been converted continue to build and test just fine.
 
-Thanks
-Seyi
+Thanks!
+
+Patrick
