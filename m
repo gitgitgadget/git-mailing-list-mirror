@@ -1,289 +1,112 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E34852472A4
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 10:25:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41DCB25A2D5
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 10:37:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746008721; cv=none; b=T/qKC6IByH9Rvm71F011AXjO7YOHFZ8ircE9Yfh46U2RC8pM/QLzwwckSSuCI0uw5CK/aaDU4g1ENGIqCpqBz5148WWNWWvJ6SwtrHaiRIFY8b+h/8xOQv4xTZEYz95AGrKBpEdbtAZ/cXZC07CW+6vlrw9++M0OqPGQX0aIwl4=
+	t=1746009432; cv=none; b=QC3jJ/vAeBcQj57MIiaJlxzNxCaeY6NKL6RHk6DdCojeSyMMgWw1yngXakgc878LZyXZ1i8DVrQvp4wF+pTf7qwRgvHdQoQ8N4JIILqOU42fiaXv32pRZ2xYxXhjsm/OHgw8RxPxAnpN2eqynD0WRKDWBUmi59FlLmyYjyBU5u8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746008721; c=relaxed/simple;
-	bh=GA5EslmZHx5pekTKOaMbVJVS5nTAOSun17GAPJvwhAw=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pl5CRUxqsTbRl07K3fhPaOAQ6vdV3WwBS1ORxbahdHMB26GSUm3Xq+WL8Y521tDmhhrsTGnY2flZAKOQI6N9sD/TYBPrHkTnsn0c6IOS0yWSqUIL6BK4XygOj2s4lDAG3wy1uW+3xwvkic1RAaULyFOsPjM/13Y4SlGzZLh3jXI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GkOqo9CN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EkYc0rae; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746009432; c=relaxed/simple;
+	bh=5l4vQaI3wBzW+iy0HkiRJagIvhcRBWk2pJmNoJP2G4M=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=LN3m7eQ4xDUD1BhqTUwLfauyN7tL0iI4IwEd9HfSyeOQoGDwLPmSLEkxahuBVlqXnL5bGpV1QgG55LLQ0Rnecix1UIapgzz1wJlM46apqsbGrrbDSfOq1dB5XszZMWEzU1sUh/MZg//234JzggAKPFU525qvcjMufxOyMQiv8D8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HwvR/Mjm; arc=none smtp.client-ip=209.85.128.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GkOqo9CN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EkYc0rae"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id DE045114022E;
-	Wed, 30 Apr 2025 06:25:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Wed, 30 Apr 2025 06:25:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746008718;
-	 x=1746095118; bh=7d73YkuSDtJLPY8afVsHU8rLdn0WWNQnUrOZbRJvxWw=; b=
-	GkOqo9CNApjXDnR/G0jBPjInVTIaqZ9r9eK3OQcVDyxCk9X58iZEIaKYZSWpi1Pt
-	svelLbid7Jn513fOZJG0E4qYNdkR/5ZFelUy5Ka8MIdxkzWl3R8s3Y6Vbunv9WKQ
-	s5NvLai4w0gefkhc0pfQ37NKgtnFUZFXbS3UXw2POgmrdFmi5p72DoQGKqAtx55d
-	knqdB55oH5hhim9Fwuw13hFdzeag6RQBq/C0+/7XXcz6SzGnD7PT2t/3IP4FltHF
-	8oGmhtuYZEWCReMfBtrBUlrKdZvPrKtaOY7u0Z5vRQ+je6hCTHqh/hu2C3XJpeRv
-	Sew/KDmxHg/34QskRsyxLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746008718; x=
-	1746095118; bh=7d73YkuSDtJLPY8afVsHU8rLdn0WWNQnUrOZbRJvxWw=; b=E
-	kYc0raeDsJyqxF9qX2NG7MRFEVPQ3kHW0IMjnZ8hI/3VCjzVbRRCwDoWkr4rCVri
-	fkrkgQubPJKEXqpMgWgUiLUvgwnQv5vY4xNhBrNcPbQ1RueGIumx8SuCuZdI3Fek
-	QiOYutsuvt1WqfT+rZAc9IDmebq9K2mSCRv7P5O+s7vJLKxNGr9Bgr83p+osMaQU
-	OD1SlNAJaz48fdgG2goUDt85ylRwys/aU5pIvCvS5F0Uup2SQSNTXznlBpWhtLGm
-	blD/MsDfkTl4cD0sIIuCvwb0DpO3AaI9CEEvUwgBq7oLG/ClA00vyZdijdRHZSmc
-	qtBgvHBoFBH3+5YolU87Q==
-X-ME-Sender: <xms:jvoRaGI4t6XaerrGbrtQJy7qkF0XUPs46U9m9G60kvqKDbVqacgcHQ>
-    <xme:jvoRaOIp-WnHeSuPt_RDvYPNtQf1jqfnIsHoUiG0BNaXbgobFMax_HSvC1x1jBZq5
-    e-Z_flQKU-phOUXYw>
-X-ME-Received: <xmr:jvoRaGs5cIpU44AdAJDWokMtsRzJVq008PIbXvTItmhINow0s8Cc3F-hRZaQrXvGswLznmHNrad64gQn8UrLeLHwLPbiVZFWZsa3ZsS7KzJFcw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeigeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeekueegieejheehueeftddugfevgeeuhffhgfeh
-    fffhhedtkeevveetkedvudeugfenucffohhmrghinheprhgvfhhlohhgqdgvgihpihhrvg
-    drrghuthhopdhlohhoshgvqdhosghjvggtthhsrdgruhhtohdprhgvrhgvrhgvqdhgtgdr
-    rghuthhopdifohhrkhhtrhgvvgdqphhruhhnvgdrrghuthhonecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    gh
-X-ME-Proxy: <xmx:jvoRaLYA5sJTYn0BmlNBPmFWWnChdnMXbTqZtwfHHxQcRFFenV860w>
-    <xmx:jvoRaNaVnVgIq1_qCwLIK0ScFXq-WWzfRXB4plC92N8sk7wbLHkWGg>
-    <xmx:jvoRaHCs5YVy1KCvh41BNmV5A_vRQOAEPcXKF-7woGoHyMRjL0u4HQ>
-    <xmx:jvoRaDadlOUyZxepBCtdT7kTp1v_6DodlRvb6_HXlYM3jp0m_2_O4g>
-    <xmx:jvoRaE1Evi-PiWgc0DW9192_zBn893J8nLuP1R6qpQvTEhFE0zLKMjHs>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 06:25:17 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2a11f704 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 30 Apr 2025 10:25:17 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 30 Apr 2025 12:25:12 +0200
-Subject: [PATCH v2 8/8] builtin/maintenance: introduce "rerere-gc" task
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HwvR/Mjm"
+Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-6ff37565232so57676977b3.3
+        for <git@vger.kernel.org>; Wed, 30 Apr 2025 03:37:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746009429; x=1746614229; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=7eo0oHlclqIn8ETvImQeJJQ49m7qvkQb2dKxwbO+Ykc=;
+        b=HwvR/MjmjPO4fQTyx+hGLPD7DbcAzKCC5vHk0n9DolWhuEpqh8IO6kIRDkJn6pj5D0
+         AbJQqTEg0pIytthdBW2QZUxSqLMFZG3QMJ/r5k77Jt7Ysi/lvyiZRz9fwTkoYzmNUjIP
+         zcLyA/veFc/lw/1iFqZQUC33QgGScSeMDqn3lmQ4P7aPtOlyCtxMR1DIYkZ1ahyUjdHk
+         6+OPZy2FKRmQrqxwSwCxXFShqAU/jychQmaPyELF5eB3wMm4WT7zwgFQ22s9y1IHQi4M
+         pS0YPouPs6sxg0f6M6wsS+DjmsFOPQROLqeZClAnmAElJ/TMJuzAwqO5WufxZayop4MG
+         oiBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746009429; x=1746614229;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7eo0oHlclqIn8ETvImQeJJQ49m7qvkQb2dKxwbO+Ykc=;
+        b=S2RneuJj58R2XaoCYwY4fZsmrpeClNJStE0smF6zRabD4wJhYXyJveWGBG6O5U8/be
+         h6lMRLRzoDDbVt+hXTHUxcHeyu8ejIBhWPy71GTtBS3g7uf/FufV945VR8eH+Z14TD8c
+         DykyaG+dX7vimjTbeAmu2tKi+mfkj9RyqUJGnlYfxYpBI068EEgCwCZBbUbL/tb1MHPO
+         Oqk+JmXpZ92L7HOqG2mmDhG36TIZ5kJBPIR27KCt1FFrYbbjhNQ2usxoOt0sgurfvbOg
+         v5mR5dkzo4NIkkWtb7gESusPoUtBE/t0SyXNEFujWANHY5gBjgwBLy4SINCfxyG8DL6z
+         QHQQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXJFAe7+nOu7pRj2vVIrI7XKvVXUFFgwsBopWjZTb9Ev9o9re41Yq2ufsODcnmBAJJdqGo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyCPHIEEucF/cHCjK3+k8FMAoHOWJaN94v/zwz+hQBP/WLj8ABV
+	FUziFLzsQSWrOLUrqj1DZUHoZax98yy8A9fPVkUItr6tsqqsnTWOeTwfew==
+X-Gm-Gg: ASbGncu7j1eIdw8E8Wh9QgeIUb+ojm/zrNh4H7PYz9DkCvQZUMoznfFAjWl+j2BGjuT
+	/guFBrt5ieWziw9zbojb+SwRY6wDP90jieuiU6sh62sbdQwrNwA1k9VnU69XQEGwTZyJAlu0rh4
+	HxanFSfSMqfDvSKt0UGa4ESBdU96C/7oEvhFFepBDM72444rP6HAmw+ByWQb6CcurfX+jpAMTfd
+	wtOhKj+3EeDGG+d19LS76uW/eRHPmxR2kRcW7amyKr4nLZ71S7fsky4MAO97NtNUAMf620QM2YT
+	SwM/VAQ8r8KNIPd9V+qwZJuMvjmpQFB7bYNl+kNsAtfEo8fYRWoX5TsqxoaRlvIuzDxtZQgm3/I
+	U6S/WOO+LCi02oo7t
+X-Google-Smtp-Source: AGHT+IGFbhPq5ylp0rZ7hy+6F1QsMwMpJ5odJKFKOtU/459GfXPs5SuGbhYqG+XcJsmQa/S5HiteMw==
+X-Received: by 2002:a05:690c:ece:b0:6fb:b8a1:d3bb with SMTP id 00721157ae682-708abd8d0a1mr39320197b3.17.1746009429071;
+        Wed, 30 Apr 2025 03:37:09 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:ad95:6981:343a:ce99? ([2600:1700:60ba:9810:ad95:6981:343a:ce99])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-708ae1b370asm3085237b3.82.2025.04.30.03.37.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 30 Apr 2025 03:37:08 -0700 (PDT)
+Message-ID: <732db882-f27c-4619-91cb-2cc291a7c7d5@gmail.com>
+Date: Wed, 30 Apr 2025 06:37:08 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250430-pks-maintenance-missing-tasks-v2-8-2580b7b8ca3a@pks.im>
-References: <20250430-pks-maintenance-missing-tasks-v2-0-2580b7b8ca3a@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/8] builtin/maintenance: implement missing tasks
+ compared to git-gc(1)
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
+ <20250430-pks-maintenance-missing-tasks-v2-0-2580b7b8ca3a@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
 In-Reply-To: <20250430-pks-maintenance-missing-tasks-v2-0-2580b7b8ca3a@pks.im>
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-While git-gc(1) knows to garbage collect the rerere cache,
-git-maintenance(1) does not yet have a task for this cleanup. Introduce
-a new "rerere-gc" task to plug this gap.
+On 4/30/2025 6:25 AM, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this small patch series implements the last couple of remaining tasks
+> that are missing compared to the functionality git-gc(1) provides.
+> 
+> Right now, git-maintenance(1) still executes git-gc(1). With these last
+> gaps plugged though we can in theory fully replace git-gc(1) with finer
+> grained tasks without losing any functionality. The benefit is that it
+> becomes possible for users to have finer-grained control over what
+> exactly the maintenance does.
+> 
+> This patch series doesn't do that yet, but only implements whatever is
+> needed to get there.
+> 
+> Changes in v2:
+>   - Introduce "maintenance.worktree-prune.auto", which controls how many
+>     stale worktrees need to exist before executing `git worktree prune`.
+>   - Introduce "maintenance.rerere-gc.auto", which controls how many
+>     stale rerere entries need to exist before executing `git rerere gc`.
+>   - Add tests to verify that "gc.worktreePruneExpire" works.
+>   - Remove some fragile test logic by introducing functions that check
+>     for a given maintenance subprocess.
+>   - Link to v1: https://lore.kernel.org/r/20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/config/maintenance.adoc |  8 ++++++
- Documentation/git-maintenance.adoc    |  4 +++
- builtin/gc.c                          | 41 ++++++++++++++++++++++++++
- t/t7900-maintenance.sh                | 54 +++++++++++++++++++++++++++++++++++
- 4 files changed, 107 insertions(+)
+This version satisfies my comments from v1 and builds further by including
+the maintenance.<task>.auto config options.
 
-diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-index b36b62c1c47..9c333d42b19 100644
---- a/Documentation/config/maintenance.adoc
-+++ b/Documentation/config/maintenance.adoc
-@@ -84,6 +84,14 @@ maintenance.reflog-expire.auto::
- 	expired reflog entries in the "HEAD" reflog is at least the value of
- 	`maintenance.loose-objects.auto`. The default value is 100.
- 
-+maintenance.rerere-gc.auto::
-+	This integer config option controls how often the `rerere-gc` task
-+	should be run as part of `git maintenance run --auto`. If zero, then
-+	the `rerere-gc` task will not run with the `--auto` option. A negative
-+	value will force the task to run every time. Otherwise, a positive
-+	value implies the command should run when the number of prunable rerere
-+	entries exceeds the value. The default value is 20.
-+
- maintenance.worktree-prune.auto::
- 	This integer config option controls how often the `worktree-prune` task
- 	should be run as part of `git maintenance run --auto`. If zero, then
-diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
-index 6f085a9cf8c..931f3e02e85 100644
---- a/Documentation/git-maintenance.adoc
-+++ b/Documentation/git-maintenance.adoc
-@@ -166,6 +166,10 @@ reflog-expire::
- 	The `reflog-expire` task deletes any entries in the reflog older than the
- 	expiry threshold. See linkgit:git-reflog[1] for more information.
- 
-+rerere-gc::
-+	The `rerere-gc` task invokes garbage collection for stale entries in
-+	the rerere cache. See linkgit:git-rerere[1] for more information.
-+
- worktree-prune::
- 	The `worktree-prune` task deletes stale or broken worktrees. See
- 	linkit:git-worktree[1] for more information.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3dd1d07cca4..e56d85ea3bc 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -16,6 +16,7 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "date.h"
-+#include "dir.h"
- #include "environment.h"
- #include "hex.h"
- #include "config.h"
-@@ -34,6 +35,7 @@
- #include "pack-objects.h"
- #include "path.h"
- #include "reflog.h"
-+#include "rerere.h"
- #include "blob.h"
- #include "tree.h"
- #include "promisor-remote.h"
-@@ -395,6 +397,39 @@ static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts UNUSED,
- 	return run_command(&rerere_cmd);
- }
- 
-+static int rerere_gc_condition(struct gc_config *cfg UNUSED)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	struct string_list prunable_dirs = STRING_LIST_INIT_DUP;
-+	struct rerere_id *prunable_entries = NULL;
-+	size_t prunable_entries_nr;
-+	int should_gc = 0;
-+	int limit = 20;
-+
-+	git_config_get_int("maintenance.rerere-gc.auto", &limit);
-+	if (limit <= 0) {
-+		should_gc = limit < 0;
-+		goto out;
-+	}
-+
-+	/* Skip garbage collecting the rerere cache in case rerere is disabled. */
-+	repo_git_path_replace(the_repository, &path, "rr-cache");
-+	if (!is_directory(path.buf))
-+		goto out;
-+
-+	if (rerere_collect_stale_entries(the_repository, &prunable_dirs,
-+					 &prunable_entries, &prunable_entries_nr) < 0)
-+		goto out;
-+
-+	should_gc = prunable_entries_nr >= limit;
-+
-+out:
-+	string_list_clear(&prunable_dirs, 0);
-+	free(prunable_entries);
-+	strbuf_release(&path);
-+	return should_gc;
-+}
-+
- static int too_many_loose_objects(struct gc_config *cfg)
- {
- 	/*
-@@ -1502,6 +1537,7 @@ enum maintenance_task_label {
- 	TASK_PACK_REFS,
- 	TASK_REFLOG_EXPIRE,
- 	TASK_WORKTREE_PRUNE,
-+	TASK_RERERE_GC,
- 
- 	/* Leave as final value */
- 	TASK__COUNT
-@@ -1548,6 +1584,11 @@ static struct maintenance_task tasks[] = {
- 		maintenance_task_worktree_prune,
- 		worktree_prune_condition,
- 	},
-+	[TASK_RERERE_GC] = {
-+		"rerere-gc",
-+		maintenance_task_rerere_gc,
-+		rerere_gc_condition,
-+	},
- };
- 
- static int compare_tasks_by_selection(const void *a_, const void *b_)
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 530c56ae91e..78da81eeb24 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -564,6 +564,60 @@ test_expect_success 'worktree-prune task honors gc.worktreePruneExpire' '
- 	test_path_is_missing .git/worktrees/worktree
- '
- 
-+setup_stale_rerere_entry () {
-+	rr=.git/rr-cache/"$(printf "%0$(test_oid hexsz)d" "$1")" &&
-+	mkdir -p "$rr" &&
-+	>"$rr/preimage" &&
-+	>"$rr/postimage" &&
-+
-+	test-tool chmtime ="$((-61 * 86400))" "$rr/preimage" &&
-+	test-tool chmtime ="$((-61 * 86400))" "$rr/postimage"
-+}
-+
-+test_expect_rerere_gc () {
-+	negate=
-+	if test "$1" = "!"
-+	then
-+		negate="!"
-+		shift
-+	fi
-+
-+	rm -f "rerere-gc.txt" &&
-+	GIT_TRACE2_EVENT="$(pwd)/rerere-gc.txt" "$@" &&
-+	test_subcommand $negate git rerere gc <rerere-gc.txt
-+}
-+
-+test_expect_success 'rerere-gc task without --auto always collects garbage' '
-+	test_expect_rerere_gc git maintenance run --task=rerere-gc
-+'
-+
-+test_expect_success 'rerere-gc task with --auto only prunes with prunable entries' '
-+	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
-+	for i in $(test_seq 19)
-+	do
-+		setup_stale_rerere_entry $i || return 1
-+	done &&
-+	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
-+	setup_stale_rerere_entry 20 &&
-+	test_expect_rerere_gc git maintenance run --auto --task=rerere-gc
-+'
-+
-+test_expect_success 'rerere-gc task with --auto honors maintenance.rerere-gc.auto' '
-+	# A negative value should always prune.
-+	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=-1 maintenance run --auto --task=rerere-gc &&
-+
-+	for i in $(test_seq 20)
-+	do
-+		setup_stale_rerere_entry $i || return 1
-+	done &&
-+
-+	# Zero should never prune.
-+	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=0 maintenance run --auto --task=rerere-gc &&
-+	# A positive value should require at least this many stale rerere entries.
-+	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=21 maintenance run --auto --task=rerere-gc &&
-+	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=10 maintenance run --auto --task=rerere-gc
-+'
-+
- test_expect_success '--auto and --schedule incompatible' '
- 	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
- 	test_grep "at most one" err
+LGTM. Thanks,
+-Stolee
 
--- 
-2.49.0.987.g0cc8ee98dc.dirty
 
