@@ -1,133 +1,93 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC95525A32F
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 18:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5439E1DFDA5
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 18:53:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746038714; cv=none; b=d957lNpFU4h0Rh1doVPJ/U032ti/GcoHhcaqp/lXYmsPZTNZorRn9MTYWn0xprV5IRD3Q/I7bBIVj2a7IH+KS8lpbx+LPrQEnvvLgrwJ4+UGWQqQV6hWIAiJYayIcB2oUlZjOaEU/yaiiT+yzU0HNOpuHPefkKBgnru+3QRlBBE=
+	t=1746039210; cv=none; b=rb+uQYbVpE6xW3XMjoAJPHXOEiBP4V4l59gabX9L4LHHF+B0hpt9BCLYDwj/t6p78NdUi7reuAF3qL3t0U4Nc00IKbTb7IgWs2rZDHVooAEZoqfndD8n9J/c1/RhckhdMQT4M7JhoUtPKwGfrwMoikcmfM8eYBxkdXUfKxbKVLA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746038714; c=relaxed/simple;
-	bh=6M4eOotlTav2ctAvaplH+g28eX1H527jTa8qR9QtkZ8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=cYS0e9b0sYdLBUK19OjxeC2iZ0jhg8Wcp/w2MsB4aeJJHcdJkXJX/U1lhQpxbipWIX+0DM/MwaRs8M0yOA/XbDX/tvHO0YkISNGlUsPZnmB+U5FkyjoFNf5MPXlie0uayHtzNz7zGGgjdQXYByq7B5cOdtiauUNrnyoDz6KhcZM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PbhQGiWo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q9FfbSx6; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746039210; c=relaxed/simple;
+	bh=SxX+EqHzFZOKL8vsJvvJIOqPSdKOgXHDqFqJemOobhk=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=K8IZspEPl9vbi2q58UvUYMLUstLSmBIHJ1KE728uhCif1VzFX390p1Y0Svqx+FTSfbh/vv3ZVvgLnvhu/CQ4ghgG0i+SgwE72VQVx5W7wuhjEQc4pDglBAFCdVY8XN0hWPhaaNpmJnX/oeQQDj3sYVSDfzB9sPKf10TSfsGEyu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dO9RmJ4L; arc=none smtp.client-ip=209.85.214.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PbhQGiWo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q9FfbSx6"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id D14C91140208;
-	Wed, 30 Apr 2025 14:45:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 30 Apr 2025 14:45:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746038710; x=1746125110; bh=AzCV8DYCYG
-	54SeCAVQfJItlJdOjOKzhfzLGfbHHirUA=; b=PbhQGiWoZvaAZPIaMCvBU9fLSV
-	6+LX4yLwZYdY3+7xdqrMKcqBRCNTCilCWRXKoHsLVdzrQcf+lvOi05gN6WJ6FVEp
-	Ld1kMpzW9LM7MODirD8bl8gfZna4KS4cyn03GPyqdcRyp5Wrj2VJW0cT0ONtXjsy
-	JjoHp5HoFe+GE7evjQjILs70Ut02O7OqA74JRbQoVYU6D2ce6c58J5f/IGtgFNZi
-	rGJU7yWRRQ6e6WRGVOwU/PekC0iqHIf3WETTtNfDsfGrFJ7q77LcVWSNLaHTOAdx
-	PIdm7u7X6B+G993TsMWbJH8wMYgzhtAQfr/rExV3GUhLGopEklLm9Gc2PsIA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746038710; x=1746125110; bh=AzCV8DYCYG54SeCAVQfJItlJdOjOKzhfzLG
-	fbHHirUA=; b=Q9FfbSx6wbHGxXl0C3ewT9TnPDHrLe+1Mq5bKntguMr2bOqnXWV
-	eRaznhQ6do0WL+xgdIg0Sx+wJcEzac5hq9LtoHDproLHZeehbOACyYclIo97h7nh
-	bFYRuUZuGg7ryT63aNjxz/P8CPVc/iWffSsmy/O+V/DIe57jfwawTCihkSupGGQB
-	cdbCmodvrO/WcbKYYc08Q36FZgur1QCKwtzAVsRTkPvVLQx7wVOdJHCnhYPLtBlf
-	S4iVpXOl9bXMGPvmpKJZ8s7591oVG2kjD1ZkMICneklpL7oWoMPSK3awb1eVdd9L
-	clx6+ZOXqbOV1OiUjYmbITHadi6yTHnFfxg==
-X-ME-Sender: <xms:tm8SaG9F4lya_GPsEbyLWW_onS0mmNGQweR4rPfI_9tpjsM09yiRlA>
-    <xme:tm8SaGtmA2OE_f6x9pMCWaoiQkYEJxb1nPC4PCbtInKTHpp60T_v8rMieYxg54WJv
-    nFkzugAbTWwgRbnFw>
-X-ME-Received: <xmr:tm8SaMAVe2ImX6Mp5m-LOhLXp9LzvzrdLKDBRyUozNqhN3p-SwIpeIlEyDYm4ufAdMfz-R4F9L1qHAkO17tD7y8T-QuTGtO4bbmE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    oheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepjhhohhgrnh
-    hnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:tm8SaOcu1lUKhEPejAB6lxKKyCH6hp0Q3KjdMp7Azl289obKDilHVA>
-    <xmx:tm8SaLNGjcV0sUdt8GWIJBHX_sV_8U8UV45zBOWP1mJ5ikgYho7bsQ>
-    <xmx:tm8SaImIlvLe6pjy5pt52sCBsh5f2RREBQ7pNEkagwZwkmk-4HJ4gg>
-    <xmx:tm8SaNvJrKfkwBuAQlH4w-id7XBu8PjB3UBV2DoxbT4RzkA94mj3Zw>
-    <xmx:tm8SaIdB4HniAz76aH5x4GfkWoFJvzrML2YU7o4tcEvtH3rPUjTEVFCf>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 14:45:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
-  Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH 2/2] builtin/mv: convert assert(3p) into `BUG()`
-In-Reply-To: <20250430-pks-mv-parent-child-conflict-v1-2-11a87c55ffb9@pks.im>
-	(Patrick Steinhardt's message of "Wed, 30 Apr 2025 14:44:58 +0200")
-References: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
-	<20250430-pks-mv-parent-child-conflict-v1-2-11a87c55ffb9@pks.im>
-Date: Wed, 30 Apr 2025 11:45:08 -0700
-Message-ID: <xmqqr0191oaz.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dO9RmJ4L"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-225df540edcso15102775ad.0
+        for <git@vger.kernel.org>; Wed, 30 Apr 2025 11:53:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746039209; x=1746644009; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=j563LolDk6lts4W0nJp0nldD5kQODfpG6rdVSrlTgcY=;
+        b=dO9RmJ4LYwMt9BAfDsigh7iBfVrKJpiJiT5pDu80CyV9Z6qYWLMb+Q7JSwFlQhWBcu
+         cljnX/JxAMg7/prtRObPSXOuKu6BabPs920yWwGrIgpYY9b9tCiUoAS9D9ZdmqZHmedM
+         0Wjd1sguw2n5TQzmAUP5QniPoKPKvZ6pyvIhFoCySNtR4ozn9ydG2UTpbxEcr80+sMpJ
+         UoARdmmBtxVCqu1SVISx6bKjTxYnfNRxeiXY7etxD7lig3LTmIOUyASANkt/Df2sm32x
+         T67ZAYk/2Wot9HqGE+FBtT9t6+lfceGugOsGb5D+ozz4KYoickboHeOLvpEYByznZVuI
+         UDWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746039209; x=1746644009;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=j563LolDk6lts4W0nJp0nldD5kQODfpG6rdVSrlTgcY=;
+        b=cj5nf1VAtIZBAfjVO9er2Dpmdp2eqhlnCOHYby6Z5GhEAqvUxXVpoWQSBij0APVdoq
+         lGTQvtYVVuPbkMqycZB3l35TEiivfBsry3ltQcsQEMNSJShHnYRbExMsuo8NDBi7/aUi
+         NpG3wmFWltL55EyhKN/uU6SKHnLe9Vd4ojYo8B9oiCp+AybR978oN95OIC75z4tj52dQ
+         CJ8VpnYbfpZ7N99inI4VGQ9LpPmM2zcHIga/Cj0DKRx5oPe20p1d9xnlDdX7RSQE3LUs
+         gVeXe2GsBXtfXAULxfTiNBqLONX4CifoeCCkvp2CikUIu/eW1uq7aaW82PcX06WE8cbB
+         AY+w==
+X-Gm-Message-State: AOJu0YxP1lLotR9PKEtL1dLeX3mas/jfVC1Y+tmjrDR47yCkJbMjF5FN
+	ZTPh4pl9OopqfiR4FV5Xy+q1vILNr8n2YyWheLmNEgweCvxzgc5xpR8JuYBU
+X-Gm-Gg: ASbGnctDktT4T6xSBjcRSmlo/3wdx0nfkdN0+c0MOqcheNFS4/sT1MfvuUDu7ocCPLd
+	jyYEjDcz29BFVWY3V6zACNmDNI4bZFIwmIA1tWmhoeRsHfjEpoAK2Q8JUX/om82nzGKa4s0qCrc
+	090y8p11yuoBaiedCXGGNSAZYGQGP+xqc4+SoKDK5HBqjNImjHjshVXckZ0koJDhOnP22JE8U39
+	Lubzs912ojKm0fPwMGaMFRs3OjdB29hogFcyK/XF43bLRc4TVrzDeNiQ3/BOAnfP7QAhmIxzpL7
+	l2leoTknkxzKH3kaZsTKgFQ9NW+RsdaxhyHm81JtvOUrLckDf+OVy22lstlp749gdCNSmLVlAzS
+	MRC6ikXQ=
+X-Google-Smtp-Source: AGHT+IEKAFaQ6Rm06oqgl7IsgYo8ouIPv3vmxj1Zm2P1XG01aiK7OyJpIO5zXCGmv52j7M9YLd6u0g==
+X-Received: by 2002:a17:902:c403:b0:21f:98fc:8414 with SMTP id d9443c01a7336-22e035fb28bmr6570435ad.26.1746039208542;
+        Wed, 30 Apr 2025 11:53:28 -0700 (PDT)
+Received: from occam.ucdavis.edu (campus-079-147.ucdavis.edu. [168.150.79.147])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b15f76f45b1sm11142958a12.1.2025.04.30.11.53.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Apr 2025 11:53:28 -0700 (PDT)
+From: Jake Roggenbuck <jakeroggenbuck2@gmail.com>
+To: jakeroggenbuck2@gmail.com
+Cc: git@vger.kernel.org,
+	roggenbuckjake@gmail.com
+Subject: Re: [PATCH 1/1] Exit on invalid diff status of diff_filepair
+Date: Wed, 30 Apr 2025 11:50:37 -0700
+Message-ID: <20250430185309.11197-1-jakeroggenbuck2@gmail.com>
+X-Mailer: git-send-email 2.47.0
+In-Reply-To: <20250108060151.7218-2-jakeroggenbuck2@gmail.com>
+References: <20250108060151.7218-2-jakeroggenbuck2@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi all,
 
-> The use of asserts is discouraged in our codebase because they lead to
-> different behaviour depending on how Git is built. When being unsure
-> enough whether a condition always holds so that one adds the assert,
-> then the assert should probably trigger regardless of how Git is being
-> built.
+Has anyone gotten a chance to take a look at this simple fix?
+When git is built of the main branch, it still segfaults when there is an invalid diff_filepair.
 
-Nicely put.  Yes, this is another reason why we frown on the use of
-assert(), in addition to the reason why why Elijah's series that
-ends with 5633aa3a (treewide: replace assert() with ASSERT() in
-special cases, 2025-03-19) was written.
+    git (main) $ make
+    <make output omitted>
+    git (main) $ cd ~/Repos/ECS50-3/hw3-skeleton-broken/
+    hw3-skeleton-broken (main) $ ~/Build/git/git diff
+    Segmentation fault (core dumped)
+    hw3-skeleton-broken (main) $
 
-> Drop the call to assert(3p) in git-mv(1) and instead use `BUG()`.
+Let me know if you have any feedback or suggestions.
 
-Being explicit about what we are unsure about is always good.  It
-would hopefully entice those who want to get their hands dirty to
-see if they can "prove" that BUG() would never happen, which would
-be a great outcome ;-).
+Signed-off-by: Jake Roggenbuck <jakeroggenbuck2@gmail.com>
 
-Thanks.
-
->
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
->  builtin/mv.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/builtin/mv.c b/builtin/mv.c
-> index edb854677d9..07548fe96ae 100644
-> --- a/builtin/mv.c
-> +++ b/builtin/mv.c
-> @@ -562,7 +562,8 @@ int cmd_mv(int argc,
->  			continue;
->  
->  		pos = index_name_pos(the_repository->index, src, strlen(src));
-> -		assert(pos >= 0);
-> +		if (pos < 0)
-> +			BUG("could not find source in index: '%s'", src);
->  		if (!(mode & SPARSE) && !lstat(src, &st))
->  			sparse_and_dirty = ie_modified(the_repository->index,
->  						       the_repository->index->cache[pos],
