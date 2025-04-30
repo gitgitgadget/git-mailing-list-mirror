@@ -1,143 +1,135 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38ED224FA
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 21:39:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8213E145A03
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 21:48:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746049150; cv=none; b=bmG2NcSBMmK+n4yOjsjt4T04kVR0xrfacK54Flt/PiXj0CiLNVzC+pLJt5XcEPDqhLNWx5lLUtEvzGzx6AuNQI8SilrHBC3GBgFPvoLwwtnL8eXVaBwnWxFqwx3tRROVVCtjoiRCtCNCpmepyx225yLBGeEBVHYdsAzeAJW6Cyk=
+	t=1746049731; cv=none; b=SPska4I3Uoq2VyAGi4cWLbH/ks4boJn6nqpy+xGrzl5WJXvMeNEIwAh6AS85GqYbJfIi0ryaXi4NfCbpLOZBty7EKAHX8xZs/+m2s+fWhxx9MArL77eOJpBzFk4RE9BCTfeoy1er9IaHq5MLVz+4E24cjkZfC+/PSKR3F8+ev1k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746049150; c=relaxed/simple;
-	bh=qE976FPFbtmszoN5s8fzVWpJp4yW//4q1LJhePnbzL4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GxtwPh+AOdPQKHW0ANzwg6j4ItpYps2zgqHFMG//qnp3KDWNpBOKyThmbMdrDWE5YPZ2KHauBgb+lTOvwubVNJMgTNSfHpFF+ZPVfTj7bb0MEXPy9z4nI8067mwFFSxCxU2PNQSAx6z6C0zSLc848WimDlzf06mUm8zWuRsJBoY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DeHDDbQ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mnGhCECl; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746049731; c=relaxed/simple;
+	bh=2flx0q0oqOSo7avRbBh/wJBo7CYL8icRfEvXdHwHTtw=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gA3xMzXdAnDcHWEPcJ9QyAOGCiChetCus7Bv65IS24fT/9NmCCTi6WIfJDO2RyZFgV+kGXCg2IXNchiV+DGNxEquPvdKHyBq934vtBvdv0JS66cyLQDyUcFXfmzPnn+DcrnWTGkC9hLM8MhMvZNQvZCYmiN1OjB2uUk99EVr32A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=E7IYIspY; arc=none smtp.client-ip=209.85.222.171
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DeHDDbQ6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mnGhCECl"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 9902325401D5;
-	Wed, 30 Apr 2025 17:39:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 30 Apr 2025 17:39:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746049146; x=1746135546; bh=KzBEy7rt4p
-	8MgHfCH4/rx47Z11DA9qx4f/Z6KCY9IO0=; b=DeHDDbQ6kriQi7YU5B2NMMEr+Q
-	b/feK6yrlFwP1S1F1TQ0i5/rYdiqiHvHb3c/yVwRVrUUtBAwRK5Bf72XaB6WOaVr
-	/w4lDcLTrHnu0Ri7Sb03ewZrA/wLgWPGVvHupv9xnPGNwPcJZROJy4g4yik8YAPe
-	ZSnbx7gpnHcwHqJO4GCjMOjmQePZQOruK3TluSvX2Ew0CVm8efXvQxQFcyPq6SYq
-	S4xQofgEmofUsUoVEnxdy4Yeq4lA5TczEE5HEE3lAmVw/Unp8fIAcF2cSYrSxmfW
-	UofsYIH1+tNfMfFztPT5GKE0ZrjTZ6d9Bcg9di1tB/fQ2iXI4OR9q07E3ZGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746049146; x=1746135546; bh=KzBEy7rt4p8MgHfCH4/rx47Z11DA9qx4f/Z
-	6KCY9IO0=; b=mnGhCECll3k5f/YoxVznrVg3ElGpI/8FjtFqDXgcYBY8He5bSJS
-	EtoeWA0bLg/KuQJJJWXU+PO4qDnONMk9o0539HpmglEZYC0OWVJB6DW7l94dZYon
-	VZ7KhhPXSKFit5snZVb4VXf8fyOtcjxwXLPJx8mJxVjIjUFSeR8MK/62v5gCsGT7
-	tFRRIHXb+X2LdwUltEN7oY/ROTrLpmLgBXMKx6SrfntI4Kn+xUruxBQ7I1CGifbM
-	YqaDxIGUsdqRUEuiTeeXpOxiXWdvk+ZFWIUPmMo4YNlDpOl8opH63bLvKg8jQLn/
-	IZMHoRKilHe99ITqHDtyLFkojdF1xom+Hgg==
-X-ME-Sender: <xms:epgSaKPdvjQIUu5WKGcs4Ou-Mw0gbyxvc-BfjaruUH71AW45v2bUvg>
-    <xme:epgSaI_snuSD5jcSkcIPlWrqZKnvj0dVTUcG7TgUQNF_GqYXzjxo0RMBrDT0CcmM4
-    EbKporwl9VlW1-mrA>
-X-ME-Received: <xmr:epgSaBSLZy1EZJ2fs9BdDuqOyQaiz_6DRIxrRKi2xFoWkjFYh-M1QIz7Iygb29H6Zr9ly7uhLiWSGAVo8kWAzBvkpAiX9Zpf0UFE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejkedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthgvrhhrhihthh
-    gvsggvrghrjeegieesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:epgSaKubXS8I-wlYKq4mE4QpyBruuA5isxWeUHid_Xy-ujaZUWC4-w>
-    <xmx:epgSaCeunkxUwR4gOG9zkwDc8MGbPthEN7eJNfn1_o_nJwvwnteKSA>
-    <xmx:epgSaO3M4Q4VIzmygScqJJsHFDoPvZ5c9nzMXaBzFbTw95Ew2qACTA>
-    <xmx:epgSaG_AWhc3ZJfKlRVKUwq-2EfyTpO7yh0Gsg1pLscIuh4Iy3H7Og>
-    <xmx:epgSaAoBq0GR5xjlsnDnuTWwLNlASTtuWjAGw70mniQH7ZK42sE-k6oV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 17:39:05 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Terry Bear <terrythebear746@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: Bug Report or Unexpected Feature when "git restore -m ."
- restores merge conflicted state of a file after a commit
-In-Reply-To: <CAJt5hUyLoNfEbQe4wpES8AZP5yimos+xjqU9B4PszGxMrg50jg@mail.gmail.com>
-	(Terry Bear's message of "Thu, 1 May 2025 01:03:12 +0400")
-References: <CAJt5hUyLoNfEbQe4wpES8AZP5yimos+xjqU9B4PszGxMrg50jg@mail.gmail.com>
-Date: Wed, 30 Apr 2025 14:39:04 -0700
-Message-ID: <xmqqzffxz5vr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="E7IYIspY"
+Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7c58974ed57so33961285a.2
+        for <git@vger.kernel.org>; Wed, 30 Apr 2025 14:48:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746049728; x=1746654528; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uQQlTP/6ckM5Xq3Y2C+u6Ucb3LC8bME9tGZfGLYI5oY=;
+        b=E7IYIspYSH2wbmj/Z/ch+5Aiu2Es1qNy/DMK05jsGlDvZ9QdHilzmTvoAPrPtwWG8Z
+         SvhfP9kRMGQhBWi6/RqwrrqdgcTvt4rKRpEW1s9k4ukp4t+ZhqcH8I+0hLfB5Ocpwlmj
+         2XuXcM/8+11DYpqd44nyWIyNeGzOXXTh8z6VGt3xt+CVxfiKYA7aFG9Mh8pXeyyD9b2v
+         FP3kEXrfqpGUP9vZUNXOPOsHW/C7KBgQrih+zfnRPugiJRVE54hanfwwrUgQFdGuyd3p
+         c1t4qnax+CVZhvWjTWXzQoVV0C30VdOELUzGuC0CJxmJuz7Gz1l4qmH66f0NtOWijYEW
+         YOMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746049728; x=1746654528;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uQQlTP/6ckM5Xq3Y2C+u6Ucb3LC8bME9tGZfGLYI5oY=;
+        b=swq1Ht4Cy+0zYwCwZdAxF0AkMyfHrQXfX6iTGmRn/Pgd7VUn1GBeqqkl1uc7aWuBd0
+         CSNCEBdSB25xzQHmJAzxCjRYZRWkFmsRZqijjSGfW84eQJZErQ4tIQnSE9QXpFvuJoAX
+         +rAryeQfbOauzTsJ8vCgQr+DhwXOIirG2gKgXiqKvhIfKy2cpncK5fVIf95wnJPRYhYc
+         +U6sMfohBtx0QtAqK1oBQ0M/9DD1S7W2Sgv7aOZYjuqhjIlC4NqK+8rxdjOtoEF+gTk3
+         wSFFt2Ox3xEdelKOdWQ4LVSx89bqwiSrhKnFYtRHzQv5G/o78WG4jAMH/JbdqIAytXg+
+         NKsQ==
+X-Gm-Message-State: AOJu0YyQNwCl5smfJNlYdJi2NpqpmECcAkGSAsgInY9kNUs885Tp5sd3
+	VUpjjwusSBYNjJpk9tJ9MnrcmK8M+Y6qHUmRAuE35qUkVLkF/Mr/2BrHLp/Wl4sMOu7LR1H1mOx
+	I4a8=
+X-Gm-Gg: ASbGncs3PPIfsHLKEItg3T10Jpm04yoXx+qDgJCiEnUidgHJM1wRfDjELYVEUydDAAW
+	ppSdZpqGnFJCQyI8q1x7rZUZXNGRVRUqioyXoQKXyYxWUayXdiw3hGZQ/jbTynLVmC10N7EKpXD
+	LVmmNN/KZfEsyNkztDj3lYIVYdFhAlqSrhCRlWn9B8xPb6LlK0wGScfwfmpz3N4Lc1S1gga3tua
+	0Bs2q4qG2ndzfpeXjmWccn/cQb70d9DiA7w8qzI/zwMQcW5kRFl3R8ZpraDmqhkHcr2BOthf7Kp
+	/3i//gTzqqHcRU0D4EwqxsShBIj/g6300aLtbmJorvNKAUWoQp30EJ/ZrlUIr5CwDXbOLC4V93E
+	S4mvksMo/PZdM
+X-Google-Smtp-Source: AGHT+IFrYiHKrL7SvC7PfHiJlKUup8XEsOZgq5nzr5th6oF1uMaNEgZNxeYezpdlAOpjrbEkZxW5og==
+X-Received: by 2002:a05:620a:2a0f:b0:7c5:3c0a:ab7e with SMTP id af79cd13be357-7cac74092fdmr786681085a.5.1746049727925;
+        Wed, 30 Apr 2025 14:48:47 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cacdee090csm10721685a.72.2025.04.30.14.48.47
+        for <git@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 30 Apr 2025 14:48:47 -0700 (PDT)
+Date: Wed, 30 Apr 2025 17:48:41 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: git@vger.kernel.org
+Subject: Re: [ANNOUNCE] Git Merge 2025, September 29-30, San Francisco, CA
+Message-ID: <aBKauXrGU8cMVXVI@nand.local>
+References: <Z+L3Mt58n18KUNzs@nand.local>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <Z+L3Mt58n18KUNzs@nand.local>
 
-Terry Bear <terrythebear746@gmail.com> writes:
-
-> 9. Make a merge switch
->     git switch --merge main-copy
->    The file on the "main-copy" branch should look like:
->      "update 1"
->      "<<<<<<< main-copy"
->      "======="
->      "update 2"
->      "update 3"
->      ">>>>>>> local"
-> 10. Stage and commit file
->     git commit -a -m "merge conflict on main-copy"
-> 11. Restore merge-conflicted state
->     git restore -m .
+On Tue, Mar 25, 2025 at 02:34:26PM -0400, Taylor Blau wrote:
+> Git Merge 2025 is happening on September 29-30th in San Francisco, CA!
+> The Contributor's Summit will be on the 30th. Here are the details for
+> the main conference:
 >
-> What did you expect to happen? (Expected behavior)
-> The "git restore -m ." is not supposed to restore the merge-conflicted
-> state of the file after it was staged and committed
+>    When: September 29th and 30th
+>   Where: GitHub HQ, 88 Colin P Kelly Jr. St., San Francisco, CA 94107
+>    What: Main conference on the 29th, breakouts and Contributor's Summit
+>          on the 30th.
 
-Just a quick question.  If you did "git reset --hard" between steps
-10 and 11, does the outcome change?
+Since announcing[1] that Git Merge will take place this year in San
+Francisco, CA, I have gotten feedback publicly and privately that there
+are challenges for those who would have to travel into the US in order
+to attend.
 
-I think the behaviour you observed dates back to the very original
-implementation of the feature, made in cfc5789a (resolve-undo:
-record resolved conflicts in a new index extension section,
-2009-12-25).
+I (and my colleagues at GitHub responsible for producing Git Merge) want
+to make sure that folks who can't attend Git Merge in-person due to
+travel concerns are still able to participate.
 
-    resolve-undo: record resolved conflicts in a new index extension section
-    
-    When resolving a conflict using "git add" to create a stage #0 entry, or
-    "git rm" to remove entries at higher stages, remove_index_entry_at()
-    function is eventually called to remove unmerged (i.e. higher stage)
-    entries from the index.  Introduce a "resolve_undo_info" structure and
-    keep track of the removed cache entries, and save it in a new index
-    extension section in the index_state.
-    
-    Operations like "read-tree -m", "merge", "checkout [-m] <branch>" and
-    "reset" are signs that recorded information in the index is no longer
-    necessary.  The data is removed from the index extension when operations
-    start; they may leave conflicted entries in the index, and later user
-    actions like "git add" will record their conflicted states afresh.
+To that end, here are a few updates on this year's Git Merge:
 
-Notice that "git add" or "git commit -a" are not included in the
-operations that are signs that the previous conflicted state no
-longer needs to be recreatable?  In other words, it is part of the
-design that you can take back the conflicted state across "git add"
-or "git commit", because you will thank Git later when you realize
-that your resolution was broken and you want to redo it after you
-finished your step #10.
+  - We're **welcoming remote speakers and attendees**. If you are
+    interested in speaking, but weren't planning on doing so due to
+    travel constraints, please consider submitting a talk proposal to
+    present virtually!
 
-If you do not want to restore the conflicted state, don't do "git
-restore -m ." at that point ;-).
+  - The **Contributor's Summit will continue to take place on the second
+    day** (September 30th), and will have two-way A/V equipment set up
+    so remote attendees can participate.
 
+A few more logistics:
 
+  - Tickets to attend remotely are $0. If you have already purchased an
+    in-person ticket and wish to refund it to attend virtually, just let
+    me know.
+
+  - Likewise, if you have submitted a talk proposal but wish to give it
+    virtually instead, please let me know there as well.
+
+If you are travelling in-person need financial assistance to do so,
+notes that we will **stop accepting requests for financial assistance on
+May 15, 2025 end of day PDT**. This is so that those who have open
+requests can get a decision sooner rather than later in order to start
+the visa application process. If you are planning on requesting
+financial assistance, and haven't yet done so, please consider doing so
+ASAP.
+
+I am sad to not be able to see everyone in person, but my hope is that
+by offering options to attend and participate remotely, that Git Merge
+will be more accessible to those not comfortable traveling into the US
+than previously.
+
+If you have any concerns or questions that you wish to handle privately,
+please feel free to contact me off-list.
+
+See you there (virtually or otherwise)!
+
+Thanks,
+Taylor
