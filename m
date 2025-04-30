@@ -1,286 +1,248 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9974253B5F
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 12:45:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 908FF2DC768
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 12:46:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746017110; cv=none; b=n5kZoKUKMPmSKuKCxg4RhWOKzAq93HbE4/23vAHuFXCiO95Fh3knBKiZ5d0Wu9sFg6FToKDUFKFBj7vE6/DbdVRnKs7tiQWx6CPRB3cgwZ4s9MHmb4e238p+f8FqH1YStgaBCNDiUdgsy7qyzyGcBOuK30iHMmK9rXSu2hLAVR0=
+	t=1746017213; cv=none; b=aGuZjs/FfkRKC195Ui3C0yoWfN8xbHMxxC2ATOt9H5vQPf0xwbPzuSYv40jlsva021DQmeHccOSNKtU0/lgcBTH0WCuG3xw2D0VPQqs4hrXCLyo0c8UbTFvbrN3zjZUY+DJPe6AXWL9zNxlakQblklwhL/I6Jdy1GKQeYvMt6cc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746017110; c=relaxed/simple;
-	bh=iHM3B3ed30+nTRMIP1tN497gYs3a7tyusV+U+Hm/biE=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PxN1u3yBsDNhpvDn2buLmT1J/4z4XKQOefvAz9rrne3n+Oucw9Q4TX9P64fywyZ++JyVKWmFpXBQIfSHgjI5ROK7+gFrWFrwMrcUYnckFFjmqKqkw/6TzUKS5tfjX15ZUMW6EPUdaYG6s1/rS2f7JlHKGH3pjYmgPyMIdxDu+Ug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=h9PLlXVg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mXAwPEwx; arc=none smtp.client-ip=103.168.172.156
+	s=arc-20240116; t=1746017213; c=relaxed/simple;
+	bh=r10w/KLX1506M7clYE1QpkJzVDtfGQpHVnmKXp6n6uc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=WPTi61Z7n9cIZcdcKlO3KwBQvIXCnFTu7a/1PHmC3pOtQ5EnVVhBwwL7S8DqzVfw2C0rkGLxsE/5TffvgnKuIOEes6Ym2TK3DIu+ML8K15Z7Mra+8/zZ8XppEUSAcqlwtvKUgHKjBllG1Qd/ufv0fgCeUZS/fcsCc0Q5B20yex8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dyA4kECh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kZ9Y970q; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="h9PLlXVg";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mXAwPEwx"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E1F801140245;
-	Wed, 30 Apr 2025 08:45:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dyA4kECh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kZ9Y970q"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 92B9311402A2;
+	Wed, 30 Apr 2025 08:46:50 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Wed, 30 Apr 2025 08:45:06 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 30 Apr 2025 08:46:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746017106;
-	 x=1746103506; bh=Em+xSFrzsJOAhrRYVYr9UVL5Lbk50hOEzKPbR1Gi86A=; b=
-	h9PLlXVgNHYm/SQcKf7+sj5h/hCvCVcpKd4EsT9jo54tgxN6j4xjinqh5ORFydIu
-	HObO4oOkUMhnrAsnJEbQONLKVEBu5jwO33znw1O7TXIq+yHsCgL34f/9mzBWdJEg
-	BNsk0ytzZp4kiPxhYl6iH91FJK472dx/bzKIuKSNMnl0CoUsmmP2w4iaqQ4y69BT
-	3So5M7wsWIi7S86Z4ejt6VHWz4ijC0oE8XWos9iFcBS5Rhw4SVLoBzWgGmsiUOmh
-	bgAa+AWgR/v0gbYS7BWB7FuTZVFhhUOh6KkCERRI9FVn8BYiZYFFceyUNm4YVnyx
-	+BGbt7UgB6T1S/3cT86scw==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746017210; x=1746103610; bh=j6pLHZ6FUT
+	F932PqWuenuTfawLEk8lE7eZh3r4Ujqd4=; b=dyA4kEChuKOxwQfmxXYNWsEa7R
+	AT5Evx6MNoz0calvxCvB/DD8DwtEcxmdAUDpCRPgoy4/w8IYD1gPBL7dqhL4Qvh+
+	cxjSdvZyrbVUhA76foz+meYBrI5hZFlw1KZSn7Z7Tye4oS2PUOH1oX89tckg4z8q
+	tkWaC2tJUmnpEn1yFtcO81Ga59/VqW++YErcsI0B9fO+YiNVTP2kRAf3AALRYtQn
+	l1eHvsYQhUnXfSA9zTmScVjxKUpZ9CfSavezc08C5rqOSrSoxMvX2mYgfyMcwAM7
+	PnEvrmTIU4bg97XXhztBnwQVJWL8edV15sUxD6JbGKxscz0MSarZ/kwiLeEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746017106; x=
-	1746103506; bh=Em+xSFrzsJOAhrRYVYr9UVL5Lbk50hOEzKPbR1Gi86A=; b=m
-	XAwPEwxN1G1KDOcCpO81/kDUQx5clyp9BzWb9oaToqZLRZAz14n8B+gGBe8RVnom
-	lA9sTatkMkyEOvvkFJ0LI9Corm5dX4AwgdiDQBd/ZCEKaEVDfAtC3LSW9hdtQTDr
-	LcuaufHUqBgPDrRGD1r52M/ltFA6BjAovTcwNEwvp70s+rMxhQyYCexdIYbi5W0v
-	l9Q0QxJ5lR4llOiHDGQ9W4iaaRydSaf++xYu7cqDWLfXtjm2fS2TQ8uVxyYIX8Ln
-	BDVcaDtV3kje8xt975hU4nZBq3dkJzgvDoo3zi0E+qJ5eDWaOTCa4w7KmoCKeYju
-	Nknwc29YtPFSljgVeZWSg==
-X-ME-Sender: <xms:UhsSaJguXHxPcElF31ALyKHNIkLrFTYqQ8_Cl7KXjKqxhq5P9rNEOw>
-    <xme:UhsSaOCCMtHUpOKowSp6_JMjb2CZ7boys26x7ilDwIPEcJfBIMK2MjmgLWh1FrCyu
-    dzOpkA0w0yCB6a9FA>
-X-ME-Received: <xmr:UhsSaJFR91HWGoszUzSffa7sZV-CrhrOspRhPiJuAl_74BNHPpRRk3c3fbkZM6P0dpblX4bWzuhZ3wG4QcKiL3oSa2PI9Udu3gi5NfbOiGqGbA>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746017210; x=1746103610; bh=j6pLHZ6FUTF932PqWuenuTfawLEk8lE7eZh
+	3r4Ujqd4=; b=kZ9Y970qJTz4GfpsKdg90Iek6GLQMPHmBwXPR/DNg0yPD5/w3Eh
+	ezHRNty8FVk81f7f9At9kSOotGV48FqqZZ97ymYsGzMKP0FiOxsokFQcNuK19LS+
+	vdYltNT3XH4dzvO5GbXYZRfknDbAuZNo3cOVFOinF/+3o5PAV9EU9TH7DSELKKMh
+	abKFfuZeJP6JbDO+it8NS0SaCYvqBnlhRrsJBIAbxfU2brP2f6tYmPdjQQIw1plz
+	mAvcTVAbvGHHUWO0k2iwDa/CrfY3T7GllVvA3unN756/Rczvu3lXIiRk5WLeyMia
+	grRC3BWsN596MfoURHtVTF98XkJ2Z4t90iw==
+X-ME-Sender: <xms:uhsSaBwGtrFVe6SmYvm8JOOXoajZUZbU9euJ9cEzNW4Dh2kNMB-WUA>
+    <xme:uhsSaBTew2XitsThbAXhjnnmaTABAQs6smJ1A_V7TVD4nvxEfAIsWChJyquLtTAep
+    RlV0Y8SvwTikfsfAA>
+X-ME-Received: <xmr:uhsSaLXeu1eV9in7zIR4MplGYIG_iOChdA70R7IZmLYRliJ1SvwdSj6hldDrV9_v5_U8f9Xx9gMV3rbAfttMIT82eQdVozPYFdNc7d819pUT3A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeijeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopegtoh
-    guvgeskhhhrghughhssggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:UhsSaORsJU5dxpOWZzDg8AJ1xeDk70iEe-xYvI9HzgXJXoqYnX2MeA>
-    <xmx:UhsSaGz5Nzx14jJhX_I-bZOv2h3hGi3IfnGrkRd3fmpgwn_0BNez_Q>
-    <xmx:UhsSaE7XYgY9MbFbEt07isCw1J-MWc_LWAnX--XHR4m7TxIVyodyXg>
-    <xmx:UhsSaLxRCxiTE8w5X_GYV5X5J1-1LFXV9bofVwxBUISiMYYZrhFOnQ>
-    <xmx:UhsSaGHGLN4XhzsvpwVsFsdjMQFp-E5y79m7Zz_tXvANPXVuxiR1aqtw>
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepjedttdegffekudejjeegudehgfehtdfgtdeiudel
+    ueelgfeuteehledugeeuueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhho
+    hhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepghhith
+    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:uhsSaDjd067XXgqfgV9CUh8e3DRzjP75jT4OIAEi7xgfRvm7xy6b-w>
+    <xmx:uhsSaDBF2YRtv6fYm9XWBE-FSKJv72oXxmwcdQuOJ_HWKfPBM2WTwg>
+    <xmx:uhsSaMIx0q1Yokwyiuk5q1lE6i8ojPUnngTBdqbYY8nzkAyxZ0W6KA>
+    <xmx:uhsSaCANqWife8MTXqgXqvmBiGkIlZm7t4p075qDF8xGOYLADMW8Qw>
+    <xmx:uhsSaFuLMxnAOFaPxoPLlB007rM6_SuveQNvSr9RyR1u0YwAxfMXqRsG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 08:45:05 -0400 (EDT)
+ 30 Apr 2025 08:46:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 735b9f33 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 30 Apr 2025 12:45:02 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c5b05cd3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 30 Apr 2025 12:46:48 +0000 (UTC)
+Date: Wed, 30 Apr 2025 14:46:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 30 Apr 2025 14:44:57 +0200
-Subject: [PATCH 1/2] builtin/mv: bail out when trying to move child and its
- parent
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv
+ hangs
+Message-ID: <aBIbtykdjseJRzwr@pks.im>
+References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+ <xmqqmsc4uv6d.fsf@gitster.g>
+ <aA8ymUzWM2t0QkFP@pks.im>
+ <xmqq8qnkdxu9.fsf@gitster.g>
+ <aBDD-NeN2YoQbU9S@pks.im>
+ <xmqqplgu4ru5.fsf@gitster.g>
+ <aBHmMKqhVDEl777o@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250430-pks-mv-parent-child-conflict-v1-1-11a87c55ffb9@pks.im>
-References: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
-In-Reply-To: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>, 
- Junio C Hamano <gitster@pobox.com>, 
- Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aBHmMKqhVDEl777o@pks.im>
 
-We have a known issue in git-mv(1) where moving both a child and any of
-its parents causes an assert to trigger because the child cannot be
-found anymore in the index. We have added a test for this in commit
-0fcd473fdd3 (t7001: add failure test which triggers assertion,
-2024-10-22) without addressing the issue, which is why the test itself
-is marked as `test_expect_failure`.
+On Wed, Apr 30, 2025 at 10:58:24AM +0200, Patrick Steinhardt wrote:
+> On Tue, Apr 29, 2025 at 01:48:18PM -0700, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > 
+> > > @@ -213,6 +228,8 @@ int cmd_mv(int argc,
+> > >  	struct cache_entry *ce;
+> > >  	struct string_list only_match_skip_worktree = STRING_LIST_INIT_DUP;
+> > >  	struct string_list dirty_paths = STRING_LIST_INIT_DUP;
+> > > +	struct hashmap moved_dirs = HASHMAP_INIT(pathmap_cmp, NULL);
+> > > +	struct strbuf pathbuf = STRBUF_INIT;
+> > >  	int ret;
+> > >  
+> > >  	git_config(git_default_config, NULL);
+> > > @@ -331,11 +348,17 @@ int cmd_mv(int argc,
+> > >  
+> > >  dir_check:
+> > >  		if (S_ISDIR(st.st_mode)) {
+> > > +			struct pathmap_entry *entry;
+> > >  			char *dst_with_slash;
+> > >  			size_t dst_with_slash_len;
+> > >  			int j, n;
+> > >  			int first = index_name_pos(the_repository->index, src, length), last;
+> > >  
+> > > +			entry = xmalloc(sizeof(*entry));
+> > > +			entry->path = src;
+> > > +			hashmap_entry_init(&entry->ent, fspathhash(src));
+> > > +			hashmap_add(&moved_dirs, &entry->ent);
+> > > +
+> > 
+> > OK, this collects in moved_dirs the directories that will get moved.
+> > And then a separate loop, ...
+> > 
+> > > +	for (i = 0; i < argc; i++) {
+> > > +		const char *slash_pos;
+> > > +
+> > > +		strbuf_addstr(&pathbuf, sources.v[i]);
+> > 
+> > Shouldn't there be a call to strbuf_reset(&pathbuf) before doing
+> > this?
+> 
+> Yup, indeed.
+> 
+> > > +		slash_pos = strrchr(pathbuf.buf, '/');
+> > 
+> > And start from the deepest directory, going one level up per
+> > iteration, ...
+> > 
+> > > +		while (slash_pos > pathbuf.buf) {
+> > > +			struct pathmap_entry needle;
+> > > +
+> > > +			strbuf_setlen(&pathbuf, slash_pos - pathbuf.buf);
+> > > +
+> > > +			needle.path = pathbuf.buf;
+> > > +			hashmap_entry_init(&needle.ent, fspathhash(pathbuf.buf));
+> > 
+> > ... see if the path being moved falls within that subdirectory.
+> 
+> Ah, there's another gotcha here: when moving a directory, we also add
+> all of its children to `argc`. So this would now always fail when we
+> move directories around.
+> 
+> I guess we can handle this by introducing another `MOVE_VIA_PARENT_DIR`
+> mode -- we'd then skip the verification for any entry marked like this.
+> 
+> > > +			if (!hashmap_get_entry(&moved_dirs, &needle, ent, NULL))
+> > > +				continue;
+> > 
+> > If there is no overlap, we need to do anything special.
+> > 
+> > > +			if (!ignore_errors)
+> > > +				die(_("cannot move both parent directory '%s' and its child '%s'"),
+> > > +				    pathbuf.buf, sources.v[i]);
+> > 
+> > Otherwise we are in trouble.
+> > 
+> > > +			if (--argc > 0) {
+> > > +				int n = argc - i;
+> > > +				strvec_remove(&sources, i);
+> > > +				strvec_remove(&destinations, i);
+> > > +				MOVE_ARRAY(modes + i, modes + i + 1, n);
+> > > +				MOVE_ARRAY(submodule_gitfiles + i,
+> > > +					   submodule_gitfiles + i + 1, n);
+> > > +				i--;
+> > > +				break;
+> > > +			}
+> > 
+> > So with
+> > 
+> > 	$ git mv a/ a/b x y z/
+> > 
+> > then a/ is left in the argv[]/sources[]/destinations[] arrays, and
+> > upon inspecting a/b, we come here and in order to ignore a/b, we
+> > shift it out; the resulting arrays would have a/, x, and y being
+> > moved to z/.
+> > 
+> > It somehow feels troubling that it would lead to a different result
+> > if I give a morally equivalent arguments, i.e.
+> > 
+> > 	$ git mv a/b a/ x y z/
+> > 
+> > where a/b survives and a/ gets omitted.
+> 
+> Fully agreed. I was quite surprised to see that git-mv(1) already
+> behaves like this with a couple of other error conditions. So I simply
+> continued to build on top of this behaviour, but I'm not a fan of it at
+> all.
+> 
+> Note that this behaviour doesn't trigger by default though. So your
+> above command would cause us to die without doing any change at all. You
+> explicitly have to `git mv -k` (whatever 'k' is supposed to mean --
+> maybe "keep going"?) to opt into this weird behaviour. Which makes this
+> overall a bit less awful.
+> 
+> > One thing that came to my mind (without concrete "here is the right
+> > way to solve it" that I am myself convinced) is this.
+> > 
+> >  * Should this code path even have its own ignore-errors handling?
+> >    "git mv a b z/", when 'a' does not exist, may ignore 'a' and move
+> >    only 'b', which may make sense.  But the original command line in
+> >    that case is a plausibly correct one if there weren't missing or
+> >    unmovable paths.  The command line "git mv a/ a/b z/" seems to
+> >    fall into a different category (aka "total nonsense"); no matter
+> >    how you fix the items in your working tree files, you cannot make
+> >    it plausibly correct.
+> 
+> Fair. I guess the intent of '-k' is about handling the case where a
+> subset of files might be missing, not the case where the original
+> request didn't make any sense at all. I certainly wouldn't mind to
+> tighten this code.
+> 
+> > a totally unrelated tangent that made me scratch my head while
+> > reading the original ocde is the dest_paths variable.  It is never
+> > used as a collection to hold potentially multiple paths; it is a
+> > strvec only to be able to call internel_prefix_pathspec() with, and
+> > used only once with only one element in the vector.  At least it
+> > should lose the plural 's' suffix to unconfuse its readers, I would
+> > think.
+> 
+> Yeah. From my point of view this isn't the only confusing part about
+> this code.
+> 
+> Patrick
+> 
 
-The behaviour of that test relies on a call to assert(3p) though, which
-may or may not be compiled into the resulting binary depending on
-whether or not we pass `-DNDEBUG`. When these asserts are compiled into
-Git this may cause our CI to hang on Windows though, because asserts may
-cause a modal window to be shown.
+I have polished this patch a bit now and sent it via [1]. Thanks!
 
-While we could work around the issue by converting this into a call to
-`BUG()`, let's rather address the root cause of the issue by bailing out
-in case we see that both a child and any of its parents are being moved
-in the same command.
+Patrick
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/mv.c  | 61 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++--
- t/t7001-mv.sh | 24 +++++++++++++++++++----
- 2 files changed, 79 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/mv.c b/builtin/mv.c
-index 54b323fff72..edb854677d9 100644
---- a/builtin/mv.c
-+++ b/builtin/mv.c
-@@ -39,6 +39,13 @@ enum update_mode {
- 	INDEX = (1 << 2),
- 	SPARSE = (1 << 3),
- 	SKIP_WORKTREE_DIR = (1 << 4),
-+	/*
-+	 * A file gets moved implicitly via a move of one of its parent
-+	 * directories. This flag causes us to skip the check that we don't try
-+	 * to move a file and any of its parent directories at the same point
-+	 * in time.
-+	 */
-+	MOVE_VIA_PARENT_DIR = (1 << 5),
- };
- 
- #define DUP_BASENAME 1
-@@ -183,6 +190,21 @@ static void remove_empty_src_dirs(const char **src_dir, size_t src_dir_nr)
- 	strbuf_release(&a_src_dir);
- }
- 
-+struct pathmap_entry {
-+	struct hashmap_entry ent;
-+	const char *path;
-+};
-+
-+static int pathmap_cmp(const void *cmp_data UNUSED,
-+		       const struct hashmap_entry *a,
-+		       const struct hashmap_entry *b,
-+		       const void *key UNUSED)
-+{
-+	const struct pathmap_entry *e1 = container_of(a, struct pathmap_entry, ent);
-+	const struct pathmap_entry *e2 = container_of(b, struct pathmap_entry, ent);
-+	return fspathcmp(e1->path, e2->path);
-+}
-+
- int cmd_mv(int argc,
- 	   const char **argv,
- 	   const char *prefix,
-@@ -213,6 +235,8 @@ int cmd_mv(int argc,
- 	struct cache_entry *ce;
- 	struct string_list only_match_skip_worktree = STRING_LIST_INIT_DUP;
- 	struct string_list dirty_paths = STRING_LIST_INIT_DUP;
-+	struct hashmap moved_dirs = HASHMAP_INIT(pathmap_cmp, NULL);
-+	struct strbuf pathbuf = STRBUF_INIT;
- 	int ret;
- 
- 	git_config(git_default_config, NULL);
-@@ -331,6 +355,7 @@ int cmd_mv(int argc,
- 
- dir_check:
- 		if (S_ISDIR(st.st_mode)) {
-+			struct pathmap_entry *entry;
- 			char *dst_with_slash;
- 			size_t dst_with_slash_len;
- 			int j, n;
-@@ -348,6 +373,11 @@ int cmd_mv(int argc,
- 				goto act_on_entry;
- 			}
- 
-+			entry = xmalloc(sizeof(*entry));
-+			entry->path = src;
-+			hashmap_entry_init(&entry->ent, fspathhash(src));
-+			hashmap_add(&moved_dirs, &entry->ent);
-+
- 			/* last - first >= 1 */
- 			modes[i] |= WORKING_DIRECTORY;
- 
-@@ -368,8 +398,7 @@ int cmd_mv(int argc,
- 				strvec_push(&sources, path);
- 				strvec_push(&destinations, prefixed_path);
- 
--				memset(modes + argc + j, 0, sizeof(enum update_mode));
--				modes[argc + j] |= ce_skip_worktree(ce) ? SPARSE : INDEX;
-+				modes[argc + j] = MOVE_VIA_PARENT_DIR | (ce_skip_worktree(ce) ? SPARSE : INDEX);
- 				submodule_gitfiles[argc + j] = NULL;
- 
- 				free(prefixed_path);
-@@ -465,6 +494,32 @@ int cmd_mv(int argc,
- 		}
- 	}
- 
-+	for (i = 0; i < argc; i++) {
-+		const char *slash_pos;
-+
-+		if (modes[i] & MOVE_VIA_PARENT_DIR)
-+			continue;
-+
-+		strbuf_reset(&pathbuf);
-+		strbuf_addstr(&pathbuf, sources.v[i]);
-+
-+		slash_pos = strrchr(pathbuf.buf, '/');
-+		while (slash_pos > pathbuf.buf) {
-+			struct pathmap_entry needle;
-+
-+			strbuf_setlen(&pathbuf, slash_pos - pathbuf.buf);
-+
-+			needle.path = pathbuf.buf;
-+			hashmap_entry_init(&needle.ent, fspathhash(pathbuf.buf));
-+
-+			if (hashmap_get_entry(&moved_dirs, &needle, ent, NULL))
-+				die(_("cannot move both '%s' and its parent directory '%s'"),
-+				    sources.v[i], pathbuf.buf);
-+
-+			slash_pos = strrchr(pathbuf.buf, '/');
-+		}
-+	}
-+
- 	if (only_match_skip_worktree.nr) {
- 		advise_on_updating_sparse_paths(&only_match_skip_worktree);
- 		if (!ignore_errors) {
-@@ -589,6 +644,8 @@ int cmd_mv(int argc,
- 	strvec_clear(&dest_paths);
- 	strvec_clear(&destinations);
- 	strvec_clear(&submodule_gitfiles_to_free);
-+	hashmap_clear_and_free(&moved_dirs, struct pathmap_entry, ent);
-+	strbuf_release(&pathbuf);
- 	free(submodule_gitfiles);
- 	free(modes);
- 	return ret;
-diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
-index 25334b50622..920479e9256 100755
---- a/t/t7001-mv.sh
-+++ b/t/t7001-mv.sh
-@@ -550,16 +550,32 @@ test_expect_success 'moving nested submodules' '
- 	git status
- '
- 
--test_expect_failure 'nonsense mv triggers assertion failure and partially updated index' '
-+test_expect_success 'moving file and its parent directory at the same time fails' '
- 	test_when_finished git reset --hard HEAD &&
- 	git reset --hard HEAD &&
- 	mkdir -p a &&
- 	mkdir -p b &&
- 	>a/a.txt &&
- 	git add a/a.txt &&
--	test_must_fail git mv a/a.txt a b &&
--	git status --porcelain >actual &&
--	grep "^A[ ]*a/a.txt$" actual
-+	cat >expect <<-EOF &&
-+	fatal: cannot move both ${SQ}a/a.txt${SQ} and its parent directory ${SQ}a${SQ}
-+	EOF
-+	test_must_fail git mv a/a.txt a b 2>err &&
-+	test_cmp expect err
-+'
-+
-+test_expect_success 'moving nested directory and its parent directory at the same time fails' '
-+	test_when_finished git reset --hard HEAD &&
-+	git reset --hard HEAD &&
-+	mkdir -p a/b/c &&
-+	>a/b/c/file.txt &&
-+	git add a &&
-+	mkdir target &&
-+	cat >expect <<-EOF &&
-+	fatal: cannot move both ${SQ}a/b/c${SQ} and its parent directory ${SQ}a${SQ}
-+	EOF
-+	test_must_fail git mv a/b/c a target 2>err &&
-+	test_cmp expect err
- '
- 
- test_done
-
--- 
-2.49.0.987.g0cc8ee98dc.dirty
-
+[1]: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
