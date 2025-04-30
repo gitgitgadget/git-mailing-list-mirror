@@ -1,83 +1,84 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F5E1FFC4F
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 07:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21765204F9B
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 07:08:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1745996894; cv=none; b=UvoPEoNTLHxbCz7d33QI0n5XJOhpoSOqHh5sLudhNSUI42Js8GVEZCuY9OzCKpFgekqipumrPl/Ra+VSEI4zeVTOM3RENGkUPopsm1xTMWlXPlAaUf5sgdrccanwGWr+j6tiOH7ICmui56LBNEf4tSz0OQNWy8m48CBOSZg3ep4=
+	t=1745996900; cv=none; b=Fp18x7A7bhWYKeHGWNiQ3D5Hc9nbDuBxscFRWbPUqWauHItu4XcqOtLdtvgQMKAlql9LObTGO9R5svbk+CfkPtmj9ycBYwwgCv9jKUmkx13i4dMHLx3BWaBQGAO3ipVfMP3UBR3A0RsJp+NIJW2JjRePKEKjGXK1pNffeitOFn8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1745996894; c=relaxed/simple;
-	bh=V1krt49anlKfCEYQz2Ak3kW2TsqlHL87YRPpmcQIpDs=;
+	s=arc-20240116; t=1745996900; c=relaxed/simple;
+	bh=gLRnnfdzB33tlq2KMnR+82dQJIvQTPK3XiwTVNM1A8M=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=QWbAp2BvO8Y1bohTQMTexWJ5RqyKozcfPYOYJpmZCHju+VJ7ThQZOVruAJQTddSkd1KMIh48bFHBKnpj4kfSfqn+oKFLVAgb7iWSWeDCJQ2rSwGyzljPbA5MqOuWQqYjOM4QKOtzN9aSs4O5hC5Q0q/r8ardbZPfjXadsHi8Pko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=iZmLfMyi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eX4d60xi; arc=none smtp.client-ip=202.12.124.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=O7PVxur7jMomsP6CUBkwU9ydEO/EFPuqv/Ku8REJ9iNamDhmSn2E+InQC5gZiEW59ylrr601M44kxyGjCaYu7E5R8FNDkllgW6LRg8NWuELQjn5ujv/sPSN7UPBDQUxocpGoMb37W3MOAsvp49R3nTeYS0CDjw4E5+DbP14+ZAI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j9nPKqhP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dF8dI3YQ; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="iZmLfMyi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eX4d60xi"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id D0F3F114023C;
-	Wed, 30 Apr 2025 03:08:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j9nPKqhP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dF8dI3YQ"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 09269114023C;
+	Wed, 30 Apr 2025 03:08:15 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 30 Apr 2025 03:08:09 -0400
+  by phl-compute-08.internal (MEProxy); Wed, 30 Apr 2025 03:08:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1745996889; x=1746083289; bh=J6cFNHvvhp
-	X2/08IgEEc9/5FmZFvH7dOXmNSC3HSZ+Q=; b=iZmLfMyi+ab5eY1K196fDKkHBZ
-	cDeioJz5oH2Cy+Iw/p30eWNcoe4XupR65YFhFctW/0hBFA73VKiOU1HkRvAfrFIr
-	3OXRlx+h0e2WyMTmbNxfSdMJTMy0kDlNYBfWjuLvDXZ7iUlIbqjeUEYZwped3xaq
-	syVF2Ep0wyiV7nLmCDT1z7Vh937DldGdAauEIgqJgzBy1Aq9yAJBPfjS4dsQS9GJ
-	jZe6W/PCt6gcplDkvUq7yHJQ8bqpnSvV+SUh51nHhXSGG5RgSIfpNqX95VsKwofs
-	Ot3keyPhYmmZLkcce/fBvv3CdmjGsZSBYk8sXfMQoFhb09PM31hMvvmGLF/Q==
+	:subject:to:to; s=fm3; t=1745996894; x=1746083294; bh=x9Yj+I3gh+
+	7EYzSCgPX6sfJCtVgu78cCN6ZVOACOKUk=; b=j9nPKqhPzOtb/weGo9UKBZddZa
+	id9JuAXIxstzLoYXVaNWGa3L3mXVPG2K/SGDcC2uZfPvgWFrZL+5wPf6cXfLN5fw
+	tJv0FGhwVifa5VETONEXynVcoqeStmdqXnc+ENnWkvqsICm1JdleU02pgfjW+7gN
+	+6D7BUUJOXR3h0t2iOj043OzKYhgEzXbnG9294NX9ZSXNBnjswaAXhsH/tv1SCA8
+	FCy0m7+CfsvgnWtz4LLe9B70iOwsYPtKdAfSanFlMQMEwV29ltoE4oF7OWcuzQot
+	TuTYU5nuIaePDiyo2HZboeRvjnmr+g1645UD2Iid0QCONSxJGT+sje5n7k6w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1745996889; x=1746083289; bh=J6cFNHvvhpX2/08IgEEc9/5FmZFvH7dOXmN
-	SC3HSZ+Q=; b=eX4d60xiIsCITw2iCRwebcfbJrOQ+yewiMqpU42JD9/0uOq4kT8
-	27lfN+hbfj59StF+NwCumfVj7cfkC6DEAL0ayPR49iiQxEYNHHFMHh245slKySRM
-	12IKd1XnYt6yvLitbkWq/RRCfxvsm9HEuwLLFAGRumuxkQEmnf2XytinPgAJHaP+
-	qNgoFUentvWdwWRRsraLxWBKgRzDffZdg862RpkGEzPWPF/QnEtxOzqx8aEJ4clb
-	hW3aGgiIYiESrHxUMQCyO1oQUHks+UBLao+GDBKGLml/4wsbz6m17gM+2Jwlgh0q
-	EnyJAzTW/DhxAGg3tLHCQ8HGZJLxo0oZ30g==
-X-ME-Sender: <xms:WcwRaBwd6umTD78S4E2OMdkUnzZFiPhwf4uiBRCL2pQM5pXIlUokeg>
-    <xme:WcwRaBSpm1ReZ7dRnbm3IJ05yU-E9G2GRgPz__HvdoFGEWEttgen9ZmLsQynjJ-op
-    hOGLc8BwG2LhH--DQ>
-X-ME-Received: <xmr:WcwRaLVN_w2zxk5uQK1-fr1pHf308U8OvsyL3Jjj8tpCQUkwy48okMhh2RLUheqx5N0yc1QhnjVcIGrKD3yqkfaF6tbg-_2bNgRZkHzlRNuQew>
+	1745996894; x=1746083294; bh=x9Yj+I3gh+7EYzSCgPX6sfJCtVgu78cCN6Z
+	VOACOKUk=; b=dF8dI3YQf05un7mftQtxHbNIlJjcgWeQjJC/UehEGAWQM9k0aPc
+	j44/qxzL+wMr/dzXuQT9i/RrP7TQHHg11w192PrF8ljXH4bC+ToxuhgS/246cRZd
+	lNvhbO2O7sWMCnzh5s1aEm0RiiR487ROmlUslZIMgsrLCn5prZ9kl0Y+4LY0o2f2
+	iPirCj3p9TeRI0PEM57tAXxbWFojelz6si7eoihu8ZvZz90i6fybUfdm6WwV9lJW
+	M9Fgcq92dHRAGmRjnAERWRGMIovanIsTH5wPX4/mU5gH7fH4g3C5bMo+8dDjzc9b
+	JNNGmZ+C9YoY/gtXla2MliAF9czboMod6ug==
+X-ME-Sender: <xms:XswRaLKWedtJCPf8QVeNTt9pQR41yxAgSRHw7uKB_n7klPNt7YA86g>
+    <xme:XswRaPIxN0Cknfm4GlVgRpSEjiz5wDRgm41YmHh6Louh1tgGuoYAZ73EXhez1DWqs
+    PZF2geim2H_DgbRNw>
+X-ME-Received: <xmr:XswRaDsI2MxlK4ODl-Hi-9v2AQ2nBzK32LW-2IGkAMrSvqhnROYKcaTkvSNVG2E-GVtI1e-Sc7A-gSJ0B0ySwi9MvgfhfYqIJM6TDpRvyP-r7A>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeitdeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:WcwRaDggRDMdFJTuxxKB9QFEyZB22PiVDA3fcRs1cA8kGwP2EmUHfQ>
-    <xmx:WcwRaDDM14h_2NXJ6nOc5BsLzGBQMnHbIT8R83iHNj07uB5EJKIpow>
-    <xmx:WcwRaMKse4LhZ_B0FRqeNsyGwAqdWyloyoKf2XHRPT1kfMA4vm6Pig>
-    <xmx:WcwRaCBsVJ3dq7jjX5i140JvvUo1qnjsWeJ0Rj3DmN_RmZnRfUEOsQ>
-    <xmx:WcwRaKdkjzgWHVkXFQ5ehXS9Jta5WREqgAyeVpL0oTaleYVLG_FLE_uB>
+    himheqnecuggftrfgrthhtvghrnhephedujefhhfekheegfffhtdeuvddtveejtdeiteeg
+    feffgeelhfeutdefheejueegnecuffhomhgrihhnpeifohhrkhhtrhgvvgdqphhruhhnvg
+    drrghuthhonecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouh
+    htpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:XswRaEbvp1TlMIJSj0crsXfhwhcV9Ex9H2QpgQ--OegoGUqAvSXcVg>
+    <xmx:XswRaCaJRXG6wqQ29ItZ73DJqNOhZMq75KtmeNijKri_eYO4UpAigg>
+    <xmx:XswRaIAlwpd2SuF3dWY3i6N2E3BpJ2bNRPRl0nJyHA-CF_2egLdXoQ>
+    <xmx:XswRaAaJ-A839wxJRCJ1CwdxG_qIeh0vD7sv8vGSiBQsqtf14dp5JA>
+    <xmx:XswRaJ0HkqylhHaP5PgmW53Nq8l8Cc1cGcYiM02g5sLowFs7q6c-5uY9>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 03:08:08 -0400 (EDT)
+ 30 Apr 2025 03:08:14 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0a84cd15 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 30 Apr 2025 07:08:07 +0000 (UTC)
-Date: Wed, 30 Apr 2025 09:08:06 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e9e1f5af (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 30 Apr 2025 07:08:13 +0000 (UTC)
+Date: Wed, 30 Apr 2025 09:08:12 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Derrick Stolee <stolee@gmail.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/7] builtin/maintenance: implement missing tasks
- compared to git-gc(1)
-Message-ID: <aBHMVm9QIKZwiaBX@pks.im>
+Subject: Re: [PATCH 5/7] builtin/maintenance: introduce "worktree-prune" task
+Message-ID: <aBHMXGNfDZQ-JVT1@pks.im>
 References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
- <3cc1ef7b-40d5-4802-9bf9-ff28824ce563@gmail.com>
+ <20250425-pks-maintenance-missing-tasks-v1-5-972ed6ab2c0d@pks.im>
+ <c629f845-180f-4ecb-949f-a99f184f812d@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,50 +87,91 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3cc1ef7b-40d5-4802-9bf9-ff28824ce563@gmail.com>
+In-Reply-To: <c629f845-180f-4ecb-949f-a99f184f812d@gmail.com>
 
-On Tue, Apr 29, 2025 at 04:02:18PM -0400, Derrick Stolee wrote:
+On Tue, Apr 29, 2025 at 04:02:03PM -0400, Derrick Stolee wrote:
 > On 4/25/2025 3:29 AM, Patrick Steinhardt wrote:
+> > While git-gc(1) knows to prune stale worktrees, git-maintenance(1) does
+> > not yet have a task for this cleanup. Introduce a new "worktree-prune"
+> > task to plug this gap.
 > 
-> > Right now, git-maintenance(1) still executes git-gc(1). With these last
-> > gaps plugged though we can in theory fully replace git-gc(1) with finer
-> > grained tasks without losing any functionality. The benefit is that it
-> > becomes possible for users to have finer-grained control over what
-> > exactly the maintenance does.
-> > 
-> > This patch series doesn't do that yet, but only implements whatever is
-> > needed to get there.
+> I initially thought that this could merge down into patch 3 (move pruning
+> of worktrees into a separate function), but...
 > 
-> Thanks for putting this together. I think this is a noble goal, allowing
-> users and system administrators more options to fine-tune the best ways to
-> optimize their repos.
+> > +static int worktree_prune_condition(struct gc_config *cfg)
+> > +{
+> > +	struct strvec worktrees = STRVEC_INIT;
+> > +	struct strbuf reason = STRBUF_INIT;
+> > +	timestamp_t expiry_date;
+> > +	int should_prune = 0;
+> > +
+> > +	if (parse_expiry_date(cfg->prune_worktrees_expire, &expiry_date) ||
+> > +	    get_worktree_names(the_repository, &worktrees) < 0)
+> > +		goto out;
+> > +
+> > +	for (size_t i = 0; i < worktrees.nr; i++) {
+> > +		char *wtpath;
+> > +
+> > +		strbuf_reset(&reason);
+> > +		if (should_prune_worktree(worktrees.v[i], &reason, &wtpath, expiry_date)) {
+> > +			should_prune = 1;
+> > +			goto out;
+> > +		}
+> > +		free(wtpath);
+> > +	}
+> > +
+> > +out:
+> > +	strvec_clear(&worktrees);
+> > +	strbuf_release(&reason);
+> > +	return should_prune;
+> > +}
+> > +
 > 
-> I wonder if any of these fine-grained steps would be valuable to add to
-> the default background maintenance schedule (perhaps as a follow-up)?
+> ...this implementation is new and nice to have in a separate patch. I
+> initially wondered if this condition needed to exist in the maintenance
+> builtin or could be relied upon by the 'git worktree prune' command that
+> is called by this implementation.
+> 
+> If we are trying to match the behavior of 'git gc --auto', then it was
+> running 'git worktree prune --expire...' every time that the generic
+> --auto condition was satisfied. But when 'git maintenance run --auto' is
+> executed, each task is checked to see if it should run. If we can avoid a
+> child process startup, then that is very valuable (especially on Windows
+> where process creation is expensive).
 
-I think so, yes. My immediate goal is to change `git maintenance run
---auto` to not run git-gc(1) by default anymore, but to instead have it
-run the fine-grained steps. But we should probably at the same time also
-adapt the background maintenance to use the same fine-grained tasks so
-that the outcome matches.
+Yup, exactly. In theory, we could even make the condition configurable
+via "maintenance.worktree-prune.auto" so that we treat it as a limit of
+how many worktrees need to be prunable before we execute `git worktree
+prune`. Maybe I'll do just that in the next iteration.
 
-My idea would be that we implement all of this via high-level strategies
-that get honored by scheduled, auto and explicit maintenance alike. We
-already have the "incremental" strategy, but there are other strategies
-that might make sense to introduce. There should be at least one
-strategy that achieves the same as git-gc(1) does right now, but there's
-probably more opportunities here to have e.g. a "geometric" strategy.
+> So I think this is a good approach. Similar thoughts apply to patch 7. No
+> code change is needed.
+> 
+> > +test_expect_success 'worktree-prune task' '
+> > +	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" \
+> > +		git maintenance run --task=worktree-prune &&
+> > +	test_subcommand git worktree prune --expire 3.months.ago <worktree-prune.txt
+> > +'
+> > +
+> > +test_expect_success 'worktree-prune task --auto only prunes with prunable worktree' '
+> > +	GIT_TRACE2_EVENT="$(pwd)/worktree-prune-auto.txt" \
+> > +		git maintenance run --auto --task=worktree-prune &&
+> > +	test_subcommand ! git worktree prune --expire 3.months.ago <worktree-prune-auto.txt &&
+> > +	mkdir .git/worktrees &&
+> > +	: >.git/worktrees/abc &&
+> > +	GIT_TRACE2_EVENT="$(pwd)/worktree-prune-auto.txt" \
+> > +		git maintenance run --auto --task=worktree-prune &&
+> > +	test_subcommand git worktree prune --expire 3.months.ago <worktree-prune-auto.txt
+> > +'
+> > +
+> >  test_expect_success '--auto and --schedule incompatible' '
+> >  	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
+> >  	test_grep "at most one" err
+> 
+> It may be good to double-check that the gc.worktreePruneExpire config value
+> is being used here, especially since the prune condition is operating on
+> that value.
 
-Users can then pick whatever strategy works best for them, with us
-providing a good default as well as rationale why we recommend one
-strategy over another. Furthermore, expert users can of course tweak
-these strategies even further by explicitly configuring which of the
-fine-grained tasks should run.
-
-Thinking ahead a bit, one might even be prompted to auto-select
-strategies based on repository properties. A tiny repository likely does
-not need multi-pack indices and cruft packs, but a huge behemoth like
-the Chromium repository probably would benefit. But that is an iteration
-that one can think about in the future.
+Fair, will do.
 
 Patrick
