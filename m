@@ -1,143 +1,143 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5FD1F1505
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 21:03:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38ED224FA
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 21:39:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746047037; cv=none; b=kmcVSRvGMzuzbAvl83Egm0UTqZ8hF5gTXwdW+W7NSaans18ToLJNc70F59ohI2XJrf0U3swkqru7J6erWGiT6aFTBYzM3ygMjXAn6kQRR87NP+UniLi944rXS1nJak2TX2rDo0kx7NMg0ldfHKdg/BZUxk1rIR4foeWj9DgLI7o=
+	t=1746049150; cv=none; b=bmG2NcSBMmK+n4yOjsjt4T04kVR0xrfacK54Flt/PiXj0CiLNVzC+pLJt5XcEPDqhLNWx5lLUtEvzGzx6AuNQI8SilrHBC3GBgFPvoLwwtnL8eXVaBwnWxFqwx3tRROVVCtjoiRCtCNCpmepyx225yLBGeEBVHYdsAzeAJW6Cyk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746047037; c=relaxed/simple;
-	bh=j8TwOvaxjnyBkTo4NN7ggChyBjRFq1zfeiIvWlCi/IA=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=YV2OowwM9tIa1+y0XITYlp7mhKUmUL2Ti+WDqxmEWyzlyaNc8SbJlgxhQN74OCg+m+KMzO3fbv7WMRu0JvwEbYimGeeIFkNttgSxRxAbqi0hTP+td8cZff/CXgU2uBheQv2i6MJYS2t9BfQVE8+Ls+P0yy+jfuzeF3xhsHDGNLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Uzpur2BV; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746049150; c=relaxed/simple;
+	bh=qE976FPFbtmszoN5s8fzVWpJp4yW//4q1LJhePnbzL4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GxtwPh+AOdPQKHW0ANzwg6j4ItpYps2zgqHFMG//qnp3KDWNpBOKyThmbMdrDWE5YPZ2KHauBgb+lTOvwubVNJMgTNSfHpFF+ZPVfTj7bb0MEXPy9z4nI8067mwFFSxCxU2PNQSAx6z6C0zSLc848WimDlzf06mUm8zWuRsJBoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DeHDDbQ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mnGhCECl; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Uzpur2BV"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5e5e0caa151so576313a12.0
-        for <git@vger.kernel.org>; Wed, 30 Apr 2025 14:03:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746047034; x=1746651834; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=6bAFtEKhYs8n8bI1FhTaHzJg3wDbJOBxNC0nyVrrsNg=;
-        b=Uzpur2BVyxrmzBZq2z3pgFAfhGXPeMLMFE+jgc31HT1LjdP07LkMhbEA0T1Y19YB+u
-         aaRiIEOspvlZloK9SIu+Vp4pzb9BVrleW6KH50EKjZ+VxTlcGb8fixq/8H0rnng841uE
-         hMptdFsJkUnO38ryUAe3ULSpEoR08l7prhQqaJvFNenl/QFDwwX93LpjNzwk5pBRt+R4
-         SIXdl90R29i5IGYGGHQAFV3wN3mlKIkPQWLF2FvprOd3jghZ03fqyDaUcSmP5Z47dgIP
-         2+P3mZvnk6V+u6yh95I90Tswyqcd2TM09vicIxLLy2pUSIUrTtP9bk9rmlvty0oFN8vJ
-         cKPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746047034; x=1746651834;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6bAFtEKhYs8n8bI1FhTaHzJg3wDbJOBxNC0nyVrrsNg=;
-        b=Kya3B0GnBtOhgYcqYmWUBmrBeqDPVuAFYxTWCdOUOjzdCsyGIVykV213UJL+b+KbIj
-         w0/F2eeVZO7q5G6QFyJ1CNHlme5TvQvC2HH5mrq2703rKqDmIyeGooC3w0VFco4eKm8O
-         l1OkGLpPLYYwRxL43oYM5Hfd98J9DCjgnoYZFOP2O57BAZagZ9oGHLTmPuzrsPtvn9Iq
-         rlt5V54QhanBlkxKvKt6IaW0HA5AYDn2v9vVjfSPU3u5CaTR5TmoEpUJ62sy74/YfyiZ
-         w1vOkIja8Kk7qhdxUBAii2+u12pqGYB6AK0LH2M7yRVh/syW43g0yVRr2mi5zOfP+su6
-         PIAw==
-X-Gm-Message-State: AOJu0YzlqaSOvcJCscCxttHx634m7TiL9vzYf+4fIloC4kBwbvKD9k+J
-	7vvKIKAXEoVv7ZlTMQiwHEiMsU1jq8nnGzylQSjky84rFSGzgWk0aWKEjJMQiiEmwRn2HYA4D9c
-	JPE2GOpLDXpOSl4jX1ApJ6ucN1L4iFli2
-X-Gm-Gg: ASbGncv5z//GjXF7SLJ1g6Nw7cGo/TibJFip/rtU0jIoECpRhKdN6na3CX4fKG4wiDS
-	GlrBEPbOUR67O+UnGfcFJZ9v1pFlFOnFCRkbVekGCbg9dYRH35ffyYAiIyMQrmOUH1/50o5X6EE
-	INdHj8RlcscJYZjRgwZJ+wtdOA3DDCTB+x
-X-Google-Smtp-Source: AGHT+IGxSj5+Wsu3yVJY3WrOtS7qLwl8abvnhsxj6QfNZ8AkGaCVB1HsEBBAM61jf4i6Xb1QzqQBdd2r8iRa0sjxwpI=
-X-Received: by 2002:a05:6402:5106:b0:5ec:da2e:6e30 with SMTP id
- 4fb4d7f45d1cf-5f919373e7fmr46844a12.4.1746047033790; Wed, 30 Apr 2025
- 14:03:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DeHDDbQ6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mnGhCECl"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9902325401D5;
+	Wed, 30 Apr 2025 17:39:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Wed, 30 Apr 2025 17:39:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746049146; x=1746135546; bh=KzBEy7rt4p
+	8MgHfCH4/rx47Z11DA9qx4f/Z6KCY9IO0=; b=DeHDDbQ6kriQi7YU5B2NMMEr+Q
+	b/feK6yrlFwP1S1F1TQ0i5/rYdiqiHvHb3c/yVwRVrUUtBAwRK5Bf72XaB6WOaVr
+	/w4lDcLTrHnu0Ri7Sb03ewZrA/wLgWPGVvHupv9xnPGNwPcJZROJy4g4yik8YAPe
+	ZSnbx7gpnHcwHqJO4GCjMOjmQePZQOruK3TluSvX2Ew0CVm8efXvQxQFcyPq6SYq
+	S4xQofgEmofUsUoVEnxdy4Yeq4lA5TczEE5HEE3lAmVw/Unp8fIAcF2cSYrSxmfW
+	UofsYIH1+tNfMfFztPT5GKE0ZrjTZ6d9Bcg9di1tB/fQ2iXI4OR9q07E3ZGQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746049146; x=1746135546; bh=KzBEy7rt4p8MgHfCH4/rx47Z11DA9qx4f/Z
+	6KCY9IO0=; b=mnGhCECll3k5f/YoxVznrVg3ElGpI/8FjtFqDXgcYBY8He5bSJS
+	EtoeWA0bLg/KuQJJJWXU+PO4qDnONMk9o0539HpmglEZYC0OWVJB6DW7l94dZYon
+	VZ7KhhPXSKFit5snZVb4VXf8fyOtcjxwXLPJx8mJxVjIjUFSeR8MK/62v5gCsGT7
+	tFRRIHXb+X2LdwUltEN7oY/ROTrLpmLgBXMKx6SrfntI4Kn+xUruxBQ7I1CGifbM
+	YqaDxIGUsdqRUEuiTeeXpOxiXWdvk+ZFWIUPmMo4YNlDpOl8opH63bLvKg8jQLn/
+	IZMHoRKilHe99ITqHDtyLFkojdF1xom+Hgg==
+X-ME-Sender: <xms:epgSaKPdvjQIUu5WKGcs4Ou-Mw0gbyxvc-BfjaruUH71AW45v2bUvg>
+    <xme:epgSaI_snuSD5jcSkcIPlWrqZKnvj0dVTUcG7TgUQNF_GqYXzjxo0RMBrDT0CcmM4
+    EbKporwl9VlW1-mrA>
+X-ME-Received: <xmr:epgSaBSLZy1EZJ2fs9BdDuqOyQaiz_6DRIxrRKi2xFoWkjFYh-M1QIz7Iygb29H6Zr9ly7uhLiWSGAVo8kWAzBvkpAiX9Zpf0UFE>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejkedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthgvrhhrhihthh
+    gvsggvrghrjeegieesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:epgSaKubXS8I-wlYKq4mE4QpyBruuA5isxWeUHid_Xy-ujaZUWC4-w>
+    <xmx:epgSaCeunkxUwR4gOG9zkwDc8MGbPthEN7eJNfn1_o_nJwvwnteKSA>
+    <xmx:epgSaO3M4Q4VIzmygScqJJsHFDoPvZ5c9nzMXaBzFbTw95Ew2qACTA>
+    <xmx:epgSaG_AWhc3ZJfKlRVKUwq-2EfyTpO7yh0Gsg1pLscIuh4Iy3H7Og>
+    <xmx:epgSaAoBq0GR5xjlsnDnuTWwLNlASTtuWjAGw70mniQH7ZK42sE-k6oV>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 30 Apr 2025 17:39:05 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Terry Bear <terrythebear746@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Bug Report or Unexpected Feature when "git restore -m ."
+ restores merge conflicted state of a file after a commit
+In-Reply-To: <CAJt5hUyLoNfEbQe4wpES8AZP5yimos+xjqU9B4PszGxMrg50jg@mail.gmail.com>
+	(Terry Bear's message of "Thu, 1 May 2025 01:03:12 +0400")
+References: <CAJt5hUyLoNfEbQe4wpES8AZP5yimos+xjqU9B4PszGxMrg50jg@mail.gmail.com>
+Date: Wed, 30 Apr 2025 14:39:04 -0700
+Message-ID: <xmqqzffxz5vr.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Terry Bear <terrythebear746@gmail.com>
-Date: Thu, 1 May 2025 01:03:12 +0400
-X-Gm-Features: ATxdqUE6UBEftR14cl0sZFg1TFeY-_-hRKkH1gesiod-mpqtjTe387oXHpnjAgQ
-Message-ID: <CAJt5hUyLoNfEbQe4wpES8AZP5yimos+xjqU9B4PszGxMrg50jg@mail.gmail.com>
-Subject: Bug Report or Unexpected Feature when "git restore -m ." restores
- merge conflicted state of a file after a commit
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-What did you do before the bug happened? (Steps to reproduce your issue)
+Terry Bear <terrythebear746@gmail.com> writes:
 
-Can be replicated on a new repository.
+> 9. Make a merge switch
+>     git switch --merge main-copy
+>    The file on the "main-copy" branch should look like:
+>      "update 1"
+>      "<<<<<<< main-copy"
+>      "======="
+>      "update 2"
+>      "update 3"
+>      ">>>>>>> local"
+> 10. Stage and commit file
+>     git commit -a -m "merge conflict on main-copy"
+> 11. Restore merge-conflicted state
+>     git restore -m .
+>
+> What did you expect to happen? (Expected behavior)
+> The "git restore -m ." is not supposed to restore the merge-conflicted
+> state of the file after it was staged and committed
 
-1. Initialize git repo.
-    git init
-2. Create a file
-    touch test-file
-3. Write to the file
-    "update 1"
-4. Stage the changes to the file, create a commit.
-    git add .
-    git commit -m "update 1"
-5. Copy the branch
-    git branch -c "main-copy"
-6. Write to the file on the same first "main" branch by appending new
-content on the second line of the "test-file"
-    "update 2"
-   The file looks like:
-    "update 1"
-    "update 2"
-7. Stage and commit.
-    git commit -a -m "update 2"
-8. Introduce another change to the file but keep it on the work-space
-by appending another line
-    "update 3"
-   The file looks like:
-    "update 1"
-    "update 2"
-    "update 3"
-9. Make a merge switch
-    git switch --merge main-copy
-   The file on the "main-copy" branch should look like:
-     "update 1"
-     "<<<<<<< main-copy"
-     "======="
-     "update 2"
-     "update 3"
-     ">>>>>>> local"
-10. Stage and commit file
-    git commit -a -m "merge conflict on main-copy"
-11. Restore merge-conflicted state
-    git restore -m .
+Just a quick question.  If you did "git reset --hard" between steps
+10 and 11, does the outcome change?
 
-What did you expect to happen? (Expected behavior)
-The "git restore -m ." is not supposed to restore the merge-conflicted
-state of the file after it was staged and committed
+I think the behaviour you observed dates back to the very original
+implementation of the feature, made in cfc5789a (resolve-undo:
+record resolved conflicts in a new index extension section,
+2009-12-25).
 
-What happened instead? (Actual behavior)
-The "git restore -m ." restored the merge-conflicted state of the file
-after it was staged and committed
+    resolve-undo: record resolved conflicts in a new index extension section
+    
+    When resolving a conflict using "git add" to create a stage #0 entry, or
+    "git rm" to remove entries at higher stages, remove_index_entry_at()
+    function is eventually called to remove unmerged (i.e. higher stage)
+    entries from the index.  Introduce a "resolve_undo_info" structure and
+    keep track of the removed cache entries, and save it in a new index
+    extension section in the index_state.
+    
+    Operations like "read-tree -m", "merge", "checkout [-m] <branch>" and
+    "reset" are signs that recorded information in the index is no longer
+    necessary.  The data is removed from the index extension when operations
+    start; they may leave conflicted entries in the index, and later user
+    actions like "git add" will record their conflicted states afresh.
 
-What's different between what you expected and what actually happened?
-The restoration of the merge-conflicted state of the file after it was
-staged and committed
+Notice that "git add" or "git commit -a" are not included in the
+operations that are signs that the previous conflicted state no
+longer needs to be recreatable?  In other words, it is part of the
+design that you can take back the conflicted state across "git add"
+or "git commit", because you will thank Git later when you realize
+that your resolution was broken and you want to redo it after you
+finished your step #10.
 
-Anything else you want to add:
-I am not sure whether it is a bug or a feature but the behavior seemed
-unexpected and I couldn't find any mentions of it.
-
-[System Info]
-git version:
-git version 2.34.1
-cpu: x86_64
-no commit associated with this build
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-uname: Linux 6.8.0-57-generic #59~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC
-Wed Mar 19 17:07:41 UTC 2 x86_64
-compiler info: gnuc: 11.4
-libc info: glibc: 2.35
-$SHELL (typically, interactive shell): /bin/bash
+If you do not want to restore the conflicted state, don't do "git
+restore -m ." at that point ;-).
 
 
-[Enabled Hooks]
-not run from a git repository - no hooks to show
