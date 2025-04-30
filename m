@@ -1,82 +1,79 @@
 Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6556023A9BF
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 10:25:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F9823C368
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 10:25:18 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746008720; cv=none; b=WUcTVwXIvrTCxRtZKZiP01JpJb9OqdHvWrh762Txok4qmH2pf/BAD6RFxbKmGeAK3I2SbkGgOS4hFFJCe8OCaykouPEO6M1KDZJdeSUKuim9sv6A34lG5zSJ1JZZ2E0D7EPVRw5wM6x1uVuCmgOPhwF0P7f1s1vz9HX457fGHHs=
+	t=1746008721; cv=none; b=VzEJie3w6+qoyEXdVCeUaUjqQBaU9iLS6mgX/U4Gi5535CpB/Nl6CZjfw0yUgCPapOxIL7sGVAoUd7wzNZQ1BnsBAwpLTC4Va7aRybxh/i+QlgoZIhvWmeEYBS53gw9FiwKxWwubMpMBB75fURSFyuu2SreZ+BMvizEY7ccKIdQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746008720; c=relaxed/simple;
-	bh=PIKkFBJvRaTzAYK78CP50a71GEzxfevoKZHLAEukEbY=;
+	s=arc-20240116; t=1746008721; c=relaxed/simple;
+	bh=8e7rqB8ui5AKoKouYEDP8XFM743EJgfb4dVIRHzd4VY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=uFPUeq9BdnBufa3JXwsa1KzzOUOqiP2M1MxbVCH8eFRzGeoNGd4S9zxJcS3MpWCyXrW9h/Sg59PL9kK0T3XHk0HuCLLP/yt0zU1BGx9ydtKHdFBzS0tK2jI7wO9R2+trufzFfnzn3Ftw3yTVG34VGATx/sQEDO+os10nKXCo8JM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZFX/0Occ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZyQFcujm; arc=none smtp.client-ip=202.12.124.157
+	 In-Reply-To:To:Cc; b=RDKTUJPRXb7QoP0abOoLpqiajkWX7MEY3DZVq2/4APqPL6JfpKCf7gdcrlWezPukAx1uMyRZwicR871BtCzK8w+qQKvp0iPvYffZCFmdnxrc5a4DedDfPPZr1VG9pdnOKjItLwthYYIlLR+8BUGGzJBNtpsFzzkJvlwsdd3HXxs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D1xFw/XK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NsyDTZe6; arc=none smtp.client-ip=202.12.124.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZFX/0Occ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZyQFcujm"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2509C2540207;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D1xFw/XK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NsyDTZe6"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BB8DF2540206;
 	Wed, 30 Apr 2025 06:25:17 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 30 Apr 2025 06:25:17 -0400
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Wed, 30 Apr 2025 06:25:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746008716;
-	 x=1746095116; bh=/5ooFaVYCzL1iwoMDMNM4Hhl+MhUcxZqePWu1zAx6EI=; b=
-	ZFX/0Occ3nfkA11ZljlyiBE4gZ3gEkM5zv14yUmrH5++NOP4Mxr44ylfO82dZAMm
-	5h8PAYdWhfYR/hL0KcxAy13npBt0LVYLVN4/4CxZvd9VHK/puhOXzAD5EVNRM2aD
-	ZkQNL5aF5M8NdrsQNuZ2//wdRCv1Sw90Sbi/81cs6MOa7moUr6KvW3zjtAjv9Da4
-	aZXMMO4nsYfrSzV36n4erFt2veDa0hX3xtN76mK2SbcvQFih5WdKeAmjXi1I7tBS
-	PeOq2NWm5pFBN6w8anxM1gAMzhVxQqDiSyveZOCA+OQTM06yHJQ3ZJ+WqmdUtBXQ
-	WqrO1TBJci5YaSnZoUrzRw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746008717;
+	 x=1746095117; bh=sZXl1m1PF5VF6oaq43Q6xSY58xacRrhinDw+7wGaMQs=; b=
+	D1xFw/XKdPylV8jdHsj2bOz3332FIkhr1+hqmFj1RsIL2jp9wJuPm1djvauPuIaU
+	yYguIILI+RvQKwNRDK2iscLA4y6vTYVWfnsA+cvGHJgvuuaAWBcj99o7SnRGgggU
+	MhQaFNqHgj2oCVhNhz1GtsIdnb0V4QemMNPGYU3DY1Qg3vclcbzbukPZB1h6oqqH
+	e0XJYj7xhXyl0nyGV+ScUAT9H/HW5IBFPyUMh2uH5RRYF2EBS0pQgj3lhTwfG7RI
+	5+ajEZ6WqR/A2cpuA7xLWTbE9evLum6CjqzBD+WJYWd70QX+t7zH8gvHwTRpObLt
+	cZMCKQ3qLJt9RvXAja5kCg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746008716; x=
-	1746095116; bh=/5ooFaVYCzL1iwoMDMNM4Hhl+MhUcxZqePWu1zAx6EI=; b=Z
-	yQFcujmRF4/hKVY2gma31z6mY1tYaDVj50kUpU0j6QLuS5nWtlrDH/gksFjXlVzG
-	ZSgnPtJTZBYFdJo3utumYSYBpIuVW6atwD3ODIp1ipCL2lOUAyuFO1wXszAxnHLw
-	wtTGwOBH3VxEPIcMJmjxB68RVYgH6pPvR2XyU53y4crc5b+DkoRfe5v2JfoZUZUf
-	ILwOxy5nR0Jsv220YU7C1iAUggwdjjuO752g+2moN1guNzXDmwomq25daybPyRj2
-	lfqOUJIdBXfgPggLbRlW3ViIL9QpPRNtpQsIOZZ2F7dzheZrWIY7QW6HA3wXTtLR
-	Io8YSQImXua//8Xfw6SHg==
-X-ME-Sender: <xms:jPoRaMDqbh9UlbillQqnuJHzelbK7x3UFmFXOalRcaTmcyOvG_RVFg>
-    <xme:jPoRaOiPGDq9ji7N5KsQEBVuVio4Fl74QiV74LnVGDclLK7FGrpngmDUHsIlrvyXD
-    sEWb0kW0M_iZB2zeA>
-X-ME-Received: <xmr:jPoRaPkNAJ_50lARtExZck8cX7n2RD68uUhQIWcx1eARCfT0RBxv5SRy4m4P99IbEqfqwNCkP2KVAQz_BFDyEKsQaiJ6uNdO5zwIo-tzniensA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746008717; x=
+	1746095117; bh=sZXl1m1PF5VF6oaq43Q6xSY58xacRrhinDw+7wGaMQs=; b=N
+	syDTZe6kqLQkOjY5uDkIS5lLxbomruZz5IhWBhNWlNrJSOBnLScpIEMKRCjHteHL
+	7O4WSZCyU3c7Z6dBmEBlt7XXffqust1Y51ow66H58lF+Pxb7r/O6fFvPpHWPRKQs
+	6qWjKIZQcWPdYFm8ytoW1HAD5qx0OQlD4mc8sLfU7QygQMBbT7amUF3hBbcCr9+s
+	FMBnjuhzMIhdKeLXZrNbiY8vZBDxIENMGHRSo6l8kEy+qafh1oB9+daMEaBtKC0g
+	frz1kHIVQFzRO3wJA7SrVmuZ1BECej2+cB6aTmEitmg31xnZQv9OKiB/neevCu9F
+	pNeg5tWe3pBM0ZPPUcGsg==
+X-ME-Sender: <xms:jfoRaCFg92WqzOjbeRK-PixN8EOvKRIFRZfoARJ1_FiVojrl8e3XJg>
+    <xme:jfoRaDWwEy88MZz4oar52IqAFqi-ERPSKQ2itVwiazUL6Vi0gx8ClO7P9UEF9z4Sr
+    mhh56K8A7lKyatLTg>
+X-ME-Received: <xmr:jfoRaML87RldUShQFGZVOEWPHEGdxa9TBWi1j6TU9pjFY7fTFZyUcJLYd21cmlXOtzRwIKFk1gANTe4VIjHShpwZg6r09oJHTuAXSeKKd7Vs-w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeigeehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedtheeiteetfefgfeehkedujedugefhffettdff
-    feeigfeihfeiffegfefhieetueenucffohhmrghinheprhgvfhhlohhgqdgvgihpihhrvg
-    drrghuthhopdhlohhoshgvqdhosghjvggtthhsrdgruhhtohdpfihorhhkthhrvggvqdhp
-    rhhunhgvrdgruhhtohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrih
-    hlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhm
-    thhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtg
-    hpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:jPoRaCwVA9SXYtuKJ-jCxhHclHki-OhBDD_DTz5ukLtYpquNKCZP3A>
-    <xmx:jPoRaBRQKfP7f6RuvFoozuYRWHecvMMOd6VMreGqCUgxy9OfB2vc_Q>
-    <xmx:jPoRaNas31E7QkogLVCesz9x5ClKWUXiV9HaHj8kEt1UsONQqMMMLQ>
-    <xmx:jPoRaKRsai221beR5-KDSAXHrsz1MshRfqGuU_Viml6zhxK3UDbrIw>
-    <xmx:jPoRaItsMawjty7Drj9bFCkssF5E44maLSHzKbUag20Qy1qJ8OYZt6EM>
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedvpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:jfoRaMFWJl9ZmKD-jB8wq1M_c1TmvHCah63OkHMS9OW8NFfKdzNrFA>
+    <xmx:jfoRaIUadIkP_KGbZ319C8lQBV-tK6Ynyxo_c9fbyO1-kwPbcTEwvA>
+    <xmx:jfoRaPNkxR-VEs7CRlsOQQl1A_AS7BIvSwbVqSOm8RctUOAafl493Q>
+    <xmx:jfoRaP3eXxxRAne7TwL2-1v4bNVlOSA10Wq3pD9dLxRl6f2sHHPNSw>
+    <xmx:jfoRaPyPIl_33MO-UdrEjpCFG2N-KmbswXHzyZrzxUqP02nKjt5c_UHd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
  30 Apr 2025 06:25:16 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9fffddf5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	by mail (OpenSMTPD) with ESMTPSA id decf9d29 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
 	Wed, 30 Apr 2025 10:25:15 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 30 Apr 2025 12:25:09 +0200
-Subject: [PATCH v2 5/8] builtin/maintenance: introduce "worktree-prune"
- task
+Date: Wed, 30 Apr 2025 12:25:10 +0200
+Subject: [PATCH v2 6/8] rerere: provide function to collect stale entries
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,216 +82,210 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250430-pks-maintenance-missing-tasks-v2-5-2580b7b8ca3a@pks.im>
+Message-Id: <20250430-pks-maintenance-missing-tasks-v2-6-2580b7b8ca3a@pks.im>
 References: <20250430-pks-maintenance-missing-tasks-v2-0-2580b7b8ca3a@pks.im>
 In-Reply-To: <20250430-pks-maintenance-missing-tasks-v2-0-2580b7b8ca3a@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>
 X-Mailer: b4 0.14.2
 
-While git-gc(1) knows to prune stale worktrees, git-maintenance(1) does
-not yet have a task for this cleanup. Introduce a new "worktree-prune"
-task to plug this gap.
+We're about to add another task for git-maintenance(1) that prunes stale
+rerere entries via `git rerere gc`. The condition of when to run this
+subcommand will be configurable so that the subcommand is only executed
+when a certain number of stale rerere entries exists. This requires us
+to know about the number of stale rerere entries in the first place,
+which is non-trivial to figure out.
+
+Refactor `rerere_gc()` and `prune_one()` so that garbage collection is
+split into three phases:
+
+  1. We collect any stale rerere entries and directories that are about
+     to become empty.
+
+  2. Prune all stale rerere entries.
+
+  3. Remove all directories that should have become empty in (2).
+
+By splitting out the collection of stale entries we can trivially expose
+this function to external callers and thus reuse it in later steps.
+
+This refactoring is not expected to result in a user-visible change in
+behaviour.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- Documentation/config/maintenance.adoc |  8 ++++
- Documentation/git-maintenance.adoc    |  4 ++
- builtin/gc.c                          | 46 +++++++++++++++++++++++
- t/t7900-maintenance.sh                | 71 +++++++++++++++++++++++++++++++++++
- 4 files changed, 129 insertions(+)
+ rerere.c | 92 ++++++++++++++++++++++++++++++++++++++++++++--------------------
+ rerere.h | 14 ++++++++++
+ 2 files changed, 78 insertions(+), 28 deletions(-)
 
-diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-index 41536162a77..b36b62c1c47 100644
---- a/Documentation/config/maintenance.adoc
-+++ b/Documentation/config/maintenance.adoc
-@@ -83,3 +83,11 @@ maintenance.reflog-expire.auto::
- 	positive value implies the command should run when the number of
- 	expired reflog entries in the "HEAD" reflog is at least the value of
- 	`maintenance.loose-objects.auto`. The default value is 100.
-+
-+maintenance.worktree-prune.auto::
-+	This integer config option controls how often the `worktree-prune` task
-+	should be run as part of `git maintenance run --auto`. If zero, then
-+	the `worktree-prune` task will not run with the `--auto` option. A
-+	negative value will force the task to run every time. Otherwise, a
-+	positive value implies the command should run when the number of
-+	prunable worktrees exceeds the value. The default value is 1.
-diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
-index 3a1e2a69b6b..6f085a9cf8c 100644
---- a/Documentation/git-maintenance.adoc
-+++ b/Documentation/git-maintenance.adoc
-@@ -166,6 +166,10 @@ reflog-expire::
- 	The `reflog-expire` task deletes any entries in the reflog older than the
- 	expiry threshold. See linkgit:git-reflog[1] for more information.
- 
-+worktree-prune::
-+	The `worktree-prune` task deletes stale or broken worktrees. See
-+	linkit:git-worktree[1] for more information.
-+
- OPTIONS
- -------
- --auto::
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 005ecc3f192..93a8c856dbc 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -44,6 +44,7 @@
- #include "hook.h"
- #include "setup.h"
- #include "trace2.h"
-+#include "worktree.h"
- 
- #define FAILED_RUN "failed to run %s"
- 
-@@ -346,6 +347,45 @@ static int maintenance_task_worktree_prune(struct maintenance_run_opts *opts UNU
- 	return run_command(&prune_worktrees_cmd);
+diff --git a/rerere.c b/rerere.c
+index 740e8ad1a0b..eb06e5f8bea 100644
+--- a/rerere.c
++++ b/rerere.c
+@@ -1202,8 +1202,8 @@ static void unlink_rr_item(struct rerere_id *id)
+ 	strbuf_release(&buf);
  }
  
-+static int worktree_prune_condition(struct gc_config *cfg)
-+{
-+	struct strvec worktrees = STRVEC_INIT;
-+	struct strbuf reason = STRBUF_INIT;
-+	timestamp_t expiry_date;
-+	int should_prune = 0;
-+	int limit = 1;
+-static void prune_one(struct rerere_id *id,
+-		      timestamp_t cutoff_resolve, timestamp_t cutoff_noresolve)
++static int is_stale(struct rerere_id *id,
++		    timestamp_t cutoff_resolve, timestamp_t cutoff_noresolve)
+ {
+ 	timestamp_t then;
+ 	timestamp_t cutoff;
+@@ -1214,11 +1214,11 @@ static void prune_one(struct rerere_id *id,
+ 	else {
+ 		then = rerere_created_at(id);
+ 		if (!then)
+-			return;
++			return 0;
+ 		cutoff = cutoff_noresolve;
+ 	}
+-	if (then < cutoff)
+-		unlink_rr_item(id);
 +
-+	git_config_get_int("maintenance.worktree-prune.auto", &limit);
-+	if (limit <= 0) {
-+		should_prune = limit < 0;
++	return then < cutoff;
+ }
+ 
+ /* Does the basename in "path" look plausibly like an rr-cache entry? */
+@@ -1229,29 +1229,35 @@ static int is_rr_cache_dirname(const char *path)
+ 	return !parse_oid_hex(path, &oid, &end) && !*end;
+ }
+ 
+-void rerere_gc(struct repository *r, struct string_list *rr)
++int rerere_collect_stale_entries(struct repository *r,
++				 struct string_list *prunable_dirs,
++				 struct rerere_id **prunable_entries,
++				 size_t *prunable_entries_nr)
+ {
+-	struct string_list to_remove = STRING_LIST_INIT_DUP;
+-	DIR *dir;
+-	struct dirent *e;
+-	int i;
+ 	timestamp_t now = time(NULL);
+ 	timestamp_t cutoff_noresolve = now - 15 * 86400;
+ 	timestamp_t cutoff_resolve = now - 60 * 86400;
+ 	struct strbuf buf = STRBUF_INIT;
++	size_t prunable_entries_alloc;
++	struct dirent *e;
++	DIR *dir = NULL;
++	int ret;
+ 
+-	if (setup_rerere(r, rr, 0) < 0)
+-		return;
++	*prunable_entries = NULL;
++	*prunable_entries_nr = 0;
++	prunable_entries_alloc = 0;
+ 
+-	repo_config_get_expiry_in_days(the_repository, "gc.rerereresolved",
++	repo_config_get_expiry_in_days(r, "gc.rerereresolved",
+ 				       &cutoff_resolve, now);
+-	repo_config_get_expiry_in_days(the_repository, "gc.rerereunresolved",
++	repo_config_get_expiry_in_days(r, "gc.rerereunresolved",
+ 				       &cutoff_noresolve, now);
+-	git_config(git_default_config, NULL);
+-	dir = opendir(repo_git_path_replace(the_repository, &buf, "rr-cache"));
+-	if (!dir)
+-		die_errno(_("unable to open rr-cache directory"));
+-	/* Collect stale conflict IDs ... */
++
++	dir = opendir(repo_git_path_replace(r, &buf, "rr-cache"));
++	if (!dir) {
++		ret = error_errno(_("unable to open rr-cache directory"));
 +		goto out;
 +	}
 +
-+	if (parse_expiry_date(cfg->prune_worktrees_expire, &expiry_date) ||
-+	    get_worktree_names(the_repository, &worktrees) < 0)
-+		goto out;
-+
-+	for (size_t i = 0; i < worktrees.nr; i++) {
-+		char *wtpath;
-+
-+		strbuf_reset(&reason);
-+		if (should_prune_worktree(worktrees.v[i], &reason, &wtpath, expiry_date)) {
-+			limit--;
-+
-+			if (!limit) {
-+				should_prune = 1;
-+				goto out;
+ 	while ((e = readdir_skip_dot_and_dotdot(dir))) {
+ 		struct rerere_dir *rr_dir;
+ 		struct rerere_id id;
+@@ -1266,23 +1272,53 @@ void rerere_gc(struct repository *r, struct string_list *rr)
+ 		for (id.variant = 0, id.collection = rr_dir;
+ 		     id.variant < id.collection->status_nr;
+ 		     id.variant++) {
+-			prune_one(&id, cutoff_resolve, cutoff_noresolve);
+-			if (id.collection->status[id.variant])
++			if (is_stale(&id, cutoff_resolve, cutoff_noresolve)) {
++				ALLOC_GROW(*prunable_entries, *prunable_entries_nr + 1,
++					   prunable_entries_alloc);
++				(*prunable_entries)[(*prunable_entries_nr)++] = id;
++			} else {
+ 				now_empty = 0;
 +			}
-+		}
-+		free(wtpath);
-+	}
+ 		}
+ 		if (now_empty)
+-			string_list_append(&to_remove, e->d_name);
++			string_list_append(prunable_dirs, e->d_name);
+ 	}
+-	closedir(dir);
+ 
+-	/* ... and then remove the empty directories */
+-	for (i = 0; i < to_remove.nr; i++)
+-		rmdir(repo_git_path_replace(the_repository, &buf,
+-					    "rr-cache/%s", to_remove.items[i].string));
++	ret = 0;
 +
 +out:
-+	strvec_clear(&worktrees);
-+	strbuf_release(&reason);
-+	return should_prune;
++	strbuf_release(&buf);
++	if (dir)
++		closedir(dir);
++	return ret;
 +}
 +
- static int too_many_loose_objects(struct gc_config *cfg)
- {
- 	/*
-@@ -1455,6 +1495,7 @@ enum maintenance_task_label {
- 	TASK_COMMIT_GRAPH,
- 	TASK_PACK_REFS,
- 	TASK_REFLOG_EXPIRE,
-+	TASK_WORKTREE_PRUNE,
++void rerere_gc(struct repository *r, struct string_list *rr)
++{
++	struct string_list prunable_dirs = STRING_LIST_INIT_DUP;
++	struct rerere_id *prunable_entries;
++	struct strbuf buf = STRBUF_INIT;
++	size_t prunable_entries_nr;
++
++	if (setup_rerere(r, rr, 0) < 0)
++		return;
++
++	git_config(git_default_config, NULL);
++
++	if (rerere_collect_stale_entries(r, &prunable_dirs, &prunable_entries,
++					 &prunable_entries_nr) < 0)
++		exit(127);
++
++	for (size_t i = 0; i < prunable_entries_nr; i++)
++		unlink_rr_item(&prunable_entries[i]);
++	for (size_t i = 0; i < prunable_dirs.nr; i++)
++		rmdir(repo_git_path_replace(r, &buf, "rr-cache/%s",
++					    prunable_dirs.items[i].string));
  
- 	/* Leave as final value */
- 	TASK__COUNT
-@@ -1496,6 +1537,11 @@ static struct maintenance_task tasks[] = {
- 		maintenance_task_reflog_expire,
- 		reflog_expire_condition,
- 	},
-+	[TASK_WORKTREE_PRUNE] = {
-+		"worktree-prune",
-+		maintenance_task_worktree_prune,
-+		worktree_prune_condition,
-+	},
- };
+-	string_list_clear(&to_remove, 0);
++	string_list_clear(&prunable_dirs, 0);
+ 	rollback_lock_file(&write_lock);
+ 	strbuf_release(&buf);
++	free(prunable_entries);
+ }
  
- static int compare_tasks_by_selection(const void *a_, const void *b_)
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 9b82e11c100..530c56ae91e 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -493,6 +493,77 @@ test_expect_success 'reflog-expire task --auto only packs when exceeding limits'
- 	test_subcommand git reflog expire --all <reflog-expire-auto.txt
- '
+ /*
+diff --git a/rerere.h b/rerere.h
+index d4b5f7c9320..fd5a2388b06 100644
+--- a/rerere.h
++++ b/rerere.h
+@@ -37,6 +37,20 @@ const char *rerere_path(struct strbuf *buf, const struct rerere_id *,
+ int rerere_forget(struct repository *, struct pathspec *);
+ int rerere_remaining(struct repository *, struct string_list *);
+ void rerere_clear(struct repository *, struct string_list *);
++
++/*
++ * Collect prunable rerere entries that would be garbage collected via
++ * `rerere_gc()`. Whether or not an entry is prunable depends on both
++ * "gc.rerereResolved" and "gc.rerereUnresolved".
++ *
++ * Returns 0 on success, a negative error code in case entries could not be
++ * collected.
++ */
++int rerere_collect_stale_entries(struct repository *r,
++				 struct string_list *prunable_dirs,
++				 struct rerere_id **prunable_entries,
++				 size_t *prunable_entries_nr);
++
+ void rerere_gc(struct repository *, struct string_list *);
  
-+test_expect_worktree_prune () {
-+	negate=
-+	if test "$1" = "!"
-+	then
-+		negate="!"
-+		shift
-+	fi
-+
-+	rm -f "worktree-prune.txt" &&
-+	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" "$@" &&
-+	test_subcommand $negate git worktree prune --expire 3.months.ago <worktree-prune.txt
-+}
-+
-+test_expect_success 'worktree-prune task without --auto always prunes' '
-+	test_expect_worktree_prune git maintenance run --task=worktree-prune
-+'
-+
-+test_expect_success 'worktree-prune task --auto only prunes with prunable worktree' '
-+	test_expect_worktree_prune ! git maintenance run --auto --task=worktree-prune &&
-+	mkdir .git/worktrees &&
-+	: >.git/worktrees/abc &&
-+	test_expect_worktree_prune git maintenance run --auto --task=worktree-prune
-+'
-+
-+test_expect_success 'worktree-prune task with --auto honors maintenance.worktree-prune.auto' '
-+	# A negative value should always prune.
-+	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=-1 maintenance run --auto --task=worktree-prune &&
-+
-+	mkdir .git/worktrees &&
-+	: >.git/worktrees/first &&
-+	: >.git/worktrees/second &&
-+	: >.git/worktrees/third &&
-+
-+	# Zero should never prune.
-+	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=0 maintenance run --auto --task=worktree-prune &&
-+	# A positive value should require at least this man prunable worktrees.
-+	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=4 maintenance run --auto --task=worktree-prune &&
-+	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=3 maintenance run --auto --task=worktree-prune
-+'
-+
-+test_expect_success 'worktree-prune task with --auto honors maintenance.worktree-prune.auto' '
-+	# A negative value should always prune.
-+	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=-1 maintenance run --auto --task=worktree-prune &&
-+
-+	mkdir .git/worktrees &&
-+	: >.git/worktrees/first &&
-+	: >.git/worktrees/second &&
-+	: >.git/worktrees/third &&
-+
-+	# Zero should never prune.
-+	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=0 maintenance run --auto --task=worktree-prune &&
-+	# A positive value should require at least this many prunable worktrees.
-+	test_expect_worktree_prune ! git -c maintenance.worktree-prune.auto=4 maintenance run --auto --task=worktree-prune &&
-+	test_expect_worktree_prune git -c maintenance.worktree-prune.auto=3 maintenance run --auto --task=worktree-prune
-+'
-+
-+test_expect_success 'worktree-prune task honors gc.worktreePruneExpire' '
-+	git worktree add worktree &&
-+	rm -rf worktree &&
-+
-+	rm -f worktree-prune.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" git -c gc.worktreePruneExpire=1.week.ago maintenance run --auto --task=worktree-prune &&
-+	test_subcommand ! git worktree prune --expire 1.week.ago <worktree-prune.txt &&
-+	test_path_is_dir .git/worktrees/worktree &&
-+
-+	rm -f worktree-prune.txt &&
-+	GIT_TRACE2_EVENT="$(pwd)/worktree-prune.txt" git -c gc.worktreePruneExpire=now maintenance run --auto --task=worktree-prune &&
-+	test_subcommand git worktree prune --expire now <worktree-prune.txt &&
-+	test_path_is_missing .git/worktrees/worktree
-+'
-+
- test_expect_success '--auto and --schedule incompatible' '
- 	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
- 	test_grep "at most one" err
+ #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
 
 -- 
 2.49.0.987.g0cc8ee98dc.dirty
