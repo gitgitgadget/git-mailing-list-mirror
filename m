@@ -1,239 +1,169 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from MRWPR03CU001.outbound.protection.outlook.com (mail-francesouthazon11021108.outbound.protection.outlook.com [40.107.130.108])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8534421B9F8
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 08:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746003516; cv=none; b=NNtZ9jExWO9oJRPcbEn9/8N/BO9qEJzBdnwXmsOUuo2Bl6GGvuTxvBEbGgACNpUcs4eeJfPK3nH0Eq9UBTsuHzebcTO/yQjy86YNXBrzP/kIPztfBL1X6IoBflHOc5E20Waw2djnrqteKERfRy7j0LnZGm0U3juTWv9oxCg6dTc=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746003516; c=relaxed/simple;
-	bh=GeXeSjOeL+14V4r/tFvsYNC2W4BO9ZTjzxC41jdC4jc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=lnAxi0xH4p/adxaxJEZed90HmHGANbRpvccNpZDs1a73NVuVdNSQDDh2A3uNRWtOtgRQxSm5a7nU8H/3VLiupTmuB6q8UT4yTLNm8KOoHBLLOtsAcdl4o26MmakhX3Ipj95L9r42/rtlR0o6SK2+/EnWyX41K2kTunefuht+0as=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=wqfhDOIG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ei9rcoGu; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E84DC2B9A9
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 10:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.130.108
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746008442; cv=fail; b=IltR9F1ntBydPEtEMA5P8e1pgwMvmq+pv6DwoBziHK/hnNYb58/67z0oiHbeGVo7d8plGZ8uCmIr8NEzgsTUqat1uLyFdz3fk/XnhKmdEDdgpvm7aANWzHtGdr+IMQzI+K4+3oKjFf7zaGU2qViozzymQhMsOAszXhyEt5a1EM8=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746008442; c=relaxed/simple;
+	bh=zesq5XfcCxjgFxDFb4BmpCCr3YlZgdaQaUISkrecc0g=;
+	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=KrnE3R0HshxWrXUM/CAQ0PXE3bWaCGsAGpGnJ+OnE9JlN1CAj4+/iTJEMj+kln0rIgqIMqZeOGSjmbr4tZVpWgMoDfxpLNC34qf9PNaAp+eMEA567N3MM3cLC9srNm4uqPHxrY08k+UM9vKVenAVWA1Q2EYcGy2jjwai+5OJXUM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wszib.edu.pl; spf=pass smtp.mailfrom=wszib.edu.pl; dkim=pass (1024-bit key) header.d=wszib.onmicrosoft.com header.i=@wszib.onmicrosoft.com header.b=T9e/73kc; arc=fail smtp.client-ip=40.107.130.108
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=wszib.edu.pl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=wszib.edu.pl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="wqfhDOIG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ei9rcoGu"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6A90625401E1;
-	Wed, 30 Apr 2025 04:58:32 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 30 Apr 2025 04:58:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746003512; x=1746089912; bh=rbZZh0ie4/
-	mKsR1rMKavpa8yclv6rZ/1itswYwG6dWo=; b=wqfhDOIGN8640edMX55i86CAfM
-	vbaT2ck96eRnaehnkJCh89B6vJrmONKfXSLwr4UyPNoyvdShiYJgpWhUFicm4X1V
-	49mXdowSEO5Dn5rVXlLP0M52AFZnYMPAYbOtiTVu8JpkUTr0ts5sdrBdJVTj53DZ
-	V/IT3k8pS7XGpXAyqr6P4Ey3yVmzxPRe18tUqlm1rBt9HMkcJGbLOjiyeJsNusyc
-	vTnCMFmkbx8rYUuHTeOZ6Nhnq/kNcTma1eJfIIwUtFhqqxPBnaZJzfft/mmKhKU0
-	OZtOLclrPMakvx4Vx/B+KlMLPoucAQPRgskRwdHpqeSRVkgypvRIWH5wOLhQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746003512; x=1746089912; bh=rbZZh0ie4/mKsR1rMKavpa8yclv6rZ/1its
-	wYwG6dWo=; b=ei9rcoGuVuaD9vSEJ/0HdyIOFhFMGSISiKtO+E4lOup5sMbpnPn
-	JuFgIeSfiUJCbFYimWb1tQ0BvJ54OQGrVGwsYV+cQiQ4bPLaWt++mNpapddIRZZ0
-	KMPAOO67II3GAvyr+G2fWMDS8NgwrPIn/NpfChPBJaHXPyBYsWq3eWQOwyoW6J40
-	WPcX7TXRuNfrGF9/US2eoy4QdlgkGxB5oJNb6PuibSqEqEdsx7ycSzgBzIvYNhcu
-	S8t7MDmvsxWkIYh/pQDFeFEezG9Oi00fnNZNi8B8PLDX/kS1/CX+GBNEa6TD529c
-	ojJutslkYzvikCmywz8BzZH4e8o0W8iWeEA==
-X-ME-Sender: <xms:OOYRaLY_zpAWspnQ-LZqYpiS678ZKS1hm8D7tiPajbBADdn4Ua4_8Q>
-    <xme:OOYRaKbAzMyjAZbQfPAGhz5da4vhgjRBuXOavMK-laMWSW5JJ3VHQ1K-z91wrZ8uv
-    c8XUJQlFO1wxBF4DA>
-X-ME-Received: <xmr:OOYRaN-Cq6ygRe3VWF2MNow4QUV-ccxDdgAVRTnd3GIjS-yWKW400vshKiZgXua04maKNXTcQ10KcsM8N3i2fajyHBFyzt9kB3NWAg_YQdZRyQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieeivdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
-    gtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgt
-    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
-    hgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:OOYRaBp_Eunv5vWFh3VqBRLgJiyIa737cPE25TBgkivmrKkBxn01_A>
-    <xmx:OOYRaGo-Tc9HQUPTpO7T4OFCxhD9vZsLaIm3Gqu7ZoPcwOYp_koNUw>
-    <xmx:OOYRaHRrlaC98T-ok2G-yF9nEqitbMJGFhjRK6Z3hde0qHhBkky0UQ>
-    <xmx:OOYRaOqJtrdaZq0gFBCHl4VxWlRBwFZDW8fQleOWdX5focS-C-xb8Q>
-    <xmx:OOYRaIXG0Bf3HaFXxkFwYZ4mlwLLsx_dINffTnZ1LwYhkMxCwkrMOaev>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 04:58:31 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 566d6809 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 30 Apr 2025 08:58:29 +0000 (UTC)
-Date: Wed, 30 Apr 2025 10:58:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH] ci(win+Meson): build in Release mode, avoiding t7001-mv
- hangs
-Message-ID: <aBHmMKqhVDEl777o@pks.im>
-References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
- <xmqqmsc4uv6d.fsf@gitster.g>
- <aA8ymUzWM2t0QkFP@pks.im>
- <xmqq8qnkdxu9.fsf@gitster.g>
- <aBDD-NeN2YoQbU9S@pks.im>
- <xmqqplgu4ru5.fsf@gitster.g>
+	dkim=pass (1024-bit key) header.d=wszib.onmicrosoft.com header.i=@wszib.onmicrosoft.com header.b="T9e/73kc"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=eqzvvosbRVD5w+RdQlDlThy8uOdKQqvVf86G5jYa/RwuKVFBDJV5JFVAuJ/q9CKQ6QRclR3ndUEMsumA3c2XrAEnBknyhYdcWGGkTMgTSqtw05FJ33pTVW2obEutuCgXWtGOrdY/n63MOacdEUTUupAdIj6auHOSuedI2UC1XqxSslPCUYcnaRlIa4SAQRMrkpuRTvLei8P4FLffiqZId5nxjvAn5IBUeOrJ8ToSFMbP8wbtTP8mIVHXloPWehMtnUWYgb7sGezwSHXiBfruk60wWeF59yS3sGbsESb99EEP+u08x6OgNo254b8vWwyck6GcGSXVsL4tS3qyUjWrGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=7SRQdDnuXwakSbbP+HlG6VCA1aQlnjubJShHatmAsUw=;
+ b=Ds4hbHmuAh+SXUKiyUvdUDSrzNzYQUblJt1Sel7H2n6Yj6OaLHZr4M9owOPk4A+jS7dbMNfw05CrT81SaZDKU94a1CWPkfD2WoxJ2pocd/+UyEOiuiMxob4IV8plfdVyXcgu6+V8nlfHc5UyvrFPjI3YuQrM/7n1lIFEfzpwvG9zMJfylsGG5GwaQTbAVL/r68XhBRH6Vetq4nR+YS0OhsHr9N8MXAp6189RX3zfRcmVoIKJvW1Z0ndv7+Js0oBaLQeQTSuJCRyZlqhhQD6VqFM/UOk16dXxNOd0f7DxeZ2a7V8nOUqwbbi1X+6sx0F7+OuC1fi1EtImUCaDrViFng==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=wszib.edu.pl; dmarc=pass action=none header.from=wszib.edu.pl;
+ dkim=pass header.d=wszib.edu.pl; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=wszib.onmicrosoft.com;
+ s=selector2-wszib-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=7SRQdDnuXwakSbbP+HlG6VCA1aQlnjubJShHatmAsUw=;
+ b=T9e/73kcesomWo6cU1r3Pmqkz6uUDQ/UOkWI7Qz6xzVPFMNYov//Rzozi3Rs4s9YXkYPEikkSUjj9Uee0Guo6PRoDQQNMo0kDlpPYblIkYNhCGG0rgdZScQnwSnO1JRiDxqCsra3MPTTazFCoT07Iu1GWSE4BU8zRimDlTbZ3yI=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=wszib.edu.pl;
+Received: from AM9PR04MB8700.eurprd04.prod.outlook.com (2603:10a6:20b:43f::8)
+ by PAXPR04MB8767.eurprd04.prod.outlook.com (2603:10a6:102:20e::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.33; Wed, 30 Apr
+ 2025 10:20:36 +0000
+Received: from AM9PR04MB8700.eurprd04.prod.outlook.com
+ ([fe80::dbdd:df26:dcb6:16a7]) by AM9PR04MB8700.eurprd04.prod.outlook.com
+ ([fe80::dbdd:df26:dcb6:16a7%4]) with mapi id 15.20.8678.025; Wed, 30 Apr 2025
+ 10:20:36 +0000
+Message-ID: <10c9da5c-234c-4a40-bbff-91ba820dd970@wszib.edu.pl>
+Date: Wed, 30 Apr 2025 12:18:24 +0200
+User-Agent: Mozilla Thunderbird
+Content-Language: en-MW
+To: git@vger.kernel.org
+Reply-To: m.miklas@wszib.edu.pl
+From: =?UTF-8?Q?Marcin_Mik=C5=82as?= <m.miklas@wszib.edu.pl>
+Subject: basics - auto staging?
+Organization: =?UTF-8?B?V3nFvHN6YSBTemtvxYJhIFphcnrEhWR6YW5pYSBpIEJhbmtvd28=?=
+ =?UTF-8?Q?=C5=9Bci?=
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: WA0P291CA0012.POLP291.PROD.OUTLOOK.COM (2603:10a6:1d0:1::7)
+ To AM9PR04MB8700.eurprd04.prod.outlook.com (2603:10a6:20b:43f::8)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqplgu4ru5.fsf@gitster.g>
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM9PR04MB8700:EE_|PAXPR04MB8767:EE_
+X-MS-Office365-Filtering-Correlation-Id: b7afea2c-612e-441c-d38b-08dd87d0a5d4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|41320700013|376014;
+X-Microsoft-Antispam-Message-Info:
+	=?utf-8?B?Q3JOeWZtdGZXd2xwNU5JeVdycDRESmxpa1k2bkRBOTRSUmhYQWJnQzFISFhQ?=
+ =?utf-8?B?QzJneXpudUQ3bmcvNGY5aEpuTnBLK0lXaEtsRGRxL0VpcnQ2anpaVDlITllk?=
+ =?utf-8?B?S3VyZDYwbDEwUjJ3ald1ZWdLdmZOaS85ZXJpQ1JMekcybEx2V1o2dDU5Q0Fq?=
+ =?utf-8?B?R29VdzFWOVR0ZmxmMDI3R0l2MEVWM1J6VmY1V0NIdjVyMTJXVVl5U3AyNXdj?=
+ =?utf-8?B?alJVWEowZitqVi9vRDR1NTdmaHdQNGQ2TnBLd28vNkNlTmtvTjdqSHFEODlZ?=
+ =?utf-8?B?UzFVejBoMVVaaExIaktyZzlFakR1MFdxNUNvem9yTGhJU25PZWRFK2NXblow?=
+ =?utf-8?B?QzVGU2g4eFlvNWsxNnBEMVVWcG93MUZJRjRwclZyeXgvZzVsS3lZMVV1S0Yz?=
+ =?utf-8?B?Y0pTOEhEOVg0RWlwVzNrT09VUHd6NHIxMGw0eXo2NUE1Y0FlMEZsU1krc2J5?=
+ =?utf-8?B?Y3QxcUJaV0Y4Qk5NNjNqdzR5eGhyOThEMldjN3NmYlYyQTQ0eGVWeWN0eHd2?=
+ =?utf-8?B?U2x0bXZXOXJSTXlxeUh6ZDkyU2FvR0pQODE4K0JlU09qY0tkclBJRy81bTFk?=
+ =?utf-8?B?MjlDU2ZaUW5DZ09hbngxeElnd24xSnJKamhpNlp0SE4vY3plVXVVVC9XbExh?=
+ =?utf-8?B?THVsRk9wNFZ6amJuZWV6Y085U29Ba0xHMDFqTjhkK1VPejh3Q3FzaFZvYXlr?=
+ =?utf-8?B?ZzVTNTd1UHBqTzhVR0VTQXovZkFZdnJmNDJOcjJMaExnb2VFUnhyU0t2dFMr?=
+ =?utf-8?B?YW9ETm9WU2QrWFVMMEVTblc4cE1RNWZoMVhMRGRFM3o3ZU9HVVZrVnplU1Zi?=
+ =?utf-8?B?U1VDbGM4SCsyeVoxZFRWc3VORXEzQWo3MldZcW1sSm96ZFZ0ZHFoaFdtZEZo?=
+ =?utf-8?B?bHRqQ1ZGQXQ5cmo5NWNWNzErMDBjK3pUQVV3dUswbkZrSGZzUEl5dEJZL3Nw?=
+ =?utf-8?B?VjFNMUN6YUhzaXdlNkFESmdmUkFVY0E2a2RIV1FvZXYvS2xZZFV6bUNDMFJp?=
+ =?utf-8?B?OFNhZmxmcGE1ckozdWRHb2lpaDRHTkxaNVpiZlUvSVlQTE1ZcVRJZUVHZ3JE?=
+ =?utf-8?B?aDNBTytLb2hrZFIvSzQxbUhsZ0pHa0tvM1UyL2lQT0xvU3prTDRnS2YycC9r?=
+ =?utf-8?B?ZGw3MjV4TGZ6UEhJUEZuUFNVNnkxN0I3K1hxaUFkSUZDMWlYOTRjWTc4M3Rw?=
+ =?utf-8?B?Y0lHKzBPaFltV2FYL0RxL0t2UEtzYk5mTlNkQ1VOREpUekE4S3FDUkhiWVpl?=
+ =?utf-8?B?RG1RTmYxc1FRQy8wWXRXK2hVNDNXNFNwZjRWdDRDdXpjR1dFQTRBZkJhMDdm?=
+ =?utf-8?B?dEtEbHorU1VqS1kvdVlsRWs3UEdxbnNFazg0blZ6SVQwdSs1ZEtwN0tGRU5E?=
+ =?utf-8?B?dWxXZU9scFFhSkFacnJXSjlFREFjR1pMUkNaZDltZmxSVFBacVd5ZHBnV2ow?=
+ =?utf-8?B?Z2JtcGJYamFrZzZlWWJzdWJ1dUlsTEdCbUJlOTdvdjVqaXhzSG53OFA4Vkl2?=
+ =?utf-8?B?aU1qNlAxREpjZkc4Qmh0aDRVSDJUVnlTNms0VmF0amRvT214ZkZaWnFGVmNi?=
+ =?utf-8?B?YkdQYTYwOTlmWFdJdmNaOTVDR0dKNlpUbHFLWWtXdjlZK3hONHlPTm1kcXRS?=
+ =?utf-8?B?UExmbEJmRGhGVUVsR0V5OU5XS2YxVS9VNUNWOUI5bDUwRit2QTYwYzJtQWtp?=
+ =?utf-8?B?Nm1WM1RlUlpoK05FZXRFbGNWYzZuOW5UT0JpY2dTMFRsaE83N1I3MFkrMG5N?=
+ =?utf-8?B?eU9LelBsanMyR2NyUGpRYnlTTFpPZDVSWVAyeEo0K21STWozdElpL2xKSlpq?=
+ =?utf-8?B?ZXQwNEcwZDdPanBnT3QwN3BPOG1BMFd5MWI3STFqQjVsK25taVRsOExMWkE1?=
+ =?utf-8?B?QTBKaWFsTDZRVitlSlR5TllWMnM2UWJWU0lEUjAwelNyb29MVkhOODRNZVdW?=
+ =?utf-8?Q?mOVZTVQLffc=3D?=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AM9PR04MB8700.eurprd04.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(41320700013)(376014);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?QXR0bXA1VTN4OTE1dmNhUEhxbTIvdytwMk9Xdks5YnBGY0EyMTlzMW5mUmlI?=
+ =?utf-8?B?QjAzSmY2eHVEQUhRN3J3bVFrcHFPR3Z0UHp2U0M5bjBheUJoL1ZRMnUyN05p?=
+ =?utf-8?B?bmUxV0hTa3hMTnNzYVJDa0RrSG5wTEhtMWxpMVdOaWd0MGp0SktXRFlRdlp3?=
+ =?utf-8?B?L2dQTkxUVkF0SHBWcE15Y1pLU1FKTE1Xc05Zb1B1TTkzQkNaM2JiRFlCb2Zr?=
+ =?utf-8?B?SU5mbGt4Z2FtYk1aa2RscGI1c05McFlzRXRPZGlVK21SalBEOEV6K0hWMFdh?=
+ =?utf-8?B?cFBCVncreVZRVEY2VDBiWFJwc2FydzNTK1JWaW52cnRLbWxEQXVRaTV3VTQ4?=
+ =?utf-8?B?S1dmYkw5SWFnbmpRRWR1WU9seFM5ZDE4MitaaXJOeFd2UnFsa0tYcFNUWVg5?=
+ =?utf-8?B?ZCtFVThYNi8rbExsbkhhVUZRc1NiamxScVpweTVncGg2eHN6OFNJb2FGQWFB?=
+ =?utf-8?B?Mk5XYndxbDRmL2JONkZjN3ZJVWRibDVuVU85QzBXVzMrOUV5MFlIa0MwY2d5?=
+ =?utf-8?B?QkpBTi9sTmd1RGlFUXBJSk01Y3JIUlRJQlBBZTQ5SXhZSEkxOFVQQ29CcUV3?=
+ =?utf-8?B?ZlBHTEd5WGRBN3RRMEhUUnZDeks0VWdmOVVBMmJBbXhLdEFuL3FUY2pObDJY?=
+ =?utf-8?B?MzFhaDJSVHMvL2JVN09Jb3NoN081eXNuQ3AzUnVUdG0vcGhRVlRmUUwzSSt3?=
+ =?utf-8?B?Nk80OUFlRnZwaFhWYTJsL3F2cFpjQ3RKQ3pyZEJnUGJXUWhjdFJ6ZXllT0tU?=
+ =?utf-8?B?WFlzVzg1cXVEc29zRjhnNXQ3ek1McitpV1dIZ0xqenFJVTFQbVVzWFVuVG05?=
+ =?utf-8?B?NnVoWmFOaFk5SC9EUFZHTUc3ZE5UZUNOZWZpVDRvU2R4VEZ0eEZYWFllSjNX?=
+ =?utf-8?B?c3JoMEZpbk56OGpqeFlUYVhZcVBDWVVtaWtLOGRwNFEvYmttK0hlOUNhdHdu?=
+ =?utf-8?B?U2w3VGZwMEVWcjR1Z1JMKy9scUE4QW4vQVZrbnd6YWg1ZXpvVmcxNHc2c05T?=
+ =?utf-8?B?Ui9lNEVBbEZ0VThuU29JUEI5d0NTMURvT3Y2K28wM21ha3pPTWcrUWt5K29p?=
+ =?utf-8?B?RHRSMFFrTkYzbFB5eXBxMEVPWUNTZ1RjbjAzLytKMHoyeGRnV1c2cTdaQ0F3?=
+ =?utf-8?B?Si90NVpuZFhjbDNsUG5uYkovYnVNbS9WNnc5Wm0yNEZRQmd3NWN2QUZSQm1z?=
+ =?utf-8?B?YnJxVnNtQUxWKzdzUW5QdVN2bXNOOTJSY2dDeTgxR0Z1MmMyY0VKMTlGbTJD?=
+ =?utf-8?B?YXRhL01NSXZITnZ0SVl3UktuaVUzTEwvYXVhbU5JdzRoZG1uRXBGY2hubDJo?=
+ =?utf-8?B?bVh1ck9zSTNtMnhFa2hacGtsejgzT0daZUJ4eGVWKzVld2Y1bGNpNEJmYkxn?=
+ =?utf-8?B?Ry9OS2UrS2FPNEZzZ1ZWSzJoUGlFV0lCUnk0bVVFZ1A3T1BVcHZHRFhuWWZF?=
+ =?utf-8?B?UXRkaisrbGM4cEhQWFRwUVpyalF0YkpZcmxmeFZVVVoxQ1hHVXc5S0dtWUc0?=
+ =?utf-8?B?NmFpNjlFemRGSVhNTG1jcGkxd3JiMW9WQXpZZjZpZFVuL01EN1p2c09JV3h4?=
+ =?utf-8?B?THF2cEpaS1F0WEF6QmN1VTVuMktIRmovYktpYjJ1VzZqUWk1MlhtU1N0dC82?=
+ =?utf-8?B?K1pqcnZtWlNHdnd3NHA0RXNwSThwQi9naXJNbWFuV0pPV2swUnB5TTFPYU5W?=
+ =?utf-8?B?M1JSRXlrZm1SV1dsZUxTbGN0alhFeWZYam15ZmM2UXEvcnlwSUZsLzJJNm5p?=
+ =?utf-8?B?T0sxdDhKb2paMzU3ZTgrZEFweXI0RFc1dTkxWXNIbUVOcE1ZZ2FyMjB3TnRq?=
+ =?utf-8?B?V0c5Zi91enpsUnJXSjZXWWNieHBSeVJxME91VjQrdkxJcWdkWjEvYnppS3oy?=
+ =?utf-8?B?RkFlYUpCeXY3VVRNdEI2Q04yb01LYThGSTRUQWJxNlNhajc0ME1tUVlzNnlC?=
+ =?utf-8?B?T1BRamo2NnlONENQNm9IbXdtUnJZSVhUYXdIVDQ2QnpVdGhNbkJFblJmRjNY?=
+ =?utf-8?B?VFprWEhMVno5eGNlTnh1KzdTUGY1MmE4ajZHRGxwZ2hIZ3RHZEREUkgrVjcz?=
+ =?utf-8?B?R2g2N3dSb3FOWUJMUlZuQXByaHE5NHA2NmNFSW51NGZ0YmlWWEJrTUttZVNl?=
+ =?utf-8?Q?WcZ+wAfoSTWdxNYF3Gi5feJ8O?=
+X-OriginatorOrg: wszib.edu.pl
+X-MS-Exchange-CrossTenant-Network-Message-Id: b7afea2c-612e-441c-d38b-08dd87d0a5d4
+X-MS-Exchange-CrossTenant-AuthSource: AM9PR04MB8700.eurprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 Apr 2025 10:20:36.3750
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 785acb66-71d5-49f6-b377-37a292991048
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: I/BoLFvS8gqxye0Ry6dZgVrvB0brZyMS/1c75MtH5TgnuERblUqDyd4WXq8wC/Zfb6NYo8NTv2r0jwC67G7nJQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PAXPR04MB8767
 
-On Tue, Apr 29, 2025 at 01:48:18PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > @@ -213,6 +228,8 @@ int cmd_mv(int argc,
-> >  	struct cache_entry *ce;
-> >  	struct string_list only_match_skip_worktree = STRING_LIST_INIT_DUP;
-> >  	struct string_list dirty_paths = STRING_LIST_INIT_DUP;
-> > +	struct hashmap moved_dirs = HASHMAP_INIT(pathmap_cmp, NULL);
-> > +	struct strbuf pathbuf = STRBUF_INIT;
-> >  	int ret;
-> >  
-> >  	git_config(git_default_config, NULL);
-> > @@ -331,11 +348,17 @@ int cmd_mv(int argc,
-> >  
-> >  dir_check:
-> >  		if (S_ISDIR(st.st_mode)) {
-> > +			struct pathmap_entry *entry;
-> >  			char *dst_with_slash;
-> >  			size_t dst_with_slash_len;
-> >  			int j, n;
-> >  			int first = index_name_pos(the_repository->index, src, length), last;
-> >  
-> > +			entry = xmalloc(sizeof(*entry));
-> > +			entry->path = src;
-> > +			hashmap_entry_init(&entry->ent, fspathhash(src));
-> > +			hashmap_add(&moved_dirs, &entry->ent);
-> > +
-> 
-> OK, this collects in moved_dirs the directories that will get moved.
-> And then a separate loop, ...
-> 
-> > +	for (i = 0; i < argc; i++) {
-> > +		const char *slash_pos;
-> > +
-> > +		strbuf_addstr(&pathbuf, sources.v[i]);
-> 
-> Shouldn't there be a call to strbuf_reset(&pathbuf) before doing
-> this?
+Hello,
 
-Yup, indeed.
+when I execute
+git commit file.txt
+(by listing file as argumentbut without the -a switch) for a file 
+file.txt that I have made changes without staged them in the index, the 
+changes are still commited.
+Is there a way to make this work like command
+git commit
+without committing the changes that are not staged in the index?
 
-> > +		slash_pos = strrchr(pathbuf.buf, '/');
-> 
-> And start from the deepest directory, going one level up per
-> iteration, ...
-> 
-> > +		while (slash_pos > pathbuf.buf) {
-> > +			struct pathmap_entry needle;
-> > +
-> > +			strbuf_setlen(&pathbuf, slash_pos - pathbuf.buf);
-> > +
-> > +			needle.path = pathbuf.buf;
-> > +			hashmap_entry_init(&needle.ent, fspathhash(pathbuf.buf));
-> 
-> ... see if the path being moved falls within that subdirectory.
+Best
+Marcin
 
-Ah, there's another gotcha here: when moving a directory, we also add
-all of its children to `argc`. So this would now always fail when we
-move directories around.
-
-I guess we can handle this by introducing another `MOVE_VIA_PARENT_DIR`
-mode -- we'd then skip the verification for any entry marked like this.
-
-> > +			if (!hashmap_get_entry(&moved_dirs, &needle, ent, NULL))
-> > +				continue;
-> 
-> If there is no overlap, we need to do anything special.
-> 
-> > +			if (!ignore_errors)
-> > +				die(_("cannot move both parent directory '%s' and its child '%s'"),
-> > +				    pathbuf.buf, sources.v[i]);
-> 
-> Otherwise we are in trouble.
-> 
-> > +			if (--argc > 0) {
-> > +				int n = argc - i;
-> > +				strvec_remove(&sources, i);
-> > +				strvec_remove(&destinations, i);
-> > +				MOVE_ARRAY(modes + i, modes + i + 1, n);
-> > +				MOVE_ARRAY(submodule_gitfiles + i,
-> > +					   submodule_gitfiles + i + 1, n);
-> > +				i--;
-> > +				break;
-> > +			}
-> 
-> So with
-> 
-> 	$ git mv a/ a/b x y z/
-> 
-> then a/ is left in the argv[]/sources[]/destinations[] arrays, and
-> upon inspecting a/b, we come here and in order to ignore a/b, we
-> shift it out; the resulting arrays would have a/, x, and y being
-> moved to z/.
-> 
-> It somehow feels troubling that it would lead to a different result
-> if I give a morally equivalent arguments, i.e.
-> 
-> 	$ git mv a/b a/ x y z/
-> 
-> where a/b survives and a/ gets omitted.
-
-Fully agreed. I was quite surprised to see that git-mv(1) already
-behaves like this with a couple of other error conditions. So I simply
-continued to build on top of this behaviour, but I'm not a fan of it at
-all.
-
-Note that this behaviour doesn't trigger by default though. So your
-above command would cause us to die without doing any change at all. You
-explicitly have to `git mv -k` (whatever 'k' is supposed to mean --
-maybe "keep going"?) to opt into this weird behaviour. Which makes this
-overall a bit less awful.
-
-> One thing that came to my mind (without concrete "here is the right
-> way to solve it" that I am myself convinced) is this.
-> 
->  * Should this code path even have its own ignore-errors handling?
->    "git mv a b z/", when 'a' does not exist, may ignore 'a' and move
->    only 'b', which may make sense.  But the original command line in
->    that case is a plausibly correct one if there weren't missing or
->    unmovable paths.  The command line "git mv a/ a/b z/" seems to
->    fall into a different category (aka "total nonsense"); no matter
->    how you fix the items in your working tree files, you cannot make
->    it plausibly correct.
-
-Fair. I guess the intent of '-k' is about handling the case where a
-subset of files might be missing, not the case where the original
-request didn't make any sense at all. I certainly wouldn't mind to
-tighten this code.
-
-> a totally unrelated tangent that made me scratch my head while
-> reading the original ocde is the dest_paths variable.  It is never
-> used as a collection to hold potentially multiple paths; it is a
-> strvec only to be able to call internel_prefix_pathspec() with, and
-> used only once with only one element in the vector.  At least it
-> should lose the plural 's' suffix to unconfuse its readers, I would
-> think.
-
-Yeah. From my point of view this isn't the only confusing part about
-this code.
-
-Patrick
