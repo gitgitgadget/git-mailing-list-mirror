@@ -1,86 +1,84 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1A5B3B2A0
-	for <git@vger.kernel.org>; Wed, 30 Apr 2025 19:17:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEFC20B7F9
+	for <git@vger.kernel.org>; Wed, 30 Apr 2025 20:28:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746040630; cv=none; b=puONomdfSInueElKLiff6LMeM0kNMaMAeoZ7OE7ZGQS2Kq7o7txH/9wpfqaBz1uszbYUOZNvN7Nt2Prf/uFQDqTj43pFKI3yFXs2fzSiL9abSqPni0oD3dgMoXzoJEMflECuahXhcQJi5HlWPk3Q8VHq24rXTLxwc3f94WkWg1k=
+	t=1746044890; cv=none; b=P8wxTU35KJ9VF8wrqdwj/mNQ6NHB5f0Bn8gwdsUeq03kWYdojwboWWH612IQ9sgnkZI0M0IcKIdAedA1idcFZSTR9WqlFRt8TSfVIy0BQ0ZZuvxG+pO+WMVN7d6zRgQQGe32BQd2be7Auvl460djRvmrQu0Lkalp+XveZwLLUJQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746040630; c=relaxed/simple;
-	bh=rcOdQSvzwydQKDHJKhLKjcXw1j0yb5GFZTscMTWsZfw=;
+	s=arc-20240116; t=1746044890; c=relaxed/simple;
+	bh=rnhJytPPbKZtk/mCDPt7nqRhbplM1C+RmznNAMdBBMw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=u+JxsfX7O7MwZv/ExiWMhjomBf3NkkTCxc1HDAJ6uSNr88Z9Hg8PITtOhS159UIuiX6SuFlVi3pWRt2K1wwIPbAqomBK2OBJzKczkIgY0LIFnpg3GiN/C8FiMf0jpc3+kS5niMezbH1abeMSVrcbK+8Z6eVzlDHCRLxIXH7mxvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TPz5i8Rv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=w2p8ScwN; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=hVy/tjBInUdyGXU0LiMWAtrJ3kUNcNTvm2iCeMvtjCMGxQAC8TXRd2M4JQOsAdemalsK4DjQBlh3dF078UfvALi+NPaNyUYiqyGira3O+bRXka0/ndm3a6ZIq0hUB+cMwsrAI5Degc221DCE5jlY9EyQqDZbRmas7bTIju0bmbA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=L536d+GH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=md2bp5vK; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TPz5i8Rv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="w2p8ScwN"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8977025401FF;
-	Wed, 30 Apr 2025 15:17:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Wed, 30 Apr 2025 15:17:07 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="L536d+GH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="md2bp5vK"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1354F11401D7;
+	Wed, 30 Apr 2025 16:28:06 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Wed, 30 Apr 2025 16:28:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746040627;
-	 x=1746127027; bh=NEOCs0iZHqpfuIe6mDLdtzI3xHbDFNF05pyOENf+qos=; b=
-	TPz5i8RvIJyYCpVzFP78khUYfcVHijoI9BAJiZIJhucnj++Jgs3Ha/LEGtBmyAMw
-	lAcrCfwEswXHtTqb1/SrUJB52rsCjyDErJ7v+Bux1GnbFb2D37sJlh2Qt2tARhsS
-	NIXHwrKhFPxC3f7QOdD3t7cWVrXo8UFy2d0FAvjXT9WV5OVWUr+yIpq7gSim/Y7u
-	GSbI7L0FABIlelBflmck2Sa1z04Ph0ThhaVuI0upPQZfmdaY5C9PwkwXpOSRNSzA
-	VHVsjJpF+p4QQj10hYDoF2SgWOjb41LK2IXDtLccFqFzTQ5/ZENJeXsNef+6dXhE
-	5e8+T9gxWCG/TipEtbH7fw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746044885; x=1746131285; bh=/l/uo2M7d/
+	alkdCP0ai7ZAo/0nAt0sNcbpc69qLLL80=; b=L536d+GHzYeEUxjpd9sNxaBJmS
+	P7uZgbZLH+nOJz+8ZgZbyPh9Hdv2dESZUTUAzIPHUeOPqb3yluqc6e/R2Eatfv+z
+	sR8+WxJqXIp2qCSkUM82UJ8cf/B8WAJ+aWxIjBBtbmAJI3ZgUoyvbjxW43aTeg07
+	a1oApOAJMO66T3qIada2uth10AfTXPpih1LnP17t/esGMppKZ9ZuWQseIcWJ/utd
+	Lrs+CCYM+fXGBaxXgUQKoxjyfAA6RgCWSyo7wLgkXacLjhpVmvt44OukP39CAX5j
+	JGZphUs885WH4r21nEIcWf9P7+u1UfW5shp+x/J4fawkGSfwPUJc3HanYBHA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746040627; x=
-	1746127027; bh=NEOCs0iZHqpfuIe6mDLdtzI3xHbDFNF05pyOENf+qos=; b=w
-	2p8ScwNvkCpfMHnzO5ktpaXTnu8FICaeKt8QIBJrMsyj1lJ32g2h6H6Ve4LSjkzQ
-	iRrKEt6ZZ6dVvtiDLczYcmOZFqdf8Nm4tp8SQvR7R2L6ciLNWU1gh+joIMCb7lI+
-	UVWAYRkgc33/dMTyl1UzcTzLy98mOy0WH1S86tA1zTT0BafYVS1MK/WUFfYIpYsc
-	2i3Yo12PmzSZP2iAlmVYfL+rKlLqsi66y2rMPR5K+htNU7xJUgzVKSz+owLmP0Bk
-	hzd3N/kO4qmP1Zzx8FzQfEAg8bzy/HxVUbxN9c6FQMw5nu6xMVoD8QB2tXiqGDIg
-	aPKg1LjH8rLWnUtqCaaBA==
-X-ME-Sender: <xms:MncSaF2qCxUlQf8jSORe-0W2hc7X9FnuvocMpP7p35U0BwNOBU5DnQ>
-    <xme:MncSaMEzuWztBPfEtxKPCG7iKf3xMjvpBZwhOeB-dn6kSUMPWgWSnIPayGnslVM9i
-    t94UKYibdkrgVbomg>
-X-ME-Received: <xmr:MncSaF7HprrrTWZ4kDgTfDeLxsYN3IOxFPg3f3Z_izIOkriddJ4legVxz5ZSC6qYRCIF82kV2E8nXOFuNMoD_k47Ha1XlDN9xwP8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejheduucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746044885; x=1746131285; bh=/l/uo2M7d/alkdCP0ai7ZAo/0nAt0sNcbpc
+	69qLLL80=; b=md2bp5vKjB3wBqn3KzgG0LOImh3x8BDxg1uMA2hFq1eZGZYRsyr
+	17gaFeo68xGgC4FBWy1bKSvZRDLQ0fvUqxA9fAPC0nRExXN7ANCnHwaWOCNKjTLa
+	TZkhgV41O4xu+KPRNRf4TNqRKqL9YiSToHQvYLDQsaykfAY57wAeMPgc7siydxoU
+	OXiniaIV0iCHyY9Uqg8xSaWSeIxgpmsVaVrZWrKunIQunKkjdrUjBBkaQV6w8sTr
+	3KcV8CiHUfZPqLCt+tgzje5Zw4ZD1XHqKcNmty6VKL1L01jMpimTaCD2W4k4mnb4
+	paA2nJ6xX+RBX9MtlwvruQGkURuBSD0CqXg==
+X-ME-Sender: <xms:1YcSaBSIcCRqZ7xCsrecOYjGS4jIOS6D3k87NKRfdFo0cvuDph2qjg>
+    <xme:1YcSaKwEkrCazEURUOwjYc3Qq9nzlc83a89hWIBTxsevV3fHJ6Y45oAym3XB0kYs0
+    vnN8caW52Ah-WbQpw>
+X-ME-Received: <xmr:1YcSaG3dTszhKV61p0R_T3ChnyUFIANs_JbNDLobAEMhkzwWfrDClz1ZWEgyccCVWPOfCZPgUocE99sRAw2ZhDDDBZWh9eEjIQ2->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieejieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehl
-    ihhnohhjohhsshhfihguvghlrdhhrghuphhtsehunhhiqdhjvghnrgdruggvpdhrtghpth
-    htohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:M3cSaC3DrOO05Pw_Y-qumx2XAmCDVr3SAniqsnRMQSri54Mu0yQnlg>
-    <xmx:M3cSaIFMqVfIuAd6PAvP9QhWN4HcWw9xal73sgsnOxadpcHnAEbeKg>
-    <xmx:M3cSaD8VpFN0aN_pvnAf91o2N6H9V8jv6_WQoenpUT23b37wQE2vLw>
-    <xmx:M3cSaFk3pbLmKMdpWPJFx9l_MYobuEzPZ6EO1j-4Ue1uAOOdnj1pbw>
-    <xmx:M3cSaDklFMN1i9CwpZa84nsEo96qeHF-yiTnuEky5FIRzNVU9m7aYeOR>
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
+    hgmhigrdguvgdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:1YcSaJCh48O1fPvTS2vlMhY2Dcrs0mIFng6D6peIzkjhNGAipqJDeQ>
+    <xmx:1YcSaKjuFvjH0ERJ2nku9DRCSKzKFZcweYGSuKV-knz3Hr7o6imIVg>
+    <xmx:1YcSaNop9W_raPRoKCCsRB3jk58zY2K3PPeOmXDTRLO79VtZiGvBjw>
+    <xmx:1YcSaFg_kgLM2jwgM3kNOTeS49cgSIBt1OivqjF3LyujQCpvSgvCRw>
+    <xmx:1YcSaElwcpu4ojJBYZ3KXt_NJhpOWEs4QdKqC0-8lPUPLH-hdhQxo0hL>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 30 Apr 2025 15:17:06 -0400 (EDT)
+ 30 Apr 2025 16:28:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Lino Haupt" <linojossfidel.haupt@uni-jena.de>,  git@vger.kernel.org
-Subject: Re: doc: git-clone: Improve discoverability of --no-single-branch flag
-In-Reply-To: <057e8f72-ea67-432b-a687-2b5af08fba05@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 30 Apr 2025 18:49:46 +0200")
-References: <fb842b0e-3666-4b78-bf00-c7d11a42dd25@uni-jena.de>
-	<057e8f72-ea67-432b-a687-2b5af08fba05@app.fastmail.com>
-Date: Wed, 30 Apr 2025 12:17:05 -0700
-Message-ID: <xmqqcyct1mtq.fsf@gitster.g>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  Derrick Stolee
+ <stolee@gmail.com>
+Subject: Re: [PATCH 0/2] scalar: add --no-maintenance option
+In-Reply-To: <pull.1913.git.1746008680.gitgitgadget@gmail.com> (Derrick Stolee
+	via GitGitGadget's message of "Wed, 30 Apr 2025 10:24:38 +0000")
+References: <pull.1913.git.1746008680.gitgitgadget@gmail.com>
+Date: Wed, 30 Apr 2025 13:28:03 -0700
+Message-ID: <xmqq8qnh1jjg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,56 +86,50 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> Many options are documented as `--[no-]`.
+> These patches add a new --no-maintenance option to the scalar register and
+> scalar clone commands. My motivation is based on setting up Scalar clones in
+> automated environments that set up a repo onto a disk image for use later.
+> If background maintenance runs during later setup steps, then this
+> introduces a variable that is unexpected at minimum and disruptive at worst.
+> The disruption comes in if the automation has steps to run git maintenance
+> run --task=<X> commands but those commands are blocked due to the
+> maintenance.lock file.
 >
->     git grep --fixed-string -- '--[no-]' Documentation/ ':(exclude)Documentation/RelNotes/'
->
-> This is explained in gitcli(7), “Enhanced Option Parser” (for some
-> commands), “Negating options”:
->
->        Options with long option names can be negated by prefixing
->        --no-. For example, git branch has the option --track which is on
->        by default. You can use --no-track to override that
->        behaviour. The same goes for --color and --no-color.
->
-> A concern might be that changing `--single-branch` in this way would be
-> inconsistent with the overall style.
+> Functionally, these leave the default behavior as-is but allow disabling the
+> git maintenance start step when users opt-in to this difference. The idea of
+> Scalar is to recommend the best practices for a typical user, but allowing
+> customization for expert users.
 
-A pair of quick counts:
+The feature itself I do not have any objections to and I found the
+reasoning given above very sound.
 
-    $ git grep -E -e '^`?--no-' Documentation/ | wc -l
-    189
-    $ git grep -E -e '^`?--\[no-\]' Documentation/ | wc -l
-    80
+With these two patches, we still have an unconditional call to
+toggle_maintenance(1) in cmd_reconfigure().  Shoudln't the call be
+at least removed, which would mean that reconfiguring would not
+change the auto-maintenance states, or made controllable from the
+command line of "maintenance reconfigure"?
 
-I think we should try to unify to the following style:
+It somehow looks to me that the real culprit of making the result of
+applying two patches still unsatisfactory is the original design to
+have the toggle_maintenance() call made from inside register_dir()
+in the first place.  Shouldn't a much higher layer entry points like
+cmd_register() and cmd_clone() be where the decision is made if
+maintenance task should be set up (or not set up) by calling
+toggle_maintenance(), leaving the register_dir() responsible only
+for "enlist the directory to the system"?
 
-    `--frotz=<string>`::
-    `--no-frotz`::
-	When `--frotz` is given, the command does THIS using the
-        given argument <string> IN THIS WAY.  The default is not to
-        to THIS, unless SUCH AND SUCH CONDITION, in which case THAT
-        is used implicitly as <string>.  To disable THIS even when
-        SUCH AND SUCH CONDITION is met, use `--no-frotz`.
-
-That is:
-
- * Both positive and negative form are given separately as a
-   headline item, so that "grep" would work well;
-
- * The description should be unified, so that it is clear to readers
-   what happens when the positive form is given, when the negative
-   form is given, and when neither is given.
-
- * Mark-up the text that the users MUST input literally inside a
-   pair of backquotes.
-
-Which means that existing "--[no-]opt::" heading should become two
-lines, "`--opt`::" and "`--no-opt`::".
+IOW it feels to me that enabling (and now optionally disabling)
+maintenance is tied too deeply into the act of enlisting a
+directory; if we need to disable maintenance (and a mode to add
+enlistment without enabling maintenance), it is a sign that it
+shouldn't be a parameter into the register_dir() function that
+controls what register_dir() does, and rather it should be done by
+letting the caller who calls register_dir() decide to call (or not)
+toggle_maintenance().
 
 Thanks.
+
