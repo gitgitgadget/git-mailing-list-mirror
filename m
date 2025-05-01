@@ -1,131 +1,99 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD74E18DB16
-	for <git@vger.kernel.org>; Thu,  1 May 2025 16:07:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 997041A0728
+	for <git@vger.kernel.org>; Thu,  1 May 2025 16:29:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746115632; cv=none; b=Git8It7KdqAHm5n213udkBH35wIU5N0wUS9HX5WCAD+XfGFfQRSNei1l3pg6ehJzFVYEWsxJ3Xt6ZrFZC2EMCcvRWmXx8K/lOnceuKetAHgjeQjFiXeeR8BqYlz8i01rQoyefZqez9tuNfV+bJr8cqudhxZWZ+8Bwqw5ipAvUkc=
+	t=1746116983; cv=none; b=G/8KD60XIvSeDH0tjU+12Xh2/HGsP7AF+U3oVvtJeVoJx+ay9W/xrAd7sAZuBPDvupK/DvKwxfXR9M9fDAuB9AadnXo8CtYbLnCah21MDkR2NVNywnD+CaOHgAIcStkp6Wj1HjV858PPmAGiJd3PrSGz9lWaekI02/8m4540Yvg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746115632; c=relaxed/simple;
-	bh=NTJMRUtVdbrNlAu2Tr0xeWNGOpN9CLrJ8je4q/6HUD0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=N1ZOCe3tKVaJofIIMlo3vCMGLhPC5YuN22Tv1KkPmBIPywNjuKJS+g9MmvO28uolNfjTIYR1RjWQYFrhzA5BUfh+f+QQxc0JtStZPPkffJnpCOMGkqJxruOh5QXXiw47PFdXTHnHqXaWbHSoWIpJK28N977awRvVs2FThs4govk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=i8l769JH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=erdtjA5X; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746116983; c=relaxed/simple;
+	bh=ors5z66BCI6eICxYuSYeGmgLpWFeCs9PYB46SL9OzjA=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=AUp3Z5xGxxGTyC0mWfU1zsu6BsnPFsQHvZwiBP//B8maKP4HpSKETjvcR7KKHkO7Z7uvX8iEsIyQ7NCix4lD5temgKLVtgj+S2nZif11efRrIgF7aVM0acxztB8uRzSc5wjjZhMxJ72MJM+amhuOElr/6+bcqqN+o+L3KvRABN4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QWsc61OE; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="i8l769JH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="erdtjA5X"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8D5DE1380E7C;
-	Thu,  1 May 2025 12:07:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Thu, 01 May 2025 12:07:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746115628; x=1746202028; bh=7k5Zj+V4P0
-	ReiroKlr6ANGmrZNzfVXZiFlOH9YBNq/8=; b=i8l769JHy7jlC1D9CYQtsFpzyD
-	R4F7gnCZMwCkuh0LE/onxUrB53g2S+xpvEKwdcNLbcD4u8659avhFYRZie0+HLy0
-	HTsyKsTREomlNycdxhYfeVy7PnpJyphjKtCmJgXfySYdNMt+avKueB5aOGQyunKE
-	mkB7IfitKZ+WyyMbHj/HpCQz7EbgkYS5Z8+fCNZvGmz4+tv81omiAMa+6LgOtGk/
-	l7dMdQLgjHeFPsfn9LHLmF/crVx6Egk+s+jAUo1/XPgrtdQ8EQ/hdFGUSfHdIFPa
-	vQImsHEvdeYjaXW1KXXO7NvLmJlA1ra65skrm5Z8AnSGhFpaGAJF19zWKnVg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746115628; x=1746202028; bh=7k5Zj+V4P0ReiroKlr6ANGmrZNzfVXZiFlO
-	H9YBNq/8=; b=erdtjA5XrwjIHTN+o7tRnlbKwKx/6yy+DC+pGVFrqMkItdC2IPY
-	X2yZ63njEwqJFwibyU2KEfGj4Cdd8/LckZZNO39NqH4gSO6aatD8i3bjN6aiq2nU
-	mW1IBwlMwDV/9Kz0iWgtlBHq5zIAg41sspAsk81gpi7ucQoKu2gBHKamQvESfL9T
-	z58fL7YjI1Yliq5DfhxDFQyl1in0DyVqjQvWNk7mdzCTBp/nPjbkSQvRh5m5JZVh
-	xf6hszKZV5AyJxl+7CMLmrIetEBxoMwrW6xZbX1OOWSjQsV5JIyD+ocRU3gMs7R5
-	z5bcam6JguFXur2qRkyDsuCVG9mvQHIQqbQ==
-X-ME-Sender: <xms:LJwTaPNrjMM1OE3lWYuj0kWHBeJU1WZWPQlZOVnhs4fMcrYFaGyTPg>
-    <xme:LJwTaJ9kwPGI6lbe68ZtI-Xy-s2ig1mrPDKXoyuvp4ZgnsQIOLjQB-I-mquV2RZHT
-    __IJyYBpAGvcXwFxQ>
-X-ME-Received: <xmr:LJwTaOQJRmUnFG70VkoPZsxfg08ENXk25Cx35jttQ5DmFgSZVAto9o2HZ7YEfofewmoLTk4oBATKhmz9mragiSF8ltyHhoFjfrZf>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedttdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:LJwTaDt6yCYy1YFl-t2nYDHY_bnX3-I_md7D9MJhuh5AqUYUZ7fsGA>
-    <xmx:LJwTaHfR1LVFTjbGIjpf_LZ-sHuor6aZl4b4kJSgQTRw8URhvXocPQ>
-    <xmx:LJwTaP21aGxXYitFs-MIQL22lizcjpENzEnMD_cGK7O-SrSbkXfzEA>
-    <xmx:LJwTaD9c8NkRI2oKb9V1ktX0EOxdx2f_yiApoQuVrHPdED9Vk68UxA>
-    <xmx:LJwTaI4nOOKnPK5VllWfbJNv0CBt-4cP52Bg_WWg2g4bHYs2IsgYhSyR>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 12:07:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,  Phillip Wood
- <phillip.wood@dunelm.org.uk>,  git@vger.kernel.org
-Subject: Re: [BUG] rebase: can write reflog with uninit. `action` string
-In-Reply-To: <20250501131751.GA1725607@coredump.intra.peff.net> (Jeff King's
-	message of "Thu, 1 May 2025 09:17:51 -0400")
-References: <20250428194048.149348-1-code@khaugsbakk.name>
-	<ce0f41e4-7d90-4398-a0e9-e8ba69791e57@gmail.com>
-	<fbc97d6a-2022-4a64-a2ba-5a7255cd81a6@app.fastmail.com>
-	<20250429215155.GA36727@coredump.intra.peff.net>
-	<6743a9fc-11ca-45ac-bc40-4148f5d85d27@app.fastmail.com>
-	<20250501131751.GA1725607@coredump.intra.peff.net>
-Date: Thu, 01 May 2025 09:07:06 -0700
-Message-ID: <xmqq4iy4z55h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QWsc61OE"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-af5085f7861so854409a12.3
+        for <git@vger.kernel.org>; Thu, 01 May 2025 09:29:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746116981; x=1746721781; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ors5z66BCI6eICxYuSYeGmgLpWFeCs9PYB46SL9OzjA=;
+        b=QWsc61OEt3tWbONOVhJZsZxeFu0/pDqzWDhbegP0H/vTvWXEHvnaJfh3x70DyQmCXH
+         XTm0U19T3R016BO7t/8Y0xlZ9hyJft35rxyOxShRp5w7vSySML3FxY4a8RRXtnqnjO5n
+         MElURM9NJ2UosT+pBmNElLX7jyWVYEcviCWxOw/XSradZopM9/gxJ4rnTGaM3V5jg+73
+         TvhgX+uj9VHnwnbhhYVEgIRCvZv5kJoRoq2Y+j0NE4C0MIA+Ir2sJfkPmjr3ya97rOxL
+         Hjt+Bq8t4usETfuMzihvsaFMOyodpnvSTphP2Sct7FyvC/1xlRl1DEsu0ndZfBqEx8h5
+         VL+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746116981; x=1746721781;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ors5z66BCI6eICxYuSYeGmgLpWFeCs9PYB46SL9OzjA=;
+        b=sXt+acE70HIW4QCxB44vSibeF4A2/v+C3A9F1Oyk40jvsU9n8ez+d66NeG/ote9pDJ
+         hg9L35RYxCw6V/CR7TlapQhDH+SSg5n8+5JYX0E/IbIckmBibkUzEIELoQ8qdcBmMnXT
+         RSn+jlO8rdNNxg1mpq1WYkveKJu2XVoCH/gM7H+hTfDTDLptGYtcvh8a2JYSYiO+exrg
+         NHk25/Mcv+FGlFsH+kiLaLHLZeNFHKrjS4AZfQY2Wy7Aj7ySXvC4tZTBgTmf/c0dS8++
+         G13SB8nlQW5BjfGld6lHxSeUeI8sUCwmc2rFM06oGcTx+QtQ9hLJOGJMski3Bn5O4WVy
+         FgvA==
+X-Gm-Message-State: AOJu0YwKSTkd/NRJulsFAb1BaJpJSQfQmNL2EZNayFVJ6I3EHP5nqt8X
+	23r+pHj81F9jgSWoKFEqTJT5BB5vvvuzTnNoiyLShWAXb4Q8heOYmMVtRCeB
+X-Gm-Gg: ASbGncsm4lYAxilu2UWscq1ytIMs8A6ARed49s5MBiI44kM9QKAHtbSVV4kvlv83RPD
+	cPCTbbmMcaBAg9pgud6QvgFxZCpaFYVMvpSkLu/CSoILioy3E6GW7++jrOIVwwruThWnY14LVSj
+	tmyvg5zCkLPb83S2kpWOECWwFy0K0FpwfQOVrHxQJTATnTa29DyYxIy6/pb3OY/SwSLFp77QgL+
+	kjctnwXPcVvQ67RE3E2BaDyQWR2c+QdLaZDCLtipMSlmnaZJ+CrTlqB9QZW0krk4E3d8u3YgLol
+	H+wxt/JplqnFAleeXJiQHYzXO2fS9Qff/OTawWYOTEAn+vU5jxhoi0PM3dEuoRw9
+X-Google-Smtp-Source: AGHT+IFxrejGF7ZjXxz7YFp+GKwn621KtQIFphZA3sVOeLbtM7VuYh6GJFsJ6/dhbgYkfQ97rFhimw==
+X-Received: by 2002:a05:6a21:350d:b0:1f5:79c4:5da2 with SMTP id adf61e73a8af0-20aa4182f30mr11478980637.31.1746116980753;
+        Thu, 01 May 2025 09:29:40 -0700 (PDT)
+Received: from smtpclient.apple ([189.62.149.3])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7404eeb1a67sm1006420b3a.25.2025.05.01.09.29.36
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Thu, 01 May 2025 09:29:40 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: Draft of Git Rev News edition 122
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAP8UFD3b8as+Qk8=TQACdXqCpNXxFtW15m4G76=r-WzsE3QbkQ@mail.gmail.com>
+Date: Thu, 1 May 2025 13:29:23 -0300
+Cc: git <git@vger.kernel.org>,
+ Junio C Hamano <gitster@pobox.com>,
+ Jakub Narebski <jnareb@gmail.com>,
+ Markus Jansen <mja@jansen-preisler.de>,
+ Kaartic Sivaraam <kaartic.sivaraam@gmail.com>,
+ =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>,
+ Taylor Blau <me@ttaylorr.com>,
+ Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+ =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+ Linus Torvalds <torvalds@linux-foundation.org>,
+ Daniel Barkalow <barkalow@iabervon.org>,
+ Catalin Marinas <catalin.marinas@gmail.com>,
+ Martin Langhoff <martin.langhoff@gmail.com>,
+ Darrin Thompson <darrint@progeny.com>,
+ Patrick Steinhardt <ps@pks.im>,
+ Scott Chacon <schacon@gmail.com>
+Content-Transfer-Encoding: 7bit
+Message-Id: <E1A9D11F-D9AD-4AF8-A17B-29324D68F3BD@gmail.com>
+References: <CAP8UFD3b8as+Qk8=TQACdXqCpNXxFtW15m4G76=r-WzsE3QbkQ@mail.gmail.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-Jeff King <peff@peff.net> writes:
+Hi, Christian!
 
-> Probably the smallest solution is for ctx->reflog_message to copy the
-> result and always own the memory (and then remember to free it, both at
-> cleanup and if it is ever overwritten).
->
-> But I think the way reflog_message() returns the "buf" member of a
-> static strbuf is kind of an anti-pattern, exactly because you can get
-> this kind of subtle re-use. It probably should just return a non-const
-> pointer, handing over memory ownership to the caller. That would require
-> adjusting its other callers, too.
+I'm really happy that the Git re-written in Haskell somehow was mentioned in
+this edition! I wrote that just for fun some years ago and I wouldn't think
+that it would be mentioned here!
 
-Yeah, yesterday I was looking at the same report and was thinking
-that the memory ownership model here is somewhat screwed up.  As
-a few more allocations/deallocations should be dwarfed by the real
-processing cost of replaying each commit, I think this "smallest"
-solution is also the solution in the right direction.
-
-> So the "smallest" version is perhaps something like this, totally
-> untested except for confirming that t3430 no longer complains:
-
-;-)
-
->  	va_start(ap, fmt);
-> -	strbuf_reset(&buf);
-> +	strbuf_release(&buf); /* guarantees realloaction */
-
-I initially thought that this comment may have to be updated in the
-production version, but because we have to freshly allocate for each
-new message for ownership change, this comment still is correct.
-The only difference between the "here is how to expose" and "this is
-part of the smallest solution" is why we want to guarantee it.
-
-> I'm hoping your or Phillip can decide on the best fix from here.
-
-;-)
+Thanks!
