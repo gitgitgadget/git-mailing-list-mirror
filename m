@@ -1,84 +1,85 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36ACE38385
-	for <git@vger.kernel.org>; Thu,  1 May 2025 23:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94915253347
+	for <git@vger.kernel.org>; Thu,  1 May 2025 23:12:43 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746141024; cv=none; b=pRCoTyUKyQHSEgfl37lAbzHAMcO3pa4cpb/rUaa4UOTP1V+ya1DPFgeeGHJIUfpFQaqP/3t/d67hqAyuc0fEtpfx0hEmSaPueOxqArqhK8bXko9kDz99PELUVbtTC8sU4Fca8U0FXmeWxb/Q+uarafSSuxRCMitV3PwREOHRA74=
+	t=1746141165; cv=none; b=NePyVRXg/0sFORwzcyk7UcENrxfLNiDrow5B9zx0+SFVGOn9DQ2FKXeuc46pcIx/n1/IgHxCrgFU+JdwvXr7g0FjN7bOch4puDVKDYqlgFQwWD/wK3sbKsXwYKiYj/5gY6IYk2qxRH5aycmIFGxSgjVm+pHZO3PpiiCN0CRb31Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746141024; c=relaxed/simple;
-	bh=FPq5vg/11xt2vDd2qk0yHAm5u01FTRtKGx8goNzjjLw=;
+	s=arc-20240116; t=1746141165; c=relaxed/simple;
+	bh=cLlFsO6I5UlRjoiIw74PuYRsJ4vxcyV7Ck1yCyZRdjw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=O3YOnFxQy5JbEZK8/2GnUh0zGar90wDUaddcZIxLqId+SML5lUVTKac5Y4dN4azmgjjpHCfdOPD2Ooz4mv+Pf5hQQaAuvTBT1fdHYOzhIKxMoDxb1pbCmx2Cbwep5to9cMEsbTVokbQsUsVwZE30nbs07RskM1Cf0oAo2nDZfAo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=InDnPf09; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oXvr76Ud; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=pzCVP6UUG50WOSCi66sKauBD1eAnVc9iRXJjCD6owkaZ5Q9dYepcm1D/RxcpjvjN9kSOwGVXx8Sk0p2X2mzMOwTyO90NEJRnaKUJHY6k66Mb17HELaX4qKMCRjdPlH5ajTAvN/6/YDJMDZ6RWTUXjUKEIVd3yslQI0eoncBlC2M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e5wKKR9N; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uj9cV66Y; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="InDnPf09";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oXvr76Ud"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 368151380171;
-	Thu,  1 May 2025 19:10:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 01 May 2025 19:10:21 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e5wKKR9N";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uj9cV66Y"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 7E14313801C6;
+	Thu,  1 May 2025 19:12:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Thu, 01 May 2025 19:12:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746141021; x=1746227421; bh=ukJSimZdZx
-	i9YdL8kYl1cmZa0ToEJxmTRJbcnHFiYGY=; b=InDnPf09QNhqBvbv+tPGfVk7D+
-	UtBDxk2P+eUcrQMsfoS4SUQOgAFj/QHGcKgZk6+3N+bRUDutGCXPDsMqFUouoTJK
-	j+jCnZchgmFM87WdvJgXryXzgoLpMlTP9FPP/n9XNWlbK+fB83sqbCApFp44Z9bs
-	0N8zX0jx2jgd7DSN9vhgNNznqZbFlwSophOnaZ/7befYLWh1jzF+Rc+ai+zLJEJG
-	1l9XGlijgjGQwLaYJajHsXLfGS6jTvYkznh7wkuUfAXfJv+QpppYAub5o7tKqrQr
-	8gYSkNXMilNzYUGf0DEQE5A7AxfW3Xy+8e/uBPzfSq8UVWwJCORi2XnPvvzA==
+	:subject:to:to; s=fm2; t=1746141162; x=1746227562; bh=iUnYWiy2ES
+	yAeLAclMzyXeHm2bB+BUi3UCq+CEY72Gc=; b=e5wKKR9NB+crqfQm5/oG7pnqnV
+	R3aiyI5Axq1tUVvIgr1hZ191rRoQgjaPFUsvrAI2h/IVWoSJDMxsnkmplO/BQzyZ
+	TvwQddRz0cWILdCinybf429IresZby1VoGcK5sx4cGad0AvFtY3xwR5WYw7rqgqA
+	WhZIbAYvqdwUE6sOo7tnEYdMCqsYsXY1VY0dggbtwVeDBjSxK5j2hJRjLZrOYF2S
+	copa0EvsM2Unp9Msj9EWS1/VS4O2AxvVI06Ngi6oiARoBY3unO1vPotmm3WL0GG1
+	je4IzOCgbKcYYYtm21UuUb7g4RQ/wJ6e9SAncD5AR9saKGQGICBYD4SgGK/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746141021; x=1746227421; bh=ukJSimZdZxi9YdL8kYl1cmZa0ToEJxmTRJb
-	cnHFiYGY=; b=oXvr76UdBeS3rufXfxmktLNju8Y8AhGkDcyfZUXQTHtjk6ijYhW
-	Zufj9g/qL7NICB0j81brs0euFpi0pdasbX1ZIDMXd2xI2/YzgM/3n1V49vZJX37A
-	THiHLTOW8o7doU7sxnFgwDHdvTPXpI/Mh+eSh5zrrEOaz1cWVuVHcrYsbkB+xnPj
-	eiwKuDtw4qYy28Y9Zuyc1QaYOrenk7hkGD5FUtWa80iEgVJOvLnbWY0h+tk0DUPP
-	CuNF1k+/3T0SNHef+kvK/5L991EgH3LplDp6dkgr0E3jCl+LVERsKoXqpzcmnSFn
-	lX/owWlWkTREMKBl9VyN86R2OFCVK8zQytA==
-X-ME-Sender: <xms:XP8TaL_60kmrLNRhZ_J0W3HhaKkN1FWW9_RKADKmX6L5ue_43uTPJQ>
-    <xme:XP8TaHt5Jg7p0V6fWwGKYFN6giUz88FVB7zZtABQ79TquxCcJA5F2btAsTjuWsCbU
-    ryU0b5bqTkYcDe2Hw>
-X-ME-Received: <xmr:XP8TaJCTSjZUM7Zxd_4Pdh0ZZBulrbGcEaJCVTpY6_CnyC4dK_PFMdAY125qvXIQ4dSMcRB-JVAglhU4ghxiaBYOX21d12VCu4Ga>
+	1746141162; x=1746227562; bh=iUnYWiy2ESyAeLAclMzyXeHm2bB+BUi3UCq
+	+CEY72Gc=; b=uj9cV66YzMFYcGXOMEmwlgTm7oPi3fpZRUYaW4CmehHVzt0yd03
+	bdt9aCzEVRXZTA4EnffjqF3QO/DsuQLCskcG5i+jW8CasITfng02FDemDgv5qPXU
+	45EpuilfJtX/ZbBDZ4Q2SG3VIdrkm0JwL+GlxfmQqW6GRKvSwJnU7Wi05WpPUaE+
+	9tvCOBQ8Eok9qFFZbD4xOfKD/NhwSd7n1nQ6vv1DFa0+nOjutTx1ZSDz5S2Lt983
+	tQBQX9yiBvWDAihEvPk1xtNw4a1Y+TA98DAQEg0abOVODlQtUHFIV9eH4CrrWHIF
+	UJYcQ1LIFK7eANLsZ6xhj0AX5p+U/FW9YAQ==
+X-ME-Sender: <xms:6v8TaD-Awn4Xqw4fOL3kuehmCdvC5BkWgAzr2hzKk1aSE91xp2L4vw>
+    <xme:6v8TaPtQE9xP3jEhIYLJWFmmjSUon8DCTnCRK-ykXTPcf2KuFjiIxClknOEXz-NVe
+    znzguAgACdFYJGaNQ>
+X-ME-Received: <xmr:6v8TaBBVv1cO0Q5vklhNGhFNuAPqz2Ok4yK9KNygctMGiMqmsSOp8y7yB927T9GdFeavEGQvMMhhpnaageWtaRQHkXxX_LLayeLN>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtkeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinh
-    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
-    rhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Xf8TaHeg90uArI2YSr9FGzpafRribiIGPTKZQxqYyEgLf4n9D_CT_Q>
-    <xmx:Xf8TaAMBki7Y0dJiSz08IvNOphpjXRCFPvR43GMowY1rxQO346cSig>
-    <xmx:Xf8TaJm8vQpnoj86-V82oyoThcBIo_ZUsnv4YRPzrjpplcfUOf3uFQ>
-    <xmx:Xf8TaKtU5AdiqrlT5TmgDCKk-uymhxePmvOXzvmnTay3rzcgSwOCtg>
-    <xmx:Xf8TaJD_mXRi5TR_WzGC5fVSiHqcAwGDwqqI2l8SCITa8g_02GHTEhbR>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepvedvffetgedugfeiieefffeghfegudek
+    geekfffgieehvedvudefkeejueehueefnecuffhomhgrihhnpegvgigrmhhplhgvrdgtoh
+    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhi
+    thhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmh
+    htphhouhhtpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:6v8TaPcDh9IMY5svnUIVwwTPOKSz463jR6aA0V3tKcCmvGeLuh109g>
+    <xmx:6v8TaINeBAdGV-77xzkQ2o599sAURWc22lOwIuw2SEutJ2kg03SB4Q>
+    <xmx:6v8TaBmMcCXriw-EIaue7f_kGT_ObE7RwtKTbIjVK1IsKJlXpMVBHg>
+    <xmx:6v8TaCuuc1YMTTfZo6bYHqJzghSMvFoEh22jpRDSJuGPqkVVBVtCtw>
+    <xmx:6v8TaBD_HHtDjaWNcGvPwW7cdbBrjcuw62mROIlLCib_yq3Q19ka7AEO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 19:10:20 -0400 (EDT)
+ 1 May 2025 19:12:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Eric Sunshine <sunshine@sunshineco.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] git-verify-* doc: update mark-up of synopsis option
+Subject: Re: [PATCH 3/4] git-daemon doc: update mark-up of synopsis option
  descriptions
-In-Reply-To: <CAPig+cR-mbtwvUZBdhVCKsimVCETKdWHNG14hXDO77qMWMwVkg@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 1 May 2025 18:43:46 -0400")
+In-Reply-To: <CAPig+cQ1CC2SXN6bViusJXy93jZ6k8UvxRXa6mE0At6FgvS2-Q@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 1 May 2025 18:52:09 -0400")
 References: <20250501213414.370514-1-gitster@pobox.com>
-	<20250501213414.370514-2-gitster@pobox.com>
-	<CAPig+cR-mbtwvUZBdhVCKsimVCETKdWHNG14hXDO77qMWMwVkg@mail.gmail.com>
-Date: Thu, 01 May 2025 16:10:19 -0700
-Message-ID: <xmqqecx8vsf8.fsf@gitster.g>
+	<20250501213414.370514-4-gitster@pobox.com>
+	<CAPig+cQ1CC2SXN6bViusJXy93jZ6k8UvxRXa6mE0At6FgvS2-Q@mail.gmail.com>
+Date: Thu, 01 May 2025 16:12:40 -0700
+Message-ID: <xmqqa57wvsbb.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,51 +91,47 @@ Content-Type: text/plain
 
 Eric Sunshine <sunshine@sunshineco.com> writes:
 
->> -'git pack-objects' command and verifies the idx file and the
->> -corresponding pack file.
->> +Read each idx file for packed Git archive given on the command line,
->> +and verify the idx file and the corresponding pack file.
+>> diff --git a/Documentation/git-daemon.adoc b/Documentation/git-daemon.adoc
+>> @@ -46,26 +46,26 @@ An `upload-archive` also exists to serve 'git archive'.
+>> ---strict-paths::
+>> +`--strict-paths`::
+>>         Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
+>>         "/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
+>>         'git daemon' will refuse to start when this option is enabled and no
+>>         directory arguments are provided.
 >
-> Okay, rewrite seems reasonable. Do we want to backtick "idx" and "pack"?
+> Should 'git daemon' be wrapped in backticks instead?
 
-No.  I would understand if it is spelled '.idx', to refer to a
-concrete file suffix that people would type verbatim.  In this
-sentence, however, I think "idx file" and "pack file" are used as a
-general noun.
+Yup, good eyes.
 
->>  OUTPUT FORMAT
->>  -------------
->> -When specifying the -v option the format used is:
->> +When specifying the `-v` option the format used is:
->>
->> -       SHA-1 type size size-in-packfile offset-in-packfile
->> +       object-name type size size-in-packfile offset-in-packfile
+>> ---base-path=<path>::
+>> +`--base-path=<path>`::
+>>         Remap all the path requests as relative to the given path.
+>>         This is sort of "Git root" - if you run 'git daemon' with
+>>         '--base-path=/srv/git' on example.com, then if you later try to pull
 >
-> Do we not typically call this object-ID (OID) rather than object-name?
+> Should the '--base-path=/srv/git' example be wrapped in backticks instead?
 
-Given these entries in Documentation/glossary-content.adoc
+Probably, so should `git daemon` one line before it.
 
-        [[def_hash]]hash::
-                In Git's context, synonym for <<def_object_name,object name>>.
-        [[def_object_identifier]]object identifier (oid)::
-                Synonym for <<def_object_name,object name>>.
-
-I do not think so, and if we find somebody doing so, we should
-correct them.
-
->> diff --git a/Documentation/git-verify-tag.adoc b/Documentation/git-verify-tag.adoc
->> @@ -7,26 +7,24 @@ git-verify-tag - Check the GPG signature of tags
+>>         'git://example.com/hello.git', 'git daemon' will interpret the path
+>>         as `/srv/git/hello.git`.
 >
-> ...all uppercase GPG...
->
->> -Validates the gpg signature created by 'git tag'.
->> +Validates the gpg signature created by 'git tag' in the tag
->> +objects listed on the command line.
->
-> ...since this is being rewritten anyhow, it probably would make sense
-> to employ consistent casing of GPG.
+> These are inconsistent, as well: the first two use apostrophes, and
+> the latter backticks.
 
-Once the dust settles from this series, yes, but not in this series
-that is about mark-up.
+I am not sure what the best mark-up for the sample strings.  They
+are not what the end-users are expected to type verbatim, so I've
+punted and left them out as in the original ;-)
 
-Thanks.
+>> @@ -135,8 +135,8 @@ none::
+>> +`--user-path`::
+>> +`--user-path=<path>`::
+>>         Allow {tilde}user notation to be used in requests.  When
+>>         specified with no parameter, a request to
+>>         git://host/{tilde}alice/foo is taken as a request to access
+>
+> And this URL has no quoting.
+
+Likewise.
+
