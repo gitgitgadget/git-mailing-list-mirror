@@ -1,128 +1,117 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FBE31898F8
-	for <git@vger.kernel.org>; Thu,  1 May 2025 13:23:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D8A21DC99C
+	for <git@vger.kernel.org>; Thu,  1 May 2025 14:11:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746105841; cv=none; b=Bp8ihgbP6jNFexCD0c0qws5tj/BEJw4AoSF3VYWGxZXGgUzWKfWpOANzyG87ZPcasjnrLJwq2TghKeVayLZ6DOBTQnF0PUgDnMDgdpB7AEJo1n1VQGCRLxUjVvXc6xA09npmeQ5Oz6afxfq5XefGBApokVxblhhHZGWlB9Y4Hyc=
+	t=1746108664; cv=none; b=YhFdetFAOgPuLvaDbTsIR25bYFkL6YTTbrmE7MnMIiFVdy52qK+SXOoA/j0aZ3Y7BOwXKEDkqfLrZYohlxKhW8cJivLqT1Xr0hYBw22DFxW8bJ5qIgu7NizNWOfDfozIb+/fEjp1HGi48Ed3dTQvYhQ+Pd93su7AuEJ4Oel+h3M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746105841; c=relaxed/simple;
-	bh=2v4h/YozirTUaoO4XNWqHprghp/NSNsY/L93kl6m6jw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YjCkc9sgdAyzmR+HcFIxh5pl4J0Z/M/rOs6jN5iNhZG5msda50nitCuMbJXA3+PdBcEcNjYuaItp8oiMgcQRTrn2L8K+w8BmwdZMWt72jstU+tAYvvbQZq9jZLUY0AQ64gqsqurV7PdbOoQak3zFJ/AdVAk4wy9SAeA05z+C10s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hkQR+Kh3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dWgXM+X8; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746108664; c=relaxed/simple;
+	bh=JxEcpuHoLMLKEGKvVbtIKXfhhubQxKtp+aAuXS3NicU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=HwrckAykT0QLaRy6xgLafRCA2wzKcaIFuunViw4VqN3sQM6qBFLK0DCY4YjksA7EFAdh4kcuKdEj1GGoX/CHLsuC40goOql9kF8VtvTtVt9vzEw4jCL89m/TIXBbye4syqCVM18qC6I22+/l7lTcdliRKep7GkoOWyg5sVVwb6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e3Cbb8l9; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hkQR+Kh3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dWgXM+X8"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 9629811400C9;
-	Thu,  1 May 2025 09:23:57 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 01 May 2025 09:23:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746105837; x=1746192237; bh=ovsmNz5Dt1
-	DqIdHCVw/LHt64icufp315VhRI1u/6DJ0=; b=hkQR+Kh3/9l8jN+lfrPUdGTi8B
-	gF2WQxaOAFYO6482VKnMcCWyYmRv7AROTZ2h5YBOSubufVDo1Ndjdbkk2InVIruy
-	2VTy+bCPGm3kdIrDV3fYDyBrkIsDCK/zgNNK4LJBODIyM+LHflEbA602GZJsWS//
-	W1NXJhYX53WS3pejOWF/R+BC+iML6rWObXzLq6qh9E/t3DGcATuDoS24cAcj8/BM
-	35oU89cDu7g59AZ7XJHmKomryItzkOfuCcy+b7adnfLmgsjbIn0+n2VzEjts6wEq
-	hry0W3hIbqOa9wJm3Z3L1qHUmG4z7BIPFWO5r8WKdHc62a8VQIK+1HsdMaag==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746105837; x=1746192237; bh=ovsmNz5Dt1DqIdHCVw/LHt64icufp315VhR
-	I1u/6DJ0=; b=dWgXM+X8189GffqO8b9uZS+Qti+qK3co9UCu06v5xYeKCdU0o9m
-	cudPWYAcdUXAcx+ybBcX4TGJIvHjZOOLKLsisI8i/mNqyI3t0YA6QoLD76VMUkXx
-	Q1dWE/W8B6I0GdVpXD8ag13r8Xh6Kdj2WNZ5375oRl1pOGYx8e0qd31CShH1IUo2
-	qeAyk+07uJ39+0GJt7RnIfCqTKnyUb9ZsycTkrm6jo/Ja6aQE1UPxCV+DWpwqaGo
-	NZZpqaXimStng+v5bJGfhaArv6pw+fTwDQHzT+BgVrdvhvBIqHw4prnlke7lfx1M
-	dlFqieGCghOb6nKyjtsC/UYQI0FmSh0+VcA==
-X-ME-Sender: <xms:7XUTaMls0u0egdZundkzqwFsbNmmI7gXqwXSsXMzU31kSGQH7Iv2bg>
-    <xme:7XUTaL0Dly84imYxWmNw8KytuAUkaR0WLNC8_C_Oz29mSAKD6jogDkZ-8bQiTEXL5
-    ik76_MRR0lwi4Haag>
-X-ME-Received: <xmr:7XUTaKq9REC-Q-_bFpbHridtfQT4qHzR3J2q87vr6dRMX8zoqUQdyLu3lXt_tHT7hxCVymD3ZwiyppvFX1QC88nLetRFjn-OfDzS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvieelieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhunhhshhhinh
-    gvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehjrghkvghrohhgghgvnhgs
-    uhgtkhdvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrghdprhgtphhtthhopehrohhgghgvnhgsuhgtkhhjrghkvgesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:7XUTaInpRqkBi69Wi-m3dBm8B5PMelgMwW8w0dLxu0Sr8I4PWjjpdA>
-    <xmx:7XUTaK1Jkh089bS1e3bPn21BxIw0aj8Kx8mjHf8erMn5-KG0XQtxfQ>
-    <xmx:7XUTaPto3Xf4PBgO1Pe3EtOYCjxfgoad0YekNcR968MlTUotF2G_LQ>
-    <xmx:7XUTaGXGmNmcc2elAO5FhB93CA2QlPLUyxX_6waA1hfif2IzHwlb5Q>
-    <xmx:7XUTaANl5sQIkPmffuX29kS1IqxVr_zSQuMBRIP6SB_YyLg0vFoGzKIq>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 09:23:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Jake Roggenbuck <jakeroggenbuck2@gmail.com>,  git@vger.kernel.org,
-  roggenbuckjake@gmail.com
-Subject: Re: [PATCH 1/1] Exit on invalid diff status of diff_filepair
-In-Reply-To: <CAPig+cRehhM-z0md_iV-VYCk_Qwv0A4zS1TfPqPxsrLZ3eYxvA@mail.gmail.com>
-	(Eric Sunshine's message of "Thu, 1 May 2025 02:16:36 -0400")
-References: <20250108060151.7218-2-jakeroggenbuck2@gmail.com>
-	<20250430185309.11197-1-jakeroggenbuck2@gmail.com>
-	<CAPig+cRehhM-z0md_iV-VYCk_Qwv0A4zS1TfPqPxsrLZ3eYxvA@mail.gmail.com>
-Date: Thu, 01 May 2025 06:23:55 -0700
-Message-ID: <xmqq8qngzcpg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e3Cbb8l9"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39c1ef4ae3aso591664f8f.1
+        for <git@vger.kernel.org>; Thu, 01 May 2025 07:11:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746108661; x=1746713461; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=GwIV1ZueUYH8Z2p3K1n4c4IyG0OwsuF6lRBp0OjphNk=;
+        b=e3Cbb8l9Lqt1iL9Ln0VDf7HNQB8ckiPlu8bFaMaP7kD1T1c2B0HzngEjBt8i2OSs3g
+         +DBoZu+tKZskN1bEh9c6lRgAWjEvamQxSO74XYIvziF3AsKRwm2pAkggYLAVVRTyzolJ
+         XBhpQObS0OY7awnWcLW5bCWrLZ4+zoStkTdO07aQZ4DeXPAWD9PCuhSvmdy+mMRjRhRC
+         KOZTHbZGX2DbDleHxT8GKEfebqV0o+PMQmzA5B1gUyZPMQqfNd87q3Z7VwyfaEpjemxQ
+         AeGHJuvbaVoTNHa0FrnI4lRHsNrrpo64SavRtkGMUrBfShLDacctxAs2iyXxXGerPkoZ
+         V93w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746108661; x=1746713461;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=GwIV1ZueUYH8Z2p3K1n4c4IyG0OwsuF6lRBp0OjphNk=;
+        b=Sn/7pqEAqJT05AJ3HOdjuU5UxWp+V3KCcFHmtJfcQmsIR2l8VCmmUfzEG4lp++XrHH
+         PCMhu7EatjcgCYgc8qgAB/ASOb7/iGk5/9ZgCrYwTOjup2mqyeIJMny1BUhN9sQWf+Or
+         A8VLsLshQN1xYRO432dzpaLZxd9JrezsRgugkA5ODN4I7yPszMyNUr0kU+a12FNFZoir
+         mPu5igjmtep+OH3In8BHCPixDSPf8e20T1sxGJl8Q2oH0OTDnU+GUNbgev6tCdXZk/Fk
+         4Gf4+WDelD1Bff/sqBuF/nwhWeTmIau0fx5UFoU9pq1E7SF1qD6Ah81tg+r24ZJUfQoB
+         sfYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXryfnGnSH4L0BXs92j6Qzk+ugP2AMaoai+SrNgGOWtxQeCA0DZwN3TerktuF7k5wHWCWw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzjI5zb74KDRTmsrSSQc+yjBJv5Q9Rn66TRuawdBZcVNTBW8rV9
+	R0jUUa+UB87t+DglyZi89Zlcq2SHfRiyPjFcjeAL9h/nmm8UN1f2HtSNSQ==
+X-Gm-Gg: ASbGncst1oMutWhN2h52+b8zX3O4Gr1GrG/hFI737oNQOs+H9vSnBDGO52meP5fn+rd
+	xHRaSt6F0Ii76Lz665ygX5EoO1eO4jTyw4BuJ5OKnj/8ganAPR4TroKS0pmhUku0EpT7ZNDyMz1
+	YeqSOqFKcGBNoTzYriPIOel2nFvwjXEJXNXSr1bb/6N49Jjs/cTq9XFJv273GTpgTt2n9mVD2OP
+	A5wK4SaWkE+u//T6pm9l+D6MTq5nGOuzNaziMVKX7R+DA3gSPVLPYr8IyF/Qq2PmTsyhy6FlMEg
+	fzvHHPCE5wKNBpDfPOumM5KiYqNFWSOD9c/vf8LdACrvR+m52Ttv9+i9yxv1w1V2S8AHownjJqx
+	tKjll4HSzDpzvTt7R
+X-Google-Smtp-Source: AGHT+IEnCedyK7lSuKF0oyKBzKw2jO58Z5xETsas1iw4GUJ0nePhZrCjPPnySCT3Vq9kN/9EnpNHOw==
+X-Received: by 2002:adf:e40d:0:b0:3a0:6a8b:ae4a with SMTP id ffacd0b85a97d-3a0941d9dfbmr1769425f8f.24.1746108660413;
+        Thu, 01 May 2025 07:11:00 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a095a882f1sm937863f8f.74.2025.05.01.07.10.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 01 May 2025 07:11:00 -0700 (PDT)
+Message-ID: <a834c708-8904-44c5-9481-5f796cf0054e@gmail.com>
+Date: Thu, 1 May 2025 15:10:44 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: phillip.wood123@gmail.com
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [BUG] rebase: can write reflog with uninit. `action` string
+To: Jeff King <peff@peff.net>, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Cc: Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+References: <20250428194048.149348-1-code@khaugsbakk.name>
+ <ce0f41e4-7d90-4398-a0e9-e8ba69791e57@gmail.com>
+ <fbc97d6a-2022-4a64-a2ba-5a7255cd81a6@app.fastmail.com>
+ <20250429215155.GA36727@coredump.intra.peff.net>
+Content-Language: en-US
+In-Reply-To: <20250429215155.GA36727@coredump.intra.peff.net>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Hi Peff
 
->>     git (main) $ cd ~/Repos/ECS50-3/hw3-skeleton-broken/
->>     hw3-skeleton-broken (main) $ ~/Build/git/git diff
->>     Segmentation fault (core dumped)
->>     hw3-skeleton-broken (main) $
+On 29/04/2025 22:51, Jeff King wrote:
+> On Tue, Apr 29, 2025 at 09:40:13PM +0200, Kristoffer Haugsbakk wrote:
+> 
+>> On Tue, Apr 29, 2025, at 11:22, Phillip Wood wrote:
+>>>> #0  run_git_commit (defmsg=0x555555babe70 "<repo path>/MERGE_MSG", opts=0x7fffffffc070, flags=0) at sequencer.c:1158
+>>>
+>>> Thanks for the backtrace. It would be useful to know what's stored in
+>>> opts->ctx->reflog_message at this point if it's not too much trouble
+>>> please can you run "print *opts" and "print *opts->ctx" here.
 >>
->> Let me know if you have any feedback or suggestions.
->
-> Do you have a reproduction recipe which demonstrates the problem which
-> your patch fixes? Including the recipe in the patch's commit message
-> would help reviewers better understand the circumstances under which
-> the crash occurs since the descriptions provided by both the original
-> problem report[1] and the submitted patch[2] seem rather nebulous[3].
->
-> More importantly, if you have a reproduction recipe, then it can be
-> used as the basis for creating a test which should accompany the patch
-> (and which should be added to one of the `t/t40xx-*.sh` files). We can
-> help you convert the reproduction recipe into a test if desired.
+>> Today I ran on f65182a99e5 (The ninth batch, 2025-04-24) at
+>> sequencer.c:1148.  I was never able to reproduce this
+>> `opts->ctx->reflog_message` having a weird value with GDB today.  The
+>> reflog was also fine.
+>>
+>> Then I ran without GDB and I got the weird reflog that I expected.
+> 
+> Have you tried building with "make SANITIZE=address,undefined"?
+> 
+> This is a wild guess, but since ctx->reflog_message is pointing to a
+> static strbuf, it could be a use after free if the strbuf is reallocated
+> due to another call to reflog_message(), but we are still holding the
+> old pointer via ctx->reflog_message.
 
-Nicely put.
+Oh, nice insight. I'd forgotten we had callers of reflog_message() that 
+didn't store the result in ctx->reflog_message. One of those callers is 
+in do_reset() which due to the way the todo list gets constructed is 
+likely to be called just before do_merge().
 
-It is a bug _elsewhere_ in the code for the .status member to be
-unassigned when the control reaches that point, so a patch to exit
-after that happens is not all that interesting.  Instead of exiting
-there, we would want to see a patch against the place where it
-should have set the .status member but fails to do so.
+Thanks
 
-Maybe with a corrupted repository, some of the blob objects we read
-for comparison may fail to load and the function may be taking an
-early return instead of complaining and dying upon unreadable blob
-(I am not saying that is the only or even a likely case; just giving
-an example situation for illustrate the point), in which case we
-would want to fix _that_ code to complain and die properly.
-
-Thanks.
+Phillip
