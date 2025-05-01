@@ -1,54 +1,54 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C6A213E94
-	for <git@vger.kernel.org>; Thu,  1 May 2025 21:34:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7CCB226D00
+	for <git@vger.kernel.org>; Thu,  1 May 2025 21:34:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746135261; cv=none; b=gv7vPIjwD4og7SEk4+wVQnGJbiLU9kHkNrzhPceDsCjzv90gA/xXnoZ8A8F1mggY/rfNfYTc/pzpGgqCLn4sCUZaPK8QPQb74k7+MuLxhxXs+7XpwEr1Jb/TV4Di+7Z2y73lH4nzUKUBRr7TEfGtkheAaXFbBmxSBeh9k5rOXDc=
+	t=1746135262; cv=none; b=mvxRQktui/eF4qh83zZWBetELyJRwsTB67Gc2QvI6RGl8+cNOqOV+E3EBqRz260HYnLfzvV4auxVZJGA6SXD+vCOK7abPa/jMZvXkwJYme/ZUppta67Skd71WvCbJb20sTtQtLMn8G8rUz1zph3BCf8UDvz2aXLEkQ1t26GuA7Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746135261; c=relaxed/simple;
-	bh=HBAPilbvTTS7HvQKXiSjKU5oVAA0LeNk1gpQtVDSaeg=;
+	s=arc-20240116; t=1746135262; c=relaxed/simple;
+	bh=cA91fKFYm0CCXTdDuRkKnm80f303z7tXwZJ8uItEYpA=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=i06nX4WmBUx4sOM8Bx6ff+ZRUN/L5Zb2lqu8zAlOFr2V1VWX173uXKbC+LYlP1zsZOIYR1k3LXBzfDMJ9vTme5jK/DmwjdwHlpH4z8gHXjNeYWlnWUdGHu+2Mc/BhnRWFtr9NJo6CaoniJTaXW1wpO54RTTgtBBs8OxXn4354ck=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dG5gKr6w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z5QjT9zL; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=I+aEyBgmUc0xxT3pqQZ/a6LnnCtaZk7rQOw82UxTDYwv4yrTu8fQkWbSCNK1sQ5tf6fJHCZ4SIbSnsodIRdC51sfRYhthMGutSePM1tMrUY/0a+q37nJF5k0irjyOoJdRFjiNsZKZRUXLmLYn9ljRHunuXl9CNxoB7nWU37iIM0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g/FLzgcG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ImPGhzND; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dG5gKr6w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z5QjT9zL"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E3DB11140281;
-	Thu,  1 May 2025 17:34:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 01 May 2025 17:34:17 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g/FLzgcG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ImPGhzND"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B15961140277;
+	Thu,  1 May 2025 17:34:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 01 May 2025 17:34:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1746135257; x=
-	1746221657; bh=QkV0bsSqUKmHNjXCuzsRLAcO5c6ZpT+C8d57nimrB/g=; b=d
-	G5gKr6wHOcobHuj+IjKJQN/4JyRc4cm6wVXqzmVmNg2HbPkKvyA6fJIQw1rf38SI
-	0wOmFVLG2otbVHZNMm0iGoSROfH2N/01+ID5aBaheHnANJlUi6jrdor2lnW5YaTV
-	4YMbNVjYXfEv9bffrdvC8kQMxuszNCp/i7qbzXWWRQyl9t5Nk66hSIMeG0Z2AVT/
-	yJnqXSoG08NLMoLImV7bNE44pdWs1drYsNbXgHaE1XUY8ptLjfZbgW0I4cOwENzy
-	DoCQTFjAiliVxKSbb980O9UdjIelaAJlIPOJdIp99GrSoMT1yRM6VXtWbmLp5+XZ
-	fonvmv/Y2JSy6XOhLMwsQ==
+	:reply-to:subject:subject:to:to; s=fm2; t=1746135259; x=
+	1746221659; bh=yuKi0I0ObigbPubwfCnI5N3KwJ7MISO6frL+mF0YrwQ=; b=g
+	/FLzgcG+QBlFXskuZIluUglw2vr5BXiYCKnceeVdumyy4QZzXmeH2Eam8FNHkSdt
+	z+AewunAp3l/G+e6Ljscb4hOPVGJsbrc8rDUzXhaI+crLfkBujVcO8TVgxNZUBF4
+	pbU43ak8sgargQn0vMNdml5ypXRKH9JWXQPJowmTLRrhjG0YqNEUFVlfRWuYperZ
+	BZKWRB7kBb1sVP+c80gcghcs0xZbRhjmAEsxJCuJ033hvtz4o9ZszvHmt/8+DTWH
+	D5NcuAP6Rp58gxVCcm9x02D3Fe1B/TbEFtlfF72ReflwMPeomXG1uDc/B2wvjnzL
+	lIoPAYq3tLLsl4o9qDIEA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746135257; x=1746221657; bh=QkV0bsSqUKmHNjXCuzsRLAcO5c6Z
-	pT+C8d57nimrB/g=; b=Z5QjT9zL2EV00puyX3LSKgTSoyHVW1wQGtXQljLN7Dkg
-	g9XS4DSBN1VOgux3YfdFVzczg84tkCTvxZPjoFcm45jN3fG62VOE9jkn1KPC4MvO
-	HmtlGeBJytjI/T7G+INAlzJHos1cfvrE3p8szYF3NzFbAYmcUk4qR2wIg7ImlFx7
-	WVMaFuwfsktYajJiaXAeE3o+oHWd+YN6kvHP4k5q92dPlBNKdNgtgHbtzZLgiXyN
-	TkMjCwCtd/SeosnjCmt4v6BRbLSKAt3PY655eMkSb0+OkohWkLw+R/vBC25I753o
-	JkanvoUGddqTzyl7Ldr126M0bAwbiYXGaLCujtTUrw==
-X-ME-Sender: <xms:2egTaF5dPgx9pSSeqAbtjh5FVc6JApwhO400Js__GBIqjKUNOEQI9g>
-    <xme:2egTaC5RDh2gOYQvKSFS9ZYOpK1iYxInuIKnrkUluKV8aagixgB1Vhp4IxOj4x4-9
-    LsIveK5VDsuX84sPQ>
-X-ME-Received: <xmr:2egTaMc80O0_lbz2UHRmmtOUfUBiyT6uq6VXso22DojhU3gWY-R6tWhPRcz3jYoZ5kytURfW0a0qYwSHSu1oar915p06w-igvxDz>
+	fm3; t=1746135259; x=1746221659; bh=yuKi0I0ObigbPubwfCnI5N3KwJ7M
+	ISO6frL+mF0YrwQ=; b=ImPGhzNDr8/xcdCLsYeKcvAl2jykUc+bjmVVLerACUsw
+	a4C6QYYO03fyAAyTFNYwvXhkk0YSP/XKU0Q8LZDAJ8vCevXImWmyLQ7oV3E9NK7O
+	yH2Tj+T0Buf4IJfJoX3+H0eAHMa+rMVMd4Xjnkn5vIBrhGw9AnBP7Qf9ViD7V/O+
+	wbgLdhSqm7Yrx9QN53DormvLcMM0O8BLOq66QGeC9gsRhBjH0edZzLC0Oi0gru0u
+	p9OVwTjIjbWKDwFuuvlyBWLEqWVWO6Aj3V8ZtBr+pzb/TTeG02msm2ysN+7bQd6c
+	QvMbjZ7PAPm7jKxYoQrCgLAnATbXKxW94R9eSJ+mCQ==
+X-ME-Sender: <xms:2-gTaAR6AqOu4odbtFvfcvTkrO_ffM2LB7b0c9LTr04tYm8qLHsbaA>
+    <xme:2-gTaNynU90o6NrAaJxSqTTPkvgl0vP4vjnuwqs0XeXFQASjbTvweMXZBxZOPxfm_
+    YkhhDQWYv77t7_hpg>
+X-ME-Received: <xmr:2-gTaN14nuOLPcxrpber9rdM4Zj6Xdq-OoZDjpg5L-opaHyHtuPiHvKa-2tyighOA_nJTvkPbEsYybAw-jI6eowfKjp5nZKioV9n>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieekucetufdote
     esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2egTaOIWnDbE52BoyGUO3Yf1MRI56Kc_qyq_DbUGFw5dCh_l_QGeyQ>
-    <xmx:2egTaJKOoM2VcREp499a0x_VyWGk0BXFAIkrtKYgMotOJ6eeLvd32A>
-    <xmx:2egTaHx88lipL3umL1UPn8glVmZikqWF8t93fp2j75ztUSttaU-bzA>
-    <xmx:2egTaFL6A3ihhoMo4Ib7s2sgZX-Z7iH7v4PF9nSKadK76hI_jKfAIg>
-    <xmx:2egTaJ5-szJ1GndKYWB1tdOqVWszD19nUxhRlqU7xaDVdmlpcMTExmJ2>
+X-ME-Proxy: <xmx:2-gTaEBwr6HtGV5lvKQtSXV-lS993chfP9L68X7amQBkEHzwzsUkow>
+    <xmx:2-gTaJgP0K04UJU-GUbi9zR_ipz6kkE6j-zAl-j-R0gPAUrJPuAunQ>
+    <xmx:2-gTaArQn6BlMTxNgkzITrUIoP16Ucv0wbGeUNjifvP-bS71On9CmA>
+    <xmx:2-gTaMghyuBBDh2BtXwoRKjqzkkalnvQOIEogqa2wLg2tu2BIAXCMA>
+    <xmx:2-gTaETmcP956pZCmZoeioOKqaMeG2-DZvZsGRBcj_shP8P9kJ_K-1Jg>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 17:34:17 -0400 (EDT)
+ 1 May 2025 17:34:19 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 1/4] git-verify-* doc: update mark-up of synopsis option descriptions
-Date: Thu,  1 May 2025 14:34:11 -0700
-Message-ID: <20250501213414.370514-2-gitster@pobox.com>
+Subject: [PATCH 2/4] git-{var,write-tree} docs: update mark-up of synopsis option descriptions
+Date: Thu,  1 May 2025 14:34:12 -0700
+Message-ID: <20250501213414.370514-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-599-gc9a5c860a0
 In-Reply-To: <20250501213414.370514-1-gitster@pobox.com>
 References: <20250501213414.370514-1-gitster@pobox.com>
@@ -85,156 +85,85 @@ Content-Transfer-Encoding: 8bit
 
 To unify mark-up used in our documentation to a newer convention,
 started by 22293895 (doc: apply synopsis simplification on git-clone
-and git-init, 2024-09-24), update the documentation pages for 'git
-verify-commit', 'git verify-tag', and 'git verify-pack' to
+and git-init, 2024-09-24), update the documentation for 'git var' and
+'git write-tree' to
 
  * use [synopsis], not [verse] in the SYNOPSIS section
  * enclose `--option=<value>` in backquotes
- * do not describe non-option arguments in the OPTIONS section
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/git-verify-commit.adoc | 16 +++++++---------
- Documentation/git-verify-pack.adoc   | 28 ++++++++++++----------------
- Documentation/git-verify-tag.adoc    | 16 +++++++---------
- 3 files changed, 26 insertions(+), 34 deletions(-)
+ Documentation/git-var.adoc        |  6 +++---
+ Documentation/git-write-tree.adoc | 16 ++++++++--------
+ 2 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-verify-commit.adoc b/Documentation/git-verify-commit.adoc
-index aee4c40eac..ff5b8b97ef 100644
---- a/Documentation/git-verify-commit.adoc
-+++ b/Documentation/git-verify-commit.adoc
-@@ -7,26 +7,24 @@ git-verify-commit - Check the GPG signature of commits
+diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
+index 0680568dfd..909963b1c2 100644
+--- a/Documentation/git-var.adoc
++++ b/Documentation/git-var.adoc
+@@ -8,8 +8,8 @@ git-var - Show a Git logical variable
  
  SYNOPSIS
  --------
 -[verse]
--'git verify-commit' [-v | --verbose] [--raw] <commit>...
+-'git var' (-l | <variable>)
 +[synopsis]
-+git verify-commit [-v | --verbose] [--raw] <commit>...
++git var (-l | <variable>)
  
  DESCRIPTION
  -----------
--Validates the GPG signature created by 'git commit -S'.
-+Validates the GPG signature created by `git commit -S`
-+on the commit objects given on the command line.
+@@ -18,7 +18,7 @@ no value.
  
  OPTIONS
  -------
----raw::
-+`--raw`::
- 	Print the raw gpg status output to standard error instead of the normal
- 	human-readable output.
- 
---v::
----verbose::
-+`-v`::
-+`--verbose`::
- 	Print the contents of the commit object before validating it.
- 
--<commit>...::
--	SHA-1 identifiers of Git commit objects.
--
- GIT
- ---
- Part of the linkgit:git[1] suite
-diff --git a/Documentation/git-verify-pack.adoc b/Documentation/git-verify-pack.adoc
-index d7e886918a..b0462d8db3 100644
---- a/Documentation/git-verify-pack.adoc
-+++ b/Documentation/git-verify-pack.adoc
-@@ -8,43 +8,39 @@ git-verify-pack - Validate packed Git archive files
+--l::
++`-l`::
+ 	Display the logical variables. In addition, all the
+ 	variables of the Git configuration file .git/config are listed
+ 	as well. (However, the configuration variables listing functionality
+diff --git a/Documentation/git-write-tree.adoc b/Documentation/git-write-tree.adoc
+index f22041a9dc..4e1c3b9c0c 100644
+--- a/Documentation/git-write-tree.adoc
++++ b/Documentation/git-write-tree.adoc
+@@ -8,8 +8,8 @@ git-write-tree - Create a tree object from the current index
  
  SYNOPSIS
  --------
 -[verse]
--'git verify-pack' [-v | --verbose] [-s | --stat-only] [--] <pack>.idx...
+-'git write-tree' [--missing-ok] [--prefix=<prefix>/]
 +[synopsis]
-+git verify-pack [-v | --verbose] [-s | --stat-only] [--] <pack>.idx...
- 
++git write-tree [--missing-ok] [--prefix=<prefix>/]
  
  DESCRIPTION
  -----------
--Reads given idx file for packed Git archive created with the
--'git pack-objects' command and verifies the idx file and the
--corresponding pack file.
-+Read each idx file for packed Git archive given on the command line,
-+and verify the idx file and the corresponding pack file.
+@@ -18,21 +18,21 @@ tree object is printed to standard output.
+ 
+ The index must be in a fully merged state.
+ 
+-Conceptually, 'git write-tree' sync()s the current index contents
++Conceptually, `git write-tree` sync()s the current index contents
+ into a set of tree files.
+ In order to have that match what is actually in your directory right
+-now, you need to have done a 'git update-index' phase before you did the
+-'git write-tree'.
++now, you need to have done a `git update-index` phase before you did the
++`git write-tree`.
+ 
  
  OPTIONS
  -------
--<pack>.idx ...::
--	The idx files to verify.
--
---v::
----verbose::
-+`-v`::
-+`--verbose`::
- 	After verifying the pack, show the list of objects contained
- 	in the pack and a histogram of delta chain length.
+---missing-ok::
+-	Normally 'git write-tree' ensures that the objects referenced by the
++`--missing-ok`::
++	Normally `git write-tree` ensures that the objects referenced by the
+ 	directory exist in the object database.  This option disables this
+ 	check.
  
---s::
----stat-only::
-+`-s`::
-+`--stat-only`::
- 	Do not verify the pack contents; only show the histogram of delta
- 	chain length.  With `--verbose`, the list of objects is also shown.
- 
--\--::
-+`--`::
- 	Do not interpret any more arguments as options.
- 
- OUTPUT FORMAT
- -------------
--When specifying the -v option the format used is:
-+When specifying the `-v` option the format used is:
- 
--	SHA-1 type size size-in-packfile offset-in-packfile
-+	object-name type size size-in-packfile offset-in-packfile
- 
- for objects that are not deltified in the pack, and
- 
--	SHA-1 type size size-in-packfile offset-in-packfile depth base-SHA-1
-+	object-name type size size-in-packfile offset-in-packfile depth base-object-name
- 
- for objects that are deltified.
- 
-diff --git a/Documentation/git-verify-tag.adoc b/Documentation/git-verify-tag.adoc
-index 81d50ecc4c..ec995323f6 100644
---- a/Documentation/git-verify-tag.adoc
-+++ b/Documentation/git-verify-tag.adoc
-@@ -7,26 +7,24 @@ git-verify-tag - Check the GPG signature of tags
- 
- SYNOPSIS
- --------
--[verse]
--'git verify-tag' [-v | --verbose] [--format=<format>] [--raw] <tag>...
-+[synopsis]
-+git verify-tag [-v | --verbose] [--format=<format>] [--raw] <tag>...
- 
- DESCRIPTION
- -----------
--Validates the gpg signature created by 'git tag'.
-+Validates the gpg signature created by 'git tag' in the tag
-+objects listed on the command line.
- 
- OPTIONS
- -------
----raw::
-+`--raw`::
- 	Print the raw gpg status output to standard error instead of the normal
- 	human-readable output.
- 
---v::
----verbose::
-+`-v`::
-+`--verbose`::
- 	Print the contents of the tag object before validating it.
- 
--<tag>...::
--	SHA-1 identifiers of Git tag objects.
--
- GIT
- ---
- Part of the linkgit:git[1] suite
+---prefix=<prefix>/::
++`--prefix=<prefix>/`::
+ 	Writes a tree object that represents a subdirectory
+ 	`<prefix>`.  This can be used to write the tree object
+ 	for a subproject that is in the named subdirectory.
 -- 
 2.49.0-599-g90c2cffacf
 
