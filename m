@@ -1,54 +1,54 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 214DE1E991D
-	for <git@vger.kernel.org>; Thu,  1 May 2025 21:34:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0391F250C18
+	for <git@vger.kernel.org>; Thu,  1 May 2025 21:34:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746135297; cv=none; b=Lbgapwmu+ldHifWHI3XDZcplDM4T85P0d2v3Bnys+esCX8YtgEdWyqd5PS7VVDTmsGAu00cE9/JIwONH4f/80uwKobKZnVLKoMO+SIWI6ifOEaL/8MNECQ2LWPpH0+vcxR1pLIF8TTkEHigHcykxZ6s+EKR5TNXaglEQiJcYQz4=
+	t=1746135300; cv=none; b=FDgD61rKMWUo9D5jLjW38sLdQmB3qFuXR2KestMVt5YJbxSzZDD6ZNf3R+9HaQAvQfgx6MZ2/KIb6bmK64w4hv0LqJA9BSpfzieVxez7758WvFRf1HNMW4Fm3EmjWxRQ31tiNOjSxsTeX6DdjcqDkISx8yZF0irCQ+R3k0iyCO8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746135297; c=relaxed/simple;
-	bh=3TZlM56R7gz7eTIRtaUd/uiDOc7TTMOxYEgNwWeGk5g=;
+	s=arc-20240116; t=1746135300; c=relaxed/simple;
+	bh=WmXs1wabU+HCbkrNVt/8r4mVvZvJcmN71Cs9K5T102A=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=l+Du+sF2GhYNujt1pKqENxSBFr1wVn9zpiQ2KbymUd0kuNxCHfBjuP7d+a1lOKWtSZ/gvGOTdorsetZccIkXmT08oa+TsP1vC6xNGmF0WaA4l06qbqfk58EcVGiRnOJ+YuTVbJxH4xJoeALnberjBAtvbu/a/CEF6+LRxL4Z9tQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=C/Na0y9Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pDu7tVpt; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=C4c+vw9th8JlCTqV9FAZpY285cmg5zTt/srzCVtdThtd5RrpKIve3VGpm4mlgGlrUHZkWXlR6WJKZkfuHmls+eTkr2onvtdOCtrFs0BHZpm6FEltqJh4Csl2D2p8v6Wya9XZ5/j0oiexvk/U7lNM69ZDAvKGYN5E29wmZb6XO4A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QCfOYWZ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YqMD9wZ6; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="C/Na0y9Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pDu7tVpt"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7585C1140278;
-	Thu,  1 May 2025 17:34:55 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 01 May 2025 17:34:55 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QCfOYWZ6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YqMD9wZ6"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0BC061380F96;
+	Thu,  1 May 2025 17:34:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Thu, 01 May 2025 17:34:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1746135295; x=
-	1746221695; bh=0eiA+piig1eZRGS2GWu5A8vlcNO+FQzHXfkVlC0d/xY=; b=C
-	/Na0y9YJnbV21VhS/gl1QPLBaVoBqMOQLyzw/0J8xOjuBfsj/dFXCMFpgkh7itQq
-	zIsQigFr7CRa0V7oB9qLPQJeE7CNeJ5IiUxey4CKgFHkDvykDr5Pc7KIa2O677FZ
-	ffvsn3caEGguENDtKxP4kHfQK0biRfrsayuJ4Yd58kZRFz7aWaStZ7I4+cf5EPa6
-	pfj/tFEhYVAofYgxQ7hEwBWqEeckTZIrShkaXyAiDzl4NoTUUmNYz49laNKYWbg5
-	q0LytnlxYd/3Xhgh7e7yqoJX8I+113eV8OLRqTZ5B7177tOkCG7Fzalc6amaNoED
-	LVBBQdPfiDmZIyHfed7oA==
+	:reply-to:subject:subject:to:to; s=fm2; t=1746135297; x=
+	1746221697; bh=U0dCZRDrFkvyjE4nny7l18JaLXNAHB9rIiZLGeKykp4=; b=Q
+	CfOYWZ6MWm08stEpkCBFy6KcVfhPtmMfsfufplpma2Psp3ERSNvEOhLVcv16BT6q
+	cdYJJrSucQxlJto6I8J5GZivcvTHXgi4t7mUnAJ9AP8IoQ5DtbEdIpwb5VrDQ5Ms
+	AX+/da/J23+RVU/MC3svd7soxVVenlGsBWtW8dZ/fAOx15+bj99Mc72z+8Nl3A53
+	yYnh1ybap2xChM/oYejwxFgDA/3sC8OFbzv/DwZKQch2cT6l4iX2CQ0LYV3h3Gn5
+	koQOQEg7XT5oxOdmrcqUz9B2DzJRefKaxXxFFAQzmoQu9HRB68TUmvJwK8/lN9I5
+	wtv7Qrk1G8KfjX5f+AWuQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746135295; x=1746221695; bh=0eiA+piig1eZRGS2GWu5A8vlcNO+
-	FQzHXfkVlC0d/xY=; b=pDu7tVptuDH41eXbKkr99IxUN7FKmXtAeuB9eQ8Lr7TM
-	bHGl1vcxpz40/ZSNRQEi+yXJObRp+kYGwMWa/xFiZTXgXr4mxwCSdDf4+n1Sg3XY
-	kBJ5k9X9uEkQ43vU51xp/mClHtQS27DjpgFdKaciUKXNLRq6BOuNozzGtBM1IEky
-	R9Q7J2j2CeVrQNRW1Ffx/+VFNclfXwI0T2yvTKoylIvZxyHchUVbcshoY6vHt0Yq
-	tv1HfUHJUFU/YgDQof+30QmOUm68oVTKOM1XE65h/sMAltY6QgqHo6liwmLd/T7y
-	sEV7Wk8n9GWRpZbvIl7jTF2hGEFIcFOjCwsKrVqLeA==
-X-ME-Sender: <xms:_-gTaGdtRNWouB4oglh6RcvlEIKz6z-f04A5YYn40AGrwBXpyNJo2w>
-    <xme:_-gTaAM7V73EoiX49AQEdK_221QgAKFLusLAKpnefxNj0VFsH6rVKTJi6ToMhWmBB
-    JNDXMxu_6ZpRHxDhQ>
-X-ME-Received: <xmr:_-gTaHgqTfVG7ZblGMZasftUB2YzibxNj0Uru6g0b3DEp4xYbf0wfHy8hlmQ3CpuH9_zOPfKAqpvCv1x3okrjgrYG8mxRGcqrUV1>
+	fm3; t=1746135297; x=1746221697; bh=U0dCZRDrFkvyjE4nny7l18JaLXNA
+	HB9rIiZLGeKykp4=; b=YqMD9wZ6NbAuhOAJ83RoM4asbWFYFgMg+GLu/eJnHvVh
+	OQvrBPgNvNoWIJRkHG0HIxcVAgr8XStrJDV6Y1MKNBcnJxQzL89upnbg4L0/Uyr7
+	Cl7VLHoJ0bG6Dw+3DDhv/XKGk2Rni8jcZLPxFhqFchM0cr6TsLEwYzt4C9u4ShPP
+	1YwF2D/HzOsCi9GsOrHeVNi7vF0IAm750UNClrGOacGYmSKbXW9ucERoBaMYL0aD
+	KpTScA7hoxMk0sVcigWKeLuSDEHfvGqxkOTttfhROXlCjxj7BET5BLH8Ib/TEA3p
+	yafrCmR2ACO+YoCtVbmla5dZ8+Sl6+nqnN3QAlE2iQ==
+X-ME-Sender: <xms:AOkTaEhzEOKgywXudDM2g3POnns9ScoP5YGW2erqXW9xoIrLm3cCDQ>
+    <xme:AOkTaNDh6QabipzTpF2ldqB3l53urWkU2phtpuukPqlCqSx4r7y21l5s9fF0C8gz2
+    c9vM8jS6wKlzoZYHQ>
+X-ME-Received: <xmr:AOkTaMFdlpVBVKZDRdiodwdmuKw-uOe-uLs1BZqclzRaCzWXfuRAliScx42peaqwxZdFHzVWvoYq5MSwtphG-KQuaBRjiCPNikgT>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieekucetufdote
     esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:_-gTaD9RhkG7OVbfiuxwpcFtgSy9y1389LnGoy59S7B_6_dpx3hJ6g>
-    <xmx:_-gTaCv2hldYGHrVzd1aSQYaG_FPIFRmqmSReVrX4TlzDpcl_IZg-A>
-    <xmx:_-gTaKEOLEDP3HXCrs4gpruYjb68rt6mXzuSG9ZcYTOWxUlJc1m-Ow>
-    <xmx:_-gTaBNy8HS3sdCfMOBm8AalebOSlUx33nHcfClfDlwH_HsMTlcJQQ>
-    <xmx:_-gTaHvoHD4_sRRythL4Q9PAH_BrYazcmvOZbpEXf9RRlsDa6YN5rexf>
+X-ME-Proxy: <xmx:AOkTaFS9ENqqJnMoaDRCXqFBfcjV-0GpE92IoSsWxNR8gB_SSRMBQw>
+    <xmx:AOkTaBzZ7YAPcaMHLD3f1MInEko1rCvOeKdzGlnDuyMLBLTSLWF9xw>
+    <xmx:AOkTaD41C4VJqQ_i7YXo3AbAv7RCs5HhRO26yd44qlpGvPuuHapvtw>
+    <xmx:AOkTaOzwYAM9pbUelic5uORrDXGJhiKaonw2G74PURy5OPMLFZAq6g>
+    <xmx:AekTaIjR6EhQNhll_bVE4K7gPtVtd5SXmH51iY9z7A4XZ0pXAX5SkXJ6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 17:34:55 -0400 (EDT)
+ 1 May 2025 17:34:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 1/2] you-still-use-that??: help deprecating commands for removal
-Date: Thu,  1 May 2025 14:34:51 -0700
-Message-ID: <20250501213452.370729-2-gitster@pobox.com>
+Subject: [PATCH 2/2] whatchanged: require --i-still-use-this
+Date: Thu,  1 May 2025 14:34:52 -0700
+Message-ID: <20250501213452.370729-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-599-gc9a5c860a0
 In-Reply-To: <20250501213452.370729-1-gitster@pobox.com>
 References: <20250501213452.370729-1-gitster@pobox.com>
@@ -83,94 +83,120 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-A command slated for removal like "git pack-redundant" gains a
-command line option "--i-still-use-this", and refuses to work when
-the option is not given.  The message and the instruction upon
-seeing what to do are both rather long, so before letting another
-command to use the same mechanism, factor out the message+die part
-into a small helper function, and use that.
+The documentation of "git whatchanged" is pretty explicit that this
+has retained for historical reasons to help those whose fingers
+cannot be retrained.  Let's see if they still are finding it hard to
+type "git log --raw" instead of "git whatchanged" by marking the
+command as "nominated for removal", and require "--i-still-use-this"
+on the command line.
 
-The existing pack-redundant test lacked a test to make sure that we
-require the --i-still-use-this option.  Add one while we are at it.
+While at it, update the documentation page to use the new [synopsis]
+facility to mark-up the SYNOPSIS part.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/pack-redundant.c  | 10 ++--------
- git-compat-util.h         |  2 ++
- t/t5323-pack-redundant.sh |  5 +++++
- usage.c                   | 12 ++++++++++++
- 4 files changed, 21 insertions(+), 8 deletions(-)
+ Documentation/git-whatchanged.adoc | 10 ++++++++--
+ builtin/log.c                      | 13 +++++++++++++
+ t/t4013-diff-various.sh            | 17 +++++++++++++++--
+ 3 files changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 3febe732f8..6dc9e020c7 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -625,14 +625,8 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
- 			break;
- 	}
+diff --git a/Documentation/git-whatchanged.adoc b/Documentation/git-whatchanged.adoc
+index 8e55e0bb1e..d21484026f 100644
+--- a/Documentation/git-whatchanged.adoc
++++ b/Documentation/git-whatchanged.adoc
+@@ -8,8 +8,14 @@ git-whatchanged - Show logs with differences each commit introduces
  
--	if (!i_still_use_this) {
--		fputs(_("'git pack-redundant' is nominated for removal.\n"
--			"If you still use this command, please add an extra\n"
--			"option, '--i-still-use-this', on the command line\n"
--			"and let us know you still use it by sending an e-mail\n"
--			"to <git@vger.kernel.org>.  Thanks.\n"), stderr);
--		die(_("refusing to run without --i-still-use-this"));
--	}
-+	if (!i_still_use_this)
-+		you_still_use_that("git pack-redundant");
- 
- 	if (load_all_packs)
- 		load_all();
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e123288e8f..21cab99567 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -703,6 +703,8 @@ void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
- 
- void show_usage_if_asked(int ac, const char **av, const char *err);
- 
-+NORETURN void you_still_use_that(const char *command_name);
+ SYNOPSIS
+ --------
+-[verse]
+-'git whatchanged' <option>...
++[synopsis]
++git whatchanged <option>...
 +
- #ifndef NO_OPENSSL
- #ifdef APPLE_COMMON_CRYPTO
- #include "compat/apple-common-crypto.h"
-diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-index 688cd9706c..f2f20cfa40 100755
---- a/t/t5323-pack-redundant.sh
-+++ b/t/t5323-pack-redundant.sh
-@@ -45,6 +45,11 @@ fi
- main_repo=main.git
- shared_repo=shared.git
++WARNING
++-------
++`git whatchanged` has been deprecated and is scheduled for removal in
++a future version of Git, as it is merely `git log` with different
++default; `whatchanged` is not even shorter to type than `log --raw`.
  
-+test_expect_success 'pack-redundant needs --i-still-use-this' '
-+	test_must_fail git pack-redundant >message 2>&1 &&
+ DESCRIPTION
+ -----------
+diff --git a/builtin/log.c b/builtin/log.c
+index 04a6ef97bc..0f98ac8a34 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -113,6 +113,13 @@ struct log_config {
+ 	int fmt_patch_name_max;
+ 	char *fmt_pretty;
+ 	char *default_date_mode;
++
++	/*
++	 * Note: git_log_config() does not touch this member and that
++	 * is very deliberate.  This member is only to be used to
++	 * resurrect whatchanged that is deprecated.
++	 */
++	int i_still_use_this;
+ };
+ 
+ static void log_config_init(struct log_config *cfg)
+@@ -267,6 +274,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
+ 		OPT__QUIET(&quiet, N_("suppress diff output")),
+ 		OPT_BOOL(0, "source", &source, N_("show source")),
+ 		OPT_BOOL(0, "use-mailmap", &mailmap, N_("use mail map file")),
++		OPT_HIDDEN_BOOL(0, "i-still-use-this", &cfg->i_still_use_this,
++				"<use this deprecated command>"),
+ 		OPT_ALIAS(0, "mailmap", "use-mailmap"),
+ 		OPT_CALLBACK_F(0, "clear-decorations", NULL, NULL,
+ 			       N_("clear all previously-defined decoration filters"),
+@@ -656,6 +665,10 @@ int cmd_whatchanged(int argc,
+ 	opt.def = "HEAD";
+ 	opt.revarg_opt = REVARG_COMMITTISH;
+ 	cmd_log_init(argc, argv, prefix, &rev, &opt, &cfg);
++
++	if (!cfg.i_still_use_this)
++		you_still_use_that("git whatchanged");
++
+ 	if (!rev.diffopt.output_format)
+ 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
+ 
+diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
+index 3855d68dbc..8caab2ee38 100755
+--- a/t/t4013-diff-various.sh
++++ b/t/t4013-diff-various.sh
+@@ -203,11 +203,19 @@ do
+ 	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
+ 		{
+ 			echo "$ git $cmd"
++
++			case "$cmd" in
++			whatchanged | whatchanged" "*)
++				run="whatchanged --i-still-use-this"
++				run="$run ${cmd#whatchanged}" ;;
++			*)
++				run=$cmd ;;
++			esac &&
+ 			case "$magic" in
+ 			"")
+-				GIT_PRINT_SHA1_ELLIPSIS=yes git $cmd ;;
++				GIT_PRINT_SHA1_ELLIPSIS=yes git $run ;;
+ 			noellipses)
+-				git $cmd ;;
++				git $run ;;
+ 			esac |
+ 			sed -e "s/^\\(-*\\)$V\\(-*\\)\$/\\1g-i-t--v-e-r-s-i-o-n\2/" \
+ 			    -e "s/^\\(.*mixed; boundary=\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
+@@ -454,6 +462,11 @@ diff-tree --stat --compact-summary initial mode
+ diff-tree -R --stat --compact-summary initial mode
+ EOF
+ 
++test_expect_success 'whatchanged needs --i-still-use-this' '
++	test_must_fail git whatchanged >message 2>&1 &&
 +	test_grep "nominated for removal" message
 +'
 +
- git_pack_redundant='git pack-redundant --i-still-use-this'
- 
- # Create commits in <repo> and assign each commit's oid to shell variables
-diff --git a/usage.c b/usage.c
-index 38b46bbbfe..4aaad2b553 100644
---- a/usage.c
-+++ b/usage.c
-@@ -372,3 +372,15 @@ void bug_fl(const char *file, int line, const char *fmt, ...)
- 	trace2_cmd_error_va(fmt, ap);
- 	va_end(ap);
- }
-+
-+NORETURN void you_still_use_that(const char *command_name)
-+{
-+	fprintf(stderr,
-+		_("'%s' is nominated for removal.\n"
-+		  "If you still use this command, please add an extra\n"
-+		  "option, '--i-still-use-this', on the command line\n"
-+		  "and let us know you still use it by sending an e-mail\n"
-+		  "to <git@vger.kernel.org>.  Thanks.\n"),
-+		command_name);
-+	die(_("refusing to run without --i-still-use-this"));
-+}
+ test_expect_success 'log -m matches pure log' '
+ 	git log master >result &&
+ 	process_diffs result >expected &&
 -- 
 2.49.0-599-g90c2cffacf
 
