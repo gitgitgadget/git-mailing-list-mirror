@@ -1,92 +1,44 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA5C333F6
-	for <git@vger.kernel.org>; Thu,  1 May 2025 16:31:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED1220DD51
+	for <git@vger.kernel.org>; Thu,  1 May 2025 16:38:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746117122; cv=none; b=puw+edbp9tVF8weOJ6FpwnxFIgyZT5vT33oAdVN0vKDujhmDKaYF/IAU9c/u/J4K9TSF6pIkctvs+Sm8yoSMlIfed0ysLVQ3gwXGc40JKWBp33jkdmIn1rKPkhv9vx6i0Gmkz+XV+pa5y8jkdYpp6BtLwamdkol2vPieJGgxBkc=
+	t=1746117505; cv=none; b=SXazzqoKoNPCUCq4OAQvbrC/vGvFjF03J0xv1b/nRnuD4Ru0eBPs6Y+rvZMPhwNAfh9d90z17etMtRF7X+jJXLpl3C6ezCO/qXa/us3z2UZStDw03/Eyuh2liG0GU+UpTUP04o8phA+tYB9vm8Vs6kym9iXJPECRNChpbgn3NqY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746117122; c=relaxed/simple;
-	bh=4l569yMJva+7JzCjVN+d2iPSmokmnzxLl8yZv/wzIfw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=iZfxT7dDFBKMbp+JYwnvyUtrww7L4x1F0rX6eaWryqe6taBUo89545p5idpd3HC2bygy5ggMdXoGmWeuyi5iquqKiwpaTLMZo4wwd5Uai84Rg3UVCxXvZis0ydIeBe8xHLOp5iCVYD7H5YFp/KdIdNU+tqkIk9Qx0wPgyEDuLbQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b+i8A85+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wn/mcv5s; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746117505; c=relaxed/simple;
+	bh=Cb+utMdVHrrSLSXee0NUJ301Ok/sAmTKbAgtQVmahRo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fRADcR7MVmrazri0C4+d40+zbswh4vW03DLvgIcjCBEU/A4kxEK1x21+LYHJXldW2uF5fnsDvC1DmzUhGlk8cp5mUaNTM55FZAxawm55P+itkeGDw+SK/+a27BSxy30JDIj/AxiFDLU9fie22bsWrYFzUu9mlFMyFvVxEyZxlSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aBsQsfha; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b+i8A85+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wn/mcv5s"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D3188114013D;
-	Thu,  1 May 2025 12:31:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 01 May 2025 12:31:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746117118;
-	 x=1746203518; bh=JifzlNp3THkJc9jHi7+jp55iYtXGostaNwLWYH39LBw=; b=
-	b+i8A85+RhFboggwa2O8FBfwV3w58+zjtFOlh8bev26NEvUnRuxHByCchpi/NVw3
-	EU6eHnCa1ST3/Hl/2g5DhqBn70YoAP4ILJ4SAO0ElqzCfnZPjqloSuKUXEoc2JwQ
-	1fke1JnvvOh6ZANLKcNyHi2YnAkeDYjSd0Pjb1JeRdJ7q5OjYsvhc58oM77VQAiV
-	MoFnQfjX31vlIIcBLkR+23oWxMr5NMszvZxam4PbgH0HBy4JYJkuWep9f31iUUwE
-	KZzXMkwvD6wu8m5Kj69PhckY8AhqiZX0OM/6mAe8SucisVS4Gwa0L3I9Xpj+/Q3+
-	eU/tmysLa33UjH4pYm74xA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746117118; x=
-	1746203518; bh=JifzlNp3THkJc9jHi7+jp55iYtXGostaNwLWYH39LBw=; b=W
-	n/mcv5sz0B6lcOay7fdrHener1j9WZljDcMJnGMG9kuCaYUL03iUWm6L/veLBIX/
-	iUh+s6YQR3fNjWSOxjO6It3PHGDlJY9pUM7iauFFSjXiG5oKX85YxU5apBfW5eg+
-	CpXjueMQleDkmZGUjuGmhKkzcP4aV1C4jTJL6CzM3FprYkfD/cmuPBuFeHESTtVy
-	hM4caGlyHOW6CMtz8cXg8rIPnbZx2Kk5WluuknLZPR4ZLMsgRZgKotXBCQOnbhEy
-	Ypgixbqf1uU+MtoTr8MbIU1W/XmdFQgu9DfmR5VNRUndXChFQritnfkICc8ODn/k
-	smhqf5+hA1pfLXkf5AUmg==
-X-ME-Sender: <xms:_qETaLFj4JzQnRKA-BseEvxpj8fdA3sOLV135MbKNlaWdZ9qWmzkSw>
-    <xme:_qETaIWUPRJtY6LVfXKPw8dVe3djTBOtnzKOJttFToVyrv9tJokUqEplU9WrnvTJd
-    7WvfV9QyG7s_j-Xcw>
-X-ME-Received: <xmr:_qETaNISpE_YYR8mdEMNJV-T3jpUMqfr9WvyLYdVBRl3vQOivYIl2B5DXd0hdD45CJZce1dKdqpc83TvW76idtApyrhTRGowJUbE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedttdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkefotddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeekgfdtuedvjeffgfehueefueeghfdt
-    jefhgfekhffhteeiffetheelhedtgfehtdenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehj
-    rghsohhnuddutghhohgtrgesphhrohhtohhnrdhmvgdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggtlhhophhtvgesghhmrghilhdr
-    tghomhdprhgtphhtthhopehrhhhoughgvghssegtihhstghordgtohhmpdhrtghpthhtoh
-    eprhhphhhoughgvghssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:_qETaJEbQAymD-Qb4_p0DV0GBwHnid8VNM9ZH0rgvIt4klwt423loQ>
-    <xmx:_qETaBXH_zNUtaOJpR4JleU1VVCFK2tR7UP4777r5vkzoIUdP_CV2A>
-    <xmx:_qETaEM-By-AcmGBPWQUcVdhLD85TheGHkgQdTyOGUafw_NQRsNBVw>
-    <xmx:_qETaA1GZ3olVM5pTJDbZsrmjeQ4F3SDBHveKlqW_kEY2Ca2tFujKw>
-    <xmx:_qETaDXUWkCdz-Pyk3rftg9qvwqjDJX0ECy6kcYQbAIdx0cE0gjliHJe>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 12:31:58 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Jason Cho" <jason11choca@proton.me>,  "git@vger.kernel.org"
- <git@vger.kernel.org>,  "aclopte@gmail.com" <aclopte@gmail.com>,
-  "rhodges@cisco.com" <rhodges@cisco.com>,  "rphodges@gmail.com"
- <rphodges@gmail.com>
-Subject: Re: [PATCH v3] apply: --intent-to-add should imply --index
-In-Reply-To: <8a61dc13-0b7e-437d-b060-c17bff483c7a@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Thu, 01 May 2025 14:48:11 +0200")
-References: <93yuUC_Wn9lQIDzJuvAWbCQ35kz1YxeNhsLLX67x9VzoPtRugVLNaHC_p1sWBzMxWy_VVRRl8av3Dx5PHw4_Cch0gmWs40DDrZRaezLVkGk=@proton.me>
-	<8a61dc13-0b7e-437d-b060-c17bff483c7a@app.fastmail.com>
-Date: Thu, 01 May 2025 09:31:56 -0700
-Message-ID: <xmqqmsbwxpfn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aBsQsfha"
+Received: (qmail 24865 invoked by uid 109); 1 May 2025 16:38:23 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Cb+utMdVHrrSLSXee0NUJ301Ok/sAmTKbAgtQVmahRo=; b=aBsQsfhasS7O8RzAjZTFDZyM6DWxPNTG+1EguMMD17gAh7YmT7RXfCzX9N3TX3s7tVA7RlFv7xYjO1+Go+RTxeBC82mWqptOCByuMSuH1bfW4GUilowFC1fDRB9mfe6PjewBz0wKpKPNDHKK1DpGCW78dSiiIlqlYCNvppngyG50s9rxkzSfPhOey+42QZYjnKinKcOG0zoWTfSFbNvILCV37w307vmyV8uiWXvtS/5ebtScUF63gV8IZSGwfLqneZFGDCcvnbeiggcz4B58v7xbzAPgL56JLSdk54wlL3hSttfbefhoirSyE5ciz6nx9SsLFUTs22Sej6xDxI9VKw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 May 2025 16:38:22 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 8936 invoked by uid 111); 1 May 2025 16:38:23 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 May 2025 12:38:23 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 1 May 2025 12:38:22 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
+Subject: Re: [BUG] rebase: can write reflog with uninit. `action` string
+Message-ID: <20250501163822.GE1795346@coredump.intra.peff.net>
+References: <20250428194048.149348-1-code@khaugsbakk.name>
+ <ce0f41e4-7d90-4398-a0e9-e8ba69791e57@gmail.com>
+ <fbc97d6a-2022-4a64-a2ba-5a7255cd81a6@app.fastmail.com>
+ <20250429215155.GA36727@coredump.intra.peff.net>
+ <6743a9fc-11ca-45ac-bc40-4148f5d85d27@app.fastmail.com>
+ <20250501131751.GA1725607@coredump.intra.peff.net>
+ <xmqq4iy4z55h.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,38 +46,24 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+In-Reply-To: <xmqq4iy4z55h.fsf@gitster.g>
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Thu, May 01, 2025 at 09:07:06AM -0700, Junio C Hamano wrote:
 
->> Johannes Altmanninger submitted patch v3 titled "apply: --intent-to-add
->> should imply --index" to fix this issue.
->>
->> Is this fix merged? If so, which Git version includes this fix.
->
-> I can’t find any commits by Johannes Altmanninger that addresses this.
-> I also can’t find any commits that start with `apply: --intent-to-add`.
+> >  	va_start(ap, fmt);
+> > -	strbuf_reset(&buf);
+> > +	strbuf_release(&buf); /* guarantees realloaction */
+> 
+> I initially thought that this comment may have to be updated in the
+> production version, but because we have to freshly allocate for each
+> new message for ownership change, this comment still is correct.
+> The only difference between the "here is how to expose" and "this is
+> part of the smallest solution" is why we want to guarantee it.
 
-The documentation says this:
+This code change is just to stimulate the bug more readily. ;)
 
-    --intent-to-add::
-            When applying the patch only to the working tree, mark new
-            files to be added to the index later (see `--intent-to-add`
-            option in linkgit:git-add[1]). This option is ignored unless
-            running in a Git repository and `--index` is not specified.
-            Note that `--index` could be implied by other options such
-            as `--cached` or `--3way`.
+I think if we started to actually allocate here, we'd want to switch the
+"return buf.buf" at the end to strbuf_detach().
 
-It is clear that whoever wrote it understands that for this option
-to be effective, the patch needs to affect the index, and one way to
-do so is for the user to pass `--index`.  But at the same time, that
-is not the only option that makes the command touch the index (e.g.,
-`--cached` does, too), and it would make it behave incorrectly if a
-patch automatically pretends that `--index` was given when this
-option was given.
-
-I can't find the patch either, but given the above documentation, is
-it even still relevant?
-
-Thanks.
-
+-Peff
