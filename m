@@ -1,55 +1,55 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 458081F4608
-	for <git@vger.kernel.org>; Thu,  1 May 2025 21:41:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2E8C26159D
+	for <git@vger.kernel.org>; Thu,  1 May 2025 21:41:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746135664; cv=none; b=XYKEWQKdxTnMo9rfAToOFx5fomBWUK2hIjAQHgzDCBSQTnrDqqoQ3wr+PlnlVGTyf9rjuDhARtowFp6OqLTQN85lSmXIY/PjiFVTSf5/5C17fIvimtHsNWK44KC1ldhvO9yENL0CJ0SIiMqo63d7x0Ge+Yu/2MMHRbSTa7zd1XM=
+	t=1746135666; cv=none; b=DwmK7+qdWv089uI2uPfwk5cZ+Zn2xwX0+hGT+GkqpPs3OpOM2UZuWtvSLhyJeT10/KMMGfkrv3M7rkg2MBMGBFU26Z4NoS0Mlm0060xLm9p3CRhVwDZv9TebyH7U3V2mbGbsxZqu9iLQO3X/13LrMHvBbrt7BAQrtSDVwN5x2u0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746135664; c=relaxed/simple;
-	bh=s9xW7L4yUb6PlkmdlvcGsos0maVa08R1PUbaOj9mPnM=;
+	s=arc-20240116; t=1746135666; c=relaxed/simple;
+	bh=zyO0o18JHZ9ky/kxsrfG1NE8/40vBk+wUpAUAHYsNSU=;
 	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=LlRvFkHrwMCMCaq9gOKCVzSDyZbiGRO4nxm00u9qfpka95Gu4wFSSHy3tAUsN3fFzNeuemqYGrWs13QfK/f9oZyYmEB6A0txBBEilAvocYKBKO3kVkq+yRKgDcyA8eE0uRFr9GUsam6ZEyQzrlRS8Y7ihz4e+xfxg7iIzSeeY20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oq9gLNIc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JdpzuMB0; arc=none smtp.client-ip=103.168.172.152
+	 MIME-Version; b=g11yB+tQg8jhvipbYlJOisfolIUHwUuKptw3vPe59P00iXS/TKWhHVylhxS/DhorvznWLMLz+c/itLPm6rCC5Y7p43ciIc9Iu5eO+lp8ipG3BjYtkADvCKFROwB7jU1oHTxORlb9DXoXp0eay756vwphhI5a4iSy3nf5STuqNu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cXXM7Mxd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KVhPx3cL; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oq9gLNIc";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JdpzuMB0"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6B2151140250;
-	Thu,  1 May 2025 17:41:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 01 May 2025 17:41:02 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cXXM7Mxd";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KVhPx3cL"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 01D051380FC2;
+	Thu,  1 May 2025 17:41:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-12.internal (MEProxy); Thu, 01 May 2025 17:41:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1746135662; x=
-	1746222062; bh=6/bzj2naTsJB2wyMsM36wq1DCdA71n/CI09DTLX5Eko=; b=o
-	q9gLNIct9+Gau0tG+0GpxvpLOQhaAq41Ue7hwkdVs6R1Zp42RO2JI7KZ8lIURzKr
-	nwIyUDUK3yacMMveuCPSfhgozNNQsa7GKDIi3LXWj5rMBzbiUMAyRIsh8/cWKdjS
-	BjjlCSgXl2mzeK4Q6wUXiA7XfmXa36pFmmurOLvCAwXJEVa+jw7yfWojRGJg+b74
-	lp7GEfBlXM/QkPLMCj2D1HIi1XPX6cE8lPw0nLy8/in398hc1kK0JvCvB7sk/hr1
-	qk4m1xIjP+ze7Wbj0xgW/eJ6nZK2QQKThlt39hF8x8zYBS7+n553gsGqh7ovW5iT
-	Xo3Y9ytLWAF0xQ7i0XJLg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1746135663; x=
+	1746222063; bh=sKqZxJA6I5VzpmUrSz4NYQP9j42uHvif1HD+phUcya8=; b=c
+	XXM7Mxd1EqsOO/SSHybPYWrByxxfMhRk9ETNn0dVBBo96VP01s7onUeXy7mgKQU9
+	fV+tzN8vFSCxbZno4ogrMhRcsQJyQ25B9fBjztIToix7pypsK9MLwplV0BcfkxKv
+	6CHgookt5R96uCAmXATLIU8zfy+Nb/O/owNkCshdz6/XP4NIgj9ghnEpP9k/OzW5
+	ZmOyzWhMtDhrVAk0EkHRM1RVmPh7rgjga/D2Bu727SvGThH/+GMCQdXtKGJo0BVc
+	2uyF71cLvXLcbZe+x1h5y1R2i5OCtxnlhRTzQ4DfSrF26L+/HsSzQyMsC0RH5bH4
+	gNM4cYYSG8l4VtZJjKWzA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:content-transfer-encoding:content-type
 	:date:date:feedback-id:feedback-id:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
 	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746135662; x=1746222062; bh=6/bzj2naTsJB2wyMsM36wq1DCdA7
-	1n/CI09DTLX5Eko=; b=JdpzuMB0ktq80ngbwOKkv63gl+HUtHx0uakiTWkAL/r8
-	XoBoe0cWAHh8jn3A9BJjuglZgXXHgzansOnmBwo7Rf9XPYh4d5Fw8D9Dm9urb6ET
-	nK9iN+9hR0u39Uxb3Rx/+2bdNhGtjHsArJUexUmP7TM+Lzs7o9aCeJSjpU9GHgpW
-	HEORot8kgloQmkDzSOrjK9hcYxlwoHdB27TMsKyIO+lMUYX28+Cgf5O1AV8JRHMN
-	tzNOH+R5bf+4KjWmh2fQsds7izQ66Kfu9XTkGyOZXMpmlW7Ga4q65is3+Q0u/njo
-	BxKZnDVasJliU/tMSjblVpTN2RC1tnczyeV+/xbzSQ==
-X-ME-Sender: <xms:buoTaJhS4Rh_BgDt8H_AENvJrpwUcrjtSS0asdm3_1doDZzWk2NJZw>
-    <xme:buoTaODWOkSiLN81G0re8mlr4kC4NAjz0zlfdiOoAnDSvOvko4nbSg0u7heLpabyR
-    DqkjVpC5pTazPqRzw>
-X-ME-Received: <xmr:buoTaJEV-zc3qtE0r5MBjdkl2p5nyUnn8ufqct2KMDuOmB94VxTYzs9Ypy-4E5o51sHfQvd-1QI8CarwO5C32LxGV8YeF9Je_Pzy>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieelucetufdoteggodetrf
+	fm3; t=1746135663; x=1746222063; bh=sKqZxJA6I5VzpmUrSz4NYQP9j42u
+	Hvif1HD+phUcya8=; b=KVhPx3cL1ZWLCW89BaOe1NsbDd6K5GyUoJ+SkY9ECcfc
+	XMOoDnRWmP0Rqd2NyRPNvszlVhresIv+/hi0beIQgMKgjmon7/ANA+fMrsE7/wDp
+	qhFQ+MlEKy26VXeBvLNO+/vwWjFQFEpsw6AgNVl3lNTyMsQ9Wy0mhyuZMv9NyMvZ
+	WEYlBix2R+b2bZpWlgCDfGr5uL8i2LbZcdCTlphgciToziwTQEYaok0AEqIgWd3/
+	IaiYxxFREaxpZx/kFtB1bmibSBM206gvXJJP/dJGsqGd0TAuTO2d+0EfD/5RxX1d
+	dFYhKu6ZTR6C9doVFhAdgwRwrgT0+9VRuuwWZOaN/A==
+X-ME-Sender: <xms:b-oTaJZ7RY-xV9r5mX2Hy2tDlcbi19-92Eem54yTIY1fUeCN7UEhNQ>
+    <xme:b-oTaAZ_3LfiJHp3gsgGX_Eh5yaZ9HiJPbj0yZDpp1uy6D8fN8WE2Ju5SkXU2Ibjg
+    shJhqNIjOe211JKXg>
+X-ME-Received: <xmr:b-oTaL_R6aegLRUJJXSQdbi55XtoOjFLBpSa0IoWSBR7idF4_zrmbPTZk5-2nPgKzU-6ExHr35sHLWR9n8KB4AYh7E8ClJte2Azg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
     fufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
@@ -59,19 +59,19 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieelucetufdote
     esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
     pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
     hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:buoTaOTg1082pCOXcLYHVjsuNgTUowFE8fg1qTiGH27eH2ruFJRIsQ>
-    <xmx:buoTaGxdazkAlwodi3Rw27hQZjNmwhRlc-T_p-3J7kO70-B0vM-05g>
-    <xmx:buoTaE5rHDHaBHtzpFzEzXqyg-vQLvbX02sqdaDLDgDPEWLjd6MG6g>
-    <xmx:buoTaLxVB3SRdk09BCx77ukCQc5IvgSZ2UTiEyK9xiJXThU0opda-g>
-    <xmx:buoTaNiYqxaMKB3kEKHRakRNC0tRgu2a8D2MC_jH_QJduJCeEwURK0Kz>
+X-ME-Proxy: <xmx:b-oTaHpU99M6ePP5dUcbvxcTI_DHIDAruBTgouFQEpBMAGe00Ui3sw>
+    <xmx:b-oTaEpY8F6G7O-U-r8vetfitzhgF6rFYRfb2Q1xlIVyjILgwkzuRQ>
+    <xmx:b-oTaNSvxmz09BqSkScTYb02RdBkfv6HG0P-vwhJvVn4iu_uvZv7hg>
+    <xmx:b-oTaMrmnjTrG0w5VhDUMjTGh5HLIFtoxZ8BigBWZRs_RPPh6jbOPQ>
+    <xmx:b-oTaNYYfvE9OpbuaSnii_qMy4qidrBxbeQPuFN0MpB0B0K7xifsaeId>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 17:41:01 -0400 (EDT)
+ 1 May 2025 17:41:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH 2/3] config: values of pathname type can be prefixed with :(optional)
-Date: Thu,  1 May 2025 14:40:56 -0700
-Message-ID: <20250501214057.371711-3-gitster@pobox.com>
+Subject: [PATCH 3/3] parseopt: values of pathname type can be prefixed with :(optional)
+Date: Thu,  1 May 2025 14:40:57 -0700
+Message-ID: <20250501214057.371711-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-599-gc9a5c860a0
 In-Reply-To: <20250501214057.371711-1-gitster@pobox.com>
 References: <CAPig+cQUycUyto6=cDadaCahzDBQ_GDngAEEtK0bshLr15ok8g@mail.gmail.com>
@@ -84,92 +84,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Sometimes people want to specify additional configuration data
-as "best effort" basis.  Maybe commit.template configuration file points
-at somewhere in ~/template/ but on a particular system, the file may not
-exist and the user may be OK without using the template in such a case.
+In the previous step, we introduced an optional filename that can be
+given to a configuration variable, and nullify the fact that such a
+configuration setting even existed if the named path is missing or
+empty.
 
-When the value given to a configuration variable whose type is
-pathname wants to signal such an optional file, it can be marked by
-prepending ":(optional)" in front of it.  Such a setting that is
-marked optional would avoid getting the command barf for a missing
-file, as an optional configuration setting that names a missing or
-an empty file is not even seen.
-
-cf. <xmqq5ywehb69.fsf@gitster.g>
+Let's do the same for command line options that name a pathname.
 
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/config.txt                  |  5 ++++-
- config.c                                  | 16 ++++++++++++++--
- t/t7500-commit-template-squash-signoff.sh |  9 +++++++++
- 3 files changed, 27 insertions(+), 3 deletions(-)
+ parse-options.c                           | 31 +++++++++++++++--------
+ t/t7500-commit-template-squash-signoff.sh | 12 ++++++++-
+ 2 files changed, 31 insertions(+), 12 deletions(-)
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 8c0b3ed807..199e29ccea 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -358,7 +358,10 @@ compiled without runtime prefix support, the compiled-in prefix will be
- substituted instead. In the unlikely event that a literal path needs to
- be specified that should _not_ be expanded, it needs to be prefixed by
- `./`, like so: `./%(prefix)/bin`.
--
-++
-+If prefixed with `:(optional)`, the configuration variable is treated
-+as if it does not exist, if the named path does not exist or names an
-+empty file.
- 
- Variables
- ~~~~~~~~~
-diff --git a/config.c b/config.c
-index a11bb85da3..4a060f1d82 100644
---- a/config.c
-+++ b/config.c
-@@ -1364,11 +1364,23 @@ int git_config_string(char **dest, const char *var, const char *value)
- 
- int git_config_pathname(char **dest, const char *var, const char *value)
+diff --git a/parse-options.c b/parse-options.c
+index 33bfba0ed4..7a2a3b1f08 100644
+--- a/parse-options.c
++++ b/parse-options.c
+@@ -75,7 +75,6 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
  {
-+	int is_optional;
-+	char *path;
-+
- 	if (!value)
- 		return config_error_nonbool(var);
--	*dest = interpolate_path(value, 0);
--	if (!*dest)
-+
-+	is_optional = skip_prefix(value, ":(optional)", &value);
-+	path = interpolate_path(value, 0);
-+	if (!path)
- 		die(_("failed to expand user dir in: '%s'"), value);
-+
-+	if (is_optional && is_empty_or_missing_file(path)) {
-+		free(path);
-+		return 0;
-+	}
-+
-+	*dest = path;
- 	return 0;
- }
+ 	const char *s, *arg;
+ 	const int unset = flags & OPT_UNSET;
+-	int err;
  
+ 	if (unset && p->opt)
+ 		return error(_("%s takes no value"), optname(opt, flags));
+@@ -131,21 +130,31 @@ static enum parse_opt_result do_get_value(struct parse_opt_ctx_t *p,
+ 	case OPTION_FILENAME:
+ 	{
+ 		const char *value;
+-
+-		FREE_AND_NULL(*(char **)opt->value);
+-
+-		err = 0;
++		int is_optional;
+ 
+ 		if (unset)
+ 			value = NULL;
+ 		else if (opt->flags & PARSE_OPT_OPTARG && !p->opt)
+-			value = (const char *) opt->defval;
+-		else
+-			err = get_arg(p, opt, flags, &value);
++			value = (char *)opt->defval;
++		else {
++			int err = get_arg(p, opt, flags, &value);
++			if (err)
++				return err;
++		}
++		if (!value)
++			return 0;
+ 
+-		if (!err)
+-			*(char **)opt->value = fix_filename(p->prefix, value);
+-		return err;
++		is_optional = skip_prefix(value, ":(optional)", &value);
++		if (!value)
++			is_optional = 0;
++		value = fix_filename(p->prefix, value);
++		if (is_optional && is_empty_or_missing_file(value)) {
++			free((char *)value);
++		} else {
++			FREE_AND_NULL(*(char **)opt->value);
++			*(const char **)opt->value = value;
++		}
++		return 0;
+ 	}
+ 	case OPTION_CALLBACK:
+ 	{
 diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
-index 4927b7260d..e28a79987d 100755
+index e28a79987d..c065f12baf 100755
 --- a/t/t7500-commit-template-squash-signoff.sh
 +++ b/t/t7500-commit-template-squash-signoff.sh
-@@ -46,6 +46,15 @@ test_expect_success 'nonexistent template file in config should return error' '
+@@ -37,12 +37,22 @@ test_expect_success 'nonexistent template file should return error' '
  	)
  '
  
-+test_expect_success 'nonexistent optional template file in config' '
-+	test_config commit.template ":(optional)$PWD"/notexist &&
++test_expect_success 'nonexistent optional template file on command line' '
++	echo changes >> foo &&
++	git add foo &&
 +	(
 +		GIT_EDITOR="echo hello >\"\$1\"" &&
 +		export GIT_EDITOR &&
-+		git commit --allow-empty
++		git commit --template ":(optional)$PWD/notexist"
 +	)
 +'
 +
- # From now on we'll use a template file that exists.
- TEMPLATE="$PWD"/template
+ test_expect_success 'nonexistent template file in config should return error' '
+ 	test_config commit.template "$PWD"/notexist &&
+ 	(
+ 		GIT_EDITOR="echo hello >\"\$1\"" &&
+ 		export GIT_EDITOR &&
+-		test_must_fail git commit
++		test_must_fail git commit --allow-empty
+ 	)
+ '
  
 -- 
 2.47.0-148-g19c85929c5
