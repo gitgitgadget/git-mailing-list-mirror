@@ -1,90 +1,118 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED53E44C7C
-	for <git@vger.kernel.org>; Thu,  1 May 2025 18:29:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809EB1F151C
+	for <git@vger.kernel.org>; Thu,  1 May 2025 21:34:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746124150; cv=none; b=a6DKtx3wxkXi+wYE9vbhQ0CLjYEMABoTo20qEUpGmXJm/otNNHPZ4RMN22B9GqRWpbs8sDew+46anLRLnaFktUhLbkJznAtzShD63WJDWkp/HAnL2i29skTuqQl97wM4HD8+hom8Hc+FRvAluf93uxqA3kya3ZWIdqhubB5zmLk=
+	t=1746135261; cv=none; b=tEret1RRgVsXckVCGyiTg0hS/ahGbvp7OzpDcyykY9y/73v5dm/V9aLn2nn9qzGNlNnSPJ2wMoPRlgdt1DREnfxQbiP/ygX78IA51yBhPfiQbnYo1p8cCOo3vHgKlAbiqyy10DyWqsWPdgoILh712DCpDfdAZ/3Z+52B/8J3N34=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746124150; c=relaxed/simple;
-	bh=5dZ02tuz35sDK3dvKUHBbkbjTfG2nh4qTbBxLRKy97o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=M9M0OULpwiy1LSv/HFey36osjpHfDDDoTAgH2QdnZLRZtCnW5TIIcRd/gQVECyWzMrLcQnUy1wXfm72UV8lGaLgXnLfJiMdRVqjeV9xTNRvlOSq+ogmea/DhzvHe5cHOR+8uQHpiFUIL3iOXyFP4awePT9OP+BnrRG8dwiWs7Mw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f0eb824f51so1765546d6.0
-        for <git@vger.kernel.org>; Thu, 01 May 2025 11:29:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746124148; x=1746728948;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=5dZ02tuz35sDK3dvKUHBbkbjTfG2nh4qTbBxLRKy97o=;
-        b=GC31g6Jv9EqVDytl2MmFYym193CSuLdOWTcOIUYeEN3nk3FMz3j3L68zWlK0840E++
-         5EhnFfwCpPL1apEmR3Ekop90z81WpczrJkM9FULRIb6Qaf8IhEz6uWh1PqNO0+mCZYtH
-         maUSQK8pAedTMe5aC0kNb9vfYS9HuNv073xiwTRqC/pisxeNBry2xB9qDch6ZYB3Ir9w
-         C8bpLqs58SnKjmCALvlwXzGWbn+DD5HpXdHqURlIPiW1fIeunoK22Hr4izc+nPvpul7M
-         7rW871JM+G315usuq27tqR7OJsnPQqkd1N5rxaT5CvLjDwVvx4algv01HAS6ninrAcTp
-         OzZw==
-X-Forwarded-Encrypted: i=1; AJvYcCWuhxz1Taj8JLfKRAo87PZ8uxPgDoRgbm5oH5EF9ojTsRLrHIyIgy4IrfB8jQTsJSXZBH8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxfQczwcRgBv86rWMr6q8Vf18i4OlfhvRFZRRI8Fxu9oi+thND1
-	eeDqAK+PrEq2CUEJ8icZUWweG08+DpUytj7igWxYbdlNadIj3dcFYjRrX3ndN++zhlpmF81uu7b
-	PQH48Z5cY7Q1HHTI4JalzDrDB77KdbJ+8
-X-Gm-Gg: ASbGncsE6ItmhjzEzIOMagwxEQBwCKFUlsfqK/VDuvKpPfUCFtqxDECPrqdaa3QivKy
-	rlDBNTppUuz4NUbA9sQW6CKLbd8ZItDarhRujBQqH0vFYtpK7aorDerYlCL2jL6aao/P+zrPPiU
-	5z+RMPHOTwTPbHRdxM0Rrc48mn3x+DOCst2fJ76j/M1OYexeQO7pK9r2E=
-X-Google-Smtp-Source: AGHT+IEBplC87jrUnFj5EB+JugXAmybXXdTFGmU0JZn4LA5NmTrioabV6ZoewYFXJLKMk+xhocDBd2PS2LGzFvhiObs=
-X-Received: by 2002:a05:6214:224a:b0:6e4:501d:4129 with SMTP id
- 6a1803df08f44-6f51563f041mr1494116d6.11.1746124147842; Thu, 01 May 2025
- 11:29:07 -0700 (PDT)
+	s=arc-20240116; t=1746135261; c=relaxed/simple;
+	bh=A60f/tAWajMam+Yx0y1xlw+UMacTKkzOMABke8slYew=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=n9liL73jTaHJF1+Vcwz5Qc/C8T34Ih1DxW7EWVNGavkfKOobq/rHJgOCBB73vTrHFXze7RnAFaXDg3wIGCruhWNYKQAjSlmWJhw8pHjOeHkjld5CW/w57d2FZ8f/Q8+/8E4XNbrNVz+gxGNbpqh0twuhiWlnzr1L3U6UtwYQA3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=H5vw6Qdn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YoeDZADx; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="H5vw6Qdn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YoeDZADx"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 62AA1114027F;
+	Thu,  1 May 2025 17:34:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 01 May 2025 17:34:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm2; t=1746135256; x=1746221656; bh=fj5VPtLUJ1
+	eArIjNGVIU0XLjeG9lRSyaJvPglYOwqTI=; b=H5vw6QdnE/9bHr97o4iutJuqiM
+	Bq6ggfWTWrGbe3/AWRJeoKEatuMipeGNSQ9fO9i/NTjHeUiIWt3aBF1W+zw44Qre
+	LIczdjOO8UaeN9l8n/Tfhcjtlq6YLeJt5nKB52+WS/xIhOUTAn4l17q8Nr7vC4bu
+	FJF5Qa4V/GvGf7ABsindGjjatqW3yn/a/oFJLZO6XM8qUzuaP3QNfBLFzWQO2BsF
+	K/L3U/i9TtBJsifnhgER2GPHDXWJA93H7Q0X28d22vPMCpj8BD2hzsEY7DSOKMfv
+	4FSLj2RkRTWoDNRRMYlHVajMe1rMRDQThg+48ntuHxAfNRpyi2dAZbZKmrDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:message-id:mime-version:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746135256; x=1746221656; bh=fj5VPtLUJ1eArIjNGVIU0XLjeG9lRSyaJvP
+	glYOwqTI=; b=YoeDZADxWrKKYTMneuRrhJsEecVuDczlmTJ1hHMVlt0ZEdK+38w
+	s9v2fo6AyjTi4lO9efCJrPXRrdzIq6xiQT6YRNEVYguvEXFvTOVL45ChA98+jm4Q
+	/D7hOaNgKSgsqDmvoKfeTkvmRXPkOUmeqV7Dqh14ozQ60JdZPpe8i5v+TAz7T+fK
+	2b8CVhI3GKXErN7mFpKWxYX89nuOq+sld07Wr1ITzrRTdZyI9uEKssvGuptUMv6/
+	/5ndGyf3O0TsluJnk/eS+g3d4CaYu/56BGwQITUBTAfGy/5ug+1nhi/sHjYjogpj
+	OzOlXqirgtXPR77pnyj4bvoUcMuw4RxWMNA==
+X-ME-Sender: <xms:2OgTaMcxfUJD53Aa6bt-51mCvpA1K6wzVt4A2fGVNjffZ_2k4Pj8Tg>
+    <xme:2OgTaOMXcYe_27amREUaI9kCTzsvqmdqiL6b_K9oUmkeltb_9hMjBh5nG5_2knEyd
+    L3CsVbSgCiGRrisng>
+X-ME-Received: <xmr:2OgTaNh1QR25yaiyeYCKNdeaWCH29kV1BjjTs45OqbGMsLAxB01M3k_hPVYKR8do3lV9uOSXwVZMYQmn4gJGXrhR93JXxbGH2KRe>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    fufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghn
+    ohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtvd
+    efleeikeefudeijefgvdefudetgffhtddufeeufeelieeghefgueejudfhffenucevlhhu
+    shhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrse
+    hpohgsohigrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2OgTaB-pwnyfGut54zmrFKv7wOnvgdbVd-6Kd9YMm1ElhGEL-AriiQ>
+    <xmx:2OgTaIugqwnvd2PXS9jRRY3KDK7ubyZQ5srqcaufdfR6Egjy6mkxyg>
+    <xmx:2OgTaIHZWlsw25P3uzsfB9PXH1atfMl0NagZu5TQMBadmYzzQGc2LQ>
+    <xmx:2OgTaHMTolgWMyNV2736IHILP5iaGNKcSqlzBl_yc6kMFY5X61NOwA>
+    <xmx:2OgTaIe7KfAhWI52pu-7QZEndx3so7USLEhdS4MBB2XqSP42O0GTMxFK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 1 May 2025 17:34:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [PATCH 0/4] A handful of doc synopsis/options update
+Date: Thu,  1 May 2025 14:34:10 -0700
+Message-ID: <20250501213414.370514-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.49.0-599-gc9a5c860a0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAAms34P=fuow0kvxvQKxbr0jhqjnBu=VsP=xAxDieG-QA2ocVQ@mail.gmail.com>
- <CAPig+cQ6L60gRGZqapkVdGjo_C_k4Wi1miK8nv5=AZeNXnK_4Q@mail.gmail.com> <CALnO6CBXqZ76iovr6JQq439RTOR6E+B2sivKWEEFtBXMj2EZXQ@mail.gmail.com>
-In-Reply-To: <CALnO6CBXqZ76iovr6JQq439RTOR6E+B2sivKWEEFtBXMj2EZXQ@mail.gmail.com>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Thu, 1 May 2025 14:28:56 -0400
-X-Gm-Features: ATxdqUFYens_yJKPEO5SI1yrJwABZVgJ9QfzXzr5bQy8tN9FXLd5KatVSQ40YaA
-Message-ID: <CAPig+cQUycUyto6=cDadaCahzDBQ_GDngAEEtK0bshLr15ok8g@mail.gmail.com>
-Subject: Re: Feature request: automatically read .git-blame-ignore-revs or
- allow global optional config
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Michael Grosser <grosser.michael@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Thu, May 1, 2025 at 2:00=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com>=
- wrote:
-> On Fri, Apr 25, 2025 at 3:55=E2=80=AFPM Eric Sunshine <sunshine@sunshinec=
-o.com> wrote:
-> > On Fri, Apr 25, 2025 at 2:42=E2=80=AFPM Michael Grosser
-> > <grosser.michael@gmail.com> wrote:>
-> > > so please make it either the default for `git blame` to check that fi=
-le,
-> > > or add a "blame: ignoreMissingFile: true" option so I an set
-> >
-> > Relevant threads:
-> > https://lore.kernel.org/git/pull.1947.git.git.1745088194384.gitgitgadge=
-t@gmail.com/T/#u
-> > https://lore.kernel.org/git/20241014204427.1712182-1-gitster@pobox.com/=
-T/#u
->
-> Did that second set of patches ever go anywhere? It seems similar to
-> what Junio proposed in the first linked thread and possibly worth
-> resurrecting. (A log --grep :(optional) didn't find anything.)
+Continuing what Jean-Noël started with 22293895 (doc: apply synopsis
+simplification on git-clone and git-init, 2024-09-24), use more
+[synopsis] (rather than [verse]) mark-up and also make sure
 
-The patches Junio submitted[1] did not go anywhere. The topic sat in
-his tree for several "What's Cooking" reports and then he dropped it
-because it received no response from reviewers[2]. I agree that it
-could be a useful enhancement if resurrected.
+ - dashed options in the text, including the heading for enumerated
+   dashed options in the OPTIONS section, are `backquoted` to be
+   typeset verbatim.
 
-[1]: https://lore.kernel.org/git/20241014204427.1712182-1-gitster@pobox.com=
-/T/#u
-[2]: https://lore.kernel.org/git/CAPig+cT1BNXRotrz=3DrnVgvhQjZZwYgsAOQMonHF=
-FTPfK-C0LOQ@mail.gmail.com/
+ - both positive and negative variants are spelled out when the
+   option is negatable, i.e. a heading "--[no-]opt::" is separated
+   into "--opt::" and "--no-opt::", to help grep hit with simpler
+   patterns.
+
+ - non-options are not described in the OPTIONS section.
+
+The "git worktree" one is a bit unsatisfactory and should be
+considered WIP.
+
+Junio C Hamano (4):
+  git-verify-* doc: update mark-up of synopsis option descriptions
+  git-{var,write-tree} docs: update mark-up of synopsis option
+    descriptions
+  git-daemon doc: update mark-up of synopsis option descriptions
+  git-worktree doc: update mark-up of synopsis option descriptions
+
+ Documentation/git-daemon.adoc        | 107 ++++++++++++++-------------
+ Documentation/git-var.adoc           |   6 +-
+ Documentation/git-verify-commit.adoc |  16 ++--
+ Documentation/git-verify-pack.adoc   |  28 +++----
+ Documentation/git-verify-tag.adoc    |  16 ++--
+ Documentation/git-worktree.adoc      |  71 +++++++++---------
+ Documentation/git-write-tree.adoc    |  16 ++--
+ 7 files changed, 129 insertions(+), 131 deletions(-)
+
+-- 
+2.49.0-599-g90c2cffacf
