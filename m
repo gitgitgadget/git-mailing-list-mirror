@@ -1,202 +1,144 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0391F250C18
-	for <git@vger.kernel.org>; Thu,  1 May 2025 21:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C12A1DD0EF
+	for <git@vger.kernel.org>; Thu,  1 May 2025 21:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746135300; cv=none; b=FDgD61rKMWUo9D5jLjW38sLdQmB3qFuXR2KestMVt5YJbxSzZDD6ZNf3R+9HaQAvQfgx6MZ2/KIb6bmK64w4hv0LqJA9BSpfzieVxez7758WvFRf1HNMW4Fm3EmjWxRQ31tiNOjSxsTeX6DdjcqDkISx8yZF0irCQ+R3k0iyCO8=
+	t=1746135520; cv=none; b=dfU1jx+LRzgXXd6t3h6MT2Y4maQG+nMn8oktj3bsAP77G1zeGjwyUyCtpk8aKZAe3Vf7JyBWPi2yN5fAAc6u4YunO+Gb3QNRrGzUsN1AU855kxE5Fa9D4egWR0c0PlFNeFbgaVQMjXYeAiV1ij21PD+/8jsJLcyhrrZJ13qSZxc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746135300; c=relaxed/simple;
-	bh=WmXs1wabU+HCbkrNVt/8r4mVvZvJcmN71Cs9K5T102A=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=C4c+vw9th8JlCTqV9FAZpY285cmg5zTt/srzCVtdThtd5RrpKIve3VGpm4mlgGlrUHZkWXlR6WJKZkfuHmls+eTkr2onvtdOCtrFs0BHZpm6FEltqJh4Csl2D2p8v6Wya9XZ5/j0oiexvk/U7lNM69ZDAvKGYN5E29wmZb6XO4A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QCfOYWZ6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YqMD9wZ6; arc=none smtp.client-ip=103.168.172.149
+	s=arc-20240116; t=1746135520; c=relaxed/simple;
+	bh=ZFhLahlOEElbnA7xrHX+GOaNjhAyw0xrw7WmyNq/S78=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=R5U3FFHY+qc1JMXNo3um5xs0R/ybgPwI5IgpXAhWe5D8Z/B2nhqv/5ZAXSQOHyzNiBIZCfldEl/kF4SU66dM5Jv1adh0Tpd4E/LMffMP49KfNax4Yi0Cwzc4gBRmv/il365BzN6g7w3A4Xg63ELzEa3yBNuyyhvZYJXREym9XKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BAIC/i06; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TCRk54De; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QCfOYWZ6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YqMD9wZ6"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0BC061380F96;
-	Thu,  1 May 2025 17:34:57 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 01 May 2025 17:34:57 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BAIC/i06";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TCRk54De"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 655191140213;
+	Thu,  1 May 2025 17:38:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Thu, 01 May 2025 17:38:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1746135297; x=
-	1746221697; bh=U0dCZRDrFkvyjE4nny7l18JaLXNAHB9rIiZLGeKykp4=; b=Q
-	CfOYWZ6MWm08stEpkCBFy6KcVfhPtmMfsfufplpma2Psp3ERSNvEOhLVcv16BT6q
-	cdYJJrSucQxlJto6I8J5GZivcvTHXgi4t7mUnAJ9AP8IoQ5DtbEdIpwb5VrDQ5Ms
-	AX+/da/J23+RVU/MC3svd7soxVVenlGsBWtW8dZ/fAOx15+bj99Mc72z+8Nl3A53
-	yYnh1ybap2xChM/oYejwxFgDA/3sC8OFbzv/DwZKQch2cT6l4iX2CQ0LYV3h3Gn5
-	koQOQEg7XT5oxOdmrcqUz9B2DzJRefKaxXxFFAQzmoQu9HRB68TUmvJwK8/lN9I5
-	wtv7Qrk1G8KfjX5f+AWuQ==
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1746135518;
+	 x=1746221918; bh=t4hpKihOBIPsfXgElIomqBDU7cCh24H+W0pT8+HbgRU=; b=
+	BAIC/i0627SnJeY5kBS0lvL5uT9E9GrtmDHUFvTt1OTFDb6kNiX8LBURh3g07VLM
+	6oRaMEURfwgXsknR9mUHcAzwcpJDtyrRAW3/B/rQVuvrXDU5l5aTudKYyd+8oNoN
+	NopdXEG+MRaaRRPZc23UUOzuTTqdLl2ibKw6UeF4+1kRahpwvb2mhMZ2IDuHYX74
+	v2ifVU/kBVNIosTenDJukAwTHDYKDGwKdi2WqxyFZTIWlpEqsmiH6vES4P0LJ+eJ
+	i2iGFhGgHJ3GDKj02VaYha+dBSx3kTp7RMv4zjXrQgZZy6/gMl7/4RKm+NiKSwOw
+	AKbi5N6RAzDtyJ1ovsjZ0g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746135297; x=1746221697; bh=U0dCZRDrFkvyjE4nny7l18JaLXNA
-	HB9rIiZLGeKykp4=; b=YqMD9wZ6NbAuhOAJ83RoM4asbWFYFgMg+GLu/eJnHvVh
-	OQvrBPgNvNoWIJRkHG0HIxcVAgr8XStrJDV6Y1MKNBcnJxQzL89upnbg4L0/Uyr7
-	Cl7VLHoJ0bG6Dw+3DDhv/XKGk2Rni8jcZLPxFhqFchM0cr6TsLEwYzt4C9u4ShPP
-	1YwF2D/HzOsCi9GsOrHeVNi7vF0IAm750UNClrGOacGYmSKbXW9ucERoBaMYL0aD
-	KpTScA7hoxMk0sVcigWKeLuSDEHfvGqxkOTttfhROXlCjxj7BET5BLH8Ib/TEA3p
-	yafrCmR2ACO+YoCtVbmla5dZ8+Sl6+nqnN3QAlE2iQ==
-X-ME-Sender: <xms:AOkTaEhzEOKgywXudDM2g3POnns9ScoP5YGW2erqXW9xoIrLm3cCDQ>
-    <xme:AOkTaNDh6QabipzTpF2ldqB3l53urWkU2phtpuukPqlCqSx4r7y21l5s9fF0C8gz2
-    c9vM8jS6wKlzoZYHQ>
-X-ME-Received: <xmr:AOkTaMFdlpVBVKZDRdiodwdmuKw-uOe-uLs1BZqclzRaCzWXfuRAliScx42peaqwxZdFHzVWvoYq5MSwtphG-KQuaBRjiCPNikgT>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746135518; x=
+	1746221918; bh=t4hpKihOBIPsfXgElIomqBDU7cCh24H+W0pT8+HbgRU=; b=T
+	CRk54DegcLkjPucJWmFiqSFnTKu+7eowRY9hGIUvrPuppMotSM49epwuMyibRrj6
+	1NP5Zy/12dk9SJ5zoia1mDa3mGe0Ws2Wp6lmWekhq/3DyZrfl1wgSpVlpSU4+JM2
+	AGjpdURaSIo8EvvjusWy5LN1pfbxU2dBN3Rc5yHmJjibuZGRelODpZ1E3XvSajVg
+	7MVl9bYgzzCcz3N9vjyT6no8s/UrzMPZoilfWGaxLVXDmoKtpHPS1W0uR8nKlVTj
+	+8AtOduk5hsyBUNtLdAjtmWnu+KI+8BVGVrF/diJ4aIJZg7xJ8UhKQckFs5jjUTX
+	zesld0IEng0osdVlgx06w==
+X-ME-Sender: <xms:3ukTaIUYjIKbj0rYJzmzGXuyMVq6cZKXoMgblBh626ZxF172e84PGA>
+    <xme:3ukTaMkKQKxfIFAooJEqlj8NiEtOSKgte7B35A1nkv0maEvjJH_nf0hRZCJZShqkm
+    XuIawyCoulukkN5wg>
+X-ME-Received: <xmr:3ukTaMaFoRchzV6a6hoLAgG10TOdngxTY5y12fdYegpHRZ1dwIcxSKsMCIuxImd7iGbgRTS2RO0BMZkjE8SEmEpd739-oGOtuZD6>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedtieekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheple
-    evieefieeuffeugefhveeugefgfeevvdefleevuedvfedvudefkeehtdeftdegnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:AOkTaFS9ENqqJnMoaDRCXqFBfcjV-0GpE92IoSsWxNR8gB_SSRMBQw>
-    <xmx:AOkTaBzZ7YAPcaMHLD3f1MInEko1rCvOeKdzGlnDuyMLBLTSLWF9xw>
-    <xmx:AOkTaD41C4VJqQ_i7YXo3AbAv7RCs5HhRO26yd44qlpGvPuuHapvtw>
-    <xmx:AOkTaOzwYAM9pbUelic5uORrDXGJhiKaonw2G74PURy5OPMLFZAq6g>
-    <xmx:AekTaIjR6EhQNhll_bVE4K7gPtVtd5SXmH51iY9z7A4XZ0pXAX5SkXJ6>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegsvghnrdhknh
+    hosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3ukTaHVFYXmDB9ZhVSdOBT3J2NUx9a8PAPMxOZo3ac62ZCVuYZMXYw>
+    <xmx:3ukTaCl18cycBO5b0kbfS-XAiW27eJYTsESE8Q1xTZRzXv2910j00Q>
+    <xmx:3ukTaMdUxEKil_bAHF96bFN4Lu_x_06UtSGJCFrLwZB7LVv9UMCOQw>
+    <xmx:3ukTaEF01P1S3lgWr3wPRtK6vuAplZ_piqFGabNDxTUwEmsZQSXScw>
+    <xmx:3ukTaMRrEDxjhu_G1Yeh7WUupRh_obmJyCljmh5Zw-IPAyalgWcVYJn3>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 1 May 2025 17:34:56 -0400 (EDT)
+ 1 May 2025 17:38:37 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH 2/2] whatchanged: require --i-still-use-this
-Date: Thu,  1 May 2025 14:34:52 -0700
-Message-ID: <20250501213452.370729-3-gitster@pobox.com>
-X-Mailer: git-send-email 2.49.0-599-gc9a5c860a0
-In-Reply-To: <20250501213452.370729-1-gitster@pobox.com>
-References: <20250501213452.370729-1-gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: response to "git branch -f foo origin/foo"
+In-Reply-To: <CALnO6CBR2J8YdGgVLHxxpciAHBe5WjwAb3dRr=aUKU8fzRvzYQ@mail.gmail.com>
+	(D. Ben Knoble's message of "Thu, 1 May 2025 14:25:02 -0400")
+References: <xmqq4iy8cagi.fsf@gitster.g>
+	<CALnO6CBR2J8YdGgVLHxxpciAHBe5WjwAb3dRr=aUKU8fzRvzYQ@mail.gmail.com>
+Date: Thu, 01 May 2025 14:38:36 -0700
+Message-ID: <xmqqo6wcvwo3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-The documentation of "git whatchanged" is pretty explicit that this
-has retained for historical reasons to help those whose fingers
-cannot be retrained.  Let's see if they still are finding it hard to
-type "git log --raw" instead of "git whatchanged" by marking the
-command as "nominated for removal", and require "--i-still-use-this"
-on the command line.
+"D. Ben Knoble" <ben.knoble@gmail.com> writes:
 
-While at it, update the documentation page to use the new [synopsis]
-facility to mark-up the SYNOPSIS part.
+> On Mon, Apr 28, 2025 at 4:12 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> When 'X' is a new branch I am creating to automatically (as the
+>> default for branch.autoSetupMerge is true these days) track the
+>> corresponding branch at the upstream, this output ...
+>>
+>>     $ git branch [-f] X origin/X
+>>     branch 'X' set up to track 'origin/X'.
+>>
+>> ... from the command, with or without -f, makes perfect sense.
+>>
+>> It also makes sense if we reset the tip of 'X' to a slightly older
+>> commit on the branch, i.e. after doing the above, running
+>>
+>>     $ git branch -f X origin/X~4
+>
+> But why not use `git reset --hard origin/X~4` here? (Answering myself:
+> presumably because this version works whatever the current branch is.)
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-whatchanged.adoc | 10 ++++++++--
- builtin/log.c                      | 13 +++++++++++++
- t/t4013-diff-various.sh            | 17 +++++++++++++++--
- 3 files changed, 36 insertions(+), 4 deletions(-)
+Exactly.  After you work on another branch (perhaps your primary
+branch) to incorporate the work that was done near the tip of
+origin/X, you may want to reset X to lose those now-redundant
+commits, but you do not want to switch to X just for that.  After
+all, you are "done" with X at that point and want to continue
+working on your current branch.
 
-diff --git a/Documentation/git-whatchanged.adoc b/Documentation/git-whatchanged.adoc
-index 8e55e0bb1e..d21484026f 100644
---- a/Documentation/git-whatchanged.adoc
-+++ b/Documentation/git-whatchanged.adoc
-@@ -8,8 +8,14 @@ git-whatchanged - Show logs with differences each commit introduces
- 
- SYNOPSIS
- --------
--[verse]
--'git whatchanged' <option>...
-+[synopsis]
-+git whatchanged <option>...
-+
-+WARNING
-+-------
-+`git whatchanged` has been deprecated and is scheduled for removal in
-+a future version of Git, as it is merely `git log` with different
-+default; `whatchanged` is not even shorter to type than `log --raw`.
- 
- DESCRIPTION
- -----------
-diff --git a/builtin/log.c b/builtin/log.c
-index 04a6ef97bc..0f98ac8a34 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -113,6 +113,13 @@ struct log_config {
- 	int fmt_patch_name_max;
- 	char *fmt_pretty;
- 	char *default_date_mode;
-+
-+	/*
-+	 * Note: git_log_config() does not touch this member and that
-+	 * is very deliberate.  This member is only to be used to
-+	 * resurrect whatchanged that is deprecated.
-+	 */
-+	int i_still_use_this;
- };
- 
- static void log_config_init(struct log_config *cfg)
-@@ -267,6 +274,8 @@ static void cmd_log_init_finish(int argc, const char **argv, const char *prefix,
- 		OPT__QUIET(&quiet, N_("suppress diff output")),
- 		OPT_BOOL(0, "source", &source, N_("show source")),
- 		OPT_BOOL(0, "use-mailmap", &mailmap, N_("use mail map file")),
-+		OPT_HIDDEN_BOOL(0, "i-still-use-this", &cfg->i_still_use_this,
-+				"<use this deprecated command>"),
- 		OPT_ALIAS(0, "mailmap", "use-mailmap"),
- 		OPT_CALLBACK_F(0, "clear-decorations", NULL, NULL,
- 			       N_("clear all previously-defined decoration filters"),
-@@ -656,6 +665,10 @@ int cmd_whatchanged(int argc,
- 	opt.def = "HEAD";
- 	opt.revarg_opt = REVARG_COMMITTISH;
- 	cmd_log_init(argc, argv, prefix, &rev, &opt, &cfg);
-+
-+	if (!cfg.i_still_use_this)
-+		you_still_use_that("git whatchanged");
-+
- 	if (!rev.diffopt.output_format)
- 		rev.diffopt.output_format = DIFF_FORMAT_RAW;
- 
-diff --git a/t/t4013-diff-various.sh b/t/t4013-diff-various.sh
-index 3855d68dbc..8caab2ee38 100755
---- a/t/t4013-diff-various.sh
-+++ b/t/t4013-diff-various.sh
-@@ -203,11 +203,19 @@ do
- 	test_expect_success "git $cmd # magic is ${magic:-(not used)}" '
- 		{
- 			echo "$ git $cmd"
-+
-+			case "$cmd" in
-+			whatchanged | whatchanged" "*)
-+				run="whatchanged --i-still-use-this"
-+				run="$run ${cmd#whatchanged}" ;;
-+			*)
-+				run=$cmd ;;
-+			esac &&
- 			case "$magic" in
- 			"")
--				GIT_PRINT_SHA1_ELLIPSIS=yes git $cmd ;;
-+				GIT_PRINT_SHA1_ELLIPSIS=yes git $run ;;
- 			noellipses)
--				git $cmd ;;
-+				git $run ;;
- 			esac |
- 			sed -e "s/^\\(-*\\)$V\\(-*\\)\$/\\1g-i-t--v-e-r-s-i-o-n\2/" \
- 			    -e "s/^\\(.*mixed; boundary=\"-*\\)$V\\(-*\\)\"\$/\\1g-i-t--v-e-r-s-i-o-n\2\"/"
-@@ -454,6 +462,11 @@ diff-tree --stat --compact-summary initial mode
- diff-tree -R --stat --compact-summary initial mode
- EOF
- 
-+test_expect_success 'whatchanged needs --i-still-use-this' '
-+	test_must_fail git whatchanged >message 2>&1 &&
-+	test_grep "nominated for removal" message
-+'
-+
- test_expect_success 'log -m matches pure log' '
- 	git log master >result &&
- 	process_diffs result >expected &&
--- 
-2.49.0-599-g90c2cffacf
+>>  - We should give another message when "git branch -f X" resets the
+>>    commit an existing branch X points at.  Unlike "what was X
+>>    tracking?" that is forever lost (hence the previous suggestion),
+>>    what X used to point at can be found out as X@{1}, so it is not
+>>    necessary to give the exact commit, but the fact that the branch
+>>    existed already may be significant (especially if you habitually
+>>    use "branch -f X" whether X exists or not).  Taking inspirations
+>>    from "git checkout -B X origin/X" that says "Switched to and
+>>    reset branch 'X'", perhaps "Reset branch 'X'" may be a good place
+>>    to stop.
+>
+> Didn't I see you recently suggest someone drop the habit of
+> unnecessary -r in rm? [1] :) This seems similar to me: don't use
+> unnecessary -f as a habit.
 
+Even if you do not have that habit, think in what situation you
+would use "branch -f X".  You do so when you think you _know_ X
+exists already, i.e. you know you are resetting an existing branch,
+and not creating a new branch.
+
+But it is possible that the one you wanted to overwrite was Y and
+not X---it would give you an extra clue to realize you screwed up if
+we gave two different messages (or perhaps "-f" that resets stay
+silent, but if "-f" created, give a "created" in a message, or
+something).
