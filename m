@@ -1,69 +1,119 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED1220DD51
-	for <git@vger.kernel.org>; Thu,  1 May 2025 16:38:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC5C20B807
+	for <git@vger.kernel.org>; Thu,  1 May 2025 16:38:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746117505; cv=none; b=SXazzqoKoNPCUCq4OAQvbrC/vGvFjF03J0xv1b/nRnuD4Ru0eBPs6Y+rvZMPhwNAfh9d90z17etMtRF7X+jJXLpl3C6ezCO/qXa/us3z2UZStDw03/Eyuh2liG0GU+UpTUP04o8phA+tYB9vm8Vs6kym9iXJPECRNChpbgn3NqY=
+	t=1746117522; cv=none; b=Ssss2W0BKI4NZYMaquP0/NkMX5ylUiesxUcYGiy3mBzFrL0MmqS6jlyBBqk2ds+xXobmjgWBHQa5bvi7eB/otnABoB3zX5p+L/ZbYJqXABK1sLgQX9gatq/Qpu7YYu0Jew0rF2ckJdqMOZstNDDpw9gkHwKRnSfhXlwOMGzQCx8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746117505; c=relaxed/simple;
-	bh=Cb+utMdVHrrSLSXee0NUJ301Ok/sAmTKbAgtQVmahRo=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=fRADcR7MVmrazri0C4+d40+zbswh4vW03DLvgIcjCBEU/A4kxEK1x21+LYHJXldW2uF5fnsDvC1DmzUhGlk8cp5mUaNTM55FZAxawm55P+itkeGDw+SK/+a27BSxy30JDIj/AxiFDLU9fie22bsWrYFzUu9mlFMyFvVxEyZxlSk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=aBsQsfha; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1746117522; c=relaxed/simple;
+	bh=GsSrKXP9KfY8O/ak46OTECUueTsjgkYtttIqcB6jnrQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DHxdGU/Jnc5HHC6XuQT67sabmVL0G3Tf5qhaOZ2ZH3Wb6V+E2NjzeVgTukrpzDtG5lpVJ5TfH/sq559BlUmmK9KTgEClFhCHr/SYowjqkyQZiCHqBKL6sXvl+3TemyFMjYtk/tNQXEIHuzr+nNLyL8++8eOsoblZham4OkUb0XU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gbany7J2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WG+/gngk; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="aBsQsfha"
-Received: (qmail 24865 invoked by uid 109); 1 May 2025 16:38:23 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Cb+utMdVHrrSLSXee0NUJ301Ok/sAmTKbAgtQVmahRo=; b=aBsQsfhasS7O8RzAjZTFDZyM6DWxPNTG+1EguMMD17gAh7YmT7RXfCzX9N3TX3s7tVA7RlFv7xYjO1+Go+RTxeBC82mWqptOCByuMSuH1bfW4GUilowFC1fDRB9mfe6PjewBz0wKpKPNDHKK1DpGCW78dSiiIlqlYCNvppngyG50s9rxkzSfPhOey+42QZYjnKinKcOG0zoWTfSFbNvILCV37w307vmyV8uiWXvtS/5ebtScUF63gV8IZSGwfLqneZFGDCcvnbeiggcz4B58v7xbzAPgL56JLSdk54wlL3hSttfbefhoirSyE5ciz6nx9SsLFUTs22Sej6xDxI9VKw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 01 May 2025 16:38:22 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 8936 invoked by uid 111); 1 May 2025 16:38:23 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 01 May 2025 12:38:23 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 1 May 2025 12:38:22 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Phillip Wood <phillip.wood@dunelm.org.uk>, git@vger.kernel.org
-Subject: Re: [BUG] rebase: can write reflog with uninit. `action` string
-Message-ID: <20250501163822.GE1795346@coredump.intra.peff.net>
-References: <20250428194048.149348-1-code@khaugsbakk.name>
- <ce0f41e4-7d90-4398-a0e9-e8ba69791e57@gmail.com>
- <fbc97d6a-2022-4a64-a2ba-5a7255cd81a6@app.fastmail.com>
- <20250429215155.GA36727@coredump.intra.peff.net>
- <6743a9fc-11ca-45ac-bc40-4148f5d85d27@app.fastmail.com>
- <20250501131751.GA1725607@coredump.intra.peff.net>
- <xmqq4iy4z55h.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gbany7J2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WG+/gngk"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F1FC61140150;
+	Thu,  1 May 2025 12:38:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 01 May 2025 12:38:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746117518; x=1746203918; bh=YIY8Emm7sS
+	atRsk7lXDLiOTw18vj5cmYaQyCXfZaFTw=; b=gbany7J2qHpzWyYiPspfAUkFl3
+	WjwwMehfIGxhrjpcGrrsSCLKyqhmixkUyYe0dmM6Z6lZu+bLFbXYuZfDSKknMpQl
+	UuRFsTJCJgaDqt4kkCEpEchiOY4bx1fBfH6sctPaJqZv7scR87E531qButGHhbN/
+	fd1xvLwfJhWtYIcGSZCJG9ciEYfK36J5fMkZy07Bg5LhvlRW4RaWXIlHhurQ38zv
+	DEpXA1IfEbCq40wP2Lw16XuB5y2mfVMZ5iQ5kTLvfVnzee2ufwJsDgiLQaMIkXHG
+	eHifMesR99Xc/iMK/APe3zjT/9fUQZmV6Nml5EcGYzRBOKiEhk94v5aLqVvQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746117518; x=1746203918; bh=YIY8Emm7sSatRsk7lXDLiOTw18vj5cmYaQy
+	CXfZaFTw=; b=WG+/gngkvef55/B+IBaVpxUdqAKNYKQQLfuckCxXvNcWKq0F6WT
+	I4WUUFC66om1Rv0nrGF9IPY9UsZf0zFuNMcosWVaoI4bcW0J8WFroDiZr19tbAJ8
+	EZJ1vUl2a545YcgxPEcDBOV4p2Tlg7dMP5tgWYyGxAaU8Ho4UvOmfRzLp4blp1Ym
+	Yhm6jGra0xJsC9SFcgTzEBolAtZJdxFZHfuHK7qfj53MoTVxVFQQvlc0M6s2a86l
+	wkHsQ+IXWhPZnZgXAuHbJPoc2sW1+cDkFf22JIPr70KRPWu/tl7fiMYoJj2BEtiV
+	XWIyolp1UUy8cw+HvdICEmqOKQj51g9XLZA==
+X-ME-Sender: <xms:jqMTaJHC3gw5LcsaPJ0K8L0oy3Ei0RW3syurqEpKXxqSfp0iqIwcXg>
+    <xme:jqMTaOU5SQHlE1WPrSd06-um2lZ1lO240kaCGk2_UWzAcasoEv2j0WH4QJ_HCH3WQ
+    sn6rIx_gtmKcorj3A>
+X-ME-Received: <xmr:jqMTaLK8rUI6IDaFzpnnd0Mu3Xk0A0X_RUephaOU1oa9pM-4Q-shkLcNeOdX_uGdNROzTfkkuUxIWOMaaVfkgYsNxu5IIOK6tLAi>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedttdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
+    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:jqMTaPGvfBAeCYnuY_-da7e_cHH3tx0y23S2RpXzonO62ceD7tfA6w>
+    <xmx:jqMTaPUzmXfHs-g__naJiAXriv7GwtP3qLXO4b7OSNO7yce_uPQ_GA>
+    <xmx:jqMTaKPZq23wufboxNbwcBgcRzrvFbolRMxUz0xwknUFH4dnSSKYSA>
+    <xmx:jqMTaO2tlYZZxHWU53J_466F1iRF7RJEGThWKwfyg13MJPfEVTo9Vw>
+    <xmx:jqMTaCqMuxxaBqub6QUY6PZ-QTouWJlyocSAe2ZtYnj9lzQF-2AShQJo>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 1 May 2025 12:38:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  johannes.schindelin@gmx.de
+Subject: Re: [PATCH 0/2] scalar: add --no-maintenance option
+In-Reply-To: <d3659baa-054e-4a31-a851-5471968aed07@gmail.com> (Derrick
+	Stolee's message of "Thu, 1 May 2025 09:21:16 -0400")
+References: <pull.1913.git.1746008680.gitgitgadget@gmail.com>
+	<xmqq8qnh1jjg.fsf@gitster.g>
+	<d3659baa-054e-4a31-a851-5471968aed07@gmail.com>
+Date: Thu, 01 May 2025 09:38:36 -0700
+Message-ID: <xmqqh624xp4j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq4iy4z55h.fsf@gitster.g>
+Content-Type: text/plain
 
-On Thu, May 01, 2025 at 09:07:06AM -0700, Junio C Hamano wrote:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> >  	va_start(ap, fmt);
-> > -	strbuf_reset(&buf);
-> > +	strbuf_release(&buf); /* guarantees realloaction */
-> 
-> I initially thought that this comment may have to be updated in the
-> production version, but because we have to freshly allocate for each
-> new message for ownership change, this comment still is correct.
-> The only difference between the "here is how to expose" and "this is
-> part of the smallest solution" is why we want to guarantee it.
+> Is the right solution to move the toggle_maintenance() out of
+> register_dir()? If this is the only way we plan to customize the
+> config, then yes. Otherwise, the second or third customization will
+> start to lead to copied logic through these three locations.
 
-This code change is just to stimulate the bug more readily. ;)
+It is mostly philosophical, I think, but I actually think the
+callers that are allowed to be different is a good thing.  The
+callers can pass different parameters to register_dir(), but the
+distinction between these different callers would become more subtle
+and not immediately obvious to readers.  With an explicit call to
+toggle_maintenance() at each callsite, it becomes more obvious to
+see who sets up the maintenance job and how.
 
-I think if we started to actually allocate here, we'd want to switch the
-"return buf.buf" at the end to strbuf_detach().
+If this is and will stay the only way, I would not care too much
+either way, but if we are planning to extend, then I would say that
+it is more important to allow callers to be more explicit.
 
--Peff
+Besides, you'd need to call toggle_maintenance() to disable it in a
+caller outside register_dir(), so it is not like you can hide the
+tweaks from readers of the code and make it appear to be simpler.
+They need to be aware of what goes on anyway.
+
+
+
+
