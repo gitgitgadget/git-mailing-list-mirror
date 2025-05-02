@@ -1,62 +1,62 @@
-Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C800F221FDF
-	for <git@vger.kernel.org>; Fri,  2 May 2025 23:25:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43F262FCF
+	for <git@vger.kernel.org>; Fri,  2 May 2025 23:31:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746228349; cv=none; b=Ovr71a9pzlBSiSjUeWyQ9mHzRZCfzRZnVkBtFR47LlMthuCzwRcs2MwgduvOc2aCDD/FHOFZtD7L/v1O4jTK051W2LFxTY2PhOXIvluSREINnOuIsjFSP/7Fbme4oRfy2VDruG/1g482flkCJBB97nVZvsTqk4J4YlF6qVXEIGk=
+	t=1746228678; cv=none; b=owBLqKRKPnaFoCFocdrfF0jbRZFClBCdOGLTTDXAPNFtlrHp5mCaD5R6drsQD21eIeIB+1289XjpjG/nkD6CjR2qxoTufQyVbIFrqIsW/rH0KjzbfLMf1OzEx8/oGKllbpDAtn6pRuK5plS5ubkHqthF5hX20ude2V+dMWnX6ys=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746228349; c=relaxed/simple;
-	bh=p/rGm60ZYQqXGr2QDI99z9fUQ6kR/5xijoRFCpQa7tE=;
+	s=arc-20240116; t=1746228678; c=relaxed/simple;
+	bh=rllFThZF6s+TJyMbY3ct/IDYgqgornKyJh9a9VB2mEw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=aKHEfXkJpIZaUxreavVG5mriYRsiFzH5e94UQQ4Xpmd+AkttActSl6dOMTkWu3+/B0YaLSxmD3lbrQBm2rZe0Hc/rPhXgFQgrYHVE4eIZ4HLuFi+N7IHommWy6tuY4O2Wz/CL0sGmeWlnwtRO6lWP11AHlhveyjb9Pg8IXaefHw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=BdFVVPsb; arc=none smtp.client-ip=209.85.160.179
+	 Content-Type:Content-Disposition:In-Reply-To; b=unnw9Jvvwwg5hLoUpDbVu4aiiualMBxUj55mxi6ddo0FfFXvofQZqlaX0NrWA2a0dUUeOYVGdEen70Ak+nxviebNQU4gQyCgr+mhQRYlgjmVuiNic9mQgOY9ocnc0GWLivN76cr0pQEGdf/B8fL0FTBkscivJPzKX9MX4rQupD8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=dEmSU3ro; arc=none smtp.client-ip=209.85.222.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="BdFVVPsb"
-Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-476b4c9faa2so38848641cf.3
-        for <git@vger.kernel.org>; Fri, 02 May 2025 16:25:47 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dEmSU3ro"
+Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7c5568355ffso229094385a.0
+        for <git@vger.kernel.org>; Fri, 02 May 2025 16:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746228346; x=1746833146; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746228674; x=1746833474; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=FJF7E+Q1caA+u12FTmW94vlxTY3rUisg/JepKRyymLY=;
-        b=BdFVVPsbd5d5sEimOeTs79W7GQIEOEcNGofUF21b1cfM4Z0WqMYcjboD7nXPIB0GSh
-         AVcGiRi730PCDsN7pkYEXRh08sg9NQ8DHyw/mdNtUT8vkqZsbYAffXoe8LNXMUpWIsVK
-         eDuDjR6PYTxEeeTXeEsiHIrBjZ+1kBDWdwO7z5JPFkAiqFKlYw/ZWdP2dNKB3WSAHwFx
-         M8OUZCGDbIR9kT5R3YeG+Bne1MKMljjVX82fHOVYDBIp/us8XuYJur+C4qi4nAMB8Eax
-         ZxzUa6NEhxsUXgQWSrT5Anfs16FgmUVTjylxmMOb+WkYzjzEutT3CqB4D1kJUKNvrv9N
-         yr4Q==
+        bh=kOUj0WVtTCtkFpVldueQ/s7gO+j5EL1+WE3BhGVNR24=;
+        b=dEmSU3roD+MDF++Jo4vxTQ39Ti83RcpCHm39aa/wv6BmPqjzycsh44bDrPdcoubS6W
+         LSBa9kuGzoUAhH3lyEE/VYdwqIKQw4fPlaM9AysvRCiygBho5r/nod4C0v+w+KTQjGVl
+         AwbIeXLjWEBzqLIB8SgA/krqRKbG58QmQjsOzhfuX9yZdyCZZd8wSp07EKPpruGfuCX4
+         qwa+ycVxicrETRSGtoAcO/fOu330a4pYHNueRuX9WEqn6B1XK7+Rf9+bzK/qLZWWvAge
+         zQ68NdKOGAUY0nRs4OqdFltWQBVZNPwq6wk+9SwkGKfksZCSp4Fw2sDi4pXwV+KD5fWy
+         UXkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746228346; x=1746833146;
+        d=1e100.net; s=20230601; t=1746228674; x=1746833474;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FJF7E+Q1caA+u12FTmW94vlxTY3rUisg/JepKRyymLY=;
-        b=NFK6q/1WXf6dTFLjv0uXIXJvrVXLYky9oP9j509dLWu5hN4AmQyV/kYygQnfDgNsz9
-         1WItvYz624xz7belXj/8Tsupx2gQSTIjmLz3YXstC9JeHgKf31brheUM6KG3GA0YbNR7
-         n3yO3xkISQsL8ErwJ432ygMg2wPkNf2hEinO/0TuGGFkvwNew3M+uMyYiha92SIRfCB6
-         CKLk2GhZEa7PVgQmYbo3UqtrpTPq9fQgAgxat5o4NXSgrpnYdqwvnZxLVlyxWt5pi7GV
-         3k19eOWFYNTRGeAI/ygUZKTyq3WJxgG7nYrSwIeLEbUHnmYTCHq72IMkIW90PIYXJFSs
-         tCfA==
-X-Gm-Message-State: AOJu0YygzvrxGlkYe882m3K4q4qyPkkIiWxqmII5UAs5HE6H/ygam5o1
-	Ci2tmWotF8mFIwRNAASC9CB2mxgfZM5zQUA1uEyh0mB95s5qKJ4FChasFrSmD9Q=
-X-Gm-Gg: ASbGnctJYP9YnuGc4gA/y+rcjv1skoNaJCmxYOArOJky06FgC1iwEhkfs3TLC0KCtbF
-	Jdk3uva4mKpoL0nU8com7nVhyCW9PXV18JsBZ69yesoGLAbB43rXUYitvJoPC63VGB1GTdybvDV
-	9Iv+RzJTfzdOQn7jdrgbP325fAshNALBSZbf+7Rejti+xW7OkFZbiSIQB2oVnUaL+RnBcvZEx/I
-	Z+4FLUzGzSmf80M/TZAB2c7HDXB/GQ3dEW9Y7SYW+m9xy6BHlAAONrMIrumSEG6onGfDX25I/fk
-	f2MW6/t+5C1QBOe6GmoVeQAPOCRu5pWJ+0GNWVvhIxq24gZV4mzHQ0agH+UjzvbVvzRZONSZ26P
-	0nRwgWHiF62Ul
-X-Google-Smtp-Source: AGHT+IG7dqi6GkoTbw/rJ3O4+Z5mtvWAr2GQTbySDhXp4W/Wp6T96253o0u1creHNTiIwaSvBGXD1w==
-X-Received: by 2002:a05:622a:2b07:b0:476:9dc9:3c2a with SMTP id d75a77b69052e-48c330bb452mr70380151cf.48.1746228346643;
-        Fri, 02 May 2025 16:25:46 -0700 (PDT)
+        bh=kOUj0WVtTCtkFpVldueQ/s7gO+j5EL1+WE3BhGVNR24=;
+        b=eHMOxF/uTsMUHc1YyTVUJVizi5j7VRm9tEEW8JvoELY+my7h9mQqUfhCs1TGhRio1T
+         zLFEki//BRS4r4bthfyPA1apPOj58hxcZxnv+FDNGXyoBAFde+OgyVFSJM0bPuZ6/rMS
+         xDT7Qw+mvaZ5KDWr6oknsKfbchV+WjQWHBvSDjKcwvUiD6qeO8IhjXZGNxtyNoDzrYuP
+         Y0JCKV+eokWyMRCsub3Dhpy5B63JZQZXCGb/O0DckeDktSneCHe6OFLLBKp+M7C/OMAe
+         AXgKJNghYfsqujRBCXe1shZFdr6q3YWTqhfgI/FSVGoeuJ13dmZY/sbrpbY3RHUyq2bj
+         GVWg==
+X-Gm-Message-State: AOJu0YyZHOboDmrcRjx28cX76oQSw3ww7EIfm6UmYlJ/FrCbGTulRjLY
+	MCZTmE5yfLDA5ATEaeuicr8a9JzR1qDsPwWCr5N3AV6Dhxp1GvIWi9WeruYLPFQ=
+X-Gm-Gg: ASbGncsXulkNjlS5R5OWjMHIU5sN3tDlSPGrQrSyy6ux2ClZuMm9aacjsZLyt3RjO3X
+	XC/jpUjyc/TQER2hex2zm64qc6fCnap7bCQATH6OU2f6iz+sO9eDJj/L8XsKFKr5GksBf5R1Si3
+	U+S+Yx0278z0blqcVZ1fNU3NPsl76eOBBw1jZq3yW9i1/VVuNKnpUnYrfcYec0xVDTfbWOzeJAn
+	wPDJzwHfs3WL08kmjB6cAuvFIOzCUz3p+W1CkTnw4kGRWjnNPQ6vrQJ1ueDBijrSAE+MJp69yBK
+	iz+Hv4tMoJJtgCHVd2esGZwOyvQXoaSigZrxX6VGFlqnLTTtRxT+lV57bIek5szMiP4YxNvmKKk
+	d6nPkj1wavOZc5byZrJm3pIk=
+X-Google-Smtp-Source: AGHT+IFQO/yBKJtYN1GoZJ5fMFs9kDOYgNJDgp+6DdR4yaOkKN/aQAizwmj335+BGSdCZSyWXPYjrA==
+X-Received: by 2002:a05:620a:f0c:b0:7c7:a184:7cb1 with SMTP id af79cd13be357-7cad5b20743mr605108785a.9.1746228673931;
+        Fri, 02 May 2025 16:31:13 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-48b966c7fcfsm25516991cf.20.2025.05.02.16.25.46
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cad23b5c40sm255208185a.23.2025.05.02.16.31.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 16:25:46 -0700 (PDT)
-Date: Fri, 2 May 2025 19:25:45 -0400
+        Fri, 02 May 2025 16:31:13 -0700 (PDT)
+Date: Fri, 2 May 2025 19:31:12 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
@@ -64,11 +64,11 @@ Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
 	jonathantanmy@google.com, karthik.188@gmail.com,
 	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
 	ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 04/13] p5313: add performance tests for --path-walk
-Message-ID: <aBVUeRFKTaYNDOmc@nand.local>
+Subject: Re: [PATCH v2 05/13] pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+Message-ID: <aBVVwCZ0NZT3KLB/@nand.local>
 References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
  <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
- <97a0b52ccee8844c1c91232c625c2c6444873d85.1742829770.git.gitgitgadget@gmail.com>
+ <0d49bb3d30add66676280ec7fabed12351d5b3ac.1742829770.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,51 +77,34 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <97a0b52ccee8844c1c91232c625c2c6444873d85.1742829770.git.gitgitgadget@gmail.com>
+In-Reply-To: <0d49bb3d30add66676280ec7fabed12351d5b3ac.1742829770.git.gitgitgadget@gmail.com>
 
-On Mon, Mar 24, 2025 at 03:22:40PM +0000, Derrick Stolee via GitGitGadget wrote:
-> The cases where the --path-walk option really shines is when the default
-> name-hash is overwhelmed with collisions. An open source example can be
-> found in the microsoft/fluentui repo [1] at a certain commit [2].
+On Mon, Mar 24, 2025 at 03:22:41PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
 >
-> [1] https://github.com/microsoft/fluentui
-> [2] e70848ebac1cd720875bccaa3026f4a9ed700e08
+> There are many tests that validate whether 'git pack-objects' works as
+> expected. Instead of duplicating these tests, add a new test environment
+> variable, GIT_TEST_PACK_PATH_WALK, that implies --path-walk by default
+> when specified.
 
-A meta-comment that occurred to me at this point while reading through
-the series. I typically think of the namehash function here as wanting
-to have some amount of collisions so that objects which are related but
-have slightly different paths (e.g., due to a rename, or similar) are
-delta'd against each other.
+I normally dislike adding new GIT_TEST_* environment variables, because
+I don't think we (myself included) are great about remembering to get
+rid of them. But in this case I think it does make sense to add one.
 
-In my mind, the problem isn't that the hash function has collisions, but
-that it has *bad* collisions between two paths where the content of each
-object is completely unrelated to the other, and any effort to find
-deltas here would be wasted at best.
+> This was useful in testing the implementation of the --path-walk
+> implementation, especially in conjunction with test such as:
 
-I'm not sure I have a concrete suggestion for how to reword this, but I
-figured it was worth mentioning since not all collisions are bad or
-created equal ;-).
+I am not quite following... this sentence sets up a list of tests which
+I was expecting to show some demonstration of how they uniquely
+exercised the path-walk feature. But instead it looks like it describes
+tests that are sensitive to object ordering within packs and thus had to
+have the new GIT_TEST_PACK_PATH_WALK variable unset/set to zero.
 
-> Running the tests on this repo results in the following comparison table:
+>  - t0411-clone-from-partial.sh : One test fetches from a repo that does
+>    not have the boundary objects. This causes the path-based walk to
+>    fail. Disable the variable for this test.
 >
-> Pack Type            Hash v1    Hash v2    Path Walk
-> ---------------------------------------------------
-> thin pack    (time)    0.36s      0.12s      0.08s
->              (size)    1.2M      22.0K      18.4K
-> big pack     (time)    2.00s      2.90s      2.21s
->              (size)   20.4M      25.9M      19.5M
-> shallow pack (time)    1.41s      1.80s      1.65s
->              (size)   34.4M      33.7M      33.6M
-
-Thanks for reformatting. As a side-note (unrelated to your series), I do
-think it would be nice to have a t/perf-native way of doing this sort of
-multi-dimensional comparison.
-
-> ---
->  t/perf/p5313-pack-objects.sh | 37 ++++++++++++++++++++++--------------
->  1 file changed, 23 insertions(+), 14 deletions(-)
-
-The patch itself makes perfect sense to me.
+> [...]
 
 Thanks,
 Taylor
