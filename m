@@ -1,135 +1,97 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BC51D619D
-	for <git@vger.kernel.org>; Fri,  2 May 2025 08:52:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9D318024
+	for <git@vger.kernel.org>; Fri,  2 May 2025 08:54:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746175936; cv=none; b=ZAx+1x1vlMEx9Eow7MrRuDDyT6cJrAgiPwGVGuWE096qpnZzJ082sRW1MdNoHhY6lXr3ORN4y8YlJ+QlIdy+NlCkuqHQRbWZ4m9oHTJkdKxeUwX/ZSOXOYWPxQe/y0Np8KXtX7IBqd+T5PcFSQtnw5fi+gC7StPpQv7Ehf5RgxA=
+	t=1746176064; cv=none; b=d4PNEB0tdqfirIdq55Kj2xI6CEZ3Vx5Zw3VubsiYiCwRrz+X6c+gaJcioAbkDKUIWV4XOSfEBcC9t8SdsYo+vpkevLAPKR3NNOMIm2rfV6QfVFkxsY7Rux+CkHhXipdtWDtMAt1H+PI8moyElwQohELjE+kjFCkJCyYT8c9USAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746175936; c=relaxed/simple;
-	bh=8kCH7npKukAmv69CkP65+qqFSwZcYcNIR2G7WMqeXSc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MBqtBt7//TghqG60UXA0latni5xxoEZHykOkfcoUCHi/Gbpfd4AnDTqTMmHzYRorOSNDOX1sDr5gCvSR70v3ldAryEZgNfSjv8E0U6SEqflYk35UfEuyZ59B/3JIusWZMcjcvB7c0YyI5MbrgX2X6PULnoVVrK0ujI7BMUQ+D6o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nerbv2qO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KxAJ3K9O; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746176064; c=relaxed/simple;
+	bh=pfFTCippbSHXUFQEmLVo7Wz1bn6OgTRGLun/ClHCt7U=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=qmkhjehZFTnNIVRsLv1U1OK4VftqaFgBgc55oEP30aUuvIE2i7DwRVGYjvOKjMB4n9biW4A0TXMRR7PbegdJlhxeByT7R922+RNQ/MpwUPW0RsuOqXZq90+jH0YavO9539KKn3RDNEV2zqOB/QkC6uDDYBFjKY12SlRjnSzoucU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jeNX+d49; arc=none smtp.client-ip=209.85.208.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nerbv2qO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KxAJ3K9O"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 096C51380212;
-	Fri,  2 May 2025 04:52:14 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Fri, 02 May 2025 04:52:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746175934; x=1746262334; bh=YCGQa0WqDw
-	XVm8kbOwYv7fweqKv6kBghapNlLd3G/eQ=; b=Nerbv2qOlBM5iKB8lMCz9x0EeK
-	H2Wrrr6nJ1yY5gvdZd+EqDnljPWdLtRpcNmF9tLNmuvizDH48SdCpJfqo7aITZlo
-	cjqvUJZc+iFYd4C3SgWaLTVAiuEYq3DDseixIAJXK/7aWWDVWbnXtUUZg3l1HSlv
-	iYMzz5JkAJBccuwuMpZDVqqcpOlY0dK4tttx4rx9KX0TGsw/E6BM73Ns1pfGd6F2
-	5tOJk3vM9X9/O0NKlMyqY/94a7Ouqm/JVld+L/RyG65+Y1NdxmQ4pw/+QSInFdcZ
-	V4ffjd9dCELfKrW4bSqpUY2JcM6SAVQJBjqR2D7ezTmnYM6tJDQs4vCIw9wA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746175934; x=1746262334; bh=YCGQa0WqDwXVm8kbOwYv7fweqKv6kBghapN
-	lLd3G/eQ=; b=KxAJ3K9OIWC6AH2ZfWPu2Dw0PJu7Ti4EDcz54hOp1Cu1lkWg3Yy
-	ZylIMDgTnFAiaomG50dxThEL4IObeZN/lFIacuITT0LlRiVFXUjFKF2NCU1B5Ezm
-	8kw3sLUy94I5oEEJyBXU047ITp2OWhRoFv0bmtbldm2JNpclcZVWbvPlK/XAkoIR
-	tzMe8cwZHNPCwL1vFbzMDo8J4m5VbrjG6jn5/sDmXfkaNrULawZzSv7Vvtsszrdu
-	qjVvIr5ZgsZckevUKEuoNcszVex2G79vUL4mBaWIuW1k35/eZiPSiJ0iOthmzedP
-	sTWM+Izv8HFZBvS7/JLLyxwWzS0OZGunyPQ==
-X-ME-Sender: <xms:vYcUaHti_LkRJKjYxiVdA56Wx9FVEPr-kISRdH2v6GavkY0sLW-Cyg>
-    <xme:vYcUaIeMSqxoGBcBh-5aUkbd8cfdm3wbACKp7k8QQ8WdegSFr2kaDvpiokFj3CJpQ
-    8-fFbg3hGkaxZoL_Q>
-X-ME-Received: <xmr:vYcUaKx30-vtnK1jY7kQYGewapDQkXFA5AXDDTbbbC7p9WGVgRQXodsdpe1EaA33RXBZO566m6lVkP0c86X5vWuaxhiQshMnFijg2Yptf3c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvtdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
-    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:vYcUaGPoASb5-YshzBCdEi3_oh-36mGXK5_kCy1jEQR8FdKy_RaGxw>
-    <xmx:vYcUaH-oIDc124gTk59DahVlXsaw-flh-faRlkeKXI9_UX58ec2_oA>
-    <xmx:vYcUaGV0RMjakKstDPb-ErlJC7GJPzFnTSwWvo3fyq1yDtjcqrX7Fg>
-    <xmx:vYcUaIfecRuCR_bLuM1fKE5go63guuGQpFRvDf1SDt9P7ZXWIXBj0Q>
-    <xmx:vocUaDtWszUZaU9x0WgHyL7KvEqzpiI_rKzPbO43Aj1x83qQuuwFdKpS>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 04:52:13 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fb27a539 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 2 May 2025 08:52:11 +0000 (UTC)
-Date: Fri, 2 May 2025 10:52:10 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 2/3] config: values of pathname type can be prefixed with
- :(optional)
-Message-ID: <aBSHugZcH8NusOcI@pks.im>
-References: <CAPig+cQUycUyto6=cDadaCahzDBQ_GDngAEEtK0bshLr15ok8g@mail.gmail.com>
- <20250501214057.371711-1-gitster@pobox.com>
- <20250501214057.371711-3-gitster@pobox.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeNX+d49"
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5f728aeedacso2666369a12.2
+        for <git@vger.kernel.org>; Fri, 02 May 2025 01:54:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746176061; x=1746780861; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=obTCIOXTeHnFMpiFMK5LteMBXhl3sjJY5n0bb21wckk=;
+        b=jeNX+d49B4gWLBXD7XXS5ffi46swfD8F7iUu2yHxnUcDKKPl49QzM+0izaZSYzulHp
+         7DigJ8/mbzSlM9UU1NrkVSCa0tlu2wd/Ua6Meqmc8M9z3MmHba2I9BHO9PdKPhw7tVN+
+         ysWMwNot/rgxDFY90UBnfNlDkJsA7EDPqlMIlUDa3e5SF0wWLkHNwuOyosyrRFejmhSE
+         4UcnxRhWoASyxx8TXfKyLZc+hJ0gn5MESt6apAa9IHXqlwlmA0uFKV7B8lIKU6d/0rk5
+         rVDMDpNDGcxuPISH0F9p3ZIQ8kZnZvTbvoMoypqyIUQmVIdU1Yg1R8Cfoo1xaijcavpD
+         vi4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746176061; x=1746780861;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=obTCIOXTeHnFMpiFMK5LteMBXhl3sjJY5n0bb21wckk=;
+        b=u/ZJG267v+jctQnJsAnjRBQokxgGTxpmLIGbzZ4AOArazUf9NcI3vg/SeR+/tZJj65
+         gtQstFa0+UPuLOlt2YelBnSVKz/bZSERaUPyQISKuPxkv/AJfezF/qLYgwdX2UvPfK8J
+         Qj3SWYc90oYlFs70G/RdTmoHCQp6PFJFrcChRcMnHWHFI55ojGEcNgCBbvzdlnNWysvS
+         UCUXRVw6hImTxatcQyNXaK3S10fDV+XsAVVQ7NzQ+o+DIvvJZFFUvl7N5KpDw2vCSAdl
+         pgW88FmYoLtGNsUsNgysm2hWYkNZavBn1YL7Ke2iXpugeHegm/fKm0Tt21WthhNJ46C6
+         Y5LQ==
+X-Gm-Message-State: AOJu0YydNIG1jQ2IfiP9P5EOEjphfXtnOUpwWpklwFxhnlYrAGs6CsJ4
+	AyDyFAVHna34zRWzIild6/Q4uHSxDDQw6dAiMzPwObTtQpuGx7kvZ0PYlsR3LiQyt5wXEQfVNZc
+	N4/1DA5TBcftYYhuhsskm06bf5LIraiMC
+X-Gm-Gg: ASbGncuzukU55X/mJSsudkUxliokUAbrMwrsnTEcU7u4Ugi9O3Cl1kbqL6/Jtx+AkYp
+	JDTkxOJ2fbzTEznQ/9lrE3fsw8BooCQ+omRqC3+UGfHwQy7x0yi1TyLzXO+Qunsu+uACwHLr4lf
+	OVnbbTJ880vxUYFtB/JiHKrm1zqxDKxvHImI1HqrwV7TkjLQZdjQo7JgXGHBWn4UCI
+X-Google-Smtp-Source: AGHT+IHiNZxgcArt7Lsulpiq+hytLJ+YpC+5QaXYnwsaj1bhJVMy/ZIvO2RhGRsufcwr58pu0UG9gbqCb8/W0bUsFI4=
+X-Received: by 2002:a05:6402:5192:b0:5f6:2758:149e with SMTP id
+ 4fb4d7f45d1cf-5fa78014527mr1508466a12.11.1746176060802; Fri, 02 May 2025
+ 01:54:20 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250501214057.371711-3-gitster@pobox.com>
+From: Christian Couder <christian.couder@gmail.com>
+Date: Fri, 2 May 2025 10:54:09 +0200
+X-Gm-Features: ATxdqUHsKsKx59Yafh_bgyzXA5u9gJgSIbPNi6QvixAZi7AKbiKy7dPri3sI1cs
+Message-ID: <CAP8UFD2umn8xr1yYKGLm3jcZv-s3OdadjNe3fEkp1x8G9tJ_Mg@mail.gmail.com>
+Subject: [ANNOUNCE] Git Rev News edition 122
+To: git <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
+	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
+	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
+	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Linus Torvalds <torvalds@linux-foundation.org>, Daniel Barkalow <barkalow@iabervon.org>, 
+	Catalin Marinas <catalin.marinas@gmail.com>, Martin Langhoff <martin.langhoff@gmail.com>, 
+	Darrin Thompson <darrint@progeny.com>, Patrick Steinhardt <ps@pks.im>, Scott Chacon <schacon@gmail.com>, lwn@lwn.net, 
+	Luca Milanesio <luca.milanesio@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
+	Elijah Newren <newren@gmail.com>, Lee Reilly <leereilly@github.com>, 
+	Bruno Brito <bruno@git-tower.com>, Toon Claes <toon@iotcl.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 01, 2025 at 02:40:56PM -0700, Junio C Hamano wrote:
-> Sometimes people want to specify additional configuration data
-> as "best effort" basis.  Maybe commit.template configuration file points
-> at somewhere in ~/template/ but on a particular system, the file may not
-> exist and the user may be OK without using the template in such a case.
-> 
-> When the value given to a configuration variable whose type is
-> pathname wants to signal such an optional file, it can be marked by
-> prepending ":(optional)" in front of it.  Such a setting that is
-> marked optional would avoid getting the command barf for a missing
-> file, as an optional configuration setting that names a missing or
-> an empty file is not even seen.
-> 
-> cf. <xmqq5ywehb69.fsf@gitster.g>
-> 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/config.txt                  |  5 ++++-
->  config.c                                  | 16 ++++++++++++++--
->  t/t7500-commit-template-squash-signoff.sh |  9 +++++++++
->  3 files changed, 27 insertions(+), 3 deletions(-)
-> 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 8c0b3ed807..199e29ccea 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -358,7 +358,10 @@ compiled without runtime prefix support, the compiled-in prefix will be
->  substituted instead. In the unlikely event that a literal path needs to
->  be specified that should _not_ be expanded, it needs to be prefixed by
->  `./`, like so: `./%(prefix)/bin`.
-> -
-> ++
-> +If prefixed with `:(optional)`, the configuration variable is treated
-> +as if it does not exist, if the named path does not exist or names an
-> +empty file.
+Hi everyone,
 
-I can see why it may be useful to allow for non-existent paths. But I
-wonder whether we really should be skipping over empty files, as well,
-as it may be assuming too much about the semantics of a given config
-key. In other words, are we reasonably sure that there won't ever be a
-usecase where you may want to specify an optional and empty file? And
-are there any use cases where an empty file should be ignored?
+The 122nd edition of Git Rev News is now published:
 
-Patrick
+  https://git.github.io/rev_news/2025/04/30/edition-122/
+
+It talks especially about Git's 20th anniversary!
+
+Thanks a lot to Junio Hamano, Lucas Seiki Oshiro, Luca Milanesio,
+Thalia Rose, Elijah Newren, Toon Claes, Lee Reilly, Bruno Brito and
+=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who helped this month!
+
+Enjoy,
+Christian, Jakub, Markus and Kaartic.
+
+PS: An issue for the next edition is already opened and contributions
+are welcome:
+
+  https://github.com/git/git.github.io/issues/775
