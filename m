@@ -1,65 +1,65 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0305C255F5E
-	for <git@vger.kernel.org>; Fri,  2 May 2025 14:28:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AD713D2B2
+	for <git@vger.kernel.org>; Fri,  2 May 2025 14:33:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746196107; cv=none; b=UnfRPqg02YVAoIx1HV2qZ1fV5KrNXRJyDVbL5dIwl13VYXzvygMfePLf7Hso5uxUaCLoHHFln/RRcMAirYCn2oqYNA/I8CWIXYFlu6NBRQ5pXni8U8uXmiU4N0KGPUw0v9kXvZAueKERRsF1wxra0Q0H5PEAYlvdWtiJYEgWYtY=
+	t=1746196403; cv=none; b=IFEgiOqpgegyGIAkWyWwJ90O7AroZiUD8u9bTfg2hxX+2iXTUBPsOE0Jjs8jLEcbpF5iZ//QdvTgEyeZBenlf4GoNvLuUnvRCo83ESzbnyF/47Hmq1k/1csJEq5LK+DvTyDG4eNtnzw6bcFW1I/LHqmXYQtkkCyHUsmAa8Q7V+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746196107; c=relaxed/simple;
-	bh=CEARxnvCF9qydxjvREglYXqgKZveaRGOk7o1JaoaTsQ=;
+	s=arc-20240116; t=1746196403; c=relaxed/simple;
+	bh=tsRcwBUctX9bHjKuGnXQsIwRckaUc7U0jLN4spHDH80=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=RjPrs0ydv83AAa1OTF9bw67Yv8mQ8LEmCPSPVbRCDmX84v04b+qpty1qrT2ZOGZx6RxJg2TYQRptfZwuHZjI24pZjRyZhFWkCXKKZrfqKQZkc5QXuluEcDfwbSUH1QVnTXRy3/2/3QU6cru7SZDQyf77tCHrcPxPg5CuBpFeGxI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fvAVr7Yw; arc=none smtp.client-ip=209.85.128.42
+	 In-Reply-To:Content-Type; b=YScITya6d/CAfUQT1/lRPaKmthcowiUJpbGdcMNPaUkz61fuUSWhGiIArG/fph1GIq6gY7yXBDmgtmYqZBCHJB6k2bWG4rDTEY8M03wNMrRxt3Xg8X7epVdhPITUx5fc3VpKGMEh9yIIgonNL6IyX1B/pyfkLvCcUWQKFAF+zTU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d2z6lyHO; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fvAVr7Yw"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-441ab63a415so19832615e9.3
-        for <git@vger.kernel.org>; Fri, 02 May 2025 07:28:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d2z6lyHO"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so12394205e9.1
+        for <git@vger.kernel.org>; Fri, 02 May 2025 07:33:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746196104; x=1746800904; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746196400; x=1746801200; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=sGz7ixe5Od0xxnZfEPPKyPMyrog6wrvxSJvaQuoSxqE=;
-        b=fvAVr7YwGdhsv6R7kQElibn0WCZAqDvbXz9ZuBcTkUTU4IhAN9X0Ds6lDbQYe5TIsL
-         smVkdvwSAL9gbBp8x2KxBlodHCHsGwFUPJz1WA42Vmy17lyqUcnCJj7p4aARnVJCpgd9
-         bLlR26+UtqLO6ECHUUH86I6sbzt+V8+UtT5ovEdJFK5sgSEOsUIHOfZ/ZJPgMrEsM4KZ
-         dNGEt0quXZZDEPhZiTrc+N7lQqc/NDwHVxyxOfduyrOdJL5ocxDN0d2+TDE7x4UNuuTI
-         Oepiik0fR3IgC+9nplZhocISIQhNtmLq7WLDDdBPP9aVWpYp4VPRUwrrDU8vzUhBZrM0
-         RFYw==
+        bh=ZapfeB3RXisc5U8irdPYwWisNk8JjqK7ZFNs2QANDgw=;
+        b=d2z6lyHOusv64tv+HPriJy19GvuL8kBaptE3Q2bxHRoIbgb7lb7dMFtSl91/YX3MiS
+         deyP+/kHpXFEtsUL6w5To/pl1kYEBcsh3Y1DfOYCZ4DFgc1219YEZHdOjm6xVPmlLGrD
+         zINFh8HRbvWqbThHaiEsQ0AYU5NW2u+VZiZp16wcNSGD6nr3GBRcWjumO1Wjl5GhP0ua
+         BNaOneEh7xpODaLwfbxpuSdbWcGbldz8PfQEpY9TAQJR4Xk7MIAtiMscvDU5Y7owdn97
+         F3HZYElMhusFUKM91vW/f+ZHeiJ7CEOCeFYEZ6HOF2Ifg3szBfadDcJIAJPijgweEwSm
+         nyBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746196104; x=1746800904;
+        d=1e100.net; s=20230601; t=1746196400; x=1746801200;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=sGz7ixe5Od0xxnZfEPPKyPMyrog6wrvxSJvaQuoSxqE=;
-        b=UobxxHuFdd7vXvdqCRGcSNkQ0H+pBaR64hdo1NnLPgNeL2gsI9jy58owLc+AZ6I1AE
-         T3Zf06GyMCF7X2xCdAvvyuk/mExP5HiED68UCNHaXq2MAsq+i9bIs6adx47GKznZjn6l
-         X8gQ5TJfn6EeGWquD5WM4i6oQL6mwJr0lK8y4hWkfWRLfjPyqVGeqQNuZQNukmjLt4TG
-         +b+Xy2x2yjduXduay6yNQQc6+GbDLRwocTndtblr9vYWZiSBq92UVaBXRWbpXFuegPCH
-         sy4myh2t8dYfDU4Nia/rGCG5bQowAIHl9QVAvLmdedcz7CJWTneGyg8Hj/n5w3sckiE2
-         slnA==
-X-Gm-Message-State: AOJu0YwzJVtFOc8pZOv0GX3Syid2JKQB8DmP/7kNjWPw44gEpE8zhgPd
-	mCuMEEFqqjYEPVdralU4NhEGvUqBsGYHFi6PTI0W1nL15gV+KjT2
-X-Gm-Gg: ASbGnctT9lxJVs+s+a/WDygJ/O6xfLSDB3FQpw/SJ/iR/Zmz6Rxgtj8mRjR5V1gMHX9
-	Q6MmRQJcMIi2nern93VH3EKE4BZbVJZmd0QfhQtqHTWQQm8RcY/9D7wtnBM9AO6VF4jX0wV+hJg
-	e3fvMlNiDxeoTEx2Jq9+RrsMetGEn7qvskHmbEmwAB1x9cBBTVaZbRfh5hxrVcsC//Is2nDv+fJ
-	gvCreNYZXndHAtuAt0XXsEDzh5bkSi8BSaF4gpCyO4lJbc5u1codtmCkMQRZ+8ZlFuxOYUOszko
-	HypcJDogXseC4RsSB+UFCuiMduqUoDRxtTu3lS3OxJ89GYTZ6SRvHdxz+839iIgLhva12bUhXDE
-	2PH42k7sUR9E3g9f7
-X-Google-Smtp-Source: AGHT+IHpiuZtG8/SBjNfF2AlXXFsQ/3rR2Czp59rFEBV9T1gWTKsmJK3JXVZYffS2QzKY+yf2LcO0w==
-X-Received: by 2002:a05:600c:870d:b0:43d:1824:aadc with SMTP id 5b1f17b1804b1-441bbf3db9cmr22933635e9.29.1746196103979;
-        Fri, 02 May 2025 07:28:23 -0700 (PDT)
+        bh=ZapfeB3RXisc5U8irdPYwWisNk8JjqK7ZFNs2QANDgw=;
+        b=rp2pc1GORqI71SGgGCMU5mvaVUz7BFl5P/CvZ/6XPmWrTlQ9Pjop2Tr0J7R9G04BsH
+         MtlPk1opjtyRjxnleGwYmyELtWtB2S8f1sYLiBAfMcWg7Q6MlUZWuLgZGIJB3xS1dg9T
+         98T1paE1360xaNIKtpqWCFuCvApNiavHPzo75xs8H4V3jtvcTvpBD3o4zWPP24Vim2or
+         duOTLIgz3L5pW1CMyYG7kehn6sjX+HA6eYMly7clna2nkFQXXstUYywVL6n79plpSzw5
+         UjpmMYPSEMF8lGuuQjlxvXc4dp2SH4w4LQmy0ARQmXaS+X2BEMYauuv/CQ367Ys7RNht
+         FlJg==
+X-Gm-Message-State: AOJu0Yxg/o5ZNMA3o/H4VfNJg7Cbh8yI9Ggzfx8hbiwdBQ/GRu23GlHp
+	EJtrQUna4zz5D5xIb1AWDm4L1znvV3lr8iB8qCI0apdnd/Cfr6Jm
+X-Gm-Gg: ASbGnctzSFEMe8hv25MsZbfBvNHYzh4dyKuIaL6GhffgMLpDjMPmWBcCR1OcGcdnMup
+	/X+KhhXbG0hwoKpjbR5Fr5AL3p5y/s8viZw1V7WugfeXWZ9IWRFGkBpZQ9isTSvldK5w7SDwZXH
+	tCPdLrKJG8FyvVzfWO3U1CjSrubvFVr0B0TGnFTE3wC2d9JUv8G0QSvs+z5GzQRmGPkjl2yeSrs
+	iSAo/kcCIthwIhjfSeTnWHeWwuL4FwIZ7mMM+QEyxqzVNCfkXgBoJyCFBtrloWPSBpRtmAmqEgl
+	BAo3N5YvOlJwD381uhoAgDwHQrPQub7mhlOI29Nc5j0uI94XuWuwQIV2kPdRAcM1jV7zmtZwGAN
+	m8AFrxoETODDNnUC/
+X-Google-Smtp-Source: AGHT+IHwIcR3P2oTbNBhtBmiRsUYuABz+2KCQl95j0j+bzeZciX6cOx3BUVH/X+IwT9M3ZvrhlkSwg==
+X-Received: by 2002:a05:600c:8711:b0:439:5f04:4f8d with SMTP id 5b1f17b1804b1-441bb88d42emr25762375e9.12.1746196399556;
+        Fri, 02 May 2025 07:33:19 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441ad81c19fsm88423925e9.0.2025.05.02.07.28.23
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2aecb60sm91624335e9.11.2025.05.02.07.33.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 02 May 2025 07:28:23 -0700 (PDT)
-Message-ID: <c492a392-8914-4fa3-8356-c583f0a3fa81@gmail.com>
-Date: Fri, 2 May 2025 15:28:05 +0100
+        Fri, 02 May 2025 07:33:19 -0700 (PDT)
+Message-ID: <3e38b7b4-eb6e-4af5-a5f6-f0d7ca4d32d6@gmail.com>
+Date: Fri, 2 May 2025 15:33:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,38 +68,61 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/3] config: values of pathname type can be prefixed with
- :(optional)
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: Discussion for interactive --patch commands to get --unified
+ support
+To: Jeff King <peff@peff.net>, Leon Michalak <leonmichalak6@gmail.com>
 Cc: git@vger.kernel.org
-References: <CAPig+cQUycUyto6=cDadaCahzDBQ_GDngAEEtK0bshLr15ok8g@mail.gmail.com>
- <20250501214057.371711-1-gitster@pobox.com>
- <20250501214057.371711-3-gitster@pobox.com> <aBSHugZcH8NusOcI@pks.im>
+References: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
+ <20250429220933.GC36727@coredump.intra.peff.net>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <aBSHugZcH8NusOcI@pks.im>
+In-Reply-To: <20250429220933.GC36727@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 02/05/2025 09:52, Patrick Steinhardt wrote:
-> On Thu, May 01, 2025 at 02:40:56PM -0700, Junio C Hamano wrote:
-> 
->> ++
->> +If prefixed with `:(optional)`, the configuration variable is treated
->> +as if it does not exist, if the named path does not exist or names an
->> +empty file.
-> 
-> I can see why it may be useful to allow for non-existent paths. But I
-> wonder whether we really should be skipping over empty files, as well,
-> as it may be assuming too much about the semantics of a given config
-> key. In other words, are we reasonably sure that there won't ever be a
-> usecase where you may want to specify an optional and empty file? And
-> are there any use cases where an empty file should be ignored?
+Hi Leon and Jeff
 
-That's my thought too - ignoring a missing file sounds like a good idea 
-but why an empty file too?
+On 29/04/2025 23:09, Jeff King wrote:
+> On Tue, Apr 29, 2025 at 10:16:15AM +0100, Leon Michalak wrote:
+> 
+>> - make `diff.context` setting extend to the interactive patch commands
+>> (not sure how a change like this would be welcomed considering it
+>> could change users command outputs seemingly out of nowhere)
+>> - add an `interactive.context` setting that would work like the
+>> existing `diff.context` setting but apply only to the interactive
+>> patch commands
+> 
+> In my opinion it would be fine to respect diff.context (and probably
+> diff.interhunkcontext[1]) by default. Though it does change the command
+> output, the interactive output is by definition user-facing, so we
+> shouldn't be breaking scripts. And we already respect other porcelain
+> level config like colorizing.
+
+I think that would be a good place to start and would be a useful 
+improvement on the status quo. To implement it one can copy what we do 
+to respect diff.algorithm. I'm not sure it is worth the effort to 
+support `git add -p -U <context>`. Being able to interactively change 
+the context as suggested elsewhere sounds more interesting to me but it 
+would be more work to implement as we'd have to regenerate the diff each 
+time.
 
 Best Wishes
 
 Phillip
+
+> I think the only reason we don't already do so is that the interactive
+> code is built around the plumbing commands, which conservatively avoid
+> various config options. So the calling code has to explicitly check the
+> config itself.
+> 
+> -Peff
+> 
+> [1] Looking at git_diff_ui_config(), which are all the options read by
+>      porcelain git-diff but not by plumbing git-diff-files, etc, there
+>      may be other config in the same boat. E.g., I'd guess that people
+>      with diff.colormoved set would appreciate seeing that effect in the
+>      colorized versions we show. But I think it is OK to just consider
+>      diff.context for now, and see if anybody ever cares enough about
+>      other options to look into them.
+> 
 
