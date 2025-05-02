@@ -1,88 +1,163 @@
-Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90CB51D554
-	for <git@vger.kernel.org>; Fri,  2 May 2025 06:52:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D66911A239E
+	for <git@vger.kernel.org>; Fri,  2 May 2025 08:06:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746168781; cv=none; b=ljaGfHkTwMmDjoXkYIT7W4aRL5zaDQXJvwCcGyn7UzNy34LTHe2XzZvDtNXy+G8EzBL5Gh9wgocNkrwVSRhY25GS/pKuazOE361kMoL4NlvTz+s7cU4Jld4zO5D/WnJxWIxls3jBUZVem3ofR93iqTwWDJ57EK6qXmMn9H9R+hM=
+	t=1746173173; cv=none; b=JrtHZ+/toL/CFqtwJNwZtpQzC52ThHzCUIukg6xOtNKvXDCo603AMasq7rzo+I50fyLLcjfTjcvAVUTs2BJqm83oW7QI9CMoAxLLxjzaoVK+7Zwgl6hqxTQ5T2VVAQYcFcxu3OPAF68wdq65BzCcF7iCfULGmjBkQbdI4CNIFDs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746168781; c=relaxed/simple;
-	bh=/g4a2C9wj9jk6VVSLe6/Q226dAmqfMCRhPEmRvdRyUU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eEp/QMCYSqyGZpW6a4J2yV9x5c4JyigPErYEODqQz/af8NbhWXxTgoxZSa24BrrwKK+1E+nH4lYD0aOAiCButI1naZ/BvmjZ1VWy/sNdSgjeJ+LNoqWGmRfWhlBAE0MXiqqrdDiRJWvxsahZal9MaaKNc4r3JHffiLHa8bqG20g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c3xgDAwm; arc=none smtp.client-ip=209.85.208.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746173173; c=relaxed/simple;
+	bh=O9n+KxMAWVBLoytvW150ynnhHkwRS3Df+rjCJ78LfFU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=bXjzkDTuNWrHe4DWh9L6ZI6Rnc5jK54k/zKOxhV1ZJQbZLuwK73hYfCUEYE4+sXWqNUXWpwXYmWkE80ytkG+HUVDg7MqaKxCvE1h/xxxN6JSd+0emHcAkAXFulpEqJYazfbbVDKBh+mhvNqgqyDMvpKGIeu3Eu0nZDMaMZXb9VI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=m+/dXarQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W1afLtSO; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c3xgDAwm"
-Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e5e22e6ed2so2534526a12.3
-        for <git@vger.kernel.org>; Thu, 01 May 2025 23:52:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746168778; x=1746773578; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=/g4a2C9wj9jk6VVSLe6/Q226dAmqfMCRhPEmRvdRyUU=;
-        b=c3xgDAwmGMNdI4aL0pxTSqrRI1MYM2uADj1xMduvT57QxZZEG5NSPEcV9QLIZEUjKl
-         5DP3TrnvTs6Ue+zYIwOuntcBSBikR2/s652p0iDQjQrgeZwfQrtgeRObFJO2Yg/uML56
-         h8mSCu00TtgPzftjEPR0gEEBp77uQGLm1z8V4v4EfSA9h6PtnCpByF75ul43w2E9StQ5
-         WOMvjJx3H2ajKS7dhICss93MEFacJWRxLH8Re2ocAR9TOkEDmF+QPLpNiEmd+WyJBQP3
-         DhPrN8P7zCuRWdWYedVF7TGQOs+LSyTkl2FEYo+e80rEr5eO6o4tUiyNzg7R/LG0p/mp
-         yr9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746168778; x=1746773578;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/g4a2C9wj9jk6VVSLe6/Q226dAmqfMCRhPEmRvdRyUU=;
-        b=LdgyGFiGkYRopDICesXoaGhs1eZlTjlmAxjxNUQTxVZFW1a9q8HpsA1Sne2euXS+FW
-         RNr4qddKSl+6heJVYksGTbBmYRzs1rl6h9uivzT50yAPSGVJT2PAPcQT91sZZHlmX2I/
-         kyW2IxwgmXF/cKBUQ8OPfyFlcMJLdQKTBYOcBWnhtSGil7Djmc2o+PH82Jyck7bIipJa
-         KFFUrusW119ctbyhzOOOsBxRBPMvlio2aN8yhJJGNK3HA2d4QFjpQxk/U32ZUaLye/Fu
-         WUX3ddpq1pnV6/06/LDXUHnevpRF96105JaUYYHaq6Z8MyUvLaiXFunZ2mcy5HKadPut
-         ErXQ==
-X-Gm-Message-State: AOJu0Yww/KlfKfKxOS8l9Ss6txXY7QweT3XBrr6uDHNy7BHgK7J9B3MB
-	ugz6XG1wtPo+y1/C5g/ucx3HpJ2dG23/n4KjGcrDvqbtNujecwRNBZiSCdXxD5Le1spDnQAwm4y
-	MiEY25ynLgbCUCXmlndbeKE1/V9E=
-X-Gm-Gg: ASbGncuxcczAQan674v4x8GfzmPrjzoLbWdHNCrkB7SNa5BkREYx1M7xXX6q+nH/9rU
-	PxERLfhXJPuuDs7PTZJd3csvgKLYHxnyMeX2PyJOEr+HNhM3jZURECkivLbnPhjjhc4Qd78EwNs
-	YnLfzydjldvdfZLvsZ8SYOcmVxWobFh5yeQTtEL95hxpKFA3eAzD6jyQ==
-X-Google-Smtp-Source: AGHT+IE97gW5bkC9iRmEKWG4FTREgri885JdlVisjuJbfaba1tvWyUyPyeNOLUG842nvw5AjvFjiONVWtEyzF9TKhAs=
-X-Received: by 2002:a05:6402:27cd:b0:5e6:17fb:d3c6 with SMTP id
- 4fb4d7f45d1cf-5fa788e5bb1mr1290149a12.25.1746168777728; Thu, 01 May 2025
- 23:52:57 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="m+/dXarQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W1afLtSO"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9A17E1380511;
+	Fri,  2 May 2025 04:06:08 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 02 May 2025 04:06:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746173168; x=1746259568; bh=nLv7EgdBMe
+	1qSlzmZxeYR/3j2rGUZQhvbpb/x+sGDnQ=; b=m+/dXarQAzZ+EKYX0RK5kwqxMW
+	r3DPL2fYi7rUbL7c662X0L+pPPV2ZYLC79tg7xT+xs646H1fjuRRLw3Nph9qNY7m
+	EZeJYpNdGbHHdq8q+AtJYXFLZ6AGUQuoWnRpqiImNYtMK4WhkqAPE1Fp6U1didJS
+	Z9vaQWtsQ5kNNVsOhKQcuD51nPbaUWg+SqIfFbgK+C5tPi0kocQ58+SPnT7E9XlG
+	+6MezR80r/4Gx8iZ6L4OG7cZ5RjIiWbZ7q7OvB1L3ekQhdc7Q4JvzKhcapkMp35z
+	bRHP/AntzYpZppThI2l3YLBkk0qpFultCeZilFEcI5OStDGgWCyj5lRtZjPQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746173168; x=1746259568; bh=nLv7EgdBMe1qSlzmZxeYR/3j2rGUZQhvbpb
+	/x+sGDnQ=; b=W1afLtSOHXeaLk8/88BQcuJmNyVrTYF7+pzxPznzqMLw3vWAaoj
+	aL5vPZqBPwFo76p4W8NrxqXhFUIgfNwLO2AZe4jpgj+F6mJ+I3D2eDzmhiu/nVe3
+	ll/lSDAvgV/j+vldGdbdnpQYky61Qql5jiZbzXWXH5DWoj3UKZqOQaR474/LmyDf
+	MeF/rwSMd70PSQQ6gLRxyt4CORt7VRqKhwn+gnuYdT6pmoZRHYlXYiKqnfa8oCsX
+	0lJ8Fo8uMsxZRGWbmYrbN4OwOLOW9RZ3JHz0MXkN+it6bJ9Ql9kLK4RTgupiRGS7
+	s8QNRGxSsdocdmJZ7W1JfoH3kV/QoO0p8pg==
+X-ME-Sender: <xms:8HwUaMGD-WmDSmV-gigcndq3ukyIgHiNzDZCRN3iTpSkQSsQFhnrOQ>
+    <xme:8HwUaFWbfmep-TYcnvfa3h__6ZA0GgUy7ri3nHU-LQdHZdWQyMMbG73Jdo8QpaYo_
+    nF-TD3iOVOSS25frw>
+X-ME-Received: <xmr:8HwUaGLZMrDdJov-UxI_Grvo3FLFgx6pZ_og28Mue2TZ9X_ENv4ALYN4jdDeYlT08vTvOYsqrWxsP16my6XkEHgi4b6MmqZLfqV5d4nDrb4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeduledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
+    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghm
+    vg
+X-ME-Proxy: <xmx:8HwUaOEGMFx8zXHy32Vo3xCgjvKiMyss6dhWXX0RvdOvWqsrTDNDAQ>
+    <xmx:8HwUaCXYUBgxD2IyP2emjNhof0Q5XdnH5ttVzfFydY1Vk6DSiH0MHw>
+    <xmx:8HwUaBPin9XRttMPmvpe5jjdEd7iVp0bzM_XMJmVTfFiwTGI0qu3mg>
+    <xmx:8HwUaJ3lUfDlT4P49ID5rHt-08agjbxAyPbT00TI9tzOq4OamJAs1A>
+    <xmx:8HwUaAHRUJ5LDhn-Ouj7XLdjlFWLHZ8tLXnhtUma8Xh-0SBprWTpDwNc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 May 2025 04:06:07 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9a8d019b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 2 May 2025 08:06:05 +0000 (UTC)
+Date: Fri, 2 May 2025 10:06:00 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] builtin/mv: convert assert(3p) into `BUG()`
+Message-ID: <aBR86Ct8mMUN_tzk@pks.im>
+References: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
+ <20250430-pks-mv-parent-child-conflict-v1-2-11a87c55ffb9@pks.im>
+ <xmqqr0191oaz.fsf@gitster.g>
+ <xmqqecx9z1n6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP8UFD3b8as+Qk8=TQACdXqCpNXxFtW15m4G76=r-WzsE3QbkQ@mail.gmail.com>
- <5aa98652c43928fd6f43533498e036816d3a518d.camel@netcologne.de>
-In-Reply-To: <5aa98652c43928fd6f43533498e036816d3a518d.camel@netcologne.de>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 2 May 2025 08:52:45 +0200
-X-Gm-Features: ATxdqUGFX20AyC4J8ytzPRphZg6iV26l3Hmi3HrEteqwHiQzyouJZKa8x6RszzA
-Message-ID: <CAP8UFD3kxAH_CzUtsn+4nAuqgdviPyupvz2OudmCVeouei=VvQ@mail.gmail.com>
-Subject: Re: Draft of Git Rev News edition 122
-To: mja@jansen-preisler.de
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>, 
-	Jakub Narebski <jnareb@gmail.com>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Daniel Barkalow <barkalow@iabervon.org>, 
-	Catalin Marinas <catalin.marinas@gmail.com>, Martin Langhoff <martin.langhoff@gmail.com>, 
-	Darrin Thompson <darrint@progeny.com>, Patrick Steinhardt <ps@pks.im>, Scott Chacon <schacon@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqecx9z1n6.fsf@gitster.g>
 
-On Thu, May 1, 2025 at 6:36=E2=80=AFPM Markus Jansen und Julia-Anna Preisle=
-r
-<jansen-preisler@netcologne.de> wrote:
->
-> Supplied some tiny corrections and rephrasings in 1a1236f and merged Brun=
-o's MR in 8a4a501.
+On Wed, Apr 30, 2025 at 04:10:37PM -0700, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > Patrick Steinhardt <ps@pks.im> writes:
+> >
+> >> The use of asserts is discouraged in our codebase because they lead to
+> >> different behaviour depending on how Git is built. When being unsure
+> >> enough whether a condition always holds so that one adds the assert,
+> >> then the assert should probably trigger regardless of how Git is being
+> >> built.
+> >
+> > Nicely put.  Yes, this is another reason why we frown on the use of
+> > assert(), in addition to the reason why why Elijah's series that
+> > ends with 5633aa3a (treewide: replace assert() with ASSERT() in
+> > special cases, 2025-03-19) was written.
+> >
+> >> Drop the call to assert(3p) in git-mv(1) and instead use `BUG()`.
+> >
+> > Being explicit about what we are unsure about is always good.  It
+> > would hopefully entice those who want to get their hands dirty to
+> > see if they can "prove" that BUG() would never happen, which would
+> > be a great outcome ;-).
+> 
+> By the way, with this in place, and without Dscho's "assert() makes
+> Win+Meson test job get stuck, so let's make assert() a no-op" patch,
+> the CI seems to be fine.
+> 
+>     https://github.com/git/git/actions/runs/14765572702
+> 
+> Triggering assert() and BUG() are something we would always want to
+> notice.  They should never trigger in production and it is an event
+> to call for fixing the underlying cause that made the condition
+> trigger if it is shown to end-users.  Dscho's patch protects us from
+> addition of a new test that triggers an assert().  We won't see such
+> a test get stuck forever on Windows, but by turning such an assert()
+> into a no-op, we would waste electricity for running CI only to miss
+> the triggering assert(), which does not sound like a good use of our
+> resources.
 
-Thanks Markus, the changes look good to me!
+It makes me wonder whether we should forbid `assert()` altogether and
+use `BUG()` everywhere, similar to the recent discussion with Elijah. We
+do have >600 callsites of `assert()` though, so we would have to
+introduce a macro that doesn't require us to provide a reasoning for
+now. E.g.
+
+    #define BUG_UNLESS(condition) if (!(condition)) BUG(##condition)
+
+or something like this.
+
+And once we've done such a conversion we could add `assert()` to our
+deny list of functions (wherever it was, I forgot).
+
+> So I am inclined to drop Dscho's "build in release mode" patch when
+> we merge this series down to 'next'.  Being able to notice a
+> breakage (which triggers a real assert(), whether it is due to
+> broken code, or due to a broken test that documents a broken code
+> path---which should be rewritten to use "if (condition) BUG()"),
+> even if it needs to be done by noticing a test that gets stuck,
+> would be much better than missing such a breakage at all, and that
+> is the primary reasoning behind my suggesting to do so.  I would not
+> be surprised if I am missing a good reason or two to make build
+> tested in CI ignore asserts, so let's hear from others.
+> 
+> Opinions?
+
+As far as I understand there is no need for this patch anymore.
+
+Patrick
