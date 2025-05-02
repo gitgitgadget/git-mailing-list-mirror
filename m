@@ -1,168 +1,119 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 793971B3925
-	for <git@vger.kernel.org>; Fri,  2 May 2025 19:19:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E8441EDA36
+	for <git@vger.kernel.org>; Fri,  2 May 2025 20:05:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746213557; cv=none; b=ZsAyvZnMQxjHsDyfTq17cdEpFZfMDcLkQZTJxChbq0pjMk2k0esFI19A8V7oKG7pY3COIkWmzpUJ7hQdGkIe4HMCnpdR1EsRa1SSEYmjxsoyodI2A/0r7PFUPnegzqf1CX9KKpYr0bnKXelPGtnQdmYBNUMQI95GlRMLOvQgzsM=
+	t=1746216348; cv=none; b=bOK1WvgMaOdM7ECxfs1/w1CDkN0IM9cfRiWytyV1uJuYOj1g5huLT90iFrayKxfDEX/qafe8mgJ7up/+4Gp1bK1Ko62O7iLZ9JoP3jx0jCyD7qmKcXn399mYBgieVOceEID5mOG71VcHeXxqy6VVTTjAC0Y0+tTLLW1axAScjfE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746213557; c=relaxed/simple;
-	bh=/45QhP2STHt+Z6v3P14LVV1y5gwonq4aGT2kBZlrPYE=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=VOKQKqGvDlU5J+zT72JzDlUFlXNsK0I8HjY3xl3TLTIdW+R2OJ60Agf/sRcmWjnu8FaM0+5DDYUw7gBy+3s1zkDdE/kNMdG08OzyX4jlR8BIRK3xw7H6Zb5vcQLH7IGhD9ON3/ZqGYjur//mBBdFFuM4dA2RNDUX2lzM6fiShfE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fW8NJyTZ; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746216348; c=relaxed/simple;
+	bh=mg/Ppnpa9HqYLGnA4MDIPbR4pum+DkrDoUe5tJ4PJMg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=KIUVrYhmFU4gpeFspo/CjlolP2PsVF05RPirHPa/vAOqWY521eiyzwoPV0hyRxfiH22nUys/1S+svhnh5TV/0w9mCGdoNRyPPgE1np2PFi3ocWP/TcL8FPsGkVXPpZRJS8i6BhNwk1H8h1nqAlQUYdwHqE2tEwaV62+8pWuTxH4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kIop+zxZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kAfX9ARa; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fW8NJyTZ"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso15088595e9.2
-        for <git@vger.kernel.org>; Fri, 02 May 2025 12:19:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746213553; x=1746818353; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TPjmTkKaX7EDdTLbb/cqOeXWtFpi/Z1POBQAUaFg8Xw=;
-        b=fW8NJyTZFRbvw6I3ODuIk7Zpo0M69t2G2hzUDHAO3P/gopqHYdPNUTl966GKDUL4kl
-         gbTnGkuuozUSGugOf9lK5XdGuMo1c2suG6dxI8EqI73m51xaOfO68Auk93DmGJEdGaYC
-         jUUCPEU57rOBxZh60eplr1rFc1BKHZw+V5eeX8m7OQ/ZUOUNFwa3B2jJHX5ujdEiQP7/
-         QYeTRzgrW7o4PJGrb9QNdioQFKjuHkPIIgA9DsFkWtMEZJtqc1nyBM3kUrb0nMJO7rIe
-         ynPYu4mqAaX+masJbiksKw7he2dnCcZpLUaoQePIubgyOaMzWedeK2LZqToW3uCwqlky
-         up7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746213553; x=1746818353;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TPjmTkKaX7EDdTLbb/cqOeXWtFpi/Z1POBQAUaFg8Xw=;
-        b=Tjb7A+pxpBSCeXeuG41DakRvlj1gz7UBuPdJkfvsRtE6VB/UbubgRkf95Zlg8ClrnP
-         Xmis8GKpXlaRMJYxrBwZBdPU2/Hxk8tl/vIWKxQDlFJLY49qP5bdUnhs01DhCvIwezH9
-         ZcHafv6wpkwwbhaSBuMXazZWRvXTDI8KQNxujLPmSgsk5zSNUekqR40FogfTk1PMIlJM
-         vmA3rnN1LgQOw4zjKYHAYK4lCRWN2aNETDFqWDNAptJ76xPYNtPLLxXVQossVxsAzgpu
-         SuDxwsmhRBEGQge3Op7jF5IblUPSREMvuV5C/InIRN72Ad3LhH/ja8Q2q3kFoa+3mu+j
-         jmiA==
-X-Gm-Message-State: AOJu0YxveTaRCQIcBw4/z+92oQZtzkRTLTZ9QUg17pb0Lmys9v15yCGQ
-	8rlJQcZMOmhAzBWwbSkDReR6SaaS2LCV3o92VFqAWU97K4f1HCsH1cTX2w==
-X-Gm-Gg: ASbGncur0ZUOwoY0CkwDoAQeRrj81oK3DgPdBvGwbbdftWGmYLB/LrUtmMUYwlV7rjm
-	LeqRmPKqdVLQ17XuHgha70n4N+/9u3Xs9cbfEtkJimCQYPhXJDjTnXVugfdLTdTxw+/NsJQUmD4
-	/gnwLf50yZMjphq1wHoT1LD2jYySlLWl6RNUYYCf37YRhMdVOEWb0tNTB2JlzLCg80HpgjNLHCO
-	mwSKpN2k1as823OB76qLX4wX7I2OAdjtc4++vSsTpHQ3UEe7vDHinsiIsiPltRa4atorrYXv6G1
-	Wzg0HqRKAo1uDI+OIeMcUjeJZn9oMe+D5ppnpLt6qA==
-X-Google-Smtp-Source: AGHT+IG2hARFlP4GwLbwoLmCJG051j+SfepiucJRbd7+pOZ2qbZXPAPp71qHISCSA72l4L1TExox9w==
-X-Received: by 2002:a05:600c:1c1c:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-441bbf34170mr32297345e9.23.1746213553140;
-        Fri, 02 May 2025 12:19:13 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b89d1636sm52744455e9.13.2025.05.02.12.19.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 12:19:12 -0700 (PDT)
-Message-Id: <pull.1912.v2.git.1746213551473.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1912.git.1745941503913.gitgitgadget@gmail.com>
-References: <pull.1912.git.1745941503913.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 02 May 2025 19:19:11 +0000
-Subject: [PATCH v2] tree-walk.h: fix incorrect API comment
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kIop+zxZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kAfX9ARa"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4FDE61380F95;
+	Fri,  2 May 2025 16:05:44 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 02 May 2025 16:05:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746216344; x=1746302744; bh=1naCGyDbpr
+	zKAa0IW60OYjTbAKZ+nux5LGsf1B3bZgY=; b=kIop+zxZByv+DFZ0rp7Stu8jq6
+	AAYmAd834pYq8BhU48Y2Wn3YVBA2HhxReDe8GTh9XJKWmssaa86k/26Lbr1Go6aW
+	ROnFKYmBvw4UlTWxFBIHg5PPypaa6VyKiMa2oXP26ou0F8A3PE2i9SOAMM6tfvuQ
+	VH6qMVDYcd0rDleK4zsj693QSjZREakjccnp/aARuTvyPlFkPOAynv17SjqDBY6s
+	4zG+lVZZCHDNcC6kDhchXgmcPdNASpgFXs4b0WzkFm8TauQvXv6GOdqAKplJNjhw
+	pPGgJufJApfJBYc1pw9rZ1P5LScXmNgbjri892sEHOLBjAISuQQSmacA76BA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746216344; x=1746302744; bh=1naCGyDbprzKAa0IW60OYjTbAKZ+nux5LGs
+	f1B3bZgY=; b=kAfX9ARaqw7Wctg0j1292bLcV4NbV+8tPrWqIq4ycG52VZ42Evl
+	LLL7OklaN+mqzN2W1buoriRxeispYE/66Bw2+Sn9YwHdoIceSNzxHOW1sYJCUzOj
+	EKgWUMbau6bpV57XnqGTGLjxQfYEN0rPR4B7eKk1LEi1FAmMvJ08l1AoQJd2VKUf
+	hi5kJjW8VVRHHsn+33HLZ1sdTPORUWHU33c3mOFHLqj73oQvSdk5+ELzgaLLifjn
+	9ApCZry1rbrmHs53NgTH9K0YN3+Pa/KP/tXxBcA/9fmn52hhwYKEk8TKhWuNsEJ9
+	7pPObES4tDl8Ut4ts7DfXqvkEwBRIDrKfYw==
+X-ME-Sender: <xms:lyUVaMh5F3AjvtbCWAIsDYJX3-YIAIgYqyh-dPI8AFhus6XdeexTEQ>
+    <xme:lyUVaFCmvs3feeN2jtCEWbIS0l-8J3IhByZDQdUX16AOqwWG3u89lpiP3v_oLq20o
+    PYE6zU43sVy6tN76Q>
+X-ME-Received: <xmr:lyUVaEEIuYwOT1YuWhtUzNCkpoBXi3kkn-H-u0uFgoCWe7JIxYedSzkqnVgEyn4UcGrfkhMTZGNpZ2916ZPSGax562aaCjSJNLMj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeeffeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:lyUVaNRVAmdIThET1LXrPkbzPu3DZbLQY1NyOMSL8chf34XZjLjBtw>
+    <xmx:lyUVaJzHziitf3YUVuJufpzOxKuV1Vdq6pC4A-mqc8JNOsP7ciY_SQ>
+    <xmx:lyUVaL7BF_R1MsT-paHWzYXbfq8Tq5yiD0heT10P8OKSY6DYsc1Tbg>
+    <xmx:lyUVaGzD8xcWNiQuxDqWwSTRl_jnztlToCtUHjvipowd_e5ATeXIeQ>
+    <xmx:mCUVaEj-5K5OmpEQLIk45aYO-1xsTz46VE4onCHjiq-NxHxQZtHXAiV3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 May 2025 16:05:43 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] config: values of pathname type can be prefixed
+ with :(optional)
+In-Reply-To: <aBSHugZcH8NusOcI@pks.im> (Patrick Steinhardt's message of "Fri,
+	2 May 2025 10:52:10 +0200")
+References: <CAPig+cQUycUyto6=cDadaCahzDBQ_GDngAEEtK0bshLr15ok8g@mail.gmail.com>
+	<20250501214057.371711-1-gitster@pobox.com>
+	<20250501214057.371711-3-gitster@pobox.com> <aBSHugZcH8NusOcI@pks.im>
+Date: Fri, 02 May 2025 13:05:41 -0700
+Message-ID: <xmqq1pt6vkve.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain
 
-From: Elijah Newren <newren@gmail.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
-When commit 50ddb089ff68 (tree-walk.c: remove the_repo from
-get_tree_entry(), 2019-06-27) added an extra parameter to
-get_tree_entry(), it did not fix the ordering comment about the meaning
-of the parameters.  Rather than just changing "third"->"fourth" and
-"fourth"->"fifth", give the paramemters meaningful names (or actually,
-just take the existing names from the get_tree_entry() definition in the
-tree-walk.c file) and while at it, tweak the rest of the description to
-incorporate the other parameter names as well.
+> I can see why it may be useful to allow for non-existent paths. But I
+> wonder whether we really should be skipping over empty files, as well,
+> as it may be assuming too much about the semantics of a given config
+> key. In other words, are we reasonably sure that there won't ever be a
+> usecase where you may want to specify an optional and empty file? And
+> are there any use cases where an empty file should be ignored?
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
-    tree-walk.h: fix incorrect API comment
-    
-    Changes since v1:
-    
-     * Updated the documentation to explain that oid and mode are output
-       parameters, and slightly tweaked the description further.
+If somebody goes back to the original discussion that happened a few
+years before the patches were originally written, they might find a
+use case where it is more convenient to ignore an empty file, but it
+is an old patch series, so I do not remember the details.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1912%2Fnewren%2Ffix-tree-walk-api-comment-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1912/newren/fix-tree-walk-api-comment-v2
-Pull-Request: https://github.com/gitgitgadget/git/pull/1912
+I would not be surprised if the design decision for an empty blob
+was done without any deep thought or motivationg use case.  After
+all, this was "I had nothing better to do, so wrote these out of
+boredom" patchset, as its cover letter said.
 
-Range-diff vs v1:
+If somebody wants to carry these patches forward (which I am hoping
+because there were a few people who expressed interest recently, and
+because I am not all that interested, certainly not more than those
+who wanted to have this feature), I think that the right approach is
+to extend the system by taking advantage of the syntax that was
+designed to be extensible.  In addition to ":(optional)", we could
+add different variants like ":(optional,ignore-empty)" with desired
+semantics, for example.
 
- 1:  6375bc7d351 ! 1:  a47aceb6394 tree-walk.h: fix incorrect API comment
-     @@ Commit message
-          of the parameters.  Rather than just changing "third"->"fourth" and
-          "fourth"->"fifth", give the paramemters meaningful names (or actually,
-          just take the existing names from the get_tree_entry() definition in the
-     -    tree-walk.c file) and strike the comment.
-     +    tree-walk.c file) and while at it, tweak the rest of the description to
-     +    incorporate the other parameter names as well.
-      
-          Signed-off-by: Elijah Newren <newren@gmail.com>
-      
-       ## tree-walk.h ##
-      @@ tree-walk.h: struct traverse_info {
-     + };
-       
-       /**
-     -  * Find an entry in a tree given a pathname and the sha1 of a tree to
-     +- * Find an entry in a tree given a pathname and the sha1 of a tree to
-      - * search. Returns 0 if the entry is found and -1 otherwise. The third
-      - * and fourth parameters are set to the entry's sha1 and mode respectively.
-     -+ * search. Returns 0 if the entry is found and -1 otherwise.
-     -  */
-     +- */
-      -int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
-     ++ * Walk trees starting with "tree_oid" to find the entry for "name", and
-     ++ * return the the object name and the mode of the found entry via the
-     ++ * "oid" and "mode" parameters.  Return 0 if the entry is found, and -1
-     ++ * otherwise.
-     ++ */
-      +int get_tree_entry(struct repository *repo, const struct object_id *tree_oid,
-      +		   const char *name, struct object_id *oid,
-      +		   unsigned short *mode);
-
-
- tree-walk.h | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
-
-diff --git a/tree-walk.h b/tree-walk.h
-index aaea689f9ae..29a55328bd9 100644
---- a/tree-walk.h
-+++ b/tree-walk.h
-@@ -176,11 +176,14 @@ struct traverse_info {
- };
- 
- /**
-- * Find an entry in a tree given a pathname and the sha1 of a tree to
-- * search. Returns 0 if the entry is found and -1 otherwise. The third
-- * and fourth parameters are set to the entry's sha1 and mode respectively.
-- */
--int get_tree_entry(struct repository *, const struct object_id *, const char *, struct object_id *, unsigned short *);
-+ * Walk trees starting with "tree_oid" to find the entry for "name", and
-+ * return the the object name and the mode of the found entry via the
-+ * "oid" and "mode" parameters.  Return 0 if the entry is found, and -1
-+ * otherwise.
-+ */
-+int get_tree_entry(struct repository *repo, const struct object_id *tree_oid,
-+		   const char *name, struct object_id *oid,
-+		   unsigned short *mode);
- 
- /**
-  * Generate the full pathname of a tree entry based from the root of the
-
-base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
--- 
-gitgitgadget
+Thanks.
