@@ -1,104 +1,108 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 595F91A2630
-	for <git@vger.kernel.org>; Fri,  2 May 2025 17:13:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E89A0376
+	for <git@vger.kernel.org>; Fri,  2 May 2025 18:36:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746206010; cv=none; b=b7ig0Q7TPXvUvvN7Q6ImsrcrQl7LW/r8cV/eBEKN/+Z1M9pa6+j4LI8a01x1VkjBodRWtectr0Yt1X+PkudZeyioBoqKQaW+trJLk7PB8Kk078/0bcgXaibNc97UlodNrAgSg+5Ji6dBeBi6EE36kC3unqqiMJ8bueEaegcH4dA=
+	t=1746210987; cv=none; b=i4tfsqYS2mZaqMjev2L4sModNwys9emArDw92+bS3afCX4n8kZ+nM5BWhDKwaMNM/njZvwWOs4Kqfz82XjEa24sXjdlS7MVqgXY9EK+8QyWZq+eMmDFcb8az2sMbkVXiWHSnfFD8nZGitCdm2IYrWajJ98jO32SXg7JYLN/z6+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746206010; c=relaxed/simple;
-	bh=6+gcNI2BswmqSgtgvudv4/fIsMywKMHF7EM2jkILBMc=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=ltAEGoAMs7GI1ExgR17zO8KQyrVrzqz+mhL1Axiv4CEYyCdx+evBHMZbnswHMoo7eDwFjt8aBgnETmGoyYRYA4NOYt4Xva97u2G51XAvKSqhfQkfz+YeiaPoRyEodhzOffBP+wCOyEEoeAAPztXgj/ghQr2Zct4JylYYdm4yFiI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KCL3bzBp; arc=none smtp.client-ip=209.85.167.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746210987; c=relaxed/simple;
+	bh=xV6hfdE4fvtt1NUyrmtiEmat/UfzjAUSNjexiIslXuc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mqXKz16NuZOlKgmawn0iGl3yVFPNNhI1o6cBRplR8oFzAHQLg1EYfxpAMLtCx3P2EYIs4PNQyqskZXQsBcD915WofvbhkOwWyj003vmON5ExOf+WEMIvaoV1ADVQwXYxmVZiqpO070ix+soMWqIUl8wiRHPneTHOFnPtF1arOh0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Oo5JNrCH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oAlWPjGz; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KCL3bzBp"
-Received: by mail-lf1-f42.google.com with SMTP id 2adb3069b0e04-549967c72bcso2505162e87.3
-        for <git@vger.kernel.org>; Fri, 02 May 2025 10:13:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746206006; x=1746810806; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=I/t8AqFcol9VHoAHAiKk9bl4f5/VGEJ22yqNJNYN0oc=;
-        b=KCL3bzBpIB1fzg0FimBPMEqQDNeQo6LAtJ7TnYE+vVtPNmL5wyKTwMdJMkXcIP+mge
-         wbOYz9ZR/bUxAtQg7NBnTS9ZK1yAaDi03n3c0aFuZAeGA2kc0Zx0SKypEe9ZyYlcgUhe
-         6DUSmSsp3edSWeoaZMeUmnM07oZeWahR+WK9AY/MDhECTQ/Eb79deWn3WlvPsrc4jz63
-         1+iDpxHx/Q5KOhnG1daum/7ffvScDgn7/5ag/7Ytxst85hjN/TUZDA9jvL1FSizq7zIZ
-         eQZM0LpMRHou0ZG81IXX6zAYCItCiwSBH/n8BqAKa8a4vTFi2OVlmIEqE69n+V1dffWx
-         H3dw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746206006; x=1746810806;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=I/t8AqFcol9VHoAHAiKk9bl4f5/VGEJ22yqNJNYN0oc=;
-        b=Btv0XzGSnwt7U5ZvNfNu4FwqWxw6TqtOmZU8O0G2S2Vb24ywTS9SGIKqNMdB28I408
-         ODNjBmgfAndaL5CCf6EDxtSwYrRvwt+eKxBGuKPLDvqc2V121zzEkCXcLMJ9VN1O0csR
-         Qi9DL0OR9VNYftmUG31UwjZoBzD0IdStN9LfRoPbGhVYy6nPcmDbZ69aLYuPeYCiw5vw
-         lC6YuRX9llez7Cjx/10hU3oUx9OpzYeL+H5Nnt8scWrmF0Y3742jTazLKKwYNzv2p4lh
-         iCo82UFMlp6eEJ33QgIc5fZ4o2aNNgYaheB/r86hoHfQL/cuMWfxgh282jLozdErfflP
-         sLHA==
-X-Gm-Message-State: AOJu0YygyIGRkMpmu9q7oGSE8/YF9mCAegHEkaZE7znzRrA8waGN4x1c
-	KmgioyAGl5rC6wWZIMEG0RbXsgOglYctW3Uvhe6YGmaf1pLvXZMK1x+tR7EKYTpEN52Ww4Cfnt3
-	Ecq5KV++z3PVjEcZW1WfrwyjDbGk=
-X-Gm-Gg: ASbGnctjxjn/8tGYH1FV2cCAJVhMkffez9P+GUYBc131yQFd+XAlX6jKGg/8se5Gbb7
-	6/E/WlQ/1meL+EYpsI6PkzFz84WKr4cPrLG7X05KIjGjEYFoHO1WCTXh1/JpIVuOYNDAjtNxSUq
-	zIp4mG3W8irNN51YDGL1bOBhF0VHzIaUSuDAQ6tczmrcu187elOyCl
-X-Google-Smtp-Source: AGHT+IEe7qkbrJVXrP+ecpLnv6Pxo9ierYO7nex/jsPtN01XaMHinjXcQyL7/66ZgtEHiAp+iYAKm5lnXu33OAOUl30=
-X-Received: by 2002:a05:6512:e93:b0:54b:117c:a3b6 with SMTP id
- 2adb3069b0e04-54eac2394ebmr1007349e87.56.1746206006132; Fri, 02 May 2025
- 10:13:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Oo5JNrCH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oAlWPjGz"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id B7680114015F;
+	Fri,  2 May 2025 14:36:23 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 02 May 2025 14:36:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746210983; x=1746297383; bh=PyEEP1OLiI
+	ub2XtyIWRShoC8wQ0EFquTCl9QxRBUmNY=; b=Oo5JNrCH/KccJweKE5prvjvzdB
+	k+K+iUJXzPsM9IJ1sySnbnN4hC1TxwxojinRkTo1kRiPZC7SCJ0OYJLb1fOUwTmI
+	W/hztSYZxq/Jo+6G8wEm7+O9oMZfBZTt/Z1tSYGRmKgb5nWZnmCLOS8+IVSko5WW
+	wcrna1Z0vu8pyL13p26aZIn7nLc3oD+4Zipxxnliel+4tNp8U78gZMiyEf4mxkt4
+	oIi2QSmtZwl14N0tp4XVlcDLI6+no192uoBIxIho4cS+SusPur5aPPOih7TpQvrC
+	FCACv/h+a4hPHQ3fR9Wl5ZhmBJPVN6XBv/wkEy/6Jw0F8VEOmu1nTWFyVuSQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746210983; x=1746297383; bh=PyEEP1OLiIub2XtyIWRShoC8wQ0EFquTCl9
+	QxRBUmNY=; b=oAlWPjGzdC6/PpKp6TiChdDwMH/rHqDFKLlKdaGnbWEP91BtBJg
+	y5MUIkwDr2pDGMDGFmIcz9U6VCTms0yBqArzZXNrJqu9Wdf4Z7XcfEHT43r91gOZ
+	ogWKzqHtf7OdN1n3Shk4PvFsg3620AIp6VwNTiDbfJbHQEph4IA5Qsf0p+bWkvXB
+	M7t/6eY4tK1kFg4/rjhY2/8Rd3y2voxxPLWvh3Fc6P/2q9e0vdf7LLm9B+R9ht5F
+	XLrwU3PCMwnMA8GVO75vdeJtLFLhKpjTN4j9dhqdbCQjIFYxSnExJJuif6fzfaHK
+	7qJX3W7637HnhQOoNdedm4jmL86DeWFaW3Q==
+X-ME-Sender: <xms:pxAVaBzgTU8OK2_jfCFNS4X9AxyfA-2gNhgGLn8GK7iSkGGDhoJKKQ>
+    <xme:pxAVaBSwR-XQJVcvxquCtYkrX8NfJGsBMULvqWlkBLoWjcHWPx668aPmRnToDsj0m
+    mGt69Qjdz35OatHRg>
+X-ME-Received: <xmr:pxAVaLVIiKlNTp3103CysVgWEtQWVvXLlroMm_cF6_H0T8ap_KxdYqVHIXmVusow-z-6RXa1FLKvC2JfHZM8ABNbA53fm51ep5GZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheplhgvohhnmhhitg
+    hhrghlrghkieesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgv
+    rhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
+    hopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:pxAVaDj_GOKuU-kwbXwnVcydsOrRPWlYNvENIVFyuJskWhEAbcGp9w>
+    <xmx:pxAVaDC_1M3GyOoywsDcqV9mI9Ad84LXKxTDn4HZJkbgS7bOnRfsuA>
+    <xmx:pxAVaMIjgSg0kgutSFUAiOzPOSx2T7ncOAKKE1SHJCQOkPOVIChn0Q>
+    <xmx:pxAVaCAXkurgKqGIByYmEaUU3Jq_hL28fe1d9GdS7R1yhs2EPdoMUA>
+    <xmx:pxAVaIYZORWAImw0xgDI6bmaHkPBu9c4zdR9kJvCeYDDvZwrUHVFZKF4>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 May 2025 14:36:22 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Leon Michalak <leonmichalak6@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,
+  phillip.wood@dunelm.org.uk
+Subject: Re: Discussion for interactive --patch commands to get --unified
+ support
+In-Reply-To: <CAP9jKjEbb_ABmGmLNwn=ruh+BOR73QDqtzF-cCYv40cE47fEGQ@mail.gmail.com>
+	(Leon Michalak's message of "Fri, 2 May 2025 18:13:15 +0100")
+References: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
+	<bf7f6606-e719-4c3d-b7ab-ef7351f66f37@gmail.com>
+	<CAP9jKjG+khoUmRpVJ8om-bs_qjB=VFCj3p3h0VSaBHVnqPLNVg@mail.gmail.com>
+	<xmqqfrhnuf06.fsf@gitster.g>
+	<CAP9jKjEbb_ABmGmLNwn=ruh+BOR73QDqtzF-cCYv40cE47fEGQ@mail.gmail.com>
+Date: Fri, 02 May 2025 11:36:21 -0700
+Message-ID: <xmqqbjsavp0a.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
- <bf7f6606-e719-4c3d-b7ab-ef7351f66f37@gmail.com> <CAP9jKjG+khoUmRpVJ8om-bs_qjB=VFCj3p3h0VSaBHVnqPLNVg@mail.gmail.com>
- <xmqqfrhnuf06.fsf@gitster.g>
-In-Reply-To: <xmqqfrhnuf06.fsf@gitster.g>
-From: Leon Michalak <leonmichalak6@gmail.com>
-Date: Fri, 2 May 2025 18:13:15 +0100
-X-Gm-Features: ATxdqUHPADSTmL4hh7Lj2SxQXq725jR7k4Iy41iK7DUFTJ5tnQXq3y4HkijszZw
-Message-ID: <CAP9jKjEbb_ABmGmLNwn=ruh+BOR73QDqtzF-cCYv40cE47fEGQ@mail.gmail.com>
-Subject: Re: Discussion for interactive --patch commands to get --unified support
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-This is what I have been using currently although the perfectionist in
-me says that a user could pass `--unified=-1` and the code would treat
-that as if nothing was passed by the user.
+Leon Michalak <leonmichalak6@gmail.com> writes:
 
-In practice, I guess this doesn't really matter. I think that was
-probably a needed sanity check, thanks
+> This is what I have been using currently although the perfectionist in
+> me says that a user could pass `--unified=-1` and the code would treat
+> that as if nothing was passed by the user.
 
-On Fri, 2 May 2025, 17:57 Junio C Hamano, <gitster@pobox.com> wrote:
->
-> Leon Michalak <leonmichalak6@gmail.com> writes:
->
-> > Inheriting the diff.context setting is what scratches my itch the most, although
-> > also being able to set the context in the command list of `add -i`
-> > sounds interesting too. Personally, I don't think I would use the
-> > command line overrides too much myself as most of the time (like with
-> > diff) I'd like to set the option and forget it but it does have a
-> > certain consistency to it.
->
-> Sounds good.
->
-> > Slightly off-topic to the discussion, but does anyone have advice on
-> > how to deal with providing a sentinel value for something like
-> > context?
->
-> Seeing in diff.c
->
->     static int diff_context_default = 3;
->     static int diff_interhunk_context_default;
->
-> that they are of signed type, and negative context would not make
-> sense (would it???), wouldn't -1 be a good "they haven't touched
-> this from the command line or configuration" value?
+The command line parser and corresponding config parser callback can
+be careful to check the value they get from the end user to avoid
+that, can't they?
+
+In any case, it is PEBKAC when the end-users do that, and they
+cannot complain about their --unified=-1 are ignored.  We do not
+have to care, and can just tell them "Don't do that, then."
