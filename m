@@ -1,121 +1,135 @@
-Received: from mail-lf1-f54.google.com (mail-lf1-f54.google.com [209.85.167.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A180E3C465
-	for <git@vger.kernel.org>; Fri,  2 May 2025 16:23:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86B1625EFBB
+	for <git@vger.kernel.org>; Fri,  2 May 2025 16:36:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746203034; cv=none; b=IdWqE3m0algYZhPAQrjNAGTyU1FWsfqDBCPj/m6bAaT1geC9W688Qken5bqSg9bhZXvHgYjnxc0mWfK69cS7Nw9rzW/ftsMqipnBAv7kGs1kj5NaNPw1OsZbXqoNla4IK81G2JWAXChat9q94ZSIX9v/uEfPGu7xbC2MHC+EBUI=
+	t=1746203763; cv=none; b=ABp4IPfyY6tuPiTv6TNc2UjOLjZx+gD4NcgGxefiMApvdoiBSiWei2zST74fqcDQaTvqBLIkPEliW8+9BLuL07E6l5baU8tfEoaGrNssAbXOkK4NMT4QvQud6u9OxPQvbinoaUo6UNlAMOfwYWk/WWG9qhIF4H/47gdJwSlf0vM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746203034; c=relaxed/simple;
-	bh=aD/J0hGYlcqcApwoJIBr49ELVuah6EetFPM+5JUN1UA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jfC3e21KYyobIH/Vzylre9GZXeRWVm+owZ77O81uWy5S5fpIByQsPBcOV0Aa4+lvtAy3nNtqhXpKorjiV1V+h7nKBb+612BEoALqNkTgjTlj8fk+HYgoSGtwqNrLphDs/fTP6tD9MGMQesCJAzPTIgybbWo9KpOTPt/P85wlu7U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lb1LKCGO; arc=none smtp.client-ip=209.85.167.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746203763; c=relaxed/simple;
+	bh=D7Isg+8pj3YugzRZsNVZqfv2mjV7vZ2vTr63EVSy7QU=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IqT0+7Ky580xUvcd/bm5DV+afRM/gPdB8Wjz4IFYtyq91lzRo9tXo8ZgqDaxQHSJnSgVC0myvLU9GDSQ/ZeRsMGxGjEwehyDqO3I1mEHV8US0h4pMPnaVoUCAj2Rdg16DUX7p/vbz5/2wk6AkHsKKhMQIhx7+kzOZlZ6lkgyLKo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cxGv9gA0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SUKRGrt6; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lb1LKCGO"
-Received: by mail-lf1-f54.google.com with SMTP id 2adb3069b0e04-54b166fa41bso2785997e87.0
-        for <git@vger.kernel.org>; Fri, 02 May 2025 09:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746203030; x=1746807830; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=aD/J0hGYlcqcApwoJIBr49ELVuah6EetFPM+5JUN1UA=;
-        b=lb1LKCGOM++XdSbRtOd9HuN8wJOqJQ8q7ld0YphL6/ZkAgZZ0Gqr0SmZPg1/5lzO7q
-         XB+KjCliRITxww09gkXjrw2YxjmZPmeYb3JGMZzDo6tLsUncUprQcYRrb2GWlsX38+xu
-         YbETa2O1cidH+eGCUe+VqKJjnTjD9XiBNnJbmKX1KEP3VkZFKIKk+u2QcMvvu50uSJ83
-         n52asYSJ4xc/ikV15cq2WgXXg9sni+urS8i0aooyHziZ+jJWpEysswtB0VvG6K+LJyZ8
-         sNEUsnKse2HiK/te3LKWSm4EAx9uVUxUxePc447pRHEXnb0bKlJTEKztR1vNULQDGKNQ
-         bTHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746203030; x=1746807830;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=aD/J0hGYlcqcApwoJIBr49ELVuah6EetFPM+5JUN1UA=;
-        b=oCh0VT1qK7bXgeq1rtMsmbKwT33g8XFgx+gHerDFH0SPo1x2uspjbI2C1GtHdlj2Qz
-         P5GQV2ejPuyynIzFsK8i0mTCZ4zpUQ+LfWlKBV6YGQ2DGPfZGCCDWgpHPikL91F/dTyL
-         cFE9LuWmIuh/PG+1lACI+NstXVdx5yH6Rwzo6jiXlsx0/6PHB6s6/9jVymldWMiZLkIu
-         Uo9ZauqjVUYPs5Q+w8Bj3cd92AkILf2PFKkifeKsTIr7Bgi3UPa3dbiBTInPVzRRxBQE
-         HWrIjRModw+h8DI9iEOC5pK3JxAaSjSLT4n6btPCc1118cqPrqSXL1IcTplzqf8TpuZ3
-         bSWQ==
-X-Gm-Message-State: AOJu0YzrtICqaueseVMoCnYL5rixDCgnD5P0cUZCrD9X4ZWQPr+Kzuh0
-	e1iZhpfwimFc3Gf5sxWPZVk6I5J/AC0Lb/wWB4V1Nsde6N45dG+o+X1+y0dwJvcIt/pbAREQos6
-	nhOFvCuFcv3cNmyj8T8v+Y5AaaYiaspodHKI0NA==
-X-Gm-Gg: ASbGncvnB0OundHhEfgwfhN8DrXF2s4BQcGKuqDAQcecwnApcPE2kzRBIzB/H9DM4sD
-	LXScnNq8dHLplQflt5gDNmIi32KYV2bNeePW0JGyTWR8K30H/S7CfqGzOrFkT5Im+X1i4FpmrIR
-	Vm1WKM5x1acnfzH/NoVVoCCA6HUC/RhBUGgXrqrzhNJpD3yXEGFqhgZ6Ykka2afCg=
-X-Google-Smtp-Source: AGHT+IElxPVQ6UySiCv9KmcgRnJazNciWXjn/7c5AYvhHyU3mHu3I9ndmEG5dVIxX2uZqbqGb+rNz3hEDtAWQ5H9LQE=
-X-Received: by 2002:a05:6512:318e:b0:545:f0a:bf50 with SMTP id
- 2adb3069b0e04-54eac233140mr938728e87.35.1746203030229; Fri, 02 May 2025
- 09:23:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cxGv9gA0";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SUKRGrt6"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6AD8D2540182;
+	Fri,  2 May 2025 12:35:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 02 May 2025 12:35:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746203759; x=1746290159; bh=M2JbPfx9uT
+	31PQfST0z2Mz3X+cmV9nX0BJCzatTNpMU=; b=cxGv9gA0LmcPgaocpS6A/VsOoa
+	Z4mhbJdaYCjmgS5KmQqI46Ix7o4X7jSvkXLluKKoVZPwsYF0hbvbio2Gx6fydmn8
+	cvMyvbVYNyvz2lFz4GpPPC95pGPgz8GpWWttqvTpnbxlY4DHadSobcZvF5d/Ew19
+	SHBXzXm/vlj7ABXNpmo5xdb3wzroGzAtuhwnLugD/z9NIkjiLZpVo93za+CiVSi8
+	WkbRqv0i1sMID1kpcE9Wyd7i52A4kX5Zc74wdeVnEJhzM7U9pqQELfrfUFS2oagl
+	2cOdnu/1DdQUT2T91cywqUTRlFwlAq0F5jkkLRsDkwWuw8yujLOZhwW5tWVw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746203759; x=1746290159; bh=M2JbPfx9uT31PQfST0z2Mz3X+cmV9nX0BJC
+	zatTNpMU=; b=SUKRGrt6vl8Z8cV86eEKvCb70dgsKvgEwL2Cq5afaMs+9Nm3TBD
+	1gpP1psy0UHlEqZsslFfweJf8BqbeB5LfE86EsCWfVV3fL54HppwSkHVSJWRkp1W
+	mtvBzNcAfwun4y5cdBmZ3uNqPA6eE5MXvkK3hIjnCLIxP0Y8xHJy/Tf6m4rUVWnX
+	Yi2+IboDbgjWaltfOm5slIlSC3Gq/kGxhaNHLRmu7iYW3UXQQdM/aWMXR+dUSrsk
+	ldkwple6BziKMyHWuDrVQ2vCt9GS6zom9AQ5vm57Ut1bPdn1lKzrohZzOyPlAvT6
+	bKwonC+kjWh9DGf8zp/qo94g4IhrH3to7rQ==
+X-ME-Sender: <xms:b_QUaFH-xp0dg7X_qA_6EPTShKw1ZB4B_3zSy3n52-OF99QOMqbHeA>
+    <xme:b_QUaKUq2e76ILn5a5BYISJL9VB3rYttWCWuo2tUhztd7jS34lQQNivjTkf35HTta
+    3BhFdiuu6jScbkoUw>
+X-ME-Received: <xmr:b_QUaHK-Qyw1oL583je-Ad8n58KUVLWwn5TVayn35G9Fe3YSMFYQwIg4DNcjFLtBvh1wBv1zDj-7cg8_fBmXOwgug-23btXNctCj>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvleehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepveejgfejkedvueehjedvgffhieeuhfff
+    uefhuefhjeelteefgedvhfettdekvdeknecuffhomhgrihhnpehrvghrvghrvgdqghgtrd
+    gruhhtohenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
+    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvg
+    epshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:b_QUaLHu7Wdwlw8CLDEuWb1jnPZUoMCpQ_ZzmO6Fi9z_PginZvbWBg>
+    <xmx:b_QUaLVrMcotYsWPElEMI9dHPIgT6W1OQ9HZ0egZHXBPB5SuHKTUtA>
+    <xmx:b_QUaGMWkj_kSU_858ICxneeTX5ArlD5UkqhOLYI-Lq0GycKomgtWA>
+    <xmx:b_QUaK0LMkF8oAObRIkaqdqSLD0JmDXxltsPGXweHwrku_12lWlMbQ>
+    <xmx:b_QUaLlC7jXXWM5fcfLQMzF2QXDUyH59YT9YE9IpQL-JqpJwQXLqfhSl>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 May 2025 12:35:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 6/8] rerere: provide function to collect stale entries
+In-Reply-To: <aBR9R3PxSCuLON6G@pks.im> (Patrick Steinhardt's message of "Fri,
+	2 May 2025 10:07:35 +0200")
+References: <20250430-pks-maintenance-missing-tasks-v2-0-2580b7b8ca3a@pks.im>
+	<20250430-pks-maintenance-missing-tasks-v2-6-2580b7b8ca3a@pks.im>
+	<xmqqy0vh1t96.fsf@gitster.g> <aBR9R3PxSCuLON6G@pks.im>
+Date: Fri, 02 May 2025 09:35:57 -0700
+Message-ID: <xmqqwmazug0i.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com>
- <bf7f6606-e719-4c3d-b7ab-ef7351f66f37@gmail.com> <CAP9jKjG+khoUmRpVJ8om-bs_qjB=VFCj3p3h0VSaBHVnqPLNVg@mail.gmail.com>
-In-Reply-To: <CAP9jKjG+khoUmRpVJ8om-bs_qjB=VFCj3p3h0VSaBHVnqPLNVg@mail.gmail.com>
-From: Leon Michalak <leonmichalak6@gmail.com>
-Date: Fri, 2 May 2025 17:23:39 +0100
-X-Gm-Features: ATxdqUETihvpJML7HRBPgeF_4O9c2U7H_ZD__kSfd61vXBidNdt-JES1h-nwKYk
-Message-ID: <CAP9jKjFEFNFK_dRCAFj224=AE=5k4RsJhspVUFhzQJia8GOdwg@mail.gmail.com>
-Subject: Re: Discussion for interactive --patch commands to get --unified support
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-Correction to my above message, I meant to reference
-`repo_diff_setup`, not `git_diff_ui_config` as that lets you
-initialise a struct with the default context value that diff uses
-(assuming I have understood correctly)
+Patrick Steinhardt <ps@pks.im> writes:
 
-On Fri, 2 May 2025 at 17:14, Leon Michalak <leonmichalak6@gmail.com> wrote:
+>> And if my suspicion is correct, all this change does to the plain
+>> vanilla user of "git rerere gc" is to have them pay the extra cost
+>> of allocating and deallocating the list of names of paths in string
+>> lists.
 >
-> Inheriting the diff.context setting is what scratches my itch the most, although
-> also being able to set the context in the command list of `add -i`
-> sounds interesting too. Personally, I don't think I would use the
-> command line overrides too much myself as most of the time (like with
-> diff) I'd like to set the option and forget it but it does have a
-> certain consistency to it.
+> Yeah, I think this concern makes sense indeed. I was a bit sceptical
+> myself whether this is going too far. Maybe a simpler solution would be
+> to just count the number of directories in ".git/rr-cache", without
+> checking whether those actually are prunable?
+
+I dunno.  It is not like you are guestimating files under
+.git/objects/??/ without couting all of them, just to see if you
+have too many of them and reduce them by repacking and/or pruning.
+
+Having too many existing rerere entries does not correleate you
+would have many prunable ones.  If your development is nearly linear
+and you do not rebuild the same merges over and over every day,
+majority of rerere entries may be created and recorded without ever
+getting used even once.  On the other hand, in my tree, where the
+same merges along master..jch first-parent history are recreated
+multiple times every day, the picture would be different.
+
+> We could also adapt this to be closer to the original version, where we
+> only verified that ".git/rr-cache" exists and contains at least one
+> subdirectory. This can even be combined with the above approach if we
+> set "maintenance.rerere-gc.auto=1" by default.
+
+But wouldn't that be like always running "rerere gc"?  What would
+you save by checking the existence of at least one rerere entry?
+Cost to spawn "rerere gc" as a subprocess?  Wouldn't it be a better
+use of the engineering effort to libify the logic of that process
+and make it internally callable in the longer term (or are you
+already doing that in this series)?
+
+>> We need to see some performance measurement to show that the we pay
+>> for collection and counting is a lot smaller compared to the whole
+>> pruning operation to justify the "auto" thing.
 >
-> Slightly off-topic to the discussion, but does anyone have advice on
-> how to deal with providing a sentinel value for something like
-> context? I'd expect to pass `--unified` to the underlying diff command
-> *only* if the user specifically has overridden it via command line
-> option or a diff.context config, just like diff.algorithm has done,
-> however diff.algorithm is a `char *` so the value can be NULL which is
-> a good sentinel value. My thinking is then the underlying command can
-> just deal with the value as it sees it, such as giving a default if
-> not provided or making sure it's a minimum of 0 etc. Otherwise the
-> level above has to deal with it which then probably involves
-> `git_diff_ui_config` and other validations which I don't even think is
-> it's responsibility and would probably duplicate logic unncessarily?
->
-> I may be completely off in my assumptions here being new to the
-> codebase, so if anyone has any thoughts I'd greatly appreciate any
-> comments!
->
-> On Fri, 2 May 2025 at 15:39, Phillip Wood <phillip.wood123@gmail.com> wrote:
-> >
-> > On 29/04/2025 10:16, Leon Michalak wrote:
-> > >
-> > > (https://stackoverflow.com/questions/6711670/git-show-more-context-when-using-git-add-i-or-git-add-e)
-> > > which mentions you can do `GIT_DIFF_OPTS=-u<number> git add -p` which
-> > > does work however isn't very user friendly or convenient.
-> > This is a question for others on the list rather than Leon - is it
-> > intentional that the plumbing diff commands respect GIT_DIFF_OPTS? If a
-> > script that wants to create a diff with a certain number of context
-> > lines runs `git diff-index -U <context>` is it helpful for that to be
-> > overridden if GIT_DIFF_OPTS happens to be set in the environment?
-> > Looking at the history it seems that environment variable used to be the
-> > only way to override the default context setting but that's not the case
-> > now.
-> >
-> > Best Wishes
-> >
-> > Phillip
+> Hm. I guess ultimately the answer is going to be "it depends". The
+> performance implication on Windows is going to be quite different
+> compared to the performance on Linux/macOS.
+
+Yes, but we need to start somewhere ;-)
