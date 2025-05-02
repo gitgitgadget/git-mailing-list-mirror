@@ -1,53 +1,53 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEEC22397BE
-	for <git@vger.kernel.org>; Fri,  2 May 2025 09:57:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7659238C35
+	for <git@vger.kernel.org>; Fri,  2 May 2025 09:57:50 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746179869; cv=none; b=qMBRr09PcTMxR1IVzBBjZ2GlUEbSRHVpu1qypg9uaLq/HmMCPXWI6daFa8+et5unzBrljhZVDG4Kn+YWy0HrFI49I820T/XB2coE7nu4eSzS9i3o2I64p4ZEMFVTRWck+HEOP78azprGfhDcEktAvC7zM1kGww1b9lydV2ZWTXw=
+	t=1746179872; cv=none; b=PcFI064vKieYZ68xFxU+Sl/Elin9ap9fOOya2IEpzu50JPJNAvYdnyX79wlPBFdYtK+G6szI0f2knQqwiNcyYYfeUaj644sGXAB4IMF1QPy/xIDeI7ngEko4wrzBeNCeJbyRx2ddGvlhoIakosSojEUMHHr7TdCdeHAAquGJbjo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746179869; c=relaxed/simple;
-	bh=BhPmtMusQFjnw+pr471qCMuudtZ6xRaUKykuP3QBDTg=;
+	s=arc-20240116; t=1746179872; c=relaxed/simple;
+	bh=4bdgF1E28FXL/Hgx9K96lX9TApq1Rt5CYLttBHGgSzE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gpsmm7ckoEzD0UqE/sab5jgWthhNBppEIpLj8pQT62Pey40kpBDO12cbkJ9wQkyKD9FvAfoyVbztiVmqym4GmjajcyEWMe09EQLtnX6Nik+6TNUsq8Vu4h0kN0fOZ5p8RwYdNMgrq8+wqKzK85kK2IQ5MwygJQfmaEhwOVt4N5w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aeUo319S; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kes8kEkj; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=eQ3YXknCkQnPeIyj3dioasqpjGGZueSRq+1soBWT5C1lVZVqTORUActFBpCcqY3oTqvf5q//YGzy9LnLSdVFfrWqfSDut034QniIqrsLcKn4chpp2OMGZUAOrS6TbtMMF4yrZ/OQWb3zgbGN7rOciNM9bb2jcYgENbevo8dVVGM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jap9zZpb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=liM5Pw4F; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aeUo319S";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kes8kEkj"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id D729C1380FEE;
-	Fri,  2 May 2025 05:57:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jap9zZpb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="liM5Pw4F"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfout.phl.internal (Postfix) with ESMTP id EC09B1380FEE;
+	Fri,  2 May 2025 05:57:49 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Fri, 02 May 2025 05:57:46 -0400
+  by phl-compute-07.internal (MEProxy); Fri, 02 May 2025 05:57:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746179866; x=1746266266; bh=fv+inLXzzf
-	/0dt7VMI6n9S4w3HTTCRJx0V14PyPgZVo=; b=aeUo319ScT68gaFukBM9eNURe7
-	eLePQrU9vTUM3GnuZ/MAHbBD2ONRqegSP35P8uYdX3KOQA9FHcI1EHdjKLZ7fWIX
-	1INCgaVCn+0sASZMwpBFsQh7HT+M4JOtA1hkeSFqzTLAyJPJ0AwhE17wwrJr7eOl
-	9A7IHzKLIzqc/IfuJOA9AnJs4B6RP2+Em/XmltJIAfgUXe/s30aAlH/2ex/9C4JZ
-	f1GOp5GrG7hQ2cVbq4J8EA6LcHJ6o/PmsaBaYNgI9xPc6COEoxCCtHDJPiw+sXo3
-	krVrEX8YPXBXaad+5qiDXLsF5ubLC5HfsxwjLbWIGRp3KG0DRRYvvZek/jSg==
+	:subject:to:to; s=fm3; t=1746179869; x=1746266269; bh=gVUA7AOnJJ
+	OSreBo53uqyYKCR2zmN2Ip/bYOepcZeyQ=; b=jap9zZpbBRBSkFl3k2qk05UxHu
+	VHomCAqmt0ZpiHT6MnyrKjOmlqjjhF+eGwCpGKysiofgfhQ2UF/wkVzooEZKoqS4
+	6FAZnan/Oou2zl0EjworW3dRSM0iNLR8anzkLt7FLGaKOA6Wnn/3+i2sAt7cECRL
+	Vpcib5jqm/gdK8cL5qgilt1LXUiqWdGJlS6J/Gd7RSjVerizxNdTCxTE6+NacBju
+	Yjyee6cHZFXeyoTM3xrcZ3U0skLdVl5nds1q4pck72hP9bmShDRTXEUFXxzhurZ9
+	EDAc+QzNywmUxzRb0yNrmGca+Llg8jOcObJmymg9La3eFksTOL2bxA3fvnMA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746179866; x=1746266266; bh=fv+inLXzzf/0dt7VMI6n9S4w3HTTCRJx0V1
-	4PyPgZVo=; b=kes8kEkjQLiGGfg2J58Ws+YHlW6dRQXBSLQxsjRrWRIKJCYJuLZ
-	msWGiSCPnOs553pXEiRY9M4hiIwuYK9yl5E6Jt6xG+QWYh1yBE2Fhpneg0+cykN2
-	iVrkQw/1KYvQIq7MwsjyaW3ZdZS5K8we6P4qyE0HLbbiAac+1m+0W4zV6F2YUWET
-	j3Alo59qKiD8n/DXcqILPFGaK/uwlwbsuEwZfanJ6PW0VyrRhqtzpDf1Yy2b7TGJ
-	5mrZqgad4QcDNqsUTlLCNJE+vKYTAn6FlzXkMNpjyDPakpqe5rzVfCzc9DLmCIpX
-	4pU31c0UqXWkA3VFCIsCZenYVAF2IY5Jxaw==
-X-ME-Sender: <xms:GpcUaDEiDx4rDHnnFiHNJupVc_2XN95rTLtvuU8UbrttubHwGTwEYw>
-    <xme:GpcUaAWxS7B8EblBIblv6k6CGq2jawvBqAhLWj-EIhL7H2p_RjXw5KMA2YEHqSvw5
-    dy0JX3oF4gxCZr3wg>
-X-ME-Received: <xmr:GpcUaFI1QY_4l9XCeIov9Fqb5hayeVs2WoTNu7Yjq80ZTCe67ctlFQMnNJC4S7Ki17DMcJbH0Mv8qvTOQYi1LW-62oODseYav8wS2074Py4>
+	1746179869; x=1746266269; bh=gVUA7AOnJJOSreBo53uqyYKCR2zmN2Ip/bY
+	OepcZeyQ=; b=liM5Pw4F+eVxny2DXqSHGGpusoHZmk4z4e0YZAx0p6VHaVyVRE4
+	VgZjBq/wKBodqDZlzTJaoyaoG6rbwroGquzUJ0I5kXm8CPEd/zFU8SAf1mjohQsy
+	PrT9nRV52x75olLGtZKi/NAA75LH/x9cHQz1AfjHvYOuFuGYamL8zKG7XtfChGl3
+	oPJCBsrD9hEGLa6PvFcP47GoYud+M1YZahshKRqtdScgtDAi97C1Bk1IZWVXrEdD
+	dYXXPVgKytACh51a/dUuTgcTDajKz6pqAfwZ9tB1LklXiv2+U5bUg0M8NAr51agm
+	u9f0Qznxjm6OncomSR3D2W6L4XSEnTALKaQ==
+X-ME-Sender: <xms:HZcUaB5_E6q2o0roZm-d22pdPCmffWhGupk4s2QvsGlxEE0We8ypcA>
+    <xme:HZcUaO4vIGrB9xjeU8FOWnb1Dq0HyCJVVvYHueRu8TkuSauj9o5uVmC99Fe8cSCr8
+    8dAP2haZ_HyVTL9cA>
+X-ME-Received: <xmr:HZcUaIeUjKXjU_8F_4wp9IpyeQEux7ROZjp-rqF7MfG6GJuh5GHg2Ef2ZmB6W9g56-dBobyi6GG42E8g_dTecJz51ul86jS8hQdv0bBrICk>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvudehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -55,31 +55,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvudehucetufdote
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepueeiueduhfevhfekiefgkefggeeljedtffetheeh
     tefhhfdvledukeekfffhffdvnecuffhomhgrihhnpehgohhoghhlvgdrtghomhenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    hushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
     ihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
-    hgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepkhhufhhorhhijhhi
-    leeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuh
+    hkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuh
     hnvghlmhdrohhrghdruhhk
-X-ME-Proxy: <xmx:GpcUaBHMJh3EMu4czVB85yQYetvulZplazfLyOV07dQzMX9MzA68PA>
-    <xmx:GpcUaJXty17la7n1n3ztbe2n9t56exqMEA7fw_Aw-cnVcY5zqTjfhg>
-    <xmx:GpcUaMOiilAKRbgFCKKQVzGfQEJRCN0CA1tsbIXYeFmGxnETRJa3EQ>
-    <xmx:GpcUaI0QpHFFtJPAI7La3z7nebBqUMirKsObRMb-OZohzoC3m62jbg>
-    <xmx:GpcUaKLyt5Nok2O_U5vez1g5PLfYzfh7jcbyzJFgRKWMWkcc_1rLWaVo>
+X-ME-Proxy: <xmx:HZcUaKLzow35ePpt4D187WEtB_337B9_ZVFf-2S4P_DWUrueYCtwsw>
+    <xmx:HZcUaFIMTm12-MgaeXy4hC4d5ZbCmyyZAdYBslfUb_gXO05ksymceQ>
+    <xmx:HZcUaDyHy6GjxE7s9Zy4xWb9U5FdHWQ9TkLhU9eYTH1th-yNaPhuFQ>
+    <xmx:HZcUaBIOFuULFjJfKhZ5dOpI6ZN_5rXS1abGQysh2RabfCAh9SGxtA>
+    <xmx:HZcUaOvKpeWUgBS2LyT8tDfjAG-NUkd-TfwT-T-LfSoRdXNSWhQc2oCh>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 05:57:45 -0400 (EDT)
+ 2 May 2025 05:57:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ead72763 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 2 May 2025 09:57:45 +0000 (UTC)
-Date: Fri, 2 May 2025 11:57:44 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 86e9e3b4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 2 May 2025 09:57:48 +0000 (UTC)
+Date: Fri, 2 May 2025 11:57:47 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Seyi Kuforiji <kuforiji98@gmail.com>
 Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 07/10] t/unit-tests: convert reftable readwrite test
- to use clar
-Message-ID: <aBSXGA5GVTNlO6lL@pks.im>
+Subject: Re: [PATCH v2 03/10] t/unit-tests: convert reftable block test to
+ use clar
+Message-ID: <aBSXGz_eIljWbb2H@pks.im>
 References: <20250429175302.23724-1-kuforiji98@gmail.com>
- <20250429175302.23724-8-kuforiji98@gmail.com>
+ <20250429175302.23724-4-kuforiji98@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,15 +88,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250429175302.23724-8-kuforiji98@gmail.com>
+In-Reply-To: <20250429175302.23724-4-kuforiji98@gmail.com>
 
-On Tue, Apr 29, 2025 at 06:52:59PM +0100, Seyi Kuforiji wrote:
-> diff --git a/t/unit-tests/u-reftable-readwrite.c b/t/unit-tests/u-reftable-readwrite.c
+On Tue, Apr 29, 2025 at 06:52:55PM +0100, Seyi Kuforiji wrote:
+> diff --git a/t/unit-tests/t-reftable-block.c b/t/unit-tests/t-reftable-block.c
+> deleted file mode 100644
+> index 22040aeefa..0000000000
+> --- a/t/unit-tests/t-reftable-block.c
+> +++ /dev/null
+
+Hm, why is this recorded as a delete and creation? Weird, inspecting the
+diff locally properly shows it as a rename, which makes it a ton easier
+to review. It would be great if you could try to play around with the
+`--find-renames` option in the next iteration of this series and double
+check that these are shown as a rename.
+
+> diff --git a/t/unit-tests/u-reftable-block.c b/t/unit-tests/u-reftable-block.c
 > new file mode 100644
-> index 0000000000..3d6bdcfceb
+> index 0000000000..af24901230
 > --- /dev/null
-> +++ b/t/unit-tests/u-reftable-readwrite.c
-> @@ -0,0 +1,870 @@
+> +++ b/t/unit-tests/u-reftable-block.c
+> @@ -0,0 +1,373 @@
 > +/*
 > +Copyright 2020 Google LLC
 > +
@@ -105,34 +117,76 @@ On Tue, Apr 29, 2025 at 06:52:59PM +0100, Seyi Kuforiji wrote:
 > +https://developers.google.com/open-source/licenses/bsd
 > +*/
 > +
-> +#define DISABLE_SIGN_COMPARE_WARNINGS
-> +
 > +#include "unit-test.h"
-> +#include "lib-reftable.h"
-> +#include "reftable/basics.h"
+> +#include "reftable/block.h"
 > +#include "reftable/blocksource.h"
-> +#include "reftable/reader.h"
+> +#include "reftable/constants.h"
 > +#include "reftable/reftable-error.h"
-> +#include "reftable/reftable-writer.h"
 > +#include "strbuf.h"
 > +
-> +static const int update_index = 5;
-> +
-> +void test_reftable_readwrite__buffer(void)
-> +{
-> +	struct reftable_buf buf = REFTABLE_BUF_INIT;
-> +	struct reftable_block_source source = { 0 };
-> +	struct reftable_block out = { 0 };
-> +	int n;
-> +	uint8_t in[] = "hello";
-> +	cl_assert(reftable_buf_add(&buf, in, sizeof(in)) == 0);
-> +	block_source_from_buf(&source, &buf);
-> +	cl_assert_equal_i(block_source_size(&source), 6);
-> +	n = block_source_read_block(&source, &out, 0, sizeof(in));
-> +	cl_assert_equal_i(n, sizeof(in));
-> +	cl_assert(memcmp(in, out.data, n) == 0);
+> +void test_reftable_block__index_read_write(void)
 
-It feels inconsisetnt that we use `cl_assert_equal_i()` to check for `n`
-but `cl_assert(... == 0)` here.
+This doesn't got to do anything with indices but with refs, so I'd
+rename this to `__ref_read_write()`.
+
+> +{
+> +	const int header_off = 21; /* random */
+> +	struct reftable_record recs[30];
+> +	const size_t N = ARRAY_SIZE(recs);
+> +	const size_t block_size = 1024;
+> +	struct reftable_block block = { 0 };
+> +	struct block_writer bw = {
+> +		.last_key = REFTABLE_BUF_INIT,
+> +	};
+> +	struct reftable_record rec = {
+> +		.type = BLOCK_TYPE_REF,
+> +	};
+> +	size_t i = 0;
+> +	int ret;
+> +	struct block_reader br = { 0 };
+> +	struct block_iter it = BLOCK_ITER_INIT;
+> +	struct reftable_buf want = REFTABLE_BUF_INIT, buf = REFTABLE_BUF_INIT;
+> +
+> +	REFTABLE_CALLOC_ARRAY(block.data, block_size);
+> +	cl_assert(block.data != NULL);
+> +	block.len = block_size;
+> +	block_source_from_buf(&block.source ,&buf);
+> +	ret = block_writer_init(&bw, BLOCK_TYPE_REF, block.data, block_size,
+> +				header_off, hash_size(REFTABLE_HASH_SHA1));
+> +	cl_assert(ret == 0);
+
+Same comment here, asserts like this can be retained as
+`cl_assert(!ret)`.
+
+> +	rec.u.ref.refname = (char *) "";
+> +	rec.u.ref.value_type = REFTABLE_REF_DELETION;
+> +	ret = block_writer_add(&bw, &rec);
+> +	cl_assert_equal_i(ret, REFTABLE_API_ERROR);
+> +
+> +	for (i = 0; i < N; i++) {
+> +		rec.u.ref.refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
+> +		rec.u.ref.value_type = REFTABLE_REF_VAL1;
+> +		memset(rec.u.ref.value.val1, i, REFTABLE_HASH_SIZE_SHA1);
+> +
+> +		recs[i] = rec;
+> +		ret = block_writer_add(&bw, &rec);
+> +		rec.u.ref.refname = NULL;
+> +		rec.u.ref.value_type = REFTABLE_REF_DELETION;
+> +		cl_assert_equal_i(ret, 0);
+> +	}
+> +
+> +	ret = block_writer_finish(&bw);
+> +	cl_assert(ret > 0);
+
+It's a bit unfortunate that we have to use `cl_assert()` here, but that
+isn't the fault of this series. I do have a pull request pending
+upstream that introduces integer comparisons. Once we've updated to that
+version I'll go through our unit tests and adapt callsites accordingly.
+
+[snip]
+> +void test_reftable_block__ref_read_write(void)
+
+This one here should be called `__index_read_write()`. I guess you
+confused the first and and this test name with one another.
 
 Patrick
