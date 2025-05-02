@@ -1,122 +1,154 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC7E227563
-	for <git@vger.kernel.org>; Fri,  2 May 2025 23:34:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72102225A29
+	for <git@vger.kernel.org>; Fri,  2 May 2025 23:34:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746228861; cv=none; b=X1UTCLCUYAqbSrtxuxOl1vd0bhhF8vtu23eoJd955ShqUijKbW/xEcYo9nC4GZw7y+tCPLQTn59K5RQLV9MkB8ijSCtmG4jAKp/I+JEVhF7REX3JoGJ/ED3csFg1cXYV5jNU+rA6Tg1QAUdfBvdQyp3BaMV5QxAT6zy2HX4Pu+Y=
+	t=1746228865; cv=none; b=G3F869TrHkwIgebH7ztdHt3L2CiWmN6IwqaexKgJNaKRby7BWiabpXp5vABPJD0fDCnXFVNOE+h5mI+tzjKELW+Kwo7u/T4oGFhFfBjBCBnQvK4gOGE2LjvdiCJ47A4vxdPmn4Uy6MC7aedx5kcX6u6rNcR+OSR6osFVnW1BmYw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746228861; c=relaxed/simple;
-	bh=u1cuoUzn5HY+o2Zlx6iLeZE6xym0FhJJQWsWOHg4SEg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=c4Phu0bC6vVZ9sx+g5LAZ/b6iTJBTgJQPdRattK1+w1+C4lwocF8kl0ldgMg+7/p2p8L3aARI/WnO4H0UbfECMfyAi5lNC28abAyRIoBdBXNt06UDb36pkHHyJX1SYOtSFIzsgvue32T90mwPuuuHfn/BGE8gV8NAh8PID6SwKg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LsLK3Eb/; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746228865; c=relaxed/simple;
+	bh=LHukUnLVwtp2IpqYC/mJq8HFCgWdmud/mNI47FBLpHA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=YNK/986JevXDD1xW7lvZeyHg6hPtpQ9rkiabzVYH3J91L+1twoZ6hf1lhGFZadi1jMf+GNd0a1BeVGxv9/h/eftGu8EcVDBMeZOyG/n7KmaNpw6Jey4OChwEKNaFwJ5+BpmS53FLEzNu92fFMNp0UYwdagZfYm995hR/JeAU2Lw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=oUfNm+tH; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LsLK3Eb/"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-73c17c770a7so3879365b3a.2
-        for <git@vger.kernel.org>; Fri, 02 May 2025 16:34:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="oUfNm+tH"
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7c9677cd6d7so304981685a.3
+        for <git@vger.kernel.org>; Fri, 02 May 2025 16:34:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746228858; x=1746833658; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=31shhJNhex/BW+tdLweDTQUW2WgGIZ+rt2Vtbz4pIUM=;
-        b=LsLK3Eb/kWDmFH74ZcaMliLhFYGPjuua4NScUUIteOuyJ7sFhmHItLeUSYN/pp//7S
-         67y1Vt9sYZAp+Wx0bUx/IRyOZVQFYGcRM/U12UmaURKTbTD1DZHd0Rb3wKCSwg7nLE1x
-         OMm/Nu8vpQ8jMbwL6uKohOXL70nalITUOYrMj/I/7mqZAhWyh2el67Qcp2s/Tiq7wbiK
-         WbCRyELFgFGbOE0U5z8UfpbxsQLJ0jVY8DXnDNEqS69Fkdk05h4uZeT90DdHZLp/DqrZ
-         GL8APgz6ZKI+QLJ1E/puLOslZyeiBd56B9urI5HqIGd4a0QR8EdlG1omPTTUPhWj6yPl
-         BM6w==
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746228862; x=1746833662; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=h9xWYhOGMYJuYx8H/NT2qH8lGF6+JKzDd2d1LZS9mw8=;
+        b=oUfNm+tHkPGRbjNYAE1GIMzY5xtF5JpkEahq5LOxMS/p90fOXUNerXStWmDbUZ03zn
+         +3hS4AjIklvqYgkzTto0H4yonNm3FloaibXWdgNId4eNWXrUXJmPbOwlyueVK8Qzrd7W
+         ZmEFwAd2/QiVclNjVVJWNZnrSeBtWlwweeNcOLpcW8MBjH4mAlz/SaRY9K47IQxCp4Nl
+         i+O7nvCf9oblTep3liDgxQvegbDV6wsSxL6+Mx1YdRCKr2crYJk+YnvVlntsxHDyRYVp
+         jLCUlIqPtixLrzAPBLMvB7f5hIGr4Aei5FDFvyPQ4etS0d1VYCZcJnxt3OXsp4s8qdX5
+         AJuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746228858; x=1746833658;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=31shhJNhex/BW+tdLweDTQUW2WgGIZ+rt2Vtbz4pIUM=;
-        b=IYM68VLGxf4fH7Y6AuoDh0Swnlc4NNQh0thZL/p3sN6ypwdYFMYKOaTjr0uFkIXOun
-         t9o7AFk0Ur5IyUinp13LPejG2ktVenU+hwsEV2ffFka71qouo+L1Uzcub6Hav+Vz3bo/
-         cdTol7kdcd+EX8IP+9iVQ53U9w2x2n892993YyeaW7SkqszV4k8lzwGmQ4VmDh0e8eBR
-         MqQaBEnYMsBHZBkHnprFeRgmX9TxInku22gfzmXEVdI+MKzebGiNm3MQgCz5BaPNIX0C
-         FSDnelgfVCsCBavYSwQvdC98mUp0jJfxCInnQwBErcBLCkxjMAM3I5OAXLwg7lOfN34i
-         I3Ww==
-X-Gm-Message-State: AOJu0Yxu/lXYEDWfUvw0hjW0HAsnlawuBR4MvKZ4s2yUIvBvBpgePiXQ
-	9dkyrbBd9RkphvUgkzM2v+ajC8qSs6MrcudnK/DWtb3En9mD3FhlZG5t4wtE
-X-Gm-Gg: ASbGnct7hPoaTSPHEsDMY+MuzsGdGuqe5lKifGwQ+OzBndo5B91m/z0X8XshZoaJ57g
-	8QVHfbCZb8M21auVlq0v0FFjBGpQa7gTCD+hDp/xJizxN5V57xCdOjaobR8h/V6cKP5ResPHbwh
-	5kVjopOabnPlqacBK2PbDz2gWiz9T6N8OMwE+keRkRCMV4KvtkapxYnGhT3ld3/eC9azf65Lgy7
-	wgEhWMM9LCMK3fM9ld5spSRA/e0dTHSVCStTfxWVyGsRusX+JpCMTjUfilkiK2DsNP3t1uU8d87
-	j7BSvA5Jj6kpajHiJ8XazgNg
-X-Google-Smtp-Source: AGHT+IGLIQ24kxhd1TWFwdpEHI8HqqkaiVu0HNpbmMz5vgQ5t1fjr9e7dHhESXMFoDnVwduuiBMIyA==
-X-Received: by 2002:a05:6a00:448c:b0:736:592e:795f with SMTP id d2e1a72fcca58-74058a20d67mr6187808b3a.9.1746228858476;
-        Fri, 02 May 2025 16:34:18 -0700 (PDT)
-Received: from fedora.. ([2601:646:8081:3770::4bd0])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74058dbbe30sm2273738b3a.62.2025.05.02.16.34.17
+        d=1e100.net; s=20230601; t=1746228862; x=1746833662;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=h9xWYhOGMYJuYx8H/NT2qH8lGF6+JKzDd2d1LZS9mw8=;
+        b=Gk6o+atzTTL3314S7hFXHhU04c7fkYbRe/g0y74jYopVxAycsugTnvdr8U+0kFbBCB
+         1pf4ar/+Af6ZE29TLVZQsyAXt1zVE6AHhcOFgd/qm3bCYikNQ+upLg4PY6jo/c9LnzAj
+         McWJa8fUBKsEE12qS8h9s38S+1KJCwm3FocjC/FRWD0Tik+C8bRIDqx8E1g/viIL9Ui8
+         SovGVnQAt+eQ2C/qrmQhc895cMr1k5UcYUwIvrjOXcW6LYVo1WS4ncej9zMYYmTbJv1G
+         QEiWIiJlk9Vw5sERxlAThL4cSUnwHI2CLhxhq9Kc3hO06pIrz24wdtIiB/8X3CsfD69I
+         ursw==
+X-Gm-Message-State: AOJu0Yws5gMcoKXlhFLg+v4PN298CWqHWixi2HD7V4FFCKQrx+4hHno7
+	bfDx2UordCbWacBABzo2GZzUM851oNIklok8UH/f7jYL4oWqfYS76iEkA96R6ZM=
+X-Gm-Gg: ASbGncvm5DaDxXsa+kbAvkzQZ9PbT005B13mLMnI29AT9fV54zTBCcrVm+eE8RfVfyJ
+	igzW7R38Jj8kWpGt/xpTDFqWdh8pFfrkAdBicIWVJTlp95HEK8HaFHO706QO2AN8nugLw4T4Pja
+	dI2QQmhbBWs1BqyN2ZHE/fUhzCQlPBoQpXpC5zRSomA38GHMJhHAgmzK11k4u8zaaWbWV/qdiu1
+	IN6MpX7x2wJ7bJGJLNlNyNwtYz5zH8YmmIfGyY89+Km5z6j1ZAs/2QZkE8jF58O4+gd+Xjp8Wur
+	Ufy0D5uTHmL9Ag6AYbSLrQyTWlXPWzmVPZcuRzhcvPmDnMBk78HFLe2jXfQLbyUdezh1H31Vzh+
+	6n57Z8I3ZY/Vr
+X-Google-Smtp-Source: AGHT+IE9iPfD7XFq6AP+m6zpQDqD7UgTP7wsjiHCLzCkQ8S23njD4pkM6RaaA6Kro6K1Bm7mlP/BWQ==
+X-Received: by 2002:a05:620a:1a94:b0:7c5:b0b4:2cea with SMTP id af79cd13be357-7cad5b8fc39mr659838585a.38.1746228862380;
+        Fri, 02 May 2025 16:34:22 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cad23d1241sm255639985a.54.2025.05.02.16.34.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 16:34:18 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: shejialuo@gmail.com,
-	Collin Funk <collin.funk1@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-Date: Fri,  2 May 2025 16:33:32 -0700
-Message-ID: <20250502233403.289761-1-collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.49.0
+        Fri, 02 May 2025 16:34:22 -0700 (PDT)
+Date: Fri, 2 May 2025 19:34:20 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	jonathantanmy@google.com, karthik.188@gmail.com,
+	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
+	ps@pks.im, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 06/13] t5538: add tests to confirm deltas in shallow
+ pushes
+Message-ID: <aBVWfJUFNdfwS0PO@nand.local>
+References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
+ <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
+ <ddf804e606a5560639e4018709da33cd80c74012.1742829770.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ddf804e606a5560639e4018709da33cd80c74012.1742829770.git.gitgitgadget@gmail.com>
 
-As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
-symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
-This patch fixes the following test failure:
+On Mon, Mar 24, 2025 at 03:22:42PM +0000, Derrick Stolee via GitGitGadget wrote:
+> From: Derrick Stolee <stolee@gmail.com>
+>
+> It can be notoriously difficult to detect if delta bases are being
+> computed properly during 'git push'. Construct an example where it will
+> make a kilobyte worth of difference when a delta base is not found. We
+> can then use the progress indicators to distinguish between bytes and
+> KiB depending on whether the delta base is found and used.
+>
+> Signed-off-by: Derrick Stolee <stolee@gmail.com>
+> ---
+>  t/t5538-push-shallow.sh | 34 ++++++++++++++++++++++++++++++++++
+>  1 file changed, 34 insertions(+)
+>
+> diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+> index e91fcc173e8..11b85cca9e8 100755
+> --- a/t/t5538-push-shallow.sh
+> +++ b/t/t5538-push-shallow.sh
+> @@ -123,4 +123,38 @@ EOF
+>  	git cat-file blob $(echo 1|git hash-object --stdin) >/dev/null
+>  	)
+>  '
+> +
+> +test_expect_success 'push new commit from shallow clone has correct object count' '
+> +	git init origin &&
+> +	test_commit -C origin a &&
+> +	test_commit -C origin b &&
+> +
+> +	git clone --depth=1 "file://$(pwd)/origin" client &&
+> +	git -C client checkout -b topic &&
+> +	git -C client commit --allow-empty -m "empty" &&
+> +	GIT_PROGRESS_DELAY=0 git -C client push --progress origin topic 2>err &&
+> +	test_grep "Enumerating objects: 1, done." err
 
-$ sh t0602-reffiles-fsck.sh --verbose
---- expect	2025-05-02 23:05:23.920890147 +0000
-+++ err	2025-05-02 23:05:23.916794959 +0000
-@@ -1 +1 @@
--error: packed-refs: badRefFiletype: not a regular file but a symlink
-+error: unable to open '.git/packed-refs': Inappropriate file type or format
-not ok 12 - the filetype of packed-refs should be checked
+Why is a full 'git push' necessary here? Could you instead directly
+invoke pack-objects as git push / send-pack does? That test_grep to
+assert on the size of the pack seems very fragile to me.
 
-This portability issue was introduced in Commit
-cfea2f2da8 (packed-backend: check whether the "packed-refs" is regular file, 2025-02-28)
+> +
+> +test_expect_success 'push new commit from shallow clone has good deltas' '
+> +	git init base &&
+> +	test_seq 1 999 >base/a &&
+> +	test_commit -C base initial &&
+> +	git -C base add a &&
+> +	git -C base commit -m "big a" &&
 
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- wrapper.c | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+I don't think it really matters, but you may want to write a test_tick
+here before committing.
 
-diff --git a/wrapper.c b/wrapper.c
-index 3c79778055..4d448d7c57 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -737,7 +737,19 @@ int is_empty_or_missing_file(const char *filename)
- int open_nofollow(const char *path, int flags)
- {
- #ifdef O_NOFOLLOW
--	return open(path, flags | O_NOFOLLOW);
-+	int ret = open(path, flags | O_NOFOLLOW);
-+#ifdef __NetBSD__
-+	/*
-+	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
-+	 * time this errno occurs when O_REGULAR is used. Since we don't use
-+	 * it anywhere we can avoid an lstat here.
-+	 */
-+	if (ret < 0 && errno == EFTYPE) {
-+		errno = ELOOP;
-+		return -1;
-+	}
-+#endif
-+	return ret;
- #else
- 	struct stat st;
- 	if (lstat(path, &st) < 0)
--- 
-2.49.0
+> +
+> +	git clone --depth=1 "file://$(pwd)/base" deltas &&
+> +	git -C deltas checkout -b deltas &&
+> +	test_seq 1 1000 >deltas/a &&
+> +	git -C deltas commit -a -m "bigger a" &&
+> +	GIT_TRACE2_PERF="$(pwd)/trace.txt" \
+> +	GIT_PROGRESS_DELAY=0 git -C deltas push --progress origin deltas 2>err &&
 
+Same note here.
+
+> +
+> +	test_grep "Enumerating objects: 5, done" err &&
+> +
+> +	# If the delta base is found, then this message uses "bytes".
+> +	# If the delta base is not found, then this message uses "KiB".
+> +	test_grep "Writing objects: .* bytes" err
+
+If we had the raw pack that was generated, could you use verify-pack
+instead to check that the desired delta/base relationship was
+discovered?
+
+Thanks,
+Taylor
