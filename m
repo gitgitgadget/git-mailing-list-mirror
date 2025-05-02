@@ -1,131 +1,104 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 058ED28F1
-	for <git@vger.kernel.org>; Fri,  2 May 2025 22:37:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD37B6EB79
+	for <git@vger.kernel.org>; Fri,  2 May 2025 22:45:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746225470; cv=none; b=p1cELeBfWqY8gqGbzYWwPOMYmFBFLtIFvGu8UkUoM9u4dV+qs2nEvQep+oI6+d0hHnE/mdtOOj9DB4jBwHxPN9SkpfUt+e1gzDwikUWuGq+cVlcLQTtLsYoVwLzltsNq2/3lV+Qa61m2DlAryEZe50B+vjwHOD4bzUlkAlqdvA0=
+	t=1746225936; cv=none; b=mKmOopkayzi7kL2IucNBuLU1GOE/9TYUlNw3pIRcgaHrhixKy7bDCVNSIv4hCXg3Fdk8j/hvHth/4WeV/yK64PdXZCHJIkSBLEFHWHDf02pEz8B1CZQC21FeGbLFOr+2kiub0iELS0bqRrWBXSC/YOzdk8cbMcUW2XSNX34i5QE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746225470; c=relaxed/simple;
-	bh=Fq7UIUQXnEAg5+k7L5DEKGHvqvFxQJpVo5S4mngt+Kc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=B60kx3/D8sCJFqaKfmMhjevHl5PX+s5U6Rch4Fezwt9cMnWUI1ANt6MRlITwMyACdTUs5asharFKC4AhPKJmDlJQdgzIBUlxBKgcoyq9y+VxIt0UYi6R51y0OtjY9+gjPQEBAVB0bl2w7x44UjOeOoe1zSikVhMkSvZwTR+lFYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id D4511343067;
-	Fri, 02 May 2025 22:37:47 +0000 (UTC)
-Message-ID: <c5486e20-dbae-4ec2-bc19-d5dc537a8399@gentoo.org>
-Date: Fri, 2 May 2025 18:37:45 -0400
+	s=arc-20240116; t=1746225936; c=relaxed/simple;
+	bh=xzvn7tOpvlBHkYxVG3yxKWyEk66XBv0AM528PEZV29U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Foju2ahkqXjHgCzImYqErHlSzxHXjtSp1+6zaWa9KP5av7c3OWOtl+bcSYmtH6XA0b+X2pB7jo6a1AfW7qxRCI3H22cSrTXdsFN1BFJMWw6C2KndTTUintVHwvR6nNdyTtmhfX74CIYmKikZ3cKbjGWkmHCjAphg/3tjpAO5L2o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Mk0FQ9gK; arc=none smtp.client-ip=209.85.160.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Mk0FQ9gK"
+Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-4774193fdffso44237161cf.1
+        for <git@vger.kernel.org>; Fri, 02 May 2025 15:45:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746225933; x=1746830733; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=idzOGxwqCRLb5PHqyMKFXw/X36PRPQYNMJAQHoVgIZI=;
+        b=Mk0FQ9gKOjD/1I/RDz6FzJZOdGyqyHTQCEqHaxpVOCnHeQ4OZg3TY0/LSxZvJFQZL2
+         F58vshvRrpyhXe5p4O2vLZObLInLoJTiItqsJqiQG3N4psO8IGTvTOOfBVgMrt4Tc6K5
+         TPbQV1UwuCxqOGfqOHAIv5U0xHckYNyDGWpnTEUQpjVo94ipRyp3k6hHzFdVr7Gw/d5+
+         mHysoepDnWJebSIDsvel7A9OsAfvCSAp0bWkqLfT/m2OZFuhNY5ausjuLw7AWhYdLUxA
+         vgNw5YfCWhrbQacqik39utW/WePu4oetkvOz+5yctr1MIlCe/VMYFqta4M+WCftwbrwZ
+         p3IQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746225933; x=1746830733;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=idzOGxwqCRLb5PHqyMKFXw/X36PRPQYNMJAQHoVgIZI=;
+        b=C+su6ZTgkfuDelgJUZseMCftIDSsjFdRTcwXqRTV2wTo0RV3BPzJy4iqHqm59WA5X6
+         6fYZkjWXXYjZc1yDxJpVRLBzSvXugemedvDEi5aGGje5j/piCR7Uh92a4ngIcTDtevDF
+         LTI1JSTftC7gg+BHM7bp+4540XZHLKLD9avjzg+qWnRE76M0t/QscovMZ4MwTUxKnCol
+         YqqiF7FTxvR9aFu8Gxcpj3wdMOL+4V5VPU0j0ElLn633acLhlm//0f9Sy409ANODAOAK
+         Zikmsqz0LKnn/zwTTsOPeKmp2skRcbD6gOin+k8AQ1cckQXkaBw/3ubLuKngLsvlEOcw
+         3QLA==
+X-Forwarded-Encrypted: i=1; AJvYcCUEJm/k5FyauKotRqpTADVW5+LOeBzXcaxZYHyo6YXrTz0r79HroiPRz+Bh4fCL4DyvXAs=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBGzy/KmwjUWgICIhKzvcj74oJ2GviHpfIdfkHOgKAPuHmwFyb
+	Q3+EjCB5Ts8eFc2jxmdHa2vxqljd/WzDQLNluufIC3GuzzSZh9XmOzaKiqlrARE=
+X-Gm-Gg: ASbGnctGP9JgSIdV3XhaKPbus4s0HQhB+4P9ftwKAhSyi3VYZoMqZrtDylsQWpd/4Oo
+	GBAOpiApIvQXOcdG5kRrnDpqNXFi2zforLI6jImmq2dNVmw4Hd7zAZwKjgv+dqjYCZX98hOQcOa
+	lrpBKuBMue1iCIjZCUXujjT9sJ+G5NoZJkm530ode3FUMRmA+LrnQo5dkRNLF+MJbuFEHNVpbXZ
+	XqFDxHSShCCQGou5MLQek5angemAp5+Hk8kxsCExzZ/2QVnfNKTmJeHxK04hjxrwDmXmTOrOq5+
+	vFE3tMYj5D9EidLLIMgU3rAOQ2m2792qB+pfVte4GonXUH9b05Y3Q9ENw5hQIERinDN7MZvNah7
+	g7SiJl8Fz0ejEXh0Ar89tdjs=
+X-Google-Smtp-Source: AGHT+IGwiyabKxFtvUL70vM/+pMchMfa00y+lrlmAAPkrXCZXOo+gEtlYbWd3hCF38ptVawn3npLAQ==
+X-Received: by 2002:a05:622a:2b4b:b0:477:d00:b43e with SMTP id d75a77b69052e-48c32ac9e96mr86404091cf.38.1746225933404;
+        Fri, 02 May 2025 15:45:33 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-48b987209f1sm24263251cf.52.2025.05.02.15.45.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 May 2025 15:45:33 -0700 (PDT)
+Date: Fri, 2 May 2025 18:45:31 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org, christian.couder@gmail.com,
+	johannes.schindelin@gmx.de, johncai86@gmail.com,
+	jonathantanmy@google.com, karthik.188@gmail.com,
+	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
+	ps@pks.im, Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2 00/13] PATH WALK II: Add --path-walk option to 'git
+ pack-objects'
+Message-ID: <aBVLC57bMJKjygyi@nand.local>
+References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
+ <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
+ <xmqqbjsau2nl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] meson: prefer '/bin/sh' over PATH lookup
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Peter Seiderer <ps.report@gmx.net>,
- Justin Tobler <jltobler@gmail.com>
-References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
- <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
- <xmqqjz6yu30o.fsf@gitster.g>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <xmqqjz6yu30o.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------fTSe0tsyuwBk56BBQbVvCtQ2"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqbjsau2nl.fsf@gitster.g>
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------fTSe0tsyuwBk56BBQbVvCtQ2
-Content-Type: multipart/mixed; boundary="------------iaHTpXOOOb83aBjABfPPBzcE";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Peter Seiderer <ps.report@gmx.net>,
- Justin Tobler <jltobler@gmail.com>
-Message-ID: <c5486e20-dbae-4ec2-bc19-d5dc537a8399@gentoo.org>
-Subject: Re: [PATCH v3 0/2] meson: prefer '/bin/sh' over PATH lookup
-References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
- <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
- <xmqqjz6yu30o.fsf@gitster.g>
-In-Reply-To: <xmqqjz6yu30o.fsf@gitster.g>
+On Fri, May 02, 2025 at 02:24:30PM -0700, Junio C Hamano wrote:
+> > Updates in v2
+> > =============
+> >
+> >  * Re-added a dropped comment when moving code in patch 1.
+> >  * Updated documentation to include interaction with --use-bitmap-index.
+> >  * An UNUSED parameter is now used, reducing the use of global variables
+> >    slightly.
+>
+> The iteration saw no comments from anybody, so I (naturally) forgot
+> about it for quite a long time.  Let me mark it for 'next'.
 
---------------iaHTpXOOOb83aBjABfPPBzcE
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+Sorry, this fell off of my to-do list. I don't want to hold things up
+further, but would appreciate a chance to review this before it hits
+'next'.
 
-On 5/2/25 5:16 PM, Junio C Hamano wrote:
-> So the discussion seems to have died out.  Have we decided that
-> unlike Makefile-based approach, it is too cumbersome to teach the
-> Meson based approach to allow user-specified commands that have
-> different basename to stand in for the command we expect in the
-> build based on Meson [*], and what the v3 iteration of this series
-> does is a good place to stop?
+I can take a look now.
 
-
-I don't have any objections to teaching git's own meson.build to do
-this, and I don't think it would be particularly cumbersome. But as I'm
-not the person who would use it, really, I was hoping others would state
-their preferences.
-
-=2E..
-
-One possibility would be if meson itself was adapted to support setting
-simple "machine description" settings via the command line. I seem to
-recall someone had proposed at one point on the meson ticket tracker, to
-support e.g.
-
-```
-meson setup -Dbinaries.cc=3Dgcc -Dbinaries.sh=3D/bin/dash
-```
-but I cannot recall what came of the discussion. I'll try to find the
-relevant ticket after the weekend (going offline right around now).
-
-
-
-> [Footnote]
->=20
->  * It is trivial to say "make SHELL_PATH=3D/bin/dash", but we do not
->    add support for anything like 'meson -dSHELL_PATH=3D/bin/dash', and
->    we only allow the search path for fixed-name commands to be
->    configured and tell our developers that they have to write an
->    extra file paths.ini just to be able to do so.
-
-
---=20
-Eli Schwartz
-
---------------iaHTpXOOOb83aBjABfPPBzcE--
-
---------------fTSe0tsyuwBk56BBQbVvCtQ2
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaBVJOQUDAAAAAAAKCRCEp9ErcA0vV0hA
-AQCdiiOaQfEc/Uf1a++1riNfRmm+xDGz1DI0eAz2y0RGuQEAssY8vifwcRErC20DER/uUF5J/A7q
-lLH8EpjWekcM4wQ=
-=ybKO
------END PGP SIGNATURE-----
-
---------------fTSe0tsyuwBk56BBQbVvCtQ2--
+Thanks,
+Taylor
