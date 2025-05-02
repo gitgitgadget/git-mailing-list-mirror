@@ -1,86 +1,84 @@
 Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A429C29408
-	for <git@vger.kernel.org>; Fri,  2 May 2025 21:16:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37A28376
+	for <git@vger.kernel.org>; Fri,  2 May 2025 21:21:49 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746220604; cv=none; b=obMmhooeD4BpCBVY1rfoVFO8J1XuUsMYXs5+nHk7uqDba01Nvsom7nGFNUiWlzvmN1wecD1rUfgY35rjTrRaqGJ7QCSulZzbmsVu9gm77QQGjzyQLkuxgwFYOdDDihJo33y0RsyBbN8rw8tXFcIGUJF2WaHrkSASKoWB4/tzqRw=
+	t=1746220912; cv=none; b=V7D7Ua9tqOU2Y0HKWlfK8Wbq/wqG9u9vIvmQ3Rh0yaFPsMJrvwte0a9QEiVwH9Ra9GBxaGw5AlmZG0uW/wGxjowIc/2yh8gRTzj6WhcPz9uPVX79aNxKBhs05caxmrtkUblxOv1B5BiAapGq0AuJ79mgABTglNUtYwzFBs7pFUM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746220604; c=relaxed/simple;
-	bh=6ivi8MX3+Azpo89l6bkWx8mx4xnnnvK5GZFfKEdYMzE=;
+	s=arc-20240116; t=1746220912; c=relaxed/simple;
+	bh=CkRylovyntyBPSIE3Ey9eUV9T2nhkwszIrdGWLA3lqE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qycDRmg+h+R5Vr9YsrRKADwhkadwhal66Syd6vOt2rwU5y4exbjZfm1w/t8g8yydjacEUxxx67xRv/TXH6sNXtXIAoF5sw5T4x4adYu1/qEGKOSQ9xtZcal1Zl34s9GRSh1qj7+TYdD95JsqaRB1SSm9h7ylyqNDOFqvdgPK+Wk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y2S0JKaJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b8WGqZGD; arc=none smtp.client-ip=103.168.172.158
+	 MIME-Version:Content-Type; b=PvIqtLtjvH3rLiydliYSBqZ3Xew+Ewc+gUV4bLDlrZ3So4KfgfyW/MGKioVq8Ze0GnraK6Ryq7GncRYK7hu9JDJZ6H8JKwxH18zEhfJuzqoHKPSbg/2rO5KMBh5SbWNzIAN0YuuvU5stNGDJzpdsEsnVSED66GLoD94KjfGYum4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YPvGyD51; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=eRcdzCLw; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y2S0JKaJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b8WGqZGD"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YPvGyD51";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="eRcdzCLw"
 Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A60E711401EC;
-	Fri,  2 May 2025 17:16:41 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Fri, 02 May 2025 17:16:41 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F9FB11400EF;
+	Fri,  2 May 2025 17:21:49 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-05.internal (MEProxy); Fri, 02 May 2025 17:21:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746220601; x=1746307001; bh=/AcUUqFNnr
-	X26Ius2F9mS8XjdHkaKbdsX9OraYr760M=; b=Y2S0JKaJ+alPooP31joO97goY3
-	CNm5rFg15Up8xPF4tqWXHouLhD/YFZR2QU23Pd23PDYtFZqmlEjqXl4XdAwOpeBh
-	t/l5CCts8dS0S+wBepGY9mDF777zyLchey8G8KrugJwWn0XwjpwhLpjRXqQ7ySQA
-	2SlHPgZbW1IdzQLcLQUaTWCtkuGEuqgGU9AqopugwK9KIVeFSqlaa+bSGn+Ar5dI
-	jqe9HlvnQOcbVl+kcPrrkuPgr69wYy+Nu0wQiMQkMzulrEqUq8VuLRK7ZH8hkus3
-	k9smMMdSlDbpwi3GImqbOuGDxCF5eMYUArsZOQ14i0HNIjdbplae4AlrrnMw==
+	:subject:to:to; s=fm2; t=1746220909; x=1746307309; bh=DkJGF2AW4z
+	l1DyymkghZlNDi/y326NPEehQJYgxjn0A=; b=YPvGyD51BdSF63x5rYaecjBeeV
+	9OcHK+LmT7BQ2Uw26gCiPvfBwDV++aFV2JSBoxr9tSRq2Ws34L1aVbTiG03bI9y1
+	ftr7tVfTA8sf8JE3pYjaAz/Qws7Ziy1gG0kHTqAJTwPi4OgVSVPgrdIMjiSQRLOr
+	Ic+aliidDpRau5BpEBV9DBYiYEo9AN7JhtzRNDlHO0RrxYh+aoazAPxtCngZvnbX
+	9j4nES7pmR+r3NfV14yN3Qjv96pQCI3MMI4wPG/NtKXxu55NijBDnnEjH4Q6JkkJ
+	F66eFH76BwgeEZzFFDxx14IOKtLM3V2x6DQ8Cvf8HPLmOwQb3Y+U/hzZgviQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746220601; x=1746307001; bh=/AcUUqFNnrX26Ius2F9mS8XjdHkaKbdsX9O
-	raYr760M=; b=b8WGqZGDWfAv+O2eZDL2IdGUVoz/IO9tZB3N+Yc6RJvR0rZSTyj
-	Bc6hkdgJOoNcGNA6JJ5tUVvsQDtWXRy7Uf6FXwaQIlOW2KxTAEq1ypiK6+A2XT3I
-	yQSyaL4VietaOYPDisFLIKpZPwEqf1vi+dslgkF9u4tuP+mdp7vkljZjeHpDYH9J
-	e96hvcPVudpEiBfY2LGXfPEENtF5YOCzjhE76Uis4nMWm7xQjrQRF/OJufIIkEOD
-	3rhS5RwHAUD9NgKenhwQXzyr7rVMHJ+zwRC9CmjSUPmf90QnZppLdflTUJxHTOcH
-	70w1RnasTq+Kfz6/yxV9iVYqZeXrR8354ig==
-X-ME-Sender: <xms:OTYVaLyDS8g4CfyEgcLOOVKnOWMXjVwr3h0nxVIDCEhNrAPnfgMuPQ>
-    <xme:OTYVaDQbyOG88mg6bZjIilOjD81sY56q5t2kuw-nAr4h0w0c5_0PzQ38f1lZknZ_B
-    rKDW7xBWUU3bX8adQ>
-X-ME-Received: <xmr:OTYVaFWl9A0s93_CGO5DM8g37oiPNLXHnvIHeEFKFVTCOtnHOGg9kc7F3a5e5NfcEV68IGRo7HwjYm6y9i_FkILl8f8LbS1-KCCV>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefhedtucetufdoteggodetrf
+	1746220909; x=1746307309; bh=DkJGF2AW4zl1DyymkghZlNDi/y326NPEehQ
+	JYgxjn0A=; b=eRcdzCLwhQD9G0IWPdJrLUEaA3auGkolLww59i3L4NyjKxTnhG/
+	5SxiKfbw2IdyvakzKsKuHZxxnnRYAGS1Gdy6kU8Pz5l5Whlhk8FlEKYDD2wOcC5B
+	+wnF2PyJmJmdhtPBSyFpECSPYaS0jgFrNKiwj/AClA3DDiRQOoCuWyE8cXnghR0S
+	6BJTMQf9PqggvTNdcaTknuwy4t1ChHclToTZr7WASsyaiDnnMvV7CIq3MSdr1Azc
+	9miBWdNYOmZO0QIKmoQnL7nIlGOJ6xEFV8NaXnQ7Xp7ICLulwekZGA11Bk/DGNH4
+	YHQTYggZ5e05083Q46jtThr+cq7XiRyMhOg==
+X-ME-Sender: <xms:bTcVaGP3Q2AjpvSoE5gMts4_brvSHnvm3r2CVODZGJq1Z63lwvrbJw>
+    <xme:bTcVaE9jbT4Jk2jGpwFcWmXQz0YU1La_r7vGPgy0DrJTkO03wq9WATLoP_kw5isDk
+    DVwNrlzGLM1XDk28A>
+X-ME-Received: <xmr:bTcVaNSaAOI8dC_vmP0kyEPL49W-y4lizmnSI_xzQdKyVzHDfCQDItsmzlMVhET-mbjIdywD2q2nJwmbi7nKq7gyeK1NzbAr2HtY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
-    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshdrrhgvphhorhhtsehgmhigrd
-    hnvghtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghp
-    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
-    gvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:OTYVaFgv9CKcvNDfrk3kS-5bjlACBpQNTR7vtGbbRmXJI1cDptXVDA>
-    <xmx:OTYVaND85HWxjbwgxx0zvGGHfii6D4rNmPHO5hOlY3738xvbqoQVpQ>
-    <xmx:OTYVaOIgSd554Jm-C3VhbIgiIYuK0XyPJl-_oA2XTUj5sJhYLUKgjw>
-    <xmx:OTYVaMCdoxcUKUhTiccM5TfmynQG81ruCmuYwilZzwa82R77EOyaww>
-    <xmx:OTYVaGK_lWqsCWU5dRbRFKIJgXRLEpy8hqgiYBEydrz8is5o8m9liqmK>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
+    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:bTcVaGvQr53HBYlAeyUj1cr8KK7JpQsGb9m6FqSpCnL1lWEMfkyP6Q>
+    <xmx:bTcVaOejA0J9kaYOZ5R9nUN-9RsL_uVS-dVWrs1cXmcI1O9bfJpRBQ>
+    <xmx:bTcVaK3vqEwyNDsDiPWwvR2PMV3WcQnyJvH6S3_z7Rry3jaFJB9maQ>
+    <xmx:bTcVaC8MXdcxE7fiOQ5R69Lz9_aVRx2XZTmrM1AjgP6ZOAhMFEQWLg>
+    <xmx:bTcVaNAn_Pjz4Lnx61bKZIcT_YnJ9W-B3Ye23AhEEsBwI9veARSavEqE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 17:16:40 -0400 (EDT)
+ 2 May 2025 17:21:48 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Peter Seiderer <ps.report@gmx.net>,  Eli Schwartz
- <eschwartz@gentoo.org>,  Justin Tobler <jltobler@gmail.com>
-Subject: Re: [PATCH v3 0/2] meson: prefer '/bin/sh' over PATH lookup
-In-Reply-To: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
-	(Patrick Steinhardt's message of "Fri, 25 Apr 2025 16:11:27 +0200")
-References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
-	<20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
-Date: Fri, 02 May 2025 14:16:39 -0700
-Message-ID: <xmqqjz6yu30o.fsf@gitster.g>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: git@vger.kernel.org,  Elijah Newren <newren@gmail.com>,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH 0/4] pack-bitmap: enable lookup tables by default, misc.
+ cleanups
+In-Reply-To: <cover.1744924321.git.me@ttaylorr.com> (Taylor Blau's message of
+	"Thu, 17 Apr 2025 17:12:10 -0400")
+References: <cover.1744924321.git.me@ttaylorr.com>
+Date: Fri, 02 May 2025 14:21:47 -0700
+Message-ID: <xmqqfrhmu2s4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,35 +88,39 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Taylor Blau <me@ttaylorr.com> writes:
 
-> But this made me remember the report from Peter [1] that Debian also
-> faced this issue. So I decided to address the issue in Meson directly by
-> preferring `/bin/sh` over a PATH-based lookup.
+> This is a short series I extracted from a larger topic on reusing
+> "external"[^1] deltas during verbatim pack reuse.
 >
-> Changes in v2:
->   - Simplify how we generate the summary.
->   - Add a comment to explain ordering of the program path.
->   - Link to v1: https://lore.kernel.org/r/20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im
+> As part of performance-testing that series, I realized that bitmap
+> lookup tables are not written by default. Since it has been a
+> significant period of time since their introduction, the first patch of
+> this series makes writing the lookup table extension the default
+> behavior. This is:
 >
-> Changes in v3:
->   - Stop claiming that "/bin/sh" is a POSIX-compliant path.
->   - Link to v2: https://lore.kernel.org/r/20250425-pks-meson-posix-shell-v2-0-fddc6123511b@pks.im
+>   * pack-bitmap: write lookup table extension by default
+>
+> The next three patches clean up some t/perf scripts that were redundant
+> now that lookup tables are the default behavior. Those are:
+>
+>   * p5312: removed duplicate performance test script
+>   * t/perf: avoid testing bitmaps without lookup table
+>   * t/perf/lib-bitmap.sh: avoid test_perf during setup
+>
+> Thanks in advance for your review :-).
+>
+> [^1]: The term I'm using to describe delta/base pairs which either (a)
+> are represented from different packs in a MIDX bitmap, or (b) the client
+> is known to already have the base.
+>
+> Taylor Blau (4):
+>   pack-bitmap: write lookup table extension by default
+>   p5312: removed duplicate performance test script
+>   t/perf: avoid testing bitmaps without lookup table
+>   t/perf/lib-bitmap.sh: avoid test_perf during setup
 
-So the discussion seems to have died out.  Have we decided that
-unlike Makefile-based approach, it is too cumbersome to teach the
-Meson based approach to allow user-specified commands that have
-different basename to stand in for the command we expect in the
-build based on Meson [*], and what the v3 iteration of this series
-does is a good place to stop?
+Peff and I were the only two people who read these patches?
+Is this topic still viable, or has it been backburnered?
 
-
-
-
-[Footnote]
-
- * It is trivial to say "make SHELL_PATH=/bin/dash", but we do not
-   add support for anything like 'meson -dSHELL_PATH=/bin/dash', and
-   we only allow the search path for fixed-name commands to be
-   configured and tell our developers that they have to write an
-   extra file paths.ini just to be able to do so.
+Thanks.
