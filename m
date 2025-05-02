@@ -1,85 +1,86 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B925D1A83FB
-	for <git@vger.kernel.org>; Fri,  2 May 2025 21:07:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A429C29408
+	for <git@vger.kernel.org>; Fri,  2 May 2025 21:16:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746220055; cv=none; b=twafkoGoUBYWm7zFLHf3QfIefRdNnKjuN1xPCgOuyJILCFmNBxC3pGiivFvZ2g1ON7VeDyyCO/NNdzFnzg41YBPxFWZVNLVUHGfTdMpME9zTOwpBXNww/SplGfPvJq9M7IR0DbwloU4mIyt0jeI++XJ5fHMMmKEYgZBT83NWjjM=
+	t=1746220604; cv=none; b=obMmhooeD4BpCBVY1rfoVFO8J1XuUsMYXs5+nHk7uqDba01Nvsom7nGFNUiWlzvmN1wecD1rUfgY35rjTrRaqGJ7QCSulZzbmsVu9gm77QQGjzyQLkuxgwFYOdDDihJo33y0RsyBbN8rw8tXFcIGUJF2WaHrkSASKoWB4/tzqRw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746220055; c=relaxed/simple;
-	bh=jht1EsUeO07rjzS/ytI4s7dd8NfEIWhFf0EsW4xichU=;
+	s=arc-20240116; t=1746220604; c=relaxed/simple;
+	bh=6ivi8MX3+Azpo89l6bkWx8mx4xnnnvK5GZFfKEdYMzE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=chRfhyHuDhtHXyrTJfvHY/sInVSWL7mPA0xhdi7ekGv61cklHjKrS+xA6KHpaZCo0trLECXbRwxLg2kCgVHz8AiIKQ4KT5gOeR26kx/TpizS3JdJA2lOLd5dasXCChhQ1zUv4DSFanm37YDgvqCUO/w2kO7OC5IN9C5Qlkwva7o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=blsa7e9/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o3V4WKOr; arc=none smtp.client-ip=103.168.172.147
+	 MIME-Version:Content-Type; b=qycDRmg+h+R5Vr9YsrRKADwhkadwhal66Syd6vOt2rwU5y4exbjZfm1w/t8g8yydjacEUxxx67xRv/TXH6sNXtXIAoF5sw5T4x4adYu1/qEGKOSQ9xtZcal1Zl34s9GRSh1qj7+TYdD95JsqaRB1SSm9h7ylyqNDOFqvdgPK+Wk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y2S0JKaJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b8WGqZGD; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="blsa7e9/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o3V4WKOr"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9C8061380775;
-	Fri,  2 May 2025 17:07:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y2S0JKaJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b8WGqZGD"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A60E711401EC;
+	Fri,  2 May 2025 17:16:41 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 02 May 2025 17:07:30 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 02 May 2025 17:16:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746220050; x=1746306450; bh=EU8nGo9k2F
-	rTyr4SdUnpGKN5PzKp2Fd0S3TDBIGwCbs=; b=blsa7e9/8qOWV6LQboiYKHA4/z
-	W849ixVxyeNKCfLsooVIWtIah8nTTmqh0Y2ahEGmLoD3v6uV9YRHD8rfjaErgp08
-	VWhLRylWS/R6K2/dzxnPYrx3JDZJqOneFXWSkbReyK1atBeLMAwOf2oVZ56RZEko
-	lc01b7KkZ5J+XNeuGQSZCjCRVv9ayeAddQJ80cPWFMUv9kN0udsg9LZGtvh1+Jmf
-	66aQ8HWxahBZs1GelOVe3qN1HnFDFsuVRmWOGcVKoOqf83mpVT0OsmrrA+YYRtOJ
-	uiln5XX7gquR0DD68UJh8xm9Mz3aBcI8pCziOC8sRlzC/hOaKE94e45RB/mA==
+	:subject:to:to; s=fm2; t=1746220601; x=1746307001; bh=/AcUUqFNnr
+	X26Ius2F9mS8XjdHkaKbdsX9OraYr760M=; b=Y2S0JKaJ+alPooP31joO97goY3
+	CNm5rFg15Up8xPF4tqWXHouLhD/YFZR2QU23Pd23PDYtFZqmlEjqXl4XdAwOpeBh
+	t/l5CCts8dS0S+wBepGY9mDF777zyLchey8G8KrugJwWn0XwjpwhLpjRXqQ7ySQA
+	2SlHPgZbW1IdzQLcLQUaTWCtkuGEuqgGU9AqopugwK9KIVeFSqlaa+bSGn+Ar5dI
+	jqe9HlvnQOcbVl+kcPrrkuPgr69wYy+Nu0wQiMQkMzulrEqUq8VuLRK7ZH8hkus3
+	k9smMMdSlDbpwi3GImqbOuGDxCF5eMYUArsZOQ14i0HNIjdbplae4AlrrnMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746220050; x=1746306450; bh=EU8nGo9k2FrTyr4SdUnpGKN5PzKp2Fd0S3T
-	DBIGwCbs=; b=o3V4WKOrPFrMxpAy0VioCP+HrKtUTNMiO+W0xqn/JwDpVOJMyqo
-	dauh4NgUMk/htC2qVErxJ5uqjobwqikjLCHd2h0WhmIO0XJpO5EQnfHo393fc1da
-	4BJEVhpZo4zuph0cQhCHvSQ6Fbc864Oco3tCa6GBei3bF98MaQNXkWa2zFF7Hdjd
-	tpMUFBOYbfrfDg1NgWyLhkfLkHSLe982jqjp7/rRUC/YM1hhi0gyrc9ObgoiWjA7
-	ggQrlBkx+YR9vmkdhxSbkZZtxenHcCN9iE0tMmsVRRX1v1cqg9zu+pXZIkkwyiF4
-	UPhJO6CDNRyoIezUcqADSA8Xl+aASxRezcA==
-X-ME-Sender: <xms:EjQVaADOtVyfg8My5P7ynqdda5StLejytCOUtuhBbwSHml8ggdh7fA>
-    <xme:EjQVaCjScgAJcytBPGKwdpD-KKZF2GO_pFjOVk08JdOpPdMlyYHWE8q5aC5tUy9oc
-    h1dVFHRG3tXw2udgQ>
-X-ME-Received: <xmr:EjQVaDnD871-1HV3KHSkn5C1T04TFB5b2jeLrkJ4oAJLeSXGPqC_uYnH7ooBZv6jgQnk8lVdvPVFVHR2WSsd23F5QOYoHsXY1RVN>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefgeekucetufdoteggodetrf
+	1746220601; x=1746307001; bh=/AcUUqFNnrX26Ius2F9mS8XjdHkaKbdsX9O
+	raYr760M=; b=b8WGqZGDWfAv+O2eZDL2IdGUVoz/IO9tZB3N+Yc6RJvR0rZSTyj
+	Bc6hkdgJOoNcGNA6JJ5tUVvsQDtWXRy7Uf6FXwaQIlOW2KxTAEq1ypiK6+A2XT3I
+	yQSyaL4VietaOYPDisFLIKpZPwEqf1vi+dslgkF9u4tuP+mdp7vkljZjeHpDYH9J
+	e96hvcPVudpEiBfY2LGXfPEENtF5YOCzjhE76Uis4nMWm7xQjrQRF/OJufIIkEOD
+	3rhS5RwHAUD9NgKenhwQXzyr7rVMHJ+zwRC9CmjSUPmf90QnZppLdflTUJxHTOcH
+	70w1RnasTq+Kfz6/yxV9iVYqZeXrR8354ig==
+X-ME-Sender: <xms:OTYVaLyDS8g4CfyEgcLOOVKnOWMXjVwr3h0nxVIDCEhNrAPnfgMuPQ>
+    <xme:OTYVaDQbyOG88mg6bZjIilOjD81sY56q5t2kuw-nAr4h0w0c5_0PzQ38f1lZknZ_B
+    rKDW7xBWUU3bX8adQ>
+X-ME-Received: <xmr:OTYVaFWl9A0s93_CGO5DM8g37oiPNLXHnvIHeEFKFVTCOtnHOGg9kc7F3a5e5NfcEV68IGRo7HwjYm6y9i_FkILl8f8LbS1-KCCV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefhedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:EjQVaGzBno1ZtBnov8WHF41Lr5HHNcLP4J1bR9OviIBu4D_oAIKr1g>
-    <xmx:EjQVaFQnMyIqTFIDc3yEf-_R2nevqoSnznl4U0OJDQ2OhFLUG_ydxw>
-    <xmx:EjQVaBbTcx9pqDQ49tUy-3qyZAPidRPU4WTUMo_MyKa5E23Z12eyFg>
-    <xmx:EjQVaOQ13JLLO2ses2ii7FKys8g8SYLsnN5gZpjo0hUwKzNFVX9Wrg>
-    <xmx:EjQVaDcFFUtfrjeWDTqC5a7ArBInIDkAXfLvlpKuYk2wMebrNddPG9tR>
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshdrrhgvphhorhhtsehgmhigrd
+    hnvghtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghp
+    thhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:OTYVaFgv9CKcvNDfrk3kS-5bjlACBpQNTR7vtGbbRmXJI1cDptXVDA>
+    <xmx:OTYVaND85HWxjbwgxx0zvGGHfii6D4rNmPHO5hOlY3738xvbqoQVpQ>
+    <xmx:OTYVaOIgSd554Jm-C3VhbIgiIYuK0XyPJl-_oA2XTUj5sJhYLUKgjw>
+    <xmx:OTYVaMCdoxcUKUhTiccM5TfmynQG81ruCmuYwilZzwa82R77EOyaww>
+    <xmx:OTYVaGK_lWqsCWU5dRbRFKIJgXRLEpy8hqgiYBEydrz8is5o8m9liqmK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 17:07:29 -0400 (EDT)
+ 2 May 2025 17:16:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
-Subject: Re: [PATCH v3 0/7] builtin/maintenance: implement missing tasks
- compared to git-gc(1)
-In-Reply-To: <d5307e82-8e45-4a2a-a8cc-03f84c2d5670@gmail.com> (Derrick
-	Stolee's message of "Fri, 2 May 2025 10:57:33 -0400")
-References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
-	<20250502-pks-maintenance-missing-tasks-v3-0-13e130d36640@pks.im>
-	<d5307e82-8e45-4a2a-a8cc-03f84c2d5670@gmail.com>
-Date: Fri, 02 May 2025 14:07:28 -0700
-Message-ID: <xmqqo6wau3fz.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Peter Seiderer <ps.report@gmx.net>,  Eli Schwartz
+ <eschwartz@gentoo.org>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v3 0/2] meson: prefer '/bin/sh' over PATH lookup
+In-Reply-To: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
+	(Patrick Steinhardt's message of "Fri, 25 Apr 2025 16:11:27 +0200")
+References: <20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im>
+	<20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
+Date: Fri, 02 May 2025 14:16:39 -0700
+Message-ID: <xmqqjz6yu30o.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,44 +90,35 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Derrick Stolee <stolee@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> On 5/2/2025 4:43 AM, Patrick Steinhardt wrote:
+> But this made me remember the report from Peter [1] that Debian also
+> faced this issue. So I decided to address the issue in Meson directly by
+> preferring `/bin/sh` over a PATH-based lookup.
 >
->> Changes in v3:
->>   - Simplify the heuristic for "rerere-gc" so that we only count the
->>     number of directory entries in ".git/rr-cache", without considering
->>     staleness.
+> Changes in v2:
+>   - Simplify how we generate the summary.
+>   - Add a comment to explain ordering of the program path.
+>   - Link to v1: https://lore.kernel.org/r/20250424-pks-meson-posix-shell-v1-0-45e06ee4b6ad@pks.im
 >
-> The range-diff was harder to read than just re-reviewing patch 7, but I
-> think this v3 is ready to go.
+> Changes in v3:
+>   - Stop claiming that "/bin/sh" is a POSIX-compliant path.
+>   - Link to v2: https://lore.kernel.org/r/20250425-pks-meson-posix-shell-v2-0-fddc6123511b@pks.im
 
-I still do not think "configurable 'rerere gc' basing the decision
-on the number of existing rerere entries" adds negative value to the
-system.  If there is truly more than N active rerere entries
-currently in your repository with your workflow, such a
-configuration essentially decides to run 'rerere gc' every time (and
-without pruning enough entries to make the next 'rerere gc'
-unnecessary), and never otherwise.  It is not like pruning unneeded
-loose object files and packing the rest into a packfile, where
-running it once (even if it resulted in miniscule packfile due to
-misidentification) would remove all the loose object files, which
-makes 'repack' unneeded for some time until we accumulate more of
-them.  After 'rerere gc', you still will have rerere entries kept.
-
-Until we can implement a meaningful automation (which may require
-changing the way rerere entries are stored on disk to help us
-cheaply tell if there truly are excessive number of no longer
-relevant rerere entries; code that we can readily borrow from
-"rerere gc" is enough, as I said), I do not think we should add
-extra code to make such a useless decision.  Instead, I would prefer
-to see a single "do we or do we not run `rerere gc`?" Boolean, until
-that happens.
-
-Other than that, I think the series is a good addition to the
-system.  Giving finer grained control is great, and 'git maintenance'
-is a much better framework than 'git gc' to do so.
-
-Thanks, all.
+So the discussion seems to have died out.  Have we decided that
+unlike Makefile-based approach, it is too cumbersome to teach the
+Meson based approach to allow user-specified commands that have
+different basename to stand in for the command we expect in the
+build based on Meson [*], and what the v3 iteration of this series
+does is a good place to stop?
 
 
+
+
+[Footnote]
+
+ * It is trivial to say "make SHELL_PATH=/bin/dash", but we do not
+   add support for anything like 'meson -dSHELL_PATH=/bin/dash', and
+   we only allow the search path for fixed-name commands to be
+   configured and tell our developers that they have to write an
+   extra file paths.ini just to be able to do so.
