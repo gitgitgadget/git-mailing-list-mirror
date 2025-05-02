@@ -1,282 +1,135 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FA422B8A7
-	for <git@vger.kernel.org>; Fri,  2 May 2025 08:44:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BC51D619D
+	for <git@vger.kernel.org>; Fri,  2 May 2025 08:52:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746175461; cv=none; b=Tl4THDZCIgwLXaAgByzoeuVsU0KQfbc/U0YjGwc1gi3qRLrOTGW4FVTLfqPYQi37IWcGPoOzREUKzLsn+aBzT78i7cn9HCXeXNTGTV6iWvMUKXcmsEUctiGalDX8acSklQfRLWlpqltdPC6GdhX4MihXcPj0LM2llHxnCsaGyAk=
+	t=1746175936; cv=none; b=ZAx+1x1vlMEx9Eow7MrRuDDyT6cJrAgiPwGVGuWE096qpnZzJ082sRW1MdNoHhY6lXr3ORN4y8YlJ+QlIdy+NlCkuqHQRbWZ4m9oHTJkdKxeUwX/ZSOXOYWPxQe/y0Np8KXtX7IBqd+T5PcFSQtnw5fi+gC7StPpQv7Ehf5RgxA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746175461; c=relaxed/simple;
-	bh=EOtC4ZSa95En2DxPgjehmCuw3mezLmp3kvjzezziESs=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=pkz3lTbfq7PYvwPqphyR/glb4qhPgQL4zC8s4KF3xJiPLN4SdP1LxNnMgE3C7i+Ul9MsVwqjauotkwJc5qsJr19YkC2E3qe3AhCegnOv1wW1sLJNArfybXoCmf2cm/erISo7foBeBPQ3IRgw6UOo/9GY78zGc77UVxzaPEGyfsQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kIdHnVVR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VYKfeeZV; arc=none smtp.client-ip=103.168.172.159
+	s=arc-20240116; t=1746175936; c=relaxed/simple;
+	bh=8kCH7npKukAmv69CkP65+qqFSwZcYcNIR2G7WMqeXSc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MBqtBt7//TghqG60UXA0latni5xxoEZHykOkfcoUCHi/Gbpfd4AnDTqTMmHzYRorOSNDOX1sDr5gCvSR70v3ldAryEZgNfSjv8E0U6SEqflYk35UfEuyZ59B/3JIusWZMcjcvB7c0YyI5MbrgX2X6PULnoVVrK0ujI7BMUQ+D6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Nerbv2qO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KxAJ3K9O; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kIdHnVVR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VYKfeeZV"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 97D4111401D1;
-	Fri,  2 May 2025 04:44:18 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Fri, 02 May 2025 04:44:18 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Nerbv2qO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KxAJ3K9O"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 096C51380212;
+	Fri,  2 May 2025 04:52:14 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 02 May 2025 04:52:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746175458;
-	 x=1746261858; bh=4slpwhJDebVYmvaNj4BW0D1bWc2p7SU8wqGkIV/gVJc=; b=
-	kIdHnVVRfBYY1irDyuzhgCAfCfqZbb2/NWFQkM2gk7nQuLEFG3Ta/fRUkhuwGbEn
-	UpMliKQE60WkBJAcoQwe6IMKbp6Kq5ZtButd4uPuctfg0pBLmWogrECNztPanFzb
-	/QdtcAIfUjrTQ2+ySBUkGg5ORhAx0793m53gd4+MPJpW1fUjYGXDCcteJ9Xb2k1Z
-	9XIynlbXyB3TyCk4Pf/ju3NFm8Oos9p5Zpa9JTSw3tP7hOnf9yX/EJOCjIpV3Me4
-	+gm03bGVTf8K9PWvcxYUUBA6WyG7pDTF0P9L+PgrvTXmHXdKak89FqU4wGjqbjIL
-	qKqBCqtAf+NMm2FJJhtkTg==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746175934; x=1746262334; bh=YCGQa0WqDw
+	XVm8kbOwYv7fweqKv6kBghapNlLd3G/eQ=; b=Nerbv2qOlBM5iKB8lMCz9x0EeK
+	H2Wrrr6nJ1yY5gvdZd+EqDnljPWdLtRpcNmF9tLNmuvizDH48SdCpJfqo7aITZlo
+	cjqvUJZc+iFYd4C3SgWaLTVAiuEYq3DDseixIAJXK/7aWWDVWbnXtUUZg3l1HSlv
+	iYMzz5JkAJBccuwuMpZDVqqcpOlY0dK4tttx4rx9KX0TGsw/E6BM73Ns1pfGd6F2
+	5tOJk3vM9X9/O0NKlMyqY/94a7Ouqm/JVld+L/RyG65+Y1NdxmQ4pw/+QSInFdcZ
+	V4ffjd9dCELfKrW4bSqpUY2JcM6SAVQJBjqR2D7ezTmnYM6tJDQs4vCIw9wA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746175458; x=
-	1746261858; bh=4slpwhJDebVYmvaNj4BW0D1bWc2p7SU8wqGkIV/gVJc=; b=V
-	YKfeeZVj5vIaVuvswejJ71liknOABZsgDqKuifY3LgzMccKgoZctFWq/fNb6RAvg
-	qHa4JR5BJePaloXWUmhH/gF3icTwtubt4CYQiGRpKyas2GpwaZtmgt22FegZNxBj
-	Lsj/WzpkTXj6B3ZsY+Q9l3NvrXJLB5XeeIhoRI3Yg0GO2KfNNxlPXipfFp22EkZW
-	JAj/cqAV03nGslyiF+EVkd9a4DlL/Y8lwnXzov8JooFXBKqpRrRn5r2OOzvdoK5Y
-	JjMR01/cE/2aLX7/ucn9APt4gUVXoOmqiF3tKug62Vxr3ioAgzCJ9JB6HYPSvpn9
-	62XlZDO9VUpiV8VwNNf4g==
-X-ME-Sender: <xms:4oUUaEbMvKYZCaJV-5PK9e6Pj_jUXqLKpdgYbnT-9Ny2WBqOEYMrAw>
-    <xme:4oUUaPb5Z-pkgF3huz_fZA7Mtomji6OlXGlkPrO88hSilOkJoth5DUF0JtmWTMPxq
-    cFpoFSdtX1a3vyU0g>
-X-ME-Received: <xmr:4oUUaO_JAPPAJswwkuhkaiQrHqtDDT9BHcA4wlmW3XnX5l4So0N4GLOZ8XpuZWUmxMxceEHGaCePgno0nxi-mxH5OPOGHl-f9nA7rfcVqpo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvtddtucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746175934; x=1746262334; bh=YCGQa0WqDwXVm8kbOwYv7fweqKv6kBghapN
+	lLd3G/eQ=; b=KxAJ3K9OIWC6AH2ZfWPu2Dw0PJu7Ti4EDcz54hOp1Cu1lkWg3Yy
+	ZylIMDgTnFAiaomG50dxThEL4IObeZN/lFIacuITT0LlRiVFXUjFKF2NCU1B5Ezm
+	8kw3sLUy94I5oEEJyBXU047ITp2OWhRoFv0bmtbldm2JNpclcZVWbvPlK/XAkoIR
+	tzMe8cwZHNPCwL1vFbzMDo8J4m5VbrjG6jn5/sDmXfkaNrULawZzSv7Vvtsszrdu
+	qjVvIr5ZgsZckevUKEuoNcszVex2G79vUL4mBaWIuW1k35/eZiPSiJ0iOthmzedP
+	sTWM+Izv8HFZBvS7/JLLyxwWzS0OZGunyPQ==
+X-ME-Sender: <xms:vYcUaHti_LkRJKjYxiVdA56Wx9FVEPr-kISRdH2v6GavkY0sLW-Cyg>
+    <xme:vYcUaIeMSqxoGBcBh-5aUkbd8cfdm3wbACKp7k8QQ8WdegSFr2kaDvpiokFj3CJpQ
+    8-fFbg3hGkaxZoL_Q>
+X-ME-Received: <xmr:vYcUaKx30-vtnK1jY7kQYGewapDQkXFA5AXDDTbbbC7p9WGVgRQXodsdpe1EaA33RXBZO566m6lVkP0c86X5vWuaxhiQshMnFijg2Yptf3c>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvtdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeekueegieejheehueeftddugfevgeeuhffhgfeh
-    fffhhedtkeevveetkedvudeugfenucffohhmrghinheprhgvfhhlohhgqdgvgihpihhrvg
-    drrghuthhopdhlohhoshgvqdhosghjvggtthhsrdgruhhtohdprhgvrhgvrhgvqdhgtgdr
-    rghuthhopdifohhrkhhtrhgvvgdqphhruhhnvgdrrghuthhonecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:4oUUaOog-tukXqWMcMiUrHAzoLKex8RAIlFniuLyhXzb-815ad7USg>
-    <xmx:4oUUaPoDDuMP9NL_iDmD2jLre3jtSf48_pzxf6v119q9rrLyoMHa5Q>
-    <xmx:4oUUaMTp6DuuW_jcTl30WjY-gdyvUI-hv2HXjKC5Z9BbxVnrkfPSdQ>
-    <xmx:4oUUaPoxf68PAfyWJzG0OAJgCsAsk07wqx2Mo_44rEFNbeRp975IxA>
-    <xmx:4oUUaDE1fRxqhpkE6e3V1Z8i49KqdwL_jjIG84g0A1uqWxokkGsLxAnX>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:vYcUaGPoASb5-YshzBCdEi3_oh-36mGXK5_kCy1jEQR8FdKy_RaGxw>
+    <xmx:vYcUaH-oIDc124gTk59DahVlXsaw-flh-faRlkeKXI9_UX58ec2_oA>
+    <xmx:vYcUaGV0RMjakKstDPb-ErlJC7GJPzFnTSwWvo3fyq1yDtjcqrX7Fg>
+    <xmx:vYcUaIfecRuCR_bLuM1fKE5go63guuGQpFRvDf1SDt9P7ZXWIXBj0Q>
+    <xmx:vocUaDtWszUZaU9x0WgHyL7KvEqzpiI_rKzPbO43Aj1x83qQuuwFdKpS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 04:44:17 -0400 (EDT)
+ 2 May 2025 04:52:13 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9926f00f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 2 May 2025 08:44:16 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id fb27a539 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 2 May 2025 08:52:11 +0000 (UTC)
+Date: Fri, 2 May 2025 10:52:10 +0200
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 02 May 2025 10:44:04 +0200
-Subject: [PATCH v3 7/7] builtin/maintenance: introduce "rerere-gc" task
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] config: values of pathname type can be prefixed with
+ :(optional)
+Message-ID: <aBSHugZcH8NusOcI@pks.im>
+References: <CAPig+cQUycUyto6=cDadaCahzDBQ_GDngAEEtK0bshLr15ok8g@mail.gmail.com>
+ <20250501214057.371711-1-gitster@pobox.com>
+ <20250501214057.371711-3-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250502-pks-maintenance-missing-tasks-v3-7-13e130d36640@pks.im>
-References: <20250502-pks-maintenance-missing-tasks-v3-0-13e130d36640@pks.im>
-In-Reply-To: <20250502-pks-maintenance-missing-tasks-v3-0-13e130d36640@pks.im>
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250501214057.371711-3-gitster@pobox.com>
 
-While git-gc(1) knows to garbage collect the rerere cache,
-git-maintenance(1) does not yet have a task for this cleanup. Introduce
-a new "rerere-gc" task to plug this gap.
+On Thu, May 01, 2025 at 02:40:56PM -0700, Junio C Hamano wrote:
+> Sometimes people want to specify additional configuration data
+> as "best effort" basis.  Maybe commit.template configuration file points
+> at somewhere in ~/template/ but on a particular system, the file may not
+> exist and the user may be OK without using the template in such a case.
+> 
+> When the value given to a configuration variable whose type is
+> pathname wants to signal such an optional file, it can be marked by
+> prepending ":(optional)" in front of it.  Such a setting that is
+> marked optional would avoid getting the command barf for a missing
+> file, as an optional configuration setting that names a missing or
+> an empty file is not even seen.
+> 
+> cf. <xmqq5ywehb69.fsf@gitster.g>
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  Documentation/config.txt                  |  5 ++++-
+>  config.c                                  | 16 ++++++++++++++--
+>  t/t7500-commit-template-squash-signoff.sh |  9 +++++++++
+>  3 files changed, 27 insertions(+), 3 deletions(-)
+> 
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 8c0b3ed807..199e29ccea 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -358,7 +358,10 @@ compiled without runtime prefix support, the compiled-in prefix will be
+>  substituted instead. In the unlikely event that a literal path needs to
+>  be specified that should _not_ be expanded, it needs to be prefixed by
+>  `./`, like so: `./%(prefix)/bin`.
+> -
+> ++
+> +If prefixed with `:(optional)`, the configuration variable is treated
+> +as if it does not exist, if the named path does not exist or names an
+> +empty file.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- Documentation/config/maintenance.adoc |  8 +++++++
- Documentation/git-maintenance.adoc    |  4 ++++
- builtin/gc.c                          | 45 +++++++++++++++++++++++++++++++++++
- t/t7900-maintenance.sh                | 43 +++++++++++++++++++++++++++++++++
- 4 files changed, 100 insertions(+)
+I can see why it may be useful to allow for non-existent paths. But I
+wonder whether we really should be skipping over empty files, as well,
+as it may be assuming too much about the semantics of a given config
+key. In other words, are we reasonably sure that there won't ever be a
+usecase where you may want to specify an optional and empty file? And
+are there any use cases where an empty file should be ignored?
 
-diff --git a/Documentation/config/maintenance.adoc b/Documentation/config/maintenance.adoc
-index b36b62c1c47..2e8299dd15a 100644
---- a/Documentation/config/maintenance.adoc
-+++ b/Documentation/config/maintenance.adoc
-@@ -84,6 +84,14 @@ maintenance.reflog-expire.auto::
- 	expired reflog entries in the "HEAD" reflog is at least the value of
- 	`maintenance.loose-objects.auto`. The default value is 100.
- 
-+maintenance.rerere-gc.auto::
-+	This integer config option controls how often the `rerere-gc` task
-+	should be run as part of `git maintenance run --auto`. If zero, then
-+	the `rerere-gc` task will not run with the `--auto` option. A negative
-+	value will force the task to run every time. Otherwise, a positive
-+	value implies the command should run when there are at least this many
-+	directory entries in the "rr-cache" directory. The default value is 1.
-+
- maintenance.worktree-prune.auto::
- 	This integer config option controls how often the `worktree-prune` task
- 	should be run as part of `git maintenance run --auto`. If zero, then
-diff --git a/Documentation/git-maintenance.adoc b/Documentation/git-maintenance.adoc
-index 6f085a9cf8c..931f3e02e85 100644
---- a/Documentation/git-maintenance.adoc
-+++ b/Documentation/git-maintenance.adoc
-@@ -166,6 +166,10 @@ reflog-expire::
- 	The `reflog-expire` task deletes any entries in the reflog older than the
- 	expiry threshold. See linkgit:git-reflog[1] for more information.
- 
-+rerere-gc::
-+	The `rerere-gc` task invokes garbage collection for stale entries in
-+	the rerere cache. See linkgit:git-rerere[1] for more information.
-+
- worktree-prune::
- 	The `worktree-prune` task deletes stale or broken worktrees. See
- 	linkit:git-worktree[1] for more information.
-diff --git a/builtin/gc.c b/builtin/gc.c
-index 3dd1d07cca4..7bba826c496 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -16,6 +16,7 @@
- #include "builtin.h"
- #include "abspath.h"
- #include "date.h"
-+#include "dir.h"
- #include "environment.h"
- #include "hex.h"
- #include "config.h"
-@@ -34,6 +35,7 @@
- #include "pack-objects.h"
- #include "path.h"
- #include "reflog.h"
-+#include "rerere.h"
- #include "blob.h"
- #include "tree.h"
- #include "promisor-remote.h"
-@@ -395,6 +397,43 @@ static int maintenance_task_rerere_gc(struct maintenance_run_opts *opts UNUSED,
- 	return run_command(&rerere_cmd);
- }
- 
-+static int rerere_gc_condition(struct gc_config *cfg UNUSED)
-+{
-+	struct strbuf path = STRBUF_INIT;
-+	int should_gc = 0, limit = 1;
-+	DIR *dir = NULL;
-+
-+	git_config_get_int("maintenance.rerere-gc.auto", &limit);
-+	if (limit <= 0) {
-+		should_gc = limit < 0;
-+		goto out;
-+	}
-+
-+	/*
-+	 * We skip garbage collection in case we either have no "rr-cache"
-+	 * directory or when it doesn't contain at least as many directories as
-+	 * indicated by "maintenance.rerere-gc.auto".
-+	 */
-+	repo_git_path_replace(the_repository, &path, "rr-cache");
-+	dir = opendir(path.buf);
-+	if (!dir)
-+		goto out;
-+
-+	while (readdir_skip_dot_and_dotdot(dir)) {
-+		if (--limit)
-+			continue;
-+
-+		should_gc = 1;
-+		goto out;
-+	}
-+
-+out:
-+	strbuf_release(&path);
-+	if (dir)
-+		closedir(dir);
-+	return should_gc;
-+}
-+
- static int too_many_loose_objects(struct gc_config *cfg)
- {
- 	/*
-@@ -1502,6 +1541,7 @@ enum maintenance_task_label {
- 	TASK_PACK_REFS,
- 	TASK_REFLOG_EXPIRE,
- 	TASK_WORKTREE_PRUNE,
-+	TASK_RERERE_GC,
- 
- 	/* Leave as final value */
- 	TASK__COUNT
-@@ -1548,6 +1588,11 @@ static struct maintenance_task tasks[] = {
- 		maintenance_task_worktree_prune,
- 		worktree_prune_condition,
- 	},
-+	[TASK_RERERE_GC] = {
-+		"rerere-gc",
-+		maintenance_task_rerere_gc,
-+		rerere_gc_condition,
-+	},
- };
- 
- static int compare_tasks_by_selection(const void *a_, const void *b_)
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 530c56ae91e..f34322de320 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -564,6 +564,49 @@ test_expect_success 'worktree-prune task honors gc.worktreePruneExpire' '
- 	test_path_is_missing .git/worktrees/worktree
- '
- 
-+test_expect_rerere_gc () {
-+	negate=
-+	if test "$1" = "!"
-+	then
-+		negate="!"
-+		shift
-+	fi
-+
-+	rm -f "rerere-gc.txt" &&
-+	GIT_TRACE2_EVENT="$(pwd)/rerere-gc.txt" "$@" &&
-+	test_subcommand $negate git rerere gc <rerere-gc.txt
-+}
-+
-+test_expect_success 'rerere-gc task without --auto always collects garbage' '
-+	test_expect_rerere_gc git maintenance run --task=rerere-gc
-+'
-+
-+test_expect_success 'rerere-gc task with --auto only prunes with prunable entries' '
-+	test_when_finished "rm -rf .git/rr-cache" &&
-+	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
-+	mkdir .git/rr-cache &&
-+	test_expect_rerere_gc ! git maintenance run --auto --task=rerere-gc &&
-+	: >.git/rr-cache/entry &&
-+	test_expect_rerere_gc git maintenance run --auto --task=rerere-gc
-+'
-+
-+test_expect_success 'rerere-gc task with --auto honors maintenance.rerere-gc.auto' '
-+	test_when_finished "rm -rf .git/rr-cache" &&
-+
-+	# A negative value should always prune.
-+	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=-1 maintenance run --auto --task=rerere-gc &&
-+
-+	mkdir .git/rr-cache &&
-+	: >.git/rr-cache/entry-1 &&
-+	: >.git/rr-cache/entry-2 &&
-+
-+	# Zero should never prune.
-+	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=0 maintenance run --auto --task=rerere-gc &&
-+	# A positive value should require at least this many stale rerere entries.
-+	test_expect_rerere_gc ! git -c maintenance.rerere-gc.auto=3 maintenance run --auto --task=rerere-gc &&
-+	test_expect_rerere_gc git -c maintenance.rerere-gc.auto=2 maintenance run --auto --task=rerere-gc
-+'
-+
- test_expect_success '--auto and --schedule incompatible' '
- 	test_must_fail git maintenance run --auto --schedule=daily 2>err &&
- 	test_grep "at most one" err
-
--- 
-2.49.0.987.g0cc8ee98dc.dirty
-
+Patrick
