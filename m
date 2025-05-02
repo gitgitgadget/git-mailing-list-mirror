@@ -1,97 +1,102 @@
-Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C9D318024
-	for <git@vger.kernel.org>; Fri,  2 May 2025 08:54:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C511C2356DE
+	for <git@vger.kernel.org>; Fri,  2 May 2025 09:08:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746176064; cv=none; b=d4PNEB0tdqfirIdq55Kj2xI6CEZ3Vx5Zw3VubsiYiCwRrz+X6c+gaJcioAbkDKUIWV4XOSfEBcC9t8SdsYo+vpkevLAPKR3NNOMIm2rfV6QfVFkxsY7Rux+CkHhXipdtWDtMAt1H+PI8moyElwQohELjE+kjFCkJCyYT8c9USAk=
+	t=1746176900; cv=none; b=J+QFWQrkAFyuN4HZ/qBwRuxSbmytjuTmmegmRrL44OBXy0I5vjfOJX+jR6lS/3X/0rTF+T35sN28apun14CywzE5QVCmyBAtNLo1hddiiUm/9C4gmJxXkplvIO3qGLJ6n65hZQKXJ3FTXrd3Bk6swn2wJt0o+YLxTdym3PaRvSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746176064; c=relaxed/simple;
-	bh=pfFTCippbSHXUFQEmLVo7Wz1bn6OgTRGLun/ClHCt7U=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=qmkhjehZFTnNIVRsLv1U1OK4VftqaFgBgc55oEP30aUuvIE2i7DwRVGYjvOKjMB4n9biW4A0TXMRR7PbegdJlhxeByT7R922+RNQ/MpwUPW0RsuOqXZq90+jH0YavO9539KKn3RDNEV2zqOB/QkC6uDDYBFjKY12SlRjnSzoucU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jeNX+d49; arc=none smtp.client-ip=209.85.208.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746176900; c=relaxed/simple;
+	bh=+3/Wsf6bAc+gOzftm75OhO4Vp+gz9H+HHWHs3drk4eA=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=fJd5SkAybBtF8IZOpS0HY90S0DTV5N+N0luh26B7KE5hG5+FvVXe3nX/iLRQxMG7JrZA38FOUIJvJrPLf/tgXJ4U7B+1P7FAepJJI/qkGRl4a7mkr286ib5PqwT6IrLuUOSD7teKNnp2Ir9oM3sezd9DgCdqssfcLJx4rWs0nbc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=t+c4AMpW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ox1oj2w0; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jeNX+d49"
-Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-5f728aeedacso2666369a12.2
-        for <git@vger.kernel.org>; Fri, 02 May 2025 01:54:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746176061; x=1746780861; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=obTCIOXTeHnFMpiFMK5LteMBXhl3sjJY5n0bb21wckk=;
-        b=jeNX+d49B4gWLBXD7XXS5ffi46swfD8F7iUu2yHxnUcDKKPl49QzM+0izaZSYzulHp
-         7DigJ8/mbzSlM9UU1NrkVSCa0tlu2wd/Ua6Meqmc8M9z3MmHba2I9BHO9PdKPhw7tVN+
-         ysWMwNot/rgxDFY90UBnfNlDkJsA7EDPqlMIlUDa3e5SF0wWLkHNwuOyosyrRFejmhSE
-         4UcnxRhWoASyxx8TXfKyLZc+hJ0gn5MESt6apAa9IHXqlwlmA0uFKV7B8lIKU6d/0rk5
-         rVDMDpNDGcxuPISH0F9p3ZIQ8kZnZvTbvoMoypqyIUQmVIdU1Yg1R8Cfoo1xaijcavpD
-         vi4Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746176061; x=1746780861;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=obTCIOXTeHnFMpiFMK5LteMBXhl3sjJY5n0bb21wckk=;
-        b=u/ZJG267v+jctQnJsAnjRBQokxgGTxpmLIGbzZ4AOArazUf9NcI3vg/SeR+/tZJj65
-         gtQstFa0+UPuLOlt2YelBnSVKz/bZSERaUPyQISKuPxkv/AJfezF/qLYgwdX2UvPfK8J
-         Qj3SWYc90oYlFs70G/RdTmoHCQp6PFJFrcChRcMnHWHFI55ojGEcNgCBbvzdlnNWysvS
-         UCUXRVw6hImTxatcQyNXaK3S10fDV+XsAVVQ7NzQ+o+DIvvJZFFUvl7N5KpDw2vCSAdl
-         pgW88FmYoLtGNsUsNgysm2hWYkNZavBn1YL7Ke2iXpugeHegm/fKm0Tt21WthhNJ46C6
-         Y5LQ==
-X-Gm-Message-State: AOJu0YydNIG1jQ2IfiP9P5EOEjphfXtnOUpwWpklwFxhnlYrAGs6CsJ4
-	AyDyFAVHna34zRWzIild6/Q4uHSxDDQw6dAiMzPwObTtQpuGx7kvZ0PYlsR3LiQyt5wXEQfVNZc
-	N4/1DA5TBcftYYhuhsskm06bf5LIraiMC
-X-Gm-Gg: ASbGncuzukU55X/mJSsudkUxliokUAbrMwrsnTEcU7u4Ugi9O3Cl1kbqL6/Jtx+AkYp
-	JDTkxOJ2fbzTEznQ/9lrE3fsw8BooCQ+omRqC3+UGfHwQy7x0yi1TyLzXO+Qunsu+uACwHLr4lf
-	OVnbbTJ880vxUYFtB/JiHKrm1zqxDKxvHImI1HqrwV7TkjLQZdjQo7JgXGHBWn4UCI
-X-Google-Smtp-Source: AGHT+IHiNZxgcArt7Lsulpiq+hytLJ+YpC+5QaXYnwsaj1bhJVMy/ZIvO2RhGRsufcwr58pu0UG9gbqCb8/W0bUsFI4=
-X-Received: by 2002:a05:6402:5192:b0:5f6:2758:149e with SMTP id
- 4fb4d7f45d1cf-5fa78014527mr1508466a12.11.1746176060802; Fri, 02 May 2025
- 01:54:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="t+c4AMpW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ox1oj2w0"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id DA7CE1380F2B;
+	Fri,  2 May 2025 05:08:17 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-01.internal (MEProxy); Fri, 02 May 2025 05:08:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746176897; x=1746263297; bh=+3/Wsf6bAc
+	+gOzftm75OhO4Vp+gz9H+HHWHs3drk4eA=; b=t+c4AMpW7DWnkXxqn0Qg51nvt3
+	sTxxE/qfN5h8iocB7G9IrSLmWYLtDdmIWgLA3DY+mA5IvYeniR1erk8Umb7FV4Xt
+	F1KKk1SYY1jA7ddhYS4UiqIcln0KC/WpShvttUjq2NkE1TwESc17mPOQK6zWirtc
+	0vunTmnMNZ5AUPYFVh1w/Ejti9O3Zco8U0t0CgVDmVcDdK0QEXjFX000kJXvDaWf
+	xqKTqT0PmvV9J3yC2Mb3J5PFUrHyy+ojHSGkU4wrcDa0zXSrPDPJrwnJBf7D2er4
+	AROLdSdXIG3b72WztdblZU1lXQQA28RKrPXIMThQ0uADH9JeovQyqPib+6gA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746176897; x=1746263297; bh=+3/Wsf6bAc+gOzftm75OhO4Vp+gz9H+HHWH
+	s3drk4eA=; b=ox1oj2w0NgVL6EP0x/lHpVAtWAdOxTvhSeoGFKIwT7iE+7bJWqT
+	yZsMzuYfQ1dNBrzZTDwz1n4vCgEU/LAgrFyCWm7ozj896xCXsaQ9zJfPcqDLMDdd
+	te0u8op7P89dxmnqESBXSFRlEaatoNe9zO7A/OG1OxZx7MFm5FHDTdUNKOxmsBDQ
+	u59WLfo2X2LcZbPZJgjOGVn6XJ5cclh2IGnHkeQDrXl6hLz4d1tYpxvNvvXijRBD
+	ywpUurvSA8ulmC8+35KM69CSxBGdqVsIx+HrOLG2iG2VOpGBvyXQMhtVqQdb2emB
+	xRhosmfKUmkGxfzKUIHi0GJPC1lzBAseF8A==
+X-ME-Sender: <xms:gYsUaNbHv-A35MvV7A4e3Wk9zWsMWTKT5ax9oztoDnBt0w0IJstDPQ>
+    <xme:gYsUaEZ2cBTR4C48-9ievCzUnlKQXQYRN7wrLhIHl2JGmlw-BG2cj5Yio7xQjBBWb
+    qeYyS1xYdvFJ7u81A>
+X-ME-Received: <xmr:gYsUaP-XDXLxkRIjY9iCoA5VcHr7pVzqdDtswT-fE49cycMxqhPkfbIZokOsMXMK3z7wJVckvPBIEYaaO14pIOAFTwqCjg1mYnUHNJ8ltKI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvtdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:gYsUaLo9UEyLKhYq91vpjWvdwstfBqx-pFcYY-JjnIyhtBAKaCB8lg>
+    <xmx:gYsUaIooWwXUOB-yPLUpKXlQaiRf0y0Q7fdjk_azbhrc9NjJKUkLig>
+    <xmx:gYsUaBTbWrqFeyrRO9EvX8coE8F1aFVOgfaz9KdCHehxocm6bmXsZA>
+    <xmx:gYsUaArRkLqb3igQKBbAp3EH_vkjRM_gwr6ClTB9P_zVDAGiT3yjXA>
+    <xmx:gYsUaBaFU6VgYlMVH0K1qL4fghBhvZsRWeh9aFPMHjg2F8TuImuHsT6Z>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 2 May 2025 05:08:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 36fe3c45 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 2 May 2025 09:08:15 +0000 (UTC)
+Date: Fri, 2 May 2025 11:08:10 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] Nominating "whatchanged" for removal
+Message-ID: <aBSLejDoqomUO3xE@pks.im>
+References: <20250501213452.370729-1-gitster@pobox.com>
+ <20250501225958.2947677-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Christian Couder <christian.couder@gmail.com>
-Date: Fri, 2 May 2025 10:54:09 +0200
-X-Gm-Features: ATxdqUHsKsKx59Yafh_bgyzXA5u9gJgSIbPNi6QvixAZi7AKbiKy7dPri3sI1cs
-Message-ID: <CAP8UFD2umn8xr1yYKGLm3jcZv-s3OdadjNe3fEkp1x8G9tJ_Mg@mail.gmail.com>
-Subject: [ANNOUNCE] Git Rev News edition 122
-To: git <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Jakub Narebski <jnareb@gmail.com>, 
-	Markus Jansen <mja@jansen-preisler.de>, Kaartic Sivaraam <kaartic.sivaraam@gmail.com>, 
-	=?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>, 
-	Taylor Blau <me@ttaylorr.com>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
-	Linus Torvalds <torvalds@linux-foundation.org>, Daniel Barkalow <barkalow@iabervon.org>, 
-	Catalin Marinas <catalin.marinas@gmail.com>, Martin Langhoff <martin.langhoff@gmail.com>, 
-	Darrin Thompson <darrint@progeny.com>, Patrick Steinhardt <ps@pks.im>, Scott Chacon <schacon@gmail.com>, lwn@lwn.net, 
-	Luca Milanesio <luca.milanesio@gmail.com>, Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, 
-	Elijah Newren <newren@gmail.com>, Lee Reilly <leereilly@github.com>, 
-	Bruno Brito <bruno@git-tower.com>, Toon Claes <toon@iotcl.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250501225958.2947677-1-gitster@pobox.com>
 
-Hi everyone,
+On Thu, May 01, 2025 at 03:59:56PM -0700, Junio C Hamano wrote:
+> This does not go far enough to touch the "Git 3.0 removal" list in
+> Documentation/BreakingChanges.adoc, but is a preparatory step
+> necessary if we ever wanted to do so in the future.
 
-The 122nd edition of Git Rev News is now published:
+I'm a little confused. These patches very much feel like starting the
+deprecation process for git-whatchanged(1), so why wouldn't we at the
+same time list it as an upcoming breaking change? Or is the intent
+rather to figure out whether anybody is still using this command so that
+we can then deprecate it after a couple releases if we haven't heard
+back from anybody?
 
-  https://git.github.io/rev_news/2025/04/30/edition-122/
-
-It talks especially about Git's 20th anniversary!
-
-Thanks a lot to Junio Hamano, Lucas Seiki Oshiro, Luca Milanesio,
-Thalia Rose, Elijah Newren, Toon Claes, Lee Reilly, Bruno Brito and
-=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec who helped this month!
-
-Enjoy,
-Christian, Jakub, Markus and Kaartic.
-
-PS: An issue for the next edition is already opened and contributions
-are welcome:
-
-  https://github.com/git/git.github.io/issues/775
+Patrick
