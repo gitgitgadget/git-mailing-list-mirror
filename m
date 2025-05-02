@@ -1,110 +1,122 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
+Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A43F262FCF
-	for <git@vger.kernel.org>; Fri,  2 May 2025 23:31:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC7E227563
+	for <git@vger.kernel.org>; Fri,  2 May 2025 23:34:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746228678; cv=none; b=owBLqKRKPnaFoCFocdrfF0jbRZFClBCdOGLTTDXAPNFtlrHp5mCaD5R6drsQD21eIeIB+1289XjpjG/nkD6CjR2qxoTufQyVbIFrqIsW/rH0KjzbfLMf1OzEx8/oGKllbpDAtn6pRuK5plS5ubkHqthF5hX20ude2V+dMWnX6ys=
+	t=1746228861; cv=none; b=X1UTCLCUYAqbSrtxuxOl1vd0bhhF8vtu23eoJd955ShqUijKbW/xEcYo9nC4GZw7y+tCPLQTn59K5RQLV9MkB8ijSCtmG4jAKp/I+JEVhF7REX3JoGJ/ED3csFg1cXYV5jNU+rA6Tg1QAUdfBvdQyp3BaMV5QxAT6zy2HX4Pu+Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746228678; c=relaxed/simple;
-	bh=rllFThZF6s+TJyMbY3ct/IDYgqgornKyJh9a9VB2mEw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=unnw9Jvvwwg5hLoUpDbVu4aiiualMBxUj55mxi6ddo0FfFXvofQZqlaX0NrWA2a0dUUeOYVGdEen70Ak+nxviebNQU4gQyCgr+mhQRYlgjmVuiNic9mQgOY9ocnc0GWLivN76cr0pQEGdf/B8fL0FTBkscivJPzKX9MX4rQupD8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=dEmSU3ro; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1746228861; c=relaxed/simple;
+	bh=u1cuoUzn5HY+o2Zlx6iLeZE6xym0FhJJQWsWOHg4SEg=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=c4Phu0bC6vVZ9sx+g5LAZ/b6iTJBTgJQPdRattK1+w1+C4lwocF8kl0ldgMg+7/p2p8L3aARI/WnO4H0UbfECMfyAi5lNC28abAyRIoBdBXNt06UDb36pkHHyJX1SYOtSFIzsgvue32T90mwPuuuHfn/BGE8gV8NAh8PID6SwKg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LsLK3Eb/; arc=none smtp.client-ip=209.85.210.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="dEmSU3ro"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7c5568355ffso229094385a.0
-        for <git@vger.kernel.org>; Fri, 02 May 2025 16:31:14 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LsLK3Eb/"
+Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-73c17c770a7so3879365b3a.2
+        for <git@vger.kernel.org>; Fri, 02 May 2025 16:34:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746228674; x=1746833474; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kOUj0WVtTCtkFpVldueQ/s7gO+j5EL1+WE3BhGVNR24=;
-        b=dEmSU3roD+MDF++Jo4vxTQ39Ti83RcpCHm39aa/wv6BmPqjzycsh44bDrPdcoubS6W
-         LSBa9kuGzoUAhH3lyEE/VYdwqIKQw4fPlaM9AysvRCiygBho5r/nod4C0v+w+KTQjGVl
-         AwbIeXLjWEBzqLIB8SgA/krqRKbG58QmQjsOzhfuX9yZdyCZZd8wSp07EKPpruGfuCX4
-         qwa+ycVxicrETRSGtoAcO/fOu330a4pYHNueRuX9WEqn6B1XK7+Rf9+bzK/qLZWWvAge
-         zQ68NdKOGAUY0nRs4OqdFltWQBVZNPwq6wk+9SwkGKfksZCSp4Fw2sDi4pXwV+KD5fWy
-         UXkA==
+        d=gmail.com; s=20230601; t=1746228858; x=1746833658; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=31shhJNhex/BW+tdLweDTQUW2WgGIZ+rt2Vtbz4pIUM=;
+        b=LsLK3Eb/kWDmFH74ZcaMliLhFYGPjuua4NScUUIteOuyJ7sFhmHItLeUSYN/pp//7S
+         67y1Vt9sYZAp+Wx0bUx/IRyOZVQFYGcRM/U12UmaURKTbTD1DZHd0Rb3wKCSwg7nLE1x
+         OMm/Nu8vpQ8jMbwL6uKohOXL70nalITUOYrMj/I/7mqZAhWyh2el67Qcp2s/Tiq7wbiK
+         WbCRyELFgFGbOE0U5z8UfpbxsQLJ0jVY8DXnDNEqS69Fkdk05h4uZeT90DdHZLp/DqrZ
+         GL8APgz6ZKI+QLJ1E/puLOslZyeiBd56B9urI5HqIGd4a0QR8EdlG1omPTTUPhWj6yPl
+         BM6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746228674; x=1746833474;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kOUj0WVtTCtkFpVldueQ/s7gO+j5EL1+WE3BhGVNR24=;
-        b=eHMOxF/uTsMUHc1YyTVUJVizi5j7VRm9tEEW8JvoELY+my7h9mQqUfhCs1TGhRio1T
-         zLFEki//BRS4r4bthfyPA1apPOj58hxcZxnv+FDNGXyoBAFde+OgyVFSJM0bPuZ6/rMS
-         xDT7Qw+mvaZ5KDWr6oknsKfbchV+WjQWHBvSDjKcwvUiD6qeO8IhjXZGNxtyNoDzrYuP
-         Y0JCKV+eokWyMRCsub3Dhpy5B63JZQZXCGb/O0DckeDktSneCHe6OFLLBKp+M7C/OMAe
-         AXgKJNghYfsqujRBCXe1shZFdr6q3YWTqhfgI/FSVGoeuJ13dmZY/sbrpbY3RHUyq2bj
-         GVWg==
-X-Gm-Message-State: AOJu0YyZHOboDmrcRjx28cX76oQSw3ww7EIfm6UmYlJ/FrCbGTulRjLY
-	MCZTmE5yfLDA5ATEaeuicr8a9JzR1qDsPwWCr5N3AV6Dhxp1GvIWi9WeruYLPFQ=
-X-Gm-Gg: ASbGncsXulkNjlS5R5OWjMHIU5sN3tDlSPGrQrSyy6ux2ClZuMm9aacjsZLyt3RjO3X
-	XC/jpUjyc/TQER2hex2zm64qc6fCnap7bCQATH6OU2f6iz+sO9eDJj/L8XsKFKr5GksBf5R1Si3
-	U+S+Yx0278z0blqcVZ1fNU3NPsl76eOBBw1jZq3yW9i1/VVuNKnpUnYrfcYec0xVDTfbWOzeJAn
-	wPDJzwHfs3WL08kmjB6cAuvFIOzCUz3p+W1CkTnw4kGRWjnNPQ6vrQJ1ueDBijrSAE+MJp69yBK
-	iz+Hv4tMoJJtgCHVd2esGZwOyvQXoaSigZrxX6VGFlqnLTTtRxT+lV57bIek5szMiP4YxNvmKKk
-	d6nPkj1wavOZc5byZrJm3pIk=
-X-Google-Smtp-Source: AGHT+IFQO/yBKJtYN1GoZJ5fMFs9kDOYgNJDgp+6DdR4yaOkKN/aQAizwmj335+BGSdCZSyWXPYjrA==
-X-Received: by 2002:a05:620a:f0c:b0:7c7:a184:7cb1 with SMTP id af79cd13be357-7cad5b20743mr605108785a.9.1746228673931;
-        Fri, 02 May 2025 16:31:13 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cad23b5c40sm255208185a.23.2025.05.02.16.31.13
+        d=1e100.net; s=20230601; t=1746228858; x=1746833658;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=31shhJNhex/BW+tdLweDTQUW2WgGIZ+rt2Vtbz4pIUM=;
+        b=IYM68VLGxf4fH7Y6AuoDh0Swnlc4NNQh0thZL/p3sN6ypwdYFMYKOaTjr0uFkIXOun
+         t9o7AFk0Ur5IyUinp13LPejG2ktVenU+hwsEV2ffFka71qouo+L1Uzcub6Hav+Vz3bo/
+         cdTol7kdcd+EX8IP+9iVQ53U9w2x2n892993YyeaW7SkqszV4k8lzwGmQ4VmDh0e8eBR
+         MqQaBEnYMsBHZBkHnprFeRgmX9TxInku22gfzmXEVdI+MKzebGiNm3MQgCz5BaPNIX0C
+         FSDnelgfVCsCBavYSwQvdC98mUp0jJfxCInnQwBErcBLCkxjMAM3I5OAXLwg7lOfN34i
+         I3Ww==
+X-Gm-Message-State: AOJu0Yxu/lXYEDWfUvw0hjW0HAsnlawuBR4MvKZ4s2yUIvBvBpgePiXQ
+	9dkyrbBd9RkphvUgkzM2v+ajC8qSs6MrcudnK/DWtb3En9mD3FhlZG5t4wtE
+X-Gm-Gg: ASbGnct7hPoaTSPHEsDMY+MuzsGdGuqe5lKifGwQ+OzBndo5B91m/z0X8XshZoaJ57g
+	8QVHfbCZb8M21auVlq0v0FFjBGpQa7gTCD+hDp/xJizxN5V57xCdOjaobR8h/V6cKP5ResPHbwh
+	5kVjopOabnPlqacBK2PbDz2gWiz9T6N8OMwE+keRkRCMV4KvtkapxYnGhT3ld3/eC9azf65Lgy7
+	wgEhWMM9LCMK3fM9ld5spSRA/e0dTHSVCStTfxWVyGsRusX+JpCMTjUfilkiK2DsNP3t1uU8d87
+	j7BSvA5Jj6kpajHiJ8XazgNg
+X-Google-Smtp-Source: AGHT+IGLIQ24kxhd1TWFwdpEHI8HqqkaiVu0HNpbmMz5vgQ5t1fjr9e7dHhESXMFoDnVwduuiBMIyA==
+X-Received: by 2002:a05:6a00:448c:b0:736:592e:795f with SMTP id d2e1a72fcca58-74058a20d67mr6187808b3a.9.1746228858476;
+        Fri, 02 May 2025 16:34:18 -0700 (PDT)
+Received: from fedora.. ([2601:646:8081:3770::4bd0])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74058dbbe30sm2273738b3a.62.2025.05.02.16.34.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 16:31:13 -0700 (PDT)
-Date: Fri, 2 May 2025 19:31:12 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	jonathantanmy@google.com, karthik.188@gmail.com,
-	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
-	ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 05/13] pack-objects: introduce GIT_TEST_PACK_PATH_WALK
-Message-ID: <aBVVwCZ0NZT3KLB/@nand.local>
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
- <0d49bb3d30add66676280ec7fabed12351d5b3ac.1742829770.git.gitgitgadget@gmail.com>
+        Fri, 02 May 2025 16:34:18 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: git@vger.kernel.org
+Cc: shejialuo@gmail.com,
+	Collin Funk <collin.funk1@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+Date: Fri,  2 May 2025 16:33:32 -0700
+Message-ID: <20250502233403.289761-1-collin.funk1@gmail.com>
+X-Mailer: git-send-email 2.49.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <0d49bb3d30add66676280ec7fabed12351d5b3ac.1742829770.git.gitgitgadget@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 24, 2025 at 03:22:41PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <stolee@gmail.com>
->
-> There are many tests that validate whether 'git pack-objects' works as
-> expected. Instead of duplicating these tests, add a new test environment
-> variable, GIT_TEST_PACK_PATH_WALK, that implies --path-walk by default
-> when specified.
+As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
+symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
+This patch fixes the following test failure:
 
-I normally dislike adding new GIT_TEST_* environment variables, because
-I don't think we (myself included) are great about remembering to get
-rid of them. But in this case I think it does make sense to add one.
+$ sh t0602-reffiles-fsck.sh --verbose
+--- expect	2025-05-02 23:05:23.920890147 +0000
++++ err	2025-05-02 23:05:23.916794959 +0000
+@@ -1 +1 @@
+-error: packed-refs: badRefFiletype: not a regular file but a symlink
++error: unable to open '.git/packed-refs': Inappropriate file type or format
+not ok 12 - the filetype of packed-refs should be checked
 
-> This was useful in testing the implementation of the --path-walk
-> implementation, especially in conjunction with test such as:
+This portability issue was introduced in Commit
+cfea2f2da8 (packed-backend: check whether the "packed-refs" is regular file, 2025-02-28)
 
-I am not quite following... this sentence sets up a list of tests which
-I was expecting to show some demonstration of how they uniquely
-exercised the path-walk feature. But instead it looks like it describes
-tests that are sensitive to object ordering within packs and thus had to
-have the new GIT_TEST_PACK_PATH_WALK variable unset/set to zero.
+Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+---
+ wrapper.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
->  - t0411-clone-from-partial.sh : One test fetches from a repo that does
->    not have the boundary objects. This causes the path-based walk to
->    fail. Disable the variable for this test.
->
-> [...]
+diff --git a/wrapper.c b/wrapper.c
+index 3c79778055..4d448d7c57 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -737,7 +737,19 @@ int is_empty_or_missing_file(const char *filename)
+ int open_nofollow(const char *path, int flags)
+ {
+ #ifdef O_NOFOLLOW
+-	return open(path, flags | O_NOFOLLOW);
++	int ret = open(path, flags | O_NOFOLLOW);
++#ifdef __NetBSD__
++	/*
++	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
++	 * time this errno occurs when O_REGULAR is used. Since we don't use
++	 * it anywhere we can avoid an lstat here.
++	 */
++	if (ret < 0 && errno == EFTYPE) {
++		errno = ELOOP;
++		return -1;
++	}
++#endif
++	return ret;
+ #else
+ 	struct stat st;
+ 	if (lstat(path, &st) < 0)
+-- 
+2.49.0
 
-Thanks,
-Taylor
