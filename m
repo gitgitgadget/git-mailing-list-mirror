@@ -1,54 +1,54 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D6318AFC
-	for <git@vger.kernel.org>; Fri,  2 May 2025 16:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14144267B86
+	for <git@vger.kernel.org>; Fri,  2 May 2025 16:53:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746204552; cv=none; b=aP6HSntertfUn5Ga7fYycrNJJItJbO2P0p4ruvyo4S/1SZO+ngZg3cttBk+CWbq9foE7XKdnEU16pEFqwFKS4MPqHixz9B55y76jOwxXJKKPKC00XhRBq0BAdz0XeaTVsFXtBbpDd2cz4Td6uTXjf/VhA+roLCzvCl/fRawl31Y=
+	t=1746204789; cv=none; b=uPfi3QgigJDU/q3xXy9Lpu+x47AgAjd6SdShPAYRB7On/drFkj96sABiKJ5oCtCmB+ZaP8u5OXBbsucGq5CUdXZe3XvmePrbDKjrtyaaqnpN7CQ8sW6Hm7WVKCRawSDEV0MDbFn0m6Wee8vh4lYZS8xtDJJwesbD8VsXSA9iKsw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746204552; c=relaxed/simple;
-	bh=olBKQVA4eF+scc5KEGOrXI2R+LBRDXtnD8tf0FsT1pM=;
+	s=arc-20240116; t=1746204789; c=relaxed/simple;
+	bh=G75Eih7veLgudVRcbzMfLDCs0LVVhMP/IUlm5fQrWBE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=kFlzOwxIns3xzbcZ0wLwau6hLnBlAFsjtYCjiVjVL0dcVBnIAxvnyfEUxxxkg3XrwWRYQs7cYsbU2m94L2Pktg+udot1Zh8SuYgleqEhJdR3IfheoP7pUM3tDi0NXyS/XcN7w3ujH9ukJmiGPeo4FR1HL3pJ+saP54oFWzxDlog=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h1Ilc05K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lQGOfm85; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=K3P/y0JqjYMBEwBGLbi4WPkPXUz42fo69MGREKBYP4wjnEszQQMvZ6oFFMUYhDc9lW+sezG8NGYBxXRCJC0//9UdPnKbrDKL69WGvbZXFVxAyB/j/VImXJFcI3W5fXeCXqlNNt2YG2Q6aYDWueiqPDqKNvkVgzaQutft1S1pcQ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=K8+x9Wzz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Th1dHqa1; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h1Ilc05K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lQGOfm85"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id A5D0411401D0;
-	Fri,  2 May 2025 12:49:08 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 02 May 2025 12:49:08 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="K8+x9Wzz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Th1dHqa1"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0571325400CF;
+	Fri,  2 May 2025 12:53:05 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 02 May 2025 12:53:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746204548; x=1746290948; bh=FK2Vs5acye
-	CrcYQxKW5pEq6EkWRnsoPtIjGw+VrShos=; b=h1Ilc05KBWqY0aH8+BbT0+KWwO
-	zyTCG27TuG7ev2zA5HxjIHPHZSM631LP5PK0xQ7/B+gQijU/hdmt173mbuXah8T4
-	c9GeGD9N7JDeqicEVYBkb65JCTFTal0/BYCkEe2DlA86kDAY9Eire4vcrdrRJ5lu
-	hFm2zyWMg38+Puq1kwg+pCssr2LiWQp+s/XUZ0C3Qklq5gQF9+qoSmjGHcwog5Ep
-	bU83aXbhqB+UyFnIjJ3Fmtg1smpwCi7xG0dEnVcf+EsUjOuzfkDO3NCrx0dggoNA
-	lwGX5Wu/5QOYp7hOPpZiITYc14DsmBQA6+q4gmNh/KnHTtBCBSpkyEhvJuIQ==
+	:subject:to:to; s=fm2; t=1746204785; x=1746291185; bh=VZpKTX+pI/
+	xHVZrEKOgzPQ1DlmORtK+8/yDYcg2qHJs=; b=K8+x9WzzNbqEQ0o9tUWsN/mdV7
+	t2D1oUnpUsE7qanXyWZMJAZXXe+M/zkh6GolBrMENmi+X7ha2bxzffQ67l4QTduB
+	B577uxN5cJSLCRMwM57R46tJ4Knr6WSgeHSmI9tjIcuppI/QKZV7l6bpCz7z8AwA
+	kTC8VWuuM17eZKI0JphU0Q9ybM52rz5yIqqOhSIb4Me2qoxh/RkHb3rXJ322cr9p
+	5qwenj52BzRNIobCVDmL3as8CJEOm8yMiqZOYy0YoVwB562pGqYmcEjXT77JKrtY
+	bnJ8aaQ/yd5PlreTwHjgl2Vn8R2hilZ1uQr7rxUlZzlIZw7tmyp49EKhVtoQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746204548; x=1746290948; bh=FK2Vs5acyeCrcYQxKW5pEq6EkWRnsoPtIjG
-	w+VrShos=; b=lQGOfm859U9jZk1oCdmz5+fuuYTXBkGfRAlhjrUWlgBgOAINgdF
-	bbI+V99xtJN1gdgSpUAmmcNThXTti9S5gRWRV/E9NSuk4Qw0APMC5pfos1Ve0EZ7
-	JWh4G6eSEdFUf1dOBXIytTu+VOpWFcCBQLEM4ybn5nCTqwSML2sFO8vapJbYPdQ+
-	Sk+MzxZD7DufMKsu8cfPP6XvZaGMdooJmZzgQ1/iCspzYeZ7yi2f4tlBXOm3Qo9j
-	L8T4ATd5hBhJoDIaOQ9ll3rYTbZEkNecfF5RRxpq81s7HJ0rSHwc+hHT6ytzTcQn
-	BHwlztg6et3zHwDwWiUYRty7+IFpe8iKGOg==
-X-ME-Sender: <xms:hPcUaJeBWEZUV1p0DbwK4YASn-c_j1ktgUlsDoXkf0Dz0KfrGawR9Q>
-    <xme:hPcUaHPzRikKUzTJUOldZb_gJS4VfXhxCWnzHRuN2wFT9dqPxeTHYgiJw7aYtBs2r
-    NYfAUwFedgePyRd_g>
-X-ME-Received: <xmr:hPcUaChSU3F3JH1VlWq605_S8QOZkw4atlppEzhBw6rPIBo3VESDgf2LbZsnVfP122DWEAguSj50EOvr8td4XcAUoHR-M7jGvXZ8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvleejucetufdoteggodetrf
+	1746204785; x=1746291185; bh=VZpKTX+pI/xHVZrEKOgzPQ1DlmORtK+8/yD
+	Ycg2qHJs=; b=Th1dHqa1CA/HBCtJftkVOXuscvQfgD24kGKtI2N76A7mBW5QcX3
+	q6m3oTx14bPPt9ZliY6o+kZOhP/D6kW2pe1lWO3CphE1RRtr3bmvmGYFMVILnuqu
+	c+1FSTMb1OIMxNRrxjz+L6+jTGWaVCsewXI6V7w+merPOao0XnZ7w06YJksfIPKB
+	XrsHrLU2BYmNydWjkZqA4jKfqhJ35EbG1ExvspTIdG6VgB+VD8PrGypFDyv0p3Ya
+	mDC3VcIp/BmxO6ZscKWmYPBhdcpRzV4ljD6DtvxxwNtm3VphGp4/zWJ4LZLnpYgQ
+	dY1wo+4Hu+NYKfZc7gCpBYQgZ5tzD+Z5znA==
+X-ME-Sender: <xms:cfgUaDVtp6vMugHzw1vKhHPTHML2ZeQqr6ZnyN7GyjA9ibh8EO6B6Q>
+    <xme:cfgUaLk5OW1uwmzBRGlZH-8hxZG3pILzadXZ78bqmaq5GHOw_OCFsqFDY8dsIIrX7
+    kr3iN5oKfyN5gfCVw>
+X-ME-Received: <xmr:cfgUaPYhJoeNQ7RV5A3l1olGODXvGBrN3_9txaxu5Tb2KHBE0kTMvhJ_ojVEQxB2VpUqhyL1dQg7zuoFp1EpFnjcjXusmNd_YrvV>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvleekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,28 +56,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjedvleejucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:hPcUaC9XDc4Py9lnHFv2F66WO-lgmKMCoAh2oybzBL2l6BZHJ0G-pw>
-    <xmx:hPcUaFsdmhURgtjkHb3BAbv8C6YVqsT2cvuQ19eDUdDWhI7LR75zIg>
-    <xmx:hPcUaBHeyCN6P80gjWOE_EMg8jEnUK0bhwTHDV2S44eh2ElKkL4yOg>
-    <xmx:hPcUaMNkU5xMMqkVX1pMDc08cGnZ97E8w9xwxpYtxszKUx4wzl7QWA>
-    <xmx:hPcUaOuYAXyvkNdYs_x14ju5Y0AnAeNyqoCHINGFdLYgYcjmoQSfNE-x>
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohhgrnhhnvg
+    hsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtohepphhssehpkhhsrdhi
+    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
+    eptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgv
+    rhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:cfgUaOXlarXEkSfmrhWPweLqN-aVYyPgNZuIKs1N90ZJ2cKApAicBg>
+    <xmx:cfgUaNlkbwoOv6nKdLV2vPwUamaFQlRfKRGGkg9_RQFe25KA8fu84A>
+    <xmx:cfgUaLeC-yzIbhC5otR_Y6w7N9eQJTLORS04W7Cv9fVgZD7EPD1N4A>
+    <xmx:cfgUaHGj2MN7lgLEgOH115ToGDhxq1WUiFY2UfuSnxJ5iYdzchjtOA>
+    <xmx:cfgUaAXL-cqdIwKcOpkBA5IwSwBkcEWC91svd2ybso9Js5LlK9zQRQvq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 12:49:07 -0400 (EDT)
+ 2 May 2025 12:53:05 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] whatchanged: require --i-still-use-this
-In-Reply-To: <aBSLgTlfwSc1u_bH@pks.im> (Patrick Steinhardt's message of "Fri,
-	2 May 2025 11:08:17 +0200")
-References: <20250501213452.370729-1-gitster@pobox.com>
-	<20250501225958.2947677-1-gitster@pobox.com>
-	<20250501225958.2947677-3-gitster@pobox.com> <aBSLgTlfwSc1u_bH@pks.im>
-Date: Fri, 02 May 2025 09:49:06 -0700
-Message-ID: <xmqqo6wbufel.fsf@gitster.g>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Kristoffer
+ Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH 2/2] builtin/mv: convert assert(3p) into `BUG()`
+In-Reply-To: <38cc3249-3de2-5ed0-7ca8-bad6d4a5bea8@gmx.de> (Johannes
+	Schindelin's message of "Fri, 2 May 2025 11:44:36 +0200 (CEST)")
+References: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
+	<20250430-pks-mv-parent-child-conflict-v1-2-11a87c55ffb9@pks.im>
+	<xmqqr0191oaz.fsf@gitster.g> <xmqqecx9z1n6.fsf@gitster.g>
+	<aBR86Ct8mMUN_tzk@pks.im>
+	<38cc3249-3de2-5ed0-7ca8-bad6d4a5bea8@gmx.de>
+Date: Fri, 02 May 2025 09:53:03 -0700
+Message-ID: <xmqqjz6zuf80.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,34 +92,21 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-> I was briefly wondering why this variable wasn't just declared in
-> `cmd_whatchanged()`, but that's because parsing is of course done by
-> `cmd_log_init_finish()`. Nothing worth thinking about too much.
+> The fact of the matter is that the Visual C-built CI (first the Azure
+> Pipeline, then GitHub Actions) have built the artifacts in release mode
+> since forever. And the Meson addition simply made a mistake by _not
+> specifying_ release mode (and hence defaulting to debug mode).
 
-Yeah, it is between "cfg that is conveniently passed around the code
-paths, even though it is not a configuration item" vs "a file-scope
-static variable that will live until we decide to remove (or keep)
-the command".
+OK, so this is needed for _different_ reason; it is no longer about
+working around a stuck CI due to misguided test.  The artifacts
+should be built in a particular way to be consistent with the other
+build pipelines (presumably they are used in production later, or
+something?).
 
->> @@ -656,6 +665,10 @@ int cmd_whatchanged(int argc,
->>  	opt.def = "HEAD";
->>  	opt.revarg_opt = REVARG_COMMITTISH;
->>  	cmd_log_init(argc, argv, prefix, &rev, &opt, &cfg);
->> +
->> +	if (!cfg.i_still_use_this)
->> +		you_still_use_that("git whatchanged");
->> +
->>  	if (!rev.diffopt.output_format)
->>  		rev.diffopt.output_format = DIFF_FORMAT_RAW;
->>  
->
-> I think it would help potential users of this command quite a bit if we
-> explicitly told them what the replacement is. So maybe we can extend
-> `you_still_use_that()` to accept an explanation?
+If explained that way in the updated log message, I would be very
+happy to take the patch and merge it down, even fast-tracking down
+to 'maint'.
 
-I doubt it.  The reason why we remove something is not "because a
-better alternative exists"; it is "because everybody *HAS* switched
-to the better alternative".  If we need to educate folks in this
-message, the plan to remove that command is still premature.
+Thanks.
