@@ -1,115 +1,136 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73C19223DCF
-	for <git@vger.kernel.org>; Fri,  2 May 2025 23:44:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24896C2FD
+	for <git@vger.kernel.org>; Sat,  3 May 2025 00:49:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746229475; cv=none; b=j3/7ytZZZiATYYxYbZfc8GMHgZnbpLVwkwH+PAU7D+2Q3Oen6gdTL3N6S6LFmMu7Q+IovB1UfTPlTGjr3H34FpsbrTqKYDmUEo71gLMnRsXEZiM6Wxfl42KbX2c5a++TvE6qhcOTwZrszaPiPnLw//peYQa7U1wCRX2rt4OYUNo=
+	t=1746233353; cv=none; b=a0NQ34FVseMpSh/+V/OxS6mGO/QrviYX0KRP08XLdf6lavY9cqVrzWyPUJso5DjKV0wXnr3K3EP/L5m/BNKnHElxixcrRPr43uffbhSMBTU954dNgmVGhals/bhMCiCADSWGSlgnG5yerxPUCZd8hqf3Mi5dzlKOWDbvxXJCbv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746229475; c=relaxed/simple;
-	bh=niwC+HWBjmsU3YqRoKDd+RpiSY6wEe2RN3Mqp4KEtSI=;
+	s=arc-20240116; t=1746233353; c=relaxed/simple;
+	bh=ksEg63i+TMK5bpHGII22Felde8R74ttVaHI+s4yh8gk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=gmXxdqUB0KdOTqT692KOJCnkmRdT7mLlbs7iW8UifR5DpoxE0oH412enMz49hku2KBCZkFaOlLLypaQ1l/wRplAl0npX8vnrt1YuwFyxRVUT/8K891PbwU9fUrB1H9kLxEWqlJwFU7woY+cm4PsYhhGMsmnw3Ek0dH4c3IkR0vI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=qZY3/DfT; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=bnZ4MbAFVcizHUPsHtal8D2yCniyMEow3UfSXAQeVdJ7K39PugocVIJ5NirFWs5mMUpihufjvNVBkVqChJIduA779Rto3zkNY96PzQO/jWnA2V0aetRy5iqC4RPwgl0XybSc9Jjv1/INswE3qXetSk9l3sXuU2tAYePEZL2mUpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=G04EdINq; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="qZY3/DfT"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6ecfbf1c7cbso49442806d6.2
-        for <git@vger.kernel.org>; Fri, 02 May 2025 16:44:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746229472; x=1746834272; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TqXQ0+cVRPhjWT8NAwXjQ/D5SBNnAIIBZR7nkRrEdTI=;
-        b=qZY3/DfTd5d5GzZd/1VPszHhs/urh3OtINbeXkDmINSz2w3QNA9vdt9OfjzHir5Ern
-         3S6xGMKo2rS3oQfa8V8Y23aIvSLtM8oxyLEVpZaQAQClNG0x8ykYT4WAbGUv43CAH+CK
-         HUS8H6UcjtUAti4nUbG2pKC8ca+JznqNj/0+gLNiIdEHWtxO3zgt9WUImjVY+dMhzckt
-         ZK5KSZbBZJ+Rt9bIys/GY6goAlsEhOWpwa1WJIM74elphnzMKW0/RI+3TdR+zZ+qkT0V
-         Upo42HPKBpz58RXaGbvQ1SjMSVl8fRhiTyQltCxEgzMu4fJyszAtlUUQzXtqApJjAVe+
-         qKQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746229472; x=1746834272;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TqXQ0+cVRPhjWT8NAwXjQ/D5SBNnAIIBZR7nkRrEdTI=;
-        b=VR3GLFgZqvDC1a1vT5mne6Lzk0vpNktsTY+rPRhv9ZAdVHclzyAg3AQV/Erm7I4A1G
-         i2esL3BLTfHoWpoR5LQ+dyjoXWjftJYnN7+N3O+ZePMG1GAX1MudQnMiSHSKgd7/IAgp
-         pMfnuZTNhibjLgde9fz3tjxPPB9L7Xz+azsrgdRY5VU/hX9VUoWG7lVjlPnogHJMiC3J
-         EyuXE5xMckNPR+nKME22EePff5M6w+NMK5Vnp3YLHuKkamEf+HXjCapBeSxz0DjmHoPB
-         /afjtFtMvdSFKrtfVfEUdccFlv7iQHMtZw93iO3zqBJf/pgHFuGW82/MyIrQ8FgQKsKj
-         hOAQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXXHv8LWq7oOyJ3j7mLriEC7/U08Tquvpy6qlUhpFLLddTMvpQS4AnrMhEt0RzXteaXu7Q=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw8NssDvrhAB8454ybh8X4PIwBECdtzswIopDNA5FUBd9aNVYAw
-	jspxGiU8JS5yojCDTXTgzrp+nAPWTUHYk05qugUuIJDy8BRtJ31zpZweC8qc8XA=
-X-Gm-Gg: ASbGncsM5kC3WPC1dWHqBBlcrwYxz7Cm3c/iyXHsHlIGDNMa2eRMNPcQdobbKCHsqb7
-	+1Bn+Psg4GI/YkL9rmI9zFUdINg99D3ne8KI0AEa51p21HySTaFsjGlYNhQerynQUAlbtvkyF41
-	O1bpQoo7JyDXlO1ytehPdGZ8MVyheu1sgZUaSp/HXEyztu8JyXIhSScKMWWDmG6+aBUCw44bRPi
-	qrd//BY7o3gDDjnUA3SA3n02NbkdwtrX5tRk8Ca1bqbqsoKK088X9wU+Zt9c1LesPuTUxAhmKPV
-	+yd0a9wJZNHMpZbSEQUchFyvbvRMmdJkdYvE2RSXcNV026N0bFpNh+daDiv6PB+XayJyZwBst+s
-	FhHkZu4Z6AUiV
-X-Google-Smtp-Source: AGHT+IGAYsZmTM8Ns8A2POIB4BFjSgyPhSQlgjFG/7enFGhQYfRFd0bCOSAAAKuCTDU/pY0izIEl2g==
-X-Received: by 2002:a05:6214:d01:b0:6e8:ff2a:a658 with SMTP id 6a1803df08f44-6f5152589c7mr77526496d6.5.1746229472245;
-        Fri, 02 May 2025 16:44:32 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f50f47e8e5sm25006086d6.99.2025.05.02.16.44.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 16:44:31 -0700 (PDT)
-Date: Fri, 2 May 2025 19:44:30 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, christian.couder@gmail.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	jonathantanmy@google.com, karthik.188@gmail.com,
-	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
-	ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 00/13] PATH WALK II: Add --path-walk option to 'git
- pack-objects'
-Message-ID: <aBVY3u58R23bI/Uo@nand.local>
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
- <xmqqbjsau2nl.fsf@gitster.g>
- <aBVLC57bMJKjygyi@nand.local>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="G04EdINq"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1746233343;
+	bh=ksEg63i+TMK5bpHGII22Felde8R74ttVaHI+s4yh8gk=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=G04EdINqeBdkWvnho0wHVjp4PU0X1nKC0hxH3O3SYy++l0cRF3a8Jtdydk98S8rvH
+	 0lLZmVW7CaVm72GJJVJf13iu6IoNtP6+fHbfLmMp3gmfF4cVeEg1TD9DDIxJf0E10D
+	 Nab2bh3QnnGurOHrzX80lOtKCaKL0kysReKO0qRZgmvyZ0m2vH1xBxPWM18sB7vuHB
+	 lz1f83j7n4rPv44lO7Lhzwn5AyKqOoNFT0RXwMxpITSlUEXMN/ht2WJnf3TVDb0tXw
+	 yv6DxuxaI8jLYqnhhjC3NbvrDgSEwz7YcfawGFl+8efZSkj0fpBk8VVCpP6hn/ONWw
+	 18Ie1hUUcNCL7Swm2kcVDNuD20Iyrnus6Abp3o8g+VaYf81Cq+jQ9+tLCgoWklfF0+
+	 4tX/8OEHY87dGnNQA9S1wyzc0JsZ2ElpO5KDsSJU1v2ItJ3FEtmv18pFrG+NGRcxsQ
+	 mQps+DvyUDirxC0i1pfdQe1UekuTcEG1ZvQt7ElX/9DSpKB1bZt
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 195AC2011C;
+	Sat,  3 May 2025 00:49:03 +0000 (UTC)
+Date: Sat, 3 May 2025 00:49:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Matthias vom Bruch <matthias.vombruch@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: bugreport - cannot clone repo over ssh which I don't own
+Message-ID: <aBVn_abDjpZFk41p@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Matthias vom Bruch <matthias.vombruch@gmx.de>, git@vger.kernel.org
+References: <dcf355a7-cbeb-4162-82a9-5486d3ce3166@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="UJ0Ejf+Muz/ia8yc"
+Content-Disposition: inline
+In-Reply-To: <dcf355a7-cbeb-4162-82a9-5486d3ce3166@gmx.de>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--UJ0Ejf+Muz/ia8yc
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aBVLC57bMJKjygyi@nand.local>
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 02, 2025 at 06:45:31PM -0400, Taylor Blau wrote:
-> On Fri, May 02, 2025 at 02:24:30PM -0700, Junio C Hamano wrote:
-> > > Updates in v2
-> > > =============
-> > >
-> > >  * Re-added a dropped comment when moving code in patch 1.
-> > >  * Updated documentation to include interaction with --use-bitmap-index.
-> > >  * An UNUSED parameter is now used, reducing the use of global variables
-> > >    slightly.
-> >
-> > The iteration saw no comments from anybody, so I (naturally) forgot
-> > about it for quite a long time.  Let me mark it for 'next'.
->
-> Sorry, this fell off of my to-do list. I don't want to hold things up
-> further, but would appreciate a chance to review this before it hits
-> 'next'.
->
-> I can take a look now.
+On 2025-05-02 at 22:07:51, Matthias vom Bruch wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>=20
+> What did you do before the bug happened? (Steps to reproduce your issue)
+>=20
+> Create a repository, rsync it to my homelab server, place into a directory
+> that is owned by a:a_and_b and has -R file mod of 770. Then cloned that
+> into a new, bare repository with the same name, say on /path/to/bare_repo.
+> Then I prepared ssh auth via key on new machine, so that user b can lo
+> g in to homelab without password. Then tried to clone the repository with
+> `git clone b@local-name:/path/to/bare_repo` and variations prepending `s
+> sh://` and appending `/.git`. Got error
+>=20
+> fatal: detected dubious ownership in repository at '/path/to/bare_repo'
+> To add an exception for this directory, call:
+> =C2=A0=C2=A0=C2=A0git config --global --add safe.directory /path/to/bare_=
+repo
+> [The following is a rough translation, as the machine is in German and so
+> was this message]
+> fatal: could not read from remote repository
+>=20
+> Please ensure that you have the correct access rights
+> and the repository exists
+>=20
+> I then execute the command it suggests and confirm that the appropriate l=
+ine
+> has been added to my git config
+>=20
+> Retry - same error
+>=20
+> Test if there is actually a problem with access rights by copying the
+> repository with `rsync -r b@local-name:/path/to/bare_repo ./`. No issue, =
+eve
+> rything gets copied
+>=20
+> What did you expect to happen? (Expected behavior)
+>=20
+> Firstly, no issue at all, as cloning from a remote (bare) repository that
+> _isn't owned by me_ seems like standard usage of git. People are bound t
+> o run into this in projects of more than one person, unless they use the
+> more elaborate implementations of vendors like github. My understanding w
+> ould be that this is how git should "naturally" work.
+>=20
+> Then, the error being fixed after I apply the command it suggested.
 
-OK, I was able to get through the first 8 or so patches in the series,
-and left a handful of comments throughout. I'm running out of time ATM
-to finish reviewing, but I should be able to pick it up next Tuesday (I
-am out of office on Monday).
+Can you retry this with Git 2.48 or newer on the server?  There's a
+patch in that version that should allow cloning from an untrusted
+repository.
 
-Again, I am sorry for the delay here. I know that I am holding things up
-here, but this genuinely fell off of my radar, and Junio's nudge above
-reminded me. I'll finish reviewing this promptly next week.
+Note that if you're cloning on the local system, you will need to use
+`--no-local`, as documented in that version.  That isn't necessary over
+the network, though.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Thanks,
-Taylor
+--UJ0Ejf+Muz/ia8yc
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgVZ/0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZwWj5/KcTtZ8Z26QsZsnQg0np7OxLB4cUC2vniPuzeRM
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAADRCAQDURlH1+MywqByupi1sTUOVchO9
+c4cKtBem0HQrl1l0ewEAlazpXbqHJU6KpHDip9N/3xjInbXSMq88cPHcHhh8gAg=
+=FN2K
+-----END PGP SIGNATURE-----
+
+--UJ0Ejf+Muz/ia8yc--
