@@ -1,340 +1,664 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E76456B81
-	for <git@vger.kernel.org>; Sat,  3 May 2025 01:15:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2652E184F
+	for <git@vger.kernel.org>; Sat,  3 May 2025 01:35:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746234946; cv=none; b=Kg4HBmtubsq17nIVlswA+BXj7DMDrWoQlAVnXJ8cXWgDqM8F+BEHTsAYyQuZrwQFcw/0arP/uzKOLg9A3dyWdtK7VPCa2IW64zF4clRLK+WBbRqAuOJGoMkommXOLt1ck9lMXvpnTLCDx2c3yFmmzOAWbbW7Ic88ioS1ljj1C9U=
+	t=1746236111; cv=none; b=KDFuYP88X0rFFeiSCWERl7dpgzJJlFYusfL+edTCMY/TZWfmLDP97fLyy7+EVfQEUxHYfLmdkRw4vm3IZbPJgnFc3g6ce5p48YdFfUVHlQGPbu70d6dhm0nAb2oOYckjL3CJ6lEW8fEG/KrjgLhGjUxj65+F6m86CQQy7wiufQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746234946; c=relaxed/simple;
-	bh=CVQ4oLr+T2Co3rYzqupr3eZvYLaJior4vZJmY5IUxEk=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=u+YeEH9wCJtmbRtBKmO48LxTqj4qDdC9W9RkvIU0tikQnAt9Rs7XZNFIORZlNm+UYJGxlzHEiPRVLjmnv1W+g6pWyEk1p42+cj9is5m7TO97RN2jubZZpTXQKZQ5N8EZiPclg1qmZUZoMYKiqD3H1YxxjZBV1MY3ACqEUiGhJeM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gNioeFAs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WnJFfHs1; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1746236111; c=relaxed/simple;
+	bh=tcKIDaN9Sa72ne5UA4TrXg4zNG3vu+Cz+9woO/nQ1iM=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=nHTXpziDIPel0ZvYf2zbKXnxFyiTZAZJtNfipREoad4N857RGeMBFsNUx0EY8aSLhA9fCo0LZol+T4W4BKiiRS/ln7kw6z/5xSV8J7WQcsjU8mA/0dVQo5C93LYzhbNk5OLMQ48otMvgSju0yr+sndn+qhTC+OZKEH2KNRRvY6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gu6WzICY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L9Xqk3Jt; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gNioeFAs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WnJFfHs1"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.phl.internal (Postfix) with ESMTP id 197501380F8B;
-	Fri,  2 May 2025 21:15:44 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-12.internal (MEProxy); Fri, 02 May 2025 21:15:44 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gu6WzICY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L9Xqk3Jt"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 180BA1140195;
+	Fri,  2 May 2025 21:35:07 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-03.internal (MEProxy); Fri, 02 May 2025 21:35:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1746234944; x=
-	1746321344; bh=Sj6/gYWyn1K+ZHedyzeDeSXzlPQUIfG7k/6eY5OJT3o=; b=g
-	NioeFAsaocWoQ456MIEVkFciJuG12G9IxJ2RZ8keuCvj1vV07ZySUQ2JTVD9twkX
-	mp+DaJ1dpFp05ittA4KhWGg9mpznbSoYUqFjzkDWeB8qQFEFYLC9p9CJqyKjKoKA
-	7XuBde86P0yDtJgSOQ9eyMFdqKgsH6UBRGT1R0sOXVHFiyMG7OkQH8UTKiRJV+Sz
-	z4wOYNfOLX0+MzA6LWfDFeOaYkIPgDsFL4st9id3W1rUAdAK2bSRaeQCOv1WAgtx
-	qduQFak0UT5Dtzket26ESIejctsXrpttmiJX/6D+6/je5cw8Jljz2n0u2M/nL/Ky
-	FzpNpfWmKRfWAE+LUMzUQ==
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1746236107; x=1746322507; bh=nqp96/kInlc8MWaIVk5Y1v70nAiXbPhQ
+	08peWSVL2xs=; b=gu6WzICYQA8rSYJBVm7Za7CDFRVtRa2lcdrAVkhEWbXFOvor
+	uxvbp2v3keGGz6Ah2Qfkn6t2TmIEDXVaZ/4SI0zpksfMnfj15kWo07T8k9U1NwAT
+	/5XRMOO7PxiQ9K38ntTfSnY2IA3dfHqBBulCLBR/rIu5spMqQFaiROXTkbq7gEv7
+	hRxxacZQUG2d96IW6/VZ1W3KotzTcPfRWIqviync3M8sYSziNbQvgyXntjuKy5Fb
+	HwIOvcNuuzHqaC15DZeRCIfxN59IzWYMTnNAzsQo2r0InuyL3CkVU1BpqPCg+UPo
+	RjSSbFZKqngCMpom0/7WizXmr7ITpK/4EcqVCw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746234944; x=1746321344; bh=Sj6/gYWyn1K+ZHedyzeDeSXzlPQU
-	IfG7k/6eY5OJT3o=; b=WnJFfHs1L+1QyrMQsCiqDxRGJW+hc/Zz0l/eIKOC9zMo
-	rk8ONK6DqF0VBkW/xa8purScAvqLe9rqZD6GSknREphpnrX32C51AXSFff/Y4i38
-	Tr5c4Bl3dErquTLMxbTYZ0A9sZVXcn7zw/mKU7c+4nnSAN0B2OFB4jc9AWqJphH3
-	BWDqoSJwXCbsRK039y83NErl01/tda592SpnMHYQwGgnXb9rOe1vFPXqvU67KKSR
-	UtPdYOgALxZRABgDJMeErkzQ4MWzs/JY7yvmq9N3nii/v+Cd0t6x9fvo9YLZvzYP
-	AoK9o87wf2FpIS82g/rZ7Fw85vsCQe/d0HmKe4hGtQ==
-X-ME-Sender: <xms:P24VaPh1aX2WpUhZ4m6TdgAxZIBriKvYmLDgK-fAaKxQt75VeCiF-g>
-    <xme:P24VaMAmej719sE5pXRTBzExDAL2mEYVDP2o-60ALbsJ2RkCPRPNbTLVdYi1AOciC
-    Fv4zedgFe6DBaoqQA>
-X-ME-Received: <xmr:P24VaPFXM4lhBesomsUX3X8QwvedOtDdWR1JDWRH6WSfpIneiL9d17OcRpxF_64Ch3oly0o1dTq0Bil8tk84_1F8rVt6xcAmsYYF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefleekucetufdoteggodetrf
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746236107; x=
+	1746322507; bh=nqp96/kInlc8MWaIVk5Y1v70nAiXbPhQ08peWSVL2xs=; b=L
+	9Xqk3Jt2EZBGrlSuObNQjTyYrBmtfMfOmjNQQWzbd5lWHBUt/zdvQ6MrW51Ux0uT
+	4+2AHIMjTtnQfL8C2ft3ml+XSJpZGHjCr1OPEwnn1Y/6DbGFLRIwHUBZ+P/rRhUR
+	lyrEvMZH7QBsxgxte/GKSlVM1/NHf2msgsSMvIuphC/cJjW8RvjbW8MeH3a5U4OG
+	ZbUkg2PSDJlUEMZNG3JuqiaAu3exEckpRibCak8kGZO8ZGfuvcnF4ptqUuF+GSdb
+	fTDbT2aQC48FkjLVOXH4GghWYR/hpLaDGDHh699I0c2o4TImN+EMRqNwwrUy1s2z
+	Tca5ekOn1DAYg7cXg3L/w==
+X-ME-Sender: <xms:ynIVaK93CyIfKq5A4gJXJJCCH0XlBz7FxIpWjmzdVRAyRPUjcbLeaw>
+    <xme:ynIVaKtLsytZHvIwzqW18CBzXz1iI-zMVSi84RBF9jJH3QHm2kF_cIB62UlGLjjsz
+    ECCm8oZnvMdB3hP8g>
+X-ME-Received: <xmr:ynIVaAAyV7QS2uGCIWZlSiURCW7vEJz-7Q9lLvD92IdUvEMuuq_Tf4Rc9UP-NPT9S6oB9TfgEYxXcymYxLgMm9evcLuiO3lT5oNh>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeegtddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgf
-    ejudfhheetueeltdejfeejgefhgfeihffhleelvdekheekjeegtdegkeejheetnecuffho
-    mhgrihhnpegvgigrmhhplhgvrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:P24VaMRj7uD_TkLTz9R3dlXaf4TtY5djq7kewI3Njzf9Ma4m8jGoYg>
-    <xmx:P24VaMxWFiD33eHDemdqteLt07tm4q_x3gHz7YwoGmJmb3s97VLZzQ>
-    <xmx:P24VaC7ZdCih8edCbp_F1dG-lK-QmqQ1J8ygPoFg9TXsoXz-lEdyLQ>
-    <xmx:P24VaBxe5cGdmBe1VqVcaP1IsQ7KHfTqJYKalqYq66p4KxCl30HCyg>
-    <xmx:QG4VaDjs6OE7p32fH3BXV260L6ZDisb6RlRv9eYzJRPMvk3doKJvNoUO>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgfrhhlucfvnfffuc
+    dluddtmdenucfjughrpefhvffufffkfgggtgesthdtredttdertdenucfhrhhomheplfhu
+    nhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecugg
+    ftrfgrthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfeegjeelheekffegiedv
+    kedvkeeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhooh
+    hglhgvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhm
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhith
+    hsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhht
+    phhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosgho
+    gidrtghomh
+X-ME-Proxy: <xmx:ynIVaCe273xY0hvfotC3MAMMHFRkvcgxDwmWIf8OQ1SqvVjptLx2lw>
+    <xmx:ynIVaPNc74mjC8gONpZy4Kx13kvxgyt9XXnJForrmW2bPFOKO4IumA>
+    <xmx:ynIVaMmBV7MugjR_I1O9HqpXhFNxO2vkWAmsDq2Amzimc1fYp__qFA>
+    <xmx:ynIVaBtqxmAOKv7ba0iYJ2GUNPFKzL-cX2qfVu11q3XtJ0Q3PwZhtg>
+    <xmx:y3IVaP3eTfHdpVNN0xJ5b06iqvCoPhBJ1SWBsKUpEtPQh_9qWWPakT5b>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 21:15:43 -0400 (EDT)
+ 2 May 2025 21:35:06 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-Subject: [PATCH v2 3/3] git-daemon doc: update mark-up of synopsis option descriptions
-Date: Fri,  2 May 2025 18:15:37 -0700
-Message-ID: <20250503011537.3035416-4-gitster@pobox.com>
-X-Mailer: git-send-email 2.49.0-601-ga5925c3955
-In-Reply-To: <20250503011537.3035416-1-gitster@pobox.com>
-References: <20250501213414.370514-1-gitster@pobox.com>
- <20250503011537.3035416-1-gitster@pobox.com>
+Subject: What's cooking in git.git (May 2025, #01; Fri, 2)
+X-master-at: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+X-next-at: a8402760328a6f9879ce40263fe306538782a5b0
+Date: Fri, 02 May 2025 18:35:04 -0700
+Message-ID: <xmqqo6waschj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-To unify mark-up used in our documentation to a newer convention,
-started by 22293895 (doc: apply synopsis simplification on git-clone
-and git-init, 2024-09-24), update the documentation of 'git daemon'
-to
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
 
- * use [synopsis], not [verse] in the SYNOPSIS section
- * enclose `--option=<value>` in backquotes
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
 
-Also, split '--[no-]option' into '--option' and '--no-option'
-to make it easier to grep for them.
+With maint, master, next, seen, todo:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-daemon.adoc | 119 +++++++++++++++++-----------------
- 1 file changed, 60 insertions(+), 59 deletions(-)
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
 
-diff --git a/Documentation/git-daemon.adoc b/Documentation/git-daemon.adoc
-index ede7b935d6..bc3f77405e 100644
---- a/Documentation/git-daemon.adoc
-+++ b/Documentation/git-daemon.adoc
-@@ -7,21 +7,21 @@ git-daemon - A really simple server for Git repositories
- 
- SYNOPSIS
- --------
--[verse]
--'git daemon' [--verbose] [--syslog] [--export-all]
--	     [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]
--	     [--strict-paths] [--base-path=<path>] [--base-path-relaxed]
--	     [--user-path | --user-path=<path>]
--	     [--interpolated-path=<pathtemplate>]
--	     [--reuseaddr] [--detach] [--pid-file=<file>]
--	     [--enable=<service>] [--disable=<service>]
--	     [--allow-override=<service>] [--forbid-override=<service>]
--	     [--access-hook=<path>] [--[no-]informative-errors]
--	     [--inetd |
--	      [--listen=<host-or-ipaddr>] [--port=<n>]
--	      [--user=<user> [--group=<group>]]]
--	     [--log-destination=(stderr|syslog|none)]
--	     [<directory>...]
-+[synopsis]
-+git daemon [--verbose] [--syslog] [--export-all]
-+	   [--timeout=<n>] [--init-timeout=<n>] [--max-connections=<n>]
-+	   [--strict-paths] [--base-path=<path>] [--base-path-relaxed]
-+	   [--user-path | --user-path=<path>]
-+	   [--interpolated-path=<pathtemplate>]
-+	   [--reuseaddr] [--detach] [--pid-file=<file>]
-+	   [--enable=<service>] [--disable=<service>]
-+	   [--allow-override=<service>] [--forbid-override=<service>]
-+	   [--access-hook=<path>] [--[no-]informative-errors]
-+	   [--inetd |
-+	     [--listen=<host-or-ipaddr>] [--port=<n>]
-+	     [--user=<user> [--group=<group>]]]
-+	   [--log-destination=(stderr|syslog|none)]
-+	   [<directory>...]
- 
- DESCRIPTION
- -----------
-@@ -32,7 +32,7 @@ that service if it is enabled.
- It verifies that the directory has the magic file "git-daemon-export-ok", and
- it will refuse to export any Git directory that hasn't explicitly been marked
- for export this way (unless the `--export-all` parameter is specified). If you
--pass some directory paths as 'git daemon' arguments, the offers are limited to
-+pass some directory paths as `git daemon` arguments, the offers are limited to
- repositories within those directories.
- 
- By default, only `upload-pack` service is enabled, which serves
-@@ -46,26 +46,26 @@ An `upload-archive` also exists to serve 'git archive'.
- 
- OPTIONS
- -------
----strict-paths::
-+`--strict-paths`::
- 	Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
- 	"/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
--	'git daemon' will refuse to start when this option is enabled and no
-+	`git daemon` will refuse to start when this option is enabled and no
- 	directory arguments are provided.
- 
----base-path=<path>::
-+`--base-path=<path>`::
- 	Remap all the path requests as relative to the given path.
--	This is sort of "Git root" - if you run 'git daemon' with
--	'--base-path=/srv/git' on example.com, then if you later try to pull
--	'git://example.com/hello.git', 'git daemon' will interpret the path
--	as `/srv/git/hello.git`.
-+	This is sort of "Git root" - if you run `git daemon` with
-+	`--base-path=/srv/git` on `example.com`, then if you later try
-+	to pull from `git://example.com/hello.git`, `git daemon` will
-+	interpret the path as `/srv/git/hello.git`.
- 
----base-path-relaxed::
--	If --base-path is enabled and repo lookup fails, with this option
-+`--base-path-relaxed`::
-+	If `--base-path` is enabled and repo lookup fails, with this option
- 	'git daemon' will attempt to lookup without prefixing the base path.
--	This is useful for switching to --base-path usage, while still
-+	This is useful for switching to `--base-path` usage, while still
- 	allowing the old paths.
- 
----interpolated-path=<pathtemplate>::
-+`--interpolated-path=<pathtemplate>`::
- 	To support virtual hosting, an interpolated path template can be
- 	used to dynamically construct alternate paths.  The template
- 	supports %H for the target hostname as supplied by the client but
-@@ -75,48 +75,48 @@ OPTIONS
- 	After interpolation, the path is validated against the directory
- 	list.
- 
----export-all::
-+`--export-all`::
- 	Allow pulling from all directories that look like Git repositories
- 	(have the 'objects' and 'refs' subdirectories), even if they
- 	do not have the 'git-daemon-export-ok' file.
- 
----inetd::
--	Have the server run as an inetd service. Implies --syslog (may be
--	overridden with `--log-destination=`).
--	Incompatible with --detach, --port, --listen, --user and --group
--	options.
-+`--inetd`::
-+	Have the server run as an inetd service. Implies `--syslog` (may
-+	be overridden with `--log-destination=`).
-+	Incompatible with `--detach`, `--port`, `--listen`, `--user` and
-+	`--group` options.
- 
----listen=<host-or-ipaddr>::
-+`--listen=<host-or-ipaddr>`::
- 	Listen on a specific IP address or hostname.  IP addresses can
- 	be either an IPv4 address or an IPv6 address if supported.  If IPv6
--	is not supported, then --listen=<hostname> is also not supported and
--	--listen must be given an IPv4 address.
-+	is not supported, then `--listen=<hostname>` is also not supported
-+	and `--listen` must be given an IPv4 address.
- 	Can be given more than once.
- 	Incompatible with `--inetd` option.
- 
----port=<n>::
-+`--port=<n>`::
- 	Listen on an alternative port.  Incompatible with `--inetd` option.
- 
----init-timeout=<n>::
-+`--init-timeout=<n>`::
- 	Timeout (in seconds) between the moment the connection is established
- 	and the client request is received (typically a rather low value, since
- 	that should be basically immediate).
- 
----timeout=<n>::
-+`--timeout=<n>`::
- 	Timeout (in seconds) for specific client sub-requests. This includes
- 	the time it takes for the server to process the sub-request and the
- 	time spent waiting for the next client's request.
- 
----max-connections=<n>::
-+`--max-connections=<n>`::
- 	Maximum number of concurrent clients, defaults to 32.  Set it to
- 	zero for no limit.
- 
----syslog::
-+`--syslog`::
- 	Short for `--log-destination=syslog`.
- 
----log-destination=<destination>::
-+`--log-destination=<destination>`::
- 	Send log messages to the specified destination.
--	Note that this option does not imply --verbose,
-+	Note that this option does not imply `--verbose`,
- 	thus by default only error conditions will be logged.
- 	The <destination> must be one of:
- +
-@@ -135,8 +135,8 @@ none::
- The default destination is `syslog` if `--inetd` or `--detach` is specified,
- otherwise `stderr`.
- 
----user-path::
----user-path=<path>::
-+`--user-path`::
-+`--user-path=<path>`::
- 	Allow {tilde}user notation to be used in requests.  When
- 	specified with no parameter, a request to
- 	git://host/{tilde}alice/foo is taken as a request to access
-@@ -145,23 +145,23 @@ otherwise `stderr`.
- 	taken as a request to access `<path>/foo` repository in
- 	the home directory of user `alice`.
- 
----verbose::
-+`--verbose`::
- 	Log details about the incoming connections and requested files.
- 
----reuseaddr::
-+`--reuseaddr`::
- 	Use SO_REUSEADDR when binding the listening socket.
- 	This allows the server to restart without waiting for
- 	old connections to time out.
- 
----detach::
--	Detach from the shell. Implies --syslog.
-+`--detach`::
-+	Detach from the shell. Implies `--syslog`.
- 
----pid-file=<file>::
-+`--pid-file=<file>`::
- 	Save the process id in 'file'.  Ignored when the daemon
- 	is run under `--inetd`.
- 
----user=<user>::
----group=<group>::
-+`--user=<user>`::
-+`--group=<group>`::
- 	Change daemon's uid and gid before entering the service loop.
- 	When only `--user` is given without `--group`, the
- 	primary group ID for the user is used.  The values of
-@@ -179,30 +179,31 @@ may also want to set and export `HOME` to point at the home
- directory of `<user>` before starting the daemon, and make sure any
- Git configuration files in that directory are readable by `<user>`.
- 
----enable=<service>::
----disable=<service>::
-+`--enable=<service>`::
-+`--disable=<service>`::
- 	Enable/disable the service site-wide per default.  Note
- 	that a service disabled site-wide can still be enabled
- 	per repository if it is marked overridable and the
- 	repository enables the service with a configuration
- 	item.
- 
----allow-override=<service>::
----forbid-override=<service>::
-+`--allow-override=<service>`::
-+`--forbid-override=<service>`::
- 	Allow/forbid overriding the site-wide default with per
- 	repository configuration.  By default, all the services
- 	may be overridden.
- 
----[no-]informative-errors::
-+`--informative-errors`::
-+`--no-informative-errors`::
- 	When informative errors are turned on, git-daemon will report
- 	more verbose errors to the client, differentiating conditions
- 	like "no such repository" from "repository not exported". This
- 	is more convenient for clients, but may leak information about
- 	the existence of unexported repositories.  When informative
- 	errors are not enabled, all errors report "access denied" to the
--	client. The default is --no-informative-errors.
-+	client. The default is `--no-informative-errors`.
- 
----access-hook=<path>::
-+`--access-hook=<path>`::
- 	Every time a client connects, first run an external command
- 	specified by the <path> with service name (e.g. "upload-pack"),
- 	path to the repository, hostname (%H), canonical hostname
--- 
-2.49.0-601-ga5925c3955
+With all the integration branches and topics broken out:
 
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* as/typofix-in-env-h-header (2025-04-18) 1 commit
+  (merged to 'next' on 2025-04-23 at a9954f6cec)
+ + environment: fix typo: 'setup_git_directory_gently'
+
+ Typofix.
+ source: <20250418185855.52950-1-abhijeet.nkt@gmaiil.com>
+
+
+* az/tighten-string-array-constness (2025-04-21) 1 commit
+  (merged to 'next' on 2025-04-23 at 5a2b439731)
+ + global: mark usage strings and string tables const
+
+ Code clean-up.
+ source: <daj53eijkqzsjy5cvuxchea4qm3pbiu673ehetihfffyvwzhgs@tarta.nabijaczleweli.xyz>
+
+
+* jh/gc-launchctl-schedule-fix (2025-04-23) 1 commit
+  (merged to 'next' on 2025-04-23 at ab4f2e0c26)
+ + maintenance: fix launchctl calendar intervals
+
+ Fix for scheduled maintenance tasks on platforms using launchctl.
+ source: <20250421054633.231069-2-joshiheinrichs@gmail.com>
+
+
+* jk/p5332-testfix (2025-04-22) 1 commit
+  (merged to 'next' on 2025-04-24 at eafff4d7b7)
+ + p5332: drop "+" from --stdin-packs input
+
+ A test fix.
+ source: <20250422111632.GA1855088@coredump.intra.peff.net>
+
+
+* js/git-perf-env-override (2025-04-20) 1 commit
+  (merged to 'next' on 2025-04-22 at 77ea361791)
+ + perf: do allow `GIT_PERF_*` to be overridden again
+
+ Developer support fix..
+ source: <pull.1900.git.1743764167548.gitgitgadget@gmail.com>
+
+
+* lo/remove-log-reencode-from-rev-info (2025-04-22) 1 commit
+  (merged to 'next' on 2025-04-24 at 1c6c33ab1f)
+ + revision: remove log_reencode field from rev_info
+
+ Code clean-up.
+ source: <20250422213133.18685-1-lucasseikioshiro@gmail.com>
+
+
+* ps/ci-resurrect-p4-on-github (2025-04-22) 1 commit
+  (merged to 'next' on 2025-04-24 at 8594d07a3e)
+ + ci: fix p4d executable not being found on GitHub Actions
+
+ CI fix.
+ source: <aActb3dB-r3s69h6@pks.im>
+
+
+* ps/fewer-perl (2025-04-16) 5 commits
+  (merged to 'next' on 2025-04-23 at 275d267126)
+ + Documentation: stop depending on Perl to generate command list
+ + Documentation: stop depending on Perl to massage user manual
+ + request-pull: stop depending on Perl
+ + filter-branch: stop depending on Perl
+ + Merge branch 'ps/test-wo-perl-prereq' into ps/fewer-perl
+
+ Reduce requirement for Perl in our documentation build and a few
+ scripts.
+ source: <20250416-b4-pks-drop-perl-v2-0-bdd0492e9498@pks.im>
+
+
+* ps/install-bash-completion (2025-04-22) 1 commit
+  (merged to 'next' on 2025-04-24 at 1171444ac4)
+ + contrib/completion: install Bash completion
+
+ Build update to install bash (but not zsh) completion script.
+ source: <20250422-b4-pks-meson-install-completions-v2-1-ab29d399bc6c@pks.im>
+
+
+* ps/reftable-api-revamp (2025-04-07) 17 commits
+  (merged to 'next' on 2025-04-23 at 1a5f00290a)
+ + reftable/table: move printing logic into test helper
+ + reftable/constants: make block types part of the public interface
+ + reftable/table: introduce iterator for table blocks
+ + reftable/table: add `reftable_table` to the public interface
+ + reftable/block: expose a generic iterator over reftable records
+ + reftable/block: make block iterators reseekable
+ + reftable/block: store block pointer in the block iterator
+ + reftable/block: create public interface for reading blocks
+ + git-zlib: use `struct z_stream_s` instead of typedef
+ + reftable/block: rename `block_reader` to `reftable_block`
+ + reftable/block: rename `block` to `block_data`
+ + reftable/table: move reading block into block reader
+ + reftable/block: simplify how we track restart points
+ + reftable/blocksource: consolidate code into a single file
+ + reftable/reader: rename data structure to "table"
+ + reftable: fix formatting of the license header
+ + Merge branch 'ps/reftable-sans-compat-util' into ps/reftable-api-revamp
+
+ Overhaul of the reftable API.
+ cf. <3okrcl7bdpy75hzyzpmrp7fluan4n3zvsroioq64id4a2kt3o4@fc6fetilb6y2>
+ source: <20250407-pks-reftable-polishing-v2-0-316c4ff10571@pks.im>
+
+
+* ua/call-repo-config-with-possibly-null-repository (2025-04-20) 2 commits
+  (merged to 'next' on 2025-04-22 at 1f30a19c02)
+ + builtin/difftool: remove unnecessary if statement
+ + builtin/add: remove unnecessary if statement
+
+ Since a call to repo_config() can be called with repo set to NULL
+ these days, a command that is marked as RUN_SETUP in the builtin
+ command table does not have to check repo with NULL before making
+ the call.
+ source: <20250420025501.183290-1-usmanakinyemi202@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* cc/promisor-remote-capability (2025-04-29) 3 commits
+ - promisor-remote: allow a client to check fields
+ - promisor-remote: allow a server to advertise more fields
+ - promisor-remote: refactor to get rid of 'struct strvec'
+
+ Expecting a reroll.
+ cf. <CAP8UFD2LzijGsU3-aO-JBPtEfT+UtR_X_mqcdVigoOfdVAg1uA@mail.gmail.com>
+ source: <20250429145243.992252-1-christian.couder@gmail.com>
+
+
+* en/hashmap-clear-fix (2025-04-29) 1 commit
+  (merged to 'next' on 2025-04-30 at b0cdbeb28e)
+ + hashmap: ensure hashmaps are reusable after hashmap_clear()
+
+ hashmap API clean-up to ensure hashmap_clear() leaves a cleared map
+ in a reusable state.
+
+ Will merge to 'master'.
+ source: <pull.1911.git.1745941663160.gitgitgadget@gmail.com>
+
+
+* js/diff-codeql-false-positive-workaround (2025-04-29) 1 commit
+  (merged to 'next' on 2025-05-01 at a840276032)
+ + diff: check range before dereferencing an array element
+
+ Work around false positive given by CodeQL.
+
+ Will merge to 'master'.
+ source: <pull.1887.v3.git.1745926679028.gitgitgadget@gmail.com>
+
+
+* ng/xdiff-truly-minimal (2025-04-29) 1 commit
+ - xdiff: disable cleanup_records heuristic with --minimal
+
+ "git diff --minimal" used to give non-minimal output when its
+ optimization kicked in, which has been disabled.
+
+ Will merge to 'next'.
+ source: <20250429140949.2634935-1-n.glodny@campus.lmu.de>
+
+
+* ds/scalar-no-maintenance (2025-04-30) 2 commits
+ - scalar clone: add --no-maintenance option
+ - scalar register: add --no-maintenance option
+
+ Two "scalar" subcommands that adds a repository that hasn't been
+ under "scalar"'s control are taught an option not to enable the
+ scheduled maintenance on it.
+
+ Expecting a reroll.
+ cf. <b9a4dbf2-0064-4933-985f-b34dcb133030@gmail.com>
+ source: <pull.1913.git.1746008680.gitgitgadget@gmail.com>
+
+
+* ps/mv-contradiction-fix (2025-04-30) 2 commits
+  (merged to 'next' on 2025-05-01 at 5c27b05f45)
+ + builtin/mv: convert assert(3p) into `BUG()`
+ + builtin/mv: bail out when trying to move child and its parent
+
+ "git mv a a/b dst" would ask to move the directory 'a' itself, as
+ well as its contents, in a single destination directory, which is
+ a contradicting request that is impossible to satisfy. This case is
+ now detected and the command errors out.
+
+ Will merge to 'master'.
+ source: <20250430-pks-mv-parent-child-conflict-v1-0-11a87c55ffb9@pks.im>
+
+
+* cf/wrapper-netbsd-errno-eftype (2025-05-02) 1 commit
+ - wrapper: NetBSD gives EFTYPE where POSIX uses ELOOP
+
+ source: <20250502233403.289761-1-collin.funk1@gmail.com>
+
+
+* en/get-tree-entry-doc (2025-05-02) 1 commit
+ - tree-walk.h: fix incorrect API comment
+
+ source: <pull.1912.v2.git.1746213551473.gitgitgadget@gmail.com>
+
+
+* jc/doc-synopsis-option-markup (2025-05-02) 3 commits
+ - git-daemon doc: update mark-up of synopsis option descriptions
+ - git-{var,write-tree} docs: update mark-up of synopsis option descriptions
+ - git-verify-* doc: update mark-up of synopsis option descriptions
+
+ Doc mark-up fixes.
+
+ Comments?
+ source: <20250503011537.3035416-1-gitster@pobox.com>
+
+
+* jc/you-still-use-whatchanged (2025-05-02) 6 commits
+ - whatschanged: list it in BreakingChanges document
+ - whatchanged: remove when built with WITH_BREAKING_CHANGES
+ - whatchanged: require --i-still-use-this
+ - tests: prepare for a world without whatchanged
+ - doc: prepare for a world without whatchanged
+ - you-still-use-that??: help deprecating commands for removal
+
+ "git whatchanged" that is longer to type than "git log --raw"
+ which is its modern rough equivalent has outlived its usefulness
+ more than 10 years ago.  Plan to deprecate and remove it.
+
+ Comments?
+ source: <20250503005814.3030099-1-gitster@pobox.com>
+
+--------------------------------------------------
+[Cooking]
+
+* jc/ci-skip-unavailable-external-software (2025-04-25) 2 commits
+ - ci: download JGit from maven, not eclipse.org
+ - ci: update the message for unavailble third-party software
+
+ Further refinement on CI messages when an optional external
+ software is unavailable (e.g. due to third-party service outage).
+
+ Will merge to 'next'.
+ source: <20250425153827.147585-1-gitster@pobox.com>
+
+
+* js/ci-win-meson-timeout-workaround (2025-04-25) 1 commit
+ - ci(win+Meson): build in Release mode, avoiding t7001-mv hangs
+
+ win+Meson CI pipeline, unlike other pipelines for Windows,
+ used to build artifacts in develper mode, which has been changed to
+ build them in release mode for consistency.
+
+ Expecting a reroll, stating an updated rationale for the change.
+ cf. <xmqqjz6zuf80.fsf@gitster.g>
+ source: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+
+
+* ps/maintenance-missing-tasks (2025-05-02) 7 commits
+ - builtin/maintenance: introduce "rerere-gc" task
+ - builtin/gc: move rerere garbage collection into separate function
+ - builtin/maintenance: introduce "worktree-prune" task
+ - worktree: expose function to retrieve worktree names
+ - builtin/gc: move pruning of worktrees into a separate function
+ - builtin/gc: remove global variables where it trivial to do
+ - builtin/gc: fix indentation of `cmd_gc()` parameters
+
+ Make repository clean-up tasks "gc" can do available to "git
+ maintenance" front-end.
+
+ Will merge to 'next'?
+ source: <20250502-pks-maintenance-missing-tasks-v3-0-13e130d36640@pks.im>
+
+
+* ag/send-email-outlook (2025-04-29) 2 commits
+ - send-email: add --[no-]outlook-id-fix option
+ - send-email: retrieve Message-ID from outlook SMTP server
+
+ Update send-email to work better with Outlook's smtp server.
+
+ Will merge to 'next'.
+ source: <PN3PR01MB95973F4B26A8CE2BF17A3AB1B8842@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ source: <PN3PR01MB9597DA8661D1AFDF4C927A11B8812@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+
+
+* ds/fix-thin-fix (2025-04-28) 3 commits
+ - index-pack: allow revisiting REF_DELTA chains
+ - t5309: create failing test for 'git index-pack'
+ - test-tool: add pack-deltas helper
+
+ "git index-pack --fix-thin" used to abort to prevent a cycle in
+ delta chains from forming in a corner case even when there is no
+ such cycle.
+
+ Will merge to 'next'.
+ source: <pull.1906.v2.git.1745871885.gitgitgadget@gmail.com>
+
+
+* ps/object-store-cleanup (2025-04-29) 8 commits
+ - object-store: drop `repo_has_object_file()`
+ - treewide: convert users of `repo_has_object_file()` to `has_object()`
+ - object-store: allow fetching objects via `has_object()`
+ - object-store: move function declarations to their respective subsystems
+ - object-store: move and rename `odb_pack_keep()`
+ - object-store: drop `loose_object_path()`
+ - object-store: move `struct packed_git` into "packfile.h"
+ - Merge branch 'ps/object-file-cleanup' into ps/object-store-cleanup
+
+ Further code clean-up in the object-store layer.
+
+ Will merge to 'next'.
+ source: <20250429-pks-object-store-cleanups-v3-0-42902bad09a1@pks.im>
+
+
+* cc/fast-import-export-signature-names (2025-04-24) 1 commit
+ . fast-(import|export): improve on the signature algorithm name
+
+ Clean up the way how signature on commit objects are exported to
+ and imported from fast-import stream.
+
+ Expecting a reroll.
+ cf. <aAq1nvcPRlIPal5l@tapette.crustytoothpaste.net>
+ cf. https://github.com/git/git/actions/runs/14671270673/job/41178138711
+ source: <20250424203904.909777-1-christian.couder@gmail.com>
+
+
+* dd/meson-perl-custom-path (2025-04-24) 1 commit
+ - meson: allow customize perl installation path
+
+ Meson-based build framework update.
+
+ Looking good.  Expecting a minor reroll.
+ cf. <aA8vSPKdznjzBf6W@pks.im>
+ source: <80a2a6ce7c6b05323cf931cdc20d4decb6270002.1745507677.git.congdanhqx@gmail.com>
+
+
+* ps/meson-bin-sh (2025-04-25) 2 commits
+ - meson: prefer shell at "/bin/sh"
+ - meson: report detected runtime executable paths
+
+ Meson-based build framework update.
+
+ Will merge to 'next'?
+ source: <20250425-pks-meson-posix-shell-v3-0-01607a2e9334@pks.im>
+
+
+* es/meson-cleanup (2025-04-25) 6 commits
+  (merged to 'next' on 2025-04-28 at 0cc8ee98dc)
+ + meson: only check for missing networking syms on non-Windows; add compat impls
+ + meson: fix typo in function check that prevented checking for hstrerror
+ + meson: add a couple missing networking dependencies
+ + meson: do a full usage-based compile check for sysinfo
+ + meson: check for getpagesize before using it
+ + meson: simplify and parameterize various standard function checks
+
+ Code clean-up for meson-based build infrastructure.
+
+ Will merge to 'master'.
+ source: <20250425053345.17288-1-eschwartz@gentoo.org>
+
+
+* js/windows-arm64 (2025-04-23) 6 commits
+  (merged to 'next' on 2025-04-28 at c3d4cea333)
+ + max_tree_depth: lower it for clangarm64 on Windows
+ + mingw(arm64): do move the `/etc/git*` location
+ + msvc: do handle builds on Windows/ARM64
+ + mingw: do not use nedmalloc on Windows/ARM64
+ + config.mak.uname: add support for clangarm64
+ + bswap.h: add support for built-in bswap functions
+
+ Update to arm64 Windows port.
+
+ Will merge to 'master'.
+ source: <pull.1904.v2.git.1745395308.gitgitgadget@gmail.com>
+
+
+* sj/string-list-typefix (2025-04-22) 5 commits
+ - u-string-list: move "remove duplicates" test to "u-string-list.c"
+ - u-string-list: move "filter string" test to "u-string-list.c"
+ - u-string-list: move "test_split_in_place" to "u-string-list.c"
+ - u-string-list: move "test_split" into "u-string-list.c"
+ - string-list: fix sign compare warnings
+
+ Code and test clean-up around string-list API.
+
+ Expecting a reroll.
+ cf. <aA8vSPKdznjzBf6W@pks.im>
+ source: <aAetW0dan8S3Fljq@ArchLinux>
+
+
+* tb/midx-avoid-cruft-packs (2025-04-15) 9 commits
+ - repack: exclude cruft pack(s) from the MIDX where possible
+ - pack-objects: introduce '--stdin-packs=follow'
+ - pack-objects: swap 'show_{object,commit}_pack_hint'
+ - pack-objects: fix typo in 'show_object_pack_hint()'
+ - pack-objects: perform name-hash traversal for unpacked objects
+ - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
+ - pack-objects: factor out handling '--stdin-packs'
+ - pack-objects: limit scope in 'add_object_entry_from_pack()'
+ - pack-objects: use standard option incompatibility functions
+
+ "pack-objects" has been taught to avoid pointing into objects in
+ cruft packs from midx.
+
+ Comments?
+ source: <cover.1744757204.git.me@ttaylorr.com>
+
+
+* tb/pack-bitmap-lookup-tables (2025-04-17) 4 commits
+ - t/perf/lib-bitmap.sh: avoid test_perf during setup
+ - t/perf: avoid testing bitmaps without lookup table
+ - p5312: removed duplicate performance test script
+ - pack-bitmap: write lookup table extension by default
+
+ Enable lookup tables extension in pack bitmap (and midx bitmap) by
+ default.
+
+ Comments?
+ source: <cover.1744924321.git.me@ttaylorr.com>
+
+
+* ps/meson-build-perf-bench (2025-04-28) 5 commits
+  (merged to 'next' on 2025-04-28 at f563542bfd)
+ + meson: wire up benchmarking options
+ + meson: wire up benchmarks
+ + t/perf: fix benchmarks with out-of-tree builds
+ + t/perf: use configured PERL_PATH
+ + t/perf: fix benchmarks with alternate repo formats
+
+ The build procedure based on Meson learned to drive the
+ benchmarking tests.
+
+ Will merge to 'master'.
+ source: <20250428-pks-meson-benchmarks-v5-0-5010dd014d1d@pks.im>
+
+
+* kn/meson-hdr-check (2025-04-23) 7 commits
+  (merged to 'next' on 2025-04-29 at c925448238)
+ + makefile/meson: add 'check-headers' as alias for 'hdr-check'
+ + meson: add support for 'hdr-check'
+ + meson: rename 'third_party_sources' to 'third_party_excludes'
+ + meson: move headers definition from 'contrib/coccinelle'
+ + coccinelle: meson: rename variables to be more specific
+ + ci/github: install git before checking out the repository
+ + Merge branch 'es/meson-build-skip-coccinelle' into kn/meson-hdr-check
+
+ Add an equivalent to "make hdr-check" target to meson based builds.
+
+ Will merge to 'master'.
+ source: <20250423-505-wire-up-sparse-via-meson-v5-0-d1e2be4b2078@gmail.com>
+
+
+* pb/status-rebase-fixes (2025-03-28) 4 commits
+ - wt-status: suggest 'git rebase --continue' to conclude 'merge' instruction
+ - wt-status: also abbreviate 'merge' and 'fixup -C' lines during rebase
+ - SQUASH??? - <CAPig+cS92W_gYuNsaTvQxiP3xBK7Wpg0__uVkgAU1x0OFJUZgQ@mail.gmail.com>
+ - rebase -r: do create merge commit after empty resolution
+
+ A few fixes around "git status" while "git rebase" is running,
+ plus a corner case bug fix for "git rebase -r".
+
+ Expecting a (small and hopefully final) clarifying reroll.
+ cf. <c2f93d99-2f4d-ee6d-7087-42320c6df0f2@gmx.de>
+ cf. <e9700234-324d-dc63-d91e-9b8f36fabc79@gmail.com>
+ source: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
+
+
+* md/userdiff-bash-shell-function (2025-04-01) 1 commit
+ - userdiff: extend Bash pattern to cover more shell function forms
+
+ The userdiff pattern for shell scripts has been updated to cope
+ with more bash-isms.
+
+ Comments?
+ source: <20250330134018.9662-2-dhar61595@gmail.com>
+
+
+* sc/bundle-uri-use-all-refs-in-bundle (2025-04-25) 2 commits
+ - bundle-uri: add test for bundle-uri clones with tags
+ - bundle-uri: copy all bundle references ino the refs/bundle space
+
+ Bundle-URI feature did not use refs recorded in the bundle other
+ than normal branches as anchoring points to optimize the follow-up
+ fetch during "git clone"; now it is told to utilize all.
+
+ Ready?
+ source: <pull.1897.v4.git.git.1745587067.gitgitgadget@gmail.com>
+
+
+* ds/path-walk-2 (2025-03-25) 13 commits
+ - pack-objects: allow --shallow and --path-walk
+ - path-walk: add new 'edge_aggressive' option
+ - pack-objects: thread the path-based compression
+ - pack-objects: refactor path-walk delta phase
+ - scalar: enable path-walk during push via config
+ - pack-objects: enable --path-walk via config
+ - repack: add --path-walk option
+ - t5538: add tests to confirm deltas in shallow pushes
+ - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+ - p5313: add performance tests for --path-walk
+ - pack-objects: update usage to match docs
+ - pack-objects: add --path-walk option
+ - pack-objects: extract should_attempt_deltas()
+
+ "git pack-objects" learns to find delta bases from blobs at the
+ same path, using the --path-walk API.
+
+ Will merge to 'next'?
+ cf. <aBVLC57bMJKjygyi@nand.local>
+ source: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
+
+
+* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
+ - diff: docs: Use --patch-{grep,modifies} over -G/-S
+ - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
+ - diff: test: Use --patch-{grep,modifies} over -G/-S
+ - completion: Support --patch-{grep,modifies}
+ - diff: --patch-{grep,modifies} arg names for -G and -S
+ - docs: gitdiffcore: -G and -S: Use regex/string placeholders
+ - diff: short help: Add -G and --pickaxe-grep
+ - diff: short help: Correct -S description
+ - diff: -G description: Correct copy/paste error
+ - t/t4209-log-pickaxe: Naming typo: -G takes a regex
+
+ The commands in the "diff" family learned longhands for "-S" and
+ "-G" options.
+
+ Expecting a reroll.
+ source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
+
+
+* ej/cat-file-remote-object-info (2025-02-24) 8 commits
+ - cat-file: add remote-object-info to batch-command
+ - transport: add client support for object-info
+ - serve: advertise object-info feature
+ - fetch-pack: move fetch initialization
+ - fetch-pack: refactor packet writing
+ - t1006: split test utility functions into new "lib-cat-file.sh"
+ - cat-file: add declaration of variable i inside its for loop
+ - git-compat-util: add strtoul_ul() with error handling
+
+ "git cat-file --batch" and friends can optionally ask a remote
+ server about objects it does not have.
+
+ Expecting a reroll.
+ cf. <CAN2LT1Cc-UaUpabqcGascicR3nk6ZdFythamKje33Orhy5WoNA@mail.gmail.com>
+ source: <20250221190451.12536-1-eric.peijian@gmail.com>
