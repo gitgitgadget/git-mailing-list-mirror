@@ -1,87 +1,73 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B62021BC41
-	for <git@vger.kernel.org>; Sat,  3 May 2025 17:32:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CD4917A31D
+	for <git@vger.kernel.org>; Sat,  3 May 2025 18:44:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746293539; cv=none; b=h3wuyvvBQE0wiYM2gghKl7/KfDJteNJ9PQaeyo6CgKOz6wLjiwzsG0YO871qyRWvsRN/YPmcUDl1Y44rymzkByGumnwd5h+R4I3Pte7JDeXNZtNNSZL0PWSGvMafIl7NfEDivttgD58sHLOuieVuQPjbflb8Jd6RI8HkKjMSbWk=
+	t=1746297865; cv=none; b=B3u3IKFBVFB3KUpy2k2T5EZIYqmYujCcQZb/Nlt5QIkcaS3cvC30dPwXbv2+s641tg15Fsz0qlsKrYyNH7oASL3IaWGKW6BHsJdmx7XoJrhTlikHsxzaAxMqfyBg4PYhwd0yX3/xnIviBRyCdZ0xg3fhAP1aaPGxl8Pw4mSnIlE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746293539; c=relaxed/simple;
-	bh=HllpEr2ffGnnEM542mRf/EQA1wblP1r6HUtjVLzUcsQ=;
+	s=arc-20240116; t=1746297865; c=relaxed/simple;
+	bh=0ekJHo105DPXGllXRvGc4uRrhAuZG+3f45ssTM3Au6Q=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ntRRDUXBevE1XCqy8pLbsE80FczE3MM1JgeEDnmd1zd1HoOSkejqYf9RO5kzIljwlKkFIck4AQr5vUGx5IJKSUoEfipt3Hz8PNXGn2e72mrrQFJ9KV+fofPqqjF99+fUxEkoykIqyMeNDyH6H81zF/6A5ZldvO/IbccbmNzVk9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EVaRko7F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g4F4rxGy; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	 MIME-Version:Content-Type; b=Gv008osuu5qX8c3xSPRrLzrsnnnPs8PN5Bz0WeR5wfYezoFCgC8PbcaUGrfMWQlyMBWb6wZ76wOFBSmAarb4aoIeKIrIMgaf8TU9NhmjdMS1k9b3Dtn6WQ4nfoh57cc3wmr/KvpldnvAHPCekDAHQB3rjwqEELaQPBRi8qxCFFM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VVttER0u; arc=none smtp.client-ip=209.85.215.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EVaRko7F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g4F4rxGy"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id B5E6D1380467;
-	Sat,  3 May 2025 13:32:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Sat, 03 May 2025 13:32:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746293535; x=1746379935; bh=JdK03kYyGg
-	oq0XWPfEAeglPmVfZgzrt5dHiSsLVd0Qc=; b=EVaRko7Fsc8LTu8oVTV1SZMRp8
-	XK2tztsKQufly/9YOOVr6z+F14IRNwPTKyXynyelz7fl34kyRSWWxhKfss3jlL3W
-	QYYUW95QTkdArrREYvYAQKs1dU9O4/n/1rto9ECrj3/H1cNTlqNNc46DQc9ZXtZm
-	Aa0XyGkVkBwaD+69Ws1AjzAfD1w6oo1DarPfaRbeZcQUD5M81KEM/Y6iXhgQsaMJ
-	34cOezauAZVLV/Q9f8i9EcV+MJY41mIIMzD1i4CEus8UWqy5/oYzCedn9kcmRlK2
-	Em6s3khGDP9ml3NeyV0Ru+zu1mHnfo8nxMjq+0GvqtW5kmEznXtmkn1xGnug==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746293535; x=1746379935; bh=JdK03kYyGgoq0XWPfEAeglPmVfZgzrt5dHi
-	SsLVd0Qc=; b=g4F4rxGy9eE4JSqCz0fr1cNITZTjW3Weupca4+LumPTjYHgI8cK
-	e/wZzDybTbbVSy6zaaUdaGmhCuy/tPeQk40b7UxCnt/6iM87lLz6Bsfk00YuuMTS
-	iexbyuSj0NjLy1rqbyX3Y8Y88UGeIKCGG1vt+xq2CixZI8xOdDaDY7SXj+ApPDvR
-	XmnjDB+YmgyAHTGl1gVxD7aZ1tNVsgvIkq5Wil0JuHMstd/J93Nn5Ac2Y+oUbjWK
-	vbW5WgL+iwIGNjFyKmmE0YCwsi5dOBKkK5fnNVRyQ9POjC92PWb+E/pGhYkSflUm
-	IyCyndv/fGjE3nsGUirSY+XIHI/LyyPDFkw==
-X-ME-Sender: <xms:H1MWaFUDfIZJJxMz-IjD4ApXFSQ2RTf5IPTrg9ooF8NWX2mU-LveJw>
-    <xme:H1MWaFnlHb6MSvcpwpZEewM6xM-D3J_mffD5jDsn4QoWD08Nf-y0OwIqwHdZpXif2
-    qINd9Sy0Y0y9qV-1Q>
-X-ME-Received: <xmr:H1MWaBb1NGI6guOazrHPqDYjERb1XNj1xfNOkH0IRDxEdJ5bnoPJv1Id6mSlJPdSwWQw67hfOjrZJKM_ThSy9737AVvzlEvaB4Br>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeehleefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptgholhhlihhnrd
-    hfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhs
-    thihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:H1MWaIWK6a259cWK6DPENHLkOIZGXufw3NegMUG-GxBJhmTB8R2TRQ>
-    <xmx:H1MWaPk8wyO1rAV9ni0xftHSHlXDBDRANfJN0_YIchXxjmM4ierk5A>
-    <xmx:H1MWaFdIW0elcMPSZyjcir8m4Cs0ibbg1R7R0OJ9jPePxP9x9nU43Q>
-    <xmx:H1MWaJGIrfnEh0TON_z5bOhToJe7cc3WBCv-7IDVD-YTAWKdGyjhug>
-    <xmx:H1MWaDyvSEgxL2NUpCGyVbKupcA7Ox1hk4PUUwrSQ9wY8EP3ux_1683g>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 3 May 2025 13:32:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  shejialuo@gmail.com,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-In-Reply-To: <87jz6ycojo.fsf@gmail.com> (Collin Funk's message of "Fri, 02 May
-	2025 21:21:15 -0700")
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VVttER0u"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-879d2e419b9so3116304a12.2
+        for <git@vger.kernel.org>; Sat, 03 May 2025 11:44:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746297863; x=1746902663; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=/lIQiSe8fkC3wrpXnRU899SNolkuZziiIz0yPZWaoBs=;
+        b=VVttER0uXjj75DX1NN3dLn3z72wW3C4CR19alD4UvVg5Dh8XRCCF+qpfvOh64ALf9x
+         gOFi7Kgsk5eyyt8eilrU8vq77dw3yr83y/xHlRVmOuGIQSCLywipx3ZIGxva6/jxAUtL
+         TyEBE/xpROi6j3CQM7x6t92YBdgxGII5aoPuKPp6IXwpgskR04bjvc9Utp6bYd0+ic7E
+         cWwV+1l+VWp/h3QzIdx+RmtInh+ZUYo00Fq7weYLUaVzYykz4MalaGsxfu+lph62j0Lq
+         iGy/1GFLscgyS3vIL100SE/WF5TJtATS0sSDiUFvZ9M3QCdq6FlBbB+qyOviQywCHHIK
+         idcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746297863; x=1746902663;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=/lIQiSe8fkC3wrpXnRU899SNolkuZziiIz0yPZWaoBs=;
+        b=XraFVe8sQxP9BbEOvmpELyCDIl+Fw4YJGglIVsvM4WBO+krfUCNE1xQqH2q7/5rIwG
+         VeHBv5sHW8GQRjDxljHjrQzoTCWnjRDKTkl925Rf2+IEQ517TblUmbOUrBm/vBa503N5
+         RD5A9Nfr8cNp8IX/baq2hZKlwn8q1j9ZrHbw/clzhUrHd8ARYmC1EPtfzlgo2hccVIkn
+         gKlHsH+776Fb1tqYY5WZs6iFQJR0dn7L7lxJ/FmbqZ+g9FCCT4cpgBHyvLx6dFC5b7xa
+         lW5zMbCOi/Ts4MRaJJImgnktZvVB1O48YP8zzGJj+84HuBb5c/BMUGNLVB+8xa9d0HOd
+         JqgQ==
+X-Gm-Message-State: AOJu0Yyh1UQE+o8ZKQI70OE/bBlZgbw/FlBrtTj0OAP7FPFOGcRrWltj
+	Dhczlf7ECpAcDxbXYoxJurg62KOlCmMhdO1EqCCUgRktEpouL9bm
+X-Gm-Gg: ASbGnctPcCTRfZIYQRfGE2FybCxsBZZLYrAEz9kDNFxS+ItPvR41eXVo2yua5VKNnmY
+	Hnb5MBplJ0RzWn0bfuaw3YJTx0shL8DStra9WCjpRGb+4B4Suan9u3DgzmXYZxPXSrLUf71BtV3
+	+yjUy6GmV4kiCYC0waDxqc6vA9joekqPGCcXWDjWxNZ7YATUDuoDFggm6pDv2QN79/uVGI+3GV4
+	0Izx/L5brVG8e1fTvQw9+9/SksUCPUgLDowo6mVPepG/aW8JntSG70osYJI3Fw9bETCRD85sHgx
+	gz3z2LJKThR4t/k0Zj5w4XiXo88wNutu4dIaE8aMJehykPxKTVjtQ7rG/sFIuTGL1h24t/XCjbj
+	NqQ==
+X-Google-Smtp-Source: AGHT+IF1SEviE0eioa1uXntxGvL1L6sLMllkwmRgDNxm+32cuKnUovEAYF9s8xq5WYBEOmDg+Z04Ng==
+X-Received: by 2002:a17:90b:4c51:b0:2ee:b4bf:2d06 with SMTP id 98e67ed59e1d1-30a5ae52d16mr5169450a91.19.1746297863346;
+        Sat, 03 May 2025 11:44:23 -0700 (PDT)
+Received: from fedora (static-198-54-134-143.cust.tzulo.com. [198.54.134.143])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b1fb3b5683esm2726135a12.24.2025.05.03.11.44.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 03 May 2025 11:44:23 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: git@vger.kernel.org,  shejialuo@gmail.com,  Jeff King <peff@peff.net>,
+  Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] wrapper: NetBSD gives EFTYPE and FreeBSD gives
+ EMFILE where POSIX uses ELOOP
+In-Reply-To: <aBY6BPnuSfslYlYt@tapette.crustytoothpaste.net>
 References: <20250502233403.289761-1-collin.funk1@gmail.com>
-	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
-	<xmqqtt62sdv9.fsf@gitster.g> <87jz6ycojo.fsf@gmail.com>
-Date: Sat, 03 May 2025 10:32:13 -0700
-Message-ID: <xmqqjz6xsiqq.fsf@gitster.g>
+	<20250503041718.42195-1-collin.funk1@gmail.com>
+	<aBY6BPnuSfslYlYt@tapette.crustytoothpaste.net>
+Date: Sat, 03 May 2025 11:44:21 -0700
+Message-ID: <87tt61mt4q.fsf@gmail.com>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,24 +77,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Collin Funk <collin.funk1@gmail.com> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Thanks, both.  Will queue after fixing the proposed log message a
->> bit (the sample must be indented, especially when it contains lines
->> that look like a patch).
->
-> Yes, that looks better. Thanks!
->
->>> I suspect we'll also hit this on FreeBSD, which has a similar issue in
->>> that it returns `EMLINK` instead of `ELOOP`.
->>
->> I won't expect Collin or you to redo this patch to cover FreeBSD;
->> anybody with FreeBSD box/vm can do a separate patch on a different
->> day.
->
-> It is no problem. I have access to a FreeBSD 14.2 machine. I can confirm
-> that it fails with EMLINK.
+> I'll just add one resource for people who might like to look into these
+> kinds of things more.  https://man.freebsd.org/cgi/man.cgi is the
+> FreeBSD man page viewer, which lets you view manual pages from the BSDs,
+> Linux, and some proprietary Unix systems.  It can be quite helpful for
+> finding and fixing portability issues like this or just seeing what
+> command-line options or arguments a certain Unix supports.
 
-Excellent.
+Gnulib documents most portability quirks too [1]. For example, it had the
+FreeBSD EMLINK and NetBSD EFTYPE with 'open("symlink", O_NOFOLLOW ...)
+documented, but for some very old versions released around 2014. Now
+that I have confirmed it still exists from this git test I have updated
+the documentation there [2].
+
+Thanks,
+Collin
+
+[1] https://www.gnu.org/software/gnulib/manual/
+[2] https://git.savannah.gnu.org/gitweb/?p=gnulib.git;a=commit;h=c0c646e29fbda0a6eadd6012d8ed1eb33b6c3968
