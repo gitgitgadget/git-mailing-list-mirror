@@ -1,159 +1,179 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AE42F30
-	for <git@vger.kernel.org>; Sat,  3 May 2025 01:05:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3698C4690
+	for <git@vger.kernel.org>; Sat,  3 May 2025 01:15:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746234320; cv=none; b=bPStCbtgL7MlJMeSypaO4ocrjgCTUqytXxXCKL8di2WQlKt1Ai+0OKD/ppslvZXAYCCghDa2v0lMkC2y9J/TYUmxICGTa1OIs33FNJ2GuVccHt2OZ5BFTRdU5ITUCdKmWUnjb2wPH8HkH9+0UWl3sbps8RAeorZ4Mpf+sDvbK8Q=
+	t=1746234942; cv=none; b=mPjHe/mweBYbHF0YxNNaiJ+NwpQyPLKwvlp9qOPk7yPWwwPIuLzGC8c5cXA4rTXJpliKPJr3bHrowsCarBhKjN/nvKOUV4+X1MUFKHZxl7e2XlMBsCJXeNAm4L4Ty5uKezAHcO9rG3s0PBYLChDhm0E/0m99ProdSI4siOgLyAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746234320; c=relaxed/simple;
-	bh=ORxcHNKkjrq/A3CY0vgXndr37B47FycXO8EZ4GSgvuM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pAmV6wjE1oMXHaUxuYpVUsNJhj8Me9Ezbr7LbRFCImD4j2QLuQfvsz8uKKpIjOParr4E5/pPeIJhQWRy9LjBZLaNKV7ojHgB2ubef+GPwwJURxyxb3h+Up5e2PJnRpgnQSAsxVzya0zgpobOrEwaO3bfpFZKc9+fv/pu+vqFYAY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XDHKUaGO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t+Jjvup6; arc=none smtp.client-ip=103.168.172.150
+	s=arc-20240116; t=1746234942; c=relaxed/simple;
+	bh=ynCl4v1IOIIhf7ibkWwzH6GSxGQhjxNWAzI56rtnfuU=;
+	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=Le6/c2plktPg+CseHSdPCXu5B4EOptq/LwiKvLj9j915vNIGfAdnIWC9Xh8tklFP1u8q0k32ORlcoXamooJQmcuot9NuhTcRF+BgtcCKSaB7PCrrY5QNRYidxt1PNrsH3zaCrw/TqYajWPxZBPxKWvdkiQenJPPeL2w8MIJt+Vc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D3XZGdTa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FAciQyo8; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XDHKUaGO";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t+Jjvup6"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id CCCB31380F25;
-	Fri,  2 May 2025 21:05:16 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 02 May 2025 21:05:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D3XZGdTa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FAciQyo8"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id DBA351380F8B;
+	Fri,  2 May 2025 21:15:38 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 02 May 2025 21:15:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746234316; x=1746320716; bh=KcCj9ZzANh
-	fh/XEm6jeKdHhyrTTFVp8ID4BRtgGxyAE=; b=XDHKUaGOGM0A6Bzxdx6Ms/r8Sm
-	8MmHcoyUYtDMlDpC/rTaVSIoQj9NBZMXCNLaVkthQJWiSKG9DtNC61Na9+n+DkA+
-	FTfgI/7ly+i0IHG4zTvV2MzPrAxrrpqZfmz5mUfelwb7u6fvhU9VLtyQy1Ukgo3V
-	fOhR/lnckAT0FFhQQlG6Qntxulh50Lmio2Y4P8iGL2s7KhkbJrDLN8AmEYkHEWpy
-	z7vC/35VJkHQX+0/Tp9yzfsMAqIFe5CX0eiWxmildlGzV/0XFnLnjAk07tGzZy03
-	0I3LciUtxvmOtDmoZuZSlEjd037ZcpgqWSB7KtgcK4I8IlCWeiZ3jFr9uUyA==
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1746234938;
+	 x=1746321338; bh=VIJXFek3P6QsyR146VPOyfOoXcc2H/W+xJEyt68qlz0=; b=
+	D3XZGdTaBczuoeQ9Dx0+yLsvznttJB9qcv1SpD8r3c+wQmvyv1YMQmsHY0ltI2YJ
+	m1YoCV9z/IuIh5EZXeF6pxSqdEcmL/+GTSE6jl2+lqsVpwPH4dMy5xZ5mkxZaUoA
+	f22WTPtBQ8UIIRrHjMZpB5RLEHVCQHxyaWqSGW+qOB6kIW7XacUGBRl2FSW6R23X
+	AtCrIEyv723KvNtTv3WwQb/LYrRAZoHz+TCdZTxqOIT8i6QjaWSc7/F1z6tCq9tM
+	8QOQUP302MVXEJmAxlJ8MbRN2hoRNCEMBtoWB2+Lz6/91ZmsG60dTOv/OuUIz+pf
+	PZ7WabAXby1muSOlu9QIzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746234316; x=1746320716; bh=KcCj9ZzANhfh/XEm6jeKdHhyrTTFVp8ID4B
-	RtgGxyAE=; b=t+Jjvup6/VvhQSEYrmTCslFN0cZsjv7NXkxkhaNR0doFcyZRn+A
-	QA2UxQGv6CY4cPzK3weMrCFmZrE1zjF60HS9rRLt5koXJqnNhdeH55My6MLvFfjx
-	SGEU4CQhPtHE1RfvDbNOWpR+bHENsrdydr8aAq5Ybvq+Ji7xBaDaHukMGfSd+A4J
-	ZT3PDY5UVUJtEDACyLLT6KBZwBpL6T1fveFnDX0rOb+RqRxnt9f/MKAbU76Og5BM
-	Sj0KVCcJ0oEAvm4tvfG3FcRCsOjU6EbGHmvdq9C9GhVhwqeQ9R3Ia88g+Ly4Xfsk
-	DYP+/oMJZ51f8GOSoN1He1fZc4v4RTWX3lw==
-X-ME-Sender: <xms:zGsVaOBBkhL4dPemNvG6wzP5E03J5rFEy0L4L-8AfsJOgsS83ruVRg>
-    <xme:zGsVaIho65Ffb_eslCZUkceCymlGlI9OF_OzqRbJknpHC-6aARJ92kTOmEkLCcTV4
-    a9GvbgAHuqazkA-UA>
-X-ME-Received: <xmr:zGsVaBkK5uXKPKPK1wpUeR97RUg6cVIqY3J6qWIZae6TlauiInV3SI3UnNu98JyQp2lZwEW9B_kWWkDvfNfr6PJDFu73exkicOWS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefleejucetufdoteggodetrf
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1746234938; x=1746321338; bh=V
+	IJXFek3P6QsyR146VPOyfOoXcc2H/W+xJEyt68qlz0=; b=FAciQyo8dqt0gSlLm
+	oGO4eoqr9PbgNRXOXv5JqZWSRsUBXu10O4FJrTqUpjv51o7fzaVT01Y/BQxi39na
+	xLXZfA+C22kEqOD2zZ5BZe8Y5dMLS1UJd31BxRktXgggxU66jbQOQ/zIvZgesjcj
+	hORCZUA7QeouOuL7fCAluAbtwLBWeOCsym5Pld3lrCbuSI+Fz7EFjtZQwsnWSBxq
+	gF3B5OIfy7wDtuG6T1RAqmrUsYN8Uhja7kpsq/YpTKdzfjTlhiM4nM3ASi85mwqX
+	/O7b6PKctvjfJm1JQAt1L5f1sUQIsLqLAJyAm98kgkiazp7eI3fp/dDAEXbsb6lj
+	VT5bQ==
+X-ME-Sender: <xms:Om4VaFW3UTDWPEZnnhMLW-8gWfium-t160W7ncvJqt9wdmbko6GJFQ>
+    <xme:Om4VaFmJ0_25MY9FG3gi2K5BipzFwgteivs14_2Y-gw7ztBa4NuClvKy6z9Sv4QBN
+    C7sdyud1wjotcAUxA>
+X-ME-Received: <xmr:Om4VaBbJ4-NWPx4yadZq82wVEMJmI-c2mI3lr4vGSWQzYeeMrC9ROPqKzEGC4KQV1RgngDhLh9Qa9oAE0NZe_uCPRltgS-H266q0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefleekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoheptgholhhlihhn
-    rdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:zGsVaMwu9NE8DR65_IIEfnhxmhAmsH1dG0u8_CAVvv1NwiPZMESx9Q>
-    <xmx:zGsVaDT5Vg9eFswscxgGSeSR7p2PptlV-9F0KBZ0vuOuiTCLK8HkLw>
-    <xmx:zGsVaHZvwwD99z8zuKhxLZxo0UjZ-ZBo39sOhywG5tplzBcfcec_MQ>
-    <xmx:zGsVaMQKwHCyv1HYUlVLBiOO13NgXBH-Ofo858tTHyjjGPw9DViTjg>
-    <xmx:zGsVaL88wfjjDpI33XSjSg-qHGV28TtYqxxkA0rZMIxmVvB9BRIeBWJ_>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    fufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    dtieegudfgieefgedvieetkefftdetleeuhfduteehgeeffeevjeegjeekheeggfenucff
+    ohhmrghinhepvgigrghmphhlvgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:Om4VaIXO0WfHQruJfr-jadUFXI68KLCxJNO_MuGURh1JzOWuRu5oTg>
+    <xmx:Om4VaPkwwKidPR92WMxve8GiCFH1rHqv3L_mPdJ36Urgk1sFKTM6Rg>
+    <xmx:Om4VaFcsRxqS7J3-tQOGiNvs9TtKKXT9TX_2qfIyHbTigII2PV1RBA>
+    <xmx:Om4VaJGc9eaQK-HkOGDx5H6FQu18wsH7PiD40uL6aLlGfxSWpqh-LQ>
+    <xmx:Om4VaBUgJhMI9KxP3MH6aDu0bthmAZPpMpxDx_oWykkFyDFe5jMa2ZYm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 21:05:16 -0400 (EDT)
+ 2 May 2025 21:15:38 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Collin Funk <collin.funk1@gmail.com>,  git@vger.kernel.org,
-  shejialuo@gmail.com,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-In-Reply-To: <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Sat, 3 May 2025 00:57:11 +0000")
-References: <20250502233403.289761-1-collin.funk1@gmail.com>
-	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
-Date: Fri, 02 May 2025 18:05:14 -0700
-Message-ID: <xmqqtt62sdv9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+To: git@vger.kernel.org
+Subject: [PATCH v2 0/3] A handful of doc synopsis/options update
+Date: Fri,  2 May 2025 18:15:34 -0700
+Message-ID: <20250503011537.3035416-1-gitster@pobox.com>
+X-Mailer: git-send-email 2.49.0-601-ga5925c3955
+In-Reply-To: <20250501213414.370514-1-gitster@pobox.com>
+References: <20250501213414.370514-1-gitster@pobox.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Continuing what Jean-Noël started with 22293895 (doc: apply synopsis
+simplification on git-clone and git-init, 2024-09-24), use more
+[synopsis] (rather than [verse]) mark-up and also make sure
 
-> On 2025-05-02 at 23:33:32, Collin Funk wrote:
->> As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
->> symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
->> This patch fixes the following test failure:
->> 
->> $ sh t0602-reffiles-fsck.sh --verbose
->> --- expect	2025-05-02 23:05:23.920890147 +0000
->> +++ err	2025-05-02 23:05:23.916794959 +0000
->> @@ -1 +1 @@
->> -error: packed-refs: badRefFiletype: not a regular file but a symlink
->> +error: unable to open '.git/packed-refs': Inappropriate file type or format
->> not ok 12 - the filetype of packed-refs should be checked
->> 
->> This portability issue was introduced in Commit
->> cfea2f2da8 (packed-backend: check whether the "packed-refs" is regular file, 2025-02-28)
->> 
->> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
->> ---
->>  wrapper.c | 14 +++++++++++++-
->>  1 file changed, 13 insertions(+), 1 deletion(-)
->> 
->> diff --git a/wrapper.c b/wrapper.c
->> index 3c79778055..4d448d7c57 100644
->> --- a/wrapper.c
->> +++ b/wrapper.c
->> @@ -737,7 +737,19 @@ int is_empty_or_missing_file(const char *filename)
->>  int open_nofollow(const char *path, int flags)
->>  {
->>  #ifdef O_NOFOLLOW
->> -	return open(path, flags | O_NOFOLLOW);
->> +	int ret = open(path, flags | O_NOFOLLOW);
->> +#ifdef __NetBSD__
->> +	/*
->> +	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
->> +	 * time this errno occurs when O_REGULAR is used. Since we don't use
->> +	 * it anywhere we can avoid an lstat here.
->> +	 */
->> +	if (ret < 0 && errno == EFTYPE) {
->> +		errno = ELOOP;
->> +		return -1;
->> +	}
->> +#endif
->> +	return ret;
->
-> This patch seems reasonable and correct.  I don't use NetBSD, but I do
-> often test there, and I'm aware of this infelicity.  I'm surprised we
-> haven't hit it before.
+ - dashed options in the text, including the heading for enumerated
+   dashed options in the OPTIONS section, are `backquoted` to be
+   typeset verbatim.
 
-Thanks, both.  Will queue after fixing the proposed log message a
-bit (the sample must be indented, especially when it contains lines
-that look like a patch).
+ - both positive and negative variants are spelled out when the
+   option is negatable, i.e. a heading "--[no-]opt::" is separated
+   into "--opt::" and "--no-opt::", to help grep hit with simpler
+   patterns.
 
-> I suspect we'll also hit this on FreeBSD, which has a similar issue in
-> that it returns `EMLINK` instead of `ELOOP`.
+ - non-options are not described in the OPTIONS section.
 
-I won't expect Collin or you to redo this patch to cover FreeBSD;
-anybody with FreeBSD box/vm can do a separate patch on a different
-day.
+The changes in the first two patches are unchanged.
 
-> I do wish these two OSes
-> would provide an appropriate POSIX-compatible `open` call when set with
-> `_POSIX_SOURCE`, since this is one of the biggest portability problems
-> with them.
+The update to "git daemon" documentation has acquired a bit more
+`literal` mark-ups, prompted by a comment by Eric Sunshine on the
+previous iteration.
 
-That may be true, but not something we can fix here X-<.
+The initial iteration contained a WIP on worktree documentation,
+which has been dropped in this iteration.
+
+
+1:  65a5556d4b = 1:  5e8ae75a6b git-verify-* doc: update mark-up of synopsis option descriptions
+2:  a9c5bd63ee = 2:  c6cc44c72b git-{var,write-tree} docs: update mark-up of synopsis option descriptions
+3:  eb0e783e21 ! 3:  d424d8c846 git-daemon doc: update mark-up of synopsis option descriptions
+    @@ Documentation/git-daemon.adoc: git-daemon - A really simple server for Git repos
+      
+      DESCRIPTION
+      -----------
+    +@@ Documentation/git-daemon.adoc: that service if it is enabled.
+    + It verifies that the directory has the magic file "git-daemon-export-ok", and
+    + it will refuse to export any Git directory that hasn't explicitly been marked
+    + for export this way (unless the `--export-all` parameter is specified). If you
+    +-pass some directory paths as 'git daemon' arguments, the offers are limited to
+    ++pass some directory paths as `git daemon` arguments, the offers are limited to
+    + repositories within those directories.
+    + 
+    + By default, only `upload-pack` service is enabled, which serves
+     @@ Documentation/git-daemon.adoc: An `upload-archive` also exists to serve 'git archive'.
+      
+      OPTIONS
+    @@ Documentation/git-daemon.adoc: An `upload-archive` also exists to serve 'git arc
+     +`--strict-paths`::
+      	Match paths exactly (i.e. don't allow "/foo/repo" when the real path is
+      	"/foo/repo.git" or "/foo/repo/.git") and don't do user-relative paths.
+    - 	'git daemon' will refuse to start when this option is enabled and no
+    +-	'git daemon' will refuse to start when this option is enabled and no
+    ++	`git daemon` will refuse to start when this option is enabled and no
+      	directory arguments are provided.
+      
+     ---base-path=<path>::
+     +`--base-path=<path>`::
+      	Remap all the path requests as relative to the given path.
+    - 	This is sort of "Git root" - if you run 'git daemon' with
+    - 	'--base-path=/srv/git' on example.com, then if you later try to pull
+    - 	'git://example.com/hello.git', 'git daemon' will interpret the path
+    - 	as `/srv/git/hello.git`.
+    +-	This is sort of "Git root" - if you run 'git daemon' with
+    +-	'--base-path=/srv/git' on example.com, then if you later try to pull
+    +-	'git://example.com/hello.git', 'git daemon' will interpret the path
+    +-	as `/srv/git/hello.git`.
+    ++	This is sort of "Git root" - if you run `git daemon` with
+    ++	`--base-path=/srv/git` on `example.com`, then if you later try
+    ++	to pull from `git://example.com/hello.git`, `git daemon` will
+    ++	interpret the path as `/srv/git/hello.git`.
+      
+     ---base-path-relaxed::
+     -	If --base-path is enabled and repo lookup fails, with this option
+
+
+
+Junio C Hamano (3):
+  git-verify-* doc: update mark-up of synopsis option descriptions
+  git-{var,write-tree} docs: update mark-up of synopsis option
+    descriptions
+  git-daemon doc: update mark-up of synopsis option descriptions
+
+ Documentation/git-daemon.adoc        | 119 ++++++++++++++-------------
+ Documentation/git-var.adoc           |   6 +-
+ Documentation/git-verify-commit.adoc |  16 ++--
+ Documentation/git-verify-pack.adoc   |  28 +++----
+ Documentation/git-verify-tag.adoc    |  16 ++--
+ Documentation/git-write-tree.adoc    |  16 ++--
+ 6 files changed, 97 insertions(+), 104 deletions(-)
+
+-- 
+2.49.0-601-ga5925c3955
+
