@@ -1,51 +1,54 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24896C2FD
-	for <git@vger.kernel.org>; Sat,  3 May 2025 00:49:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C00E4D528
+	for <git@vger.kernel.org>; Sat,  3 May 2025 00:57:14 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746233353; cv=none; b=a0NQ34FVseMpSh/+V/OxS6mGO/QrviYX0KRP08XLdf6lavY9cqVrzWyPUJso5DjKV0wXnr3K3EP/L5m/BNKnHElxixcrRPr43uffbhSMBTU954dNgmVGhals/bhMCiCADSWGSlgnG5yerxPUCZd8hqf3Mi5dzlKOWDbvxXJCbv0=
+	t=1746233837; cv=none; b=WsLw8g1Alrv5EfI/o3gC4U50by73skCtCGhZO2PO+2gZ8lRXK2CF+KUusknKYsJAk1TiO4QLlYesYrR7nRXjpZb/HdUnqKQNwiF7SdJmN5tnLMLcc4kcGKRCcmykRbStgybl4Mc+bMz+CF7Ycu/YIK/xkI+UU/a3dSPSsSt//Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746233353; c=relaxed/simple;
-	bh=ksEg63i+TMK5bpHGII22Felde8R74ttVaHI+s4yh8gk=;
+	s=arc-20240116; t=1746233837; c=relaxed/simple;
+	bh=S4T/xUK795k75kFXM+dtvDRdwaG8MN5MJUoe+uwnCOY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bnZ4MbAFVcizHUPsHtal8D2yCniyMEow3UfSXAQeVdJ7K39PugocVIJ5NirFWs5mMUpihufjvNVBkVqChJIduA779Rto3zkNY96PzQO/jWnA2V0aetRy5iqC4RPwgl0XybSc9Jjv1/INswE3qXetSk9l3sXuU2tAYePEZL2mUpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=G04EdINq; arc=none smtp.client-ip=172.105.7.114
+	 Content-Type:Content-Disposition:In-Reply-To; b=c5ytAOeYDhhuHSbZI0BB47V5HDsWUbl7G1PiwsUn9bV6LH/MWzGZz0a9Ig3kQWtTftScNvpIEf/B6f2vkDiTIxrz2kMoMMZVYC3IxOh3/2NdMKcQ1t78rLuyCu+VPDkTdDaCHMUb6qAZN43aBAPJbwHrw7RRbMrBAXcn8HPJ3Ys=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=fkzFl/lK; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="G04EdINq"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="fkzFl/lK"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1746233343;
-	bh=ksEg63i+TMK5bpHGII22Felde8R74ttVaHI+s4yh8gk=;
+	s=default; t=1746233833;
+	bh=S4T/xUK795k75kFXM+dtvDRdwaG8MN5MJUoe+uwnCOY=;
 	h=Date:From:To:Cc:Subject:References:Content-Type:
 	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
 	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
 	 Content-Type:Content-Disposition;
-	b=G04EdINqeBdkWvnho0wHVjp4PU0X1nKC0hxH3O3SYy++l0cRF3a8Jtdydk98S8rvH
-	 0lLZmVW7CaVm72GJJVJf13iu6IoNtP6+fHbfLmMp3gmfF4cVeEg1TD9DDIxJf0E10D
-	 Nab2bh3QnnGurOHrzX80lOtKCaKL0kysReKO0qRZgmvyZ0m2vH1xBxPWM18sB7vuHB
-	 lz1f83j7n4rPv44lO7Lhzwn5AyKqOoNFT0RXwMxpITSlUEXMN/ht2WJnf3TVDb0tXw
-	 yv6DxuxaI8jLYqnhhjC3NbvrDgSEwz7YcfawGFl+8efZSkj0fpBk8VVCpP6hn/ONWw
-	 18Ie1hUUcNCL7Swm2kcVDNuD20Iyrnus6Abp3o8g+VaYf81Cq+jQ9+tLCgoWklfF0+
-	 4tX/8OEHY87dGnNQA9S1wyzc0JsZ2ElpO5KDsSJU1v2ItJ3FEtmv18pFrG+NGRcxsQ
-	 mQps+DvyUDirxC0i1pfdQe1UekuTcEG1ZvQt7ElX/9DSpKB1bZt
+	b=fkzFl/lKuMINcRMYxaA/QPZIzLjHx26hdfHa8r2nubl3psbrmR68G0ic31sGfWiDp
+	 0iAXkdk0nKyRmYE82/3iewjs3X5ajgC2lKoBT/JRJW4TfJGUqyoEiPyJJh0bH/I4iK
+	 aNuPHqX9Vj5btww9v22Mo23CR8J9rgecWSFA9iw41LuBP/Ouvk4e5W9lNePpg6GVvW
+	 yEQqz9wNGpyq+H4Dyr13O5nX9S3HBTm4grmh4exrj5hB7qst0RAPxvQzPjlDr6vl1N
+	 iGVbd1Y+OPJT+EyTL/OJN8c4Z8TWckkbs3sJucT75KnDfYvxUSsPsJJjBUDOyskSCc
+	 VgMDwK24aPNUz+h3nwm/r4ytIfQ17avmjwavKfi5D8eqWLXfvorLB9kQQpAnfDNpuy
+	 4JoMt8tIZo7ojlwusar6ru3McEJVqoNr6Rxf+c/y3OebA6apd2VcpXwnI6zn4L1VgL
+	 Kp72/rt7kpoU91SCdwIU1hJwPBhGPdymWHPnYxK/f2JHcGlgT84
 Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 195AC2011C;
-	Sat,  3 May 2025 00:49:03 +0000 (UTC)
-Date: Sat, 3 May 2025 00:49:01 +0000
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 3BBE12011C;
+	Sat,  3 May 2025 00:57:13 +0000 (UTC)
+Date: Sat, 3 May 2025 00:57:11 +0000
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Matthias vom Bruch <matthias.vombruch@gmx.de>
-Cc: git@vger.kernel.org
-Subject: Re: bugreport - cannot clone repo over ssh which I don't own
-Message-ID: <aBVn_abDjpZFk41p@tapette.crustytoothpaste.net>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: git@vger.kernel.org, shejialuo@gmail.com, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+Message-ID: <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
 Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Matthias vom Bruch <matthias.vombruch@gmx.de>, git@vger.kernel.org
-References: <dcf355a7-cbeb-4162-82a9-5486d3ce3166@gmx.de>
+	Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
+	shejialuo@gmail.com, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -53,84 +56,86 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="UJ0Ejf+Muz/ia8yc"
+	protocol="application/pgp-signature"; boundary="GDM5ibzO46MtpyOo"
 Content-Disposition: inline
-In-Reply-To: <dcf355a7-cbeb-4162-82a9-5486d3ce3166@gmx.de>
+In-Reply-To: <20250502233403.289761-1-collin.funk1@gmail.com>
 User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
---UJ0Ejf+Muz/ia8yc
+--GDM5ibzO46MtpyOo
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On 2025-05-02 at 22:07:51, Matthias vom Bruch wrote:
-> Thank you for filling out a Git bug report!
-> Please answer the following questions to help us understand your issue.
+On 2025-05-02 at 23:33:32, Collin Funk wrote:
+> As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
+> symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
+> This patch fixes the following test failure:
 >=20
-> What did you do before the bug happened? (Steps to reproduce your issue)
+> $ sh t0602-reffiles-fsck.sh --verbose
+> --- expect	2025-05-02 23:05:23.920890147 +0000
+> +++ err	2025-05-02 23:05:23.916794959 +0000
+> @@ -1 +1 @@
+> -error: packed-refs: badRefFiletype: not a regular file but a symlink
+> +error: unable to open '.git/packed-refs': Inappropriate file type or for=
+mat
+> not ok 12 - the filetype of packed-refs should be checked
 >=20
-> Create a repository, rsync it to my homelab server, place into a directory
-> that is owned by a:a_and_b and has -R file mod of 770. Then cloned that
-> into a new, bare repository with the same name, say on /path/to/bare_repo.
-> Then I prepared ssh auth via key on new machine, so that user b can lo
-> g in to homelab without password. Then tried to clone the repository with
-> `git clone b@local-name:/path/to/bare_repo` and variations prepending `s
-> sh://` and appending `/.git`. Got error
+> This portability issue was introduced in Commit
+> cfea2f2da8 (packed-backend: check whether the "packed-refs" is regular fi=
+le, 2025-02-28)
 >=20
-> fatal: detected dubious ownership in repository at '/path/to/bare_repo'
-> To add an exception for this directory, call:
-> =C2=A0=C2=A0=C2=A0git config --global --add safe.directory /path/to/bare_=
-repo
-> [The following is a rough translation, as the machine is in German and so
-> was this message]
-> fatal: could not read from remote repository
+> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+> ---
+>  wrapper.c | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
 >=20
-> Please ensure that you have the correct access rights
-> and the repository exists
->=20
-> I then execute the command it suggests and confirm that the appropriate l=
-ine
-> has been added to my git config
->=20
-> Retry - same error
->=20
-> Test if there is actually a problem with access rights by copying the
-> repository with `rsync -r b@local-name:/path/to/bare_repo ./`. No issue, =
-eve
-> rything gets copied
->=20
-> What did you expect to happen? (Expected behavior)
->=20
-> Firstly, no issue at all, as cloning from a remote (bare) repository that
-> _isn't owned by me_ seems like standard usage of git. People are bound t
-> o run into this in projects of more than one person, unless they use the
-> more elaborate implementations of vendors like github. My understanding w
-> ould be that this is how git should "naturally" work.
->=20
-> Then, the error being fixed after I apply the command it suggested.
+> diff --git a/wrapper.c b/wrapper.c
+> index 3c79778055..4d448d7c57 100644
+> --- a/wrapper.c
+> +++ b/wrapper.c
+> @@ -737,7 +737,19 @@ int is_empty_or_missing_file(const char *filename)
+>  int open_nofollow(const char *path, int flags)
+>  {
+>  #ifdef O_NOFOLLOW
+> -	return open(path, flags | O_NOFOLLOW);
+> +	int ret =3D open(path, flags | O_NOFOLLOW);
+> +#ifdef __NetBSD__
+> +	/*
+> +	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
+> +	 * time this errno occurs when O_REGULAR is used. Since we don't use
+> +	 * it anywhere we can avoid an lstat here.
+> +	 */
+> +	if (ret < 0 && errno =3D=3D EFTYPE) {
+> +		errno =3D ELOOP;
+> +		return -1;
+> +	}
+> +#endif
+> +	return ret;
 
-Can you retry this with Git 2.48 or newer on the server?  There's a
-patch in that version that should allow cloning from an untrusted
-repository.
+This patch seems reasonable and correct.  I don't use NetBSD, but I do
+often test there, and I'm aware of this infelicity.  I'm surprised we
+haven't hit it before.
 
-Note that if you're cloning on the local system, you will need to use
-`--no-local`, as documented in that version.  That isn't necessary over
-the network, though.
+I suspect we'll also hit this on FreeBSD, which has a similar issue in
+that it returns `EMLINK` instead of `ELOOP`.  I do wish these two OSes
+would provide an appropriate POSIX-compatible `open` call when set with
+`_POSIX_SOURCE`, since this is one of the biggest portability problems
+with them.
 --=20
 brian m. carlson (they/them)
 Toronto, Ontario, CA
 
---UJ0Ejf+Muz/ia8yc
+--GDM5ibzO46MtpyOo
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-wr0EABYKAG8FgmgVZ/0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZwWj5/KcTtZ8Z26QsZsnQg0np7OxLB4cUC2vniPuzeRM
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAADRCAQDURlH1+MywqByupi1sTUOVchO9
-c4cKtBem0HQrl1l0ewEAlazpXbqHJU6KpHDip9N/3xjInbXSMq88cPHcHhh8gAg=
-=FN2K
+wr0EABYKAG8FgmgVaecJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ7Cur8KnmvbSPLdo/wBpn+SlZpOtuWrcWb0LxyLZRdTi
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAHotAP4o6/4QENw3LaMFiG3OL8TAkHlt
+4czQQE2P6OChKiSmpAEAohm7Ev6STDm70hDa/GHEgk2xYpA8ZDiM3Su27yIhaQ8=
+=4F3e
 -----END PGP SIGNATURE-----
 
---UJ0Ejf+Muz/ia8yc--
+--GDM5ibzO46MtpyOo--
