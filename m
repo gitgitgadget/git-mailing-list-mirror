@@ -1,143 +1,159 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5392870838
-	for <git@vger.kernel.org>; Sat,  3 May 2025 00:58:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2AE42F30
+	for <git@vger.kernel.org>; Sat,  3 May 2025 01:05:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746233909; cv=none; b=CcZXWVsG8hnrridRy3Q2+1y6Oxy4iML6o7ld9n+tET1XXdVh2F+AaxfUrXXmKoZjx6lpf+iot6I1c0Ae2uKOFZirguDDcI86zFfxPyGKkb9QZJlgMhNslFlVJI8Jzwa/+c+KLiVp2J8T5QQ8CvvfH4t9kvMgvdElhCHRuvLxpgs=
+	t=1746234320; cv=none; b=bPStCbtgL7MlJMeSypaO4ocrjgCTUqytXxXCKL8di2WQlKt1Ai+0OKD/ppslvZXAYCCghDa2v0lMkC2y9J/TYUmxICGTa1OIs33FNJ2GuVccHt2OZ5BFTRdU5ITUCdKmWUnjb2wPH8HkH9+0UWl3sbps8RAeorZ4Mpf+sDvbK8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746233909; c=relaxed/simple;
-	bh=EvH6mTf5uNws3NVbsW/Oj+25JhYxj3xJ59k+IzCV7UM=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=iLk3NpO8r8HfO+g1oru0bqC68zywbVAkWNgGrfItnUxNgtXE9vBMn4Wwqm1rngJJv0WWzwkTPaoE/29ZVJJ2AhvuhdomJZfCLmOVpPDuayaDwqUr19IXIrDRKCCiwJ8YNs2fnLggk1acv5U7xuFndxKMcydjYhANgGmdeN42v3w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DanwgtM9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q09ecZe8; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1746234320; c=relaxed/simple;
+	bh=ORxcHNKkjrq/A3CY0vgXndr37B47FycXO8EZ4GSgvuM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=pAmV6wjE1oMXHaUxuYpVUsNJhj8Me9Ezbr7LbRFCImD4j2QLuQfvsz8uKKpIjOParr4E5/pPeIJhQWRy9LjBZLaNKV7ojHgB2ubef+GPwwJURxyxb3h+Up5e2PJnRpgnQSAsxVzya0zgpobOrEwaO3bfpFZKc9+fv/pu+vqFYAY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XDHKUaGO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=t+Jjvup6; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DanwgtM9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q09ecZe8"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 731A21140205;
-	Fri,  2 May 2025 20:58:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Fri, 02 May 2025 20:58:26 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XDHKUaGO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="t+Jjvup6"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id CCCB31380F25;
+	Fri,  2 May 2025 21:05:16 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 02 May 2025 21:05:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1746233906; x=
-	1746320306; bh=4EWJ+HyMEqUdsrWRuBMSD8aHZEogtRVNMILh7M5na/o=; b=D
-	anwgtM94vhotO6u55vy2Zc6E5MjhCJL9X+z8SmpTSkMHyLad5ROy0rSkUX5wxUZk
-	NOJkYO0xSdukcC+DveueRqTSHzqzg6WjyhmchSQhSHDZfCra+XUJZIJRw1vinCnn
-	WpVg8yzEyMNxlCsKsVCfvrIRshnnrceB5qpnvCrSVPjrtfsX5U1NiRRKHN7fsB3p
-	x+ywCeMAiK6pm9YIPCbhaE7wSUMbhUb0M3MJBLAp4X/wBtWXduh2BeSkz3xelkuF
-	nkSoIYl5TkXeSTVvXnSGlcMtlD6sshHKdT86egawTR5woOtDRoD0meMZiNAW3++e
-	mQMYflg2BpgcIP3YBhIdw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:date:date:feedback-id:feedback-id:from:from:in-reply-to
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746233906; x=1746320306; bh=4EWJ+HyMEqUdsrWRuBMSD8aHZEog
-	tRVNMILh7M5na/o=; b=Q09ecZe8aLVYC3dCJWbP25TGCCczClNu9uNaM4cdbtpj
-	dMnW5JJ5H64eYOrd6gAdu/QRwNA7W3CZHeKvV3fVhFdLgLDLlTRwHMXuihCrBuHn
-	KMqpcX4MC6tb/CdKdUpavqRyldV/iu52pAw40lD5ONBmpbNpkIDm1ESLVzFaMjOU
-	orc0XZmiAslMoA/+pU0PJvbmeoo/ejLL/umqgBw96nvTsxHTKRmvSLu2DPafCaZe
-	zejPlE5F95nKlj5CLPyRDYA8HEbQyS2zE5GgIyfxBtR5QbB6DHcsH4ibBqHvx//m
-	zWwJkBmhWMeeLkdpXwh6/no/oxPvw1awfQy+K+Dmjw==
-X-ME-Sender: <xms:MmoVaD1KhfhP67t7-VdlJYbtd5ssqECp_lTMktS8TedvUvMNwbQxMw>
-    <xme:MmoVaCGGpS-98hxU59dePs1UHRB2lRgpOIrl001gPK9MZQ2UH6oaG9O8o2g3tQZdf
-    mOcoew2NIZFDSHPGw>
-X-ME-Received: <xmr:MmoVaD4ayDtoWpNnlMjqyW05z_RQ22XgZp3VaaoVXnUqbGV2HsH46zA-7WCUV1r-seA-YTpMjUVNHNorAdrDVHBBPJw1LzpoJxne>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefleehucetufdoteggodetrf
+	:subject:to:to; s=fm2; t=1746234316; x=1746320716; bh=KcCj9ZzANh
+	fh/XEm6jeKdHhyrTTFVp8ID4BRtgGxyAE=; b=XDHKUaGOGM0A6Bzxdx6Ms/r8Sm
+	8MmHcoyUYtDMlDpC/rTaVSIoQj9NBZMXCNLaVkthQJWiSKG9DtNC61Na9+n+DkA+
+	FTfgI/7ly+i0IHG4zTvV2MzPrAxrrpqZfmz5mUfelwb7u6fvhU9VLtyQy1Ukgo3V
+	fOhR/lnckAT0FFhQQlG6Qntxulh50Lmio2Y4P8iGL2s7KhkbJrDLN8AmEYkHEWpy
+	z7vC/35VJkHQX+0/Tp9yzfsMAqIFe5CX0eiWxmildlGzV/0XFnLnjAk07tGzZy03
+	0I3LciUtxvmOtDmoZuZSlEjd037ZcpgqWSB7KtgcK4I8IlCWeiZ3jFr9uUyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746234316; x=1746320716; bh=KcCj9ZzANhfh/XEm6jeKdHhyrTTFVp8ID4B
+	RtgGxyAE=; b=t+Jjvup6/VvhQSEYrmTCslFN0cZsjv7NXkxkhaNR0doFcyZRn+A
+	QA2UxQGv6CY4cPzK3weMrCFmZrE1zjF60HS9rRLt5koXJqnNhdeH55My6MLvFfjx
+	SGEU4CQhPtHE1RfvDbNOWpR+bHENsrdydr8aAq5Ybvq+Ji7xBaDaHukMGfSd+A4J
+	ZT3PDY5UVUJtEDACyLLT6KBZwBpL6T1fveFnDX0rOb+RqRxnt9f/MKAbU76Og5BM
+	Sj0KVCcJ0oEAvm4tvfG3FcRCsOjU6EbGHmvdq9C9GhVhwqeQ9R3Ia88g+Ly4Xfsk
+	DYP+/oMJZ51f8GOSoN1He1fZc4v4RTWX3lw==
+X-ME-Sender: <xms:zGsVaOBBkhL4dPemNvG6wzP5E03J5rFEy0L4L-8AfsJOgsS83ruVRg>
+    <xme:zGsVaIho65Ffb_eslCZUkceCymlGlI9OF_OzqRbJknpHC-6aARJ92kTOmEkLCcTV4
+    a9GvbgAHuqazkA-UA>
+X-ME-Received: <xmr:zGsVaBkK5uXKPKPK1wpUeR97RUg6cVIqY3J6qWIZae6TlauiInV3SI3UnNu98JyQp2lZwEW9B_kWWkDvfNfr6PJDFu73exkicOWS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeefleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fufffkofgjfhgggfestdekredtredttdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheple
-    evieefieeuffeugefhveeugefgfeevvdefleevuedvfedvudefkeehtdeftdegnecuvehl
-    uhhsthgvrhfuihiivgepudenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:MmoVaI1M0nXdlHnWinXiT4QMxMjrQTQSeH-QyQfIhCWbfUb-RAif6A>
-    <xmx:MmoVaGEKkS8ZnhdaLRVRHznGLfv1ZMEHB5acgkRj0_cn8G1XuzuRMw>
-    <xmx:MmoVaJ8tZ8CdqoKXkoqy3j7neeyadLU0OEn8eub0Q23n_DiCmkVPPg>
-    <xmx:MmoVaDnYHALGoFbVL-fF8L45F8YjvV66zQt4fBRIIzMNZtCHdccbTg>
-    <xmx:MmoVaP1GZQ2HrHdto62lZSS85UrJZvi6pev-UEKqjJ9-__7Iwfcs_1kH>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtoheptgholhhlihhn
+    rdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
+    hrnhgvlhdrohhrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:zGsVaMwu9NE8DR65_IIEfnhxmhAmsH1dG0u8_CAVvv1NwiPZMESx9Q>
+    <xmx:zGsVaDT5Vg9eFswscxgGSeSR7p2PptlV-9F0KBZ0vuOuiTCLK8HkLw>
+    <xmx:zGsVaHZvwwD99z8zuKhxLZxo0UjZ-ZBo39sOhywG5tplzBcfcec_MQ>
+    <xmx:zGsVaMQKwHCyv1HYUlVLBiOO13NgXBH-Ofo858tTHyjjGPw9DViTjg>
+    <xmx:zGsVaL88wfjjDpI33XSjSg-qHGV28TtYqxxkA0rZMIxmVvB9BRIeBWJ_>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 2 May 2025 20:58:25 -0400 (EDT)
+ 2 May 2025 21:05:16 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: [PATCH v3 6/6] whatschanged: list it in BreakingChanges document
-Date: Fri,  2 May 2025 17:58:14 -0700
-Message-ID: <20250503005814.3030099-7-gitster@pobox.com>
-X-Mailer: git-send-email 2.49.0-601-ga5925c3955
-In-Reply-To: <20250503005814.3030099-1-gitster@pobox.com>
-References: <20250501225958.2947677-1-gitster@pobox.com>
- <20250503005814.3030099-1-gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Collin Funk <collin.funk1@gmail.com>,  git@vger.kernel.org,
+  shejialuo@gmail.com,  Jeff King <peff@peff.net>
+Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+In-Reply-To: <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net> (brian
+	m. carlson's message of "Sat, 3 May 2025 00:57:11 +0000")
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
+	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
+Date: Fri, 02 May 2025 18:05:14 -0700
+Message-ID: <xmqqtt62sdv9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-This can be squashed into the previous step.  That is how our "git
-pack-redundant" conversion did.
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Theoretically, however, those who want to gauge the need to keep the
-command by exposing their users to patches before this one may want
-to wait until their experiment finishes before they formally say
-"this will go away".  
+> On 2025-05-02 at 23:33:32, Collin Funk wrote:
+>> As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
+>> symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
+>> This patch fixes the following test failure:
+>> 
+>> $ sh t0602-reffiles-fsck.sh --verbose
+>> --- expect	2025-05-02 23:05:23.920890147 +0000
+>> +++ err	2025-05-02 23:05:23.916794959 +0000
+>> @@ -1 +1 @@
+>> -error: packed-refs: badRefFiletype: not a regular file but a symlink
+>> +error: unable to open '.git/packed-refs': Inappropriate file type or format
+>> not ok 12 - the filetype of packed-refs should be checked
+>> 
+>> This portability issue was introduced in Commit
+>> cfea2f2da8 (packed-backend: check whether the "packed-refs" is regular file, 2025-02-28)
+>> 
+>> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+>> ---
+>>  wrapper.c | 14 +++++++++++++-
+>>  1 file changed, 13 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/wrapper.c b/wrapper.c
+>> index 3c79778055..4d448d7c57 100644
+>> --- a/wrapper.c
+>> +++ b/wrapper.c
+>> @@ -737,7 +737,19 @@ int is_empty_or_missing_file(const char *filename)
+>>  int open_nofollow(const char *path, int flags)
+>>  {
+>>  #ifdef O_NOFOLLOW
+>> -	return open(path, flags | O_NOFOLLOW);
+>> +	int ret = open(path, flags | O_NOFOLLOW);
+>> +#ifdef __NetBSD__
+>> +	/*
+>> +	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
+>> +	 * time this errno occurs when O_REGULAR is used. Since we don't use
+>> +	 * it anywhere we can avoid an lstat here.
+>> +	 */
+>> +	if (ret < 0 && errno == EFTYPE) {
+>> +		errno = ELOOP;
+>> +		return -1;
+>> +	}
+>> +#endif
+>> +	return ret;
+>
+> This patch seems reasonable and correct.  I don't use NetBSD, but I do
+> often test there, and I'm aware of this infelicity.  I'm surprised we
+> haven't hit it before.
 
-This change is made into a separate patch from the previous step
-precisely to help those folks.
+Thanks, both.  Will queue after fixing the proposed log message a
+bit (the sample must be indented, especially when it contains lines
+that look like a patch).
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/BreakingChanges.adoc | 9 +++++++++
- Documentation/git-whatchanged.adoc | 6 ++++++
- 2 files changed, 15 insertions(+)
+> I suspect we'll also hit this on FreeBSD, which has a similar issue in
+> that it returns `EMLINK` instead of `ELOOP`.
 
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index bdfad29d8a..f9026d004c 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -178,6 +178,15 @@ references.
- +
- These features will be removed.
- 
-+* The git-whatchanged(1) command has outlived its usefulness more than
-+  10 years ago, and takes more keystrokes to type than its rough
-+  equivalent `git log --raw`.  We have nominated the command for
-+  removal, have changed the command to refuse to work unless the
-+  `--i-still-use-this` option is given, and asked the users to report
-+  when they do so.  So far there hasn't been a single complaint.
-++
-+The command will be removed
-+
- == Superseded features that will not be deprecated
- 
- Some features have gained newer replacements that aim to improve the design in
-diff --git a/Documentation/git-whatchanged.adoc b/Documentation/git-whatchanged.adoc
-index d400b68d4b..d21484026f 100644
---- a/Documentation/git-whatchanged.adoc
-+++ b/Documentation/git-whatchanged.adoc
-@@ -11,6 +11,12 @@ SYNOPSIS
- [synopsis]
- git whatchanged <option>...
- 
-+WARNING
-+-------
-+`git whatchanged` has been deprecated and is scheduled for removal in
-+a future version of Git, as it is merely `git log` with different
-+default; `whatchanged` is not even shorter to type than `log --raw`.
-+
- DESCRIPTION
- -----------
- 
--- 
-2.49.0-601-ga5925c3955
+I won't expect Collin or you to redo this patch to cover FreeBSD;
+anybody with FreeBSD box/vm can do a separate patch on a different
+day.
 
+> I do wish these two OSes
+> would provide an appropriate POSIX-compatible `open` call when set with
+> `_POSIX_SOURCE`, since this is one of the biggest portability problems
+> with them.
+
+That may be true, but not something we can fix here X-<.
