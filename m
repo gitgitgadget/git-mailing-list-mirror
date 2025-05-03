@@ -1,100 +1,563 @@
-Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B70B74C98
-	for <git@vger.kernel.org>; Sat,  3 May 2025 04:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EB661865EB
+	for <git@vger.kernel.org>; Sat,  3 May 2025 06:07:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746246079; cv=none; b=tZDpWnUt8YLbAQCbdmGHEzvgHykNvg1+OnDDxVMnnZ8IE/pCtVZgsu3k1PDxpwQWgsQz0LSE7iFUYAGBwAzLxaJFo/K96WwFzVkzf+mak0AC6WNsJvqcNbimjQNF0EiGtnn0fsy5EIpXwLBgi6uL6901ngz8xaDyhYJStVONw8c=
+	t=1746252480; cv=none; b=QDz6eTwXud2692yGpG5NaYuj8Z1R0dRi0flVTQxJQ1i29CdnUSkc4ZBzofXt8Rx7KqhzWhqhwYTejm+jaEh74BApuvYav9/WKybA5Ebss97fCU4yLxxDDnJYCjAXiZN5Vh8WTvTR36A81fMkdelFbfw/B1Ez9KLB1yECFYMIa8Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746246079; c=relaxed/simple;
-	bh=e3k5DDxM2BsMx9FRxcjDJFK7gf6GqnTwPPZwwlY2Jl4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FLSX7zupNHHOTY66TVYzp5Y+qup1h88gcMAsyLwjeL/5ADsui0xehGkWZnhWi1+1vdtRtWnNKrOjK5JR28/MIvUx64M+3Gro8F4pjlnuury1c1P69JiqHvgukgEsN5ZI6p5XOh3wRFJTDoIMO6zQIKiHAcUOJsrUQGHZogPKRdA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dkiQVXn7; arc=none smtp.client-ip=209.85.210.170
+	s=arc-20240116; t=1746252480; c=relaxed/simple;
+	bh=O4lmUueTHDF83d1BZGds47TNlGjnw+JPmNIESG7y/e4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=ipx/DM2KjTOWz9cRj6+wSKiXn5OJDN9yoXo6WCevk5t3V95VUyC7HmXlKaXDsjhjt0bOIGszjtPEaNwH7p5Mcpt83eZiMG44Tap/y2TOEnkyqDWRucr0/3kwBRVNrnIMzTskmNXufqIs4fvmfA9GlifWiYqrskohB+FFFTAF4XQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V6X0e7Sp; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dkiQVXn7"
-Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-739525d4e12so2856728b3a.3
-        for <git@vger.kernel.org>; Fri, 02 May 2025 21:21:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V6X0e7Sp"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-af579e46b5dso1953973a12.3
+        for <git@vger.kernel.org>; Fri, 02 May 2025 23:07:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746246077; x=1746850877; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=WRsKqC3gXjsNNeqT6Pb8HIaG/+c7GCcSudqpnhrr+ys=;
-        b=dkiQVXn7/dy0bijXA2BUJBdzuhSqGucxAru4HCkOh48BZwrWMzvgJ/SgsoWfGkJpOT
-         8RiasnWfRNukopomeCVilGDLsSgjwBx7syT8O3ui6tRA12AiBOuVNpAM8KN2u0wFFaTz
-         TsPDXRkeK6Oux2qc83VMaf5TPSfM8Tkt38jP9vDMlNiOWTuz5vTo6/0g84gEZ+T87S5m
-         HwiYhXfEikir4sRiFplWpYxbRXT5ndR+cA7kFeI5ffGhn0xQxH9l4FdzXZ4HOANGFKvA
-         l+9Pm+IFTzan/2GMXbUWXWHDSaHURGsCIn6Wg4rT+4Jk9kqRCfbPmVqCCl7rHK3timb+
-         YAIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746246077; x=1746850877;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1746252478; x=1746857278; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WRsKqC3gXjsNNeqT6Pb8HIaG/+c7GCcSudqpnhrr+ys=;
-        b=YQlIwumBvqIZmPY7KV3qrr0ioW/P0pbTrQOiNLz+w6+epF32O9rKOTZ5kKPosZ8MAY
-         YnsAsawtrQ851m/mIczJjlotbx8rusjGQULP0u/oYhZBAjta8e62fzq4x6D0393g1lIc
-         lN4pvwXWQCmG4K/FdnnxToBfWCGBc8oS5cgdl/m3ScVE4y/5E16GhjsMajk1b+UGfpSa
-         QBhxlXGonSjW+Hm2LrX08dGpRp4nYjiZCWVR5nxNrsSSkbxoX+HurU7Boos4nj5y6+K6
-         yp4zRQlPmKcaZp+Ze549fVXmiuRpXofc3bCy1V2SL7lHj/DvCFjLiz9Sfl9Q2DC0q2d8
-         uavQ==
-X-Forwarded-Encrypted: i=1; AJvYcCUqQAr+G3NfkziWOSaZ7qcNHD5FReGMEPez/Y9ynuBVoxDKZ6REDDIFR7npE1uFnqbKZLw=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywy2jW3BncdnUAhpzlYkCxbVaYjRg435fqSMqEt2oyzc/sVCAgO
-	2Wa3My0vlSXJExrLnop86SADb0BRHkxfYSbRk+Xvi5vMQ6Q5I3vN
-X-Gm-Gg: ASbGncvFsjygh9yEodfL3ke9oNdx4vDF6mwutnMsh2GQTSA4lLmwWULLennYJAayvrj
-	M+TQxG4PnKj05wwkeza711YlRE3Uz1z3t0r+NduLv0mcVD8BiAbCZNrg398/1D74i/Oq3RMuNHi
-	wHcFWN7V61m4A0k8tAaEwXsMGMQn/lVUQLtGAflXVVfn5WgjWU32j5BO06UWUEYUhFx0IcM4DP2
-	aIAf+I3wiVa88lGQvkxbn9ejkbOFLXggLjuGFWoSJvp2EL4/703fe+hAWLOeEihbgTVR7XAGnxX
-	J83GjVZhA9Z1HoWpyS7uLj78A+sBcTh7
-X-Google-Smtp-Source: AGHT+IF7Zt+Yiop4vG1MaZo786QHWDhtZFzGe2I0rM8gjtBhRwhcH+DEENEu1m7s/lukvL/6fj7KTQ==
-X-Received: by 2002:a05:6a00:340b:b0:730:79bf:c893 with SMTP id d2e1a72fcca58-74058904a5amr8216260b3a.4.1746246076896;
-        Fri, 02 May 2025 21:21:16 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::4bd0])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7405c2e7596sm2262836b3a.147.2025.05.02.21.21.16
+        bh=38uPQD/n9ULsasOVfrNpB2m6q/DQolYzOnm+v++ZQ2k=;
+        b=V6X0e7SpQnGXOZS/FcEEwLH5PFeXoNn95l29/1ZL+FcbaZlrDbGwJfggBrzJwynzy0
+         QVzzucDBWPFUFhDGCGdrV1E/97pNCfeKPFc4ZPFKHqh9TRiVwDdu3AAIB3UjLLFLGpLv
+         vTqDamqM78o98R3jVoX+Cmnk6x0yrqsIr8kAM7AKGWkxeP6FMurKzZp9xWCvwHZKtuVm
+         RLEjxBaLVgEgmukw67HWDaaNDCJl+p5Qy9CuXV/BWBxnv3j15X2LLupqWhJDPYxlr8Iz
+         KIExNENDsY5V80YPSN9CgWc4dHf1rdan2uyy8u/uoEK6jm/49aiAHqjlTfkOsTTSOnh2
+         PKag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746252478; x=1746857278;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=38uPQD/n9ULsasOVfrNpB2m6q/DQolYzOnm+v++ZQ2k=;
+        b=iFh2mAV5aDibhWuqySDTHTC/rqX2YeExAE00/MBqqFQ08wudHISfRVtM+OTSf1cVEU
+         FF4HxDQ/YKHJq9PkVn0/IhdX5GGHkJpUVAmx5dicVN/Hkj2Z3BlzFUnht8sNAKawYJn2
+         YP7KtP7eGTygKjmKBAtv6DLKb7JvMF5rtodUjMFIhUDjMkpGs5SxsaAlsjWbJj8Nze9p
+         MFiS6Bf61Hh7MDmMKJJlAbaV6dtTrxpRz1b9m3Q5niippwRZV8zlkBLqyh0nH/NNH3MV
+         Y8NSGtsQDiHqZaL9LljKge7ZXaSp62q6x0fmObYNMp0H81gXJOkMHUFjvSBsRmjW3wDf
+         52pA==
+X-Gm-Message-State: AOJu0Yz6kwoB5HKzcdWA0FrvQJvtLTgvy07L2tDSHHnIFjhh7uyzUOz6
+	u9eRCkdJYwwEltMaVZ+AtNOcjc1FRoQ5q5KJahr8wDTgCutYtGGTiHUGOw==
+X-Gm-Gg: ASbGncvzTof6Q4nz9umS2qWf2Q6HSPYIKNnQtcyxkDVqZXkXaD1yshzzDLrREpEvHdB
+	T1/e9vCajYksd+khcI2jmYumerxh9sVa3isUGmagwC8XjE4ExvdOPerYgertI5jiBNzW0v4mt5C
+	UvUaONUgczDMVt5ptm6kjx8VXubQFSRrP2a/pAs8Muh7WV65t7lM4Bt/iWVtK9AKhgz3i4NNCw/
+	Qh/8HwA6tIijOzAQhhNq5UgnytBdDGNJpwtpgTd1Lp142ZqZ7ucvBLrgtoz3PIo/3j+OsbQligQ
+	imLymTfpNzSSFvK1G8l9NPelkdmIUW4T6fJDPRH5n5N/x3OZtBa4Zo/J
+X-Google-Smtp-Source: AGHT+IHN1MAPCjZ5RlRoTBFbKwEHOwQfX7FQMiO18GRXeiFxY1t82sqvw5VMbTaOif1rVwpq9B4TwQ==
+X-Received: by 2002:a05:6a20:6f92:b0:1f5:7873:3053 with SMTP id adf61e73a8af0-20e97ac1a80mr37234637.29.1746252477468;
+        Fri, 02 May 2025 23:07:57 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b1fb3c6a151sm1798044a12.64.2025.05.02.23.07.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 02 May 2025 21:21:16 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  shejialuo@gmail.com,  Jeff King <peff@peff.net>
-Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-In-Reply-To: <xmqqtt62sdv9.fsf@gitster.g>
-References: <20250502233403.289761-1-collin.funk1@gmail.com>
-	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
-	<xmqqtt62sdv9.fsf@gitster.g>
-Date: Fri, 02 May 2025 21:21:15 -0700
-Message-ID: <87jz6ycojo.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+        Fri, 02 May 2025 23:07:57 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	jayatheerthkulkarni2005@gmail.com,
+	lucasseikioshiro@gmail.com,
+	peff@peff.net,
+	piotrsiupa@gmail.com,
+	sandals@crustytoothpaste.net
+Subject: [PATCH] dir.c: literal match with wildcard in pathspec should still glob
+Date: Sat,  3 May 2025 11:37:36 +0530
+Message-ID: <20250503060736.587286-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
+In-Reply-To: <xmqqecxk3u5l.fsf@gitster.g>
+References: <xmqqecxk3u5l.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+With a path with wildcard characters, e.g. 'f*o', exists in the
+working tree, "git add -- 'f*o'" stops after happily finding
+that there is 'f*o' and adding it to the index, without
+realizing there may be other paths, e.g. 'foooo', that may match
+the given pathspec.
 
-> Thanks, both.  Will queue after fixing the proposed log message a
-> bit (the sample must be indented, especially when it contains lines
-> that look like a patch).
+This is because dir.c:do_match_pathspec() disables further
+matches with pathspec when it finds an exact match.
 
-Yes, that looks better. Thanks!
+Reported-by: piotrsiupa <piotrsiupa@gmail.com>
+Helped-by: Jeff King <peff@peff.net>
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ dir.c                                 |   3 +-
+ t/meson.build                         |   1 +
+ t/t6137-pathspec-wildcards-literal.sh | 429 ++++++++++++++++++++++++++
+ 3 files changed, 432 insertions(+), 1 deletion(-)
+ create mode 100755 t/t6137-pathspec-wildcards-literal.sh
 
->> I suspect we'll also hit this on FreeBSD, which has a similar issue in
->> that it returns `EMLINK` instead of `ELOOP`.
->
-> I won't expect Collin or you to redo this patch to cover FreeBSD;
-> anybody with FreeBSD box/vm can do a separate patch on a different
-> day.
+diff --git a/dir.c b/dir.c
+index 28b0e03feb..9405fee83a 100644
+--- a/dir.c
++++ b/dir.c
+@@ -519,7 +519,8 @@ static int do_match_pathspec(struct index_state *istate,
+ 		    ( exclude && !(ps->items[i].magic & PATHSPEC_EXCLUDE)))
+ 			continue;
+ 
+-		if (seen && seen[i] == MATCHED_EXACTLY)
++		if (seen && seen[i] == MATCHED_EXACTLY &&
++			ps->items[i].nowildcard_len == ps->items[i].len)
+ 			continue;
+ 		/*
+ 		 * Make exclude patterns optional and never report
+diff --git a/t/meson.build b/t/meson.build
+index bfb744e886..61285852e9 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -788,6 +788,7 @@ integration_tests = [
+   't6134-pathspec-in-submodule.sh',
+   't6135-pathspec-with-attrs.sh',
+   't6136-pathspec-in-bare.sh',
++  't6137-pathspec-wildcards-literal.sh',
+   't6200-fmt-merge-msg.sh',
+   't6300-for-each-ref.sh',
+   't6301-for-each-ref-errors.sh',
+diff --git a/t/t6137-pathspec-wildcards-literal.sh b/t/t6137-pathspec-wildcards-literal.sh
+new file mode 100755
+index 0000000000..20abad5667
+--- /dev/null
++++ b/t/t6137-pathspec-wildcards-literal.sh
+@@ -0,0 +1,429 @@
++#!/bin/sh
++test_description='test wildcards and literals with git add/commit (subshell style)'
++
++. ./test-lib.sh
++
++test_have_prereq FUNNYNAMES || {
++	skip_all='skipping: needs FUNNYNAMES (non-Windows only)'
++	test_done
++}
++
++prepare_test_files () {
++	for f in "*" "**" "?" "[abc]" "a" "f*" "f**" "f?z" "foo*bar" "hello?world" "hello_world"
++	do
++		>"$f" || return
++	done
++}
++
++test_expect_success 'add wildcard *' '
++	git init test-asterisk &&
++	(
++		cd test-asterisk &&
++		prepare_test_files &&
++		git add "*" &&
++		cat >expect <<-EOF &&
++		*
++		**
++		?
++		[abc]
++		a
++		f*
++		f**
++		f?z
++		foo*bar
++		hello?world
++		hello_world
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add literal \*' '
++	git init test-asterisk-literal &&
++	(
++		cd test-asterisk-literal &&
++		prepare_test_files &&
++		git add "\*" &&
++		cat >expect <<-EOF &&
++		*
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard **' '
++	git init test-dstar &&
++	(
++		cd test-dstar &&
++		prepare_test_files &&
++		git add "**" &&
++		cat >expect <<-EOF &&
++		*
++		**
++		?
++		[abc]
++		a
++		f*
++		f**
++		f?z
++		foo*bar
++		hello?world
++		hello_world
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard ?' '
++	git init test-qmark &&
++	(
++		cd test-qmark &&
++		prepare_test_files &&
++		git add "?" &&
++		cat >expect <<-\EOF | sort &&
++		*
++		?
++		a
++		EOF
++		git ls-files | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard [abc]' '
++	git init test-brackets &&
++	(
++		cd test-brackets &&
++		prepare_test_files &&
++		git add "[abc]" &&
++		cat >expect <<-\EOF | sort &&
++		[abc]
++		a
++		EOF
++		git ls-files | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard f*' '
++	git init test-f-wild &&
++	(
++		cd test-f-wild &&
++		prepare_test_files &&
++		git add "f*" &&
++		cat >expect <<-\EOF | sort &&
++		f*
++		f**
++		f?z
++		foo*bar
++		EOF
++		git ls-files | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add literal f\*' '
++	git init test-f-lit &&
++	(
++		cd test-f-lit &&
++		prepare_test_files &&
++		git add "f\*" &&
++		cat >expect <<-\EOF &&
++		f*
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard f**' '
++	git init test-fdstar &&
++	(
++		cd test-fdstar &&
++		prepare_test_files &&
++		git add "f**" &&
++		cat >expect <<-\EOF | sort &&
++		f*
++		f**
++		f?z
++		foo*bar
++		EOF
++		git ls-files | sort >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add literal f\*\*' '
++	git init test-fdstar-lit &&
++	(
++		cd test-fdstar-lit &&
++		prepare_test_files &&
++		git add "f\*\*" &&
++		cat >expect <<-\EOF &&
++		f**
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard f?z' '
++	git init test-fqz &&
++	(
++		cd test-fqz &&
++		prepare_test_files &&
++		git add "f?z" &&
++		cat >expect <<-\EOF &&
++		f?z
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add literal \? literal' '
++	git init test-q-lit &&
++	(
++		cd test-q-lit &&
++		prepare_test_files &&
++		git add "\?" &&
++		cat >expect <<-\EOF &&
++		?
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard foo*bar' '
++	git init test-foobar &&
++	(
++		cd test-foobar &&
++		prepare_test_files &&
++		git add "foo*bar" &&
++		cat >expect <<-\EOF &&
++		foo*bar
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add wildcard hello?world' '
++	git init test-hellowild &&
++	(
++		cd test-hellowild &&
++		prepare_test_files &&
++		git add "hello?world" &&
++		cat >expect <<-\EOF &&
++		hello?world
++		hello_world
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add literal hello\?world' '
++	git init test-hellolit &&
++	(
++		cd test-hellolit &&
++		prepare_test_files &&
++		git add "hello\?world" &&
++		cat >expect <<-\EOF &&
++		hello?world
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'add literal [abc]' '
++	git init test-brackets-lit &&
++	(
++		cd test-brackets-lit &&
++		prepare_test_files &&
++		git add "\[abc\]" &&
++		cat >expect <<-\EOF &&
++		[abc]
++		EOF
++		git ls-files >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: wildcard *' '
++	git init test-c-asterisk &&
++	(
++		cd test-c-asterisk &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c1" -- "*" &&
++		cat >expect <<-EOF &&
++		*
++		**
++		?
++		[abc]
++		a
++		f*
++		f**
++		f?z
++		foo*bar
++		hello?world
++		hello_world
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: literal *' '
++	git init test-c-asterisk-lit &&
++	(
++		cd test-c-asterisk-lit &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c2" -- "\*" &&
++		cat >expect <<-EOF &&
++		*
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: wildcard f*' '
++	git init test-c-fwild &&
++	(
++		cd test-c-fwild &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c3" -- "f*" &&
++		cat >expect <<-EOF &&
++		f*
++		f**
++		f?z
++		foo*bar
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: literal f\*' '
++	git init test-c-flit &&
++	(
++		cd test-c-flit &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c4" -- "f\*" &&
++		cat >expect <<-EOF &&
++		f*
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: wildcard pathspec limits commit' '
++	git init test-c-pathlimit &&
++	(
++		cd test-c-pathlimit &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c5" -- "f**" &&
++		cat >expect <<-EOF &&
++		f*
++		f**
++		f?z
++		foo*bar
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: literal f\*\*' '
++	git init test-c-fdstar-lit &&
++	(
++		cd test-c-fdstar-lit &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c6" -- "f\*\*" &&
++		cat >expect <<-EOF &&
++		f**
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: wildcard ?' '
++	git init test-c-qwild &&
++	(
++		cd test-c-qwild &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c7" -- "?" &&
++		cat >expect <<-EOF &&
++		*
++		?
++		a
++		EOF
++		git ls-tree -r --name-only HEAD | sort >actual &&
++		sort expect >expect.sorted &&
++		test_cmp expect.sorted actual
++	)
++'
++
++test_expect_success 'commit: literal \?' '
++	git init test-c-qlit &&
++	(
++		cd test-c-qlit &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c8" -- "\?" &&
++		cat >expect <<-EOF &&
++		?
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_expect_success 'commit: wildcard hello?world' '
++	git init test-c-hellowild &&
++	(
++		cd test-c-hellowild &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c9" -- "hello?world"  &&
++		cat >expect <<-EOF &&
++		hello?world
++		hello_world
++		EOF
++		git ls-tree -r --name-only HEAD | sort >actual &&
++		sort expect >expect.sorted &&
++		test_cmp expect.sorted actual
++	)
++'
++
++test_expect_success 'commit: literal hello\?world' '
++	git init test-c-hellolit &&
++	(
++		cd test-c-hellolit &&
++		prepare_test_files &&
++		git add . &&
++		git commit -m "c10" -- "hello\?world" &&
++		cat >expect <<-EOF &&
++		hello?world
++		EOF
++		git ls-tree -r --name-only HEAD >actual &&
++		test_cmp expect actual
++	)
++'
++
++test_done
+-- 
+2.49.GIT
 
-It is no problem. I have access to a FreeBSD 14.2 machine. I can confirm
-that it fails with EMLINK.
-
-My V2 patch fixes the issue on both platforms. From the documentation
-OpenBSD shouldn't be an issue. But if so it should be trivial to fix.
-
-Collin
