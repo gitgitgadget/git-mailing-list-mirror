@@ -1,116 +1,110 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B08D227BF8F
-	for <git@vger.kernel.org>; Sat,  3 May 2025 15:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1D612FF69
+	for <git@vger.kernel.org>; Sat,  3 May 2025 15:49:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746287114; cv=none; b=F3I1basJQen+mvsBZzeNwh1exPdnNwX8nMy4NIz/DfqqoXY5XFsKONKCdEdfV67zPpVuAtamK7dPNQr+jO13WIocWa2Sh5rE7J/VyPqoyBRbb8Ge/cvRwN9YE0JgRcgjJSyRUvH03PiXfKz3/OudTLQNtAQUcXRVz8Won3FbDco=
+	t=1746287372; cv=none; b=sG3fuxK9E+bq2VIL6g3F1iCN9d5ZX16NrwUI3WO5h1bLd6yv4qZJpUrCn5O4j/fUnGv7KQ6BreLo3+erOPKoDdvhSGQnkPB22NSlJSfTfrebV1YqLs7wVL7wI/67clXFNDrGijnS2LRh2RdzLoXSqI4a2Yvf7DLZkM0JmLweEOw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746287114; c=relaxed/simple;
-	bh=sPnTRSAzV8eBpXnM2ieuADgwOFPewZ2LovmBJlLSBqU=;
+	s=arc-20240116; t=1746287372; c=relaxed/simple;
+	bh=yX7hqZt5mhs186s0NO3FwLYGPZDV0wFLwOXrlS0dZVk=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Xp7sl4VxnuBU6fibhczYnmKEMTgRcQItrpIiHy5OWqUtOT7pi0GNHiM33Lvkc4urDule70Oj7/RtnKoXm+bETd1L4MFsb7iJSUxpTRgND1XNtbyJI6Jl/2kD0s3q3zfXA/nxo3Z+6oGxAszkA4usI7D07DAgqV1LkhQdvjmal5A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=yvULwJpS; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wikmm39Kd8BVtWpub/evn/xk7VqlpTx4DwHO0NVSmp3Cbz/adJ2wYRYBNsT4O8cPB3VPs19AEYmzYuXV8IetaDbgUUaKOxKWN5nRwxQKePeSnyR3ezqG2Ykbrmsy5tVAFWWopf0ikBLsjFnJ4nM48DqivAbPvzLuLoGk7AL/7i4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=OXWu+P2S; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="yvULwJpS"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1746287110;
-	bh=sPnTRSAzV8eBpXnM2ieuADgwOFPewZ2LovmBJlLSBqU=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=yvULwJpSB2DBzMJp6TIKZpuh5QW7MzQJdpMv+jvWy1PwWG8EmykUvzEhu1cuJrP3X
-	 1O/mWyw3KqnOT82+QAblZuPVMgtT6T7ZVVbAV4sZlZU3h9nBF4zfAlpGwjiBarMILR
-	 rRhRPYIkq4NtXrrX+kfD0CoEloNP6OFRHIQB2J+XKWQ8D9Rv0ofPZxb4cQoey9nqmQ
-	 L43IWxO9OnWqYHYiLUAZQ/TMU8jsjqMHY0EmpCVYzzpZqa8zBknHJI1eLbrrWARF8B
-	 6bFw9bs+UJXudMymw+dAR+5yE5CEQ3q9llevBQkMPetLuSqmtAeuRmLuLnrna1LJi8
-	 smU3HrdhzbafnfUs8Q5EPuXxo7n5iumYjFd7sUqblt/7r9S0keoaNSimoS7+1YyP3b
-	 aUU3S0VTwuz4l6eCu7NMdRHHfRxDf/3CWxiyt9wNAaPNp82hW15RAkhVvl074GXEvr
-	 DotQF76wzPZe4b3MT3WyaTm4XaRfjaxen5yEnx1eyxp7j0d7mym
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 089F220114;
-	Sat,  3 May 2025 15:45:10 +0000 (UTC)
-Date: Sat, 3 May 2025 15:45:08 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Collin Funk <collin.funk1@gmail.com>
-Cc: git@vger.kernel.org, shejialuo@gmail.com, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] wrapper: NetBSD gives EFTYPE and FreeBSD gives EMFILE
- where POSIX uses ELOOP
-Message-ID: <aBY6BPnuSfslYlYt@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="OXWu+P2S"
+Received: (qmail 10646 invoked by uid 109); 3 May 2025 15:49:29 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=yX7hqZt5mhs186s0NO3FwLYGPZDV0wFLwOXrlS0dZVk=; b=OXWu+P2SVS6l0FVs3g+owsngyLOX7rQX/uJrGoVm0dSbILHVb6WNOg7M2VvvjEzTxbcETjzYQwKI7vda7lI/rtrxQ0HS+jgN5LXmBoCjGSSa5IGjlkh0gox9iO23rv8U6n0RXtz1HxRQekyP+7Qm0uIMTGcdNh7UD3H7zr/Ma3bjsOYLDYWQg6TneLIxKtq+ueqf3G3PRkaCYnWeV8m5BQnKNT7qzwq7JBy3If942U+V2+CuvvYVcfqVo/z6s/EZHmslMQW5FXqVMgryWU1yx3/JuogiKmhiHwxZ6/QLRD2dmEeXFpo8SoB6bgzeIPMUW+rn6nmFVoBCorc4MTfuNg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 03 May 2025 15:49:29 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5489 invoked by uid 111); 3 May 2025 15:49:29 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 03 May 2025 11:49:29 -0400
+Authentication-Results: peff.net; auth=none
+Date: Sat, 3 May 2025 11:49:28 -0400
+From: Jeff King <peff@peff.net>
+To: shejialuo <shejialuo@gmail.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
 	Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
-	shejialuo@gmail.com, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+Message-ID: <20250503154928.GA3412@coredump.intra.peff.net>
 References: <20250502233403.289761-1-collin.funk1@gmail.com>
- <20250503041718.42195-1-collin.funk1@gmail.com>
+ <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
+ <20250503133158.GA4450@coredump.intra.peff.net>
+ <aBYvMjtGjzEhKg4s@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7BEJ143A87clfw8b"
-Content-Disposition: inline
-In-Reply-To: <20250503041718.42195-1-collin.funk1@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
-
-
---7BEJ143A87clfw8b
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <aBYvMjtGjzEhKg4s@ArchLinux>
 
-On 2025-05-03 at 04:16:51, Collin Funk wrote:
-> As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
-> symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
->=20
-> This patch fixes the following test failure:
->=20
->     $ sh t0602-reffiles-fsck.sh --verbose
->     --- expect	2025-05-02 23:05:23.920890147 +0000
->     +++ err	2025-05-02 23:05:23.916794959 +0000
->     @@ -1 +1 @@
->     -error: packed-refs: badRefFiletype: not a regular file but a symlink
->     +error: unable to open '.git/packed-refs': Inappropriate file type or=
- format
->     not ok 12 - the filetype of packed-refs should be checked
->=20
-> FreeBSD has the same issue for EMLINK instead of EFTYPE.
->=20
-> This portability issue was introduced in cfea2f2da8 (packed-backend:
-> check whether the "packed-refs" is regular file, 2025-02-28)
+On Sat, May 03, 2025 at 10:58:58PM +0800, shejialuo wrote:
 
-Yup, this looks good.  Thanks again for the patch.
+> > PS I notice that this same function reads the whole packed-refs file
+> >    into a strbuf. That may be a problem, as they can grow pretty big in
+> >    extreme cases (e.g., GitHub's fork networks easily got into the
+> >    gigabytes, as it was every ref of every fork). We usually mmap it.
+> >    Not related to this discussion, but just something I noticed while
+> >    reading the function.
+> 
+> Peff, thanks for notifying me. I want to know more background.
+> Initially, the reason why I don't use `mmap` is that when checking the
+> ref consistency, we usually don't need to share the "packed-refs"
+> content for multiple processes via `mmap`.
 
-I'll just add one resource for people who might like to look into these
-kinds of things more.  https://man.freebsd.org/cgi/man.cgi is the
-FreeBSD man page viewer, which lets you view manual pages from the BSDs,
-Linux, and some proprietary Unix systems.  It can be quite helpful for
-finding and fixing portability issues like this or just seeing what
-command-line options or arguments a certain Unix supports.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+You're not sharing with other processes running fsck, but you'd be
+sharing the memory with all of the other processes using that
+packed-refs file for normal lookups.
 
---7BEJ143A87clfw8b
-Content-Type: application/pgp-signature; name="signature.asc"
+But even if it's shared with nobody, reading it all into memory is
+strictly worse than just mmap (since the data is getting copied into the
+new allocation).
 
------BEGIN PGP SIGNATURE-----
+> I don't know how Github executes "git fsck" for the forked repositories.
+> Is there any regular tasks for "git fsck"? And would "packed-refs" file
+> be shared for all these repositories?
 
-wr0EABYKAG8FgmgWOgQJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ5XvT2TsaaTucytSDvd/jCjtJd7p2ZG2Gy2Um8QiifWs
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAFKLAQCWReabdz/mnK8RTGvu0RXIF2lB
-Q4wA7u/fRGcTNm5xEAEA8qVFqqV07tFRGzMIZjEAn9HcSkAFk13pjF/gaBP5dg8=
-=K5XL
------END PGP SIGNATURE-----
+I don't know offhand how often GitHub runs fsck in an automated way
+these days. Or even how big packed-refs files get, for that matter.
 
---7BEJ143A87clfw8b--
+The specific case I'm thinking of for GitHub is that each fork network
+has a master "network.git" repo that stores the objects for all of the
+forks (which point to it via their objects/info/alternates files).  That
+network.git repo doesn't technically need to have all of the refs all
+the time, but in practice it wants to know about them for reachability
+during repacking, etc.
+
+So it has something like "refs/remotes/<fork_id>/heads/master", and so
+on, copying the whole refs/* namespace of each fork. If you look at,
+say, torvalds/linux, the refs data for a single fork is probably ~30k or
+so (based on looking at what's in a clone). And there are ~55k forks. So
+that's around 1.5G. Not a deal-breaker to allocate (keeping in mind they
+have pretty beefy systems), but enough that mmap is probably better.
+
+I'm also sure that's not the worst case. It has a lot of forks but the
+ref namespace is not that huge compared to some other projects (and it's
+the product of the two that is the problem).
+
+> If above is the case, I agree that we should reuse the logic of
+> "load_contents" to enhance. But I don't know whether we need to do this
+> in the first place.
+
+I think you can skip the stat validity bits. In theory you can also skip
+the mmap_strategy stuff, but I guess it might mean that "fsck" could
+block other writers on Windows temporarily (though we wouldn't plan to
+hold it open long, the way the normal reader does).
+
+The other gotcha is that the result won't be NUL-terminated, but it
+looks like the helper functions already take an "eof" pointer to avoid
+looking past the end of what was read.
+
+-Peff
