@@ -1,92 +1,137 @@
-Received: from out-179.mta0.migadu.com (out-179.mta0.migadu.com [91.218.175.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3731FB666
-	for <git@vger.kernel.org>; Sat,  3 May 2025 03:51:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEFBB4C98
+	for <git@vger.kernel.org>; Sat,  3 May 2025 04:17:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746244280; cv=none; b=djofdknJNTF/cGiE4GBZHkWTlAbvmnoPOL4otPDd+WyPc0GCX2nALkuXWD7ljrsac8ymzoubhNTD3ZrT/4U2EHpu5c7LHfg5ldBnKjbfvCEd/uo1OmwtaiU/BJidT79agU9Pp3pd466UOgI7YUxmX3A6cw1XL6IxC2XRLI99dlg=
+	t=1746245852; cv=none; b=MeIF3+DO66JwFG3Zc0BiPmOaWFkjogjCMtsD4NldgZEevPRB8ZxL9+R2bWbCChgMPN2Lg4nkZMVALMFSgSySBdTDIlsX228hkxJwRse/K6F3E7uwQ+kGWKr8X6jSaGS9SyqVYXuknec93LaMmCfqWBQiYPz+gbBe29757hzJwGM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746244280; c=relaxed/simple;
-	bh=vhYATxX1hWfE5xGDaJn0FYij+fhrjikH4n63EOSkUao=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=E1+8NLi1KlJV7QZuBVXgcuUbJBeja1cb3t0FPnFpX6ROMzmy6MMGqYjBD7fFKzIQKR+qU/MyxV1sSSSGC83azAzKpCE5gSl+nb6ksdcv1Lmm63s70D52UXLHwyz6Vp+TaU0KKCEG1kbjrWaJQiesvRFu4K8WxIz9oI9/UoJAYoM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=Waw2xOa6; arc=none smtp.client-ip=91.218.175.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
+	s=arc-20240116; t=1746245852; c=relaxed/simple;
+	bh=v3De2a3WkEbo7WmPRzlrqys4ArYXuxVnsQPSmU3gurQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=XC2K8bcky/XkP+p/9PlJr9jCwxxzYyVI7wro+E5gLqpa5Xb57N71Le2vu6eFcieeCxhcUMmYyl97k27a8t181OZJUcmDnrQglPJU4Lc9fsu20MAVi9B4MhSs+07ER5l99nzWEePrTvqxi0rAJvzZbQ889V6yMQuqID0A3AZeDXE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ewUrJf1Q; arc=none smtp.client-ip=209.85.214.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="Waw2xOa6"
-Date: Fri, 2 May 2025 23:51:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
-	s=default; t=1746244272;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=vhYATxX1hWfE5xGDaJn0FYij+fhrjikH4n63EOSkUao=;
-	b=Waw2xOa62m0+z/Z3tgsZCixNYeSC3YhkKr6HQoQS2KBJEFrqkRbEEcGKYHwXr6gETYqBJa
-	qIienmgkWfoG2KXG1tTKjFHTaZCgWg9/hzaklybhaEi814mCoTWyYwuio7l/5jihn2hip4
-	rXvWjmz6ereqpZg3+sDLXqP2S5oZZ3Q=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
-From: "Raymond E. Pasco" <ray@ameretat.dev>
-To: Ryan Hodges <rphodges@gmail.com>
-Cc: Junio C Hamano <gitster@pobox.com>, 
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Jason Cho <jason11choca@proton.me>, 
-	"git@vger.kernel.org" <git@vger.kernel.org>, "aclopte@gmail.com" <aclopte@gmail.com>, 
-	Ryan Hodges <rhodges@cisco.com>
-Subject: Re: [PATCH v3] apply: --intent-to-add should imply --index
-Message-ID: <4e2szrowd43w6lrzawqtddamdxvp6ke65jkzmdoru4gjin7xhn@kaqe7skrktgt>
-References: <93yuUC_Wn9lQIDzJuvAWbCQ35kz1YxeNhsLLX67x9VzoPtRugVLNaHC_p1sWBzMxWy_VVRRl8av3Dx5PHw4_Cch0gmWs40DDrZRaezLVkGk=@proton.me>
- <8a61dc13-0b7e-437d-b060-c17bff483c7a@app.fastmail.com>
- <xmqqmsbwxpfn.fsf@gitster.g>
- <ED60E13F-F9D4-4261-8C85-29AC771B5D54@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ewUrJf1Q"
+Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-22c33e4fdb8so29028215ad.2
+        for <git@vger.kernel.org>; Fri, 02 May 2025 21:17:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746245850; x=1746850650; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=TVXWW/RkDgFZDOUtGHXZKXh6HXkVsusxlWfpJE48G/8=;
+        b=ewUrJf1QtU7Qy6IPQb8ijXQxyUUNu6rG1aPBXK+AVg84eAX+lVtpf1Xj5crdwXX0dk
+         +4gQL3IMXwf3PQFZSu1kfW7DcMYuz0q8+GK9ya1jlkG0SiZTKDCr9dns3OPToraBakBO
+         p896aDxLBjTgJ+xTRdYs4Wk6euuHp3QRkT7BXTLDL3bYCOI2k9L2gZn+zdTmaDH8vRQV
+         GuaNWLV6WHA94jHjhU3LpErFIgpJoCSuwV/NI4unOL+xO/F58jDlo6kX049CB6UU8P1T
+         XfU5KRHR3W42pU7pras2dcJ2qfW8yOS6L6ae9wIswareBizu5qe2/r1O+YmEhLSOM1/P
+         dRBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746245850; x=1746850650;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=TVXWW/RkDgFZDOUtGHXZKXh6HXkVsusxlWfpJE48G/8=;
+        b=eiyM3ZD05sFbWZVZFxchL+J1UlMc5wRLjSmvzs5k+N9BodMvoMciIFg+8usS/bKH6c
+         yxAHDjURNJ2wf5RT0JolLqoetYE5FPrdGhQcH2FyGlQEUg5x5SSuhOyDbBD+WH1bW68x
+         VRpTCQOkH8dasoOg1oP0FEDHwX1iakiVCEYskdvSClPYkZ3Zsu9Ym/NXOhBfFlsWzPts
+         xyJ35kWxpU+sQ1d1ydumOv1mdlsBqc9zCWDbKTtLZTqKp43HYKgCb/lZCA62NyC9cy6Y
+         hsWJfoHiBt8iZaybGFgrMd59Cj53H+qNSA/RCOCGcUmBuAFykWE2um5ynl+twSc/Yc5T
+         WOAg==
+X-Gm-Message-State: AOJu0Yzk1P0r51Fcx/yEoNznax2LSBMPt9xIOYnSv4dJwXzLs0DxkSSN
+	e+zhmryLu1p5DfXzYUbqhVTYo8Soh26TWN09qbXv7Ra0kwC9JoBfGIqQlR8C
+X-Gm-Gg: ASbGncv5jvY1UzHmjnYfM9Xv9+HQ23AA7DSdpBYq4RyeiBheSrZz8dwfNl6/sFC8soV
+	Z+PFONaBXfgnKTzbFvUfWuGQc+Xjdsxmg2SEFTxMS2/o8bApMzDNYWh747JinEqcCoyRaZIGOMp
+	+1y8gb5Xlmbr3MWhAUsPpnCbIhf39Eg7HGOLi7GmVAAvLAdfnoUg9At+AyoUi09qe04dyK2cj0Z
+	LH4xg32343kj9+Qj5B11C32DJwdWzM5MwQ/2/vkLTqIAuYYqHbmHgGsEwA3M8HLSw35E5713evu
+	FmqNdcRS7RrDMKl1Fa+i2sCo
+X-Google-Smtp-Source: AGHT+IFY0Y0wUvceoSax+/lZzj+u7EztYc1PYtw69uw10NIxAuWttqoCrubgl9zIoNAKMaRSfYyQ9Q==
+X-Received: by 2002:a17:903:f90:b0:215:b9a6:5cb9 with SMTP id d9443c01a7336-22e1030c7a9mr83751535ad.5.1746245849719;
+        Fri, 02 May 2025 21:17:29 -0700 (PDT)
+Received: from fedora.. ([2601:646:8081:3770::4bd0])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22e151e9df5sm16132485ad.82.2025.05.02.21.17.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 02 May 2025 21:17:29 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: git@vger.kernel.org
+Cc: shejialuo@gmail.com,
+	sandals@crustytoothpaste.net,
+	Collin Funk <collin.funk1@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2] wrapper: NetBSD gives EFTYPE and FreeBSD gives EMFILE where POSIX uses ELOOP
+Date: Fri,  2 May 2025 21:16:51 -0700
+Message-ID: <20250503041718.42195-1-collin.funk1@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250502233403.289761-1-collin.funk1@gmail.com>
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ED60E13F-F9D4-4261-8C85-29AC771B5D54@gmail.com>
-X-Migadu-Flow: FLOW_OUT
+Content-Transfer-Encoding: 8bit
 
-Intents to add are a tricky part of the system; I fixed them up
-some time ago for `add -p` which uses apply.c machinery, but not for
-`apply -N`, which seems to have never worked since its introduction
-in Git 2.19.
+As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
+symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
 
-To recap how this all works, apply has three modes: with no flag, it
-applies a diff to the physical files in the worktree; with --index it
-applies a diff to both the physical files in the worktree and to the
-index, and with --cached it applies to the index but *not* the physical
-files in the worktree.
+This patch fixes the following test failure:
 
---intent-to-add / -N is intended to apply only to the first of these
-modes; this makes sense, because an intent to add is meant to behave
-like a diff not added to the index. However, the intent to add lives in
-the index; Git just behaves as though it were a worktree change not in
-the index.
+    $ sh t0602-reffiles-fsck.sh --verbose
+    --- expect	2025-05-02 23:05:23.920890147 +0000
+    +++ err	2025-05-02 23:05:23.916794959 +0000
+    @@ -1 +1 @@
+    -error: packed-refs: badRefFiletype: not a regular file but a symlink
+    +error: unable to open '.git/packed-refs': Inappropriate file type or format
+    not ok 12 - the filetype of packed-refs should be checked
 
-The behavior `apply -N` actually exhibits is that it clobbers the index
-with a new index containing *only* the contents of the diff, nothing
-else; my guess is that it was only tested against repositories with
-entirely empty trees. If the tree is not empty, then of course an index
-with only the intent to add and nothing else shows up as every file in
-the tree being deleted.
+FreeBSD has the same issue for EMLINK instead of EFTYPE.
 
-The patch discussed here (the headers for the thread seem broken,
-but the message id is <20211106114202.3486969-1-aclopte@gmail.com>) does
-seem like a mostly complete fix for the issue. However, the message is
-entirely wrong and confused about how any of this works, which is likely
-why the patch fell through the cracks. (Of course --intent-to-add can't
-imply --index, they are mutually exclusive options.)
+This portability issue was introduced in cfea2f2da8 (packed-backend:
+check whether the "packed-refs" is regular file, 2025-02-28)
 
-However, the code appears entirely correct. The combination of --cached
-with -N doesn't work, despite the message claiming it does, but it can't
-possibly work because it includes the file in the index, so it can't
-include it as an intent to add in the index. So this just merits a note
-that --intent-to-add is mutually exclusive with both --index and
---cached.
+Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+---
+ wrapper.c | 21 ++++++++++++++++++++-
+ 1 file changed, 20 insertions(+), 1 deletion(-)
 
-If the original author (Johannes Altmanninger) isn't around or doesn't
-want to, I can clean this patch up for resubmission.
+diff --git a/wrapper.c b/wrapper.c
+index 3c79778055..f74e3f7747 100644
+--- a/wrapper.c
++++ b/wrapper.c
+@@ -737,7 +737,26 @@ int is_empty_or_missing_file(const char *filename)
+ int open_nofollow(const char *path, int flags)
+ {
+ #ifdef O_NOFOLLOW
+-	return open(path, flags | O_NOFOLLOW);
++	int ret = open(path, flags | O_NOFOLLOW);
++	/*
++	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
++	 * time this errno occurs when O_REGULAR is used. Since we don't use
++	 * it anywhere we can avoid an lstat here. FreeBSD does the same with
++	 * EMLINK.
++	 */
++#ifdef __NetBSD__
++#define SYMLINK_ERRNO EFTYPE
++#elif defined(__FreeBSD__)
++#define SYMLINK_ERRNO EMLINK
++#endif
++#if SYMLINK_ERRNO
++	if (ret < 0 && errno == SYMLINK_ERRNO) {
++		errno = ELOOP;
++		return -1;
++	}
++#undef SYMLINK_ERRNO
++#endif
++	return ret;
+ #else
+ 	struct stat st;
+ 	if (lstat(path, &st) < 0)
+-- 
+2.49.0
+
