@@ -1,121 +1,86 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6639F27EC6A
-	for <git@vger.kernel.org>; Sat,  3 May 2025 19:13:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BFF17F7
+	for <git@vger.kernel.org>; Sat,  3 May 2025 21:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746299618; cv=none; b=R9CcE2Vn371H1YTou8lgaNoiM1aiz6Co9bsHZp6B2XREMuvj/20oUt5c41awHvM6efgnlz+Dr+bnHylWQMEJprhsnwFCyMBbIgY0/6qoF69tJHEb/px3O5XEXwveaUXgGnKZI7fIINv1AHiKC3QTW9gJ7abD9WEJLtkYdzEF8ig=
+	t=1746309361; cv=none; b=p5gZzCMBaKdP+utmlP51qjDn2pJOXqOyEOjKLVFL1XP5epqj4E//GqfQyI9YeiNv+CYLSNb9qPWDWiUCgEjHj75wvjk38vDKu0hPjbM20gu3FS1GX5q9mjgtGt13lfpcAm+Fnwnart8DBEx/ASF0UWtN9cmkpZb+Nz2t9388kpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746299618; c=relaxed/simple;
-	bh=DhOjiaB22/LYE7q17wQ5I4n6npPoxcWrnUe189J6/Ik=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=QepwUEkMMOma/PuTD9MOKiI5lldlR/vngq5g6x7pdDi2h6HpEgMfBNocpQev8zuc0c66ldGEv7dKfuiiMZafbFQCgphktkaichmz0LpoG45GTS0nt3HCwHMDKU74aqggsyJ9opmzlYIU5B01vB81m3O+3EQoFg1SZO9dhaIBIWo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Sgvq60e9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XZnSSxqY; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1746309361; c=relaxed/simple;
+	bh=XKx7iPfNqqCDHqB+JAbQftOv4syZXxZsGppuyzapS3M=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=BXv9TcaRzaAVd+LkWUVBqwIKpyjiMlsQSk0ftQfpVt9KgWGA9iKd1hoJmgBnrLJ/jfV6Zq+KBvX/vkBGx3Q6NW7mBRu9uzLrX1C623kLtHWgTMBsaQSQEb+6g5aKCv93qLI8omu9rt9W3/9DS2qhLSaZrmpf9wWUW3eNOpHCCJA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BKULEjPH; arc=none smtp.client-ip=209.85.214.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Sgvq60e9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XZnSSxqY"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 775F8114013B;
-	Sat,  3 May 2025 15:13:35 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Sat, 03 May 2025 15:13:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746299615;
-	 x=1746386015; bh=z6qAOejgEK4L7Vqra9wa9eDht2pS1VCZqCKovm0JBGY=; b=
-	Sgvq60e9IgShe9ac1WIBMSm1kurswCmmIU6S3Gicq5KX9vFRgM3mXigwTKBMzGk5
-	dme1fN/R491AYb4I/lyhgwMTY0BRfBdmRZbAanODOjksavq7lR+gxWUEKTK/CTwZ
-	xzuA3IZOHd9AAKil/NYRAjrgYIaNTlNg+FFb0CZhSdFIIvcC5O6Ks0NSbiCW6GK0
-	oCrUbHJMYD2MB+EoqIK6gXG41kjQuVc9mk8FM/BMy0ogaUDe8Dhd49hWdnPI/1dF
-	HoatXnf0VMDJ99SM0Ex/+jZfbYarLxVipUC7tQmVo8zEuZB9KWkfIGU/kOuYfBgn
-	F1vHu6+SSqcnlgJl+DksRA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746299615; x=
-	1746386015; bh=z6qAOejgEK4L7Vqra9wa9eDht2pS1VCZqCKovm0JBGY=; b=X
-	ZnSSxqY7tagBn6X+mMA2VbK8WXNKcUm1yrdzEN1fWQmsV2wNKIOatT0R/nVKyUZp
-	+l82v95r26Qd1GTa3HA3PnNbGY4eXF5JX2uGKyybJXWumZI10BROOdhEjjpB0+Lb
-	bpoNlcrqzVT6avZpa1OmyC5Cet8n5IapyfSEjeUWp22/vBc5lVVOrsYhmrFYOwbP
-	4K6Hvo1mDhr3GF6r3iuzDV5aRuIaresiX5pc9d2plGxWEHy6oekhVU+aDJhuJZem
-	wFwm//xMh8dGEqNrHQITWtRvfDuknWXwe++QIk39x+u88+ZkvkBMp+pabXW8emE0
-	xL/ldcWVv9Ix3CdtcZR9g==
-X-ME-Sender: <xms:32oWaKyTInE42bi1MSMYdcunHSXt2u4i_zlxK4grfziqX8-yU-64_Ds>
-    <xme:32oWaGSE68729QQaqZe0uDKNvE1K5f3LfnDztOYRsJqo5LemcckmfbeSXLq08Xmgg
-    FxOL408oBQXtjbC4Q>
-X-ME-Received: <xmr:32oWaMWOyW4YDPrgEktQqcEJR9Q94IC4BsvgChfleyrPYtr2GuGD440ICWUSHDyrTavMHcuLg_gqzol5i_E5DsSeuUCAo8iQhrBLyFiLZkhCIMtHNlvqm7klZA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeeiudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertder
-    tdejnecuhfhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrg
-    hilhdrtghomhenucggtffrrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeiheeg
-    fedtudduffegjefhkeetudeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrh
-    grmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghs
-    thhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegt
-    ohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehjnhdrrghvihhlrg
-    esfhhrvggvrdhfrhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgt
-    ohhm
-X-ME-Proxy: <xmx:32oWaAg0lvq4xxPh_gqVmAfIuH63WUJkDSH8YtqyvMs8HylVAtXMUg>
-    <xmx:32oWaMAbV8iSdb0rS7gAcmxGN8-WERz8QXdkLhMgB24rCfnioihGpw>
-    <xmx:32oWaBLt6yU50FEiC_PksxO5N8ZVwdIcnIuEzFksOgGYZe1Kp4RVjQ>
-    <xmx:32oWaDCup7fWzuDJnzLJmWEVtAN0Q4mSpIgQfJfa5fhcvc2efxFXLg>
-    <xmx:32oWaME45JidKmDucrTAfKf1evvu8y1X00GQy3_iJOPg-ClEgehanjjQ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 3 May 2025 15:13:33 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
-	Karthik Nayak <karthik.188@gmail.com>
-Subject: [PATCH 2/2] doc: branch: fix inline-verbatim
-Date: Sat,  3 May 2025 21:13:09 +0200
-Message-ID: <2e41f0f0f0738418375f77146e4b10e0e562d7fb.1746299135.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.49.0.459.gf65182a99e5
-In-Reply-To: <cover.1746299135.git.code@khaugsbakk.name>
-References: <cover.1746299135.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BKULEjPH"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-223fd89d036so37323075ad.1
+        for <git@vger.kernel.org>; Sat, 03 May 2025 14:55:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746309358; x=1746914158; darn=vger.kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=LW+6ACYdS4y/dTk+rVetPcUqDs8ed3oG4fI+TRgvchs=;
+        b=BKULEjPH8IpPUPOdkWjzajtkPHrV6PxZ62kZbx4u9lw6SlzsgWHM3hTIFmg5Y6c6Xh
+         BoD3qV/b+Okk3bqAEawfbfAlj/Dp3YNCiGr0I+3vGGJfY0vIcLYsPIoiUBol5FStlo2m
+         ygKlstwp5f56C6jczprwU0NqQ8rPO+1XR/igA/wOEfNLgjfSZQTFL1Z2a0N60r+c7zKs
+         F0mPBMZTx1NIsUAo8MPu9/YcvumoYdO2biai9VeT4y1U5fw6wE2HwPhJRVfSkCxS1ChK
+         dTeWLyYZUceAIoAlRJ0VdOkhIF+0vO/rVzpiTGhfAvZF2Iwr92L6phd320fEaxuq6nTL
+         RYHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746309358; x=1746914158;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=LW+6ACYdS4y/dTk+rVetPcUqDs8ed3oG4fI+TRgvchs=;
+        b=p1aiwsO/Y4YkUEeJymDEAmdWg3ZBVo2Czk6qZY5pZ8gs/Cli84tuWbhsL8/DwFZV3d
+         YlgCNQaJ/SGvytm3GGEJtXc0rRCHOABCir8Y8UNusoFxVyHGp1yGo70Bb+ZHqoFsjWWO
+         NvanJxL08NkpD9YKOx61E/DJ14mQt5OkwyUJmieRI3D/o0qdA9gMTH/KQ4mEmG6I8LoD
+         VptXhiI6pJktMdqfVz8ZeqOwdosL7ooxmz3aPl339BtGziyQxBEtXCeZLP+UmFUtdncU
+         XkEH/ABk1hjocEu/bVmjAExvRAGYUYv8+zM45MvB97p0LZL289BbsE0vMnIPvi3a6iAf
+         bjGg==
+X-Gm-Message-State: AOJu0Yyi3wTbjDw1e+cWWNZ6J59ehnHF/Wxr5KHjsnU7iWJ+chmQIy0m
+	Vlg9xDS9B9GTSHURC6rQE3XcoR3AJA+T6bnikkWcPKC5CzHfwoVJ2AsM5gPW88ehibLoCfrjOwz
+	FH3eg8Mn6MZ9wo5D9N8O0OOgKZFy3arxY
+X-Gm-Gg: ASbGncsoSFXIx2OMjtTW4G24GeeOjz5ys+VCwRk/+3KlaVjX7wMLDqA3WOj/TWcwMfg
+	HR51sF441jJysUM0ukaF5yjxeA4t0ZLFWL2CZ6DPmzfLPBxis82nT2yAsAXW1cWp0f5YGsJ9u03
+	by9nlj+ky72mm09oKyuB2W6VUr/UPjupQk+2w=
+X-Google-Smtp-Source: AGHT+IEmdr20v+z7u7Rmv4cSpSkMnt4yOnbuT4adWR7MM6Vj/cIUQ6wh6aieke2TIqCW8lsNohrxBLB77pSrGah4w/U=
+X-Received: by 2002:a17:903:22d0:b0:229:1619:ab58 with SMTP id
+ d9443c01a7336-22e1ea6705fmr29565375ad.43.1746309358491; Sat, 03 May 2025
+ 14:55:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+From: Britton Kerin <britton.kerin@gmail.com>
+Date: Sat, 3 May 2025 13:55:46 -0800
+X-Gm-Features: ATxdqUG_ApADAr5AMB4QYL2mf1gZEo2LjHvwoXxuiPhwXa0nnqnozeNlVTmOCh8
+Message-ID: <CAC4O8c9OJQQn_22i0-bZUDtHoi+ti6aT6FwupnQBoBFg6BNK6w@mail.gmail.com>
+Subject: easily use meld 3-pane view to review merge commits?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+I like how git-mergetool can use meld with 3 pane view to see merge conflicts:
 
-7b399322a2e (doc: apply new format to git-branch man page, 2025-03-19)
-updated the formatting for this doc to, among other things, use backtick
-for some elements.  In the process `è` was used by accident instead
-of backtick.
+  git mergetool --tool=meld
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- Documentation/git-branch.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I'd like to use the same sort of view to see already-committed merges,
+but I didn't find an easy way to do it.  It seems like git-diff,
+git-difftool and git-show are oriented entirely towards diff or 2-pane
+view rather than diff3/3-pane that git-mergetool uses.  Did I miss the
+existing functionality somehow?
 
-diff --git a/Documentation/git-branch.adoc b/Documentation/git-branch.adoc
-index 50a1e13e1f2..c0afddc424d 100644
---- a/Documentation/git-branch.adoc
-+++ b/Documentation/git-branch.adoc
-@@ -373,7 +373,7 @@ $ git branch -D test                                    <2>
- ------------
- +
- <1> Delete the remote-tracking branches "todo", "html" and "man". The next
--    `git fetch` or `git pullè will create them again unless you configure them not to.
-+    `git fetch` or `git pull` will create them again unless you configure them not to.
-     See linkgit:git-fetch[1].
- <2> Delete the "test" branch even if the "master" branch (or whichever branch
-     is currently checked out) does not have all commits from the test branch.
--- 
-2.49.0.459.gf65182a99e5
+I asked about this on stackoverflow and made an answer with a script also:
 
+  https://stackoverflow.com/questions/79599180/show-a-git-merge-commit-in-three-panel-form-inimeld
+
+If there isn't any existing automatic way to inspect merge commits in
+this way I'd like to improve this script and turn it into git-meld3 or
+something.  It's tempting to think it could be wedged into the
+existing diff-oriented architecture of git-diff/difftool/show but the
+result would probably be too confusing to be useful.
+
+Britton
