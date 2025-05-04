@@ -1,86 +1,101 @@
-Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6BFF17F7
-	for <git@vger.kernel.org>; Sat,  3 May 2025 21:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267F933E4
+	for <git@vger.kernel.org>; Sun,  4 May 2025 08:00:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746309361; cv=none; b=p5gZzCMBaKdP+utmlP51qjDn2pJOXqOyEOjKLVFL1XP5epqj4E//GqfQyI9YeiNv+CYLSNb9qPWDWiUCgEjHj75wvjk38vDKu0hPjbM20gu3FS1GX5q9mjgtGt13lfpcAm+Fnwnart8DBEx/ASF0UWtN9cmkpZb+Nz2t9388kpU=
+	t=1746345622; cv=none; b=PT2+Bj0ViwDF3aBMDSVmnr9NbiuyAaxAzmt33Lpice5LP0fmWhoOKtWiLPIcVKHU1yqCT8Urdg1dEUa/JhkuMyXGN5H+PsneA/wYIAxhK7fd910wVSyJ7+6xkm2xUFYN3i3PckRu+j1cFHWfQJzXL9Q2NpXtxjBvx8rLOCDQyho=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746309361; c=relaxed/simple;
-	bh=XKx7iPfNqqCDHqB+JAbQftOv4syZXxZsGppuyzapS3M=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=BXv9TcaRzaAVd+LkWUVBqwIKpyjiMlsQSk0ftQfpVt9KgWGA9iKd1hoJmgBnrLJ/jfV6Zq+KBvX/vkBGx3Q6NW7mBRu9uzLrX1C623kLtHWgTMBsaQSQEb+6g5aKCv93qLI8omu9rt9W3/9DS2qhLSaZrmpf9wWUW3eNOpHCCJA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BKULEjPH; arc=none smtp.client-ip=209.85.214.172
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746345622; c=relaxed/simple;
+	bh=mL3HqXr/sIe+6g4tZwCEyR4arlSBqF8E9s/cW/hz9Cg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=B/U2mWN7ZwyJLs6at87OP4ItCg064J2cXSySAdPYMOC+dVXrUCfrnuNouIowRjXn+0c1QvOeVdoQwlr7faOi6oq9/lNJFb59opJPhKYTaXNbIknvTxJbuRSfzVxFcyJ54z5O1ic0mTTauBEj2++EZniCTW6g9gHSBYWtZDS6/WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Km4j5cvA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pLZATiVb; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BKULEjPH"
-Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-223fd89d036so37323075ad.1
-        for <git@vger.kernel.org>; Sat, 03 May 2025 14:55:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746309358; x=1746914158; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=LW+6ACYdS4y/dTk+rVetPcUqDs8ed3oG4fI+TRgvchs=;
-        b=BKULEjPH8IpPUPOdkWjzajtkPHrV6PxZ62kZbx4u9lw6SlzsgWHM3hTIFmg5Y6c6Xh
-         BoD3qV/b+Okk3bqAEawfbfAlj/Dp3YNCiGr0I+3vGGJfY0vIcLYsPIoiUBol5FStlo2m
-         ygKlstwp5f56C6jczprwU0NqQ8rPO+1XR/igA/wOEfNLgjfSZQTFL1Z2a0N60r+c7zKs
-         F0mPBMZTx1NIsUAo8MPu9/YcvumoYdO2biai9VeT4y1U5fw6wE2HwPhJRVfSkCxS1ChK
-         dTeWLyYZUceAIoAlRJ0VdOkhIF+0vO/rVzpiTGhfAvZF2Iwr92L6phd320fEaxuq6nTL
-         RYHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746309358; x=1746914158;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=LW+6ACYdS4y/dTk+rVetPcUqDs8ed3oG4fI+TRgvchs=;
-        b=p1aiwsO/Y4YkUEeJymDEAmdWg3ZBVo2Czk6qZY5pZ8gs/Cli84tuWbhsL8/DwFZV3d
-         YlgCNQaJ/SGvytm3GGEJtXc0rRCHOABCir8Y8UNusoFxVyHGp1yGo70Bb+ZHqoFsjWWO
-         NvanJxL08NkpD9YKOx61E/DJ14mQt5OkwyUJmieRI3D/o0qdA9gMTH/KQ4mEmG6I8LoD
-         VptXhiI6pJktMdqfVz8ZeqOwdosL7ooxmz3aPl339BtGziyQxBEtXCeZLP+UmFUtdncU
-         XkEH/ABk1hjocEu/bVmjAExvRAGYUYv8+zM45MvB97p0LZL289BbsE0vMnIPvi3a6iAf
-         bjGg==
-X-Gm-Message-State: AOJu0Yyi3wTbjDw1e+cWWNZ6J59ehnHF/Wxr5KHjsnU7iWJ+chmQIy0m
-	Vlg9xDS9B9GTSHURC6rQE3XcoR3AJA+T6bnikkWcPKC5CzHfwoVJ2AsM5gPW88ehibLoCfrjOwz
-	FH3eg8Mn6MZ9wo5D9N8O0OOgKZFy3arxY
-X-Gm-Gg: ASbGncsoSFXIx2OMjtTW4G24GeeOjz5ys+VCwRk/+3KlaVjX7wMLDqA3WOj/TWcwMfg
-	HR51sF441jJysUM0ukaF5yjxeA4t0ZLFWL2CZ6DPmzfLPBxis82nT2yAsAXW1cWp0f5YGsJ9u03
-	by9nlj+ky72mm09oKyuB2W6VUr/UPjupQk+2w=
-X-Google-Smtp-Source: AGHT+IEmdr20v+z7u7Rmv4cSpSkMnt4yOnbuT4adWR7MM6Vj/cIUQ6wh6aieke2TIqCW8lsNohrxBLB77pSrGah4w/U=
-X-Received: by 2002:a17:903:22d0:b0:229:1619:ab58 with SMTP id
- d9443c01a7336-22e1ea6705fmr29565375ad.43.1746309358491; Sat, 03 May 2025
- 14:55:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Km4j5cvA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pLZATiVb"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 07D3125401CF;
+	Sun,  4 May 2025 04:00:18 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Sun, 04 May 2025 04:00:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1746345617; x=1746432017; bh=kl8NfLFh92zVBJyCb3kxcZd1kw/o9Q3U
+	oI5bsYTtld0=; b=Km4j5cvAPy9FsTu0jZ4xkYjifwEaWotG7UV7/PjnZQBnBnUl
+	Gi33RxEM1Np1eknR8VkVmWEvt7MaeiJUhG+G1p0bubvRzoyIjidI36Sv30/e1AcY
+	9tNcaZGKLNPLXszUc7Rn4sVHfHLYFlqoUSVAFCr+UhiQF/yJAg2dYRv3CpOHoChL
+	CNSVS3pRzNn/159c99EtHMZocSQc0m0Lr104dsnda3Ci0cmArNHthJvTTKkv2UQP
+	mJAsOg7PfOmrY3Pc3YES/YCwkUjaFgvDt+huTs/1cbwFvsus3FHlNOibe1r8STNh
+	Dy/DLv64li6921KDgLeNOCdTjaIP80vPBzyvDg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746345617; x=
+	1746432017; bh=kl8NfLFh92zVBJyCb3kxcZd1kw/o9Q3UoI5bsYTtld0=; b=p
+	LZATiVb5AfYATJvBEDmnLMi2wgK3ME0OaDojyN5UzJiixVUUvSbZ4fovcf55KRsw
+	Q4sXv1DaCDsZ7BGNEKkKZ2YzKkP/XOJvasb+Oyqfl880aHTBxdqS9FDTHNY1dLfO
+	bqHgsyDMme1gZCwYAr8mYWaN2GhP62vlZ0tnz4bGdM1u/aQpZYfksxiYhvVxjhu1
+	r2NiAY3ueRetJ1yPNkRkXuUr0WP9SRpLrHe70ny1rgl+KxygzUq7u9VWzgaWWwux
+	b/sydAfy3VHeXmwTRs+IpNIQCmoEEzq49cD2sG6WWQDpPlUFkv09egAKT4f941BG
+	5RPSrF+Xja/bcxPltstVw==
+X-ME-Sender: <xms:kR4XaNbG4XohbTcNNbs8uYqnYR5fZ4aKfvoEZVGHIZnrX_p7m_U72Q>
+    <xme:kR4XaEYJBFTvIn7UFOkEHwFXwIYG8qDjsq3ZnpTmMX6xqR2SitpOhqgZNfnnJGFyo
+    6LzXn1y4OGoHEOU6Q>
+X-ME-Received: <xmr:kR4XaP8u9Z0ZVlrtG-LbFUpESo4cDZLLMgLdkknXkEuYsnIf2AZNB4D-d9dVCJcRfCmDsAefB5LewlxyEPMKyvGurMf12lZ2gV9K>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvjeejieejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    fufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhho
+    uceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepledvfe
+    dtfedtkeefueevlefgleetieeuffffkefhgfekveehkefhgfetjefhffegnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesph
+    hosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhr
+    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:kR4XaLqIlUMcTPQkqwvn4LiSGeyCM-Zc2qO9zCGNwGGRJH4vaR50Qg>
+    <xmx:kR4XaIoXPrMeveku6cCLy7durrBshpGc1_svnwXrL257_TMglUyPMg>
+    <xmx:kR4XaBSetPoEuqCeQbBsF88t670ZALmmVQlHYXm-H1ymOAHjD8tRkA>
+    <xmx:kR4XaArY-olsbHef7LRfCvkL0yQDODanhTOGLuuYdyGLEUmyGiCkUQ>
+    <xmx:kR4XaBYEYQvK5OE6DS90E8lfY5m-QSbMCyRmT8uXBAGhwTwtQKVYwKmj>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 4 May 2025 04:00:17 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: [Bug?] "git show -s" still worries about renameLimit?
+Date: Sun, 04 May 2025 01:00:16 -0700
+Message-ID: <xmqq8qncst4f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Britton Kerin <britton.kerin@gmail.com>
-Date: Sat, 3 May 2025 13:55:46 -0800
-X-Gm-Features: ATxdqUG_ApADAr5AMB4QYL2mf1gZEo2LjHvwoXxuiPhwXa0nnqnozeNlVTmOCh8
-Message-ID: <CAC4O8c9OJQQn_22i0-bZUDtHoi+ti6aT6FwupnQBoBFg6BNK6w@mail.gmail.com>
-Subject: easily use meld 3-pane view to review merge commits?
-To: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-I like how git-mergetool can use meld with 3 pane view to see merge conflicts:
+$ git show -s | cat
+warning: exhaustive rename detection was skipped due to too many files.
+warning: you may want to set your diff.renameLimit variable to at least 6123 and retry the command.
+commit a3a9dd8be6b8767e690b014715aefa2ba39672e2 (HEAD -> master)
+Author: Junio C Hamano <gitster@pobox.com>
+Date:   Sat Apr 19 14:27:03 2025 -0700
 
-  git mergetool --tool=meld
+    Something something something
 
-I'd like to use the same sort of view to see already-committed merges,
-but I didn't find an easy way to do it.  It seems like git-diff,
-git-difftool and git-show are oriented entirely towards diff or 2-pane
-view rather than diff3/3-pane that git-mergetool uses.  Did I miss the
-existing functionality somehow?
+As we have -M (rename detection) on by default these days, and this
+particular commit has very many deletions and creations, if we were
+asking to show some diff (not necessarily patch text output, but
+just "--stat" or even "--raw") it is fair to warn about rename
+detection being limited by diff.renameLimit.
 
-I asked about this on stackoverflow and made an answer with a script also:
+But the command knows that with "-s" the user declined to show any
+diff computation, so it feels wrong to even _count_ how many
+diff_filepairs there are and comparing with the renameLimit, in
+order to warn about busting the limit.
 
-  https://stackoverflow.com/questions/79599180/show-a-git-merge-commit-in-three-panel-form-inimeld
-
-If there isn't any existing automatic way to inspect merge commits in
-this way I'd like to improve this script and turn it into git-meld3 or
-something.  It's tempting to think it could be wedged into the
-existing diff-oriented architecture of git-diff/difftool/show but the
-result would probably be too confusing to be useful.
-
-Britton
