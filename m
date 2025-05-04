@@ -1,123 +1,75 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F206C36B
-	for <git@vger.kernel.org>; Sun,  4 May 2025 08:27:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1AB94C7C
+	for <git@vger.kernel.org>; Sun,  4 May 2025 09:38:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746347240; cv=none; b=Dn1Dh3I2VSTHaUMvvVC7p4Fw1eVtBZMnlUczQbvnQVfiDjMIeEBmI0kTEwYW9AF4VAvwxWJoRDUyrfSQXVW9DrC2hkdaVXAXuR8IodLLjL4ShJnKslLo0SRhe0WedHMWBb2H+IOl9sHN5o+/LDK+O/CXqEtbREgNdxg+eVayyPc=
+	t=1746351511; cv=none; b=k/LWWhLwRDVDMCA2a+yb58RR0hSM8DCXt6qOfPUR1VhNgn/7J6YTnJBRQ5z+YCI+NkTjXwHyQLVj7DfOEQsFKcvtb088qiT8iALfh0eebf6jsYM8ERS2hiJjRqyH+b4Vf1EW7UtvcM0qmizE8w2ugNGlhWjy4xmnNE9lxjEfBnE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746347240; c=relaxed/simple;
-	bh=OBBePJLcljjbguTydT2qTNd5z/jZPfa2t2C+4aF++i8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=cncCMOroJVhMptRZkq3voWplYpfPsGZ8svBzTkr8joh1J7RCX+PdULggjEG6BRPl67jC8/KA9N1AEL5iYQN3Ed5ntgYpTOBNMxI0Dq89KhIRl9zKi+UA1y2hCxcx/OsAfmw1hJsOqo25xWyedxzd3xPANdc+FTujBb9/XlGyChI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Gw5oHrv6; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Gw5oHrv6"
-Received: (qmail 16259 invoked by uid 109); 4 May 2025 08:27:16 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=OBBePJLcljjbguTydT2qTNd5z/jZPfa2t2C+4aF++i8=; b=Gw5oHrv6kZq8G/gpC/EGFNqxKB9NMMSm/T0qiLP+J1+J2cTThdh7qDpj4Htp4P193IP5tIIiJLkiSUdikyPseLEqOe/Y2n19mTrft5nc17k4s8wT858FozmAjMmmAprX6IHoLWH8w4Df3Gt0YuuGLCpx27VW0pPP+mYFztIEiEPN2+oNBt2Pe60Kc6wNBAxZOhDDqgVHY+XO2GvPbIboBjsLeIADTT4At6XYAhyJoA++KE9aakNMVWjxfUqWpcwyWy6WcXG1ubhHi/+25xOjL29d03pQwCsXqjo/OVIulEPYrKTFH+pLiOI2wCETi621K0juL2Kes73Y8UPbQZesfA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sun, 04 May 2025 08:27:16 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16798 invoked by uid 111); 4 May 2025 08:27:20 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sun, 04 May 2025 04:27:20 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sun, 4 May 2025 04:27:15 -0400
-From: Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Subject: Re: [Bug?] "git show -s" still worries about renameLimit?
-Message-ID: <20250504082715.GA6257@coredump.intra.peff.net>
-References: <xmqq8qncst4f.fsf@gitster.g>
+	s=arc-20240116; t=1746351511; c=relaxed/simple;
+	bh=5/ui0Na5e5roMIQYum4XaUN1mxpQN2Fg8+1RKLQT8gk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=IpUMYiMR1nzgWKEfDGI8HECWMtx0TI8cnQeGCWXMdnwy4bX94eyoxXgm/646rJl7+2L1e4v2uuCdBkWvSmxjhEFP88cdfttJjbyiqKu2jnWGQ94bYLHEogdzrmWfgh1IRD8v8LHboWxK2geTF7GNBP0opHlf5FkNgJ+5b2HTIPA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.105])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4ZqzBj4lQkz7SZ7y
+	for <git@vger.kernel.org>; Sun,  4 May 2025 11:00:13 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4ZqzBY1WNQzRnlJ;
+	Sun,  4 May 2025 11:00:05 +0200 (CEST)
+Message-ID: <50428492-8ece-426f-bfea-071b7bd2c374@kdbg.org>
+Date: Sun, 4 May 2025 11:00:04 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <xmqq8qncst4f.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Subject: Re: easily use meld 3-pane view to review merge commits?
+To: Britton Kerin <britton.kerin@gmail.com>
+References: <CAC4O8c9OJQQn_22i0-bZUDtHoi+ti6aT6FwupnQBoBFg6BNK6w@mail.gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+Cc: git@vger.kernel.org
+In-Reply-To: <CAC4O8c9OJQQn_22i0-bZUDtHoi+ti6aT6FwupnQBoBFg6BNK6w@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Sun, May 04, 2025 at 01:00:16AM -0700, Junio C Hamano wrote:
-
-> $ git show -s | cat
-> warning: exhaustive rename detection was skipped due to too many files.
-> warning: you may want to set your diff.renameLimit variable to at least 6123 and retry the command.
-> commit a3a9dd8be6b8767e690b014715aefa2ba39672e2 (HEAD -> master)
-> Author: Junio C Hamano <gitster@pobox.com>
-> Date:   Sat Apr 19 14:27:03 2025 -0700
+Am 03.05.25 um 23:55 schrieb Britton Kerin:
+> I like how git-mergetool can use meld with 3 pane view to see merge conflicts:
 > 
->     Something something something
+>   git mergetool --tool=meld
 > 
-> As we have -M (rename detection) on by default these days, and this
-> particular commit has very many deletions and creations, if we were
-> asking to show some diff (not necessarily patch text output, but
-> just "--stat" or even "--raw") it is fair to warn about rename
-> detection being limited by diff.renameLimit.
-> 
-> But the command knows that with "-s" the user declined to show any
-> diff computation, so it feels wrong to even _count_ how many
-> diff_filepairs there are and comparing with the renameLimit, in
-> order to warn about busting the limit.
+> I'd like to use the same sort of view to see already-committed merges,
+> but I didn't find an easy way to do it.  It seems like git-diff,
+> git-difftool and git-show are oriented entirely towards diff or 2-pane
+> view rather than diff3/3-pane that git-mergetool uses.  Did I miss the
+> existing functionality somehow?
 
-This seemed eerily familiar. See this thread:
+I see a conceptual inconsistency with the desire to use a 3-pane view
+with a merge commit.
 
-  https://lore.kernel.org/git/87h750q1b9.fsf@gnu.org/
+When merge conflicts are to be resolved, you have exactly 4 versions of
+a file to work with: base, ours, theirs, and the merge result. (Meld
+does not show the base and uses only 3 panes.) For this reason, it makes
+sense to have 3 panes in a merge tool, perhaps a forth for the merge
+base. That's it. You never need to have more than that.
 
-and in particular this proposal:
+With a merge commit, you can have: the merge result, the first parent,
+and the second parent... and the third parent, the fourth parent, etc.
+You can have any number of versions to deal with.
 
-  https://lore.kernel.org/git/YqI%2FTcZyXomxtXtN@coredump.intra.peff.net/
+How does that fit into the picture? Can meld (or any other merge tool)
+have any number of panes and still work in a reasonable way? Why should
+2-parent merge commits be special-cased?
 
-I've been carrying that patch in my tree (reproduced below), but I don't
-remember why I never polished it. I wonder if it was the question about
---exit-code below. Or maybe I was just nervous about other corner cases.
+That was the devil's advocate speaking. 2-parent merge commits are
+common enough that some merge tool support could make sense, but we
+should be aware that there is a conceptual hurdle.
 
--- >8 --
-Subject: [PATCH] show: skip diff when possible
-
-Running:
-
-  git show -s $commit
-
-will still compute a diff for $commit, even though we aren't going to
-show it. This is wasted computation, since it cannot affect the output
-or exit code of the program.
-
-In the more general case:
-
-  - if the requested diff format is NO_OUTPUT, then we won't change the
-    output of the diff itself
-
-  - if rev_info.always_show_header is set, then we will show the commit
-    regardless of whether the diff is empty (which is true for git-show,
-    for example, but not git-log)
-
-  - we don't use --exit-code here (should check?)
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- log-tree.c | 4 ++++
- 1 file changed, 4 insertions(+)
-
-diff --git a/log-tree.c b/log-tree.c
-index a4d4ab59ca..740219ce99 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -1105,6 +1105,10 @@ static int log_tree_diff(struct rev_info *opt, struct commit *commit, struct log
- 	if (!all_need_diff && !opt->merges_need_diff)
- 		return 0;
- 
-+	if (opt->diffopt.output_format == DIFF_FORMAT_NO_OUTPUT &&
-+	    opt->always_show_header)
-+		return 0;
-+
- 	parse_commit_or_die(commit);
- 	oid = get_commit_tree_oid(commit);
- 
--- 
-2.49.0.754.gd827f9aa09
+-- Hannes
 
