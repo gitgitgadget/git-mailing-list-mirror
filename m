@@ -1,43 +1,43 @@
 Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011029.outbound.protection.outlook.com [52.103.68.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCB5914A4F9
-	for <git@vger.kernel.org>; Mon,  5 May 2025 06:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13BF41A315E
+	for <git@vger.kernel.org>; Mon,  5 May 2025 06:19:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.29
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746425949; cv=fail; b=eC4MjBLp1Pj0avpetVFxISLsUvImY9WoKdHv0gz0Ad+u+KC/jSM/H/OJ/GG9gTl15mmc5bui4g/iaAEL2RHpD2OU7YXmr7VSBJhtOXxUQjgNNCC65BIv2gti1SC/FJEif7t1jub+wOjvSN1i020v0eu8N8cVlhg+XVTdYoys2f8=
+	t=1746425952; cv=fail; b=pgOD75arrjmafuZk+KgpxUW/upenLzpzvd5f+7VikL850TaZiWRxsJSW3APVxhKF6GGOfnk74EFny7WwzROoZNiqpZzlhGbR3PbUMru6Tq15yGue80q/DEZ0Hii0BKMrFdlaTHu4TUfUTJgBsRU3dxYsCuaPgqTY+svaN6CNpNM=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746425949; c=relaxed/simple;
-	bh=nv0NdZ5jrQTL+E3ogV1jw8cDMjw7UNyjz5Bx29lcG9w=;
+	s=arc-20240116; t=1746425952; c=relaxed/simple;
+	bh=ciGjbfjt2FKhMxD5OMd9rfFBCWTYCV9XOr9TOQsv8Ws=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=oKs5XJA09Md9Xz7RZw3EFA2jjuJvSLcWP6pWwoN0F97HwGICH2VR6ZQPzoCL5TX/EbnjRFMieWc7RU+ckgDZICCbpvBAgDMFb97G0jBXRLaKjuxR+63cycUTaRotrnF5ZWh25FpdTWUIF13rCkks8ztieZn2MI/Js0adzE8tCSg=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=TlK45662; arc=fail smtp.client-ip=52.103.68.29
+	 Content-Type:MIME-Version; b=b6/rRLLIovLcLTVSvUTfYFtbSYrD1DDgecAUcfFp3qdLIeNkz73tJV5J4dX+3eyLDJoTHRLRETk1/H/eYSuSK/UssHmgi7novVQMSNWNh+cBDT10+0TOy2akZ2AnRrjPN7zUvdeugTol0v/zfKWgyD1FSP4sOKDfOABoM8yrLgs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=ecXFvlE3; arc=fail smtp.client-ip=52.103.68.29
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="TlK45662"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="ecXFvlE3"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RZtmFVHojean24L94TZBZYUGlUz3aDLzT21nSqx2USWgrcF+phGSm9BBnFEI+zZHv+DKPWBWPbdk1ph2+XH9NSCqwIFruiLQQ7hGyURjO6HHHyPMxyavK6SH21YnSZfMTuXvGByVCdrjFZH5e7S79yUyFZGKMpIMUlHS4bk2doJk5bzBHQWrDMf7HQJgRSuG3E0T5TKhpMUg79dhKoifXPH/GOSZYDagTJRrzr/POkZ73HZBLUqzlDJFG9AREQ+FnNOC7P/4PNuMnGj17ihdML5elozQ+kaFWEXUtNPIAz+oYQ8BDzjR96/V7HUkWJuekxD/T8Qm/jdpduWgJXvmPQ==
+ b=o24PXdnzXQ0wQdTi1EWdslkRyHi2ULFYQ0zYqUww8BAicPJBhiU7z7YziD1S8hRFTkcGKN5buWID+6WQaVkXcXjtE0GhAaGAYaeGt2KneORDBhQOE8TR2uYjonc1dTF7/DqlClpVdNSunstt75+RPaxyIa72/h9m4pGyJ1qZdzjnhBKSfdoXJifmHqcbD4M/CTEOjZd9sspE5dvy7Wp3NWer+38kxGl9kbNLmrrEn5Slx1aywBEb9abbLBwbBjsgDMMj1I6JSlUrBYRpZqUy46vM8CFnkkzSe7PU3hqsO3zEk/mZ8aUIGE9Lgi6q/oYgCP4UtXSWcDkCqG6B0mrC3Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=E2DmVAqbTouml5QoAtSPt3w2w20Wp9qQJbP06RC4YfY=;
- b=hJGAh7B2IZL0uBYWrytzWfpCsfPTrhvfBXG1aA27kys65du1mrIz9NC49nX7aVU/euAOw8/4QPCFjpQWxas08aW1xFsvAcdMxQSgy2c/p6BYETPKeltfsdfzmUA2EIpIHPHxSn4aoi3m///YvD40WcgnJnEIqfhbRQ607OHDbuc1r/bnbEXG0m7etnJlYppeN2GyaQuc8xJ2Ng5NKw/6ai6gnPwUug2mKevTx+XSDl5bdiwPx2bixOHNkb588y4GIJF4Ag+GaiU5ODGr+W3iAPAeYoItyNky3mQFuM/u4gcQ7S6FvEkjXBADN7qLmmJyePRSE2zurtTQIuhSwEpeLA==
+ bh=WXeokw7DK0iCpWAXOWmAF8It8o2A8peAjtOOKKvn61U=;
+ b=Q/MQtoHbdwiMOEhvCrO5E9mhtwz/tFFkBOFEnYVmL+G0SAShkzIIh1+AHt8kiysA0z5OQ4C7CQ6HS8cV4aZeZ127LIluvuaYcdaUN16BaUffjmvMwbJuWRjThoWs6RtIzAjCK2mx5XV2Obj10PS9ISDjYLghx3T/tY9IBGL12Vxa/ZvvLjt2udNZz1djhpzmd5PI343B1H9BdsSW0Pj4o5MlTaE3Ivm77Lpl4NYf741yEAzGbKPJb8WgTnCJrBxLMfYcFxZ3yCvJwn3c6TWaJbQKDwftcpDWHRJ19+hsJXxqquQwIsGzJ3cMfqQm+j7Rp4Y6zxhlNoWOagmhL6DGvA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=E2DmVAqbTouml5QoAtSPt3w2w20Wp9qQJbP06RC4YfY=;
- b=TlK456621+3+BcoBcT8kG55LEzU1APHZfiahEp3ki4CkYZC7tfa2y+PpNVi/gb7pCQbh3e4muMSPWvrnnEc7PqEEK4TxEE0jPbmTt+1kZof85oBqGozVeFYeTNB8Sr9hvooIjWtweeDsNZrUFh2r7aCTJphtvz9dS+dasQthAFXE/PL8UYQskDMwiK4uj1jRYqIpq27Nzbu7z+E+YEpnWDOFlpIuiTyEcIXMdXaMIFmACHQ18O2ZVVJEsR97xJbeADr93G5nuG5CrUpLMjneiwSGESeGZIOtdXC3g4Qou9WquARFZMUeYRsXsU4yLuOHSa58H4v/6M1nvD/IPbaQEQ==
+ bh=WXeokw7DK0iCpWAXOWmAF8It8o2A8peAjtOOKKvn61U=;
+ b=ecXFvlE3Qb2aNSIsRHU7Du4UKIHGtczUmCbeY5UdlAFPCMQtv5Kfp7mIxHCl++VcL2e+4D5TKfv4XEAtYR7g30CeToJm1k8Jl1RmnDj1857kx3U9b9TdmV62NRBpjUa67CuE79y3AHekfRGBQVKcyTKdw3ZD3uHjTRiBZu8Dm2BKi0tV6N+5iIt6c2BB9hEX/mHQvs31jld+mv9deheTvITHzQ9BfkI7RTCuGbOxql847KHFrXJNlxx+VXWWF4TVgECC8I0wrsi4v+hGCK9vqk7bLAbVMjU06P0FAcwMEQL2n/lA5/LGrxdI0Ipk6rsjLtjoaiJ3hj0JWC8omxXPUQ==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PN3PR01MB6047.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:6e::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8678.33; Mon, 5 May
- 2025 06:19:00 +0000
+ 2025 06:19:01 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8699.019; Mon, 5 May 2025
- 06:19:00 +0000
+ 06:19:01 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,20 +47,21 @@ Cc: M Hickford <mirth.hickford@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Zi Yao <ziyao@disroot.org>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v2 0/3] Improve checks for valid_fqdn in send-email and update documentation
-Date: Mon,  5 May 2025 06:16:21 +0000
+Subject: [PATCH v2 1/3] send-mail: improve checks for valid_fqdn
+Date: Mon,  5 May 2025 06:16:22 +0000
 Message-ID:
- <PN3PR01MB9597827866A582654661102CB88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB95976908158F1091EC482088B88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email @GIT_VERSION@
-In-Reply-To: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+In-Reply-To: <PN3PR01MB9597827866A582654661102CB88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597827866A582654661102CB88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
 X-ClientProxiedBy: PN1PEPF000067EC.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c04::28) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250505061846.11170-1-gargaditya08@live.com>
+ <20250505061846.11170-2-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,61 +71,64 @@ MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PR01MB6047:EE_
-X-MS-Office365-Filtering-Correlation-Id: c3f7636d-bde6-406e-12af-08dd8b9cb9bb
+X-MS-Office365-Filtering-Correlation-Id: 09abfd13-854c-4eec-e6b1-08dd8b9cb9fd
 X-MS-Exchange-SLBlob-MailProps:
-	gMiuAN0LASIScjX/aS/OnauL17RJFM5J2rpohuCff7iuzjyEiGQXEeIgT/RScgEZqIeHBjtxMjcE/JdtyfuXXLCTDAp1QyJy/PdSPppgZQM8uEYynwsOgudIbkhRWnSI7BkGIs795IS6FyzwpdC/HbRlWpliheBrEHsbgruBO2XEn2gTwSuFt/UhUyKjx4Z56gEqBcDY6KyNAVFKLHA+QB6XDqTthAG4KVCycvxrgHHNkrUR1toPI7wOzNcfGdmtvyqIxmSOJnMzynLjNL8YMU6errVtfDSGFUa5kSOtAgIdLCNEQi7GJ0hvjkW4p0GJSY4o8NW21pUpdGeqgIYkpXQkwHwDu825MrwWVwNvVxyNvThPUmb/l6hAe5f6i8RW2PM1pfSlOVAUDtoyKQJCagjxrThthWkT0RsG3IV1YPivzKzVkgoCx5nx5DSm+ucp2xI40H9ECs6cBH98ujXvUmRPDMufExkly9w9ONTqTmpz25HuwFni5eKAuuEARudYqe98Y+d4JV79e99x9SEYM5ftl+sZnbB+x3bnzAyE3OuKRCUBL5LkMBmP8uoVtJrxbKbSDMdROwdEfJYp8fJ5O28RsGzRwH/3wDjF7bIHzrRVYwMwabHMklAWiPjBIlvmWe0vDBK1n42Qt02jKDXcnoW+ty+B2w5rrakLmxBq4t3rFkBdSg9Rmq7TY6JhMdrGTc6zDqFsAA+07ROpPD5Nzg==
+	WaIXnCbdHrMi34iUpeHrvUBJkG+6rPgnsOjthBlzVaa1GD4xhPUXjXmGOSh2E/3oul42Z27Dxnaxr+ocG8IydmRRx0VodGf0HfEMcfsHwn22FBkPLN1rr6+Zp70EaGfjqOFaMg79snCoYBfvKkzmCUmNfZQcBvu4lVBV5R+7czfiEve/8sjao2ZuL2QcJEkr23zExDPo9hZo+PP63/lpb6oQZIA40Q/kHhbtzbBGpq8oS02zD2qtvbMfrWKDWElUhnV0pSwjrJ5Ceu18K7YAlJWTAITBevdCEAqyfMZYvOxZnRpVsvXQT5bkH5MXby537ls8Us4V4SO3yT2XRQ3w9YpoFuloo75R8ESYslt+8VyF+Yx3uTRyVxyzPgZN961Rw4ljzrcphaE/Lxu2KMBy4mCZWWQibxQtgxssZKl2vUIkGNlJPg+AK3wj2nBiQXoQin8Fa08SsiqOX6Xt24pIpThsuBUOAZNe+lHWWuOlBPU1pP4T7eT5c4KaX29D8KDYr/G3kN17aoXTi8JH/EZSS4GY1IitTPS9HXtF046djV7/nBmMysJ1o84qHHHkTnD9YQSa0kE6Pba4M8WjCAaxVPKnalrJVz5PkYLRUqdm2ryKxjlxND1GstirQ2Y8jTsrgAa9ZZexxgIV81Fx3xqh1Ll51NnwTeu2skxFt1P/efUHnwpm+Es2KEKEdDAwJyodEuFGkos33iOPyiPtxlsYUL0oWrOsT1gUtIC7Ywl59AsiPbY2D/Z2HStNfvNUyPTpW4xZF3DKMZ8=
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|19110799003|461199028|8060799006|5072599009|15080799006|7092599003|12071999003|21061999003|3412199025|440099028;
+	BCL:0;ARA:14566002|19110799003|461199028|8060799006|5072599009|15080799006|7092599003|41001999003|19111999003|1602099012|10035399004|3412199025|4302099013|440099028;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?XYftkhsiBV94HzLOXGKqcmYdmLohUpPPaxuAvpFsWA2FTNs+Vmw8l5iw5eFQ?=
- =?us-ascii?Q?SSy8d0J53eWuQ8wWc96cPn/xc1w15lBannyfO2qsyPlH4qfGR8U5PuB6Mpqx?=
- =?us-ascii?Q?230MswHpdMMu9jVAgcvqu8rsv3PBrEmIG+N/1RfoK9K7cZuPiabxg6m/upk9?=
- =?us-ascii?Q?4zy1bkFPvDsluUk90ykqHl+p5E/Ji08+MVE+LoHlDgsAylsEF4tpe4h0tr9E?=
- =?us-ascii?Q?HCkxA3doi+eNRqFF+G765R78MwYhfpUhZUrY5cfp4ncYGIuuT1/5Sp/s/b/7?=
- =?us-ascii?Q?HVmcwoSzE1QZ1ji994i3x1wB4xKnz/iyJMJUPDaJE2XKbC7JalIYrwl0PYtp?=
- =?us-ascii?Q?lj/oNaWvQGf+bwFyL7zVtylAGEJVPOlwnK+MCHzkZZGZA6xqSk9fS0BOq3wG?=
- =?us-ascii?Q?Sx6hMVroW0wnmqYj+LWgx5htMchNSvSPYSRYZIC2le/mkDzHRXVjq7bdpOtX?=
- =?us-ascii?Q?02744kRENPNk4BrcDd2cwTS9W9cFmS0xlS97guGSbOo5XOc1SD88uanq6DkJ?=
- =?us-ascii?Q?AT/rLbloOX5mS9aVxGdnUHR8csioy01tPZ2VqTStcWVloiI0BSbrj4lFxQl6?=
- =?us-ascii?Q?PqjeQO9EK0l1u8Rpw4onBHi1FZHZfD0ZJdS4rZb9B8PXP4lPOoXhY2f1ubz5?=
- =?us-ascii?Q?hL8cg9OKHAS+b9UKytORYs5uj3DZ/nTQrdwXhyQindsbyu5ixJwBQKchdNx0?=
- =?us-ascii?Q?Tkg2zRQxzcCH1u/CKUGj7gmSntEpGTQqTUTKHEvwxnd98beNZW1qaYegtC9j?=
- =?us-ascii?Q?PK0rdysCZ9UnahiSFzZZlls4y81azPtiRD6UGjM1F1BvQd3rJJkuLnclvyIJ?=
- =?us-ascii?Q?SAPWfyOX68RLZNbtEFnTR+y4xka/ZvpkqyRc+cPvSSgT91Ii/+yN8QDAH56i?=
- =?us-ascii?Q?iTUICLLVczKt1eNo1lX9c18kebBjDWdzflMRl0EptFVcCIC8hUICJG4tB8Ej?=
- =?us-ascii?Q?5PxQPitaqOr0NbbxpSFLZVtkldeUd70Ydh2sOPFEi463T59VD0EdisY/VAiy?=
- =?us-ascii?Q?8Ktol3wbjM2lMBMJ+CyNSsCRVi/lz06FAqsTtCpXQiaNLX12Nh+Nwm63ccU6?=
- =?us-ascii?Q?mQLbLkFij+ixVjrEZt7YZOPD6rpzuypPrzFNE6134lU/eFMqMT/HFUT4iIc1?=
- =?us-ascii?Q?J4h0DG/Nubx0kjZkU4Kob5Tm+rvecPVZjcqLFq6c8z06yYJ0ISiXuFI=3D?=
+	=?us-ascii?Q?EtiQgp84fTOSh4yWpfTBwfgoWV+1MKNi/UjGQGqMeunb9plYxEZCfSiuf8r2?=
+ =?us-ascii?Q?JN0Gag61Bp0uCq+v9NvkmP9MXYZfriE9YkHd5AtFJLu0JbZbhsas0/o7pur8?=
+ =?us-ascii?Q?PrTwcvC+dDC8kahEvH2PD6RYCBImlxDHdOZjkzpQRHFke7kuT/2b/dFFobXL?=
+ =?us-ascii?Q?lnXG0Tf87FRaSww1XnveRzK5NHYiDqJNblEbbJCbKcwuknnxopmnWsW7X2vz?=
+ =?us-ascii?Q?BujJmnOEs75JNW6NG3qaDa6Tit28rSURv8WodQ/X5rzKtJtGfr6vZpLVl8Bc?=
+ =?us-ascii?Q?EWbc0OBidGsxEj6SctT5gfhrjcTiNeXn7dn+FMS/FQg3W1FOFYG8VSE3nJfH?=
+ =?us-ascii?Q?1VxZQg3n/wqHnwuTxLR72Xw20k4oCwMUPRragaJ72fYNOa9p6PU0nHV6fERR?=
+ =?us-ascii?Q?qrbKH8Cs04TF0IRBLRf1eqKmz7z4L9B2NZVAPNDrxvB6QH+rbITWWWE9884k?=
+ =?us-ascii?Q?WmJeLzLjgGYJ6kLtktONcH2q42KuTTLVQClVaVWR8E3K0m7UJZ7fFJdt2JwT?=
+ =?us-ascii?Q?BDBQxJkj0cQ/YEkHscj9W1p/bpCj62qm+O3E2NSCJNqKndBBL+GpaaHOEKMn?=
+ =?us-ascii?Q?IAhzF24fBnLepc5TSZehOww1iS6TnTf1O6jE+2PCPqwdlzY0aAjzP4aX3Utr?=
+ =?us-ascii?Q?YgBe3WxDfZFGlLAhJ1Z1t/tqQg5uCldCiSpQxDlZCTc/3HYwnG8JA9fbGAmQ?=
+ =?us-ascii?Q?TchEEifrL/NGQiVbaJPesoPwlPPIWn0XZ4LuxxkVG08HAYeJbxiwAspzZXq8?=
+ =?us-ascii?Q?W82VGV0q7eTl9Zja/Y0p5l19oqTXRPe4e0At49rBIhmdBVPCKdhAm1lrZ4uZ?=
+ =?us-ascii?Q?mnUo+do1QmZhPAPjP4U2KShlcAa/08sXvFdaXPmrk2L7VzSzHIoy18kTllF0?=
+ =?us-ascii?Q?u3S5Vm5aJSPnTSMrXbj+k7bK6+r2tFGIn+yE5ZOwrqNWEtR1ZoExCvbnullj?=
+ =?us-ascii?Q?aOwq6qkXuC7j/ncgotaOwx1OPTGmvU+FuKTA6Hv+pzfh032v9GiehOUEIJ18?=
+ =?us-ascii?Q?ImEz1mMwhO6orfNyr+t6mna0T9ANkvZcBQILL7ydAv1+rR1Mep0yPk2ms7FW?=
+ =?us-ascii?Q?w4Q4YB9IUrl91RluhfbwJbUO/nvFO920YyzXHST3Kn2JYA1uO5erRJD86ZtP?=
+ =?us-ascii?Q?QnCLDon7pceU+OVHwO+PnppjT8G+s3NfNIrK3p8bSUMRB4OlV8PjdW7jB9MD?=
+ =?us-ascii?Q?vEHasZ3enlRlW6VrWki0bg37QZB+QR+V2Hwn+gUm1ruwCorkACCjwXMEGME7?=
+ =?us-ascii?Q?tCHLyYRIYia+H1cAsKjnEJ04AsernIdxQtsMc9x/M8fnjGKgXvYIfO9xLseI?=
+ =?us-ascii?Q?dSidxYE1WDL8lWzYsB7JhpKpNpAJinU6qiBxXFGUhtfvww=3D=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?txNLLxXKHJ6khq3Rjpaz2q4rhKooXob2Xsv7X16c/6eMEoaCPWW7awKytfAn?=
- =?us-ascii?Q?FG51Z9CWpEHK8gUzWZB3Mj30P2xSz0kuvIJuctsw8Xs1Xo0A7KTkJT6NnyvX?=
- =?us-ascii?Q?mVE6jlJrLi9NA12LBaPHLn1xt+zC4V0XcJG85fFjLHPWaAxlctnukXNBp57A?=
- =?us-ascii?Q?LCCmOyBGSFaqiLqr3gFwCn0PuU9pGVZ5SBxuuQPGxpcyiWVhb+Y8C75pm3Gv?=
- =?us-ascii?Q?HB5BhG9fPJzqRDLlPIz4h6Ocv12ORiQ13cMnRztOG15lKdMseJtCbwPdl+YL?=
- =?us-ascii?Q?iFzxLbNKJ1gmMAySdvA6pa0Wf0Curp3c/T0oFMBPdU+qDP2hFepyLGIrCIms?=
- =?us-ascii?Q?DSdVMZ2FlVrD2zZWDaH8kocyIOfhjrTeYS6M74En0R6xhErbAaWdlK6QT9LK?=
- =?us-ascii?Q?9vukMcxAznhC5VyMzEMQqT/XC7pxfJmFuPoojlKAF7KhfAuz4Ma8SEVemri9?=
- =?us-ascii?Q?AQC3TAci0D4YB/1SoNLkmN6Z+hNwIKWF5i+Tcl14jmM02dto0EOSyabPmKTX?=
- =?us-ascii?Q?kYRjc4JrKchWBQVNTdEVJE7wZ0BRcAeQGRIH3i5hor6qUJtG/PMIfBa+QuGi?=
- =?us-ascii?Q?x0epPuzGLqZS+OJE66q9H+7Kr3uu5iflz3sHNv57Hp9V/Bj655DJt49+81yt?=
- =?us-ascii?Q?foub1U1o/YgD8Lh6sfiYZNv9+9QoS/4ZThHIU71kokA7oCom4GVL8pDOviDX?=
- =?us-ascii?Q?RBTv5eh/PkXIAwP7PihFrVzvO5nANq2R5DeK6tk+6L+c/8pizRMGYeHGRzDA?=
- =?us-ascii?Q?qhP9+W1tcI/IpUqBEDs+2ZEvh/9Nx35g2Cz+ydcAQfJWeqBGm8oK/lho0Rj3?=
- =?us-ascii?Q?qVQ8gBb5Ps05jadIjtIoWG6CHxJ1A/whKKSAZvMQe8BfKQqNAHDXdWSAIvIp?=
- =?us-ascii?Q?k7qGuFmT2QbSA+KwrktAq/FcfIK9oqGrkfyEpTMupO8OzM9tEt7YhwJ+bC8z?=
- =?us-ascii?Q?/mzFQTxlAnu2xGcB/ZwnI+CxKsz2fJT9LExWNEQPkEIH/GfBzr9JnEVUnQJm?=
- =?us-ascii?Q?xrjLL/sOBDp3mCbekmrdUD3KJpQDSRkIxKEVVG07HQho4Rt671h5oCH3fo36?=
- =?us-ascii?Q?5rOUXbRSgtyBN+MouceXW/uq3wndPEKG+4r3f6GVjN3ctPKXViO9MyJ9QSU2?=
- =?us-ascii?Q?VlIKDH7ZfYVFiT3pbUdWHb0sKLFYa3WhyWu99MXiEmMkMBarLVyyP+RzPjc8?=
- =?us-ascii?Q?eD+umcjemoP3HYLoA8Q5FY6gp04n2FODi57HNZwtExDCUP8Dv6AJvIMCf5w?=
+	=?us-ascii?Q?UjJwc493ydWLJFrlHECpAj/DRoAXsyYFqb8QAI8aWU+z9JM9luWRflK/HTAo?=
+ =?us-ascii?Q?MoZMvsQkNtf31+SLbAQfpOhXh6tEYQlG1bfjCjKWQEuQPrCex5LnXPsHPPh5?=
+ =?us-ascii?Q?jPLc/XN8BzacExDtKK5UOnKBTFSZMsESzLC+wXKVTtbMr/X+vCP8DzfvJhoW?=
+ =?us-ascii?Q?OOV+JLwkvRvZkigZFxUXKSruNibO+uikxa3H6/WXDZpo1euKK3PSoLYQ+IGN?=
+ =?us-ascii?Q?fDf71NkUvMMth3WUSMyjRcp4LoXCxXfZ/Cq7J9tCEYuUIZ1lOwLW+gfYcrQ0?=
+ =?us-ascii?Q?c+biOIGFEnB068BUQq41XunzqfFN4SsPtDTnjTNMM35souaCalKPXT6nLAQs?=
+ =?us-ascii?Q?wSrXvXJCWYSBmVF2aslZNGpM5B5v80RkRrV8tqGy6/KGKx+KFnpw8cDwyoGV?=
+ =?us-ascii?Q?dKF748UJ3FVFvWHwRSSwp+AbAf4jj0OV9Rxp7+vUiE3XRDyImGxPtocwUVdn?=
+ =?us-ascii?Q?ex4LPjEwXB35wq/VilzqnwmCt6sR2BO34fhUXsGgW4MQz9+8T4b4/mitNx5/?=
+ =?us-ascii?Q?nHA4LEiAXyLB3rcVbZN62Vs/6WC4WjyGjeToHQ+5pd7oHHaFx0BbHMU6Il6n?=
+ =?us-ascii?Q?/a+xgC6O6+fScMepb1vOWtTofKshRQmScz08+SMN1YKdbnL9g2W104aaltSm?=
+ =?us-ascii?Q?wtWYmyGnTztkn9Hn+KOCaVXJbU+v0W7VRkDWkdCLND/W4f3fV/twSsKs0VCN?=
+ =?us-ascii?Q?pOAosO1O3TntvGY4+2Ys1kF+qwmxPB8EQZKM+Ew8nk3wBKAWkwdRqMUPYY40?=
+ =?us-ascii?Q?hCyURkloWGOnBpxAXmtb1I9rGT7g8Ui856a1IMjlWeEkBrAUfTJHWLoSoRms?=
+ =?us-ascii?Q?dNe4nQVHNqXtc1OJ0+3tUoq9jKkqe//12Ew2HvOkbaT0mk19NqfrUcbFJf0W?=
+ =?us-ascii?Q?1VAWfk07lvV5I8hVo9pitNw7Vx9/2C3rxlFTfVfKuWXLr8snEkgeptM14oBz?=
+ =?us-ascii?Q?MLaYQpqSrHtiGSzGubAxSmyMT/LsedQKqWH6jB9opNYX0IBJWstT/FhIO68P?=
+ =?us-ascii?Q?KjX0cAtyGe/caVLNDtp6qKGB8//t7mEw9ekWJqtWSfQI0r98EesGNpjELRmq?=
+ =?us-ascii?Q?2htTos7o292PhhJY7vUhPCPK2tvHdw0yovbBVKtD0+MOawYP9DQXKAkdlsyc?=
+ =?us-ascii?Q?fXjyq7LT1M6rvsa3MkVNCtDXJoTIAVC7LQINP49WJvkIhSuQ4GKCcVlzLVhl?=
+ =?us-ascii?Q?hiZas+aw/IJdQ2GYfBU0ehTNhWmomfcyzETDDoD8NQQFdVHk1m3nnaLn32I?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: c3f7636d-bde6-406e-12af-08dd8b9cb9bb
+X-MS-Exchange-CrossTenant-Network-Message-Id: 09abfd13-854c-4eec-e6b1-08dd8b9cb9fd
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 06:19:00.7037
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 May 2025 06:19:01.0069
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -132,30 +136,121 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB6047
 
-Hi all
+The current implementation of a valid Fully Qualified Domain Name
+is not that strict. It just checks whether it has a dot (.) and
+if using macOS, it should not end with .local. As per RFC1035[1],
+from what I understood, the following checks need to be done:
 
-This series of patches mainly has two changes:
+- The domain must contain atleast one dot
+- Each label (separated by dots) must be 1-63 characters long
+- Labels must start and end with an alphanumeric character
+- Labels can contain alphanumeric characters and hyphens
 
-1. Improve the checks for valid_fqdn in send-email to be more strict and
-   compliant with RFC1035.
-2. Update the documentation for send-email to include examples of using
-   OAuth2.0 with Gmail and Outlook, as well as links to the credential
-   helpers for these services.
+Here are some examples of valid and invalid labels:
 
-v2: - Improve grammar and add missing "" in second patch.
-    - Separate footnotes and the trailer block with a blank line in the first patch.
+'example.com',          # Valid
+'sub.example.com',      # Valid
+'my-domain.org',        # Valid
+'localhost',            # Invalid (no dot)
+'MacBook..',            # Invalid (double dots)
+'-example.com',         # Invalid (starts with a hyphen)
+'example-.com',         # Invalid (ends with a hyphen)
+'example..com',         # Invalid (double dots)
+'example',              # Invalid (no TLD)
+'example.local',        # Invalid on macOS
+'valid-domain.co.uk',   # Valid
+'123.example.com',      # Valid
+'example.com.',         # Invalid (trailing dot)
+'toolonglabeltoolonglabeltoolonglabeltoolonglabeltoolonglabeltoolonglabel.com', # Invalid (label > 63 chars)
 
-Aditya Garg (3):
-  send-mail: improve checks for valid_fqdn
-  docs: improve send-email documentation
-  docs: add credential helper for outlook and gmail in OAuth list of
-    helpers
+Due to current implementation, I was not able to send emails from
+Ubuntu. Upon debugging, I found that the SMTP domain was coming out
+to be "MacBook.." and was being considered as valid. As a result
+the script was failing. The debug logs with the failed script are
+below:
 
- Documentation/git-send-email.adoc | 106 ++++++++++++++++++++++++++----
- Documentation/gitcredentials.adoc |   4 ++
- git-send-email.perl               |   3 +-
- 3 files changed, 99 insertions(+), 14 deletions(-)
+Net::SMTP>>> Net::SMTP(3.15)
+Net::SMTP>>>   Net::Cmd(3.15)
+Net::SMTP>>>     Exporter(5.77)
+Net::SMTP>>>   IO::Socket::IP(0.4101)
+Net::SMTP>>>     IO::Socket(1.52)
+Net::SMTP>>>       IO::Handle(1.52)
+Net::SMTP=GLOB(0x5db4351225f8)<<< 220 BMXPR01CA0083.outlook.office365.com Microsoft ESMTP MAIL Service ready at Sat, 26 Apr 2025 18:06:30 +0000 [08DD842467C8274D]
+Net::SMTP=GLOB(0x5db4351225f8)>>> EHLO MacBook..
+Net::SMTP=GLOB(0x5db4351225f8)<<< 501 5.5.4 Invalid domain name [BMXPR01CA0083.INDPRD01.PROD.OUTLOOK.COM 2025-04-26T18:06:35.781Z 08DD842467C8274D]
+Net::SMTP=GLOB(0x5db4351225f8)>>> HELO MacBook..
+Net::SMTP=GLOB(0x5db4351225f8)<<< 501 5.5.4 Invalid domain name [BMXPR01CA0083.INDPRD01.PROD.OUTLOOK.COM 2025-04-26T18:06:40.828Z 08DD842467C8274D]
+Unable to initialize SMTP properly. Check config and use --smtp-debug. VALUES: server=smtp.office365.com encryption=tls hello=MacBook.. port=587 at ../git-send-email.perl line 1727.
 
+With this patch, it was fixed and was being considered as an invalid
+domain. Logs after this patch:
+
+Net::SMTP>>> Net::SMTP(3.15)
+Net::SMTP>>>   Net::Cmd(3.15)
+Net::SMTP>>>     Exporter(5.77)
+Net::SMTP>>>   IO::Socket::IP(0.4101)
+Net::SMTP>>>     IO::Socket(1.52)
+Net::SMTP>>>       IO::Handle(1.52)
+Net::SMTP=GLOB(0x58c8af71e930)<<< 220 PN4P287CA0064.outlook.office365.com Microsoft ESMTP MAIL Service ready at Sat, 26 Apr 2025 18:08:13 +0000 [08DD84B323498C1A]
+Net::SMTP=GLOB(0x58c8af71e930)>>> EHLO localhost.localdomain
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-PN4P287CA0064.outlook.office365.com Hello [2401:4900:a052:31f0:9beb:e613:56e8:f897]
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-SIZE 157286400
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-PIPELINING
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-DSN
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-ENHANCEDSTATUSCODES
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-STARTTLS
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-8BITMIME
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-BINARYMIME
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250-CHUNKING
+Net::SMTP=GLOB(0x58c8af71e930)<<< 250 SMTPUTF8
+Net::SMTP=GLOB(0x58c8af71e930)>>> STARTTLS
+Net::SMTP=GLOB(0x58c8af71e930)<<< 220 2.0.0 SMTP server ready
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)>>> EHLO localhost.localdomain
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-PN4P287CA0064.outlook.office365.com Hello [2401:4900:a052:31f0:9beb:e613:56e8:f897]
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-SIZE 157286400
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-PIPELINING
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-DSN
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-ENHANCEDSTATUSCODES
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-AUTH LOGIN XOAUTH2
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-8BITMIME
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-BINARYMIME
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-CHUNKING
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250 SMTPUTF8
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)>>> EHLO localhost.localdomain
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-PN4P287CA0064.outlook.office365.com Hello [2401:4900:a052:31f0:9beb:e613:56e8:f897]
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-SIZE 157286400
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-PIPELINING
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-DSN
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-ENHANCEDSTATUSCODES
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-AUTH LOGIN XOAUTH2
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-8BITMIME
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-BINARYMIME
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250-CHUNKING
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 250 SMTPUTF8
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)>>> AUTH XOAUTH2 (OAuth2 access token removed for security)
+Net::SMTP::_SSL=GLOB(0x58c8af71e930)<<< 235 2.7.0 Authentication successful
+
+[1]: https://datatracker.ietf.org/doc/html/rfc1035
+
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ git-send-email.perl | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 4215f8f7e9..4c143e24bf 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1359,7 +1359,8 @@ sub process_address_list {
+ 
+ sub valid_fqdn {
+ 	my $domain = shift;
+-	return defined $domain && !($^O eq 'darwin' && $domain =~ /\.local$/) && $domain =~ /\./;
++	return defined $domain && !($^O eq 'darwin' && $domain =~ /\.local$/)
++		&& $domain  =~ /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)(\.[A-Za-z0-9-]{1,63})+$/;
+ }
+ 
+ sub maildomain_net {
 -- 
 2.49.0
 
