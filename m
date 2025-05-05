@@ -1,110 +1,133 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0A51A5BAE
-	for <git@vger.kernel.org>; Mon,  5 May 2025 09:11:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE49A2DC789
+	for <git@vger.kernel.org>; Mon,  5 May 2025 09:18:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746436293; cv=none; b=ba0SK3icTqlgSFCPYS3bMtKH4D1BsfoAE+jOlspoBqOKQXFEwcs4voYudYwAXvFGu+T8Onsp2i4DkIsOhwTQjjcnVQNtIBvfmFT39NBoBIMViJdtU2ajHhkCSkaIxpEHLcItwq0moS5xo6OMusJHKtYpmgmeJnmnbxtd09wfCPc=
+	t=1746436724; cv=none; b=FMK86l34S4TjEw+WtujtLgTrAdzAp8f1TaNDX+fFpbesa24sA6Q0rMQZ/OHSB0ldcoH0nJNogtpXDmmyTLZ0xq2An7LGgw6IPdv4gfgnD2h3+dzYhepQpps8z5gyxBFflG3JCylTKa8MV9yRLHUUjEJfc1uUXQdgPfbNV9PgErI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746436293; c=relaxed/simple;
-	bh=XQ41KPxA8aC+xvH0hMm62yKvpIzbDj5nWxO6nwNc/UY=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=tw0AYuPLfrt/AhW5guc2KpMO2qpO3Nw7krECLmfh7uOt7tUiyVUQ6s6dmirW6NcGNYjZRO19c4/PcLthOjaAdcgXn5lunz1MSq/U8xkmBKA2Np+uakicQjlXXoXaRMqMlYRmbC5yMMyWXXzTIO7OqOYt11PtPXjyoCsd2j0GN30=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=T7G29O1j; arc=none smtp.client-ip=209.85.219.175
+	s=arc-20240116; t=1746436724; c=relaxed/simple;
+	bh=QhZB551z+a0s8NTYIhZj5lIkMaj9JP9OedbtUuiiDxo=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=U087N6PhgtMnOw4VLKY30v3dqWP7EYYAUuosoUVJhqwQv9EQGdmZPdDuqkWYHa2+FjuEGjpwy+5naXkmwjxYa8ZagI+gAZf28yViFQaIubvstFJ3XA0W0xI648HBY0DkZsxO9DSHIsJlYbq5S9WH7jHNZHzfNW3hvtxYP0XXPnM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=k8wbphbg; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="T7G29O1j"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e756416045bso2906933276.2
-        for <git@vger.kernel.org>; Mon, 05 May 2025 02:11:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="k8wbphbg"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cf680d351so26363705e9.0
+        for <git@vger.kernel.org>; Mon, 05 May 2025 02:18:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746436291; x=1747041091; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=YNvLmLWeXKkZmro4MVejMXPVBZsEJVrAgUExbGwAhKY=;
-        b=T7G29O1jdT3/JUuOiLr06mkJjS224qiQixluqkk0yC+zWqVhDGpD5sARkeEHKfJ+gI
-         9kGjF65SfS0dXqxsMqHfc9wPHM2TFZoYVpxT7P12YimDVJBdEgyNcxldyS//0+8ZnFlJ
-         IXSHwoSjRMoLX6EuJrPSzbPPUzq93JRHsl9XntfMl2i/l9ZGdtAxTKr85fLLeGyH5tnS
-         PySQBnXcEHGj3zU8QnTHXSuCBlCKIKEdH37us5IvTsjVEE7QAO9rHKF1B5HywiCV773Q
-         pDBm5AvAZOzq97Npzcy21C0yqJjc3i6Fzg1YY9qaJbeXSQ4ntMZvTQBfdVSQxCHyO6Y9
-         JLWg==
+        d=gmail.com; s=20230601; t=1746436721; x=1747041521; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=YRpHxng/O2KyGUwn25ceTfGmqKNN9W5xpNzHMfuK+WQ=;
+        b=k8wbphbg9IEJqE/GdnUEkLYoE+eWUfiY19e+Iyk9Pon2dxM1KAcnY4YWvnJxOTmCEU
+         vxFJGKN1gE658vgD7at4Ap1afI5Ku9qrEVqMQiNvbXNsi8XpP2zotU1Uy1F6RPOZtMjg
+         VLC3fa8MGaI0bA6EIQWqwUGb6n7WhIWYHJSO9jZLeqPTHhl1CFPZmB9yo9LjVji1bEPp
+         BVfKC9HP9rKQoaBGTw9Y9T9nlOidbRTouBedUd10DRCrD9oEop31BgyleqNNpysIXSeU
+         thL5I8nrtBKLS4JyxW5+rhGL80LAda93IxHUo8YlaToXOjubpyqm5JOQXw1F+6Ze84LY
+         Yjow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746436291; x=1747041091;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1746436721; x=1747041521;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=YNvLmLWeXKkZmro4MVejMXPVBZsEJVrAgUExbGwAhKY=;
-        b=F1O01crOuuvbkY184tJgh/SHIuJanhkxPGF1gkSohzHPpBNM9DaBMsk7jHA4LQrCfW
-         loisax342BQKSVkaB52PI0ZXjMIhaw5dyLd8edupA+9G7NQ94drd8U53qjBAKQKRH5lR
-         FdPpYyLom3xCZ8OgNq3+l88gSUbQKe04mcuIg4vjGBCZIARlnL5Q85EaokfgGRWtoFsW
-         7nWglXkQndICmMi3umGzd68rypOMcRJIjn9wxfabXNTzRAhKOZBuLOqSBCNQ3IJjiNxI
-         4wuRmd4/ILMVlBeGv0JLjdpUITQ7OJ+TTWHaUWAJ80ddLxiMOGDxgpLWewz72662gUZE
-         DjVg==
-X-Gm-Message-State: AOJu0YyphPv8d9We2Ej2Zf937VZCgGNZI5hIgabrNDfQtqNHkOpRcckz
-	+gr7DouoGC9I20NHFPC4Ew/74RcANQx9Fd+iLDFPzc40hK1EOi+MW+yVux/3vQPZkjTMiNqyzZc
-	QHFmUtM4anJJYBVYSRiBkcJBUSBU=
-X-Gm-Gg: ASbGnct+9SGcEJWVBreoMgQ4wC6Xb9m5lqQmL8UVIRUi3FZBvoCQ41kqg2pbnTbx/jF
-	fZxcItMQvAaOCwdLMMpUGmg1CM0Y29sDW88hXENVtgCocRGuBC0NC7jTKdTP+FmVeQIvisaWlrG
-	xttUF3hp4MY19Tr3VKy3br1Kc=
-X-Google-Smtp-Source: AGHT+IFGWUPt8D0Ko0KnIK5fTziXbnbkodLOt0PWG8daTi0MXAKpev0ms1EzDNOW16gqbzlzYOWZ9laNJ1QRXRFCqxE=
-X-Received: by 2002:a05:6902:1607:b0:e73:22c4:117b with SMTP id
- 3f1490d57ef6-e756566218cmr15246740276.47.1746436290965; Mon, 05 May 2025
- 02:11:30 -0700 (PDT)
+        bh=YRpHxng/O2KyGUwn25ceTfGmqKNN9W5xpNzHMfuK+WQ=;
+        b=XStaz5Z0deJHk8FOn0gTMP2nu34gEYwL3nTySX6E3rqIagOS48jvALfi1izunvprc5
+         KxhvlJsVHBS4lgtCWO0BeJecgv4czY5x/Mc/Ys/oTdFc+TqUNXWUvdrzR27056AvLuEC
+         gQz3dqvnFUku3ny0QUhDae4FonR7s8Cwdnm7xd3tuiAaHzh/PXvT+TwdwNPefUNVV6zr
+         T9CYIyunhHvEq3N4nJ9/lCnyyykiVV4dCBxWlK3He9silTaI2YdG1HmcO9r4hA8tHPCq
+         Mzz9qC03/WHd9mi02cHI1/KKlqVPYVkMJaGG3eIQJAQNVM9Hx+3fvFrVJVLg9hrfCyPY
+         Haaw==
+X-Gm-Message-State: AOJu0Yz2uGm+ON4CFru20TEZLwdA9WN3Ct5ycj5ydps8mybMfjskSND+
+	peOZtrEaRTEqRkvILwdS/Pnl2LVzmoDCB1wmai2hPpdKqCu9XWPbXVA7yA==
+X-Gm-Gg: ASbGncsbSl+OQDom6SqWLxuaGf+LDusuRZxUKk1Er4xg8P6fGwcGVzrETTGLDeFJG5l
+	JgIWNjeO7LkApQOZ5Y58rtSJ+79V7zXG6aMfQSt5PO3D+jPH2UA4ScUetzP9foWsAwe00WFZlmQ
+	jmnUF359RwssblCX5ANHkWWzFNHFSTLFCQUdR+lvDUkojva/IbcnNZNJjEHrvlsTy2rNAMVSJzz
+	kK0YZpAsN1SX75JJHKuyN9VdMR6U4Ea0Gs2qm62g5Yker6Gp8n6YtchjbnKA5LkbO0EiO7Ykj6E
+	ScjAMSDX+8HUUUVb6cZE8vfqokustQ8KEAkKkL7QOw==
+X-Google-Smtp-Source: AGHT+IFlZM7tFXqcdZ2KfMP+1FUP9aAP/o39T5w2H5KY/ljTWjlTv3r4VnjePy2j3Y5Rv+Zs/H6JXw==
+X-Received: by 2002:a05:600c:c19:b0:439:9737:675b with SMTP id 5b1f17b1804b1-441bb856784mr89411365e9.7.1746436720655;
+        Mon, 05 May 2025 02:18:40 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b89cc480sm129687165e9.2.2025.05.05.02.18.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 05 May 2025 02:18:40 -0700 (PDT)
+Message-Id: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+From: "Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 05 May 2025 09:18:36 +0000
+Subject: [PATCH 0/3] Better support for customising context lines in --patch commands
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250429175302.23724-1-kuforiji98@gmail.com> <20250429175302.23724-10-kuforiji98@gmail.com>
- <aBSXBv0oPOXpfC2i@pks.im>
-In-Reply-To: <aBSXBv0oPOXpfC2i@pks.im>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Mon, 5 May 2025 10:11:18 +0100
-X-Gm-Features: ATxdqUG0orQyCJfoafy4OQGJ_DDC3vaeNqmuKM0TRjxSvbZ8MfLzbbLR_RrqytQ
-Message-ID: <CAGedMtc49Mur-M77krEZ7NbomKn1bTW-q1MuweQa0=Vh4M-hvg@mail.gmail.com>
-Subject: Re: [PATCH v2 09/10] t/unit-tests: convert reftable stack test to use clar
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+To: git@vger.kernel.org
+Cc: Leon Michalak <leonmichalak6@gmail.com>
 
-On Fri, 2 May 2025 at 10:57, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Tue, Apr 29, 2025 at 06:53:01PM +0100, Seyi Kuforiji wrote:
-> > diff --git a/t/meson.build b/t/meson.build
-> > index 756cb2a2dd..8fa00fc9ef 100644
-> > --- a/t/meson.build
-> > +++ b/t/meson.build
-> > @@ -1102,7 +1102,6 @@ integration_tests = [
-> >  # sufficient to catch missing test suites in our CI though.
-> >  foreach glob, tests : {
-> >    't[0-9][0-9][0-9][0-9]-*.sh': integration_tests,
-> > -  'unit-tests/t-*.c': unit_test_programs,
-> >    'unit-tests/u-*.c': clar_test_suites,
-> >  }
-> >    actual_tests = run_command(shell, '-c', 'ls ' + glob,
->
-> Okay. Ideally this would be moved into the next commit where we remove
-> the infrastructure for our old-style unit tests, but we can't because
-> the glob matches nothing anymore and thus causes an error.
->
-> Also, we have a "check-meson" target in "t/Makefile". Don't we have to
-> remove unit tests from there, too?
->
-> Patrick
+This series of patches attempt to give --interactive/--patch compatible
+builtins ("add", "commit", "checkout", "reset", "restore" and "stash")
+better support and nicer experience for configuring how many context lines
+are shown in diffs through a variety of ways.
 
-You are referring to this, yes?
-`@# awk acts up when trying to match single quotes, so we use \047 instead.
-    @mkdir -p mesontmp && \
-    printf "%s\n" \
-        "integration_tests t[0-9][0-9][0-9][0-9]-*.sh" \
-        "unit_test_programs unit-tests/t-*.c" \
-        "clar_test_suites unit-tests/u-*.c" | \
-    while read -r variable pattern; do \`
+Prior to these patches, the user could not choose how many context lines
+they saw in --patch commands (apart from one workaround by using
+GIT_DIFF_OPTS=-u<number> ..., however this isn't a good user experience or a
+persistent solution). Additionally, the behaviour around reading from the
+diff.context and diff.interHunkContext configs was also inconsistent with
+other diff generating commands such as "log -p".
 
-I've hardly taken a look at the `t/Makefile`, given my very little
-interaction with the file throughout the test conversions.
+The summarised changes below hopefully make this experience better and fix
+some inconsistencies:
 
-Best
-Seyi
+ * diff.context and diff.interHunkContext configs are now respected by
+   --patch compatible commands
+ * --unified and --inter-hunk-context command line options have been added
+   to --patch compatible commands (which take prescendence over file
+   configs)
+ * "add" and "commit" in --interactive mode now expose a new "context"
+   subcommand which configures the amount of context lines you wish to see
+   in subsequent diffs generated from other subcommands such as "patch" or
+   "diff"
+
+The original discussion for this can be read at:
+
+ * https://lore.kernel.org/git/CAP9jKjGb-Rcr=RLJEzeFdtrekYM+qmHy+1T1fykU3n9cV4GhGw@mail.gmail.com/
+
+Leon Michalak (3):
+  add-patch: respect diff.context configuration
+  add-patch: add diff.context command line overrides
+  add-interactive: add new "context" subcommand
+
+ Documentation/git-add.adoc      |  21 ++++++-
+ Documentation/git-checkout.adoc |  11 ++++
+ Documentation/git-commit.adoc   |  11 ++++
+ Documentation/git-reset.adoc    |  11 ++++
+ Documentation/git-restore.adoc  |  11 ++++
+ Documentation/git-stash.adoc    |  11 ++++
+ add-interactive.c               | 107 +++++++++++++++++++++++++++++---
+ add-interactive.h               |  17 ++++-
+ add-patch.c                     |  11 +++-
+ builtin/add.c                   |  21 +++++--
+ builtin/checkout.c              |  28 ++++++++-
+ builtin/commit.c                |  15 ++++-
+ builtin/reset.c                 |  16 ++++-
+ builtin/stash.c                 |  54 ++++++++++++----
+ commit.h                        |   3 +-
+ t/t3701-add-interactive.sh      |  36 +++++++++--
+ t/t4055-diff-context.sh         |  78 ++++++++++++++++++++++-
+ t/t9902-completion.sh           |   2 +
+ 18 files changed, 420 insertions(+), 44 deletions(-)
+
+
+base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1915%2FNinjaInShade%2Finteractive-patch-context-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1915/NinjaInShade/interactive-patch-context-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1915
+-- 
+gitgitgadget
