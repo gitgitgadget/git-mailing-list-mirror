@@ -1,183 +1,143 @@
-Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02BB514B965
-	for <git@vger.kernel.org>; Mon,  5 May 2025 07:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F9C171A1
+	for <git@vger.kernel.org>; Mon,  5 May 2025 07:32:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746430052; cv=none; b=oSUy/y52fm7crjtswuLLuiW4lxB7u/kcL4gDyUwBjgfDSMEqMXD4duDTQz8DHlB/GK+0yFTHn9jnHQslV3AkE5x5ysq9WMSQ8GiSqv5uwTvV912AdIj9n5QWliy7+mAmED/aKkipa54ngId/G7OTdygq4xSfLAO8+k7X/0vQIjM=
+	t=1746430377; cv=none; b=JBLJxiZByQV4SAAZEYAKau9ApfNGle/GVZ3sEfjZAPhq62LGgsiWgqscuh3tKXBKmdgcEMp3SkB+q6EjAY3x5G1fh5dz1YZXG1RRRuR4rCc96wlgxe3gk4RVWVmovozqxC23TTqbdbeN0J6dMgjvHJJ1MlhjJOyerpteLNkKaCE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746430052; c=relaxed/simple;
-	bh=65IGrO/SFag4pw5MZ/Wk2GyyG0vMN2YksR3dPQLBQhA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=l1rf3eBRlCZ1rNEhzXxQriiC/5juhOLQRmGRAOZ+bDKJgdx50LaN/L3rusc1hX+MCi6HGkLbeP39tCNa6MEekHcB4zrZbAPnlYIX3hh3Rq7i1sruHMi1NvPEk+uuiYXUSiIsNVp1xZ6umNtxitWMoemBRS+NB44L82b0EzBKPMk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m/MQ1Kg8; arc=none smtp.client-ip=209.85.219.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746430377; c=relaxed/simple;
+	bh=J5nVqhgNdJfm9HKDz6KxaaFKEQRd4sqAtvtmKfdcojM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BIgUID9Bz9g3eC0PEoJ1eQexwZZnJbCC/nCMQs2CoMlAdGoq9HT4Je35no5ntydE9dvVK89s+Idlq/sCWm7q4xM8gF99m7S2hCH4KA8w1BtvvCmeWtzmYBLtm8o8yRFlF76GQOpyN4NpXlulNV+wurAI2h5G5xBK/IhKywMamqg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hdG4cFs3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lXbfxcyQ; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m/MQ1Kg8"
-Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e72a786b1b8so3185835276.1
-        for <git@vger.kernel.org>; Mon, 05 May 2025 00:27:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746430050; x=1747034850; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=WYAoIFr0FT7tTW9i4YTQQ8UwTOzit5ePJNKxRcWv+zU=;
-        b=m/MQ1Kg8MqwNdp4B0jTRqnlwxCMcDkjpPx6hYKaZJGmB1hUGeaeO+Np/o1MUm5m6Zv
-         J3O6/0YHNaPw3F45Bml/slQ6+1ViVIb8YXoznD/YUMxpS31QYlWxpiS/9qtATcD57K9o
-         iv/6/P2w5GNFJjuSWU4w/fBOGLm9AcKOk2ZH7FVtQAKpjzFy4rxpvTkqE/vA2HQylj6w
-         rraGjZsXSdxnW9wHREuFktA8cysOd9fo0hQS5jx1BMdF79bikgGe0dSa/4CeM03BNsqN
-         iZOSC8gP+inDKi24WKWoaUZSMNIEFEg34XTewN1QYeYrPpdBZuediwRQ/loU1a56sMip
-         hRPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746430050; x=1747034850;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=WYAoIFr0FT7tTW9i4YTQQ8UwTOzit5ePJNKxRcWv+zU=;
-        b=ifhWEd3zfkgKcVNx+EJ0wHCQHhFvQ2r7zoK5PMgqzxamixc+/MCl6WnxSTMBST6dN9
-         ppMft5x6eT0ZDXBpCHGLruHE+yigUrAfTDwzMBZb9bb+DAhqwUFGBuq2sLjJR7Nk65UT
-         FWAfcJPOemmljx+Fosp7Sp9fVWYQ/vfsXj3COSQAXXGv3+Vu9SXCb5fpLdxT3RjprgzB
-         OZKDknChj/q7XBYhqwSAU09keZL+0Fjb30lDen4VUouHqbb34fUDqFlS3/ABNKYC+pjW
-         j1jh+G3QsvalzCF/Ox/oQfVeSMWJZSS7KJyV+gTxFAa7mPadCzyhYizkGNDRPhWEXfRL
-         JZjg==
-X-Gm-Message-State: AOJu0YxhfUs9NYh348vwHBSZiy9WjhVF8J7OaG/WbOz4nxje8P/Z7xMw
-	X08UdOCiWtl4xl/GI0P1ANAk1NkAMTV4a+rInwPKgZtO6a/gELTCKZbI2WSWDqsqGGSv+KB3MHx
-	a1JPsYoOThhLTKU2nanfNz9loodbqnJMuwXROfw==
-X-Gm-Gg: ASbGncshJ3Bek4om9Prer4aW7+KIgwDMHFt5dpAx5GgeKru74dCujMU7+ebe+Q77Pjl
-	/tMUZHwn3+PNujtM0iD3FD+EAfujkn91HtN0HiCnolrwHZ4ZPiJoMFVy817HBMwQfsggfHALqC2
-	TEM6qS72zxmIqimHaisLX39zA=
-X-Google-Smtp-Source: AGHT+IFclb+btv41BxxhVgUszBcSpFz7qDnFBJIAnGVS6KGvwgCqGLI2Sk23pv5QZCe13gaL8d/Ki7iNVfGY39qlMC0=
-X-Received: by 2002:a05:6902:a09:b0:e73:312e:7809 with SMTP id
- 3f1490d57ef6-e7564a52e60mr15944497276.14.1746430049826; Mon, 05 May 2025
- 00:27:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hdG4cFs3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lXbfxcyQ"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 62ACA254020E;
+	Mon,  5 May 2025 03:32:54 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Mon, 05 May 2025 03:32:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746430374; x=1746516774; bh=ab0L8+jfDZ
+	IczClS2sObiUVRh5Lo6N1ZVgonOLkQslo=; b=hdG4cFs37+m2mTc3WXZ4JdE8G9
+	9SublTATjTc8de5deAbIiksFDzbb1G+dxiEjmFbT09YIAJq3H+JbGcjbKdoqvtHU
+	YjihcE+Q2nfuaYp40lFQz94wRbJzP6g+XGQxxBXj8fMuJtaJhIW6ZxJl3sOZzrOF
+	nnRWHoYvEVufTS8ptQuZaOwyHOUS9lOsgwU/HEbM+TWIrN1O2UDDSYHKfzZxEj6E
+	9w6qK4xQ/Kk0QZEAZIxcu9GrPzcS9V5iLfHANuKLcb0NwnlrFF1p4emM7oBIZYfq
+	cMQB5uINf94pbGaBJXPyokvfMOjpXQ+AAEZuAPACko1NtogaHNxm193Yp0sQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746430374; x=1746516774; bh=ab0L8+jfDZIczClS2sObiUVRh5Lo6N1ZVgo
+	nOLkQslo=; b=lXbfxcyQTL8JEFcb8tFZMGUERWU9xducS48iPbLoav4idd7+CuH
+	9FQlrZcHR3bppdrg6hThJfG9qXKJQp2g0nzs9Wt/s/4NGnPORuyXfQnS/XZCe2iM
+	e5N0k36rQPD+irhOrNIH9Sgil1X+RhtfiCfkGatItegv1bG/OGgv+vR/ZvScHBRj
+	pMwv1BMpVcW1+uM9bmqTFGiGN6jDSJuboavUPuzble7UXbX3ezF9iJ75sJgeD9gV
+	VlgKbwCJe1AR6pY/Og2mHKQ7xKPHwlrD1mANvphfEu4ytXm5lptTzlWrHpGFT/sG
+	AKSNsR4l7XDw+VmuzXAfeD3Umfb8ogJ1p1A==
+X-ME-Sender: <xms:pmkYaIZo3OegCsND3HwhR-O_rPpMErwDonhb1Lz70ChT9g_SfZcKXw>
+    <xme:pmkYaDYBP5apPsNqkADYrhlUmHp8LQpB6sIu4_abVER5eBNje_jLsWjmiceCs1xXx
+    5DO1DtINM2mH5lhMw>
+X-ME-Received: <xmr:pmkYaC9gEn1jyYWQKcMYU5bLjZTqwiEIKq8EyjwX5nc61gA1q8rE1-ur6eGsNbvlRB-ymmwPAtCpWdM4c2QPXYhFtEJLn79VhID7v75audG6oA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedthedtucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepkeeftdffvdeuffeigfehgeduveekgfeiheeutdef
+    ffehveefleefffetieetfefgnecuffhomhgrihhnpehrvghrvghrvgdqghgtrdgruhhtoh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
+    phhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrgh
+X-ME-Proxy: <xmx:pmkYaCqadHXboNaZJgIEyqc8tMAEJbTGtT3cc1bsbS1-q6jHWl0RaA>
+    <xmx:pmkYaDokI4y6MCAXNn4nV4qpD74TqxJ4K1fVpE1H1BD8AszE3ReRfg>
+    <xmx:pmkYaAQl4W8gMXDVnQHWA4cbBQqc3iiWX8oROUn9VrFyFrgV1ah5zw>
+    <xmx:pmkYaDrsa_QW5MDPZ_BB6Gh9uBfnuWBZmEyPRDyXygjAx197ZBf8rQ>
+    <xmx:pmkYaHHMbUnaKzgc3LG4i1rI3zaT9bvqtZCvUGfhOKjN0x9yoZUjC1eL>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 May 2025 03:32:53 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8e5ec437 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 5 May 2025 07:32:51 +0000 (UTC)
+Date: Mon, 5 May 2025 09:32:47 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
+Subject: Re: [PATCH v3 0/7] builtin/maintenance: implement missing tasks
+ compared to git-gc(1)
+Message-ID: <aBhpn3q-sgm3WjR6@pks.im>
+References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
+ <20250502-pks-maintenance-missing-tasks-v3-0-13e130d36640@pks.im>
+ <d5307e82-8e45-4a2a-a8cc-03f84c2d5670@gmail.com>
+ <xmqqo6wau3fz.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250429175302.23724-1-kuforiji98@gmail.com> <20250429175302.23724-11-kuforiji98@gmail.com>
- <aBSXJcT8REHWrsrx@pks.im>
-In-Reply-To: <aBSXJcT8REHWrsrx@pks.im>
-From: Seyi Chamber <kuforiji98@gmail.com>
-Date: Mon, 5 May 2025 08:27:16 +0100
-X-Gm-Features: ATxdqUEfA-LNASfmZ72GlM-tRiJAlDpe-mcDe6jyQZu85Rfv2LlcnCqijW7uegU
-Message-ID: <CAGedMtdRwsBwRK6ENaJfbZ1tba4jD1WMyk3HdFft3sC6H2001w@mail.gmail.com>
-Subject: Re: [PATCH v2 10/10] t/unit-tests: adapt lib-reftable{c,h} helper
- functions to clar
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, phillip.wood@dunelm.org.uk
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6wau3fz.fsf@gitster.g>
 
-Hi Patrick,
-On Fri, 2 May 2025 at 10:58, Patrick Steinhardt <ps@pks.im> wrote:
->
-> On Tue, Apr 29, 2025 at 06:53:02PM +0100, Seyi Kuforiji wrote:
-> > Helper functions defined in `t/unit-tests/lib-reftable.{c,h}` are
-> > required for the reftable-related test files to run efficeintly. In the
-> > current implementation these functions are designed to conform with our
-> > homegrown unit-testing structure. So in other to convert the reftable
-> > test files, there is need for a clar specific implementation of these
-> > helper functions.
+On Fri, May 02, 2025 at 02:07:28PM -0700, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
+> 
+> > On 5/2/2025 4:43 AM, Patrick Steinhardt wrote:
 > >
-> > type cast `for (size_t i = 0; i < (size_t)stats->ref_stats.blocks; i++)`
-> > Adapt functions in lib-reftable.{c,h} to use clar. These functions
-> > conform with the clar testing framework and become available for all
-> > reftable-related test files implemented using the clar testing
-> > framework, which requires them. This change migrates the helper
-> > functions back into `lib-reftable.{c,h}`.
+> >> Changes in v3:
+> >>   - Simplify the heuristic for "rerere-gc" so that we only count the
+> >>     number of directory entries in ".git/rr-cache", without considering
+> >>     staleness.
 > >
-> > Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
-> > ---
-> >  Makefile                    |  4 +-
-> >  t/meson.build               |  4 +-
-> >  t/unit-tests/lib-reftable.c | 26 +++++------
-> >  t/unit-tests/lib-reftable.h |  6 +--
-> >  t/unit-tests/unit-test.c    | 93 -------------------------------------
-> >  t/unit-tests/unit-test.h    | 16 -------
-> >  6 files changed, 20 insertions(+), 129 deletions(-)
-> >
-> > diff --git a/Makefile b/Makefile
-> > index 0b42893611..7e646e16ee 100644
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -1379,12 +1379,12 @@ CLAR_TEST_SUITES += u-urlmatch-normalization
-> >  CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
-> >  CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
-> >  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
-> > -CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
-> >  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
-> > +CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
-> > +CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
-> >
-> >  UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
-> >  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
-> > -UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
-> >
->
-> `UNIT_TEST_PROGS` only contains the "unit-test" binary now, right? Does
-> this mean that we can simplify build rules in our Makefile now?
->
-> > diff --git a/t/meson.build b/t/meson.build
-> > index 8fa00fc9ef..7c305a90b5 100644
-> > --- a/t/meson.build
-> > +++ b/t/meson.build
-> > @@ -26,8 +26,9 @@ clar_test_suites = [
-> >
-> >  clar_sources = [
-> >    'unit-tests/clar/clar.c',
-> > +  'unit-tests/lib-oid.c',
-> > +  'unit-tests/lib-reftable.c',
-> >    'unit-tests/unit-test.c',
-> > -  'unit-tests/lib-oid.c'
-> >  ]
-> >
-> >  clar_decls_h = custom_target(
-> > @@ -69,7 +70,6 @@ foreach unit_test_program : unit_test_programs
-> >    unit_test = executable(unit_test_name,
-> >      sources: [
-> >        'unit-tests/test-lib.c',
-> > -      'unit-tests/lib-reftable.c',
-> >        unit_test_program,
-> >      ],
-> >      dependencies: [libgit_commonmain],
->
-> Can't we remove this completely? `unit_test_programs` is empty now, so
-> this loop is a no-op now.
->
-> > diff --git a/t/unit-tests/lib-reftable.h b/t/unit-tests/lib-reftable.h
-> > index e4c360fa7e..2958db5dc0 100644
-> > --- a/t/unit-tests/lib-reftable.h
-> > +++ b/t/unit-tests/lib-reftable.h
-> > @@ -6,12 +6,12 @@
-> >
-> >  struct reftable_buf;
-> >
-> > -void t_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id);
-> > +void cl_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id);
-> >
-> > -struct reftable_writer *t_reftable_strbuf_writer(struct reftable_buf *buf,
-> > +struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
-> >                                                struct reftable_write_options *opts);
-> >
-> > -void t_reftable_write_to_buf(struct reftable_buf *buf,
-> > +void cl_reftable_write_to_buf(struct reftable_buf *buf,
-> >                            struct reftable_ref_record *refs,
-> >                            size_t nrecords,
-> >                            struct reftable_log_record *logs,
->
-> It is quite weird that we declare the replacement functions in
-> "unit-test.h" in the first commit only to remove them at a later point.
-> It would make way more sense if we introduced the functions in
-> "t/unit/lib-reftable.{c,h}" right from the start and then only remove
-> the unused functions in the last step.
->
-> Patrick
+> > The range-diff was harder to read than just re-reviewing patch 7, but I
+> > think this v3 is ready to go.
+> 
+> I still do not think "configurable 'rerere gc' basing the decision
+> on the number of existing rerere entries" adds negative value to the
+> system.  If there is truly more than N active rerere entries
+> currently in your repository with your workflow, such a
+> configuration essentially decides to run 'rerere gc' every time (and
+> without pruning enough entries to make the next 'rerere gc'
+> unnecessary), and never otherwise.  It is not like pruning unneeded
+> loose object files and packing the rest into a packfile, where
+> running it once (even if it resulted in miniscule packfile due to
+> misidentification) would remove all the loose object files, which
+> makes 'repack' unneeded for some time until we accumulate more of
+> them.  After 'rerere gc', you still will have rerere entries kept.
+> 
+> Until we can implement a meaningful automation (which may require
+> changing the way rerere entries are stored on disk to help us
+> cheaply tell if there truly are excessive number of no longer
+> relevant rerere entries; code that we can readily borrow from
+> "rerere gc" is enough, as I said), I do not think we should add
+> extra code to make such a useless decision.  Instead, I would prefer
+> to see a single "do we or do we not run `rerere gc`?" Boolean, until
+> that happens.
+> 
+> Other than that, I think the series is a good addition to the
+> system.  Giving finer grained control is great, and 'git maintenance'
+> is a much better framework than 'git gc' to do so.
 
-If I get it correctly, you're suggesting I have both the original
-functions and the clar-based variant in `t/unit/lib-reftable.{c,h}`
-right from the first commit, right?
+Ok, fair enough. I'll stick with the "maintenance.rerere-gc.auto"
+config as integer, but will adapt it so that any positive value will
+cause us to invoke `git rerere gc` when the "rr-cache" directory exists
+and has at least one entry.
 
-Thanks
-Seyi
+The reason I want to keep it as an integer is mostly to stay consistent
+with all the other "maintenance.*.auto" settings, even though it does
+not add a lot of value right now.
+
+Patrick
