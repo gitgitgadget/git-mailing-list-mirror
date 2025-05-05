@@ -1,186 +1,146 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48EB225D8FB
-	for <git@vger.kernel.org>; Mon,  5 May 2025 15:27:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6E21DFF7
+	for <git@vger.kernel.org>; Mon,  5 May 2025 15:43:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746458853; cv=none; b=gVSB7SfcGrIDEF/Grcds5lc/AHwPuqLlG9lO2drtNfSId2P7VSNcgLgYDj3JQHMzHcMXEKY6RRuueIw3as7OwnFHeo8Rib67zCWzd5yPhHDH0norSA7mSHbE6fZiJs/Pa3yWd6z+u/qyB/3BlgfT4zyfsjcGWUQgdUpqCoV8Nxs=
+	t=1746459805; cv=none; b=SCA/TMzTKVmcdsjIrwh2EZgzpIY8nwFSlIbpUsRwC8dL+IUhkiWd1607zgBD8k48fcDE8ck44lprdlyEJCglItEFjr7eRWfsAe0XnwBKBHz6qMCthQitFwVLgJ9OZ/OrT6EXAhTRVjPIctAyegGP+Pr6JjLLLEy7AYi76lFDo2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746458853; c=relaxed/simple;
-	bh=C4EekIRbTnbtA+wvC8NFIS2gP6U6ZsqR3/GdGkW8pXg=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=TaCUiWZw29isxFPNdT4y0nkg44+MR4JZX1XCaZhmyImtUrmzwGo1nD+AxmFPYd/jL0odvw+8KEA2mmcom5NxSeRhACF9rePQMQd9r3atDF3qtw+/GxHVgy0v23+IpV3ODtNtkPw8IK9p3fuKLVNs5AIvEfkX3oCBgfOlSlcV+/c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ih0rVz2s; arc=none smtp.client-ip=209.85.221.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746459805; c=relaxed/simple;
+	bh=OfXnOZ2DNKOCBTpgS4Op8h/46fFn335rLbTIWh5O7GM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UTEeeAMed56Kfx6FPd+bVtj3k2yCwb+lQ0eGHzQx4oNl9B1h5z9DqrvpbJVNlij9LZbo0pREk5nlYz58d0e3WkYLUTh0gYkiQ6Vfl09AOjI0z/ZJsc/MtQ1BQwbFNNvX+xRDfUd8iA1zFxEvyyn9hdEvuzNSmymPIsQ1lwQ8Gbk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S7FTxlxi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e3sLcy2z; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ih0rVz2s"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-39ee682e0ddso3053652f8f.1
-        for <git@vger.kernel.org>; Mon, 05 May 2025 08:27:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746458849; x=1747063649; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=CxH4ZqDJ/v47BJ/Fqd1RijKr+RXYOOZ44YuHjsehVzg=;
-        b=Ih0rVz2sq+vbdQnAuNA31TwWlzQc+o5yPqOK1ZroQB3INXGIHUgmgHqYIHJigo97wv
-         tJpCRseOnI5zvNAVrufGvO3+vWEmcMz+ElieNYTS3pyhyIobcayxyGvfqm9/OE+FLucv
-         Miy6/jBGMrddPZ1RDKANHNpb5txe7WBeY5ZH+9bjP89Dns8i/hGRPOd8E1xKKIiwaALc
-         sIJgZyCHblBTQevkdI/6dryEZi7OEcc+Tbt4+V/Rrg9IESsPZnDkJFQAU+Egp6CbfCcZ
-         yxWg+xqKdsCOD1FBLux1RPRiLH2yYlDMfD0C42osKQtIk8bbAa42xkGNSwjxE/uqv50w
-         QbYw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746458849; x=1747063649;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=CxH4ZqDJ/v47BJ/Fqd1RijKr+RXYOOZ44YuHjsehVzg=;
-        b=ueqe1LHV5gElWr5eOhJhvVP7wxKQOTMv+VPATuX51uYvblEkiGcX+2bGnvzXyX2AI4
-         3jv+zBXZXzV2bx3+YXx23sdh0bIN/Aq+6C7MbAKjR1gaqPrvDdPsDUjZSC57DA+VWijG
-         FD2DhZpKBw59r06f+GWPghTQKEfo2mJ+pmWo/XXABDO2oDuqcK1pfbhmKIoaKzc8qtj2
-         fr+KEW1yPC/VoaHQ01X33YhhqEVltXkPAgqU2m2EYu5234t2IVP7w/WeeDG5fQ5NMJxU
-         DY+CJl37JWdD5vJHM25uwGTuIevRdnAmfitdrbEf8iGGU+ZUgqNWGPjpu25G3Y/zu2QF
-         SEbg==
-X-Gm-Message-State: AOJu0Yx5nNos7OeLOGtjMK5bNxao58e6qTJL0DTo7ApuCINMaJ5DLNIs
-	qsDAS+40mcqsWPxdStT+qPxRToIhUkR8gRLv9nPDPqHG8BA8MrfI0sSjag==
-X-Gm-Gg: ASbGncsi3YIJp4Ieo1sBFDs0KKCLVoZmHg6SuCorD6BGWTLRjKwAgCTYnpjd0WQDAum
-	/VdAQQWFMNfTO7sbl47kDj3cITVPIIn4fz9z/kimm5w8+a6FtChrnwIXLMulYemIPzTVMQkrHT0
-	ArLoffGK8AT4BAOZqVDUBq5Fhf4JfhvsdonVuf9KQ7pmnoy+2zpctXXqSbxsW3JaGnL0VCceG7I
-	P2Fd3bpTMEdqGo9gHB4W9q4rQs4P3hh5uhhFq1IlrBEkbLSiZBiQrpQ8tUzDgeVxx+Oc+sqUT8b
-	qT/xeBPB6Hduwxafpc3hdQLLtPqKO3OHgrhEE6TkUeOKiCzOlKWf
-X-Google-Smtp-Source: AGHT+IHPsBaKLvk075/vmc0UCCjkDKN6vSayakMLmoF3jzTeh0m2dv6u5I6UnbLgw/mmZa4CfDkyfw==
-X-Received: by 2002:a5d:5f43:0:b0:39e:cc10:3945 with SMTP id ffacd0b85a97d-3a09fd6b904mr6260522f8f.2.1746458848657;
-        Mon, 05 May 2025 08:27:28 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099ae3441sm10556806f8f.26.2025.05.05.08.27.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 08:27:28 -0700 (PDT)
-Message-Id: <6fac9c4c394b9882a2f7af6209af389edf384e4d.1746458844.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
-References: <pull.1913.git.1746008680.gitgitgadget@gmail.com>
-	<pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
-From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 05 May 2025 15:27:24 +0000
-Subject: [PATCH v2 4/4] scalar reconfigure: add --no-maintenance option
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S7FTxlxi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e3sLcy2z"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id F02571140254;
+	Mon,  5 May 2025 11:43:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 05 May 2025 11:43:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746459800; x=1746546200; bh=igWEIvryIv
+	Y6F0CeypAfxVdq/MtSkYnjsR0Yh5qmTOU=; b=S7FTxlxibT9SplyZpXAQtCUElL
+	jL4590AoNHisUv3XxiVIAe4DctS8B2Nc23ZOrOLoWlYJDYDVN63DKtqj3E98T3/p
+	71lBwqPUT+tKQvV1HkvrF9wjFjd2wW8lQ19WMFmoCJ21aU3OCJegYMSF2Ki9CG+Z
+	RNdsxObfhi8RE5/eYFusNlAjg1RA+AoK+zU1wxZnUV6wdfV+RrO1MzSfHs4zu/3a
+	PDC85CD5S2y+FezQVOCRnJsOcz/z1HOFNnLiAGte6GKPUbQ6SUlSunBbLkD58L65
+	lKTsZ7IT4RT3kUvnGGfr+5dwaiOfzMjstvXT90zWM2C+ZSBArdXBoEuQtkrw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746459800; x=1746546200; bh=igWEIvryIvY6F0CeypAfxVdq/MtSkYnjsR0
+	Yh5qmTOU=; b=e3sLcy2zoLFqd+40xsbB1rlO4LfiNq6fx3P67fwe33IDKHAn5OR
+	02N1OON7GFV6tdGU0k7rTYJIvvTBrgX7BHrMfpi0L30g2Oz+CgaE/Sc47oz59L+/
+	c1ep6sDVMixZCmykqFCgdhJhzkU754pjTie0ZMeGctA93iWAAsrJmLyanVhVrEcn
+	1RYSUKnmgQokHIw+L8EwVO3CVRCdnYW1AZjW0ioOh3qPhBiSQdWat06dAm2NhZ6V
+	/VT2VyHTisMiU0tHRUe6lmR/3o/0sP03e7yhI3VxkgZAAItVeOWypT3R90tkSonp
+	AZEoUmT3JyoffD1os+T0/nvVDyDHoOcivOg==
+X-ME-Sender: <xms:mNwYaMXDq7xKi5ga8oXVnce54rmUyvgCh7IDjpMpr8XyNf08jb86eQ>
+    <xme:mNwYaAl1lz4JqVZkFqgqQu1luKx0meVawCmAHYpyqGhhklhWk1gMZFCkaTqCW8fwt
+    MWWymw-DNqR6OiqAQ>
+X-ME-Received: <xmr:mNwYaAZDT2NxHPSIaW_fsvR9KwPEzeBJBWLtc77TOaTttquNXdXDxRfTAJjdQsr_cR1GM8JN5yjycSM0PA3rONimLjctXTaECAQo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedugeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
+    hffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
+    shhtvgdrnhgvthdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
+    hrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:mNwYaLVZYsHjcex4ADcrs06EbuOeErC7OTO9Ng4-C6NMAoBujFmqug>
+    <xmx:mNwYaGmUmJh3Iu6Qv1HDttAuoEJKmRNUDlRGYwClHW_CLecp5qACaQ>
+    <xmx:mNwYaAcjAG7qafzRRXZTxLEpowkk66K1eM6T3ZwVJa4dnzWABtVfvQ>
+    <xmx:mNwYaIHFmMTYzCOvY0pUG7JUtYiNVPzfXpLTAqzCrTudYcubpPxq1w>
+    <xmx:mNwYaCwlYGJ048bBNycwraju0qBIdzaYyXuh_VExbH6EZwKRRKHyAn9m>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 May 2025 11:43:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Collin Funk
+ <collin.funk1@gmail.com>,  git@vger.kernel.org,  shejialuo@gmail.com
+Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+In-Reply-To: <20250503133158.GA4450@coredump.intra.peff.net> (Jeff King's
+	message of "Sat, 3 May 2025 09:31:58 -0400")
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
+	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
+	<20250503133158.GA4450@coredump.intra.peff.net>
+Date: Mon, 05 May 2025 08:43:18 -0700
+Message-ID: <xmqqtt5zoyg9.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-    johannes.schindelin@gmx.de,
-    Patrick Steinhardt <ps@pks.im>,
-    Derrick Stolee <stolee@gmail.com>,
-    Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain
 
-From: Derrick Stolee <stolee@gmail.com>
+Jeff King <peff@peff.net> writes:
 
-When users want to enable the latest and greatest configuration options
-recommended by Scalar after a Git upgrade, 'scalar reconfigure --all' is
-a great option that iterates over all repos in the multi-valued
-'scalar.repos' config key.
+> That changed in cfea2f2da8 (packed-backend: check whether the
+> "packed-refs" is regular file, 2025-02-28), which uses open_nofollow()
+> to check for symlinks while we open it. But it feels like it would be
+> more direct to just lstat() the file in the first place (which we end up
+> doing anyway to check for other things besides symlinks!).
+> ...
+> It's not as "atomic" as open_nofollow() and fstat(), but I don't think
+> we care about that for fsck. This is about consistency checking, not
+> trying to beat races against active adversaries (not to mention that our
+> open_nofollow() is best-effort anyway, and may be racy).
 
-However, this feature previously forced users to enable background
-maintenance. In some environments this is not preferred.
+True.  Atomicity, which the use of open_nofollow() and fstat() tries
+to achieve, may not matter in fsck.  We can think of the use of
+open_nofollow() in this particular codepath merely as a convenient
+helper function, and I do not think we have any problem with such a
+helper function.
 
-Add a new --[no-]maintenance option to 'scalar reconfigure' that avoids
-running 'git maintenance start' on these enlistments.
+But open_nofollow() and its emulation can be called from other
+codepaths that may care about atomicity, and I am not sure what our
+attitude towards atomicity requirements vs platform capabilities
+should be.
 
-Signed-off-by: Derrick Stolee <stolee@gmail.com>
----
- Documentation/scalar.adoc | 14 +++++++++++---
- scalar.c                  |  9 ++++++---
- t/t9210-scalar.sh         |  7 ++++++-
- 3 files changed, 23 insertions(+), 7 deletions(-)
+If an atomicity (or any other) requirement in a particular codepath
+has a simple and obvious way to solve on common platforms, but that
+the mechanism to implement the simple and obvious way is unavailable
+on other platforms, where does it lead us?
 
-diff --git a/Documentation/scalar.adoc b/Documentation/scalar.adoc
-index 7753df3b4352..2868b01988e4 100644
---- a/Documentation/scalar.adoc
-+++ b/Documentation/scalar.adoc
-@@ -14,7 +14,7 @@ scalar list
- scalar register [--[no-]maintenance] [<enlistment>]
- scalar unregister [<enlistment>]
- scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
--scalar reconfigure [ --all | <enlistment> ]
-+scalar reconfigure [--[no-]maintenance] [ --all | <enlistment> ]
- scalar diagnose [<enlistment>]
- scalar delete <enlistment>
- 
-@@ -160,8 +160,16 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
- was somehow corrupted or changed by mistake, this subcommand allows to
- reconfigure the enlistment.
- 
--With the `--all` option, all enlistments currently registered with Scalar
--will be reconfigured. Use this option after each Scalar upgrade.
-+--all::
-+	When `--all` is specified, reconfigure all enlistments currently
-+	registered with Scalar by the `scalar.repo` config key. Use this
-+	option after each upgrade to get the latest features.
-+
-+--[no-]maintenance::
-+	By default, Scalar configures the enlistment to use Git's
-+	background maintenance feature. Use the `--no-maintenance` to skip
-+	this configuration and leave the repositories in whatever state is
-+	currently configured.
- 
- Diagnose
- ~~~~~~~~
-diff --git a/scalar.c b/scalar.c
-index dd6e1447e086..0b8a63f6e5a6 100644
---- a/scalar.c
-+++ b/scalar.c
-@@ -667,14 +667,16 @@ static int remove_deleted_enlistment(struct strbuf *path)
- 
- static int cmd_reconfigure(int argc, const char **argv)
- {
--	int all = 0;
-+	int all = 0, maintenance = 1;
- 	struct option options[] = {
- 		OPT_BOOL('a', "all", &all,
- 			 N_("reconfigure all registered enlistments")),
-+		OPT_BOOL(0, "maintenance", &maintenance,
-+			 N_("specify if background maintenance should be enabled")),
- 		OPT_END(),
- 	};
- 	const char * const usage[] = {
--		N_("scalar reconfigure [--all | <enlistment>]"),
-+		N_("scalar reconfigure [--[no-]maintenance] [--all | <enlistment>]"),
- 		NULL
- 	};
- 	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
-@@ -758,7 +760,8 @@ static int cmd_reconfigure(int argc, const char **argv)
- 		the_repository = old_repo;
- 		repo_clear(&r);
- 
--		if (toggle_maintenance(1) >= 0)
-+		if (maintenance &&
-+		    toggle_maintenance(1) >= 0)
- 			succeeded = 1;
- 
- loop_end:
-diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
-index 89a6a2a24d8b..34765a49fd07 100755
---- a/t/t9210-scalar.sh
-+++ b/t/t9210-scalar.sh
-@@ -210,7 +210,12 @@ test_expect_success 'scalar reconfigure' '
- 	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
- 	test_path_is_file one/src/cron.txt &&
- 	test true = "$(git -C one/src config core.preloadIndex)" &&
--	test_subcommand git maintenance start <reconfigure
-+	test_subcommand git maintenance start <reconfigure &&
-+	test_subcommand ! git maintenance unregister --force <reconfigure &&
-+
-+	GIT_TRACE2_EVENT="$(pwd)/reconfigure-maint" scalar reconfigure --no-maintenance -a &&
-+	test_subcommand ! git maintenance start <reconfigure-maint &&
-+	test_subcommand ! git maintenance unregister --force <reconfigure-maint
- '
- 
- test_expect_success 'scalar reconfigure --all with includeIf.onbranch' '
--- 
-gitgitgadget
+For some kind of requirements, we can treat it merely as a quality
+of implementation issue, similar to how finalize_object_file()
+ideally wants to do the create(TMP) then link(TMP->FINAL) then
+unlink(TMP) dance (because we want to detect collisions when able)
+but has fallback implementation to create(TMP) then
+rename(TMP->FINAL) (which punts on collision detection) on platforms
+where the preferred way does not work.  It falls into this category,
+I would think, to think of use of open_nofollow() in this codepath
+as a mere helper function that makes the code in fsck shorter.
+
+But for other kind of requirements, we want to fulfill them on all
+platforms that we claim to support.  Using open_nofollow() to
+achieve hard atomicity requirement would be a bug in such a
+situation.  Should we somehow warn our developers against its use?
+
+Idealists in us first try hard to find the right abstraction that
+would work everywhere, and use compat/ layer to implement that
+abstraction, but we of course are often not successful, and end up
+with a series of #ifdef for pieces of platform-specific code in
+fairly higher layer.  It feels that open_nofollow() that is not
+necesarily atomic is the latter but that is done at a level that is
+a bit too low.  I dunno.
+
+
