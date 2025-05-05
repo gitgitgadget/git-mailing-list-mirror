@@ -1,76 +1,84 @@
-Received: from mail-pg1-f179.google.com (mail-pg1-f179.google.com [209.85.215.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91C924A06D
-	for <git@vger.kernel.org>; Mon,  5 May 2025 12:16:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 988FE25A2C2
+	for <git@vger.kernel.org>; Mon,  5 May 2025 13:25:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746447419; cv=none; b=rVzGfD85YWPCE8ax/69S4fe6zdyfnTaKIBRgJNOvniaRKJad8rGfppQCSzhW3RB3qrBeai4ruwfYB2k0SLkWpefHEmV3YfC1b6CmMrCIB6cUo49wfsGOJv+uHdQpjiaNQUalabfOVksgvq81VwBm3hOGZXXUUbV4iP/uo6vGAi0=
+	t=1746451506; cv=none; b=Csg/LFILWccAYmTGB/DuIeBdexy0LE8n1Bu8lr/LkW7BqbJLRnPgz3MZgV2I0Nyig21oeGbiAz50j2T2vXFy8Ndyvyv56ZGaumNTe6cT35CAMmpV9ybgrSc/kihRK438uphUZYWfTCHoQNMCU6RYMGC3spmhbq6ythP7qFRsycY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746447419; c=relaxed/simple;
-	bh=i0CLOEnPEhqxFdXMMqsM6ZMRgaXbBjBarkQoMeO2ZWI=;
+	s=arc-20240116; t=1746451506; c=relaxed/simple;
+	bh=IqG2I3raV8Zvv4zj5HcMuXo5ddVu2O+29YGYAFHSmqM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eNfKNCPk5MxoPidFIGOnumAIbGD4TJsl+DFCwhFwWRnQNOOOT8zY7TL3UCxpKNYCTjPrlEmrqzZ3nb0Bk8AtLoFiIQZQNqWcYdejFA5bn02Ovfdyr+Pz2DxksUCf2bfj7i+mmJs5gnUfYJlT2Tf7k/4Sg+PiN/8gZGASq8JF1dE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GQxz/h1j; arc=none smtp.client-ip=209.85.215.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=LXyNn+IH0Eg3I3tMa0NGfqg3wVW2gjXJKFtsLTX4cp83BRXEX8CTeyiR+kLEAM46nR7UMcApD9GCTnJzDRl9d/Pku8rgWw0svkhubjCpcKTe+yeB4ehJoFvJf4UY7sou5ApJji4tsKpX6zKhVVxYrqYxdKnnqBxLBXpAavH4nGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OuB4PFEM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NzT4o3cP; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GQxz/h1j"
-Received: by mail-pg1-f179.google.com with SMTP id 41be03b00d2f7-af908bb32fdso3649602a12.1
-        for <git@vger.kernel.org>; Mon, 05 May 2025 05:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746447417; x=1747052217; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=8RR8ka4+vdZPdB4MAUEg7WCcyvwByptClWQkWUDlYak=;
-        b=GQxz/h1jx1yyNKv8agCtbeLSLLlkJG7/sOoBcrDux+nXyQU2hSSS1HIThlP2RyugRL
-         dFxUlvPexWyalNl43R9qr1d5FG0u+ONGSbz69kriQtajnsh6imVuPIu9ygVos96k4Geu
-         MtHwsbR7Y9a4heUfZmWN9ADcqHyaj/QgLvSGtc211oczh9saSCEB52NzNRPqfqO676qU
-         yB8wjz0IU0tok4Nqd4//Zy0VCTyK0uG3XNjXZno714DdRDf9K/qi3CzKWLPER+x93mXL
-         9jqMU5FaDmRbGjdjL3F62uL2DdyYVR6AQalbq3HCrHPXPFW60JVJwD4dTJIIuz1ScDIu
-         vDPQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746447417; x=1747052217;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8RR8ka4+vdZPdB4MAUEg7WCcyvwByptClWQkWUDlYak=;
-        b=txyXrFC1Z6U9Psmn/NsJ2Nyo+18hsmutN+KOlvbaQhNcuBlETlJ0OKc5rFsdgHX9Qu
-         un1G3pHeO9/QHyPIEOHg7Ag/aZrq3rH+OZx2lO023FXpmIR+v1f+aeTZUlkST6jnxRn6
-         gTx0aF5Gf5OeKmf8k0X6CITY+Aj3AflBNKQt7MwSFrgOJ2ENVrORymAr//LA6QLZrjJN
-         ydNIDGbSslRoLEdkd5sR1FsmiVbsUIj8LvXftAOPH7wj4DY2nYqMoBMcWXS+RSggkvzu
-         u+//CVYg5w7ttjmsjPt7dEM/nz3E8OsUrPhA/P6a+2C3aysy4ZIlKH/1vNvvYN7C+4J9
-         9/Nw==
-X-Forwarded-Encrypted: i=1; AJvYcCXIGYo9EkymdQnmuLhyBBrwe0ukvHAgYePwpnmuHI3RD0i0h+C06DgbR8wrhqhpnvn4krE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxkM9lrw1hrOfR77V7reL1mlSbS3qlDoCv8a7RdW9FdoypN82JH
-	Y4QZE2vNNBNjnXSMdwzORjwfLwpCPFK+sf1ZVubcK03+EomnbGHI
-X-Gm-Gg: ASbGnctbRvDayuD6RLiYaEPmvkb1LRc8RXl+PyMiwQ+Dqhz4III1mxbsSsBhxSk5zb2
-	b7LtXb3N245kJFWguenJMyKBpQu53SHC8Qdhe2Ft82OWeP9e0tMeOIwMcPY94cu0NAR1J9iPzBQ
-	i2IQUzckO4iSuwYPW6CJGVpIncsSWHjchs5fOIE2TG1BGGrPK4KVLhKH1t0dZUMlR5LqbvzZkir
-	eBB7/DINLRKMeI/SLEx+ryl7jVibZbY54R/r0827/LInBMOzKoHgCsxc4LgmQWr6EZENBGvJd2G
-	Wjbrql3M8nl5hSCQXtIzPZ8S+5hi87i0DOQ0
-X-Google-Smtp-Source: AGHT+IHd8HLIxLs4lFwkOCUa+oU+C0Ut7Pt+jtdV9QpMmR16TMLDkghlyUdRs49UmZHMw9hJw0F3Uw==
-X-Received: by 2002:a17:903:189:b0:21f:6ce8:29df with SMTP id d9443c01a7336-22e0832d854mr227604425ad.3.1746447417134;
-        Mon, 05 May 2025 05:16:57 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74059065555sm6571741b3a.155.2025.05.05.05.16.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 05:16:56 -0700 (PDT)
-Date: Mon, 5 May 2025 20:17:19 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,
-	"brian m. carlson" <sandals@crustytoothpaste.net>,
-	Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-Message-ID: <aBisTxORH95BgLIT@ArchLinux>
-References: <20250502233403.289761-1-collin.funk1@gmail.com>
- <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
- <20250503133158.GA4450@coredump.intra.peff.net>
- <aBYvMjtGjzEhKg4s@ArchLinux>
- <20250503154928.GA3412@coredump.intra.peff.net>
- <aBhdH9jWpnpbkPHn@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OuB4PFEM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NzT4o3cP"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A084E11401FE;
+	Mon,  5 May 2025 09:25:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 05 May 2025 09:25:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746451501; x=1746537901; bh=PSXYHP1J94
+	tgYtDz04igWZsP8t0zVK0W/dJagKnUIEQ=; b=OuB4PFEMpTHay0GsUY8Ndo1oYg
+	iui75tjf2r86jpWoA/u4rKRjLMFPl26qCOxsGFVL1FZdwC0sJtEXXxDMRl+8meVQ
+	n5wqXLihEbeT6FsTeDnZLo9xERtCbV9CtAMlzhmgjnDQ5m2JN1jZp0dXS0DuM+PZ
+	95IGTAJCa6IJ7mMh/qXmllQc4iv5f7+sYnDbQPMxjFKBwa1ffSlvtZD+NOK9uRw9
+	dZTyHRivHh6It9DtYGby6rgFzhzOmT4XmnFxTglZqEe+KF4PhQG+xPs297ZLdLZb
+	WrPEDw6AT5O11M9qVEBZKNbFLgKk7L1Ta6SaTAl4ejlIeMCEkDpHkQwqUlEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746451501; x=1746537901; bh=PSXYHP1J94tgYtDz04igWZsP8t0zVK0W/dJ
+	agKnUIEQ=; b=NzT4o3cP5+R0/yak/QbkJ6n3+L1nTx4PfJuZviBgRhA54EckPWu
+	IMCsT8/c+N9jFbXQEYakOZE+3oviSMfiluCyYJ3bqOUnoMUsPtz98cFaHvQ4zJb2
+	Ve5rfvSN9HmZcGYZe36QCZTg+MinuHn/D91MeC6xeE9E7a80Uz+e+EhkdPyr9iWe
+	T3cSEH05R7hOTiIqt6nqXujYOzFsHW0YQWRd22WZFcDjFXtRoIv8Pc3Z6MzlxNUb
+	p0N1ZN0+W5ZUuJvJlJr6QGpyWwEmUGCFF22iDilJ+Tbiv+hW+Ne1nCT6X6nG6Rj3
+	Hx3S4zbqj6CQYcRRA4FA1TkhcYwPWdMjOvA==
+X-ME-Sender: <xms:LbwYaMzHcwEeo04hHFm0LtxjGlPTmBwYhms-IthW5GXEnMydRT5C1w>
+    <xme:LbwYaAR20wP_qn_1FpcwXM71BN-G-Frqe_AZ0Qvc5CN_eI72zl0z0Qnk1vszMBKlp
+    LkHa0BNZB5HiaVPCA>
+X-ME-Received: <xmr:LbwYaOUvIdjwCmX83Y-kiW9vqhM6EYwsi-0EI88-CZ40hQ4e2Y89DKqqMQ8CoKyIAJtEqxl0rJvsyHEEcntYFjNpPhzaV1xu-ngPlNN2iELsug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeduvdduucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvg
+X-ME-Proxy: <xmx:LbwYaKiOKNnFj0sCtakd9sYUZJ46oS9c91wgQB3m1TfXb52vJRWA4w>
+    <xmx:LbwYaOBxk1X09s_O4WCz2rRXuBQmdP4K9HB6GdE7tucIIDtNQmG73w>
+    <xmx:LbwYaLJYfaMaBYqEUbKvIEXzGtNWIHmztt5tXY_3aGU0zikMUTJ8AQ>
+    <xmx:LbwYaFBBxMwj9inBjz5DcHaUpLe724GQ01-jJhEVwpmnGdpmGn55Rw>
+    <xmx:LbwYaGe-beAGlCDKrJYPAkUBCV5FhjA9y5tZiYOvqgFDxHk7Lv_6V3t1>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 May 2025 09:25:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e6cfcb93 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 5 May 2025 13:24:58 +0000 (UTC)
+Date: Mon, 5 May 2025 15:24:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 2/3] contrib/buildsystems: drop support for building
+ .vcproj/.vcxproj files
+Message-ID: <aBi8KQWP4YAi6Gph@pks.im>
+References: <pull.1916.git.1746430790.gitgitgadget@gmail.com>
+ <1ec2a4bb1d58ea8cfa6abb2a0e625ef3e0db2a1f.1746430790.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -79,70 +87,28 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aBhdH9jWpnpbkPHn@pks.im>
+In-Reply-To: <1ec2a4bb1d58ea8cfa6abb2a0e625ef3e0db2a1f.1746430790.git.gitgitgadget@gmail.com>
 
-On Mon, May 05, 2025 at 08:39:27AM +0200, Patrick Steinhardt wrote:
-> On Sat, May 03, 2025 at 11:49:28AM -0400, Jeff King wrote:
-> > On Sat, May 03, 2025 at 10:58:58PM +0800, shejialuo wrote:
-> > 
-> > > > PS I notice that this same function reads the whole packed-refs file
-> > > >    into a strbuf. That may be a problem, as they can grow pretty big in
-> > > >    extreme cases (e.g., GitHub's fork networks easily got into the
-> > > >    gigabytes, as it was every ref of every fork). We usually mmap it.
-> > > >    Not related to this discussion, but just something I noticed while
-> > > >    reading the function.
-> > > 
-> > > Peff, thanks for notifying me. I want to know more background.
-> > > Initially, the reason why I don't use `mmap` is that when checking the
-> > > ref consistency, we usually don't need to share the "packed-refs"
-> > > content for multiple processes via `mmap`.
-> > 
-> > You're not sharing with other processes running fsck, but you'd be
-> > sharing the memory with all of the other processes using that
-> > packed-refs file for normal lookups.
-> > 
-> > But even if it's shared with nobody, reading it all into memory is
-> > strictly worse than just mmap (since the data is getting copied into the
-> > new allocation).
-> > 
-> > > I don't know how Github executes "git fsck" for the forked repositories.
-> > > Is there any regular tasks for "git fsck"? And would "packed-refs" file
-> > > be shared for all these repositories?
-> > 
-> > I don't know offhand how often GitHub runs fsck in an automated way
-> > these days. Or even how big packed-refs files get, for that matter.
+On Mon, May 05, 2025 at 07:39:49AM +0000, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
 > 
-> They typically are at most a couple of megabytes, but there certainly
-> are outliers. For as at GitLab.com, the vast majority (>99%) of such
-> files is less than 50MB and typically even less than 5MB.
+> Before we had CMake support, the only way to build Git in Visual Studio
+> was via this hacky `generate` script.
 > 
-> > The specific case I'm thinking of for GitHub is that each fork network
-> > has a master "network.git" repo that stores the objects for all of the
-> > forks (which point to it via their objects/info/alternates files).  That
-> > network.git repo doesn't technically need to have all of the refs all
-> > the time, but in practice it wants to know about them for reachability
-> > during repacking, etc.
-> > 
-> > So it has something like "refs/remotes/<fork_id>/heads/master", and so
-> > on, copying the whole refs/* namespace of each fork. If you look at,
-> > say, torvalds/linux, the refs data for a single fork is probably ~30k or
-> > so (based on looking at what's in a clone). And there are ~55k forks. So
-> > that's around 1.5G. Not a deal-breaker to allocate (keeping in mind they
-> > have pretty beefy systems), but enough that mmap is probably better.
-> > 
-> > I'm also sure that's not the worst case. It has a lot of forks but the
-> > ref namespace is not that huge compared to some other projects (and it's
-> > the product of the two that is the problem).
+> For a while I tried to fix whenever things got broken, in particular to
+> allow building confidence in embargoed releases by running the CI builds
+> in Azure Pipelines in a private Azure DevOps project. I even carried the
+> patches in Git for Windows with the intention of upstreaming them,
+> eventually.
 > 
-> Yeah, the interesting case is always the outliers. One of the worst
-> offenders we have at GitLab.com is our own "gitlab-org/gitlab"
-> repository. This particular repository has a "packed-refs" file that is
-> around 2GB in size.
-> 
-> So I think refactoring this code to use `mmap()` would probably make
-> sense.
-> 
+> However, it is a lot of work with too little benefit. CMake is much
+> better supported by Visual Studio. So let's drop this hacky script (plus
+> support code).
 
-Thank Peff and Patrick for the information. I will send a patch later.
+Makes sense. This made me wonder whether we also want to get rid of
+"contrib/vscode", which is similar in spirit. Both Meson and CMake can
+be used natively with VSCode.
 
-> Patrick
+Thanks for working on these cleanups!
+
+Patrick
