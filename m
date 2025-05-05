@@ -1,86 +1,91 @@
 Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71B12EBE
-	for <git@vger.kernel.org>; Mon,  5 May 2025 06:24:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5D481A0711
+	for <git@vger.kernel.org>; Mon,  5 May 2025 06:39:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746426286; cv=none; b=jfAvmnBWgl+5pvTDfdIl1tlPcPaL7gYXzMI4XOQ+/BeKc8zbvFxsQOjpq2P92w8Ir1Hvy3kKIW6Ej21rCl3PdYzDFvKe/DF5QGaY+wXC1i2FnJosO3RQ+pB6OaESOGcjV7hUvbaK+NK41E9yI7bOcMAEgL1nIpdR6SOXLjs1CkM=
+	t=1746427178; cv=none; b=FGvTm8fud15Jg/aud6wfA8Sg0kX6k7YtHAecfkmjO1UQPlWo4RCYCsStnFrPb78y/Hz7tmK7WiOfSMmJHIQe1ZymDrBzewwOJzSf4Ddic2v4zr/RYW5h8wyZy5IgZ8rt90pba4VosBW1buan2xj0MuKwcmLCeqDWv1shPDleQdc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746426286; c=relaxed/simple;
-	bh=elO33Nrp6KMM5iEIvGWm/2Q05JnsCgm5JHd/yDZQSsA=;
+	s=arc-20240116; t=1746427178; c=relaxed/simple;
+	bh=heXZNgoxRfCaYHYqDCpLY5YVNN92nj5/wZcZJ9T/4Do=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bIVpb0JM09DB1qsfDL/h8tvl9DPMPHuqcPF/7pqmJcuOoEerOXBsEjwx8e/hr1tJaDTdVxG9eX/eoTl1oO5cQ/nPK40xyD1CM6t5+cC6BGnXe44SlbCA3UGLy+73/sKm3yJhuIzNXYLcWZgEj/fvexbA5U4e335ViZieCfGxwmo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=S/997Tln; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hk4rLXC7; arc=none smtp.client-ip=202.12.124.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=uY9Jz/p5pu6umrlWEik1g+xuwkAeo5CuErIoMsybmtImWceSf2wEnRHlSaqb7ElfdSwZobiEvFu+QCyeBIN/1Q69zcJqM+M6jRbC6TgGLovKnbfox8tzXfMtju8cwwl8ljaF6TYIJGVQsjCvGJR9TPvhyvBnySwFCuO7wHdI6iI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kKDyVl+O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MCkAPRcF; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="S/997Tln";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hk4rLXC7"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 60F2D25401BA;
-	Mon,  5 May 2025 02:24:43 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kKDyVl+O";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MCkAPRcF"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 6491C25401BA;
+	Mon,  5 May 2025 02:39:35 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 05 May 2025 02:24:43 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 05 May 2025 02:39:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746426283; x=1746512683; bh=qhpS/NgDSY
-	TcuxrYuOvCQ8aaLQCzOJ17yj2gySVialA=; b=S/997TlndQpIi5D2+20bpM8EZi
-	yVmEEuJRTu89RhfWkIb5cpNjhaohluV1vM/Ka2rfWS2zoKVEv+L34TTtFG0QpOOP
-	PjwoTK04CliebOoF2cwmvXdAS8DAFPhgVjECiUOcOiBgIVcBNnt7jJ7CkqSnwkCJ
-	F8OwbbCv01PGh/IlCjOA3SF4ev6pyi6e7pEro49VJvpO3iTRbUKmzyBFdm86SrBF
-	BWELdAq+8U5m9db9mBEiDeyyOsTsynbCOMaQ5bxxGUpg8bZ2xHcqhEux2N4WHs0h
-	pk0QYbyy5EkIsC7BcCCJC6gal7n9jB1ypqV88J8EBpoVf9lXGk+FUT2qSxLQ==
+	:subject:to:to; s=fm3; t=1746427175; x=1746513575; bh=T24FipdKe2
+	3yXObqkvb8TryyCiRwRaFb/4wpPNTc2ww=; b=kKDyVl+OeWe2xYLOV9/6RtGCna
+	iDpw35jVl/xo5zbI7m2fNMoQ1oXneQZBgPTdSnUobWHzdnTglxHwGGjxdL7uf2tY
+	7TxN6Y4UKNj8oWnx/DYEKBuFT9y53zP+1TG0OH8JZpSUQTrLC3cE5L46gqIMHZA8
+	7ZB019mwJpaNWWzfAa7P4fmylG5mcSYoYUWvhBNbGGmJRI8Jv4mM4iE94aA9jNYI
+	gjYy0jYUaRKiDB5WZNWA1/dmdfrIJc3iMi1Zwft1ytcjc717JBx/QG4ahjCyOXEm
+	DnWq0LLzZ7y+T3PbX7h3K/3fLt6tBtSkzei27UJNuU11RmqOfnbicimVTzzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746426283; x=1746512683; bh=qhpS/NgDSYTcuxrYuOvCQ8aaLQCzOJ17yj2
-	gySVialA=; b=hk4rLXC7DpZ6sE1PASeeXX3pkQV5IZ+j2MY+YqV1kmy03XpZbXJ
-	FLFhZm8aziy/zDKLjxwBrfeapw/9bffDtGEJC5DWOztyEeiTk6qaESlBpwQsxeC3
-	0e50o4vpekPRMibjBUESxdmxXjBgJDYqh+TJif+rqlk4GndhlFHuWlMgsfiY4Zjt
-	4iJKfKUrjcIh+ngJD5DFTcqtNElSt6YhVTrcP9XIT78FLB51kr7PPllkVKEFyUkf
-	a7cTCad8ko1Osf9FevQaPnmwA9hW4QQZfUry3CvhVRJPwf+K6re9um/csLmzqEC9
-	A3SOPvHEJdDA9xtN+g8Ct4Z9AKch5Bcw0Qw==
-X-ME-Sender: <xms:q1kYaIQ_-P_O9zdcQE5Dj7DDwLj0DXZF07WVUCgu9IvvIr96nxZJWw>
-    <xme:q1kYaFy_aVOieUpjrwI6JQLwddLTeg1IbDh6UU_1nTKxA3LKELtt0cu3FilKrYIeA
-    LY_BwE9yOOnrCfWYA>
-X-ME-Received: <xmr:q1kYaF16I653IR-MO2xUHSOCpsE8BTKRs6eWoKVLUNxRl46A7ywjClCi0tljN5W6IjS50HHB4qbA8Ts8KgYW3Ao_1pkHgTPLvJPHTCmNXqQNtg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedtfeeiucetufdoteggodetrf
+	1746427175; x=1746513575; bh=T24FipdKe23yXObqkvb8TryyCiRwRaFb/4w
+	pPNTc2ww=; b=MCkAPRcFOiH7aJpzAWLcY/xiWEBWvS41Ja9YxSdfEQ1SiyudK5e
+	ooPIo7IV1oxMfR9rL1/uU4sla0u9o5f/avPdgs5IHFrr/MmUAR8l8N9f9XuNs3ld
+	GjEvZdhokF1uhP0Ov7qxpyIPm5SAe9Rqriazv7oL57jFGKxGGl5FDFkphtaKlkOZ
+	tczfQgZWjGWnVcFRJQUr3iuPplfWypVyXWjEimj3HVTxomZwORyhiRNtJFogrZvP
+	MeD3QOMEtZg95qlOuUGrmfItMPkyMtMxV+KK81ExXDKN7WUue/P7ulduzxYjjb6h
+	90mN3G60XIxXnYfML5x06GLM/TyxS3IDaew==
+X-ME-Sender: <xms:Jl0YaDrZWxXI7bv9oMl0yh42ssfMRhkRnVli8oDlBSskm1ULyt3Q_A>
+    <xme:Jl0YaNq1s3JTmvKelGOUCruuYpAkdxIIXiDYDhoN5m_Tdcallj1wOFUH3OgmW1-Q8
+    hOn7mpcpVprON8fiw>
+X-ME-Received: <xmr:Jl0YaAOiPvQAyXTo0iW5MSkWK5c2R4Ixav8fhe3iwZjrGo5rxE2hq3TwaEU8b1UKZ48YdI7UIKWMGEzglzknUcdvR1Ko5RgZmSwCLoSsVZih_Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedtgedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepleekgfeuledvkefhhfeugeehvdffjeekjeetkedu
-    teeuffehkefghedtueevtedunecuffhomhgrihhnpehgihhthhhusgdrtghomhdpmhhitg
-    hrohhsohhfthdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
-    ihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehg
-    mhigrdguvgdprhgtphhtthhopegrrhhnohhuugdrsggvrhgvnhgushgvnhesshhophhrrg
-    hsthgvrhhirgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhg
-X-ME-Proxy: <xmx:q1kYaMATqr2ePl6DRZFUDoFWPMJBikO_SQs1sh57RM-5bWTYv4FFJA>
-    <xmx:q1kYaBitbIBrJDvLPTrY_xV6BF4YQWJXKRJyT7iLZ1p_tL2vDQbixA>
-    <xmx:q1kYaIrfzzTqmI3Qp4YQh6NKNPeyo1Kb1cvMdlHoqBOgo-Hu-2cilQ>
-    <xmx:q1kYaEi7LXFodPbNjms5MsbyB003bKaAs1UU2BEyBnwfELj28YoEsA>
-    <xmx:q1kYaKVVJt7sWJEq5zt1pta_gd8dg5IsSDWDhALJqIvsIR4eZw5mT4TY>
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    phgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthi
+    htohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhmpdhrtghpthhtoheptgholhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:J10YaG4Z4X3xFh_C8aZ3LlmK8L9eMcsm7jYNmiOG3KReZOyGUHRX1A>
+    <xmx:J10YaC5sXOduOPmcN0kFgGXvGrmP4TLigcLyMZWqnNeh6cZEDocZxg>
+    <xmx:J10YaOj_2aru-OdsJgS4-NwAqmgCYe7HWF8oS3pA-009O58NKoGeOw>
+    <xmx:J10YaE73OSeqMIrVTpysOGf5VB4PAvYqJbg-UgbAoVZrSt2tPxw0sg>
+    <xmx:J10YaKkLZkVayvLWfWgPv4kPG5jioyivyEZ3aOw8uYzTHLAUPfbSIexV>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 May 2025 02:24:42 -0400 (EDT)
+ 5 May 2025 02:39:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3f7f8561 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 5 May 2025 06:24:40 +0000 (UTC)
-Date: Mon, 5 May 2025 08:24:34 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 673f624b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 5 May 2025 06:39:32 +0000 (UTC)
+Date: Mon, 5 May 2025 08:39:27 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Cc: BERENDSEN Arnoud <arnoud.berendsen@soprasteria.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Cleaning up "contrib/" (was: git svn clone failed)
-Message-ID: <aBhZHA7av8bWH9Ac@pks.im>
-References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com>
- <3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
+To: Jeff King <peff@peff.net>
+Cc: shejialuo <shejialuo@gmail.com>,
+	"brian m. carlson" <sandals@crustytoothpaste.net>,
+	Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+Message-ID: <aBhdH9jWpnpbkPHn@pks.im>
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
+ <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
+ <20250503133158.GA4450@coredump.intra.peff.net>
+ <aBYvMjtGjzEhKg4s@ArchLinux>
+ <20250503154928.GA3412@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,67 +94,66 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
+In-Reply-To: <20250503154928.GA3412@coredump.intra.peff.net>
 
-On Sun, May 04, 2025 at 10:19:06AM +0200, Johannes Schindelin wrote:
-> Hi Arnoud,
+On Sat, May 03, 2025 at 11:49:28AM -0400, Jeff King wrote:
+> On Sat, May 03, 2025 at 10:58:58PM +0800, shejialuo wrote:
 > 
-> On Fri, 2 May 2025, BERENDSEN Arnoud wrote:
+> > > PS I notice that this same function reads the whole packed-refs file
+> > >    into a strbuf. That may be a problem, as they can grow pretty big in
+> > >    extreme cases (e.g., GitHub's fork networks easily got into the
+> > >    gigabytes, as it was every ref of every fork). We usually mmap it.
+> > >    Not related to this discussion, but just something I noticed while
+> > >    reading the function.
+> > 
+> > Peff, thanks for notifying me. I want to know more background.
+> > Initially, the reason why I don't use `mmap` is that when checking the
+> > ref consistency, we usually don't need to share the "packed-refs"
+> > content for multiple processes via `mmap`.
 > 
-> > What did you do before the bug happened? (Steps to reproduce your issue)
-> > 
-> > - I was migrating an SVN repository to Git using:
-> > git svn clone <my-svn-repo> --stdlayout --authors-file=C:\path\to\my-authors-file.txt  --preserve-empty-dirs .
-> > 
-> > 
-> > What did you expect to happen? (Expected behavior)
-> > 
-> > - I expect the entire process to succeed without errors.
-> > When unavoidable errors do happen, I expect the error message to be helpful, give a clear description of what the underlying problem is, and how to solve it.
-> > 
-> > 
-> > What happened instead? (Actual behavior)
-> > 
-> > - The migration failed with the folowwing error:
-> > 
-> > r2814 = 1ecf20e2d14b45ee517b56f5f51b406801e9869b (refs/remotes/origin/trunk)
-> > Found possible branch point: https://<my-svn-repo> => https://<my-svn-repo>/branches/<my-branch-name>, 2814
-> > W: Refspec glob conflict (ref: refs/remotes/origin/trunk):
-> > expected path: branches/trunk
-> >     real path: trunk
-> > Continuing ahead with trunk
-> > W: Refspec glob conflict (ref: refs/remotes/origin/trunk):
-> > expected path: branches/trunk
-> >     real path: trunk
-> > Continuing ahead with trunk
-> > Initializing parent: refs/remotes/origin/<my-branch-name>@2814
-> > Use of uninitialized value $args[2] in join or string at C:/Program Files/Git/mingw64/share/perl5/Git.pm line 1655.
-> > Use of uninitialized value $_[3] in exec at C:/Program Files/Git/mingw64/share/perl5/Git.pm line 1681.
-> > fatal: Not a valid object name
-> > ls-tree -z --name-only  data/OVK/: command returned error: 128
+> You're not sharing with other processes running fsck, but you'd be
+> sharing the memory with all of the other processes using that
+> packed-refs file for normal lookups.
 > 
-> In Git for Windows, `git svn` is quite a maintenance burden (with a few
-> known issues) and my current thinking is to drop it from Git for Windows
-> instead of leaving it in the current shape (I, for one, cannot justify
-> working on it myself, and the same seems to hold for everybody else, too).
-> See also https://github.com/git-for-windows/git/issues/5405.
+> But even if it's shared with nobody, reading it all into memory is
+> strictly worse than just mmap (since the data is getting copied into the
+> new allocation).
 > 
-> Is there a chance that you could use the [Windows Subsystem for Linux
-> (WSL)](https://learn.microsoft.com/en-us/windows/wsl/) (i.e. the Linux
-> version of Git) for this migration, especially given that the
-> characterization as "migration" suggests that this is a one-off task?
+> > I don't know how Github executes "git fsck" for the forked repositories.
+> > Is there any regular tasks for "git fsck"? And would "packed-refs" file
+> > be shared for all these repositories?
+> 
+> I don't know offhand how often GitHub runs fsck in an automated way
+> these days. Or even how big packed-refs files get, for that matter.
 
-I sometimes wonder whether we should move such basically-unmaintained
-scripts out of the Git repository. They do a disservice to both us and
-to our users as they create the wrong impression of being the sanctioned
-way of doing a particular task even though they have only been gathering
-dust for ages.
+They typically are at most a couple of megabytes, but there certainly
+are outliers. For as at GitLab.com, the vast majority (>99%) of such
+files is less than 50MB and typically even less than 5MB.
 
-Many of the tools in "contrib/" fall into this category, and to the best
-of my knowledge there isn't really a clear strategy for that directory.
-So from my perspective, we should either rethink whether it is worth it
-to have "contrib/" as part of Git, or we should at least do a spring
-cleanup and drop bits that haven't seen any love in the last couple of
-years.
+> The specific case I'm thinking of for GitHub is that each fork network
+> has a master "network.git" repo that stores the objects for all of the
+> forks (which point to it via their objects/info/alternates files).  That
+> network.git repo doesn't technically need to have all of the refs all
+> the time, but in practice it wants to know about them for reachability
+> during repacking, etc.
+> 
+> So it has something like "refs/remotes/<fork_id>/heads/master", and so
+> on, copying the whole refs/* namespace of each fork. If you look at,
+> say, torvalds/linux, the refs data for a single fork is probably ~30k or
+> so (based on looking at what's in a clone). And there are ~55k forks. So
+> that's around 1.5G. Not a deal-breaker to allocate (keeping in mind they
+> have pretty beefy systems), but enough that mmap is probably better.
+> 
+> I'm also sure that's not the worst case. It has a lot of forks but the
+> ref namespace is not that huge compared to some other projects (and it's
+> the product of the two that is the problem).
+
+Yeah, the interesting case is always the outliers. One of the worst
+offenders we have at GitLab.com is our own "gitlab-org/gitlab"
+repository. This particular repository has a "packed-refs" file that is
+around 2GB in size.
+
+So I think refactoring this code to use `mmap()` would probably make
+sense.
 
 Patrick
