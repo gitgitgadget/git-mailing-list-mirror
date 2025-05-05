@@ -1,143 +1,146 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94F9C171A1
-	for <git@vger.kernel.org>; Mon,  5 May 2025 07:32:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6501B5BAF0
+	for <git@vger.kernel.org>; Mon,  5 May 2025 07:36:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746430377; cv=none; b=JBLJxiZByQV4SAAZEYAKau9ApfNGle/GVZ3sEfjZAPhq62LGgsiWgqscuh3tKXBKmdgcEMp3SkB+q6EjAY3x5G1fh5dz1YZXG1RRRuR4rCc96wlgxe3gk4RVWVmovozqxC23TTqbdbeN0J6dMgjvHJJ1MlhjJOyerpteLNkKaCE=
+	t=1746430577; cv=none; b=j5fjrADZyeIJiWgIX9Y/zWXuNhysDw/jkM7hVdPR6FQAjKWNl59fVXRybwRqJ6pgooZQh4jTU58Dy3CbAxx8p76XCMXpe1z8c4lUQFl4SKuuBGFqSiriT99QEa5F9hl/iTQn5ESy+NGSvS4GUhNeukMXRWuxv/i/IkJYeLu+rxw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746430377; c=relaxed/simple;
-	bh=J5nVqhgNdJfm9HKDz6KxaaFKEQRd4sqAtvtmKfdcojM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BIgUID9Bz9g3eC0PEoJ1eQexwZZnJbCC/nCMQs2CoMlAdGoq9HT4Je35no5ntydE9dvVK89s+Idlq/sCWm7q4xM8gF99m7S2hCH4KA8w1BtvvCmeWtzmYBLtm8o8yRFlF76GQOpyN4NpXlulNV+wurAI2h5G5xBK/IhKywMamqg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hdG4cFs3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lXbfxcyQ; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746430577; c=relaxed/simple;
+	bh=i1wC4Q74DJZVhuQhJWu7imtvF7VWHlibEE0QlRIr0As=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=TvFY4ovUc1JtSST3jwuhla95fTW4q5QMpJT1ykaFHCqB73v4MRjJ4xUhkdWyJPDAwpQQk+vl9ihg9vlZNst7QCAsVYLDM3soBQuvfcd5eycVck9YkE2+RGYyluoYVRHw9tlFb5A8yuvkbYtLqW8f8M2rU20u6VQajbHXHL/Aj/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=Lz1qLFaC; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hdG4cFs3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lXbfxcyQ"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 62ACA254020E;
-	Mon,  5 May 2025 03:32:54 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Mon, 05 May 2025 03:32:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746430374; x=1746516774; bh=ab0L8+jfDZ
-	IczClS2sObiUVRh5Lo6N1ZVgonOLkQslo=; b=hdG4cFs37+m2mTc3WXZ4JdE8G9
-	9SublTATjTc8de5deAbIiksFDzbb1G+dxiEjmFbT09YIAJq3H+JbGcjbKdoqvtHU
-	YjihcE+Q2nfuaYp40lFQz94wRbJzP6g+XGQxxBXj8fMuJtaJhIW6ZxJl3sOZzrOF
-	nnRWHoYvEVufTS8ptQuZaOwyHOUS9lOsgwU/HEbM+TWIrN1O2UDDSYHKfzZxEj6E
-	9w6qK4xQ/Kk0QZEAZIxcu9GrPzcS9V5iLfHANuKLcb0NwnlrFF1p4emM7oBIZYfq
-	cMQB5uINf94pbGaBJXPyokvfMOjpXQ+AAEZuAPACko1NtogaHNxm193Yp0sQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746430374; x=1746516774; bh=ab0L8+jfDZIczClS2sObiUVRh5Lo6N1ZVgo
-	nOLkQslo=; b=lXbfxcyQTL8JEFcb8tFZMGUERWU9xducS48iPbLoav4idd7+CuH
-	9FQlrZcHR3bppdrg6hThJfG9qXKJQp2g0nzs9Wt/s/4NGnPORuyXfQnS/XZCe2iM
-	e5N0k36rQPD+irhOrNIH9Sgil1X+RhtfiCfkGatItegv1bG/OGgv+vR/ZvScHBRj
-	pMwv1BMpVcW1+uM9bmqTFGiGN6jDSJuboavUPuzble7UXbX3ezF9iJ75sJgeD9gV
-	VlgKbwCJe1AR6pY/Og2mHKQ7xKPHwlrD1mANvphfEu4ytXm5lptTzlWrHpGFT/sG
-	AKSNsR4l7XDw+VmuzXAfeD3Umfb8ogJ1p1A==
-X-ME-Sender: <xms:pmkYaIZo3OegCsND3HwhR-O_rPpMErwDonhb1Lz70ChT9g_SfZcKXw>
-    <xme:pmkYaDYBP5apPsNqkADYrhlUmHp8LQpB6sIu4_abVER5eBNje_jLsWjmiceCs1xXx
-    5DO1DtINM2mH5lhMw>
-X-ME-Received: <xmr:pmkYaC9gEn1jyYWQKcMYU5bLjZTqwiEIKq8EyjwX5nc61gA1q8rE1-ur6eGsNbvlRB-ymmwPAtCpWdM4c2QPXYhFtEJLn79VhID7v75audG6oA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedthedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepkeeftdffvdeuffeigfehgeduveekgfeiheeutdef
-    ffehveefleefffetieetfefgnecuffhomhgrihhnpehrvghrvghrvgdqghgtrdgruhhtoh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshes
-    phhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrgh
-X-ME-Proxy: <xmx:pmkYaCqadHXboNaZJgIEyqc8tMAEJbTGtT3cc1bsbS1-q6jHWl0RaA>
-    <xmx:pmkYaDokI4y6MCAXNn4nV4qpD74TqxJ4K1fVpE1H1BD8AszE3ReRfg>
-    <xmx:pmkYaAQl4W8gMXDVnQHWA4cbBQqc3iiWX8oROUn9VrFyFrgV1ah5zw>
-    <xmx:pmkYaDrsa_QW5MDPZ_BB6Gh9uBfnuWBZmEyPRDyXygjAx197ZBf8rQ>
-    <xmx:pmkYaHHMbUnaKzgc3LG4i1rI3zaT9bvqtZCvUGfhOKjN0x9yoZUjC1eL>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 May 2025 03:32:53 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8e5ec437 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 5 May 2025 07:32:51 +0000 (UTC)
-Date: Mon, 5 May 2025 09:32:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH v3 0/7] builtin/maintenance: implement missing tasks
- compared to git-gc(1)
-Message-ID: <aBhpn3q-sgm3WjR6@pks.im>
-References: <20250425-pks-maintenance-missing-tasks-v1-0-972ed6ab2c0d@pks.im>
- <20250502-pks-maintenance-missing-tasks-v3-0-13e130d36640@pks.im>
- <d5307e82-8e45-4a2a-a8cc-03f84c2d5670@gmail.com>
- <xmqqo6wau3fz.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="Lz1qLFaC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1746430567; x=1747035367;
+	i=johannes.schindelin@gmx.de;
+	bh=i1wC4Q74DJZVhuQhJWu7imtvF7VWHlibEE0QlRIr0As=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=Lz1qLFaC3dF22wGyRTxExcnGfx6LT3T3865x3NEE0oURJRVLiDXrv7/qj13qwFxA
+	 UvKT0lbN/9CtEkaJXJNOw1paI33ew0Mi8UD1fHn4m0Ke6208Cie3HE0rLNWyWvVVp
+	 uvU/uSWCNKWkv2HdjOsj05BIOsf/mMLhIjLB6i457NXrwrIILjsQMwv5TqHIDmC6C
+	 UztaQs6SIHDGrAgV+SBExq4St2b/1jrgIzNib/9CAGvnF+vasUeT40gFnTBEeYMsK
+	 s0JGQIiujZ5lOzPCTCy2sgMYKeQT+rskSfwNMXPmx5Wil6bwO4nPoKv1c8FHvRFGM
+	 niTgpUxXx1Uyjyk70Q==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.189]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MYvcA-1uXkvv1A1I-00Xq2I; Mon, 05
+ May 2025 09:36:07 +0200
+Date: Mon, 5 May 2025 09:36:06 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: BERENDSEN Arnoud <arnoud.berendsen@soprasteria.com>, 
+    "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Cleaning up "contrib/" (was: git svn clone failed)
+In-Reply-To: <aBhZHA7av8bWH9Ac@pks.im>
+Message-ID: <5ffefc29-75ee-e278-448c-9124740d02fb@gmx.de>
+References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com> <3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de> <aBhZHA7av8bWH9Ac@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqo6wau3fz.fsf@gitster.g>
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:4X30x4c4h/KbaOJZ1QK6SyJzNWK51oo2QgOYBxo6kFK8W4k7jTe
+ Q8wRCquHJ88HZUAOChkzpOJxdrS15LzyGZXY8OgxXov14oTRJvfuDYQZ977tMDW49kL/vPF
+ 0m5TEX51G64ibBG4F7XryBxyLW5Y+/L8XrjvkwNo+OR1uEAzQ/ivosWHOLPiyTFr8mu4LJY
+ FUGL0hmsffJ0mXrxBt2Nw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:+VGaXQ+ozJQ=;EYnXEc2sIT2tYzb8NYCasOHgeIB
+ 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
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 02, 2025 at 02:07:28PM -0700, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
-> > On 5/2/2025 4:43 AM, Patrick Steinhardt wrote:
-> >
-> >> Changes in v3:
-> >>   - Simplify the heuristic for "rerere-gc" so that we only count the
-> >>     number of directory entries in ".git/rr-cache", without considering
-> >>     staleness.
-> >
-> > The range-diff was harder to read than just re-reviewing patch 7, but I
-> > think this v3 is ready to go.
-> 
-> I still do not think "configurable 'rerere gc' basing the decision
-> on the number of existing rerere entries" adds negative value to the
-> system.  If there is truly more than N active rerere entries
-> currently in your repository with your workflow, such a
-> configuration essentially decides to run 'rerere gc' every time (and
-> without pruning enough entries to make the next 'rerere gc'
-> unnecessary), and never otherwise.  It is not like pruning unneeded
-> loose object files and packing the rest into a packfile, where
-> running it once (even if it resulted in miniscule packfile due to
-> misidentification) would remove all the loose object files, which
-> makes 'repack' unneeded for some time until we accumulate more of
-> them.  After 'rerere gc', you still will have rerere entries kept.
-> 
-> Until we can implement a meaningful automation (which may require
-> changing the way rerere entries are stored on disk to help us
-> cheaply tell if there truly are excessive number of no longer
-> relevant rerere entries; code that we can readily borrow from
-> "rerere gc" is enough, as I said), I do not think we should add
-> extra code to make such a useless decision.  Instead, I would prefer
-> to see a single "do we or do we not run `rerere gc`?" Boolean, until
-> that happens.
-> 
-> Other than that, I think the series is a good addition to the
-> system.  Giving finer grained control is great, and 'git maintenance'
-> is a much better framework than 'git gc' to do so.
+Hi Patrick,
 
-Ok, fair enough. I'll stick with the "maintenance.rerere-gc.auto"
-config as integer, but will adapt it so that any positive value will
-cause us to invoke `git rerere gc` when the "rr-cache" directory exists
-and has at least one entry.
+On Mon, 5 May 2025, Patrick Steinhardt wrote:
 
-The reason I want to keep it as an integer is mostly to stay consistent
-with all the other "maintenance.*.auto" settings, even though it does
-not add a lot of value right now.
+> On Sun, May 04, 2025 at 10:19:06AM +0200, Johannes Schindelin wrote:
+> >=20
+> > On Fri, 2 May 2025, BERENDSEN Arnoud wrote:
+> >=20
+> > > [... talks about `git svn` not working in Git for Windows ...]
+> >=20
+> > In Git for Windows, `git svn` is quite a maintenance burden [... then
+> > suggests to use Windows System for Linux (WSL) as a workaround ...].
+>=20
+> I sometimes wonder whether we should move such basically-unmaintained
+> scripts out of the Git repository. They do a disservice to both us and
+> to our users as they create the wrong impression of being the sanctioned
+> way of doing a particular task even though they have only been gathering
+> dust for ages.
+>=20
+> Many of the tools in "contrib/" fall into this category, and to the best
+> of my knowledge there isn't really a clear strategy for that directory.
+> So from my perspective, we should either rethink whether it is worth it
+> to have "contrib/" as part of Git, or we should at least do a spring
+> cleanup and drop bits that haven't seen any love in the last couple of
+> years.
 
-Patrick
+While I am thoroughly sympathetic to the idea of cleaning up `contrib/`
+(which is a mixture of things that are quite well supported, such as the
+Bash tab completion script, and of things that are the opposite of
+maintained, such as `contrib/workdir/` that should have been dropped a
+long time ago since it encourages relying on Git's internals and has been
+superseded by `git worktree`), I cannot fail to notice that `git-svn`
+isn't even in `contrib/`.
+
+Instead, `git-svn` is in the same category as `git-archimport`,
+`git-cvsserver`, `git-cvsexportcommit` and `git-cvsimport`, i.e. Git
+commands that tried to facilitate transitioning from specific version
+control systems that had been a lot more common than Git at the time, but
+no longer are. Maybe `git-svn` is not quite as obsolete as the other
+commands in that category, but they are all merely dust collectors in
+Git's codebase.
+
+Ciao,
+Johannes
