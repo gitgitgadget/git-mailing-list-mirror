@@ -1,165 +1,124 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAD0113AA53
-	for <git@vger.kernel.org>; Mon,  5 May 2025 13:41:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E80D18DF80
+	for <git@vger.kernel.org>; Mon,  5 May 2025 13:46:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746452471; cv=none; b=sTxe26Dt/wdRoRaV++03MQWHtJZNMlhY0S6oPct6yXXUW8jJz/nKgL/d24l32UG7wHVUfb9jjuDygf8Dv94xFMi9T6RMeANrCWnOSEJR9tvgAgMTKlWmMRYxE29sVudLKKnH7fZUf+wGFxZ2CcH7+RkWBheJphI+aBFlBeXQvP4=
+	t=1746452784; cv=none; b=PinesOLEz5nFeLSpMbKeg7y1LPXbZlj4de9B7Y1ejjlRLI5WBdpQ3Q+etc6fUJUhiCJoF64P1wBco1oEU7hpLis1fYwYBbtykrvKabf5m3vKEL1mvhIPac+cI7IQSPdfogyp6Gz0dOf1bwINJSZXElJ+ZLwrR/+foKtC8HtD39c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746452471; c=relaxed/simple;
-	bh=RXbraGh4xuCqtwsNWRrd/uwuIPhPEP4GM7kOj9VNIRw=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=CeDIlWOiCnItgXScU54ihQU6x3tcAmRWgnBQuJJ0w9ZF0VcykcQELeCYYUkBxyux8Zg1+BBe0VzS/cneiPtqp2Pccn8lz4W1S8t21z2HuXRVX4FUj2akvvA8mw90dX1iWaJX30sqPgtmJ/SxvJFFVZ9nLk82Meggk5laRGXDikw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=coRJckEl; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746452784; c=relaxed/simple;
+	bh=B8F84qnGp0kWbO6Drexh8dRe47ieL+zyLK/Toc/QgRg=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=tczuQHtvYasADg1OU/f0sY9QMmhatt+I7xe5gntfhQ9tKI5jLrW+0TDrjKHjNHHThK5tPD4BG72W0dI4iQXF3i1rexL/dkyyibLiLTPCrJXruK393//IGqtTvfFdw/kvoNlwyZB/puzU50QcMIS7o9gLcPyjCGWUm2yz44UDK9A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=FxVXN9v9; arc=none smtp.client-ip=212.227.15.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="coRJckEl"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-acb2faa9f55so587245766b.3
-        for <git@vger.kernel.org>; Mon, 05 May 2025 06:41:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746452468; x=1747057268; darn=vger.kernel.org;
-        h=content-transfer-encoding:subject:to:content-language:from
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=iApBQQ1ibKjxhRGDxGECFy/aU2GFayvwJYG6OE8liMo=;
-        b=coRJckElKcU9shHjtaZczAsN/8AOwPp+sWZW6GIYXr3oFvwg8lBbiAXPErXh+XRwsB
-         n75y9kV22IJmR5tFnTM7ZnaA4XLp5ajkb+5VS3qVz4zTYBKHnXIm+yTKndUVx2FIHLTH
-         Eviv9szhDUlAI4lZGZmnAp/leVsuBC0GoY69nmup9rV4Z8SjjwXlhnqw4+M9UlUMxosO
-         EHKwSNjIRz/OdwihVKfpk1XOBGly1XJa+KKG/wZ84ZypxBU6vhKs4RjFoaS6phvwYLw1
-         kBGB0Mmn9rDjEEIEc2lmNgZPSVM2gXjY1ItmJ+DKc0icLmfK6Zr3gt/0Q05vMdu2iR8z
-         eICw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746452468; x=1747057268;
-        h=content-transfer-encoding:subject:to:content-language:from
-         :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=iApBQQ1ibKjxhRGDxGECFy/aU2GFayvwJYG6OE8liMo=;
-        b=Mkd5cR9zkFVgkB5KKUdDDN8PNLHNVhJ5BA1+Si8dSjEhEvA7igLx7zjKxo6NBvTn5z
-         CaeszqeYAdiP1oRCs3r56ckPWOvJwK7fWIyKD8V7Uq5vZLSfnWCDgjiVaoKKHY+5aPK5
-         Qdl26q/YVXLwmvaUJGx7EnKT0DR37FfBiRL708QSQROgM9M72yCq65TCrHQ71mV/18V7
-         OhseA8AXMoGze3xUtd2XAOkOCJffBPZBFzAunHvZVs3Y4foigE3gbA0BtmtU6x9IjmDV
-         nY/J0+tey1LH+yDomTbbnZacTwRroHyUW1u6dmRhigxj9iixhZ525uqNFENTaz1bG0HR
-         i+xg==
-X-Gm-Message-State: AOJu0YzLN8pj6i46RYrcO/80Fhvbboc3F+1yZUxJ1ULmcBnLxbvjHFL0
-	gIn5GgosjMu1XR2HXjaN0AU5K2BN4egUrSHNYVvBK7lu6poHISscuZOZnQ==
-X-Gm-Gg: ASbGnct6o5vLMsaP/JJGCpcJbpd/xjAsacbclxWLuHcUsSDrHkWCUNUF389q2wjwok9
-	h51bwA6RRnA0uWvKk+lSoqRPLQiCIgnIgKkWfd2onfDOjoJmUvWVjW5vdTFBwGdzTcziLXvFdIY
-	Di1Nx9KEp+dLnrC6Hk9LtSBbE0b7iwCoBEoDgluRXr/VnBg7LPS8wLB2G8NViE3fZhtYzdkfXrw
-	FSd4FzpFlgdaoqV+IJJWQGhbd5Q/Y/C4hDxOTqElnc8eymT8muzaM2QbytSTRFDkaCJ93/osJcy
-	r2dqIsYCHpaNtdwonAYRkHpDZfQMCBiVGA/QZJog4KJ3AUBcrvWgm5n/wfLQH77h1e7VPoxr0ka
-	MY29xzicEbkzsbx1Dzfar4FN/FgnC7I4=
-X-Google-Smtp-Source: AGHT+IHVCqmkMgwR9eMu0xdwGTHrHG0el73PZssQRUk0+EvsZ2CAgCVFRAaYVKq3Tu2HioxBqhHeag==
-X-Received: by 2002:a17:907:86a2:b0:abf:4da0:28e3 with SMTP id a640c23a62f3a-ad1a490f050mr767503866b.18.1746452467824;
-        Mon, 05 May 2025 06:41:07 -0700 (PDT)
-Received: from [192.168.2.101] (dslb-084-056-099-033.084.056.pools.vodafone-ip.de. [84.56.99.33])
-        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad1891a2bd8sm500666266b.57.2025.05.05.06.41.07
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 05 May 2025 06:41:07 -0700 (PDT)
-Message-ID: <5b8e60ba-b05b-4389-8c06-88c143ceee10@gmail.com>
-Date: Mon, 5 May 2025 15:41:06 +0200
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="FxVXN9v9"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1746452774; x=1747057574;
+	i=johannes.schindelin@gmx.de;
+	bh=B8F84qnGp0kWbO6Drexh8dRe47ieL+zyLK/Toc/QgRg=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=FxVXN9v9WJdoW4kqlFKh48owLwgWadQHpACsPhN3W9PyZNF+xvq9Y3/inBwFWf2Q
+	 jCG0qJB7h4kk60IU2uFkh/8DI6+vIZIyFkxyh4IoxCz3HvrbdlOwKHNZVcSzSSZid
+	 blozGzQnOaLRaAhcRMwii245nNGztRx5gSDN+XvzDeKjAExAXnB+P3rBxkMTNCZMF
+	 1tA0aEWXVFkh/VlXCe+n1TD3LjkpPwpYDcNfnckDtlMtK6ZAPB1iMY+0snpyE7ZfD
+	 yBKTjYAUhWGs8gMV1nDKPriaO+llpbyZQ/DVTKhY+zCwXkiGe3p7108zvkUQMs6TN
+	 jeC3FtuSGtriDr0yYQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.189]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1MplXz-1uodTf2LhF-00o707; Mon, 05
+ May 2025 15:46:14 +0200
+Date: Mon, 5 May 2025 15:46:14 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>, 
+    git@vger.kernel.org
+Subject: Re: [PATCH 2/3] contrib/buildsystems: drop support for building
+ .vcproj/.vcxproj files
+In-Reply-To: <aBi8KQWP4YAi6Gph@pks.im>
+Message-ID: <ddcbbd1a-dd36-a115-aa77-d5bd3c210cd7@gmx.de>
+References: <pull.1916.git.1746430790.gitgitgadget@gmail.com> <1ec2a4bb1d58ea8cfa6abb2a0e625ef3e0db2a1f.1746430790.git.gitgitgadget@gmail.com> <aBi8KQWP4YAi6Gph@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: mlell08@gmail.com
-Content-Language: en-US
-To: git@vger.kernel.org
-Subject: Bug Report: git submodule overwrites submodules of same name but
- different path
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:UTjqklH+4VLCAfeISzVzbTRaUn8tNzM5X/xJv8D8zZxJjCtVdJX
+ fQ2yYWSA0CKTcufYqIiReSAu8IP8+3+Uvikpmdq1jnpcQQmy03fGyEY7gAnmO6VIxAS/ZJE
+ IzEg4O3aRagIK4LLOM3Y8V1KHh6UOZsxbJSniW18zS5SUY55wkGNx+UVQE7D7RvMPcvK1Mo
+ q9wQfB1JH2uUyQLo9zBWg==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:ew3UvbytX3c=;Xh8qHV6rfzz0QDM4swYFmHGqPte
+ d8Lpc5/1RjSFcmwXOufPtDQjTpru2DmdsSnOqHH7LslKcj+Z6IUBGf+kcLkvHbb7Vcn2G7twT
+ 8OLmjbIzVoT3jIdRskrosEZ7RW4xluz7c6avttGK6jGyZGhE/bLzhpnXcVT6kh7kOJISGwQbY
+ 3J3xq4uQe7TbUOWNJxlwBZIgBHn57dgYQ9a33tZnPHgM8Z97K4BVE3P2fa95ZmpzAZE3ZEj13
+ RcqNCWN/RM4jkHY4ZRYP28QSiDafyt6qbTzMHh6kGq1zQB08P3FdZbRMSIeRNOOorGfH/Rj8a
+ b4qMrLfoszzOCtk/eSIcikeHbBoHQj9dyP35/+mxcVgBYcxxUVlexuGcq9dOmII0CXpQMt9CU
+ m2z37MXtxMEKVo2bscSd5ixeGUMbeqpwO1Dyh5vqYv5LGnNeTYlFj3vXlHDS9uVg1DPo/58Wa
+ wU8yERN0pOssb5CC4IGZE8FXPIoohrp4By5gddQ4ImdnV60z1cs0ZdY5Sx9x/jvb2S5elLtRY
+ o52hwU2vVjZvopZThjLJGGSrMsyeVWqVLGT8OPLSUnqzZZFsmZZIHxUVSsWpBJKttnRMyxBzP
+ bXjuAOMta3Xligz8FGauZbgzIh/QWlZM1+G6CkXh/MZaCMi6trCefFZzpMcEAIEgUj81ecJ5Q
+ sOezWUPFX2mKaNGvQ5++HulxsthLMTPVcUwKx4KPkGc+O6zKHhZfJ72vD+dWFydGUY7sT6H5L
+ /8wk1ZA7pCxZqP7VPg4G89YbezvzWYIFQu0kUAfixXf6EK+JZhoIt+nQt7Zl3EqUOgSRm+6xx
+ jSTkPEfmZl/zDyGK36Y4jxKUTVlq7Did4x8p73QtAIg4mavx5Cbp6nVzOM6ohvF1Kvrx+vSWX
+ ezYOEO41XBRT3a7bMn+YpvvOYs7SyvXQ98Z5CQlcIEDRQYwu/i7xSKP1HHzHvZL+KjO8mN2GA
+ c1c0S+jvnXXySD+nKS+B3FyNwJc3PNaFMBL19rRXlF2Fo2ojhW1pu0HIyxr5d3nb7ZwrSSxpZ
+ O5SFf/sdSLmW70BmXQCIGfiQ596G2BG2GupL/kJtCtl89KQ1VheJ/bXlOv2ooxGrGNQYNxehp
+ PGunhl2qJSmVxEroEpguwwAMKLYr+l4RceheBibW5GuHUSEziC3V3quia8UXUUZAlnrG0M9on
+ qO4tiI2if2Z6gRiDtOiKAYbhECJvy8O9vQbeuGTUrvwizmm93hmHmXZ2RSQicNkZoDuPcG5Id
+ 1nSkcE2HzkR36bJZ3+9w9bskHdDhTcqm3qvoHaLdTXzTHUaEJTbLdgfZbDiDSOEC0Qh/mMBKm
+ 54vjCWK0LTLxqXK7zb2PsV9aWx0kVtkEU53fYOz8kLv96kuqNXdsnC7wbBe7lDdSz54Hy3XGG
+ FTqhIyymX3PoZZzSbq+FPki2/CejQBEpQLkK08VI1/FOm9RYgLyFmjH8ITqrdnIzIZLbig+BS
+ vXDE5xZROaMJC3iGOaU8L2hymP7NkTYXwPe2bY3qNb1BCImLr+ME+qL5WNzUFlyMXg8zZHGg5
+ GiJDtIn4Uulc8f5ZVzRe+ZPVR+Yqy3+vHCyK58i6EoTyyYlyLS6uiKzwFdqgsrAZ7xvOL6Sy+
+ wqiNaD25ntDJSK2UMN3pr4SyMNngmhdKIkGKXMHsS+e8YC0DdeeNI1FJmHJNqN4gv6spMAAaq
+ RVA4q1PKwj5TeyOv2LtGnG/j4sg/yHojNKyM41DkaQycQLl+EuF9HIIeaxk8EKyhHq17N8WiS
+ WlH5Qot/ldcYzWF6w54v+6OzRabFEobebnifn2TVORq5YKlwcSlw8DIVx/082TOm1Vi9WM6CD
+ LyP+oB9fRbM42HKaiLhbROpiiWOqUzlnXHYLTPNxo1lAwT3Y8bvGmX6ukuLJOPWHf/TOtufwZ
+ 027a3eajeWRrkcvLoJYFDrzAuq+h+d08LBq7vgCOYWNnPYuRiam/sJutvoPj2PLXNR1jfs2qQ
+ u53EIc1oLf5AxELWw5RNwnbnJYazmIK7P3O78e91a9Y13ExhAZejgwXppO0bS4J2UBKxzA4Lk
+ YUxq5EwWFWoYoED5rBE0s5nuv84Qem0+dUOYrg4FXTETqe9/pGcHSgz+be5ey6JdNKd6ghzTu
+ +7SIKtpwyQfqhmibCr9qDYQS42CRKxMmOSzXJz8G8shwcug1fmjo7gv1nc5z+IfC9OcIeL7nZ
+ LCmK5uiiW4IAi8ISWu2JW0o/P2Nr/0AnWq6iR3x3KlWDEmTbppliRvODbYXoCHiWGaKTf9lIA
+ K3P8GmjywBMmFO8zyVl3B0tZXvBEXt+AMbar3KpbBWgeBOgb2VXJ3u9X5Xf0LtrP/zdY4++jU
+ soPI5HZKWD2LYl8mpV1RQH/xbAs2EYh7MuEzagrBEGJ5+qsj+wbI2AxWMFnn0vzFGWnv4Wdwo
+ jPiVmyjQKsZPN4aP/GqYOhYXjmo7t/DzPVjjAugMIbxu7g31ZKjByQb+5qqb1sJJFqeyYlEjf
+ p+CM4vWf0iCr631WMhqd3PXWaAB1r8QQtaYNnniuyp6LQ4R4VzhhuA4eGmm7JkXs0bKexB9/8
+ gKqveiW+P8J3b6lSH5acfuwHcT848Lbfm0R1ojOUpPVMW+bztZ1WLSdryyMdcr+IvnQM4vgGy
+ 8sfMwEaaO0o4uL2nIJufSgC27nl4U/jQZSahm+js8acdcTLJz0IGupNV409P6ZZuSrz7rML8c
+ nirh5j2W/G6/sujUJX7eC2SVkwsWYxxC8moSHZIfAJvsu3cAcGbPjaRAbDyuHsLHNyTTeqe4d
+ WD/ax1/QpcOB8cQzjlQu1HbjkWYxBNoYyjFSDhqAAVZGXxrh9f7V2OcKczurT0PfFGU1wQ+RZ
+ E0iFObwV1QOHtNNzDRTEm+JVIDKcEMXy9YcWnBQyiMVJ6zKsaJTAWZtBOe5ntMpPJEaZh5irW
+ j647ei1FIohU3p/98sYb91/ruCbVFLcbIyJWSEO3hlRenlwuae2dApVHoAShWDMMz4QfENTNf
+ 0ODsYkaMCht/FiNYY2nHHa4yEr1ORdNoY/ulIoYzddKiqpAsiEMq7+Wo3vlNW9ymyMdWFaXbr
+ hIxkdO2Tbl3Ij1/k2zQZau7A3TAZHDRK3o0SAq8dOU7
 
-Dear list,
+Hi Patrick,
 
-I have encountered a problem with git submodule add that leads to info 
-of a submodule being lost if another submodule of the same name is 
-added. This can happen if a submodule has existed on the path in an 
-earlier commit but has been moved (git mv edits path= in .gitmodules but 
-not the submodule name, probably to avoid moving the corresponding 
-folder in .git/modules)
+On Mon, 5 May 2025, Patrick Steinhardt wrote:
 
-Find below the summary from "git bugreport" (Answers in English).
+> [I] wonder whether we also want to get rid of "contrib/vscode", which is
+> similar in spirit. Both Meson and CMake can be used natively with
+> VSCode.
 
-Best wishes,
-Moritz
+I would like to avoid that, as the `contrib/vscode/` files do not even
+have anything in the way of building Git. Instead, there is a
+configuration that allows Intellisense to find the symbols' declarations
+and definitions, and it specifies a little bit the style conventions as
+well as common terms that the cSpell checker benefits from.
 
+I use this on almost a daily basis, so I believe that `contrib/vscode/` is
+in a _much_ better shape than `contrib/buildsystems/`' Visual Studio
+support code ever was. For that reason, I am a lot more in favor of
+keeping the `vscode/` stuff.
 
-
-# What did you do to reproduce the error
-
-
-git init parent
-cd parent
-git commit --allow-empty -m "initial commit"
-git init child
-git -C child commit --allow-empty -m "initial commit"
-git submodule add https://example.com/child.git	child
-git commit -m "Add submodule child"
-
-git mv child child_old
-git commit -m "Move child to child_old"
-
-git init child
-git -C child commit --allow-empty -m "initial commit"
-git submodule add https://example.com/child2.git child
-git commit -m "Add an new submodule at child/"
-
-cat .gitmodules
-
-
-# What did you expect to happen
-
-I expect that both submodules have entries in the .gitmodules file.
-Git submodule names are given by the path, so I expected some way
-of resolving ambiguity, for example, git appends ".path" in other
-cases to disambiguate. So the expected .gitmodules content would
-be
-
-[submodule "child"]
-	path = child_old
-	url = https://example.com/child.git
-[submodule "child.path"]
-	path = child
-	url = https://example.com/child2.git
-
-# What happened instead
-
-I see that there is only one entry in .gitmodules listing the
-new submodule, under the name "child":
-
-[submodule "child"]
-	path = child
-	url = https://example.com/child2.git
-
-# How is this different from the expected result
-
-The old submodule (path = child_old) is not listed, the information 
-about the origin of the old subrepo is lost.
-
-
-
-[System Info]
-git Version:
-git version 2.49.0
-cpu: x86_64
-built from commit: 683c54c999c301c2cd6f715c411407c413b1d84e
-sizeof-long: 8
-sizeof-size_t: 8
-shell-path: /bin/sh
-libcurl: 8.12.1
-OpenSSL: OpenSSL 3.4.1 11 Feb 2025
-zlib: 1.3.1
-uname: Linux 6.14.3-arch1-1 #1 SMP PREEMPT_DYNAMIC Sun, 20 Apr 2025 
-12:38:52 +0000 x86_64
-Compiler Info: gnuc: 14.2
-libc Info: glibc: 2.41
-$SHELL (typically, interactive shell): /bin/bash
-
-
-[Active Hooks]
-
+Ciao,
+Johannes
