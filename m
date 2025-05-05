@@ -1,87 +1,90 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6E21DFF7
-	for <git@vger.kernel.org>; Mon,  5 May 2025 15:43:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE092580E1
+	for <git@vger.kernel.org>; Mon,  5 May 2025 15:54:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746459805; cv=none; b=SCA/TMzTKVmcdsjIrwh2EZgzpIY8nwFSlIbpUsRwC8dL+IUhkiWd1607zgBD8k48fcDE8ck44lprdlyEJCglItEFjr7eRWfsAe0XnwBKBHz6qMCthQitFwVLgJ9OZ/OrT6EXAhTRVjPIctAyegGP+Pr6JjLLLEy7AYi76lFDo2A=
+	t=1746460468; cv=none; b=f/zIBqdDfEo1cCnXPnCMGlmifWjAMyVgiArV2X+HMqJOZykVYbiqUFGp/Wo8zu9FgmgqNrFj1fBdRNCgtRqDtsKehB8//WPNryjWIa8gurGtLS5UC7PhoS2ZOcMXK8OYObUw8SKhoE4jzRtMLISdHO7bWWt/DapYnt4Lf84OaL4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746459805; c=relaxed/simple;
-	bh=OfXnOZ2DNKOCBTpgS4Op8h/46fFn335rLbTIWh5O7GM=;
+	s=arc-20240116; t=1746460468; c=relaxed/simple;
+	bh=XPegPlRvC6F3uf3xJJ5vmoNZRJP0Ht1yXPM/I0k4Dtg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=UTEeeAMed56Kfx6FPd+bVtj3k2yCwb+lQ0eGHzQx4oNl9B1h5z9DqrvpbJVNlij9LZbo0pREk5nlYz58d0e3WkYLUTh0gYkiQ6Vfl09AOjI0z/ZJsc/MtQ1BQwbFNNvX+xRDfUd8iA1zFxEvyyn9hdEvuzNSmymPIsQ1lwQ8Gbk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=S7FTxlxi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e3sLcy2z; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=mMW+IWLqiKQiC4KHFxRJwXVzwF1odiNpT+8byhJD8WXm3Iw7WFI6CnFGpp8l0I4VCmCfJ/k8gyUdqzIz7mkVGRaU/6FuOellDVhOjoUKH65WFqfybPSjbHcgq/6DTZHYtHcWHul4RhUs5PrFo50/XNRIkJtPDo/y9PhGYJ2y9Lo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=I+VXW+zt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rPcHSwKj; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="S7FTxlxi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e3sLcy2z"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id F02571140254;
-	Mon,  5 May 2025 11:43:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="I+VXW+zt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rPcHSwKj"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 962D32540270;
+	Mon,  5 May 2025 11:54:25 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 05 May 2025 11:43:21 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 05 May 2025 11:54:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746459800; x=1746546200; bh=igWEIvryIv
-	Y6F0CeypAfxVdq/MtSkYnjsR0Yh5qmTOU=; b=S7FTxlxibT9SplyZpXAQtCUElL
-	jL4590AoNHisUv3XxiVIAe4DctS8B2Nc23ZOrOLoWlYJDYDVN63DKtqj3E98T3/p
-	71lBwqPUT+tKQvV1HkvrF9wjFjd2wW8lQ19WMFmoCJ21aU3OCJegYMSF2Ki9CG+Z
-	RNdsxObfhi8RE5/eYFusNlAjg1RA+AoK+zU1wxZnUV6wdfV+RrO1MzSfHs4zu/3a
-	PDC85CD5S2y+FezQVOCRnJsOcz/z1HOFNnLiAGte6GKPUbQ6SUlSunBbLkD58L65
-	lKTsZ7IT4RT3kUvnGGfr+5dwaiOfzMjstvXT90zWM2C+ZSBArdXBoEuQtkrw==
+	:subject:to:to; s=fm2; t=1746460465; x=1746546865; bh=Z1llhCCWir
+	jEk64MSo7WS4fSXEMiqyqSL6Kczd41T7I=; b=I+VXW+ztRMG6fvVh86bsJXA0Rr
+	Yb9Fh07yNtvZTvDh4AfMZ+/Ln7o8GmCVLsYkCfOZ7yxcQQce/nNrtuKjOts+qVjx
+	oLPjFEJEtAJLXvxCcmViYXtqytCEgtQQJ2i4EZEocJcEx8TPuEVcjJQzkjjVra90
+	znkt5Ztg+mpafe3BakoHpXsyMAvELGI9bE1AywYv2YvySdnMQE4KiDFvU+xq1KKf
+	OaoEqqV0xCmOC50czkPWbi5pIYQiU98gwt+BtpMIvOTd7yNcojQc3EDElnSdcINx
+	Gq3SZAcEjPex99kRUt4tYGBAD+B6oeOOn2KE26l5mUiqljmkkcbq6YX7FHIA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746459800; x=1746546200; bh=igWEIvryIvY6F0CeypAfxVdq/MtSkYnjsR0
-	Yh5qmTOU=; b=e3sLcy2zoLFqd+40xsbB1rlO4LfiNq6fx3P67fwe33IDKHAn5OR
-	02N1OON7GFV6tdGU0k7rTYJIvvTBrgX7BHrMfpi0L30g2Oz+CgaE/Sc47oz59L+/
-	c1ep6sDVMixZCmykqFCgdhJhzkU754pjTie0ZMeGctA93iWAAsrJmLyanVhVrEcn
-	1RYSUKnmgQokHIw+L8EwVO3CVRCdnYW1AZjW0ioOh3qPhBiSQdWat06dAm2NhZ6V
-	/VT2VyHTisMiU0tHRUe6lmR/3o/0sP03e7yhI3VxkgZAAItVeOWypT3R90tkSonp
-	AZEoUmT3JyoffD1os+T0/nvVDyDHoOcivOg==
-X-ME-Sender: <xms:mNwYaMXDq7xKi5ga8oXVnce54rmUyvgCh7IDjpMpr8XyNf08jb86eQ>
-    <xme:mNwYaAl1lz4JqVZkFqgqQu1luKx0meVawCmAHYpyqGhhklhWk1gMZFCkaTqCW8fwt
-    MWWymw-DNqR6OiqAQ>
-X-ME-Received: <xmr:mNwYaAZDT2NxHPSIaW_fsvR9KwPEzeBJBWLtc77TOaTttquNXdXDxRfTAJjdQsr_cR1GM8JN5yjycSM0PA3rONimLjctXTaECAQo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedugeelucetufdoteggodetrf
+	1746460465; x=1746546865; bh=Z1llhCCWirjEk64MSo7WS4fSXEMiqyqSL6K
+	czd41T7I=; b=rPcHSwKjrbVVhF853Z7L5Ta73OHYnkTt1lCQMMToP2Y5+td3bxu
+	ro+eEsrSrs5ZXIkU8DvI3FvtVCn/UpA2XbrQg7781Mja++elMGsRC2B9Akp4oZ/S
+	r1th9/Yoe7M1+1WuxQgEFsLpvt/StoCMlSaWspXBeS062rET+bngpKgOcaXHQ3IQ
+	zW9OTIU9NBHlD/xc4MDNOuiGVZQkI+tFjPxOa/etI30YrFbThq6SwN/CgbUTqsPj
+	vLF2VFvSOT782za9QckY17lCbpu6wiojyuffKHYTdb02BuIXb5uCg7gYe+VgHwGb
+	tg/a+zRCE8ps8XAaPIQjmj1ghcwTtvkiAMg==
+X-ME-Sender: <xms:MN8YaLqDLwDVAm9r0OgHxCTEiPcstuas0QkN7dBSwaqMNZWwfc9_1g>
+    <xme:MN8YaFpOAsg0V7HQNdUTt8W0Row4kwhAYxd8KQc_A0j17kad4GigOTgI3f8F1u0HC
+    o_TdLShRHWkLbFvdA>
+X-ME-Received: <xmr:MN8YaIOQuHnDD8o-4y635_lE2ChhRHRDaVhVolntuhwrkUoCvxuqmYkoR5g11pPvo383B3sKNeSyUWIdXaGIeXHLbuu5QZr1D7yp>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeduheduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mNwYaLVZYsHjcex4ADcrs06EbuOeErC7OTO9Ng4-C6NMAoBujFmqug>
-    <xmx:mNwYaGmUmJh3Iu6Qv1HDttAuoEJKmRNUDlRGYwClHW_CLecp5qACaQ>
-    <xmx:mNwYaAcjAG7qafzRRXZTxLEpowkk66K1eM6T3ZwVJa4dnzWABtVfvQ>
-    <xmx:mNwYaIHFmMTYzCOvY0pUG7JUtYiNVPzfXpLTAqzCrTudYcubpPxq1w>
-    <xmx:mNwYaCwlYGJ048bBNycwraju0qBIdzaYyXuh_VExbH6EZwKRRKHyAn9m>
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdgu
+    vgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggv
+    sehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:MN8YaO6lEr2N1J7fxJNkxNFUK3TvZgWJI0EoY0fbqWPBf3K-LG5Pvw>
+    <xmx:MN8YaK4-sNldVuqCyXO-8X45sF5M8dmOrCThcaJsX8_Hjnoh5ejodA>
+    <xmx:MN8YaGigqTUeMSvkbmUkbAG2My12hU8WWp3AwQzEJ0cqzkDakCZ19g>
+    <xmx:MN8YaM5N1MGYmVBhKLhJtBZyrGTgjKO_P9KDgLpgjpIkKWkZTsWNZA>
+    <xmx:Md8YaLx1wlEZV6vm1UYUZcbKglxXPEJ8gCdi_2RuzBubCFMd-UsbyyDH>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 May 2025 11:43:20 -0400 (EDT)
+ 5 May 2025 11:54:24 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Collin Funk
- <collin.funk1@gmail.com>,  git@vger.kernel.org,  shejialuo@gmail.com
-Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-In-Reply-To: <20250503133158.GA4450@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 3 May 2025 09:31:58 -0400")
-References: <20250502233403.289761-1-collin.funk1@gmail.com>
-	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
-	<20250503133158.GA4450@coredump.intra.peff.net>
-Date: Mon, 05 May 2025 08:43:18 -0700
-Message-ID: <xmqqtt5zoyg9.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,  Johannes Schindelin
+ via GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org,
+  Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: Re: [PATCH v2] ci(win+Meson): build in Release mode
+In-Reply-To: <aBiIPe7EVTBxENUp@pks.im> (Patrick Steinhardt's message of "Mon,
+	5 May 2025 11:43:25 +0200")
+References: <pull.1908.git.1745593515875.gitgitgadget@gmail.com>
+	<pull.1908.v2.git.1746282346370.gitgitgadget@gmail.com>
+	<aBhVWMabOFYRUjvD@pks.im>
+	<5e2fdccc-2c52-805f-ff9c-b9e0e72614ac@gmx.de>
+	<aBiIPe7EVTBxENUp@pks.im>
+Date: Mon, 05 May 2025 08:54:23 -0700
+Message-ID: <xmqqmsbroxxs.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,56 +94,47 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> That changed in cfea2f2da8 (packed-backend: check whether the
-> "packed-refs" is regular file, 2025-02-28), which uses open_nofollow()
-> to check for symlinks while we open it. But it feels like it would be
-> more direct to just lstat() the file in the first place (which we end up
-> doing anyway to check for other things besides symlinks!).
-> ...
-> It's not as "atomic" as open_nofollow() and fstat(), but I don't think
-> we care about that for fsck. This is about consistency checking, not
-> trying to beat races against active adversaries (not to mention that our
-> open_nofollow() is best-effort anyway, and may be racy).
+>> I am afraid that getting rid of asserts in Git's codebase won't ever be
+>> able to address the challenge that Git -- despite much reluctance --
+>> relies on a couple of external dependencies that might at any point in
+>> time cause `assert()` to be called, e.g. due to unexpected changes in the
+>> CI runner images.
+>
+> Good point indeed, I haven't considered this.
 
-True.  Atomicity, which the use of open_nofollow() and fstat() tries
-to achieve, may not matter in fsck.  We can think of the use of
-open_nofollow() in this particular codepath merely as a convenient
-helper function, and I do not think we have any problem with such a
-helper function.
+Thanks both for a discussion.  Let's replace and queue this, and
+fast track it down to 'maint'.
 
-But open_nofollow() and its emulation can be called from other
-codepaths that may care about atomicity, and I am not sure what our
-attitude towards atomicity requirements vs platform capabilities
-should be.
+Here is a range-diff for my tentative rebasing the patch on 'maint';
+I'll make sure merging it up to 'master' would match exactly the
+result of applying the original patch directly to 'master' before
+queuing.
 
-If an atomicity (or any other) requirement in a particular codepath
-has a simple and obvious way to solve on common platforms, but that
-the mechanism to implement the simple and obvious way is unavailable
-on other platforms, where does it lead us?
+Thanks!
 
-For some kind of requirements, we can treat it merely as a quality
-of implementation issue, similar to how finalize_object_file()
-ideally wants to do the create(TMP) then link(TMP->FINAL) then
-unlink(TMP) dance (because we want to detect collisions when able)
-but has fallback implementation to create(TMP) then
-rename(TMP->FINAL) (which punts on collision detection) on platforms
-where the preferred way does not work.  It falls into this category,
-I would think, to think of use of open_nofollow() in this codepath
-as a mere helper function that makes the code in fsck shorter.
 
-But for other kind of requirements, we want to fulfill them on all
-platforms that we claim to support.  Using open_nofollow() to
-achieve hard atomicity requirement would be a bug in such a
-situation.  Should we somehow warn our developers against its use?
-
-Idealists in us first try hard to find the right abstraction that
-would work everywhere, and use compat/ layer to implement that
-abstraction, but we of course are often not successful, and end up
-with a series of #ifdef for pieces of platform-specific code in
-fairly higher layer.  It feels that open_nofollow() that is not
-necesarily atomic is the latter but that is done at a level that is
-a bit too low.  I dunno.
+1:  f3ae94b175 ! 1:  184abdcf05 ci(win+Meson): build in Release mode
+    @@ Commit message
+         patch is still needed.
+     
+         Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+    +    Acked-by: Patrick Steinhardt <ps@pks.im>
+    +    [jc: rebased on 'maint' to enable fast-tracking the change down]
+         Signed-off-by: Junio C Hamano <gitster@pobox.com>
+     
+      ## .github/workflows/main.yml ##
+    @@ .github/workflows/main.yml: jobs:
+            run: pip install meson ninja
+          - name: Setup
+            shell: pwsh
+    --      run: meson setup build --vsenv -Dperl=disabled -Dcredential_helpers=wincred
+    -+      run: meson setup build --vsenv -Dbuildtype=release -Dperl=disabled -Dcredential_helpers=wincred
+    +-      run: meson setup build -Dperl=disabled -Dcredential_helpers=wincred
+    ++      run: meson setup build -Dbuildtype=release -Dperl=disabled -Dcredential_helpers=wincred
+          - name: Compile
+            shell: pwsh
+            run: meson compile -C build
 
 
