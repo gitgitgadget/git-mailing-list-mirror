@@ -1,67 +1,68 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014BD1D5CD1
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77D7B5BAF0
 	for <git@vger.kernel.org>; Mon,  5 May 2025 07:39:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746430798; cv=none; b=Hr8jeKt2f1XO8lh40lsDar2o/PtQLspvdqDSeSDuN7G7BvKP+s4wXYODhWdcZvlcRS9g+W9k+Opxa4iDWSDCETnXhaiX31aQmLHAHQgT0dO8Sh3dYxUQ90BABbyw4AnHdFQbU/H3Y4p7TN6uOp4Qh6dqxY5CFXEuwZjs61u227M=
+	t=1746430800; cv=none; b=SZ1el30VBp3wtNJsk55O3t/NwSP6aPr0w1x4qPsZzBAkIh7bV0SVOgb40yA/FPvObaD6bJ4/LBBvBWZAOphHnMb5SRsiVE0rt3inWZkX0izcZCMPHF7eSaWDc1TURCPEyXKRit2QrXg4/J8nt1Yuz2NWQX9ksWJe28e3yER2OrY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746430798; c=relaxed/simple;
-	bh=QUsr+DZPW8rMY4bAXDeALQkmhyPl/cAgYNwEygN15SM=;
+	s=arc-20240116; t=1746430800; c=relaxed/simple;
+	bh=vul27Jf2v+P6nwbI2SW6sinVCfiv0dUmJM5Zau5Uul0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=erIGlBMICexxz9MujGOERbA3XzCafls7PRJyNxvwuz2Wd2lB+xW5EqniDTK8Tz0GnEooqrJGhTsXNqtGQn08JLVwx+/xxlAy0DdXwZQUAZuZW2aI+KrfG2Z3HDCNNJWkIkcZdTsb47hAicHxnqZL6ViJ6iZakEUh5i8ZpV7+uGs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RMoN5wII; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=uRJsADOCjFkycdf1RuG55rSPY0OcLfuX77JezgCAR4H+sZ0NfcbgIBzDpz3U5VCRhkoi0xMfdMG+cEOGDfRSJb92rKCHvKps1/PoxB0rLKvL3b1yAIXVD9e3+OUr8sRgkm3YYXehW7eHh99K2OeO8rATRPn9pp0yo49QmAZ6GRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ely8xx/m; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RMoN5wII"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43cebe06e9eso24245535e9.3
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ely8xx/m"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-39c13fa05ebso2350017f8f.0
         for <git@vger.kernel.org>; Mon, 05 May 2025 00:39:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746430795; x=1747035595; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746430794; x=1747035594; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=CKgmnRV0VhLeKOXCJQqawxknA0daZdT/B8ar8Ic818E=;
-        b=RMoN5wII4VTZdW4fPgYHNjN0Sw1t8uA0NVHJnDiaMN0RMKQPvLSndqddMfxSauP33K
-         Du04n+w9WRCWu1uaTDjAXFPCIeHURzJSJ9WoTrwGYeH0LAnWPdL3MGZdN9hX/ewStswo
-         UCMQJIhLVO605YAvRoE1GlECJAHGJY6+6nE14KKwmRyKWPDohAw9yO2zYsRRdd/XcknW
-         Mq3J6r+7Tfb7dv+GAevUdcHtNT69cDwe85UqVqw92Rm6Zz1P+Lvc2SJQPovWE+1taW8O
-         Qm+jyI9IVZlRQsaD+9v2MCJeKy6KdUubn+Xb+nleJ3tnEI71HjgvwwxXJdp6ibhYq4y6
-         DtVQ==
+        bh=IKsrFruKW2dsfwHBWbuMTbXytCFSFWORwfskp9Mjr6U=;
+        b=Ely8xx/mPSPzoSdEYbGHgTGmwDtq+/mN+YskWWG+2WEBgV0fHCfH7NAGQVj1wC8Noq
+         X+g5/dcMY1hahkdiLZpqEaJpw4PJtpBFvwAXOz5Ap+6IjHYZWjV5mm6TeFnW0I1jjv3E
+         sEOyhQYGKQeyelr3ceIU66oMx6q+pukcdNP+5LXfrKQ51LXesWDKPzD5E2xV1BKFeOzH
+         xtdPcTTqyCYxmt3La1GPY8aBLIJ/6kEHrb2zeLBBpMgZQ/2qFRW8gVEON1hO6hNbIsyl
+         z++Cmjj5S8WpilBqbpquIpMuiIHT6LTnm1d4D2+9P68k/oXl2Y0ONHRy/dylnyayUG8L
+         RvAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746430795; x=1747035595;
+        d=1e100.net; s=20230601; t=1746430794; x=1747035594;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=CKgmnRV0VhLeKOXCJQqawxknA0daZdT/B8ar8Ic818E=;
-        b=TYJZHq6jyBa3wY2Xul/ZSlJppHO94nxocuRFHAgIWoh7Sf9Umfd7/ruIMQc0w7P8jB
-         LHmSNEeAKT1CX4kN3YZ7RAndXZu2A1NzMp40Lm0RrMtT47dR8lWr/dBFe7CkMiDCge2A
-         cbrj6RIdftwysL+CD2dVkqfWfZ/Z/Ga5nOhzzY9BEXZ+Wr7y2VGRMEZWpIKr2srRTBEs
-         jBZ3al7ZByGiPmF2NrwOBGHt+73W0EePHEb0YbsVrq2IkE23Vfxlv5nY225Kndd+IxoY
-         sCAvkdxk5ApmXE9ibJGkMRHJN6X+UbgJ2WkNPeGGk94G5yw8raSgpMhAaveS4A4Xw6nI
-         QKmA==
-X-Gm-Message-State: AOJu0YxvvYmDHSH2YrPB5+CLWfuAASA9G6uhh3l05ETS2Rpny+sQOGhs
-	QqS01H3ZfvvNjuF0ZzL0b4BPgKBNQIGktXdoVWuyKJz1Y8Clz9gbc97wpA==
-X-Gm-Gg: ASbGncuJCBMSF02m8OtShmlGblEuwN8oIjk/sqqdA/QE4rMxnEyDbIxSnYRuEGhS025
-	wY+7et9z8t15Y4L3wy22CF5iyq0FXf60emahzIKRL02AVHyO6wqWvQQsXhvwQFxGZ4E74jNyecI
-	B2ZDLZ+vY7dQYH6zGOLZCkxcpEnwoe2spf9Xfd7dq23fDTCHAlra6ShVq47LofKqtspSOQPK/Sc
-	213RhWsaJRB7IWQlG2JjZwhCP+LOd0B1/db+ybLxf/CTrHKXAGmJm/YFhNVoLPevn3l/nSkgg9o
-	d3TszdpbYXpvpnpN5TLuxqbMYxptUxXIQO1UcvcmnkSAOefXsVNW
-X-Google-Smtp-Source: AGHT+IHX6SwYdpiAfgdg3oIhCvMgYR5WaY05OxLXHNENDkTv/QCBBlJMWtdRPmVLZ00k6lwLzpXXLg==
-X-Received: by 2002:a05:600c:8012:b0:43d:26e3:f2f6 with SMTP id 5b1f17b1804b1-441c48b069emr51180805e9.5.1746430794643;
-        Mon, 05 May 2025 00:39:54 -0700 (PDT)
+        bh=IKsrFruKW2dsfwHBWbuMTbXytCFSFWORwfskp9Mjr6U=;
+        b=cLi8t7Y++DNlYJkKtGFim9GvYA24yKkr7NQmwH8px/SC8n/l1qzRz0MLUU02HmEPX0
+         RfYL5ZtjYKUr+X4DlSEiqS+qOHXIblhbZUtkprTbsLPu/CqSU24Ab55Qfed2lo95dZag
+         Gfr3/bL6qdQhcmjBDVEAK8lN7MoRHSmKBBobwXfq1zEMxzMJ+DLV4otQ8FB/S4zemr9q
+         0CHVwSS0hwWH6IMQh4tMkRhZibzhJTCeew97KZX5olZkwZ53epaXV6YfLKE2VNettZMo
+         9u4jfoPy5nD8ylNwcIVqziK7iYHWR1zOX+HHPp1b7VEmYZIWMYIeXYLWL4XwhITuwwkR
+         BGxA==
+X-Gm-Message-State: AOJu0YyvmBR8M6K1a+XgdlTlyL4P/rSS6ageYekl33XJS546EL3rCt2y
+	9z8C8547lcLmfh4kNVcwkHzBElUrvE//bMTFl/HotkBjItsBiD+2PCQtoQ==
+X-Gm-Gg: ASbGncvHPHSocJTGJe5rQsLT4fTuYp9Hq7d0Vjtd0RiskeeXPfmItwAWiHcJTjJfeYD
+	JFS7WysA8ZbGUM4xyDuctCIcHf2AwdTTj615ZhO3PveYEnDRsKpHCbEBYaocL9WMBW8vVWYnmGr
+	umvjlbeXVn87uUQNyaxU8gTmpweXgK1XYeCiOCHCHRjywBtMPTKcsT9KbmblAJ3XjbCxWRygoGi
+	xdiY5XuhPZsSjPjUD4aq4m/fB9w+ql3OPxIiKaf9YDXXy3ZivnNC8pXliAw4LfrEMDGP+PGa1zz
+	llBlOFQPtu1L3na2OcjH5SG8G8yYyIQNhTOTZ9T9Rg==
+X-Google-Smtp-Source: AGHT+IExQLZtnoD9TdDRK8x0EMc5j9JEgCHaC1sQ47Mmb8bQIJkv7gxAaNqQOvadDsoZCfaT1JzepA==
+X-Received: by 2002:a05:6000:1445:b0:3a0:82e7:227a with SMTP id ffacd0b85a97d-3a09fd6ba02mr4203180f8f.6.1746430793892;
+        Mon, 05 May 2025 00:39:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441b2b20a70sm171159675e9.31.2025.05.05.00.39.54
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099ae0d3csm9364319f8f.3.2025.05.05.00.39.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 00:39:54 -0700 (PDT)
-Message-Id: <225eec050ebfa234a570ca00181e58aa7cb9a78d.1746430791.git.gitgitgadget@gmail.com>
+        Mon, 05 May 2025 00:39:53 -0700 (PDT)
+Message-Id: <1ec2a4bb1d58ea8cfa6abb2a0e625ef3e0db2a1f.1746430790.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1916.git.1746430790.gitgitgadget@gmail.com>
 References: <pull.1916.git.1746430790.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 05 May 2025 07:39:50 +0000
-Subject: [PATCH 3/3] config.mak.uname: drop the `vcxproj` target
+Date: Mon, 05 May 2025 07:39:49 +0000
+Subject: [PATCH 2/3] contrib/buildsystems: drop support for building
+ .vcproj/.vcxproj files
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,98 +78,1943 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-Now that we dropped `contrib/buildsystems/generate` to generate Visual
-Studio Solution files, it is time to also drop the `vcxproj` Makefile
-target that depended on that script.
+Before we had CMake support, the only way to build Git in Visual Studio
+was via this hacky `generate` script.
+
+For a while I tried to fix whenever things got broken, in particular to
+allow building confidence in embargoed releases by running the CI builds
+in Azure Pipelines in a private Azure DevOps project. I even carried the
+patches in Git for Windows with the intention of upstreaming them,
+eventually.
+
+However, it is a lot of work with too little benefit. CMake is much
+better supported by Visual Studio. So let's drop this hacky script (plus
+support code).
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- config.mak.uname | 76 ------------------------------------------------
- 1 file changed, 76 deletions(-)
+ contrib/buildsystems/Generators.pm         |  42 --
+ contrib/buildsystems/Generators/QMake.pm   | 189 -------
+ contrib/buildsystems/Generators/Vcproj.pm  | 579 ---------------------
+ contrib/buildsystems/Generators/Vcxproj.pm | 402 --------------
+ contrib/buildsystems/engine.pl             | 395 --------------
+ contrib/buildsystems/generate              |  29 --
+ contrib/buildsystems/parse.pl              | 228 --------
+ 7 files changed, 1864 deletions(-)
+ delete mode 100644 contrib/buildsystems/Generators.pm
+ delete mode 100644 contrib/buildsystems/Generators/QMake.pm
+ delete mode 100644 contrib/buildsystems/Generators/Vcproj.pm
+ delete mode 100644 contrib/buildsystems/Generators/Vcxproj.pm
+ delete mode 100755 contrib/buildsystems/engine.pl
+ delete mode 100755 contrib/buildsystems/generate
+ delete mode 100755 contrib/buildsystems/parse.pl
 
-diff --git a/config.mak.uname b/config.mak.uname
-index db22a8fb3113..524a7faa3098 100644
---- a/config.mak.uname
-+++ b/config.mak.uname
-@@ -766,79 +766,3 @@ ifeq ($(uname_S),QNX)
- 	NO_STRCASESTR = YesPlease
- 	NO_STRLCPY = YesPlease
- endif
+diff --git a/contrib/buildsystems/Generators.pm b/contrib/buildsystems/Generators.pm
+deleted file mode 100644
+index aa4cbaa2adac..000000000000
+--- a/contrib/buildsystems/Generators.pm
++++ /dev/null
+@@ -1,42 +0,0 @@
+-package Generators;
+-require Exporter;
 -
--vcxproj:
--	# Require clean work tree
--	git update-index -q --refresh && \
--	git diff-files --quiet && \
--	git diff-index --cached --quiet HEAD --
+-use strict;
+-use File::Basename;
+-no strict 'refs';
+-use vars qw($VERSION @AVAILABLE);
 -
--	# Make .vcxproj files and add them
--	perl contrib/buildsystems/generate -g Vcxproj
--	git add -f git.sln {*,*/lib,t/helper/*}/*.vcxproj
+-our $VERSION = '1.00';
+-our(@ISA, @EXPORT, @EXPORT_OK, @AVAILABLE);
+-@ISA = qw(Exporter);
 -
--	# Generate the LinkOrCopyBuiltins.targets and LinkOrCopyRemoteHttp.targets file
--	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
--	 echo '  <Target Name="CopyBuiltins_AfterBuild" AfterTargets="AfterBuild">' && \
--	 for name in $(BUILT_INS);\
--	 do \
--	   echo '    <Copy SourceFiles="$$(OutDir)\git.exe" DestinationFiles="$$(OutDir)\'"$$name"'" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />'; \
--	 done && \
--	 echo '  </Target>' && \
--	 echo '</Project>') >git/LinkOrCopyBuiltins.targets
--	(echo '<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">' && \
--	 echo '  <Target Name="CopyBuiltins_AfterBuild" AfterTargets="AfterBuild">' && \
--	 for name in $(REMOTE_CURL_ALIASES); \
--	 do \
--	   echo '    <Copy SourceFiles="$$(OutDir)\'"$(REMOTE_CURL_PRIMARY)"'" DestinationFiles="$$(OutDir)\'"$$name"'" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />'; \
--	 done && \
--	 echo '  </Target>' && \
--	 echo '</Project>') >git-remote-http/LinkOrCopyRemoteHttp.targets
--	git add -f git/LinkOrCopyBuiltins.targets git-remote-http/LinkOrCopyRemoteHttp.targets
+-BEGIN {
+-    local(*D);
+-    my $me = $INC{"Generators.pm"};
+-    die "Couldn't find myself in \@INC, which is required to load the generators!" if ("$me" eq "");
+-    $me = dirname($me);
+-    if (opendir(D,"$me/Generators")) {
+-        foreach my $gen (readdir(D)) {
+-            next unless ($gen  =~ /\.pm$/);
+-            require "${me}/Generators/$gen";
+-            $gen =~ s,\.pm,,;
+-            push(@AVAILABLE, $gen);
+-        }
+-        closedir(D);
+-        my $gens = join(', ', @AVAILABLE);
+-    }
 -
--	# Add generated headers
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(GENERATED_H)
--	git add -f $(GENERATED_H)
+-    push @EXPORT_OK, qw(available);
+-}
 -
--	# Add scripts
--	rm -f perl/perl.mak
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(SCRIPT_LIB) $(SCRIPTS)
--	# Strip out the sane tool path, needed only for building
--	sed -i '/^git_broken_path_fix ".*/d' git-sh-setup
--	git add -f $(SCRIPT_LIB) $(SCRIPTS)
+-sub available {
+-    return @AVAILABLE;
+-}
 -
--	# Add Perl module
--	$(MAKE) $(LIB_PERL_GEN)
--	git add -f perl/build
+-sub generate {
+-    my ($gen, $git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    return eval("Generators::${gen}::generate(\$git_dir, \$out_dir, \$rel_dir, \%build_structure)") if grep(/^$gen$/, @AVAILABLE);
+-    die "Generator \"${gen}\" is not available!\nAvailable generators are: @AVAILABLE\n";
+-}
 -
--	# Add bin-wrappers, for testing
--	rm -rf bin-wrappers/
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(test_bindir_programs)
--	# Ensure that the GIT_EXEC_PATH is a Unix-y one, and that the absolute
--	# path of the repository is not hard-coded (GIT_EXEC_PATH will be set
--	# by test-lib.sh according to the current setup)
--	sed -i -e 's/^\(GIT_EXEC_PATH\)=.*/test -n "$${\1##*:*}" ||\
--			\1="$$(cygpath -u "$$\1")"/' \
--		-e "s|'$$(pwd)|\"\$$GIT_EXEC_PATH\"'|g" bin-wrappers/*
--	# Ensure that test-* helpers find the .dll files copied to top-level
--	sed -i 's|^PATH=.*|&:"$$GIT_EXEC_PATH"|' bin-wrappers/test-*
--	# We do not want to force hard-linking builtins
--	sed -i 's|\(git\)-\([-a-z]*\)\.exe"|\1.exe" \2|g' \
--		bin-wrappers/git-{receive-pack,upload-archive}
--	git add -f $(test_bindir_programs)
+-1;
+diff --git a/contrib/buildsystems/Generators/QMake.pm b/contrib/buildsystems/Generators/QMake.pm
+deleted file mode 100644
+index ff3b657e6105..000000000000
+--- a/contrib/buildsystems/Generators/QMake.pm
++++ /dev/null
+@@ -1,189 +0,0 @@
+-package Generators::QMake;
+-require Exporter;
 -
--	# Add templates
--	$(MAKE) -C templates
--	git add -f templates/boilerplates.made templates/blt/
+-use strict;
+-use vars qw($VERSION);
 -
--	# Add the translated messages
--	make MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 $(MOFILES)
--	git add -f $(MOFILES)
+-our $VERSION = '1.00';
+-our(@ISA, @EXPORT, @EXPORT_OK, @AVAILABLE);
+-@ISA = qw(Exporter);
 -
--	# Add build options
--	$(MAKE) MSVC=1 SKIP_VCPKG=1 prefix=/mingw64 GIT-BUILD-OPTIONS
--	git add -f GIT-BUILD-OPTIONS
+-BEGIN {
+-    push @EXPORT_OK, qw(generate);
+-}
 -
--	# Commit the whole shebang
--	git commit -m "Generate Visual Studio solution" \
--		-m "Auto-generated by \`$(MAKE)$(MAKEFLAGS) $@\`"
+-sub generate {
+-    my ($git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-
+-    my @libs = @{$build_structure{"LIBS"}};
+-    foreach (@libs) {
+-        createLibProject($_, $git_dir, $out_dir, $rel_dir, %build_structure);
+-    }
+-
+-    my @apps = @{$build_structure{"APPS"}};
+-    foreach (@apps) {
+-        createAppProject($_, $git_dir, $out_dir, $rel_dir, %build_structure);
+-    }
+-
+-    createGlueProject($git_dir, $out_dir, $rel_dir, %build_structure);
+-    return 0;
+-}
+-
+-sub createLibProject {
+-    my ($libname, $git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    print "Generate $libname lib project\n";
+-    $rel_dir = "../$rel_dir";
+-
+-    my $sources = join(" \\\n\t", sort(map("$rel_dir/$_", @{$build_structure{"LIBS_${libname}_SOURCES"}})));
+-    my $defines = join(" \\\n\t", sort(@{$build_structure{"LIBS_${libname}_DEFINES"}}));
+-    my $includes= join(" \\\n\t", sort(map("$rel_dir/$_", @{$build_structure{"LIBS_${libname}_INCLUDES"}})));
+-    my $cflags  = join(" ", sort(@{$build_structure{"LIBS_${libname}_CFLAGS"}}));
+-
+-    my $cflags_debug = $cflags;
+-    $cflags_debug =~ s/-MT/-MTd/;
+-    $cflags_debug =~ s/-O.//;
+-
+-    my $cflags_release = $cflags;
+-    $cflags_release =~ s/-MTd/-MT/;
+-
+-    my @tmp  = @{$build_structure{"LIBS_${libname}_LFLAGS"}};
+-    my @tmp2 = ();
+-    foreach (@tmp) {
+-        if (/^-LTCG/) {
+-        } elsif (/^-L/) {
+-            $_ =~ s/^-L/-LIBPATH:$rel_dir\//;
+-        }
+-        push(@tmp2, $_);
+-    }
+-    my $lflags = join(" ", sort(@tmp));
+-
+-    my $target = $libname;
+-    $target =~ s/\//_/g;
+-    $defines =~ s/-D//g;
+-    $defines =~ s/"/\\\\"/g;
+-    $includes =~ s/-I//g;
+-    mkdir "$target" || die "Could not create the directory $target for lib project!\n";
+-    open F, ">$target/$target.pro" || die "Could not open $target/$target.pro for writing!\n";
+-    print F << "EOM";
+-TEMPLATE = lib
+-TARGET = $target
+-DESTDIR = $rel_dir
+-
+-CONFIG -= qt
+-CONFIG += static
+-
+-QMAKE_CFLAGS =
+-QMAKE_CFLAGS_RELEASE = $cflags_release
+-QMAKE_CFLAGS_DEBUG = $cflags_debug
+-QMAKE_LIBFLAGS = $lflags
+-
+-DEFINES += \\
+-        $defines
+-
+-INCLUDEPATH += \\
+-        $includes
+-
+-SOURCES += \\
+-        $sources
+-EOM
+-    close F;
+-}
+-
+-sub createAppProject {
+-    my ($appname, $git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    print "Generate $appname app project\n";
+-    $rel_dir = "../$rel_dir";
+-
+-    my $sources = join(" \\\n\t", sort(map("$rel_dir/$_", @{$build_structure{"APPS_${appname}_SOURCES"}})));
+-    my $defines = join(" \\\n\t", sort(@{$build_structure{"APPS_${appname}_DEFINES"}}));
+-    my $includes= join(" \\\n\t", sort(map("$rel_dir/$_", @{$build_structure{"APPS_${appname}_INCLUDES"}})));
+-    my $cflags  = join(" ", sort(@{$build_structure{"APPS_${appname}_CFLAGS"}}));
+-
+-    my $cflags_debug = $cflags;
+-    $cflags_debug =~ s/-MT/-MTd/;
+-    $cflags_debug =~ s/-O.//;
+-
+-    my $cflags_release = $cflags;
+-    $cflags_release =~ s/-MTd/-MT/;
+-
+-    my $libs;
+-    foreach (sort(@{$build_structure{"APPS_${appname}_LIBS"}})) {
+-        $_ =~ s/\//_/g;
+-        $libs .= " $_";
+-    }
+-    my @tmp  = @{$build_structure{"APPS_${appname}_LFLAGS"}};
+-    my @tmp2 = ();
+-    foreach (@tmp) {
+-        # next if ($_ eq "-NODEFAULTLIB:MSVCRT.lib");
+-        if (/^-LTCG/) {
+-        } elsif (/^-L/) {
+-            $_ =~ s/^-L/-LIBPATH:$rel_dir\//;
+-        }
+-        push(@tmp2, $_);
+-    }
+-    my $lflags = join(" ", sort(@tmp));
+-
+-    my $target = $appname;
+-    $target =~ s/\.exe//;
+-    $target =~ s/\//_/g;
+-    $defines =~ s/-D//g;
+-    $defines =~ s/"/\\\\"/g;
+-    $includes =~ s/-I//g;
+-    mkdir "$target" || die "Could not create the directory $target for app project!\n";
+-    open F, ">$target/$target.pro" || die "Could not open $target/$target.pro for writing!\n";
+-    print F << "EOM";
+-TEMPLATE = app
+-TARGET = $target
+-DESTDIR = $rel_dir
+-
+-CONFIG -= qt embed_manifest_exe
+-CONFIG += console
+-
+-QMAKE_CFLAGS =
+-QMAKE_CFLAGS_RELEASE = $cflags_release
+-QMAKE_CFLAGS_DEBUG = $cflags_debug
+-QMAKE_LFLAGS = $lflags
+-LIBS   = $libs
+-
+-DEFINES += \\
+-        $defines
+-
+-INCLUDEPATH += \\
+-        $includes
+-
+-win32:QMAKE_LFLAGS += -LIBPATH:$rel_dir
+-else: QMAKE_LFLAGS += -L$rel_dir
+-
+-SOURCES += \\
+-        $sources
+-EOM
+-    close F;
+-}
+-
+-sub createGlueProject {
+-    my ($git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    my $libs = join(" \\ \n", map("\t$_|$_.pro", @{$build_structure{"LIBS"}}));
+-    my $apps = join(" \\ \n", map("\t$_|$_.pro", @{$build_structure{"APPS"}}));
+-    $libs =~ s/\.a//g;
+-    $libs =~ s/\//_/g;
+-    $libs =~ s/\|/\//g;
+-    $apps =~ s/\.exe//g;
+-    $apps =~ s/\//_/g;
+-    $apps =~ s/\|/\//g;
+-
+-    my $filename = $out_dir;
+-    $filename =~ s/.*\/([^\/]+)$/$1/;
+-    $filename =~ s/\/$//;
+-    print "Generate glue project $filename.pro\n";
+-    open F, ">$filename.pro" || die "Could not open $filename.pro for writing!\n";
+-    print F << "EOM";
+-TEMPLATE = subdirs
+-CONFIG += ordered
+-SUBDIRS += \\
+-$libs \\
+-$apps
+-EOM
+-    close F;
+-}
+-
+-1;
+diff --git a/contrib/buildsystems/Generators/Vcproj.pm b/contrib/buildsystems/Generators/Vcproj.pm
+deleted file mode 100644
+index 737647e76afd..000000000000
+--- a/contrib/buildsystems/Generators/Vcproj.pm
++++ /dev/null
+@@ -1,579 +0,0 @@
+-package Generators::Vcproj;
+-require Exporter;
+-
+-use strict;
+-use vars qw($VERSION);
+-use Digest::SHA qw(sha256_hex);
+-
+-our $VERSION = '1.00';
+-our(@ISA, @EXPORT, @EXPORT_OK, @AVAILABLE);
+-@ISA = qw(Exporter);
+-
+-BEGIN {
+-    push @EXPORT_OK, qw(generate);
+-}
+-
+-sub generate_guid ($) {
+-    my $hex = sha256_hex($_[0]);
+-    $hex =~ s/^(.{8})(.{4})(.{4})(.{4})(.{12}).*/{$1-$2-$3-$4-$5}/;
+-    $hex =~ tr/a-z/A-Z/;
+-    return $hex;
+-}
+-
+-sub generate {
+-    my ($git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    my @libs = @{$build_structure{"LIBS"}};
+-    foreach (@libs) {
+-        createLibProject($_, $git_dir, $out_dir, $rel_dir, \%build_structure);
+-    }
+-
+-    my @apps = @{$build_structure{"APPS"}};
+-    foreach (@apps) {
+-        createAppProject($_, $git_dir, $out_dir, $rel_dir, \%build_structure);
+-    }
+-
+-    createGlueProject($git_dir, $out_dir, $rel_dir, %build_structure);
+-    return 0;
+-}
+-
+-sub createLibProject {
+-    my ($libname, $git_dir, $out_dir, $rel_dir, $build_structure) = @_;
+-    print "Generate $libname vcproj lib project\n";
+-    $rel_dir = "..\\$rel_dir";
+-    $rel_dir =~ s/\//\\/g;
+-
+-    my $target = $libname;
+-    $target =~ s/\//_/g;
+-    $target =~ s/\.a//;
+-
+-    my $uuid = generate_guid($libname);
+-    $$build_structure{"LIBS_${target}_GUID"} = $uuid;
+-
+-    my @srcs = sort(map("$rel_dir\\$_", @{$$build_structure{"LIBS_${libname}_SOURCES"}}));
+-    my @sources;
+-    foreach (@srcs) {
+-        $_ =~ s/\//\\/g;
+-        push(@sources, $_);
+-    }
+-    my $defines = join(",", sort(@{$$build_structure{"LIBS_${libname}_DEFINES"}}));
+-    my $includes= join(";", sort(map("&quot;$rel_dir\\$_&quot;", @{$$build_structure{"LIBS_${libname}_INCLUDES"}})));
+-    my $cflags  = join(" ", sort(@{$$build_structure{"LIBS_${libname}_CFLAGS"}}));
+-    $cflags =~ s/\"/&quot;/g;
+-    $cflags =~ s/</&lt;/g;
+-    $cflags =~ s/>/&gt;/g;
+-
+-    my $cflags_debug = $cflags;
+-    $cflags_debug =~ s/-MT/-MTd/;
+-    $cflags_debug =~ s/-O.//;
+-
+-    my $cflags_release = $cflags;
+-    $cflags_release =~ s/-MTd/-MT/;
+-
+-    my @tmp  = @{$$build_structure{"LIBS_${libname}_LFLAGS"}};
+-    my @tmp2 = ();
+-    foreach (@tmp) {
+-        if (/^-LTCG/) {
+-        } elsif (/^-L/) {
+-            $_ =~ s/^-L/-LIBPATH:$rel_dir\//;
+-        }
+-        push(@tmp2, $_);
+-    }
+-    my $lflags = join(" ", sort(@tmp));
+-
+-    $defines =~ s/-D//g;
+-    $defines =~ s/\"/\\&quot;/g;
+-    $defines =~ s/</&lt;/g;
+-    $defines =~ s/>/&gt;/g;
+-    $defines =~ s/\'//g;
+-    $includes =~ s/-I//g;
+-    mkdir "$target" || die "Could not create the directory $target for lib project!\n";
+-    open F, ">$target/$target.vcproj" || die "Could not open $target/$target.pro for writing!\n";
+-    binmode F, ":crlf";
+-    print F << "EOM";
+-<?xml version="1.0" encoding = "Windows-1252"?>
+-<VisualStudioProject
+-	ProjectType="Visual C++"
+-	Version="9,00"
+-	Name="$target"
+-	ProjectGUID="$uuid">
+-	<Platforms>
+-		<Platform
+-			Name="Win32"/>
+-	</Platforms>
+-	<ToolFiles>
+-	</ToolFiles>
+-	<Configurations>
+-		<Configuration
+-			Name="Debug|Win32"
+-			OutputDirectory="$rel_dir"
+-			ConfigurationType="4"
+-			CharacterSet="0"
+-			IntermediateDirectory="\$(ProjectDir)\$(ConfigurationName)"
+-			>
+-			<Tool
+-				Name="VCPreBuildEventTool"
+-			/>
+-			<Tool
+-				Name="VCCustomBuildTool"
+-			/>
+-			<Tool
+-				Name="VCXMLDataGeneratorTool"
+-			/>
+-			<Tool
+-				Name="VCMIDLTool"
+-			/>
+-			<Tool
+-				Name="VCCLCompilerTool"
+-				AdditionalOptions="$cflags_debug"
+-				Optimization="0"
+-				InlineFunctionExpansion="1"
+-				AdditionalIncludeDirectories="$includes"
+-				PreprocessorDefinitions="WIN32,_DEBUG,$defines"
+-				MinimalRebuild="true"
+-				RuntimeLibrary="1"
+-				UsePrecompiledHeader="0"
+-				ProgramDataBaseFileName="\$(IntDir)\\\$(TargetName).pdb"
+-				WarningLevel="3"
+-				DebugInformationFormat="3"
+-			/>
+-			<Tool
+-				Name="VCManagedResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCPreLinkEventTool"
+-			/>
+-			<Tool
+-				Name="VCLibrarianTool"
+-				SuppressStartupBanner="true"
+-			/>
+-			<Tool
+-				Name="VCALinkTool"
+-			/>
+-			<Tool
+-				Name="VCXDCMakeTool"
+-			/>
+-			<Tool
+-				Name="VCBscMakeTool"
+-			/>
+-			<Tool
+-				Name="VCFxCopTool"
+-			/>
+-			<Tool
+-				Name="VCPostBuildEventTool"
+-			/>
+-		</Configuration>
+-		<Configuration
+-			Name="Release|Win32"
+-			OutputDirectory="$rel_dir"
+-			ConfigurationType="4"
+-			CharacterSet="0"
+-			WholeProgramOptimization="1"
+-			IntermediateDirectory="\$(ProjectDir)\$(ConfigurationName)"
+-			>
+-			<Tool
+-				Name="VCPreBuildEventTool"
+-			/>
+-			<Tool
+-				Name="VCCustomBuildTool"
+-			/>
+-			<Tool
+-				Name="VCXMLDataGeneratorTool"
+-			/>
+-			<Tool
+-				Name="VCMIDLTool"
+-			/>
+-			<Tool
+-				Name="VCCLCompilerTool"
+-				AdditionalOptions="$cflags_release"
+-				Optimization="2"
+-				InlineFunctionExpansion="1"
+-				EnableIntrinsicFunctions="true"
+-				AdditionalIncludeDirectories="$includes"
+-				PreprocessorDefinitions="WIN32,NDEBUG,$defines"
+-				RuntimeLibrary="0"
+-				EnableFunctionLevelLinking="true"
+-				UsePrecompiledHeader="0"
+-				ProgramDataBaseFileName="\$(IntDir)\\\$(TargetName).pdb"
+-				WarningLevel="3"
+-				DebugInformationFormat="3"
+-			/>
+-			<Tool
+-				Name="VCManagedResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCPreLinkEventTool"
+-			/>
+-			<Tool
+-				Name="VCLibrarianTool"
+-				SuppressStartupBanner="true"
+-			/>
+-			<Tool
+-				Name="VCALinkTool"
+-			/>
+-			<Tool
+-				Name="VCXDCMakeTool"
+-			/>
+-			<Tool
+-				Name="VCBscMakeTool"
+-			/>
+-			<Tool
+-				Name="VCFxCopTool"
+-			/>
+-			<Tool
+-				Name="VCPostBuildEventTool"
+-			/>
+-		</Configuration>
+-	</Configurations>
+-	<Files>
+-		<Filter
+-			Name="Source Files"
+-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+-EOM
+-    foreach(@sources) {
+-        print F << "EOM";
+-			<File
+-				RelativePath="$_"/>
+-EOM
+-    }
+-    print F << "EOM";
+-		</Filter>
+-	</Files>
+-	<Globals>
+-	</Globals>
+-</VisualStudioProject>
+-EOM
+-    close F;
+-}
+-
+-sub createAppProject {
+-    my ($appname, $git_dir, $out_dir, $rel_dir, $build_structure) = @_;
+-    print "Generate $appname vcproj app project\n";
+-    $rel_dir = "..\\$rel_dir";
+-    $rel_dir =~ s/\//\\/g;
+-
+-    my $target = $appname;
+-    $target =~ s/\//_/g;
+-    $target =~ s/\.exe//;
+-
+-    my $uuid = generate_guid($appname);
+-    $$build_structure{"APPS_${target}_GUID"} = $uuid;
+-
+-    my @srcs = sort(map("$rel_dir\\$_", @{$$build_structure{"APPS_${appname}_SOURCES"}}));
+-    my @sources;
+-    foreach (@srcs) {
+-        $_ =~ s/\//\\/g;
+-        push(@sources, $_);
+-    }
+-    my $defines = join(",", sort(@{$$build_structure{"APPS_${appname}_DEFINES"}}));
+-    my $includes= join(";", sort(map("&quot;$rel_dir\\$_&quot;", @{$$build_structure{"APPS_${appname}_INCLUDES"}})));
+-    my $cflags  = join(" ", sort(@{$$build_structure{"APPS_${appname}_CFLAGS"}}));
+-    $cflags =~ s/\"/&quot;/g;
+-    $cflags =~ s/</&lt;/g;
+-    $cflags =~ s/>/&gt;/g;
+-
+-    my $cflags_debug = $cflags;
+-    $cflags_debug =~ s/-MT/-MTd/;
+-    $cflags_debug =~ s/-O.//;
+-
+-    my $cflags_release = $cflags;
+-    $cflags_release =~ s/-MTd/-MT/;
+-
+-    my $libs;
+-    foreach (sort(@{$$build_structure{"APPS_${appname}_LIBS"}})) {
+-        $_ =~ s/\//_/g;
+-        $libs .= " $_";
+-    }
+-    my @tmp  = @{$$build_structure{"APPS_${appname}_LFLAGS"}};
+-    my @tmp2 = ();
+-    foreach (@tmp) {
+-        if (/^-LTCG/) {
+-        } elsif (/^-L/) {
+-            $_ =~ s/^-L/-LIBPATH:$rel_dir\//;
+-        }
+-        push(@tmp2, $_);
+-    }
+-    my $lflags = join(" ", sort(@tmp)) . " -LIBPATH:$rel_dir";
+-
+-    $defines =~ s/-D//g;
+-    $defines =~ s/\"/\\&quot;/g;
+-    $defines =~ s/</&lt;/g;
+-    $defines =~ s/>/&gt;/g;
+-    $defines =~ s/\'//g;
+-    $defines =~ s/\\\\/\\/g;
+-    $includes =~ s/-I//g;
+-    mkdir "$target" || die "Could not create the directory $target for lib project!\n";
+-    open F, ">$target/$target.vcproj" || die "Could not open $target/$target.pro for writing!\n";
+-    binmode F, ":crlf";
+-    print F << "EOM";
+-<?xml version="1.0" encoding = "Windows-1252"?>
+-<VisualStudioProject
+-	ProjectType="Visual C++"
+-	Version="9,00"
+-	Name="$target"
+-	ProjectGUID="$uuid">
+-	<Platforms>
+-		<Platform
+-			Name="Win32"/>
+-	</Platforms>
+-	<ToolFiles>
+-	</ToolFiles>
+-	<Configurations>
+-		<Configuration
+-			Name="Debug|Win32"
+-			OutputDirectory="$rel_dir"
+-			ConfigurationType="1"
+-			CharacterSet="0"
+-			IntermediateDirectory="\$(ProjectDir)\$(ConfigurationName)"
+-			>
+-			<Tool
+-				Name="VCPreBuildEventTool"
+-			/>
+-			<Tool
+-				Name="VCCustomBuildTool"
+-			/>
+-			<Tool
+-				Name="VCXMLDataGeneratorTool"
+-			/>
+-			<Tool
+-				Name="VCMIDLTool"
+-			/>
+-			<Tool
+-				Name="VCCLCompilerTool"
+-				AdditionalOptions="$cflags_debug"
+-				Optimization="0"
+-				InlineFunctionExpansion="1"
+-				AdditionalIncludeDirectories="$includes"
+-				PreprocessorDefinitions="WIN32,_DEBUG,$defines"
+-				MinimalRebuild="true"
+-				RuntimeLibrary="1"
+-				UsePrecompiledHeader="0"
+-				ProgramDataBaseFileName="\$(IntDir)\\\$(TargetName).pdb"
+-				WarningLevel="3"
+-				DebugInformationFormat="3"
+-			/>
+-			<Tool
+-				Name="VCManagedResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCPreLinkEventTool"
+-			/>
+-			<Tool
+-				Name="VCLinkerTool"
+-				AdditionalDependencies="$libs"
+-				AdditionalOptions="$lflags"
+-				LinkIncremental="2"
+-				GenerateDebugInformation="true"
+-				SubSystem="1"
+-				TargetMachine="1"
+-			/>
+-			<Tool
+-				Name="VCALinkTool"
+-			/>
+-			<Tool
+-				Name="VCXDCMakeTool"
+-			/>
+-			<Tool
+-				Name="VCBscMakeTool"
+-			/>
+-			<Tool
+-				Name="VCFxCopTool"
+-			/>
+-			<Tool
+-				Name="VCPostBuildEventTool"
+-			/>
+-		</Configuration>
+-		<Configuration
+-			Name="Release|Win32"
+-			OutputDirectory="$rel_dir"
+-			ConfigurationType="1"
+-			CharacterSet="0"
+-			WholeProgramOptimization="1"
+-			IntermediateDirectory="\$(ProjectDir)\$(ConfigurationName)"
+-			>
+-			<Tool
+-				Name="VCPreBuildEventTool"
+-			/>
+-			<Tool
+-				Name="VCCustomBuildTool"
+-			/>
+-			<Tool
+-				Name="VCXMLDataGeneratorTool"
+-			/>
+-			<Tool
+-				Name="VCMIDLTool"
+-			/>
+-			<Tool
+-				Name="VCCLCompilerTool"
+-				AdditionalOptions="$cflags_release"
+-				Optimization="2"
+-				InlineFunctionExpansion="1"
+-				EnableIntrinsicFunctions="true"
+-				AdditionalIncludeDirectories="$includes"
+-				PreprocessorDefinitions="WIN32,NDEBUG,$defines"
+-				RuntimeLibrary="0"
+-				EnableFunctionLevelLinking="true"
+-				UsePrecompiledHeader="0"
+-				ProgramDataBaseFileName="\$(IntDir)\\\$(TargetName).pdb"
+-				WarningLevel="3"
+-				DebugInformationFormat="3"
+-			/>
+-			<Tool
+-				Name="VCManagedResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCResourceCompilerTool"
+-			/>
+-			<Tool
+-				Name="VCPreLinkEventTool"
+-			/>
+-			<Tool
+-				Name="VCLinkerTool"
+-				AdditionalDependencies="$libs"
+-				AdditionalOptions="$lflags"
+-				LinkIncremental="1"
+-				GenerateDebugInformation="true"
+-				SubSystem="1"
+-				TargetMachine="1"
+-				OptimizeReferences="2"
+-				EnableCOMDATFolding="2"
+-			/>
+-			<Tool
+-				Name="VCALinkTool"
+-			/>
+-			<Tool
+-				Name="VCXDCMakeTool"
+-			/>
+-			<Tool
+-				Name="VCBscMakeTool"
+-			/>
+-			<Tool
+-				Name="VCFxCopTool"
+-			/>
+-			<Tool
+-				Name="VCPostBuildEventTool"
+-			/>
+-		</Configuration>
+-	</Configurations>
+-	<Files>
+-		<Filter
+-			Name="Source Files"
+-			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+-EOM
+-    foreach(@sources) {
+-        print F << "EOM";
+-			<File
+-				RelativePath="$_"/>
+-EOM
+-    }
+-    print F << "EOM";
+-		</Filter>
+-	</Files>
+-	<Globals>
+-	</Globals>
+-</VisualStudioProject>
+-EOM
+-    close F;
+-}
+-
+-sub createGlueProject {
+-    my ($git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    print "Generate solutions file\n";
+-    $rel_dir = "..\\$rel_dir";
+-    $rel_dir =~ s/\//\\/g;
+-    my $SLN_HEAD = "Microsoft Visual Studio Solution File, Format Version 10.00\n# Visual Studio 2008\n";
+-    my $SLN_PRE  = "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = ";
+-    my $SLN_POST = "\nEndProject\n";
+-
+-    my @libs = @{$build_structure{"LIBS"}};
+-    my @tmp;
+-    foreach (@libs) {
+-        $_ =~ s/\//_/g;
+-        $_ =~ s/\.a//;
+-        push(@tmp, $_);
+-    }
+-    @libs = @tmp;
+-
+-    my @apps = @{$build_structure{"APPS"}};
+-    @tmp = ();
+-    foreach (@apps) {
+-        $_ =~ s/\//_/g;
+-        $_ =~ s/\.exe//;
+-        if ($_ eq "git" ) {
+-            unshift(@tmp, $_);
+-        } else {
+-            push(@tmp, $_);
+-        }
+-    }
+-    @apps = @tmp;
+-
+-    open F, ">git.sln" || die "Could not open git.sln for writing!\n";
+-    binmode F, ":crlf";
+-    print F "$SLN_HEAD";
+-
+-    my $uuid_libgit = $build_structure{"LIBS_libgit_GUID"};
+-    my $uuid_xdiff_lib = $build_structure{"LIBS_xdiff_lib_GUID"};
+-    foreach (@apps) {
+-        my $appname = $_;
+-        my $uuid = $build_structure{"APPS_${appname}_GUID"};
+-        print F "$SLN_PRE";
+-        print F "\"${appname}\", \"${appname}\\${appname}.vcproj\", \"${uuid}\"\n";
+-        print F "	ProjectSection(ProjectDependencies) = postProject\n";
+-        print F "		${uuid_libgit} = ${uuid_libgit}\n";
+-        print F "		${uuid_xdiff_lib} = ${uuid_xdiff_lib}\n";
+-        print F "	EndProjectSection";
+-        print F "$SLN_POST";
+-    }
+-    foreach (@libs) {
+-        my $libname = $_;
+-        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
+-        print F "$SLN_PRE";
+-        print F "\"${libname}\", \"${libname}\\${libname}.vcproj\", \"${uuid}\"";
+-        print F "$SLN_POST";
+-    }
+-
+-    print F << "EOM";
+-Global
+-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+-		Debug|Win32 = Debug|Win32
+-		Release|Win32 = Release|Win32
+-	EndGlobalSection
+-EOM
+-    print F << "EOM";
+-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+-EOM
+-    foreach (@apps) {
+-        my $appname = $_;
+-        my $uuid = $build_structure{"APPS_${appname}_GUID"};
+-        print F "\t\t${uuid}.Debug|Win32.ActiveCfg = Debug|Win32\n";
+-        print F "\t\t${uuid}.Debug|Win32.Build.0 = Debug|Win32\n";
+-        print F "\t\t${uuid}.Release|Win32.ActiveCfg = Release|Win32\n";
+-        print F "\t\t${uuid}.Release|Win32.Build.0 = Release|Win32\n";
+-    }
+-    foreach (@libs) {
+-        my $libname = $_;
+-        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
+-        print F "\t\t${uuid}.Debug|Win32.ActiveCfg = Debug|Win32\n";
+-        print F "\t\t${uuid}.Debug|Win32.Build.0 = Debug|Win32\n";
+-        print F "\t\t${uuid}.Release|Win32.ActiveCfg = Release|Win32\n";
+-        print F "\t\t${uuid}.Release|Win32.Build.0 = Release|Win32\n";
+-    }
+-
+-    print F << "EOM";
+-	EndGlobalSection
+-EndGlobal
+-EOM
+-    close F;
+-}
+-
+-1;
+diff --git a/contrib/buildsystems/Generators/Vcxproj.pm b/contrib/buildsystems/Generators/Vcxproj.pm
+deleted file mode 100644
+index b2e68a16715e..000000000000
+--- a/contrib/buildsystems/Generators/Vcxproj.pm
++++ /dev/null
+@@ -1,402 +0,0 @@
+-package Generators::Vcxproj;
+-require Exporter;
+-
+-use strict;
+-use vars qw($VERSION);
+-use Digest::SHA qw(sha256_hex);
+-
+-our $VERSION = '1.00';
+-our(@ISA, @EXPORT, @EXPORT_OK, @AVAILABLE);
+-@ISA = qw(Exporter);
+-
+-BEGIN {
+-    push @EXPORT_OK, qw(generate);
+-}
+-
+-sub generate_guid ($) {
+-	my $hex = sha256_hex($_[0]);
+-	$hex =~ s/^(.{8})(.{4})(.{4})(.{4})(.{12}).*/{$1-$2-$3-$4-$5}/;
+-	$hex =~ tr/a-z/A-Z/;
+-	return $hex;
+-}
+-
+-sub generate {
+-    my ($git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    my @libs = @{$build_structure{"LIBS"}};
+-    foreach (@libs) {
+-        createProject($_, $git_dir, $out_dir, $rel_dir, \%build_structure, 1);
+-    }
+-
+-    my @apps = @{$build_structure{"APPS"}};
+-    foreach (@apps) {
+-        createProject($_, $git_dir, $out_dir, $rel_dir, \%build_structure, 0);
+-    }
+-
+-    createGlueProject($git_dir, $out_dir, $rel_dir, %build_structure);
+-    return 0;
+-}
+-
+-sub createProject {
+-    my ($name, $git_dir, $out_dir, $rel_dir, $build_structure, $static_library) = @_;
+-    my $label = $static_library ? "lib" : "app";
+-    my $prefix = $static_library ? "LIBS_" : "APPS_";
+-    my $config_type = $static_library ? "StaticLibrary" : "Application";
+-    print "Generate $name vcxproj $label project\n";
+-    my $cdup = $name;
+-    $cdup =~ s/[^\/]+/../g;
+-    $cdup =~ s/\//\\/g;
+-    $rel_dir = $rel_dir eq "." ? $cdup : "$cdup\\$rel_dir";
+-    $rel_dir =~ s/\//\\/g;
+-
+-    my $target = $name;
+-    if ($static_library) {
+-      $target =~ s/\.a//;
+-    } else {
+-      $target =~ s/\.exe//;
+-    }
+-
+-    my $uuid = generate_guid($name);
+-    $$build_structure{"$prefix${target}_GUID"} = $uuid;
+-    my $vcxproj = $target;
+-    $vcxproj =~ s/(.*\/)?(.*)/$&\/$2.vcxproj/;
+-    $vcxproj =~ s/([^\/]*)(\/lib)\/(lib.vcxproj)/$1$2\/$1_$3/;
+-    $$build_structure{"$prefix${target}_VCXPROJ"} = $vcxproj;
+-
+-    my @srcs = sort(map("$rel_dir\\$_", @{$$build_structure{"$prefix${name}_SOURCES"}}));
+-    my @sources;
+-    foreach (@srcs) {
+-        $_ =~ s/\//\\/g;
+-        push(@sources, $_);
+-    }
+-    my $defines = join(";", sort(@{$$build_structure{"$prefix${name}_DEFINES"}}));
+-    my $includes= join(";", sort(map { s/^-I//; s/\//\\/g; File::Spec->file_name_is_absolute($_) ? $_ : "$rel_dir\\$_" } @{$$build_structure{"$prefix${name}_INCLUDES"}}));
+-    my $cflags = join(" ", sort(map { s/^-[GLMOWZ].*//; s/.* .*/"$&"/; $_; } @{$$build_structure{"$prefix${name}_CFLAGS"}}));
+-    $cflags =~ s/</&lt;/g;
+-    $cflags =~ s/>/&gt;/g;
+-
+-    my $libs_release = "\n    ";
+-    my $libs_debug = "\n    ";
+-    if (!$static_library && $name ne 'headless-git') {
+-      $libs_release = join(";", sort(grep /^(?!libgit\.lib|xdiff\/lib\.lib|vcs-svn\/lib\.lib|reftable\/libreftable\.lib)/, @{$$build_structure{"$prefix${name}_LIBS"}}));
+-      $libs_debug = $libs_release;
+-      $libs_debug =~ s/zlib\.lib/zlibd\.lib/g;
+-      $libs_debug =~ s/libexpat\.lib/libexpatd\.lib/g;
+-      $libs_debug =~ s/libcurl\.lib/libcurl-d\.lib/g;
+-    }
+-
+-    $defines =~ s/-D//g;
+-    $defines =~ s/</&lt;/g;
+-    $defines =~ s/>/&gt;/g;
+-    $defines =~ s/\'//g;
+-
+-    die "Could not create the directory $target for $label project!\n" unless (-d "$target" || mkdir "$target");
+-
+-    open F, ">$vcxproj" or die "Could not open $vcxproj for writing!\n";
+-    binmode F, ":crlf :utf8";
+-    print F chr(0xFEFF);
+-    print F << "EOM";
+-<?xml version="1.0" encoding="utf-8"?>
+-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+-  <ItemGroup Label="ProjectConfigurations">
+-    <ProjectConfiguration Include="Debug|Win32">
+-      <Configuration>Debug</Configuration>
+-      <Platform>Win32</Platform>
+-    </ProjectConfiguration>
+-    <ProjectConfiguration Include="Release|Win32">
+-      <Configuration>Release</Configuration>
+-      <Platform>Win32</Platform>
+-    </ProjectConfiguration>
+-    <ProjectConfiguration Include="Debug|x64">
+-      <Configuration>Debug</Configuration>
+-      <Platform>x64</Platform>
+-    </ProjectConfiguration>
+-    <ProjectConfiguration Include="Release|x64">
+-      <Configuration>Release</Configuration>
+-      <Platform>x64</Platform>
+-    </ProjectConfiguration>
+-  </ItemGroup>
+-  <PropertyGroup Label="Globals">
+-    <ProjectGuid>$uuid</ProjectGuid>
+-    <Keyword>Win32Proj</Keyword>
+-    <VCPKGArch Condition="'\$(Platform)'=='Win32'">x86-windows</VCPKGArch>
+-    <VCPKGArch Condition="'\$(Platform)'!='Win32'">x64-windows</VCPKGArch>
+-    <VCPKGArchDirectory>$cdup\\compat\\vcbuild\\vcpkg\\installed\\\$(VCPKGArch)</VCPKGArchDirectory>
+-    <VCPKGBinDirectory Condition="'\$(Configuration)'=='Debug'">\$(VCPKGArchDirectory)\\debug\\bin</VCPKGBinDirectory>
+-    <VCPKGLibDirectory Condition="'\$(Configuration)'=='Debug'">\$(VCPKGArchDirectory)\\debug\\lib</VCPKGLibDirectory>
+-    <VCPKGBinDirectory Condition="'\$(Configuration)'!='Debug'">\$(VCPKGArchDirectory)\\bin</VCPKGBinDirectory>
+-    <VCPKGLibDirectory Condition="'\$(Configuration)'!='Debug'">\$(VCPKGArchDirectory)\\lib</VCPKGLibDirectory>
+-    <VCPKGIncludeDirectory>\$(VCPKGArchDirectory)\\include</VCPKGIncludeDirectory>
+-    <VCPKGLibs Condition="'\$(Configuration)'=='Debug'">$libs_debug</VCPKGLibs>
+-    <VCPKGLibs Condition="'\$(Configuration)'!='Debug'">$libs_release</VCPKGLibs>
+-  </PropertyGroup>
+-  <Import Project="\$(VCTargetsPath)\\Microsoft.Cpp.Default.props" />
+-  <PropertyGroup Condition="'\$(Configuration)'=='Debug'" Label="Configuration">
+-    <UseDebugLibraries>true</UseDebugLibraries>
+-    <LinkIncremental>true</LinkIncremental>
+-  </PropertyGroup>
+-  <PropertyGroup Condition="'\$(Configuration)'=='Release'" Label="Configuration">
+-    <UseDebugLibraries>false</UseDebugLibraries>
+-    <WholeProgramOptimization>true</WholeProgramOptimization>
+-  </PropertyGroup>
+-  <PropertyGroup>
+-    <ConfigurationType>$config_type</ConfigurationType>
+-    <PlatformToolset>v140</PlatformToolset>
+-    <!-- <CharacterSet>UTF-8</CharacterSet> -->
+-    <OutDir>..\\</OutDir>
+-    <!-- <IntDir>\$(ProjectDir)\$(Configuration)\\</IntDir> -->
+-  </PropertyGroup>
+-  <Import Project="\$(VCTargetsPath)\\Microsoft.Cpp.props" />
+-  <ImportGroup Label="ExtensionSettings">
+-  </ImportGroup>
+-  <ImportGroup Label="Shared">
+-  </ImportGroup>
+-  <ImportGroup Label="PropertySheets">
+-    <Import Project="\$(UserRootDir)\\Microsoft.Cpp.\$(Platform).user.props" Condition="exists('\$(UserRootDir)\\Microsoft.Cpp.\$(Platform).user.props')" Label="LocalAppDataPlatform" />
+-  </ImportGroup>
+-  <PropertyGroup Label="UserMacros" />
+-  <PropertyGroup>
+-    <GenerateManifest>false</GenerateManifest>
+-    <EnableManagedIncrementalBuild>true</EnableManagedIncrementalBuild>
+-  </PropertyGroup>
+-  <ItemDefinitionGroup>
+-    <ClCompile>
+-      <AdditionalOptions>$cflags %(AdditionalOptions)</AdditionalOptions>
+-      <AdditionalIncludeDirectories>$cdup;$cdup\\compat;$cdup\\compat\\regex;$cdup\\compat\\win32;$cdup\\compat\\poll;$cdup\\compat\\vcbuild\\include;\$(VCPKGIncludeDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+-      <EnableParallelCodeGeneration />
+-      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+-      <PrecompiledHeader />
+-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+-    </ClCompile>
+-    <Lib>
+-      <SuppressStartupBanner>true</SuppressStartupBanner>
+-    </Lib>
+-    <Link>
+-      <AdditionalLibraryDirectories>\$(VCPKGLibDirectory);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+-      <AdditionalDependencies>\$(VCPKGLibs);\$(AdditionalDependencies)</AdditionalDependencies>
+-      <AdditionalOptions>invalidcontinue.obj %(AdditionalOptions)</AdditionalOptions>
+-      <EntryPointSymbol>wmainCRTStartup</EntryPointSymbol>
+-      <ManifestFile>$cdup\\compat\\win32\\git.manifest</ManifestFile>
+-      <SubSystem>Console</SubSystem>
+-    </Link>
+-EOM
+-    if ($target eq 'libgit') {
+-        print F << "EOM";
+-    <PreBuildEvent Condition="!Exists('$cdup\\compat\\vcbuild\\vcpkg\\installed\\\$(VCPKGArch)\\include\\openssl\\ssl.h')">
+-      <Message>Initialize VCPKG</Message>
+-      <Command>del "$cdup\\compat\\vcbuild\\vcpkg"</Command>
+-      <Command>call "$cdup\\compat\\vcbuild\\vcpkg_install.bat"</Command>
+-    </PreBuildEvent>
+-EOM
+-    }
+-    print F << "EOM";
+-  </ItemDefinitionGroup>
+-  <ItemDefinitionGroup Condition="'\$(Platform)'=='Win32'">
+-    <Link>
+-      <TargetMachine>MachineX86</TargetMachine>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemDefinitionGroup Condition="'\$(Configuration)'=='Debug'">
+-    <ClCompile>
+-      <Optimization>Disabled</Optimization>
+-      <PreprocessorDefinitions>WIN32;_DEBUG;$defines;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+-    </ClCompile>
+-    <Link>
+-      <GenerateDebugInformation>true</GenerateDebugInformation>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemDefinitionGroup Condition="'\$(Configuration)'=='Release'">
+-    <ClCompile>
+-      <Optimization>MaxSpeed</Optimization>
+-      <IntrinsicFunctions>true</IntrinsicFunctions>
+-      <PreprocessorDefinitions>WIN32;NDEBUG;$defines;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+-      <FunctionLevelLinking>true</FunctionLevelLinking>
+-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+-    </ClCompile>
+-    <Link>
+-      <GenerateDebugInformation>true</GenerateDebugInformation>
+-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+-      <OptimizeReferences>true</OptimizeReferences>
+-    </Link>
+-  </ItemDefinitionGroup>
+-  <ItemGroup>
+-EOM
+-    foreach(@sources) {
+-        print F << "EOM";
+-    <ClCompile Include="$_" />
+-EOM
+-    }
+-    print F << "EOM";
+-  </ItemGroup>
+-EOM
+-    if ((!$static_library || $target =~ 'vcs-svn' || $target =~ 'xdiff') && !($name =~ /headless-git/)) {
+-      my $uuid_libgit = $$build_structure{"LIBS_libgit_GUID"};
+-      my $uuid_libreftable = $$build_structure{"LIBS_reftable/libreftable_GUID"};
+-      my $uuid_xdiff_lib = $$build_structure{"LIBS_xdiff/lib_GUID"};
+-
+-      print F << "EOM";
+-  <ItemGroup>
+-    <ProjectReference Include="$cdup\\libgit\\libgit.vcxproj">
+-      <Project>$uuid_libgit</Project>
+-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+-    </ProjectReference>
+-EOM
+-      if (!($name =~ /xdiff|libreftable/)) {
+-        print F << "EOM";
+-    <ProjectReference Include="$cdup\\reftable\\libreftable\\libreftable.vcxproj">
+-      <Project>$uuid_libreftable</Project>
+-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+-    </ProjectReference>
+-EOM
+-      }
+-      if (!($name =~ 'xdiff')) {
+-        print F << "EOM";
+-    <ProjectReference Include="$cdup\\xdiff\\lib\\xdiff_lib.vcxproj">
+-      <Project>$uuid_xdiff_lib</Project>
+-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+-    </ProjectReference>
+-EOM
+-      }
+-      if ($name =~ /(test-(line-buffer|svn-fe)|^git-remote-testsvn)\.exe$/) {
+-        my $uuid_vcs_svn_lib = $$build_structure{"LIBS_vcs-svn/lib_GUID"};
+-        print F << "EOM";
+-    <ProjectReference Include="$cdup\\vcs-svn\\lib\\vcs-svn_lib.vcxproj">
+-      <Project>$uuid_vcs_svn_lib</Project>
+-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+-    </ProjectReference>
+-EOM
+-      }
+-      print F << "EOM";
+-  </ItemGroup>
+-EOM
+-    }
+-    print F << "EOM";
+-  <Import Project="\$(VCTargetsPath)\\Microsoft.Cpp.targets" />
+-EOM
+-    if (!$static_library) {
+-      print F << "EOM";
+-  <Target Name="${target}_AfterBuild" AfterTargets="AfterBuild">
+-    <ItemGroup>
+-      <DLLsAndPDBs Include="\$(VCPKGBinDirectory)\\*.dll;\$(VCPKGBinDirectory)\\*.pdb" />
+-    </ItemGroup>
+-    <Copy SourceFiles="@(DLLsAndPDBs)" DestinationFolder="\$(OutDir)" SkipUnchangedFiles="true" UseHardlinksIfPossible="true" />
+-    <MakeDir Directories="..\\templates\\blt\\branches" />
+-  </Target>
+-EOM
+-    }
+-    if ($target eq 'git') {
+-      print F "  <Import Project=\"LinkOrCopyBuiltins.targets\" />\n";
+-    }
+-    if ($target eq 'git-remote-http') {
+-      print F "  <Import Project=\"LinkOrCopyRemoteHttp.targets\" />\n";
+-    }
+-    print F << "EOM";
+-</Project>
+-EOM
+-    close F;
+-}
+-
+-sub createGlueProject {
+-    my ($git_dir, $out_dir, $rel_dir, %build_structure) = @_;
+-    print "Generate solutions file\n";
+-    $rel_dir = "..\\$rel_dir";
+-    $rel_dir =~ s/\//\\/g;
+-    my $SLN_HEAD = "Microsoft Visual Studio Solution File, Format Version 11.00\n# Visual Studio 2010\n";
+-    my $SLN_PRE  = "Project(\"{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}\") = ";
+-    my $SLN_POST = "\nEndProject\n";
+-
+-    my @libs = @{$build_structure{"LIBS"}};
+-    my @tmp;
+-    foreach (@libs) {
+-        $_ =~ s/\.a//;
+-        push(@tmp, $_);
+-    }
+-    @libs = @tmp;
+-
+-    my @apps = @{$build_structure{"APPS"}};
+-    @tmp = ();
+-    foreach (@apps) {
+-        $_ =~ s/\.exe//;
+-        if ($_ eq "git" ) {
+-            unshift(@tmp, $_);
+-        } else {
+-            push(@tmp, $_);
+-        }
+-    }
+-    @apps = @tmp;
+-
+-    open F, ">git.sln" || die "Could not open git.sln for writing!\n";
+-    binmode F, ":crlf :utf8";
+-    print F chr(0xFEFF);
+-    print F "$SLN_HEAD";
+-
+-    foreach (@apps) {
+-        my $appname = $_;
+-        my $uuid = $build_structure{"APPS_${appname}_GUID"};
+-        print F "$SLN_PRE";
+-	my $vcxproj = $build_structure{"APPS_${appname}_VCXPROJ"};
+-	$vcxproj =~ s/\//\\/g;
+-        $appname =~ s/.*\///;
+-        print F "\"${appname}\", \"${vcxproj}\", \"${uuid}\"";
+-        print F "$SLN_POST";
+-    }
+-    foreach (@libs) {
+-        my $libname = $_;
+-        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
+-        print F "$SLN_PRE";
+-        my $vcxproj = $build_structure{"LIBS_${libname}_VCXPROJ"};
+-	$vcxproj =~ s/\//\\/g;
+-        $libname =~ s/\//_/g;
+-        print F "\"${libname}\", \"${vcxproj}\", \"${uuid}\"";
+-        print F "$SLN_POST";
+-    }
+-
+-    print F << "EOM";
+-Global
+-	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+-		Debug|x64 = Debug|x64
+-		Debug|x86 = Debug|x86
+-		Release|x64 = Release|x64
+-		Release|x86 = Release|x86
+-	EndGlobalSection
+-EOM
+-    print F << "EOM";
+-	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+-EOM
+-    foreach (@apps) {
+-        my $appname = $_;
+-        my $uuid = $build_structure{"APPS_${appname}_GUID"};
+-        print F "\t\t${uuid}.Debug|x64.ActiveCfg = Debug|x64\n";
+-        print F "\t\t${uuid}.Debug|x64.Build.0 = Debug|x64\n";
+-        print F "\t\t${uuid}.Debug|x86.ActiveCfg = Debug|Win32\n";
+-        print F "\t\t${uuid}.Debug|x86.Build.0 = Debug|Win32\n";
+-        print F "\t\t${uuid}.Release|x64.ActiveCfg = Release|x64\n";
+-        print F "\t\t${uuid}.Release|x64.Build.0 = Release|x64\n";
+-        print F "\t\t${uuid}.Release|x86.ActiveCfg = Release|Win32\n";
+-        print F "\t\t${uuid}.Release|x86.Build.0 = Release|Win32\n";
+-    }
+-    foreach (@libs) {
+-        my $libname = $_;
+-        my $uuid = $build_structure{"LIBS_${libname}_GUID"};
+-        print F "\t\t${uuid}.Debug|x64.ActiveCfg = Debug|x64\n";
+-        print F "\t\t${uuid}.Debug|x64.Build.0 = Debug|x64\n";
+-        print F "\t\t${uuid}.Debug|x86.ActiveCfg = Debug|Win32\n";
+-        print F "\t\t${uuid}.Debug|x86.Build.0 = Debug|Win32\n";
+-        print F "\t\t${uuid}.Release|x64.ActiveCfg = Release|x64\n";
+-        print F "\t\t${uuid}.Release|x64.Build.0 = Release|x64\n";
+-        print F "\t\t${uuid}.Release|x86.ActiveCfg = Release|Win32\n";
+-        print F "\t\t${uuid}.Release|x86.Build.0 = Release|Win32\n";
+-    }
+-
+-    print F << "EOM";
+-	EndGlobalSection
+-	GlobalSection(SolutionProperties) = preSolution
+-		HideSolutionNode = FALSE
+-	EndGlobalSection
+-EndGlobal
+-EOM
+-    close F;
+-}
+-
+-1;
+diff --git a/contrib/buildsystems/engine.pl b/contrib/buildsystems/engine.pl
+deleted file mode 100755
+index 069be7e4befc..000000000000
+--- a/contrib/buildsystems/engine.pl
++++ /dev/null
+@@ -1,395 +0,0 @@
+-#!/usr/bin/perl -w
+-######################################################################
+-# Do not call this script directly!
+-#
+-# The generate script ensures that @INC is correct before the engine
+-# is executed.
+-#
+-# Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
+-######################################################################
+-use strict;
+-use File::Basename;
+-use File::Spec;
+-use Cwd;
+-use Generators;
+-use Text::ParseWords;
+-
+-my (%build_structure, %compile_options, @makedry);
+-my $out_dir = getcwd();
+-my $git_dir = $out_dir;
+-$git_dir =~ s=\\=/=g;
+-$git_dir = dirname($git_dir) while (!-e "$git_dir/git.c" && "$git_dir" ne "");
+-die "Couldn't find Git repo" if ("$git_dir" eq "");
+-
+-my @gens = Generators::available();
+-my $gen = "Vcproj";
+-
+-sub showUsage
+-{
+-    my $genlist = join(', ', @gens);
+-    print << "EOM";
+-generate usage:
+-  -g <GENERATOR>  --gen <GENERATOR> Specify the buildsystem generator    (default: $gen)
+-                                    Available: $genlist
+-  -o <PATH>       --out <PATH>      Specify output directory generation  (default: .)
+-                  --make-out <PATH> Write the output of GNU Make into a file
+-  -i <FILE>       --in <FILE>       Specify input file, instead of running GNU Make
+-  -h,-?           --help            This help
+-EOM
+-    exit 0;
+-}
+-
+-# Parse command-line options
+-my $make_out;
+-while (@ARGV) {
+-    my $arg = shift @ARGV;
+-    if ("$arg" eq "-h" || "$arg" eq "--help" || "$arg" eq "-?") {
+-	showUsage();
+-	exit(0);
+-    } elsif("$arg" eq "--out" || "$arg" eq "-o") {
+-	$out_dir = shift @ARGV;
+-    } elsif("$arg" eq "--make-out") {
+-	$make_out = shift @ARGV;
+-    } elsif("$arg" eq "--gen" || "$arg" eq "-g") {
+-	$gen = shift @ARGV;
+-    } elsif("$arg" eq "--in" || "$arg" eq "-i") {
+-	my $infile = shift @ARGV;
+-        open(F, "<$infile") || die "Couldn't open file $infile";
+-        @makedry = <F>;
+-        close(F);
+-    } else {
+-        die "Unknown option: " . $arg;
+-    }
+-}
+-
+-# NOT using File::Spec->rel2abs($path, $base) here, as
+-# it fails badly for me in the msysgit environment
+-$git_dir = File::Spec->rel2abs($git_dir);
+-$out_dir = File::Spec->rel2abs($out_dir);
+-my $rel_dir = makeOutRel2Git($git_dir, $out_dir);
+-
+-# Print some information so the user feels informed
+-print << "EOM";
+------
+-Generator: $gen
+-Git dir:   $git_dir
+-Out dir:   $out_dir
+------
+-Running GNU Make to figure out build structure...
+-EOM
+-
+-# Pipe a make --dry-run into a variable, if not already loaded from file
+-# Capture the make dry stderr to file for review (will be empty for a release build).
+-
+-my $ErrsFile = "msvc-build-makedryerrors.txt";
+-@makedry = `make -C $git_dir -n MSVC=1 SKIP_VCPKG=1 V=1 2>$ErrsFile`
+-if !@makedry;
+-# test for an empty Errors file and remove it
+-unlink $ErrsFile if -f -z $ErrsFile;
+-
+-if (defined $make_out) {
+-    open OUT, ">" . $make_out;
+-    print OUT @makedry;
+-    close OUT;
+-}
+-
+-# Parse the make output into usable info
+-parseMakeOutput();
+-
+-# Finally, ask the generator to start generating..
+-Generators::generate($gen, $git_dir, $out_dir, $rel_dir, %build_structure);
+-
+-# main flow ends here
+-# -------------------------------------------------------------------------------------------------
+-
+-
+-# 1) path: /foo/bar/baz        2) path: /foo/bar/baz   3) path: /foo/bar/baz
+-#    base: /foo/bar/baz/temp      base: /foo/bar          base: /tmp
+-#    rel:  ..                     rel:  baz               rel:  ../foo/bar/baz
+-sub makeOutRel2Git
+-{
+-    my ($path, $base) = @_;
+-    my $rel;
+-    if ("$path" eq "$base") {
+-        return ".";
+-    } elsif ($base =~ /^$path/) {
+-        # case 1
+-        my $tmp = $base;
+-        $tmp =~ s/^$path//;
+-        foreach (split('/', $tmp)) {
+-            $rel .= "../" if ("$_" ne "");
+-        }
+-    } elsif ($path =~ /^$base/) {
+-        # case 2
+-        $rel = $path;
+-        $rel =~ s/^$base//;
+-        $rel = "./$rel";
+-    } else {
+-        my $tmp = $base;
+-        foreach (split('/', $tmp)) {
+-            $rel .= "../" if ("$_" ne "");
+-        }
+-        $rel .= $path;
+-    }
+-    $rel =~ s/\/\//\//g; # simplify
+-    $rel =~ s/\/$//;     # don't end with /
+-    return $rel;
+-}
+-
+-sub parseMakeOutput
+-{
+-    print "Parsing GNU Make output to figure out build structure...\n";
+-    my $line = 0;
+-    while (my $text = shift @makedry) {
+-        my $ate_next;
+-        do {
+-            $ate_next = 0;
+-            $line++;
+-            chomp $text;
+-            chop $text if ($text =~ /\r$/);
+-            if ($text =~ /\\$/) {
+-                $text =~ s/\\$//;
+-                $text .= shift @makedry;
+-                $ate_next = 1;
+-            }
+-        } while($ate_next);
+-
+-        if ($text =~ /^test /) {
+-            # options to test (eg -o) may be mistaken for linker options
+-            next;
+-        }
+-
+-        if ($text =~ /^(mkdir|msgfmt) /) {
+-            # options to the Portable Object translations
+-            # the line "mkdir ... && msgfmt ..." contains no linker options
+-            next;
+-        }
+-
+-        if($text =~ / -c /) {
+-            # compilation
+-            handleCompileLine($text, $line);
+-
+-        } elsif ($text =~ / -o /) {
+-            # linking executable
+-            handleLinkLine($text, $line);
+-
+-        } elsif ($text =~ /\.o / && $text =~ /\.a /) {
+-            # libifying
+-            handleLibLine($text, $line);
+-#
+-#        } elsif ($text =~ /^cp /) {
+-#            # copy file around
+-#
+-#        } elsif ($text =~ /^rm -f /) {
+-#            # shell command
+-#
+-#        } elsif ($text =~ /^make[ \[]/) {
+-#            # make output
+-#
+-#        } elsif ($text =~ /^echo /) {
+-#            # echo to file
+-#
+-#        } elsif ($text =~ /^if /) {
+-#            # shell conditional
+-#
+-#        } elsif ($text =~ /^tclsh /) {
+-#            # translation stuff
+-#
+-#        } elsif ($text =~ /^umask /) {
+-#            # handling boilerplates
+-#
+-#        } elsif ($text =~ /\$\(\:\)/) {
+-#            # ignore
+-#
+-#        } elsif ($text =~ /^FLAGS=/) {
+-#            # flags check for dependencies
+-#
+-#        } elsif ($text =~ /^'\/usr\/bin\/perl' -MError -e/) {
+-#            # perl commands for copying files
+-#
+-#        } elsif ($text =~ /generate-cmdlist\.sh/) {
+-#            # command for generating list of commands
+-#
+-#        } elsif ($text =~ /new locations or Tcl/) {
+-#            # command for detecting Tcl/Tk changes
+-#
+-#        } elsif ($text =~ /mkdir -p/) {
+-#            # command creating path
+-#
+-#        } elsif ($text =~ /: no custom templates yet/) {
+-#            # whatever
+-#
+-#        } else {
+-#            print "Unhandled (line: $line): $text\n";
+-        }
+-    }
+-
+-#    use Data::Dumper;
+-#    print "Parsed build structure:\n";
+-#    print Dumper(%build_structure);
+-}
+-
+-# variables for the compilation part of each step
+-my (@defines, @incpaths, @cflags, @sources);
+-
+-sub clearCompileStep
+-{
+-    @defines = ();
+-    @incpaths = ();
+-    @cflags = ();
+-    @sources = ();
+-}
+-
+-sub removeDuplicates
+-{
+-    my (%dupHash, $entry);
+-    %dupHash = map { $_, 1 } @defines;
+-    @defines = keys %dupHash;
+-
+-    %dupHash = map { $_, 1 } @incpaths;
+-    @incpaths = keys %dupHash;
+-
+-    %dupHash = map { $_, 1 } @cflags;
+-    @cflags = keys %dupHash;
+-}
+-
+-sub handleCompileLine
+-{
+-    my ($line, $lineno) = @_;
+-    my @parts = shellwords($line);
+-    my $sourcefile;
+-    shift(@parts); # ignore cmd
+-    while (my $part = shift @parts) {
+-        if ("$part" eq "-o") {
+-            # ignore object file
+-            shift @parts;
+-        } elsif ("$part" eq "-c") {
+-            # ignore compile flag
+-        } elsif ("$part" eq "-c") {
+-        } elsif ($part =~ /^.?-I/) {
+-            push(@incpaths, $part);
+-        } elsif ($part =~ /^.?-D/) {
+-            push(@defines, $part);
+-        } elsif ($part =~ /^-/) {
+-            push(@cflags, $part);
+-        } elsif ($part =~ /\.(c|cc|cpp)$/) {
+-            $sourcefile = $part;
+-        } else {
+-            die "Unhandled compiler option @ line $lineno: $part";
+-        }
+-    }
+-    @{$compile_options{"${sourcefile}_CFLAGS"}} = @cflags;
+-    @{$compile_options{"${sourcefile}_DEFINES"}} = @defines;
+-    @{$compile_options{"${sourcefile}_INCPATHS"}} = @incpaths;
+-    clearCompileStep();
+-}
+-
+-sub handleLibLine
+-{
+-    my ($line, $lineno) = @_;
+-    my (@objfiles, @lflags, $libout, $part);
+-    # kill cmd and rm 'prefix'
+-    $line =~ s/^rm -f .* && .* rcs //;
+-    my @parts = shellwords($line);
+-    while ($part = shift @parts) {
+-        if ($part =~ /^-/) {
+-            push(@lflags, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
+-            push(@objfiles, $part);
+-        } elsif ($part =~ /\.(a|lib)$/) {
+-            $libout = $part;
+-            $libout =~ s/\.a$//;
+-        } else {
+-            die "Unhandled lib option @ line $lineno: $part";
+-        }
+-    }
+-#    print "LibOut: '$libout'\nLFlags: @lflags\nOfiles: @objfiles\n";
+-#    exit(1);
+-    foreach (@objfiles) {
+-        my $sourcefile = $_;
+-        $sourcefile =~ s/\.o$/.c/;
+-        push(@sources, $sourcefile);
+-        push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+-        push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+-        push(@incpaths, @{$compile_options{"${sourcefile}_INCPATHS"}});
+-    }
+-    removeDuplicates();
+-
+-    push(@{$build_structure{"LIBS"}}, $libout);
+-    @{$build_structure{"LIBS_${libout}"}} = ("_DEFINES", "_INCLUDES", "_CFLAGS", "_SOURCES",
+-                                             "_OBJECTS");
+-    @{$build_structure{"LIBS_${libout}_DEFINES"}} = @defines;
+-    @{$build_structure{"LIBS_${libout}_INCLUDES"}} = @incpaths;
+-    @{$build_structure{"LIBS_${libout}_CFLAGS"}} = @cflags;
+-    @{$build_structure{"LIBS_${libout}_LFLAGS"}} = @lflags;
+-    @{$build_structure{"LIBS_${libout}_SOURCES"}} = @sources;
+-    @{$build_structure{"LIBS_${libout}_OBJECTS"}} = @objfiles;
+-    clearCompileStep();
+-}
+-
+-sub handleLinkLine
+-{
+-    my ($line, $lineno) = @_;
+-    my (@objfiles, @lflags, @libs, $appout, $part);
+-    my @parts = shellwords($line);
+-    shift(@parts); # ignore cmd
+-    while ($part = shift @parts) {
+-        if ($part =~ /^-IGNORE/) {
+-            push(@lflags, $part);
+-        } elsif ($part =~ /^-[GRIMDO]/) {
+-            # eat compiler flags
+-        } elsif ("$part" eq "-o") {
+-            $appout = shift @parts;
+-        } elsif ("$part" eq "-lz") {
+-            push(@libs, "zlib.lib");
+-        } elsif ("$part" eq "-lcrypto") {
+-            push(@libs, "libcrypto.lib");
+-        } elsif ("$part" eq "-lssl") {
+-            push(@libs, "libssl.lib");
+-        } elsif ("$part" eq "-lcurl") {
+-            push(@libs, "libcurl.lib");
+-        } elsif ("$part" eq "-lexpat") {
+-            push(@libs, "libexpat.lib");
+-        } elsif ("$part" eq "-liconv") {
+-            push(@libs, "iconv.lib");
+-        } elsif ($part =~ /^[-\/]/) {
+-            push(@lflags, $part);
+-        } elsif ($part =~ /\.(a|lib)$/) {
+-            $part =~ s/\.a$/.lib/;
+-            push(@libs, $part);
+-        } elsif ($part eq 'invalidcontinue.obj') {
+-            # ignore - known to MSVC
+-        } elsif ($part =~ /\.o$/) {
+-            push(@objfiles, $part);
+-        } elsif ($part =~ /\.obj$/) {
+-            # do nothing, 'make' should not be producing .obj, only .o files
+-        } else {
+-            die "Unhandled link option @ line $lineno: $part";
+-        }
+-    }
+-#    print "AppOut: '$appout'\nLFlags: @lflags\nLibs  : @libs\nOfiles: @objfiles\n";
+-#    exit(1);
+-    foreach (@objfiles) {
+-        my $sourcefile = $_;
+-        $sourcefile =~ s/^headless-git\.o$/compat\/win32\/headless.c/;
+-        $sourcefile =~ s/\.o$/.c/;
+-        push(@sources, $sourcefile);
+-        push(@cflags, @{$compile_options{"${sourcefile}_CFLAGS"}});
+-        push(@defines, @{$compile_options{"${sourcefile}_DEFINES"}});
+-        push(@incpaths, @{$compile_options{"${sourcefile}_INCPATHS"}});
+-    }
+-    removeDuplicates();
+-
+-    removeDuplicates();
+-    push(@{$build_structure{"APPS"}}, $appout);
+-    @{$build_structure{"APPS_${appout}"}} = ("_DEFINES", "_INCLUDES", "_CFLAGS", "_LFLAGS",
+-                                             "_SOURCES", "_OBJECTS", "_LIBS");
+-    @{$build_structure{"APPS_${appout}_DEFINES"}} = @defines;
+-    @{$build_structure{"APPS_${appout}_INCLUDES"}} = @incpaths;
+-    @{$build_structure{"APPS_${appout}_CFLAGS"}} = @cflags;
+-    @{$build_structure{"APPS_${appout}_LFLAGS"}} = @lflags;
+-    @{$build_structure{"APPS_${appout}_SOURCES"}} = @sources;
+-    @{$build_structure{"APPS_${appout}_OBJECTS"}} = @objfiles;
+-    @{$build_structure{"APPS_${appout}_LIBS"}} = @libs;
+-    clearCompileStep();
+-}
+diff --git a/contrib/buildsystems/generate b/contrib/buildsystems/generate
+deleted file mode 100755
+index bc10f25ff24a..000000000000
+--- a/contrib/buildsystems/generate
++++ /dev/null
+@@ -1,29 +0,0 @@
+-#!/usr/bin/perl -w
+-######################################################################
+-# Generate buildsystem files
+-#
+-# This script generate buildsystem files based on the output of a
+-# GNU Make --dry-run, enabling Windows users to develop Git with their
+-# trusted IDE with native projects.
+-#
+-# Note:
+-# It is not meant as *the* way of building Git with MSVC, but merely a
+-# convenience. The correct way of building Git with MSVC is to use the
+-# GNU Make tool to build with the maintained Makefile in the root of
+-# the project. If you have the msysgit environment installed and
+-# available in your current console, together with the Visual Studio
+-# environment you wish to build for, all you have to do is run the
+-# command:
+-#     make MSVC=1
+-#
+-# Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
+-######################################################################
+-use strict;
+-use File::Basename;
+-use Cwd;
+-
+-my $git_dir = getcwd();
+-$git_dir =~ s=\\=/=g;
+-$git_dir = dirname($git_dir) while (!-e "$git_dir/git.c" && "$git_dir" ne "");
+-die "Couldn't find Git repo" if ("$git_dir" eq "");
+-exec join(" ", ("PERL5LIB=${git_dir}/contrib/buildsystems ${git_dir}/contrib/buildsystems/engine.pl", @ARGV));
+diff --git a/contrib/buildsystems/parse.pl b/contrib/buildsystems/parse.pl
+deleted file mode 100755
+index c9656ece9931..000000000000
+--- a/contrib/buildsystems/parse.pl
++++ /dev/null
+@@ -1,228 +0,0 @@
+-#!/usr/bin/perl -w
+-######################################################################
+-# Do not call this script directly!
+-#
+-# The generate script ensures that @INC is correct before the engine
+-# is executed.
+-#
+-# Copyright (C) 2009 Marius Storm-Olsen <mstormo@gmail.com>
+-######################################################################
+-use strict;
+-use File::Basename;
+-use Cwd;
+-
+-my $file = $ARGV[0];
+-die "No file provided!" if !defined $file;
+-
+-my ($cflags, $target, $type, $line);
+-
+-open(F, "<$file") || die "Couldn't open file $file";
+-my @data = <F>;
+-close(F);
+-
+-while (my $text = shift @data) {
+-    my $ate_next;
+-    do {
+-        $ate_next = 0;
+-        $line++;
+-        chomp $text;
+-        chop $text if ($text =~ /\r$/);
+-        if ($text =~ /\\$/) {
+-            $text =~ s/\\$//;
+-            $text .= shift @data;
+-            $ate_next = 1;
+-        }
+-    } while($ate_next);
+-
+-    if($text =~ / -c /) {
+-        # compilation
+-        handleCompileLine($text, $line);
+-
+-    } elsif ($text =~ / -o /) {
+-        # linking executable
+-        handleLinkLine($text, $line);
+-
+-    } elsif ($text =~ /\.o / && $text =~ /\.a /) {
+-        # libifying
+-        handleLibLine($text, $line);
+-
+-#    } elsif ($text =~ /^cp /) {
+-#        # copy file around
+-#
+-#    } elsif ($text =~ /^rm -f /) {
+-#        # shell command
+-#
+-#    } elsif ($text =~ /^make[ \[]/) {
+-#        # make output
+-#
+-#    } elsif ($text =~ /^echo /) {
+-#        # echo to file
+-#
+-#    } elsif ($text =~ /^if /) {
+-#        # shell conditional
+-#
+-#    } elsif ($text =~ /^tclsh /) {
+-#        # translation stuff
+-#
+-#    } elsif ($text =~ /^umask /) {
+-#        # handling boilerplates
+-#
+-#    } elsif ($text =~ /\$\(\:\)/) {
+-#        # ignore
+-#
+-#    } elsif ($text =~ /^FLAGS=/) {
+-#        # flags check for dependencies
+-#
+-#    } elsif ($text =~ /^'\/usr\/bin\/perl' -MError -e/) {
+-#        # perl commands for copying files
+-#
+-#    } elsif ($text =~ /generate-cmdlist\.sh/) {
+-#        # command for generating list of commands
+-#
+-#    } elsif ($text =~ /^test / && $text =~ /|| rm -f /) {
+-#        # commands removing executables, if they exist
+-#
+-#    } elsif ($text =~ /new locations or Tcl/) {
+-#        # command for detecting Tcl/Tk changes
+-#
+-#    } elsif ($text =~ /mkdir -p/) {
+-#        # command creating path
+-#
+-#    } elsif ($text =~ /: no custom templates yet/) {
+-#        # whatever
+-
+-    } else {
+-#        print "Unhandled (line: $line): $text\n";
+-    }
+-}
+-close(F);
+-
+-# use Data::Dumper;
+-# print "Parsed build structure:\n";
+-# print Dumper(%build_structure);
+-
+-# -------------------------------------------------------------------
+-# Functions under here
+-# -------------------------------------------------------------------
+-my (%build_structure, @defines, @incpaths, @cflags, @sources);
+-
+-sub clearCompileStep
+-{
+-    @defines = ();
+-    @incpaths = ();
+-    @cflags = ();
+-    @sources = ();
+-}
+-
+-sub removeDuplicates
+-{
+-    my (%dupHash, $entry);
+-    %dupHash = map { $_, 1 } @defines;
+-    @defines = keys %dupHash;
+-
+-    %dupHash = map { $_, 1 } @incpaths;
+-    @incpaths = keys %dupHash;
+-
+-    %dupHash = map { $_, 1 } @cflags;
+-    @cflags = keys %dupHash;
+-
+-    %dupHash = map { $_, 1 } @sources;
+-    @sources = keys %dupHash;
+-}
+-
+-sub handleCompileLine
+-{
+-    my ($line, $lineno) = @_;
+-    my @parts = split(' ', $line);
+-    shift(@parts); # ignore cmd
+-    while (my $part = shift @parts) {
+-        if ("$part" eq "-o") {
+-            # ignore object file
+-            shift @parts;
+-        } elsif ("$part" eq "-c") {
+-            # ignore compile flag
+-        } elsif ("$part" eq "-c") {
+-        } elsif ($part =~ /^.?-I/) {
+-            push(@incpaths, $part);
+-        } elsif ($part =~ /^.?-D/) {
+-            push(@defines, $part);
+-        } elsif ($part =~ /^-/) {
+-            push(@cflags, $part);
+-        } elsif ($part =~ /\.(c|cc|cpp)$/) {
+-            push(@sources, $part);
+-        } else {
+-            die "Unhandled compiler option @ line $lineno: $part";
+-        }
+-    }
+-    #print "Sources: @sources\nCFlags: @cflags\nDefine: @defines\nIncpat: @incpaths\n";
+-    #exit(1);
+-}
+-
+-sub handleLibLine
+-{
+-    my ($line, $lineno) = @_;
+-    my (@objfiles, @lflags, $libout, $part);
+-    # kill cmd and rm 'prefix'
+-    $line =~ s/^rm -f .* && .* rcs //;
+-    my @parts = split(' ', $line);
+-    while ($part = shift @parts) {
+-        if ($part =~ /^-/) {
+-            push(@lflags, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
+-            push(@objfiles, $part);
+-        } elsif ($part =~ /\.(a|lib)$/) {
+-            $libout = $part;
+-        } else {
+-            die "Unhandled lib option @ line $lineno: $part";
+-        }
+-    }
+-    #print "LibOut: '$libout'\nLFlags: @lflags\nOfiles: @objfiles\n";
+-    #exit(1);
+-    removeDuplicates();
+-    push(@{$build_structure{"LIBS"}}, $libout);
+-    @{$build_structure{"LIBS_${libout}"}} = ("_DEFINES", "_INCLUDES", "_CFLAGS", "_SOURCES",
+-                                             "_OBJECTS");
+-    @{$build_structure{"LIBS_${libout}_DEFINES"}} = @defines;
+-    @{$build_structure{"LIBS_${libout}_INCLUDES"}} = @incpaths;
+-    @{$build_structure{"LIBS_${libout}_CFLAGS"}} = @cflags;
+-    @{$build_structure{"LIBS_${libout}_SOURCES"}} = @sources;
+-    @{$build_structure{"LIBS_${libout}_OBJECTS"}} = @objfiles;
+-    clearCompileStep();
+-}
+-
+-sub handleLinkLine
+-{
+-    my ($line, $lineno) = @_;
+-    my (@objfiles, @lflags, @libs, $appout, $part);
+-    my @parts = split(' ', $line);
+-    shift(@parts); # ignore cmd
+-    while ($part = shift @parts) {
+-        if ($part =~ /^-[GRIDO]/) {
+-            # eat compiler flags
+-        } elsif ("$part" eq "-o") {
+-            $appout = shift @parts;
+-        } elsif ($part =~ /^-/) {
+-            push(@lflags, $part);
+-        } elsif ($part =~ /\.(a|lib)$/) {
+-            push(@libs, $part);
+-        } elsif ($part =~ /\.(o|obj)$/) {
+-            push(@objfiles, $part);
+-        } else {
+-            die "Unhandled lib option @ line $lineno: $part";
+-        }
+-    }
+-    #print "AppOut: '$appout'\nLFlags: @lflags\nLibs  : @libs\nOfiles: @objfiles\n";
+-    #exit(1);
+-    removeDuplicates();
+-    push(@{$build_structure{"APPS"}}, $appout);
+-    @{$build_structure{"APPS_${appout}"}} = ("_DEFINES", "_INCLUDES", "_CFLAGS", "_LFLAGS",
+-                                             "_SOURCES", "_OBJECTS", "_LIBS");
+-    @{$build_structure{"APPS_${appout}_DEFINES"}} = @defines;
+-    @{$build_structure{"APPS_${appout}_INCLUDES"}} = @incpaths;
+-    @{$build_structure{"APPS_${appout}_CFLAGS"}} = @cflags;
+-    @{$build_structure{"APPS_${appout}_LFLAGS"}} = @lflags;
+-    @{$build_structure{"APPS_${appout}_SOURCES"}} = @sources;
+-    @{$build_structure{"APPS_${appout}_OBJECTS"}} = @objfiles;
+-    @{$build_structure{"APPS_${appout}_LIBS"}} = @libs;
+-    clearCompileStep();
+-}
 -- 
 gitgitgadget
+
