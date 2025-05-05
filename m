@@ -1,102 +1,177 @@
-Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B48E25EF9C
-	for <git@vger.kernel.org>; Mon,  5 May 2025 16:22:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 569B126A0D1
+	for <git@vger.kernel.org>; Mon,  5 May 2025 16:32:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746462181; cv=none; b=FFoupucVfw0qe34M2PWRei+sqXZRs2I0Tm4h6K6FRDC8nL5CcrumcuuVzea4BRoqD0eR+tKk+wJw7mbKVXkjXWnBbah5vLua02AL7xeX/2rB4Yx7WKzvveiuxk3KISDLHFRhuZxK8YJ8dKI9h1ApzhrL/ghRn+ZbdzXcjmz4dB8=
+	t=1746462744; cv=none; b=Ml+4e6n46RwXKsX+np7DiqI3R+UtIf1Wqk6nwZ27+wtOHevs8WjCgkWJFKTqBsCUTDvW7Sk77hKcg1m83PHQaTxRJQCmXMe/94hKFxlKifV3SI70HVQjjqcjFNrIS6J6BrxyWACXir/XVOYB9ccNo/hQNzSXEyA2REzJUcQbuzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746462181; c=relaxed/simple;
-	bh=ZsxQ/+Bf4uWzfQ8DXpeWbcmvFOJ8JeSKdsSOFF6UBtw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=eEWP6J1bU7yNTRsraXhXa9PlQGO1WtURZq1qBvk/k5MQHGYmK8XM3DaUjl0FvoPA8QJoSKDwsuOPAPxV8QwQJ7xi9yELeyYZupkatNCQLd9bcMBJhffYSF/n0MueqHuhn2g8Rj1q9wUfc3Nol0b7FQ8fFfHk+HSybeXg4k2uiS0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z+YuYZX6; arc=none smtp.client-ip=209.85.167.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746462744; c=relaxed/simple;
+	bh=HX5T4mi9IBdtziRXhmAsKDCivNtYjypiFDJUwOltzro=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UbaWUG8tp2/TklYzVISNITIm2k5DZClBIgoGCL/AnCSdj1dDtudEqviDMPD9H2fNrFRdnMmk1k74XQW7NO9/cDpAGcXmhxXHSsbV3xK7TAbfzJwhyfH0rjhG/e4lOl9LPvebYrr0RFJlhDV8nsmBPDVxJ6xTwTpzxWa0kE7fk6Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aqWYl+ip; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aoqwg3H7; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z+YuYZX6"
-Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-400fa6eafa9so3454285b6e.1
-        for <git@vger.kernel.org>; Mon, 05 May 2025 09:22:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746462179; x=1747066979; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7qts45gHNjjCaIGOhiJXGsireJzdFsO9P42cFgc03U4=;
-        b=Z+YuYZX6MMmFjv15wZ6bC7lnIpTa0pYoaKAGw9T3gcLzuRn3UlmZ/3wU3qQ+56Tbuy
-         vj6uJYQzJUgs669aWAM059zXPuChtqdHNyT8cYK9FLWIS8rwktUnspiZlPPn5yWyIAwl
-         nYNSeGCDKjsdy4OUTT7J4xRN1FL96hHOaTpg+7xY+MnTSkRQULwpcXFzgW0hI+t50KLH
-         /GcROe3mmY9KPVufiW8IW/Hb6BZ1OySm59TnjZPzSTBoLxqooIJr2UfZIGbtEt1Qka3o
-         p0nVQxGjkfACDuzIXkpdHKi+rEI09N98LXu5YxV4DtrK2kI4vyIu9HFovZIhQkkv1pDU
-         WlQA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746462179; x=1747066979;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=7qts45gHNjjCaIGOhiJXGsireJzdFsO9P42cFgc03U4=;
-        b=u6Gs1TChWaoIjKUDbXsp4tvw6zNWWpr+isGxWqnz3/uJxO3pMpqW4cP6aDL02sFftw
-         N4m63s4SqmNYTSSjLaDjk6f3BehLPjpUlOPBq+KPHA9Iz8ENWE5ofhi4FjiCzG5fGrr8
-         Q7lq/vmCP51zvFzWulaFjjYnU/Rv50QVWWrZjlgAVeeGShEvobeXzZlGZhJmGVMmu34y
-         9zU/rnQ+bz9lCZ0MfiNYFtrC4uGZYv0Gj9u3PqxpdOaPbPss20nHrvxJeGm0V/Jia+fp
-         roSAaM8hjUMYD/bheSmwFeQgdiKmJ2ptDdUsrpaDkfKA57QnUXu6xlO6o6KaaBsiVQ2M
-         Fvcw==
-X-Gm-Message-State: AOJu0Ywm9InqQoPzWxuYFE8sycz1AxtVML7M3wqLes9XY2CIjQGMIAVe
-	hIHYpy4rWXhkhT1/CMPhHudIvLmCCnXyenDKSMV+SuEYJAMP9vidQ/txkuGV
-X-Gm-Gg: ASbGncslN+eYLClXsgNXC+sj8Q8l/i5G2mNwDuv1URnFZdgNqu5Hrk66797zNYSVlvK
-	ENl5klvqBS3c8TUAvPiHqIe0jsI+upKdKTfIJy3Axc7GicpMEdT3XxxvLYjA421PY3bJ+DrWWAf
-	8Z3F9/8BBYJG1ROAML1h+GDx1C9NAWTwNa9w/Lusk213NzPoH2i7PkmIxLhtQ/JRPb8u6tcG8g1
-	ZjTvjHmroVOMcPyadJglfh2I1o0X2uXnos+7mwmcsj4btu8z6WajwKgQR+Ys/0TD5gLCkmTsYII
-	N/gBkEi9dVXtKtgqRHNqBv0LLa4C1SttZg==
-X-Google-Smtp-Source: AGHT+IEq9gFI0AbPpax02alYur/LZZvFm31Y8y7MnBNxtWO2eCByzPFayXxRoVjqh9+Z/jLJ0LC7uw==
-X-Received: by 2002:a05:6808:3389:b0:402:11c4:bceb with SMTP id 5614622812f47-40341a0cb7fmr9294958b6e.19.1746462178856;
-        Mon, 05 May 2025 09:22:58 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-4033dae4323sm1924227b6e.22.2025.05.05.09.22.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 09:22:58 -0700 (PDT)
-Date: Mon, 5 May 2025 11:18:36 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Akash S <akashs@commvault.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>, 
-	Adithya Urugudige <aurugudige@commvault.com>, Abhishek Dalmia <adalmia@commvault.com>
-Subject: Re: Incremental Backup of repositories using Git
-Message-ID: <2dz3cema2mr5mrlvuroemnyeqyrglxfmusfdz2kaghv6rvj3ro@ti2dhu45fdmr>
-References: <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aqWYl+ip";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aoqwg3H7"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5B5A3254019A;
+	Mon,  5 May 2025 12:32:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 05 May 2025 12:32:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746462741; x=1746549141; bh=g//IafHaYm
+	WDHS0jwHw1fG9dXlcsrI2R7uPq1GJWIv8=; b=aqWYl+ipIyeZLaQNYnczyNtK8+
+	8f7EL7bgJCieXLhQn+R1vDmxrbM6pr0pfUZcMtnEElIX9cm18vwFfF8Hh6Ab8XS1
+	TnxoGLVOcppe6Vca+/CQFD+meX5339pNLZOj5ZWM2kAmZS7K99+LBrp8Og7jBWwu
+	Sk1jyjJrHPfWl/LnMIhSUBW49mH293wTzLKdW7V2E8Yt/AnfAkjAC/xpC+xkdVqY
+	IgH0J7POhVq1lbPpWZdLTrz9t8LbvnbfmlGgzzRgmRtdbS4hOiLzfkPK/5fE7EgS
+	le+WfmRtBuBOn+fvsaJ9+YBjhvteA1XVBbwQorBKIyTa7nWAiK5P4ZXFE27g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746462741; x=1746549141; bh=g//IafHaYmWDHS0jwHw1fG9dXlcsrI2R7uP
+	q1GJWIv8=; b=aoqwg3H7wMVKAcHcisjeCx0mJCwKxHeTOGvsFyaNWtDz65nJwHA
+	z5/ybtoQvLlI0jnbjRXyQLemJAPR2iZqMo+bPC33UVuxg98nYFwbXsR8dwMOkXIU
+	VNM7N1KMom4tL5Cp0N/4A1WgWIB9nG38Vw7mDI4efBeMJwfDv6SynlwCqKH02WQT
+	KqBMYIs0Hu00zgesyE37FGbfv/vShckymXzBVAS7QrZaRvWTOn9IEb7XxBa7DJJW
+	UzQdl0Zm5gy4e+1KgPmiZC4fdOp3QEMpq1x22OtZOAfZNixPDdRv8IQEO+382+6G
+	UfxhZGEw6N82EvcQipc3ud+xbnnkV4yjAVA==
+X-ME-Sender: <xms:FOgYaG39A2VThtlohRE_3Wac7S9istQ9ZWZn11ms4UQ3Vs2M1x-P3g>
+    <xme:FOgYaJHx1AZ3M_W1qqHKPhTaO-UdupM8nBR8TcvuS5VhqWLQ62bfW-HS5ua4qAU74
+    EvquN5kTz3N0dfaEg>
+X-ME-Received: <xmr:FOgYaO54v6Dm4n9w6p3Al-vUhPXQBOjytvShaxJJTJp_bQ_MVTJwdQ2Iefsf4xZak2bRQ9r7wVoEQm0qfcuZT6q9OdNEusUCVKT8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeduheekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhumhgrrheslh
+    griigrrhdrtghordhniidprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepsghughiiihhllhgrsehlrgiirghrrdgtohdrnhiipdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:FOgYaH29d5xIKMJbvoroPxy8YveoVEbYgY4eyJ5uwV9xFrUlf20p7g>
+    <xmx:FOgYaJHAuYSmjctKK7vVlfo7-5YkZA7ApYVpMIyUn6GY9PYzdo-kGw>
+    <xmx:FOgYaA_gqypDNLCqe4le8KZXarph07e20GIdNs91Ro38lX1ZC39PrA>
+    <xmx:FOgYaOlx7ZghBltNrc2ZpA5O82Pi4ok19Evk29n2rEuFoC0imMS9Ww>
+    <xmx:FegYaAgiazW5siZ6dXF-n0bBQNaIi7_07pP9XNsY2Mdzi03BDX6PAoTx>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 5 May 2025 12:32:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Lazar Sumar <sumar@lazar.co.nz>
+Cc: git@vger.kernel.org,  Lazar Sumar <bugzilla@lazar.co.nz>
+Subject: Re: [PATCH 0/1] New remote groups subcommand
+In-Reply-To: <20250503160953.196329-1-bugzilla@lazar.co.nz> (Lazar Sumar's
+	message of "Sat, 3 May 2025 17:09:51 +0100")
+References: <20250503160953.196329-1-bugzilla@lazar.co.nz>
+Date: Mon, 05 May 2025 09:32:09 -0700
+Message-ID: <xmqqecx3ow6u.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
+Content-Type: text/plain
 
-On 25/05/05 02:35PM, Akash S wrote:
-> Hi,
-> 
-> Currently we are backing up repositories using the "git clone -bare" command and save it to disk. If we want to restore, we just run git push -mirror from the repo that was saved during the backup.
-> 
-> Currently we are running full backups (run git clone -bare) everyday, which is taking a lot of disk space and time.
-> 
-> Are there any possible ways to backup only the incremental changes of a repository? And somehow construct the whole repository when we want to do a restore from the incremental backups?
+Lazar Sumar <sumar@lazar.co.nz> writes:
 
-You could look into using git-bundle(1) to create incremental bundles
-using exclusions. Examples:
+> Lastly, I wanted to at least add a test for the expected behavior of
+> remote grups when a remote is renamed but found the current behavior
+> surprising, i.e.
+>
+>     $ git config --get-regexp 'remotes\.'
+>     file:.git/config        remotes.group1 upstream origin
+>     $ git remote rename origin fork
+>     Renaming remote references: 100% (8/8), done.
+>     $ git config --get-regexp 'remotes\.'
+>     file:.git/config        remotes.group1 upstream origin
+>
+> The remote group is defined in the local config file and I would expect
+> the rename to rename the group member here.
 
-  # Creates a bundle containing the last 10 commits for main.
-  $ git bundle create inc-backup main~10..main
+Even for a single same person, depending on the reason why the
+renaming of the underlying individual remote nickname is done, I
+think the expectation is different.  Perhaps they have a set of
+remotes that they use for CI use (i.e., they push there to trigger
+multiple CI platforms), that are named ci-alfa ci-beta etc. to make
+it easier for them to identify these remotes, and grouped under "ci"
+group, and they have another group they use for publishing (i.e.,
+they push there and the latest history becomes available to their
+developers), as "publish" group.  Suppose they decide to retire the
+CI infrastructure from the ci-alfa remote and use the repository
+only for publishing.  Then the config setting that may have looked
+like this
 
-  # Creates incremental bundle based on time for all references.
-  $ git bundle create inc-backup --all --since=7.days
+	[remotes]
+		ci = ci-alfa ci-beta ...
+		publish = north-america europe ...
 
-These bundles can then be "unbundled" into a repository as long as the
-repo contains the required prerequisite objects.
+would want to become
 
--Justin
+	[remotes]
+		ci = ci-beta ...
+		publish = asia north-america europe ...
 
-> 
-> Thanks,
-> Akash
-> 
+when they rename "ci-alfa" to "asia" because they no longer have
+CI infrastructure attached to the repository to trigger, and instead
+they want to use the repository to serve asian customers.
+
+If "git remote rename ci-alfa asia" automatically rewrote the first
+one to
+
+	[remotes]
+		ci = asia ci-beta ...
+		publish = north-america europe ...
+
+it would not help anybody.
+
+Of course, if the renaming is done to fix typo in the name of a
+remote, e.g., "git remote rename ci-alfa ci-alpha", it would be
+useful if the rename also rewrote the config into
+
+	[remotes]
+		ci = ci-alpha ci-beta ...
+		publish = north-america europe ...
+
+but we cannot guess the intentions.  So I am not sure if always
+automatically rewriting is a good idea.
+
+Before thinking about "rename" doing random things that the user may
+or may not want to see perform automatically, I think it is better
+to give users a way to exactly do what they want first.  Perhaps a
+session with those tools would look like this?
+
+    $ git remote group --list
+    ci
+    publish
+    $ git remote group --list --verbose
+    ci		ci-alfa ci-beta
+    publish	north-america europe
+    $ git remote group --get ci
+    ci-alfa
+    ci-beta
+    $ git remote group --set ci ci-alfa ci-beta
+    $ git remote group --get ci
+    ci-alpha
+    ci-beta
+    $ git remote group --list
+    ci
+    publish
+    $ git remote group --rename publish pub
+    $ git remote group --list
+    ci
+    pub
+
