@@ -1,100 +1,176 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 573192517A4
-	for <git@vger.kernel.org>; Mon,  5 May 2025 13:52:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A60518DB2F
+	for <git@vger.kernel.org>; Mon,  5 May 2025 14:00:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746453149; cv=none; b=NhNSWPc1f/k1ATzJsTDs7kbUOgxkN85ob+AQ99DX9tU+31tILqQEE0Ga90ZOWXuH3Tjmql5dqRf3Etthxf5q4P52XFACL6cc0LCYQJU+N5/q7BM7VpcvebwBFUk9Q0CdsL0PWO4fetBA43PlBD0RypsnCzsoLBxOsIf4ISq9+1E=
+	t=1746453615; cv=none; b=I4LG/22nBH+yqE84s2zCzCDgh7YjCd4zH6Af81iqmpzTZ1kXibQBX6diXKGPQhz+rbu12oD+y4yZWRkmQyGNAt71yisOq/tJF1lzMLsrzLdND9Bdn1y6pNFW0ObVRGyq2pYS+aL0i8B/AAZMGjg4n9IBoVEIuTVxBzqlLSbMXLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746453149; c=relaxed/simple;
-	bh=DMzeHg0FnCyuaf+pPkS0MS5vehNH0brnNMAFUoYxjVY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AbnkGoaJyynjM/SKOBRYa7WGrXf3iMqhd+eOwMot99iUrRinzH5eXlXQMXI/HHq2A1N1UcxJ8R3V+JCUKXeyUAaEAmSjIl2OA6IJVeB0nJGjWzUQLgK46KtKujrRtmxMVd0PF1GS6fE9OCKOovjE70pQRe9p8SImHYBSaxKOcc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ISSoRdKP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JX/QUuY1; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746453615; c=relaxed/simple;
+	bh=TCUwmzxruSw40iZ7cHBv6ZE4IJ5Oz9xxQmdRTZHNuZE=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=FWbY4r7rgoQd6k5KBMcyyKJt3eO5LNoOatWpLZfWnuSwfyplOhI8jLPObdebH9fX/AVriS/yQGUmRH0k4jx6oc6VZswARyy46A+fUrqmwQFsYMQmVJZkviavZKkoTEVhVT+2125N7k128E0f/cABUhO/ziUpt2p3vgSBBZVFbuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=PYb3fRA5; arc=none smtp.client-ip=212.227.17.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ISSoRdKP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JX/QUuY1"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2ABF125401A5;
-	Mon,  5 May 2025 09:52:25 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Mon, 05 May 2025 09:52:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746453145; x=1746539545; bh=cOZOTFTyDU
-	quveB51mSOPBGvZKZOPVRyRjr3WwLRF+U=; b=ISSoRdKPpaxMg+2wEY1yVxsIYG
-	qdKbf0tisfccCuzYgQFx1GIr1gPTu5Lslmr2aR1jJnXm96b+3oLmH9apKp4d7cfx
-	aGMTycdwP/7K7XPdL6s+RsfOj9MyNbl1lsXpIYYfodWXpIsPB0CF6nEjPre+T1Ur
-	y2R0KadeYcFDOg1oMPrS2EZlF137hGQmfSnY0CrrFPfcSELpVzHtQrQ8lLebCnho
-	jnJiK4bbqyBdhLfYj9a3AbxfuvsZhkGfFI+EK9TVm8QzIJXw3XPKBIKAXcjodxmZ
-	SLz9a5pXlHH7QTST2tnWUjj2dxK+LbzE4UjrIq/iuTbBQK7qnp6SgbZReBKg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746453145; x=1746539545; bh=cOZOTFTyDUquveB51mSOPBGvZKZOPVRyRjr
-	3WwLRF+U=; b=JX/QUuY1tTYMswg/caPfxKv/MK8Dl7fQRXqbmXt82kqOxRP3mH6
-	GIUemjYblIV6eoimaT8okm7MpzJ7nEJ8sv+Nisl+6i6DXPcURTIRX5eBKld8Thij
-	94UO4xrWckH2iXbwpON132YLp3fem2UGGL07MCU3mvmNFg4Fml0isAZTiH91NUk4
-	e5lBf+IaoZeWlXuJL19Lsc2CAuWj12rRVYLXUFUq9jJOf/mvLOp4ukTni7x0GRGI
-	IIjYWNZOk9C2bIJvC8ljET+6tyKCsMnpcWmai0rLqcBrrkKetfLBDkpZAgMmMTF4
-	5/zqWBFvZuEsyOE5WdskNeQijYzTEbvDGsQ==
-X-ME-Sender: <xms:mMIYaKCQJmA5ivM6nJR3HmOdG2sFFoB2-ob8xv9Zjsmop83zlMRVEg>
-    <xme:mMIYaEhw0fGCznGUrYi4s5hvmx5E723njYNOY3mqtS8ESrIxmEbvDqy_gzf4jZCPs
-    5Gl0HPOW1oE3WMJuA>
-X-ME-Received: <xmr:mMIYaNnWzQqt-Bg0jiqn5X-ALRVp9uw_fsIEOaI7LePiC1bqfgy4_Uqwx4D91B3onUIPq_R6eU5dzWFCKOqGnWk3as9H1FiPLLRH>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeduvdejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:mMIYaIzcmguk8vOTphvwTOMf_QPa4P_SZDdF33HRfhG9VxE6eam0nA>
-    <xmx:mMIYaPRzaQh3FJ9L06-1_fPN4bqwOo5omCieEjYiQ3KNmk8C81WnZg>
-    <xmx:mMIYaDYz6lC0C3sTVOvh7CzCg8k-kM8D2a_eIafuO38rgZXwg2fVjg>
-    <xmx:mMIYaITjH1oOh1NYL0QolzjLoHNdxYDWautQ6W05VWdZHx92WQho3w>
-    <xmx:mcIYaH8pKamaZ4FEfRGYkR1NKMycNHQQcY9Rm9tAWZiWhbbFy8oKJfs5>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 May 2025 09:52:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 0/3] Some CI/buildsystems cleanup
-In-Reply-To: <pull.1916.git.1746430790.gitgitgadget@gmail.com> (Johannes
-	Schindelin via GitGitGadget's message of "Mon, 05 May 2025 07:39:47
-	+0000")
-References: <pull.1916.git.1746430790.gitgitgadget@gmail.com>
-Date: Mon, 05 May 2025 06:52:23 -0700
-Message-ID: <xmqq4ixzrwq0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="PYb3fRA5"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1746453607; x=1747058407;
+	i=johannes.schindelin@gmx.de;
+	bh=rcOlKeNPXK3AsFtVE40aUc7fOxpICCkJBtkPqgZZ7EA=;
+	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=PYb3fRA5JM46K/o1++9yUAN0vyEvz5GK9+TcH1tiAa8rd2RKW7zCVi4PILxmnXus
+	 m3rrzTD2fDi9tXjbGUEU//CdnrXjyibPzo6r9k+glrXhBD+g1IQGAaJuV8Exak/DI
+	 TaVv8aLu6eVr4cPXsqZM6zdayt6hcAf2vbJwiBFTku0gdI8+4GLBSXfe5B7siIYtk
+	 mHN+tBFGfvUf8V3AK88bxrxqnOtWgInwjtAEmYyr+V7jo7jjO9Nwq8Wjp33TJ5eaA
+	 R911BNZdbd486MEBY+WLY6vaYPCDSj92ob853qR9PSbIvyxFkRGo1VkxjN1R6oIY7
+	 UKVSYdi0ioD6oInuvA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [172.23.242.68] ([89.1.214.189]) by mail.gmx.net (mrgmx104
+ [212.227.17.168]) with ESMTPSA (Nemesis) id 1Mgeo8-1ufWUV2RLg-00qOmY; Mon, 05
+ May 2025 16:00:07 +0200
+Date: Mon, 5 May 2025 16:00:07 +0200 (CEST)
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Patrick Steinhardt <ps@pks.im>
+cc: git@vger.kernel.org
+Subject: Re: [PATCH] ci: fix aggregation of test results with Meson
+In-Reply-To: <20250505-b4-pks-meson-aggregate-results-v1-1-f38899a0a2cc@pks.im>
+Message-ID: <b98d128e-0c16-aa50-e5d5-1717a611b7f6@gmx.de>
+References: <20250505-b4-pks-meson-aggregate-results-v1-1-f38899a0a2cc@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII
+X-Provags-ID: V03:K1:mQ9Chk7L/ycta44OhSMFNx+bdnMJL+1wER/7xmZFLHrokOut1vE
+ 2UP6qhZGqyCSMcOOJ6voR3gjSEa7GfcLRnOskyB3hXU5nG7jVzTqjrnucq2s6On47HutDCw
+ nXJUpzhjEtHoyjq3ka1Fb+my7vbNBomB6Ait7FX6O+sKEfKsNy+zQCtJzHA3/LyKXIsNKWK
+ ctnIUFy/qjNz4oj0U4X5Q==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:6r+5K5zSsIU=;DOdH66YltxV1hxOe4SBJ4e98OTw
+ ED/YFYRz1JrmMCdweo8AYUQiqjR8gy8flQ2Kk1qmeSqucM+FqDJBXkbL0WuDmQNmUEr20y8/O
+ Dc0XTejTT+MG7P4KAxcJFnQjYVsLbw1ynpoJyULAgmkFPm5tBJMpa0w/UVcpWbJk/xJfCatF/
+ dPmw3YOalI2n1V2pgViy1UlkU7U2LYHxpkoR+LSIAaA8BMWhhRY15Lrg3xQMFZYatj+6cH+sf
+ 2Z2Gs0KIcmAsb3Zfow3q6k/Wc5v1aBFIepRNAvBMk9D6eE0E8BK/grxaVXjjvMabRcWs5vPKA
+ Ty8Gv7vfMjNO6lCU6OK+EfbQrJoZyQsLRVkgKtW/YMezYK4cAmjtXDjpNlp/2wCoMdLDewCQP
+ rVkr2wxi5X4TLqkR7BTlKyuKcKYuYMYhi/gON4ExUE026jJacmX/4A7W5M+WfkdGZFm3BfO1U
+ k95k46TK7limS4w5R7Vzi8rPKajHjIWAhZCXHP27f+b+G6As0T66vAN8BpkR/s1JiWmMoBLUs
+ +gbZu16FgNZ72gynjKwY/URaTmArlg2suacccc39drWhJvf42KP3or1cISnRykP8y2L0H6XKw
+ LLWmW33TJGGx/EmEcavjN4PemQiP+9wkX5Sqk1vVmC8JsrPgec0SGUp0i3FqYZjpfCJSdtHub
+ XrKQ73TKmCYMNbBvrM7qfTnAiRZ2ghfxF8RFuT5rwHFRPak1whccA9LqXP/NETRL31UJcY6S2
+ eRVh6UJ7qpR8MZ8sdIeFlujqt5PBVb09rm9M4fOL5k1yo5CcihNfq7GZNLEKOTwDyF8GCuVqx
+ 6gDN8/i85iWCvtRnuHyO9BbmvHqIqjnYTWtqaGKRyI1LxbsZZUubsLqsFvJm2u8qsHHyLyzlq
+ dT6B4wBVrmRZwSlSqP7qHHu6r2/5ayCf3t6URnL41RsYrFKVVPFG5WeLat7RvjtQJhtWzb+Lr
+ R7yZ+kb+n3IyNA+XpyQYMVMmfsyfRfitys2nf+UMK1MzwouxlCdvl3bfmPekrwLA0BnLfRJc/
+ eyLaSrvaO7O5yjNXJOCB9Wsb3nd9kweuUlBzvq4R0+q7Eo6YeOkeyBRd4marTBGm1aXH/Wtjj
+ Z93rtIZfXrTl1tfm0x1h5QC89uZLjBLm+rAk62Cc/8ZGUxwbHHEn3RY0GCYMkCVpddyqMwDc5
+ TMe6fAjwKm0YS+lSpgslmCaURepn0O1uBM/N+BVD7d/iBlsc7aMHQWgVMdRQsCxtdGB1xnhYS
+ 8GEDTZ4fISveIL61nrGy4CPWwC87nB8dOlHH3kRSXxOkEGEmuFc+fP2u5spF5yihXyz7yDwRF
+ svH+GR1PVOMhN07hQ8a4fiPjjmzbtTy8FrReXfjGoHJrybTOFpobuvdUpXIQpbs4qdsQ3v2v+
+ AxzlkHVkamnn5waNUoQit2v3PXb4fcp0S+H5FvVNge+hmvTPjgxxWBJtO8Mhc5TSEexT/Ahur
+ 7rPkQnNttq28ZOjoj/9nhGgc6UHfUhL/kA+Zr5FEN2fvJsyvdrjHnsjvdEGLiEuadCjZKNVRh
+ xqZ7m+0dAdwAaXw5kyY2nk2hiifPCi01v4GZ9elOvsiHfEWv1xlmugK0C43+oi5JbvaM1m9+C
+ sQPX1BE1QUD1qewK+wVTgcVG/MSgFoklD53Uqc5HU2yt8Q18pXIyibVwi0si6cQqSX8fiSnb0
+ Ktowjvf45Mi7xvTUXbccTHqDeX4WAtXZCDTPjqQPKnKg96BsDj4tSWVthfhxdtVZoaF8B8F4p
+ 44eyTTZ11CC37dqWs5XMcWvtL4M4XKFk+jutVj48kaaYu4IXMbu/2kbGaAa/mxq0sdJWrA9bg
+ wyKt5czPzF/8xRtVjIkqBkoH9YHFkOXzc6+IUXnLhO25rElZ+hVlq0xcfx7bzJc6gsbktQZuD
+ WlbzZtxVvE0XhLkDHKXrURz2GfWQOWUX5DW+HvZMBbx0wgmHTvZdKJ3aJ8JE2RDpxtRH5P6R6
+ Chkb1+eCv8t5es/vD7U5cHpt4rlFmaG8+go3L4mh2GfPVJPRxJsCCRfV8IP/YsGDbHrPwf4oP
+ VXVnEnzHCHYjn6BUjznm8bvQ8JtjkxWAJlDPRQ3VvoCekE8Cy5coa/0Iwpwu/n3NzAlJrEdQf
+ 0SyfBVlJP+CPI5YJnjmuLevcDNbnxRJCwneVaM81KWderg35ve5Ps+l8EI6z87D1v4+0YbJsz
+ Cv/+OqI3k+COmcs++YgN6XtvVasYLmn0FXZHN+BbkijcQ308oYnE96LAnJ5y+QQn3Kgiv4bkh
+ hHw0SOPRASRvtgIdUIDL46ox7rHCX00ZXlE7ygQkMiZexMwqgiKQ8x7IhWnAAc1k8d1EMGLFC
+ rFkvgg5EaZCtZ1Eyf8jD96s4tBwYv9UWN+pIhxYBJjyk8fg+NzpdSnSDKFNMcBuOQFhJY9dTS
+ f68D1hAtw3COOoY48W4xTHrwb0MvALsuvOsvi3q3bzHc2aRdK3RCuGw9uKubuSH5UHXN54hNu
+ zahF7MTDYXFROIHNJg55zqwSh4D7vswp/jVFasVRikwt1MO/XdbXTTpIUUSdC/MRDLrCyeua3
+ 0Djp/zfwlpgrW9pktdLDvbuPWpMfczhIU41tBTHvWEOB8kbbi8bhzA+S5dVox83u9tqD2GqHG
+ nddkyxukYyB6O/HtwLDyi7UmhEzfnunMm23wtlHJtMM7IgyI4krxaXsNZGYmHe7RADxjpO+W9
+ UTCJQFIpoh6yJFCamzV3yrE7z4lOl0Gtx0d8BxkQAczL8RePFbXChmfF5u1rgtXNgLLqBuWdC
+ 31N7zOLrLPiKJXdaujc/jqS4xJoGoCDcrAiKbXBak4N50bBIPJkk+8F7hqKA0qRgCLrd+Kefp
+ OP/DayCv7AecPmMRWU2PEX6pFbFvA+RHjWmN1oyOfFe9/Z5v0GawlQr8kjAwVzNaMj6nIRg8/
+ F8WXBHmSLz66ZdVBj9looPU05eS2IcFf2GUniRY51PijcNGVOi3nD59hIgV3lcWic3/gZy0Y5
+ OG5bRJK2fJtCs87zQ25y9+oBNxDNm2+wo9hRElcaI/pqpRocMuVsZTjV4oTOLq3078bDkRLT7
+ R94yKoIO7fPGthpw+mattG0And+zB5zRsUvTvsUZ/c1Xo0x2tkHY6+EZZoKS3tWFpMFrnygj0
+ JRRzz2kl+kwj8=
+Content-Transfer-Encoding: quoted-printable
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+Hi Patrick,
 
-> This patch series drops a couple of no-longer-used parts of Git's code base.
->
-> Johannes Schindelin (3):
->   ci: stop linking the `prove` cache
->   contrib/buildsystems: drop support for building .vcproj/.vcxproj files
->   config.mak.uname: drop the `vcxproj` target
+On Mon, 5 May 2025, Patrick Steinhardt wrote:
 
-Thanks, will queue.
+> Our CI needs to be aware of the location of the test output directory so
+> that it knows where to find test results. Some of our CI jobs achieve
+> this by setting the `TEST_OUTPUT_DIRECTORY` environment variable, which
+> ensures that the output will be written to that directory. Other jobs,
+> especially on GitHub Workflows, don't set that environment variable and
+> instead expect test results to be located in the source directory in
+> "t/".
+>=20
+> The latter logic does not work with Meson though, as the test results
+> are not written into the source directory by default, but instead into
+> the build directory. As such, any job that uses Meson without setting
+> the environment variable will be unable to locate and aggregate results.
+>=20
+> Fix this by explicitly setting the test output directory when we set up
+> the Meson build directory. Like this, we can easily default to "t/" in
+> the source directory when the value hasn't been set explicitly.
+>=20
+> Reported-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> Hi,
+>=20
+> Johannes reported to me off-list that aggregation of test results
+> doesn't work on GitHub Workflow when using Meson, as can be seen e.g. in
+> [1].
+>=20
+> As it turns out, the issue is that we don't set `TEST_OUTPUT_DIRECTORY`
+> for many of the GitHub Workflows jobs. And because Meson by default puts
+> test results into the build instead of into the source directory our
+> assumption that the results can be found in "t/" is broken. This isn't=
+=20
+>=20
+> I never noticed this failure myself because in GitLab we always set the
+> above environment variable there. In any case, this patch fixes it as
+> can be seen at [2].
+>=20
+> Thanks!
+
+Thank _you_!
+Johannes
+
+>=20
+> Patrick
+>=20
+> [1]: https://github.com/git-for-windows/git/actions/runs/14806194960/job=
+/41574766327#step:9:2125
+> [2]: https://github.com/git/git/actions/runs/14833082023/job/41638408968
+> ---
+>  ci/run-build-and-tests.sh | 1 +
+>  1 file changed, 1 insertion(+)
+>=20
+> diff --git a/ci/run-build-and-tests.sh b/ci/run-build-and-tests.sh
+> index f99b7db2ee8..bd300a05db8 100755
+> --- a/ci/run-build-and-tests.sh
+> +++ b/ci/run-build-and-tests.sh
+> @@ -56,6 +56,7 @@ case "$jobname" in
+>  		--warnlevel 2 --werror \
+>  		--wrap-mode nofallback \
+>  		-Dfuzzers=3Dtrue \
+> +		-Dtest_output_directory=3D"${TEST_OUTPUT_DIRECTORY:-$(pwd)/t}" \
+>  		$MESONFLAGS
+>  	group "Build" meson compile -C build --
+>  	if test -n "$run_tests"
+>=20
+> ---
+> base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+> change-id: 20250505-b4-pks-meson-aggregate-results-60ef175dd424
+>=20
+>=20
