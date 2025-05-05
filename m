@@ -1,102 +1,87 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0878B1AC458
-	for <git@vger.kernel.org>; Mon,  5 May 2025 17:48:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3C126D4DB
+	for <git@vger.kernel.org>; Mon,  5 May 2025 18:03:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746467296; cv=none; b=IE3O4nMSgiydABIISZakNNsUxfV+DpFviyI/v++BP9/x+G7bF/MHxCYGAoHEzsF7BdY4q7BTqtcwuzpW74OY+OjEc7jbYrlqt8eRwElz7MKkmYh5sIN15myOMCETSumayUqEBZwchZORtG+4AHSMb27WwfLCQDNGL2gVJ+QaFmU=
+	t=1746468205; cv=none; b=qH9pCvVeHDN3nW+IyKSaFo0o7N9n+KTm3GhgqOhxfatwPzhk5+SwvLDcWXPhNIl0S6YacaV3f5weK0UfDXSEBGyCmqeBuL8hXY1z7tPv8bwZLeIzhQrsxYH4XmdYbkwfKbB/zd9GNJkN+/lIggLcxnuyH735zmGq2Ily+muYM0g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746467296; c=relaxed/simple;
-	bh=J1TviDuj1C4EKbsMEcxJPOb6IYSWyZewZaz2WodbkcA=;
-	h=Message-ID:Date:Content-Type:MIME-Version:From:To:Cc:Subject; b=U2u8XTxF+0AaHa45MLdrNHmhWVfTIj9BMUNCacCx0795lVed+ykWhTZkKhdAf4cC5CgPT3HmghV6IAnPbwW0CP+0NDLRIbQZOtWXDWeY07Fpec8pVAw4rG6ra3ABxnHentjxvv25s/Q4bz3xakAn2IJu4vhxRSrsxff4OWPUWvs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org; spf=pass smtp.mailfrom=ieee.org; dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b=Er5T9NLg; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=ieee.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ieee.org
+	s=arc-20240116; t=1746468205; c=relaxed/simple;
+	bh=0rOPmL/urVcRqK17/OiCQ3TkjlUS7Efbuu7l3nBawA0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MnJ8wS3NbvuTD/HMoitbClXni6xvEzO4QhULvUMcJHgkxIXpeUtMCO+1diGDkcty+Kww1zZySd82CHRX5Q+IUPFmNAQlfvQ720yJlSpX9hnCRfvJlQK1LRC5whca0nokO6bufs/R5nmbfbMDezvkos2Fc3wRsFX0ISDvBj8VKGw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Km5bIFKH; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=ieee.org header.i=@ieee.org header.b="Er5T9NLg"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2241053582dso71149915ad.1
-        for <git@vger.kernel.org>; Mon, 05 May 2025 10:48:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ieee.org; s=google; t=1746467293; x=1747072093; darn=vger.kernel.org;
-        h=subject:cc:to:from:mime-version:date:message-id:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=J1TviDuj1C4EKbsMEcxJPOb6IYSWyZewZaz2WodbkcA=;
-        b=Er5T9NLgHW+n2LdLK/cxUPGYdEx1iqqV4Us33hn73uUvpYyNj7hN94FDYmFGr8rYLC
-         92iBY5BK2gg5OrHQZqjvKC3+oG6QmO0zDImzmLHqliDUJw0o+CboNNe3s3dV8Xc6BDVY
-         +6ZCfa14oilqINF3FqU3x9x6IE8ZyjrDpQU+s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746467293; x=1747072093;
-        h=subject:cc:to:from:mime-version:date:message-id:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J1TviDuj1C4EKbsMEcxJPOb6IYSWyZewZaz2WodbkcA=;
-        b=an5nnbKsx47iPLkqGKQ50bXfRp8ElqJ5SAABKdQLcv0HIKETddILYU3r9adcuM5TyP
-         sTMFNyjvOZyJ0kKgyZmLYLBHE7ZMw4eML29J4c7muDnFcNmZB5ddLQJpAEQW5Q18ijS3
-         PpOJUSlj/nHx8Y+VR/drLaHcGjuL/RbPsIwor02JLKkVIj3sdf476PjiZsE1xCrAU3gM
-         ciKJ1E7rQtD08Wr6JaREQrDgLZyMyu8RFzDL5B95gMMZbNQOLd5SW0s/HAkbZxMswiXi
-         W9jzXHvaxtKbu0a77QRchXUltPZgovV7kbYL1YUlAWciM9qEDsgprqGm6MRA/9eQpWNS
-         AzAg==
-X-Gm-Message-State: AOJu0YxzfXcZ3/wrX+UP3fPANbzTYTfZ5bn+cN9hLalL+Y1CkE4OrPy+
-	3deIPtETz9Okn925VkYpBBYogm0Rp/omBCsS3m/BKyQTNtjcgcicEBKFZsdLrmz426KXStILjAn
-	cSSSo58oSte+JjVu4mZWGKgFithQPcM7o9bxVlRhLWj2QrhCrljsNcaBAy86GkggzKtwu8XoQYz
-	GLvHQWBp05Nd7v3WzzY4pxoecTHo+jrMnF
-X-Gm-Gg: ASbGncuvi8Q3m0CqiZpYu0xj0qNRzqMxjSCQhUJBHjuEyZ0yT7FEXqLLzEZUOx7wfSY
-	yWbALLB+ypGN+sAsMgvnMjqc0R7p78qtZPvlx0On9PJNy1+DEgYSwHQ4ULhUMSoRMkByDhsopfz
-	2IAXOL0ZS3EqW7qbh02sh+JFf8s3+RIvddK0zaFkKTZ+0RbsfsOIOcCC7OqKt/tUXD0s1Mv42ll
-	Io0H2bUgW4bCP329kQdpN0x4txggsC0nB5dlqXRyVF+VD3f8QKl3CXIQFbVZG1jNkg5P/O5Sdhk
-	NJK901m5Y+BmrzXwShqF+dItWDVVrHXmKKvnXBJRcDVYVtvOzAeTacMKO0Zke/hPWw==
-X-Google-Smtp-Source: AGHT+IEM1sOuQwGpQPjPmvxNvv28+EgxUhRrj6AHaHPtvTSuzm+WS2cJuoGwUnIFq9O/IwjFObhJ/A==
-X-Received: by 2002:a17:903:2408:b0:223:37ec:63d5 with SMTP id d9443c01a7336-22e32ba8292mr5116005ad.28.1746467292852;
-        Mon, 05 May 2025 10:48:12 -0700 (PDT)
-Received: from [172.20.10.2] ([2401:4900:91e3:a99d:fcd1:c9ad:8551:9158])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22e15229469sm57681785ad.207.2025.05.05.10.48.11
-        for <git@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 10:48:12 -0700 (PDT)
-Message-ID: <6818f9dc.170a0220.3b22af.84a0@mx.google.com>
-Date: Mon, 05 May 2025 10:48:12 -0700 (PDT)
-Content-Type: multipart/mixed; boundary="===============0252110459312059723=="
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Km5bIFKH"
+Received: (qmail 29470 invoked by uid 109); 5 May 2025 18:03:14 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0rOPmL/urVcRqK17/OiCQ3TkjlUS7Efbuu7l3nBawA0=; b=Km5bIFKHziM2534W1eY5DLtG1y48FaPOEtLbLOVlCxptw8y6ZHIlq185Ok7hLy96H+iMTpCgKGYZTQSE6ogXdIg4qtxX4K1nTb9dpKyM9Ofdeg4QY/mNKp7HRyWiMWl/WVhABi3lqlDuccoJRnErpMs5BPRtzili5o35wZUN4Zb8DU1O7H0dShs0tV8K4ZUeH+ItHsoCvW1iTHrOhEL4cY9QU+6RwnAyfl2301pLifOVHkm1au/jap48SqJGvdtMLFSuRt0O6rUNHJ0XrgdAzdksEnAen7cml/AMvhsUDPEAo2gtLKB4OSHHz8WVmkoHzVnGooo50KSvp6mBCInoJw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 05 May 2025 18:03:14 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 5103 invoked by uid 111); 5 May 2025 18:03:13 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 05 May 2025 14:03:13 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 5 May 2025 14:03:11 -0400
+From: Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Collin Funk <collin.funk1@gmail.com>, git@vger.kernel.org,
+	shejialuo@gmail.com
+Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
+Message-ID: <20250505180311.GA29783@coredump.intra.peff.net>
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
+ <aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
+ <20250503133158.GA4450@coredump.intra.peff.net>
+ <xmqqtt5zoyg9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: numarahamath@ieee.org
-To: git@vger.kernel.org
-Cc: 
-Subject: =?utf-8?q?Collaboration_Opportunity=3A_IEEE_Summer_of_Code_2025_?=
- =?utf-8?q?=F0=9F=9A=80?=
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqtt5zoyg9.fsf@gitster.g>
 
---===============0252110459312059723==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: base64
+On Mon, May 05, 2025 at 08:43:18AM -0700, Junio C Hamano wrote:
 
-CkRlYXIgR2l0LAoKSSBob3BlIHRoaXMgbWVzc2FnZSBmaW5kcyB5b3Ugd2VsbC4KCldl4oCZcmUg
-ZXhjaXRlZCB0byBhbm5vdW5jZSAqKklFRUUgU3VtbWVyIG9mIENvZGUgMjAyNSoqLCBhIGZsYWdz
-aGlwIG9wZW4tc291cmNlIGluaXRpYXRpdmUgb3JnYW5pemVkIGJ5IHRoZSBJRUVFIFN0dWRlbnQg
-QnJhbmNoIGF0ICoqQk1TIEluc3RpdHV0ZSBvZiBUZWNobm9sb2d5ICYgTWFuYWdlbWVudCAoQk1T
-SVQpKiosIEJlbmdhbHVydS4gVGhpcyBwcm9ncmFtIGJyaW5ncyB0b2dldGhlciBzdHVkZW50cyBh
-bmQgbWVudG9ycyB0byBjb250cmlidXRlIHRvIGltcGFjdGZ1bCBvcGVuLXNvdXJjZSBwcm9qZWN0
-cy4KCvCfk4wgKipFdmVudCBEZXRhaWxzOioqCuKAoiBEdXJhdGlvbjogTWF5IOKAkyBKdW5lIDIw
-MjUgIArigKIgRm9ybWF0OiBIeWJyaWQgKE9ubGluZSArIEluLVBlcnNvbikgIArigKIgVmVudWU6
-IEJNU0lULCBCZW5nYWx1cnUgIArigKIgT2JqZWN0aXZlOiBFbmNvdXJhZ2UgcmVhbC13b3JsZCBv
-cGVuLXNvdXJjZSBjb250cmlidXRpb25zIHVuZGVyIG1lbnRvcnNoaXAKCldl4oCZZCBsb3ZlIHRv
-IGluY2x1ZGUgeW91ciByZXBvc2l0b3J5IGluIG91ciBjb250cmlidXRvciBwcm9qZWN0IHBvb2wu
-IFNlbGVjdGVkIHN0dWRlbnRzIHdpbGwgc3VibWl0IHB1bGwgcmVxdWVzdHMgdW5kZXIgdGhlIHRh
-ZyAqKiNJRUVFU09DMjUqKiwgYW5kIHdlIGtpbmRseSByZXF1ZXN0IHRoYXQgZWFjaCBQUiBiZSBy
-ZXZpZXdlZCBhbmQgYWNrbm93bGVkZ2VkICh2aWEgbWVyZ2UsIGZlZWRiYWNrLCBvciByZWplY3Rp
-b24pIHdpdGhpbiAqKjM2IGhvdXJzKiosIHRvIGVuc3VyZSBhIHNtb290aCBsZWFybmluZyBleHBl
-cmllbmNlLgoKQWRkaXRpb25hbGx5LCBpZiB5b3UncmUgb3BlbiB0byBpdCwgd2Ugd2VsY29tZSBv
-cHRpb25hbCBzdXBwb3J0IHRocm91Z2g6CuKAoiBTcG9uc29yc2hpcCAgCuKAoiBTb2NpYWwgbWVk
-aWEgcHJvbW90aW9uICAK4oCiIEludGVybnNoaXAgb2ZmZXJzICAK4oCiIEJyYW5kIGdvb2RpZXMg
-Zm9yIGNvbnRyaWJ1dG9ycwoKTGVhcm4gbW9yZSBhdDogKip3d3cuaWVlZXNvYy54eXoqKgoKV2Xi
-gJlkIGJlIGRlbGlnaHRlZCB0byBjb2xsYWJvcmF0ZSBhbmQgYXJlIGhhcHB5IHRvIHNoYXJlIG1v
-cmUgZGV0YWlscyBpZiBuZWVkZWQuCgpMb29raW5nIGZvcndhcmQgdG8geW91ciByZXNwb25zZSEK
-Cldhcm0gcmVnYXJkcywgIAoqKk51bWEgUmFoYW1hdGgqKiAgClRlY2huaWNhbCBDby1IZWFkICAK
-SUVFRSBDb21wdXRlciBTb2NpZXR5IFN0dWRlbnQgQnJhbmNoIENoYXB0ZXIgIApCTVMgSW5zdGl0
-dXRlIG9mIFRlY2hub2xvZ3kgJiBNYW5hZ2VtZW50IChCTVNJVCkgIApJRUVFIFN1bW1lciBvZiBD
-b2RlIDIwMjUgVGVhbQo=
+> But for other kind of requirements, we want to fulfill them on all
+> platforms that we claim to support.  Using open_nofollow() to
+> achieve hard atomicity requirement would be a bug in such a
+> situation.  Should we somehow warn our developers against its use?
 
---===============0252110459312059723==--
+The comment above the declaration says:
+
+  /*
+   * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
+   * may be racy. Do not use this as protection against an attacker who can
+   * simultaneously create paths.
+   */
+  int open_nofollow(const char *path, int flags);
+
+though that may not be enough. 00611d8440 (add open_nofollow() helper,
+2021-02-16) discusses a way that it could be made less racy, at a
+slightly increased cost.
+
+IMHO that is somewhat orthogonal to the issue here, though, which is
+purely about the case where O_NOFOLLOW does exist (ironically, our
+racy fallback code consistently returns ELOOP ;) ).
+
+The issue at hand is that particular errno responses are not always
+portable. The patch discussed here improves that. My point was more that
+I'm not sure to what degree we should care about errno consistency in
+our wrappers (which is inherently a bit whack-a-mole as we find new
+cases), versus trying not to care too hard about specific errno values
+in calling code.
+
+I can see arguments either way (and as I said, an argument for making
+errno values consistent even if we try to rely on them less). Mostly I
+was just a little surprised to see open_nofollow() being used in this
+way (especially since we have to end up stat()-ing anyway to check for
+other cases).
+
+-Peff
