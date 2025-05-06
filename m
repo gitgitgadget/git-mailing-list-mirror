@@ -1,55 +1,55 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5835F27A464
-	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC6B27A473
+	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746529766; cv=none; b=gyQCplhZ9PoKQ4A/dNbEI8xLc+QRcLZGAwwT/XXsF27+WdfCBdKPAAooMLDRRhUaFIsZuWzK83cyEZNbebtX1ZRuj9RteoIQiVCQ7vIlyzMvYHkvDpQGdUF2ii9BKKDG1LJjW7KqyZPB2OfoJuXc6dvdBM1m5kXZkzk/1pcKGic=
+	t=1746529766; cv=none; b=JWwyCN/q2Ltu3DW4RBXRze9hUkrwkfo9B8UIcohLMShZZHGkb4uIGX4upqGzXGh/dHYOQXqZWXt704D0qlHuUiCyiltrPfCUejW/D+tEofClbDrc/4tV42r0d2+AC0PiwMPFIS6Sa0W4N4eNOicsG4MkpIkmI1VXNxP55G3VPsQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746529766; c=relaxed/simple;
-	bh=fp7kWR3NcYHsiSrZ0iZSWl9dzlU7+WDkfUWW3HwK3Lc=;
+	bh=gmyCZB3zWTM8k4RWGkuItSQPpuSBdMWL/FP8ElRLgc4=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=PbjIlN1yju8dPyTfGWYPHuEYBOeT8ek4/Kqu93NHhlphAXPeZH9p08VM59lq4QEOIJK4ZRXthRenZKBEy0ooBmiSgkKXoXUpMaIz1kLu5ToS0Pzf0h7n1UGmAlQ2qkkXcZfn9tS5MaQrSFCH+mRoHuV7+R5I9dJKg1a77BobYU8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VcQElCra; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RdvS4Qx7; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=tOLNQigfyhgW8p4WjAGuUYcD7ktoUbAZpZjB7AFiVI9Q533u3G71tfzsDC8SuBtufPqHgdQmrR8Jhh/WibR/Uebn7jEK+5DH9FroSrKsNsTFvHh01ybV2vjSe1jrqKC52vvV/PtqBmAip1hJxmVDQGC26xaPoOUUREw9aYEOqtQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XznuVzQL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oOSWiV+O; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VcQElCra";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RdvS4Qx7"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 398FE1140290
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XznuVzQL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oOSWiV+O"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id EFEA711401DD
 	for <git@vger.kernel.org>; Tue,  6 May 2025 07:09:23 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Tue, 06 May 2025 07:09:23 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 07:09:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529763;
-	 x=1746616163; bh=EXI6bBoQslG+ml/3r35D19h1DwO+ZmY47T6EYwoBEMQ=; b=
-	VcQElCraWnn4igIJVmOyRLKJKV5MeL3BrwCzyPmOdmgtWaDsKfqlrJwXl4HteC3l
-	xt4tR5J67/1nJU2fY/IwEiPXrCaQFgAcwSkZAao6vj1yIqy9AzTWtFoAwAaesQiS
-	91cNXOksSw/w1aWvUa82fPfi4NoQhlpy/ukL0ousb2DwPvQbN2BpDVXifqCihtuB
-	jR4joqmodkKk0YwgztPnsiRaIcDDbxIjxn1n1pSe0kOGVhKn/lFp0OvlYG54/2y2
-	+F21TFiRvqVPYVfPYqlxsI2LekjbYb4RydvnfIYSQJSFQQWcrUyZGlbZdLk1icgd
-	txLq0KObBi7IPkCnccWM9A==
+	 x=1746616163; bh=MKwBj141fzhap76j86nuA/tufGqGPZNLpHprMcup89M=; b=
+	XznuVzQLdlgL/OrrNMvmkD1BLRx+a21JtpVf4WnvvmWnZa55eFtRtqgFVKKziLca
+	S9JGFhcr7PAsAXDgMbVlBTFySOuqNw1p7UJsVdHkArt/ey8dMS+5AB3XbEBmjpu3
+	eit5YqUIxpqQglFvzfb8lUNriLQv5yG1yqq+QFjuy15pUsV1/AfEy6qJp8YOgscf
+	8ecQePG/l4dPh2r+psRvs4xgfxT8hPxEhchx7rmOoDVZwPB4ACAAUwRVZQQeGSXf
+	vBTwqeqtY8avr4e0d8g9PMwE0YfR0UFnxq7iL5FSZYk2nUsP9iRjzzCR4mZEkLYM
+	Ylu6JJAw730lRBIrHHoWew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529763; x=
-	1746616163; bh=EXI6bBoQslG+ml/3r35D19h1DwO+ZmY47T6EYwoBEMQ=; b=R
-	dvS4Qx7h/iwVpe/NgrNYkm6q3p9wixPoqVS3WZ7LmEk0S33v8q8For1CqIQTMZs9
-	K6uwUuHhtq9d90r7btGdiFiKghGN096e1y4m6QJtzJXbeud0aeRFITqHcNQKVvWj
-	TMyzuUtBk8xLEeuggCVcgquneDWiEG9VN2IS6BNyro4vAcOgPogORbzGFBx9oHxA
-	yVBbL6XxwKcr8ctt2KODVhhWaUwHTzotRn97fQNk9j4xonr036DhcTReueP/7GFQ
-	ukZrM8XHLdc+evYyj7M4HmSZLooPWyMFilRMDFMbgNkFxKP5M6N3diV49BpL7dGC
-	CJobO898Szd6Q1aBOupTw==
-X-ME-Sender: <xms:4-0ZaHF3JZ1nPqMv3U0SYJPl0QKAo6TusZyJoheD2h69K7m-NysCaw>
-    <xme:4-0ZaEV9ZfQG4MVVrwFnGDNJON8GGbrazJbfP8qghg0Uxc7heHl96xAjT7E9A21Y4
-    udAlvvz8SCpxTNm1Q>
-X-ME-Received: <xmr:4-0ZaJKsvobGdu6xBkuEVnNjT1F2JrwMiKjwMbnLrPjZVOKkYbi_N4unAO7UJFkWMtUpjoleRiDymChX9QJAIT218KDSCOzKvdDB76hf>
+	1746616163; bh=MKwBj141fzhap76j86nuA/tufGqGPZNLpHprMcup89M=; b=o
+	OSWiV+OXYBsmo1opZhYcfLzLdr5yYpjvAij7EkCRmL+b/+P23m3mhWe1Ae5c/IOU
+	xO9u/su2h7ewb7qgWp69BigSQhzYIUbsQaZuCidNaUq42aw2o6Pj2nazCF7+rHn+
+	Xrbx5YmnybjfM1ZBiHq1NK+UoUQXpIAfxH+lY5Bq6l8xiFU4sZK+LW+GHEXlunP0
+	FEujsOnH7/KDbQmsRaNrnKu5fatxcScASkcfh93g8q7nmWH1ICHPOTE5zxTixYcS
+	4/uxiE+FhG7TROaEcLtBvpnudaO54A7PLrblVMHixeNg+Ea/YqsDQ5qCUycyBqQ4
+	77GSUwWtnWC0egGaTaGBQ==
+X-ME-Sender: <xms:4-0ZaLxA37Qr4wwFBuztFn40IfRBKHZfW_dbHMRvLkbEn3PqEa_hDQ>
+    <xme:4-0ZaDSUfZTq2JeXJUG61krpoSnK_ECpN2KCveYVWTYa1v82KKU43w3Gve9EoegqI
+    EmXVQ6C1Fz0IdhRUw>
+X-ME-Received: <xmr:4-0ZaFUq77v6BLW7uMn7a7izTuRC2L0tN_SjpW2eBZgRNk3VKsXW7tNEia8Ijw3tcPwHk_R77k85F_uZb-uD5GoY9AaALCAr1idS6mZX>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkeefucetufdote
     thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
     dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:4-0ZaFEStqWdeyeT07P0tqvxxPqnz7Md95zO0aPcR7xRmJYFg8zZjQ>
-    <xmx:4-0ZaNVW6n__6mzkQvZQ1mZIxIP9MezkMS1Wqnad-0EMTDD3DJo57Q>
-    <xmx:4-0ZaAPzDEREfbgmJqYeX1lsYVYGgkzA-a-CRuI3GTHN7Rfwcz3K6Q>
-    <xmx:4-0ZaM27Oa_Y9K_FJWKoBqaHWuf9G9XmQx4SQ5Jqb9cjvYYetlzcbw>
-    <xmx:4-0ZaFRpKEkdcsvkJQxBQC1RLrwqq5FiL2gj52ZFBwmSiLvh3dKf9Vdy>
+X-ME-Proxy: <xmx:4-0ZaFjQHOaey0jZnCTzRFQFJaHwRGDExuJ_BYo7pF84yutccesqAw>
+    <xmx:4-0ZaNCJ13pVnXZFeEdsda2Q-FPVjXbfH-2tGeZyaD_SCKUm5FhQ5g>
+    <xmx:4-0ZaOIpPeCGeFLnMVkLo2DAk1IwUXb-D5oA8K3PHHZZASJ_NmB6Dw>
+    <xmx:4-0ZaMByoXivjwyXWSZlhDWxiy0Y2DzROBzCrFRFx1AcZb46FhiOOg>
+    <xmx:4-0ZaBu35ivwRuQeQAd9XHvR6kYVezgcv0ZJlJDa2XMnxrSLC9MO1rOH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 May 2025 07:09:22 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 May 2025 07:09:23 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 303cb68e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id f24fcf9a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 May 2025 11:09:21 +0000 (UTC)
+	Tue, 6 May 2025 11:09:22 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 06 May 2025 13:09:17 +0200
-Subject: [PATCH 04/17] odb: introduce parent pointers
+Date: Tue, 06 May 2025 13:09:18 +0200
+Subject: [PATCH 05/17] odb: get rid of `the_repository` in `find_odb()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,199 +82,168 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250506-pks-object-store-wo-the-repository-v1-4-c05b82e7b126@pks.im>
+Message-Id: <20250506-pks-object-store-wo-the-repository-v1-5-c05b82e7b126@pks.im>
 References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
 In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-In subsequent commits we'll get rid of our use of `the_repository` in
-"odb.c" in favor of explicitly passing in a `struct object_database` or
-a `struct odb_backend`. In some cases though we'll need access to the
-repository, for example to read a config value from it, but we don't
-have a way to access the repository owning a specific object database.
+Get rid of our dependency on `the_repository` in `find_odb()` by passing
+in the object database in which we want to search for the backend and
+adjusting all callers.
 
-Introduce parent pointers for `struct object_database` to its owning
-repository as well as for `struct odb_backend` to its owning object
-database, which will allow us to adapt those use cases.
-
-Note that this change requires us to pass through the object database to
-`link_alt_odb_entry()` so that we can set up the parent pointers for any
-alternative backends there. The callchain is adapted to pass through the
-object database accordingly.
+Rename the function to `odb_find_backend()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c | 43 +++++++++++++++++++++++++------------------
- odb.h |  6 ++++++
- 2 files changed, 31 insertions(+), 18 deletions(-)
+ builtin/commit-graph.c | 18 +++++++++---------
+ midx-write.c           |  2 +-
+ odb.c                  | 14 +++++++-------
+ odb.h                  |  7 ++++++-
+ 4 files changed, 23 insertions(+), 18 deletions(-)
 
+diff --git a/builtin/commit-graph.c b/builtin/commit-graph.c
+index 0a184d39720..28550d3bcc9 100644
+--- a/builtin/commit-graph.c
++++ b/builtin/commit-graph.c
+@@ -66,7 +66,7 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
+ 			struct repository *repo UNUSED)
+ {
+ 	struct commit_graph *graph = NULL;
+-	struct odb_backend *odb = NULL;
++	struct odb_backend *backend = NULL;
+ 	char *graph_name;
+ 	char *chain_name;
+ 	enum { OPENED_NONE, OPENED_GRAPH, OPENED_CHAIN } opened = OPENED_NONE;
+@@ -101,9 +101,9 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
+ 	if (opts.progress)
+ 		flags |= COMMIT_GRAPH_WRITE_PROGRESS;
+ 
+-	odb = find_odb(the_repository, opts.obj_dir);
+-	graph_name = get_commit_graph_filename(odb);
+-	chain_name = get_commit_graph_chain_filename(odb);
++	backend = odb_find_backend(the_repository->objects, opts.obj_dir);
++	graph_name = get_commit_graph_filename(backend);
++	chain_name = get_commit_graph_chain_filename(backend);
+ 	if (open_commit_graph(graph_name, &fd, &st))
+ 		opened = OPENED_GRAPH;
+ 	else if (errno != ENOENT)
+@@ -120,7 +120,7 @@ static int graph_verify(int argc, const char **argv, const char *prefix,
+ 	if (opened == OPENED_NONE)
+ 		return 0;
+ 	else if (opened == OPENED_GRAPH)
+-		graph = load_commit_graph_one_fd_st(the_repository, fd, &st, odb);
++		graph = load_commit_graph_one_fd_st(the_repository, fd, &st, backend);
+ 	else
+ 		graph = load_commit_graph_chain_fd_st(the_repository, fd, &st,
+ 						      &incomplete_chain);
+@@ -221,7 +221,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
+ 	struct string_list pack_indexes = STRING_LIST_INIT_DUP;
+ 	struct strbuf buf = STRBUF_INIT;
+ 	struct oidset commits = OIDSET_INIT;
+-	struct odb_backend *odb = NULL;
++	struct odb_backend *backend = NULL;
+ 	int result = 0;
+ 	enum commit_graph_write_flags flags = 0;
+ 	struct progress *progress = NULL;
+@@ -289,10 +289,10 @@ static int graph_write(int argc, const char **argv, const char *prefix,
+ 	    git_env_bool(GIT_TEST_COMMIT_GRAPH_CHANGED_PATHS, 0))
+ 		flags |= COMMIT_GRAPH_WRITE_BLOOM_FILTERS;
+ 
+-	odb = find_odb(the_repository, opts.obj_dir);
++	backend = odb_find_backend(the_repository->objects, opts.obj_dir);
+ 
+ 	if (opts.reachable) {
+-		if (write_commit_graph_reachable(odb, flags, &write_opts))
++		if (write_commit_graph_reachable(backend, flags, &write_opts))
+ 			result = 1;
+ 		goto cleanup;
+ 	}
+@@ -318,7 +318,7 @@ static int graph_write(int argc, const char **argv, const char *prefix,
+ 		stop_progress(&progress);
+ 	}
+ 
+-	if (write_commit_graph(odb,
++	if (write_commit_graph(backend,
+ 			       opts.stdin_packs ? &pack_indexes : NULL,
+ 			       opts.stdin_commits ? &commits : NULL,
+ 			       flags,
+diff --git a/midx-write.c b/midx-write.c
+index dd3b3070e55..e8371a84a14 100644
+--- a/midx-write.c
++++ b/midx-write.c
+@@ -922,7 +922,7 @@ static struct multi_pack_index *lookup_multi_pack_index(struct repository *r,
+ 	struct strbuf cur_path_real = STRBUF_INIT;
+ 
+ 	/* Ensure the given object_dir is local, or a known alternate. */
+-	find_odb(r, obj_dir_real);
++	odb_find_backend(r->objects, obj_dir_real);
+ 
+ 	for (cur = get_multi_pack_index(r); cur; cur = cur->next) {
+ 		strbuf_realpath(&cur_path_real, cur->object_dir, 1);
 diff --git a/odb.c b/odb.c
-index 435f532a9c4..67207ce636d 100644
+index 67207ce636d..6359c541d78 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -135,11 +135,15 @@ static int alt_odb_usable(struct object_database *o,
-  * of the object ID, an extra slash for the first level indirection, and
-  * the terminating NUL.
-  */
--static void read_info_alternates(struct repository *r,
-+static void read_info_alternates(struct object_database *odb,
- 				 const char *relative_base,
- 				 int depth);
--static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
--	const char *relative_base, int depth, const char *normalized_objdir)
-+
-+static int link_alt_odb_entry(struct object_database *odb,
-+			      const struct strbuf *entry,
-+			      const char *relative_base,
-+			      int depth,
-+			      const char *normalized_objdir)
+@@ -448,15 +448,15 @@ char *compute_alternate_path(const char *path, struct strbuf *err)
+ 	return ref_git;
+ }
+ 
+-struct odb_backend *find_odb(struct repository *r, const char *obj_dir)
++struct odb_backend *odb_find_backend(struct object_database *odb, const char *obj_dir)
  {
- 	struct odb_backend *backend;
- 	struct strbuf pathbuf = STRBUF_INIT;
-@@ -167,22 +171,23 @@ static int link_alt_odb_entry(struct repository *r, const struct strbuf *entry,
- 	while (pathbuf.len && pathbuf.buf[pathbuf.len - 1] == '/')
- 		strbuf_setlen(&pathbuf, pathbuf.len - 1);
+-	struct odb_backend *odb;
++	struct odb_backend *backend;
+ 	char *obj_dir_real = real_pathdup(obj_dir, 1);
+ 	struct strbuf odb_path_real = STRBUF_INIT;
  
--	if (!alt_odb_usable(r->objects, &pathbuf, normalized_objdir, &pos))
-+	if (!alt_odb_usable(odb, &pathbuf, normalized_objdir, &pos))
- 		goto error;
- 
- 	CALLOC_ARRAY(backend, 1);
-+	backend->odb = odb;
- 	/* pathbuf.buf is already in r->objects->backend_by_path */
- 	backend->path = strbuf_detach(&pathbuf, NULL);
- 
- 	/* add the alternate entry */
--	*r->objects->backends_tail = backend;
--	r->objects->backends_tail = &(backend->next);
-+	*odb->backends_tail = backend;
-+	odb->backends_tail = &(backend->next);
- 	backend->next = NULL;
--	assert(r->objects->backend_by_path);
--	kh_value(r->objects->backend_by_path, pos) = backend;
-+	assert(odb->backend_by_path);
-+	kh_value(odb->backend_by_path, pos) = backend;
- 
- 	/* recursively add alternates */
--	read_info_alternates(r, backend->path, depth + 1);
-+	read_info_alternates(odb, backend->path, depth + 1);
- 	ret = 0;
-  error:
- 	strbuf_release(&tmp);
-@@ -219,7 +224,7 @@ static const char *parse_alt_odb_entry(const char *string,
- 	return end;
- }
- 
--static void link_alt_odb_entries(struct repository *r, const char *alt,
-+static void link_alt_odb_entries(struct object_database *odb, const char *alt,
- 				 int sep, const char *relative_base, int depth)
- {
- 	struct strbuf objdirbuf = STRBUF_INIT;
-@@ -234,20 +239,20 @@ static void link_alt_odb_entries(struct repository *r, const char *alt,
- 		return;
+-	prepare_alt_odb(r);
+-	for (odb = r->objects->backends; odb; odb = odb->next) {
+-		strbuf_realpath(&odb_path_real, odb->path, 1);
++	prepare_alt_odb(odb->repo);
++	for (backend = odb->backends; backend; backend = backend->next) {
++		strbuf_realpath(&odb_path_real, backend->path, 1);
+ 		if (!strcmp(obj_dir_real, odb_path_real.buf))
+ 			break;
  	}
+@@ -464,9 +464,9 @@ struct odb_backend *find_odb(struct repository *r, const char *obj_dir)
+ 	free(obj_dir_real);
+ 	strbuf_release(&odb_path_real);
  
--	strbuf_realpath(&objdirbuf, r->objects->backends->path, 1);
-+	strbuf_realpath(&objdirbuf, odb->backends->path, 1);
- 
- 	while (*alt) {
- 		alt = parse_alt_odb_entry(alt, sep, &entry);
- 		if (!entry.len)
- 			continue;
--		link_alt_odb_entry(r, &entry,
-+		link_alt_odb_entry(odb, &entry,
- 				   relative_base, depth, objdirbuf.buf);
- 	}
- 	strbuf_release(&entry);
- 	strbuf_release(&objdirbuf);
+-	if (!odb)
++	if (!backend)
+ 		die(_("could not find object directory matching %s"), obj_dir);
+-	return odb;
++	return backend;
  }
  
--static void read_info_alternates(struct repository *r,
-+static void read_info_alternates(struct object_database *odb,
- 				 const char *relative_base,
- 				 int depth)
- {
-@@ -261,7 +266,7 @@ static void read_info_alternates(struct repository *r,
- 		return;
- 	}
- 
--	link_alt_odb_entries(r, buf.buf, '\n', relative_base, depth);
-+	link_alt_odb_entries(odb, buf.buf, '\n', relative_base, depth);
- 	strbuf_release(&buf);
- 	free(path);
- }
-@@ -303,7 +308,7 @@ void add_to_alternates_file(const char *reference)
- 		if (commit_lock_file(&lock))
- 			die_errno(_("unable to move new alternates file into place"));
- 		if (the_repository->objects->loaded_alternates)
--			link_alt_odb_entries(the_repository, reference,
-+			link_alt_odb_entries(the_repository->objects, reference,
- 					     '\n', NULL, 0);
- 	}
- 	free(alts);
-@@ -317,7 +322,7 @@ void add_to_alternates_memory(const char *reference)
- 	 */
- 	prepare_alt_odb(the_repository);
- 
--	link_alt_odb_entries(the_repository, reference,
-+	link_alt_odb_entries(the_repository->objects, reference,
- 			     '\n', NULL, 0);
- }
- 
-@@ -336,6 +341,7 @@ struct odb_backend *set_temporary_primary_odb(const char *dir, int will_destroy)
- 	 * alternate
- 	 */
- 	backend = xcalloc(1, sizeof(*backend));
-+	backend->odb = the_repository->objects;
- 	backend->path = xstrdup(dir);
- 
- 	/*
-@@ -580,9 +586,9 @@ void prepare_alt_odb(struct repository *r)
- 	if (r->objects->loaded_alternates)
- 		return;
- 
--	link_alt_odb_entries(r, r->objects->alternate_db, PATH_SEP, NULL, 0);
-+	link_alt_odb_entries(r->objects, r->objects->alternate_db, PATH_SEP, NULL, 0);
- 
--	read_info_alternates(r, r->objects->backends->path, 0);
-+	read_info_alternates(r->objects, r->objects->backends->path, 0);
- 	r->objects->loaded_alternates = 1;
- }
- 
-@@ -964,6 +970,7 @@ struct object_database *odb_new(struct repository *repo)
- 	struct object_database *o = xmalloc(sizeof(*o));
- 
- 	memset(o, 0, sizeof(*o));
-+	o->repo = repo;
- 	INIT_LIST_HEAD(&o->packed_git_mru);
- 	hashmap_init(&o->pack_map, pack_map_entry_cmp, NULL, 0);
- 	pthread_mutex_init(&o->replace_mutex, NULL);
+ static void fill_alternate_refs_command(struct child_process *cmd,
 diff --git a/odb.h b/odb.h
-index 5774e1d615b..1617a9bac2c 100644
+index 1617a9bac2c..a8c0f788969 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -16,6 +16,9 @@ struct repository;
- struct odb_backend {
- 	struct odb_backend *next;
+@@ -56,7 +56,6 @@ struct odb_backend {
+ void prepare_alt_odb(struct repository *r);
+ int has_alt_odb(struct repository *r);
+ char *compute_alternate_path(const char *path, struct strbuf *err);
+-struct odb_backend *find_odb(struct repository *r, const char *obj_dir);
+ typedef int alt_odb_fn(struct odb_backend *, void *);
+ int foreach_alt_odb(alt_odb_fn, void*);
+ typedef void alternate_ref_fn(const struct object_id *oid, void *);
+@@ -183,6 +182,12 @@ struct object_database {
+ struct object_database *odb_new(struct repository *repo);
+ void odb_clear(struct object_database *o);
  
-+	/* Object database that owns this backend. */
-+	struct object_database *odb;
++/*
++ * Find backend by its object directory path. Dies in case the object directory
++ * couldn't be found.
++ */
++struct odb_backend *odb_find_backend(struct object_database *odb, const char *obj_dir);
 +
- 	/*
- 	 * Used to store the results of readdir(3) calls when we are OK
- 	 * sacrificing accuracy due to races for speed. That includes
-@@ -93,6 +96,9 @@ struct cached_object_entry;
-  * configured via alternates.
-  */
- struct object_database {
-+	/* Repository that owns this database. */
-+	struct repository *repo;
-+
- 	/*
- 	 * Set of all object directories; the main directory is first (and
- 	 * cannot be NULL after initialization). Subsequent directories are
+ /*
+  * Create a temporary file rooted in the object database directory, or
+  * die on failure. The filename is taken from "pattern", which should have the
 
 -- 
 2.49.0.1045.g170613ef41.dirty
