@@ -1,113 +1,222 @@
-Received: from mout.web.de (mout.web.de [217.72.192.78])
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2079.outbound.protection.outlook.com [40.107.94.79])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22D4280015
-	for <git@vger.kernel.org>; Tue,  6 May 2025 12:32:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746534742; cv=none; b=kvUaQcCPdLkqJVOM9xa8DE8eUH+jXZxkixae0QhYrqV7cAT4/Lo+c+ownCSggsFABoAbNNjbPpcI/6r+y1ECP/EVe5y7+jx0sO2y6uv2m9THra13Ybk0nStNeuw4eXs6IJ4C1ng25GM4eHbgKaC0eqEv3o7LOkpXiPHpajvywtM=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746534742; c=relaxed/simple;
-	bh=Y7m1cJu9O3O2Jh2HeMAjrE9rDgfrF3E+Xm164wepPdE=;
-	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=uiBowCKtUmzgQbIKmsH9QSjZlKnno3EL8/XgVqwdZcvWSrXP+M8N6hfEz6w2m6K6Oe4FX53Rarri6j+ulqlP7lQpYlDf9xsyKDM5fOv9PE/KTDINmStbP15ttWZCHKoeJXrZY/TcM27OLJOQyujPtcxbkYdpjjiW0uudnNwy2To=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=wDmbwDUj; arc=none smtp.client-ip=217.72.192.78
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272EB27CCD3
+	for <git@vger.kernel.org>; Tue,  6 May 2025 12:44:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.79
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746535483; cv=fail; b=nOnuvNqaTCELHVCDCx+zyx/BREFLQtKrAAS2m/w/W6RiYXAazrzhKTXfhgbYXnZ3cOawGcWXfco558uav0CRFxoTx6fYGLeRvQPadL7HZ+nrnPdamZzspGEJrPAfUzNJHStprCilFkD7tv5MLz3rkLYyVAY8kGJ77u9oBaG81Fk=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746535483; c=relaxed/simple;
+	bh=iJuOvjGUmiVfYzWBtMAt6is+VEnV7i1O1Es49Whpo5I=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=iMRt3njT27roHa0kQ9JJsiQDAo7dOmJR/NZz1KtaXCwjR2E1CiUrRYTfnSxF8ZKV3h9kZdAC5S/xUjPorOhZI2bLlqlFxUZ1RoaZxWFHS6Hh6NY3O+xyvicA/2YSabrbfz5xIhklEUlio0Ot0zB+SGTke6pG+Qt9+efYiGvKzv8=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com; spf=pass smtp.mailfrom=commvault.com; dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b=SzmlAiHw; arc=fail smtp.client-ip=40.107.94.79
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=commvault.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="wDmbwDUj"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1746534729; x=1747139529; i=tboegi@web.de;
-	bh=er+Mox+XMqsj+1qvzv5uBkeerXhvihASkRUu+eogiYg=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
-	 Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=wDmbwDUjdxrfFcsEph+qwsLucxkC7atHvnScKV9JMHeRte9/y3VOagtoESYr0LOU
-	 k6r6OOzwLcKUCPXDC/4RNBiy0GE4mUFZW4CNYrBqXTjXrhgBCfhmWy7SNJ953IPrA
-	 vDu84ATqMDn/fRhr1SokxKEek9RBOSMycgc8BXC3rTQWMXBh3q5jq3rt6hkP23Or8
-	 Cih0ftYcfSFDh9SdXZrZqGI4lBzbm6dfulUrGkQEGhAEi18LkymGy/cMnZVJDSSE+
-	 Zkdx4FAqiDFhxdIReQ6BaPB/HAX3xhvQt9DWxmtDyq7F3Ju70k+HjVJ1NnrMe1QVx
-	 P6cow+u4+SVSD6rzrQ==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.209.87] ([81.231.143.213]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1MdfCN-1ultGa22Eb-00ZzWC; Tue, 06
- May 2025 14:32:09 +0200
-Message-ID: <71fcb24d-55e3-40bb-9368-5b47aa180993@web.de>
-Date: Tue, 6 May 2025 14:32:04 +0200
+	dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b="SzmlAiHw"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=NDijf7QPexefEzkXtL310y5dVFXccxOe9fPc5tA15g7DUUOxPujnhsiQRHTO2/994rSGGphAJkrDMoc7CmoLQlaayDMUxVa2w5dxLHfG+5V6YSLfdmwfGexpoeWjWS7oyL5AKd/gi+ITvYZN6idzZzY8WGEzfjo+s8bSU9ZE8rHBesNnXqh3dO8id3+J7ZvCoHLxEnQwOPNBxATZBVsp5DMRNJUMBPWzBj2LrZk4YFn1B12fDE5UNA8BPL4pX7+uNkmi4Cq+x6aCxkVw+EFPo6N4yJnpOH4umnEcieTWrqqfhcvKe2BYATLj5LLIBwdUo9iUt7483Bu4BhYEF5Cc/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6XX1Nz6yFIOIk8WkEEexZjOx8zsabjKU3Zu0Ye7Sp/w=;
+ b=rA751TY+GKdc2R4r4l6U30S8JDkiGSI3FqR+acpy1AN4StGWlESrUE18ih7nb+C8UcDgRhC2Bbm25G9zlPUriHSXT7QLMQT1cMQrfrxvDl+h8oWN6jTXase3z4eDXZMIIahB+dbGRQ8uQyohzcoLIhGzmcXHdBv3TW+918M4BRyy34zetOlf3obl2o7pU1iSLdscQO8b30RhDIzqdxsI9jaja4R3llIb9GiMIOYbNR1GDdSPL52YSdsInKFPtO3o8Oo6v6WTZqjg5Bk0q0GBCdmF80blNJBExBnwFs8ihfQvRD0/wIaTgyr9yeZEg+vCF9rfo++eRWceaKjkF+/3Vw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=commvault.com; dmarc=pass action=none
+ header.from=commvault.com; dkim=pass header.d=commvault.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=commvault.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=6XX1Nz6yFIOIk8WkEEexZjOx8zsabjKU3Zu0Ye7Sp/w=;
+ b=SzmlAiHwVIlH/gLGdplOJxQmtYGYckH3NzieTSoHS5ETCXpnVEUMA8FJxhfnz3+B+2vL28Y49QGff6FUFQQIu017OG81FG9qpk5OUCzu/jJMHcurc5S7y80UXFAviMpfsNTIJckkqfl5kGClqj9FjMtZ7AIc8rA4yilmBp7u0PHf8jNxcJCCCELImMAdsyY1v3EqSVvLXMwrgyxnnv2DJHgStTmoFio/hYSFiCQww9qZZmo4M5mQUK++Q9IATYJ+zirBYFQB/tYD8dP1GjJy1S9LxsWf2haeEk3NlmW7sW0lWx/CgGvBDmkotVjlRW1EqlLRMjv3EFveQffbdV+3iw==
+Received: from SJ1PR19MB6401.namprd19.prod.outlook.com (2603:10b6:a03:458::14)
+ by SJ2PR19MB7439.namprd19.prod.outlook.com (2603:10b6:a03:4c4::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.19; Tue, 6 May
+ 2025 12:44:35 +0000
+Received: from SJ1PR19MB6401.namprd19.prod.outlook.com
+ ([fe80::dfce:4bc1:f841:c291]) by SJ1PR19MB6401.namprd19.prod.outlook.com
+ ([fe80::dfce:4bc1:f841:c291%5]) with mapi id 15.20.8699.026; Tue, 6 May 2025
+ 12:44:34 +0000
+From: Abhishek Dalmia <adalmia@commvault.com>
+To: Justin Tobler <jltobler@gmail.com>, Akash S <akashs@commvault.com>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, Adithya Urugudige
+	<aurugudige@commvault.com>, Abhishek Dalmia <adalmia@commvault.com>
+Subject: RE: Incremental Backup of repositories using Git
+Thread-Topic: Incremental Backup of repositories using Git
+Thread-Index: Adu9yuZ7Kg9IZ5BOSWCrIQPM1Q8FHgADnPsAACq806A=
+Date: Tue, 6 May 2025 12:44:34 +0000
+Message-ID:
+ <SJ1PR19MB6401D7734B73C453E491D54DAE89A@SJ1PR19MB6401.namprd19.prod.outlook.com>
+References:
+ <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
+ <2dz3cema2mr5mrlvuroemnyeqyrglxfmusfdz2kaghv6rvj3ro@ti2dhu45fdmr>
+In-Reply-To: <2dz3cema2mr5mrlvuroemnyeqyrglxfmusfdz2kaghv6rvj3ro@ti2dhu45fdmr>
+Accept-Language: en-GB, en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=commvault.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR19MB6401:EE_|SJ2PR19MB7439:EE_
+x-ms-office365-filtering-correlation-id: c8f8e39c-52f2-4145-4187-08dd8c9bc120
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|1800799024|376014|366016|7053199007|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?uLm+h/ZS+noxcCnTWlQmMA8sgPVsF34PQQ3xJ0PHukGbzBHMpeWIXRbAwgKQ?=
+ =?us-ascii?Q?++K/j/wdDcI7Ob8+AiH5GOP7r9e8zppV5Wh1kB9F/m7s1Z1pUiaDpXyoB/0p?=
+ =?us-ascii?Q?LDsVo5jvJjsfpQEwdtwBvT44aMUsieUVEAnUf7s9M9KJ3plS77wEsVqKvsx7?=
+ =?us-ascii?Q?alo3PDaS3dzzRDbbXHfjmuFhc+eTTjeewT0TCmkxE686Mji7B/qZIGl0pBcE?=
+ =?us-ascii?Q?mVdKRTZHmwdRquHRuhxGkkB+vckYvmBsfquSY0qHxBKYjA9IZL99KDc7WtYm?=
+ =?us-ascii?Q?k46nTSy/bekwpiLQS4bYYbv4A9RZSGiHMqTK2qhy1JqjsIZbOiwwPX2LwXwJ?=
+ =?us-ascii?Q?cjA+lXBQBB6qDRFPrieaD6q8sIdFU6X9b9lVejZGBTdvl0IcbfAoGhrZWHrV?=
+ =?us-ascii?Q?Uunr6FrRrypqijei5rtocd9x6nmrGD5XI6Ne7t22t9Q+vM8LAwT7fYJFVddP?=
+ =?us-ascii?Q?Xo2uJ2JzJnqFGfiWNuKDH1ivSkvnxGjp58Qug5BxKCK4NNxxOf1Wnfp/W+mM?=
+ =?us-ascii?Q?Q/gj79VWyVmGs0o7xQn9pNJnhgjc1qB60ulwSaQeTGYq1os1/Q+HEiHwQQVh?=
+ =?us-ascii?Q?e41J0JQyq5GI/egpReqzK00KPdtirJ0epC1CZQmf9SOQ54TcHPOVZHe4j3G4?=
+ =?us-ascii?Q?P2ewO3VBrMr3hgJON50LCGctfb0SBQ8dxiZtE96zgbzPgIvLP/nhA1F1R4NT?=
+ =?us-ascii?Q?GsdW3CiHn+fyTw84b7X/wbf9fLPAkq47luBCAmaGPjmAAgHzs2JjCRyDMy5C?=
+ =?us-ascii?Q?3yxlZCcG6r1v5GzYhN61prjskz6lGvV98gf3SOmFqGCK6jtqAhD++7PH6sps?=
+ =?us-ascii?Q?BxxYw+2cU1pBDh9UPgGnbJhQdD1T7eTu4tfaulzX3upV1Mvd/stdG9dRStaH?=
+ =?us-ascii?Q?Ry7ZRMVmq4ZBNrLnu25izXDW9MaW9ULQGNWCxzvUIhozjRVr9ZKvfs9FNDRe?=
+ =?us-ascii?Q?w2sK1TeoH2pAm0Lqgcr201AKmRWLWfW5bA1Y4cVmpW+8rs4c+I+SXxctYymC?=
+ =?us-ascii?Q?LkL4XcgRBvoSmVd4UsAhCJXrMvtISiTCrYSJp+nrqlchg/Iq6+TuOvFQWVQd?=
+ =?us-ascii?Q?A9662zvUpnCYs9hND88JP+mBKrIPWiEGxghtcHBTamK7tSEd73IF57CLH04U?=
+ =?us-ascii?Q?KwY4/cqShncPLg86APx4ypuX97z/lsAZza5BEKYMEZGDo6fH3EXTnvleB4t8?=
+ =?us-ascii?Q?/vLTqaa49W4i0heqLHYQuBHz1CJoh0No/5aP+314KUw4zr6WVxqjt0HH5fRe?=
+ =?us-ascii?Q?izwFxSSz20Uo1QKNzDyD0CnE9icLD6Gm+Z1exsCVQ7XL+q2/mTvzVmcPZM6F?=
+ =?us-ascii?Q?i6bmdsheXWz4U7eTgCsLXM7lBXsNqtrDwkMLejbREpHF2eX9eBAqi8FAr20k?=
+ =?us-ascii?Q?FXTjlRshwkQqSpXG3Drg69XxBnV9nxOy0LraSswId1j0EANscYURAETCmVp5?=
+ =?us-ascii?Q?Vc6vICFJ1Eep0nzDy5BO+GKa8TlCF2V8LpkWBXbrbv4PznRYl2mSeQ=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR19MB6401.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(376014)(366016)(7053199007)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?cz/KzL4yXZJXijagk9eTAySqslw1s3nV8+6lRDmmqG2cyK2VKWgqdSg/ctCh?=
+ =?us-ascii?Q?b9DoghG7oCqx92NZ7QcfvKAaKQtKTmySVfGXbIVduZWXoLtL/N/iZtlTYjYE?=
+ =?us-ascii?Q?ArCxzXDFORopJMREj0hOfpLtwS6kzkU53GTUCjl27o/iNfBxRzxBt66nld3k?=
+ =?us-ascii?Q?F/6bF0hDN3qbf77T9j96dBW1oRPB4wH/9+C5kR2h7QA4zWwoT6spZ8R0TThS?=
+ =?us-ascii?Q?oJJHR1vNmhm3RsgUH7muW0VIpgkSgIfK5BWQf/GfSqAoHAlkhKnU3FPdouqE?=
+ =?us-ascii?Q?bR7KEO0JhFp2PCU+wYz3gGxQ45wbLCTKo2qS294enpKfzpBotiIa83/Yt8OR?=
+ =?us-ascii?Q?vXOOy1KRQ3wYW8wTVNL8r9YxE1H+FqFSad0OTL9lWNiNWRCWVFJPwMyKjonK?=
+ =?us-ascii?Q?AOGUcmEj20idKdGaz4ozJP9AZV7cuuswZLHNvC6I5WcadnwFtc/t6IXDlbrD?=
+ =?us-ascii?Q?gY8CPrmxtMaosLALLGVAyqeLOIa0J98V8M/EebEU4lLa8ip+harJ0nYSbbM/?=
+ =?us-ascii?Q?iyJxqWt1KW+SEs8yPpRMiNjv8gffDSDkHu6RyE7MXmVRNJu3GGHV06058vz0?=
+ =?us-ascii?Q?yymlVrnnrw3sE/neOoj3jVVqoVpAS+VzwZJFlB5M0qqGsPCCmZMNfQLskpM6?=
+ =?us-ascii?Q?juOim3qN/rNpd+Mto0srJ2pu0Remf/s0XyQHZod/WjiXSjBjdHXjGEiuz0mm?=
+ =?us-ascii?Q?zrfOla8ST2a2buTxefYxaek3n4RKLrEh98cGr4ceF3pmLR+L4bA+e1pwZYP8?=
+ =?us-ascii?Q?8slT2o2AeaupIXjCWYCCmPt/Xb0bW+t4HDwgW1DzXLkkPuXGYWQP2ph7ZzPV?=
+ =?us-ascii?Q?BMiMALpXCOPhQ+UecBIzzo1B5ZI6s6a+652ibPI7KtFyMRqRRxGEKzV2pLLp?=
+ =?us-ascii?Q?jNhDY+ckReXQgtymMJte01VlSZgyNYP8SNrqjc9ygFARYyebrfh4x+aQLnRr?=
+ =?us-ascii?Q?/6UdT6YRzRylHv0AjBZhXD6rw4OaoKR4kb9o9OiCmwJfp/bFeHPxqsyiEnAC?=
+ =?us-ascii?Q?jFUfdT36aJJsLBkiYivk4lp51YGsE+y+N1jWUXACh06mX9aQzQGFzbN1KptN?=
+ =?us-ascii?Q?YPgNf9JWGQk7CJLOOKLX1KtLR80dIi1ROFVX0oacuorHjRsO1HKOX44cOYRM?=
+ =?us-ascii?Q?d4Aqyyq0SI92hTxxT9b0KzusMqbTDqu9tCjpT2Aw9gFpo736rW+jTMoB7BLx?=
+ =?us-ascii?Q?MzIa6UDhm3lK2Cj6A2+veEFSLHN3ebHDUZPjhuvxtrKitLDXlee6dtJW49jR?=
+ =?us-ascii?Q?Qj4uO6QiUfqvvXf+K7HAMGZRSvCpSdVLxfFjfF/n3n2tfjUukq+eQZ2aqIl0?=
+ =?us-ascii?Q?K0fTKJLPbP8PMhaNKSt+XUBVB/v1Lpdfndj2nnoFVLBHLYiHL5Kz6MOsnVy8?=
+ =?us-ascii?Q?d9M0ssQKHN2WfNcTf9hcwH90vvk1qFaAXkAyX0eR83hkCMO5DtOwD5I4I3wD?=
+ =?us-ascii?Q?JYsPJ57HrLVIjJrcY0D2wmSJ29+jEDILvA1lbQL70Jk1J1LUq8tFKEAVBola?=
+ =?us-ascii?Q?00JjACHRwO5t0aQZWayW70WQGsWjQUe25FORtBs8B6eKfnK08uOYFQ9h37fP?=
+ =?us-ascii?Q?GeYXwFOgQ4IvcyINuxn9ryvr0gJwsJU42/Zq2fc8?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: git@vger.kernel.org, ps@pks.im
-From: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
-Subject: Problems with t6011
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Provags-ID: V03:K1:0sELQiniZKOjhan/w4VmhG0e8QG6XEbM1L1KyNqCASgb33PDZUd
- PiRFtdjzFJzhHGJ2zFNx6L4wJr6KnvStGqEIsGuYK+d0XRTAqssyiPp40XPZjQgTnYQNCMA
- zGxNLnrOfbATwXlO3LNuNW8KboAH3q352oiplaQtRVAyNKps3q65/TT7xqiqco0wypiAiXn
- 9Cj4flSp/9b0qV2p4pY9A==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:06T546tXuIQ=;WR1+4vAd4P8Obya+1fHFADdUImu
- 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
- aOdnkKpONamyPvudXX3ojs=
+X-OriginatorOrg: commvault.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR19MB6401.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c8f8e39c-52f2-4145-4187-08dd8c9bc120
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2025 12:44:34.4084
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 40ed1e38-a16e-4622-9d7c-45161b6969d5
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: xfuY4fcmrK+z/VJqVMhhCVdPK0s3SrUxQRSkNUedSVLwBZOzUtSblJTt7VZPOY4lxYkySW86o8KBu9bIYm4+4g==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR19MB7439
 
-Hej Patrick,
-in case you have a second:
-the mv command here needs a "-f" to overwrite
-read-only files:
+Hi Justin
 
---- a/t/t6011-rev-list-with-bad-commit.sh
-+++ b/t/t6011-rev-list-with-bad-commit.sh
-@@ -39,7 +39,7 @@ test_expect_success 'corrupt second commit object' '
-         for p in .git/objects/pack/*.pack
-         do
-                 sed "s/second commit/socond commit/" "$p" >"$p.munged" &&
--               mv "$p.munged" "$p" ||
-+               mv -f "$p.munged" "$p" ||
-                 return 1
+(My previous email got blocked due to HTML content)
+
+Thanks for the recommendation. We want to backup all the repo contents, so =
+could you please comment if the following steps will help us backup and res=
+tore everything, or we might miss some tags/references?
+
+During backup:
+- Create full bundle first time using: git bundle create <full-bundle-file-=
+path> --all
+- Create further incremental bundles using: git bundle create <inc-bundle-f=
+ile-path> --since=3D"<last-backup-time>" -all
+	- making sure we don't miss out any time
+
+During restore:
+- Create the initial repo with: git clone -bare <full-bundle-file-path> - u=
+sing the full bundle we created earlier
+- For restoring further incremental bundle files
+	- git fetch <inc-bundle-file-path> 'refs/*:refs/*'
+	- I can't use --all here, that works only with remote repos
+
+Will using 'refs/*:refs/*' restore everything, or is it possible any git da=
+ta might get missed out?
+
+Regards,
+Abhishek
+
+-----Original Message-----
+From: Justin Tobler <jltobler@gmail.com>=20
+Sent: 05 May 2025 21:49
+To: Akash S <akashs@commvault.com>
+Cc: git@vger.kernel.org; Adithya Urugudige <aurugudige@commvault.com>; Abhi=
+shek Dalmia <adalmia@commvault.com>
+Subject: Re: Incremental Backup of repositories using Git
+
+[Some people who received this message don't often get email from jltobler@=
+gmail.com. Learn why this is important at https://aka.ms/LearnAboutSenderId=
+entification ]
+
+External email. Inspect before opening.
+
+
+
+On 25/05/05 02:35PM, Akash S wrote:
+> Hi,
+>
+> Currently we are backing up repositories using the "git clone -bare" comm=
+and and save it to disk. If we want to restore, we just run git push -mirro=
+r from the repo that was saved during the backup.
+>
+> Currently we are running full backups (run git clone -bare) everyday, whi=
+ch is taking a lot of disk space and time.
+>
+> Are there any possible ways to backup only the incremental changes of a r=
+epository? And somehow construct the whole repository when we want to do a =
+restore from the incremental backups?
+
+You could look into using git-bundle(1) to create incremental bundles using=
+ exclusions. Examples:
+
+  # Creates a bundle containing the last 10 commits for main.
+  $ git bundle create inc-backup main~10..main
+
+  # Creates incremental bundle based on time for all references.
+  $ git bundle create inc-backup --all --since=3D7.days
+
+These bundles can then be "unbundled" into a repository as long as the repo=
+ contains the required prerequisite objects.
+
+-Justin
+
+>
+> Thanks,
+> Akash
+>
