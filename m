@@ -1,55 +1,55 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F5B62641F3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3614B27874F
 	for <git@vger.kernel.org>; Tue,  6 May 2025 11:00:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746529202; cv=none; b=i8W8nGKgjxVQVwk9hX0E5ku97FY00ZhuJSHKlvhAqXZWEHAC7UEmp0waXi1NUefLDWha3KdDAXOIzn3iXvxzw5iv6wkLO3BYxDCyA3gkfz5LygnidzSJUR8MoZzbivM0mCcn+aF9bXHRcPZm+1EpeEnBv13hkBsMAKwfinGdnb8=
+	t=1746529203; cv=none; b=o9IvAlKIsincm9h4RV1OtbCYxMVsG7cBKRySI80+r1I2IQbLqEpZGwyMoBCB03qLypwHDp51Ui1jkkQwbzGVRZXC9bWy/PrB0Bw3zL4A0X/gwZ4XlfWaN16MRn/BWQQedKgTMhedljgl6xNl5UvgKkd10OpiK4nBzsLPRVd8hEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746529202; c=relaxed/simple;
-	bh=ghc7dMuLwnX2DkjCv3JtSH8CVOMiuoVvuEExz/gyH7M=;
+	s=arc-20240116; t=1746529203; c=relaxed/simple;
+	bh=p3MBZeaKxS08uXLHoBya8KjedgVVXKvKdsnWmF/++aU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=khaunN1EE2aS9Eh975x/+1ee28vdp3TpzhSU7Fm/FWMhKbBBBCunbLCsqeFgh5JKNqKahPR1xSZ7YyGBW2+W/rIMdVfm0pYHKFQ8R0WyDq/a9FW2w4cEJYoIbq4Fz4N7o1XMjHvoEPSHXI8+4tp3NS3mtl8aaNcBQ5e6Y0l/1q8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pTK+uYpZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JljY6iJX; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=aj7qc4S6NMfBiJiu9ZXXx8bxEb9OrDuUWdUdQSY/BaE52q7L8TrlK8GF2qM6c1bwdeVGVcFKwKgiO90LnEj09ehp6VHRBL9Vn1aOQcmPBNI7sOqKGGP0lQuTCONirlNR8khl/SNOXIcAIelJeG7PYjIqewTk/XNCSEQUHOrbEz8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BV/ZkCz6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=k4a9Cxb1; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pTK+uYpZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JljY6iJX"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D8021114026C
-	for <git@vger.kernel.org>; Tue,  6 May 2025 06:59:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BV/ZkCz6";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="k4a9Cxb1"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id 471711381006
+	for <git@vger.kernel.org>; Tue,  6 May 2025 07:00:00 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Tue, 06 May 2025 06:59:59 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 06 May 2025 07:00:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529199;
-	 x=1746615599; bh=k7vpZC+jVYmjpgwQ7jPx4moPtmTK9wRsx/L+fkA3LZs=; b=
-	pTK+uYpZf8JS71bptEcCVT1IDq4CwZMoGcxUuEs3WSk4qm55J7Wj+59ihytfeSp1
-	oOlIH1SdcLw8K6gqpzpoxoBxfukYBrppK6OI6a38AgbZpWzjAAT9I92sCaIDFjZ5
-	CVjAX8+CeDJx/AVeoxe/CpvNPSiBGgk+NgU6lXyHZX+9YNx0F2d8WqqaJtNQOvpV
-	vZlJgtC+zS0ciJDp2wtQaGDShpV4RUME40s/T9k8rEU6md1nNkiXPoj8k6SZsnoT
-	vhN/3ersRYSrCLjUI7DBO4Uqj0wAZX9rO+LP9CdDji8gE0RdLUwdssjwp5RWLuoK
-	vjZPt7BNGk25Nlh5FFCHqA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529200;
+	 x=1746615600; bh=sniyl8ENacKVkZe/53lDfLs7rgeR80EZ00PNXYejCMA=; b=
+	BV/ZkCz6/5M83kRdx2OhQ7QfmwSBXD/ZHqjwdGPMXpJTeyJ4MSRgnDkKsgewXMTb
+	KL0g9XcHwFYW1NXs7YgGpjoO0nDlz/oa5mnaJy78whl5FHPAgCMMOypQvJDK5idO
+	WrI1S6W0eqtvZ4g3Ir4JXvNw5e3qn6flFCcMVfRQ0CNchOfVzcIqb67279ggA5sm
+	cqVDKZkopfo9CNIxmUgLtocuVFh+uOVhltsDFU5qUuqKcPCGOu8+JNoeaaPtKXoE
+	l2dFqcJsP4gQbonbhD4XGZj0e8+pNl7lfSilCvB7jkE7SG4XUpBZUK/2+ys1jIVo
+	FGAZXlvfCqkZqvaVIxXxYA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529199; x=
-	1746615599; bh=k7vpZC+jVYmjpgwQ7jPx4moPtmTK9wRsx/L+fkA3LZs=; b=J
-	ljY6iJXZm8oYGSxonokijXK3AyG8IVmd6/kIzbSk1OM3cyQalUxZw7zsQf7j8kP8
-	icduRlzi44CeWHXxgso/3LLW6Lc08KtxN6pXiavOL8f+0feijYLL8Ur6p6WMfcSg
-	muNwOU3OQXmljIXoOv++trCrDx14KDVrPycW+z1IORkZ9+9KSyp8B4wBIOMb4zCz
-	jLu0sG9G9s3eLvc8Cr4aizuB5exc2piFqWQajlvkWu0LYAIx2jolti6HnJZQeOgs
-	Aph2/NnwzraRR244peLfgkuCHZDbahRGb7ecbfyBCTOLjyffL3tau8lTSWy9EFWv
-	8JoLVFpBBGUREkZ1oiAWw==
-X-ME-Sender: <xms:r-sZaHcX2jbCVjyf06Mgd7neSgiWxtMZsIZwGlkKTZWqYlfoO8AJAg>
-    <xme:r-sZaNMDm2cTB8T_nVMI6p54UlOASHzPw1cB1WjfMzPQ7RC3gKodensDBCFIm1dfC
-    Pam24kfdeWfLTHnow>
-X-ME-Received: <xmr:r-sZaAiLVNqcQHrB_8aWUUMHdBNEUVaN5_vKv_j9sWemXzmPEvcZArtGhKvFlO-bxg9PpFy2m-BjfOK5kMx6pkzlQKjwNhpvb3keKOT1>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529200; x=
+	1746615600; bh=sniyl8ENacKVkZe/53lDfLs7rgeR80EZ00PNXYejCMA=; b=k
+	4a9Cxb1aOslZxX/U+eWXsnpIfZyP4ZvXYCXwPzcShrKEiRMAlQ4k9SNDUVdNl2mo
+	k6ViRJ2ZUUHS8/W88f+plsKNx+vHfg5G14Fx3tu+VcxrX9K8Y3sxsKPhKZUqRXFY
+	c+Cys/7mRcQxly1giFsOZDJv5U8jnx0ImC7Oz+nCkCTwd4lFEHjc2yd3+t8LqgpZ
+	eBxDDzf+5CvBCo6hf1nsuOsVex0HSfoRVqh9Ay0ClR8YP0lzb7w/F+3dgcZvquKk
+	1QyjN+0NSuTIyZ8MO7CTZJVEXr018IxOXwgjMwIeDdxzHzpagTT0e1S44K9xxiyQ
+	4IuAdcWMUaWw05deEY3aA==
+X-ME-Sender: <xms:sOsZaOTg8jS2XtItFHO-_9vIgSdXslzggrk2rG5d8vt_prOCRO96fQ>
+    <xme:sOsZaDy1nBOnuNI18MoVqnXXPDfNTcCXAalwxPuaSXNU_Ohii1X_imufNU444Hjrz
+    OPOks4gK9RymypS7Q>
+X-ME-Received: <xmr:sOsZaL1qPTfF8MCO7i0nRyxfEPsyotzeA8-BFn0NPN2K6kdpR9bGZZi_ipCzi8k7EWVAZdXve9pp-G8t2bcpTGjyJJRR_UVU2sLTesUm>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
@@ -59,21 +59,21 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkedtucetufdote
     thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
     dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:r-sZaI_OK0s67mnOfKD9njxkVDZEmcd-N5cY192zdkGRQppQWGb91w>
-    <xmx:r-sZaDsxUwfsmIZcs-HHaIOYpMUIPzixoKmQnxdjBFGY2zW7Qy95-g>
-    <xmx:r-sZaHGU8emdp6VnxlQxP3SMlSTXDqHcRmBA56JRSp4G4YvrzwIGeg>
-    <xmx:r-sZaKNLA_D2RUu_cEstyIPkiDadQjhSJ9Ok-m16-bXhsBryGxdpFw>
-    <xmx:r-sZaBKxncM4kru1VkgI9uKpE2QIUt1InZRbidNyFYilygzpoTZbb_zG>
+X-ME-Proxy: <xmx:sOsZaKCsK0Sc1pw3eDfvSrT-6EZ6fwgDIVTL6HPzo-sEB-gPlMn89A>
+    <xmx:sOsZaHgEdGPXyVwlfPT1L06mZ5E63ROv8PZNUQcnJvrwLthmRtHeWQ>
+    <xmx:sOsZaGpT8EM9Gg1Hse-WrGDyjy79xQH6bVYaLcKEzCJDiNyEaTroJg>
+    <xmx:sOsZaKhRmhyr9rUh3rk011i0ofMQcyCJxoVuy3XSHJPiftXfZaE0rA>
+    <xmx:sOsZaGM1Bfzd8Wyq9KFCwv_6Eh3YbdJ_Hi5UxWhpNcaz4LVDITs_Gk2B>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
  <git@vger.kernel.org>; Tue, 6 May 2025 06:59:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id fefd7ad8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 3894ce47 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 May 2025 10:59:57 +0000 (UTC)
+	Tue, 6 May 2025 10:59:58 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 06 May 2025 12:59:51 +0200
-Subject: [PATCH 2/4] t/test-lib: don't print shell traces to stdout
+Date: Tue, 06 May 2025 12:59:52 +0200
+Subject: [PATCH 3/4] meson: introduce kwargs variable for tests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,127 +82,102 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250506-pks-meson-tap-v1-2-5aaab2942a4c@pks.im>
+Message-Id: <20250506-pks-meson-tap-v1-3-5aaab2942a4c@pks.im>
 References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
 In-Reply-To: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-We have several flags like "--verbose", "--verbose-only" or "-x" that
-cause us to generate shell traces. The generated tracing output is split
-up in these cases so that the test's stdout is printed to file
-descriptor 3 whereas its stderr is printed to file descriptor 4.
-Depending on which options have been given, we then end up either:
+Meson has the ability to create a kwargs dictionary that can then be
+passed to any function call with the `kwargs:` positional argument. This
+allows one to deduplicate common parameters that one wishes to pass to
+several different function invocations.
 
-  - Redirecting both file descriptors to a file.
-
-  - Redirecting them to stdout and stderr, respectively.
-
-  - Closing them in case we're running in none-verbose mode.
-
-The second case causes problems though when passing output to a TAP
-parser. We print the test's stdout to the console's stdout, and that
-results in broken TAP output.
-
-Fix the issue by instead redirecting the test's stdout to the shell's
-stderr. This makes it impossible to discern stdout from stderr, but
-going by my own experience I never came across a usecase where I would
-have needed this distinction.
+Our tests already have one common parameter that we use everywhere,
+"timeout", and we're about to add a second common parameter in the next
+commit. Let's prepare for this by introducing `test_kwargs` so that we
+can deduplicate these common arguments.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0000-basic.sh | 35 +++++++++++++++++++----------------
- t/test-lib.sh    |  4 ++--
- 2 files changed, 21 insertions(+), 18 deletions(-)
+ contrib/credential/netrc/meson.build | 2 +-
+ contrib/subtree/meson.build          | 2 +-
+ meson.build                          | 4 ++++
+ t/meson.build                        | 6 +++---
+ 4 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
-index 35c5c2b4f9b..16b785f3b91 100755
---- a/t/t0000-basic.sh
-+++ b/t/t0000-basic.sh
-@@ -219,41 +219,44 @@ test_expect_success 'subtest: --verbose option' '
- 	test_expect_success "failing test" false
- 	test_done
- 	EOF
--	mv t1234-verbose/out t1234-verbose/out+ &&
--	grep -v "^Initialized empty" t1234-verbose/out+ >t1234-verbose/out &&
--	check_sub_test_lib_test t1234-verbose <<-\EOF
--	> expecting success of 1234.1 '\''passing test'\'': true
-+	mv t1234-verbose/err t1234-verbose/err+ &&
-+	grep -v "^Initialized empty" t1234-verbose/err+ >t1234-verbose/err &&
-+	check_sub_test_lib_test_err t1234-verbose \
-+		<<-\EOF_OUT 3<<-\EOF_ERR
- 	> ok 1 - passing test
-+	> ok 2 - test with output
-+	> not ok 3 - failing test
-+	> #	false
-+	> # failed 1 among 3 test(s)
-+	> 1..3
-+	EOF_OUT
-+	> expecting success of 1234.1 '\''passing test'\'': true
- 	> Z
- 	> expecting success of 1234.2 '\''test with output'\'': echo foo
- 	> foo
--	> ok 2 - test with output
- 	> Z
- 	> expecting success of 1234.3 '\''failing test'\'': false
--	> not ok 3 - failing test
--	> #	false
- 	> Z
--	> # failed 1 among 3 test(s)
--	> 1..3
--	EOF
-+	EOF_ERR
- '
+diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
+index 3d74547c8ae..16fa69e317e 100644
+--- a/contrib/credential/netrc/meson.build
++++ b/contrib/credential/netrc/meson.build
+@@ -17,6 +17,6 @@ if get_option('tests')
+     workdir: meson.current_source_dir(),
+     env: credential_netrc_testenv,
+     depends: test_dependencies + bin_wrappers + [credential_netrc],
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endif
+diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+index 63714166a61..98dd8e0c8ea 100644
+--- a/contrib/subtree/meson.build
++++ b/contrib/subtree/meson.build
+@@ -21,7 +21,7 @@ if get_option('tests')
+     env: subtree_test_environment,
+     workdir: meson.current_source_dir() / 't',
+     depends: test_dependencies + bin_wrappers + [ git_subtree ],
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endif
  
- test_expect_success 'subtest: --verbose-only option' '
- 	run_sub_test_lib_test_err \
- 		t1234-verbose \
- 		--verbose-only=2 &&
--	check_sub_test_lib_test t1234-verbose <<-\EOF
-+	check_sub_test_lib_test_err t1234-verbose <<-\EOF_OUT 3<<-\EOF_ERR
- 	> ok 1 - passing test
--	> Z
--	> expecting success of 1234.2 '\''test with output'\'': echo foo
--	> foo
- 	> ok 2 - test with output
--	> Z
- 	> not ok 3 - failing test
- 	> #	false
- 	> # failed 1 among 3 test(s)
- 	> 1..3
--	EOF
-+	EOF_OUT
-+	> Z
-+	> expecting success of 1234.2 '\''test with output'\'': echo foo
-+	> foo
-+	> Z
-+	EOF_ERR
- '
+diff --git a/meson.build b/meson.build
+index 270ce933d0f..94bd525dd7b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2027,6 +2027,10 @@ subdir('templates')
+ # can properly set up test dependencies. The bin-wrappers themselves are set up
+ # at configuration time, so these are fine.
+ if get_option('tests')
++  test_kwargs = {
++    'timeout': 0,
++  }
++
+   subdir('t')
+ endif
  
- test_expect_success 'subtest: skip one with GIT_SKIP_TESTS' '
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index af722d383d9..6ce8570226c 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -707,7 +707,7 @@ then
- 	exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
- elif test "$verbose" = "t"
- then
--	exec 4>&2 3>&1
-+	exec 4>&2 3>&2
- else
- 	exec 4>/dev/null 3>/dev/null
- fi
-@@ -949,7 +949,7 @@ maybe_setup_verbose () {
- 	test -z "$verbose_only" && return
- 	if match_pattern_list $test_count "$verbose_only"
- 	then
--		exec 4>&2 3>&1
-+		exec 4>&2 3>&2
- 		# Emit a delimiting blank line when going from
- 		# non-verbose to verbose.  Within verbose mode the
- 		# delimiter is printed by test_expect_*.  The choice
+diff --git a/t/meson.build b/t/meson.build
+index b09c0becb8d..1af7111b0f8 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -51,7 +51,7 @@ clar_unit_tests = executable('unit-tests',
+   sources: clar_sources + clar_test_suites,
+   dependencies: [libgit_commonmain],
+ )
+-test('unit-tests', clar_unit_tests)
++test('unit-tests', clar_unit_tests, kwargs: test_kwargs)
+ 
+ unit_test_programs = [
+   'unit-tests/t-reftable-basics.c',
+@@ -76,7 +76,7 @@ foreach unit_test_program : unit_test_programs
+   )
+   test(unit_test_name, unit_test,
+     workdir: meson.current_source_dir(),
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endforeach
+ 
+@@ -1210,7 +1210,7 @@ foreach integration_test : integration_tests
+     workdir: meson.current_source_dir(),
+     env: test_environment,
+     depends: test_dependencies + bin_wrappers,
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endforeach
+ 
 
 -- 
 2.49.0.1045.g170613ef41.dirty
