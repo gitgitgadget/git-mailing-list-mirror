@@ -1,111 +1,162 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from bsmtp.bon.at (bsmtp.bon.at [213.33.87.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC76422087
-	for <git@vger.kernel.org>; Tue,  6 May 2025 19:16:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DFFF1F3FF8
+	for <git@vger.kernel.org>; Tue,  6 May 2025 19:39:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.14
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746558972; cv=none; b=JJbKDK5PFdi64SlaKoWfExpt1qUi5Fu3jhQ89HotsM4esXHBGwBTDeEX+4cq88q9gWUq8oewgNq3+t3tFXaDOd5PmyEt23gjfF622CvoKqDOyHIu+/wtPGUuEhtFgkcTaIHsMtzVbyhV9p/wuYqomYc7f1ZoYOGwQOnw6exYwl4=
+	t=1746560357; cv=none; b=tdA9RZq8aGl5o/o3+TsKL8CVsNTEUqoLgkHM/fkR/dmiqN+sL4gEVv+rO/ojiBdS2b0/mC6wdtTZgSaCjdCbw5LCIGWm6DjZs/McDOIaBqfJOuJKmxekDffZDcoEa+fiGG8TNk9c6b4vsgO5sm5J6j/bKsGc4X11SGeAApSYZ88=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746558972; c=relaxed/simple;
-	bh=kiMidEXyFPgbhQSIw0vK/jKq4Z4jXCRwAjtGkuLYStw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uHFN72J2cgFA3UKsr4jIRCM+I4vFKrXTWVBBeSq8VUA7KTV8S57gAh30f7/RFnQd9xjVslrQ6tcrsfAZMtIkDHJeijArcFdxGWpmElwAgC/xLDcZoMFav4uKgJLpYR7u5Nfb2YxhM3j1nAGYymTJg605A+2K9JJOAadlejkvDOQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FD2R5SSL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eqh75wkP; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FD2R5SSL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eqh75wkP"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 83DAD25401C1;
-	Tue,  6 May 2025 15:16:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 15:16:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746558969; x=1746645369; bh=QgNX1SifgL
-	ngmPeJkZqOZFEpCtlaTySluOWf2OALa7E=; b=FD2R5SSLiDmqqGoZsFEXFtSPpS
-	grvD7gaUDZhKdX7eNwhpgmnl68Bej1vauE5Su6gY4oBQ0+CesRaC7/dXRdvDmbOS
-	oDIqxgdJ4iLeIzJe48NkcwNDHR+XO3f5JUpAAw5xH+ZpFlI6pkC0luFe01tp9gEI
-	fHX0EbmmG8aw1c2RVUO2dz7xNjmEh76CqE/HdDR0XQIjK2BLcMIuLoAwxUmYJC4u
-	LEGUbxvYviseMnaHWVFUhaRf4/+T+SjCZTv4C/4BkRJRAuFaU3JeW8ZoXqUyPeKa
-	7siZH8GV7bxgm5bFsFd3t12Q3P2a8k63Edl8p5Hi0gzkBk8KnoYpCveG3b9A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746558969; x=1746645369; bh=QgNX1SifgLngmPeJkZqOZFEpCtlaTySluOW
-	f2OALa7E=; b=Eqh75wkP+5G7dqEl1pNKOewcqmriq0138cbbEuK57osX2Y4iFUS
-	rW/2G8rjUIoFibdQQuZNqpbyaiA5hgxFga27dgU5urkdTFEP1+/zQ+GOeG5TkMpm
-	1vHjF8UC7k3YNFxyZqjqg/EUfuEhUtFbV7ffEXHRmQ72rIMA0C/pr3pniirjuroR
-	+eLCujuMA8rBHPEVgd92cYJB7lE/AyPIDXsZv4f/450x7UpNngfGKx905r5pV46J
-	b/GjENe5UJEBKlZc8CanMZNAtqXszcKJS056zbExUCHWdMoO13lzaLU8JbmbE6/A
-	ZLJXHs58sOqlZQSyUA1+NgcoXKS3UYNeVag==
-X-ME-Sender: <xms:-V8aaFLQPMExOqVpYS9lBT9QYNd1jcWI6W1V2c6sVACrvGz0X0URmw>
-    <xme:-V8aaBJ7nFmHvQ7_m99FW5nbhimxFTG8ofJZMVpyELRQU46u1FrLGAveNNjYLT4KS
-    u5jPJxHiYHgUF_DTg>
-X-ME-Received: <xmr:-V8aaNvqKsbZogMOkX5IXB5wQbVeCo-Jj4QlR1lyjMXq8iWRRZ18qzmHrJNkvtaY0plZH7ES_3zGNTUkuRKZGp_01vjraXSLzT5c>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegjeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlh
-    huohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-V8aaGYtDqCFH5PjIbr8KCAQ2mGsBosYBmPVcJFlbqjYb9xxfJaD0A>
-    <xmx:-V8aaMa8Hm0nH5yyiXutIuZSDDsqjA2DedQpiWrY-isH3JbR6TT7dw>
-    <xmx:-V8aaKDgHk-HmAkuc7YxAQHkmKnKCRa_RzMtWht7innRgcM7mrNjSA>
-    <xmx:-V8aaKb1ErROGM3jANQUyZu0v1AdJeNUOz2S6gyN5hCijhUP5KHWYw>
-    <xmx:-V8aaCWu3ku0LyHjM1X_BQP0AUUZ9PFuGUmGrkdOFwEUEZ04CfdRT6Jk>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 15:16:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH 2/4] packed-backend: extract snapshot allocation in
- `load_contents`
-In-Reply-To: <aBo7pcimOG19oInQ@ArchLinux> (shejialuo@gmail.com's message of
-	"Wed, 7 May 2025 00:41:09 +0800")
-References: <aBo7OiCKHTyT4DzH@ArchLinux> <aBo7pcimOG19oInQ@ArchLinux>
-Date: Tue, 06 May 2025 12:16:07 -0700
-Message-ID: <xmqqv7qdim88.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1746560357; c=relaxed/simple;
+	bh=0W/M0R+gb5xzs4cVvCfGEXv+eLMUXVTHwoPxk4/Cc9w=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=tLZnK+dCajh9ZitxYLMicpw7wBwtw+Bnv81JyOHLC+0rEBHL9HTLLz2BpMqxxcoTbRYcTfLFRrRiJ5ndeYnAyqm2K0TxdGxP0tiC6mQo0regGDocBdWZ9C0b6cBJ6kZ2IMItakjKjGdNZN+TYbupQlsr7rs7pnYw9krd9/cNO6o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTPSA id 4ZsTH46JwHzRq1h;
+	Tue,  6 May 2025 21:39:12 +0200 (CEST)
+Message-ID: <39a90178-5989-403d-8e4e-290827eb44a3@kdbg.org>
+Date: Tue, 6 May 2025 21:39:12 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4] gitk: add external diff file rename detection
+Content-Language: en-US
+To: ToBoMi via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: ToBoMi <tobias.boesch@miele.com>
+References: <pull.1774.v3.git.1741093275742.gitgitgadget@gmail.com>
+ <pull.1774.v4.git.1745830037917.gitgitgadget@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <pull.1774.v4.git.1745830037917.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-shejialuo <shejialuo@gmail.com> writes:
+Am 28.04.25 um 10:47 schrieb ToBoMi via GitGitGadget:
+> From: Tobias Boesch <tobias.boesch@miele.com>
+> 
+> If a file is renamed between commits and an external diff is started
+> through gitk on the original or the renamed file name,
+> gitk is unable to open the renamed file in the external diff editor.
+> It fails to fetch the renamed file from git, because it fetches it
+> using its original path in contrast to using the renamed path of the
+> file.
+> Detect the rename and open the external diff with the original and
+> the renamed file instead of no file (fetch the renamed file path and
+> name from git) no matter if the original or the renamed file is
+> selected in gitk.
+> Since moved or renamed file are handled the same way do this also
+> for moved files.
+> 
+> Signed-off-by: Tobias Boesch <tobias.boesch@miele.com>
 
-> "load_contents" would choose which way to load the content of the
-> "packed-refs". However, we cannot directly use this function when
-> checking the consistency due to we don't want to open the file. And we
-> also need to reuse the logic to avoid causing repetition.
->
-> Let's create a new helper function "allocate_snapshot_buffer" to extract
-> the snapshot allocation logic in "load_contents" and update the
-> "load_contents" to align with the behavior.
->
-> Suggested-by: Jeff King <peff@peff.net>
-> Suggested-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
-> ---
->  refs/packed-backend.c | 54 +++++++++++++++++++++++++------------------
->  1 file changed, 32 insertions(+), 22 deletions(-)
+Thank you. Sorry for taking so long to respond.
 
-Trivially correct, cleanly done, and nicely described.
+In general, I like the goal of this patch.
 
-Thanks.
+I am not familar, yet, how renamed files are represented in Gitk.
+
+I wonder whether it is necessary to parse diff text to find renamed file
+names. When you click on a renamed file in the file list, the diff panel
+jumps to the corresponding text for both the original file name and the
+renamed file name. Is the information about those two names not already
+available?
+
+Would it make sense to support also copied files?
+
+>  gitk-git/gitk | 45 +++++++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 43 insertions(+), 2 deletions(-)
+> 
+> diff --git a/gitk-git/gitk b/gitk-git/gitk
+> index bc9efa18566..ddbe60398f2 100755
+> --- a/gitk-git/gitk
+> +++ b/gitk-git/gitk
+> @@ -3806,6 +3806,39 @@ proc external_diff_get_one_file {diffid filename diffdir} {
+>                 "revision $diffid"]
+>  }
+>  
+> +proc check_for_renames_in_diff {filepath} {
+> +    global ctext
+> +
+> +    set renamed_filenames [list {}]
+> +    set filename [file tail $filepath]
+> +    set rename_from_text_identifier_length 12
+> +    set rename_to_text_identifier_length 10
+> +    set reg_expr_rename_from {^rename from (.*$filename)}
+
+$filename can certainly have characters that are special for a regular
+expression, such as the fullstop, right? They need to be escaped or this
+will find the wrong file if one at all.
+
+If this search wants to find one side of the rename, why does it ignore
+the directories?
+
+> +    set reg_expr_rename_from [subst -nobackslashes -nocommands $reg_expr_rename_from]
+> +    set rename_from_text_index [$ctext search -elide -regexp -- $reg_expr_rename_from 0.0]
+> +    if { ($rename_from_text_index != {})} {
+
+Here and elsewhere in this patch we have a string comparison that uses
+'!='. It should use 'ne'.
+
+Please avoid the extra set of parentheses, even around && (below). Also,
+in this code base, we do not have spaces around the condition inside {}.
+
+> +        set reg_expr_rename_to {^rename to (.*)}
+> +        set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to $rename_from_text_index]
+> +        if { ($rename_from_text_index != {}) && ($rename_to_text_index != {}) } {
+> +            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_identifier_length chars" "$rename_from_text_index lineend"]
+> +            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_identifier_length chars" "$rename_to_text_index lineend"]
+> +        }
+> +        return $renamed_filenames
+> +    }
+> +    set reg_expr_rename_to {^rename to (.*$filename)}
+> +    set reg_expr_rename_to [subst -nobackslashes -nocommands $reg_expr_rename_to]
+> +    set rename_to_text_index [$ctext search -elide -regexp -- $reg_expr_rename_to 0.0]
+> +    if { ($rename_to_text_index != {})} {
+> +        set reg_expr_rename_from {^rename from (.*)}
+> +        set rename_from_text_index [$ctext search -backwards -elide -regexp -- $reg_expr_rename_from $rename_to_text_index]
+> +        if { ($rename_to_text_index != {}) && ($rename_from_text_index != {}) } {
+> +            lappend renamed_filenames [$ctext get "$rename_from_text_index + $rename_from_text_identifier_length chars" "$rename_from_text_index lineend"]
+> +            lappend renamed_filenames [$ctext get "$rename_to_text_index + $rename_to_text_identifier_length chars" "$rename_to_text_index lineend"]
+> +        }
+> +        return $renamed_filenames
+> +    }
+> +}
+> +
+
+Can we please have shorter variable names? They are all local variables.
+I have to spend so mucht time to find the end of the variable names
+before I can understand what the lines do...
+
+>  proc external_diff {} {
+>      global nullid nullid2
+>      global flist_menu_file
+> @@ -3836,8 +3869,16 @@ proc external_diff {} {
+>      if {$diffdir eq {}} return
+>  
+>      # gather files to diff
+> -    set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+> -    set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
+> +    set renamed_filenames [check_for_renames_in_diff $flist_menu_file]
+> +    set rename_from_filename [lindex $renamed_filenames 1]
+> +    set rename_to_filename [lindex $renamed_filenames 2]
+> +    if { ($rename_from_filename != {}) && ($rename_to_filename != {}) } {
+> +        set difffromfile [external_diff_get_one_file $diffidfrom $rename_from_filename $diffdir]
+> +        set difftofile [external_diff_get_one_file $diffidto $rename_to_filename $diffdir]
+> +    } else {
+> +        set difffromfile [external_diff_get_one_file $diffidfrom $flist_menu_file $diffdir]
+> +        set difftofile [external_diff_get_one_file $diffidto $flist_menu_file $diffdir]
+> +    }
+>  
+>      if {$difffromfile ne {} && $difftofile ne {}} {
+>          set cmd [list [shellsplit $extdifftool] $difffromfile $difftofile]
+> 
+> base-commit: 5b97a56fa0e7d580dc8865b73107407c9b3f0eff
+
+-- Hannes
+
