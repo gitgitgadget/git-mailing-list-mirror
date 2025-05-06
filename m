@@ -1,124 +1,169 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f41.google.com (mail-ot1-f41.google.com [209.85.210.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEDC1314414
-	for <git@vger.kernel.org>; Mon,  5 May 2025 23:54:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DDB4255222
+	for <git@vger.kernel.org>; Tue,  6 May 2025 00:08:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746489256; cv=none; b=TdKOo9htIhuWGqENc0FhQsUCjsQRsrrATx6qkzRTHHDvhUnIgoNEC1R0XS+rSxLry1SYD3srSBZ+sXC3ezgqzzurcJQcnJuSgC341eHO/Ci8IIX1YwBsQ99lpIPa8ndZqvFh9jbtEbSXJHBheuXaRsvxc7TTd832YFH+R8/dNHs=
+	t=1746490108; cv=none; b=fUqCXIP380x37BFHFDlHPcf9aGsIubTwuP2667QCAGE2SGHS+uSy+KrP5r4ScyBmtJ6TUErIMpM6Se99Aylye41jczZx24yo91e2q6Ddn1PF1df08WmxbmcgRXkS5+SoN/LiduwNYz4it/ilIkqyUwmATnUBaOWNNnyiQCwJaoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746489256; c=relaxed/simple;
-	bh=5Viq1vbITCyvupu0GXjWBfP4b90Z8lnQ4EmY+46Vs5c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=glqmEPGAd0+oI+D+pHtoDnRvfaqHErw/jLpus0NfiozItJNVHsx4i8BrV6tuIDmbcbpICgn2vxfnFnT//7x9cOzdOmRlQQh0bkI3KmiWFwCHxjXD8WtjFOhgbFNzh0sUEW6gFjLOVx/ZfvxFDilt1fLlJImntHOQK+8UUwVtHqA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J97LU10Y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dD7EmIzg; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J97LU10Y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dD7EmIzg"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 686812540222;
-	Mon,  5 May 2025 19:54:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 05 May 2025 19:54:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746489252; x=1746575652; bh=94QfSj8L1A
-	5iiCJPlulN56IAHlaRsbou1uqHVszJFaA=; b=J97LU10YSj18qguhdxnLP0UpuD
-	PFAmVN0nvpHaJuqjpdsYmNwGZ8zAfyeGt1hawlkK6yQmK3UlnE/Xy2kfno+i7bTF
-	1UDEhyUZBE/PUIVuyob3n+rhESDYKXEZjhVcyS96gUEPvvAnJa8UnBJuLb1S+ryT
-	u94P/IKA3Bi7DQ6cSEDDhN4Wr3JDs03ZC7itGYnNdN1PPMFnDXpnLF56aNtXzWZI
-	41mIHrEvXa8hcOc0GHxsddsUeK1Uo3WDfUcoaPA9RwA+Wqww65G5vM3oxjPuhgzn
-	1yRLVl/I+9xR2wcE8qHkX6wsBP4xnq93biBo5nkw1obfVhxHila2jeSPHfdg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746489252; x=1746575652; bh=94QfSj8L1A5iiCJPlulN56IAHlaRsbou1uq
-	HVszJFaA=; b=dD7EmIzgy175FWDAG+WDsqKulnHKiqxytRrmohzDiqYoFE688IS
-	H30chNjPNGAYvzOtPjusxV7pKH7++o+SONdccF7NEyn9ue5xzbg8Xu7EAav9CHMO
-	4ez12zmN99xJJ+ZuSZmD35R4uAuwyah/3OQ2h3nWaYr9tZkpel3QuAdpHJ20uNUr
-	Eo+BXI32zjYl5/NXhDpd3T7QMN20NaQXefEZeT/5HUzfTHepyxFJxYLIsjPQWEpc
-	McfaB+C6vdZ44EezbRqPi3iBC5stsIAgBlCHaSd30Q4lVgDp7mK6DjBF/JU5YkFt
-	1bUCfbUbPX8dBR8UjXUpZIC1KIPt6oeCwZw==
-X-ME-Sender: <xms:pE8ZaLLDHoifMwMQxzkP7hVTKRIpQZEyJSUktEymRnLEmvY4cYv2kA>
-    <xme:pE8ZaPJa-aQrglHIGPvl8YuNYSDGj1-J0l7369SAfY3yXXMAIPa4I9lo65SviO6HT
-    oo_53yJS7TunJIe2g>
-X-ME-Received: <xmr:pE8ZaDt9WfBPU4mKI_QiipPr80i1ifTdCHSFeBzmsIyTg1f0eLM_C82371Ot_Fm8cJ5cj5ktj8FkkndWnJaGMhOFpQbPlytsioeF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkedvgeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguih
-    hthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpdhr
-    tghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvghtpd
-    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
-    thhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:pE8ZaEbA5J24QCnFjddea5l1uuvb898hTggHVb5SsOZUf1iGkNzaIA>
-    <xmx:pE8ZaCaG8O-SdYGe6m3SniPK--08kpjCufStRrlaZk9LEE-cyocwoA>
-    <xmx:pE8ZaIDe3WHcx8eqivcX0fDT3rYfPJVLtfbkEwYyqruAJRt3_nkKYQ>
-    <xmx:pE8ZaAZO_JEL7IuXRqY7qAi2on48EULM2yKUrt_yltNslP2P_din6g>
-    <xmx:pE8ZaGj69D9lMHKH8zfzP8ckpMDlJUFoWJDpNwmgmlBatJuWZ0UbpO6Y>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 5 May 2025 19:54:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>,  Julian
- Swagemakers <julian@swagemakers.org>,  sandals@crustytoothpaste.net,  Eric
- Sunshine <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v3 2/3] docs: improve send-email documentation
-In-Reply-To: <PN3PR01MB95971776178BED3516DA03DCB88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Mon, 5 May 2025 15:23:04 +0000")
-References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597BD33DB2C4F3BE9E5F4C6B88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB95971776178BED3516DA03DCB88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Mon, 05 May 2025 16:54:10 -0700
-Message-ID: <xmqqldralil9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1746490108; c=relaxed/simple;
+	bh=/gOPlhN6v5OAQ9B5Y6Xed4wUlIMP+AwERbcYtsH7Yrg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=OETW+DVfMdL7xFIGQ/BMX7uMdQQLNI23jtzHc7vlFqYuoinWFbIZOCB7q0XBL6iS0y/J0VWfumQooLuJXMjNyvfBCO1FMGD0BFrFcWk1qPeqafR+Qiz9yHnf/mSRWIj8XKy8M+ruP4BQ2DhUtRVeiaq/1j5eqKGK816qKvABGa4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.210.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-ot1-f41.google.com with SMTP id 46e09a7af769-72b87587c61so191628a34.0
+        for <git@vger.kernel.org>; Mon, 05 May 2025 17:08:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746490105; x=1747094905;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H1IXzRJZdMj5SyHEb6Wr/bVSIvJgOJsLKkyme0skv6c=;
+        b=MnKtsk4TbMmf0vHO4KvgENJvHpYSXyQ/Fb496TpS4jsDRhjrLpXsEnoh8WGL+tYMcV
+         YneMNkNWQOOY+iqfbXEjBYQUuHlba9ecHv1BCxeKpKeHFflYpj56PskFfzSMSQUDPwBE
+         Hiu2ew5TRewcKJUsxlgSRgmEkBfZRf9xXawFHjscdWZYtKHcOY9E1+BaQldY7Lpp/Egj
+         wIlPXMswOWBrwCz7vib+9C4XfMh4iYmlru5tYOJO0hmRuSK+nw0W3c//XAdTOhej0sTC
+         cAf5NWfZJLZCXH7zNL54TD9XfeNN4lGoM4rxbeXYi3Cr89Y5hemRdu7JgwS7SpjWOQWQ
+         CfJw==
+X-Gm-Message-State: AOJu0YwGE/ZgpOxCUU2X8YbgnIAPF+yo2PbyzsXAFp6Om7iMTYnG+eNp
+	z4S0Bx1Nlavo4INYH55U191HwOR5tDPPPJ2Meez+DPtXScszhYNemt1y+SMV1Sz4iU5S31a7vBo
+	ioTeX/sg8LTxCT6onif7Ux8MwDqA38ewS
+X-Gm-Gg: ASbGncsU0ltNGGk2/vcM8fcH2DwLeDGJk2un6DqUMNiwoU/XI656ZgwuRykauG5BZml
+	gUJuidljdzq6FG8s65yYMVEnpWePYauQlcD4fOsk7wvi1O/0hZi0tpRNHS3cc9yfvi9OEo06FES
+	gwk1REkrvU29wgpM6xQKWxjcCwnz0miTSIwjHufu1+VnGgtYFUz5WRYoI=
+X-Google-Smtp-Source: AGHT+IG8GMzf6bdpNoAdlvU63lib5cUQxFHYHlyugPzxj4KO/qZdOpYhall9SbDnarYK+D7xre7e/5WuqcV0feVUqoI=
+X-Received: by 2002:ac8:7d14:0:b0:48b:6eeb:f98e with SMTP id
+ d75a77b69052e-48c30f741c7mr79272381cf.2.1746489739961; Mon, 05 May 2025
+ 17:02:19 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com> <b4b7854f330af7588b12e3361bed40723febddad.1746436719.git.gitgitgadget@gmail.com>
+In-Reply-To: <b4b7854f330af7588b12e3361bed40723febddad.1746436719.git.gitgitgadget@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 5 May 2025 20:02:09 -0400
+X-Gm-Features: ATxdqUG2VXeLj6Qc1ZyGoXQg0L5-gx6d9EilWYsj1EehY2lehIHyeQb0e1ea-DQ
+Message-ID: <CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] add-interactive: add new "context" subcommand
+To: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Leon Michalak <leonmichalak6@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Aditya Garg <gargaditya08@live.com> writes:
+On Mon, May 5, 2025 at 5:19=E2=80=AFAM Leon Michalak via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
+> This teaches `add/commit --interactive` a new "context" subcommand, which
+> changes the amount of context lines subsequent subcommands like "patch"
+> or "diff" generate in their diffs.
+>
+> Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
+> ---
+> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> @@ -265,14 +265,15 @@ and type return, like this:
+>  ------------
+>      *** Commands ***
+>        1: status       2: update       3: revert       4: add untracked
+> -      5: patch        6: diff         7: quit         8: help
+> +      5: patch        6: diff         7: context      8: quit
+> +      9: help
+>      What now> 1
 
-> +If you want to send a single patch, run:
+I'm not a `git add/commit --interactive' user, but I can imagine that
+inserting "context" at 7 and bumping "quit" and "help" to 8 and 9,
+respectively, is going to play havoc with muscle memory people have
+built up over the years. To make this more friendly for existing
+users, I'd suggest adding this new command at the end of the list
+without changing the existing command numbers.
+
+Also, looking at this list, I can't help but think that "context"
+feels out of place among the other action-oriented commands. Moreover,
+if --interactive mode grows more configuration/setting-like commands
+in the future, do we really want to keep extending this menu for them?
+Specifically, I'm wondering if it would instead make sense to
+introduce a new item "9: settings" which takes the user to a
+"Settings" submenu from which the number of context lines can be set.
+
+> -The main command loop has 6 subcommands (plus help and quit).
+> +The main command loop has 7 subcommands (plus help and quit).
+
+Since you're touching this anyhow, let's fix this maintenance burden
+once and for all by writing more it generically, perhaps like this:
+
+   The main command loop has several subcommands (plus help and quit).
+
+> +context::
 > +
-> +	$ git send-email --to="mailinglist@example.org" HEAD~1
+> +  This lets you change the amount of context lines shown in diffs that
+> +  the 'patch' and 'diff' subcommands generate.
 
-Didn't I already tell you not to encourage to run format-patch from
-send-email all over the place?  Just prepare the mail files once,
-and feed them, perhaps
+s/amount/number/
 
-    ... how to send patches to a mailing list from a set of patch
-    files you prepared with `git format-patch`.
+> diff --git a/add-interactive.c b/add-interactive.c
+> @@ -1061,6 +1118,8 @@ static int run_help(struct add_i_state *s, const st=
+ruct pathspec *ps UNUSED,
+> +       color_fprintf_ln(stdout, s->help_color, "context       - %s",
+> +                        _("change how many context lines diffs are gener=
+ated with"));
 
-    If you want to send a single patch:
+Perhaps:
 
-	$ git send-email --to="there" 0001-fix-this.patch
+    _("change the number of diff context lines"));
 
-    Or more than one
+> @@ -1087,6 +1146,16 @@ static void choose_prompt_help(struct add_i_state =
+*s)
+> +static void choose_prompt_help_context(struct add_i_state *s)
+> +{
+> +       color_fprintf_ln(stdout, s->help_color, "%s",
+> +                        _("Prompt help:"));
+> +       color_fprintf_ln(stdout, s->help_color, "<n>        - %s",
+> +                        _("specify new context lines amount"));
 
-	$ git send-email --to="there" patches/000[1-4]*.patch
+Likewise:
 
-etc.
+    _("change number of diff context lines"));
 
-> -	$ git format-patch --cover-letter -M origin/master -o outgoing/
-> -	$ edit outgoing/0000-*
-> -	$ git send-email outgoing/*
+> +       color_fprintf_ln(stdout, s->help_color, "           - %s",
+> +                        _("(empty) finish selecting"));
+
+"finish selecting" looks like a copy/paste error from elsewhere in
+this source file. Perhaps you meant something like:
+
+    _("(empty) don't change number of context lines"));
+
+> diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> @@ -1230,4 +1237,23 @@ test_expect_success 'hunk splitting works with dif=
+f.suppressBlankEmpty' '
+> +test_expect_success 'change context works' '
+> +       git reset --hard &&
+> +       cat >template <<-\EOF &&
+> +       firstline
+> +       preline
+> +       TARGET
+> +       postline
+> +       lastline
+> +       EOF
+> +       sed "/TARGET/d" >x <template &&
+> +       git update-index --add x &&
+> +       git commit -m initial &&
+> +       sed "s/TARGET/ADDED/" >x <template &&
+> +       test_write_lines p 1 | git add -i >output &&
+> +       grep firstline output &&
+> +       test_write_lines c 0 p 1 | git add -i >output &&
+> +       ! grep firstline output
+> +'
+
+This script does have its share of bare `grep` invocations, but these
+days we prefer `test_grep`, which also appears often in this script,
+so the following would be more appropriate:
+
+    test_grep firstline output &&
+    ...
+    test_grep ! firstline output
+
+Note the placement of "!" when used with `test_grep`.
