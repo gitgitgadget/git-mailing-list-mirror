@@ -1,54 +1,54 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C862188734
-	for <git@vger.kernel.org>; Tue,  6 May 2025 20:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D09A6FC5
+	for <git@vger.kernel.org>; Tue,  6 May 2025 20:25:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746562302; cv=none; b=qVKTUo07aaI2cON1NRSf1LFs+yPWI1hugc1yZubr649qS12mcc0pGAjq6Y1GUe9trJIcXRxAGMVpX4iu/c0SgjqKTouFnmnUR/Lqvih38MKA5qCj+ubklVXaxRCPByFWJf8uok4gtPA69sbgy6qgDKtzv88wH3D1sHPcKD4cz8E=
+	t=1746563151; cv=none; b=ZTUHbEwDpIZNmOGAKq4QG5fLzEzVAWffVdLnj/KHBfjiyfoK3hayrloC2tPP2Q4zXB3PFtOr5RfucJbWaPC58H8tADHzVwUsUpgpar9TuD7fiWH47+Y30uDu82aPiPOYI4mhlspICNF0PTVhusshOGoCJQy9u6c3pp5ECN5Hy0c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746562302; c=relaxed/simple;
-	bh=OiXn/f+Lz21qMH34UOzWkx70IT9/wm+8WejWhT1MDWs=;
+	s=arc-20240116; t=1746563151; c=relaxed/simple;
+	bh=840BIkmy4WWW59CCCjHbLBqL9vxJRzTau/Xlwbv90gw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MlC2IL/W1ZCHwiol9r5g6IdiO4I11DeBWiF7bcMpL7Mup2yKVDCleKIrELZSIhb/IfHvjTYBM9TA6frP8NT3u2/fOJ75Oa3dPo2a72I14cVXcrt6Y61pVW5DJKKMKT9/5DAxzPerjvmiwL/FwxH+Jky+yfv/I5YGCesLRthNnFA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Ul1gY1B0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rY7k1XcW; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=MMrHrA4Wf3cOIQb263V5vCaoGEGH0wMPjJqBiTwtznSwQEEpzY26uikJ+gJMtnVmyu4P1hkrExmf772EMFGAbTM465MVQgr7100bfM4ZL1kOMKpMYAV2toj2RGO4V3vjrh+sIHMZsokPnn3saAJ0SE7lkPpA/nvxhShhpijDf8M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E69+0KcR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sBFOs39p; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Ul1gY1B0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rY7k1XcW"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1690D11401E4;
-	Tue,  6 May 2025 16:11:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E69+0KcR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sBFOs39p"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5ADD91140181;
+	Tue,  6 May 2025 16:25:47 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 16:11:40 -0400
+  by phl-compute-08.internal (MEProxy); Tue, 06 May 2025 16:25:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746562299; x=1746648699; bh=jE9P7ncDNx
-	RRQ05oyIrqtlPZ3h2UkManLA1gNSmB6Is=; b=Ul1gY1B07Vb+vM2J148iv+R8iG
-	YSNxldyEneKouYok/T+s97PeC67Ed+djpyV/rXoIFLzd5/bulLfoMPewBtK+0TRj
-	f8ZeLP8FdIim4vemA8OVX9FjignhCuhvTh1gIpZeywjeIIXYR595tDfljX1RHZ2O
-	qmoR2ekH6MzK052kBMzqudg6XIbuTNM7dA+eavrXFM6aAfrlmY5Bbgsr2MX3KXeY
-	6/0Xtu+VEbHqIaCGEtBuB4wESOkBscZNz5Ya+brcjUaC2QP048MiJSnpV2E0n48c
-	f9MUDj33HGoxT46umjWP/yCEXrvzmzDfw3fNRWuvRbMd7jVqQl+7mG9cUpjQ==
+	:subject:to:to; s=fm2; t=1746563147; x=1746649547; bh=840BIkmy4W
+	WW59CCCjHbLBqL9vxJRzTau/Xlwbv90gw=; b=E69+0KcReC+M9QlPc1rcgZBffr
+	MfhbvNyo9VVrpJK6AZCZa6KjEHU064kyx2lp0PrSmfuEr8TZgSciyqTtOV/q1yvZ
+	o9jvTdNo7XOQ6OhbtqEVCHrYMpU4dcmiRtV9ShmkP9THxHU5pvbPSctfAbrCMxOJ
+	M1G7y+loBDOrRbsu/i++WkGx2B/YhsMErYxlF891eDLtQ8PkssqIrpNFGWRhD+4T
+	YKemBRj8PHYlLp3dM00t2RoN5EW06h7ork2cakInzIqBxlXwL6+WVcyM6wdLanYE
+	Epro7yTQedTKqTQKEeyvAtlWUu8/fXW4wBYooIPQmNvRfSynh6iEBuQ16Lgw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746562299; x=1746648699; bh=jE9P7ncDNxRRQ05oyIrqtlPZ3h2UkManLA1
-	gNSmB6Is=; b=rY7k1XcWVN4aFh5AX/xDy6O+Qux/VqE6KoTd1h2LhOEwTNFqyFS
-	KGmBeyVtXu2wxHY3URDuUI2D3YPycSfv/A6EGpacAMVt/bX2nX/lpumPjB2R5CV0
-	bIpSmNHnAXmP1Hj/zGlcM/gkQRDltgCA6qzerAF6ub2onpa+VTC/ZMi8VvQSYkai
-	SqExc0ZZj6gLmSeT+FDYtN3e1tGEjsqTMm90FKTobKDQ3ulPVnQNVoNMl1NrERxR
-	YbseMz64Uk4MkSCXf/VdyU1yXz+uwliH6a8Fyu8wwd6Xbg+GFvtC7Ol/EJ72iUiS
-	F5tA8EcTb5oLz6T8fKjOEY1sLtxLir5TxVg==
-X-ME-Sender: <xms:-2waaJCqGx7a2YrysXQGkllWWVkc2rVIlCREnJ-JhNLFDgBZb2erSw>
-    <xme:-2waaHgbuxEchJqcygxjSQgt66h1N0snZa3W9ODmmK3mZ9bmogYdiEuRiwfXk2Nh8
-    fvbAnoJA1237d5TbQ>
-X-ME-Received: <xmr:-2waaEnaWAGarEe2JiuL75oKAUpBY7LTsJ1BxCDlqKItPI8SUZfqEWY05cQNrpdb3BFsyJre8-TOmZMgNIegxmdrOs9MaLWdbHoQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegledtucetufdoteggodetrf
+	1746563147; x=1746649547; bh=840BIkmy4WWW59CCCjHbLBqL9vxJRzTau/X
+	lwbv90gw=; b=sBFOs39pHsqEW71xx4mMKfAxKflRJU3I+KtOGzKHpnWf7tjrAHT
+	uiwEYj6M47NTjaKuFA7qKa/GnvEoUwri+EsAKadnP8HjlJ9kxOvoVn/RsiPMTJAB
+	T5aRejSbhbHC68kHF8CAVDZf7Ff7ZQ5PKotjTi7ryum0EW1h1gTuDII3u10CT7c+
+	sN3xc7i23GQQPQlJ6Noyu7rtFTpIC/GnQpGIEDRKZJ4rbpGVGl45NmOvSISsYl31
+	08N5f1BmKy5Tyb6dGPIXVoHWpw5MyZT+j0br4w7wEg8JkRsRKitBpBu6Z87E2iys
+	j7ZVafVR9VN3RRmk3+0jKLQj5raNCksEk8Q==
+X-ME-Sender: <xms:S3AaaMbbpn6cqOS4hmMa2_R8QDxlaYuUA08r7oa1WhDL0m3TVlrvoA>
+    <xme:S3AaaHaT_WzG4_cCgClfU60S3QN_8FZeefdVu4XSGbfuFmkxeIF0zvyCfuSArnJto
+    4J_CQR4KlhaRW_tOQ>
+X-ME-Received: <xmr:S3AaaG8lnHb-9KDLqrrxw3I2D3UNnMOPL-gEzBqe6uGA3hPWYmP7ADkiSHGDdebf9xynTKBueUZw4UU9QTBKgP8xGA57FcX64lly>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -59,24 +59,24 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegledtucetufdote
     tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
     himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
     ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-2waaDzzITXOi471bBHMLRPB0700BZLAGB7ku0c9JaNbEH0bFE4aJQ>
-    <xmx:-2waaOQ8kJ_Ycg-MSySrAFM4UbrdQpO3UfomqJ5t42YFLc81fwptuA>
-    <xmx:-2waaGZhNeK2P-Jv34WngIuuMNBFRIT5oq-_0nxzHcce-3ot0thd5g>
-    <xmx:-2waaPSt4fY0pbUj1XbRqXVIPONS2wSbomBmcQ4IvWLM9L9erO_p8Q>
-    <xmx:-2waaHAnS7BGU1LLf4LmBM1MQv8vfw5gtE3_gOzZtQlAGEr264qC4l9Y>
+X-ME-Proxy: <xmx:S3AaaGoWVdOWO-DREyEK3b4KwXaSyPl_XvZcWW0Q0mRrXScrgIML2A>
+    <xmx:S3AaaHqLWT9XFfs-zoUJERw8TFYdAo3E0HHMMBiepgsY30P9ZHiSEQ>
+    <xmx:S3AaaESbzk3mhQNC_j6LL7q8rev_tzj3zmNl6NRQX60Adoy8lWQGdA>
+    <xmx:S3AaaHrFxE0DhqWCapwQqa378Cby4Wa5d68ug_uO9c9zXO6Ui17Txg>
+    <xmx:S3AaaG52T2C5F8FjerQ7WDxdoHpKoaoRdBqSnzG1AcWB7MNyd21Z2tRO>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 16:11:39 -0400 (EDT)
+ 6 May 2025 16:25:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 08/10] contrib: remove "git-resurrect.sh"
-In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-8-e6d5ddd79a72@pks.im>
-	(Patrick Steinhardt's message of "Tue, 06 May 2025 16:12:41 +0200")
+Subject: Re: [PATCH 07/10] contrib: remove "persistent-https" remote helper
+In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-7-e6d5ddd79a72@pks.im>
+	(Patrick Steinhardt's message of "Tue, 06 May 2025 16:12:40 +0200")
 References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
-	<20250506-pks-contrib-spring-cleanup-v1-8-e6d5ddd79a72@pks.im>
-Date: Tue, 06 May 2025 13:11:37 -0700
-Message-ID: <xmqq34dhijnq.fsf@gitster.g>
+	<20250506-pks-contrib-spring-cleanup-v1-7-e6d5ddd79a72@pks.im>
+Date: Tue, 06 May 2025 13:25:45 -0700
+Message-ID: <xmqqwmath4fq.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,30 +88,18 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The "git-resurrect.sh" script can be used to find traces of a branch tip
-> in the reflog and resurrect that branch. Despite a couple of global
-> cleanups, the script hasn't seen any activity since it was introduced in
-> e1ff064e1bf (contrib git-resurrect: find traces of a branch name and
-> resurrect it, 2009-02-04).
+> The "persistent-https" remote helper supposedly speeds up SSL operations
+> by running a daemon that keeps a connection open to a remote server. It
+> is effectively unmaintained nowadays: the last time it received an
+> update was in accb613afd2 (contrib/persistent-https: use Git version for
+> build label, 2016-07-20) and its parent commits to make it compile with
+> Go 1.7+.
 
-A single-purpose thing that is done correctly on top of a right
-abstraction does not necessarily need further updates, so I doubt
-this paragraph contributes to the decision to remove the script in
-any way.
+Unlike other ones you said "haven't been touched" and I responded
+with "that alone is not a reason it is stale and useless", the above
+description clearly shows that it has bitrotted.
 
-Having said that, I would not be surprised at all if large bugs
-still remain in the script.  The reason why we scarcely heard
-complaints about it is due to the fact that people simply are not
-aware of it, people do not lose branches too often, and when it
-happens, it is crystal clear what needs to be done with the output
-of "git reflog HEAD@{0}", once people learn about "git reflog".
-Even though it may be tedious to inspect "git reflog" output and
-pick the right record to use with "git branch" to resurrect, as long
-as it is a one-off thing, it would be more assuring to end-users than
-some rarely used script with no correctness guarantee magically picks
-a commit to place on the "resurrected" branch tip, I suspect.
+If somebody wants to use it as a reference to build their own remote
+helper, they can always go back in the history to find the copy.
 
-So I personally do not think many people shed tears if we remove
-this script.  I am for its removal.
-
-Do we have a better alternative we officially support, by the way?
+Let's remove it.
