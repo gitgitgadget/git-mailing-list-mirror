@@ -1,241 +1,137 @@
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814C122D4DF
-	for <git@vger.kernel.org>; Tue,  6 May 2025 21:36:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D1E63D3B8
+	for <git@vger.kernel.org>; Tue,  6 May 2025 21:59:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746567410; cv=none; b=aRhwmnRF72uPQbl40jAxrz+asfqOZBR1dA9qJIwv1YV5atJNgzEgK3evZQQJmfmvB14lA+2ZEAeXV9lts0Bb6fRbe34HugH4EX3lIH7DKplMOlqBTl4jRHAssDHcg+P5dxgHiuru8wUpzb0UQTaPwrLIYwXjRnKtvnaY206i+Oo=
+	t=1746568771; cv=none; b=nB6Wk6CvX286+PWfYvXFPhHqX2n+BPF16WMZ7zBgC9JuSyNd1AsHq1zYEe8Un+grraYfeYN9yRd5//lrO8iZroWAM236TDOq+28zqrjUhzpKjllJfirZCTbRkPof6fj3x7Y/qi5+w5/gc8eyRcBhh92HisnbLrNGHILrKbD78SY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746567410; c=relaxed/simple;
-	bh=zcBLetiXM3rgw2ibgeUJJysrq9k1FW2HS7/l/gr1OQU=;
-	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=eODMGVsz09+NF5HEewAlB8sx/kygtaT6MObyGleQcHtwVtHiP8g4/z+wpKYBV4RXi8z0jz5igLro97WloZxS5R/BMF8YfGS2KVPxnwmx5SvYpd2ovm08+1qUpWOCK2H3mX2/D2LoExKNUWb0mrMsLYZiTd88x+L23S7yxgvMXRU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ajCSnCz1; arc=none smtp.client-ip=209.85.166.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746568771; c=relaxed/simple;
+	bh=UT0WBh8d7p5YDldWlhAid8SUi+gI+CUigmVsIf9M75A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=p4WGPubXXe5fWzEuATWcqsxuLX4hO1g+g+O1iKAKOFKS9yCV4QrCEGsob3TrO6maN8gY4l3SQ6sa7Aad7oWHe/OzGGABB7RLPXlu/mNQeD6X1y+8RCU/sKbFQw745czYnoEltpqPdhPXSYDh8LHWBntefnmRFpJJnd7d4mSx61M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pj3uu/Ei; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YxKJUsFS; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ajCSnCz1"
-Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3d9327d0720so48829695ab.3
-        for <git@vger.kernel.org>; Tue, 06 May 2025 14:36:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746567406; x=1747172206; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:date:message-id
-         :subject:from:to:from:to:cc:subject:date:message-id:reply-to;
-        bh=w4tq26Z3kHfID0JnZldUQ3zac3uBb50D6yax+Y4A41Y=;
-        b=ajCSnCz10iDF4JgbtNbrxHOOmqKA0yMB+uzKHoYfUcFZFktC8DjZg00xCfoJXXMYY+
-         w3GUJOYuf76MNBriAlZSg80CFkJQG4lEerErRQhPiEWUdEePpL4Scs75e/IDaEvsWfHk
-         dWD6DLQ7RNHSjC5FVM0W+os33Eas0WWdp5vOYxkLMWPJCeRy1KvBnCfrGEGo2qfK3Am+
-         Jri6H8qqpr9ExTMhm97alDsdBU169D7KO3y9CzRlMHNQoDQZLAKEVGYqlU/qPFtd7D8C
-         jAVTYhB9/DJf7NwfTw0yAf3y5FtQ5RJB2t7topv523j4hLfxLAKgS4sgy3R6C+ZRRVwv
-         L4YA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746567406; x=1747172206;
-        h=content-transfer-encoding:mime-version:user-agent:date:message-id
-         :subject:from:to:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=w4tq26Z3kHfID0JnZldUQ3zac3uBb50D6yax+Y4A41Y=;
-        b=NbngfM1gdqF1kVITsBrERqFoboU61UUi5ffRKUQte4Koa/Cv0QbX1pOZb+TuNoZhfg
-         69Q70gBTfzVf9RLPeai/deRKOuI4z9I7Bjj3aLrDOsSyAfhR6k37WJU2rKJOE2dZNNbi
-         TQQliz9X42asu3bV4wricFIlWMV8/XZT+5qiI+PJPYgAYe3TM6P8D5PkAe4rY2vY8Qz7
-         VIuU3PrxG846vNG2LJf9U6fGk2BCr6nzGa2y1AZdByFfOUw2xUKJfKKXW9qrd9ylh8Cu
-         0LnQmbfKnXxnz6lV40axrj90qQdWZqa4EtYeLzat8Yw+FsXKXrxOeatQFhQm6xLP0YdO
-         X0Rg==
-X-Gm-Message-State: AOJu0Yy/AmozfSmKEG30A+6pnBkESwLqwJKoz3HAQFjyxQqMDYSBxru0
-	IFQv59eMz+aSL31ktFId6rofZpa3xO0YQzIv5AYB85hRPi5ATwbbTO+NNA==
-X-Gm-Gg: ASbGnctXo14dSUEK2xaahVlLEdJkfnIYl+ZE3OHVqoXU5iCu9Xw+BoRtsoFRxv55iMs
-	9vVPdd3B98gXeUJ0hK6ARgj94kbGjDU6e3Wx+gpd4zWg+0ym9rys8Kn3OViqiE0ElRcsEkuq79E
-	6RrxJ8blWFjtcinjfm6bDdZ5aVV4P05xx8Sby48FpDy1o2P4iPTIJbKkXHgrhCOhZNafbzVrjMs
-	Ik0JNniK3mgYpd0vT8bWWSlrYAvWdumsehm8hhtCLCz0sV7k72zBPJHYQOQZgWKr0G6hLl1yiua
-	Z1W1Az3Azy/BQSdQmm46RUi2gujnXdHV5Zt+jX6MjiziS6H69WzrYTwG30TVDOBUVLHBE6ZbQKv
-	Ofdp9VTHQsiZU586kthEsnxYDwMAAcOYr
-X-Google-Smtp-Source: AGHT+IHdp6+3mwvnfz1GWYP67TJPTwo/bnf6e0DtfwkoL8KStK80qgPvbazvwlHALMW72NYUhVXdxg==
-X-Received: by 2002:a05:6e02:1d88:b0:3d8:1a87:89e5 with SMTP id e9e14a558f8ab-3da738ee4a2mr8932195ab.5.1746567406404;
-        Tue, 06 May 2025 14:36:46 -0700 (PDT)
-Received: from [192.168.1.253] (76-206-246-123.lightspeed.cicril.sbcglobal.net. [76.206.246.123])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4f88a8d0fd6sm2369750173.22.2025.05.06.14.36.44
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 06 May 2025 14:36:44 -0700 (PDT)
-To: git@vger.kernel.org
-From: Mr Bill <billc56196@gmail.com>
-Subject: Bug report for pull --rebase
-Message-ID: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
-Date: Tue, 6 May 2025 16:36:44 -0500
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pj3uu/Ei";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YxKJUsFS"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2435D25401E1;
+	Tue,  6 May 2025 17:59:27 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 17:59:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746568767; x=1746655167; bh=zScjSyEPjV
+	H2Z1O8Fksw01HmpOHrItljW1B0YAsSCoQ=; b=pj3uu/Ei2RZmPP8L5w7vOFKmbk
+	mpEojKozLgm6FWNT4c+9nt4bjdQUtmCe2jt9/M4SqfrBLaa2k6D3ChJgBHN4SzEl
+	he39V9xbt6sgFBmd2AummBKKldpKRmCdPro4U+dpFnuPP2jldjT6Cnr5ID1wP2kX
+	Q2WkrsBokIXro8WNHqzkzbWKv5fchYsOPw7QxMk3iU+1HkSyUpPVz6K2wS1M4Mfj
+	LZ5jcQQmDwn7eoWeHouZKs74UZ10CF/mtMqVq24LM2s2ml5pnEwxVMQW1qqlLjWP
+	3Nx0HVvpwegw3i9EXv/rNIe9jqCOnJt3NzNw65CYAMV3wq6rfbAGjaOH+THA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746568767; x=1746655167; bh=zScjSyEPjVH2Z1O8Fksw01HmpOHrItljW1B
+	0YAsSCoQ=; b=YxKJUsFSO/kc/1GPtaH4tInfET0J4HHOZshKq8DLb8JnZ5P2adp
+	vKU/TZUWcsr1vHGnueHZ+pcwlFncRKvoFZYYSFSY//iWBhQVWz0MBUKYX81N+1wZ
+	aVRYzp9zStCxEk5nYUjzk0bQI8HOyqa1LE3/ZLTco9ld/jYRB7JF0XP/HsPfVYut
+	jGkWYc89jXb74Ozzpv/zXfUVuQ8bgebyeyoPP2Gx9g/NrCaN/WpG3ylZUH+26D/j
+	znn/IOlyG52JmocaOaA9T1/3M3hI4QD4ZostW/FrgO1OBbwkmmLDwDlRHCmtOCf3
+	oMrrZQACqdPadxnQFc3VfDvx5A7+vb90/rQ==
+X-ME-Sender: <xms:PoYaaApLXUOIAV5t6LVBCD7QElERB8Yzbq0Nu9LCqMzdXSeLYN0P4g>
+    <xme:PoYaaGoLUqEFZvXiXCM4H4rP4iDB10U4cf1eyKRtC33Z5k-uYdnIlMP8zAU19GBNW
+    mLWUo0LnvXuT35-XQ>
+X-ME-Received: <xmr:PoYaaFNwSM80a4vGFua-fp2Dl29f7YA07_tJIfDNugRO8pLMQDGH-zjOhALFsKtp5QcQwQqWBI6OeBUmJ642WQLpih-DePUkMAkx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeehuddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepuddupdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgrghrghgrug
+    hithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehmihhrthhhrdhhihgtkhhfohhrugesghhmrghilh
+    drtghomhdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrghkvghrshdrohhrghdp
+    rhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvth
+    dprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghp
+    thhtohepiihihigrohesughishhrohhothdrohhrghdprhgtphhtthhopehkrhhishhtoh
+    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehs
+    thgvvhgvrdhmrdhhrgihsehgohhoghhlvghmrghilhdrtghomh
+X-ME-Proxy: <xmx:PoYaaH7RKSJe-aWs_IkTG56Goi8MDQ77MhX5dyK1xgdzYi-XnqCxww>
+    <xmx:PoYaaP4qcb7EnhyQdKhUsZuVYTLJDowpzRhCGbQGuU54o1WkDk7b-A>
+    <xmx:PoYaaHge3in9dw1CY7_FwhSmNlebtZWAwzt5GjlSuYV_ijIM2B3o-g>
+    <xmx:PoYaaJ5aMPw7Z-8AbFLNVVowxLExrXaAEq3AujsDmWMZigwy9lSZag>
+    <xmx:PoYaaGDxjqq88UN5u7j4oV0nXwggI9Mo_pwCZguj3oZMU4vdBLtGd5IK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 May 2025 17:59:25 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  M Hickford
+ <mirth.hickford@gmail.com>,  Julian Swagemakers <julian@swagemakers.org>,
+  "sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,  Steve Hay
+ <steve.m.hay@googlemail.com>,  Steve Hay <shay@cpan.org>
+Subject: Re: [PATCH v3 1/3] send-mail: improve checks for valid_fqdn
+In-Reply-To: <PN3PR01MB9597E09838320FF9F403D255B889A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Tue, 6 May 2025 22:20:35 +0530")
+References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597BD33DB2C4F3BE9E5F4C6B88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95971B8A202ADEA412010B35B88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<xmqqplgmlisy.fsf@gitster.g>
+	<PN3PR01MB9597B15F81AC6DDB35546C2CB8892@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597ED4DA3E781A6EFC03B9CB8892@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597E09838320FF9F403D255B889A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Tue, 06 May 2025 14:59:24 -0700
+Message-ID: <xmqq4ixxh03n.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Aditya Garg <gargaditya08@live.com> writes:
 
-Hi, I ran across this doing a pull --rebase using the current master 
-version of git
+> As far as the script is concerned,
+>
+> - The script currently checks the presence of a period in the fqdn.
 
-This happens on Slackware linux, using git HEAD, version 2.35.8, and 2.46.2
+I suspect that this is overly strict in a strictly local settings.
 
-I have a clone of the ffmpeg video package, with a few custom commits on 
-top of it,
-I periodically fetch and "pull --rebase" to update the underlying ffmpeg 
-code.
-I tried this recently, and my custom commits disappeared.
+> - At the same time, the script does NOT check whether the fqdn
+> starts or ends with a period.
 
+As a DNS domainname, starting with is problematic, but ending with a
+period (e.g., "example.com.") should be OK, as long as the last
+label is truly a top-level domain name.  I however think 
 
-I looked further with a small test, and it looks like this is happening:
+> - Also, it does NOT check if 2 periods are together or not.
 
-The setup:
-    "base" repo with a few commits (A, B, C)
-    "clone_1" cloned from "base", with a few extra commits (F, G)
-    "clone_2" cloned from "clone_1"
+That does sound problematic.
 
-Add a few more commits for base (D, E)
+> a fqdn without a dot at all gets accepted by my Outlook server, ...
+> ... afterall no FQDN would have these things.
 
-Then use "git remote set-url origin" to point "clone_2" to "base"
+True; we need to be careful here, though---after all the world is
+not necessarily RFC 5321 compliant, as your Outlook server shows, if
+accepts a name without any dot and is not a top-level domain.
 
-Then, in "clone_2" do "pull --rebase"; the F and G commits disappear.
+So I think "one or more <upto 63 octet run of alnum or hyphen that
+does not begin or end with hyphen>, separated by a single dot in
+between each" (which is probably what you wanted to say in your
+regexp, even though it wasn't clear to me if you restricted the
+second and subsequent labels like you did the first one correctly)
+would be a reasonable check to have.
 
-Then, in "clone_1" do "pull --rebase"; the F and G commits are retained.
-
-Something like this:
-
-# commit trees:
-#
-#    base: A---B---C          (initial base repo with 3 commits)
-# clone_1: A---B---C          (clone_1 cloned from base at commit C)
-#    base: A---B---C---D---E  (base added extra commits D and E)
-# clone_1: A---B---C---F---G  (clone_1 added extra commits F and G)
-# clone_2: A---B---C---F---G  (clone_2 cloned from clone_1 at commit G)
-#
-# *** now, change clone_2 to use base as the upstream url, and fetch / 
-pull / rebase to get up to date ***
-#
-# * set clone_2 upstream to point to base repo
-# * "pull --rebase" in clone_2 (should fetch from base repo and rebase F 
-and G after D and E)
-#
-#   expected result: A---B---C---D---E---F---G
-#   actual result:   A---B---C---D---E
-#   commits F and G are gone
-#
-# Doing "pull --rebase" in clone_1 gives the expected result:
-#   expected result: A---B---C---D---E---F---G
-#
-
-This looks like either stale state info after the "set-url" command,
-or I'm doing something wrong.
-
-I can repeatedly cause this to happen in my local ffmpeg devel area, if 
-that helps debug/test this.
-... and answer questions, if any.
-
-Thanks for the help!
-Bill
-
-P.S. here's the test script I used for this:
-
---------------------------------------------------------------------------
-
-#!/bin/bash
-
-set -o errexit
-
-BASE_WORKING_DIR="rebase_bug.working"
-
-# Clean up the test area
-rm -rf "${BASE_WORKING_DIR:?}"
-mkdir  "${BASE_WORKING_DIR:?}"
-cd     "${BASE_WORKING_DIR:?}"
-
-WORKING_DIR="${PWD}"
-
-mkdir test_rebase_base.git
-cd test_rebase_base.git
-
-     # create the base git repo, with commit A, B and C
-     git init
-     echo "Commit A" > testfileA
-     git add testfileA
-     git commit -m "Commit A"
-
-     echo "Commit B" > testfileB
-     git add testfileB
-     git commit -m "Commit B"
-
-     echo "Commit C" > testfileC
-     git add testfileC
-     git commit -m "Commit C"
-
-cd ..
-
-     # Clone the base area into the clone_1 area
-     git clone test_rebase_base.git test_rebase_clone_1.git
-
-cd test_rebase_base.git
-     # Add commit D and E to the base area
-
-     echo "Commit D" > testfileD
-     git add testfileD
-     git commit -m "Commit D"
-
-     echo "Commit E" > testfileE
-     git add testfileE
-     git commit -m "Commit E"
-
-cd ..
-
-cd test_rebase_clone_1.git
-     # Add commit F and G to the clone_1 area
-
-     echo "Commit F" > testfileF
-     git add testfileF
-     git commit -m "Commit F"
-
-     echo "Commit G" > testfileG
-     git add testfileG
-     git commit -m "Commit G"
-
-cd ..
-
-     # clone from clone_1 into clone_2
-     git clone test_rebase_clone_1.git test_rebase_clone_2.git
-
-cd test_rebase_clone_2.git
-
-     # change clone_2 to point to base
-
-     git remote set-url origin "${WORKING_DIR:?}/test_rebase_base.git"
-
-     # expecting this to pull in the "base" extra commits, and move the 
-local HEAD commit after it in sequence
-     git pull --rebase
-
-cd ..
-
-cd test_rebase_clone_1.git
-     # do the same pull --rebase in clone_1
-     git pull --rebase
-
-cd ..
-
-cd test_rebase_base.git
-git log --oneline > "${WORKING_DIR:?}/test_rebase_base.oneline.log"
-cd ..
-
-cd test_rebase_clone_1.git
-git log --oneline > "${WORKING_DIR:?}/test_rebase_clone_1.oneline.log"
-cd ..
-
-cd test_rebase_clone_2.git
-git log --oneline > "${WORKING_DIR:?}/test_rebase_clone_2.oneline.log"
-cd ..
-
-# The test_rebase_clone_1.oneline.log and 
-test_rebase_clone_2.oneline.log should match, but they don't
-
-echo "done"
-
---------------------------------------------------------------------------------------------------
