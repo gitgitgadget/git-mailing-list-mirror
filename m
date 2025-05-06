@@ -1,83 +1,81 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175281388
-	for <git@vger.kernel.org>; Tue,  6 May 2025 20:34:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E62AD1388
+	for <git@vger.kernel.org>; Tue,  6 May 2025 20:43:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746563648; cv=none; b=rZTIbM4GsDmcPzuaWtXswHdSapva7SxfQnot3p3/bC2uHWN0xH/BARVtNLiwIBffTpyE1h8wNX527wdJuypi0aBmWDxN6lmMEpGyM4Wn73N6tk5ZLr0wP2j0U0f9s6QOF69rbyuZ/1AMobRf/2sPrk7xTemtMKWeDH6DEQXpzKc=
+	t=1746564225; cv=none; b=jsWqkEkwowmS0RkW6X1l/WARuhjcImLjngP3kEQ+Esdb2mWFvHiI3MHJWwy/uafT0Wa6QSWuNtqVjCtk2Rvd8ylWOMXFoW6+wsJ2P56Qko7dvFc2F94kIAF6fGFIgbQ/4PQIfyPeVwpvbTMOngnBkkb/TuHxCwTqk/ZmxtWrzqU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746563648; c=relaxed/simple;
-	bh=TUhkgt0VdjJBpYGRnwMmQYSUm57YFHF80yVSP4OCVc8=;
+	s=arc-20240116; t=1746564225; c=relaxed/simple;
+	bh=tBCKY4sEAhjvMQFiAuCYagdeYE7lHSSCg2UOIrPrqPw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TyVXXe3VJF+fMN5MJ2wExtgnorfrZp87y3Qt1cELnXMzajkR/r1HGfINVZOlTP0Ku7utTherUW2EKA0HyhGmZpY4pjA6AJTHByFDx2k/BlBVB7ncGEbEj+X6nXcjasLRX5ZAOb+8MzTXr9Mk6IP1ZIvJncfQB2sVf5+qJXAYVLQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ENphoTAy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wi7oNF+b; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=pqIQCCSAXA55k+c5ebG+iwWfj0Wp7BsS0/6R1kSY3SoNIpEkTtyYI3UipjU1iIluzHMlXynF7eXAxz0rO5ACMt9batYSuflt8lEP9wtxU1WBSvOIvc2NRiA1PcCyF1QoyHVEtCog2Ht1wmoLCH8QunzBVPpEsUGU6ondjaMMrr4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=prUl8qL1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hgQrCmle; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ENphoTAy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wi7oNF+b"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id F189C2540262;
-	Tue,  6 May 2025 16:34:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 06 May 2025 16:34:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="prUl8qL1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hgQrCmle"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0665E2540095;
+	Tue,  6 May 2025 16:43:41 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 16:43:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746563644; x=1746650044; bh=TUhkgt0Vdj
-	JBpYGRnwMmQYSUm57YFHF80yVSP4OCVc8=; b=ENphoTAyJjY2aAjfxE8lvE3MR/
-	G4mPG3TT6kw6rX/g79rKup3Y/oeRgjmGiFGDv4eb59W0kWQi1Bl/R85h4ebUfu05
-	zkVgSmkDH1MEwdL6Ckn/1LUmGtwtunyPqY6IofoxD681QB1E16dwQEmNW2seJQ/H
-	9ClnZBCDR7F+QdSF2bY4Z21GLdlwpPWEhIqCCBQM8hxqcA3pRdbsT2ITI8NCvGq/
-	+uSaCgKG9g9dm9xQG3VaI7iEkF2btcB3kvycuaO6xsamWQJpCIGiBYgtGfyY0Tci
-	cJfNQJTNSCDAhb+bak9j+Hb2dxOKWNK5CiKZFoUe2WF3YGxmblYzNiWJNjjw==
+	:subject:to:to; s=fm2; t=1746564220; x=1746650620; bh=8+skiTgZAx
+	zUed4DarDhscFEDhfounXxezumORZRDGs=; b=prUl8qL1IYXeVmWoKIo+xAvxrt
+	G/NW1Fi/DRWcdjcHfbfmPju5O4ewMWXRSjzotPRiCZH0kmMifYlvHsMRj2CE+Fpm
+	dqtus3RkFHO/9CAmruJu6jMAP92Kvm9IljyYZkzkS79r/Hwy2h/Iez1g+fHSsXSD
+	mMtrt+RRQ0223iMAoUfdlpymqjkx1SCoPqWNGmZo7rsOa3374zMY4xpWo1hOwsvy
+	pMI/To0ps24Mo8PH5lctWS2lM2wy/lXX4294O4KhZOz8tQ1rQBX39twfqcFfRERE
+	otVcQcHaG/9fid4PaFc+FPSb95Ubp7JFzCHbYQJ3eR2YaE+dp749/86KQi5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746563644; x=1746650044; bh=TUhkgt0VdjJBpYGRnwMmQYSUm57YFHF80yV
-	SP4OCVc8=; b=wi7oNF+bYrCXm9XNQexltY6QGSx4RcoVfa8yyJQU6fik28bM4XK
-	7wt8qWM8Av9K9VJPOUI38oDdLlhMYYAOJ6xiIrW8t7SdoLO8acQNMkCP56dvog7U
-	GGWT6vMSPPiN1eTP+MgJIVoGnEQMxkOPgOesdliztn2MavkZmYMeEVQLfrLO1Kjr
-	PfeQhsFNs199HK//XuuLQFBevFa3VsLpuyvFfpCM+v9bwaOkZZB7S7FP7j1VpXW/
-	7+M/qQFmmSRfU+AmoYk9TON5X5bt7t0kEJ7dXBaYB/fGZk6qr8diz7ps51TwK/F0
-	rww57lGYUO9Sfwkwi3JJSpCSTcdrXhTFgnA==
-X-ME-Sender: <xms:PHIaaH2XSrizStRakfgbuBbEmHeM3yZws1hCPKDwivC1ySYuIZjsKg>
-    <xme:PHIaaGHqDtGIDD1bMxadn8o4R4aZqnZ_IEw_yLovIUeRR2jftxbhXWHSTz1b1yGKL
-    YJ1XplsY6iCNSOMuA>
-X-ME-Received: <xmr:PHIaaH5JuZCCpEV4_h5gxZkyfMF8TzPNo-jk7IBqKl3jW4jNlmOivqRmCRY_xiiuvz8d5hIxeMT4gHyr84y6dGZephzeZUhCnq9I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleehucetufdoteggodetrf
+	1746564220; x=1746650620; bh=8+skiTgZAxzUed4DarDhscFEDhfounXxezu
+	mORZRDGs=; b=hgQrCmleSCOeXNrWXz/uvY/Y9pI4augPfDi75LAFxTf0Igx7+JX
+	ujisRSdlCnFqeg+ZLeF0HTGwODESRplE/KZvd//CeHGEbbrCQf9sWc/0GH9uUqOQ
+	AD5n5RtQrMm0PhaMnLzEoGeZw9wrJdiN4IVloGtP91JT/VDwCVmAyJaNsmvBvbcb
+	lC0Zc0aRf3y/WPKhw5/Xpxdf9vv23Rqs9IdtJND5Sc19drZ97pd8Z3EgHyL/2tSe
+	KwWb2gbA9T7b68kYkLt/CPUXFhK9O/Y6+iIxUi9kusvGUm6few1S9h+rU57WFCdf
+	H0gi1GyCKwEXjLqgdyfnXeFZdizoGR2YYCQ==
+X-ME-Sender: <xms:fHQaaKCf4A8yZ-O3t74iQ26fK8-NyZs5TtcDY2os0AUU-JT75N1-3A>
+    <xme:fHQaaEjTg8EJiCNW47wWBONh8YYXlvqsaOwxUUX0__Clnsx78TCAiYW7_62v83GOT
+    xwdJ5DZHImHQS4hcA>
+X-ME-Received: <xmr:fHQaaNn9swJhlYe_3J8z7otXmHWV7Efv25TbRQDulramcKtF_JsV3CNZtbEG-KhsJUEUeWP6BiLNSRy4dlVOX1NdC6Ga_viTonPC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
-    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsehmrghtthhhihgvuhdqmh
-    hohidrfhhrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PHIaaM3q9l_tLLdmmHqwbpMyZ6WavVZ_h8Dthysexyp3BceOXqCRJQ>
-    <xmx:PHIaaKHrVSqNYYROGvKBZfmmVTCosp9iYm_-PVY3AHwrsF0r_aUMHw>
-    <xmx:PHIaaN-Vmo81mEK4nk9PEdMVAGeyG9hxfzPGn8M7GyXE8iQe9jR1Fw>
-    <xmx:PHIaaHm7qQUcBt8poTG-bCXvagn-d0YmhSueU0Ko1QH8sWsdUAR8Bw>
-    <xmx:PHIaaLHZOEXYsXUV8_qDvZVI8orgPLsNWE2yFYzZoOHuIPN-AWwegvO8>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:fHQaaIx3o1MFMQr33vwirTAegLhVc-CdVtmhlpJMj2I6faedLwQ1GA>
+    <xmx:fHQaaPRyVVOutkhDQja-_bpNt89zZ0gw_4X5LsJ6g--twhl5-ELmxg>
+    <xmx:fHQaaDbGf1L9UKqVJjeXlofk5rfPnpHmX7YTqk98nB3cZ3zZfQdUmA>
+    <xmx:fHQaaIR64ewxIgSxugMOBn2XyM8q7nqIvfUne31gcunPo42gT1-rvw>
+    <xmx:fHQaaEAHXD5xEhRRtkkbXbBVCgm1QWWqxuxRRm9B-_SdC_F6mYCl61jZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 16:34:04 -0400 (EDT)
+ 6 May 2025 16:43:40 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re: [PATCH 06/10] contrib: remove "mw-to-git"
-In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-6-e6d5ddd79a72@pks.im>
-	(Patrick Steinhardt's message of "Tue, 06 May 2025 16:12:39 +0200")
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 00/10] Spring cleanup of "contrib/"
+In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
+	(Patrick Steinhardt's message of "Tue, 06 May 2025 16:12:33 +0200")
 References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
-	<20250506-pks-contrib-spring-cleanup-v1-6-e6d5ddd79a72@pks.im>
-Date: Tue, 06 May 2025 13:34:02 -0700
-Message-ID: <xmqqr011h41x.fsf@gitster.g>
+Date: Tue, 06 May 2025 13:43:39 -0700
+Message-ID: <xmqqmsbph3lw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,24 +87,44 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The "mw-to-git" directory contains tools for accessing MediaWiki via
-> Git. The scripts are essentially unmaintained in Git: despite a couple
-> of global cleanups, the last changes were a couple of security-related
-> issues part of 9a8606465e8 (remote-mediawiki: use "sh" to eliminate
-> unquoted commands, 2020-09-21) and its parents. We don't ever run any of
-> the tests so it is more likely than not that many of the tests have been
-> bitrotting, like e.g. documented in f8ab018dafc (remote-mediawiki tests:
-> annotate failing tests, 2020-09-21).
+> I have used the following reasons for removal:
 >
-> Furthermore, the code has been spun out into a separate project at [2].
-> Remove the directory in favor of this new home.
+>   - The tool is clearly broken, e.g. it doesn't even compile.
 >
-> [2]: https://github.com/Git-Mediawiki/Git-Mediawiki
+>   - The tool hasn't received any updates for at least the last 5 years.
+>
+>   - The tool has a clear alternative or just isn't useful anymore.
 
-OK, the new home also lacks activity since Mar 2022, but it
-still is certainly a much better home than having it here.
+I've expressed my opinions on many of the individual patches, but
+not all of them.  For some, it may be better done at 3.0 boundary
+with the BreakingChanges transition like everybody else, and some
+others with clear "new home", we can remove them much earlier and
+independent from 3.0 plan.  Some others with no "new home" may be
+in the gray area, but my gut feeling is that many of them do not
+need a careful BreakingChanges transition as some others do.
 
-And I doubt this removal needs to wait for Git 3.0 boundary; unlike
-other things, we shouldn't even have been its primary home to begin
-with.
+> With this model, "contrib/" would be closer to Linux' staging drivers
+> with the expectation that a tool should eventually be part of proper Git
+> in case it proves to be useful, or booted out when it doesn't seem to be
+> getting there.
 
+OK.
+
+> Another subsequent step would be to split out some parts of "contrib/"
+> to be hosted in their own hierarchy. CMake, Coccinelle, Unicode updates,
+> VScode and the like are all tools that are used during development, so
+> they should probably not be part of "contrib/" but rather of a new
+> "tools/" hierarchy (we can bikeshed the name at a later point, I'm not
+> yet doing that in this series).
+
+Yeah, I think we had a discussion like this, and I do not remember
+the new names proposed for things that are out of core but still
+part of our tree, but "tools" sounds like a good place.
+
+> There's also other bits and pieces that serve as examples. I think we
+> should move these into our documentation instead of having those in
+> "contrib/".
+
+Sounds sensible.
+
+Thanks for getting the ball rolling.
