@@ -1,263 +1,155 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1CD52472AE
-	for <git@vger.kernel.org>; Tue,  6 May 2025 16:30:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D84D283C97
+	for <git@vger.kernel.org>; Tue,  6 May 2025 16:37:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746549024; cv=none; b=DDCHzfqof41ECywfyOc33IzB7snOnhnkqq0AH2nF3wVTbKnQiWevS8Cs+j56o3SBuv2C64iqe9CoD705RH5blnfAqoOr2EwHvedtRzMa3Vd3IsMSw9YjB2ozdsz5iVCrxKyHz503BSGTTHjAe4f47+XK+XZOisSxjtGi0lom7rA=
+	t=1746549457; cv=none; b=NqtELN/tiBw44lD6oGAlWE1GRAOMrbNepi1bJkjYCywXjkIdsOCoF7T17s1HS1IEzb6JjaflpkCGtUfPhLzfIBAR/iyTBd4gQ00fUyKq9Hu0R+Q/lCm/sbTQ3QfopYBcTxvl79z72nSQ4/IjmIKkdKludUqDrOK3lL6ugFevLA4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746549024; c=relaxed/simple;
-	bh=UZnFeec7TznkMGkSMwyd4YLFMygK//w38gPGYklmS/w=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=P0o6ClOXkSB7bwAtxJOo8EZUs7U/mPlqqV09xdL15vo/CvFCoGejjFeHSKm0Zh5hF93O4K4COCIOzYRz5oB+6WvIJ5CiBewoLGctFBn78VWLmQ1UQ0iynOxqmQmQEI4d2xo1NdV8EInyHYHN/YPVbSwlh5HZA5O9CNSatbC+TdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp.bon.at (unknown [192.168.181.101])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4ZsP504WZZz7Sxlr
-	for <git@vger.kernel.org>; Tue,  6 May 2025 18:30:12 +0200 (CEST)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTPSA id 4ZsP4r26mhzRq25;
-	Tue,  6 May 2025 18:30:04 +0200 (CEST)
-Message-ID: <9d548d94-eed8-434a-a9ef-67df694c5c79@kdbg.org>
-Date: Tue, 6 May 2025 18:30:04 +0200
+	s=arc-20240116; t=1746549457; c=relaxed/simple;
+	bh=43J5ZCEdhipsNJ3lhClRx7OuoFdOWEP7BEbd5bLfhsc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=IPdaXCw3kSAmEdIsujOpgfNLlYFsPNRUcsg/a8Y89V2TJxGL9ghrdM1NZvYMpKGjgdCFG5w6bwkEiCxL7FBbIr9C5mfcrvFPfHRGniqW1io+z+u2Wv/1D55UWD+RLd9O4CiX6wS5JzSAk+8c0jWE0iaukwvrDRnDSLmLX3piYkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GxMzxocT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gDu7nFM/; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GxMzxocT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gDu7nFM/"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 46D37114030B;
+	Tue,  6 May 2025 12:37:33 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Tue, 06 May 2025 12:37:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1746549453;
+	 x=1746635853; bh=+FIc2llEjmwNVw71Q6TGV2gIb99wYdjsEOa/ErhDZTU=; b=
+	GxMzxocTZpvZ6Ln9jmIKrJhaexK3wgxoV1h3zUJhJmdMncwhvcEjatsPwSMYfTyD
+	Zlqjlskfaq+cEkGMibtO9F6gmFuYKdGBl6v+MgR9iUQ+QADb6r493NIAsRplJHJv
+	OQn2GErDFD/Yze5jeBlk1S64V0hw14w90/uZaaNtXj98jE50g2Ryl4+T9zMynNMO
+	4zdRSo4+tXyLGC6Za6m7GDsVW04v/upEyLqAglgFc0bFozVvMbRRSWXAKFLVV6BY
+	5O3QrQ5RV5G5/ttg+H3JTwyI3FmeWLi/tVs8Gm9oApYgseIW/e8cNLoqLHDukRpN
+	OdR8ZJm3ZcB74pdtqkT86g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746549453; x=
+	1746635853; bh=+FIc2llEjmwNVw71Q6TGV2gIb99wYdjsEOa/ErhDZTU=; b=g
+	Du7nFM/o1nb3YOE39CN+QZW4El5x5CAA7fe87qpOKHEqWg3Vcd+0K2bjCXarNCmk
+	RVpis4GpZXHjq0oBnf+tuny3GvwduhpmzDZk/RkxrhbXKxc/a8GiwrIIqvzmgOjT
+	BdytdtO2vY1jSuwNe4/ITLyqT9v8AeThnhOLvn1f0G/QOITFRfzubz/dQaIMOk7a
+	7JsskoavByQtzwW0XdcwdJGA4KMtRrOsTvuctBytNiK3rlSQrCalOULz4lr5T0kD
+	g1Oaa+8XOT4yp4Ckzg+B15HEp/4YGnqHfBKfO43AZQ4TOLNWs4uPOOQIXwcHyV4S
+	ikk3VMwMwzZbMhevERRaw==
+X-ME-Sender: <xms:zToaaPwjNabNouDCphp0CXdLAtFa0p5fjPCbAJGmfy4rzkz3j7Fnjw>
+    <xme:zToaaHTWOn-gCPx9uldFVxlOSmujDHcagXVBPquWFJhuk86rLf1dnAbKesFiDziv2
+    JKSxld4Ar0SE3nzRA>
+X-ME-Received: <xmr:zToaaJXfCUsZx6iRo3QUF-T12A-aMcNZYbWpkcf_9ZDSC7SH9kqOvYMCzTjU9QthF3vyeNPjS-KoNmx1RMzi9Qh0Azuj-j4qWh7Z>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeggeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhih
+    hnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhgihhtghgrughg
+    vghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehlvghonhhmihgthhgrlhgrkheisehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:zToaaJh8U2r0XxSM9jG8b13GCRSp1sG1OyG9qF8CO3ljESCuMi2LGA>
+    <xmx:zToaaBBh4C94sUaWcKbU87okiuBxRS48TZMbQi7CbnJST09BEmt9sg>
+    <xmx:zToaaCJQZNXQifWlwrjURawfmK562kYU6DIsfZ9y-NqcBdNL-Jr1bg>
+    <xmx:zToaaAA8qskWpbD6LZNIYyAT34WkDMEjeF82jteFwMtIMP0Y6ma1yA>
+    <xmx:zToaaKInZtafAM4N5dYDaShMaT13wAsSRVgxeNPYwuqw3CDfZ2LyZM6g>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 May 2025 12:37:32 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Leon Michalak <leonmichalak6@gmail.com>
+Subject: Re: [PATCH 3/3] add-interactive: add new "context" subcommand
+In-Reply-To: <CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+	(Eric Sunshine's message of "Mon, 5 May 2025 20:02:09 -0400")
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+	<b4b7854f330af7588b12e3361bed40723febddad.1746436719.git.gitgitgadget@gmail.com>
+	<CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+Date: Tue, 06 May 2025 09:37:31 -0700
+Message-ID: <xmqqldr9lmpg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/1][GSOC] userdiff: extend Bash pattern to cover more
- shell function forms
-Content-Language: en-US
-To: Moumita <dhar61595@gmail.com>
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
- Junio C Hamano <gitster@pobox.com>, =?UTF-8?Q?Ren=C3=A9_Scharfe?=
- <l.s.r@web.de>, Atharva Raykar <raykar.ath@gmail.com>,
- "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
-References: <20250328200525.4437-1-dhar61595@gmail.com>
- <20250330134018.9662-1-dhar61595@gmail.com>
- <20250330134018.9662-2-dhar61595@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250330134018.9662-2-dhar61595@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-Am 30.03.25 um 15:39 schrieb Moumita:
-> From: Moumita Dhar <dhar61595@gmail.com>
-> 
-> The previous function regex required explicit matching of function
-> bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
-> 
-> - It failed to capture valid functions where `{` was on the next line
->   due to line continuation (`\`).
-> - It did not recognize functions with single  command body, such as
->   `x () echo hello`.
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
-Good.
+> On Mon, May 5, 2025 at 5:19 AM Leon Michalak via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+>> This teaches `add/commit --interactive` a new "context" subcommand, which
+>> changes the amount of context lines subsequent subcommands like "patch"
+>> or "diff" generate in their diffs.
+>>
+>> Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
+>> ---
+>> diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+>> @@ -265,14 +265,15 @@ and type return, like this:
+>>  ------------
+>>      *** Commands ***
+>>        1: status       2: update       3: revert       4: add untracked
+>> -      5: patch        6: diff         7: quit         8: help
+>> +      5: patch        6: diff         7: context      8: quit
+>> +      9: help
+>>      What now> 1
+>
+> I'm not a `git add/commit --interactive' user, but I can imagine that
+> inserting "context" at 7 and bumping "quit" and "help" to 8 and 9,
+> respectively, is going to play havoc with muscle memory people have
+> built up over the years. To make this more friendly for existing
+> users, I'd suggest adding this new command at the end of the list
+> without changing the existing command numbers.
 
-> Replacing the function body matching logic with `.*$`, ensures
-> that everything on the function definition line is captured,
-> aligning with other userdiff drivers and improving hunk headers in
-> `git diff`.
+Hmph, in the real UI, the first letters of these commands (which
+have deliberately been chosen to be unique) are shown in different
+color to hint that the answer to the prompt can be like 's' (for
+status).  I would hate to see that quit/help, which are somewhat
+special, move from the very end position.
 
-Personally, I am a bit allergic against marketing speak. *Of course* do
-we intend improve the code. No need to mention it.
+Perhaps the example of the documentation page shown above should
+respond with 's', not '1' to show more prominently that it is
+possible and encouraged?  I dunno.
 
-> Additionally, the word regex is refined to better recognize shell
-> syntax, including additional parameter expansion operators and
-> command-line options, improving syntax-aware diffs.
+> Also, looking at this list, I can't help but think that "context"
+> feels out of place among the other action-oriented commands. Moreover,
+> if --interactive mode grows more configuration/setting-like commands
+> in the future, do we really want to keep extending this menu for them?
 
-Good. (But see above about "improving".)
+That is a valid concern.
 
-> 
-> Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
-> ---
+> Specifically, I'm wondering if it would instead make sense to
+> introduce a new item "9: settings" which takes the user to a
+> "Settings" submenu from which the number of context lines can be set.
 
-> diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-> index f51d3557f1..0be647c2fb 100755
-> --- a/t/t4034-diff-words.sh
-> +++ b/t/t4034-diff-words.sh
-> @@ -320,6 +320,7 @@ test_expect_success 'unset default driver' '
->  
->  test_language_driver ada
->  test_language_driver bibtex
-> +test_language_driver bash
->  test_language_driver cpp
->  test_language_driver csharp
->  test_language_driver css
+'s' is taken for 'status', so it shouldn't be '9: settings' (it
+should come before 'quit' instead), but I think I know where you are
+going.
 
-Including a test for word-diff is very much appreciated!
+An alternative that may work better is to allow subcommand specific
+parameters in the answer to the "What now>" prompt, e.g.
 
-> diff --git a/t/t4034/bash/expect b/t/t4034/bash/expect
-> new file mode 100644
-> index 0000000000..a0f7cbd5a3
-> --- /dev/null
-> +++ b/t/t4034/bash/expect
-> @@ -0,0 +1,30 @@
-> +<BOLD>diff --git a/pre b/post<RESET>
-> +<BOLD>index 09ac008..60ba6a2 100644<RESET>
-> +<BOLD>--- a/pre<RESET>
-> +<BOLD>+++ b/post<RESET>
-> +<CYAN>@@ -1,25 +1,25 @@<RESET>
-> +<RED>my_var<RESET><GREEN>new_var<RESET>=10
-> +x=<RED>123<RESET><GREEN>456<RESET>
-> +y=<RED>3.14<RESET><GREEN>2.71<RESET>
-> +z=<RED>.5<RESET><GREEN>.75<RESET>
+	What now> r -U7
 
-OK.
+to choose an equivalent to "git revert -p -U7".
 
-> +echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
-
-This tests a typical variable expansion. Good.
-
-> +${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
-
-A more elaborate variable expansion does not include the surrounding ${
-}. Good.
-
-> +if [ "<RED>$a<RESET><GREEN>$x<RESET>" == "<RED>$b<RESET><GREEN>$y<RESET>" ] || [ "<RED>$c<RESET><GREEN>$x<RESET>" != "<RED>$d<RESET><GREEN>$y<RESET>" ]; then echo "OK"; fi
-
-This line also only tests variable expansions and is quite redundant. It
-could test the operators that we see, but it doesn't. See below for
-ideas how to do that.
-
-And all from here...
-
-> +((<RED>a<RESET><GREEN>x<RESET>+=<RED>b<RESET><GREEN>y<RESET>))
-> +((<RED>a<RESET><GREEN>x<RESET>-=<RED>b<RESET><GREEN>y<RESET>))
-> +$((<RED>a<RESET><GREEN>x<RESET><<<RED>b<RESET><GREEN>y<RESET>))
-> +$((<RED>a<RESET><GREEN>x<RESET>>><RED>b<RESET><GREEN>y<RESET>))
-> +${<RED>a<RESET><GREEN>x<RESET>:-<RED>b<RESET><GREEN>y<RESET>}
-> +${<RED>a<RESET><GREEN>x<RESET>:=<RED>b<RESET><GREEN>y<RESET>}
-> +${<RED>a<RESET><GREEN>x<RESET>##*/}
-> +${<RED>a<RESET><GREEN>x<RESET>%.*}
-> +${<RED>a<RESET><GREEN>x<RESET>%%.*}
-> +${<RED>a<RESET><GREEN>x<RESET>^^}
-> +${<RED>a<RESET><GREEN>x<RESET>,}
-> +${<RED>a<RESET><GREEN>x<RESET>,,}
-
-... to here also only test variable expansions, but not the operators.
-As written, they are totally redundant and should be dropped or improved.
-
-To test, for example, that '##' is kept together as an operator, you
-have to have
-
-   ${x#*/}
-
-in the pre-image and
-
-   ${x##*/}
-
-in the post-image, so that we see
-
-   ${x<RED>#<RESET><GREEN>##<RESET>*/}
-
-in the result. If '##' were two tokens (due to a bug in the pattern), we
-would see
-
-   ${x#<GREEN>#<RESET>*/}
-
-in the result.
-
-You should go through all not-single-character operators and have a
-pre-image and a post-image where one characters is added or removed. The
-following is not a correct test:
-
-pre:    ((x+=b))
-post:   ((x-=b))
-result: ((x<RED>+=<RESET><GREEN>-=<RESET>))
-
-because we would see this result even if the pattern has a bug that
-recognizes only one of += or -=, but would split the other one. A
-correct test would be:
-
-pre:    ((x+b))
-post:   ((x+=b))
-result: ((x<RED>+<RESET><GREEN>+=<RESET>))
-
-> +${!<RED>a<RESET><GREEN>x<RESET>}
-
-Here, you should have no '!' in the pre-image and the '!' in the post
-image and not change the name. Then the test demonstrates that '!' is
-its own token and not merged with '${' (if that is the intent of the
-test; otherwise it is a redunant test).
-
-> +${<RED>a<RESET><GREEN>x<RESET>[@]}
-
-If you want to test that '@' is not merged with the brackets, then you
-can have, for example '*' in the pre-image and '@' in the post image.
-
-> +${<RED>a<RESET><GREEN>x<RESET>:?error message}
-
-Either redundant or another two-character operator to test.
-
-> +${<RED>a<RESET><GREEN>x<RESET>:2:3}
-
-Redundant.
-
-> +ls <RED>-a<RESET><GREEN>-x<RESET>
-> +ls <RED>--a<RESET><GREEN>--x<RESET>
-
-Both are good tests.
-
-> diff --git a/userdiff.c b/userdiff.c
-> index 340c4eb4f7..4c77c7e0f6 100644
-> --- a/userdiff.c
-> +++ b/userdiff.c
-> @@ -64,15 +64,27 @@ PATTERNS("bash",
->  	     /* Bashism identifier with optional parentheses */
->  	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
->  	 ")"
-> -	 /* Optional whitespace */
-> -	 "[ \t]*"
-> -	 /* Compound command starting with `{`, `(`, `((` or `[[` */
-> -	 "(\\{|\\(\\(?|\\[\\[)"
-> +	 /* Everything after the function header is captured  */
-> +	 ".*$"
-
-I remember suggesting to capture everything after the function header.
-However, If I am not mistaken, this does not do what I intended (and as
-written it means that a pointless matching operation happens). The hunk
-header shows everything that is in the outermost parentheses (group).
-This catch-all, however, is even outside the outermost group and not
-captured. It should be above the closing parenthesis that we see in the
-context.
-
-To test for this, you can have one test where "RIGHT" is not the
-function name, but in the comment on the function header line.
-
->  	 /* End of captured text */
->  	 ")",
->  	 /* -- */
-> -	 /* Characters not in the default $IFS value */
-> -	 "[^ \t]+"),
-> +	 /* Identifiers: variable and function names */
-> +	  "[a-zA-Z_][a-zA-Z0-9_]*"
-> +	 /* Numeric constants: integers and decimals */
-> +	  "|[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
-> +	 /* Shell variables: $VAR, ${VAR} */
-> +	  "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{"
-> +	  /* Logical and comparison operators */
-> +	 "|\\|\\||&&|<<|>>|==|!=|<=|>="
-> +	 /* Assignment and arithmetic operators */
-> +	 "|[-+*/%&|^!=<>]=?"
-> +	 /* Additional parameter expansion operators */
-> +	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|/[a-zA-Z0-9_-]+|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
-
-What is the purpose of this "/[a-zA-Z0-9_-]+"? It would mean, for
-example that changes in alphanumeric path names would include the slash
-in the changed part. I don't think this should be here.
-
-> +	 /* Command-line options (to avoid splitting -option) */
-> +	 "|--?[a-zA-Z0-9_-]+"
-> +	 /* Brackets and grouping symbols */
-> +	 "|\\(|\\)|\\{|\\}|\\[|\\]"),
->  PATTERNS("bibtex",
->  	 "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
->  	 /* -- */
-
--- Hannes
-
+Thanks.
