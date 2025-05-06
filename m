@@ -1,64 +1,65 @@
-Received: from mail-yw1-f181.google.com (mail-yw1-f181.google.com [209.85.128.181])
+Received: from mail-yw1-f182.google.com (mail-yw1-f182.google.com [209.85.128.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1095F2857E4
-	for <git@vger.kernel.org>; Tue,  6 May 2025 18:00:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 368AA19DF8D
+	for <git@vger.kernel.org>; Tue,  6 May 2025 18:06:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746554406; cv=none; b=EL/mvgvONXTCde5nLEsIS5FNeDJy+7gH4PN2l372+f7qcarXSfQrnXMcsZfF5gQ8VwsJZ8M+2iQ11BNRkEfSxLxS7rAWN0KrSK/7f+mP9I4umhXpZ//gMXUNzpz27Joj0iU0YJPiUOba6yPlB5GrjMPIV1yEuRNpQyE92J1u30E=
+	t=1746554777; cv=none; b=QtcZE9QBsDNr2mcFk6YlK++o92qkhgwDzc3WejClVr0D1JuOLTQoYZ2WK5S4isEYitcQR5g3MRqUgds/Y1RKkzEZLSJU90aCgs1chPrlKJvD+L8LHlI79tunavaR9TJTqJQfwxhjcPNGTu6FGu5XWLijndyvZGafBZ14A2PWHI4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746554406; c=relaxed/simple;
-	bh=s2mdleRhVfGpA+TYanNN6Ntrm/fcjh77JBuWIsqxCp0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=YzMpT0Gvety5CR558mJGTJggis/e32zHHUCIXrxV6UEEvtsCSjTffpEAFQnchPcE+Ylr6xCtKu799oMUuqYFSKMOc7D1uW9foymgc3541u6RAiboHcSt4CAM1A8og+drog2yPwk1VlASxyDfk2sNPeR0RI6x12UduRDeZz9EeOg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nGmZ2pDd; arc=none smtp.client-ip=209.85.128.181
+	s=arc-20240116; t=1746554777; c=relaxed/simple;
+	bh=ewHbEZvPMzwc3YBLY7PDbCFC6hcYw7ENLd6kxPn3XSo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=G1XQgSETZTQtDs10CbN7OOuXBDO3AYFxSd8zVjipCubs5PVClLflI+p1o/1wweheRhTRnUjW0jK34dgNq0qV1sybRpY8IDbHZZRhmuVBDllv23fufD9Fwi3Y+IEKbRRWv0gDV3XnGmIJzJ9limmU+vdg3YZkWfi0JUpQBQ4j3sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KB35FoXU; arc=none smtp.client-ip=209.85.128.182
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nGmZ2pDd"
-Received: by mail-yw1-f181.google.com with SMTP id 00721157ae682-7080dd5fe92so50810177b3.3
-        for <git@vger.kernel.org>; Tue, 06 May 2025 11:00:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KB35FoXU"
+Received: by mail-yw1-f182.google.com with SMTP id 00721157ae682-6ff4faf858cso41276817b3.2
+        for <git@vger.kernel.org>; Tue, 06 May 2025 11:06:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746554404; x=1747159204; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746554775; x=1747159575; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=J+9bdVtD9uf00sSLHqtGtwfzn6B/BktHeqj+Fo9jdgI=;
-        b=nGmZ2pDd6bkfnyo2PfQ2v7SQEWc9GRH64G2OEy1CWS3YlJzdjBlNURWGDPv4WB3mYu
-         Oi1o6NwcxLT90ANCTyLHgqfIFdgoNnZDOQwt+opGJq7QK4A/q/Jjd02/jmnSkmJfjTPk
-         5K1QQDOXhJzXo9dc/hsgzjMMFk6h3D3H7kqayFPHzc1Jf49W63sm8bJpQYhqjPnMBGXj
-         5kwbhgVUYiz3GaDd6ahE+kXi6z9MJSglBY5WiBkFuK9UMvvyl8Otb5zy8zF9qiuO6D3A
-         PbcNsrbEbhOzj0t8YoaM8484VOjmDluYAPLqLF/Gq/qwdzBKVIO4OqLNvIVBMFHEtEDg
-         yFog==
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=ewHbEZvPMzwc3YBLY7PDbCFC6hcYw7ENLd6kxPn3XSo=;
+        b=KB35FoXUwsxtZNKkmVf59HWCwZjcJCTlwEYLtgx4xG7dMo5mHGrQUFrxAHbUpnaRMs
+         aAL+lTNWgkvu6s/Nhi4XodWuCBCDxCap7H6fVV++y3lhFl3nixtOMButgBLRx3I6cDPP
+         hBnGFUO3EZFfakBko97/fTEfsXM/rX7xGctRO2ivFkfqyXyYIRuPmlDq4BHXeIBFtGHz
+         meezhho7KfdUAsvKZJhZ1Naa48e13Rtjm7VVhfIZpj8kQasWGV0WNSYr7Lraz0mANfDl
+         z8Tug2E3jo1MJfW1BwdxHKFFxuA2DWtluFy9Bak7e85hthMIBGBHPeBE0V4p/yhWRtgA
+         gx1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746554404; x=1747159204;
+        d=1e100.net; s=20230601; t=1746554775; x=1747159575;
         h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=J+9bdVtD9uf00sSLHqtGtwfzn6B/BktHeqj+Fo9jdgI=;
-        b=PqgZwtjYGN7SfYVBz0onXWIa3gPShxC6EvkYdbRFZjwCISI6jewxsgccYSKATw/NMD
-         ro7QgIB9j4SypFnihUvJYFQrxAz4kXk8DNJosPT7JP1UD+mzWqAbZWdG0dhjxFJjjNje
-         F3yQJDjm+pm3eQbUyh30aoe5icH3PdvgPAyes7K+gNUDNlqrls0/RypItC9UnoJkV3O6
-         uA0gqBsjSYsiZ+03OWHqv5Pyqsb56av0XKIaN1zyx4Bx6gUQ76GDmf7mgw/PdFgL0iFI
-         ihoSaBIk1gvbTXLCgd38Ctgwq/X+b6ZT9NUfWGojq3XKIHqakwxg6N2zwjs3/Dk/4QOV
-         Eh0g==
-X-Gm-Message-State: AOJu0Yz3SCg5NqnBlI28fZ+kTxiTmnX4pvEpFVwhBTGdg8j1C+Nwa8jt
-	hqugOgG4ybekztIT/vWEMkHoUfLei39g+zyo3uAFLYySmFVAaEgw
-X-Gm-Gg: ASbGnctOXxi/zB7f86eDndVRm0lKDxQ/NM1ISIQKD7czngvkfejkMKmJHexViuMAkRg
-	SFYPmZlnCtOv0btpsKDkfwtZ4OXAyVNTARnGNU08Jq61UzBEVC+QqIMpTseUBN+WPyiEBv5ZIMs
-	v4RDmWn/o8RhL936J8b3dM2W9x0EP60Ri1e0u9VbuSiFIGSiQrd6bNoOqJe4Pq6Tv8CxC5012Yo
-	5Widr7HUD8GBs8+dd0Iz5UJ0I0a7gO7EMH3JwcneppzuMA7IxBA6z74tFSyizcNsRnKC2oqacnI
-	32iaDkuLbOn61w6Ux0putEUTp2i1UwmNIc2FBTC3P8NHu7zP/hWzj69LrrHA29Wc+E390bQVHkX
-	LrFoFp5hFHvwBQQT8
-X-Google-Smtp-Source: AGHT+IEHpsptNgeQj/Izdu/blS1/xcir1YTVNVRmEQE4YS6xm6M4UobhnmneDEZ+A0Z80ifUBFcTeQ==
-X-Received: by 2002:a05:690c:688b:b0:705:750e:851 with SMTP id 00721157ae682-70a1dafceb5mr4726027b3.37.1746554403902;
-        Tue, 06 May 2025 11:00:03 -0700 (PDT)
+        bh=ewHbEZvPMzwc3YBLY7PDbCFC6hcYw7ENLd6kxPn3XSo=;
+        b=c/dsM9zbPzzxeJCiI5lluoinOkDT+NbYodiBsU5iLghM3xdiFI4+8gCETp44cZv5L4
+         434RKifh3QDDDLGs/GpXQE/A4MS6PI7d9xFT1C30O7ACzp4K6wQiUff7dRn0woNntJCr
+         WIEtw0qTYLzB8cDvppJdk1v41krVp2YcH8TJNuITSeDX26q9P55zzrC2eDJbPqSL8NB/
+         /m25nMA/Utd8nTf7Qx07hPBlWf5DA4cYQKnS0iF3dB4f4lOWNonroK5oFG6BUJrYt0HN
+         Wk6Jl1sdNXq46GcBsLqK+8k4XkWmMaVp0d/3xcw6hjzFEmXt0KMmuj9aAQpQzhMwWehV
+         xSkQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXFNmIjLcGA7fUFRC485HoFD7ofqmbbgeshvALtmiqdrh2VTIstTyaBhMr4M7Wvc0lGpj4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUeM2UUTDnaiUn4hwOcKEG9Lyg/yrW064+VJPk/yDxNaEp6LD+
+	iCv7lIMLWGffBjZKwqSI73Wo3DyOW8KFS8wLg9uAQR97av3MV10b
+X-Gm-Gg: ASbGncs0h6FX2ZHY9lQWT9fNGC6L21WItlz9PZB0Gzf2XwuovUDOblEdZIFY5ddhl/2
+	cDoXwrjBUGuDNhcT/anDtighBdoo9mxsWYpkMLtWOA7/BV+ONNX5N7FesqWfj3mPnZAJfNAmHsO
+	PHdXTUoEenXrwdzH/UP5PCJMYNoBJ1ESkRSVqnfkNi7V3RX9iAFbO9Xf2YburxVM4D83Fv6MNOU
+	t1AHTcaCi8oKfbU+sbY5KcDlcIONXcs7lEscNjnSbS2tZwQvVtMQDMhC6HZxZYeJUWN1RyuJ+U6
+	2QLOLJTzS1HvphcGDkzD4icqWPxfprUTDfpzjF0UD4W1Z0uXNopqMY0UPX4J6gSgDjnAL+tp6pQ
+	A/0/5OZY3wh3FfdLbusPSU0778y0=
+X-Google-Smtp-Source: AGHT+IHnd0d/SC20EzCvsi2AffTjeLKsg0gRwUIl9XzcrgBAazI2K3Dr3EO479FljKjNWsOtUgeTJA==
+X-Received: by 2002:a05:690c:4587:b0:700:a6be:d6b8 with SMTP id 00721157ae682-70a1daea35fmr5503887b3.35.1746554775063;
+        Tue, 06 May 2025 11:06:15 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:d190:934d:4c0f:2336? ([2600:1700:60ba:9810:d190:934d:4c0f:2336])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-708c46c022fsm28210547b3.112.2025.05.06.11.00.03
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-708c46b9e38sm28628967b3.103.2025.05.06.11.06.14
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 May 2025 11:00:03 -0700 (PDT)
-Message-ID: <3e307bf1-52ef-4280-bada-5cc50cc7a817@gmail.com>
-Date: Tue, 6 May 2025 14:00:02 -0400
+        Tue, 06 May 2025 11:06:14 -0700 (PDT)
+Message-ID: <a6b1bb83-02e1-4589-92b2-e005673a3c42@gmail.com>
+Date: Tue, 6 May 2025 14:06:14 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,94 +67,30 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] scalar reconfigure: add --no-maintenance option
-To: Junio C Hamano <gitster@pobox.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, johannes.schindelin@gmx.de,
- Patrick Steinhardt <ps@pks.im>
-References: <pull.1913.git.1746008680.gitgitgadget@gmail.com>
- <pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
- <6fac9c4c394b9882a2f7af6209af389edf384e4d.1746458844.git.gitgitgadget@gmail.com>
- <xmqqselin30f.fsf@gitster.g>
+Subject: Re: [PATCH 03/17] object-store: rename files to "odb.{c,h}"
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+ <20250506-pks-object-store-wo-the-repository-v1-3-c05b82e7b126@pks.im>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqqselin30f.fsf@gitster.g>
+In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-3-c05b82e7b126@pks.im>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 5/5/2025 5:47 PM, Junio C Hamano wrote:
-> "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> 
->> From: Derrick Stolee <stolee@gmail.com>
->>
->> When users want to enable the latest and greatest configuration options
->> recommended by Scalar after a Git upgrade, 'scalar reconfigure --all' is
->> a great option that iterates over all repos in the multi-valued
->> 'scalar.repos' config key.
->>
->> However, this feature previously forced users to enable background
->> maintenance. In some environments this is not preferred.
->>
->> Add a new --[no-]maintenance option to 'scalar reconfigure' that avoids
->> running 'git maintenance start' on these enlistments.
-> 
-> It makes sense for --maintenance option to be between enable and
-> disable when registering a new directory to the system, and when
-> cloning somebody else's repository that causes a new directory to be
-> created and enlisting the resulting new directory to the system.
-> 
-> But wouldn't users want "leave maintenance-enrollment status alone"
-> option when reconfiguring an existing already enlisted directory?
-> 
-> As written, the design easily allows enabling of maintenance as part
-> of reconfiguring, but disabling cannot be done the same way
-> (i.e. individual enlistments need to be visited and their
-> maintenance disabled manually).
-> 
-> IOW, it is a bit counter-intuitive
-> 
->> +--[no-]maintenance::
->> +	By default, Scalar configures the enlistment to use Git's
->> +	background maintenance feature. Use the `--no-maintenance` to skip
->> +	this configuration and leave the repositories in whatever state is
->> +	currently configured.
-> 
-> that for clone and register, --maintenance means "enable" and
-> "--no-maintenance" means "disable", but when reconfiguring an
-> already registered directory, it would be natural to expect that
-> "--no-maintenance" would explicitly tell the command to disable
-> scheduled maintenance.
+On 5/6/2025 7:09 AM, Patrick Steinhardt wrote:
+> In the preceding commits we have renamed the structures contained in
+> "object-store.h" to `struct object_database` and `struct odb_backend`.
+> As such, the code files "object-store.{c,h}" are confusingly named now.
+> Rename them to "odb.{c,h}" accordingly.
+While I appreciate the goal of this series, I'm not sold on the need to
+rename these files. Not only is it a tree-wide change to the headers, but
+it now requires tracking changes across the rename which can complicate
+history spelunking.
 
-I can see how this command is different from the other two, and thus
-a three-way flipper can actually result in three different behaviors:
-
-> A 3-way approach would make this part something like ...
-> 
-> 	switch (maintenance) {
-> 	default:	BUG("..."); break;
-> 	case ENABLE:	res = toggle_maintenance(1); break;
-> 	case DISABLE:	res = toggle_maintenance(0); break;
-> 	case ASIS:	res = 0; break;
-> 	}
-> 	if (res >= 0)
-> 		succeeded = 1;
-> 
-> ... which would allow people to easily say "leave the existing
-> maintenance state alone".
-
-This does mean that we'd need to have a different toggle from the
-typical OPT_BOOL().
-
-What do you think about something of the form --maintenance=<option>
-where <option> is one of these:
-
- * "enable" (default) runs 'git maintenance start'
- * "disable" runs 'git maintenance unregister'
- * "keep" does not mess with maintenance config.
-
-Does this sort of option seem to make sense? I'll wait to see if
-any further adjustments are recommended before I start rolling a
-new version.
+At minimum, the method renames are likely to create semantic merge issues
+with parallel work. If the rename is truly valuable, then maybe it could
+be done in an isolated change after the method renames are landed?
 
 Thanks,
 -Stolee
+
