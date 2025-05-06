@@ -1,149 +1,201 @@
-Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ACCF21ABBC
-	for <git@vger.kernel.org>; Tue,  6 May 2025 22:58:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 913F021CC5F
+	for <git@vger.kernel.org>; Tue,  6 May 2025 23:29:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746572294; cv=none; b=omz+ziHGBEoduZeIth+ZlB6ygZV8vZ6OcgcGh9qS7iDtRAgLaR4CeHsrNoG0z0NgT6eABcB9LeIxnkbAoBJ6ERJqTkupShwK8b94fnJwn4EzCA5bozOvtIGviqDHZxgdkblVAZA+NKf3Zf/w4eZxSNWY/zpDGDcwyQnJIUL93i4=
+	t=1746574194; cv=none; b=sgG/4RQtIX2z6dDpd3S4AdJ7cga/yTMNbkYG4svIsA2BaOCJLPgy1VteiFzZFrXz/vybX1xMXUJWFKwZmxj4c5N6/v2vkrB031uMqTe/moRVxyzj8SVld5DCQcU6jv0qWUNgek9DrbrUl69oTTfQP2Kkl4u8XJolOg+JlSb/y1o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746572294; c=relaxed/simple;
-	bh=LJ8lOV0ObVgz5/UwYvfkw3N2j965Fl/tTHMDUtmEY04=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sAhZ/oQOAjRa2+bl859EevaYwWoVVWoegFocxH0bTcsxkUjrQ9EyBYp6KBW0MfBF8gI5J8N1f3ZnTco0EERckQgedw9ep7NuScCDl0lMZ7xuppCLGMNtDFHIJK2pYJod7ikxWbyFHn998JVi5dUZilP4eS23EMYHAnLzI2b4to4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dlVxO2nk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AjYyWo5X; arc=none smtp.client-ip=202.12.124.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746574194; c=relaxed/simple;
+	bh=PMb7vM8bFQYP4CDMhRmE+FW1UdTMjYSjc3PffLyGo+E=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=q0fu43KOZ8x1C/lrfeuiZpz4/flRsA37B/hOH4SXh7a0lnApVVXpERlR2SSlW/2vAQUsiK5VsqrrRjha9lodlWHCJkcb2Wh2Gdvm2m38k3qas+knGyEyln89HaVWCrRJqKzxKbZ3nlwKRhU13IEfLYkkfX+L9EX60S2x36kBkXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ANsLhaPb; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dlVxO2nk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AjYyWo5X"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 2843D2540268;
-	Tue,  6 May 2025 18:58:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Tue, 06 May 2025 18:58:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746572291; x=1746658691; bh=ayYM0N1J8h
-	YPA/AgPQVb+/ntFxLD/++izIrgDQx4nUc=; b=dlVxO2nkK33LOd4FNHTQOIRno2
-	9j9Ba8/I8ugFrUiqbdIbEQBakQqHUjACLI2j+2i5ATEZ2aovYL470XywaC3z7KCR
-	qEGciRuJdH3xkvV7jyyvdB6nOcN5Cb3u5xwD5t7igVR7D44sT1YkJT0UbPBrcDcU
-	FFrrcWqXmI/HEm55W+U3i9ELtbL+MNjTU01N4m7l/BP6EOnxxNVC3//4KA3aayma
-	wl221D7u7US/H8iCRbUygX77cDgT3ijyEGS+xXwGyHdysfn8czAo+q3j43DYI51h
-	s9z1w9UOQWeCB7tOH7z2H8ah4lLngiipJIfFLcz/Fsh4nyHZoGsjngk5MQcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746572291; x=1746658691; bh=ayYM0N1J8hYPA/AgPQVb+/ntFxLD/++izIr
-	gDQx4nUc=; b=AjYyWo5XtwZD09ye26noqEMUJPPcUmEpjJ7yMkNCZHUAiDD7+6d
-	n28uY2B+t8boP1f5xUKkI2hrkut5el570NBHDXy4rGOjlV7NKiMh8Zgra5tSEN1T
-	9L76qt9FdMXN45nu48tIBC8SeKSxZeCJmLcYyIuGeux1bJmdg7e+tbCUuF7aPrPZ
-	TB+Y9gDrWDzn1FPTf0hDic4O5MAohwK8e1HSlpr06T+wltr0xKUPwWBpKGC65zqL
-	J/M1HER5Sf3xxCcsPKRKFKkhaBevs9gVQgb6B9BnGE0fkVTmJfN2jlnEGD4wOuAk
-	fnpw+9Ie190CY7mMeqB67yWrnrETFWFlB3A==
-X-ME-Sender: <xms:ApQaaHwTEDIM6_vrWtunoVLGMmEee_OghEheL9q90Z98Do2OfHue3w>
-    <xme:ApQaaPTPn4glKa3B37MVeF-0llCr2k6YhMxGW-dHq2cvAXVya_ReLraI7PbFTzduW
-    UMIyT_EhsL94owETA>
-X-ME-Received: <xmr:ApQaaBUbMQVaj4Kw6wsDge88l9ApL4S4E03W8WUHmcwdii3ofIiDRPOeDQ84r5zzEKfavLcLAd1jAlFRLT3R5VbBqDH65OpnZFYw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeehvdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopegtohhllhhinhdrfhhunhhkudesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:ApQaaBjSfMYanoofFcwAUF-UhibvHOa-gqfyq2csx7VTfR3rAgC1OQ>
-    <xmx:ApQaaJDISmJ0VD5BBheolGrTypmdQGgq2zajK9iF8xLB2ftoQGOyyw>
-    <xmx:ApQaaKJhr0-dQrOgqkd2ZJseArG3VycMv3J0Wgp60pkqDs4qvd75GA>
-    <xmx:ApQaaICvWW_PESzuCKjQUvYCe3geCS452lTumZBxQaV6D0wSdoHINA>
-    <xmx:A5QaaLvXEUGJPUygO--6CRmBKntnWgEKFz7z0wvEXQE3e0mmQIUh1ysp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 18:58:10 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Collin Funk
- <collin.funk1@gmail.com>,  git@vger.kernel.org,  shejialuo@gmail.com
-Subject: Re: [PATCH] wrapper: Fix a errno discrepancy on NetBSD.
-In-Reply-To: <20250505180311.GA29783@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 5 May 2025 14:03:11 -0400")
-References: <20250502233403.289761-1-collin.funk1@gmail.com>
-	<aBVp51yLwxBpRskt@tapette.crustytoothpaste.net>
-	<20250503133158.GA4450@coredump.intra.peff.net>
-	<xmqqtt5zoyg9.fsf@gitster.g>
-	<20250505180311.GA29783@coredump.intra.peff.net>
-Date: Tue, 06 May 2025 15:58:09 -0700
-Message-ID: <xmqqzffpe48u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ANsLhaPb"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-441c99459e9so22845095e9.3
+        for <git@vger.kernel.org>; Tue, 06 May 2025 16:29:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746574190; x=1747178990; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=O2a+goulv19V9Q+rny3M76bSvIXtkb1rXDjzo8Jt5DI=;
+        b=ANsLhaPbNmbS7xmrQAXFvP9k8i11dBcadcVnWdtP6ilNJ0eiXZ0Qq5vgxM8qUPOlYD
+         ppExYDFkBlRewRtmDxyYoieMLNzCccMHZaRh5yCSnmr7zBgkvp42dcjg5dOZ68Glt+ps
+         756zkZayBftUVlwfJm7npOzVmKhlk4Q6pYM5M8c84s3p4HqT23egFECQMcKeidy+OgL7
+         OVAqc4ztuBWRI1pPKvtZTyJuMfxGrJ/hRGoTBKmTFKncD9AMv888mZtx23OB2fMxMwCf
+         owzmVTU2p/d+4AJac1e+n7KdxXWJB6MQUab/d8xTdxoqFtp91qes1sKFgPvIDLhvdU5i
+         kj2w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746574190; x=1747178990;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=O2a+goulv19V9Q+rny3M76bSvIXtkb1rXDjzo8Jt5DI=;
+        b=XVYYtW2B0uctwOHjW23GAMc5x4sQzuK4kNDfpYVcCPfgXTxj78Vc2YrH1jrEzCoq1j
+         v1X5tMzCsrod3SZwhRyE/tWhKr+JUu9TIbmhUBA18g6VyGQopnLQS3rFpTEnA8iw2SGB
+         /wyoGHpDSxJJ9SW+aowb0XI1VwbkgbdUMi24Ij4W80MG2zw1v8NkAEbBo9CWwvVRFzqu
+         6j5c8f3qVQPeGzDP7i56K5Mvd+U68uf02LRb+AcVRhVZT5EcZvPrSif1DrJ6gYQh1bxy
+         UMbXTSZIssBbk7iWmplvFjLkVd0qNWeOO60QPA/rKhV2eB0ItO/r/ItQy78KKKvxcS8L
+         b/Sg==
+X-Gm-Message-State: AOJu0YyPQk+LaOUyc/8rcPx7W84on9L4h9nJR1E3T/+lST1RKIVKU2j2
+	DpZzrEWEP7Sb+fp21tbySzp4rBnXtIS9+rrLNsk29mqEm0XZqCjyT7vYQw==
+X-Gm-Gg: ASbGnctiGfAIgnhU7z6coX+q8N/PVk/HniG1dmyjVOYYG8SA5kAodzzyH25aE4exFlf
+	mzgCFX2FKtBTRBznc4A0nfn6kev2JP282Q61cqJr8iZQ8nL4EPuu7Jvaegg9uSrO8nNwCXoDNdU
+	cYwn3GD1fDRaJodofB25knksX7PQAZvwapUdoTO8Vm/PB7fOWIxcEE98MbRuZc7n+eF+DdiXFsi
+	KGcTKQnUXSTYM7GY2Agt5KxH1tO9rYNj3ijN3oQtuKhGdfd9JlKDbUMDb/HnIvPBzFnsuDPdFrh
+	EX9anUc3TTPZRGxIa/LZ7eDQW63OQj7ZZlPAXZTI/Q==
+X-Google-Smtp-Source: AGHT+IHKKnbfNORmecKacAitPkcd98pNN05GNKXinGzfVo2dEidXqnWiugnrsG22UUG1GAhF4Tkzhw==
+X-Received: by 2002:a05:600c:6749:b0:43d:2313:7b49 with SMTP id 5b1f17b1804b1-441d44c4547mr6035305e9.12.1746574190182;
+        Tue, 06 May 2025 16:29:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441d43a7523sm9392735e9.33.2025.05.06.16.29.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 06 May 2025 16:29:49 -0700 (PDT)
+Message-Id: <pull.1917.git.1746574189008.gitgitgadget@gmail.com>
+From: "Scott Guest via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 06 May 2025 23:29:48 +0000
+Subject: [PATCH] git-p4: preserve executable bit in LFS pointers
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Scott Guest <scottguest02@gmail.com>,
+    Scott Guest <sguest@nvidia.com>
 
-Jeff King <peff@peff.net> writes:
+From: Scott Guest <sguest@nvidia.com>
 
-> On Mon, May 05, 2025 at 08:43:18AM -0700, Junio C Hamano wrote:
->
->> But for other kind of requirements, we want to fulfill them on all
->> platforms that we claim to support.  Using open_nofollow() to
->> achieve hard atomicity requirement would be a bug in such a
->> situation.  Should we somehow warn our developers against its use?
->
-> The comment above the declaration says:
->
->   /*
->    * Open with O_NOFOLLOW, or equivalent. Note that the fallback equivalent
->    * may be racy. Do not use this as protection against an attacker who can
->    * simultaneously create paths.
->    */
->   int open_nofollow(const char *path, int flags);
->
-> though that may not be enough. 00611d8440 (add open_nofollow() helper,
-> 2021-02-16) discusses a way that it could be made less racy, at a
-> slightly increased cost.
->
-> IMHO that is somewhat orthogonal to the issue here, though, which is
-> purely about the case where O_NOFOLLOW does exist (ironically, our
-> racy fallback code consistently returns ELOOP ;) ).
+git-p4.py currently marks all Git LFS pointers non-executable,
+when it should instead match the executable bit of the stored file.
 
-Yup.  And with the above comment, I would say that my worries above
-are unfounded.
+The LFS spec made this change nearly a decade ago, see
+https://github.com/git-lfs/git-lfs/commit/8d075a8
 
-> The issue at hand is that particular errno responses are not always
-> portable. The patch discussed here improves that. My point was more that
-> I'm not sure to what degree we should care about errno consistency in
-> our wrappers (which is inherently a bit whack-a-mole as we find new
-> cases), versus trying not to care too hard about specific errno values
-> in calling code.
+Signed-off-by: Scott Guest <sguest@nvidia.com>
+---
+    git-p4: preserve executable bit in LFS pointers
 
-Yeah, it does give me a bad aftertaste having to pretend (by adding
-compat code to translate as needed) that all systems share the same
-set of errno, but we live in not-so-ideal world, so I am afraild
-that it cannot be avoided.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1917%2FScott-Guest%2Fp4-lfs-exec-fix-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1917/Scott-Guest/p4-lfs-exec-fix-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1917
 
-> I can see arguments either way (and as I said, an argument for making
-> errno values consistent even if we try to rely on them less). Mostly I
-> was just a little surprised to see open_nofollow() being used in this
-> way (especially since we have to end up stat()-ing anyway to check for
-> other cases).
+ git-p4.py | 34 +++++++++++++---------------------
+ 1 file changed, 13 insertions(+), 21 deletions(-)
 
-That is true.
+diff --git a/git-p4.py b/git-p4.py
+index c0ca7becaf4..adfb5988492 100755
+--- a/git-p4.py
++++ b/git-p4.py
+@@ -1463,7 +1463,7 @@ class LargeFileSystem(object):
+         self.largeFiles = set()
+         self.writeToGitStream = writeToGitStream
+ 
+-    def generatePointer(self, cloneDestination, contentFile):
++    def generatePointer(self, contentFile):
+         """Return the content of a pointer file that is stored in Git instead
+            of the actual content.
+            """
+@@ -1517,20 +1517,14 @@ class LargeFileSystem(object):
+     def isLargeFile(self, relPath):
+         return relPath in self.largeFiles
+ 
+-    def processContent(self, git_mode, relPath, contents):
++    def processContent(self, relPath, contents):
+         """Processes the content of git fast import. This method decides if a
+            file is stored in the large file system and handles all necessary
+            steps.
+            """
+-        # symlinks aren't processed by smudge/clean filters
+-        if git_mode == "120000":
+-            return (git_mode, contents)
+-
+         if self.exceedsLargeFileThreshold(relPath, contents) or self.hasLargeFileExtension(relPath):
+             contentTempFile = self.generateTempFile(contents)
+-            pointer_git_mode, contents, localLargeFile = self.generatePointer(contentTempFile)
+-            if pointer_git_mode:
+-                git_mode = pointer_git_mode
++            contents, localLargeFile = self.generatePointer(contentTempFile)
+             if localLargeFile:
+                 # Move temp file to final location in large file system
+                 largeFileDir = os.path.dirname(localLargeFile)
+@@ -1542,7 +1536,7 @@ class LargeFileSystem(object):
+                     self.pushFile(localLargeFile)
+                 if verbose:
+                     sys.stderr.write("%s moved to large file system (%s)\n" % (relPath, localLargeFile))
+-        return (git_mode, contents)
++        return contents
+ 
+ 
+ class MockLFS(LargeFileSystem):
+@@ -1555,10 +1549,9 @@ class MockLFS(LargeFileSystem):
+            """
+         with open(contentFile, 'r') as f:
+             content = next(f)
+-            gitMode = '100644'
+             pointerContents = 'pointer-' + content
+             localLargeFile = os.path.join(os.getcwd(), '.git', 'mock-storage', 'local', content[:-1])
+-            return (gitMode, pointerContents, localLargeFile)
++            return (pointerContents, localLargeFile)
+ 
+     def pushFile(self, localLargeFile):
+         """The remote filename of the large file storage is the same as the
+@@ -1586,7 +1579,7 @@ class GitLFS(LargeFileSystem):
+            content.
+            """
+         if os.path.getsize(contentFile) == 0:
+-            return (None, '', None)
++            return ('', None)
+ 
+         pointerProcess = subprocess.Popen(
+             ['git', 'lfs', 'pointer', '--file=' + contentFile],
+@@ -1616,9 +1609,7 @@ class GitLFS(LargeFileSystem):
+             'objects', oid[:2], oid[2:4],
+             oid,
+         )
+-        # LFS Spec states that pointer files should not have the executable bit set.
+-        gitMode = '100644'
+-        return (gitMode, pointerFile, localLargeFile)
++        return (pointerFile, localLargeFile)
+ 
+     def pushFile(self, localLargeFile):
+         uploadProcess = subprocess.Popen(
+@@ -1652,12 +1643,12 @@ class GitLFS(LargeFileSystem):
+         LargeFileSystem.removeLargeFile(self, relPath)
+         self.writeToGitStream('100644', '.gitattributes', self.generateGitAttributes())
+ 
+-    def processContent(self, git_mode, relPath, contents):
++    def processContent(self, relPath, contents):
+         if relPath == '.gitattributes':
+             self.baseGitAttributes = contents
+-            return (git_mode, self.generateGitAttributes())
++            return self.generateGitAttributes()
+         else:
+-            return LargeFileSystem.processContent(self, git_mode, relPath, contents)
++            return LargeFileSystem.processContent(self, relPath, contents)
+ 
+ 
+ class Command:
+@@ -3217,8 +3208,9 @@ class P4Sync(Command, P4UserMap):
+         if regexp:
+             contents = [regexp.sub(br'$\1$', c) for c in contents]
+ 
+-        if self.largeFileSystem:
+-            git_mode, contents = self.largeFileSystem.processContent(git_mode, relPath, contents)
++        # symlinks aren't processed by smudge/clean filters
++        if git_mode != '120000' and self.largeFileSystem:
++            contents = self.largeFileSystem.processContent(relPath, contents)
+ 
+         self.writeToGitStream(git_mode, relPath, contents)
+ 
 
-The callers in attr.c and dir.c do want to fstat() after they open,
-but they are more interested in atomicity (with "the best effort on
-less capable systems" attitude).  The one in mailmap.c doesn't do
-any stat(), but again it is more about atomisity with the same
-attitude, I think.
+base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+-- 
+gitgitgadget
