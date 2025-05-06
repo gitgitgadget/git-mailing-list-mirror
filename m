@@ -1,53 +1,53 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E552FC0E
-	for <git@vger.kernel.org>; Tue,  6 May 2025 19:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC76422087
+	for <git@vger.kernel.org>; Tue,  6 May 2025 19:16:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746558904; cv=none; b=iMbHOkX2Hg4Oaaz176JiFRt8K1lfxWLd1YA766PgbATUFlx7/vsH4DZF/v2L1E567txq2QUSni/0taTRhfK9EU75ean9F8mIWXelqa1kItIHVLC2jRCeQP8TvmT/tvrDjrpmUtVusucfogj6pd5C4DLqqw9LR7Bn00qqVbRzZ3I=
+	t=1746558972; cv=none; b=JJbKDK5PFdi64SlaKoWfExpt1qUi5Fu3jhQ89HotsM4esXHBGwBTDeEX+4cq88q9gWUq8oewgNq3+t3tFXaDOd5PmyEt23gjfF622CvoKqDOyHIu+/wtPGUuEhtFgkcTaIHsMtzVbyhV9p/wuYqomYc7f1ZoYOGwQOnw6exYwl4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746558904; c=relaxed/simple;
-	bh=woEAUANEN3y/jIRSS0sbkBic5O5RJx4BBZlt4qZ2BOM=;
+	s=arc-20240116; t=1746558972; c=relaxed/simple;
+	bh=kiMidEXyFPgbhQSIw0vK/jKq4Z4jXCRwAjtGkuLYStw=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jF+9lbLbdjEngGJmNCCYeeu+nPyGIb+y3JgJZ89NiRwuMThZDNmvsh0mgRW3PqDPCNA9Qc16fn/Cb1G2OecAV13pGMVB4CqZxtkLitxpVLPxtBaw5ZY7lG9AtKv9LPDQtU6ZN6vQnZoXo6CdvlJwXHaFQibjoLxCwLiIJHIVgig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gw7lmkKe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J2eTgLzU; arc=none smtp.client-ip=202.12.124.155
+	 MIME-Version:Content-Type; b=uHFN72J2cgFA3UKsr4jIRCM+I4vFKrXTWVBBeSq8VUA7KTV8S57gAh30f7/RFnQd9xjVslrQ6tcrsfAZMtIkDHJeijArcFdxGWpmElwAgC/xLDcZoMFav4uKgJLpYR7u5Nfb2YxhM3j1nAGYymTJg605A+2K9JJOAadlejkvDOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FD2R5SSL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Eqh75wkP; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gw7lmkKe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J2eTgLzU"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3755A254021A;
-	Tue,  6 May 2025 15:15:01 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FD2R5SSL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Eqh75wkP"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 83DAD25401C1;
+	Tue,  6 May 2025 15:16:09 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 06 May 2025 15:15:01 -0400
+  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 15:16:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746558901; x=1746645301; bh=Vwkz9EWdK3
-	yOqK0fGirUXtm52+31L8B/a+1NCag/+Po=; b=gw7lmkKe9E0KAL1ZwibrieuI74
-	5Y15qe1H87jjUL06G9GLHYa7gunoeoeO/WwZbLGQWbZYTx4iEMGHBEgN3WNzjGj8
-	4jMpV2uk1/mtgc1YBLCWaVoZmDNEgTt318MWVdV7WnRx3WrD11/7v4c1DKa9NT2B
-	OItih+fTZ0oyaKVJwTXLJt8of+ROxmolD5xNxx/W2JuKzOEiwvibLT9wSjApJ0d4
-	TLYtp3ZxauQV7tOSiHVM6pOd5/4WpFb4bQuCb50//IC1dT1TcIG3w/62wGy+s5Pg
-	RDn5gDsCNfvpKjlQlyQwR1b8HF20ZcNBLmr9Hm1O+Nrhh3Hhon7CJ3LVhWQg==
+	:subject:to:to; s=fm2; t=1746558969; x=1746645369; bh=QgNX1SifgL
+	ngmPeJkZqOZFEpCtlaTySluOWf2OALa7E=; b=FD2R5SSLiDmqqGoZsFEXFtSPpS
+	grvD7gaUDZhKdX7eNwhpgmnl68Bej1vauE5Su6gY4oBQ0+CesRaC7/dXRdvDmbOS
+	oDIqxgdJ4iLeIzJe48NkcwNDHR+XO3f5JUpAAw5xH+ZpFlI6pkC0luFe01tp9gEI
+	fHX0EbmmG8aw1c2RVUO2dz7xNjmEh76CqE/HdDR0XQIjK2BLcMIuLoAwxUmYJC4u
+	LEGUbxvYviseMnaHWVFUhaRf4/+T+SjCZTv4C/4BkRJRAuFaU3JeW8ZoXqUyPeKa
+	7siZH8GV7bxgm5bFsFd3t12Q3P2a8k63Edl8p5Hi0gzkBk8KnoYpCveG3b9A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746558901; x=1746645301; bh=Vwkz9EWdK3yOqK0fGirUXtm52+31L8B/a+1
-	NCag/+Po=; b=J2eTgLzU9rPepRQFv3O3iFN0aFKwz+1/5T4snvsqYx4RIeMCYtR
-	oVVvnjnSj2zBpOyGja1rFryRBc37Op1mBV9uKiF7KBjAPyobg/hFTb7tv20jrEqJ
-	S0dcIcO/eU2EHVm11U5kRwYsNI9bo3F2vv+zUZUB6dFmj+XlzkXkX3xgzwkJ81b8
-	RgsA2IBWa8aYy/aKEiyqAVMcA+ujHYRJAs7Q1fyszGha1kHrhhbQ8iP0zlD0zwKN
-	0++I5qrvBLZeIx6xQKHWJfEauJxXpxIdOKriAgq4z+1Q3bwrsWqxEu5ryr0JeZK2
-	jSMgcp9neAozi+dYRu2E6vtROo81W4qCqEg==
-X-ME-Sender: <xms:tF8aaC714ZvGhMKYIoSlU5riBbsuITa3RqpXVNMVfyYWd8-eGfRaqQ>
-    <xme:tF8aaL7U2pNa6I5-E_5lqmvHXOc1DmAN2Fs8h7lZku9g55c5fD_G9Zjlq1GBcZ1uV
-    6qCocl57NYh1OSFcw>
-X-ME-Received: <xmr:tF8aaBeh12mqE__VKfeQU062daCDlaTcRfNzS_JXvf-lwxT1Xbz6QoZvoAru-frdgSxbivlVcW959LaiVMM-yzTXM1AHFwPuQORA>
+	1746558969; x=1746645369; bh=QgNX1SifgLngmPeJkZqOZFEpCtlaTySluOW
+	f2OALa7E=; b=Eqh75wkP+5G7dqEl1pNKOewcqmriq0138cbbEuK57osX2Y4iFUS
+	rW/2G8rjUIoFibdQQuZNqpbyaiA5hgxFga27dgU5urkdTFEP1+/zQ+GOeG5TkMpm
+	1vHjF8UC7k3YNFxyZqjqg/EUfuEhUtFbV7ffEXHRmQ72rIMA0C/pr3pniirjuroR
+	+eLCujuMA8rBHPEVgd92cYJB7lE/AyPIDXsZv4f/450x7UpNngfGKx905r5pV46J
+	b/GjENe5UJEBKlZc8CanMZNAtqXszcKJS056zbExUCHWdMoO13lzaLU8JbmbE6/A
+	ZLJXHs58sOqlZQSyUA1+NgcoXKS3UYNeVag==
+X-ME-Sender: <xms:-V8aaFLQPMExOqVpYS9lBT9QYNd1jcWI6W1V2c6sVACrvGz0X0URmw>
+    <xme:-V8aaBJ7nFmHvQ7_m99FW5nbhimxFTG8ofJZMVpyELRQU46u1FrLGAveNNjYLT4KS
+    u5jPJxHiYHgUF_DTg>
+X-ME-Received: <xmr:-V8aaNvqKsbZogMOkX5IXB5wQbVeCo-Jj4QlR1lyjMXq8iWRRZ18qzmHrJNkvtaY0plZH7ES_3zGNTUkuRKZGp_01vjraXSLzT5c>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegjeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -60,25 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegjeelucetufdote
     huohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
     rdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpsh
     esphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:tF8aaPKsoYPRo2NPG1y4GsaUc2XdI_asQFylsZiJTmgcII4uQiKkIg>
-    <xmx:tF8aaGLTk9SeVv8hNzqdOFc_eFjerFtCwTkMK-7paSNislPuJYGcLg>
-    <xmx:tF8aaAypGa5xJWEdaw2oWfUGsSvtkJYfhN4l_afEMcEIa956rozwSw>
-    <xmx:tF8aaKJTe-DgngkYOZIVE9o3d-MKpcejr9rNfMsdB17N5Ruu9VmYiA>
-    <xmx:tV8aaDFaFjat5lGZckNq-H4CjSgopyLhLM75YD-6Qc8AXB-KQynW0pnB>
+X-ME-Proxy: <xmx:-V8aaGYtDqCFH5PjIbr8KCAQ2mGsBosYBmPVcJFlbqjYb9xxfJaD0A>
+    <xmx:-V8aaMa8Hm0nH5yyiXutIuZSDDsqjA2DedQpiWrY-isH3JbR6TT7dw>
+    <xmx:-V8aaKDgHk-HmAkuc7YxAQHkmKnKCRa_RzMtWht7innRgcM7mrNjSA>
+    <xmx:-V8aaKb1ErROGM3jANQUyZu0v1AdJeNUOz2S6gyN5hCijhUP5KHWYw>
+    <xmx:-V8aaCWu3ku0LyHjM1X_BQP0AUUZ9PFuGUmGrkdOFwEUEZ04CfdRT6Jk>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 15:15:00 -0400 (EDT)
+ 6 May 2025 15:16:08 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
  <ps@pks.im>
-Subject: Re: [PATCH 1/4] packed-backend: skip checking consistency of empty
- packed-refs file
-In-Reply-To: <aBo7nBOl18WWYIsA@ArchLinux> (shejialuo@gmail.com's message of
-	"Wed, 7 May 2025 00:41:00 +0800")
-References: <aBo7OiCKHTyT4DzH@ArchLinux> <aBo7nBOl18WWYIsA@ArchLinux>
-Date: Tue, 06 May 2025 12:14:59 -0700
-Message-ID: <xmqqzffpima4.fsf@gitster.g>
+Subject: Re: [PATCH 2/4] packed-backend: extract snapshot allocation in
+ `load_contents`
+In-Reply-To: <aBo7pcimOG19oInQ@ArchLinux> (shejialuo@gmail.com's message of
+	"Wed, 7 May 2025 00:41:09 +0800")
+References: <aBo7OiCKHTyT4DzH@ArchLinux> <aBo7pcimOG19oInQ@ArchLinux>
+Date: Tue, 06 May 2025 12:16:07 -0700
+Message-ID: <xmqqv7qdim88.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,33 +90,22 @@ Content-Type: text/plain
 
 shejialuo <shejialuo@gmail.com> writes:
 
-> In "load_contents", when the "packed-refs" is empty, we will just return
-> the snapshot. However, we would report an error to the user when
-> checking the consistency of the empty "packed-refs".
+> "load_contents" would choose which way to load the content of the
+> "packed-refs". However, we cannot directly use this function when
+> checking the consistency due to we don't want to open the file. And we
+> also need to reuse the logic to avoid causing repetition.
+>
+> Let's create a new helper function "allocate_snapshot_buffer" to extract
+> the snapshot allocation logic in "load_contents" and update the
+> "load_contents" to align with the behavior.
+>
+> Suggested-by: Jeff King <peff@peff.net>
+> Suggested-by: Patrick Steinhardt <ps@pks.im>
+> Signed-off-by: shejialuo <shejialuo@gmail.com>
+> ---
+>  refs/packed-backend.c | 54 +++++++++++++++++++++++++------------------
+>  1 file changed, 32 insertions(+), 22 deletions(-)
 
-Neither the commit title nor the above paragraph hints that this is
-talking about "fsck" part of the packed-refs subsystem.  That leaves
-the readers confused when they read "with the runtime behavior"
-below.
+Trivially correct, cleanly done, and nicely described.
 
-> We should align with the runtime behavior. As what "load_contents" does,
-> let's check whether the file size is zero and if so, we will skip
-> checking the consistency and simply return.
-
-How about
-
-	During fsck, an empty "packed-refs" file gives an error;
-	this is unwarranted.  We should instead just return an empty
-	"snapshot" and let the caller happily declare success, just
-	like the code paths that implement the runtime use of the
-	file do.
-
-or something?
-
-As to the title
-
-	packed-backend: fsck should allow an empty packed-refs file
-
-is shorter and clearer, I would think.
-
-The code change is trivially correct, I think.  Nicely found.
+Thanks.
