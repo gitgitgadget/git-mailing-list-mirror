@@ -1,54 +1,54 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46BFF286422
-	for <git@vger.kernel.org>; Tue,  6 May 2025 18:52:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48A1741C71
+	for <git@vger.kernel.org>; Tue,  6 May 2025 19:00:42 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746557528; cv=none; b=RzY3jBP48/VSm9jvEhbexKilewJ/A5SfWj25rkGkqlbAZPXgGakT8lZEuguvw8NK8mgIYCwep/FL0hBv3Zc8iTuEdb2T/g4MJ134CYzdkyCbWexEaJmaZ0UMkkYfaIf4ejbHtHyHlmf8ZfFFaFacV6U+id087lOtvT772RxLIZc=
+	t=1746558045; cv=none; b=PeR866ECZabx8BBYLttTnKg8anU3NzBkBsMHmdJ86/07EmxNxpr3IRvfu3z0tvxhGN24vnHk2k7XqSwuCqUkK9LHLPKUFSpkweVRbaU1N4L4i+e0992rMPenjPo/wvYwDpLoQrkr7522QWcgU15yodytqFW3xLUKGUwabohnncs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746557528; c=relaxed/simple;
-	bh=JPAuqR5NITOj8tkpoYRECFzUTXR35Rt/OSR9qRiOMJA=;
+	s=arc-20240116; t=1746558045; c=relaxed/simple;
+	bh=CJ2au3zxxGsQfgh1bLEyljMaME6b5qjmKrjTg/wuK+E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=YhMUOpJ1ZRZTRJ6/Jb3GsADxYzTeVT9QAPP8VY8UiS0gQhsJnZOLlWxDmXCPORnR5OTfHkGlhKrsP2OwON7QngwrsG0mUtKhQLKXssjh+0I91Zkt68yNFUiXEvvX8cSDsmMcLfA9hmB4kdvCBnl5j8w2mz8kD0+4a7DHNu01yQI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UPDep8VH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WWDx5zwb; arc=none smtp.client-ip=202.12.124.147
+	 MIME-Version:Content-Type; b=PYcBnIDuhEpiWy8KMIOGB+DH6xIHdQFBCq7FwY3bOa6T/aVLiRgt/MLCHii5gSv2f+ccEsmffPyKtrRzI6DHfKYNuLxAxU864zA9gGNyugu5qI9bpPcsbmfiD82f/HCD5nyT+0SL4/4oWPHzogXQg+XaMTlxP+oNH9rNW8Csjws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KaHAvy94; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wa6LcmY1; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UPDep8VH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WWDx5zwb"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 1D347114021E;
-	Tue,  6 May 2025 14:52:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 06 May 2025 14:52:05 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KaHAvy94";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wa6LcmY1"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id 1503A1140230;
+	Tue,  6 May 2025 15:00:42 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 15:00:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746557524; x=1746643924; bh=DZzeWYyNsR
-	aoo81hrFLzuI8O4O2t/37T6IF6Eye5Iaw=; b=UPDep8VHrRpULinPs9W+GDMefT
-	z8nPwf207SgXGfvJlK6U8yctQcEq5p/xv0LavEF6J1knlVpawt9XnG2+ZJpAFbe5
-	iZo5Hk0rLSlcUy1S9o8eaAzEGDLzE6uHMk2fBn1JAB+yz3PyTb/TtRDG7pYzX9i6
-	ZR+hE3ZYCvg+h2v39nR70uLDsQL9JSafb1v6PJsazKRfE/nOZ1IrW73JnJFZPBBx
-	kw/NwRS9BOnk2kIHXdUGZImLZl3J2me1psXFYDPaU+dT7erNjkbQfNKUqJzrqwRA
-	HiUPhiLT356Y+H7Pyot4SoFMWxxomGOAk+e3WF9nnd27mv3FQT1HmykCyvOw==
+	:subject:to:to; s=fm2; t=1746558041; x=1746644441; bh=cPEGQ4+I7Z
+	BfzdyX2C/Jm+1kTyug9o1bLl6/JY1IzNY=; b=KaHAvy94WOPHYKKu5j6tdPiSXe
+	DK7dq1FnJ1dV3eMz3m4rfYTXypZ7hScteRrFwzJsRy3tZxLZp85L6afElxWIqcy2
+	8fPhG/y8Ze8AwRjJ3QjjReWV5Lz3X+xOpsh9ce/XF17pNJosytDSbJL0IwV86M85
+	0ski/NR5uaDfTUwVZ5DaKTGFEfs0H9D9gldXv738MiOEGpOsxy4B8uZOvUwaoHrr
+	1/IpXx+PHuGzVszvEViGB4aeMHUpWyLa/FvZVaSFUQlnFAwA9prJupLesjskMhaV
+	S+Dz9vuXwxOhcYHrAKSEDEOWcT+C0n8fIBEx6UADBll7/9SWzLZNDCovkLlw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746557524; x=1746643924; bh=DZzeWYyNsRaoo81hrFLzuI8O4O2t/37T6IF
-	6Eye5Iaw=; b=WWDx5zwbYKCqNZO2piQm6aksqV3QUqBprX6jf8PPDFr2s39bJpn
-	0VI+LpHYyXR8Izdw/SQB1wFAHOpG9OeaSwyipNdRbCKQG9HzioYQZ73saUisVM4E
-	UG0e2AgPYQnUsShOG/Fgev7a6JhmPZmEquFl1ozvWN8rJtDsltoldW7DQgcWDMyu
-	lPPhuHLHRRX3jyvHNA7ZKMqerrpSd0hFbzie0jW9f1sSXGqmVnj2fqTFSc6Qj0mL
-	9KAxATjM26TzEl9JjOBX4rHMiplh+sxF2iwdzOkM9Kc+nlB/cPZ9w66b8IaNDInh
-	qo85ntvdm/VjNXWaqAuQYeL+zuJlaVJK9Rw==
-X-ME-Sender: <xms:VFoaaErX5N8II3cuS0dutbne2E9OCGvoDrdO0KdOF8Fn_cAJ6_cMkw>
-    <xme:VFoaaKpCCtoc_wSqT05fIXET6wNA3qe89zhXHxgz7fQuljhQgMdad1xBENyFnsx0R
-    Fucv-DwYUzWNS48OQ>
-X-ME-Received: <xmr:VFoaaJN2W-aTgbNT61hojs85vCiQ3j2ZeI506t90Bs3hRzz2FX7I_uCkGc1ETPFsXLwiHYG0qAC9Aem40FJx2v6cdQufMIVlk0Fx>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegjeehucetufdoteggodetrf
+	1746558041; x=1746644441; bh=cPEGQ4+I7ZBfzdyX2C/Jm+1kTyug9o1bLl6
+	/JY1IzNY=; b=wa6LcmY1VAcI6ZCPpIfspqqKJ/SbxltYthtsMPtP8gr8eI5EfBV
+	tWX+kcBPOfCg4BSb9J33XOztmGe9T7a2Z6/VXGgfPe11yc/VIgy6kx8eN4CUgXXd
+	kp8/+f2KCQFr3H8lum5PVuz1yovQVD9dBR0zjg2g5/QzrvJoqf5b1gZYjBuEvCUE
+	M2XFT7+i2gVndADYxcvgafuX5wWp0AOKlkxse7zPDpo49NKk9gHZM88nBlsjheZF
+	VqVMGFK4311rtKPOvXHMH+qZ/Zo5K6Z62Bryo+1fhoo1AE5LxsCm8ywqIitLjN0o
+	BHr67gxFjBQiLQK7aQGM+gvP4ss5rmHNSkg==
+X-ME-Sender: <xms:WVwaaP-MymX7IHH5L-67fg05Ff4XCGtoRZwNLBLRnsYZjkCeY2GJzA>
+    <xme:WVwaaLs-9bZL9Bbyqh-aZw5MzujWLqkTmnahvjD-jXykFjv-9HeMAcLbWRwiAkb91
+    j4Wr1MM_sKQOLFjrQ>
+X-ME-Received: <xmr:WVwaaNAPjDJizkiY8mM9oIe30EdlMLu9itKDuT6b0Qs4KB8iAHxXTu-WOUpTusLyJTxPg62p1Zm4_7W811K13eQi9dtbx18S5vu6>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegjeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -60,25 +60,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegjeehucetufdote
     huohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
     rdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpsh
     esphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:VFoaaL764E-IfSMwMYOpcWSWtnbUW69S9pqCHhzHIKmq7AexDiPrCg>
-    <xmx:VFoaaD47fUtbUpZKa1yfr0iItVqWJkedwgYL0LRoUXk1Iyj0qdd3nA>
-    <xmx:VFoaaLiJmomUFFMRJUSt_MaN0nFodsCZGkdT8-XqT4mUKa5jVQALbQ>
-    <xmx:VFoaaN6ExWZ1F329yrGWajY_FeEfAPYD9tnLGjkKPwrTWLCbyGffyw>
-    <xmx:VFoaaH2sv_zeeaNrlnlFrOtyO5vsGp6PE68K5puTpm6T2hbfCoBtkIDk>
+X-ME-Proxy: <xmx:WVwaaLcHe5TpCgJhr0uBaLmc69HHVuLVbodV9mtAz81AX5tdWh7vRQ>
+    <xmx:WVwaaEN3SMwLIY--AVaNREGiFApUSNKDYA53fOf6xi8pBxrrBUVO9w>
+    <xmx:WVwaaNmVq6IiTeVjZxzS2a7ibKpKMFCKoYQY9B6QgC41EX_2m0AC9Q>
+    <xmx:WVwaaOtUWTDm9kyM2qPcX-brV5ioPllVSOYB4b6IcaDR_SNE9kiS_w>
+    <xmx:WVwaaNZ4K6DVGTkSzn3TKmXDAvOaYHVjvyqRGXzEvKji4tThWLW3ghzq>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 14:52:04 -0400 (EDT)
+ 6 May 2025 15:00:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: shejialuo <shejialuo@gmail.com>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
  <ps@pks.im>
-Subject: Re: [PATCH 3/4] packed-backend: extract munmap operation for
- `MMAP_TEMPORARY`
-In-Reply-To: <aBo7rXx46_jQhTGA@ArchLinux> (shejialuo@gmail.com's message of
-	"Wed, 7 May 2025 00:41:17 +0800")
-References: <aBo7OiCKHTyT4DzH@ArchLinux> <aBo7rXx46_jQhTGA@ArchLinux>
-Date: Tue, 06 May 2025 11:52:02 -0700
-Message-ID: <xmqqldr9k1wt.fsf@gitster.g>
+Subject: Re: [PATCH 4/4] packed-backend: use mmap when opening large
+ "packed-refs" file
+In-Reply-To: <aBo7tOkheM6zOJpe@ArchLinux> (shejialuo@gmail.com's message of
+	"Wed, 7 May 2025 00:41:24 +0800")
+References: <aBo7OiCKHTyT4DzH@ArchLinux> <aBo7tOkheM6zOJpe@ArchLinux>
+Date: Tue, 06 May 2025 12:00:39 -0700
+Message-ID: <xmqqecx1k1ig.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,39 +90,61 @@ Content-Type: text/plain
 
 shejialuo <shejialuo@gmail.com> writes:
 
-> +static void munmap_snapshot_if_temporary(struct snapshot *snapshot)
-> +{
-> +	if (mmap_strategy != MMAP_OK && snapshot->mmapped) {
+> We use "strbuf_read" to read the content of "packed-refs". However, this
+> is a bad practice which would consume a lot of memory usage if there are
+> multiple processes reading large "packed-refs".
 
-In general, a refactoring tomove conditionals like this to the
-callee and make the callers unconditionally call the helper is an
-antipattern from maintainability's point of view.
+Neither this nor the commit title says that the issue is limited to
+the code path that runs fsck on packed-refs file, but I thought the
+code paths to use packed-refs to resolve refs correctly uses mmap()
+and does not share this issue?  If it is limited to one single code
+path, please mention it explicitly.
 
-Imagine what would happen when we acquire a different mmap_strategy
-in the future, and by that time, there are callers in the codebase
-other than what we currently have (which is just one below after
-this patch).  Do you have to verify if all existing callers that
-trusted "if_temporary" really meant MMAP_TEMPORARY, as the name of
-the helper function suggested, or do some of the callers meant "any
-strategy other than MMAP_OK"?  What if some callers want the former
-and others want the latter semantics?
+Also, I think it was already pointed out that "multiple processes"
+is not all that interesting issue.  Even if there is a single
+process using a single large packed-refs file, alloc+read gives the
+system more memory pressure than the read-only mmap like we do.
 
-Without even talking about longer term maintainability, at the
-callsite, _if_temporary in the name is a much weaker sign than an
-explicit if() condition that says what is going on.
+As to the title
 
-I'd prefer the caller to be more like
+	packed-backend: use mmap when opening large "packed-refs" file
+	packed-backend: mmap large "packed-refs" file during fsck
 
-	if (mmap_strategy == MMAP_TEMPORARY)
-		munmap_temporary_stapshot(snapshot)
+would be shorter and clearer.
 
-and make the caller to return immediately when !snapshot, i.e.
+The patch looks OK.  Nice to see this one-off strbuf use going away.
 
-	static void munmap_temporary_stapshot(struct snapshot *snapshot
-	{
-		if (!snapshot)
-			return;
-		... the rest of the helper function ...
-	}
-
-Thanks.
+> -	struct strbuf packed_ref_content = STRBUF_INIT;
+> +	struct snapshot *snapshot = xcalloc(1, sizeof(*snapshot));
+>  	unsigned int sorted = 0;
+>  	struct stat st;
+>  	int ret = 0;
+> @@ -2121,21 +2121,21 @@ static int packed_fsck(struct ref_store *ref_store,
+>  	if (!st.st_size)
+>  		goto cleanup;
+>  
+> -	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
+> -		ret = error_errno(_("unable to read '%s'"), refs->path);
+> +	if (!allocate_snapshot_buffer(snapshot, fd, &st))
+>  		goto cleanup;
+> -	}
+> +	munmap_snapshot_if_temporary(snapshot);
+>  
+> -	ret = packed_fsck_ref_content(o, ref_store, &sorted, packed_ref_content.buf,
+> -				      packed_ref_content.buf + packed_ref_content.len);
+> +	ret = packed_fsck_ref_content(o, ref_store, &sorted, snapshot->start,
+> +				      snapshot->eof);
+>  	if (!ret && sorted)
+> -		ret = packed_fsck_ref_sorted(o, ref_store, packed_ref_content.buf,
+> -					     packed_ref_content.buf + packed_ref_content.len);
+> +		ret = packed_fsck_ref_sorted(o, ref_store, snapshot->start,
+> +					     snapshot->eof);
+>  
+>  cleanup:
+>  	if (fd >= 0)
+>  		close(fd);
+> -	strbuf_release(&packed_ref_content);
+> +	clear_snapshot_buffer(snapshot);
+> +	free(snapshot);
+>  	return ret;
+>  }
