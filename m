@@ -1,80 +1,80 @@
 Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CEE2798F2
-	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A3FB27B4F3
+	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746529769; cv=none; b=F8hz4KMNQupU0wCGe74Bxce1cNntXfJMcbvDGyW4p7teV4nQKiF5loPTAlSEsitbVltre3PjA/Un9pN4aoMB9eM3/UTpbozjCiguye120pA5OrIL8NTsPv/22MFw53Tup26avHT5COP9QiGgVbbjiRmYe6mAdcNaLen2AdGeYiU=
+	t=1746529770; cv=none; b=J/f+LpBba6OJ4gs473x+L6LS8DfeF08uIufoxwPD4tkijplxRXHd+dQMk92HQDJ4lK1wV+taKz7WE9RuOjNaFvgbzIWdPo1Vc0St75w9K51vBVmGYvRa2CoN0/BAJRZbHwscpeTDFudvuEa87j5ObkGl21MJ3vFX9hu2hfgHC38=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746529769; c=relaxed/simple;
-	bh=9JiLuYT2G2gXz14rzIDzrhUpBNktc21P4zfY+j+WMuI=;
+	s=arc-20240116; t=1746529770; c=relaxed/simple;
+	bh=59zHaXbidqA1FfepHjLLIbz40KED0yEV358vag/W+Tc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=SSCWuLXsrgUtwJSAgcCJPu4hpaw+sp4Ru7/LUOHw6Lq7YL3h+dSbE9cdq4BPKc5oMLc/9Rfm8s9+5dmku4ZPuRxMwQrlfCRGMenDgkmKzhIeYSXy/fpxNXWsy0eER2hCtm/UpL2lTXGf4h0h8CXLWNFaARsZ/BULtvx5ugEB1I0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VbxRCHiu; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tiMVytck; arc=none smtp.client-ip=103.168.172.154
+	 In-Reply-To:To:Cc; b=fR6yp5EXxU2A2ZQVlhnbt4JuvlaJ6MhZ++laEz+AO59pUggu9IgpnwtLKuA1ESQgev8+KdAr61E+d/abiNBIY0NEGB22FmsLVXhrnN8efsgti2z6a/El7YwJt+1C9rapoPvVc8aKdv9nAn+pY1T4GLslz6FfFflYaaxczlclau0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sqE/sAyS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TwQkutRj; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VbxRCHiu";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tiMVytck"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D971F114028C
-	for <git@vger.kernel.org>; Tue,  6 May 2025 07:09:26 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sqE/sAyS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TwQkutRj"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 989F7114028D
+	for <git@vger.kernel.org>; Tue,  6 May 2025 07:09:27 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 07:09:26 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 06 May 2025 07:09:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529766;
-	 x=1746616166; bh=AxwfhTNFH1p2l1uuIrC9nc+f3a7RMqrKOIehVBI5nGY=; b=
-	VbxRCHiulkfYptjPsmk96piL+zlb7+uCsLeh2+wW0BhyU6y9Qcda0yb9HvxU1fOM
-	2KdXUO4wPdq9tXy71j8Fg5OJu2MAFQCtZ4hpX+37EA8inssFYETsln4hs0n/EXOz
-	SPp/GKtdzGP/sPDnKPvjJa2u7nxcylkC1JkJjnuH3S5EDLlL7YYpp47Xlbn1K0Yx
-	7/rRHj9Zn8DSZOEYbEB/63e+mtWTFEmap8ic2H+GpdyhCHIpaGseeUjCHd497tXo
-	AaR+1wMDgysB1ZdNOv713Nn/NCPxZNRpy6720a/NEqqbTIAbXKgIO3p4dwycTcpJ
-	KSNreqEGT/Mo4DUSGjDaUg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529767;
+	 x=1746616167; bh=nVZeP406jw6tz1WxdqcqYbgurt+u7bN64LdemItfaxo=; b=
+	sqE/sAySw/tLY23t/VadUzhEzcQuyaVK0VqgdA4c/iPD5VB2+Dd3on0x2fvP1aen
+	WHSanjycbKW3WF1FnDdLcsSccpCaBJMDzQfqRWHoFMUEsxbz4MItS2gaMsXGI7dC
+	oXg3Z4LkPbBWcv7bF8Yx3bQO9YNOcrpEC15XeJmuaTBDR5y30YQ+oIRKksbboGBD
+	Qrkk2jL7D1PgBaenuK8EajrEd1WYABMg3l5vgUqDi/6/kQIDOMSjn+KOLmbBrS1Q
+	UMpb4YE4Isvpex/3H1ZKyg5HnEWc33MCnUCsefDVMcxaeINDMSjlS6VyKIm6ypuC
+	sNICItqFo175rkzOB/jO5Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529766; x=
-	1746616166; bh=AxwfhTNFH1p2l1uuIrC9nc+f3a7RMqrKOIehVBI5nGY=; b=t
-	iMVytck+mMvU5PBTPbDg8pDv6X06GRRyMXuSmYEhItNwDCiKK9Gu4mAtv3VpcYTm
-	zxd9AEhAcjzdaMWcPrVTyxPqdos3X36ob7h27hsHjhw8bOdLVp5aTK74fFpJ4p/C
-	m19iUote2cklUdkyXrqS2pfRuKxB7k+erkGPa8twH5BH45biYqnnBMY9hsX3e/IH
-	k8SpU5Dhe5mv0hcU5IABDi2cU6IVwEJ/QeJ4bo7p1y1nKTK2G/5n8AlAVgy2RYCZ
-	M+IQR+8T/r19FNr3mSmtiBlDJZ/z0aCXdz2/ncZNbODQNzLZ4KfF4JohmzXM0xxo
-	YFJHbL7MpcpK1NOVdu9ew==
-X-ME-Sender: <xms:5u0ZaGoL0oTDMFq5PjmmF8IYq7-pLZbf3lHT0WWDMRd4b400F3g-Pg>
-    <xme:5u0ZaEo0Xv33_YbECm-yc5b1pmr-ftCCMSUB_OR7FPrvXsmmC1ArPTSGvmRsbkAO7
-    0ejcp-c4PrkM1uO0w>
-X-ME-Received: <xmr:5u0ZaLMXr9vUd9brNFku12b7_wIg53lnbpB81mPKzIuGjsqPVPvE0HUY5DhCaK--g6lzMSCFYElfCSJz0fd_I9AWN4Fkme1iI3dOpui0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkeefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529767; x=
+	1746616167; bh=nVZeP406jw6tz1WxdqcqYbgurt+u7bN64LdemItfaxo=; b=T
+	wQkutRje4JLFTxHEOqWmX57VCZA0JZ+wQWxNK5UVvKpQ7IgGYj1b3iVpWlesZRqF
+	3i9tpKcYemVixp9NPkOXV4GOhn25Q7g8Lbp5Xwu+MCAm20iEJOsT0pfwUrAcvvrW
+	kMHR46TkUEX/5waITRzYjDupJuPSb6hbGYElqOEY8bnDAJcZK21w1PzB7ugxSgzc
+	GcoyB9wflr3STs8jV4z3m7vqcDB+vJHX9Stu68K2l/3N3p7z8j+HZ61x23STNJAI
+	vsiYDEnhLM4awrv7zfkFHJmC4kT/Z8JmYgb3oEIwb6/zl3lq9AIscXFtRfgQepMN
+	a1aOBAr4Dil+djQqkcesA==
+X-ME-Sender: <xms:5-0ZaNJ5mdByffDWP3npSqIxTVKAU1eTMR3FP7voWEl-uD0GFxDypw>
+    <xme:5-0ZaJKmWWYyrnINwG1Ly7axmEO4qVzYuqag3ERTl2jDuAzQT9r9A0sa89vPjC5Gc
+    zNdjHfxPISuw_L3JQ>
+X-ME-Received: <xmr:5-0ZaFtwy0EcaaLWYkfFnFyGHRwwQjFdKaWYLwVCq7-FEHwG4qpbe6O6CyStgh-c7DS3cXqA3Jkgkh7uRDcw1Mvb_YUuMjOlpcNjpJ49>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
     fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
     vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
     dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
-    thgvrhfuihiivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
     dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
     thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:5u0ZaF5VvzAvMIWydd24u-RdWL-Br9rQ1zf8m39xKQx6fNU6mYXcFg>
-    <xmx:5u0ZaF6RFRsGWaD0se0WHxF6QI5EYCNUZIb3BCnjSA_2IBm_9P-ofw>
-    <xmx:5u0ZaFj1V_DNZH7evD9O7AM3hw5_bzfBI6xbU6V1dWALaiV5aglFMw>
-    <xmx:5u0ZaP4XnkvLrlqjOpkeExlHDktEW_1FS_sr69uHncMUHkXnTCl-Zg>
-    <xmx:5u0ZaKGJ7Opke9H7sQj0cWGuUloG8e6rIM21_GlNnHqtMW2evGHAzmMr>
+X-ME-Proxy: <xmx:5-0ZaOYEWI34qHFo6aM_QF0XU3Z_eoX47tB1PugorBLPC3oB5ZbXzw>
+    <xmx:5-0ZaEZ-LHf0_TlImlqWQIOvUVYV8_J8Lfp2gWk1B7zOm4xv58DJMw>
+    <xmx:5-0ZaCBE01Ru2Gyfgg8QwgLbZqJL7bRH1tnaFA7uUBsEuaCPrp6oCQ>
+    <xmx:5-0ZaCZTRu1ro4NGlnpkeP715EYMYPM5mlt9U_jndmBfkkBWHAqhnA>
+    <xmx:5-0ZaCkrsCiOeCxG-YfxgcfChaEDqpb97O577pXxsnPaLP-YwRh7Fpr0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
  <git@vger.kernel.org>; Tue, 6 May 2025 07:09:26 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 66c0ce2d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 4bd37f10 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
 	Tue, 6 May 2025 11:09:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 06 May 2025 13:09:22 +0200
-Subject: [PATCH 09/17] odb: get rid of `the_repository` in `for_each()`
- functions
+Date: Tue, 06 May 2025 13:09:23 +0200
+Subject: [PATCH 10/17] odb: get rid of `the_repository` when handling the
+ primary backend
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,242 +83,177 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250506-pks-object-store-wo-the-repository-v1-9-c05b82e7b126@pks.im>
+Message-Id: <20250506-pks-object-store-wo-the-repository-v1-10-c05b82e7b126@pks.im>
 References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
 In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-There are a couple of iterator-style functions that execute a callback
-for each instance of a given set, all of which currently depend on
-`the_repository`. Refactor them to instead take an object database as
-parameter so that we can get rid of this dependency.
+The functions `set_temporary_primary_odb()` and `restore_primary_odb()`
+are responsible for managing a temporary primary backend for the
+database. Both of these fucntions implicitly rely on `the_repository`.
 
-Rename the functions accordingly.
+Refactor them to instead take an explicit object database parameter as
+argument and adjust callers. Rename the functions accordingly.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/count-objects.c     |  2 +-
- builtin/receive-pack.c      |  3 ++-
- builtin/submodule--helper.c |  3 ++-
- diagnose.c                  |  2 +-
- fetch-pack.c                |  3 ++-
- odb.c                       | 36 +++++++++++++++++++-----------------
- odb.h                       | 23 ++++++++++++++++++-----
- revision.c                  |  3 ++-
- 8 files changed, 47 insertions(+), 28 deletions(-)
+ odb.c        | 19 +++++++++++--------
+ odb.h        | 25 ++++++++++++++-----------
+ tmp-objdir.c | 10 ++++++----
+ 3 files changed, 31 insertions(+), 23 deletions(-)
 
-diff --git a/builtin/count-objects.c b/builtin/count-objects.c
-index 80f2693ac3c..5ca806d53e3 100644
---- a/builtin/count-objects.c
-+++ b/builtin/count-objects.c
-@@ -159,7 +159,7 @@ int cmd_count_objects(int argc,
- 		printf("prune-packable: %lu\n", packed_loose);
- 		printf("garbage: %lu\n", garbage);
- 		printf("size-garbage: %s\n", garbage_buf.buf);
--		foreach_alt_odb(print_alternate, NULL);
-+		odb_for_each_backend(the_repository->objects, print_alternate, NULL);
- 		strbuf_release(&loose_buf);
- 		strbuf_release(&pack_buf);
- 		strbuf_release(&garbage_buf);
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index cb5fd55a8e4..8c157ea7d1b 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -358,7 +358,8 @@ static void write_head_info(void)
- 
- 	refs_for_each_fullref_in(get_main_ref_store(the_repository), "",
- 				 exclude_patterns, show_ref_cb, &seen);
--	for_each_alternate_ref(show_one_alternate_ref, &seen);
-+	odb_for_each_alternate_ref(the_repository->objects,
-+				   show_one_alternate_ref, &seen);
- 
- 	oidset_clear(&seen);
- 	strvec_clear(&excludes_vector);
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 7f672e4808c..d54546df9da 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1668,7 +1668,8 @@ static void prepare_possible_alternates(const char *sm_name,
- 		die(_("Value '%s' for submodule.alternateErrorStrategy is not recognized"), error_strategy);
- 
- 	if (!strcmp(sm_alternate, "superproject"))
--		foreach_alt_odb(add_possible_reference_from_superproject, &sas);
-+		odb_for_each_backend(the_repository->objects,
-+				     add_possible_reference_from_superproject, &sas);
- 	else if (!strcmp(sm_alternate, "no"))
- 		; /* do nothing */
- 	else
-diff --git a/diagnose.c b/diagnose.c
-index 6ec07761a0f..0529e239837 100644
---- a/diagnose.c
-+++ b/diagnose.c
-@@ -229,7 +229,7 @@ int create_diagnostics_archive(struct repository *r,
- 	strbuf_reset(&buf);
- 	strbuf_addstr(&buf, "--add-virtual-file=packs-local.txt:");
- 	dir_file_stats(r->objects->backends, &buf);
--	foreach_alt_odb(dir_file_stats, &buf);
-+	odb_for_each_backend(r->objects, dir_file_stats, &buf);
- 	strvec_push(&archiver_args, buf.buf);
- 
- 	strbuf_reset(&buf);
-diff --git a/fetch-pack.c b/fetch-pack.c
-index cf157f5d7e5..47fa7fa4c49 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -115,7 +115,8 @@ static void for_each_cached_alternate(struct fetch_negotiator *negotiator,
- 	size_t i;
- 
- 	if (!initialized) {
--		for_each_alternate_ref(cache_one_alternate, &cache);
-+		odb_for_each_alternate_ref(the_repository->objects,
-+					   cache_one_alternate, &cache);
- 		initialized = 1;
- 	}
- 
 diff --git a/odb.c b/odb.c
-index 229e048d573..66cad14f538 100644
+index 66cad14f538..8be5d4fb2d6 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -494,8 +494,8 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+@@ -329,7 +329,8 @@ void odb_add_to_alternates_memory(struct object_database *odb,
+ 			     '\n', NULL, 0);
  }
  
- static void read_alternate_refs(const char *path,
--				alternate_ref_fn *cb,
--				void *data)
-+				odb_for_each_alternate_ref_fn *cb,
-+				void *payload)
- {
- 	struct child_process cmd = CHILD_PROCESS_INIT;
- 	struct strbuf line = STRBUF_INIT;
-@@ -517,7 +517,7 @@ static void read_alternate_refs(const char *path,
- 			break;
- 		}
- 
--		cb(&oid, data);
-+		cb(&oid, payload);
- 	}
- 
- 	fclose(fh);
-@@ -526,16 +526,16 @@ static void read_alternate_refs(const char *path,
- }
- 
- struct alternate_refs_data {
--	alternate_ref_fn *fn;
--	void *data;
-+	odb_for_each_alternate_ref_fn *fn;
-+	void *payload;
- };
- 
- static int refs_from_alternate_cb(struct odb_backend *e,
--				  void *data)
-+				  void *payload)
- {
- 	struct strbuf path = STRBUF_INIT;
- 	size_t base_len;
--	struct alternate_refs_data *cb = data;
-+	struct alternate_refs_data *cb = payload;
- 
- 	if (!strbuf_realpath(&path, e->path, 0))
- 		goto out;
-@@ -549,29 +549,31 @@ static int refs_from_alternate_cb(struct odb_backend *e,
- 		goto out;
- 	strbuf_setlen(&path, base_len);
- 
--	read_alternate_refs(path.buf, cb->fn, cb->data);
-+	read_alternate_refs(path.buf, cb->fn, cb->payload);
- 
- out:
- 	strbuf_release(&path);
- 	return 0;
- }
- 
--void for_each_alternate_ref(alternate_ref_fn fn, void *data)
-+void odb_for_each_alternate_ref(struct object_database *odb,
-+				odb_for_each_alternate_ref_fn cb, void *payload)
- {
--	struct alternate_refs_data cb;
--	cb.fn = fn;
--	cb.data = data;
--	foreach_alt_odb(refs_from_alternate_cb, &cb);
-+	struct alternate_refs_data data;
-+	data.fn = cb;
-+	data.payload = payload;
-+	odb_for_each_backend(odb, refs_from_alternate_cb, &data);
- }
- 
--int foreach_alt_odb(alt_odb_fn fn, void *cb)
-+int odb_for_each_backend(struct object_database *odb,
-+			 odb_for_each_backend_fn cb, void *payload)
+-struct odb_backend *set_temporary_primary_odb(const char *dir, int will_destroy)
++struct odb_backend *odb_set_temporary_primary_backend(struct object_database *odb,
++						      const char *dir, int will_destroy)
  {
  	struct odb_backend *backend;
- 	int r = 0;
  
+@@ -337,14 +338,14 @@ struct odb_backend *set_temporary_primary_odb(const char *dir, int will_destroy)
+ 	 * Make sure alternates are initialized, or else our entry may be
+ 	 * overwritten when they are.
+ 	 */
 -	odb_prepare_alternates(the_repository->objects);
--	for (backend = the_repository->objects->backends->next; backend; backend = backend->next) {
--		r = fn(backend, cb);
 +	odb_prepare_alternates(odb);
-+	for (backend = odb->backends->next; backend; backend = backend->next) {
-+		r = cb(backend, payload);
- 		if (r)
- 			break;
- 	}
+ 
+ 	/*
+ 	 * Make a new primary odb and link the old primary ODB in as an
+ 	 * alternate
+ 	 */
+ 	backend = xcalloc(1, sizeof(*backend));
+-	backend->odb = the_repository->objects;
++	backend->odb = odb;
+ 	backend->path = xstrdup(dir);
+ 
+ 	/*
+@@ -353,8 +354,8 @@ struct odb_backend *set_temporary_primary_odb(const char *dir, int will_destroy)
+ 	 */
+ 	backend->disable_ref_updates = 1;
+ 	backend->will_destroy = will_destroy;
+-	backend->next = the_repository->objects->backends;
+-	the_repository->objects->backends = backend;
++	backend->next = odb->backends;
++	odb->backends = backend;
+ 	return backend->next;
+ }
+ 
+@@ -366,9 +367,11 @@ static void free_object_directory(struct odb_backend *odb)
+ 	free(odb);
+ }
+ 
+-void restore_primary_odb(struct odb_backend *restore_odb, const char *old_path)
++void odb_restore_primary_backend(struct object_database *odb,
++				 struct odb_backend *restore_odb,
++				 const char *old_path)
+ {
+-	struct odb_backend *cur_odb = the_repository->objects->backends;
++	struct odb_backend *cur_odb = odb->backends;
+ 
+ 	if (strcmp(old_path, cur_odb->path))
+ 		BUG("expected %s as primary object store; found %s",
+@@ -377,7 +380,7 @@ void restore_primary_odb(struct odb_backend *restore_odb, const char *old_path)
+ 	if (cur_odb->next != restore_odb)
+ 		BUG("we expect the old primary object store to be the first alternate");
+ 
+-	the_repository->objects->backends = restore_odb;
++	odb->backends = restore_odb;
+ 	free_object_directory(cur_odb);
+ }
+ 
 diff --git a/odb.h b/odb.h
-index 2221af208ee..2165396a165 100644
+index 2165396a165..e80ee5efec6 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -61,11 +61,6 @@ struct odb_backend {
+@@ -61,17 +61,6 @@ struct odb_backend {
  	char *path;
  };
  
--typedef int alt_odb_fn(struct odb_backend *, void *);
--int foreach_alt_odb(alt_odb_fn, void*);
--typedef void alternate_ref_fn(const struct object_id *oid, void *);
--void for_each_alternate_ref(alternate_ref_fn, void *);
+-/*
+- * Replace the current writable object directory with the specified temporary
+- * object directory; returns the former primary object directory.
+- */
+-struct odb_backend *set_temporary_primary_odb(const char *dir, int will_destroy);
 -
- /*
-  * Replace the current writable object directory with the specified temporary
-  * object directory; returns the former primary object directory.
-@@ -180,6 +175,24 @@ void odb_clear(struct object_database *o);
+-/*
+- * Restore a previous ODB replaced by set_temporary_main_odb.
+- */
+-void restore_primary_odb(struct odb_backend *restore_odb, const char *old_path);
+-
+ struct packed_git;
+ struct multi_pack_index;
+ struct cached_object_entry;
+@@ -175,6 +164,20 @@ void odb_clear(struct object_database *o);
   */
  struct odb_backend *odb_find_backend(struct object_database *odb, const char *obj_dir);
  
 +/*
-+ * Iterate through all backends of the database and execute the provided
-+ * callback function for each of them. Stop iterating once the callback
-+ * function returns a non-zero value, in which case the value is bubbled up
-+ * from the callback.
++ * Replace the current writable object directory with the specified temporary
++ * object directory; returns the former primary backend.
 + */
-+typedef int odb_for_each_backend_fn(struct odb_backend *, void *);
-+int odb_for_each_backend(struct object_database *odb,
-+			 odb_for_each_backend_fn cb, void *payload);
++struct odb_backend *odb_set_temporary_primary_backend(struct object_database *odb,
++						      const char *dir, int will_destroy);
 +
 +/*
-+ * Iterate through all alternative object backends of the database and yield
-+ * their respective references.
++ * Restore a previous bakcend replaced by `odb_set_temporary_primary_backend()`.
 + */
-+typedef void odb_for_each_alternate_ref_fn(const struct object_id *oid, void *);
-+void odb_for_each_alternate_ref(struct object_database *odb,
-+				odb_for_each_alternate_ref_fn cb, void *payload);
++void odb_restore_primary_backend(struct object_database *odb,
++				 struct odb_backend *restore_odb,
++				 const char *old_path);
 +
  /*
-  * Create a temporary file rooted in the primary object database backend's
-  * directory, or die on failure. The filename is taken from "pattern", which
-diff --git a/revision.c b/revision.c
-index cdefe7d6e48..b0364f556ee 100644
---- a/revision.c
-+++ b/revision.c
-@@ -1907,7 +1907,8 @@ static void add_alternate_refs_to_pending(struct rev_info *revs,
- 	struct add_alternate_refs_data data;
- 	data.revs = revs;
- 	data.flags = flags;
--	for_each_alternate_ref(add_one_alternate_ref, &data);
-+	odb_for_each_alternate_ref(the_repository->objects,
-+				   add_one_alternate_ref, &data);
+  * Iterate through all backends of the database and execute the provided
+  * callback function for each of them. Stop iterating once the callback
+diff --git a/tmp-objdir.c b/tmp-objdir.c
+index 2982c646569..e6221879395 100644
+--- a/tmp-objdir.c
++++ b/tmp-objdir.c
+@@ -47,7 +47,7 @@ int tmp_objdir_destroy(struct tmp_objdir *t)
+ 		the_tmp_objdir = NULL;
+ 
+ 	if (t->prev_odb)
+-		restore_primary_odb(t->prev_odb, t->path.buf);
++		odb_restore_primary_backend(t->repo->objects, t->prev_odb, t->path.buf);
+ 
+ 	err = remove_dir_recursively(&t->path, 0);
+ 
+@@ -279,7 +279,7 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
+ 	if (t->prev_odb) {
+ 		if (t->repo->objects->backends->will_destroy)
+ 			BUG("migrating an ODB that was marked for destruction");
+-		restore_primary_odb(t->prev_odb, t->path.buf);
++		odb_restore_primary_backend(t->repo->objects, t->prev_odb, t->path.buf);
+ 		t->prev_odb = NULL;
+ 	}
+ 
+@@ -311,7 +311,8 @@ void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
+ {
+ 	if (t->prev_odb)
+ 		BUG("the primary object database is already replaced");
+-	t->prev_odb = set_temporary_primary_odb(t->path.buf, will_destroy);
++	t->prev_odb = odb_set_temporary_primary_backend(t->repo->objects,
++							t->path.buf, will_destroy);
+ 	t->will_destroy = will_destroy;
  }
  
- static int add_parents_only(struct rev_info *revs, const char *arg_, int flags,
+@@ -320,7 +321,8 @@ struct tmp_objdir *tmp_objdir_unapply_primary_odb(void)
+ 	if (!the_tmp_objdir || !the_tmp_objdir->prev_odb)
+ 		return NULL;
+ 
+-	restore_primary_odb(the_tmp_objdir->prev_odb, the_tmp_objdir->path.buf);
++	odb_restore_primary_backend(the_tmp_objdir->repo->objects,
++				    the_tmp_objdir->prev_odb, the_tmp_objdir->path.buf);
+ 	the_tmp_objdir->prev_odb = NULL;
+ 	return the_tmp_objdir;
+ }
 
 -- 
 2.49.0.1045.g170613ef41.dirty
