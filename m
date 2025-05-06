@@ -1,81 +1,79 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983BC28137C
-	for <git@vger.kernel.org>; Tue,  6 May 2025 14:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E11152820C8
+	for <git@vger.kernel.org>; Tue,  6 May 2025 14:12:48 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746540770; cv=none; b=ARvt7ald/rdU/abJmmYO+OYCNOylBxUn7lTo8NWT2AtsrTu/E6BrF9vbX9BmymTyE3y8MzFSDegqicoD3kt9HxGTDKcVDZwjpkDRxYiDgL9vOFsxZUJ2N1GyqW0TWnjNL71xC+obTargpIKo0jdNEholZ+mt/2w1Fvg52sAEN/8=
+	t=1746540770; cv=none; b=Q2AdkluRUTCj4mXkQ2nxfp4i1Z2Fz0Dvoq8A7p3F6nUHEE550FOgCWiNShFIlQJMDzShES0Ai9D9g+cYcM6EU+xUpxLNyI8EzDdtAMDVJUAy4+DpHydxKKBaotSTJPwFOeTtl5AUqigaGhoNZ4Gjq5HKmITcUl/yMlvvCKA4L8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746540770; c=relaxed/simple;
-	bh=1XRvd2I8L0bAMFC41w6S/evrVKnZaLKjq7rnNoVd1NI=;
+	bh=232BauiBaKf/IKnv0Czrg89is7OWflLG9qfxfFTZ4BM=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=V74KwEZ8/i/ZmdqFDSlt9IApYZ/ecvYjty8VTxpMbrqwADGTCH4mzi8ko5ZNQa5TR9+ESgvvAMOvNI+JHGE1MsdJuyqhyXOY3yxib9kK/a1Ax2k3eFhw4dptOtY4/D0HgO/gvT/USeu2iKxi85wGFenZDS9XEbBxqpsizMY71k8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TZlgAkR+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T3KFkGTS; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=arhFFVsG3CkIhKPXREVev5FFT4NMvyO82xgI8l36sfNJjZ1MNRrKqKcGut//dVfc26cHx+V/bU+MAIxwBadjBODL4sqblAYvANdfQEJWyMl6EEF0qWrdeLRowgkLSIq6KlQDUo4wUUgr729D18Zw2wIGIAeoRFRec69aRKmK6Fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RcYeMcsU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dDfbeNhk; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TZlgAkR+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T3KFkGTS"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id C31F513814A0
-	for <git@vger.kernel.org>; Tue,  6 May 2025 10:12:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RcYeMcsU";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dDfbeNhk"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 532291380EF8
+	for <git@vger.kernel.org>; Tue,  6 May 2025 10:12:48 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 06 May 2025 10:12:45 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 06 May 2025 10:12:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746540765;
-	 x=1746627165; bh=1J89Vssh/wRQOqF4JnGKOSgl4nFg3Hc4u+eHQ0nR1HE=; b=
-	TZlgAkR+/Ud9SHj2SHtjB7Su25gZhDMNJilyvEu6LBfPJc41C9h7obYN9D5Z3sQm
-	wEWNjWVGL3tu+Kex6NL2FIXSQkOVsNNIXDLy9yEtciHGFrQd6v4yAsp0qJgfnYfQ
-	tOavk1ByA3+AehnAAdqpZZvypdShoO5vhA9dvzt3PDPMPMa1tQUamqRcc/RmmOV1
-	PoMX0+RG5EGglv8J4hu+JSOXbXdcbEEyHHHKKZJdUfaIFfARZs3dSb56lD3UwMZA
-	Q4M85zGtKyv0SOQt+5nok00KD9HjaP8LUG0TTXl0CQM5BM3/QesQ0nSsI4zBFI2R
-	5ORBrpyUfAbKELmczYBEJQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746540768;
+	 x=1746627168; bh=VKoIjnZmkYL8WRitVHoY16z99aRlcpBd6DYKoS74EAo=; b=
+	RcYeMcsUe4bKpc5adhSHVTD3XSGTkAILMybaNiLne9AlUbFRzfsLVcsCUqhGMHsr
+	PW33AcxRgYPs5YQ/9+2ohvnFXXl4UMbPzMSan/ymv0KySd7DTAU2P33QJFyjzDwQ
+	Hnv+K1GOIFEjlZsg/NAZyQu8lDlJFL5Qluv829SSPD2X/+lgtXAFkGB8UpE6EoQM
+	9wCg413dRaJtpu/qdKmfH/hTBYzqq45kKY+cRxWJ4sLM22JNGkahek01JSu7Ztt7
+	vcV9sl4si+Y9DZj9E/3QnljmgwpSuFmgnE29BLC4OnbHHaI2iVsPCZPqsG6CIwZa
+	rKWpVzatkX3XH4YQ9Y6DiQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746540765; x=
-	1746627165; bh=1J89Vssh/wRQOqF4JnGKOSgl4nFg3Hc4u+eHQ0nR1HE=; b=T
-	3KFkGTSRsKzSKzGq0pP4fSR2iyOrC7RihtwysrLZ7hV3h2E9uODc18M73S4+OnAl
-	7tm7p4hoZhZZVDikGRPRCmaDbLjoM0GMQAwzbneAb5wqPvve91gJqW6mrQV6V/C2
-	2Dozi5cFxTvz8DLj9AcYdER7u0QYGS/2rPC2rAx1gTsWuxf/Mi5vzStKWXmrB24W
-	Ae4kPs/9fVGQRBjcnrx/WEnzwCn7xfb+nHPwMKj8VLhFjqVvkOS2A0UkK1CuUpD1
-	xekA/CcOREcOz3hpqtd+FbygN+pDDMH2ON2g0A9X965rD0qHzykBEQvEKwkybDLf
-	HnA39tkS3aUMAQ+I1jzHg==
-X-ME-Sender: <xms:3RgaaGsfpVStJp0RjXDN-s1Cevko3vGieBpNKtW72jAD1TJBvviNAQ>
-    <xme:3RgaaLeeIm3FQggr23R-NhfNbTUkWa902RvF0QB27d3rVEu6SGsyZ71kdiQALVQPV
-    Djx4yHY6dYEdGWdhg>
-X-ME-Received: <xmr:3RgaaBxWaozFIQlNg6cAZXG0F6RPpvKBBBSSKoD7JTh_QXfF9BcPoq5Vfn1uQbNRA-ihuxtdTEfA6nRrIWhLTCanWT6VFKhslkYwkFcY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegudelucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746540768; x=
+	1746627168; bh=VKoIjnZmkYL8WRitVHoY16z99aRlcpBd6DYKoS74EAo=; b=d
+	DfbeNhk0ywb2q396pdSdcjZqLISx/pHqewaZtDQ8KKd7U+/kFSBiNcDStBifTtRL
+	3YuMZur9GyS2CXeye0xPcYu1moDbb0acWyKZWaKk+59agxVx+ecJl4zmj4ATqFsg
+	wYYosJ9AnzZJ9MM9kBAfiR+S91USocY1M2PTQsdUD+Q7Sh2+K1cgsUZN+nBAL41O
+	iqIFpR/MmJDAfCRuMBlWCmlOp2eTYqApPIIMHybJX+1nciBS/1lgZeyyaMrCk052
+	2h0TqMMHtCCmMsFxCqIVpWNHigeF4PdhuxfXfTuZnp7WifNW0gWa3Xl0ulQCsl2w
+	a2expytF+fv5Sf95+eH2Q==
+X-ME-Sender: <xms:4BgaaJC4SEQs9FUbmaVs0nuUt7d4db_frOpjzKxfqmDrpDwPLNGcyA>
+    <xme:4BgaaHgRfrXqycABQ4eVzwMK8ljFdr8252Dxg2p0qU4VX8TdKna7ZjEO38nfgUcNC
+    iviY-29_83fwj_Z1w>
+X-ME-Received: <xmr:4BgaaEmYX6w3rNL-KlrRuqovMk8qsMZOl4kyLKPj35jE7-vIkDwbSxxu6MYtY4cfDzThVJbCViJqr3ISnS1bluQVCrgzmJImTdVG-N5K>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgovfgvgihtqfhnlh
-    ihqddqteefjeefqddtgeculdehtddmnecujfgurhephfffufggtgfgkfhfjgfvvefoseht
-    jeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpsh
-    esphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevhfevleetvdevtdeifffgvdehieeu
-    jefhtddutefhvdeltefgudduhefhvedtfeenucffohhmrghinhepghhithhhuhgsrdgtoh
-    hmpdhrvghpohhsihhtohhrhidruggvvhenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopedupd
-    hmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhg
-X-ME-Proxy: <xmx:3RgaaBM-V0GjD9sLD8EiRAAo5u4Rl-cWYa1DmCnr6WWZf7tLJRaKHA>
-    <xmx:3RgaaG9EsiMhMaX7_Ao1M51qx97cic3Z2dlaZGDEIVsSIIwvvuI0QQ>
-    <xmx:3RgaaJV5nTXFQqSyNJtj7dOhb_wFhe3HyYpZmySMJYofF1BeaKSWQA>
-    <xmx:3RgaaPczQg250V1kh9UV1cw9xa1r9oG-EvjhbFLdKGECGWC6JE7IHA>
-    <xmx:3RgaaJYJVKPGWHPa4Q6dGTHqLq811Gho50qRTXXEpG8vPdy-1hXOEhF4>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
+    fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
+    dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:4BgaaDzZtD0I3-XxO1y1iVI-0iKU62Z7PaD47pj2VJyPWECjezX5Dg>
+    <xmx:4BgaaOQqwEiVx2EpUgClY8KZPrAdR6SgkSowMVmTUDwuW0xHzHbPGA>
+    <xmx:4BgaaGa3cWMxJchBuOzgZTQygOrqXFCgfAiKjH1B0X7cbv2yMSLUgQ>
+    <xmx:4BgaaPRL1nooGcmW7Wd6rhJz17KJv8xwfntBSYBwUXLDk6aJ3aQqZA>
+    <xmx:4BgaaP_A4iBBTFyBkkWC2fjuiNw5L3ofnM18H_OyoSnSxRQu-bFm5_Nj>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 May 2025 10:12:44 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 May 2025 10:12:47 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e3e99b87 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 40f164f7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 May 2025 14:12:44 +0000 (UTC)
+	Tue, 6 May 2025 14:12:47 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 06 May 2025 16:12:38 +0200
-Subject: [PATCH 05/10] contrib: remove "hooks" directory
+Date: Tue, 06 May 2025 16:12:41 +0200
+Subject: [PATCH 08/10] contrib: remove "git-resurrect.sh"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,1507 +82,213 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250506-pks-contrib-spring-cleanup-v1-5-e6d5ddd79a72@pks.im>
+Message-Id: <20250506-pks-contrib-spring-cleanup-v1-8-e6d5ddd79a72@pks.im>
 References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
 In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-The "hooks" directory contains a handful of example hooks. Most of these
-hooks are highly specific and haven't really received any updates over
-the last couple of years, except for some global cleanups. The multimail
-hook has also been removed in f74d11471fa (multimail: stop shipping a
-copy, 2021-06-10) in favor of its upstream project [1].
+The "git-resurrect.sh" script can be used to find traces of a branch tip
+in the reflog and resurrect that branch. Despite a couple of global
+cleanups, the script hasn't seen any activity since it was introduced in
+e1ff064e1bf (contrib git-resurrect: find traces of a branch name and
+resurrect it, 2009-02-04).
 
-Remove those hooks. If we want to provide examples for how to use Git
-hooks we should do that as part of our documentation, for example in
-githooks(5).
-
-[1]: https://github.com/git-multimail/git-multimail
+Remove it.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/hooks/multimail/README.Git |   7 -
- contrib/hooks/post-receive-email   | 759 -------------------------------------
- contrib/hooks/pre-auto-gc-battery  |  42 --
- contrib/hooks/setgitperms.perl     | 214 -----------
- contrib/hooks/update-paranoid      | 421 --------------------
- 5 files changed, 1443 deletions(-)
+ contrib/git-resurrect.sh | 181 -----------------------------------------------
+ 1 file changed, 181 deletions(-)
 
-diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimail/README.Git
-deleted file mode 100644
-index c427efc7bd8..00000000000
---- a/contrib/hooks/multimail/README.Git
-+++ /dev/null
-@@ -1,7 +0,0 @@
--git-multimail is developed as an independent project at the following
--website:
--
--    https://github.com/git-multimail/git-multimail
--
--Please refer to that project page for information about how to report
--bugs or contribute to git-multimail.
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+diff --git a/contrib/git-resurrect.sh b/contrib/git-resurrect.sh
 deleted file mode 100755
-index ff565eb3d88..00000000000
---- a/contrib/hooks/post-receive-email
+index d843df3afd0..00000000000
+--- a/contrib/git-resurrect.sh
 +++ /dev/null
-@@ -1,759 +0,0 @@
+@@ -1,181 +0,0 @@
 -#!/bin/sh
--#
--# Copyright (c) 2007 Andy Parkins
--#
--# An example hook script to mail out commit update information.
--#
--# NOTE: This script is no longer under active development.  There
--# is another script, git-multimail, which is more capable and
--# configurable and is largely backwards-compatible with this script;
--# please see "contrib/hooks/multimail/".  For instructions on how to
--# migrate from post-receive-email to git-multimail, please see
--# "README.migrate-from-post-receive-email" in that directory.
--#
--# This hook sends emails listing new revisions to the repository
--# introduced by the change being reported.  The rule is that (for
--# branch updates) each commit will appear on one email and one email
--# only.
--#
--# This hook is stored in the contrib/hooks directory.  Your distribution
--# will have put this somewhere standard.  You should make this script
--# executable then link to it in the repository you would like to use it in.
--# For example, on debian the hook is stored in
--# /usr/share/git-core/contrib/hooks/post-receive-email:
--#
--#  cd /path/to/your/repository.git
--#  ln -sf /usr/share/git-core/contrib/hooks/post-receive-email hooks/post-receive
--#
--# This hook script assumes it is enabled on the central repository of a
--# project, with all users pushing only to it and not between each other.  It
--# will still work if you don't operate in that style, but it would become
--# possible for the email to be from someone other than the person doing the
--# push.
--#
--# To help with debugging and use on pre-v1.5.1 git servers, this script will
--# also obey the interface of hooks/update, taking its arguments on the
--# command line.  Unfortunately, hooks/update is called once for each ref.
--# To avoid firing one email per ref, this script just prints its output to
--# the screen when used in this mode.  The output can then be redirected if
--# wanted.
--#
--# Config
--# ------
--# hooks.mailinglist
--#   This is the list that all pushes will go to; leave it blank to not send
--#   emails for every ref update.
--# hooks.announcelist
--#   This is the list that all pushes of annotated tags will go to.  Leave it
--#   blank to default to the mailinglist field.  The announce emails lists
--#   the short log summary of the changes since the last annotated tag.
--# hooks.envelopesender
--#   If set then the -f option is passed to sendmail to allow the envelope
--#   sender address to be set
--# hooks.emailprefix
--#   All emails have their subjects prefixed with this prefix, or "[SCM]"
--#   if emailprefix is unset, to aid filtering
--# hooks.showrev
--#   The shell command used to format each revision in the email, with
--#   "%s" replaced with the commit id.  Defaults to "git rev-list -1
--#   --pretty %s", displaying the commit id, author, date and log
--#   message.  To list full patches separated by a blank line, you
--#   could set this to "git show -C %s; echo".
--#   To list a gitweb/cgit URL *and* a full patch for each change set, use this:
--#     "t=%s; printf 'http://.../?id=%%s' \$t; echo;echo; git show -C \$t; echo"
--#   Be careful if "..." contains things that will be expanded by shell "eval"
--#   or printf.
--# hooks.emailmaxlines
--#   The maximum number of lines that should be included in the generated
--#   email body. If not specified, there is no limit.
--#   Lines beyond the limit are suppressed and counted, and a final
--#   line is added indicating the number of suppressed lines.
--# hooks.diffopts
--#   Alternate options for the git diff-tree invocation that shows changes.
--#   Default is "--stat --summary --find-copies-harder". Add -p to those
--#   options to include a unified diff of changes in addition to the usual
--#   summary output.
--#
--# Notes
--# -----
--# All emails include the headers "X-Git-Refname", "X-Git-Oldrev",
--# "X-Git-Newrev", and "X-Git-Reftype" to enable fine tuned filtering and
--# give information for debugging.
--#
 -
--# ---------------------------- Functions
+-USAGE="[-a] [-r] [-m] [-t] [-n] [-b <newname>] <name>"
+-LONG_USAGE="git-resurrect attempts to find traces of a branch tip
+-called <name>, and tries to resurrect it.  Currently, the reflog is
+-searched for checkout messages, and with -r also merge messages.  With
+--m and -t, the history of all refs is scanned for Merge <name> into
+-other/Merge <other> into <name> (respectively) commit subjects, which
+-is rather slow but allows you to resurrect other people's topic
+-branches."
 -
--#
--# Function to prepare for email generation. This decides what type
--# of update this is and whether an email should even be generated.
--#
--prep_for_email()
--{
--	# --- Arguments
--	oldrev=$(git rev-parse $1)
--	newrev=$(git rev-parse $2)
--	refname="$3"
+-OPTIONS_KEEPDASHDASH=
+-OPTIONS_STUCKLONG=
+-OPTIONS_SPEC="\
+-git resurrect $USAGE
+---
+-b,branch=            save branch as <newname> instead of <name>
+-a,all                same as -l -r -m -t
+-k,keep-going         full rev-list scan (instead of first match)
+-l,reflog             scan reflog for checkouts (enabled by default)
+-r,reflog-merges      scan for merges recorded in reflog
+-m,merges             scan for merges into other branches (slow)
+-t,merge-targets      scan for merges of other branches into <name>
+-n,dry-run            don't recreate the branch"
 -
--	# --- Interpret
--	# 0000->1234 (create)
--	# 1234->2345 (update)
--	# 2345->0000 (delete)
--	if expr "$oldrev" : '0*$' >/dev/null
--	then
--		change_type="create"
--	else
--		if expr "$newrev" : '0*$' >/dev/null
--		then
--			change_type="delete"
--		else
--			change_type="update"
--		fi
--	fi
+-. git-sh-setup
 -
--	# --- Get the revision types
--	newrev_type=$(git cat-file -t $newrev 2> /dev/null)
--	oldrev_type=$(git cat-file -t "$oldrev" 2> /dev/null)
--	case "$change_type" in
--	create|update)
--		rev="$newrev"
--		rev_type="$newrev_type"
--		;;
--	delete)
--		rev="$oldrev"
--		rev_type="$oldrev_type"
--		;;
--	esac
--
--	# The revision type tells us what type the commit is, combined with
--	# the location of the ref we can decide between
--	#  - working branch
--	#  - tracking branch
--	#  - unannoted tag
--	#  - annotated tag
--	case "$refname","$rev_type" in
--		refs/tags/*,commit)
--			# un-annotated tag
--			refname_type="tag"
--			short_refname=${refname##refs/tags/}
--			;;
--		refs/tags/*,tag)
--			# annotated tag
--			refname_type="annotated tag"
--			short_refname=${refname##refs/tags/}
--			# change recipients
--			if [ -n "$announcerecipients" ]; then
--				recipients="$announcerecipients"
--			fi
--			;;
--		refs/heads/*,commit)
--			# branch
--			refname_type="branch"
--			short_refname=${refname##refs/heads/}
--			;;
--		refs/remotes/*,commit)
--			# tracking branch
--			refname_type="tracking branch"
--			short_refname=${refname##refs/remotes/}
--			echo >&2 "*** Push-update of tracking branch, $refname"
--			echo >&2 "***  - no email generated."
--			return 1
--			;;
--		*)
--			# Anything else (is there anything else?)
--			echo >&2 "*** Unknown type of update to $refname ($rev_type)"
--			echo >&2 "***  - no email generated"
--			return 1
--			;;
--	esac
--
--	# Check if we've got anyone to send to
--	if [ -z "$recipients" ]; then
--		case "$refname_type" in
--			"annotated tag")
--				config_name="hooks.announcelist"
--				;;
--			*)
--				config_name="hooks.mailinglist"
--				;;
--		esac
--		echo >&2 "*** $config_name is not set so no email will be sent"
--		echo >&2 "*** for $refname update $oldrev->$newrev"
--		return 1
--	fi
--
--	return 0
+-search_reflog () {
+-	sed -ne 's~^\([^ ]*\) .*	checkout: moving from '"$1"' .*~\1~p' \
+-		< "$GIT_DIR"/logs/HEAD
 -}
 -
--#
--# Top level email generation function.  This calls the appropriate
--# body-generation routine after outputting the common header.
--#
--# Note this function doesn't actually generate any email output, that is
--# taken care of by the functions it calls:
--#  - generate_email_header
--#  - generate_create_XXXX_email
--#  - generate_update_XXXX_email
--#  - generate_delete_XXXX_email
--#  - generate_email_footer
--#
--# Note also that this function cannot 'exit' from the script; when this
--# function is running (in hook script mode), the send_mail() function
--# is already executing in another process, connected via a pipe, and
--# if this function exits without, whatever has been generated to that
--# point will be sent as an email... even if nothing has been generated.
--#
--generate_email()
--{
--	# Email parameters
--	# The email subject will contain the best description of the ref
--	# that we can build from the parameters
--	describe=$(git describe $rev 2>/dev/null)
--	if [ -z "$describe" ]; then
--		describe=$rev
--	fi
--
--	generate_email_header
--
--	# Call the correct body generation function
--	fn_name=general
--	case "$refname_type" in
--	"tracking branch"|branch)
--		fn_name=branch
--		;;
--	"annotated tag")
--		fn_name=atag
--		;;
--	esac
--
--	if [ -z "$maxlines" ]; then
--		generate_${change_type}_${fn_name}_email
--	else
--		generate_${change_type}_${fn_name}_email | limit_lines $maxlines
--	fi
--
--	generate_email_footer
--}
--
--generate_email_header()
--{
--	# --- Email (all stdout will be the email)
--	# Generate header
--	cat <<-EOF
--	To: $recipients
--	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
--	MIME-Version: 1.0
--	Content-Type: text/plain; charset=utf-8
--	Content-Transfer-Encoding: 8bit
--	X-Git-Refname: $refname
--	X-Git-Reftype: $refname_type
--	X-Git-Oldrev: $oldrev
--	X-Git-Newrev: $newrev
--	Auto-Submitted: auto-generated
--
--	This is an automated email from the git hooks/post-receive script. It was
--	generated because a ref change was pushed to the repository containing
--	the project "$projectdesc".
--
--	The $refname_type, $short_refname has been ${change_type}d
--	EOF
--}
--
--generate_email_footer()
--{
--	SPACE=" "
--	cat <<-EOF
--
--
--	hooks/post-receive
--	--${SPACE}
--	$projectdesc
--	EOF
--}
--
--# --------------- Branches
--
--#
--# Called for the creation of a branch
--#
--generate_create_branch_email()
--{
--	# This is a new branch and so oldrev is not valid
--	echo "        at  $newrev ($newrev_type)"
--	echo ""
--
--	echo $LOGBEGIN
--	show_new_revisions
--	echo $LOGEND
--}
--
--#
--# Called for the change of a pre-existing branch
--#
--generate_update_branch_email()
--{
--	# Consider this:
--	#   1 --- 2 --- O --- X --- 3 --- 4 --- N
--	#
--	# O is $oldrev for $refname
--	# N is $newrev for $refname
--	# X is a revision pointed to by some other ref, for which we may
--	#   assume that an email has already been generated.
--	# In this case we want to issue an email containing only revisions
--	# 3, 4, and N.  Given (almost) by
--	#
--	#  git rev-list N ^O --not --all
--	#
--	# The reason for the "almost", is that the "--not --all" will take
--	# precedence over the "N", and effectively will translate to
--	#
--	#  git rev-list N ^O ^X ^N
--	#
--	# So, we need to build up the list more carefully.  git rev-parse
--	# will generate a list of revs that may be fed into git rev-list.
--	# We can get it to make the "--not --all" part and then filter out
--	# the "^N" with:
--	#
--	#  git rev-parse --not --all | grep -v N
--	#
--	# Then, using the --stdin switch to git rev-list we have effectively
--	# manufactured
--	#
--	#  git rev-list N ^O ^X
--	#
--	# This leaves a problem when someone else updates the repository
--	# while this script is running.  Their new value of the ref we're
--	# working on would be included in the "--not --all" output; and as
--	# our $newrev would be an ancestor of that commit, it would exclude
--	# all of our commits.  What we really want is to exclude the current
--	# value of $refname from the --not list, rather than N itself.  So:
--	#
--	#  git rev-parse --not --all | grep -v $(git rev-parse $refname)
--	#
--	# Gets us to something pretty safe (apart from the small time
--	# between refname being read, and git rev-parse running - for that,
--	# I give up)
--	#
--	#
--	# Next problem, consider this:
--	#   * --- B --- * --- O ($oldrev)
--	#          \
--	#           * --- X --- * --- N ($newrev)
--	#
--	# That is to say, there is no guarantee that oldrev is a strict
--	# subset of newrev (it would have required a --force, but that's
--	# allowed).  So, we can't simply say rev-list $oldrev..$newrev.
--	# Instead we find the common base of the two revs and list from
--	# there.
--	#
--	# As above, we need to take into account the presence of X; if
--	# another branch is already in the repository and points at some of
--	# the revisions that we are about to output - we don't want them.
--	# The solution is as before: git rev-parse output filtered.
--	#
--	# Finally, tags: 1 --- 2 --- O --- T --- 3 --- 4 --- N
--	#
--	# Tags pushed into the repository generate nice shortlog emails that
--	# summarise the commits between them and the previous tag.  However,
--	# those emails don't include the full commit messages that we output
--	# for a branch update.  Therefore we still want to output revisions
--	# that have been output on a tag email.
--	#
--	# Luckily, git rev-parse includes just the tool.  Instead of using
--	# "--all" we use "--branches"; this has the added benefit that
--	# "remotes/" will be ignored as well.
--
--	# List all of the revisions that were removed by this update, in a
--	# fast-forward update, this list will be empty, because rev-list O
--	# ^N is empty.  For a non-fast-forward, O ^N is the list of removed
--	# revisions
--	fast_forward=""
--	rev=""
--	for rev in $(git rev-list $newrev..$oldrev)
--	do
--		revtype=$(git cat-file -t "$rev")
--		echo "  discards  $rev ($revtype)"
--	done
--	if [ -z "$rev" ]; then
--		fast_forward=1
--	fi
--
--	# List all the revisions from baserev to newrev in a kind of
--	# "table-of-contents"; note this list can include revisions that
--	# have already had notification emails and is present to show the
--	# full detail of the change from rolling back the old revision to
--	# the base revision and then forward to the new revision
--	for rev in $(git rev-list $oldrev..$newrev)
--	do
--		revtype=$(git cat-file -t "$rev")
--		echo "       via  $rev ($revtype)"
--	done
--
--	if [ "$fast_forward" ]; then
--		echo "      from  $oldrev ($oldrev_type)"
--	else
--		#  1. Existing revisions were removed.  In this case newrev
--		#     is a subset of oldrev - this is the reverse of a
--		#     fast-forward, a rewind
--		#  2. New revisions were added on top of an old revision,
--		#     this is a rewind and addition.
--
--		# (1) certainly happened, (2) possibly.  When (2) hasn't
--		# happened, we set a flag to indicate that no log printout
--		# is required.
--
--		echo ""
--
--		# Find the common ancestor of the old and new revisions and
--		# compare it with newrev
--		baserev=$(git merge-base $oldrev $newrev)
--		rewind_only=""
--		if [ "$baserev" = "$newrev" ]; then
--			echo "This update discarded existing revisions and left the branch pointing at"
--			echo "a previous point in the repository history."
--			echo ""
--			echo " * -- * -- N ($newrev)"
--			echo "            \\"
--			echo "             O -- O -- O ($oldrev)"
--			echo ""
--			echo "The removed revisions are not necessarily gone - if another reference"
--			echo "still refers to them they will stay in the repository."
--			rewind_only=1
--		else
--			echo "This update added new revisions after undoing existing revisions.  That is"
--			echo "to say, the old revision is not a strict subset of the new revision.  This"
--			echo "situation occurs when you --force push a change and generate a repository"
--			echo "containing something like this:"
--			echo ""
--			echo " * -- * -- B -- O -- O -- O ($oldrev)"
--			echo "            \\"
--			echo "             N -- N -- N ($newrev)"
--			echo ""
--			echo "When this happens we assume that you've already had alert emails for all"
--			echo "of the O revisions, and so we here report only the revisions in the N"
--			echo "branch from the common base, B."
--		fi
--	fi
--
--	echo ""
--	if [ -z "$rewind_only" ]; then
--		echo "Those revisions listed above that are new to this repository have"
--		echo "not appeared on any other notification email; so we list those"
--		echo "revisions in full, below."
--
--		echo ""
--		echo $LOGBEGIN
--		show_new_revisions
--
--		# XXX: Need a way of detecting whether git rev-list actually
--		# outputted anything, so that we can issue a "no new
--		# revisions added by this update" message
--
--		echo $LOGEND
--	else
--		echo "No new revisions were added by this update."
--	fi
--
--	# The diffstat is shown from the old revision to the new revision.
--	# This is to show the truth of what happened in this change.
--	# There's no point showing the stat from the base to the new
--	# revision because the base is effectively a random revision at this
--	# point - the user will be interested in what this revision changed
--	# - including the undoing of previous revisions in the case of
--	# non-fast-forward updates.
--	echo ""
--	echo "Summary of changes:"
--	git diff-tree $diffopts $oldrev..$newrev
--}
--
--#
--# Called for the deletion of a branch
--#
--generate_delete_branch_email()
--{
--	echo "       was  $oldrev"
--	echo ""
--	echo $LOGBEGIN
--	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
--	echo $LOGEND
--}
--
--# --------------- Annotated tags
--
--#
--# Called for the creation of an annotated tag
--#
--generate_create_atag_email()
--{
--	echo "        at  $newrev ($newrev_type)"
--
--	generate_atag_email
--}
--
--#
--# Called for the update of an annotated tag (this is probably a rare event
--# and may not even be allowed)
--#
--generate_update_atag_email()
--{
--	echo "        to  $newrev ($newrev_type)"
--	echo "      from  $oldrev (which is now obsolete)"
--
--	generate_atag_email
--}
--
--#
--# Called when an annotated tag is created or changed
--#
--generate_atag_email()
--{
--	# Use git for-each-ref to pull out the individual fields from the
--	# tag
--	eval $(git for-each-ref --shell --format='
--	tagobject=%(*objectname)
--	tagtype=%(*objecttype)
--	tagger=%(taggername)
--	tagged=%(taggerdate)' $refname
+-search_reflog_merges () {
+-	git rev-parse $(
+-		sed -ne 's~^[^ ]* \([^ ]*\) .*	merge '"$1"':.*~\1^2~p' \
+-			< "$GIT_DIR"/logs/HEAD
 -	)
+-}
 -
--	echo "   tagging  $tagobject ($tagtype)"
--	case "$tagtype" in
--	commit)
+-oid_pattern=$(git hash-object --stdin </dev/null | sed -e 's/./[0-9a-f]/g')
 -
--		# If the tagged object is a commit, then we assume this is a
--		# release, and so we calculate which tag this tag is
--		# replacing
--		prevtag=$(git describe --abbrev=0 $newrev^ 2>/dev/null)
+-search_merges () {
+-	git rev-list --all --grep="Merge branch '$1'" \
+-		--pretty=tformat:"%P %s" |
+-	sed -ne "/^$oid_pattern \($oid_pattern\) Merge .*/ {s//\1/p;$early_exit}"
+-}
 -
--		if [ -n "$prevtag" ]; then
--			echo "  replaces  $prevtag"
--		fi
+-search_merge_targets () {
+-	git rev-list --all --grep="Merge branch '[^']*' into $branch\$" \
+-		--pretty=tformat:"%H %s" --all |
+-	sed -ne "/^\($oid_pattern\) Merge .*/ {s//\1/p;$early_exit} "
+-}
+-
+-dry_run=
+-early_exit=q
+-scan_reflog=t
+-scan_reflog_merges=
+-scan_merges=
+-scan_merge_targets=
+-new_name=
+-
+-while test "$#" != 0; do
+-	case "$1" in
+-	    -b|--branch)
+-		shift
+-		new_name="$1"
 -		;;
--	*)
--		echo "    length  $(git cat-file -s $tagobject) bytes"
+-	    -n|--dry-run)
+-		dry_run=t
+-		;;
+-	    --no-dry-run)
+-		dry_run=
+-		;;
+-	    -k|--keep-going)
+-		early_exit=
+-		;;
+-	    --no-keep-going)
+-		early_exit=q
+-		;;
+-	    -m|--merges)
+-		scan_merges=t
+-		;;
+-	    --no-merges)
+-		scan_merges=
+-		;;
+-	    -l|--reflog)
+-		scan_reflog=t
+-		;;
+-	    --no-reflog)
+-		scan_reflog=
+-		;;
+-	    -r|--reflog_merges)
+-		scan_reflog_merges=t
+-		;;
+-	    --no-reflog_merges)
+-		scan_reflog_merges=
+-		;;
+-	    -t|--merge-targets)
+-		scan_merge_targets=t
+-		;;
+-	    --no-merge-targets)
+-		scan_merge_targets=
+-		;;
+-	    -a|--all)
+-		scan_reflog=t
+-		scan_reflog_merges=t
+-		scan_merges=t
+-		scan_merge_targets=t
+-		;;
+-	    --)
+-		shift
+-		break
+-		;;
+-	    *)
+-		usage
 -		;;
 -	esac
--	echo " tagged by  $tagger"
--	echo "        on  $tagged"
+-	shift
+-done
 -
--	echo ""
--	echo $LOGBEGIN
+-test "$#" = 1 || usage
 -
--	# Show the content of the tag message; this might contain a change
--	# log or release notes so is worth displaying.
--	git cat-file tag $newrev | sed -e '1,/^$/d'
--
--	echo ""
--	case "$tagtype" in
--	commit)
--		# Only commit tags make sense to have rev-list operations
--		# performed on them
--		if [ -n "$prevtag" ]; then
--			# Show changes since the previous release
--			git shortlog "$prevtag..$newrev"
--		else
--			# No previous tag, show all the changes since time
--			# began
--			git shortlog $newrev
--		fi
--		;;
--	*)
--		# XXX: Is there anything useful we can do for non-commit
--		# objects?
--		;;
--	esac
--
--	echo $LOGEND
--}
--
--#
--# Called for the deletion of an annotated tag
--#
--generate_delete_atag_email()
--{
--	echo "       was  $oldrev"
--	echo ""
--	echo $LOGBEGIN
--	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
--	echo $LOGEND
--}
--
--# --------------- General references
--
--#
--# Called when any other type of reference is created (most likely a
--# non-annotated tag)
--#
--generate_create_general_email()
--{
--	echo "        at  $newrev ($newrev_type)"
--
--	generate_general_email
--}
--
--#
--# Called when any other type of reference is updated (most likely a
--# non-annotated tag)
--#
--generate_update_general_email()
--{
--	echo "        to  $newrev ($newrev_type)"
--	echo "      from  $oldrev"
--
--	generate_general_email
--}
--
--#
--# Called for creation or update of any other type of reference
--#
--generate_general_email()
--{
--	# Unannotated tags are more about marking a point than releasing a
--	# version; therefore we don't do the shortlog summary that we do for
--	# annotated tags above - we simply show that the point has been
--	# marked, and print the log message for the marked point for
--	# reference purposes
--	#
--	# Note this section also catches any other reference type (although
--	# there aren't any) and deals with them in the same way.
--
--	echo ""
--	if [ "$newrev_type" = "commit" ]; then
--		echo $LOGBEGIN
--		git diff-tree -s --always --encoding=UTF-8 --pretty=medium $newrev
--		echo $LOGEND
--	else
--		# What can we do here?  The tag marks an object that is not
--		# a commit, so there is no log for us to display.  It's
--		# probably not wise to output git cat-file as it could be a
--		# binary blob.  We'll just say how big it is
--		echo "$newrev is a $newrev_type, and is $(git cat-file -s $newrev) bytes long."
--	fi
--}
--
--#
--# Called for the deletion of any other type of reference
--#
--generate_delete_general_email()
--{
--	echo "       was  $oldrev"
--	echo ""
--	echo $LOGBEGIN
--	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
--	echo $LOGEND
--}
--
--
--# --------------- Miscellaneous utilities
--
--#
--# Show new revisions as the user would like to see them in the email.
--#
--show_new_revisions()
--{
--	# This shows all log entries that are not already covered by
--	# another ref - i.e. commits that are now accessible from this
--	# ref that were previously not accessible
--	# (see generate_update_branch_email for the explanation of this
--	# command)
--
--	# Revision range passed to rev-list differs for new vs. updated
--	# branches.
--	if [ "$change_type" = create ]
--	then
--		# Show all revisions exclusive to this (new) branch.
--		revspec=$newrev
--	else
--		# Branch update; show revisions not part of $oldrev.
--		revspec=$oldrev..$newrev
--	fi
--
--	other_branches=$(git for-each-ref --format='%(refname)' refs/heads/ |
--	    grep -F -v $refname)
--	git rev-parse --not $other_branches |
--	if [ -z "$custom_showrev" ]
--	then
--		git rev-list --pretty --stdin $revspec
--	else
--		git rev-list --stdin $revspec |
--		while read onerev
--		do
--			eval $(printf "$custom_showrev" $onerev)
--		done
--	fi
--}
--
--
--limit_lines()
--{
--	lines=0
--	skipped=0
--	while IFS="" read -r line; do
--		lines=$((lines + 1))
--		if [ $lines -gt $1 ]; then
--			skipped=$((skipped + 1))
--		else
--			printf "%s\n" "$line"
--		fi
--	done
--	if [ $skipped -ne 0 ]; then
--		echo "... $skipped lines suppressed ..."
--	fi
--}
--
--
--send_mail()
--{
--	if [ -n "$envelopesender" ]; then
--		/usr/sbin/sendmail -t -f "$envelopesender"
--	else
--		/usr/sbin/sendmail -t
--	fi
--}
--
--# ---------------------------- main()
--
--# --- Constants
--LOGBEGIN="- Log -----------------------------------------------------------------"
--LOGEND="-----------------------------------------------------------------------"
--
--# --- Config
--# Set GIT_DIR either from the working directory, or from the environment
--# variable.
--GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
--if [ -z "$GIT_DIR" ]; then
--	echo >&2 "fatal: post-receive: GIT_DIR not set"
--	exit 1
+-all_strategies="$scan_reflog$scan_reflog_merges$scan_merges$scan_merge_targets"
+-if test -z "$all_strategies"; then
+-	die "must enable at least one of -lrmt"
 -fi
 -
--projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
--# Check if the description is unchanged from it's default, and shorten it to
--# a more manageable length if it is
--if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
--then
--	projectdesc="UNNAMED PROJECT"
+-branch="$1"
+-test -z "$new_name" && new_name="$branch"
+-
+-if test ! -z "$scan_reflog"; then
+-	if test -r "$GIT_DIR"/logs/HEAD; then
+-		candidates="$(search_reflog $branch)"
+-	else
+-		die 'reflog scanning requested, but' \
+-			'$GIT_DIR/logs/HEAD not readable'
+-	fi
+-fi
+-if test ! -z "$scan_reflog_merges"; then
+-	if test -r "$GIT_DIR"/logs/HEAD; then
+-		candidates="$candidates $(search_reflog_merges $branch)"
+-	else
+-		die 'reflog scanning requested, but' \
+-			'$GIT_DIR/logs/HEAD not readable'
+-	fi
+-fi
+-if test ! -z "$scan_merges"; then
+-	candidates="$candidates $(search_merges $branch)"
+-fi
+-if test ! -z "$scan_merge_targets"; then
+-	candidates="$candidates $(search_merge_targets $branch)"
 -fi
 -
--recipients=$(git config hooks.mailinglist)
--announcerecipients=$(git config hooks.announcelist)
--envelopesender=$(git config hooks.envelopesender)
--emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
--custom_showrev=$(git config hooks.showrev)
--maxlines=$(git config hooks.emailmaxlines)
--diffopts=$(git config hooks.diffopts)
--: ${diffopts:="--stat --summary --find-copies-harder"}
+-candidates="$(git rev-parse $candidates | sort -u)"
 -
--# --- Main loop
--# Allow dual mode: run from the command line just like the update hook, or
--# if no arguments are given then run as a hook script
--if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
--	# Output to the terminal in command line mode - if someone wanted to
--	# resend an email; they could redirect the output to sendmail
--	# themselves
--	prep_for_email $2 $3 $1 && PAGER= generate_email
+-if test -z "$candidates"; then
+-	hint=
+-	test "z$all_strategies" != "ztttt" \
+-		&& hint=" (maybe try again with -a)"
+-	die "no candidates for $branch found$hint"
+-fi
+-
+-echo "** Candidates for $branch **"
+-for cmt in $candidates; do
+-	git --no-pager log --pretty=tformat:"%ct:%h [%cr] %s" --abbrev-commit -1 $cmt
+-done \
+-| sort -n | cut -d: -f2-
+-
+-newest="$(git rev-list -1 $candidates)"
+-if test ! -z "$dry_run"; then
+-	printf "** Most recent: "
+-	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
+-elif ! git rev-parse --verify --quiet $new_name >/dev/null; then
+-	printf "** Restoring $new_name to "
+-	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
+-	git branch $new_name $newest
 -else
--	while read oldrev newrev refname
--	do
--		prep_for_email $oldrev $newrev $refname || continue
--		generate_email $maxlines | send_mail
--	done
+-	printf "Most recent: "
+-	git --no-pager log -1 --pretty=tformat:"%h %s" $newest
+-	echo "** $new_name already exists, doing nothing"
 -fi
-diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
-deleted file mode 100755
-index 7ba78c4dff6..00000000000
---- a/contrib/hooks/pre-auto-gc-battery
-+++ /dev/null
-@@ -1,42 +0,0 @@
--#!/bin/sh
--#
--# An example hook script to verify if you are on battery, in case you
--# are running Linux or OS X. Called by git-gc --auto with no arguments.
--# The hook should exit with non-zero status after issuing an appropriate
--# message if it wants to stop the auto repacking.
--#
--# This hook is stored in the contrib/hooks directory. Your distribution
--# may have put this somewhere else. If you want to use this hook, you
--# should make this script executable then link to it in the repository
--# you would like to use it in.
--#
--# For example, if the hook is stored in
--# /usr/share/git-core/contrib/hooks/pre-auto-gc-battery:
--#
--# cd /path/to/your/repository.git
--# ln -sf /usr/share/git-core/contrib/hooks/pre-auto-gc-battery \
--#	hooks/pre-auto-gc
--
--if test -x /sbin/on_ac_power && (/sbin/on_ac_power;test $? -ne 1)
--then
--	exit 0
--elif test "$(cat /sys/class/power_supply/AC/online 2>/dev/null)" = 1
--then
--	exit 0
--elif grep -q 'on-line' /proc/acpi/ac_adapter/AC/state 2>/dev/null
--then
--	exit 0
--elif grep -q '0x01$' /proc/apm 2>/dev/null
--then
--	exit 0
--elif grep -q "AC Power \+: 1" /proc/pmu/info 2>/dev/null
--then
--	exit 0
--elif test -x /usr/bin/pmset && /usr/bin/pmset -g batt |
--	grep -q "drawing from 'AC Power'"
--then
--	exit 0
--fi
--
--echo "Auto packing deferred; not on AC"
--exit 1
-diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
-deleted file mode 100755
-index 2770a1b1d20..00000000000
---- a/contrib/hooks/setgitperms.perl
-+++ /dev/null
-@@ -1,214 +0,0 @@
--#!/usr/bin/perl
--#
--# Copyright (c) 2006 Josh England
--#
--# This script can be used to save/restore full permissions and ownership data
--# within a git working tree.
--#
--# To save permissions/ownership data, place this script in your .git/hooks
--# directory and enable a `pre-commit` hook with the following lines:
--#      #!/bin/sh
--#     SUBDIRECTORY_OK=1 . git-sh-setup
--#     $GIT_DIR/hooks/setgitperms.perl -r
--#
--# To restore permissions/ownership data, place this script in your .git/hooks
--# directory and enable a `post-merge` and `post-checkout` hook with the
--# following lines:
--#      #!/bin/sh
--#     SUBDIRECTORY_OK=1 . git-sh-setup
--#     $GIT_DIR/hooks/setgitperms.perl -w
--#
--use strict;
--use Getopt::Long;
--use File::Find;
--use File::Basename;
--
--my $usage =
--"usage: setgitperms.perl [OPTION]... <--read|--write>
--This program uses a file `.gitmeta` to store/restore permissions and uid/gid
--info for all files/dirs tracked by git in the repository.
--
-----------------------------------Read Mode-------------------------------------
---r,  --read         Reads perms/etc from working dir into a .gitmeta file
---s,  --stdout       Output to stdout instead of .gitmeta
---d,  --diff         Show unified diff of perms file (XOR with --stdout)
--
-----------------------------------Write Mode------------------------------------
---w,  --write        Modify perms/etc in working dir to match the .gitmeta file
---v,  --verbose      Be verbose
--
--\n";
--
--my ($stdout, $showdiff, $verbose, $read_mode, $write_mode);
--
--if ((@ARGV < 0) || !GetOptions(
--			       "stdout",         \$stdout,
--			       "diff",           \$showdiff,
--			       "read",           \$read_mode,
--			       "write",          \$write_mode,
--			       "verbose",        \$verbose,
--			      )) { die $usage; }
--die $usage unless ($read_mode xor $write_mode);
--
--my $topdir = `git rev-parse --show-cdup` or die "\n"; chomp $topdir;
--my $gitdir = $topdir . '.git';
--my $gitmeta = $topdir . '.gitmeta';
--
--if ($write_mode) {
--    # Update the working dir permissions/ownership based on data from .gitmeta
--    open (IN, "<$gitmeta") or die "Could not open $gitmeta for reading: $!\n";
--    while (defined ($_ = <IN>)) {
--	chomp;
--	if (/^(.*)  mode=(\S+)\s+uid=(\d+)\s+gid=(\d+)/) {
--	    # Compare recorded perms to actual perms in the working dir
--	    my ($path, $mode, $uid, $gid) = ($1, $2, $3, $4);
--	    my $fullpath = $topdir . $path;
--	    my (undef,undef,$wmode,undef,$wuid,$wgid) = lstat($fullpath);
--	    $wmode = sprintf "%04o", $wmode & 07777;
--	    if ($mode ne $wmode) {
--		$verbose && print "Updating permissions on $path: old=$wmode, new=$mode\n";
--		chmod oct($mode), $fullpath;
--	    }
--	    if ($uid != $wuid || $gid != $wgid) {
--		if ($verbose) {
--		    # Print out user/group names instead of uid/gid
--		    my $pwname  = getpwuid($uid);
--		    my $grpname  = getgrgid($gid);
--		    my $wpwname  = getpwuid($wuid);
--		    my $wgrpname  = getgrgid($wgid);
--		    $pwname = $uid if !defined $pwname;
--		    $grpname = $gid if !defined $grpname;
--		    $wpwname = $wuid if !defined $wpwname;
--		    $wgrpname = $wgid if !defined $wgrpname;
--
--		    print "Updating uid/gid on $path: old=$wpwname/$wgrpname, new=$pwname/$grpname\n";
--		}
--		chown $uid, $gid, $fullpath;
--	    }
--	}
--	else {
--	    warn "Invalid input format in $gitmeta:\n\t$_\n";
--	}
--    }
--    close IN;
--}
--elsif ($read_mode) {
--    # Handle merge conflicts in the .gitperms file
--    if (-e "$gitdir/MERGE_MSG") {
--	if (`grep ====== $gitmeta`) {
--	    # Conflict not resolved -- abort the commit
--	    print "PERMISSIONS/OWNERSHIP CONFLICT\n";
--	    print "    Resolve the conflict in the $gitmeta file and then run\n";
--	    print "    `.git/hooks/setgitperms.perl --write` to reconcile.\n";
--	    exit 1;
--	}
--	elsif (`grep $gitmeta $gitdir/MERGE_MSG`) {
--	    # A conflict in .gitmeta has been manually resolved. Verify that
--	    # the working dir perms matches the current .gitmeta perms for
--	    # each file/dir that conflicted.
--	    # This is here because a `setgitperms.perl --write` was not
--	    # performed due to a merge conflict, so permissions/ownership
--	    # may not be consistent with the manually merged .gitmeta file.
--	    my @conflict_diff = `git show \$(cat $gitdir/MERGE_HEAD)`;
--	    my @conflict_files;
--	    my $metadiff = 0;
--
--	    # Build a list of files that conflicted from the .gitmeta diff
--	    foreach my $line (@conflict_diff) {
--		if ($line =~ m|^diff --git a/$gitmeta b/$gitmeta|) {
--		    $metadiff = 1;
--		}
--		elsif ($line =~ /^diff --git/) {
--		    $metadiff = 0;
--		}
--		elsif ($metadiff && $line =~ /^\+(.*)  mode=/) {
--		    push @conflict_files, $1;
--		}
--	    }
--
--	    # Verify that each conflict file now has permissions consistent
--	    # with the .gitmeta file
--	    foreach my $file (@conflict_files) {
--		my $absfile = $topdir . $file;
--		my $gm_entry = `grep "^$file  mode=" $gitmeta`;
--		if ($gm_entry =~ /mode=(\d+)  uid=(\d+)  gid=(\d+)/) {
--		    my ($gm_mode, $gm_uid, $gm_gid) = ($1, $2, $3);
--		    my (undef,undef,$mode,undef,$uid,$gid) = lstat("$absfile");
--		    $mode = sprintf("%04o", $mode & 07777);
--		    if (($gm_mode ne $mode) || ($gm_uid != $uid)
--			|| ($gm_gid != $gid)) {
--			print "PERMISSIONS/OWNERSHIP CONFLICT\n";
--			print "    Mismatch found for file: $file\n";
--			print "    Run `.git/hooks/setgitperms.perl --write` to reconcile.\n";
--			exit 1;
--		    }
--		}
--		else {
--		    print "Warning! Permissions/ownership no longer being tracked for file: $file\n";
--		}
--	    }
--	}
--    }
--
--    # No merge conflicts -- write out perms/ownership data to .gitmeta file
--    unless ($stdout) {
--	open (OUT, ">$gitmeta.tmp") or die "Could not open $gitmeta.tmp for writing: $!\n";
--    }
--
--    my @files = `git ls-files`;
--    my %dirs;
--
--    foreach my $path (@files) {
--	chomp $path;
--	# We have to manually add stats for parent directories
--	my $parent = dirname($path);
--	while (!exists $dirs{$parent}) {
--	    $dirs{$parent} = 1;
--	    next if $parent eq '.';
--	    printstats($parent);
--	    $parent = dirname($parent);
--	}
--	# Now the git-tracked file
--	printstats($path);
--    }
--
--    # diff the temporary metadata file to see if anything has changed
--    # If no metadata has changed, don't overwrite the real file
--    # This is just so `git commit -a` doesn't try to commit a bogus update
--    unless ($stdout) {
--	if (! -e $gitmeta) {
--	    rename "$gitmeta.tmp", $gitmeta;
--	}
--	else {
--	    my $diff = `diff -U 0 $gitmeta $gitmeta.tmp`;
--	    if ($diff ne '') {
--		rename "$gitmeta.tmp", $gitmeta;
--	    }
--	    else {
--		unlink "$gitmeta.tmp";
--	    }
--	    if ($showdiff) {
--		print $diff;
--	    }
--	}
--	close OUT;
--    }
--    # Make sure the .gitmeta file is tracked
--    system("git add $gitmeta");
--}
--
--
--sub printstats {
--    my $path = $_[0];
--    $path =~ s/@/\@/g;
--    my (undef,undef,$mode,undef,$uid,$gid) = lstat($path);
--    $path =~ s/%/\%/g;
--    if ($stdout) {
--	print $path;
--	printf "  mode=%04o  uid=$uid  gid=$gid\n", $mode & 07777;
--    }
--    else {
--	print OUT $path;
--	printf OUT "  mode=%04o  uid=$uid  gid=$gid\n", $mode & 07777;
--    }
--}
-diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-paranoid
-deleted file mode 100755
-index 0092d67b8a4..00000000000
---- a/contrib/hooks/update-paranoid
-+++ /dev/null
-@@ -1,421 +0,0 @@
--#!/usr/bin/perl
--
--use strict;
--use File::Spec;
--
--$ENV{PATH}     = '/opt/git/bin';
--my $acl_git    = '/vcs/acls.git';
--my $acl_branch = 'refs/heads/master';
--my $debug      = 0;
--
--=doc
--Invoked as: update refname old-sha1 new-sha1
--
--This script is run by git-receive-pack once for each ref that the
--client is trying to modify.  If we exit with a non-zero exit value
--then the update for that particular ref is denied, but updates for
--other refs in the same run of receive-pack may still be allowed.
--
--We are run after the objects have been uploaded, but before the
--ref is actually modified.  We take advantage of that fact when we
--look for "new" commits and tags (the new objects won't show up in
--`rev-list --all`).
--
--This script loads and parses the content of the config file
--"users/$this_user.acl" from the $acl_branch commit of $acl_git ODB.
--The acl file is a git-config style file, but uses a slightly more
--restricted syntax as the Perl parser contained within this script
--is not nearly as permissive as git-config.
--
--Example:
--
--  [user]
--    committer = John Doe <john.doe@example.com>
--    committer = John R. Doe <john.doe@example.com>
--
--  [repository "acls"]
--    allow = heads/master
--    allow = CDUR for heads/jd/
--    allow = C    for ^tags/v\\d+$
--
--For all new commit or tag objects the committer (or tagger) line
--within the object must exactly match one of the user.committer
--values listed in the acl file ("HEAD:users/$this_user.acl").
--
--For a branch to be modified an allow line within the matching
--repository section must be matched for both the refname and the
--opcode.
--
--Repository sections are matched on the basename of the repository
--(after removing the .git suffix).
--
--The opcode abbreviations are:
--
--  C: create new ref
--  D: delete existing ref
--  U: fast-forward existing ref (no commit loss)
--  R: rewind/rebase existing ref (commit loss)
--
--if no opcodes are listed before the "for" keyword then "U" (for
--fast-forward update only) is assumed as this is the most common
--usage.
--
--Refnames are matched by always assuming a prefix of "refs/".
--This hook forbids pushing or deleting anything not under "refs/".
--
--Refnames that start with ^ are Perl regular expressions, and the ^
--is kept as part of the regexp.  \\ is needed to get just one \, so
--\\d expands to \d in Perl.  The 3rd allow line above is an example.
--
--Refnames that don't start with ^ but that end with / are prefix
--matches (2nd allow line above); all other refnames are strict
--equality matches (1st allow line).
--
--Anything pushed to "heads/" (ok, really "refs/heads/") must be
--a commit.  Tags are not permitted here.
--
--Anything pushed to "tags/" (err, really "refs/tags/") must be an
--annotated tag.  Commits, blobs, trees, etc. are not permitted here.
--Annotated tag signatures aren't checked, nor are they required.
--
--The special subrepository of 'info/new-commit-check' can
--be created and used to allow users to push new commits and
--tags from another local repository to this one, even if they
--aren't the committer/tagger of those objects.  In a nut shell
--the info/new-commit-check directory is a Git repository whose
--objects/info/alternates file lists this repository and all other
--possible sources, and whose refs subdirectory contains symlinks
--to this repository's refs subdirectory, and to all other possible
--sources refs subdirectories.  Yes, this means that you cannot
--use packed-refs in those repositories as they won't be resolved
--correctly.
--
--=cut
--
--my $git_dir = $ENV{GIT_DIR};
--my $new_commit_check = "$git_dir/info/new-commit-check";
--my $ref = $ARGV[0];
--my $old = $ARGV[1];
--my $new = $ARGV[2];
--my $new_type;
--my ($this_user) = getpwuid $<; # REAL_USER_ID
--my $repository_name;
--my %user_committer;
--my @allow_rules;
--my @path_rules;
--my %diff_cache;
--
--sub deny ($) {
--	print STDERR "-Deny-    $_[0]\n" if $debug;
--	print STDERR "\ndenied: $_[0]\n\n";
--	exit 1;
--}
--
--sub grant ($) {
--	print STDERR "-Grant-   $_[0]\n" if $debug;
--	exit 0;
--}
--
--sub info ($) {
--	print STDERR "-Info-    $_[0]\n" if $debug;
--}
--
--sub git_value (@) {
--	open(T,'-|','git',@_); local $_ = <T>; chop; close T; $_;
--}
--
--sub match_string ($$) {
--	my ($acl_n, $ref) = @_;
--	   ($acl_n eq $ref)
--	|| ($acl_n =~ m,/$, && substr($ref,0,length $acl_n) eq $acl_n)
--	|| ($acl_n =~ m,^\^, && $ref =~ m:$acl_n:);
--}
--
--sub parse_config ($$$$) {
--	my $data = shift;
--	local $ENV{GIT_DIR} = shift;
--	my $br = shift;
--	my $fn = shift;
--	return unless git_value('rev-list','--max-count=1',$br,'--',$fn);
--	info "Loading $br:$fn";
--	open(I,'-|','git','cat-file','blob',"$br:$fn");
--	my $section = '';
--	while (<I>) {
--		chomp;
--		if (/^\s*$/ || /^\s*#/) {
--		} elsif (/^\[([a-z]+)\]$/i) {
--			$section = lc $1;
--		} elsif (/^\[([a-z]+)\s+"(.*)"\]$/i) {
--			$section = join('.',lc $1,$2);
--		} elsif (/^\s*([a-z][a-z0-9]+)\s*=\s*(.*?)\s*$/i) {
--			push @{$data->{join('.',$section,lc $1)}}, $2;
--		} else {
--			deny "bad config file line $. in $br:$fn";
--		}
--	}
--	close I;
--}
--
--sub all_new_committers () {
--	local $ENV{GIT_DIR} = $git_dir;
--	$ENV{GIT_DIR} = $new_commit_check if -d $new_commit_check;
--
--	info "Getting committers of new commits.";
--	my %used;
--	open(T,'-|','git','rev-list','--pretty=raw',$new,'--not','--all');
--	while (<T>) {
--		next unless s/^committer //;
--		chop;
--		s/>.*$/>/;
--		info "Found $_." unless $used{$_}++;
--	}
--	close T;
--	info "No new commits." unless %used;
--	keys %used;
--}
--
--sub all_new_taggers () {
--	my %exists;
--	open(T,'-|','git','for-each-ref','--format=%(objectname)','refs/tags');
--	while (<T>) {
--		chop;
--		$exists{$_} = 1;
--	}
--	close T;
--
--	info "Getting taggers of new tags.";
--	my %used;
--	my $obj = $new;
--	my $obj_type = $new_type;
--	while ($obj_type eq 'tag') {
--		last if $exists{$obj};
--		$obj_type = '';
--		open(T,'-|','git','cat-file','tag',$obj);
--		while (<T>) {
--			chop;
--			if (/^object ([a-z0-9]{40})$/) {
--				$obj = $1;
--			} elsif (/^type (.+)$/) {
--				$obj_type = $1;
--			} elsif (s/^tagger //) {
--				s/>.*$/>/;
--				info "Found $_." unless $used{$_}++;
--				last;
--			}
--		}
--		close T;
--	}
--	info "No new tags." unless %used;
--	keys %used;
--}
--
--sub check_committers (@) {
--	my @bad;
--	foreach (@_) { push @bad, $_ unless $user_committer{$_}; }
--	if (@bad) {
--		print STDERR "\n";
--		print STDERR "You are not $_.\n" foreach (sort @bad);
--		deny "You cannot push changes not committed by you.";
--	}
--}
--
--sub load_diff ($) {
--	my $base = shift;
--	my $d = $diff_cache{$base};
--	unless ($d) {
--		local $/ = "\0";
--		my %this_diff;
--		if ($base =~ /^0{40}$/) {
--			# Don't load the diff at all; we are making the
--			# branch and have no base to compare to in this
--			# case.  A file level ACL makes no sense in this
--			# context.  Having an empty diff will allow the
--			# branch creation.
--			#
--		} else {
--			open(T,'-|','git','diff-tree',
--				'-r','--name-status','-z',
--				$base,$new) or return undef;
--			while (<T>) {
--				my $op = $_;
--				chop $op;
--
--				my $path = <T>;
--				chop $path;
--
--				$this_diff{$path} = $op;
--			}
--			close T or return undef;
--		}
--		$d = \%this_diff;
--		$diff_cache{$base} = $d;
--	}
--	return $d;
--}
--
--deny "No GIT_DIR inherited from caller" unless $git_dir;
--deny "Need a ref name" unless $ref;
--deny "Refusing funny ref $ref" unless $ref =~ s,^refs/,,;
--deny "Bad old value $old" unless $old =~ /^[a-z0-9]{40}$/;
--deny "Bad new value $new" unless $new =~ /^[a-z0-9]{40}$/;
--deny "Cannot determine who you are." unless $this_user;
--grant "No change requested." if $old eq $new;
--
--$repository_name = File::Spec->rel2abs($git_dir);
--$repository_name =~ m,/([^/]+)(?:\.git|/\.git)$,;
--$repository_name = $1;
--info "Updating in '$repository_name'.";
--
--my $op;
--if    ($old =~ /^0{40}$/) { $op = 'C'; }
--elsif ($new =~ /^0{40}$/) { $op = 'D'; }
--else                      { $op = 'R'; }
--
--# This is really an update (fast-forward) if the
--# merge base of $old and $new is $old.
--#
--$op = 'U' if ($op eq 'R'
--	&& $ref =~ m,^heads/,
--	&& $old eq git_value('merge-base',$old,$new));
--
--# Load the user's ACL file. Expand groups (user.memberof) one level.
--{
--	my %data = ('user.committer' => []);
--	parse_config(\%data,$acl_git,$acl_branch,"external/$repository_name.acl");
--
--	%data = (
--		'user.committer' => $data{'user.committer'},
--		'user.memberof' => [],
--	);
--	parse_config(\%data,$acl_git,$acl_branch,"users/$this_user.acl");
--
--	%user_committer = map {$_ => $_} @{$data{'user.committer'}};
--	my $rule_key = "repository.$repository_name.allow";
--	my $rules = $data{$rule_key} || [];
--
--	foreach my $group (@{$data{'user.memberof'}}) {
--		my %g;
--		parse_config(\%g,$acl_git,$acl_branch,"groups/$group.acl");
--		my $group_rules = $g{$rule_key};
--		push @$rules, @$group_rules if $group_rules;
--	}
--
--RULE:
--	foreach (@$rules) {
--		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
--			my $k = lc $1;
--			my $v = $data{"user.$k"};
--			next RULE unless defined $v;
--			next RULE if @$v != 1;
--			next RULE unless defined $v->[0];
--			s/\${user\.$k}/$v->[0]/g;
--		}
--
--		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/) {
--			my ($ops, $pth, $ref, $bst) = ($1, $2, $3, $4);
--			$ops =~ s/ //g;
--			$pth =~ s/\\\\/\\/g;
--			$ref =~ s/\\\\/\\/g;
--			push @path_rules, [$ops, $pth, $ref, $bst];
--		} elsif (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)$/) {
--			my ($ops, $pth, $ref) = ($1, $2, $3);
--			$ops =~ s/ //g;
--			$pth =~ s/\\\\/\\/g;
--			$ref =~ s/\\\\/\\/g;
--			push @path_rules, [$ops, $pth, $ref, $old];
--		} elsif (/^([CDRU ]+)\s+for\s+([^\s]+)$/) {
--			my $ops = $1;
--			my $ref = $2;
--			$ops =~ s/ //g;
--			$ref =~ s/\\\\/\\/g;
--			push @allow_rules, [$ops, $ref];
--		} elsif (/^for\s+([^\s]+)$/) {
--			# Mentioned, but nothing granted?
--		} elsif (/^[^\s]+$/) {
--			s/\\\\/\\/g;
--			push @allow_rules, ['U', $_];
--		}
--	}
--}
--
--if ($op ne 'D') {
--	$new_type = git_value('cat-file','-t',$new);
--
--	if ($ref =~ m,^heads/,) {
--		deny "$ref must be a commit." unless $new_type eq 'commit';
--	} elsif ($ref =~ m,^tags/,) {
--		deny "$ref must be an annotated tag." unless $new_type eq 'tag';
--	}
--
--	check_committers (all_new_committers);
--	check_committers (all_new_taggers) if $new_type eq 'tag';
--}
--
--info "$this_user wants $op for $ref";
--foreach my $acl_entry (@allow_rules) {
--	my ($acl_ops, $acl_n) = @$acl_entry;
--	next unless $acl_ops =~ /^[CDRU]+$/; # Uhh.... shouldn't happen.
--	next unless $acl_n;
--	next unless $op =~ /^[$acl_ops]$/;
--	next unless match_string $acl_n, $ref;
--
--	# Don't test path rules on branch deletes.
--	#
--	grant "Allowed by: $acl_ops for $acl_n" if $op eq 'D';
--
--	# Aggregate matching path rules; allow if there aren't
--	# any matching this ref.
--	#
--	my %pr;
--	foreach my $p_entry (@path_rules) {
--		my ($p_ops, $p_n, $p_ref, $p_bst) = @$p_entry;
--		next unless $p_ref;
--		push @{$pr{$p_bst}}, $p_entry if match_string $p_ref, $ref;
--	}
--	grant "Allowed by: $acl_ops for $acl_n" unless %pr;
--
--	# Allow only if all changes against a single base are
--	# allowed by file path rules.
--	#
--	my @bad;
--	foreach my $p_bst (keys %pr) {
--		my $diff_ref = load_diff $p_bst;
--		deny "Cannot difference trees." unless ref $diff_ref;
--
--		my %fd = %$diff_ref;
--		foreach my $p_entry (@{$pr{$p_bst}}) {
--			my ($p_ops, $p_n, $p_ref, $p_bst) = @$p_entry;
--			next unless $p_ops =~ /^[AMD]+$/;
--			next unless $p_n;
--
--			foreach my $f_n (keys %fd) {
--				my $f_op = $fd{$f_n};
--				next unless $f_op;
--				next unless $f_op =~ /^[$p_ops]$/;
--				delete $fd{$f_n} if match_string $p_n, $f_n;
--			}
--			last unless %fd;
--		}
--
--		if (%fd) {
--			push @bad, [$p_bst, \%fd];
--		} else {
--			# All changes relative to $p_bst were allowed.
--			#
--			grant "Allowed by: $acl_ops for $acl_n diff $p_bst";
--		}
--	}
--
--	foreach my $bad_ref (@bad) {
--		my ($p_bst, $fd) = @$bad_ref;
--		print STDERR "\n";
--		print STDERR "Not allowed to make the following changes:\n";
--		print STDERR "(base: $p_bst)\n";
--		foreach my $f_n (sort keys %$fd) {
--			print STDERR "  $fd->{$f_n} $f_n\n";
--		}
--	}
--	deny "You are not permitted to $op $ref";
--}
--close A;
--deny "You are not permitted to $op $ref";
 
 -- 
 2.49.0.1045.g170613ef41.dirty
