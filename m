@@ -1,183 +1,134 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DEA828137E
-	for <git@vger.kernel.org>; Tue,  6 May 2025 13:21:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C479280A4C
+	for <git@vger.kernel.org>; Tue,  6 May 2025 13:24:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746537662; cv=none; b=Smq6tfofIJSZuYhvxSV09tDWtOz4U3HD1NAE4HaMhd8/Z98SHefMa1fXrWPJj09maTyT2CIfhBeUO5ixAx2+BBvfWdaeBxIti8p5ns5tk7h6UrUiSDcNqrumaWQoJl+tW+azw75fZzRNhtFTgX2eufw/o92Iq/RUar4788aNOkM=
+	t=1746537843; cv=none; b=T9hYicmqVte6KLnW9+IJqw1J/aJoyk0PCwltMAN7qt+BJC6LcNAk/6ljrBPnJSc59F94yDDBgKqju2nKAZnXkMR2vQmp7edMwW3TPHZeTrqvm1/vv7X0IPq+3gOlmnOVQw0pIVr4flyMjMnd0ZKkqg8t0VLQ2kLH8Ejxnfcw9Ug=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746537662; c=relaxed/simple;
-	bh=blpc/EfM/AvKb16A6XnTVjt6rebxb/6fjSfnA7JtkEc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iwTfCV/kfkSGkgxw8C6igX2gOHWPS2C8VoSPW7SUgQWeFB3Ekk+xFI++ulL66cwL3lnXNjvNjLfOaKmSkPbraeDVrojIQw1Uni4GkmM1LWicDWb2p07DVODJr+saRrUbS/YUvbwHGMeIq5xwLLdOr/WX6dxdgJwhCs9NITlx44o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=O2s4+EBW; arc=none smtp.client-ip=209.85.221.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746537843; c=relaxed/simple;
+	bh=z4XsFeriS14PODQFvx6Oz6q+ujkxsBrWOfBuTf8NkXQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=GYnh7Nsb0qcFnJQ1v7bYHxxrc7EIdZlJinjkFaavsV5+GY87VHtkf3qgX3IykK4OGqfA1wTNubsr8IPny/W04zwENodXR3Ue0IUVg0kcyDPcNvyGh0CyHyViUioX1gUAvdMU4A5qJqA581URl8NHInbEV4wz9OIy0oV7va5utiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=evjITvlk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ws4ICrD3; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="O2s4+EBW"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-39ac8e7688aso4083412f8f.2
-        for <git@vger.kernel.org>; Tue, 06 May 2025 06:21:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746537659; x=1747142459; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=MWAnjkozbPlViBG+EZRvZbvKsy8xnjM0vMqVJUh5Wfo=;
-        b=O2s4+EBWAiXgyial1GyHoJFfGFHz/zqSXemgwOiLnwl5kOC/s4ZNN0c7N9/QxztozQ
-         ADya2O8kX+NDUfbjLIq0NlrwrmQzRAwmaWBi3pjNClby52SmMSup1BQt4F7/ieIvFbqU
-         sUJKzl/zP49wnri5qhR8Hc3rIfT9tjFc3YmKc8UxrRGtS1BBLMjLrTOQcZqbf3CWqReM
-         nowvkHuDHvysVP2UP5uLqIYNF91Vdk5srzmw89i6VFIIR/YQxyh5DSDZbR+mT6bmGKco
-         Yh4oXhN564Fsul6NMIkdgI8ajIm9XqK1qq0lOofjTdddV5s2B7DvojNykTMVEv6t+mNg
-         eLrQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746537659; x=1747142459;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MWAnjkozbPlViBG+EZRvZbvKsy8xnjM0vMqVJUh5Wfo=;
-        b=GLZuOWerQhINPXeXclnU66V5bIKBHaNUdoR/8ajqGoqALPMsCWnsxLfSRo7RmBCbR4
-         Gzl0idqEEhfLCgtvVceOyNmrXOQAFLyaNx6CCDf9UyVDhI3+anHyEdPCRA5JdSBydhBi
-         JGJyaHlTEyFlQFLz5vd6M4eG0JG1EpvX3VHDGdWyFVCrh6VoQYAw4eKfamolA6Kx3ftf
-         SwNDb/EGJYHgNm5VLeb6hgO00tZ2NsXamvi2lq3sSEYC99hhm+HAkMHgQkiyZKpYG4IJ
-         gju3SNQQZDrvF1ngAlFki1VZP7ZJAOyssrZIIUi/qTuNhs86JX8h6hEUtckW2HqUeZZX
-         q0Kw==
-X-Forwarded-Encrypted: i=1; AJvYcCWsCVes40U01ynkqWfB8zOAeqQcbs0ejIMnzj86fBXldBXttYLY9sUOocRJDudHppN1PIg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YySXlsi+OYx463nU2djsIVQjoHqDPyLPEyPqg/+OBbbu50QjYnL
-	R6wz8eS5RY7dAFJd4GRgh91hli22N/drk1SuRa1Et7ial2G0sDPD
-X-Gm-Gg: ASbGnculrWd9MPtkD8u+FTGowntzE2HKhta0k9VjXRDrfortNkH64OeFim4RFL47QOR
-	IBe/HN/LbtKGczjgXkEJQgxa8vRkYgmilZGOkCB1BUXyT+GXwcNSR7vO7nxFBGvCMSoRH7u3e21
-	4/5hNLvuIx38c87SBBlu6oPGIrLtl2JeeW1tgGvRl3NSnlACfkBnNgZf61fpAMxRqd2O3ObMWqa
-	cCq8hcAFVlPyLmhrwkthvTGo01SofQiMMbpubdV3XSdesi/xHEzL/kCMASPPlfyzM1qoZzDdVIA
-	nzpVxo3aMWQ27TkGbvK4yyQ/U/RYlw0YnWqXmJiLqpF0cY7ptaYZmdrz0g7at2n96LYIleDEm8j
-	viGndsTvlF3TQpET3ETN5Tt0=
-X-Google-Smtp-Source: AGHT+IGkTxLGZQAeN2YoVqTibf0ocj9H3uAR6JBAOVF8j4l3o4AgVt3qqcUfEAeYC+DMD+Yi6GS6mQ==
-X-Received: by 2002:a5d:5f41:0:b0:3a0:a8b1:cf17 with SMTP id ffacd0b85a97d-3a0ac0d97f7mr2220159f8f.15.1746537658675;
-        Tue, 06 May 2025 06:20:58 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099b107c4sm13704050f8f.76.2025.05.06.06.20.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 May 2025 06:20:58 -0700 (PDT)
-Message-ID: <f2b34e81-fb86-4a30-9aa7-67e6f5758168@gmail.com>
-Date: Tue, 6 May 2025 14:21:01 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="evjITvlk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ws4ICrD3"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7436411400BE;
+	Tue,  6 May 2025 09:24:00 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-11.internal (MEProxy); Tue, 06 May 2025 09:24:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746537840; x=1746624240; bh=gO+woshugo
+	CE3cqKVVzCuTeuH4X8veedg+XNS+sLExo=; b=evjITvlkExOrFuaPZZK/PK5vf/
+	kZOeKPEtLee6aYVFklw9CeVZFkKNDRTf0EE3hzK8EevAaZGEw3btsaSVzOfbsWov
+	3ehM4qNJuCFOVe6u7AzTHTdZzQYSggv/eQ/fqkpf31s8WyVHfalNnPAYVedFLiyx
+	c7GsVyRK9+DvutKUZfPNS9faVbZ3QRoj0i3CQR7bG3MoQZbJ8nL14oYyBXGJg5nL
+	QH5jHPm+yMwwCIwqTwMG0pfmgkht8idmNirXU6r/vNJroHVSarK52Zr7bGXI3VV+
+	yX9VTQ8DKF2Y4vbflC+GgagQaWSs1Ttq2cIOgNZnbqaVhh2CSKIjc62y8u5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746537840; x=1746624240; bh=gO+woshugoCE3cqKVVzCuTeuH4X8veedg+X
+	NS+sLExo=; b=ws4ICrD39fcwqbYh5X1+xDr7GQdl8aQodpdQ9KteMo3KtSCDiDY
+	GJdDEZ6zQZmKCs1ziZDzvq2zkvVCSZOq2eG9a5QjMokRPqyiDg3kzGftGZ+tjxpx
+	rerESsbQX0d9Vr+Bsxv7UvqjRGlSbiPZqBDg45x8VXPIvQwI4V7VaT5ad3wTlMLA
+	tIFeVkwb7OurH6gFMeSe8f0PwotgicWjSy3T1OiPCUun2Y2CVI7HdzIVgEkuZLQr
+	EA5eFjETnUHad6LMnMu5RM51IPDMZ8PgO2WFPdIeUtgefeaX699EOC3vbElGI90P
+	NjEWCOpctkgSYoHUps2gHOzrqpDcJ9pJ/jA==
+X-ME-Sender: <xms:cA0aaEV-VQHYvOySdU3D7bjC9b73kd_PFg9hRxxJGUTQ0YbxBA4fVA>
+    <xme:cA0aaIndauZIIjD6Xvnjpf-od2deBdDukZgCr3AQpY4R6uorySAcXxgT46tBchKWO
+    0QTh3n7e2v-EJN5LA>
+X-ME-Received: <xmr:cA0aaIbBNR4ca8vLRVIHmqL6OxIZBlHl2dB8bo9sFCsOohqPutWwIMf5RDoa_EINFp6ceMlhz4dCCDADlnonDK7nMJgrxrkwX6kKAZJU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegtdelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthh
+    hprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdp
+    rhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtoheptg
+    holhhlihhnrdhfuhhnkhdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+X-ME-Proxy: <xmx:cA0aaDU2LQl3Se4Nw_L0b4x0JBI8FwTCJHC4ndl-KsM7WKaCRb7NHg>
+    <xmx:cA0aaOl2E7K7ZaA_-OvoX7-5lNXC54YpzFX0_XrE2avmHvgwKLjknA>
+    <xmx:cA0aaIeT0XzDderzRFgkf7e4qbztM45sxSHKO4Wlh4JmYjKGPeIKOA>
+    <xmx:cA0aaAGs2PTa7xNcOvzMwNtTF-e2oJ3mqdw_03inyvzaIXV_BaHDSQ>
+    <xmx:cA0aaKxjCh98qM7S_iK1qUc4MhIRQIHHNddcdXAImiCK9NDKSWO0Fi7X>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 6 May 2025 09:23:59 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 28d047f4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 6 May 2025 13:23:57 +0000 (UTC)
+Date: Tue, 6 May 2025 15:23:56 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Collin Funk <collin.funk1@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	shejialuo@gmail.com, sandals@crustytoothpaste.net,
+	Jeff King <peff@peff.net>
+Subject: Re: [PATCH v2] wrapper: NetBSD gives EFTYPE and FreeBSD gives EMFILE
+ where POSIX uses ELOOP
+Message-ID: <aBoNbDgHncAeGW4e@pks.im>
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
+ <20250503041718.42195-1-collin.funk1@gmail.com>
+ <aBheGySF1FTsIVzx@pks.im>
+ <xmqqo6w6okni.fsf@gitster.g>
+ <87ikmemtd8.fsf@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3] xdiff: disable cleanup_records heuristic with
- --minimal
-To: Niels Glodny <n.glodny@campus.lmu.de>, git@vger.kernel.org
-Cc: phillip.wood@dunelm.org.uk, johannes.schindelin@gmx.de, peff@peff.net,
- gitster@pobox.com
-References: <20250425155951.1227700-1-n.glodny@campus.lmu.de>
- <20250429140949.2634935-1-n.glodny@campus.lmu.de>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250429140949.2634935-1-n.glodny@campus.lmu.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87ikmemtd8.fsf@gmail.com>
 
-Hi Niels
-
-On 29/04/2025 15:09, Niels Glodny wrote:
-> The cleanup_records function marks some lines as changed before running
-> the actual diff algorithm. For most lines, this is a good performance
-> optimization, but it also marks lines that are surrounded by many
-> changed lines as changed as well. This can cause redundant changes and
-> longer-than-necessary diffs.
+On Mon, May 05, 2025 at 06:16:03PM -0700, Collin Funk wrote:
+> Hi all,
 > 
-> Whether this results in better-looking diffs is subjective. However, the
-> --minimal flag explicitly requests the shortest possible diff.
+> Junio C Hamano <gitster@pobox.com> writes:
 > 
-> The change results in shorter diffs in about 1.3% of all diffs in Git's
-> history. Performance wise, I have measured the impact on
-> "git log -p -3000 --minimal > /dev/null". With this change, I get
->    Time (mean ± σ): 2.363 s ±  0.023 s (25 runs)
-> and without this patch I measured
->    Time (mean ± σ): 2.362 s ±  0.035 s (25 runs).
-> As the difference is well within the margin of error, this does not seem
-> to have an impact on performance.
-
-Thanks for adding the performance information, this version looks good 
-to me.
-
-Best Wishes
-
-Phillip
-
-> Signed-off-by: Niels Glodny <n.glodny@campus.lmu.de>
-> ---
->   t/meson.build           |  1 +
->   t/t4071-diff-minimal.sh | 14 ++++++++++++++
->   xdiff/xprepare.c        |  5 +++--
->   3 files changed, 18 insertions(+), 2 deletions(-)
->   create mode 100755 t/t4071-diff-minimal.sh
+> >> Nit, to make this a bit easier to read: our style guide says that nested
+> >> preprocessor directives should be indented by one spaces. So this would
+> >> become:
+> >>
+> >>     # ifdef __NetBSD__
+> >>     #  define SYMLINK_ERRNO EFTYPE
+> >>     # elif defined(__FreeBSD__)
+> >>     #  define SYMLINK_ERRNO EMLINK
+> >>     # endif
+> >>
+> >> Note that the `ifdef` itself would also be indented because we already
+> >> have a surrounding `#ifdef O_NOFOLLOW`.
+> >
+> > Hmph, it does look easier to read.  I think we used to have some
+> > outlier files that indented CPP directives by prefixing spaces in
+> > front of the whole line, but these days we standardized to express
+> > the indentation by inserting spaces immediately after '#' that
+> > always sit at the beginning of line, so what you showed here is a
+> > good example to mimic.
 > 
-> diff --git a/t/meson.build b/t/meson.build
-> index bfb744e886..8f2e9d2c50 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -501,6 +501,7 @@ integration_tests = [
->     't4068-diff-symmetric-merge-base.sh',
->     't4069-remerge-diff.sh',
->     't4070-diff-pairs.sh',
-> +  't4071-diff-minimal.sh',
->     't4100-apply-stat.sh',
->     't4101-apply-nonl.sh',
->     't4102-apply-rename.sh',
-> diff --git a/t/t4071-diff-minimal.sh b/t/t4071-diff-minimal.sh
-> new file mode 100755
-> index 0000000000..4c484dadfb
-> --- /dev/null
-> +++ b/t/t4071-diff-minimal.sh
-> @@ -0,0 +1,14 @@
-> +#!/bin/sh
-> +
-> +test_description='minimal diff algorithm'
-> +
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'minimal diff should not mark changes between changed lines' '
-> +	test_write_lines x x x x >pre &&
-> +	test_write_lines x x x A B C D x E F G >post &&
-> +	test_expect_code 1 git diff --no-index --minimal pre post >diff &&
-> +	test_grep ! ^[+-]x diff
-> +'
-> +
-> +test_done
-> diff --git a/xdiff/xprepare.c b/xdiff/xprepare.c
-> index c84549f6c5..e1d4017b2d 100644
-> --- a/xdiff/xprepare.c
-> +++ b/xdiff/xprepare.c
-> @@ -368,6 +368,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->   	xrecord_t **recs;
->   	xdlclass_t *rcrec;
->   	char *dis, *dis1, *dis2;
-> +	int need_min = !!(cf->flags & XDF_NEED_MINIMAL);
->   
->   	if (!XDL_CALLOC_ARRAY(dis, xdf1->nrec + xdf2->nrec + 2))
->   		return -1;
-> @@ -379,7 +380,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->   	for (i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart]; i <= xdf1->dend; i++, recs++) {
->   		rcrec = cf->rcrecs[(*recs)->ha];
->   		nm = rcrec ? rcrec->len2 : 0;
-> -		dis1[i] = (nm == 0) ? 0: (nm >= mlim) ? 2: 1;
-> +		dis1[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
->   	}
->   
->   	if ((mlim = xdl_bogosqrt(xdf2->nrec)) > XDL_MAX_EQLIMIT)
-> @@ -387,7 +388,7 @@ static int xdl_cleanup_records(xdlclassifier_t *cf, xdfile_t *xdf1, xdfile_t *xd
->   	for (i = xdf2->dstart, recs = &xdf2->recs[xdf2->dstart]; i <= xdf2->dend; i++, recs++) {
->   		rcrec = cf->rcrecs[(*recs)->ha];
->   		nm = rcrec ? rcrec->len1 : 0;
-> -		dis2[i] = (nm == 0) ? 0: (nm >= mlim) ? 2: 1;
-> +		dis2[i] = (nm == 0) ? 0: (nm >= mlim && !need_min) ? 2: 1;
->   	}
->   
->   	for (nreff = 0, i = xdf1->dstart, recs = &xdf1->recs[xdf1->dstart];
-> 
-> base-commit: f65182a99e545d2f2bc22e6c1c2da192133b16a3
+> No problem, I sent V3 with the suggested changes. That is actually my
+> preferred why of indenting preprocessor directives. But I saw a mix if
+> CPP indenting, so I was unsure what was correct. I guess I could have
+> looked harder for a style guide, but at least hopefully I followed
+> 'SubmittingPatches' mostly correct. :)
 
+Yeah, the rule was only introduced rather recently in 7df3f55b92e
+(Documentation: clarify indentation style for C preprocessor directives,
+2024-07-30), so we're still wildly inconsistent.
+
+Patrick
