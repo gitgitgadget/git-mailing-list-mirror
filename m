@@ -1,133 +1,165 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011025.outbound.protection.outlook.com [52.103.68.25])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1BC22397AA
-	for <git@vger.kernel.org>; Tue,  6 May 2025 05:10:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746508221; cv=none; b=Wnz484mgzvyJYTDHMO1Ztrh7mGbf/e5Xe1+LYFvmrm29/LIcfO7IGho8ahHGEYpx5gIECNTiBJu8KU+7Ub+r07K1MGV9LcXP/nubQbJ4JCmE0vltx2cXK7qsLxnKj8qtDbUWXl18TOAxmRrgHvyDkBX8UBOZqBsPEO4coHVcPbA=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746508221; c=relaxed/simple;
-	bh=S0lVGsNUrUCp3ysSz3JCoggd7oLu4lMcFDb3/Ml+2K0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tBoUlaoLzTW/Sxx20Y8tsu3zqu02RnmdMF3jmAb9hM1TVzZiNh3j8tRIEkXXq7xT19C9MGkxcs0EAYe/HAVXpiLd1B8Uk33H/Bn74ITQYdTQBLOuY8LmRTpAmKj8iWVdGhQHdEbcix4Q+bhex6ac7LBm1i+2SzBrBdBHNOwVesI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uZfpBN3j; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FZOB9MVV; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FEA428F51A
+	for <git@vger.kernel.org>; Tue,  6 May 2025 05:36:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.25
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746509820; cv=fail; b=jQUjtW7bE+EJ0+ANvso/VaI0oCBaUZ9rGYcR7U9oYkuYNMg5kfIZc9xp+b8n6NBCR6WV8a9Tc2qnkUAw7+o4my9p8HC21MUr5qcaATtjatdIBIffyyUu4r9xWxkgos0fnXjbS4k+rz+MGYNyotWqui9L+bcSjaQp5/jaYkMcYEg=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746509820; c=relaxed/simple;
+	bh=mtx1RQFfkRIoLZuMMb+8X4M7z0lbiyuHpsHulsNuPFQ=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=LMQaeSmQN7ITm6eZ80608dQejufsQdhkck9jF2I9KwavWEDaRIUIdFSR9kE4AshmBehJ855CLsURUQvXrfWH1zSiNtInkueDOkfpI6gen3hl/KnIJ0iNGlS12coCuGrDtelCr/t4VZ+dUtR/kF64iqVjWcaXcOZdlXKGDn2kpMA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=TnNBuLeR; arc=fail smtp.client-ip=52.103.68.25
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uZfpBN3j";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FZOB9MVV"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5DE1C1140259;
-	Tue,  6 May 2025 01:10:16 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 01:10:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746508216;
-	 x=1746594616; bh=IU8xNKzSG4Xe7qN73/g16i0M+a4hVmuxq9Q35KZ2Erc=; b=
-	uZfpBN3j5O4Y49vwPtopGpHqPgC0vg/GWDkxfn7ORRW9JO7H5icTvByC9JtHAnsw
-	JUK7iCkFt6TsygW/jxUBPaGliU0+9fAEigznW/fFLxOUKZ9fzqPi/YFZZtZ3EvUS
-	RdHSe2JeY1EJ3EsvdZfmamiNycMB6XY9p12Zm0v2ytBmN+/XNT9PXqeECL/Xe2tY
-	14DX9nD1aC/y1YwVf4B/135bri7drQhzKWoBR3yi4bmXXqUMCCkn2yY+IuSw/2GL
-	n+vAKh71xIaupfvEhEzjYiV+TwDAjo94dS4maBuMbhCsJIy23oN0bVteiDZPruY3
-	UpZYp4TAlRXSvfqUmpp2OQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746508216; x=
-	1746594616; bh=IU8xNKzSG4Xe7qN73/g16i0M+a4hVmuxq9Q35KZ2Erc=; b=F
-	ZOB9MVVDt22scEfZgWupELRRfyFIUQ8weV4fxajbsmcnvOftXD8/GLPcvOocD7NQ
-	ueaL0HtM16Rh0Ig2lWduOMo71F/97K45uvtS9K4fO36nrfk8sA/hZqZ24OxDI/bO
-	Ot0KcdrN0WYa9MgcetH+JhGfVD5PhBW45BcKsIx9mn+1E3wasseHX+EAhK3dlUfX
-	7cckCCcnfxPNB0RwUt4Q7i7JgyF+BhABF3/KFIOCPVonf9ZHtSllpeVeZud+Vvv2
-	BLL0PKvdzhpdaeqSr2ZFwTylT+iBvpWIYyLYazZLkBfSTTzMU52cPROhcxw/3eZU
-	Ed59T7r6HQVxnT+PXZSXA==
-X-ME-Sender: <xms:t5kZaFYAzbH-D3YhRXiDzgh0_4kd4x3lT2gw7NJLERvMhF6yCAyMzQ>
-    <xme:t5kZaMaE1A375ogAQcmEVj_IWWmo5rhie7ycpERYBzcdulqlbSrId5aE_RkhvVckx
-    MdRut7fVd3PmpuW_Q>
-X-ME-Received: <xmr:t5kZaH_EruQIiPz3OHAbXzIfnXrGNMEr0Zu97Nyeq63yUvPb8l7gXt1enzy2I75fLEU8hEilQXKkwfBexnW-9Jk7K3WZlIxVCcnDwHD0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefuddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufht
-    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefje
-    eitdetleehieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhs
-    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
-    dpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifoh
-    hougesughunhgvlhhmrdhorhhgrdhukhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhrtghpthhtohepkhhufhhorhhijhhileeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:t5kZaDow6-4ugTt6t-7hP-9dFMO-jSs745d06wljCRcqzgAsR62pzg>
-    <xmx:t5kZaAppMwWQ1qdwlT7coIzMC31c2O2Q7u7eAFbpmSV4w4XhlgXhpQ>
-    <xmx:t5kZaJRRYWm0yUg-s0cq6bOEV9ceyfopA7xqMMwowK18vZEV5JyK2g>
-    <xmx:t5kZaIpFyEwCRCJsvTR9Zjq2r-c8vo0JU_e7uqVOxjRey_0Bsd1DkQ>
-    <xmx:uJkZaAdQtNs4QeBj-vOzAl0hNy-dwT_hJHdki_yoIan9PBrAeK9en4Uw>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 01:10:14 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id de4cd89f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 6 May 2025 05:10:13 +0000 (UTC)
-Date: Tue, 6 May 2025 07:10:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="TnNBuLeR"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Lk0uBbg+uHMx+tca/RM2k4qV3XBwg+gXv1/1XMj5j4Ww8W5i9JtEEiXuEFnkFYrYZeKgPaz8VE/RO64mUvjLjFhddBX0Za4+4YAwnzAScqJN5MLqyG9lON0FEdrI631jA68TLWlWL23XLAbPhYEQ/i5LMsphDLjKj/bdDRIZVmCxbi+KVpa2Y9z9HIwk1ULINEQscASF+miuEjhNTDEbTLqsU8KfUXV4Daa/ye2I4azMsaC2RmEWUwN0J+ErnHvW20MDt21e6OTBRfobvpTuM0w3AEx/rs4l2GB+xdBYz5o3iA4BB+wkRTztI/Nk9CozwJxv1wkC31Pvrq07sjb1Lw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=mtx1RQFfkRIoLZuMMb+8X4M7z0lbiyuHpsHulsNuPFQ=;
+ b=NcXJ7s6h/nGGbG+VlqRLB+p3JGwBezKj24zx5ouRtfKS34nys73u3ZKaDlCIngS0EKmATTSE2EoJQTF+MTtZrR0yR5bgGcWMXim4JOLH/mhBZhaNZryUR1GnKtjdebLeOCcLlExAulN4Djp04Z+ToaLMHdMp5t9gB/o/cTTUUl29S62XlAOrp83VJ4FXuQByFluMLJ5DT0s2zqJs25VYkB3kX6OaOucqsho81EzTy4e5Lj/YWqq92BVoPQlZDkH5qwZLfQr3b1gIDGA9iOPdZcg0bb0U//A6dTMNQXMOlTma0TNvCqiRbvsinuop1EiQmVVJoMc/d1OpJqqbL2eZeA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=mtx1RQFfkRIoLZuMMb+8X4M7z0lbiyuHpsHulsNuPFQ=;
+ b=TnNBuLeRM+ngtz0Qg7F0Eow/xjnsCa9jwM7XLaslzjhidIWcQdRbGb1DgqQczze7CFYH4tnFxl9UQ7CpUiX1qLjOc/OWlzk/9AsKFIkRi8gg9aJDFfynz2YZ16noCI6agluixb7PGNhvzW0PA4jgzWanco7g622EhlAAFwiTtQV0cE0eRUNb0DlXoDOhgjqISqdQoHJCyH5VPQxFYQ41xxpFLcec9qSTbMUj2drO4s0vTWHGIZls8Mz73racHx18Kkg5CyF7enCUzSXHRo+4RWFLcSdYKizW3iS0zO4O+9fTdn5CbIIaplrR6T62YKtQ/fiLrXn+r8pr0m0XzEdDMg==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by MA0PR01MB9323.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:c4::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.25; Tue, 6 May
+ 2025 05:36:52 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8699.030; Tue, 6 May 2025
+ 05:36:52 +0000
+From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Seyi Chamber <kuforiji98@gmail.com>, git@vger.kernel.org,
-	phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 03/10] t/unit-tests: convert reftable block test to
- use clar
-Message-ID: <aBmZtFlcn8CunVg_@pks.im>
-References: <20250429175302.23724-1-kuforiji98@gmail.com>
- <20250429175302.23724-4-kuforiji98@gmail.com>
- <aBSXGz_eIljWbb2H@pks.im>
- <CAGedMtcBsT=7=tL_y99_G9xNW43Bttb3dFqy68DfFt0ZgpZ-4Q@mail.gmail.com>
- <aBiKSeTLItw85A8z@pks.im>
- <xmqq7c2uoj40.fsf@gitster.g>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, M Hickford
+	<mirth.hickford@gmail.com>, Julian Swagemakers <julian@swagemakers.org>,
+	"sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>, Eric Sunshine
+	<sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>, Kristoffer Haugsbakk
+	<kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v3 2/3] docs: improve send-email documentation
+Thread-Topic: [PATCH v3 2/3] docs: improve send-email documentation
+Thread-Index: AQHbvdIHVNNF0fQexECuSqAmqwnoRrPEtmX1gABfs8E=
+Date: Tue, 6 May 2025 05:36:52 +0000
+Message-ID:
+ <PN3PR01MB9597EF61B4CC43595DE4341BB8892@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+References:
+ <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597BD33DB2C4F3BE9E5F4C6B88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95971776178BED3516DA03DCB88E2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <xmqqldralil9.fsf@gitster.g>
+In-Reply-To: <xmqqldralil9.fsf@gitster.g>
+Accept-Language: en-IN, en-US
+Content-Language: en-IN
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|MA0PR01MB9323:EE_
+x-ms-office365-filtering-correlation-id: 68e571b4-8ccf-4a1e-794c-08dd8c6001a0
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|19110799006|15080799009|8062599006|8060799009|7092599006|461199028|6072599003|440099028|3412199025|102099032;
+x-microsoft-antispam-message-info:
+ =?utf-8?B?N3ptTkMzdVkwMmNncGVZQ0xyZFZRSThad2lKb0NQQWllRkR5ME1mMTNjTXpO?=
+ =?utf-8?B?ZWF0bTM1eWpTVVlkMjVkMGVLUWhCVXFacUlCc3Ntd2l4aXFyVndkYm1uS2pi?=
+ =?utf-8?B?Q21BRTZKWE84azJvU0JNbXhCQzJSZGZma0VybTR1aW5KYUVHYjIyUlp6dHMv?=
+ =?utf-8?B?Z3VuTzZFZFZlUjNMNjBRQnlPcEVDR3orYmtBbzdhcXBIczIyLzd4N2k2aEEz?=
+ =?utf-8?B?Nm5HK2JJWU1kdGtoTi9PbVEvKzBYQmVvNCthYmJGeUc0L0xLVHV4T0xOQnJP?=
+ =?utf-8?B?Q2JwTytYd0NjdFBFcXhlOHd3UTJpNmd4aGlla3BXQWc5enVHeFhleWhWbGtn?=
+ =?utf-8?B?WWcweElpV0hWcGFlTkxYOXV2NWFFeFdsMC9hYzFvSkdyN3g4Q09KWVNTU3Jp?=
+ =?utf-8?B?dVRxVUNnZEZRM2traVVGZWMvREtoYlI1aElWdkUrWTJuSjExQ1d2V25NVkF6?=
+ =?utf-8?B?RzVPcXVMdFJ2K2FlS09GRnVQZHF1WU9wRTlleDZNTnRvK3VuODl1K1NDWEZK?=
+ =?utf-8?B?di9Hd3c5TVZ0OXFOeXl4OHhpZGt3ZG5vdW5UQ2xOdHdmbHAwRDlJNEc5amRj?=
+ =?utf-8?B?bkhQVWRoLzZyc1FUMExCVVg4QzhFWC8wdkRyb1ZtVTZaaERrVkpjRzQ2Y0hq?=
+ =?utf-8?B?NFJaZ1czcm9xSi85OUtTcTZEWTRRZHByTzFRZGx4ZmtVQ0F0N2krMW14ZUhO?=
+ =?utf-8?B?R01uem1MMzZpdVIydlpzcEpIbk9lamFlZ2pJR0czVHZBOEorOFFxeVFSV0dC?=
+ =?utf-8?B?VE84dmZEWlh0RWtuOXRBd0JzaTl5aXFPSkJqRzI2MzU5aEE3NU96NzNlTFow?=
+ =?utf-8?B?b2FHZDltYzRQMTNhb2czRUtUL2FNa09OM0ZnQlpkWSthMDNQdXU1aWRkZUpO?=
+ =?utf-8?B?YmJDY2NGM1NCUUJCaVFicHhUODN6T1o3YTl0cEpwUEU2V0VhVkFXa2tBS2lo?=
+ =?utf-8?B?QnpsQTlkOTZINTc3V0NROWpoNDhtcDNlL1pGdkNMUDRKQVd0OEhsYzk1WlBy?=
+ =?utf-8?B?cGtUcmo4K1FSei9xSHR2R1NQaUxzblFBZEw3NjBmRnVGQ0o1VmxmQmVYVkxv?=
+ =?utf-8?B?RzFmWnFYNXBJeGJmRmRxY0t6NnJQTEJEek9SWS81V3BLSURiNzZCQmpnOTgw?=
+ =?utf-8?B?T01EbFUwMHZXdytRZFlrYVlBNTRLS0RwUjVPTnBpcERDaUEvS1krYkxrNXNn?=
+ =?utf-8?B?VzF5eCtSZ1VrT1JKMjJPSjFWcHBUYVp0T0RDaUlZa2ttbVZiMEZHWStWelJr?=
+ =?utf-8?B?T29LQ3k0N21ueUNHVW1iOGJHVTdnZkZJUGlpVENnSEtLZnptSW54c0Z1WkFD?=
+ =?utf-8?B?azErL0hLaXJtM2FVWFZhbnNIK2pubnpHMnVFOGNrWnU5QmpUSVY1eFY5aEYw?=
+ =?utf-8?B?NDZJeE5tUi9rVHg1OWJNZi9lSkx5SjhoSWpBTTJ6bVZOMFlVT3huaUtXZ0Iw?=
+ =?utf-8?B?RUEvWWM4bC9rV28wTm9vYlpCd01STW9qNW1iVzRpZldkQmhxUUZBeEpJRU92?=
+ =?utf-8?Q?AhbjM8IdhEz/fPFvRereXCSJR0+?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?utf-8?B?Q2t2SmdScWVKV0VsUW1uZ0I0TGU1akxMUnFVekw2eFM4YkZpNWFnemZLbmli?=
+ =?utf-8?B?WDFxVjZCT0ljTUxwN1RiZ3hGSmlwVTJBYlZXclRUVWlNSlRDMmo2L2hoQm5s?=
+ =?utf-8?B?bTB3aStFYXNHWWxESzJ0M1JIQnV6MEY0RGRJS21odklxNmd2QjE4MGNDS2cw?=
+ =?utf-8?B?ZzROeHFjbWx2WkRxdStkWE00N0tvTFJrM2JsSmVBY0xWVmtiY3ZPUi9pOWZz?=
+ =?utf-8?B?cTBIN0xvUjJLaDZZcGpwRy9lWHIrVktwTmxYN0lVTUVpcXBUdWFUV3lTRklN?=
+ =?utf-8?B?NDJNU2NUOEdFZFhBbHVTcjM3YXpPSnlVWm9VbFdOSXBGWUZTTmpKTi94WGkz?=
+ =?utf-8?B?dFcrNWxwanZZejFMMW1MSktpYk9KMEZyZW83UU9FaURHY0tnY3UwdGlXamdT?=
+ =?utf-8?B?RGRIR1ZqU1FOTmtOOU42UlJpS2FseEpqVUw3YkwrQ2llN2h5Sk9tWFZ6NndN?=
+ =?utf-8?B?bTBOQ1RUWWc1UlVZaWtLTHcyRnVJMlA2QjAyendsQVo1UHlRRElSbjVTeUZm?=
+ =?utf-8?B?WnR3bTRpODRTbFRDakNiY084L0NqM3JQWldaNTNpV3R2bTRGcWRqQUs2Y21l?=
+ =?utf-8?B?Ty9OaG5rRSt4czBlYjh0YWdJd3JUREVoS05zNndZQTRKaVlncDJQeTZ1Yk16?=
+ =?utf-8?B?YnBUcVRocXlabTlYdjB2c1E5OW8zVnZVbWRGK0oyK1V1SWw0dlVTbUpXN092?=
+ =?utf-8?B?NHREdVZ6QzdORmJFOGlXNHd6QkJYT3ByOGhuMmZtd0hqWi9IR1J3bjN1SDk1?=
+ =?utf-8?B?eVkrR0lqL094M1J1VTRtTTBRK24zVnpKMHhpR1Y2bTJSWGZBV0k1Nk9xSkdP?=
+ =?utf-8?B?cFQ5N2NKcHhIeFhGYWlyMmhXak93dEVOSkNRZEZjY3QvWHVULy9taUtTZUUw?=
+ =?utf-8?B?SkhLdS8zSGlOWitjLzlTbGI3d0N6U3FrZjZqWXJSNjB2ODZXcUdZZjFuVFZh?=
+ =?utf-8?B?Y3NsVDJXMWNZQVJPRDl2Q3B0MU0zQzBtODlncDRkNW5Qd0VJM0JseE1aTzVj?=
+ =?utf-8?B?MC93WS9NbzJsK3lTbTZmU2hOZUxlZlRqR0ltNHROb25EY0xUUmlNL0xlOHI1?=
+ =?utf-8?B?NlpKaG1pZVFOTDBuekdiY0tlVmNnT2Mvc3hwRkN3ZmdDSWpSakdKR29sY1BW?=
+ =?utf-8?B?UGNVSzRobGpGOWZFNWRUYllBSS9hWlBXUlo5YUNvY2E5OE5NNEIvMUFlbVZ3?=
+ =?utf-8?B?Z0NOeEtualNuWTc3azFqRU95c2lnTkRxWEpDbUZuVFNaQm51ejdSL3hLWEdM?=
+ =?utf-8?B?U25xZDh6Nm1XTmpnZmxOamV4UEN0UmxCZUwwVEIvTDhHUXI2Skx0QjI5amF4?=
+ =?utf-8?B?dHNmNzZ1SlVhV0dkZVVTYnFDRXRBaUhCY3plRkFxN3NjSy9CWDNZakdZMmlO?=
+ =?utf-8?B?bytac3kySjVsU09SdEtyVEF3Zm94blVES0FnRnFkcnJmTDFMMFRVa1M0ZkFH?=
+ =?utf-8?B?TmYrTEU0Rml2YmF5dEN2REF0MXM5QUJHdjVCcjFHOXNxNXpOTUprajVLZzB2?=
+ =?utf-8?B?c0xTQ3MxYUVuTEZLell4YWJvNjU2MUFPY2F6MzdOYmpGNmhXNkxwdDM1TENn?=
+ =?utf-8?B?cHE5YnBSY1E2WWtGaFV6S2NrUzRvZXJaR2FpNFl6cUNZSUNrOU12SS9WYXRn?=
+ =?utf-8?B?dDZuM3N5WVNISzErNC9Zd0dxRkltYko1VDRjdStuNnpSNkUxU1VoMUI1RVBI?=
+ =?utf-8?B?bFFzZ3dNbVJ4Ui85R25uSmJCMlF5eDRuRlQ3NnVSWXV6N1pZRVliSFFqSEdo?=
+ =?utf-8?Q?8dTfcrKmWptR+kK4wk=3D?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <xmqq7c2uoj40.fsf@gitster.g>
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 68e571b4-8ccf-4a1e-794c-08dd8c6001a0
+X-MS-Exchange-CrossTenant-originalarrivaltime: 06 May 2025 05:36:52.7976
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB9323
 
-On Mon, May 05, 2025 at 02:14:39PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> >     -M[<n>], --find-renames[=<n>]
-> >         Detect renames. If <n> is specified, it is a threshold on the similarity index (i.e. amount
-> >         of addition/deletions compared to the file’s size). For example, -M90% means Git should
-> >         consider a delete/add pair to be a rename if more than 90% of the file hasn’t changed.
-> >         Without a % sign, the number is to be read as a fraction, with a decimal point before it.
-> >         I.e., -M5 becomes 0.5, and is thus the same as -M50%. Similarly, -M05 is the same as -M5%.
-> >         To limit detection to exact renames, use -M100%. The default similarity index is 50%.
-> >
-> > What you probably wanted to say is `--find-renames=90%`, but without the
-> > percentage sign it is read as a fraction, where 1 means "exact copy" and
-> > 0 means "all different".
-> 
-> I am confused.  -M<number> without trailing %-sign is taken as
-> fraction against 1 followed by the same number of '0' has the
-> <number> has digits.  -M5 is 5 over 10, -M50 is 50 over 100.  -M90
-> is 90 over 100, so -M90 and -M90% should mean the same thing.
-
-Hm, I guess _I_ was confused then. It doesn't feel natural to me that
--M90 would mean 90% whereas -M5 means 50%, and the documentation isn't
-quite clear about this, either.
-
-> But you are right.  When you want to claim your pre- and post- image
-> files still correspond with each other in a meaningful way, even
-> after making extensive change, you would want to _lower_, not raise,
-> your similarity threshold.  If the default is -M50, then -M90 would
-> be a useful option to reject what Git (mistakenly) thinks are renames
-> and tell it to instead consider they are removals and creations.
-
-Yeah, at least that point stands :)
-
-Patrick
+DQoNCj4gT24gNiBNYXkgMjAyNSwgYXQgNToyNOKAr0FNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3Rl
+ckBwb2JveC5jb20+IHdyb3RlOg0KPiANCj4g77u/QWRpdHlhIEdhcmcgPGdhcmdhZGl0eWEwOEBs
+aXZlLmNvbT4gd3JpdGVzOg0KPiANCj4+ICtJZiB5b3Ugd2FudCB0byBzZW5kIGEgc2luZ2xlIHBh
+dGNoLCBydW46DQo+PiArDQo+PiArICAgICQgZ2l0IHNlbmQtZW1haWwgLS10bz0ibWFpbGluZ2xp
+c3RAZXhhbXBsZS5vcmciIEhFQUR+MQ0KPiANCj4gRGlkbid0IEkgYWxyZWFkeSB0ZWxsIHlvdSBu
+b3QgdG8gZW5jb3VyYWdlIHRvIHJ1biBmb3JtYXQtcGF0Y2ggZnJvbQ0KPiBzZW5kLWVtYWlsIGFs
+bCBvdmVyIHRoZSBwbGFjZT8gIEp1c3QgcHJlcGFyZSB0aGUgbWFpbCBmaWxlcyBvbmNlLA0KPiBh
+bmQgZmVlZCB0aGVtLCBwZXJoYXBzDQoNClRoaXMgdmVyc2lvbiB3YXMgc2VudCBiZWZvcmUgeW91
+ciByZXZpZXcgOykNCj4gDQo+ICAgIC4uLiBob3cgdG8gc2VuZCBwYXRjaGVzIHRvIGEgbWFpbGlu
+ZyBsaXN0IGZyb20gYSBzZXQgb2YgcGF0Y2gNCj4gICAgZmlsZXMgeW91IHByZXBhcmVkIHdpdGgg
+YGdpdCBmb3JtYXQtcGF0Y2hgLg0KPiANCj4gICAgSWYgeW91IHdhbnQgdG8gc2VuZCBhIHNpbmds
+ZSBwYXRjaDoNCj4gDQo+ICAgICQgZ2l0IHNlbmQtZW1haWwgLS10bz0idGhlcmUiIDAwMDEtZml4
+LXRoaXMucGF0Y2gNCj4gDQo+ICAgIE9yIG1vcmUgdGhhbiBvbmUNCj4gDQo+ICAgICQgZ2l0IHNl
+bmQtZW1haWwgLS10bz0idGhlcmUiIHBhdGNoZXMvMDAwWzEtNF0qLnBhdGNoDQo+IA0KPiBldGMu
+DQo+IA0KPj4gLSAgICAkIGdpdCBmb3JtYXQtcGF0Y2ggLS1jb3Zlci1sZXR0ZXIgLU0gb3JpZ2lu
+L21hc3RlciAtbyBvdXRnb2luZy8NCj4+IC0gICAgJCBlZGl0IG91dGdvaW5nLzAwMDAtKg0KPj4g
+LSAgICAkIGdpdCBzZW5kLWVtYWlsIG91dGdvaW5nLyoNCg==
