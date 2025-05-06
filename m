@@ -1,141 +1,128 @@
-Received: from mout.web.de (mout.web.de [212.227.17.11])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59AC627F4D4
-	for <git@vger.kernel.org>; Tue,  6 May 2025 12:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.11
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA4A280324
+	for <git@vger.kernel.org>; Tue,  6 May 2025 12:29:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746533526; cv=none; b=SFbMlnd3e74UnHN2iM57eoL5IogLghqXMQ80VrJprMiVhbo9zWzPUjzLqnZHNBH8uJiOh2ZmkQgZQZSW61CpRe2vOFp9bUC8LkcSSnSl8Yd3q6W7NnqYt+KbYvowwOmC3GPiQpR/ykSdgnDVOCCgipiK9IJLOSPO2ZAsOTj4bxM=
+	t=1746534585; cv=none; b=UqBubXY/kJ77/WZ71raVEzljowbEp60JnaAEFmq22wSOTnKSVr19QbX9eL9rJfQuuABuXTUD1+Jygk7eC9KhxSEhTL0dOl0LcOB1oTtPfMSsjK9aJxEDB4R6GgOTj4NkmfYI6gD1Ma1W7YPCK1sDdBZ9gHbJnrnB97IEYlO7xqM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746533526; c=relaxed/simple;
-	bh=ghfFE3DQYjFRPCXgcGtkNq6QFd4O24F/H8hvdzYo2H0=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=gqW2iiWqDiBlGdLIEMfgeoY2LDCKFloujmdmujTDVGUJHr/gkm189h+gsIKtALk/HMR0PTHyTxHP12+0ATKKL+CWVEh87cI8iMWYAUxWzy6dc34sMOk5iCsizcNPyhGlpH2P72APs8QDwKYBX4augw2ZF3kzqvp7lEzHImdnIUY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=Yr/7kkdw; arc=none smtp.client-ip=212.227.17.11
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1746534585; c=relaxed/simple;
+	bh=Vs0zKwdTN9sN/hJrbrHLu9nSIo5vgmtzfx00hSnpdhc=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=dtQ64dClPcARB78tWFZLRM9MGy4mf7gM/QfUrC3M0d18tUK6XoWc6y57KLkxZo3Xq/MOshVPNG5Uz0lsUoFU5zWWfbkoeVzBHMo/UJ52j7O16vOi9Bw00P72BmnsuAsBsdjp6nh9ataVWK7/2htRalm1Y90Gxxc3uJ+xsxuCvrg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=syfDuvf4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WQHGfOc9; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="Yr/7kkdw"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1746533521; x=1747138321; i=tboegi@web.de;
-	bh=xSdv6YkzZ/fGcQYfuOt6GoxFG2No7zv3MCGH90P2JxM=;
-	h=X-UI-Sender-Class:From:To:Subject:Date:Message-ID:In-Reply-To:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=Yr/7kkdw8lID/LxZuCHVQA3WYH4fT19rNmP1JhHPrulcMdP/Tv9vViDzk6ivczUR
-	 DfQgRa2zbt/Pxw34J4OP1ri7q5A79Hn5Rmh1jZSEExFvpWyH4XpnrbjdMQMVbkCT4
-	 p6zAHu6oVjcxoIGsbLIX69tPvdaDCBDAAG3lcvebphlqbYbqLQ+XMjZJKcDKHXaza
-	 baqBYDBqYbA41kY9SEcSEbQWWq3j9FIWJnezOP64mR1rA4MlgoF6cq1EQPeXmFGMu
-	 tWHrD+aqI6Aga7UPXrIu89bwrDZTwPH8B0a2wecyY9ORzBC+L3cHQhL6XNJX+byF2
-	 llLeVFAdyr2IkIVKVA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost.localdomain ([81.231.143.213]) by smtp.web.de
- (mrweb106 [213.165.67.124]) with ESMTPSA (Nemesis) id
- 1Mt8gF-1v0NeL0pOj-00wNQS; Tue, 06 May 2025 14:06:48 +0200
-From: tboegi@web.de
-To: tboegi@web.de,
-	git@vger.kernel.org,
-	koji.nakamaru@gree.net
-Subject: [PATCH/RFC v1 1/1] intialize false_but_the_compiler_does_not_know_it_
-Date: Tue,  6 May 2025 14:06:44 +0200
-Message-ID: <20250506120644.186968-1-tboegi@web.de>
-X-Mailer: git-send-email 2.49.0.532.g6f84262c44
-In-Reply-To: <7efc9c9c-8187-4e10-bf9d-1cbb6aeac124@web.de>
-References: <7efc9c9c-8187-4e10-bf9d-1cbb6aeac124@web.de>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="syfDuvf4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WQHGfOc9"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 8D0BA1380516
+	for <git@vger.kernel.org>; Tue,  6 May 2025 08:29:42 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 08:29:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746534582; x=1746620982; bh=CtlIewhA8m
+	jats9fn3SPKz0UwCLpaXaWLFERdIXhTqs=; b=syfDuvf4wRPoPXmE5Cv3IWnu9R
+	iCS0Epdu/R7E6sNUL4gCeg05Qng+++FzKh6zQizPvagHvvuHRIiipM9YltU4kbOW
+	XfsDT0csLH8ClK4tIf0bYIsFeXvNs1XA8nODaeucuHAXgxhozwHpsT/XVUNCeGe/
+	Pj/kQEPh2GfRVI4VYCp7AJbiyJWMvKvG34MIZh+Mcze7NgZu9pB/BfoHxNqrI+UM
+	8bzU1cZQmVhJ+LKdICpP1YWjMjWT8tcf//bzwbZbAwm+JO9ulSZkOy7C8MhqMHkN
+	/2kPR5cpaT6xGWRjkYnDUY6BiE0h8qx9afsU9R9C+AsfRZdWk9Vd7abblEgA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746534582; x=1746620982; bh=CtlIewhA8mjats9fn3SPKz0UwCLpaXaWLFE
+	RdIXhTqs=; b=WQHGfOc9b9aYtfYNP3HPVLsPfjSor7MwTjxOp9c1Waw+69tlH5y
+	bZn8WiR2dAe2eqeKGBegPzQqqW7+dDLsX+27oK0bdbM8Byt4AybJZ+6V/U3jq8g6
+	B3AQQb06YN9JTnFWDEQ1GbfkHY7w7+ryJDhsFssdWAZr83RgqJKjNRNjgT6GZh4k
+	Vxo9McdPrkJHKZtLCmGuS/nwEQ3M5jMiCb5rV7s+8O9uYSXUgG1JS/qBM0y0svYF
+	mcg8d7ATH+C26p8LrQbidVzBs2Vqo0+P6AEXJCdomqv9ZrnXuc9vAsp5ZSsh7oOi
+	Oo/IVvyUfasK4TuJ7U0WEdG004QnyGoMg+A==
+X-ME-Sender: <xms:tgAaaEAWGRZ6i9L9chOqMLVrLnunJJKoqr9F9s4pOgidThIpVnzLdA>
+    <xme:tgAaaGgVoj2NF2GPYQC7fb9PmwZo6K68wF0CfaLvkfKKEyUKEYs9bulXOftMHjXS1
+    TE6beXj1cD7r4NJCg>
+X-ME-Received: <xmr:tgAaaHnlfsD98bBPkQyyFuXGry1j91yeS-2qxKAg4gDaIj8ki8cmfTA-XefqTrMwJaIGc_I-A8-6qYOihFTcxd6t6UdHTG2LK4yyH99n>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefleekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefge
+    egvdegvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:tgAaaKzWobYBstJ7c9FKdqV4UqtC8CZ_J1CGvg-kT3K8aO92QHRUUw>
+    <xmx:tgAaaJSzmnTZOImNXBSOstordacnQ5Ce06NbxLcWxS12WmsVGVxHCg>
+    <xmx:tgAaaFYKjAjND93xwuHEylyiHjwczM0xLjT6HTEPHFWqVUfk6b4J0A>
+    <xmx:tgAaaCQ8zwJ719sI-kHuR7Hd9vWdRIBdYP2VZULK6XvkiB2BdOHo7A>
+    <xmx:tgAaaG_6yYXFYh5J1qoVMQSYs2JQQ9Qyzh2XnNldO1ueP9I5GsHzv5Ac>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA for
+ <git@vger.kernel.org>; Tue, 6 May 2025 08:29:41 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d6e85e29 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	for <git@vger.kernel.org>;
+	Tue, 6 May 2025 12:29:40 +0000 (UTC)
+Date: Tue, 6 May 2025 14:29:35 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: git@vger.kernel.org
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+Message-ID: <aBoAr6ABSFiJPGgu@pks.im>
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:65KqnrjU+IpumOUFd2qUu8GVWH9w6ykNZ0089245G7NacrUurRf
- InyiUzqX57pUH5FZliz+KMiyDnNSNbNW5zH8iRONc7QW8UnuKWOoo/Io793lu92ClOVVOUY
- Dcpie9G7J2jfYRrJDG5a1d71JNWWQfIl92UE9ZYGS/XxyfVdA90EpFeyd3PhECrbBnTngTd
- fel3da5XPtzIFktfJ1+8g==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:/tvsWZYWq+I=;yObEUDZ1zMMVVnwQjiFDG300+Lo
- 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
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
 
-From: Torsten B=C3=B6gershausen <tboegi@web.de>
+On Tue, May 06, 2025 at 12:59:49PM +0200, Patrick Steinhardt wrote:
+> Hi,
+> 
+> this patch series starts to parse TAP output generated by our tests when
+> executing them via Meson. This has the benefit that Meson starts to
+> understand skipped tests and reports how many subtests have been
+> executed:
+> 
+>     ```
+>     $ meson test t002*
+>     ninja: Entering directory `/home/pks/Development/git/build'
+>      1/10 t0024-crlf-archive                  OK              0.17s   2 subtests passed
+>      2/10 t0022-crlf-rename                   OK              0.18s   2 subtests passed
+>      3/10 t0029-core-unsetenvvars             SKIP            0.15s
+>      4/10 t0023-crlf-am                       OK              0.18s   2 subtests passed
+>      5/10 t0025-crlf-renormalize              OK              0.21s   3 subtests passed
+>      6/10 t0026-eol-config                    OK              0.25s   5 subtests passed
+>      7/10 t0020-crlf                          OK              0.81s   36 subtests passed
+>      8/10 t0028-working-tree-encoding         OK              0.85s   22 subtests passed
+>      9/10 t0021-conversion                    OK              3.45s   38 subtests passed
+>     10/10 t0027-auto-crlf                     OK             26.35s   2600 subtests passed
+>     
+>     Ok:                9
+>     Fail:              0
+>     Skipped:           1
+>     ```
+> 
+> This new feature is only enabled with Meson 1.8 and newer, which
+> contains a bugfix that we have upstreamed [1] to make the TAP parser
+> work in `meson test --interactive` mode.
+> 
+> Despite the changes to Meson itself, this patch series also contains a
+> couple of fixes for our test suite that caused us to not generate proper
+> TAP output.
 
-Compiling/linking 82e79c63642c on an older MacOs machine leads to this:
-Undefined symbols for architecture x86_64:
-  "_false_but_the_compiler_does_not_know_it_", referenced from:
-      _start_command in libgit.a(run-command.o)
+Please hold off with merging this to "seen" just yet. I have missed that
+this introduces issues with MinGW, which I want to have a look at first
+before resubmitting. I didn't see those issues in a previous iteration,
+so I'm not sure whether it was introduced by this series or not.
 
-The linker doesn't seem to pick up the symbol:
-"false_but_the_compiler_does_not_know_it_"
-
-Initializing the variable to 0 fixes the problem:
-The symbol type changes from 'C' to 'S' and is picked up by the linker.
-
-Helped-by: Koji Nakamaru <koji.nakamaru@gree.net>
-Signed-off-by: Torsten B=C3=B6gershausen <tboegi@web.de>
-=2D--
- compiler-tricks/not-constant.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-Koji Nakamaru: Thanks for the digging.
-This patch fixes the problem here -  as a side note,
-the change in Makefile alone doesn't help.
-
-
-diff --git a/compiler-tricks/not-constant.c b/compiler-tricks/not-constant=
-.c
-index 1da3ffc2f5..9fb4f275b1 100644
-=2D-- a/compiler-tricks/not-constant.c
-+++ b/compiler-tricks/not-constant.c
-@@ -1,2 +1,2 @@
- #include <git-compat-util.h>
--int false_but_the_compiler_does_not_know_it_;
-+int false_but_the_compiler_does_not_know_it_ =3D 0;
-=2D-=20
-2.39.5
-
+Patrick
