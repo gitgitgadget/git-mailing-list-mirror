@@ -1,149 +1,196 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+Received: from mail-lf1-f47.google.com (mail-lf1-f47.google.com [209.85.167.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71D4221FA0
-	for <git@vger.kernel.org>; Tue,  6 May 2025 06:14:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0250E4A1D
+	for <git@vger.kernel.org>; Tue,  6 May 2025 07:21:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746512086; cv=none; b=dvmkDYE8F3Pv7F+EGK0r1uc6CRTgJVOn52k1igXk/zPTbe7GANA3acpvInGEnBf98c1kUTObf/hLJ9LEWLqq6r/+hBsx0B8/fzfcV4LXJHuvF4k18a2TB4Zr1WKJMzCO9M9NToyg9/1fd6W91b75EbCs6pV3yuRPr/YXmNFpYkM=
+	t=1746516063; cv=none; b=QP2kzZ+3G4Qx06a2dOiLiFhiaVlnEspVuxp8nXV1tGzK9StHwJiwduuQ4vyZYXPmlGh4ZcEQGZxfsMrPHrDNj/v+Q1SKySJU8aQH7G+fK+3wq76p/dTc6GIXkTyqpcEKfgjRANMFcQToJjy3Pa7uWL4YSPqzE+nOH5VRh6M0GIM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746512086; c=relaxed/simple;
-	bh=SWQre0T/2k4GAc3nkvZFZdZnAONDcZsGd0TwCg4PftM=;
+	s=arc-20240116; t=1746516063; c=relaxed/simple;
+	bh=yEqpZsTTyGQPUONh3SFpxowetfn48S1HbUs33h77o+A=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=RCnQywyg4+sD8cjV07vJWBoVwARokp61j7dqdZm5drWgEEA5HvCTW6cey4ow7HbaGhLcS23n6uIV11WqZOztxh4gUn4sJbuq6jU1nCNPZSfblOWtR7vAyUuYe84JUlmjR6xIunngPJx40XcAgr1pS6Tm7JNvAEz8HQPH64ulUpc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=yW6NJLE4; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
+	 To:Cc:Content-Type; b=ZGLzyENGJEama47qDttvN6crUngn+gNp7V21Iy4+METk9HGWX1aeFmixBqUdW7F5btYfoL0GIma2dpTjqnpUcgVxws0+FrpoQPwoclaSAozWQvRA3W020BKDTrYFn406myyEY1JyZ4mGxGLFPf70Z8khKxsNJdC74sWlg+sj/EU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ff/ElwA2; arc=none smtp.client-ip=209.85.167.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="yW6NJLE4"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-301e05b90caso5622950a91.2
-        for <git@vger.kernel.org>; Mon, 05 May 2025 23:14:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ff/ElwA2"
+Received: by mail-lf1-f47.google.com with SMTP id 2adb3069b0e04-5498d2a8b89so6555713e87.1
+        for <git@vger.kernel.org>; Tue, 06 May 2025 00:21:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1746512083; x=1747116883; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746516060; x=1747120860; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=vVH9uszKUf0ImyZn7pUcvK6tOg67lyVz/6ILO2VOaVg=;
-        b=yW6NJLE4QXNu7O0z466OCZFLaoa2RFnnHhlF5AEWttz7sro9Mn1OA9PCQ4bpTtNG6s
-         cfpCHRcPu4XlUV4vYiAISuaQZwFHy4Ps4thvJvoxiN8yWs5O1Sk+7njjOYe1GxwXF8+6
-         KFWNh/xQtByFKLcTIi1N+YGn4C/XF7ZOwpa/LT8McNGDHN1Gu8IhVnsNo85WX8yiuxAB
-         4yl+Ic855LCRFCYyGiJpmtMbcdU9Okm1u++pVeVOpDXSFGfNSiIP56S/iQ8pQmtjJY55
-         N9Ev2Hg6DrBdoc8jIlZsRvq/ggRByVNY8y+y/VtPwsa3uJO9zYjU4jgY/wsrW7Cqy4Ta
-         2yZw==
+        bh=KThepZP551gK8cSQ+seSb4qJfRqKpa4vpwvp3/PWIbE=;
+        b=Ff/ElwA2sn1w+pmqDPDfPiYqfujWel2GtQbIXwNnPnTEO/18Seicf8G9hbtiQqRzit
+         cOeTfSbTFpBVjDnSpDD20tcJU0b5h/wuLS2eQ8Qf947WhibLfMWWjFn30h0na1YlPNPr
+         GQztt34cN2TGefyrbM5C83mslaTj+YH7OO9zsF0/iuDMykZ2l/GWpXHb6KLHpiCSpR3O
+         /nBiqRfthoDUA4BfXRJLCCtSaEkAkoBp18FexmVvvuvr1jHp7a3us04pOUnpkDtA8pn0
+         vZ54vNzhqNhVHPXo7V4fuM55aRSAYeuQ7LyZ1CguO6atQ8NQU9Qg12yUbqffD+xfDHST
+         aKcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746512083; x=1747116883;
+        d=1e100.net; s=20230601; t=1746516060; x=1747120860;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=vVH9uszKUf0ImyZn7pUcvK6tOg67lyVz/6ILO2VOaVg=;
-        b=E7KZycagAHE4RGn8BtOtJflszOSl0dn3r+CXoMjMH8L9JTz/Hu4shsI0w+HVbvU3O/
-         WfiBFQFJos93W4cjTWwwk8Q8fG+DNo9pEaArDo6kTXPwd2wG11CkJQOofIpj2nsGR1Q6
-         cKAr2Mv05EPgGAyC6nqjjh1+pZEbirva58nidVlvtscm/W1GyEycHl1hVC0bzDY/zQhc
-         h2zrWYaO2hdHor1GRzeaq88niT162ZizdBsahLoFtlyH3Mlohrsj3cAXdOwoyJErnFbU
-         D32+JxyOd4i4a8chjNCjo54J1jg+8Ep1j1gcVrxS/+wkdtYNWH6Sco4ew7Xt1pFFLAZl
-         ci+w==
-X-Forwarded-Encrypted: i=1; AJvYcCXGv6BMrUNHDsTwxZCZiVshEK5+nF81jdYC7nzmBRxKeGB6byfL4Ix/qjdRgYd5sWBI6Tg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzKJ6Xmk2mZUZUWKj/LX0mNe4i5CFAmP39p0Q6Qhi4np2gtKhmm
-	1JY9sW9/HYiS5Wfcp5LwywwND+qElit8oE4S6mk5GhUidEYPGEOkUJnw67mw0mwQ4kN0ZMjUTnA
-	FsFfpUrE5MKnbU7Q9fkp80uLfrDvgddQNjJlw0sUWEl4zYHgLVVcPNa7jFLgV6DolbrJ8hypkiA
-	tGuiwkzO1stduY2gwHfJe6i0fF7hNJZK0RA/pfH38bZziN0jxa42ObIZ+UnZdJU1NMlEjUZLcrO
-	01UbT4adkQh2TpKdgklan91aBQhrJkP8elmYCtdLDPOYchxfQdT+tYoFZzCLBEtp/Mr64HK5Ot1
-	Wyjg3IjeIyA=
-X-Gm-Gg: ASbGncuTBgBcDAS5fkGfdsfkR/0DGoKMpQk6pGg5C8iYpnWFzmDEHDItD8tlPad9wQi
-	i7ygCOdjv785f5pNoxYlOK0W2J18cpMtYoO/sWQMWndR0LTWY88yJep0S6AYlQpIOOijMZ96eo9
-	zH4u8UMd5lUiawPQOKRo2UYOs=
-X-Google-Smtp-Source: AGHT+IG9Qn4Nuo8hmyxgOYvDCyrbFdOpPbs6YLNjI+Vt7oDYHmElC+4edXAor+t/qFTx0xjGa0uovMQiMyHSM+WyQdI=
-X-Received: by 2002:a17:90b:5148:b0:2f2:a664:df20 with SMTP id
- 98e67ed59e1d1-30a7bf68f44mr3410817a91.7.1746512082659; Mon, 05 May 2025
- 23:14:42 -0700 (PDT)
+        bh=KThepZP551gK8cSQ+seSb4qJfRqKpa4vpwvp3/PWIbE=;
+        b=ehXtm+r8XfbrYJo+sxlhfGyVraTRjoa3vpcMj05FzvW7fJ0OqdVch00oNUcqqMREIR
+         x1PcRU38hET0apJtgxyApHAfZ+ZBqFGCQIszpgxmxbpVAB9Y87h5FsSyF18ZA8qWSlg9
+         ZIEUOt049+TGM7TBNJbCT2+iry3WH0HKCX4zyVDoB/nDX+ZFJvOjYQfCudkgNnQ/SLWI
+         Myt4q8mQEAGMKffXAGYk/VnWMbDAYpXAJwoKlZlf+h0SDu59247Dsc5Ut+GSqYY7hOxX
+         vTQ/QoSoLVy+qFNKFk34MQ1HeXkN2mX/mXr9jaYPpX0Yi26reVg8zolXwbf8Sw2XQLl2
+         Gvqw==
+X-Forwarded-Encrypted: i=1; AJvYcCUwf0sfzsoa9L7OXZDKad5d9qnpXiQgSLgKQZL4X2/uEteARpm3PTVQylyCL7WkE/AgogA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yx8BcfCR0dqj0gv0V8SduA6Wil+k02uD/IzdhrSKqK8T+em6faL
+	ITioZko29oE+G59BAEVtCth3Lpn+r3WZVoF4eGXioAchyeZ2kqbWrnskAdEXBzbyXICL43++2+A
+	pT0gPGtDBm8QI6Fugdd9dz8hqooI=
+X-Gm-Gg: ASbGncsKr6x3kxS1KeoLWpHEpiDdJr7IgJhFHqPXpB+ovEpyRgp1h/x806zjtC3XUn1
+	YmEjtt8qBDoXRuiGfpw2f3hck7Kmbp9cBrA8itb0/OI+70K2J7+Kv7oxnmWl/MXGMNHZhfCCODr
+	DSvXJPYr4HtLS3oklegvX6nin5pFs=
+X-Google-Smtp-Source: AGHT+IGn9cdfzWFzE7xGBoJZEOlyvUDOdjHNHSPfMW447WADoKbhyvgjZ2wOUKasEk0C5OGVCVS1PMGeQFaxRTG2AOY=
+X-Received: by 2002:a19:6b14:0:b0:545:60b:f38c with SMTP id
+ 2adb3069b0e04-54fa4f904d6mr2862984e87.41.1746516059804; Tue, 06 May 2025
+ 00:20:59 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <7efc9c9c-8187-4e10-bf9d-1cbb6aeac124@web.de> <xmqqjz6uokdx.fsf@gitster.g>
-In-Reply-To: <xmqqjz6uokdx.fsf@gitster.g>
-From: Koji Nakamaru <koji.nakamaru@gree.net>
-Date: Tue, 6 May 2025 15:14:30 +0900
-X-Gm-Features: ATxdqUGGKozQmEa7Wa3N4bblKzwxsDpZ6CAgctVXAQprX6ayKwzMvFni16Bw8iQ
-Message-ID: <CAOTNsDw=0+2pLfPTaGdfwpMrnFDJ9nTBiwRO6w=fZ=Am5thXXA@mail.gmail.com>
-Subject: Re: Problems with 82e79c63642c, NOT_CONSTANT with sigfillset()
-To: Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>, git@vger.kernel.org
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+ <b4b7854f330af7588b12e3361bed40723febddad.1746436719.git.gitgitgadget@gmail.com>
+ <CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+In-Reply-To: <CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+From: Leon Michalak <leonmichalak6@gmail.com>
+Date: Tue, 6 May 2025 08:20:48 +0100
+X-Gm-Features: ATxdqUHiLKoFjEP05d4TJCjdx_Q_E_kScUPjerWzPRZRMIXTlq_41i3l9UWKcSU
+Message-ID: <CAP9jKjFH_2CmvVAQwfk4KKTjDyMne2Wq9rkVnn+XB0dD5BEOCQ@mail.gmail.com>
+Subject: Re: [PATCH 3/3] add-interactive: add new "context" subcommand
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 6, 2025 at 5:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
-rote:
+Valid points, I don't think I have any objections to anything listed.
+
+Would it be recommended to update to test_grep (and test_config from
+previous message) in the same test files whilst I'm at it?
+
+Thanks for the review :)
+
+On Tue, 6 May 2025 at 01:02, Eric Sunshine <sunshine@sunshineco.com> wrote:
 >
-> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+> On Mon, May 5, 2025 at 5:19=E2=80=AFAM Leon Michalak via GitGitGadget
+> <gitgitgadget@gmail.com> wrote:
+> > This teaches `add/commit --interactive` a new "context" subcommand, whi=
+ch
+> > changes the amount of context lines subsequent subcommands like "patch"
+> > or "diff" generate in their diffs.
+> >
+> > Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
+> > ---
+> > diff --git a/Documentation/git-add.adoc b/Documentation/git-add.adoc
+> > @@ -265,14 +265,15 @@ and type return, like this:
+> >  ------------
+> >      *** Commands ***
+> >        1: status       2: update       3: revert       4: add untracked
+> > -      5: patch        6: diff         7: quit         8: help
+> > +      5: patch        6: diff         7: context      8: quit
+> > +      9: help
+> >      What now> 1
 >
-> > There is a problem with the somewhat new
-> > commit 82e79c63642c introducing NOT_CONSTANT with sigfillset():
-> >
-> > Compiling on older (?) MacOs machine leads to this:
-> >     Undefined symbols for architecture x86_64:
-> >       "_false_but_the_compiler_does_not_know_it_", referenced from:
-> >           _start_command in libgit.a(run-command.o)
-> >
-> > What is the best thing to avoid this ?
-> >
-> > The introduced "false_but_the_compiler_does_not_know_it" triggers here
-> > because there is a proper prototype in signal.h and then a
-> > #define sigfillset() ...
-> > further down in the file, which can never fail.
-> >
-> > a) Define a sigfillset_or_die_if_needed macro,
-> >   which does what we have today, and is simply defined
-> >   as sigfillset() without any error checking for MacOs(some version)
-> > b) Revert the commit (and fix the conflicts)
-> > c) Anything better ?
-> >
-> > I have a raw patch for b), not fully cooked, as the commit message
-> > is the hardest part. Before sending that out:
-> > Are the thoughts about a better solution ?
+> I'm not a `git add/commit --interactive' user, but I can imagine that
+> inserting "context" at 7 and bumping "quit" and "help" to 8 and 9,
+> respectively, is going to play havoc with muscle memory people have
+> built up over the years. To make this more friendly for existing
+> users, I'd suggest adding this new command at the end of the list
+> without changing the existing command numbers.
 >
-> How about figuring out why it does not work on your system?
+> Also, looking at this list, I can't help but think that "context"
+> feels out of place among the other action-oriented commands. Moreover,
+> if --interactive mode grows more configuration/setting-like commands
+> in the future, do we really want to keep extending this menu for them?
+> Specifically, I'm wondering if it would instead make sense to
+> introduce a new item "9: settings" which takes the user to a
+> "Settings" submenu from which the number of context lines can be set.
 >
-> Namely, compiling compiler-tricks/not-constant.c should yield
-> compiler-tricks/not-constant.o and that should be "ar"ed into
-> libgit.a, just like config.o, connect.o, etc., so I cannot see how
-> your ld fails to find false_but_the_compiler_does_not_know_it when
-> it has no problem with say git_config or other global symbols.
+> > -The main command loop has 6 subcommands (plus help and quit).
+> > +The main command loop has 7 subcommands (plus help and quit).
 >
-
-I reproduced the issue with Xcode 14.2 on macOS Monterey. It seems to
-be caused by the ld command's bug and can be avoided by tweaking
-Makefile:
-
-diff --git a/Makefile b/Makefile
-index 8a7f1c7654..8a06db8400 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1387,7 +1387,7 @@ UNIT_TEST_OBJS +=3D $(UNIT_TEST_DIR)/test-lib.o
- UNIT_TEST_OBJS +=3D $(UNIT_TEST_DIR)/lib-reftable.o
-
- # xdiff and reftable libs may in turn depend on what is in libgit.a
--GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_F=
-ILE)
-+GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
-$(LIB_FILE) compiler-tricks/not-constant.o
- EXTLIBS =3D
-
- GIT_USER_AGENT =3D git/$(GIT_VERSION)
-
-or by explicitly initializing false_but_the_compiler_does_not_know_it_
-(which changes the symbol type from 'C' to 'S'):
-
-diff --git a/compiler-tricks/not-constant.c b/compiler-tricks/not-constant.=
-c
-index 1da3ffc2f5..9fb4f275b1 100644
---- a/compiler-tricks/not-constant.c
-+++ b/compiler-tricks/not-constant.c
-@@ -1,2 +1,2 @@
- #include <git-compat-util.h>
--int false_but_the_compiler_does_not_know_it_;
-+int false_but_the_compiler_does_not_know_it_ =3D 0;
-
-Koji Nakamaru
+> Since you're touching this anyhow, let's fix this maintenance burden
+> once and for all by writing more it generically, perhaps like this:
+>
+>    The main command loop has several subcommands (plus help and quit).
+>
+> > +context::
+> > +
+> > +  This lets you change the amount of context lines shown in diffs that
+> > +  the 'patch' and 'diff' subcommands generate.
+>
+> s/amount/number/
+>
+> > diff --git a/add-interactive.c b/add-interactive.c
+> > @@ -1061,6 +1118,8 @@ static int run_help(struct add_i_state *s, const =
+struct pathspec *ps UNUSED,
+> > +       color_fprintf_ln(stdout, s->help_color, "context       - %s",
+> > +                        _("change how many context lines diffs are gen=
+erated with"));
+>
+> Perhaps:
+>
+>     _("change the number of diff context lines"));
+>
+> > @@ -1087,6 +1146,16 @@ static void choose_prompt_help(struct add_i_stat=
+e *s)
+> > +static void choose_prompt_help_context(struct add_i_state *s)
+> > +{
+> > +       color_fprintf_ln(stdout, s->help_color, "%s",
+> > +                        _("Prompt help:"));
+> > +       color_fprintf_ln(stdout, s->help_color, "<n>        - %s",
+> > +                        _("specify new context lines amount"));
+>
+> Likewise:
+>
+>     _("change number of diff context lines"));
+>
+> > +       color_fprintf_ln(stdout, s->help_color, "           - %s",
+> > +                        _("(empty) finish selecting"));
+>
+> "finish selecting" looks like a copy/paste error from elsewhere in
+> this source file. Perhaps you meant something like:
+>
+>     _("(empty) don't change number of context lines"));
+>
+> > diff --git a/t/t3701-add-interactive.sh b/t/t3701-add-interactive.sh
+> > @@ -1230,4 +1237,23 @@ test_expect_success 'hunk splitting works with d=
+iff.suppressBlankEmpty' '
+> > +test_expect_success 'change context works' '
+> > +       git reset --hard &&
+> > +       cat >template <<-\EOF &&
+> > +       firstline
+> > +       preline
+> > +       TARGET
+> > +       postline
+> > +       lastline
+> > +       EOF
+> > +       sed "/TARGET/d" >x <template &&
+> > +       git update-index --add x &&
+> > +       git commit -m initial &&
+> > +       sed "s/TARGET/ADDED/" >x <template &&
+> > +       test_write_lines p 1 | git add -i >output &&
+> > +       grep firstline output &&
+> > +       test_write_lines c 0 p 1 | git add -i >output &&
+> > +       ! grep firstline output
+> > +'
+>
+> This script does have its share of bare `grep` invocations, but these
+> days we prefer `test_grep`, which also appears often in this script,
+> so the following would be more appropriate:
+>
+>     test_grep firstline output &&
+>     ...
+>     test_grep ! firstline output
+>
+> Note the placement of "!" when used with `test_grep`.
