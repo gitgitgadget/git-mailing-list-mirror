@@ -1,138 +1,111 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-pg1-f173.google.com (mail-pg1-f173.google.com [209.85.215.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8321C29CB22
-	for <git@vger.kernel.org>; Tue,  6 May 2025 01:09:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26FB11BE23F
+	for <git@vger.kernel.org>; Tue,  6 May 2025 01:16:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746493796; cv=none; b=tB5Ve9QBl1tjgNnTvRE8Hv1xODrsm0GtGDrcqCuEqlK/T5aiGz3ad9gEyGvyPzM50CHHHstRkTjnraTfyDy0C/9poQUw32eTTbbtOUpeBVXLPFsAw6C+u+cMhU9oEcKGM0QM7EiZPZzsABu+pWtAOxHDbFjqJ/3uCoHsc0sII/E=
+	t=1746494167; cv=none; b=U7pg5L3/glVri3hizgXlxTqQm0dunodEsgQw7MOTZ3+ecFf1rBQndfb6kRt0c8WWMj/FhgP1sVFYapi2IHZ23bTYkGTzY1ucaoLQ6fT3wZVXjGebBZlntnojBn1I2w4gMHJCZOdkAKRfUZo/rWm6N7DXO4k4fkP+wwO0RiaR9Fc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746493796; c=relaxed/simple;
-	bh=6dfvJmAZ2TAHLG8ZeuzX0QQsICmMH8Jo6TVrzaNBpUQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=mSscvFmusUqo0Eujo5yEJuqGRbyViRT4Imex0n11V9d9wKoSOTlDv3YOeMQUIAz3Sys+aXJr4MuYg1WRY6uW9J5HSnum/F+jcaRNtAm1TZuiEO5PiJjtPeAb+R9XDoM1l63NS7VbMJz/lpsjoTXc/sTs5JaRw/13io5f3gL6EB8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i7YbYVCd; arc=none smtp.client-ip=209.85.214.181
+	s=arc-20240116; t=1746494167; c=relaxed/simple;
+	bh=sXCIKBXfqNDvmSOYjD4jG/p1aPzNzb3C7dYPlJtvRpI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=I5atS58LRzXlDRHcG+Rrm5X4bnPvnKrVeKdw7gdvUHUaxFam3SKe19Vntz95jCMXorQXMcu770ABHr9ghj9FVGIle2gBH92CDOYmdUyF5LetYwVzPvD/3/y+MPtbaiUixAFWjPCGQLCKVDg62tnaiNuSCn2ijEJRM5sADd/YSu0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YkYwwdv7; arc=none smtp.client-ip=209.85.215.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i7YbYVCd"
-Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22401f4d35aso59759055ad.2
-        for <git@vger.kernel.org>; Mon, 05 May 2025 18:09:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YkYwwdv7"
+Received: by mail-pg1-f173.google.com with SMTP id 41be03b00d2f7-b07d607dc83so4247603a12.1
+        for <git@vger.kernel.org>; Mon, 05 May 2025 18:16:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746493793; x=1747098593; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nlb8eFl6Kta3g31vZ0YdUyURSBdZtbaJP/R61ET4vks=;
-        b=i7YbYVCdDkGv4UTTLg0LZTZsCmeDojKAyXt8w8mmXauCzXS6IlezqHLbWt8gVijrnk
-         fsi7Ah4b0QnU4BDck4bBTKXhAJn1W/FCvhR/sqOH6TSma/OJKyasBaz5asGsH5mCUlRN
-         RZglAmbabllo3TOPVQTeITFfBzU2TkG3g7dWLK56L2qidont1hK19SMcyXWFY0djfO2p
-         +D9PdzXFqmLJ+G6SfwbJqX4KImyR1tW2KdA6RrDbMcLaJnX3LlWz4EFd0seVard2cn/P
-         v2ZM1CDM+YwVrsTD/ZU66+rvzfgryftg2VOaUDGOLo85Sr83j4G8rF4yo7rLaPAf2/kL
-         TQaA==
+        d=gmail.com; s=20230601; t=1746494165; x=1747098965; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=x/+i3kEXZQQpB+7yYGQyWdX3xy/W0IRhzsx/CUThwDw=;
+        b=YkYwwdv74c6qj2UHXwYRKg/e0C9Aa+Pkh25W3CGayOfw9gJH+e/lmKjjkj06hgD5ER
+         ZqySyAacXyjd87z7RdmOWMY/rQ/gAz31C8/PXOm0QdPzsYtW430mpOFeHx3Ylp76zGeU
+         9GApnG9V5A3cf0YTQIbXF/ALobeQqZvPrZlG2Krf4mt8H9QPk9sytxznNpxEHPT828l1
+         Tkcl4oJxKKeZX2gJakMjHmyhMMAeEm48Oakl8uRjilZY1Gd7zmmGfB4RiH+fvjYcZW6v
+         KktUbcqR5FWxTL0JeQITCf3yowZwpCfiTtKO2T8GJwSWAUswx/DFIlw+DJS+nlmQAXY8
+         b4Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746493793; x=1747098593;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=nlb8eFl6Kta3g31vZ0YdUyURSBdZtbaJP/R61ET4vks=;
-        b=gqBUA9gUXxWGGYpqw2jHITf1VuEEzKqqen6Ugw9YpSuHaZtAW1wanxMNZooo1KpLxj
-         MeKr/amqL6/RjHJQVrf5MgZQ6S0ugGeXsXKYL22A+SEzqxMoRrbn9vMJj7CdP+enAhJv
-         zKi/BFuZm7uREhzayYW4Hc4KDiEcxc6es2BUlW9cjFo5j4/c4//L85d+LeUGcC7XYGaF
-         ibJ0cuVoSAEsGxkNEVojJayvruzHBSJ5/NC7/cb0V4Haa/GvdHW0/6AQaggcZsAQ/iLN
-         mqms/JybtQsg9UKdcg37jIPvOTzBUL24sGLKpRr9m0ldiBNt54CZzGL/VKC4m4pJQsFu
-         zC2Q==
-X-Gm-Message-State: AOJu0YxQ2Vp4Z/VcIjJIjiiirgA8nFDn5Vc7Zd3zdLiKX5NULMRV42Vu
-	5GYadxbSnhSzuKFDUa0LHjUPfYnXl33Bdvi5//KyQxo2PYMvJIKowY1uDAmd
-X-Gm-Gg: ASbGncubXiu5Je2oJ+vHNBA5UPKI3loutaTIYO9MCZDMDuv1kjb2djHgpOqjtZ3vjl2
-	S+P6P7uekdGiuPIBN/8or6Ujj8EBc8zorPQoz+PsSZqHu4TaE9naoyuXaZtCPqdMmb4VAmwWIdh
-	fpa25ViGJBQgck8Gt3Du7D0i1F+miLQGfwYDLZjT4zHKDYrNb8RMLpafHRrRulLBDos9wimPmkm
-	uzatso+Lhf/eX0od0ScbauZY5p+okm9VJqNtU2vKUzB8y++zN5kIs90Ih/6zmt+KmBHE34XdDFc
-	TNOO6/92olf0W9JRjhklaFvM
-X-Google-Smtp-Source: AGHT+IEbFGkdT1uXeR0ppVYoLVJptV2vUMwlfM+XMMd3IzBc6HvbhkKmeXLWdavMVURnRllHhP2vvQ==
-X-Received: by 2002:a17:903:2385:b0:22e:1791:2e5a with SMTP id d9443c01a7336-22e36388959mr15055185ad.35.1746493793533;
-        Mon, 05 May 2025 18:09:53 -0700 (PDT)
-Received: from fedora.. ([2601:646:8081:3770::16aa])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-7405902167csm7851476b3a.98.2025.05.05.18.09.52
+        d=1e100.net; s=20230601; t=1746494165; x=1747098965;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=x/+i3kEXZQQpB+7yYGQyWdX3xy/W0IRhzsx/CUThwDw=;
+        b=V+jfl4jB2YH6XeNXMv4BehvGalZHGcSzoe2aeAmD0WSZbPNqthO2rpDaDH7RXrCK/R
+         lbmkRD876kcsVkQvemTtkxNW+AuURyQ+U//BMNv4ngwV0/fUlCmCg1SUQaIXg2Zn0smZ
+         Fr9ZxXY22qBvcLqNlsf9zmQ4J9lWXuiGb9CA8A0H8quoM2U1gBx0xRGiOwlCUlSAL+Y8
+         0dl8a4kAN4ipn2ad+gLyOiG2L0tESUwaNDZBKmHmK3iaMXwbcqoeJXkDktTV1wpO8Jze
+         0GvWOel6uHullY6rpKdEZI4iiJZQsR1ksV0hHeeGB0m1v7rfsGVz4Dv9dq8FtnYJ/lTj
+         RZAw==
+X-Forwarded-Encrypted: i=1; AJvYcCWPz3SMUJeDpLokcxrPUfibIyKjIrIm2kjV+eNA0Dn3tuH6UWKh+MiyzY5oB8mZXE6uKtY=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXQ0ezXtYfoLQP/AIJ8MSycrxuk8vtbxm5yAaqWLDbiMQR2Sjp
+	gmmYNClrCE0lbyceUdb+EiSaJgFwrWEIDbSjDJwJN9jNiAedJXgI
+X-Gm-Gg: ASbGncvPueoRr9uRbvLPon8594/SCFxfNIFbgG0gx/Ss1NV11y3xs87kvGz+EnRum5W
+	EW8QbKfGftw/5cksLVTRAoV9niv1RMI+Xh1b6nTTdh6exWkKoSgYbESVQrLZDUSubH/k+edJ3QP
+	q1culX46HbedLQb9Uae35KDiNVOMAUzvKYySAN7Zf5DROuwsx5a95LdnA7Q78ktg3k26FsF15LY
+	MdrHzcpv56PjzQckfXqqJ/Ld/oxs6ALGmF8trmwddQA/ZPbN4oDkdoBvRsJyqWAXXm9z0IAAuKP
+	YzarjO5oBC9Zg7RIfBQ5pw==
+X-Google-Smtp-Source: AGHT+IG+C7dHwvTipmg8xkMbU1zvptK8FsV7t6HbSVyt1juzlLsQnjfaAuSrUB6d9q9wxly3R1KljA==
+X-Received: by 2002:a17:90b:1cd0:b0:301:1bce:c255 with SMTP id 98e67ed59e1d1-30a61a50832mr13237568a91.27.1746494165288;
+        Mon, 05 May 2025 18:16:05 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::16aa])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30a3464e830sm12514129a91.0.2025.05.05.18.16.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 05 May 2025 18:09:53 -0700 (PDT)
+        Mon, 05 May 2025 18:16:04 -0700 (PDT)
 From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: shejialuo@gmail.com,
-	sandals@crustytoothpaste.net,
-	Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Collin Funk <collin.funk1@gmail.com>
-Subject: [PATCH v3] wrapper: NetBSD gives EFTYPE and FreeBSD gives EMFILE where POSIX uses ELOOP
-Date: Mon,  5 May 2025 18:08:59 -0700
-Message-ID: <20250506010946.212068-1-collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250503041718.42195-1-collin.funk1@gmail.com>
-References: <20250503041718.42195-1-collin.funk1@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,
+  shejialuo@gmail.com,  sandals@crustytoothpaste.net,  Jeff King
+ <peff@peff.net>
+Subject: Re: [PATCH v2] wrapper: NetBSD gives EFTYPE and FreeBSD gives
+ EMFILE where POSIX uses ELOOP
+In-Reply-To: <xmqqo6w6okni.fsf@gitster.g>
+References: <20250502233403.289761-1-collin.funk1@gmail.com>
+	<20250503041718.42195-1-collin.funk1@gmail.com>
+	<aBheGySF1FTsIVzx@pks.im> <xmqqo6w6okni.fsf@gitster.g>
+Date: Mon, 05 May 2025 18:16:03 -0700
+Message-ID: <87ikmemtd8.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-As documented on NetBSD's man page, open with the O_NOFOLLOW flag and a
-symlink returns -1 and sets errno to EFTYPE which differs from POSIX.
+Hi all,
 
-This patch fixes the following test failure:
+Junio C Hamano <gitster@pobox.com> writes:
 
-    $ sh t0602-reffiles-fsck.sh --verbose
-    --- expect	2025-05-02 23:05:23.920890147 +0000
-    +++ err	2025-05-02 23:05:23.916794959 +0000
-    @@ -1 +1 @@
-    -error: packed-refs: badRefFiletype: not a regular file but a symlink
-    +error: unable to open '.git/packed-refs': Inappropriate file type or format
-    not ok 12 - the filetype of packed-refs should be checked
+>> Nit, to make this a bit easier to read: our style guide says that nested
+>> preprocessor directives should be indented by one spaces. So this would
+>> become:
+>>
+>>     # ifdef __NetBSD__
+>>     #  define SYMLINK_ERRNO EFTYPE
+>>     # elif defined(__FreeBSD__)
+>>     #  define SYMLINK_ERRNO EMLINK
+>>     # endif
+>>
+>> Note that the `ifdef` itself would also be indented because we already
+>> have a surrounding `#ifdef O_NOFOLLOW`.
+>
+> Hmph, it does look easier to read.  I think we used to have some
+> outlier files that indented CPP directives by prefixing spaces in
+> front of the whole line, but these days we standardized to express
+> the indentation by inserting spaces immediately after '#' that
+> always sit at the beginning of line, so what you showed here is a
+> good example to mimic.
 
-FreeBSD has the same issue for EMLINK instead of EFTYPE.
+No problem, I sent V3 with the suggested changes. That is actually my
+preferred why of indenting preprocessor directives. But I saw a mix if
+CPP indenting, so I was unsure what was correct. I guess I could have
+looked harder for a style guide, but at least hopefully I followed
+'SubmittingPatches' mostly correct. :)
 
-This portability issue was introduced in cfea2f2da8 (packed-backend:
-check whether the "packed-refs" is regular file, 2025-02-28)
-
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- wrapper.c | 21 ++++++++++++++++++++-
- 1 file changed, 20 insertions(+), 1 deletion(-)
-
-diff --git a/wrapper.c b/wrapper.c
-index 8b98593149..38fce5327a 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -737,7 +737,26 @@ int is_empty_or_missing_file(const char *filename)
- int open_nofollow(const char *path, int flags)
- {
- #ifdef O_NOFOLLOW
--	return open(path, flags | O_NOFOLLOW);
-+	int ret = open(path, flags | O_NOFOLLOW);
-+	/*
-+	 * NetBSD sets errno to EFTYPE when path is a symlink. The only other
-+	 * time this errno occurs when O_REGULAR is used. Since we don't use
-+	 * it anywhere we can avoid an lstat here. FreeBSD does the same with
-+	 * EMLINK.
-+	 */
-+# ifdef __NetBSD__
-+#  define SYMLINK_ERRNO EFTYPE
-+# elif defined(__FreeBSD__)
-+#  define SYMLINK_ERRNO EMLINK
-+# endif
-+# if SYMLINK_ERRNO
-+	if (ret < 0 && errno == SYMLINK_ERRNO) {
-+		errno = ELOOP;
-+		return -1;
-+	}
-+#  undef SYMLINK_ERRNO
-+# endif
-+	return ret;
- #else
- 	struct stat st;
- 	if (lstat(path, &st) < 0)
--- 
-2.49.0
-
+Collin
