@@ -1,128 +1,113 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from mout.web.de (mout.web.de [217.72.192.78])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA4A280324
-	for <git@vger.kernel.org>; Tue,  6 May 2025 12:29:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F22D4280015
+	for <git@vger.kernel.org>; Tue,  6 May 2025 12:32:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746534585; cv=none; b=UqBubXY/kJ77/WZ71raVEzljowbEp60JnaAEFmq22wSOTnKSVr19QbX9eL9rJfQuuABuXTUD1+Jygk7eC9KhxSEhTL0dOl0LcOB1oTtPfMSsjK9aJxEDB4R6GgOTj4NkmfYI6gD1Ma1W7YPCK1sDdBZ9gHbJnrnB97IEYlO7xqM=
+	t=1746534742; cv=none; b=kvUaQcCPdLkqJVOM9xa8DE8eUH+jXZxkixae0QhYrqV7cAT4/Lo+c+ownCSggsFABoAbNNjbPpcI/6r+y1ECP/EVe5y7+jx0sO2y6uv2m9THra13Ybk0nStNeuw4eXs6IJ4C1ng25GM4eHbgKaC0eqEv3o7LOkpXiPHpajvywtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746534585; c=relaxed/simple;
-	bh=Vs0zKwdTN9sN/hJrbrHLu9nSIo5vgmtzfx00hSnpdhc=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dtQ64dClPcARB78tWFZLRM9MGy4mf7gM/QfUrC3M0d18tUK6XoWc6y57KLkxZo3Xq/MOshVPNG5Uz0lsUoFU5zWWfbkoeVzBHMo/UJ52j7O16vOi9Bw00P72BmnsuAsBsdjp6nh9ataVWK7/2htRalm1Y90Gxxc3uJ+xsxuCvrg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=syfDuvf4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WQHGfOc9; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746534742; c=relaxed/simple;
+	bh=Y7m1cJu9O3O2Jh2HeMAjrE9rDgfrF3E+Xm164wepPdE=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=uiBowCKtUmzgQbIKmsH9QSjZlKnno3EL8/XgVqwdZcvWSrXP+M8N6hfEz6w2m6K6Oe4FX53Rarri6j+ulqlP7lQpYlDf9xsyKDM5fOv9PE/KTDINmStbP15ttWZCHKoeJXrZY/TcM27OLJOQyujPtcxbkYdpjjiW0uudnNwy2To=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=wDmbwDUj; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="syfDuvf4";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WQHGfOc9"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8D0BA1380516
-	for <git@vger.kernel.org>; Tue,  6 May 2025 08:29:42 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 08:29:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746534582; x=1746620982; bh=CtlIewhA8m
-	jats9fn3SPKz0UwCLpaXaWLFERdIXhTqs=; b=syfDuvf4wRPoPXmE5Cv3IWnu9R
-	iCS0Epdu/R7E6sNUL4gCeg05Qng+++FzKh6zQizPvagHvvuHRIiipM9YltU4kbOW
-	XfsDT0csLH8ClK4tIf0bYIsFeXvNs1XA8nODaeucuHAXgxhozwHpsT/XVUNCeGe/
-	Pj/kQEPh2GfRVI4VYCp7AJbiyJWMvKvG34MIZh+Mcze7NgZu9pB/BfoHxNqrI+UM
-	8bzU1cZQmVhJ+LKdICpP1YWjMjWT8tcf//bzwbZbAwm+JO9ulSZkOy7C8MhqMHkN
-	/2kPR5cpaT6xGWRjkYnDUY6BiE0h8qx9afsU9R9C+AsfRZdWk9Vd7abblEgA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746534582; x=1746620982; bh=CtlIewhA8mjats9fn3SPKz0UwCLpaXaWLFE
-	RdIXhTqs=; b=WQHGfOc9b9aYtfYNP3HPVLsPfjSor7MwTjxOp9c1Waw+69tlH5y
-	bZn8WiR2dAe2eqeKGBegPzQqqW7+dDLsX+27oK0bdbM8Byt4AybJZ+6V/U3jq8g6
-	B3AQQb06YN9JTnFWDEQ1GbfkHY7w7+ryJDhsFssdWAZr83RgqJKjNRNjgT6GZh4k
-	Vxo9McdPrkJHKZtLCmGuS/nwEQ3M5jMiCb5rV7s+8O9uYSXUgG1JS/qBM0y0svYF
-	mcg8d7ATH+C26p8LrQbidVzBs2Vqo0+P6AEXJCdomqv9ZrnXuc9vAsp5ZSsh7oOi
-	Oo/IVvyUfasK4TuJ7U0WEdG004QnyGoMg+A==
-X-ME-Sender: <xms:tgAaaEAWGRZ6i9L9chOqMLVrLnunJJKoqr9F9s4pOgidThIpVnzLdA>
-    <xme:tgAaaGgVoj2NF2GPYQC7fb9PmwZo6K68wF0CfaLvkfKKEyUKEYs9bulXOftMHjXS1
-    TE6beXj1cD7r4NJCg>
-X-ME-Received: <xmr:tgAaaHnlfsD98bBPkQyyFuXGry1j91yeS-2qxKAg4gDaIj8ki8cmfTA-XefqTrMwJaIGc_I-A8-6qYOihFTcxd6t6UdHTG2LK4yyH99n>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefleekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvuffkfhggtggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepheekfeefge
-    egvdegvdeffeehtedttdffjeeuffelgffgheefleffleejvdefheeinecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:tgAaaKzWobYBstJ7c9FKdqV4UqtC8CZ_J1CGvg-kT3K8aO92QHRUUw>
-    <xmx:tgAaaJSzmnTZOImNXBSOstordacnQ5Ce06NbxLcWxS12WmsVGVxHCg>
-    <xmx:tgAaaFYKjAjND93xwuHEylyiHjwczM0xLjT6HTEPHFWqVUfk6b4J0A>
-    <xmx:tgAaaCQ8zwJ719sI-kHuR7Hd9vWdRIBdYP2VZULK6XvkiB2BdOHo7A>
-    <xmx:tgAaaG_6yYXFYh5J1qoVMQSYs2JQQ9Qyzh2XnNldO1ueP9I5GsHzv5Ac>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 May 2025 08:29:41 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d6e85e29 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
-	for <git@vger.kernel.org>;
-	Tue, 6 May 2025 12:29:40 +0000 (UTC)
-Date: Tue, 6 May 2025 14:29:35 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: git@vger.kernel.org
-Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
-Message-ID: <aBoAr6ABSFiJPGgu@pks.im>
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="wDmbwDUj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1746534729; x=1747139529; i=tboegi@web.de;
+	bh=er+Mox+XMqsj+1qvzv5uBkeerXhvihASkRUu+eogiYg=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:To:From:Subject:
+	 Content-Type:Content-Transfer-Encoding:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=wDmbwDUjdxrfFcsEph+qwsLucxkC7atHvnScKV9JMHeRte9/y3VOagtoESYr0LOU
+	 k6r6OOzwLcKUCPXDC/4RNBiy0GE4mUFZW4CNYrBqXTjXrhgBCfhmWy7SNJ953IPrA
+	 vDu84ATqMDn/fRhr1SokxKEek9RBOSMycgc8BXC3rTQWMXBh3q5jq3rt6hkP23Or8
+	 Cih0ftYcfSFDh9SdXZrZqGI4lBzbm6dfulUrGkQEGhAEi18LkymGy/cMnZVJDSSE+
+	 Zkdx4FAqiDFhxdIReQ6BaPB/HAX3xhvQt9DWxmtDyq7F3Ju70k+HjVJ1NnrMe1QVx
+	 P6cow+u4+SVSD6rzrQ==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.209.87] ([81.231.143.213]) by smtp.web.de (mrweb105
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MdfCN-1ultGa22Eb-00ZzWC; Tue, 06
+ May 2025 14:32:09 +0200
+Message-ID: <71fcb24d-55e3-40bb-9368-5b47aa180993@web.de>
+Date: Tue, 6 May 2025 14:32:04 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: git@vger.kernel.org, ps@pks.im
+From: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>
+Subject: Problems with t6011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Provags-ID: V03:K1:0sELQiniZKOjhan/w4VmhG0e8QG6XEbM1L1KyNqCASgb33PDZUd
+ PiRFtdjzFJzhHGJ2zFNx6L4wJr6KnvStGqEIsGuYK+d0XRTAqssyiPp40XPZjQgTnYQNCMA
+ zGxNLnrOfbATwXlO3LNuNW8KboAH3q352oiplaQtRVAyNKps3q65/TT7xqiqco0wypiAiXn
+ 9Cj4flSp/9b0qV2p4pY9A==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:06T546tXuIQ=;WR1+4vAd4P8Obya+1fHFADdUImu
+ 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
+ aOdnkKpONamyPvudXX3ojs=
 
-On Tue, May 06, 2025 at 12:59:49PM +0200, Patrick Steinhardt wrote:
-> Hi,
-> 
-> this patch series starts to parse TAP output generated by our tests when
-> executing them via Meson. This has the benefit that Meson starts to
-> understand skipped tests and reports how many subtests have been
-> executed:
-> 
->     ```
->     $ meson test t002*
->     ninja: Entering directory `/home/pks/Development/git/build'
->      1/10 t0024-crlf-archive                  OK              0.17s   2 subtests passed
->      2/10 t0022-crlf-rename                   OK              0.18s   2 subtests passed
->      3/10 t0029-core-unsetenvvars             SKIP            0.15s
->      4/10 t0023-crlf-am                       OK              0.18s   2 subtests passed
->      5/10 t0025-crlf-renormalize              OK              0.21s   3 subtests passed
->      6/10 t0026-eol-config                    OK              0.25s   5 subtests passed
->      7/10 t0020-crlf                          OK              0.81s   36 subtests passed
->      8/10 t0028-working-tree-encoding         OK              0.85s   22 subtests passed
->      9/10 t0021-conversion                    OK              3.45s   38 subtests passed
->     10/10 t0027-auto-crlf                     OK             26.35s   2600 subtests passed
->     
->     Ok:                9
->     Fail:              0
->     Skipped:           1
->     ```
-> 
-> This new feature is only enabled with Meson 1.8 and newer, which
-> contains a bugfix that we have upstreamed [1] to make the TAP parser
-> work in `meson test --interactive` mode.
-> 
-> Despite the changes to Meson itself, this patch series also contains a
-> couple of fixes for our test suite that caused us to not generate proper
-> TAP output.
+Hej Patrick,
+in case you have a second:
+the mv command here needs a "-f" to overwrite
+read-only files:
 
-Please hold off with merging this to "seen" just yet. I have missed that
-this introduces issues with MinGW, which I want to have a look at first
-before resubmitting. I didn't see those issues in a previous iteration,
-so I'm not sure whether it was introduced by this series or not.
-
-Patrick
+--- a/t/t6011-rev-list-with-bad-commit.sh
++++ b/t/t6011-rev-list-with-bad-commit.sh
+@@ -39,7 +39,7 @@ test_expect_success 'corrupt second commit object' '
+         for p in .git/objects/pack/*.pack
+         do
+                 sed "s/second commit/socond commit/" "$p" >"$p.munged" &&
+-               mv "$p.munged" "$p" ||
++               mv -f "$p.munged" "$p" ||
+                 return 1
