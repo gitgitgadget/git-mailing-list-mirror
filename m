@@ -1,71 +1,71 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 69F774B1E5D
-	for <git@vger.kernel.org>; Tue,  6 May 2025 07:44:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC60121D5B2
+	for <git@vger.kernel.org>; Tue,  6 May 2025 07:50:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746517460; cv=none; b=URmEc2Nu1/Yr63NUPt5YIHdaI4fL8KKtRqJehr+dd6hzLkgSFK+skED5ukVY7uuSnbbzHYb/+Nf+cUQNn11qNIxrJjaCWdNJwfgZVv0HCR8TsgISFAFzEr/W4AfXReBn5jXgeIdBVqFlul8r4AG2mFKBkUuzh6eb/4T5SZrNrW4=
+	t=1746517829; cv=none; b=kQiNP9K7bmiYdeERbZL0g//WJCuiqodmN3itKu1/8I1jRPE1mSrOj5Xz8lQQHtKzLkryKD1BW3LcZv7hKGCtui2coaxJQTSqQn5mFVpHDnfiHE/SdpQuXHVcf/UVGJRWpseY2HRHDkx0wUtv2KeA+rpkv96wBgfWFTRdF1vUlBE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746517460; c=relaxed/simple;
-	bh=nCduZPrMg+bb1ua2zsSRTj6GT2BtuDqbNo1NaWkOWBE=;
+	s=arc-20240116; t=1746517829; c=relaxed/simple;
+	bh=AYoOz1teWdJITTKzAm86AXwv1TDV8BhiEokEtyk78+8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=LrmvPELEEODjxVMoOEQ2NCHhtqsVLKODOzcMMm6zu9tQTRVnbaIeZuZ5ragftZ7MWs9V3i/mg5BjFukYxW0N2pMAnZlI63925yT7yVN2Upm8Qwl7eQ48XrcOGxJFVzijvXuTmRbsj9NoDHoX7rpWwM6lAkp4Ir+FnzZF2CR2/L0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=J2Al/NCo; arc=none smtp.client-ip=209.85.218.54
+	 To:Cc:Content-Type; b=r7KPclPokFgMQBk0hzz2ayUhNgMzQhhRdzbHBcGhbBIKEfMnQxxoyzZaKJinYsGLpid1nDqcHFyAkC6u19IEYDyyBXeaEQLlagXdPU3okziXR/RJXd6R/PWVdi+xyeCxQoHXECpCNBa6anB5JEJu12jNDzc4EOlfQpxvSfHTojk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CILBGf40; arc=none smtp.client-ip=209.85.208.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="J2Al/NCo"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ac2dfdf3c38so963758666b.3
-        for <git@vger.kernel.org>; Tue, 06 May 2025 00:44:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CILBGf40"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-5f4b7211badso7832741a12.2
+        for <git@vger.kernel.org>; Tue, 06 May 2025 00:50:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746517457; x=1747122257; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746517826; x=1747122626; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=nCduZPrMg+bb1ua2zsSRTj6GT2BtuDqbNo1NaWkOWBE=;
-        b=J2Al/NCoffLT8inest2Sbzs/yWplAKRX6Y/780zSHn8fpQ6Orr5fo8OwBRTm3pgxTq
-         Btr7u/aoP8hZ2sXNN6yFiJQnbiPHanemuJ9ZtaskS0PMVgZEvBmWDRwlYbAYWE8HCfh+
-         C58dYMGd9GByxcet2OgLI1PUsuUeaIA46va/OneNROD9cdXSUFAAIo3pX4zQ1PWWUFnI
-         MNpGvyrAxqt6SoQRyeuQ3JxWTs3umAPL8A+6DaFoMEuDtQsqI12dcsfwCrzfpUv1P5W3
-         u9xQSwj+wLVw3bx6KdONrPQ5czH6D3khoVZnEyRU1iBY0cRKs+SMt325pgDFSYUQiZtp
-         gI+A==
+        bh=AYoOz1teWdJITTKzAm86AXwv1TDV8BhiEokEtyk78+8=;
+        b=CILBGf40ljSMPpBE8NPGOhlsh+KW/l6R1ZMefWAlAaBCP8EswnF4X1WT03m7QKjQVi
+         Surt8HeaE3E6a3Wx35tMIRvivB6L5e0s8OdjkqzG+WOj+oAjZIcj0QeIGMoIY3HQespI
+         gtHD2WMg7mV8wCeqlzpx7sk1RjcLZZqGZ1tA7cPB/bQ+dPlQf5hOloxoqjFe1bRxZOIi
+         YYZ/qewrrsOGYMrcyVbUBSt3VvvcALPg+LTTCanOOY+hvcrI2fEoyndUM8Ud9ViKcLZG
+         2ui0AEqWfTLeQXTgkHpwTFPfs8SuuN/X/0F2lRcR+CPkWq0VTJLXFg4cmlKe1p8VgQx9
+         5kOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746517457; x=1747122257;
+        d=1e100.net; s=20230601; t=1746517826; x=1747122626;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=nCduZPrMg+bb1ua2zsSRTj6GT2BtuDqbNo1NaWkOWBE=;
-        b=nBVJKFVxRyTs1iga1b7wO6S8ndJMrZrHkiS/LhqiOuErFzRUifOF4hUPtTJvGQhuT4
-         e5lpW0N1LQEP7h7knXNr9Y/ptCByzWht6z7cEPvlZrmIObnipwzuX6JiK57ViG6pcTwl
-         ggbRmn4jO3hke8jURwyeLJfbQK+16AcVWGyvvp0Du8TjnA4LNIfXqJLN9tbyP3VUTOXI
-         8d+sHkBs8BY6hmONrv5TQMoecbzBbLyca3fqUUED2LBPhdYFmalxIOIQ45zme5ZXX+tG
-         UhCIskrPCGP4n6bTqqXEv9uJ4HskxBxEkNRR4Eqz9UBrg7hHJkBOYQk7Htnfc5VFh822
-         TqCQ==
-X-Gm-Message-State: AOJu0Yz4wOmnHev69X891l0qUK5shk9/y+iledcD62o/1psZh9Mp9gbj
-	v3pRgfbe22nbMwxO2MZdnU/Xh3i2ytA5lOwABPqarWG0S01weNcKC7DtEZJ+Mlgk0atUiR1n0cc
-	lJ8WfgmYiv/r1+aiCiwuOzPj/+Qs=
-X-Gm-Gg: ASbGncsUNg0n4TuSNb+Bjy4Wj1nyEQLRYZc+9CNZECBtnlMcHJ+pEuV4oYW9abN7foy
-	XbggCDvo5L9ndIT0ZMiIKRrtceEuXJheZsUUXP6HRgPMoxHFxIgIor3FC0BDvcPeZlduZsg8crD
-	hCnktryeGdVGl3WDZpKs651pTZI1uVbD9n9edKUhmcpbn9FvwKVwxzIw==
-X-Google-Smtp-Source: AGHT+IEJTMwMu1JWv7E+Q+3KE1umIlhyqMNkH7RPxhxX6VXc7QmeUiW+Vfqciwb72c1SPyOI+4zt4otYzt/MjHESybA=
-X-Received: by 2002:a17:907:da7:b0:ad1:825f:e326 with SMTP id
- a640c23a62f3a-ad1d355a5fcmr191459066b.52.1746517456439; Tue, 06 May 2025
- 00:44:16 -0700 (PDT)
+        bh=AYoOz1teWdJITTKzAm86AXwv1TDV8BhiEokEtyk78+8=;
+        b=vk7v7i+zzoE/+lkul1bhR9wt1bxsm1tm/wDuu5Fqp7tfQLkU8B6eldoOOB1Wfc3rJY
+         d1qL8DAZP2IHmVci8LlPNVa1icTLohWvq3ZPvE288rr51OO4+uKdrGqFWRXaQ/1OBnKl
+         IK6biu/KEfYtoyiBuL05Ind1JymfPRB/KmEixm4RBexKU198KsFMfAE1s3Tj/rQs9OcL
+         RrR6FauQ5M+ZHX9sUOVEUbKQKhanhwatclqUKBEXH1eCT9uE8Dss1LOp8v9vFfxaUBbL
+         WxCXaJafM63n3Bs89rRKfvJ/9uwMGGWVJYjG3we9GHKlXMuVKsB9pYm+ICP5ZaUUL7+k
+         VuFw==
+X-Gm-Message-State: AOJu0Yxx2Sey2gC5qi7OQcCibuE6cPCt39XMFcrvdfOoFUpuzYmg1m7r
+	qs2GEhpCL6b9ydOCsboXOVZ5D9npejmrBUklCcgN9k2pOgkDfUZ2qC1rEcs3yZVruHmxWBiBiG6
+	wNHC7jg26a7YqcqZEYPsqJAZdC0o=
+X-Gm-Gg: ASbGncvUBPuf2SxQXQmxlirPv9ohlDCvZlYh2P0T8gCzH42jNhCB1cTtP0PKRkrwsI4
+	EPgtHPedzhV0O0g5wRwBSkhE6Xv89ijmsjmxVvbW4GurkYVT8gDhqMu7TwDm7icWru/5UX/9nWW
+	+0K0ptMMLKXOg2qyllvVvor3EpxtAstA8MdPDKzNepbqMUahWsDBPiKz2LQxxCpcke
+X-Google-Smtp-Source: AGHT+IFLdBUu1bA3SHxTXYbm5uYSezSIdIqJIxJmc0HSi0rcW7Hhvj63Prh75GfJsw29z5PlCHksx95jiPj36tyqaB0=
+X-Received: by 2002:a17:907:c305:b0:ad1:766a:9441 with SMTP id
+ a640c23a62f3a-ad1d454f502mr187982166b.23.1746517825676; Tue, 06 May 2025
+ 00:50:25 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250505-pks-maintenance-missing-tasks-v4-0-141f4df906a1@pks.im> <20250505-pks-maintenance-missing-tasks-v4-2-141f4df906a1@pks.im>
-In-Reply-To: <20250505-pks-maintenance-missing-tasks-v4-2-141f4df906a1@pks.im>
+References: <20250505-pks-maintenance-missing-tasks-v4-0-141f4df906a1@pks.im> <20250505-pks-maintenance-missing-tasks-v4-3-141f4df906a1@pks.im>
+In-Reply-To: <20250505-pks-maintenance-missing-tasks-v4-3-141f4df906a1@pks.im>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Tue, 6 May 2025 09:44:03 +0200
-X-Gm-Features: ATxdqUFJNT2sECC9TovxIkgg1h8zpi2grh1dS8kbGldgXtua3Zj8QkLll6MwkSY
-Message-ID: <CAP8UFD2BDv=kp7W6w=J00iRAj-Jqz_EjHGfH_YpNTEWC2a82QA@mail.gmail.com>
-Subject: Re: [PATCH v4 2/7] builtin/gc: remove global variables where it
- trivial to do
+Date: Tue, 6 May 2025 09:50:12 +0200
+X-Gm-Features: ATxdqUGkajlSnHm2EuHOFLCoe-JwrMGyNePhQaBC8YOSQ4WGL7FUNlQ8rigLn3w
+Message-ID: <CAP8UFD1ZtYMf0ja75AV_jGJgzAL919zpHoGy0v-G2tNV+OEDwA@mail.gmail.com>
+Subject: Re: [PATCH v4 3/7] builtin/gc: move pruning of worktrees into a
+ separate function
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
 	Junio C Hamano <gitster@pobox.com>
@@ -75,19 +75,21 @@ Content-Transfer-Encoding: quoted-printable
 On Mon, May 5, 2025 at 10:52=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
 e:
 >
-> We use a couple of global variables to assemble command line arguments
-> for subprocesses we execute in git-gc(1). All of these variables except
-> the one for git-repack(1) are only used in a single place though, so
-> they don't really add anything but confusion.
->
-> Remove those variables.
+> Move pruning of worktrees into a separate function.
 
-About the commit message it seems to me that it's missing "is", so maybe:
+Repeating the subject at the beginning of the body part of the commit
+message doesn't bring much value.
 
-"builtin/gc: remove global variables where it's trivial to do"
+> This prepares for a
+> subsequent commit where we introduce a new "worktree-prune" task for
+> git-maintenance(1).
 
-or just:
+I think it might help a bit to reword in the usual "describe the
+problem first and then say what to do about it" way. Maybe something
+like:
 
-"builtin/gc: remove global variables where trivial to do"
+"In a subsequent commit we are going to introduce a new
+"worktree-prune" task for git-maintenance(1).
 
-?
+To prepare for this, refactor the code that prunes worktrees into a
+separate function."
