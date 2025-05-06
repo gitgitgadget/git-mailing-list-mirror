@@ -1,78 +1,80 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1863D27990D
-	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78FA279917
+	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:21 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746529763; cv=none; b=heeMLaxNYBoM3/arUNnlG/pVHFTHVZFderkx6GfeL6tqGO2T2vFJAGFwB6bH6I8gVzDTsv6H4cjts0QBgiAOqfxEtVy8/ZhkNb1AzBwoaioxO2X19OkFPByeQROGW/sBKKOsSziVkolDd8mFmrEg9Phr0qIDuwsI/Yrs1MC5tMI=
+	t=1746529763; cv=none; b=NV//LSgwAhe8v3nM3Qs5pFTDT2Kvl0FRdKZMXYH5O2FbMoiUgOdb6trxiqRzVffg2/2p/AbMrJr3OxUaBOmWyzJEv0I84KkckELv8nn/i7oDZZTJNPcLTgkDx68glsjgn1Gjmmg5bKIgFRaBqq+SHtp8B4fQlQKhiYnl2Uq0jI8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746529763; c=relaxed/simple;
-	bh=cjQbjk5ezEJaU3F59PPuo7K+PZD62VrFezcBRrbwrcs=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MnQdZ/oMhYigBZ4EZU6MBTACZBJyYlrwOIVpoMzWUxW4Z/CVjS+TCaxHl5ro+q3TcVTkaOzFCAWxk9NwfdXUAL1wwL+PxFdL3KCFRpUNh3Wcs5oIqx+gb0EQKSB1IbfgY7K1XgOBAtoY/6iW/vy3vKQaS7iwLs4wP8TYgLTLRb0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yNntqYzh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ADofN0lR; arc=none smtp.client-ip=103.168.172.144
+	bh=4a+7YCQw5eJX7dNbUKaEG1isihqgNY0azw5vwfDO5u4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=fhFiDzX7+M7kN5JvTBHPzbhmgqCqseSuofEfmo+Qvqi9QvQ6pgLlfifD/9hveC6uPrsmvSP3FYs1fGU+fmvQb1J2DLsgCFXHwo/WNdJ1Xxj0rxT6lr0hzvBYeJajYKVoh7mlQH9dgueq5N4xFeJyO4q+ptpw0+T9XXEv3fq9rJU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sjs2UCDn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=advzV4wG; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yNntqYzh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ADofN0lR"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 10BCC138146A
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sjs2UCDn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="advzV4wG"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id CE6F21380FE3
 	for <git@vger.kernel.org>; Tue,  6 May 2025 07:09:20 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 07:09:20 -0400
+  by phl-compute-03.internal (MEProxy); Tue, 06 May 2025 07:09:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1746529760; x=1746616160; bh=ukJjLHk9du
-	dSulybo2SG3j39gVKcZoi0bx7JlnxAx/M=; b=yNntqYzhXfE8AoVDSup0VPzgDE
-	Vu+GGtSkN4fVxLIe/amIWEsganc2zAWRChFWHNf+20NsKRwLFB+bR9NNcaBJ5KPr
-	BbuenLW2l9ZsNXJbjAokyXO2mgnz6EmZ/VSfa5bWrkHxcyhd9KNLlSMdZx2hz6QU
-	CLUPJmOVdrst7XTCDu9lmipeBPHSxzCTJGhS/RS1Q9wMBKtUrtJIi0VZnsSxN4pc
-	phJm1nSG6bMVDoeZTbrXGQsD5H8DE37S8t7tAtChNJSV4yvIvT82G/PIekak6e5C
-	dUKOPrXAKEYlw9MU2zcYJvTW/ywA1NajYT/vWZrEal6hZYIBm1n/zglRwtWA==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529760;
+	 x=1746616160; bh=a6KpWo5xggKySFmDgz+TQ3fIibKzugia/2zcDK75K/s=; b=
+	sjs2UCDnluV7sD0GqQUDr0y2j/68pZlrsCTSVEf58i1BoLMq8vqn+04vanXDNAIN
+	RUFVt5BJF+Y15CRUTjabovh52aKh4yyhXbUmRho7idZYrHG7TDiuqnl8cX+4O9AJ
+	MSn9kBPyDKF3i5BNP+kpF7Rszn+MpX9ifnuNUqPDDdwEo4nqBF5VWh6LpRt6zOeE
+	/nYMt8ezD/8uZcbxUaM/PnPtqcJWwl5jVlA0iJW3bXlEkjdc1XH+hTpVPaSHtXQw
+	rSumZxuauJVOk7Rpt3UYUGANDbodI5V9L2i0YsRdY/Z9KZamWtEYIVOO0MC2pzYM
+	WUCVScY79+d3Jyvbhrekxw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1746529760; x=1746616160; bh=ukJjLHk9dudSulybo2SG3j39gVKc
-	Zoi0bx7JlnxAx/M=; b=ADofN0lRoBCPM1dVKTDkz5vqKnZlm5Ox5bcKHuGpCuQa
-	BIzLHudHgzc2ppRUIPsCUp4yTSh44s574qr8V1IJsjzSSSlok82x+0R1527aizX1
-	Xkyp54/IaVFfnzvueDv2Z60+4CeAamMplZvpgQX17fztox9QMhFzQ3055YcN44Pq
-	Z4Dh43/R4nFoUN7+S8QYjb/HN7ExkERkCDqqtEnHEC1emJXD0UGPi+fDuWW4FKA4
-	chWaBOPW4BhRXjJEoqjb+qShzBKc0/js8beHtQtt0hW4rN7OgqmIohhLEFEKLKiv
-	PMOcEKK1tErHgwzFgM7ihJ6OrqyJwdaSvaH15gQyiA==
-X-ME-Sender: <xms:3-0ZaJBjilkKBXJADB-p3jf_LRHVk9cWAth9bz04AxX_AQSfeWX9GA>
-    <xme:3-0ZaHjgFWZYth_JhjO53SaM3P2I9TFl-jAARmnjoFlrvW61R1pJqB3gyECJxa0Lk
-    cpqH5TW1JDBa8Ng6w>
-X-ME-Received: <xmr:3-0ZaEm7_BSXh3aNTmh0voA-kCodQ986cCLqZlf3vid52u_Lfq4_TKCArzmB2zLD_hv9sN57DKzJ4pbuh8qneC5avyfG6I-vhtaWnPSv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkeefucetufdoteggodetrf
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529760; x=
+	1746616160; bh=a6KpWo5xggKySFmDgz+TQ3fIibKzugia/2zcDK75K/s=; b=a
+	dvzV4wGcXqmZeznPnXfx8UHbLCcjJVn7boMSSTRmhJmI/yFSqTNPha5xK/AhzZhh
+	hMWpx+Dp8kVIh4ptOPLAy84jNJi1rHq+W4SHbZviA/UpOiXO8KwzuXeZPAeTvNiX
+	sxXIWm24hGW5rMTRHSS2MKOkecUH8zTg3NG/hUReyi97lAxU6e1umoKkgqByOkgl
+	phF9zGkac7/O++bMhK2GEj2uQ3/kz4qQFC+QllZU6s/MkJqap0oNl+ig5M15+un0
+	MYLLcUZSnQRPT7ZayG8U+Z4v+qZXC/kep/Hfw6i5WHHI5n6brmbf/6Bk0k5u9ZVW
+	2VBx25X0a6dq9GQgJnYdw==
+X-ME-Sender: <xms:4O0ZaEruE2d-QoW5Jtw9yT4sE6-qqnu-q5uLPuIcW--SWyDSRnjlIw>
+    <xme:4O0ZaKoNweuN-13DgNUh2bGZdYz3zSj6zLjFNGkQ70hoUSFGMP1fG8qBe06cFjJBR
+    v0WAqEsugOyYLV7cg>
+X-ME-Received: <xmr:4O0ZaJPlkc88B3lcOxU5e556xJ_ma3LDTzwylbEAI-uMnWg88K0TLxK9ZAoldUoWu_KMKTZiU1mjAFGwjfSGi4uM1mPt55T--HweFC_z>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhuf
-    ffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektd
-    etieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:3-0ZaDzADjpSXHHt9ebWoaz1RHTpsbtr-LxmpzjYvHB-qtdRrsQKdA>
-    <xmx:3-0ZaOSFkXSQ92NFgDU4WSBl8gszTyMbGzNov54srBelnnq5fIxtLg>
-    <xmx:3-0ZaGZ2Vwe5Y3BniroiKcCm63JbnBuui72Gfvx3Io-526YiZqx-oA>
-    <xmx:3-0ZaPSeQsEdnext8KyTkcnoXJVPgwHoFQzWghvrqTQt11cFd245tw>
-    <xmx:4O0ZaP9nhJOGO5NY_IB5vobZCTLIpW3Ld9b3DFME_YCu7StTn_IdhotB>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
+    fugggtgffkfhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuie
+    dujedvkeehuedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhs
+    thgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimh
+    dpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:4O0ZaL49yNexXUupWL8fw3cAUN2KGKv6l4Sev6wImxSvGhp6BlODeQ>
+    <xmx:4O0ZaD7CJrNcl-061W6dsJSVOqm7aI4TqoXzoBEd8SNIugcfTBbETQ>
+    <xmx:4O0ZaLgEE3C-xoC8Miai0_ne7laf42TW5EbC5hMpQul6ZFvPQ9HfWQ>
+    <xmx:4O0ZaN7jkypUHCKbQY2C4mfhX31yAq-m3p6w6RQdchEfuH8G7QdKZA>
+    <xmx:4O0ZaAFKgLGKCdzGO89pkZSaLRSoQkVRaUNS80vKa-HJZDtetyjOLj_y>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 May 2025 07:09:19 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 May 2025 07:09:20 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 6de26ae8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id fabd4f4b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
 	Tue, 6 May 2025 11:09:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/17] object-store: carve out the object database
- subsystem
-Date: Tue, 06 May 2025 13:09:13 +0200
-Message-Id: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+Date: Tue, 06 May 2025 13:09:14 +0200
+Subject: [PATCH 01/17] object-store: rename `raw_object_store` to
+ `object_database`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -81,307 +83,252 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIANntGWgC/x2NQQqDQAxFryJZN6DSltarSBfOTKxpwQzJoBXx7
- obyVu8t/t/BSJkMumoHpYWNZXZpLhXEaZjfhJzcoa3bW+1g/hpK+FAsaEWUcBUsE6FSFmMvGz7
- jPYY0PtI1NOBDWWnk3/+kfx3HCTR0Udp0AAAA
-X-Change-ID: 20250505-pks-object-store-wo-the-repository-9c6cbdf8d4b1
+Message-Id: <20250506-pks-object-store-wo-the-repository-v1-1-c05b82e7b126@pks.im>
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-Hi,
+The `raw_object_store` structure is the central entry point for reading
+and writing objects in a repository. The main purpose of this structure
+is to manage object directories and provide an interface to access and
+write objects in those object directories.
 
-this patch series refactors the object store subsystem to become more
-self-contained by getting rid of `the_repository`. Instead of passing in
-the repository explicitly, we start to pass in the object store itself,
-which is in contrast to many other refactorings we did, but in line with
-what we did for the ref store, as well.
+Right now, many of the functions associated with the raw object store
+implicitly rely on `the_repository` to get access to its `objects`
+pointer, which is the `raw_object_store`. As we want to generally get
+rid of using `the_repository` across our codebase we will have to
+convert this implicit dependency on this global variable into an
+explicit parameter.
 
-This series also starts to properly scope functions to the carved out
-object database subsystem, which requires a bit of shuffling. This
-allows us to have a short-and-sweet `odb_` prefix for functions and
-prepares us for a future with pluggable object backends.
+This conversion can be done by simply passing in an explicit pointer to
+a repository and then using its `->objects` pointer. But there is a
+second effort underway, which is to make the object subsystem more
+selfcontained so that we can eventually have pluggale object backends.
+As such, passing in a repository wouldn't make a ton of sense, and the
+goal is to convert the object store interfaces such that we always pass
+in a reference to the `raw_object_store` instead.
 
-The series is structured as follows:
+This will expose the `raw_object_store` type to a lot more callers
+though, which surfaces that this type is named somewhat awkwardly. The
+"raw_" prefix makes readers wonder whether there is a non-raw variant of
+the object store, but there isn't. Furthermore, we nowadays want to name
+functions in a way that they can be clearly attributed to a specific
+subsystem, but calling them e.g. `raw_object_store_has_object()` is just
+too unwieldy, even when dropping the "raw_" prefix.
 
-  - Patches 1 to 3 rename `struct object_store` and `struct
-    object_directory` as well as the code files.
+Instead, rename the structure to `object_database`. This term is already
+used a lot throughout our codebase, and it cannot easily be mistaken for
+"object directories", either. Furthermore, its acronym ODB is already
+well-known and works well as part of a function's name, like for example
+`odb_has_object()`.
 
-  - Patches 4 to 12 refactor "odb.c" to get rid of `the_repository`.
-
-  - Patches 13 to 17 adjust the name of remaining functions so that they
-    can be clearly attributed to the ODB. I'm happy to kick these
-    patches out of this series and resend them at a later point in case
-    they create too much turmoil.
-
-This series is built on top of 6f84262c44a (The eleventh batch,
-2025-05-05) with ps/object-store-cleanup at 8a9e27be821 (object-store:
-drop `repo_has_object_file()`, 2025-04-29) merged into it. There are a
-couple of trivial conflicts when merged with "seen", I have appended the
-merge conflict resolution as a patch at the end of this mail.
-
-Thanks!
-
-Patrick
-
--- >8 --
-
-diff --cc builtin/pack-objects.c
-index e88a13dbb9f,2936a08e130..00000000000
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@@ -4063,9 -4318,10 +4320,10 @@@ static void add_objects_in_unpacked_pac
-  }
-  
-  static int add_loose_object(const struct object_id *oid, const char *path,
-- 			    void *data UNUSED)
-+ 			    void *data)
-  {
-+ 	struct rev_info *revs = data;
- -	enum object_type type = oid_object_info(the_repository, oid, NULL);
- +	enum object_type type = odb_read_object_info(the_repository->objects, oid, NULL);
-  
-  	if (type < 0) {
-  		warning(_("loose object at %s could not be examined"), path);
-diff --cc odb.h
-index 03f269c4e82,af0b3d856f5..00000000000
---- a/odb.h
-+++ b/odb.h
-@@@ -338,25 -258,10 +338,28 @@@ struct object_info 
-  /* Die if object corruption (not just an object being missing) was detected. */
-  #define OBJECT_INFO_DIE_IF_CORRUPT 32
-  
- -int oid_object_info_extended(struct repository *r,
- -			     const struct object_id *,
- -			     struct object_info *, unsigned flags);
- +/*
- + * Read object info from the object database and populate the `object_info`
- + * structure. Returns 0 on success, a negative error code otherwise.
- + */
- +int odb_read_object_info_extended(struct object_database *odb,
- +				  const struct object_id *oid,
- +				  struct object_info *oi,
- +				  unsigned flags);
- +
- +/*
- + * Read a subset of object info for the given object ID. Returns an `enum
- + * object_type` on success, a negative error code otherwise. If successful and
- + * `sizep` is non-NULL, then the size of the object will be written to the
- + * pointer.
- + */
- +int odb_read_object_info(struct object_database *odb,
- +			 const struct object_id *oid,
- +			 unsigned long *sizep);
- +
-++/* Free pointers inside of object_info, but not object_info itself */
-++void free_object_info_contents(struct object_info *object_info);
-+ 
-  enum {
-  	/* Retry packed storage after checking packed and loose storage */
-  	HAS_OBJECT_RECHECK_PACKED = (1 << 0),
-diff --git a/fetch-object-info.c b/fetch-object-info.c
-index 1b2c6c4d27c..6c2abb78055 100644
---- a/fetch-object-info.c
-+++ b/fetch-object-info.c
-@@ -4,7 +4,7 @@
- #include "pkt-line.h"
- #include "connect.h"
- #include "oid-array.h"
--#include "object-store.h"
-+#include "odb.h"
- #include "fetch-object-info.h"
- #include "string-list.h"
- 
-diff --git a/fetch-object-info.h b/fetch-object-info.h
-index 7910d7f1532..d35284bd6bc 100644
---- a/fetch-object-info.h
-+++ b/fetch-object-info.h
-@@ -3,7 +3,7 @@
- 
- #include "pkt-line.h"
- #include "protocol.h"
--#include "object-store.h"
-+#include "odb.h"
- 
- struct object_info_args {
- 	struct string_list *object_info_options;
-diff --git a/transport.h b/transport.h
-index 5a4f27451ae..3ef3acf8650 100644
---- a/transport.h
-+++ b/transport.h
-@@ -5,7 +5,7 @@
- #include "remote.h"
- #include "list-objects-filter-options.h"
- #include "string-list.h"
--#include "object-store.h"
-+#include "odb.h"
- 
- struct git_transport_options {
- 	unsigned thin : 1;
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (17):
-      object-store: rename `raw_object_store` to `object_database`
-      object-store: rename `object_directory` to `odb_backend`
-      object-store: rename files to "odb.{c,h}"
-      odb: introduce parent pointers
-      odb: get rid of `the_repository` in `find_odb()`
-      odb: get rid of `the_repository` in `assert_oid_type()`
-      odb: get rid of `the_repository` in `assert_oid_type()`
-      odb: get rid of `the_repository` when handling alternates
-      odb: get rid of `the_repository`  in `for_each()` functions
-      odb: get rid of `the_repository` when handling the primary backend
-      odb: get rid of `the_repository` when handling submodule backends
-      odb: trivial refactorings to get rid of `the_repository`
-      odb: rename `oid_object_info()`
-      odb: rename `repo_read_object_file()`
-      odb: rename `has_object()`
-      odb: rename `pretend_object_file()`
-      odb: rename `read_object_with_reference()`
+ commit-graph.c |  2 +-
+ commit-graph.h |  4 ++--
+ object-store.c | 12 ++++++------
+ object-store.h | 11 ++++++++---
+ packfile.c     |  2 +-
+ packfile.h     |  4 ++--
+ repository.c   |  4 ++--
+ repository.h   |  4 ++--
+ 8 files changed, 24 insertions(+), 19 deletions(-)
 
- Documentation/user-manual.adoc          |   4 +-
- Makefile                                |   2 +-
- apply.c                                 |  14 +-
- archive-tar.c                           |   2 +-
- archive-zip.c                           |   2 +-
- archive.c                               |   6 +-
- attr.c                                  |   4 +-
- bisect.c                                |   8 +-
- blame.c                                 |  22 +-
- builtin/backfill.c                      |   6 +-
- builtin/blame.c                         |   6 +-
- builtin/cat-file.c                      |  62 +++--
- builtin/checkout.c                      |   2 +-
- builtin/clone.c                         |  14 +-
- builtin/commit-graph.c                  |  20 +-
- builtin/commit-tree.c                   |   4 +-
- builtin/count-objects.c                 |   4 +-
- builtin/describe.c                      |   5 +-
- builtin/difftool.c                      |   4 +-
- builtin/fast-export.c                   |  10 +-
- builtin/fast-import.c                   |  49 ++--
- builtin/fetch.c                         |  21 +-
- builtin/fsck.c                          |  31 +--
- builtin/gc.c                            |  16 +-
- builtin/grep.c                          |  26 +--
- builtin/hash-object.c                   |   2 +-
- builtin/index-pack.c                    |  29 +--
- builtin/log.c                           |   4 +-
- builtin/ls-files.c                      |   4 +-
- builtin/ls-tree.c                       |   6 +-
- builtin/merge-file.c                    |   2 +-
- builtin/merge-tree.c                    |  14 +-
- builtin/mktag.c                         |   6 +-
- builtin/mktree.c                        |  10 +-
- builtin/multi-pack-index.c              |   6 +-
- builtin/notes.c                         |   8 +-
- builtin/pack-objects.c                  |  70 +++---
- builtin/pack-redundant.c                |   2 +-
- builtin/prune.c                         |   6 +-
- builtin/receive-pack.c                  |   9 +-
- builtin/remote.c                        |   6 +-
- builtin/repack.c                        |   7 +-
- builtin/replace.c                       |  12 +-
- builtin/rev-list.c                      |   8 +-
- builtin/show-ref.c                      |   6 +-
- builtin/submodule--helper.c             |   7 +-
- builtin/tag.c                           |  10 +-
- builtin/unpack-file.c                   |   4 +-
- builtin/unpack-objects.c                |  12 +-
- bulk-checkin.c                          |   6 +-
- bundle-uri.c                            |   5 +-
- bundle.c                                |   6 +-
- cache-tree.c                            |  17 +-
- combine-diff.c                          |   4 +-
- commit-graph.c                          |  56 ++---
- commit-graph.h                          |  20 +-
- commit.c                                |  15 +-
- config.c                                |   4 +-
- connected.c                             |   2 +-
- contrib/coccinelle/the_repository.cocci |   2 +-
- diagnose.c                              |   8 +-
- diff.c                                  |  20 +-
- dir.c                                   |   2 +-
- entry.c                                 |   6 +-
- fetch-pack.c                            |  17 +-
- fmt-merge-msg.c                         |   6 +-
- fsck.c                                  |   4 +-
- grep.c                                  |   6 +-
- http-backend.c                          |   2 +-
- http-push.c                             |  20 +-
- http-walker.c                           |  12 +-
- http.c                                  |   6 +-
- list-objects-filter.c                   |   4 +-
- list-objects.c                          |   6 +-
- log-tree.c                              |   2 +-
- loose.c                                 |  24 +-
- mailmap.c                               |   4 +-
- match-trees.c                           |   6 +-
- merge-blobs.c                           |  10 +-
- merge-ort.c                             |   8 +-
- meson.build                             |   2 +-
- midx-write.c                            |   2 +-
- midx.c                                  |   6 +-
- notes-cache.c                           |   4 +-
- notes-merge.c                           |   4 +-
- notes.c                                 |  19 +-
- object-file.c                           |  60 ++---
- object-file.h                           |  12 +-
- object-name.c                           |  24 +-
- object.c                                |   8 +-
- object-store.c => odb.c                 | 395 +++++++++++++++++---------------
- object-store.h => odb.h                 | 271 ++++++++++++++++------
- oss-fuzz/fuzz-pack-idx.c                |   2 +-
- pack-bitmap-write.c                     |   9 +-
- pack-bitmap.c                           |  10 +-
- pack-check.c                            |   2 +-
- pack-mtimes.c                           |   2 +-
- pack-objects.h                          |   2 +-
- pack-revindex.c                         |   2 +-
- pack-write.c                            |  10 +-
- packfile.c                              |  29 +--
- packfile.h                              |   8 +-
- path.c                                  |   4 +-
- promisor-remote.c                       |   6 +-
- protocol-caps.c                         |   4 +-
- reachable.c                             |   2 +-
- read-cache.c                            |  14 +-
- ref-filter.c                            |   6 +-
- reflog.c                                |   8 +-
- refs.c                                  |   7 +-
- remote.c                                |   9 +-
- replace-object.c                        |   2 +-
- replace-object.h                        |   2 +-
- repository.c                            |  21 +-
- repository.h                            |   4 +-
- rerere.c                                |   7 +-
- revision.c                              |   5 +-
- send-pack.c                             |   4 +-
- sequencer.c                             |   7 +-
- server-info.c                           |   2 +-
- shallow.c                               |  14 +-
- streaming.c                             |  10 +-
- submodule-config.c                      |   9 +-
- submodule.c                             |  32 +--
- submodule.h                             |   9 -
- t/helper/test-find-pack.c               |   2 +-
- t/helper/test-pack-mtimes.c             |   2 +-
- t/helper/test-partial-clone.c           |   4 +-
- t/helper/test-read-graph.c              |   8 +-
- t/helper/test-read-midx.c               |   2 +-
- t/helper/test-ref-store.c               |   4 +-
- tag.c                                   |  10 +-
- tmp-objdir.c                            |  18 +-
- tree-walk.c                             |  18 +-
- tree.c                                  |   6 +-
- unpack-trees.c                          |   2 +-
- upload-pack.c                           |   4 +-
- walker.c                                |   6 +-
- xdiff-interface.c                       |   4 +-
- 139 files changed, 1104 insertions(+), 961 deletions(-)
+diff --git a/commit-graph.c b/commit-graph.c
+index 6394752b0b0..1b66486b9c9 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -829,7 +829,7 @@ struct bloom_filter_settings *get_bloom_filter_settings(struct repository *r)
+ 	return NULL;
+ }
+ 
+-void close_commit_graph(struct raw_object_store *o)
++void close_commit_graph(struct object_database *o)
+ {
+ 	if (!o->commit_graph)
+ 		return;
+diff --git a/commit-graph.h b/commit-graph.h
+index 13f662827d4..20d38c100ce 100644
+--- a/commit-graph.h
++++ b/commit-graph.h
+@@ -26,7 +26,7 @@ void git_test_write_commit_graph_or_die(void);
+ struct commit;
+ struct bloom_filter_settings;
+ struct repository;
+-struct raw_object_store;
++struct object_database;
+ struct string_list;
+ 
+ char *get_commit_graph_filename(struct object_directory *odb);
+@@ -186,7 +186,7 @@ int write_commit_graph(struct object_directory *odb,
+ 
+ int verify_commit_graph(struct repository *r, struct commit_graph *g, int flags);
+ 
+-void close_commit_graph(struct raw_object_store *);
++void close_commit_graph(struct object_database *);
+ void free_commit_graph(struct commit_graph *);
+ 
+ /*
+diff --git a/object-store.c b/object-store.c
+index 2f51d0e3b03..1effcb12273 100644
+--- a/object-store.c
++++ b/object-store.c
+@@ -44,7 +44,7 @@ struct cached_object_entry {
+ 	} value;
+ };
+ 
+-static const struct cached_object *find_cached_object(struct raw_object_store *object_store,
++static const struct cached_object *find_cached_object(struct object_database *object_store,
+ 						      const struct object_id *oid)
+ {
+ 	static const struct cached_object empty_tree = {
+@@ -86,7 +86,7 @@ int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
+ /*
+  * Return non-zero iff the path is usable as an alternate object database.
+  */
+-static int alt_odb_usable(struct raw_object_store *o,
++static int alt_odb_usable(struct object_database *o,
+ 			  struct strbuf *path,
+ 			  const char *normalized_objdir, khiter_t *pos)
+ {
+@@ -959,9 +959,9 @@ void assert_oid_type(const struct object_id *oid, enum object_type expect)
+ 		    type_name(expect));
+ }
+ 
+-struct raw_object_store *raw_object_store_new(void)
++struct object_database *odb_new(void)
+ {
+-	struct raw_object_store *o = xmalloc(sizeof(*o));
++	struct object_database *o = xmalloc(sizeof(*o));
+ 
+ 	memset(o, 0, sizeof(*o));
+ 	INIT_LIST_HEAD(&o->packed_git_mru);
+@@ -970,7 +970,7 @@ struct raw_object_store *raw_object_store_new(void)
+ 	return o;
+ }
+ 
+-static void free_object_directories(struct raw_object_store *o)
++static void free_object_directories(struct object_database *o)
+ {
+ 	while (o->odb) {
+ 		struct object_directory *next;
+@@ -983,7 +983,7 @@ static void free_object_directories(struct raw_object_store *o)
+ 	o->odb_by_path = NULL;
+ }
+ 
+-void raw_object_store_clear(struct raw_object_store *o)
++void odb_clear(struct object_database *o)
+ {
+ 	FREE_AND_NULL(o->alternate_db);
+ 
+diff --git a/object-store.h b/object-store.h
+index c2fe5a19605..34b8efbbb83 100644
+--- a/object-store.h
++++ b/object-store.h
+@@ -86,7 +86,12 @@ struct packed_git;
+ struct multi_pack_index;
+ struct cached_object_entry;
+ 
+-struct raw_object_store {
++/*
++ * The object database encapsulates access to objects in a repository. It
++ * manages one or more backends that store the actual objects which are
++ * configured via alternates.
++ */
++struct object_database {
+ 	/*
+ 	 * Set of all object directories; the main directory is first (and
+ 	 * cannot be NULL after initialization). Subsequent directories are
+@@ -168,8 +173,8 @@ struct raw_object_store {
+ 	unsigned packed_git_initialized : 1;
+ };
+ 
+-struct raw_object_store *raw_object_store_new(void);
+-void raw_object_store_clear(struct raw_object_store *o);
++struct object_database *odb_new(void);
++void odb_clear(struct object_database *o);
+ 
+ /*
+  * Create a temporary file rooted in the object database directory, or
+diff --git a/packfile.c b/packfile.c
+index d91016f1c7f..8f51665266d 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -359,7 +359,7 @@ void close_pack(struct packed_git *p)
+ 	oidset_clear(&p->bad_objects);
+ }
+ 
+-void close_object_store(struct raw_object_store *o)
++void close_object_store(struct object_database *o)
+ {
+ 	struct packed_git *p;
+ 
+diff --git a/packfile.h b/packfile.h
+index 3a3c77cf05a..826eb7f475f 100644
+--- a/packfile.h
++++ b/packfile.h
+@@ -183,12 +183,12 @@ int close_pack_fd(struct packed_git *p);
+ 
+ uint32_t get_pack_fanout(struct packed_git *p, uint32_t value);
+ 
+-struct raw_object_store;
++struct object_database;
+ 
+ unsigned char *use_pack(struct packed_git *, struct pack_window **, off_t, unsigned long *);
+ void close_pack_windows(struct packed_git *);
+ void close_pack(struct packed_git *);
+-void close_object_store(struct raw_object_store *o);
++void close_object_store(struct object_database *o);
+ void unuse_pack(struct pack_window **);
+ void clear_delta_base_cache(void);
+ struct packed_git *add_packed_git(struct repository *r, const char *path,
+diff --git a/repository.c b/repository.c
+index 9b3d6665fc6..07757e6e0c9 100644
+--- a/repository.c
++++ b/repository.c
+@@ -52,7 +52,7 @@ static void set_default_hash_algo(struct repository *repo)
+ 
+ void initialize_repository(struct repository *repo)
+ {
+-	repo->objects = raw_object_store_new();
++	repo->objects = odb_new();
+ 	repo->remote_state = remote_state_new();
+ 	repo->parsed_objects = parsed_object_pool_new(repo);
+ 	ALLOC_ARRAY(repo->index, 1);
+@@ -374,7 +374,7 @@ void repo_clear(struct repository *repo)
+ 	FREE_AND_NULL(repo->worktree);
+ 	FREE_AND_NULL(repo->submodule_prefix);
+ 
+-	raw_object_store_clear(repo->objects);
++	odb_clear(repo->objects);
+ 	FREE_AND_NULL(repo->objects);
+ 
+ 	parsed_object_pool_clear(repo->parsed_objects);
+diff --git a/repository.h b/repository.h
+index c4c92b2ab9c..3a5ef9c781e 100644
+--- a/repository.h
++++ b/repository.h
+@@ -9,7 +9,7 @@ struct git_hash_algo;
+ struct index_state;
+ struct lock_file;
+ struct pathspec;
+-struct raw_object_store;
++struct object_database;
+ struct submodule_cache;
+ struct promisor_remote_config;
+ struct remote_state;
+@@ -47,7 +47,7 @@ struct repository {
+ 	/*
+ 	 * Holds any information related to accessing the raw object content.
+ 	 */
+-	struct raw_object_store *objects;
++	struct object_database *objects;
+ 
+ 	/*
+ 	 * All objects in this repository that have been parsed. This structure
 
-
----
-base-commit: 046efb6f2b050efd580e1c1750b77328a1790c0e
-change-id: 20250505-pks-object-store-wo-the-repository-9c6cbdf8d4b1
+-- 
+2.49.0.1045.g170613ef41.dirty
 
