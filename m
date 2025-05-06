@@ -1,139 +1,149 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8827B27C85C
-	for <git@vger.kernel.org>; Tue,  6 May 2025 05:40:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A71D4221FA0
+	for <git@vger.kernel.org>; Tue,  6 May 2025 06:14:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746510049; cv=none; b=ptO5gBUddZSpJPayjK+y0gxdX9RSPGM+zq59vwn79TnrA2LySmTiB5J6VjXNtBC0phDoKMKcF5yFce9MSl1CXgITV6+yEpkzivejnV3Av1hK8OKAbaJm8jQ5UZlyWvlVmfuyBmGSNmGmV3Atfkz6wxzDjWxDZCrbW/+iByTWtrE=
+	t=1746512086; cv=none; b=dvmkDYE8F3Pv7F+EGK0r1uc6CRTgJVOn52k1igXk/zPTbe7GANA3acpvInGEnBf98c1kUTObf/hLJ9LEWLqq6r/+hBsx0B8/fzfcV4LXJHuvF4k18a2TB4Zr1WKJMzCO9M9NToyg9/1fd6W91b75EbCs6pV3yuRPr/YXmNFpYkM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746510049; c=relaxed/simple;
-	bh=Wlxwh2IREyq5DKDbs66Gb00IIoJmrEQdOhKxBPNZSYw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AeoxL60A6pbx/eZZ5bH4knRu0PShwLCVRSz3wHiivLg48/1xOo2yZfEdHwMgk/j6vy7sIqO+h1O/0KbPspV/HEn01g5IOZW6AQcupcNW0g6LJbL1Sd/COgoWXcCOpu5WNhW6aerVEaeTgg3XOOEgpZbxfe7BV9VoS60xSjaZm/Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PBEj3UZx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dPTnA9Fq; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746512086; c=relaxed/simple;
+	bh=SWQre0T/2k4GAc3nkvZFZdZnAONDcZsGd0TwCg4PftM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RCnQywyg4+sD8cjV07vJWBoVwARokp61j7dqdZm5drWgEEA5HvCTW6cey4ow7HbaGhLcS23n6uIV11WqZOztxh4gUn4sJbuq6jU1nCNPZSfblOWtR7vAyUuYe84JUlmjR6xIunngPJx40XcAgr1pS6Tm7JNvAEz8HQPH64ulUpc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net; spf=pass smtp.mailfrom=gree.net; dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b=yW6NJLE4; arc=none smtp.client-ip=209.85.216.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gree.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gree.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PBEj3UZx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dPTnA9Fq"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 6C896138148B;
-	Tue,  6 May 2025 01:40:46 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Tue, 06 May 2025 01:40:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746510046; x=1746596446; bh=xFGvGxGLNn
-	T5/wg/mxqVhU6dsbyDo9uFd9uwiw3ScoM=; b=PBEj3UZxdya5pKneUEjrgwePU9
-	7xaphVPdEABsa8ttJ4PqJvXhzeABxBNwRcLn3DAbWKN6p4bVPOy75J2hls9r/uXY
-	zTPvuDAb2rUDbbnEp1fURYU//ETea9ihJ/AtCzfugJ4E1EuTStuzRdpIHNKhb9ap
-	VKoF9xvS7d4orBRouSQDpvEbz7WjWrOWtKXQ0I2KgpQHc2VJGb1hRrVNn91AqYyn
-	7avEGAzQk6uHeoq2lKqZNQdcqbdnFVcZALmbiJnepx8uI7Wsxb451eVQxJVvM6l3
-	UJiWH37Gxke9wrd4M2xjdfymoJjBSx+WFjQ9jreFWAWObQPfhBytDBTqx5Ww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746510046; x=1746596446; bh=xFGvGxGLNnT5/wg/mxqVhU6dsbyDo9uFd9u
-	wiw3ScoM=; b=dPTnA9FqlZ/I5Cekt+Hq2dYUhhb2xEaYtlGvvP/Sdr2wqIfjzqO
-	2imjmNlff4URTfeXTQFtxi9PUIXCzS6SjvRwDO9JwL1yLLEQDJb7wOtXxGZTFpKd
-	mlHNqauIqPnHnhc8xLfHCaXaCvxNkBuHR0uq1yfef6Q9Z7bvHr8sQiPJHzucFANO
-	/aYJc3HZqe85guZ/zC51gyinzA1nfdhiQlTv6TYSe8muIJF+bRE6mfYHmvPnQFNQ
-	oZpKKBqZIGL64uqZ6Uu5m9IihLWmbRgUYfRYOVtdCGaXScdoAl5VYNhi/AbbkObp
-	FFW6XRluZ7wDraX2VQksvgXK7WEC8UH2q9w==
-X-ME-Sender: <xms:3qAZaCAL216nidUR-O0j1SvdnzwDU-GnzWBN4LMq6PcQb1hkKiZpgQ>
-    <xme:3qAZaMiYuHiuEqL37dKJt7_IW3D774yu6hkdtgjkUfxUqW0SIvBmu1oTAZdbIWZBP
-    ku81bwhMlew7gj4yg>
-X-ME-Received: <xmr:3qAZaFkVnX9YxNtcGhBkqbt0f0qgHs7MeobsLraqhSeqE7vpQL6x9nuiLhkDTXY9vtGbhv7Og7dR0N9Au7Mkg5_TgiS7M0YFJO3top-J>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefudeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepgeetuedugeekvdegjeefjeeiveeljeevhfejieev
-    veeigeekgfdtudetueduvefgnecuffhomhgrihhnpehlfihnrdhnvghtnecuvehluhhsth
-    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdp
-    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheprghrnhho
-    uhgurdgsvghrvghnughsvghnsehsohhprhgrshhtvghrihgrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:3qAZaAx5_5dBXeLUmqeshlxOdi2j-WyDz9aODnUkaNLnLfU_YYvysQ>
-    <xmx:3qAZaHQW23nRhf9dEiKIHdt3MJ9yq-IGA9q2CTjCpQI2tDzLnp6ojA>
-    <xmx:3qAZaLZjS4STi0Gsjy-11fvB0EunhRNG9vofp2GTa5FOiemlhiezlQ>
-    <xmx:3qAZaASKFEIJ3ceN3A2MjLvn1YeDC8ctXKc8y0nMsArpYLVOsR0w8Q>
-    <xmx:3qAZaE5NEq0MmzCxwhlrCFu79YowTbq0POhq_7bQlAEP05DDu_3UGW5->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 01:40:45 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d3b1636d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 6 May 2025 05:40:43 +0000 (UTC)
-Date: Tue, 6 May 2025 07:40:39 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	BERENDSEN Arnoud <arnoud.berendsen@soprasteria.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Re: Cleaning up "contrib/"
-Message-ID: <aBmg1_wlF2fuk96M@pks.im>
-References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com>
- <3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
- <aBhZHA7av8bWH9Ac@pks.im>
- <xmqq5xieq3fs.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gree-net.20230601.gappssmtp.com header.i=@gree-net.20230601.gappssmtp.com header.b="yW6NJLE4"
+Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-301e05b90caso5622950a91.2
+        for <git@vger.kernel.org>; Mon, 05 May 2025 23:14:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gree-net.20230601.gappssmtp.com; s=20230601; t=1746512083; x=1747116883; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vVH9uszKUf0ImyZn7pUcvK6tOg67lyVz/6ILO2VOaVg=;
+        b=yW6NJLE4QXNu7O0z466OCZFLaoa2RFnnHhlF5AEWttz7sro9Mn1OA9PCQ4bpTtNG6s
+         cfpCHRcPu4XlUV4vYiAISuaQZwFHy4Ps4thvJvoxiN8yWs5O1Sk+7njjOYe1GxwXF8+6
+         KFWNh/xQtByFKLcTIi1N+YGn4C/XF7ZOwpa/LT8McNGDHN1Gu8IhVnsNo85WX8yiuxAB
+         4yl+Ic855LCRFCYyGiJpmtMbcdU9Okm1u++pVeVOpDXSFGfNSiIP56S/iQ8pQmtjJY55
+         N9Ev2Hg6DrBdoc8jIlZsRvq/ggRByVNY8y+y/VtPwsa3uJO9zYjU4jgY/wsrW7Cqy4Ta
+         2yZw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746512083; x=1747116883;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vVH9uszKUf0ImyZn7pUcvK6tOg67lyVz/6ILO2VOaVg=;
+        b=E7KZycagAHE4RGn8BtOtJflszOSl0dn3r+CXoMjMH8L9JTz/Hu4shsI0w+HVbvU3O/
+         WfiBFQFJos93W4cjTWwwk8Q8fG+DNo9pEaArDo6kTXPwd2wG11CkJQOofIpj2nsGR1Q6
+         cKAr2Mv05EPgGAyC6nqjjh1+pZEbirva58nidVlvtscm/W1GyEycHl1hVC0bzDY/zQhc
+         h2zrWYaO2hdHor1GRzeaq88niT162ZizdBsahLoFtlyH3Mlohrsj3cAXdOwoyJErnFbU
+         D32+JxyOd4i4a8chjNCjo54J1jg+8Ep1j1gcVrxS/+wkdtYNWH6Sco4ew7Xt1pFFLAZl
+         ci+w==
+X-Forwarded-Encrypted: i=1; AJvYcCXGv6BMrUNHDsTwxZCZiVshEK5+nF81jdYC7nzmBRxKeGB6byfL4Ix/qjdRgYd5sWBI6Tg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzKJ6Xmk2mZUZUWKj/LX0mNe4i5CFAmP39p0Q6Qhi4np2gtKhmm
+	1JY9sW9/HYiS5Wfcp5LwywwND+qElit8oE4S6mk5GhUidEYPGEOkUJnw67mw0mwQ4kN0ZMjUTnA
+	FsFfpUrE5MKnbU7Q9fkp80uLfrDvgddQNjJlw0sUWEl4zYHgLVVcPNa7jFLgV6DolbrJ8hypkiA
+	tGuiwkzO1stduY2gwHfJe6i0fF7hNJZK0RA/pfH38bZziN0jxa42ObIZ+UnZdJU1NMlEjUZLcrO
+	01UbT4adkQh2TpKdgklan91aBQhrJkP8elmYCtdLDPOYchxfQdT+tYoFZzCLBEtp/Mr64HK5Ot1
+	Wyjg3IjeIyA=
+X-Gm-Gg: ASbGncuTBgBcDAS5fkGfdsfkR/0DGoKMpQk6pGg5C8iYpnWFzmDEHDItD8tlPad9wQi
+	i7ygCOdjv785f5pNoxYlOK0W2J18cpMtYoO/sWQMWndR0LTWY88yJep0S6AYlQpIOOijMZ96eo9
+	zH4u8UMd5lUiawPQOKRo2UYOs=
+X-Google-Smtp-Source: AGHT+IG9Qn4Nuo8hmyxgOYvDCyrbFdOpPbs6YLNjI+Vt7oDYHmElC+4edXAor+t/qFTx0xjGa0uovMQiMyHSM+WyQdI=
+X-Received: by 2002:a17:90b:5148:b0:2f2:a664:df20 with SMTP id
+ 98e67ed59e1d1-30a7bf68f44mr3410817a91.7.1746512082659; Mon, 05 May 2025
+ 23:14:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqq5xieq3fs.fsf@gitster.g>
+References: <7efc9c9c-8187-4e10-bf9d-1cbb6aeac124@web.de> <xmqqjz6uokdx.fsf@gitster.g>
+In-Reply-To: <xmqqjz6uokdx.fsf@gitster.g>
+From: Koji Nakamaru <koji.nakamaru@gree.net>
+Date: Tue, 6 May 2025 15:14:30 +0900
+X-Gm-Features: ATxdqUGGKozQmEa7Wa3N4bblKzwxsDpZ6CAgctVXAQprX6ayKwzMvFni16Bw8iQ
+Message-ID: <CAOTNsDw=0+2pLfPTaGdfwpMrnFDJ9nTBiwRO6w=fZ=Am5thXXA@mail.gmail.com>
+Subject: Re: Problems with 82e79c63642c, NOT_CONSTANT with sigfillset()
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?UTF-8?Q?Torsten_B=C3=B6gershausen?= <tboegi@web.de>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 05, 2025 at 12:10:15PM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
-> > Many of the tools in "contrib/" fall into this category, and to the best
-> > of my knowledge there isn't really a clear strategy for that directory.
-> > So from my perspective, we should either rethink whether it is worth it
-> > to have "contrib/" as part of Git, or we should at least do a spring
-> > cleanup and drop bits that haven't seen any love in the last couple of
-> > years.
-> 
-> Things in contrib/ should either move up (to become a part of the
-> core), move out (to become an independent project), or disappear.
+On Tue, May 6, 2025 at 5:47=E2=80=AFAM Junio C Hamano <gitster@pobox.com> w=
+rote:
+>
+> Torsten B=C3=B6gershausen <tboegi@web.de> writes:
+>
+> > There is a problem with the somewhat new
+> > commit 82e79c63642c introducing NOT_CONSTANT with sigfillset():
+> >
+> > Compiling on older (?) MacOs machine leads to this:
+> >     Undefined symbols for architecture x86_64:
+> >       "_false_but_the_compiler_does_not_know_it_", referenced from:
+> >           _start_command in libgit.a(run-command.o)
+> >
+> > What is the best thing to avoid this ?
+> >
+> > The introduced "false_but_the_compiler_does_not_know_it" triggers here
+> > because there is a proper prototype in signal.h and then a
+> > #define sigfillset() ...
+> > further down in the file, which can never fail.
+> >
+> > a) Define a sigfillset_or_die_if_needed macro,
+> >   which does what we have today, and is simply defined
+> >   as sigfillset() without any error checking for MacOs(some version)
+> > b) Revert the commit (and fix the conflicts)
+> > c) Anything better ?
+> >
+> > I have a raw patch for b), not fully cooked, as the commit message
+> > is the hardest part. Before sending that out:
+> > Are the thoughts about a better solution ?
+>
+> How about figuring out why it does not work on your system?
+>
+> Namely, compiling compiler-tricks/not-constant.c should yield
+> compiler-tricks/not-constant.o and that should be "ar"ed into
+> libgit.a, just like config.o, connect.o, etc., so I cannot see how
+> your ld fails to find false_but_the_compiler_does_not_know_it when
+> it has no problem with say git_config or other global symbols.
+>
 
-So this very much sounds like staging drivers in the Linux kernel, where
-[1] seems to match the description of yours. The only problem is that I
-haven't really seen the described movement -- many of the pieces haven't
-been touched for years.
+I reproduced the issue with Xcode 14.2 on macOS Monterey. It seems to
+be caused by the ld command's bug and can be avoided by tweaking
+Makefile:
 
-I'll probably just send a patch series to get rid of at least a subset
-of them. I also think that we should adapt the README and rephrase it
-according to what the modern intention of this directory is, which seems
-to have changed.
+diff --git a/Makefile b/Makefile
+index 8a7f1c7654..8a06db8400 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1387,7 +1387,7 @@ UNIT_TEST_OBJS +=3D $(UNIT_TEST_DIR)/test-lib.o
+ UNIT_TEST_OBJS +=3D $(UNIT_TEST_DIR)/lib-reftable.o
 
-Other than that we also have some bits and pieces that _are_ actively
-maintained, but that just don't have a better place to live:
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
+-GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_F=
+ILE)
++GITLIBS =3D common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB)
+$(LIB_FILE) compiler-tricks/not-constant.o
+ EXTLIBS =3D
 
-  - CMake.
-  - Coccinelle rules.
-  - Contacts.
-  - Credential helpers.
-  - Diff-highlight.
-  - git-jump.
-  - Shell completion.
+ GIT_USER_AGENT =3D git/$(GIT_VERSION)
 
-Maybe they should be promoted and receive a proper home.
+or by explicitly initializing false_but_the_compiler_does_not_know_it_
+(which changes the symbol type from 'C' to 'S'):
 
-> But isn't git-svn not even part of contrib/?
+diff --git a/compiler-tricks/not-constant.c b/compiler-tricks/not-constant.=
+c
+index 1da3ffc2f5..9fb4f275b1 100644
+--- a/compiler-tricks/not-constant.c
++++ b/compiler-tricks/not-constant.c
+@@ -1,2 +1,2 @@
+ #include <git-compat-util.h>
+-int false_but_the_compiler_does_not_know_it_;
++int false_but_the_compiler_does_not_know_it_ =3D 0;
 
-Yeah, Dscho already corrected me.
-
-Patrick
-
-[1]: https://lwn.net/Articles/324279/
+Koji Nakamaru
