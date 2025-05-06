@@ -1,80 +1,78 @@
 Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A868227877D
-	for <git@vger.kernel.org>; Tue,  6 May 2025 11:00:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1863D27990D
+	for <git@vger.kernel.org>; Tue,  6 May 2025 11:09:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746529203; cv=none; b=Db7fIOAw6nRng7aZwI9NG7Rz3xYQWrfZ04BdW6qnNsfs7TKAhyOu27HLPuvlWNKCjIZjn+TFJ39BUqYsrIqKSCt6IvKoSoVh8sEvzP8dGHRrAWkV3vBNM7Pd7kHtXTk5bk2FjY/F/IsB3gE5cllkSfC7CaYMvM9XAJ2U88a2by4=
+	t=1746529763; cv=none; b=heeMLaxNYBoM3/arUNnlG/pVHFTHVZFderkx6GfeL6tqGO2T2vFJAGFwB6bH6I8gVzDTsv6H4cjts0QBgiAOqfxEtVy8/ZhkNb1AzBwoaioxO2X19OkFPByeQROGW/sBKKOsSziVkolDd8mFmrEg9Phr0qIDuwsI/Yrs1MC5tMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746529203; c=relaxed/simple;
-	bh=MiyT/RyPpEW5Q4za/uvFghMe4dGK8xUQuURC2M9fks4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Ca4KLMNjYwIMCp39Ox9n+a5HtLu2vluGB4bzaWCqJ0+Juj3ly7vwV5YIkx7ylY5coAsh7Luxw6Uhp0gCTh6IvpWh6wc3WhcDZlb1GiffL0p0TpkVDLd3EIfd1uJSRucCfxnaWcPymndHdyiVxM8/0PoiSSm0wF3uMh3YY47VFtQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kwFsJBCi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GJ9C7Adi; arc=none smtp.client-ip=103.168.172.144
+	s=arc-20240116; t=1746529763; c=relaxed/simple;
+	bh=cjQbjk5ezEJaU3F59PPuo7K+PZD62VrFezcBRrbwrcs=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=MnQdZ/oMhYigBZ4EZU6MBTACZBJyYlrwOIVpoMzWUxW4Z/CVjS+TCaxHl5ro+q3TcVTkaOzFCAWxk9NwfdXUAL1wwL+PxFdL3KCFRpUNh3Wcs5oIqx+gb0EQKSB1IbfgY7K1XgOBAtoY/6iW/vy3vKQaS7iwLs4wP8TYgLTLRb0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yNntqYzh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ADofN0lR; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kwFsJBCi";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GJ9C7Adi"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id A86BB138100E
-	for <git@vger.kernel.org>; Tue,  6 May 2025 07:00:00 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yNntqYzh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ADofN0lR"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 10BCC138146A
+	for <git@vger.kernel.org>; Tue,  6 May 2025 07:09:20 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 06 May 2025 07:00:00 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 06 May 2025 07:09:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746529200;
-	 x=1746615600; bh=mNooLtoOMY5aSf4fGUX3ZUqPg2W0MNlTjri4XZVkJGU=; b=
-	kwFsJBCi/3TC7mxc4jEyWW+lX78yRS17DRZXuK+cv+xoPci+0yCHcoDEIythPz8S
-	X11yNwDDQb5+7Pwv1yQiXExREKrN1oO4WCcQg3+fG4O119sSXhQRNNtl9o7uY21x
-	az0aWDUejNZQhRIcSMSTWRt2zSa5mslJb+JlYgxMDjhhXnhCEIX/qXd2eOhQH6dE
-	u8i8Hq8o6FcW4/ITbwpFY0o/rlvHn1wZCFKfSSORvG6ZRExATdrlXcivxFv37tEf
-	QgIAfjvvj5iIMX8ZxXwT++L8C9RvLUtiJS5bBo43zIKY/hVAApuG5++TBUN/OlCz
-	cjvNqKYE8My0niykyt5AzQ==
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1746529760; x=1746616160; bh=ukJjLHk9du
+	dSulybo2SG3j39gVKcZoi0bx7JlnxAx/M=; b=yNntqYzhXfE8AoVDSup0VPzgDE
+	Vu+GGtSkN4fVxLIe/amIWEsganc2zAWRChFWHNf+20NsKRwLFB+bR9NNcaBJ5KPr
+	BbuenLW2l9ZsNXJbjAokyXO2mgnz6EmZ/VSfa5bWrkHxcyhd9KNLlSMdZx2hz6QU
+	CLUPJmOVdrst7XTCDu9lmipeBPHSxzCTJGhS/RS1Q9wMBKtUrtJIi0VZnsSxN4pc
+	phJm1nSG6bMVDoeZTbrXGQsD5H8DE37S8t7tAtChNJSV4yvIvT82G/PIekak6e5C
+	dUKOPrXAKEYlw9MU2zcYJvTW/ywA1NajYT/vWZrEal6hZYIBm1n/zglRwtWA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746529200; x=
-	1746615600; bh=mNooLtoOMY5aSf4fGUX3ZUqPg2W0MNlTjri4XZVkJGU=; b=G
-	J9C7AdisV0xd1nBglwz8U69wD/UL1VcDSdcYzwXGA7ewbJpRRzevgneffQ1ux/so
-	DXV7xYlFpVuF9hdpO2B6QDYCiIq88M2fqkL4iiJ8HuOl4lQvFx2SHETr0Nc5RL+l
-	f8efyPU8R5HjDqZZMOGKe2gARYNZAOFA1SGsw7pJ7jzdhUTNUdsThrSrYG4kQ5oG
-	fJ7//USy/jvLERpBxYaSLWEQWSBgZkHGzxrmn50sfLFlgbhTjLidTnp8Hu2p3QVf
-	yPYI0Q/Sc4D95toUM6o4fYmczEorg9qdbSbxGUsBrLQ70bL0LNM9cOzSMYf6nWl+
-	7uLdCmB5ltYEyVDkBUjjw==
-X-ME-Sender: <xms:sOsZaK_MivWZQeaADHPgwbRyvIk6e5-XfBEEv82swffzpLoVg2WhBQ>
-    <xme:sOsZaKt8SPt2uCkgpnJ4c3d6YeEctiz9HttYNzsBJ5nayGOYke7uAy9wFQsPoUEl5
-    b_hnW74x4b6LPsHPA>
-X-ME-Received: <xmr:sOsZaAAP40yuTQsm6Puj-xW5MXgjUXRV2ft5FwLFrN14wbpMM4CIppKkN7BteuTf2_nyTyhdBf0WXQxcTN5y4GIHzdqMRuu6gsrQLpZd>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkedtucetufdoteggodetrf
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1746529760; x=1746616160; bh=ukJjLHk9dudSulybo2SG3j39gVKc
+	Zoi0bx7JlnxAx/M=; b=ADofN0lRoBCPM1dVKTDkz5vqKnZlm5Ox5bcKHuGpCuQa
+	BIzLHudHgzc2ppRUIPsCUp4yTSh44s574qr8V1IJsjzSSSlok82x+0R1527aizX1
+	Xkyp54/IaVFfnzvueDv2Z60+4CeAamMplZvpgQX17fztox9QMhFzQ3055YcN44Pq
+	Z4Dh43/R4nFoUN7+S8QYjb/HN7ExkERkCDqqtEnHEC1emJXD0UGPi+fDuWW4FKA4
+	chWaBOPW4BhRXjJEoqjb+qShzBKc0/js8beHtQtt0hW4rN7OgqmIohhLEFEKLKiv
+	PMOcEKK1tErHgwzFgM7ihJ6OrqyJwdaSvaH15gQyiA==
+X-ME-Sender: <xms:3-0ZaJBjilkKBXJADB-p3jf_LRHVk9cWAth9bz04AxX_AQSfeWX9GA>
+    <xme:3-0ZaHjgFWZYth_JhjO53SaM3P2I9TFl-jAARmnjoFlrvW61R1pJqB3gyECJxa0Lk
+    cpqH5TW1JDBa8Ng6w>
+X-ME-Received: <xmr:3-0ZaEm7_BSXh3aNTmh0voA-kCodQ986cCLqZlf3vid52u_Lfq4_TKCArzmB2zLD_hv9sN57DKzJ4pbuh8qneC5avyfG6I-vhtaWnPSv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeefkeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucgovfgvgihtqfhnlh
-    ihqddqteefjeefqddtgeculdehtddmnecujfgurhephfffufggtgfgkfhfjgfvvefoseht
-    jeertdertdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpsh
-    esphhkshdrihhmqeenucggtffrrghtthgvrhhnpeefgfevtdevudefudetudfghfejgfel
-    geehhefflefggeffheeigedvgfefheeugfenucffohhmrghinhepghhithhhuhgsrdgtoh
-    hmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhs
-    sehpkhhsrdhimhdpnhgspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:sOsZaCfPCtUVZAOVHAyA6FFt4Ztx95BPbm3wAZC5usgmphcM5ZHnpQ>
-    <xmx:sOsZaPMB73F_B6TcsFIwOWu_NRmjy66iQllQ3spk1D49hZ1zb_x4Jw>
-    <xmx:sOsZaMnCbkV0QGv9TROiYmdAn4KNj9q8eAAB9o5qoMqsJvz0SfUTig>
-    <xmx:sOsZaBsXE2XHP9pDGYgu87aTYXCvQ3FaaTkvHWPzPwJqydKCxCSRzA>
-    <xmx:sOsZaKoHHsgbOjSoxYdd1u2lcPA5hX1NYUglBB54FFveL-Mr_pXBt3xo>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhuf
+    ffkfggtgfgvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektd
+    etieegjeeuheeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepuddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:3-0ZaDzADjpSXHHt9ebWoaz1RHTpsbtr-LxmpzjYvHB-qtdRrsQKdA>
+    <xmx:3-0ZaOSFkXSQ92NFgDU4WSBl8gszTyMbGzNov54srBelnnq5fIxtLg>
+    <xmx:3-0ZaGZ2Vwe5Y3BniroiKcCm63JbnBuui72Gfvx3Io-526YiZqx-oA>
+    <xmx:3-0ZaPSeQsEdnext8KyTkcnoXJVPgwHoFQzWghvrqTQt11cFd245tw>
+    <xmx:4O0ZaP9nhJOGO5NY_IB5vobZCTLIpW3Ld9b3DFME_YCu7StTn_IdhotB>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA for
- <git@vger.kernel.org>; Tue, 6 May 2025 06:59:59 -0400 (EDT)
+ <git@vger.kernel.org>; Tue, 6 May 2025 07:09:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 1ad49925 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
+	by mail (OpenSMTPD) with ESMTPSA id 6de26ae8 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO)
 	for <git@vger.kernel.org>;
-	Tue, 6 May 2025 10:59:59 +0000 (UTC)
+	Tue, 6 May 2025 11:09:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 06 May 2025 12:59:53 +0200
-Subject: [PATCH 4/4] meson: parse TAP output generated by our tests
+Subject: [PATCH 00/17] object-store: carve out the object database
+ subsystem
+Date: Tue, 06 May 2025 13:09:13 +0200
+Message-Id: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,74 +81,307 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250506-pks-meson-tap-v1-4-5aaab2942a4c@pks.im>
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
-In-Reply-To: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+X-B4-Tracking: v=1; b=H4sIANntGWgC/x2NQQqDQAxFryJZN6DSltarSBfOTKxpwQzJoBXx7
+ obyVu8t/t/BSJkMumoHpYWNZXZpLhXEaZjfhJzcoa3bW+1g/hpK+FAsaEWUcBUsE6FSFmMvGz7
+ jPYY0PtI1NOBDWWnk3/+kfx3HCTR0Udp0AAAA
+X-Change-ID: 20250505-pks-object-store-wo-the-repository-9c6cbdf8d4b1
 To: git@vger.kernel.org
 Cc: 
 X-Mailer: b4 0.14.2
 
-By default, Meson only knows to pay respect to the exit code of tests to
-judge whether or not it ran successfully. This can be changed though by
-specifying the "protocol" parameter. Next to the default "exitcode"
-protocol, Meson also supports the "tap" output that our tests already
-know to generate.
+Hi,
 
-Unfortunately, the "tap" protocol was incompatible with `meson test
---interactive` and caused a hang. We have upstreamed a fix [1] though,
-so with the recent release of Meson 1.8 that fix is finally out and we
-can start using the "tap" protocol when running with a recent-enough
-version of this build tool.
+this patch series refactors the object store subsystem to become more
+self-contained by getting rid of `the_repository`. Instead of passing in
+the repository explicitly, we start to pass in the object store itself,
+which is in contrast to many other refactorings we did, but in line with
+what we did for the ref store, as well.
 
-With this change in place, Meson now properly detects how many subtests
-ran and whether test suites have been skipped:
+This series also starts to properly scope functions to the carved out
+object database subsystem, which requires a bit of shuffling. This
+allows us to have a short-and-sweet `odb_` prefix for functions and
+prepares us for a future with pluggable object backends.
 
-    ```
-    $ meson test t002*
-    ninja: Entering directory `/home/pks/Development/git/build'
-     1/10 t0024-crlf-archive                  OK              0.17s   2 subtests passed
-     2/10 t0022-crlf-rename                   OK              0.18s   2 subtests passed
-     3/10 t0029-core-unsetenvvars             SKIP            0.15s
-     4/10 t0023-crlf-am                       OK              0.18s   2 subtests passed
-     5/10 t0025-crlf-renormalize              OK              0.21s   3 subtests passed
-     6/10 t0026-eol-config                    OK              0.25s   5 subtests passed
-     7/10 t0020-crlf                          OK              0.81s   36 subtests passed
-     8/10 t0028-working-tree-encoding         OK              0.85s   22 subtests passed
-     9/10 t0021-conversion                    OK              3.45s   38 subtests passed
-    10/10 t0027-auto-crlf                     OK             26.35s   2600 subtests passed
+The series is structured as follows:
 
-    Ok:                9
-    Fail:              0
-    Skipped:           1
-    ```
+  - Patches 1 to 3 rename `struct object_store` and `struct
+    object_directory` as well as the code files.
 
-[1]: https://github.com/mesonbuild/meson/pull/13980
+  - Patches 4 to 12 refactor "odb.c" to get rid of `the_repository`.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
+  - Patches 13 to 17 adjust the name of remaining functions so that they
+    can be clearly attributed to the ODB. I'm happy to kick these
+    patches out of this series and resend them at a later point in case
+    they create too much turmoil.
+
+This series is built on top of 6f84262c44a (The eleventh batch,
+2025-05-05) with ps/object-store-cleanup at 8a9e27be821 (object-store:
+drop `repo_has_object_file()`, 2025-04-29) merged into it. There are a
+couple of trivial conflicts when merged with "seen", I have appended the
+merge conflict resolution as a patch at the end of this mail.
+
+Thanks!
+
+Patrick
+
+-- >8 --
+
+diff --cc builtin/pack-objects.c
+index e88a13dbb9f,2936a08e130..00000000000
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@@ -4063,9 -4318,10 +4320,10 @@@ static void add_objects_in_unpacked_pac
+  }
+  
+  static int add_loose_object(const struct object_id *oid, const char *path,
+- 			    void *data UNUSED)
++ 			    void *data)
+  {
++ 	struct rev_info *revs = data;
+ -	enum object_type type = oid_object_info(the_repository, oid, NULL);
+ +	enum object_type type = odb_read_object_info(the_repository->objects, oid, NULL);
+  
+  	if (type < 0) {
+  		warning(_("loose object at %s could not be examined"), path);
+diff --cc odb.h
+index 03f269c4e82,af0b3d856f5..00000000000
+--- a/odb.h
++++ b/odb.h
+@@@ -338,25 -258,10 +338,28 @@@ struct object_info 
+  /* Die if object corruption (not just an object being missing) was detected. */
+  #define OBJECT_INFO_DIE_IF_CORRUPT 32
+  
+ -int oid_object_info_extended(struct repository *r,
+ -			     const struct object_id *,
+ -			     struct object_info *, unsigned flags);
+ +/*
+ + * Read object info from the object database and populate the `object_info`
+ + * structure. Returns 0 on success, a negative error code otherwise.
+ + */
+ +int odb_read_object_info_extended(struct object_database *odb,
+ +				  const struct object_id *oid,
+ +				  struct object_info *oi,
+ +				  unsigned flags);
+ +
+ +/*
+ + * Read a subset of object info for the given object ID. Returns an `enum
+ + * object_type` on success, a negative error code otherwise. If successful and
+ + * `sizep` is non-NULL, then the size of the object will be written to the
+ + * pointer.
+ + */
+ +int odb_read_object_info(struct object_database *odb,
+ +			 const struct object_id *oid,
+ +			 unsigned long *sizep);
+ +
+++/* Free pointers inside of object_info, but not object_info itself */
+++void free_object_info_contents(struct object_info *object_info);
++ 
+  enum {
+  	/* Retry packed storage after checking packed and loose storage */
+  	HAS_OBJECT_RECHECK_PACKED = (1 << 0),
+diff --git a/fetch-object-info.c b/fetch-object-info.c
+index 1b2c6c4d27c..6c2abb78055 100644
+--- a/fetch-object-info.c
++++ b/fetch-object-info.c
+@@ -4,7 +4,7 @@
+ #include "pkt-line.h"
+ #include "connect.h"
+ #include "oid-array.h"
+-#include "object-store.h"
++#include "odb.h"
+ #include "fetch-object-info.h"
+ #include "string-list.h"
+ 
+diff --git a/fetch-object-info.h b/fetch-object-info.h
+index 7910d7f1532..d35284bd6bc 100644
+--- a/fetch-object-info.h
++++ b/fetch-object-info.h
+@@ -3,7 +3,7 @@
+ 
+ #include "pkt-line.h"
+ #include "protocol.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ struct object_info_args {
+ 	struct string_list *object_info_options;
+diff --git a/transport.h b/transport.h
+index 5a4f27451ae..3ef3acf8650 100644
+--- a/transport.h
++++ b/transport.h
+@@ -5,7 +5,7 @@
+ #include "remote.h"
+ #include "list-objects-filter-options.h"
+ #include "string-list.h"
+-#include "object-store.h"
++#include "odb.h"
+ 
+ struct git_transport_options {
+ 	unsigned thin : 1;
+
 ---
- meson.build | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Patrick Steinhardt (17):
+      object-store: rename `raw_object_store` to `object_database`
+      object-store: rename `object_directory` to `odb_backend`
+      object-store: rename files to "odb.{c,h}"
+      odb: introduce parent pointers
+      odb: get rid of `the_repository` in `find_odb()`
+      odb: get rid of `the_repository` in `assert_oid_type()`
+      odb: get rid of `the_repository` in `assert_oid_type()`
+      odb: get rid of `the_repository` when handling alternates
+      odb: get rid of `the_repository`  in `for_each()` functions
+      odb: get rid of `the_repository` when handling the primary backend
+      odb: get rid of `the_repository` when handling submodule backends
+      odb: trivial refactorings to get rid of `the_repository`
+      odb: rename `oid_object_info()`
+      odb: rename `repo_read_object_file()`
+      odb: rename `has_object()`
+      odb: rename `pretend_object_file()`
+      odb: rename `read_object_with_reference()`
 
-diff --git a/meson.build b/meson.build
-index 94bd525dd7b..cd8df189d79 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2031,6 +2031,14 @@ if get_option('tests')
-     'timeout': 0,
-   }
- 
-+  # The TAP protocol was already understood by previous versions of Meson, but
-+  # it was incompatible with the `meson test --interactive` flag.
-+  if meson.version().version_compare('>=1.8.0')
-+    test_kwargs += {
-+      'protocol': 'tap',
-+    }
-+  endif
-+
-   subdir('t')
- endif
- 
+ Documentation/user-manual.adoc          |   4 +-
+ Makefile                                |   2 +-
+ apply.c                                 |  14 +-
+ archive-tar.c                           |   2 +-
+ archive-zip.c                           |   2 +-
+ archive.c                               |   6 +-
+ attr.c                                  |   4 +-
+ bisect.c                                |   8 +-
+ blame.c                                 |  22 +-
+ builtin/backfill.c                      |   6 +-
+ builtin/blame.c                         |   6 +-
+ builtin/cat-file.c                      |  62 +++--
+ builtin/checkout.c                      |   2 +-
+ builtin/clone.c                         |  14 +-
+ builtin/commit-graph.c                  |  20 +-
+ builtin/commit-tree.c                   |   4 +-
+ builtin/count-objects.c                 |   4 +-
+ builtin/describe.c                      |   5 +-
+ builtin/difftool.c                      |   4 +-
+ builtin/fast-export.c                   |  10 +-
+ builtin/fast-import.c                   |  49 ++--
+ builtin/fetch.c                         |  21 +-
+ builtin/fsck.c                          |  31 +--
+ builtin/gc.c                            |  16 +-
+ builtin/grep.c                          |  26 +--
+ builtin/hash-object.c                   |   2 +-
+ builtin/index-pack.c                    |  29 +--
+ builtin/log.c                           |   4 +-
+ builtin/ls-files.c                      |   4 +-
+ builtin/ls-tree.c                       |   6 +-
+ builtin/merge-file.c                    |   2 +-
+ builtin/merge-tree.c                    |  14 +-
+ builtin/mktag.c                         |   6 +-
+ builtin/mktree.c                        |  10 +-
+ builtin/multi-pack-index.c              |   6 +-
+ builtin/notes.c                         |   8 +-
+ builtin/pack-objects.c                  |  70 +++---
+ builtin/pack-redundant.c                |   2 +-
+ builtin/prune.c                         |   6 +-
+ builtin/receive-pack.c                  |   9 +-
+ builtin/remote.c                        |   6 +-
+ builtin/repack.c                        |   7 +-
+ builtin/replace.c                       |  12 +-
+ builtin/rev-list.c                      |   8 +-
+ builtin/show-ref.c                      |   6 +-
+ builtin/submodule--helper.c             |   7 +-
+ builtin/tag.c                           |  10 +-
+ builtin/unpack-file.c                   |   4 +-
+ builtin/unpack-objects.c                |  12 +-
+ bulk-checkin.c                          |   6 +-
+ bundle-uri.c                            |   5 +-
+ bundle.c                                |   6 +-
+ cache-tree.c                            |  17 +-
+ combine-diff.c                          |   4 +-
+ commit-graph.c                          |  56 ++---
+ commit-graph.h                          |  20 +-
+ commit.c                                |  15 +-
+ config.c                                |   4 +-
+ connected.c                             |   2 +-
+ contrib/coccinelle/the_repository.cocci |   2 +-
+ diagnose.c                              |   8 +-
+ diff.c                                  |  20 +-
+ dir.c                                   |   2 +-
+ entry.c                                 |   6 +-
+ fetch-pack.c                            |  17 +-
+ fmt-merge-msg.c                         |   6 +-
+ fsck.c                                  |   4 +-
+ grep.c                                  |   6 +-
+ http-backend.c                          |   2 +-
+ http-push.c                             |  20 +-
+ http-walker.c                           |  12 +-
+ http.c                                  |   6 +-
+ list-objects-filter.c                   |   4 +-
+ list-objects.c                          |   6 +-
+ log-tree.c                              |   2 +-
+ loose.c                                 |  24 +-
+ mailmap.c                               |   4 +-
+ match-trees.c                           |   6 +-
+ merge-blobs.c                           |  10 +-
+ merge-ort.c                             |   8 +-
+ meson.build                             |   2 +-
+ midx-write.c                            |   2 +-
+ midx.c                                  |   6 +-
+ notes-cache.c                           |   4 +-
+ notes-merge.c                           |   4 +-
+ notes.c                                 |  19 +-
+ object-file.c                           |  60 ++---
+ object-file.h                           |  12 +-
+ object-name.c                           |  24 +-
+ object.c                                |   8 +-
+ object-store.c => odb.c                 | 395 +++++++++++++++++---------------
+ object-store.h => odb.h                 | 271 ++++++++++++++++------
+ oss-fuzz/fuzz-pack-idx.c                |   2 +-
+ pack-bitmap-write.c                     |   9 +-
+ pack-bitmap.c                           |  10 +-
+ pack-check.c                            |   2 +-
+ pack-mtimes.c                           |   2 +-
+ pack-objects.h                          |   2 +-
+ pack-revindex.c                         |   2 +-
+ pack-write.c                            |  10 +-
+ packfile.c                              |  29 +--
+ packfile.h                              |   8 +-
+ path.c                                  |   4 +-
+ promisor-remote.c                       |   6 +-
+ protocol-caps.c                         |   4 +-
+ reachable.c                             |   2 +-
+ read-cache.c                            |  14 +-
+ ref-filter.c                            |   6 +-
+ reflog.c                                |   8 +-
+ refs.c                                  |   7 +-
+ remote.c                                |   9 +-
+ replace-object.c                        |   2 +-
+ replace-object.h                        |   2 +-
+ repository.c                            |  21 +-
+ repository.h                            |   4 +-
+ rerere.c                                |   7 +-
+ revision.c                              |   5 +-
+ send-pack.c                             |   4 +-
+ sequencer.c                             |   7 +-
+ server-info.c                           |   2 +-
+ shallow.c                               |  14 +-
+ streaming.c                             |  10 +-
+ submodule-config.c                      |   9 +-
+ submodule.c                             |  32 +--
+ submodule.h                             |   9 -
+ t/helper/test-find-pack.c               |   2 +-
+ t/helper/test-pack-mtimes.c             |   2 +-
+ t/helper/test-partial-clone.c           |   4 +-
+ t/helper/test-read-graph.c              |   8 +-
+ t/helper/test-read-midx.c               |   2 +-
+ t/helper/test-ref-store.c               |   4 +-
+ tag.c                                   |  10 +-
+ tmp-objdir.c                            |  18 +-
+ tree-walk.c                             |  18 +-
+ tree.c                                  |   6 +-
+ unpack-trees.c                          |   2 +-
+ upload-pack.c                           |   4 +-
+ walker.c                                |   6 +-
+ xdiff-interface.c                       |   4 +-
+ 139 files changed, 1104 insertions(+), 961 deletions(-)
 
--- 
-2.49.0.1045.g170613ef41.dirty
+
+---
+base-commit: 046efb6f2b050efd580e1c1750b77328a1790c0e
+change-id: 20250505-pks-object-store-wo-the-repository-9c6cbdf8d4b1
 
