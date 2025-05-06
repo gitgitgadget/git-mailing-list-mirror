@@ -1,82 +1,83 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D09A6FC5
-	for <git@vger.kernel.org>; Tue,  6 May 2025 20:25:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 175281388
+	for <git@vger.kernel.org>; Tue,  6 May 2025 20:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746563151; cv=none; b=ZTUHbEwDpIZNmOGAKq4QG5fLzEzVAWffVdLnj/KHBfjiyfoK3hayrloC2tPP2Q4zXB3PFtOr5RfucJbWaPC58H8tADHzVwUsUpgpar9TuD7fiWH47+Y30uDu82aPiPOYI4mhlspICNF0PTVhusshOGoCJQy9u6c3pp5ECN5Hy0c=
+	t=1746563648; cv=none; b=rZTIbM4GsDmcPzuaWtXswHdSapva7SxfQnot3p3/bC2uHWN0xH/BARVtNLiwIBffTpyE1h8wNX527wdJuypi0aBmWDxN6lmMEpGyM4Wn73N6tk5ZLr0wP2j0U0f9s6QOF69rbyuZ/1AMobRf/2sPrk7xTemtMKWeDH6DEQXpzKc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746563151; c=relaxed/simple;
-	bh=840BIkmy4WWW59CCCjHbLBqL9vxJRzTau/Xlwbv90gw=;
+	s=arc-20240116; t=1746563648; c=relaxed/simple;
+	bh=TUhkgt0VdjJBpYGRnwMmQYSUm57YFHF80yVSP4OCVc8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=MMrHrA4Wf3cOIQb263V5vCaoGEGH0wMPjJqBiTwtznSwQEEpzY26uikJ+gJMtnVmyu4P1hkrExmf772EMFGAbTM465MVQgr7100bfM4ZL1kOMKpMYAV2toj2RGO4V3vjrh+sIHMZsokPnn3saAJ0SE7lkPpA/nvxhShhpijDf8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E69+0KcR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sBFOs39p; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=TyVXXe3VJF+fMN5MJ2wExtgnorfrZp87y3Qt1cELnXMzajkR/r1HGfINVZOlTP0Ku7utTherUW2EKA0HyhGmZpY4pjA6AJTHByFDx2k/BlBVB7ncGEbEj+X6nXcjasLRX5ZAOb+8MzTXr9Mk6IP1ZIvJncfQB2sVf5+qJXAYVLQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ENphoTAy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wi7oNF+b; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E69+0KcR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sBFOs39p"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5ADD91140181;
-	Tue,  6 May 2025 16:25:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ENphoTAy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wi7oNF+b"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id F189C2540262;
+	Tue,  6 May 2025 16:34:04 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-08.internal (MEProxy); Tue, 06 May 2025 16:25:47 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 06 May 2025 16:34:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746563147; x=1746649547; bh=840BIkmy4W
-	WW59CCCjHbLBqL9vxJRzTau/Xlwbv90gw=; b=E69+0KcReC+M9QlPc1rcgZBffr
-	MfhbvNyo9VVrpJK6AZCZa6KjEHU064kyx2lp0PrSmfuEr8TZgSciyqTtOV/q1yvZ
-	o9jvTdNo7XOQ6OhbtqEVCHrYMpU4dcmiRtV9ShmkP9THxHU5pvbPSctfAbrCMxOJ
-	M1G7y+loBDOrRbsu/i++WkGx2B/YhsMErYxlF891eDLtQ8PkssqIrpNFGWRhD+4T
-	YKemBRj8PHYlLp3dM00t2RoN5EW06h7ork2cakInzIqBxlXwL6+WVcyM6wdLanYE
-	Epro7yTQedTKqTQKEeyvAtlWUu8/fXW4wBYooIPQmNvRfSynh6iEBuQ16Lgw==
+	:subject:to:to; s=fm2; t=1746563644; x=1746650044; bh=TUhkgt0Vdj
+	JBpYGRnwMmQYSUm57YFHF80yVSP4OCVc8=; b=ENphoTAyJjY2aAjfxE8lvE3MR/
+	G4mPG3TT6kw6rX/g79rKup3Y/oeRgjmGiFGDv4eb59W0kWQi1Bl/R85h4ebUfu05
+	zkVgSmkDH1MEwdL6Ckn/1LUmGtwtunyPqY6IofoxD681QB1E16dwQEmNW2seJQ/H
+	9ClnZBCDR7F+QdSF2bY4Z21GLdlwpPWEhIqCCBQM8hxqcA3pRdbsT2ITI8NCvGq/
+	+uSaCgKG9g9dm9xQG3VaI7iEkF2btcB3kvycuaO6xsamWQJpCIGiBYgtGfyY0Tci
+	cJfNQJTNSCDAhb+bak9j+Hb2dxOKWNK5CiKZFoUe2WF3YGxmblYzNiWJNjjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746563147; x=1746649547; bh=840BIkmy4WWW59CCCjHbLBqL9vxJRzTau/X
-	lwbv90gw=; b=sBFOs39pHsqEW71xx4mMKfAxKflRJU3I+KtOGzKHpnWf7tjrAHT
-	uiwEYj6M47NTjaKuFA7qKa/GnvEoUwri+EsAKadnP8HjlJ9kxOvoVn/RsiPMTJAB
-	T5aRejSbhbHC68kHF8CAVDZf7Ff7ZQ5PKotjTi7ryum0EW1h1gTuDII3u10CT7c+
-	sN3xc7i23GQQPQlJ6Noyu7rtFTpIC/GnQpGIEDRKZJ4rbpGVGl45NmOvSISsYl31
-	08N5f1BmKy5Tyb6dGPIXVoHWpw5MyZT+j0br4w7wEg8JkRsRKitBpBu6Z87E2iys
-	j7ZVafVR9VN3RRmk3+0jKLQj5raNCksEk8Q==
-X-ME-Sender: <xms:S3AaaMbbpn6cqOS4hmMa2_R8QDxlaYuUA08r7oa1WhDL0m3TVlrvoA>
-    <xme:S3AaaHaT_WzG4_cCgClfU60S3QN_8FZeefdVu4XSGbfuFmkxeIF0zvyCfuSArnJto
-    4J_CQR4KlhaRW_tOQ>
-X-ME-Received: <xmr:S3AaaG8lnHb-9KDLqrrxw3I2D3UNnMOPL-gEzBqe6uGA3hPWYmP7ADkiSHGDdebf9xynTKBueUZw4UU9QTBKgP8xGA57FcX64lly>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleegucetufdoteggodetrf
+	1746563644; x=1746650044; bh=TUhkgt0VdjJBpYGRnwMmQYSUm57YFHF80yV
+	SP4OCVc8=; b=wi7oNF+bYrCXm9XNQexltY6QGSx4RcoVfa8yyJQU6fik28bM4XK
+	7wt8qWM8Av9K9VJPOUI38oDdLlhMYYAOJ6xiIrW8t7SdoLO8acQNMkCP56dvog7U
+	GGWT6vMSPPiN1eTP+MgJIVoGnEQMxkOPgOesdliztn2MavkZmYMeEVQLfrLO1Kjr
+	PfeQhsFNs199HK//XuuLQFBevFa3VsLpuyvFfpCM+v9bwaOkZZB7S7FP7j1VpXW/
+	7+M/qQFmmSRfU+AmoYk9TON5X5bt7t0kEJ7dXBaYB/fGZk6qr8diz7ps51TwK/F0
+	rww57lGYUO9Sfwkwi3JJSpCSTcdrXhTFgnA==
+X-ME-Sender: <xms:PHIaaH2XSrizStRakfgbuBbEmHeM3yZws1hCPKDwivC1ySYuIZjsKg>
+    <xme:PHIaaGHqDtGIDD1bMxadn8o4R4aZqnZ_IEw_yLovIUeRR2jftxbhXWHSTz1b1yGKL
+    YJ1XplsY6iCNSOMuA>
+X-ME-Received: <xmr:PHIaaH5JuZCCpEV4_h5gxZkyfMF8TzPNo-jk7IBqKl3jW4jNlmOivqRmCRY_xiiuvz8d5hIxeMT4gHyr84y6dGZephzeZUhCnq9I>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeegleehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:S3AaaGoWVdOWO-DREyEK3b4KwXaSyPl_XvZcWW0Q0mRrXScrgIML2A>
-    <xmx:S3AaaHqLWT9XFfs-zoUJERw8TFYdAo3E0HHMMBiepgsY30P9ZHiSEQ>
-    <xmx:S3AaaESbzk3mhQNC_j6LL7q8rev_tzj3zmNl6NRQX60Adoy8lWQGdA>
-    <xmx:S3AaaHrFxE0DhqWCapwQqa378Cby4Wa5d68ug_uO9c9zXO6Ui17Txg>
-    <xmx:S3AaaG52T2C5F8FjerQ7WDxdoHpKoaoRdBqSnzG1AcWB7MNyd21Z2tRO>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
+    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsehmrghtthhhihgvuhdqmh
+    hohidrfhhrpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:PHIaaM3q9l_tLLdmmHqwbpMyZ6WavVZ_h8Dthysexyp3BceOXqCRJQ>
+    <xmx:PHIaaKHrVSqNYYROGvKBZfmmVTCosp9iYm_-PVY3AHwrsF0r_aUMHw>
+    <xmx:PHIaaN-Vmo81mEK4nk9PEdMVAGeyG9hxfzPGn8M7GyXE8iQe9jR1Fw>
+    <xmx:PHIaaHm7qQUcBt8poTG-bCXvagn-d0YmhSueU0Ko1QH8sWsdUAR8Bw>
+    <xmx:PHIaaLHZOEXYsXUV8_qDvZVI8orgPLsNWE2yFYzZoOHuIPN-AWwegvO8>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 6 May 2025 16:25:46 -0400 (EDT)
+ 6 May 2025 16:34:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 07/10] contrib: remove "persistent-https" remote helper
-In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-7-e6d5ddd79a72@pks.im>
-	(Patrick Steinhardt's message of "Tue, 06 May 2025 16:12:40 +0200")
+Cc: git@vger.kernel.org, Matthieu Moy <git@matthieu-moy.fr>
+Subject: Re: [PATCH 06/10] contrib: remove "mw-to-git"
+In-Reply-To: <20250506-pks-contrib-spring-cleanup-v1-6-e6d5ddd79a72@pks.im>
+	(Patrick Steinhardt's message of "Tue, 06 May 2025 16:12:39 +0200")
 References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
-	<20250506-pks-contrib-spring-cleanup-v1-7-e6d5ddd79a72@pks.im>
-Date: Tue, 06 May 2025 13:25:45 -0700
-Message-ID: <xmqqwmath4fq.fsf@gitster.g>
+	<20250506-pks-contrib-spring-cleanup-v1-6-e6d5ddd79a72@pks.im>
+Date: Tue, 06 May 2025 13:34:02 -0700
+Message-ID: <xmqqr011h41x.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,18 +89,24 @@ Content-Type: text/plain
 
 Patrick Steinhardt <ps@pks.im> writes:
 
-> The "persistent-https" remote helper supposedly speeds up SSL operations
-> by running a daemon that keeps a connection open to a remote server. It
-> is effectively unmaintained nowadays: the last time it received an
-> update was in accb613afd2 (contrib/persistent-https: use Git version for
-> build label, 2016-07-20) and its parent commits to make it compile with
-> Go 1.7+.
+> The "mw-to-git" directory contains tools for accessing MediaWiki via
+> Git. The scripts are essentially unmaintained in Git: despite a couple
+> of global cleanups, the last changes were a couple of security-related
+> issues part of 9a8606465e8 (remote-mediawiki: use "sh" to eliminate
+> unquoted commands, 2020-09-21) and its parents. We don't ever run any of
+> the tests so it is more likely than not that many of the tests have been
+> bitrotting, like e.g. documented in f8ab018dafc (remote-mediawiki tests:
+> annotate failing tests, 2020-09-21).
+>
+> Furthermore, the code has been spun out into a separate project at [2].
+> Remove the directory in favor of this new home.
+>
+> [2]: https://github.com/Git-Mediawiki/Git-Mediawiki
 
-Unlike other ones you said "haven't been touched" and I responded
-with "that alone is not a reason it is stale and useless", the above
-description clearly shows that it has bitrotted.
+OK, the new home also lacks activity since Mar 2022, but it
+still is certainly a much better home than having it here.
 
-If somebody wants to use it as a reference to build their own remote
-helper, they can always go back in the history to find the copy.
+And I doubt this removal needs to wait for Git 3.0 boundary; unlike
+other things, we shouldn't even have been its primary home to begin
+with.
 
-Let's remove it.
