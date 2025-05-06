@@ -1,66 +1,69 @@
-Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5392820CB
-	for <git@vger.kernel.org>; Tue,  6 May 2025 16:38:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C3D27FD52
+	for <git@vger.kernel.org>; Tue,  6 May 2025 16:40:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746549541; cv=none; b=aDsuJNIyHV5KhUABPdNXo+E8EbyqUuMUnVnB5dpSLx97sQHJs8aaq5615km/7WXgIr360PXBGxN3/mIPM+8P1Eh0e5yYGY8oxv3/GsWA7UCj7xtokSVQdPvVUUoaNAavjRANb58z5bCkK7KNq2O0mdj1qxw5xPCJ55+gVMY2x5c=
+	t=1746549639; cv=none; b=RJyNknbjMQ+EfnUieDzLYzD1roG80rHBdvr5zf/HP4AYV/8ZUSAd0mUFHKcX5bg1VsHWxu8gi/1szDsBerpoMHaHZV93BRBkbECfboImY7GwRntPb7onv9S+U2gvBUQ13yaYgpy8Tp/lP7AroWwJLjvqtTfMq5QxMxWbgX0J5jo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746549541; c=relaxed/simple;
-	bh=GEAaXlATV2MsoukTVJp4GQ/d54RwBgiW7dLaTb8dloQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=G1294ESA8bEu8OxhRjDU//BNNzpBB/mAz4kmpndeCnkde1b3O5J4FxEUW+aoaNV8ikX7PEumalkeTwN56PCOOjp3LWOzql7tKOADEW7mKpp9AYkjrLAgR6a99GiG8AB6s9Az6ZiPS4ejJn/1ljDskOf22XMmWhshkbuJFcp9XI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KOxxFEAx; arc=none smtp.client-ip=209.85.214.179
+	s=arc-20240116; t=1746549639; c=relaxed/simple;
+	bh=FW8phX77BveW7DmBEJzIF5Gpz4MHQcSDXCeUklJyNco=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=akzdIM8dhWxcOAR3YNzefYZRWXr5wa7BCkVSujhQ6dqHL+kOyCAz2zD0mR+15P3bX5RFm8MBvkVMUiLswPvVgaXkHtqrmmO/Lo6T+UY8Sr7fxFnYS11QBDsaLxvZt33lwpAQWwXhYiixCwILVVN2f/kdClDw5s5Q6b9I5lbsYNw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FWr8cVyq; arc=none smtp.client-ip=209.85.210.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KOxxFEAx"
-Received: by mail-pl1-f179.google.com with SMTP id d9443c01a7336-223fb0f619dso70898245ad.1
-        for <git@vger.kernel.org>; Tue, 06 May 2025 09:38:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FWr8cVyq"
+Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-72d3b48d2ffso6322109b3a.2
+        for <git@vger.kernel.org>; Tue, 06 May 2025 09:40:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746549538; x=1747154338; darn=vger.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=K2htmNvaWYTGWl++hRiNSafawvyQ8IleMqDBwSNE0Vc=;
-        b=KOxxFEAxmh4JzUe37LqcYC9bVhfynjImLxMaCHnUizIKvc7MvgoW11Tyl+rmvRoJAs
-         NPhci9IKWG7jkhLZSsZOOPX12OshI/PKdfqIWOqGP/m1nLgDGjzD7Dx2lMF3juBbvZdh
-         Sr0c97h0b/krDSCeK3z04qQAp/fONagqS/01PAEYc6ZbgsC79BzfeLhFZMmQi96ulJpd
-         rR8BDrvHm5pomZe6TksYUpLIelpQ26anKueCflOHNMC11C5lvuV4g6fPlalhNCNTjlnT
-         DhUMqSSF+8rP4IUZzAE/KqEHLfoOn6Iy6fkCJlRA+Istuu0uVTcf3FXI02T72226GEky
-         9+vw==
+        d=gmail.com; s=20230601; t=1746549637; x=1747154437; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=IaJl+2LKPp08Xe4xefzmtDJ+no6VSTIcrYxLTOVHamk=;
+        b=FWr8cVyqM6Fz1+LxEUTK6kFTJBT3tIKYgkQl6ErzH8sgtF+p2ffCRmr6QAOIVxMr6B
+         lxBYWxX0T4KSvGscutt9txs/N+Wau5eKhRKeX2jUgVaQkzceEtKm83uEmmeWvKPibXNi
+         TCx3Uq+UclOfkEFzeKr5IBtqGTAz1w3weiemfZm69cBKeiYG5PUGGTblMk2Hx/aVhv76
+         e5RA/+cEgH0pGWNvrLslm5M0/U+5ckvmgAINliw3CD+epSY3O0X7igN2R8m2gX2fefEy
+         2TJVAoDg35cG4bFqiUQe8uN2F6fy23BqF9WnG0dmZzQQun8UCxvQbuz4UKiXBq5SH5WO
+         25jQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746549538; x=1747154338;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=K2htmNvaWYTGWl++hRiNSafawvyQ8IleMqDBwSNE0Vc=;
-        b=GF6ur+ktHG2+TITMTIza5gQ7IhmFsljaWIAdl0j8DHHpSi8g/TR851nBWbCdCXjJfe
-         1CEgc9YzN9tXcUtVN7VvrYX4CUrk4haQUCSWiJMs/mnkbmfkbqi77ah73EiXthA4edBN
-         i/9ieqfUUq835JO/21zYRB6K2L9LUpyze2C+VGg8gpWV9d+aq48WiEHurlgllDIwUkuB
-         NGES+fI0nTGlmlhpfx0wllboSc4HnxlYtF6c79zQ+ULfrQUIyFqHKbGB96xglJhzmRMt
-         oGsRfvGmBL3GgXl0w6lbS0ToKPh2dHyTTYmVbHMbcrmqh0okMoEgKxzwjRTKlMsFJjCq
-         E2Vw==
-X-Gm-Message-State: AOJu0YyjhX6Q7byaY795jaqSz1zjP1NcAAI1SDOXPQ88TaFgaSr867Wl
-	Q9jESilea463l57jnmFJ77jfUYyTUjJZM1ZYG1dIlEyxGM6CclJ+dk7mkw0n
-X-Gm-Gg: ASbGnctsor6VdQx+W4wnOdrEOvVkemy6VU4nKUN6fSH3OmCm+6jUgoLH7t66VPJlY7j
-	JLO9AMzFPtINXgIhIfcO5qXeDEWja68ToUVpE7bHv/CxSZlBn24tjfNiQvydL9YZr7kkCI+3Iq2
-	I3RL3g3ZvghWvp+TevNwfNxZUgqus3UXwylio8Ky8+n0CuVFqAZDt/NHjrjfuoiOIbojRpvcmf9
-	G5bw5+5kRMI3GNDdeqG4lW7jZNdr9B7p032yBObnuteFoZ65SIsg69zoavhgDcsazUXzq0VGpU0
-	KCNFm7Yt/N4wLSiiUcGfvdr7nCMIf0v8QwIT
-X-Google-Smtp-Source: AGHT+IHfyAg5E0JAOyuRy5pQF9jcWpskPjY4iBKU4P1MhrRjLAJvFKh27qiUEGhhToLw/XmOCwzfig==
-X-Received: by 2002:a17:902:db10:b0:223:653e:eb09 with SMTP id d9443c01a7336-22e102b8537mr216613375ad.7.1746549538561;
-        Tue, 06 May 2025 09:38:58 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746549637; x=1747154437;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IaJl+2LKPp08Xe4xefzmtDJ+no6VSTIcrYxLTOVHamk=;
+        b=kccB9rjzC9PoGNT7ivqlhoNnJzXBwj7z3V161XlQ0bfS9DzGJtYRSRHeaRp6/EQhJ5
+         XK1JZJTl8s9lh5kLR5kyHR/oecNvh+TgTOEcZQ77TqObCjAEwPjIdnbtB0XCVbSB48om
+         YJQ4IYKD86qKSstAbSSM0pGGg0iMu0oTGidLVTn5Q/45bIjleA9bNxz/nyRK3e/vebnC
+         RcEq1mjXlj3mbAK/egaEuXOc17ksK1Tofu9DgeSpIl1rQhhvjz9Z22W3V/IfDlxiscHS
+         2qfTGK/tovkkd+q7nm6rM0YYmTSyQjukMvdcc7VngQBuDbxImkr+ZtiD287HZnWVd5ls
+         QQcA==
+X-Gm-Message-State: AOJu0YwJ2vfMRypdGfQBUWWk17ui61r9lNmM5a2JtORJwBLJjO7EPIKF
+	O5eQDdAp65pfMM3k7mE8Q5gVJjyeDnvvwgxIryVqNU4/1yu4OXs2iKyRydub
+X-Gm-Gg: ASbGncvf+iIGTj7Jstro8qv0/mbAsaonv0MUIB/Iwyd81M0mimTwR4WQLOc3jMUz0nn
+	1p+dqOTc3DvqZrjut5UCB6KM/L1EToljDws9Vo9Whg8AFt2kSW6hWJXMkT9pD/1O00pDFngW4T4
+	rfz6uSiIP00VIvraHywdhnUb3OY0gVWC9vnEKkbcXiLpTOikolQXp9J4nMIGd9ST6OFsAtP16s0
+	r/03ufa8oWDGdDb81/+1m8na2GEz5GhlFyFYUMzoPpGPK+5j+NdoYXIj/uzlQLGXLlOq/rFacU3
+	W+Lc4B8NNq+OvCkkqJVnu5PD55+cvfkL5WqL6FUkurQ62gw=
+X-Google-Smtp-Source: AGHT+IGYiMbIekphlLc/OU16nGA1H9lpOU/6pg/uqkQOpWGilSgwYNN74VR4KuOLdF9Ox3o5Pn1Gsg==
+X-Received: by 2002:a05:6a00:f0b:b0:73c:b86:b47f with SMTP id d2e1a72fcca58-7409ba00eaamr463369b3a.4.1746549636690;
+        Tue, 06 May 2025 09:40:36 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22e1522fb26sm75683075ad.247.2025.05.06.09.38.57
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-740590207e3sm9430971b3a.94.2025.05.06.09.40.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 09:38:57 -0700 (PDT)
-Date: Wed, 7 May 2025 00:39:22 +0800
+        Tue, 06 May 2025 09:40:35 -0700 (PDT)
+Date: Wed, 7 May 2025 00:41:00 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 0/4] align the behavior when opening "packed-refs"
-Message-ID: <aBo7OiCKHTyT4DzH@ArchLinux>
+Subject: [PATCH 1/4] packed-backend: skip checking consistency of empty
+ packed-refs file
+Message-ID: <aBo7nBOl18WWYIsA@ArchLinux>
+References: <aBo7OiCKHTyT4DzH@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,35 +72,60 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
+In-Reply-To: <aBo7OiCKHTyT4DzH@ArchLinux>
 
-Hi All:
+In "load_contents", when the "packed-refs" is empty, we will just return
+the snapshot. However, we would report an error to the user when
+checking the consistency of the empty "packed-refs".
 
-As discussed in [1], we need to use mmap mechanism to open large
-"packed_refs" file to save the memory usage. This patch mainly does the
-following things:
+We should align with the runtime behavior. As what "load_contents" does,
+let's check whether the file size is zero and if so, we will skip
+checking the consistency and simply return.
 
-1: Fix an issue that we would report an error when the "packed-refs"
-file is empty, which does not align with the runtime behavior.
-2-4: Extract some logic from the existing code and then use these
-created helper functions to let fsck code to use mmap necessarily
+Signed-off-by: shejialuo <shejialuo@gmail.com>
+---
+ refs/packed-backend.c    |  3 +++
+ t/t0602-reffiles-fsck.sh | 13 +++++++++++++
+ 2 files changed, 16 insertions(+)
 
-[1] https://lore.kernel.org/git/20250503133158.GA4450@coredump.intra.peff.net
-
-Really thank Peff and Patrick to suggest me to do above change.
-
-Thanks,
-Jialuo
-
-shejialuo (4):
-  packed-backend: skip checking consistency of empty packed-refs file
-  packed-backend: extract snapshot allocation in `load_contents`
-  packed-backend: extract munmap operation for `MMAP_TEMPORARY`
-  packed-backend: use mmap when opening large "packed-refs" file
-
- refs/packed-backend.c    | 106 +++++++++++++++++++++++----------------
- t/t0602-reffiles-fsck.sh |  13 +++++
- 2 files changed, 75 insertions(+), 44 deletions(-)
-
+diff --git a/refs/packed-backend.c b/refs/packed-backend.c
+index 3ad1ed0787..0dd6c6677b 100644
+--- a/refs/packed-backend.c
++++ b/refs/packed-backend.c
+@@ -2103,6 +2103,9 @@ static int packed_fsck(struct ref_store *ref_store,
+ 		goto cleanup;
+ 	}
+ 
++	if (!st.st_size)
++		goto cleanup;
++
+ 	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
+ 		ret = error_errno(_("unable to read '%s'"), refs->path);
+ 		goto cleanup;
+diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+index 9d1dc2144c..0a9e9ccc55 100755
+--- a/t/t0602-reffiles-fsck.sh
++++ b/t/t0602-reffiles-fsck.sh
+@@ -647,6 +647,19 @@ test_expect_success SYMLINKS 'the filetype of packed-refs should be checked' '
+ 	)
+ '
+ 
++test_expect_success 'empty packed-refs should not be reported' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit default &&
++
++		touch .git/packed-refs &&
++		git refs verify 2>err &&
++		test_must_be_empty err
++	)
++'
++
+ test_expect_success 'packed-refs header should be checked' '
+ 	test_when_finished "rm -rf repo" &&
+ 	git init repo &&
 -- 
 2.49.0
 
