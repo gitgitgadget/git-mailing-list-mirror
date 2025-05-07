@@ -1,89 +1,90 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794372144CD
-	for <git@vger.kernel.org>; Wed,  7 May 2025 07:06:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2311215F72
+	for <git@vger.kernel.org>; Wed,  7 May 2025 07:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746601615; cv=none; b=QYqxYbVuGIbpzF2fTVWQ3AifzM6OB6IaTyklhA9H35176WXatx3DNoEPrnbnUrB/BmQFbji2Xcqin1J+TJjRcsk4+MIJBjimD7wo608Sj0C3jjCtjTn/1FJjNdYI+t1FM3n8YfaxB13lGFk0pJkMnnLoL9LNFyfinrkS2du0/wM=
+	t=1746601619; cv=none; b=iRjFXb9eWyYmdX4BoHcNnRSVAQfeq1u73CCrpj1dJYsP1UVbtvov8ZLqugqPPyDqGZOly13hHAm2eBclylwunDms4GEuKtETlRZk3xS9g9zRNCMqAhJciIxhJhWLLp53xJMim2hssWys7sqgtwq4hbey1j/FY7iGWmBci840Bv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746601615; c=relaxed/simple;
-	bh=witw/uJuDMwcxEHvvJdkC93xtHWXUyK/T80CUBJud5I=;
+	s=arc-20240116; t=1746601619; c=relaxed/simple;
+	bh=qK01Xj1aHo43I3RvguD78+CxGDjP1efBPsNtps24S6w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=NshYZls4wDtSHIIEATYualT4FsKjvMiAN0Nb+RDUfAJWpugdab1b++VQnhS3sy2cYQ59zP/QOFQ4YplHbhcAGcz4tOLCgPLUOGStAyjJows4x/rtBylRpkNYtC/RjvpwmBAb3zyeyDVSwNRvb+QV6ebLYPMMgL+bvl41nbdna8U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qV4p8BHW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DwxdA89R; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=iNaabJBv1S0FIodp4Pinx7c0LJuc1xOJcACaV/gwZRDKB30KxqJBV92wQ65KGkYSc38fxUCbe5T/XZ/Advra860AYNgaRo6rZIYEQBLPVP2oi+CCyz2h496e9ICdwI9ASh7aqkEeY0fsr80PtNABlYewwXfUBTeV4xr/QdggyW4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RZEb7OYN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=enyfO7Gh; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qV4p8BHW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DwxdA89R"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RZEb7OYN";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="enyfO7Gh"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 450E4114011B;
-	Wed,  7 May 2025 03:06:53 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AAE992540101;
+	Wed,  7 May 2025 03:06:56 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 03:06:53 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 03:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746601613;
-	 x=1746688013; bh=Mi4cMvzLiub/7yXrgFazMHySar/rahuKf5hGTe4Bpak=; b=
-	qV4p8BHWnFFwRuqGds4p/f71P1f9pvoanMQd0kYRYadNwLAZ9rToivPh3oe+sce2
-	P2yD1EKi3TaxfLoS4dxWBHgctJnQa8WUs2ESOrW9WUd6q3Ay/reIhZipbhjE9nDr
-	qVIe+rZ7XevMGgo3hPQrMvywHgT2boXegRpumjQDgVtZavhJWOzwAbnQf0d1Psou
-	hYtAMZ+7qgrIF1ukvn46O2b2JV9KkzvQc/2ceY1YlxVAVzMvo/O2WUjyHC8Hy0F8
-	aqzVJC3XeywlkHIj3hWHTSGEZi4UEL1p/8Benyjc8lEgkNYv4hFBi92raHCNrBG1
-	+sBOPFstWcgeMYNB/kSaFg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746601616;
+	 x=1746688016; bh=BMp48bvCzH6Wak9s/u3F3J6tFw7bLjrEEwCtccECHUk=; b=
+	RZEb7OYNAla7YcXyR+z/ZqVjFpQo4OlprhY51Ftl0AdXAnLpWa9qI7oimZqDOI32
+	kA54N2/UCypBL4ZmfZWJkLHivn79AhTTz4dIquxyLkudWksT1ODWUEkRtDmdoBhF
+	30D2bb2gxsUgQMXIQvkpkmhxTypFXUpwb7BLS5txi2oAsW3z082X94z28pW91dNA
+	xb5UAXMKBmLqR71mkt6wkTnEkkscY0QuUdQrrgVMorWJW1eJVdHBbGyXUFuN1edS
+	/X7eL/5VJLF2wbKfUfCAOrVVl2U/V5ehh/8E58h6UHyMCv75rSRaqXyB6p8FJ0qY
+	3uqSQwaqraYAQdNYxcCAGw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746601613; x=
-	1746688013; bh=Mi4cMvzLiub/7yXrgFazMHySar/rahuKf5hGTe4Bpak=; b=D
-	wxdA89RfFJxPu7ZMJacAMUvrNht88PjuZryTkkrnvoGvKcdjxtxuwdRbMJYYidVZ
-	890VkxnAnt2EiymszRJySTSTjvD8Q9vg5x3SDKmhju/N8KaDpXXe/um7wc7TgpzG
-	Lp0Fa7AFRDwZrQBuHTqZG3MrxNr1hCsbRj4UPKaFsbr9ffvFfb9soS4YfgSoIf8I
-	C4y/HeDYSTtSQLISV4Nk9pFOt7fKFYBzLjkWTosqH/vwzK8rNvvJbAfuHxNi2Mih
-	70yH4KXH70KvHi1vn4jiKK/2S11cFJXhsyLqj985hE0D6OsK8BFmaYxFC1rXyhcc
-	zxXtZUxFWPI2P4r0rL4xg==
-X-ME-Sender: <xms:jQYbaB-h_o2m60RhAM34YXBEDUMN3Cw6LfqxJ2OCHl9QVMSCEuxuQA>
-    <xme:jQYbaFuQtuw-9nus9QO9XAF2xsROcatKfywnRlJTu4yKeUOBkepulkFtNNeGBPzZe
-    ZzsVhJESlYHDhhU7w>
-X-ME-Received: <xmr:jQYbaPCQscSaow3sr7XlsiRy0Zq8Cr1aqIN3RPOd013aWc9bFDPXRWoGX1OBakJYxo7d-FtMrICpsiVUrKx5PJfCQeOWNRqVjJB3iqAAFptyiQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746601616; x=
+	1746688016; bh=BMp48bvCzH6Wak9s/u3F3J6tFw7bLjrEEwCtccECHUk=; b=e
+	nyfO7Gh+dhReLtj2NpJuy44sKk8PnRhgzJhQT8DncBFqsntcPsCT60cR54HLJPyl
+	YPxsEj1vxq2ykuyc9mIv6AaK6YA7U16q9Bej1zdYcdpYR8N6TocxUDGEcdCXgxIA
+	DVkb7Qb8h9/nh3r3bGCGKdFR3kWuS9IzeN5njbFJHfnV4Ne5yUYJPpV61fPuJKD6
+	T3nMYHXQIGGSpEySt5gZvo3/aErI6H7mOkNMqPrjPjWF5YTznOLH2eOSLqy3epud
+	WoUmn0IUn5VVZm5oIw8+AR4RYjcpO8ctXtcjmWwDi0m8mCLnzHSDSkU/usGbPH2j
+	8xE0zquHX8MBpDD2pwRqQ==
+X-ME-Sender: <xms:kAYbaEiqh2hATl-BreyALvKwBMdn9qANHSaBFIRfEgrIezurHuI0nw>
+    <xme:kAYbaNBMFhcp5rYZBR4mnwRFkgVdb02JVxPlVgFNZYJG6k9sFC2LnWhdcYvZmfcfY
+    zpfcKiEkYSmnWy2WQ>
+X-ME-Received: <xmr:kAYbaMHsoQTebzTBqmZ_vv2UYNDRd7RJcTgtg_nmy_8lBl87PATIrEGzLnOhU09gNDIfGz4Hcy-CKOGnilTY2SFpsXbQ7LAGF9LVO4x_CzewkA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeivdduucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
-    hrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsth
-    holhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:jQYbaFfC9UmPqzS-WyIbktG2x23o5CDI30W-BuskZVKuVX4bW0fXsA>
-    <xmx:jQYbaGOttSCNT8iKuL_UcSn8xA0RINof5a7RI_fwBZYfVHW7AXNCAA>
-    <xmx:jQYbaHlhTFks4_cMELvWzgH-d85dmN4GUzyvGcTBfCiFMZiOF2xeKg>
-    <xmx:jQYbaAvIQeGjPpfUI3-3h9XBKhyq79TCineA8-wn2Szkt2TaKT7gxA>
-    <xmx:jQYbaK594Y1Y5BgLFt95XOHZcQpDettFITfwUxkrTE22Epj_85apxlxN>
+    drihhmqeenucggtffrrghtthgvrhhnpefgteelhedvkeelvdeukefgtdffhefhheehvedt
+    vedugefhvedtveelheejfeeuveenucffohhmrghinhepfihorhhkthhrvggvqdhprhhunh
+    gvrdgruhhtohenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhr
+    ohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
+    huthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
+    tghhrhhishhtihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhm
+    rghilhdrtghomh
+X-ME-Proxy: <xmx:kAYbaFSgdlhe20U8MQwgeQ4YlZkv85zT8yubwPP06pCNaJ95xXl-gA>
+    <xmx:kAYbaByAQSARQ7oIMtPwFCZvYD1yYwvd0XeedFW1eFrJ4W1n6VYTeQ>
+    <xmx:kAYbaD5Qs3etKko-2E2oNvTbEfLJP8jSDM1NOiCyU33j7LdMNsYStA>
+    <xmx:kAYbaOxvNkHoAmboW93aPm48l6M1f7dmX526w4rXSm7YIN_WyxeJwA>
+    <xmx:kAYbaL9o-zqy3IVGTK_7S8FlAvB1ABnz42bLmfGr0Lm_tTocsEj6mHc6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 03:06:52 -0400 (EDT)
+ 7 May 2025 03:06:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 8ec8b4f1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 07:06:48 +0000 (UTC)
-Date: Wed, 7 May 2025 09:06:50 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 46887db9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 7 May 2025 07:06:52 +0000 (UTC)
+Date: Wed, 7 May 2025 09:06:53 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Christian Couder <christian.couder@gmail.com>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 3/7] builtin/gc: move pruning of worktrees into a
- separate function
-Message-ID: <aBsGiu3IBIUuYuYU@pks.im>
+Subject: Re: [PATCH v4 5/7] builtin/maintenance: introduce "worktree-prune"
+ task
+Message-ID: <aBsGjVqYr2jY6oJ6@pks.im>
 References: <20250505-pks-maintenance-missing-tasks-v4-0-141f4df906a1@pks.im>
- <20250505-pks-maintenance-missing-tasks-v4-3-141f4df906a1@pks.im>
- <CAP8UFD1ZtYMf0ja75AV_jGJgzAL919zpHoGy0v-G2tNV+OEDwA@mail.gmail.com>
+ <20250505-pks-maintenance-missing-tasks-v4-5-141f4df906a1@pks.im>
+ <CAP8UFD2cuMxdpGFuBoKirw2mko6gt-djndqqZy92NypPiiFCYQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -93,35 +94,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAP8UFD1ZtYMf0ja75AV_jGJgzAL919zpHoGy0v-G2tNV+OEDwA@mail.gmail.com>
+In-Reply-To: <CAP8UFD2cuMxdpGFuBoKirw2mko6gt-djndqqZy92NypPiiFCYQ@mail.gmail.com>
 
-On Tue, May 06, 2025 at 09:50:12AM +0200, Christian Couder wrote:
+On Tue, May 06, 2025 at 09:40:55AM +0200, Christian Couder wrote:
 > On Mon, May 5, 2025 at 10:52 AM Patrick Steinhardt <ps@pks.im> wrote:
-> >
-> > Move pruning of worktrees into a separate function.
 > 
-> Repeating the subject at the beginning of the body part of the commit
-> message doesn't bring much value.
+> > +static int worktree_prune_condition(struct gc_config *cfg)
+> > +{
+> > +       struct strvec worktrees = STRVEC_INIT;
+> > +       struct strbuf reason = STRBUF_INIT;
+> > +       timestamp_t expiry_date;
+> > +       int should_prune = 0;
+> > +       int limit = 1;
+> > +
+> > +       git_config_get_int("maintenance.worktree-prune.auto", &limit);
+> > +       if (limit <= 0) {
+> > +               should_prune = limit < 0;
+> > +               goto out;
+> > +       }
+> > +
+> > +       if (parse_expiry_date(cfg->prune_worktrees_expire, &expiry_date) ||
+> > +           get_worktree_names(the_repository, &worktrees) < 0)
+> > +               goto out;
+> > +
+> > +       for (size_t i = 0; i < worktrees.nr; i++) {
+> > +               char *wtpath;
+> > +
+> > +               strbuf_reset(&reason);
+> > +               if (should_prune_worktree(worktrees.v[i], &reason, &wtpath, expiry_date)) {
+> > +                       limit--;
+> > +
+> > +                       if (!limit) {
+> > +                               should_prune = 1;
+> > +                               goto out;
+> 
+> Eric noticed in a previous round that wtpath is leaked in this `goto
+> out` path, and it seems to me that it's still the case.
 
-I disagree with that statement. The way I review commit messages the
-subject is often detached from the body, so it always helps me quite a
-bit when the body is fully self-contained and doesn't depend on the
-subject.
-
-> > This prepares for a
-> > subsequent commit where we introduce a new "worktree-prune" task for
-> > git-maintenance(1).
-> 
-> I think it might help a bit to reword in the usual "describe the
-> problem first and then say what to do about it" way. Maybe something
-> like:
-> 
-> "In a subsequent commit we are going to introduce a new
-> "worktree-prune" task for git-maintenance(1).
-> 
-> To prepare for this, refactor the code that prunes worktrees into a
-> separate function."
-
-But this reads better regardless of that, so I'll take it. Thanks!
+Yeah, our mails had crossed back then. Fixed now.
 
 Patrick
