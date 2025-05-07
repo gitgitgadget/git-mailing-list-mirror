@@ -1,71 +1,71 @@
-Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940C821770A
-	for <git@vger.kernel.org>; Wed,  7 May 2025 12:09:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 716AD25E449
+	for <git@vger.kernel.org>; Wed,  7 May 2025 12:10:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746619760; cv=none; b=N3ZsYgB6oEkTnKo0eodCB6qD3uSTmF9T3DlhNJTu8LDx3w+2xp5imJztX3T8gsDAxPysdwbnFfhSqPaVT1AosnqUgQs9izudY7Tvtb5xWzWQU1EGYvLS1Dgyl/vF4BycLlCrGfjFNn5BQdrcCcbeYbf8nU4F+bHWizkPmTkGtx0=
+	t=1746619806; cv=none; b=SFZ1Aw+6r3jKQ3Z+p6vcmeoAo2wfF4f/kZZgC6kYcg27MnrNB6WNLf9RL+zxwCP7uRGjRqpYhNve8V16FxLh5rAC41d57cwSwHhwG9KPq7qOzMo17/2j0w1y24XNv4lv6EIxElLXdTib45ZSC89gStrgV0AYDlj5OK/TLye6GvM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746619760; c=relaxed/simple;
-	bh=SfX0sE+I3xxrZkQLz6v47PTvw1Wf/Nnh+vQBNzKQaLk=;
+	s=arc-20240116; t=1746619806; c=relaxed/simple;
+	bh=k5YoCbFqw8VEh+yj/PqUnUydkMIbaaAsPwowuavBE0Q=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=uCwlqoaMZpXTZ0/M4VITFmVkwa2MCiwN5eaP/4UKR5/uaIE12b8W0H6JbPuWhF/I059DVDx8ububgKJzVa9Ev+q+Ib90VdibvDsoYjahUNPX3cjUPCyUajY+ifzD7ZluaOdj1CiXHQ81f79tqBQ5dEDGZ0Ed7DbOqzhuL2N2rKw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gt4A6wwX; arc=none smtp.client-ip=209.85.210.173
+	 Content-Type:Content-Disposition:In-Reply-To; b=dYuBN/4fV0RoS++WKkE27gt40Jy7uzvHatOH6avNKvCGtMwKrT1hf+WxE2Vip3fhjLZM1FH3DYv4GOj4efxA2yHYaP59el/ZgKF6BK1viPpd0uF3fSBsn3stQDbOBPnai9tmT9QpySjaOdRjgKhzAC/TwENn9btzHIaNekW7X8c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZJW6W/rG; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gt4A6wwX"
-Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-739525d4e12so6635802b3a.3
-        for <git@vger.kernel.org>; Wed, 07 May 2025 05:09:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZJW6W/rG"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-224341bbc1dso88072205ad.3
+        for <git@vger.kernel.org>; Wed, 07 May 2025 05:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746619758; x=1747224558; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746619805; x=1747224605; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=TH7IuhZWJDqqOAF+crLDXvbPHe8oyrJPjQwxUQVJvxo=;
-        b=Gt4A6wwXGfXg23Y72pX6x5TzDPnvFCLU9lsmA2cykeNnZC44CKtJCHsaTlEbxA6WwY
-         kFz6NglnwVGiYqtqMfMHXLfFTRCt15tBeHCtsLqyVRzcqMyR8okjxxHE4uF/Q9N7KhCc
-         HVxgnHv+Uj+IjseUPVMxAQOqlcv5rIJCB7DNGiZlGEAF4bAV4eCIlh/uNT3RRysfLmkf
-         XI+dDSp2u60HODMX3jcw2ZIQD1uCuaZH6axs24PcWbkPmy30Lgolvv+V1OSFver6WLkf
-         ijUNmsVdj4GbISLYWGXTKLVd1m5/UodO4SyRnP2V9IItaLcWGNDMkmm3ft+Kg0Mzi1ia
-         rNQQ==
+        bh=qU0q9gKbvh5XhBvuYGR7H6phEv0v1PWxORPpqEDSQxw=;
+        b=ZJW6W/rGjqGN8nqklR+fRmnycj1RM/DO81FtW7YG2z4CbSed3XstFxFv+c029STWWn
+         Pw1Vopd4IRiz0S7+V4dflSUG847mH/yQMegPwjyc+Qknx7n1PkWwh6430nmJ/m2P5CLr
+         nGBoouGq5R0GReJyb6hwO+oWG3C9WUaccGZqXyo4Ygd7IroembhJnz2BKkFArV0NFI8n
+         Jc6UT6hCEkQfnJ4rI0i+C3TSrLWwTvYcl2hM6wV+xhtK4w3FlD9m4S8K+HcxNghBRSC8
+         iJgmYjMusMRwqWAm5nCF7UnAnK167QcqIpYrqibzMi7G/KVHEHBQPBW9umbME9ENLBc2
+         fnxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746619758; x=1747224558;
+        d=1e100.net; s=20230601; t=1746619805; x=1747224605;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TH7IuhZWJDqqOAF+crLDXvbPHe8oyrJPjQwxUQVJvxo=;
-        b=POASdDurrWl1YUXS8mIyt3HgoL3GNxCoe1hF7PFcT3DGELTYDTz/n/nHsiZqMk8FsS
-         cyeKuRlpJR6NwSCeL+39yrzXQAr5+Qw4z5EdXdK1pVjUNXim5GjCfYFHIN2jO/yGMA/b
-         MUn+ON6qS44ZtjaT7jPV8Igloz3+EEbvvft/MyNrnUtyYRfRF6A+KR46vLYcpb+dzYDm
-         njuE5ZhyKb8AbZNW5MrkkeSyOatKTphnMHAuDRGZs04onUbt7ee1OXMpKPBuCIN+RrXg
-         aPMWXgh/JuF2c03g1rGbUyx2pyynsc7NtA5CfWJ18TUsHjBihBp9wk7ar/pupDU8KQvl
-         /yVA==
-X-Gm-Message-State: AOJu0Yxtn8tietk32ZtMHTtpc7LAuaHhDde6J9ratkprXRFD0+C52T7T
-	o51763rvhADFwpg2hxaw/vIa6vjXw6HmN+outE3+WnriOyWE1sGO
-X-Gm-Gg: ASbGncvwM7abEoqikTE/h1xWWxw9wRO5tnvkYxlkQOPCFj6qVOfX4k3o9SpmoCosNdf
-	h/ingkhnQoDmbV0Z9uUW8hNSQwAmzj5PImyMnhDsDhkS543xnwcd7ArGzLQ553zXwySwgX7DAOC
-	WP4syHe7QMIbOlOsc2WTVMGlSQjp9fvcsLQkP395UPW/1z4g5JQwG0oyC054E6Op4NJed3e9SD1
-	1t8mBLb3JnyX2kUIYOwW9aykINPDxKxDQNS5p4zKKnNPivXxlUScAR/Zf5VrXqeun2QcJ8r+4kX
-	2TYvzutt/CwcLCCL+Y38ApdrUVN9ub5JimZklosOpG/68Fk=
-X-Google-Smtp-Source: AGHT+IEvXTXhs0xkRPOZHirMv+nqTjNzpoXcOJ+8Xtyu+zIF4Kqvaa3UBjaNF/fn/J0PWvujYgvaJg==
-X-Received: by 2002:a05:6a21:1085:b0:1f3:40a9:2c36 with SMTP id adf61e73a8af0-2148b81eda3mr3791757637.10.1746619757766;
-        Wed, 07 May 2025 05:09:17 -0700 (PDT)
+        bh=qU0q9gKbvh5XhBvuYGR7H6phEv0v1PWxORPpqEDSQxw=;
+        b=uTOQ/9FH+WsL88WzNWxlsRjlpUFBQ/It2c2+NRo/XT/yoWzTcsD7/Fq9+R5/gEJS+I
+         kFI2qa0sXKTHGuabmOSTCDXKy/i9nzr6u1eRncpxHShn3lVxy6Xgft07Pc/R62j/2lIx
+         yhN3DqZ5Xkq86Vyl/a752F9sn7yuiZKNF63hR4euvXtLESMnoLaW8gPUO8ezuM6v+58p
+         desEElO1jUJL0U28mJVsB78dn0yYFUEweixmxIE4WRNIfP+ZLz7Vj6MTOe9T6rroHI42
+         3ayM1yi5HKVNn64z8nK7Dgf1AKszuEA79LD6y+y36ZjD+pXq2Vd0Pldf1dtX0jJdkziA
+         nUZA==
+X-Gm-Message-State: AOJu0YyPwsGcgJXI/YCeZLXiOOSqXcyVF90j17TYdML98DEZATq8hYRV
+	d+rSkF96vNWwAzLw8UY8fDw08y2EfhX57mKiN9eLIlAWzNZUBmA7gR5g3m0YmaU=
+X-Gm-Gg: ASbGnct3esQDn3Yi+EVrFVaswiN7aSD4HfhBy4PP655m2j2RCNdMP8V+pgz5edCOjJR
+	smLNM4ASwzOx1NQQW5/e5x3nmn+H9TSMt5+1yOyNPSMR1jM/vmKwCV8e6Wm+yt/M+xTd9i06XbY
+	2o1NOhtmSfqVGjWFkclfK4Vx+dNtiV+vTZK5jDHD9q0MM60jqWr2T6RHAEtMLm0+Utzozwj3OQ5
+	NXt/b9pW7LMlJbJ5l7XVHkAYfUh0GteyS+0LHZ1asG5B7xRmYXXnCW+ZLTYIbIRJpHSIyarBRUL
+	ZLeu5EjlychoWY8T17DDXgFAL+dKt9d2iSSV
+X-Google-Smtp-Source: AGHT+IEKkTryeroxZnq1KvuOwlzPymxoAR3tcxQV0YyAGQL/GssiydSNKARIPqx4fGFLJmw14x75TA==
+X-Received: by 2002:a17:90b:3b8f:b0:2f9:bcd8:da33 with SMTP id 98e67ed59e1d1-30aac1bf94amr4381744a91.21.1746619804614;
+        Wed, 07 May 2025 05:10:04 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b1fb3c6b332sm9266039a12.70.2025.05.07.05.09.16
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-30aaec19d86sm1797182a91.40.2025.05.07.05.10.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 05:09:17 -0700 (PDT)
-Date: Wed, 7 May 2025 20:09:41 +0800
+        Wed, 07 May 2025 05:10:03 -0700 (PDT)
+Date: Wed, 7 May 2025 20:10:28 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Patrick Steinhardt <ps@pks.im>
 Subject: Re: [PATCH 1/4] packed-backend: skip checking consistency of empty
  packed-refs file
-Message-ID: <aBtNhXVpnvPuV6b7@ArchLinux>
+Message-ID: <aBtNtHni7uT70_Nu@ArchLinux>
 References: <aBo7OiCKHTyT4DzH@ArchLinux>
  <aBo7nBOl18WWYIsA@ArchLinux>
- <xmqqr011k2ci.fsf@gitster.g>
+ <xmqqzffpima4.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,24 +74,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqr011k2ci.fsf@gitster.g>
+In-Reply-To: <xmqqzffpima4.fsf@gitster.g>
 
-On Tue, May 06, 2025 at 11:42:37AM -0700, Junio C Hamano wrote:
+On Tue, May 06, 2025 at 12:14:59PM -0700, Junio C Hamano wrote:
 > shejialuo <shejialuo@gmail.com> writes:
 > 
-> > +		touch .git/packed-refs &&
+> > In "load_contents", when the "packed-refs" is empty, we will just return
+> > the snapshot. However, we would report an error to the user when
+> > checking the consistency of the empty "packed-refs".
 > 
-> Unless you want to signal your readers that you care about file
-> timestamp somehow, don't use "touch" as a means to create a file.
-> Readers would have to wonder if .git/packed-refs existed before,
-> or what git command that follows this part cares about its last
-> modified time, or what behaviour the timestamp would affect.
+> Neither the commit title nor the above paragraph hints that this is
+> talking about "fsck" part of the packed-refs subsystem.  That leaves
+> the readers confused when they read "with the runtime behavior"
+> below.
 > 
-> What you are interested in doing with this is to ensure that *AN*
-> *EMPTY* file exists there, hence you should say
-> 
-> 		>.git/packed-refs &&
-> 
-> instread.
 
-Thanks for the suggestion, I didn't realise about this.
+That's right. My message is vague.
+
+> > We should align with the runtime behavior. As what "load_contents" does,
+> > let's check whether the file size is zero and if so, we will skip
+> > checking the consistency and simply return.
+> 
+> How about
+> 
+> 	During fsck, an empty "packed-refs" file gives an error;
+> 	this is unwarranted.  We should instead just return an empty
+> 	"snapshot" and let the caller happily declare success, just
+> 	like the code paths that implement the runtime use of the
+> 	file do.
+> 
+> or something?
+> 
+> As to the title
+> 
+> 	packed-backend: fsck should allow an empty packed-refs file
+> 
+> is shorter and clearer, I would think.
+> 
+
+Thanks, I will improve this in the next version.
+
+> The code change is trivially correct, I think.  Nicely found.
