@@ -1,57 +1,59 @@
-Received: from mail-oi1-f174.google.com (mail-oi1-f174.google.com [209.85.167.174])
+Received: from mail-ot1-f43.google.com (mail-ot1-f43.google.com [209.85.210.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7EE370824
-	for <git@vger.kernel.org>; Wed,  7 May 2025 03:07:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3851184524
+	for <git@vger.kernel.org>; Wed,  7 May 2025 03:07:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746587252; cv=none; b=HGkIfLVQbUjpeIXlWlyaLqtCpXvgi5cxI4ArxwZIn2rb0Ef9ROoLZ6bjRyYxnb/pSTd9IyL8/k+yxeRuzCj3uf5IlhhDUQeYTT6yEB41tMrP6xvctiZQ2OEPUqUFbaoDsyx3nnL7jvKM6/N3gh63XH0zhVcmewNoO4/K0ynQIuY=
+	t=1746587253; cv=none; b=JmTvY7SMgXy5NyoI+Ra8IUj8xW3PbZ8GGA6RxrYNVVsQHGE3XQioo1L7fWvhAjB1353ubElrxAY9yopaWZ7pIc2myCG4ZQCXiOMjCznBbD57Abh6b3w+wOf5WpSV2t4sj7RoM+SKRQEWuyfb6je11vAsqST7QgjRnraeB/ENT94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746587252; c=relaxed/simple;
-	bh=8SN5HKfLqVFMAud3T3fsejND3zjEU5naSoh3JQrEuIw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=USceTRQe+4RNmAmRNK1qSnmhHtPFRbPHVypNas/lWtRAS1FFSXN6BKtnfQhc/RpbMbBEdaPbU2kunYKoJ2CA9+Sn7aNCGKvmmUqCFmW4Q2KDwRNkkoITAEbg5NDT8wnUkT2sGAqnH4yNzvc6WzZkD605eCYr7A36upCS3fEr1Xg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTBGBEYL; arc=none smtp.client-ip=209.85.167.174
+	s=arc-20240116; t=1746587253; c=relaxed/simple;
+	bh=MT/Pf3iOswiU3q2hGl/EYsD1nW51m8TOp3xISl422Ls=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=K2wNXQ6JDYHOe3LXs84nqux7cNHREYZdfIjBzo2s4/LU81RLMPIKTsr5YmjHh0Mvf9+srCZ0aY3nTZ7euzmjOoG/GD5rEPcl8/HYJbPnjbeAvI9G52pZGmi0eUomfcyybjpLnJh74M5NQqYvUMmvwcztUlIttY2DAZwcYx7Us/o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Wzul4K3O; arc=none smtp.client-ip=209.85.210.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTBGBEYL"
-Received: by mail-oi1-f174.google.com with SMTP id 5614622812f47-3f6aa4b3a7fso1728661b6e.3
-        for <git@vger.kernel.org>; Tue, 06 May 2025 20:07:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Wzul4K3O"
+Received: by mail-ot1-f43.google.com with SMTP id 46e09a7af769-72c14138668so1534268a34.2
+        for <git@vger.kernel.org>; Tue, 06 May 2025 20:07:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746587249; x=1747192049; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2hYqOy5RzvxJRE5mqOnPnMLvEGK4ontQhx94LYEQPOw=;
-        b=BTBGBEYLfHGj9hSmBQuiRFOVZliynstmzWc9G1OW0ITA3AwmK0Ye4Ot29PZDCQYxQt
-         fIZpsyzolBKFdvHiWdD2+pKFGZOydL+yIAWcrQX/+rAm0WLcMPYesmcev/Q+ycReo0zG
-         /JPqigvPqJ4o/06rwgMCSOsjfJ9twXHM+aRp6An8cOvTIWWb3K1SwWphTlpW/5Hk6gvz
-         jLeG1MZTXXthEmc0f4jbwGqSYoSS05zWBpWgohCoyQnso0ZXjzfI9mc5I+yJ9q0l/w9q
-         je1wQWuIk0Vb422wflvkLQULxYOl5NDWzAin6PV7Wfiz343i8Kd0WueIV/cGDzikfMwW
-         GOkw==
+        d=gmail.com; s=20230601; t=1746587250; x=1747192050; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zs5z0MkS0aTzkZTZGttxzIQ3f57njK7qZhAScEWeClY=;
+        b=Wzul4K3O/3LR0IpX3ECSHAd1PC9aBfKUML097fHBlPWIYQ5dv04s42SULCbxZPX1fD
+         nUkKqiF83uAefQM8Y8G6Yetoch4oe1bx/B8WZsPjTlQ7vsACXbpidMDAaoeiIPsP6UAH
+         m1ARigOxSd+XUOnKXJN8bwwWmNLbj1KBJCSojnjiwTQVwJ74kcJBxyRZ8BNbTGAF6YW8
+         gCugJQiPvWOIVSqRcUIKl6yYTlOnqa+6x6B4x+9xtIMVpsmbJEvDs8rDoUSNLIIeE6x1
+         SlcYbnXrnCwIE0rGPa7jcDZfltbBbVvP7P+Vc89ErCjOcDMd4qrB5CzqpWkaDiA7PlNz
+         Yi0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746587249; x=1747192049;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2hYqOy5RzvxJRE5mqOnPnMLvEGK4ontQhx94LYEQPOw=;
-        b=GK0iKsvh1/xrK5L9eili84Dz7DtSAw4baTd6fGkaYJLY5XRYYJVUUBzHDk8oZbQxa0
-         wT3+XGrCoTpyS+S9hXVjthincUEhdfJJhpl2K3fwo2a8O54//rLu/s7DAHA4JOR+KU6Q
-         R5WtqrUTrm0sYIHoCRj6iGme3/24lKVReNiLxHg9lBEBaPhg5W+A2MFsDy7J78H3NVJh
-         npF+WS30YZ2ecA8k7q+DQi2L5XHvLG/c7t+iRkZoBOZ0bghwhVbiNfjJUdd+iv6rm89/
-         yIY2HoCPDC7IsjoWU5STNwg5lcPxhMBrUkxJnJP8XHfXvHQV2HiXjtLhHIVJvEKI2QGe
-         yZwQ==
-X-Gm-Message-State: AOJu0YwqcJiyCbQphnu7XujJHcaQ2GMZfm7x7XT/meFsQK8195ea+1MA
-	Ifi/vmVIYa6h3c+36DpB8oC5UI8U0aWWa4mPt8BjX+LO3YqxT0Qrza+T6G2o
-X-Gm-Gg: ASbGncvJz1HZIAm7BJh+VbwMWOQUlGOaS1DL+SnYhFIDSvDN8PNPc41nIb8EJhf9XxS
-	n6/T3LaCPxumQu35BIKUujt2LsIra5UKc4bmsBycO2fYNtuDsRl2zWAFJ2j304wXtZ/qakpXLhI
-	KvW4sxBFkdpLGKOoZkAKBPPxEkjRYkZqBC9SA9mwyfRP8XFFwTq91GZINfQi7n7y2XnUINzc+Sd
-	ultnFDMhugBnaJWyfFkGmBGLvJ7MY1GwgrFvgqqndIq2ZDEwPZ668IvBMCRGuisiCpbkBEPd27j
-	f/iNSKXLCI3nIMmofvBhjtvtOUWU3IcIZUxeqJbaI1lOzKSi
-X-Google-Smtp-Source: AGHT+IG/LumAnKiHAyAYRZrRztj0xm6L9VgSSL/wLTSlQwBjf5Si7xio/11o2Fa/xYsaCU4KxivXLw==
-X-Received: by 2002:a05:6808:14cf:b0:403:3c87:403e with SMTP id 5614622812f47-4036f067bf6mr1045622b6e.6.1746587249319;
-        Tue, 06 May 2025 20:07:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1746587250; x=1747192050;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zs5z0MkS0aTzkZTZGttxzIQ3f57njK7qZhAScEWeClY=;
+        b=d0HzWcyNUX2f9GDLbhmQ6X6a20OziUu49afWyN9T6r8gOfDsprZHfAe11lS4T9L1TE
+         Q4pBqncNWZoVIabr1IXC/aitKVug59njpsgjiJ+6dmwYe+oiZfUWL1cTmmin1cWb9x6U
+         1kTh/v2gz5WstVzZmAbXGsVv+1fYlzqnC52ZsUrP8qJptHwwh0waH9WE14i7U6JdrIj4
+         qb5rVt5ezQUzFmIjbhTVUT3FXZ00i5a98w/wFQAp0alUtrTBQQpbXaAYfD5IJr8YjUgn
+         BYB7Z0dcOgJVGV5IAoLDOmsscxnWTtxQoVIlCxrM4smTu2FcW8X01euJLkO2HrPCI5v8
+         LOzQ==
+X-Gm-Message-State: AOJu0YyrsOBjOpZPyZmqA8KJRTvicxUtq2OzodZUxtvKgI3USS/Nt6Cv
+	1MjntMlNK6cyC/VeSQ9rRgNQLR+cIqbZJng/kDhDUePMBgati5umwRc/durw
+X-Gm-Gg: ASbGncullAZuZmrsAebUS9+c1flChBbo17pHwAchDBba6grSxIrIZShvVsXh8MzuoKg
+	LLYQ9Eta4zsGj04CTjfK8GtqV0XiYYK1XJeF90ouFjsY5s5fTpJvRvDqFE9iINaR9WE47FfJt7q
+	FdYzZXVpgKJ70y1tSs7XqI443vF47IO4hpm0L/bLfWsxC8QyOEE8P4m5S7g45BSANwz/+snQO4N
+	XBLlJr61xRP+YbJE1DJMycpAa9zngDkoNl4+kpNMgy0sOoxUQf2JmmIJTmpeGlB68rLeAT5vuEd
+	+ceEmcRsfS74qHhDYVhn+XZx6uIndmRHuiy4dNDDQJlqvgJD
+X-Google-Smtp-Source: AGHT+IGvAeANjBbmvd7CeVPtr5GXajNU5G/caz47CM2B6mE9FUbvWHZSVGi7rM+4YhWqH/32LpQ6eg==
+X-Received: by 2002:a05:6830:6409:b0:72a:327:eed3 with SMTP id 46e09a7af769-73210a6ec1fmr1080344a34.5.1746587250285;
+        Tue, 06 May 2025 20:07:30 -0700 (PDT)
 Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 46e09a7af769-73210aaab9asm268260a34.53.2025.05.06.20.07.28
+        by smtp.gmail.com with ESMTPSA id 46e09a7af769-73210aaab9asm268260a34.53.2025.05.06.20.07.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 06 May 2025 20:07:29 -0700 (PDT)
 From: Justin Tobler <jltobler@gmail.com>
@@ -59,10 +61,12 @@ To: git@vger.kernel.org
 Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	Justin Tobler <jltobler@gmail.com>
-Subject: [RFC PATCH 0/2] builtin/receive-pack: introduce option to skip connectivity checks
-Date: Tue,  6 May 2025 22:02:47 -0500
-Message-ID: <20250507030249.4802-1-jltobler@gmail.com>
+Subject: [RFC PATCH 1/2] t5412: test receive-pack connectivity check
+Date: Tue,  6 May 2025 22:02:48 -0500
+Message-ID: <20250507030249.4802-2-jltobler@gmail.com>
 X-Mailer: git-send-email 2.49.0.111.g5b97a56fa0
+In-Reply-To: <20250507030249.4802-1-jltobler@gmail.com>
+References: <20250507030249.4802-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,55 +75,62 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Greetings,
+As part of git-recieve-pack(1), the connectivity of objects is checked.
+Add a test validating that git-receive-pack(1) fails due to an incoming
+packfile that would leave the repository with missing objects.
 
-At GitLab, we are interested in introducing an optional means to bypass
-the connectivity checks performed through git-receive-pack(1). This
-series implements a `--skip-connectivity-check` option to facilitate
-this. I'm interested in collecting some thoughts before pursuing further
-though.
-
-For some background, we have a transaction management system that runs
-in our Git RPC service and wraps all repository operations. Operations
-that write to a repository are first recorded and staged outside of the
-repository. When committing a transaction, the connectivity of newly
-written objects is checked by walking the object graph containing only
-the new objects from the updated tips and identifying the missing
-objects which represent the boundary between the new objects and the
-repository. The boundary objects are then checked in the canonical
-repository to ensure the new objects will connect as expected. All
-repository operations are run in a transaction and conflict checked
-before being applied serially to the canonical repository. This ensures
-that operations that would break the repository are not applied.
-
-For our specific use case, the conflict checks performed by
-git-receive-pack(1) are redundant and thus we would like to introduce an
-option that allows connectivity checks to be skipped.
-
-One concern I see could be the `--receive-pack` flag for git-push(1) or
-the `remote.<name>.receivepack` option which configures the receive-pack
-program that gets executed on the remote side for some protocols. This
-could provide a way for users to enable such a flag if the remote
-doesn't protect against arbitrary arguments being added. I don't think
-git-shell(1) would protect against this, so maybe instead of a flag a
-config option could be used or an ENV var?
-
-Thanks for taking a look.
-
--Justin
-
-Justin Tobler (2):
-  t5412: test receive-pack connectivity check
-  builtin/receive-pack: add option to skip connectivity check
-
- builtin/receive-pack.c  | 40 +++++++++++++++++++----------------
+Signed-off-by: Justin Tobler <jltobler@gmail.com>
+---
  t/meson.build           |  1 +
- t/t5412-receive-pack.sh | 47 +++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 70 insertions(+), 18 deletions(-)
+ t/t5412-receive-pack.sh | 27 +++++++++++++++++++++++++++
+ 2 files changed, 28 insertions(+)
  create mode 100755 t/t5412-receive-pack.sh
 
-
-base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+diff --git a/t/meson.build b/t/meson.build
+index 43c9750b88..81066668b9 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -630,6 +630,7 @@ integration_tests = [
+   't5409-colorize-remote-messages.sh',
+   't5410-receive-pack-alternates.sh',
+   't5411-proc-receive-hook.sh',
++  't5412-receive-pack.sh',
+   't5500-fetch-pack.sh',
+   't5501-fetch-push-alternates.sh',
+   't5502-quickfetch.sh',
+diff --git a/t/t5412-receive-pack.sh b/t/t5412-receive-pack.sh
+new file mode 100755
+index 0000000000..190c7d3624
+--- /dev/null
++++ b/t/t5412-receive-pack.sh
+@@ -0,0 +1,27 @@
++#!/bin/sh
++
++test_description='git receive-pack connectivity checks'
++
++. ./test-lib.sh
++
++test_expect_success 'receive-pack missing objects fails connectivity check' '
++	test_when_finished rm -rf repo remote.git setup.git &&
++
++	git init repo &&
++	git -C repo commit --allow-empty -m 1 &&
++	git clone --bare repo setup.git &&
++	git -C repo commit --allow-empty -m 2 &&
++
++	# Capture git-send-pack(1) output sent to git-receive-pack(1).
++	git -C repo send-pack ../setup.git --all \
++		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
++
++	# Replay captured git-send-pack(1) output on new empty repository.
++	git init --bare remote.git &&
++	git receive-pack remote.git <out >actual &&
++
++	test_grep "fatal: Failed to traverse parents" actual &&
++	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
++'
++
++test_done
 -- 
 2.49.0.111.g5b97a56fa0
 
