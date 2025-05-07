@@ -1,88 +1,94 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7C4DDC3
-	for <git@vger.kernel.org>; Wed,  7 May 2025 21:46:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6405C231A3B
+	for <git@vger.kernel.org>; Wed,  7 May 2025 22:21:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746654422; cv=none; b=cu+OwVS6Iljh/a36o5Zc3Y4S1KsXxwNuaPrXxdRLO+26Lyx5Mi7fkPtHAtMaq4dmNB3HmnJV0QgRqZm3eOVpQ/g3bHNO/ar9hMhP0qLi9c7yMrGC0IyykY+WaiY3kQe9/diLgQ00GDY8wzqWd7AGdJ0y9wQMm+kTqzesjMGOGfc=
+	t=1746656510; cv=none; b=D7HBzAU4TGwOIi0G7BB3fHC/l8gPTdTgPoqeDCE03BvFjti4x7AZrx6BnkBE4O2mVh9GJTIST8pJqmc6wa48Ac3HtipV6BykbGFXpefh55POithcl95l8iW0mh5KH59ZFbHFQKia0t5jWbUcWJc4xznh2JTW64tlRzKNSOYmhT0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746654422; c=relaxed/simple;
-	bh=FD0n6dmNefktvOlwRtm+t5nv6Bo5Ec6t1zCwzMNv6zI=;
+	s=arc-20240116; t=1746656510; c=relaxed/simple;
+	bh=C/nynAR4Eed6ylpQ/aLTziV5sNPZq258L5p5QsG7zZc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d5IT3AYAO+zK8OHrSWwHIC5MnWmq6qSJwBgdCXZaA1wH78PmjkzHOIkDXgntcnkKKn1haq6O37RUTlzi3awlzGyzBndYKu1MYRDne16Y3s/Mxie2cz4QN1T8mGqGUlAw9hebonhynVi7U7YYu8pPuS7yE7pgpaXkf+eADies+6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oIRN+zBz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=utPRYP9k; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=dJ+JzkLkQDTwNfGADFqZXZtB7+SGmDF97l9qS6Le0dCh/ZcHzjCJVAL7O4C3oG9ALVL2VmiUN3a7YgtaTd6S90PrmO9tOR3uvEnWfxYwyMmf6udNHntB5hzxf3BRvjDyL4thVqCstSGqmBoO0JWMCgZ62t+JkysKuB1kzkdqRZ4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WxlebnpJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CWmNJVfg; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oIRN+zBz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="utPRYP9k"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 147EF1380178;
-	Wed,  7 May 2025 17:46:58 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 17:46:58 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WxlebnpJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CWmNJVfg"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 1CD961140118;
+	Wed,  7 May 2025 18:21:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Wed, 07 May 2025 18:21:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746654418; x=1746740818; bh=JxA9/8v814
-	r2QuqTcLz0ad9h6R5JYpdvvPsmYN1llAA=; b=oIRN+zBz0++IcbpEpJutyDLXvK
-	XrfKkBRQqr3DBcGGf08O0e4k1U9ZKlN2PpYJ0I/FvBCB5T+4n5DXDEgEh/mDzRic
-	H0h3YmxYv6lrEMKQ8glW86QP9xtkCz7IVq5NfzBIcw6BD6hl0q/a7V7RXb9Ek+Wd
-	9GFYWO46ms5LfURjJI+fJS3kxVgxFM+Zpzikk8/KpksxPdh0Yzu7oN6lcy/bjQAP
-	iyCBeeTJRxEndav/lfCq/ZP5nOrAgtZ4HAd2apt9L2tqYJVtdg2pVYam8Si5GS3+
-	Tt/vievOkvosI/1loWUET6eVIZPqJ3N34be/PV7BzQ8C3nZeT4K8v7jvHGmw==
+	:subject:to:to; s=fm2; t=1746656506; x=1746742906; bh=FdJfkGH66a
+	R1Bdsp3CSf3zNb65AKE+akwD5HX7nvMTE=; b=WxlebnpJyxbxaE+Yg1lR6M624I
+	gONyYkofM3bW9lxhPCuatMyk3rLo20Och9+0/MdORTeA0fMmaDHk7EDXdcVKRiJO
+	nX2ODZgU4Onsazq/18zX/QezYAtw8RPw99dtW6eeIeELhEzsQsvNWNzladS5hg3n
+	RCx7vBOJHJyzIcp2/3Xi6eIh3UZEUcSS7waZREGcFJWwC66cWnNHZfB5uUMheE6X
+	O/qbzdDfE4JH0saObSr52BRXDQ0YMYSdb/g8MYP6cZS6k1nMBvILKfyGwsH03+OR
+	1bKak0W7z9KbKGt5Oge6qTX6iLJ2gGqTqj1VFOqa3MV/0EOWOiiGcdXxl85Q==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746654418; x=1746740818; bh=JxA9/8v814r2QuqTcLz0ad9h6R5JYpdvvPs
-	mYN1llAA=; b=utPRYP9kAgLUb4UPCZAxOHwg/ui6ex1dth/LTtGhxVv1yhnEuun
-	Drji+C97gWv5T0nnUNNstsO6nsLfj0JoroWoFI+G7SaPI1ifm2tM1uvRis4BCHhc
-	LIOt0OM4fS7/Jr3XnbVxq7zSZKdb9p7jKiyfn2g4mQbFuwAiIk06XKeQTUp0AS04
-	M+6upIFl+FUPUD45ikP2KLyJvYK4aeyL8bjf59O8/qLemkqAlhAOTk5eR2aE/dyO
-	jhIDfj6ZtKMAITwq/pOXJ/fMFGKs/75Q7vAwAc7m/T9k8i0cmRYK4Q6Uc5lYSL7N
-	/EYO67IOOAZcawZYucq+RE6xHHJEwRvOFwA==
-X-ME-Sender: <xms:0dQbaC3QEoutsvqsdPNKkTSKt2bdVs2m4vhJ24K8LnPu4R95tfU7sw>
-    <xme:0dQbaFEtfVUm3qwu9hA_4EEbvbNZxN7gWxYwIsyP399KXifQpLKFKvWcGaNpeKqwu
-    58TZjkmHXGxtrxpaw>
-X-ME-Received: <xmr:0dQbaK5pD9lTbf_HcbT6vkEYTdPUx6aJsUm-allHi6kXflCnHhMWkUmnJ5HOCC0ghegFWYpfD4osnRNIlhUv4Nux6feKtg-fCKu7>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejleejucetufdoteggodetrf
+	1746656506; x=1746742906; bh=FdJfkGH66aR1Bdsp3CSf3zNb65AKE+akwD5
+	HX7nvMTE=; b=CWmNJVfgkDGkWyP7Zp9fOYZ2P1uxUkNWVyXIQ6kuBxyJWhZxG4o
+	cNvZH34zfq5xV/DNJ9aVc3aNfIYR4/53nic2A1ZwkmIWjcIYFyqQhcFh0NawAZlH
+	ge9re+ZFe9vEx5v1casvUSLlIhwdjNpFDnpmcqqH3OSfAx+ero/wMPItSmOzjh7t
+	ToZIImGQc0tdMJMeQidqd6pCTVvlrtESvysaZF6bRwd8vGZYqy6O8IASAnko9epg
+	Ppg/PB4woFvRxqZJG2moHkRb3dSJadbG3xiZbzoDO6OTA5Lj+RL1WU+NR0yZ9qRr
+	7boDQmkelN7vYJNHltEDHBtlFq1BJf4AEzw==
+X-ME-Sender: <xms:-dwbaEPCNcIcyEWK175u4iBmv_0pH_IRHnP7a2ob-yPkmOMh65UbGQ>
+    <xme:-dwbaK8EJnWJD8p0W12gO37QX_aOqiOg0tohNL4SZK_6HskRic4F_vXHLKQ8A9kJc
+    fYu-BcEmrH2P7PgUw>
+X-ME-Received: <xmr:-dwbaLSQGRQNqRDRDxYhjCnyTS2FA_ailyfTpQnuFAz_x2EYJgjvEa5lgx4ARzrMUupXjveT4Pu_PlbICDW2HhDinh2nAgoPenDF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeektdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhl
-    vggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homh
-X-ME-Proxy: <xmx:0dQbaD2_zdnsjS9DsNkyA1dFci-a2JJ1ozj_i1se3Qykt4Z957okCw>
-    <xmx:0dQbaFH_6gST4h96Y2oLup4L08OnTVRoSDZj5Duh2QJymibAy9XaUA>
-    <xmx:0dQbaM8XBFf4_mvPY2aAU_1OH2LBeAaLqZjBJeONskUall378Rnwsg>
-    <xmx:0dQbaKmuk6G13tppdy59kZxsOHvc9iuIXKYDiEfUUGpKhaYSc23ufg>
-    <xmx:0tQbaN-eF9Ine3qxVB-Y7izzQSO6U0MPF8khtV6O3IbWzCrQFlb6r7US>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhephffhjeekhfettefgkeelfeevieffveel
+    gfehfeevffejleettdegvedtiefggeelnecuffhomhgrihhnpehgohhoghhlvgdrtghomh
+    dpohhffhhitggvfeeihedrtghomhdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogi
+    drtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtse
+    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhho
+    rhgusehgmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihth
+    hoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmhgr
+    khgvrhhsrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtoh
+    drtghomhdprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthht
+    ohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-dwbaMvAt0kH3VkXA4i8RMHk-iSkZTgajzsmW6X3XuEdFlHPAjjEtw>
+    <xmx:-dwbaMc823vo_RsvoSWOqGJNpltO_GGajU56LiMG5Nc-x83coUysUA>
+    <xmx:-dwbaA1HTs9Jys-kuoSHcNM35FKPjL7GBhqIFIieIu-vVfMAzWFwAQ>
+    <xmx:-dwbaA-Aw9AqXViKUo3edScCmoJyh_LiJxlH6HUgfuxD_4fgrWebIA>
+    <xmx:-twbaDDYEl2dZmz2HQ4iMLtOy8vZRJf_1LlQ2-KCs4PTz7s_8QyVC0Qa>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 17:46:57 -0400 (EDT)
+ 7 May 2025 18:21:45 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  Patrick Steinhardt
- <ps@pks.im>,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v3 4/4] scalar reconfigure: add --maintenance=<mode> option
-In-Reply-To: <684f04aaf7e87f22ab0b00a4fd42d2943304ef04.1746582637.git.gitgitgadget@gmail.com>
-	(Derrick Stolee via GitGitGadget's message of "Wed, 07 May 2025
-	01:50:37 +0000")
-References: <pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
-	<pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
-	<684f04aaf7e87f22ab0b00a4fd42d2943304ef04.1746582637.git.gitgitgadget@gmail.com>
-Date: Wed, 07 May 2025 14:46:55 -0700
-Message-ID: <xmqqcyckayb4.fsf@gitster.g>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>,
+  sandals@crustytoothpaste.net,  Julian Swagemakers
+ <julian@swagemakers.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Zi
+ Yao <ziyao@disroot.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v4 2/3] docs: improve send-email documentation
+In-Reply-To: <PN3PR01MB959781C8A5B990B2CCB68836B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Wed, 7 May 2025 12:33:06 +0000")
+References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597208F139D23AF3436B16AB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB959781C8A5B990B2CCB68836B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 07 May 2025 15:21:43 -0700
+Message-ID: <xmqq5xicawp4.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,85 +98,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> -EXAMPLES
+> ---------
+> -Use gmail as the smtp server
+> +EXAMPLES OF SMTP SERVERS
+> +------------------------
+> +Use Gmail as the SMTP Server
 
-> Add a new --maintenance=<mode> option to 'scalar reconfigure' that
-> provides options for enabling (default), disabling, or leaving
-> background maintenance config as-is.
+Nice to see that you got the capitalization got right while at it.
 
-Hmph, this is a bit unexpected.
+>  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> -To use 'git send-email' to send your patches through the GMail SMTP server,
+> -edit ~/.gitconfig to specify your account settings:
+> +To use 'git send-email' to send your patches through the Gmail SMTP server,
+> +edit '~/.gitconfig' to specify your account settings:
 
-> +--maintenance=<mode>::
-> +	By default, Scalar configures the enlistment to use Git's
-> +	background maintenance feature; this is the same as using the
-> +	`--maintenance=enable` value for this option. Use the
-> +	`--maintenance=disable` to remove each considered enlistment
-> +	from background maintenance. Use `--maitnenance=keep' to leave
-> +	the background maintenance configuration untouched for These
-> +	repositories.
+The four single quotes above should probably be changed to back
+quotes, to match the "You can also use OAuth2.0..." below.
 
-If I understand it correctly, here is the only place that the users
-can learn what the valid choices are, and it is not even an
-enumeration.  They are forced to read the entire paragraph to learn
-what the choices are.
-
-> +		OPT_STRING(0, "maintenance", &maintenance_str,
-> +			 N_("<mode>"),
-> +			 N_("signal how to adjust background maintenance")),
-
-And there is no hint what are the right <mode> strings are.
-
->  	const char * const usage[] = {
-> -		N_("scalar reconfigure [--all | <enlistment>]"),
-> +		N_("scalar reconfigure [--maintenance=<mode>] [--all | <enlistment>]"),
->  		NULL
->  	};
-
-So "scalar reconfigure -h" would not tell readers what the right
-choices are, either.
-
-> +	if (maintenance_str) {
-> +		if (!strcmp(maintenance_str, "enable"))
-> +			maintenance = 1;
-> +		else if (!strcmp(maintenance_str, "disable"))
-> +			maintenance = 0;
-> +		else if (!strcmp(maintenance_str, "keep"))
-> +			maintenance = -1;
-> +		else
-> +			die(_("unknown mode for --maintenance option: %s"),
-> +			    maintenance_str);
-
-Those who say "scalar reconfigure --maintenance=yes" gets this
-message that tells 'yes' is not a known mode, without saying that
-they meant 'enable'.  
-
-The --opt=<mode> interface is good when we expect the vocabulary for
-<mode> to grow, but I am not sure if it is warranted in this case.
-Is there a strong reason why 'reconfigure' MUST enable the
-maintenance by default, even if it were originally disabled in the
-enlistment?  If there isn't, initializing maintenance to -1 and
-setting it with OPT_BOOL() would make the UI consistent with the
-register and clone subcommands, and also we can lose the above block
-to parse out a string.  Also the code below ...
-
-
-> @@ -758,7 +776,8 @@ static int cmd_reconfigure(int argc, const char **argv)
->  		the_repository = old_repo;
->  		repo_clear(&r);
+> @@ -528,6 +528,37 @@ If you have multi-factor authentication set up on your Gmail account, you can
+>  generate an app-specific password for use with 'git send-email'. Visit
+>  https://security.google.com/settings/security/apppasswords to create it.
 >  
-> -		if (toggle_maintenance(1) >= 0)
-> +		if (maintenance >= 0 &&
-> +		    toggle_maintenance(maintenance) >= 0)
->  			succeeded = 1;
+> +You can also use OAuth2.0 authentication with Gmail. To do this, edit your
+> +`~/.gitconfig` file and add `smtpAuth = OAUTHBEARER` to your account settings:
+> +
+> +----
+> +[sendemail]
+> +	smtpEncryption = tls
+> +	smtpServer = smtp.gmail.com
+> +	smtpUser = yourname@gmail.com
+> +	smtpServerPort = 587
+> +	smtpAuth = OAUTHBEARER
+> +----
+> +
+> +Use Microsoft Outlook as the SMTP Server
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +Unlike Gmail, Microsoft Outlook no longer supports app-specific passwords.
+> +Therefore, OAuth2.0 authentication must be used for Outlook.
+> +
+> +Edit '~/.gitconfig' to specify your account settings for Outlook and use its
+> +SMTP server with 'git send-email':
+> +
+> +----
+> +[sendemail]
+> +	smtpEncryption = tls
+> +	smtpServer = smtp.office365.com
+> +	smtpUser = yourname@outlook.com
+> +	smtpServerPort = 587
+> +	smtpAuth = XOAUTH2
+> +----
 
-... which does make perfect sense, would still be applicable.
+Just for my education, the above description does say why Outlook
+needs to use OAuth2.0, but does not hint the reason for the
+difference between the two example, OAUTHBEARER vs XOAUTH2.  Do
+these two services support both, or does Gmail support only
+OAUTHBEARER while Outlook supports only XOAUTH2?  
 
-I dunno.  I just feel that 3-way "mode" interface is too much hassle
-to get right (e.g., give hints to guide the users who forgot what
-modes are available and how they are spelled) for this code path.
+Given that the former is described in RFC and the latter sometimes
+described as "Proprietary Google extension, not a standard", it is
+somewhat funny to see that Gmail example uses OAUTHBEARER while
+Outlook example uses XOAUTH2.
 
-Anyway, will replace the previous round with this one.
+> +SENDING PATCHES
+> +---------------
+>  Once your commits are ready to be sent to the mailing list, run the
+>  following commands:
+>  
+> @@ -536,9 +567,23 @@ following commands:
+>  	$ git send-email outgoing/*
+>  
+>  The first time you run it, you will be prompted for your credentials.  Enter the
+> -app-specific or your regular password as appropriate.  If you have credential
+> -helper configured (see linkgit:git-credential[1]), the password will be saved in
+> -the credential store so you won't have to type it the next time.
+> +app-specific or your regular password as appropriate.
+> +
+> +If you have a credential helper configured (see linkgit:git-credential[1]), the
+> +password will be saved in the credential store so you won't have to type it the
+> +next time.
+> +
+> +If you are using OAuth2.0 authentication, you need to use an access token in
+> +place of a password when prompted. Various OAuth2.0 token generators are
+> +available online. Community maintained credential helpers for Gmail and Outlook
+> +are also available:
+> +
+> +	- https://github.com/AdityaGarg8/git-credential-email[git-credential-gmail] (cross platform, dedicated helper for authenticating Gmail accounts)
+> +
+> +	- https://github.com/AdityaGarg8/git-credential-email[git-credential-outlook] (cross platform, dedicated helper for authenticating Microsoft Outlook accounts)
 
-Thanks.
+Given that this will be formatted via AsciiDoc (or asciidoctor),
+would it make sense to make it easier for readers of the source
+document by folding lines, like:
 
+	- https://github.com/AdityaGarg8/git-credential-email[git-credential-gmail]
+	  (cross platform, dedicated helper for authenticating Gmail accounts)
 
+	- https://github.com/AdityaGarg8/git-credential-email[git-credential-outlook]
+	  (cross platform, dedicated helper for authenticating Microsoft Outlook accounts)
+
+or something?
+
+Other than that, very nicely done.  Thanks.
