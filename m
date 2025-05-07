@@ -1,68 +1,68 @@
-Received: from mail-pf1-f169.google.com (mail-pf1-f169.google.com [209.85.210.169])
+Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF5161DA21
-	for <git@vger.kernel.org>; Wed,  7 May 2025 14:53:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E71A2643
+	for <git@vger.kernel.org>; Wed,  7 May 2025 14:54:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746629634; cv=none; b=DX5Hl0KbveDdfVGLo6dvQ2mCxfekMnzsZxUy+OQhlFpOGRMR4DT6RKk08GEqeLLpvx62/BhBmJb9nqS2KmnRZOxks0tmvObvJyh8PpeVuVrR2FnEY1WH9KuJzLwwVQAHqpQiAfj7g2OwoWCe76SDHC1IrD+D/vS7R4XTmaitHnI=
+	t=1746629642; cv=none; b=r6XwYmYfaWZCjfLkYftNL1OgHW1g9hdUJ+i84y4C5uzO8PH30nmg/DTrv1PnyU3PVMJ5lt1o0RL1I21jcFcC4PHqJJK0gg/GqQshOchY5gVgItEu8lLEoHr0rjrLS/Ro3NfTbNHxmsO3qLVOZHJcVoULrsB6BmtXd5qOAtRI17s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746629634; c=relaxed/simple;
-	bh=bUISYwzdo265oNRuE2YO6S7Yva1Hb7XoEqo7n8jB4rk=;
+	s=arc-20240116; t=1746629642; c=relaxed/simple;
+	bh=ctdHksgJtC50QPCZP3SXwzCGB+BdoBrdSlhfoHB2i/g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=MIbDt19GmPxm/qi0H80LndpzFKCwAb0qxeeJqzvXN1nfEE0zSb4yDyoWjlwf4XyCXYfDBKVRRd9kZ3CB7yY/JJKS+R6R+dpzMpSOJihin/fN3Lszj+Gbfie50MI4aPJMtX/yz0SZwPpNyFJNXZWJKBwCcG9Rl+9ZUPT2exU9NjY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Y7AHar22; arc=none smtp.client-ip=209.85.210.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q0pH1oj8hs4/acaMz2ju8kua9dRWOWNXg/ITEDeKfGAElMYJCa95boP84MDY/5z/j5PuGohx7HLId6KSbGJq7lWVOKBzm8FqWCbORgXFo4L169cKiM7Tfu82Qv0IRnoxWhnEz9O9ZU4is1YDvQOct3CrMFrjEFk24JeyWsdtfB4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LNNnbnMl; arc=none smtp.client-ip=209.85.214.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Y7AHar22"
-Received: by mail-pf1-f169.google.com with SMTP id d2e1a72fcca58-736c3e7b390so7906422b3a.2
-        for <git@vger.kernel.org>; Wed, 07 May 2025 07:53:52 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LNNnbnMl"
+Received: by mail-pl1-f181.google.com with SMTP id d9443c01a7336-22e70a9c6bdso10107785ad.3
+        for <git@vger.kernel.org>; Wed, 07 May 2025 07:54:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746629631; x=1747234431; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746629639; x=1747234439; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=phDKJw+UjD1EoQwB2QJFAsXgBkQ7/qGdwj4hF79beqU=;
-        b=Y7AHar22YSqwKaAWJMTTxb64WkAxL2DUfejr1niqHg4yjqZj9m9Gk3vFulOl9ElMKo
-         B9S681+zwXeQlY+wIZntEDkVNYAbLNLzrujxxjSrGoUzfnrkXLjszQxMmjQ6yKfRZ0Ew
-         0RZ3vPu8XrMd+fHC10m0bTlXP/qNDbrzIAsiu+oOLgtx31Rh81sAupT4vl8Y7E0Jm0Si
-         YDMPQA1pTcK2VQqoj9x4C14bb8bvX/SC80RAq0evoR+NV3UPSnixu1JOqdtyYCH0s7Gw
-         rJcY+L/JN1ahhrd2ycpcTucrXI6VguVPh/BuXpRMSYyIRXnesEgDsdSFbabrQsIKfhUv
-         B+mg==
+        bh=zuFixe1+DmJcvVyuOgJo35lY1WDmfejV+pdzhu0IO0M=;
+        b=LNNnbnMlsvmqkO07GdOu6c9TTiQr95yHNi8FWZF1ndKjWGiEhUo2rF4oLCTpVXrx0O
+         sbRzP62/+84GzzIDjEz/WFpv7iZ5m23MecqhEdjr3nQ8sNdwjJhgX93q7FdzeZ/r/eTs
+         Ske9OWOmXh8l2F/BGj/12KxwN7VvN+kD37FYFlh79D5gDAhxCF3MtuBozWY3W4egZ3Nk
+         lWU1YRprmJuK3HEmiC9SlAO1mAmVPIDAAH1EetcnjXKhVDqXwcyl4TVRbzMrfJcc+blT
+         zxcmLQ1Xk0syiqt1UZv8MmTvF7d35/jU6Mq4GpyNzhbLqyn9lHo9g28UMOsXFVgEOBes
+         xBgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746629631; x=1747234431;
+        d=1e100.net; s=20230601; t=1746629639; x=1747234439;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=phDKJw+UjD1EoQwB2QJFAsXgBkQ7/qGdwj4hF79beqU=;
-        b=Ia+e/TZx0ycGSZe8yvlZyD1PsBVURTNxGluOm8h8RUaXCgKGiLPzEZQQ3RUzhvQutL
-         CxfhesahenjRNhxVIMPqCD1tF5dIvIqcEiszPXyGleWsOR9hs+HTcmnsz65f//u1qrM+
-         oCVBw3upvqcQ/y4umXh2E36ahH3xBHtvv7t6vkqzu10677MKtIi4XGFW9Czc7ERtls2f
-         beuoFJ+pKsDUGM1nKeCCOO6JbOZIYqZuWFYi16ljV2c/F4HUrJD8u6qtQvQQrZH0jWsC
-         BYOauCzQuIwSwvUKfPWWDHsdWJYJayNU1rD62p58Iap+GfsfPSBmt6NFlbFxDOMPaOLY
-         V35A==
-X-Gm-Message-State: AOJu0Yysx1suLCyTCewGUODVmDKgFjJjqbL4hlhWAFQnLy45aXGTs7/8
-	Z39CryiSmE/PUMM2sLCtc9vUizEj6BGr+VwimkZOzXpArgF3hxVMbirVZySih2M=
-X-Gm-Gg: ASbGncuaBoQTehjrDuS6/zhgF7CMmUsU/wGXgmaC3OVB3OivvbRHtzQdMKJqTg1CNAh
-	ENtYpl5WZb4WmH35hzOUZy2QoG6c3X851Qr/g8kun+0fbve1JU7Uru/OwBrRv5yCxhDRXa87Hk8
-	I7UYsY2bUp+P466sM0tt48/YDtDr5PUGyqrNkmb6rhfYelzt6a/4x5Gbn8h3X6lkmkv6m7X1aHd
-	+8wqohaMv5UxUybVQp+YghsvVnt0mHbF1NJh+6yWyk0/vLBEOH8jrC4nIBDwPgIN7xbGz/WCcdV
-	EBxsX21r58jxEOi2Tp22+rf6P9NFADVx7dpgS/ccICe0cfI=
-X-Google-Smtp-Source: AGHT+IGurPR4pair1jH36hNy2OdN2W+pCc65iEiYiMj7G/P37PDtoyprqzu56ykTtljsCjQM80mZ6w==
-X-Received: by 2002:a05:6a00:4ac5:b0:730:95a6:375f with SMTP id d2e1a72fcca58-7409cee4245mr6138454b3a.3.1746629631588;
-        Wed, 07 May 2025 07:53:51 -0700 (PDT)
+        bh=zuFixe1+DmJcvVyuOgJo35lY1WDmfejV+pdzhu0IO0M=;
+        b=lsW36c8HmYKQBhe4nPccexvfcqxz1TRqCUCy+4rf4RxMnPhaz+GR/FTCdSroqn/LC0
+         dmescMBrzjLUBlRzhFI0xvpdP1CYYmxxr1eb7XiFV5ScdvcCxQV1XW7Qc2DmCozsgTDI
+         CGD77eDb1RWX5LzwMeAgQMG+MPTQwF01zF9A+4fubG1y+KjxhO+Ab1107/K55XUXQTUi
+         O/GnFgG3C9uFAN9+l4AYZQvYpj7QN6L+QZwPDLUCwJL2eeScrP3tz8rzvfKM/IpvMH5Y
+         ggq9OI2XR64Po7E9lWwSBytjTxwv9YlmnjRWSRN73OWIXzI+QdXgl70RpwXyPLDtvsLx
+         A+yg==
+X-Gm-Message-State: AOJu0YymK2X7D8YcH4iD5hbA9NIS/USEaiop/W4+y1xmLwWtzyTNyXBW
+	d2TtM3X64Qgsb0PWZ2JAMwK9m3mG729rhwU/w7T6/WShNSEX3kG7n+h7uCg3Hbc=
+X-Gm-Gg: ASbGnctmLXYr33Bj8r5WbPlzwoSH3wqTL49z3S9fz3sge66DTSFQjvnLqNJdtZ3IXa7
+	1WXZ6FCoTp96k4ysAkMtADTiLERaXFcDVv1f+rWWCQffcD7EhkV3KthRBc44lvBqJkGIjmgX2O0
+	m3vAEqXCLIvwmrzCRJj4ivVuK3Fxqopzhcey5Sf/DIj5rBqwld9VjOo4AWOD/7uLCVs5ZjH2Y4A
+	ZRjWwyQQfPJiNirvz9YMuZQ7nmgYaeddKCrhj/DZZrrvsn6pF2u5A/9hwlWd02fw1tD6H/lrpRG
+	qxRQbSCj3wqzbWTVA0jGb3zlemjdiRlO4kSF
+X-Google-Smtp-Source: AGHT+IF04SKghcqB9GU15NhV7YFBd7J9lGQsqPEXaZeOIxUIUUZZKyrFiANtLAq2KKprVwbEKoRQAw==
+X-Received: by 2002:a17:902:e950:b0:220:cd9a:a167 with SMTP id d9443c01a7336-22e5ea424e5mr54392585ad.4.1746629639448;
+        Wed, 07 May 2025 07:53:59 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74058d7a47esm11286445b3a.29.2025.05.07.07.53.50
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22e1521fc19sm95318735ad.122.2025.05.07.07.53.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 07:53:50 -0700 (PDT)
-Date: Wed, 7 May 2025 22:53:47 +0800
+        Wed, 07 May 2025 07:53:58 -0700 (PDT)
+Date: Wed, 7 May 2025 22:53:56 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
 	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 2/4] packed-backend: extract snapshot allocation in
- `load_contents`
-Message-ID: <aBtz-2A2VkhdNAyH@ArchLinux>
+Subject: [PATCH v2 3/4] packed-backend: extract munmap operation for
+ `MMAP_TEMPORARY`
+Message-ID: <aBt0BDTuOfUuCHE4@ArchLinux>
 References: <aBtzn4nwLsI9p5Cp@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -74,104 +74,74 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <aBtzn4nwLsI9p5Cp@ArchLinux>
 
-"load_contents" would choose which way to load the content of the
-"packed-refs". However, we cannot directly use this function when
-checking the consistency due to we don't want to open the file. And we
-also need to reuse the logic to avoid causing repetition.
+"create_snapshot" would try to munmap the file when the "mmap_strategy"
+is "MMAP_TEMPORARY". We also need to do this operation when checking the
+consistency of the "packed-refs" file.
 
-Let's create a new helper function "allocate_snapshot_buffer" to extract
-the snapshot allocation logic in "load_contents" and update the
-"load_contents" to align with the behavior.
+Create a new function "munmap_temporary_snapshot" to do above and
+change "create_snapshot" to align with the behavior.
 
 Suggested-by: Jeff King <peff@peff.net>
 Suggested-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- refs/packed-backend.c | 54 +++++++++++++++++++++++++------------------
- 1 file changed, 32 insertions(+), 22 deletions(-)
+ refs/packed-backend.c | 36 +++++++++++++++++++++++-------------
+ 1 file changed, 23 insertions(+), 13 deletions(-)
 
 diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index 0dd6c6677b..e582227772 100644
+index e582227772..ae6b6845a6 100644
 --- a/refs/packed-backend.c
 +++ b/refs/packed-backend.c
-@@ -517,6 +517,32 @@ static int refname_contains_nul(struct strbuf *refname)
+@@ -543,6 +543,27 @@ static int allocate_snapshot_buffer(struct snapshot *snapshot, int fd, struct st
+ 	return 1;
+ }
  
- #define SMALL_FILE_SIZE (32*1024)
- 
-+static int allocate_snapshot_buffer(struct snapshot *snapshot, int fd, struct stat *st)
++static void munmap_temporary_snapshot(struct snapshot *snapshot)
 +{
-+	ssize_t bytes_read;
++	char *buf_copy;
 +	size_t size;
 +
-+	size = xsize_t(st->st_size);
-+	if (!size)
-+		return 0;
++	if (!snapshot)
++		return;
 +
-+	if (mmap_strategy == MMAP_NONE || size <= SMALL_FILE_SIZE) {
-+		snapshot->buf = xmalloc(size);
-+		bytes_read = read_in_full(fd, snapshot->buf, size);
-+		if (bytes_read < 0 || bytes_read != size)
-+			die_errno("couldn't read %s", snapshot->refs->path);
-+		snapshot->mmapped = 0;
-+	} else {
-+		snapshot->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
-+		snapshot->mmapped = 1;
-+	}
++	/*
++	 * We don't want to leave the file mmapped, so we are
++	 * forced to make a copy now:
++	 */
++	size = snapshot->eof - snapshot->start;
++	buf_copy = xmalloc(size);
 +
-+	snapshot->start = snapshot->buf;
-+	snapshot->eof = snapshot->buf + size;
-+
-+	return 1;
++	memcpy(buf_copy, snapshot->start, size);
++	clear_snapshot_buffer(snapshot);
++	snapshot->buf = snapshot->start = buf_copy;
++	snapshot->eof = buf_copy + size;
 +}
 +
  /*
   * Depending on `mmap_strategy`, either mmap or read the contents of
   * the `packed-refs` file into the snapshot. Return 1 if the file
-@@ -525,10 +551,9 @@ static int refname_contains_nul(struct strbuf *refname)
-  */
- static int load_contents(struct snapshot *snapshot)
- {
--	int fd;
- 	struct stat st;
--	size_t size;
--	ssize_t bytes_read;
-+	int ret = 1;
-+	int fd;
+@@ -761,19 +782,8 @@ static struct snapshot *create_snapshot(struct packed_ref_store *refs)
+ 		verify_buffer_safe(snapshot);
+ 	}
  
- 	fd = open(snapshot->refs->path, O_RDONLY);
- 	if (fd < 0) {
-@@ -550,27 +575,12 @@ static int load_contents(struct snapshot *snapshot)
- 
- 	if (fstat(fd, &st) < 0)
- 		die_errno("couldn't stat %s", snapshot->refs->path);
--	size = xsize_t(st.st_size);
+-	if (mmap_strategy != MMAP_OK && snapshot->mmapped) {
+-		/*
+-		 * We don't want to leave the file mmapped, so we are
+-		 * forced to make a copy now:
+-		 */
+-		size_t size = snapshot->eof - snapshot->start;
+-		char *buf_copy = xmalloc(size);
 -
--	if (!size) {
--		close(fd);
--		return 0;
--	} else if (mmap_strategy == MMAP_NONE || size <= SMALL_FILE_SIZE) {
--		snapshot->buf = xmalloc(size);
--		bytes_read = read_in_full(fd, snapshot->buf, size);
--		if (bytes_read < 0 || bytes_read != size)
--			die_errno("couldn't read %s", snapshot->refs->path);
--		snapshot->mmapped = 0;
--	} else {
--		snapshot->buf = xmmap(NULL, size, PROT_READ, MAP_PRIVATE, fd, 0);
--		snapshot->mmapped = 1;
+-		memcpy(buf_copy, snapshot->start, size);
+-		clear_snapshot_buffer(snapshot);
+-		snapshot->buf = snapshot->start = buf_copy;
+-		snapshot->eof = buf_copy + size;
 -	}
--	close(fd);
++	if (mmap_strategy == MMAP_TEMPORARY && snapshot->mmapped)
++		munmap_temporary_snapshot(snapshot);
  
--	snapshot->start = snapshot->buf;
--	snapshot->eof = snapshot->buf + size;
-+	if (!allocate_snapshot_buffer(snapshot, fd, &st))
-+		ret = 0;
- 
--	return 1;
-+	close(fd);
-+	return ret;
+ 	return snapshot;
  }
- 
- static const char *find_reference_location_1(struct snapshot *snapshot,
 -- 
 2.49.0
 
