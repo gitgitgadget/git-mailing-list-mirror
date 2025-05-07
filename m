@@ -1,83 +1,83 @@
 Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8BD20FA86
-	for <git@vger.kernel.org>; Wed,  7 May 2025 06:52:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D5462101B3
+	for <git@vger.kernel.org>; Wed,  7 May 2025 06:58:47 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746600756; cv=none; b=RRYFy40h0Z7YHo/nsWLr9C7YYGusQ+PIIX0LKQlXD+aL/pLBTG+lzDUgTgj4ybICnVJ924sJeBNPDKT7fKtWbfb3lugllzaa9vvwfsaUWPlGLbby/j1ggRSNLCRuwLWEpLYebY+Xt04YNKOYv+5g/PtLkUzqamZg4xra/8CQE24=
+	t=1746601129; cv=none; b=LUxroa0rekyWkHWtywbRT8pTIvFZybf2FbII5a0T5AeDtVA6h0YqROKF5WotPdRHcpNtUswPexDLYcZ3JLY9zagMwRnCS+SmVR8eBCDBuxcNQWWxI5+Rg6Viq/v4BejNzIXGRarzRLQRCKdg9vH1Vm6gOZncT0EKVM527scTVe0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746600756; c=relaxed/simple;
-	bh=D0H0rrGhOuGL3TqEJF6V0gebk1tLBIWYmCN6MN/AV+4=;
+	s=arc-20240116; t=1746601129; c=relaxed/simple;
+	bh=Z/WS6nCtELKW3C1wsKjzJOH6z8Mm5JlBibja9sE+eOU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YUNEM1lmnp+C+QaUvImhi6WmiS+2/drhU5VA3sLfC62s/g3sN2tXGub48HdsUn2sMCmU2yxQ2s2NQ7vTD3LUTRgNkrjTN7DlN5uyfR5rxI/wjrBLLE//NLPyLL/gizNh5h5K+A60Gk9zYsXwCAr9Tjepmv/sqLjHlWdSR73v4tE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=BKES1O+y; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZV4vxU+2; arc=none smtp.client-ip=202.12.124.147
+	 Content-Type:Content-Disposition:In-Reply-To; b=NVjPdJVpKr0Gi80ZoWT4ZCegYvlyfUU6oIYl027DyXQqrXYYOACDKH2wiASyJnsm065FymO+wNySzCZ7vdvotMdKoGHVjXMsgf2Ey/qxOyjyviedVyWdooIzUpxxTQBAEdo544886tpFui/Q9bfVLBnUyW2e5soGitUsFd/Km2E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=JqR3a/Ya; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Yl4COVrM; arc=none smtp.client-ip=202.12.124.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="BKES1O+y";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZV4vxU+2"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="JqR3a/Ya";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Yl4COVrM"
 Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 667FE11400FA;
-	Wed,  7 May 2025 02:52:33 -0400 (EDT)
+	by mailfout.stl.internal (Postfix) with ESMTP id 7043B114011D;
+	Wed,  7 May 2025 02:58:46 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 02:52:33 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 02:58:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746600753; x=1746687153; bh=mPJAD2VY7I
-	J4P4woyqR1bdb8u/cyKjB36PLf4Xv7sDk=; b=BKES1O+yhH0PIFG9Beui+YwHmV
-	m/sH5L0FaHM5GmaL26giTwsrImGiEvyIdmnXJROjzF9ZDvholORybfiS/yJn8iK6
-	WKCYYnyrw1TMPOHaHP4TvRW3pGB5vjsmqXtGesZFC0ntc6rNkxPI++/owsGVZ7nU
-	y7rLZuAG8AouzNbi0L52OSpgSe4N6WnPo6CRqfp53VgENVUCYw97bo8crcH28w8V
-	a/ITnpNdx2dJjGGtEPvahvY5dHaXV1c3Byu8qkpemRzXfryxc0ZlNgDkQqdrs0f5
-	64T3RmbKV/sKie+jlXncqw1qztlg/RknRV1VPzwh+4fz7lvN63YXjcG8gxCQ==
+	:subject:to:to; s=fm3; t=1746601126; x=1746687526; bh=Yr4E4PMoTP
+	NP3QKchKioZAwu0SZ2uxpzH0tsM5niAKc=; b=JqR3a/Ya+AW2TFkzrQro2KWLWs
+	2mlARMFKIQQlkGfIqYqFi92htpk99xG0jK4y5t5Wqpy0iDqxObTmLvhcagMXW5XI
+	2myUwcZ6en7WXuf2NXnvSTw1JzvDWQGOj0JuL3RFC14Ix9fzkzd2VKBgnmYshSYj
+	Q9Dq9WGH++NXmXtqcgaan/hrHj/gBaEbCig+6GD6bYMw/LQ10vXiRjsvJwEJetTh
+	nanJSl13vUFcM+UndRH02YsWdKfCunOQEbTBL1Qx2aMhsgzoMk92hAN2D4P/JojG
+	JhQnFjuOboOioPKBJJbdl33QKoz4NOKog0pIiQhcjmUYAh+dDanbcb2HmWlA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746600753; x=1746687153; bh=mPJAD2VY7IJ4P4woyqR1bdb8u/cyKjB36PL
-	f4Xv7sDk=; b=ZV4vxU+2AP233mSxUprldUWrj6zM0Q3cy8jwcEJdq+N9bSosYYW
-	FPGej3l8Np9iIDJlQcR3RG0Kf0NKuTaKEWvXYb1/0+sEIpvNQYEiD2vEJ3CudfeR
-	sF6sGsKtmdPKccZ7h2SiLNdljWg7IpXc/g6dRMZUwDUnZxmNkC5c2EopGOLf2x15
-	MmNv5yhbkb9Pj0d65upup65VDHD7jpkt8daF3sHdy4sJ6TwkpDG+3sHIaBAwO4A4
-	8CCzx7sSN+ly1HSCJXEjVTZqY70cQFYl+d/s5nhu7rcO8SqN478F/icAT+Ahl3yq
-	HZzwKcRBRKQPcXhvG2EgkzzXHFlIUcyrd8Q==
-X-ME-Sender: <xms:MQMbaNvURaBEknMwkid-i4aUf6sp0QH-9OKgjbGuxPfiBNwOcdpQXQ>
-    <xme:MQMbaGd_0ma1DV3ANpygW0q61eP_SCmQNVizgEslCzmJ0K7vZiP_kIan4MhMudJv0
-    fLA8i0KZ1gPXEj_Yw>
-X-ME-Received: <xmr:MQMbaAwha6JKbdIvIgS7SjSnY3hIO3opgCcKcp2Fh3A21mJF9SSa6Fe4YxNmrD5hejGN9TaBegzkwJl3SPN9CfTd-DtRmHiD7nxrUF_K3WOUTA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeiudelucetufdoteggodetrf
+	1746601126; x=1746687526; bh=Yr4E4PMoTPNP3QKchKioZAwu0SZ2uxpzH0t
+	sM5niAKc=; b=Yl4COVrMRmOt/YG1ULwwTXzYpWpZ09NhQji4pF8i4v88VtS6MBD
+	g3oVEE/szfXxOmjw3fxHT6tZ/o/RXuU7qjH9yPCYHAZdjogmHSOp6emMOvEQHdTV
+	KUr17Fc4fQOwKTSrMHNzRoPuA1zhhnknddPP3gWbAob1PkpsvuaL//ovjbxeimcy
+	y5mSA+IRrhp7At/740ItU2Jlm5HXbfnD/5J5Cc3GTjQKmdOzhUM7fjvJJpOFQZrx
+	XRwVaFcJpw/zTMANUaJjoHitSmNLVMJ3IsW4tVOEqq6PY8hLl8JY2t6c5qgw8ki0
+	L66NkCOanJEsISMMbpW/kysPj5wtdBwOgfA==
+X-ME-Sender: <xms:pgQbaMdavRi-q8HsrJubpnaaqRCx-1muA22pO1xgj35rLVQKBLOUrg>
+    <xme:pgQbaOOMmDGoPcjG3TNGzFVJMa81xvoJ11JT5cr-6kdbWGVwqHuYAkR5RFvmbOluX
+    oONYgjBr73-O-3Aow>
+X-ME-Received: <xmr:pgQbaNhGLN8QKdzzwUG6M7HYrldo73s81ewQV_uuNq_KO2NcKQRgi_Y3C4-l1jUWPPvBQ8sGExtqedy9t0XOPGmW9gibPmAJHzsisBXIwHUQLA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeivddtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:MQMbaENGQYtbHHLuOTW4_50e4pYjfgHVj04jGj32vLEuk8SAKQQicw>
-    <xmx:MQMbaN_g8gsSIVXUzvPptNBGtgMx0SG8Y08rZQx7Br3zDIwFeYmaBg>
-    <xmx:MQMbaEW17Hwh6Rk9pARwqXkfrzZKK_b4DYVw-Gq-M4nL74FjxqLsQA>
-    <xmx:MQMbaOe93j9_Ejwd8aFjqDZ2oAVCGZFlz2jWioZtUu65R36fkJwsIA>
-    <xmx:MQMbaFZASLmzufgKtTwG0ee9eSC-KI8qGji3ubhw1Qeoa6D_g3B65-Az>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:pgQbaB-mg7FH6hf2mycaS_Yse3JbiI6p7uNeCAeqEdZK3XymTiVBIQ>
+    <xmx:pgQbaItZJR8YO_hm6N24BLq8UaUtvDpYMpb1UNlVNCezWKoddX6HgQ>
+    <xmx:pgQbaIGeZGiWcJPJKdCm7FMwi8reKrnoHr6do1ZJW253EOgRyQWUgQ>
+    <xmx:pgQbaHP0yEjeFDwVPDhIGNCeHH1kEBbwXGf1b16PCvdAyiBiVt6PDA>
+    <xmx:pgQbaIdkst7fRxbuMe5wba9N4L8afjO2fTYknEd1Up1RFeN-E2rVYQUS>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 02:52:32 -0400 (EDT)
+ 7 May 2025 02:58:45 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id ebcf4e61 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 06:52:28 +0000 (UTC)
-Date: Wed, 7 May 2025 08:52:25 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 97fdf648 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 7 May 2025 06:58:41 +0000 (UTC)
+Date: Wed, 7 May 2025 08:58:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Phillip Wood <phillip.wood123@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 1/4] t: fix cases where output breaks TAP format
-Message-ID: <aBsDKayGKszubn5i@pks.im>
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
- <20250506-pks-meson-tap-v1-1-5aaab2942a4c@pks.im>
- <49ef0fc1-39f1-4771-88e4-440e0924478f@gmail.com>
+Subject: Re: [PATCH 08/10] contrib: remove "git-resurrect.sh"
+Message-ID: <aBsEooYbNl1cjlFO@pks.im>
+References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
+ <20250506-pks-contrib-spring-cleanup-v1-8-e6d5ddd79a72@pks.im>
+ <xmqq34dhijnq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,31 +86,56 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <49ef0fc1-39f1-4771-88e4-440e0924478f@gmail.com>
+In-Reply-To: <xmqq34dhijnq.fsf@gitster.g>
 
-On Tue, May 06, 2025 at 02:17:09PM +0100, Phillip Wood wrote:
-> Hi Patrick
+On Tue, May 06, 2025 at 01:11:37PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> On 06/05/2025 11:59, Patrick Steinhardt wrote:
-> > The TAP format does not allow arbitrary output outside of a specific
-> > test case. If a test suite wants to print any such diagnostic output,
-> > then this output has to be prefixed with "#" to mark it accordingly.
-> > A bunch of our tests generate output outside of `test_expect_*`
-> > testcases anyway without such a mark, which breaks strict TAP parsers.
-> > 
-> > Upon further inspection, all of the output generated by such tests is
-> > rather uninteresting. Refactor them so that we don't break the TAP
-> > format.
+> > The "git-resurrect.sh" script can be used to find traces of a branch tip
+> > in the reflog and resurrect that branch. Despite a couple of global
+> > cleanups, the script hasn't seen any activity since it was introduced in
+> > e1ff064e1bf (contrib git-resurrect: find traces of a branch name and
+> > resurrect it, 2009-02-04).
 > 
-> I think there is an argument that these tests are broken and we should be
-> running these commands inside test_expect_success(). However this patch
-> doesn't make things substantially worse because although we lose the output
-> from test_create_repo that probably isn't going to matter. The changes to
-> the highlighting prereq look fine too.
+> A single-purpose thing that is done correctly on top of a right
+> abstraction does not necessarily need further updates, so I doubt
+> this paragraph contributes to the decision to remove the script in
+> any way.
+> 
+> Having said that, I would not be surprised at all if large bugs
+> still remain in the script.  The reason why we scarcely heard
+> complaints about it is due to the fact that people simply are not
+> aware of it, people do not lose branches too often, and when it
+> happens, it is crystal clear what needs to be done with the output
+> of "git reflog HEAD@{0}", once people learn about "git reflog".
+> Even though it may be tedious to inspect "git reflog" output and
+> pick the right record to use with "git branch" to resurrect, as long
+> as it is a one-off thing, it would be more assuring to end-users than
+> some rarely used script with no correctness guarantee magically picks
+> a commit to place on the "resurrected" branch tip, I suspect.
+> 
+> So I personally do not think many people shed tears if we remove
+> this script.  I am for its removal.
+> 
+> Do we have a better alternative we officially support, by the way?
 
-Yeah, agreed, our modern style when writing tests should always use
-`test_expect_success()` indeed. So an alternative to this commit would
-thus be to use `test_expect_success()` as you propose. Let me know your
-preference, I'm happy to adapt if you think this is preferable.
+Not that I'd know of, no, but I also had the same thought. If this was a
+common scenario then we really should provide an easy user interface for
+it. The question is whether it does come up often.
+
+In any case, the best solution from my perspective would be to stop
+deleting reflogs for deleted branches, even if only for the reftable
+backend. We don't have to worry about file/directory conflicts there, so
+there isn't really a good reason why reflogs need to be deleted with
+their branch. I would even say that it's counter to the intent to
+reflogs in the first place: the intent is to restore old versions of a
+specific reference, and I cannot see a good reason why a user wouldn't
+want to do that even for deleted refs.
+
+If we did that, a user can trivially learn about the old state of that
+branch (and even states before!) even after they have accidentally
+deleted it. Just type `git reflog show refs/heads/branch` and you got
+it. There wouldn't even be any extra need for a new command, this feels
+simple enough to me.
 
 Patrick
