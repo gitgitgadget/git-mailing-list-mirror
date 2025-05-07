@@ -1,63 +1,65 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7275E19005E
-	for <git@vger.kernel.org>; Wed,  7 May 2025 10:13:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C76774B1E69
+	for <git@vger.kernel.org>; Wed,  7 May 2025 10:17:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746612791; cv=none; b=NTrybXQYxKX1g+Le7AOoLUxHaPiDiwOQ3ktRSQJow05J/HmWEdsVEKhWT6pHeotOEg1zpNeJx+oKxYNfbplSsGfCnxmSrYYzdjj5ffw/fiBSTgKdKCfcfQnJGCoHb0qMktD22vEcYCbqyQ4tXiyleUAFs3c44MFZHIUSrulz+ww=
+	t=1746613058; cv=none; b=U77TCf75gz/K0WGGVSBsv56R9+HDvpU1CDJnM0XXU7Hw9qGMHkeJlabhYNUH+Z0+CqQh4sUfdSW4IiXAaIkNiMXtnwxjqb5KQ1ZCM83pkncrYGhmNlv7FVswzktWdTylF8zdcK9n8J2EA4+j5qlrbX4YhlAeDCEmLNXJcGa2hHE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746612791; c=relaxed/simple;
-	bh=VFMjsd98/SN12KOfOk1Fg9LuwIAL0NrRZvbr3qJGOl8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jbjmrSk+C13BD4IrSPhNa24swEgCMOCyTAm6We6uHRjBSTLoFDXoFwoi6MDjhMCCBx3lmp8gfcsAOPkqmw8+XOluDDaFjYh76iUfFtFu+4LoEG0VkFmYCg/vaKy7gHyH2XWd3iedyKv90z2wEAKl4d71/m41hQP6LeosKbr4FbU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l6XdVDll; arc=none smtp.client-ip=209.85.128.54
+	s=arc-20240116; t=1746613058; c=relaxed/simple;
+	bh=RtBPdx9eGGet3w9uP9KQRdl3imlxnriR0nmDYIPqcD8=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=NxEOKGXSx4SruQFVVGXugZS1ZZNytdBYvN9ET9f6371uixvVQV8Lji9e1V2D3GZKZyXoYTutTIhDjdcK4WmWhJoOK29dzUTdtyRJ5Vsho9EOS402qfRz9EcCFCozhnMeXVkXvFSKpED7SO9zff4VUcUo6XR7JdsGV9WM525JoUg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iNwZwGA8; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l6XdVDll"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43d0359b1fcso4977695e9.0
-        for <git@vger.kernel.org>; Wed, 07 May 2025 03:13:09 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iNwZwGA8"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-39c0dfad22aso4469411f8f.2
+        for <git@vger.kernel.org>; Wed, 07 May 2025 03:17:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746612788; x=1747217588; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=HIhqjvWDgrg9/u7zGkuYlFP+qk8lFq/0EVgXce3U53E=;
-        b=l6XdVDllUEaGwCJ069WmezcduLnmfLwy4jyRtoESWUh+q63A7exF1RRLK90Qoal0eE
-         IIRnEFUQfapbGWn6AOst5cNybC6OQrvotKQ9/8FeqxNeeu4dUdF1wA72VsIB4yEhiUYb
-         fRgwvSTcZSWLubuQJe6V3O0R8lOfqvG7z/Xc0Nw4AkM1mShNx0tbjyUtqfXkHctKMosl
-         8pXKrIbJMEFuocBncJ1qGIsaIPVUzSBgTvxUiqmVmuZKhVr/uLro24uDn3RNiQv0fhJQ
-         alw6vLbsWwofKDRFo2szFGfSRpW3pWlPxuXu4rsXG9UUc9J45xx4H+ywtQVP4YfTQ1rM
-         sX1w==
+        d=gmail.com; s=20230601; t=1746613055; x=1747217855; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=ciDEiNxekOZ71CDHOzyxJfwUKXL0VyMYO3FMy/dFpAo=;
+        b=iNwZwGA8fl9Nu8vjoHE+pY1eHsecPT34tFbtPr5CRPxh7AITcVkwolw6SgQgtKNxph
+         oDIUTDPoPqipsG8z4AA2osrnDoqzi0gmLJOSfOMaX18tgxekytr8gu2jQ8GVvbKIvVna
+         MPh0morWNvjibL/KTQQXyWZsuWj4h54caLx5c/Y/ldKDi4oqI7iDoUnG/iG4c5qXJMnt
+         gWgM/o383xe24+6KREZsMzaI042MfKI8vNJN4Zp3cQZTJUPr4hK2nTYaWpKHCNYUCvuz
+         /KACt3W5QU7sEp3H/BS6pNy8Vzl3LcE38eozp+7/51ZRLCczp7RwvRzSOAIAPvHK8wKi
+         R2+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746612788; x=1747217588;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1746613055; x=1747217855;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=HIhqjvWDgrg9/u7zGkuYlFP+qk8lFq/0EVgXce3U53E=;
-        b=lYWa9GvENiLzJ3mVwnwMSyBaA2MHrWdofyQVHVQYxehxxwyda2rYy/ejcbMf+Ogu5v
-         Ba3UkOpFKZU7lm1RIwTmxF/ykR8Au/4G1h2BzeYJdrk1nYx0PsqbpTZtm9dmdgtqr8u4
-         uv1VfG5hIGzujtHP8C5wo38k0Dh+oS5Qt1OKckLkMok1eoW+ZmV2g/9Edb9nK2C1Qk+R
-         D/f/mcRB7khn400MxXWHkQL3AlW0kRu7j/xlJ0vim4pkEnZvGaePysNaZZsFclYjaODA
-         hnrFa1FvJw0MiEz/IZdK+vIlzw8EnLSyjH+fpfH0VMBS/C2EQQzCthqI4/24rZTjiMj3
-         NreQ==
-X-Gm-Message-State: AOJu0YyOxZI1WW9VQA/RnhXg00pmPc4HTDOpEEyxuBKlisbjinj0ztvt
-	vjrO+iKapsOGUVonz+5wSzG8e+NQCYXHEkrfYGBE3z/1p6dgQolKmjSxiA==
-X-Gm-Gg: ASbGncvYzjgyEIloMxuJYd9JemKYK28WtXf70q4wjwU/yDc9TxJySu21EcCGO+8Wu+I
-	5lH2JEItCvc1W7kTQTCcOMTskQRUYSYsXAFwaOEIn+XqC1p7QFhDEOHyre8fua1fidRiclaJvul
-	tjdwvaB0j/gCO+GhL4p9fMwoNj4u6bb2LqGFMN160qojzY1YFh0qg4fwRmKSf9QCugXJA0gfvqU
-	TeiT1cigsfhYiV5vy4RgAIs7jEXEhabaOQDJO/y7VAakkjZBu4+uBux83HqK//lw2mIL3apJd5G
-	EWcsgrxlqItMnBIhv+mSAa4x46Z2oaXhexYv9drNUnZrcHg+8P+LEUZDSbBIRGWT1w==
-X-Google-Smtp-Source: AGHT+IEP1h2LpoAfMFeWVZDoWRZqz7GzJaJ+4+o6gE+cTfG+LXHm1tONsjB75yzZAlpM8BnlZurgcQ==
-X-Received: by 2002:a05:600c:860b:b0:43d:5264:3cf0 with SMTP id 5b1f17b1804b1-441d3a6e1f8mr32117465e9.11.1746612787361;
-        Wed, 07 May 2025 03:13:07 -0700 (PDT)
+        bh=ciDEiNxekOZ71CDHOzyxJfwUKXL0VyMYO3FMy/dFpAo=;
+        b=SP5Ahuxm/Jn38lnKp2jhuWdqZ5rLx61GvLV3o7dIKfiyctbSC3mAljWMD39l/coFpt
+         SGwhB3ybNv+4AUvc7kJ+8y/m8LX5V4M6fmlWfhwp6eYC5+BchFxTI6TGWRC7fDowlhaY
+         cXV/ZVMA3h6V8V5eNjG3LT9ATf0j8HgYBPjQCNq8EM+VK/fqoIaFEdMJ8bMfm9j9/O7J
+         CfKnn/G5gvQnGtNQ0V7bTZyGNoImN8+g3Br8PeRLU71KI1ZlvsZQ8LSdQNurvR0JETrR
+         Vznh1AaK5Y1mzgCKmLbHHiGccN0hMdBnN8mEYnOviAuXArmug03FmjM6HCC2nz3P3whV
+         SjpA==
+X-Gm-Message-State: AOJu0YxGNgMOxxB58s6UY0aRJRI2gqBEc9zq59ZkHMz6jt0+mgiZKOLd
+	13HN51HtqiLXg/8Gb8HJsRxdE5dfWF0A24QSJKWf2XZ7RHetlw2J
+X-Gm-Gg: ASbGnctOFSjncnCc0wZRVTJx7fNvhOuRkCn3QCZFcyC2Jhzou3N0RWpX2Okam598t5z
+	BLCpSc/8j0ITqse71YRb3T5tlOU47LSF46N1VBJRt3KtjgqXGc7pnsdA82AGagBA7T+0qmplt9g
+	YeqcXRt6Wd6KyJWl//6SN8FM5diYUvge5RsMNLyUIVqiqhkypkWymhrrhTYLoHAMFene98ZY1L2
+	bJWCMbPvrUhzcuIK92IFB9hL5altRPLUiQRZwH0Jw3d4URhVhpUhnjNdHXiDIEBSNdrWKAa6pGZ
+	6WbDj0pFnQ8ijdAXJLVdtAyxWeiOqidnxEDxODJ47PsAMv5TuQOLmKNvhIc=
+X-Google-Smtp-Source: AGHT+IEGwiULJ3OYQRuPHdMZx7iUu6T4iGJdDsQzBQUN1VKOPNi22GYAs1mZcXGsbbQvQwsCkXvbWw==
+X-Received: by 2002:a05:6000:1846:b0:3a0:8707:dad6 with SMTP id ffacd0b85a97d-3a0b4a02947mr2141244f8f.3.1746613054996;
+        Wed, 07 May 2025 03:17:34 -0700 (PDT)
 Received: from [192.168.1.194] ([84.64.112.61])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-441d43a765bsm26122655e9.38.2025.05.07.03.13.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a0b05334e0sm4349761f8f.43.2025.05.07.03.17.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 07 May 2025 03:13:06 -0700 (PDT)
-Message-ID: <548bec93-ae39-4536-8972-5a9ec538aa3e@gmail.com>
-Date: Wed, 7 May 2025 11:12:45 +0100
+        Wed, 07 May 2025 03:17:34 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phil@crinan.ddns.net>
+Message-ID: <48b86c85-bc39-40ba-a2b3-67de707dd798@crinan.ddns.net>
+Date: Wed, 7 May 2025 11:17:33 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -65,37 +67,52 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/4] t: fix cases where output breaks TAP format
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
- <20250506-pks-meson-tap-v1-1-5aaab2942a4c@pks.im>
- <49ef0fc1-39f1-4771-88e4-440e0924478f@gmail.com> <aBsDKayGKszubn5i@pks.im>
-From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [RFC PATCH 1/2] rebase, am: add --reviewby option
+To: Li Chen <me@linux.beauty>, Junio C Hamano <gitster@pobox.com>
+Cc: git <git@vger.kernel.org>
+References: <196a5ac1393.f5b4db7d187309.2451613571977217927@linux.beauty>
+ <196a5aceb00.fdc2d9ff187843.3547183335386278718@linux.beauty>
+ <xmqqv7qdk3yl.fsf@gitster.g>
+ <196a97f45e6.ee3375ac536926.7531113088063277926@linux.beauty>
 Content-Language: en-US
-In-Reply-To: <aBsDKayGKszubn5i@pks.im>
+In-Reply-To: <196a97f45e6.ee3375ac536926.7531113088063277926@linux.beauty>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 07/05/2025 07:52, Patrick Steinhardt wrote:
-> On Tue, May 06, 2025 at 02:17:09PM +0100, Phillip Wood wrote:
->
->> I think there is an argument that these tests are broken and we should be
->> running these commands inside test_expect_success(). However this patch
->> doesn't make things substantially worse because although we lose the output
->> from test_create_repo that probably isn't going to matter. The changes to
->> the highlighting prereq look fine too.
+Hi Li
+
+On 07/05/2025 07:46, Li Chen wrote:
 > 
-> Yeah, agreed, our modern style when writing tests should always use
-> `test_expect_success()` indeed. So an alternative to this commit would
-> thus be to use `test_expect_success()` as you propose. Let me know your
-> preference, I'm happy to adapt if you think this is preferable.
+> Some projects require every commit to carry a Reviewed-by: line
+> for accountability, much like the kernel requires Signed-off-by:.
+> A first‑class option keeps that workflow “out of the box”; otherwise
+> people need to define an alias such as
+> 
+> [alias]
+>      rbr = rebase --trailer "Reviewed-by: $GIT_AUTHOR_NAME <$GIT_AUTHOR_EMAIL>"
+> 
+> which is functional but less convenient.
+> 
+> I would appreciate your further thoughts on whether a dedicated
+> flag(--reviewby) is acceptable, or whether we should drop it and rely solely on
+> the generic --trailer interface.
 
-If you feel like re-rolling using test_expect_success() that would 
-definitely be an improvement but I don't think your patch makes things 
-worse than they already are so don't feel you have to.
+I think adding support for --trailer is a good idea and if we do that we 
+don't need --reviewby. The existence and implementation of --signoff is 
+largely a historical artifact - I'm not sure we'd make the same choices 
+if we were thinking about adding it today. Different projects have 
+different requirements and I don't think it is sensible to add a new 
+option catering to the different demands of each project.
 
-Thanks
+I'll take a proper look at the second patch tomorrow.
+
+Best Wishes
 
 Phillip
+
+> Thanks again for the review.
+> 
+> Regards,
+> Li
+> 
 
