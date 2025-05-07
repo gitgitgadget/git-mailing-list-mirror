@@ -1,345 +1,176 @@
-Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
+Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59BA028FAAA
-	for <git@vger.kernel.org>; Wed,  7 May 2025 21:01:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E7C4DDC3
+	for <git@vger.kernel.org>; Wed,  7 May 2025 21:46:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746651712; cv=none; b=DgfxiUATDvtnOxyvR1+oXKzeuOY2xGX6aI+Aokeec23AGX/AO7J//vBhK4t5G2NONUr1ph3xWnmmzxClyMlHEvuoKYNT4H4Jtb/Xlw8PZOH48M/TBDk1AtZ/m1G5xoZIxbEkSLikZva29p+H9X1TwO8rFBnIbp/IDWf7bNLmB7A=
+	t=1746654422; cv=none; b=cu+OwVS6Iljh/a36o5Zc3Y4S1KsXxwNuaPrXxdRLO+26Lyx5Mi7fkPtHAtMaq4dmNB3HmnJV0QgRqZm3eOVpQ/g3bHNO/ar9hMhP0qLi9c7yMrGC0IyykY+WaiY3kQe9/diLgQ00GDY8wzqWd7AGdJ0y9wQMm+kTqzesjMGOGfc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746651712; c=relaxed/simple;
-	bh=CeSyEute1oNfUmgsr0v6G4OR1aH9Ktr1SAche5tXSzY=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Zj+JUfi4XlULUUHeRXcWi5jtiBJOJ9GGSiw6Yhn512xUpCUftpj2s10Vz7ajnPsC1TmbVwYUQtbXIXd8MRPFQSYwuqy4EyNOyledI7pE5Ez+CMfOlj/MDC3gc+Ceho7Z0OEWXZnp/XrpSReg/c/xdIkMsLiFzPMRAPUtqTCQvF0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; arc=none smtp.client-ip=212.27.42.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
-Received: from cayenne.. (unknown [IPv6:2a01:e0a:d1:f360:c2d2:c7d2:a4cd:bda7])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 8E19113F89C;
-	Wed,  7 May 2025 23:01:44 +0200 (CEST)
-From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-To: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Cc: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
-Subject: [PATCH] Additional changes
-Date: Wed,  7 May 2025 22:58:16 +0200
-Message-ID: <20250507210104.26709-2-jn.avila@free.fr>
-X-Mailer: git-send-email 2.48.0
-In-Reply-To: <20250507210104.26709-1-jn.avila@free.fr>
-References: <20250503011537.3035416-1-gitster@pobox.com>
- <20250507210104.26709-1-jn.avila@free.fr>
+	s=arc-20240116; t=1746654422; c=relaxed/simple;
+	bh=FD0n6dmNefktvOlwRtm+t5nv6Bo5Ec6t1zCwzMNv6zI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d5IT3AYAO+zK8OHrSWwHIC5MnWmq6qSJwBgdCXZaA1wH78PmjkzHOIkDXgntcnkKKn1haq6O37RUTlzi3awlzGyzBndYKu1MYRDne16Y3s/Mxie2cz4QN1T8mGqGUlAw9hebonhynVi7U7YYu8pPuS7yE7pgpaXkf+eADies+6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=oIRN+zBz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=utPRYP9k; arc=none smtp.client-ip=103.168.172.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="oIRN+zBz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="utPRYP9k"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.phl.internal (Postfix) with ESMTP id 147EF1380178;
+	Wed,  7 May 2025 17:46:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 17:46:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746654418; x=1746740818; bh=JxA9/8v814
+	r2QuqTcLz0ad9h6R5JYpdvvPsmYN1llAA=; b=oIRN+zBz0++IcbpEpJutyDLXvK
+	XrfKkBRQqr3DBcGGf08O0e4k1U9ZKlN2PpYJ0I/FvBCB5T+4n5DXDEgEh/mDzRic
+	H0h3YmxYv6lrEMKQ8glW86QP9xtkCz7IVq5NfzBIcw6BD6hl0q/a7V7RXb9Ek+Wd
+	9GFYWO46ms5LfURjJI+fJS3kxVgxFM+Zpzikk8/KpksxPdh0Yzu7oN6lcy/bjQAP
+	iyCBeeTJRxEndav/lfCq/ZP5nOrAgtZ4HAd2apt9L2tqYJVtdg2pVYam8Si5GS3+
+	Tt/vievOkvosI/1loWUET6eVIZPqJ3N34be/PV7BzQ8C3nZeT4K8v7jvHGmw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746654418; x=1746740818; bh=JxA9/8v814r2QuqTcLz0ad9h6R5JYpdvvPs
+	mYN1llAA=; b=utPRYP9kAgLUb4UPCZAxOHwg/ui6ex1dth/LTtGhxVv1yhnEuun
+	Drji+C97gWv5T0nnUNNstsO6nsLfj0JoroWoFI+G7SaPI1ifm2tM1uvRis4BCHhc
+	LIOt0OM4fS7/Jr3XnbVxq7zSZKdb9p7jKiyfn2g4mQbFuwAiIk06XKeQTUp0AS04
+	M+6upIFl+FUPUD45ikP2KLyJvYK4aeyL8bjf59O8/qLemkqAlhAOTk5eR2aE/dyO
+	jhIDfj6ZtKMAITwq/pOXJ/fMFGKs/75Q7vAwAc7m/T9k8i0cmRYK4Q6Uc5lYSL7N
+	/EYO67IOOAZcawZYucq+RE6xHHJEwRvOFwA==
+X-ME-Sender: <xms:0dQbaC3QEoutsvqsdPNKkTSKt2bdVs2m4vhJ24K8LnPu4R95tfU7sw>
+    <xme:0dQbaFEtfVUm3qwu9hA_4EEbvbNZxN7gWxYwIsyP399KXifQpLKFKvWcGaNpeKqwu
+    58TZjkmHXGxtrxpaw>
+X-ME-Received: <xmr:0dQbaK5pD9lTbf_HcbT6vkEYTdPUx6aJsUm-allHi6kXflCnHhMWkUmnJ5HOCC0ghegFWYpfD4osnRNIlhUv4Nux6feKtg-fCKu7>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
+    hgmhigrdguvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepshhtohhl
+    vggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    homh
+X-ME-Proxy: <xmx:0dQbaD2_zdnsjS9DsNkyA1dFci-a2JJ1ozj_i1se3Qykt4Z957okCw>
+    <xmx:0dQbaFH_6gST4h96Y2oLup4L08OnTVRoSDZj5Duh2QJymibAy9XaUA>
+    <xmx:0dQbaM8XBFf4_mvPY2aAU_1OH2LBeAaLqZjBJeONskUall378Rnwsg>
+    <xmx:0dQbaKmuk6G13tppdy59kZxsOHvc9iuIXKYDiEfUUGpKhaYSc23ufg>
+    <xmx:0tQbaN-eF9Ine3qxVB-Y7izzQSO6U0MPF8khtV6O3IbWzCrQFlb6r7US>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 May 2025 17:46:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  johannes.schindelin@gmx.de,  Patrick Steinhardt
+ <ps@pks.im>,  Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v3 4/4] scalar reconfigure: add --maintenance=<mode> option
+In-Reply-To: <684f04aaf7e87f22ab0b00a4fd42d2943304ef04.1746582637.git.gitgitgadget@gmail.com>
+	(Derrick Stolee via GitGitGadget's message of "Wed, 07 May 2025
+	01:50:37 +0000")
+References: <pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
+	<pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
+	<684f04aaf7e87f22ab0b00a4fd42d2943304ef04.1746582637.git.gitgitgadget@gmail.com>
+Date: Wed, 07 May 2025 14:46:55 -0700
+Message-ID: <xmqqcyckayb4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
----
- Documentation/git-daemon.adoc     | 60 +++++++++++++++----------------
- Documentation/git-var.adoc        | 40 ++++++++++-----------
- Documentation/git-verify-tag.adoc |  2 +-
- Documentation/git-write-tree.adoc |  2 +-
- 4 files changed, 51 insertions(+), 53 deletions(-)
+"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-diff --git a/Documentation/git-daemon.adoc b/Documentation/git-daemon.adoc
-index bc3f77405e..99389f0388 100644
---- a/Documentation/git-daemon.adoc
-+++ b/Documentation/git-daemon.adoc
-@@ -36,13 +36,13 @@ pass some directory paths as `git daemon` arguments, the offers are limited to
- repositories within those directories.
- 
- By default, only `upload-pack` service is enabled, which serves
--'git fetch-pack' and 'git ls-remote' clients, which are invoked
--from 'git fetch', 'git pull', and 'git clone'.
-+`git fetch-pack` and `git ls-remote` clients, which are invoked
-+from `git fetch`, `git pull`, and `git clone`.
- 
- This is ideally suited for read-only updates, i.e., pulling from
- Git repositories.
- 
--An `upload-archive` also exists to serve 'git archive'.
-+An `upload-archive` also exists to serve `git archive`.
- 
- OPTIONS
- -------
-@@ -61,24 +61,24 @@ OPTIONS
- 
- `--base-path-relaxed`::
- 	If `--base-path` is enabled and repo lookup fails, with this option
--	'git daemon' will attempt to lookup without prefixing the base path.
-+	`git daemon` will attempt to lookup without prefixing the base path.
- 	This is useful for switching to `--base-path` usage, while still
- 	allowing the old paths.
- 
- `--interpolated-path=<pathtemplate>`::
- 	To support virtual hosting, an interpolated path template can be
- 	used to dynamically construct alternate paths.  The template
--	supports %H for the target hostname as supplied by the client but
--	converted to all lowercase, %CH for the canonical hostname,
--	%IP for the server's IP address, %P for the port number,
--	and %D for the absolute path of the named repository.
-+	supports `%H` for the target hostname as supplied by the client but
-+	converted to all lowercase, `%CH` for the canonical hostname,
-+	`%IP` for the server's IP address, `%P` for the port number,
-+	and `%D` for the absolute path of the named repository.
- 	After interpolation, the path is validated against the directory
- 	list.
- 
- `--export-all`::
- 	Allow pulling from all directories that look like Git repositories
- 	(have the 'objects' and 'refs' subdirectories), even if they
--	do not have the 'git-daemon-export-ok' file.
-+	do not have the `git-daemon-export-ok` file.
- 
- `--inetd`::
- 	Have the server run as an inetd service. Implies `--syslog` (may
-@@ -118,17 +118,17 @@ OPTIONS
- 	Send log messages to the specified destination.
- 	Note that this option does not imply `--verbose`,
- 	thus by default only error conditions will be logged.
--	The <destination> must be one of:
-+	The _<destination>_ must be one of:
- +
- --
--stderr::
-+`stderr`::
- 	Write to standard error.
- 	Note that if `--detach` is specified,
- 	the process disconnects from the real standard error,
- 	making this destination effectively equivalent to `none`.
--syslog::
-+`syslog`::
- 	Write to syslog, using the `git-daemon` identifier.
--none::
-+`none`::
- 	Disable all logging.
- --
- +
-@@ -149,7 +149,7 @@ otherwise `stderr`.
- 	Log details about the incoming connections and requested files.
- 
- `--reuseaddr`::
--	Use SO_REUSEADDR when binding the listening socket.
-+	Use `SO_REUSEADDR` when binding the listening socket.
- 	This allows the server to restart without waiting for
- 	old connections to time out.
- 
-@@ -157,7 +157,7 @@ otherwise `stderr`.
- 	Detach from the shell. Implies `--syslog`.
- 
- `--pid-file=<file>`::
--	Save the process id in 'file'.  Ignored when the daemon
-+	Save the process id in _<file>_.  Ignored when the daemon
- 	is run under `--inetd`.
- 
- `--user=<user>`::
-@@ -170,14 +170,14 @@ otherwise `stderr`.
- +
- Giving these options is an error when used with `--inetd`; use
- the facility of inet daemon to achieve the same before spawning
--'git daemon' if needed.
-+`git daemon` if needed.
- +
- Like many programs that switch user id, the daemon does not reset
--environment variables such as `$HOME` when it runs git programs,
-+environment variables such as `HOME` when it runs git programs,
- e.g. `upload-pack` and `receive-pack`. When using this option, you
- may also want to set and export `HOME` to point at the home
--directory of `<user>` before starting the daemon, and make sure any
--Git configuration files in that directory are readable by `<user>`.
-+directory of _<user>_ before starting the daemon, and make sure any
-+Git configuration files in that directory are readable by _<user>_.
- 
- `--enable=<service>`::
- `--disable=<service>`::
-@@ -206,8 +206,8 @@ Git configuration files in that directory are readable by `<user>`.
- `--access-hook=<path>`::
- 	Every time a client connects, first run an external command
- 	specified by the <path> with service name (e.g. "upload-pack"),
--	path to the repository, hostname (%H), canonical hostname
--	(%CH), IP address (%IP), and TCP port (%P) as its command-line
-+	path to the repository, hostname (`%H`), canonical hostname
-+	(`%CH`), IP address (`%IP`), and TCP port (`%P`) as its command-line
- 	arguments. The external command can decide to decline the
- 	service by exiting with a non-zero status (or to allow it by
- 	exiting with a zero status).  It can also look at the $REMOTE_ADDR
-@@ -218,7 +218,7 @@ The external command can optionally write a single line to its
- standard output to be sent to the requestor as an error message when
- it declines the service.
- 
--<directory>::
-+_<directory>_::
- 	The remaining arguments provide a list of directories. If any
- 	directories are specified, then the `git-daemon` process will
- 	serve a requested directory only if it is contained in one of
-@@ -230,24 +230,24 @@ SERVICES
- 
- These services can be globally enabled/disabled using the
- command-line options of this command.  If finer-grained
--control is desired (e.g. to allow 'git archive' to be run
-+control is desired (e.g. to allow `git archive` to be run
- against only in a few selected repositories the daemon serves),
- the per-repository configuration file can be used to enable or
- disable them.
- 
- upload-pack::
--	This serves 'git fetch-pack' and 'git ls-remote'
-+	This serves `git fetch-pack` and `git ls-remote`
- 	clients.  It is enabled by default, but a repository can
- 	disable it by setting `daemon.uploadpack` configuration
- 	item to `false`.
- 
- upload-archive::
--	This serves 'git archive --remote'.  It is disabled by
-+	This serves `git archive --remote`.  It is disabled by
- 	default, but a repository can enable it by setting
- 	`daemon.uploadarch` configuration item to `true`.
- 
- receive-pack::
--	This serves 'git send-pack' clients, allowing anonymous
-+	This serves `git send-pack` clients, allowing anonymous
- 	push.  It is disabled by default, as there is _no_
- 	authentication in the protocol (in other words, anybody
- 	can push anything into the repository, including removal
-@@ -301,7 +301,7 @@ default repository could be made as well.
- 
- 
- 'git daemon' as regular daemon for virtual hosts::
--	To set up 'git daemon' as a regular, non-inetd service that
-+	To set up `git daemon` as a regular, non-inetd service that
- 	handles repositories for multiple virtual hosts based on
- 	their IP addresses, start the daemon like this:
- +
-@@ -318,7 +318,7 @@ Repositories can still be accessed by hostname though, assuming
- they correspond to these IP addresses.
- 
- selectively enable/disable services per repository::
--	To enable 'git archive --remote' and disable 'git fetch' against
-+	To enable `git archive --remote` and disable `git fetch` against
- 	a repository, have the following in the configuration file in the
- 	repository (that is the file 'config' next to `HEAD`, 'refs' and
- 	'objects').
-@@ -332,8 +332,8 @@ selectively enable/disable services per repository::
- 
- ENVIRONMENT
- -----------
--'git daemon' will set REMOTE_ADDR to the IP address of the client
--that connected to it, if the IP address is available. REMOTE_ADDR will
-+`git daemon` will set `REMOTE_ADDR` to the IP address of the client
-+that connected to it, if the IP address is available. `REMOTE_ADDR` will
- be available in the environment of hooks called when
- services are performed.
- 
-diff --git a/Documentation/git-var.adoc b/Documentation/git-var.adoc
-index 909963b1c2..b606c2d649 100644
---- a/Documentation/git-var.adoc
-+++ b/Documentation/git-var.adoc
-@@ -32,58 +32,56 @@ EXAMPLES
- 
- VARIABLES
- ---------
--GIT_AUTHOR_IDENT::
-+`GIT_AUTHOR_IDENT`::
-     The author of a piece of code.
- 
--GIT_COMMITTER_IDENT::
-+`GIT_COMMITTER_IDENT`::
-     The person who put a piece of code into Git.
- 
--GIT_EDITOR::
-+`GIT_EDITOR`::
-     Text editor for use by Git commands.  The value is meant to be
-     interpreted by the shell when it is used.  Examples: `~/bin/vi`,
-     `$SOME_ENVIRONMENT_VARIABLE`, `"C:\Program Files\Vim\gvim.exe"
--    --nofork`.  The order of preference is the `$GIT_EDITOR`
--    environment variable, then `core.editor` configuration, then
--    `$VISUAL`, then `$EDITOR`, and then the default chosen at compile
-+    --nofork`.  The order of preference is `$GIT_EDITOR`, then
-+    `core.editor` configuration value, then `$VISUAL`, then
-+    `$EDITOR`, and then the default chosen at compile
-     time, which is usually 'vi'.
- ifdef::git-default-editor[]
-     The build you are using chose '{git-default-editor}' as the default.
- endif::git-default-editor[]
- 
--GIT_SEQUENCE_EDITOR::
-+`GIT_SEQUENCE_EDITOR`::
-     Text editor used to edit the 'todo' file while running `git rebase
-     -i`. Like `GIT_EDITOR`, the value is meant to be interpreted by
--    the shell when it is used. The order of preference is the
--    `$GIT_SEQUENCE_EDITOR` environment variable, then
--    `sequence.editor` configuration, and then the value of `git var
--    GIT_EDITOR`.
-+    the shell when it is used. The order of preference is
-+    `$GIT_SEQUENCE_EDITOR`, then `sequence.editor` configuration value,
-+    and then the value of `git var GIT_EDITOR`.
- 
--GIT_PAGER::
-+`GIT_PAGER`::
-     Text viewer for use by Git commands (e.g., 'less').  The value
-     is meant to be interpreted by the shell.  The order of preference
--    is the `$GIT_PAGER` environment variable, then `core.pager`
--    configuration, then `$PAGER`, and then the default chosen at
--    compile time (usually 'less').
-+    is `$GIT_PAGER`, then the value of `core.pager` configuration, then
-+    `$PAGER`, and then the default chosen at compile time (usually `less`).
- ifdef::git-default-pager[]
-     The build you are using chose '{git-default-pager}' as the default.
- endif::git-default-pager[]
- 
--GIT_DEFAULT_BRANCH::
-+`GIT_DEFAULT_BRANCH`::
-     The name of the first branch created in newly initialized repositories.
- 
--GIT_SHELL_PATH::
-+`GIT_SHELL_PATH`::
-     The path of the binary providing the POSIX shell for commands which use the shell.
- 
--GIT_ATTR_SYSTEM::
-+`GIT_ATTR_SYSTEM`::
-     The path to the system linkgit:gitattributes[5] file, if one is enabled.
- 
--GIT_ATTR_GLOBAL::
-+`GIT_ATTR_GLOBAL`::
-     The path to the global (per-user) linkgit:gitattributes[5] file.
- 
--GIT_CONFIG_SYSTEM::
-+`GIT_CONFIG_SYSTEM`::
-     The path to the system configuration file, if one is enabled.
- 
--GIT_CONFIG_GLOBAL::
-+`GIT_CONFIG_GLOBAL`::
-     The path to the global (per-user) configuration files, if any.
- 
- Most path values contain only one value. However, some can contain multiple
-diff --git a/Documentation/git-verify-tag.adoc b/Documentation/git-verify-tag.adoc
-index ec995323f6..b3721a86f4 100644
---- a/Documentation/git-verify-tag.adoc
-+++ b/Documentation/git-verify-tag.adoc
-@@ -12,7 +12,7 @@ git verify-tag [-v | --verbose] [--format=<format>] [--raw] <tag>...
- 
- DESCRIPTION
- -----------
--Validates the gpg signature created by 'git tag' in the tag
-+Validates the gpg signature created by `git tag` in the tag
- objects listed on the command line.
- 
- OPTIONS
-diff --git a/Documentation/git-write-tree.adoc b/Documentation/git-write-tree.adoc
-index 4e1c3b9c0c..4c7100ea1e 100644
---- a/Documentation/git-write-tree.adoc
-+++ b/Documentation/git-write-tree.adoc
-@@ -34,7 +34,7 @@ OPTIONS
- 
- `--prefix=<prefix>/`::
- 	Writes a tree object that represents a subdirectory
--	`<prefix>`.  This can be used to write the tree object
-+	_<prefix>_.  This can be used to write the tree object
- 	for a subproject that is in the named subdirectory.
- 
- GIT
--- 
-2.48.0
+> Add a new --maintenance=<mode> option to 'scalar reconfigure' that
+> provides options for enabling (default), disabling, or leaving
+> background maintenance config as-is.
+
+Hmph, this is a bit unexpected.
+
+> +--maintenance=<mode>::
+> +	By default, Scalar configures the enlistment to use Git's
+> +	background maintenance feature; this is the same as using the
+> +	`--maintenance=enable` value for this option. Use the
+> +	`--maintenance=disable` to remove each considered enlistment
+> +	from background maintenance. Use `--maitnenance=keep' to leave
+> +	the background maintenance configuration untouched for These
+> +	repositories.
+
+If I understand it correctly, here is the only place that the users
+can learn what the valid choices are, and it is not even an
+enumeration.  They are forced to read the entire paragraph to learn
+what the choices are.
+
+> +		OPT_STRING(0, "maintenance", &maintenance_str,
+> +			 N_("<mode>"),
+> +			 N_("signal how to adjust background maintenance")),
+
+And there is no hint what are the right <mode> strings are.
+
+>  	const char * const usage[] = {
+> -		N_("scalar reconfigure [--all | <enlistment>]"),
+> +		N_("scalar reconfigure [--maintenance=<mode>] [--all | <enlistment>]"),
+>  		NULL
+>  	};
+
+So "scalar reconfigure -h" would not tell readers what the right
+choices are, either.
+
+> +	if (maintenance_str) {
+> +		if (!strcmp(maintenance_str, "enable"))
+> +			maintenance = 1;
+> +		else if (!strcmp(maintenance_str, "disable"))
+> +			maintenance = 0;
+> +		else if (!strcmp(maintenance_str, "keep"))
+> +			maintenance = -1;
+> +		else
+> +			die(_("unknown mode for --maintenance option: %s"),
+> +			    maintenance_str);
+
+Those who say "scalar reconfigure --maintenance=yes" gets this
+message that tells 'yes' is not a known mode, without saying that
+they meant 'enable'.  
+
+The --opt=<mode> interface is good when we expect the vocabulary for
+<mode> to grow, but I am not sure if it is warranted in this case.
+Is there a strong reason why 'reconfigure' MUST enable the
+maintenance by default, even if it were originally disabled in the
+enlistment?  If there isn't, initializing maintenance to -1 and
+setting it with OPT_BOOL() would make the UI consistent with the
+register and clone subcommands, and also we can lose the above block
+to parse out a string.  Also the code below ...
+
+
+> @@ -758,7 +776,8 @@ static int cmd_reconfigure(int argc, const char **argv)
+>  		the_repository = old_repo;
+>  		repo_clear(&r);
+>  
+> -		if (toggle_maintenance(1) >= 0)
+> +		if (maintenance >= 0 &&
+> +		    toggle_maintenance(maintenance) >= 0)
+>  			succeeded = 1;
+
+... which does make perfect sense, would still be applicable.
+
+I dunno.  I just feel that 3-way "mode" interface is too much hassle
+to get right (e.g., give hints to guide the users who forgot what
+modes are available and how they are spelled) for this code path.
+
+Anyway, will replace the previous round with this one.
+
+Thanks.
+
 
