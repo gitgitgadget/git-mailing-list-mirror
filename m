@@ -1,159 +1,174 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42BA628B7EC
-	for <git@vger.kernel.org>; Wed,  7 May 2025 16:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EE1428C5A0
+	for <git@vger.kernel.org>; Wed,  7 May 2025 17:02:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746636123; cv=none; b=XjFhxGY+YdIagkunX2p564XLymSCEgI/qELj3G6tEg8qIDYnoF6Dxw5hpHraKDuujW8f5CO+CinV1FlU2/q/fOU/ynaedLyP4B+8eSOcRKRvxiCEBXEn2252yS5qj+8YN8TfqMbwhuIFUkco+H1VXwx/xfrJK+xYv18oJng3H3I=
+	t=1746637338; cv=none; b=KcZQLodWrfDLCAlKhmi2XrsXKW5gJZbQbL5/bkntYSzDiIjLVM1npvkZz3HbdEY+xmT42sjct1IxTEyHY+UAkmr7QSD1vSnOAo82RcuPNe6EnM2BDapEswumIZGnFwSwpvnkeJbPR9KrpaYOZjzqaObCx15YUXqB6T0+tXHvMow=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746636123; c=relaxed/simple;
-	bh=IBNQw6kBAcFU2/PkIYXHT48BrBW93NdeRjDk6rJkKrU=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=dweSWIQRNciAr0EdLerufp1FWFLNbFz9bj8IxXQPSFa8nDTYAXNLWJGjG+r0VxRDhb0R3ZfJu1pDc2f0plB0xl89JzUaTzsMnkugMWoTv7086WwQ7Id2jPf3Qem9l9WBg0tXqnbBGSDe+fHWuuX7nntdUHsHvLAB/FtGjQZXjk4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=z2J/LVJ+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJgat2Ka; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1746637338; c=relaxed/simple;
+	bh=/2Oe2CvbAJ/pVg8LAakxFWkx9Skes2MCNFalDyxH6jg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bm/nuUwr5T8a22V97ZTDTH4ZZcJsagYSRwK/6gt7iXi5HMh6uHkEV7s/bKTDOFhOKz93WEbl0yf8miNRsgcmfhxTYht1UHDwg1chXIO5FR94UaOGTRzpoM2WKvfs9IZrbfVfD5Ead9Q9roNv7cqZBqo/w1K4PiySVLkVlrXl80I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h5V/NDe9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oUMZTJH/; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="z2J/LVJ+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJgat2Ka"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 341DB25400CE;
-	Wed,  7 May 2025 12:41:59 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Wed, 07 May 2025 12:41:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746636119;
-	 x=1746722519; bh=nx5/CcPSDtyU7dlXiuqODkyBE1GRygn6YDmhi81ikn0=; b=
-	z2J/LVJ+0WgR/EGe2dd6dL0Dd8m+Bhh3AH2sdnHHRtCuZOCZsCTjy78yR8AVB3RM
-	Xmh0AffeIvyTmO485phgeLG5QpaBnxISGoLyXb2EDK4fIBM3AENsx09YSIyNqi7Z
-	9orkuAKdGQKQqJ7fA89GY0X28vXJ9/sJJyVHscnt8dybUIghp1+Z0Me2n5TBI+KE
-	a/VKElTPhN0RMdaEVNkUIVuzZ9gnEj0S0JvgcMgKw2ez3ytfUSkqhZ2EUl2BEN5B
-	J+BeS2rhmjCDMZ+0M10Mb7FQoZgsk8tVAxp2RbtZOMav3u8QEfHhEz5MjDDviAsH
-	v2jFljVUbTIY3BT5D+sUvg==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h5V/NDe9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oUMZTJH/"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 51B26138016B;
+	Wed,  7 May 2025 13:02:14 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 07 May 2025 13:02:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746637334; x=1746723734; bh=4wLNGHHmhr
+	SRoGWM2+F4/2QR07iL7B/5zKl8kS3rUj0=; b=h5V/NDe9SeM5wMEGimcN3F+Rgo
+	yX5A115iddFCEK1cl1nOS4so7/dlcs5CY9+eWvfyRgQYTotiSje2/f0vpHbV801+
+	pXhsLQzndtaY7KKJ+XPJxg38CeWp1Dz2K4JhgbGNsoxq/s8lFQc92NP9fepESmi7
+	vk3QCNLnN/DZ2II6FS/ihNqpGlWoIuGoS/QztcRBqm5BhgDUpgN7eoJZYtZFePkJ
+	zT5EW54onFgA0KFldESRumiRiC6GtzsH6qBEPTnUKTcMYBFlii/eOq1ZypYVhAMA
+	ouAxrn3FzrnbEfjjj87wStPa+AUVKNS2ciAB8qZ32jQYPYpblgBA7i47x1Dw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746636119; x=
-	1746722519; bh=nx5/CcPSDtyU7dlXiuqODkyBE1GRygn6YDmhi81ikn0=; b=n
-	Jgat2KaE/PNlKFpk4bARZ/K9RKsH/a8NyNK+kWrA2qYk0EG61Yc0zwrrh4XzgFRT
-	V2Gmg3vxJdjIJRT7n64Rx8q3AFeZfPZkIjhTebusN+fuPRvkApW67wsaSvydTFpE
-	Bqem0x/d1++gRPldt2xO47u6rQBHJ/SwH7WXkLckuD9TKczCo+7jz7uJDudBGVyo
-	sf8PGp/C3zQpFe1t4KTBo8DiAq50+GAUPMcMzgwFxpGIJvMHkzKf82BdHR/IwMOf
-	t19nq8LmULQ9jtjlmQYhh3wL7O6SLAuzlwqZJyI8tNZ8w1GvuEDoBgkJPOUDUZNi
-	WKlwdwJz0w3x2bVdixK6Q==
-X-ME-Sender: <xms:Vo0baJRtbg_LIkorSbg2_dUDp8cWKj5K2YcHOOoJa5hXUUyGGvCU6_I>
-    <xme:Vo0baCy83WygGl0h2ihHUpjAHvP0rlDZQLmxHVrSjAgjdICX_CZg_fWW4MbF3ANnj
-    UsY84YNYypvU5kwSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejfeeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746637334; x=1746723734; bh=4wLNGHHmhrSRoGWM2+F4/2QR07iL7B/5zKl
+	8kS3rUj0=; b=oUMZTJH/HjQ5lbBuJU0lCePHGXu1XLljj0PJvO/puUBEh/vFRXv
+	aZQglYMbiBFXUWEdzifJeVONzZ2/WWL3EmydjOFMy0cVQiWCgKjIxte9Xn/rS460
+	mdLfHZStX/ixYroImIuY/QIQf9TPHfZ6BSf0KJQRSST1xVeXyfidSrZWcf9pPysF
+	FXDLWsBjRpvWbz0HTRcJ8n4tKlSPZJqlUo4268Rh2Cyj4KjJaBRuVRUF55U7x+Q3
+	rGWs6OooPlnq7vI5gnpErq0EPyUgXrnAF9xkEs5HrpsCV7GaDe9jdDgcwZuC01G8
+	mrqleL4dG5nNQ0UojF7b+IV7OhIVQ31kODg==
+X-ME-Sender: <xms:FpIbaMwXbMf-GdL2M54AG7kz-05uKVCK9Jd4rDO28JU6tHIaOCYieQ>
+    <xme:FpIbaASGbSaqHINRJ0AOgzzTonxXh7pibpI_UQQb-Jsb0L04f0D3hVohIT39IQ7Jv
+    Vr0A9j-_HK_XZrtng>
+X-ME-Received: <xmr:FpIbaOX_Gb6r80yP9xfT-nRvOkF1kUdih5AzoB_M3pNyPax4ZyAmqPHtjzdxZLXdRQ-OtEJ5z2nnIM5nhiemSJWyw8ZLn2b8dVzF>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejgedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
-    tdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrh
-    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggft
-    rfgrthhtvghrnhephedugfevgfefgfffvdfhffdvveevgeehhedutedvgfeuffejveejud
-    egveefvdefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhi
-    iigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghugh
-    hssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepiedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtoheprggurghmseguihhnfihoohguihgvrdhorhhgpd
-    hrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpshesphhkshdr
-    ihhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtg
-    homhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:Vo0baO3-aClgSyWpQMuMpfGOh-jrvFsk_gAh-_TGsVA6HbB6NSQvDg>
-    <xmx:Vo0baBDlHMSuIRlhPXm3f3LGcoRJw-N180pHfrpDWv5z-ONZFDJZKg>
-    <xmx:Vo0baCisHb3CxMAtAq2os_wUg89Fa4ujz0WkHGLuI8C7ERyQyJ7c0g>
-    <xmx:Vo0baFrZFBS890zgVQVKIEZ8mjuLdEppp9lEByLk-okpbsGHprtFKw>
-    <xmx:V40baN67m5Yq-UIzukYHa5prGXh4xeB_sOo_Q6Ejzjb9oW5XyJdHe07j>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id EE5B5780069; Wed,  7 May 2025 12:41:57 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:FpIbaKge-Q6e56u5X7KzbOnpL5iW8Y-BPvS9f6Q36dm3JdHSgW5MwQ>
+    <xmx:FpIbaODBwGC-If1xmIKWAImdbyM4dVz56jfviLgE5VD07ft8SmVJFA>
+    <xmx:FpIbaLJoqNsHSUgByZkxmMHpj12l3K-LZOZRG24kwsAHnuXOpkJvlw>
+    <xmx:FpIbaFAReick3GQaCdZLeegxjpVNKNih3ZsAcWltnlIxqrSQ1gY3fg>
+    <xmx:FpIbaONQeaKvDH-aGpEiqruFB0xiyvBnZVWuaEo_b6bOjb3UTipwFdFJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 May 2025 13:02:13 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 00/17] object-store: carve out the object database
+ subsystem
+In-Reply-To: <5bea19fe-6616-4f01-a78d-9b7da94db899@gmail.com> (Derrick
+	Stolee's message of "Tue, 6 May 2025 21:40:16 -0400")
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+	<5bea19fe-6616-4f01-a78d-9b7da94db899@gmail.com>
+Date: Wed, 07 May 2025 10:02:12 -0700
+Message-ID: <xmqqa57oe4mj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Tfc695154c64d9261
-Date: Wed, 07 May 2025 18:41:27 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>, "Adam Dinwoodie" <adam@dinwoodie.org>,
- "Ramsay Jones" <ramsay@ramsayjones.plus.com>,
- "Taylor Blau" <me@ttaylorr.com>, "Jeff King" <peff@peff.net>
-Message-Id: <29ff888d-9749-4fbe-9722-95dd71008a2a@app.fastmail.com>
-In-Reply-To: <ae56dc14-bbae-4d5e-a890-20735131d484@app.fastmail.com>
-References: 
- <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
- <658fe4fa540a0a5316e11ed43f9139d5ef818ee5.1729226155.git.ps@pks.im>
- <20241018052952.GE2408674@coredump.intra.peff.net>
- <71e8e44e-dbf9-482e-a351-3a82aa1ca5dd@app.fastmail.com>
- <20241019212135.GB589728@coredump.intra.peff.net>
- <ae56dc14-bbae-4d5e-a890-20735131d484@app.fastmail.com>
-Subject: Re: Comment trailers vs. bracketed lines
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hi, this is an old thread:
+Derrick Stolee <stolee@gmail.com> writes:
 
-On Sun, Oct 20, 2024, at 19:08, Kristoffer Haugsbakk wrote:
-> On Sat, Oct 19, 2024, at 23:21, Jeff King wrote:
->>> On Fri, Oct 18, 2024, at 07:29, Jeff King wrote:
->>> [=E2=80=A6]
->>
->> I assigned authorship to Ramsay, so my name is not otherwise mentione=
-d,
->> but appears in the signoff. So it was a way of mentioning what I
->> contributed (both for credit, but also in case anybody has questions
->> later).
->>
->> I guess "Commit-message-by:" would work, too. ;)
+> Patches 1 and 2 involve renaming some core structures, and I had
+> some questions around these names (since we hope to be stuck with
+> the new names for a long time). I was thinking out loud on a per-
+> patch basis, but now want to collect my thoughts around these:
 >
-> I=E2=80=99ve done that when someone has given me a non-descript diff. =
-:)
+>  * raw_object_store currently describes the abstraction that contains
+>    all objects that can be accessed within the repository. This may
+>    include multiple alternates. Patch 1 renames this to
+>    'object_database'.
 >
->> I think in the usual trailer order, it would be:
->>
->>   Signed-off-by: Ramsay
->>   [jk: add commit message]
->>   Signed-off-by: me
->>
->> but I didn't want to forge his S-o-b without asking first.
+>  * object_directory currently describes a single directory that
+>    has the same structure as $GIT_DIR/objects/ but may be an alternate
+>    or a submodule object directory. Patch 2 renames this to
+>    'odb_backend'.
 >
-> I=E2=80=99ve seen those brackets in the log.  They used to happen with=
- some
-> regularity.  At first it made sense since you need a free-form area to
-> both comment and tell everyone that you left the comment.  And a trail=
-er
-> doesn=E2=80=99t make sense for that, I thought.[1]
->
-> But thinking about the signoff requirement: you already have all the
-> information you need from the next trailer, namely the signoff.  In
-> other words this:
->
->     [kh: Added tests]
->     Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Has the same information as this:
->
->     Comment: Added tests
->     Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Because the signoff order tells you who left the comment.  So I was
-> wondering to myself why this uniform approach wasn=E2=80=99t used.
->
-> =E2=80=A0 1: Since the brackets become =E2=80=9Cnon-trailer values=E2=80=
-=9D or something
->    (git-interpret-trailers(1)), i.e. the discarded parts of the trailer
->    block
+> My concerns around this are basically around not liking "backend" for
+> this purpose. When I think of a backend, I'm thinking about the
+> implementation details (like the refs backend being files or reftable)
+> and not multiple distinct locations that have their own objects.
 
-I was just reminded of this: https://lore.kernel.org/git/xmqqikmce67y.fs=
-f@gitster.g/T/#m68c22c9b7dbc9b295e923a913e9d67e3ab28a2a4
+Yup, odb_backend_files (aot odb_backend_redis) or something?
 
-I=E2=80=99m just doing a little bump of this topic in case anyone has any
-thoughts.  I hope that is okay.
+>  * 'struct object_directory' could be renamed to 'struct odb_shard' or
+>    'struct odb_slice' or similar. I may even recommend 'odb_partition'
+>    though that does imply some disjointness that is not guaranteed (an
+>    object can exist in multiple parts).
+>
+>  * In the event that we create multiple implementations for storing
+>    objects, then a 'struct odb_shard' could point to a backend to help
+>    find the appropriate methods for interacting with its storage.
+
+Hmph, I do not have strong opinions, but I consider it an
+implementation detail of one particular backend, namely, the
+filesystem based backend, that it can link together multiple
+object_directory instances and present them as if they form a single
+object database, just like all files within a single object_directory
+form an illusion of a single object database (aka key-value store) even
+though some objects are stored in individual loose object files while
+many others are packed in a single packfile.
+
+I did not expect you would want to go to the world where a single
+"shard" consists of an object_directory backed by the filesystem and
+some other more database-y backend.  It is an interesting idea, but
+we'd need to worry about many things we do not have to worry about
+right now.  E.g. what do the precedence rules among different
+components within a single "shard" look like?  How do we express "in
+this repository, local filesystem-backed piece is consulted first,
+and then check this piece backed by low-cost but high-latency
+storage backend"?
+
+> I do mention that the rename of the object-store.[c|h] files may be
+> unnecessary, or perhaps could be delayed until this series is merged
+> and the collateral is calmed.
+
+Right now, merge-fix needed against all other topics in flight look
+like this, in order to merge it to 'seen'.
+
+$ git show --oneline -U0 merge-fix/ps/object-store
+c8afa0ab8e merge-fix/ps/object-store
+diff --git a/fetch-object-info.c b/fetch-object-info.c
+index 1b2c6c4d27..6c2abb7805 100644
+--- a/fetch-object-info.c
++++ b/fetch-object-info.c
+@@ -7 +7 @@
+-#include "object-store.h"
++#include "odb.h"
+diff --git a/fetch-object-info.h b/fetch-object-info.h
+index 7910d7f153..d35284bd6b 100644
+--- a/fetch-object-info.h
++++ b/fetch-object-info.h
+@@ -6 +6 @@
+-#include "object-store.h"
++#include "odb.h"
+diff --git a/transport.h b/transport.h
+index 5a4f27451a..3ef3acf865 100644
+--- a/transport.h
++++ b/transport.h
+@@ -8 +8 @@
+-#include "object-store.h"
++#include "odb.h"
+
+IOW, not too horrible.
