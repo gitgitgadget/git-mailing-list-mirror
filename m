@@ -1,83 +1,83 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80EB1D7985
-	for <git@vger.kernel.org>; Wed,  7 May 2025 04:57:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790201CEEBE
+	for <git@vger.kernel.org>; Wed,  7 May 2025 06:27:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746593856; cv=none; b=RBuFCjwgYldH81QgDsWeayj7k2L8dYw8ST9TLQLE5O1qqdEkmKJHe/tKOiFt25jvJ5IURfBBi2HTTj9sKGrONd0SueqyKQIF5Ji7On/XhU//PcpIs6A8xd57nGxfn1o8Th94UqOyw+wzER/8bfmNtiLH9aTcobYXFRrfVNY689c=
+	t=1746599266; cv=none; b=jogx3CDkslQ60J3S2CgFsQMqYjNUf9ReRScTAvLS94muEtQW40gPeu5y3konQqpnrzuY8sl3tZvkQ93nlQZkB3an/txx1Z7Ydx5g78fddthpD0ZWzfVm7nVXCuntyCTPRAbMHcGUDAffytqqPIXDci5FKA0OkDhezQk4QMn89LU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746593856; c=relaxed/simple;
-	bh=RXx3kHzQoXkMTe+/IgdnnZMAem6WnrL/QhieN7QWW2c=;
+	s=arc-20240116; t=1746599266; c=relaxed/simple;
+	bh=dW0Ov+FXoxV01UlvAWSrqtSt7lMb5XKjHKLfFYobpnc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=W+aOOXCUcGA/axXWSQhEYsZ+7p8xcfaQdDuebp6EOZk9fX9iAc/KWvjaJ08pCD7uv22AlQNFru3DlUbxabfdTFkzivqXeqzJwU9DaIm+s4m4WlHnmQUeRcjbVlK1pfjaxaVTyLA26xN9y/wV9519rwF0eyQND7we3R/V2Um+/0E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=igRZHZRr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vguebu/5; arc=none smtp.client-ip=103.168.172.157
+	 Content-Type:Content-Disposition:In-Reply-To; b=PNjj4+ABT5zEYqYla6zAhAmyWEQ0yMz5I9orYii1JE1o8LsUJ3eims6wbIR5C12RJVEYFrs0qVzfaet4wLEWOlCdI165YDUi7MoG0K0NkyCtPKAANXYNgokfZJyg/OgEK9WnKGtehUy3aeabuKwNV9KUfNjj5yKOACWjh0AW6sM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ql2k8lUK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HfPL2Nxe; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="igRZHZRr";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vguebu/5"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ql2k8lUK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HfPL2Nxe"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6FD051140237;
-	Wed,  7 May 2025 00:57:31 -0400 (EDT)
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 53C4125400F6;
+	Wed,  7 May 2025 02:27:42 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 00:57:31 -0400
+  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 02:27:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746593851; x=1746680251; bh=w31gTjPcxd
-	2qc+F8HN8VZig6JPLBSI0MF1SGFCl/UZY=; b=igRZHZRrC8av5m1JuJikXxh/Tu
-	+nsIGJqxXQMAa6Fxqs/+aZ3vwm5WJyJmppUPGfW2QX64b0tMv/LxX+W3Ky46cBMP
-	yRJfwP3VYy9ixqDyy18kopeBr2OTuubOAsqafFdpr/FvvQA94sLzACnZgbgh2DfU
-	1qYwxW3gFTYGr0IYj7iRDQMgx2JDoK3wI/g3JjiK5YPqK9FHU8+THWY4mR7eM0oh
-	jOL5VRGLwRJd4Ts4hp6qKaA/rKZLMH++iAacbIDtnDUZmHDxrSo1s2lknhxNulZ1
-	n0plzRPNfj6pOB2tEvmk++TLeSx4W5e9XOmEOFWFk8PlO7Gqfbk+T/Gun1PA==
+	:subject:to:to; s=fm3; t=1746599262; x=1746685662; bh=dKAhFSHRFV
+	f4PiKFhz8HG4yLYeFl+YYp85FjKVN7W5A=; b=Ql2k8lUKGjg0kZIG9s/099fCO8
+	obP+EscE81NazfoyARaT8wF2/Y97rRX6j+6z3NMrNAPs+sjdTwkI3UUS+IkW83hZ
+	IVI9afz3i0LSDwpeJ/LNqLW+S359gcpc+kxvbrUMzD6qRRBWXrH8rqB4PJRSbNXY
+	FaeQvYo/nxyA85FhQYHeEwU9oLQDTZ8XtnUMzukWGIViEFh/gptbbSWOQvJtEldy
+	BtFKV143Hg7H9oD/f1/SoyPS5O9c78IRiTRf57Z2Oy9XDYxcigwlfavOHJoDuoU1
+	wm3cnmEr55qmL0kfVrP/tA6efKs7siwXrRn3PVXiRAMSEB80KC3tZrMUK1YA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746593851; x=1746680251; bh=w31gTjPcxd2qc+F8HN8VZig6JPLBSI0MF1S
-	GFCl/UZY=; b=vguebu/5HxgSnBKMeOcF/Mb/8eIhiEiV/4Qkn1c/6dE7RsC1QB4
-	WRoDve1y42S8IUItrrRI5qLQfsVgGNX2mvqyBx9e/rGXdUkzU/78Ow/nNHaYVR/v
-	WCjX935Zi/rKNAlyGkgD1aehBrTzihssMCB2RMLRELDUiaEPB952nHDQZxV348Yb
-	/oMU0PcrauFhyPD05xCVuCej2/ERWJNAsc+w+Z05fKA1sZvXHF7R0P5KMqJbaGQy
-	I8fo9gjLIrZaLvV/WFJUSmRby4D3Vlol6j57AiGvvRLoRqm4Bt/bUaZE4xa+X/kI
-	/N10fKqPc+xSCSIDzKAQgwSN17iiLBH6akA==
-X-ME-Sender: <xms:O-gaaIryQe6vaL7oDTqw6rDlmdYA4kLFONeLa6SQAq12tmZdPU8pHQ>
-    <xme:O-gaaOpcKj3niZtZWFyF75PEh7U5lxP-qxbJF4CiH0L6K2hb19GBm0f5qV4QpPnwE
-    bK4FjZ-cerVo-c7KQ>
-X-ME-Received: <xmr:O-gaaNMjnKVWmqO-XnUlXEhP-G1CCv9V0BSCSwD-p-0nOFBaMG-rULq-rtbkym5ieIMq5FGllSJOPHcYEi-TFLZDfntpTYYwsqp30M6lcXeYJQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeehleehucetufdoteggodetrf
+	1746599262; x=1746685662; bh=dKAhFSHRFVf4PiKFhz8HG4yLYeFl+YYp85F
+	jKVN7W5A=; b=HfPL2Nxewy5J+2B9/Ngcc8iPv7AP7sYBIgf6Nkf43R9Y68LMXqe
+	Pw9IJetygw2TFrfMxLUYWhNKoUufppLhmCcy0RqKSS44X+yNWoYQXu/ZVKZOUSuF
+	vmFLy1eggg3T7ali8n2OXyJ4AL93raxy3+gaRgn8F0wL+QQbCK55+aKkR6B5zfm3
+	ypcAc4LDPHLbc4kuQQgwqZbqFdLCD06hY+hxQa2rwgae6h+Zm8L3Dmbfqd8t2qFP
+	Ud5JpgNkRshfVv2RYebCzQbc9j1l0+RfLd9VYeaOPLu4wPCzeM/0oFKyLvlysvD2
+	D6F5TCxuIOhvJxkcHm8pnK+0phWNj9L0VZw==
+X-ME-Sender: <xms:Xv0aaEMJ7edy9Bu7ZH68vSJxMEL6UWHVbmtZoXM_1HCZuXUEQo97Zw>
+    <xme:Xv0aaK8_-aEi9FkgDuxKtiOShSQ3QKE0yp3QXgBnpDo-Oi00f1lQ47kkfswysht1j
+    uAi9RI558Yf9L365w>
+X-ME-Received: <xmr:Xv0aaLSvC1VtZW1PMkIG5DKo6kSuEcjMUlAAvEWaSX4cQWij-Rjous96q97BbAFJrKY9sxqfslHKLBoe0xc2t4Iidsbcb-phSThAdRrkZnR3pA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeiudefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
     fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
     ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
     fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
     vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehtsgho
-    vghgihesfigvsgdruggvpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:O-gaaP4-EhGbplPm-EeVSyT2aKx1XUKSjscHp-9S-4ciqfb-1NCvjw>
-    <xmx:O-gaaH7KyDstjFvkHzwzYPTbU0HJc7oPvvik3xA0liSMqUDldYVpFg>
-    <xmx:O-gaaPgHekvgBF4iB9PUO_GI33J09iVwFlee5gEkDPIGbA4cjhWrhw>
-    <xmx:O-gaaB7GW6HgQ8VVm77hcY2oB2gvTX_hVIXEl63TbV7LChAZURc7dQ>
-    <xmx:O-gaaE_DfqSVk2l1NsQC1U6bfZMFUuchBalbUsU-i2D-uytbVm3T4ycP>
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrgh
+X-ME-Proxy: <xmx:Xv0aaMvzqAyvJffIy2qHOM0Tt18Fsbwpzxq4h-o9v9Cg4vEch8cYHg>
+    <xmx:Xv0aaMfzXzSX3Okk08bvXP6ewvPMN0iJG83MDl4gu64WDAVcgOt8lg>
+    <xmx:Xv0aaA0yOlBb0PfelJC4AQseqXrZO1Y520HwzvizyvPbeeyh8doptA>
+    <xmx:Xv0aaA-PWE7kFuwA0yljn1r8-m7wwE29YWGWIRd2ssXfcQSYKrJyFg>
+    <xmx:Xv0aaAMBJ2Awxu4PyTxjniXM9O8ftXkBcVBMWyEqBRMa1GwLemiMSL7u>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 00:57:30 -0400 (EDT)
+ 7 May 2025 02:27:41 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d4b856f7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 04:57:26 +0000 (UTC)
-Date: Wed, 7 May 2025 06:57:23 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e690c07f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 7 May 2025 06:27:36 +0000 (UTC)
+Date: Wed, 7 May 2025 08:27:34 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,
-	git@vger.kernel.org
-Subject: Re: [PATCH] t6011: fix misconversion from perl to sed
-Message-ID: <aBroM9wh7Oo0xMU2@pks.im>
-References: <71fcb24d-55e3-40bb-9368-5b47aa180993@web.de>
- <xmqq8qn9fj8o.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 01/10] contrib: remove "remotes2config.sh"
+Message-ID: <aBr9VuYurCCvRYnj@pks.im>
+References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
+ <20250506-pks-contrib-spring-cleanup-v1-1-e6d5ddd79a72@pks.im>
+ <xmqqr011ikjc.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,40 +86,76 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq8qn9fj8o.fsf@gitster.g>
+In-Reply-To: <xmqqr011ikjc.fsf@gitster.g>
 
-On Tue, May 06, 2025 at 03:48:55PM -0700, Junio C Hamano wrote:
-> No, this is not about a quiz on regexp compatibility between Perl
-> and sed.
+On Tue, May 06, 2025 at 12:52:39PM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
 > 
-> Back when cdbdc6bf (t: refactor tests depending on Perl substitution
-> operator, 2025-04-03) rewrite many use of perl with sed, the general
-
-s/rewrite many use/rewrote many uses/
-
-> pattern of the original scripts were
+> > Remotes can be configured either via a repository's config or by using
+> > the ".git/branches/" or ".git/remotes/" directories. Back when the new
+> > config-based mechanism has been introduced we also introduced a helper
+> > script that migrates from the old-style remote configuration to the new
+> > config-based mechanism.
+> >
+> > With the recent removal announcement for the two directories we also
+> > started to instruct users to migrate repositories that still use these
+> > mechanism to use config-based remotes. Notably though, the migration
+> > path doesn't even use the migration script. Instead, git-remote(1)
+> > itself knows how to migrate any such remote via `git remote rename`.
 > 
->     chmod +w some_read_only_file &&
->     perl -p -e "regexp to munge" some_read_only_file >some_tmp &&
->     mv some_tmp some_read_only_file
+> Makes sense.
 > 
-> persumably because the author new replacing some_read_only_file with
+> This logically comes after your series, which ended at 8ccc75c2
+> (remote: announce removal of "branches/" and "remotes/",
+> 2025-01-22), lands.  After that, we can safely remove this script at
+> the 3.0 boundary, at the same time we clean up the code paths that
+> are conditionally compiled with WITH_BREAKING_CHANGES.
+> 
+> > Furthermore, the script hasn't been touched since afa75bc8aa1 (contrib:
+> > Make remotes2config.sh script more robust, 2007-12-02).
+> 
+> A single-purpose thing that is done correctly on top of a right
+> abstraction does not necessarily need further updates, so I doubt
+> this paragraph contributes to the decision to remove the script in
+> any way.
+> 
+> > Given that there is a migration path without this script it is very
+> > unlikely that anyone still uses the script. Remove it.
+> 
+> Sounds good, but not right now, I presume?
 
-s/new/knew?
+I think it should be fine to remove it right now. If it was the
+canonical way to migrate repos to the new format we definitely
+shouldn't. But nowhere in our tree do we even point to this script, and
+the deprecation notice we have created explicitly tells users to use
+`git remote rename`:
 
-> diff --git a/t/t6011-rev-list-with-bad-commit.sh b/t/t6011-rev-list-with-bad-commit.sh
-> index b6f3344dbf..1dd1e50d21 100755
-> --- a/t/t6011-rev-list-with-bad-commit.sh
-> +++ b/t/t6011-rev-list-with-bad-commit.sh
-> @@ -38,6 +38,7 @@ test_expect_success 'verify number of revisions' \
->  test_expect_success 'corrupt second commit object' '
->  	for p in .git/objects/pack/*.pack
->  	do
-> +		chmod +w "$p" &&
->  		sed "s/second commit/socond commit/" "$p" >"$p.munged" &&
->  		mv "$p.munged" "$p" ||
->  		return 1
+    static void warn_about_deprecated_remote_type(const char *type,
+                              const struct remote *remote)
+    {
+        warning(_("reading remote from \"%s/%s\", which is nominated for removal.\n"
+              "\n"
+              "If you still use the \"remotes/\" directory it is recommended to\n"
+              "migrate to config-based remotes:\n"
+              "\n"
+              "\tgit remote rename %s %s\n"
+              "\n"
+              "If you cannot, please let us know why you still need to use it by\n"
+              "sending an e-mail to <git@vger.kernel.org>."),
+            type, remote->name, remote->name, remote->name);
+    }
 
-Ok, the fix makes sense. Thanks!
+So I highly doubt this script plays any role in the migration towards
+config-based remotes. Also because the script only cares about the
+"remotes/" directory -- it doesn't even know to migrate remotes from
+"branches/".
+
+Another data point: the script doesn't even work as-is, as it sources
+". git-sh-setup". So for it to work it would need to be installed into
+"$prefix/libexec/git-core" together with our other tools, or it needs to
+be called so that "git-sh-setup" is in the user's PATH. Both of which
+seems quite unlikely to me.
+
+All of this reasoning should of course go into the commit message.
 
 Patrick
