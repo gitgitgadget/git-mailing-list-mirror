@@ -1,65 +1,65 @@
-Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com [209.85.219.173])
+Received: from mail-yb1-f169.google.com (mail-yb1-f169.google.com [209.85.219.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE11313D521
-	for <git@vger.kernel.org>; Wed,  7 May 2025 01:25:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 940D742A83
+	for <git@vger.kernel.org>; Wed,  7 May 2025 01:25:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746581104; cv=none; b=dTrsYYyfzkzrMTQwAqzHtVsaUwYBBmsd0tf5Pmnvtd10u10iC5odJ4ylLPkmAOygONMowmy6otbOVf5WpAEF5ymdaVp0d/9HPN6gBYb+/8oLkTJm+BLb/KP+fB73hh4aYqWvp7bBY59sNPY5ZwTzF6reotOdIelDPg3cGRVm6WA=
+	t=1746581151; cv=none; b=XGZ66k1Bb/QfhaPr4R1J7Avu+jPeszo922RJLXBBXiAcKZAjwSGeTHbbShhuEaDlywjGuNF9ZIOztMR/yFc37Yu5McLoIh9eD59TRtUeFF2pHR63k11lEu4hAysoyCgvUsPi7++4jOHgjCJAHXvPCFSCurj2mgsQpGxhITXUiv0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746581104; c=relaxed/simple;
-	bh=BTZWC1O3p23KUD9kFXahiXU/a0BsOYLTN4iLQotvqCE=;
+	s=arc-20240116; t=1746581151; c=relaxed/simple;
+	bh=0Zw9fI3gSCATNg7pkmuQ2Nipaoeq6gnHRoLL4ztxPPE=;
 	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=MAQwaiCevRFr/cH+Tn7dMonfybaRqKzzr9mgg8D+KKC9OskZZ/zNHx7dGGlAtYDLHidhRuw9dsv6uSizpGxrNvXK7eCzivKQvxv0KBQD3vmdjpVeTmoYq52P1tD68igq3ERUcbMIjZEbgyv7nIQZxwLf1aLPMcnHbu7JjIwWLns=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=a+nD3JWW; arc=none smtp.client-ip=209.85.219.173
+	 In-Reply-To:Content-Type; b=EID6E41sv4BP2quRmoJucVFRpuR5/stGxTiqEdK9qTYDZQajL/HEPfyCTOLgZDleyL03wdbHxZAf575/ImKNH/YUXzyorZaJzxoSbJ7OI7vFv2e2g89JIQv10YwH4gWB3XuLUANqkJ42Tk4RkJms7UrpJ53YLf1a08Sjn4kzfAw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DmB2HCdt; arc=none smtp.client-ip=209.85.219.169
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="a+nD3JWW"
-Received: by mail-yb1-f173.google.com with SMTP id 3f1490d57ef6-e733cd55f9eso5851060276.1
-        for <git@vger.kernel.org>; Tue, 06 May 2025 18:25:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DmB2HCdt"
+Received: by mail-yb1-f169.google.com with SMTP id 3f1490d57ef6-e7585d4f921so2554987276.1
+        for <git@vger.kernel.org>; Tue, 06 May 2025 18:25:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746581101; x=1747185901; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746581148; x=1747185948; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=EZcPa2/MOaImrmnfaA1yNKRnLCtf8bm62HzFNkyxcaE=;
-        b=a+nD3JWW7f5oHDaH0O1wugkHJeMYGM5/GHi/LAHhMGbbT9Cq33uzAJ07Y2Ka8edJQq
-         qsN9smHW2a/MvIbvVhNPerMllO7ZUXzOgX4aU+W4mMIXknWtMPsxo7aUMFxmLGipn47R
-         mBf/KqqcwU8sS5K/G2g/YjB+Z3fGb1ERQ9GeQaX+ChNLA0az9BzI8RW/KjfcyhM3VUsU
-         R+QpOU3SSuKXkAy//0ERu1InnRxGOLFkPb/bRVTNHD+g+cvyvIJP0NnWQBcOWVtVX5Q0
-         LPhar7usvIDvkQ54aMPmwh0PEgQ73Pw6sFGaDnyKEmnIw2Uk6Na7IMf4gVR9CORBp24d
-         OGqA==
+        bh=Q6WZ2eIJN/O5JXke3tC5Z148JoKZddyYxQA3ro9kUUs=;
+        b=DmB2HCdtwZ6opE2EQ0hZQRDoS8SmBcz3vdCbhPAaIXrqrclJkPgeHDd5fd/3WJwG/v
+         div6cZH5orZqvVSQMMdyVtQjWjOyEifHGrLYN99BHo70KZmQsM1dj8G/bcU+6mRz5Btl
+         FMAggNj9aXZ5EATnhi5SwDmvDJ245Bo76dTlyn+d8Ia5CsUIK3ntWVjR4J75xzdxgduA
+         I8yuu5YcbdR8XtLUWuzXcw82g9j4GnAiebUD0/y0O2W7cDU1jY3eUJ2CEmnVRYrsfk1D
+         73AAiRvLPShPp41vyFaoV/MSIteWImx3pwslkY2mVqxo6f7J2eJi8qcOP750SMML8mGE
+         wezg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746581101; x=1747185901;
+        d=1e100.net; s=20230601; t=1746581148; x=1747185948;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EZcPa2/MOaImrmnfaA1yNKRnLCtf8bm62HzFNkyxcaE=;
-        b=T6ZU8WUnCnQi3pAYc0iorO9d3J1n7hhfWYly/6yNspyhqSUaoc36H/ryai7YScUPww
-         OJczyOlgi+ebRjykkQ4/bTfPlCCDe4mhxnYqD2fkTrmbANIaHdpUaZMIu4K5dW9KTCtQ
-         GFnup6XuXBRZAv+U1iG6iXxwkfYyW4MlpBKHFdtw7pJFj6ccLUKErU5My2T3DebQyic2
-         XOtSt3UgKgWm4R0DXrmBzbnM8xiLyapxewkKaUyocS2xNIEdQoDeIfIm04dNfRLTIBCG
-         eBhn9Ii4FMKVSyanNdlOvgs25iyguPnQ1LFVbV9LYcffmQoLM54do0oJQyHcYus8n1jw
-         Wjjw==
-X-Forwarded-Encrypted: i=1; AJvYcCUPMKo6lirV19D/BvRftWsc1QMEOJgApBfGohKXGUwOhlPL/6zEwRQ1yATbF4dR2YZ/PxU=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz0yP4Owx3bVzC1g0qffnk/mbTREaF0nJyVejYtIbRMPNF9CThv
-	41sRhj/lF2BxofelPu8RCbJytdukUtMzcGRvYmW0eqaya9MfTrkT
-X-Gm-Gg: ASbGnctunh7Bh9wWvm6xa4GKpeLsWRJRQAhDebR5XWVz2lBYb6j2tXidE4JGf2mUpw/
-	PfAeCR0Dx5WTk5DejEqcxTgOmXyjZlPcWCylinTe0quaJqLGexpzUK5YEOpMpZ2w7X+RbWWwQc4
-	LgQydr+L3Slji4Tgni+DxkBbJ2vzSzZB/dMGENd4tb06x1lFzSXPbE5/uPBW8imD1sgLmY9K0wv
-	/8i59QydIvmeduzYfHQT2SRoVMzBZDluxUSJdh2B0iwgMmuh9YGmprdzSnlr4r9VtmW55rq72Lv
-	kUDF9OkjA/e1QrtGWoQbIw8DwSrV2MzK5m4Oss1fw+7mFecVMOkCzSgRzWW52N2nztDYYaHqef/
-	1mGO83v1sv/nDN9v5QzVtj1w4FDOO
-X-Google-Smtp-Source: AGHT+IGzaSmCqhx8tLOwW4V64g4ORAUBUPGUESkZ+crN0+yvwZ4l4C9ZXi3TUNIp4aURRHZlft6ziQ==
-X-Received: by 2002:a05:6902:154b:b0:e73:2c64:5666 with SMTP id 3f1490d57ef6-e7881931b6dmr1945864276.35.1746581101595;
-        Tue, 06 May 2025 18:25:01 -0700 (PDT)
+        bh=Q6WZ2eIJN/O5JXke3tC5Z148JoKZddyYxQA3ro9kUUs=;
+        b=Z9vYklN9AP/cOyToXwOQupc5KBXa/YmMqo95SNtjl73ktu8NNLoq8zd9/VGXofRDlL
+         N1CTTuwF4kXPwfcG0xCHewmQFmH7UOeR/ziXYgKTTaLN/G4yzu8X/P2RKr8xwqcbo00D
+         DajLC+rx4GLvBcyJrVI3xAysKcORfBzL/NhpYKuG1uREh9VyayYZrDCtHwDL6HPM3Fgp
+         VuInQioY4YPcNDcfE+rXKwsewubli8+PELBJ+hx/pPGxOohPKMq3u/VxJq2f8QzV+YuN
+         0Nt1R+6LdCJS4w00vYQ2tJTvFBtwlXZKDUltgV/tYnofk3upR0BPBUNgCfV6GQPHS9c9
+         O01A==
+X-Forwarded-Encrypted: i=1; AJvYcCVysJ5/kNluTyUFmXVUy3hm5m5wEFsllwvHWNANI+HsUNhUzRIiKSJojuCEVWgWYS7dwyQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxbG3zswtz9ZiAHQc6LeweXdgT5+JPux9+1dktPM/cJ+4198Q2r
+	qds8WQH8DbBtIu9WQc90X2FJq8ctXeh+BgdRtRP+wmQJUNZ8EgXt8QnixA==
+X-Gm-Gg: ASbGncuYRijGODjE9ovJbSxPUffOvbv5iUz5rjn7gIvD29o0C9Fi5qiCi8+gbIilvSK
+	P1TqxWP2hd+lMlFaaUno/eBCWkqKNFhBA/eOw/3HjBuy0bvjtts/zvfr3bNqQfGS+jUnhWypONS
+	YqqIcC/xJAbXLgWeHg+uEoWO6FGzUqeckR6380km3wjDfsuNxAuGqfgYFCb9PGJzMIBvwtgL8F5
+	Qbifn4umqhwo1vSvOeeRYAhbPGWhYVhjlXVN1PraB4zlOS/154C+Hlf9Oxx6XboBADO0OB/IORN
+	xrLZUYInYWmUdGWMUYMW323MWZna3rCBzrDZFR+KQBTHSQUhrOPXsm++0qVcr3yKmVnO3dZJHoL
+	92vIcSOHrFKf8IuxG+SRDoQCfmj43
+X-Google-Smtp-Source: AGHT+IHLP41WWcXTr480OtkXYr87Nx8tXfZ5ktyhEpmjUtSU7iaEWOd0r5eeKv7UwiwTOEbcPsD9AQ==
+X-Received: by 2002:a05:6902:701:b0:e78:7b0c:db8e with SMTP id 3f1490d57ef6-e788143f6a1mr1815392276.30.1746581148433;
+        Tue, 06 May 2025 18:25:48 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:cc2e:477b:d336:3346? ([2600:1700:60ba:9810:cc2e:477b:d336:3346])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e755e716696sm2725059276.31.2025.05.06.18.25.00
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e78c8f0f3c9sm84504276.46.2025.05.06.18.25.47
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 06 May 2025 18:25:01 -0700 (PDT)
-Message-ID: <a715e7c7-20a7-4a2f-95e3-28d4d4bc8995@gmail.com>
-Date: Tue, 6 May 2025 21:25:00 -0400
+        Tue, 06 May 2025 18:25:48 -0700 (PDT)
+Message-ID: <728e13e3-b563-4d66-bc00-b3320b76ec9f@gmail.com>
+Date: Tue, 6 May 2025 21:25:47 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,40 +67,32 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/17] odb: get rid of `the_repository` when handling
- submodule backends
+Subject: Re: [PATCH 12/17] odb: trivial refactorings to get rid of
+ `the_repository`
 To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
- <20250506-pks-object-store-wo-the-repository-v1-11-c05b82e7b126@pks.im>
+ <20250506-pks-object-store-wo-the-repository-v1-12-c05b82e7b126@pks.im>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-11-c05b82e7b126@pks.im>
+In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-12-c05b82e7b126@pks.im>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 5/6/25 7:09 AM, Patrick Steinhardt wrote:
-> The "--recursive" flag for git-grep(1) allows users to grep for a string
-> across submodule boundaries. To make this work we add each submodule's
-> object backend to our own object database so that the objects can be
-> accessed directly.
+> All of the external functions provided by the object database subsystem
+> don't depend on `the_repository` anymore, but some internal functions
+> still do. Refactor those cases by plumbing through the repository that
+> owns the object database.
+> 
+> This change allows us to get rid of the `USE_THE_REPOSITORY_VARIABLE`
+> preprocessor define.
 
+> --- a/odb.c
+> +++ b/odb.c
+> @@ -1,5 +1,3 @@
+> -#define USE_THE_REPOSITORY_VARIABLE
+> -
 
-> +static int register_all_submodule_backends(struct object_database *odb)
-> +{
-> +	int ret = odb->submodule_backend_paths.nr;
-> +
-> +	for (size_t i = 0; i < odb->submodule_backend_paths.nr; i++)
-> +		odb_add_to_alternates_memory(odb,
-> +					     odb->submodule_backend_paths.items[i].string);
-> +	if (ret) {
-> +		string_list_clear(&odb->submodule_backend_paths, 0);
-> +		trace2_data_intmax("submodule", odb->repo,
-> +				   "register_all_submodule_backends/registered", ret);
-> +		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
-> +			BUG("register_all_submodule_backends() called");
-
-Did you plan to create a test around this test variable?
-
-Thanks,
+Very satisfying! Thanks,
 -Stolee
 
