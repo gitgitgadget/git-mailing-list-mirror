@@ -1,165 +1,112 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185F1204C3B
-	for <git@vger.kernel.org>; Wed,  7 May 2025 13:28:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21A634B1E56
+	for <git@vger.kernel.org>; Wed,  7 May 2025 13:30:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746624528; cv=none; b=RTIaCT0SxlfsNt3inU1PUZHL1plM19RCfXALxnDR2qpONYiBZD3hXlPj4/OlwPGmrsRBiGfcE5K11oKdP05D8RxgSLBAr7PChRwUxhpqNOxCnT0BgtJELS4BJKSCkivMOmsoF+yoLk1g90zsIpnki1oGBMLOZSR6DgL9xv706sU=
+	t=1746624647; cv=none; b=OYlj4OIuaO1vz1GnxVFs5dhKujOT/O8pheHjwizkRVrW50GWqJpo3l78zloDh6HgVGjF6lVqMY2nxGyd7I90gHaMldycg5s6fu7XFKgCWv//7ljoymykyho6hQ+j82g/iRKzebFIzDYBOqLThPLZOrosRWoechJfRboet6EBpLw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746624528; c=relaxed/simple;
-	bh=ArJZhl6ioYwHHvnRFULMT6lGIPDcIvstFZv/8skqK5g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=bYBsZp0Lg7rfqwzp7xTs0RKADk+ZTdRyNtCMUt1ZsWd6LYyB2xYacKMkT/2/GInSOFoZk8VyoEeDPgil1JQm/b5rfZIgQ1dozfpPLuT4C2eTWWBtAbuaO7cb5bcHzCt52n8FqfhE8WtEt5aNdkauOAXa7QBq+QKL6EBNeNc9w7s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ch7bNms2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=B8f0wqmK; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746624647; c=relaxed/simple;
+	bh=syPM1XqSThC0TmVXsPJQfWOlDd1/4ISAo7WoxKB6bIY=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=X9JzVanz+nTCjJUUvq/+eZHgzNADZnue0f8odmdB8YNOVYq6+EMwtXFe1cEuSVcUn/PPt+22GMzWMWYszyHQ3tiPFeo5a27ie0qK13sXA85sc9K4cXP3NMEixBU8qjQbYVvzpJat0g9HCXpPTAzx90LTZ0+hZ7pyiXhLdR9Xfvc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EzUOoVIo; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ch7bNms2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="B8f0wqmK"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 155B01140102;
-	Wed,  7 May 2025 09:28:45 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 09:28:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746624524; x=1746710924; bh=iKXclflEcP
-	d7ppXJM7xb3c0eCIY7DseiNpnIC+CRPCQ=; b=ch7bNms2Z9EjauUscPlJevTvdp
-	wzOpG9SsUdM/bdSSnCELfLRHoMorjwcw86Hpioahp0x8Gn6PvsgFGyTDIHUN+ADc
-	gk+h6qGh4f4cNgtDovm4RZiTKPwKHFweRyLDtLXNB89qlLM+wG5fKcN1IPIF/+fg
-	jHKERZIHTMaGbYJgKLa1yYuqfJLbHnSIX3gqH0ESYNTLn1jZyDgr2emz+YXn2nk6
-	2dVgWIzZRhmsP2GE5Z7ATSxnLTLIkTAuVuOuVxYBKY29KfAq0qcyDhClydhWuDID
-	+S4eTSs2VBmIVyOt27eWYOMJ/lRoDomUTmTutHWUU2O+5ngr9VDHYsiB3yUg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746624524; x=1746710924; bh=iKXclflEcPd7ppXJM7xb3c0eCIY7DseiNpn
-	IC+CRPCQ=; b=B8f0wqmKK8ztwsFF8jNM1LC4TTgFv8fkffD3IXuY1nrVYLOxvZQ
-	m/Mnr07jNsCh5oEYoePenDXwyL2kKUQBei1MBNQSfkO7DMZDkH+tNJryxrzOdkgO
-	jhE3w6KJ4JSv5qrY/uacNc9Fetseh615lJVnvPmxMDT+/7N/bY5S3Orx/Ja6MExn
-	4PAZZapY3/vMNrWFnRxgemlVY6yarBN/wvcM2Id5lWgAYJNYl1S5THv0YYBQFesu
-	UOJawui4W5COzit95v3KVaPIDQ1WN1He7sXE4yxJMej3vB6V047dNPAsIQXIviyA
-	O91WyZ+Z2yPNxv25HL18IovNUDFD5/HEQsw==
-X-ME-Sender: <xms:DGAbaJSAuUhtA-JVBchR_231xV6NreewRSfU_TDm13-Czb2qnYJJ-Q>
-    <xme:DGAbaCzT5sjFHwcIbwy0ISEZ1XRFWkoCxOQ7UH_Yu_JsAES9Em8vSXfbF24o-xxBw
-    MlB5KhCiUBM2R47gg>
-X-ME-Received: <xmr:DGAbaO3J8bfKGQ1TyZba-n2dZWqDk0lQNJ-CVdgz5H2VvsvKe0r-BX6Fz6-0HS-AX-xQ3o7OZxJJlKxNSvJzsDy4Ek7O1fhV6Xsa2OMZVQgvjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeileekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtrodttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepjedttdegffekudejjeegudehgfehtdfgtdeiudel
-    ueelgfeuteehledugeeuueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehk
-    rghrthhhihhkrddukeeksehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:DGAbaBBUvX4o12Yb9FGuBaV0Wxzw47nEOZC_w3U0fkX5YCixfWgGKQ>
-    <xmx:DGAbaCjvJquBMHhI3zupSOLoIcU2Fq48D_lfltwWxdlKz4UYu9f-aA>
-    <xmx:DGAbaFpgOIT4CjlZzQ5aOaAYaprlkeihznYdfm14Diya4N4ziSzSeA>
-    <xmx:DGAbaNhzJ0Q4H2bkT0ft9eHFKZgzg1283qqRFrH2ULm61nf4i-Ey-w>
-    <xmx:DGAbaCrvWCHN8DmAKx1DmtCqzc25ge__fGS1xo2KOfn80hQix8TjWaKI>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 09:28:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d7bf67fc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 13:28:38 +0000 (UTC)
-Date: Wed, 7 May 2025 15:28:41 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Justin Tobler <jltobler@gmail.com>
-Cc: git@vger.kernel.org, karthik.188@gmail.com
-Subject: Re: [RFC PATCH 1/2] t5412: test receive-pack connectivity check
-Message-ID: <aBtgCYYKPuowEeNQ@pks.im>
-References: <20250507030249.4802-1-jltobler@gmail.com>
- <20250507030249.4802-2-jltobler@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EzUOoVIo"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-39c266c2dd5so8047604f8f.3
+        for <git@vger.kernel.org>; Wed, 07 May 2025 06:30:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746624644; x=1747229444; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=t2nN7ZbeaM8U1+aROdg+mUjX6N2JhPBQB7ZfCWEU5H8=;
+        b=EzUOoVIoev1y9e1P7CfvDARpJYETb7VV9XHFWJSnl6VAHedo3Z8v3/tmaq6kxFsPQF
+         I2Lz8W4zcjNay2cTaxl8AXeupwKgAWtME8dlx+oLd33qSmawDsSsgQ+GCpHxgWKx4yEr
+         c/Bgw32uZzFDj6O6E4Hy/ull/yS/FqAk1x9CE7Oo0Oo07WvCIottDf3nAYbgggQjRpKV
+         kQBn0m8aqC9IrMBM4qAZVIbT4XiKU35U0gjvtaRoXxA/g6oMX0WQte4wvzz0aDuJ0syC
+         YwkD2x1fl6fWs2US1ezw4sevWHPOJlBHocs1vlfH9Edm6n6WNFypcosR14RVlAtoyZyf
+         pB7A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746624644; x=1747229444;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=t2nN7ZbeaM8U1+aROdg+mUjX6N2JhPBQB7ZfCWEU5H8=;
+        b=U8YmccmPrwIdR/bOUwHcx6DBHzQRqvAICeqwL6tpCnJYiuE9NCU1a2QJW6jKM1tZzw
+         rKA0W3B4ROFj3b1IsKiJillU4qYxj5OqGuUotjae6MI5DgDH4BSGAEyOZH+myko04uQ6
+         tIcgBxRsNpCkLmVLXG0bb/4V+5igkEQ7rAXfwMdADQYwvbMVrbMTgQ/ANTmmw1aZQ1sK
+         IMWHMIreCWbY8Ca2j4E0cVu7k/d9/dn+y0EurBsAlSKZhlQVwKYenRC3U1xmsoHNuATO
+         hyNIh9vSqgxd+6KbpFL3MmgjOD8NeueUWQ49noVqQIOtZtnp0MDUOnPFPmiZGkLDXpGG
+         77dA==
+X-Forwarded-Encrypted: i=1; AJvYcCWxbTxBqOiba3hZNuW0TIGRdnE62D/8kC27LFWZpHEXoXcZyEaGqL/uy7+bRLTotxxYAro=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yxr3k8h5cwE2lFr+DoI3F/DC7bzq5UBpNTvRXajwbCExrIeMW47
+	R55XXHfOz6aqoyKEwBvD1y1LJhSh87I1NXlDwUkmHa5kqYGm+gqE
+X-Gm-Gg: ASbGncuKKqiYXpCJAkQBMuswTCWPTyWfWwEVuApxXn0Km/Rh0WPQTu9DXF2XhHgoQwI
+	OMhMIvg/Ip1bkbDV6Gps1mop/2NABvGqUWyDwVLc+udyP+tNkSZvaDbpJDVANLPI2eMfOYTO0Y4
+	WzWysWYdxOuB8FcJT/y1qcEbct1pZoo2bv98BJuFuYVGP6gmCEdaWkwxlZuarp6MaQpAhIzjyG9
+	KV9nUB+h/zUDoatNTjoo4H32+ZdAbHN1i2msjZsj9JcqaTzMfSP4R7SD//J83S8fkA4gm6c6kZi
+	UWXUrqZiu3qDeHhs1itaDp9uJLGdoSxP0d4T09Y7sqVfq8yKPcb4aGg+is8dFDqTopZCZN1hsWA
+	SxPlEIjM8Dm7tpZ6M
+X-Google-Smtp-Source: AGHT+IGUUEA+szOirAR+uduUo9sWofkp7JRyF/JYS/0b7yOiXQkrTmr6/bA9C5sSJMqEOxMztLvbpQ==
+X-Received: by 2002:a5d:64c3:0:b0:39c:1f02:5409 with SMTP id ffacd0b85a97d-3a0b499c1e5mr2834387f8f.9.1746624644172;
+        Wed, 07 May 2025 06:30:44 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a0b3331cb0sm3653340f8f.65.2025.05.07.06.30.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 May 2025 06:30:43 -0700 (PDT)
+Message-ID: <a290bc6f-9198-4a00-8273-2970cfbd4a29@gmail.com>
+Date: Wed, 7 May 2025 14:30:42 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250507030249.4802-2-jltobler@gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 3/3] add-interactive: add new "context" subcommand
+To: Junio C Hamano <gitster@pobox.com>,
+ Eric Sunshine <sunshine@sunshineco.com>
+Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org, Leon Michalak <leonmichalak6@gmail.com>
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+ <b4b7854f330af7588b12e3361bed40723febddad.1746436719.git.gitgitgadget@gmail.com>
+ <CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+ <xmqqldr9lmpg.fsf@gitster.g>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <xmqqldr9lmpg.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, May 06, 2025 at 10:02:48PM -0500, Justin Tobler wrote:
-> As part of git-recieve-pack(1), the connectivity of objects is checked.
-> Add a test validating that git-receive-pack(1) fails due to an incoming
-> packfile that would leave the repository with missing objects.
+On 06/05/2025 17:37, Junio C Hamano wrote:
 > 
-> Signed-off-by: Justin Tobler <jltobler@gmail.com>
-> ---
->  t/meson.build           |  1 +
->  t/t5412-receive-pack.sh | 27 +++++++++++++++++++++++++++
->  2 files changed, 28 insertions(+)
->  create mode 100755 t/t5412-receive-pack.sh
+> An alternative that may work better is to allow subcommand specific
+> parameters in the answer to the "What now>" prompt, e.g.
 > 
-> diff --git a/t/meson.build b/t/meson.build
-> index 43c9750b88..81066668b9 100644
-> --- a/t/meson.build
-> +++ b/t/meson.build
-> @@ -630,6 +630,7 @@ integration_tests = [
->    't5409-colorize-remote-messages.sh',
->    't5410-receive-pack-alternates.sh',
->    't5411-proc-receive-hook.sh',
-> +  't5412-receive-pack.sh',
+> 	What now> r -U7
+> 
+> to choose an equivalent to "git revert -p -U7".
 
-Instead of creating a new test file, do we maybe want to generalize
-"t5410-receive-pack-alternates.sh"? Just a suggestion, this is not a
-strong requirement from my side.
+I think the best solution would be to allow users to re-display the 
+current hunk with more context inside "add -p" rather than changing "add 
+-i". That way a user who needs more context to make a decision on the 
+current hunk can get it without restarting the whole process of 
+selecting hunks [1]. If the user knows up front that they want a certain 
+amount of context they can use "git add -p -U <context>" or "git add -i 
+-U <context>" which was added in the preceding patch.
 
-> diff --git a/t/t5412-receive-pack.sh b/t/t5412-receive-pack.sh
-> new file mode 100755
-> index 0000000000..190c7d3624
-> --- /dev/null
-> +++ b/t/t5412-receive-pack.sh
-> @@ -0,0 +1,27 @@
-> +#!/bin/sh
-> +
-> +test_description='git receive-pack connectivity checks'
+Best Wishes
 
-The description is way more specific than the file name suggests.
+Phillip
 
-> +. ./test-lib.sh
-> +
-> +test_expect_success 'receive-pack missing objects fails connectivity check' '
-> +	test_when_finished rm -rf repo remote.git setup.git &&
-> +
-> +	git init repo &&
-> +	git -C repo commit --allow-empty -m 1 &&
-> +	git clone --bare repo setup.git &&
-> +	git -C repo commit --allow-empty -m 2 &&
-
-Okay, we create two repositories. "repo" contains the full history,
-"setup.git" only contains the first commit.
-
-> +	# Capture git-send-pack(1) output sent to git-receive-pack(1).
-> +	git -C repo send-pack ../setup.git --all \
-
-The `-C repo` shouldn't be necessary at all, should it? The repository
-in which it runs is specified via the first parameter.
-
-> +		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
-> +
-> +	# Replay captured git-send-pack(1) output on new empty repository.
-> +	git init --bare remote.git &&
-> +	git receive-pack remote.git <out >actual &&
-
-And then we reply the packfile that only contains the second commit onto
-an empty repository, which should of course fail because we don't have
-all files.
-
-> +	test_grep "fatal: Failed to traverse parents" actual &&
-> +	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
-
-I'm a bit surprised by the error message though. First, why is it on
-stdout? Second, shouldn't there be some hint that the connectivity check
-has failed in the error message?
-
-Patrick
+[1] With "git add -p" they can quit and carry on from where they left 
+off but "git stash -p" doesn't let you amend an existing stash and git 
+refuses to pop a stash if the working tree is dirty. This means if a 
+stash is split in two because the user exited to change the context they 
+cannot pop both stashes on top of each other.
