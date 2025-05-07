@@ -1,54 +1,54 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 790201CEEBE
-	for <git@vger.kernel.org>; Wed,  7 May 2025 06:27:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 641F51CEEBE
+	for <git@vger.kernel.org>; Wed,  7 May 2025 06:27:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746599266; cv=none; b=jogx3CDkslQ60J3S2CgFsQMqYjNUf9ReRScTAvLS94muEtQW40gPeu5y3konQqpnrzuY8sl3tZvkQ93nlQZkB3an/txx1Z7Ydx5g78fddthpD0ZWzfVm7nVXCuntyCTPRAbMHcGUDAffytqqPIXDci5FKA0OkDhezQk4QMn89LU=
+	t=1746599276; cv=none; b=YcnYFpQZ6YBcb0UZL/H+bDhz15TLtb9s9WjGbxkcDrW0yTfSeQIITta2jCCH9ZOga0Isvl5fgQXch8AdhhNhOEl0tqENnFmtZ7iR5HnPKktFMlUWZNdznwUETbdRh3CDtd5grPXkF58SP2JadkhNGJ9mMv/7KxPG9bn6FbaigxI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746599266; c=relaxed/simple;
-	bh=dW0Ov+FXoxV01UlvAWSrqtSt7lMb5XKjHKLfFYobpnc=;
+	s=arc-20240116; t=1746599276; c=relaxed/simple;
+	bh=SRCkk7p/+Oj+DvW7y2BSzmzHAmyQaVcSsP7hOD+Vs9E=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PNjj4+ABT5zEYqYla6zAhAmyWEQ0yMz5I9orYii1JE1o8LsUJ3eims6wbIR5C12RJVEYFrs0qVzfaet4wLEWOlCdI165YDUi7MoG0K0NkyCtPKAANXYNgokfZJyg/OgEK9WnKGtehUy3aeabuKwNV9KUfNjj5yKOACWjh0AW6sM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Ql2k8lUK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HfPL2Nxe; arc=none smtp.client-ip=202.12.124.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=o4yu/oOHanIZmyeffbIy+F/yoXd+0dnv7xgxH0/j/S4BBYHsFrGTbCfYQkFkuc96ztSgnfUm3qkPN7ap/rmpwB+7apvE+HlEr2qzaeS3paVHuCJBEtx5MfJDZ450F41FS60wDuyhlyTgjuR7/Wr/7KQynU+fBf+LTp2o8Gq++ik=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b3LKfkzB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lQ3joB2I; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Ql2k8lUK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HfPL2Nxe"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 53C4125400F6;
-	Wed,  7 May 2025 02:27:42 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b3LKfkzB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lQ3joB2I"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id 894811140081;
+	Wed,  7 May 2025 02:27:53 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 02:27:42 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 07 May 2025 02:27:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746599262; x=1746685662; bh=dKAhFSHRFV
-	f4PiKFhz8HG4yLYeFl+YYp85FjKVN7W5A=; b=Ql2k8lUKGjg0kZIG9s/099fCO8
-	obP+EscE81NazfoyARaT8wF2/Y97rRX6j+6z3NMrNAPs+sjdTwkI3UUS+IkW83hZ
-	IVI9afz3i0LSDwpeJ/LNqLW+S359gcpc+kxvbrUMzD6qRRBWXrH8rqB4PJRSbNXY
-	FaeQvYo/nxyA85FhQYHeEwU9oLQDTZ8XtnUMzukWGIViEFh/gptbbSWOQvJtEldy
-	BtFKV143Hg7H9oD/f1/SoyPS5O9c78IRiTRf57Z2Oy9XDYxcigwlfavOHJoDuoU1
-	wm3cnmEr55qmL0kfVrP/tA6efKs7siwXrRn3PVXiRAMSEB80KC3tZrMUK1YA==
+	:subject:to:to; s=fm3; t=1746599272; x=1746685672; bh=8+/P3rWsrx
+	IXYz+nNKdQu7W9q/J41WxaTpjnrGyT8dY=; b=b3LKfkzBAypKC8I+pWWFvDaJOn
+	kjSIqRLD9kA8um9Z96TxwHl4HhqlRXmh1YwpBs1g7rL00mLui1zr9nAbZJy81oH2
+	0hVtk0BvfixY0caicseRAZs8EL2tC/TaM6ELro3lDVNl5di/x+Gl8cSLv0rUMbDz
+	htP8rniFkKC6LWaMuIJegpiqYAeUwSQ+JuEord5muLBsYYxkzJPJM5yQQ0AS95gR
+	+Cil61DPXCq5OwOHXPvtO3+xxfFB72NtK9MGzu7/0ILQdGvlou9Kwsr8nzdGRbww
+	+9VV2yLwlzh+9mCMy7gheuNweZ8s/Z8rI4qL+rfDI5hHLgcfTHzQsqvC8yVw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746599262; x=1746685662; bh=dKAhFSHRFVf4PiKFhz8HG4yLYeFl+YYp85F
-	jKVN7W5A=; b=HfPL2Nxewy5J+2B9/Ngcc8iPv7AP7sYBIgf6Nkf43R9Y68LMXqe
-	Pw9IJetygw2TFrfMxLUYWhNKoUufppLhmCcy0RqKSS44X+yNWoYQXu/ZVKZOUSuF
-	vmFLy1eggg3T7ali8n2OXyJ4AL93raxy3+gaRgn8F0wL+QQbCK55+aKkR6B5zfm3
-	ypcAc4LDPHLbc4kuQQgwqZbqFdLCD06hY+hxQa2rwgae6h+Zm8L3Dmbfqd8t2qFP
-	Ud5JpgNkRshfVv2RYebCzQbc9j1l0+RfLd9VYeaOPLu4wPCzeM/0oFKyLvlysvD2
-	D6F5TCxuIOhvJxkcHm8pnK+0phWNj9L0VZw==
-X-ME-Sender: <xms:Xv0aaEMJ7edy9Bu7ZH68vSJxMEL6UWHVbmtZoXM_1HCZuXUEQo97Zw>
-    <xme:Xv0aaK8_-aEi9FkgDuxKtiOShSQ3QKE0yp3QXgBnpDo-Oi00f1lQ47kkfswysht1j
-    uAi9RI558Yf9L365w>
-X-ME-Received: <xmr:Xv0aaLSvC1VtZW1PMkIG5DKo6kSuEcjMUlAAvEWaSX4cQWij-Rjous96q97BbAFJrKY9sxqfslHKLBoe0xc2t4Iidsbcb-phSThAdRrkZnR3pA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeiudefucetufdoteggodetrf
+	1746599272; x=1746685672; bh=8+/P3rWsrxIXYz+nNKdQu7W9q/J41WxaTpj
+	nrGyT8dY=; b=lQ3joB2IA1B8tVPZNo3/XTDIJ465mxpXPR6eO3Rq+ycaF0nETob
+	e3zCDVLMCqCUPbSMiWreIQcNYrQNOzY4dEf1eHrMia4chasK4GPZkmC8G0nFvwVi
+	HLsW2LAu70iaFucPbT7qPr78bba8q9F54Q072Ix6Nm4dMtQrmESAgSEw++Q3Sa/M
+	/BwIZVA8RXqbYvze+hXZmneG5eqPUNS5an4uIdsDEZmgEpoEDa8yVfn4nsmn2HbS
+	2rble18Yz2h5Q3AiYz6nDJx1WsY5xcbmW9QuFg5SkZgF6Jp5XA/p7g4bIzo32b1l
+	XZGP7bZrsIY6EJDI0EYM0l3JCnS5P/K1klw==
+X-ME-Sender: <xms:aP0aaP-lpsfv1uXu760Q52f13AhLdxEuCXMS4IxbaaMuSG9WZVfmBQ>
+    <xme:aP0aaLvjISyhkxrMcpaZN0bWloOa7kahZP1vV-6Y3YDoutO2VtQijz1xu1l1wiXQf
+    IJlwMeX-ZE5qJe_0A>
+X-ME-Received: <xmr:aP0aaNBQzE5Uyyt-sNoPL0nPWsiBtow1J1pNbnkOId9ACRjexC4NTffBC34TGLgCAaVIss_qUqJUsJ9iMN2jOICvJbgdzmXARet5OyQznuQ-Kw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeiudegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
     fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
@@ -56,28 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeiudefucetufdote
     fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
     vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
     hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
-    gvlhdrohhrgh
-X-ME-Proxy: <xmx:Xv0aaMvzqAyvJffIy2qHOM0Tt18Fsbwpzxq4h-o9v9Cg4vEch8cYHg>
-    <xmx:Xv0aaMfzXzSX3Okk08bvXP6ewvPMN0iJG83MDl4gu64WDAVcgOt8lg>
-    <xmx:Xv0aaA0yOlBb0PfelJC4AQseqXrZO1Y520HwzvizyvPbeeyh8doptA>
-    <xmx:Xv0aaA-PWE7kFuwA0yljn1r8-m7wwE29YWGWIRd2ssXfcQSYKrJyFg>
-    <xmx:Xv0aaAMBJ2Awxu4PyTxjniXM9O8ftXkBcVBMWyEqBRMa1GwLemiMSL7u>
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:aP0aaLe0PEJComX7zq5SRfAaeYSflTrbiaNGzuuX9okXmmFFOk8gsg>
+    <xmx:aP0aaEMgLUWbusWP47CHRUx8we9NWkN0G1-c1NpubZkuG8ulHJzm7g>
+    <xmx:aP0aaNmK3VdFis9BceQokENH3S1nfoLfDtV_8wFOqxCmN6jQPodRyA>
+    <xmx:aP0aaOulvBS-Q_6g2Cg82l48fxcATZh2d09EOkoN90J-5EI6qo4NSw>
+    <xmx:aP0aaL-r-Q588NlFba4hJlT40qW9UwOB-SOgrpWmZzAogJHuZVcLEeFW>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 02:27:41 -0400 (EDT)
+ 7 May 2025 02:27:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e690c07f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 06:27:36 +0000 (UTC)
-Date: Wed, 7 May 2025 08:27:34 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 8c62e5b1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 7 May 2025 06:27:48 +0000 (UTC)
+Date: Wed, 7 May 2025 08:27:50 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 01/10] contrib: remove "remotes2config.sh"
-Message-ID: <aBr9VuYurCCvRYnj@pks.im>
+Subject: Re: [PATCH 10/10] contrib: remove "git-new-workdir"
+Message-ID: <aBr9ZhSmbYtRp6o0@pks.im>
 References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
- <20250506-pks-contrib-spring-cleanup-v1-1-e6d5ddd79a72@pks.im>
- <xmqqr011ikjc.fsf@gitster.g>
+ <20250506-pks-contrib-spring-cleanup-v1-10-e6d5ddd79a72@pks.im>
+ <xmqqjz6tikak.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,76 +86,75 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqr011ikjc.fsf@gitster.g>
+In-Reply-To: <xmqqjz6tikak.fsf@gitster.g>
 
-On Tue, May 06, 2025 at 12:52:39PM -0700, Junio C Hamano wrote:
+On Tue, May 06, 2025 at 12:57:55PM -0700, Junio C Hamano wrote:
 > Patrick Steinhardt <ps@pks.im> writes:
 > 
-> > Remotes can be configured either via a repository's config or by using
-> > the ".git/branches/" or ".git/remotes/" directories. Back when the new
-> > config-based mechanism has been introduced we also introduced a helper
-> > script that migrates from the old-style remote configuration to the new
-> > config-based mechanism.
-> >
-> > With the recent removal announcement for the two directories we also
-> > started to instruct users to migrate repositories that still use these
-> > mechanism to use config-based remotes. Notably though, the migration
-> > path doesn't even use the migration script. Instead, git-remote(1)
-> > itself knows how to migrate any such remote via `git remote rename`.
+> > The "git-new-workdir" command has been introduced to make it possible to
+> > have a separate working directory in a different place. The command thus
+> > predates git-worktree(1), which is what people use nowadays to create
+> > any such working directory. As such, the script doesn't really have much
+> > of a reason to exist nowadays anymore.
 > 
-> Makes sense.
+> Yup.  As the original inventor of the concept, I still have one "new
+> workdir" I use daily, without any problems, so I think the layout it
+> creates (actually, it created 10 years ago) is more or less still OK
+> with the current binary.
 > 
-> This logically comes after your series, which ended at 8ccc75c2
-> (remote: announce removal of "branches/" and "remotes/",
-> 2025-01-22), lands.  After that, we can safely remove this script at
-> the 3.0 boundary, at the same time we clean up the code paths that
-> are conditionally compiled with WITH_BREAKING_CHANGES.
+> But even I do not create a new one (not that I run "git worktree" to
+> create an equivalent all that often).  I do not have an objection
+> against the removal.
 > 
-> > Furthermore, the script hasn't been touched since afa75bc8aa1 (contrib:
-> > Make remotes2config.sh script more robust, 2007-12-02).
+> >  contrib/workdir/.gitattributes  |   1 -
+> >  contrib/workdir/git-new-workdir | 105 ----------------------------------------
+> >  t/meson.build                   |   1 -
+> >  t/t1021-rerere-in-workdir.sh    |  58 ----------------------
+> >  t/t3000-ls-files-others.sh      |  19 --------
+> >  5 files changed, 184 deletions(-)
 > 
-> A single-purpose thing that is done correctly on top of a right
-> abstraction does not necessarily need further updates, so I doubt
-> this paragraph contributes to the decision to remove the script in
-> any way.
-> 
-> > Given that there is a migration path without this script it is very
-> > unlikely that anyone still uses the script. Remove it.
-> 
-> Sounds good, but not right now, I presume?
+> Oops, do we have tests that depend on contrib/ stuff (other than
+> completion and prompt, which should have moved up long ago)?  That
+> changes the story a bit.
 
-I think it should be fine to remove it right now. If it was the
-canonical way to migrate repos to the new format we definitely
-shouldn't. But nowhere in our tree do we even point to this script, and
-the deprecation notice we have created explicitly tells users to use
-`git remote rename`:
+The tests we have only verify that unrelated feature A works well with
+workdirs created by git-new-workdir(1). So that alone isn't a good
+enough reason from my point of view to do a full deprecation cycle.
 
-    static void warn_about_deprecated_remote_type(const char *type,
-                              const struct remote *remote)
-    {
-        warning(_("reading remote from \"%s/%s\", which is nominated for removal.\n"
-              "\n"
-              "If you still use the \"remotes/\" directory it is recommended to\n"
-              "migrate to config-based remotes:\n"
-              "\n"
-              "\tgit remote rename %s %s\n"
-              "\n"
-              "If you cannot, please let us know why you still need to use it by\n"
-              "sending an e-mail to <git@vger.kernel.org>."),
-            type, remote->name, remote->name, remote->name);
-    }
+> Shouldn't we do the usual WITH_BREAKING_CHANGES transition, then?
 
-So I highly doubt this script plays any role in the migration towards
-config-based remotes. Also because the script only cares about the
-"remotes/" directory -- it doesn't even know to migrate remotes from
-"branches/".
+That is a very good question, and something that we should hash out as
+part of this cleanup.
 
-Another data point: the script doesn't even work as-is, as it sources
-". git-sh-setup". So for it to work it would need to be installed into
-"$prefix/libexec/git-core" together with our other tools, or it needs to
-be called so that "git-sh-setup" is in the user's PATH. Both of which
-seems quite unlikely to me.
+As you have mentioned, "contrib/" nowadays is expected to work as a
+staging area for features that aren't quite ready yet, but that should
+eventually move into Git proper. But if that future never materializes,
+either because we notice that the feature just doesn't work well or that
+the interest goes away, then it should be fine to drop that feature
+without a full deprecation cycle.
 
-All of this reasoning should of course go into the commit message.
+To me this feels a bit like the whole point about "contrib/": it is an
+stepping stone to get something into Git, but we don't provied any
+guarantees until it has been promoted into Git core.
+
+I know that this is certainly a revisionist attitude, as "contrib/"
+hasn't really worked like that in the past. I think though that we have
+outgrown the old concept of "contrib/" for quite a while already, and
+that it doesn't really work well in its current form. The ecosystem
+around Git has grown big enough that we don't want to and cannot host it
+as part of Git itself anymore, so that original need has gone away.
+
+So I think we should rework our "contrib/" policy so that it serves a
+better purpose in the modern Git ecosystem. It should be a staging area
+for new features that are experimental. We don't provide guarantees, but
+we will ensure that things don't bitrot. If they do start to bitrot and
+nobody cares, we throw them out. If we eventually see that the feature
+is getting nowhere, we throw it out. Otherwise, if the feature is
+eventually deemed to be stable enough, we promote it to Git proper and
+are happy everafter.
+
+If this is something that the project can agree on I'm happy to rewrite
+"contrib/README" accordingly. Maybe I should even do it without having
+any consent yet so that it can serve as a starting point for discussion.
 
 Patrick
