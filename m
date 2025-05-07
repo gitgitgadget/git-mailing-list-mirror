@@ -1,237 +1,98 @@
-Received: from mail-qk1-f177.google.com (mail-qk1-f177.google.com [209.85.222.177])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37B102B9BC
-	for <git@vger.kernel.org>; Wed,  7 May 2025 01:14:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF9E2B9BC
+	for <git@vger.kernel.org>; Wed,  7 May 2025 01:14:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746580479; cv=none; b=oDRFDa6u1KFM0StbV0xtKnuucfFT+hAPc1q3ejJ4Oy2/DrATmZHudcNbPH1wRl3RM2qmOAxPQDbpoVEK3aDAa1ltHK1M24M19WahDDRmQJlv/oaH8OpgcSVaQTMc5kJ1zQbXS0wT7vOX8sNVnTBwEUPd/8j56xv7tmPJqCfJ6PY=
+	t=1746580492; cv=none; b=u0r6lFX/5qXS0AGI7IUc/P1pd4iHqBMRM2ErH8GlugLSJVg3UZavGYtGKX17dvEkYT7MPIH+OVMZ8IZHZx3K8IqplQ04JG9PI8SxI+5QBh4XDC1U1hh+a3UqLHtY+yYsnlAUspUZyzMhTD0LTY7Th6a457qm6bDCfWeVQ4ARvJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746580479; c=relaxed/simple;
-	bh=vdk7yWb79sgD1A5k1jGSXCh3c0Z3E2VzBbdmXlGPoTE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GbiufZ18AtGitEgNU2jP+qpGnGnFPKOGfG/q20PnjbGna/DA8Ke8+nKHrNtaE2HQWD0veub5+q2Kw7/aFgHFxOfcblzrX9LfYJmr6Y+/+bKekO29vIjJe+JWhhMCzXhqt+qUd8Pt0MjGW/3XFuqJrn3BZ4E0C6whOyD7ouHudlQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=rLSz6EuQ; arc=none smtp.client-ip=209.85.222.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1746580492; c=relaxed/simple;
+	bh=X/3qrNGnecAJVNBmxmFvnQxW1TPlJyhF5zSkpXolJSs=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=lodyho3NsjzfGb/Egq6P25jLUL6sffEi+E174rOD43ylZEO4MstZcoSJKykdKEiaJp5sx0JBd1tQBe+FHvxRRU+MajIJA5eIajZ61w7V9H5Epcxmslx/XaDiURXjl7jLPTo07en9MNxdmmjCZsoWrynuCs4EuvkpN1YQLZHBq2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DHlyX0CJ; arc=none smtp.client-ip=209.85.219.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="rLSz6EuQ"
-Received: by mail-qk1-f177.google.com with SMTP id af79cd13be357-7c5b8d13f73so775981185a.0
-        for <git@vger.kernel.org>; Tue, 06 May 2025 18:14:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DHlyX0CJ"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e728cd7150dso4787549276.3
+        for <git@vger.kernel.org>; Tue, 06 May 2025 18:14:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746580475; x=1747185275; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=VJnjWfx/ST05i7eGBdvwch/aTV1qM6M9SzaAZ10vxyA=;
-        b=rLSz6EuQBFCe7Pi0aRYhzFd3HIkwJlqPwNKegh9ikb9pLKTnxm1j/JDnMlZvxmdseS
-         XSKOUiD8+ygi/OPnNQhivvf3+3bHN+0yOOaDgbs5F282Zmlre+8pJa9GGemm51jvB2aW
-         6z48CzjNPsp4rmfvWfByVUd1761qEfavao6rUFY0lK4dIBzJjJ9Sm55D4heXBdGOycNj
-         iIefGo94U9i9raOiYQS6febcPNw1SMQw0KAf1n7EwtyP4s3zM29gJHeoOHuJEKFeXj2j
-         nnHYnCPwC1z34SlyHO6lEVHkhwcK8lYOjxR6t72a1e1+GxG1MqEmTtk1CLVV2BBE3NRJ
-         /cjA==
+        d=gmail.com; s=20230601; t=1746580490; x=1747185290; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=JOugaR0mZSaY6c1zJI8d6bjbqibT2lm1pbBIAk174uM=;
+        b=DHlyX0CJT/WpSnKETguO2TsR4z8nlz+84mqTfd79ttkynxd/WM3xkaOLW+2C8jPHyl
+         B4V7WfuYUfwRgI8swTpdkADfImBLF4c+JLdHRrLaoIt0JCd/W3HZwduP1dBC8VS/bZrZ
+         p0B+xZjf8OMTjKQs0DcFmlaIrTeCignAoTwBRjG65fIrNxt208gKbT3PoSI7rFQBqlJa
+         fQbFv9HyDgZnwKRZYILLiz5Pn8GWlkuZrhjzfNcZgft6/pKy5OKVmmPux8pGOOusuGEG
+         8YV5rwHxr9aXbxQmJCcJu3INaMTzK7xSQZzWb21R2qneXcWvvc4ra7YDwNZrAf9EcDCb
+         OURQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746580475; x=1747185275;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VJnjWfx/ST05i7eGBdvwch/aTV1qM6M9SzaAZ10vxyA=;
-        b=RDnbMU+ASuopHmDIVUYs1wdWqlG4HzCuZJMs0NcMueFAingQakIdu5aUVfvOHZLHfY
-         OEpPBrKJ5NH9kgg0F5x+Y85cFFbSke6e5+gXnMreogufpnosYFl2AEbnCfsHKNpzO1iG
-         ORgilErg9GvZiteHda2pRfsfwhz9q9YIE5F5VxuqETON3P4052I3MnH/6/QOXrrux35G
-         zANJv26E/P8m6QM/ONrBb69DvaZl8m9NSQMrApDasGyu9s5kDSiraS0aAhShZXZ5nUbC
-         hQ4nDpfrabBBUZaXj92z8w15Abu7jeqWs0cYuxgd7ysJf7MowkhNS8AIujAGFmMNTZbw
-         3FuQ==
-X-Gm-Message-State: AOJu0Yxn87HboQmG9DHasS7AZaOU7fViP0qmUrVmxrybid0I3DZ6XmmK
-	Y8qxnnSb4G4Mbtp5I/SXZfJvB3ZFY7mLPOMygC8Di5dXUqNTHLnYYxB+2eQAc4s=
-X-Gm-Gg: ASbGncuJhW6kKzblb3HJFywZol2lE2efRovGjhRZ1OezOurI29CXaTqaAcQoC+YN4e0
-	I0lR10HmUFwUo3jMIanwe477eYhNeS07sD6UstYryJNW4XJ+GEmXlB3ycMbz7WU9uSEAptzgE21
-	69YgGGlTIpbZ9lYpzdjZjgk5IQm0TqdPOby7Bw61112S8eg0l4sgzpe4M7SuX6bOtjwzXmuOOjh
-	vdkgGTjl/eGpVAjJisT3PCMCCkosmIdeDUz170Ma/++3936rziBL2QtDbvTxl6irAp97X+Q5mRB
-	XS/03LP93aLLyF1a/PvbjuY6FIGe1/hzGPo/Gpg7oBeZr/C/6LJOjNxF4Fw7CqcdFdmaepWkdfA
-	bSiv2Wy8wDMBs
-X-Google-Smtp-Source: AGHT+IG4rGKz2kAoDNrQ3txqlzaiV/3GlmvOMXkojeSSoc+ZGKq9pr91flWPsn3vYojEpjIuL4UcSA==
-X-Received: by 2002:a05:620a:2a0a:b0:7ca:ea9a:31b8 with SMTP id af79cd13be357-7caf741d81bmr249316785a.53.1746580474980;
-        Tue, 06 May 2025 18:14:34 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7caf75b87casm60873985a.74.2025.05.06.18.14.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 18:14:34 -0700 (PDT)
-Date: Tue, 6 May 2025 21:14:33 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	jonathantanmy@google.com, karthik.188@gmail.com,
-	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
-	ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 10/13] pack-objects: refactor path-walk delta phase
-Message-ID: <aBqz+VfSvecJdWHw@nand.local>
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
- <622439d78557d94da899d21444920c27768d3c67.1742829770.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1746580490; x=1747185290;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JOugaR0mZSaY6c1zJI8d6bjbqibT2lm1pbBIAk174uM=;
+        b=OEna+aUghJsAl8+OlMj3rdt43LxtzUmHYV6UoagROJUe5lHBfth5hapFlCI58uqgl9
+         SJRM1feTDn0ec+6pWFsMLbtKE8hliet8lE9hMMGwAAmIr3+Y/qxqMLRkGUdAuzby+yR/
+         7WPAfaicYJGtis/3coy9Fn6J9yfJNkarJzyWSOe1dKaCF8RS/QGn3E8y0bsmp6Dd12NB
+         5J5EWbURqfdHh3QIeufcsP3VlOYmPI4BxFCIYbXOt86y5tFEJUc8bfEgEvQ8Wx47q+2o
+         cavDzFtMt0KLzmg9eCP6PVyFsGe8UjcODWqu0Sl48muZ6bqwy/vYIO7U2Km3Y1xVaN/Y
+         V5dg==
+X-Forwarded-Encrypted: i=1; AJvYcCWzNLOHraFFuqCkwv5VRrKoTBMonkKt1tEfjUEwDd6N4ogmp6RvY2d3CuJV8yX29eeDhek=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywl9Csw0DP+HJra0r7au1RSnxPZAn97nSPm+9HLqd0PSoqVf82c
+	eS/j2v8EFGHgRdrlGnWNwGAZwUFGFxMG8cl3UpO2kVy4lI5E5RC8
+X-Gm-Gg: ASbGncva4PJ6rJ5ETP1eOmZnufoIdhTq6+t+ggp122x/2fQ1NdS26HZaFAW+A4VWFzb
+	4AUoWdhZf7ouIaPxw1FyQVOo9MmeuFdgnwE6TFD1nSKWQkSTgXGGyHzYkyBLo5GhcWGjxBZp2P1
+	OGEZ2+8/rzPWCkRLOjPGgtv5yKHG2Dz4/3SqV3gFdrqF0eSGp9zug4gdXf2oyjAX/+Ka7hvfuwv
+	H6i8/YaZvLppsY4CQ3rIl4Aaa0B6S4yLZdBqatf9FLh2MKwWQybqfSLQtNlVDlYbypWNFX18hQa
+	+iUfSoZbbsdAsIq6vrTym6VTbwP1iG1QqXgVTxcjQDSRQfSrMtI52fMaTVy0hm55yNii8oKG/jL
+	GzkRxf/KzdQEpSl3A3BOHAjZsKXLl
+X-Google-Smtp-Source: AGHT+IH+8mtdO/Qc9tzpYG13KDSmxzqo8UtTWf5v6yJoC5+/tv5Xl20sBwKUFIPBfHbd4254GPMZaQ==
+X-Received: by 2002:a05:6902:e0f:b0:e73:124b:95c4 with SMTP id 3f1490d57ef6-e7880e7df25mr2158742276.13.1746580489771;
+        Tue, 06 May 2025 18:14:49 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:cc2e:477b:d336:3346? ([2600:1700:60ba:9810:cc2e:477b:d336:3346])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e7841cc7fc9sm229400276.25.2025.05.06.18.14.49
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 May 2025 18:14:49 -0700 (PDT)
+Message-ID: <8c4841eb-473d-483b-a5cf-15bd41ba890c@gmail.com>
+Date: Tue, 6 May 2025 21:14:48 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <622439d78557d94da899d21444920c27768d3c67.1742829770.git.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 08/17] odb: get rid of `the_repository` when handling
+ alternates
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+ <20250506-pks-object-store-wo-the-repository-v1-8-c05b82e7b126@pks.im>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <20250506-pks-object-store-wo-the-repository-v1-8-c05b82e7b126@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Mar 24, 2025 at 03:22:46PM +0000, Derrick Stolee via GitGitGadget wrote:
-> The current implementation is not integrated with threads, but could be
-> done in a future update.
+On 5/6/25 7:09 AM, Patrick Steinhardt wrote:
+> The functions to manage alternates all depend on `the_repository`.
+> Refactor them to accept an object database as parameter and adjusting
+> all callers. The functions are renamed accordingly.
 
-I think that "in a future update" may be worth replacing with "the
-following commit", as the former suggests (to me) that it may be perused
-outside of this series.
+...
 
-> Since we do not attempt to sort objects by size until after exploring
-> all trees, we can remove the previous change to t5530 due to a different
-> error message appearing first.
+> -	prepare_alt_odb(odb->repo);
+> +	odb_prepare_alternates(odb);
 
-Makes sense.
-
-> Signed-off-by: Derrick Stolee <stolee@gmail.com>
-> ---
->  builtin/pack-objects.c       | 82 +++++++++++++++++++++++++-----------
->  pack-objects.h               | 12 ++++++
->  t/t5300-pack-object.sh       |  8 +++-
->  t/t5530-upload-pack-error.sh |  6 ---
->  4 files changed, 75 insertions(+), 33 deletions(-)
->
-> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-> index 0ea85754c52..d4e05ca4434 100644
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -3236,6 +3236,51 @@ static int should_attempt_deltas(struct object_entry *entry)
->  	return 1;
->  }
->
-> +static void find_deltas_for_region(struct object_entry *list,
-> +				   struct packing_region *region,
-> +				   unsigned int *processed)
-> +{
-> +	struct object_entry **delta_list;
-> +	uint32_t delta_list_nr = 0;
-> +
-> +	ALLOC_ARRAY(delta_list, region->nr);
-> +	for (uint32_t i = 0; i < region->nr; i++) {
-
-I know that these values are all unsigned, and very unlikely to get near
-the 32-bit maximum, but I do think we should use size_t here (and
-likewise when dealing with values that deal with how many entries in a
-list we've allocated and indexes into that list).
-
-> +		struct object_entry *entry = list + region->start + i;
-> +		if (should_attempt_deltas(entry))
-> +			delta_list[delta_list_nr++] = entry;
-> +	}
-> +
-> +	QSORT(delta_list, delta_list_nr, type_size_sort);
-> +	find_deltas(delta_list, &delta_list_nr, window, depth, processed);
-> +	free(delta_list);
-> +}
-
-The rest of this function (modulo the inline comment removal, which I
-wrote about below) appear to be a straightforward copy of the previous
-home of this function.
-
-> +static void find_deltas_by_region(struct object_entry *list,
-> +				  struct packing_region *regions,
-> +				  uint32_t start, uint32_t nr)
-
-I imagine that "start" here is setup for the following commit which will
-parallelize this task across multiple threads, with each thread starting
-at a different position.
-
-I wonder if (as an alternative) we could get away with passing in a
-(struct packing_region *, size_t) pair and drop "start". I think this
-can work if you pass in the result of adding whatever the value of
-"start" would be to to_pack.regions here.
-
-That somewhat hides the fact that this code is meant to be run across
-multiple threads, but in a way that I think is worth doing. It lets the
-function avoid having to do things like:
-
-  for (size_t i = start; i < start + nr; i++)
-
-and instead do the simpler:
-
-  for (size_t i = 0; i < nr; i++)
-
-since the caller already adjusted the regions pointer for us. As a
-side-effect, it also means that the call below in prepare_pack() can
-avoid passing a literal zero.
-
-> +{
-> +	unsigned int processed = 0;
-> +	uint32_t progress_nr;
-
-This uses a mix of uint32_t and unsigned int types. Should these all be
-the same (and/or size_t's)?
-
-> -	/*
-> -	 * Find delta bases among this list of objects that all match the same
-> -	 * path. This causes the delta compression to be interleaved in the
-> -	 * object walk, which can lead to confusing progress indicators. This is
-> -	 * also incompatible with threaded delta calculations. In the future,
-> -	 * consider creating a list of regions in the full to_pack.objects array
-> -	 * that could be picked up by the threaded delta computation.
-> -	 */
-
-Nice, it is very satisfying to see this comment go away ;-).
-
-> -	if (sub_list_size && window) {
-> -		QSORT(delta_list, sub_list_size, type_size_sort);
-> -		find_deltas(delta_list, &sub_list_size, window, depth, processed);
-> -	}
-> +	*processed += oids->nr;
-> +	display_progress(progress_state, *processed);
->
-> -	free(delta_list);
->  	return 0;
->  }
->
-> diff --git a/pack-objects.h b/pack-objects.h
-> index d73e3843c92..7ba9f3448fe 100644
-> --- a/pack-objects.h
-> +++ b/pack-objects.h
-> @@ -119,11 +119,23 @@ struct object_entry {
->  	unsigned ext_base:1; /* delta_idx points outside packlist */
->  };
->
-> +/**
-
-This is an extreme nitpick, but I think that "/**" (as opposed to "/*")
-is preferred, as the former is used for Doxygen-style comments. I feel
-like I have seen Junio comment on this before, but searching 'f:Junio
-"/**"' yields a measly 83,000+ results, so I am unlikely to find it ;-).
-
-(Not worth rerolling on its own, but if you are rerolling anyway, which
-is what I gathered from some of your earlier replies, it may be worth
-picking up along the way.)
-
-> + * A packing region is a section of the packing_data.objects array
-> + * as given by a starting index and a number of elements.
-> + */
-> +struct packing_region {
-> +	uint32_t start;
-> +	uint32_t nr;
-> +};
-
-Same note here about the uint32_t versus size_t.
-> +
->  struct packing_data {
->  	struct repository *repo;
->  	struct object_entry *objects;
->  	uint32_t nr_objects, nr_alloc;
->
-> +	struct packing_region *regions;
-> +	uint64_t nr_regions, nr_regions_alloc;
-
-Ditto, but this one jumps to uint64_t. What differentiates these two?
+I was looking forward to this change in an earlier patch that
+introduced the line being edited here. Thanks for making this
+cleaner (and the other callers will get cleaner eventually,
+too).
 
 Thanks,
-Taylor
+-Stolee
+
