@@ -1,88 +1,85 @@
 Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4291C84CD
-	for <git@vger.kernel.org>; Wed,  7 May 2025 16:27:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2721228BAAE
+	for <git@vger.kernel.org>; Wed,  7 May 2025 16:38:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746635271; cv=none; b=QFlvtYfnCprsg8QwFNf1+Lmde8wgexaf8T4yK+qnhf7OtyJWOyGReJmIRUtyDd4J3Ti67OBefVqEdlGD/LMajPQyxzjIC4g0l3/RGQKg51G+9Iseh2hYmBh08plfg0w08NRftIaD3CaLdvca0VJrFND/Evm/34Ooij5wJ9ZLzH4=
+	t=1746635937; cv=none; b=r9Z2XaWoq6De+pb9S6nrSTFt6e0roBfmMSrLUjKefLhKS5sS3S6nQMSuX3xXcv3agbzMar3rNLMw+YcpBr1lp3wv5fv7xnxZj5i1s8t1HPdoheY38V0mQEIukvqa5PEe4pqLHkMh68HspacBZBI8qKyGSH1jWk3CAFsWyGOUboo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746635271; c=relaxed/simple;
-	bh=5XZuhByySv5bg+x27I2w9jLeM6cFVsrWMo0kTmotVdI=;
+	s=arc-20240116; t=1746635937; c=relaxed/simple;
+	bh=EeMM64/KqW3kcrmTfPedmxRRlONG+htjElJZTbJrkHg=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Hw0/0Vv9oTHo95GIKB6+iHaA4/7MSWNXeYgaIp03JdRRaCnvoNIBLEDL9rX6PP5BkG/pY9vt2c3ixt8YI26pDuiYVERKXshbdinAh0GrWOaEXm0TmdoMXaNJrXzwrY+Gb4TZhduXcfDmaMOkhLts/w73+eRi2pjuaDzGXMtI5Qo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=GPjc5jt8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TaRqsqlJ; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=szMhzUGOypH9fihukWOFy0fq2XV8p4UCpkPPJViFximRBQydwJRAzp7sOrwvbnZssz5FURaJfJv0jBUd5cp5GWF3eIMFotZ6KvD1mFIrJgKbaGrdbSqWCLd2qYo7SPTKZlZ+SeOzN+r1WLov49n4L43TbPK89g5n5N3k1guq9gw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=IlBroFw3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LNcQkWp8; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="GPjc5jt8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TaRqsqlJ"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id B395D13801F7;
-	Wed,  7 May 2025 12:27:47 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 07 May 2025 12:27:47 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="IlBroFw3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LNcQkWp8"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2CC4513801FF;
+	Wed,  7 May 2025 12:38:54 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 07 May 2025 12:38:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746635267;
-	 x=1746721667; bh=hnHyHr8PJzZIFHw1nUYUSXgaZSfABE5ukyhpHntUGCk=; b=
-	GPjc5jt8UOsNiOd6G19THYuDvuNVR/XXScsXktMYYU3RUU1+b+oF/2kJRpwtZvSH
-	3q0go2IGkSKqzvSvcNBlUAYZlbsXpy7GqJjQO/82vhF8gYCZn8uTWqrhLeCh6EJJ
-	ifhcOI1AdKG8kgn0PQa7aoOBT5pMqoD6Gy5yFN8Orm3F36osya74RjdzuszdaCYD
-	AjitS03sF1CzUM5WjjEeooKRVzBv1trippjQsyr0AjlJ2FXi3NBh6PbCap9Vul6F
-	YIuvViOnwtrKFi253iNyjZiaKWjexRvfzHdxrtbB3SXNQUL7Abp5TNG2jzvocT1x
-	Rh//1BVzYLBj2/mJTUvIOg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746635934; x=1746722334; bh=9qJNvYB76w
+	oNJTLMqhWgw/xbXUztaowytW1hYcE9evk=; b=IlBroFw33pahvAdwlTQskBYgig
+	9wY1NMH1cYpDiel2CeDtGTxMJSkvN5YRsGMoXeZh46OPuKl0rwZbGcvQKKI3TXuJ
+	Egoxceq54qyiTCWeLIPaJ6PdBleH1miH/u1nM2vlNTIxa6rAmL0av9VyoEnUXcBF
+	Cy2rVsYi3e5qF8d55J6roWhc7nU42cI4t2M8YrqEGQNzt2eiXaTy7I9Kubg/bhgH
+	2uWGPy2Jap3wa+EHBVi+sLu99xlslJzXpU2VQ/swLZX9CZz7S/EzBKlhk6nxhfgY
+	JqQvhGQSW/U49qTCMgHByL1un3dqLNXTJu1TC2tpF+2a3OdQVS/+y3UuFpjA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746635267; x=
-	1746721667; bh=hnHyHr8PJzZIFHw1nUYUSXgaZSfABE5ukyhpHntUGCk=; b=T
-	aRqsqlJs2OBcSrwZCC7EU/x9pyhrU+lZHoNcX+7DKpBXWVpiAxbQj2VHNv9p1xWV
-	LRisT3SupoKaPZAQzeuJ4aqE4LVYGbb8N6HCLLKhIKRq4mB0I8gtaU5SkXjfhmO8
-	KovZSLn2KPSmn/Hqg149VXnHV3Cbam2SNGV2DCgua1CpyYxwRMBV8hrx39g2ojro
-	9il/a37uqQslMwjkJsfrY2Lnki0aFexkY0qAGg0oGVDUi13+kT6q9ZoZJy5lbPHL
-	eKO69GyZFKPYO84wg2bvdW4g/xK0q7joxI4A0FS7fVHhPnuVl/hNwUpmPLEnTpLs
-	cMcZsYHuoe57k4/CNy+Tw==
-X-ME-Sender: <xms:A4obaA_3E3v0-v3acT_WXlsBuOgkv0hIE7rRdOSLY2EJmRMRhKch2Q>
-    <xme:A4obaIvHQWMfewVt0R68U0Z4V7SzduljIlNLAyCasltLY3-XO_jsfsxRsMHS7EJBd
-    3-iRFz8Kf1TXDhUMA>
-X-ME-Received: <xmr:A4obaGAwzdGg0Q3iotSAzLpMwbtL4j8Kf9pkwwDLHpeeqslQn-lZTszYDP47qINYNkR4Bn_n7hj8GPADBNzVihStx_ds027rsIji>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejfeefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746635934; x=1746722334; bh=9qJNvYB76woNJTLMqhWgw/xbXUztaowytW1
+	hYcE9evk=; b=LNcQkWp8cj0S5BQO/dOyVvrBhhs99hT+vcrLdMP+ALzu6/CfmGQ
+	8N/ikrGrJiRI+LgdRbdyUa/F3WFiUDMLojb7gwZmy2EjfSXrVmf3LAKf/ZYjlMib
+	wxUFCTnV6YzNh1c85lipNQ5e2nRIbf85iiZTu/uEeOAlTXVLL/iXvSnmtE8fbsXM
+	10BVy9a3t7igV3bDR8rYhTjdAzXkD4sZIP+jKsGH10K/9uv6u1JXZvpSxX9UpgPW
+	JYpG7+uOmkGMx0A3mQ1f/bOyMNEaPwAWwZgC9M/WoAb4mL58gacOBkjxs2ZHAIuk
+	BjseOh8U1P+h1A5+4KkfOs+uibPSbI1Fd7g==
+X-ME-Sender: <xms:nYwbaJ6YKogyvkVxtKc1cX_Ln3YrMHhagcwgvRzBMvC-0djDLZQ0tw>
+    <xme:nYwbaG4L3zxQJYmYqt-CfUZWRCZYjh6D6rZAcpGOD8qfabC3cZ1K6sN1c5ISLC6_J
+    MfaW9GlGqHlq4cIXQ>
+X-ME-Received: <xmr:nYwbaAcKBTSRS2b73xhpmmpPOu6vlnjU1FWPXy7W-W7BIxQvza2N-nvFweZR2ThLQTUaTUeNSKiK4YLTnrLaKZQg4OkuCopJdds_>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejfeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeelhfeiueekfffhveekudeileetjeeu
-    geejfeejueelhfelveetueffueevgfejveenucffohhmrghinheprghpphhlvgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehkohhjihdrnhgrkhgrmhgrrhhusehgrhgvvgdrnhgvthdp
-    rhgtphhtthhopehtsghovghgihesfigvsgdruggvpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:A4obaAdFN8ubB25ZP18LxF8ThK2RCSjKav4TqD7XHQiLbFHNwo_czg>
-    <xmx:A4obaFNyRB_Lurwei_ryzfRUK2JwOCyQq5zBa-3-4ks6_XSWmQ9HBA>
-    <xmx:A4obaKnbRa5sQat88-jQzSdx7Fy9TCsc8-HlGYBwLNYhhJcX_IC_Uw>
-    <xmx:A4obaHvugXcvXJTXBwfRTbG27Z0U1SMsSyOPOZVkQno69P6RwtH0gg>
-    <xmx:A4obaClAI6CK3QE-YH0BvpWS-yn7etL-IIkRtij5e1VW5BDeL7YTteqw>
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:nYwbaCL7fkK3XwG5-0m1XDadaklPeF_w6zLT4v8dYSj6cCcdVdQISg>
+    <xmx:nYwbaNI9TaGhS4tZbp6q93uMGxuPzAcQ5nCP86UN_23M3m4eXqvoSQ>
+    <xmx:nYwbaLya7K2zMNTCpLmdMsIQjeBYv_yTE-UwFQttByyc0-LvvzRCmw>
+    <xmx:nYwbaJJbsMBQXEgiV7hu4iu6A6d9TN6chr2t9gh0-S637PDkOPNLow>
+    <xmx:nowbaIWZZyXOmAi0XeVrlAYYLsXsKLpDj8yITAbQwO4OIcSWj4EsRWOP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 12:27:47 -0400 (EDT)
+ 7 May 2025 12:38:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Koji Nakamaru <koji.nakamaru@gree.net>
-Cc: tboegi@web.de,  git@vger.kernel.org
-Subject: Re: [PATCH/RFC v1 1/1] intialize
- false_but_the_compiler_does_not_know_it_
-In-Reply-To: <CAOTNsDy4YcOP9H_xmUDKRdGuEu0GABDj8sM0Jt+oPEo7JVSQ9A@mail.gmail.com>
-	(Koji Nakamaru's message of "Wed, 7 May 2025 10:22:51 +0900")
-References: <7efc9c9c-8187-4e10-bf9d-1cbb6aeac124@web.de>
-	<20250506120644.186968-1-tboegi@web.de> <xmqq5xidlkvv.fsf@gitster.g>
-	<CAOTNsDy4YcOP9H_xmUDKRdGuEu0GABDj8sM0Jt+oPEo7JVSQ9A@mail.gmail.com>
-Date: Wed, 07 May 2025 09:27:45 -0700
-Message-ID: <xmqqikmce67y.fsf@gitster.g>
+To: Derrick Stolee <stolee@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org
+Subject: Re: [PATCH 12/17] odb: trivial refactorings to get rid of
+ `the_repository`
+In-Reply-To: <728e13e3-b563-4d66-bc00-b3320b76ec9f@gmail.com> (Derrick
+	Stolee's message of "Tue, 6 May 2025 21:25:47 -0400")
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+	<20250506-pks-object-store-wo-the-repository-v1-12-c05b82e7b126@pks.im>
+	<728e13e3-b563-4d66-bc00-b3320b76ec9f@gmail.com>
+Date: Wed, 07 May 2025 09:38:52 -0700
+Message-ID: <xmqqecx0e5pf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,72 +87,37 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Koji Nakamaru <koji.nakamaru@gree.net> writes:
+Derrick Stolee <stolee@gmail.com> writes:
 
-> On Wed, May 7, 2025 at 2:16 AM Junio C Hamano <gitster@pobox.com> wrote:
->> Just for reference (as the proposed log message refers to an "older
->> macOS"), do we know if the toolchain on a more recent release of
->> macOS work without this workaround already?  It may be nice to tell
->> users what version they need to avoid the same issue in their own
->> program.
+> On 5/6/25 7:09 AM, Patrick Steinhardt wrote:
+>> All of the external functions provided by the object database subsystem
+>> don't depend on `the_repository` anymore, but some internal functions
+>> still do. Refactor those cases by plumbing through the repository that
+>> owns the object database.
+>> This change allows us to get rid of the
+>> `USE_THE_REPOSITORY_VARIABLE`
+>> preprocessor define.
 >
-> I tested further with Xcode 14.3.1 (the last version of 14.x) and 15,
-> where the former still had the issue and the latter worked without the
-> workaround. Xcode 15 introduces a new linker which seems to fix the bug.
+>> --- a/odb.c
+>> +++ b/odb.c
+>> @@ -1,5 +1,3 @@
+>> -#define USE_THE_REPOSITORY_VARIABLE
+>> -
 >
-> cf. https://developer.apple.com/documentation/xcode-release-notes/xcode-15-release-notes#Build-System
->
-> Koji Nakamaru
+> Very satisfying! Thanks,
 
-Wonderful.  Thanks for a quick report.
+Yes, nice outcome.  I looked at the resulting odb.c and was a bit
+unhappy to see that we still need to pass "struct repository *"
+(instead of "struct object_database *") around.  But that is not
+because we assume we can get to an odb via repo, but primarily
+because repo has many things like config access and hash-algo that
+we rely on, so it is perfectly OK.
 
-Here is an updated patch with the above information.
+At some places, where we pass odb around, we can and do go from it
+to its repository (e.g. odb->repo->hash_algo), which was what I am
+expecting to see more of in the future.
 
 Thanks.
 
---- >8 ---
-From: Torsten Bögershausen <tboegi@web.de>
-Date:   Tue May 6 14:06:44 2025 +0200
-
-intialize false_but_the_compiler_does_not_know_it_
-
-Compiling/linking 82e79c63642c on an older MacOs machine (like Xcode
-14.3.1, the last version of 14.x series) leads to this:
-
-    Undefined symbols for architecture x86_64:
-      "_false_but_the_compiler_does_not_know_it_", referenced from:
-          _start_command in libgit.a(run-command.o)
-
-The linker fails to pick up compiler-tricks/not-constant.o that
-defines the needed false_but_the_compiler_does_not_know_it_ symbol,
-which is the only thing defined in that object file, from the
-libgit.a archive.
-
-Initializing the variable explicitly to 0 works around the linker
-bug; the symbol type changes from 'C' to 'S' and is picked up by the
-linker.
-
-Xcode 15 introduces a new linker, which seems to fix the bug, making
-the workaround here unnecessary, and Apple requires [*] to build with
-Xcode 16 or later in order to upload to their App Store Connect
-since April 24, 2025, but not everybody is expected to upgrade their
-toolchain immediately.
-
- [*] https://developer.apple.com/news/upcoming-requirements/?id=02212025a
-
-Helped-by: Koji Nakamaru <koji.nakamaru@gree.net>
-Signed-off-by: Torsten Bögershausen <tboegi@web.de>
-[jc: update version info with Koji's help]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-diff --git a/compiler-tricks/not-constant.c b/compiler-tricks/not-constant.c
-index 1da3ffc2f5..9fb4f275b1 100644
---- a/compiler-tricks/not-constant.c
-+++ b/compiler-tricks/not-constant.c
-@@ -1,2 +1,2 @@
- #include <git-compat-util.h>
--int false_but_the_compiler_does_not_know_it_;
-+int false_but_the_compiler_does_not_know_it_ = 0;
