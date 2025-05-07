@@ -1,43 +1,66 @@
-Received: from mut-mta1-se01b-zose1-rescue-fr.yulpa.io (mut-mta1-se01b-zose1-rescue-fr.yulpa.io [185.49.22.249])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A730217E4
-	for <git@vger.kernel.org>; Wed,  7 May 2025 09:46:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.49.22.249
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C20376410
+	for <git@vger.kernel.org>; Wed,  7 May 2025 09:51:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746611184; cv=none; b=JA2aovxFLxeivNM0bS7E/AtDE8+WO5WyJ1zK3Zz72qCoFvTENdcqW+Uap6DM0ik6XAfYErx9wX0NlmKiz5wLVacKCA6TfDkVz0xmFpWaxz5CDp4JNGFxJ5n2+7PFh/qVxcKKy2nuqwQ0rmyr2nQrv9KB+FInKcmQSWAzCXsAbcA=
+	t=1746611479; cv=none; b=S5ySTLxEswtA9IlKb2h+jMNOCYs8DguDNzsZG7Pek25/bs4nnO+jEJ0Jqsj4MC81ZJgddHA5op1oDBfWmfDJ5SFDsiIeL3btqTI2Ett6KGygmJi7+cf8ChMPt0N/FfpE4ZQaRxU0/17gxRlBLSlhna8L8sMHcMp6Iobsauxe31M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746611184; c=relaxed/simple;
-	bh=Tsl6BdWXN1tXcd/C+5W4xdDF1E28sV+N8HECftuzGgo=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=a9jSxPMiVrxPIKm/uTC03DARbSF8hmH0BwqhTZBxgMeYIkFtYdfSNiTMqNOnehmSCCRkDnMacu6xf/fdoLKVO35h6wnX1m7b/XSEWTV/YZNmP8ARj3WHHJNQ4NXmu8KNzqYTt88pxKgNd5/5P/A/A1uvdWzqtflD64zs7Y/4d/Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthieu-moy.fr; spf=pass smtp.mailfrom=matthieu-moy.fr; arc=none smtp.client-ip=185.49.22.249
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthieu-moy.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=matthieu-moy.fr
-Received: from [185.217.155.54] (helo=mut-zose1-mta-hub-outmua01b-fr.yulpa.io)
-	by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <git@matthieu-moy.fr>)
-	id 1uCaod-0099EN-Dm; Wed, 07 May 2025 11:11:50 +0200
-Received: from localhost (localhost [127.0.0.1])
-	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id C4B6A100CC4;
-	Wed,  7 May 2025 11:11:46 +0200 (CEST)
-Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
-	by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id uyHzoYLWlLoE; Wed,  7 May 2025 11:11:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id 2DC80100CDE;
-	Wed,  7 May 2025 11:11:46 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
-Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
-	by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id fqeOfNMsUfA4; Wed,  7 May 2025 11:11:46 +0200 (CEST)
-Received: from [192.168.1.82] (209.56.68.91.rev.sfr.net [91.68.56.209])
-	(Authenticated sender: matthieu.moy@matthieu-moy.fr)
-	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTPSA id DA548100CC4;
-	Wed,  7 May 2025 11:11:45 +0200 (CEST)
-Message-ID: <108f297a-b415-4742-80e4-51ea02af18e9@matthieu-moy.fr>
-Date: Wed, 7 May 2025 11:11:45 +0200
+	s=arc-20240116; t=1746611479; c=relaxed/simple;
+	bh=Mh4mF7QNf1S1MIHlDvcP735kYaSZA5qeEp5/+1royJo=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Yn3RT2h3zF1xyoo6ff4d3gJ05ctg8wSEJgVMyPTxXy0280XKVcwIBSVdu6DeGZzKwch0PeDSK5p7dIcPJtQgE4saogLAtsPg5qmO+wSTvi4fIKaVZH1O57e7V4LtiUSA0tW+i3BQBRutCTMJSUJKjABCwneo7T5dizwW6IgHra0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZEakCmyD; arc=none smtp.client-ip=209.85.128.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZEakCmyD"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43d07ca6a80so27238935e9.1
+        for <git@vger.kernel.org>; Wed, 07 May 2025 02:51:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746611475; x=1747216275; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=VOYSv3PtN0h7HP/otjuHOnA4fnl3uVIwNKYmsZkO1i4=;
+        b=ZEakCmyDPXlafE5MMCu3oeB0zHxWpHx9YJQQVH+vaGcO5iZwhTbQt2FvmNwzXRnIS8
+         iblt7VhS3BURMUmVhWDD8fWcyomEtlMR+3/gUZ362Qv4LpcsvjrtDeDPa6kxnY93xezw
+         ZwoYFv5OTkeNop0+vghmXmsbxrKjXaoZG/4OxfDCxfeslHsD31zq7d7xfUbLMDI1M7fA
+         HDjy9h2QXIeMnBHKgwP7CU8l25FFOrak3c3YbpOoWG33f7GTEZNOEO81zNjOh41ccK2M
+         hjgGPWWO3ICCJmI44sK9Cakrblm5xF7KLxYyuhyfsGqRu3qo+w5x+TkZm15KSVXyrf1p
+         IVwg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746611475; x=1747216275;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=VOYSv3PtN0h7HP/otjuHOnA4fnl3uVIwNKYmsZkO1i4=;
+        b=qdovnoWdPwMPmD5lpPJd7TLvXbgOPfFlEegj3MGOLGTxTBDNOzZTDvV7IC0mQaafFY
+         SYk0sWMkJ10LqIIHZ6EEy2lLeDFdu6QC6jqvi1FOl4SuIxETPixMH/F1IPSI179vPcra
+         gB7+FZqPiGGlxtSa9gkKScOXpT9//MkCejkmX7uWZxz+hspAkwZE/xezKt3s+GKy+LKf
+         tow3a4MkkdnATDygnH2AkEs+vtstfZHByS2LpuWG1XcQRmd5anPMoUue6QY3rM5I4b1x
+         febwx2TTRgvzwly+l9OViIheYz42wnGdM0UUc0Meefx6Uian8rOxL8IVdf8gT8jm/sf9
+         uNuw==
+X-Forwarded-Encrypted: i=1; AJvYcCWMnvqo03uWpRey3xNtZ5WUvAM0n88jXuQC4bJVAAp2M5VzdExnKN9FDCBKLs2JI1vut+Q=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUIYy8QFP8HSNoxEbrmb31YWTf3Mk/DFOAsVPr8YXyDZTlPbbs
+	XVFyUVSjZ87BPA13186ggz24nPsrrxFTPq7vRnsO+PBjqEuE7zS94nCPIA==
+X-Gm-Gg: ASbGncvQdQ4jJe9kZI7+BXVe6RrU5xVQJ2ZcnYheIaK0Bk75lwbIUt7SYALI+DntWU3
+	0A4FjE7HjLEPz1TOn7ZFrjxvzGSKSeYmEZ2ONkI20170IT9ODrtABwpTS7P0N/f1/bw/g+PBlVe
+	F7wHdMU24HjLNbbDuhAxIWXxLnKUj8utMitnt9wfwP5oCjaEBVSuMwLE9CCDrfMuyq0mGGGMy16
+	g/C3rnwyloA9JwIS297b46i4q7HjtD9/IOsDgZM+eNrq5Z9Oyd0O+ogfA7pMK9wZcfdpuiGigPX
+	DuuTwXoSGiDJpDEgHtNSvLXK7Hzqt0vFodvEGQB3DypvQQ7XxpAwORdhc6k7iypkg2nCVnUgDCQ
+	lkx3hjk/mbWgLcAFk
+X-Google-Smtp-Source: AGHT+IH3FKHW3DHaON/PLy4hZ3EetLpkUqVTMUABL4X6W/53r0ARWy4gIFMxvyERWMREgN+QSToUkQ==
+X-Received: by 2002:a05:6000:1885:b0:39c:1424:2827 with SMTP id ffacd0b85a97d-3a0b4a0526fmr2521303f8f.15.1746611474965;
+        Wed, 07 May 2025 02:51:14 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099b17260sm16798183f8f.98.2025.05.07.02.51.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 07 May 2025 02:51:14 -0700 (PDT)
+Message-ID: <61fe7690-87af-4159-be87-cd39c09475fe@gmail.com>
+Date: Wed, 7 May 2025 10:51:13 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -45,78 +68,190 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Matthieu Moy <git@matthieu-moy.fr>
-Subject: Re: [PATCH 06/10] contrib: remove "mw-to-git"
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
- <20250506-pks-contrib-spring-cleanup-v1-6-e6d5ddd79a72@pks.im>
- <xmqqr011h41x.fsf@gitster.g>
-Content-Language: fr
-In-Reply-To: <xmqqr011h41x.fsf@gitster.g>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 2/3] add-patch: add diff.context command line overrides
+To: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Leon Michalak <leonmichalak6@gmail.com>
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+ <7700eb173e73bb240852dc1c7ce26f3d1f95d8ca.1746436719.git.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <7700eb173e73bb240852dc1c7ce26f3d1f95d8ca.1746436719.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-yulPa-Domain: mut-zose1.yulpa.io
-X-yulPa-Username: 185.217.155.54
-Authentication-Results: yulpa.io; auth=pass smtp.auth=185.217.155.54@mut-zose1.yulpa.io
-X-yulPa-Outgoing-Class: ham
-X-yulPa-Outgoing-Evidence: Combined (0.18)
-X-Recommended-Action: accept
-X-Filter-ID: Pt3MvcO5N4iKaDQ5O6lkdGlMVN6RH8bjRMzItlySaT9p2hGKdLcZfsw7HwUF3DC/PUtbdvnXkggZ
- 3YnVId/Y5jcf0yeVQAvfjHznO7+bT5xwE+hFmHMHy7s8iAlBXqMSJ34yWkEDVsqYuRzEmKCD/jvY
- alByojF4/HJojC+gJeiYLVWfuE7KV6TRwC004sAACNkMkPiMYC+wMzHEMLPorbobc2oE2sGfAUTk
- EY7T3q4A8cYjACAs+j94NvLRgDL8VE2GDhhqlvnVCBLP4t+/qqVq46o/8MwZyVD9QGGfHMq7jJDZ
- ae6/9tkhc4aQqqFfN942RHV7KcBh+Yyy9UjcDMivEsJmn1J3i12zQnpjnAmy5UuY4esEwCgdIg/E
- IjtOg46a7F+LaHXXFQyrAsHe1K0udfbeJGXxh19U+NTtq/kGKqiBEW9ii+hcJOF6qk3sQRLeJOb9
- 1qg3iHopBP3/vLDzrhovf28HhjvwUeewP+A5Da5oo4qcHGmq3GQv9ZVj7LkpijicqSalrW2rJb6H
- PsFUVZKs0eeC26uVFs0oAkiflq7EPr0YgoJW9n+OafbCpKg4T3vgTS7kLivzY20h++wKvRaKNZis
- NFiUWHlKyjzuDFeHsKFQTpBp9R1uNwjHsFdDzqgpYxz1gf6QkX8e0GiH1Wgh6RAenBR+licROGbs
- k3YQoRw4Z7svCbphEftyfmEMaf5c+xWmLXJHak999PZHFmWeyMKEblX9h9vPgm6EpheizIhoWwtm
- 5CT3thgqYixlBRaMQfsEfUT6qffDgVvEUMWF9507kX9PudfQZl+LBDMrD7q/cJogwbqzsuok3gFJ
- TFE9LIBVCsj7+GXcyREnRV+KD/zPY7Gk9PF60yqIyhaI671I4yi7MsEJJOHqowZWfqOfoY56Kz1g
- bVajKNS5ltNyc8pc5dVBGlMifyclCkSujm58a/xB+XC1kCc60ScQfWjzSCvQ9Y+1CCZHkMcnOSyB
- mtqjtHaipgVbT5gfw10R8xRWgb42LTVX/Sq//5iHE6NKmdYM/wvullW8NNjZ2BWEUGaa2KR6vniz
- CCbswUEHuAiex0HQwUJspzSocRo1RRiieYHPbowxVKku/TiHyo1+EhP4m3G0HBShybIxL7hrJSk6
- 0SF3F6RYOYr2
-X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
-X-Complaints-To: abuse@mut-mta1-se01a-fr.yulpa.io
 
-On 5/6/25 22:34, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+Hi Leon
+
+On 05/05/2025 10:18, Leon Michalak via GitGitGadget wrote:
+> From: Leon Michalak <leonmichalak6@gmail.com>
 > 
->> The "mw-to-git" directory contains tools for accessing MediaWiki via
->> Git. The scripts are essentially unmaintained in Git: despite a couple
->> of global cleanups, the last changes were a couple of security-related
->> issues part of 9a8606465e8 (remote-mediawiki: use "sh" to eliminate
->> unquoted commands, 2020-09-21) and its parents. We don't ever run any of
->> the tests so it is more likely than not that many of the tests have been
->> bitrotting, like e.g. documented in f8ab018dafc (remote-mediawiki tests:
->> annotate failing tests, 2020-09-21).
->>
->> Furthermore, the code has been spun out into a separate project at [2].
->> Remove the directory in favor of this new home.
- >>
- >> [2]: https://github.com/Git-Mediawiki/Git-Mediawiki
+> This patch compliments `8b91eef812`, where builtins that accept
+> `--patch` options now respect `diff.context` and `diff.interHunkContext`
+> file configurations.
+> 
+> In particular, this patch helps users who don't want to set persistent
+> context configurations or just want a way to override them on a one-time
+> basis, by allowing the relevant builtins to accept corresponding command
+> line options that override the file configurations.
+> 
+> This mimics `diff` which allows for both context file configuration and
+> command line overrides.
+> 
+> Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
 
-AFAICT, there was no activity at all on this project, neither in 
-contrib/ nor on GitHub, for years. I'm not using it anymore and lack 
-motivation to maintain/contribute to it, and no one really stepped in to 
-take over.
+I'm somewhat torn about the name "--unified" as I don't think it is 
+particularly informative - it only makes sense if one knows the diff 
+option and we only support a single diff format. Having said that it is 
+probably better to reuse the name from "git diff" for consistency.
 
-> OK, the new home also lacks activity since Mar 2022, but it
-> still is certainly a much better home than having it here.
+> +`-U<n>`::
+> +`--unified=<n>`::
+> +	Generate diffs with _<n>_ lines of context. Defaults to `diff.context`
+> +	or 3 if the config option is unset. Implies `--interactive/--patch`.
+> +
+> +`--inter-hunk-context=<n>`::
+> +	Show the context between diff hunks, up to the specified _<number>_
+> +	of lines, thereby fusing hunks that are close to each other.
+> +	Defaults to `diff.interHunkContext` or 0 if the config option
+> +	is unset. Implies `--interactive/--patch`.
 
-Perhaps it's a grave more than a home, but that's indeed a better place 
-for the project to rest.
+This documentation is repeated for each command. I think it would be 
+better to put this in separate file that is then included where it is 
+needed. That way if we need to update the documentation in the future we 
+only have one copy to worry about. The syntax to include a file called 
+diff-context-options.adoc is
 
-> And I doubt this removal needs to wait for Git 3.0 boundary;
+include::diff-context-options.adoc[]
 
-Right, actually IIRC we already discussed its removal and it could have 
-been removed long ago already.
+> --- a/add-interactive.c
+> +++ b/add-interactive.c
+> @@ -86,6 +87,11 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+>   	repo_config_get_bool(r, "interactive.singlekey", &s->use_single_key);
+>   	if (s->use_single_key)
+>   		setbuf(stdin, NULL);
+> +
+> +	if (add_p_opt->context != -1)
+> +		s->context = add_p_opt->context;
+> +	if (add_p_opt->interhunkcontext != -1)
+> +		s->interhunkcontext = add_p_opt->interhunkcontext;
 
-Anyway, many thanks to this list for the help building up this project 
-when we created it, loooong ago!
+This happens after we read the config so the command line option wins - 
+good.
 
--- 
-Matthieu Moy
+> index 693f125e8e4b..653f07a917b8 100644
+> --- a/add-interactive.h
+> +++ b/add-interactive.h
+> @@ -3,6 +3,13 @@
+>   
+>   #include "color.h"
+>   
+> +#define ADD_P_OPT_INIT { .context = -1, .interhunkcontext = -1 }
+
+I think we normally define initializer macros after the struct they 
+initialize so the reader can more easily check the fields are all 
+initialized correctly
+
+> +struct add_p_opt {
+> +	int context;
+> +	int interhunkcontext;
+> +};
+> +
+>   struct add_i_state {
+>   	struct repository *r;
+>   	int use_color;
+> @@ -18,14 +25,17 @@ struct add_i_state {
+>   
+>   	int use_single_key;
+>   	char *interactive_diff_filter, *interactive_diff_algorithm;
+> +	int context, interhunkcontext;
+
+Should this be in the previous patch? It is a good idea to run
+
+     git rebase --keep-base --exec 'make && cd t && prove -j8 
+tests-that-you-think-might-fail :: --root=/dev/shm'
+
+before submitting a patch series so that you can be sure the patches all 
+compile and the tests pass. Running the whole test suite can be pretty 
+slow so just run the tests that are relevant to your changes.
+
+> @@ -169,9 +170,10 @@ int interactive_add(struct repository *repo,
+>   		       prefix, argv);
+>   
+>   	if (patch)
+> -		ret = !!run_add_p(repo, ADD_P_ADD, NULL, &pathspec);
+> +		ret = !!run_add_p(repo, ADD_P_ADD, add_p_opt, NULL,
+> +				  &pathspec);
+
+This line could be unwraped and still fit within 80 columns I think.
+
+>   	else
+> -		ret = !!run_add_i(repo, &pathspec);
+> +		ret = !!run_add_i(repo, &pathspec, add_p_opt);
+>   
+>   	clear_pathspec(&pathspec);
+>   	return ret;
+> @@ -253,6 +255,12 @@ static struct option builtin_add_options[] = {
+>   	OPT_GROUP(""),
+>   	OPT_BOOL('i', "interactive", &add_interactive, N_("interactive picking")),
+>   	OPT_BOOL('p', "patch", &patch_interactive, N_("select hunks interactively")),
+> +	OPT_INTEGER_F('U', "unified", &add_p_opt.context,
+> +		      N_("generate diffs with <n> lines context, implies --interactive/--patch"),
+
+It cannot imply both --interactive and --patch as they are two different 
+operations. I think it should imply --patch because that option is 
+supported by all the commands we're adding -U to.
+
+> +		      PARSE_OPT_NONEG),
+> +	OPT_INTEGER_F(0, "inter-hunk-context", &add_p_opt.interhunkcontext,
+> +		      N_("show context between diff hunks up to the specified number of lines, implies --interactive/--patch"),
+> +		      PARSE_OPT_NONEG),
+
+As these two options are duplicated in many commands we should define a 
+preprocessor macro for them in parse-options.h. If you look at the end 
+of that file there are a bunch of similar definitions.
+
+>   	OPT_BOOL('e', "edit", &edit_interactive, N_("edit current diff and apply")),
+>   	OPT__FORCE(&ignored_too, N_("allow adding otherwise ignored files"), 0),
+>   	OPT_BOOL('u', "update", &take_worktree_changes, N_("update tracked files")),
+> @@ -398,7 +406,12 @@ int cmd_add(int argc,
+>   			die(_("options '%s' and '%s' cannot be used together"), "--dry-run", "--interactive/--patch");
+>   		if (pathspec_from_file)
+>   			die(_("options '%s' and '%s' cannot be used together"), "--pathspec-from-file", "--interactive/--patch");
+> -		exit(interactive_add(repo, argv + 1, prefix, patch_interactive));
+> +		exit(interactive_add(repo, argv + 1, prefix, patch_interactive, &add_p_opt));
+> +	} else {
+> +		if (add_p_opt.context != -1)
+> +			die(_("the option '%s' requires '%s'"), "--unified", "--interactive/--patch");
+> +		if (add_p_opt.interhunkcontext != -1)
+> +			die(_("the option '%s' requires '%s'"), "--inter-hunk-context", "--interactive/--patch");
+
+I don't understand this - I thought the help for --unified said it 
+implied --patch but here it is erroring out if --patch is not given.
+
+Somewhere we should check that the values given for the context and 
+interhunk context are non-negative. git_diff_ui_config() errors out if 
+the context is negative and we should do the same in add-patch.c 
+otherwise we'll get some wierd error about "git diff-index" failing. We 
+should also think about -U0 as "git apply" rejects hunks without any 
+context unless by default and I dont think "add -p" passes the option to 
+enable that and I'm not sure it should.
+
+> +test_expect_success 'The -U option overrides diff.context for "add"' '
+> +	git config diff.context 8 &&
+> +	git add -U4 -p >output &&
+> +	! grep "^ firstline" output
+> +'
+
+It is great that you've added tests and I do think we should test all 
+the commands here as unlike the previous patch there isn't a common code 
+path. My other comments about the tests in the previous patch apply here 
+though I think.
+
+We should have a test to check negative context values and possibly zero 
+are rejected.
+
+Thanks
+
+Phillip
 
