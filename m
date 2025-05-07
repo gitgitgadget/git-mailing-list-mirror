@@ -1,136 +1,149 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC6385A79B
-	for <git@vger.kernel.org>; Wed,  7 May 2025 20:45:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40591E22E9
+	for <git@vger.kernel.org>; Wed,  7 May 2025 20:49:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746650723; cv=none; b=ikPWwcGd0c2XrPNVNk7GAIzxoVn/J4VJ8zLwSNxx7F85UUEZzMgarHapTr576TeespJWik9eBddiOpnBEpSlaR+1AjWxpVwyJlVR0nkQW+fBFrXBVbvyMnrUluJjMzL1JIIGbyw1GjjJj9mvYK1IzUn+Y0A/OEbitBTD5U5UaiQ=
+	t=1746650966; cv=none; b=bEw2C1UikP1a2djsWNIgzaElv28/EwZmpXpPUnn5ADFnNI4ecXhDMm6oWmWdOfPRjIRO8jhGlxFI2P2wYL7Gyfz8mKSPm9bjzkN9A9AQQ8sDYbedGA6XnyT9YE/j5cvU3da1j+KzwWfCqEA7srqvKloewUYcpSWg/VjFKwjm9mA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746650723; c=relaxed/simple;
-	bh=Ny2SV85WntwE1jsnCt4MGhm1ViQM92tiCvZtwTcv/bk=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uF96uGTU8sCj7AqCd4cESLt4H7lAPhumpYA9Ao5LZt59RCSMiAsja/xEa2CiwCOkxbG7F9zODK1vVgnNTSPV76YrSMbeExCtrWOKMWm+/vpzghNnzq0BGX6zCt8O+kPWcAbQ7H8B+W/p2op31rnfg06DlXpNiA/j6lvyPzdyhA4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VSp/Q/bH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=av+3FAn+; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746650966; c=relaxed/simple;
+	bh=eR/AeMKo97SpJyK8c+5ppbn8oOdyQPxY+pL0mo9X2uM=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=BkUjnCuMsnWuhBdj6X6ou0cprzfDHo+bd+mWSUvlxoWLuCBhvbz6V4D6ZOdqGDyOwtWJuc0QHOJjpiTLmUkTQXmlO/2gWT59hjqW6h6DEDuSAhaZLwW8D5eATVnpPJhV/3kPTjh8hDSK6nx0RPdeOiP5RIPiESZJqidJqj8gx7Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=LeOC0xJx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=azhYAHVs; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VSp/Q/bH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="av+3FAn+"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id ACDC71380163;
-	Wed,  7 May 2025 16:45:19 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Wed, 07 May 2025 16:45:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746650719; x=1746737119; bh=SdkJPZmXb/
-	HnyXVmMl0bGVbbOJ0BmTsQyVEbod3HAmo=; b=VSp/Q/bHXM51aCalUg085I0oKx
-	TV8IRO2u+C+B90HKc89T6bp+mqxqA8/oiugg5Z680LQKBvFbhQ7+6PYKXxnSNQxD
-	8DA9E9PIxkYZB881Ah0w+yzHvWnqyTUAFVfW21u0V9/gMBCBRoKw9/9hLYzCEbnt
-	gasS3S10OTuKeMAzOhRi8+tD1G74JoxYqFh7zkGUUZt1PBjr0lHSgV4a41s9XlSp
-	qR2ILh3KJUFw7fgY3zIB7jdGvW7/wij0ZDXtx5j4ihkVzzkRhKUpWuHEGS/XKoqz
-	jxZDFYLmUT24jju+Y5q6PziZFC8pmPl9GzzoPSgP12TmcYNsoCI4Jxe/5eEw==
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="LeOC0xJx";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="azhYAHVs"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id 9C18C114016C;
+	Wed,  7 May 2025 16:49:22 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-09.internal (MEProxy); Wed, 07 May 2025 16:49:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746650962;
+	 x=1746737362; bh=X2cupYqYZ5Mtf0mIZdgaRESEO/caV1Xkg1kOYzMYX7w=; b=
+	LeOC0xJxiJbbdCz/hF1BJwuWo2P4A1FkERWeocF+2sC00e6JQxdLcjol0N2XaDUF
+	2wNjpSLYRd5mYnY2nWiI9jRb1S4kzndQr1hGJZ9ypW7G15ZHZKjS010dPH4arglz
+	luM+oy+xyxuRA3ubMYHcRhph2Mk2C64FrlZecZC/lV3S+77llOAijqoUJjXm33XB
+	cxSgAsLNoHa3T77TUxnjcip2p5lb/Jge3197PIkE+mdTfBUP6m0aBifMsvHECbC9
+	lH7Lh7tf25ZvTc/qbFvCeAZx4ZAOJLX6OlA1bUZORt28ZcGA9TgpBzylubBt8rSJ
+	6rm9bsrmZkXNrXEVA2o5Lg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746650719; x=1746737119; bh=SdkJPZmXb/HnyXVmMl0bGVbbOJ0BmTsQyVE
-	bod3HAmo=; b=av+3FAn+/zVXhqzzT3h90ym0lROQaPLcWX7YbRkVPxW6WmSyD2N
-	d9Ab4MApkBPBVmXK22mNQA9f7l5e7UQ11hvyd8xzRmUlU49pgNI7BjojAHonbHbG
-	tlyoSJLJF5yC7R/sPiT/IZWbT6kdO8OH8d5Ah7qfU3USByHiRQo64ax1u54O9jeM
-	aaUFH8/by2ZvmQo6iAhAAQAqA5XCpYjL9ztRHo9vrxjTvg1gyGGMI4MpPvASaFnq
-	o4LGSBkV/rGMZcX5oLqmuwsQY3S4mZieSYJhx3/0fTWbpJ31oJfIXLsK1wI1VvHd
-	h7uBXqVmw7E3eViiQFkimm8oPncJaL1nUNg==
-X-ME-Sender: <xms:X8YbaCALK8Oa-P8JSSwixaQoaXvQiP2-i9nRWgXosDez9fXvdX__eQ>
-    <xme:X8YbaMiYyA6tF72E1hd1Fcftb-v51mVGxdaL1OmVtieoPQyQ0Cif6dPsvBUACqotw
-    JlojDHr8Z7A7ThhwQ>
-X-ME-Received: <xmr:X8YbaFkVbcR5bQU1K_XPoA67fkS1ZcKvAiVRVgZ4aS3Hj06l3jf5XKdSAdDWTLRFkexxwResyFzlo_W9IEQsasGME7DbKt5glXlM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejkeehucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746650962; x=
+	1746737362; bh=X2cupYqYZ5Mtf0mIZdgaRESEO/caV1Xkg1kOYzMYX7w=; b=a
+	zhYAHVssrgmN0mlPlJ0ZhroKfbu4DZChYyEwRK/yMiOAD5ri+epsi7wxlzExEMSB
+	nh9ClkwwCJ1PRrnXjBbQxwsAcTYzGu1UV93VH3lqCDxAbP6gSaNFME3y9xpIMGcd
+	I/f8b/xPzD3RRuRA7em4DJ/FVqyQqm2DQcN9ZwyUzeWYsUXKhL0A2selSO42UeLW
+	IYDi88Rm0X74PWMU2UKtgT4NuhqB6nWZ4VaPbFQ/jBoTTufQek7Bhsf3KVWt5PQJ
+	dloGMt/V6tX7ihLcQL6VRdPaXl2pdP9gO0OVFJgYdxMdwmOqqPt6YODrC8atLi0b
+	OasmTnjzcNxshEDDcK5lA==
+X-ME-Sender: <xms:UscbaJRY1wrzTx0Td2eYeksAWhRfUiXZw8gqMcrlU-gP11YUqqgz0vU>
+    <xme:UscbaCzLq18PA88ZkmRBjHZ3CHZUoy0ZE8zYBfKjQkJjPPUS_wCuYJ5VPZ19eWw7q
+    Zqj_oa519H2a7DSuQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejkeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhgtnhgrrh
-    gtseigihhplhhinhhkrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
-    mhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopegrvh
-    grrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:X8YbaAx5j8SBkcVYny6hS0OPGrm0zh_43BRa6HsvLvdSipKG4uAlBw>
-    <xmx:X8YbaHQWK9PrLhJyM-LqeDnwQqZVKPYdfEoexc9b2qOTo4nb5feKow>
-    <xmx:X8YbaLZjW2vpRdi_nC69-3AdX6LeWynLCdoia9gBfBIWtC5gzo1CTA>
-    <xmx:X8YbaASK5AO6nL7m5dRXTmMbEE0a567IOv--pJoCgPyu2AOjqc1kVg>
-    <xmx:X8YbaOT0UM6RnH_snOXcsY7KLJQuMX8ONzAyJ_IgMFf9_lmsAStdks3J>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 16:45:18 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Marc Branchaud <marcnarc@xiplink.com>
-Cc: Toon Claes <toon@iotcl.com>,  git@vger.kernel.org,  Jeff King
- <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee
- <stolee@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH RFC 0/5] Introduce git-blame-tree(1) command
-In-Reply-To: <323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com> (Marc
-	Branchaud's message of "Wed, 7 May 2025 16:23:37 -0400")
-References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
-	<69a10929-0e44-4ce9-af91-048b8404c752@xiplink.com>
-	<87ecx0ijqt.fsf@iotcl.com>
-	<323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com>
-Date: Wed, 07 May 2025 13:45:17 -0700
-Message-ID: <xmqqjz6sb15u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
+    tdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrh
+    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggft
+    rfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgie
+    fgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
+    mhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
+    hnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrvhgr
+    rhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
+    homhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprh
+    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepmhgr
+    rhgtnhgrrhgtseigihhplhhinhhkrdgtohhm
+X-ME-Proxy: <xmx:UscbaO1hn4C349RCpOIR4sXs6NtbzIXCxznScmurC3jJYTLUjFnMCw>
+    <xmx:UscbaBAMNwcbvnByOczhmf-kJs_RVmcXr1Sg8srsz5zaUyiksE3OEg>
+    <xmx:UscbaChHSsLQAmg_kobMibPvsRo_-1I_e9NGmykx3HaAQy3hobrVfg>
+    <xmx:UscbaFrYVD9UsrAai8IJ9We8DyyELxQgamqA-jpWOCdr9u-9YNeEPQ>
+    <xmx:UscbaJ5_c1VHGs1eOErRX3a1GNp1hZNMHlhFDqWJDnZI_0LUbw3XNWUh>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 2C2AD780069; Wed,  7 May 2025 16:49:22 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+X-ThreadId: T2ded8740debeeda3
+Date: Wed, 07 May 2025 22:49:01 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Marc Branchaud" <marcnarc@xiplink.com>, "Toon Claes" <toon@iotcl.com>,
+ git@vger.kernel.org
+Cc: "Jeff King" <peff@peff.net>, "Taylor Blau" <me@ttaylorr.com>,
+ "Derrick Stolee" <stolee@gmail.com>,
+ =?UTF-8?Q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= <avarab@gmail.com>
+Message-Id: <9a0c98d1-4a77-4f2e-9aa9-bbab11b3e44d@app.fastmail.com>
+In-Reply-To: <323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com>
+References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
+ <69a10929-0e44-4ce9-af91-048b8404c752@xiplink.com> <87ecx0ijqt.fsf@iotcl.com>
+ <323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com>
+Subject: Re: [PATCH RFC 0/5] Introduce git-blame-tree(1) command
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-Marc Branchaud <marcnarc@xiplink.com> writes:
+On Wed, May 7, 2025, at 22:23, Marc Branchaud wrote:
+> On 2025-05-07 10:22, Toon Claes wrote:
+>> Marc Branchaud <marcnarc@xiplink.com> writes:
+>>
+>>> I feel the need to get some bike-shedding off my chest, though:
+>>
+>> Always welcome!
+>>
+>>> "blame-tree" would be a terrible name for this command.
+>>
+>> Do you feel this way because "blame" as a negative conotation?
+>
+> Good question, but no, not at all.
+>
+> My concern is about having two commands to do blaming (or "crediting" =
+or
+> whatever anyone wants to call it), instead of just one.
+>
+>>> I think that if Git ends up with two blame-like commands it will
+>>> merely solidify Git's reputation for obscurity.
+>>
+>> I think "blaming" is a well-concept in Git, and many people (familiar
+>> with Git) would understand in instant what `blame-tree` would do.
+>
+> I agree that blaming is a well-(known) concept.  I also agree that most
+> users would understand what blame-tree would do, *once they find it*.
+>
+> But I think that's beside the point I'm trying to make.  Git is
+> notorious for making users learn countless commands, and having two
+> slightly-different commands for blaming is just going to make that wor=
+se.
 
-> My concern is about having two commands to do blaming (or "crediting"
-> or whatever anyone wants to call it), instead of just one.
+Use a Git user I don=E2=80=99t see the problem.  `git --list-cmds=3Dbuil=
+tins`
+lists 144 commands.  Six of them are `-tree` commands.
 
-Existing "git blame" (or "git annotate") is about tracing the origin
-of individual lines, so perhaps we can say "git blame" has two
-modes, blame lines or blame files, and run the code for this new
-mode with "git blame --mode=file" (and add "git blame --mode=line"
-that is on by default that runs the original "git blame" code
-paths)?
+It=E2=80=99s not been my understanding that people stumble upon niche co=
+mmands
+that easily.  Most questions I=E2=80=99ve seen about git-commit-tree(1) =
+(one of
+the `-tree` commands that seems to come up from time to time) seem to
+come from a point of idle curiosity.  That=E2=80=99s questions that brin=
+g it up
+(i.e. potential user confusion).
 
-> I mean, from a usability point of view, it makes much more sense if
-> "git blame" simply understood how to handle blaming a directory
-> differently from blaming a file/blob:
+(The first impression I got of `-tree` commands was that they were less
+user-friendly commands for hardcore users.)
 
-I think this needs rephrasing: blaming a whole file (or a whole
-tree) differently from blaming individual lines.
-
-As lines can move across files, and we do find such moves while
-tracing the origin of each line, "blaming a file" is not quite the
-right way to think about it.  "blaming lines in a file", perhaps.
-
-> Git should be smart enough to figure out what to do from just whether
-> or not the last argument is a file or directory.
-
-Ah, that is interesting.  We do not have to introduce "--mode=line/file"
-option.  Just see if the given pathspec names a tree object in the starting
-commit and trigger the blame-tree logic, otherwise we just line the
-"blame lines in a file" mode.  So dispatching between the two modes
-is almost trivial.  I like that.
-
-After command line option parsing, however, there may need some
-sanity checking logic like "You said you want to blame the t/
-directory and its contents, but at the same time you have -L1,10
-to say you only want to blame the first 10 lines, which is an option
-that does not make sense in blame-tree mode, so I abort".  As long
-as that is cleanly done, I think it is a good direction forward.
-
+That=E2=80=99s just my perspective.  Do you have a case in mind where su=
+ch a new
+command could lead to user confusion?
