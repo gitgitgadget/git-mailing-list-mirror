@@ -1,135 +1,89 @@
-Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f45.google.com (mail-lf1-f45.google.com [209.85.167.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3624028C5B0
-	for <git@vger.kernel.org>; Wed,  7 May 2025 18:07:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06DF41E1C1A
+	for <git@vger.kernel.org>; Wed,  7 May 2025 18:29:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746641274; cv=none; b=qhADGzEq6eF58rsw9HbnmrdKdvBlPLWTiw1M36PgHKiGOl3h5KP2OtVHIqFP9g+plyzkAzAgONgDSW6RsQiEpf+MiVMx+CRv4XRxMikMUcX7NXNHDjZu4yrvFKeaH6rvATB63CWjnace6trNjKSzNSno1tJJZNic1LC0HmlBTGI=
+	t=1746642549; cv=none; b=u0+wX4pAvmSQgFFuAelZ4Pr2qA/xdRh/McdQq43jiEzxEvfZh6u8SlCNfOXkCQAfc0mmANTFU3sUGXgrNNjlx4e0qoXUB6pUrfTy3sqkMKlApvhbNJDwNqxLndkVQa676lcxovJpVOdfds2lUOEB1rw3601u60+UlV2gS/DKQtg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746641274; c=relaxed/simple;
-	bh=+1cgbddVqI4sURZKBkjPQs4aaqHnM/HkDlXwaKmH+a8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=d2r1cEwJVJpJnQ7zuoQctOMcGHzHT6z2nwmUGwaB393A/nFCslHs7YFJCEkgFgbWox0N8MUnkBJnlyXRkdkRSGtP5AF9p04Kq/r+X5rS7mtK3npAQF5GAeezLahK+B9VMoG5UGy7su+bUznZCIesdviCG2Zabr6rv4uPCdjUhYM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=lRTbg7r9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rLCARekL; arc=none smtp.client-ip=103.168.172.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746642549; c=relaxed/simple;
+	bh=U2+qtKXIkeG7v4Tu/A3y1bXkeUcAtdJV7YXlksR3stI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=P9cCr31J0G886o+lUqCw4W9QVdWXBIAU3RoNx7M6xmCs2y2j3jai+ISHnncm2PdYN9c6rndrTFV+MMeZgH7Wotu5MHlnKcqfSiGSpSQkDbiNEibH2ibSws1NIs8vXogMMCaTjaXMDGZIipIGr8CiWPtmdoMYoAhRhmAjJcU9jv4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MPThuxpk; arc=none smtp.client-ip=209.85.167.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="lRTbg7r9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rLCARekL"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1CADD1380192;
-	Wed,  7 May 2025 14:07:51 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 07 May 2025 14:07:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746641271; x=1746727671; bh=0TAN8K0693
-	l7ulYOOG7FGQ8Bu8qtIi0Cw5g/6IVtEwU=; b=lRTbg7r9TwnhyGD6QZUfRExuDQ
-	Y+jE5KnDT4umTxVGeaiJlLky++B59gOtFPQHQA29aszGWyV6UxKMPoYNgKC+ZA/e
-	Qh8Hf1NMAcA5jmdAn4rtYumLKRkoAuJ6SUXioUj8kZDFgXnaZzdN5dfcfzuGWRp2
-	yTSZUF3udhOYeg68P6vayfbEyTdMfUUNX2yX1bPWLuUqIrkIXwVgTJ4jsu02zvp0
-	sJ8UYVUXI7PzMlbFUYgj5aBobj6AwnjGVZSAbZ/R33sbbO6F84TATE8btiOzm0jf
-	ghRm4V83M4BzjV11KrhugoZ7+e8bKRs4Z3sxyyzHOHEOZbjSqcsVIBS5n26w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746641271; x=1746727671; bh=0TAN8K0693l7ulYOOG7FGQ8Bu8qtIi0Cw5g
-	/6IVtEwU=; b=rLCARekLAzZYqUK1n4RM2C2ZMhWVW8tmPhMyAFnmtteOGwFjGS8
-	oeZ0VOb3EpAifIZQHBxjgQelfSuWJuImc66RFWQoo5aihDfc+/mMrgqAo+nhRUdH
-	dr8a+q+bybsmfEzZYpKYGsYn52hgDE/LcbM5ONR24DU9Zc4pCm/HjFaNrjPFJAnf
-	fOg5EJGh8Vb8+K1XOu3uR1qLVERpYld9r6OQ6VWYsUmCjNZlTOO8Tz+GwhpmvgvF
-	ufBorFyld5rpH+kpirsUF3fYO+MNOrQSODc4NghoimnewaYa8t1mN7gtvRk277vl
-	iBN+L6h603MW/upHGMSyl4uxwGn0KSelWCA==
-X-ME-Sender: <xms:dqEbaAEEPEtQX2CAqlYTXEf5F_YK2B6iAtA2hC8jtlpXDhVGq9cOFQ>
-    <xme:dqEbaJW2CMtmAwUr2iBSnatVda3l3groeYtdg0oUOBGBgZga80BpeZU-2GgkjUCZq
-    5kKG5CRV-IeatKAhg>
-X-ME-Received: <xmr:dqEbaKLze8WOrCDm4sA_sb7ZL88ILYvsPb2ETSkBExgAGPkLALjoGNhlB--H1_ZAbNDxXG4avbRalcSXp0cqP8t_2K25I31dEPWC>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejheegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtoheplhgvohhnmhhitghhrghlrghkieesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:dqEbaCG05cxOiQJZZOlu0CcnP9V1w_egyrb4YXpJRZSRDznvU5WLTA>
-    <xmx:dqEbaGUcU4ZyydenPS1GFjDN7hgEid09ROFrlruUh60Np5RladFjiA>
-    <xmx:dqEbaFNx6CB38resoZ7mmp7x_l7Ijnfc7jNwhpuhlV1MiZ0D9Jh3Ew>
-    <xmx:dqEbaN1j6r0Ni657zxKmbYA_eXa75Wq8naa1XQbgxr4QJeFvwMKAyg>
-    <xmx:d6EbaCk02Yikb9V3mnkxZy0D3KUl6ZpJ8ekDIreNAlw1XXdOJsmigdjU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 14:07:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Leon Michalak <leonmichalak6@gmail.com>
-Subject: Re: [PATCH 2/3] add-patch: add diff.context command line overrides
-In-Reply-To: <61fe7690-87af-4159-be87-cd39c09475fe@gmail.com> (Phillip Wood's
-	message of "Wed, 7 May 2025 10:51:13 +0100")
-References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
-	<7700eb173e73bb240852dc1c7ce26f3d1f95d8ca.1746436719.git.gitgitgadget@gmail.com>
-	<61fe7690-87af-4159-be87-cd39c09475fe@gmail.com>
-Date: Wed, 07 May 2025 11:07:49 -0700
-Message-ID: <xmqq8qn8cn0q.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MPThuxpk"
+Received: by mail-lf1-f45.google.com with SMTP id 2adb3069b0e04-549967c72bcso180197e87.3
+        for <git@vger.kernel.org>; Wed, 07 May 2025 11:29:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746642546; x=1747247346; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=U2+qtKXIkeG7v4Tu/A3y1bXkeUcAtdJV7YXlksR3stI=;
+        b=MPThuxpkQvOC5NC1cESNoK+ZLa6gYXb9hr1MQb5E03OjcDgOsSO7ARQb2/W/Ih+/KW
+         7CZxPdjv1VPb2vnTxg1eO3QKlM0lGCNsPwyHdiBANsG99RA6rii9D+TGAijgpB3hAUfi
+         KUmCh9mf3w5N18hgmRPGRQ/dzvxcZVjHpxqZnUoAYo/ASmFgulsd4slMo/5aHdqCP4hj
+         LDv/wSq+x4TEmPDxLhI60GL/8/bmxc+QLQr1qnVdLcBtpbaRKUbiRe0Z2WLfPQ0Jxoei
+         MkEU2lvgC5XXwiFHzbVNyEMIE0F+H4o+1cAFZAFJsqDT28V3p9H0D9SRQ7mOkhxDh7ad
+         S7fg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746642546; x=1747247346;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=U2+qtKXIkeG7v4Tu/A3y1bXkeUcAtdJV7YXlksR3stI=;
+        b=xP/DJg3V6Blw41BfXcFkLb8ncpm3+qbsya1aufe9q06kVq4HyASniHu0DFsiPhsVmf
+         J0FDdBTFbBWdV4x6j7bzsG6f9WnNYOygZAdizMJJP/P4p+ZoLYrCg2iIG86SU7hNzuuk
+         ADDl0lVbxhFflBy425461iy8pOY4dC14hOnhIUiHNu6JneOCwrA+gc2fCL9sA0SbkR8x
+         zoCWGVcHLTO5tEnueXhyVCVpm3lNLpqLcLkpL3eBbCzVbNprClRyI5e0eZlZo1r8/LGH
+         vvuW9p7tRnmLT6Dd+PXMiKXAACPBJeq+cUo7BdAWALVsYZdTmlDSWdh/htRqwNP9nk2b
+         Yd1w==
+X-Forwarded-Encrypted: i=1; AJvYcCV7UUHxb3Wf8imd8tEe8IbokCSGEtd8UTUnbPmCp5OYuUrw16kEgf27LWhjV/vuPUNuDnA=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yyai1CseOY42QA3nPtMJyacxp+A97niVpcLuJfUj7ytDyayZJn4
+	AizZJ7JrO6KmJplIDvC6Uj5GZxsKC4WZvkUPDcDKHTzTQCc5QdtJMRzTl95vPAxRfgjc40iNgjU
+	J6FEgkOBiu8pkuv7UxcN72VxdsG8=
+X-Gm-Gg: ASbGnctBrgm43vDkz9sn8+yfTRsO+V84ArPtdIiFpOz6u1qO3FMK1UcoT0Ry3xun4tm
+	9tip0crx+8e0Sp0uA9iWJzTzXTSzZ/N9bGDO0/7EtKm8zEkcPVFcmkLg7UxqjSgPwqCpaEfWJuN
+	imtAbb80/j35anO7MiRXlUUILHF9g=
+X-Google-Smtp-Source: AGHT+IHuFMbNwGcg0NvbtMU5QxSRE7f1KuGKYVlh2Zx52BqylNOl+sfqN6cNw0HxRPiwKwQ97P2FoPmShT0JXIrE96k=
+X-Received: by 2002:a05:6512:130b:b0:54e:8172:fb6e with SMTP id
+ 2adb3069b0e04-54fbfc53716mr78870e87.54.1746642545671; Wed, 07 May 2025
+ 11:29:05 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+ <7700eb173e73bb240852dc1c7ce26f3d1f95d8ca.1746436719.git.gitgitgadget@gmail.com>
+ <61fe7690-87af-4159-be87-cd39c09475fe@gmail.com> <xmqq8qn8cn0q.fsf@gitster.g>
+In-Reply-To: <xmqq8qn8cn0q.fsf@gitster.g>
+From: Leon Michalak <leonmichalak6@gmail.com>
+Date: Wed, 7 May 2025 19:28:54 +0100
+X-Gm-Features: ATxdqUE_tnghpkDyLpjNovqZdGGzQJbzncF6WwNv8_rTsGjHcQ0GsP90kJObQoA
+Message-ID: <CAP9jKjGEDY78MSrZVS2FxAoikPZpGazqem2XHDVmXqMjcox6yg@mail.gmail.com>
+Subject: Re: [PATCH 2/3] add-patch: add diff.context command line overrides
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, 
+	Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+I think I may be misunderstanding, so I'll elaborate on what I
+personally intended my documentation to mean.
 
->
->> +`-U<n>`::
->> +`--unified=<n>`::
->> +	Generate diffs with _<n>_ lines of context. Defaults to `diff.context`
->> +	or 3 if the config option is unset. Implies `--interactive/--patch`.
->> +
->> +`--inter-hunk-context=<n>`::
->> +	Show the context between diff hunks, up to the specified _<number>_
->> +	of lines, thereby fusing hunks that are close to each other.
->> +	Defaults to `diff.interHunkContext` or 0 if the config option
->> +	is unset. Implies `--interactive/--patch`.
->
-> This documentation is repeated for each command. I think it would be
-> better to put this in separate file that is then included where it is
-> needed. That way if we need to update the documentation in the future
-> we only have one copy to worry about. The syntax to include a file
-> called diff-context-options.adoc is
->
-> include::diff-context-options.adoc[]
+When I put in the documentation "implies --interactive/--patch" it
+reads to me as "this assumes you are also using either --interactive
+or --patch and that if you don't specify one or the other it will do
+nothing or possibly error (which is what I chose in the end, based on
+the initial discussion in a separate thread)". I didn't think it would
+read as "you must have both settings" or "if you don't specify these
+the command will assume it as if you had and effectively act as if you
+had".
 
-Excellent suggestion.
-
-I however think "-U implies -i/-p" makes no sense at all.  What if
-the user said "git add -U6"?  Do we run "git add -i -U6" or go
-directly to "git add -p -U6"?
-
-I think it is better to encourage the user to be more explicit to
-require them to say "git revert -U6 -p" or "git add -U6 -i".
-
-If -U<n> is given and there is no "-i" (for "add" only) or "-p" (for
-everything), just error out *until* other modes of these commands
-find a good use of context width information, at which point we can
-use the context length information to drive these commands in their
-non-"patch" mode.
-
-Even if we cannot think of a way to use the diff output (and with
-configurable context length) in modes that are not "--patch" for
-these commands RIGHT NOW, that does not mean -U<n> would never
-become useful in these modes for the commands.  Let's not close the
-door prematurely from our future developers by making -U<n> imply
-anything, and make it an error to use -U<N> without -p/-i for now.
+I'm not sure if the wording was confusing or it generally has
+different meanings to others so perhaps that might clarify at least
+what I intended :)
