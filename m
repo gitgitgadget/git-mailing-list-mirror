@@ -1,55 +1,55 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A38202F6D
-	for <git@vger.kernel.org>; Wed,  7 May 2025 07:21:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73E9E218EA1
+	for <git@vger.kernel.org>; Wed,  7 May 2025 07:21:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746602510; cv=none; b=cAd9XIW9D92UlpDbUuOj3pmD2sY6q5BfoO3mpguIZSmO7sRHUQlm6REksT+aY7Fk78Mc0URN9dE2Crmv/NU10+cj+K9/T8kHXxfC/+qsXvN/WoNbHUjsE2ryP39jRCJDtBzWhdtG32tLYzb8NcPbssFSKt8XLIWbFOnr6RccuIg=
+	t=1746602511; cv=none; b=mWY4EQav72e0krKtJlSlALdWp+lPuvxHRzpD7zzJG2so3xDHLc2S4uC8epKiIeSLzFSKC6ohR/naVngDjs3khIgaN0rhzl5ThiYdm3ATwbIQSaq/b0AbJM3G8fO4tWfzwzyW1N/N8E9qFzqPcj+kuFxpx3ir/kdZRMyhZ3gja8Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746602510; c=relaxed/simple;
-	bh=jpQaS8vmaXgS5FItQCJBwF3Ib39zuAgCX9cftUxrSXc=;
+	s=arc-20240116; t=1746602511; c=relaxed/simple;
+	bh=G1YnYs22YKL3x9oDMuJWJzOzRVwM+tubh10Mzw+plR8=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XHIFhaQI29vFK0DcbLMvpvXrm9yVIXlMuoD35X28LDa1eqZ/2N24gS8ImahIfQs4YKYCo0dl+lJzIxHCZ8HSMF3d3pgrgBxxomLzmGnyNS+vVoICCFUZisuVV6AUDvTCcWjQtBwv3vy//P0VYIJJ3Vv+Vh7TqD+a2h0MZ5GO+h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zzq4CWKf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Gzj2avPW; arc=none smtp.client-ip=202.12.124.147
+	 In-Reply-To:To:Cc; b=I92XBaWnleUc1TeJLK3aJwckH6xKBN3MrKM16tujc9h4EhN+LKjYgVyIHBo2VTcsi3zm9IJjn7jjgi4j0gJ0fHjtRUL5RowbYO4RTnzeymo0dr1R20V1co/xdzyuxKK1z1VkUmAMVjcg6yb026+fZWE++X+Efj8VR/9DcuLkraM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kJpynyVL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ajBAkho6; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zzq4CWKf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Gzj2avPW"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id BBE1311400FF;
-	Wed,  7 May 2025 03:21:47 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kJpynyVL";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ajBAkho6"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5B15225400DA;
+	Wed,  7 May 2025 03:21:48 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 07 May 2025 03:21:48 -0400
+  by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 03:21:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746602507;
-	 x=1746688907; bh=el3zysiXZDQoyG5mKkI718guaOuVSM+4FB5y4ahs0FU=; b=
-	Zzq4CWKfqmqOu+bSI91KRjj6DP9A9S2VhsKqig6ibyWpvnhIGMCZ8zSsU3xAnz0P
-	ZW0PVT76FqRtsmlc7qx7v/wmrtNte/DDFQ9JMUEf5s1oG65+QQKucDQOD6shDOtj
-	geidq/d7IriPdoutJ5MpGiYkxbX6EZ8VFWkEO9WFdLiFZQUoGFhMv1wlYTcN1EBk
-	BpWUMQdz7KuYHCLI6kZX0wMriUkLidGmvl6dS5ROnCvyvLhJ/v9o4PLtX/ozOycf
-	OjIlw7clBi0RB6r7aXWwmWUyxMDFgFLGjatF8okxw2NKwP3GK/gIwRIGnrS0FuBc
-	A2j4FveCH5a9c01oXVDziw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746602508;
+	 x=1746688908; bh=BAXBSyoIPzn37MTJYxnNL5ggZd20YnEYXfeQ4hfu6Y4=; b=
+	kJpynyVLputgW1tmx8bXwUBVocHr8eGWqG7rz57ElByOp+k6dX/5jyOLAIWqIygJ
+	JCmAvNjmwN0H39W1iYyFuz1IIhyLmzv5sBAqYdnE9NZBgGNNF4K8ZTXSTK5U8qLU
+	xvjQXxVQOZEPVwG4mvVG+mvI/G9cG9fM2wje/BnAGvbjGZVA/s9M/5xBN9Sh+IoT
+	bw1wfY6QiqHcFndj3rNEaVfNG59spPl19CBQcABKiVLODdtD0m/6JG1r4JDy1Wp1
+	b6FP+oQVBtZ2Y9CF8ocA1EFlao/+2C+t+gXXwLxfnNQnphghg5Xerp4UPDTW9OV8
+	aE5KCTcsfYRBP7Jb/aySbQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746602507; x=
-	1746688907; bh=el3zysiXZDQoyG5mKkI718guaOuVSM+4FB5y4ahs0FU=; b=G
-	zj2avPW7K5Qlw00TUIwM+BeG4Aze8Hla2/vkFQzXmiNToNRImGFMcEg132B689bv
-	LhzU3HFdeOh8ikItxJg/wWIxOow2KBOW5gH5D/vE1kdSjoh2PHEfyFr1ZsfCvsrS
-	wfNIbfnaewecjDusGzwuWzrjJW66K6zP668SaslupqeSaD/d3/YOIpPZTBU/u5Z8
-	AvGGXHwsiQxpWp521Q8KKaKBj1FJVVm5Hn6n7a4ZUE6d5QjDNz0k5T8g/PJXWRD0
-	QTRGmrfz6Re9ROz5kJOuubyDlSSfZRRAwyE07kIHqYt3qlUghpPzoQHT5xNg1xeP
-	T8RStEe99sh1yl+bc/hXQ==
-X-ME-Sender: <xms:CwobaMk7SJ4PFuWTYcvRQkOycLigDQp3KOzr0o9r5qmx74hJ1fbG_g>
-    <xme:CwobaL0muv2zEj9Y9Yig-1KsXoMSN1kS1FFebVs0T4jIKqiIF0SDt6qWQt1C8HfyN
-    fnJys8jmFP1xsygJw>
-X-ME-Received: <xmr:CwobaKqkrNrDXxeRUJEHvjrddUgGLi1HqYQuDQNHwXSqhrrCfdFjCA4VM0njoFc6fUkZIBfGfYaZY-HGS_UrMBvhYjt_sx4x3uxGl5x4uY6QYA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746602508; x=
+	1746688908; bh=BAXBSyoIPzn37MTJYxnNL5ggZd20YnEYXfeQ4hfu6Y4=; b=a
+	jBAkho6Et+7u88XMc+NG63aCIYOi+7i69sNNn7Z+GR1Izo8a7erM+DUSLxMVsr8Q
+	hpC/Qty9jY2wOReF5KxZ+up000+LjbVAIl/jKF8bNFQEdlaQzVqhjeU3ZAaU0LT4
+	3TjVkLFaHnCiFUMlAVfSMf1l5wEHYFvIttagluLQXR3ppQxkMU3u8LR0yrOMfENp
+	2ENQCGjA3+o18Z2A3gDqKTrA5YFC3Is8Y9mz9Mpbhu/qo/6Ew0hu/NHsJfuuq2fL
+	WX5ONbganjwUa3lWx7ZbFRualJMcvYPBLJu7ai5Gad+zf7zbshIDbVAgxTHA6ak6
+	AEAc2aOs/euAf+4tIpuTg==
+X-ME-Sender: <xms:DAobaKpSaDkuEL_FtY8cCWwnfAxhY_AokET1JLtCadeDVGRFuoGabQ>
+    <xme:DAobaIoKXhQ2WqA_0zmJzHPcxeiEl6jn1pLK8r6wINBXJ_2qUedxHCIW38TCXG987
+    LDo0Ge-neU_g1pT_w>
+X-ME-Received: <xmr:DAobaPPQGoTEhpdTxFXvMXubcR743zdBEk-piLvnNp6m9srWY4k6i2D1tf7kBg8U3a_Agi6lhzTEdKF-ZAFqO6NhJ-V55hCeqqYwN71coPdYqQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeivdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,26 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeivdegucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
     udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeehpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghm
-    ihhlhidrohhrgh
-X-ME-Proxy: <xmx:CwobaIlEDrWC9mJ3Ys1K03Y6f3b2VliDbTBPAR5KY_WmB6xYToxj2g>
-    <xmx:CwobaK0INiFu8rUPwYpu1LGCWsIoCIjt3LRkEN17DPuqr5nh70HDqQ>
-    <xmx:CwobaPu7LzY39vK7JlL3H-gGuuSllIbHjGGQSErNvhXy9Xu1EYrJug>
-    <xmx:CwobaGUdOF2XI3trd-lXNZB50fu6cwYz6LLwzIvSFliCm5NsUz2-YQ>
-    <xmx:CwobaGYm0c91F2voxKhqi2UmFzT_4A0GlhSgu7M1FLrTz5ryqbeSnThW>
+    vgepshhmthhpohhuthdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilh
+    ihrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtgho
+    mhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgih
+    htshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrgh
+X-ME-Proxy: <xmx:DAobaJ61DPYr1T6Y_jOaNzm-IUokne7yOb3M5ja3Da5cx0VUGXXu0A>
+    <xmx:DAobaJ4Mgdxlqe7Q9XD6Vi9D5Oezh7vUQuOAYbs_LJzjxMe05ctFFQ>
+    <xmx:DAobaJjv1vqNPRnDmDrQwuygZNYzilDMq6uwbnYkehCaN1rSFT1Ugg>
+    <xmx:DAobaD4lhAvcy9onCRTJNVtdR5blXxDJuyjjMGNb1r01vaSTOv3dvA>
+    <xmx:DAobaJsAusQ37-Yki4ebDDf6tIfKyIcM35csUfHFD6WnYFNmxGDqfuWg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 03:21:46 -0400 (EDT)
+ 7 May 2025 03:21:47 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 4993ad4a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 07:21:41 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 61f12a54 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 7 May 2025 07:21:42 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 07 May 2025 09:21:37 +0200
-Subject: [PATCH v5 1/6] builtin/gc: fix indentation of `cmd_gc()`
- parameters
+Date: Wed, 07 May 2025 09:21:38 +0200
+Subject: [PATCH v5 2/6] builtin/gc: remove global variables where it is
+ trivial to do
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250507-pks-maintenance-missing-tasks-v5-1-aa5fdfb82891@pks.im>
+Message-Id: <20250507-pks-maintenance-missing-tasks-v5-2-aa5fdfb82891@pks.im>
 References: <20250507-pks-maintenance-missing-tasks-v5-0-aa5fdfb82891@pks.im>
 In-Reply-To: <20250507-pks-maintenance-missing-tasks-v5-0-aa5fdfb82891@pks.im>
 To: git@vger.kernel.org
@@ -95,30 +95,95 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Christian Couder <chriscool@tuxfamily.org>
 X-Mailer: b4 0.14.2
 
-The parameters of `cmd_gc()` aren't indented properly. Fix this.
+We use a couple of global variables to assemble command line arguments
+for subprocesses we execute in git-gc(1). All of these variables except
+the one for git-repack(1) are only used in a single place though, so
+they don't really add anything but confusion.
+
+Remove those variables.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ builtin/gc.c | 31 ++++++++++++-------------------
+ 1 file changed, 12 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index d5c75be2522..a73ec22fb18 100644
+index a73ec22fb18..ada36e210f0 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -724,9 +724,9 @@ static void gc_before_repack(struct maintenance_run_opts *opts,
- }
+@@ -53,15 +53,9 @@ static const char * const builtin_gc_usage[] = {
+ };
  
- int cmd_gc(int argc,
--const char **argv,
--const char *prefix,
--struct repository *repo UNUSED)
-+	   const char **argv,
-+	   const char *prefix,
-+	   struct repository *repo UNUSED)
- {
- 	int aggressive = 0;
- 	int quiet = 0;
+ static timestamp_t gc_log_expire_time;
+-
+ static struct strvec repack = STRVEC_INIT;
+-static struct strvec prune = STRVEC_INIT;
+-static struct strvec prune_worktrees = STRVEC_INIT;
+-static struct strvec rerere = STRVEC_INIT;
+-
+ static struct tempfile *pidfile;
+ static struct lock_file log_lock;
+-
+ static struct string_list pack_garbage = STRING_LIST_INIT_DUP;
+ 
+ static void clean_pack_garbage(void)
+@@ -769,9 +763,6 @@ int cmd_gc(int argc,
+ 					 builtin_gc_usage, builtin_gc_options);
+ 
+ 	strvec_pushl(&repack, "repack", "-d", "-l", NULL);
+-	strvec_pushl(&prune, "prune", "--expire", NULL);
+-	strvec_pushl(&prune_worktrees, "worktree", "prune", "--expire", NULL);
+-	strvec_pushl(&rerere, "rerere", "gc", NULL);
+ 
+ 	gc_config(&cfg);
+ 
+@@ -897,34 +888,36 @@ int cmd_gc(int argc,
+ 		if (cfg.prune_expire) {
+ 			struct child_process prune_cmd = CHILD_PROCESS_INIT;
+ 
++			strvec_pushl(&prune_cmd.args, "prune", "--expire", NULL);
+ 			/* run `git prune` even if using cruft packs */
+-			strvec_push(&prune, cfg.prune_expire);
++			strvec_push(&prune_cmd.args, cfg.prune_expire);
+ 			if (quiet)
+-				strvec_push(&prune, "--no-progress");
++				strvec_push(&prune_cmd.args, "--no-progress");
+ 			if (repo_has_promisor_remote(the_repository))
+-				strvec_push(&prune,
++				strvec_push(&prune_cmd.args,
+ 					    "--exclude-promisor-objects");
+ 			prune_cmd.git_cmd = 1;
+-			strvec_pushv(&prune_cmd.args, prune.v);
++
+ 			if (run_command(&prune_cmd))
+-				die(FAILED_RUN, prune.v[0]);
++				die(FAILED_RUN, prune_cmd.args.v[0]);
+ 		}
+ 	}
+ 
+ 	if (cfg.prune_worktrees_expire) {
+ 		struct child_process prune_worktrees_cmd = CHILD_PROCESS_INIT;
+ 
+-		strvec_push(&prune_worktrees, cfg.prune_worktrees_expire);
+ 		prune_worktrees_cmd.git_cmd = 1;
+-		strvec_pushv(&prune_worktrees_cmd.args, prune_worktrees.v);
++		strvec_pushl(&prune_worktrees_cmd.args, "worktree", "prune", "--expire", NULL);
++		strvec_push(&prune_worktrees_cmd.args, cfg.prune_worktrees_expire);
++
+ 		if (run_command(&prune_worktrees_cmd))
+-			die(FAILED_RUN, prune_worktrees.v[0]);
++			die(FAILED_RUN, prune_worktrees_cmd.args.v[0]);
+ 	}
+ 
+ 	rerere_cmd.git_cmd = 1;
+-	strvec_pushv(&rerere_cmd.args, rerere.v);
++	strvec_pushl(&rerere_cmd.args, "rerere", "gc", NULL);
+ 	if (run_command(&rerere_cmd))
+-		die(FAILED_RUN, rerere.v[0]);
++		die(FAILED_RUN, rerere_cmd.args.v[0]);
+ 
+ 	report_garbage = report_pack_garbage;
+ 	reprepare_packed_git(the_repository);
 
 -- 
 2.49.0.1045.g170613ef41.dirty
