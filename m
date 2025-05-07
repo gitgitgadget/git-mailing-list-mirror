@@ -1,158 +1,98 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B25014A11
-	for <git@vger.kernel.org>; Wed,  7 May 2025 02:08:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9613863A9
+	for <git@vger.kernel.org>; Wed,  7 May 2025 02:33:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746583705; cv=none; b=Zz/vAh/jXQpB5Fyo02FLlH4dzlM3+cbLnKS2NSfBNxXD6GsEufbEVTHm16GPZZKGi9EPBfGOQM1VXuaf0+Tgk2IzSX/gaWRF3PQCEy0Kohaw5daif1HE28Sb3gNTKqhajZb8mKjOuJVZkq/5KrMkoEXA+6UEqp1v1cncHG/uEDk=
+	t=1746585208; cv=none; b=RLK0PjxBt7whvjZUkwbjxFt1ADVuWfcVpt6HMnImMGKa3fi1v//U5KOk1bdCjCavnFyhp7Qu6iANENOxJ02VIZBW1H0geUsFHmgnfllLip7bBa3dxFpVgLFyZo42AfFahq+4i2WSsP6xHOgz9CORrew5Gl/ukuvhJPdJxLsEgjA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746583705; c=relaxed/simple;
-	bh=dd9Bf5kxx3hnIB2ktLX9V0fS6mzhcszR0ZFRWoCHVmQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LhvXGJ24lDZACRkT6vAf+rPV5frWaSp3t5He1QWVDPiF1UDk/d0Bd7jFgiaUYXCRgAFLnejyJA84GlTItez88rln07qE5tMkFn4OvgPMXYrP9INjh3aWRmlGjQ6Gq2iwbELVB9YWL92FYbVgbjenn8G1z6LSnXgPm2rLO380SVo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=Cp1aAjJ2; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1746585208; c=relaxed/simple;
+	bh=eoqty9NyQ/HfQgyhjlMler+GTrJVMGj1K1fluamDyn8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ag9TMV/MMKbSuE2GyWa5MtP5ZAaGUk49ZQVEKQeKnevByJXcFfYSo55i9/a4yGwv7GWM5V4vQ7VLDlWneXBAFWnCGObHchN6ftk7v3d41gxdBp6Xo1n5hQ3YWPrX4i1R21PUsARXbBNQekbPx1lSOnR7dSPUqQA50hXvX9dhquU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nVu1lZrH; arc=none smtp.client-ip=209.85.128.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="Cp1aAjJ2"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6f5373067b3so16068816d6.2
-        for <git@vger.kernel.org>; Tue, 06 May 2025 19:08:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nVu1lZrH"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so55774515e9.3
+        for <git@vger.kernel.org>; Tue, 06 May 2025 19:33:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746583702; x=1747188502; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=yhihn6EbM08vkV6hO54lLNviGuqvPhfl7dCvMBLt3+g=;
-        b=Cp1aAjJ2VK8CrplWdGNOAUu10tHoYD1L/TSox+ZbgrPSJ3LHsnA/ye4F20ybJMzJuF
-         c2BKxeYjya2SsldqnpUtiiPZ4cqaiAQY+sM86+Aq6BbB1e/XubXGcXMErvZTKUw/gt4P
-         kfw9rqw38+JTLM+eWzuYB+zyYS4Wmn1fPOstgo2NMPAyjTw4d0xGNPdNZ5QOBKWvLHrq
-         6gP3ITei+MkIoqP2aHkfVfvN6HipKWH/83HTe2qqp4AorFxFOdNZDqA5uKaJnrCKegHk
-         rzrYqFMA8leTp7iLZXV/N3+a85bIxrmauGj0H1MKvfVCfyGxmX7k9nex5g9U2EnssMTy
-         hc4w==
+        d=gmail.com; s=20230601; t=1746585204; x=1747190004; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=KigjYxVubOHCWu4YMnODkW+yHc7+NdIO2e9r5kSWlvc=;
+        b=nVu1lZrHgz292HYPfAZLfbx7YUiJGsXO0Xvr8K5qMo/NC9aCbrJVh4gd3sGmr0JBAY
+         gZmuN5u6w/mvaYx+sOqmT+9tJWeqeec9nECnpv1xx8SpODAw0MfpbEtTNLCRmKsOEVoy
+         XmiFPj2Mpo5sZmjiKdGHE30yEpfrERxg78rcD8ehCcuAW7BhF2WYc/apF+DfxWT89GYu
+         90A12/yhBWqYbCA49LroX4Syr/UvxpFjuisuaF2R8XU+Ph7gx5IeFl/MeNhemAYq8Ky7
+         7ySeLw3/LFelbHG0WAznfty6U3lfQytiGq1+t4Ue6h5/m1OAkaep5+COiBWZfRsUcE9y
+         WMcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746583702; x=1747188502;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yhihn6EbM08vkV6hO54lLNviGuqvPhfl7dCvMBLt3+g=;
-        b=Rcq7gIQYtngug+9/K33hbbtrzhR/IzsqcTkMUPkwx0ZsfJCaeCFhSivI5zj0h34uiy
-         ThF2QNyLAMAl4rEAZYIslfgaV+TXmuY0pkN5c2oRq1Z0Agy+zc87fMEUG3tqkLQ4wjHU
-         kCxVNlNBZlnua5B+SQ+CuNjATocV501pnJVHBYhIje5oK0v0JMLMTMrU/+22ABmQiRMq
-         S3F8si8GOeYoBsgn7BiXETB/Q9hA0jAn4/P1Gez7O6Q8tge7Wx4ZJyVTzP6vdOBtiv/J
-         LrEX34IVXrEkFvnxa0v8XAseRjOfivlHeqpU/2z0OJsf2wau6oHWQff3KPY5ka/24XNv
-         phfw==
-X-Gm-Message-State: AOJu0YwJyU13ViHL6I/m+h2h+kmI/z8RKYv6TTQ6NSB1XDujcSpSfc4c
-	ljDCIPGeuJeNCGmxG4oyVOpnY5ATxb0EnPsWOJhJ6MRvFWQqIcAqOAoLwvWjPfs=
-X-Gm-Gg: ASbGncvg7NJZDfQp3HG3gYME5DJobzX5QrVTcK260AjitluRYrRyB20g7e1wxaxB2Zb
-	VgOXKb+bi2NuEq2cxMC2h/JC1A+PcXWacyRx09pl8C4yDo2swSg3xvxIhbj+1FRRwqdmgNWO+cN
-	7EMpHj4bawWHQ4MVRE3O/mVToZ/j9qODvU6zZp+SFXCTct5Z3oEK3K0sgxTfpX0S5dqc4n8FJst
-	o8kTAOckRBHWiw60KHt8f59dbbTNhHWvEwp8ejFsrbxOpSIxtnNOAmF4RbrR8udnNa+tsED0h2n
-	GRlq33uNU8stiOua7ithrr2o4UBygmJl48UWKyN10OpTLdXgZWyaBr5MuD/10jeg0Oe/kvJq/uq
-	fOPB9I/1UisHr
-X-Google-Smtp-Source: AGHT+IFC4daviCQMkDZTsbwTXyYah/5gaB13Iw+4dgpYncOJUxu2UqF+lpVv0FU+gMOwN6Ikhlad7Q==
-X-Received: by 2002:ad4:5aee:0:b0:6e8:97c0:76f8 with SMTP id 6a1803df08f44-6f542aa8825mr22345556d6.27.1746583702480;
-        Tue, 06 May 2025 19:08:22 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f54266e5ecsm6396636d6.44.2025.05.06.19.08.22
+        d=1e100.net; s=20230601; t=1746585204; x=1747190004;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KigjYxVubOHCWu4YMnODkW+yHc7+NdIO2e9r5kSWlvc=;
+        b=d5aTitctdpcqH/TQE57rDC8bKjahg/+tqPtF7e6iL4WwXbbrOjZJYCD5G0L87UEXJa
+         BxykdR/1jJo9nvRuCkEmNjnJIZ+tfgpakRJSDER5UJ2HyD01tKE0oDgn+OF299T7dsUe
+         HXHpYnBXVnkBBShQiXEjVq4JgEmh77ECia/ybhFawDIwUD4WrEVciRnib1O9OPCiNy5l
+         wh5yOhI6ips5uOq/DGHfKYlSWgLNJ3DO7wIe+mLzr2xVHJoK3pmYVHDeWVN29YQrQUJC
+         3xaVB3+tiekGtBlY0e/3cxUrciodMbnXR9du3ZWX3FrcGuumxKk1+kqqmmDGaVMKw4AG
+         4znw==
+X-Gm-Message-State: AOJu0YyOsvbctWyWiZIKddjBpcGlVpElG77xMkI/PX877MQY1SuQ/kat
+	5G3NeTccA3YJF1Ob5G4NSNQ2nOTY91PSfJ3D41Gb+tIgdLYd6wQr3jZRNA==
+X-Gm-Gg: ASbGncsJeFfNcw/HZwiNpMLpEoz7bORDtXJV1tlX0h9M3BcS5LRUZLBkianzRvdB9/r
+	4WriYQd9nYUQdGJZlw6enbmotxHJ+eyCoCsL6uncTzRXgnwGcUEcIqHUpaB1RJa8SXMNpW1LeEn
+	tEQJmBaxPtqrvfzK7lyREgSBurru4TJ84gG3ifuiC6CEWkGMKu3Dxtyysjqsb6RcPaKG34e/SDS
+	f4l/3gJ+QwW9sDnq9tQ68Hu4fYEz25FTOcibsUaq8fVXXQvkMbwAxDE9OICsyFZ8QBX3TaeYl/M
+	WWgYThOxDJjXf5gwn7YV7Qh7dz/wHnaWy63oHe+Erg==
+X-Google-Smtp-Source: AGHT+IGOSa0cFmuKUZu4/g0PNXE3DLTgwhiXr8qg1k7vqSptXrwlUag5Ctc5uhari/b7244SRLp2jw==
+X-Received: by 2002:a05:600c:4503:b0:43d:fa59:bcee with SMTP id 5b1f17b1804b1-441d44d8b4cmr7147395e9.33.1746585204319;
+        Tue, 06 May 2025 19:33:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a0af3255afsm3514547f8f.66.2025.05.06.19.33.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 19:08:22 -0700 (PDT)
-Date: Tue, 6 May 2025 22:08:21 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, gitster@pobox.com, peff@peff.net,
-	Patrick Steinhardt <ps@pks.im>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 3/3] index-pack: allow revisiting REF_DELTA chains
-Message-ID: <aBrAlc8k8uxzrIV9@nand.local>
-References: <pull.1906.git.1745430004.gitgitgadget@gmail.com>
- <pull.1906.v2.git.1745871885.gitgitgadget@gmail.com>
- <1358039b2f3bf893fffc63c1065f1d6862b74957.1745871885.git.gitgitgadget@gmail.com>
+        Tue, 06 May 2025 19:33:24 -0700 (PDT)
+Message-Id: <pull.1954.git.git.1746585203.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 07 May 2025 02:33:20 +0000
+Subject: [PATCH 0/3] fix xstrdup leak in parse_short_opt
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1358039b2f3bf893fffc63c1065f1d6862b74957.1745871885.git.gitgitgadget@gmail.com>
+To: git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-On Mon, Apr 28, 2025 at 08:24:45PM +0000, Derrick Stolee via GitGitGadget wrote:
-> The crux of the matter is how the algorithm works when the REF_DELTAs
-> point to base objects that exist in the local repository.
+Pass a usered defined strdup-like function a parse_opt_ctx to avoid memory
+leak.
 
-Hmm. I'm having trouble squaring this with these next two paragraphs:
+Lidong Yan (3):
+  fix xstrdup leak in parse_short_opt
+  fix: replace bug where int was incorrectly used as bool
+  fix: use strvec_push_wrapper to prevent ubsan failure
 
-> Consider the case where the packfile has two REF_DELTA objects, A and B,
-> and the delta chain looks like "A depends on B" and "B depends on C" for
-> some third object C, where C is already in the current repository. The
-> algorithm _should_ start with all objects that depend on C, finding B,
-> and then moving on to all objects depending on B, finding A.
->
-> However, if the repository also already has object B, then the delta
-> chain can be analyzed in a different order. The deltas with base B can
-> be analyzed first, finding A, and then the deltas with base C are
-> analyzed, finding B. The algorithm currently continues to look for
-> objects that depend on B, finding A again. This fails due to A's
-> 'real_type' member already being overwritten from OBJ_REF_DELTA to the
-> correct object type.
+ Makefile                             |  1 +
+ parse-options.c                      | 23 ++++++++++++++-
+ parse-options.h                      | 12 ++++++++
+ t/helper/meson.build                 |  1 +
+ t/helper/test-free-unknown-options.c | 42 ++++++++++++++++++++++++++++
+ t/helper/test-tool.c                 |  1 +
+ t/helper/test-tool.h                 |  1 +
+ t/t0040-parse-options.sh             | 14 ++++++++++
+ 8 files changed, 94 insertions(+), 1 deletion(-)
+ create mode 100644 t/helper/test-free-unknown-options.c
 
-ISTM that this A->B->C chain is a problem because (in the above example)
-the server sent B as a REF_DELTA base for A but also had its own
-pre-existing copy of B.
 
-But the first quoted sentence suggests that the issue is with REF_DELTAs
-that point to base objects that exist in the local repository. Does
-"point to" mean that the REF_DELTA's base is the local object, or that
-the local object itself was sent as a REF_DELTA against some other base?
-
-I haven't fully wrapped my head around the implications of this all yet,
-but I think that it's the former, though admittedly even typing this I
-am not quite sure of myself. I *think* that doing this is OK if the only
-path from base objects to their corresponding deltas is unique, and/or
-there were no such paths at all.
-
-I'm trying to think through the implications of this against my
-series[1] from a while ago that converts OFS_DELTAs that weren't usable
-as part of verbatim pack-reuse into REF_DELTAs. There are two cases
-there that I was considering:
-
-  - For some (delta, base) pair in a pack, there was an additional copy
-    of 'base' in some other pack, and the MIDX chose the copy from that
-    pack. That forms what I'm calling a "cross-pack" delta. This isn't
-    currently reusable as an OFS_DELTA for a variety of reasons, but is
-    OK as a REF_DELTA provided we know that the client either already
-    has the base object or we are sending it as part of the pack anyway.
-
-  - The other case is that we the client wants the delta-half of a
-    delta/base-pair, but not the base object. In this case, we can't
-    currently reuse the OFS_DELTA verbatim, but could if we converted it
-    to a REF_DELTA based on the knowledge that the client already has
-    the base object.
-
-The latter is doable based on the information in the wants/haves bitmap.
-The process there looks like: determine that the client doesn't want the
-base object, realize that its bit is set in the 'haves' bitmap, and then
-convert the delta object from a OFS_DELTA to a REF_DELTA.
-
-But I think that all breaks for older clients that don't meet the unique
-paths condition above. Does that sound right to you?
-
-I think the cross-pack case is fine, provided we know ahead of time that
-the client doesn't have the (converted-to-REF_DELTA) delta object in its
-local copy.
-
-Unfortunately, I think this means that [1] is a bit of a dead-end for
-serves that have older clients (running a version that does not include
-this patch). At least, I think that's true if we can construct a
-situation where the server sends a REF_DELTA that it thinks the client
-doesn't have but actually does. I'm not immediately sure what such a
-situation would look like beyond cases like: "the client verbatim asked
-for an object it already has, but isn't reachable from the set of
-provided 'haves'".
-
-Thanks,
-Taylor
-
-[1]: https://lore.kernel.org/git/cover.1728505840.git.me@ttaylorr.com/
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1954%2Fbrandb97%2Ffix-parse-option-leak-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1954/brandb97/fix-parse-option-leak-v1
+Pull-Request: https://github.com/git/git/pull/1954
+-- 
+gitgitgadget
