@@ -1,68 +1,68 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A3DB16F841
-	for <git@vger.kernel.org>; Wed,  7 May 2025 01:50:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601AC1898FB
+	for <git@vger.kernel.org>; Wed,  7 May 2025 01:50:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746582644; cv=none; b=L8U8Q7YhSMXLwCrdpqBGLnIIwE1d0BcbMvAOPoe2uqM7ZSR/afQRx4QPmyeOjkuszNAo4FFpctssAr7TYD95MXERRJmDt8EiMTme27FzJ6aezVXw4oXE8bdSY0xKla189n3/wrBpo8mbZ3707T1HOUPtFQe68XrP6mBAmrO4hpE=
+	t=1746582646; cv=none; b=GfCA6NSUSeTVGv0cRRxJomxPg6TwsYtLyT0qFvpPOv/P/fsS/jZfPMM+JA8dxdl+nTVhdfOKqRC+0SkzyJihGL3Lj6hv2fnJYoXt/DmJFmx+xuyygrYDTryYr5QEbrhfIDsehvezL791JV01L4PiTanwyXCNzah9C0HdgHDUQcg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746582644; c=relaxed/simple;
-	bh=6ZnmN18q3Y1mvbjPP8HF5PqB0HljVXgprM8m7u4Tj/w=;
+	s=arc-20240116; t=1746582646; c=relaxed/simple;
+	bh=EdVRalaJ+v+kcisZTza59NdNgkDNWHhjjUfrXAgEda0=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GZi/PFJG0Y6Viphfar3Zphigcf02qugggrM+W6l7RqeZm2TJC1txwtigzd0qc2e8ZgOPtSz4UTCuA6hIXA5o5m3N9NCHb4FYsyYeQ9jXedkTHpmwhVPbyBOXqGswSQRV38M4+T1wKLcXVkIXwd1h7q6eut/sUjsHMheF8t1M23Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z49JnuXV; arc=none smtp.client-ip=209.85.221.41
+	 MIME-Version:To:Cc; b=Nvu09fQ99HQuIA+Ta59ijemW7FodHi+kI7oiVSNQdrbDloaFKdU7JtKuvWvBLp5D/Oy7G0+0ndlLbgI/rZENn9xZuuCT75gzN+0+QpuZbrQCjgaQ8mZcu9MqxHSgOrmUCLzpBB3PPhOLcuvC+MUjQbEJzEL9Bl9Lx8/e40GpVJQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hQRFQKDU; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z49JnuXV"
-Received: by mail-wr1-f41.google.com with SMTP id ffacd0b85a97d-39c0e0bc733so6150858f8f.1
-        for <git@vger.kernel.org>; Tue, 06 May 2025 18:50:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hQRFQKDU"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43d0618746bso45142445e9.2
+        for <git@vger.kernel.org>; Tue, 06 May 2025 18:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746582641; x=1747187441; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746582642; x=1747187442; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Fwqk2iQYeNDakTWQy9JkdYTlz5c+hwsuldRW0e+Mlz4=;
-        b=Z49JnuXVU3EDDfILTNyl7z97ZyDK6ukpgJoNDfYAKRYPXFRFBNXUtwjn8ZifVD1i1A
-         Zf71eQm1TT6ijjmObB7clYFjGHu9hiO0VwnQYt3ulIrw2J4pyELtjcM0D9G5brL7rClu
-         4kkgP47qXj6OW3OkWBjI8+Fw1N5aPvEOzPOTY/+RfVe0tAdG92DRwPR+Xajb68sMywYn
-         m9oIyOSctJy65q9mmNDeyulRu6PkjRazm1Ssq8nuzX0fccHp9XcrBkTaVlYhtI7evxQc
-         SzHmx1dhOZg9Off9ku9BvbDfgaOvjMTcfMXkc/v8xBMBE3kdSGaQ8r56/ItnwOLPaS6k
-         M4/Q==
+        bh=37xfrH+Rc2uqeoDB+gYA4ywEcBr24PYip03smtUYDLQ=;
+        b=hQRFQKDUCs8ajyQMQvmXRwmTk9GNlquWnctbnocgflq8R0NhFaMkJJRYRYRXwa9ET3
+         0iHR0TToFpdvCn7gZW98phrY3pDCk78FNwO0i5ZRATmKP2BgNeIBhk+ZblM6Z3S5BQDn
+         4EmvEhWq/Ea7NN0AJV1ykJ+uyrVOPPFf8BAwRAHPlKpOggnqTVR53c9SqRrD2bcimY6f
+         +++N41U6IpSc4UGWUlGRh1PWeR8Q1VXNz/b9XKV78cGpE2HE34Kx9inVgNsER+R0OhuQ
+         HQSuzDL4LVD+spMDL7pXOqak/mYXOo80IE9daqxYs+r74F7gaVFxsVl7lu+CALhKKZC+
+         Ha0A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746582641; x=1747187441;
+        d=1e100.net; s=20230601; t=1746582642; x=1747187442;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Fwqk2iQYeNDakTWQy9JkdYTlz5c+hwsuldRW0e+Mlz4=;
-        b=TR0TMfdGuKf01fv+lGWgbDnV6zUDQtKrOPDDJRvo1+vKiBMpBFl+uQ1dz7us5n7kex
-         2Cg8Tqxjdf/N0fZCzWEIxaluNRD/eNWIheyJ0eZQa4D012G/ZWwgGvK9AM05kXBC6u5S
-         Z9//lfHHOq0QBjwFNHeOXLcWhqFkOcSoC7bPQWj5qu2ReHkL0UgQ4JF/ouBfjqA7DVvk
-         IcbjHFL3kBsYbn+1/9pP1+WUfLWqwq7ksLOSD/OJ2jqdfrKSGxZkf3zjHbRUiZTDb/PX
-         9/4kVM7J6t/QwVc6DsztSeP3ckcS9UbSMI4muOW0IwkI8ogmyY0rWYSYF7Am4zqtXW1D
-         3sVg==
-X-Gm-Message-State: AOJu0YyJaa9yl45CwyDcPsNdzJLJ2S2o77Sj4zsiKLLNlKuzMQNauOFL
-	fcycgCjJQvUx267rQ3cK1+Y9QKY6swvndNK44d1R6kh2HimnoiifEWAlfA==
-X-Gm-Gg: ASbGncuSMSVEyU32+mnPlfujPZbyIIqCFlOtvs3LtWRaK3wC6QCvLab0R4S9GhO1xzf
-	ypForC+WYefG8MSHSzcwZC+lJH41d1t7oi/3y9X4sRB7O+HImEWzAE9EmWMW7eTpmjkJHnLUrso
-	lbANEGn00DMH78+A8AFgbB8bZYCRl3PqOU2Jpb2E90TyRewlBQc+QC5rLZOosYy3FybdTJRH3Sd
-	svgJI8ecczwhXCh0vezIahpvonsTc3NFXF4VZjxFbgRa/t5TqnoBXMPS2CPu4Fwpx7501XQ/stA
-	FLOd5AejxXLee+IUcQzelI6qwG6orpfjjwbz29j4VA==
-X-Google-Smtp-Source: AGHT+IEz1JKTeQYZYzLaY6/fT8092pKUilpvGRbMd/GhCEVqSmu9myVa6jDWS5fjAQBhIFSww6fNEw==
-X-Received: by 2002:a5d:5f8b:0:b0:39c:30cd:352c with SMTP id ffacd0b85a97d-3a0b4a05df1mr1070762f8f.8.1746582640856;
-        Tue, 06 May 2025 18:50:40 -0700 (PDT)
+        bh=37xfrH+Rc2uqeoDB+gYA4ywEcBr24PYip03smtUYDLQ=;
+        b=FIIYPeex90613JUdZiAOuJU5pa3RGIalTFlb9mUmLuwFO/3rJEKpOCFkZ02snkbnyO
+         hCKWmav7JVGORhU4dlRuQ0VQ0A1wmUi1rHgcn7jWf22VTgNJHeJEPj1+5OSaeTrJeOHC
+         6egPlyyoPG0OYNPv5uLEGYZbqHEd1r1ccVuYDEl3JpTyCNnr0wQbk/Xp7Y1NRhHHkrO8
+         zZvRI2wrutESFu6M0wKRYZQjvX491TOG9my8VSm0Ka9+rJE4t8G++MS0M/uuCnN5ZGDd
+         ryjXN31qkDUnSMbKK09CvR343yBBZ1lMKsn4KYk5gWy9lsXU+pEbrGeVw0CBvDOAMFuC
+         RYsA==
+X-Gm-Message-State: AOJu0YxteCE9dZ0I1+OBOceQs7YUR2tIa/G8M0NqcsxKc2hG9ysBsBwk
+	KinEtrc0T9dRPG8wudcMpjPhYakr+bC/TtgRbC/0qk1lxAWM/efrhvWorQ==
+X-Gm-Gg: ASbGncuIRt8l6zREJnwr450gI7wi0BH6im8e/W9TIjM2lNnnUCFuyC44hyPY6gSfEmH
+	aOhkaF0f7bRCzqvd5yz69w1pL/R0Y4dG5TFIG/vhq0ipYVpzRUzih1fXDnzrM3XXc0yjv9o9G3B
+	walinpT2OVXSzvS5KVxyCfaB4ALgGz+gB/HMmW3K8a4sHAP3xDVRRqMSAm38xlOAk8xVipwOJeM
+	la7nTfqiMwnlQ96vr05gyQBXpjdUsuIQE3mJcMonkPzpOzsJGL5w1ELnd3s9ppv7kQGpTNRyPNZ
+	cUrSd3y/wfcKw1Xa9umKHhuDUlyG/YpjN1ewoQeQEQ==
+X-Google-Smtp-Source: AGHT+IHD7UUY/0CAPqtv++hlqrrZTSAhy31/aYzWXhMTkLVdaJE51WmPrfRT8bBI215dAaNiiwNTGg==
+X-Received: by 2002:a05:600c:3e84:b0:43c:eeee:b70a with SMTP id 5b1f17b1804b1-441d44dd23dmr7192015e9.22.1746582641942;
+        Tue, 06 May 2025 18:50:41 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a0b1e8e8d8sm3102569f8f.33.2025.05.06.18.50.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a099ae831esm15612863f8f.57.2025.05.06.18.50.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 18:50:40 -0700 (PDT)
-Message-Id: <e52b1282d93b795d077f169573487dca06b83bbe.1746582637.git.gitgitgadget@gmail.com>
+        Tue, 06 May 2025 18:50:41 -0700 (PDT)
+Message-Id: <684f04aaf7e87f22ab0b00a4fd42d2943304ef04.1746582637.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
 References: <pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
 	<pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 07 May 2025 01:50:36 +0000
-Subject: [PATCH v3 3/4] scalar clone: add --no-maintenance option
+Date: Wed, 07 May 2025 01:50:37 +0000
+Subject: [PATCH v3 4/4] scalar reconfigure: add --maintenance=<mode> option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,109 +81,138 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-When creating a new enlistment via 'scalar clone', the default is to set
-up situations that work for most user scenarios. Background maintenance
-is one of those highly-recommended options for most users.
+When users want to enable the latest and greatest configuration options
+recommended by Scalar after a Git upgrade, 'scalar reconfigure --all' is
+a great option that iterates over all repos in the multi-valued
+'scalar.repos' config key.
 
-However, when using 'scalar clone' to create an enlistment in a
-different situation, such as prepping a VM image, it may be valuable to
-disable background maintenance so the manual maintenance steps do not
-get blocked by concurrent background maintenance activities.
+However, this feature previously forced users to enable background
+maintenance. In some environments this is not preferred.
 
-Add a new --no-maintenance option to 'scalar clone'.
+Add a new --maintenance=<mode> option to 'scalar reconfigure' that
+provides options for enabling (default), disabling, or leaving
+background maintenance config as-is.
 
+Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/scalar.adoc |  7 ++++++-
- scalar.c                  |  9 ++++++---
- t/t9211-scalar-clone.sh   | 11 ++++++++++-
- 3 files changed, 22 insertions(+), 5 deletions(-)
+ Documentation/scalar.adoc | 17 ++++++++++++++---
+ scalar.c                  | 23 +++++++++++++++++++++--
+ t/t9210-scalar.sh         | 13 ++++++++++++-
+ 3 files changed, 47 insertions(+), 6 deletions(-)
 
 diff --git a/Documentation/scalar.adoc b/Documentation/scalar.adoc
-index b2b244a86499..7753df3b4352 100644
+index 7753df3b4352..387527be1ea5 100644
 --- a/Documentation/scalar.adoc
 +++ b/Documentation/scalar.adoc
-@@ -9,7 +9,7 @@ SYNOPSIS
- --------
- [verse]
- scalar clone [--single-branch] [--branch <main-branch>] [--full-clone]
--	[--[no-]src] <url> [<enlistment>]
-+	[--[no-]src] [--[no-]tags] [--[no-]maintenance] <url> [<enlistment>]
- scalar list
+@@ -14,7 +14,7 @@ scalar list
  scalar register [--[no-]maintenance] [<enlistment>]
  scalar unregister [<enlistment>]
-@@ -97,6 +97,11 @@ cloning. If the HEAD at the remote did not point at any branch when
- 	A sparse-checkout is initialized by default. This behavior can be
- 	turned off via `--full-clone`.
+ scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files ) [<enlistment>]
+-scalar reconfigure [ --all | <enlistment> ]
++scalar reconfigure [--maintenance=<mode>] [ --all | <enlistment> ]
+ scalar diagnose [<enlistment>]
+ scalar delete <enlistment>
  
-+--[no-]maintenance::
-+	By default, `scalar clone` configures the enlistment to use Git's
-+	background maintenance feature. Use the `--no-maintenance` to skip
-+	this configuration.
+@@ -160,8 +160,19 @@ After a Scalar upgrade, or when the configuration of a Scalar enlistment
+ was somehow corrupted or changed by mistake, this subcommand allows to
+ reconfigure the enlistment.
+ 
+-With the `--all` option, all enlistments currently registered with Scalar
+-will be reconfigured. Use this option after each Scalar upgrade.
++--all::
++	When `--all` is specified, reconfigure all enlistments currently
++	registered with Scalar by the `scalar.repo` config key. Use this
++	option after each upgrade to get the latest features.
 +
- List
- ~~~~
++--maintenance=<mode>::
++	By default, Scalar configures the enlistment to use Git's
++	background maintenance feature; this is the same as using the
++	`--maintenance=enable` value for this option. Use the
++	`--maintenance=disable` to remove each considered enlistment
++	from background maintenance. Use `--maitnenance=keep' to leave
++	the background maintenance configuration untouched for These
++	repositories.
  
+ Diagnose
+ ~~~~~~~~
 diff --git a/scalar.c b/scalar.c
-index da0c46bc96cc..dd6e1447e086 100644
+index dd6e1447e086..847d2dd2f58a 100644
 --- a/scalar.c
 +++ b/scalar.c
-@@ -426,7 +426,7 @@ static int cmd_clone(int argc, const char **argv)
- 	const char *branch = NULL;
- 	char *branch_to_free = NULL;
- 	int full_clone = 0, single_branch = 0, show_progress = isatty(2);
--	int src = 1, tags = 1;
-+	int src = 1, tags = 1, maintenance = 1;
- 	struct option clone_options[] = {
- 		OPT_STRING('b', "branch", &branch, N_("<branch>"),
- 			   N_("branch to checkout after clone")),
-@@ -439,11 +439,13 @@ static int cmd_clone(int argc, const char **argv)
- 			 N_("create repository within 'src' directory")),
- 		OPT_BOOL(0, "tags", &tags,
- 			 N_("specify if tags should be fetched during clone")),
-+		OPT_BOOL(0, "maintenance", &maintenance,
-+			 N_("specify if background maintenance should be enabled")),
+@@ -668,13 +668,19 @@ static int remove_deleted_enlistment(struct strbuf *path)
+ static int cmd_reconfigure(int argc, const char **argv)
+ {
+ 	int all = 0;
++	const char *maintenance_str = NULL;
++	int maintenance = 1; /* Enable maintenance by default. */
++
+ 	struct option options[] = {
+ 		OPT_BOOL('a', "all", &all,
+ 			 N_("reconfigure all registered enlistments")),
++		OPT_STRING(0, "maintenance", &maintenance_str,
++			 N_("<mode>"),
++			 N_("signal how to adjust background maintenance")),
  		OPT_END(),
  	};
- 	const char * const clone_usage[] = {
- 		N_("scalar clone [--single-branch] [--branch <main-branch>] [--full-clone]\n"
--		   "\t[--[no-]src] [--[no-]tags] <url> [<enlistment>]"),
-+		   "\t[--[no-]src] [--[no-]tags] [--[no-]maintenance] <url> [<enlistment>]"),
+ 	const char * const usage[] = {
+-		N_("scalar reconfigure [--all | <enlistment>]"),
++		N_("scalar reconfigure [--maintenance=<mode>] [--all | <enlistment>]"),
  		NULL
  	};
- 	const char *url;
-@@ -565,7 +567,8 @@ static int cmd_clone(int argc, const char **argv)
- 	if (res)
- 		goto cleanup;
+ 	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
+@@ -694,6 +700,18 @@ static int cmd_reconfigure(int argc, const char **argv)
+ 		usage_msg_opt(_("--all or <enlistment>, but not both"),
+ 			      usage, options);
  
--	res = register_dir(1);
-+	/* If --no-maintenance, then skip maintenance command entirely. */
-+	res = register_dir(maintenance);
- 
- cleanup:
- 	free(branch_to_free);
-diff --git a/t/t9211-scalar-clone.sh b/t/t9211-scalar-clone.sh
-index 01f71910f533..bfbf22a46218 100755
---- a/t/t9211-scalar-clone.sh
-+++ b/t/t9211-scalar-clone.sh
-@@ -177,7 +177,16 @@ test_expect_success 'progress without tty' '
- test_expect_success 'scalar clone warns when background maintenance fails' '
- 	GIT_TEST_MAINT_SCHEDULER="crontab:false,launchctl:false,schtasks:false" \
- 		scalar clone "file://$(pwd)/to-clone" maint-fail 2>err &&
--	grep "could not turn on maintenance" err
-+	grep "could not toggle maintenance" err
-+'
++	if (maintenance_str) {
++		if (!strcmp(maintenance_str, "enable"))
++			maintenance = 1;
++		else if (!strcmp(maintenance_str, "disable"))
++			maintenance = 0;
++		else if (!strcmp(maintenance_str, "keep"))
++			maintenance = -1;
++		else
++			die(_("unknown mode for --maintenance option: %s"),
++			    maintenance_str);
++	}
 +
-+test_expect_success 'scalar clone --no-maintenance' '
-+	GIT_TEST_MAINT_SCHEDULER="crontab:false,launchctl:false,schtasks:false" \
-+	GIT_TRACE2_EVENT="$(pwd)/no-maint.event" \
-+	GIT_TRACE2_EVENT_DEPTH=100 \
-+		scalar clone --no-maintenance "file://$(pwd)/to-clone" no-maint 2>err &&
-+	! grep "could not toggle maintenance" err &&
-+	test_subcommand ! git maintenance unregister --force <no-maint.event
+ 	git_config(get_scalar_repos, &scalar_repos);
+ 
+ 	for (size_t i = 0; i < scalar_repos.nr; i++) {
+@@ -758,7 +776,8 @@ static int cmd_reconfigure(int argc, const char **argv)
+ 		the_repository = old_repo;
+ 		repo_clear(&r);
+ 
+-		if (toggle_maintenance(1) >= 0)
++		if (maintenance >= 0 &&
++		    toggle_maintenance(maintenance) >= 0)
+ 			succeeded = 1;
+ 
+ loop_end:
+diff --git a/t/t9210-scalar.sh b/t/t9210-scalar.sh
+index 89a6a2a24d8b..bd6f0c40d229 100755
+--- a/t/t9210-scalar.sh
++++ b/t/t9210-scalar.sh
+@@ -210,7 +210,18 @@ test_expect_success 'scalar reconfigure' '
+ 	GIT_TRACE2_EVENT="$(pwd)/reconfigure" scalar reconfigure -a &&
+ 	test_path_is_file one/src/cron.txt &&
+ 	test true = "$(git -C one/src config core.preloadIndex)" &&
+-	test_subcommand git maintenance start <reconfigure
++	test_subcommand git maintenance start <reconfigure &&
++	test_subcommand ! git maintenance unregister --force <reconfigure &&
++
++	GIT_TRACE2_EVENT="$(pwd)/reconfigure-maint-disable" \
++		scalar reconfigure -a --maintenance=disable &&
++	test_subcommand ! git maintenance start <reconfigure-maint-disable &&
++	test_subcommand git maintenance unregister --force <reconfigure-maint-disable &&
++
++	GIT_TRACE2_EVENT="$(pwd)/reconfigure-maint-keep" \
++		scalar reconfigure --maintenance=keep -a &&
++	test_subcommand ! git maintenance start <reconfigure-maint-keep &&
++	test_subcommand ! git maintenance unregister --force <reconfigure-maint-keep
  '
  
- test_expect_success '`scalar clone --no-src`' '
+ test_expect_success 'scalar reconfigure --all with includeIf.onbranch' '
 -- 
 gitgitgadget
-
