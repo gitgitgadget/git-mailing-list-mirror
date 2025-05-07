@@ -1,162 +1,120 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+Received: from sender4-op-o15.zoho.com (sender4-op-o15.zoho.com [136.143.188.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E1420B1F5
-	for <git@vger.kernel.org>; Wed,  7 May 2025 06:28:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746599284; cv=none; b=C+ZGBtqzmMo9VIhJlR7D+e9W03LRiL9EnyXTYLVgqel5pq99AhbBP0ZvKMK8ktD5I57ZG263ORn0K56z5bWWhdBW1dBlXKobSrJxWCnmGPk7vUaTgTfioVW5a86OtkI5Sdf8Z0XihRuGlsq8bJ55+GvFYcJuBJc95S3OuMfLe4I=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746599284; c=relaxed/simple;
-	bh=GyLEK0U9gRiOfW6Qp27FIhDp4xPv1ml74v7Ac7hISUs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ukYjYVjSYDj58wJcfY31NAL8cbTpPg2jxSgtSAWfvIM/ScZxr1M/ElLFPwUf2/98AjYb3m5SZ05i6xyWHH/7xVYoe0lErahe388AVWnyp9cyJu00JuHQN3/cV68+K67Vh6Moa6B0ylgWHENvdMIEeGWGrAyJ2kOd8uNNbyoi1Ks=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=z4ZfQtJa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WF/CH0ji; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E70911D9346
+	for <git@vger.kernel.org>; Wed,  7 May 2025 06:46:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.15
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746600423; cv=pass; b=uxYKJmBucuUWRyl7QgRH8bKb1ur8jGhQVxll1k5ZRiUzXMHV17bDwPfBbGgSaqEXced68eiWx9ESpZnSyInzJH9NZRUDUvRKmht8uWwovMneh8CcQhzI9nXjp2Z0hLRWCCzJsXDRE9M222tadI3RpayauVpSPMOmCHBz7NDt5L0=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746600423; c=relaxed/simple;
+	bh=41yVXUnbndmXsCgawKq2LIDyU9MSql9iSlXToqf0+lY=;
+	h=Date:From:To:Cc:Message-ID:In-Reply-To:References:Subject:
+	 MIME-Version:Content-Type; b=LE2tWci83Wedt6N2dGwI1mh4UOZ5g/MWpyuoDjanYO2l4JHAXdnPnbD0KndPfaiBcdOQfD0QupwuGZxhLGRx0DITeuNEB4PP4i6SihQtBzHtRzbtR7+fNz01UR2c8PuMq/CcaAtc9IJaTB6PORkvz+M7OEPYL78rLMQzxnA6iwk=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty; spf=pass smtp.mailfrom=linux.beauty; dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b=Exa9mQP3; arc=pass smtp.client-ip=136.143.188.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=linux.beauty
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.beauty
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="z4ZfQtJa";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WF/CH0ji"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id EA9A625400F8;
-	Wed,  7 May 2025 02:28:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Wed, 07 May 2025 02:28:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746599281;
-	 x=1746685681; bh=NbRCvdSQNMQrxuxHsxMENqOt0FVz7wlO88R7yCCpEQw=; b=
-	z4ZfQtJa5yflBg2t/0A5WHgBsyd6zD4EIg9B1bvz64cTDZGL6gl4j/4GnqIRq/jJ
-	flMnKcLLPRAQ5MfvuuZBUWUaFdWdebEig1ql/NUZyu2iqeESnQjwHmchD+UzcniH
-	EHAQhIWrfvVYFcST3XMSWKFjWgdizkGvnoNP2gGJSt7uyxUt55jiI3W7OlaULHUy
-	S6T1sT9n15U+h5ZmB8Kk5X8EzOTksUK/W5NxCyyNGIeuS/Plge4QteNtqqEr38vl
-	1Md00GLh4sB0LKc4VmLb/VAkiChD/139alALYsfG8dV95NJKqjl/6rRXA4z3nyMd
-	PCkqZ3JvL25QMTbcU84RFw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746599281; x=
-	1746685681; bh=NbRCvdSQNMQrxuxHsxMENqOt0FVz7wlO88R7yCCpEQw=; b=W
-	F/CH0jiqeliSxZ06x1QqRkgef0KO4dgOIV1hMpbon6gJ++u3w/AebaYn/xyOoGA3
-	oRs0IRP4hr8BgtvY77dCc0k1sWskpbIJY2XFhWJ9/E/Bv/yOVe+NpdK7CuTfCrjQ
-	gZRfWm1+ZTmmitIITDDXQ8BcVBmsOoCGJIDw1+C58EuD7wfB/m03Yk6B9HLjXjix
-	ceXyh5IXN/FYD9GvrFDtKPSiJw4jFJgU/9kZrDLBEvPkIRMhfYCH3ls5jURu6oQ3
-	gcS9z8KpHRCY5rmwNmKRHDafCbvJAHYJjBKkTfofceUxuwz9nIa2oAVkjjO56deJ
-	V7c9dK/n2Sk24eJKciN+A==
-X-ME-Sender: <xms:cf0aaIOc-PzLswx1C6kX-7tZUhvpM0FxxF0TcezdL4hPOABrvAiuvg>
-    <xme:cf0aaO9xMj0j_z7Lpi28U5mMIuVC4HT81oWtHpS53IXKiFUuke-qBsS_i-IuE9Z2p
-    4ryjX76TkZfLAqsAw>
-X-ME-Received: <xmr:cf0aaPSUi6JD-da4uMPVLxSsFbZw7fPkjaQ2o-i4iV1TUO-juKQ2zLd6GdACRwtZG38mSZ7n7Twjk8rfP_XvQs62d-V4bD24F9r4vVKNtO6iUw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeiudegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeefheffgeeflefgieduleehueeugfeifeevjeej
-    veelheetvdegjefgkeeguefgtdenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
-    rdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepthhmiiesphhosghogidrtghomhdprhgtph
-    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhm
-X-ME-Proxy: <xmx:cf0aaAsQFcuH8A26YVu1YHMNWLp84yOwvTb8hrYzZzvoOehrbmYDfw>
-    <xmx:cf0aaAd7yfSpF4eMKgEywg2ouvVhgqjxT_RlIIUzFOdAcjlICPpOfg>
-    <xmx:cf0aaE1IrDsPgG1RVOzgXb3px9jsxUyElbUjeT0IVkXPy6HH-y_bWg>
-    <xmx:cf0aaE-I6RAqMM7eb9fZBaLXf9oVN1tCk8TcnRTL6LpQnTKmFUSESw>
-    <xmx:cf0aaIDZcKnz2mJTovNAE4KSCUOdhOGw1rxncEOZ-C6RQP5CGq3VET7h>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 02:28:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id adfea2dc (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 06:27:57 +0000 (UTC)
-Date: Wed, 7 May 2025 08:27:59 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH 00/10] Spring cleanup of "contrib/"
-Message-ID: <aBr9bwNQ1J46NNXI@pks.im>
-References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
- <xmqqmsbph3lw.fsf@gitster.g>
- <CAPig+cT6XbdzeOFoeZUmX+ozPa2XNOv=H85xQhY4y8NYmJZ6-g@mail.gmail.com>
- <aBq4J6UTZVPF8rb4@teonanacatl.net>
- <CAPig+cRxDQBmPu_-ci5vEuwtsAHadfCiFOccdYseBSj2F52JGw@mail.gmail.com>
+	dkim=pass (1024-bit key) header.d=linux.beauty header.i=me@linux.beauty header.b="Exa9mQP3"
+ARC-Seal: i=1; a=rsa-sha256; t=1746600414; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=ch43to1/kgD77n007NgLgOu1ApIBpDkFV7DVVQd30524s7T8Pum8exp5KmSEljV2BFZpWwm1iguLJ0A0267++qk+v6EG9tPmmq3dUo5rWl86MMNk4j7XANpz4L3SDooODY6qRLk5jmEKz9QYW/Nu5OzXbhRL2Kl1In2GrIJnrVw=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1746600414; h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=cdvj1uGE6eJfp76wBEW85KDx3SvW/dovrkFwvkvMVJY=; 
+	b=ZqFWGgrBDdgxWmFr8hmhl4LRKiyxXC3FGWxGQb06Fz/TQUCNeO+vzcGqoKmQWHBcBxv35kLM5sgSFtQDrqWUYaRSv81Sf3PMstki7bU+ezqwo7aOhHm6YSfNi+L/k5EQY4MFuhgsM4FzPh1BZZ515f6GQktBh+uciuBET14xzXQ=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=linux.beauty;
+	spf=pass  smtp.mailfrom=me@linux.beauty;
+	dmarc=pass header.from=<me@linux.beauty>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1746600414;
+	s=zmail; d=linux.beauty; i=me@linux.beauty;
+	h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
+	bh=cdvj1uGE6eJfp76wBEW85KDx3SvW/dovrkFwvkvMVJY=;
+	b=Exa9mQP3mHIB2ND7HFs/7RcrxK90S5vf42cGFVWlIeU+xVJjmVuvVHIZ+AAd8Eio
+	4qV5f/nXxiMVAeJuxH7Y9jsjWTktvLoQgb8VD0F25olh8mJPnTJqFyqwxHfqrpdmqDn
+	nnxK5c38jcMp0UZ5ueEBM6C5HHPoSBoh2a7rbylI=
+Received: from mail.zoho.com by mx.zohomail.com
+	with SMTP id 1746600412672252.3307613535202; Tue, 6 May 2025 23:46:52 -0700 (PDT)
+Date: Wed, 07 May 2025 14:46:52 +0800
+From: Li Chen <me@linux.beauty>
+To: "Junio C Hamano" <gitster@pobox.com>
+Cc: "git" <git@vger.kernel.org>
+Message-ID: <196a97f45e6.ee3375ac536926.7531113088063277926@linux.beauty>
+In-Reply-To: <xmqqv7qdk3yl.fsf@gitster.g>
+References: <196a5ac1393.f5b4db7d187309.2451613571977217927@linux.beauty>
+	<196a5aceb00.fdc2d9ff187843.3547183335386278718@linux.beauty> <xmqqv7qdk3yl.fsf@gitster.g>
+Subject: Re: [RFC PATCH 1/2] rebase, am: add --reviewby option
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPig+cRxDQBmPu_-ci5vEuwtsAHadfCiFOccdYseBSj2F52JGw@mail.gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Importance: Medium
+User-Agent: Zoho Mail
+X-Mailer: Zoho Mail
 
-On Tue, May 06, 2025 at 11:55:20PM -0400, Eric Sunshine wrote:
-> On Tue, May 6, 2025 at 9:32 PM Todd Zullinger <tmz@pobox.com> wrote:
-> > Eric Sunshine wrote:
-> > > Although we periodically hear that someone uses it, git-contacts
-> > > probably falls into the "tool has a clear alternative" category. In
-> > > this case, git-related[*] is a separately-maintained more functional
-> > > drop-in replacement which people could be using instead of
-> > > git-contacts.
-> > >
-> > > [*]: https://github.com/felipec/git-related/blob/master/git-related
-> >
-> > It may be worth noting that git-contacts is suggested in
-> > both MyFirstContribution.adoc and SubmittingPatches.
-> 
-> I think I knew but forgot about those mentions. Certainly useful
-> information if Patrick decides to pursue retirement of git-contacts.
+Hi Junio,
 
-I thought about moving git-contacts out of "contrib/" into "tools/"
-exactly because of that. Tooling related to working with Git itself
-shouldn't live in "contrib/" in the first place, but really should have
-its own home in the Git project.
+Thank you for the feedback. My current understanding is as below, please co=
+rrect me if I am mistaken
 
-> > It probably helps that since 824503ce88 (SubmittingPatches:
-> > clarify 'git-contacts' location, 2024-04-18) there has been
-> > a note stating this isn't "part of the core `git` binary and
-> > must be called directly." That is relatively recent, though.
-> 
-> Out of curiosity, I Googled git-contacts but didn't find any
-> meaningful hits. Pretty much the only pages found were renderings of
-> Git's documentation (including SubmittingPatches and the man page for
-> git-contacts itself), as well as the few patches to the Git mailing
-> list which introduced or touched git-contacts over the years. I did
-> not find any general discussion or recommendations to use
-> git-contacts, so perhaps it indeed is not very much used.
-> 
-> > I added git-contacts to the Fedora git packaging shortly
-> > after 92a5dbbc22 (SubmittingPatches: mention the git
-> > contacts command, 2018-04-11), presuming some readers would
-> > want to use it.  (I never want to penalize users who are
-> > diligent enough to read SubmittingPatches. :)
-> >
-> > All that said, I don't have any strong opinion on whether it
-> > is kept or removed, let alone when that might happen.  I
-> > don't know that I've ever used it, other than for testing
-> > that it worked while packaging it.
-> 
-> I've never used git-contacts either, despite the fact that I'm the one
-> who ported Felipe's git-related from Ruby[1] to Perl[2] for inclusion
-> in Git's "contrib" since the Ruby version had been rejected due to
-> being written in a language not already employed elsewhere in the
-> project. The Perl rewrite also included a number of useful
-> enhancements which Felipe later incorporated into git-related after he
-> published it as a standalone project. He has since extended it to
-> include even more features, so it's functionally a superset of
-> git-contacts.
-> 
-> By the way, Felipe also sent a patch series[3] eleven years ago with
-> the same intention of Patrick's series under discussion. Felipe's
-> series was never picked up but did undertake the retirement of
-> git-contacts.
+---- On Wed, 07 May 2025 02:07:46 +0800  Junio C Hamano <gitster@pobox.com>=
+ wrote ---=20
+ > Li Chen <me@linux.beauty> writes:
+ >=20
+ > > From: Li Chen <chenl311@chinatelecom.cn>
+ > >
+ > > Introduce a new `--reviewby` flag to `git rebase` and `git am` that ap=
+pends a
+ >=20
+ > Shouldn't this (and possibly the other one, I didn't look at the
+ > patch text) be using the internal machinery used by interpret-trailers
+ > so that we can do the usual "do not duplicated existing ones",
+ > "append only at the last one is different" etc.?
+=20
+At the moment, git-interpret=E2=80=91trailers only works on a file or on
+stdin. During an interactive/merge rebase we change it on the fly
+without format-patch && am, which  is very convenient.
 
-Thanks for the pointers.
+The new --trailer option already re=E2=80=91uses amend_file_with_trailers()
+from trailer.c, so there is very little trailer=E2=80=91specific code of my=
+ own.
 
-Patrick
+Right now --reviewby mirrors the existing --signoff implementation,
+and append_signoff() itself does not use the trailer library. If you are
+open to keeping a dedicated --reviewby, I can send  a follow=E2=80=91up
+(or roll it into this series) that moves both sign=E2=80=91off and review=
+=E2=80=91by to
+the common trailer helpers.
+
+ > I also do not think we want to see one option (like the above) for
+ > each trailer elements (like "Reviewed-by") that is commonly used,
+ > which would lead us to adding "--helped-by", "--acked-by", etc. to
+ > complement this one.
+ >=20
+
+Some projects require every commit to carry a Reviewed-by: line
+for accountability, much like the kernel requires Signed-off-by:.
+A first=E2=80=91class option keeps that workflow =E2=80=9Cout of the box=E2=
+=80=9D; otherwise
+people need to define an alias such as
+
+[alias]
+    rbr =3D rebase --trailer "Reviewed-by: $GIT_AUTHOR_NAME <$GIT_AUTHOR_EM=
+AIL>"
+
+which is functional but less convenient.
+
+I would appreciate your further thoughts on whether a dedicated
+flag(--reviewby) is acceptable, or whether we should drop it and rely solel=
+y on
+the generic --trailer interface.
+
+Thanks again for the review.
+
+Regards,
+Li
