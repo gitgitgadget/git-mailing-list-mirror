@@ -1,520 +1,132 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3C9125DB1A
-	for <git@vger.kernel.org>; Wed,  7 May 2025 13:24:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1CD288C12
+	for <git@vger.kernel.org>; Wed,  7 May 2025 13:28:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746624301; cv=none; b=DuF+rhnMrMie7/H7tX3WKTAfnvKRDioSoas1W2N8VSLYX6Pny29u3ai8fbke4wovYTxbEdDhsJ/LJw366An7DAOYsrQpc/38H18TLrZIURYHYhE/06Au+/x7o7K8XWxmLZhYGSmEzRtsaZYDKi6m102fpE8JWNVfl2sf8n1JLSw=
+	t=1746624527; cv=none; b=qGN74wMNCnMfyW+GyKHUYpkQDM4EEAd2aJMxmdY8uKWv5+kWO22EtZRWAjgBNbFMmUku/QvavBNRWHEnY3aDOvk95E1MNpbikhs7Jj7BW8KJFUUIoX3PWYFRGoGvWoCxxCjbBfZO/Y4InMqGNY17fGUeGVx36Rg1pcTphvuPKT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746624301; c=relaxed/simple;
-	bh=ZZoMXXMWSnehDrGw9bInY5hRYLU3Krv/jE/5hoTu3KU=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=OeV4TrK86C2HfxwKuB7yZ6EHb4AYtri8Oo4zbbabVzvIBqT89u7ilP1NTfjCkzkOMqVazmlI4dcEJB8Gad442bZFUQaDOmakIlMtuDiuiFYR8yvCJShpQZ8jlVVSfAvcHhUIIc6vk0xM1tXVaKeqM3qnEM9dHzj/SnJqksF2BmY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aZegvp8P; arc=none smtp.client-ip=209.85.128.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746624527; c=relaxed/simple;
+	bh=2Ecs0r6YHBcoY4ZAh92QtlM527X5X0QNXD11myxioAU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=s9R8v9TxKUjbrqZQQ1prK9wEsNARgZoqm/om1x07kgYjXGewUjXll0EFVIULFNtokxClvv/tTdHz7y/wiux1NiUDpFFtXnakDlPwQzmLe99AlZRnzpe5sOC0iVfj7Q0JpsGYbr+jWPiJnZX3ZGlhPmVsYZPHR2bIh3tQHaveUA0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=do+z7+lG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QOvFyirh; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aZegvp8P"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-442ccf0e1b3so1395245e9.3
-        for <git@vger.kernel.org>; Wed, 07 May 2025 06:24:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746624296; x=1747229096; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=cauvL0Rr624g0eW9h9xVV7JHL3gs+HPVWJXT+yMQwKU=;
-        b=aZegvp8P5JXDCwjTfw6fkfhhZM1XKkLLMvqducw6O6cxXLpEII6mYjeNzfLvnY/s6s
-         pTgy/gj9VBlU6nlZ/EWfM7L4NgXWXPUVCyeWsvy8lQx7QC/Fr5YQl5W8L9f0cDJMIyH5
-         Gjq0owq/vFYpt1djs6eM/7i3IdRreVBN5hgKHZGxsMK9uMdkzlzwKwgjznFrWWYI4kaS
-         2RFvrjgOUpUunpLApqaIVvVBO+XeJ+6zd0a1dVq0pqDOcd18yU+tu/B8yaxnIdw6LCmR
-         iQum08fm10TZpkPi+HT45Wev7C8dGI1oggll9uODNbfreyLpPPWbt3zpdxMoVEWpikH+
-         K06Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746624296; x=1747229096;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=cauvL0Rr624g0eW9h9xVV7JHL3gs+HPVWJXT+yMQwKU=;
-        b=aV2ua0m/Zc/S8vq9J+S7saQByACHptiPymaWXwiKjkZWKmFdDfQ8POjVfPaXv43HE/
-         4UM0wUYiRCdYdatLNmLvn6GU7t+0cn38Q1sT1ZbGaQQlk9gTHs7QtfuC5VvJet/2b5cf
-         TqQrwyPgAlO3LSnV/cMsRo8PTzsAuhqMx0+fzgw2tt9vvfW5L6+PN2/2V3HCdk6UEyDN
-         jMfcPr6L2BoDH8tqGntst/is5hJMiq8d9fL1PgdyvVicIIUyKYmsv/I9piZ7qaKN9rjr
-         DWrEkr3JoyeoC8vNUP3WjeWmB3eTjK43HWe0bEZXzNTd/kNCUIx1AqkqI0rfxTnxQLLv
-         oP8w==
-X-Gm-Message-State: AOJu0YxtkylTMAlnicYS7FjpEcCcr0UrVlFt05+EjpJGyGbszNR/HaEe
-	+TMnkQHzoTwYe7glh3zaymbyO8BZt2DbyA7LDyBvren/7VCwbbMG2CUkRQ==
-X-Gm-Gg: ASbGncsqrETd96TFFWjC0yPqTpG8eyPwONH+cqVs03+pONvcTVmFT7qiUo7QRNsZZJ3
-	beaIw0X/D6oubsctoEJ/ANXp6x8cCL6JFSMkFBZD+Z86TuC9Uo2HjDkgKFK9zyx8cdeT/YDbv97
-	DSsKshn+F5/+9a6geC826614lMfcIVHZSA7yQ/ceeh0Dp0lyKC1W3Of3OkM2bZyOdZVZ7cEUF7z
-	NK4DwMBRtWNX8TGXZLWKhrABGw9zV56sLz4bHVG4w4xXf1Vnfs1tpau99iLufCZWfd7sVbJ9G95
-	vj+veGGgyqh0ulI5Su10rPbkjq3TDjTZZeg0HL9qZA==
-X-Google-Smtp-Source: AGHT+IF7YIwahgCBd0BLrWSS3m4OTNY5QJqiSgCdeiX7oB6D+WTZj+W2XBl2s908WlQv3Ct1ntCY0A==
-X-Received: by 2002:a05:600c:1d08:b0:43c:fe85:e4ba with SMTP id 5b1f17b1804b1-441d44c75b0mr31252025e9.15.1746624295510;
-        Wed, 07 May 2025 06:24:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd350f56sm897625e9.21.2025.05.07.06.24.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 07 May 2025 06:24:55 -0700 (PDT)
-Message-Id: <pull.1954.v2.git.git.1746624294017.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1954.git.git.1746585203.gitgitgadget@gmail.com>
-References: <pull.1954.git.git.1746585203.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 07 May 2025 13:24:53 +0000
-Subject: [PATCH v2] parse-options: fix xstrdup leak in parse_options_step
- parse-options:984
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="do+z7+lG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QOvFyirh"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9A07825400C8;
+	Wed,  7 May 2025 09:28:41 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Wed, 07 May 2025 09:28:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746624521; x=1746710921; bh=jr6+pqj1HJ
+	siENoRK3uuw1Q0acL+afSjezRlecdwgGQ=; b=do+z7+lGnpPavTb3xX4EDyke7C
+	uvTnJbqWmSHZKLEj80cGlHv+Gz/M5kLFjfUjDSlmy1XITAaRzrPFeicVkncw0cbA
+	tdTWqipgssHY0/KzpVLN5dTm5nOtJhJBRjSoSMSSdnBfGI348Z3yzzaU0OHv4iq/
+	Qy8OM73Y/QNMDy4lsvkZOS4pfmR/pZbuWTDspnH1RMGfEKAYUtkTxt8izS2i7DR+
+	rYonAMRN36xg3VO1K8JyC1D7ZS3NI4P5UpglIN2oxK9WaOiSv92vLxNxMEjjf4c6
+	TFv0oX8qd1i0DK7b/VhGSy3wQzgAG1P4fZ/XBQLJOb0WPfLXGBXpelTNnK1w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746624521; x=1746710921; bh=jr6+pqj1HJsiENoRK3uuw1Q0acL+afSjezR
+	lecdwgGQ=; b=QOvFyirhy2OOHyGCJn8/pAUyQLvUzYA6C/8jIuqSYPVttpgx7ml
+	yWV7D9y7lruUA1MhvZLj9NCjty8bi87I/ePtge2yUTk6jBrGcSbQIszuopxFmHLO
+	unIe6y4e0G0gMU1S/HNF59AE8UDNjZ8CXr7Uohs+o5xvu5dujqo4I/e48yQI9udw
+	M30VG31yVNFbbyz/z1n7batFWEH627EgNFZzQ79eFoC/+R0xQ8I845hHRD8tW2Ap
+	pAGRztWSAyR41rG9bRjYS9e0A/dBA0l6EZutmQRK0Q5l+Q4+f6KStEt+OCKzsy+V
+	4cSqEs+s9NvUOcC2EuiKChXLiKTdk0ObxCw==
+X-ME-Sender: <xms:CWAbaOg_JH8TUbOm83Ra3ngep0QwECm5RjMje6c3Nrv23TRUaxA9sw>
+    <xme:CWAbaPDBrxVw3txiGd5WuayZdBxWFDM2ZFw6iS_c3_XJJg5te8HDQHGl3QdldimB0
+    DolkL63SSiLNY7UmQ>
+X-ME-Received: <xmr:CWAbaGGLswQdalvJKvBocsP8UcUIhqkB20-lSUQi6OzAVQesE4G0H6edXWSdgJCr8iSDVwdsPhpufClkBPmmkgDWeEb82lKBEaOrlkVh1JMahA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeileekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepjeffffevheetudekgeejtdeuhfejgeehtdfftefg
+    geefleejfefhgfeuheejhfdvnecuffhomhgrihhnpehpkhhsrdhimhenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhn
+    sggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtoh
+    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:CWAbaHTq-i89gdJf7lB2kT92yGh4yp0yBwu1UJKnAeu8uTFsQMGYhQ>
+    <xmx:CWAbaLzPrdPI_D-k3FCeCP6McwSPjwBu6n_ti402MIBmUjOsY1_w_Q>
+    <xmx:CWAbaF732lOGo4OEehEwdDBBmdlHArtfSncQL2TDu6b_u29C2Nm6Sw>
+    <xmx:CWAbaIxYv2_G3KTIcgHHW_aN76pzNXv14Eo9AlHjFRzfr8KeTnOC2Q>
+    <xmx:CWAbaNrtq_4Vs5v3dIGYJ4Z4IOsy1DafCDwvHsaT4EWJDSRO-H5-lzCF>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 May 2025 09:28:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 0fbe861b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 7 May 2025 13:28:34 +0000 (UTC)
+Date: Wed, 7 May 2025 15:28:37 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [RFC PATCH 2/2] builtin/receive-pack: add option to skip
+ connectivity check
+Message-ID: <aBtgBQxv4_NanE-r@pks.im>
+References: <20250507030249.4802-1-jltobler@gmail.com>
+ <20250507030249.4802-3-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250507030249.4802-3-jltobler@gmail.com>
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+On Tue, May 06, 2025 at 10:02:49PM -0500, Justin Tobler wrote:
+> During git-receive-pack(1), connectivity of the object graph is
+> validated to ensure that the received packfile does not leave the
+> repository in a broken state.
+> 
+> Generally, this check is critical to avoid an incomplete receieved
 
-Most Git commands use parse_options to parse options, but parse_options
-causes a memory leak when it encounters unknown short options. The leak
-occurs at line 984 in parse-options.c, where git allocates some spaces
-to store the unknown short options and will never release those spaces.
+s/receieved/received/
 
-To address this issue, users can be allowed to provide a custom function
-to allocate memory for unknown options. For example, users can use
-strvec_push to allocate memory for unknown options and later call
-strvec_clear at the end of the Git command to release the memory, thereby
-avoiding the memory leak.
+> packfile from corrupting a repository. In situations where server
+> operators validate the connectivity of incoming objects outside of Git,
+> such a check may be redundant.
 
-This commit allows users to provide a custom allocation function for
-unknown options via the strdup_fn field in the last struct option. For
-convenience, this commit also introduces a new macro, OPT_UNKNOWN, which
-behaves like OPT_END but takes an additional argument for the allocation
-function. parse_options could get the custom allocation function in struct
-parse_opt_ctx_t by using set_strdup_fn. A simple example to use
-OPT_UNKNOWN is put into t/helper/test-free-unknown-options.c
+This is a bit handwavy. _I_ know why we at GitLab are doing this, but
+other readers won't have the necessary context to be able to judge
+whether this really is a good idea. I think the important question to
+answer is: why does the server side want to perform the check if Git
+already does it anyway? Why is it in a better position to do so? And why
+can't we instead have Git itself perform it in the same "better" way?
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    fix xstrdup leak in parse_short_opt
-    
-    Pass a user defined strdup-like function in parse_opt_ctx to avoid
-    memory leak.
+Ultimately it boils down to having more knowledge around exactly how Git
+is being used on the server side. With the additional information we can
+make better decisions and we can make assumptions that a general user of
+the connectivity check cannot do.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1954%2Fbrandb97%2Ffix-parse-option-leak-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1954/brandb97/fix-parse-option-leak-v2
-Pull-Request: https://github.com/git/git/pull/1954
+Most importantly, we know that all objects in the repository will always
+be fully connected. Received packfiles get filtered, so we won't ever
+accept an object that isn't fully connected. Neither will Gitaly write
+such an object.
 
-Range-diff vs v1:
+So what we can do in Gitaly specifically is similar to what I proposed
+in [1] a while ago: we simply walk all received objects and then verify
+that the edges resolve to objects in the existing repository. The idea
+was rightfully shot down because we cannot assume in general that a mere
+object walk in the quarantine directory really means that all objects
+are fully connected. But with the extra knowledge we have in Gitaly we
+can do this optimization indeed.
 
- 1:  b34445d166c ! 1:  e7b4465b83e fix xstrdup leak in parse_short_opt
-     @@ Metadata
-      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-       ## Commit message ##
-     -    fix xstrdup leak in parse_short_opt
-     +    parse-options: fix xstrdup leak in parse_options_step parse-options:984
-     +
-     +    Most Git commands use parse_options to parse options, but parse_options
-     +    causes a memory leak when it encounters unknown short options. The leak
-     +    occurs at line 984 in parse-options.c, where git allocates some spaces
-     +    to store the unknown short options and will never release those spaces.
-     +
-     +    To address this issue, users can be allowed to provide a custom function
-     +    to allocate memory for unknown options. For example, users can use
-     +    strvec_push to allocate memory for unknown options and later call
-     +    strvec_clear at the end of the Git command to release the memory, thereby
-     +    avoiding the memory leak.
-     +
-     +    This commit allows users to provide a custom allocation function for
-     +    unknown options via the strdup_fn field in the last struct option. For
-     +    convenience, this commit also introduces a new macro, OPT_UNKNOWN, which
-     +    behaves like OPT_END but takes an additional argument for the allocation
-     +    function. parse_options could get the custom allocation function in struct
-     +    parse_opt_ctx_t by using set_strdup_fn. A simple example to use
-     +    OPT_UNKNOWN is put into t/helper/test-free-unknown-options.c
-      
-          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-     @@ parse-options.c: static int has_subcommands(const struct option *options)
-       	return 0;
-       }
-       
-     -+static void set_strdup_fn(struct parse_opt_ctx_t *ctx, const struct option *options) {
-     ++static void set_strdup_fn(struct parse_opt_ctx_t *ctx,
-     ++			  const struct option *options)
-     ++{
-      +	for (; options->type != OPTION_END; options++)
-      +		;
-      +	if (options->value && options->strdup_fn) {
-     @@ parse-options.c: enum parse_opt_result parse_options_step(struct parse_opt_ctx_t
-       					 */
-      -					ctx->argv[0] = xstrdup(ctx->opt - 1);
-      +					if (ctx->unknown_opts && ctx->strdup_fn) {
-     -+						ctx->argv[0] = ctx->strdup_fn(ctx->unknown_opts, ctx->opt - 1);
-     ++						ctx->argv[0] =
-     ++							ctx->strdup_fn(ctx->unknown_opts,
-     ++								       ctx->opt -
-     ++									       1);
-      +					} else {
-     -+						ctx->argv[0] = xstrdup(ctx->opt - 1);
-     ++						ctx->argv[0] =
-     ++							xstrdup(ctx->opt - 1);
-      +					}
-       					*(char *)ctx->argv[0] = '-';
-       					goto unknown;
-     @@ parse-options.h: static char *parse_options_noop_ignored_value MAYBE_UNUSED;
-       }
-       #define OPT_SUBCOMMAND(l, v, fn)    OPT_SUBCOMMAND_F((l), (v), (fn), 0)
-       
-     -+#define OPT_UNKNOWN(v, fn) { \
-     -+	.type = OPTION_END, \
-     -+	.value = (v), \
-     -+	.strdup_fn = (fn), \
-     -+}
-     ++#define OPT_UNKNOWN(v, fn)          \
-     ++	{                           \
-     ++		.type = OPTION_END, \
-     ++		.value = (v),       \
-     ++		.strdup_fn = (fn),  \
-     ++	}
-      +
-       /*
-        * parse_options() will filter out the processed options and leave the
-     @@ parse-options.h: struct parse_opt_ctx_t {
-       	const char *prefix;
-       	const char **alias_groups; /* must be in groups of 3 elements! */
-       	struct parse_opt_cmdmode_list *cmdmode_list;
-     -+
-      +	void *unknown_opts;
-      +	parse_opt_strdup_fn *strdup_fn;
-       };
-     @@ t/helper/test-free-unknown-options.c (new)
-      +#include "parse-options.h"
-      +#include "setup.h"
-      +#include "strvec.h"
-     ++#include "test-tool.h"
-      +
-      +static const char *const free_unknown_options_usage[] = {
-     -+    "test-tool free-unknown-options",
-     -+    NULL
-     ++	"test-tool free-unknown-options", NULL
-      +};
-      +
-     -+int cmd__free_unknown_options(int argc, const char **argv) {
-     -+    struct strvec *unknown_opts = xmalloc(sizeof(struct strvec));
-     -+    strvec_init(unknown_opts);
-     -+    const char *prefix = setup_git_directory();
-     ++static char *strvec_push_wrapper(void *value, const char *str)
-     ++{
-     ++	struct strvec *sv = value;
-     ++	return (char *)strvec_push(sv, str);
-     ++}
-      +
-     -+    bool a, b;
-     ++int cmd__free_unknown_options(int argc, const char **argv)
-     ++{
-     ++	struct strvec *unknown_opts = xmalloc(sizeof(struct strvec));
-     ++	const char *prefix = setup_git_directory();
-     ++	int a = 0, b = 0;
-     ++	size_t i;
-      +	struct option options[] = {
-      +		OPT_BOOL('a', "test-a", &a, N_("option a, only for test use")),
-     -+	OPT_BOOL('b', "test-b", &b, N_("option b, only for test use")),
-     -+	OPT_UNKNOWN(unknown_opts, (parse_opt_strdup_fn *)&strvec_push),
-     ++		OPT_BOOL('b', "test-b", &b, N_("option b, only for test use")),
-     ++		OPT_UNKNOWN(unknown_opts, strvec_push_wrapper),
-      +	};
-      +
-     -+    parse_options(argc, argv, prefix, options,
-     -+	free_unknown_options_usage, PARSE_OPT_KEEP_UNKNOWN_OPT);
-     ++	strvec_init(unknown_opts);
-     ++	parse_options(argc, argv, prefix, options, free_unknown_options_usage,
-     ++		      PARSE_OPT_KEEP_UNKNOWN_OPT);
-      +
-     -+    printf("a = %s\n", a? "true": "false");
-     -+    printf("b = %s\n", b? "true": "false");
-     ++	printf("a = %s\n", a ? "true" : "false");
-     ++	printf("b = %s\n", b ? "true" : "false");
-      +
-     -+    int i;
-     -+    for (i = 0; i < unknown_opts->nr; i++) {
-     -+	printf("free unknown option: %s\n", unknown_opts->v[i]);
-     -+    }
-     -+    strvec_clear(unknown_opts);
-     -+    free(unknown_opts);
-     ++	for (i = 0; i < unknown_opts->nr; i++)
-     ++		printf("free unknown option: %s\n", unknown_opts->v[i]);
-     ++	strvec_clear(unknown_opts);
-     ++	free(unknown_opts);
-     ++
-     ++	return 0;
-      +}
-     - \ No newline at end of file
-      
-       ## t/helper/test-tool.c ##
-      @@ t/helper/test-tool.c: static struct test_cmd cmds[] = {
-       	{ "parse-options-flags", cmd__parse_options_flags },
-       	{ "parse-pathspec-file", cmd__parse_pathspec_file },
-       	{ "parse-subcommand", cmd__parse_subcommand },
-     -+	{ "free-unknown-options", cmd__free_unknown_options},
-     ++	{ "free-unknown-options", cmd__free_unknown_options },
-       	{ "partial-clone", cmd__partial_clone },
-       	{ "path-utils", cmd__path_utils },
-       	{ "path-walk", cmd__path_walk },
-     @@ t/t0040-parse-options.sh: test_expect_success 'u16 limits range' '
-       	test_grep "value 65536 for option .u16. not in range \[0,65535\]" err
-       '
-       
-     -+cat >expect <<\EOF
-     -+a = true
-     -+b = true
-     -+free unknown option: -c
-     -+free unknown option: -d
-     -+EOF
-     -+
-      +test_expect_success 'free unknown options' '
-      +	test-tool free-unknown-options -ac -bd \
-      +	>output 2>output.err &&
-     ++	cat >expect <<-\EOF &&
-     ++	a = true
-     ++	b = true
-     ++	free unknown option: -c
-     ++	free unknown option: -d
-     ++	EOF
-      +	test_cmp expect output &&
-      +	test_must_be_empty output.err
-      +'
- 2:  7a5e2f29529 < -:  ----------- fix: replace bug where int was incorrectly used as bool
- 3:  a9cbca6bed3 < -:  ----------- fix: use strvec_push_wrapper to prevent ubsan failure
+Patrick
 
-
- Makefile                             |  1 +
- parse-options.c                      | 23 ++++++++++++++-
- parse-options.h                      | 12 ++++++++
- t/helper/meson.build                 |  1 +
- t/helper/test-free-unknown-options.c | 42 ++++++++++++++++++++++++++++
- t/helper/test-tool.c                 |  1 +
- t/helper/test-tool.h                 |  1 +
- t/t0040-parse-options.sh             | 13 +++++++++
- 8 files changed, 93 insertions(+), 1 deletion(-)
- create mode 100644 t/helper/test-free-unknown-options.c
-
-diff --git a/Makefile b/Makefile
-index 8a7f1c76543..af8ea677b82 100644
---- a/Makefile
-+++ b/Makefile
-@@ -822,6 +822,7 @@ TEST_BUILTINS_OBJS += test-online-cpus.o
- TEST_BUILTINS_OBJS += test-pack-mtimes.o
- TEST_BUILTINS_OBJS += test-parse-options.o
- TEST_BUILTINS_OBJS += test-parse-pathspec-file.o
-+TEST_BUILTINS_OBJS += test-free-unknown-options.o
- TEST_BUILTINS_OBJS += test-partial-clone.o
- TEST_BUILTINS_OBJS += test-path-utils.o
- TEST_BUILTINS_OBJS += test-path-walk.o
-diff --git a/parse-options.c b/parse-options.c
-index a9a39ecaef6..12721b83000 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -638,6 +638,18 @@ static int has_subcommands(const struct option *options)
- 	return 0;
- }
- 
-+static void set_strdup_fn(struct parse_opt_ctx_t *ctx,
-+			  const struct option *options)
-+{
-+	for (; options->type != OPTION_END; options++)
-+		;
-+	if (options->value && options->strdup_fn) {
-+		ctx->unknown_opts = options->value;
-+		ctx->strdup_fn = options->strdup_fn;
-+		return;
-+	}
-+}
-+
- static void parse_options_start_1(struct parse_opt_ctx_t *ctx,
- 				  int argc, const char **argv, const char *prefix,
- 				  const struct option *options,
-@@ -655,6 +667,7 @@ static void parse_options_start_1(struct parse_opt_ctx_t *ctx,
- 	ctx->cpidx = ((flags & PARSE_OPT_KEEP_ARGV0) != 0);
- 	ctx->flags = flags;
- 	ctx->has_subcommands = has_subcommands(options);
-+	set_strdup_fn(ctx, options);
- 	if (!ctx->has_subcommands && (flags & PARSE_OPT_SUBCOMMAND_OPTIONAL))
- 		BUG("Using PARSE_OPT_SUBCOMMAND_OPTIONAL without subcommands");
- 	if (ctx->has_subcommands) {
-@@ -981,7 +994,15 @@ enum parse_opt_result parse_options_step(struct parse_opt_ctx_t *ctx,
- 					 *
- 					 * This is leaky, too bad.
- 					 */
--					ctx->argv[0] = xstrdup(ctx->opt - 1);
-+					if (ctx->unknown_opts && ctx->strdup_fn) {
-+						ctx->argv[0] =
-+							ctx->strdup_fn(ctx->unknown_opts,
-+								       ctx->opt -
-+									       1);
-+					} else {
-+						ctx->argv[0] =
-+							xstrdup(ctx->opt - 1);
-+					}
- 					*(char *)ctx->argv[0] = '-';
- 					goto unknown;
- 				case PARSE_OPT_NON_OPTION:
-diff --git a/parse-options.h b/parse-options.h
-index 91c3e3c29b3..57037bd381a 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -77,6 +77,8 @@ typedef enum parse_opt_result parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
- typedef int parse_opt_subcommand_fn(int argc, const char **argv,
- 				    const char *prefix, struct repository *repo);
- 
-+typedef char *parse_opt_strdup_fn(void *value, const char *s);
-+
- /*
-  * `type`::
-  *   holds the type of the option, you must have an OPTION_END last in your
-@@ -165,6 +167,7 @@ struct option {
- 	parse_opt_ll_cb *ll_callback;
- 	intptr_t extra;
- 	parse_opt_subcommand_fn *subcommand_fn;
-+	parse_opt_strdup_fn *strdup_fn;
- };
- 
- #define OPT_BIT_F(s, l, v, h, b, f) { \
-@@ -388,6 +391,13 @@ static char *parse_options_noop_ignored_value MAYBE_UNUSED;
- }
- #define OPT_SUBCOMMAND(l, v, fn)    OPT_SUBCOMMAND_F((l), (v), (fn), 0)
- 
-+#define OPT_UNKNOWN(v, fn)          \
-+	{                           \
-+		.type = OPTION_END, \
-+		.value = (v),       \
-+		.strdup_fn = (fn),  \
-+	}
-+
- /*
-  * parse_options() will filter out the processed options and leave the
-  * non-option arguments in argv[]. argv0 is assumed program name and
-@@ -496,6 +506,8 @@ struct parse_opt_ctx_t {
- 	const char *prefix;
- 	const char **alias_groups; /* must be in groups of 3 elements! */
- 	struct parse_opt_cmdmode_list *cmdmode_list;
-+	void *unknown_opts;
-+	parse_opt_strdup_fn *strdup_fn;
- };
- 
- void parse_options_start(struct parse_opt_ctx_t *ctx,
-diff --git a/t/helper/meson.build b/t/helper/meson.build
-index d2cabaa2bcf..476e3278176 100644
---- a/t/helper/meson.build
-+++ b/t/helper/meson.build
-@@ -39,6 +39,7 @@ test_tool_sources = [
-   'test-pack-mtimes.c',
-   'test-parse-options.c',
-   'test-parse-pathspec-file.c',
-+  'test-free-unknown-options.c',
-   'test-partial-clone.c',
-   'test-path-utils.c',
-   'test-path-walk.c',
-diff --git a/t/helper/test-free-unknown-options.c b/t/helper/test-free-unknown-options.c
-new file mode 100644
-index 00000000000..7369dfe379d
---- /dev/null
-+++ b/t/helper/test-free-unknown-options.c
-@@ -0,0 +1,42 @@
-+#include "git-compat-util.h"
-+#include "parse-options.h"
-+#include "setup.h"
-+#include "strvec.h"
-+#include "test-tool.h"
-+
-+static const char *const free_unknown_options_usage[] = {
-+	"test-tool free-unknown-options", NULL
-+};
-+
-+static char *strvec_push_wrapper(void *value, const char *str)
-+{
-+	struct strvec *sv = value;
-+	return (char *)strvec_push(sv, str);
-+}
-+
-+int cmd__free_unknown_options(int argc, const char **argv)
-+{
-+	struct strvec *unknown_opts = xmalloc(sizeof(struct strvec));
-+	const char *prefix = setup_git_directory();
-+	int a = 0, b = 0;
-+	size_t i;
-+	struct option options[] = {
-+		OPT_BOOL('a', "test-a", &a, N_("option a, only for test use")),
-+		OPT_BOOL('b', "test-b", &b, N_("option b, only for test use")),
-+		OPT_UNKNOWN(unknown_opts, strvec_push_wrapper),
-+	};
-+
-+	strvec_init(unknown_opts);
-+	parse_options(argc, argv, prefix, options, free_unknown_options_usage,
-+		      PARSE_OPT_KEEP_UNKNOWN_OPT);
-+
-+	printf("a = %s\n", a ? "true" : "false");
-+	printf("b = %s\n", b ? "true" : "false");
-+
-+	for (i = 0; i < unknown_opts->nr; i++)
-+		printf("free unknown option: %s\n", unknown_opts->v[i]);
-+	strvec_clear(unknown_opts);
-+	free(unknown_opts);
-+
-+	return 0;
-+}
-diff --git a/t/helper/test-tool.c b/t/helper/test-tool.c
-index 50dc4dac4ed..5af5acae1cb 100644
---- a/t/helper/test-tool.c
-+++ b/t/helper/test-tool.c
-@@ -51,6 +51,7 @@ static struct test_cmd cmds[] = {
- 	{ "parse-options-flags", cmd__parse_options_flags },
- 	{ "parse-pathspec-file", cmd__parse_pathspec_file },
- 	{ "parse-subcommand", cmd__parse_subcommand },
-+	{ "free-unknown-options", cmd__free_unknown_options },
- 	{ "partial-clone", cmd__partial_clone },
- 	{ "path-utils", cmd__path_utils },
- 	{ "path-walk", cmd__path_walk },
-diff --git a/t/helper/test-tool.h b/t/helper/test-tool.h
-index 6d62a5b53d9..33fa7828b9f 100644
---- a/t/helper/test-tool.h
-+++ b/t/helper/test-tool.h
-@@ -44,6 +44,7 @@ int cmd__parse_options(int argc, const char **argv);
- int cmd__parse_options_flags(int argc, const char **argv);
- int cmd__parse_pathspec_file(int argc, const char** argv);
- int cmd__parse_subcommand(int argc, const char **argv);
-+int cmd__free_unknown_options(int argc, const char **argv);
- int cmd__partial_clone(int argc, const char **argv);
- int cmd__path_utils(int argc, const char **argv);
- int cmd__path_walk(int argc, const char **argv);
-diff --git a/t/t0040-parse-options.sh b/t/t0040-parse-options.sh
-index ca55ea8228c..df221be5d18 100755
---- a/t/t0040-parse-options.sh
-+++ b/t/t0040-parse-options.sh
-@@ -822,4 +822,17 @@ test_expect_success 'u16 limits range' '
- 	test_grep "value 65536 for option .u16. not in range \[0,65535\]" err
- '
- 
-+test_expect_success 'free unknown options' '
-+	test-tool free-unknown-options -ac -bd \
-+	>output 2>output.err &&
-+	cat >expect <<-\EOF &&
-+	a = true
-+	b = true
-+	free unknown option: -c
-+	free unknown option: -d
-+	EOF
-+	test_cmp expect output &&
-+	test_must_be_empty output.err
-+'
-+
- test_done
-
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
--- 
-gitgitgadget
+[1]: <cover.1621451532.git.ps@pks.im>
