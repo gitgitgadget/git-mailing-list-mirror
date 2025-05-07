@@ -1,99 +1,121 @@
-Received: from mail-qv1-f51.google.com (mail-qv1-f51.google.com [209.85.219.51])
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF3D278F2B
-	for <git@vger.kernel.org>; Wed,  7 May 2025 00:58:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C823142A83
+	for <git@vger.kernel.org>; Wed,  7 May 2025 01:00:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746579515; cv=none; b=uLaZL0/7CGuEWQfRJy2b+V1b2SbzENlbJE18qoXXEXTS/T1sg4EdiVW71A3Qgh9o63lltXhNDhC+4WNgMWHHo5Q5+m4/jIKFWaswW68bZGy9Kt5hLqW0sLhqQjXKhu4+zyOdU93jPdLflpzEu6yEqjApY1RXJGuVw+gUjMJMVjY=
+	t=1746579608; cv=none; b=Up5AhE3ffV+LaDM5zUUbQZbO5rUnF0GIlpRb5ktNufCqWB2NQpe2pE7pd0/fY23nqTVaPkXYAA/jXCDW1eS1oMneQHd6zVYw8UudVFhZhWGWFH7+b7MGFSGOdCDEKDQMmwKy9HOK4zcr1oQj4MUPRBOVepwJjWpMJaozgCBR4W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746579515; c=relaxed/simple;
-	bh=lOzp/0RMOQtVJpTQpgf6LRxK6b4diHdQ9jmn9Aoa8c0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=XgxgK9mju+lu8QXhDy2jSXGHCy41j1f478Cp6+G2I1C/Dl6j4e6hEpPOnNBKCrvY2PidTqRvEJnlzBIxilR4PmPg+jAav+6riFMxym7GA6hXg5wfqKWjT27P//+oI1x3424xtdzwoP441Y/rfA24g/tUVSyyiwwcl7LpuP2EN9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=wA7MrGsN; arc=none smtp.client-ip=209.85.219.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1746579608; c=relaxed/simple;
+	bh=M3MYTbYyR3acfel9GOmrBDmw5VOEQJM3usaSZKXYXRc=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
+	 In-Reply-To:Content-Type; b=lr+Mj8rojSsOpvwY5iHyqwNtUfP7xRT5S6fq4PhBD9n6+0HCCyqfOYuLKHIaWTB3UuMPxPMMDtxqlfSQw1pR1nMD8kvnvF8a5/HkCnD9R9pQ3EWeoMGKuyo3uGYpx9JOeIDRigy1Yeu3PRLGS5eXR1cQmG+83+htCZV0RpUa0JY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ajU+GPl4; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="wA7MrGsN"
-Received: by mail-qv1-f51.google.com with SMTP id 6a1803df08f44-6e8fce04655so65408746d6.3
-        for <git@vger.kernel.org>; Tue, 06 May 2025 17:58:33 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ajU+GPl4"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-7081165a238so45554007b3.1
+        for <git@vger.kernel.org>; Tue, 06 May 2025 18:00:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1746579513; x=1747184313; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=lOzp/0RMOQtVJpTQpgf6LRxK6b4diHdQ9jmn9Aoa8c0=;
-        b=wA7MrGsNoVwEBfJ1g7fhUenFw4mhtwLJXTqcNJAt5vRW5YqaNRvGM3GjfhUQMusA+S
-         t6wmpzW98HUBEYAN1Ej4PabvWLuki9+sU3/nrjAaXCBaJ4sZgv1JzOZl9OfGMILewt/9
-         Kg+De4S5fukKa+BxHLV6zcQcWKlKBR1bnVsynTAgs5ppKPV5LzQxTnIozotdyfqmkNfc
-         etSpJwVZnVwQlpGYT8VEBC0/nfAhwnbtjz8MUTCO20uHdKYT0EEzOwAdsqBjkHWPs/Xc
-         WwEC4MX8moM2OJ4/yss/yF17raG1EPU8kLDkI5oGHI4tSjRVvOlnsF+PHAQj0yX1I7S9
-         DjWQ==
+        d=gmail.com; s=20230601; t=1746579605; x=1747184405; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=aDnfNV0+o+PdsHnZO+zQ0rD8pUwnYSw69vDaknZ6Aj4=;
+        b=ajU+GPl4WZ1eKvUpOD8sYqWDDV7NXo6lAn9/kls6oHUZ1hv69VGae4wf4dbjvGdNZ4
+         6sZ5XvDG7ekgDCkdkLZ6KTAr9mkan33VoNMjVPaAGrjHX6sVjzPZFA9U1RwyVLYWBG75
+         9em38Sjb7/gzL5aWpH41R+7obQYlQTz97SaKDJSsWqyGgce5SUGMuA6H0G5LaL7VcTa3
+         3p2u1qr3VVZcUMTrbqwlKQ8wZX4ZdMe4GNBctsjcbP+mHhnVhN/UnmALELhhkHVhcTUZ
+         KBu2d2YQDrzWwxYKeckvCJtXNqlelxfPYvsZdpFwytM5bEmDFafFKnRjq8Y1bA0EFlew
+         0QCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746579513; x=1747184313;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=lOzp/0RMOQtVJpTQpgf6LRxK6b4diHdQ9jmn9Aoa8c0=;
-        b=JUE9b2/+CtGU27V0K3i2mwEDAoSXRVmAUaQfuu1Eab4wueyGwI5tMfJxv6doiJqNmS
-         KsxBh897mzKqPBgdTcInMzqKN63Z7nZvMgrIaE1ix7UBYT42cFDBX6PEbb+XMbe84lzo
-         qiUXiHyPejyYeOIhjXtzOTdeb0kORJ3PND1A7tKq7NMJ7gZCCCJBq5eDEjo8KTulW6JQ
-         Ce3eUUIvoWbjIPhHIe8ZMsrK7VPPhmYbq7NJkh1foIhYKtolXifkC0KDRbI4GB0MTOWv
-         R6527abm/4haDPxLKeZThxsy+4VYPxGAN9KYr5WBqU92ERK0V0z8ICoB4lY7iz+T0rbA
-         EovA==
-X-Gm-Message-State: AOJu0YyJYkaOxJyCc49Um0CM2MfDg2PaBOYCc5tC60ySBbZcjPGQCHi9
-	+6TKAog8HC9truoS9v/jQbKua7UnZBNDAkHNhuHPl+RfJhtaTtLmbBhxXU6mraQ=
-X-Gm-Gg: ASbGncssslA21/Bs0mBcW5nxhZhhXrmY7/eVaTLrSQ9HLvp3UUxyLGTxtMzGqwCXOBW
-	hwOAWPL9lzfNppQbk51YnJYQU5/MJDL9ino/d5PfnCGpDclgpCHI9cSv9GVGt5NgTxvCTBuxShX
-	xYz6RC33vIXdzQNulwGfygBFh11sO6dvLhEbpW+mbrkL0OGuzj+gfjmPjOxA7n1UZc3YfgWlfFQ
-	UIt9d8NDJfBo3+9EftzcJ1ZR1NU2fSYUWfoSGK0ZnIUas3Mq/oneZRQD6YH6AdMDLv5cTRSxq/j
-	e1BbvlRDStBRuIAmrPV1FcN+AOwf2a2ZleXcpXYkegLrevd7dbWpupLT/5+3ZozGWfeT4YQHFGY
-	0o9zvQDn3ozV1
-X-Google-Smtp-Source: AGHT+IFoaQGZuCKuc+MWKOlNRJbz9zUi3eF58i+BuoBmZx6juiE9nTKyWwGtGQCxpCw0j/s54u22Sg==
-X-Received: by 2002:a05:6214:cc8:b0:6e8:ebfa:42f9 with SMTP id 6a1803df08f44-6f542a59966mr18482506d6.16.1746579510902;
-        Tue, 06 May 2025 17:58:30 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6f542781393sm5205586d6.88.2025.05.06.17.58.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 06 May 2025 17:58:30 -0700 (PDT)
-Date: Tue, 6 May 2025 20:58:29 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
-	johannes.schindelin@gmx.de, johncai86@gmail.com,
-	jonathantanmy@google.com, karthik.188@gmail.com,
-	kristofferhaugsbakk@fastmail.com, newren@gmail.com, peff@peff.net,
-	ps@pks.im, Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 09/13] scalar: enable path-walk during push via config
-Message-ID: <aBqwNaF9UNT7VK+1@nand.local>
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
- <e5624c379d5804bf4fc44163c14a85ef55f89c97.1742829770.git.gitgitgadget@gmail.com>
+        d=1e100.net; s=20230601; t=1746579605; x=1747184405;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :to:from:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aDnfNV0+o+PdsHnZO+zQ0rD8pUwnYSw69vDaknZ6Aj4=;
+        b=KP2HiiynAwumx8HmK9iDaqjCN0vnN5qEP6JtlrM1lHqv2Gq/ywxJ5/i5YPOZBvQAZj
+         JLVrkHK818S6MfzBk+1BBrN6ucFdhF3j5GzJ2oPRFchL5jbv11kb11fAjSoj0sjnxjv6
+         SiKUSdKHsJqbVLuYXfYACsytfvEvyV9fCiqanfiYqfdOUsSz5R1LBzPmulDflZNbb6jK
+         Fw8kdvbjEzIdIApYZ+wR/3obnhOxIbD2/0sJov+yy+5lSLaNvzrc8Q1k9TCgJxCxYstZ
+         7h7GKP0FtxMi/uMTTcLi3lAmoxyeHEKrx3FlR/eqqSJljCeVJ86IMAzAEfkzb5mJi6RW
+         GF1Q==
+X-Forwarded-Encrypted: i=1; AJvYcCXbwgcKJUwNEXbZPG7CLAZKmUyaPoWSbHWBAx1blmLBkdyL/r0htehdbVnzRDwM3lcBUks=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzl/3plSWZGxuGErMeqrQcZ/IGrqdm7fUW9o1VygdJYOurimZew
+	UxAA+1eKtCuOkzCwPAXBvAca65Y16cILicGQXSVPoK8V4hhzfLKfM0nEOg==
+X-Gm-Gg: ASbGncs/thmOWQV8vbVFD1xIVWSmycnEiFqHd3UW/9X+dtIHTOxIZMP+OxZ9yjA5wqS
+	RORQWiFTZ3bdnj9B6wetFN0vOK9aMuo9Cr7TIJS9S+ID6ENNsnl5+wSfxzJv5fouchytTsh9kTZ
+	/8WYSptIPhjQKeRnTpRpVYg/Bo7imL9mH7BjILnWKiQJL5L868bMZy2AdrQbe/Kjya5y18O+4uw
+	OX1OqptNsBagXYTNmWLV22xOY3bshAhCEJmqc/Q5DSHnGAyRE5S0ltcLmS4U9bv6g5q1wHZxPMB
+	5m3PAlMrOxM73YJDGxTfLJvFSiKTW+mo3gukUXdqQ6XzEK8AiwyocTkAWU39XTFRlrL6ZXO8Ssj
+	Y/lqX6hsR4xOPXIC7xtGc1uYJ61Ix
+X-Google-Smtp-Source: AGHT+IEPl/egKKqxWjfL3unVm4gApfgz7HaqeQ5lWdnzjWkNCigm4jPOpSVwh5oHNAS6puPVoKZGnw==
+X-Received: by 2002:a05:690c:338a:b0:708:b7fd:bb03 with SMTP id 00721157ae682-70a1da08f52mr21881967b3.13.1746579605447;
+        Tue, 06 May 2025 18:00:05 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:cc2e:477b:d336:3346? ([2600:1700:60ba:9810:cc2e:477b:d336:3346])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-708c3f3d67esm29879007b3.35.2025.05.06.18.00.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 06 May 2025 18:00:05 -0700 (PDT)
+Message-ID: <41f4a9f0-e758-49e5-8e88-4659966547c1@gmail.com>
+Date: Tue, 6 May 2025 21:00:04 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <e5624c379d5804bf4fc44163c14a85ef55f89c97.1742829770.git.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 02/17] object-store: rename `object_directory` to
+ `odb_backend`
+From: Derrick Stolee <stolee@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+ <20250506-pks-object-store-wo-the-repository-v1-2-c05b82e7b126@pks.im>
+ <e23e7e63-1d66-4a5c-8c4e-19b5078a75ad@gmail.com>
+Content-Language: en-US
+In-Reply-To: <e23e7e63-1d66-4a5c-8c4e-19b5078a75ad@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Mon, Mar 24, 2025 at 03:22:45PM +0000, Derrick Stolee via GitGitGadget wrote:
-> From: Derrick Stolee <stolee@gmail.com>
->
-> Repositories registered with Scalar are expected to be client-only
-> repositories that are rather large. This means that they are more likely to
-> be good candidates for using the --path-walk option when running 'git
-> pack-objects', especially under the hood of 'git push'. Enable this config
-> in Scalar repositories.
+On 5/6/25 8:51 PM, Derrick Stolee wrote:
+> On 5/6/25 7:09 AM, Patrick Steinhardt wrote:
 
-Makes sense, and feels well-justified.
+>> Let's preempt this by renaming the structure to `odb_backend` now
+>> already. This name is agnostic of how exactly objects are stored and
+>> allows us to easily introduce e.g. a `files_odb_backend` and other
+>> specific implementations over time.
+> 
+> But here's where I'll get a little nitpicky and say that these are
+> "odb"s not "odb_backend"s.
+> 
+> * odb: a single object database. A repo can have multiple, currently
+>    only one that is read/write and multiple read-only alternates.
+> 
+> * odb backend: an _implementation_ of an object database. This would
+>    be the structure that containts a vtable of implementation methods.
+>    Each individual 'odb' would point to a single backend describing
+>    how to access the data in it.
+> 
+> Does that make sense? If we are going through the effort of renaming
+> things, I think it's worth being a little more future-proof here.
+And immediately upon sending this message, I went and looked at
+another patch and realized that the rename in Patch 1 would be
+confusing with 'struct object_database' containing a list of
+'struct odb's.
 
-From my understanding of the series thus far, it seems like path-walk is
-(currently) a better default choice for clients than for servers. And
-Scalar is a perfect candidate, since its users are likely using it with
-large repositories.
+Perhaps in my head I was thinking that each repository has an
+"object store" which is an abstraction over possibly multiple
+"odb"s which each are interacted with via one "odb backend"
+(and there may be multiple potential odb backends in the future,
+but only one right now).
+
+If we want to keep the 'object_database' name from patch 1 (or
+replace it with 'odb' for brevity) then we might want a different
+name for each sub-odb. Perhaps 'odb_shard'? 'odb_slice'? Do any
+of these sound better?
 
 Thanks,
-Taylor
+-Stolee
+
