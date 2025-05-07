@@ -1,151 +1,123 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B97928691
-	for <git@vger.kernel.org>; Wed,  7 May 2025 18:36:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A974C2144C1
+	for <git@vger.kernel.org>; Wed,  7 May 2025 19:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746643010; cv=none; b=lSPElsO1yIEVP4n781Q5swSWIyrctHBuowgVIlBLjNYFhW9Unww0/sFgt4OWAQ7QLQkW24xYHdlvu9kbYDfZrRatK9bhygD6Sl3kBEtHQLc3pasDUos06T4xuAAyZvlpI7/eJIzux2I+RYPZgnVF9zogqjUs+SkZMHgfQYb92rg=
+	t=1746645048; cv=none; b=NEQ15BY+1MW7xt50o9Xi1uDGhHkp5XlnmMdo/CiliqPi9ug/uwf/xCBDEEosrw1qfHGkOVBDC/0/aC08eTdm2JRHAog+27xEh90EJ44KA4RIXqQWfThBZOLo7AAi+jnt5bjtrzRgQc7OHmjvZ/r18WtR8ZVmT82osrCgr2KbLNY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746643010; c=relaxed/simple;
-	bh=1dAZgJwHLEQ6fAmuf/FjlazarjUGrN88vZmAIG+gc3c=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=oby+7D09uGpLWoP9oHwZco+YRn2Md+LNC3U+LCCNivuYCOl7yHDZP8+m5PBPkYQz3RsWR1M8y6Lzcjq5WzoyXeBCCYIM+CNy9x/7Jo3R/72hOdpcRCpZcRSWdBev6Tm0ChvRLQmHSW80nO050MRZWgcIlkY4QPpqoVSTRBwHBPo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=xfTZgQe9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JjTzwg8r; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1746645048; c=relaxed/simple;
+	bh=YFsNXbLivdHUspp2z695Xr8W2yIIzH81rOI+isD9ncc=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=XOsqbBmsBT2GqHNyhnFk248h/jqB/zb+r/HIINGP+Uqe5BIB0DfdzO7SngrZvhYLcgW3mfG2qJioXMn5ibvZdsksAT/L1zrBVUqj2R+LaRJuZK5zFVvk1TIXZDYa8P4zIXSCCtXO+/jZ975y+6lX9KyvVojIS8wW3LjwP2f00sw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=XBAS8ehH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e8+b/rXn; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="xfTZgQe9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JjTzwg8r"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id E0C3C11400E2;
-	Wed,  7 May 2025 14:36:46 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Wed, 07 May 2025 14:36:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746643006;
-	 x=1746729406; bh=aUyCjuiASciXla2J7jaGTtdbeZsk7WLzdSdRvqiwNvY=; b=
-	xfTZgQe949hWlIMI/WfaT5NvW0tLg0EpVTNvRbdimpcJ84Ys8c4CjBM9nbtOxpt0
-	/FRMjZA9XF8ykS+VmGpbx+hqLVAxKxrF1ZxOnRknktuD5yyBJMlf+1t+WgOW9CRX
-	+Ym3kiSSyt4Y25RcQ6+dmZss30mCRDNfISWiF97yjjmW9Qb/T8eSq8/5SqGgF3wF
-	NdMTPbb1PEgcMgrbI+LQbLbbJ1vxUrNnb8LKecvLa16GEIykVH0jWNNpXJB5IwVA
-	yZ1vs3upCpkgdqhcV4LNsJAEJ0NW7aR4JfFmf1rQcF7UAOwY47fVmmAapNRaev4G
-	CF0qEYctCmvBmA2SCssrnA==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="XBAS8ehH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e8+b/rXn"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7E5DF1140163;
+	Wed,  7 May 2025 15:10:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 07 May 2025 15:10:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746645043; x=1746731443; bh=5T5RXQ3ESU
+	QQ08UDpOa3Vp11L+OsQ/UIdYynbc02fAQ=; b=XBAS8ehHZKFkiORY03DqiSZjYI
+	Rv/0GuNZQ2TTy2AaiFLmwngMHQIq9K0JasL0PWAYQiin1jXgYpSqUMjNCi3OYVk0
+	ihmlA6pD/UaHsuNhTP4eY/9IrRdp7dmu2rdbZcn51zDHDfOZoitBZO2MSm4/SVB5
+	xO75K3C+NBV7JKLONvE0p9El5q+UAIc3u2MmsVUOP2ArnyipHWxgwwaqN3pQ3ZzS
+	MqLyeRZ4MyQqQY/UF8URH99qhUwlQI0Sfac5tzuGEFl06aw+hfbcrv1BVVmISiGp
+	UgBjQxVDDs8uRTQR94elhnyYJSN/mzHzxpoRVyohXUfqVhIq8Ei80H0smfgQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746643006; x=
-	1746729406; bh=aUyCjuiASciXla2J7jaGTtdbeZsk7WLzdSdRvqiwNvY=; b=J
-	jTzwg8r6+b7zSXYWx4zlDqfsqupLQSndGx5l8wXZdxdNg7ETPltOyyM6Kh4cIScr
-	tjUpe22OZMY7zQz1YG3aEZqdxo4kK/O7xFUZDwSta1xw0IOaXRMiw/GMlxRM2H3X
-	cBTMx64nAf332eyI+tqJIkZB9IO2RSSgIKjnHfdKOIVFMA8aMafYbOZttLVek0uv
-	atJOnJDDCtFZj0M3TWDvAqV+aVlKgKkvsqhduMTb0KE9FWyjZtk4GZduis8c37ci
-	aN4AbGosr/7D0C9laQAQ6d0pYjIv7H+rrZW/ceIHqNtxczoFgYTEkVQnfIR25bEi
-	EJ44eI8BjlpYUGp61e9zQ==
-X-ME-Sender: <xms:PqgbaMxS_FDzyZw7vKykTqlH0Bj7RXIfvvVy3evjMYq8An8RnNCgHM0>
-    <xme:PqgbaASl2LH551np8eIA-Tm-9ol8bky1eh4rX-Ipduzn2PJVLGRINpE3ARmQjYHi3
-    rMkme2OGBx4JRsM3g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejheelucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746645043; x=1746731443; bh=5T5RXQ3ESUQQ08UDpOa3Vp11L+OsQ/UIdYy
+	nbc02fAQ=; b=e8+b/rXn5sBBCabvt5MJrTQKDkEV7m5CBIbSjKIuYuE/R7/xFOz
+	nimoAKFi4OPs1Pe1s9bHJVEnvGeS/juvtjS91bk+fEbQ8EdMIFl13pYugOXLQrxu
+	V2YSOtxveLXtGW0IC477rZRNtHc0yVBD2lMKygYD9N7AVjiNRQZ+NNJKMUGQUmrg
+	G6rUfHykuiJDpNzyAmp67DZcBIfHbUy9x6c9RNEA1sATuabJCB0/bjLiDl3TRdFm
+	2flSR36mWPuTIPSr6yb2+jLz/DkfKSKefqUi6qt8mGyUkkeMKbBzWo/GoUeAyOez
+	PZWgd18ef1iAjGTqzVHSv58bNsi/IEDhb8g==
+X-ME-Sender: <xms:M7AbaGCcKUIUPcnR2n0Z0Ue4oYAD-Stbl1_9uiIj6hgti7WppGWAwg>
+    <xme:M7AbaAjxqz69juo1Li0g9ZLxSwiHt3Mfq4psGz4mfjim4Xa4RZmDYsd5Xj4Tpt3El
+    TSncTSmPqejJkkXIA>
+X-ME-Received: <xmr:M7AbaJkog0SNU4un0jIfZj59r7etlJt2U5qD6bM73yFj03aP_MzbMe3--yiOiiswy3EKvTc76yiCO0KsbUfMhsbaE1iPyABKgAUM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejieejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
-    tdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrh
-    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggft
-    rfgrthhtvghrnhepgfdtgedvvdejuddvteeigfeutdejleetueeufeefleevhfevuddule
-    eifeekjeefnecuffhomhgrihhnpehsthgrtghkohhvvghrfhhlohifrdgtohhmnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthho
-    peefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:PqgbaOUykOw0da63NUr1xU6LO8d2h-VlImfh5RzOvLMiYKUXo3aC-A>
-    <xmx:PqgbaKjVHg17tOOtiOvLEhPmb43alDHoBgRK_NpCKajzHMapTU4s5A>
-    <xmx:PqgbaOCsOS0gcPZqAQ42CNaF3Vfj8Mptv_ae019D94YyK2vR9oeznQ>
-    <xmx:PqgbaLJ3RjIWeIkX-W1tXKp6Awzr4WvGvuCI39Sw2rJ4_F3C0mxh6g>
-    <xmx:PqgbaAzDbrDvuvnc1wVWC5cDQFZs3XHMV5g8u7LkEpGwnXslNIGI8DfJ>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 86397780069; Wed,  7 May 2025 14:36:46 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvges
+    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehlvghonhhmihgthhgrlhgrkheisehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:M7AbaEwrQWK0vedYiUfYZ44BnaxQUFj8Lxyp4YUKeAa0YEfwg9X_KA>
+    <xmx:M7AbaLR7-XAofaeZvbK1V7kNNLf6SsPTR8sJ6evEfEM-yyxXujsYww>
+    <xmx:M7AbaPb_M-JbrYcaekJXJIAeyt9hfqCt08KzCbtzvMQeF3838BlAsg>
+    <xmx:M7AbaESRgMUSeGDjZCIAWeNkcmu4pPDg_67WtMtK2nh8trAIKs7q8Q>
+    <xmx:M7AbaH0OcWlxzlf9zxvvQW8y2iNSeoXoeYxFXavewTWYeAgaVTpZDIYA>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 7 May 2025 15:10:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,  Leon Michalak via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Leon Michalak
+ <leonmichalak6@gmail.com>
+Subject: Re: [PATCH 3/3] add-interactive: add new "context" subcommand
+In-Reply-To: <a290bc6f-9198-4a00-8273-2970cfbd4a29@gmail.com> (Phillip Wood's
+	message of "Wed, 7 May 2025 14:30:42 +0100")
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+	<b4b7854f330af7588b12e3361bed40723febddad.1746436719.git.gitgitgadget@gmail.com>
+	<CAPig+cQmnAiHo8su6UBaKnZ=UZwgwMbDFA6ewMAfvCRR0RFzbw@mail.gmail.com>
+	<xmqqldr9lmpg.fsf@gitster.g>
+	<a290bc6f-9198-4a00-8273-2970cfbd4a29@gmail.com>
+Date: Wed, 07 May 2025 12:10:41 -0700
+Message-ID: <xmqqzffob5ji.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T1842cedc60ad5f96
-Date: Wed, 07 May 2025 20:36:26 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>, "Patrick Steinhardt" <ps@pks.im>
-Cc: git@vger.kernel.org
-Message-Id: <3fff50c2-d36b-451e-b324-aa00f8548bf5@app.fastmail.com>
-In-Reply-To: <xmqq34dhijnq.fsf@gitster.g>
-References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
- <20250506-pks-contrib-spring-cleanup-v1-8-e6d5ddd79a72@pks.im>
- <xmqq34dhijnq.fsf@gitster.g>
-Subject: Re: [PATCH 08/10] contrib: remove "git-resurrect.sh"
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, May 6, 2025, at 22:11, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
+
+> On 06/05/2025 17:37, Junio C Hamano wrote:
+>> An alternative that may work better is to allow subcommand specific
+>> parameters in the answer to the "What now>" prompt, e.g.
+>> 	What now> r -U7
+>> to choose an equivalent to "git revert -p -U7".
 >
->> The "git-resurrect.sh" script can be used to find traces of a branch =
-tip
->> in the reflog and resurrect that branch. Despite a couple of global
->> cleanups, the script hasn't seen any activity since it was introduced=
- in
->> e1ff064e1bf (contrib git-resurrect: find traces of a branch name and
->> resurrect it, 2009-02-04).
->
-> A single-purpose thing that is done correctly on top of a right
-> abstraction does not necessarily need further updates, so I doubt
-> this paragraph contributes to the decision to remove the script in
-> any way.
->
-> Having said that, I would not be surprised at all if large bugs
-> still remain in the script.  The reason why we scarcely heard
-> complaints about it is due to the fact that people simply are not
-> aware of it, people do not lose branches too often, and when it
-> happens, it is crystal clear what needs to be done with the output
-> of "git reflog HEAD@{0}", once people learn about "git reflog".
-> Even though it may be tedious to inspect "git reflog" output and
-> pick the right record to use with "git branch" to resurrect, as long
-> as it is a one-off thing, it would be more assuring to end-users than
-> some rarely used script with no correctness guarantee magically picks
-> a commit to place on the "resurrected" branch tip, I suspect.
+> I think the best solution would be to allow users to re-display the
+> current hunk with more context inside "add -p" rather than changing
+> "add -i". That way a user who needs more context to make a decision on
+> the current hunk can get it without restarting the whole process of
+> selecting hunks [1]. If the user knows up front that they want a
+> certain amount of context they can use "git add -p -U <context>" or
+> "git add -i -U <context>" which was added in the preceding patch.
 
-The top-voted answer here has 3029 votes:
-https://stackoverflow.com/a/3640806/
+Yes, but notice that the above is about interactive mode "add -i"
+that is setting the diff.context to 7 for subsequent "patch"
+command, not against "Stage this hunk [y,n,q,...]?" prompt inside
+"add -p".  Once you go into the "--patch" mode, especially after you
+let the user to edit some hunks, "redisplay this hunk with wider
+context" is an impossible operation with the current code structure,
+I think, as the implementation does not keep track of information
+that are needed to do so.
 
-Which is in fact to just use the reflog manually.
-
-The git-resurrect.sh answer was added two days later and has 16 votes:
-https://stackoverflow.com/a/3653931/
-
-Given this vote-split,[1] it seems people would rather do some manual
-reflog work rather than figure out how to call scripts from contrib/.
-
-Also the answer was by Jakub Nar=C4=99bski.  (Not a normal user who happ=
-ened
-to find contrib/)
-
-It seems that many people delete branches they would like back at least
-one time during their tenure.  But they don=E2=80=99t seem to want to st=
-reamline
-that process.  Which makes sense considering the previous discussion
-here.
-
-=E2=80=A0 1: Potentially popular answers can get buried on StackOverflow=
- if they
-    are posted much later.  But this does not seem to be the case here.
-
-    Also a 337 vote answer was posted over three years later.[1]
-    Although that=E2=80=99s a more advanced answer which goes into using
-    git-fsck(1).
-
-    [2]: https://stackoverflow.com/a/22303923/
+So, this is like "restarting 'add -p' with -U7", but done from the
+"add -i" session.
