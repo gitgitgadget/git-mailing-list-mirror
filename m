@@ -1,144 +1,122 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from mut-mta1-se01b-zose1-rescue-fr.yulpa.io (mut-mta1-se01b-zose1-rescue-fr.yulpa.io [185.49.22.249])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7148221DB4
-	for <git@vger.kernel.org>; Wed,  7 May 2025 08:25:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A730217E4
+	for <git@vger.kernel.org>; Wed,  7 May 2025 09:46:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.49.22.249
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746606352; cv=none; b=ZzYEhE6HgeMVWaxjvKfnmclGEOabLwhBqQZCaLRN6QJR+B7s+OrDb3hNlc7rfnvQTV6Ptqz/SunrokdemWlOeBqAWYsMmMKV2ZXg+Xkph2Jo7sTS0wNhjBc5/qaXC8akzaF6bCvwcJOxBRIXc5TodSW88KhKAoHipPfTx24rXKo=
+	t=1746611184; cv=none; b=JA2aovxFLxeivNM0bS7E/AtDE8+WO5WyJ1zK3Zz72qCoFvTENdcqW+Uap6DM0ik6XAfYErx9wX0NlmKiz5wLVacKCA6TfDkVz0xmFpWaxz5CDp4JNGFxJ5n2+7PFh/qVxcKKy2nuqwQ0rmyr2nQrv9KB+FInKcmQSWAzCXsAbcA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746606352; c=relaxed/simple;
-	bh=IafVNesCpDHvAb6kItmedFMAm8RT0NFtbVLhJWng9C8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JgyW++viPOvBbTzWhenJZeht3iSJzX1wdjxrdS2Ko1faOWt90rRQItXrBwUUGXwwil6+yxU8lPWehJ18IA10Ta1ZTsSgdSpdA2nfJB3lFhRv6GwaLHyiZqojMy4afDYpeu5iYNVO24iFkAbyloSGegePqJOAPHsIzQ/SpJgE+lM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=16MTIosX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WU3zrcq3; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="16MTIosX";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WU3zrcq3"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 986181140159;
-	Wed,  7 May 2025 04:25:49 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 07 May 2025 04:25:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746606349; x=1746692749; bh=7Xu4UaXLD6
-	meHGUeArW1j207LUwb+xhegx8FXnYbLI4=; b=16MTIosXY1QKKmTEWICOTjjbwy
-	OQyFE0Se/tF3dyiRknbKuKM+WHmfLI8jfSJupY+/HUtwX26qVYpyAYW4MRVnvbAu
-	T4BW/szUT9yNRwN6SsPbgBozgS5J3y5M/PN+4dZZH82gIeEB+O8VN8kdJMQSXa6G
-	ca3b77QMgJ6R1ztuyJPC/NkjLjKE+BFPZmfyw2zHlCa/dB1OmBSJ9dxaQrjG2HAM
-	UrLlkB69oF+q5aj9k1U7yVXbU422gm3v+lvvLoOmdvW0KdMgMS5eUPqr8hltP4vu
-	Lb/XPG3YlOGfLOjftuKMMeFbRUaaDDZzeW17hFxLI4KJGXfwH3+LXNfqYFeg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746606349; x=1746692749; bh=7Xu4UaXLD6meHGUeArW1j207LUwb+xhegx8
-	FXnYbLI4=; b=WU3zrcq3nub6dMyWAgXxtYLrK9aijFWmP0TNkRIc0vHp0L3c5vo
-	h+NSCPGPmFaJAwy+UhFnsNW4pyReByLc2XrCaQ77rTBVBud6cJNiFmMj74FsANzD
-	5Dk+WWvexK2cgHgd4MD8v8az26YpYBvhiznZZyCeF2PHOBGjZUNYcKKk9uzNkhFm
-	+rS4VlDoPM21shLhJxC9WTox6cfD3VyW9LRxvHFTxjTc5xwB3BaFKL8GvYrxqyzS
-	+0Dbb4QUBa85+TVuYDnBDLo8lMvHzkjSi1o+mf35PVblR3EHY3He9ZH6YGHu4ukD
-	73iJbbhoeQaNsH0BnPi1bcF4NJyMKZ+SwGg==
-X-ME-Sender: <xms:DRkbaPpx4eBerxj6jNezCPgkxHFWWUo3HwJWkche72mfDTHpA9t00w>
-    <xme:DRkbaJo_0nJlFe5T1LmVhYSzOdVhYpj46s8uW-m1N9aRRoHtLwWWUEvrm10ojeCsG
-    MTFPOARnRTgc7qs-g>
-X-ME-Received: <xmr:DRkbaMPIAe7zt-25zWBK19AC4T3sS1Ksg2o2nsrrbqzFUXsaXAdcWQAyZKEDKP2ZXEu9Ddd3ArGMaGmL3MWhIKEGqXXHJmVuZ05PrMb1cJRJdg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeeifeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgepudenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtph
-    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghhrhhishht
-    ihgrnhdrtghouhguvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidroh
-    hrgh
-X-ME-Proxy: <xmx:DRkbaC4ZyWNf8eACgfcuC-iMnXymldffiijfeG4z3rKjmssA1Gs7Cw>
-    <xmx:DRkbaO7Q6n8TkWpDPj0Ut-4mzVex5JXhtSZ2PRkt1HtDJw_0GUu9pw>
-    <xmx:DRkbaKhl_-6S0DiafXS2I9KETQJhY_oV7brK1L05C-Hz2zywvpbzgg>
-    <xmx:DRkbaA7KkBFpEQcqCw_CdxC4sFg_Kedei-rhggMCiSveNKctXa4tZw>
-    <xmx:DRkbaHeG-kmOXNvWudm2_kcA_QtKHUT_5fWTvUcfTH06MvWxzyjs_vNz>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 04:25:48 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0af42d2c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 7 May 2025 08:25:45 +0000 (UTC)
-Date: Wed, 7 May 2025 10:25:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Taylor Blau <me@ttaylorr.com>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH v2 3/3] promisor-remote: allow a client to check fields
-Message-ID: <aBsZC_MZw7BHxUiS@pks.im>
-References: <20250414160343.2216312-1-christian.couder@gmail.com>
- <20250429145243.992252-1-christian.couder@gmail.com>
- <20250429145243.992252-4-christian.couder@gmail.com>
+	s=arc-20240116; t=1746611184; c=relaxed/simple;
+	bh=Tsl6BdWXN1tXcd/C+5W4xdDF1E28sV+N8HECftuzGgo=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=a9jSxPMiVrxPIKm/uTC03DARbSF8hmH0BwqhTZBxgMeYIkFtYdfSNiTMqNOnehmSCCRkDnMacu6xf/fdoLKVO35h6wnX1m7b/XSEWTV/YZNmP8ARj3WHHJNQ4NXmu8KNzqYTt88pxKgNd5/5P/A/A1uvdWzqtflD64zs7Y/4d/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthieu-moy.fr; spf=pass smtp.mailfrom=matthieu-moy.fr; arc=none smtp.client-ip=185.49.22.249
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=matthieu-moy.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=matthieu-moy.fr
+Received: from [185.217.155.54] (helo=mut-zose1-mta-hub-outmua01b-fr.yulpa.io)
+	by mut-mta1-se01b-fr.yulpa.io with esmtps (TLSv1.3:TLS_AES_256_GCM_SHA384:256)
+	(Exim 4.92)
+	(envelope-from <git@matthieu-moy.fr>)
+	id 1uCaod-0099EN-Dm; Wed, 07 May 2025 11:11:50 +0200
+Received: from localhost (localhost [127.0.0.1])
+	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id C4B6A100CC4;
+	Wed,  7 May 2025 11:11:46 +0200 (CEST)
+Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
+	by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10032)
+	with ESMTP id uyHzoYLWlLoE; Wed,  7 May 2025 11:11:46 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTP id 2DC80100CDE;
+	Wed,  7 May 2025 11:11:46 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at mut-zose1.yulpa.io
+Received: from mut-zose1-mta-hub-outmua01b-fr.yulpa.io ([127.0.0.1])
+	by localhost (mut-zose1-mta-hub-outmua01b-fr.yulpa.io [127.0.0.1]) (amavisd-new, port 10026)
+	with ESMTP id fqeOfNMsUfA4; Wed,  7 May 2025 11:11:46 +0200 (CEST)
+Received: from [192.168.1.82] (209.56.68.91.rev.sfr.net [91.68.56.209])
+	(Authenticated sender: matthieu.moy@matthieu-moy.fr)
+	by mut-zose1-mta-hub-outmua01b-fr.yulpa.io (Postfix) with ESMTPSA id DA548100CC4;
+	Wed,  7 May 2025 11:11:45 +0200 (CEST)
+Message-ID: <108f297a-b415-4742-80e4-51ea02af18e9@matthieu-moy.fr>
+Date: Wed, 7 May 2025 11:11:45 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250429145243.992252-4-christian.couder@gmail.com>
+User-Agent: Mozilla Thunderbird
+From: Matthieu Moy <git@matthieu-moy.fr>
+Subject: Re: [PATCH 06/10] contrib: remove "mw-to-git"
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
+ <20250506-pks-contrib-spring-cleanup-v1-6-e6d5ddd79a72@pks.im>
+ <xmqqr011h41x.fsf@gitster.g>
+Content-Language: fr
+In-Reply-To: <xmqqr011h41x.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-yulPa-Domain: mut-zose1.yulpa.io
+X-yulPa-Username: 185.217.155.54
+Authentication-Results: yulpa.io; auth=pass smtp.auth=185.217.155.54@mut-zose1.yulpa.io
+X-yulPa-Outgoing-Class: ham
+X-yulPa-Outgoing-Evidence: Combined (0.18)
+X-Recommended-Action: accept
+X-Filter-ID: Pt3MvcO5N4iKaDQ5O6lkdGlMVN6RH8bjRMzItlySaT9p2hGKdLcZfsw7HwUF3DC/PUtbdvnXkggZ
+ 3YnVId/Y5jcf0yeVQAvfjHznO7+bT5xwE+hFmHMHy7s8iAlBXqMSJ34yWkEDVsqYuRzEmKCD/jvY
+ alByojF4/HJojC+gJeiYLVWfuE7KV6TRwC004sAACNkMkPiMYC+wMzHEMLPorbobc2oE2sGfAUTk
+ EY7T3q4A8cYjACAs+j94NvLRgDL8VE2GDhhqlvnVCBLP4t+/qqVq46o/8MwZyVD9QGGfHMq7jJDZ
+ ae6/9tkhc4aQqqFfN942RHV7KcBh+Yyy9UjcDMivEsJmn1J3i12zQnpjnAmy5UuY4esEwCgdIg/E
+ IjtOg46a7F+LaHXXFQyrAsHe1K0udfbeJGXxh19U+NTtq/kGKqiBEW9ii+hcJOF6qk3sQRLeJOb9
+ 1qg3iHopBP3/vLDzrhovf28HhjvwUeewP+A5Da5oo4qcHGmq3GQv9ZVj7LkpijicqSalrW2rJb6H
+ PsFUVZKs0eeC26uVFs0oAkiflq7EPr0YgoJW9n+OafbCpKg4T3vgTS7kLivzY20h++wKvRaKNZis
+ NFiUWHlKyjzuDFeHsKFQTpBp9R1uNwjHsFdDzqgpYxz1gf6QkX8e0GiH1Wgh6RAenBR+licROGbs
+ k3YQoRw4Z7svCbphEftyfmEMaf5c+xWmLXJHak999PZHFmWeyMKEblX9h9vPgm6EpheizIhoWwtm
+ 5CT3thgqYixlBRaMQfsEfUT6qffDgVvEUMWF9507kX9PudfQZl+LBDMrD7q/cJogwbqzsuok3gFJ
+ TFE9LIBVCsj7+GXcyREnRV+KD/zPY7Gk9PF60yqIyhaI671I4yi7MsEJJOHqowZWfqOfoY56Kz1g
+ bVajKNS5ltNyc8pc5dVBGlMifyclCkSujm58a/xB+XC1kCc60ScQfWjzSCvQ9Y+1CCZHkMcnOSyB
+ mtqjtHaipgVbT5gfw10R8xRWgb42LTVX/Sq//5iHE6NKmdYM/wvullW8NNjZ2BWEUGaa2KR6vniz
+ CCbswUEHuAiex0HQwUJspzSocRo1RRiieYHPbowxVKku/TiHyo1+EhP4m3G0HBShybIxL7hrJSk6
+ 0SF3F6RYOYr2
+X-Report-Abuse-To: spam@mut-mta1-se01a-fr.yulpa.io
+X-Complaints-To: abuse@mut-mta1-se01a-fr.yulpa.io
 
-On Tue, Apr 29, 2025 at 04:52:43PM +0200, Christian Couder wrote:
-> diff --git a/Documentation/config/promisor.adoc b/Documentation/config/promisor.adoc
-> index 71311b70c8..4147d2cf44 100644
-> --- a/Documentation/config/promisor.adoc
-> +++ b/Documentation/config/promisor.adoc
-> @@ -46,3 +46,28 @@ promisor.acceptFromServer::
->  	lazily fetchable from this promisor remote from its responses
->  	to "fetch" and "clone" requests from the client. Name and URL
->  	comparisons are case sensitive. See linkgit:gitprotocol-v2[5].
-> +
-> +promisor.checkFields::
-> +	A comma or space separated list of additional remote related
-> +	fields that a client will check before accepting a promisor
-> +	remote. Currently, only the "partialCloneFilter" and "token"
-> +	fields are supported.
-> ++
-> +When a field is part of this list and a corresponding
-> +"remote.foo.<field>" config variable is set locally for remote "foo",
-> +then the value of this config variable will be checked against the
-> +value of the same field passed by the server for the remote "foo". The
-> +remote "foo" will be rejected if the values don't match.
-> ++
-> +For the "partialCloneFilter" field, this allows the client to ensure
-> +that the server's filter matches what it expects locally, preventing
-> +inconsistencies in filtering behavior. For the "token" field, this can
-> +be used to verify that authentication credentials match expected
-> +values.
-> ++
-> +The fields should be passed by the server through the
-> +"promisor-remote" capability by using the `promisor.sendFields` config
-> +variable. The fields will be checked only if the
-> +`promisor.acceptFromServer` config variable is not set to "None".  If
-> +set to "None", this config variable will have no effect.  See
-> +linkgit:gitprotocol-v2[5].
+On 5/6/25 22:34, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+>> The "mw-to-git" directory contains tools for accessing MediaWiki via
+>> Git. The scripts are essentially unmaintained in Git: despite a couple
+>> of global cleanups, the last changes were a couple of security-related
+>> issues part of 9a8606465e8 (remote-mediawiki: use "sh" to eliminate
+>> unquoted commands, 2020-09-21) and its parents. We don't ever run any of
+>> the tests so it is more likely than not that many of the tests have been
+>> bitrotting, like e.g. documented in f8ab018dafc (remote-mediawiki tests:
+>> annotate failing tests, 2020-09-21).
+>>
+>> Furthermore, the code has been spun out into a separate project at [2].
+>> Remove the directory in favor of this new home.
+ >>
+ >> [2]: https://github.com/Git-Mediawiki/Git-Mediawiki
 
-One thought that came to my mind is that inevitably, users will
-eventually want to specify different conditions and combinations. E.g.
-"accept a promisor remote if it's announced by GitLab and if the partial
-filter strips blobs, but not if it requires additional authentication".
-I don't think that "checkFields" would be able to implement such a use
-case.
+AFAICT, there was no activity at all on this project, neither in 
+contrib/ nor on GitHub, for years. I'm not using it anymore and lack 
+motivation to maintain/contribute to it, and no one really stepped in to 
+take over.
 
-What is the vision where we want to end up here? Should we maybe provide
-some more flexibility now already so that we don't have to retrofit such
-a mechanism in the future?
+> OK, the new home also lacks activity since Mar 2022, but it
+> still is certainly a much better home than having it here.
 
-Patrick
+Perhaps it's a grave more than a home, but that's indeed a better place 
+for the project to rest.
+
+> And I doubt this removal needs to wait for Git 3.0 boundary;
+
+Right, actually IIRC we already discussed its removal and it could have 
+been removed long ago already.
+
+Anyway, many thanks to this list for the help building up this project 
+when we created it, loooong ago!
+
+-- 
+Matthieu Moy
+
