@@ -1,145 +1,132 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 919C928DF21
-	for <git@vger.kernel.org>; Wed,  7 May 2025 19:20:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B83B620296E
+	for <git@vger.kernel.org>; Wed,  7 May 2025 19:48:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746645650; cv=none; b=DSckAFBHSs7hu6U86AH4nCFowbzcBOzEpyPmwD++16nXYQEPL+SdqxXlgLAwgfxXMW49w2J+rPBrjC8K9KAi2WTzk1tm5wgiCXThLrfTjYF3Mc4ZeZsP5HpP1K5IuY8WX45VFjmE+rScc8w82QgfXyk743HKwfgB8359d0ip+rM=
+	t=1746647324; cv=none; b=risy1TyWneaW3vpjyLWQn2zxIWWH33NXx2ok1YUWEF6Au+lfmbEYRI7dF/clkeR8GcdoQUegd0qpkg3RSRfCi5pzAYsxen+SBTypRF4Li/bRiLVrPcU/SHQCwpfkSfN4jcP9lM/o8Aubbj8C+fLEwCapeIN19rN56STZFdrG3No=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746645650; c=relaxed/simple;
-	bh=H+TOht/JefV21b8Yj+V3cdR4d+lzfGUTRxvjdtNk6Z4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=G3Qg59ca0R+m0/1/Kd7ph8CelJ9VaKQdB81ILJCOlaArKgz4g2lYGNmo+GMY7JJJdtRKhN4mN9h2qLsgw0bOZ3ixEtswkUD4DQULHSV3mjKeflYHXgRk8Jc2RpS3oMYKQC/LaEv0YMMBWhVXAjtaG3WDk8AfzcocS4JCBKGcri0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SEpvcPh5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DSeaBiOQ; arc=none smtp.client-ip=103.168.172.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746647324; c=relaxed/simple;
+	bh=oIICLo5FRIva3N2aGyF/PLYpmlWDJ/ClOJE7CG4Y9Hs=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=EGiite1ccu5wC6IyAlXgU1MMXsTPa/NaoMsu6PSmExw1FS0XW9bvWCabV8EpDHYHYDFiauBp5Qob6QJpmi6uPneBQrf1ShaoCIIj10lfOnCjJudrkrh2AvlIcAWyPn+LCn8vbx1ns6/f0vE2O29YlHB9eK5Zfdhd9q4+v1wEcms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JPEUUSw1; arc=none smtp.client-ip=209.85.215.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SEpvcPh5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DSeaBiOQ"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 58360138010C;
-	Wed,  7 May 2025 15:20:47 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 07 May 2025 15:20:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746645647;
-	 x=1746732047; bh=OmEC/XwBlhgLSNeiDUWjxk2FgzrYPkk6s1GRfhVBZLU=; b=
-	SEpvcPh5l3yQC/p+LMrLSLgXbixgL7YMCcheFnkyxI5Gqx4DrhT2b9MSNpr7FEjw
-	y/cZiLDqivxwcrrUuoD6Osef6QrCZ+Jo3t9jsgfI2i6YgFSLYJBMnLx+zvsSBMQl
-	/nvgf8GFOye3ORuV7K0Tl3BirWYnEHYgue00nXcOSbBOcNVmfyeS/D/HVGd0nyA0
-	CEtm/C3gzTA2D0PtI6Bou76GiBEi3oWvfV7HNzNH0OcOfXd6Ys51fd0UK09smWSi
-	OkRwcBMzMYaF2YfhdX7GxdrBCT418DNLh65QZZAR5gAOocSBc97NpEdJDVOWk/4f
-	HVPqG/jXRyBKejkWqS5kJQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746645647; x=
-	1746732047; bh=OmEC/XwBlhgLSNeiDUWjxk2FgzrYPkk6s1GRfhVBZLU=; b=D
-	SeaBiOQWRFdUnpJIJv6AfLSyFwYnwmeLHjO7ii+/4h5uxmnj90DDIVQhBcyw49Qb
-	beJFlJUV9yx0rTzrus3bkv7pO7rDjjgWB9/4UWXpAQfID6Xr5qFlz8motags7o/U
-	3wcmZT7D3NCsPZATXEBnS804YjXfCTIDVDSLmmVEOqIrasuVNXycgqg7CFQlFX1o
-	Su+zrfkt1s8UsmMHNyfX/6MvIGiRuGtMN0H0O1bP3M96cJsqzPdxIN5mB+FhJiD3
-	x7olrJ7JpnyjfUk18EkLo16g8uOxUrapaZQK2WqG9kVb+QA3e+cyUTxc+VxygFNg
-	ZXNCVsL/eUhqc1AA/xYCA==
-X-ME-Sender: <xms:jrIbaPYtOeiHAMp3kKxAsz3P7xLaM2xBfyWVhi4XWOUUDeSrFxCviA>
-    <xme:jrIbaOaxYTo0HMrDVqDY8zDMrNzuTe4WWDZDeCxbHuDLyGhMrzlCmfCVTLGcqT7ty
-    dTQdDk9UkD68s4Fvg>
-X-ME-Received: <xmr:jrIbaB-71QxxCh7qO7a9-Aum_QCug0W8ukFLs9FKcZfE9wmxES4Ov3FdCa5vHlX3D5beGzddycD75vnsLND30Z581bfVcWyEorlZ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeejieekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtoh
-    hffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
-    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprggurghmsegu
-    ihhnfihoohguihgvrdhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjoh
-    hnvghsrdhplhhushdrtghomhdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:jrIbaFrylSSSROpcRqwg7DGeArxhgFb_GnKt6ffWaTtkgalpMjSJ0Q>
-    <xmx:jrIbaKrQ0P5e0DdHMZYL9usFjjLuKYi75Ef1S_RFWCwVNtqO2kFEAw>
-    <xmx:jrIbaLQwAGSmutXTiUWCbtnXW4qa8zi5g38GMmFeKkP9rhSZfnd-7A>
-    <xmx:jrIbaCoGZDBK7PTCohyWEc5hQtJLkLxw_YxfXVXOiigb8iGucpzJFA>
-    <xmx:j7IbaHpusL-UGBHSnIeD3BF5qBsXH91U1kVTO-jyeCvI9yZP65sCSyLt>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 7 May 2025 15:20:46 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Jeff King" <peff@peff.net>,  "Patrick Steinhardt" <ps@pks.im>,
-  git@vger.kernel.org,  "Adam Dinwoodie" <adam@dinwoodie.org>,  "Ramsay
- Jones" <ramsay@ramsayjones.plus.com>,  "Taylor Blau" <me@ttaylorr.com>
-Subject: Re: Comment trailers vs. bracketed lines
-In-Reply-To: <ae56dc14-bbae-4d5e-a890-20735131d484@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Sun, 20 Oct 2024 19:08:24 +0200")
-References: <a4472d6d1551e7c25540c4c8361bcb6b1c9f92ff.1729084997.git.ps@pks.im>
-	<658fe4fa540a0a5316e11ed43f9139d5ef818ee5.1729226155.git.ps@pks.im>
-	<20241018052952.GE2408674@coredump.intra.peff.net>
-	<71e8e44e-dbf9-482e-a351-3a82aa1ca5dd@app.fastmail.com>
-	<20241019212135.GB589728@coredump.intra.peff.net>
-	<ae56dc14-bbae-4d5e-a890-20735131d484@app.fastmail.com>
-Date: Wed, 07 May 2025 12:20:44 -0700
-Message-ID: <xmqqv7qcb52r.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JPEUUSw1"
+Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-af52a624283so325396a12.0
+        for <git@vger.kernel.org>; Wed, 07 May 2025 12:48:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746647321; x=1747252121; darn=vger.kernel.org;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=cIU7kpPxyQJHzMF2cNsncaKFxyRnwB/mPtnzYYDpzd0=;
+        b=JPEUUSw16V2Wr82g69DPH9ynSTInZhoipI9htBLeUE5XfSmV576FW5WXYv/hn65Uaz
+         F1p6C3Kt1TbkBGm7ehtdSwpvHP43r/Fw3G2quKXQJt7gHqewFqm1XmMnsbVc6rY2RHeM
+         oArzbiyvp8DRkVOpfGLz7z4Oz1SOqK+H6tX3ENmKW3mXVaycCJtBhd06ttiPr9Mw8Tj8
+         B1GBxX5VAVjCEomU5TGFxKJbz6zTquyqcXcXrxdrlxflMlRBjlpHXLQx5U4xgbCoNd/5
+         lwjOcsSkJcivGlXp/nZai+B5XC3jydUbm3rNcLsGxPMxe7knXTT3En7JUqLcBoRYEDWL
+         o+Pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746647321; x=1747252121;
+        h=content-transfer-encoding:to:subject:message-id:date:from
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cIU7kpPxyQJHzMF2cNsncaKFxyRnwB/mPtnzYYDpzd0=;
+        b=WvrFVUiqML6e2m2iS78v9zn8URalli+FMlBYe2ZGd4oo3TQa4Lhzu9JHa48djU0uy8
+         lRapR98PTpYLmRqDds0f3C9sfk12ibCq30Iap+vdozPAF+vehYpXu8E7LYtdCIOK/Ga6
+         ijDlHdGCpujjuvyztI+NXga4mCuuKJdXjqKhX3zU95a9KXeVC33lEeoAiGDkfSStjdBX
+         qMv8laie38EAuo5CaaoGrr77MmJFiiYTmoC3za6FyjEk9uus1MQkvuu0It0HBN0oo9LA
+         7zoF2qofqH24U+AP0PyZS4FdtGfo0q8j6paYZ5i/YSY/J+sr6EYIpZm2zNFDp+KJ0bS9
+         zfWg==
+X-Gm-Message-State: AOJu0YytrHsVvBhwb3VKwLSOZvSCGazsJuv0ao1b7weY5lTlIFOQf2/u
+	53Vy8nADnEpkRBDfzfFq1o2cROlgCRcEdc0yFQBGv3CmvmaXg5mhYz8Gi5g7RtGUyiMA00bQFal
+	j2uvXQ7dhX0POq3Y7f3xNdhHGXB0ljExB
+X-Gm-Gg: ASbGncvNLZAfNH+ntGW/15DTdGEVEnH3fEpM6zFZXQnRvcmZWvY/D49JrCIzeIfaueO
+	YxKbSDr+AP4FHOwBmJM8B3AQVfwslU3qQYzG5NhrjTW1rTe6saq3A+MJd3ITfn45T5THsKYRi1b
+	W//S9rVEStiHhi5J7RNxzTBw==
+X-Google-Smtp-Source: AGHT+IGa32hJYMSMurOckG92OaRMB01TAvIivSlXMJ2F3qFdQXTOvpMEUy4hmhI2fpQvtEfLmpY3gl4OjrvQQurFSr0=
+X-Received: by 2002:a17:90b:1a8d:b0:2fa:17e4:b1cf with SMTP id
+ 98e67ed59e1d1-30adbefcbf3mr1087627a91.2.1746647321408; Wed, 07 May 2025
+ 12:48:41 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+From: Britton Kerin <britton.kerin@gmail.com>
+Date: Wed, 7 May 2025 11:48:29 -0800
+X-Gm-Features: ATxdqUEK8w-SopUa4-VdN6xu-vp1GUMtJsKOs8bpAiwVeDS_45SqJyaI34Ci9-E
+Message-ID: <CAC4O8c-964C15ceOHYbk0=_DwpWfpbHgrvP46DoUeUtBbab1-g@mail.gmail.com>
+Subject: Re: easily use meld 3-pane view to review merge commits?
+To: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+On Sun, May 4, 2025 at 1:00=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
+>
+> Am 03.05.25 um 23:55 schrieb Britton Kerin:
+> > I like how git-mergetool can use meld with 3 pane view to see merge con=
+flicts:
+> >
+> >   git mergetool --tool=3Dmeld
+> >
+> > I'd like to use the same sort of view to see already-committed merges,
+> > but I didn't find an easy way to do it.  It seems like git-diff,
+> > git-difftool and git-show are oriented entirely towards diff or 2-pane
+> > view rather than diff3/3-pane that git-mergetool uses.  Did I miss the
+> > existing functionality somehow?
+>
+> I see a conceptual inconsistency with the desire to use a 3-pane view
+> with a merge commit.
+>
+> When merge conflicts are to be resolved, you have exactly 4 versions of
+> a file to work with: base, ours, theirs, and the merge result. (Meld
+> does not show the base and uses only 3 panes.) For this reason, it makes
+> sense to have 3 panes in a merge tool, perhaps a forth for the merge
+> base. That's it. You never need to have more than that.
 
->> I think in the usual trailer order, it would be:
->>
->>   Signed-off-by: Ramsay
->>   [jk: add commit message]
->>   Signed-off-by: me
->>
->> but I didn't want to forge his S-o-b without asking first.
->
-> I’ve seen those brackets in the log.  They used to happen with some
-> regularity.  At first it made sense since you need a free-form area to
-> both comment and tell everyone that you left the comment.  And a trailer
-> doesn’t make sense for that, I thought.[1]
->
-> But thinking about the signoff requirement: you already have all the
-> information you need from the next trailer, namely the signoff.  In
-> other words this:
->
->     [kh: Added tests]
->     Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Has the same information as this:
->
->     Comment: Added tests
->     Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
->
-> Because the signoff order tells you who left the comment.  So I was
-> wondering to myself why this uniform approach wasn’t used.
+At least meld via git-difftool (e.g. via git `mergetool --tool=3Dmeld` defa=
+ults to
+showing $LOCAL, $BASE, and $REMOTE.  I think this is the right default,
+but others prefer to see $MERGED from the start.  It's this configuration
+with BASE that has an obvious symmetric arrangement for review of an
+existing commit, and it's LOCAL, MERGED (the final form), and REMOTE.
 
-Simply because we already saw another project like the kernel use
-the [initial: comment] convention, I think.  The "25% rule" was
-originally added specifically to accomdate this kind of comments
-frequently used in the kernel project, if I am not mistaken.
+> With a merge commit, you can have: the merge result, the first parent,
+> and the second parent... and the third parent, the fourth parent, etc.
+> You can have any number of versions to deal with.
+>
+> How does that fit into the picture? Can meld (or any other merge tool)
+> have any number of panes and still work in a reasonable way? Why should
 
-We see too many 'jk' and 'js' in the project so the initial may not
-be all that meaningful if added and it usually is obvious who did
-what without, but even with three letter initial,
+Not that I know of.
 
-    [khh: Added tests]
-    Comment: Added tests
+> 2-parent merge commits be special-cased?
 
-the existing convention is still shorter than with your "Comment: "
-prefix ;-)
+> That was the devil's advocate speaking. 2-parent merge commits are
+> common enough that some merge tool support could make sense, but we
+> should be aware that there is a conceptual hurdle.
+
+Agreed.  Of course all merges can be decomposed into successive 2-parent
+merges, and I suspect there are a lot of other paranoid people like myself
+who always do it that way in large part because it's much easier to see wha=
+t
+happened after the fact that with octopus merges.
+
+As I said I agree that wedging this into git-difftool isn't necessarily a g=
+ood
+idea, but it would be nice if it was available somewhere.  What I have
+now as an answer to
+
+https://stackoverflow.com/questions/79599180/show-a-git-merge-commit-in-thr=
+ee-panel-form-in-meld
+
+is enough for me but obviously needs more work (to handle trees, various
+diff3 renderers, etc.) but if that straightforward work got done would it b=
+e
+a worthwhile addition to the toolbox?
+
+Britton
