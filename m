@@ -1,123 +1,140 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2D4221552
-	for <git@vger.kernel.org>; Thu,  8 May 2025 17:40:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60AA538384
+	for <git@vger.kernel.org>; Thu,  8 May 2025 18:08:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746726015; cv=none; b=C4mtLPtxvl+AsXsAMuH167gbsUWiMZ9KiGDAdvmzHp9U8lvoYEgJUvEjmdjlnmq/IXkP6AOhJm207cJ7TLHDwD+6OQ5RpuWFyoBhmnMG+rv4Fy8xlxL7nsziLvgrGWZIV9bCOVslnrtXhLeVFD4/918TEnH/fdAysNPau8pdDtM=
+	t=1746727731; cv=none; b=q8Naic3LtgG/UirDj66QLRRrOLm5XWILwN1hXEZQCaoeIuqtnRYOTr3+OcOrfLMGa9WMwVI5HgwSEOMAZdCRGuBrR6cdEunyclrmkci91UzuJLnr7dqxBXb1zlIOt/c3BFVeAp2iUtyZaxs6HzogYXuzdOO1p2UPBj9Goho7ZDA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746726015; c=relaxed/simple;
-	bh=9ExSnV7NCbK7ljHqLJOZE5u20iyWhYoFrk13R4CYCvM=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=tTJBVxf0hjW93rFWVq7H61+MMru/1AXsUbaqYTgoe+bVOdA93VMTFAD+VpREo1F2qbgm/C8Wfek3KvGRfX/mD4yK/qDNv9JYqtgDtpdYrg8pK6PcttevKp579lPxj4Vkv3AWvo3CfR7ZPnhBAIp6OIaKhQTs/QwoujMTKuM+3qg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=Ci8vvMFQ; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1746727731; c=relaxed/simple;
+	bh=Uynr/nb+W8lbis3CYzww72IiabLBgx7l2gLstJlGvNI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bdjfFVpoomMZBU24GMB4fc33OiVdIlRAItxxrnFPaT46304Lw4l3sRjvA0wiuDP/6oVnhpUZj6EvMuqOe4hYx8eWvVP2jxVwP9knRnXpyu/lphJz5gyiXfA20IjCB2lj7yDOVoJb5EE5dYzV2pbc7A0WAhmnsAWZNV/wSaGmegg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hdSWqHVr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=huDeV2vm; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="Ci8vvMFQ"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id D5B3upVSrSSpfD5B5uBjYu; Thu, 08 May 2025 18:37:03 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1746725823; bh=WRLjgLUvJDmyJ1dh/643iLXhu2bVi2AvQyIw9Y2kch8=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=Ci8vvMFQPcTYaXExoDwY3TzMG/5QzurQrgrZBWnf1QQSEmMh9GaQkvFT6XS61CboE
-	 o5/VUR/NeQ8jEgPhImZ7m3P2ZWLLIBLiLFF+LpxUBH9ZqzTBlkNaD0+1As+dKUlukF
-	 PmB2vC1EvQHj6aXvqHcGdbUCe61s05qiOb4/rcHqF/cAmpnJO+6eMcdArk3GMEhXzR
-	 SpwE/lzTy+dBknVmzZkC0fihdIlwOj0SjbCeSJK/mHQWFaifiU2QBiTw2+uiujp8a2
-	 jENRw44Yvu1eh3wKbvKbS9uoiRYgzQLz35Y/oq1HlBcsoEgM9VSqcE3AvJv9C0LtTb
-	 DTd0tuwkW8KzA==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=V9re0vni c=1 sm=1 tr=0 ts=681cebbf
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=oCIE9s--p_-iXHk1q-EA:9 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <e961ef56-f39e-40ea-85fe-964b66b9bcce@ramsayjones.plus.com>
-Date: Thu, 8 May 2025 18:36:57 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hdSWqHVr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="huDeV2vm"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2B4EC11400EB;
+	Thu,  8 May 2025 14:08:47 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 08 May 2025 14:08:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746727727; x=1746814127; bh=zoa3MEfwTI
+	fbw+Xg37hYgUMzzC16WjGPN4V7gmPyUY0=; b=hdSWqHVr+1wsCa93VdxHb/yYl2
+	GAqvDLC5hvZfRe3xZYabgoOlzQH0/fJAyKceQVWq1S7v6VEaNZKbVll/UR18lrqo
+	kIBq/DAW055lt3OpswK6zh7B0+MLcI8m6z7UOjpPZekKfzwY+O4H0/LKhvSY5ufw
+	UUKCXuIRCsyoz9lUqGm22qItfLrwLYpFS0x1agJ8W7FcN4iu+JcSw5Urh/RE+N9H
+	Ov747sSxbSSdv6dXg738ZoMqsodIltXSRcDBLthxOyXVC3Qpom00t9v24Gl1+pq1
+	tDVillshMHqFkS91cnz2tYCaXD/8KeOrxhQf0ciuHc7kCgQXB13NPkPx7iYQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746727727; x=1746814127; bh=zoa3MEfwTIfbw+Xg37hYgUMzzC16WjGPN4V
+	7gmPyUY0=; b=huDeV2vm39Rc8WpuU3gF808itamRTKdgWtudM94zuRpBJH6IIZr
+	9tHv7+0fD+XlWuq644LlXzL4MbMNpO/c8hsHwHDYG7JKTPuDzC/y4zxPeWunVXmO
+	khYZRh9OI6qOeIPxY65YuVj6gWluR9ci7J10miVpaj0e1Wx6+2inRQ/jhqBpwvzk
+	GeTCijKF1a7XxOL3B4iP5ZQ7iKIVKpkwwqgLRR8br+Zw1oadANAAMJfGub6frGr2
+	acf4hYz7bA1TghtBsNI22hqD9se3rBhDbgpuGNg8+I8/YYC3Ib0RBTCLukNqIxIq
+	BvhaaKS2cTyePanxi9lTU43DPnrXyE85vOQ==
+X-ME-Sender: <xms:LvMcaEAtmkhgR39Kai_qo05qoTcgsNwV9vIdfODCCRIefF85jpKI-g>
+    <xme:LvMcaGjgQu1HMKveWAe9er0LdEe4lr2eWtrYzpCNE5XrxI2SpQsQJ08tfe5kkBqmV
+    yQ4C9iwhsn2s1o4vw>
+X-ME-Received: <xmr:LvMcaHlUVyIl-lkUei1adHJIsTx6ZpG0WdCCCIquE3dXXUerbDQh8aSALzw7m77EGvjdnmxnulMj51lW-Ix8a1j4tidZJ8h5fH2N>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledtgedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguih
+    hthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpdhr
+    tghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtth
+    hopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphht
+    thhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhsthhofh
+    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:LvMcaKwZgyeZEuSWCNPd8AKiRCthLRGvzEGlqwYGdtdByLd58Qm3Fg>
+    <xmx:LvMcaJQ6tqp6zE8QBmknxBhy61dQdyt_A1te9CPthOA-aYWa9Id8Ig>
+    <xmx:LvMcaFaFjkGjOrydCcA2fmAZe4wco6TB2Lk9fzTXkpNs1Tpl0cv81Q>
+    <xmx:LvMcaCSbX-eeKbeVYAP-dQxCJ1xpihEfirSs9E3ymaeYwQ6-pI6Ylg>
+    <xmx:LvMcaBHDMy0q9IQEIbZSGKmZMq7pE3wuxqFAm7-JFIuNOZEXtH4wlsZM>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 May 2025 14:08:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  M Hickford <mirth.hickford@gmail.com>,  Julian
+ Swagemakers <julian@swagemakers.org>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  sandals@crustytoothpaste.net,  Zi Yao
+ <ziyao@disroot.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v7 0/3] Improve checks for valid_fqdn in send-email and
+ update documentation
+In-Reply-To: <PN0PR01MB95882173451A6A7C28AD7BE7B88BA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Thu, 8 May 2025 17:14:26 +0000")
+References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN0PR01MB95882173451A6A7C28AD7BE7B88BA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
+Date: Thu, 08 May 2025 11:08:44 -0700
+Message-ID: <xmqqzffn561f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/5] miscellaneous build mods (part 2)
-To: GIT Mailing-list <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- Eli Schwartz <eschwartz@gentoo.org>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfC2DtyDSBUlZpx0w+8EKXPeYXPIkqtoQaQdnsAi1ltSKJg4ju8Ep9sa9kLLujlH/pSwyfaa1AUkLGzkNB1dbkN8oC+f6Fx1h7wh4AT9HI3lMsttxBoP8
- 1PUkBkgQOPQxZQtfF8L48vci9XhTiWI3OeL5YFLKJ3EimUxbEmolf7xaDXxo/Hwi2jCUsK1PvQMZjtVGUUaoPa3YabjSTWTVFUQ=
+Content-Type: text/plain
 
-Hmm, I seem to have misunderstood the '--chain-reply-to' documentation
-on the 'git send-email' man page! :( Sorry about that.
+Aditya Garg <gargaditya08@live.com> writes:
 
-[I had intended a shallow threading].
+> Hi all
+>
+> This series of patches mainly has two changes:
+>
+> 1. Improve the checks for valid_fqdn in send-email to be more strict and
+>    compliant with RFC1035.
+> 2. Update the documentation for send-email to include examples of using
+>    OAuth2.0 with Gmail and Outlook, as well as links to the credential
+>    helpers for these services.
+>
+> P.S. I have used `git-credential-outlook` linked in the second and third
+> patch for this email!
+>
+> v2: - Improve grammar and add missing "" in second patch.
+>     - Separate footnotes and the trailer block with a blank line in the first
+>       patch.
+>
+> v3: - Change link for email helpers since old one was too long.
+>
+> v4: - Improve log message of first and second patch.
+>     - Update valid_fqdn check in first patch to allow one or more <upto 63
+>       octet run of alnum or hyphen that does not begin or end with hyphen>,
+>       separated by a single dot in between each.
+>     - Revert the documentation regarding sending patches to a mailing list
+>       in the second patch.
+>
+> v5: - Simplify the regex in the first patch to check for valid FQDN.
+>     - Fix formatting in the second patch to make it more readable.
+>
+> v6: - Use backticks for ~/.gitconfig in the second patch.
+>
+> v7: - Clarify the use of `OAUTHBEARER` and `XOAUTH2` in the second patch.
 
-On 08/05/2025 17:44, Ramsay Jones wrote:
-> This series (part 2) continues the miscellaneous changes to the make,
-> meson and autoconf build systems. I am sending this part a little
-> earlier than I expected, so there will now be a part 3!
-> 
-> The reason for the early posting is to try and avoid an regression in
-> the autoconf build system (see patch #5). Hopefully, we still have time
-> in this cycle to get patch #5 included.
+Much better than what I came up with ;-)  Nicely phrased.
 
-Note that I cannot test the new autoconf check in patch #5 (I don't have
-access to a Solaris system). I _think_ it will correctly unset HAVE_SYSINFO
-on Solaris, but I cannot confirm that. (I can only test on Linux and cygwin).
+Will queue.  Unless there are issues pointed out by others in a few
+days, let me mark the topic for 'next'.
 
-> 
-> This series is based on commit 6f84262c44 ("The eleventh batch", 2025-05-05)
-> 
-> I did a test merge to 'next'@629a3ecd64 without issue, but 'seen'@71cfd25022
-> had a small conflict with commit 1a2929c851 ("meson: allow customize perl
-> installation path", 2025-04-24) on the 'dd/meson-perl-custom-path' branch.
-> (I note that a new version of that patch was posted to the list today).
-
-Note that it is patch #2 "meson: correct install location of YAML.pm" that
-conflicts with the 'seen' branch.
-
-> 
-> The fixup looks like:
-> 
->     diff --cc perl/Git/SVN/Memoize/meson.build
->     index 4c589b30c3,8c2e80d2d2..d6209dc3bf
->     --- a/perl/Git/SVN/Memoize/meson.build
->     +++ b/perl/Git/SVN/Memoize/meson.build
->     @@@ -3,6 -3,6 +3,6 @@@ test_dependencies += custom_target
->         output: 'YAML.pm',
->         command: generate_perl_command,
->         install: true,
->     -   install_dir: perllibdir / 'Git/SVN',
->      -  install_dir: get_option('datadir') / 'perl5/Git/SVN/Memoize',
->     ++  install_dir: perllibdir / 'Git/SVN/Memoize',
->         depends: [git_version_file],
->       )
-> 
-> ATB,
-> Ramsay Jones
-> 
-> 
-> Ramsay Jones (5):
->   meson.build: quote the GITWEBDIR build configuration
->   meson: correct install location of YAML.pm
->   meson: correct path to system config/attribute files
->   meson.build: correct setting of GIT_EXEC_PATH
->   configure.ac: upgrade to a compilation check for sysinfo
-> 
->  configure.ac                     | 25 ++++++++++++++++++++++---
->  meson.build                      | 28 +++++++++++++++++++++++-----
->  meson_options.txt                |  4 ++--
->  perl/Git/SVN/Memoize/meson.build |  2 +-
->  4 files changed, 48 insertions(+), 11 deletions(-)
-> 
-
+Thanks.
