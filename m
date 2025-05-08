@@ -1,131 +1,116 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76E34215F46
-	for <git@vger.kernel.org>; Thu,  8 May 2025 13:34:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D96E4B1E6D
+	for <git@vger.kernel.org>; Thu,  8 May 2025 13:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746711244; cv=none; b=mC+S+HTvXrsFI0kI6rl35F3Q6wk8gBAVIxMZBrqGkJgPIw3wnSdk0a/Es4H8JI0U6GeI1nN8cLtiHJ212K7zoVObkCncBZr0dbZHZvbFNIU5ALN3oeuk/B+Ieg0yXHVW+YQLV4gg+Wu/SVqewGM/APsX5FWY73yAQow+DlOJzy0=
+	t=1746711528; cv=none; b=oYTa2pNyflPfyGl8rDmPZL5Y/Y9S83feTaMEcxsk/YqqEEpVDRIqfOuI4wsPm0e7TQao6323hSA/yIx0TD6EoOlJ1/ivpE98BWTViPSkIVMtN4+PFm0H6k5fMiuhKAdeCdqs7IO5TdHi0TEZXb+BouhIjdWzh1rJDpPHan7jgtM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746711244; c=relaxed/simple;
-	bh=NITlHdVzzMIEn1iJezxY99kHu+HkVtleW3en3svxPB4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=qO0LgMTvU1+eIUYBtndTPJNwMJPMGsXbQHJk8U6K8XDLjqUrEF3GT2XLL++jmep2rqilMsSrKuW1LmHeXbRrXSE6zT4K2n9e0xGfEzR9t2+vo43vkiNGHAKEPH2vqW2cORxtdvIzkmAMn1LlFva9pcVtKG4iSIJHF+k3xnBKZHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TqbUZdaz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VtJFgRci; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746711528; c=relaxed/simple;
+	bh=JaX8RIsrCoenoHpmTNADYjqt5Uv8kP/gZNVOfwUSc8s=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VaVb61Yl9t6HdLj3nOmHYAOT9vDFhhVmzcjlf8k/lUcPf4JxWYwfHckEmWZrDWA9X3X8iD2cmzy89adaux5WAgwpRsqlxKpqHCmeSRoN5OPFfLgPNvk8EcpEG7ZjFad+Dq/2akC5IexYXrYrLls5WbiZSYAwBpYGJ0/csZu3X58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQI4cT0O; arc=none smtp.client-ip=209.85.128.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TqbUZdaz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VtJFgRci"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 29B1211401B8;
-	Thu,  8 May 2025 09:34:01 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 08 May 2025 09:34:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746711241; x=1746797641; bh=1LJd9GsPnM
-	i8/IFQWq19gGsTreUQ6E/tTF/CCFlX1vw=; b=TqbUZdazpuHKjlqCGU1++qQbQU
-	VeS4lNx4o1N29h2FSf851dIRV9T+1pbQhWrJuWgyc3cLJePBUEh5pDHkNJHYx4sT
-	Dd1E/vclDL+2VHywvyTZSU/8pqtM8EnvEnN1w6TrDFh3b78paQkQ3mWjOrWgOo7a
-	Es7v4Eaa8Tb7+SbZznnkH+HZwi5rh4OfHXmEvE8LrhrnrsySTmzsN37cvjQ6qRMn
-	TRxx2Wj68gb1p/vZJDbfYE9wS0BupXMZQmB6F/j42LnKbeH91Jiaqk5UavBTSixU
-	FlEqFYK7W2BIw9GuCGzFv0RBvoLp0AZyxbgZLILX0RabI81piFRFjE/yjgSg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746711241; x=1746797641; bh=1LJd9GsPnMi8/IFQWq19gGsTreUQ6E/tTF/
-	CCFlX1vw=; b=VtJFgRciVhA5MTnDhAXiaWGuJNqSzvMO6T+yYsWSHax2h32lFMZ
-	BzVk2swKLiDvnpfV1IMAB0NglK9JoSQbsD1CtuwmOvwUxFdqX3gK8s2BsJE2jtdG
-	IsZa0Pjvz1ERUZFDquJb/2PGkQiAAMCDYa4qluHG8hJxv0fEtRKZHMzR4rRU9dtM
-	JA0c2t3ZdO87qf7v2O2pJ1Qvs8/R3nMhjH996/eBgV5j6iSJk6MKeJQroOPSIRc8
-	DlwxfK0G1oexLK/B6p7QBXY+iQxqBd5vrPBh8pnr6dLGf4RNv96dwuVLji25AdqQ
-	BZyWk40YUirfztHBu935BdQl2JJRd9/Yybw==
-X-ME-Sender: <xms:x7IcaEvTbjxyT_zadxFHc7DY028Pb0ITAXUdXINkHR5erGBsSEGckw>
-    <xme:x7IcaBd1H2hAw_q2FgKY-8QSb-QaPuclAx1jgT8W-X4gHUXszCTfPvaw0XSJBo0_9
-    Z6xQz_aBRIIFpPeGw>
-X-ME-Received: <xmr:x7IcaPzcK3MvaY90VspwSJewXwxjh_sjSLkfd6SAvCZiSyx_Po1dKp4_1G7_70zjMRVxV1X13prwCqvw_Q0OYY4p6Ji4eiT_jmBp>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvkeelkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguih
-    hthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpd
-    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
-    thhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:x7IcaHPravckV6OO61Y7z8ZCbATX7EHYsUQa6BmMZyScb4skWea4dw>
-    <xmx:x7IcaE9WV2xOAETIlPc-26FtXxg7EFqezI0DpMDdCkm5zMUa6OZkIQ>
-    <xmx:x7IcaPVVdSzVyNGDexfptf6sEwnmIh17QXLaJf9vsAZWAETAAIoEWw>
-    <xmx:x7IcaNdIqX9otih3oG3vCEkah_jN7nAsQLSVInDAbd8HwiO448GMKQ>
-    <xmx:ybIcaNjSSy68IaVnElV5bX3sG0FrUwYhWyG65WjYVm-ZDxn57stykMwz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 09:33:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  M Hickford
- <mirth.hickford@gmail.com>,  "sandals@crustytoothpaste.net"
- <sandals@crustytoothpaste.net>,  Julian Swagemakers
- <julian@swagemakers.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Zi
- Yao <ziyao@disroot.org>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v4 2/3] docs: improve send-email documentation
-In-Reply-To: <PN3PR01MB9597C4313236E59ABEF0B732B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Thu, 8 May 2025 03:29:58 +0000")
-References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597208F139D23AF3436B16AB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB959781C8A5B990B2CCB68836B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqq5xicawp4.fsf@gitster.g>
-	<PN3PR01MB9597C4313236E59ABEF0B732B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 08 May 2025 06:33:58 -0700
-Message-ID: <xmqqwmar8bw9.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQI4cT0O"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so6729055e9.1
+        for <git@vger.kernel.org>; Thu, 08 May 2025 06:38:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746711523; x=1747316323; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=pPqr0WWlAcw7VFfJgxWfX3+lEzVONDk74rTQmqYAlXk=;
+        b=MQI4cT0OiunbwWWiv4hfRGkJvmngWrwIydLhsIognSUWZv8p+hImRSgiycUfrlMKdw
+         byLMEwwNYYXL0cAmjsp3sd6TA/f9BiEVASdVyqgAWXqJt2/agFiraxDerZFrDmgRvh+3
+         OJlssXXVzZzhqDL9SSc1aZe1oRi1TB17KBfMfki0Sw0c77O1Qz80kWl93ixrsNoSB2+Y
+         eAT0REw0Xp/SMFocQEgErqNzfFCZBLq0OBjAmTnLscWRNL9VP+jSfuJrYP2nIG8DQkCH
+         6XSKyzJx/BOJADkKPTjnHhxBAgf1Wn+Y4oxWV0pUUwwk4Cag6TVcIqKkRFdLCNJrYf9u
+         z4Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746711523; x=1747316323;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=pPqr0WWlAcw7VFfJgxWfX3+lEzVONDk74rTQmqYAlXk=;
+        b=l0lY3QGZqCfwk9r2Uin54OYV6xuwk880O3amuLaI+oXkx/3Hd925pgrfmW0GKWtKfz
+         c14wMoZpz2wBjVzDlp4DIMobdiog92tdZD91usNduNMBDIVkpql7iLdqygV9Jd3Q4EvQ
+         +LtNDyVAMP09TnmQd6yqZjLEO1gU/FoKK8cPpcAyUR1oKcvXPsDpwRMi8GiVrl5n0uo6
+         LpfrPbvI5+d5QeVkTPASo+zkWAFAIZaJUYQm/I6TXIOYp5FOehX0XcPDzdkIuCIBwdhv
+         hA/xvZMxmh62EUACEClyUESPiDtwSjSfmAAAxKZe3idvwFLTpsqVIXfaJ6lH6x5sGm51
+         WKHg==
+X-Gm-Message-State: AOJu0YyOr8G/5hWRlVy8mIks5PWioU8X/W7ptQLU86UyMZoMOYwuIs7c
+	loiGv4Ag1WOEyuw7dATcx7eiOEulbz1g1hqY5LRYbiCCFn6+XAEmEHotFQ==
+X-Gm-Gg: ASbGncv4gXBZ2wkr+h7xWmWcU2YuDcaMuGbjT+ZLNQe2YybkOc3/vrkRVCnAu4PsrpP
+	oqKK628UCZqunVLsg4jnnypeQggC3aK4KOiFX9JrRqoxKGa137npxpATBCggBClnHaFKoYBza0D
+	EI8XQNWUYNUFepxRyICRjvZ/Jhu+9su4QNrrpZS7jc4qaqGSbwI3nz1bG9t1Vj0dQLJEPByIlN6
+	JC+ZaiMQE7eMrlIVc4YxskTPtVTxC0rt7OtM9RUHxFePfiMs9DTyw5Q/QOc3E3jj4NaYPgfNdMi
+	kf0d+YAM2Qktv9R8oy4VhTLYE4IK1qOn2fNcmhiflxMIn+hZ4SSI
+X-Google-Smtp-Source: AGHT+IFjelJU7HXLzEWfvse4fCEyZAOAU6yNKe3kAXZjUBNA3Tli0sX6Zw3A8/492MfSh6ioFUIQ7w==
+X-Received: by 2002:a05:600c:a06:b0:43d:16a0:d98d with SMTP id 5b1f17b1804b1-442d030d73emr34736215e9.15.1746711522721;
+        Thu, 08 May 2025 06:38:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd34bef4sm38817595e9.24.2025.05.08.06.38.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 May 2025 06:38:42 -0700 (PDT)
+Message-Id: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Thu, 08 May 2025 13:38:41 +0000
+Subject: [PATCH] decode_header: fix pointential memory leak if decode_header
+ failed
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-Aditya Garg <gargaditya08@live.com> writes:
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
->>> -To use 'git send-email' to send your patches through the GMail SMTP server,
->>> -edit ~/.gitconfig to specify your account settings:
->>> +To use 'git send-email' to send your patches through the Gmail SMTP server,
->>> +edit '~/.gitconfig' to specify your account settings:
->> 
->> The four single quotes above should probably be changed to back
->> quotes, to match the "You can also use OAuth2.0..." below.
->
-> I think ~/.gitconfig should be in single quotes, its not a command.
+In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
+in dec will leak. Simply add strbuf_release and free(dec) will solve
+this problem.
 
-"Is this something the end-user would type verbatim?" is the criteria,
-not "Is this a command name?".
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+    decode_header: fix pointential memory leak if decode_header failed
+    
+    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
+    dec will leak. Simply add strbuf_release and free(dec) will solve this
+    problem.
 
-> Gmail supports for OAUTHBEARER and XOAUTH2. I added OAUTHBEARER
-> just for the sake of a different example. I think adding a choice
-> between two will just cause confusion among people.
->
-> Outlook supports only XOAUTH2 (which is surprising since OAUTHBEARER
-> is described in RFC, and XOAUTH2 is Google's).
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v1
+Pull-Request: https://github.com/git/git/pull/1956
 
-Your examples that show that smtpAuth can take these different
-values are certainly good.  As we know what these two services
-support, it is worth saying, no?  Unless it is like Gmail supports
-both but git-send-email for whatever reason can use only one of them
-to talk to Gmail, that is.
+ mailinfo.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-Thanks.
+diff --git a/mailinfo.c b/mailinfo.c
+index 7b001fa5dbd..7a54471a481 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -536,8 +536,11 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+ 			dec = decode_q_segment(&piecebuf, 1);
+ 			break;
+ 		}
+-		if (convert_to_utf8(mi, dec, charset_q.buf))
++		if (convert_to_utf8(mi, dec, charset_q.buf)) {
++			strbuf_release(dec);
++			free(dec);
+ 			goto release_return;
++		}
+ 
+ 		strbuf_addbuf(&outbuf, dec);
+ 		strbuf_release(dec);
+
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+-- 
+gitgitgadget
