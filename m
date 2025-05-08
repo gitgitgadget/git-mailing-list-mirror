@@ -1,128 +1,99 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB371D618E
-	for <git@vger.kernel.org>; Thu,  8 May 2025 18:26:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6791C3F0C
+	for <git@vger.kernel.org>; Thu,  8 May 2025 18:39:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746728793; cv=none; b=Zi+O7yp4Dw8cNidpXK/MjMZZ3SkOd7cjjtDKJyZEplgmcN5ErXiO5/MrZhP36C0CH2L0jKVTif6Q7uyyIdkRYJ7CZy14x1TgOA9lKWSJFeh1IqLjfliSJUR9Xc07ceLIqQxIwJ9ESaeGwz3PlOi0nabAiDBQcQYytBcMNh94eIU=
+	t=1746729563; cv=none; b=jXv8EczKVfendH4m3X2chCZSMonxh556LYteBVUmOFOdCV1w67bfLIUTyMlNkwAYE6g3R1qWO3+OVfgleKQaAGxjeLCg99o5FV6F5WbsrvFXv+tHIeVraJpu1WenVkfr2bxUMPe+OD9wPJCDhjdBBgd9REfv18l0cML/9tIlSF8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746728793; c=relaxed/simple;
-	bh=CEB8XcsG7/ZPiE2yRVSVp2Z4EaD68h6ZyLThfKIzv7E=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=mWSJOnCqm6QR7QNkRUgGD+eDpfOPieLLumL95lUBbcuGhsirn5Ia/ctFZCiWHRqYLbzIwx1aXNq3nmKObza3iLw0B+53/Pdjq/ghOnszTn8LaTPQPbbUjRP9iYCKcPmQ1mQ98+Ul9vGvX9v8BfJsP8JHgF/g7L1b0nLXqHcYnLw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=B9BSCA/I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IT5xn7si; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746729563; c=relaxed/simple;
+	bh=AhWkJZ0VgJ/E6rSDoi/rHxtvI/rvicxjjSZp8BLVnWQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MSoBRTZ8LP6sgIm18NtNyts8rHbcv7mhEbawLK45qGS46xE6QqJ+9V6/HUi0JP3aQrnpoo7fPLY+Ckx5efrJEoXE+HP+hx7NVqAFkJF2JMuhC4hfcmBklxJ/kdCnXQRoDIBfwt4H/ctPKbpy8MVMiWZ7n7WpTELGk/0OzmKdw3M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=FdvJk8b3; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="B9BSCA/I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IT5xn7si"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id BA72611400DB;
-	Thu,  8 May 2025 14:26:29 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 08 May 2025 14:26:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746728789; x=1746815189; bh=i/6lhxJqA+
-	kOR+2lAH2iLHaiJf8sPw+B2hnM9yX0v4U=; b=B9BSCA/IRHKqruhbS1Re11V0vQ
-	J+Ima6zQvzk5Uekhw+Fq1VYZ+R5t2a65QX4jJFNokhgnPOpGTn1c1puUuDtPYWEX
-	xMvCBWkAojBGSzjRYs9E5w9tnq2pfx75pS3HEjeP1X/dcuh6XhDLUUmhIDUbk/68
-	OxBIZBCz4hdblRs3PZlitOnLxsDYz6jntWWgTwIXxo9k8uBm6jLUGDF7dblp4TcA
-	5ikWZgxFQjTXqHkbFqA6cjAaTV2hPrX7lHo1ql3AWhSdrXNfDLJ3tuU8EYkt0e32
-	wq7UFMl0s+jCnSBroHo579+A9lZ0d4p/sX4d+Az1ukEgJc0lxbN9/yVVVN+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746728789; x=1746815189; bh=i/6lhxJqA+kOR+2lAH2iLHaiJf8sPw+B2hn
-	M9yX0v4U=; b=IT5xn7siBzD1PKyVAv7IcTKd32K757gtFG3G07XQ3KqGUE9fIT2
-	3W3Xf4v209UqY2UUqB6I2vnbMV2QinfWRKhffu0mmc7RbrtbQZBJMWFADavw0g5n
-	a5XPHZzI072wOk+74C1XOYJfESAasne96D8yP+Lpmyd7vqWCBK5Lf8htPRi8W19b
-	mwZeYuMywNNTKFNyT/YdyINxPklCubtR2CReRUJ8Ou7EVmkGG12USSB3YNNMLYCL
-	GWPiqRA0JUpJmcP0HxU93C8tGH1GwOHivkvWyAYdVhi66GmbB4IINliecSUtHZq5
-	aEk8zg+SxNS4OF0rr3+WIXDYxBkVRamXocA==
-X-ME-Sender: <xms:VfccaBgFh-NBYEgRiqZjQh2NG-n8BpZlQ_7mdurAbDA0oujggS0FJg>
-    <xme:VfccaGDXJvnBIUm0kXpV4r6W3i7AEEJL7oXwZztDllyArTaVNNB7IMloD8syBPoct
-    G5R4XR5Npbif3suRg>
-X-ME-Received: <xmr:VfccaBFM6r7Nq3VtJabaaEli3J6HWBr4VuAsPk8bQJtE4B_J5LlSz-WhUSpW35orCZiVIMmZ6QylZbCQ30fu6-spo0UZY8Rip-Rw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledtgeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtph
-    htthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:VfccaGQVqexlK7Fs9tcINcRyPCi0ZIBk6f0AM_sdFYWFiGDlBKFrYw>
-    <xmx:VfccaOy3qVmF209a_TTbhROwZTTYMPYcvOFDxz23LJhc-7NJ-qpcSQ>
-    <xmx:VfccaM7z9174iSwdBZzLCFQA5CASBB6R9J3xP3ZkbYvUuHyfjTH-ow>
-    <xmx:VfccaDx0Iw3qLFAjw-HBJ0ogHt_dRwTTJWvM8uK1bL1FwjWuz2DGcg>
-    <xmx:VfccaCynBum-ghYiU24CalJ6m58OD8kcCBxjTr0nR_EdX3WLJ0eQFXCl>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 14:26:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  newren@gmail.com,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH 0/3] Integrate the sparse index with 'git apply' and
- 'git add -p/-i'
-In-Reply-To: <pull.1914.git.1746579320.gitgitgadget@gmail.com> (Derrick Stolee
-	via GitGitGadget's message of "Wed, 07 May 2025 00:55:17 +0000")
-References: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
-Date: Thu, 08 May 2025 11:26:27 -0700
-Message-ID: <xmqqecwz557w.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="FdvJk8b3"
+Received: (qmail 28684 invoked by uid 109); 8 May 2025 18:39:11 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=AhWkJZ0VgJ/E6rSDoi/rHxtvI/rvicxjjSZp8BLVnWQ=; b=FdvJk8b3Qh7VsVqUCOkPcTEQitNOidp4wu3ClVYLuEa8AuSUldNdizr0I0RGOMAObd4DchUzRIIgL9/oLGkNV+BLEKUXMGxQtPtuTZP8KjsHnkK66J93HCCDmkMgx7hsPZVms8AqnpMylI6aJkhuY0FOMPi41+LBFPiGD/RtLwSnNu/Y+4VKsscpWXqCMgWbVIW/+BYcFqEDA6euxRhjHDFzdR3lUaBx5w8YtM8h9YCpgqCfZCU4EgLsB5qaDOBJMKuasKb991wUGz0HKeIRiypuL6j10cU3RAWA5IqOzDeYdWngUQs1uhhzpS0dyjWrm1g6s0j5oS8/dM6Ghod4oQ==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 May 2025 18:39:11 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 18715 invoked by uid 111); 8 May 2025 18:39:12 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 May 2025 14:39:12 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 8 May 2025 14:39:10 -0400
+From: Jeff King <peff@peff.net>
+To: Abhishek Dalmia <adalmia@commvault.com>
+Cc: Justin Tobler <jltobler@gmail.com>, Akash S <akashs@commvault.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Adithya Urugudige <aurugudige@commvault.com>
+Subject: Re: Incremental Backup of repositories using Git
+Message-ID: <20250508183910.GB10864@coredump.intra.peff.net>
+References: <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
+ <2dz3cema2mr5mrlvuroemnyeqyrglxfmusfdz2kaghv6rvj3ro@ti2dhu45fdmr>
+ <SJ1PR19MB6401D7734B73C453E491D54DAE89A@SJ1PR19MB6401.namprd19.prod.outlook.com>
+ <hanlqq5mma3dvbfq4j4u2zgz5mjegejjg3gjrhyggg2e6ozd5t@354nrc4nq6gn>
+ <SJ1PR19MB64010CDB3F21FE91C97E566BAE8BA@SJ1PR19MB6401.namprd19.prod.outlook.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <SJ1PR19MB64010CDB3F21FE91C97E566BAE8BA@SJ1PR19MB6401.namprd19.prod.outlook.com>
 
-"Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, May 08, 2025 at 10:24:55AM +0000, Abhishek Dalmia wrote:
 
-> The sparse index helps make some Git commands faster when using
-> sparse-checkout in cone mode. However, not all code paths are aware that the
-> index can have non-blob entries, so we are careful about rolling this
-> feature out gradually. The cost of this rollout is that some commands are
-> slower with the sparse index as they need to expand a sparse index into a
-> full index in memory, which requires parsing tree objects to construct the
-> full path list.
->
-> This patch series focuses on the 'git add -p' command, which is slow with
-> the sparse index for a couple of reasons, handled in the first two patches:
->
->  1. 'git add -p' uses 'git apply' as a subcommand and 'git apply' needs
->     integration with the sparse index. Luckily, we just need to add the repo
->     setting and appropriate tests to confirm it behaves as expected.
->  2. The interactive modes of 'git add' ('-p' and '-i') leave cmd_add()
->     before the code that sets the repo setting to allow for a sparse index.
->     Patch 2 fixes this and adds appropriate tests to confirm the behavior in
->     a sparse-checkout.
->
-> A third patch adds a performance test to p2000-sparse-operations.sh to
-> confirm that we are getting the performance improvement we expect:
->
->                         BASE    PATCH 1        PATCH 2
-> ---------------------------------------------------------
-> 2000.118: (full-v3)     0.80   0.84 +5.0%     0.84  +5.0%
-> 2000.119: (full-v4)     0.76   0.79 +3.9%     0.80  +5.3%
-> 2000.120: (sparse-v3)   2.09   1.39 -33.5%    0.07 -96.7%
-> 2000.121: (sparse-v4)   2.09   1.39 -33.5%    0.07 -96.7%
->
->
-> Thanks, -Stolee
+> I ran into an edge case while testing incremental backups with git
+> bundle. If a commit is created with a timestamp earlier than the
+> latest full or incremental backup, it can be excluded from the next
+> bundle due to the --since parameter even if there is a buffer.
 
-As always, it is delight to read a well-written cover letter that
-naturally convinces readers why the series is worth reading ;-)
+Yeah, I don't think you want to use "--since" here, since it is about
+commit timestamps. You care about the state of the refs at a particular
+time. Or more accurately, you care that you have captured a particular
+ref state previously.
 
-Thanks.
+So ideally you'd snapshot that state in an atomic way, feed it as the
+"current" state when doing a bundle, and then save it for later. You can
+easily create such a snapshot with for-each-ref, but I don't think
+git-bundle has a way to provide the exact set of ref tips and their
+values (it just takes rev-list arguments, and wants to resolve the refs
+themselves).
+
+You could probably get away with just creating a bundle with the current
+state, and then pulling the snapshot values from the created bundle.
+Something like this:
+
+  # for initial backup
+  if ! test -e last-bundle-snapshot; then
+    >last-bundle-snapshot
+  fi
+
+  # mark everything from last as seen, so we do not include it,
+  # along with --all (or your choice of refs) to pick up everything
+  # we have currently
+  sed -e 's/^/^/' <last-bundle-snapshot |
+  git bundle create out.bundle --all --stdin
+
+  # and now save that ref state for next time; this is inherently
+  # peeking at the bundle format.
+  sed -ne '
+	# quit when we see end of header
+	/^$/q;
+	# drop comments and old negatives; copy only first word (the oid)
+	s/^\([^-#][^ ]*\).*/\1/p;
+  ' <out.bundle >last-bundle-snapshot
+
+Or alternatively, instead of using git-bundle at all, you could just
+store a collection of ref snapshots (from "for-each-ref") and thin packs
+(from "pack-objects --thin --stdout", fed from the old snapshot and the
+new). Which is really all that bundles are anyway.
+
+-Peff
