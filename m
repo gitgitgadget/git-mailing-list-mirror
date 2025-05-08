@@ -1,28 +1,41 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-004.plus.net (avasout-peh-004.plus.net [212.159.14.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47781E4AE
-	for <git@vger.kernel.org>; Thu,  8 May 2025 22:51:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9F0028373
+	for <git@vger.kernel.org>; Thu,  8 May 2025 23:04:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.20
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746744665; cv=none; b=mmN5NwCsiCbejZLwpie6Vk0N4S0Aq/Dpav4B7bOzrtBj1rDO+xRfNfPmFZfjxZNpkVGWqvSz9+YR5FocNLbOsOc3J8KL851vV8KxRTJ4XI5XyDJnCZMx7z/4glJQjoq5KENnU2JLwdWiyTm0yWWnbQR6ucb/HLqrmUYCw4Rs+Rc=
+	t=1746745469; cv=none; b=pikkcyewUzfLmkZy/xuGc+lbmiSwHEXVzjM8ye6kD85mKG8y3EEVFk04cZyaona8yf6laeElBiB/cQD9vGHiVMTyNheorxUAD1oDXYbOBuByZV1urPilx+v+hzNWyOefpZ39YVapHeQDcwSqo/SRCJe3e/KPHPd36cgVNxS1Jks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746744665; c=relaxed/simple;
-	bh=HxkdgwriMj/Pq2/yAIJS9rQ1iIwb2q5xF0vW5qqKQiA=;
+	s=arc-20240116; t=1746745469; c=relaxed/simple;
+	bh=iixe2qvSqPx7u7RCv6J+xy5rIHqeqV6EIdNmBo6I55U=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=taCsYlfBQnb3bthL7r/056ZUaJOGZ6EQt0y3T3SYdPFiVv9Vx3+qr3zl/eJcjJFeRTXZhfvu53H2gmimFsScmB6mKI1lnVPV+MsbSyKCtwGMVz+m/J5wFUbxDd35fyCbpMUHVcoahOJ2j505/1dBsUf+KyjkmMy1FWwskO1J1pw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 43E0B342FA9;
-	Thu, 08 May 2025 22:51:02 +0000 (UTC)
-Message-ID: <5a91094a-08d5-4bf8-a4c3-1d54cc970f67@gentoo.org>
-Date: Thu, 8 May 2025 18:50:59 -0400
+	 In-Reply-To:Content-Type; b=tRs2Te0EAYG1gthpCascvUYxV19yg/A2XzaNH/rSkwVFODOIG8TcV6N6A3xtiHZEExHSrortUGviD0LSFL+fEuKmTarTqIXXu9OY7odNTWafIvZ7FSg4vrzNPw0K5fxn3AspgaImaZlb6h5RqyHjaoORVGd7E0QZIpIyRV9DaSk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=LreiVLLq; arc=none smtp.client-ip=212.159.14.20
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="LreiVLLq"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id DAEsu0gX9Crh0DAEuuzu8e; Fri, 09 May 2025 00:01:17 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1746745277; bh=nrDQOV18liLmDsUgyU+RvbHQWtcLpwtqTsmWwI0iBF8=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=LreiVLLqh/x0FIzEma5eLOE38BRfVd5SK5xHnaDElMNPCtw5ebsAFIj2CcSDBoRxd
+	 WDr1HphttM9oOENnmqP4McbsZQuZbSofJQpgZ5EqsfUfLAIn2FRB8tnpe2k/h+OyEm
+	 o/DUN7vi4ArZQFugwLFMZ6if+eFK2OSiabkDSGmmptvoI/A2gZd4sYe+TKrluquw3d
+	 hG+d7TZ3jL6dzsuJaKFlTPkvxZk5Ju+VPYK6wpWNbTGriH7yw3REkj1G99JF+88SXP
+	 UShTICQ6kXZGWja0E2FyqoNLJgNMaJoVa9xN5MgGY21VLDfXu9nmdkNMqckqVn3XPu
+	 3DMAYjC5jmBRQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=frB/Z04f c=1 sm=1 tr=0 ts=681d37bd
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=YfPZEZ28wHLemy_V5IUA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <56706ad8-93c6-48cd-ad16-9d8b00a669c9@ramsayjones.plus.com>
+Date: Fri, 9 May 2025 00:01:14 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,197 +43,89 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/5] meson: correct path to system config/attribute files
-To: Junio C Hamano <gitster@pobox.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+Subject: Re: [PATCH 5/5] configure.ac: upgrade to a compilation check for
+ sysinfo
+To: Eli Schwartz <eschwartz@gentoo.org>,
+ GIT Mailing-list <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
  =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
 References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
  <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
  <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
  <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
- <xmqqr00y4vvd.fsf@gitster.g>
+ <20250508164443.1506440-5-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
+ <9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org>
 Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <xmqqr00y4vvd.fsf@gitster.g>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------hER5CWrqcP5dY0GepGZUakqp"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------hER5CWrqcP5dY0GepGZUakqp
-Content-Type: multipart/mixed; boundary="------------ULZneJ2VfcTmWIQxVI0zM0d2";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Junio C Hamano <gitster@pobox.com>,
- Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Message-ID: <5a91094a-08d5-4bf8-a4c3-1d54cc970f67@gentoo.org>
-Subject: Re: [PATCH 3/5] meson: correct path to system config/attribute files
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
- <xmqqr00y4vvd.fsf@gitster.g>
-In-Reply-To: <xmqqr00y4vvd.fsf@gitster.g>
-
---------------ULZneJ2VfcTmWIQxVI0zM0d2
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-
-On 5/8/25 5:48 PM, Junio C Hamano wrote:
-> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->=20
->> -  '-DETC_GITATTRIBUTES=3D"' + get_option('gitattributes') + '"',
->> -  '-DETC_GITCONFIG=3D"' + get_option('gitconfig') + '"',
->> ...
->> +system_attributes =3D get_option('gitattributes')
->> +if system_attributes !=3D ''
->> +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + system_attributes + =
-'"'
->> +else
->> +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + get_option('sysconfd=
-ir') + '/gitattributes"'
->> +endif
->=20
-> Just out of curiosity (because this cannot be a regression, since
-> the original removed one used the same constructs).
->=20
-> I am guessing from the presence of double quote around the value
-> that these strings are not directly used to invoke the compiler
-> without involving any shell (in other words, you wouldn't want these
-> quotes if you are shoving these strings in argv[] yourself to feed
-> execv()).
->=20
-> How does the above, and get_option() in particular, cope with a
-> pathname that has letters with special meanings to the shell when
-> they appear inside double-quote pair (like backquote or backslash or
-> even a dollar sign)?  On the Makefile side we give VAR_SQ for a raw
-> variable VAR and use the latter to write something like
->=20
->         -DETC_GITATTRIBUTES=3D'"$(ETC_GITATTRIBUTES_SQ)"'
->=20
-> to make sure we won't be broken by them.  Is Meson giving us an
-> equivalent to us for free by simply using get_option() here?
->=20
-> Thanks.
-
-
-Meson uses strong implicit typing. The object type of '"' is a string
-with value of double-quote-char, and the type of libgit_c_args is
-"array". It's not a result of get_option() here, except inasmuch as
-get_option() returned a string type.
-
-Meson guarantees that arrays of strings e.g.
-
-libgit_c_args =3D [
-    '-Dfoo=3Dstring containing the $ (mighty dollar)',
-    '-Dbar=3Dstring containing the ` soft-deprecated',
-    '-Doopsies=3Dstring containing the \' (you read that right)',
-]
-
-
-are passed to the shell in a manner suitable for reinterpretation as an
-argv array, notwithstanding other concerns (e.g. I believe there's some
-mingw hack regarding doubling backslash escapes so they don't get
-eaten). And of course this is conditional on the idea that it is
-possible to reliably pass arguments on the Windows command line, which
-doesn't have the notion of an array.
-
-So, given that meson takes care of this, the actual value of the -D
-define will be
-
-string containing the $ (mighty dollar)
-
-
-etc.
-
-e.g. here is the ninja output:
-
-
-[1/3] ccache cc -Ifoo.p -I. -I.. -fdiagnostics-color=3Dalways
--D_FILE_OFFSET_BITS=3D64 -Wall -Winvalid-pch -O0 -g '-Dfoo=3Dstring
-containing the $ (mighty dollar)' '-Dbar=3Dstring containing the `
-soft-deprecated' '-Doopsies=3Dstring containing the '"'"' (you read that
-right)' -MD -MQ foo.p/foo.c.o -MF foo.p/foo.c.o.d -o foo.p/foo.c.o -c
-=2E./foo.c
-<command-line>: warning: missing terminating ' character
-
-Notice that the array contained a single quote using a meson string type
-backslash escape, but the generated command line chose to shell-escape
-it as ' ... '"'"' .... '
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfLZdV5w+Ze53MrMl1pzvjgg1DyBfnhZ0ymkUOg1MeEpCFd38J1rUklGVjqXteM29hAVRxIiy4vT9dEdzdrt8b+TYvXBUf1zcGcJ/7iuHeU3jR0nd96su
+ DPJZndpOtu4JgH1IXLzsjVVNiu67wIXGb/zHpPz6xQMMY4BiBuMwo6wQjpylnplkUDGkV7pYnbv9d0M/C0MUSshTYBhPNd+7NyQ=
 
 
 
-In this case, the Makefile does:
+On 08/05/2025 22:07, Eli Schwartz wrote:
+> On 5/8/25 12:44 PM, Ramsay Jones wrote:
+[snip]
+>> In order to correctly identify the 'sysinfo()' function we require as
+>> part of 'git-gc' (used in the 'total_ram() function), we also upgrade
+>> to a compilation check, in a similar way to the meson commit. Note that
+>> since commit c9a51775a3 ("builtin/gc.c: correct RAM calculation when
+>> using sysinfo", 2025-04-17) both the 'totalram' and 'mem_unit' fields
+>> of the 'struct sysinfo' are used, so the new check includes both of
+>> those fields in the compile check.
+> 
+> and
+> 
+>> Note that I cannot test the new autoconf check in patch #5 (I don't have
+>> access to a Solaris system). I _think_ it will correctly unset HAVE_SYSINFO
+>> on Solaris, but I cannot confirm that. (I can only test on Linux and cygwin).
+> 
+> 
+> Well, I can confirm this results in the detection being correctly
+> changed on Solaris 11.3 and stop reporting sysinfo as available during
+> ./configure, so this has my ACK on technical grounds.
 
--DETC_GITATTRIBUTES=3D'"$(ETC_GITATTRIBUTES_SQ)"'
+Thank you very much for testing this patch, much appreciated!
+
+[snip]
+
+> 
+> So you are indeed teaching autoconf to check for this function, but
+> should we also ask whether it's worth continued maintenance of autoconf?
+> It was/is not clear to me who the stakeholders are for the autoconf support.
+
+Hmm, someone posted a list of people using autoconf somewhat recently
+to the mailing-list ... I don't have it to hand, but cygwin was one
+of the projects using it.
+
+> On the one hand, it exists so maybe it should be fixed when we know it
+> has issues.
+
+Yes, exactly.
+
+> On the other hand, it sounds like this patch (and commit 50dec7c566
+> "config.mak.uname: add sysinfo() configuration for cygwin") only modify
+> autoconf out of a sense of duty, rather than finding autoconf useful.
+
+Hmm, I am not convinced (yet) that meson is all that useful either. ;)
+ 
+> What does it say about the autoconf support if the people finding bugs
+> in it don't even use it, but only discovered the bug while working on a
+> different build system they do use and depend on (config.mak.uname, or
+> meson.build, both count here).
+
+I am trying very hard not to express a view on this debate. :)
+
+[well, except that I find CMake to be absolutely awful!]
+
+Thanks!
+
+ATB,
+Ramsay Jones
 
 
-and if I understand correctly the _SQ is to handle single quotes in the
-directory name:
 
 
--DETC_GITATTRIBUTES=3D'"/etc/git'\''s attribute file"'
-
-
-Or in meson,
-
-libgit_c_args +=3D [
-    '-DETC_GITATTRIBUTES=3D"/etc/git\'s attribute file"',
-]
-
-
-compiles as:
-
-[1/3] ccache cc -Ifoo.p -I. -I.. -fdiagnostics-color=3Dalways
--D_FILE_OFFSET_BITS=3D64 -Wall -Winvalid-pch -O0 -g '-Dfoo=3Dstring
-containing the $ (mighty dollar)' '-Dbar=3Dstring containing the `
-soft-deprecated' '-Doopsies=3Dstring containing the '"'"' (you read that
-right)' '-DETC_GITATTRIBUTES=3D"/etc/git'"'"'s attribute file"' -MD -MQ
-foo.p/foo.c.o -MF foo.p/foo.c.o.d -o foo.p/foo.c.o -c ../foo.c
-
-
-Meson has refrained from backslashes again:
-
-ccache cc '-DETC_GITATTRIBUTES=3D"/etc/git'"'"'s attribute file"'
-
-Double quotes are part of the define value, single quote gets de-escaped
-via the sequence:
-
-'"'"'
-
-instead of the sequence
-
-'\''
-
-
---=20
-Eli Schwartz
-
---------------ULZneJ2VfcTmWIQxVI0zM0d2--
-
---------------hER5CWrqcP5dY0GepGZUakqp
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaB01UwUDAAAAAAAKCRCEp9ErcA0vVy08
-AP9H2oBcqmHoAeNSBb8n34gG1I+FQQXX+gFD+yqInQ0mVAD9GwgofvBJTm3rVF+jxceIk1PESoJ8
-QY2KSYK2AHCEgwc=
-=ssfb
------END PGP SIGNATURE-----
-
---------------hER5CWrqcP5dY0GepGZUakqp--
