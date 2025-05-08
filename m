@@ -1,214 +1,174 @@
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2058.outbound.protection.outlook.com [40.107.94.58])
+Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011031.outbound.protection.outlook.com [52.103.67.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1C94B1E5C
-	for <git@vger.kernel.org>; Thu,  8 May 2025 10:25:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.58
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0573220699
+	for <git@vger.kernel.org>; Thu,  8 May 2025 10:34:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.31
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746699907; cv=fail; b=MLMeuR1teT8/HFhIurwCbxDvIe8/Xm/6IpQEg8K1Yijo/n8exfjaIDOyaclORffvsPSgMey6vc+pwRyDWanQatX4wQhOhdvY+Jy7Jgrgwq5fd8oIsAdpXCdU85mQ9uASkPQQaQpvCyhV5uglsHVaVjZ3HZAOdR4xxoXFlbmU8ko=
+	t=1746700456; cv=fail; b=at1635QxkcDz8g9uGAkkkkQIVLVp7qGtx5/uZ8wzZGSL5BmmGgPg7J8OzDYBdxpNLZ69MyDMr14ztq6xXFh13IrE15ZQsQJTN5cVHzAVhGCrw6dDo9bN2sGZHv8vnG8NxY0Sw+pD2ItepDhUf1qFDH6347uVE3XA61dY8T2wdOA=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746699907; c=relaxed/simple;
-	bh=XjyEWLe8mZeItEModPJ8Lmc7jXnr/WcTLHNmhTqAhQs=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=VryY29hCI9x9iijp86bG0jOZp1qOSwZuJVC/M52GWlAnWu+iPwOBPMGZAhPkJydDgrY7KPhK/d6hQkeTElOMkm9NqOfYqK/Enta3mQD8nVBj8QWsXZVjMvH+J2LILsSuouBwGCcdTQfurtSNmYkuIK4VSxQ7IG6oxLNFCbNI/ao=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com; spf=pass smtp.mailfrom=commvault.com; dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b=dUXvvWwJ; arc=fail smtp.client-ip=40.107.94.58
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=commvault.com
+	s=arc-20240116; t=1746700456; c=relaxed/simple;
+	bh=XcM48xhn0d4bWl/LqHMkZ0Fm2sh//8OFTKR1Znwk4+k=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=auvQc3PPSjc+i9VbUtg6BfV7gJ3HMDiCnwP5in8PCrEJWvgkM0sylGOi5oI3zwv0a8/5OFijZSQtsio5KwIjuSRZURnBuid3TwUTnuZ0Pf1fgt8Na2rWAfpMfl3u5FVYwtw48j6EZSA9RfXiulMUsvMY7xZdbeM8Bg8u0HCe9WE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=A0bBsisX; arc=fail smtp.client-ip=52.103.67.31
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b="dUXvvWwJ"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="A0bBsisX"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=p3T2Eaz+q3dvv20ozBw317A24Vcsij+5aGK5Q1rfnr+9tWdeqkeGPAiwQZqaVwuCPImKJuXrOgoq5vgQPYrDHjup9KuhRtSbcNOwNTFzuUqxU19LzsNQLPosbwS8y2JJv4tPSz5/4rriN6skTKYkpvLkbyy7n/cWmjsTfQO631ukKER8GbmbtzjsGJxz4THJkKQz12Zse4j7HcIPN/vnp42kNb2KUAUAQMaV5JpwlPEvLfiFcZ+RG41k+tpGdZNe1YLxjdaFqAwddmHA5vMxzk7ToD486FxIvqF/DM6iSUgYzGcVl2pFvPuG+1W+GCITZNYWbKn11CKOOs6b+nij/w==
+ b=t3d0LKh6zHB8I6rvAwENdVNVeQ/bY4CRnhIdI0h4F+zFrNOZyJ4OH+B6o8gJlNDQ8JnsO+HUJSEX8cHKpUYZOnaO/7+cBfLSDMzpZCdRVgllYR9t+1xNbhibKuvy5ImoPwnBQS4Oz5eKjg78w08+lJkJfPae88dxILKQd9Ah18XU4Xqg1YYPdnSm69Axzaaiz7X1fVzq8FzDZpcGiziyiQvDsrcD+La6rSFzvjEmKJkdxjlL1uuv1X0hgZA+B+4wbxnZkZLv2qMkxlv7Rtmrxxsd4DwLk0i0JcBvWjKcOc++m3+fg4nwGJ4TXtS7D3XWHZAhDusVeV82x3+lMeUX+Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=33qdNE4XCEKyBmFeJ+qpc3GPR2dTb5JV3M0iYFs1wQc=;
- b=KxeYjkgNeiIggaziK8+7kpQ5kfUpNLEEYVcNcSMCGkxZj/oUo9p4e150RKzm6KHswfNJX5EJiz7EGZfBlqNFrsoq0OClx3RmHRgAqpX3aPujp6qp5fUElrWR62CJoRa8TAw/F5ppcXMiAe2Pyno9/Jsdt1/XeMdaQt8lEHo6wNWXwWwHP3xUx96lwYY0KJDHG9UdvHzKQjuheyyUo/SM7NiXvrOPYPMPYKcGq/W9dSVhNgCNQzH1oH9FbCFD1tvNAfEYwLCS/NVzGrj6vKnSJ9IeoRC+JVyKOuOGnCRkeEE57Y7EVW9omCO6rNdQpDSDe+V8hmIlxKqVjcL2KqY2vQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=commvault.com; dmarc=pass action=none
- header.from=commvault.com; dkim=pass header.d=commvault.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=commvault.com;
- s=selector1;
+ bh=v+8ifD2SljnUElTRBL8FHYcUMmPVu/HQbjZxtc2S+xA=;
+ b=SQsmywD7dd7RTtqF/+5upZtJM+0fLzq9qAB71w/6YGg1A3klN/TffeSXt8Dz6eOGtjOK2ZbXYCp+PnzvSWlBLiP6XE2Et+PMNRr+o8t6lJjm0cXScLnhK1lJU8a2vWoQ90KHyVsDVnC5h8HjnMqgJxLZJzF1R1UMMZBZupYM11+uCGWisvIy6R/ekZzyV/5lT1BHMbQir3a0Vz5MK8/I02538IQ1Mt3xYEgh73nUUU6tUhWRqyBU77UyGhxZ7qCR5uV2b817C9twzji2M5iiE+8LSH27tKaeXzIL0SaUIybTJTsUFJ+8YbzVPKhNKUGN92rSe5YXMY3OT9LaWvIpTA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=33qdNE4XCEKyBmFeJ+qpc3GPR2dTb5JV3M0iYFs1wQc=;
- b=dUXvvWwJKAvQq6uWmeVt/sP9Ihufjhrpl31UQ8D3z3KKex41Kt5D9uVaaxxwqeG91oI1LfzeNU1liFtVq+vVzfEBI271m/UoZY2oKIjR18FQUzBnCargCwlzJ3B6FPt7i9jpv4JG1oaviaQ+Ts/YRDVa5ZcwQxDToywrHYogsxNkxXDTkAifFhZIuiGs5dr44E05DHQkZ4SdN1iH8G7np922jPFWi6WEH/WomO6UpFwaifVSDSJ6Byn5zQwB0l5NqgY6tJ96x5WYOzfxv/gL5LFZ33Hf6tHmfzzfvlssDljmSzBn70cyxEceGOHDWbQVWY931xpqfUCVbZE47P1/hg==
-Received: from SJ1PR19MB6401.namprd19.prod.outlook.com (2603:10b6:a03:458::14)
- by DS0PR19MB7297.namprd19.prod.outlook.com (2603:10b6:8:149::22) with
+ bh=v+8ifD2SljnUElTRBL8FHYcUMmPVu/HQbjZxtc2S+xA=;
+ b=A0bBsisXqPER2OI+q8haYtHOEmXE9qbwUxi29er20iDB75NF0OmkElA6oop4MdS2SXAPoodUR1oc1Y6yKN86nJ7S6vzmP+jbzJCICXHGXFeT17f29jbe9HcFjHLzBGYlC4N3f9gIBw4tZpfDOel+ZNdN28p0czt+cMGXUsDkrzClLAtXrzESKh69asyymW8gVKlfvd4o4stNUT4/VUTEDumpgPEi9yuTJbms7HGS7aGoHlyys7ZcF7rqzWEygzD26BEn5qjaW3Wg0mbXkdG/PLLHRBYU1jrymEzjThTjyE44GHa/Hsqct67hBGIZDxtpYQ6gUZA1lDFUg7aTYVLgrA==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by PN2PR01MB9409.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:fd::13) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.23; Thu, 8 May
- 2025 10:24:56 +0000
-Received: from SJ1PR19MB6401.namprd19.prod.outlook.com
- ([fe80::dfce:4bc1:f841:c291]) by SJ1PR19MB6401.namprd19.prod.outlook.com
- ([fe80::dfce:4bc1:f841:c291%5]) with mapi id 15.20.8699.035; Thu, 8 May 2025
- 10:24:55 +0000
-From: Abhishek Dalmia <adalmia@commvault.com>
-To: Justin Tobler <jltobler@gmail.com>
-CC: Akash S <akashs@commvault.com>, "git@vger.kernel.org"
-	<git@vger.kernel.org>, Adithya Urugudige <aurugudige@commvault.com>, Abhishek
- Dalmia <adalmia@commvault.com>
-Subject: RE: Incremental Backup of repositories using Git
-Thread-Topic: Incremental Backup of repositories using Git
-Thread-Index: Adu9yuZ7Kg9IZ5BOSWCrIQPM1Q8FHgADnPsAACq806AAEOrIAABOC8/w
-Date: Thu, 8 May 2025 10:24:55 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.23; Thu, 8 May
+ 2025 10:34:09 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8699.030; Thu, 8 May 2025
+ 10:34:09 +0000
+From: Aditya Garg <gargaditya08@live.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Cc: M Hickford <mirth.hickford@gmail.com>,
+	Julian Swagemakers <julian@swagemakers.org>,
+	sandals@crustytoothpaste.net,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Zi Yao <ziyao@disroot.org>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: [PATCH v5 0/3] Improve checks for valid_fqdn in send-email and update documentation
+Date: Thu,  8 May 2025 10:31:55 +0000
 Message-ID:
- <SJ1PR19MB64010CDB3F21FE91C97E566BAE8BA@SJ1PR19MB6401.namprd19.prod.outlook.com>
-References:
- <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
- <2dz3cema2mr5mrlvuroemnyeqyrglxfmusfdz2kaghv6rvj3ro@ti2dhu45fdmr>
- <SJ1PR19MB6401D7734B73C453E491D54DAE89A@SJ1PR19MB6401.namprd19.prod.outlook.com>
- <hanlqq5mma3dvbfq4j4u2zgz5mjegejjg3gjrhyggg2e6ozd5t@354nrc4nq6gn>
-In-Reply-To: <hanlqq5mma3dvbfq4j4u2zgz5mjegejjg3gjrhyggg2e6ozd5t@354nrc4nq6gn>
-Accept-Language: en-GB, en-IN, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=commvault.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SJ1PR19MB6401:EE_|DS0PR19MB7297:EE_
-x-ms-office365-filtering-correlation-id: 94596603-5a8a-4b55-2217-08dd8e1a93d2
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?us-ascii?Q?Y0IcgqRHbfU7o1KcqgHwWdmNwbn4wbjxZR3I3jbFhTTpMS66PqNQTZ/Df4Av?=
- =?us-ascii?Q?ndzhJnA+C60DYbARWEkGKoUuIUsM9w0LYdab0afQhz4PBbw0pa7TLraW/ynJ?=
- =?us-ascii?Q?zZ40DDjsogTr5BJS9awb03y6WGQSu64uN/3hvECpOH0XIDgqvZ9LATALwwpM?=
- =?us-ascii?Q?jMQo8h6mh6HZ9DgUBBOTHr+R8JTqtQBbyShnLRaDWAqrfel/5XAPOT/DlmOc?=
- =?us-ascii?Q?L24OJYcDjO4MD/FJ1A+rtBTyWNe72O3g0fPbWsFubFBRy6NCoLT+SNfQ0p9J?=
- =?us-ascii?Q?T+YNMlYVyYaZ9YfMrAjcRrUaK3HvGcvOAWkwOvXArbBkoKRpUK8mNCQHo2Hu?=
- =?us-ascii?Q?d1JR9mz/FnNDX/e2YfETgweJThciAf5vhb2yCQT6t8TSsu/6wH/WBrD61iDE?=
- =?us-ascii?Q?42hxJMELge4PIdIapaV5Zvs+ga/8qgq44aMDjXhznFB6gZjWTzPc3X21zI1j?=
- =?us-ascii?Q?cMLyRauV5SOqNOAxMohWyBqVfLAda2ZX/0/x6Dh3Ly/OXgV4kFFAF1xu1tp6?=
- =?us-ascii?Q?HTnQaj5KXdSnJkzGlybWZ5Vsjn1rswOu7CYJHBXFUM4wPAAUUJ3bht3o+gKt?=
- =?us-ascii?Q?Xxrj8tWRfkl/lJ6ftzFxXlyiFKOQRGCvlguM3ndqZr7IOX4l1SB2YQYdxRWM?=
- =?us-ascii?Q?QZJSIr1B+QaL1e/ClWApVIvCyDv8nfi1H+nhd9qp2/5GmgMW9usACf4TYfSQ?=
- =?us-ascii?Q?MbsEqhTQat33iPOxJGkSO7xdi4v+vD/xJeIHiv11iAtN9tz74Z/+zN7xF+bo?=
- =?us-ascii?Q?PtmFm/9B18gzbDuw+4RAsIMBASn5ETsvT/jp+g4VDpGg/5EdjsHfJX3dEqzs?=
- =?us-ascii?Q?2wQgULyO5ki5BruKoZPBQHfO4G7WMPF3edlXnkKZgsaR8j4e+44XXuZtuqr1?=
- =?us-ascii?Q?A6lDNoqG+3KDsDxHL4ZXQAWu0ian5KFu2aLhI/kebC8ZBu7MYjAQ/LXzl7Uu?=
- =?us-ascii?Q?0fxjYkyHWebnkQ3/xPDMVz8gPW42pRgQD2kYQ2jwc2CV5CKi6mbTXNow1doG?=
- =?us-ascii?Q?QhDdNmMPVh0o/vCwzKzYCoTiTPwfl2hUrvWgYbnkZ8mQt+rNlLZ+34B+nuku?=
- =?us-ascii?Q?nGalhgsY1BVwng9biUAkBnEarTA9BNcpSHp3vDZsesD+Ma8VuHBYpOF5FHv1?=
- =?us-ascii?Q?KFj6m4lo+BIWuGFkqRxn69ki4cekuH8ufflDMrgUk4SUBwtXAJweXp5N9tYa?=
- =?us-ascii?Q?OZJ8x2UIXKahEkvL3zCbw6sNUflb1q53A0Anx15pLbV1PrAv4eNdYM3AMghI?=
- =?us-ascii?Q?P8/DJDiApwup8PPI6P4JlFB1XfwV8G8NZVmRk+OdQR38RgGgGRl0C8XqZ+tc?=
- =?us-ascii?Q?Trfz2Ho6Hm2F5u29Hq5asNRbbuqxb76x+HQVharzvx5Pm99rXuSFIt+NSIWB?=
- =?us-ascii?Q?S16b5UWJBy2IW2aGOBzegp8MyyQ/RZ9XSkn6F1gJ7igCBpB1v5iPZtk7EuIS?=
- =?us-ascii?Q?ZKwaOa+IpFxtFvMtiqfiDy8/+5pHPL/6n8h2K3MbfTZxkl4kxNVIlfbINCE3?=
- =?us-ascii?Q?ML+p5sLy5WmjtCE=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR19MB6401.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(38070700018);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?us-ascii?Q?UfTK3iYFI+RuNy3jnt8lQsponRR7qkQy7n8aX+wyp4u59t5alcQMEhHVJN0B?=
- =?us-ascii?Q?LiGykKntjrQ8jthMuiWzZHYl+TXi+m2DnHIIv1zMsmB8G+AmonRji+37byt3?=
- =?us-ascii?Q?vu0WTguY6QSIF6Z8qZ1Vg4QcSsZtzOvmRe1OFLuaamQtZStmd/StkWiXce1h?=
- =?us-ascii?Q?unkloLRRSfcU8FaLV8GnrjjTdv741zJEzpmVp1bYSytbLk3m9EOuyrnFxLwx?=
- =?us-ascii?Q?SHBsQwBMYtg8/UtUseZi22i1GhrCaXqhaKPv+tompkAFDGTLYF1FCkXzlGQr?=
- =?us-ascii?Q?6kD+lLLH2yzkqsosDsngWkGgfDucx2KflvmvOPjjFHkFuZO3h6fgGRDFlfUg?=
- =?us-ascii?Q?jNnlMOTIx58gza93N2tORDUjKudHg38LLHAQzJK9SMrqKBycimSJCJWEAnG/?=
- =?us-ascii?Q?pxaqkSC+lp2Sk5wmi5bjZaGUMxeyCm/iE4KRVY1jbkudFwsZS0AiRT8v5Yub?=
- =?us-ascii?Q?Dv/Q6Nfu7fr04UJqTdAODiu+N3Khx76mzXAeB82pAq1s6zu5DNA/wKNA7rVx?=
- =?us-ascii?Q?0pgu0gFv9dDuG8x0XUq1L6Yvv+SdtkIUrfED7Q10nR6xvQrvbJPeSe/aOVob?=
- =?us-ascii?Q?rSW4SKfZqOE1TXXunK6InzA0JCGAm0dulXa93IKAqhaxH+WvpI5MsssF4UK8?=
- =?us-ascii?Q?kGdXY/dDOSVopktYzDsMv44z/SzkkvNv5baWqUim8wFrTHCcRrbSCrFhvrvJ?=
- =?us-ascii?Q?NZBA3wiZuKKoIy+jmrNCBFBQql9RpfqhyhT6gBmMHmL+l+EwRX5Q38tPRgc1?=
- =?us-ascii?Q?TEIiWWxv2CeC8nh7Kx+xubP+8gvcz91cvx26335bvCW7WUMFtn5W/hMkL65E?=
- =?us-ascii?Q?kK0+2FGC2BV7lscPJUuzscTttFCn6183YlPstiTTwvB+0eTB+oaOVht+42u7?=
- =?us-ascii?Q?Oi8rXVRbqHJrfIWaWhjIDdUOMXV8U02zjUUvEIwEa69hAtqbY3Bun+aXQ1L1?=
- =?us-ascii?Q?83G4JlH8oCdXcwoXduxYVJGp3l/jTHT9p8tFmwlHSVfD2Yui257ZtRsr+hOX?=
- =?us-ascii?Q?e5IZ2zDQ1i+uZDw+07lKcKw2LZW2rCISiiTtKd5eBrhYirDUHpd/kNiLsNog?=
- =?us-ascii?Q?kxtiM2sJAYWuYJpd8A2KxWDT4AL6Z+hVPi9aGCn53JFW/51rrwatMv4GhPQ5?=
- =?us-ascii?Q?uo5IYwLVjTlvmuHqsDBww6R6SkpzSvQTdMerJLBP6dqT2IAqZaRvEVdUWBrj?=
- =?us-ascii?Q?OwZzhHl+KstFyLmJXergwRKjQkiG+sfOcRICKxCWLN2EC3a8VOmq3SK8mYRJ?=
- =?us-ascii?Q?sX5lxjvej37N6lRNdPnA4i5+k3yQw2ZDBfLqnqeFu7KbqLA5cNXmq0yRfImd?=
- =?us-ascii?Q?yKq7XwEAqvuLNhqcW6m+qkXS5ou/aUUlCSNrP7/1xG896hxaAf/xpnDwD0AB?=
- =?us-ascii?Q?KVYVghUcgEBUFVsSydlfC7XqqbR7MmuvvUWVTjKOkFDh+5R9tbvj97x8TDVp?=
- =?us-ascii?Q?w+Qp0RHS5GeMW86nHMYYc+QRMo5V1dfSOzuHh4UNmPgu0TYCYokc2lc6em2i?=
- =?us-ascii?Q?CvRvY1qMIw5zwzcxkJTXh+T78zLsqWYaWswlzukaPDpwIJbVlmjRcs6gioal?=
- =?us-ascii?Q?5SymN23eQWHIl7RgIhHa3G+I2KQJhPuw8aRNpYTh?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ <PN3PR01MB95974932FF37D9F24A7633C6B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email @GIT_VERSION@
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PN0PR01CA0049.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:49::6) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID:
+ <20250508103358.15409-1-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: commvault.com
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN2PR01MB9409:EE_
+X-MS-Office365-Filtering-Correlation-Id: 72e04191-7606-422c-c8b2-08dd8e1bddd4
+X-MS-Exchange-SLBlob-MailProps:
+	ScCmN3RHayHzgPFTkOkKHOaNyTn4nQw6ketNNKUQnLSznkos01rEDq1x121/roB5bItWzvjaVI49nUCBiGGulOBsxkks2fSw9U78Lx2lKr6NwlM/w5+HsvxIjUUMs1nXX5M7BfkquQ8MVpYqC+sVagHTBJVjZDQtLik+EpRmHBRORigsrVEiOwjb9Ar1bTMpWfYoNJOJ9vrNQBA1ecWLt/7l46maP/DS/5sAiKfR27S1wqbcO81YwHj6FDVxfUWERhpo6oMdP+2fBgKfEI/RlJJC71WKqSLi7CGRXI/1KdI6yzrRMvNPLNvl7VqxEcWiBSiqfqYxmMQxcKUb01s4D83ma6Geluq6/+z+o1GD3hGiec7owIRZn9V8SF+lcayjUyJqAIQUbxuRr/r0IMNQJRfZCwLtSC9AdIJ0PC7dHbMT8j8VLNOdJeS5KqCiXCepk63cJynTm/e+cVGu12jyPG+itPjG58T37kgf/gb6kIdjIm1ZpOmp30tP3j7p4J0aAIEWQCp6wqECYFpbptGNE47MJRzQjjxUZCK2ph0rizNonDvdU/RR3g1pbkNgCPrbvUj2YqSOtjnuqKZoyFA/E2cyaLIeTcxFYATzDD+rakDYYtQJ4kJatq6ZQfiKCELbvhS3IJ1bGqQC2ami1fUAvohHpwHtWU2YyBL7K6Am04ULWQidccrn7TWDbDm6RwNfKHBvNDL5TYqU6cTaEW4yEAdufx55YF9s8IDd1nqfDcc=
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|21061999006|461199028|7092599006|15080799009|19110799006|8060799009|5072599009|440099028|3412199025;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?e2O3RLc5hZ2VvPtiRm3khg1tz25+h8ROfvjrC95ZhYUmS4Nz7+79sMt14yKv?=
+ =?us-ascii?Q?mW2DnjfDma4h544e+LYOGtK8gqiE2L2NfZ3MqFI8qpcYxXFlCyltDoJrK9Ut?=
+ =?us-ascii?Q?FGqZE9xUzRnv4WBXI+h3yJrldHfoZA/VyX6CBxNvj0qw51OFwY/PdNwfIwzS?=
+ =?us-ascii?Q?dPE5/1fY7KrlZxBqa4reDzvRrJJCm+mANPyBwHDs0mH0aMW+vzvNDlcVgNPj?=
+ =?us-ascii?Q?AMHTOksjauGhFk7EVi6f81ajWGL3AESYc1ZYtknOIJEa4F1pWTI7HufIQsz9?=
+ =?us-ascii?Q?Qm8V5kQWfIFPL24RdTHMwjyQ8g1dTR6g8ddYlGNFgkOo4b3QytzsGxV6w/Ak?=
+ =?us-ascii?Q?OSMYTSuxunp/6j5ga+6KDOWSE7z+LPg4KgFLNxdAAChfKjLB6nmHM9MaPgKm?=
+ =?us-ascii?Q?jW8WS6RpojIP75vvooS4eOIpIq6PbEvHlFOpSpW3E7xPV2xrrQNe3sqdrqBK?=
+ =?us-ascii?Q?yzpDh5tdzAuQjVxYsU5p0XWBTekVvdSE3J0a7mgpvUoyUmUjRLMK3w9L43Ch?=
+ =?us-ascii?Q?y2bR2J8FK/LJM/WKzpJk9x5+s7zhUyWJZ6K5XmidC0tjkVqraFXdzPftfnYw?=
+ =?us-ascii?Q?8xm5rH9jKWfyuJbRTIoanV6mMPX8EJFr0jLu6T2h7ZgpwRdk51cR0lsccGJ2?=
+ =?us-ascii?Q?U5N3z7aC/RsM+We/psOi10xIh8hkY0ik8rv7YYvyS8pLqDtG6R2pG+uvvrpJ?=
+ =?us-ascii?Q?izx8ACkJgr+3TVXWH6/BiopWYh3ar3jz/iLIt7Xa2eCThC20FPDzKNQiEpjL?=
+ =?us-ascii?Q?hINy3+mdfFXtg/K9W8QabiIFL/dcLltMfpYMIiCXwslCSE/rTkM704JlVotn?=
+ =?us-ascii?Q?exRM6yUAVjN62n+Bo3vjNFzUQJAIxyZcwdnNvb86tXRJ44pAhDDmHqmM6XKl?=
+ =?us-ascii?Q?IVoQVt+kFUkIJhnqdGYbpx2zqzcvpKzqkObU55JFyVVsofdEeRT2lGhUN73Z?=
+ =?us-ascii?Q?khU7gP0ivURaJk6Jtamo1khff9PNAgjkOzxTqOn4dP7loLewMfZEYXSxqg99?=
+ =?us-ascii?Q?OlJJexxUuFKADBhSzB/6+yqViLpKJ43Z2EvO3hldyi+fAP9TTsn1uDNMsaBA?=
+ =?us-ascii?Q?X6VOobIaJNkltaZNAt0Fh2HUxbCVXl4WAuCmzm5FaIbGYb7X3xGYHLqa5M9L?=
+ =?us-ascii?Q?5PqxDQFVY6enLBkHbjJ6bulSGaW912J+Iw=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?7sl09lKQndtg8TX+jsAO7ILgaTV+L1OPv8bbevkMEjHCgk6+bB5uJtr6aMw7?=
+ =?us-ascii?Q?mnOqzIGqyj3MPeaidlqWcSE8L2qwdy1OQFhdzrMPaOkP1VFpuHas3IY6//or?=
+ =?us-ascii?Q?kJT1LYpKD7fdCVdh77ebQSQqg0PFkrSCMsuVL2dOtTtmdL1+MbeOgL2RbeL9?=
+ =?us-ascii?Q?uxnOVdR2Shsqk6BR7+xkt6WcjBkeaUfO5hP7JyF3ZfJqeGs09EkcfLtR3kOY?=
+ =?us-ascii?Q?1Qh6dFPBN4ATrpJ/jH/+T/GRQU+6jpHXzjyLgA0r//oWrxVq5SFDgoH0OXY/?=
+ =?us-ascii?Q?+pAUoNggDkxl0y35hD3py+A2XBujggDb1mTb6Jg6LL+Fo6DXNaFmf2wcjLE+?=
+ =?us-ascii?Q?/taRGDHtsobCy6DxcAq0jGN+0ZpUq+wXKZV2j8RMeHe6zE5MjI+HSTeug0Ja?=
+ =?us-ascii?Q?m2lg9X7hC/B93Z5rGHWHDisBZ6n7LlNUkhYCbxP9pJIhOnVdZsmliZ94PKZf?=
+ =?us-ascii?Q?Y/BPU8qx5vzmDZ49uMgEJnXBlBb9E7/GFaxkq2bSvAkUqVNNg9Y17JwNsiML?=
+ =?us-ascii?Q?bx8S6PXk5RlDQbzwF6668u40iO4bUvwdLbyFFMMzLk4Sa5szpopHnyCJx2in?=
+ =?us-ascii?Q?/HmxLs7JYCYX6jvEevDXA+KILszfmfkXdHAhZLaKLv+5G0S5QmjyxM84as7n?=
+ =?us-ascii?Q?8IKkky3MQ2SF/mcYDoY2CGbmwAo+BZZQKgKvt2mKFmgaVu74BCY/4Ev+iyRH?=
+ =?us-ascii?Q?2napwrVgTRO40p8RdiesUtN/m3iHO4ysCpOoVJej1BJ0UVilpLOB7iE+jpDT?=
+ =?us-ascii?Q?Ts9gKwMVrlfJv/pDH+15dUq9REgLUFbAqD0un8BAJoOaIRswLmopB0BYZ8VN?=
+ =?us-ascii?Q?36osszi4mZJdJu5IyMb2RQw80RCF85aAkhynWKKfZTcBSdHvJCZL5oPV0rGe?=
+ =?us-ascii?Q?IrCt7bql9HUfYPLHNHhgvUNlN+mCSyCs8sfrUU1sVG0+OuDdhoTn6hkHBkhU?=
+ =?us-ascii?Q?j30fyFZO3HE7j7oPxTZTw31Ce4clSNx397GMxHuHu0f0SXB0VOp2waug3M9z?=
+ =?us-ascii?Q?JPApqYIryVlzGSNzjKgqx7pbe270oDRsCV/gjlM2n4Hgk3KUyVjhtYRQ4VC7?=
+ =?us-ascii?Q?/bzGuYrRNqrAwXCDL8+eV1zX1kN5i8Z0AxxuLW8e0covCKg1O8u7ZdiJcNSN?=
+ =?us-ascii?Q?VT3s6k8AZZCCTYGtxDFo+/pvPIAdZJShHsDM/ktjCOYlmcWFy4+sBi1QdHIa?=
+ =?us-ascii?Q?3MNao56wPmzD0b2ihTOIAxryQdVA+aaOf1xpek38eaPZ1z/P0+Si5ADxx1o?=
+ =?us-ascii?Q?=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72e04191-7606-422c-c8b2-08dd8e1bddd4
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SJ1PR19MB6401.namprd19.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 94596603-5a8a-4b55-2217-08dd8e1a93d2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2025 10:24:55.6762
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 10:34:09.6099
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 40ed1e38-a16e-4622-9d7c-45161b6969d5
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: XWimcaZNuMV4XuAngAtHmnCtKN2eGHVqieQRUkEoMlwwIUy7/A2srqtQgcHvk+155ziVuYdeUwPTCxnKj2jFuQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR19MB7297
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB9409
 
-Hi Justin,
+Hi all
 
-I ran into an edge case while testing incremental backups with git bundle. =
-If a commit is created with a timestamp earlier than the latest full or inc=
-remental backup, it can be excluded from the next bundle due to the --since=
- parameter even if there is a buffer.
-Given this, do you think git bundle is still the most reliable approach for=
- incremental backups, or is there a better alternative worth exploring?
+This series of patches mainly has two changes:
 
-Regards,
-Abhishek=20
+1. Improve the checks for valid_fqdn in send-email to be more strict and
+   compliant with RFC1035.
+2. Update the documentation for send-email to include examples of using
+   OAuth2.0 with Gmail and Outlook, as well as links to the credential
+   helpers for these services.
 
------Original Message-----
-From: Justin Tobler <jltobler@gmail.com>=20
-Sent: 07 May 2025 02:17
-To: Abhishek Dalmia <adalmia@commvault.com>
-Cc: Akash S <akashs@commvault.com>; git@vger.kernel.org; Adithya Urugudige =
-<aurugudige@commvault.com>
-Subject: Re: Incremental Backup of repositories using Git
+P.S. I have used `git-credential-outlook` linked in the second and third
+patch for this email!
 
-External email. Inspect before opening.
+v2: - Improve grammar and add missing "" in second patch.
+    - Separate footnotes and the trailer block with a blank line in the first
+      patch.
 
+v3: - Change link for email helpers since old one was too long.
 
+v4: - Improve log message of first and second patch.
+    - Update valid_fqdn check in first patch to allow one or more <upto 63
+      octet run of alnum or hyphen that does not begin or end with hyphen>,
+      separated by a single dot in between each.
+    - Revert the documentation regarding sending patches to a mailing list
+      in the second patch.
 
-On 25/05/06 12:44PM, Abhishek Dalmia wrote:
-> Hi Justin
->
-> (My previous email got blocked due to HTML content)
->
-> Thanks for the recommendation. We want to backup all the repo contents, s=
-o could you please comment if the following steps will help us backup and r=
-estore everything, or we might miss some tags/references?
->
-> During backup:
-> - Create full bundle first time using: git bundle create=20
-> <full-bundle-file-path> --all
-> - Create further incremental bundles using: git bundle create <inc-bundle=
--file-path> --since=3D"<last-backup-time>" -all
->       - making sure we don't miss out any time
+v5: - Simplify the regex in the first patch to check for valid FQDN.
+    - Fix formatting in the second patch to make it more readable.
 
-Just something to note, it's ok if a bundle contains objects that already e=
-xist in the repository. So some overlap with the previous backup would be f=
-ine.
+Aditya Garg (3):
+  send-mail: improve checks for valid_fqdn
+  docs: improve send-email documentation
+  docs: add credential helper for outlook and gmail in OAuth list of
+    helpers
 
-> During restore:
-> - Create the initial repo with: git clone -bare=20
-> <full-bundle-file-path> - using the full bundle we created earlier
-> - For restoring further incremental bundle files
->       - git fetch <inc-bundle-file-path> 'refs/*:refs/*'
->       - I can't use --all here, that works only with remote repos
+ Documentation/git-send-email.adoc | 63 +++++++++++++++++++++++++++----
+ Documentation/gitcredentials.adoc |  4 ++
+ git-send-email.perl               |  4 +-
+ 3 files changed, 62 insertions(+), 9 deletions(-)
 
-This seems reasonable to me. It may be worth validating that the bundles wo=
-uld apply to a fresh repository. If an incremental bundle depends on some p=
-rerequistite objects that are not in a repository it cannot be applied. Thi=
-s means if you have a series of incremental backups, they all would depend =
-on each other and one missing in the middle could prevent subsequent bundle=
-s from being applied.
+-- 
+2.49.0
 
-> Will using 'refs/*:refs/*' restore everything, or is it possible any git =
-data might get missed out?
-
-That refspec captures all references and mirrors them. All branches and tag=
-s, along with all reachable objects from them, would be fetched.
-
--Justin
