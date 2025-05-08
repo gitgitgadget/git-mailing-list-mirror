@@ -1,43 +1,43 @@
 Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011031.outbound.protection.outlook.com [52.103.67.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE4D221714
-	for <git@vger.kernel.org>; Thu,  8 May 2025 10:34:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3DC6221DBA
+	for <git@vger.kernel.org>; Thu,  8 May 2025 10:34:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.31
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746700459; cv=fail; b=Y+CKXdhgLAgHdMJIxJ5JYjfinJvRHWIPkP8hIRK8oc/RK20TBvjTMYrocSqi+oGt2FoUqqgBA7R7Sb6VHmLyt/uHOB29lZHr2wVjn7+ptvPHPtQOZEfcG5vqBy9fJT9d2OXKXrtGsOG2FACM/AOYqjqQrBFREU14ZgqL1EsKwBE=
+	t=1746700461; cv=fail; b=kykxFekVAe4d8Lv2sUIZ47sEbVajejelrBwCcaxhbZ6UocU+Wg/uhJNezoQDbOQHN1BGcU/YMcxTfRkAGsk2wSAJ7/72SKbfw1dvSKl7EXmykzmE93wi3/mfSfG70WTRdHbVEG4MLwS0ZWUwUyeaYSSQ/DJTpXQgzBGA5QBITFc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746700459; c=relaxed/simple;
-	bh=+A6Ccsjg/lGqxlJbXgNL8JtRo+xlskZAe2UizyxLiBk=;
+	s=arc-20240116; t=1746700461; c=relaxed/simple;
+	bh=0wQNDruKIBTzCYyYhUPUBXf9UtyfSpuAAkFzdeoDyro=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=kJ8G/ylO46JkVcmcKUT0pSr2uej4vriGTr2ZNBqqFSwXErgMSTlGaGGz9xjG6Hlo+N71c4H/zJ9Yk/MTwLjKr7v1kTQN0o8QUhgtENf3sQzXPLmrmNM5cpvbCS+kavkwfTguYIiniOThGsVOXFQWOJ4aGLZCPo8ZqMJi8N/KFus=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=n/lcRBpJ; arc=fail smtp.client-ip=52.103.67.31
+	 Content-Type:MIME-Version; b=eCJUDTu839tLFL8hpMGyCCH0b5+EcDzrBlSEK/YW0N1RxpsKAeSYFac1xuDbpnowhYGK7mVPWAJmytgcPMv+VU0ULg6DDAryRrYomvVudfOlw8DSi/nsV/UziwJqI0QOxkVzhIz7oLtbcEgcfe8m3+VvksX1fMD7qQGg5hp1d6w=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=LVmmamb+; arc=fail smtp.client-ip=52.103.67.31
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="n/lcRBpJ"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="LVmmamb+"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uPpwjmCdkeUXUVXIlBGsO8TROMDUNTb30+nH3ATd1itzDZ3Owo9feave1gDohoEl/mn8hRcGVYpsTFUu6eUaKSAEncmtpi3znTmGMIR8NxbFINW0lvJVtqcW2fTtBbN4ROIr70e25aJ6P2munVJuc51OZ6qFIqFG4c2mAyk8g3nkzKSRl0wy71VqrDq6QvUCC/NEly+diSOjvJ9DhrPil3q2rWQ3m/aoIPYVvkErDQbL8fS9WXjCVL8his/V5Mjn9oRlUTwvcFno7/yg9qn9X9FIPhw9rvJaWnsUPnIG6a+vuCK3OkjeJz2BG/86ANnFVDxju9LpHCn+Gqo/7zxVJw==
+ b=nuNioSDGwKnKqGWmZXTylO82tQbOEH9l2Tn0pF9JIpKDo4nQnR18fHz2RgcRLO0+azBpEGDUMojltfw7rWUSNbjW7heJz5T2nqDIUgx59zmrDA0ZJM7kYSCPwzAulPVa5G3+9romRiBLWcykl2C5Nf0JVTSZu8zWj9wzNSB1tnv44yCiJbfnjsvSUnKvrPRjdXvaJRFG/vNDvyIfrZWPTGvW4yR2x/f7z7kNtz4SkoDrZaW+GN2EAR7zsG9IInfy5Wb2vstfY2jPjdOCIE0+kqhZE8AuVJd2qomK+UGm1csN3iXRYQCwkeJE+1SeSgq5mZInPnLZAfwGYcL5uTOmdg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=2lUkydggf1TkQmPlfi2lXMoQ+5vAkdhaXRECIOyFHZk=;
- b=vPuUl0MYewvPA21/ULomfKBkBp7PRXeaCUKnt+M0pkIuN/QW9v1o0naSFMAo32mYZmIZBv8ljoEevfI4BAGwY1pnNe/O33ccP0h7mXnqnY8UtAJvJAouRzH5czC8gKaLL1ZNKE/9FItF/GlFjC73SLxnSBZjJhWCtEdmFg1+QrpD3rBjn6AzfBtons8kvM6hNhneZv7K+1ctH2HtdeRNh7UuinC7Sm+EZ65+cVi2Z62b39TDGYPGqOYN5cY7Nrvuo1BVKWWg0lsYSuTJ4mrPLujVNQr7WaAFIsTWDk1lkQgXmTEwErWpgjbTfEDrfPSje4ukYJLsfDPHveVKLoINDg==
+ bh=lNdQNGZVWIBO329lraON46/xW8kEYtIXudZzcTTIyyw=;
+ b=vZrR2r565IS+2zd9ablXhzEDmsvgUcUM/gnQE/6kNaNVJRfwESEZmvd4N1F/BU0NcArCzWO9Z5GoNmaF9ulQ455Avyf5wuj3FSf3zZKxHYq3RCmLSD7tVhImtaifxiVakPMUxLPsjxc7YnDv3e5UqE2gxFNXJO/r9Wk8OTzIJy/t3sfJ8z6Sl2U8t4/yaXxaQ6gKj+W1KHPug8A58tirA/kHTfGLdwekYRSidY01pstoD1pOy1BWMn9G+Je5yQFzNbUgj50L5KAFFrcLx1l/IxeDhgx5Kmw1tnZ4lM/GzbS/MBKaBgohFXX6SeOjA/Cfj8xem9qfY2DQP9DM3pkNdA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=2lUkydggf1TkQmPlfi2lXMoQ+5vAkdhaXRECIOyFHZk=;
- b=n/lcRBpJ9UbxrgGy2vFYFwl25E6Q/G1zV0htAMobRnoNvEOAH9UmhsXo63TfesmPu5pJoREl1ABDDrVhFhNqLk7kpRBDMcXbLZYkVY3eeqgqJpc9avtUtcyyFIeEbrvfLtoijQ234JMYJacELTS8qyHtCbzbb7IoMcSRz16/UbdgTBQDAGFyhldG9PTGWgjEloAgx9I3nE/ayAeJIR3MS8shuh9WYwWcQcjmTO5HsBg+c36aK4CwUlTcwcbOHPzh0MdC2f5BMRTn8PNkykK5xPWmAdbcnJy450bom7lHpjYDI7jMR22FU6jVxj/pwUGviVGW5gpXFPQP5WBYLAax0g==
+ bh=lNdQNGZVWIBO329lraON46/xW8kEYtIXudZzcTTIyyw=;
+ b=LVmmamb+H7pVBTBn8XX5DxldMra4NTwo+awhLAnzkGUGvWkyv11FZadcKyf+xj2oqtUi5c7NWdWdaOJs/jh+bc6OGLTc1cLkAiLf4InWOaaorMOVmvDUl/6k/E6/E0lotS6foQhwQbKoayLgX2lZTkXs9rJ9j8+pbuLqxZw22PEjn26JQKs4lecQ1avxX7tEryw8ske+bAjj5lXpadcyXeeUgYq5vF4lFQMhDYN3ljXreMxevZPxgrTFmJc987onDgdSOQnphZhpMwkqTHubHUdH+LX8qBlpfy/VkPludbYzcDyRtGaZ66mQEpZeqQyCKb3oouosRfRhePg8uy6plA==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PN2PR01MB9409.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:fd::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.23; Thu, 8 May
- 2025 10:34:10 +0000
+ 2025 10:34:11 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8699.030; Thu, 8 May 2025
- 10:34:10 +0000
+ 10:34:11 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,10 +47,10 @@ Cc: M Hickford <mirth.hickford@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
 	Zi Yao <ziyao@disroot.org>,
 	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v5 1/3] send-mail: improve checks for valid_fqdn
-Date: Thu,  8 May 2025 10:31:56 +0000
+Subject: [PATCH v5 2/3] docs: improve send-email documentation
+Date: Thu,  8 May 2025 10:31:57 +0000
 Message-ID:
- <PN3PR01MB9597C59F6CA7D9D40B09966AB88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597FB82424820EAB5D4D2EAB88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email @GIT_VERSION@
 In-Reply-To: <PN3PR01MB95974932FF37D9F24A7633C6B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB95974932FF37D9F24A7633C6B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
@@ -60,7 +60,7 @@ X-ClientProxiedBy: PN0PR01CA0049.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:49::6) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250508103358.15409-2-gargaditya08@live.com>
+ <20250508103358.15409-3-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -70,64 +70,63 @@ MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN2PR01MB9409:EE_
-X-MS-Office365-Filtering-Correlation-Id: a84dbe73-0ade-47d4-ab08-08dd8e1bde09
+X-MS-Office365-Filtering-Correlation-Id: 19df8223-751e-4095-1995-08dd8e1bde34
 X-MS-Exchange-SLBlob-MailProps:
-	laRBL560oLR0Ybdxcp7KTbjbpYD2CblCovr/S0ACg5+jIvVMM6V5NJnQlH9OAa7yVTFDMtPZ9GFYpcHERWosmIUwfcmCXEcRgmdW1wKrY7KDkySjVj3yp1fnB+seldN/xlG+1YdZfG5WwOgdQX6bbF7fJH2Mpo35TIQDhBqTCbHQQztV7sWxKJM1DNr1ha8DiL/2axv19qaC4I957bqTln4LtR4Kyyz582Wgn3PZm+Do5sb4McRD4dde5dQBMH8cvqoqT+G/n3PoQGK09byEEL+9Jq5X/7qJszQmM+ojupk6Z20Xj3O/L0XFxaZaAfikdFptbyVmVx2J+s1nAcHckTmEf3vzBpZtOAeM1GkKK4VCRo3k9QB1ZughaHDfcGYpnuWe0tdVZBbwnra5wQ7WH7+lsMhySS+awhUBvoMKbvaghcTQqzyeA9iN/lZ6DsF795hUkmImoWMnTEfFNCaGGR6i4jWnq1wHharSTN0PAv9Sil1rJiWotBjtwiLTwrCK3Twx6Oxtx7GGn1Qxejg7x2sgmEX0mV7M9esnEgLBTjlIU/zEupR5JfCXYfMmGR3szpgXx3Xuj6h+GhzCM93EnMo4mtG8a3Mev4WirVDYBaVcRyCrgOR7dTmrGwkkCOGBvGSQR6N6mT1ijLLnVokyYr3428gEfHvu/4+/RfcDsP5vlzZd2JjyQB6/Qjwp0KJsgwUTr5YScSvrA3kqsVbKayXQiNCjSir7OSsCZzQr9Zq0rHmjImjTkDmufsRxagd/hifWhYYkM9/US87Nw0ESpe3hJXx3A/xf
+	vuaKsetfIZlTCb19IcwxWRBJYK03wWzGLNKCZYezGU9ni3RpR4qw8n/U1hueKU4fDcw2xWVL0SQL8yAETEfPCafISNRmEaJDUFlMJUFOopcWL4mfMi2RiMAut6V8cGspIp2YoE6EkPlbYtGfSedZ93PsQfJCW15pXVLR9Frv200eQSO2PXIHJacT7K7WxTJd30QXPmKVIG8YtifHszvrZe+iIIPZUj7TPEDdDUN2UEzcHbl2VPezto29zJtQ9to5GIU88rYXdq3DoVHBEG6/f7O80c3yxRfaB8V5t9I35CfjN7cne69m6+ODv5HwXFj/9LgMw/V81CY2qzdlnTl27mN0SbGOy6eC1jd13Jv1dVcw2b4fHSIO3rquoy9vOxC4IScHF94ZSW81/iPsZTRRAlq04x0M57EYO6RljkkAW3LGA7SRJXPF7LIGFC5SVsqEF8P9yKiL9ziQlSygbdrz+LN1kul9hy46LaMoozXd0PsJU1/7n+S3fpRkwAR6N7ARNKE3m6ET8QYrxXOStUBkzlO64jqvRoD1b9vHeqsH3hr1S9i5OKkD4CZyqemmsW1Wzyzd19ouYUbPx9Ez6g5wbwa1yLeQpw8midAwHHhE7wvBuTZBoK86acK51hSbiSPFY8XE4ISBkzLtuSmngeQqYxTiNF6FdV3NZQfLsmgdIY/hlfRifKHV7u+A3z5+3u0sFfeOqOYIgcjw2NgFdMhIg+WlYgqRZS68dTFrpdtOY3FBxk7BY/9GZ4CHpZcft+IglISy/V1w/pToUF0hdD0hZMfwiuAm581ZXUlXvMtnMZ6U/YxKm0iSEE7fCoZ5NZgH
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|7092599006|15080799009|19110799006|41001999006|8060799009|5072599009|1602099012|440099028|4302099013|3412199025|19111999003|10035399007;
+	BCL:0;ARA:14566002|461199028|7092599006|12121999007|15080799009|19110799006|8060799009|5072599009|440099028|3412199025|34005399003|19111999003|10035399007;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?yQOE3SBSpzfXw4KbRDrI+tV/C8PJMsAKJGHGLVgezAEN3tvx6og2jVOdDdST?=
- =?us-ascii?Q?ooxrZd0n1NYyM/iMYlSh3AEApV4RkwMAF7XHzX1uz9BkucKvSGLl15qQ0Wjc?=
- =?us-ascii?Q?NnK+tbAjsBTqm0xL047c+25zzCdDfgV1UOFlP5dibPfbPfb8f4+IgcWiP2MZ?=
- =?us-ascii?Q?guexbS9f3lr32CljECsjXwRxUedsFnhZVCTUnrMXSKSjgu/fZ9XO/MLM1lFX?=
- =?us-ascii?Q?2agEDQwcPvzYRBXqg386q/vKfcu+vfoNQ/2Nqs9NaG6tqMNLQOoU3q9+TN/+?=
- =?us-ascii?Q?Xuw8JLxLrDbArRva1Tb2yNDhUKPKg9R97iFY6ReI78D3KANJ42n9xvWvhrcV?=
- =?us-ascii?Q?gXcpwqm9EfpABciZWdmZ8O2GdrdneLw/s4YldyFrzJ4BARz4EzpVW9edpt7Q?=
- =?us-ascii?Q?taadXvPfJa5nHeCa6zAF3EU6DbPwCE+M+WM+dQYs8zPPYWzmkwAoQfn31BsD?=
- =?us-ascii?Q?WofI7dva4O/2piZRJOaaMLTPGT1ktw1L4G6cHIxnjdReeTEFK7BrVhpyplCe?=
- =?us-ascii?Q?fH30KI9Is2g7TF1CTcfbisdTzbmOQhvoOaXRwKS+IslIzhvRwqlNKhp6Y9OJ?=
- =?us-ascii?Q?lFGEH1pLwYh53YTjHhnv0VJORhklEAF4ZeoF5CU3LU9572by6v/GumTHN3U3?=
- =?us-ascii?Q?k/lzYmt6Mrks7luYO+kjg8K05wfdIJ9d5Ev7J/1XAzXC0zioWulqKSJD5j5E?=
- =?us-ascii?Q?fs20i2vtuJ6VHWrLawFHmbcHOXh4C7OzXfME+r8pEOIJneP0oCMOZsW81Lp+?=
- =?us-ascii?Q?hBPJVsWyUF2FpjmeeEtw75AlBL+q+F8L70CqCbD8p7RWJxJX6Hi4u24wisxr?=
- =?us-ascii?Q?hU0MF49+4Hs+di9VuZ82uR2/R9fi+05fb8R5BJr7ZIwTFohikKK8g+dUCddY?=
- =?us-ascii?Q?nye0drRpXwgjhsbhLUJhk5wCDeRlxOXaY67sZ9AJoy4vQGPbQQEdz5R1qaFV?=
- =?us-ascii?Q?IXjC4AxFerjrnSl78czLQJS1D62+eFDZ4l+UxARkkyhC82m3P8878iGe4gVq?=
- =?us-ascii?Q?TvWp8mxORVG/gnWK3xpTyhGLbYhBeT2wDEuSWTAvKUkDODeuN4PHo5WrQSqd?=
- =?us-ascii?Q?t2Sl9rNz7PJd+i4PN7ot5vYfB/jHngPhBGex/2g2lMFE2A3SWrRm4oj+dOo9?=
- =?us-ascii?Q?Ry8uCEraxdta1GDnT0zDAvK8yeobv79gx4WAl//ZZzbeM+KbQLIz3wXMwt96?=
- =?us-ascii?Q?/UH2fi3Qd9oAcw5FQ5doBma8aUyw+ZfZ7bAHzTUQ2AK2PcSk4ViFmpNvuvWk?=
- =?us-ascii?Q?bBljDN12ky8gKliQBJCl+dGFZr/4wrkxEl7mH4FEfGzVBsA/R798H9EJ6V8E?=
- =?us-ascii?Q?cS6MAz/1MVVDl15TSnc/NxsO7b3Wm90ZHfZ5KRgWT7ve0Q=3D=3D?=
+	=?us-ascii?Q?U7A/UWx0PouNI5E4/c+uM1OFIU6wE8eMNsPAyg5f95s2RJAQAoFu+6Sk6/h2?=
+ =?us-ascii?Q?9OSD3oFrE8gZXXhS2m3TbeGKbBDJva5zJgP/qC6wKyaq+EQOoy6SyDRKNV8a?=
+ =?us-ascii?Q?CuqFgH0JAQuL6FT975cRLZtHXAIEOIMYFhXVCs8hu9RfXoMLFhx/SwvtbPJv?=
+ =?us-ascii?Q?7DrovkGfDvYrQNYEzhZhBj0pnFPE31YIKtfsHt2cugred2RUOC43ZTUMPNZk?=
+ =?us-ascii?Q?Zx2k8Zymakh3mCzU1h8CI2ISdsET/JJsMKkQtUzj5f+b/cfwL/qI7FZKP6nk?=
+ =?us-ascii?Q?jyHuoS6OBm0ck5j/p2PW6afsEWq4nlgF3WtdpgpYTfLUkx9z6hbJY9MOgz4t?=
+ =?us-ascii?Q?vq+yQGIr7EzIVNxfWBoqSJC2ZIdDdWOFVDo+lm8dUDc7A9fERuR/vxbkwjLK?=
+ =?us-ascii?Q?ZeZ8rXTMehLu9TnOBfnJ2d4zDcmj/SnN9UW5GOxGX+EEs4r9K0ssjWH1Q4Yo?=
+ =?us-ascii?Q?qv7sbQbqrWA3hn8BqzTo4T2oxTzXhzrpnqRW7hYcTsOHr7kEzsftjkVaYQc8?=
+ =?us-ascii?Q?VkMVxWIKCmiP6Ceu1glPtgF7UppeNfwiS57dzJxM4eeldCWNfN+wEkCt1K/F?=
+ =?us-ascii?Q?dA9g2JTqhfOl3dgLjCE9ekeq7+c5C0JuNoMWqZqlHbb8aOtOIqBsbMWHyG0P?=
+ =?us-ascii?Q?DDMhIplj+54ifBxgrDV5Y86QKQRwXeB937wPFocf3UOCXquXgkOmI88ErTXN?=
+ =?us-ascii?Q?FIz41UEfhHWqdZd9AA3VmrzdJRGbEUni/6yAPv+XK9AOugerdIsAfSfFtqP/?=
+ =?us-ascii?Q?Triw8yZN0MTVtuK2WrdQbAhAQLqie4PbvkX1uj72TPDeOfxAhP22tOQD82Lr?=
+ =?us-ascii?Q?xlJRbV8zL+NHP3/4uq4tPt2oevtMEotrD+9R5Ujyz/5qNECW4nu8y6Gcxc8r?=
+ =?us-ascii?Q?d8jXx3J/aes4gE6QVPF7VLGINoBmEqmwQjdhsLXzO7PieM+caqkth+wFdatT?=
+ =?us-ascii?Q?/zGTLm++w9lDh12pIBauD7FE6/8VF1FtrMWRcOoTqVdsmDBH9JPwJE7wT/rg?=
+ =?us-ascii?Q?YuA5NuXGGEeS83x3UEhuy+OWRrjrmOxNIlkZfDBCshqeaesif+aMZ4VZB5bm?=
+ =?us-ascii?Q?GQ1LjOovbLwwzDPQs7MQ3uUqpZPwbzsctkgpGg3DdmuiYoyNoXbBBv6Jla02?=
+ =?us-ascii?Q?J5FebyfRQTkTPnKJYfe4rJGt2+fRVP9vAudiSSItL4CTNA/uXjgLG/GzIQJF?=
+ =?us-ascii?Q?LwXNhU8ag6PimP8WlRt0h6xKoZCClTwNat8zbXxWmE1BFd5dtzJHyp/zTzVW?=
+ =?us-ascii?Q?dHLcgj/88v4mGbDcLWuST5kfmRlAVhWaQCIr3IhS7w=3D=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Tqs2pV9pAi7Rftj6vSUzVUCueKO6EOEJgQz/FtLdMmGEDFSNgbn+lO7H1Jze?=
- =?us-ascii?Q?AXW+TyvDZ6bFgzGB5OyB5WVuZIJx9j6uqGFsqlM8sr74Xx3fTIpY6K8zDDUA?=
- =?us-ascii?Q?48/OZXBfTvJrzRD4efAJDL3B+Jl/6DO8H/Qn6x9BM4N0RNDvG6eBamQ+snE7?=
- =?us-ascii?Q?qy3TzxGRm3z6Juc0+64zkF2Rf2oB/6K+QOc12TCwsjqN6tPSv0DT+LHMCOAf?=
- =?us-ascii?Q?butWwbkeBZN7Bn5neITFlV5ANcDJlMYVnyzPLG4Ga+gqaJBkfxPvlwbvJzqZ?=
- =?us-ascii?Q?8PakMClIdgcR4KNqYwo7sMDVpOGpuDvlrESxHpa/t4XUeNazzP7o2q2z0tEt?=
- =?us-ascii?Q?37a2ondg9fuFpvxfDLKlIGhdEGwpQfGQ4eRu1VwF8Mp6snCUoCxUBh+VwN1w?=
- =?us-ascii?Q?uOw13j6jVwMnqKMYBNHrCfxJtOvIVUtjTlYXmV90epEvJSO3C9YpuhvDi5jJ?=
- =?us-ascii?Q?HX8Bd7Z2VBOrmL87xcajO+U5rjJZcFWsBnGq0WnzmFgYNL5jyglZL43ksstj?=
- =?us-ascii?Q?JS9myKL4lu9vTxK++1tygbdcxRpkk003ruaK+9dTu2LKg05AQhJvwf432WFU?=
- =?us-ascii?Q?HNzQ6wLZu9r7Y85NbjT0ZRVD6ye/gm14YgIEU0JWzhsLMV7RrZChag2BBlAO?=
- =?us-ascii?Q?goDwxXzzhdPQAc1g+m+SrVZKjBHbYMfprT3d95uGgH6sqa1lITxwheHCUyS7?=
- =?us-ascii?Q?6Ta+qwgGXhE+p68lYyLgllI7M2167wMmhGRC+WPiazFjSD5nXL2YzQYm1qaP?=
- =?us-ascii?Q?BK87i9+cjd/NBxHARWAAdueEPTG/LLmZVQH5fqGCB2lnXBZ4kbOJCZAC0m1i?=
- =?us-ascii?Q?s5cAen1RewbrF5OC/c6cjHO5EN5roISoLHfo91gJViO9ApLPgzKtlq75ozz7?=
- =?us-ascii?Q?dPcjabonB+V+DrJ5P1H45LiGJqh0cOuYGrvO+hDHrc4lFucOEsBDNCQlNaGq?=
- =?us-ascii?Q?bNEW2op3xU+/nc5KfPvCGoNXZrG9u1C6DljK7og8EHw+3DeqkBQdCbd4oU1E?=
- =?us-ascii?Q?J0jtkqgYlMXWv/X0hRiVMYDhNIFIJO+bpIXpptW1M0KhZyIFBlgSmqzp50pa?=
- =?us-ascii?Q?l/cmQAe2gWGwryLf4Jqh98gBibHgOV9MlK5K1awTOrr4D4WTCv7a30oWb6Xp?=
- =?us-ascii?Q?auDl4H1eASAvAdLQVPSARmhmff+OIT4CDn2/vYcRBnGMNHQ5Pc0zpmgEvaCW?=
- =?us-ascii?Q?hQkz+b//Adhj3E97nzNcKKuqkd0vbN/2r3Y8Ptae5KYYTY0L0RB5d0hZrw8?=
+	=?us-ascii?Q?lr8tz6Pa9llNcu4uUqLfnuzebJ/aWZlOco0Ii/AyOIn1yLHlHhHtg9EPS2+c?=
+ =?us-ascii?Q?ujKN521usH6l1VESROOUk6pf3Xcq7PoiNoglm+KV3LHcyJfa1YzAJZKHysdM?=
+ =?us-ascii?Q?lcPBbOG2dyjkNX2MXQxL8Rb06WiIMdSAu9TDKppOfJ/26GlqzvuULclW7RoV?=
+ =?us-ascii?Q?Q314SLYLSdBcZzK9M823oACSztIP/4LeqaJR1sqH1qu/UqVhsF7H55epQwi1?=
+ =?us-ascii?Q?9PCwGWrstRnsBd3qeOlC0+29bjkXLKPC8mC2HLAw7z/azhqVeYu36fdja4a3?=
+ =?us-ascii?Q?wSjWvuEn45s+xFp8DQC2dMEmEt/fJZD6aWyAeBxLjzgT4mj4KLdAl8o6tOqZ?=
+ =?us-ascii?Q?WxAPE7nFhXoX57AyDdnkvhdxFMukTak9fdoqWS9RzoS1EOzNJ3E2x6t16suP?=
+ =?us-ascii?Q?v2Nz63sH+QlxTbL1f/HhVI7/wGNLP/88rfpNQ2xFKD7irZTiCv77I5ykASio?=
+ =?us-ascii?Q?A7YP6pzV840/AVtGqMA0TtQeeKkbEXinXwJh5oQUw+wiG5QIgvZCtSERKNfA?=
+ =?us-ascii?Q?y56VL9DfOC8H/iso6Aro6t2uNkN/CTaucJFUHwvszw8e4+kLS+XAjgGrIC2C?=
+ =?us-ascii?Q?hVy39HlvLmTzf5OsAHgavw9Qdrz2Dhm/g0wdY2Jss2x9g0VFqa0A29LnQs8X?=
+ =?us-ascii?Q?gRveqqEIRvCHySGEq1qrF6+kC6oeQXMPLvRt4F7yZblKskeejmpuzKriTKS9?=
+ =?us-ascii?Q?BJmJbMUN9QEebwh3iBz56NlNymjyaK7Axg1deMaPoe0z5gFwoerilOUI2Ieo?=
+ =?us-ascii?Q?tc8jtezeiJfzv3hSkGK3V6wDj5+Z5c1nrzei8BhtIEJ5jqjynCTHGt9/pMak?=
+ =?us-ascii?Q?evT8xXYLEcecc5WIyu7BsLMOqTp5kNVY/RyL3cEgOsnN6wWrDUaNWi4Y5WzT?=
+ =?us-ascii?Q?H9i6/EEgB/3uzYdWmyKHgR35RN6fVNUei9uUbZDJOSRQ/soIRs1sY1ePS8Cc?=
+ =?us-ascii?Q?IVUEUPY5nEYCBs9zq65U5/9iu2zTsgDAy6aEtK1NKf5GVjvsTnKyW4wjfmBs?=
+ =?us-ascii?Q?6TDAAQA0DgtR38Z4cPm0h+GTp57rv9LdRzWeaeBF/3B9uNaFpvipsEAgGx9b?=
+ =?us-ascii?Q?zW6BHXQWO/kJZB0wOKfoaUWD83euIV5enY6dVEnLkG4fv1G2a4tctLcG1Ckn?=
+ =?us-ascii?Q?vme/M1j75UPIaQzMNVUm004tTjGqWdO6oKEO5TCxImWFM1eFxF3qoQaa1xGh?=
+ =?us-ascii?Q?iGjPiSUB6xmT9hOVDEDbu+xA9bxR5ed9T8VRTktiOXwI54BcSQTnlLIyLiU?=
  =?us-ascii?Q?=3D?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: a84dbe73-0ade-47d4-ab08-08dd8e1bde09
+X-MS-Exchange-CrossTenant-Network-Message-Id: 19df8223-751e-4095-1995-08dd8e1bde34
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 10:34:09.9041
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 May 2025 10:34:10.1982
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -135,75 +134,111 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB9409
 
-The current implementation of a valid Fully Qualified Domain Name
-is not that strict. It just checks whether it has a dot (.) and
-if using macOS, it should not end with .local. As per RFC1035[1],
-from what I understood, the following checks need to be done:
+OAuth2.0 is a new authentication method that is being used by many email
+providers, including Outlook and Gmail. Recently, the Authen::SASL perl
+module has been updated to support OAuth2.0 authentication, thus making
+the git-send-email script be able to use this authentication method as
+well. So lets improve the documentation to reflect this change.
 
-- The domain must contain atleast one dot
-- Each label (separated by dots) must be 1-63 characters long
-- Labels must start and end with an alphanumeric character
-- Labels can contain alphanumeric characters and hyphens
-
-Here are some examples of valid and invalid labels:
-
-'example.com',          # Valid
-'sub.example.com',      # Valid
-'my-domain.org',        # Valid
-'localhost',            # Invalid (no dot)
-'MacBook..',            # Invalid (double dots)
-'-example.com',         # Invalid (starts with a hyphen)
-'example-.com',         # Invalid (ends with a hyphen)
-'example..com',         # Invalid (double dots)
-'example',              # Invalid (no TLD)
-'example.local',        # Invalid on macOS
-'valid-domain.co.uk',   # Valid
-'123.example.com',      # Valid
-'example.com.',         # Invalid (trailing dot)
-'toolonglabeltoolonglabeltoolonglabeltoolonglabeltoolonglabeltoolonglabel.com', # Invalid (label > 63 chars)
-
-Due to current implementation, I was not able to send emails from
-Ubuntu. Upon debugging, I found that the SMTP domain being passed
-to Outlook's servers was not valid.
-
-Net::SMTP=GLOB(0x5db4351225f8)>>> EHLO MacBook..
-Net::SMTP=GLOB(0x5db4351225f8)<<< 501 5.5.4 Invalid domain name
-Net::SMTP=GLOB(0x5db4351225f8)>>> HELO MacBook..
-
-Notice that an invalid domain name "MacBook.." is sent by git-send-email.
-We have a fallback code that checks output from Net::Domain::domainname()
-or asking domain method of an Net::SMTP instance to detect a misconfigured
-hostname and replace it with fallback "localhost.localdomain", but the
-valid_fqdn apparently is failing to say "MacBook.." is not a valid fqdn.
-
-With this patch, the rule used in valid_fqdn is tightened, the beginning
-part of the SMTP exchange looked like this:
-
-Net::SMTP=GLOB(0x58c8af71e930)>>> EHLO localhost.localdomain
-Net::SMTP=GLOB(0x58c8af71e930)<<< 250-PN4P287CA0064.outlook.office365.com Hello
-
-[1]: https://datatracker.ietf.org/doc/html/rfc1035
+I also had a hard time finding a reliable OAuth2.0 access token
+generator for Outlook and Gmail. So I added a link to the such
+generators which I developed myself after seaching through lots of code
+and API documentation to make things easier for others.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- git-send-email.perl | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/git-send-email.adoc | 63 +++++++++++++++++++++++++++----
+ 1 file changed, 55 insertions(+), 8 deletions(-)
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 4215f8f7e9..55b7e00d29 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1359,7 +1359,9 @@ sub process_address_list {
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+index 92389036fa..d232e109a1 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -509,12 +509,12 @@ include::includes/cmd-config-section-all.adoc[]
  
- sub valid_fqdn {
- 	my $domain = shift;
--	return defined $domain && !($^O eq 'darwin' && $domain =~ /\.local$/) && $domain =~ /\./;
-+	my $subdomain = '(?!-)[A-Za-z0-9-]{1,63}(?<!-)';
-+	return defined $domain && !($^O eq 'darwin' && $domain =~ /\.local$/)
-+		&& $domain  =~ /^$subdomain(?:\.$subdomain)*$/;
- }
+ include::config/sendemail.adoc[]
  
- sub maildomain_net {
+-EXAMPLES
+---------
+-Use gmail as the smtp server
++EXAMPLES OF SMTP SERVERS
++------------------------
++Use Gmail as the SMTP Server
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-To use 'git send-email' to send your patches through the GMail SMTP server,
+-edit ~/.gitconfig to specify your account settings:
++To use `git send-email` to send your patches through the Gmail SMTP server,
++edit '~/.gitconfig' to specify your account settings:
+ 
+ ----
+ [sendemail]
+@@ -528,6 +528,37 @@ If you have multi-factor authentication set up on your Gmail account, you can
+ generate an app-specific password for use with 'git send-email'. Visit
+ https://security.google.com/settings/security/apppasswords to create it.
+ 
++You can also use OAuth2.0 authentication with Gmail. To do this, edit your
++'~/.gitconfig' file and add `smtpAuth = OAUTHBEARER` to your account settings:
++
++----
++[sendemail]
++	smtpEncryption = tls
++	smtpServer = smtp.gmail.com
++	smtpUser = yourname@gmail.com
++	smtpServerPort = 587
++	smtpAuth = OAUTHBEARER
++----
++
++Use Microsoft Outlook as the SMTP Server
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Unlike Gmail, Microsoft Outlook no longer supports app-specific passwords.
++Therefore, OAuth2.0 authentication must be used for Outlook.
++
++Edit '~/.gitconfig' to specify your account settings for Outlook and use its
++SMTP server with `git send-email`:
++
++----
++[sendemail]
++	smtpEncryption = tls
++	smtpServer = smtp.office365.com
++	smtpUser = yourname@outlook.com
++	smtpServerPort = 587
++	smtpAuth = XOAUTH2
++----
++
++SENDING PATCHES
++---------------
+ Once your commits are ready to be sent to the mailing list, run the
+ following commands:
+ 
+@@ -536,9 +567,25 @@ following commands:
+ 	$ git send-email outgoing/*
+ 
+ The first time you run it, you will be prompted for your credentials.  Enter the
+-app-specific or your regular password as appropriate.  If you have credential
+-helper configured (see linkgit:git-credential[1]), the password will be saved in
+-the credential store so you won't have to type it the next time.
++app-specific or your regular password as appropriate.
++
++If you have a credential helper configured (see linkgit:git-credential[1]), the
++password will be saved in the credential store so you won't have to type it the
++next time.
++
++If you are using OAuth2.0 authentication, you need to use an access token in
++place of a password when prompted. Various OAuth2.0 token generators are
++available online. Community maintained credential helpers for Gmail and Outlook
++are also available:
++
++	- https://github.com/AdityaGarg8/git-credential-email[git-credential-gmail]
++	  (cross platform, dedicated helper for authenticating Gmail accounts)
++
++	- https://github.com/AdityaGarg8/git-credential-email[git-credential-outlook]
++	  (cross platform, dedicated helper for authenticating Microsoft Outlook accounts)
++
++You can also see linkgit:gitcredentials[7] for more OAuth based authentication
++helpers.
+ 
+ Note: the following core Perl modules that may be installed with your
+ distribution of Perl are required:
 -- 
 2.49.0
 
