@@ -1,166 +1,102 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 271D226FD88
-	for <git@vger.kernel.org>; Thu,  8 May 2025 16:23:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E9A5270ED0
+	for <git@vger.kernel.org>; Thu,  8 May 2025 16:28:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746721410; cv=none; b=UA3Z13Vu3BDsHqYYh9xrGCqCd2YxYbmk2CITOP/mIOcNFlOshin1uHw2DK5rlE8hkij2D3+C9anRnjwiyBFIxd5IRVWjuWoIDdLTH1JmZad9HPK2e9FDIcsHrVLaMncUrP3UdtHn0eyir4QDWOlPbYYP0651m+fYuuVpv5K6KHU=
+	t=1746721739; cv=none; b=rABTFdZYozqXbV5nwuOcJfkzs277Dtu0VEze9esY1yecR7FIGl0uZj9li2AAc/ZoOVJQMx5R7AmeV/S8U+GzN8BjRNfo3/bYbgDC+tEYHsxGJYbjA5kKFt5QsOzWTtP5Zbk7nujCzsYikKeOUfdK3k7afQSV/vjAB2FXtkmEeZ8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746721410; c=relaxed/simple;
-	bh=fryy7JRWjRFW+EiPrZFR/zOKYxMPxeK4akJiID32CBM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=usbkhPUwL+RUV7znmp5BX2sgfiAJRkUAQoSUWXABxiEYUZrX/C+ZWMSWuEH6Pp5dx0j01gWaPNnt4+fiqNaBLTSMQzOTVBd5w2j80VJILk2wuDmDPu5Y/JH4WiTKDD3bjy3Kf0L+j1as1iEYOVQMMjH/2aTY0Wb3goACuHIUMl0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=g+CzUTyT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XqUJiZHw; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746721739; c=relaxed/simple;
+	bh=y24xhxxcjcDfJUR7KhbBHmQJOZ3O+GHASBIRJAG2bCE=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=J0CW9Vy/L9UiosTf6sd1/hmTq1gX08VCLP1U+t2aRLn0ocj5y2+GpQ0p3zJ8RU0JftorEVPxy6RqUjt+GGg14WAYu0GthMha5AnN79tjsRym1QShBcLQT+nuWTzOT/wiIGKuU15F/K25NDeae1W7yDQopIDigA6NuJ8Ttk9A8xk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ncEqHEqu; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="g+CzUTyT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XqUJiZHw"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 02A30114010C;
-	Thu,  8 May 2025 12:23:26 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Thu, 08 May 2025 12:23:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746721406; x=1746807806; bh=Yl961HYkms
-	LzMLtvVPcoCOrv+BKv6rUN8IItzgH4SHk=; b=g+CzUTyTVXDFIOv1o1qAR5RqwW
-	aGmhHJMyqQYnLbkoUPJDVIVbeAYkHCd9uayPVbVMDC0z4xhcJ29OmfMoQLcZcM2n
-	+4HyYItGk4gVFIx/FRvbFWcU5KbAOh/YkTFJTG2p0F70l/5RCnccXYjcwXtjoGPN
-	VtoqInGjrQBmb/NvG5nNXrIYl2QWxn2OgSvQDe2SomUOVpuOB4wsfItn5h7R/f1R
-	28rK39hrHIvzua3h8NRtE1eQYH/N5VE+qv4Hht69Jl0oiJGtdSrVqg4fDSxcC+hF
-	wW5vjdT/zTF3pT3bHRbrwPT4hTGDuyx25fGzS3RS8XfM/RLdNNeBR9F5TWGA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746721406; x=1746807806; bh=Yl961HYkmsLzMLtvVPcoCOrv+BKv6rUN8II
-	tzgH4SHk=; b=XqUJiZHwaUMzprAzDbuj/JnPJUlNHc2fyikQFr8dg9KgzRy+Zmt
-	dl90TwI1rxh6aEyNcioa8X3ZnsFvRWuICWGXV8asaRY9YXjvboFhGgQxvLawze5X
-	VRDfmsANFOozjjKJ7j3So9f6MiWRN1bQWtLfPzWKkOBKM6drmkYa5jaPk55dwdME
-	GOaYaJ8SQsZHcj1E/HjzeNEDPj5/q9Xs+kgtxue+0/H83p2cYlovOW85XwjZTKWc
-	9BifZEjN/QnOPsoWsNWRjDw3CIVkilIwORSVdKgZ/6FWCVO5D14d+/avR8cDYxdC
-	OBkpr1f8t1ryWRCxQJQU0kuo578MiIs+5AA==
-X-ME-Sender: <xms:fdocaLRFAVWNBRtnNTDQY62Cr1paEBIe88XHyrBq5PO61VCD15bKug>
-    <xme:fdocaMyBEPjX0-F0s7OcKbIvlXw_bd8vQS3BRV4V0dcQX4obPL5YkCYLT2MfYe3Jg
-    sy6-mczk4T5kN1zAw>
-X-ME-Received: <xmr:fdocaA3kFPvJc3kE6v4P203tGARUssjI9DYNEbEBIj-vIaOHIw1QZQPro_8pS9C3UuRGg8KUdBK3J6MJiE6FiQbEWLmn3RJ-QZag>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledtvdduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghgrrhhgrgguih
-    hthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepmhhirhhthhdrhhhitghkfhhorhgusehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgv
-    rdhnvghtpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpd
-    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
-    thhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhsthhofh
-    hfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:fdocaLAzqHNovMd0Nbiqnhb_Tf7n6i0M-FV58oMjtdbVYN5UvlGaIw>
-    <xmx:fdocaEjmkd-0OATx4-Ytq-PGWLYS2CdNzd3v0pZdZBhhnGp8G-wWEA>
-    <xmx:fdocaPpYSoF7tPGx6c370mVqG8AGZu3ngP6jB25kl09SNs0XtEnwaA>
-    <xmx:fdocaPgPrh2VISlZY8kzjly9PYS_6GMB-SZgqyzPYipTxvbxgA2_5w>
-    <xmx:ftocaBUl5LppwWqlWoH-Ypw7uhScAaLpjokl-Uq-fOz0IpAEt8CwB-45>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 12:23:25 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  M Hickford
- <mirth.hickford@gmail.com>,  "sandals@crustytoothpaste.net"
- <sandals@crustytoothpaste.net>,  Julian Swagemakers
- <julian@swagemakers.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Zi
- Yao <ziyao@disroot.org>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v4 2/3] docs: improve send-email documentation
-In-Reply-To: <PN3PR01MB95972BB022C2297D3E52DE78B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Thu, 8 May 2025 13:52:26 +0000")
-References: <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597208F139D23AF3436B16AB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB959781C8A5B990B2CCB68836B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqq5xicawp4.fsf@gitster.g>
-	<PN3PR01MB9597C4313236E59ABEF0B732B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqqwmar8bw9.fsf@gitster.g>
-	<PN3PR01MB95972BB022C2297D3E52DE78B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 08 May 2025 09:23:23 -0700
-Message-ID: <xmqq7c2r6phg.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ncEqHEqu"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-441ab63a415so12329875e9.3
+        for <git@vger.kernel.org>; Thu, 08 May 2025 09:28:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746721736; x=1747326536; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=XSo7bE9gTbviipY9jhaEuxGSjF0ccTV7acBSJyJi4kA=;
+        b=ncEqHEqusS7dlbhS+m0bEs3IKVf5L/kmopR5LDZ6ukPVFSlyu8AiEq6Dx42UaMcoNw
+         mx5XX9I5jpRRqaT1xxUCiRnfLizcDGjsuknyYkoofLabUkA6BrKdF3mJeKa1kmQ3oZ1Y
+         XR7ge5/9EXbtzoOn1jKXmfTFMdYw0h1JbyRvcxuxA8Ted8GHFTcHNisJPeASzz3psb1V
+         4qOv7CB+AgrU+R5S0DYt/jjsQzkxyA9vx9Cb3xh3aBM2ECFC1cAg1RvBWBLWme423M85
+         VnA2d529yXFs0zoOdZb49eChA+Icu4U1N1UenDqt1jJs01oMdMaaBKR1tHquWpm0h/7w
+         U5Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746721736; x=1747326536;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=XSo7bE9gTbviipY9jhaEuxGSjF0ccTV7acBSJyJi4kA=;
+        b=lhdeCtQGb64wI2iudv8YHEAsh5w/jpMJChqcom4dEzpTAd4Z7nvlo6KCyNVzHSOwIu
+         airPApFq4XK1QPaJsEo2DdzJabV8UuLLp3pDNJ3ZowhuEjbM/Cx4EdSjNYYGTlqxbQrR
+         anoSEypon2rGOIgPx2WDd4Ml4erypbWO48wbL+UK/gnEliRlHpVENmEYuYJiziDkdkG4
+         Vi1nKZDHNSVwojta56iA5ORd18whtJf/AMy6p6IdOHePmdxek9+yKo8zhN6N1iSmcOE/
+         LWZQgh8ZUha+N86hpQjNxLSo8uw20OF65Eghe4WdgBuGwQdM7O3i9PBa4eZmbrkLrcXw
+         eR7A==
+X-Gm-Message-State: AOJu0Yw51djH2yKzWYouOaToqoUfVohEi97OYtmN27cr0Kk/cuAPgeQf
+	PW3yz9m7wUEmnR/h8GN04bw0aZQ5oSprAkO1eITpKQdILM/LdvLZ
+X-Gm-Gg: ASbGncslNP6uD85x/eRYKyc9WvuOrufzXF9RRjleOzCwzr+ZamOJ7UU/JsRm8bK2a6E
+	dFATcsgLOGfnL4d2rsIbCNQ6zk/+l8MdHW/LsQeWlqEAG3XPMpanoM+43wCLvwiHDdvKx7Ae/sJ
+	v9ZlftUucYNPNcVETZu1lCiX6Q9DtViFLkbQo22tpWZ4yLJjqRG5Lt0xxN3FFLWqO81kX86bruR
+	eRwTmIRvme+HKiCiDuYzjLf2b5GsP61PaNQyJjjhHAIpCBiBCTEjcVTGx7XJ9wQqKIcpPAvJBKw
+	M0oZ5BNth9li4JiP4USl+7yEWB/8fyEOZ7wsvFfSaweo9A0ROMqT3w45tb4cG8n3VWyp1PQrdoI
+	jOh9NQbF3RiAVo1M7ekAt3FCon6qsvDaj9g==
+X-Google-Smtp-Source: AGHT+IEAvbyt7bKaTVtnF9rvKPhir66jl56E0fInOvFdpiKqKzyCWllWbNO6nbEPAt9H9A+WyZStyQ==
+X-Received: by 2002:a05:600c:4454:b0:43c:eec7:eab7 with SMTP id 5b1f17b1804b1-441d44c36efmr63281065e9.11.1746721735652;
+        Thu, 08 May 2025 09:28:55 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:3cd0:e939:e6b:f95c? ([2a0a:ef40:700:a501:3cd0:e939:e6b:f95c])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd3aeccdsm41830215e9.32.2025.05.08.09.28.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 May 2025 09:28:55 -0700 (PDT)
+Message-ID: <98415c84-a5ab-4bf0-b361-dd60ff3e7dd2@gmail.com>
+Date: Thu, 8 May 2025 17:29:01 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/2] rebase: support --trailer
+To: Li Chen <me@linux.beauty>, phillipwood <phillip.wood@dunelm.org.uk>
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+References: <196a5ac1393.f5b4db7d187309.2451613571977217927@linux.beauty>
+ <196a5ad7fff.c587c495188189.5980390754046003962@linux.beauty>
+ <951d3343-fe97-4e7e-bb73-1c569ff10ee6@gmail.com>
+ <196b09c1324.fba686d21234508.1995945025408421751@linux.beauty>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <196b09c1324.fba686d21234508.1995945025408421751@linux.beauty>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Aditya Garg <gargaditya08@live.com> writes:
+Hi Li
 
->> "Is this something the end-user would type verbatim?" is the criteria,
->
-> So the end user won't type it. It's just a path of a file to be edited.
-> If you still want to change it to backticks, I'll change it. Do confirm the same btw.
->
->> not "Is this a command name?".
+On 08/05/2025 16:55, Li Chen wrote:
+>   ---- On Thu, 08 May 2025 22:17:17 +0800  Phillip Wood <phillip.wood123@gmail.com> wrote ---
+> 
+>   > I've left some comments on the changes to builtin/rebase.c and the
+>   > tests, I've skipped the changes to sequencer.c for now as they'll have
+>   > to be updated to avoid forking "git interpret-trailers"
+> 
+> Thanks for all your great reviews!
+> 
+> I'll address all your reviews in next version.
 
-Then perhaps 'type' -> 'use'; the idea is the same.  Are we showing
-the exact concrete thing (e.g. "file at this path, which you would
-spell `like so`") or a concept (e.g. "per-user configuration file")?
-The `literal` mark-up is for the former.
+I forgot to say earlier that if you have any questions or queries about 
+my review or the trailer code do feel free to ask.
 
-> git send email can use any smtpAuth method that is supported by Authen::SASL
-> and the server. So using XOAUTH2 with gmail will also work just fine.
+Best Wishes
 
-OK.
+Phillip
 
-> As far as giving information about supported authentication methods is concerned,
-> we are writing an example, not giving a detailed guide with the providers docs.
 
-Yes, but giving a passing mention, like
-
-	You can also use OAuth2.0 authentication with Gmail.  Edit
-	`~/.gitconfig` and set `sendemail.smtpAuth = OAUTHBEARER`
-	there (they support both XOAUTH2 and OAUTHBEARER, but the
-	latter is more recent and in the standard):
-
-	---
-	... example here ...
-	---	
-
-would make it easier to see to those who learn from elsewhere that
-they can use their e-mail client (not `git send-email`) with Gmail
-with OAuth, come here because they want to use the same account with
-`git send-email` too.  If that 'elsewhere' only mentioned XOAUTH2,
-writing something like the above would be more helpful than using
-OAUTHBEARER without mentioning XOAUTH2 at all, no?
-
-> Also, by this logic, Gmail also supports smtpAuth=LOGIN with app passwords.
-
-But the question we need to answer is: does talking about it help
-when people want to learn how to use OAuth2.0 instead of plain
-vanilla password login?  I think talking about smtpAuth=OAUTHBEARER
-and smtpAuth=XOAUTH2 does help; does talking about smtpAuth=LOGIN
-help?
-
-So, no, LOGIN is irrelevant, and I do not quite see the above as
-making a meaningful analogy "by this logic".
-
-> Plus, anyone reading this guide would most likely be a newbie, who will be more
-> interested in "how to get this thing working" than knowing "oh, I can use XOAUTH2
-> as well in gmail".
-
-I am suggeting that you can cater to both of them with minimum
-effort.  A newbie can fall into the latter class; those who used
-XOAUTH2 when setting up other software (hence they know XOAUTH2
-works with Gmail) but did not know that OAUTHBEARER also worked as
-well.
-
-Thanks.
