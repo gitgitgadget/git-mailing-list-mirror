@@ -1,250 +1,214 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (mail-mw2nam10on2058.outbound.protection.outlook.com [40.107.94.58])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA3122A4EC
-	for <git@vger.kernel.org>; Thu,  8 May 2025 08:24:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746692690; cv=none; b=cj308tdxSvivepUVdgrL4r4Buxh/m4swwS8t41150pXD3yxkDdb3L4/piJW30+4OtTxBWsCUVkvnOWMS2+lsChD7dgSQhymRKXlFHtetBA2YR71jkMaNcT9xCyWA0PUcdpErYoCHEEy8YWsZMPwW2MGCwDApMclX+YePO7lHOwk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746692690; c=relaxed/simple;
-	bh=GlKCu27dSGCwsZFYlPuJ1uPXnWCBwVpjMwLhheKL3pA=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=H5uOphN+MSta8Gfwsa4KusuTcrBmZYvOmzbqlLwYnwWcLpZQkZrNAlVQNDaO7V330D9PjuwwztbwC7E1ooWMRwIZ+LxII3BXx7Sb4i4iQOytScm1BA0nFiwm4yxoR02aPM0hvWhuYURLtIkLk1aAKbodSkUSovegNNcLiRqYSy4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c30bNiWK; arc=none smtp.client-ip=209.85.210.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA1C94B1E5C
+	for <git@vger.kernel.org>; Thu,  8 May 2025 10:25:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.94.58
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746699907; cv=fail; b=MLMeuR1teT8/HFhIurwCbxDvIe8/Xm/6IpQEg8K1Yijo/n8exfjaIDOyaclORffvsPSgMey6vc+pwRyDWanQatX4wQhOhdvY+Jy7Jgrgwq5fd8oIsAdpXCdU85mQ9uASkPQQaQpvCyhV5uglsHVaVjZ3HZAOdR4xxoXFlbmU8ko=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746699907; c=relaxed/simple;
+	bh=XjyEWLe8mZeItEModPJ8Lmc7jXnr/WcTLHNmhTqAhQs=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=VryY29hCI9x9iijp86bG0jOZp1qOSwZuJVC/M52GWlAnWu+iPwOBPMGZAhPkJydDgrY7KPhK/d6hQkeTElOMkm9NqOfYqK/Enta3mQD8nVBj8QWsXZVjMvH+J2LILsSuouBwGCcdTQfurtSNmYkuIK4VSxQ7IG6oxLNFCbNI/ao=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com; spf=pass smtp.mailfrom=commvault.com; dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b=dUXvvWwJ; arc=fail smtp.client-ip=40.107.94.58
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=commvault.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=commvault.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c30bNiWK"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7399a2dc13fso983458b3a.2
-        for <git@vger.kernel.org>; Thu, 08 May 2025 01:24:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746692688; x=1747297488; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8CjOXCh1zOIqLGH09TPLYOHbjXE9GpRVqmvd2G4fxKI=;
-        b=c30bNiWKNXN7LVGAnV9v9OiAsUxFzqC5oLYgPtcLeopzUhZD3R4bZkX01Vg+bHpiD4
-         VY5KX+vejLDK54F/dqJEXUjK2i9yAMYjLUqJt4PR8m+UJwUOG/PTzvghNMwKYW4GvfjD
-         /wYs5MasdWqE98FGHKxY9OPZjthFk+HoIoWNoFJxXA9SAwLPoLymaimDdKkbrohnpANr
-         VBHUp8/77kBbsr4TH+gIMIuPTiLfqFAtQglRqWzY6HwplWGG0rlTaawWr1BPWInzFg/N
-         8cXsua+hhOgePW1dv/nsCMzQtuuhnB2CZtsDr51buZxT1pRQKoVIIPvsBo3+bwlIcMgu
-         ADUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746692688; x=1747297488;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8CjOXCh1zOIqLGH09TPLYOHbjXE9GpRVqmvd2G4fxKI=;
-        b=kJLbb6ZyFoK8il55cBKMAs8FTvtmFRIqwJbjCPn5+A76TEZVYpjRn0D4SPXMdQlR2a
-         C3mmbwQjoGWPYEO+fYr4EI+CQlqDaS/OgYQmttEWkXQXnH6qzL/+03nBJrN+NDURxGOV
-         V3jZE+5T8aMGxxRqp2pWCdfYGPUYUf6Ijg9D2Udai/sywuEYAoyigw1RZuw4Q65QdsVG
-         mHugcXQuUV2rHHUFfLxpcE05OeH3RTcThadYEQKT7lEgwHP4oMvc7pLOSp11RBSjuaXt
-         YsiCKr5zH6YKDrhyhN06yw2CtxRdwzjGzxu1tJO/WMLBxQfVw86mDPMWxPXpzjtpVThi
-         II/A==
-X-Gm-Message-State: AOJu0YxRY3+5Hw2eCBScL0eq1EPwWXS5CSaF/oY6cxjaktT9VzUNS3Cz
-	AFkqjWhLbQ2Gcbr/Z7+BqAqj2ZbfFFVeS/1xsHd6yqXpVJxa0ZrA+krNhg==
-X-Gm-Gg: ASbGncuptuguwaW8gMFmwHvGQj8ad7jrTjcZsyAfiy63OblI/KcEhXnrHQSaH/lPnsj
-	aS6wlxtF6nFN80WpIwVkImJrFtXsdGJd4Hc7NPHpVJ2KFKcVtG3R9VVrl6wD3wTmlMSiNEGuHtR
-	H/yjVT02OLs/EqBR9vxxywAMDcCgXq0m1Bi7g/IUtZsEscEcs6ePKl6l3nrrUt1Xo/SAARwBSbk
-	0LNoTJEoy3ZWewQupJ/fJdmmSNjRn8OjZ+YyBjj+gViwqUiA6hUu91pboaTmMfoSydeDCPi/peP
-	ivGF4j2aCLMNcYxfP9RsNioPREUJkjsi/LPO7q7f4TweY67wMZjFRjfz4g==
-X-Google-Smtp-Source: AGHT+IHtyj0X/8c/++OjpBsJsOfiexbuyknJEWutrlfBNaaYifqyRA8b/NRz8ebnJXTAfFSh1eUpHA==
-X-Received: by 2002:a05:6a20:c791:b0:1f5:72eb:8b62 with SMTP id adf61e73a8af0-2148be01d42mr8893430637.20.1746692688252;
-        Thu, 08 May 2025 01:24:48 -0700 (PDT)
-Received: from localhost.localdomain ([2001:ee0:50da:6e40:c6b6:28e0:30d5:5a17])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74058db91cfsm12555695b3a.48.2025.05.08.01.24.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 May 2025 01:24:47 -0700 (PDT)
-From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
-To: git@vger.kernel.org
-Cc: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2] meson: allow customize perl installation path
-Date: Thu,  8 May 2025 15:24:40 +0700
-Message-ID: <a9d431944b6d94e0eb25535c061fc226a7fefa9e.1746692662.git.congdanhqx@gmail.com>
-X-Mailer: git-send-email 2.49.0.395.g12beb8f557ceb
-In-Reply-To: <80a2a6ce7c6b05323cf931cdc20d4decb6270002.1745507677.git.congdanhqx@gmail.com>
-References: <80a2a6ce7c6b05323cf931cdc20d4decb6270002.1745507677.git.congdanhqx@gmail.com>
+	dkim=pass (2048-bit key) header.d=commvault.com header.i=@commvault.com header.b="dUXvvWwJ"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=p3T2Eaz+q3dvv20ozBw317A24Vcsij+5aGK5Q1rfnr+9tWdeqkeGPAiwQZqaVwuCPImKJuXrOgoq5vgQPYrDHjup9KuhRtSbcNOwNTFzuUqxU19LzsNQLPosbwS8y2JJv4tPSz5/4rriN6skTKYkpvLkbyy7n/cWmjsTfQO631ukKER8GbmbtzjsGJxz4THJkKQz12Zse4j7HcIPN/vnp42kNb2KUAUAQMaV5JpwlPEvLfiFcZ+RG41k+tpGdZNe1YLxjdaFqAwddmHA5vMxzk7ToD486FxIvqF/DM6iSUgYzGcVl2pFvPuG+1W+GCITZNYWbKn11CKOOs6b+nij/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=33qdNE4XCEKyBmFeJ+qpc3GPR2dTb5JV3M0iYFs1wQc=;
+ b=KxeYjkgNeiIggaziK8+7kpQ5kfUpNLEEYVcNcSMCGkxZj/oUo9p4e150RKzm6KHswfNJX5EJiz7EGZfBlqNFrsoq0OClx3RmHRgAqpX3aPujp6qp5fUElrWR62CJoRa8TAw/F5ppcXMiAe2Pyno9/Jsdt1/XeMdaQt8lEHo6wNWXwWwHP3xUx96lwYY0KJDHG9UdvHzKQjuheyyUo/SM7NiXvrOPYPMPYKcGq/W9dSVhNgCNQzH1oH9FbCFD1tvNAfEYwLCS/NVzGrj6vKnSJ9IeoRC+JVyKOuOGnCRkeEE57Y7EVW9omCO6rNdQpDSDe+V8hmIlxKqVjcL2KqY2vQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=commvault.com; dmarc=pass action=none
+ header.from=commvault.com; dkim=pass header.d=commvault.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=commvault.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=33qdNE4XCEKyBmFeJ+qpc3GPR2dTb5JV3M0iYFs1wQc=;
+ b=dUXvvWwJKAvQq6uWmeVt/sP9Ihufjhrpl31UQ8D3z3KKex41Kt5D9uVaaxxwqeG91oI1LfzeNU1liFtVq+vVzfEBI271m/UoZY2oKIjR18FQUzBnCargCwlzJ3B6FPt7i9jpv4JG1oaviaQ+Ts/YRDVa5ZcwQxDToywrHYogsxNkxXDTkAifFhZIuiGs5dr44E05DHQkZ4SdN1iH8G7np922jPFWi6WEH/WomO6UpFwaifVSDSJ6Byn5zQwB0l5NqgY6tJ96x5WYOzfxv/gL5LFZ33Hf6tHmfzzfvlssDljmSzBn70cyxEceGOHDWbQVWY931xpqfUCVbZE47P1/hg==
+Received: from SJ1PR19MB6401.namprd19.prod.outlook.com (2603:10b6:a03:458::14)
+ by DS0PR19MB7297.namprd19.prod.outlook.com (2603:10b6:8:149::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.23; Thu, 8 May
+ 2025 10:24:56 +0000
+Received: from SJ1PR19MB6401.namprd19.prod.outlook.com
+ ([fe80::dfce:4bc1:f841:c291]) by SJ1PR19MB6401.namprd19.prod.outlook.com
+ ([fe80::dfce:4bc1:f841:c291%5]) with mapi id 15.20.8699.035; Thu, 8 May 2025
+ 10:24:55 +0000
+From: Abhishek Dalmia <adalmia@commvault.com>
+To: Justin Tobler <jltobler@gmail.com>
+CC: Akash S <akashs@commvault.com>, "git@vger.kernel.org"
+	<git@vger.kernel.org>, Adithya Urugudige <aurugudige@commvault.com>, Abhishek
+ Dalmia <adalmia@commvault.com>
+Subject: RE: Incremental Backup of repositories using Git
+Thread-Topic: Incremental Backup of repositories using Git
+Thread-Index: Adu9yuZ7Kg9IZ5BOSWCrIQPM1Q8FHgADnPsAACq806AAEOrIAABOC8/w
+Date: Thu, 8 May 2025 10:24:55 +0000
+Message-ID:
+ <SJ1PR19MB64010CDB3F21FE91C97E566BAE8BA@SJ1PR19MB6401.namprd19.prod.outlook.com>
+References:
+ <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
+ <2dz3cema2mr5mrlvuroemnyeqyrglxfmusfdz2kaghv6rvj3ro@ti2dhu45fdmr>
+ <SJ1PR19MB6401D7734B73C453E491D54DAE89A@SJ1PR19MB6401.namprd19.prod.outlook.com>
+ <hanlqq5mma3dvbfq4j4u2zgz5mjegejjg3gjrhyggg2e6ozd5t@354nrc4nq6gn>
+In-Reply-To: <hanlqq5mma3dvbfq4j4u2zgz5mjegejjg3gjrhyggg2e6ozd5t@354nrc4nq6gn>
+Accept-Language: en-GB, en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=commvault.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SJ1PR19MB6401:EE_|DS0PR19MB7297:EE_
+x-ms-office365-filtering-correlation-id: 94596603-5a8a-4b55-2217-08dd8e1a93d2
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;ARA:13230040|366016|376014|1800799024|38070700018;
+x-microsoft-antispam-message-info:
+ =?us-ascii?Q?Y0IcgqRHbfU7o1KcqgHwWdmNwbn4wbjxZR3I3jbFhTTpMS66PqNQTZ/Df4Av?=
+ =?us-ascii?Q?ndzhJnA+C60DYbARWEkGKoUuIUsM9w0LYdab0afQhz4PBbw0pa7TLraW/ynJ?=
+ =?us-ascii?Q?zZ40DDjsogTr5BJS9awb03y6WGQSu64uN/3hvECpOH0XIDgqvZ9LATALwwpM?=
+ =?us-ascii?Q?jMQo8h6mh6HZ9DgUBBOTHr+R8JTqtQBbyShnLRaDWAqrfel/5XAPOT/DlmOc?=
+ =?us-ascii?Q?L24OJYcDjO4MD/FJ1A+rtBTyWNe72O3g0fPbWsFubFBRy6NCoLT+SNfQ0p9J?=
+ =?us-ascii?Q?T+YNMlYVyYaZ9YfMrAjcRrUaK3HvGcvOAWkwOvXArbBkoKRpUK8mNCQHo2Hu?=
+ =?us-ascii?Q?d1JR9mz/FnNDX/e2YfETgweJThciAf5vhb2yCQT6t8TSsu/6wH/WBrD61iDE?=
+ =?us-ascii?Q?42hxJMELge4PIdIapaV5Zvs+ga/8qgq44aMDjXhznFB6gZjWTzPc3X21zI1j?=
+ =?us-ascii?Q?cMLyRauV5SOqNOAxMohWyBqVfLAda2ZX/0/x6Dh3Ly/OXgV4kFFAF1xu1tp6?=
+ =?us-ascii?Q?HTnQaj5KXdSnJkzGlybWZ5Vsjn1rswOu7CYJHBXFUM4wPAAUUJ3bht3o+gKt?=
+ =?us-ascii?Q?Xxrj8tWRfkl/lJ6ftzFxXlyiFKOQRGCvlguM3ndqZr7IOX4l1SB2YQYdxRWM?=
+ =?us-ascii?Q?QZJSIr1B+QaL1e/ClWApVIvCyDv8nfi1H+nhd9qp2/5GmgMW9usACf4TYfSQ?=
+ =?us-ascii?Q?MbsEqhTQat33iPOxJGkSO7xdi4v+vD/xJeIHiv11iAtN9tz74Z/+zN7xF+bo?=
+ =?us-ascii?Q?PtmFm/9B18gzbDuw+4RAsIMBASn5ETsvT/jp+g4VDpGg/5EdjsHfJX3dEqzs?=
+ =?us-ascii?Q?2wQgULyO5ki5BruKoZPBQHfO4G7WMPF3edlXnkKZgsaR8j4e+44XXuZtuqr1?=
+ =?us-ascii?Q?A6lDNoqG+3KDsDxHL4ZXQAWu0ian5KFu2aLhI/kebC8ZBu7MYjAQ/LXzl7Uu?=
+ =?us-ascii?Q?0fxjYkyHWebnkQ3/xPDMVz8gPW42pRgQD2kYQ2jwc2CV5CKi6mbTXNow1doG?=
+ =?us-ascii?Q?QhDdNmMPVh0o/vCwzKzYCoTiTPwfl2hUrvWgYbnkZ8mQt+rNlLZ+34B+nuku?=
+ =?us-ascii?Q?nGalhgsY1BVwng9biUAkBnEarTA9BNcpSHp3vDZsesD+Ma8VuHBYpOF5FHv1?=
+ =?us-ascii?Q?KFj6m4lo+BIWuGFkqRxn69ki4cekuH8ufflDMrgUk4SUBwtXAJweXp5N9tYa?=
+ =?us-ascii?Q?OZJ8x2UIXKahEkvL3zCbw6sNUflb1q53A0Anx15pLbV1PrAv4eNdYM3AMghI?=
+ =?us-ascii?Q?P8/DJDiApwup8PPI6P4JlFB1XfwV8G8NZVmRk+OdQR38RgGgGRl0C8XqZ+tc?=
+ =?us-ascii?Q?Trfz2Ho6Hm2F5u29Hq5asNRbbuqxb76x+HQVharzvx5Pm99rXuSFIt+NSIWB?=
+ =?us-ascii?Q?S16b5UWJBy2IW2aGOBzegp8MyyQ/RZ9XSkn6F1gJ7igCBpB1v5iPZtk7EuIS?=
+ =?us-ascii?Q?ZKwaOa+IpFxtFvMtiqfiDy8/+5pHPL/6n8h2K3MbfTZxkl4kxNVIlfbINCE3?=
+ =?us-ascii?Q?ML+p5sLy5WmjtCE=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SJ1PR19MB6401.namprd19.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024)(38070700018);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?us-ascii?Q?UfTK3iYFI+RuNy3jnt8lQsponRR7qkQy7n8aX+wyp4u59t5alcQMEhHVJN0B?=
+ =?us-ascii?Q?LiGykKntjrQ8jthMuiWzZHYl+TXi+m2DnHIIv1zMsmB8G+AmonRji+37byt3?=
+ =?us-ascii?Q?vu0WTguY6QSIF6Z8qZ1Vg4QcSsZtzOvmRe1OFLuaamQtZStmd/StkWiXce1h?=
+ =?us-ascii?Q?unkloLRRSfcU8FaLV8GnrjjTdv741zJEzpmVp1bYSytbLk3m9EOuyrnFxLwx?=
+ =?us-ascii?Q?SHBsQwBMYtg8/UtUseZi22i1GhrCaXqhaKPv+tompkAFDGTLYF1FCkXzlGQr?=
+ =?us-ascii?Q?6kD+lLLH2yzkqsosDsngWkGgfDucx2KflvmvOPjjFHkFuZO3h6fgGRDFlfUg?=
+ =?us-ascii?Q?jNnlMOTIx58gza93N2tORDUjKudHg38LLHAQzJK9SMrqKBycimSJCJWEAnG/?=
+ =?us-ascii?Q?pxaqkSC+lp2Sk5wmi5bjZaGUMxeyCm/iE4KRVY1jbkudFwsZS0AiRT8v5Yub?=
+ =?us-ascii?Q?Dv/Q6Nfu7fr04UJqTdAODiu+N3Khx76mzXAeB82pAq1s6zu5DNA/wKNA7rVx?=
+ =?us-ascii?Q?0pgu0gFv9dDuG8x0XUq1L6Yvv+SdtkIUrfED7Q10nR6xvQrvbJPeSe/aOVob?=
+ =?us-ascii?Q?rSW4SKfZqOE1TXXunK6InzA0JCGAm0dulXa93IKAqhaxH+WvpI5MsssF4UK8?=
+ =?us-ascii?Q?kGdXY/dDOSVopktYzDsMv44z/SzkkvNv5baWqUim8wFrTHCcRrbSCrFhvrvJ?=
+ =?us-ascii?Q?NZBA3wiZuKKoIy+jmrNCBFBQql9RpfqhyhT6gBmMHmL+l+EwRX5Q38tPRgc1?=
+ =?us-ascii?Q?TEIiWWxv2CeC8nh7Kx+xubP+8gvcz91cvx26335bvCW7WUMFtn5W/hMkL65E?=
+ =?us-ascii?Q?kK0+2FGC2BV7lscPJUuzscTttFCn6183YlPstiTTwvB+0eTB+oaOVht+42u7?=
+ =?us-ascii?Q?Oi8rXVRbqHJrfIWaWhjIDdUOMXV8U02zjUUvEIwEa69hAtqbY3Bun+aXQ1L1?=
+ =?us-ascii?Q?83G4JlH8oCdXcwoXduxYVJGp3l/jTHT9p8tFmwlHSVfD2Yui257ZtRsr+hOX?=
+ =?us-ascii?Q?e5IZ2zDQ1i+uZDw+07lKcKw2LZW2rCISiiTtKd5eBrhYirDUHpd/kNiLsNog?=
+ =?us-ascii?Q?kxtiM2sJAYWuYJpd8A2KxWDT4AL6Z+hVPi9aGCn53JFW/51rrwatMv4GhPQ5?=
+ =?us-ascii?Q?uo5IYwLVjTlvmuHqsDBww6R6SkpzSvQTdMerJLBP6dqT2IAqZaRvEVdUWBrj?=
+ =?us-ascii?Q?OwZzhHl+KstFyLmJXergwRKjQkiG+sfOcRICKxCWLN2EC3a8VOmq3SK8mYRJ?=
+ =?us-ascii?Q?sX5lxjvej37N6lRNdPnA4i5+k3yQw2ZDBfLqnqeFu7KbqLA5cNXmq0yRfImd?=
+ =?us-ascii?Q?yKq7XwEAqvuLNhqcW6m+qkXS5ou/aUUlCSNrP7/1xG896hxaAf/xpnDwD0AB?=
+ =?us-ascii?Q?KVYVghUcgEBUFVsSydlfC7XqqbR7MmuvvUWVTjKOkFDh+5R9tbvj97x8TDVp?=
+ =?us-ascii?Q?w+Qp0RHS5GeMW86nHMYYc+QRMo5V1dfSOzuHh4UNmPgu0TYCYokc2lc6em2i?=
+ =?us-ascii?Q?CvRvY1qMIw5zwzcxkJTXh+T78zLsqWYaWswlzukaPDpwIJbVlmjRcs6gioal?=
+ =?us-ascii?Q?5SymN23eQWHIl7RgIhHa3G+I2KQJhPuw8aRNpYTh?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-OriginatorOrg: commvault.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PR19MB6401.namprd19.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 94596603-5a8a-4b55-2217-08dd8e1a93d2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2025 10:24:55.6762
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 40ed1e38-a16e-4622-9d7c-45161b6969d5
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XWimcaZNuMV4XuAngAtHmnCtKN2eGHVqieQRUkEoMlwwIUy7/A2srqtQgcHvk+155ziVuYdeUwPTCxnKj2jFuQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR19MB7297
 
-Some distros, notably Fedora, want to install non-core Perl libraries
-into specific directory, namely /usr/share/perl5/vendor_perl.
+Hi Justin,
 
-The Makefile build system allows this by overriding perllibdir variable,
-let's make meson works on par with our Makefile.
+I ran into an edge case while testing incremental backups with git bundle. =
+If a commit is created with a timestamp earlier than the latest full or inc=
+remental backup, it can be excluded from the next bundle due to the --since=
+ parameter even if there is a buffer.
+Given this, do you think git bundle is still the most reliable approach for=
+ incremental backups, or is there a better alternative worth exploring?
 
-Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
----
- meson.build                        | 9 +++++++--
- meson_options.txt                  | 4 ++++
- perl/FromCPAN/Mail/meson.build     | 2 +-
- perl/FromCPAN/meson.build          | 2 +-
- perl/Git/LoadCPAN/Mail/meson.build | 2 +-
- perl/Git/LoadCPAN/meson.build      | 2 +-
- perl/Git/SVN/Memoize/meson.build   | 2 +-
- perl/Git/SVN/meson.build           | 2 +-
- perl/Git/meson.build               | 2 +-
- perl/meson.build                   | 2 +-
- 10 files changed, 19 insertions(+), 10 deletions(-)
+Regards,
+Abhishek=20
 
-diff --git a/meson.build b/meson.build
-index efe2871c9dba1..5155aa726b20e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1825,14 +1825,19 @@ if perl_features_enabled
-     perl_header_template = 'perl/header_templates/runtime_prefix.template.pl'
-   endif
- 
-+  perllibdir = get_option('perllibdir')
-+  if perllibdir == ''
-+    perllibdir = get_option('datadir') / 'perl5'
-+  endif
-+
-   perl_header = configure_file(
-     input: perl_header_template,
-     output: 'GIT-PERL-HEADER',
-     configuration: {
-       'GITEXECDIR_REL': get_option('libexecdir') / 'git-core',
--      'PERLLIBDIR_REL': get_option('datadir') / 'perl5',
-+      'PERLLIBDIR_REL': perllibdir,
-       'LOCALEDIR_REL': get_option('datadir') / 'locale',
--      'INSTLIBDIR': get_option('datadir') / 'perl5',
-+      'INSTLIBDIR': perllibdir,
-       'PATHSEP': pathsep,
-     },
-   )
-diff --git a/meson_options.txt b/meson_options.txt
-index 78d172a74019a..cc19918a7ccfa 100644
---- a/meson_options.txt
-+++ b/meson_options.txt
-@@ -1,3 +1,7 @@
-+# Configuration for Git installation
-+option('perllibdir', type: 'string', value: '',
-+  description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
-+
- # Configuration for how Git behaves at runtime.
- option('default_pager', type: 'string', value: 'less',
-   description: 'Fall-back pager.')
-diff --git a/perl/FromCPAN/Mail/meson.build b/perl/FromCPAN/Mail/meson.build
-index b4ff2fc0b24c9..467507c5e690e 100644
---- a/perl/FromCPAN/Mail/meson.build
-+++ b/perl/FromCPAN/Mail/meson.build
-@@ -3,6 +3,6 @@ test_dependencies += custom_target(
-   output: 'Address.pm',
-   command: generate_perl_command,
-   install: true,
--  install_dir: get_option('datadir') / 'perl5/FromCPAN/Mail',
-+  install_dir: perllibdir / 'FromCPAN/Mail',
-   depends: [git_version_file],
- )
-diff --git a/perl/FromCPAN/meson.build b/perl/FromCPAN/meson.build
-index 1f9ea6ce8e844..720c60283d89b 100644
---- a/perl/FromCPAN/meson.build
-+++ b/perl/FromCPAN/meson.build
-@@ -3,7 +3,7 @@ test_dependencies += custom_target(
-   output: 'Error.pm',
-   command: generate_perl_command,
-   install: true,
--  install_dir: get_option('datadir') / 'perl5/FromCPAN',
-+  install_dir: perllibdir / 'FromCPAN',
-   depends: [git_version_file],
- )
- 
-diff --git a/perl/Git/LoadCPAN/Mail/meson.build b/perl/Git/LoadCPAN/Mail/meson.build
-index 89cde56be8491..05a5770560d3d 100644
---- a/perl/Git/LoadCPAN/Mail/meson.build
-+++ b/perl/Git/LoadCPAN/Mail/meson.build
-@@ -3,6 +3,6 @@ test_dependencies += custom_target(
-   output: 'Address.pm',
-   command: generate_perl_command,
-   install: true,
--  install_dir: get_option('datadir') / 'perl5/Git/LoadCPAN/Mail',
-+  install_dir: perllibdir / 'Git/LoadCPAN/Mail',
-   depends: [git_version_file],
- )
-diff --git a/perl/Git/LoadCPAN/meson.build b/perl/Git/LoadCPAN/meson.build
-index 1ee915c650517..b975d4972631d 100644
---- a/perl/Git/LoadCPAN/meson.build
-+++ b/perl/Git/LoadCPAN/meson.build
-@@ -3,7 +3,7 @@ test_dependencies += custom_target(
-   output: 'Error.pm',
-   command: generate_perl_command,
-   install: true,
--  install_dir: get_option('datadir') / 'perl5/Git/LoadCPAN',
-+  install_dir: perllibdir / 'Git/LoadCPAN',
-   depends: [git_version_file],
- )
- 
-diff --git a/perl/Git/SVN/Memoize/meson.build b/perl/Git/SVN/Memoize/meson.build
-index 233ec670d7de9..4c589b30c387a 100644
---- a/perl/Git/SVN/Memoize/meson.build
-+++ b/perl/Git/SVN/Memoize/meson.build
-@@ -3,6 +3,6 @@ test_dependencies += custom_target(
-   output: 'YAML.pm',
-   command: generate_perl_command,
-   install: true,
--  install_dir: get_option('datadir') / 'perl5/Git/SVN',
-+  install_dir: perllibdir / 'Git/SVN',
-   depends: [git_version_file],
- )
-diff --git a/perl/Git/SVN/meson.build b/perl/Git/SVN/meson.build
-index 44abaf42b7cea..8858985fe8660 100644
---- a/perl/Git/SVN/meson.build
-+++ b/perl/Git/SVN/meson.build
-@@ -13,7 +13,7 @@ foreach source : [
-     output: source,
-     command: generate_perl_command,
-     install: true,
--    install_dir: get_option('datadir') / 'perl5/Git/SVN',
-+    install_dir: perllibdir / 'Git/SVN',
-     depends: [git_version_file],
-   )
- endforeach
-diff --git a/perl/Git/meson.build b/perl/Git/meson.build
-index b21fa5591e7e7..a61b7b1f4abf2 100644
---- a/perl/Git/meson.build
-+++ b/perl/Git/meson.build
-@@ -10,7 +10,7 @@ foreach source : [
-     output: source,
-     command: generate_perl_command,
-     install: true,
--    install_dir: get_option('datadir') / 'perl5/Git',
-+    install_dir: perllibdir / 'Git',
-     depends: [git_version_file],
-   )
- endforeach
-diff --git a/perl/meson.build b/perl/meson.build
-index 2d4ab1c4a986f..3c66b007eaad9 100644
---- a/perl/meson.build
-+++ b/perl/meson.build
-@@ -3,7 +3,7 @@ test_dependencies += custom_target(
-   output: 'Git.pm',
-   command: generate_perl_command,
-   install: true,
--  install_dir: get_option('datadir') / 'perl5',
-+  install_dir: perllibdir,
-   depends: [git_version_file],
- )
- 
+-----Original Message-----
+From: Justin Tobler <jltobler@gmail.com>=20
+Sent: 07 May 2025 02:17
+To: Abhishek Dalmia <adalmia@commvault.com>
+Cc: Akash S <akashs@commvault.com>; git@vger.kernel.org; Adithya Urugudige =
+<aurugudige@commvault.com>
+Subject: Re: Incremental Backup of repositories using Git
 
-Range-diff against v1:
-1:  14e38695adbd6 ! 1:  a9d431944b6d9 meson: allow customize perl installation path
-    @@ meson.build: if perl_features_enabled
-      ## meson_options.txt ##
-     @@
-     +# Configuration for Git installation
-    -+
-     +option('perllibdir', type: 'string', value: '',
-    -+  description: 'Directory to install perl lib to. Default to <datadir>/perl5')
-    ++  description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
-     +
-      # Configuration for how Git behaves at runtime.
-      option('default_pager', type: 'string', value: 'less',
+External email. Inspect before opening.
+
+
+
+On 25/05/06 12:44PM, Abhishek Dalmia wrote:
+> Hi Justin
+>
+> (My previous email got blocked due to HTML content)
+>
+> Thanks for the recommendation. We want to backup all the repo contents, s=
+o could you please comment if the following steps will help us backup and r=
+estore everything, or we might miss some tags/references?
+>
+> During backup:
+> - Create full bundle first time using: git bundle create=20
+> <full-bundle-file-path> --all
+> - Create further incremental bundles using: git bundle create <inc-bundle=
+-file-path> --since=3D"<last-backup-time>" -all
+>       - making sure we don't miss out any time
+
+Just something to note, it's ok if a bundle contains objects that already e=
+xist in the repository. So some overlap with the previous backup would be f=
+ine.
+
+> During restore:
+> - Create the initial repo with: git clone -bare=20
+> <full-bundle-file-path> - using the full bundle we created earlier
+> - For restoring further incremental bundle files
+>       - git fetch <inc-bundle-file-path> 'refs/*:refs/*'
+>       - I can't use --all here, that works only with remote repos
+
+This seems reasonable to me. It may be worth validating that the bundles wo=
+uld apply to a fresh repository. If an incremental bundle depends on some p=
+rerequistite objects that are not in a repository it cannot be applied. Thi=
+s means if you have a series of incremental backups, they all would depend =
+on each other and one missing in the middle could prevent subsequent bundle=
+s from being applied.
+
+> Will using 'refs/*:refs/*' restore everything, or is it possible any git =
+data might get missed out?
+
+That refspec captures all references and mirrors them. All branches and tag=
+s, along with all reachable objects from them, would be fetched.
+
+-Justin
