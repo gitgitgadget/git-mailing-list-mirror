@@ -1,63 +1,63 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D96E4B1E6D
-	for <git@vger.kernel.org>; Thu,  8 May 2025 13:38:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D3E44B1E6D
+	for <git@vger.kernel.org>; Thu,  8 May 2025 13:39:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746711528; cv=none; b=oYTa2pNyflPfyGl8rDmPZL5Y/Y9S83feTaMEcxsk/YqqEEpVDRIqfOuI4wsPm0e7TQao6323hSA/yIx0TD6EoOlJ1/ivpE98BWTViPSkIVMtN4+PFm0H6k5fMiuhKAdeCdqs7IO5TdHi0TEZXb+BouhIjdWzh1rJDpPHan7jgtM=
+	t=1746711588; cv=none; b=BlPNUiS4eGO173bc/2fqYi1iuyJLj8j92tHxxz1vxgO3zlnHhEXqNLNx/+Wd/j5YmwNfOps/5PmBR1tVxxTEeGPTtjM7a4EodTKHEy7RIpWTkmCoUQjpuVe/MrRPyq6TxFL6glLoWBgBHEhjOziJI6YYoa3mMkV680+ESaVo5Tg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746711528; c=relaxed/simple;
-	bh=JaX8RIsrCoenoHpmTNADYjqt5Uv8kP/gZNVOfwUSc8s=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=VaVb61Yl9t6HdLj3nOmHYAOT9vDFhhVmzcjlf8k/lUcPf4JxWYwfHckEmWZrDWA9X3X8iD2cmzy89adaux5WAgwpRsqlxKpqHCmeSRoN5OPFfLgPNvk8EcpEG7ZjFad+Dq/2akC5IexYXrYrLls5WbiZSYAwBpYGJ0/csZu3X58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MQI4cT0O; arc=none smtp.client-ip=209.85.128.49
+	s=arc-20240116; t=1746711588; c=relaxed/simple;
+	bh=RrTIQgjcQezfVSNqLq7ZrKfbknwaDK559NIfi1qDou0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=s3FtQWBgIimSUCgdLmH3eSH/DJiY6motBzHGse1tTC2FbA55h6LHoGPrYzs5UeN91pfrtrOa1cFV/qx2T1wbpEKi+5tkFt9O4vBaMvdNl/Q/nF9LGoEmGqrhcV3lAOW3OJpmFGjASVsoTFs09htiT405uIBW4U9WarV3F9bF2X8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FqsAZHyW; arc=none smtp.client-ip=209.85.128.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MQI4cT0O"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfa7e7f54so6729055e9.1
-        for <git@vger.kernel.org>; Thu, 08 May 2025 06:38:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FqsAZHyW"
+Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-441ab63a415so10380375e9.3
+        for <git@vger.kernel.org>; Thu, 08 May 2025 06:39:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746711523; x=1747316323; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746711584; x=1747316384; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=pPqr0WWlAcw7VFfJgxWfX3+lEzVONDk74rTQmqYAlXk=;
-        b=MQI4cT0OiunbwWWiv4hfRGkJvmngWrwIydLhsIognSUWZv8p+hImRSgiycUfrlMKdw
-         byLMEwwNYYXL0cAmjsp3sd6TA/f9BiEVASdVyqgAWXqJt2/agFiraxDerZFrDmgRvh+3
-         OJlssXXVzZzhqDL9SSc1aZe1oRi1TB17KBfMfki0Sw0c77O1Qz80kWl93ixrsNoSB2+Y
-         eAT0REw0Xp/SMFocQEgErqNzfFCZBLq0OBjAmTnLscWRNL9VP+jSfuJrYP2nIG8DQkCH
-         6XSKyzJx/BOJADkKPTjnHhxBAgf1Wn+Y4oxWV0pUUwwk4Cag6TVcIqKkRFdLCNJrYf9u
-         z4Fw==
+        bh=WJvm7F7FCWMkUu8MNBogTOzceZDoSK7n0fbfJNuFts4=;
+        b=FqsAZHyWAR8dN+n4fG2hDP6ZMjF7q7aW9i/SHdlk0sl2ivCrwuuJYSEY0T1ZUJBFn5
+         416E0RAKPhVDF/prSzYIj7JhWDj9kB5Dj2VkOPthnumcHjJiJ6C6V7HyuLP2mpf1usfy
+         ITVR3c2VKpT5+RKZfqrq7GOwzXygxXjMvBFY3RTRDYw2ce+9i7r2GBn3Bdvr8AmWUfe8
+         nk6bcHrf7B95/lfHRV5rcrxBVaic4HVN6liT/PfhGr5WIdcUd0oPD+5RK0k+jQbm/iLU
+         Cnnak17/jcQ5kZEgeLHgx2e8dFJFHRzCHbg/atTg3nOMLkxBmNXBxy+Uu/9ZSM+WeSuJ
+         3pbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746711523; x=1747316323;
+        d=1e100.net; s=20230601; t=1746711584; x=1747316384;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=pPqr0WWlAcw7VFfJgxWfX3+lEzVONDk74rTQmqYAlXk=;
-        b=l0lY3QGZqCfwk9r2Uin54OYV6xuwk880O3amuLaI+oXkx/3Hd925pgrfmW0GKWtKfz
-         c14wMoZpz2wBjVzDlp4DIMobdiog92tdZD91usNduNMBDIVkpql7iLdqygV9Jd3Q4EvQ
-         +LtNDyVAMP09TnmQd6yqZjLEO1gU/FoKK8cPpcAyUR1oKcvXPsDpwRMi8GiVrl5n0uo6
-         LpfrPbvI5+d5QeVkTPASo+zkWAFAIZaJUYQm/I6TXIOYp5FOehX0XcPDzdkIuCIBwdhv
-         hA/xvZMxmh62EUACEClyUESPiDtwSjSfmAAAxKZe3idvwFLTpsqVIXfaJ6lH6x5sGm51
-         WKHg==
-X-Gm-Message-State: AOJu0YyOr8G/5hWRlVy8mIks5PWioU8X/W7ptQLU86UyMZoMOYwuIs7c
-	loiGv4Ag1WOEyuw7dATcx7eiOEulbz1g1hqY5LRYbiCCFn6+XAEmEHotFQ==
-X-Gm-Gg: ASbGncv4gXBZ2wkr+h7xWmWcU2YuDcaMuGbjT+ZLNQe2YybkOc3/vrkRVCnAu4PsrpP
-	oqKK628UCZqunVLsg4jnnypeQggC3aK4KOiFX9JrRqoxKGa137npxpATBCggBClnHaFKoYBza0D
-	EI8XQNWUYNUFepxRyICRjvZ/Jhu+9su4QNrrpZS7jc4qaqGSbwI3nz1bG9t1Vj0dQLJEPByIlN6
-	JC+ZaiMQE7eMrlIVc4YxskTPtVTxC0rt7OtM9RUHxFePfiMs9DTyw5Q/QOc3E3jj4NaYPgfNdMi
-	kf0d+YAM2Qktv9R8oy4VhTLYE4IK1qOn2fNcmhiflxMIn+hZ4SSI
-X-Google-Smtp-Source: AGHT+IFjelJU7HXLzEWfvse4fCEyZAOAU6yNKe3kAXZjUBNA3Tli0sX6Zw3A8/492MfSh6ioFUIQ7w==
-X-Received: by 2002:a05:600c:a06:b0:43d:16a0:d98d with SMTP id 5b1f17b1804b1-442d030d73emr34736215e9.15.1746711522721;
-        Thu, 08 May 2025 06:38:42 -0700 (PDT)
+        bh=WJvm7F7FCWMkUu8MNBogTOzceZDoSK7n0fbfJNuFts4=;
+        b=r/6u2BKQ4cnhUYbbb8J0Jci0qMQni7biu1+bsK3soe1ub2CkDY0tmowaiJiFoyhlmE
+         ctWjSHFxxtzw6HbnSNbr9sF7eQLqQGvG05MwjorqCPD6Kyl9WE6gOqe0+B65p8m3BqaV
+         uPSb3yrVHPgDXBd8ETKd/T98TWddKsH1UpE+Nj3ozzTrs8LqhK5bm0hFt4ZVeWOmC59s
+         hEj3WRiTh/6OOuNGOrWGhz1WGwKRowd1GOXZV1AwRSAazs/1zsCPvGzbaR812gRyhJks
+         KkklViz53DdWKeDwmzVFOaEwsngabq6H5X2EUJjkgO3squ63bNf5dLIe/oj8sM1FXfCK
+         nsgg==
+X-Gm-Message-State: AOJu0Yzq5MfSSNjInnoEw1LZAWrWW4h7iKO1jTzLXP0ryCOr0S8l3sqm
+	RD5AUM2HAMqbC30+KBv0WLp0X6VYpULU0rEhwzztrp9luDrFtgcuNojVPw==
+X-Gm-Gg: ASbGncvXFsiZKL2QTzKXw7lo3Hmo6vUTx9CMbFVmTM8eE+TKmUi33y0P2is58Ai3Vx+
+	1ljLV24GQ8C9Khb6hG46tUA1rHeAS3pO1iX00DC0UX2wxq9KNZGVDkb4ZmgQyFNWtCnaBH27rrV
+	faPFZLHLk1wPzaKUCPS1ufxP3TmC0FHffjQvor2lm3/rZw4268O7nqMIULj1gqwurz7froQnB69
+	1bLWuCUZ3cFcZrHwxzyC8vNf+4A+QN+fU3MiVjZCwtUboF9vp+PL/7Ap5uXSl6CDJBc6xKznPP4
+	jg4YIa6xEJbhzp2i9JaW66qOH+iRrbLJEBwLk9AXxQ==
+X-Google-Smtp-Source: AGHT+IE1iOLpapeezOLksguioyI77tSkR1+4o5+ZWqtZUSOSNItM32Qc5VFFTjcc2LFLJB+ExqnS5w==
+X-Received: by 2002:a5d:5f86:0:b0:3a0:b979:4e7c with SMTP id ffacd0b85a97d-3a0b9794e9cmr3169523f8f.3.1746711584057;
+        Thu, 08 May 2025 06:39:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd34bef4sm38817595e9.24.2025.05.08.06.38.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a0af3255afsm8458559f8f.66.2025.05.08.06.39.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 08 May 2025 06:38:42 -0700 (PDT)
-Message-Id: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+        Thu, 08 May 2025 06:39:43 -0700 (PDT)
+Message-Id: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
 From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 08 May 2025 13:38:41 +0000
-Subject: [PATCH] decode_header: fix pointential memory leak if decode_header
+Date: Thu, 08 May 2025 13:39:43 +0000
+Subject: [PATCH] REFTABLE_REALLOC_ARRAY: fix potential memory leak if realloc
  failed
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -74,42 +74,62 @@ Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
 
 From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
-in dec will leak. Simply add strbuf_release and free(dec) will solve
-this problem.
+REFTABLE_REALLOC_ARRAY doesn't free origin pointer when reftable_realloc
+failed. This leak can be fixed by add a free(x) before set x to NULL.
 
 Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
-    decode_header: fix pointential memory leak if decode_header failed
+    REFTABLE_REALLOC_ARRAY: fix potential memory leak if realloc failed
     
-    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
-    dec will leak. Simply add strbuf_release and free(dec) will solve this
-    problem.
+    REFTABLE_REALLOC_ARRAY doesn't free origin pointer when reftable_realloc
+    failed. This leak can be fixed by add a free(x) before set x to NULL.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v1
-Pull-Request: https://github.com/git/git/pull/1956
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1955%2Fbrandb97%2Ffix-REFTABLE-REALLOC-leak-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1955/brandb97/fix-REFTABLE-REALLOC-leak-v1
+Pull-Request: https://github.com/git/git/pull/1955
 
- mailinfo.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ reftable/basics.h | 28 ++++++++++++++++++++--------
+ 1 file changed, 20 insertions(+), 8 deletions(-)
 
-diff --git a/mailinfo.c b/mailinfo.c
-index 7b001fa5dbd..7a54471a481 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -536,8 +536,11 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
- 			dec = decode_q_segment(&piecebuf, 1);
- 			break;
- 		}
--		if (convert_to_utf8(mi, dec, charset_q.buf))
-+		if (convert_to_utf8(mi, dec, charset_q.buf)) {
-+			strbuf_release(dec);
-+			free(dec);
- 			goto release_return;
-+		}
+diff --git a/reftable/basics.h b/reftable/basics.h
+index d8888c12629..c7651f0cda8 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -200,14 +200,26 @@ static inline int reftable_alloc_size(size_t nelem, size_t elsize, size_t *out)
+ 		} \
+ 	} while (0)
+ #define REFTABLE_CALLOC_ARRAY(x, alloc) (x) = reftable_calloc((alloc), sizeof(*(x)))
+-#define REFTABLE_REALLOC_ARRAY(x, alloc) do { \
+-		size_t alloc_size; \
+-		if (reftable_alloc_size(sizeof(*(x)), (alloc), &alloc_size) < 0) { \
+-			errno = ENOMEM; \
+-			(x) = NULL; \
+-		} else { \
+-			(x) = reftable_realloc((x), alloc_size); \
+-		} \
++#define REFTABLE_REALLOC_ARRAY(x, alloc)                                      \
++	do {                                                                  \
++		size_t alloc_size;                                            \
++		void *new_p;                                                  \
++		if (reftable_alloc_size(sizeof(*(x)), (alloc), &alloc_size) < \
++		    0) {                                                      \
++			goto cleanup;                                         \
++		} else {                                                      \
++			new_p = reftable_realloc((x), alloc_size);            \
++			if (!new_p) {                                         \
++				goto cleanup;                                 \
++			}                                                     \
++			(x) = new_p;                                          \
++		}                                                             \
++		break;                                                        \
++	cleanup:                                                              \
++		if (x)                                                        \
++			free(x);                                              \
++		errno = ENOMEM;                                               \
++		(x) = NULL;                                                   \
+ 	} while (0)
  
- 		strbuf_addbuf(&outbuf, dec);
- 		strbuf_release(dec);
+ static inline void *reftable_alloc_grow(void *p, size_t nelem, size_t elsize,
 
 base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
 -- 
