@@ -1,160 +1,226 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9375E21FF59
-	for <git@vger.kernel.org>; Thu,  8 May 2025 22:16:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47781E4AE
+	for <git@vger.kernel.org>; Thu,  8 May 2025 22:51:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746742573; cv=none; b=VHHdUu9emjY/ROHkw+ocS9+1pPH/voHi1AYQgu07sbne9bdvgvABjAGLLQa6VOAqESKDTySplwG8qL+zo4SAJo65wbbuW4nAkVbOkb1j03W9G8zP/E50FSvlV1Qp++j1lVTeg/xJ5cG5F9aJbqt+cgtxz+QzCsk+hCwVk2QPops=
+	t=1746744665; cv=none; b=mmN5NwCsiCbejZLwpie6Vk0N4S0Aq/Dpav4B7bOzrtBj1rDO+xRfNfPmFZfjxZNpkVGWqvSz9+YR5FocNLbOsOc3J8KL851vV8KxRTJ4XI5XyDJnCZMx7z/4glJQjoq5KENnU2JLwdWiyTm0yWWnbQR6ucb/HLqrmUYCw4Rs+Rc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746742573; c=relaxed/simple;
-	bh=CuBgXnFTPwwEY0VxlFacr0Y4SeRQlwmvXPXp8HhGs1U=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zx1gLxQ4emlh9JX6HKBDd624mJVm/sN4bpdz7Y01m+xpRmZehg98W0N4pFbKJEgQUNLSrQuyOw9yHZe5fGsWqQYMv/kbo6OKvL9NfIXGd/Bf7ShcGX/5f3fv2L17t4JrPLIuPqaKTgOKFeI3vi//KNXHViFHDNlura+1+fAfUXM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PsQn0qPD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=v9JrhZc2; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PsQn0qPD";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="v9JrhZc2"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 75D9111400C5;
-	Thu,  8 May 2025 18:16:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Thu, 08 May 2025 18:16:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746742570; x=1746828970; bh=VV1BfC+4Ai
-	I4dRGPc6Ut4cfTPvYG+0aq1h1lvfkGCEA=; b=PsQn0qPDZWFqw3eVDpPPbjI2M7
-	k6EHJPFO3GXe1J8XqYsuqZYBT6TiqyFrD9anG0RjwstT1VtnQkPE5dm84XM6O0lD
-	GWRotzszBKUY/Aq4yEa6sdI1E4ylASFCw7qeaQY38BdtQcdsMAMTmdyY8zvBpjHr
-	TumpLhp4HJBFpj65uQDblZHKTVzZocsga+fgJ1hO23Opl7NBIRonaJpfKnal5tNa
-	oeTnBft6BrtGZijmIFtAYyt3WRN/gDYhNLf5W9ZTUvnOY/Sfa7KDB/4ORyBP45Hg
-	MmgB1FJ5Yj41FLWpElGRT/c+tXNoeItvdHnMPI/4sQNHX72CuvwtlbncKRRQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746742570; x=1746828970; bh=VV1BfC+4AiI4dRGPc6Ut4cfTPvYG+0aq1h1
-	lvfkGCEA=; b=v9JrhZc2YYIcihEBjv63CkkupaqManRrXYcjRWdi+qhCZeijAQp
-	HG9cqsU1dkQFgp0k7Acu+SB6RtiHi6IoVN5PUqBiAIxpXrS9vZzonkg92S4g03yU
-	QdkstyKAizNfcDBj2+JEdX0bakCW4AzN3hpbD3JY4/jPvlrBhpwaQ9zymReWctY9
-	9/5tV6jhBhiylHQkXJerzveo8hFvNVRkxBWYTa9Npji+mTciBxg/VtKWsvvgqL/i
-	noU7+R1ajj/Wd/1iypFrmDHpCdDi5DYwO1EPHJrrG4C34Vf4YPbB7LMUK4fRQyD/
-	mesMRf6ubUgVZ5c0N7GI13y8SmdzNhlaIYg==
-X-ME-Sender: <xms:KS0daHhCBqmWCLTi1DpAcHmpNdaPHyMNVeBkNvVxar_WnOrHDWdUKA>
-    <xme:KS0daEA5-DUucQ8DxAdMCCpz8bzMxECzP-Pwl9_1zQIfDr07D8kRecCvjRnujl8M9
-    C1RLU4KcbSb2spwcg>
-X-ME-Received: <xmr:KS0daHE4gDwJh9ZJGW-srPBP2Yjpawt4NJRRSF8EMDw6E6Qj9yF4JDguwczXYemQrMmjXti9ZOrHbY8FiUQr1X-K6QrMk02M_caI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledtleduucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
-    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephe
-    dtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:KS0daET6XEBPyv76yK7_87sv_EtrBlIM2iLVD-pF7Lur9duSEq8cag>
-    <xmx:KS0daExrY9uXiLXUWFiHJYYnGzj1Jz6euNJUEvYRyVV7KrY-q6yiew>
-    <xmx:KS0daK6TsQ4ovDjGlCt_EViQG6bH__qjiPx2owOsMYR_lhBkLSBljQ>
-    <xmx:KS0daJzGT0flXes9vW1gHNB2VN9mcG0fzfVoDCttFqARrosfDTVh1g>
-    <xmx:Ki0daK2RPUr6_u99N6sfo6X9kfAuqkSrFBihUqdno8A4RuIkDT7UURXT>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 18:16:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] decode_header: fix pointential memory leak if
- decode_header failed
-In-Reply-To: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com> (Lidong
-	Yan via GitGitGadget's message of "Thu, 08 May 2025 13:38:41 +0000")
-References: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
-Date: Thu, 08 May 2025 15:16:07 -0700
-Message-ID: <xmqqh61u4ul4.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1746744665; c=relaxed/simple;
+	bh=HxkdgwriMj/Pq2/yAIJS9rQ1iIwb2q5xF0vW5qqKQiA=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=taCsYlfBQnb3bthL7r/056ZUaJOGZ6EQt0y3T3SYdPFiVv9Vx3+qr3zl/eJcjJFeRTXZhfvu53H2gmimFsScmB6mKI1lnVPV+MsbSyKCtwGMVz+m/J5wFUbxDd35fyCbpMUHVcoahOJ2j505/1dBsUf+KyjkmMy1FWwskO1J1pw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 43E0B342FA9;
+	Thu, 08 May 2025 22:51:02 +0000 (UTC)
+Message-ID: <5a91094a-08d5-4bf8-a4c3-1d54cc970f67@gentoo.org>
+Date: Thu, 8 May 2025 18:50:59 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] meson: correct path to system config/attribute files
+To: Junio C Hamano <gitster@pobox.com>,
+ Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
+ <xmqqr00y4vvd.fsf@gitster.g>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <xmqqr00y4vvd.fsf@gitster.g>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------hER5CWrqcP5dY0GepGZUakqp"
 
-"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------hER5CWrqcP5dY0GepGZUakqp
+Content-Type: multipart/mixed; boundary="------------ULZneJ2VfcTmWIQxVI0zM0d2";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Junio C Hamano <gitster@pobox.com>,
+ Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Patrick Steinhardt <ps@pks.im>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Message-ID: <5a91094a-08d5-4bf8-a4c3-1d54cc970f67@gentoo.org>
+Subject: Re: [PATCH 3/5] meson: correct path to system config/attribute files
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
+ <xmqqr00y4vvd.fsf@gitster.g>
+In-Reply-To: <xmqqr00y4vvd.fsf@gitster.g>
 
-> From: Lidong Yan <502024330056@smail.nju.edu.cn>
->
-> In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
-> in dec will leak. Simply add strbuf_release and free(dec) will solve
-> this problem.
+--------------ULZneJ2VfcTmWIQxVI0zM0d2
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-We try to write our proposed log messages so that readers can
-understand the idea behind the change without having to look at the
-patch.  Even to those who are intimately familiar with this area of
-the code base, an exact line number reference rarely add any useful
-information.  Something like "In mailinfo.c:decode_header()" would 
-help them better than "In mailinfo.c line 539".
+On 5/8/25 5:48 PM, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>=20
+>> -  '-DETC_GITATTRIBUTES=3D"' + get_option('gitattributes') + '"',
+>> -  '-DETC_GITCONFIG=3D"' + get_option('gitconfig') + '"',
+>> ...
+>> +system_attributes =3D get_option('gitattributes')
+>> +if system_attributes !=3D ''
+>> +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + system_attributes + =
+'"'
+>> +else
+>> +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + get_option('sysconfd=
+ir') + '/gitattributes"'
+>> +endif
+>=20
+> Just out of curiosity (because this cannot be a regression, since
+> the original removed one used the same constructs).
+>=20
+> I am guessing from the presence of double quote around the value
+> that these strings are not directly used to invoke the compiler
+> without involving any shell (in other words, you wouldn't want these
+> quotes if you are shoving these strings in argv[] yourself to feed
+> execv()).
+>=20
+> How does the above, and get_option() in particular, cope with a
+> pathname that has letters with special meanings to the shell when
+> they appear inside double-quote pair (like backquote or backslash or
+> even a dollar sign)?  On the Makefile side we give VAR_SQ for a raw
+> variable VAR and use the latter to write something like
+>=20
+>         -DETC_GITATTRIBUTES=3D'"$(ETC_GITATTRIBUTES_SQ)"'
+>=20
+> to make sure we won't be broken by them.  Is Meson giving us an
+> equivalent to us for free by simply using get_option() here?
+>=20
+> Thanks.
 
-> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-> ---
->     decode_header: fix pointential memory leak if decode_header failed
->     
->     In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
->     dec will leak. Simply add strbuf_release and free(dec) will solve this
->     problem.
 
-Just FYI, here is a space to describe what would not have to go into
-the proposed log message; there is no need to duplicate what you
-already said in the log message above.
+Meson uses strong implicit typing. The object type of '"' is a string
+with value of double-quote-char, and the type of libgit_c_args is
+"array". It's not a result of get_option() here, except inasmuch as
+get_option() returned a string type.
 
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v1
-> Pull-Request: https://github.com/git/git/pull/1956
->
->  mailinfo.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/mailinfo.c b/mailinfo.c
-> index 7b001fa5dbd..7a54471a481 100644
-> --- a/mailinfo.c
-> +++ b/mailinfo.c
-> @@ -536,8 +536,11 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
->  			dec = decode_q_segment(&piecebuf, 1);
->  			break;
->  		}
-> -		if (convert_to_utf8(mi, dec, charset_q.buf))
-> +		if (convert_to_utf8(mi, dec, charset_q.buf)) {
-> +			strbuf_release(dec);
-> +			free(dec);
+Meson guarantees that arrays of strings e.g.
 
-OK, this fix is obviously correct.
+libgit_c_args =3D [
+    '-Dfoo=3Dstring containing the $ (mighty dollar)',
+    '-Dbar=3Dstring containing the ` soft-deprecated',
+    '-Doopsies=3Dstring containing the \' (you read that right)',
+]
 
-A nicer fix for longer-term may however be to fix the calling
-convention for decode_?_segment() functions, so that they take a
-caller-prepared strbuf as a parameter and fill it (and signal an
-error by returning -1, a success by returning 0).  There is no way
-for them to signal errors they detect (if we do not count the usual
-form of doing so by returning NULL, which this caller is not
-expecting) with the current calling convention.
 
-We'd still need to release the data in the strbuf "dec" even if we
-did so, but the strbuf would be on stack so there is no need to
-free().
+are passed to the shell in a manner suitable for reinterpretation as an
+argv array, notwithstanding other concerns (e.g. I believe there's some
+mingw hack regarding doubling backslash escapes so they don't get
+eaten). And of course this is conditional on the idea that it is
+possible to reliably pass arguments on the Windows command line, which
+doesn't have the notion of an array.
 
->  			goto release_return;
-> +		}
->  
->  		strbuf_addbuf(&outbuf, dec);
->  		strbuf_release(dec);
->
-> base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+So, given that meson takes care of this, the actual value of the -D
+define will be
 
-Thanks.
+string containing the $ (mighty dollar)
+
+
+etc.
+
+e.g. here is the ninja output:
+
+
+[1/3] ccache cc -Ifoo.p -I. -I.. -fdiagnostics-color=3Dalways
+-D_FILE_OFFSET_BITS=3D64 -Wall -Winvalid-pch -O0 -g '-Dfoo=3Dstring
+containing the $ (mighty dollar)' '-Dbar=3Dstring containing the `
+soft-deprecated' '-Doopsies=3Dstring containing the '"'"' (you read that
+right)' -MD -MQ foo.p/foo.c.o -MF foo.p/foo.c.o.d -o foo.p/foo.c.o -c
+=2E./foo.c
+<command-line>: warning: missing terminating ' character
+
+Notice that the array contained a single quote using a meson string type
+backslash escape, but the generated command line chose to shell-escape
+it as ' ... '"'"' .... '
+
+
+
+In this case, the Makefile does:
+
+-DETC_GITATTRIBUTES=3D'"$(ETC_GITATTRIBUTES_SQ)"'
+
+
+and if I understand correctly the _SQ is to handle single quotes in the
+directory name:
+
+
+-DETC_GITATTRIBUTES=3D'"/etc/git'\''s attribute file"'
+
+
+Or in meson,
+
+libgit_c_args +=3D [
+    '-DETC_GITATTRIBUTES=3D"/etc/git\'s attribute file"',
+]
+
+
+compiles as:
+
+[1/3] ccache cc -Ifoo.p -I. -I.. -fdiagnostics-color=3Dalways
+-D_FILE_OFFSET_BITS=3D64 -Wall -Winvalid-pch -O0 -g '-Dfoo=3Dstring
+containing the $ (mighty dollar)' '-Dbar=3Dstring containing the `
+soft-deprecated' '-Doopsies=3Dstring containing the '"'"' (you read that
+right)' '-DETC_GITATTRIBUTES=3D"/etc/git'"'"'s attribute file"' -MD -MQ
+foo.p/foo.c.o -MF foo.p/foo.c.o.d -o foo.p/foo.c.o -c ../foo.c
+
+
+Meson has refrained from backslashes again:
+
+ccache cc '-DETC_GITATTRIBUTES=3D"/etc/git'"'"'s attribute file"'
+
+Double quotes are part of the define value, single quote gets de-escaped
+via the sequence:
+
+'"'"'
+
+instead of the sequence
+
+'\''
+
+
+--=20
+Eli Schwartz
+
+--------------ULZneJ2VfcTmWIQxVI0zM0d2--
+
+--------------hER5CWrqcP5dY0GepGZUakqp
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaB01UwUDAAAAAAAKCRCEp9ErcA0vVy08
+AP9H2oBcqmHoAeNSBb8n34gG1I+FQQXX+gFD+yqInQ0mVAD9GwgofvBJTm3rVF+jxceIk1PESoJ8
+QY2KSYK2AHCEgwc=
+=ssfb
+-----END PGP SIGNATURE-----
+
+--------------hER5CWrqcP5dY0GepGZUakqp--
