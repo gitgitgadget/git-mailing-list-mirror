@@ -1,28 +1,41 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [217.72.192.78])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981114B1E72
-	for <git@vger.kernel.org>; Thu,  8 May 2025 21:07:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA482191F77
+	for <git@vger.kernel.org>; Thu,  8 May 2025 21:42:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=217.72.192.78
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746738465; cv=none; b=SQYC/1MA4FHVlCPaQgK5DwYICk4BFp3waD7a15afRqQ/V+ya7jOVlqL7+H/UaRretpOF/IOibpoY02GtLZdRf0WHL2FByEhBBEcPR1avEYD1pJxvajR+mw105QePpEqutSfXyYOWuQFXwr11lYB3HhaYo/WF82l8czXtehSCm8o=
+	t=1746740574; cv=none; b=C3udL/jic06glJ6VY2SnD5O6KGSaNQn57JRnXZwsTwwUgFh4kw5iO+APUUHDy0C5sDIBdzFiGw5eAy6FL6efgKqBxd3CZyqg5/AS3SM3UXKrEMqf+TgIUp6x3LCB9+Dn7qTQ5uDFQQF0JWZhdUkWv0LoriADLy11l4/5zV2h4Yw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746738465; c=relaxed/simple;
-	bh=nEmez69T2rem+79/2aAqsau63hzq5U5GQwJ/jUFaLeU=;
+	s=arc-20240116; t=1746740574; c=relaxed/simple;
+	bh=2EMMUIYRdfeYBaJMYddERIi20XxWDJNWAKFUtaDAJa8=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=rU/AU4HkLTzNQ5zJ3sTlTV/Jaz+yvVErs4g2vU8muLS38A5Nu/A5sZWnBpLcxjt1aHFF3VWRWyuoCjhHctKNZwk+MuM4EyN020Bf1FN13xyjVOB89ApMaeAN/ILnLk5T8e9QTNNOwtNHxv8RMpqj0XsA35VIKP9tkYg8Pqcxy5c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 007EB3430C6;
-	Thu, 08 May 2025 21:07:41 +0000 (UTC)
-Message-ID: <9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org>
-Date: Thu, 8 May 2025 17:07:37 -0400
+	 In-Reply-To:Content-Type; b=jV30Cfbzr+9CLKHRmChNQNfCInOckTH9GHli30UBID5Wxnoo8vk86oc5+msqnpsTxAYIulyiFZlq4vWj27D7dFP3ouAX3++dCqqSVGOyrkYe/LN+g/tITGafX1FU1Y5aQS2H2VaQgc/AEXFNOXY+Z947QNc8XLYn2GziI/AI+kY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=jdpHVQyQ; arc=none smtp.client-ip=217.72.192.78
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="jdpHVQyQ"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1746740559; x=1747345359; i=l.s.r@web.de;
+	bh=qvBAoy2cMqWGaSTzXW+WX8k34RRMlilC3DazRIDc7PM=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
+	 References:From:In-Reply-To:Content-Type:
+	 Content-Transfer-Encoding:cc:content-transfer-encoding:
+	 content-type:date:from:message-id:mime-version:reply-to:subject:
+	 to;
+	b=jdpHVQyQcACVkCnHcbTqjI3Sbb8siPzJioI0c4df1QKDmbdvo8/teglJ6UYcXLWj
+	 JF9WVJ6cEV900wT+ZxcQ7U1SrC0PksS547wFwKOLNVXs8vMvozjiAiKm5kvlWC1A3
+	 sM7rAdIZP6DtxFgFFihi26G6C3uzrHqs0TZ6MYxcqToAhq+zQOlvRq6sI1NV2Dtzo
+	 mv3jf5jg8yRo+bCXGvXniw2k+1D0TNomG+ujkjKmsCxKZrhdgoAe0O+tm08XyOftk
+	 YS/wAvILrzRV/9WIFuov9zkY8jym5eH5PzRNh0AWOKXVhtFI8c/ujRJZkLokUpDPw
+	 gdDuzFCl2Gj1I6YN6w==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from [192.168.2.31] ([79.203.19.115]) by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MBS6v-1uItFJ3SJz-00Dw5T; Thu, 08
+ May 2025 23:42:38 +0200
+Message-ID: <174cb568-e2bd-41e0-b090-eadd919d1ddd@web.de>
+Date: Thu, 8 May 2025 23:42:37 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -30,162 +43,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] configure.ac: upgrade to a compilation check for
- sysinfo
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
- GIT Mailing-list <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-5-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH] REFTABLE_REALLOC_ARRAY: fix potential memory leak if
+ realloc failed
+To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>
+References: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
 Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ekHrD14GsvTzXT0PbIPbDOyT"
-
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ekHrD14GsvTzXT0PbIPbDOyT
-Content-Type: multipart/mixed; boundary="------------ED7LsLdoFgc2fRrN0pxBq9lj";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
- GIT Mailing-list <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Message-ID: <9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org>
-Subject: Re: [PATCH 5/5] configure.ac: upgrade to a compilation check for
- sysinfo
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-5-ramsay@ramsayjones.plus.com>
- <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
-In-Reply-To: <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
-
---------------ED7LsLdoFgc2fRrN0pxBq9lj
+From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
+In-Reply-To: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:MlYRAZWaC4sCVQ4MAnvu3QiqEWpU4aXXk3RzBVpCXmkD18/bL6K
+ y0eo8OKuAgRJ6F9c8AZw4Ztlx8c9Nz8P6dnuBOOftX+cUqtWaSLQi1FPWtGylk2CPiyTKFL
+ uGPBnxy4vqmStJRyTZlyxhjHDV+wP/xPd9i2Dwiaptv6Ot4EzMXlQmSXlpG3bUjUiHPZjLV
+ 1ZZQcr1TGUDn0lQ91Nbiw==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:5H+l1oiAU34=;LJ6T9cPb6yDqL/vntjk+l1rqQc1
+ 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
+ 5XJfP4mZ5T7e9RgrCNIQo3hAdnIJ5DUATa
 
-On 5/8/25 12:44 PM, Ramsay Jones wrote:
-> Commit f5e3c6c57d ("meson: do a full usage-based compile check for
-> sysinfo", 2025-04-25) updated the 'sysinfo()' check, as part of the
-> meson build, due to the failure of the check on Solaris. Prior to
-> that commit, the meson build only checked the availability of the
-> '<sys/sysinfo.h>' header file. On Solaris, both the header and the
-> 'sysinfo()' function exist, but are completely unrelated to the same
-> function on Linux (and cygwin).
+Am 08.05.25 um 15:39 schrieb Lidong Yan via GitGitGadget:
+> From: Lidong Yan <502024330056@smail.nju.edu.cn>
 >=20
-> Commit 50dec7c566 ("config.mak.uname: add sysinfo() configuration for
-> cygwin", 2025-04-17) added a similar 'sysinfo()' check to the autoconf
-> build. This check looked for the 'sysinfo()' function itself, rather
-> than just the header, but it will fail (incorrectly set HAVE_SYSINFO)
-> for the same reason.
->=20
-> In order to correctly identify the 'sysinfo()' function we require as
-> part of 'git-gc' (used in the 'total_ram() function), we also upgrade
-> to a compilation check, in a similar way to the meson commit. Note that=
+> REFTABLE_REALLOC_ARRAY doesn't free origin pointer when reftable_realloc
+> failed. This leak can be fixed by add a free(x) before set x to NULL.
 
-> since commit c9a51775a3 ("builtin/gc.c: correct RAM calculation when
-> using sysinfo", 2025-04-17) both the 'totalram' and 'mem_unit' fields
-> of the 'struct sysinfo' are used, so the new check includes both of
-> those fields in the compile check.
+Hmm, this macro is unused.  Perhaps remove it?
 
-and
+Ren=C3=A9
 
-> Note that I cannot test the new autoconf check in patch #5 (I don't hav=
-e
-> access to a Solaris system). I _think_ it will correctly unset HAVE_SYS=
-INFO
-> on Solaris, but I cannot confirm that. (I can only test on Linux and cy=
-gwin).
-
-
-Well, I can confirm this results in the detection being correctly
-changed on Solaris 11.3 and stop reporting sysinfo as available during
-=2E/configure, so this has my ACK on technical grounds. That being said,
-in the original meson thread, there was this review:
-
-
-On 4/22/25 3:31 AM, Patrick Steinhardt wrote:
-> On Mon, Apr 21, 2025 at 01:51:46PM -0400, Eli Schwartz wrote:
->> It is deprecated and removed in SUS v3 / POSIX 2001, so various system=
-s
->> may not include it. Solaris, in particular, carefully refrains from
->> defining it except inside of a maze of `#ifdef` to make sure you have
->> kept your nose clean and only used it in code that *targets* SUS v2 or=
-
->> earlier.
->>
->> config.mak.uname defines this automatically, though only for QNX.
->=20
-> Ah, interesting. I mostly went by our autoconf infrastructure when
-> converting the checks, which didn't have a check for `getpagesize()`
-> either. We might want to teach autoconf to check for this function whil=
-e
-> at it.
->=20
-> In all honesty though, I rather hope that we're soon in a state where w=
-e
-> can just drop autoconf altogether in favor of Meson. The only two
-> blockers I'm aware of are wiring up git-gui and gitk. The former projec=
-t
-> has already been adapted upstream, the latter is still in review. But
-> once those have landed, we should be ready to mark Meson as stable and
-> then we can start deprecating autoconf unless there are good reasons no=
-t
-> to do so.
-
-
-So you are indeed teaching autoconf to check for this function, but
-should we also ask whether it's worth continued maintenance of autoconf?
-It was/is not clear to me who the stakeholders are for the autoconf suppo=
-rt.
-
-On the one hand, it exists so maybe it should be fixed when we know it
-has issues.
-
-On the other hand, it sounds like this patch (and commit 50dec7c566
-"config.mak.uname: add sysinfo() configuration for cygwin") only modify
-autoconf out of a sense of duty, rather than finding autoconf useful.
-What does it say about the autoconf support if the people finding bugs
-in it don't even use it, but only discovered the bug while working on a
-different build system they do use and depend on (config.mak.uname, or
-meson.build, both count here). Who *is* using it? Apparently not Solaris
-users?
-
-
---=20
-Eli Schwartz
-
---------------ED7LsLdoFgc2fRrN0pxBq9lj--
-
---------------ekHrD14GsvTzXT0PbIPbDOyT
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaB0dGQUDAAAAAAAKCRCEp9ErcA0vV6Wy
-AP0VUAGBmI6DspmgEQhWffnLDUPCTZdcGrb5xBGUX+SU5wD/UPe3jom4XgGV2kf0QqI5YYZVBHav
-5N76It4l1w32lgo=
-=uYBm
------END PGP SIGNATURE-----
-
---------------ekHrD14GsvTzXT0PbIPbDOyT--
