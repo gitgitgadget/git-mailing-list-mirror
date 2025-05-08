@@ -1,135 +1,250 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.20])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BB71220F3B
-	for <git@vger.kernel.org>; Thu,  8 May 2025 07:40:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FA3122A4EC
+	for <git@vger.kernel.org>; Thu,  8 May 2025 08:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746690047; cv=none; b=Q5/l3mJu1R4kdyDZ3YJgs6apZtWqUiTYdoqvsf3v05SXS3T8NIQWZHmIHJ50On395bKmOLyuSsvTkk3IB85WxvRnsGat0xEBLiK4G8gxEaDbr75KwLaj5rSWTEkeHLk7XHFurntTCTwAFumO1z4saN3fDiQCerVk2SEhf6/OEnw=
+	t=1746692690; cv=none; b=cj308tdxSvivepUVdgrL4r4Buxh/m4swwS8t41150pXD3yxkDdb3L4/piJW30+4OtTxBWsCUVkvnOWMS2+lsChD7dgSQhymRKXlFHtetBA2YR71jkMaNcT9xCyWA0PUcdpErYoCHEEy8YWsZMPwW2MGCwDApMclX+YePO7lHOwk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746690047; c=relaxed/simple;
-	bh=zpN7BceUStcrAC7eTHMkGzZ1sQDMUnX7OUQp7Xra8Bc=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=W7XmZpKlGVCL5fH4qVTXafNV/0bdo762Jom/MTt48rQtBZ8sIAKS39N9hkQSd2rS+skVpBXS2ykkgGYKTCwpEL5PNsBEG2coOKPJlEZosJoskJwcia6rM2eRx1GsBGV8Q/dAPi/ZeFQwUs2S4fVu3pfxoXiy5xpR2ReSxI+mCH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b=pEJUyDVr; arc=none smtp.client-ip=212.227.17.20
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
+	s=arc-20240116; t=1746692690; c=relaxed/simple;
+	bh=GlKCu27dSGCwsZFYlPuJ1uPXnWCBwVpjMwLhheKL3pA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=H5uOphN+MSta8Gfwsa4KusuTcrBmZYvOmzbqlLwYnwWcLpZQkZrNAlVQNDaO7V330D9PjuwwztbwC7E1ooWMRwIZ+LxII3BXx7Sb4i4iQOytScm1BA0nFiwm4yxoR02aPM0hvWhuYURLtIkLk1aAKbodSkUSovegNNcLiRqYSy4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c30bNiWK; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.de header.i=johannes.schindelin@gmx.de header.b="pEJUyDVr"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
-	s=s31663417; t=1746690042; x=1747294842;
-	i=johannes.schindelin@gmx.de;
-	bh=zpN7BceUStcrAC7eTHMkGzZ1sQDMUnX7OUQp7Xra8Bc=;
-	h=X-UI-Sender-Class:Date:From:To:cc:Subject:In-Reply-To:Message-ID:
-	 References:MIME-Version:Content-Type:Content-Transfer-Encoding:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=pEJUyDVr4+LEdzA/vlVanPZrnDlt05xYVnVqiRZBjJi26TLu1V1BTqj/w1N7eQHj
-	 8yaCwsYI2har9FqWnNMm5q4Jhx3JkYtpL3t/q0Dppe8rb+IYkmghmiez95DVhN2SO
-	 eDQmkVXJTIni951YO7Gko9tlcYb8cUy2k+JT1UUomKmXjHRo8pbLPGLjtLERa1ya1
-	 IAAA/xepz1xBJLsizzuBDbTcJ4rataNznVnOinxnSCYl6gkvKH0OFh1/rapd3+CTF
-	 KVeQMEj3RLnmixZXbiW7+ztC/Rlxb2ROqWt/ANgJZPkJNiWngey0u3/i7xleMpRcM
-	 jmLP9MD9OPZaeh4k9g==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [172.23.242.68] ([89.1.214.189]) by mail.gmx.net (mrgmx104
- [212.227.17.168]) with ESMTPSA (Nemesis) id 1My36N-1uwtBF0ckZ-00siGa; Thu, 08
- May 2025 09:40:42 +0200
-Date: Thu, 8 May 2025 09:40:41 +0200 (CEST)
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Toon Claes <toon@iotcl.com>
-cc: git@vger.kernel.org
-Subject: Re: Celebrating Git's 20th Anniversary - A Token of Appreciation
- from GitLab
-In-Reply-To: <87jz6sivhj.fsf@iotcl.com>
-Message-ID: <45fee163-db11-d3fe-5619-944f512f62f5@gmx.de>
-References: <87jz6sivhj.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c30bNiWK"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-7399a2dc13fso983458b3a.2
+        for <git@vger.kernel.org>; Thu, 08 May 2025 01:24:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746692688; x=1747297488; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8CjOXCh1zOIqLGH09TPLYOHbjXE9GpRVqmvd2G4fxKI=;
+        b=c30bNiWKNXN7LVGAnV9v9OiAsUxFzqC5oLYgPtcLeopzUhZD3R4bZkX01Vg+bHpiD4
+         VY5KX+vejLDK54F/dqJEXUjK2i9yAMYjLUqJt4PR8m+UJwUOG/PTzvghNMwKYW4GvfjD
+         /wYs5MasdWqE98FGHKxY9OPZjthFk+HoIoWNoFJxXA9SAwLPoLymaimDdKkbrohnpANr
+         VBHUp8/77kBbsr4TH+gIMIuPTiLfqFAtQglRqWzY6HwplWGG0rlTaawWr1BPWInzFg/N
+         8cXsua+hhOgePW1dv/nsCMzQtuuhnB2CZtsDr51buZxT1pRQKoVIIPvsBo3+bwlIcMgu
+         ADUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746692688; x=1747297488;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=8CjOXCh1zOIqLGH09TPLYOHbjXE9GpRVqmvd2G4fxKI=;
+        b=kJLbb6ZyFoK8il55cBKMAs8FTvtmFRIqwJbjCPn5+A76TEZVYpjRn0D4SPXMdQlR2a
+         C3mmbwQjoGWPYEO+fYr4EI+CQlqDaS/OgYQmttEWkXQXnH6qzL/+03nBJrN+NDURxGOV
+         V3jZE+5T8aMGxxRqp2pWCdfYGPUYUf6Ijg9D2Udai/sywuEYAoyigw1RZuw4Q65QdsVG
+         mHugcXQuUV2rHHUFfLxpcE05OeH3RTcThadYEQKT7lEgwHP4oMvc7pLOSp11RBSjuaXt
+         YsiCKr5zH6YKDrhyhN06yw2CtxRdwzjGzxu1tJO/WMLBxQfVw86mDPMWxPXpzjtpVThi
+         II/A==
+X-Gm-Message-State: AOJu0YxRY3+5Hw2eCBScL0eq1EPwWXS5CSaF/oY6cxjaktT9VzUNS3Cz
+	AFkqjWhLbQ2Gcbr/Z7+BqAqj2ZbfFFVeS/1xsHd6yqXpVJxa0ZrA+krNhg==
+X-Gm-Gg: ASbGncuptuguwaW8gMFmwHvGQj8ad7jrTjcZsyAfiy63OblI/KcEhXnrHQSaH/lPnsj
+	aS6wlxtF6nFN80WpIwVkImJrFtXsdGJd4Hc7NPHpVJ2KFKcVtG3R9VVrl6wD3wTmlMSiNEGuHtR
+	H/yjVT02OLs/EqBR9vxxywAMDcCgXq0m1Bi7g/IUtZsEscEcs6ePKl6l3nrrUt1Xo/SAARwBSbk
+	0LNoTJEoy3ZWewQupJ/fJdmmSNjRn8OjZ+YyBjj+gViwqUiA6hUu91pboaTmMfoSydeDCPi/peP
+	ivGF4j2aCLMNcYxfP9RsNioPREUJkjsi/LPO7q7f4TweY67wMZjFRjfz4g==
+X-Google-Smtp-Source: AGHT+IHtyj0X/8c/++OjpBsJsOfiexbuyknJEWutrlfBNaaYifqyRA8b/NRz8ebnJXTAfFSh1eUpHA==
+X-Received: by 2002:a05:6a20:c791:b0:1f5:72eb:8b62 with SMTP id adf61e73a8af0-2148be01d42mr8893430637.20.1746692688252;
+        Thu, 08 May 2025 01:24:48 -0700 (PDT)
+Received: from localhost.localdomain ([2001:ee0:50da:6e40:c6b6:28e0:30d5:5a17])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74058db91cfsm12555695b3a.48.2025.05.08.01.24.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 May 2025 01:24:47 -0700 (PDT)
+From: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
+To: git@vger.kernel.org
+Cc: =?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2] meson: allow customize perl installation path
+Date: Thu,  8 May 2025 15:24:40 +0700
+Message-ID: <a9d431944b6d94e0eb25535c061fc226a7fefa9e.1746692662.git.congdanhqx@gmail.com>
+X-Mailer: git-send-email 2.49.0.395.g12beb8f557ceb
+In-Reply-To: <80a2a6ce7c6b05323cf931cdc20d4decb6270002.1745507677.git.congdanhqx@gmail.com>
+References: <80a2a6ce7c6b05323cf931cdc20d4decb6270002.1745507677.git.congdanhqx@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-X-Provags-ID: V03:K1:HnywlNr7JiSh5vviPPKk16/CbVq8Y68Ud+D7WegVDFMaCYsWgBm
- hOGsDiJxyhU/71qOvs/LkulKxRCui5UOY6bAqePMK6aYCn6fbK4crBsD5odo7x6oHTiFA+b
- RRV9hx7lNZsuL1iavvM0eNXP0rq1sF5VX4YvAfBvLg5NxpGWHMOZYvBzO7KiTg08qgi9x/b
- nX1Y454v5OfhSG0hqif6Q==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:9IEKjf0ugH8=;zllAHmqXIZpQQG7pWg0h4HQec7K
- CxQk3LWZ/QPeJk5fFiNrLF/V6HFrJJqCAo2XOT2Q8YJ30sc3tklrfOEu/xXUDgIZdbOgnpgkU
- r1YD2wM7//Yn+nPZxAJMPHo8rkv41cXzwaFgTx4hpBxfTfjOigsiQ/wIaeGZcWn1J32TtuA7p
- 1s02+tDmy1V1ntGphKJqXhKDW7ofp9AL7TXecAVPZPgNXxiJGVndVQjjVVW1R6cl+rClgJA4G
- vv66IwGcb7gdfbYqwZfwK8O/c2BHDRZnYIg/HZ/oksp5G2PS3oGzYKjQPjD5XfhylyA5SuJ6S
- gB2M6th3wBqwWbsTfs/LtuuaP3Y47gGf5fmy95gbe/dtL5GANH2xz+wi0zZ7rfLDumrOGuMsC
- FxN2QVWAjHThc1TDk7KMGwkS8tRdtsO6gEWgsKAXnCbH33dW1U2JakurBiSVPBzMvUaIego9z
- or3px8YraaOldnBcwh9koZ5XbMTCwTmHFyWtWu55Hc9lf/xI/bJ/LMsbGeE7iY+VsIyunrCJX
- z0htWRSzFybm79xrlxw5LoVGzBNoHi3Do4Y2sm6QkI6xE12HLiGsPAHKbGXCJL55PL9SpT2hP
- n5NTUiFIO1ZMsIkJjpBAuRVndMYPFzL/KB/gDyR3DB0l3i8c4IzjTmtRbO1ZI6GuZJZ/HpRzV
- Bn71BiDzI/b5NFCNyX8zbCCVZUtRRJa0UCtk8Sff/rEqusO+2k/BHdsgOvJM1KiVxzTjRbANm
- xGF3rOsL4VKPnh/JDXQV2ghsEcjQAizqTRqbXsfnEdApdLcbtelRfcRgpbFDFB10niWy66bai
- SDcpi5c6UF1hd9M4d7QsQmrfICqKSUtrjE96pYDCDdiKmbrw+rXsT1V3/hrgZOAHgkoh/CikQ
- PdtOcdIUEJW6ijEvXuTIX0PFaF3XO0on1RPRFZZ6xD55uhi0z/8p8qQVXPZvL/a7uPId7GJTq
- qFn0KGMEoklfqMW/b3eF4lejyoQcfa1o5wgV+epCte1mXSOU2g5rWw0NL8VSxRPpKZQjcPOjE
- I6/ImCmeCy395va7zqJcP7KJRu7Q+4iRpBkBGqUyXzhzqj7pLayCKgsm4hAKvrpdlqKFQ3Dg7
- GxlAx1SQLWBWeZibtxhl+CC5cyUHDA+A8cDvDq/a6ArB96e1230W2L2vU14R/OUANwSBGig2W
- +wszPt4hn9jYq+ybJBWs+lgTphjUSKvhL+BUSHP0VAqeH38y9dYt0rgYOCAR8y9LeqarlCCNp
- GxhHvvyU3Fk2/+xAEHzryEuNRdEdLz/z0epHH/b6gGsVwuByC4FAG/k0WAJB52/2BvSJ7iEQl
- AZBBfhwH3uUJWFqpWy61AhHn+LxFMk49IZbl7kMi43caIfZcl/0RghooP7lOEbAzqozPEoKpE
- GscZF5aSqPMfqabj7WSxHHUvHUp1cckZP2qnR5DLWv7zR1poFKa2OJlrFu0vTj5vV5zWeB3u2
- QNNNiSDOB7iGdlM+Qa/CjOeVGe5eK9rPL9vPtIlGTVuVujWhbeW8USpPx9bVEkBcowk1kBPTC
- VX/myYYRflp9dXvYBxR/lRPpXFN68oWZp2a3ZxXvrDkYINtJxBnevCxRaSqso+OV8TSVeQebZ
- GNNJw4r9vupjaUdowZd55zQy3/jwMAYjYGSRvIpB1TydwP1SniajbvNP3DHJ0xCHOQdC91qah
- qjJhyovJz0SnII9gzexQVylR9daRu3yCihuNjaf8fC09JRVl9zbpljT3T9BGLFQHRslDjUyxL
- iramASLJs2UsxcHyHFUC0wgNrMbKUa5xxLgu0t6bVCA/Ixb3zGVs7Vc1PMna+GmbvF/QgZTzZ
- 7nfZ8dB143+vHNkdSdXnjKTY35RxTWFZvG5z5kXCedQ0Dy5AwoiPx8WJukCbw2rXzi86c2tGf
- bV3Fb/mo2QUhHHMVcE/+XjSbW9hTKGH3nq9/devs6Yxm7VYhgua1qURVB3iy6I9CWfwbbJahb
- Ox80a+qUTn4dcj53Axy89w1HRX3JoSEwfImsBa9RTkdiD/exJLPNMMzClGJw0lFln3gQB+zcx
- DvMRJjW3udBgULY/UxzKDET6XhB2PArsDUWn1U7nCJRif06QbJIcOQkipvp27dy1X7YuqWoxi
- Snm84dRKzp2lv4St92aP8GGAlG2BVWlWdY/e8o8l7RO9L0CBJnKTqcpMs7+Pv1oRIN+v301B7
- SN21DnVHnwpVxuuOWtuPviU3qkpfozlMrhLfZ6e/4dKpyPzTRgoKj9T1D2NxvXjoIz5vZ57AL
- qF5U9l5rrZQV7yRgbUXGxmeiZUoTEWewBPYGAZY1E5mVbXHWPspbDptVR7Bfi+UOCK5azZpr5
- xBHBbVf35goKkVX+WXQg/I5os6WDwD9FoQmCd7FkhJhnhOGhDRbMNW8zdvmxha6RWZxI+1MV/
- grAgKN5XaoYReNJlGH1HPyVE6SRDh+DRU6E54L/IZ9RPqHKzc3bDXCPKTRMXIzCzFqn8OXAHl
- 5/S5nuCYDR/1DZaBQ9Vbu6zNeaOI9WBSkZH9u0FF2qv8Q+ZQP+CvEt4UBXdzekqTNHgYnrOyD
- FTFc450n7IjYr9ICf5DT0XDmzHJVjMJ93lktiGvcfRPAg8diHC+o2Dg1oUce3B6SFLDqY9VKO
- HSBGT443zSLm2F2YvGp4+4W4WevTgB4EVN6A0dbYah8MX7Y7c5nbeJH8oqPyAVzwBgbY9nHgz
- gDh7bjWo90aJNPajPK6wUANAuoHo+xFoVOaSZ3ZL9wPph+Ham+Fh1pRDah02ZdDnC5FsD5DC1
- WdbZ5rhC8vf60LQKB3+PyDFj8o32ZVK0JJm4M1f/X/SRTFuNIe2ELSZpNPYixgUswW58SRX7Q
- /yvMFkjy8/HhrWiuvYU5XC8PsC2kPW+Hdb4KgGTR3Uh1+t4C9jB0eUr+JZZh3soawHWCm9M7q
- o4cIf+Hbwl3yB0qV7jI3M4dryZTuYBOV9GMz16xwNjRxeRBsMsX3rCnywmJOrbX8U58e4u++3
- kfdqYC4MDsT2+eNOJXpSbGpXzC2UjJXKpfEG7Q6rcTCuaPh+R2nOlPpm0i1J5EtS5P/NdPea6
- yDZfeyLvKFYTMsZ/KmeTdo=
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Toon,
+Some distros, notably Fedora, want to install non-core Perl libraries
+into specific directory, namely /usr/share/perl5/vendor_perl.
 
-On Wed, 7 May 2025, Toon Claes wrote:
+The Makefile build system allows this by overriding perllibdir variable,
+let's make meson works on par with our Makefile.
 
-> Dear Git Contributors,
->=20
-> Last month Git celebrated its 20th anniversary. This is a huge
-> milestone, and we at GitLab are grateful for your incredible engagement
-> with Git over the years! It's awesome that we've reached this 20-year
-> milestone together. Your contributions to the Git ecosystem have not
-> only shaped this powerful tool but also made platforms like GitLab
-> possible.
->=20
-> As Git celebrates its 20th anniversary this year, we at GitLab want to
-> express our gratitude for your contributions to the Git ecosystem that
-> has made our community possible.
->=20
-> To commemorate this milestone, we're offering active Git contributors a
-> special anniversary package containing Git-themed merchandise. You can
-> find it at: https://rewards.gitlab.com/kits/1008.
->=20
-> If you're interested in receiving such package, please send us an email
-> at: contributors@gitlab.com
->=20
-> Thank you for your ongoing support and engagement!
->=20
->=20
-> Toon Claes
-> Senior Backend Engineer @ GitLab
+Signed-off-by: Đoàn Trần Công Danh <congdanhqx@gmail.com>
+---
+ meson.build                        | 9 +++++++--
+ meson_options.txt                  | 4 ++++
+ perl/FromCPAN/Mail/meson.build     | 2 +-
+ perl/FromCPAN/meson.build          | 2 +-
+ perl/Git/LoadCPAN/Mail/meson.build | 2 +-
+ perl/Git/LoadCPAN/meson.build      | 2 +-
+ perl/Git/SVN/Memoize/meson.build   | 2 +-
+ perl/Git/SVN/meson.build           | 2 +-
+ perl/Git/meson.build               | 2 +-
+ perl/meson.build                   | 2 +-
+ 10 files changed, 19 insertions(+), 10 deletions(-)
 
-What a lovely idea, thank you so much!
-Johannes
+diff --git a/meson.build b/meson.build
+index efe2871c9dba1..5155aa726b20e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1825,14 +1825,19 @@ if perl_features_enabled
+     perl_header_template = 'perl/header_templates/runtime_prefix.template.pl'
+   endif
+ 
++  perllibdir = get_option('perllibdir')
++  if perllibdir == ''
++    perllibdir = get_option('datadir') / 'perl5'
++  endif
++
+   perl_header = configure_file(
+     input: perl_header_template,
+     output: 'GIT-PERL-HEADER',
+     configuration: {
+       'GITEXECDIR_REL': get_option('libexecdir') / 'git-core',
+-      'PERLLIBDIR_REL': get_option('datadir') / 'perl5',
++      'PERLLIBDIR_REL': perllibdir,
+       'LOCALEDIR_REL': get_option('datadir') / 'locale',
+-      'INSTLIBDIR': get_option('datadir') / 'perl5',
++      'INSTLIBDIR': perllibdir,
+       'PATHSEP': pathsep,
+     },
+   )
+diff --git a/meson_options.txt b/meson_options.txt
+index 78d172a74019a..cc19918a7ccfa 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -1,3 +1,7 @@
++# Configuration for Git installation
++option('perllibdir', type: 'string', value: '',
++  description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
++
+ # Configuration for how Git behaves at runtime.
+ option('default_pager', type: 'string', value: 'less',
+   description: 'Fall-back pager.')
+diff --git a/perl/FromCPAN/Mail/meson.build b/perl/FromCPAN/Mail/meson.build
+index b4ff2fc0b24c9..467507c5e690e 100644
+--- a/perl/FromCPAN/Mail/meson.build
++++ b/perl/FromCPAN/Mail/meson.build
+@@ -3,6 +3,6 @@ test_dependencies += custom_target(
+   output: 'Address.pm',
+   command: generate_perl_command,
+   install: true,
+-  install_dir: get_option('datadir') / 'perl5/FromCPAN/Mail',
++  install_dir: perllibdir / 'FromCPAN/Mail',
+   depends: [git_version_file],
+ )
+diff --git a/perl/FromCPAN/meson.build b/perl/FromCPAN/meson.build
+index 1f9ea6ce8e844..720c60283d89b 100644
+--- a/perl/FromCPAN/meson.build
++++ b/perl/FromCPAN/meson.build
+@@ -3,7 +3,7 @@ test_dependencies += custom_target(
+   output: 'Error.pm',
+   command: generate_perl_command,
+   install: true,
+-  install_dir: get_option('datadir') / 'perl5/FromCPAN',
++  install_dir: perllibdir / 'FromCPAN',
+   depends: [git_version_file],
+ )
+ 
+diff --git a/perl/Git/LoadCPAN/Mail/meson.build b/perl/Git/LoadCPAN/Mail/meson.build
+index 89cde56be8491..05a5770560d3d 100644
+--- a/perl/Git/LoadCPAN/Mail/meson.build
++++ b/perl/Git/LoadCPAN/Mail/meson.build
+@@ -3,6 +3,6 @@ test_dependencies += custom_target(
+   output: 'Address.pm',
+   command: generate_perl_command,
+   install: true,
+-  install_dir: get_option('datadir') / 'perl5/Git/LoadCPAN/Mail',
++  install_dir: perllibdir / 'Git/LoadCPAN/Mail',
+   depends: [git_version_file],
+ )
+diff --git a/perl/Git/LoadCPAN/meson.build b/perl/Git/LoadCPAN/meson.build
+index 1ee915c650517..b975d4972631d 100644
+--- a/perl/Git/LoadCPAN/meson.build
++++ b/perl/Git/LoadCPAN/meson.build
+@@ -3,7 +3,7 @@ test_dependencies += custom_target(
+   output: 'Error.pm',
+   command: generate_perl_command,
+   install: true,
+-  install_dir: get_option('datadir') / 'perl5/Git/LoadCPAN',
++  install_dir: perllibdir / 'Git/LoadCPAN',
+   depends: [git_version_file],
+ )
+ 
+diff --git a/perl/Git/SVN/Memoize/meson.build b/perl/Git/SVN/Memoize/meson.build
+index 233ec670d7de9..4c589b30c387a 100644
+--- a/perl/Git/SVN/Memoize/meson.build
++++ b/perl/Git/SVN/Memoize/meson.build
+@@ -3,6 +3,6 @@ test_dependencies += custom_target(
+   output: 'YAML.pm',
+   command: generate_perl_command,
+   install: true,
+-  install_dir: get_option('datadir') / 'perl5/Git/SVN',
++  install_dir: perllibdir / 'Git/SVN',
+   depends: [git_version_file],
+ )
+diff --git a/perl/Git/SVN/meson.build b/perl/Git/SVN/meson.build
+index 44abaf42b7cea..8858985fe8660 100644
+--- a/perl/Git/SVN/meson.build
++++ b/perl/Git/SVN/meson.build
+@@ -13,7 +13,7 @@ foreach source : [
+     output: source,
+     command: generate_perl_command,
+     install: true,
+-    install_dir: get_option('datadir') / 'perl5/Git/SVN',
++    install_dir: perllibdir / 'Git/SVN',
+     depends: [git_version_file],
+   )
+ endforeach
+diff --git a/perl/Git/meson.build b/perl/Git/meson.build
+index b21fa5591e7e7..a61b7b1f4abf2 100644
+--- a/perl/Git/meson.build
++++ b/perl/Git/meson.build
+@@ -10,7 +10,7 @@ foreach source : [
+     output: source,
+     command: generate_perl_command,
+     install: true,
+-    install_dir: get_option('datadir') / 'perl5/Git',
++    install_dir: perllibdir / 'Git',
+     depends: [git_version_file],
+   )
+ endforeach
+diff --git a/perl/meson.build b/perl/meson.build
+index 2d4ab1c4a986f..3c66b007eaad9 100644
+--- a/perl/meson.build
++++ b/perl/meson.build
+@@ -3,7 +3,7 @@ test_dependencies += custom_target(
+   output: 'Git.pm',
+   command: generate_perl_command,
+   install: true,
+-  install_dir: get_option('datadir') / 'perl5',
++  install_dir: perllibdir,
+   depends: [git_version_file],
+ )
+ 
+
+Range-diff against v1:
+1:  14e38695adbd6 ! 1:  a9d431944b6d9 meson: allow customize perl installation path
+    @@ meson.build: if perl_features_enabled
+      ## meson_options.txt ##
+     @@
+     +# Configuration for Git installation
+    -+
+     +option('perllibdir', type: 'string', value: '',
+    -+  description: 'Directory to install perl lib to. Default to <datadir>/perl5')
+    ++  description: 'Directory to install perl lib to. Defaults to <datadir>/perl5')
+     +
+      # Configuration for how Git behaves at runtime.
+      option('default_pager', type: 'string', value: 'less',
