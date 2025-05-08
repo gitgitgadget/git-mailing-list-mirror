@@ -1,203 +1,454 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010015.outbound.protection.outlook.com [52.103.68.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F93022A7E8
-	for <git@vger.kernel.org>; Thu,  8 May 2025 13:52:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746712354; cv=fail; b=uYGINaxcfLreWQRelo10uuFhPY7w66n1tt5nlA0g8gWxRkvlRM5cErN3j3lF1tMEKmPZcHvGVaQ3ViRIIvBZaKVvUL1GaqJz1glQB9ytGIThXsM42clVQfgP0yX1q4i3E5j5UD8qyUh3+wwk4tQ6jQ7/0LYUGT8NYqXoW2TXE50=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746712354; c=relaxed/simple;
-	bh=duT6ztSLK9zbNoKf4fVZac9ngbgO/S3m3hKcKi8wBW8=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=al2qPZIPC3Xlmc9oKTobXKLjmcwtzcjWk4tuSQeqz5JPju1mo+pDQUBCf2iqw18+LnBPQT+4pnUoltZ8zc4sY+Ph9lg2sT3g5IoMcROwm5TGk27f/3XQYShGnaU2ARpQaTVjkFKPeihoxxq7cTqEZ1ZLsdL4A72S/toeg4ZS7iM=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=K/RAy841; arc=fail smtp.client-ip=52.103.68.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6282201100
+	for <git@vger.kernel.org>; Thu,  8 May 2025 14:17:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1746713843; cv=none; b=ulG0+rcs0DiA7srfnaUrBwJLsVkgI6IdOM/ZKUEepTIN4aqsxCTCOF4cEPmejxQ/YavvdbMU7yfL6jNkM2IpXVbu/v1kryIBZSoNxQNTrqFzfa58tAoHKxzhmgZp5TzNOjozseQyxZ3yRliOlgUjbqgmwwYVv8TLvgAYnGCcgLU=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1746713843; c=relaxed/simple;
+	bh=llv0vS+pWzS6hGqfP4UM8RycLL8KWnsUrlH3cvf7kIc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=SNNMqLckq5t1I6eHrMiuQoGVV9q2E7YkbZ3khAsYfM17gYMmSSv90XIFhXBMGzJNMBvV3wGVDAfYiXE7YDOTJWHzA32JzsjYstP2fkmQf/qVgA6bJ43urX3FJ+jBJm+e/7Aa8zyeeXdayASMaXW7OySGXSYLexifqc5pBuELM6k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xnbc3bBL; arc=none smtp.client-ip=209.85.221.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="K/RAy841"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Gd/DyQowBNuvoQZVx/lpHUMzjOj7vgz2oQ2hcq6dxzE8V4P5C56V7pwp+tKwWxjXvEMmNue1rwBOR24JhBS2Pj3yR8i/FS8ApLiUQJllUbmHJUY64syys5A2bwXSvs8keK/ohRhKy8slUAY4TSF3duEDuic6U69h7plfW58FeHE1zdtAz4rxN4mZTI/NWLssZJQlEwoKC1TGYI7Dt4m8/poOq+CkorfBdyRxGwc74r/1w5WvOxGN43VJ6TdX8WaSqFWCahH9jytxGQWc2r3D1Dvakd4gBIRu8QKFJENvmxjCuhg6+3fdrX6YjyLYhDy5NTRHYpB2L5lv3GLjeJ0uNQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=duT6ztSLK9zbNoKf4fVZac9ngbgO/S3m3hKcKi8wBW8=;
- b=fjdkw3f1zFhk/0KJqFzoJ4k8qKjY6mmfQAWQqmygdxojjhSLpZzAFrF4xSu+iOBEBrD6RV9E2DNfH+ahnOpooih2BNUeKBGWRPdriRsXfRMHPTTg+cQujpstNHEwdW52sADGfJQ2mu2euzJhZTpWTr7sUvXTkP2HfO0bxJsoyg79Twk158WKXARm9tJbikvJ5IdTJwFOJ1EoVcqP5PA81aUos+G8yAtqzG8obQfg3U4SqZvBSNY3yzgf8pEoOIIoApSmIGbSIcxiTvCz3ltUstKP40qFtPwdEOb8Y1SKF4Yj7OcCRLC7ky3FKd3WccLZscqKYaA6Z7G75AWvz0QMIQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=duT6ztSLK9zbNoKf4fVZac9ngbgO/S3m3hKcKi8wBW8=;
- b=K/RAy841zETwsMxNl5LD3ic75RsD4IYM+uVj3HjWXjGlvozyTJUQGRbGiivDm9PTeYO4mfYghQoBa51ZqNM8bFyd5j1xhCSVo/A3aPHM4QM2U0oyhahDmYbE4+edkQCeQKahDrtPc9GjbvauyL5iDBUV/ekpktz5ZOlfm8Lz5XhVtHmHS2XKAJZsPjZ8OzsOvPwPVOwgJTD+K89zHxqIh0fOP1SkVtokiOhXKXvEMxYzMs7oeEgxTAlxEjcDsrPwLb42d43BgVPJCcS/WaG05Qj3EjywWOnEPsMy0U7/qDnN3l2e1mvdbuxY1Kzlp+BZXRL2sqAN93Hql+CYWwcVoQ==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PNXPR01MB6756.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:6c::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.20; Thu, 8 May
- 2025 13:52:26 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8699.030; Thu, 8 May 2025
- 13:52:26 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>, M Hickford
-	<mirth.hickford@gmail.com>, "sandals@crustytoothpaste.net"
-	<sandals@crustytoothpaste.net>, Julian Swagemakers <julian@swagemakers.org>,
-	Eric Sunshine <sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v4 2/3] docs: improve send-email documentation
-Thread-Topic: [PATCH v4 2/3] docs: improve send-email documentation
-Thread-Index: AQHbv0zFVjfsAuRfzESA3EiZEdhM8rPHvkVHgABWFBmAAKjMt4AABR0D
-Date: Thu, 8 May 2025 13:52:26 +0000
-Message-ID:
- <PN3PR01MB95972BB022C2297D3E52DE78B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References:
- <PN3PR01MB9597FADD19D6BBCE3FCD4FBCB88F2@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597208F139D23AF3436B16AB888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB959781C8A5B990B2CCB68836B888A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqq5xicawp4.fsf@gitster.g>
-	<PN3PR01MB9597C4313236E59ABEF0B732B88BA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqwmar8bw9.fsf@gitster.g>
-In-Reply-To: <xmqqwmar8bw9.fsf@gitster.g>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PNXPR01MB6756:EE_
-x-ms-office365-filtering-correlation-id: 589a4d8d-ee3a-44d5-7d46-08dd8e379126
-x-ms-exchange-slblob-mailprops:
- 30ekHghIwFpWJZJ/S7H67WW7FVejyf+CoK2gWfPPgC1xI5BeF0Gzox/W8FrMxS/4+XiJ4Y3VSdy5F9anTxihlp4TeQmKr7croBnhosn+uRyItYS8mmtdVOMlw8r5cAU3Hur1HYtiwsdhlGKeIjVZT5bEoA5nDIZ1D+fJfD49Qcm5BHUxddue0XnO5vSgBVTbap5MghyJlOJYWjKTMnyEeVG7eNUiJpfnVFeMrMwxobQjmRYfSHb9tvo3upoSDGVgKyU/ywaNwTXSYlAXJXQDlRAkl9OvQkS/MzH0PfdeTaZokULWrZBdCnrV76BQw9br5kHwdTe5bXgd12479adjvXtCwivKcbI7KUvOE2NMNrHWfZOAW418BTAHcjqT+IL68j7ImjlvtSw+DoD4TByjTAb1ZxbqZn01WuoiVk0zd1qeb6VXM192zAqA4CtL2WBJ71CR9y8gF/7V5xBf7EhqbJBoVu/YLyZeOBCtWc7XXpsBCNnzHB3cHxwvrsOUFhvrnNHm1sebZj8/7VLebimOxcH1RDa9FBNGcOxXlza2yAQnVike8asIaZ1VkEknzCyBpNgrkPBEdFN/aPl6NVciYwbdYFrJBuJjCw23H1krmLYY4n3Y7DdTojLjePSXWp/A38DSE2F7U6noR/3RuC8Oa2YdA4EmnOU/r0TNV9E81KHufyiXhZF5drk5pXf2KaJMamb50PgfNwNkLhuVZdFqHpfcv7tFOugDpAzn2z6hw12EctINLeJkaGbGcLYbXgEo
-x-microsoft-antispam:
- BCL:0;ARA:14566002|6072599003|8062599006|7092599006|12121999007|8060799009|15080799009|19110799006|461199028|102099032|440099028|3412199025|19111999003;
-x-microsoft-antispam-message-info:
- =?utf-8?B?bWY1bTZOSWhESXd5T1NzNGgzenVicXhNUzYzeFpNMG1MRjZWelBmaExyOWl1?=
- =?utf-8?B?bUNvcnNtRmRZeFR3MmhKc0hoK3doVEM5OXpQTkVzSDdWaXZzYVhzQXNVSFdx?=
- =?utf-8?B?bURGK2VXYTdKd0lMM2l0Ym9aK0VtemwwblgrSmd3SWp4YTZIYmUzVVZ3cU9Y?=
- =?utf-8?B?VkU4ZzhFdkVqVTFlMHQwajMvc1ZVR1FtWWpLZ3BTWTRrazhWWnZmTkdXa2Jq?=
- =?utf-8?B?QzcyVEVZR1BTaW1hOE11Rk1TQ3pITWNtYWFoWTZ4citLQ1A5dE5wSnRUeGUv?=
- =?utf-8?B?UXE2TUU0NkFpL01YUnRMNFFrbkhsSnN1ME1vZXB2bm45U3l5NTRpVDNaV282?=
- =?utf-8?B?WHF1WHlCSHA1b0pLak1aZ0tGUmQwRFJHczVueTVmd3pzUjN4K2EzWERZaTNZ?=
- =?utf-8?B?M2lLZ3VZalNJdVM3OGU1RDh5dGYydzM2QjFtVjYxUE1pZVB5VDV4Wm5QNXFq?=
- =?utf-8?B?c2trTHd2UWJrZ0w1Y1hsM282YVpWNWM0eVhlUVVLVEFidUZvVVgyd3hFZDI4?=
- =?utf-8?B?ZFE1bCtTK09JcTBnQ1J5NDc5Tzh3cnprZ253V1FibWkwanQ0bzY0bnRMUmdD?=
- =?utf-8?B?Z0UxaUVRenJDdVQ3L0JxbWc5cklxNU1IcFpDZ0dvbjkya013bU1KTmU0ZVN2?=
- =?utf-8?B?RCtDcUdDeWZtWW1PaDZHOXE4YU9lSlNNN3E5bnY1VVFmdVlNZ215QlNabjBy?=
- =?utf-8?B?TjVpbTVMVTNUSDNHeVh3QmhDYkw0cnNPSUh4Ri9WWUIwR3JvN0ZENHNRQjg5?=
- =?utf-8?B?d0VRM1FrK2REdFZhNDNVMzl0Umo5YUI4WlFOb2FLMWtQM3YvT0pLclNURHl6?=
- =?utf-8?B?ODZjblROTWk2V0ZQeFJtVXhqWjNad2o1R010RUlpbER0Y3NyZzVheGxHdW00?=
- =?utf-8?B?dnJvTUJpRGtackZpenhPUjZrOElHd2xFczBiNllwSXRPakdjTW9tQURHaXZS?=
- =?utf-8?B?WGFqbjA2YmNuNjdiakhYeTdDYXpuZitGd3lkNFg2bEovMnNGbGNjRVV1NEFT?=
- =?utf-8?B?eXJPQUM5SDZ4UC9icklHMHJkUWxHY1V4VXI0OWVVcXkzTVpDaUNrT2ZxV3Ur?=
- =?utf-8?B?KzZ4MWJnd2dkNCtRaWVsRGxaVnJyWmdYQWZ3WDl4aGxCbm1Cdk4xUk91a2ZM?=
- =?utf-8?B?WkNYZEdqc2xnNzk0YXNaZUFKMkdibWpGK2lPdGp1aGxrMUw5VjR0ZWpEVHhV?=
- =?utf-8?B?T0ZWd2ZaUXd4Q0s4dlpsazc0NFBYSCs0cUpuVk53RWNvOVQxdUZFOWxuV2Yz?=
- =?utf-8?B?ZTE2SVJCYitQVDBGRElwd2pZSURrN1NIT2M0UTFidlJZU3VNVHAwVk9nSHBE?=
- =?utf-8?B?WHBiSTVxMWZJQXBHTVFGK1pmM2RDQW1nSnhtdmJrQmVxTVMwUysvMCtSaWUy?=
- =?utf-8?B?TEZzT2NnNmdQRGpuSm9HVFF5SjZtM0dXQXEwSG9JejZPKzF1U25QZTBGM25W?=
- =?utf-8?B?KzU2U0gydHRjRFBKQWljcm1wS252OW55TnQ5WURhR3NWN3prWE1lQmpkU3Vz?=
- =?utf-8?B?RXQrM3JWYVRTeVBpdjc2MlViWi9WZ2tIUjZaRGQzWHk4d0ZJeDlKSjdXTzMy?=
- =?utf-8?B?VDJQaEk5VnNFUVJVM1RZRWVoQXExUC82YU5QRldNMjI3S3R6eklnN2xhamdr?=
- =?utf-8?B?S2FEbUNOa3RONmwxaUhEKzUyK29qM0E9PQ==?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?Rk80bC9pR2JHSERwNldHZGdoSnBuSldZend6dVBUU0puUXRFbkJGT0F2WXN1?=
- =?utf-8?B?K0JHNGZ1aGNTOWFEOHlGbUttR1M0OU4ycWhpbHhneXFtWnZwc2k1VUhRMG1u?=
- =?utf-8?B?U1JMdXlVaXhzTzdxdy9QSDhqa2ZHMndweDFNNTF1OFdRLzFUWUdPYXFWcUIr?=
- =?utf-8?B?ZzdrNzNQbTV3cFRKc01zUTcrQ1c5YjdZa0dzczNvK2xIRHRTdVc1Q0k2UzJC?=
- =?utf-8?B?NDJFb1E1YmJhaEpiUjZPaW94aEpaM1JwUUlITWVnbUNJTE94SG5SQWRVK1gv?=
- =?utf-8?B?QlI3SkNDVTdxdUxMeCtGZFhubWRRQXdWdWxibUF3dUptWVJIWUNjM0RSMkNB?=
- =?utf-8?B?eThZSnorSVVRU0YwR1QybUo3bHo5bEJsYlkrT0JUR05UdkhHQ2p5QnZWVTBY?=
- =?utf-8?B?b0tDUEIxSy9kYVNIbzhLK3pnL05zZDBDQVNoWWhybEZCZUlhdEpCRndQbURG?=
- =?utf-8?B?ak81Z0hWYkxJN2pKQjJnNXVnK0hBTXY0L0tUSVJlbE5ZNE9XbGpydzVGUnNX?=
- =?utf-8?B?d3BxUVVtSGRwNmZaWTdBWlRrVnJKV1BpeWRmRXFtVml6K0xVWElzVFR3V2tK?=
- =?utf-8?B?aURaZjYwMnhHM0NOZkVBVmZabTBiQTlrMnI2SEJIOGU3Z1p4b1JOZDVIVERk?=
- =?utf-8?B?ZTF0Y3gzY0ZSS1pNZjdJTVJaUFptb0cxWGN0Mnk1NVRsZUpUdXpSVjljRHFw?=
- =?utf-8?B?ODVRMERWa3owSGIzMktjNlY4cEdzM3FESXZtYVJ1L1VNM2MrbVRLdFdBMGZh?=
- =?utf-8?B?ZnpGTGlxNWcya2Y3MnQ3bEVMSWtFNjZrMHNOWTd5R0hwMC9Gc0JybjhaZW9C?=
- =?utf-8?B?M3pPZG84U2dMREk4bEZ4b0xTcE16ay9sQ1dDam10cEJWNFFxMVZ1TkZHQ3l2?=
- =?utf-8?B?L0tIeTJNRjVGeVhiaklZUnpkOWlCSmRRU0dQbW1EZU9BR1ZYYm1WWDVvU3E2?=
- =?utf-8?B?UW5CYWVUNUFVVGFJbWZMTndXOWtwL2g0VVlmM2xaaGx2cm9qRmF0MlA1MVJI?=
- =?utf-8?B?MkxaazVMd1QvRXVnQmFGMHAwazJTdmZjVGJBU2duYTVlR3JhWit2dzZvdFZy?=
- =?utf-8?B?Q012MzE0SjV6dWM1SzhpQm5xdnZSV01kOXNnRVdyem9NenZHN3VxREQ1N1p4?=
- =?utf-8?B?cENhRW56TkgyaURrWXFuWDRQRnZOWFJlU2pxSjZhTGtvUjZCWXZxSEIxNGRt?=
- =?utf-8?B?R3NDZFZ3UjgvZFF1VGZLeXJEMGhoUzdpNEE2Mkl1aTAxSWYyOVdJeHBOY1pa?=
- =?utf-8?B?Vm9rUnNuZEIyT0FMTzVWbnF5dTAyRm5vNVgrQVFJV0hWR2FZaHBnY2s0M2FZ?=
- =?utf-8?B?ZnV0aUcvZ0dkU3VkZ2Y3S2xUV05QZzlpNzZENkpjc2RObWJPR09RMnpvQTNJ?=
- =?utf-8?B?cTkydlZvREpRSTJlbEYzMlRWbzU2TnZCeFpKcTAyRWsvSXBhRWRrUGkxMUR6?=
- =?utf-8?B?RWMzVGpxb2Q1azJsN1UvTFY4S0thM0pjdGEwM3B6VnYzLzlYamRtcExXeWYy?=
- =?utf-8?B?aVhwUTBFYTRTdDlFcjJyOTdsMTl5SEo0K2lmbUlBcVYvam1kcTk5eDh4NXZR?=
- =?utf-8?B?amgzeWt6eTh0NThJQmJqMkJGa05HT283ZkVKS0ZCWnEyVlM0RWljQkh4MUh4?=
- =?utf-8?B?cS9XaWtZM1J3dmFDLy9Ld09ocEIwL1d4MkdwVWVEeUhvUGdkRkdKTHdESXFX?=
- =?utf-8?B?OFk4eDM1MzhzbExFVXJKMFJFWTlIZXQycE9jdjFNZVZBZGNRQUlwdUJZc3pq?=
- =?utf-8?Q?zPtkzBG3laE5bB8zS8=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xnbc3bBL"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-39efc1365e4so580691f8f.1
+        for <git@vger.kernel.org>; Thu, 08 May 2025 07:17:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746713839; x=1747318639; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=BvN0YGdCzV3MJjcGSHKc5SX8a+fFSAmGJKTEWq9u/HE=;
+        b=Xnbc3bBLqRhNlKKWiVea3ZDG5prZo/Oz8lvN/gSd/FfwiFy7Na8LY7MyfJIUdacdFZ
+         NtJqbwIaDYcgDHCKx6zDBqMdmrg0dlgsPsH56qqVbcn9wB+sUQNHJK0SXI6Fh2D7nUwf
+         QE9l18OyxCvUQtIEx7BFAclg8ukpYS1DfifWtvnjB+uAIo3yPCrRDFzjCwQcAgivkDz+
+         DPgFvZ8+D79/BgX5YC81vNgApve4NIbPO2Zb2xQ+pVkW6piEuvTO8kHbSBuPpL8kJjKl
+         Hxd6OuKjVErLXTrg2g3/vX9R5EKV2QiypuDO4yhS1rDXtCH4P1Qq1oAVh8Hy3+ya2JuN
+         x6+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746713839; x=1747318639;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=BvN0YGdCzV3MJjcGSHKc5SX8a+fFSAmGJKTEWq9u/HE=;
+        b=phezFzvleM0CL5fKlh0PtOzAmefPEIc4nVsRmfojf90EHyFUPDUd7YT9y6wB4HFdYO
+         yyhxYYHptQFKHQMrwJorETXWqlczaM+u6H8MpVkObL66xtd4af2mo5dU6CIrj/v3DvwQ
+         txIbDlUOgB9W5PRVgpAVa994g9EXeokFBWRmrUO0JGpkqkdjIprTdVb1ysigkee27Ly+
+         u4qW9ilNsJ9wPvMUHDeequeKoq5eIEa7oEDNswvwnMHDj0SFOlLP5gE4Ah974s5SsLU5
+         t5uoRpU1JdH0/I2QrGiK2iDmJVh5aNj8tJ0exPVgZiN6XSh/Avg+9AICXrd/dcC4r5pS
+         /4eg==
+X-Forwarded-Encrypted: i=1; AJvYcCVj/fW2yDGADtBUbW/CeZpaULlVTd9PyNJ57q9k+cCoWokSBtJUWA2BYnGYjF5Tjo3k5qY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz3rK8l+06RSWkTCbWS+t1XVIpRbKrQMEOY56WVxeZma67rVz2J
+	jgbJuhTpZY6zUtpehNKGvpfCUIa+iPKxqy4vge7zAnIdksud3Z/sqFhsHA==
+X-Gm-Gg: ASbGncu74Z7NvHohKeIE0yxlMuUN5/3MjKqZkRrlaoaXIWNuljDByp92fZYwEI5fbJu
+	11FCuL0sQlp9EgzNmAEZTmIuWW40vbmhbQuLRsScNIsQbAKcMnJg0RlNwjVX8T3CfCRbe5omQVA
+	fxVmlnExBrq67PWwrMGhVEQiQFS0Rmlz/l6m4S+bUaB3Z5yS4VQji42FOWjdOoCBmI8mW0xjv6j
+	19XL+ZSdo9mKqksH14EgwvV39otQPcYjGy3DnW/RQUKLHkZUbqWVVtir8fSUMztdNCZG58f0Nxg
+	10pxsxfPhu/5ep0QfyTcwzF8tchaC1rLYFmZomt+zrjvBNuP0XTW89FKtG6NXnYLbSANhsygtkI
+	qNFrDGLw1MzhHFJAf
+X-Google-Smtp-Source: AGHT+IFIMhtlL06bLkDmu8QSnzGFIaWaJTDF6xOhWwUk5uYxb3YlpPkIAU5CTmTt5iSN31k9gKSnYg==
+X-Received: by 2002:a05:6000:420c:b0:3a0:b1de:1be0 with SMTP id ffacd0b85a97d-3a0b4a234c5mr6748451f8f.31.1746713838538;
+        Thu, 08 May 2025 07:17:18 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4cc39sm77859f8f.100.2025.05.08.07.17.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 08 May 2025 07:17:17 -0700 (PDT)
+Message-ID: <951d3343-fe97-4e7e-bb73-1c569ff10ee6@gmail.com>
+Date: Thu, 8 May 2025 15:17:17 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 589a4d8d-ee3a-44d5-7d46-08dd8e379126
-X-MS-Exchange-CrossTenant-originalarrivaltime: 08 May 2025 13:52:26.5914
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB6756
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [RFC PATCH 2/2] rebase: support --trailer
+To: Li Chen <me@linux.beauty>, git <git@vger.kernel.org>
+References: <196a5ac1393.f5b4db7d187309.2451613571977217927@linux.beauty>
+ <196a5ad7fff.c587c495188189.5980390754046003962@linux.beauty>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <196a5ad7fff.c587c495188189.5980390754046003962@linux.beauty>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-DQoNCj4gT24gOCBNYXkgMjAyNSwgYXQgNzowNOKAr1BNLCBKdW5pbyBDIEhhbWFubyA8Z2l0c3Rl
-ckBwb2JveC5jb20+IHdyb3RlOg0KPiANCj4g77u/QWRpdHlhIEdhcmcgPGdhcmdhZGl0eWEwOEBs
-aXZlLmNvbT4gd3JpdGVzOg0KPiANCj4+Pj4gLVRvIHVzZSAnZ2l0IHNlbmQtZW1haWwnIHRvIHNl
-bmQgeW91ciBwYXRjaGVzIHRocm91Z2ggdGhlIEdNYWlsIFNNVFAgc2VydmVyLA0KPj4+PiAtZWRp
-dCB+Ly5naXRjb25maWcgdG8gc3BlY2lmeSB5b3VyIGFjY291bnQgc2V0dGluZ3M6DQo+Pj4+ICtU
-byB1c2UgJ2dpdCBzZW5kLWVtYWlsJyB0byBzZW5kIHlvdXIgcGF0Y2hlcyB0aHJvdWdoIHRoZSBH
-bWFpbCBTTVRQIHNlcnZlciwNCj4+Pj4gK2VkaXQgJ34vLmdpdGNvbmZpZycgdG8gc3BlY2lmeSB5
-b3VyIGFjY291bnQgc2V0dGluZ3M6DQo+Pj4gDQo+Pj4gVGhlIGZvdXIgc2luZ2xlIHF1b3RlcyBh
-Ym92ZSBzaG91bGQgcHJvYmFibHkgYmUgY2hhbmdlZCB0byBiYWNrDQo+Pj4gcXVvdGVzLCB0byBt
-YXRjaCB0aGUgIllvdSBjYW4gYWxzbyB1c2UgT0F1dGgyLjAuLi4iIGJlbG93Lg0KPj4gDQo+PiBJ
-IHRoaW5rIH4vLmdpdGNvbmZpZyBzaG91bGQgYmUgaW4gc2luZ2xlIHF1b3RlcywgaXRzIG5vdCBh
-IGNvbW1hbmQuDQo+IA0KPiAiSXMgdGhpcyBzb21ldGhpbmcgdGhlIGVuZC11c2VyIHdvdWxkIHR5
-cGUgdmVyYmF0aW0/IiBpcyB0aGUgY3JpdGVyaWEsDQoNClNvIHRoZSBlbmQgdXNlciB3b24ndCB0
-eXBlIGl0LiBJdCdzIGp1c3QgYSBwYXRoIG9mIGEgZmlsZSB0byBiZSBlZGl0ZWQuDQpJZiB5b3Ug
-c3RpbGwgd2FudCB0byBjaGFuZ2UgaXQgdG8gYmFja3RpY2tzLCBJJ2xsIGNoYW5nZSBpdC4gRG8g
-Y29uZmlybSB0aGUgc2FtZSBidHcuDQoNCj4gbm90ICJJcyB0aGlzIGEgY29tbWFuZCBuYW1lPyIu
-DQo+IA0KPj4gR21haWwgc3VwcG9ydHMgZm9yIE9BVVRIQkVBUkVSIGFuZCBYT0FVVEgyLiBJIGFk
-ZGVkIE9BVVRIQkVBUkVSDQo+PiBqdXN0IGZvciB0aGUgc2FrZSBvZiBhIGRpZmZlcmVudCBleGFt
-cGxlLiBJIHRoaW5rIGFkZGluZyBhIGNob2ljZQ0KPj4gYmV0d2VlbiB0d28gd2lsbCBqdXN0IGNh
-dXNlIGNvbmZ1c2lvbiBhbW9uZyBwZW9wbGUuDQo+PiANCj4+IE91dGxvb2sgc3VwcG9ydHMgb25s
-eSBYT0FVVEgyICh3aGljaCBpcyBzdXJwcmlzaW5nIHNpbmNlIE9BVVRIQkVBUkVSDQo+PiBpcyBk
-ZXNjcmliZWQgaW4gUkZDLCBhbmQgWE9BVVRIMiBpcyBHb29nbGUncykuDQo+IA0KPiBZb3VyIGV4
-YW1wbGVzIHRoYXQgc2hvdyB0aGF0IHNtdHBBdXRoIGNhbiB0YWtlIHRoZXNlIGRpZmZlcmVudA0K
-PiB2YWx1ZXMgYXJlIGNlcnRhaW5seSBnb29kLiAgQXMgd2Uga25vdyB3aGF0IHRoZXNlIHR3byBz
-ZXJ2aWNlcw0KPiBzdXBwb3J0LCBpdCBpcyB3b3J0aCBzYXlpbmcsIG5vPyAgVW5sZXNzIGl0IGlz
-IGxpa2UgR21haWwgc3VwcG9ydHMNCj4gYm90aCBidXQgZ2l0LXNlbmQtZW1haWwgZm9yIHdoYXRl
-dmVyIHJlYXNvbiBjYW4gdXNlIG9ubHkgb25lIG9mIHRoZW0NCj4gdG8gdGFsayB0byBHbWFpbCwg
-dGhhdCBpcy4NCg0KZ2l0IHNlbmQgZW1haWwgY2FuIHVzZSBhbnkgc210cEF1dGggbWV0aG9kIHRo
-YXQgaXMgc3VwcG9ydGVkIGJ5IEF1dGhlbjo6U0FTTA0KYW5kIHRoZSBzZXJ2ZXIuIFNvIHVzaW5n
-IFhPQVVUSDIgd2l0aCBnbWFpbCB3aWxsIGFsc28gd29yayBqdXN0IGZpbmUuDQoNCkFzIGZhciBh
-cyBnaXZpbmcgaW5mb3JtYXRpb24gYWJvdXQgc3VwcG9ydGVkIGF1dGhlbnRpY2F0aW9uIG1ldGhv
-ZHMgaXMgY29uY2VybmVkLA0Kd2UgYXJlIHdyaXRpbmcgYW4gZXhhbXBsZSwgbm90IGdpdmluZyBh
-IGRldGFpbGVkIGd1aWRlIHdpdGggdGhlIHByb3ZpZGVycyBkb2NzLg0KQWxzbywgYnkgdGhpcyBs
-b2dpYywgR21haWwgYWxzbyBzdXBwb3J0cyBzbXRwQXV0aD1MT0dJTiB3aXRoIGFwcCBwYXNzd29y
-ZHMuDQpQbHVzLCBhbnlvbmUgcmVhZGluZyB0aGlzIGd1aWRlIHdvdWxkIG1vc3QgbGlrZWx5IGJl
-IGEgbmV3YmllLCB3aG8gd2lsbCBiZSBtb3JlDQppbnRlcmVzdGVkIGluICJob3cgdG8gZ2V0IHRo
-aXMgdGhpbmcgd29ya2luZyIgdGhhbiBrbm93aW5nICJvaCwgSSBjYW4gdXNlIFhPQVVUSDINCmFz
-IHdlbGwgaW4gZ21haWwiLiBJbmZhY3QgbWVudGlvbmluZyBib3RoIG9wdGlvbnMgd2lsbCBqdXN0
-IG1ha2UgaGltIHdvbmRlciBvbg0Kd2hhdCBvcHRpb24gaXMgYmV0dGVyLCBYT0FVVEgyIG9yIE9B
-VVRIQkVBUkVSLCB3aGljaCBwcmFjdGljYWxseSBhcmUgdGhlIHNhbWUNCmluIHRlcm1zIG9mIGFj
-Y2VzcyB0b2tlbnMgYW5kIG90aGVyIHN0dWZmLiBUaGUgb25seSBkaWZmZXJlbmNlIGlzICJob3cg
-aXMgdGhlIGFjY2Vzcw0KdG9rZW4gZm9ybWF0dGVkIGFuZCBzZW50IHRvIHRoZSBzZXJ2ZXIiLCB3
-aGljaCBpcyBkb25lIGF0IGEgbG93ZXIgbGV2ZWwgYnkNCkF1dGhlbjo6U0FTTCwgYW5kIGlzbid0
-IHJlYWxseSBhIGNvbmNlcm4gZm9yIHVzZXJzLiBJbiBzaG9ydCwgdGhlIHNhbWUgYWNjZXNzIHRv
-a2VuDQp3b3JrcyBmb3IgYm90aCBYT0FVVEgyIGFuZCBPQVVUSEJFQVJFUi4gQXMgZmFyIGFzICJ3
-aGF0IGFjdHVhbGx5IGlzIHN1cHBvcnRlZA0KYnkgbXkgZW1haWwgcHJvdmlkZXIiLCBpcyBjb25j
-ZXJuZWQsIGp1c3QgY29uc3VsdCB0aGVpciBkb2NzLiBUaGF0J3Mgd2hhdCBhIGN1cmlvdXMNCmFk
-dmFuY2VkIHVzZXIgd291bGQgd2FudCB0byBrbm93IGFuZCBJIGJlbGl2ZSBoZSBpcyB2ZXJ5IGNh
-cGFibGUgdG8gZmlndXJlIHRoYXQNCm91dC4=
+Hi Li
+
+On 06/05/2025 13:58, Li Chen wrote:
+> From: Li Chen <chenl311@chinatelecom.cn>
+> 
+> Implement a new `--trailer <text>` option for `git rebase`
+> (support merge backend only now), which appends arbitrary
+> trailer lines to each rebased commit message. Reject early
+> if used with the apply backend (git am) since it lacks
+> message‑filter/trailer hook. Automatically set REBASE_FORCE when
+> any trailer is supplied.
+
+I think this is a reasonable idea but unfortunately I think the trailer 
+API needs improving so that the implementation
+
+(a) Checks the trailers given on the command-line before the user edits 
+the todo list. That way we reject invalid trailers and exit before the 
+user has spent any effort editing the todo list.
+
+(b) Does not fork another process to add the trailers. Without this the 
+performance is going to suffer. Hopefully it wont be too difficult to 
+modify the existing code to take a struct strbuf and a list of trailers 
+to append to it.
+
+(c) Only adds the trailers on the commandline. I'm a bit confused by the 
+various trailer config options - the man page reads to me like "git 
+interpret-trailers" can add missing trailers that are configured but not 
+passed on the commandline.
+
+The changes to the trailer api should be made in one or more preparatory 
+commits before adding support for --trailer to "git rebase"
+
+I've left some comments on the changes to builtin/rebase.c and the 
+tests, I've skipped the changes to sequencer.c for now as they'll have 
+to be updated to avoid forking "git interpret-trailers"
+
+> diff --git a/builtin/rebase.c b/builtin/rebase.c
+> index b288aedfb1..df65a1e040 100644
+> --- a/builtin/rebase.c
+> +++ b/builtin/rebase.c
+> @@ -36,6 +36,9 @@
+>   #include "reset.h"
+>   #include "trace2.h"
+>   #include "hook.h"
+> +#include "trailer.h"
+> +
+> +static const char trailer_state_name[] = "trailer";
+>   
+>   static char const * const builtin_rebase_usage[] = {
+>   	N_("git rebase [-i] [options] [--exec <cmd>] "
+> @@ -46,6 +49,8 @@ static char const * const builtin_rebase_usage[] = {
+>   	NULL
+>   };
+>   
+> +static struct strvec trailer_args = STRVEC_INIT;
+
+We should not need to add any file scope variables
+
+>   static GIT_PATH_FUNC(path_squash_onto, "rebase-merge/squash-onto")
+>   static GIT_PATH_FUNC(path_interactive, "rebase-merge/interactive")
+>   static GIT_PATH_FUNC(apply_dir, "rebase-apply")
+> @@ -114,6 +119,7 @@ struct rebase_options {
+>   	char *reflog_action;
+>   	int signoff;
+>   	int reviewby;
+> +	struct strvec trailer_args;
+
+This is good and means we don't need the file-scope declaration above.
+
+>   	int allow_rerere_autoupdate;
+>   	int keep_empty;
+>   	int autosquash;
+> @@ -144,6 +150,7 @@ struct rebase_options {
+>   		.flags = REBASE_NO_QUIET, 		\
+>   		.git_am_opts = STRVEC_INIT,		\
+>   		.exec = STRING_LIST_INIT_NODUP,		\
+> +		.trailer_args = STRVEC_INIT,  \
+>   		.git_format_patch_opt = STRBUF_INIT,	\
+>   		.fork_point = -1,			\
+>   		.reapply_cherry_picks = -1,             \
+> @@ -167,6 +174,7 @@ static void rebase_options_release(struct rebase_options *opts)
+>   	free(opts->strategy);
+>   	string_list_clear(&opts->strategy_opts, 0);
+>   	strbuf_release(&opts->git_format_patch_opt);
+> +	strvec_clear(&opts->trailer_args);
+>   }
+>   
+>   static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+> @@ -179,6 +187,10 @@ static struct replay_opts get_replay_opts(const struct rebase_options *opts)
+>   
+>   	replay.signoff = opts->signoff;
+>   	replay.reviewby = opts->reviewby;
+> +
+> +	for (size_t i = 0; i < opts->trailer_args.nr; i++)
+> +        strvec_push(&replay.trailer_args, opts->trailer_args.v[i]);
+
+The indentation is off here
+
+> +
+>   	replay.allow_ff = !(opts->flags & REBASE_FORCE);
+>   	if (opts->allow_rerere_autoupdate)
+>   		replay.allow_rerere_auto = opts->allow_rerere_autoupdate;
+> @@ -437,6 +449,8 @@ static int read_basic_state(struct rebase_options *opts)
+>   	struct strbuf head_name = STRBUF_INIT;
+>   	struct strbuf buf = STRBUF_INIT;
+>   	struct object_id oid;
+> +	struct strbuf t = STRBUF_INIT, one = STRBUF_INIT;
+
+You can just use the existing "buf" instead of adding "t" and "one" is 
+unneeded (see below)
+
+> +	const char *path = state_dir_path(trailer_state_name, opts);
+>   
+>   	if (!read_oneliner(&head_name, state_dir_path("head-name", opts),
+>   			   READ_ONELINER_WARN_MISSING) ||
+> @@ -509,6 +523,22 @@ static int read_basic_state(struct rebase_options *opts)
+>   
+>   	strbuf_release(&buf);
+>   
+> +	if (strbuf_read_file(&t, path, 0) >= 0) {
+> +		const char *p = t.buf, *end = t.buf + t.len;
+> +
+> +		while (p < end) {
+> +			const char *nl = memchr(p, '\n', end - p);
+
+We expect each line to be terminated with '\n' so we should die if nl is 
+NULL
+> +			strbuf_reset(&one);
+> +			strbuf_add(&one, p, nl ? nl - p : end - p);
+
+Instead of copying the string into an strbuf we can just do "*nl == '\0';"
+
+> +			if (one.len) /* skip empty line */
+
+There should not be any empty lines so we should die here if it is empty
+
+> +				strvec_push(&opts->trailer_args,
+> +					    strbuf_detach(&one, NULL));
+> +			p = nl ? nl + 1 : end;
+> +		}
+> +		strbuf_release(&one);
+> +	}
+> +	strbuf_release(&t);
+> +
+>   	return 0;
+>   }
+>   
+> @@ -537,6 +567,28 @@ static int rebase_write_basic_state(struct rebase_options *opts)
+>   	if (opts->reviewby)
+>   		write_file(state_dir_path("reviewby", opts), "--reviewby");
+>   
+> +    /*
+> +     * save opts->trailer_args into state_dir/trailer
+> +     */
+> +    if (opts->trailer_args.nr) {
+> +            struct strbuf buf = STRBUF_INIT;
+> +            size_t i;
+> +
+> +            for (i = 0; i < opts->trailer_args.nr; i++) {
+> +                    strbuf_addstr(&buf, opts->trailer_args.v[i]);
+> +                    strbuf_addch(&buf, '\n');
+> +            }
+> +            write_file(state_dir_path(trailer_state_name, opts),
+> +                       "%s", buf.buf);
+> +            strbuf_release(&buf);
+
+This looks good
+
+> +    } else {
+> +            /*
+> +             * but if rebase doesn't pass any --trailer，
+> +             * and state dir still have residual files，let's delete it。
+> +             */
+
+This should never happen should it?
+
+> +            unlink_or_warn(state_dir_path(trailer_state_name, opts));
+> +    }
+> +
+>   	return 0;
+>   }
+>   
+> @@ -1140,6 +1192,7 @@ int cmd_rebase(int argc,
+>   			.flags = PARSE_OPT_NOARG,
+>   			.defval = REBASE_DIFFSTAT,
+>   		},
+> +		OPT_PASSTHRU_ARGV(0, "trailer", &trailer_args, N_("trailer"), N_("add custom trailer(s)"), PARSE_OPT_NONEG),
+
+This should be OPT_STRVEC() and should populate &options.trailers
+
+>   		OPT_BOOL(0, "signoff", &options.signoff,
+>   			 N_("add a Signed-off-by trailer to each commit")),
+>   		OPT_BOOL(0, "reviewby", &options.reviewby,
+> @@ -1292,6 +1345,13 @@ int cmd_rebase(int argc,
+>   			     builtin_rebase_options,
+>   			     builtin_rebase_usage, 0);
+>   
+> +    for (i = 0; i < trailer_args.nr; i++)
+> + 	   strvec_push(&options.trailer_args, trailer_args.v[i]);
+> +
+> +    /* if add --trailer，force rebase */
+> +    if (options.trailer_args.nr)
+> +		   options.flags |= REBASE_FORCE;
+
+This is good
+
+>   	if (preserve_merges_selected)
+>   		die(_("--preserve-merges was replaced by --rebase-merges\n"
+>   			"Note: Your `pull.rebase` configuration may also be set to 'preserve',\n"
+> @@ -1549,6 +1609,16 @@ int cmd_rebase(int argc,
+>   	if (options.root && !options.onto_name)
+>   		imply_merge(&options, "--root without --onto");
+>   
+> +	/*
+> +	 * The apply‑based backend (git am) cannot append trailers because
+> +	 * it lacks a message‑filter facility.  Reject early, before any
+> +	 * state (index, HEAD, etc.) is modified.
+> +	 */
+> +	if (options.type == REBASE_APPLY && options.trailer_args.nr)
+> +		die(_("the --apply backend (git am) cannot currently handle "
+> +		      "--trailer; please omit --apply or use "
+> +		      "the merge/interactive backend"));
+
+It's good you're checking this but we should call imply_merge() to do 
+that instead.
+
+> +test_description='git rebase --trailer integration tests
+> +We verify that --trailer on the merge/interactive/exec/root backends,
+> +and that it is rejected early when the apply backend is requested.'
+> +
+> +GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
+> +export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+> +
+> +. ./test-lib.sh
+> +. "$TEST_DIRECTORY"/lib-rebase.sh       # test_commit_message, helpers
+> +
+> +############################################################################
+> +# 1.  repository setup
+> +############################################################################
+> +
+> +test_expect_success 'setup repo with a small history' '
+> +	git commit --allow-empty -m "Initial empty commit" &&
+> +	test_commit first   file a &&
+> +	test_commit second  file &&
+> +	git checkout -b conflict-branch first &&
+> +	test_commit file-2  file-2 &&
+> +	test_commit conflict file &&
+> +	test_commit third   file &&
+
+The alignment is off here - it would be much simpler just to separate 
+each argument with a single space
+
+> +	ident="$GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL>"
+> +'
+> +
+> +create_expect () {
+> +	cat >"$1" <<-EOF
+> +	$2
+> +
+> +	Reviewed-by: Dev <dev@example.com>
+> +	EOF
+> +}
+> +# golden files:
+> +create_expect initial-signed  "Initial empty commit"
+> +create_expect first-signed    "first"
+> +create_expect second-signed   "second"
+> +create_expect file2-signed    "file-2"
+> +create_expect third-signed    "third"
+> +create_expect conflict-signed "conflict"
+
+Thanks for adding these tests. This should be inside the setup test - 
+noting should be run outside of test_expect_success()
+
+> +
+> +############################################################################
+> +# 2.  explicitly reject --apply + --trailer
+> +############################################################################
+> +
+> +test_expect_success 'apply backend is rejected when --trailer is given' '
+> +	git reset --hard third &&
+> +	git tag before-apply &&
+> +	test_expect_code 128 \
+> +		git rebase --apply --trailer "Reviewed-by: Dev <dev@example.com>" \
+> +			HEAD^ &&
+
+We should check the error message here by redirecting stderr to a file 
+and checking that with test_grep or test_cmp so we can be confidant that 
+rebase is failing for the reason it should be and not some other bug.
+
+> +	git diff --quiet before-apply..HEAD      # prove nothing moved
+
+If you want to check that HEAD is unchanged I'd run "head=$(git show-ref 
+--verify -s HEAD)" before the rebase and "test_cmp_rev HEAD $head" 
+afterwards.
+
+> +'
+> +
+> +############################################################################
+> +# 3.  --no‑op: same range, no changes
+> +############################################################################
+> +
+> +test_expect_success '--trailer without range change is a no‑op' '
+> +	git checkout main &&
+> +	git tag before-noop &&
+> +	git rebase --trailer "Reviewed-by: Dev <dev@example.com>" HEAD &&
+> +	git diff --quiet before-noop..HEAD
+
+Do we really need this - it isn't really checking anything to do with 
+the implementation of --trailer.
+
+> +
+> +############################################################################
+> +# 4.  merge backend (-m), conflict resolution path
+> +############################################################################
+
+Excellent
+
+> +
+> +test_expect_success 'rebase -m --trailer adds trailer after conflicts' '
+> +	git reset --hard third &&
+> +	test_must_fail git rebase -m \
+> +		--trailer "Reviewed-by: Dev <dev@example.com>" \
+> +		second third &&
+> +	git checkout --theirs file &&
+> +	git add file &&
+> +    GIT_EDITOR=: git rebase --continue &&
+GIT_EDITOR=: unless you call test_set_editor() which should always be 
+done in a subshell so this isn't needed.
+
+> +	git show --no-patch --pretty=format:%B HEAD~2 >actual &&
+> +	test_cmp file2-signed actual
+
+I think test_commit_message would help simplify this
+
+> +'
+> +
+> +############################################################################
+> +# 5.  --exec path
+> +############################################################################
+> +
+> +test_expect_success 'rebase --exec --trailer adds trailer' '
+> +	test_when_finished "rm -f touched" &&
+> +	git rebase --exec "touch touched" \
+> +		--trailer "Reviewed-by: Dev <dev@example.com>" \
+> +		first^ first &&
+> +	test_path_is_file touched &&
+> +	test_commit_message HEAD first-signed
+
+I'm not sure this has anything to do with --trailer
+
+> +'
+> +
+> +############################################################################
+> +# 6.  --root path
+> +############################################################################
+> +
+> +test_expect_success 'rebase --root --trailer updates every commit' '
+> +	git checkout first &&
+> +	git rebase --root --keep-empty \
+> +		--trailer "Reviewed-by: Dev <dev@example.com>" &&
+> +	test_commit_message HEAD   first-signed &&
+> +	test_commit_message HEAD^  initial-signed
+
+This test looks good.
+
+Best Wishes
+
+Phillip
+
+> +'
+> +test_done
+G
