@@ -1,62 +1,132 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0981D28B7D6
-	for <git@vger.kernel.org>; Thu,  8 May 2025 20:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAA422797B2
+	for <git@vger.kernel.org>; Thu,  8 May 2025 20:20:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746735636; cv=none; b=rPUJkvu9WwU3zp3h5wAF3UmSuoQgwoM9othNRN/shHWolavw9oWhPd+LEv4NxM29KdG9kAcZR8Hyg0BVsAwkJ3nbpiCxbHDNem3hVWPqNfVVwpLxw3xbQfxqFE/6OkxixusozR/2eyFJLKzqetnyj9FZmmqrzb1wGunLYsb8qJg=
+	t=1746735660; cv=none; b=mGYEoklS50kk7YbVHb5AmvDqK5qtSCLORXWn+xbWx1qxm4uFg0a8pev2QaF6NkxziP4hP69wU7CphFVGiF1Acg9svlbNAgObx51kz459RJqWGHhDOo8FN+WGnkBsMjvmM0azfFzN/B8EvU3leCR0GiZwle/qZ6+lGViOVoXURd8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746735636; c=relaxed/simple;
-	bh=vGazjFmWNisVl+wCgFM8t2j/XTZ9m7kix6EMAiDHCDY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R6VUNVIRn7+lUT8xPh8AIKFVvRfzqMqt25jf2ifoZEijPjiGjnAPNOlY9qcODPXljcMIKleSQeXbRynm55kuQF6A/m/WC2MvtFg9tUqzZBZvSiZ2Q2Aow/ejwbb5bQISQNIFcn/plyVeX9nXF7+X6UK/f/a/rSovoteF96nENvU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=h9HEpkOJ; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1746735660; c=relaxed/simple;
+	bh=tKhCWnqHmwJxuLIK1lw/aUOp8kAa6DQnA74Wmn+ygp8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RLgDZILqsfpre/hWF0E0DDSXDHzg1DeAn0mnxohX8vVzHYe6uCM4oreDdrBpDiqBHWd7quOY6SA9BySxf/+LemhJGIbcFGz1rLvfH2NpxjQxoq8qTpjoU/DxGv1x0Qu3u1/zo2VGuGBmATjBZOZt7lJneEgDpHevTc8vcG7gVio=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eAa28cQa; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uvvu182Y; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="h9HEpkOJ"
-Received: (qmail 29296 invoked by uid 109); 8 May 2025 20:20:34 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=vGazjFmWNisVl+wCgFM8t2j/XTZ9m7kix6EMAiDHCDY=; b=h9HEpkOJ92zGuBiVnmCOm9aBtcq6Ab1/SU6743rLwhLR1nHn9fnrCzojhOzR8rVfI+DM5B0OnD8DR7t5K5kc5IaMzAjfz2ZpLc9/vscOBgb2/dm/N3yTMzt+O1Rh2vsaAE8y09mmZ4i9pNwRztgdaLY2tQtrXDm9+TXWgk774iWEl7MsxYtpuQZy/T4KzLDzHq3ANZDGUvN+IZuCsSrEFNLoBMb4AO8lrMW5licRsKSipFp4Jut4W5F1F/LW/xzB/bdMCBRGuH5lqsDd9drMRd7IX/XpPBHk+Hk+NPJJCbJAtIZ1xaomNT3I+1B50nSN175gjHmYUxg+mTqajjkGUA==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 08 May 2025 20:20:34 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 20307 invoked by uid 111); 8 May 2025 20:20:35 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 08 May 2025 16:20:35 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 8 May 2025 16:20:33 -0400
-From: Jeff King <peff@peff.net>
-To: rsbecker@nexbridge.com
-Cc: 'Michal =?utf-8?Q?Such=C3=A1nek'?= <msuchanek@suse.de>,
-	'Akash S' <akashs@commvault.com>, git@vger.kernel.org,
-	'Adithya Urugudige' <aurugudige@commvault.com>,
-	'Abhishek Dalmia' <adalmia@commvault.com>
-Subject: Re: Incremental Backup of repositories using Git
-Message-ID: <20250508202033.GE18229@coredump.intra.peff.net>
-References: <PH7PR19MB70252D42F5D04FFC0331AB63C08E2@PH7PR19MB7025.namprd19.prod.outlook.com>
- <aBz8U35YX7UH-PTW@kitsune.suse.cz>
- <20250508194731.GA13108@coredump.intra.peff.net>
- <029701dbc054$a6e9af00$f4bd0d00$@nexbridge.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eAa28cQa";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uvvu182Y"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id AC64F114010E;
+	Thu,  8 May 2025 16:20:56 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Thu, 08 May 2025 16:20:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746735656; x=1746822056; bh=AFNHHkYXNb
+	z8dxzwoEn5dobL55obeN/SuvcHyWkFvTU=; b=eAa28cQa3eW8K87sMRFciAmL2F
+	/uK/ff01oR/UD6uS2yxazHJ85d9ezo5CZU8GNz1YyzreBw2xXQADSyTAaqkT9aqt
+	G+KQRw/fJOu+QTCnFHpHYTA3R0FxgVAdDt63cbx10W6PwlJdICqa1zw7uUTtkjvX
+	EMumlFUJCHwypOcsTKAtiYtP6GwGZ5kgoEY8Hidtt52vV6mUP9Ova810KENrDmdO
+	q9PdcK8SK+7tEkq5FIy5HQnQekRiAT/hJZxPz713fCxQPqrYQi1shqPg8l+Fg4tx
+	BYMAnmHX2yMCWltv6YTo9Aq9I7/4TWqGUnGDz+Xn2D3dhRIuQKHREca6zLcg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746735656; x=1746822056; bh=AFNHHkYXNbz8dxzwoEn5dobL55obeN/Suvc
+	HyWkFvTU=; b=uvvu182Y7ewye/2ab3zCdK/e8O+tdNdS7GxyECG2EyM7zoHfN3M
+	cDVtwOovFYlphWuH1s+E/i/rfFl794kkFnWJFtOlm8ef3QjLreDck+qze7TLPueH
+	GfasMbHltXpKWJ1OSJO80+jftUo5M6w/F2USOOlCZC1O5dt8mGTJnMLA7iIasBK+
+	nJk+BNdktDibmIbCQxyvdk7mxL68ShRo0xSGNMY2NAmfIV1pt59SZrqH7DJdB9r/
+	josTKlB8mpxPD2tB4ieHxTFGZFLcBbSQq1/vDoJ+eRjs2Zbz7X9NAzzrQwFHa0Vi
+	CfYrUKozWXT0kEMLiXYbEchVSH41OrqWP5w==
+X-ME-Sender: <xms:KBIdaABp_nZTPEDSII3lu3pXeMjYAjo8C7vmL9rQ2NGc2TC8XWADzw>
+    <xme:KBIdaCjRnlAztgrmZT1m-QqT7E3UrYittihU8P9EOv9sFtM91AbQN2g54CsZAD2eg
+    nGBS68Psvr9_XfL9w>
+X-ME-Received: <xmr:KBIdaDlWyXsoQ3JtH46OmvdBR7Nk2fwOP86gxpWna0pbdYkaGdDuqG_pkv3dr4W-7u1Opb9ChGGzrjPttncW9gap5uaVc14iC6C5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledtieekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhh
+    vghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
+    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:KBIdaGxYoMe4jKBfaj76QoRMtzg8v9HYwgs2epakuitnwv6yQR4usg>
+    <xmx:KBIdaFRyinY4L22Ep4DWmoW0RdhMyMJjtYUj0FIv4aTkg8_9DF488A>
+    <xmx:KBIdaBbCAJp7jSvRxAihqRXRwmwP2l-_fEsnB3XMag__yt-eMOlEnw>
+    <xmx:KBIdaOT4l7MtzZZZbpPfhCVR5RcPAuHWvYz7g48GzOcrHAqezHH8jA>
+    <xmx:KBIdaGunLfHlzHB4SBNcc9w2xqdPy2NUxfgMFtO4FdT717MLvZewUdgn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 8 May 2025 16:20:56 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: shejialuo <shejialuo@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 0/4] align the behavior when opening "packed-refs"
+In-Reply-To: <20250508200802.GC18229@coredump.intra.peff.net> (Jeff King's
+	message of "Thu, 8 May 2025 16:08:02 -0400")
+References: <aBo7OiCKHTyT4DzH@ArchLinux> <aBtzn4nwLsI9p5Cp@ArchLinux>
+	<xmqqv7qc9grt.fsf@gitster.g>
+	<20250508200802.GC18229@coredump.intra.peff.net>
+Date: Thu, 08 May 2025 13:20:54 -0700
+Message-ID: <xmqqzffm4zx5.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <029701dbc054$a6e9af00$f4bd0d00$@nexbridge.com>
+Content-Type: text/plain
 
-On Thu, May 08, 2025 at 04:06:08PM -0400, rsbecker@nexbridge.com wrote:
+Jeff King <peff@peff.net> writes:
 
-> As a possible alternative, would some kind of information presented via the proposed
-> git blame-tree series (or call it git annotate-tree perhaps) be useful for this enhancement?
-> I am not sure what the results will look like, but it might be useful and then cached by
-> the backup strategy. I'm grasping at straws, though.
+> On Wed, May 07, 2025 at 03:51:02PM -0700, Junio C Hamano wrote:
+>
+>> shejialuo <shejialuo@gmail.com> writes:
+>> 
+>> > Hi All:
+>> >
+>> > As discussed in [1], we need to use mmap mechanism to open large
+>> > "packed_refs" file to save the memory usage. This patch mainly does the
+>> > following things:
+>> >
+>> > 1: Fix an issue that we would report an error when the "packed-refs"
+>> > file is empty, which does not align with the runtime behavior.
+>> > 2-4: Extract some logic from the existing code and then use these
+>> > created helper functions to let fsck code to use mmap necessarily
+>> >
+>> > [1] https://lore.kernel.org/git/20250503133158.GA4450@coredump.intra.peff.net
+>> >
+>> > Really thank Peff and Patrick to suggest me to do above change.
+>> 
+>> This round looks good to me.  Others?
+>
+> I left a few comments that I think bear addressing (or at least some
+> discussion).
 
-I don't think so. From an efficiency perspective, your best git-aware
-backup really is going to be packfiles representing slices of history,
-depending on each other. I.e., bundles or something approximating them.
+I found both of your points very good ones, especially the "why are
+we making an in-core copy anyway later?"
 
--Peff
+Which may probably mean that munmap_temporary_snapshot() is not the
+helper function we want in the code path, so one of the preliminary
+refactoring patches can be removed.
+
+Even on mmap-incapable platforms, we have enough emulation in
+git_mmap() and git_munmap(), and this code path that wants to read a
+packed-refs file just mmap(), do its thing, and then munmap(),
+without worrying anything about "ah, temporary, so we need to make
+an in-core copy for ourselves".
+
+THanks.
