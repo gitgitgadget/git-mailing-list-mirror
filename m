@@ -1,138 +1,173 @@
-Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E32A4224AF0
-	for <git@vger.kernel.org>; Fri,  9 May 2025 15:27:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF9D21579F
+	for <git@vger.kernel.org>; Fri,  9 May 2025 15:27:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746804422; cv=none; b=kfpHR1d2y0NsdvSEvHhZEJeKXdD1fz/z5Nxj7HNMtsvGwL1rCsE3tx4OIpa8tJ5M8UyOtc1KF6CKtz5V+das7VQ1JnxAQ+jX5NCAjfsew1jBrLfvzkq9/mYtd+aBJqLESqJq9bFquvo66REhvoGXcPf4GyCDoxiYW14WtkY9ggU=
+	t=1746804445; cv=none; b=ZNwM6iDq3Ckr18v3orynMrx+tlWS5NFUoZDSQLSLoQVqbxA1ckvb89bLYPk27KgsEL2F4y1LOmoZTodqqx6GdEZHs/KejwNrMB0BuA6UGO35TBOftR2aRbKfJyMIXLffqwyLN2qeSUPb4zxMzXxiVbO0F4pOE6dvtEhsCcDXDfk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746804422; c=relaxed/simple;
-	bh=hOttSo4p8+EPQUGqJ1SmUb0nQjr1GLZT62Ong9/m2TE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JTpfSkXxe9/aeH/xSmLpRTR4ZhfJOeTjUMwncBSw6Ec8Kpud6XoOXby3xJAF7OBH0XXbIPMssZWkS7lVcXB9qZl3j27AwQo+YKiI97bUwdMVPwMRqBAIG/eoAZ51rw3ZKdy/wExXkxFlTYMHOcETtSmMKeb3VcPnKZ8R2v30AHM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cGMeFA/6; arc=none smtp.client-ip=209.85.215.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746804445; c=relaxed/simple;
+	bh=f5LHffP8dahKbPyAM7WVuQrZawGikj+Oegf2jy0nk3A=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=VhAijRtI1Ozsdds3KUqTo3cxBSQJWlYPbFIk4kPvuBJbBexYd/6+CUcR6tmuwZ3yRyXUo8CV3ZjvU1eRMZQ3NBwSktl5cFuFhel98aIX6lTgal9GC1loWxp7sRsDdZZ7R0uu2VBJeNypqQiwGMDPU9Df9L1Tn6vi122qclYH9LY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zi+zoRIp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aV7eQtBI; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cGMeFA/6"
-Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b200047a6a5so1565143a12.0
-        for <git@vger.kernel.org>; Fri, 09 May 2025 08:27:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746804420; x=1747409220; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=Q+HgYuXpN6bVDgAE3qAa1Xyk7V3c21W7oKOmsHvxdhM=;
-        b=cGMeFA/614B9RrOYHy2qYyP6rP/VMDUjyfVgZsR09JVux/Gbb1rhvyHqqBhibWCOtK
-         6cRk9b2smPi7WgCIoP2VLIjoTl+i5HfBh3A1ccS1r/SK6NIwJy+kAM/dQNV5aournQ4s
-         rE18LpozcRek6H1Dy641RtGAOm2woKH+rB/DzqrLGIEgHm0YvxguHfJMVAqSE5vjEdGw
-         NDa2hVBE0ZAqkySFKGRHyJGI6iBYdraZ8VWvIovwrOkDCyYNpCNPHjQFCMmctzQnhkg7
-         4MbUXptPEXaUQIhnjZncJ+wDR0nQNDUAy9fpPyzDJNikcqlNgn+/pWKkSLJT+DAe0iHJ
-         Gc2w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746804420; x=1747409220;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Q+HgYuXpN6bVDgAE3qAa1Xyk7V3c21W7oKOmsHvxdhM=;
-        b=WvLgUdNCRnqQhXRsznvRjQNAp6WppqF0y7wnTaXgTPCGuowzh/NC/L/n/8GFmg6DGZ
-         HX32107yv4HuKEV6PvqAbBLj9vJUoyig/wIBVVvVQXA3T+nRaynoT7O8y4tuyKbsSBBV
-         3lTzldXmrzg+T351XqZMezNpzzACkvd6iCjz82o2lfZlRWHh5hiAQkHrF3CbKSedtkPK
-         DdfMw1pdaUCoC5nXJRG7UOoqMRVAhaO6cl+tgAA7+vlkBrPgTBUJMiihg6ub3lQuCgRi
-         6HYfHSWD7mAyUHQAgEjOlj5viKnpuFFzwRBmHiB4RAbSXk+3DgAbX/+GzV919QkQb+3Z
-         gLrA==
-X-Forwarded-Encrypted: i=1; AJvYcCV4N/Ti8FLasdbdOsR1mTflEip7HQVaceFVFqFcg9K+kB6g6zMKaov76mTT0EL55BZ/dkE=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyu0XbjmKJac0PCSwSGyJWWvsnCFYNxwuNUKDknXmwsKO05WBaN
-	aGKe+QB8FKhm672q5HZXhBaTn3DU7n8cWQkoKbnSeqz2W7ZtSw1/hDs+u3Xa
-X-Gm-Gg: ASbGncvxOyNSO6q9kgJKYBT309FzgRl3BrA7+CCMv09tiLtVTT+9SI/sjeuu54M/ZT0
-	Ib7Lhvp1XEu1dwr27+bBevE2FlKEdisHjP3qhOsGD+hPxpMXWHB1mPRydG0k8RUJA5jVE0j8B/X
-	z4xN/IK1wLM2sdL9X+H/v3G2oIdIA+134BwbjNjfXM3tQSAsrmHwPmYR5GvXJI+G1laefoGo4fm
-	7uQ3+4yUITnokY3vWfKD3cgFtuDEqEstn32U34C00a43+/EicIaWHkuYsVrAXikUdrt00OTwkDz
-	meEduJTSFniJIkRbkucwYYLoT9DMa6q/hk7T
-X-Google-Smtp-Source: AGHT+IFrwsajQORDI4MTmpXVqR7eHTW7ZJQTboppnpw7Y0yRzBr0D/z3T6z6wt1tXykJPMBScB8cTg==
-X-Received: by 2002:a17:902:cccc:b0:223:4d5e:7592 with SMTP id d9443c01a7336-22e847b0172mr117447605ad.21.1746804420073;
-        Fri, 09 May 2025 08:27:00 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22fc7741e76sm18635485ad.98.2025.05.09.08.26.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 08:26:59 -0700 (PDT)
-Date: Fri, 9 May 2025 23:26:56 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 0/4] align the behavior when opening "packed-refs"
-Message-ID: <aB4ewBsxnq0Yv3Fd@ArchLinux>
-References: <aBo7OiCKHTyT4DzH@ArchLinux>
- <aBtzn4nwLsI9p5Cp@ArchLinux>
- <xmqqv7qc9grt.fsf@gitster.g>
- <20250508200802.GC18229@coredump.intra.peff.net>
- <xmqqzffm4zx5.fsf@gitster.g>
- <20250508203350.GG18229@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zi+zoRIp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aV7eQtBI"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 62D651140182;
+	Fri,  9 May 2025 11:27:22 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 11:27:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746804442; x=1746890842; bh=bSo01TXAtX
+	kTWxJB/To4yAgkJkxk8XEU/1nUqJ4lYzE=; b=Zi+zoRIpLCNan7siYNvMmCdgdR
+	JJqrqULmKGSz4DwEV9GiwzYdrJUns+FRuV8mPaslTkJrBnmXHC7bF2WdH4P4nbkS
+	rR4VUWJokW5Z9ffTotfDETdaE4dgkW/vn3dZRfkCTCnws6rND7rk/qOR3dG/Cq4t
+	yfMolTY4WrDvF9Z1+iNeiHOiL85t6foD2GaZ8LYpE/RggQm0cQuBgHCYbPdWCGDG
+	fePOaNIiR9p+sQ2YBsI3fCliMRtyUQLkOw78CtNEoypz4tpSfCWy5ksPjwK6ydIJ
+	1+/0qdLYDL4so4taiPEth+Zha0jNCVmil74KiJqEm8JxwqnQbAWTlhqbHU1A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746804442; x=1746890842; bh=bSo01TXAtXkTWxJB/To4yAgkJkxk8XEU/1n
+	UqJ4lYzE=; b=aV7eQtBIZyb8YDv7+fAV83sgDC/DndQrdLdi08mRHJLr9lf2n7r
+	Kmmz9B9okj7NlD5kz8Tt3Yk/Rn27B20ttcCtSiV8Bfv9SVTsV5D9ugwjKX4NmDi8
+	EKACGcDFmJ4cBeMldnUuaYskDHewrIBFM/8HHKMrIJd8b4+4MirIJ/W+zQORVqRr
+	hARFPvlHT84gDQfsD9J474RS988TaPC1aqqVjZvIYQgZmTj6PpCOuQySPfIQZacK
+	hTg3YugH9w7hF6UCget8VFMAh82PPRjZS6oLL+99VrZ27EQvNv6irGMVJqqOChe6
+	q7a7BPla5kN1IiDKVmSv9KDi9wlMIo0M9pA==
+X-ME-Sender: <xms:2h4eaA22qmzx47_faMPvWBktaaZC3gdLz12nl7GIbXOhxUhE_IAbyA>
+    <xme:2h4eaLFNMQZM743D-JAIZWnS9GBA6-az60Jn0AMJGJFcFh_ZYdpgNxi8rBgBLVrZ7
+    zH-AtbonkB1UR7IRA>
+X-ME-Received: <xmr:2h4eaI5yVwMCNHflNyTeKdM8upLFLdlnB0sKIiCEFqnYkErfTBSKy6yRjZk3k_6DBxTCqvSwHlxilORimt96vevtaw4TCP3Oe5mO>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvleejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
+    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:2h4eaJ3G8gCuz69Gbgo7-JfZav5di_5EX5cPYtV15fVgITZNfUhG1A>
+    <xmx:2h4eaDFjzwBOYXg1WZjjuG4MofMJ1v3JmvPWKoTN2PuWAwyhU42Fgg>
+    <xmx:2h4eaC_efRt5m7vXLCexZdql_PSdU5wxgORSgDCJyBm0S8KdxnzenQ>
+    <xmx:2h4eaIllJ9ICXJr6wHw-9brvjaiJr4s4bpz7W453svZlxapHh5MrpA>
+    <xmx:2h4eaPbfbN_CS5UMrrw8b-AmmUmLLoA57NoP9q-NKgeiVAvjnKlBA0Fm>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 11:27:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 2/4] builtin/stash: factor out revision parsing into
+ a function
+In-Reply-To: <20250508234458.3665894-3-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 8 May 2025 23:44:55 +0000")
+References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
+	<20250508234458.3665894-3-sandals@crustytoothpaste.net>
+Date: Fri, 09 May 2025 08:27:20 -0700
+Message-ID: <xmqqldr53iuf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250508203350.GG18229@coredump.intra.peff.net>
+Content-Type: text/plain
 
-On Thu, May 08, 2025 at 04:33:50PM -0400, Jeff King wrote:
-> On Thu, May 08, 2025 at 01:20:54PM -0700, Junio C Hamano wrote:
-> 
-> > > I left a few comments that I think bear addressing (or at least some
-> > > discussion).
-> > 
-> > I found both of your points very good ones, especially the "why are
-> > we making an in-core copy anyway later?"
-> > 
-> > Which may probably mean that munmap_temporary_snapshot() is not the
-> > helper function we want in the code path, so one of the preliminary
-> > refactoring patches can be removed.
-> 
-> Yep.
-> 
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-Right, I will remove this patch in the next version.
+> We allow several special forms of stash names in this code.  In the
+> future, we'll want to allow these same forms without parsing a stash
+> commit, so let's refactor this code out into a function for reuse.
+>
+> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+> ---
+>  builtin/stash.c | 34 +++++++++++++++++++++++-----------
+>  1 file changed, 23 insertions(+), 11 deletions(-)
+>
+> diff --git a/builtin/stash.c b/builtin/stash.c
+> index cfbd92852a..8ee6752efa 100644
+> --- a/builtin/stash.c
+> +++ b/builtin/stash.c
+> @@ -169,6 +169,25 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
+>  		die(_("'%s' is not a stash-like commit"), revision);
+>  }
+>  
+> +static int parse_revision(struct strbuf *revision, const char *commit, int quiet)
+> +{
+> +	strbuf_reset(revision);
+> +	if (!commit) {
+> +		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
+> +			if (!quiet)
+> +				fprintf_ln(stderr, _("No stash entries found."));
+> +			return -1;
+> +		}
+> +
+> +		strbuf_addf(revision, "%s@{0}", ref_stash);
+> +	} else if (strspn(commit, "0123456789") == strlen(commit)) {
+> +		strbuf_addf(revision, "%s@{%s}", ref_stash, commit);
+> +	} else {
+> +		strbuf_addstr(revision, commit);
+> +	}
+> +	return 0;
+> +}
+> +
+>  static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+>  {
+>  	int ret;
+> @@ -196,17 +215,10 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+>  	if (argc == 1)
+>  		commit = argv[0];
+>  
+> -	if (!commit) {
+> -		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
+> -			fprintf_ln(stderr, _("No stash entries found."));
+> -			return -1;
+> -		}
+> -
+> -		strbuf_addf(&info->revision, "%s@{0}", ref_stash);
+> -	} else if (strspn(commit, "0123456789") == strlen(commit)) {
+> -		strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
+> -	} else {
+> -		strbuf_addstr(&info->revision, commit);
+> +	strbuf_init(&info->revision, 0);
+> +	if (parse_revision(&info->revision, commit, 0)) {
+> +		free_stash_info(info);
+> +		return -1;
+>  	}
 
-> > Even on mmap-incapable platforms, we have enough emulation in
-> > git_mmap() and git_munmap(), and this code path that wants to read a
-> > packed-refs file just mmap(), do its thing, and then munmap(),
-> > without worrying anything about "ah, temporary, so we need to make
-> > an in-core copy for ourselves".
-> 
-> Hmm, yeah. I had thought that somebody could explicitly set
-> mmap_strategy themselves via config, in which case we'd want to avoid
-> calling git_mmap() on systems where it actually does mmap. But it
-> doesn't look like we have any mechanism for setting the config. So
-> MMAP_NONE happens only when NO_MMAP is set.
-> 
->   I briefly wondered if the existing code could be simplified to get rid
->   of MMAP_NONE, since it could also rely on git_mmap() to make an
->   in-memory copy. But it gets weird with MMAP_PREVENTS_DELETE and
->   NO_MMAP combined, since then we make a pointless extra copy (one to
->   fake-mmap, and one into the new buffer). OTOH, I'd expect those to be
->   mutually exclusive.
-> 
->   I kind of wonder with MMAP_TEMPORARY why we bother mapping at all and
->   not just reading into a buffer. Maybe it's more efficient?
-> 
+Two comments:
 
-I am also confused about this. If we eventually would allocate a buffer,
-it is wired that we map in the first place.
+ - It is file-scope static so it is not a huge deal, but it is a bit
+   confusing that parse_revision() sounds like a helper function you
+   would have in revision.c and call from everywhere.
 
->   Probably not worth revisiting all of this old code, though. And
->   anyway, because of the SMALL_FILE_SIZE check, we couldn't even
->   simplify away the read_in_full() code.
-> 
+ - The call to free_stash_info() from inside get_stash_info() is
+   probably wrong.  The early error return when ref_stash is missing
+   leaves info intact, and the callers of it share this pattern:
 
-Right, I will try to clean the code later. At now, I think we need to
-concentrate on using `mmap`. I will add this into my TODOs. Thanks for
-the suggestion.
+        if (get_stash_info(&info, argc - 1, argv + 1))
+                goto cleanup;
+        ...
+    cleanup:
+        free_stash_info(&info);
+        return ret;
 
-> -Peff
+   Even if free_stah_info() happen to be idempotent right now, I do
+   not think we want our code to rely on it.
 
-Thanks,
-Jialuo
