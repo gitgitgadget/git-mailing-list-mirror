@@ -1,134 +1,115 @@
-Received: from fortymile.utu.fi (fortymile.utu.fi [130.232.247.4])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85053215175
-	for <git@vger.kernel.org>; Fri,  9 May 2025 18:14:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=130.232.247.4
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D5323CEF8
+	for <git@vger.kernel.org>; Fri,  9 May 2025 18:24:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746814480; cv=none; b=C46OAI4DhWy1zijbaqWIjbSo6FtjnWvQDL7gAlEAhfHepPBu5I3uCsrfNcODiXNz3qM+yjmJVEP4sja45doIpBfPvAv6moqWCmY4i9whWb49nNoA26x6kYJaE1pjpegKTluZWenFskS1s7OMAZQrGH2dS4Ac+ooC/av42yMjNIQ=
+	t=1746815050; cv=none; b=Tc5virF8dBbBpfcYc/KYgOE81m90RqBWSPsgg9QdACwbk0oiI5RBtCmtSuxgT0e1Z92duPynKeDswA87FQN9lXgnDsktZEp411YbaemVzNmOPClkwbMG1FAYRMlS3M54Dv5Y2662y3o7waX56xo3psAXKJhDECiA4chQZwd2/6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746814480; c=relaxed/simple;
-	bh=39sEUkN2Pv5y92x1DRCPbHEiZs+89j8qTykTjgxAYWQ=;
-	h=Date:From:To:CC:Subject:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=ZxbIzdF4kSnECKnP7j5CDd1eRmMlSR+V42QG4Lx0b4MGuOMY/0KUHwheRsE8nMlai/TTlwnTTvQZGz+JcRg+oXW+j8GyizbNDRLvROEnTAjK8OcNYzWnrKJ2AoCSZ0NwLpq4okKyCaVrGDa6EvwsX6wFbEtrzIeb2ILz6eZ2cc4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi; spf=pass smtp.mailfrom=utu.fi; dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b=O7JJ7VNW; arc=none smtp.client-ip=130.232.247.4
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=utu.fi
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=utu.fi
+	s=arc-20240116; t=1746815050; c=relaxed/simple;
+	bh=rsrJmut91GEJsLZBARrPG75DzshXozQk0WtqWZtjYp0=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=B5LGBhOZza+D5t0dBQdyKcNuqMQr3wihBketgHpCqAJiA173Do+85vTwxFll6lw+RnQIOi22nDZXpNNKnRSeuZcOFYY1bqsrt+mK00sLxgIVB+iptg1f44V0tdzXAUpQS7X05EqtodhQdbhkqsj9J/mOgWWcCFW9euOMN161HUs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=epldUk8H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fvUdJAx9; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=utu.fi header.i=@utu.fi header.b="O7JJ7VNW"
-Received: from smtp-04.utu.fi (smtp-04.utu.fi [130.232.207.47])
-	by fortymile.utu.fi  with ESMTPS id 549HxNMI017906-549HxNMK017906
-	(version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NO);
-	Fri, 9 May 2025 20:59:23 +0300
-Received: from ex19-06.utu.fi ([130.232.247.46])
-	by smtp-04.utu.fi with esmtps  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.95)
-	(envelope-from <taahol@utu.fi>)
-	id 1uDS0J-00EbND-5i;
-	Fri, 09 May 2025 20:59:23 +0300
-Received: from localhost (86.50.95.90) by ex19-06.utu.fi (130.232.247.46) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.10; Fri, 9 May
- 2025 20:59:22 +0300
-Received: from localhost (localhost [local])
-	by localhost (OpenSMTPD) with ESMTPA id 9d01de39;
-	Fri, 9 May 2025 17:59:21 +0000 (UTC)
-Date: Fri, 9 May 2025 20:59:21 +0300
-From: Tuomas Ahola <taahol@utu.fi>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-CC: Mr Bill <billc56196@gmail.com>, <git@vger.kernel.org>
-Subject: Re: Bug report for pull --rebase
-Message-ID: <20250509175921.N7Sy9%taahol@utu.fi>
-In-Reply-To: <CALnO6CB6aH5DEDP3QL43RCFfaZJ3uzrAY1LdGyTNi8F3XVoEhw@mail.gmail.com>
-References: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
- <CALnO6CB6aH5DEDP3QL43RCFfaZJ3uzrAY1LdGyTNi8F3XVoEhw@mail.gmail.com>
-User-Agent: s-nail v14.9.22
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="epldUk8H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fvUdJAx9"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id AC84613801AB;
+	Fri,  9 May 2025 14:24:06 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 09 May 2025 14:24:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1746815046;
+	 x=1746901446; bh=NztiIZRBCO6jU+Tbshv+ON0jadlL6ZgPGpZtWVXhCfQ=; b=
+	epldUk8HPLyiSYZuaFiV+u3ZVttILbCMDRilwaBmhkurHnpf+otZZEK6Gx3rxD04
+	acH9bfJ70HwWN11HO2hc2J24tknc6geHgFuaZvDDL7kCJAPgZ12j2jMPD5Mm3IRV
+	3PamKyDhn1X8QW0pq6588GhVu3iw8ar7ETVfbeYEnHfa2dZ7SzAar3oAp5OUvPF9
+	X7aQyQ9tOSrU1qvcvFXKummsxMYaEUt5yQsreJR/yiEW5Yf1ioHCvH6wl+d4sprD
+	qjOVbtced1vZ1QC6mmIXk+Ed79pmDh4P5Kfd17gbNADNyrtTRUThzp+lcrqdeYNb
+	TgZgG1pHqnP65zO31Dib4w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746815046; x=
+	1746901446; bh=NztiIZRBCO6jU+Tbshv+ON0jadlL6ZgPGpZtWVXhCfQ=; b=f
+	vUdJAx9579ZEacVgTKM/tyHjqIbVjf7qNUMipyhKXd1FLgI7iuQUAEtQJsNPnTwN
+	6Lyh756fJ8wyeJ9hdRDXmwPWFqeEAr7BFhwvjSZ6Ud/VG1f6/qj/jYAotPrZYBnA
+	cIrbNOu9iC/3rosZhn2CS6MHgsrvmsfxIBDRM5vOpt1NWz38m+p16xioAzqLmUeS
+	W08H9/mMM0jCsfDc7evvUt1iJT5cnx5kwd6MqqFqBrUYK8BqOs+9T9glC0wChKOp
+	HVFJqaDe6VR6Thm0s2rBzQplqqGFNPATAfGZkbXtTqrkIfR3++XBmQMOv/Sy3ffi
+	G6y+eoua+1aW0WuULeyQw==
+X-ME-Sender: <xms:RkgeaHIObdNL0zFPbC_-QNg9xwgj-Mc7YxB_D3kOxJ3sHKoXiWRhjw>
+    <xme:RkgeaLKud3XFGPCMsYWpaKsurporw21A1i9F-G3Wr8kpJmR0bs465ZCFAmjIzCu6r
+    NQyhhluUUy0H2SoFw>
+X-ME-Received: <xmr:RkgeaPulYepNYo2QaKzuC75qCG6VdJJ492GipnnMBvp8Vla7V5-jA4Q4029nuYIb627CHGthKbWOIVJ966jn4_O2hFkxQsseNKOU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleeffeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvih
+    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:RkgeaAaa-nht8qm4Z3Mi1Sz7WKCd3W1o3GakENBftdyi2mgwVBdkkg>
+    <xmx:RkgeaOa84BYoap3vsmJukkQsGza9yQ982Wt_tMoBT_VPMty6bxh9_A>
+    <xmx:RkgeaECuVcAWTehoz47rl1Kdcej_ss-eKIucfZXTg9cawKGlSnAz-A>
+    <xmx:RkgeaMZCpnSJRVA-5bPKkAdp_4-x6nutSmHmuG8045NxWZ2HDrjCzQ>
+    <xmx:RkgeaJcuy30xEf4vtGKeBygA591mqCadMADKg3_Aa7O5OYueff8iC7cE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 14:24:06 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Additional changes
+In-Reply-To: <13790247.uLZWGnKmhe@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+	"Fri, 09 May 2025 19:08:37 +0200")
+References: <20250503011537.3035416-1-gitster@pobox.com>
+	<5040970.31r3eYUQgx@cayenne> <xmqqr00x3l8h.fsf@gitster.g>
+	<13790247.uLZWGnKmhe@cayenne>
+Date: Fri, 09 May 2025 11:24:04 -0700
+Message-ID: <xmqqmsbl1w3f.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-ClientProxiedBy: ex19-03.utu.fi (130.232.247.43) To ex19-06.utu.fi
- (130.232.247.46)
-X-FEAS-BEC-Info: WlpIGw0aAQkEARIJHAEHBlJSCRoLAAEeDUhZUEhYSFhIWUhZXkguLT4lWFxYWFhYWFBeUVxfSFlbSBwJCQAHBCgdHB1GDgFIWUhZUUgPARwoHg8NGkYDDRoGDQRGBxoPSFhIWkhZXEhZW1hGWltaRlpYX0ZcX0hQSFhIWEhaSFhIWEhYSFpYSAoNBkYDBgcKBA0oDwUJAQRGCwcFSFhIWVFIDwEcKB4PDRpGAw0aBg0ERgcaD0hY
-X-FEAS-Client-IP: 130.232.207.47
-X-FE-Last-Public-Client-IP: 130.232.207.47
-X-FE-Policy-ID: 3:5:2:SYSTEM
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; d=utu.fi; s=out-utu-v3; c=relaxed/relaxed;
- h=date:from:to:cc:subject:message-id:references:mime-version:content-type;
- bh=jY+lFEzmmcvWT0O5juQ9gl6XDF6QG+Jkr5To25kDYPE=;
- b=O7JJ7VNWrk9DnZD3FQyXBsFe9JTf71fehJ1ltC8MYRpZddXfwNu9BA0lgOPt4OkutJcpB6ObbWhW
-	XxhLkzySnFXVqGfqjDevtpE3PcuuYJDgfEIns9xf90qVPO4DVKstmYBZFMPA0iOoy5iFyJUGK1Vw
-	2ZRZI6WTTt64wcvKhZR56sJhN4xPbUE4xKon511/rnOR3jPzU4DUdRkuDgfWxdxQO831vAfpoIKJ
-	54B1VjEn+rUwquTuSbIzxf/SurxftoC6K2z2VoDtB+J0Q4AROZdcjxAkP8y8FV4KsjyW3yECnZpu
-	HO4scQQYKEUAB1sRBqOOXImCZogsGEzS+A24yA==
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-"D. Ben Knoble" <ben.knoble@gmail.com> wrote:
+Jean-Noël AVILA <jn.avila@free.fr> writes:
 
-> On Tue, May 6, 2025 at 5:44=E2=80=AFPM Mr Bill <billc56196@gmail.com> wro=
-te:
-> >
-> >
-> > Hi, I ran across this doing a pull --rebase using the current master
-> > version of git
-> >
-> > This happens on Slackware linux, using git HEAD, version 2.35.8, and 2.=
-46.2
-> >
-> > I have a clone of the ffmpeg video package, with a few custom commits on
-> > top of it,
-> > I periodically fetch and "pull --rebase" to update the underlying ffmpeg
-> > code.
-> > I tried this recently, and my custom commits disappeared.
-> >
-> >
-> > I looked further with a small test, and it looks like this is happening:
-> >
-> > The setup:
-> >     "base" repo with a few commits (A, B, C)
-> >     "clone_1" cloned from "base", with a few extra commits (F, G)
-> >     "clone_2" cloned from "clone_1"
-> >
-> > Add a few more commits for base (D, E)
-> >
-> > Then use "git remote set-url origin" to point "clone_2" to "base"
-> >
-> > Then, in "clone_2" do "pull --rebase"; the F and G commits disappear.
-> >
-> > Then, in "clone_1" do "pull --rebase"; the F and G commits are retained.
->=20
-> Thanks for including a script! I modified it (uploaded to
-> https://gist.github.com/benknoble/7a5eecd522b48669c2a5207e2ed9b7ee to
-> avoid problems with my mailer) to be suitable for use with bisect.
->=20
-> I put the script at /tmp/bugreport/doit next to a clone of the Git
-> source code, then (in the Git source repo) started a --first-parent
-> bisect between 2.49 and 2.0 with the ../doit script as the runner;
+> On Friday, 9 May 2025 16:35:42 CEST Junio C Hamano wrote:
+>> Surely.  Are there particular things that you were either unsure
+>> about (which may lead to possible partial retraction) or want to
+>> stress on (which would help other developers and reviewers recall
+>> what they need to watch out for when touching the documentation)?
+>> 
+>
+> Now that you're asking, the heavy additional changes to git-var's manpage are 
+> mainly targeted at clearing out some misuses of $ENV_VAR vs ENV_VAR as I see 
+> them. Others can disagree. 
+>
+> Maybe these changes should go into a separated patch because they do not 
+> really fit with the "new style" changes.
 
-Hello!
+OK, then I'll revert the changes from these three patches I squashed
+your additional changes in, so that we can have a separate series to
+clean up "$ENV_VAR vs ENV_VAR" (Documentation/CodingGuidelines tells
+us when to use and not to use "$", which is quite useful), perhaps?
 
-I think I found something related.  Let=E2=80=99s test on your Git fork:
-
-```
-$ git clone https://github.com/benknoble/git.git git && cd git
-$ git checkout next
-$ git remote set-url origin "https://github.com/git/git.git"
-$ git remote add upstream "https://github.com/git/git.git"
-$ git fetch origin next
-$ git fetch upstream next
-```
-
-Now these yield different results:
-
-```
-$ git merge-base --fork-point origin/next @
-e0522318ac56aeb88f14e72ba2db25912e9972de
-$ git merge-base --fork-point upstream/next @
-```
-
-Which looks like a bug to me.
---=20
-Tuomas Ahola
+Thanks.
