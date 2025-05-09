@@ -1,81 +1,81 @@
 Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 879762957BC
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE12D2957BF
 	for <git@vger.kernel.org>; Fri,  9 May 2025 14:12:20 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746799942; cv=none; b=SkX674zqNT6uDqzHyMpsP/QXNdYdlIlfBwg+jB4+Oy+5LjRTBjiHTRlsYNlnGv6a9+3Xw+0wBbZvdCI3jQNHnCFMTf91ECkZmStNEZwjwneaUaHIoqa/PsNs6u5w6t13RkXp7uOAlOz4TLkM8O4fgIf17sZEkl5i0V2y6CM2t/I=
+	t=1746799943; cv=none; b=UZNykTptpCPCvCr9rdHqq0QxkRK4Ih22Gjc2ss1ZJNhci27+GukLfd+ipCkgEfNKm6KSR2McNj1x8OmjyH4PnlIkKQASwO0ZykLNISjkMDxh9Ks/BTaJ4B9OORDY3mTRL/D9nNdrEtxDJJNRdCFAwSHnuWO+f8ilQkIXa5l4YnQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746799942; c=relaxed/simple;
-	bh=FK+Gmv7UHr1sKfkFI6Z+hN3YpHFgY+41yvj3o+s/mGs=;
+	s=arc-20240116; t=1746799943; c=relaxed/simple;
+	bh=QJ5HkRzSjROtKXQuWvmYWg4EQWWMmazRXHZpBMU9KZc=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=qTtjS61R1Um55tJkgC14DOD7cGdmD3SdY6wX52k3iOulDd85a6WCI0kwJ2KhHh9jKPFv+5EY2UuHDxZxYEnAfGG/kimOgLYHkCnB+x6IUgQ5ZuoMe6yUvaGYYCRZcpfUYcJdfoZzuHsuMBQdsRg6DWMYFbxX99TuIYd+zOzWrTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=j8/eikPb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sXJcqBPT; arc=none smtp.client-ip=202.12.124.155
+	 In-Reply-To:To:Cc; b=h+K5GJf8TQ5EQu1EqlS5sa99LNC/S3oIwRKwbhxkPt50OLZy3T1bqaIUiZLQ8nVKdIRvzILiTgrKjObC6VkoL2/GiUBR+LBV1gnnuJrxm22PynHM6A9Fope9aAd+OT+YLeFJkeAn6rTQrpQz0QIsR7ujV/ck/64ETWjY9vr5TzY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dnbWVsCQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fp7Oi7Qo; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="j8/eikPb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sXJcqBPT"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 697A725400A2;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dnbWVsCQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fp7Oi7Qo"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9BB46254013C;
 	Fri,  9 May 2025 10:12:19 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 09 May 2025 10:12:19 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 09 May 2025 10:12:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1746799939;
-	 x=1746886339; bh=FE2J4hs8csM1cVlzJUIRdsXHe6qAlrN8pH7wo38FJDk=; b=
-	j8/eikPbA8jSru2gbDOGaBvkHfxaZ8FMc7eSwJah+g59y8l3vSkZsNmk3YLURkcM
-	1s3Un1/p2cr9aT79JW1xUzjuSwY6LWEf2MVxoNgybakfj5ySMtnz8N7KtfEKDfXS
-	VVeogsRIbngdTTXjSwCvaBX3mOhmZ/5PJ9x9dJOpHBiuB4DmnGdOS4LZ3z7MkJQO
-	Bx/bU+SrKbp8qJxTbjUdy558/FhArppKWdLknSwZv9UN3nN8MpYH4M+4pBYWsF0C
-	Yb6eKX+touDhlbken0PyvkCEv77pvXDUztU5B9BDHSOurT5dm9Oi0rp27jB2I4u+
-	PEgIOl1v/Tp/17VTM85vEQ==
+	 x=1746886339; bh=VPThfSDVmP7Nj1K+MhJBU/LrKXCs1dwq0Hzir/sqWNI=; b=
+	dnbWVsCQLlmtKoHs1giqmrIbqj9IsxRLu3qHFVubPz5xGbOK1jnGbp60AwMeDq96
+	YHyPFwGjGB4FHVRN49cmm7x8GFH9rPhS5LHY/6a9FJr1GNGG1VZGPuE2+kYOFwOQ
+	F9ovswq48SmrMK74MuL3GBSU3DcuifvAfQRrjjU/pnfb91TRpEweDX1lTv7/Fb7r
+	kk1YwRsybuc2ZF8ug0OlDj6Pua+ITsdAqLbcJI3KN1Omxp32456ncwJBkBov9Lg9
+	XSzdRoETdcVkyjq0TqzQqj1B0fSDB+OpECF+ezgI7HNBwz0oIor+S60TZHiNze/6
+	/pynJnO/tJUXxkvK7WyFoA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746799939; x=
-	1746886339; bh=FE2J4hs8csM1cVlzJUIRdsXHe6qAlrN8pH7wo38FJDk=; b=s
-	XJcqBPTk1hHf5bqBjR3rzeaGaAoBGk4AQE6/MKB/jt0nPO2zV0VPrcmCl7/MA/Ut
-	92GivE4VDy2NfMNy/y1bfm7ocT5uo1wUqf8zbzItdy4KJLH3+EhBfE9FTNZDeNdx
-	G0bGwFMv98CpJTr0wHPMiK4HSLXJeqdr3NYnOUm1k1RdiBIsToWE1fDOumqIJjrN
-	Drtx2jLHbnXMAHO7YtdddL0gkEKD9zCcbVExrE33aZTqyi6XJcmPpTJVOCvlDecC
-	FC5/N+RVLpAYRFReSpUXyrExgp7QiLYNcZhVSMdJ79Yc8n2B9lX+dyCxOfIqAUnN
-	NqpDP7/9Y7We1e2hulc0w==
-X-ME-Sender: <xms:Qw0eaM8JIhOsJRDgJHegeDJ0s7iaQqGvtOO2aCxzwRdGpqrTrRmadA>
-    <xme:Qw0eaEtDGI8GVAPOZRwvtHf91GrOciw0OyACl56lTw64ZlWFLiY9bGj_HHFmWJ882
-    D8ZzFt6twB7JKgGJA>
-X-ME-Received: <xmr:Qw0eaCBhTsTuo27aL7thPYCB0lw3kF_jK5M1ZI2Jy7Ka487e37V71nfDk4mWoYR6vrDvUS3Pyx6Hh_TDWB0nUFBBUH5aolSIzRt9w1wfCw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvkeefucetufdoteggodetrf
+	1746886339; bh=VPThfSDVmP7Nj1K+MhJBU/LrKXCs1dwq0Hzir/sqWNI=; b=f
+	p7Oi7QoqcpZvKsR+lH7K8yxnVzwIRYtaG1TgBxD1oelxzwiIjRxR/vXI9TlN9Cor
+	EgzafrC7Rs8VdKjZpE81tG/LWbKPS0fmYim0v0xBbKWvAjobBrIIFv/6jCjosNGU
+	n+sjYh9HqsWnpDkTCu1A7RnQXQhk/l+1s+zvjNBW/WO0tLbcO1bp9rHbG3d4GNg2
+	kxmnijRL9ivN5CER6YM582OXTVbLBvdUItTJb0R4MNQ5r5kC1SeWRTzlyOZX3zTq
+	NzL1cFNprGWbcDKK2WWoWixOZZsYGXxs3aekccDePpn8Cw+3TD0WxZwLg9WpPH4b
+	sr6hRPiRxYfrBRk6q4VhQ==
+X-ME-Sender: <xms:Qw0eaLfLIN0_duDrVZzBwt-VMKPM4gjBrrf29N2e7471zTAc6m_oPw>
+    <xme:Qw0eaBNDp2TOuqrren7pJLyEmLoSptyJtTEJSDhIVYdvf4I9Aob1qXQBkOGKD2S_V
+    C1ZZY-NB77UENb_iw>
+X-ME-Received: <xmr:Qw0eaEj5XmhF6fmFPTbrMcMpABvE9AnUzc2QkxuOM3nFDlS47Z0t_V9q63PQ4br0rglMhxB2YYJW9nyETIYWNmXpZXKxN7YTJJEMpEShXg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprh
-    gtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhi
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
     thhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Qw0eaMeGBY-om2XB0HAzhpytaW4QIn9c0Kj3DLvwJLtIfAVJ9ZZg_Q>
-    <xmx:Qw0eaBPxKOrysQ8Ir94uzxwUwfeAQsGKZJAnoBexK4paIIct7Jzo8A>
-    <xmx:Qw0eaGlTcLS6CYuEXaN3L93HUgbPRT8wqKzjmu0-uBlRgMTy9i0zXQ>
-    <xmx:Qw0eaDtrLSTlvjfeSAUD_9ZONZCKOKtJj-RYV3vDmP9zYroPVak2LA>
-    <xmx:Qw0eaMaacbx6jjnr3oMZyg5MJoEF98-S9WnIIP4pU7teWaTW-MgYgiiV>
+X-ME-Proxy: <xmx:Qw0eaM8_qkdzOmTxo2Rl_iitBNpmQalte7wk1ddFwnCX_a78n6dl2w>
+    <xmx:Qw0eaHvp6AlPOoG2UxlNFubzUuz6NxcOdl1H01qP530f-zs1dCZIAA>
+    <xmx:Qw0eaLGHOuIPk48xKQXKhghi4ZKJ11WAZRZW3I8nwkj7-QFgVLh5Qw>
+    <xmx:Qw0eaONdnvA2DWNjvxhVeA61OOz9oMVE8rQuV838oUUZMOAgeeGXRw>
+    <xmx:Qw0eaI4kCw4xRYZrNOnnFqFOF1lIMDzdCFhIIUbX1gl7zWmzEecSfapQ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
  9 May 2025 10:12:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a4fac165 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 9 May 2025 14:12:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id b0ff1438 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 14:12:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 09 May 2025 16:12:06 +0200
-Subject: [PATCH v2 06/17] odb: get rid of `the_repository` in
- `assert_oid_type()`
+Date: Fri, 09 May 2025 16:12:07 +0200
+Subject: [PATCH v2 07/17] odb: get rid of `the_repository` in
+ `odb_mkstemp()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,83 +84,178 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250509-pks-object-store-wo-the-repository-v2-6-103f59bf8e28@pks.im>
+Message-Id: <20250509-pks-object-store-wo-the-repository-v2-7-103f59bf8e28@pks.im>
 References: <20250509-pks-object-store-wo-the-repository-v2-0-103f59bf8e28@pks.im>
 In-Reply-To: <20250509-pks-object-store-wo-the-repository-v2-0-103f59bf8e28@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Get rid of our dependency on `the_repository` in `assert_oid_type()` by
+Get rid of our dependency on `the_repository` in `odb_mkstemp()` by
 passing in the object database as a parameter and adjusting all callers.
-
-Rename the function to `odb_assert_oid_type()`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/commit-tree.c | 2 +-
- commit.c              | 2 +-
- odb.c                 | 5 +++--
- odb.h                 | 3 ++-
- 4 files changed, 7 insertions(+), 5 deletions(-)
+ builtin/fast-import.c |  3 ++-
+ builtin/index-pack.c  |  2 +-
+ bundle-uri.c          |  3 ++-
+ odb.c                 |  9 +++++----
+ odb.h                 |  7 ++++---
+ pack-bitmap-write.c   |  3 ++-
+ pack-write.c          | 10 ++++++----
+ 7 files changed, 22 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/commit-tree.c b/builtin/commit-tree.c
-index 546069f8682..31cfd9bd15d 100644
---- a/builtin/commit-tree.c
-+++ b/builtin/commit-tree.c
-@@ -48,7 +48,7 @@ static int parse_parent_arg_callback(const struct option *opt,
- 	if (repo_get_oid_commit(the_repository, arg, &oid))
- 		die(_("not a valid object name %s"), arg);
+diff --git a/builtin/fast-import.c b/builtin/fast-import.c
+index 52c792488e1..413304db9b5 100644
+--- a/builtin/fast-import.c
++++ b/builtin/fast-import.c
+@@ -763,7 +763,8 @@ static void start_packfile(void)
+ 	struct packed_git *p;
+ 	int pack_fd;
  
--	assert_oid_type(&oid, OBJ_COMMIT);
-+	odb_assert_oid_type(the_repository->objects, &oid, OBJ_COMMIT);
- 	new_parent(lookup_commit(the_repository, &oid), parents);
- 	return 0;
- }
-diff --git a/commit.c b/commit.c
-index 1d30f8ce15a..aa65183d8b6 100644
---- a/commit.c
-+++ b/commit.c
-@@ -1706,7 +1706,7 @@ int commit_tree_extended(const char *msg, size_t msg_len,
- 	/* Not having i18n.commitencoding is the same as having utf-8 */
- 	encoding_is_utf8 = is_encoding_utf8(git_commit_encoding);
+-	pack_fd = odb_mkstemp(&tmp_file, "pack/tmp_pack_XXXXXX");
++	pack_fd = odb_mkstemp(the_repository->objects, &tmp_file,
++			      "pack/tmp_pack_XXXXXX");
+ 	FLEX_ALLOC_STR(p, pack_name, tmp_file.buf);
+ 	strbuf_release(&tmp_file);
  
--	assert_oid_type(tree, OBJ_TREE);
-+	odb_assert_oid_type(the_repository->objects, tree, OBJ_TREE);
- 
- 	if (memchr(msg, '\0', msg_len))
- 		return error("a NUL byte in commit log message not allowed.");
+diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+index 8ce446064e8..8e5acefde40 100644
+--- a/builtin/index-pack.c
++++ b/builtin/index-pack.c
+@@ -362,7 +362,7 @@ static const char *open_pack_file(const char *pack_name)
+ 		input_fd = 0;
+ 		if (!pack_name) {
+ 			struct strbuf tmp_file = STRBUF_INIT;
+-			output_fd = odb_mkstemp(&tmp_file,
++			output_fd = odb_mkstemp(the_repository->objects, &tmp_file,
+ 						"pack/tmp_pack_XXXXXX");
+ 			pack_name = strbuf_detach(&tmp_file, NULL);
+ 		} else {
+diff --git a/bundle-uri.c b/bundle-uri.c
+index 993ac62c271..87a5ba50945 100644
+--- a/bundle-uri.c
++++ b/bundle-uri.c
+@@ -278,7 +278,8 @@ static char *find_temp_filename(void)
+ 	 * Find a temporary filename that is available. This is briefly
+ 	 * racy, but unlikely to collide.
+ 	 */
+-	fd = odb_mkstemp(&name, "bundles/tmp_uri_XXXXXX");
++	fd = odb_mkstemp(the_repository->objects, &name,
++			 "bundles/tmp_uri_XXXXXX");
+ 	if (fd < 0) {
+ 		warning(_("failed to create temporary file"));
+ 		return NULL;
 diff --git a/odb.c b/odb.c
-index 621a16b35ea..d09b8bf00cc 100644
+index d09b8bf00cc..7ff614fb0c7 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -955,9 +955,10 @@ int has_object(struct repository *r, const struct object_id *oid,
- 	return oid_object_info_extended(r, oid, NULL, object_info_flags) >= 0;
+@@ -63,7 +63,8 @@ static const struct cached_object *find_cached_object(struct object_database *ob
+ 	return NULL;
  }
  
--void assert_oid_type(const struct object_id *oid, enum object_type expect)
-+void odb_assert_oid_type(struct object_database *odb,
-+			 const struct object_id *oid, enum object_type expect)
+-int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
++int odb_mkstemp(struct object_database *odb,
++		struct strbuf *temp_filename, const char *pattern)
  {
--	enum object_type type = oid_object_info(the_repository, oid, NULL);
-+	enum object_type type = oid_object_info(odb->repo, oid, NULL);
- 	if (type < 0)
- 		die(_("%s is not a valid object"), oid_to_hex(oid));
- 	if (type != expect)
+ 	int fd;
+ 	/*
+@@ -71,15 +72,15 @@ int odb_mkstemp(struct strbuf *temp_filename, const char *pattern)
+ 	 * restrictive except to remove write permission.
+ 	 */
+ 	int mode = 0444;
+-	repo_git_path_replace(the_repository, temp_filename, "objects/%s", pattern);
++	repo_git_path_replace(odb->repo, temp_filename, "objects/%s", pattern);
+ 	fd = git_mkstemp_mode(temp_filename->buf, mode);
+ 	if (0 <= fd)
+ 		return fd;
+ 
+ 	/* slow path */
+ 	/* some mkstemp implementations erase temp_filename on failure */
+-	repo_git_path_replace(the_repository, temp_filename, "objects/%s", pattern);
+-	safe_create_leading_directories(the_repository, temp_filename->buf);
++	repo_git_path_replace(odb->repo, temp_filename, "objects/%s", pattern);
++	safe_create_leading_directories(odb->repo, temp_filename->buf);
+ 	return xmkstemp_mode(temp_filename->buf, mode);
+ }
+ 
 diff --git a/odb.h b/odb.h
-index 60d6358c2c6..39d896ecd3f 100644
+index 39d896ecd3f..3430089803b 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -295,7 +295,8 @@ enum {
- int has_object(struct repository *r, const struct object_id *oid,
- 	       unsigned flags);
- 
--void assert_oid_type(const struct object_id *oid, enum object_type expect);
-+void odb_assert_oid_type(struct object_database *odb,
-+			 const struct object_id *oid, enum object_type expect);
+@@ -191,12 +191,13 @@ void odb_clear(struct object_database *o);
+ struct odb_alternate *odb_find_alternate(struct object_database *odb, const char *obj_dir);
  
  /*
-  * Enabling the object read lock allows multiple threads to safely call the
+- * Create a temporary file rooted in the object database directory, or
+- * die on failure. The filename is taken from "pattern", which should have the
++ * Create a temporary file rooted in the primary alternate's directory, or die
++ * on failure. The filename is taken from "pattern", which should have the
+  * usual "XXXXXX" trailer, and the resulting filename is written into the
+  * "template" buffer. Returns the open descriptor.
+  */
+-int odb_mkstemp(struct strbuf *temp_filename, const char *pattern);
++int odb_mkstemp(struct object_database *odb,
++		struct strbuf *temp_filename, const char *pattern);
+ 
+ void *repo_read_object_file(struct repository *r,
+ 			    const struct object_id *oid,
+diff --git a/pack-bitmap-write.c b/pack-bitmap-write.c
+index 37648b57125..c847369eaaa 100644
+--- a/pack-bitmap-write.c
++++ b/pack-bitmap-write.c
+@@ -1052,7 +1052,8 @@ void bitmap_writer_finish(struct bitmap_writer *writer,
+ 
+ 	struct bitmap_disk_header header;
+ 
+-	int fd = odb_mkstemp(&tmp_file, "pack/tmp_bitmap_XXXXXX");
++	int fd = odb_mkstemp(writer->repo->objects, &tmp_file,
++			     "pack/tmp_bitmap_XXXXXX");
+ 
+ 	if (writer->pseudo_merges_nr)
+ 		options |= BITMAP_OPT_PSEUDO_MERGES;
+diff --git a/pack-write.c b/pack-write.c
+index 6b06315f80a..eccdc798e36 100644
+--- a/pack-write.c
++++ b/pack-write.c
+@@ -84,7 +84,8 @@ const char *write_idx_file(struct repository *repo,
+ 	} else {
+ 		if (!index_name) {
+ 			struct strbuf tmp_file = STRBUF_INIT;
+-			fd = odb_mkstemp(&tmp_file, "pack/tmp_idx_XXXXXX");
++			fd = odb_mkstemp(repo->objects, &tmp_file,
++					 "pack/tmp_idx_XXXXXX");
+ 			index_name = strbuf_detach(&tmp_file, NULL);
+ 		} else {
+ 			unlink(index_name);
+@@ -259,7 +260,8 @@ char *write_rev_file_order(struct repository *repo,
+ 	if (flags & WRITE_REV) {
+ 		if (!rev_name) {
+ 			struct strbuf tmp_file = STRBUF_INIT;
+-			fd = odb_mkstemp(&tmp_file, "pack/tmp_rev_XXXXXX");
++			fd = odb_mkstemp(repo->objects, &tmp_file,
++					 "pack/tmp_rev_XXXXXX");
+ 			path = strbuf_detach(&tmp_file, NULL);
+ 		} else {
+ 			unlink(rev_name);
+@@ -342,7 +344,7 @@ static char *write_mtimes_file(struct repository *repo,
+ 	if (!to_pack)
+ 		BUG("cannot call write_mtimes_file with NULL packing_data");
+ 
+-	fd = odb_mkstemp(&tmp_file, "pack/tmp_mtimes_XXXXXX");
++	fd = odb_mkstemp(repo->objects, &tmp_file, "pack/tmp_mtimes_XXXXXX");
+ 	mtimes_name = strbuf_detach(&tmp_file, NULL);
+ 	f = hashfd(repo->hash_algo, fd, mtimes_name);
+ 
+@@ -531,7 +533,7 @@ struct hashfile *create_tmp_packfile(struct repository *repo,
+ 	struct strbuf tmpname = STRBUF_INIT;
+ 	int fd;
+ 
+-	fd = odb_mkstemp(&tmpname, "pack/tmp_pack_XXXXXX");
++	fd = odb_mkstemp(repo->objects, &tmpname, "pack/tmp_pack_XXXXXX");
+ 	*pack_tmp_name = strbuf_detach(&tmpname, NULL);
+ 	return hashfd(repo->hash_algo, fd, *pack_tmp_name);
+ }
 
 -- 
 2.49.0.1077.gc0e912fd4c.dirty
