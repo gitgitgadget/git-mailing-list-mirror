@@ -1,80 +1,80 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A1482957D4
-	for <git@vger.kernel.org>; Fri,  9 May 2025 14:12:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56551296FAA
+	for <git@vger.kernel.org>; Fri,  9 May 2025 14:12:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746799953; cv=none; b=SFniP9P0BjC5OYuyOmjcQrdefrnq+roK5uokty7R+k/jz6xXgIpuWQerVj7GTwX56xB1xtAnfLZkeNRtMqBj1Pj+LE6tP6rf+rTFLQdn0YorNgjcWqvxDywXEA8ihmMqSr09NgqMUqdZmysDTOooBdO2AcZ7eDNp9RUZEpv2ZvQ=
+	t=1746799954; cv=none; b=fTn1rL3HkTyJgRCVl6O3b0SLu4GaO0P9Qy4gX9Fp4yhZ4cokeAdQ2H+F6PvmpGuIdUEPoxxUs22fjeUrD8mFj+bYodpAXg2xNiqm5uqDlKc/Zc6gHA/u8wVbgcVc11PNnffUA10BkNK3mvCiqcigko8LtGH8xCArZn5fi/aPPEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746799953; c=relaxed/simple;
-	bh=0cHFlAqaLrfO3DLyj285Gn8kM4lbimdk2hmplB9rSN8=;
+	s=arc-20240116; t=1746799954; c=relaxed/simple;
+	bh=4myBycOk6ubuolsqY6XaY2N4l+Rdp2c40t3O13NL2L0=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=n1R9kwz2N0S3lny0llQcrp+Ym8edmSNuKL30l7DIUiCau+FKq+LQ/CjmuyqZNZSx8ghxDYiWXKsBN/svLT51YpWkUF+m5VqlNgGWCA3iDL6Lh7cM1/tfZRje7n/+4GDxm8/RziCwt9X+XF5m1bvRkVgAgRd6j5EKcxplN4/OYDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=lqygrusz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S6GbYpL8; arc=none smtp.client-ip=202.12.124.148
+	 In-Reply-To:To:Cc; b=Sg/lret2yjS6CY+ZBfNYI8wVU1XGs5Gd4+SMJ4VD9DwCYx0TK6wGznMpuwvM+theLJ06SRfQ/L5BpuE72bWihyB2BmllzEfyu/x3uvxET4vhARm5v8Q5kbVknIEms2perOIQj6QRrSYLW1PCT8dw/OxFXaFeIdDeUcOBdfqgmFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GRpjo4U5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AIdxha+R; arc=none smtp.client-ip=202.12.124.155
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="lqygrusz";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S6GbYpL8"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2E666114017C;
-	Fri,  9 May 2025 10:12:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GRpjo4U5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AIdxha+R"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5F1B925400CB;
+	Fri,  9 May 2025 10:12:31 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Fri, 09 May 2025 10:12:30 -0400
+  by phl-compute-01.internal (MEProxy); Fri, 09 May 2025 10:12:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746799950;
-	 x=1746886350; bh=kKtzdNLnf2x8ydA7j8xs3Fr0k4/HPgosL+kis4nlxhE=; b=
-	lqygruszXUhKzdmKD1uHRaSM3W42/Wb3joF3CaC+TsquGGBWmSpzvbL2Gd1++/Md
-	NR3DGTD3HcYbUsT6qSJmuGJMQDqujk/52vagJgEuxuHGYa3OeAshJms9VdfANbur
-	VfBaRYk7vG0eEiN5yCR+crAEE21VcGu6i6p37vzMaZ7J2gwNeeYHVL1ZltUx89/x
-	WnMiq0taKohx6eZR2dpnKnZ4iL34IVJoiqdjXFzGThvJ+qKyQW1Cj1lGkwxobIS5
-	dhwr/fYiiZT91Us19r0qFYdBRq6tUif/jhBmeKhSiZRpNumqhVI4yxq1Xrmw/0QL
-	hAI1P5pPLK28rm/xqm0HGw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746799951;
+	 x=1746886351; bh=CuOEz7hO1fLwqxx7HieG7mIPBCClFsODLrzf63M49Ik=; b=
+	GRpjo4U5WP9ugOypCdwHxIUhJ4Ecy3GVpQaKCGstCsLY5obZcIj7pgO6w8GnAcyB
+	NqZ9ywMK27PuPCFT7GonxrD3p6WTZj+Umnzg6/OfUWHW6RSJq6PxgYMakFV2mi+Z
+	7DhFmHCMnA24tb3H1npYmE7W48IdVwq2SFNUUw3HGDbLQ8Im90ZGYeNMpV1UJtf9
+	039o7M245z6uJ3Bczc6EngrJGLvkXIJoQWJ0FkOek19L2SIC2BivicmjOlOFXDT0
+	NmRS0HbHOJ2U+L0bQd0fqE9x39Z/z8FHQ/qWNSEn2f5N6mFot5+oybCifyYNQnr3
+	VwcyMZA3tgPGAF0yEOCpFw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746799950; x=
-	1746886350; bh=kKtzdNLnf2x8ydA7j8xs3Fr0k4/HPgosL+kis4nlxhE=; b=S
-	6GbYpL8cBs7XDflNeynE2dfHtYtVHvk63UmdlYe9jAlktiPg7MdyqMSTETE7uamV
-	ICAGNsL4p8kzI2T5nJV9QowvPxnBqNkV402TQXRg28bG9j1zfYRreQvTowhusPWt
-	tvY/Xy1f3n3DF2s+iSHO9T1snIYq58zA/u6djOgnwOML5RfjUwfbL9K4BtevCBCQ
-	Db1gFVAq6lEwWOGUGyzZunKy0JlJZSLSiJ/7y8q2vZvT71WBoj7nkoXmYoa2WdIQ
-	t772o9Phwbk4BiystEGNQV0ZA5go3Yqi5OYVrLda38AFgPyvNY7fItLOWqyTPhpZ
-	jytJJ/HHMrtBvYoRFweVA==
-X-ME-Sender: <xms:TQ0eaKRKslztNFNc2G_TwprcEi7Yqt_9kBrH8oec0onsmjXypLTy1A>
-    <xme:TQ0eaPw7H_auTwHwJcoSNDY21baLW1zq-B5rz5A1zoqnw2LkBUIPsgJw8LWpec9dk
-    rVr26FPcGtaYS00Vw>
-X-ME-Received: <xmr:TQ0eaH1K4aYx74Z6HNXcB0hSKmNVXrcv72nozTFjbx56cAdWiiqfXn-pLGKxAU3EnkP5OdDzzu-eg_FzBzV7-DxODhipZkJPnCa1CDkbEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvkeefucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746799951; x=
+	1746886351; bh=CuOEz7hO1fLwqxx7HieG7mIPBCClFsODLrzf63M49Ik=; b=A
+	Idxha+RQBhcd2XxXjIL+5gvjjTr/9qZyJNicNX3IKarf4vuEfUSUVOCGw+SKGjM3
+	mK9v16hroBVubJILiOMHx0Xu8d0wGlobygitOabBixsMZx9tOQM28SFvjg6smuUQ
+	cEBHSDsbeSRUseBlJA8wvNzzFEf7kjZ5ApY8NyMzb+hJ+Krhvex6ewONvEZ/3iZt
+	MRTactYN4JTjinLrF4sHQHVCNt4f+CbbBw3zzC8ubVUF2knwIkHklWL+ykRHyUCF
+	+O/Jp/MTVx0BRtkN0RmcMnGh03STzEIhrI8NhXSL7r6B9AI8ZoLl1lMqFtjroZ+n
+	sngIgrEcSSAZbH9L3uQKQ==
+X-ME-Sender: <xms:Tw0eaDIpNmd0xGr7YXW6YofPv723GsRURIumWs54SpuDDuruirnpdg>
+    <xme:Tw0eaHKSIDlhMqWZxFI0p6pSVdoLqv_hIyaDJKfpXo8HVqCxLr2iR_yYS04lmOXCk
+    6Z0bwGN8jFivcKLCA>
+X-ME-Received: <xmr:Tw0eaLse6Wr0pM-OceHBKLD_-rnYabsFhSClZito-biKjbE1v-mwPEiQUFPF4r2T76ZpjurU_3-B2nK7KqBxO5pJg4T_EMS3mV-M97BGDQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvkedvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpeejnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
     hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehs
     thholhgvvgesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:TQ0eaGBx-MzMnhe5rH0JAoGfhOqRAJlcNgEXmFODKzqXNTiG2Khiwg>
-    <xmx:TQ0eaDhKaHyIPYj0EBVQpcOWx8MuFa2w6p4GW5Y-vcT8D0CliBcLVw>
-    <xmx:TQ0eaCqGnCdwDtIVnu3myEsEjYQjW_-PBj0yWGFna3ykBYQMNE4uKw>
-    <xmx:TQ0eaGhthAuWoMAOmA2rv1tBJbauoIXwxT9QXiIzFTt5xXpNWiMc9w>
-    <xmx:Tg0eaLf6UmsaOHCRQspqbRCU0WZ1tlErvaV_WmH_DnT0FnqRC9wNncgT>
+X-ME-Proxy: <xmx:Tw0eaMaDJbr--u6YAciiw8G3XIJ7gZYCAfG9sbHdFS3vx1D-KMcAyw>
+    <xmx:Tw0eaKbDKGEw_SGW5hiEFbP480GTmLDbva3hrbTvmlJ0Qzh0_HjOsQ>
+    <xmx:Tw0eaAAOEdCToiIpcGv8YHPVODP8EyklBaMOSJf1ipgFCA6LKoB74w>
+    <xmx:Tw0eaIaHdETK-VhcenafzebBxgIY0HCMWZQ_FJQbXs5e34vO7rPb2w>
+    <xmx:Tw0eaK3AvnA5TNHHvTRekZPKoCpC5R08lR54hi8LijhiUYwZ59rmie49>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 10:12:29 -0400 (EDT)
+ 9 May 2025 10:12:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bbf87fea (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 9 May 2025 14:12:25 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id b893dc8f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 14:12:26 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 09 May 2025 16:12:15 +0200
-Subject: [PATCH v2 15/17] odb: rename `has_object()`
+Date: Fri, 09 May 2025 16:12:16 +0200
+Subject: [PATCH v2 16/17] odb: rename `pretend_object_file()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -83,682 +83,93 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250509-pks-object-store-wo-the-repository-v2-15-103f59bf8e28@pks.im>
+Message-Id: <20250509-pks-object-store-wo-the-repository-v2-16-103f59bf8e28@pks.im>
 References: <20250509-pks-object-store-wo-the-repository-v2-0-103f59bf8e28@pks.im>
 In-Reply-To: <20250509-pks-object-store-wo-the-repository-v2-0-103f59bf8e28@pks.im>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
 X-Mailer: b4 0.14.2
 
-Rename `has_object()` to `odb_has_object()` to match other functions
-related to the object database and our modern coding guidelines.
+Rename `pretend_object_file()` to `odb_pretend_object()` to match other
+functions related to the object database and our modern coding
+guidelines.
 
-Introduce a compatibility wrapper so that any in-flight topics will
-continue to compile.
+No compatibility wrapper is introduces as the function is not used a lot
+throughout our codebase.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.c                  |  2 +-
- builtin/backfill.c       |  4 ++--
- builtin/cat-file.c       |  4 ++--
- builtin/clone.c          |  2 +-
- builtin/fetch.c          | 17 +++++++++--------
- builtin/fsck.c           |  2 +-
- builtin/index-pack.c     |  4 ++--
- builtin/pack-objects.c   |  4 ++--
- builtin/receive-pack.c   |  4 ++--
- builtin/remote.c         |  4 ++--
- builtin/show-ref.c       |  4 ++--
- builtin/unpack-objects.c |  4 ++--
- bulk-checkin.c           |  4 ++--
- cache-tree.c             | 15 ++++++++-------
- commit-graph.c           |  2 +-
- commit.c                 |  2 +-
- fetch-pack.c             |  8 ++++----
- http-push.c              | 14 ++++++++------
- http-walker.c            |  8 ++++----
- list-objects.c           |  4 ++--
- notes.c                  |  4 ++--
- odb.c                    |  6 +++---
- odb.h                    | 12 ++++++++++--
- reflog.c                 |  2 +-
- refs.c                   |  3 ++-
- remote.c                 |  2 +-
- send-pack.c              |  2 +-
- shallow.c                | 12 ++++++------
- upload-pack.c            |  2 +-
- walker.c                 |  4 ++--
- 30 files changed, 87 insertions(+), 74 deletions(-)
+ blame.c |  3 ++-
+ odb.c   | 18 +++++++++---------
+ odb.h   |  6 +++---
+ 3 files changed, 14 insertions(+), 13 deletions(-)
 
-diff --git a/apply.c b/apply.c
-index 56cd0540350..7fb56517649 100644
---- a/apply.c
-+++ b/apply.c
-@@ -3204,7 +3204,7 @@ static int apply_binary(struct apply_state *state,
- 		return 0; /* deletion patch */
- 	}
- 
--	if (has_object(the_repository, &oid, 0)) {
-+	if (odb_has_object(the_repository->objects, &oid, 0)) {
- 		/* We already have the postimage */
- 		enum object_type type;
- 		unsigned long size;
-diff --git a/builtin/backfill.c b/builtin/backfill.c
-index 0b49baa39fa..80056abe473 100644
---- a/builtin/backfill.c
-+++ b/builtin/backfill.c
-@@ -67,8 +67,8 @@ static int fill_missing_blobs(const char *path UNUSED,
- 		return 0;
- 
- 	for (size_t i = 0; i < list->nr; i++) {
--		if (!has_object(ctx->repo, &list->oid[i],
--				OBJECT_INFO_FOR_PREFETCH))
-+		if (!odb_has_object(ctx->repo->objects, &list->oid[i],
-+				    OBJECT_INFO_FOR_PREFETCH))
- 			oid_array_append(&ctx->current_batch, &list->oid[i]);
- 	}
- 
-diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index d6b9afca06e..571b5cc2ad5 100644
---- a/builtin/cat-file.c
-+++ b/builtin/cat-file.c
-@@ -169,8 +169,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 		goto cleanup;
- 
- 	case 'e':
--		ret = !has_object(the_repository, &oid,
--				  HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR);
-+		ret = !odb_has_object(the_repository->objects, &oid,
-+				      HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR);
- 		goto cleanup;
- 
- 	case 'w':
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 3aabdf6570b..6d08abed37c 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -506,7 +506,7 @@ static void write_followtags(const struct ref *refs, const char *msg)
- 			continue;
- 		if (ends_with(ref->name, "^{}"))
- 			continue;
--		if (!has_object(the_repository, &ref->old_oid, 0))
-+		if (!odb_has_object(the_repository->objects, &ref->old_oid, 0))
- 			continue;
- 		refs_update_ref(get_main_ref_store(the_repository), msg,
- 				ref->name, &ref->old_oid, NULL, 0,
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 82e9603ccab..2000299bcc5 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -366,9 +366,9 @@ static void find_non_local_tags(const struct ref *refs,
- 		 */
- 		if (ends_with(ref->name, "^{}")) {
- 			if (item &&
--			    !has_object(the_repository, &ref->old_oid, 0) &&
-+			    !odb_has_object(the_repository->objects, &ref->old_oid, 0) &&
- 			    !oidset_contains(&fetch_oids, &ref->old_oid) &&
--			    !has_object(the_repository, &item->oid, 0) &&
-+			    !odb_has_object(the_repository->objects, &item->oid, 0) &&
- 			    !oidset_contains(&fetch_oids, &item->oid))
- 				clear_item(item);
- 			item = NULL;
-@@ -382,7 +382,7 @@ static void find_non_local_tags(const struct ref *refs,
- 		 * fetch.
- 		 */
- 		if (item &&
--		    !has_object(the_repository, &item->oid, 0) &&
-+		    !odb_has_object(the_repository->objects, &item->oid, 0) &&
- 		    !oidset_contains(&fetch_oids, &item->oid))
- 			clear_item(item);
- 
-@@ -403,7 +403,7 @@ static void find_non_local_tags(const struct ref *refs,
- 	 * checked to see if it needs fetching.
- 	 */
- 	if (item &&
--	    !has_object(the_repository, &item->oid, 0) &&
-+	    !odb_has_object(the_repository->objects, &item->oid, 0) &&
- 	    !oidset_contains(&fetch_oids, &item->oid))
- 		clear_item(item);
- 
-@@ -910,8 +910,8 @@ static int update_local_ref(struct ref *ref,
- 	struct commit *current = NULL, *updated;
- 	int fast_forward = 0;
- 
--	if (!has_object(the_repository, &ref->new_oid,
--			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+	if (!odb_has_object(the_repository->objects, &ref->new_oid,
-+			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
- 
- 	if (oideq(&ref->old_oid, &ref->new_oid)) {
-@@ -1330,7 +1330,8 @@ static int check_exist_and_connected(struct ref *ref_map)
- 	 * we need all direct targets to exist.
- 	 */
- 	for (r = rm; r; r = r->next) {
--		if (!has_object(the_repository, &r->old_oid, HAS_OBJECT_RECHECK_PACKED))
-+		if (!odb_has_object(the_repository->objects, &r->old_oid,
-+				    HAS_OBJECT_RECHECK_PACKED))
- 			return -1;
- 	}
- 
-@@ -1485,7 +1486,7 @@ static void add_negotiation_tips(struct git_transport_options *smart_options)
- 			struct object_id oid;
- 			if (repo_get_oid(the_repository, s, &oid))
- 				die(_("%s is not a valid object"), s);
--			if (!has_object(the_repository, &oid, 0))
-+			if (!odb_has_object(the_repository->objects, &oid, 0))
- 				die(_("the object %s does not exist"), s);
- 			oid_array_append(oids, &oid);
- 			continue;
-diff --git a/builtin/fsck.c b/builtin/fsck.c
-index 08a79fe044d..74bfa182597 100644
---- a/builtin/fsck.c
-+++ b/builtin/fsck.c
-@@ -161,7 +161,7 @@ static int mark_object(struct object *obj, enum object_type type,
- 		return 0;
- 
- 	if (!(obj->flags & HAS_OBJ)) {
--		if (parent && !has_object(the_repository, &obj->oid, 1)) {
-+		if (parent && !odb_has_object(the_repository->objects, &obj->oid, 1)) {
- 			printf_ln(_("broken link from %7s %s\n"
- 				    "              to %7s %s"),
- 				  printable_type(&parent->oid, parent->type),
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index d33392cab65..0aa2f099cbe 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -893,8 +893,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 
- 	if (startup_info->have_repository) {
- 		read_lock();
--		collision_test_needed = has_object(the_repository, oid,
--						   HAS_OBJECT_FETCH_PROMISOR);
-+		collision_test_needed = odb_has_object(the_repository->objects, oid,
-+						       HAS_OBJECT_FETCH_PROMISOR);
- 		read_unlock();
- 	}
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index 580a5c1996b..06bdeb4223b 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -3968,7 +3968,7 @@ static void show_object__ma_allow_any(struct object *obj, const char *name, void
- 	 * Quietly ignore ALL missing objects.  This avoids problems with
- 	 * staging them now and getting an odd error later.
- 	 */
--	if (!has_object(the_repository, &obj->oid, 0))
-+	if (!odb_has_object(the_repository->objects, &obj->oid, 0))
- 		return;
- 
- 	show_object(obj, name, data);
-@@ -3982,7 +3982,7 @@ static void show_object__ma_allow_promisor(struct object *obj, const char *name,
- 	 * Quietly ignore EXPECTED missing objects.  This avoids problems with
- 	 * staging them now and getting an odd error later.
- 	 */
--	if (!has_object(the_repository, &obj->oid, 0) &&
-+	if (!odb_has_object(the_repository->objects, &obj->oid, 0) &&
- 	    is_promisor_object(to_pack.repo, &obj->oid))
- 		return;
- 
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index 8c157ea7d1b..27684dce3a4 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -1508,8 +1508,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
- 	}
- 
- 	if (!is_null_oid(new_oid) &&
--	    !has_object(the_repository, new_oid,
--			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
-+	    !odb_has_object(the_repository->objects, new_oid,
-+			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
- 		error("unpack should have generated %s, "
- 		      "but I can't find it!", oid_to_hex(new_oid));
- 		ret = "bad pack";
-diff --git a/builtin/remote.c b/builtin/remote.c
-index ac5b8d2a1a6..7cbda285ebe 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -454,8 +454,8 @@ static int get_push_ref_states(const struct ref *remote_refs,
- 			info->status = PUSH_STATUS_UPTODATE;
- 		else if (is_null_oid(&ref->old_oid))
- 			info->status = PUSH_STATUS_CREATE;
--		else if (has_object(the_repository, &ref->old_oid,
--				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
-+		else if (odb_has_object(the_repository->objects, &ref->old_oid,
-+					HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
- 			 ref_newer(&ref->new_oid, &ref->old_oid))
- 			info->status = PUSH_STATUS_FASTFORWARD;
- 		else
-diff --git a/builtin/show-ref.c b/builtin/show-ref.c
-index 90ec1de78f9..117709cb076 100644
---- a/builtin/show-ref.c
-+++ b/builtin/show-ref.c
-@@ -35,8 +35,8 @@ static void show_one(const struct show_one_options *opts,
- 	const char *hex;
- 	struct object_id peeled;
- 
--	if (!has_object(the_repository, oid,
--			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+	if (!odb_has_object(the_repository->objects, oid,
-+			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		die("git show-ref: bad ref %s (%s)", refname,
- 		    oid_to_hex(oid));
- 
-diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 4bc6575a574..a69d59eb50c 100644
---- a/builtin/unpack-objects.c
-+++ b/builtin/unpack-objects.c
-@@ -449,8 +449,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 		delta_data = get_data(delta_size);
- 		if (!delta_data)
- 			return;
--		if (has_object(the_repository, &base_oid,
--			       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+		if (odb_has_object(the_repository->objects, &base_oid,
-+				   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 			; /* Ok we have this one */
- 		else if (resolve_against_held(nr, &base_oid,
- 					      delta_data, delta_size))
-diff --git a/bulk-checkin.c b/bulk-checkin.c
-index 55406a539e7..16df86c0ba8 100644
---- a/bulk-checkin.c
-+++ b/bulk-checkin.c
-@@ -130,8 +130,8 @@ static void flush_batch_fsync(void)
- static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
- {
- 	/* The object may already exist in the repository */
--	if (has_object(the_repository, oid,
--		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+	if (odb_has_object(the_repository->objects, oid,
-+			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		return 1;
- 
- 	/* Might want to keep the list sorted */
-diff --git a/cache-tree.c b/cache-tree.c
-index 9786b32b3a1..a4bc14ad15c 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -239,8 +239,8 @@ int cache_tree_fully_valid(struct cache_tree *it)
- 	if (!it)
- 		return 0;
- 	if (it->entry_count < 0 ||
--	    has_object(the_repository, &it->oid,
--		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+	    odb_has_object(the_repository->objects, &it->oid,
-+			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		return 0;
- 	for (i = 0; i < it->subtree_nr; i++) {
- 		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
-@@ -292,8 +292,8 @@ static int update_one(struct cache_tree *it,
- 	}
- 
- 	if (0 <= it->entry_count &&
--	    has_object(the_repository, &it->oid,
--		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+	    odb_has_object(the_repository->objects, &it->oid,
-+			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		return it->entry_count;
+diff --git a/blame.c b/blame.c
+index 858d2d74df9..dce5c8d855c 100644
+--- a/blame.c
++++ b/blame.c
+@@ -277,7 +277,8 @@ static struct commit *fake_working_tree_commit(struct repository *r,
+ 	convert_to_git(r->index, path, buf.buf, buf.len, &buf, 0);
+ 	origin->file.ptr = buf.buf;
+ 	origin->file.size = buf.len;
+-	pretend_object_file(the_repository, buf.buf, buf.len, OBJ_BLOB, &origin->blob_oid);
++	odb_pretend_object(the_repository->objects, buf.buf, buf.len,
++			   OBJ_BLOB, &origin->blob_oid);
  
  	/*
-@@ -399,8 +399,9 @@ static int update_one(struct cache_tree *it,
- 		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
- 			!must_check_existence(ce);
- 		if (is_null_oid(oid) ||
--		    (!ce_missing_ok && !has_object(the_repository, oid,
--						   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))) {
-+		    (!ce_missing_ok &&
-+		     !odb_has_object(the_repository->objects, oid,
-+				     HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))) {
- 			strbuf_release(&buffer);
- 			if (expected_missing)
- 				return -1;
-@@ -448,7 +449,7 @@ static int update_one(struct cache_tree *it,
- 		struct object_id oid;
- 		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
- 				 OBJ_TREE, &oid);
--		if (has_object(the_repository, &oid, HAS_OBJECT_RECHECK_PACKED))
-+		if (odb_has_object(the_repository->objects, &oid, HAS_OBJECT_RECHECK_PACKED))
- 			oidcpy(&it->oid, &oid);
- 		else
- 			to_invalidate = 1;
-diff --git a/commit-graph.c b/commit-graph.c
-index 84cfaf87639..cb81a5ce228 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1040,7 +1040,7 @@ struct commit *lookup_commit_in_graph(struct repository *repo, const struct obje
- 		return NULL;
- 	if (!search_commit_pos_in_graph(id, repo->objects->commit_graph, &pos))
- 		return NULL;
--	if (commit_graph_paranoia && !has_object(repo, id, 0))
-+	if (commit_graph_paranoia && !odb_has_object(repo->objects, id, 0))
- 		return NULL;
- 
- 	commit = lookup_commit(repo, id);
-diff --git a/commit.c b/commit.c
-index 28ee6b73ae6..15115125c36 100644
---- a/commit.c
-+++ b/commit.c
-@@ -575,7 +575,7 @@ int repo_parse_commit_internal(struct repository *r,
- 		if (commit_graph_paranoia == -1)
- 			commit_graph_paranoia = git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 0);
- 
--		if (commit_graph_paranoia && !has_object(r, &item->object.oid, 0)) {
-+		if (commit_graph_paranoia && !odb_has_object(r->objects, &item->object.oid, 0)) {
- 			unparse_commit(r, &item->object.oid);
- 			return quiet_on_missing ? -1 :
- 				error(_("commit %s exists in commit-graph but not in the object database"),
-diff --git a/fetch-pack.c b/fetch-pack.c
-index 0f5de1c94d1..5e74235fc06 100644
---- a/fetch-pack.c
-+++ b/fetch-pack.c
-@@ -142,7 +142,7 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
- 	commit = lookup_commit_in_graph(the_repository, oid);
- 	if (commit) {
- 		if (mark_tags_complete_and_check_obj_db) {
--			if (!has_object(the_repository, oid, 0))
-+			if (!odb_has_object(the_repository->objects, oid, 0))
- 				die_in_commit_graph_only(oid);
- 		}
- 		return commit;
-@@ -770,7 +770,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
- 		if (!commit) {
- 			struct object *o;
- 
--			if (!has_object(the_repository, &ref->old_oid, 0))
-+			if (!odb_has_object(the_repository->objects, &ref->old_oid, 0))
- 				continue;
- 			o = parse_object(the_repository, &ref->old_oid);
- 			if (!o || o->type != OBJ_COMMIT)
-@@ -1984,8 +1984,8 @@ static void update_shallow(struct fetch_pack_args *args,
- 		struct oid_array extra = OID_ARRAY_INIT;
- 		struct object_id *oid = si->shallow->oid;
- 		for (i = 0; i < si->shallow->nr; i++)
--			if (has_object(the_repository, &oid[i],
--				       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+			if (odb_has_object(the_repository->objects, &oid[i],
-+					   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 				oid_array_append(&extra, &oid[i]);
- 		if (extra.nr) {
- 			setup_alternate_shallow(&shallow_lock,
-diff --git a/http-push.c b/http-push.c
-index 9481825abfb..beb41732fb6 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -1447,8 +1447,8 @@ static void one_remote_ref(const char *refname)
- 	 * may be required for updating server info later.
- 	 */
- 	if (repo->can_update_info_refs &&
--	    !has_object(the_repository, &ref->old_oid,
--			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
-+	    !odb_has_object(the_repository->objects, &ref->old_oid,
-+			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
- 		obj = lookup_unknown_object(the_repository, &ref->old_oid);
- 		fprintf(stderr,	"  fetch %s for %s\n",
- 			oid_to_hex(&ref->old_oid), refname);
-@@ -1653,14 +1653,16 @@ static int delete_remote_branch(const char *pattern, int force)
- 			return error("Remote HEAD symrefs too deep");
- 		if (is_null_oid(&head_oid))
- 			return error("Unable to resolve remote HEAD");
--		if (!has_object(the_repository, &head_oid, HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+		if (!odb_has_object(the_repository->objects, &head_oid,
-+				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", oid_to_hex(&head_oid));
- 
- 		/* Remote branch must resolve to a known object */
- 		if (is_null_oid(&remote_ref->old_oid))
- 			return error("Unable to resolve remote branch %s",
- 				     remote_ref->name);
--		if (!has_object(the_repository, &remote_ref->old_oid, HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+		if (!odb_has_object(the_repository->objects, &remote_ref->old_oid,
-+				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 			return error("Remote branch %s resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", remote_ref->name, oid_to_hex(&remote_ref->old_oid));
- 
- 		/* Remote branch must be an ancestor of remote HEAD */
-@@ -1881,8 +1883,8 @@ int cmd_main(int argc, const char **argv)
- 		if (!force_all &&
- 		    !is_null_oid(&ref->old_oid) &&
- 		    !ref->force) {
--			if (!has_object(the_repository, &ref->old_oid,
--					HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) ||
-+			if (!odb_has_object(the_repository->objects, &ref->old_oid,
-+					    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) ||
- 			    !ref_newer(&ref->peer_ref->new_oid,
- 				       &ref->old_oid)) {
- 				/*
-diff --git a/http-walker.c b/http-walker.c
-index 4b1cdd25a80..4e7024ebc5f 100644
---- a/http-walker.c
-+++ b/http-walker.c
-@@ -138,8 +138,8 @@ static int fill_active_slot(void *data UNUSED)
- 	list_for_each_safe(pos, tmp, head) {
- 		obj_req = list_entry(pos, struct object_request, node);
- 		if (obj_req->state == WAITING) {
--			if (has_object(the_repository, &obj_req->oid,
--				       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+			if (odb_has_object(the_repository->objects, &obj_req->oid,
-+					   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 				obj_req->state = COMPLETE;
- 			else {
- 				start_object_request(obj_req);
-@@ -497,8 +497,8 @@ static int fetch_object(struct walker *walker, const struct object_id *oid)
- 	if (!obj_req)
- 		return error("Couldn't find request for %s in the queue", hex);
- 
--	if (has_object(the_repository, &obj_req->oid,
--		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
-+	if (odb_has_object(the_repository->objects, &obj_req->oid,
-+			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
- 		if (obj_req->req)
- 			abort_http_object_request(&obj_req->req);
- 		abort_object_request(obj_req);
-diff --git a/list-objects.c b/list-objects.c
-index c50b9578584..42c17d95739 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -74,8 +74,8 @@ static void process_blob(struct traversal_context *ctx,
- 	 * of missing objects.
- 	 */
- 	if (ctx->revs->exclude_promisor_objects &&
--	    !has_object(the_repository, &obj->oid,
--			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
-+	    !odb_has_object(the_repository->objects, &obj->oid,
-+			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
- 	    is_promisor_object(ctx->revs->repo, &obj->oid))
- 		return;
- 
-diff --git a/notes.c b/notes.c
-index 73eb5f00cf5..97b995f3f2d 100644
---- a/notes.c
-+++ b/notes.c
-@@ -794,8 +794,8 @@ static int prune_notes_helper(const struct object_id *object_oid,
- 	struct note_delete_list **l = (struct note_delete_list **) cb_data;
- 	struct note_delete_list *n;
- 
--	if (has_object(the_repository, object_oid,
--		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+	if (odb_has_object(the_repository->objects, object_oid,
-+			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 		return 0; /* nothing to do for this note */
- 
- 	/* failed to find object => prune this note */
+ 	 * Read the current index, replace the path entry with
 diff --git a/odb.c b/odb.c
-index 5202f107af2..787611c8f60 100644
+index 787611c8f60..dfebeb4c8c0 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -880,7 +880,7 @@ int pretend_object_file(struct repository *repo,
+@@ -872,21 +872,21 @@ int odb_read_object_info(struct object_database *odb,
+ 	return type;
+ }
+ 
+-int pretend_object_file(struct repository *repo,
+-			void *buf, unsigned long len, enum object_type type,
+-			struct object_id *oid)
++int odb_pretend_object(struct object_database *odb,
++		       void *buf, unsigned long len, enum object_type type,
++		       struct object_id *oid)
+ {
+ 	struct cached_object_entry *co;
  	char *co_buf;
  
- 	hash_object_file(repo->hash_algo, buf, len, type, oid);
--	if (has_object(repo, oid, 0) ||
-+	if (odb_has_object(repo->objects, oid, 0) ||
- 	    find_cached_object(repo->objects, oid))
+-	hash_object_file(repo->hash_algo, buf, len, type, oid);
+-	if (odb_has_object(repo->objects, oid, 0) ||
+-	    find_cached_object(repo->objects, oid))
++	hash_object_file(odb->repo->hash_algo, buf, len, type, oid);
++	if (odb_has_object(odb, oid, 0) ||
++	    find_cached_object(odb, oid))
  		return 0;
  
-@@ -962,7 +962,7 @@ void *read_object_with_reference(struct repository *r,
- 	}
- }
- 
--int has_object(struct repository *r, const struct object_id *oid,
-+int odb_has_object(struct object_database *odb, const struct object_id *oid,
- 	       unsigned flags)
- {
- 	unsigned object_info_flags = 0;
-@@ -974,7 +974,7 @@ int has_object(struct repository *r, const struct object_id *oid,
- 	if (!(flags & HAS_OBJECT_FETCH_PROMISOR))
- 		object_info_flags |= OBJECT_INFO_SKIP_FETCH_OBJECT;
- 
--	return odb_read_object_info_extended(r->objects, oid, NULL, object_info_flags) >= 0;
-+	return odb_read_object_info_extended(odb, oid, NULL, object_info_flags) >= 0;
- }
- 
- void odb_assert_oid_type(struct object_database *odb,
+-	ALLOC_GROW(repo->objects->cached_objects,
+-		   repo->objects->cached_object_nr + 1, repo->objects->cached_object_alloc);
+-	co = &repo->objects->cached_objects[repo->objects->cached_object_nr++];
++	ALLOC_GROW(odb->cached_objects,
++		   odb->cached_object_nr + 1, odb->cached_object_alloc);
++	co = &odb->cached_objects[odb->cached_object_nr++];
+ 	co->value.size = len;
+ 	co->value.type = type;
+ 	co_buf = xmalloc(len);
 diff --git a/odb.h b/odb.h
-index e4a3763914a..3d38f1ebe60 100644
+index 3d38f1ebe60..911448f4d42 100644
 --- a/odb.h
 +++ b/odb.h
-@@ -364,8 +364,9 @@ enum {
-  * Returns 1 if the object exists. This function will not lazily fetch objects
-  * in a partial clone by default.
+@@ -271,9 +271,9 @@ void *odb_read_object(struct object_database *odb,
+  * object in persistent storage before writing any other new objects
+  * that reference it.
   */
--int has_object(struct repository *r, const struct object_id *oid,
--	       unsigned flags);
-+int odb_has_object(struct object_database *odb,
-+		   const struct object_id *oid,
-+		   unsigned flags);
+-int pretend_object_file(struct repository *repo,
+-			void *buf, unsigned long len, enum object_type type,
+-			struct object_id *oid);
++int odb_pretend_object(struct object_database *odb,
++		       void *buf, unsigned long len, enum object_type type,
++		       struct object_id *oid);
  
- void odb_assert_oid_type(struct object_database *odb,
- 			 const struct object_id *oid, enum object_type expect);
-@@ -455,4 +456,11 @@ static inline void *repo_read_object_file(struct repository *r,
- 	return odb_read_object(r->objects, oid, type, size);
- }
- 
-+static inline int has_object(struct repository *r,
-+			     const struct object_id *oid,
-+			     unsigned flags)
-+{
-+	return odb_has_object(r->objects, oid, flags);
-+}
-+
- #endif /* ODB_H */
-diff --git a/reflog.c b/reflog.c
-index 747b82eada8..39c205fd26e 100644
---- a/reflog.c
-+++ b/reflog.c
-@@ -152,7 +152,7 @@ static int tree_is_complete(const struct object_id *oid)
- 	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
- 	complete = 1;
- 	while (tree_entry(&desc, &entry)) {
--		if (!has_object(the_repository, &entry.oid,
-+		if (!odb_has_object(the_repository->objects, &entry.oid,
- 				HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) ||
- 		    (S_ISDIR(entry.mode) && !tree_is_complete(&entry.oid))) {
- 			tree->object.flags |= INCOMPLETE;
-diff --git a/refs.c b/refs.c
-index 82a70b502f8..d6475d5e745 100644
---- a/refs.c
-+++ b/refs.c
-@@ -376,7 +376,8 @@ int ref_resolves_to_object(const char *refname,
- {
- 	if (flags & REF_ISBROKEN)
- 		return 0;
--	if (!has_object(repo, oid, HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
-+	if (!odb_has_object(repo->objects, oid,
-+			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
- 		error(_("%s does not point to a valid object!"), refname);
- 		return 0;
- 	}
-diff --git a/remote.c b/remote.c
-index 72c36239d31..5edf2a9f4b2 100644
---- a/remote.c
-+++ b/remote.c
-@@ -1703,7 +1703,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
- 		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
- 			if (starts_with(ref->name, "refs/tags/"))
- 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
--			else if (!has_object(the_repository, &ref->old_oid, HAS_OBJECT_RECHECK_PACKED))
-+			else if (!odb_has_object(the_repository->objects, &ref->old_oid, HAS_OBJECT_RECHECK_PACKED))
- 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
- 			else if (!lookup_commit_reference_gently(the_repository, &ref->old_oid, 1) ||
- 				 !lookup_commit_reference_gently(the_repository, &ref->new_oid, 1))
-diff --git a/send-pack.c b/send-pack.c
-index abca2dd38a7..d029f748232 100644
---- a/send-pack.c
-+++ b/send-pack.c
-@@ -45,7 +45,7 @@ int option_parse_push_signed(const struct option *opt,
- static void feed_object(struct repository *r,
- 			const struct object_id *oid, FILE *fh, int negative)
- {
--	if (negative && !has_object(r, oid, 0))
-+	if (negative && !odb_has_object(r->objects, oid, 0))
- 		return;
- 
- 	if (negative)
-diff --git a/shallow.c b/shallow.c
-index d379756e39a..ef3adb635fd 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -310,8 +310,8 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
- 	if (graft->nr_parent != -1)
- 		return 0;
- 	if (data->flags & QUICK) {
--		if (!has_object(the_repository, &graft->oid,
--				HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+		if (!odb_has_object(the_repository->objects, &graft->oid,
-+				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 			return 0;
- 	} else if (data->flags & SEEN_ONLY) {
- 		struct commit *c = lookup_commit(the_repository, &graft->oid);
-@@ -477,8 +477,8 @@ void prepare_shallow_info(struct shallow_info *info, struct oid_array *sa)
- 	ALLOC_ARRAY(info->ours, sa->nr);
- 	ALLOC_ARRAY(info->theirs, sa->nr);
- 	for (size_t i = 0; i < sa->nr; i++) {
--		if (has_object(the_repository, sa->oid + i,
--			       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
-+		if (odb_has_object(the_repository->objects, sa->oid + i,
-+				   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
- 			struct commit_graft *graft;
- 			graft = lookup_commit_graft(the_repository,
- 						    &sa->oid[i]);
-@@ -515,8 +515,8 @@ void remove_nonexistent_theirs_shallow(struct shallow_info *info)
- 	for (i = dst = 0; i < info->nr_theirs; i++) {
- 		if (i != dst)
- 			info->theirs[dst] = info->theirs[i];
--		if (has_object(the_repository, oid + info->theirs[i],
--			       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
-+		if (odb_has_object(the_repository->objects, oid + info->theirs[i],
-+				   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
- 			dst++;
- 	}
- 	info->nr_theirs = dst;
-diff --git a/upload-pack.c b/upload-pack.c
-index cec12cb478a..98cda156434 100644
---- a/upload-pack.c
-+++ b/upload-pack.c
-@@ -509,7 +509,7 @@ static int got_oid(struct upload_pack_data *data,
- {
- 	if (get_oid_hex(hex, oid))
- 		die("git upload-pack: expected SHA1 object, got '%s'", hex);
--	if (!has_object(the_repository, oid, 0))
-+	if (!odb_has_object(the_repository->objects, oid, 0))
- 		return -1;
- 	return do_got_oid(data, oid);
- }
-diff --git a/walker.c b/walker.c
-index a8abe8a2e78..d131af04c7b 100644
---- a/walker.c
-+++ b/walker.c
-@@ -150,8 +150,8 @@ static int process(struct walker *walker, struct object *obj)
- 		return 0;
- 	obj->flags |= SEEN;
- 
--	if (has_object(the_repository, &obj->oid,
--		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
-+	if (odb_has_object(the_repository->objects, &obj->oid,
-+			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
- 		/* We already have it, so we should scan it now. */
- 		obj->flags |= TO_SCAN;
- 	}
+ struct object_info {
+ 	/* Request */
 
 -- 
 2.49.0.1077.gc0e912fd4c.dirty
