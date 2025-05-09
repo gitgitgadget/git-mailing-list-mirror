@@ -1,107 +1,118 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 292EEF507
-	for <git@vger.kernel.org>; Fri,  9 May 2025 03:43:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3160F79FE
+	for <git@vger.kernel.org>; Fri,  9 May 2025 05:38:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746762191; cv=none; b=GiddffOtR9UFuBrHElqMmB/3FZZmjnOJVK6va8iYhphKH47ftcHFmmywm5gJ2F5RAxKbn5SOUv4Ga3EK/VdOVbNxLC3TKoCYoT7n0HN8elw2luEii9U4jA7Pe0oAkzIceOlPIpGYZ7mS/UVKOg81feEPrLXpkwgKwNN+XR/Zrn4=
+	t=1746769125; cv=none; b=q8PowaOSQ81Vm6X/BxIELyzzuZ/wWa+23Cy2dJL3u9nIyaosH5CbzfcliA246qdfg0lZlXsjwMJ0+78u++2Fkpt92b1Dpd/chJMC6fPsbUpGq+fDNnbP1227YPPDY/zb6t5iS13g3y5nY+SD+eit7Pnl9ktHlB6dKf8kOQ7RgOc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746762191; c=relaxed/simple;
-	bh=fiTsf7YCDE6OU4RyygOMurWTCxALJOIlMZMwb9riZb0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XnI955xpojQGLSSPe2EVGT0pzMWK5FT8pqVVA9BECs1nhHTY3GxWTZiauBQ5uvc2Tr/26gJwu82Quf6H+CeX0kCoDJNnEzO4mhcEsDcbfDxX6FAtVEyqi9a++5FSHfaQWoEYIk5pA75MWcdW9b9Fli6W2CGpMPIMQymSCuIfVbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kOltW+7Q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ftgw2CS6; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746769125; c=relaxed/simple;
+	bh=Em1Q8JS24S8bqkNv8g9kKrgCV4Bq6M5151lhQiqK6+Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=S0yQx0u8C/0sVY5SV0IK57MxdJZ7siqS68wtHC2AqHDGEXvcecfE0jEedhBMyjr3qQww7rw/ADcKgyECb2tEHq73ryvABZF7xk6YUq/StoXFWcQLIVvotqMjmdMRK2bKKTBRpLG4rY+2i1YJ7rGTblLOKj8aJM3N8epgLFv982w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=NTYzvHTv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RpTyzhE6; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kOltW+7Q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ftgw2CS6"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id D363013801A7;
-	Thu,  8 May 2025 23:43:06 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Thu, 08 May 2025 23:43:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746762186;
-	 x=1746848586; bh=oja3pvugdPG3yBBAIKw//fp5t5vjQsR0oDwv/bnmj1M=; b=
-	kOltW+7Q0lPvF8Fizwaau0RhTfO8KqlJ0Ug2e80thiSVtO1AA4CPbruPh9RhbjAS
-	KmJ1cAx1QPhLsOKrjVu/T0oQLbtsygkpbZlV1LXLZ/qn4Sz+pgZoCSBI40C6C/EM
-	Ok8iQzKXLPYe/AXIGGLO6eyCp/7lMhCbjW+Mk+X5/FBLQTiG0MFv2OCnpQM41MUY
-	6PMZ2Nowwo762eeGBqkPry8VOl6XM9NzGvvKZgmnvAbtagKU8vt+T+Re+smz1jKU
-	iHr6NLBs1ROYz3WI4/9QgUtHJJEsr/au4KxyHUsHY8ViQ01vRvpVF13iNIywQlOX
-	pToUI9SiYLSdmsAcGIiqgw==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="NTYzvHTv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RpTyzhE6"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 2A723138025D;
+	Fri,  9 May 2025 01:38:41 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-05.internal (MEProxy); Fri, 09 May 2025 01:38:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746769121; x=1746855521; bh=V8DYO9YGSj
+	L+Z/KplmmtVyYeUIZn9giQ/wCkZfztqaA=; b=NTYzvHTvzOSki2GsFITqCEyoFx
+	sIotrHkq89ckfDuU99sJnvLBEpmAtbOUnusV7u4YtLOkWESxRue10bKOYtTzcWC9
+	inPEYOKYcWaYncF/lZvFXTT99sudtEC45yBVPey4+r2i5i/yhr9UQNhhxl9CpTsc
+	BjISTyVLrTieDUlFs/Sy12FINTIM1o7Pvx6rl78IQAT4ZhdFlo+JYwwKMSlkqQds
+	0/YFnspQkGUoTd3lQ9lDrCEcQhaeBNukS1K4EhHafjSWnnZOGfqzb6yJgIgzPKcv
+	Uqsf3UnP3rW+aj/NTN81dCQJzWuqtu20EhfahG7lm1d3IGOrek97AqN4guOw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746762186; x=
-	1746848586; bh=oja3pvugdPG3yBBAIKw//fp5t5vjQsR0oDwv/bnmj1M=; b=f
-	tgw2CS6hKnpI7R+R1HDhoLWpfJbU4PZnXeKIVdRJpj50X6XaQ6S3RGzPmaLrPA6y
-	Rjd3162xwu0GnB1hpFEyXMF/kKXv+sG9rg+uk9Tnig/Gkh9f3bWTTNSt9KAJoXx+
-	oCudJDTgaz4hn7zn3eHJRetCMiuE9nrJ8VJu7WFstwGjt7TPuWq6TrK9kvIri0LO
-	2wO63teWeWFtQRZ5eWt1644RLmSiQ40c+ffgVYi4n3ox9WyNbzj9Der6Em8bs8oH
-	osfkpxGDVV52sNT3cPBhZrgyI66WgunVzVVhvr9VFoKwR7RC1nfiDTZJbtEqWuF4
-	CMIR6SO4HHu0OAYoqT9uw==
-X-ME-Sender: <xms:yXkdaCi3nuURL4595Co5V-PDyV3yDq1Zkk4IzhYc5jIbS-w7hsvmUA>
-    <xme:yXkdaDAI-C2cA5Ocz_7ydZKabCjDSF8tkIMox1kBaBYHq69h6BYWtZqicYKr5eBxq
-    EvIQd1kltRF48zD7Q>
-X-ME-Received: <xmr:yXkdaKH0lo2Dyn20u2khSwupsSS-uTD6FxlJIA7DhUFQHdTkDluISevHYhIHhydLAJh4vrcxHjl4OCiE1Tm2mSDLb-tGY-sOLFXb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleduheeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746769121; x=1746855521; bh=V8DYO9YGSjL+Z/KplmmtVyYeUIZn9giQ/wC
+	kZfztqaA=; b=RpTyzhE6w1ViVtdHjC+UhTmaaqZU08fbfflOqFNoBnptpYJhnKk
+	V1cgBYdACI8tERheMlkUzVXYd1J19FmScz4RGMJyFcINH/R0YxJrkb26lZBgBGJa
+	cchGEzvnILZJpAZqUpnxAtkfz94+ysQS8WBNP0CdfPJpshbSHrLTHmr9MyuSk1jj
+	OXdhcBuKAM35NW+t12oEbJs6hBGslCHyj1ytH+OUL4+FbdHaSxZWIjNLHaXmiZog
+	MhEKUaE2bDZ6WbI1c2yJvhkxfWdzgrzXUwuA0LkQWOfO6EhsaD0KCHjE8pNtequm
+	wqZXDtcAD/E/EbkeD4NUGtqm8eB5T7aLN8A==
+X-ME-Sender: <xms:35QdaNeTDIZTcqZXxp1ITMRtsY25zku5Br5KkG8PZEYJaG4SVk4W7w>
+    <xme:35QdaLM4WGRL8anxPSYFTmt1rq9yX6em4VdNVHpAv28hmI7F1AN9uJyBcIJYWi496
+    vL7h8nUyxV_pauHzg>
+X-ME-Received: <xmr:35QdaGhO5XI-sZYdY4BWPMDYFmAvsBYVzddbBl6y5Zq26hJGgTt1jStjoMY44jqrhi8dpRQUTMp1EDtBgwWOtUPnVdKinLy_LGWOafRe2Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledukedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehlrdhsrdhrse
-    ifvggsrdguvgdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
-    ephedtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphht
-    thhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:yXkdaLQ6XlDDk1OcJzp2Z9YOrm5EKGIItn8RQRojk3lw6CcHHYgLPA>
-    <xmx:yXkdaPx6EFPqekZInTh2WP5aWc0ISH57PndoMQPakv0ockHBxj-LOQ>
-    <xmx:yXkdaJ5huZVibmYXR4JlpfTxyJEC7YWKx1aJx00N6PsKtcqfIgCgEQ>
-    <xmx:yXkdaMwV6MFwrDHPbSc84OkBYOrAWtQxTTZSTdmGd8G6n4h-ATEamQ>
-    <xmx:ynkdaHE7Psqbi85BkinBk_Ky6yxVdCyq2yoE0VlAo-B8VMhuDXd2ILAV>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 23:43:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] REFTABLE_REALLOC_ARRAY: fix potential memory leak if
- realloc failed
-In-Reply-To: <174cb568-e2bd-41e0-b090-eadd919d1ddd@web.de> (=?utf-8?Q?=22R?=
- =?utf-8?Q?en=C3=A9?= Scharfe"'s
-	message of "Thu, 8 May 2025 23:42:37 +0200")
-References: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
-	<174cb568-e2bd-41e0-b090-eadd919d1ddd@web.de>
-Date: Thu, 08 May 2025 20:43:03 -0700
-Message-ID: <xmqqzffm30vs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopeehtddvtddvgeeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdrtghn
+X-ME-Proxy: <xmx:35QdaG8-16x38ceVYNBVOD83tYc8vhG6T1yrT4HZuztjQT1bSK8Hvg>
+    <xmx:35QdaJsTVQasxSxOgg9ewJ4YHUmG7neKociRHmWgE8sKPe518hYYxA>
+    <xmx:35QdaFE3oR8lIRg9_TjKBtPOM9OwR53rYP6Yi2l6LA2ecK2KfbS-hw>
+    <xmx:35QdaAPloP4PeukJFbCNsblXCco1b1zodoO9bq4nICVZJUtjgZ0Vgg>
+    <xmx:4ZQdaC5iy37xqIgsfQ2HZVxCbzssp41gW7yBIhseXUozhgnRXy-PwukS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 01:38:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ab196e6b (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 05:38:37 +0000 (UTC)
+Date: Fri, 9 May 2025 07:38:32 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH] fill_oids_from_packs: fix memory leak when
+ fill_oids_from_packs failed
+Message-ID: <aB2U2Jb8hXW3Hwt3@pks.im>
+References: <pull.1957.git.git.1746712275566.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1957.git.git.1746712275566.gitgitgadget@gmail.com>
 
-René Scharfe <l.s.r@web.de> writes:
+On Thu, May 08, 2025 at 01:51:15PM +0000, Lidong Yan via GitGitGadget wrote:
+> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+> 
+> In commit-graph.c line 1930, if open_pack_index failed, memory allocated
+> in line 1925 by add_packed_git will leak. Simply add close_pack and
+> free(p) will solve this problem.
 
-> Am 08.05.25 um 15:39 schrieb Lidong Yan via GitGitGadget:
->> From: Lidong Yan <502024330056@smail.nju.edu.cn>
->> 
->> REFTABLE_REALLOC_ARRAY doesn't free origin pointer when reftable_realloc
->> failed. This leak can be fixed by add a free(x) before set x to NULL.
->
-> Hmm, this macro is unused.  Perhaps remove it?
+The same comments apply to this commit message as Junio has already
+mentioned in other commits. We don't typically point to exact line
+numbers, but rather mention for example the function name.
 
-Or let the sleeping dog alone, perhaps?
+> diff --git a/commit-graph.c b/commit-graph.c
+> index 6394752b0b0..93d867770b0 100644
+> --- a/commit-graph.c
+> +++ b/commit-graph.c
+> @@ -1929,6 +1929,8 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
+>  		}
+>  		if (open_pack_index(p)) {
+>  			ret = error(_("error opening index for %s"), packname.buf);
+> +			close_pack(p);
+> +			free(p);
+>  			goto cleanup;
+>  		}
+>  		for_each_object_in_pack(p, add_packed_commits, ctx,
+
+The change itself looks correct to me. Thanks!
+
+Patrick
