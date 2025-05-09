@@ -1,159 +1,145 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEE8C2D1
-	for <git@vger.kernel.org>; Fri,  9 May 2025 15:21:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF2105223
+	for <git@vger.kernel.org>; Fri,  9 May 2025 15:26:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746804100; cv=none; b=DUP3nvPjE+wb2r/N8ZGm9Bk8pCCBX2GiBpOBWdwKKNEEAG9WnS0AgJ36sZZhogNNItkoJKqZX9txsB5djAQrs6yEKrUKXM7jC+OJ5gFBdJcszedneHR7slIjAAtvvbaiuWIE6bVolDHUQaVMOAWOnEMcjmPNLIKGB/qe3c7zeh8=
+	t=1746804397; cv=none; b=KP4wNL/ao2mSpSUsuPrGhUnlMI/UZ0WXSglrDwIwFfPzFbaM6HfHkqVJzS+VkrzM9mgHUDeuGllvWjIz62rgECydq2pG4uMHH1tz9wB3JQi3xXQycart5Dq7vRmr4vBPGR+R8YxZg6oPDN7tEk9YAsJBHwSf54aGCwWxIwpvi/E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746804100; c=relaxed/simple;
-	bh=mNWSjO6J0p70asNzG5zPYZQPwT4qR9jJfjl925wF9pg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=CZBNYj+IpGtSkpipVKKg425TJgdAdDEOxHR1TjG84aMrUKaQP+8bWkyIDOBjXKFF8hZ//8/cCbb7xBnFljf/H7Fofr06vZGGPfmn50hDdSR86aXOakSC7L5OtIWeY7wIW6nn3day0OI9rX42G4+ZYyDdo1NNBc4a+TifnQJljA8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=YunXgI8e; arc=none smtp.client-ip=209.85.214.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746804397; c=relaxed/simple;
+	bh=iV7yvqqZR5pq4qWD/BhNzfcmy/bxo4mJ9u1ncRyEDvQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=njS/7VlwUtW0WzUWCRC4PvwdT51tUOmVu5EIx7cGn18JjdZRxtxokDpGqJAW5yrnyla5uyzlTrCikZe3QAiFzKBkd4VPMaZH8jd5Ak+yfSYT5olmsZKI7aG47YD9caLnXHQMbIY7eIB4ayApQN5e1CiHytJ3CP9V9c2chMF4G2Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=nnute47q; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="YunXgI8e"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-22e76850b80so17304385ad.1
-        for <git@vger.kernel.org>; Fri, 09 May 2025 08:21:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746804098; x=1747408898; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=H87f985D+tfyttKVfRgpkW+5Ev7knamWCQYLWCZ8VIo=;
-        b=YunXgI8eq5POrIrKcfPN6vVQb/DhXKcV2y+lPFzxMtTP+Tt6Q7morkLY0aW96PkBc7
-         5pip6Ga/qVEH4t3vNRitM352ofaayqtf4diHIDNA7nzWdCIDw2q87Nl/QqiNxx1c++9X
-         a3MFPqAisRpAuDW5/L6+d/DPRRrXIss6tjv6z7D+vg7K+prPzaQcdmki1msFyh7F0AiK
-         GtKdN2buuMtl48wJNFmXMve1Zn3k6gO9Esliashx9cB181qjtmIbtkou4d2GRCUSi6Zh
-         kc2hhdRpXoyzHQdLEDWs9V1a4irYiOCE10zGu5bnRtH+2+YiBR5BgrmLVf2nYUS4pVPU
-         53qA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746804098; x=1747408898;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=H87f985D+tfyttKVfRgpkW+5Ev7knamWCQYLWCZ8VIo=;
-        b=iVAns8HLafVo+hHn9esw0PGJfu2jyAkeA9yCC9Olx6LvDVtAHWDhbapvHne4O0bHwa
-         5Lq9R2WSHAR97aMkZKms6C0o9c8ckxKGb8zwj/IE8FgJzf56yJjMN9JXChDLYcvRSC4d
-         POutnbwIpDJOA356dENhBBvHKDXnUoiqc9s40rhJf+IAiE5rBMs0t6Eixk9FZXYGvCtD
-         aBWby1NoXQapK+4R65UKpeA7EzSEf3xY/wxPwG7/qHdRRidtDxG1iVFkcGLQqsGO7Qr7
-         o5QD81/lRyVBgukKr3/6BNpRXn4dtDXI322tgrU4gsfSHA4Ia9mLy4QZLtQoxJsYJ9FI
-         Ok0A==
-X-Gm-Message-State: AOJu0YyJsWzOVQrfSkALic7qEI36eM74IT0ivvdGx5GBklVwtWcvgGeD
-	uhBeYKDvr1VCpbTQqWwt7wH7mXcw7EkgjOoIg7rXIeRET30qKK59
-X-Gm-Gg: ASbGncsOvMXSypWU8gG/sxAIR5oYLblPMM3XPzd9X0V4RQFlG7n09jjdB5h/bfo7hX4
-	kV7w07dV+3U4E3AFsbMMDOsVZXaJYvDOyl5KLV/9mdbcbMlAV3gUIKL/kYzmTl6LBG7uuShA4ZM
-	cX4sAPu2CJ5Gl/PoemaCwtemCGIN0+1L20tbnzvaXbkzIlwMrcOUCWO7u8VF28sm7dE2r6aGvoM
-	Qjwig/+UuRSn0L5QnYRKT4ynHX33VsUymbq7peRNa5TH8bapVkfNy+oGsS/NS9otT8YitnuWKmD
-	klEiQxurITB6sMS1d93Srv3gg5AGSXvpG4+/uUAv8z5EhFU=
-X-Google-Smtp-Source: AGHT+IHuoQ+/iWBG802ROC5yxXYh2eCMvGVinn+eKNOJzGy+G8l60Rha9CFafLsf4IM4Tn2dZxyGrA==
-X-Received: by 2002:a17:903:2f8e:b0:216:7926:8d69 with SMTP id d9443c01a7336-22fc91ab409mr50570145ad.47.1746804098565;
-        Fri, 09 May 2025 08:21:38 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22fc7743bc9sm18434395ad.100.2025.05.09.08.21.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 08:21:37 -0700 (PDT)
-Date: Fri, 9 May 2025 23:21:34 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 4/4] packed-backend: mmap large "packed-refs" file
- during fsck
-Message-ID: <aB4dflpFNW4mJlq6@ArchLinux>
-References: <aBtzn4nwLsI9p5Cp@ArchLinux>
- <aBt0C8gdBecq5f8U@ArchLinux>
- <20250508200741.GB18229@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="nnute47q"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id DPZIuKKykXacADPZJuVBvk; Fri, 09 May 2025 16:23:25 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1746804205; bh=rbX0fkicpGeCj+34fd4aUSaLQmuf8fISpc900XnAXrE=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=nnute47qqDvXGlyn8fxSx5OItc/YMvv1teFa5kWKqgG/KvpiSovaoAxKPYiSGUG7L
+	 mI2TcDob0h84ZRNvt2PZ/MRslREqLQ/EQp/T1M49QPsPumR9QtOqRcmzzbZ+1IwIXR
+	 TAJFx3OuPc21IeiOKERkoFsvb6qRrkDqngVQGIvZ/3f4rrCeIyI7a5qHmfhSA230zq
+	 MRANEVHg7aSEj+wi1bdjNMlSGfiY3fq16+/BOdmJOApHjkQQoRismRc7fgMv1a6pfr
+	 aI+FylbMF4tlz3sCvcN6hckGRudVBHDKbZnAtdcT3mZDBEJiiF0ivHPuNm6KIf6yCX
+	 8RoO8GpYpaeJQ==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=X9rxK3Te c=1 sm=1 tr=0 ts=681e1ded
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=ukH1R-b_AAAA:8 a=kEb-AwymRv2rEsFlSO8A:9 a=QEXdDO2ut3YA:10
+ a=Wk8CdDEMYW0A:10 a=zUGFzhdS3I8ccRoxxLmr:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <348ccba5-66c1-4c09-a478-3cffdd862d8b@ramsayjones.plus.com>
+Date: Fri, 9 May 2025 16:23:20 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250508200741.GB18229@coredump.intra.peff.net>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/5] meson: correct path to system config/attribute files
+To: Patrick Steinhardt <ps@pks.im>
+Cc: GIT Mailing-list <git@vger.kernel.org>, Junio C Hamano
+ <gitster@pobox.com>, Eli Schwartz <eschwartz@gentoo.org>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
+ <aB3CDOljn9zJsVwt@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <aB3CDOljn9zJsVwt@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfHj8XZAGDyuRKW65vmkfOI95XYU/09k/CbutLLwaongnvjUSmng7Ew76L1XgG48OcdeK+FKCV6rwBdB9gsLy8l9SyN0V9HWh+WkZdDmHQt+g2DzBJIU2
+ N9jcSye8aMm6DERVhZwvfRe0fW0KXbS28D5ED2Y7a9x404jhWW4rBWYkqFCWD+vbFIu0DVuuTK8rBtUmKt9S5/t36kZjpxZs7V0=
 
-On Thu, May 08, 2025 at 04:07:41PM -0400, Jeff King wrote:
-> On Wed, May 07, 2025 at 10:54:03PM +0800, shejialuo wrote:
-> 
-> > diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-> > index ae6b6845a6..ff744f1d4c 100644
-> > --- a/refs/packed-backend.c
-> > +++ b/refs/packed-backend.c
-> > @@ -2079,7 +2079,7 @@ static int packed_fsck(struct ref_store *ref_store,
-> >  {
-> >  	struct packed_ref_store *refs = packed_downcast(ref_store,
-> >  							REF_STORE_READ, "fsck");
-> > -	struct strbuf packed_ref_content = STRBUF_INIT;
-> > +	struct snapshot *snapshot = xcalloc(1, sizeof(*snapshot));
-> 
-> Minor, but is there any reason to allocate this here and not just:
-> 
->   struct snapshot snapshot = { 0 };
-> 
-> ?
 
-I simply copy the code from the existing code... I will change.
 
+On 09/05/2025 09:51, Patrick Steinhardt wrote:
+> On Thu, May 08, 2025 at 05:44:37PM +0100, Ramsay Jones wrote:
+>> diff --git a/meson.build b/meson.build
+>> index 48f31157a0..106cb17612 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -757,8 +757,6 @@ endif
+>>  libgit_c_args = [
+>>    '-DBINDIR="' + get_option('bindir') + '"',
+>>    '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
+>> -  '-DETC_GITATTRIBUTES="' + get_option('gitattributes') + '"',
+>> -  '-DETC_GITCONFIG="' + get_option('gitconfig') + '"',
+>>    '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
+>>    '-DGIT_HOST_CPU="' + host_machine.cpu_family() + '"',
+>>    '-DGIT_HTML_PATH="' + get_option('datadir') / 'doc/git-doc"',
+>> @@ -769,6 +767,18 @@ libgit_c_args = [
+>>    '-DSHELL_PATH="' + fs.as_posix(target_shell.full_path()) + '"',
+>>  ]
+>>  
+>> +system_attributes = get_option('gitattributes')
+>> +if system_attributes != ''
+>> +  libgit_c_args += '-DETC_GITATTRIBUTES="' + system_attributes + '"'
+>> +else
+>> +  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') + '/gitattributes"'
+>> +endif
+>> +system_config = get_option('gitconfig')
+>> +if system_config != ''
+>> +  libgit_c_args += '-DETC_GITCONFIG="' + system_config + '"'
+>> +else
+>> +  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') + '/gitconfig"'
 > 
-> > @@ -2126,21 +2126,23 @@ static int packed_fsck(struct ref_store *ref_store,
-> >  	if (!st.st_size)
-> >  		goto cleanup;
-> >  
-> > -	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
-> > -		ret = error_errno(_("unable to read '%s'"), refs->path);
-> > +	if (!allocate_snapshot_buffer(snapshot, fd, &st))
-> >  		goto cleanup;
-> > -	}
-> 
-> Looking at allocate_snapshot_buffer(), it will return 0 only when the
-> file is empty (and thus there is nothing to allocate) and will
-> otherwise die(). So we do not need to report any error when it fails.
-> Good.
-> 
-> But that makes the "!st.st_size" check in the context redundant, doesn't
-> it? It can just go away.
-> 
+> Instead of `get_option('sysconfdir') + '/gitconfig'` you can say
+> `get_option('sysconfdir') / 'gitconfig'`. It's a bit pointless in this
+> case and not really needed, but '/' has some special magic for handling
+> absolute and relative paths.
 
-Good catch. I remember in the V1, this does not exist. I may make
-something wrong when rebasing the code. Thanks!
+OK, TIL. I just looked this up ([0]) and I am not sure such 'magic' is
+always a good thing. ;)
 
-> > -	ret = packed_fsck_ref_content(o, ref_store, &sorted, packed_ref_content.buf,
-> > -				      packed_ref_content.buf + packed_ref_content.len);
-> > +	if (mmap_strategy == MMAP_TEMPORARY && snapshot->mmapped)
-> > +		munmap_temporary_snapshot(snapshot);
-> > +
-> > +	ret = packed_fsck_ref_content(o, ref_store, &sorted, snapshot->start,
-> > +				      snapshot->eof);
+[0] https://mesonbuild.com/Syntax.html#string-path-building
+
+>> +endif
+>>  editor_opt = get_option('default_editor')
+>>  if editor_opt != '' and editor_opt != 'vi'
+>>    libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
 > 
-> Why are we unmapping here before we use the content? That will create an
-> allocated in-memory copy of the mmap'd content. I thought the whole
-> point here was to avoid doing so.
+> Nit: let's maybe add an empty newline after each of these blocks to make
+> it a bit easier to see where handling for each specific option stops.
+
+OK, will do.
+
+>> diff --git a/meson_options.txt b/meson_options.txt
+>> index 8547c0eb47..4d78d4c7ac 100644
+>> --- a/meson_options.txt
+>> +++ b/meson_options.txt
+>> @@ -3,9 +3,9 @@ option('default_pager', type: 'string', value: 'less',
+>>    description: 'Fall-back pager.')
+>>  option('default_editor', type: 'string', value: 'vi',
+>>    description: 'Fall-back editor.')
+>> -option('gitconfig', type: 'string', value: '/etc/gitconfig',
+>> +option('gitconfig', type: 'string',
+>>    description: 'Path to the global git configuration file.')
+>> -option('gitattributes', type: 'string', value: '/etc/gitattributes',
+>> +option('gitattributes', type: 'string',
+>>    description: 'Path to the global git attributes file.')
+>>  option('pager_environment', type: 'string', value: 'LESS=FRX LV=-c',
+>>    description: 'Environment used when spawning the pager')
 > 
+> Makes sense. Should we maybe document the default values here now that
+> they aren't immediately obvious anymore?
 
-I simply follow how "create_snapshot" does. Actually, I am also quite
-confused about this. If we would eventually copy the content into the
-user space's memory. What is the reason that we mmap at Windows in the
-first place?
+good idea.
 
-My understanding is that after mmaping, we need to do some sanity checks
-and then if there is a need, we may sort the "packed-refs" file. So, we
-would improve some efficiency at Windows for this part?
+Thanks!
 
-> It does shorten the amount of time we hold the temporary mmap in place,
-> but I don't think we care about that here. The whole point of
-> MMAP_TEMPORARY is that we usually hold the packed-refs file open across
-> many requests, and on some platforms (like Windows) we don't want to do
-> that. But in this code path we plan to mmap, do our verification, and
-> then drop the snapshot. So we're always "temporary" anyway.
-> 
-> I.e., I'd have expected this code to allocate_snapshot_buffer(), do its
-> checks, and then call clear_snapshot_buffer().
-> 
+ATB,
+Ramsay Jones
 
-I will improve this in the next version.
 
-> -Peff
