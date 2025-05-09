@@ -1,101 +1,96 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549DA232369
-	for <git@vger.kernel.org>; Fri,  9 May 2025 15:53:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFCEF23237B
+	for <git@vger.kernel.org>; Fri,  9 May 2025 15:59:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746805982; cv=none; b=aQ9omoJtA8C2Vo6j0DKdRpnhLfOBd04a0sy5bTbqPWaBwOzOdPYjjPiT3krVCHcLo7sDzmk+cQ40JmkG2Jsi9mLf6iJc0AxY6GNRGk2GX46+G8zInDJhpSopF4GqoA8sZGZoNmczrSJbuF7Ynq4HI4C+UZPZuuaElSdG+VECa8g=
+	t=1746806379; cv=none; b=EwL7lPkombQQkugp+02+yLF3H8x5ew+Og3M9YZjVf0b5O/zbLGKuiejrAW5OW6gF1gI3xmSLhZKDCjykchwrNiNqULFVbwmEWWVef8Udf5gO+7BSsPjiTCONbsgGUp+mGvyzcLvFuluOXObnqFoirSeAq77FCzxnQDGAdsnQJsk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746805982; c=relaxed/simple;
-	bh=Dt87ZwOUpPnCT1CJl1FESpPKt9QBO0tIJkrpV24Hkno=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=o5lhW4qJN565dzuIqckunlWg68bz8VCxpsx/x0kN262OieZYTxUPNULQRl0LZRHjwiwmwPp5c6hbKGWZCl0bSxEQWmJL/mvgx8SOUFyNqelSnDSifD0/AZSO6KcE7oZDVfMExHaVhtcLg396xDhbTbXe+hYALcJHSIBLoOerN7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lv2nos35; arc=none smtp.client-ip=209.85.218.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746806379; c=relaxed/simple;
+	bh=A0ZcBS+u8Oa59gmZ62YdGgKIjKRd+nqFsGX0/ileQco=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BAeStZZWEadGF/Hy99VjcQBuBoBEeI2zU78X+Ze5Ktv734ii8h+dINqXyWywHeyttkFuSDm3t9ICwtJMAHHQH1AZwCk0AlOqHTXtn+DIj95yur+/pJl1MpQJTULtx0Eaps6efUwCrWxjLoXBWI32ICG7vJewYo4X1kDVtkK+va0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=UfNHC0dv; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lv2nos35"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ace333d5f7bso389876366b.3
-        for <git@vger.kernel.org>; Fri, 09 May 2025 08:52:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746805978; x=1747410778; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Dt87ZwOUpPnCT1CJl1FESpPKt9QBO0tIJkrpV24Hkno=;
-        b=Lv2nos35RzMhClIc9zzdXVCTEMv2QNWqE8heE+7z9eek4h0Qv0D1wDyUL52xFaujKR
-         OW/y5qEiF1b4b/ffqYbkqsaFfX1IdJ5JpTkrV5eeji5/CtlArx2497iyF1M1i4cpz5ho
-         JnFjKPeFI53uEBhBqoLmEbk+OgApkGHwKJdGGpnLED5rQVos7yNyYg1usSetPK3lgSus
-         /Me7eVLX1Pxv1fwfvZDBGZXPbMxn5+2BXEtWBsaSeomLqsUywXDe4xa7q0zYYpYAnL1N
-         wSUyuSZfLjS6u4LziCJOEkSJwiZBbOG5np7MIkUOVn7Gl0AfhowivsbXPxYmvdO20VB0
-         cDHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746805978; x=1747410778;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Dt87ZwOUpPnCT1CJl1FESpPKt9QBO0tIJkrpV24Hkno=;
-        b=IWkQAqsoKWOxLTRd3mZgoSvOVkuJqi/gVuZeB/zFb8Qq3erTfrFRMI7GbZvKVUAOls
-         YdSj/ULNHyfy1H2xG0Fk/zzP5bJXq/28JfP/ms/ScVu0ln2DRkQ1aMdjri66Gsyyenla
-         l+BJU2tetrNvTSmVQdLZzt8l4iyPKl9p7HIbz16JipHI5Ab9WTmPCm8nSXGdNXvyxoMQ
-         LFFYY13VUuP5YAKAj6eleVBhwCIvKM++rjnnQTffJjigaRrLqUzaU6NqnJGRneWtWty4
-         8eCKQ7LrL8mHFYYOKO+PHxEXddmmJyXT1iIEGvL4LPH/L0rNsU+9D7epanvxv339EFt5
-         htEQ==
-X-Forwarded-Encrypted: i=1; AJvYcCXmsj4sSqftxRaIkAJLGNNj+2NZnDM4UJZzX7gGCKporigeoYUVvhTUs6FTiLvO4/s70lE=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxrU9j9nFzPXsZZ5Y2l1eB6kQop6J2oJB2bgsGQbE5B3VIAakQr
-	OxvyldOxCGhy6u1QtjmUG6OKR4nBEIO39z5WA5ZaZyjBRwCbmgifRdS3WVPHOptDPuaJFVuwsol
-	MBRZ2PVLWb4p028WG8XINMS/Jqk8=
-X-Gm-Gg: ASbGncuj7Tuuib3ud2UfwEScfp37rihn8okYICNl+JK7bE5TGbLYZmXR31b9nK05m9U
-	yOmB06QA3RVRDneqSeHRZSczHvQq1hbc17NbcOP+MO3xlQ8fhdyH6G3zFJjrz1NLtpTCzPjp2hu
-	9URwtRy35tAdwpKy6WVMDmEN+96qd6rl+Z0Gt9IWauhphmMWl5lH+wlZ8fEQdVTqzRnQ==
-X-Google-Smtp-Source: AGHT+IE0zdo3YNtG109FD870NZcPRx/HsDq/v9qt8YPXirVcg5ukckaRe59ptoT1clOz4XEa0agL4HRVapGVf5TodQw=
-X-Received: by 2002:a17:906:f296:b0:ad2:1f65:855f with SMTP id
- a640c23a62f3a-ad21f658715mr245809166b.12.1746805978297; Fri, 09 May 2025
- 08:52:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="UfNHC0dv"
+Received: (qmail 3697 invoked by uid 109); 9 May 2025 15:59:35 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=A0ZcBS+u8Oa59gmZ62YdGgKIjKRd+nqFsGX0/ileQco=; b=UfNHC0dvReAsZi6yQiKGPjOs7oqSFKcBd3AAd2WTq7cDO8Hp90WnfFPNZ3UDpoTW2qOYLZ9RB6Nev4KQgVISE6hnqEifW8cJKYYnu+UU/eVZt709bCNdp4vLlzNJPaczOwfT6zHyjwMDWxBY45Oi8hdLmK6QqLyKtjVz7d2ggh0mHvjo3QqqsMMe7bE0q7X2ZK+dfAsgjd1/xR7qzbVMTGwCt8dhcMBnfzqRDAA+2vdte9UZdd5sCTnHAcIOGreA1C/2N4Y03jgLLgWDeq2ufsryj7/oM86WCS7KJNYG3jMZqdWR5D9taRJ5Q2aKrrp7XUE+BvNYWvSj2RDkqrx25A==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 09 May 2025 15:59:35 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 32668 invoked by uid 111); 9 May 2025 15:59:36 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 09 May 2025 11:59:36 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 9 May 2025 11:59:34 -0400
+From: Jeff King <peff@peff.net>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 4/4] packed-backend: mmap large "packed-refs" file
+ during fsck
+Message-ID: <20250509155934.GA25686@coredump.intra.peff.net>
+References: <aBtzn4nwLsI9p5Cp@ArchLinux>
+ <aBt0C8gdBecq5f8U@ArchLinux>
+ <20250508200741.GB18229@coredump.intra.peff.net>
+ <aB4dflpFNW4mJlq6@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAC4O8c9OJQQn_22i0-bZUDtHoi+ti6aT6FwupnQBoBFg6BNK6w@mail.gmail.com>
- <50428492-8ece-426f-bfea-071b7bd2c374@kdbg.org>
-In-Reply-To: <50428492-8ece-426f-bfea-071b7bd2c374@kdbg.org>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Fri, 9 May 2025 11:52:47 -0400
-X-Gm-Features: AX0GCFuUwmswbc9zMpXHKOLnWWc46FALrjBgRDrEqv2tKCERIsJRZIGzC5NiD0Y
-Message-ID: <CALnO6CDNPWWCWXvkpU0BUmaCzUfyZQhrtcxi1Nw_MBwVO6BKnQ@mail.gmail.com>
-Subject: Re: easily use meld 3-pane view to review merge commits?
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Britton Kerin <britton.kerin@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aB4dflpFNW4mJlq6@ArchLinux>
 
-On Sun, May 4, 2025 at 5:38=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
-> [=E2=80=A6]
-> When merge conflicts are to be resolved, you have exactly 4 versions of
-> a file to work with: base, ours, theirs, and the merge result. (Meld
-> does not show the base and uses only 3 panes.) For this reason, it makes
-> sense to have 3 panes in a merge tool, perhaps a forth for the merge
-> base. That's it. You never need to have more than that.
->
-> With a merge commit, you can have: the merge result, the first parent,
-> and the second parent... and the third parent, the fourth parent, etc.
-> You can have any number of versions to deal with.
->
-> How does that fit into the picture? Can meld (or any other merge tool)
-> have any number of panes and still work in a reasonable way? Why should
-> 2-parent merge commits be special-cased?
+On Fri, May 09, 2025 at 11:21:34PM +0800, shejialuo wrote:
 
-Out of idle curiosity (with some Zsh shorthands):
+> > > -	struct strbuf packed_ref_content = STRBUF_INIT;
+> > > +	struct snapshot *snapshot = xcalloc(1, sizeof(*snapshot));
+> > 
+> > Minor, but is there any reason to allocate this here and not just:
+> > 
+> >   struct snapshot snapshot = { 0 };
+> > 
+> > ?
+> 
+> I simply copy the code from the existing code... I will change.
 
-for x (a b c d e); print -l 1 2 3 | shuf > $x'
-vimdiff {a..e}
+Ah, I see. The existing code must allocate on the heap because it is
+returning the snapshot to its caller. But here the variable is
+completely local to the function.
 
-Turns out vimdiff can handle this and be reasonable, yep. Partly
-because we can have arbitrarily many splits. It's still a bit
-difficult to understand, though.
+However, if we stop using mmap_strategy altogether and just use xmmap()
+directly, I don't think you'd even need a snapshot variable.
 
---=20
-D. Ben Knoble
+> > Why are we unmapping here before we use the content? That will create an
+> > allocated in-memory copy of the mmap'd content. I thought the whole
+> > point here was to avoid doing so.
+> > 
+> 
+> I simply follow how "create_snapshot" does. Actually, I am also quite
+> confused about this. If we would eventually copy the content into the
+> user space's memory. What is the reason that we mmap at Windows in the
+> first place?
+> 
+> My understanding is that after mmaping, we need to do some sanity checks
+> and then if there is a need, we may sort the "packed-refs" file. So, we
+> would improve some efficiency at Windows for this part?
+
+Ah, yes, that makes sense for the existing code. If we do have to sort,
+then mapping on Windows means we could sort into our internal buffer,
+saving an extra copy. That is probably a rare case these days (once upon
+a time the file was not guaranteed to be sorted, but these days the
+writer makes sure it is sorted and puts a marker in the header claiming
+it is so). So maybe that approach is not as useful as it once was, but I
+don't know if it's worth spending effort to rip it out now.
+
+I don't think any of that applies for packed_fsck(), though, since it is
+just processing the file linearly in that case (rather than making a
+sorted copy).
+
+-Peff
