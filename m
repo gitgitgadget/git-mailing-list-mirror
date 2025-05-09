@@ -1,83 +1,87 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CFC78F40
-	for <git@vger.kernel.org>; Fri,  9 May 2025 20:17:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ABB2376EB
+	for <git@vger.kernel.org>; Fri,  9 May 2025 20:37:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746821854; cv=none; b=GkrVXAu2vSEtnuwszKNuTUVs6+ynfqQMlBD9iFwzqmqVZFg8nVYGrjsP4E9hZguA2/FS6f5quJebxLlrYtNoSzDgEs4qa+8GxYj42uVFkj8y3hPULmScxpEEr6Nl8Uw1kpEV9AGjYmZekZ9NLTiKZ77L4+I+MpCYYLVAZ7qHWzU=
+	t=1746823070; cv=none; b=LdTLbbHk6X+qs3gVif4f6sDA8DN44FnOPsyDQcgNz2LYsVy4P2mKrnPqsBoC2mItbIdk6CzgR3d8gagNsbsISfQ/dYJAfsLqHyTDn9Zwa9ZCpwpnHYl7BdkDoMvg84SsJfSGs19E5i9pF7ToX8+x+G0Pq0nbdl/kNZWttDK3Lc8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746821854; c=relaxed/simple;
-	bh=0yITxan1d5611HL/cpTcC3cqILLiAvM1MbU8iHpSDDA=;
+	s=arc-20240116; t=1746823070; c=relaxed/simple;
+	bh=x0mEqIQ0gD7i4c/Fz5aQZ18U5i61WwCUcEWZRfCkX3s=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AfiI8pfQFaBCDwiXUjCh0hev4b+DcKAypwCDsvBhyxgSPqLhe8MrmfbQ8In4wUFx4saQJtuLvXZ+c1lHHZTpwCcWgML0QH9TnikjHwVLOsczYsnogt351eaYjaNebjVN2Rcr3yr13z1Fp9Iz1OwSCXnJzZ0/e56vs9ECpyKUw8M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NZdXW0xj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kVgwe+u6; arc=none smtp.client-ip=103.168.172.146
+	 MIME-Version:Content-Type; b=LBfeMvejW0KlTpaAxSEiPyoqdwN0XYTREtr18BBsBMa27QiBVrC/E1F3SL3BT+u3Pte4oL16ipqT78R0OQrE0BVFz8NdR6nTBo3z/+2JafCew35v0vK90W//HFbjOGsZKx4/Fwkxtn/pXOObXqHeLK9+8H5wwHE52eB42CTsHzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KFy1+3r7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sfuNY8Vm; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NZdXW0xj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kVgwe+u6"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KFy1+3r7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sfuNY8Vm"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 01B7D1380172;
-	Fri,  9 May 2025 16:17:32 -0400 (EDT)
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A28EA11400C7;
+	Fri,  9 May 2025 16:37:46 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 09 May 2025 16:17:32 -0400
+  by phl-compute-06.internal (MEProxy); Fri, 09 May 2025 16:37:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746821852;
-	 x=1746908252; bh=bQBK1epnUl59vyr3/DtfG+6uGu6xlFqIV8kDN7GZl84=; b=
-	NZdXW0xjclEyG4ekHNXmykd1YP2pMDPAFUeUzWICNo2RZe+4faBXgUfE+dFd4jhg
-	FuqXi/xOEFHzusjovNRI2954YEvCRd0DPYidSMVMEihdOJoo7pL9E19xCYD4uIqD
-	17zRPO1CDQklRb7BQevWicE1fRB/JxKBFOwKbdIYMsrjLNYNfeKe3RHh6QFSsD0r
-	WPq4nQ0Bh2p9iXfydeQbQ467jCV3OFtrXKFs/z5OIdKWYugUcaZ30ovu2k2ig9S/
-	BnYLtk5zD/AAuGAn5Rj/TGnl2ZCFClcm5I5/n1dVX5/Yb06v49fUml6nvhWfVSf4
-	PXB1YhIAeqgBA/9JEVHWKg==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746823066; x=1746909466; bh=A5C2YIWd9i
+	25WBDxPV/YlDUjSgwIH/Z18AeE3xGWmQU=; b=KFy1+3r7S3roTbKadheqfvRTAm
+	m/PYFUIj5XNfX0IQRZvq5ailhhB9DlVmLQuKp/x9hIYhv0TXiEtf3nzxa7Ice6+W
+	qZCX/0VKEKRTCP4w3DWHCsCelIQ5qIRt56/wlvzmk+eY6ydw/mLwd84IAJMPgcHd
+	Kdox1G9IsS1rIbIN48Svh8BDn2V6WpEwQaOTmISweFoa9cDrGqbEMCsp374S6kQR
+	/UtsiaPmWvL1ZVSy396ID/5zSu94iZFMvMvRED2tV+Ctk4tKLKHasuOpDJYi8i/Q
+	e0NfxwVuUQ5F7cUFn1mk22HXCS7xQGHUKQ9/NNVHIQ66xmgOvwE7ae+AGwUw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746821852; x=
-	1746908252; bh=bQBK1epnUl59vyr3/DtfG+6uGu6xlFqIV8kDN7GZl84=; b=k
-	Vgwe+u6JlD8QF4HDK+Xe7NBPkMyNzXOvTPSTqrG3QLO1wgPCotLAZDdg5nHem62E
-	TYYGGAFfaeR1xml1JC0qR0mWiLAl83daemtjCevua16m3lGoQ9K0dXYzdAYBJk0n
-	UXSoR2Ti9S0wD4mFRnY2w2qSVMS3ZmWFTbSrdjrj64m9olnni8Tzi9qLz1dE3Ntv
-	fPYOqQL1ks3OnvAkKz8ao1p1SwtkNaypoX1uOUngXHVXUV4agcsLaB9xg7W5fsTO
-	cMf7SAdDFOFCjIpY7sZ6ry/qA3TQD1yrTr9IPaKpeSNA/j0drFqimREW2Jaq7V9a
-	rYDaJybNCBxpLg+xJiAvw==
-X-ME-Sender: <xms:22IeaMFTyCyzb45e3t5FRE1kPzB2RHa8m6tAPXoTBOgnkj3gHaAMhg>
-    <xme:22IeaFUrbehVhhZJcf2Mrhx6Mdb_x0VFSmzkSdNpNoHtX7dsCzMCGV8oSltXSTNsr
-    ixiRH2ZVIvs3HF3-g>
-X-ME-Received: <xmr:22IeaGIpJqvV1WJ74zRC0v97-2VZ9WClW5wq7nE-O3qaU2r8fLGPLWW4L4j1_Av4YEaP1tMGl0GfZY4yNpx1SDWz0zB8ksS7STIJ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefheeiucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746823066; x=1746909466; bh=A5C2YIWd9i25WBDxPV/YlDUjSgwIH/Z18Ae
+	E3xGWmQU=; b=sfuNY8VmK7zNwR9LJC6U1BbLK5VrwyP/UQT4u8LoHCIceUQz9wr
+	rsH4XQefIgWfwZMmNN/AF7H417fcL/iJ+le9T4hfLHfAxCfyzwwJ9lGnfvWCel16
+	2txK0uz6+/DfnQxisfjlZmausofI/IKq3IT14mCLVocQFLRUX1xcVr1U6hdSViSR
+	tg8pF1FRI3X3WUaAiksCvrUwxru6IiFcxllFdTqNA9tXYUXzZr5D4Lnt5DZH2fSL
+	Wi6FW2O8fHXGWNfALJSCeWkQYWOJEr7BjDF+jOVRfbkGpNGY/MIYqbd4DVoMKby6
+	AVs61nWj3UrMxj81iwEXr7GKMyjLe6A/jvg==
+X-ME-Sender: <xms:mWceaOsFb9SNzZjx5YRPzN07D9zAfQXPbvivuTYLllQtplt01_pu_w>
+    <xme:mWceaDfDMLlH_Gf6JCaF4UvqtUmP0-F7ZkfDD6tmBeTqUxaan-x6apLA2ryD3zQLU
+    IZYXZU7XekZ9gkB2g>
+X-ME-Received: <xmr:mWceaJzgOkm80zCWMHugIkundxoT6DsFFVtyhYQ1q75a64RiKsqgzXoZg1O_ZuMV4KH9Ho_cmUXvR1nSswGN7cxX6B5wF52uBaVS>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefiedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgr
-    mhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnh
-    epgeeghfdufeekgeeuiefgjefhjedvjeevtdehgeeuudekgfeileefueetjeeiueelnecu
-    ffhomhgrihhnpehgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjiehtsehkug
-    gsghdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:22IeaOEWqY_RZ3bxvruO5joKNsZR_MAsfE_m3C5jTmMl0pMa77ovLg>
-    <xmx:22IeaCWoPIc_qIFEiJsLBlfvIFpABrK21ujrl3j-xGWJXPgokitg2w>
-    <xmx:22IeaBNy56z8vq5g6Z3UpKOT52cH6xP3Lj2td4DYq5VOvhkAFAg19w>
-    <xmx:22IeaJ01KqVEgqQbRU-4ismXhpT7hfYKh8eO2GCVFQXSAXeUzTbHGg>
-    <xmx:22IeaFeG9ADWgwxbAu6Bev6ZICxiqOV-fKcPoIReshijZrsT4PP-6O6k>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
+    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
+    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
+    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
+    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:mWceaJM2kbCK3u393Neb3kytUbENUI14TgdGME39Qvcgw_RS_rvvmA>
+    <xmx:mWceaO8SpKoF1DSMxI7YEtPeyZq42UjVFBnviCzvNRRB3sQUDmL-ig>
+    <xmx:mWceaBVmGUgpZ8v1dCf3K48jSaLUzBVfMiblUG9CwHS76fQd3JROjw>
+    <xmx:mWceaHfmgEhfpXJmuJ2v879fGn427NIxTo3oboPHBohYLzUFwfsZSA>
+    <xmx:mmceaARTbu6MimJGUnjWrOFcaF7kwZfzYiZYCENxgVuSQTc6-K4QpaO0>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 16:17:31 -0400 (EDT)
+ 9 May 2025 16:37:44 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Git Mailing List <git@vger.kernel.org>
-Subject: Re: [GIT PULL] gitk: fix Cygwin infinite recursion, Tamil translation
-In-Reply-To: <113a6aef-7dd3-4a5c-8c0e-1acb9c0bd16e@kdbg.org> (Johannes Sixt's
-	message of "Fri, 9 May 2025 19:29:16 +0200")
-References: <113a6aef-7dd3-4a5c-8c0e-1acb9c0bd16e@kdbg.org>
-Date: Fri, 09 May 2025 13:17:30 -0700
-Message-ID: <xmqqjz6pzgh1.fsf@gitster.g>
+To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff
+ King <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
+Subject: Re: [PATCH 2/2] sequencer: rework reflog message handling
+In-Reply-To: <90c6912478683d96ef18b521506c703a2467585e.1746807747.git.gitgitgadget@gmail.com>
+	(Phillip Wood via GitGitGadget's message of "Fri, 09 May 2025 16:22:27
+	+0000")
+References: <pull.1919.git.1746807747.gitgitgadget@gmail.com>
+	<90c6912478683d96ef18b521506c703a2467585e.1746807747.git.gitgitgadget@gmail.com>
+Date: Fri, 09 May 2025 13:37:43 -0700
+Message-ID: <xmqqfrhdzfjc.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,42 +89,43 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> The following changes since commit 4a6cc6a20eeb593f1ad0f60475a9867532d7c5d5:
->
->   Merge branch 'pks-meson-support' of https://github.com/pks-t/gitk (2025-02-20 10:54:37 +0100)
->
-> are available in the Git repository at:
->
->   https://github.com/j6t/gitk.git master
->
-> for you to fetch changes up to 3fdbf184be906b5f6abb35c02842ec8ad861e8f9:
->
->   Merge branch 'at/translation-tamil' (2025-05-09 18:01:02 +0200)
->
-> ----------------------------------------------------------------
-> Johannes Sixt (2):
->       gitk: adjust indentation to match the style used in this script
->       Merge branch 'at/translation-tamil'
->
-> Mark Levedahl (3):
->       gitk: override $PATH search only on Windows
->       gitk: _search_exe is no longer needed
->       gitk: limit PATH search to bare executable names
+> Fix this by creating the reflog message nearer to where the commit is
+> created and storing it in a local variable which is passed as an
+> additional parameter to run_git_commit() rather than storing the message
+> in `struct replay_ctx`. This makes it harder to forget to call
+> `reflog_message()` before creating a commit and using a variable with a
+> narrower scope means that a stale value cannot carried across a from one
+> iteration of the loop to the next which should prevent any similar
+> use-after-free bugs in the future.
 
-Thanks, pulled.
+Nice.
 
+> @@ -1124,10 +1119,10 @@ static int run_command_silent_on_success(struct child_process *cmd)
+>   * author metadata.
+>   */
+>  static int run_git_commit(const char *defmsg,
+> +			  const char *reflog_action,
+>  			  struct replay_opts *opts,
+>  			  unsigned int flags)
+> ...
+>  static int try_to_commit(struct repository *r,
+>  			 struct strbuf *msg, const char *author,
+> +			 const char *reflog_action,
+>  			 struct replay_opts *opts, unsigned int flags,
+>  			 struct object_id *oid)
+> ...
+>  static int do_commit(struct repository *r,
+>  		     const char *msg_file, const char *author,
+> +		     const char *reflog_action,
+>  		     struct replay_opts *opts, unsigned int flags,
+>  		     struct object_id *oid)
 
->
-> தமிழ் நேரம் (1):
->       gitk: add Tamil translation
->
->  gitk           |  221 ++++-----
->  po/meson.build |    1 +
->  po/ta.po       | 1457 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
->  3 files changed, 1553 insertions(+), 126 deletions(-)
->  create mode 100644 po/ta.po
+OK.  We no longer have the reflog_action as a part of replay_opts,
+but they are almost always passed together, so making them sit
+together in the list of parameters does make sense.
+
+Will queue.  Thanks.
