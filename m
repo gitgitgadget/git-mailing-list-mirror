@@ -1,188 +1,98 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+Received: from smtp3-g21.free.fr (smtp3-g21.free.fr [212.27.42.3])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336D528DF4D
-	for <git@vger.kernel.org>; Fri,  9 May 2025 11:25:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E02D27A925
+	for <git@vger.kernel.org>; Fri,  9 May 2025 12:13:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746789946; cv=none; b=P4TCeqqBg2KeTEDc4kT4VdHc5ppAKxRSEjBM1/G0qzf69VeVbpzARQGQYiZ4PeNCkdPeUY5uO6AFXW9+HVqNc5cokKM04PWdWyjqaFB3XiionGJvsRKSVoWkJszOouDtB9bu5k955lZfe11MEcPqRp8im6godu1xXQwM97aLQqQ=
+	t=1746792785; cv=none; b=FIc6JR5MYreJaeoFd3jEcysrDjm6XADK0Tr00OJ5+IJbbSyl9VeoVbQXlICHMeiLJfrAUPE5++lgZ2zakXdZBDpQgGAidjL7x2XJkva60V7mvy+pv5En/1IC3S1JPEtc2mzZYLPYSwvjTaxYyqlD+EbzrtVX7dtc5JbJmVUZVKE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746789946; c=relaxed/simple;
-	bh=vLbPQOgrAWo4OABH5KpP3c2tLzNvgLWfIbH9Dg+UMBs=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=d3Nntq7u4JPRfQfK2VB+lC0pFL6hbJtCOtdNWguJmzWtWUo52E2xMNpGBe93Lj3rZvX5bBYKaL7qnsSnonSCv5gkjCr4pZxNwzQE69OS9Vr4N8MU6QmajFbuBZDJhb69B00w9tmQi2MLqZM3ndz9jOFl2MPSV05Yx3LwqaWa2Sc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qHZM8FtV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mQFRRrNo; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1746792785; c=relaxed/simple;
+	bh=45tr6tTUAxuU1e73feL3KuixZG1YaAKzKfxLslkFxes=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=qZza9IANIBG1sIjbpXSruCPhwvqqR/6/FAKeJFq05/De/V1b48oF9yRMPJ6iHygpfsGUDSMCZrTqXKylNHGaciVeqzYPrFQTd3+gYx/Pfd0jWZ6bh4r6PER0t2SBCc6DXVsveFrr134PpGJqKmiQL7i5nVxhTISKn1UOcH3WBoU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=ccul8Ldn; arc=none smtp.client-ip=212.27.42.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qHZM8FtV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mQFRRrNo"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F24E1140193;
-	Fri,  9 May 2025 07:25:44 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 07:25:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746789944; x=1746876344; bh=jpA/FMQumo
-	eUKg+t52+WhBJhEL36qVoxj775J31wahk=; b=qHZM8FtV+ybIs0IEU8Z2wXr9uh
-	bs4dWUBuBNh1oQeLOWcH6l5dDw0YdE2DlRjWO6pBLJHnX/tcGzcJ0Ns92XtEpLQT
-	vwfhu0QQOJHNdf9TuFwG8lAPxU2vlWLVQuRrPU72iP/lFAf3zNVCCm6niCmXE+dc
-	ipUsiBlwRVoYESk49tI2OGyILHzGMqT+DeK/Wt0vJ8uMbWhQ+GKJhnZbAlCCUqpa
-	P+6gz2pjXmnkkw7UIL18juKkGYljKssjgDOrtbryVZcRBrJkA56Nzp/5Cgrg7cAY
-	c1Ad3CL3y3kaEsyvQwUtCv7HzYi1wehyZsYy3N93pTR3nvC3zpGWm1Jv+Zww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746789944; x=1746876344; bh=jpA/FMQumoeUKg+t52+WhBJhEL36qVoxj77
-	5J31wahk=; b=mQFRRrNoKp3PqoJYwPr4jEmiQfqTZoVwtH8SB33XwxZJjv9+G7d
-	0RMn02UCIvp6QTSV3avQvAt54EHYeO6tdNr3pHJqIDWa6A83Q06JeaQAFV+8hFab
-	/zPSw9Rkt4YiqBWDPGuoID2S5SqCkjAGykeTEEaD2Tls5xZ2pRlGoxxF2bLhuEZJ
-	+QyhEdmXsKNC/yWAS3ZtYP5OnaJX8cbqji7Yi5uuVWi2jwQhX5KuTglhZO8jeD10
-	Zrf66l3VWU3brapTczTNFqz2yEffBnLc/Wax390zMvx+62Ft2tlFor2HryH6GB7R
-	IFd/UKRy5LJ5KJTIQMoV95+aCicrPQJvA+Q==
-X-ME-Sender: <xms:OOYdaHFyZ_rTHDT9v87ptr-HSssZQPLtmAlWXfmN1NjxVV2P3SFcMg>
-    <xme:OOYdaEVc_1S6vqO9sx1hZ-BPOoPK362bEYqH5i5LcLMlpOGDrmUFfSx7Y_Z3KTZr4
-    U-yOYxh3HyYxjw_Bw>
-X-ME-Received: <xmr:OOYdaJKfnHoCFTcXKed72CqmfJVrubkK063Q4jWCZiVaJRMlMoqkrxrqEdFGbgClfSOI6jIdw8wpul0zMIZA0dV8rEHXo5shuzpoFvRH5g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvgeelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:OOYdaFGJiOdv5AmRGB3NSiF-A16OSIkiBPrYcFazKy8EPvnnuVUrOw>
-    <xmx:OOYdaNUBcVHQj6Rp8VN4nRsqa14oi-Ox2gGTsN25yDB811bCE2Y7Ug>
-    <xmx:OOYdaAPCBRx4c_92dNJvJui1JSKfBjNSrZa-q0p7ywbcNhvwOw5SOA>
-    <xmx:OOYdaM3eIwJe-3Yfkc9bIY1LelB3crHs8NPqDJ9_TqLtfK1GBPeB4w>
-    <xmx:OOYdaEDwmdfrAtTE5TWk-3Ni9MsfWxOs_-IL-15JGJUEvfWI4kWbWTo->
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 07:25:43 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3ed57c11 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 9 May 2025 11:25:43 +0000 (UTC)
-Date: Fri, 9 May 2025 13:25:42 +0200
-From: Patrick Steinhardt <ps@pks.im>
+	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="ccul8Ldn"
+Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:c2d2:c7d2:a4cd:bda7])
+	(Authenticated sender: jn.avila@free.fr)
+	by smtp3-g21.free.fr (Postfix) with ESMTPSA id 2D47013F88F;
+	Fri,  9 May 2025 14:12:54 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
+	s=smtp-20201208; t=1746792775;
+	bh=45tr6tTUAxuU1e73feL3KuixZG1YaAKzKfxLslkFxes=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ccul8Ldnyh8GKQ0fHcuyrGDzIR7n2N5Z6NtYrF+9RYL2R2bCft5H0kNZDN7zGkypm
+	 eVDdNkgG38haOoGMXZJOQ+kT+attCplP+2rHiu/Kapi7klknErLqCaUVCNqQYpvkCR
+	 WnrJtcoVODeSHnbY3CzkqlAv5SYabXBFGF4+qvPdRr0IHu9iLkdqdejn8Fg9Inccat
+	 REg+nrZdQV2w56lds2uRBEWGSFtzHm2iAVG66mPeKtLgARjtYb2S3AnoC+vpxcyWWN
+	 IwNHi9hyuEzE77FgicQGqRWyLgFcRllPoHlzlkUM8pdbQps9ob3W8ASFQkWuPvE5Sk
+	 QSTrDzThCMIbg==
+From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
-Subject: Re: [PATCH 00/17] object-store: carve out the object database
- subsystem
-Message-ID: <aB3mNiiAGE2KHbGY@pks.im>
-References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
- <5bea19fe-6616-4f01-a78d-9b7da94db899@gmail.com>
- <xmqqa57oe4mj.fsf@gitster.g>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Additional changes
+Date: Fri, 09 May 2025 14:12:53 +0200
+Message-ID: <5040970.31r3eYUQgx@cayenne>
+In-Reply-To: <xmqq1psz878f.fsf@gitster.g>
+References:
+ <20250503011537.3035416-1-gitster@pobox.com>
+ <20250507210104.26709-2-jn.avila@free.fr> <xmqq1psz878f.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqa57oe4mj.fsf@gitster.g>
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
 
-On Wed, May 07, 2025 at 10:02:12AM -0700, Junio C Hamano wrote:
-> Derrick Stolee <stolee@gmail.com> writes:
-> 
-> > Patches 1 and 2 involve renaming some core structures, and I had
-> > some questions around these names (since we hope to be stuck with
-> > the new names for a long time). I was thinking out loud on a per-
-> > patch basis, but now want to collect my thoughts around these:
-> >
-> >  * raw_object_store currently describes the abstraction that contains
-> >    all objects that can be accessed within the repository. This may
-> >    include multiple alternates. Patch 1 renames this to
-> >    'object_database'.
-> >
-> >  * object_directory currently describes a single directory that
-> >    has the same structure as $GIT_DIR/objects/ but may be an alternate
-> >    or a submodule object directory. Patch 2 renames this to
-> >    'odb_backend'.
-> >
-> > My concerns around this are basically around not liking "backend" for
-> > this purpose. When I think of a backend, I'm thinking about the
-> > implementation details (like the refs backend being files or reftable)
-> > and not multiple distinct locations that have their own objects.
-> 
-> Yup, odb_backend_files (aot odb_backend_redis) or something?
+On Thursday, 8 May 2025 17:14:40 CEST Junio C Hamano wrote:
+> Jean-No=C3=ABl Avila <jn.avila@free.fr> writes:
+> > ---
+> >=20
+> >  Documentation/git-daemon.adoc     | 60 +++++++++++++++----------------
+> >  Documentation/git-var.adoc        | 40 ++++++++++-----------
+> >  Documentation/git-verify-tag.adoc |  2 +-
+> >  Documentation/git-write-tree.adoc |  2 +-
+> >  4 files changed, 51 insertions(+), 53 deletions(-)
+>=20
+> I was somewhat confused where this patch is designed to apply, but I
+> think I figured it out.  These are to further update on top of my
+> synopsis related mark-up updates.
+>=20
+> Do you mean this as a set of review comment, i.e. I am expected to
+> spilt them into parts and fold them into those three commits to
+> produce an updated version of those three patches with "Helped-by:"
+> attributing you?
+>=20
+> Or do you want this to sit on top of the 3-patch series separately
+> as the 4th patch?  If the latter we'd need a log message plus
+> sign-off.
+>=20
+> I'd assume it is the former (as the three-patch series hasn't hit
+> 'next' yet) and start updating htese three patches.
+>=20
+> Thanks.
 
-Yeah, that was my vision indeed. I think it works equally well though in
-case we name this `odb_alternate`. The benefit of the "alternate"
-terminology is that we already use it and it's almost a perfect fit, and
-it gives the reader a hint that we may have multiple alternates. On the
-other hand, `odb_backend` sounds as if there would only be a single
-backend for a `struct object_database`.
+Sorry for not being clear. I was wary of what the provided patches did not=
+=20
+address, so I reviewed after applying your series and bundled it in another=
+=20
+patch, which was not signed off on purpose.
 
-So Stolee caused me to reconsider and favor `odb_alternate`. But in the
-end I guess that both names would work alright.
+Of course, the proposed changes can be discussed. If you prefer, I can=20
+dispatch them and propose a v3.
 
-> >  * 'struct object_directory' could be renamed to 'struct odb_shard' or
-> >    'struct odb_slice' or similar. I may even recommend 'odb_partition'
-> >    though that does imply some disjointness that is not guaranteed (an
-> >    object can exist in multiple parts).
-> >
-> >  * In the event that we create multiple implementations for storing
-> >    objects, then a 'struct odb_shard' could point to a backend to help
-> >    find the appropriate methods for interacting with its storage.
-> 
-> Hmph, I do not have strong opinions, but I consider it an
-> implementation detail of one particular backend, namely, the
-> filesystem based backend, that it can link together multiple
-> object_directory instances and present them as if they form a single
-> object database, just like all files within a single object_directory
-> form an illusion of a single object database (aka key-value store) even
-> though some objects are stored in individual loose object files while
-> many others are packed in a single packfile.
-> 
-> I did not expect you would want to go to the world where a single
-> "shard" consists of an object_directory backed by the filesystem and
-> some other more database-y backend.  It is an interesting idea, but
-> we'd need to worry about many things we do not have to worry about
-> right now.  E.g. what do the precedence rules among different
-> components within a single "shard" look like?  How do we express "in
-> this repository, local filesystem-backed piece is consulted first,
-> and then check this piece backed by low-cost but high-latency
-> storage backend"?
 
-Well, in fact I want to design this from the start so that you can mix
-and match different backends. I think it falls out naturally from the
-design if an alternate can be backed by anything, and it has a lot of
-very interesting features.
+Thanks,
 
-Furthermore, it would cause a bunch of problems if we _didn't_ allow for
-this, at least for hosting providers:
+JN
 
-  - Migrations would now need to be atomic across fork networks where
-    all forks need to be migrated at once so that we don't mix backends.
 
-  - Migrations in general would be a pain if we had to do an atomic
-    migration even for a single object directory. With mixed backends we
-    can already make a partially-migrated backend available while the
-    old backend is still in use.
 
-  - High-latency storage backends may work well for binary files, but
-    not for smallish text files. 
 
-This all of course still needs to be hashed out. I do want to send an
-RFC document to the mailing list soonish, probably in the first half of
-the Git 2.51 release cycle, so that we can discuss where to go.
 
-> > I do mention that the rename of the object-store.[c|h] files may be
-> > unnecessary, or perhaps could be delayed until this series is merged
-> > and the collateral is calmed.
-> 
-> Right now, merge-fix needed against all other topics in flight look
-> like this, in order to merge it to 'seen'.
 
-Okay. In that case I'll keep that patch for now.
-
-Patrick
