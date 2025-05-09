@@ -1,96 +1,122 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C673878F40
-	for <git@vger.kernel.org>; Fri,  9 May 2025 20:16:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C081A78F40
+	for <git@vger.kernel.org>; Fri,  9 May 2025 20:17:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746821808; cv=none; b=sXKC2zujOpVIoHmvvAxJaUWlRYEURLEUaKEHXSCaLkbU13wP1+Lbh3v4wRV/frX/THdToXqem60+0kD8qHaUAcCb5paJvpJVLuZKgRlc3HibLRzynzzU+SrB7aY2cBo8T8gJEw9GqlPrczjgoMJfKOCY9fX9t7ScBey+T6vW6kM=
+	t=1746821843; cv=none; b=SvTF6DECMRKEyFxGgOSeYgmdmLQD2JM1mGyHurtBBaTcyyoakbn9YDpgOjx2Ur4YkJN3biDAiHdHMfk/0qI96wawb1kT0/pijHT7+65VtRoBJyOsPEzPasN0LkyI3MtT8dPDXHXwZkzufhQl1YafBIVsdgW2a0/bdlZs429sYpQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746821808; c=relaxed/simple;
-	bh=jB9mkyCo8KbH6PxcWKZzPZG03Sq9zI9euMC7d/sw06Q=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p58XPRHpC3fQK6NkBfUdnoipAzsSHdGGpMm1rcPSc44TsyysPuBBDO82O9QUnOS0vaCrtEs2Ae6433fcZyI6b4jpnEkMWYwXHhYdNGUx02GXYaYvjOEMEUhsvhQljno6T0wcv+g3tXQsGcTmrm9n/cRxcyJwGbIgcFe34y5l9fc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=TLx0mmiH; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1746821843; c=relaxed/simple;
+	bh=cD8IYeLPML0fwkKcQ+ZAyOLpxYQH/XePLZ+hqxhAVSA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gAc8pTbOdRFyf+Ee61zQ1epmU1vXyC4zGJssEFBe/yo1jkB0U9bUP7KXXZu/tVQAshFpGxo7RcKQCDUqj+iEtH7JzbesZqzc0yus4B1UzukkBcheOV9gov5NyqU9z2eWSUUZ0PP9HVU6xdjeB9VfNshsv0EQT+BHRdkpBw8SVyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BwJf5/4H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SyhEebVM; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="TLx0mmiH"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1746821805;
-	bh=jB9mkyCo8KbH6PxcWKZzPZG03Sq9zI9euMC7d/sw06Q=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=TLx0mmiH5alxsvYnS32NWI3zKGP1Bkimml4l1pOsd7ujlZ+cWIu/5t1upsWgyWhmS
-	 nVseDte0drrRMFG3btyx6q0s3mocOto/HARBAFNelMIZUBf4eHoLVGGxQBsKRoBWfo
-	 fGvnv2/fjhDG7NYCKDhf/aeuRU5YPooUsMZxtwOZMeAnt37zaadyxEt/gHTFqdi4mK
-	 b6uVdKknyqu7D1X4/vbR5IgVdUS5DBrj3u7ryCGod+xZQE9CU0HGlxz+2Ci20mkDmd
-	 SYGM2Dg1FLLz/1BN/uYvsp5/gIm6W3qo9g06h6aq5yyw+r9RS9X1Mv4+nBe00fvuyg
-	 lPUDBnc78uv8cyMJyPSRFv832vkJ9mQByClxsDuPTWcUvYajOU3RRCxCbz4NF1StJn
-	 GSuVY94RO7AAn02r8CStcvlfMc++OqcTLv0K4bRoDh6ME0TQ2ycBcLkOoNGkq4VBZm
-	 N/uYfgyJnkCRaLt3FzWmEdoqk9guQgxbQYjNibzktevNFjTLpaG
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id BAA7F200C6;
-	Fri,  9 May 2025 20:16:45 +0000 (UTC)
-Date: Fri, 9 May 2025 20:16:44 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 0/4] Importing and exporting stashes to refs
-Message-ID: <aB5irPERgQx20HJ3@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Phillip Wood <phillip.wood123@gmail.com>
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
- <xmqq8qn64mho.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BwJf5/4H";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SyhEebVM"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9B3431380184;
+	Fri,  9 May 2025 16:17:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 09 May 2025 16:17:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746821840; x=1746908240; bh=vCaNIRH47B
+	22xHnCQpfXhD4UgOWZg2Ab90eF7Q0Niew=; b=BwJf5/4HGn22g6jRDHQJy9418c
+	uYMRJKmjRtPh6BCx+5PTt9jggHgv4uSlkm0TZw7sdKfThdurUxLMHRkgpZkzXf8Y
+	yaY+CgUk2i0rWi7ZEqaQrmboAQ7OxnaCJLq6lgHoXPRQrvxeGIZjzT5Y8vnpbPzO
+	l1lGfWlAgYWSVjIJR/fV4ubXDUSdZ/05a8pAr1eK98WBGzxVLHp47ifqWNkbf9i5
+	FfnM+c28kcD66XgHB/QOiUv/ah8lPNP033QUxx/9FLPUjaeZ5i5BDivcLQgRuy2F
+	gn+Tc9UopJKZnodjJWkBCLctnJ0CqrBos4GzYYHU7rVVuD/VZ6mDNA1Wa+3g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746821840; x=1746908240; bh=vCaNIRH47B22xHnCQpfXhD4UgOWZg2Ab90e
+	F7Q0Niew=; b=SyhEebVMoRe9ujSd7LTdpTx3Ka/GTPXDcx7fgxslUK/42YxMnNB
+	UB4hvLit5bskeKOOQuTiRrTOLmDGYCB8VuW5vKtTdB2Y/5mtGF7+aJEtr7Qu2J2T
+	Y0XtyFkE9L3ac2+0NjAyw86jQoH5re0pATeP6GjZM3DTgUlcma6g9vUxN7AlEJZ7
+	4JYG3qgUM+Cd/070Mfm9nxoGIu/jsgyj/zlMo0XB9sBg94DJu/UArGRRofYCPUQh
+	o3WVMq0qQT7pnU2EoAzZm+W+7iv/GjFTNRUtIcqdWSRKvzKY4EOugwh3TCWadZzW
+	hrEVp/RwjzQolsJwGC6oi0IV+7KwAUFetAg==
+X-ME-Sender: <xms:0GIeaN0IN2djpK7HZtuT6YU6psqLjU8P5cfkGOMEjfNJM23-rcl-zQ>
+    <xme:0GIeaEFwF37ydC3tcrcBfoihlsF_EpCgUVVT7MNo7htsPXRheR_g63lFZn5JvHwdd
+    fmMOfli1d1VkBuJYg>
+X-ME-Received: <xmr:0GIeaN6JIZBzJHhsdCZxIl_Q3vOQwss3wuClgIr6ArhnDnVX6U-UUh9RRIOxkNkDqWqJqLkZyP6fv4bWqCnozLRQ84PQIukMM8ep>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    ffieetueejveefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieejtdenucff
+    ohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjheitheskhgusg
+    hgrdhorhhgpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:0GIeaK2TsGFEzZ9MyHLRXfw0lmeM1O9FTr3DrPtKvq9987nEvYIFcw>
+    <xmx:0GIeaAETnKKejEIrwHrpa-ZOH_G71Bxq4eosz9A5MJAt9JlMQL4W6g>
+    <xmx:0GIeaL-ZWVmM2sR1_gLPmkALoEHkXapPja1w6p-tLZShNuWsW8BPRw>
+    <xmx:0GIeaNmh-VtWohbxZeuIos4UtqqjSEspI9CIFayrb83rrxUKkAZOAA>
+    <xmx:0GIeaOM5vQ-eKUNYcXai8k2fxu2rp6HMak0Ux36h4MtscryV4SmJhhZr>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 16:17:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Git Mailing List <git@vger.kernel.org>
+Subject: Re: [GIT PULL] git-gui: heed core.commentChar, ephemeral git-gui.pot
+In-Reply-To: <69db24c0-40b3-44e0-b225-4df2c357106a@kdbg.org> (Johannes Sixt's
+	message of "Fri, 9 May 2025 19:25:00 +0200")
+References: <69db24c0-40b3-44e0-b225-4df2c357106a@kdbg.org>
+Date: Fri, 09 May 2025 13:17:18 -0700
+Message-ID: <xmqqo6w1zghd.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="bir0Ounl11/x5IgX"
-Content-Disposition: inline
-In-Reply-To: <xmqq8qn64mho.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Johannes Sixt <j6t@kdbg.org> writes:
 
---bir0Ounl11/x5IgX
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The following changes since commit ae6336b6173bf5303fad53e0a52a16f92c47b6b7:
+>
+>   Merge branch 'as/translations-bg' (2025-01-05 10:44:35 +0100)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/j6t/git-gui.git master
+>
+> for you to fetch changes up to 309bb874dcba2c96f8b12d20bed16cf6a1ea0133:
+>
+>   Merge branch 'js/po-update-workflow' (2025-05-09 19:17:19 +0200)
+>
+> ----------------------------------------------------------------
+> Johannes Sixt (4):
+>       git-gui: po/README: update repository location and maintainer
+>       Merge branch 'ob/strip-comments-on-commit'
+>       git-gui: treat the message template file as a built file
+>       Merge branch 'js/po-update-workflow'
+>
+> Oswald Buddenhagen (1):
+>       git-gui: heed core.commentChar/commentString
 
-On 2025-05-09 at 01:10:59, Junio C Hamano wrote:
-> Thanks for resurrecting the thread.  Once this part gets sorted out
-> and the outside-reflog representation of stash becomes stable, the
-> next logical step would be to teach the "git stash create" and
-> friends to directly work on the new format, perhaps?  But first
-> things first---export+import would certainly be a logical first
-> step.
+Thanks, pulled.
 
-That could certainly be a follow-up, yes.  I don't currently have any
-plans to do that, but of course someone else could or I could be
-convinced that it's something I should pick up.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---bir0Ounl11/x5IgX
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmgeYqwJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ2/KFqw/6zuDkBG8WHm1Y9aVV9es55ga9Wm5wrgs1ln+
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAD9YAQDbrb1DLk6bnfK1Br5TWpYdEZ2d
-BWlbI2QlZ4nMRleLXwEApb+3Gbdr3QphKYG98oLh4dbyVQeUeYSI9IDe9fhNGQY=
-=DPv9
------END PGP SIGNATURE-----
-
---bir0Ounl11/x5IgX--
+>
+>  Makefile       |    2 +-
+>  git-gui.sh     |    8 +
+>  lib/commit.tcl |    4 +-
+>  po/.gitignore  |    1 +
+>  po/README      |   74 +-
+>  po/git-gui.pot | 2666 --------------------------------------------------------
+>  6 files changed, 23 insertions(+), 2732 deletions(-)
+>  delete mode 100644 po/git-gui.pot
