@@ -1,121 +1,132 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f170.google.com (mail-pf1-f170.google.com [209.85.210.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C096224B15
-	for <git@vger.kernel.org>; Fri,  9 May 2025 14:35:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F7962356B9
+	for <git@vger.kernel.org>; Fri,  9 May 2025 15:03:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746801349; cv=none; b=hIoJJmO1NUgCJjhukdERO579TkSrIAEPUJcJzlvUp3g9Y7ugOi17w1Dhn0Ou/uSytd02sphyZ7vXGe6tfewp9Pu3HEcmM49LgD3UZuARnHDZLlwN5p/9+iFtSSgWxsenl7BLyXKtW0vsZt3FKRkE7traVcbUoXaI2yk8ESYql4g=
+	t=1746803005; cv=none; b=DLu+b3+/IbYVOSHEHX/8ppuf/I/0s0WYGWXGmomqKUxNoz5/Fy3shvvDT3XKr4ODBCfzV58iUmz4Cu26zOnuZaFu8UFLSIXQ+izSKqiPfP/VhOBcHHjiCKShjcivE2QYuB1woFlw4dscJx5YexkI0aRQ2I6eZzJNFRNSPvtxj5w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746801349; c=relaxed/simple;
-	bh=zPCxuTroj55IgEesABPA5Ajn3wlhgBekzLe2Us4E/VM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aOcvGaC43GWjqVmBCe1QhYeQJ38GXLCcOTmKOl0/rMSACes02u3xwNpTJjrlvVnE4ca5412StlJTz+RySqCRdZfcS3kueWa8Sv5e8szrj7eZDRAll8wFkiK4+6lS85tvYe/FBfWTc3e1MQRxP6PuHbLGxepkmcif+RKg5CjPpGU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y1ZfT9gp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aurhQY99; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746803005; c=relaxed/simple;
+	bh=ak8BxMnzdp+0lAHwV5zexIUwkAJjSlTCEcg7XmhdsnI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=OY88Omxshyc7pr44jL5yqxmnW0wBmC7YkIPwxB3WVLN/DvFeo0FvAk4khDUhedTiun0sSIMFTMWhI6mipwqueG+BqbPVCOjs8+rFHUuvp/VpKiwsdZ9wqxUwvxBXZJk5hxTwcoFWcqEfrEWg0UlQZvhpgwtvAI3YLksEQNayd8Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fO7QQI2n; arc=none smtp.client-ip=209.85.210.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y1ZfT9gp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aurhQY99"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 38182114016F;
-	Fri,  9 May 2025 10:35:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 10:35:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746801345;
-	 x=1746887745; bh=62bAu6WisX2ksGJVdGZko8BeoCBjk87QR6j46b+LjQQ=; b=
-	Y1ZfT9gpStpVrZNn5mRavUcB4zP6d0mOI6TU25EO5/4n0srlCDLZ4yNmu1jN3oCC
-	CV0duzrzqOjWqVa21UN8xsnL34EBxPDwwbLVgYezeoqy7ha1hRGQ9gBBTHlfZtrn
-	2qTBHBjNMkx2pButBXO14g8hmklRT8CDp7LSBaB/sFk3WzEZmNaze7Ae15DSmXuv
-	bH67s1U8ADAoL/5fEyVcpL7YAQS53j9p/ajcnq+c+pWwyszO1EUvXVg3HbxExmhh
-	1K3tlWAbU4yPJNeeiy9KaDwxTqwfYRTtT3ULFEWSbhkzTx7ZhylL7VoGvYFAo/Sy
-	M+++mRZrPr4ldUbvcRPUEg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746801345; x=
-	1746887745; bh=62bAu6WisX2ksGJVdGZko8BeoCBjk87QR6j46b+LjQQ=; b=a
-	urhQY99sjVLMFa7FTeoX3EIh5hDZC6lhXsl/IVw20oYKwJ2EC1RBWGuQyVgdwOjl
-	hLVkyPi11NOP936DKIHgGJ3+MLooyj0iw/m/P0gBfxcILKRODxhfNOnM5LT2hOug
-	SayXo1mI1QOdVJ/Qy4Vlw+temAqXybzbFa9IYLdumFQdbquHSx4UiDqLNHHHrHVL
-	w1SQtVzDHEzWzCyBMOSs1JWkv+EnhanRkgpI7LA428MUcCPArl2Iv1swJtJAJ46v
-	LWi5skq2EHamBeREDtSq0RrRBiuKRieZDccXnK/vSg7gH/urxakTbhBVrWAir+E7
-	h9/Dl9Mh+TPrYAAnwGl0A==
-X-ME-Sender: <xms:wRIeaBFRzlTmPH0mN6_exgCSmVw74UUSmCvhJ1hwfRBFgdaC-Ooqtg>
-    <xme:wRIeaGXmTzpJfcOl_JJ4IjPpkex9E5tGJjzfQxA6MkYrKqjeze5eLdftYfsVySViV
-    t69PPjqqqVAMaP0xQ>
-X-ME-Received: <xmr:wRIeaDIvgI8YuBcp2i0eZr7u16LYX5Alkz5VRbksy8MIK8eNYr2skw7i5O2vk8oxctlSoRzIcjFxS6Y4erQPnXpjkZtbuGchgNk->
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvkeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvih
-    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:wRIeaHFw9mZ5Y4JoNb-LkQP18RZJv3b7vhulnGIwvNUmKlNUUS23QA>
-    <xmx:wRIeaHUqYyKYP6PJVkQbZk-XZjcqphds8rlv6Zi76pxzTT2Cc3-GqA>
-    <xmx:wRIeaCPOINdDVg7A_PVDkcN0KEd-SPn3B8BwJXHPRnRPmIOrY9dbnw>
-    <xmx:wRIeaG3IDOec3mBT1Sc0CcUE41h3nYNG_svnnDnfZGDx8sT5oprh2Q>
-    <xmx:wRIeaFolpEi7ULs2wh7Cja7_WMcPaCApjWoGIxAzs6qHiYUHwcVWOCwy>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 10:35:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Additional changes
-In-Reply-To: <5040970.31r3eYUQgx@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Fri, 09 May 2025 14:12:53 +0200")
-References: <20250503011537.3035416-1-gitster@pobox.com>
-	<20250507210104.26709-2-jn.avila@free.fr> <xmqq1psz878f.fsf@gitster.g>
-	<5040970.31r3eYUQgx@cayenne>
-Date: Fri, 09 May 2025 07:35:42 -0700
-Message-ID: <xmqqr00x3l8h.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fO7QQI2n"
+Received: by mail-pf1-f170.google.com with SMTP id d2e1a72fcca58-7418e182864so1520577b3a.1
+        for <git@vger.kernel.org>; Fri, 09 May 2025 08:03:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746803003; x=1747407803; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=WQiFFuScfd5dCfLqbIMvHH7iiUCGOPigyCmpeTdBJgY=;
+        b=fO7QQI2nqBQ/0n+bbJEEGEoYb/6LNEE3sRJcr6AKyT2LuDpUw+o9WL4I5k8t1BQ4hv
+         vUi2X5Pl7WplYVYupadrT09n6ixSmC8M9APVzdY/+8MxGlVyLW4gKV0VzqWiGWjtWsfq
+         HG5brxdGCe6FDfrvKA0t/FC4kTaaDHkcTCBZvBJKUeoB6HiBnh7dZ0QmfX/DXuWT9FdR
+         h/adVzLCp5NhA5+WqOS3pSZvZiDJZNK4AcLdFpfnwy2Za7H4uRGtSGj5f1kmjOEfz5Tt
+         3A7CC88nD+3BHJZ+18FgLxP0Vl6f+AY7BmIDbMTP4sb8eLTGRV0ktxhbaY+63nCDvHSy
+         kLug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746803003; x=1747407803;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WQiFFuScfd5dCfLqbIMvHH7iiUCGOPigyCmpeTdBJgY=;
+        b=NvHApFam0P9EFb+w+8CZG2pazivYjp2kEAIXfsjFiiMe7PC0T3bLHu/fLCJQni5ae9
+         U1GY4wxz6Hov+LlGMOymS3I1JiHLP7aFKtYwWxbFeNB0WaZoOnpmMnfZnf4kNLOMD9/X
+         FAzRIUo9NOUHUeHnFXVNhqWn69VylUnlNonUx4tzxrYZ1a7/DwXHrjbL5bW/HfEQzLCa
+         KFKt8ZpJL66LD3GyF+EwOLvliNFcSkNX0s+zxmf5KnzJ1BMPeZ224zmijkPXOqoRI/1S
+         Z7oLmLZtPg8Es2c/uvHGBT4hH8zx6X0UnfCzOABpobb3HV4Hr3uMPxpgdtwPwwCE1+LD
+         onaQ==
+X-Forwarded-Encrypted: i=1; AJvYcCW8jAN1jeDEvhtZtXlC3BjGv4uyC/0HfukdIj/H9oOf3l+9rqtw4t738ngP+KzaixDUPSQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyQU+QTZ+OKP59NC/rlxokScQjtmrLb87dtkj/k/MDVhampxdY1
+	tBvPmUUZ+x/xaETraIpSXA6AkVH26Lg2eMsmqUxuk+/ne3cFxM7KXgunZTVH
+X-Gm-Gg: ASbGnctYaZomDthRH0Hpdl9ZoBQHEuVJvO+E6u3s2wbALYOXukDlzUsex+iANYWIcIZ
+	Rr8FB+fOPqLaxl/VB10WkzWqqQrta8rQdgGbHkjQ/Jy+IzIr5FiLD4q9XFdda1IeoUaby+vRDtR
+	3ij/oNdSjFv0H/7NGpaWgZ7S7StsOHOc8rluD9BDeQTG52U3kdVEaJ/ALhdK41hdKJbG157sFxU
+	V8QzfmBHcmqboCRT29vyW8kzFg6chts8s2GU+9g3+ndsh/OCp/xZJc503zyhg1slqeAStXQ4stU
+	aRlA7b0zXoOBkfmINmWosKkp7NwPM3xOjCrTVhPDDySIUQ8=
+X-Google-Smtp-Source: AGHT+IFDOWrcBkPH+W0VfLlAw1UpUkQTvMUSQvt0pq2QopNzCw0XU2MNiyzFnqsjL3c9nl/WhDS4jQ==
+X-Received: by 2002:a05:6a21:b85:b0:1f5:7ba7:69d7 with SMTP id adf61e73a8af0-215ababbfcamr4804060637.3.1746803003169;
+        Fri, 09 May 2025 08:03:23 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b2349dd1fcdsm1358602a12.18.2025.05.09.08.03.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 May 2025 08:03:22 -0700 (PDT)
+Date: Fri, 9 May 2025 23:03:19 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 3/4] packed-backend: extract munmap operation for
+ `MMAP_TEMPORARY`
+Message-ID: <aB4ZN5IY585Qlz9r@ArchLinux>
+References: <aBtzn4nwLsI9p5Cp@ArchLinux>
+ <aBt0BDTuOfUuCHE4@ArchLinux>
+ <20250508195714.GA18229@coredump.intra.peff.net>
+ <xmqq4ixu6f6q.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq4ixu6f6q.fsf@gitster.g>
 
-Jean-Noël AVILA <jn.avila@free.fr> writes:
+On Thu, May 08, 2025 at 01:05:49PM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> >> -	if (mmap_strategy != MMAP_OK && snapshot->mmapped) {
+> >> -		/*
+> >> -		 * We don't want to leave the file mmapped, so we are
+> >> -		 * forced to make a copy now:
+> >> -		 */
+> >> -		size_t size = snapshot->eof - snapshot->start;
+> >> -		char *buf_copy = xmalloc(size);
+> >> -
+> >> -		memcpy(buf_copy, snapshot->start, size);
+> >> -		clear_snapshot_buffer(snapshot);
+> >> -		snapshot->buf = snapshot->start = buf_copy;
+> >> -		snapshot->eof = buf_copy + size;
+> >> -	}
+> >> +	if (mmap_strategy == MMAP_TEMPORARY && snapshot->mmapped)
+> >> +		munmap_temporary_snapshot(snapshot);
+> >
+> > The original triggers this conditional whenever the strategy is not
+> > MMAP_OK (so MMAP_TEMPORARY or MMAP_NONE). But in your post-image, we do
+> > so only for MMAP_TEMPORARY.
+> >
+> > I can guess that the two end up the same, because snapshot->mmapped
+> > would never be set when MMAP_NONE is set. But if we are going to make
+> > such a logical inference, it should be explained in the commit message
+> > (though my preference is to leave the code as-is, or to pull the
+> > refactor into its own commit).
 
->> I'd assume it is the former (as the three-patch series hasn't hit
->> 'next' yet) and start updating htese three patches.
->> 
->> Thanks.
->
-> Sorry for not being clear. I was wary of what the provided patches did not 
-> address, so I reviewed after applying your series and bundled it in another 
-> patch, which was not signed off on purpose.
+That's right, I made a mistake here. I somehow think that we should just
+check whether "mmap_strategy" is "MMAP_TEMPORARY". And this would be
+enough. Because when "mmap_strategy" is "MMAP_NONE", we would never call
+`mmap`.
 
-I see.  In the original, I deliberately ignored what the patches did
-not address ;-) as I wanted to limit the scope of the changes to
-reduce the number of things the reviewers need to look for.
+Actually, when I refactor the code, this one makes me quite confusing.
+And I think we should not change. I will revert in the next version.
 
-In any case, i assumed the former and squashed your changes (which
-looked all sensible) and the result is what is in my tree right now
-(but it can be further modified as the series is not yet in 'next').
+> 
+> Good thinking.
+> 
+> An "extract" step that is meant as a preliminary refactoring should
+> not make such a change.  The change may or may not prepare the code
+> for better maintainability, but I agree that such a change needs to
+> be justified separately.
+> 
 
-> Of course, the proposed changes can be discussed. If you prefer, I can 
-> dispatch them and propose a v3.
+Yeah, sure. I didn't consider well.
 
-Surely.  Are there particular things that you were either unsure
-about (which may lead to possible partial retraction) or want to
-stress on (which would help other developers and reviewers recall
-what they need to watch out for when touching the documentation)?
+> Thanks.
 
-Thanks.
+Thanks,
+Jialuo
