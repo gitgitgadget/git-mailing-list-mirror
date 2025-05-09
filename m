@@ -1,171 +1,105 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04FB1891A9
-	for <git@vger.kernel.org>; Fri,  9 May 2025 19:31:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F2A92367DA
+	for <git@vger.kernel.org>; Fri,  9 May 2025 19:50:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746819077; cv=none; b=j4m/gOCWJb7yyPR/G8iWeUSc8i49YR9jJ5I/QTHtZ/xkJ+QomkhzCWPgxC2pPqVTy8CLXvvYZzRGNum6Tvasrwsmkb+HRiX3uisNRbrT79FmSAK//o6xSxzuht3J+wAvxQVymhCXy81f7xdcua5aOF9ZtCVVtq5XfVEx0zbOXYQ=
+	t=1746820212; cv=none; b=qH3QCAX3JlFc+/1QJI6VxH2UG/5V9O68VDSfkx6LMI7M9j3udET4Ed1tmeWETvIKleo/tbTzWicuRt32aJSMMtuKXpZCAScP9ai9gKqSvJXLYi/FUSly2xIZeoIMO6S+rvNYQRWm8rZNTcd5JRKueUEU8DuS9FS0JpkJAEVb1uI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746819077; c=relaxed/simple;
-	bh=HXdzVmOuOS2LeiMpdpo7T1CEH84Z3RHky5EusnIIXlc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LYVcECZX3t6a3QiNe8Tv2yL+bEJu8sY9mY8jjd8UPeHncxxIqo7gT05/Z0JpEmPyDHcy1uxzUK90OIcumnZEMRV9eGKGwfbJYqZ1g/b9Abf2RJSX9BXiQK1daRReKzT/NdGq1o3NtheJtL2qE/MJp0sz9jSk4OeAalptXBILp+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RLQZlnYk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UEWWffUH; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746820212; c=relaxed/simple;
+	bh=RnELupGkiKlBhgQ05xrKx5uSwyLFJbN9CMJoSKkp35Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=APpK7XC5l4E1EDNGDW+RyIPWB88fMJIAVfvf+t7wW2evt5bevgvGKyOcUsRZ7BOBVKWRaX6vmuhdebwYIhsSYDU1gxVXQaEt6J3lpozkQI5chf+WPAjQGiatjzklsW5dhYm5OqXKpBo66mtNZHlsVJg+0w1dnQgz6pr2u7dAE6Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=MrbWm+gv; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RLQZlnYk";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UEWWffUH"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 80C4213800C9;
-	Fri,  9 May 2025 15:31:13 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 09 May 2025 15:31:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746819073; x=1746905473; bh=hk2lxDgZaD
-	h3OTm9xnt8aDWj6kN0k113k5zS0EkseEo=; b=RLQZlnYklMheUpYYf1mjLVJrKI
-	hPox5WajvvQ+fUgjEY/IvVDN6+Xqv8qe4yLuBPHAr/AOeaSJG5Q47kpBEp/+PtNi
-	uNKGSfMhJzGIox2/PC8a1NFe6kXn/SHxHNG/UzAigmDJ/kxs+bXBqASCtv8t5ZAM
-	6Cppn05RLRgi5LkTHW2i7tWRwFA4kDdKdzVZxh51E6+828oFNcfGVqcJnM4Hxkm/
-	qqERGFZxaDNcSUSTd3yKWTvR5k/Ob+M4MnXQ7IlMiDmND3y3a5qOSoBVAOzNdQI5
-	du8mS2n2SeaqbO5ipCzyn0tp7w+KeZZTxwbt8vp4yMlQbgBumA50cgfKIV/w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746819073; x=1746905473; bh=hk2lxDgZaDh3OTm9xnt8aDWj6kN0k113k5z
-	S0EkseEo=; b=UEWWffUHwgZh0Qis0nvIx3i+ZSvKa+yLApwoMLZRz5uSTgHIdt8
-	2Nt3UcgXlMfuYzdRei8LuuoAT7RGOX9Ql2OUeGlhzezOQcmP8qoJDNyM402yMRgh
-	75gvYfnslceXc7zH+5QRalkAwTDVU5gLjH8cTiB648cMMSJN6D/7KXnG14bVQa2+
-	rcTOyZ4yhp2O+1xx4L+udvC4qQmNtbtbZMqpZEZ7HGFAf5V6m5KorrQ047bAdrPI
-	jVazhwYvJdZq7y6zdp5HjPTE0eNhXljFk3UDqJzz+JEylP3GeKtSiqoRvXLMdUqw
-	vU4BBscIAATMJ2MOeKDig1ewNXMgIhoRiEA==
-X-ME-Sender: <xms:AVgeaHdBHIbAvupR40pXPtIy9dhguiB2yR8mISXDOwb9iEi1soBodA>
-    <xme:AVgeaNPlglASmvRyz2k8WkTMu6kxyRq1ZPa0-9YA2As8Uk_DD87z9P-84034-jc8C
-    zM60ORu8xhUdLgieA>
-X-ME-Received: <xmr:AVgeaAjFG7JIvezjkQo6N9fdC4WiW132FArkOoz5Vd_PcF-WAPkXV1w5iXOWUNrfxlNfQQRD_INEjXn1rqsn3xwbtlKLZBtE4iCv>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefgeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:AVgeaI-AG6H4fCTXMONgEgIdNtiDlmU7Nyrae5Hn8vGLwewNfDSZ7Q>
-    <xmx:AVgeaDv7TRBInZLbPKK-pCMuDsN2McN6hpfw2seO-0htZQ0DvrF3Ew>
-    <xmx:AVgeaHGWNUbWrcDWviq17mEHUzDeXSQUZ4VTMFv5oFkzeM-hnzuTog>
-    <xmx:AVgeaKMlxCrysJOsG1USNIKzD1NXDksmJpYBnAb1F1dG0HJFOOa3QA>
-    <xmx:AVgeaCDnY5O414S_-NaCH0oMMDityYOmxc0PTc5uSkvlVYDqmZxtZvQE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 15:31:12 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 3/4] builtin/stash: provide a way to export stashes
- to a ref
-In-Reply-To: <20250508234458.3665894-4-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 8 May 2025 23:44:56 +0000")
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="MrbWm+gv"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1746820208;
+	bh=RnELupGkiKlBhgQ05xrKx5uSwyLFJbN9CMJoSKkp35Y=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=MrbWm+gvmvYCgH9Ncjegm4A4/PggQ8dva0JTSuunsPshuHOhMVtau274xF3iEMMqh
+	 G1HeKaM+GpFmTo5OVXtR8z/2+Q8tlXQO1iZ4Dmov31f5E/PCgLESAuhfBFaB4ignst
+	 qb5dEJ0AS+FAWSQ8LrYAnb68wtZrwgZ3zyKuUPoFZnLStZ07IK6MjBzeRiW45cocU0
+	 qw2t0OjSzJltAV7R3iorpP8zfP3fuvGlCRBBUg4bcIkrINnpj4UJFj56vHGw6+xFxL
+	 bc14rSVBgDQG1fykcxIAg44fQldC34AqkjqGespyfeqJUvxQsR+W/DJ2FMn9wI80C7
+	 DzTkuQWSdqwSHdgAAuAA2NkBoJ74BPIwCFwTuegt/pBb+L8KsmUBiKFpq4pR0DvzZM
+	 4LVg5S2YD6oyVd4dUWOP7ABK9mzNqFZ0Em7y9/9sYz59YWIK3WfGdL6NPpzAno1cZR
+	 PxyinEb6EpHdKt5zAlwfe4O1y1Yc9IlnZzamk79bO/8StdeUNTT
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 0A319200C6;
+	Fri,  9 May 2025 19:50:08 +0000 (UTC)
+Date: Fri, 9 May 2025 19:50:06 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 1/4] object-name: make get_oid quietly return an error
+Message-ID: <aB5cbjlSKXt-uOw-@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Phillip Wood <phillip.wood123@gmail.com>
 References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-4-sandals@crustytoothpaste.net>
-Date: Fri, 09 May 2025 12:31:11 -0700
-Message-ID: <xmqqecwx1szk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250508234458.3665894-2-sandals@crustytoothpaste.net>
+ <xmqq4ixu4kfo.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="4x43wHvr2mJYie2O"
+Content-Disposition: inline
+In-Reply-To: <xmqq4ixu4kfo.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> +static int do_export_stash(struct repository *r,
-> +			   const char *ref,
-> +			   int argc,
-> +			   const char **argv)
-> +{
-> +...
-> +	if (argc) {
-> +		/*
-> +		 * Find each specified stash, and load data into the array.
-> +		 */
-> +		for (i = 0; i < argc; i++) {
-> +			struct object_id oid;
-> +			if (parse_revision(&revision, argv[i], 1) ||
-> +			    get_oid_with_context(r, revision.buf,
-> +						 GET_OID_QUIETLY | GET_OID_GENTLY,
-> +						 &oid, &unused)) {
-> +				res = error(_("unable to find stash entry %s"), argv[i]);
-> +				goto out;
-> +			}
-> +			oid_array_append(&items, &oid);
-> +		}
+--4x43wHvr2mJYie2O
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Grabbing individual reflog entry given on the command line looks
-trivial, but ...
+On 2025-05-09 at 01:55:23, Junio C Hamano wrote:
+> Almost everybody else in this function hits "return -1" after
+> detecting that it cannot yield a valid object name, and this change
+> makes the oddball case do the same.
+>=20
+> Ideally in a distant past, we might want to remove this _GENTLY
+> flag, together with the code path that is not so gentle, and adjust
+> the callers that depend on the current behaviour (which I somehow
+> doubt--- they need to be prepared to deal with the error return from
+> other parts of the same function already).  We might need to make it
+> possible for callers to tell which error condition we got (e.g., did
+> the input give it a non-existing ref?  did reflog walk run out?),
+> but these (including to the change to just lose "die" and always go
+> the GENTLY code path) are totally outside the scope of this series.
 
-> +	} else {
-> +		/*
-> +		 * Walk the reflog, finding each stash entry, and load data into the
-> +		 * array.
-> +		 */
-> +		for (i = 0;; i++) {
-> +			char buf[32];
-> +			struct object_id oid;
-> +
-> +			snprintf(buf, sizeof(buf), "%d", i);
-> +			if (parse_revision(&revision, buf, 1) ||
-> +			    get_oid_with_context(r, revision.buf,
-> +						 GET_OID_QUIETLY | GET_OID_GENTLY,
-> +						 &oid, &unused))
-> +				break;
-> +			oid_array_append(&items, &oid);
-> +		}
+Yes, I think we may have discussed doing this in the past and I
+originally considered doing so, only to realize that was an entire
+series to itself and would be pretty disruptive.  Last I looked, we
+unfortunately relied on this case more than you might imagine.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-... have you considered reusing reflog-walk.c:read_complete_reflog()
-as a helper function?  
+--4x43wHvr2mJYie2O
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Doing so of would be more efficient than going from int to string
-back to int to call read_ref_at() and iterate over the same reflog
-entries with refs_for_each_reflog_ent().
+-----BEGIN PGP SIGNATURE-----
 
-> +	}
-> +
-> +	/*
-> +	 * Now, create a set of commits identical to the regular stash commits,
-> +	 * but where their first parents form a chain to our original empty
-> +	 * base commit.
-> +	 */
-> +	for (i = items.nr - 1; i >= 0; i--) {
-> +		struct commit_list *parents = NULL;
-> +		struct commit_list **next = &parents;
-> +		struct object_id out;
-> +		const struct object_id *oid = items.oid + i;
-> +
-> +		next = commit_list_append(prev, next);
-> +		next = commit_list_append(lookup_commit_reference(r, oid), next);
+wr0EABYKAG8FgmgeXG0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ0F7V9kn8CUfibWDh4bN6VDmKmTURxva41RETeaDlR+s
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAACklAQCi9zbBNnUcQdLo9DNFKQV8UHfq
+yPzd7T3m4ce1pbX5cAEA9nWOS+xeZ1wU89Q+BrgSkfwP+TBn1OR6qZKjkUJUQAY=
+=kqKq
+-----END PGP SIGNATURE-----
 
-The individual-reflog-entry mode above was fairly strict in that a
-list of reflog entries with even one unreadable commit caused the
-whole command to fail, but reflog-walk mode assumed that a failure
-to read an entry must always be due to reflog entries running out
-due to the index incremented to a large enough number.  I suspect
-get_oid_with_context() can give you oid obtained out of a reflog
-entry without actually parsing the object or checking if it exists.
-
-Should we be a bit more defensinve here in lookup_commit_reference()
-call, which would silently throw a NULL back at us if the commit
-cannot be found without complaining?
-
+--4x43wHvr2mJYie2O--
