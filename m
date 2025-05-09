@@ -1,85 +1,91 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E01253935
-	for <git@vger.kernel.org>; Fri,  9 May 2025 19:54:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0761B25DB18
+	for <git@vger.kernel.org>; Fri,  9 May 2025 20:13:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746820456; cv=none; b=BWeu/Em2ahO9VHE7+NdbTyEBQx24uRpMd9oMMPf1qs2MVsDoy+rCuN/fmjkJp0knm8sh6b4I8E6J036gPQODcWAPNXatcRwBeSz9zFWWU+Iu46jp73a9j0gDsDAop+VdAIurOoiQ5HKNpFbTe0c6OyVqCE72a3Ijy0zv6pKCIDA=
+	t=1746821588; cv=none; b=eW5H3Ivk9NiFst2lo4E9Nf2epupY0YwBc7Wy3mDYbudZENOkfGTMzpph//N5BfWfWB5WVMRSbLNVEsKBGREHTDL8g55X8+IMZsP6nrogsUFYSwnA739fpgb0XfJ1yzSh2NsRVXVN6O5CHxUUbgEUTgJZ9a0/HMXPzR1zfXUcl9w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746820456; c=relaxed/simple;
-	bh=G0m9Y/b1E6EeCtzmubw5Zs+/d4AmSBKB9gO6qEkXokM=;
+	s=arc-20240116; t=1746821588; c=relaxed/simple;
+	bh=tkFpcR0SVAlMae3bmBt6i1xJsvvoUAbXzIoEreKtv6o=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=chV6C71Fy174Ip0JLcSk/thg6zZVThZZMj+W4xuWkyeeouNX0NxXy7V4nF55NICioYe4H3x/DgROQqgKNWPQStZWgwrPJle3JOht24ZJt0q4HP6MITyia8EjHgrf1OBz7h7Pee82JH3Nu68FEcsJwEov4LXCfpOgeWVA3i7d3JI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WFdFnsDZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pPKgZEeX; arc=none smtp.client-ip=103.168.172.155
+	 MIME-Version:Content-Type; b=eYnXVuuqXPIp1MNiJOqBCKjdB1DYlv1IDg+5ts2g9swwbCOwGLafpNrMKPPRdgkTkBAZWNvBWkqyhNO3jkLjyCIcSoTeBMv/YeSTPbCTqTZH9PJsUUhuq3rKZKyZALtyjaVf0Gn0sl1SFSq9ooWxJ7vEwylOy5DBfNJ63FK+jWc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e0FFUULt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QDtz5jJ0; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WFdFnsDZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pPKgZEeX"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 06BA211400DB;
-	Fri,  9 May 2025 15:54:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 15:54:14 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e0FFUULt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QDtz5jJ0"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 00F4B1380161;
+	Fri,  9 May 2025 16:13:05 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Fri, 09 May 2025 16:13:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746820454; x=1746906854; bh=mUTA8OFADJ
-	5Kb7h2eMGuWhuqSivJaW2R9CSctziiwxQ=; b=WFdFnsDZOEV8CPKozXEZBMiW76
-	zKLmRJvTWBKVboQV04cp+e2V3UH15V3/ZVlziSwIfnCIxMKsc9WeN0+MFUx8KKj0
-	jl/BrDC0jEdLmNEhNgIDTbVqp/Vd5icYWY6aVSHe7gCdPZ3RKtI9WplwwUEetv/r
-	GSXrGnQG4YRpV1FPMg+M3nB4F6gqbdkX7stDAQYSNh8MO+9qD/MIt8CAuXIChSs9
-	PVXTgaLVbL72usm41HzPe83+akx5Zlzy9P7Rb7V7K4rlXjAdg1tLFK3Q62+o+IHo
-	CbzYfDoo5xt695tSokKi8/wI1GIZFNs5AUSPZ18kASw2XZEal8sPe1puqrIQ==
+	:subject:to:to; s=fm2; t=1746821584; x=1746907984; bh=URkCnadCJt
+	BqR9qByidZXWwD82/HvxzeU+1rAgetKq0=; b=e0FFUULtOMr/fui25iq/vrM5Fb
+	E3C1vdpvM7IjkyCl97t8Ajmpi0O4oJSd64S3zMUvIpJuuhWUUGP/G8oCs8M6mswr
+	ER7J1mij1N+ojIzlYdh9jTN8OLTBEHQ7oLDbzlf6ooCm1uUiwq0Xk6bcmcCRFV+s
+	IS8CJATWhgStoMYEC7UKPE2idY60DR+YhZPQ1aqDwekF9wnDcPp/rALMKGTx0Vp5
+	KGsHvN78BWxvQWCpQnMf4M/hnlVaBoCdoRQIxpiqzGIvShWu9J3Fxi686NMoG9+7
+	GR8shx66tKCTICBP9p625W4CLyPDSgd4nmWC9UBfnFVpFMUH8qKV/1XY6vtg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746820454; x=1746906854; bh=mUTA8OFADJ5Kb7h2eMGuWhuqSivJaW2R9CS
-	ctziiwxQ=; b=pPKgZEeX1rfqfX+Ezw0xZTcMpiR4/TA59EtUeDKfJNetBdKHMqU
-	qGA4lNwUP25CPzfmU99EiJKNOXMVSFnArphIho9muIcvBll/eIbUzsFL3Rd+GdOn
-	Z/LFatuUOpM2SvhPMeR00c+OjNxE178yI42aTqgzMIBuXA62csaKHLyXeMRavo8m
-	J8+tR62RY+akhWVdkFPGyxqICeZ0GcR73TTI3qB89rGJOjpSeQINMUFP7TisncrJ
-	kdW6pW7VHFE3ZWMe/F8BvGnisPjh0sbBLsml7sSND56lOXf+Vf0Vhj+or4EI+7IL
-	n983p7GGVZIRgj2jQeRT1EtBP+P+dymGXww==
-X-ME-Sender: <xms:ZV0eaCjJV-Veb5XwgPcYjmSPyLBj7tUKVk0bFGDrNXbwXJO6AlfUEA>
-    <xme:ZV0eaDCy8O0TL_A0iMcqq7a7lTFepQZiYGlD1MzU3ztwouwu1WLMifckmqh7rJZez
-    Yr-8xIXz8QW5Q7o7g>
-X-ME-Received: <xmr:ZV0eaKFWM2u1-fddXG0BF-J87i916CVHlqa1qlSgq1MNbTU_GUAdIQxzGK1_VXieaNL3AiqoO6Csze0t75ogfDXjGffpOsAQjpqo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefheduucetufdoteggodetrf
+	1746821584; x=1746907984; bh=URkCnadCJtBqR9qByidZXWwD82/HvxzeU+1
+	rAgetKq0=; b=QDtz5jJ0MNgteq66DjyuYvKLHh+XOecJ+FrkaD7Pkpv7XqnOdua
+	LSO7f3ymSDI/C3s7Li5RiV85XtRtE4Xj0y2Sy0pfjsvJI3R+OgB8zA1diLJKcdaQ
+	sqARlqo54472ElJ/dbI2z4hLyzdYNaNpf7QwF8xOUqeZIyO/OuOX6RYfe3Wqg8iB
+	uHvurXzsVdFsp9n2jTC37ACihcuB+MBO6VuR1LhhXwDU8PpVkbQqrMLVkX1hjD7S
+	eHd2rytphz8Uxwyo7suQT2XB15ccsfRxFLwQzPJppNXNjGfhh5dYi9aQS2nO0gHe
+	+eA4+udCsbBw4AXY2L01iFcarJwvCbNgWaA==
+X-ME-Sender: <xms:0GEeaG-iWGns38kHsef41T7EDJmW-z_irpwaa81PRLEr-mW92JjnLg>
+    <xme:0GEeaGv_9sSKrnpqMO-LiOlBbvBPbFUwqxQA7aEMyXDsMA1IJgCdEoDUgctb0gc21
+    zGM2Tw2ldS9_LfaRw>
+X-ME-Received: <xmr:0GEeaMA6qf6vtbl69LHcJ-2wWoxYXXOT-n5lhHCf0THcEYYrtJO6K5cZSC_J9QemwaoNwj3wf5OTt7Mui404kHG5lG2Q3_HYjxqL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefheegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
-    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:ZV0eaLT0_4NYiQK3T5b-VzZQ2P_0hNRESZvTsCIVWPQ_cgMTJE1MJw>
-    <xmx:ZV0eaPysCBTPonk4JtU5VCpdhmOIBvfklsMx9ww5yPl4atWm827yxA>
-    <xmx:ZV0eaJ6rUtTfXx-9bG8zASyodwJ00iAIdvvOa5qOXuF7DdWvp6ZK8A>
-    <xmx:ZV0eaMyXqFkntMe9-UaGKa7O9kosTQGho-MLiVPquiTq-xleXUIG0A>
-    <xmx:Zl0eaDEjdYMyDsCtcrEHoc4B2emb63aOpd1fsDKyQDIbZlEhZwyCQoJh>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepjefhlefgfeevvdevtddtteeigeekjefh
+    heeitefhgeetueefgfetfeefjeeuleejnecuffhomhgrihhnpehmrghnjedrohhrghdpgh
+    hithhhuhgsrdgtohhmpdguohhmrghinhdrphhmpdhhohhsthhnrghmvgdrphhmnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhi
+    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
+    hushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopeiiihihrghoseguihhs
+    rhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:0GEeaOfvuWa2-1rIJd-kWWr8qHyaKMaZ1PMmHMK_bVjgzTLz_tLywA>
+    <xmx:0GEeaLNz7IGgdwC_lbYIX-FIihLvZ4gNwy5OXAhAnzmccZkmY_vg8g>
+    <xmx:0GEeaImxiiVWUbehSpg4VR7oPbtbkqn4FzVRBqIwFczziiEM1JIgyQ>
+    <xmx:0GEeaNs-eII8DSu3PtZ0WwxZ5WYrnwLief22A-WvoD_RTk2fjgtiWA>
+    <xmx:0GEeaAVL4Qhx6uConpsT6UmvjfqM9Hs015vqv8JiNnv_1wyDXgkhjvNE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 15:54:13 -0400 (EDT)
+ 9 May 2025 16:13:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 4/4] builtin/stash: provide a way to import stashes
- from a ref
-In-Reply-To: <20250508234458.3665894-5-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 8 May 2025 23:44:57 +0000")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-5-sandals@crustytoothpaste.net>
-Date: Fri, 09 May 2025 12:54:12 -0700
-Message-ID: <xmqqzfflzhjv.fsf@gitster.g>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,
+  sandals@crustytoothpaste.net,  Zi Yao <ziyao@disroot.org>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH] send-email: try to get fqdn by running hostname --fqdn
+ on Linux and macOS
+In-Reply-To: <PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Fri, 9 May 2025 16:49:58 +0000")
+References: <PN0PR01MB95882173451A6A7C28AD7BE7B88BA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Fri, 09 May 2025 13:13:02 -0700
+Message-ID: <xmqqseldzgoh.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,82 +95,72 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Aditya Garg <gargaditya08@live.com> writes:
 
-> +static int do_import_stash(struct repository *r, const char *rev)
-> +{
-> +	struct object_id chain;
-> +	struct oid_array items = OID_ARRAY_INIT;
-> +	int res = 0;
-> +	int i;
-> +	const char *buffer = NULL;
-> +	struct commit *this = NULL;
-> +	char *msg = NULL;
-> +
-> +	if (repo_get_oid(r, rev, &chain))
-> +		return error(_("not a valid revision: %s"), rev);
-> +
-> +	/*
-> +	 * Walk the commit history, finding each stash entry, and load data into
-> +	 * the array.
-> +	 */
-> +	for (i = 0;; i++) {
-> +		struct object_id tree, oid;
-> +		char revision[GIT_MAX_HEXSZ + 1];
-> +
-> +		oid_to_hex_r(revision, &chain);
-> +
-> +		if (get_oidf(&tree, "%s:", revision) ||
-> +		    !oideq(&tree, r->hash_algo->empty_tree)) {
-> +			res = error(_("%s is not a valid exported stash commit"), revision);
-> +			goto out;
-> +		}
-> +		if (get_oidf(&chain, "%s^1", revision) ||
-> +		    get_oidf(&oid, "%s^2", revision))
-> +			break;
+> `hostname` is a popular command available on both Linux and macOS. As
+> per the man-page[1], `hostname --fqdn` command returns the fully
+> qualified domain name (FQDN) of the system. The current Net::Domain
+> perl module being used in the script for the same has been quite
+> unrealiable in many cases. Thankfully, we now have a better check for
+> valid_fqdn, which does reject the invalid FQDNs given by this module
+> properly, but at the same time, it will result in a fallback to
+> 'localhost.localdomain' being used. `hostname --fqdn` has been quite
+> reliable (probably even more reliable than the Net::Domain module) and
+> before falling back to 'localhost.localdomain', we should try to use it.
+> Interestingly, the `hostname` command is actually used by perl modules
+> like Net::Domain[2] and Sys::Hostname[3] to get the hostname. So, lets
+> give `hostname --fqdn` a chance as well!
+>
+> [1]: https://man7.org/linux/man-pages/man1/hostname.1.html
+> [2]: https://github.com/Perl/perl5/blob/blead/cpan/libnet/lib/Net/Domain.pm#L88
+> [3]: https://github.com/Perl/perl5/blob/blead/ext/Sys-Hostname/Hostname.pm#L93
+>
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> ---
+>  git-send-email.perl | 14 +++++++++++++-
+>  1 file changed, 13 insertions(+), 1 deletion(-)
 
-This is to stop at the sentinel commit at the end.  Don't we want to
-make sure that it actually has the expected shape of the sentinel?
+As maildomain() is called at most once in a process, thanks to
+send_message() conditionally calling it only to set $smtp_domain
+that is not yet set, I do not personally mind adding an extra
+fork/exec here, but ...
 
-IOW, how robust do we try to be against being fed a random mergy
-commit history (e.g., our 'master') and mistakenly adding nonsense
-stash entries as refs/stash@{<n>}?
-
-> +	/*
-> +	 * Now, walk each entry, adding it to the stash as a normal stash
-> +	 * commit.
-> +	 */
-> +	for (i = items.nr - 1; i >= 0; i--) {
-> +		unsigned long bufsize;
-> +		const char *p;
-> +		const struct object_id *oid = items.oid + i;
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 55b7e00d29..735d8abc12 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1393,8 +1393,20 @@ sub maildomain_mta {
+>  	return $maildomain;
+>  }
+>  
+> +sub maildomain_hostname_command {
+> +	my $maildomain;
 > +
-> +		this = lookup_commit_reference(r, oid);
-> +		buffer = repo_get_commit_buffer(r, this, &bufsize);
-> +		if (!buffer) {
-> +			res = error(_("cannot read commit buffer for %s"), oid_to_hex(oid));
-> +			goto out;
-> +		}
-> +
-> +		p = strstr(buffer, "\n\n");
-> +		if (!p) {
-> +			res = error(_("cannot parse commit %s"), oid_to_hex(oid));
-> +			goto out;
-> +		}
-> +
-> +		p += 2;
-> +		msg = xmemdupz(p, bufsize - (p - buffer));
+> +	if ($^O eq 'linux' || $^O eq 'darwin') {
+> +		my $domain = `(hostname --fqdn) 2>/dev/null`;
+> +		chomp($domain);
+> +		$maildomain = $domain if valid_fqdn($domain);
 
-Here, we could check "git stash: " string to make sure that it is as
-expected in an exported stash we previously made, and abort, just
-like the above "cannot parse" case.
+... we do not know everybody's implementation, especially including
+the non stardard ones, of 'hostname --fqdn'.  Some may stay silent,
+or say something only to its standard error, when it cannot produce
+a usable output, which is the above code expects, but some others
+emit whatever it wants to to its standard output while signalling an
+error with its exit value, when it sees some error (like "I do not
+know about that 'fqdn' option").
 
-> +		repo_unuse_commit_buffer(r, this, buffer);
-> +		buffer = NULL;
-> +
-> +		if (do_store_stash(oid, msg, 1)) {
+In short, I do not have too much trouble against the idea to add
+"ask hostname(1)" to the source of maildomain information, but I'd
+prefer for the implementation to be a bit more careful to detect
+errors, more careful than "if we get anything on its standard
+output, it cannot be an error and we'd use that".  I understand that
+the call to "if valid_fqdn()" tightens the condition a bit better by
+looking at $domain, but we shouldn't be even chomping $domain or
+feeding it to valid_fqdn() when we know the `hostname` failed in the
+first place.
 
-Should we be making sure that the object named by "oid" does look
-like a stash, like what is done in builtin/stash.c:get_stash_info(),
-or is assert_stash_like() called from do_store_stash() sufficient?
+> +	}
+> +	return $maildomain;
+> +}
 
+Thanks.
