@@ -1,83 +1,90 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8DE22D9EF
-	for <git@vger.kernel.org>; Fri,  9 May 2025 08:36:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766B916D4E6
+	for <git@vger.kernel.org>; Fri,  9 May 2025 08:51:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746779809; cv=none; b=PudSRMMvhw06N3Gmiv8fdFb624V8bo+P4VoGoHIhES/cdAz0ZOTnAjhgB3jmgfEE1k4y4dt+L4B/MOHf0R7O0NQDp8WDt7y1lVat9FpLxgyxh2G8UO08IKV+YEBTEDeBQqQCFRQjGCI4a+PQNaRRAOpIV7EIJ4Q9xW5sNtgknvY=
+	t=1746780695; cv=none; b=HY+Kuf16ch9j7tL8c6xiB+O1eNMdcAX3gejpxFRgUqyKFBZWApAhc+JSlUu9Ui9ek7Jgl8ASsaFPSTEpcW/XNonmLg/+ACr5sUewld4TQlKDDRQE0MDLuK99DqPoqX0pbFswUwuf6Z0WKaLygJ8DzCxuwxEeXFtz63RfSWoQfts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746779809; c=relaxed/simple;
-	bh=NLrgRXOVBqY1yfjpBJlyfQwuOKiDXWvOWybmXI8eOsU=;
+	s=arc-20240116; t=1746780695; c=relaxed/simple;
+	bh=4seK2LUZNR0TsxjSPyk1LExZdzTsPA+TuSlcysEf038=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=LFWdwMYUZ37KSf2ECTG/NCSKogwBzyXd2aRXVSCbBiPvDg/1DWyivOS7S5F/O71yOFL5VT8Y0c5eAINo+4BhLXKR03u++Ew8DB5R4Ri1vibMHwumPQjBHtkaG5Z1QwuZW+AQX6XonwQOZ2gBzgeDG/asZMaa1S3VZl8WF0YphtY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tsZOUYym; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTQ5E7+z; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=dmhPdCKtat/UhaUNu1nzCtxNfdoYxVmEmb5lt7sLJqAegSwpo9yv5fySByQ/5wPkcF7BtiWVu5eK+dMiBuJnKPKolSiI9OOjd/L8jin1Q3wuW3hBBG7Pyj7OBj3cdm7pnzRxYjf7zOs3pItpmlljzV1DkyRWPs7TL7c5fZnCQzE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=kUnTJiYK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=isBy934j; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tsZOUYym";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTQ5E7+z"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F1879114017C;
-	Fri,  9 May 2025 04:36:45 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="kUnTJiYK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="isBy934j"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 410D711400EB;
+	Fri,  9 May 2025 04:51:32 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Fri, 09 May 2025 04:36:45 -0400
+  by phl-compute-11.internal (MEProxy); Fri, 09 May 2025 04:51:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746779805; x=1746866205; bh=5Gn1daxIds
-	o3vuo/i4ZoyaTeGYDXEA61ipE5ezz4pno=; b=tsZOUYymLlmRMpmqsFpR22rBTK
-	6C84dN14yEFCv/OFG0SCO0af8lWmlswORKiQq5I+5jV7tqynclJSH2jvUhbvHS/m
-	FSzItP8LHoUsiOnoRaeWDRNlFerlFhhueOwhxNUDPczC5PARvsRenQNZR5im09RS
-	boHpo6nDLY3l7nn9NekQsUDvm0JsPyklbxV59TlyTXBPwR9k3x8cnehN4XGuz21F
-	0RZI5z8cLO0WBMfwMl1dkfQZzeGdpAdrufHQQEzlxj09OUP5cmucgd4lxtzs3Krw
-	AEt+kG+QLWvbt0NA1sduyEJlgxAzudYGyPnHom4nr9SERYi+FLeGJX0DrmjQ==
+	:subject:to:to; s=fm3; t=1746780692; x=1746867092; bh=jUhgp0Khfi
+	3juScDhFOMOT3PmkHskPCiNdeCOzFecmI=; b=kUnTJiYKqySAWDLRykZy4i9d/U
+	/RdJ3lZn2DSYaTgvGeomPuk1d06gTE0q8OArxHpzQMOVxFUABnPufiCHZfjfdwST
+	ZNZ1s4utVaZ7p2zXMG73v/xbXprF1gsMYCA8bOlBAurM1S2NjGTKyzGNUwTWlfQd
+	+SH75kR3KKY0ZkryzaqahevGUgbG+wQpzrNiKXKAx/xtcEJ16Lum09CSBkx1P2lH
+	4mnXrXcl6X5G44Y5Q4Mou+RA18070uPNqdp9ddUwDVkrPpN3X7qGi+KxwLn/mEaW
+	I6Kw0L1cNadviDd8hHSwFRCLdHr0rjR69l28sWDuQB3Widl0d8ka8bPIJjvg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746779805; x=1746866205; bh=5Gn1daxIdso3vuo/i4ZoyaTeGYDXEA61ipE
-	5ezz4pno=; b=lTQ5E7+zCzXXtkNTl+eq/TxJyPZ+B2cJGYcudUDqAsnfLfIve1t
-	ARNOR6vMB15B4Dgpp4QujXMis1Y2RInkpjajwV2HJ3YtMgwBumXqBVIW4DLzTBlL
-	Nb9YcobmwLlGdyO+bIWbbOj3MORS5N/QOyHpMjbFOdnlDgsbcRaAfSyt2cIAX2tr
-	+v16NV3/GXrTOBb9zIr8YRBbpreNxgBJk0P2pjM3tgNKfVfKd6L5vkOpgrfirrYd
-	aa3di3w2N0D405D79ytGbJhpEeXoxj5OTTvuAIn/9nYKrCjSsDWRiTIOkAoLzbxn
-	0Wx495pKUn9lsRQKsN4zIBwo+IoVZ5FmvjA==
-X-ME-Sender: <xms:nb4daKF9Hnap3sY1F0e9Ih-fw-0rA7FzD_n3THMRnZoe3zW9DW3C5g>
-    <xme:nb4daLU_PGZENEj7RP0pm9uTAwMBzFOURnUbdyU4QVIzygmM4Tyce4zT-QRRmv2RP
-    PEn0mu5vtzPykMbng>
-X-ME-Received: <xmr:nb4daEIWIFF0bxpzMLeJ2l799ptydaFNzIX4Tsy4PBlR0W0-1OZP8LHT_nKjgDaW8NIUkNY2Hy8Uw0eRd1RHT_cocGgDmsduWOjNfRBqaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvudehucetufdoteggodetrf
+	1746780692; x=1746867092; bh=jUhgp0Khfi3juScDhFOMOT3PmkHskPCiNde
+	COzFecmI=; b=isBy934jhw3NA9vgh3kilJaWv1XM/OBEbddWG+euXKM4ZRe02Bd
+	FWRGsDRCDk5TXgUyt8/1a+Wm6ZtyNXzDmVEZVwRNgBVf1rqG0x037p1uW+AF0Fez
+	PK0USwB2cTNCm3UK1ORH8/Lws2n7B6FHjawbQeGTB63KizUAHjiJHKRN9e8d1wIN
+	ihCY7aa+7uCgLh4zElzW8PjxzwU9z3atrPnNR+eQirRYFJJxZlrKI0mVazBi0efq
+	dIRRU8IxTzuE2YQYea11TeI0kLauA1EaN2ukybs5RHJl1AL2uryeW8FAv7uffUV8
+	F6Og66xv4uTDcM0LctFPvStsOjpX20ewC+g==
+X-ME-Sender: <xms:E8IdaC8foa_QWMYr2F-UP9hMnqnjyAIYRVnem4vKgqCWhV-DpsfYEQ>
+    <xme:E8IdaCud6FKn2Px1S1FSDo43rtQep5n7Y4lFbldqh74bKbpx8GQniqQRVzETq-D5v
+    CZcMQfOztOAfI3-WQ>
+X-ME-Received: <xmr:E8IdaIDlQ2-25VeCkwAiGvSOmQIWco_bRROwj3PMbnCqCSk58TpYsyhd1hiyMWC_Z_9RZRuxYhnzV6Jvj28NoE0Y2TNZv9xlXJhPO94thQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepudegtdejffduffeggeevudejgeeuveeiuefggeff
-    geetvdehieelfedvueejffehnecuffhomhgrihhnpehophgvnhgsshgurdhorhhgnecuve
-    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
-    rdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsrhgrugestgho
-    mhhsthihlhgvrdgtohhm
-X-ME-Proxy: <xmx:nb4daEEyZGQnanPQFMM4fuhjFT7J4WyLuBHmoWiNmoMi31wlwRb3ww>
-    <xmx:nb4daAWQ_7Hqb0pwOpWcV4KH_4gDfP8fWamcucSn22gO-pDr-oHwWQ>
-    <xmx:nb4daHNstwC8TnFgIHUIYU7AGiKRIcuMVz4dWsY2pYygY0fmOTg_1Q>
-    <xmx:nb4daH0QKkD9G0cQj8CvuI3ENOGmd5JjJSjLlv4QycTbGZVia_42-Q>
-    <xmx:nb4daGH8L8viLI-sXiS-BomwoXgxSd8zHfcuBV28k5JA8tkWePxiXcfD>
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehr
+    rghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtoheptg
+    honhhguggrnhhhqhigsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:E8IdaKcj_TbuVpLfFkgbDyxAZrV1gTcsxn--3IkPj3T4V-4gigxdmw>
+    <xmx:E8IdaHP8B8TMIYEcYGyf5tpc0eld6DEZdERJ94HN9MFxbWo5jMELwg>
+    <xmx:E8IdaElrIJlHIyrVoqCaTWwNz2xa3POTwOdHnIAz5qkDkX2JxuTy4A>
+    <xmx:E8IdaJvVGvtJ0x8-cS_xBqzJcm5c6oR5jDnB6QuSHJzt50nhbPEmFQ>
+    <xmx:FMIdaPPSGDhA-lQPZDWWh9gHSlId7wnH856HJPCjaKM1lAf7AMVsDlYP>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 04:36:45 -0400 (EDT)
+ 9 May 2025 04:51:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cc631863 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 9 May 2025 08:36:43 +0000 (UTC)
-Date: Fri, 9 May 2025 10:36:39 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5baf88a6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 08:51:28 +0000 (UTC)
+Date: Fri, 9 May 2025 10:51:24 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Brad Smith <brad@comstyle.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] thread-utils.c: detect online CPU count on OpenBSD /
- NetBSD
-Message-ID: <aB2-lwKPOnj3EH0b@pks.im>
-References: <aB2c-W0V83aVDpZr@humpty.home.comstyle.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	=?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
+Subject: Re: [PATCH 3/5] meson: correct path to system config/attribute files
+Message-ID: <aB3CDOljn9zJsVwt@pks.im>
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,46 +93,69 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <aB2c-W0V83aVDpZr@humpty.home.comstyle.com>
+In-Reply-To: <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
 
-On Fri, May 09, 2025 at 02:13:13AM -0400, Brad Smith wrote:
-> OpenBSD / NetBSD use HW_NCPUONLINE to detect the online CPU
-> count. OpenBSD ships with SMT disabled on X86 systems so
-> HW_NCPU would provide double the number of CPUs as opposed
-> to the proper online count.
-> 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->  thread-utils.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/thread-utils.c b/thread-utils.c
-> index 1f89ffab4c..374890e6b0 100644
-> --- a/thread-utils.c
-> +++ b/thread-utils.c
-> @@ -46,11 +46,11 @@ int online_cpus(void)
->  	mib[0] = CTL_HW;
->  #  ifdef HW_AVAILCPU
->  	mib[1] = HW_AVAILCPU;
-> -	len = sizeof(cpucount);
-> -	if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))
-> -		return cpucount;
-> -#  endif /* HW_AVAILCPU */
-> +#  elif defined(HW_NCPUONLINE)
-> +	mib[1] = HW_NCPUONLINE;
-> +#  else
->  	mib[1] = HW_NCPU;
-> +#  endif /* HW_AVAILCPU */
->  	len = sizeof(cpucount);
->  	if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))
->  		return cpucount;
+On Thu, May 08, 2025 at 05:44:37PM +0100, Ramsay Jones wrote:
+> diff --git a/meson.build b/meson.build
+> index 48f31157a0..106cb17612 100644
+> --- a/meson.build
+> +++ b/meson.build
+> @@ -757,8 +757,6 @@ endif
+>  libgit_c_args = [
+>    '-DBINDIR="' + get_option('bindir') + '"',
+>    '-DDEFAULT_GIT_TEMPLATE_DIR="' + get_option('datadir') / 'git-core/templates' + '"',
+> -  '-DETC_GITATTRIBUTES="' + get_option('gitattributes') + '"',
+> -  '-DETC_GITCONFIG="' + get_option('gitconfig') + '"',
+>    '-DFALLBACK_RUNTIME_PREFIX="' + get_option('prefix') + '"',
+>    '-DGIT_HOST_CPU="' + host_machine.cpu_family() + '"',
+>    '-DGIT_HTML_PATH="' + get_option('datadir') / 'doc/git-doc"',
+> @@ -769,6 +767,18 @@ libgit_c_args = [
+>    '-DSHELL_PATH="' + fs.as_posix(target_shell.full_path()) + '"',
+>  ]
+>  
+> +system_attributes = get_option('gitattributes')
+> +if system_attributes != ''
+> +  libgit_c_args += '-DETC_GITATTRIBUTES="' + system_attributes + '"'
+> +else
+> +  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') + '/gitattributes"'
+> +endif
+> +system_config = get_option('gitconfig')
+> +if system_config != ''
+> +  libgit_c_args += '-DETC_GITCONFIG="' + system_config + '"'
+> +else
+> +  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') + '/gitconfig"'
 
-This change looks sensible to me and matches the documentation at [1].
-Using the number of online CPUs instead of existing CPUs certainly
-matches the expectation of what this function should reutrn.
+Instead of `get_option('sysconfdir') + '/gitconfig'` you can say
+`get_option('sysconfdir') / 'gitconfig'`. It's a bit pointless in this
+case and not really needed, but '/' has some special magic for handling
+absolute and relative paths.
 
-Thanks!
+> +endif
+>  editor_opt = get_option('default_editor')
+>  if editor_opt != '' and editor_opt != 'vi'
+>    libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
+
+Nit: let's maybe add an empty newline after each of these blocks to make
+it a bit easier to see where handling for each specific option stops.
+
+> diff --git a/meson_options.txt b/meson_options.txt
+> index 8547c0eb47..4d78d4c7ac 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -3,9 +3,9 @@ option('default_pager', type: 'string', value: 'less',
+>    description: 'Fall-back pager.')
+>  option('default_editor', type: 'string', value: 'vi',
+>    description: 'Fall-back editor.')
+> -option('gitconfig', type: 'string', value: '/etc/gitconfig',
+> +option('gitconfig', type: 'string',
+>    description: 'Path to the global git configuration file.')
+> -option('gitattributes', type: 'string', value: '/etc/gitattributes',
+> +option('gitattributes', type: 'string',
+>    description: 'Path to the global git attributes file.')
+>  option('pager_environment', type: 'string', value: 'LESS=FRX LV=-c',
+>    description: 'Environment used when spawning the pager')
+
+Makes sense. Should we maybe document the default values here now that
+they aren't immediately obvious anymore?
 
 Patrick
-
-[1]: https://man.openbsd.org/sysctl.2#HW_NCPUONLINE~2
