@@ -1,131 +1,96 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3ABB2376EB
-	for <git@vger.kernel.org>; Fri,  9 May 2025 20:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5988025394A
+	for <git@vger.kernel.org>; Fri,  9 May 2025 21:12:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746823070; cv=none; b=LdTLbbHk6X+qs3gVif4f6sDA8DN44FnOPsyDQcgNz2LYsVy4P2mKrnPqsBoC2mItbIdk6CzgR3d8gagNsbsISfQ/dYJAfsLqHyTDn9Zwa9ZCpwpnHYl7BdkDoMvg84SsJfSGs19E5i9pF7ToX8+x+G0Pq0nbdl/kNZWttDK3Lc8=
+	t=1746825128; cv=none; b=i6sJ2gFV1IUsEBJwewSWcoVWNBeQYifFJLyTLEhR3ccG+9BEkn3MMmC1pnzk8h4ljyzj8LKdPhtx2HISzJ43rsY1qBHns4Zt78UhP6IwDDOGjjawK0sx0KvMM/WPLRzHKcMpzpRtSuoewUoPDqNg2X/iPzgAZK884TIOpW/Vfqg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746823070; c=relaxed/simple;
-	bh=x0mEqIQ0gD7i4c/Fz5aQZ18U5i61WwCUcEWZRfCkX3s=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=LBfeMvejW0KlTpaAxSEiPyoqdwN0XYTREtr18BBsBMa27QiBVrC/E1F3SL3BT+u3Pte4oL16ipqT78R0OQrE0BVFz8NdR6nTBo3z/+2JafCew35v0vK90W//HFbjOGsZKx4/Fwkxtn/pXOObXqHeLK9+8H5wwHE52eB42CTsHzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KFy1+3r7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sfuNY8Vm; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746825128; c=relaxed/simple;
+	bh=Oi/fFdsVIIpt2tSP+X6ZCdtQXH/hO1z1K9NTsGBRBRo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KpinJlztXp6AklrwchO+araxE49fXlYwUn9BaFzaYgsSMmWgdcn9WrjvXcTcsQ026NuQwpOUkxguhuMGQqRIlk+FeT0BIEC9z8jHE3iQz/ydTmMmEUGJOMzC/mC9k0qRmd2W1ZqBvnvN0dIqskGtpmpe1gTbt5rtRITxL49x8ms=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=kgX03r0y; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KFy1+3r7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sfuNY8Vm"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A28EA11400C7;
-	Fri,  9 May 2025 16:37:46 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 09 May 2025 16:37:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746823066; x=1746909466; bh=A5C2YIWd9i
-	25WBDxPV/YlDUjSgwIH/Z18AeE3xGWmQU=; b=KFy1+3r7S3roTbKadheqfvRTAm
-	m/PYFUIj5XNfX0IQRZvq5ailhhB9DlVmLQuKp/x9hIYhv0TXiEtf3nzxa7Ice6+W
-	qZCX/0VKEKRTCP4w3DWHCsCelIQ5qIRt56/wlvzmk+eY6ydw/mLwd84IAJMPgcHd
-	Kdox1G9IsS1rIbIN48Svh8BDn2V6WpEwQaOTmISweFoa9cDrGqbEMCsp374S6kQR
-	/UtsiaPmWvL1ZVSy396ID/5zSu94iZFMvMvRED2tV+Ctk4tKLKHasuOpDJYi8i/Q
-	e0NfxwVuUQ5F7cUFn1mk22HXCS7xQGHUKQ9/NNVHIQ66xmgOvwE7ae+AGwUw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746823066; x=1746909466; bh=A5C2YIWd9i25WBDxPV/YlDUjSgwIH/Z18Ae
-	E3xGWmQU=; b=sfuNY8VmK7zNwR9LJC6U1BbLK5VrwyP/UQT4u8LoHCIceUQz9wr
-	rsH4XQefIgWfwZMmNN/AF7H417fcL/iJ+le9T4hfLHfAxCfyzwwJ9lGnfvWCel16
-	2txK0uz6+/DfnQxisfjlZmausofI/IKq3IT14mCLVocQFLRUX1xcVr1U6hdSViSR
-	tg8pF1FRI3X3WUaAiksCvrUwxru6IiFcxllFdTqNA9tXYUXzZr5D4Lnt5DZH2fSL
-	Wi6FW2O8fHXGWNfALJSCeWkQYWOJEr7BjDF+jOVRfbkGpNGY/MIYqbd4DVoMKby6
-	AVs61nWj3UrMxj81iwEXr7GKMyjLe6A/jvg==
-X-ME-Sender: <xms:mWceaOsFb9SNzZjx5YRPzN07D9zAfQXPbvivuTYLllQtplt01_pu_w>
-    <xme:mWceaDfDMLlH_Gf6JCaF4UvqtUmP0-F7ZkfDD6tmBeTqUxaan-x6apLA2ryD3zQLU
-    IZYXZU7XekZ9gkB2g>
-X-ME-Received: <xmr:mWceaJzgOkm80zCWMHugIkundxoT6DsFFVtyhYQ1q75a64RiKsqgzXoZg1O_ZuMV4KH9Ho_cmUXvR1nSswGN7cxX6B5wF52uBaVS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefiedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
-    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvg
-    dprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepphhhihhllhhi
-    phdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:mWceaJM2kbCK3u393Neb3kytUbENUI14TgdGME39Qvcgw_RS_rvvmA>
-    <xmx:mWceaO8SpKoF1DSMxI7YEtPeyZq42UjVFBnviCzvNRRB3sQUDmL-ig>
-    <xmx:mWceaBVmGUgpZ8v1dCf3K48jSaLUzBVfMiblUG9CwHS76fQd3JROjw>
-    <xmx:mWceaHfmgEhfpXJmuJ2v879fGn427NIxTo3oboPHBohYLzUFwfsZSA>
-    <xmx:mmceaARTbu6MimJGUnjWrOFcaF7kwZfzYiZYCENxgVuSQTc6-K4QpaO0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 16:37:44 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff
- King <peff@peff.net>,  Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: Re: [PATCH 2/2] sequencer: rework reflog message handling
-In-Reply-To: <90c6912478683d96ef18b521506c703a2467585e.1746807747.git.gitgitgadget@gmail.com>
-	(Phillip Wood via GitGitGadget's message of "Fri, 09 May 2025 16:22:27
-	+0000")
-References: <pull.1919.git.1746807747.gitgitgadget@gmail.com>
-	<90c6912478683d96ef18b521506c703a2467585e.1746807747.git.gitgitgadget@gmail.com>
-Date: Fri, 09 May 2025 13:37:43 -0700
-Message-ID: <xmqqfrhdzfjc.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="kgX03r0y"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1746825124;
+	bh=Oi/fFdsVIIpt2tSP+X6ZCdtQXH/hO1z1K9NTsGBRBRo=;
+	h=From:To:Cc:Subject:Date:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=kgX03r0yr4CeHADUB7wb8PfBpYNPLk961uPPbIkvcrc1CSjylj/lOLnp0tFLHapvy
+	 SxOKg2S/g/O05rgcADLIshH0K5C4pz8m/3IkI51bLBbVONG4rIzFA81UiN3dXvzr3G
+	 tNjdi7womwysh9Ic8xqVczXHPVEvls3Y3VehdQt/vujpupS4bpwbjiEfC/uCG7MmCY
+	 oUbytkfF6xjoJ7Ef2yiPU18MCaH3YgC1Mb4ufVWcuDcFDl+xiMRFwrx2TgFOu5w866
+	 6R2VfJjEjiqXB998qqveQjUyfkCeOIzDW8tZ12zVQsBf0Lr5SsQNnzVHtVIhDftA+l
+	 4+DmIBsbXNS+mEnaPXwyyQntE7E8wKvW6gmj/qll+5py7Ae2+jfUTZXm0jQ5e22DTp
+	 JRTACV0h0LDttYxtzaWNFpnsAkgOkFQsFRX0nTtK9LV28djvW9yiJHOxia3nv9qiq5
+	 8KVJT5UYwF3tgCR0qbS14ajHVVaD87El8LAtuZz4k3+qKLm9KSy
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D30D4200C6;
+	Fri,  9 May 2025 21:12:04 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Philippe Blain <levraiphilippeblain@gmail.com>
+Subject: [PATCH] Makefile: avoid constant rebuilds with compilation database
+Date: Fri,  9 May 2025 21:12:02 +0000
+Message-ID: <20250509211202.3910761-1-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.49.0.395.g12beb8f557c
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Phillip Wood via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Many contributors to software use a Language Server Protocol
+implementation to allow their editor to learn structural information
+about the code they write and provide additional features, such as
+jumping to the declaration or definition of a function or type.  In C,
+the usual implementation is clangd, which requires compiling with clang.
 
-> Fix this by creating the reflog message nearer to where the commit is
-> created and storing it in a local variable which is passed as an
-> additional parameter to run_git_commit() rather than storing the message
-> in `struct replay_ctx`. This makes it harder to forget to call
-> `reflog_message()` before creating a commit and using a variable with a
-> narrower scope means that a stale value cannot carried across a from one
-> iteration of the loop to the next which should prevent any similar
-> use-after-free bugs in the future.
+Because C and C++ projects lack a standard file system layout and build
+system, unlike languages such as Rust and Go, clangd requires a
+compilation database to be generated by the clang compiler in order to
+pass the proper compilation flags and discover all of the files
+necessary to make the LSP work.  This is done by setting
+GENERATE_COMPILATION_DATABASE to "yes".
 
-Nice.
+However, when that's enabled and the user runs "make" a second time,
+all of the files are re-compiled, which is inconvenient for contributors
+to Git, since it makes small changes or rebases recompile the entirety
+of the codebase.  This happens because the directory holding the
+compilation database is updated anytime an object is built, so its
+modification date will always be newer than the first object built.
 
-> @@ -1124,10 +1119,10 @@ static int run_command_silent_on_success(struct child_process *cmd)
->   * author metadata.
->   */
->  static int run_git_commit(const char *defmsg,
-> +			  const char *reflog_action,
->  			  struct replay_opts *opts,
->  			  unsigned int flags)
-> ...
->  static int try_to_commit(struct repository *r,
->  			 struct strbuf *msg, const char *author,
-> +			 const char *reflog_action,
->  			 struct replay_opts *opts, unsigned int flags,
->  			 struct object_id *oid)
-> ...
->  static int do_commit(struct repository *r,
->  		     const char *msg_file, const char *author,
-> +		     const char *reflog_action,
->  		     struct replay_opts *opts, unsigned int flags,
->  		     struct object_id *oid)
+To solve this, use the same trick we do just above for the .depend
+directory and filter the compilation database directory out if it
+already exists, which avoids making it a target to be built.
 
-OK.  We no longer have the reflog_action as a part of replay_opts,
-but they are almost always passed together, so making them sit
-together in the list of parameters does make sense.
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+Helped-by: Philippe Blain <levraiphilippeblain@gmail.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Will queue.  Thanks.
+diff --git a/Makefile b/Makefile
+index 8a7f1c7654..8f38de8ebf 100644
+--- a/Makefile
++++ b/Makefile
+@@ -2804,7 +2804,7 @@ endif
+ compdb_dir = compile_commands
+ 
+ ifeq ($(GENERATE_COMPILATION_DATABASE),yes)
+-missing_compdb_dir = $(compdb_dir)
++missing_compdb_dir = $(filter-out $(wildcard $(compdb_dir)), $(compdb_dir))
+ $(missing_compdb_dir):
+ 	@mkdir -p $@
+ 
