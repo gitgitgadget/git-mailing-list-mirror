@@ -1,164 +1,125 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DB561E1DE8
-	for <git@vger.kernel.org>; Fri,  9 May 2025 16:38:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A25022DA19
+	for <git@vger.kernel.org>; Fri,  9 May 2025 16:39:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746808699; cv=none; b=s4o1MLgZZCBu9D532UF8D/EdNLbUzla1CaWPpELwfM/p1YnOCYAGipSb73ND4O4qJaIja4hFOq854V+LyF10vi2D5+pXn5zrVXS29IBonwjFi4B17nCW0/myDRnQ+4vck9Uh0SDJpD+9F88GAjDEz/sva0TihtoZcXhQlRyzfjk=
+	t=1746808785; cv=none; b=td86KeLX0aVddQgACs4Bw20AYD8BMlC9BMvUTui9gvrGkK/TDbBpV2s+SBIdx91RlU581ZREF3LcqOnNfU5ZP38u9JIX61RkJO1OpEjui1nrlCNJooiN2TZzyJszpGULxK3V5EuoHZLG9tZvsDpCzfg0s6k+RpnWAdKJm7eTTe8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746808699; c=relaxed/simple;
-	bh=EYbsRMHDBA5FWwD1MCRlTuasfFZXsFb2OOm6sTTN+/4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GJUcP4slAgx3thXT5D6MXl3b3JTqL9IOfpmOlOu9fytSGOPOIP4T8cwmb+NOjJpa1bq8UE01wDz9wGOFaV/RPTb80VWJly0b0LAMqlA5D+vBj949UoDm4OubgExUNs5eb2veepTO8MR5gIxwLwgt2POe+Jh4PYKbV11/2bYJ+sw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fvscBwA7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NjugsbfA; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746808785; c=relaxed/simple;
+	bh=fFUa1oPzjolaPs76AZIrcb/YsTuHwgU7q33E744Kbso=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JV6tRUk0uQ8I8gEZh6wfWxkG8n1b7AhcBNagV9gTuF4X7LDFauPg2JvLfOr5bfSsHC9WxMrseszYj/VWAPjMLvkgXUyzlNCnWNacJppbgN3OeH+vOGARbNw79LCfIiWD7aN9KLwZlfq5grc5r28A2r0fS/hudPOJj8RADrKIyvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hBFPNXex; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fvscBwA7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NjugsbfA"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7745F13801AF;
-	Fri,  9 May 2025 12:38:14 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 09 May 2025 12:38:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746808694; x=1746895094; bh=NLS9W6diLt
-	xihXj8CZQ1hfVXUNRPQbPQpVXCsqFr97A=; b=fvscBwA77Y+MXevUdOkyOGprlE
-	WzQ1XpPIItaeH9MQOnOCc7L7ob24S6SOCjwYvReGne4LA60h2dhsclUt+OQSIkIz
-	yEptyZVczp4qD4zSMiOqGHmUqUDm1sXi2wWo+O+nsAHviawxyT2hD/njy0tLwzyo
-	tyqd9ggmP313ekE+4rJFKyYzLpYjVglTDVr0f9bKwXP/apSrTvCEg+bs5OMJk9pW
-	AFXPjgkfHFqJUjs5sr0775pBsv+A7zMp9NnJ9CI9KdS2PpMvbLlnkOSy024ZY9HQ
-	yFEUZVYzqymZahN7W99L6tVwtsLFBooP+IdGRfsA2m5yk9NfuapNAMv4AcDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746808694; x=1746895094; bh=NLS9W6diLtxihXj8CZQ1hfVXUNRPQbPQpVX
-	CsqFr97A=; b=NjugsbfAneHuPJIw7yx688B7Ch/wlBOarbqUOC/sF7f1cE5UomS
-	eLATuCTkeOaNkfk4BLJsV/5y3SrCYezaS7b4ZFRpcHC2qvc87zSt8VZRBi0xbdLA
-	ktX4vwV3VfXobaxOtgQ1SagKilzTzI8r9gu+ZYq2jELTPVApJqPdOqA+u+cWDTR4
-	+AHU7ujz8RhwnGqoHNQMNJqjxYyv687qjPUSH4b0xp2oTKciAghr7/K5wnh5I5Cx
-	Xxzad+o8PbKsM4PM3p4iAYj94ni3g8aBnXW7SZbEa95sKvJDhr9gmQft4lWXBepq
-	QcnnczxOa6tK4ArAFiPmjbGtvFwP0wnsxfg==
-X-ME-Sender: <xms:di8eaHbj2mYijVcsa9dvVc1XcGDkK6xmMqIK-FEwyZ4b0PHs0s8x9Q>
-    <xme:di8eaGb5TMDm1GGNNW4u9S0zlRNJEvUQ5wS3IH7W1_qC2W08kl9roB2sDiWklD59m
-    2_hJpztAFH5nDp1HQ>
-X-ME-Received: <xmr:di8eaJ8sQF6CjtihX3MaSGYBnf7dMPVzyrC-GAA6nLhHTkgS8-P6mjlCZjWHsLcrwzNQGnmO778B9oss_lUw_5x-dvSgMZJ6KxEa>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefuddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:di8eaNpF4RKWbQHh77j4XjAhlZZ8mB7ZW9W8Fk1SA3FoVog2GycetA>
-    <xmx:di8eaCpe6Buj0UKDJUpwlcd4aobNHIhLED8mRqPNb5sWF42wyNRmAw>
-    <xmx:di8eaDRwKGKBj4L7IZ84X3jbxMG8E1TDkZ1cAo_9IEFIEXrSi4newg>
-    <xmx:di8eaKoPlBqmBHsbtpWg8UkGqeIcXRvY00T1uTvGTVD9CQZXO3Ypbg>
-    <xmx:di8eaL_WzBa6QSsfsr0gqgj44l7Rrj7zt-YO9y-1V32FW2FYvSsZRjl9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 12:38:13 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 3/4] builtin/stash: provide a way to export stashes
- to a ref
-In-Reply-To: <20250508234458.3665894-4-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 8 May 2025 23:44:56 +0000")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-4-sandals@crustytoothpaste.net>
-Date: Fri, 09 May 2025 09:38:12 -0700
-Message-ID: <xmqqr00x20zv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hBFPNXex"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-73bf1cef6ceso2475581b3a.0
+        for <git@vger.kernel.org>; Fri, 09 May 2025 09:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746808783; x=1747413583; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dJhy3RkK3n+zP4z+bZJePmGyd7puyQvH575W1FleQjI=;
+        b=hBFPNXexc/Ikz3enRkNSRNuWr50nhEtDJOScZMIb8Hd3en2GKK6oz9hWEH1hJwH5q6
+         VuMv0DknUgQXlP01mK3NUGbc6HNsvMZWwirzmLhlXgMfCw+9/+prNM5Q95TpZn3TcPwB
+         ysYxQHUBd/m/svbgdSuXpH0/fIZWdy5Nm7WJhKLKcm4gnUTitMO4GocZzd+97rUQ4hZq
+         f4gX3kCuArgbYPiQ+TakIFEwpXlubCvz5sZhtMy2TxJqXXRTJi4B7koEPf9dyZOdIttV
+         N1Q865pt1+3JPp5dgNOgwDF8ssesXtmhWOIj6VQtSoRR84dJ8aQpsDpCaN+q8ou8AqGv
+         oTZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746808783; x=1747413583;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dJhy3RkK3n+zP4z+bZJePmGyd7puyQvH575W1FleQjI=;
+        b=jd3IPGbnCDnetPTBn5q30ualW7wOO/pUmVIVjD1j6hKUkBITCOJhaPzsO0QjJ43ZBj
+         XXLkunDTn8N493W/JjlmS1xcju82/+CvTewTQnFBonKyRWFVcHS3j1QJfbu1/EThR8s+
+         t0RuW6t/V5qE0qiKr0cJbLQjWgAK4c8V6DvWbgDvD6jC1Gu9VuU9LjWfOTm/LqR4xxwW
+         oyV7vHwkBVtWM6FZ9T9GrMJtKEBV0mWCWGCztFti3nxnu88Ll7JYqwbQHI9Kno54ybZU
+         sj/R1YWQHLzNpFR2sSCv2NQhgkguHOnNl0JgakZZI7VdmQgOt2AZ0cLx84AoLjFh1sDV
+         NFSg==
+X-Gm-Message-State: AOJu0YxAA6HOZaYpIdlyrj8Nv2KZv4/7qg9wMwFNONnsoVwhUU6Hs/SB
+	icy7hoa1/fAjOMLWd7SOACvK/8Ze5eUV3akKEJE22hQtf44HBAbLPwN/aSlB
+X-Gm-Gg: ASbGncvO/sCp7TO8PMpY4HwnG2VKe19GG9zebRhdwEYSI6Q1EdWmkIPxP0IeN8riKwm
+	Lk0RaIctezbPx/m+ElpQJnsAZ7dScM3weaaKY2xV0mrfAKiGueKCUQg5Avh6kzAf3JbI+U67sso
+	FckBBTXIyPB+3T+/ycNsI6ugBynt0L7ynFsoUfGoWLwqq0RkTfYGjIYdxocY9hgGzqiXkwXqU/c
+	TFaagA8YpR/3rDyCQqIsjdZGuLkkAqmZhUlHxsJVPeQRknJWGks2jWBdHiPYBhbQtKZeeq00053
+	RYdLu/cYMDieCFRfecZEx9q86KUP9PC3IUpa/tMV51PVF9o=
+X-Google-Smtp-Source: AGHT+IG7EGEp5nWrrne0KIYhcm5q0Zv4P1pok57Q2EktKBd6FV++uDX1N1Q2MESbnHD6NqvBpW+1EQ==
+X-Received: by 2002:a05:6a21:4d14:b0:1f5:8f65:a6f5 with SMTP id adf61e73a8af0-215abc17334mr7530521637.30.1746808783298;
+        Fri, 09 May 2025 09:39:43 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b234a0b5815sm1685476a12.21.2025.05.09.09.39.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 09 May 2025 09:39:42 -0700 (PDT)
+Date: Sat, 10 May 2025 00:40:10 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 4/4] packed-backend: mmap large "packed-refs" file
+ during fsck
+Message-ID: <aB4v6kBdNHmFlPlR@ArchLinux>
+References: <aBtzn4nwLsI9p5Cp@ArchLinux>
+ <aBt0C8gdBecq5f8U@ArchLinux>
+ <20250508200741.GB18229@coredump.intra.peff.net>
+ <aB4dflpFNW4mJlq6@ArchLinux>
+ <20250509155934.GA25686@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250509155934.GA25686@coredump.intra.peff.net>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On Fri, May 09, 2025 at 11:59:34AM -0400, Jeff King wrote:
+> On Fri, May 09, 2025 at 11:21:34PM +0800, shejialuo wrote:
+> 
+> > > > -	struct strbuf packed_ref_content = STRBUF_INIT;
+> > > > +	struct snapshot *snapshot = xcalloc(1, sizeof(*snapshot));
+> > > 
+> > > Minor, but is there any reason to allocate this here and not just:
+> > > 
+> > >   struct snapshot snapshot = { 0 };
+> > > 
+> > > ?
+> > 
+> > I simply copy the code from the existing code... I will change.
+> 
+> Ah, I see. The existing code must allocate on the heap because it is
+> returning the snapshot to its caller. But here the variable is
+> completely local to the function.
+> 
+> However, if we stop using mmap_strategy altogether and just use xmmap()
+> directly, I don't think you'd even need a snapshot variable.
+> 
 
-> +static int write_commit_with_parents(struct repository *r,
-> +				     struct object_id *out,
-> +				     const struct object_id *oid,
-> +				     struct commit_list *parents)
-> +{
-> +	size_t author_len, committer_len;
-> +	struct commit *this;
-> +	const char *orig_author, *orig_committer;
-> +	char *author = NULL, *committer = NULL;
-> +	const char *buffer;
-> +	unsigned long bufsize;
-> +	const char *p;
-> +	struct strbuf msg = STRBUF_INIT;
-> +	int ret = 0;
-> +	struct ident_split id;
-> +
-> +	this = lookup_commit_reference(r, oid);
-> +	buffer = repo_get_commit_buffer(r, this, &bufsize);
-> +	orig_author = find_commit_header(buffer, "author", &author_len);
-> +	orig_committer = find_commit_header(buffer, "committer", &committer_len);
-> +	if (split_ident_line(&id, orig_author, author_len) < 0 ||
-> +	    split_ident_line(&id, orig_committer, committer_len) < 0) {
-> +		ret = error(_("invalid author or committer for %s"), oid_to_hex(oid));
-> +		goto out;
-> +	}
-> +	p = strstr(buffer, "\n\n");
-> +
-> +	if (!orig_author || !orig_committer || !p) {
-> +		ret = error(_("cannot parse commit %s"), oid_to_hex(oid));
-> +		goto out;
-> +	}
+Yes, that's right. Maybe the simplest way is to use `xmmap()`. But I
+don't want to introduce repetition. In the current codebase, we already
+have the logic to load the "packed-refs". Let's just reuse it.
 
-It is too late to check the NULL-ness of orig_author and
-orig_committer here.  They have already been used without checking
-for their NULL-ness to call split_ident_line() that happily will
-dereference its second "const char *line" parameter, so we would
-have already segfaulted.
+Out of topic, I have more to express.
 
-As fsck.c::verify_headers() say, it is not a crime to lack the
-"\n\n" after the last header item, if the commit truly lacks any
-message.  So '!p' is a bit overly strict, but in practice I do not
-think our tools saved a byte by omitting the empty line after the
-header even when creating a commit with an empty message for a long
-time, so this may be OK.  On the other hand, preparing for a stash
-entry a third-party reimplementation prepared would not be too hard
-to do here.
+Actually, my eventual goal is to unify the fsck and other parts. For
+example, "create_snapshot" would also do some basic sanity checks. And
+of course, there is some overlap between fsck and this function. And
+also for "next_record", it would also check something.
 
-	if (!orig_author || !orig_committer) {
-		ret = error(_("cannot parse..."));
-		goto out;
-	}
-	if (split_ident_line(...) < 0 ||
-	    split_ident_line(...) < 0) {
-		ret = error(_("invalid au..."));
-		goto out;
-	}
+During my implementation, I find it hard to unify and it would require a
+lot of effort. So, I simply introduce some redundant logic. But this is
+not perfect. Because I still parse the "packed-refs" file just like
+"next_record" and "create_snapshot" do. And the most disappointed thing
+is that I cannot reuse them at all. But the things I want to do is very
+similar to these functions.
 
-	p = strstr(buffer, "\n\n");
-	strbuf_addstr(&msg, "git stash: ");
+So, I think I would eventually to find out a way to do above in the
+future.
 
-	if (p)
-		strbuf_add(&msg, p+2, bufsize - (p + 2 - buffer));
-	strbuf_complete_line(&mesg);
-
-or something.
-
-> +	/* Jump to message. */
-> +	p += 2;
-> +	strbuf_addstr(&msg, "git stash: ");
-> +	strbuf_add(&msg, p, bufsize - (p - buffer));
-
+Thanks,
+Jialuo
