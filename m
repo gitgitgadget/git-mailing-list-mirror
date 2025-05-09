@@ -1,135 +1,95 @@
-Received: from mail-wr1-f42.google.com (mail-wr1-f42.google.com [209.85.221.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA7A726B2DF
-	for <git@vger.kernel.org>; Fri,  9 May 2025 07:14:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5F31D7E41
+	for <git@vger.kernel.org>; Fri,  9 May 2025 07:35:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746774874; cv=none; b=HQfTuTuMWaTXuX0w8s9HJekcVejUtzedkDHv87XNcaCgcO8g+wNi04/FHTCdJQqbqYp8BE0tLlbgywHC6eW9hoR1X9M5dXqk4gASW23Pr9Wo7In64v//4C7qpSeOcuoafwZVM4s0xI7MfgeSF2ddNXXkTi3c+UqHlm2VenfO1MA=
+	t=1746776161; cv=none; b=FnePhq6UmwABMJHKK+LyWpadVeyNm1eKN0y/qNY6RlpjdSYj7+7ov4elOK9StI/MZ2qcbVRdQcR05kV2XXfOidoR5JFHrvSsoU7Z3c9o0v7CBwW3gKkbjoTaXTD25w1s7Z9RyiGDQT2w5t65zsT/qSOJIyFOTDdjawJvFQCq0YQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746774874; c=relaxed/simple;
-	bh=t0uVXm0jBpj0T7i7iXBgX7dSsWxOOaz8mYn8gUZZWH0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=uWesR44EfPJ0ozg6kNVltJb7I/Ru6Fxip6lG5xLrVXIsDgPIj5XY+7DI5ScvdgQ3dNk5TGQ8R+Z+wGTky6UU8bQUCs6x5oSZy8hjg8kmCJUj58S3QD5mgldweEpNxQxdoI+Efhp6nTr0drddk/58D3Ednush5JtOG/ezJEzmXho=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ntmiYUSy; arc=none smtp.client-ip=209.85.221.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ntmiYUSy"
-Received: by mail-wr1-f42.google.com with SMTP id ffacd0b85a97d-3a1d8c0966fso689330f8f.1
-        for <git@vger.kernel.org>; Fri, 09 May 2025 00:14:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746774870; x=1747379670; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=11Umvpu64gP6CH2sco0ZQzrc7iz31s/R9UWCOXEausY=;
-        b=ntmiYUSy+xZLN1xcI+3KrYAFoMsGkaHkIdBweu4ozFRww3APxVxz24zglH7zxWD0Y8
-         G0pAn6j+dYpyi4m/4+59uFdPH0cte6LRRX105+amcNlc8CqpADmfxqAIbUuZtikMbOOP
-         IIrDSuYtBOwaE1hP/CFZ86WzLjI50NUFGZKhkguMeYiJZQfN20xHFGymIg7ptjkWg7B7
-         H5SUQBFb6INEA8dBtFfK+nt323Crag6xo+BTq5gQ1s3yHYELhxoGZnEsc9HOnjabrjuB
-         qeIygHxJQbThtkbEgBCJjnfTzZNS3y1hHMZPjT6v7Qah734E4WSKn6Jsj5USAsKaDIbB
-         QUSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746774870; x=1747379670;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=11Umvpu64gP6CH2sco0ZQzrc7iz31s/R9UWCOXEausY=;
-        b=rRdlwT5zv1qeI+A7NZp6lW/jlKq7Qo/WmCCWWhDdaLPW6pBGvZty8B9+mj25rRM5WL
-         gECES9dfSEIlxSuw0nG+0C28h1GAq2tt2Fz2+ecuWnT6+MoDEC2ZwxOrOEB/CaQgoij8
-         KD1EMVzxNxLj4I88xp7wM+LPHwYUEFAg2su+22iTMuT/okoj4qWJvi8Ts3M7GUD+FS2I
-         vHv7NTABTW1sLs9GFvX5A+o5sIyRK5q8oKfPvB/OE3xHFasMsot1dGbAooMT4kMJR6yy
-         wCw+8WbyAEwEG9qaxdk1C8PXhKB0H61Lbu4z+3WLvuAY1NZpuiLllCwhuhEdRRY/Zl/I
-         fJhQ==
-X-Gm-Message-State: AOJu0YziNIabCrR7lRMtmgGImZVdgm/XppCxJ64Ay1oW2pPwjticq0OU
-	qZKkxcliVEvBY9zp9UNEozwtQsl4QC9W6eSB+3pT3fQS4rdonLUzxky59Q==
-X-Gm-Gg: ASbGncui69KL7Df3ZD8fsvcQF6FzZF1FS4EpiZlLB/IoNnivjrY9I3P+10c5Kb69X83
-	SfLSw1FqlszYClGefLibi9zMjGByfi0lJUp9VnhfaXzEHuSKMzlQLZXR3DqPI1LUUHMdkP+gU6V
-	6AICcL2Whf27DARkHNOr7bZYU31tfeNKH66tSOj2vcxQqUlxlo6uhXlKl1gYoVBCq+uATqwFX6b
-	XNsYSlghbDvKzT9b55E+psqMLtoMs2Qc3a13NiWf08t1GXrTq98Gahiw7bcTekE0x+dO+P0C92z
-	/fSFWKJuKIes971+uq1lkSjztHuUZNxslUCQ9DKgRA==
-X-Google-Smtp-Source: AGHT+IGPXTSO39+OS8IPDitRjrE3QoTBe2sVQjCvW3dF/LA5W/xlYyzxX7VaF8N1I8omxIUrExBefA==
-X-Received: by 2002:a05:6000:1882:b0:3a0:bd7a:7ba8 with SMTP id ffacd0b85a97d-3a1f6c98e05mr1614311f8f.19.1746774870040;
-        Fri, 09 May 2025 00:14:30 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f57de001sm2309201f8f.20.2025.05.09.00.14.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 00:14:29 -0700 (PDT)
-Message-Id: <pull.1957.v2.git.git.1746774869081.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1957.git.git.1746712275566.gitgitgadget@gmail.com>
-References: <pull.1957.git.git.1746712275566.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 May 2025 07:14:28 +0000
-Subject: [PATCH v2] fill_oids_from_packs: fix memory leak when
- fill_oids_from_packs failed
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	s=arc-20240116; t=1746776161; c=relaxed/simple;
+	bh=Fe36ONOX+x39C4MasyX0oa7tD6W0dKpE6DVj33sA3sA=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=anRJjucvJEFVoRFHigwbB/Z7mcfao5wV5dsydsCk2+lQzCYqqC/HxT+SxEYmRAo+6dVjvc4OoxtclkZDxE3goiq9DEvJQqUfIj/XjV1+Jpakq3nQSEV3hFBmKWuieZ7v4LfwuDi0pTKozPwjkP3ez20zRasxRpn3uW+NsOCP3cg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.92.39.34
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: esmtpsz16t1746776130t5ebafedf
+X-QQ-Originating-IP: LRvmMe5vyDP9djQL2ohygDbBsVz7STrj2vQGxvHEpAQ=
+Received: from smtpclient.apple ( [36.152.24.180])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 09 May 2025 15:35:28 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 12614574274519910953
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [PATCH v2] parse-options: fix xstrdup leak in parse_options_step
+ parse-options:984
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <aB2ejA1tCK9DR1Nq@pks.im>
+Date: Fri, 9 May 2025 15:35:18 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CC653689-3047-4DFD-9893-46D08F948C10@smail.nju.edu.cn>
+References: <pull.1954.git.git.1746585203.gitgitgadget@gmail.com>
+ <pull.1954.v2.git.git.1746624294017.gitgitgadget@gmail.com>
+ <aB2ejA1tCK9DR1Nq@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: MIAHdi1iQo+zOJPpvkLEbyl0wfr4aDl0JGRmDMsBHKjee/IAoBOBjMYy
+	/vut8WjV+NzlVsLJhG2vuwaWTqSwoXXhtm9IVzM58iazADsp0L7n+1tDTdG8BF/SnGxykdE
+	HXMNtzgTcHIjkaokSD2iAbze4mjclatqTvHWos4RSa4sasYaWxAaFvjOmSRsOXBSFy7WB8H
+	R+vOAIczuXQUeMYYE0NNvDH0b20mZQ/4m110velD1LU7dLdtqq9iHJMmw0lLgWXkhfJn3xO
+	kU7ZTu+inplS62XJBu+sIDfMPfGlfZPr63aVhI1kVWWUHeeBvoqYvurOpStZBLfZEHUDhQE
+	Z0t9qMekLxq1+Dl3is1xFsZqbGlChbbFRrLVyZgGLVtVrAw3awcRJDGB9JmDlwVdWa9QQxL
+	zBTQsFIKyVxWF7Gi8TqhT9zwr0lap2Q2mskEbq2RMLJfo0yZTZGtqG1ZyyO5XWeQqMPtZuB
+	UPoDLXB+BZhDbDdj14v7voraIiraNuyWvuPkOlyfRRGUVOfgmbLPmwPtEG0O9Oc/qw8PyXG
+	kkpFLRROlvqHsqV8z+3XYdLv56F1mX9PEe9viAJCyJe/geNvxL8Fgmt/SBknglE7ARXaURp
+	ycBNBye+/QTZbdsFD57tEnSri2FZcD3auD0nlZqhJPUUMa51XyMPN6ryu+4W5i57JcKIBhk
+	Yo6qKl5N7Mn8D55Zjsk+zGu/L9dU0MDsmLkr5VbTdkJuXl4kTwYhpvezVkFYX9Qu/s1bi9R
+	eAoM29mfdHjRLY6QEsAWpgGpsYCLATbCZ97FXui0K6q2/G6qiGYbPVEzFbw7QJoc5ftAlF3
+	4oSaTxZmZuQXWs+EAWDE1mORrl/xj6RxT2mtDiWXeYnDyVDGcA6tsJR2cdOnGrAl6BjdAMP
+	vJZy+RMEjgYSSA9hQY+cgo17T/q4kCtIHfUAfJW2H43uG+peXUwsycLhdOatbYZtyUs5zVt
+	ASWvWAs0HsYMSJetxVBWhY4uripmGElauDUNwgKnCIdIzjGZ38khztd01YfKw0gHeH3A=
+X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+X-QQ-RECHKSPAM: 0
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+2025=E5=B9=B45=E6=9C=889=E6=97=A5 14:19=EF=BC=8CPatrick Steinhardt =
+<ps@pks.im> =E5=86=99=E9=81=93=EF=BC=9A
+> So does that mean that _every_ user of the "parse-options" interfaces
+> now has to explicitly plug this memory leak when facing unknown =
+options?
+> That sounds rather undesirable, as there are so many users out there.
 
-In commit-graph.c:fill_oids_from_packs, if open_pack_index failed,
-memory allocated and returned by add_packed_git will leak. Simply
-add close_pack and free(p) will solve this problem.
+Since the lifetime of `argv` last until the program terminates, a memory =
+leak
+can only occur if parse_option is called multiple times and at least two =
+of=20
+those calls use the `PARSE_OPT_KEEP_UNKNOWN` flag. In the other
+words, the memory leak only occurs when the statement `ctx->argue[0] =3D =
+xstrdup`
+overwrites the result of a previous `xstrdup` call.
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
-    
-    In commit-graph.c line 1930, if open_pack_index failed, memory allocated
-    in line 1925 by add_packed_git will leak. Simply add close_pack and
-    free(p) will solve this problem.
+> Hm. Is there any other usecase for the `strdup_fn` field that you can
+> think about in the future? Otherwise it feels a bit overengineered =
+from
+> my perspective.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1957%2Fbrandb97%2Ffix-commit-graph-leak-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1957/brandb97/fix-commit-graph-leak-v2
-Pull-Request: https://github.com/git/git/pull/1957
+I think a simple approach is to add a marker to the string allocated by =
+`xstrdup`
+, and before the next potential leaking `ctx->argv[0] =3D xstrdup`, =
+check whether the
+string needs to be freed. Like we could allocate one more byte in the =
+end of the
+string to store the marker.
 
-Range-diff vs v1:
-
- 1:  72402abe900 ! 1:  190961fe942 fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
-     @@ Metadata
-       ## Commit message ##
-          fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
-      
-     -    In commit-graph.c line 1930, if open_pack_index failed, memory allocated
-     -    in line 1925 by add_packed_git will leak. Simply add close_pack and
-     -    free(p) will solve this problem.
-     +    In commit-graph.c:fill_oids_from_packs, if open_pack_index failed,
-     +    memory allocated and returned by add_packed_git will leak. Simply
-     +    add close_pack and free(p) will solve this problem.
-      
-          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-
-
- commit-graph.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 6394752b0b0..93d867770b0 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1929,6 +1929,8 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
- 		}
- 		if (open_pack_index(p)) {
- 			ret = error(_("error opening index for %s"), packname.buf);
-+			close_pack(p);
-+			free(p);
- 			goto cleanup;
- 		}
- 		for_each_object_in_pack(p, add_packed_commits, ctx,
-
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
--- 
-gitgitgadget
