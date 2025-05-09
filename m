@@ -1,83 +1,83 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 939C927F16B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28F9627CB21
 	for <git@vger.kernel.org>; Fri,  9 May 2025 09:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746782242; cv=none; b=OQDlLHtEA7piq6whHne1k8MTX++ymVetxTy9r/qEonuWONLvuWxVjASNMO3UhLxoj2Fl1owhJxyy045P7o5pK7wGFK0+VN4NIz4b4ETehxpRO84+tkB8idQbprPoecQlr353FvQjuElnZz1rA8+ha7hCKxcQcwu9pDu63umu8eM=
+	t=1746782243; cv=none; b=AtUia8J3ABFWChDPXUbFwHQvLKKiq3mY4rKfDT3Jp6/LOTS7CVHWhGm1kRwwL8nTJKmzfFI7/OybBEpTxoId2zP++p9EQf6IRICdf7LR63/EX/3JU3aIqLbtArFBoJi0pvEJsa0FXCr/ahDo2i4HLll7VBVccblwmREkvZz77Mo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746782242; c=relaxed/simple;
-	bh=6N6u1CxaJIrztRGY4Ph8RZ0MAng7q1d3e5psFFjJWA0=;
+	s=arc-20240116; t=1746782243; c=relaxed/simple;
+	bh=h1wTE9Rke3cFKHEWHafWE4J9cy3XzTAfv8EDTWRxJoA=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=g9LN+zJTWplWza183axXL+Vx191Sd/0fiYg8Vzew9bDGAKRbHojEW+gIRgNxVJxUcKsS2bsKfgWZm9XE7Gg9eKSIR7DrhcPp8c3ORG63iqO2INXYqNdJrOJ1a9Cpo1DlFQSWq5kMs97ijzuQogD4BuBdCRBG9UjVNX9tB+7CkgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=2dLLlRdA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AbDBelA9; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=BqS854csR4cTlRGdsnovnaaCtxuVApvPF73nO2U8hIsfp2BoWW5iuYsn0Cmy/oE0Uv7136jb0W71qa/BXtcs2JWWVlOBqEH6U2EL6M7y2VRnD8xHyNWujfu38IEObdwZtA4QR9igriIDpbtNPgdWO/bmwp1szz0mJ1+wXlpeW/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=TbURNSG7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qTdO7V+n; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="2dLLlRdA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AbDBelA9"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 845111140182;
-	Fri,  9 May 2025 05:17:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="TbURNSG7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qTdO7V+n"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 47B1B13801C7;
+	Fri,  9 May 2025 05:17:20 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 09 May 2025 05:17:19 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 09 May 2025 05:17:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1746782239;
-	 x=1746868639; bh=w+c3nqXD2/B2cFcm6s0fz+0+CK52e1wVSFskfwpgBRY=; b=
-	2dLLlRdA3QIOrcFh84grDfEmVX3t3P4hLIjeKfWbP0AspTdycnv2qzGOSG6ZZR81
-	kG+2HmAdBqlsslVtWpl4bjYepXS1XwmxTudbgOlrJ9B0SWGD2Pi7GUg4GHKFTNOR
-	IPVLfJKr0qucE/XWiaIAA7IxP1xpRVlaiiTtQW9gNf8V9NwslTicqWcRNObPsM7Y
-	XINItdnJNhuyjGNfLzIy8aao7kD0YAW+B0IDSDYQYZ/E6zHGA69Q91KHPa52gkHB
-	RAJeQuQFNLHzKlxYP2Xn7Fj9fFWWoh92H0ym81Qa6P8OPXWq3dUamJirL0mOa5vF
-	hv0zRclG4BkY4AAsqeu/Vw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1746782240;
+	 x=1746868640; bh=yFhBRJXXuaf+JYB7T4cjh+Y/Sh0k/EJ8vQ4kdgIlQFo=; b=
+	TbURNSG7kpqXCxCm2a7YAZ+G6h8DkOnSnpOB2ouNJt0kdGGimaUEUIhfRM9yUD2O
+	mux3FPi+npFKiechp9pL6j0hsQEypblCrWpWQFAqFHMN0qJ6QqSMe1ZfVPFS1/w9
+	ZX0snuI62SjZY84ZiQdndANcsBv5zpciynOmVMJc+WBAXbW8uXvSGyvBTEyQrPIz
+	lx6ws69DXAyjIuNytaw6np/2H12xWChrN6bnOYippzu0SSPuDuCs7Ur93yJgUOYH
+	NpqRpXPxGePQVvB83Jf8YKxioMpWUwno227RF0eNypOTG6kplI/ueQYgiLqmQCM7
+	bK6p+f0RYXRPqNbkytQubA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746782239; x=
-	1746868639; bh=w+c3nqXD2/B2cFcm6s0fz+0+CK52e1wVSFskfwpgBRY=; b=A
-	bDBelA9JJPwoFndwmskS5cknM+GmoGPUJ9RNslC8f1jVBwbiVL3fFhaOjb0MU3xO
-	LM1ILDWMd+XRfLOKu6HFBnIw0fxrAzNJymxs8169HYRHBelFOsx36iMlHyrKDQxH
-	BwWqJFmyzPMr1ABpqb7h5O+yVQzckuUt2TvPJB6Gx7NWyIvtYrlxKUFAdYY1cIXO
-	9Tr3QjmwIcNUrejCcmDE324haMVzFlqplFOmdiACyPUb9LyBpvX1Ub7tlO4Y9xmL
-	J7mJPwFbRux1SViAtzx7QK7GIc2MsPvsy9ME/oh7MeDmn4B8TrdTTyI0KGdnA8p2
-	Td85Ls5NBXC9rE1EavGbg==
-X-ME-Sender: <xms:H8gdaPyhHLgrzwBn7C8bH1OsW-WzuxAaBvYywfsM8HmWoVD8wiUwDw>
-    <xme:H8gdaHR8_0HCiETccY86SLO4WLzWoWw6U7T9T0NrbLa7ae0x6d4qCJtavoPH28KYs
-    emDHutKytCPWQnjGA>
-X-ME-Received: <xmr:H8gdaJWN6O0iFk4UTduXd5V9oC9S_gvbjF17NYB6ByNGFMR3Zi4RxlyKlA4vcnEBNiF0rF91o3cBLtSnFfcwtd6iibEWMzlXvqjWQVGjlQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746782240; x=
+	1746868640; bh=yFhBRJXXuaf+JYB7T4cjh+Y/Sh0k/EJ8vQ4kdgIlQFo=; b=q
+	TdO7V+njLPcKqWPgcCyl/hfsJU2VkE6gnZSlIW6aSOrhOcJ3NR1gVxPlHRDdgfTO
+	EMd2Q1XgXNOvnNid5YVoTapsrvdd8HOBzyjCU80l49dl9A27thU39W0+jqN90q7z
+	MSbbQHVfBnlsV3UqxHuYuuxs3XegeRwZMeVcFWsYAWh1bQ9/Nz9pTmYO4soqMcSn
+	Xf8Nxnz/vVRPETAakSKmGMc8qyRnEjf8w4fWXKX1JAndjpGtJIWPZvXDztQJJqsk
+	igHKeKez/+9RJDeOynNDYVZB20brIL4TOTWbwNXaanOYu5UT8D40gVgXvE/mq2oi
+	22+yW4nl5ghMV+ldoanDQ==
+X-ME-Sender: <xms:IMgdaKSD13x7qy161YOGp4R6YFxMedNeZGJc80300Dx37LiiDE455A>
+    <xme:IMgdaPyALqOP7yP-Kr-mWXX9SOVzXQjL9yjfER5IYQ5eIecU5siLKYl8wUHJp7qYU
+    uTjTvlnD6OueqUYhg>
+X-ME-Received: <xmr:IMgdaH2rX6rXioEs8nKgNPklr3fw1CR3TZEzV_oHhRD8GwzXMbheB2lHmF-StpckbxmyJjck5IO7rsF6-rd6ht4E7sYhZ8XH-pedZNR6pg>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvvdefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepghhithesmhgrthhthhhivghuqdhmohihrdhfrhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvg
-    hrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhs
-    hhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehtmhiisehpohgsoh
+    vgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkh
+    hksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhs
+    hhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohep
+    ghhithesmhgrthhthhhivghuqdhmohihrdhfrhdprhgtphhtthhopehtmhiisehpohgsoh
     igrdgtohhm
-X-ME-Proxy: <xmx:H8gdaJiSdzv0qS5DzQl3MprZKm8a8scNgYUSFaqBSxQVdsi_cCGuOg>
-    <xmx:H8gdaBC_AfCUvSXpIaUz9aO1t2LM8_VcsaaM9lXfUf655pwV-ybMRw>
-    <xmx:H8gdaCJWDUasEcJ23E4adKm8wriG686OUD5mwfMSd_5SCxtId8vXDg>
-    <xmx:H8gdaADKBSXDBWuZQyvvPKMHWuzwNwJCJPfDAAv8mJrmbkTUjaxe-w>
-    <xmx:H8gdaEZ2pepnLwnNuCbkElngT06OPJb5-xyJxNO5Xcpkzx3K9U9znGWq>
+X-ME-Proxy: <xmx:IMgdaGC-7UDI0EBc3wfHlqKzuWJTjO4Fs1_5IJs-bpDWtGDPujIQLA>
+    <xmx:IMgdaDgTCDs5IOR7r8TK_CfpJ4rW7JEngwQKkqBnWWvQszp7fIDUqQ>
+    <xmx:IMgdaCobOyxfeGs97hYngb4B5oR7A8L04-6VfC-_148ADxAP19aQfg>
+    <xmx:IMgdaGje59iK6oRSlDRCWAlDq7t5vJu3r_Hkx1hmKcNB6ICwWv0hQQ>
+    <xmx:IMgdaC68kBqg9p8WcS7Owu48ZU_0U0xMYiZC838--teKBhrQrMpirIPF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 05:17:18 -0400 (EDT)
+ 9 May 2025 05:17:19 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 738d1ca1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 9 May 2025 09:17:17 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 78e8b5df (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 09:17:18 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 09 May 2025 11:17:10 +0200
-Subject: [PATCH v2 10/11] contrib: remove "git-new-workdir"
+Date: Fri, 09 May 2025 11:17:11 +0200
+Subject: [PATCH v2 11/11] contrib: remove "stats" directory
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250509-pks-contrib-spring-cleanup-v2-10-14e20d95ec68@pks.im>
+Message-Id: <20250509-pks-contrib-spring-cleanup-v2-11-14e20d95ec68@pks.im>
 References: <20250509-pks-contrib-spring-cleanup-v2-0-14e20d95ec68@pks.im>
 In-Reply-To: <20250509-pks-contrib-spring-cleanup-v2-0-14e20d95ec68@pks.im>
 To: git@vger.kernel.org
@@ -96,250 +96,382 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Todd Zullinger <tmz@pobox.com>
 X-Mailer: b4 0.14.2
 
-The "git-new-workdir" command has been introduced to make it possible to
-have a separate working directory in a different place. The command thus
-predates git-worktree(1), which is what people use nowadays to create
-any such working directory. As such, the script doesn't really have much
-of a reason to exist nowadays anymore.
+The "stats" directory contains a couple of scripts to do some statistics
+on a repository:
 
-It also doesn't seem like the script is still in use: the last time it
-has received an update was in e32afab7b03 (git-new-workdir: don't fail
-if the target directory is empty, 2014-11-26), more than a decade ago.
-Remove it as well as the tests that depend on it.
+  - "git-common-hash" shows the longest common hash prefixes and can be
+    used to determine the minimum prefix length to use for object names
+    to be unique. The script has last been touched in 53474eb92ff
+    (contrib: update stats/mailmap script, 2012-12-12) and searching for
+    it on the internet doesn't really surface any potential use cases or
+    even mentions of it.
+
+    Modern Git also shouldn't really need this tool as it knows to
+    automatically scale printed prefixes via some heuristics.
+
+  - "mailmap.pl" performs some statistics on the number of mailmapped
+    commits in a repository. It has last been modified in 53474eb92ff
+    (contrib: update stats/mailmap script, 2012-12-12) and has since
+    been bitrotting. It doesn't even compile nowadays anymore:
+
+        $ perl contrib/stats/mailmap.pl
+        Experimental keys on scalar is now forbidden at contrib/stats/mailmap.pl line 57.
+        Type of arg 1 to keys must be hash or array (not hash element) at contrib/stats/mailmap.pl line 57, near "}) "
+        Experimental keys on scalar is now forbidden at contrib/stats/mailmap.pl line 57.
+        Type of arg 1 to keys must be hash or array (not private variable) at contrib/stats/mailmap.pl line 57, near "$h)"
+        Experimental keys on scalar is now forbidden at contrib/stats/mailmap.pl line 64.
+        Type of arg 1 to keys must be hash or array (not private variable) at contrib/stats/mailmap.pl line 64, near "$h)"
+        Execution of contrib/stats/mailmap.pl aborted due to compilation errors.
+
+    This should be good-enough signal to indicate that nodoby is using
+    this script at all anymore.
+
+  - "packinfo.pl" takes the output from git-verify-pack(1) and performs
+    some pretty printing thereof. On the one hand it reformats the
+    output to be easier to read and provide some summaries. On the other
+    hand it may also print filenames of blobs.
+
+    The script has last been touched in 3b1eb124932 (contrib: update
+    packinfo.pl to not use dashed commands, 2008-10-17), but it still
+    works nowadays. Even so, it is quite unlikely that anybody is still
+    using it. And if the provided information really was useful we
+    should rather think about moving it into git-verify-pack(1) itself.
+
+Remove the whole directory.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/workdir/.gitattributes  |   1 -
- contrib/workdir/git-new-workdir | 105 ----------------------------------------
- t/meson.build                   |   1 -
- t/t1021-rerere-in-workdir.sh    |  58 ----------------------
- t/t3000-ls-files-others.sh      |  19 --------
- 5 files changed, 184 deletions(-)
+ contrib/stats/git-common-hash |  26 ------
+ contrib/stats/mailmap.pl      |  70 --------------
+ contrib/stats/packinfo.pl     | 212 ------------------------------------------
+ 3 files changed, 308 deletions(-)
 
-diff --git a/contrib/workdir/.gitattributes b/contrib/workdir/.gitattributes
-deleted file mode 100644
-index 1f78c5d1bd3..00000000000
---- a/contrib/workdir/.gitattributes
-+++ /dev/null
-@@ -1 +0,0 @@
--/git-new-workdir eol=lf
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+diff --git a/contrib/stats/git-common-hash b/contrib/stats/git-common-hash
 deleted file mode 100755
-index 989197aace0..00000000000
---- a/contrib/workdir/git-new-workdir
+index e27fd088be1..00000000000
+--- a/contrib/stats/git-common-hash
 +++ /dev/null
-@@ -1,105 +0,0 @@
+@@ -1,26 +0,0 @@
 -#!/bin/sh
 -
--usage () {
--	echo "usage:" $@
--	exit 127
--}
+-# This script displays the distribution of longest common hash prefixes.
+-# This can be used to determine the minimum prefix length to use
+-# for object names to be unique.
 -
--die () {
--	echo $@
--	exit 128
--}
--
--failed () {
--	die "unable to create new workdir '$new_workdir'!"
--}
--
--if test $# -lt 2 || test $# -gt 3
--then
--	usage "$0 <repository> <new_workdir> [<branch>]"
--fi
--
--orig_git=$1
--new_workdir=$2
--branch=$3
--
--# want to make sure that what is pointed to has a .git directory ...
--git_dir=$(cd "$orig_git" 2>/dev/null &&
--  git rev-parse --git-dir 2>/dev/null) ||
--  die "Not a git repository: \"$orig_git\""
--
--case "$git_dir" in
--.git)
--	git_dir="$orig_git/.git"
--	;;
--.)
--	git_dir=$orig_git
--	;;
--esac
--
--# don't link to a configured bare repository
--isbare=$(git --git-dir="$git_dir" config --bool --get core.bare)
--if test ztrue = "z$isbare"
--then
--	die "\"$git_dir\" has core.bare set to true," \
--		" remove from \"$git_dir/config\" to use $0"
--fi
--
--# don't link to a workdir
--if test -h "$git_dir/config"
--then
--	die "\"$orig_git\" is a working directory only, please specify" \
--		"a complete repository."
--fi
--
--# make sure the links in the workdir have full paths to the original repo
--git_dir=$(cd "$git_dir" && pwd) || exit 1
--
--# don't recreate a workdir over an existing directory, unless it's empty
--if test -d "$new_workdir"
--then
--	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
--	then
--		die "destination directory '$new_workdir' is not empty."
--	fi
--	cleandir="$new_workdir/.git"
--else
--	cleandir="$new_workdir"
--fi
--
--mkdir -p "$new_workdir/.git" || failed
--cleandir=$(cd "$cleandir" && pwd) || failed
--
--cleanup () {
--	rm -rf "$cleandir"
--}
--siglist="0 1 2 15"
--trap cleanup $siglist
--
--# create the links to the original repo.  explicitly exclude index, HEAD and
--# logs/HEAD from the list since they are purely related to the current working
--# directory, and should not be shared.
--for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn reftable
--do
--	# create a containing directory if needed
--	case $x in
--	*/*)
--		mkdir -p "$new_workdir/.git/${x%/*}"
--		;;
--	esac
--
--	ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
--done
--
--# commands below this are run in the context of the new workdir
--cd "$new_workdir" || failed
--
--# copy the HEAD from the original repository as a default branch
--cp "$git_dir/HEAD" .git/HEAD || failed
--
--# the workdir is set up.  if the checkout fails, the user can fix it.
--trap - $siglist
--
--# checkout the branch (either the same as HEAD from the original repository,
--# or the one that was asked for)
--git checkout -f $branch
-diff --git a/t/meson.build b/t/meson.build
-index b09c0becb8d..9206090fedc 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -178,7 +178,6 @@ integration_tests = [
-   't1015-read-index-unmerged.sh',
-   't1016-compatObjectFormat.sh',
-   't1020-subdirectory.sh',
--  't1021-rerere-in-workdir.sh',
-   't1022-read-tree-partial-clone.sh',
-   't1050-large.sh',
-   't1051-large-conversion.sh',
-diff --git a/t/t1021-rerere-in-workdir.sh b/t/t1021-rerere-in-workdir.sh
+-git rev-list --objects --all | sort | perl -lne '
+-  substr($_, 40) = "";
+-  # uncomment next line for a distribution of bits instead of hex chars
+-  # $_ = unpack("B*",pack("H*",$_));
+-  if (defined $p) {
+-    ($p ^ $_) =~ /^(\0*)/;
+-    $common = length $1;
+-    if (defined $pcommon) {
+-      $count[$pcommon > $common ? $pcommon : $common]++;
+-    } else {
+-      $count[$common]++; # first item
+-    }
+-  }
+-  $p = $_;
+-  $pcommon = $common;
+-  END {
+-    $count[$common]++; # last item
+-    print "$_: $count[$_]" for 0..$#count;
+-  }
+-'
+diff --git a/contrib/stats/mailmap.pl b/contrib/stats/mailmap.pl
 deleted file mode 100755
-index 0b892894eb9..00000000000
---- a/t/t1021-rerere-in-workdir.sh
+index 9513f5e35b4..00000000000
+--- a/contrib/stats/mailmap.pl
 +++ /dev/null
-@@ -1,58 +0,0 @@
--#!/bin/sh
+@@ -1,70 +0,0 @@
+-#!/usr/bin/perl
 -
--test_description='rerere run in a workdir'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
--export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+-use warnings 'all';
+-use strict;
+-use Getopt::Long;
 -
--. ./test-lib.sh
+-my $match_emails;
+-my $match_names;
+-my $order_by = 'count';
+-Getopt::Long::Configure(qw(bundling));
+-GetOptions(
+-	'emails|e!' => \$match_emails,
+-	'names|n!'  => \$match_names,
+-	'count|c'   => sub { $order_by = 'count' },
+-	'time|t'    => sub { $order_by = 'stamp' },
+-) or exit 1;
+-$match_emails = 1 unless $match_names;
 -
--test_expect_success SYMLINKS setup '
--	git config rerere.enabled true &&
--	>world &&
--	git add world &&
--	test_tick &&
--	git commit -m initial &&
+-my $email = {};
+-my $name = {};
 -
--	echo hello >world &&
--	test_tick &&
--	git commit -a -m hello &&
+-open(my $fh, '-|', "git log --format='%at <%aE> %aN'");
+-while(<$fh>) {
+-	my ($t, $e, $n) = /(\S+) <(\S+)> (.*)/;
+-	mark($email, $e, $n, $t);
+-	mark($name, $n, $e, $t);
+-}
+-close($fh);
 -
--	git checkout -b side HEAD^ &&
--	echo goodbye >world &&
--	test_tick &&
--	git commit -a -m goodbye &&
+-if ($match_emails) {
+-	foreach my $e (dups($email)) {
+-		foreach my $n (vals($email->{$e})) {
+-			show($n, $e, $email->{$e}->{$n});
+-		}
+-		print "\n";
+-	}
+-}
+-if ($match_names) {
+-	foreach my $n (dups($name)) {
+-		foreach my $e (vals($name->{$n})) {
+-			show($n, $e, $name->{$n}->{$e});
+-		}
+-		print "\n";
+-	}
+-}
+-exit 0;
 -
--	git checkout main
--'
+-sub mark {
+-	my ($h, $k, $v, $t) = @_;
+-	my $e = $h->{$k}->{$v} ||= { count => 0, stamp => 0 };
+-	$e->{count}++;
+-	$e->{stamp} = $t unless $t < $e->{stamp};
+-}
 -
--test_expect_success SYMLINKS 'rerere in workdir' '
--	rm -rf .git/rr-cache &&
--	"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" . work &&
--	(
--		cd work &&
--		test_must_fail git merge side &&
--		git rerere status >actual &&
--		echo world >expect &&
--		test_cmp expect actual
--	)
--'
+-sub dups {
+-	my $h = shift;
+-	return grep { keys($h->{$_}) > 1 } keys($h);
+-}
 -
--# This fails because we don't resolve relative symlink in mkdir_in_gitdir()
--# For the purpose of helping contrib/workdir/git-new-workdir users, we do not
--# have to support relative symlinks, but it might be nicer to make this work
--# with a relative symbolic link someday.
--test_expect_failure SYMLINKS 'rerere in workdir (relative)' '
--	rm -rf .git/rr-cache &&
--	"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" . krow &&
--	(
--		cd krow &&
--		rm -f .git/rr-cache &&
--		ln -s ../.git/rr-cache .git/rr-cache &&
--		test_must_fail git merge side &&
--		git rerere status >actual &&
--		echo world >expect &&
--		test_cmp expect actual
--	)
--'
+-sub vals {
+-	my $h = shift;
+-	return sort {
+-		$h->{$b}->{$order_by} <=> $h->{$a}->{$order_by}
+-	} keys($h);
+-}
 -
--test_done
-diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-index 13f66fd649d..b41e7f0daa4 100755
---- a/t/t3000-ls-files-others.sh
-+++ b/t/t3000-ls-files-others.sh
-@@ -73,25 +73,6 @@ test_expect_success 'ls-files --others handles non-submodule .git' '
- 	test_cmp expected1 output
- '
- 
--test_expect_success SYMLINKS 'ls-files --others with symlinked submodule' '
--	git init super &&
--	git init sub &&
--	(
--		cd sub &&
--		>a &&
--		git add a &&
--		git commit -m sub &&
--		git pack-refs --all
--	) &&
--	(
--		cd super &&
--		"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" ../sub sub &&
--		git ls-files --others --exclude-standard >../actual
--	) &&
--	echo sub/ >expect &&
--	test_cmp expect actual
--'
+-sub show {
+-	my ($n, $e, $h) = @_;
+-	print "$n <$e> ($h->{$order_by})\n";
+-}
+diff --git a/contrib/stats/packinfo.pl b/contrib/stats/packinfo.pl
+deleted file mode 100755
+index be188c0f11d..00000000000
+--- a/contrib/stats/packinfo.pl
++++ /dev/null
+@@ -1,212 +0,0 @@
+-#!/usr/bin/perl
+-#
+-# This tool will print vaguely pretty information about a pack.  It
+-# expects the output of "git verify-pack -v" as input on stdin.
+-#
+-# $ git verify-pack -v | packinfo.pl
+-#
+-# This prints some full-pack statistics; currently "all sizes", "all
+-# path sizes", "tree sizes", "tree path sizes", and "depths".
+-#
+-# * "all sizes" stats are across every object size in the file;
+-#   full sizes for base objects, and delta size for deltas.
+-# * "all path sizes" stats are across all object's "path sizes".
+-#   A path size is the sum of the size of the delta chain, including the
+-#   base object.  In other words, it's how many bytes need be read to
+-#   reassemble the file from deltas.
+-# * "tree sizes" are object sizes grouped into delta trees.
+-# * "tree path sizes" are path sizes grouped into delta trees.
+-# * "depths" should be obvious.
+-#
+-# When run as:
+-#
+-# $ git verify-pack -v | packinfo.pl -tree
+-#
+-# the trees of objects are output along with the stats.  This looks
+-# like:
+-#
+-#   0 commit 031321c6...      803      803
+-#
+-#   0   blob 03156f21...     1767     1767
+-#   1    blob f52a9d7f...       10     1777
+-#   2     blob a8cc5739...       51     1828
+-#   3      blob 660e90b1...       15     1843
+-#   4       blob 0cb8e3bb...       33     1876
+-#   2     blob e48607f0...      311     2088
+-#      size: count 6 total 2187 min 10 max 1767 mean 364.50 median 51 std_dev 635.85
+-# path size: count 6 total 11179 min 1767 max 2088 mean 1863.17 median 1843 std_dev 107.26
+-#
+-# The first number after the sha1 is the object size, the second
+-# number is the path size.  The statistics are across all objects in
+-# the previous delta tree.  Obviously they are omitted for trees of
+-# one object.
+-#
+-# When run as:
+-#
+-# $ git verify-pack -v | packinfo.pl -tree -filenames
+-#
+-# it adds filenames to the tree.  Getting this information is slow:
+-#
+-#   0   blob 03156f21...     1767     1767 Documentation/git-lost-found.txt @ tags/v1.2.0~142
+-#   1    blob f52a9d7f...       10     1777 Documentation/git-lost-found.txt @ tags/v1.5.0-rc1~74
+-#   2     blob a8cc5739...       51     1828 Documentation/git-lost+found.txt @ tags/v0.99.9h^0
+-#   3      blob 660e90b1...       15     1843 Documentation/git-lost+found.txt @ master~3222^2~2
+-#   4       blob 0cb8e3bb...       33     1876 Documentation/git-lost+found.txt @ master~3222^2~3
+-#   2     blob e48607f0...      311     2088 Documentation/git-lost-found.txt @ tags/v1.5.2-rc3~4
+-#      size: count 6 total 2187 min 10 max 1767 mean 364.50 median 51 std_dev 635.85
+-# path size: count 6 total 11179 min 1767 max 2088 mean 1863.17 median 1843 std_dev 107.26
+-#
+-# When run as:
+-#
+-# $ git verify-pack -v | packinfo.pl -dump
+-#
+-# it prints out "sha1 size pathsize depth" for each sha1 in lexical
+-# order.
+-#
+-# 000079a2eaef17b7eae70e1f0f635557ea67b644 30 472 7
+-# 00013cafe6980411aa6fdd940784917b5ff50f0a 44 1542 4
+-# 000182eacf99cde27d5916aa415921924b82972c 499 499 0
+-# ...
+-#
+-# This is handy for comparing two packs.  Adding "-filenames" will add
+-# filenames, as per "-tree -filenames" above.
 -
- test_expect_success 'setup nested pathspec search' '
- 	test_create_repo nested &&
- 	(
+-use strict;
+-use Getopt::Long;
+-
+-my $filenames = 0;
+-my $tree = 0;
+-my $dump = 0;
+-GetOptions("tree" => \$tree,
+-           "filenames" => \$filenames,
+-           "dump" => \$dump);
+-
+-my %parents;
+-my %children;
+-my %sizes;
+-my @roots;
+-my %paths;
+-my %types;
+-my @commits;
+-my %names;
+-my %depths;
+-my @depths;
+-
+-while (<STDIN>) {
+-    my ($sha1, $type, $size, $space, $offset, $depth, $parent) = split(/\s+/, $_);
+-    next unless ($sha1 =~ /^[0-9a-f]{40}$/);
+-    $depths{$sha1} = $depth || 0;
+-    push(@depths, $depth || 0);
+-    push(@commits, $sha1) if ($type eq 'commit');
+-    push(@roots, $sha1) unless $parent;
+-    $parents{$sha1} = $parent;
+-    $types{$sha1} = $type;
+-    push(@{$children{$parent}}, $sha1);
+-    $sizes{$sha1} = $size;
+-}
+-
+-if ($filenames && ($tree || $dump)) {
+-    open(NAMES, "git name-rev --all|");
+-    while (<NAMES>) {
+-        if (/^(\S+)\s+(.*)$/) {
+-            my ($sha1, $name) = ($1, $2);
+-            $names{$sha1} = $name;
+-        }
+-    }
+-    close NAMES;
+-
+-    for my $commit (@commits) {
+-        my $name = $names{$commit};
+-        open(TREE, "git ls-tree -t -r $commit|");
+-        print STDERR "Plumbing tree $name\n";
+-        while (<TREE>) {
+-            if (/^(\S+)\s+(\S+)\s+(\S+)\s+(.*)$/) {
+-                my ($mode, $type, $sha1, $path) = ($1, $2, $3, $4);
+-                $paths{$sha1} = "$path @ $name";
+-            }
+-        }
+-        close TREE;
+-    }
+-}
+-
+-sub stats {
+-    my @data = sort {$a <=> $b} @_;
+-    my $min = $data[0];
+-    my $max = $data[$#data];
+-    my $total = 0;
+-    my $count = scalar @data;
+-    for my $datum (@data) {
+-        $total += $datum;
+-    }
+-    my $mean = $total / $count;
+-    my $median = $data[int(@data / 2)];
+-    my $diff_sum = 0;
+-    for my $datum (@data) {
+-        $diff_sum += ($datum - $mean)**2;
+-    }
+-    my $std_dev = sqrt($diff_sum / $count);
+-    return ($count, $total, $min, $max, $mean, $median, $std_dev);
+-}
+-
+-sub print_stats {
+-    my $name = shift;
+-    my ($count, $total, $min, $max, $mean, $median, $std_dev) = stats(@_);
+-    printf("%s: count %s total %s min %s max %s mean %.2f median %s std_dev %.2f\n",
+-           $name, $count, $total, $min, $max, $mean, $median, $std_dev);
+-}
+-
+-my @sizes;
+-my @path_sizes;
+-my @all_sizes;
+-my @all_path_sizes;
+-my %path_sizes;
+-
+-sub dig {
+-    my ($sha1, $depth, $path_size) = @_;
+-    $path_size += $sizes{$sha1};
+-    push(@sizes, $sizes{$sha1});
+-    push(@all_sizes, $sizes{$sha1});
+-    push(@path_sizes, $path_size);
+-    push(@all_path_sizes, $path_size);
+-    $path_sizes{$sha1} = $path_size;
+-    if ($tree) {
+-        printf("%3d%s %6s %s %8d %8d %s\n",
+-               $depth, (" " x $depth), $types{$sha1},
+-               $sha1, $sizes{$sha1}, $path_size, $paths{$sha1});
+-    }
+-    for my $child (@{$children{$sha1}}) {
+-        dig($child, $depth + 1, $path_size);
+-    }
+-}
+-
+-my @tree_sizes;
+-my @tree_path_sizes;
+-
+-for my $root (@roots) {
+-    undef @sizes;
+-    undef @path_sizes;
+-    dig($root, 0, 0);
+-    my ($aa, $sz_total) = stats(@sizes);
+-    my ($bb, $psz_total) = stats(@path_sizes);
+-    push(@tree_sizes, $sz_total);
+-    push(@tree_path_sizes, $psz_total);
+-    if ($tree) {
+-        if (@sizes > 1) {
+-            print_stats("     size", @sizes);
+-            print_stats("path size", @path_sizes);
+-        }
+-        print "\n";
+-    }
+-}
+-
+-if ($dump) {
+-    for my $sha1 (sort keys %sizes) {
+-        print "$sha1 $sizes{$sha1} $path_sizes{$sha1} $depths{$sha1} $paths{$sha1}\n";
+-    }
+-} else {
+-    print_stats("      all sizes", @all_sizes);
+-    print_stats(" all path sizes", @all_path_sizes);
+-    print_stats("     tree sizes", @tree_sizes);
+-    print_stats("tree path sizes", @tree_path_sizes);
+-    print_stats("         depths", @depths);
+-}
 
 -- 
 2.49.0.1077.gc0e912fd4c.dirty
