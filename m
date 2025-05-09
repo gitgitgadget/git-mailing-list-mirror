@@ -1,53 +1,53 @@
-Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2109F2868B5
-	for <git@vger.kernel.org>; Fri,  9 May 2025 11:25:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 336D528DF4D
+	for <git@vger.kernel.org>; Fri,  9 May 2025 11:25:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746789944; cv=none; b=aDzt2mLpHvyi4D+FQ33XqSBm0EtRiu2V9mI1vE5gaGigGpkeJKrEAjtFClDd5jlIFikjXWRxGK9iLWgE1n7BFX3r2G/EZzSsHxAPMQ5BE74c2P9gN8xu02MQ1UW+uNdU5NXgSr9k7k3yHUCu9Beid7CU7MUMjk7SUG/39n13Ork=
+	t=1746789946; cv=none; b=P4TCeqqBg2KeTEDc4kT4VdHc5ppAKxRSEjBM1/G0qzf69VeVbpzARQGQYiZ4PeNCkdPeUY5uO6AFXW9+HVqNc5cokKM04PWdWyjqaFB3XiionGJvsRKSVoWkJszOouDtB9bu5k955lZfe11MEcPqRp8im6godu1xXQwM97aLQqQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746789944; c=relaxed/simple;
-	bh=I0JgWn86HpNIyB/g+/uSYE6tGxKayyET0dz98JjE/Y4=;
+	s=arc-20240116; t=1746789946; c=relaxed/simple;
+	bh=vLbPQOgrAWo4OABH5KpP3c2tLzNvgLWfIbH9Dg+UMBs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WfmZSH2f/NVMnsOhXZGD0atv8cDMqHSMoYFg1FzzFIr6OSKQZ6fUMDvek3h7VVZreKTuQFgCMfYU5GqdRCERBkklVpnTONvwc+cSyM06dh32cySQEDPcQVJ1ANJZ8iEmvv/nDFbbzOtisFPw6PQlWZs0iTp7hurBg8rSixfkDhQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aGMbfma/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZTry0bQz; arc=none smtp.client-ip=103.168.172.148
+	 Content-Type:Content-Disposition:In-Reply-To; b=d3Nntq7u4JPRfQfK2VB+lC0pFL6hbJtCOtdNWguJmzWtWUo52E2xMNpGBe93Lj3rZvX5bBYKaL7qnsSnonSCv5gkjCr4pZxNwzQE69OS9Vr4N8MU6QmajFbuBZDJhb69B00w9tmQi2MLqZM3ndz9jOFl2MPSV05Yx3LwqaWa2Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qHZM8FtV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mQFRRrNo; arc=none smtp.client-ip=103.168.172.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aGMbfma/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZTry0bQz"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3BAE41380229;
-	Fri,  9 May 2025 07:25:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qHZM8FtV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mQFRRrNo"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 2F24E1140193;
+	Fri,  9 May 2025 07:25:44 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-07.internal (MEProxy); Fri, 09 May 2025 07:25:41 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 07:25:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1746789941; x=1746876341; bh=S0XyGHmDAF
-	uvYNrTfgmgYIdxj4E145a7GC0p2WFv1N8=; b=aGMbfma/HiUHsYbYd+i4E6Qn9Y
-	la8DPFYon3Nwtyhq3i+1ub4txfVZzG1traL9viTdXcsnyhF5pOSUSKJ2VEubL/Wg
-	XUxu9lpW2PERnZ56oQ4+DCccYcJa8MRa0yWdDHIXDMAkhLZVTNUDIquH0TpgwgvW
-	c/quY4HOIHkk57I89jDKK9nUYP5ghYmIAudO9iGpbBpaEAVoQTAe9JlRwfKTeLuD
-	m3JypcBB94pxYS5sAyMqzA0b0kPGScVqhGtOhiBYQoQCF9pbkFyKq+P0V85TBY60
-	0yhl5NpGqAhIc2tRuUtjjRcBzMaTrk4oG3KPDt3qYeOfeYVhwZE1Cit/0xYQ==
+	:subject:to:to; s=fm3; t=1746789944; x=1746876344; bh=jpA/FMQumo
+	eUKg+t52+WhBJhEL36qVoxj775J31wahk=; b=qHZM8FtV+ybIs0IEU8Z2wXr9uh
+	bs4dWUBuBNh1oQeLOWcH6l5dDw0YdE2DlRjWO6pBLJHnX/tcGzcJ0Ns92XtEpLQT
+	vwfhu0QQOJHNdf9TuFwG8lAPxU2vlWLVQuRrPU72iP/lFAf3zNVCCm6niCmXE+dc
+	ipUsiBlwRVoYESk49tI2OGyILHzGMqT+DeK/Wt0vJ8uMbWhQ+GKJhnZbAlCCUqpa
+	P+6gz2pjXmnkkw7UIL18juKkGYljKssjgDOrtbryVZcRBrJkA56Nzp/5Cgrg7cAY
+	c1Ad3CL3y3kaEsyvQwUtCv7HzYi1wehyZsYy3N93pTR3nvC3zpGWm1Jv+Zww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746789941; x=1746876341; bh=S0XyGHmDAFuvYNrTfgmgYIdxj4E145a7GC0
-	p2WFv1N8=; b=ZTry0bQzmsLUy8o1+F4+pPewlbdqr6k2gtfJlPfOszS2npIUitR
-	HbTX4UMyDG0dydtc2dQETRe4SXrgRW6ozKvOeiA8Bj8ED1TnAEpZ859TBu3rMeft
-	+eA8J1XacQgrn26sZ3fXaZPQrx3If0MznIPnMTdsP2Bsr9nNAti2zq9bUGET5fvO
-	C/jkRbW0in6lt+iZgeGVFhoWGWLWevrBlsIvENEzd3X+9fkQO+/0eJejg9y+Z8wB
-	xPsnn+sxtI3zwKTWKKaH6l2ka8641vhFZWQsRiivoqOU4QrDDM3bjqPYNNiKomcW
-	sS2mpBoegBTANAVlySgTeZQD+Bjl8USxXiQ==
-X-ME-Sender: <xms:NeYdaAzUIUDVoxIBsk4q6WOsNbqhEBdZqnzGEC92GKTsemC7M0nXiw>
-    <xme:NeYdaEQt8N3jT6D2axF_SJaC240_X4e8b9YxpUVxaEe_ugC1vTF1QbNKw32jCigZi
-    6w_WTSXSrvoxZ8xww>
-X-ME-Received: <xmr:NeYdaCW2_vHypL49ack5YV2m41uVRZv50yHVFuAjgrsn26cI95qkdwxaHX3hy4kb2mImon-bJ6UoswZ4s-zY5E-xJDRQhRwO59vStUd-wA>
+	1746789944; x=1746876344; bh=jpA/FMQumoeUKg+t52+WhBJhEL36qVoxj77
+	5J31wahk=; b=mQFRRrNoKp3PqoJYwPr4jEmiQfqTZoVwtH8SB33XwxZJjv9+G7d
+	0RMn02UCIvp6QTSV3avQvAt54EHYeO6tdNr3pHJqIDWa6A83Q06JeaQAFV+8hFab
+	/zPSw9Rkt4YiqBWDPGuoID2S5SqCkjAGykeTEEaD2Tls5xZ2pRlGoxxF2bLhuEZJ
+	+QyhEdmXsKNC/yWAS3ZtYP5OnaJX8cbqji7Yi5uuVWi2jwQhX5KuTglhZO8jeD10
+	Zrf66l3VWU3brapTczTNFqz2yEffBnLc/Wax390zMvx+62Ft2tlFor2HryH6GB7R
+	IFd/UKRy5LJ5KJTIQMoV95+aCicrPQJvA+Q==
+X-ME-Sender: <xms:OOYdaHFyZ_rTHDT9v87ptr-HSssZQPLtmAlWXfmN1NjxVV2P3SFcMg>
+    <xme:OOYdaEVc_1S6vqO9sx1hZ-BPOoPK362bEYqH5i5LcLMlpOGDrmUFfSx7Y_Z3KTZr4
+    U-yOYxh3HyYxjw_Bw>
+X-ME-Received: <xmr:OOYdaJKfnHoCFTcXKed72CqmfJVrubkK063Q4jWCZiVaJRMlMoqkrxrqEdFGbgClfSOI6jIdw8wpul0zMIZA0dV8rEHXo5shuzpoFvRH5g>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvgeelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -55,29 +55,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvgeelucetufdote
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:NeYdaOg3GCarW65cTn68xv20LtjYYPLaUpuxd90eWTckLumx6g4DNQ>
-    <xmx:NeYdaCACrvAGNkyx6XIRmFr6RYLxcIuE4cVe9zdBBe5I_bT8A0wCJw>
-    <xmx:NeYdaPJDZgan6TiCvuti-mydzna2VifXdeJwFOAGwN28kVt4hnnw4g>
-    <xmx:NeYdaJDrS4ztTPoFcjvs0QhoORkbQcJGXsQkOMSY4bPMjHGC5vzrZQ>
-    <xmx:NeYdaJcKpUhD6e-JUxrqRDnwVkt_v_Q2SpnfYil0tHn5A8EUzT9zWQtX>
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    shhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OOYdaFGJiOdv5AmRGB3NSiF-A16OSIkiBPrYcFazKy8EPvnnuVUrOw>
+    <xmx:OOYdaNUBcVHQj6Rp8VN4nRsqa14oi-Ox2gGTsN25yDB811bCE2Y7Ug>
+    <xmx:OOYdaAPCBRx4c_92dNJvJui1JSKfBjNSrZa-q0p7ywbcNhvwOw5SOA>
+    <xmx:OOYdaM3eIwJe-3Yfkc9bIY1LelB3crHs8NPqDJ9_TqLtfK1GBPeB4w>
+    <xmx:OOYdaEDwmdfrAtTE5TWk-3Ni9MsfWxOs_-IL-15JGJUEvfWI4kWbWTo->
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 07:25:40 -0400 (EDT)
+ 9 May 2025 07:25:43 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a2b64e71 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 9 May 2025 11:25:39 +0000 (UTC)
-Date: Fri, 9 May 2025 13:25:38 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 3ed57c11 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 11:25:43 +0000 (UTC)
+Date: Fri, 9 May 2025 13:25:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Derrick Stolee <stolee@gmail.com>
-Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Derrick Stolee <stolee@gmail.com>, git@vger.kernel.org
 Subject: Re: [PATCH 00/17] object-store: carve out the object database
  subsystem
-Message-ID: <aB3mMtoxCcaOFn0W@pks.im>
+Message-ID: <aB3mNiiAGE2KHbGY@pks.im>
 References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
  <5bea19fe-6616-4f01-a78d-9b7da94db899@gmail.com>
+ <xmqqa57oe4mj.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,127 +88,101 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <5bea19fe-6616-4f01-a78d-9b7da94db899@gmail.com>
+In-Reply-To: <xmqqa57oe4mj.fsf@gitster.g>
 
-On Tue, May 06, 2025 at 09:40:16PM -0400, Derrick Stolee wrote:
-> On 5/6/25 7:09 AM, Patrick Steinhardt wrote:
+On Wed, May 07, 2025 at 10:02:12AM -0700, Junio C Hamano wrote:
+> Derrick Stolee <stolee@gmail.com> writes:
 > 
-> > this patch series refactors the object store subsystem to become more
-> > self-contained by getting rid of `the_repository`. Instead of passing in
-> > the repository explicitly, we start to pass in the object store itself,
-> > which is in contrast to many other refactorings we did, but in line with
-> > what we did for the ref store, as well.
-> > 
-> > This series also starts to properly scope functions to the carved out
-> > object database subsystem, which requires a bit of shuffling. This
-> > allows us to have a short-and-sweet `odb_` prefix for functions and
-> > prepares us for a future with pluggable object backends.
-> > 
-> > The series is structured as follows:
-> > 
-> >    - Patches 1 to 3 rename `struct object_store` and `struct
-> >      object_directory` as well as the code files.
+> > Patches 1 and 2 involve renaming some core structures, and I had
+> > some questions around these names (since we hope to be stuck with
+> > the new names for a long time). I was thinking out loud on a per-
+> > patch basis, but now want to collect my thoughts around these:
+> >
+> >  * raw_object_store currently describes the abstraction that contains
+> >    all objects that can be accessed within the repository. This may
+> >    include multiple alternates. Patch 1 renames this to
+> >    'object_database'.
+> >
+> >  * object_directory currently describes a single directory that
+> >    has the same structure as $GIT_DIR/objects/ but may be an alternate
+> >    or a submodule object directory. Patch 2 renames this to
+> >    'odb_backend'.
+> >
+> > My concerns around this are basically around not liking "backend" for
+> > this purpose. When I think of a backend, I'm thinking about the
+> > implementation details (like the refs backend being files or reftable)
+> > and not multiple distinct locations that have their own objects.
 > 
-> Patches 1 and 2 involve renaming some core structures, and I had
-> some questions around these names (since we hope to be stuck with
-> the new names for a long time). I was thinking out loud on a per-
-> patch basis, but now want to collect my thoughts around these:
-> 
->  * raw_object_store currently describes the abstraction that contains
->    all objects that can be accessed within the repository. This may
->    include multiple alternates. Patch 1 renames this to
->    'object_database'.
-> 
->  * object_directory currently describes a single directory that
->    has the same structure as $GIT_DIR/objects/ but may be an alternate
->    or a submodule object directory. Patch 2 renames this to
->    'odb_backend'.
-> 
-> My concerns around this are basically around not liking "backend" for
-> this purpose. When I think of a backend, I'm thinking about the
-> implementation details (like the refs backend being files or reftable)
-> and not multiple distinct locations that have their own objects.
+> Yup, odb_backend_files (aot odb_backend_redis) or something?
 
-That is very much the intent eventually. Right now the backend is always
-the one that uses loose objects and packfiles. But eventually, the goal
-is to introduce different backends.
+Yeah, that was my vision indeed. I think it works equally well though in
+case we name this `odb_alternate`. The benefit of the "alternate"
+terminology is that we already use it and it's almost a perfect fit, and
+it gives the reader a hint that we may have multiple alternates. On the
+other hand, `odb_backend` sounds as if there would only be a single
+backend for a `struct object_database`.
 
-But regardless of that, ...
+So Stolee caused me to reconsider and favor `odb_alternate`. But in the
+end I guess that both names would work alright.
 
-> In this sense, I'm partial to being brief for the most-common structure
-> that will be passed around and then more descriptive about the smaller
-> pieces:
+> >  * 'struct object_directory' could be renamed to 'struct odb_shard' or
+> >    'struct odb_slice' or similar. I may even recommend 'odb_partition'
+> >    though that does imply some disjointness that is not guaranteed (an
+> >    object can exist in multiple parts).
+> >
+> >  * In the event that we create multiple implementations for storing
+> >    objects, then a 'struct odb_shard' could point to a backend to help
+> >    find the appropriate methods for interacting with its storage.
 > 
->  * 'struct raw_object_store' could be renamed to 'struct odb' to match
->    its use in all of the new odb_*() methods. This represents the
->    "object database abstraction" and consumers don't care if this is
->    one or many object directories in a trench coat.
-
-    NB: I think having a long name here is nicer, even if it's
-    abbreviated in the functions. But that's mostly my own preference, I
-    don't care too much. I'll keep this as-is in the next iteration, but
-    if you feel strongly I'm certainly happy to rename it to `struct
-    odb`. Just give me a ping and I'll do so.
-
->  * 'struct object_directory' could be renamed to 'struct odb_shard' or
->    'struct odb_slice' or similar. I may even recommend 'odb_partition'
->    though that does imply some disjointness that is not guaranteed (an
->    object can exist in multiple parts).
+> Hmph, I do not have strong opinions, but I consider it an
+> implementation detail of one particular backend, namely, the
+> filesystem based backend, that it can link together multiple
+> object_directory instances and present them as if they form a single
+> object database, just like all files within a single object_directory
+> form an illusion of a single object database (aka key-value store) even
+> though some objects are stored in individual loose object files while
+> many others are packed in a single packfile.
 > 
->  * In the event that we create multiple implementations for storing
->    objects, then a 'struct odb_shard' could point to a backend to help
->    find the appropriate methods for interacting with its storage.
+> I did not expect you would want to go to the world where a single
+> "shard" consists of an object_directory backed by the filesystem and
+> some other more database-y backend.  It is an interesting idea, but
+> we'd need to worry about many things we do not have to worry about
+> right now.  E.g. what do the precedence rules among different
+> components within a single "shard" look like?  How do we express "in
+> this repository, local filesystem-backed piece is consulted first,
+> and then check this piece backed by low-cost but high-latency
+> storage backend"?
 
-... I have decided to rename this to `odb_alternate`. I don't think
-"shard" works well, as shard is an extremely generic term that doesn't
-really convey much meaning.
+Well, in fact I want to design this from the start so that you can mix
+and match different backends. I think it falls out naturally from the
+design if an alternate can be backed by anything, and it has a lot of
+very interesting features.
 
-On the other hand, I think that `odb_alternate` is quite a good fit. We
-already use it all over the place to mean almost exactly what we are
-after here. And it doesn't seem far-fetched to have an
-`odb_packed_alternate`, `odb_loose_alternate` and `odb_redis_alternate`
-for different backends.
+Furthermore, it would cause a bunch of problems if we _didn't_ allow for
+this, at least for hosting providers:
 
-The only stretch is that the primary object directory is now the primary
-alternate. I think that this is acceptable though'
+  - Migrations would now need to be atomic across fork networks where
+    all forks need to be migrated at once so that we don't mix backends.
 
->  * "alternate refs" are locked in as names based on the following
->    config key names:
-> 
->    - core.alternateRefsCommand
->    - core.alternateRefsPrefix
-> 
->    These user-facing names should not change. This may be valuable to
->    make sure that the 'odb_shard's still have a state of "I'm an
->    alternate" or "I'm the base read/write shard for this repo".
+  - Migrations in general would be a pain if we had to do an atomic
+    migration even for a single object directory. With mixed backends we
+    can already make a partially-migrated backend available while the
+    old backend is still in use.
 
-Agreed.
+  - High-latency storage backends may work well for binary files, but
+    not for smallish text files. 
 
-> >    - Patches 4 to 12 refactor "odb.c" to get rid of `the_repository`.
-> 
-> These are carefully done. Thanks. I only have a few nitpicks here
-> and there.
-> 
-> >    - Patches 13 to 17 adjust the name of remaining functions so that they
-> >      can be clearly attributed to the ODB. I'm happy to kick these
-> >      patches out of this series and resend them at a later point in case
-> >      they create too much turmoil.
-> 
-> I like that these are present, especially because you included
-> compatibility macros for in-flight topics.
-> 
-> I do mention that the rename of the object-store.[c|h] files may be
-> unnecessary, or perhaps could be delayed until this series is merged
-> and the collateral is calmed.
-> 
-> ---
-> 
-> This was clearly a lot of work to put together. Thanks for working
-> hard to thoughtfully rename things while refactoring to reduce our
-> dependence on global state.
+This all of course still needs to be hashed out. I do want to send an
+RFC document to the mailing list soonish, probably in the first half of
+the Git 2.51 release cycle, so that we can discuss where to go.
 
-Well. Frankly, the hard work is only just starting. Next step: push down
-`struct packed_git` from `struct object_database` to `odb_alternate`.
-I'm scared what I'll find there.
+> > I do mention that the rename of the object-store.[c|h] files may be
+> > unnecessary, or perhaps could be delayed until this series is merged
+> > and the collateral is calmed.
+> 
+> Right now, merge-fix needed against all other topics in flight look
+> like this, in order to merge it to 'seen'.
+
+Okay. In that case I'll keep that patch for now.
 
 Patrick
