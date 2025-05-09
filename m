@@ -1,160 +1,121 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45190218584
-	for <git@vger.kernel.org>; Fri,  9 May 2025 14:28:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C096224B15
+	for <git@vger.kernel.org>; Fri,  9 May 2025 14:35:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746800919; cv=none; b=tgreohuL32yNKflZvQLAM5jWdcYkrEQRu3IriLpOQ+GAhe+UL1cyk6R2yC945bGj+eGQ3WD8lGKKz56F0Y9TJkVKiHl2VjiWKqfbCCv0wTcsntG8iEUmcEBwyl5BJDDJkiBRUjA+BeoeaKHF+MEbgUnL0Ns2P50ozbNln/gSij4=
+	t=1746801349; cv=none; b=hIoJJmO1NUgCJjhukdERO579TkSrIAEPUJcJzlvUp3g9Y7ugOi17w1Dhn0Ou/uSytd02sphyZ7vXGe6tfewp9Pu3HEcmM49LgD3UZuARnHDZLlwN5p/9+iFtSSgWxsenl7BLyXKtW0vsZt3FKRkE7traVcbUoXaI2yk8ESYql4g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746800919; c=relaxed/simple;
-	bh=XxGfbszB1x/CutUHZ78TbyWbJaTOvC+EybOadaBgY/o=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=mdckiqfylDCxatv0F+0qhN0XzYkUa/aKnnXCFxH6FoKARDeGqFIZyb1N+sekRokoDPwi3ia/8lCwsfR2bSD4N55TGpSFjfkjRg3TqRaC+enejKcqbuYZbQlsmOFQFdScPN14RL4JtsvM6XE9Bvl3ylGybeWRsD36HysOvrtKVdc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZvoCiC9Y; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746801349; c=relaxed/simple;
+	bh=zPCxuTroj55IgEesABPA5Ajn3wlhgBekzLe2Us4E/VM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=aOcvGaC43GWjqVmBCe1QhYeQJ38GXLCcOTmKOl0/rMSACes02u3xwNpTJjrlvVnE4ca5412StlJTz+RySqCRdZfcS3kueWa8Sv5e8szrj7eZDRAll8wFkiK4+6lS85tvYe/FBfWTc3e1MQRxP6PuHbLGxepkmcif+RKg5CjPpGU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Y1ZfT9gp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aurhQY99; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZvoCiC9Y"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43d0782d787so14832455e9.0
-        for <git@vger.kernel.org>; Fri, 09 May 2025 07:28:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746800915; x=1747405715; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0ITyUGJerBk7rYYy94BgJQNcKVisaT9nf0wn2VzEVi4=;
-        b=ZvoCiC9YQh7rptw+qPs+Qrq7cSZjbNBh963zE5ajakfmICoLt21NHOMNTE+OiiYYOv
-         u0v/4OeXkWv/zjHkq6vVdrMXPI5ELIBQtVOJPwLNdx7MWJiIqCBv8yJdZmaGbS0H+K37
-         8044FDZC6t9zA0otNlYdutqyIy8knmZ8vxC7p1d3bhRw67a3wGtctGfLvAQjOyLFqZ5l
-         UBZz9pNfiaO1P0m3C+MqlYiWNgLaOVMP+bEn+ls7fxNu7jRqZvWfeW0H82ktzFynKBCo
-         xTmgaOGL9XTreyU2tfW8qhqs3egf++Bsnk2BDfReNZhDkx0EjVLXdNvJPwWdMQHUQQyE
-         rO1g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746800915; x=1747405715;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=0ITyUGJerBk7rYYy94BgJQNcKVisaT9nf0wn2VzEVi4=;
-        b=TkrFKd2OSZTajsc7wm2oRRADpVjFbKx46cj6rsVVdmtpPH+kdzg//v/4JWKMAm+CLY
-         IhVRgb7hbS3A83TrwsTgqL5F4DdeshCZoyfRuFp2jGOg8R0Fg3jw1yiluVWhUBGkg+hu
-         4nrujxnDr85P9lRrThYtKrVgBsV1ELiBqTcWviQtIk7r6Lhcxa1W6C+PWaujUPZUk4iX
-         F/qPVuVL3csAt9EWa6C+AcOCafn6udwYPxqZcfvK4K4OkqDxqsWzNDLS8jVQCMfpzmg/
-         SVPdPh76gI+w8qBu5L6mR6vmBrSfZFKTt1pGq1XfIhR3GAXogsJEn6y8YxNDHIjFjqar
-         ZT9w==
-X-Gm-Message-State: AOJu0Yxilqlj9VPe+5egeGDkxNq8Q3g2vvfAFkfwV0xHU+GTaAJntGSi
-	VvJaT0gs2D5SlIboRHyWxsY4TUPiGp0sO4rypiBgoViGDYkPg0xGgef/2g==
-X-Gm-Gg: ASbGncumcfhiHxzDHBce5mUuO13Jlt+RVUxgcP3B8MjRMwF9B9sYj6Rm87wAfcGGO2i
-	5epvYx5YsxTZiK72OtsZAUbECWQeszGoJ39F5+VRWLA1rwSSJqb9T1rHJP4ViUpzfCmZnNQhIyY
-	vTtdHVm8qpMZcwvUz7HJMCxe+Kc1G6SClyFo9b2depE1lx2QoCqqL/lJTY8jn9+QpPIKs4n1cyZ
-	PV1hUJ+hJl914B/HlB3gam6ZWtM8A/sDP/Gu4xYUyocsJXP8QYhP1gY6x/S5anT+syEH7nGLkwS
-	J+uCiCvBillmtlmOm3BugAir5Z+ozzUoGLMLx9UnOA==
-X-Google-Smtp-Source: AGHT+IEuRs/BwHQ+rLwPqbvY3xX5QZZJSmMCa3dHFy2oCFEUsIB2YhnZmvYJblPxJPNE/2Bn7cVZFg==
-X-Received: by 2002:a05:600c:37c6:b0:439:643a:c8d5 with SMTP id 5b1f17b1804b1-442d6c39d19mr40459765e9.0.1746800914885;
-        Fri, 09 May 2025 07:28:34 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f57dde6bsm3466844f8f.13.2025.05.09.07.28.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 07:28:34 -0700 (PDT)
-Message-Id: <pull.1954.v3.git.git.1746800913128.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1954.v2.git.git.1746624294017.gitgitgadget@gmail.com>
-References: <pull.1954.v2.git.git.1746624294017.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 May 2025 14:28:32 +0000
-Subject: [PATCH v3] parse-options: fix memory leak when calling
- `parse_options`
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Y1ZfT9gp";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aurhQY99"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 38182114016F;
+	Fri,  9 May 2025 10:35:45 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 10:35:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1746801345;
+	 x=1746887745; bh=62bAu6WisX2ksGJVdGZko8BeoCBjk87QR6j46b+LjQQ=; b=
+	Y1ZfT9gpStpVrZNn5mRavUcB4zP6d0mOI6TU25EO5/4n0srlCDLZ4yNmu1jN3oCC
+	CV0duzrzqOjWqVa21UN8xsnL34EBxPDwwbLVgYezeoqy7ha1hRGQ9gBBTHlfZtrn
+	2qTBHBjNMkx2pButBXO14g8hmklRT8CDp7LSBaB/sFk3WzEZmNaze7Ae15DSmXuv
+	bH67s1U8ADAoL/5fEyVcpL7YAQS53j9p/ajcnq+c+pWwyszO1EUvXVg3HbxExmhh
+	1K3tlWAbU4yPJNeeiy9KaDwxTqwfYRTtT3ULFEWSbhkzTx7ZhylL7VoGvYFAo/Sy
+	M+++mRZrPr4ldUbvcRPUEg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746801345; x=
+	1746887745; bh=62bAu6WisX2ksGJVdGZko8BeoCBjk87QR6j46b+LjQQ=; b=a
+	urhQY99sjVLMFa7FTeoX3EIh5hDZC6lhXsl/IVw20oYKwJ2EC1RBWGuQyVgdwOjl
+	hLVkyPi11NOP936DKIHgGJ3+MLooyj0iw/m/P0gBfxcILKRODxhfNOnM5LT2hOug
+	SayXo1mI1QOdVJ/Qy4Vlw+temAqXybzbFa9IYLdumFQdbquHSx4UiDqLNHHHrHVL
+	w1SQtVzDHEzWzCyBMOSs1JWkv+EnhanRkgpI7LA428MUcCPArl2Iv1swJtJAJ46v
+	LWi5skq2EHamBeREDtSq0RrRBiuKRieZDccXnK/vSg7gH/urxakTbhBVrWAir+E7
+	h9/Dl9Mh+TPrYAAnwGl0A==
+X-ME-Sender: <xms:wRIeaBFRzlTmPH0mN6_exgCSmVw74UUSmCvhJ1hwfRBFgdaC-Ooqtg>
+    <xme:wRIeaGXmTzpJfcOl_JJ4IjPpkex9E5tGJjzfQxA6MkYrKqjeze5eLdftYfsVySViV
+    t69PPjqqqVAMaP0xQ>
+X-ME-Received: <xmr:wRIeaDIvgI8YuBcp2i0eZr7u16LYX5Alkz5VRbksy8MIK8eNYr2skw7i5O2vk8oxctlSoRzIcjFxS6Y4erQPnXpjkZtbuGchgNk->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvkeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvih
+    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:wRIeaHFw9mZ5Y4JoNb-LkQP18RZJv3b7vhulnGIwvNUmKlNUUS23QA>
+    <xmx:wRIeaHUqYyKYP6PJVkQbZk-XZjcqphds8rlv6Zi76pxzTT2Cc3-GqA>
+    <xmx:wRIeaCPOINdDVg7A_PVDkcN0KEd-SPn3B8BwJXHPRnRPmIOrY9dbnw>
+    <xmx:wRIeaG3IDOec3mBT1Sc0CcUE41h3nYNG_svnnDnfZGDx8sT5oprh2Q>
+    <xmx:wRIeaFolpEi7ULs2wh7Cja7_WMcPaCApjWoGIxAzs6qHiYUHwcVWOCwy>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 10:35:44 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Additional changes
+In-Reply-To: <5040970.31r3eYUQgx@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
+ AVILA"'s message of
+	"Fri, 09 May 2025 14:12:53 +0200")
+References: <20250503011537.3035416-1-gitster@pobox.com>
+	<20250507210104.26709-2-jn.avila@free.fr> <xmqq1psz878f.fsf@gitster.g>
+	<5040970.31r3eYUQgx@cayenne>
+Date: Fri, 09 May 2025 07:35:42 -0700
+Message-ID: <xmqqr00x3l8h.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+Jean-Noël AVILA <jn.avila@free.fr> writes:
 
-call parse_options twice and occasionally meet unknown option
-in the same place would cause memory leak, since the second `xstrdup`
-in `parse_options_step` would make the first `xstrdup` unreachable.
+>> I'd assume it is the former (as the three-patch series hasn't hit
+>> 'next' yet) and start updating htese three patches.
+>> 
+>> Thanks.
+>
+> Sorry for not being clear. I was wary of what the provided patches did not 
+> address, so I reviewed after applying your series and bundled it in another 
+> patch, which was not signed off on purpose.
 
-One solution is allocate one more magic byte for the unknown option to
-indicate that argv[?] stores a heap allocated arg. Assume for all
-arg, `*((char *)arg - 1)` is valid, we could put a magic number before
-the unknown option. Next time calling "xstrdup" will check the magic
-number first, and frees the previous heap allocated memory.
+I see.  In the original, I deliberately ignored what the patches did
+not address ;-) as I wanted to limit the scope of the changes to
+reduce the number of things the reviewers need to look for.
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    fix xstrdup leak in parse_short_opt
-    
-    Pass a user defined strdup-like function in parse_opt_ctx to avoid
-    memory leak.
+In any case, i assumed the former and squashed your changes (which
+looked all sensible) and the result is what is in my tree right now
+(but it can be further modified as the series is not yet in 'next').
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1954%2Fbrandb97%2Ffix-parse-option-leak-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1954/brandb97/fix-parse-option-leak-v3
-Pull-Request: https://github.com/git/git/pull/1954
+> Of course, the proposed changes can be discussed. If you prefer, I can 
+> dispatch them and propose a v3.
 
-Range-diff vs v2:
+Surely.  Are there particular things that you were either unsure
+about (which may lead to possible partial retraction) or want to
+stress on (which would help other developers and reviewers recall
+what they need to watch out for when touching the documentation)?
 
- 1:  e7b4465b83e < -:  ----------- parse-options: fix xstrdup leak in parse_options_step parse-options:984
- -:  ----------- > 1:  475f7b5b1bd parse-options: fix memory leak when calling `parse_options`
-
-
- parse-options.c | 12 +++++++++++-
- parse-options.h |  2 ++
- 2 files changed, 13 insertions(+), 1 deletion(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index a9a39ecaef6..84f6ae90c77 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -886,6 +886,8 @@ enum parse_opt_result parse_options_step(struct parse_opt_ctx_t *ctx,
- 					 const char * const usagestr[])
- {
- 	int internal_help = !(ctx->flags & PARSE_OPT_NO_INTERNAL_HELP);
-+	char *magic_ptr = NULL;
-+	size_t opt_sz = 0;
- 
- 	/* we must reset ->opt, unknown short option leave it dangling */
- 	ctx->opt = NULL;
-@@ -981,7 +983,15 @@ enum parse_opt_result parse_options_step(struct parse_opt_ctx_t *ctx,
- 					 *
- 					 * This is leaky, too bad.
- 					 */
--					ctx->argv[0] = xstrdup(ctx->opt - 1);
-+					magic_ptr = (char *)ctx->argv[0] - 1;
-+					if (*magic_ptr == OPT_MAGIC)
-+						free(magic_ptr);
-+					opt_sz = strlen(ctx->opt - 1) + 1;
-+					magic_ptr = xmalloc(opt_sz + 1);
-+					*magic_ptr = OPT_MAGIC;
-+					ctx->argv[0] = magic_ptr + 1;
-+					memcpy((char *)ctx->argv[0],
-+					       ctx->opt - 1, opt_sz);
- 					*(char *)ctx->argv[0] = '-';
- 					goto unknown;
- 				case PARSE_OPT_NON_OPTION:
-diff --git a/parse-options.h b/parse-options.h
-index 91c3e3c29b3..7fdd2e1097a 100644
---- a/parse-options.h
-+++ b/parse-options.h
-@@ -477,6 +477,8 @@ static inline void die_for_incompatible_opt2(int opt1, const char *opt1_name,
- 		BUG("option callback expects an argument"); \
- } while(0)
- 
-+#define OPT_MAGIC ((char)(0xee))
-+
- /*----- incremental advanced APIs -----*/
- 
- struct parse_opt_cmdmode_list;
-
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
--- 
-gitgitgadget
+Thanks.
