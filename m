@@ -1,111 +1,157 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from smtpbgbr2.qq.com (smtpbgbr2.qq.com [54.207.22.56])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C14E101E6
-	for <git@vger.kernel.org>; Fri,  9 May 2025 01:11:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D16139D0A
+	for <git@vger.kernel.org>; Fri,  9 May 2025 01:53:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.207.22.56
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746753074; cv=none; b=EmaWjon2MJX+YOZdgpQoQtV31PtqPjOjTjNe36oppYuS7h4jlnPnImkdJ2RlzE+nHd78AAjplprexd/ApNf5r6+uLCT2rgmExW4cIQqNyfcw5mADSsEbummcI0BIIVdVe1tQNKgTHbK6kMTu1VsBqeUvFkUtuswFbgGjQsVEt/I=
+	t=1746755606; cv=none; b=dJejHiOZ/bdLnJXKrVMiG0z/gK1BHI9qOA06amm52AI/DFHZMEii6AE7TT0Kmzehe0hbQc+cQms8OMbgq4e8o4/vOe41GKlThZnycWawWxoVGSDrcjmrM8Z0U6fLKxz2E3TFB4Osiuvl+JwKrcZC2SzTiTJtrozUgOsKN97aMb0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746753074; c=relaxed/simple;
-	bh=WWsyY8ldYG4AzlkleUKE7ZtTCB4FMPthQkQ+DBrr6CA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=RuG1BkD2xUyyfP9spyLWDgvyyJP+FFPX2Denc+ptHh00/iE3ng5d5jJJMHh50uL4gnxnB8is3QWSbjqA1LkSMO6VnlUZGiusAkTVJVuDQP/TakAVp8H0hGmr+bYu5zJ2j84+RXw1sdJ/ZroJxKsZERQKLGS3gwigVoVeLjdaapk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=UvXu6K/c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cz4NwC2R; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="UvXu6K/c";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cz4NwC2R"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CF5D6114019C;
-	Thu,  8 May 2025 21:11:00 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Thu, 08 May 2025 21:11:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746753060; x=1746839460; bh=N86PuJEjnp
-	9ajP7Od7ph/p56e24c1ZpdMx7wudXlOqs=; b=UvXu6K/chmyx34HsP25x0P8Z51
-	pWgzC6ZSGjxNnx9vZS9AGnjtHJQrSfrA6csulGgnLFvwOQ/EibXtFyVHpRPgizS9
-	KpqAOXp7d8Bd3zZtVxASYQ8gUDTHCMYVKHRXyKZhVIgyYLqke7nGKeZqsaevNoFE
-	m2v1C3jTYkGMpTPh/CivpENW5H+CR1AWV/sL6PIR9VZLAMQX4FHsvzM92VhLtdFX
-	3dD34PFA/I+MdTaD4h/VtXn9N/b5zBcNCXaZmDP599dPEFxvHshPYGdE1oBwUt9v
-	LGAyunc7QT0R0yUHVIBAKpHKH+R/mnvyM9aweXQHtejpLJ0XXRfb8B62n6nA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746753060; x=1746839460; bh=N86PuJEjnp9ajP7Od7ph/p56e24c1ZpdMx7
-	wudXlOqs=; b=Cz4NwC2Rx8OJ9tGyZvKKsRQuPEoMRxjm22VOaMSOF1lq7am1J1Q
-	Tzn92alhA2bvmPLZl5Ca8SEx44SUiA6XD2sQIEr5xX+d4++c5B8EnJ3G2DewPnem
-	+2Im17HiLnk50LHYhzl90FpIf+as5PnQDbHPY2N7s7dHrE82yLBZEwicgY9QyuXd
-	Hi9fbJZvZuiuLGFwMKbLg9fPhFAhlqzk4m3+InqJ1t4EdhZbF4/VFhZhhaKsfW1X
-	cen/XQdHi7KOeUZyzMXcKkokZEcZFamdff147Zcv5Cqawbg7CWOsKpqPKIqMd0Rl
-	6YHpdiCPEOi7au3MoeOMjaoy9rq5a91/qYw==
-X-ME-Sender: <xms:JFYdaHaPdWxbm5OKH6Z60HYlWjXH1BdWSWa0ZPHorBD4HQA6CPTCAA>
-    <xme:JFYdaGY1sKlWbn9tBb_WYiLdCeoVXdjxLzR_c0wLfgvuZYzXI6WRz62DwtsjsUXZl
-    LR604wJtkgE0XB_pg>
-X-ME-Received: <xmr:JFYdaJ-4aDUZQKTOq964uGXM0KlWex24w0eYngosPEs5_Jo6QXugpTxSptrPXCpC2R5jK7Z3fScLSinnQ8z5yfRbLaIx69P2J_6D>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleduvdeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:JFYdaNrh7CwiKcOo9XuR2vjso1fBrlXeqcFLBdWYSIeYIf14wrWB4Q>
-    <xmx:JFYdaCrKAXEnXK0dtuRfQZXXa_ThMayp-qcTJvD9eG9c7BCjAGVUwA>
-    <xmx:JFYdaDRsAwVsAUEb4KeO0uW5u4nqxb1eEijcQGkR9rxRn6cYcTtb_g>
-    <xmx:JFYdaKpbOYBIYwH39f1SWSnaWJktEMhoCCPbtlkW72gua2Zjo6lGyw>
-    <xmx:JFYdaL8CAF9toDQc0rWaLZ2GNZD-eu7pT5mcjM7tS3sHN6579VJMrjN->
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 21:11:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 0/4] Importing and exporting stashes to refs
-In-Reply-To: <20250508234458.3665894-1-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 8 May 2025 23:44:53 +0000")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-Date: Thu, 08 May 2025 18:10:59 -0700
-Message-ID: <xmqq8qn64mho.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1746755606; c=relaxed/simple;
+	bh=GcQhTlUJUOgsUqnGGQYHBiDAv/YaNomfElXFlclxKj8=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=lCCjizl5TJ8Xssrbr/39mVg1A5bvzVYmek77UWwFnnssjY7NBiZVvXN2lwR5UZzouly63PIEx6faAymqDlq5cPdrLw59rQShYQzNotKJ0jbxjrwfifT40aL7VleQVIBln5iLtQd5unGVINSlTPZMhQK7qldUHlUAUcYgZ6bENEc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.207.22.56
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: zesmtpgz9t1746755530t87f75455
+X-QQ-Originating-IP: GkTA+YZx0viQGwMf0p3xDjhal0VfYqKuB5nEz3cte0w=
+Received: from smtpclient.apple ( [36.152.24.174])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 09 May 2025 09:52:08 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 8019495912542183850
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [PATCH] decode_header: fix pointential memory leak if
+ decode_header failed
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <xmqqh61u4ul4.fsf@gitster.g>
+Date: Fri, 9 May 2025 09:51:58 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <19EA1FF8-836C-4444-A027-A65CF28E2CFE@smail.nju.edu.cn>
+References: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+ <xmqqh61u4ul4.fsf@gitster.g>
+To: Junio C Hamano <gitster@pobox.com>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
+X-QQ-SENDSIZE: 520
+Feedback-ID: zesmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: OGvgEoGelOUdH0DeLaC4KH1ctTO2kSMFaDS7VXctOGwUtzfolffrkwq3
+	Uj46PzluVahLbZnlfY+fDjCE3vadfq5SEfc7LIVVV7RAIM6kVw94z0V78wHrGpIHhH9T4ya
+	1VeXBgY455rIB1HdS+mQRM42ZuUxaQl1cAPk8dqROhbLGXwfm4Ea6XM5eA9rMqe/FHpyZ2b
+	Jrz1Bv5R0OwHOsBAWVr00SEtu4GEOnBq2HSTWyCXnvbXmngQSD0lEkkDpwKc5Mczd/VPeTR
+	7qihDo+2c6uVy0+qWVAHEqCkyK/wHErjovNdXv3QqKoiAGlRC6+vr+7QE3ZPPKOdyOKfxUv
+	KD7+Q4La3vyVJqr/Ihg8zbZgckwgJW/fkA8xubjWvapPFmtwWPZrOpeFf6RdkgHw/UawJEa
+	RzhhLCD7BTMVV9J3wMCYBCI2mgjjcUnmvpfSvTbb8DPDXi853IHRHLoj6Y3SA/PAo3VMrZ6
+	dk4Kg+pwMDbkCC6MK66n2uv9f817fwWUR4TzV/oHVUUFZQFCMDHNLT74otUt9bDCvdXZhtX
+	2VR4YzszyVrEfM5reB/K1aJyVX3dOqq52kP0diM5nj7uugv+SX0Md4eIr4J0l4i8pyd/S0B
+	x/YESEPPLOLsckZfknVqK75KUdk5vNyL1y5oRhjB44LmPHp290ao4blLLBUlE4bTkG71JdW
+	L1BkPUPyZB+ie0hLCLdyJaUxYMiSj4LidUUOd2OQgn+NygWJNjx9lnBTCNmBO9z0p18GTS8
+	RDx2TSO1q78OTJ/C0mHAzlLZAHtLWfPLX7l1fyDuXnS4uAtZLhLZRSjUkRwjm89hnReq7ZF
+	BRv/HR+n9QsgHNzDNlvCw1lyk2NwdPE0wYTjVCJurcykvFYRUMTyJxY3Gu/MdU5FquXPO6x
+	eCTQy7KNqYXxlg4lIcT3+DW4IWQOPsK160aDnD8lLuZSoI0kphWCdbJGW7E7NpVkO+7jxV8
+	ojWQ612KmEAg67p2GWtMy7B4BnWoZektF13QxyEsjEvsRV9zOv4D8DAPNrp56pzweS2/xRf
+	6aPde3kBcaenB2KP5z1RMVexmWWxg=
+X-QQ-XMRINFO: Mp0Kj//9VHAxr69bL5MkOOs=
+X-QQ-RECHKSPAM: 0
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+Thank you for your suggestion. I will update the log message in next
+patch.
 
-> Stashes are currently stored using the reflog in a given repository.
-> This is an interesting and novel way to handle them, but there is no way
-> to easily move a stash across machines.  For example, stashes cannot be
-> bundled, pushed, or fetched.
->
-> Let's solve this problem by allowing users to import and export stashes
-> to a chain of commits.  The commits used in a stash export contain two
-> parents: one which is the pointer to the next exported stash (or to an
-> empty commit with no parents if there are no more) and the second is the
-> stash commit that would normally be stored in the reflog.
->
-> Original thread at message-ID: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+The only reason decode_?_header might fail is that xmalloc could=20
+return NULL, whereas other functions will cause the program to terminate
+ on failure. If I pass a pointer to a local variable into these =
+functions,
+decode_?_header will always return 0. Should I change decode_?_header
+signature in the next patch?
 
-Thanks for resurrecting the thread.  Once this part gets sorted out
-and the outside-reflog representation of stash becomes stable, the
-next logical step would be to teach the "git stash create" and
-friends to directly work on the new format, perhaps?  But first
-things first---export+import would certainly be a logical first
-step.
+> 2025=E5=B9=B45=E6=9C=889=E6=97=A5 06:16=EF=BC=8CJunio C Hamano =
+<gitster@pobox.com> =E5=86=99=E9=81=93=EF=BC=9A
+>=20
+> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+>=20
+>> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+>>=20
+>> In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
+>> in dec will leak. Simply add strbuf_release and free(dec) will solve
+>> this problem.
+>=20
+> We try to write our proposed log messages so that readers can
+> understand the idea behind the change without having to look at the
+> patch.  Even to those who are intimately familiar with this area of
+> the code base, an exact line number reference rarely add any useful
+> information.  Something like "In mailinfo.c:decode_header()" would=20
+> help them better than "In mailinfo.c line 539".
+>=20
+>> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+>> ---
+>>    decode_header: fix pointential memory leak if decode_header failed
+>>=20
+>>    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf =
+stored in
+>>    dec will leak. Simply add strbuf_release and free(dec) will solve =
+this
+>>    problem.
+>=20
+> Just FYI, here is a space to describe what would not have to go into
+> the proposed log message; there is no need to duplicate what you
+> already said in the log message above.
+>=20
+>> Published-As: =
+https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2F=
+fix-mailinfo-decode-header-leak-v1
+>> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git =
+pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v1
+>> Pull-Request: https://github.com/git/git/pull/1956
+>>=20
+>> mailinfo.c | 5 ++++-
+>> 1 file changed, 4 insertions(+), 1 deletion(-)
+>>=20
+>> diff --git a/mailinfo.c b/mailinfo.c
+>> index 7b001fa5dbd..7a54471a481 100644
+>> --- a/mailinfo.c
+>> +++ b/mailinfo.c
+>> @@ -536,8 +536,11 @@ static void decode_header(struct mailinfo *mi, =
+struct strbuf *it)
+>> dec =3D decode_q_segment(&piecebuf, 1);
+>> break;
+>> }
+>> - if (convert_to_utf8(mi, dec, charset_q.buf))
+>> + if (convert_to_utf8(mi, dec, charset_q.buf)) {
+>> + strbuf_release(dec);
+>> + free(dec);
+>=20
+> OK, this fix is obviously correct.
+>=20
+> A nicer fix for longer-term may however be to fix the calling
+> convention for decode_?_segment() functions, so that they take a
+> caller-prepared strbuf as a parameter and fill it (and signal an
+> error by returning -1, a success by returning 0).  There is no way
+> for them to signal errors they detect (if we do not count the usual
+> form of doing so by returning NULL, which this caller is not
+> expecting) with the current calling convention.
+>=20
+> We'd still need to release the data in the strbuf "dec" even if we
+> did so, but the strbuf would be on stack so there is no need to
+> free().
+>=20
+>> goto release_return;
+>> + }
+>>=20
+>> strbuf_addbuf(&outbuf, dec);
+>> strbuf_release(dec);
+>>=20
+>> base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+>=20
+> Thanks.
+
 
