@@ -1,125 +1,174 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-ej1-f43.google.com (mail-ej1-f43.google.com [209.85.218.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A25022DA19
-	for <git@vger.kernel.org>; Fri,  9 May 2025 16:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CE5F231841
+	for <git@vger.kernel.org>; Fri,  9 May 2025 16:42:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746808785; cv=none; b=td86KeLX0aVddQgACs4Bw20AYD8BMlC9BMvUTui9gvrGkK/TDbBpV2s+SBIdx91RlU581ZREF3LcqOnNfU5ZP38u9JIX61RkJO1OpEjui1nrlCNJooiN2TZzyJszpGULxK3V5EuoHZLG9tZvsDpCzfg0s6k+RpnWAdKJm7eTTe8=
+	t=1746808922; cv=none; b=LIs2VHqeg5A8lbFm6Jyi7AphiYlrDYK4ao+4hqxhvomwjl6aU+YaotWF3CSR8dZu8NZbPkM5yJrHGw4ACVb4wfSKJnadquhwF9kjD2qrVy3OqNGQ7c+EOGO6ZiiOcg+j6dd7Cl7pZzQ1pKzHZT9p+e/wBpUpSTWylTWg2BLXUSo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746808785; c=relaxed/simple;
-	bh=fFUa1oPzjolaPs76AZIrcb/YsTuHwgU7q33E744Kbso=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JV6tRUk0uQ8I8gEZh6wfWxkG8n1b7AhcBNagV9gTuF4X7LDFauPg2JvLfOr5bfSsHC9WxMrseszYj/VWAPjMLvkgXUyzlNCnWNacJppbgN3OeH+vOGARbNw79LCfIiWD7aN9KLwZlfq5grc5r28A2r0fS/hudPOJj8RADrKIyvY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hBFPNXex; arc=none smtp.client-ip=209.85.210.175
+	s=arc-20240116; t=1746808922; c=relaxed/simple;
+	bh=qfBTzxuHGs787k+o1mZ8/96SVyOufkdn43UEKdMXyKs=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=DMMctUDDlH+KyxkSJ4TXwd/1PeklXOuBtdYlfB8k7Avl5hHb1mpGw9lHiyKClisFrl9Z/SE7VxQfz3NvJiODmSwj7yr9dE0PKjBBTct6OkiSk16QVxJoujqDOwBaYVSR0DXyS2MTpe76vfjbVp/JPilCB+jjoh85LotdiSzL83o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RZTeTUYy; arc=none smtp.client-ip=209.85.218.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hBFPNXex"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-73bf1cef6ceso2475581b3a.0
-        for <git@vger.kernel.org>; Fri, 09 May 2025 09:39:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RZTeTUYy"
+Received: by mail-ej1-f43.google.com with SMTP id a640c23a62f3a-ac345bd8e13so343595966b.0
+        for <git@vger.kernel.org>; Fri, 09 May 2025 09:42:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746808783; x=1747413583; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dJhy3RkK3n+zP4z+bZJePmGyd7puyQvH575W1FleQjI=;
-        b=hBFPNXexc/Ikz3enRkNSRNuWr50nhEtDJOScZMIb8Hd3en2GKK6oz9hWEH1hJwH5q6
-         VuMv0DknUgQXlP01mK3NUGbc6HNsvMZWwirzmLhlXgMfCw+9/+prNM5Q95TpZn3TcPwB
-         ysYxQHUBd/m/svbgdSuXpH0/fIZWdy5Nm7WJhKLKcm4gnUTitMO4GocZzd+97rUQ4hZq
-         f4gX3kCuArgbYPiQ+TakIFEwpXlubCvz5sZhtMy2TxJqXXRTJi4B7koEPf9dyZOdIttV
-         N1Q865pt1+3JPp5dgNOgwDF8ssesXtmhWOIj6VQtSoRR84dJ8aQpsDpCaN+q8ou8AqGv
-         oTZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746808783; x=1747413583;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1746808919; x=1747413719; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=dJhy3RkK3n+zP4z+bZJePmGyd7puyQvH575W1FleQjI=;
-        b=jd3IPGbnCDnetPTBn5q30ualW7wOO/pUmVIVjD1j6hKUkBITCOJhaPzsO0QjJ43ZBj
-         XXLkunDTn8N493W/JjlmS1xcju82/+CvTewTQnFBonKyRWFVcHS3j1QJfbu1/EThR8s+
-         t0RuW6t/V5qE0qiKr0cJbLQjWgAK4c8V6DvWbgDvD6jC1Gu9VuU9LjWfOTm/LqR4xxwW
-         oyV7vHwkBVtWM6FZ9T9GrMJtKEBV0mWCWGCztFti3nxnu88Ll7JYqwbQHI9Kno54ybZU
-         sj/R1YWQHLzNpFR2sSCv2NQhgkguHOnNl0JgakZZI7VdmQgOt2AZ0cLx84AoLjFh1sDV
-         NFSg==
-X-Gm-Message-State: AOJu0YxAA6HOZaYpIdlyrj8Nv2KZv4/7qg9wMwFNONnsoVwhUU6Hs/SB
-	icy7hoa1/fAjOMLWd7SOACvK/8Ze5eUV3akKEJE22hQtf44HBAbLPwN/aSlB
-X-Gm-Gg: ASbGncvO/sCp7TO8PMpY4HwnG2VKe19GG9zebRhdwEYSI6Q1EdWmkIPxP0IeN8riKwm
-	Lk0RaIctezbPx/m+ElpQJnsAZ7dScM3weaaKY2xV0mrfAKiGueKCUQg5Avh6kzAf3JbI+U67sso
-	FckBBTXIyPB+3T+/ycNsI6ugBynt0L7ynFsoUfGoWLwqq0RkTfYGjIYdxocY9hgGzqiXkwXqU/c
-	TFaagA8YpR/3rDyCQqIsjdZGuLkkAqmZhUlHxsJVPeQRknJWGks2jWBdHiPYBhbQtKZeeq00053
-	RYdLu/cYMDieCFRfecZEx9q86KUP9PC3IUpa/tMV51PVF9o=
-X-Google-Smtp-Source: AGHT+IG7EGEp5nWrrne0KIYhcm5q0Zv4P1pok57Q2EktKBd6FV++uDX1N1Q2MESbnHD6NqvBpW+1EQ==
-X-Received: by 2002:a05:6a21:4d14:b0:1f5:8f65:a6f5 with SMTP id adf61e73a8af0-215abc17334mr7530521637.30.1746808783298;
-        Fri, 09 May 2025 09:39:43 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 41be03b00d2f7-b234a0b5815sm1685476a12.21.2025.05.09.09.39.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 09:39:42 -0700 (PDT)
-Date: Sat, 10 May 2025 00:40:10 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 4/4] packed-backend: mmap large "packed-refs" file
- during fsck
-Message-ID: <aB4v6kBdNHmFlPlR@ArchLinux>
-References: <aBtzn4nwLsI9p5Cp@ArchLinux>
- <aBt0C8gdBecq5f8U@ArchLinux>
- <20250508200741.GB18229@coredump.intra.peff.net>
- <aB4dflpFNW4mJlq6@ArchLinux>
- <20250509155934.GA25686@coredump.intra.peff.net>
+        bh=JiX0YVnr+Yy6DW7oI8l4Fy3HbBzp0pw72xGq3WS6AF4=;
+        b=RZTeTUYyNX/AaVciXCDZQVDILv7KVPu/8lXUJj/e1VeziWN+Ogs+cXf0PyV9NjqByZ
+         NA8Pd1FAmWjztII+IC31in4tx90uDjyDzEyDiayYgwYxFCYQij/88R4vigw1g1AgAHFr
+         VNHVcADmb516k5V6o1Nf3ZQHIFVQAjgUszFd5TuAST/kh0eUXvuQzb09sNWH/pZ6cZeJ
+         NO7KOVU23upur5B1H0/dFX/Mfk5vJr2ghK8bjdAtjEyVZk3RtAth76iUpnBFLmyIOtI+
+         uy2o/+ePDBZ9rNKrSSCo79iuFegFlHqwjRvsLIsS4GHvlKz0gKm/9VFlyjvRGxaTgTIK
+         o3sg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746808919; x=1747413719;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=JiX0YVnr+Yy6DW7oI8l4Fy3HbBzp0pw72xGq3WS6AF4=;
+        b=QdYIlv6kHrXTLX+HakUoVasdgp/HUCed2b8/KOqwzNLzhKXoNi5a8jB3ay87HinytK
+         Y22WAbCyqqiOK17hvCAmkyK0w8yGt0hp7vX82NePA/AAir3rg3gxuYMRNqW31hhyTuAY
+         KuotN4SEj9Dp/9duzU1CeVm80VXWW+iTzb2wS/BguET8N/yFnuQEAyRv42PerrsriaMv
+         ooXYqHg50MMja0nAGUCX8eZpzC/1Q1GUJ6ImXe0FdrOL6z4Te1Gm+rZA2mOzbmztbNJy
+         Y4Sk50tKcvtaSPa2g16Ji2MCwEImIkaFfMxEhp6VTVyuMBA7Z1Ujsv3x6oWzVQj93FXM
+         uicA==
+X-Gm-Message-State: AOJu0YxJ7zXwROlMM1PD65niE1ISBi+NnGITnCVihMFBh9k/FqIeHR7I
+	gX3cV6GFndQVKqoorznJ2HA0dbsq9D6sMQ8HHs2s4QwZ2Nmj09E4F7jte2sCKUYGIBpJlkL7faD
+	FgRUy/YDcr//7uXz0ACLWiQPkcM4KfuxE
+X-Gm-Gg: ASbGnct2XQYx0Gh9E7Ut/drEOz+STdNiK0K1d42gz28NlegI+NX0NC6E3NknJ07LQ4u
+	AmajBE5GA0onNH2G+EBQS03dNQALpgIhbPn51lE1ZUpeSMKUZHvV6knGaOhh+LJnRBXZSVcdcuq
+	uVbi5+Qf+GV2kGTW9mb3LG5zUXPiNyXZ0KCO0zgdXj775neBw+uK4sikA=
+X-Google-Smtp-Source: AGHT+IFUTGldtcuVNPk5Y8+DRak/wLxl2gQN88Q4t8MJxZ6QVTzKE6fT58P4YHkmcbWQHJCrRviwZmYn6xoxH6QcD1o=
+X-Received: by 2002:a17:907:9453:b0:ace:f53b:ff4a with SMTP id
+ a640c23a62f3a-ad21917f5d3mr426724466b.50.1746808918384; Fri, 09 May 2025
+ 09:41:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250509155934.GA25686@coredump.intra.peff.net>
+References: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
+In-Reply-To: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 9 May 2025 12:41:47 -0400
+X-Gm-Features: AX0GCFupmqKXqlTsmrfPHemtzdVadoYEfHlH_oNvaq2AdrMDiEvxdk3iaiFLpx0
+Message-ID: <CALnO6CB6aH5DEDP3QL43RCFfaZJ3uzrAY1LdGyTNi8F3XVoEhw@mail.gmail.com>
+Subject: Re: Bug report for pull --rebase
+To: Mr Bill <billc56196@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 09, 2025 at 11:59:34AM -0400, Jeff King wrote:
-> On Fri, May 09, 2025 at 11:21:34PM +0800, shejialuo wrote:
-> 
-> > > > -	struct strbuf packed_ref_content = STRBUF_INIT;
-> > > > +	struct snapshot *snapshot = xcalloc(1, sizeof(*snapshot));
-> > > 
-> > > Minor, but is there any reason to allocate this here and not just:
-> > > 
-> > >   struct snapshot snapshot = { 0 };
-> > > 
-> > > ?
-> > 
-> > I simply copy the code from the existing code... I will change.
-> 
-> Ah, I see. The existing code must allocate on the heap because it is
-> returning the snapshot to its caller. But here the variable is
-> completely local to the function.
-> 
-> However, if we stop using mmap_strategy altogether and just use xmmap()
-> directly, I don't think you'd even need a snapshot variable.
-> 
+On Tue, May 6, 2025 at 5:44=E2=80=AFPM Mr Bill <billc56196@gmail.com> wrote=
+:
+>
+>
+> Hi, I ran across this doing a pull --rebase using the current master
+> version of git
+>
+> This happens on Slackware linux, using git HEAD, version 2.35.8, and 2.46=
+.2
+>
+> I have a clone of the ffmpeg video package, with a few custom commits on
+> top of it,
+> I periodically fetch and "pull --rebase" to update the underlying ffmpeg
+> code.
+> I tried this recently, and my custom commits disappeared.
+>
+>
+> I looked further with a small test, and it looks like this is happening:
+>
+> The setup:
+>     "base" repo with a few commits (A, B, C)
+>     "clone_1" cloned from "base", with a few extra commits (F, G)
+>     "clone_2" cloned from "clone_1"
+>
+> Add a few more commits for base (D, E)
+>
+> Then use "git remote set-url origin" to point "clone_2" to "base"
+>
+> Then, in "clone_2" do "pull --rebase"; the F and G commits disappear.
+>
+> Then, in "clone_1" do "pull --rebase"; the F and G commits are retained.
 
-Yes, that's right. Maybe the simplest way is to use `xmmap()`. But I
-don't want to introduce repetition. In the current codebase, we already
-have the logic to load the "packed-refs". Let's just reuse it.
+Thanks for including a script! I modified it (uploaded to
+https://gist.github.com/benknoble/7a5eecd522b48669c2a5207e2ed9b7ee to
+avoid problems with my mailer) to be suitable for use with bisect.
 
-Out of topic, I have more to express.
+I put the script at /tmp/bugreport/doit next to a clone of the Git
+source code, then (in the Git source repo) started a --first-parent
+bisect between 2.49 and 2.0 with the ../doit script as the runner;
+here's the log:
 
-Actually, my eventual goal is to unify the fsck and other parts. For
-example, "create_snapshot" would also do some basic sanity checks. And
-of course, there is some overlap between fsck and this function. And
-also for "next_record", it would also check something.
+# bad: [683c54c999c301c2cd6f715c411407c413b1d84e] Git 2.49
+# good: [e156455ea49124c140a67623f22a393db62d5d98] Git 2.0
+git bisect start '--first-parent' '@' 'v2.0.0'
+# bad: [4336fdb2efaf77b720f152c06b5ce2aa2e347fb6] Merge branch
+'rs/nedalloc-fixlets'
+git bisect bad 4336fdb2efaf77b720f152c06b5ce2aa2e347fb6
+# bad: [130b664e442767587638b3e807a6f543168239d7] Merge branch
+'js/travis-32bit-linux'
+git bisect bad 130b664e442767587638b3e807a6f543168239d7
+# bad: [922239e7da03f8e0a8c6ba809c1ee0cf3776f94a] Merge branch
+'dk/p4-import-ctypes'
+git bisect bad 922239e7da03f8e0a8c6ba809c1ee0cf3776f94a
+# bad: [afa3ccbf44cb47cf988c6f40ce3ddb10829a9e7b] Merge branch
+'jc/pretty-format-doc'
+git bisect bad afa3ccbf44cb47cf988c6f40ce3ddb10829a9e7b
+# bad: [7669461459aaee1587bac77c4a446e9365b582c7] Merge branch
+'rs/merge-tree-simplify'
+git bisect bad 7669461459aaee1587bac77c4a446e9365b582c7
+# bad: [3d77f72efe79eb90f67aec9ecf6d4bd11fc9a78c] Merge branch
+'jc/fix-clone-single-starting-at-a-tag'
+git bisect bad 3d77f72efe79eb90f67aec9ecf6d4bd11fc9a78c
+# bad: [5b3a58d459171f49ee8d486e4ac399eb2678605d] Merge branch
+'jk/argv-array-for-child-process'
+git bisect bad 5b3a58d459171f49ee8d486e4ac399eb2678605d
+# bad: [d83c9c75e1edebd4ece3ad5223103f46fc38a4d3] Merge branch
+'jk/grep-tell-run-command-to-cd-when-running-pager'
+git bisect bad d83c9c75e1edebd4ece3ad5223103f46fc38a4d3
+# bad: [e3798318b12502ae13a8e35e4a385665e810047f] Merge branch
+'mm/mediawiki-encoding-fix'
+git bisect bad e3798318b12502ae13a8e35e4a385665e810047f
+# bad: [2e4b5dee97cb1524a88f0ee90450b139bfaff07b] Merge branch
+'rs/ref-update-check-errors-early'
+git bisect bad 2e4b5dee97cb1524a88f0ee90450b139bfaff07b
+# bad: [f008cef4abb2a4db766b4a152b304aca91a0101a] Merge branch
+'jc/apply-ignore-whitespace'
+git bisect bad f008cef4abb2a4db766b4a152b304aca91a0101a
+# bad: [bce14aa132e0064d9a9b1c7ad98e71e22c6e0272] Sync with 1.9.4
+git bisect bad bce14aa132e0064d9a9b1c7ad98e71e22c6e0272
+# bad: [d7172825321369cb951dd7bbfc0c12dc4ecbe518] t5537: re-drop http tests
+git bisect bad d7172825321369cb951dd7bbfc0c12dc4ecbe518
+# first bad commit: [d7172825321369cb951dd7bbfc0c12dc4ecbe518] t5537:
+re-drop http tests
 
-During my implementation, I find it hard to unify and it would require a
-lot of effort. So, I simply introduce some redundant logic. But this is
-not perfect. Because I still parse the "packed-refs" file just like
-"next_record" and "create_snapshot" do. And the most disappointed thing
-is that I cannot reuse them at all. But the things I want to do is very
-similar to these functions.
+I think this just means the bug has been present since at least 2.0 (I
+never checked if 2.0 was actually "good"; that was just as far back as
+I was willing to go).
 
-So, I think I would eventually to find out a way to do above in the
-future.
+I didn't try to track down where it came from, though.
 
-Thanks,
-Jialuo
+P.S. I was having trouble building master (something in the linker
+with _false_but_the_compiler_does_not_know_it)? Revision 1ee85f0e21
+(The twelfth batch, 2025-05-08). Log at
+https://gist.github.com/benknoble/a8bdc272f44673e115f8b3e57d62e4f6.
+P.P.S. I was flummoxed for a long time before I realized that "git
+bisect run" sets GIT_DIR in the environment (checked by comparing the
+script's environment in and out of "git bisect run"); is that
+documented? Intended? Made it harder to drive Git in this script (see
+"unset GIT_DIR").
+
+--=20
+D. Ben Knoble
