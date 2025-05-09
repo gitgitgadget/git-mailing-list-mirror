@@ -1,131 +1,131 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA17BA38
-	for <git@vger.kernel.org>; Fri,  9 May 2025 08:30:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D8DE22D9EF
+	for <git@vger.kernel.org>; Fri,  9 May 2025 08:36:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746779441; cv=none; b=SX6p0L/6IAmo5bGDxxSzkVnQ+Qri3hyPWT6EoCqxeKiPxlcpCQl7URyyW4iz3He5U007t3Cd/clmfrUn++u39ETLRd/FLz+Kz2nqiXq7sBdPq49SgofTsjB3HJ6kcv0ziufl4234YGp6c5FMfzwpwdQiJJLx1F9Zq/vxNNaVQeE=
+	t=1746779809; cv=none; b=PudSRMMvhw06N3Gmiv8fdFb624V8bo+P4VoGoHIhES/cdAz0ZOTnAjhgB3jmgfEE1k4y4dt+L4B/MOHf0R7O0NQDp8WDt7y1lVat9FpLxgyxh2G8UO08IKV+YEBTEDeBQqQCFRQjGCI4a+PQNaRRAOpIV7EIJ4Q9xW5sNtgknvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746779441; c=relaxed/simple;
-	bh=JiDxrDon/2DrJx00a0Y1Mq2RlIBoADCMedDzKqBMso4=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=asjCNs8tPPqoeot68/DWVRKME8mc+CeMfnIFN0raZpb4G2J71AMCXxevv3BoSNkkO4AzAKsublbsqyjazyEJVrxkeoduWorjUSvOjFaRslfBZ3aj23m9iRYQ3BvO5uVqUoFzVAvfrOsb2gAA+XrTO23SU5cOA43VxSW0ozHyKbo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PlU451PD; arc=none smtp.client-ip=209.85.128.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1746779809; c=relaxed/simple;
+	bh=NLrgRXOVBqY1yfjpBJlyfQwuOKiDXWvOWybmXI8eOsU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=LFWdwMYUZ37KSf2ECTG/NCSKogwBzyXd2aRXVSCbBiPvDg/1DWyivOS7S5F/O71yOFL5VT8Y0c5eAINo+4BhLXKR03u++Ew8DB5R4Ri1vibMHwumPQjBHtkaG5Z1QwuZW+AQX6XonwQOZ2gBzgeDG/asZMaa1S3VZl8WF0YphtY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tsZOUYym; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lTQ5E7+z; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PlU451PD"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43cfba466b2so20544125e9.3
-        for <git@vger.kernel.org>; Fri, 09 May 2025 01:30:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746779438; x=1747384238; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VqOLUAjY1HtFLqN8o6/wmISmBUGZBTa+CiZf2nuL0uM=;
-        b=PlU451PDP/rW4M1CRPEMH+PqRC9CMezE87B+JQnSSYkTOEE/W8sZb16svaN6eH3YsH
-         V+H0nQLHWUUPHzvRi/wfg0fv22xY2FjoZNvhMZvRk8OEroj/Z4IHNXGHqgJFxHLaGTB+
-         mDS5SyfvL461MDg6fwrVXt1pTfYDvIfOc5hKy3gHWPsZPmye8Cj0lARODBJACuLdmf6W
-         qJcn0UpMNr7/rMpYiFHWh7T8O62YNPuR9vN3lqnremaAHztowy6DZ1JTDyv0R9Ug/Wii
-         1N9uzmEOqMVxslWHkniPlFqMj1authszNHnp4Iy6fA8QNllAg2YqZa+UUqrnMGOkFnpN
-         Anwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746779438; x=1747384238;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VqOLUAjY1HtFLqN8o6/wmISmBUGZBTa+CiZf2nuL0uM=;
-        b=LEUWJZPcVepNoNFh9NfhTNXzdBqHuzPrdxDkU4PV4runVQYuz8auqzU+fMsJ4ZGgFb
-         vrBhI2AwvptIK/ZBJun6f8midA/IvJeIyP4uOZgXhkQoXKwueEguEJb899l/qbdVoX/A
-         412cFg/yJZ1G2hgEsgN91I3KlsVRMtsInQOcRRG6Skpui3Y2F9a1oT920vCjCpXUGcSb
-         tc1jI2eFrxjQzZG9FpngBmajrd76dFmYqyDNRKfHcy3Ly8X+zFOBCN4yWpE611zXicBN
-         UGqSJeRrrB04AyywfOcgrDM/XmYy3MKwyf3kJ8zcHUrz5HJB+btEJhMQUw5H1QcCLHdo
-         jBNw==
-X-Gm-Message-State: AOJu0Yzba9GE0IEPNApj2AIb5PFmpHDhqWYBvK9J4isjxcij2oh8cNBr
-	vIF2jg8xZJkL/7e8f2Dok3VNcyCqy8hLzWTf1ayf6bi+SU0wXgVXCRkIzQ==
-X-Gm-Gg: ASbGncsQ9/M/4yqZOMrtnxguwp7tP52DoAQpVTZGU3zlnkH/kHZE7aLA5riwf49/rUb
-	EzGXSDZAwPcQK3VdhKvoCuAUxH62TYBMHIxklqZef7EHxdycVdRPwLfS/fi7RLr78sZA6xvKeeX
-	qhHyaO9PxFzez5m4GNW7vfV/LSFrV3yhqZMS03V3jz8HDnh/rv6+icg6KYa8v3OsKAM9U7QKzGm
-	d+jg4qZcGZuFbB1NFVRhmw6WeC159WNRVD1Fx/pe0hBLDpZd/mIUQe0ZHgPj/UDluFhPRc8J64N
-	C5xWWa8Z6FwZZ2XBjWRatfY6x2W/nYtyI8wgoRDYpA==
-X-Google-Smtp-Source: AGHT+IHkfU0wWMgaN1H5rhwiHl+wsTMnPBY2XO6wXV+urR0AuiYvnsb5U/BpdpnUaBfRla6iRdZw2A==
-X-Received: by 2002:a05:600c:c0d1:10b0:43d:762:e0c4 with SMTP id 5b1f17b1804b1-442d77fa213mr8820195e9.27.1746779437186;
-        Fri, 09 May 2025 01:30:37 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d7778a79sm10595695e9.0.2025.05.09.01.30.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 May 2025 01:30:36 -0700 (PDT)
-Message-Id: <pull.1957.v3.git.git.1746779435536.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1957.v2.git.git.1746774869081.gitgitgadget@gmail.com>
-References: <pull.1957.v2.git.git.1746774869081.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 09 May 2025 08:30:35 +0000
-Subject: [PATCH v3] commit-grap: fix memory leak when `fill_oids_from_packs()`
- fails
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tsZOUYym";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lTQ5E7+z"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F1879114017C;
+	Fri,  9 May 2025 04:36:45 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-04.internal (MEProxy); Fri, 09 May 2025 04:36:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1746779805; x=1746866205; bh=5Gn1daxIds
+	o3vuo/i4ZoyaTeGYDXEA61ipE5ezz4pno=; b=tsZOUYymLlmRMpmqsFpR22rBTK
+	6C84dN14yEFCv/OFG0SCO0af8lWmlswORKiQq5I+5jV7tqynclJSH2jvUhbvHS/m
+	FSzItP8LHoUsiOnoRaeWDRNlFerlFhhueOwhxNUDPczC5PARvsRenQNZR5im09RS
+	boHpo6nDLY3l7nn9NekQsUDvm0JsPyklbxV59TlyTXBPwR9k3x8cnehN4XGuz21F
+	0RZI5z8cLO0WBMfwMl1dkfQZzeGdpAdrufHQQEzlxj09OUP5cmucgd4lxtzs3Krw
+	AEt+kG+QLWvbt0NA1sduyEJlgxAzudYGyPnHom4nr9SERYi+FLeGJX0DrmjQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746779805; x=1746866205; bh=5Gn1daxIdso3vuo/i4ZoyaTeGYDXEA61ipE
+	5ezz4pno=; b=lTQ5E7+zCzXXtkNTl+eq/TxJyPZ+B2cJGYcudUDqAsnfLfIve1t
+	ARNOR6vMB15B4Dgpp4QujXMis1Y2RInkpjajwV2HJ3YtMgwBumXqBVIW4DLzTBlL
+	Nb9YcobmwLlGdyO+bIWbbOj3MORS5N/QOyHpMjbFOdnlDgsbcRaAfSyt2cIAX2tr
+	+v16NV3/GXrTOBb9zIr8YRBbpreNxgBJk0P2pjM3tgNKfVfKd6L5vkOpgrfirrYd
+	aa3di3w2N0D405D79ytGbJhpEeXoxj5OTTvuAIn/9nYKrCjSsDWRiTIOkAoLzbxn
+	0Wx495pKUn9lsRQKsN4zIBwo+IoVZ5FmvjA==
+X-ME-Sender: <xms:nb4daKF9Hnap3sY1F0e9Ih-fw-0rA7FzD_n3THMRnZoe3zW9DW3C5g>
+    <xme:nb4daLU_PGZENEj7RP0pm9uTAwMBzFOURnUbdyU4QVIzygmM4Tyce4zT-QRRmv2RP
+    PEn0mu5vtzPykMbng>
+X-ME-Received: <xmr:nb4daEIWIFF0bxpzMLeJ2l799ptydaFNzIX4Tsy4PBlR0W0-1OZP8LHT_nKjgDaW8NIUkNY2Hy8Uw0eRd1RHT_cocGgDmsduWOjNfRBqaw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvudehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepudegtdejffduffeggeevudejgeeuveeiuefggeff
+    geetvdehieelfedvueejffehnecuffhomhgrihhnpehophgvnhgsshgurdhorhhgnecuve
+    hluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhs
+    rdhimhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsrhgrugestgho
+    mhhsthihlhgvrdgtohhm
+X-ME-Proxy: <xmx:nb4daEEyZGQnanPQFMM4fuhjFT7J4WyLuBHmoWiNmoMi31wlwRb3ww>
+    <xmx:nb4daAWQ_7Hqb0pwOpWcV4KH_4gDfP8fWamcucSn22gO-pDr-oHwWQ>
+    <xmx:nb4daHNstwC8TnFgIHUIYU7AGiKRIcuMVz4dWsY2pYygY0fmOTg_1Q>
+    <xmx:nb4daH0QKkD9G0cQj8CvuI3ENOGmd5JjJSjLlv4QycTbGZVia_42-Q>
+    <xmx:nb4daGH8L8viLI-sXiS-BomwoXgxSd8zHfcuBV28k5JA8tkWePxiXcfD>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 9 May 2025 04:36:45 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id cc631863 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 9 May 2025 08:36:43 +0000 (UTC)
+Date: Fri, 9 May 2025 10:36:39 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Brad Smith <brad@comstyle.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] thread-utils.c: detect online CPU count on OpenBSD /
+ NetBSD
+Message-ID: <aB2-lwKPOnj3EH0b@pks.im>
+References: <aB2c-W0V83aVDpZr@humpty.home.comstyle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aB2c-W0V83aVDpZr@humpty.home.comstyle.com>
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+On Fri, May 09, 2025 at 02:13:13AM -0400, Brad Smith wrote:
+> OpenBSD / NetBSD use HW_NCPUONLINE to detect the online CPU
+> count. OpenBSD ships with SMT disabled on X86 systems so
+> HW_NCPU would provide double the number of CPUs as opposed
+> to the proper online count.
+> 
+> Signed-off-by: Brad Smith <brad@comstyle.com>
+> ---
+>  thread-utils.c | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/thread-utils.c b/thread-utils.c
+> index 1f89ffab4c..374890e6b0 100644
+> --- a/thread-utils.c
+> +++ b/thread-utils.c
+> @@ -46,11 +46,11 @@ int online_cpus(void)
+>  	mib[0] = CTL_HW;
+>  #  ifdef HW_AVAILCPU
+>  	mib[1] = HW_AVAILCPU;
+> -	len = sizeof(cpucount);
+> -	if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))
+> -		return cpucount;
+> -#  endif /* HW_AVAILCPU */
+> +#  elif defined(HW_NCPUONLINE)
+> +	mib[1] = HW_NCPUONLINE;
+> +#  else
+>  	mib[1] = HW_NCPU;
+> +#  endif /* HW_AVAILCPU */
+>  	len = sizeof(cpucount);
+>  	if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))
+>  		return cpucount;
 
-In commit-graph.c:fill_oids_from_packs, if open_pack_index failed,
-memory allocated and returned by add_packed_git will leak. Simply
-add close_pack and free(p) will solve this problem.
+This change looks sensible to me and matches the documentation at [1].
+Using the number of online CPUs instead of existing CPUs certainly
+matches the expectation of what this function should reutrn.
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
-    
-    In commit-graph.c line 1930, if open_pack_index failed, memory allocated
-    in line 1925 by add_packed_git will leak. Simply add close_pack and
-    free(p) will solve this problem.
+Thanks!
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1957%2Fbrandb97%2Ffix-commit-graph-leak-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1957/brandb97/fix-commit-graph-leak-v3
-Pull-Request: https://github.com/git/git/pull/1957
+Patrick
 
-Range-diff vs v2:
-
- 1:  190961fe942 ! 1:  e0dfe69f504 fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
-     @@ Metadata
-      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-       ## Commit message ##
-     -    fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
-     +    commit-grap: fix memory leak when `fill_oids_from_packs()` fails
-      
-          In commit-graph.c:fill_oids_from_packs, if open_pack_index failed,
-          memory allocated and returned by add_packed_git will leak. Simply
-
-
- commit-graph.c | 2 ++
- 1 file changed, 2 insertions(+)
-
-diff --git a/commit-graph.c b/commit-graph.c
-index 6394752b0b0..93d867770b0 100644
---- a/commit-graph.c
-+++ b/commit-graph.c
-@@ -1929,6 +1929,8 @@ static int fill_oids_from_packs(struct write_commit_graph_context *ctx,
- 		}
- 		if (open_pack_index(p)) {
- 			ret = error(_("error opening index for %s"), packname.buf);
-+			close_pack(p);
-+			free(p);
- 			goto cleanup;
- 		}
- 		for_each_object_in_pack(p, add_packed_commits, ctx,
-
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
--- 
-gitgitgadget
+[1]: https://man.openbsd.org/sysctl.2#HW_NCPUONLINE~2
