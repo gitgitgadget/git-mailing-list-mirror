@@ -1,133 +1,185 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C1ED21B9F5
-	for <git@vger.kernel.org>; Fri,  9 May 2025 01:55:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16368F77
+	for <git@vger.kernel.org>; Fri,  9 May 2025 02:04:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746755728; cv=none; b=GV6RgCo6uFO50KPsv+jma/QTsT3/ponsEpfYESoWNRgb5ZxyZXn1ysVjydQr0qfXrWpwmv6udWgj9zdvedtSxcu2al/RGWBQbOVJLCW2ADi77t6tyJ5qsxh/FAU37gfCGqo0kQXKVEY46JO4u7wMEEgn3Fj/musivvkyXU70nDc=
+	t=1746756268; cv=none; b=KutDEEB9s19b40JkQemIu79J92bZazyE37m2B9SSKRutnfCtprCvwAibsyhXa4nsLo63qm1vt9j/oBEdlgK9VljtNKNWbQSV3ykMOnkQdjnOeuj/hOJ+QHls8UTUojRImG2Mu/LGQBkv0DPc94q0JXUiUuGYQmthoAFkirtl/lk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746755728; c=relaxed/simple;
-	bh=3Z9mta+FQMYTqDmMuB6TpWerV7Ae2NUpesE/vvVbJiI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Lxl/+wBxErIpxoh/W5Po0ZgucOCN1qrF2SKAE2jL634xz00AKCuBqSTT4GEZk+TznLJbwOx+y+t5ZGcL8gZuG8o1V7dwjZgn5bbDvYxjuc95yWMF2VZ7g0VOYV+p9Y/JGtqVKhqhF3RCeUcENwrKuFVtAoJNj+p7+TYO1/LrlgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/OtKLk3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=mbFBzjSp; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746756268; c=relaxed/simple;
+	bh=TyBm9Bff4VORNHKf5odmVTlJYhW/cr+OdbHufk9/+Hc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=k12dPf4kBB+nHP+W2Iy4ZWYoTXt+PrZyBmQP/4NmrdLFjSR8UyqmANI0c4z6G3u+FjuEY1PYxqiun5ohKqK3hTBINQoa3XDG6xCJHvO5vAbL4rKJuK53enihUj41LseLX0IMHdWb3nkjeIU+BjAygl60ulyQC4FyvSprpjSxQtk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NtP/vBSg; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/OtKLk3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="mbFBzjSp"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F3E601140153;
-	Thu,  8 May 2025 21:55:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Thu, 08 May 2025 21:55:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746755724; x=1746842124; bh=n66q+2ElqX
-	QrdPtR+lqHke9CUL7D5MdJMdSXUTsxCi8=; b=c/OtKLk3gxbDQNmNLZQE9OUXxd
-	hfmePe1gi7CuJKQr0o0624vAxyzDTPfA9Bz8auPpASIUGUi6Vik/wBLhr7fqPtOJ
-	8s2+b1KxWqHost+Lophp2npLNKLJInaxP0TxR3UzZll8pn69EeUM6wso1QdJhDM2
-	B4v/tRBjQtjF7Ipaubnr0GbO24qXOy3W9fduOLfJ1MTnJ5tyY8MEiJzpkMxRoAL3
-	r44IdeRiCx7YzvJpJygDYeEqsyl/QciC8QiKN9DV7esGEg0Kdb0ml8Nip5JiPlJR
-	uE/oBbKpRiIiDfMeR7GPh47BgNYJa9v30HUWt/OXp3mQidX73vrsc/sLKE1Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746755724; x=1746842124; bh=n66q+2ElqXQrdPtR+lqHke9CUL7D5MdJMdS
-	XUTsxCi8=; b=mbFBzjSpPqVRbqiznBYsxhcKBecJtA+FZmMhPpVWFczs/aUSK0P
-	r7fcR59gMaEDhMFoPtvV8aEaLe5Ev2CuZDW1hw4fCcW+VEWYQPvshVlaRS7emf9n
-	rUHAgWuqdyhBTQCumxyT9jUwmDx1r4ii04peslPSYoe8Iqo0diUlmR7dBAbWqNPR
-	T8kdSwsnwCZ+5WaPJxul+U7znTwcMmsLRebBX9mDweQWwIWoCFteewM3Pl2t4qLy
-	5DxOiuXGYcjN1uT0F6jbNHGeHXIUZs6Qi+Yhbd+F/TKtXvRpFJZsy+qnfmYK/yWG
-	3leP7X+uzAtzMiUyLTWJyeYWdbOOz1wID8w==
-X-ME-Sender: <xms:jGAdaAsjnqh5XPgbHVJrm5AfOFFUiRd9AyHn7O3rx8bFUSE7sLJCjw>
-    <xme:jGAdaNfp6v5Ji-zpjeZY7z-mFrbnJ3BRw868Tld7DQHdllE74fgtw6kl0jVkw2H48
-    sGnESSVAaxt1Sqw3g>
-X-ME-Received: <xmr:jGAdaLwSsZNm10xIQ3dPW-9SEynzyOSyyG1UACMoNhF_ahBXPndXrKKK3cZ84ER6OBDrclZ0fe81QU35ro2tb4XFGES0XMBA84CF>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledufeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:jGAdaDNObYua2JDXpIl2du7yEE5FWP1ZBqSr-hT5RMHqgHSgqvzr4g>
-    <xmx:jGAdaA_iEx-g1RPG0l4whWxurcle8OPbrElAnf8MTRDo4G4wYVyo6A>
-    <xmx:jGAdaLVWSwHZRdSBLu8DJuh7mcaze8jwgRA7xaFTWwDHIWnRJfUOsg>
-    <xmx:jGAdaJcadJQRfMLdeG7A1HYLaI3DXrFgFdM8FyJ0OX1byLJR2AtqWw>
-    <xmx:jGAdaDT-JYf-k2690u3h3hV5mI6UF1twwULKYKXGGVHQvY6em1ZYHpbU>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 8 May 2025 21:55:24 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 1/4] object-name: make get_oid quietly return an error
-In-Reply-To: <20250508234458.3665894-2-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 8 May 2025 23:44:54 +0000")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-2-sandals@crustytoothpaste.net>
-Date: Thu, 08 May 2025 18:55:23 -0700
-Message-ID: <xmqq4ixu4kfo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NtP/vBSg"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a0b308856fso1056730f8f.2
+        for <git@vger.kernel.org>; Thu, 08 May 2025 19:04:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746756264; x=1747361064; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uKLZk7a5JwSfGeU8Zv9y5oN/I+fblcgG9tuszjwzSXI=;
+        b=NtP/vBSgkGffmi+cl38v/70wx8Fy9070wyWVq2MTU+AdKCX3bq6ynvW5/7cK3ugTz/
+         PPGf8xz16LfL1zR4EMZkWRiiUSrbr9IP/kpZ1Ij+tNp3HVjx0+k1HK8aOK1ROngjGfFE
+         2dk2M/7dv3dFqga7B0/++XJU2/OuRs8YNzlMspWiLRVWzWCwoNZF+/0bGnAgNo19fs8f
+         qahn7ambVJ0PhQBUc/iLiJ3zcQE6KZV7nKKYX2ek1dwH/+PF5p1li7aqpcGcHHLOYMvf
+         jU4lFNdbcSV7USOQx0VMfxZuikHQyYe5+MQmNcA9/nELBLzzaXLRyO1u/wqXl11yrzNY
+         J6nw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746756264; x=1747361064;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=uKLZk7a5JwSfGeU8Zv9y5oN/I+fblcgG9tuszjwzSXI=;
+        b=a7matQjWQbWuAKAsZoV+1VYBokiY5alAJdqPgoc9qhtODkgh308YpTNwPtzFa6SE/u
+         NgucNYpUp3osSe9p1gPLUrPMTkQGzU+Ck9BmRViF8rySKzxRYM6gs46BkKTG/QhxtkX0
+         p/nVMvxxGx5B3wfgH+e7ud54SLwYTDZr7H581/7KGD3cje89pqpC/j0OOXZC7ClPcif7
+         DjHPDJNlbhFHNR+HKy1wNbr5UqHjU0C4kVv4MlMnnYOCdYVse1u/7h/bvewEPs0pzFCd
+         1ZdwkbGHa9bR3deMxzpTiSsfiEf2x576LZSlDJlnGie4A5gOSxUeaNF9BwT7k4aSgQm5
+         p3PA==
+X-Gm-Message-State: AOJu0YzEu186krd9uqZ+DMJqTrO7EGihbjmUVz9aMcUesT6K/XzH0FpZ
+	eZImE5npbPtxau8XQdqbJ/rpPtjb7TlitQcst8UjQF+E6ZjrdFaym5gGyw==
+X-Gm-Gg: ASbGncuQaqPYn9vGj5ESXvZSNWHTAkjdwpDPnBIKjsewPU4tnGArOcvO5hGvlp2ajqO
+	agj8KzRafpyE5Y/dQrLX4dTQ0180RAYoQYVa/ZiWw3EaMS27sPWZtYZTnFwlc/DiEZVywD8HwF/
+	uXayFTdo/9ino3jJC0PuZLOOJN470CQcEtEgrXYuuGV6L0rPOwzn329GNyif1NNruJ/MAmb/ghE
+	JIdA2ueBqR/D7KL1kFOq7UJlh1hWvG8ZmMU6DqTbRYra509pte7yfpSCXCw46hBFj6z7NL2IOTO
+	Jhbi/Ipl4oQqnSHWxGsh+CoZOjkijhrZq2y+mpsqRQ==
+X-Google-Smtp-Source: AGHT+IFl5DATt5iVTWZw6SI0PUkwoJwG9JKtmLfr1PM7CrrOAVkYySEBjLYD0Xyd57noVEFsy3/3XA==
+X-Received: by 2002:a05:6000:18ae:b0:3a0:831d:267c with SMTP id ffacd0b85a97d-3a1f6433a0bmr1382172f8f.18.1746756264251;
+        Thu, 08 May 2025 19:04:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f58ecb46sm1671837f8f.30.2025.05.08.19.04.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 08 May 2025 19:04:23 -0700 (PDT)
+Message-Id: <pull.1955.v2.git.git.1746756263207.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
+References: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 09 May 2025 02:04:22 +0000
+Subject: [PATCH v2] REFTABLE_REALLOC_ARRAY: remove this unsafe yet unused
+ macro
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Ren=C3=A9?= Scharfe <l.s.r@web.de>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-> diff --git a/object-name.c b/object-name.c
-> index 2c751a5352..3138103343 100644
-> --- a/object-name.c
-> +++ b/object-name.c
-> @@ -1081,13 +1081,17 @@ static int get_oid_basic(struct repository *r, const char *str, int len,
->  				 * still fill in the oid with the "old" value,
->  				 * which we can use.
->  				 */
-> -			} else {
-> +			} else if (!(flags & GET_OID_GENTLY)) {
->  				if (flags & GET_OID_QUIETLY) {
->  					exit(128);
->  				}
->  				die(_("log for '%.*s' only has %d entries"),
->  				    len, str, co_cnt);
->  			}
-> +			if (flags & GET_OID_GENTLY) {
-> +				free(real_ref);
-> +				return -1;
-> +			}
->  		}
->  	}
->  
+REFTABLE_REALLOC_ARRAY will cause memory leak if realloc failed.
+Since it is unused, remove this unsafe macro.
 
-Almost everybody else in this function hits "return -1" after
-detecting that it cannot yield a valid object name, and this change
-makes the oddball case do the same.
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+    REFTABLE_REALLOC_ARRAY: fix potential memory leak if realloc failed
+    
+    REFTABLE_REALLOC_ARRAY doesn't free origin pointer when reftable_realloc
+    failed. This leak can be fixed by add a free(x) before set x to NULL.
 
-Ideally in a distant past, we might want to remove this _GENTLY
-flag, together with the code path that is not so gentle, and adjust
-the callers that depend on the current behaviour (which I somehow
-doubt--- they need to be prepared to deal with the error return from
-other parts of the same function already).  We might need to make it
-possible for callers to tell which error condition we got (e.g., did
-the input give it a non-existing ref?  did reflog walk run out?),
-but these (including to the change to just lose "die" and always go
-the GENTLY code path) are totally outside the scope of this series.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1955%2Fbrandb97%2Ffix-REFTABLE-REALLOC-leak-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1955/brandb97/fix-REFTABLE-REALLOC-leak-v2
+Pull-Request: https://github.com/git/git/pull/1955
 
-Thanks.
+Range-diff vs v1:
+
+ 1:  4d786a0ec17 ! 1:  6cc191f9db8 REFTABLE_REALLOC_ARRAY: fix potential memory leak if realloc failed
+     @@ Metadata
+      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## Commit message ##
+     -    REFTABLE_REALLOC_ARRAY: fix potential memory leak if realloc failed
+     +    REFTABLE_REALLOC_ARRAY: remove this unsafe yet unused macro
+      
+     -    REFTABLE_REALLOC_ARRAY doesn't free origin pointer when reftable_realloc
+     -    failed. This leak can be fixed by add a free(x) before set x to NULL.
+     +    REFTABLE_REALLOC_ARRAY will cause memory leak if realloc failed.
+     +    Since it is unused, remove this unsafe macro.
+      
+          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## reftable/basics.h ##
+      @@ reftable/basics.h: static inline int reftable_alloc_size(size_t nelem, size_t elsize, size_t *out)
+     + 			(x) = reftable_malloc(alloc_size); \
+       		} \
+       	} while (0)
+     - #define REFTABLE_CALLOC_ARRAY(x, alloc) (x) = reftable_calloc((alloc), sizeof(*(x)))
+     +-#define REFTABLE_CALLOC_ARRAY(x, alloc) (x) = reftable_calloc((alloc), sizeof(*(x)))
+      -#define REFTABLE_REALLOC_ARRAY(x, alloc) do { \
+      -		size_t alloc_size; \
+      -		if (reftable_alloc_size(sizeof(*(x)), (alloc), &alloc_size) < 0) { \
+     @@ reftable/basics.h: static inline int reftable_alloc_size(size_t nelem, size_t el
+      -		} else { \
+      -			(x) = reftable_realloc((x), alloc_size); \
+      -		} \
+     -+#define REFTABLE_REALLOC_ARRAY(x, alloc)                                      \
+     -+	do {                                                                  \
+     -+		size_t alloc_size;                                            \
+     -+		void *new_p;                                                  \
+     -+		if (reftable_alloc_size(sizeof(*(x)), (alloc), &alloc_size) < \
+     -+		    0) {                                                      \
+     -+			goto cleanup;                                         \
+     -+		} else {                                                      \
+     -+			new_p = reftable_realloc((x), alloc_size);            \
+     -+			if (!new_p) {                                         \
+     -+				goto cleanup;                                 \
+     -+			}                                                     \
+     -+			(x) = new_p;                                          \
+     -+		}                                                             \
+     -+		break;                                                        \
+     -+	cleanup:                                                              \
+     -+		if (x)                                                        \
+     -+			free(x);                                              \
+     -+		errno = ENOMEM;                                               \
+     -+		(x) = NULL;                                                   \
+     - 	} while (0)
+     +-	} while (0)
+     ++#define REFTABLE_CALLOC_ARRAY(x, alloc) \
+     ++	(x) = reftable_calloc((alloc), sizeof(*(x)))
+       
+       static inline void *reftable_alloc_grow(void *p, size_t nelem, size_t elsize,
+     + 					size_t *allocp)
 
 
+ reftable/basics.h | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
+
+diff --git a/reftable/basics.h b/reftable/basics.h
+index d8888c12629..667feffd935 100644
+--- a/reftable/basics.h
++++ b/reftable/basics.h
+@@ -199,16 +199,8 @@ static inline int reftable_alloc_size(size_t nelem, size_t elsize, size_t *out)
+ 			(x) = reftable_malloc(alloc_size); \
+ 		} \
+ 	} while (0)
+-#define REFTABLE_CALLOC_ARRAY(x, alloc) (x) = reftable_calloc((alloc), sizeof(*(x)))
+-#define REFTABLE_REALLOC_ARRAY(x, alloc) do { \
+-		size_t alloc_size; \
+-		if (reftable_alloc_size(sizeof(*(x)), (alloc), &alloc_size) < 0) { \
+-			errno = ENOMEM; \
+-			(x) = NULL; \
+-		} else { \
+-			(x) = reftable_realloc((x), alloc_size); \
+-		} \
+-	} while (0)
++#define REFTABLE_CALLOC_ARRAY(x, alloc) \
++	(x) = reftable_calloc((alloc), sizeof(*(x)))
+ 
+ static inline void *reftable_alloc_grow(void *p, size_t nelem, size_t elsize,
+ 					size_t *allocp)
+
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+-- 
+gitgitgadget
