@@ -1,173 +1,101 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF9D21579F
-	for <git@vger.kernel.org>; Fri,  9 May 2025 15:27:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 549DA232369
+	for <git@vger.kernel.org>; Fri,  9 May 2025 15:53:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746804445; cv=none; b=ZNwM6iDq3Ckr18v3orynMrx+tlWS5NFUoZDSQLSLoQVqbxA1ckvb89bLYPk27KgsEL2F4y1LOmoZTodqqx6GdEZHs/KejwNrMB0BuA6UGO35TBOftR2aRbKfJyMIXLffqwyLN2qeSUPb4zxMzXxiVbO0F4pOE6dvtEhsCcDXDfk=
+	t=1746805982; cv=none; b=aQ9omoJtA8C2Vo6j0DKdRpnhLfOBd04a0sy5bTbqPWaBwOzOdPYjjPiT3krVCHcLo7sDzmk+cQ40JmkG2Jsi9mLf6iJc0AxY6GNRGk2GX46+G8zInDJhpSopF4GqoA8sZGZoNmczrSJbuF7Ynq4HI4C+UZPZuuaElSdG+VECa8g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746804445; c=relaxed/simple;
-	bh=f5LHffP8dahKbPyAM7WVuQrZawGikj+Oegf2jy0nk3A=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=VhAijRtI1Ozsdds3KUqTo3cxBSQJWlYPbFIk4kPvuBJbBexYd/6+CUcR6tmuwZ3yRyXUo8CV3ZjvU1eRMZQ3NBwSktl5cFuFhel98aIX6lTgal9GC1loWxp7sRsDdZZ7R0uu2VBJeNypqQiwGMDPU9Df9L1Tn6vi122qclYH9LY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Zi+zoRIp; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aV7eQtBI; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1746805982; c=relaxed/simple;
+	bh=Dt87ZwOUpPnCT1CJl1FESpPKt9QBO0tIJkrpV24Hkno=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=o5lhW4qJN565dzuIqckunlWg68bz8VCxpsx/x0kN262OieZYTxUPNULQRl0LZRHjwiwmwPp5c6hbKGWZCl0bSxEQWmJL/mvgx8SOUFyNqelSnDSifD0/AZSO6KcE7oZDVfMExHaVhtcLg396xDhbTbXe+hYALcJHSIBLoOerN7M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lv2nos35; arc=none smtp.client-ip=209.85.218.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Zi+zoRIp";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aV7eQtBI"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 62D651140182;
-	Fri,  9 May 2025 11:27:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Fri, 09 May 2025 11:27:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1746804442; x=1746890842; bh=bSo01TXAtX
-	kTWxJB/To4yAgkJkxk8XEU/1nUqJ4lYzE=; b=Zi+zoRIpLCNan7siYNvMmCdgdR
-	JJqrqULmKGSz4DwEV9GiwzYdrJUns+FRuV8mPaslTkJrBnmXHC7bF2WdH4P4nbkS
-	rR4VUWJokW5Z9ffTotfDETdaE4dgkW/vn3dZRfkCTCnws6rND7rk/qOR3dG/Cq4t
-	yfMolTY4WrDvF9Z1+iNeiHOiL85t6foD2GaZ8LYpE/RggQm0cQuBgHCYbPdWCGDG
-	fePOaNIiR9p+sQ2YBsI3fCliMRtyUQLkOw78CtNEoypz4tpSfCWy5ksPjwK6ydIJ
-	1+/0qdLYDL4so4taiPEth+Zha0jNCVmil74KiJqEm8JxwqnQbAWTlhqbHU1A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1746804442; x=1746890842; bh=bSo01TXAtXkTWxJB/To4yAgkJkxk8XEU/1n
-	UqJ4lYzE=; b=aV7eQtBIZyb8YDv7+fAV83sgDC/DndQrdLdi08mRHJLr9lf2n7r
-	Kmmz9B9okj7NlD5kz8Tt3Yk/Rn27B20ttcCtSiV8Bfv9SVTsV5D9ugwjKX4NmDi8
-	EKACGcDFmJ4cBeMldnUuaYskDHewrIBFM/8HHKMrIJd8b4+4MirIJ/W+zQORVqRr
-	hARFPvlHT84gDQfsD9J474RS988TaPC1aqqVjZvIYQgZmTj6PpCOuQySPfIQZacK
-	hTg3YugH9w7hF6UCget8VFMAh82PPRjZS6oLL+99VrZ27EQvNv6irGMVJqqOChe6
-	q7a7BPla5kN1IiDKVmSv9KDi9wlMIo0M9pA==
-X-ME-Sender: <xms:2h4eaA22qmzx47_faMPvWBktaaZC3gdLz12nl7GIbXOhxUhE_IAbyA>
-    <xme:2h4eaLFNMQZM743D-JAIZWnS9GBA6-az60Jn0AMJGJFcFh_ZYdpgNxi8rBgBLVrZ7
-    zH-AtbonkB1UR7IRA>
-X-ME-Received: <xmr:2h4eaI5yVwMCNHflNyTeKdM8upLFLdlnB0sKIiCEFqnYkErfTBSKy6yRjZk3k_6DBxTCqvSwHlxilORimt96vevtaw4TCP3Oe5mO>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvledvleejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
-    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
-    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:2h4eaJ3G8gCuz69Gbgo7-JfZav5di_5EX5cPYtV15fVgITZNfUhG1A>
-    <xmx:2h4eaDFjzwBOYXg1WZjjuG4MofMJ1v3JmvPWKoTN2PuWAwyhU42Fgg>
-    <xmx:2h4eaC_efRt5m7vXLCexZdql_PSdU5wxgORSgDCJyBm0S8KdxnzenQ>
-    <xmx:2h4eaIllJ9ICXJr6wHw-9brvjaiJr4s4bpz7W453svZlxapHh5MrpA>
-    <xmx:2h4eaPbfbN_CS5UMrrw8b-AmmUmLLoA57NoP9q-NKgeiVAvjnKlBA0Fm>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 11:27:21 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 2/4] builtin/stash: factor out revision parsing into
- a function
-In-Reply-To: <20250508234458.3665894-3-sandals@crustytoothpaste.net> (brian
-	m. carlson's message of "Thu, 8 May 2025 23:44:55 +0000")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-3-sandals@crustytoothpaste.net>
-Date: Fri, 09 May 2025 08:27:20 -0700
-Message-ID: <xmqqldr53iuf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lv2nos35"
+Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ace333d5f7bso389876366b.3
+        for <git@vger.kernel.org>; Fri, 09 May 2025 08:52:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746805978; x=1747410778; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Dt87ZwOUpPnCT1CJl1FESpPKt9QBO0tIJkrpV24Hkno=;
+        b=Lv2nos35RzMhClIc9zzdXVCTEMv2QNWqE8heE+7z9eek4h0Qv0D1wDyUL52xFaujKR
+         OW/y5qEiF1b4b/ffqYbkqsaFfX1IdJ5JpTkrV5eeji5/CtlArx2497iyF1M1i4cpz5ho
+         JnFjKPeFI53uEBhBqoLmEbk+OgApkGHwKJdGGpnLED5rQVos7yNyYg1usSetPK3lgSus
+         /Me7eVLX1Pxv1fwfvZDBGZXPbMxn5+2BXEtWBsaSeomLqsUywXDe4xa7q0zYYpYAnL1N
+         wSUyuSZfLjS6u4LziCJOEkSJwiZBbOG5np7MIkUOVn7Gl0AfhowivsbXPxYmvdO20VB0
+         cDHw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746805978; x=1747410778;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Dt87ZwOUpPnCT1CJl1FESpPKt9QBO0tIJkrpV24Hkno=;
+        b=IWkQAqsoKWOxLTRd3mZgoSvOVkuJqi/gVuZeB/zFb8Qq3erTfrFRMI7GbZvKVUAOls
+         YdSj/ULNHyfy1H2xG0Fk/zzP5bJXq/28JfP/ms/ScVu0ln2DRkQ1aMdjri66Gsyyenla
+         l+BJU2tetrNvTSmVQdLZzt8l4iyPKl9p7HIbz16JipHI5Ab9WTmPCm8nSXGdNXvyxoMQ
+         LFFYY13VUuP5YAKAj6eleVBhwCIvKM++rjnnQTffJjigaRrLqUzaU6NqnJGRneWtWty4
+         8eCKQ7LrL8mHFYYOKO+PHxEXddmmJyXT1iIEGvL4LPH/L0rNsU+9D7epanvxv339EFt5
+         htEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXmsj4sSqftxRaIkAJLGNNj+2NZnDM4UJZzX7gGCKporigeoYUVvhTUs6FTiLvO4/s70lE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxrU9j9nFzPXsZZ5Y2l1eB6kQop6J2oJB2bgsGQbE5B3VIAakQr
+	OxvyldOxCGhy6u1QtjmUG6OKR4nBEIO39z5WA5ZaZyjBRwCbmgifRdS3WVPHOptDPuaJFVuwsol
+	MBRZ2PVLWb4p028WG8XINMS/Jqk8=
+X-Gm-Gg: ASbGncuj7Tuuib3ud2UfwEScfp37rihn8okYICNl+JK7bE5TGbLYZmXR31b9nK05m9U
+	yOmB06QA3RVRDneqSeHRZSczHvQq1hbc17NbcOP+MO3xlQ8fhdyH6G3zFJjrz1NLtpTCzPjp2hu
+	9URwtRy35tAdwpKy6WVMDmEN+96qd6rl+Z0Gt9IWauhphmMWl5lH+wlZ8fEQdVTqzRnQ==
+X-Google-Smtp-Source: AGHT+IE0zdo3YNtG109FD870NZcPRx/HsDq/v9qt8YPXirVcg5ukckaRe59ptoT1clOz4XEa0agL4HRVapGVf5TodQw=
+X-Received: by 2002:a17:906:f296:b0:ad2:1f65:855f with SMTP id
+ a640c23a62f3a-ad21f658715mr245809166b.12.1746805978297; Fri, 09 May 2025
+ 08:52:58 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <CAC4O8c9OJQQn_22i0-bZUDtHoi+ti6aT6FwupnQBoBFg6BNK6w@mail.gmail.com>
+ <50428492-8ece-426f-bfea-071b7bd2c374@kdbg.org>
+In-Reply-To: <50428492-8ece-426f-bfea-071b7bd2c374@kdbg.org>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Fri, 9 May 2025 11:52:47 -0400
+X-Gm-Features: AX0GCFuUwmswbc9zMpXHKOLnWWc46FALrjBgRDrEqv2tKCERIsJRZIGzC5NiD0Y
+Message-ID: <CALnO6CDNPWWCWXvkpU0BUmaCzUfyZQhrtcxi1Nw_MBwVO6BKnQ@mail.gmail.com>
+Subject: Re: easily use meld 3-pane view to review merge commits?
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Britton Kerin <britton.kerin@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
-
-> We allow several special forms of stash names in this code.  In the
-> future, we'll want to allow these same forms without parsing a stash
-> commit, so let's refactor this code out into a function for reuse.
+On Sun, May 4, 2025 at 5:38=E2=80=AFAM Johannes Sixt <j6t@kdbg.org> wrote:
+> [=E2=80=A6]
+> When merge conflicts are to be resolved, you have exactly 4 versions of
+> a file to work with: base, ours, theirs, and the merge result. (Meld
+> does not show the base and uses only 3 panes.) For this reason, it makes
+> sense to have 3 panes in a merge tool, perhaps a forth for the merge
+> base. That's it. You never need to have more than that.
 >
-> Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
-> ---
->  builtin/stash.c | 34 +++++++++++++++++++++++-----------
->  1 file changed, 23 insertions(+), 11 deletions(-)
+> With a merge commit, you can have: the merge result, the first parent,
+> and the second parent... and the third parent, the fourth parent, etc.
+> You can have any number of versions to deal with.
 >
-> diff --git a/builtin/stash.c b/builtin/stash.c
-> index cfbd92852a..8ee6752efa 100644
-> --- a/builtin/stash.c
-> +++ b/builtin/stash.c
-> @@ -169,6 +169,25 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
->  		die(_("'%s' is not a stash-like commit"), revision);
->  }
->  
-> +static int parse_revision(struct strbuf *revision, const char *commit, int quiet)
-> +{
-> +	strbuf_reset(revision);
-> +	if (!commit) {
-> +		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
-> +			if (!quiet)
-> +				fprintf_ln(stderr, _("No stash entries found."));
-> +			return -1;
-> +		}
-> +
-> +		strbuf_addf(revision, "%s@{0}", ref_stash);
-> +	} else if (strspn(commit, "0123456789") == strlen(commit)) {
-> +		strbuf_addf(revision, "%s@{%s}", ref_stash, commit);
-> +	} else {
-> +		strbuf_addstr(revision, commit);
-> +	}
-> +	return 0;
-> +}
-> +
->  static int get_stash_info(struct stash_info *info, int argc, const char **argv)
->  {
->  	int ret;
-> @@ -196,17 +215,10 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
->  	if (argc == 1)
->  		commit = argv[0];
->  
-> -	if (!commit) {
-> -		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
-> -			fprintf_ln(stderr, _("No stash entries found."));
-> -			return -1;
-> -		}
-> -
-> -		strbuf_addf(&info->revision, "%s@{0}", ref_stash);
-> -	} else if (strspn(commit, "0123456789") == strlen(commit)) {
-> -		strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
-> -	} else {
-> -		strbuf_addstr(&info->revision, commit);
-> +	strbuf_init(&info->revision, 0);
-> +	if (parse_revision(&info->revision, commit, 0)) {
-> +		free_stash_info(info);
-> +		return -1;
->  	}
+> How does that fit into the picture? Can meld (or any other merge tool)
+> have any number of panes and still work in a reasonable way? Why should
+> 2-parent merge commits be special-cased?
 
-Two comments:
+Out of idle curiosity (with some Zsh shorthands):
 
- - It is file-scope static so it is not a huge deal, but it is a bit
-   confusing that parse_revision() sounds like a helper function you
-   would have in revision.c and call from everywhere.
+for x (a b c d e); print -l 1 2 3 | shuf > $x'
+vimdiff {a..e}
 
- - The call to free_stash_info() from inside get_stash_info() is
-   probably wrong.  The early error return when ref_stash is missing
-   leaves info intact, and the callers of it share this pattern:
+Turns out vimdiff can handle this and be reasonable, yep. Partly
+because we can have arbitrarily many splits. It's still a bit
+difficult to understand, though.
 
-        if (get_stash_info(&info, argc - 1, argv + 1))
-                goto cleanup;
-        ...
-    cleanup:
-        free_stash_info(&info);
-        return ret;
-
-   Even if free_stah_info() happen to be idempotent right now, I do
-   not think we want our code to rely on it.
-
+--=20
+D. Ben Knoble
