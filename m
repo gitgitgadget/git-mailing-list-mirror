@@ -1,27 +1,27 @@
 Received: from smtpbgjp3.qq.com (smtpbgjp3.qq.com [54.92.39.34])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A5F31D7E41
-	for <git@vger.kernel.org>; Fri,  9 May 2025 07:35:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0777626FA6C
+	for <git@vger.kernel.org>; Fri,  9 May 2025 07:38:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=54.92.39.34
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746776161; cv=none; b=FnePhq6UmwABMJHKK+LyWpadVeyNm1eKN0y/qNY6RlpjdSYj7+7ov4elOK9StI/MZ2qcbVRdQcR05kV2XXfOidoR5JFHrvSsoU7Z3c9o0v7CBwW3gKkbjoTaXTD25w1s7Z9RyiGDQT2w5t65zsT/qSOJIyFOTDdjawJvFQCq0YQ=
+	t=1746776335; cv=none; b=QIrPb7mG7KSY+ekv98+yY7ed2dTmFfxX3HZV1Z/Z2YLOZRHAWaZAPlOlfHCelCwrmhQA53vXddTjAQUPTfNRWSHzAetzEu2pEmtsHPvnVioI8saMorFLgbrbtHJTYaCPWo4Om47vVdmUfMT5A5zvsWJ2VXklHhawqIT1cZgYeOA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746776161; c=relaxed/simple;
-	bh=Fe36ONOX+x39C4MasyX0oa7tD6W0dKpE6DVj33sA3sA=;
+	s=arc-20240116; t=1746776335; c=relaxed/simple;
+	bh=i2M6tq9rQdHe8jeRRSi8O/ZoIKKd4KamDRYEZb1i+RI=;
 	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=anRJjucvJEFVoRFHigwbB/Z7mcfao5wV5dsydsCk2+lQzCYqqC/HxT+SxEYmRAo+6dVjvc4OoxtclkZDxE3goiq9DEvJQqUfIj/XjV1+Jpakq3nQSEV3hFBmKWuieZ7v4LfwuDi0pTKozPwjkP3ez20zRasxRpn3uW+NsOCP3cg=
+	 Message-Id:References:To; b=iOVUXGPN7ErA4kIYuGp7t43PyCKwkEY/+rptpFn/KHeoF3Gli8dqqPA+pyjQqiF/D7gYAI8NkbzUgzZF3WP/6PhFE0jtezriZx2EdL1uljC5IWkErT8Dt/NWYTqhb43Z0PONhSmJBGjmzpWMXXUuuZE97F+J+6pkQxR6NSJW56g=
 ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=54.92.39.34
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: esmtpsz16t1746776130t5ebafedf
-X-QQ-Originating-IP: LRvmMe5vyDP9djQL2ohygDbBsVz7STrj2vQGxvHEpAQ=
-Received: from smtpclient.apple ( [36.152.24.180])
+X-QQ-mid: esmtpgz10t1746776306tf23cf5c6
+X-QQ-Originating-IP: E456WH+0x6gRGRRkLSmZOAg2wiTZbrCfFaiz0gB/iVM=
+Received: from smtpclient.apple ( [36.152.24.174])
 	by bizesmtp.qq.com (ESMTP) with 
-	id ; Fri, 09 May 2025 15:35:28 +0800 (CST)
+	id ; Fri, 09 May 2025 15:38:24 +0800 (CST)
 X-QQ-SSF: 0000000000000000000000000000000
 X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 12614574274519910953
+X-BIZMAIL-ID: 1019446017007566406
 Content-Type: text/plain;
 	charset=utf-8
 Precedence: bulk
@@ -30,66 +30,77 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH v2] parse-options: fix xstrdup leak in parse_options_step
- parse-options:984
+Subject: Re: [PATCH v2] REFTABLE_REALLOC_ARRAY: remove this unsafe yet unused
+ macro
 From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <aB2ejA1tCK9DR1Nq@pks.im>
-Date: Fri, 9 May 2025 15:35:18 +0800
+In-Reply-To: <aB2l_WaBFyz5POld@pks.im>
+Date: Fri, 9 May 2025 15:38:14 +0800
 Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
+ git@vger.kernel.org,
+ =?utf-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <CC653689-3047-4DFD-9893-46D08F948C10@smail.nju.edu.cn>
-References: <pull.1954.git.git.1746585203.gitgitgadget@gmail.com>
- <pull.1954.v2.git.git.1746624294017.gitgitgadget@gmail.com>
- <aB2ejA1tCK9DR1Nq@pks.im>
+Message-Id: <02E0C9C6-3A1A-480C-834A-BB30C3170C78@smail.nju.edu.cn>
+References: <pull.1955.git.git.1746711583166.gitgitgadget@gmail.com>
+ <pull.1955.v2.git.git.1746756263207.gitgitgadget@gmail.com>
+ <aB2l_WaBFyz5POld@pks.im>
 To: Patrick Steinhardt <ps@pks.im>
 X-Mailer: Apple Mail (2.3826.500.181.1.5)
 X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: MIAHdi1iQo+zOJPpvkLEbyl0wfr4aDl0JGRmDMsBHKjee/IAoBOBjMYy
-	/vut8WjV+NzlVsLJhG2vuwaWTqSwoXXhtm9IVzM58iazADsp0L7n+1tDTdG8BF/SnGxykdE
-	HXMNtzgTcHIjkaokSD2iAbze4mjclatqTvHWos4RSa4sasYaWxAaFvjOmSRsOXBSFy7WB8H
-	R+vOAIczuXQUeMYYE0NNvDH0b20mZQ/4m110velD1LU7dLdtqq9iHJMmw0lLgWXkhfJn3xO
-	kU7ZTu+inplS62XJBu+sIDfMPfGlfZPr63aVhI1kVWWUHeeBvoqYvurOpStZBLfZEHUDhQE
-	Z0t9qMekLxq1+Dl3is1xFsZqbGlChbbFRrLVyZgGLVtVrAw3awcRJDGB9JmDlwVdWa9QQxL
-	zBTQsFIKyVxWF7Gi8TqhT9zwr0lap2Q2mskEbq2RMLJfo0yZTZGtqG1ZyyO5XWeQqMPtZuB
-	UPoDLXB+BZhDbDdj14v7voraIiraNuyWvuPkOlyfRRGUVOfgmbLPmwPtEG0O9Oc/qw8PyXG
-	kkpFLRROlvqHsqV8z+3XYdLv56F1mX9PEe9viAJCyJe/geNvxL8Fgmt/SBknglE7ARXaURp
-	ycBNBye+/QTZbdsFD57tEnSri2FZcD3auD0nlZqhJPUUMa51XyMPN6ryu+4W5i57JcKIBhk
-	Yo6qKl5N7Mn8D55Zjsk+zGu/L9dU0MDsmLkr5VbTdkJuXl4kTwYhpvezVkFYX9Qu/s1bi9R
-	eAoM29mfdHjRLY6QEsAWpgGpsYCLATbCZ97FXui0K6q2/G6qiGYbPVEzFbw7QJoc5ftAlF3
-	4oSaTxZmZuQXWs+EAWDE1mORrl/xj6RxT2mtDiWXeYnDyVDGcA6tsJR2cdOnGrAl6BjdAMP
-	vJZy+RMEjgYSSA9hQY+cgo17T/q4kCtIHfUAfJW2H43uG+peXUwsycLhdOatbYZtyUs5zVt
-	ASWvWAs0HsYMSJetxVBWhY4uripmGElauDUNwgKnCIdIzjGZ38khztd01YfKw0gHeH3A=
-X-QQ-XMRINFO: NS+P29fieYNw95Bth2bWPxk=
+Feedback-ID: esmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: OKKHiI6c9SH3GF3RBxO7w2wD4SLwsf1T7s2GsSsehKKVJgzhQYOkFe+w
+	8/1wXpZWTQ9uuzW0CcOPt9oi+ejJJ1CjPxY+Ci4uNzmdFlKE5wm7LE9VGoO4RVhATxH1h5r
+	whKUJ7b+znBwy7lPnjL11SWpJNs+KW4b2C1dZaZp0QdZTKVkoSOK/ezC19xpEmC7lqnP3oO
+	+DwozNmk2vOOCfGwA+PEH8c2wD6i/M/9E9eiR56MzRJT8MH0XfumauolBH1VXUsRxHm2f3J
+	DCL/3Ur3dLcWToyZin663Mwat1Ig5SKow28EnyQj56zq62DW/XI0BpjOLRzeogfEH2bQNhV
+	jrf7t+J+fBJ2/HWoobmfneqHFPv5b/FV0kJGtVhQDNbF4zuhASNyvWBPuIqS/YpBWOUyhxP
+	ZFP/GOpc5ZeTxzVot/ZkUDSCeNLqbJ8lLbR0jP8NiMEWxJYyipjMV8+NE1cVP5bCH92posL
+	5x4E3zDiBkN4u/FLn6hayQgCNrwGY5bgVQUT1MA5F8mAw5hGQH5cnN5Uy9rvZb4AlK2yfRy
+	rzBKaFYg6dx8zguGnKwo0QKIes6jJqtYKIPU2flrRCn4AI2VfSsNhwU/KNfx7RT2CoMqPhH
+	s5rBv/XzQ3Ya8GoB/6Xkm7Gy1FwfI5XUdf8d8ZleN/m72/XMp1Gaqqqak0qVDULeuiiyfGg
+	iU5AiudT1luP/U+0Io/6/q3HzIFy2jnoyBMZJ1rrhS0WkDFvo8X7ctrWo4EsRuogplvN61/
+	8A3/uTZLL+cCtQMNwxI407RYRZJ4GmxNDYg/Imymbr953+TAopzCAggG6FHTlQzNVVJveTk
+	Z2vXWSfRaEzFdjkGk8TUdy6LiXVwD1PV/ols0L5uHvUDErVmBjrJhXK598Ajyslm43g9Rdj
+	pPQaJENTH/QIrS5vidpl5o2gsTDMixgTFnyZ2tjIzAUfpB5eweW3g4tScGRwC3wnRPJ+cXM
+	z+ZbCpudS13tgQ7yIcHSoaZ3E/tpyriMpuoVXNC5uhFv7X7vpKrYV6LvRL0WvFQB7d2XKn9
+	D8ndyWb4nuSfqbMrDX85uxdiJ5B3e8o0LqvRdZfw==
+X-QQ-XMRINFO: OD9hHCdaPRBwq3WW+NvGbIU=
 X-QQ-RECHKSPAM: 0
 
-2025=E5=B9=B45=E6=9C=889=E6=97=A5 14:19=EF=BC=8CPatrick Steinhardt =
+2025=E5=B9=B45=E6=9C=889=E6=97=A5 14:51=EF=BC=8CPatrick Steinhardt =
 <ps@pks.im> =E5=86=99=E9=81=93=EF=BC=9A
-> So does that mean that _every_ user of the "parse-options" interfaces
-> now has to explicitly plug this memory leak when facing unknown =
-options?
-> That sounds rather undesirable, as there are so many users out there.
+>=20
+> On Fri, May 09, 2025 at 02:04:22AM +0000, Lidong Yan via GitGitGadget =
+wrote:
+>> diff --git a/reftable/basics.h b/reftable/basics.h
+>> index d8888c12629..667feffd935 100644
+>> --- a/reftable/basics.h
+>> +++ b/reftable/basics.h
+>> @@ -199,16 +199,8 @@ static inline int reftable_alloc_size(size_t =
+nelem, size_t elsize, size_t *out)
+>> (x) =3D reftable_malloc(alloc_size); \
+>> } \
+>> } while (0)
+>> -#define REFTABLE_CALLOC_ARRAY(x, alloc) (x) =3D =
+reftable_calloc((alloc), sizeof(*(x)))
+>> -#define REFTABLE_REALLOC_ARRAY(x, alloc) do { \
+>> - size_t alloc_size; \
+>> - if (reftable_alloc_size(sizeof(*(x)), (alloc), &alloc_size) < 0) { =
+\
+>> - errno =3D ENOMEM; \
+>> - (x) =3D NULL; \
+>> - } else { \
+>> - (x) =3D reftable_realloc((x), alloc_size); \
+>> - } \
+>> - } while (0)
+>> +#define REFTABLE_CALLOC_ARRAY(x, alloc) \
+>> + (x) =3D reftable_calloc((alloc), sizeof(*(x)))
+>=20
+> Let's avoid reformatting unrelated macros. But other than that I fully
+> agree -- we should remove stuff that we don't use in the first place.
+>=20
+> Thanks!
+>=20
+> Patrick
+>=20
 
-Since the lifetime of `argv` last until the program terminates, a memory =
-leak
-can only occur if parse_option is called multiple times and at least two =
-of=20
-those calls use the `PARSE_OPT_KEEP_UNKNOWN` flag. In the other
-words, the memory leak only occurs when the statement `ctx->argue[0] =3D =
-xstrdup`
-overwrites the result of a previous `xstrdup` call.
-
-> Hm. Is there any other usecase for the `strdup_fn` field that you can
-> think about in the future? Otherwise it feels a bit overengineered =
-from
-> my perspective.
-
-I think a simple approach is to add a marker to the string allocated by =
-`xstrdup`
-, and before the next potential leaking `ctx->argv[0] =3D xstrdup`, =
-check whether the
-string needs to be freed. Like we could allocate one more byte in the =
-end of the
-string to store the marker.
-
+Ok, I will restore REFTABLE_CALLOC_ARRAY in the next patch.=
