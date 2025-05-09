@@ -1,86 +1,85 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93D5323CEF8
-	for <git@vger.kernel.org>; Fri,  9 May 2025 18:24:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A04FB1891A9
+	for <git@vger.kernel.org>; Fri,  9 May 2025 19:31:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746815050; cv=none; b=Tc5virF8dBbBpfcYc/KYgOE81m90RqBWSPsgg9QdACwbk0oiI5RBtCmtSuxgT0e1Z92duPynKeDswA87FQN9lXgnDsktZEp411YbaemVzNmOPClkwbMG1FAYRMlS3M54Dv5Y2662y3o7waX56xo3psAXKJhDECiA4chQZwd2/6g=
+	t=1746819077; cv=none; b=j4m/gOCWJb7yyPR/G8iWeUSc8i49YR9jJ5I/QTHtZ/xkJ+QomkhzCWPgxC2pPqVTy8CLXvvYZzRGNum6Tvasrwsmkb+HRiX3uisNRbrT79FmSAK//o6xSxzuht3J+wAvxQVymhCXy81f7xdcua5aOF9ZtCVVtq5XfVEx0zbOXYQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746815050; c=relaxed/simple;
-	bh=rsrJmut91GEJsLZBARrPG75DzshXozQk0WtqWZtjYp0=;
+	s=arc-20240116; t=1746819077; c=relaxed/simple;
+	bh=HXdzVmOuOS2LeiMpdpo7T1CEH84Z3RHky5EusnIIXlc=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B5LGBhOZza+D5t0dBQdyKcNuqMQr3wihBketgHpCqAJiA173Do+85vTwxFll6lw+RnQIOi22nDZXpNNKnRSeuZcOFYY1bqsrt+mK00sLxgIVB+iptg1f44V0tdzXAUpQS7X05EqtodhQdbhkqsj9J/mOgWWcCFW9euOMN161HUs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=epldUk8H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fvUdJAx9; arc=none smtp.client-ip=103.168.172.144
+	 MIME-Version:Content-Type; b=LYVcECZX3t6a3QiNe8Tv2yL+bEJu8sY9mY8jjd8UPeHncxxIqo7gT05/Z0JpEmPyDHcy1uxzUK90OIcumnZEMRV9eGKGwfbJYqZ1g/b9Abf2RJSX9BXiQK1daRReKzT/NdGq1o3NtheJtL2qE/MJp0sz9jSk4OeAalptXBILp+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RLQZlnYk; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UEWWffUH; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="epldUk8H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fvUdJAx9"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id AC84613801AB;
-	Fri,  9 May 2025 14:24:06 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RLQZlnYk";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UEWWffUH"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 80C4213800C9;
+	Fri,  9 May 2025 15:31:13 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 09 May 2025 14:24:06 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 09 May 2025 15:31:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1746815046;
-	 x=1746901446; bh=NztiIZRBCO6jU+Tbshv+ON0jadlL6ZgPGpZtWVXhCfQ=; b=
-	epldUk8HPLyiSYZuaFiV+u3ZVttILbCMDRilwaBmhkurHnpf+otZZEK6Gx3rxD04
-	acH9bfJ70HwWN11HO2hc2J24tknc6geHgFuaZvDDL7kCJAPgZ12j2jMPD5Mm3IRV
-	3PamKyDhn1X8QW0pq6588GhVu3iw8ar7ETVfbeYEnHfa2dZ7SzAar3oAp5OUvPF9
-	X7aQyQ9tOSrU1qvcvFXKummsxMYaEUt5yQsreJR/yiEW5Yf1ioHCvH6wl+d4sprD
-	qjOVbtced1vZ1QC6mmIXk+Ed79pmDh4P5Kfd17gbNADNyrtTRUThzp+lcrqdeYNb
-	TgZgG1pHqnP65zO31Dib4w==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1746819073; x=1746905473; bh=hk2lxDgZaD
+	h3OTm9xnt8aDWj6kN0k113k5zS0EkseEo=; b=RLQZlnYklMheUpYYf1mjLVJrKI
+	hPox5WajvvQ+fUgjEY/IvVDN6+Xqv8qe4yLuBPHAr/AOeaSJG5Q47kpBEp/+PtNi
+	uNKGSfMhJzGIox2/PC8a1NFe6kXn/SHxHNG/UzAigmDJ/kxs+bXBqASCtv8t5ZAM
+	6Cppn05RLRgi5LkTHW2i7tWRwFA4kDdKdzVZxh51E6+828oFNcfGVqcJnM4Hxkm/
+	qqERGFZxaDNcSUSTd3yKWTvR5k/Ob+M4MnXQ7IlMiDmND3y3a5qOSoBVAOzNdQI5
+	du8mS2n2SeaqbO5ipCzyn0tp7w+KeZZTxwbt8vp4yMlQbgBumA50cgfKIV/w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1746815046; x=
-	1746901446; bh=NztiIZRBCO6jU+Tbshv+ON0jadlL6ZgPGpZtWVXhCfQ=; b=f
-	vUdJAx9579ZEacVgTKM/tyHjqIbVjf7qNUMipyhKXd1FLgI7iuQUAEtQJsNPnTwN
-	6Lyh756fJ8wyeJ9hdRDXmwPWFqeEAr7BFhwvjSZ6Ud/VG1f6/qj/jYAotPrZYBnA
-	cIrbNOu9iC/3rosZhn2CS6MHgsrvmsfxIBDRM5vOpt1NWz38m+p16xioAzqLmUeS
-	W08H9/mMM0jCsfDc7evvUt1iJT5cnx5kwd6MqqFqBrUYK8BqOs+9T9glC0wChKOp
-	HVFJqaDe6VR6Thm0s2rBzQplqqGFNPATAfGZkbXtTqrkIfR3++XBmQMOv/Sy3ffi
-	G6y+eoua+1aW0WuULeyQw==
-X-ME-Sender: <xms:RkgeaHIObdNL0zFPbC_-QNg9xwgj-Mc7YxB_D3kOxJ3sHKoXiWRhjw>
-    <xme:RkgeaLKud3XFGPCMsYWpaKsurporw21A1i9F-G3Wr8kpJmR0bs465ZCFAmjIzCu6r
-    NQyhhluUUy0H2SoFw>
-X-ME-Received: <xmr:RkgeaPulYepNYo2QaKzuC75qCG6VdJJ492GipnnMBvp8Vla7V5-jA4Q4029nuYIb627CHGthKbWOIVJ966jn4_O2hFkxQsseNKOU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleeffeefucetufdoteggodetrf
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1746819073; x=1746905473; bh=hk2lxDgZaDh3OTm9xnt8aDWj6kN0k113k5z
+	S0EkseEo=; b=UEWWffUHwgZh0Qis0nvIx3i+ZSvKa+yLApwoMLZRz5uSTgHIdt8
+	2Nt3UcgXlMfuYzdRei8LuuoAT7RGOX9Ql2OUeGlhzezOQcmP8qoJDNyM402yMRgh
+	75gvYfnslceXc7zH+5QRalkAwTDVU5gLjH8cTiB648cMMSJN6D/7KXnG14bVQa2+
+	rcTOyZ4yhp2O+1xx4L+udvC4qQmNtbtbZMqpZEZ7HGFAf5V6m5KorrQ047bAdrPI
+	jVazhwYvJdZq7y6zdp5HjPTE0eNhXljFk3UDqJzz+JEylP3GeKtSiqoRvXLMdUqw
+	vU4BBscIAATMJ2MOeKDig1ewNXMgIhoRiEA==
+X-ME-Sender: <xms:AVgeaHdBHIbAvupR40pXPtIy9dhguiB2yR8mISXDOwb9iEi1soBodA>
+    <xme:AVgeaNPlglASmvRyz2k8WkTMu6kxyRq1ZPa0-9YA2As8Uk_DD87z9P-84034-jc8C
+    zM60ORu8xhUdLgieA>
+X-ME-Received: <xmr:AVgeaAjFG7JIvezjkQo6N9fdC4WiW132FArkOoz5Vd_PcF-WAPkXV1w5iXOWUNrfxlNfQQRD_INEjXn1rqsn3xwbtlKLZBtE4iCv>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgddvleefgeeiucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
-    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
-    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
-    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjnhdrrghvih
-    hlrgesfhhrvggvrdhfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:RkgeaAaa-nht8qm4Z3Mi1Sz7WKCd3W1o3GakENBftdyi2mgwVBdkkg>
-    <xmx:RkgeaOa84BYoap3vsmJukkQsGza9yQ982Wt_tMoBT_VPMty6bxh9_A>
-    <xmx:RkgeaECuVcAWTehoz47rl1Kdcej_ss-eKIucfZXTg9cawKGlSnAz-A>
-    <xmx:RkgeaMZCpnSJRVA-5bPKkAdp_4-x6nutSmHmuG8045NxWZ2HDrjCzQ>
-    <xmx:RkgeaJcuy30xEf4vtGKeBygA591mqCadMADKg3_Aa7O5OYueff8iC7cE>
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshgrnhgurghlsh
+    estghruhhsthihthhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhg
+    vghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvd
+    efsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:AVgeaI-AG6H4fCTXMONgEgIdNtiDlmU7Nyrae5Hn8vGLwewNfDSZ7Q>
+    <xmx:AVgeaDv7TRBInZLbPKK-pCMuDsN2McN6hpfw2seO-0htZQ0DvrF3Ew>
+    <xmx:AVgeaHGWNUbWrcDWviq17mEHUzDeXSQUZ4VTMFv5oFkzeM-hnzuTog>
+    <xmx:AVgeaKMlxCrysJOsG1USNIKzD1NXDksmJpYBnAb1F1dG0HJFOOa3QA>
+    <xmx:AVgeaCDnY5O414S_-NaCH0oMMDityYOmxc0PTc5uSkvlVYDqmZxtZvQE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 9 May 2025 14:24:06 -0400 (EDT)
+ 9 May 2025 15:31:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Additional changes
-In-Reply-To: <13790247.uLZWGnKmhe@cayenne> (=?utf-8?Q?=22Jean-No=C3=ABl?=
- AVILA"'s message of
-	"Fri, 09 May 2025 19:08:37 +0200")
-References: <20250503011537.3035416-1-gitster@pobox.com>
-	<5040970.31r3eYUQgx@cayenne> <xmqqr00x3l8h.fsf@gitster.g>
-	<13790247.uLZWGnKmhe@cayenne>
-Date: Fri, 09 May 2025 11:24:04 -0700
-Message-ID: <xmqqmsbl1w3f.fsf@gitster.g>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: <git@vger.kernel.org>,  Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH v5 3/4] builtin/stash: provide a way to export stashes
+ to a ref
+In-Reply-To: <20250508234458.3665894-4-sandals@crustytoothpaste.net> (brian
+	m. carlson's message of "Thu, 8 May 2025 23:44:56 +0000")
+References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
+	<20250508234458.3665894-4-sandals@crustytoothpaste.net>
+Date: Fri, 09 May 2025 12:31:11 -0700
+Message-ID: <xmqqecwx1szk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,28 +87,85 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Jean-Noël AVILA <jn.avila@free.fr> writes:
+"brian m. carlson" <sandals@crustytoothpaste.net> writes:
 
-> On Friday, 9 May 2025 16:35:42 CEST Junio C Hamano wrote:
->> Surely.  Are there particular things that you were either unsure
->> about (which may lead to possible partial retraction) or want to
->> stress on (which would help other developers and reviewers recall
->> what they need to watch out for when touching the documentation)?
->> 
->
-> Now that you're asking, the heavy additional changes to git-var's manpage are 
-> mainly targeted at clearing out some misuses of $ENV_VAR vs ENV_VAR as I see 
-> them. Others can disagree. 
->
-> Maybe these changes should go into a separated patch because they do not 
-> really fit with the "new style" changes.
+> +static int do_export_stash(struct repository *r,
+> +			   const char *ref,
+> +			   int argc,
+> +			   const char **argv)
+> +{
+> +...
+> +	if (argc) {
+> +		/*
+> +		 * Find each specified stash, and load data into the array.
+> +		 */
+> +		for (i = 0; i < argc; i++) {
+> +			struct object_id oid;
+> +			if (parse_revision(&revision, argv[i], 1) ||
+> +			    get_oid_with_context(r, revision.buf,
+> +						 GET_OID_QUIETLY | GET_OID_GENTLY,
+> +						 &oid, &unused)) {
+> +				res = error(_("unable to find stash entry %s"), argv[i]);
+> +				goto out;
+> +			}
+> +			oid_array_append(&items, &oid);
+> +		}
 
-OK, then I'll revert the changes from these three patches I squashed
-your additional changes in, so that we can have a separate series to
-clean up "$ENV_VAR vs ENV_VAR" (Documentation/CodingGuidelines tells
-us when to use and not to use "$", which is quite useful), perhaps?
+Grabbing individual reflog entry given on the command line looks
+trivial, but ...
 
-Thanks.
+> +	} else {
+> +		/*
+> +		 * Walk the reflog, finding each stash entry, and load data into the
+> +		 * array.
+> +		 */
+> +		for (i = 0;; i++) {
+> +			char buf[32];
+> +			struct object_id oid;
+> +
+> +			snprintf(buf, sizeof(buf), "%d", i);
+> +			if (parse_revision(&revision, buf, 1) ||
+> +			    get_oid_with_context(r, revision.buf,
+> +						 GET_OID_QUIETLY | GET_OID_GENTLY,
+> +						 &oid, &unused))
+> +				break;
+> +			oid_array_append(&items, &oid);
+> +		}
+
+... have you considered reusing reflog-walk.c:read_complete_reflog()
+as a helper function?  
+
+Doing so of would be more efficient than going from int to string
+back to int to call read_ref_at() and iterate over the same reflog
+entries with refs_for_each_reflog_ent().
+
+> +	}
+> +
+> +	/*
+> +	 * Now, create a set of commits identical to the regular stash commits,
+> +	 * but where their first parents form a chain to our original empty
+> +	 * base commit.
+> +	 */
+> +	for (i = items.nr - 1; i >= 0; i--) {
+> +		struct commit_list *parents = NULL;
+> +		struct commit_list **next = &parents;
+> +		struct object_id out;
+> +		const struct object_id *oid = items.oid + i;
+> +
+> +		next = commit_list_append(prev, next);
+> +		next = commit_list_append(lookup_commit_reference(r, oid), next);
+
+The individual-reflog-entry mode above was fairly strict in that a
+list of reflog entries with even one unreadable commit caused the
+whole command to fail, but reflog-walk mode assumed that a failure
+to read an entry must always be due to reflog entries running out
+due to the index incremented to a large enough number.  I suspect
+get_oid_with_context() can give you oid obtained out of a reflog
+entry without actually parsing the object or checking if it exists.
+
+Should we be a bit more defensinve here in lookup_commit_reference()
+call, which would silently throw a NULL back at us if the commit
+cannot be found without complaining?
+
