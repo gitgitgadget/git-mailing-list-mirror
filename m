@@ -1,71 +1,75 @@
-Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B69C182B7
-	for <git@vger.kernel.org>; Sat, 10 May 2025 18:34:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56ED914901B
+	for <git@vger.kernel.org>; Sat, 10 May 2025 18:34:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746902070; cv=none; b=KX4Lzdn7ckCWtwZPi2LyQzZDLzgEQRchemTzFKN40aDhCIcYijbvH2Qmed3UGsUish0hH5vJ7C0TRHksGoO82QY0D/FN9S+6SSyCABtmvnlYd6wsK+fKhLmu3BDMmmskcqHHre+5606BCIlY79s0dPHiW1sJ2mwa9kHDGIlPAKc=
+	t=1746902077; cv=none; b=f0/l8HPDNfVhV5kG4erobwTV7R22FjB3ZvA1PnKC+eenU+hOpIDk17L58/5pRJGsIZFKml6KHiQBRegV4+28Ba3jX1MctgzW/ruxnbi8TukoOV+WyyiXtnR+ocdnLVUuhA+VHjnH2RlldOsotEcGn0w6ZRcSU1M+JYMFkaLWQ2A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746902070; c=relaxed/simple;
-	bh=CTLdu3Wqz6i4NYdD1aP+u5MteNUC0bOnenn5ddIRiN8=;
+	s=arc-20240116; t=1746902077; c=relaxed/simple;
+	bh=NjyYOarFcqsFPantjLqPduuZ2mV0BIBV2RdTi6kF1ps=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=baj1hq0PX3lwb/uquEQUdQpoV3wYxts3s80qTkW09N7ZtOs2V2RqjR2l38oOU1oyXqJJnL0gauA7RweYo2LsZZY53bbTZwj4tQkK4BaBGkuKMGLeJlFGR26FxJ0MB3NNsH6Dxh3KT4g2QwbVSmKNQD5lxZwosrrlIUwX9BDGjbs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UQyAieku; arc=none smtp.client-ip=209.85.219.179
+	 MIME-Version; b=k61U7XjLmLreNOI30Xm162iTTba4RGyV9r1k3L6rNiTcpy8kjFwfDG+P6LMqJd7z4oIE5vzJzpTx3PKQjmuXCAJyHXRL0hShmdAVoaVIOnxzwCWmCWk21skZLaQeNASxxd/TuBBgdxvGSZk36Os5hAgMd5kD5kPDe3L1sr2iVTo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dkvT0ZVr; arc=none smtp.client-ip=209.85.219.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UQyAieku"
-Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e7311e66a8eso3013125276.2
-        for <git@vger.kernel.org>; Sat, 10 May 2025 11:34:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dkvT0ZVr"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e728cd7150dso2638458276.3
+        for <git@vger.kernel.org>; Sat, 10 May 2025 11:34:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746902067; x=1747506867; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746902073; x=1747506873; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=TZIXhL0z+EP62ziqOX8F+olttblBbHPs1+ftcoVHvx0=;
-        b=UQyAieku966Aw1j+sYG+naZPiy6C/mHanfRTRjtEbKZQg0u94dpBM+k6dCQBdzmhMV
-         LGgnEq8EP1nQi1CnO1Qwdpx5XQDWCg5zN5oydDsVBL6u0yV6N+E/3KibMDSrQucpSZeD
-         WymHKf4Ikc95Ov/Iv6lZyxJ4fqDsSLbvgfoZuOzcUucUBZ+ecZbmfPPT4sddTX8+GQJg
-         5CRXC4NxqvLURFHk7dJU52B3/VKPha2eH27QfQdjdP9q6tFzqH9mruDqOuDZjbRgOAV7
-         xV8jmWkdiDVQmT1t7mLEk3QQE1oTAAYl/9CenuwQC6hj1+fwpxeiAjAok2RIx0411y5K
-         QgZg==
+        bh=BkH4rbeTpV9KsoPcPR/OF7FU+ie1pZ66kjqUas/jPIE=;
+        b=dkvT0ZVrIgUMr36l5vP1q7SD3YtJXHdsE2j/UPx+YZUnbLSebFE3ZWXzu6/zBto/6F
+         DYF0qISlu/BIjW5aZ2Ieecjwil/VkdX1rhATgS6GlsD3xS3xa7oirp6Q159VvI40c2/s
+         6VP0Zsc4bvqpBVhmh0SKnuGWKxPMfjy7bzpQjW0V1QvZv8eywPDk7RLMBdHzTwQkhTP1
+         aBmRGbFhBaiSDUIOaq16BrInycwiLZXXgw3+rv+0AnucsWcZwGiwa/bhfBWWBP+LI+O0
+         oywYmKq7Ico3cxinY7aV3mwIjy48AmxEIEKVj/HVGbfnYLBZfTqihHX5z8YZnVRr6D97
+         +u3Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746902067; x=1747506867;
+        d=1e100.net; s=20230601; t=1746902073; x=1747506873;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
          :to:cc:subject:date:message-id:reply-to;
-        bh=TZIXhL0z+EP62ziqOX8F+olttblBbHPs1+ftcoVHvx0=;
-        b=RMCPD18lqEy7jbhMZBf0ZU7ubKLZOrWeyyU4THXCI6UEDp2Y22WpMsJSwjxv1WV9QS
-         pU0QDWawx4b/din/C1DxaB/51rzZpj0uvA1JFGAG/h+x+aQUgLbQgY5FcU/iTEBZPcLX
-         QaXXFC6QL/rZJBknIltPO381Ezm3i5Ro0SNC3capTzY5kGRJQmPRH0zJRBIhXWULNRkr
-         1MzG8uKveAS0LwcxRj61emQMvR8ULK0P4bP1s79sT8Yk7DFS4jgSbecCebsq1CoK5SJZ
-         dvRvTrvmRmnRTQba531ZlpSlVrYg8cnuGQelHRhxVRwl0gdvuRuJOOLlBid7qTNT3UG6
-         7fgg==
-X-Gm-Message-State: AOJu0YyI8ogvNNa5RrDziH4gDnU7+5c952q90mlG+0RNx1z4Kmond8R+
-	01L19l2lq7hetVNxgwjbs9y0DlE8aflE9AcORHhtjqn38PTK9GiJ3bUEoA==
-X-Gm-Gg: ASbGncsvIeDM9niXECy7yh8Tws+Aw4Nv+1bbPblwU0VL0EAIBo1j1mQF48Ls5t3lfxl
-	qmPsrYJvYBemtj2DbLTI7Bfr8DtyAfGotAGDKN5kl7jdUeCNdOjS2cueXARUtN6vNB+pUlpKExQ
-	mV+gfSKzxEM519oXHcI0/TBFZiL8vsL+/3N54Hf8N3jS+8MFimbsw84Vbs7BD4hLmBsy3RPPRG8
-	bxtTgeg8NPDYibr1n7jv0RRZZViGz2qyT2PCgJy4chDojOLQdB51toM3edKpCYKA6tySB87jMtF
-	vHSLaFrE4t+LcMlrtmqk2m5zdbO36ny8BVsP3m9Ac2dw5g1SuH9szGelHo87/44hQfG+UW0tG6t
-	WCFsCLaCI3YfVDwGV0/4JCoj8
-X-Google-Smtp-Source: AGHT+IEPTjt2LXOgmS6Gw7Y8xL0JD6Q47twA5+Dg81pcAOUfvyanUvUZ9D+cLBMEa8u2E3bdlFisrA==
-X-Received: by 2002:a05:6902:728:b0:e79:b0fb:cfc6 with SMTP id 3f1490d57ef6-e79b0fbd114mr2436151276.49.1746902066677;
-        Sat, 10 May 2025 11:34:26 -0700 (PDT)
+        bh=BkH4rbeTpV9KsoPcPR/OF7FU+ie1pZ66kjqUas/jPIE=;
+        b=LQ0pyiUz6tyhw3Px2REqnWAKWYCNrY77474MKnhOC8FFWdfy3AwLMgLf1p9ukU1Www
+         EZJPkbbnVkbfLziQ/W37ItJOkOpgLRxUFnX8jo1NupjhfWMZzG2BPei50Z+AIduryeun
+         JPt5xm8EKavu6eV+oE8Ks3fU1S1zh/IQEaS1FxU1PpIH2MDblSrU5N+MjX/MTxurqE47
+         RdORQwHehs0RRarur8priUp01xvqt+ve+n7Vu8+jg4Mrp19ivL02VBJ934swmRhLTohO
+         pTRnQt5ImU0KMWr+GpCJTAvIZc6Q7SOP231zQwho7c++gELMtzseNXPmK3K3C8QPkECz
+         JoIQ==
+X-Gm-Message-State: AOJu0Ywq0PnnxI5l2gIX3kBM4bimPUCev0f63NwS3/r5sTMU+AH1XszY
+	SFhvyPGCTc+UXwGiYiz3pDupFvgH7Klc0OtxH1bsFauXsynpEGAZZ4TG7YF6
+X-Gm-Gg: ASbGncuHDN9hJ/3yecn9oUX3k1zh7MGNO7H5E/zBzDRQdZT9TU4r/w6P0RNIiaU+QJn
+	fM4/SolBJu617im4wvhmBiTT3ShwynDC5oSei9JXjvKl7YRT0lnO0/RtpkSPV/j42b4ryrd8Uzk
+	NBdPT63GveCC64IEC8ilyMmLe05q04cUTghKb19ao4UG+wCgLTNhESmmVYxprbQKaetmIbeuYV5
+	1Z43A4Z7gQ7X5coAG+0Mxnsg0f24arl4Bos592zzBObcyfIai+W/V5HEUGbyD53i8+VIEmbnioV
+	KxaQLtuarIFpvDdqAPyYJFeSvrwkU9dgW2K0UM2cMpW0HK/sJN+5QsMF1u+3bXOkbsJ1u3Rt3KA
+	YgKJsofZJC2NEA5TaWJYjMpp7
+X-Google-Smtp-Source: AGHT+IEpezcVxm4z7RCRnFJSEP/4gB5Oasf1boK/JIgm7YC/LNJ2p9x7vAggngFv4pK+LKTFusesNg==
+X-Received: by 2002:a05:6902:f07:b0:e78:eb00:baae with SMTP id 3f1490d57ef6-e78fdd46878mr7184615276.45.1746902073557;
+        Sat, 10 May 2025 11:34:33 -0700 (PDT)
 Received: from localhost.localdomain ([2605:a601:90a6:1600:541:bcf5:33bd:f1fc])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e78fd4a72f0sm1191649276.20.2025.05.10.11.34.25
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e78fd4a72f0sm1191649276.20.2025.05.10.11.34.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 May 2025 11:34:25 -0700 (PDT)
+        Sat, 10 May 2025 11:34:33 -0700 (PDT)
 Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
 To: git@vger.kernel.org
 Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 3/9] BreakingChanges: announce stash {apply,pop} will imply --index
-Date: Sat, 10 May 2025 14:33:38 -0400
-Message-ID: <20250510183358.36806-4-ben.knoble+github@gmail.com>
+	Karthik Nayak <karthik.188@gmail.com>,
+	Denton Liu <liu.denton@gmail.com>,
+	Kyle Meyer <kyle@kyleam.com>,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= <avarab@gmail.com>
+Subject: [PATCH 4/9] stash: restore the index by default when breaking changes are enabled
+Date: Sat, 10 May 2025 14:33:39 -0400
+Message-ID: <20250510183358.36806-5-ben.knoble+github@gmail.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250510183358.36806-1-ben.knoble+github@gmail.com>
 References: <20250510183358.36806-1-ben.knoble+github@gmail.com>
@@ -77,45 +81,149 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some uses may now require --no-index, but remove a footgun that has bit
-users over the years where stash {apply,pop} are not the opposite of
-stash push because they drop the (saved) index.
+This footgun is described in the previous commit to
+Documentation/BreakingChanges.adoc; without --index, stash apply and
+stash pop confusingly drop stashed index changes.
+
+When compiling with breaking changes, instead restore the index unless
+asked not to. Adjust both argument parsing and handling, as well as help
+synopses. Don't forget to adjust the error message when application
+fails to point to --no-index instead.
 
 Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
 ---
 
 Notes:
-    Dscho/Junio suggested it in the original thread [1], but it wasn't
-    considered for the release I believe [2].
+    Tests will follow in separate patches, as some changes are rather complicated.
 
-    [1]: https://lore.kernel.org/git/Pine.LNX.4.64.0707021213350.4438@racer.site/
-    [2]: https://lore.kernel.org/git/7vzm20q1l7.fsf_-_@assigned-by-dhcp.cox.net/
+ Documentation/git-stash.adoc |  6 ++++++
+ builtin/stash.c              | 38 ++++++++++++++++++++++++++++++++++++
+ 2 files changed, 44 insertions(+)
 
- Documentation/BreakingChanges.adoc | 11 +++++++++++
- 1 file changed, 11 insertions(+)
-
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index 61bdd586b9..798e742267 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -118,6 +118,17 @@ Cf. <2f5de416-04ba-c23d-1e0b-83bb655829a7@zombino.com>,
- <20170223155046.e7nxivfwqqoprsqj@LykOS.localdomain>,
- <CA+EOSBncr=4a4d8n9xS4FNehyebpmX8JiUwCsXD47EQDE+DiUQ@mail.gmail.com>.
+diff --git a/Documentation/git-stash.adoc b/Documentation/git-stash.adoc
+index 1a5177f498..3b01f494a3 100644
+--- a/Documentation/git-stash.adoc
++++ b/Documentation/git-stash.adoc
+@@ -11,8 +11,14 @@ SYNOPSIS
+ 'git stash' list [<log-options>]
+ 'git stash' show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]
+ 'git stash' drop [-q | --quiet] [<stash>]
++ifndef::with-breaking-changes[]
+ 'git stash' pop [--index] [-q | --quiet] [<stash>]
+ 'git stash' apply [--index] [-q | --quiet] [<stash>]
++endif::with-breaking-changes[]
++ifdef::with-breaking-changes[]
++'git stash' pop [--no-index] [-q | --quiet] [<stash>]
++'git stash' apply [--no-index] [-q | --quiet] [<stash>]
++endif::with-breaking-changes[]
+ 'git stash' branch <branchname> [<stash>]
+ 'git stash' [push [-p | --patch] [-S | --staged] [-k | --[no-]keep-index] [-q | --quiet]
+ 	     [-u | --include-untracked] [-a | --all] [(-m | --message) <message>]
+diff --git a/builtin/stash.c b/builtin/stash.c
+index cfbd92852a..4ffa586d07 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -38,10 +38,17 @@
+ 	N_("git stash show [-u | --include-untracked | --only-untracked] [<diff-options>] [<stash>]")
+ #define BUILTIN_STASH_DROP_USAGE \
+ 	N_("git stash drop [-q | --quiet] [<stash>]")
++#ifdef WITH_BREAKING_CHANGES
++#define BUILTIN_STASH_POP_USAGE \
++	N_("git stash pop [--no-index] [-q | --quiet] [<stash>]")
++#define BUILTIN_STASH_APPLY_USAGE \
++	N_("git stash apply [--no-index] [-q | --quiet] [<stash>]")
++#else
+ #define BUILTIN_STASH_POP_USAGE \
+ 	N_("git stash pop [--index] [-q | --quiet] [<stash>]")
+ #define BUILTIN_STASH_APPLY_USAGE \
+ 	N_("git stash apply [--index] [-q | --quiet] [<stash>]")
++#endif /* WITH_BREAKING_CHANGES */
+ #define BUILTIN_STASH_BRANCH_USAGE \
+ 	N_("git stash branch <branchname> [<stash>]")
+ #define BUILTIN_STASH_STORE_USAGE \
+@@ -562,8 +569,13 @@ static int do_apply_stash(const char *prefix, struct stash_info *info,
+ 			ret = apply_cached(&out);
+ 			strbuf_release(&out);
+ 			if (ret)
++#ifdef WITH_BREAKING_CHANGES
++				return error(_("conflicts in index. "
++					       "Try with --no-index."));
++#else
+ 				return error(_("conflicts in index. "
+ 					       "Try without --index."));
++#endif /* WITH_BREAKING_CHANGES */
  
-+* The git-stash(1) command now tries to reinstate the index by default in
-+  the "apply" and "pop" modes. Not doing so creates a common trap: "git stash
-+  apply" is not the reverse of "git stash push" because carefully staged indices
-+  are lost and have to be manually recreated.
-++
-+Now git-stash(1) will behave like "--index" was given in the "apply" and "pop"
-+modes. Use "--no-index" to disable this behavior.
-++
-+Cf. <CAPx1GvcxyDDQmCssMjEnt6JoV6qPc5ZUpgPLX3mpUC_4PNYA1w@mail.gmail.com>,
-+<c5a811ac-8cd3-c389-ac6d-29020a648c87@gmail.com>.
-+
- === Removals
+ 			discard_index(the_repository->index);
+ 			repo_read_index(the_repository);
+@@ -658,12 +670,21 @@ static int apply_stash(int argc, const char **argv, const char *prefix,
+ {
+ 	int ret = -1;
+ 	int quiet = 0;
++#ifdef WITH_BREAKING_CHANGES
++	int no_index = 0;
++#else
+ 	int index = 0;
++#endif /* WITH_BREAKING_CHANGES */
+ 	struct stash_info info = STASH_INFO_INIT;
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
++#ifdef WITH_BREAKING_CHANGES
++		OPT_BOOL(0, "no-index", &no_index,
++			 N_("do not attempt to recreate the index")),
++#else
+ 		OPT_BOOL(0, "index", &index,
+ 			 N_("attempt to recreate the index")),
++#endif /* WITH_BREAKING_CHANGES */
+ 		OPT_END()
+ 	};
  
- * Support for grafting commits has long been superseded by git-replace(1).
+@@ -673,7 +694,11 @@ static int apply_stash(int argc, const char **argv, const char *prefix,
+ 	if (get_stash_info(&info, argc, argv))
+ 		goto cleanup;
+ 
++#ifdef WITH_BREAKING_CHANGES
++	ret = do_apply_stash(prefix, &info, !no_index, quiet);
++#else
+ 	ret = do_apply_stash(prefix, &info, index, quiet);
++#endif /* WITH_BREAKING_CHANGES */
+ cleanup:
+ 	free_stash_info(&info);
+ 	return ret;
+@@ -755,13 +780,22 @@ static int pop_stash(int argc, const char **argv, const char *prefix,
+ 		     struct repository *repo UNUSED)
+ {
+ 	int ret = -1;
++#ifdef WITH_BREAKING_CHANGES
++	int no_index = 0;
++#else
+ 	int index = 0;
++#endif /* WITH_BREAKING_CHANGES */
+ 	int quiet = 0;
+ 	struct stash_info info = STASH_INFO_INIT;
+ 	struct option options[] = {
+ 		OPT__QUIET(&quiet, N_("be quiet, only report errors")),
++#ifdef WITH_BREAKING_CHANGES
++		OPT_BOOL(0, "no-index", &no_index,
++			 N_("do not attempt to recreate the index")),
++#else
+ 		OPT_BOOL(0, "index", &index,
+ 			 N_("attempt to recreate the index")),
++#endif /* WITH_BREAKING_CHANGES */
+ 		OPT_END()
+ 	};
+ 
+@@ -771,7 +805,11 @@ static int pop_stash(int argc, const char **argv, const char *prefix,
+ 	if (get_stash_info_assert(&info, argc, argv))
+ 		goto cleanup;
+ 
++#ifdef WITH_BREAKING_CHANGES
++	if ((ret = do_apply_stash(prefix, &info, !no_index, quiet)))
++#else
+ 	if ((ret = do_apply_stash(prefix, &info, index, quiet)))
++#endif /* WITH_BREAKING_CHANGES */
+ 		printf_ln(_("The stash entry is kept in case "
+ 			    "you need it again."));
+ 	else
 -- 
 2.48.1
 
