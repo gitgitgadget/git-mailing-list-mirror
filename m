@@ -1,120 +1,329 @@
-Received: from mout.web.de (mout.web.de [212.227.15.3])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f50.google.com (mail-oa1-f50.google.com [209.85.160.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 227A0199FA2
-	for <git@vger.kernel.org>; Sat, 10 May 2025 08:34:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DFF21EA7E6
+	for <git@vger.kernel.org>; Sat, 10 May 2025 11:46:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746866095; cv=none; b=t0DAv1BzHrtmbxZ0eu+WiI/v1L8wn1WArfdfsgAcT2vnzmojGDAuLhFEEU/4EhH4b+tn7pxBkz1ey6q9XIfKHaIlirAijs/6LEYpSGzG0+UHweayQSkdnSLW2baTpU7wd1hBCicwLtE+TI24hF3hmuZcaxFpn9wiaFMFuNPvhsA=
+	t=1746877614; cv=none; b=InX9vS8dozoGYu64GTXtCAzhizmqbUvoRd+ZfGtWiic5IpCw/3NY4iF8PfG2qHwy+uJIjChy50fg20Wcj1fXIT6TTHzns7KBuhVEU5EIJ3Z9IhQR/qSzlEWepIlDRlaVwuAovARGuEffBlc1YLqNNNOK25MQroqOLUac2anhDyc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746866095; c=relaxed/simple;
-	bh=kKqfJ0lUyBICN8FljAyn1Wgs2C1rl+aPlTzXSUeIdR0=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nqW4Fou0NKHXMnhZKJB0RsBoUCVsOkWVdhb5EJww6v3g+PYDbOzSEFef3EqQn6jhtWzRA6WOh3+YfkBALhItKtU8g2DHEEezC/Qeaj3Z5GSWmHxZ8NBoLlwege9iz6PiXshlgdn1be9uM86uW8D8eVy6u+5hyK1lsVN/gxIQ8ac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=eKD5wLlh; arc=none smtp.client-ip=212.227.15.3
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1746877614; c=relaxed/simple;
+	bh=qwCXehBqsG/dh+CR15Zy1tT/+5iBDsGt1VfEEtkHsIM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=JxFRA9XVpfYtCUBoSj14ESYExilCDuu4aL5iNd29d2xCtMD0gJaagRu+a9ZE7W96qyfUheCmftUhfLVYSzrPdK8lvqX5uOZmshkFuVWrF7y7xUNcKN9PIWHlD/+G2S4zYXwXtzQfR0PNBkRxYn48ndPnyYEPDNo9c9fx6HsgzhA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ciFE81cg; arc=none smtp.client-ip=209.85.160.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="eKD5wLlh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1746866091; x=1747470891; i=tboegi@web.de;
-	bh=kKqfJ0lUyBICN8FljAyn1Wgs2C1rl+aPlTzXSUeIdR0=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=eKD5wLlhCEFIToTxAOeM1hA6JYpDG3t9BHdpeCJSzbtah1kGwe7NKy40gfa3hvL4
-	 Omgc6vXJAIWs2v5F47teE/WDAdVa8/2+ZYGf8m+l/J5M3sInBrp3VFaYBpuCO1Gr2
-	 9Y0BCWC/7iStbdy6VegxYLtkcdMaDXt99NiDODb9uK66uKMIo96GX/IYyezTJhNvb
-	 xxL1OXRoGJbwCRDEvZgkasCnhNz7WZV4M+WsoHGqgeNUExJgjp0WkZbfvvdwsUkEL
-	 62GdQO1hDADJ75cgh/7+JmHkkGiuIvXTkygKq0kkhgssfYHspWQ2AFgGE/26n3Gsp
-	 y+2tg8B8fnnyV4t9Zw==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb005
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1Mo6O7-1uoQ0k333D-00k4rN; Sat, 10
- May 2025 10:10:05 +0200
-Date: Sat, 10 May 2025 10:10:05 +0200
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: "D. Ben Knoble" <ben.knoble@gmail.com>
-Cc: Mr Bill <billc56196@gmail.com>, git@vger.kernel.org
-Subject: Re: Bug report for pull --rebase
-Message-ID: <20250510081005.GA4318@tb-raspi4>
-References: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
- <CALnO6CB6aH5DEDP3QL43RCFfaZJ3uzrAY1LdGyTNi8F3XVoEhw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ciFE81cg"
+Received: by mail-oa1-f50.google.com with SMTP id 586e51a60fabf-2d060c62b61so3113562fac.0
+        for <git@vger.kernel.org>; Sat, 10 May 2025 04:46:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746877612; x=1747482412; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=k+p0jrJR+MkkgnX7XZDspznJPs97lS/2FV5Dy98UwSM=;
+        b=ciFE81cgGQQlstNT1+bQR7xoDtwkXqKxF1HM3bDzWKy1VXiyNh1BrhVtwDkz37Obbo
+         I3etEMjpNCRTj+JnIXP719zYzRsKyfAzaoBW6oHl48B/ExcMhxiatxCYP2+IpSGFbgrI
+         J2xhpOuTFIuGa79bbu3W+Z6VzOQGMgvwNAPswYZ6NfIzwEHRzxummpn360C9nOJ3XyVD
+         2PIkRYrXwdSS2DzHWBPPMOvzYMjw7WJlsHshZMuZ5djDtdfwx6OKYB6df6ODkyUePv/J
+         9d+5fF00Jm1waeH8vbALWTuNTWUt1/XlAArvZMdtxwxokLJOslBzbdobTq6DTyMpNkSG
+         KAVw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746877612; x=1747482412;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=k+p0jrJR+MkkgnX7XZDspznJPs97lS/2FV5Dy98UwSM=;
+        b=GF0D+oH+xJbBevUrqkNiVSLaT7hSwgKqwtQRRU6SxQMEpViaTtoXsJQs778VLwNtvr
+         8EUKKu2uLII3vlol9Xm3z/s6gYypfi3XNERT2/CA34ZCMhfYKxUC1ghUCbAp3/72zgaN
+         XPRZFrDDG6/X2+cuVL7iTLyOqUd/JkqCPFjVW9TtZoVCWRieYNzmCJJxvmq6YZvSGuu+
+         n5kPZ3dnH+h6PDY/vGUtfDj5VxFze6n9QGmjzITE5VWivBEQD6nekEuy50cuMXiT5cd9
+         6LtYY2FbXh5RrwOpZcTiELwgDZZeeZ1jddEsoXyphduUhJCi3zqcOX0sYSK1/LJ6BpiV
+         WqXQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV2qba9TTYPsMe8QviNDACA6d1hqzwTAmB7gX/hjwcB7tBgKdLroUp33JZI6JB/4shO9Io=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywn+x4lvnGz7gOtAnaWI8R1sr2OLcfapn0ADzRT42C5W/GMjebB
+	EPPtIyZvMC9+3ZJl/7EjqykzuDJ/hUfKLolweL0y5GxGlOWsOX9ZUOl4aOqb8sTmmgFDOzkavzy
+	+xLLzwmInUU+czyyRrcYjVhmskYA=
+X-Gm-Gg: ASbGncvHwftvzCCx+tqv426COO8QWTR7vqUFBf5NLmrHetALlq+EmGdKitcvJir5goc
+	Wg0ZiB1+1dzuRN5K+kv/G+r1DaQd+yYKNxqbEHDhFqc6kTqd96/VdJomBZ8qgpIizoOSf9CNllm
+	gd/vEiGoZ3Sq+sTyz2aY72RQZUQsQDnFnE6TTvChC8u0/l0ISd6Q9rsx9jEAzHk7Nijbk=
+X-Google-Smtp-Source: AGHT+IGD/lLJe9U1q6abkBB3pJX5UST6GWRvQkgFlws65M9NTphkyXB+Sd95uP9EOAGfI/TS64XLONNF9bWdeguVxA8=
+X-Received: by 2002:a05:6870:e994:b0:2d5:4898:fbe8 with SMTP id
+ 586e51a60fabf-2dba4277d4emr3771770fac.13.1746877611831; Sat, 10 May 2025
+ 04:46:51 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CALnO6CB6aH5DEDP3QL43RCFfaZJ3uzrAY1LdGyTNi8F3XVoEhw@mail.gmail.com>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:j7TD9+vXyE7FjURb227AQKnAvazNthWp/B/b/JXgOT8jt1SEDCN
- c2eMp/W95pn2HLiC6DguL+vOcd1PxlGTTbXhjb1OWkNA6VNoeug8S8YhXGt3xd0ZsdWcujb
- mVEVo4YT0cCN8jQFIj2PjUm5POtRnQcP9e/w7hvKoQB+mXVDmeLEjX/43EEjcrlapB0lFlw
- 91uXjWOjiKRPYMlNgE9xA==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:NTY152osdL4=;ESKhUo8GJx8QVhrY1mkRME6qQGD
- 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
+References: <20250328200525.4437-1-dhar61595@gmail.com> <20250330134018.9662-1-dhar61595@gmail.com>
+ <20250330134018.9662-2-dhar61595@gmail.com> <9d548d94-eed8-434a-a9ef-67df694c5c79@kdbg.org>
+In-Reply-To: <9d548d94-eed8-434a-a9ef-67df694c5c79@kdbg.org>
+From: MOUMITA DHAR <dhar61595@gmail.com>
+Date: Sat, 10 May 2025 17:07:30 +0530
+X-Gm-Features: AX0GCFtd-682lvVIyc6BGGxFZazVvkicxML4soNsroZbzJ_xUBecs3rOUjUJ2vI
+Message-ID: <CAF=ncLbaxYPRx79wYVgpMFuV7UGSObMD+A3zTssWvtVJmXHXVg@mail.gmail.com>
+Subject: Re: [PATCH v4 1/1][GSOC] userdiff: extend Bash pattern to cover more
+ shell function forms
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>, 
+	=?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>, 
+	Atharva Raykar <raykar.ath@gmail.com>, "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-On Fri, May 09, 2025 at 12:41:47PM -0400, D. Ben Knoble wrote:
-> On Tue, May 6, 2025 at 5:44=E2=80=AFPM Mr Bill <billc56196@gmail.com> wr=
-ote:
-[]
+On Tue, 6 May 2025 at 22:00, Johannes Sixt <j6t@kdbg.org> wrote:
+>
+> Am 30.03.25 um 15:39 schrieb Moumita:
+> > From: Moumita Dhar <dhar61595@gmail.com>
+> >
+> > The previous function regex required explicit matching of function
+> > bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
+> >
+> > - It failed to capture valid functions where `{` was on the next line
+> >   due to line continuation (`\`).
+> > - It did not recognize functions with single  command body, such as
+> >   `x () echo hello`.
+>
+> Good.
+>
+> > Replacing the function body matching logic with `.*$`, ensures
+> > that everything on the function definition line is captured,
+> > aligning with other userdiff drivers and improving hunk headers in
+> > `git diff`.
+>
+> Personally, I am a bit allergic against marketing speak. *Of course* do
+> we intend improve the code. No need to mention it.
+>
+> > Additionally, the word regex is refined to better recognize shell
+> > syntax, including additional parameter expansion operators and
+> > command-line options, improving syntax-aware diffs.
+>
+> Good. (But see above about "improving".)
+>
+> > Yes I will be careful about the commit messages.
 
-> P.S. I was having trouble building master (something in the linker
-> with _false_but_the_compiler_does_not_know_it)? Revision 1ee85f0e21
-> (The twelfth batch, 2025-05-08). Log at
+> > Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
+> > ---
+>
+> > diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+> > index f51d3557f1..0be647c2fb 100755
+> > --- a/t/t4034-diff-words.sh
+> > +++ b/t/t4034-diff-words.sh
+> > @@ -320,6 +320,7 @@ test_expect_success 'unset default driver' '
+> >
+> >  test_language_driver ada
+> >  test_language_driver bibtex
+> > +test_language_driver bash
+> >  test_language_driver cpp
+> >  test_language_driver csharp
+> >  test_language_driver css
+>
+> Including a test for word-diff is very much appreciated!
+>
+> > diff --git a/t/t4034/bash/expect b/t/t4034/bash/expect
+> > new file mode 100644
+> > index 0000000000..a0f7cbd5a3
+> > --- /dev/null
+> > +++ b/t/t4034/bash/expect
+> > @@ -0,0 +1,30 @@
+> > +<BOLD>diff --git a/pre b/post<RESET>
+> > +<BOLD>index 09ac008..60ba6a2 100644<RESET>
+> > +<BOLD>--- a/pre<RESET>
+> > +<BOLD>+++ b/post<RESET>
+> > +<CYAN>@@ -1,25 +1,25 @@<RESET>
+> > +<RED>my_var<RESET><GREEN>new_var<RESET>=10
+> > +x=<RED>123<RESET><GREEN>456<RESET>
+> > +y=<RED>3.14<RESET><GREEN>2.71<RESET>
+> > +z=<RED>.5<RESET><GREEN>.75<RESET>
+>
+> OK.
+>
+> > +echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
+>
+> This tests a typical variable expansion. Good.
+>
+> > +${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
+>
+> A more elaborate variable expansion does not include the surrounding ${
+> }. Good.
+>
+> > +if [ "<RED>$a<RESET><GREEN>$x<RESET>" == "<RED>$b<RESET><GREEN>$y<RESET>" ] || [ "<RED>$c<RESET><GREEN>$x<RESET>" != "<RED>$d<RESET><GREEN>$y<RESET>" ]; then echo "OK"; fi
+>
+> This line also only tests variable expansions and is quite redundant. It
+> could test the operators that we see, but it doesn't. See below for
+> ideas how to do that.
+>
+> And all from here...
+>
+> > +((<RED>a<RESET><GREEN>x<RESET>+=<RED>b<RESET><GREEN>y<RESET>))
+> > +((<RED>a<RESET><GREEN>x<RESET>-=<RED>b<RESET><GREEN>y<RESET>))
+> > +$((<RED>a<RESET><GREEN>x<RESET><<<RED>b<RESET><GREEN>y<RESET>))
+> > +$((<RED>a<RESET><GREEN>x<RESET>>><RED>b<RESET><GREEN>y<RESET>))
+> > +${<RED>a<RESET><GREEN>x<RESET>:-<RED>b<RESET><GREEN>y<RESET>}
+> > +${<RED>a<RESET><GREEN>x<RESET>:=<RED>b<RESET><GREEN>y<RESET>}
+> > +${<RED>a<RESET><GREEN>x<RESET>##*/}
+> > +${<RED>a<RESET><GREEN>x<RESET>%.*}
+> > +${<RED>a<RESET><GREEN>x<RESET>%%.*}
+> > +${<RED>a<RESET><GREEN>x<RESET>^^}
+> > +${<RED>a<RESET><GREEN>x<RESET>,}
+> > +${<RED>a<RESET><GREEN>x<RESET>,,}
+>
+> ... to here also only test variable expansions, but not the operators.
+> As written, they are totally redundant and should be dropped or improved.
+>
+> To test, for example, that '##' is kept together as an operator, you
+> have to have
+>
+>    ${x#*/}
+>
+> in the pre-image and
+>
+>    ${x##*/}
+>
+> in the post-image, so that we see
+>
+>    ${x<RED>#<RESET><GREEN>##<RESET>*/}
+>
+> in the result. If '##' were two tokens (due to a bug in the pattern), we
+> would see
+>
+>    ${x#<GREEN>#<RESET>*/}
+>
+> in the result.
+>
+> You should go through all not-single-character operators and have a
+> pre-image and a post-image where one characters is added or removed. The
+> following is not a correct test:
+>
+> pre:    ((x+=b))
+> post:   ((x-=b))
+> result: ((x<RED>+=<RESET><GREEN>-=<RESET>))
+>
+> because we would see this result even if the pattern has a bug that
+> recognizes only one of += or -=, but would split the other one. A
+> correct test would be:
+>
+> pre:    ((x+b))
+> post:   ((x+=b))
+> result: ((x<RED>+<RESET><GREEN>+=<RESET>))
+>
+> > +${!<RED>a<RESET><GREEN>x<RESET>}
+>
+> Here, you should have no '!' in the pre-image and the '!' in the post
+> image and not change the name. Then the test demonstrates that '!' is
+> its own token and not merged with '${' (if that is the intent of the
+> test; otherwise it is a redunant test).
+>
+> > +${<RED>a<RESET><GREEN>x<RESET>[@]}
+>
+> If you want to test that '@' is not merged with the brackets, then you
+> can have, for example '*' in the pre-image and '@' in the post image.
 
-This has been fixed the last days.
-The fix works under MacOs,
-do you think that you can test the patch, please ?
-<https://github.com/gitster/git/tree/tb/macos-false-but-the-compiler-does-=
-not-know-it-fix>
+>
+> > +${<RED>a<RESET><GREEN>x<RESET>:?error message}
+>
+> Either redundant or another two-character operator to test.
 
-Or look into the seen branch.
+Ok I got it.
+>
+> > +${<RED>a<RESET><GREEN>x<RESET>:2:3}
+>
+> Redundant.
+>
+I understand I will remove it.
+
+> > +ls <RED>-a<RESET><GREEN>-x<RESET>
+> > +ls <RED>--a<RESET><GREEN>--x<RESET>
+>
+> Both are good tests.
+
+Thank you. I understand the suggestions about the word diff tests and
+I will remove the redundant ones and write the correct tests .
+>
+> > diff --git a/userdiff.c b/userdiff.c
+> > index 340c4eb4f7..4c77c7e0f6 100644
+> > --- a/userdiff.c
+> > +++ b/userdiff.c
+> > @@ -64,15 +64,27 @@ PATTERNS("bash",
+> >            /* Bashism identifier with optional parentheses */
+> >            "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+> >        ")"
+> > -      /* Optional whitespace */
+> > -      "[ \t]*"
+> > -      /* Compound command starting with `{`, `(`, `((` or `[[` */
+> > -      "(\\{|\\(\\(?|\\[\\[)"
+> > +      /* Everything after the function header is captured  */
+> > +      ".*$"
+>
+> I remember suggesting to capture everything after the function header.
+> However, If I am not mistaken, this does not do what I intended (and as
+> written it means that a pointless matching operation happens). The hunk
+> header shows everything that is in the outermost parentheses (group).
+> This catch-all, however, is even outside the outermost group and not
+> captured. It should be above the closing parenthesis that we see in the
+> context.
+
+> I am sorry I want to understand a thing  , we want everything from the function name to the end of the line to be the hunk header right ? So in the pattern "^[ \t]*"
+/* Start of captured text */
+"("
+"("
+     /* POSIX identifier with mandatory parentheses */
+     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+"|"
+     /* Bashism identifier with optional parentheses */
+     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+")"
+/* Optional whitespace */
+"[ \t]*"
+/* Compound command starting with `{`, `(`, `((` or `[[` */
+"(\\{|\\(\\(?|\\[\\[)"
+/* End of captured text */
+")"
+if I replace
+"[ \t]*"
+"(\\{|\\(\\(?|\\[\\[)"  part with .*$ then will it not capture the
+entire line ? I mean the outermost group ends here-
+
+ /* End of captured text */
+")"
+right ? What am I getting wrong ?
+
+> To test for this, you can have one test where "RIGHT" is not the
+> function name, but in the comment on the function header line.
+>
+> >        /* End of captured text */
+> >        ")",
+> >        /* -- */
+> > -      /* Characters not in the default $IFS value */
+> > -      "[^ \t]+"),
+> > +      /* Identifiers: variable and function names */
+> > +       "[a-zA-Z_][a-zA-Z0-9_]*"
+> > +      /* Numeric constants: integers and decimals */
+> > +       "|[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
+> > +      /* Shell variables: $VAR, ${VAR} */
+> > +       "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{"
+> > +       /* Logical and comparison operators */
+> > +      "|\\|\\||&&|<<|>>|==|!=|<=|>="
+> > +      /* Assignment and arithmetic operators */
+> > +      "|[-+*/%&|^!=<>]=?"
+> > +      /* Additional parameter expansion operators */
+> > +      "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|/[a-zA-Z0-9_-]+|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+>
+> What is the purpose of this "/[a-zA-Z0-9_-]+"? It would mean, for
+> example that changes in alphanumeric path names would include the slash
+> in the changed part. I don't think this should be here.
+
+> Ok I got it.
+
+> > +      /* Command-line options (to avoid splitting -option) */
+> > +      "|--?[a-zA-Z0-9_-]+"
+> > +      /* Brackets and grouping symbols */
+> > +      "|\\(|\\)|\\{|\\}|\\[|\\]"),
+> >  PATTERNS("bibtex",
+> >        "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+> >        /* -- */
+>
+> -- Hannes
+>
