@@ -1,101 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2C7D7263E
-	for <git@vger.kernel.org>; Sat, 10 May 2025 21:33:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ABC72628
+	for <git@vger.kernel.org>; Sat, 10 May 2025 22:02:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746912807; cv=none; b=rnyunjm22PmkeFi88IH3LnM8JjpkijMeSPmF1X2vFG9E1Jd252KEQLJjB1RAkArbQ2QISPa/11gNP7RsrrYJ81t9cilUbg0zkx7Eh/U+Zhg/J8k5yyV6Lg+p1VWhCrdcMvSjca8MUmBQLSwGBHmyKikglXD2oVjVsJBPLFJx+xk=
+	t=1746914567; cv=none; b=c2EA/bTPSKyj54453Z0u3YS6oGX6H8x3tuaLsRSJUCpar1Jcztw/aIQIFKWb6OT+kvRNNOa3/rVQ6Z7iu7qzrcTIVbe25cBz2D4quj8+IXr3ZELpIJ69yEWGWyHBAwSvPxPS5im2O+Mk11oyyEbRS/LU253qfG4IH/uwlyuKOHo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746912807; c=relaxed/simple;
-	bh=Uhh9K9/BV3gvrUUFqg+/Lrige8TIyVmMc+06KCNgmPA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=YQg7jLZ7RfYmm0E2gjcNmu/tsMvLRMs0c8p9YX3JZKVB5u4I8Ic/zMNXq5S2sWyysaZ39z28o8XEqUuebJKM7Sfbz0xIN/MGNHu3/HM836ZuyPrXxjbr3v/GdQ4sr6KdoQA9ZqcO8lPow2zA36lgcFzaT3zElji0zszGAa6n+fg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Ggkg4k0K; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1746914567; c=relaxed/simple;
+	bh=anWjeK0fpQx4gaFGlt89W1i/LEZREagwYvsEBjoICmU=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=A+pcziom2kamJ8M++dBsGZ9dzhBBTTmUTvY90CTs/5a7DCxwo0NNZh8aKE7kGjzD9sDXr8NuNoTWOLFm0GQ59WHUqAU49ND5Z+lwoAHMxNhs4iZXnMOVF2LQH2lnj7cMLDtDLGbJDqgfgOUvQd2siz4TyWrU+yj86W0cu4fGE5M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZacmP/V; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Ggkg4k0K"
-Received: (qmail 16524 invoked by uid 109); 10 May 2025 21:33:25 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Uhh9K9/BV3gvrUUFqg+/Lrige8TIyVmMc+06KCNgmPA=; b=Ggkg4k0Kn2zz+kvFMQ2rg4ftkN3c7+DuQBSq6VX3KUMG4r2lcMpqNyVwGsk3l/W06ifcekJ1k/1NhVvUSgpi5aURbvlyfyzIl4bwEWaGTJ4kVHb7XPJYcvmmFNqasMJL2HS2nOoqrO31qlvByy2q0JwP3pv8fLfEf+Pg5F2a0M5xUWGodouej8riYBQJq5nxRutDcdRPduemQ5FS+UQammWSYGIJv3RadaWDAIwuHWUIQ659gieBr65hroFUY4Xs6YoViAzLH1Zl1qLLt+QDCyNcDBqMlhpmYB0+dDM2tkXqhL0ZTYOgrm5xrcGJ6EIn/SfjBPZn4lGRCxwM2LelxQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Sat, 10 May 2025 21:33:25 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 16480 invoked by uid 111); 10 May 2025 21:33:26 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Sat, 10 May 2025 17:33:26 -0400
-Authentication-Results: peff.net; auth=none
-Date: Sat, 10 May 2025 17:33:24 -0400
-From: Jeff King <peff@peff.net>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 4/4] builtin/stash: provide a way to import stashes
- from a ref
-Message-ID: <20250510213324.GB1139735@coredump.intra.peff.net>
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
- <20250508234458.3665894-5-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZacmP/V"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a1f9791a4dso962810f8f.0
+        for <git@vger.kernel.org>; Sat, 10 May 2025 15:02:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746914563; x=1747519363; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=akLIZJwYx92RdGoBkgsiciKvcX+R5w9GZJ/imUnVMow=;
+        b=NZacmP/V2YvFoI+sP23TZkceicDn/6FJMQTCY38BUAqyS7GCljF7zzL1bqxgv6wuqO
+         ANYdGFduiHItfFVzHtH6Y7/uL4cLIJl0AEq2tkRZigXcOevX67c3ObNpcWMv91t51BO+
+         1dgCUfjHTSrnpJbhWBiS9rQYxfrB7x1pk9kazR2MQ3LntEH8QrPHXKBjKP63N9Qy6oqW
+         6RXP9BdPP0Jk2T9GRJJelkiQ9G/sEZsEPNxSFos34hlMAPAdTvTil9xYDIvJBSFSVPaM
+         s+LpD1sot4lz//CfhHIyqk7YVpxXemCOjOzgvyyHsQEkeuB9jii/NHYKSPejZMCmJ/Ym
+         fDgg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746914563; x=1747519363;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=akLIZJwYx92RdGoBkgsiciKvcX+R5w9GZJ/imUnVMow=;
+        b=nEMx+za/kjjADhRDszxDQ/HeScgMlK1NBHf0ZgNx04mmDxKyt4Lo2Gka8H0ZLVzlzF
+         RzzQiLWtL0X3KFTSsldC8QmOVvzBPEL9znEF5WCLuJMcRB6j0yqsNRFCnkPbi5n3t/fz
+         idsfDqXStCXTQ8oKerMLe7KjToK5pFGI4M7+aPA/xVQGktfiprkmmRxngWkb/X6daVOe
+         LOy2KwxDLtFnQIFJJailgU5T+cQFfrEweNRi0vaxDNn2r4CHQv9quPqqG4cgRXxGUOQQ
+         jesR9q+alOjkfO1xQTaNLuT8ME/GRZk4pLXRp9Gk3opBwLiwreBjTwAqwcqVb5Ka5GXv
+         7ytw==
+X-Gm-Message-State: AOJu0YyM5kpHmc4HOpfqrqGs8B4d8/Ty8svvRoJMMko7p7AKSZrUHw0I
+	dOav5Jnx04NKYk5PvnUxHgmEPVLp8Kgl3XOVBpMwLB2awZIXkX1njM65uQ==
+X-Gm-Gg: ASbGncvUn8orexqT0huvOgzZRPJUZzpAwfbN8mwEFrsDhWqNFQwtPqs1YmhSF4w5QRW
+	ZcCRmImQbe45CywYAaNLbB16RikVK9G6ftLjRZ/125MlO6CLsNf1UvRuT52esUC5BMYzZgDgS3v
+	Xw6eQW8cGv7w+gR39jzfVm4rbAw3byR4rUkEX3/E8Le5HkklSjTeL8sdPkMUPiYeOaCSeQ1nT/x
+	aAsSuUMaQITKgWFjm6u4TIEwXYM8unkd4ywy4Iywr7Ar6g7TAEkhqpcDJugPcSws2NHRa2K/Z+J
+	a+RhnjjsbF8YjJA+DPsakI8cPkqNs8syVlGUocfy6Gd3h36ALxwC
+X-Google-Smtp-Source: AGHT+IGEhd9aKWT2F/NIV5XxkoBgXmELoX2g6LCKrGcFvhGsUxrSPzuYZTXujYXklBJKPxC2nm2SwA==
+X-Received: by 2002:a5d:5f4a:0:b0:39c:1f04:bb4a with SMTP id ffacd0b85a97d-3a1f64277e7mr6380514f8f.10.1746914562700;
+        Sat, 10 May 2025 15:02:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4bbf0sm7413602f8f.82.2025.05.10.15.02.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 May 2025 15:02:42 -0700 (PDT)
+Message-Id: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 10 May 2025 22:02:39 +0000
+Subject: [PATCH 0/2] merge-tree: add new --mergeability-only option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250508234458.3665894-5-sandals@crustytoothpaste.net>
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>
 
-On Thu, May 08, 2025 at 11:44:57PM +0000, brian m. carlson wrote:
+This adds a new flag, --mergeability-only, to git merge-tree, which
+suppresses all output and leaves only the exit status (reflecting successful
+merge or conflict). This is useful for Git Forges in cases where they are
+only interested in whether two branches can be merged, without needing the
+actual merge result or conflict details.
 
-> +static int do_import_stash(struct repository *r, const char *rev)
-> [...]
-> +	struct oid_array items = OID_ARRAY_INIT;
-> +	int i;
-> [...]
-> +	/*
-> +	 * Walk the commit history, finding each stash entry, and load data into
-> +	 * the array.
-> +	 */
-> +	for (i = 0;; i++) {
-> +		struct object_id tree, oid;
-> +		char revision[GIT_MAX_HEXSZ + 1];
-> +
-> +		oid_to_hex_r(revision, &chain);
-> +
-> +		if (get_oidf(&tree, "%s:", revision) ||
-> +		    !oideq(&tree, r->hash_algo->empty_tree)) {
-> +			res = error(_("%s is not a valid exported stash commit"), revision);
-> +			goto out;
-> +		}
-> +		if (get_oidf(&chain, "%s^1", revision) ||
-> +		    get_oidf(&oid, "%s^2", revision))
-> +			break;
-> +		oid_array_append(&items, &oid);
-> +	}
-> +
-> +	/*
-> +	 * Now, walk each entry, adding it to the stash as a normal stash
-> +	 * commit.
-> +	 */
-> +	for (i = items.nr - 1; i >= 0; i--) {
+The advantage of the flag is two fold:
 
-Coverity complains about possible integer overflow here. It's an
-interesting case. items.nr is a size_t, coming from the oid_array, and
-so it's unsigned. You use a signed int to iterate, which is needed to
-catch walking past the zero. But in that initial assignment, the
-subtraction of 1 is done on an unsigned value. If items.nr is zero, then
-it wraps around to a big (usually 64-bit) number, which is then
-truncated and forced into a signed 32-bit int.
+ * The merge machinery can exit once it detects the first conflict, instead
+   of continuing to compute merge result information
+ * The merge machinery can avoid writing merged blobs and trees to the
+   object store when in the outer layer of the merging process (more details
+   in the first commit message).
 
-I _think_ that usually works out, because the overflowed size_t is going
-to be all-bits-1, and then the truncation to int is also all-bits-1,
-which taken as a signed value is -1.
+Elijah Newren (2):
+  merge-ort: add a new mergeability_only option
+  merge-tree: add a new --mergeability-only flag
 
-Probably there's some light violation of the standard there, but I think
-it should be OK. But I thought I'd mention it in case I'm missing
-something.
+ Documentation/git-merge-tree.adoc |  6 +++++
+ builtin/merge-tree.c              | 22 ++++++++++++++++++
+ merge-ort.c                       | 38 +++++++++++++++++++++++++------
+ merge-ort.h                       |  1 +
+ t/t4301-merge-tree-write-tree.sh  | 38 +++++++++++++++++++++++++++++++
+ 5 files changed, 98 insertions(+), 7 deletions(-)
 
--Peff
 
-PS Sorry for the flurry of emails on a v5; this hit jch, so it got
-   sucked into my usual testing / analysis flow.
+base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1920%2Fnewren%2Fmergeability-only-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1920/newren/mergeability-only-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1920
+-- 
+gitgitgadget
