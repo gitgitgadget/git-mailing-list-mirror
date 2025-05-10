@@ -1,137 +1,159 @@
-Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
+Received: from mail-ej1-f42.google.com (mail-ej1-f42.google.com [209.85.218.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5385F2F3E
-	for <git@vger.kernel.org>; Sat, 10 May 2025 19:46:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEEF61553AB
+	for <git@vger.kernel.org>; Sat, 10 May 2025 20:07:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746906385; cv=none; b=h6aoxfRgLj6yQCiez9B94eaSbxn+j/pcLDEJ+kIxMgPl2pxsuWesY+UahJFgWOcmGGz4V07XvfsOroU8kXvWA3ski4KEWjVnzemlCGyjwai3qCm8NDjf/Dxchv5ccSiSMEx7eL+2xWKJbfGyqQxnhyDuxFubqWbNkmbOBp+Enc8=
+	t=1746907661; cv=none; b=t22ilYzSj4sypgj6PXHZ7LxFELhCbGn4VTbwqbwpEL93z1gu4t3D5WkAlJVYgvmfaD3bPe++DALK+HIkoLUjH7Xjob3N0LyoEODyqf3llhfWffmtcYQzN468bMoVMlE51/xGl0+dQ5V6TqoBe6J6/EfO5uqVUO6ND7SUbGi9ZkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746906385; c=relaxed/simple;
-	bh=jN+zjPvahBujeHlQRiugm/d1b/jJ2I38CcEMBvWgpBA=;
+	s=arc-20240116; t=1746907661; c=relaxed/simple;
+	bh=0MzkNa9YyqlCQ6j4YSy/XSGmSjUaGMuGo6fg9waVka8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Cy0/XwZ/GOVm7Ir3mtPspIjOYfT3ICD6+dlbZox2YThp59mi9DaoHZGweHAs8mA4qImagBobBLSyD4gBPHjAJJwgN78tKmf6Aoln60S5rSX4WHYJ4f0DGD5g25wBaqXZFcj77YqT3dWPN5qNpZiGmeGFEBQP4SGmXIylQ7tNQsY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HDOpRhT/; arc=none smtp.client-ip=209.85.218.41
+	 To:Cc:Content-Type; b=gD/W2WxLKzjS4skXeguz9UjbCfb1cdzyKazoaPeEYOw28VzkLcvghH+712oXS2mhFeiOCN+0HQb3Z5eojutkUZtCHC0DVdQAaHa5uhMvd1vJ8tSKd99oWIcI9DzWPDCIiuY/mgWUlvl2U5ZgPwrEgPH17PeQjX5fAI/1apKFCc4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SXI4Gc/H; arc=none smtp.client-ip=209.85.218.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HDOpRhT/"
-Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ad216a5a59cso301100166b.3
-        for <git@vger.kernel.org>; Sat, 10 May 2025 12:46:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SXI4Gc/H"
+Received: by mail-ej1-f42.google.com with SMTP id a640c23a62f3a-ad2216ef31cso277187066b.1
+        for <git@vger.kernel.org>; Sat, 10 May 2025 13:07:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746906381; x=1747511181; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746907658; x=1747512458; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=jN+zjPvahBujeHlQRiugm/d1b/jJ2I38CcEMBvWgpBA=;
-        b=HDOpRhT/C+8PhnlpjwCFP1DX8JwKi8XliNVv7/dSSfqdM93OeFrONlEGJpUwuMpwE/
-         lwePv+2gKJch12P0j1uQL0NoQgtZN5Mk2sxaZ13amPifiEONzslWXCFAHlM82Sa+Y8/H
-         DAdCS/WW6qgwDkQDdThAfgQck9ZnwCSb57GHARAxse+Mn5W0Sr2EwPo1iq4M5XY3l7M5
-         au5MIkh+Nj55foh4FWvMZaKEYX2fXCCJ/fKZsLP+wzWFgvafdL9BBCUvM8P8+nR2lScR
-         CSFrV8Ss1aT7zPqNO56OqdLsSFekwbJwG+dUpv1HQaoYpAyWEuKY9OceVPr9bFf9JRL1
-         /d8A==
+        bh=0LOKIo5n4BJ0Wdw6jzediioPNIXE/UH9+oGVgzvOdVI=;
+        b=SXI4Gc/HTc/cQCHFEJnlKxaNhSH/kDggSUM86wsmFCB3g2sYHeUxXQdYs10OFDDko9
+         cYkQrCl/G8akJOOgSxX9F7zmgixhASOZ9WjjFXDEqwTUU4yvW7FNZ5OzGPtsNR/DVn4g
+         4w0OBT3oYErxQTfTbsZU4O3EwYrcsTXfZibFizL+plGWWygpYd2jWodGKXy5ta8woXRw
+         0gPgztLbZDYYtyvdSgHbhlfAXKXw3wtbR8HJfP+/1El4Oyr+7Nz+joCbg3QotjCfDeky
+         XaDwY9y+Jf/lURddPJjftn/KJuFdAEWuDQJ2H3KN8z2gzJ58GQZqwC/9hkNgDLnJCYZ0
+         V4Og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746906381; x=1747511181;
+        d=1e100.net; s=20230601; t=1746907658; x=1747512458;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=jN+zjPvahBujeHlQRiugm/d1b/jJ2I38CcEMBvWgpBA=;
-        b=WMgVhli2gB3ypMQDSk2/2ks9mOs8J6YapG3A9lJ9HY37aNR+bLX1CA0bOHzGwtnT4D
-         kY6baGvT65ktK0xsBH/amvG4Lk7azkoDLmT9g3CWqKIY50N/jZmEreXHdtd9yajt5UMr
-         N79SA57pFhmjuELsQ3i8a55QQ6k3XCWyogXIICOVMstjB7t6QBNe/zYoUvvUW+pN8Czl
-         0j4/gO3N4eD/W+H43LIKMrkqLmJA8r6yZi7/EuUcm0IolXeT39AgmaIe7m//tEt/jQ+B
-         +l8QtJtNOJfPKE3srfZ4N/tZLkpuaHHeNssEqrVsEpIQy4tIar16DpWC20U6jJI/TboG
-         m7Gw==
-X-Forwarded-Encrypted: i=1; AJvYcCWP5Tb0qgz9C8KZlmJvlhEW+XRq5igl/cTl+sUqsrmgCCAa9KhwqxkBIzisFr0Btgas1ZM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywk6VEZmNUVS7G03iaKQd+1mCxK8VM9M0c8l+5/Vs+t5TbrlwJO
-	H4Ro1BTNS/ozi+SnVyDCqpOsHWDh7Wh8SQHy6d+3+Yt5wb/Ch2fYx0IwL0uLymBw+PHhsFA0yvh
-	1FXl6ROxzUFL5gek6VcZ5qSnjeTo=
-X-Gm-Gg: ASbGnctKDvTFg+o7f11zsZ+mE0eXmWmvmK7u3C/izygRBErG7pr/2J43+kd+3fd/OTY
-	l8JyIcp0VsoKOQTzFGfBsvP6VcupPcMFJyDo7Yc0GzUC0LCVO93pVcCtBtZRcIOyzDriMVjN7D5
-	2xzcJDk97zIB2aD39Z3Gyr7fuD5phR0g4R1MWXgm/hPa+SqZAv2hGkQeTht6dX6CUtKw==
-X-Google-Smtp-Source: AGHT+IHQYYwM72cGRnqfdlFO3/ii2wPblXtAnk07RJgjikARaJT5bucV0zZfj3oSO//3yiWjqlcR9tDDC+UR5AJ0Ic4=
-X-Received: by 2002:a17:907:a08b:b0:acb:5adb:bd4a with SMTP id
- a640c23a62f3a-ad218ea828fmr741864466b.12.1746906381340; Sat, 10 May 2025
- 12:46:21 -0700 (PDT)
+        bh=0LOKIo5n4BJ0Wdw6jzediioPNIXE/UH9+oGVgzvOdVI=;
+        b=Px/L6a1b5SnBkK08F/W2r/8kqqPL75VXJT0nw8V1U9RWpofapMAJMHJlC9wt+xrUol
+         12elUuqIGikLNj6jEtXjgd+rKNVmKIF6wr5eBgMSrrSXHkeIy+iuoZ4QRW+U0TNYWqD1
+         /xlPcsk60OkGQ0gSISDFjzyaVC3I/BwMRYY8v2UTCS9yCYDCY166sI4Yo1AecXO1iLLG
+         XPF/wx67QHcXXcvqNr98/ZR19H6gePaBb5OJjwLsDV5McnsZ0tkxLUYmkcJTIviPVbTI
+         +qWcvd82xmMZaYif8dK8olUemWV4VHRR4SIFrXPtG1or0ibydb9wm11cV+TMh5FjZT9A
+         n0hQ==
+X-Forwarded-Encrypted: i=1; AJvYcCXpggnGeTVdObvtiPWH7kKjfbPLA2Rkh/mVzU0fX2JphJt1FPUqvw/HPW8QY/0yRWCKO4k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwaQJRNX6bROVbwuiCBMsJ+q02pG1mHDvVY/F/pUJggRK5BWw7s
+	Rieq1b8bEPjH7wMoM5nPqkFG5gmKtwkArWvZwyAYAZ9uXB8RQibQbV7q+gMjl2eIJ065nQ8bXXO
+	nE6iIUtjw81+ND3CrCXf19ARbyjI=
+X-Gm-Gg: ASbGnct01zcB3jc7cflWf1doVuy4otSz9fGtl7Dnk3BtnMoTAZ+SwAmYdhFmCpWnEan
+	Ja6u8+OpYGHnQSvR/WZjZhULSMfTRxRvSk55tPhUF3LhdP4kWTIJ77fBE/fQbRrgP+xlsTr/qtT
+	T/F/JDMYCZqFDwFaDvm9MZhjpN6q+Vor2qHPGEqg1E8LaRakbu4BEa4+6tC7QKpNGmQtzjtDyvV
+	cw5
+X-Google-Smtp-Source: AGHT+IF1ZVZs3Zvr33m+TUefQkyuJ44mKia5qoNqD6sNX8XmSSGCYcVJhfTn65OmnDRy83c5QC9kt229MvtHytOps3Y=
+X-Received: by 2002:a17:907:d109:b0:aca:aeb4:9bd6 with SMTP id
+ a640c23a62f3a-ad218f2d4d6mr704121566b.10.1746907657795; Sat, 10 May 2025
+ 13:07:37 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
- <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby> <20250408125521.GA17892@mit.edu>
- <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev> <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <aAgWytQNqtLzg2TU@ubby> <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
-In-Reply-To: <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
+References: <20250506-pks-contrib-spring-cleanup-v1-0-e6d5ddd79a72@pks.im>
+ <xmqqmsbph3lw.fsf@gitster.g> <CAPig+cT6XbdzeOFoeZUmX+ozPa2XNOv=H85xQhY4y8NYmJZ6-g@mail.gmail.com>
+ <aBq4J6UTZVPF8rb4@teonanacatl.net> <CAPig+cRxDQBmPu_-ci5vEuwtsAHadfCiFOccdYseBSj2F52JGw@mail.gmail.com>
+In-Reply-To: <CAPig+cRxDQBmPu_-ci5vEuwtsAHadfCiFOccdYseBSj2F52JGw@mail.gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Sat, 10 May 2025 15:46:10 -0400
-X-Gm-Features: AX0GCFszl95GWb9jMGIwHXkwWGEiHQzHQ7vUclXrzbYRnwivQTI31AL100VqtJo
-Message-ID: <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-To: Nico Williams <nico@cryptonector.com>
-Cc: Remo Senekowitsch <remo@buenzli.dev>, "Theodore Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, 
-	Martin von Zweigbergk <martinvonz@google.com>, Git Mailing List <git@vger.kernel.org>, 
-	Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, 
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Date: Sat, 10 May 2025 16:07:26 -0400
+X-Gm-Features: AX0GCFsC_xymUp4QHziAlGNxv2Ar58mOXK4Zt53Gl6IErkCrutloiabRKXOEGEQ
+Message-ID: <CALnO6CDp3Kr_Ma49jzftN_sMkOU95xGZ0sMe2J2boG2pWggCzQ@mail.gmail.com>
+Subject: Re: [PATCH 00/10] Spring cleanup of "contrib/"
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Todd Zullinger <tmz@pobox.com>, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 10, 2025 at 3:32=E2=80=AFPM D. Ben Knoble <ben.knoble@gmail.com=
-> wrote:
-[=E2=80=A6]
+On Tue, May 6, 2025 at 11:55=E2=80=AFPM Eric Sunshine <sunshine@sunshineco.=
+com> wrote:
 >
-> Thanks for thinking out some concrete options on where IDs come from!
-> I think I've gotten even more confused on how they are supposed to be
-> used (which should probably inform the implementation), but hopefully
-> we're getting somewhere :)
+> On Tue, May 6, 2025 at 9:32=E2=80=AFPM Todd Zullinger <tmz@pobox.com> wro=
+te:
+> > Eric Sunshine wrote:
+> > > Although we periodically hear that someone uses it, git-contacts
+> > > probably falls into the "tool has a clear alternative" category. In
+> > > this case, git-related[*] is a separately-maintained more functional
+> > > drop-in replacement which people could be using instead of
+> > > git-contacts.
+> > >
+> > > [*]: https://github.com/felipec/git-related/blob/master/git-related
+> >
+> > It may be worth noting that git-contacts is suggested in
+> > both MyFirstContribution.adoc and SubmittingPatches.
 >
-> --
-> D. Ben Knoble
+> I think I knew but forgot about those mentions. Certainly useful
+> information if Patrick decides to pursue retirement of git-contacts.
+>
+> > It probably helps that since 824503ce88 (SubmittingPatches:
+> > clarify 'git-contacts' location, 2024-04-18) there has been
+> > a note stating this isn't "part of the core `git` binary and
+> > must be called directly." That is relatively recent, though.
+>
+> Out of curiosity, I Googled git-contacts but didn't find any
+> meaningful hits. Pretty much the only pages found were renderings of
+> Git's documentation (including SubmittingPatches and the man page for
+> git-contacts itself), as well as the few patches to the Git mailing
+> list which introduced or touched git-contacts over the years. I did
+> not find any general discussion or recommendations to use
+> git-contacts, so perhaps it indeed is not very much used.
+>
+> > I added git-contacts to the Fedora git packaging shortly
+> > after 92a5dbbc22 (SubmittingPatches: mention the git
+> > contacts command, 2018-04-11), presuming some readers would
+> > want to use it.  (I never want to penalize users who are
+> > diligent enough to read SubmittingPatches. :)
+> >
+> > All that said, I don't have any strong opinion on whether it
+> > is kept or removed, let alone when that might happen.  I
+> > don't know that I've ever used it, other than for testing
+> > that it worked while packaging it.
+>
+> I've never used git-contacts either, despite the fact that I'm the one
+> who ported Felipe's git-related from Ruby[1] to Perl[2] for inclusion
+> in Git's "contrib" since the Ruby version had been rejected due to
+> being written in a language not already employed elsewhere in the
+> project. The Perl rewrite also included a number of useful
+> enhancements which Felipe later incorporated into git-related after he
+> published it as a standalone project. He has since extended it to
+> include even more features, so it's functionally a superset of
+> git-contacts.
 
-[Trying to summarize?]
+On a related note, installing git-related seems like rather more work
+than using git-contacts [1]: I have to keep a Ruby environment with
+the right gem working since I don't see this packaged anywhere.
+Keeping a Perl or Ruby environment working (at least for me) has been
+enough trouble as it is, heh.
 
-On a re-read of
-https://lore.kernel.org/git/CANiSa6gwup5vXU235mG+Ybbc+P=3DSbwoNFEmuhg=3DiYu=
-0yGvSXVA@mail.gmail.com/,
-I see that change IDs were motivated partly by identifying (related?)
-commits after rewrites. I can certainly see how it would be nice to
-track down how a commit I'm working on evolved; I can even imagine
-most of the problems brought up in this thread wrt splitting or
-combining commits (not to mention, say, cherry-picks where the
-committer makes non-trivial changes to the patch).
+[1]: https://github.com/felipec/git-related#installation
 
-There was also a note about using a change ID to identify a code
-review in supporting tools. Neat!
+Not that we couldn't drop the script, but ideally the replacement is
+an easy install (since, e.g., some of us use git-contacts as a ccCmd
+per the documentation).
 
-I'll leave it to someone else to summarize the open questions? (I now
-have a few of my own about how tools in Gits ecosystem respond to=E2=80=A6
-unexpected=E2=80=A6 headers.)
+>
+> By the way, Felipe also sent a patch series[3] eleven years ago with
+> the same intention of Patrick's series under discussion. Felipe's
+> series was never picked up but did undertake the retirement of
+> git-contacts.
+>
+> [1]: https://lore.kernel.org/git/1369986380-412-1-git-send-email-felipe.c=
+ontreras@gmail.com/
+> [2]: https://lore.kernel.org/git/1374403962-48361-1-git-send-email-sunshi=
+ne@sunshineco.com/
+> [3]: https://lore.kernel.org/git/1399662703-355-1-git-send-email-felipe.c=
+ontreras@gmail.com/T/
+>
 
-In the meantime, I think I'll repost this, since I'm not sure I ever
-got clarity:
-
-Re-reading the original post [1] (which didn't mention this kind of
-ID?), I'm having a hard time seeing the problem statement. There's a
-lot said here about the specifics of the solution, and some other neat
-things it might unlock=E2=80=A6 meanwhile, I'm wondering if all the
-consternation about change IDs is because the problem being solved is
-underspecified for a core Git feature? (That might tie to Ted's
-initial concerns about semantic meaning, on which I think I concur:
-the parent and committer/author headers have unambiguous meaning to
-Git, independent of anything else.)
-
-It looks to me, an outsider, like the problem is some combination of
-"I want to track a commit's evolution" and "I want to see related
-commits in review, esp. when it's an identical and already-approved
-commit." But I might be misreading, and clarifying the problem
-statement might help bring us to a better core solution?
-
-[1]: https://lore.kernel.org/git/xmqqh62tm5fo.fsf@gitster.g/T/#m038be849b9b=
-4020c16c562d810cf77bad91a2c87
 
 --=20
 D. Ben Knoble
