@@ -1,63 +1,67 @@
-Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62ABC72628
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AA11194137
 	for <git@vger.kernel.org>; Sat, 10 May 2025 22:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746914567; cv=none; b=c2EA/bTPSKyj54453Z0u3YS6oGX6H8x3tuaLsRSJUCpar1Jcztw/aIQIFKWb6OT+kvRNNOa3/rVQ6Z7iu7qzrcTIVbe25cBz2D4quj8+IXr3ZELpIJ69yEWGWyHBAwSvPxPS5im2O+Mk11oyyEbRS/LU253qfG4IH/uwlyuKOHo=
+	t=1746914567; cv=none; b=J/Iim2ehPyU0Ih3++gqTb/hZ6LJBscl3iK45670PBQt1cMPTbxfWvq9az2JvZZDe62AVe23Ps3reMmUsyJwAELyVtSBod7vRwH2LoeYOBzx5xT+HuvQnqjmOfdDq9imhuw9za0aV2E/D8j+Nx7Bey1bX6n8N9VKp+oomGrRF5Aw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1746914567; c=relaxed/simple;
-	bh=anWjeK0fpQx4gaFGlt89W1i/LEZREagwYvsEBjoICmU=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=A+pcziom2kamJ8M++dBsGZ9dzhBBTTmUTvY90CTs/5a7DCxwo0NNZh8aKE7kGjzD9sDXr8NuNoTWOLFm0GQ59WHUqAU49ND5Z+lwoAHMxNhs4iZXnMOVF2LQH2lnj7cMLDtDLGbJDqgfgOUvQd2siz4TyWrU+yj86W0cu4fGE5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NZacmP/V; arc=none smtp.client-ip=209.85.221.48
+	bh=rNLQxc3UwLA63h/66fm93Lq+bcmTs3chXk8uhejlJKc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=saYT1222+ckfVopVlAXglgh7tqjShhvRggAlODeeFrU+SxR/vJKjoArJmLY5KCeleR/W/UR9oRNTUP0gehXamuzwde/AzzKFOYp4O4UyBcCkYCXQS+wek4MrRJEtOc9Rr0QM4zGGFODIHFYxI752VE0dQKFc5u7iA9s0JdEr38Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=SQJzra9J; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NZacmP/V"
-Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a1f9791a4dso962810f8f.0
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="SQJzra9J"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a0ac853894so2768110f8f.3
         for <git@vger.kernel.org>; Sat, 10 May 2025 15:02:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1746914563; x=1747519363; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=akLIZJwYx92RdGoBkgsiciKvcX+R5w9GZJ/imUnVMow=;
-        b=NZacmP/V2YvFoI+sP23TZkceicDn/6FJMQTCY38BUAqyS7GCljF7zzL1bqxgv6wuqO
-         ANYdGFduiHItfFVzHtH6Y7/uL4cLIJl0AEq2tkRZigXcOevX67c3ObNpcWMv91t51BO+
-         1dgCUfjHTSrnpJbhWBiS9rQYxfrB7x1pk9kazR2MQ3LntEH8QrPHXKBjKP63N9Qy6oqW
-         6RXP9BdPP0Jk2T9GRJJelkiQ9G/sEZsEPNxSFos34hlMAPAdTvTil9xYDIvJBSFSVPaM
-         s+LpD1sot4lz//CfhHIyqk7YVpxXemCOjOzgvyyHsQEkeuB9jii/NHYKSPejZMCmJ/Ym
-         fDgg==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=eQfjF/s2gFH2fbTZzIn5/8PpbqPg+trnUX/BhuLb/fU=;
+        b=SQJzra9J6Tv3v+vpVmcAF22j5GNGDiSN5Kc6AlYMjugc1HG8eamAkU7qXb6npBnj+4
+         khDhwlV/0juJg7kDiPwP65A1OGu9NXfa6ilDU34+8hMdeN6wXmw8m9QwjSfsplV63Xw2
+         OJURM/iCywNzZZbjE54II1I54zFvJP3n2/29DU0D9y/CIc6ktLCi6ba9vRr2N2BY1djW
+         VabV6rXuxFveTst88gfqbejuI3NBTiO0YkgCz0FPVEEmTagzAu3orSFLFG7tqnJXDNo5
+         dbiF14M6FPAibdUsam8NxgHmDsfzMn53Vm1E++8Aqxb75/GrYaYKMpYbUYe1f2l0gF6H
+         FydA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1746914563; x=1747519363;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=akLIZJwYx92RdGoBkgsiciKvcX+R5w9GZJ/imUnVMow=;
-        b=nEMx+za/kjjADhRDszxDQ/HeScgMlK1NBHf0ZgNx04mmDxKyt4Lo2Gka8H0ZLVzlzF
-         RzzQiLWtL0X3KFTSsldC8QmOVvzBPEL9znEF5WCLuJMcRB6j0yqsNRFCnkPbi5n3t/fz
-         idsfDqXStCXTQ8oKerMLe7KjToK5pFGI4M7+aPA/xVQGktfiprkmmRxngWkb/X6daVOe
-         LOy2KwxDLtFnQIFJJailgU5T+cQFfrEweNRi0vaxDNn2r4CHQv9quPqqG4cgRXxGUOQQ
-         jesR9q+alOjkfO1xQTaNLuT8ME/GRZk4pLXRp9Gk3opBwLiwreBjTwAqwcqVb5Ka5GXv
-         7ytw==
-X-Gm-Message-State: AOJu0YyM5kpHmc4HOpfqrqGs8B4d8/Ty8svvRoJMMko7p7AKSZrUHw0I
-	dOav5Jnx04NKYk5PvnUxHgmEPVLp8Kgl3XOVBpMwLB2awZIXkX1njM65uQ==
-X-Gm-Gg: ASbGncvUn8orexqT0huvOgzZRPJUZzpAwfbN8mwEFrsDhWqNFQwtPqs1YmhSF4w5QRW
-	ZcCRmImQbe45CywYAaNLbB16RikVK9G6ftLjRZ/125MlO6CLsNf1UvRuT52esUC5BMYzZgDgS3v
-	Xw6eQW8cGv7w+gR39jzfVm4rbAw3byR4rUkEX3/E8Le5HkklSjTeL8sdPkMUPiYeOaCSeQ1nT/x
-	aAsSuUMaQITKgWFjm6u4TIEwXYM8unkd4ywy4Iywr7Ar6g7TAEkhqpcDJugPcSws2NHRa2K/Z+J
-	a+RhnjjsbF8YjJA+DPsakI8cPkqNs8syVlGUocfy6Gd3h36ALxwC
-X-Google-Smtp-Source: AGHT+IGEhd9aKWT2F/NIV5XxkoBgXmELoX2g6LCKrGcFvhGsUxrSPzuYZTXujYXklBJKPxC2nm2SwA==
-X-Received: by 2002:a5d:5f4a:0:b0:39c:1f04:bb4a with SMTP id ffacd0b85a97d-3a1f64277e7mr6380514f8f.10.1746914562700;
-        Sat, 10 May 2025 15:02:42 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=eQfjF/s2gFH2fbTZzIn5/8PpbqPg+trnUX/BhuLb/fU=;
+        b=gZWF6HAvfNaYc5oha1+K+mhuo6phg9ucUnlK0IyxEmuO8yx+SbiCzk5lk1qC48Sn5i
+         5kBjoInB2dTjmE2o03lIFXejjXIjJAnPicXyDH+L4P1s6hpXFsg0zJaGGJdrQ9cGv2Ul
+         B3Qyr+J81tBRceFhRXg8K2S4I1LWUwv9rAk3IeTw+D/wwgRb7EFRKRDeKIVKehg5xD2T
+         cQUpMtzvXmu3k5tL59fSSzVRz+vbMiFhDXVeY2w45BvHgXOWJBil1FXTIkk/b97FszQ4
+         AsBLh/Hrsn4/0QWFpCWxknGQv6UEO8h8NqW28T1OpuEYatyElxSWms84RKJiGsKs7mnL
+         VA5Q==
+X-Gm-Message-State: AOJu0YzKIGVMaEaKCxeASyCEmTfxV/hlgIURKAVquofkdEYLar1XE21R
+	pAb7v03WA1FmIgfDlZSperq6jhC1+Zgl6xTukPFBSmrqw7F35MThr54dZQ==
+X-Gm-Gg: ASbGncvhkSF4GFi0ayOaL8XSnV+wCyVgd1tZOg+hJA1ZzELPLyJVNAU4WLSwiMrVVNV
+	5fc8y53wqTpfBj9CQutUb9x542HYU+4yravAT/qCmyzEvYiVtef4oIesHBPniuTW+nZj5yIUIw1
+	zq3JxjE7P5nugHQaZJxGzCpeKkLy4oGj2/6psqgYwOykr7naR40nhby/DoJPzbMYuCitYPlNXxR
+	b5SuhQQdHSPFPJT3Zw/Mtp1WNya4kTpKLXHhF8LWjmZlD3/tHQKW/Q/MxgdUlA3ske66PzNdizq
+	quEvfDdgM9Ys0Eygn6zw2kH+QfYvEG9Ua05KraD3MlDdzpzo6Ip/
+X-Google-Smtp-Source: AGHT+IFZsjO0yaXWefLqAQF6fDSL3VIf2/MiV7uxVq8IJpl/6QuqMr6ut/wfBmJ5UdZZWnoyz/mMyA==
+X-Received: by 2002:a05:6000:3113:b0:39c:1f0e:95af with SMTP id ffacd0b85a97d-3a1f64279d3mr6819007f8f.3.1746914563339;
+        Sat, 10 May 2025 15:02:43 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4bbf0sm7413602f8f.82.2025.05.10.15.02.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f57dde27sm7670106f8f.17.2025.05.10.15.02.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 May 2025 15:02:42 -0700 (PDT)
-Message-Id: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
+        Sat, 10 May 2025 15:02:43 -0700 (PDT)
+Message-Id: <09292804cffc41d15f1156e0b4bba4cba7ec7ca4.1746914561.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
+References: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
 From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sat, 10 May 2025 22:02:39 +0000
-Subject: [PATCH 0/2] merge-tree: add new --mergeability-only option
+Date: Sat, 10 May 2025 22:02:40 +0000
+Subject: [PATCH 1/2] merge-ort: add a new mergeability_only option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -68,37 +72,196 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-This adds a new flag, --mergeability-only, to git merge-tree, which
-suppresses all output and leaves only the exit status (reflecting successful
-merge or conflict). This is useful for Git Forges in cases where they are
-only interested in whether two branches can be merged, without needing the
-actual merge result or conflict details.
+From: Elijah Newren <newren@gmail.com>
 
-The advantage of the flag is two fold:
+Git Forges may be interested in whether two branches can be merged while
+not being interested in what the resulting merge tree is nor which files
+conflicted.  For such cases, add a new mergeability_only option.  This
+option allows the merge machinery to, in the outer layer of the merge:
+  * exit upon first conflict
+  * avoid writing merged blobs/trees to the object store
 
- * The merge machinery can exit once it detects the first conflict, instead
-   of continuing to compute merge result information
- * The merge machinery can avoid writing merged blobs and trees to the
-   object store when in the outer layer of the merging process (more details
-   in the first commit message).
+Note that since the recursive merge of merge bases (corresponding to
+call_depth > 0) can conflict without the outer final merge (corresponding
+to call_depth == 0) conflicting, we can't short-circuit nor avoid
+writing merges blobs/trees to the object store during those inner
+merges.
 
-Elijah Newren (2):
-  merge-ort: add a new mergeability_only option
-  merge-tree: add a new --mergeability-only flag
+There is a further potential micro-optimization here.  rename/rename
+conflicts have the potential for nested conflicts even without recursive
+merges; because of that, handle_content_merge() can be called multiple
+times and is done via different paths.  Currently, we only exit early in
+process_entries(), which is where the final handle_content_merge() is
+invoked.  Since rename/rename conflicts have an additional earlier
+handle_content_merge() call that can be invoked from
+detect_and_process_renames() (via process_renames()), we could
+potentially exit earlier at that call point.  However, rename/rename
+conflicts are exceptionally rare, and feeding the extra logic through
+didn't seem worth it.  (And, if we don't exit early at that point, then
+any resulting blobs need to be written to the store so that subsequent
+handle_content_merge() calls trying to use the blob don't throw
+exceptions.)
 
- Documentation/git-merge-tree.adoc |  6 +++++
- builtin/merge-tree.c              | 22 ++++++++++++++++++
- merge-ort.c                       | 38 +++++++++++++++++++++++++------
- merge-ort.h                       |  1 +
- t/t4301-merge-tree-write-tree.sh  | 38 +++++++++++++++++++++++++++++++
- 5 files changed, 98 insertions(+), 7 deletions(-)
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+ merge-ort.c | 38 +++++++++++++++++++++++++++++++-------
+ merge-ort.h |  1 +
+ 2 files changed, 32 insertions(+), 7 deletions(-)
 
-
-base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1920%2Fnewren%2Fmergeability-only-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1920/newren/mergeability-only-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1920
+diff --git a/merge-ort.c b/merge-ort.c
+index 77310a4a52c9..47b3d1730ece 100644
+--- a/merge-ort.c
++++ b/merge-ort.c
+@@ -2127,6 +2127,7 @@ static int handle_content_merge(struct merge_options *opt,
+ 				const struct version_info *b,
+ 				const char *pathnames[3],
+ 				const int extra_marker_size,
++				const int record_object,
+ 				struct version_info *result)
+ {
+ 	/*
+@@ -2214,7 +2215,7 @@ static int handle_content_merge(struct merge_options *opt,
+ 			ret = -1;
+ 		}
+ 
+-		if (!ret &&
++		if (!ret && record_object &&
+ 		    write_object_file(result_buf.ptr, result_buf.size,
+ 				      OBJ_BLOB, &result->oid)) {
+ 			path_msg(opt, ERROR_OBJECT_WRITE_FAILED, 0,
+@@ -2897,6 +2898,7 @@ static int process_renames(struct merge_options *opt,
+ 			struct version_info merged;
+ 			struct conflict_info *base, *side1, *side2;
+ 			unsigned was_binary_blob = 0;
++			const int record_object = true;
+ 
+ 			pathnames[0] = oldpath;
+ 			pathnames[1] = newpath;
+@@ -2947,6 +2949,7 @@ static int process_renames(struct merge_options *opt,
+ 							   &side2->stages[2],
+ 							   pathnames,
+ 							   1 + 2 * opt->priv->call_depth,
++							   record_object,
+ 							   &merged);
+ 			if (clean_merge < 0)
+ 				return -1;
+@@ -3061,6 +3064,7 @@ static int process_renames(struct merge_options *opt,
+ 
+ 			struct conflict_info *base, *side1, *side2;
+ 			int clean;
++			const int record_object = true;
+ 
+ 			pathnames[0] = oldpath;
+ 			pathnames[other_source_index] = oldpath;
+@@ -3080,6 +3084,7 @@ static int process_renames(struct merge_options *opt,
+ 						     &side2->stages[2],
+ 						     pathnames,
+ 						     1 + 2 * opt->priv->call_depth,
++						     record_object,
+ 						     &merged);
+ 			if (clean < 0)
+ 				return -1;
+@@ -3931,9 +3936,12 @@ static int write_completed_directory(struct merge_options *opt,
+ 		 * Write out the tree to the git object directory, and also
+ 		 * record the mode and oid in dir_info->result.
+ 		 */
++		int record_tree = (!opt->mergeability_only ||
++				   opt->priv->call_depth);
+ 		dir_info->is_null = 0;
+ 		dir_info->result.mode = S_IFDIR;
+-		if (write_tree(&dir_info->result.oid, &info->versions, offset,
++		if (record_tree &&
++		    write_tree(&dir_info->result.oid, &info->versions, offset,
+ 			       opt->repo->hash_algo->rawsz) < 0)
+ 			ret = -1;
+ 	}
+@@ -4231,10 +4239,13 @@ static int process_entry(struct merge_options *opt,
+ 		struct version_info *o = &ci->stages[0];
+ 		struct version_info *a = &ci->stages[1];
+ 		struct version_info *b = &ci->stages[2];
++		int record_object = (!opt->mergeability_only ||
++				     opt->priv->call_depth);
+ 
+ 		clean_merge = handle_content_merge(opt, path, o, a, b,
+ 						   ci->pathnames,
+ 						   opt->priv->call_depth * 2,
++						   record_object,
+ 						   &merged_file);
+ 		if (clean_merge < 0)
+ 			return -1;
+@@ -4395,6 +4406,8 @@ static int process_entries(struct merge_options *opt,
+ 						   STRING_LIST_INIT_NODUP,
+ 						   NULL, 0 };
+ 	int ret = 0;
++	const int record_tree = (!opt->mergeability_only ||
++				 opt->priv->call_depth);
+ 
+ 	trace2_region_enter("merge", "process_entries setup", opt->repo);
+ 	if (strmap_empty(&opt->priv->paths)) {
+@@ -4454,6 +4467,12 @@ static int process_entries(struct merge_options *opt,
+ 				ret = -1;
+ 				goto cleanup;
+ 			};
++			if (!ci->merged.clean && opt->mergeability_only &&
++			    !opt->priv->call_depth) {
++				ret = 0;
++				goto cleanup;
++			}
++
+ 		}
+ 	}
+ 	trace2_region_leave("merge", "processing", opt->repo);
+@@ -4468,7 +4487,8 @@ static int process_entries(struct merge_options *opt,
+ 		fflush(stdout);
+ 		BUG("dir_metadata accounting completely off; shouldn't happen");
+ 	}
+-	if (write_tree(result_oid, &dir_metadata.versions, 0,
++	if (record_tree &&
++	    write_tree(result_oid, &dir_metadata.versions, 0,
+ 		       opt->repo->hash_algo->rawsz) < 0)
+ 		ret = -1;
+ cleanup:
+@@ -4715,6 +4735,8 @@ void merge_display_update_messages(struct merge_options *opt,
+ 
+ 	if (opt->record_conflict_msgs_as_headers)
+ 		BUG("Either display conflict messages or record them as headers, not both");
++	if (opt->mergeability_only)
++		BUG("Displaying conflict messages incompatible with mergeability-only checks");
+ 
+ 	trace2_region_enter("merge", "display messages", opt->repo);
+ 
+@@ -5171,10 +5193,12 @@ redo:
+ 	result->path_messages = &opt->priv->conflicts;
+ 
+ 	if (result->clean >= 0) {
+-		result->tree = parse_tree_indirect(&working_tree_oid);
+-		if (!result->tree)
+-			die(_("unable to read tree (%s)"),
+-			    oid_to_hex(&working_tree_oid));
++		if (!opt->mergeability_only) {
++			result->tree = parse_tree_indirect(&working_tree_oid);
++			if (!result->tree)
++				die(_("unable to read tree (%s)"),
++				    oid_to_hex(&working_tree_oid));
++		}
+ 		/* existence of conflicted entries implies unclean */
+ 		result->clean &= strmap_empty(&opt->priv->conflicted);
+ 	}
+diff --git a/merge-ort.h b/merge-ort.h
+index 30750c03962f..6045579825da 100644
+--- a/merge-ort.h
++++ b/merge-ort.h
+@@ -83,6 +83,7 @@ struct merge_options {
+ 	/* miscellaneous control options */
+ 	const char *subtree_shift;
+ 	unsigned renormalize : 1;
++	unsigned mergeability_only : 1; /* exit early, write fewer objects */
+ 	unsigned record_conflict_msgs_as_headers : 1;
+ 	const char *msg_header_prefix;
+ 
 -- 
 gitgitgadget
+
