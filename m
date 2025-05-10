@@ -1,120 +1,124 @@
-Received: from bsmtp1.bon.at (bsmtp1.bon.at [213.33.87.15])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f181.google.com (mail-yb1-f181.google.com [209.85.219.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355311AA1FF
-	for <git@vger.kernel.org>; Sat, 10 May 2025 17:52:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=213.33.87.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8569F182B7
+	for <git@vger.kernel.org>; Sat, 10 May 2025 18:34:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746899548; cv=none; b=Ajy3KA1xAJwUhQfyk92ujmijfPKoGYWarHvFFK+Jvh5j7RbWQW1Sqf9mD+6MV2UUrtxsiGsGCnrbtJijvPF3EtyjKFStNOvuiwjPL5In7f9HsURssmhG10cNIQLPfHFtdbyG9IW8OlxAB2SqpiwbroLz1VygkZHAngC/kdxQywM=
+	t=1746902055; cv=none; b=X5D07qf4bVD20Rl/C9L90PV1CdpjXsT+QaztH9J14/u60nva99Qe0N0VBvNCq1jnZ4uTyPpq5ivVYkNHaX79YaAMeomf7jB5HMkaWnbOHqD+yXnZQtSKHnCneYiAdxogv9HtnLhyrMhRdrDAMhPSUl5ZA0i9qlM0RYnJ/EIye9M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746899548; c=relaxed/simple;
-	bh=KVo0CX8WJMQaQ7GSdqk0Nq+UFVODw0/mUG2dALCoD4Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=iFA/uvfbzxqys2H1qvpQMDQKrsq6PvIsOUUgu02myGIsiMuFwoNZd5SexeN5lQA5FC5MS9npu5Tmtx/ixzuFA1pzjCPvIsCSQcF9SnztscucLBTgB6B6RcghpMcN1jLhGTapTZRj6Tl6Lobw8AuGsVIKcD/0Qv5n2NGNweC5ZwI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=213.33.87.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp1.bon.at (Postfix) with ESMTPSA id 4Zvtjs38svzRq1T;
-	Sat, 10 May 2025 19:52:17 +0200 (CEST)
-Message-ID: <f75dec28-ec1f-4f94-be09-6b86a2421ac5@kdbg.org>
-Date: Sat, 10 May 2025 19:52:17 +0200
+	s=arc-20240116; t=1746902055; c=relaxed/simple;
+	bh=uSXYeTv98b6ldWOMndYQVjltDpgR72BwN8CH6sOOYpM=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=pNZMJBI8ufnBDM+RlOcLfB8rMzi7/KIKz2LPPw642DGUk3ifgIcCVGtly/8auqAy4hXd/aaXAdwomx1BKOsoaJo6P1ylgMwGYkIMO1InDWoN5/ehp6U2FBvAd3Sc86d4vpwYYxhlN8BpyZ3seISn4O1qjsMSM071Qj46/NUy9Sc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lIYW2QO6; arc=none smtp.client-ip=209.85.219.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIYW2QO6"
+Received: by mail-yb1-f181.google.com with SMTP id 3f1490d57ef6-e6df1419f94so2579023276.0
+        for <git@vger.kernel.org>; Sat, 10 May 2025 11:34:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1746902052; x=1747506852; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=qTgzaKjofYgcxHU4avwRe1VKnQG6Y5IFVuKMP8lSZ2U=;
+        b=lIYW2QO6TmhkgRUgcKvz8uIRwQBTCOvsaX9CaLS0qEPZ7KedPQcYexeOfJgk4H0LPd
+         P2xn/JDgrqZTg2D39d1xaCBA7YtsVL9L/qw+vGKa8orK1BKN8WQU6iwyf7um0+0k0olq
+         Jq4YJ26NxBZQ/iItlzowS1L10dnv9KeVfrd4CMh7P719l2WSsXyvlfYLU2sbMg+Q0aG1
+         yStZzsZjW1Q8j+OT33753/m0WU3MrBXYvH8D4to12rJXMjGJtx8N8mQN5C/TPeaEOARO
+         RW8R4hfyS7pRpbEeUe53LUQ4bf/vXMZGznVA7fNBSs6aXUFKRd7VFX0LM/qcjd6LxE9g
+         4dMQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746902052; x=1747506852;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:sender:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=qTgzaKjofYgcxHU4avwRe1VKnQG6Y5IFVuKMP8lSZ2U=;
+        b=vw/aRn+nTBacdfCYLjqKnjWO9ZUSiM7hxIZw3/9GuLxBBVDNE/wzk/DBhG7pikNluv
+         KJ7pJWpi64ht0nUmZAUSSm2ZIZ/ewvRolsfdFFjY4Qw5deUNzgEFtth9UD2vnW9qJ4Fq
+         DvaxQlUGJWjwI55Pu2AdhOFRC/qXCDhJIYr28QodioIiorzmB9zlCNBB7vsqLR3IELsT
+         fYesnNWo9WbFgwUg09Kd6b/GBVVa5zLGRPGfVf8/udtWN3MvkjUJxcp+5SurVFToKq3Q
+         JxULGZ8OzC1kEgbd7k6PTBxqnf33TjQJcdnHqAWiqS0NMZldY+LU7RVCF3WsHmzaKt6p
+         jRnw==
+X-Gm-Message-State: AOJu0Ywu/ga8+3NYxLZ1agzKsN10S5wNOJKTtzZog+ZyWW77XqUtnG2w
+	Ae1WpUvJEypdPdHGBFM0q754SdHOZeXJbHEaLuXlfhTaJlOuP0u+t4Yl4g==
+X-Gm-Gg: ASbGnctLf/L+xP7YlCD3UlS7+9q7Jvz6Maeb7Wz/Mi0xVqtNITbVZGGC5Cxr1AO3npg
+	h1Sgu2na7j88x5mFe2tvO6OiRedskSdR+X7x2svaBqXmr9sSvUaIoFNRpH8GoChpfTUW+OKgiY2
+	4Anjldk4OBnlTJH4LT9kldjmRhCHZCqUFOd8a9Rx5qFH6jUllEuVlr7GDb9/50e8/ZTLnUqkfwL
+	0WP0N3WqoIVHq1yGrYUxifskibS9oqYrnIo+Gqdl+ZdeTQ/5X64tE2JS0qB8BXDo2vT2ZbPt8ct
+	bkFFiVai1T2vz6DUljYhF/BDQsICstVx0Ja1NwF3ar73o2cQRZB02VPncUYZ83IjUAK4dTE2Fq0
+	WTbcGnSXEr/t2X1l/WN0Rgm1O
+X-Google-Smtp-Source: AGHT+IHlS2tcIjcdXSIn1ZvZrwkVNObjHPW2jDEmXa+/WUDrD1SMFAC3EPu8mOTokBcpZ9YPEmfGag==
+X-Received: by 2002:a05:6902:2002:b0:e78:f98b:539 with SMTP id 3f1490d57ef6-e78fdcebc0fmr10919810276.23.1746902051967;
+        Sat, 10 May 2025 11:34:11 -0700 (PDT)
+Received: from localhost.localdomain ([2605:a601:90a6:1600:541:bcf5:33bd:f1fc])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e78fd4a72f0sm1191649276.20.2025.05.10.11.34.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 10 May 2025 11:34:11 -0700 (PDT)
+Sender: "D. Ben Knoble" <ben.knoble@gmail.com>
+From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+To: git@vger.kernel.org
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Subject: [PATCH 0/9] make stash apply with --index by default
+Date: Sat, 10 May 2025 14:33:35 -0400
+Message-ID: <20250510183358.36806-1-ben.knoble+github@gmail.com>
+X-Mailer: git-send-email 2.48.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] gitk: use makedroplist, not ::combobox
-Content-Language: en-US
-To: Mark Levedahl <mlevedahl@gmail.com>
-Cc: git@vger.kernel.org
-References: <20250510171723.32163-1-mlevedahl@gmail.com>
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <20250510171723.32163-1-mlevedahl@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Am 10.05.25 um 19:17 schrieb Mark Levedahl:
-> gitk offers to not use themed tk (ttk), and cannot use such on Tcl/Tk
-> earlier than 8.5 where ttk was introduced. To facilitate this, widgets
-> are switched from themed to not by use of the global ${NS}: ${NS} == ttk
-> to select themed widgets, "" for non-themed. The combobox widget exists
-> only in ttk, and proc makedroplist exists to create a combobox like
-> widget using only base tk widgets.
-> 
-> However, 904b36b815 ("gitk: add text wrapping preferences", 2024-12-05),
-> introduced two instances of ${NS}::combobox, and since that commit,
-> gitk effectively requires Tk >= 8.5 and themed widgets enabled.
-> 
-> Fix this by using makedropbox instead.
-> 
-> Signed-off-by: Mark Levedahl <mlevedahl@gmail.com>
-> ---
->  gitk | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitk b/gitk
-> index 11ad639..d48982f 100755
-> --- a/gitk
-> +++ b/gitk
-> @@ -11736,12 +11736,12 @@ proc prefspage_general {notebook} {
->      grid x $page.tabstopl $page.tabstop -sticky w
->  
->      ${NS}::label $page.wrapcommentl -text [mc "Wrap comment text"]
-> -    ${NS}::combobox $page.wrapcomment -values {none char word} -state readonly \
-> +    makedroplist $page.wrapcomment -values {none char word} -state readonly \
->          -textvariable wrapcomment
->      grid x $page.wrapcommentl $page.wrapcomment -sticky w
->  
->      ${NS}::label $page.wrapdefaultl -text [mc "Wrap other text"]
-> -    ${NS}::combobox $page.wrapdefault -values {none char word} -state readonly \
-> +    makedroplist $page.wrapdefault -values {none char word} -state readonly \
->          -textvariable wrapdefault
->      grid x $page.wrapdefaultl $page.wrapdefault -sticky w
->  
+Since git-stash's inception, it has defaulted to stashing the index but not
+restoring it. This has caused some confusion: change the default as part of Git
+3.0 to unstash the index, too.
 
-Unfortunately, the fix is not that simple. `makedroplist` isn't just a
-drop-in replacement for `${NS}::combobox`.
+I ran into this myself a while back and did some digging; it appears that other
+have been bit, too (see references in patch 3). Moreover, when git-stash was
+originally written, defaulting with --index was suggested but not implemented
+before the script merged. So this RFC should bring us back towards "less
+confusing," hopefully.
 
-Allow me to prefer https://github.com/j6t/gitk/commit/c259b2ede8a74809005f81eeb6bb827b1d9692e0,
-reproduced below, over this patch.
+The series is structured as follows:
 
--- Hannes
+Patches 1-2: unrelated prep/style commits noticed while working on tests.
+Patch 3: update Documentation/BreakingChanges.adoc. This seems like a natural
+    place to discuss the proposal, so it contains no other changes.
+Patch 4: make it so in builtin/stash.c.
+Patches 5-9: update the impacted tests. Separated out for ease of review. I used
+    a style more like "split the test into 2: one with, one without breaking
+    changes." In retrospect, the diff might be smaller (and the 2 versions of
+    the test easier to compare) if I used "test_has_prereq" in the tests… but at
+    the cost of making the tests harder to follow. Thoughts?
 
-From: YOKOTA Hiroshi <yokota.hgml@gmail.com>
-Subject: [PATCH] gitk: Legacy widgets doesn't have combobox
+D. Ben Knoble (9):
+  t3903: reduce dependencies on previous tests
+  t3905: remove unneeded blank line
+  BreakingChanges: announce stash {apply,pop} will imply --index
+  stash: restore the index by default when breaking changes are enabled
+  t0450: mark stash documentation as a known discrepancy
+  t3903: adjust stash test to account for --[no-]index with breaking
+    changes
+  t3904: adjust stash -p test to account for index states with breaking
+    changes
+  t3905: adjust stash -u tests for breaking changes
+  t3906: adjust stash submodule tests to account for breaking changes
 
-Use "proc makedroplist" function to support combobox on legacy widgets mode.
-"proc makedroplist" uses "ttk::combobox" for themed mode, and uses
-"tk_optionMenu" for legacy mode to get rid of the probrem.
+ Documentation/BreakingChanges.adoc |  11 ++
+ Documentation/git-stash.adoc       |   6 ++
+ builtin/stash.c                    |  38 +++++++
+ t/lib-submodule-update.sh          |  24 ++++-
+ t/t0450/adoc-help-mismatches       |   1 +
+ t/t3903-stash.sh                   | 161 +++++++++++++++++++++++++++--
+ t/t3904-stash-patch.sh             |  14 ++-
+ t/t3905-stash-include-untracked.sh |  40 ++++++-
+ 8 files changed, 276 insertions(+), 19 deletions(-)
 
-Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
----
- gitk | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/gitk b/gitk
-index 0d96597..fc1dd61 100755
---- a/gitk
-+++ b/gitk
-@@ -11782,13 +11782,11 @@ proc prefspage_general {notebook} {
-     grid x $page.tabstopl $page.tabstop -sticky w
- 
-     ${NS}::label $page.wrapcommentl -text [mc "Wrap comment text"]
--    ${NS}::combobox $page.wrapcomment -values {none char word} -state readonly \
--        -textvariable wrapcomment
-+    makedroplist $page.wrapcomment wrapcomment none char word
-     grid x $page.wrapcommentl $page.wrapcomment -sticky w
- 
-     ${NS}::label $page.wrapdefaultl -text [mc "Wrap other text"]
--    ${NS}::combobox $page.wrapdefault -values {none char word} -state readonly \
--        -textvariable wrapdefault
-+    makedroplist $page.wrapdefault wrapdefault none char word
-     grid x $page.wrapdefaultl $page.wrapdefault -sticky w
- 
-     ${NS}::checkbutton $page.ntag -text [mc "Display nearby tags/heads"] \
+base-commit: 1ee85f0e215f22b0878d0ad4b2445d12bbb63887
 -- 
-2.49.0.212.gc22db56b11.dirty
+2.48.1
 
