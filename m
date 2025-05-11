@@ -1,337 +1,355 @@
-Received: from mail-pg1-f174.google.com (mail-pg1-f174.google.com [209.85.215.174])
+Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C7CF286A1
-	for <git@vger.kernel.org>; Sun, 11 May 2025 14:13:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ADD2571AC
+	for <git@vger.kernel.org>; Sun, 11 May 2025 16:15:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746972793; cv=none; b=qd8FFqoqJecojbyNQdrMkubkxGBWe24uRdU9kGICJ3eP4sSe6POzgwS9ALK7CfE5wL/S64YIgQZ+NgUcwinfUnNYYasmnB/Dp5pqpwl7Q/uI5kv38kr2+cG99nWKTx0l82+2V1kaa/5t/BuMdUciDn4R1XE4vHBWpRCQPKrkrC8=
+	t=1746980104; cv=none; b=JK5luGbDCOXL4XYaiCLPzOIrMQiAVTnwIw5O7RHqEEgfPB68XeGnyMAwo+3DXFyG9sCcPq87NjiTaKHKQpXeTmWfOd1zS86kRjvojxDrfwUxgWeSc2XaE3sLjgPsfSCW9eVrHK6EoQ2VAe9Ng5QnJ19AnFYYIhBf6RiHC0kqRWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746972793; c=relaxed/simple;
-	bh=RzDL/rn2UJDRrGL878Qz33zU2qyA7eUBkN5SudXdnoQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=GWNCEx6P56jG6JIqJ8u0kGbwTLws3HgBr6I+wXBGqUzJbke9P+k0DnAVMnY9N3Yh511XGUoYwwODusedAJSHWTzEwPn3EaSdhNJWk4p98bBx/MelvcpFAdA1Wr7lqQZ0UvGH2AIT6n+ZIYn7iIu7uz4ntQ6Q5PZoLDQAupAIbVA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BHGzYeVV; arc=none smtp.client-ip=209.85.215.174
+	s=arc-20240116; t=1746980104; c=relaxed/simple;
+	bh=ZrNdCILaQ877zy5gVNiOJBQWFnEJEtoLLaOv3yvtCe0=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=O8//ZRPDMgNbaArjYrwqMJYJcmQA3byeUe0GU1/E14Z5b5soXXvN1HZ5gi6r2xOYdmP6JdaLCrq6xWvixzgyU8rHTYGDy2KCCqsqO6FgjYESZ0WKM+F4+UJD87h4YXPiyF9KFZTq0kYzHUvNGL3fa18U2KgNZurdEj6njEvUoAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9X+Gugx; arc=none smtp.client-ip=209.85.128.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BHGzYeVV"
-Received: by mail-pg1-f174.google.com with SMTP id 41be03b00d2f7-b200047a6a5so2602385a12.0
-        for <git@vger.kernel.org>; Sun, 11 May 2025 07:13:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9X+Gugx"
+Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so40334475e9.3
+        for <git@vger.kernel.org>; Sun, 11 May 2025 09:15:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746972790; x=1747577590; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1746980099; x=1747584899; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rv886oZD725UASZkwqlMcuqO6OlgVQEGpaEOSLzqBFk=;
-        b=BHGzYeVVN79P36lnW7vhmfrg2PepqxygNflzuKpWH6qL7fVLwSYWYQ9BHCcd80h/JH
-         LI9fNUpeHcp44BdrCfjOUxCEuHpi76HX09983X8n5JnYOklWMh9JKNjmAjGBXcoXg9rB
-         wAGpyqnpRKku6jVHFTCKwBdDU/zYGAfnU+mm6gSqmtt22VNsk1QtN4kd4oqlDXXvOuPP
-         Ewd9W86TXM4PKLh3slrM0b5NU8Ggviulo7gTkBwg/GyR1W1Ocd6NBVyf9eErwvtYIARK
-         DmMSPNqf0SXDdvQN2X1mbAqJNvAZilFY297PI9Oa0aAwqDe1agh8zzdCrOAknNUBTilb
-         /7Zw==
+        bh=0Tsw64GnNSMt3fN0JdvV0j2xHGPLtrzez0t4vl/fxgU=;
+        b=b9X+GugxnQqJ+hXUBYozlfIr16BwXezGLwF5Wo4gYoP8E/9qluSE9NRzq6xQtBmrEF
+         eC2S86jjexUv9+Xfu1jLA8mJCclwHLLgZSrP0TivK7YDV7tX5oUIeSpvX9KNUgzWgTpK
+         9LzrVr4X2mf+GSbcw79xmF+JBnxC53ZhF0ZoDZFYt3/EQqt++24xh9YaYu1uZFljET7G
+         IohgoWo/n0erpypMWflIqn2gKQLuh/O2SZOOW0d9Bu7DUf+69xZVUfBwh6ad00ky0gZ8
+         pgP8/IhHY1Jx9XigTJndT/mL5WXGC9voXo+ppzK2Q8GaKzHhos7dL+3eB9uL0qO8mh9o
+         p+xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746972790; x=1747577590;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1746980099; x=1747584899;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rv886oZD725UASZkwqlMcuqO6OlgVQEGpaEOSLzqBFk=;
-        b=ZM1g92gNEJISo89U1SwHBnoYeAyCaNQsMPVbapUREGr3Tk01Ez9/iVhljSNa2Eam6V
-         n44D+Vma/lED6jB5G2SR5rk/WVrrWhYBFtKX2WSchQ/dHlfUpM9wYEIaLFvcP16budZs
-         O5ui7i9N6pREV5bWTh1ftnt4iyrxSjp9rK+ge76n2lsR6UIKRYf4zFzAgBXOw/kD0MRg
-         7yoJi3hsQ6RX1B7ETyuRZrlnT24zDBfG+fv5ohfi0Ie+J2DTYE8JPjrdrzJzLs/ifj1i
-         xt5wbmYOSgMkX/l+NmDs21aYrxnCYrTe7YoLbSz69oy5VgacZSuGWs//p8ppuvS4Glsw
-         1BQA==
-X-Gm-Message-State: AOJu0Yx9RjQvFAoKqEuSTTTj3eFdn6iquyA6g2AulZjc7kV8xvZ0fwNr
-	aMQEKrnnv1WmAp6XlyHUBKyhiRyzfqkPsBlMrD/rYJhX2+ASqRfUE2XjLw==
-X-Gm-Gg: ASbGncsiBnVBHvyQmJIepbYx7EVrYyKUTL5Pd/37YBKBGxll0KUPceyP+y7LNdqqTQd
-	nzBrhK/XvKFKcA8hjoQJtO6HlsnCK6GCNO6Ee1G9gqRxrVU/2wQMi1JpU1EuwY7tifU5gKfBndC
-	Mpggl7JhqNxlffJwtX1zIJI3PSAQ6Axln8rMAc9e07eLl21ueWeoT9Ys2C2+X+u0Ho941Z15BXz
-	UPqJniha4Cs0WNyccObgrdtgGmarcQ40k965wvWqO6YVwvlEFNQkZnEIaKzYpX5shlOKWGueoKB
-	vkGH5dYItFxDihVxOVcLmS9y2KSBPbFwAXvFdN87pLb3/LlGj23iL32BQW4h9UfHcw==
-X-Google-Smtp-Source: AGHT+IHrGFl7VifM43/Okd71qsyc9Wxf4OzAJWFiT0ENZ+GHvhyYgWywtw+RIRpKd3JhrDhmVNF+hQ==
-X-Received: by 2002:a17:902:d4c3:b0:220:ff82:1c60 with SMTP id d9443c01a7336-22e8475b0b8mr231671065ad.14.1746972790427;
-        Sun, 11 May 2025 07:13:10 -0700 (PDT)
-Received: from localhost.localdomain ([223.237.150.155])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc7544fc1sm46688675ad.46.2025.05.11.07.13.04
+        bh=0Tsw64GnNSMt3fN0JdvV0j2xHGPLtrzez0t4vl/fxgU=;
+        b=mz5yJ9nQEvsBoMZdAg1bd+IHw3kxKXvxChwycQtg8p28JESahV9AukgJ7bEgSZzYl7
+         jWedyM5qIwBoereT7He7IkP5tQRn3D3az3lhiTEzQ5SDv5NOSbFgdKyjUDsjgwQukRoy
+         LwM71N6ty1ho/Xl4opTL+r5YT/1slpA1ZeopU5EYdMouAC0fiC1zA1M2bZrCB6OeleLJ
+         UWeSrmOdiH39Qoj1tV9KSrLG8TsFa6ZpesnhP0+GFZeGepb4ViRf0T37gbVDxYxOJefz
+         uOw1GCfRQb0XkURohoVJgDN1rll4rPoRsD4TFXgDZ8YlMgKA64+cyZcQ564ylZAIEpUE
+         928g==
+X-Gm-Message-State: AOJu0YypaDmq00biEHTpKNVDrBVW7sr3rwr0ELjqTJdMLZqXcS7znEw+
+	Zdzqj12/BX8SmvgNVKqEC8hm4qXirmqZIdh2TQaT9RMSnktW7SBZIRgVmg==
+X-Gm-Gg: ASbGncsqLrU7ZwSfPg7f3NurY8daYOFDOSWkmBsw2VKESG8vk+cCTW/xac6P4TUsSSf
+	nlYWbPflCgjUyYQwMeS7YJMlKnRl4n8C5QYXhI7lwCP43QyyaCZ6KZaf8nlYUusJTEw8D2MA6sS
+	r6rWJ9cRJewIMoCOp29+gDsvF4tEjAmANoNPZAM+dRIvoh6B6JFva0Lm2wie/FeiDd2hP+FQetp
+	nDVeV+qHMCveRLmZE5adRVmcKB7pla9tlI2hGa4YevsL9PZMT0kva34FP2Qw7hUY+/1gyfWTR4Z
+	XYPMMOOuWGhL2Bf7OGPRcMbhklt0nWfTVwHS1bomPCjWJvkJnSzG
+X-Google-Smtp-Source: AGHT+IE+2KGDBnhqhndZv145bO6LMFZwjc5HvbKlojQLEpZ1+eukWsVj2rX9CZ3KYcC1FDSIoHeMAw==
+X-Received: by 2002:a05:600c:1e18:b0:43c:fe15:41cb with SMTP id 5b1f17b1804b1-442dc95a564mr59189275e9.15.1746980099047;
+        Sun, 11 May 2025 09:14:59 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d6bf96bfsm96205835e9.6.2025.05.11.09.14.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 May 2025 07:13:10 -0700 (PDT)
-From: Moumita <dhar61595@gmail.com>
-To: git@vger.kernel.org
-Cc: Moumita Dhar <dhar61595@gmail.com>,
-	"Johannes Sixt" <j6t@kdbg.org>,
-	"Eric Sunshine" <sunshine@sunshineco.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-Subject: [PATCH v6 1/1] userdiff: extend Bash pattern to cover more shell function forms
-Date: Sun, 11 May 2025 19:41:01 +0530
-Message-ID: <20250511141101.18450-2-dhar61595@gmail.com>
-X-Mailer: git-send-email 2.48.0
-In-Reply-To: <20250511141101.18450-1-dhar61595@gmail.com>
-References: <20250511125809.14180-1-dhar61595@gmail.com>
- <20250511141101.18450-1-dhar61595@gmail.com>
+        Sun, 11 May 2025 09:14:58 -0700 (PDT)
+Message-Id: <pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+References: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 11 May 2025 16:14:57 +0000
+Subject: [PATCH v2] mailinfo: fix pointential memory leak if `decode_header`
+ failed
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-From: Moumita Dhar <dhar61595@gmail.com>
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-The previous function regex required explicit matching of function
-bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
+In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
+in dec will leak. Simply add strbuf_release and free(dec) will solve
+this problem.
 
-- It failed to capture valid functions where `{` was on the next line
-  due to line continuation (`\`).
-- It did not recognize functions with single  command body, such as
-  `x () echo hello`.
-
-Replacing the function body matching logic with `.*$`, ensures
-that everything on the function definition line is captured.
-
-Additionally, the word regex is refined to better recognize shell
-syntax, including additional parameter expansion operators and
-command-line options.
-
-Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
- t/t4018/bash-bashism-style-multiline-function |  4 ++
- .../bash-hunk-header-complete-line-capture    |  4 ++
- t/t4018/bash-posix-style-multiline-function   |  4 ++
- .../bash-posix-style-single-command-function  |  3 ++
- t/t4034-diff-words.sh                         |  1 +
- t/t4034/bash/expect                           | 38 +++++++++++++++++++
- t/t4034/bash/post                             | 33 ++++++++++++++++
- t/t4034/bash/pre                              | 33 ++++++++++++++++
- userdiff.c                                    | 28 ++++++++++----
- 9 files changed, 140 insertions(+), 8 deletions(-)
- create mode 100644 t/t4018/bash-bashism-style-multiline-function
- create mode 100644 t/t4018/bash-hunk-header-complete-line-capture
- create mode 100644 t/t4018/bash-posix-style-multiline-function
- create mode 100644 t/t4018/bash-posix-style-single-command-function
- create mode 100644 t/t4034/bash/expect
- create mode 100644 t/t4034/bash/post
- create mode 100644 t/t4034/bash/pre
+    decode_header: fix pointential memory leak if decode_header failed
+    
+    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
+    dec will leak. Simply add strbuf_release and free(dec) will solve this
+    problem.
 
-diff --git a/t/t4018/bash-bashism-style-multiline-function b/t/t4018/bash-bashism-style-multiline-function
-new file mode 100644
-index 0000000000..284d50dd99
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-multiline-function
-@@ -0,0 +1,4 @@
-+function RIGHT \
-+{    
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-hunk-header-complete-line-capture b/t/t4018/bash-hunk-header-complete-line-capture
-new file mode 100644
-index 0000000000..b56942f322
---- /dev/null
-+++ b/t/t4018/bash-hunk-header-complete-line-capture
-@@ -0,0 +1,4 @@
-+func() { # RIGHT
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-multiline-function b/t/t4018/bash-posix-style-multiline-function
-new file mode 100644
-index 0000000000..cc8727cbcd
---- /dev/null
-+++ b/t/t4018/bash-posix-style-multiline-function
-@@ -0,0 +1,4 @@
-+RIGHT() \
-+{
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-single-command-function b/t/t4018/bash-posix-style-single-command-function
-new file mode 100644
-index 0000000000..398ae1c5d2
---- /dev/null
-+++ b/t/t4018/bash-posix-style-single-command-function
-@@ -0,0 +1,3 @@
-+RIGHT() echo "hello"
-+
-+    ChangeMe
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index f51d3557f1..0be647c2fb 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -320,6 +320,7 @@ test_expect_success 'unset default driver' '
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v2
+Pull-Request: https://github.com/git/git/pull/1956
+
+Range-diff vs v1:
+
+ 1:  81fdfb94315 ! 1:  90dc9b0d49b decode_header: fix pointential memory leak if decode_header failed
+     @@ Metadata
+      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## Commit message ##
+     -    decode_header: fix pointential memory leak if decode_header failed
+     +    mailinfo: fix pointential memory leak if `decode_header` failed
+      
+     -    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
+     +    In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
+          in dec will leak. Simply add strbuf_release and free(dec) will solve
+          this problem.
+      
+          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## mailinfo.c ##
+     +@@ mailinfo.c: static int is_format_patch_separator(const char *line, int len)
+     + 	return !memcmp(SAMPLE + (cp - line), cp, strlen(SAMPLE) - (cp - line));
+     + }
+     + 
+     +-static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
+     ++static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
+     ++			    int rfc2047)
+     + {
+     + 	const char *in = q_seg->buf;
+     + 	int c;
+     +-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+     + 	strbuf_init(out, q_seg->len);
+     + 
+     + 	while ((c = *in++) != 0) {
+     +@@ mailinfo.c: static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
+     + 			c = 0x20;
+     + 		strbuf_addch(out, c);
+     + 	}
+     +-	return out;
+     ++	return 0;
+     + }
+     + 
+     +-static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
+     ++static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
+     + {
+     + 	/* Decode in..ep, possibly in-place to ot */
+     + 	int c, pos = 0, acc = 0;
+     + 	const char *in = b_seg->buf;
+     +-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+     + 	strbuf_init(out, b_seg->len);
+     + 
+     + 	while ((c = *in++) != 0) {
+     +@@ mailinfo.c: static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
+     + 			break;
+     + 		}
+     + 	}
+     +-	return out;
+     ++	return 0;
+     + }
+     + 
+     + static int convert_to_utf8(struct mailinfo *mi,
+     +@@ mailinfo.c: static int convert_to_utf8(struct mailinfo *mi,
+     + static void decode_header(struct mailinfo *mi, struct strbuf *it)
+     + {
+     + 	char *in, *ep, *cp;
+     +-	struct strbuf outbuf = STRBUF_INIT, *dec;
+     ++	struct strbuf outbuf = STRBUF_INIT, dec = STRBUF_INIT;
+     + 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
+     + 	int found_error = 1; /* pessimism */
+     + 
+      @@ mailinfo.c: static void decode_header(struct mailinfo *mi, struct strbuf *it)
+     - 			dec = decode_q_segment(&piecebuf, 1);
+     + 		default:
+     + 			goto release_return;
+     + 		case 'b':
+     +-			dec = decode_b_segment(&piecebuf);
+     ++			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
+     ++				goto release_return;
+     ++			}
+     + 			break;
+     + 		case 'q':
+     +-			dec = decode_q_segment(&piecebuf, 1);
+     ++			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
+     ++				goto release_return;
+     ++			}
+       			break;
+       		}
+      -		if (convert_to_utf8(mi, dec, charset_q.buf))
+     -+		if (convert_to_utf8(mi, dec, charset_q.buf)) {
+     -+			strbuf_release(dec);
+     -+			free(dec);
+     ++		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
+     ++			strbuf_release(&dec);
+       			goto release_return;
+      +		}
+       
+     - 		strbuf_addbuf(&outbuf, dec);
+     - 		strbuf_release(dec);
+     +-		strbuf_addbuf(&outbuf, dec);
+     +-		strbuf_release(dec);
+     +-		free(dec);
+     ++		strbuf_addbuf(&outbuf, &dec);
+     ++		strbuf_release(&dec);
+     + 		in = ep + 2;
+     + 	}
+     + 	strbuf_addstr(&outbuf, in);
+     +@@ mailinfo.c: static int is_inbody_header(const struct mailinfo *mi,
+     + 
+     + static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+     + {
+     +-	struct strbuf *ret;
+     ++	struct strbuf ret;
+     ++	int found_error = 0;
+     + 
+     + 	switch (mi->transfer_encoding) {
+     + 	case TE_QP:
+     +-		ret = decode_q_segment(line, 0);
+     ++		found_error = decode_q_segment(&ret, line, 0);
+     + 		break;
+     + 	case TE_BASE64:
+     +-		ret = decode_b_segment(line);
+     ++		found_error = decode_b_segment(&ret, line);
+     + 		break;
+     + 	case TE_DONTCARE:
+     + 	default:
+     + 		return;
+     + 	}
+     + 	strbuf_reset(line);
+     +-	strbuf_addbuf(line, ret);
+     +-	strbuf_release(ret);
+     +-	free(ret);
+     ++	strbuf_addbuf(line, &ret);
+     ++	if (!found_error)
+     ++		strbuf_release(&ret);
+     + }
+     + 
+     + static inline int patchbreak(const struct strbuf *line)
+
+
+ mailinfo.c | 43 ++++++++++++++++++++++++-------------------
+ 1 file changed, 24 insertions(+), 19 deletions(-)
+
+diff --git a/mailinfo.c b/mailinfo.c
+index 7b001fa5dbd..11ec3914ce4 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -381,11 +381,11 @@ static int is_format_patch_separator(const char *line, int len)
+ 	return !memcmp(SAMPLE + (cp - line), cp, strlen(SAMPLE) - (cp - line));
+ }
  
- test_language_driver ada
- test_language_driver bibtex
-+test_language_driver bash
- test_language_driver cpp
- test_language_driver csharp
- test_language_driver css
-diff --git a/t/t4034/bash/expect b/t/t4034/bash/expect
-new file mode 100644
-index 0000000000..17755e455f
---- /dev/null
-+++ b/t/t4034/bash/expect
-@@ -0,0 +1,38 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index 09ac008..60ba6a2 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,33 +1,33 @@<RESET>
-+<RED>my_var<RESET><GREEN>new_var<RESET>=10
-+x=<RED>123<RESET><GREEN>456<RESET>
-+y=<RED>3.14<RESET><GREEN>2.71<RESET>
-+z=<RED>.5<RESET><GREEN>.75<RESET>
-+echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
-+${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
-+((a<RED>+<RESET><GREEN>+=<RESET>b))
-+((a<RED>*<RESET><GREEN>*=<RESET>b))
-+((a<RED>/<RESET><GREEN>/=<RESET>b))
-+((a<RED>%<RESET><GREEN>%=<RESET>b))
-+((a<RED>|<RESET><GREEN>|=<RESET>b))
-+((a<RED>^<RESET><GREEN>^=<RESET>b))
-+((a<RED>=<RESET><GREEN>==<RESET>b))
-+((a<RED>!<RESET><GREEN>!=<RESET>b))
-+((a<RED><<RESET><GREEN><=<RESET>b))
-+((a<RED>><RESET><GREEN>>=<RESET>b))
-+$((a<RED><<RESET><GREEN><<<RESET>b))
-+$((a<RED>><RESET><GREEN>>><RESET>b))
-+$((a<RED>&<RESET><GREEN>&&<RESET>b))
-+$((a<RED>|<RESET><GREEN>||<RESET>b))
-+${a<RED>:<RESET><GREEN>:-<RESET>b}
-+${a<RED>:<RESET><GREEN>:=<RESET>b}
-+${a<RED>:<RESET><GREEN>:+<RESET>b}
-+${a<RED>:<RESET><GREEN>:?<RESET>b}
-+${a<RED>#<RESET><GREEN>##<RESET>*/}
-+${a<RED>%<RESET><GREEN>%%<RESET>.*}
-+${a<RED>^<RESET><GREEN>^^<RESET>}
-+${a<RED>,<RESET><GREEN>,,<RESET>}
-+${<GREEN>!<RESET>a}
-+${a[<RED>*<RESET><GREEN>@<RESET>]}
-+${a<RED>:2:3<RESET><GREEN>:4:6<RESET>}
-+ls <RED>-a<RESET><GREEN>-x<RESET>
-+ls <RED>--a<RESET><GREEN>--x<RESET>
-diff --git a/t/t4034/bash/post b/t/t4034/bash/post
-new file mode 100644
-index 0000000000..669e218c30
---- /dev/null
-+++ b/t/t4034/bash/post
-@@ -0,0 +1,33 @@
-+new_var=10
-+x=456
-+y=2.71
-+z=.75
-+echo $USERNAME
-+${HOMEDIR}
-+((a+=b))
-+((a*=b))
-+((a/=b))
-+((a%=b))
-+((a|=b))
-+((a^=b))
-+((a==b))
-+((a!=b))
-+((a<=b))
-+((a>=b))
-+$((a<<b))
-+$((a>>b))
-+$((a&&b))
-+$((a||b))
-+${a:-b}
-+${a:=b}
-+${a:+b}
-+${a:?b}
-+${a##*/}
-+${a%%.*}
-+${a^^}
-+${a,,}
-+${!a}
-+${a[@]}
-+${a:4:6}
-+ls -x
-+ls --x
-diff --git a/t/t4034/bash/pre b/t/t4034/bash/pre
-new file mode 100644
-index 0000000000..ada8470bac
---- /dev/null
-+++ b/t/t4034/bash/pre
-@@ -0,0 +1,33 @@
-+my_var=10
-+x=123
-+y=3.14
-+z=.5
-+echo $USER
-+${HOME}
-+((a+b))
-+((a*b))
-+((a/b))
-+((a%b))
-+((a|b))
-+((a^b))
-+((a=b))
-+((a!b))
-+((a<b))
-+((a>b))
-+$((a<b))
-+$((a>b))
-+$((a&b))
-+$((a|b))
-+${a:b}
-+${a:b}
-+${a:b}
-+${a:b}
-+${a#*/}
-+${a%.*}
-+${a^}
-+${a,}
-+${a}
-+${a[*]}
-+${a:2:3}
-+ls -a
-+ls --a
-diff --git a/userdiff.c b/userdiff.c
-index 340c4eb4f7..655c8fe0b1 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -59,20 +59,32 @@ PATTERNS("bash",
- 	 "("
- 	 "("
- 	     /* POSIX identifier with mandatory parentheses */
--	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
-+	     "([a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
- 	 "|"
- 	     /* Bashism identifier with optional parentheses */
--	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
-+	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+)))"
- 	 ")"
--	 /* Optional whitespace */
--	 "[ \t]*"
--	 /* Compound command starting with `{`, `(`, `((` or `[[` */
--	 "(\\{|\\(\\(?|\\[\\[)"
-+	 /* Everything after the function header is captured  */
-+	 ".*$"
- 	 /* End of captured text */
- 	 ")",
- 	 /* -- */
--	 /* Characters not in the default $IFS value */
--	 "[^ \t]+"),
-+	 /* Identifiers: variable and function names */
-+	  "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 /* Numeric constants: integers and decimals */
-+	  "|[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
-+	 /* Shell variables: $VAR, ${VAR} */
-+	  "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{"
-+	  /* Logical and comparison operators */
-+	 "|\\|\\||&&|<<|>>|==|!=|<=|>="
-+	 /* Assignment and arithmetic operators */
-+	 "|[-+*/%&|^!=<>]=?"
-+	 /* Additional parameter expansion operators */
-+	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
-+	 /* Command-line options (to avoid splitting -option) */
-+	 "|--?[a-zA-Z0-9_-]+"
-+	 /* Brackets and grouping symbols */
-+	 "|\\(|\\)|\\{|\\}|\\[|\\]"),
- PATTERNS("bibtex",
- 	 "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 /* -- */
--- 
-2.48.0
+-static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
++static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
++			    int rfc2047)
+ {
+ 	const char *in = q_seg->buf;
+ 	int c;
+-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+ 	strbuf_init(out, q_seg->len);
+ 
+ 	while ((c = *in++) != 0) {
+@@ -405,15 +405,14 @@ static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
+ 			c = 0x20;
+ 		strbuf_addch(out, c);
+ 	}
+-	return out;
++	return 0;
+ }
+ 
+-static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
++static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
+ {
+ 	/* Decode in..ep, possibly in-place to ot */
+ 	int c, pos = 0, acc = 0;
+ 	const char *in = b_seg->buf;
+-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+ 	strbuf_init(out, b_seg->len);
+ 
+ 	while ((c = *in++) != 0) {
+@@ -447,7 +446,7 @@ static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
+ 			break;
+ 		}
+ 	}
+-	return out;
++	return 0;
+ }
+ 
+ static int convert_to_utf8(struct mailinfo *mi,
+@@ -475,7 +474,7 @@ static int convert_to_utf8(struct mailinfo *mi,
+ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+ {
+ 	char *in, *ep, *cp;
+-	struct strbuf outbuf = STRBUF_INIT, *dec;
++	struct strbuf outbuf = STRBUF_INIT, dec = STRBUF_INIT;
+ 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
+ 	int found_error = 1; /* pessimism */
+ 
+@@ -530,18 +529,23 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+ 		default:
+ 			goto release_return;
+ 		case 'b':
+-			dec = decode_b_segment(&piecebuf);
++			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
++				goto release_return;
++			}
+ 			break;
+ 		case 'q':
+-			dec = decode_q_segment(&piecebuf, 1);
++			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
++				goto release_return;
++			}
+ 			break;
+ 		}
+-		if (convert_to_utf8(mi, dec, charset_q.buf))
++		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
++			strbuf_release(&dec);
+ 			goto release_return;
++		}
+ 
+-		strbuf_addbuf(&outbuf, dec);
+-		strbuf_release(dec);
+-		free(dec);
++		strbuf_addbuf(&outbuf, &dec);
++		strbuf_release(&dec);
+ 		in = ep + 2;
+ 	}
+ 	strbuf_addstr(&outbuf, in);
+@@ -634,23 +638,24 @@ static int is_inbody_header(const struct mailinfo *mi,
+ 
+ static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+ {
+-	struct strbuf *ret;
++	struct strbuf ret;
++	int found_error = 0;
+ 
+ 	switch (mi->transfer_encoding) {
+ 	case TE_QP:
+-		ret = decode_q_segment(line, 0);
++		found_error = decode_q_segment(&ret, line, 0);
+ 		break;
+ 	case TE_BASE64:
+-		ret = decode_b_segment(line);
++		found_error = decode_b_segment(&ret, line);
+ 		break;
+ 	case TE_DONTCARE:
+ 	default:
+ 		return;
+ 	}
+ 	strbuf_reset(line);
+-	strbuf_addbuf(line, ret);
+-	strbuf_release(ret);
+-	free(ret);
++	strbuf_addbuf(line, &ret);
++	if (!found_error)
++		strbuf_release(&ret);
+ }
+ 
+ static inline int patchbreak(const struct strbuf *line)
 
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+-- 
+gitgitgadget
