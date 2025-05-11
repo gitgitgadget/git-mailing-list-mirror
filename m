@@ -1,139 +1,312 @@
-Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
+Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52CB11459EA
-	for <git@vger.kernel.org>; Sun, 11 May 2025 14:02:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33F18286A1
+	for <git@vger.kernel.org>; Sun, 11 May 2025 14:12:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746972126; cv=none; b=s9qBkY6wu81cj38UVcg3/4yg4B0pC/LjtXd/iWMayNbXgX4mOnK9wFh21F6okKcCUtgA6J6uiwiJ3SolSsUYvfrDkLDIWUQbMnLg52+pxvI9NYnqSPp+EgVQ2lInL1+kZhM56aGPmM2vnDHRVtNd1nddDseiiIV07i3w6pdAUH8=
+	t=1746972775; cv=none; b=MSnhRKh8bNWJtxhFfQgllRavUJzK1hKpWWvSDG6qULkCTfMP+07Oo3/0Uo0JdUM0THQ2wqGmW5jALXhz0zlRNpTKXTRfyiLJdPxIeCmqbjduwokuYYaMHem5IzswL/F1E8he44/TB0IU991XCevRZp0TxQLz8UugUEiOSsyTbAQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746972126; c=relaxed/simple;
-	bh=D6LqkK3b4PPvI/gP5wz6X2LmqYBNcAP2l3ao16d/TIc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=KZR0+guqPjommHlv+kIbWEiGi5pbO+E6k79OlvgiTBP9j/BEUCaCAQAImKULKopS3s6mfSlVlMUpUIHa+a2lT68FXN3K5hWE7HK+4NCZB6LEeVYNOGUmkFPLKoOosLo0SMHBvhYhEnGvoJ7mhPaxJcujLYEKJvjKMFJgNgGfTys=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LqisvDsM; arc=none smtp.client-ip=209.85.210.177
+	s=arc-20240116; t=1746972775; c=relaxed/simple;
+	bh=1vayY5IMX1K93Qhpj0/WkZtjAP0PU0Ii5ZHULZH5QlA=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fNQyMHtoO8/hINZVohJmF/loBpVPKnjp/MFu2cRk+3IbFlJQJAAEbxLYRD7KmDPfQJTpCHL1yMuLRaT0Mc24vTP7PoLkwYs0anW5ibfJf9cL/mAVxIHqNFr6nOUnMb9KDd2N4q9OlH3NBhI3UPkskg8cJPHtOEEFpBSeYHU0thk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VkIksBpr; arc=none smtp.client-ip=209.85.215.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LqisvDsM"
-Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-739525d4e12so3210086b3a.3
-        for <git@vger.kernel.org>; Sun, 11 May 2025 07:02:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VkIksBpr"
+Received: by mail-pg1-f171.google.com with SMTP id 41be03b00d2f7-af908bb32fdso2821108a12.1
+        for <git@vger.kernel.org>; Sun, 11 May 2025 07:12:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746972124; x=1747576924; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LtkxIzChUTHqGhByJErcvwCPjgd/s8ypwYHi+35YfGw=;
-        b=LqisvDsM66LTtgnMxQkTZ2+ePqy7idYA4eKWAs2DuTTUFoGrl7k07GDHueYkJjf4vm
-         op3TZSbMmWyCQg1ptvu2P3uMOzzjw01tuEWsdTcRgYepje2tCZiV2FrZWwe8lLIaNr9a
-         Vg5TeHB4KWt+C+9YKmrgBOogehd+ywTsiHp5qwiquNvles7eUV7SIbl0lpUALrcb6Kot
-         ZBeMk3TyeWUFs9PrP0KHaIe0IVxInw01pb0PKvjEoBas/fzIHvSqmdg8n0f6c77S8ydo
-         8AN4oDIS9cSMuzoBnClKKIM+4yxgY6G0HLuycd9XsV6Ce+jkOFz2encwBPr20BdjEMrc
-         88Bw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746972124; x=1747576924;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1746972773; x=1747577573; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LtkxIzChUTHqGhByJErcvwCPjgd/s8ypwYHi+35YfGw=;
-        b=qSiUvPWaD6/hP5vDVNAgUs3c+znwKUm4Ygx/eYms4k3IVYplsgz7gT3r7FpPD/QeQO
-         jJUv7Fzf0E3P3a73eBrylO4g8u7A5U196GREGUXc03BUYf1puWZfWdQzo/lVDnH92LP8
-         DqUXgU9DM/TuETifjgWLy2lgwexq8XnDPIRiPxML0BXMtERO0xS5VDevXNK5QkWq4u9F
-         DYXitBQytclf+IIAJVyn7q0mZUdbFUS4On02AqYGpO3THciC9McUEsMVW7SZ3UWk3BqV
-         L47RZOAb249fyk7aDfuB1xRsVc/SB29Vt3yr+JbFplzFXKQIK1iiPTSkO5FMOqI/knRN
-         LZeg==
-X-Gm-Message-State: AOJu0YzvVGdCjVss1RtClcHG+t98kKehOrLRYNvv0psAEbKkJNpzA7Ez
-	2G3HCikVgugFlk8At8+2S7prWGk/uJjHn4l9QOtExdLFnBaYOs6NqLbTIQ==
-X-Gm-Gg: ASbGncvhGnBbr0jmNGlAr+R4hRnRHRLSt0djEjm5+WjbmAEu2HVnlmeG2goyQlTFUht
-	T3i6lC+j0xCqCbcL+NQHOVUfdrPA4xK/ZQXxCg0q3NcbnRtyyCvv/1XO4gsSC0hKyGUWZ2YUHuS
-	QuB45ay5/BNQvwpUgHq1EHXeVp4EUQEQU1PAI33WTztrnyaZE9AeTHkkT1ockVYDcnkIJueYcOF
-	YdEh18CQVJ7l7Er+bAZGadTAL0ER8aIztPIsIU6alTilwc0iBe8mXy2QqTha2HhKjtpDesmXSNg
-	o+ksZ0vL2P/j/7kuyYa63KSIl8yTQCDovX7AHWRvkkLpu3o=
-X-Google-Smtp-Source: AGHT+IHIcNlletWirrwncezehViLmYWEbMqeZPKSvBPUZe7VQRKF9T1Yf06Ls7+MpKPP7JTz+JF0tg==
-X-Received: by 2002:a05:6a00:300b:b0:736:39d4:ccf6 with SMTP id d2e1a72fcca58-7423be710admr17619137b3a.8.1746972124004;
-        Sun, 11 May 2025 07:02:04 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74237a8972asm4431460b3a.157.2025.05.11.07.02.02
+        bh=z+ddIiCK5xdrCVhEv2ElL79c8fFewZKA9JAScHoGP7s=;
+        b=VkIksBprxtB/tvdGCPrW+Z0QS0zZNk3IDCAduCvhEO1cMoVXkE4zz7UyZoE5lEftx9
+         /ExKZdWax8BYuWRs6Ze2OWpZKf3Q03wBdywiyv+bOqnyKnm1WIZmHOJ0xTG/a/aT44zO
+         HqGpRikOOYKPAfE4FE6cAC/7/U01HSjVMnjG29ck5+Ui5ZPA56TicIKBM5vzGGgHpd+2
+         S7H4qj+tPPOfsX2sPxB4RTlwzcUoUb7ZgCpn6k2F/7RhW9OZOjaVAAzRD4pXr0Pp3w7h
+         9G9jVjtcrwaKhnbDogagIsMIEfGRsr3NhRxw1u7JEvqZ/9HKx4SAVkPvfqrU2Iq8KfkE
+         jDNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1746972773; x=1747577573;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=z+ddIiCK5xdrCVhEv2ElL79c8fFewZKA9JAScHoGP7s=;
+        b=JU1Zb4BArYun6hwtyli7vLewhdKtv85m9qK4mk0wK9/4OQqET9W9TPPArS+xBIN2Vb
+         RI1D5U3Hq4qABb1kgb6rYuTShihEl9rMDuLvSgZAUmvfSjQVUUWtCd9JqWBz8uGvZfOM
+         5+u86DrBnyLq5uk9ZhdcIAPGrzbUMqCyXIk2NLBPeRFm6uEeZH1W4snPeyVdCO5evXTp
+         q6qy8Csdg6Kh2Lgu/x8R2iVjwK9vkWnzdWXUCEvzg6OFSTL5NKCQFLmxYOnVepcbGTaw
+         PN3oTB4cJtcs05Q+qbj83tM20j1NjFpO36JlDPpWXytWp2C5ndQulQE57LVYgl9yCPOO
+         +BDA==
+X-Gm-Message-State: AOJu0YzkdOgu83F6tnDfXrCHkWfiQDLFsf/yejqqQjOv6D+Dbn4YabK3
+	n4rJCiTBNAzNq1Vfe43eX8Ri1wd2Z9eIJfqTzZZpN2FRn9bC9A0KaeNRbQ==
+X-Gm-Gg: ASbGncsLtsb7jeT4Hw63ZYoRMJpn741K0Fc/k3p/0Xp2A1GGGKRTIR9yMPpJ1jSlMdm
+	F8dTUyRIP0ALqtBSqk2cq0HBvtuQpgIDO7t8MLBNnRc4sJCaQWdbFZXEbahW7ssPO3L15oVTn/s
+	Ppdm2/VK5PYB2Sy10U2vP6sE/s4bik5wCbWWGxhfirz9+dOiMhNgB8yrxCjNtz1/QI+2qSn/IHa
+	o3NOSY/X45YjtTly9nzEZFH4J5wLi0BoHn9N3PwZAiVMdsN/XWxHew8oLmr+X91cl/fihfTZJ/9
+	GCv0TG6Kh1bKmRlJHbg+80yI4nbGSUTv5ke7c7z4Zrnn3U3p6QHdqvRfsZS5VtSx+Q==
+X-Google-Smtp-Source: AGHT+IGH6iTbDNtkU69Oqfun+M3FFtikfANAzmaPsImyTJ9GLYxohyaPaLkmJUG1wqyZ+FJlDrGpHA==
+X-Received: by 2002:a17:902:d505:b0:223:807f:7f92 with SMTP id d9443c01a7336-22e847ad1fdmr197877495ad.20.1746972772961;
+        Sun, 11 May 2025 07:12:52 -0700 (PDT)
+Received: from localhost.localdomain ([223.237.150.155])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc7544fc1sm46688675ad.46.2025.05.11.07.12.45
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 May 2025 07:02:03 -0700 (PDT)
-Date: Sun, 11 May 2025 22:01:59 +0800
-From: shejialuo <shejialuo@gmail.com>
+        Sun, 11 May 2025 07:12:52 -0700 (PDT)
+From: Moumita <dhar61595@gmail.com>
 To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 3/3] packed-backend: mmap large "packed-refs" file during
- fsck
-Message-ID: <aCCt1zJ2yviOz--l@ArchLinux>
-References: <aCCtQDnWII-knmEc@ArchLinux>
+Cc: Moumita <dhar61595@gmail.com>,
+	"Johannes Sixt" <j6t@kdbg.org>,
+	"Eric Sunshine" <sunshine@sunshineco.com>,
+	"Junio C Hamano" <gitster@pobox.com>
+Subject: [PATCH v6 0/1] Added the newline after the test in t/4018
+Date: Sun, 11 May 2025 19:41:00 +0530
+Message-ID: <20250511141101.18450-1-dhar61595@gmail.com>
+X-Mailer: git-send-email 2.48.0
+In-Reply-To: <20250511125809.14180-1-dhar61595@gmail.com>
+References: <20250511125809.14180-1-dhar61595@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aCCtQDnWII-knmEc@ArchLinux>
+Content-Transfer-Encoding: 8bit
 
-During fsck, we use "strbuf_read" to read the content of "packed-refs"
-without using mmap mechanism. This is a bad practice which would consume
-more memory than using mmap mechanism. Besides, as all code paths in
-"packed-backend.c" use this way, we should make "fsck" align with the
-current codebase.
+Sorry I forgot to add the newline after the test in t/4018 again so I had to send the patch again.
 
-As we have introduced the helper function "allocate_snapshot_buffer", we
-could simple use this function to use mmap mechanism.
+Moumita Dhar (1):
+  userdiff: extend Bash pattern to cover more shell function forms
 
-Suggested-by: Jeff King <peff@peff.net>
-Suggested-by: Patrick Steinhardt <ps@pks.im>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- refs/packed-backend.c | 19 +++++++------------
- 1 file changed, 7 insertions(+), 12 deletions(-)
+ t/t4018/bash-bashism-style-multiline-function |  4 ++
+ .../bash-hunk-header-complete-line-capture    |  4 ++
+ t/t4018/bash-posix-style-multiline-function   |  4 ++
+ .../bash-posix-style-single-command-function  |  3 ++
+ t/t4034-diff-words.sh                         |  1 +
+ t/t4034/bash/expect                           | 38 +++++++++++++++++++
+ t/t4034/bash/post                             | 33 ++++++++++++++++
+ t/t4034/bash/pre                              | 33 ++++++++++++++++
+ userdiff.c                                    | 28 ++++++++++----
+ 9 files changed, 140 insertions(+), 8 deletions(-)
+ create mode 100644 t/t4018/bash-bashism-style-multiline-function
+ create mode 100644 t/t4018/bash-hunk-header-complete-line-capture
+ create mode 100644 t/t4018/bash-posix-style-multiline-function
+ create mode 100644 t/t4018/bash-posix-style-single-command-function
+ create mode 100644 t/t4034/bash/expect
+ create mode 100644 t/t4034/bash/post
+ create mode 100644 t/t4034/bash/pre
 
-diff --git a/refs/packed-backend.c b/refs/packed-backend.c
-index e582227772..85f5a45160 100644
---- a/refs/packed-backend.c
-+++ b/refs/packed-backend.c
-@@ -2069,7 +2069,7 @@ static int packed_fsck(struct ref_store *ref_store,
- {
- 	struct packed_ref_store *refs = packed_downcast(ref_store,
- 							REF_STORE_READ, "fsck");
--	struct strbuf packed_ref_content = STRBUF_INIT;
-+	struct snapshot snapshot = { 0 };
- 	unsigned int sorted = 0;
- 	struct stat st;
- 	int ret = 0;
-@@ -2113,24 +2113,19 @@ static int packed_fsck(struct ref_store *ref_store,
- 		goto cleanup;
- 	}
- 
--	if (!st.st_size)
-+	if (!allocate_snapshot_buffer(&snapshot, fd, &st))
- 		goto cleanup;
- 
--	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
--		ret = error_errno(_("unable to read '%s'"), refs->path);
--		goto cleanup;
--	}
--
--	ret = packed_fsck_ref_content(o, ref_store, &sorted, packed_ref_content.buf,
--				      packed_ref_content.buf + packed_ref_content.len);
-+	ret = packed_fsck_ref_content(o, ref_store, &sorted, snapshot.start,
-+				      snapshot.eof);
- 	if (!ret && sorted)
--		ret = packed_fsck_ref_sorted(o, ref_store, packed_ref_content.buf,
--					     packed_ref_content.buf + packed_ref_content.len);
-+		ret = packed_fsck_ref_sorted(o, ref_store, snapshot.start,
-+					     snapshot.eof);
- 
- cleanup:
- 	if (fd >= 0)
- 		close(fd);
--	strbuf_release(&packed_ref_content);
-+	clear_snapshot_buffer(&snapshot);
- 	return ret;
- }
- 
+Range-diff against v5:
+1:  40cffd3b4a ! 1:  464cb8a1eb userdiff: extend Bash pattern to cover more shell function forms
+    @@ Commit message
+           `x () echo hello`.
+     
+         Replacing the function body matching logic with `.*$`, ensures
+    -    that everything on the function definition line is captured,
+    -    aligning with other userdiff drivers and improving hunk headers in
+    -    `git diff`.
+    +    that everything on the function definition line is captured.
+     
+         Additionally, the word regex is refined to better recognize shell
+         syntax, including additional parameter expansion operators and
+    -    command-line options, improving syntax-aware diffs.
+    +    command-line options.
+     
+         Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
+     
+    @@ t/t4018/bash-bashism-style-multiline-function (new)
+     +function RIGHT \
+     +{    
+     +    echo 'ChangeMe'
+    ++}
+    +
+    + ## t/t4018/bash-hunk-header-complete-line-capture (new) ##
+    +@@
+    ++func() { # RIGHT
+    ++
+    ++    ChangeMe
+     +}
+     
+      ## t/t4018/bash-posix-style-multiline-function (new) ##
+    @@ t/t4034/bash/expect (new)
+     +<BOLD>index 09ac008..60ba6a2 100644<RESET>
+     +<BOLD>--- a/pre<RESET>
+     +<BOLD>+++ b/post<RESET>
+    -+<CYAN>@@ -1,25 +1,25 @@<RESET>
+    ++<CYAN>@@ -1,33 +1,33 @@<RESET>
+     +<RED>my_var<RESET><GREEN>new_var<RESET>=10
+     +x=<RED>123<RESET><GREEN>456<RESET>
+     +y=<RED>3.14<RESET><GREEN>2.71<RESET>
+     +z=<RED>.5<RESET><GREEN>.75<RESET>
+     +echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
+     +${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
+    -+if [ "<RED>$a<RESET><GREEN>$x<RESET>" == "<RED>$b<RESET><GREEN>$y<RESET>" ] || [ "<RED>$c<RESET><GREEN>$x<RESET>" != "<RED>$d<RESET><GREEN>$y<RESET>" ]; then echo "OK"; fi
+    -+((<RED>a<RESET><GREEN>x<RESET>+=<RED>b<RESET><GREEN>y<RESET>))
+    -+((<RED>a<RESET><GREEN>x<RESET>-=<RED>b<RESET><GREEN>y<RESET>))
+    -+$((<RED>a<RESET><GREEN>x<RESET><<<RED>b<RESET><GREEN>y<RESET>))
+    -+$((<RED>a<RESET><GREEN>x<RESET>>><RED>b<RESET><GREEN>y<RESET>))
+    -+${<RED>a<RESET><GREEN>x<RESET>:-<RED>b<RESET><GREEN>y<RESET>}
+    -+${<RED>a<RESET><GREEN>x<RESET>:=<RED>b<RESET><GREEN>y<RESET>}
+    -+${<RED>a<RESET><GREEN>x<RESET>##*/}
+    -+${<RED>a<RESET><GREEN>x<RESET>%.*}
+    -+${<RED>a<RESET><GREEN>x<RESET>%%.*}
+    -+${<RED>a<RESET><GREEN>x<RESET>^^}
+    -+${<RED>a<RESET><GREEN>x<RESET>,}
+    -+${<RED>a<RESET><GREEN>x<RESET>,,}
+    -+${!<RED>a<RESET><GREEN>x<RESET>}
+    -+${<RED>a<RESET><GREEN>x<RESET>[@]}
+    -+${<RED>a<RESET><GREEN>x<RESET>:?error message}
+    -+${<RED>a<RESET><GREEN>x<RESET>:2:3}
+    ++((a<RED>+<RESET><GREEN>+=<RESET>b))
+    ++((a<RED>*<RESET><GREEN>*=<RESET>b))
+    ++((a<RED>/<RESET><GREEN>/=<RESET>b))
+    ++((a<RED>%<RESET><GREEN>%=<RESET>b))
+    ++((a<RED>|<RESET><GREEN>|=<RESET>b))
+    ++((a<RED>^<RESET><GREEN>^=<RESET>b))
+    ++((a<RED>=<RESET><GREEN>==<RESET>b))
+    ++((a<RED>!<RESET><GREEN>!=<RESET>b))
+    ++((a<RED><<RESET><GREEN><=<RESET>b))
+    ++((a<RED>><RESET><GREEN>>=<RESET>b))
+    ++$((a<RED><<RESET><GREEN><<<RESET>b))
+    ++$((a<RED>><RESET><GREEN>>><RESET>b))
+    ++$((a<RED>&<RESET><GREEN>&&<RESET>b))
+    ++$((a<RED>|<RESET><GREEN>||<RESET>b))
+    ++${a<RED>:<RESET><GREEN>:-<RESET>b}
+    ++${a<RED>:<RESET><GREEN>:=<RESET>b}
+    ++${a<RED>:<RESET><GREEN>:+<RESET>b}
+    ++${a<RED>:<RESET><GREEN>:?<RESET>b}
+    ++${a<RED>#<RESET><GREEN>##<RESET>*/}
+    ++${a<RED>%<RESET><GREEN>%%<RESET>.*}
+    ++${a<RED>^<RESET><GREEN>^^<RESET>}
+    ++${a<RED>,<RESET><GREEN>,,<RESET>}
+    ++${<GREEN>!<RESET>a}
+    ++${a[<RED>*<RESET><GREEN>@<RESET>]}
+    ++${a<RED>:2:3<RESET><GREEN>:4:6<RESET>}
+     +ls <RED>-a<RESET><GREEN>-x<RESET>
+     +ls <RED>--a<RESET><GREEN>--x<RESET>
+     
+    @@ t/t4034/bash/post (new)
+     +z=.75
+     +echo $USERNAME
+     +${HOMEDIR}
+    -+if [ "$x" == "$y" ] || [ "$x" != "$y" ]; then echo "OK"; fi
+    -+((x+=y))
+    -+((x-=y))
+    -+$((x<<y))
+    -+$((x>>y))
+    -+${x:-y}
+    -+${x:=y}
+    -+${x##*/}
+    -+${x%.*}
+    -+${x%%.*}
+    -+${x^^}
+    -+${x,}
+    -+${x,,}
+    -+${!x}
+    -+${x[@]}
+    -+${x:?error message}
+    -+${x:2:3}
+    ++((a+=b))
+    ++((a*=b))
+    ++((a/=b))
+    ++((a%=b))
+    ++((a|=b))
+    ++((a^=b))
+    ++((a==b))
+    ++((a!=b))
+    ++((a<=b))
+    ++((a>=b))
+    ++$((a<<b))
+    ++$((a>>b))
+    ++$((a&&b))
+    ++$((a||b))
+    ++${a:-b}
+    ++${a:=b}
+    ++${a:+b}
+    ++${a:?b}
+    ++${a##*/}
+    ++${a%%.*}
+    ++${a^^}
+    ++${a,,}
+    ++${!a}
+    ++${a[@]}
+    ++${a:4:6}
+     +ls -x
+     +ls --x
+     
+    @@ t/t4034/bash/pre (new)
+     +z=.5
+     +echo $USER
+     +${HOME}
+    -+if [ "$a" == "$b" ] || [ "$c" != "$d" ]; then echo "OK"; fi
+    -+((a+=b))
+    -+((a-=b))
+    -+$((a << b))
+    -+$((a >> b))
+    -+${a:-b}
+    -+${a:=b}
+    -+${a##*/}
+    ++((a+b))
+    ++((a*b))
+    ++((a/b))
+    ++((a%b))
+    ++((a|b))
+    ++((a^b))
+    ++((a=b))
+    ++((a!b))
+    ++((a<b))
+    ++((a>b))
+    ++$((a<b))
+    ++$((a>b))
+    ++$((a&b))
+    ++$((a|b))
+    ++${a:b}
+    ++${a:b}
+    ++${a:b}
+    ++${a:b}
+    ++${a#*/}
+     +${a%.*}
+    -+${a%%.*}
+    -+${a^^}
+    ++${a^}
+     +${a,}
+    -+${a,,}
+    -+${!a}
+    -+${a[@]}
+    -+${a:?error message}
+    ++${a}
+    ++${a[*]}
+     +${a:2:3}
+     +ls -a
+     +ls --a
+     
+      ## userdiff.c ##
+     @@ userdiff.c: PATTERNS("bash",
+    + 	 "("
+    + 	 "("
+    + 	     /* POSIX identifier with mandatory parentheses */
+    +-	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+    ++	     "([a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+    + 	 "|"
+      	     /* Bashism identifier with optional parentheses */
+    - 	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+    +-	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+    ++	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+)))"
+      	 ")"
+     -	 /* Optional whitespace */
+     -	 "[ \t]*"
+    @@ userdiff.c: PATTERNS("bash",
+     +	 /* Assignment and arithmetic operators */
+     +	 "|[-+*/%&|^!=<>]=?"
+     +	 /* Additional parameter expansion operators */
+    -+	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|/[a-zA-Z0-9_-]+|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+    ++	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+     +	 /* Command-line options (to avoid splitting -option) */
+     +	 "|--?[a-zA-Z0-9_-]+"
+     +	 /* Brackets and grouping symbols */
 -- 
-2.49.0
+2.48.0
 
