@@ -1,68 +1,67 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9ADD2571AC
-	for <git@vger.kernel.org>; Sun, 11 May 2025 16:15:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276C335950
+	for <git@vger.kernel.org>; Sun, 11 May 2025 16:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746980104; cv=none; b=JK5luGbDCOXL4XYaiCLPzOIrMQiAVTnwIw5O7RHqEEgfPB68XeGnyMAwo+3DXFyG9sCcPq87NjiTaKHKQpXeTmWfOd1zS86kRjvojxDrfwUxgWeSc2XaE3sLjgPsfSCW9eVrHK6EoQ2VAe9Ng5QnJ19AnFYYIhBf6RiHC0kqRWY=
+	t=1746980171; cv=none; b=lJo4RjgFKUyepQq2y7O+cESd5NFbbCCIsC3Cz0nzAA2ZtHGB/Ob7h0oidudgJbb6s7BD7KHyTPBSdXN++JHlfdRINvFSW2fahoKOk3yzC/rLpyt2Hci9PxKGntxotT1yqu3F1GyoWhtwt4knACvUS6k9smoFeP+JHsoaaLAmxh8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746980104; c=relaxed/simple;
-	bh=ZrNdCILaQ877zy5gVNiOJBQWFnEJEtoLLaOv3yvtCe0=;
+	s=arc-20240116; t=1746980171; c=relaxed/simple;
+	bh=UhzMNmnrcWK5gQQIhOrXIVT3Dk7msA4pLC6zG8XNAic=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=O8//ZRPDMgNbaArjYrwqMJYJcmQA3byeUe0GU1/E14Z5b5soXXvN1HZ5gi6r2xOYdmP6JdaLCrq6xWvixzgyU8rHTYGDy2KCCqsqO6FgjYESZ0WKM+F4+UJD87h4YXPiyF9KFZTq0kYzHUvNGL3fa18U2KgNZurdEj6njEvUoAE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=b9X+Gugx; arc=none smtp.client-ip=209.85.128.54
+	 MIME-Version:To:Cc; b=PReLq4zYT/Ln875yb83G7Z1V2wNJ3iUrErAZbV7gp7GtqPdL3+c+Er/Vlq0+xWLxK45vkD0nZ3ya/UxR360DqnnwLLaNG6Xw3FsPs9cAeSFjEvVHa7zmsDfPvSaAf/Sd1sIbwu3OjMT2oXMMsBJOxqy+D+lSLOJqil1ot0S/CAE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WmPK3j++; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="b9X+Gugx"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so40334475e9.3
-        for <git@vger.kernel.org>; Sun, 11 May 2025 09:15:01 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WmPK3j++"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43cfe574976so25432665e9.1
+        for <git@vger.kernel.org>; Sun, 11 May 2025 09:16:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746980099; x=1747584899; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746980167; x=1747584967; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=0Tsw64GnNSMt3fN0JdvV0j2xHGPLtrzez0t4vl/fxgU=;
-        b=b9X+GugxnQqJ+hXUBYozlfIr16BwXezGLwF5Wo4gYoP8E/9qluSE9NRzq6xQtBmrEF
-         eC2S86jjexUv9+Xfu1jLA8mJCclwHLLgZSrP0TivK7YDV7tX5oUIeSpvX9KNUgzWgTpK
-         9LzrVr4X2mf+GSbcw79xmF+JBnxC53ZhF0ZoDZFYt3/EQqt++24xh9YaYu1uZFljET7G
-         IohgoWo/n0erpypMWflIqn2gKQLuh/O2SZOOW0d9Bu7DUf+69xZVUfBwh6ad00ky0gZ8
-         pgP8/IhHY1Jx9XigTJndT/mL5WXGC9voXo+ppzK2Q8GaKzHhos7dL+3eB9uL0qO8mh9o
-         p+xQ==
+        bh=IlzhTnkb9UoJlypaC/4I3RGsmBzXQvznwTtYdTPoZ48=;
+        b=WmPK3j++maCR4eLW+jUrzgiBGhdYhbC3FW8N8m5gaeQPNy9VfZFvnQPZa8YSfbnhTQ
+         WfWSXZQAXlCCDdRjLjVEuabum1Z8WswiqNoexNYOw+MbBelzrJmMuGFCd5O3w39/ejrN
+         0+AQOGNvU0f8GbmqQPAyzE/UELgqVwq//lWMIcrMQ4BSE35L8wFked8oaB91Jl0PMe7g
+         ljAHCmxTQx+U2qQlV9nVWgKj4KYGOgGF33OF+hGKtrCGdSfdnf52X3CqG0/6389j0Lxd
+         ZxKQvj1Nn7by82gg345DhDTaUpIvFfETArj4F5oiRXGQ4210XvfEd4lvDQO9mWRl8GEH
+         8FVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746980099; x=1747584899;
+        d=1e100.net; s=20230601; t=1746980167; x=1747584967;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=0Tsw64GnNSMt3fN0JdvV0j2xHGPLtrzez0t4vl/fxgU=;
-        b=mz5yJ9nQEvsBoMZdAg1bd+IHw3kxKXvxChwycQtg8p28JESahV9AukgJ7bEgSZzYl7
-         jWedyM5qIwBoereT7He7IkP5tQRn3D3az3lhiTEzQ5SDv5NOSbFgdKyjUDsjgwQukRoy
-         LwM71N6ty1ho/Xl4opTL+r5YT/1slpA1ZeopU5EYdMouAC0fiC1zA1M2bZrCB6OeleLJ
-         UWeSrmOdiH39Qoj1tV9KSrLG8TsFa6ZpesnhP0+GFZeGepb4ViRf0T37gbVDxYxOJefz
-         uOw1GCfRQb0XkURohoVJgDN1rll4rPoRsD4TFXgDZ8YlMgKA64+cyZcQ564ylZAIEpUE
-         928g==
-X-Gm-Message-State: AOJu0YypaDmq00biEHTpKNVDrBVW7sr3rwr0ELjqTJdMLZqXcS7znEw+
-	Zdzqj12/BX8SmvgNVKqEC8hm4qXirmqZIdh2TQaT9RMSnktW7SBZIRgVmg==
-X-Gm-Gg: ASbGncsqLrU7ZwSfPg7f3NurY8daYOFDOSWkmBsw2VKESG8vk+cCTW/xac6P4TUsSSf
-	nlYWbPflCgjUyYQwMeS7YJMlKnRl4n8C5QYXhI7lwCP43QyyaCZ6KZaf8nlYUusJTEw8D2MA6sS
-	r6rWJ9cRJewIMoCOp29+gDsvF4tEjAmANoNPZAM+dRIvoh6B6JFva0Lm2wie/FeiDd2hP+FQetp
-	nDVeV+qHMCveRLmZE5adRVmcKB7pla9tlI2hGa4YevsL9PZMT0kva34FP2Qw7hUY+/1gyfWTR4Z
-	XYPMMOOuWGhL2Bf7OGPRcMbhklt0nWfTVwHS1bomPCjWJvkJnSzG
-X-Google-Smtp-Source: AGHT+IE+2KGDBnhqhndZv145bO6LMFZwjc5HvbKlojQLEpZ1+eukWsVj2rX9CZ3KYcC1FDSIoHeMAw==
-X-Received: by 2002:a05:600c:1e18:b0:43c:fe15:41cb with SMTP id 5b1f17b1804b1-442dc95a564mr59189275e9.15.1746980099047;
-        Sun, 11 May 2025 09:14:59 -0700 (PDT)
+        bh=IlzhTnkb9UoJlypaC/4I3RGsmBzXQvznwTtYdTPoZ48=;
+        b=AmrTTSFq+uFkp5qvbsOzxlINUGrvjD6qLtgx87QWa+pgKPD2JuPjYRLqkabALdULHl
+         bR7C1ke3/+uyB+uPFBMV6rL8RQ0gBiVyArywI7JP8XHR3etvzHQqSs4cV2IH2E7lQP8a
+         mRjg37AO0PPw3aWJjaf8w9lrxnOwKRcBbXL1RtCZXdD6jUHZb7MHePc36/+x30bsNhA8
+         UNPcufnzeWn0W2DHkMMbCbtYJPlXNY+UO3yru1ZSQpfIX0eE1A/nFeJFiY5lWrKCgHkP
+         jq7Z2LeWfTT1fTI9o1l8YWHVruVVa1qlmJuUHHz4cHs2zaMH/8FTgjPs6GcGBsd+AGSQ
+         TbOQ==
+X-Gm-Message-State: AOJu0Yx104b1awvuSjAhdmXq3P3AUEbUVKR71ro42/J75cE+0oPJIOSL
+	eMvk7OWvvp0Nczd5rdSzI9bdH1mQXPZWrF1hzvmf+I5iLJ2FOi/Co7xwnw==
+X-Gm-Gg: ASbGncvtoDzrYgTmMkUEhQscfOIxW8X/t++IHR80e9IZg9Lw5Ip9WcgQBU74tvLilD3
+	9p9eifmejPxKUVpoNvKGYPbiSxVRiAf42o/a5O3e0FUIWNkOdua54O6kzH0ulHSluuM+OTxosA9
+	Ps5KKiNlxFl9H4kblvP+t4jPLKxkuTVI2cFNa9PuJT7TPgmpToHS+gsmsOI8HbH4zetNuaYc0YB
+	MrpQNmdrx2bwIckTpduqj/WOMiWDBD0WiCCpytJLXZlFy7FZvhJyiLOgLQmawB5K4K9fXNQGz2E
+	PeYVuHpkDS8czb8g8/mTrpD6Iziz/HtOnNKesI8UzF9h9B4O8PrP
+X-Google-Smtp-Source: AGHT+IGzdI+nCwz089wEKjI7wvnN8fSDwKU/RAKcbNcZra9d4BXk4QFlAcSSdceI51rBeifQS5/xyA==
+X-Received: by 2002:a05:600c:34d5:b0:43c:fe5e:f040 with SMTP id 5b1f17b1804b1-442d6dd21bfmr73941985e9.23.1746980166848;
+        Sun, 11 May 2025 09:16:06 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d6bf96bfsm96205835e9.6.2025.05.11.09.14.58
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f58f2ab2sm9481330f8f.46.2025.05.11.09.16.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 May 2025 09:14:58 -0700 (PDT)
-Message-Id: <pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
-References: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+        Sun, 11 May 2025 09:16:06 -0700 (PDT)
+Message-Id: <pull.1958.v2.git.git.1746980165245.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1958.git.git.1746849030749.gitgitgadget@gmail.com>
+References: <pull.1958.git.git.1746849030749.gitgitgadget@gmail.com>
 From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 11 May 2025 16:14:57 +0000
-Subject: [PATCH v2] mailinfo: fix pointential memory leak if `decode_header`
- failed
+Date: Sun, 11 May 2025 16:16:04 +0000
+Subject: [PATCH v2] reftable/writer: fix memory leak if write fails
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,277 +77,101 @@ Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
 
 From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
-in dec will leak. Simply add strbuf_release and free(dec) will solve
-this problem.
+In reftable/writer.c:padded_write(), if w->writer failed, zeroed
+allocated in `reftable_calloc` will leak. w->writer could be
+`reftable_write_data` in reftable/stack.c, and could fail due to
+some write error. Simply add reftable_free(zeroed) will solve this
+problem.
+
+In reftable/writer.c:writer_index_hash(), if `reftable_buf_add` failed,
+key allocated by `reftable_malloc` will not be insert into `obj_index_tree`
+thus leaks. Simple add reftable_free(key) will solve this problem.
 
 Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 ---
-    decode_header: fix pointential memory leak if decode_header failed
+    reftable/writer: fix memory leak when padded_write() fails
     
-    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
-    dec will leak. Simply add strbuf_release and free(dec) will solve this
-    problem.
+    In reftable/writer.c:padded_write(), if w->writer failed, zeroed
+    allocated in reftable_calloc will leak. w->writer could be
+    reftable_write_data in reftable/stack.c, and could fail due to some
+    write error. Simply add reftable_free(zeroed) will solve this problem.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v2
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v2
-Pull-Request: https://github.com/git/git/pull/1956
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1958%2Fbrandb97%2Ffix-reftable-padded-write-leak-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1958/brandb97/fix-reftable-padded-write-leak-v2
+Pull-Request: https://github.com/git/git/pull/1958
 
 Range-diff vs v1:
 
- 1:  81fdfb94315 ! 1:  90dc9b0d49b decode_header: fix pointential memory leak if decode_header failed
+ 1:  2023d6791ef ! 1:  9329ae2d478 reftable/writer: fix memory leak when `padded_write()` fails
      @@ Metadata
       Author: Lidong Yan <502024330056@smail.nju.edu.cn>
       
        ## Commit message ##
-     -    decode_header: fix pointential memory leak if decode_header failed
-     +    mailinfo: fix pointential memory leak if `decode_header` failed
+     -    reftable/writer: fix memory leak when `padded_write()` fails
+     +    reftable/writer: fix memory leak if write fails
       
-     -    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
-     +    In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
-          in dec will leak. Simply add strbuf_release and free(dec) will solve
-          this problem.
+          In reftable/writer.c:padded_write(), if w->writer failed, zeroed
+          allocated in `reftable_calloc` will leak. w->writer could be
+     @@ Commit message
+          some write error. Simply add reftable_free(zeroed) will solve this
+          problem.
       
+     +    In reftable/writer.c:writer_index_hash(), if `reftable_buf_add` failed,
+     +    key allocated by `reftable_malloc` will not be insert into `obj_index_tree`
+     +    thus leaks. Simple add reftable_free(key) will solve this problem.
+     +
           Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
       
-       ## mailinfo.c ##
-     +@@ mailinfo.c: static int is_format_patch_separator(const char *line, int len)
-     + 	return !memcmp(SAMPLE + (cp - line), cp, strlen(SAMPLE) - (cp - line));
-     + }
-     + 
-     +-static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
-     ++static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
-     ++			    int rfc2047)
-     + {
-     + 	const char *in = q_seg->buf;
-     + 	int c;
-     +-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
-     + 	strbuf_init(out, q_seg->len);
-     + 
-     + 	while ((c = *in++) != 0) {
-     +@@ mailinfo.c: static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
-     + 			c = 0x20;
-     + 		strbuf_addch(out, c);
-     + 	}
-     +-	return out;
-     ++	return 0;
-     + }
-     + 
-     +-static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
-     ++static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
-     + {
-     + 	/* Decode in..ep, possibly in-place to ot */
-     + 	int c, pos = 0, acc = 0;
-     + 	const char *in = b_seg->buf;
-     +-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
-     + 	strbuf_init(out, b_seg->len);
-     + 
-     + 	while ((c = *in++) != 0) {
-     +@@ mailinfo.c: static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
-     + 			break;
-     + 		}
-     + 	}
-     +-	return out;
-     ++	return 0;
-     + }
-     + 
-     + static int convert_to_utf8(struct mailinfo *mi,
-     +@@ mailinfo.c: static int convert_to_utf8(struct mailinfo *mi,
-     + static void decode_header(struct mailinfo *mi, struct strbuf *it)
-     + {
-     + 	char *in, *ep, *cp;
-     +-	struct strbuf outbuf = STRBUF_INIT, *dec;
-     ++	struct strbuf outbuf = STRBUF_INIT, dec = STRBUF_INIT;
-     + 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
-     + 	int found_error = 1; /* pessimism */
-     + 
-      @@ mailinfo.c: static void decode_header(struct mailinfo *mi, struct strbuf *it)
-     - 			dec = decode_q_segment(&piecebuf, 1);
-     + 		default:
-     + 			goto release_return;
-     + 		case 'b':
-     +-			dec = decode_b_segment(&piecebuf);
-     ++			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
-     ++				goto release_return;
-     ++			}
-     + 			break;
-     + 		case 'q':
-     +-			dec = decode_q_segment(&piecebuf, 1);
-     ++			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
-     ++				goto release_return;
-     ++			}
-       			break;
-       		}
-      -		if (convert_to_utf8(mi, dec, charset_q.buf))
-     -+		if (convert_to_utf8(mi, dec, charset_q.buf)) {
-     -+			strbuf_release(dec);
-     -+			free(dec);
-     ++		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
-     ++			strbuf_release(&dec);
-       			goto release_return;
-      +		}
+       ## reftable/writer.c ##
+     @@ reftable/writer.c: static int padded_write(struct reftable_writer *w, uint8_t *d
        
-     - 		strbuf_addbuf(&outbuf, dec);
-     - 		strbuf_release(dec);
-     +-		strbuf_addbuf(&outbuf, dec);
-     +-		strbuf_release(dec);
-     +-		free(dec);
-     ++		strbuf_addbuf(&outbuf, &dec);
-     ++		strbuf_release(&dec);
-     + 		in = ep + 2;
-     + 	}
-     + 	strbuf_addstr(&outbuf, in);
-     +@@ mailinfo.c: static int is_inbody_header(const struct mailinfo *mi,
+       		w->pending_padding = 0;
+       		reftable_free(zeroed);
+     +@@ reftable/writer.c: static int writer_index_hash(struct reftable_writer *w, struct reftable_buf *has
      + 
-     + static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
-     + {
-     +-	struct strbuf *ret;
-     ++	struct strbuf ret;
-     ++	int found_error = 0;
-     + 
-     + 	switch (mi->transfer_encoding) {
-     + 	case TE_QP:
-     +-		ret = decode_q_segment(line, 0);
-     ++		found_error = decode_q_segment(&ret, line, 0);
-     + 		break;
-     + 	case TE_BASE64:
-     +-		ret = decode_b_segment(line);
-     ++		found_error = decode_b_segment(&ret, line);
-     + 		break;
-     + 	case TE_DONTCARE:
-     + 	default:
-     + 		return;
-     + 	}
-     + 	strbuf_reset(line);
-     +-	strbuf_addbuf(line, ret);
-     +-	strbuf_release(ret);
-     +-	free(ret);
-     ++	strbuf_addbuf(line, &ret);
-     ++	if (!found_error)
-     ++		strbuf_release(&ret);
-     + }
-     + 
-     + static inline int patchbreak(const struct strbuf *line)
+     + 		reftable_buf_reset(&key->hash);
+     + 		err = reftable_buf_add(&key->hash, hash->buf, hash->len);
+     +-		if (err < 0)
+     ++		if (err < 0) {
+     ++			reftable_free(key);
+     + 			return err;
+     ++		}
+     + 		tree_insert(&w->obj_index_tree, key,
+     + 			    &obj_index_tree_node_compare);
+     + 	} else {
 
 
- mailinfo.c | 43 ++++++++++++++++++++++++-------------------
- 1 file changed, 24 insertions(+), 19 deletions(-)
+ reftable/writer.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/mailinfo.c b/mailinfo.c
-index 7b001fa5dbd..11ec3914ce4 100644
---- a/mailinfo.c
-+++ b/mailinfo.c
-@@ -381,11 +381,11 @@ static int is_format_patch_separator(const char *line, int len)
- 	return !memcmp(SAMPLE + (cp - line), cp, strlen(SAMPLE) - (cp - line));
- }
+diff --git a/reftable/writer.c b/reftable/writer.c
+index cb16f71be49..3b4ebdd6dce 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -57,8 +57,10 @@ static int padded_write(struct reftable_writer *w, uint8_t *data, size_t len,
+ 			return -1;
  
--static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
-+static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
-+			    int rfc2047)
- {
- 	const char *in = q_seg->buf;
- 	int c;
--	struct strbuf *out = xmalloc(sizeof(struct strbuf));
- 	strbuf_init(out, q_seg->len);
- 
- 	while ((c = *in++) != 0) {
-@@ -405,15 +405,14 @@ static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
- 			c = 0x20;
- 		strbuf_addch(out, c);
- 	}
--	return out;
-+	return 0;
- }
- 
--static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
-+static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
- {
- 	/* Decode in..ep, possibly in-place to ot */
- 	int c, pos = 0, acc = 0;
- 	const char *in = b_seg->buf;
--	struct strbuf *out = xmalloc(sizeof(struct strbuf));
- 	strbuf_init(out, b_seg->len);
- 
- 	while ((c = *in++) != 0) {
-@@ -447,7 +446,7 @@ static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
- 			break;
- 		}
- 	}
--	return out;
-+	return 0;
- }
- 
- static int convert_to_utf8(struct mailinfo *mi,
-@@ -475,7 +474,7 @@ static int convert_to_utf8(struct mailinfo *mi,
- static void decode_header(struct mailinfo *mi, struct strbuf *it)
- {
- 	char *in, *ep, *cp;
--	struct strbuf outbuf = STRBUF_INIT, *dec;
-+	struct strbuf outbuf = STRBUF_INIT, dec = STRBUF_INIT;
- 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
- 	int found_error = 1; /* pessimism */
- 
-@@ -530,18 +529,23 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
- 		default:
- 			goto release_return;
- 		case 'b':
--			dec = decode_b_segment(&piecebuf);
-+			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
-+				goto release_return;
-+			}
- 			break;
- 		case 'q':
--			dec = decode_q_segment(&piecebuf, 1);
-+			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
-+				goto release_return;
-+			}
- 			break;
- 		}
--		if (convert_to_utf8(mi, dec, charset_q.buf))
-+		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
-+			strbuf_release(&dec);
- 			goto release_return;
+ 		n = w->write(w->write_arg, zeroed, w->pending_padding);
+-		if (n < 0)
++		if (n < 0) {
++			reftable_free(zeroed);
+ 			return n;
 +		}
  
--		strbuf_addbuf(&outbuf, dec);
--		strbuf_release(dec);
--		free(dec);
-+		strbuf_addbuf(&outbuf, &dec);
-+		strbuf_release(&dec);
- 		in = ep + 2;
- 	}
- 	strbuf_addstr(&outbuf, in);
-@@ -634,23 +638,24 @@ static int is_inbody_header(const struct mailinfo *mi,
+ 		w->pending_padding = 0;
+ 		reftable_free(zeroed);
+@@ -256,8 +258,10 @@ static int writer_index_hash(struct reftable_writer *w, struct reftable_buf *has
  
- static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
- {
--	struct strbuf *ret;
-+	struct strbuf ret;
-+	int found_error = 0;
- 
- 	switch (mi->transfer_encoding) {
- 	case TE_QP:
--		ret = decode_q_segment(line, 0);
-+		found_error = decode_q_segment(&ret, line, 0);
- 		break;
- 	case TE_BASE64:
--		ret = decode_b_segment(line);
-+		found_error = decode_b_segment(&ret, line);
- 		break;
- 	case TE_DONTCARE:
- 	default:
- 		return;
- 	}
- 	strbuf_reset(line);
--	strbuf_addbuf(line, ret);
--	strbuf_release(ret);
--	free(ret);
-+	strbuf_addbuf(line, &ret);
-+	if (!found_error)
-+		strbuf_release(&ret);
- }
- 
- static inline int patchbreak(const struct strbuf *line)
+ 		reftable_buf_reset(&key->hash);
+ 		err = reftable_buf_add(&key->hash, hash->buf, hash->len);
+-		if (err < 0)
++		if (err < 0) {
++			reftable_free(key);
+ 			return err;
++		}
+ 		tree_insert(&w->obj_index_tree, key,
+ 			    &obj_index_tree_node_compare);
+ 	} else {
 
 base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
 -- 
