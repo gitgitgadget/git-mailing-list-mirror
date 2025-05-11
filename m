@@ -1,74 +1,74 @@
-Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 148321C3BEB
-	for <git@vger.kernel.org>; Sun, 11 May 2025 13:29:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B79C9139D
+	for <git@vger.kernel.org>; Sun, 11 May 2025 13:38:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1746970149; cv=none; b=tZodBmos3enJtX7IXtZ6W2xkGzbfJchsiKbELecPH1jVYsChpbgHP5GU3Dri3122tGlyZptnTaJMY+WkPrcTolgqgWtpJKhN3z+5nODz/aIP1tbdMtXKnMFHxljU5YQ1doa89CWpsY0uX7wfqgukchHwksQvy7lRVJvtXS4Rzoo=
+	t=1746970726; cv=none; b=oo75ALSh+SNlIrtiHmAoqLg2OZDJW2DmimYmEaGYPRVDRYnxp/OF9lbdNxpfDuSZL2yG2xlEMUBwztgrcZzYa7v6CyJAzhf7JPGgFpFRMVoIjGPiy4hTK3F6kGcn9fSn5XdyeiMuSDaLMCe0F7rBIiJYcPvEeXmfe7n14LBI7X4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1746970149; c=relaxed/simple;
-	bh=xZCjsT4+mqj/oN9TqoXS8J6RV6BMfFD7s5EjzZn6ZK8=;
+	s=arc-20240116; t=1746970726; c=relaxed/simple;
+	bh=irGi4QySuwhHqzNaYOsxse6lBC2Gqe4oGXPvTP3nHxE=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=FG66vgntpVgCyUxvSdEuugBRgirgiUKXWmVvjyejt488nmQ1mr0LJ/j+6hrfv7h5EMbi3mBoUJf+1uBG6z5DD0vonV6M1JrdkReWzSD8pkWfZYc8yYSIrxC/ymRdA8+6ImQ6ToyIEmotp4LRLbX2dUlrcFwDgh7T7nQ1px4DAgo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=FniO/CcP; arc=none smtp.client-ip=209.85.210.172
+	 MIME-Version; b=nyiWBr+IBiNH+/i02G7m4AH7DgjkfQsBwoKGSnu5Nw3gSLGvyxFFn1zvCuloGiyGVcDh7a1VowbeipFm0pzHhom/c3mxnhVXWivU17COqjTjZSeqxJ1OIeQLcCD8JMhO7PGhfjDHKKnG7riSC6p9s74L0zw3bp5fNhD8BuGRJnU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V4KOGkZc; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="FniO/CcP"
-Received: by mail-pf1-f172.google.com with SMTP id d2e1a72fcca58-74019695377so2619657b3a.3
-        for <git@vger.kernel.org>; Sun, 11 May 2025 06:29:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V4KOGkZc"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22fac0694aaso25853595ad.1
+        for <git@vger.kernel.org>; Sun, 11 May 2025 06:38:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1746970147; x=1747574947; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1746970724; x=1747575524; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=IY4kymXz1p7lguN5G9B8cSJ96Ll9BwVNM5wZiACkUpQ=;
-        b=FniO/CcPyM/qjf8Sjc5m8xQJ6z7drqUj2c4XHIioQ3sumYI7gqFGMwuNG0pNEdOlsl
-         ZujdORCtLVjX7lzm1NyyS0H+5Od5uBxiY/QxVxQchS+mxgOb4OQqal3lBmu3n86QE6dZ
-         jp+uZwLvYK9DGUGCWoQR1BphcMm8DEI2qaKkHnwek6TkTh5sgNzEWE6YGLSYnYvHTiSV
-         I7QCX9iakDdVlOhLqIasZh3TU31IDXBm2/N4GeCnuXImmqsmPK0QjB1yoj8lrd1Oy5Wl
-         yKX4Mo5SwnOlGLiLG7jVwskabqUaGGab78KV7xUZfcOMrTZ7OoTj96c0fAZiHqmkLu1O
-         vCfw==
+        bh=uMrOYLawAKnECrlVscLaQGSIhi4mdVNCj7pUrql6tZk=;
+        b=V4KOGkZczTn/V3CunKzeLXE9XUWlbgh/rGsamqzvMWWtcojs5J3hFq64J+3cGJaZXZ
+         4x0dXQTXs0ltOZht7ASsAx4wLvk9n8cGcdlJPnOS/VGG/oB7/q7gb1HsOmbdDUlVuJMO
+         IhxNnwqqVqEqYvHCBwvEjahtAYg09/P+YeBd65bzztteQpV/mwXBNBMjGQ9UVgiVM0mD
+         MRV/BpF0G6oEdlczTz5jB6Uf4hwRbdMGrWwu6xjqtkHra0OOKZXxSpW7UDmN7o2pHn7F
+         4Um+gPPBpOdWzKCBe5mMd15GiwCgjjugBKSmT0Jqgx5+KGi6MAniCNDqcnaqY26I72Ts
+         ogrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1746970147; x=1747574947;
+        d=1e100.net; s=20230601; t=1746970724; x=1747575524;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=IY4kymXz1p7lguN5G9B8cSJ96Ll9BwVNM5wZiACkUpQ=;
-        b=C/EuZvvVsg5Sda01dEj3VdoUHN6WB3RBLn5wh95c5QVLmE/IM6fcTcIK1DFXXhIQc5
-         waLtRSESced4x+OP/AvGdg06fQ+qgy0p2lwt4IZTlTj0sKICFDkzhRF3ZJ+7oHvemivF
-         JBy5N1ViTSjrsmf00Phaw5nAtzxMPEeuDbVgu7reweiLnUNsGvcw38xan6ryeHeLA3um
-         +jpC6+c2HmXejpyOdR/2wwVd4Uf25MNUuOtdGNunlbSfTTWMLmyrhDfj5Zk1sc91B14j
-         rcvDCgVxWoSOI6qgZrgFQwB+YPR55MUIx2EZEyrhtBOaKF4DUZBCbrgRpQiJX6F25kbR
-         VYvg==
-X-Gm-Message-State: AOJu0YzWRWUg3zcSKz6N/9G0yW+jjyMNyYmOnVtultXUTuGLzg5TFyS2
-	FHm5aOh5DxxlYamVYsADQ4Vicmt7eiz+E9+EykvE1bndUH741CZEofm11Q==
-X-Gm-Gg: ASbGnctn7TjCH87n9dixE4JlkB7zqC5pzLsfLq3w8F5nVh71/uYSZ/LhWq6W3s/B4mP
-	Lfs2S/dDX3smBTC7hnLAYiX8RuPzcVGIauRfcGGZ6huvYSK9EtlxQ9jbahu56BBnI2+ktpKKsx9
-	HWvBpLEG/Vikn4s26Tb7wz27xofES6zlhFwKx9v5UUQkVKSSqL+OikaRa9txkePDiyzMQRf4Xv5
-	W7Tjv1yMm6huAoyUUAUuzuFq+5JVibC6nvPdhuqDtv0heDvxZZxQlDItR7qWr6XE9cIWRmVwEwj
-	PULjW0vdLww4H09M5z8rkDeHwWOKsynNWnl0RKyRGK0Bgm2Ph8aqFqiWYwsnzlI2qQ==
-X-Google-Smtp-Source: AGHT+IEyBitNAkqgINj/NDOHIDPFLxyilgPmiRUIH+aRc4SsANHqOgYZvCHQE3mLY/Q3KvIb97dTEg==
-X-Received: by 2002:a17:90b:4c89:b0:2fe:7f40:420a with SMTP id 98e67ed59e1d1-30c3d3e8b69mr18552994a91.17.1746970146993;
-        Sun, 11 May 2025 06:29:06 -0700 (PDT)
+        bh=uMrOYLawAKnECrlVscLaQGSIhi4mdVNCj7pUrql6tZk=;
+        b=Kp0O5PHfY9G+YJl/AYKMlGfKvplK5QONFtGC9Kkq/zmK0gfTSdPRteWei3vlos+UVt
+         6CCyqZf8BZ9gTIS1uO3iE//0vPIe0QSDqufq71g+zW6yFjYCDAUf8FwedH8R8AyzvtQN
+         lV2JtLcFL61c3yF3YKfJnoT2tU0tIw1HE3TsvP47C8zbcYS5nOkxwUrT7fU7Jph7t5ga
+         i/H5V5vBRkXAp7AtbJ/RhsX0FLnDe6JbbnwelB7QqAkdHGJoZk2KkZOxlo0iuVfvm6rF
+         m8Z7lBSnM4MQfTmRmW6iXYxSO/tqsHzne4Zsn4985g1wJ1o4Je28cG7EyfjmU3ZES83j
+         1LBw==
+X-Gm-Message-State: AOJu0YxcgNDa50BXItXTjvdJvdpB7t8HNyOinys23GALLkgEa4CjrM6T
+	aoxWR4/MwuuBveVFlUZRVtwAyoZ1HXu26Ih7AThNjPB19KXK16SY3V30OQ==
+X-Gm-Gg: ASbGnctZByTjerBQcfBryAnoF7Ywe005D/8DV7dUdJncRefhg3CmYc4bviBGaZyNjz6
+	PgUm04iVmEmp18t/pIxmLt9Tzjv99UrbEIlXR1RIF0IcWNEw8iHEU46iYapxAJc5c3e683aJUlP
+	i364wlqyfadVEIn41f1N0RFrKWVv93f7mhLax9A15lvnIkxjBAy3KsRpWLjydFLEan+4knYpcQN
+	nsu4co/PECtIGie/ipZgV1Mja4lu9IjdFBDlvJq7e1hlY56vLuP9cGzwSWun0bpv7fCxXed/NA1
+	ER0DsR75d3lKf8636GnwJti3j0PUEub0GW0JJfr1FqUQ+XoSgItxmlj7xiDBFt0c/rmjT0zfFfZ
+	r
+X-Google-Smtp-Source: AGHT+IHjiZJMHby60IFq+X/o46QQM0LcUDk5emy32N0/y9BtX5PQPerqgVg9QR/7U6ZdPYNeBNu8yA==
+X-Received: by 2002:a17:903:2444:b0:22f:bf03:8dac with SMTP id d9443c01a7336-22fc8b5856fmr139518175ad.26.1746970723607;
+        Sun, 11 May 2025 06:38:43 -0700 (PDT)
 Received: from localhost.localdomain ([223.237.150.155])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30ad4ffb42fsm7778088a91.40.2025.05.11.06.29.00
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc82c0b82sm45777935ad.245.2025.05.11.06.38.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 May 2025 06:29:06 -0700 (PDT)
+        Sun, 11 May 2025 06:38:43 -0700 (PDT)
 From: Moumita <dhar61595@gmail.com>
 To: git@vger.kernel.org
-Cc: Moumita Dhar <dhar61595@gmail.com>,
+Cc: Moumita <dhar61595@gmail.com>,
 	"Johannes Sixt" <j6t@kdbg.org>,
 	"Eric Sunshine" <sunshine@sunshineco.com>,
 	"Junio C Hamano" <gitster@pobox.com>
 Subject: 
-Date: Sun, 11 May 2025 18:58:02 +0530
-Message-ID: <20250511132802.16338-2-dhar61595@gmail.com>
+Date: Sun, 11 May 2025 19:07:35 +0530
+Message-ID: <20250511133736.16760-1-dhar61595@gmail.com>
 X-Mailer: git-send-email 2.48.0
-In-Reply-To: <20250511132802.16338-1-dhar61595@gmail.com>
+In-Reply-To: <20250511125809.14180-1-dhar61595@gmail.com>
 References: <20250511125809.14180-1-dhar61595@gmail.com>
- <20250511132802.16338-1-dhar61595@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,28 +77,13 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-From: Moumita Dhar <dhar61595@gmail.com>
+Subject: [PATCH v6 0/1] Added the newline after the test in t/4018
 
-Subject: [PATCH v6 1/1] userdiff: extend Bash pattern to cover more shell
- function forms
+Sorry , I forgot to add the newline after the test in t/4018 again so I had send the patch agaain.
 
-The previous function regex required explicit matching of function
-bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
+Moumita Dhar (1):
+  userdiff: extend Bash pattern to cover more shell function forms
 
-- It failed to capture valid functions where `{` was on the next line
-  due to line continuation (`\`).
-- It did not recognize functions with single  command body, such as
-  `x () echo hello`.
-
-Replacing the function body matching logic with `.*$`, ensures
-that everything on the function definition line is captured.
-
-Additionally, the word regex is refined to better recognize shell
-syntax, including additional parameter expansion operators and
-command-line options.
-
-Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
----
  t/t4018/bash-bashism-style-multiline-function |  4 ++
  .../bash-hunk-header-complete-line-capture    |  4 ++
  t/t4018/bash-posix-style-multiline-function   |  4 ++
@@ -117,224 +102,214 @@ Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
  create mode 100644 t/t4034/bash/post
  create mode 100644 t/t4034/bash/pre
 
-diff --git a/t/t4018/bash-bashism-style-multiline-function b/t/t4018/bash-bashism-style-multiline-function
-new file mode 100644
-index 0000000000..284d50dd99
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-multiline-function
-@@ -0,0 +1,4 @@
-+function RIGHT \
-+{    
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-hunk-header-complete-line-capture b/t/t4018/bash-hunk-header-complete-line-capture
-new file mode 100644
-index 0000000000..b56942f322
---- /dev/null
-+++ b/t/t4018/bash-hunk-header-complete-line-capture
-@@ -0,0 +1,4 @@
-+func() { # RIGHT
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-multiline-function b/t/t4018/bash-posix-style-multiline-function
-new file mode 100644
-index 0000000000..cc8727cbcd
---- /dev/null
-+++ b/t/t4018/bash-posix-style-multiline-function
-@@ -0,0 +1,4 @@
-+RIGHT() \
-+{
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-single-command-function b/t/t4018/bash-posix-style-single-command-function
-new file mode 100644
-index 0000000000..398ae1c5d2
---- /dev/null
-+++ b/t/t4018/bash-posix-style-single-command-function
-@@ -0,0 +1,3 @@
-+RIGHT() echo "hello"
-+
-+    ChangeMe
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index f51d3557f1..0be647c2fb 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -320,6 +320,7 @@ test_expect_success 'unset default driver' '
- 
- test_language_driver ada
- test_language_driver bibtex
-+test_language_driver bash
- test_language_driver cpp
- test_language_driver csharp
- test_language_driver css
-diff --git a/t/t4034/bash/expect b/t/t4034/bash/expect
-new file mode 100644
-index 0000000000..17755e455f
---- /dev/null
-+++ b/t/t4034/bash/expect
-@@ -0,0 +1,38 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index 09ac008..60ba6a2 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,33 +1,33 @@<RESET>
-+<RED>my_var<RESET><GREEN>new_var<RESET>=10
-+x=<RED>123<RESET><GREEN>456<RESET>
-+y=<RED>3.14<RESET><GREEN>2.71<RESET>
-+z=<RED>.5<RESET><GREEN>.75<RESET>
-+echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
-+${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
-+((a<RED>+<RESET><GREEN>+=<RESET>b))
-+((a<RED>*<RESET><GREEN>*=<RESET>b))
-+((a<RED>/<RESET><GREEN>/=<RESET>b))
-+((a<RED>%<RESET><GREEN>%=<RESET>b))
-+((a<RED>|<RESET><GREEN>|=<RESET>b))
-+((a<RED>^<RESET><GREEN>^=<RESET>b))
-+((a<RED>=<RESET><GREEN>==<RESET>b))
-+((a<RED>!<RESET><GREEN>!=<RESET>b))
-+((a<RED><<RESET><GREEN><=<RESET>b))
-+((a<RED>><RESET><GREEN>>=<RESET>b))
-+$((a<RED><<RESET><GREEN><<<RESET>b))
-+$((a<RED>><RESET><GREEN>>><RESET>b))
-+$((a<RED>&<RESET><GREEN>&&<RESET>b))
-+$((a<RED>|<RESET><GREEN>||<RESET>b))
-+${a<RED>:<RESET><GREEN>:-<RESET>b}
-+${a<RED>:<RESET><GREEN>:=<RESET>b}
-+${a<RED>:<RESET><GREEN>:+<RESET>b}
-+${a<RED>:<RESET><GREEN>:?<RESET>b}
-+${a<RED>#<RESET><GREEN>##<RESET>*/}
-+${a<RED>%<RESET><GREEN>%%<RESET>.*}
-+${a<RED>^<RESET><GREEN>^^<RESET>}
-+${a<RED>,<RESET><GREEN>,,<RESET>}
-+${<GREEN>!<RESET>a}
-+${a[<RED>*<RESET><GREEN>@<RESET>]}
-+${a<RED>:2:3<RESET><GREEN>:4:6<RESET>}
-+ls <RED>-a<RESET><GREEN>-x<RESET>
-+ls <RED>--a<RESET><GREEN>--x<RESET>
-diff --git a/t/t4034/bash/post b/t/t4034/bash/post
-new file mode 100644
-index 0000000000..669e218c30
---- /dev/null
-+++ b/t/t4034/bash/post
-@@ -0,0 +1,33 @@
-+new_var=10
-+x=456
-+y=2.71
-+z=.75
-+echo $USERNAME
-+${HOMEDIR}
-+((a+=b))
-+((a*=b))
-+((a/=b))
-+((a%=b))
-+((a|=b))
-+((a^=b))
-+((a==b))
-+((a!=b))
-+((a<=b))
-+((a>=b))
-+$((a<<b))
-+$((a>>b))
-+$((a&&b))
-+$((a||b))
-+${a:-b}
-+${a:=b}
-+${a:+b}
-+${a:?b}
-+${a##*/}
-+${a%%.*}
-+${a^^}
-+${a,,}
-+${!a}
-+${a[@]}
-+${a:4:6}
-+ls -x
-+ls --x
-diff --git a/t/t4034/bash/pre b/t/t4034/bash/pre
-new file mode 100644
-index 0000000000..ada8470bac
---- /dev/null
-+++ b/t/t4034/bash/pre
-@@ -0,0 +1,33 @@
-+my_var=10
-+x=123
-+y=3.14
-+z=.5
-+echo $USER
-+${HOME}
-+((a+b))
-+((a*b))
-+((a/b))
-+((a%b))
-+((a|b))
-+((a^b))
-+((a=b))
-+((a!b))
-+((a<b))
-+((a>b))
-+$((a<b))
-+$((a>b))
-+$((a&b))
-+$((a|b))
-+${a:b}
-+${a:b}
-+${a:b}
-+${a:b}
-+${a#*/}
-+${a%.*}
-+${a^}
-+${a,}
-+${a}
-+${a[*]}
-+${a:2:3}
-+ls -a
-+ls --a
-diff --git a/userdiff.c b/userdiff.c
-index 340c4eb4f7..655c8fe0b1 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -59,20 +59,32 @@ PATTERNS("bash",
- 	 "("
- 	 "("
- 	     /* POSIX identifier with mandatory parentheses */
--	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
-+	     "([a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
- 	 "|"
- 	     /* Bashism identifier with optional parentheses */
--	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
-+	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+)))"
- 	 ")"
--	 /* Optional whitespace */
--	 "[ \t]*"
--	 /* Compound command starting with `{`, `(`, `((` or `[[` */
--	 "(\\{|\\(\\(?|\\[\\[)"
-+	 /* Everything after the function header is captured  */
-+	 ".*$"
- 	 /* End of captured text */
- 	 ")",
- 	 /* -- */
--	 /* Characters not in the default $IFS value */
--	 "[^ \t]+"),
-+	 /* Identifiers: variable and function names */
-+	  "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 /* Numeric constants: integers and decimals */
-+	  "|[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
-+	 /* Shell variables: $VAR, ${VAR} */
-+	  "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{"
-+	  /* Logical and comparison operators */
-+	 "|\\|\\||&&|<<|>>|==|!=|<=|>="
-+	 /* Assignment and arithmetic operators */
-+	 "|[-+*/%&|^!=<>]=?"
-+	 /* Additional parameter expansion operators */
-+	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
-+	 /* Command-line options (to avoid splitting -option) */
-+	 "|--?[a-zA-Z0-9_-]+"
-+	 /* Brackets and grouping symbols */
-+	 "|\\(|\\)|\\{|\\}|\\[|\\]"),
- PATTERNS("bibtex",
- 	 "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 /* -- */
+Range-diff against v5:
+1:  40cffd3b4a ! 1:  464cb8a1eb userdiff: extend Bash pattern to cover more shell function forms
+    @@ Commit message
+           `x () echo hello`.
+     
+         Replacing the function body matching logic with `.*$`, ensures
+    -    that everything on the function definition line is captured,
+    -    aligning with other userdiff drivers and improving hunk headers in
+    -    `git diff`.
+    +    that everything on the function definition line is captured.
+     
+         Additionally, the word regex is refined to better recognize shell
+         syntax, including additional parameter expansion operators and
+    -    command-line options, improving syntax-aware diffs.
+    +    command-line options.
+     
+         Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
+     
+    @@ t/t4018/bash-bashism-style-multiline-function (new)
+     +function RIGHT \
+     +{    
+     +    echo 'ChangeMe'
+    ++}
+    +
+    + ## t/t4018/bash-hunk-header-complete-line-capture (new) ##
+    +@@
+    ++func() { # RIGHT
+    ++
+    ++    ChangeMe
+     +}
+     
+      ## t/t4018/bash-posix-style-multiline-function (new) ##
+    @@ t/t4034/bash/expect (new)
+     +<BOLD>index 09ac008..60ba6a2 100644<RESET>
+     +<BOLD>--- a/pre<RESET>
+     +<BOLD>+++ b/post<RESET>
+    -+<CYAN>@@ -1,25 +1,25 @@<RESET>
+    ++<CYAN>@@ -1,33 +1,33 @@<RESET>
+     +<RED>my_var<RESET><GREEN>new_var<RESET>=10
+     +x=<RED>123<RESET><GREEN>456<RESET>
+     +y=<RED>3.14<RESET><GREEN>2.71<RESET>
+     +z=<RED>.5<RESET><GREEN>.75<RESET>
+     +echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
+     +${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
+    -+if [ "<RED>$a<RESET><GREEN>$x<RESET>" == "<RED>$b<RESET><GREEN>$y<RESET>" ] || [ "<RED>$c<RESET><GREEN>$x<RESET>" != "<RED>$d<RESET><GREEN>$y<RESET>" ]; then echo "OK"; fi
+    -+((<RED>a<RESET><GREEN>x<RESET>+=<RED>b<RESET><GREEN>y<RESET>))
+    -+((<RED>a<RESET><GREEN>x<RESET>-=<RED>b<RESET><GREEN>y<RESET>))
+    -+$((<RED>a<RESET><GREEN>x<RESET><<<RED>b<RESET><GREEN>y<RESET>))
+    -+$((<RED>a<RESET><GREEN>x<RESET>>><RED>b<RESET><GREEN>y<RESET>))
+    -+${<RED>a<RESET><GREEN>x<RESET>:-<RED>b<RESET><GREEN>y<RESET>}
+    -+${<RED>a<RESET><GREEN>x<RESET>:=<RED>b<RESET><GREEN>y<RESET>}
+    -+${<RED>a<RESET><GREEN>x<RESET>##*/}
+    -+${<RED>a<RESET><GREEN>x<RESET>%.*}
+    -+${<RED>a<RESET><GREEN>x<RESET>%%.*}
+    -+${<RED>a<RESET><GREEN>x<RESET>^^}
+    -+${<RED>a<RESET><GREEN>x<RESET>,}
+    -+${<RED>a<RESET><GREEN>x<RESET>,,}
+    -+${!<RED>a<RESET><GREEN>x<RESET>}
+    -+${<RED>a<RESET><GREEN>x<RESET>[@]}
+    -+${<RED>a<RESET><GREEN>x<RESET>:?error message}
+    -+${<RED>a<RESET><GREEN>x<RESET>:2:3}
+    ++((a<RED>+<RESET><GREEN>+=<RESET>b))
+    ++((a<RED>*<RESET><GREEN>*=<RESET>b))
+    ++((a<RED>/<RESET><GREEN>/=<RESET>b))
+    ++((a<RED>%<RESET><GREEN>%=<RESET>b))
+    ++((a<RED>|<RESET><GREEN>|=<RESET>b))
+    ++((a<RED>^<RESET><GREEN>^=<RESET>b))
+    ++((a<RED>=<RESET><GREEN>==<RESET>b))
+    ++((a<RED>!<RESET><GREEN>!=<RESET>b))
+    ++((a<RED><<RESET><GREEN><=<RESET>b))
+    ++((a<RED>><RESET><GREEN>>=<RESET>b))
+    ++$((a<RED><<RESET><GREEN><<<RESET>b))
+    ++$((a<RED>><RESET><GREEN>>><RESET>b))
+    ++$((a<RED>&<RESET><GREEN>&&<RESET>b))
+    ++$((a<RED>|<RESET><GREEN>||<RESET>b))
+    ++${a<RED>:<RESET><GREEN>:-<RESET>b}
+    ++${a<RED>:<RESET><GREEN>:=<RESET>b}
+    ++${a<RED>:<RESET><GREEN>:+<RESET>b}
+    ++${a<RED>:<RESET><GREEN>:?<RESET>b}
+    ++${a<RED>#<RESET><GREEN>##<RESET>*/}
+    ++${a<RED>%<RESET><GREEN>%%<RESET>.*}
+    ++${a<RED>^<RESET><GREEN>^^<RESET>}
+    ++${a<RED>,<RESET><GREEN>,,<RESET>}
+    ++${<GREEN>!<RESET>a}
+    ++${a[<RED>*<RESET><GREEN>@<RESET>]}
+    ++${a<RED>:2:3<RESET><GREEN>:4:6<RESET>}
+     +ls <RED>-a<RESET><GREEN>-x<RESET>
+     +ls <RED>--a<RESET><GREEN>--x<RESET>
+     
+    @@ t/t4034/bash/post (new)
+     +z=.75
+     +echo $USERNAME
+     +${HOMEDIR}
+    -+if [ "$x" == "$y" ] || [ "$x" != "$y" ]; then echo "OK"; fi
+    -+((x+=y))
+    -+((x-=y))
+    -+$((x<<y))
+    -+$((x>>y))
+    -+${x:-y}
+    -+${x:=y}
+    -+${x##*/}
+    -+${x%.*}
+    -+${x%%.*}
+    -+${x^^}
+    -+${x,}
+    -+${x,,}
+    -+${!x}
+    -+${x[@]}
+    -+${x:?error message}
+    -+${x:2:3}
+    ++((a+=b))
+    ++((a*=b))
+    ++((a/=b))
+    ++((a%=b))
+    ++((a|=b))
+    ++((a^=b))
+    ++((a==b))
+    ++((a!=b))
+    ++((a<=b))
+    ++((a>=b))
+    ++$((a<<b))
+    ++$((a>>b))
+    ++$((a&&b))
+    ++$((a||b))
+    ++${a:-b}
+    ++${a:=b}
+    ++${a:+b}
+    ++${a:?b}
+    ++${a##*/}
+    ++${a%%.*}
+    ++${a^^}
+    ++${a,,}
+    ++${!a}
+    ++${a[@]}
+    ++${a:4:6}
+     +ls -x
+     +ls --x
+     
+    @@ t/t4034/bash/pre (new)
+     +z=.5
+     +echo $USER
+     +${HOME}
+    -+if [ "$a" == "$b" ] || [ "$c" != "$d" ]; then echo "OK"; fi
+    -+((a+=b))
+    -+((a-=b))
+    -+$((a << b))
+    -+$((a >> b))
+    -+${a:-b}
+    -+${a:=b}
+    -+${a##*/}
+    ++((a+b))
+    ++((a*b))
+    ++((a/b))
+    ++((a%b))
+    ++((a|b))
+    ++((a^b))
+    ++((a=b))
+    ++((a!b))
+    ++((a<b))
+    ++((a>b))
+    ++$((a<b))
+    ++$((a>b))
+    ++$((a&b))
+    ++$((a|b))
+    ++${a:b}
+    ++${a:b}
+    ++${a:b}
+    ++${a:b}
+    ++${a#*/}
+     +${a%.*}
+    -+${a%%.*}
+    -+${a^^}
+    ++${a^}
+     +${a,}
+    -+${a,,}
+    -+${!a}
+    -+${a[@]}
+    -+${a:?error message}
+    ++${a}
+    ++${a[*]}
+     +${a:2:3}
+     +ls -a
+     +ls --a
+     
+      ## userdiff.c ##
+     @@ userdiff.c: PATTERNS("bash",
+    + 	 "("
+    + 	 "("
+    + 	     /* POSIX identifier with mandatory parentheses */
+    +-	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+    ++	     "([a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+    + 	 "|"
+      	     /* Bashism identifier with optional parentheses */
+    - 	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+    +-	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+    ++	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+)))"
+      	 ")"
+     -	 /* Optional whitespace */
+     -	 "[ \t]*"
+    @@ userdiff.c: PATTERNS("bash",
+     +	 /* Assignment and arithmetic operators */
+     +	 "|[-+*/%&|^!=<>]=?"
+     +	 /* Additional parameter expansion operators */
+    -+	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|/[a-zA-Z0-9_-]+|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+    ++	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+     +	 /* Command-line options (to avoid splitting -option) */
+     +	 "|--?[a-zA-Z0-9_-]+"
+     +	 /* Brackets and grouping symbols */
 -- 
 2.48.0
 
