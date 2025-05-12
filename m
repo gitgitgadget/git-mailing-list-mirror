@@ -1,56 +1,56 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3855827703A
-	for <git@vger.kernel.org>; Mon, 12 May 2025 19:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5EA0297A41
+	for <git@vger.kernel.org>; Mon, 12 May 2025 19:03:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747076599; cv=none; b=X3KmzfGz89INrV/M6Qz20EmuL3i6fpHetV9PqtfAV0XppkuOCpPWJP0hwmufBTgykJ21/gzocAb9JsbY+NkAKVWD5KEBGkwDgH5JtUd4MF1SyFx5Bjk6hc3EOoUPaQJUnKGT79J5ALo9JpTHGdbVgYJI9CN1xRMH++z+bXHvqoY=
+	t=1747076601; cv=none; b=niiCbL/qqvJzJlL04Mkx9AfIwzOUNYmN3YtE9ekiXyDbDadMBIOnCx8pMBx/RvGDDag+fLyccr3z7amavMkaUwVQOHT3tWjGhFdKG9BqgqOLndzTiKmjXNhpdcqRZipV6a4Hau228L/wGhUoCL78L8uTNM1U7APSm6dtCtnUaMY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747076599; c=relaxed/simple;
-	bh=Vx0ukIBsC/PW5fOnATyXe5puxnmD25cK86KhSB0iTh8=;
+	s=arc-20240116; t=1747076601; c=relaxed/simple;
+	bh=07Qv3e4wKlqqZ0IpQQDF2McfpTDs4jZAkiLdV45X/Eo=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ePTdaent/lhQWtgd5UrGbL1Q4RVgu2RSm02PIMLptHNLdbGXzTnW+NNKdLEgaYVCRqRRrYFLR/owozvyHEoWqm1qAublkD1BhAeolw57fVaquSdMDGDpxGQF3UXg6uTt+HNh/oZyNfTAiUIZCht9BHiyJ6LaWmMtSfpVHOrAV+0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nfYw8nXY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YAullJW6; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version; b=qy6iDdIoeKR74KwbrDvysP0H8UjkMWKREdFl4/Gzq0yW4G2CzOrie3zh0egyqozZmGcQis9BbCwId0jatyyQOaTDr10c/q5nfvdtkvSl2aD3JNng8M+jvXgxoBo52mxDrnxLVHz9gzc80YF5DIGUPUspitj1RAsEK4yQkmKSiUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JeE3750r; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lFX3lgYl; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nfYw8nXY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YAullJW6"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1D45D13800D6;
-	Mon, 12 May 2025 15:03:17 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 15:03:17 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JeE3750r";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lFX3lgYl"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id B2D5E13800A4;
+	Mon, 12 May 2025 15:03:18 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 12 May 2025 15:03:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1747076597; x=
-	1747162997; bh=TKTUhbag6ST43Tx4L+5am4gJsbtAXM6wNJeE2cWFa84=; b=n
-	fYw8nXY09oz3a4DUqUmhpWAbBE1eqSOjE40wz1ETPpbxCw142lDWho/vyRNxo8jP
-	Cy8H2iQfz5JHptdyJfJSfzlV2pFtOMBHvLCdYYVVt7Rtzxskh5PD9ufbJhR0ehp7
-	QD20+IKgNrW3KwuVzvuCYJ3HgxSc9+I/sB+bBUtVOKcSzTeUkQup+9mas83HpcN/
-	0Vtw39JRmsYYV6f5a9QxgrEyTB20GVq+wqj9FGQoCkWOoZ0VEpGNu3su55UeUMx8
-	ej88KkG99gHg9PQVUpI+E8i8V6n1FYMLu1Lei4hUkK6f8qU1dq6EH+oqyAwPdOuv
-	jGHKjX1MPhcujZKHLfi5A==
+	:reply-to:subject:subject:to:to; s=fm2; t=1747076598; x=
+	1747162998; bh=hQgXIAMmj5OeGLDU/zU0p+oFRkTz01qTckQCbPPouPI=; b=J
+	eE3750rhhIhI9/GAfEpIYCgp/D+5hcOM3wnrItkY+e69KMCah0VYY91dmTOqaLrd
+	uWW6EnGnAKAg94p7vD/b4RIzM+qshdgBuIbpVRcrkRbTFJNutRYCoYcooHbT9cxh
+	Mv9wcohWVdNudxazQRWz2e2Fx07CBGcyQsDIRbi0E/OIuzNVU7xP5ZCMC3IHUphd
+	FSpjQF884aozn7W6MZOBUjFLf0Wwm8GTx0FWp3oUhObElE7SX6giorhyRKG96q0b
+	7j6V1ZQ6eCougug5hmJWTF00p0dQo5zG2eYclC4hXCFFDdLUDhgtdry1HeVgQfTJ
+	PK/2p3FQg0Z2VepapwEsA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1747076597; x=1747162997; bh=T
-	KTUhbag6ST43Tx4L+5am4gJsbtAXM6wNJeE2cWFa84=; b=YAullJW6kRQ4LAy3B
-	CiLWfLqCv3a7AIP0aFSy/GmGqZEa0e/r+2mUnm06VDltbMoRs0G/O5cZZvsI/ol+
-	vAk7irrhmWNRhs3SM+0o7LCMFjr+s/yRFc0h/VCx46mJGpjqqg5Rc4Rg+NXckrjT
-	t33N/Z693pJ9cABDv3SnsriPSrxbzjCuRLWpjPiSeTWSMhCeWrcGPYvc4nU3iLX5
-	PTPT/qUYKkU0VbqiHtnVe3URN04hj00+0hAENHoOtWhySu9+naF5D+86DlK/i5Le
-	ltdo6DFIgCe2vrajaHmYLyUQWDxWOTkoZeKfcVi4p/Dza/eFUiTKXMgc8lad6lIU
-	XuQVg==
-X-ME-Sender: <xms:9EUiaOHaNTQF72UstF6t1QswkeUY2bNuXbetf9p0WBe8LsjVM9wqFg>
-    <xme:9EUiaPVz9spuUjDh4Ew22yKgVuTfy_FX6G89PXeHzI1yg6wpTIqNrWaH5ihey7_k9
-    EbjpqeP6fjwfDV-ew>
-X-ME-Received: <xmr:9EUiaILVWSrQIxthRv0kAHWerX_4eXsaV9KLSAkT1oKIUZQoBdWxGZ6oZAIrFBVNu26lwYXv40uFsjlfdnpHgb9QkPa0Nfoegidmgow>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvtdehucetufdoteggodetrf
+	:x-me-sender:x-sasl-enc; s=fm3; t=1747076598; x=1747162998; bh=h
+	QgXIAMmj5OeGLDU/zU0p+oFRkTz01qTckQCbPPouPI=; b=lFX3lgYl4nqp4ObKv
+	EwsEDBHkw+jh6bwmaDRFNoPFC4Bzd0GwEMJhQLsB2cZbfQMw+zcF0W91A14LD9PA
+	NsTPa5RWfh96ACLnAMzqrwqAaoB47eoJaXSfmL7rVKbWKdND25xiEkZPtPXtehTL
+	YcMJTo90vwBt2akOt2abqgt25wq6LmR1sFsnX9WFjubMzeoeCmi47ZSVlY1UfJ57
+	tEOQWDVguJmf7pJwm3bK8v1uFM5HfHWM54pObzKwxXhBUCZmtcRNJHgVJH8xEbPh
+	nydqxmRp2CItwbSbF+Ez1nhnFID8hqxwL6Utq57/dPhrnA7hifkfnqLUd58DPfB1
+	9SPXw==
+X-ME-Sender: <xms:9kUiaKFMR-GcsnaKauFpovwkJQnOUJqksNPmzw6AFwbRixGtW-nmGQ>
+    <xme:9kUiaLViloR26opK_fRCOjfYPL8PyN6g-hN_45l8_5cSn_VIOUNkJlZd1xoHtrpU2
+    pRWT6Q106XI3Fig8w>
+X-ME-Received: <xmr:9kUiaEL98nzigUUOfNyFgEJJCy8c8T8nQdFJX1ZvAbFmRCWkRI5Rh6mhS-Adb55QgSpWrUu9grzKFDxAJGc3dZMAcLTR-7Y-a5_y-dc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvtdegucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredt
@@ -61,20 +61,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvtdehucetufdote
     tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
     hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
     mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:9EUiaIEgzpJREtFRL0fZ4KkKnI8-tqd8hXgA_aMdk6OfzPhDoeP-tg>
-    <xmx:9EUiaEWBJ8S9_ooRBJYIMDHmV0O5h4vob7vUGPf-tek1aR28HgkXlQ>
-    <xmx:9EUiaLOkeIU2zQQpDPNdtTaIf0n-wGasQ8CxLvn1zF-VZQkp203CcQ>
-    <xmx:9EUiaL2D-Lmxg0K2L0TAq7yoWeYnQtX5FA3yC5CFZ67UCYRZHSa86Q>
-    <xmx:9UUiaPCDyXqzwFBxa3v9JWeXm3VYPJ69ZLumSGThGWtlA7pudQO0ZgzV>
+X-ME-Proxy: <xmx:9kUiaEGNunzg8kE3co-z8ud0iwxql4P1kQFk3adwI0GSqgSAvAGnIQ>
+    <xmx:9kUiaAVPhojvy4IOj4VLHM3IdztTnq-qcjkQndj6ksA8DTi9_p5fJw>
+    <xmx:9kUiaHO_sHvZ2JIqs0QQim-7zyDv7yzPSU6LTBNqZeFraGII3VGCSw>
+    <xmx:9kUiaH1n5CC9FfkhX6I4-E3hD7kQsdwocjxen6nPxT5N_4DGjOGuEQ>
+    <xmx:9kUiaLBiX9tLB_I43FOi8GNVJXGw1PqSpKftmJdqEMz6XbTtn19X-VjK>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 15:03:16 -0400 (EDT)
+ 12 May 2025 15:03:18 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 2/6] doc: prepare for a world without whatchanged
-Date: Mon, 12 May 2025 12:03:07 -0700
-Message-ID: <20250512190311.1451556-3-gitster@pobox.com>
+Subject: [PATCH v4 3/6] tests: prepare for a world without whatchanged
+Date: Mon, 12 May 2025 12:03:08 -0700
+Message-ID: <20250512190311.1451556-4-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-674-gc1e4f99c0b
 In-Reply-To: <20250512190311.1451556-1-gitster@pobox.com>
 References: <20250503005814.3030099-1-gitster@pobox.com>
@@ -87,59 +87,97 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Some documentation examples reference "whatchanged", either as a
-placeholder command or an example of source structure.
+Some tests on fast-import run "git whatchanged" without even
+checking the output from the command.  It is tempting to remove the
+calls altogether since they are not doing anything useful, but they
+presumably were added there while the tests were developed to manually
+sanity check which paths were touched.
 
-To reduce the need for future edits when `whatchanged` is removed,
-replace these references with alternatives:
+Replace these calls with "git log --raw", which is a rough
+equivalent in the more modern Git.
 
- - In `MyFirstObjectWalk.adoc`, use `version` as the nearby anchor
-   point for `walken`, instead of `whatchanged`.
-
- - In `user-manual.adoc`, cite `show` instead of `whatchanged` as
-   a command whose source lives in the same file as `log`.
+This does not remove "git whatchanged", but we no longer have to
+worry about adjusting these places when we eventually do.
 
 Helped-by: Elijah Newren <newren@gmail.com>
 [en: log message]
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- Documentation/MyFirstObjectWalk.adoc | 4 ++--
- Documentation/user-manual.adoc       | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ t/t9300-fast-import.sh       | 12 ++++++------
+ t/t9301-fast-import-notes.sh |  2 +-
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/MyFirstObjectWalk.adoc b/Documentation/MyFirstObjectWalk.adoc
-index d6e9dfdbbe..102a465a48 100644
---- a/Documentation/MyFirstObjectWalk.adoc
-+++ b/Documentation/MyFirstObjectWalk.adoc
-@@ -83,13 +83,13 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
- }
- ----
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index b258dbf1df..4dc3d645bf 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -120,7 +120,7 @@ test_expect_success 'A: create pack from stdin' '
  
--Also add the relevant line in `builtin.h` near `cmd_whatchanged()`:
-+Also add the relevant line in `builtin.h` near `cmd_version()`:
+ 	INPUT_END
+ 	git fast-import --export-marks=marks.out <input &&
+-	git whatchanged main
++	git log --raw main
+ '
  
- ----
- int cmd_walken(int argc, const char **argv, const char *prefix);
- ----
+ test_expect_success 'A: verify pack' '
+@@ -279,7 +279,7 @@ test_expect_success 'A: verify marks import does not crash' '
+ 	INPUT_END
  
--Include the command in `git.c` in `commands[]` near the entry for `whatchanged`,
-+Include the command in `git.c` in `commands[]` near the entry for `version`,
- maintaining alphabetical ordering:
+ 	git fast-import --import-marks=marks.out <input &&
+-	git whatchanged verify--import-marks
++	git log --raw verify--import-marks
+ '
  
- ----
-diff --git a/Documentation/user-manual.adoc b/Documentation/user-manual.adoc
-index d2b478ad23..7124345966 100644
---- a/Documentation/user-manual.adoc
-+++ b/Documentation/user-manual.adoc
-@@ -4240,7 +4240,7 @@ command `git`.  The source side of a builtin is
- - an entry in `BUILTIN_OBJECTS` in the `Makefile`.
+ test_expect_success 'A: verify pack' '
+@@ -652,7 +652,7 @@ test_expect_success 'C: incremental import create pack from stdin' '
+ 	INPUT_END
  
- Sometimes, more than one builtin is contained in one source file.  For
--example, `cmd_whatchanged()` and `cmd_log()` both reside in `builtin/log.c`,
-+example, `cmd_show()` and `cmd_log()` both reside in `builtin/log.c`,
- since they share quite a bit of code.  In that case, the commands which are
- _not_ named like the `.c` file in which they live have to be listed in
- `BUILT_INS` in the `Makefile`.
+ 	git fast-import <input &&
+-	git whatchanged branch
++	git log --raw branch
+ '
+ 
+ test_expect_success 'C: verify pack' '
+@@ -715,7 +715,7 @@ test_expect_success 'D: inline data in commit' '
+ 	INPUT_END
+ 
+ 	git fast-import <input &&
+-	git whatchanged branch
++	git log --raw branch
+ '
+ 
+ test_expect_success 'D: verify pack' '
+@@ -882,7 +882,7 @@ test_expect_success 'H: deletall, add 1' '
+ 
+ 	INPUT_END
+ 	git fast-import <input &&
+-	git whatchanged H
++	git log --raw H
+ '
+ 
+ test_expect_success 'H: verify pack' '
+@@ -2066,7 +2066,7 @@ test_expect_success 'Q: commit notes' '
+ 	INPUT_END
+ 
+ 	git fast-import <input &&
+-	git whatchanged notes-test
++	git log --raw notes-test
+ '
+ 
+ test_expect_success 'Q: verify pack' '
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index 1ae4d7c0d3..e62173cf1f 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -76,7 +76,7 @@ INPUT_END
+ test_expect_success 'set up main branch' '
+ 
+ 	git fast-import <input &&
+-	git whatchanged main
++	git log --raw main
+ '
+ 
+ commit4=$(git rev-parse refs/heads/main)
 -- 
 2.49.0-674-gc1e4f99c0b
 
