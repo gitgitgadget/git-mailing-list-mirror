@@ -1,84 +1,86 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D2925C6E9
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E16F25C80B
 	for <git@vger.kernel.org>; Mon, 12 May 2025 09:20:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747041614; cv=none; b=mW8zaOib0saDoPbZrp0KFWjYLHeLnxGL4iHOfg8jxg/922qGf/SulPUNoxUblRF1ZOc1ek5kWb+zqqVziGyLaHNbLi4BqlcWnPzcdsd8HyEZMYuy8zDKBKQohw1KaMIR++KKxx220xUjW0SV1b1/eS49gHmm97Bd2XFrcdGeQDU=
+	t=1747041614; cv=none; b=TWQr1YMpfRDst+6jOK1jOMdltZhBag4CPiggq868aK7lSZh486gJPrzotWj4IR+OxuWVYtKanluUcM+UHTP4zft4U2OpP53klOEwa9/J86qY9zImeyTNJTqoSmyNe+1T7qbfsSlgEtc2fIy6L70eUsxMJoccIQQ18cJze2uujJw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747041614; c=relaxed/simple;
-	bh=9FxWfqQgYVBMhs7CEQGLCXozi+vZ2n+nPMzQHhqyUQc=;
+	bh=BCk1af8yrgz8m9fmkYiIlk3cMYGp7QghmxYr8zamWHs=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=NnlD89dZX1immPHwAgBJ8hk4lIb1i/MgLxeCSHdmbKYYuFIrLJrigQJpQg0xFTMT2ha3kFimOdKggBkkfUomofCvxAp4k9v8w07snvACgBWPMI5fjdlBCqnpB/Wab/j6X3YBg7IZjkBThfLgy979vpHush3V9i5ySOhgrY394Bc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=QPT8GQaH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L9Cd5H7L; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=EjEIdxIwpcXkcz/CnZlsNN/3dznXLEw5O2M1m5DIItwloUoQJe7jXW1H62Uu7emrtPKclqSp/LYhCS/LI7oG1NV5/eT4xM70oxlZle57VitFlll8ZTjrRdgldQqMyImHtc0Mz63MvQ2dIcHNHnnG1DHL8RWnXsIBseYQrjOM0E8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=D5Zc9ttQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Hy3dxbLj; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="QPT8GQaH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L9Cd5H7L"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 8E0DA114013F;
-	Mon, 12 May 2025 05:20:09 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="D5Zc9ttQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Hy3dxbLj"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 0E26D254010F;
+	Mon, 12 May 2025 05:20:10 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-11.internal (MEProxy); Mon, 12 May 2025 05:20:09 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 12 May 2025 05:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm3; t=1747041609;
-	 x=1747128009; bh=sPW6i3A94kRvqfIsPiKjW/bhEXLFKUcnZbcCGDfQTkU=; b=
-	QPT8GQaH8vwgzJ52dm1Z4jFuCpgRqHBQkyd850jsP2afdx/hpzVA4D35Wrs1isQC
-	lPmFRGiy/J4cDDIAK71OY8C/hZfXf9jn3fpuIvUg1rNRUDimzaw+IK2kI4qW6I+F
-	Fs3WmrBKM20p58AcQaeRV/PXKJ2gtty/OPvJMpzrgYBJKW2M80fXyeW4nPSsZqr4
-	X1lrjMLzLPxXUFx3Fcoc+LEUMEN7h7qJZ6F5T/zbE9qkkV/G7AUIX/xSCRzHqX9z
-	oSZUkXgoMrgqtdOzFNWaQ6IImbCWozNL042zXj/8S0sD9w4PRZlrEQBUeG2Rlinm
-	UQPvyUPV9ZL/JZAm0CNI0g==
+	 x=1747128009; bh=CvG9Q5i268k8loeWGhb+owFyMjEihLW/bEzT5hnj1DQ=; b=
+	D5Zc9ttQaRfjOenmj3Q6cu4m/f8tUUlxY5CSwkMUYH34Y3AyWiMSMjL/SKBpRvyK
+	1ZAi+aUwe6YATZGl0d7kjPhdhmuN/bMqc0+T1qwdj2Ir3bHyKBsJBXZdHdbQVE+5
+	nRIs7uuV7HtEWTIzh1jfZ1mwWNZjmEu24JkaMCpdG+ko0PXDpMP3U0HvvNlVZ7g9
+	aqydZlXeyNhmT7N4ZRnChy1ls9eE+Z2XneahpRqViebQYPMu4022ggtStmGnMcHA
+	uqfd6Tw/sg23MYTCYnNT2r5NsBU3IoeCIzWOfaRvvpTHxrgLXu428p4mGs961792
+	uZ0QO6r1jzxgYRHkWz8kkA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747041609; x=
-	1747128009; bh=sPW6i3A94kRvqfIsPiKjW/bhEXLFKUcnZbcCGDfQTkU=; b=L
-	9Cd5H7LUrc9ukhwupbm5NpIci0bOMxEJt611Q882n5rvyge54AdbZ/6f8Fn+FRHo
-	DvPPnyeWCn5b+NzfStIvorG66Q8mU6UvzFSITDglVCUSOcXwTEY9jrf7SbTeONma
-	UEd2kXEZrinkEVmo24/8ozVhsXc7/Eerb9AHoCdmO/kmYo7lFS4Bod6+7j5xZ9re
-	/QtMIufqWvc5KAjARgeynpiu48YCLJHPjQlMs13AAmYjBnen6XjkF06G5iMOmlK6
-	TPr8XUMwan8LheDi5J+YXIp30sGVFYigazqJ68o4fTaRT3LU5dqaMju3peWvpHQc
-	ZhOXF6zXBHm6rX74MeqZw==
-X-ME-Sender: <xms:Sb0haLFwGZKp2h3YLGSSbcTMhxdM_mUAYa5bD_0ZMbTw3Cyy6pltig>
-    <xme:Sb0haIUdNrmwqyIXZuHtWaNrefIREnzlk27SJvKYA7XBShGk8YZFqy5YkgcaQEZLx
-    h5Rx4-N09AWN6zyIw>
-X-ME-Received: <xmr:Sb0haNJnjP7QhahT2G2KleATap81dAMza2KNf9dw5rVj_i2QSd_rlC7lvqXe5gkKKu3k6mtJM7TDTSsrhiQk2vGEXn_PV2K-CGW1EZd5sxQ>
+	1747128009; bh=CvG9Q5i268k8loeWGhb+owFyMjEihLW/bEzT5hnj1DQ=; b=H
+	y3dxbLjwI1u7llaYwW3tzOT4tHKdaQwo+UN4vx9Qx1iWGsBQ3TEwWpKjRRy0Q7pj
+	bBoWTv4SizmXlSDy6wnCNChGQhwkRmabSAjhIXm+Fg7CtPwrTSFdK+dKZgAwhcnY
+	Bgd/vvRA5FznAr+BgTFhUFG9CZhmO4kFhkzzJc/x+2OW4fXOngGyz0yj/DYzdsmh
+	mKZZuE0KOyR3D/9exZCZtBafQH3c6ooBjPXRGwv+oRtqmc/AGIuDrTP094sWZLGO
+	nqmtA3tJj3w2nBwBjSz9XH1LrZh/27pr2TS4QItHtYiZaiMEni3q4K886QF4LRpK
+	NmpuIl6lrHRy4MN3Ru/kw==
+X-ME-Sender: <xms:Sb0haF8k3bm-Idkw9txjz5zmzSUWOpD3oleP9deJFKPY4XXRNTAbqg>
+    <xme:Sb0haJvyXwPyTsxDB2T-JK9L2lmjW6ggCaNbga5AtdXDFSNOmpAOPglFRLkrDCqDp
+    xkoXY9HesbAs6yNCQ>
+X-ME-Received: <xmr:Sb0haDDmFax7ki0EoJjOcvCFkfRfbAq-W2iz4C4ee3AVqZAmCmQHyNpEQ9lBrHw-JfWs0aL_0O6Bmk9WBPPNVngtroGGbxeVpJokQp_el84>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddtkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeevhfevleetvdevtdeifffgvdehieeujefhtddu
-    tefhvdeltefgudduhefhvedtfeenucffohhmrghinhepghhithhhuhgsrdgtohhmpdhrvg
-    hpohhsihhtohhrhidruggvvhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohguvg
-    epshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgt
-    phhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehmrghtthhh
-    ihgvuhdqmhhohidrfhhrpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhm
-    rghilhdrtghomhdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Sb0haJFMip2vKsZBzrayjWrWKpbCmrOwpPp53BCPEHAUf7XdbF6N7Q>
-    <xmx:Sb0haBWknOTA7IknaI4phy5gGa3tPgIvqlTtC0agUEurOBamX0XD7w>
-    <xmx:Sb0haENXXwyIeojWwQG1bfXtJURXnGCkHtB2Ewv-hjPCCFzTWXL8lg>
-    <xmx:Sb0haA3rX-vWdSVJwueOclvNcMVsTgNiJf9t6TzbBSbe1MwYWj_ipw>
-    <xmx:Sb0haDXFePM_RIEGY67txNPk_ezno-irytV2M75hnKq1nkys0vAs_9bb>
+    drihhmqeenucggtffrrghtthgvrhhnpeeuheduuddvjeelvdeikefhffduhfdvvdeulefh
+    ieeuudeuvedutdevffduveejtdenucffohhmrghinheprghprggthhgvrdhorhhgpdhgoh
+    hoghhlvggrphhishdrtghomhdpghhoohhglhgvshhouhhrtggvrdgtohhmpdhkvghrnhgv
+    lhdrohhrghdpghholhgrnhhgrdhorhhgpdhgohhoghhlvgdrtghomhdpvghrrhdrnhgvth
+    dpuggvrhhrrdhnvghtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghi
+    lhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmh
+    htphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphht
+    thhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepnh
+    gvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgr
+    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhr
+    tghpthhtohepghhithesmhgrthhthhhivghuqdhmohihrdhfrh
+X-ME-Proxy: <xmx:Sb0haJeORQuyV2uS8O6_NA7RA1GcFSr1FP_xXX4H8tl3t_jHSGNeKA>
+    <xmx:Sb0haKMkMexgnPyORSznN_C7DPSAsRvb-oaN-KXcgA0kuQqvLP47-A>
+    <xmx:Sb0haLmnAVnaVS4KQ-nyoy2kfG-vTiReXzLj1mfqPyzZq0Silpalng>
+    <xmx:Sb0haEsxjuGnDs1-fjlHhdZ1CexPxNE4b7QtnYNH0frvplrH12YVQw>
+    <xmx:Sb0haLvFsVojhB9QUijxIduTmA_YqOWSFc7DbRnEsDTqkN7jR3nCCwxm>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 05:20:07 -0400 (EDT)
+ 12 May 2025 05:20:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 3152e6a2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 12 May 2025 09:20:05 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 649f3c14 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 12 May 2025 09:20:07 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 May 2025 11:19:55 +0200
-Subject: [PATCH v3 05/11] contrib: remove "hooks" directory
+Date: Mon, 12 May 2025 11:19:57 +0200
+Subject: [PATCH v3 07/11] contrib: remove "persistent-https" remote helper
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +89,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250512-pks-contrib-spring-cleanup-v3-5-32e151b0bfb0@pks.im>
+Message-Id: <20250512-pks-contrib-spring-cleanup-v3-7-32e151b0bfb0@pks.im>
 References: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
 In-Reply-To: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
 To: git@vger.kernel.org
@@ -97,1500 +99,965 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Todd Zullinger <tmz@pobox.com>, Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-The "hooks" directory contains a handful of example hooks. Most of these
-hooks are highly specific and haven't really received any updates over
-the last couple of years, except for some global cleanups. The multimail
-hook has also been removed in f74d11471fa (multimail: stop shipping a
-copy, 2021-06-10) in favor of its upstream project [1].
+The "persistent-https" remote helper supposedly speeds up SSL operations
+by running a daemon that keeps a connection open to a remote server. It
+is effectively unmaintained nowadays: the last time it received an
+update was in accb613afd2 (contrib/persistent-https: use Git version for
+build label, 2016-07-20) and its parent commits to make it compile with
+Go 1.7+.
 
-Remove those hooks. If we want to provide examples for how to use Git
-hooks we should do that as part of our documentation, for example in
-githooks(5).
+This Go toolchain is somewhat dated by now though and unsupported. The
+oldest still-supported toolchain is Go 1.23, which was released in
+August 2024. It is not possible to compile the remote helper with that
+Go version anymore:
 
-[1]: https://github.com/git-multimail/git-multimail
+    $ go version
+    go version go1.23.8 linux/amd64
+    $ make
+    case $(go version) in \
+    "go version go"1.[0-5].*) EQ=" " ;; *) EQ="=" ;; esac && \
+    go build -o git-remote-persistent-https \
+            -ldflags "-X main._BUILD_EMBED_LABEL${EQ}GIT_VERSION=2.49.0.943.g965a70ebf62"
+    go: cannot find main module, but found .git/config in /home/pks/Development/git
+            to create a module there, run:
+            cd ../.. && go mod init
+    make: *** [Makefile:31: git-remote-persistent-https] Error 1
+
+The problem is that modern Go toolchains require a "go.mod" file, but we
+don't have any such files. This requirement exists since quite a while
+already, so it's clear that nobody has tried to use this remote helper
+anytime recent.
+
+Remove the remote helper.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/hooks/multimail/README.Git |   7 -
- contrib/hooks/post-receive-email   | 759 -------------------------------------
- contrib/hooks/pre-auto-gc-battery  |  42 --
- contrib/hooks/setgitperms.perl     | 214 -----------
- contrib/hooks/update-paranoid      | 421 --------------------
- 5 files changed, 1443 deletions(-)
+ contrib/persistent-https/LICENSE   | 202 -------------------------------------
+ contrib/persistent-https/Makefile  |  43 --------
+ contrib/persistent-https/README    |  72 -------------
+ contrib/persistent-https/client.go | 189 ----------------------------------
+ contrib/persistent-https/main.go   |  82 ---------------
+ contrib/persistent-https/proxy.go  | 190 ----------------------------------
+ contrib/persistent-https/socket.go |  97 ------------------
+ 7 files changed, 875 deletions(-)
 
-diff --git a/contrib/hooks/multimail/README.Git b/contrib/hooks/multimail/README.Git
+diff --git a/contrib/persistent-https/LICENSE b/contrib/persistent-https/LICENSE
 deleted file mode 100644
-index c427efc7bd8..00000000000
---- a/contrib/hooks/multimail/README.Git
+index d6456956733..00000000000
+--- a/contrib/persistent-https/LICENSE
 +++ /dev/null
-@@ -1,7 +0,0 @@
--git-multimail is developed as an independent project at the following
--website:
+@@ -1,202 +0,0 @@
 -
--    https://github.com/git-multimail/git-multimail
+-                                 Apache License
+-                           Version 2.0, January 2004
+-                        http://www.apache.org/licenses/
 -
--Please refer to that project page for information about how to report
--bugs or contribute to git-multimail.
-diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
-deleted file mode 100755
-index ff565eb3d88..00000000000
---- a/contrib/hooks/post-receive-email
+-   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+-
+-   1. Definitions.
+-
+-      "License" shall mean the terms and conditions for use, reproduction,
+-      and distribution as defined by Sections 1 through 9 of this document.
+-
+-      "Licensor" shall mean the copyright owner or entity authorized by
+-      the copyright owner that is granting the License.
+-
+-      "Legal Entity" shall mean the union of the acting entity and all
+-      other entities that control, are controlled by, or are under common
+-      control with that entity. For the purposes of this definition,
+-      "control" means (i) the power, direct or indirect, to cause the
+-      direction or management of such entity, whether by contract or
+-      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+-      outstanding shares, or (iii) beneficial ownership of such entity.
+-
+-      "You" (or "Your") shall mean an individual or Legal Entity
+-      exercising permissions granted by this License.
+-
+-      "Source" form shall mean the preferred form for making modifications,
+-      including but not limited to software source code, documentation
+-      source, and configuration files.
+-
+-      "Object" form shall mean any form resulting from mechanical
+-      transformation or translation of a Source form, including but
+-      not limited to compiled object code, generated documentation,
+-      and conversions to other media types.
+-
+-      "Work" shall mean the work of authorship, whether in Source or
+-      Object form, made available under the License, as indicated by a
+-      copyright notice that is included in or attached to the work
+-      (an example is provided in the Appendix below).
+-
+-      "Derivative Works" shall mean any work, whether in Source or Object
+-      form, that is based on (or derived from) the Work and for which the
+-      editorial revisions, annotations, elaborations, or other modifications
+-      represent, as a whole, an original work of authorship. For the purposes
+-      of this License, Derivative Works shall not include works that remain
+-      separable from, or merely link (or bind by name) to the interfaces of,
+-      the Work and Derivative Works thereof.
+-
+-      "Contribution" shall mean any work of authorship, including
+-      the original version of the Work and any modifications or additions
+-      to that Work or Derivative Works thereof, that is intentionally
+-      submitted to Licensor for inclusion in the Work by the copyright owner
+-      or by an individual or Legal Entity authorized to submit on behalf of
+-      the copyright owner. For the purposes of this definition, "submitted"
+-      means any form of electronic, verbal, or written communication sent
+-      to the Licensor or its representatives, including but not limited to
+-      communication on electronic mailing lists, source code control systems,
+-      and issue tracking systems that are managed by, or on behalf of, the
+-      Licensor for the purpose of discussing and improving the Work, but
+-      excluding communication that is conspicuously marked or otherwise
+-      designated in writing by the copyright owner as "Not a Contribution."
+-
+-      "Contributor" shall mean Licensor and any individual or Legal Entity
+-      on behalf of whom a Contribution has been received by Licensor and
+-      subsequently incorporated within the Work.
+-
+-   2. Grant of Copyright License. Subject to the terms and conditions of
+-      this License, each Contributor hereby grants to You a perpetual,
+-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+-      copyright license to reproduce, prepare Derivative Works of,
+-      publicly display, publicly perform, sublicense, and distribute the
+-      Work and such Derivative Works in Source or Object form.
+-
+-   3. Grant of Patent License. Subject to the terms and conditions of
+-      this License, each Contributor hereby grants to You a perpetual,
+-      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+-      (except as stated in this section) patent license to make, have made,
+-      use, offer to sell, sell, import, and otherwise transfer the Work,
+-      where such license applies only to those patent claims licensable
+-      by such Contributor that are necessarily infringed by their
+-      Contribution(s) alone or by combination of their Contribution(s)
+-      with the Work to which such Contribution(s) was submitted. If You
+-      institute patent litigation against any entity (including a
+-      cross-claim or counterclaim in a lawsuit) alleging that the Work
+-      or a Contribution incorporated within the Work constitutes direct
+-      or contributory patent infringement, then any patent licenses
+-      granted to You under this License for that Work shall terminate
+-      as of the date such litigation is filed.
+-
+-   4. Redistribution. You may reproduce and distribute copies of the
+-      Work or Derivative Works thereof in any medium, with or without
+-      modifications, and in Source or Object form, provided that You
+-      meet the following conditions:
+-
+-      (a) You must give any other recipients of the Work or
+-          Derivative Works a copy of this License; and
+-
+-      (b) You must cause any modified files to carry prominent notices
+-          stating that You changed the files; and
+-
+-      (c) You must retain, in the Source form of any Derivative Works
+-          that You distribute, all copyright, patent, trademark, and
+-          attribution notices from the Source form of the Work,
+-          excluding those notices that do not pertain to any part of
+-          the Derivative Works; and
+-
+-      (d) If the Work includes a "NOTICE" text file as part of its
+-          distribution, then any Derivative Works that You distribute must
+-          include a readable copy of the attribution notices contained
+-          within such NOTICE file, excluding those notices that do not
+-          pertain to any part of the Derivative Works, in at least one
+-          of the following places: within a NOTICE text file distributed
+-          as part of the Derivative Works; within the Source form or
+-          documentation, if provided along with the Derivative Works; or,
+-          within a display generated by the Derivative Works, if and
+-          wherever such third-party notices normally appear. The contents
+-          of the NOTICE file are for informational purposes only and
+-          do not modify the License. You may add Your own attribution
+-          notices within Derivative Works that You distribute, alongside
+-          or as an addendum to the NOTICE text from the Work, provided
+-          that such additional attribution notices cannot be construed
+-          as modifying the License.
+-
+-      You may add Your own copyright statement to Your modifications and
+-      may provide additional or different license terms and conditions
+-      for use, reproduction, or distribution of Your modifications, or
+-      for any such Derivative Works as a whole, provided Your use,
+-      reproduction, and distribution of the Work otherwise complies with
+-      the conditions stated in this License.
+-
+-   5. Submission of Contributions. Unless You explicitly state otherwise,
+-      any Contribution intentionally submitted for inclusion in the Work
+-      by You to the Licensor shall be under the terms and conditions of
+-      this License, without any additional terms or conditions.
+-      Notwithstanding the above, nothing herein shall supersede or modify
+-      the terms of any separate license agreement you may have executed
+-      with Licensor regarding such Contributions.
+-
+-   6. Trademarks. This License does not grant permission to use the trade
+-      names, trademarks, service marks, or product names of the Licensor,
+-      except as required for reasonable and customary use in describing the
+-      origin of the Work and reproducing the content of the NOTICE file.
+-
+-   7. Disclaimer of Warranty. Unless required by applicable law or
+-      agreed to in writing, Licensor provides the Work (and each
+-      Contributor provides its Contributions) on an "AS IS" BASIS,
+-      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+-      implied, including, without limitation, any warranties or conditions
+-      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+-      PARTICULAR PURPOSE. You are solely responsible for determining the
+-      appropriateness of using or redistributing the Work and assume any
+-      risks associated with Your exercise of permissions under this License.
+-
+-   8. Limitation of Liability. In no event and under no legal theory,
+-      whether in tort (including negligence), contract, or otherwise,
+-      unless required by applicable law (such as deliberate and grossly
+-      negligent acts) or agreed to in writing, shall any Contributor be
+-      liable to You for damages, including any direct, indirect, special,
+-      incidental, or consequential damages of any character arising as a
+-      result of this License or out of the use or inability to use the
+-      Work (including but not limited to damages for loss of goodwill,
+-      work stoppage, computer failure or malfunction, or any and all
+-      other commercial damages or losses), even if such Contributor
+-      has been advised of the possibility of such damages.
+-
+-   9. Accepting Warranty or Additional Liability. While redistributing
+-      the Work or Derivative Works thereof, You may choose to offer,
+-      and charge a fee for, acceptance of support, warranty, indemnity,
+-      or other liability obligations and/or rights consistent with this
+-      License. However, in accepting such obligations, You may act only
+-      on Your own behalf and on Your sole responsibility, not on behalf
+-      of any other Contributor, and only if You agree to indemnify,
+-      defend, and hold each Contributor harmless for any liability
+-      incurred by, or claims asserted against, such Contributor by reason
+-      of your accepting any such warranty or additional liability.
+-
+-   END OF TERMS AND CONDITIONS
+-
+-   APPENDIX: How to apply the Apache License to your work.
+-
+-      To apply the Apache License to your work, attach the following
+-      boilerplate notice, with the fields enclosed by brackets "[]"
+-      replaced with your own identifying information. (Don't include
+-      the brackets!)  The text should be enclosed in the appropriate
+-      comment syntax for the file format. We also recommend that a
+-      file or class name and description of purpose be included on the
+-      same "printed page" as the copyright notice for easier
+-      identification within third-party archives.
+-
+-   Copyright [yyyy] [name of copyright owner]
+-
+-   Licensed under the Apache License, Version 2.0 (the "License");
+-   you may not use this file except in compliance with the License.
+-   You may obtain a copy of the License at
+-
+-       http://www.apache.org/licenses/LICENSE-2.0
+-
+-   Unless required by applicable law or agreed to in writing, software
+-   distributed under the License is distributed on an "AS IS" BASIS,
+-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-   See the License for the specific language governing permissions and
+-   limitations under the License.
+diff --git a/contrib/persistent-https/Makefile b/contrib/persistent-https/Makefile
+deleted file mode 100644
+index 691737e76be..00000000000
+--- a/contrib/persistent-https/Makefile
 +++ /dev/null
-@@ -1,759 +0,0 @@
--#!/bin/sh
+@@ -1,43 +0,0 @@
+-# Copyright 2012 Google Inc. All Rights Reserved.
 -#
--# Copyright (c) 2007 Andy Parkins
+-# Licensed under the Apache License, Version 2.0 (the "License");
+-# you may not use this file except in compliance with the License.
+-# You may obtain a copy of the License at
 -#
--# An example hook script to mail out commit update information.
+-#     http://www.apache.org/licenses/LICENSE-2.0
 -#
--# NOTE: This script is no longer under active development.  There
--# is another script, git-multimail, which is more capable and
--# configurable and is largely backwards-compatible with this script;
--# please see "contrib/hooks/multimail/".  For instructions on how to
--# migrate from post-receive-email to git-multimail, please see
--# "README.migrate-from-post-receive-email" in that directory.
--#
--# This hook sends emails listing new revisions to the repository
--# introduced by the change being reported.  The rule is that (for
--# branch updates) each commit will appear on one email and one email
--# only.
--#
--# This hook is stored in the contrib/hooks directory.  Your distribution
--# will have put this somewhere standard.  You should make this script
--# executable then link to it in the repository you would like to use it in.
--# For example, on debian the hook is stored in
--# /usr/share/git-core/contrib/hooks/post-receive-email:
--#
--#  cd /path/to/your/repository.git
--#  ln -sf /usr/share/git-core/contrib/hooks/post-receive-email hooks/post-receive
--#
--# This hook script assumes it is enabled on the central repository of a
--# project, with all users pushing only to it and not between each other.  It
--# will still work if you don't operate in that style, but it would become
--# possible for the email to be from someone other than the person doing the
--# push.
--#
--# To help with debugging and use on pre-v1.5.1 git servers, this script will
--# also obey the interface of hooks/update, taking its arguments on the
--# command line.  Unfortunately, hooks/update is called once for each ref.
--# To avoid firing one email per ref, this script just prints its output to
--# the screen when used in this mode.  The output can then be redirected if
--# wanted.
--#
--# Config
--# ------
--# hooks.mailinglist
--#   This is the list that all pushes will go to; leave it blank to not send
--#   emails for every ref update.
--# hooks.announcelist
--#   This is the list that all pushes of annotated tags will go to.  Leave it
--#   blank to default to the mailinglist field.  The announce emails lists
--#   the short log summary of the changes since the last annotated tag.
--# hooks.envelopesender
--#   If set then the -f option is passed to sendmail to allow the envelope
--#   sender address to be set
--# hooks.emailprefix
--#   All emails have their subjects prefixed with this prefix, or "[SCM]"
--#   if emailprefix is unset, to aid filtering
--# hooks.showrev
--#   The shell command used to format each revision in the email, with
--#   "%s" replaced with the commit id.  Defaults to "git rev-list -1
--#   --pretty %s", displaying the commit id, author, date and log
--#   message.  To list full patches separated by a blank line, you
--#   could set this to "git show -C %s; echo".
--#   To list a gitweb/cgit URL *and* a full patch for each change set, use this:
--#     "t=%s; printf 'http://.../?id=%%s' \$t; echo;echo; git show -C \$t; echo"
--#   Be careful if "..." contains things that will be expanded by shell "eval"
--#   or printf.
--# hooks.emailmaxlines
--#   The maximum number of lines that should be included in the generated
--#   email body. If not specified, there is no limit.
--#   Lines beyond the limit are suppressed and counted, and a final
--#   line is added indicating the number of suppressed lines.
--# hooks.diffopts
--#   Alternate options for the git diff-tree invocation that shows changes.
--#   Default is "--stat --summary --find-copies-harder". Add -p to those
--#   options to include a unified diff of changes in addition to the usual
--#   summary output.
--#
--# Notes
--# -----
--# All emails include the headers "X-Git-Refname", "X-Git-Oldrev",
--# "X-Git-Newrev", and "X-Git-Reftype" to enable fine tuned filtering and
--# give information for debugging.
--#
--
--# ---------------------------- Functions
--
--#
--# Function to prepare for email generation. This decides what type
--# of update this is and whether an email should even be generated.
--#
--prep_for_email()
--{
--	# --- Arguments
--	oldrev=$(git rev-parse $1)
--	newrev=$(git rev-parse $2)
--	refname="$3"
--
--	# --- Interpret
--	# 0000->1234 (create)
--	# 1234->2345 (update)
--	# 2345->0000 (delete)
--	if expr "$oldrev" : '0*$' >/dev/null
--	then
--		change_type="create"
--	else
--		if expr "$newrev" : '0*$' >/dev/null
--		then
--			change_type="delete"
--		else
--			change_type="update"
--		fi
--	fi
--
--	# --- Get the revision types
--	newrev_type=$(git cat-file -t $newrev 2> /dev/null)
--	oldrev_type=$(git cat-file -t "$oldrev" 2> /dev/null)
--	case "$change_type" in
--	create|update)
--		rev="$newrev"
--		rev_type="$newrev_type"
--		;;
--	delete)
--		rev="$oldrev"
--		rev_type="$oldrev_type"
--		;;
--	esac
--
--	# The revision type tells us what type the commit is, combined with
--	# the location of the ref we can decide between
--	#  - working branch
--	#  - tracking branch
--	#  - unannoted tag
--	#  - annotated tag
--	case "$refname","$rev_type" in
--		refs/tags/*,commit)
--			# un-annotated tag
--			refname_type="tag"
--			short_refname=${refname##refs/tags/}
--			;;
--		refs/tags/*,tag)
--			# annotated tag
--			refname_type="annotated tag"
--			short_refname=${refname##refs/tags/}
--			# change recipients
--			if [ -n "$announcerecipients" ]; then
--				recipients="$announcerecipients"
--			fi
--			;;
--		refs/heads/*,commit)
--			# branch
--			refname_type="branch"
--			short_refname=${refname##refs/heads/}
--			;;
--		refs/remotes/*,commit)
--			# tracking branch
--			refname_type="tracking branch"
--			short_refname=${refname##refs/remotes/}
--			echo >&2 "*** Push-update of tracking branch, $refname"
--			echo >&2 "***  - no email generated."
--			return 1
--			;;
--		*)
--			# Anything else (is there anything else?)
--			echo >&2 "*** Unknown type of update to $refname ($rev_type)"
--			echo >&2 "***  - no email generated"
--			return 1
--			;;
--	esac
--
--	# Check if we've got anyone to send to
--	if [ -z "$recipients" ]; then
--		case "$refname_type" in
--			"annotated tag")
--				config_name="hooks.announcelist"
--				;;
--			*)
--				config_name="hooks.mailinglist"
--				;;
--		esac
--		echo >&2 "*** $config_name is not set so no email will be sent"
--		echo >&2 "*** for $refname update $oldrev->$newrev"
--		return 1
--	fi
--
--	return 0
--}
--
--#
--# Top level email generation function.  This calls the appropriate
--# body-generation routine after outputting the common header.
--#
--# Note this function doesn't actually generate any email output, that is
--# taken care of by the functions it calls:
--#  - generate_email_header
--#  - generate_create_XXXX_email
--#  - generate_update_XXXX_email
--#  - generate_delete_XXXX_email
--#  - generate_email_footer
--#
--# Note also that this function cannot 'exit' from the script; when this
--# function is running (in hook script mode), the send_mail() function
--# is already executing in another process, connected via a pipe, and
--# if this function exits without, whatever has been generated to that
--# point will be sent as an email... even if nothing has been generated.
--#
--generate_email()
--{
--	# Email parameters
--	# The email subject will contain the best description of the ref
--	# that we can build from the parameters
--	describe=$(git describe $rev 2>/dev/null)
--	if [ -z "$describe" ]; then
--		describe=$rev
--	fi
--
--	generate_email_header
--
--	# Call the correct body generation function
--	fn_name=general
--	case "$refname_type" in
--	"tracking branch"|branch)
--		fn_name=branch
--		;;
--	"annotated tag")
--		fn_name=atag
--		;;
--	esac
--
--	if [ -z "$maxlines" ]; then
--		generate_${change_type}_${fn_name}_email
--	else
--		generate_${change_type}_${fn_name}_email | limit_lines $maxlines
--	fi
--
--	generate_email_footer
--}
--
--generate_email_header()
--{
--	# --- Email (all stdout will be the email)
--	# Generate header
--	cat <<-EOF
--	To: $recipients
--	Subject: ${emailprefix}$projectdesc $refname_type $short_refname ${change_type}d. $describe
--	MIME-Version: 1.0
--	Content-Type: text/plain; charset=utf-8
--	Content-Transfer-Encoding: 8bit
--	X-Git-Refname: $refname
--	X-Git-Reftype: $refname_type
--	X-Git-Oldrev: $oldrev
--	X-Git-Newrev: $newrev
--	Auto-Submitted: auto-generated
--
--	This is an automated email from the git hooks/post-receive script. It was
--	generated because a ref change was pushed to the repository containing
--	the project "$projectdesc".
--
--	The $refname_type, $short_refname has been ${change_type}d
--	EOF
--}
--
--generate_email_footer()
--{
--	SPACE=" "
--	cat <<-EOF
--
--
--	hooks/post-receive
--	--${SPACE}
--	$projectdesc
--	EOF
--}
--
--# --------------- Branches
--
--#
--# Called for the creation of a branch
--#
--generate_create_branch_email()
--{
--	# This is a new branch and so oldrev is not valid
--	echo "        at  $newrev ($newrev_type)"
--	echo ""
--
--	echo $LOGBEGIN
--	show_new_revisions
--	echo $LOGEND
--}
--
--#
--# Called for the change of a pre-existing branch
--#
--generate_update_branch_email()
--{
--	# Consider this:
--	#   1 --- 2 --- O --- X --- 3 --- 4 --- N
--	#
--	# O is $oldrev for $refname
--	# N is $newrev for $refname
--	# X is a revision pointed to by some other ref, for which we may
--	#   assume that an email has already been generated.
--	# In this case we want to issue an email containing only revisions
--	# 3, 4, and N.  Given (almost) by
--	#
--	#  git rev-list N ^O --not --all
--	#
--	# The reason for the "almost", is that the "--not --all" will take
--	# precedence over the "N", and effectively will translate to
--	#
--	#  git rev-list N ^O ^X ^N
--	#
--	# So, we need to build up the list more carefully.  git rev-parse
--	# will generate a list of revs that may be fed into git rev-list.
--	# We can get it to make the "--not --all" part and then filter out
--	# the "^N" with:
--	#
--	#  git rev-parse --not --all | grep -v N
--	#
--	# Then, using the --stdin switch to git rev-list we have effectively
--	# manufactured
--	#
--	#  git rev-list N ^O ^X
--	#
--	# This leaves a problem when someone else updates the repository
--	# while this script is running.  Their new value of the ref we're
--	# working on would be included in the "--not --all" output; and as
--	# our $newrev would be an ancestor of that commit, it would exclude
--	# all of our commits.  What we really want is to exclude the current
--	# value of $refname from the --not list, rather than N itself.  So:
--	#
--	#  git rev-parse --not --all | grep -v $(git rev-parse $refname)
--	#
--	# Gets us to something pretty safe (apart from the small time
--	# between refname being read, and git rev-parse running - for that,
--	# I give up)
--	#
--	#
--	# Next problem, consider this:
--	#   * --- B --- * --- O ($oldrev)
--	#          \
--	#           * --- X --- * --- N ($newrev)
--	#
--	# That is to say, there is no guarantee that oldrev is a strict
--	# subset of newrev (it would have required a --force, but that's
--	# allowed).  So, we can't simply say rev-list $oldrev..$newrev.
--	# Instead we find the common base of the two revs and list from
--	# there.
--	#
--	# As above, we need to take into account the presence of X; if
--	# another branch is already in the repository and points at some of
--	# the revisions that we are about to output - we don't want them.
--	# The solution is as before: git rev-parse output filtered.
--	#
--	# Finally, tags: 1 --- 2 --- O --- T --- 3 --- 4 --- N
--	#
--	# Tags pushed into the repository generate nice shortlog emails that
--	# summarise the commits between them and the previous tag.  However,
--	# those emails don't include the full commit messages that we output
--	# for a branch update.  Therefore we still want to output revisions
--	# that have been output on a tag email.
--	#
--	# Luckily, git rev-parse includes just the tool.  Instead of using
--	# "--all" we use "--branches"; this has the added benefit that
--	# "remotes/" will be ignored as well.
--
--	# List all of the revisions that were removed by this update, in a
--	# fast-forward update, this list will be empty, because rev-list O
--	# ^N is empty.  For a non-fast-forward, O ^N is the list of removed
--	# revisions
--	fast_forward=""
--	rev=""
--	for rev in $(git rev-list $newrev..$oldrev)
--	do
--		revtype=$(git cat-file -t "$rev")
--		echo "  discards  $rev ($revtype)"
--	done
--	if [ -z "$rev" ]; then
--		fast_forward=1
--	fi
--
--	# List all the revisions from baserev to newrev in a kind of
--	# "table-of-contents"; note this list can include revisions that
--	# have already had notification emails and is present to show the
--	# full detail of the change from rolling back the old revision to
--	# the base revision and then forward to the new revision
--	for rev in $(git rev-list $oldrev..$newrev)
--	do
--		revtype=$(git cat-file -t "$rev")
--		echo "       via  $rev ($revtype)"
--	done
--
--	if [ "$fast_forward" ]; then
--		echo "      from  $oldrev ($oldrev_type)"
--	else
--		#  1. Existing revisions were removed.  In this case newrev
--		#     is a subset of oldrev - this is the reverse of a
--		#     fast-forward, a rewind
--		#  2. New revisions were added on top of an old revision,
--		#     this is a rewind and addition.
--
--		# (1) certainly happened, (2) possibly.  When (2) hasn't
--		# happened, we set a flag to indicate that no log printout
--		# is required.
--
--		echo ""
--
--		# Find the common ancestor of the old and new revisions and
--		# compare it with newrev
--		baserev=$(git merge-base $oldrev $newrev)
--		rewind_only=""
--		if [ "$baserev" = "$newrev" ]; then
--			echo "This update discarded existing revisions and left the branch pointing at"
--			echo "a previous point in the repository history."
--			echo ""
--			echo " * -- * -- N ($newrev)"
--			echo "            \\"
--			echo "             O -- O -- O ($oldrev)"
--			echo ""
--			echo "The removed revisions are not necessarily gone - if another reference"
--			echo "still refers to them they will stay in the repository."
--			rewind_only=1
--		else
--			echo "This update added new revisions after undoing existing revisions.  That is"
--			echo "to say, the old revision is not a strict subset of the new revision.  This"
--			echo "situation occurs when you --force push a change and generate a repository"
--			echo "containing something like this:"
--			echo ""
--			echo " * -- * -- B -- O -- O -- O ($oldrev)"
--			echo "            \\"
--			echo "             N -- N -- N ($newrev)"
--			echo ""
--			echo "When this happens we assume that you've already had alert emails for all"
--			echo "of the O revisions, and so we here report only the revisions in the N"
--			echo "branch from the common base, B."
--		fi
--	fi
--
--	echo ""
--	if [ -z "$rewind_only" ]; then
--		echo "Those revisions listed above that are new to this repository have"
--		echo "not appeared on any other notification email; so we list those"
--		echo "revisions in full, below."
--
--		echo ""
--		echo $LOGBEGIN
--		show_new_revisions
--
--		# XXX: Need a way of detecting whether git rev-list actually
--		# outputted anything, so that we can issue a "no new
--		# revisions added by this update" message
--
--		echo $LOGEND
--	else
--		echo "No new revisions were added by this update."
--	fi
--
--	# The diffstat is shown from the old revision to the new revision.
--	# This is to show the truth of what happened in this change.
--	# There's no point showing the stat from the base to the new
--	# revision because the base is effectively a random revision at this
--	# point - the user will be interested in what this revision changed
--	# - including the undoing of previous revisions in the case of
--	# non-fast-forward updates.
--	echo ""
--	echo "Summary of changes:"
--	git diff-tree $diffopts $oldrev..$newrev
--}
--
--#
--# Called for the deletion of a branch
--#
--generate_delete_branch_email()
--{
--	echo "       was  $oldrev"
--	echo ""
--	echo $LOGBEGIN
--	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
--	echo $LOGEND
--}
--
--# --------------- Annotated tags
--
--#
--# Called for the creation of an annotated tag
--#
--generate_create_atag_email()
--{
--	echo "        at  $newrev ($newrev_type)"
--
--	generate_atag_email
--}
--
--#
--# Called for the update of an annotated tag (this is probably a rare event
--# and may not even be allowed)
--#
--generate_update_atag_email()
--{
--	echo "        to  $newrev ($newrev_type)"
--	echo "      from  $oldrev (which is now obsolete)"
--
--	generate_atag_email
--}
--
--#
--# Called when an annotated tag is created or changed
--#
--generate_atag_email()
--{
--	# Use git for-each-ref to pull out the individual fields from the
--	# tag
--	eval $(git for-each-ref --shell --format='
--	tagobject=%(*objectname)
--	tagtype=%(*objecttype)
--	tagger=%(taggername)
--	tagged=%(taggerdate)' $refname
--	)
--
--	echo "   tagging  $tagobject ($tagtype)"
--	case "$tagtype" in
--	commit)
--
--		# If the tagged object is a commit, then we assume this is a
--		# release, and so we calculate which tag this tag is
--		# replacing
--		prevtag=$(git describe --abbrev=0 $newrev^ 2>/dev/null)
--
--		if [ -n "$prevtag" ]; then
--			echo "  replaces  $prevtag"
--		fi
--		;;
--	*)
--		echo "    length  $(git cat-file -s $tagobject) bytes"
--		;;
--	esac
--	echo " tagged by  $tagger"
--	echo "        on  $tagged"
--
--	echo ""
--	echo $LOGBEGIN
--
--	# Show the content of the tag message; this might contain a change
--	# log or release notes so is worth displaying.
--	git cat-file tag $newrev | sed -e '1,/^$/d'
--
--	echo ""
--	case "$tagtype" in
--	commit)
--		# Only commit tags make sense to have rev-list operations
--		# performed on them
--		if [ -n "$prevtag" ]; then
--			# Show changes since the previous release
--			git shortlog "$prevtag..$newrev"
--		else
--			# No previous tag, show all the changes since time
--			# began
--			git shortlog $newrev
--		fi
--		;;
--	*)
--		# XXX: Is there anything useful we can do for non-commit
--		# objects?
--		;;
--	esac
--
--	echo $LOGEND
--}
--
--#
--# Called for the deletion of an annotated tag
--#
--generate_delete_atag_email()
--{
--	echo "       was  $oldrev"
--	echo ""
--	echo $LOGBEGIN
--	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
--	echo $LOGEND
--}
--
--# --------------- General references
--
--#
--# Called when any other type of reference is created (most likely a
--# non-annotated tag)
--#
--generate_create_general_email()
--{
--	echo "        at  $newrev ($newrev_type)"
--
--	generate_general_email
--}
--
--#
--# Called when any other type of reference is updated (most likely a
--# non-annotated tag)
--#
--generate_update_general_email()
--{
--	echo "        to  $newrev ($newrev_type)"
--	echo "      from  $oldrev"
--
--	generate_general_email
--}
--
--#
--# Called for creation or update of any other type of reference
--#
--generate_general_email()
--{
--	# Unannotated tags are more about marking a point than releasing a
--	# version; therefore we don't do the shortlog summary that we do for
--	# annotated tags above - we simply show that the point has been
--	# marked, and print the log message for the marked point for
--	# reference purposes
--	#
--	# Note this section also catches any other reference type (although
--	# there aren't any) and deals with them in the same way.
--
--	echo ""
--	if [ "$newrev_type" = "commit" ]; then
--		echo $LOGBEGIN
--		git diff-tree -s --always --encoding=UTF-8 --pretty=medium $newrev
--		echo $LOGEND
--	else
--		# What can we do here?  The tag marks an object that is not
--		# a commit, so there is no log for us to display.  It's
--		# probably not wise to output git cat-file as it could be a
--		# binary blob.  We'll just say how big it is
--		echo "$newrev is a $newrev_type, and is $(git cat-file -s $newrev) bytes long."
--	fi
--}
--
--#
--# Called for the deletion of any other type of reference
--#
--generate_delete_general_email()
--{
--	echo "       was  $oldrev"
--	echo ""
--	echo $LOGBEGIN
--	git diff-tree -s --always --encoding=UTF-8 --pretty=oneline $oldrev
--	echo $LOGEND
--}
--
--
--# --------------- Miscellaneous utilities
--
--#
--# Show new revisions as the user would like to see them in the email.
--#
--show_new_revisions()
--{
--	# This shows all log entries that are not already covered by
--	# another ref - i.e. commits that are now accessible from this
--	# ref that were previously not accessible
--	# (see generate_update_branch_email for the explanation of this
--	# command)
--
--	# Revision range passed to rev-list differs for new vs. updated
--	# branches.
--	if [ "$change_type" = create ]
--	then
--		# Show all revisions exclusive to this (new) branch.
--		revspec=$newrev
--	else
--		# Branch update; show revisions not part of $oldrev.
--		revspec=$oldrev..$newrev
--	fi
--
--	other_branches=$(git for-each-ref --format='%(refname)' refs/heads/ |
--	    grep -F -v $refname)
--	git rev-parse --not $other_branches |
--	if [ -z "$custom_showrev" ]
--	then
--		git rev-list --pretty --stdin $revspec
--	else
--		git rev-list --stdin $revspec |
--		while read onerev
--		do
--			eval $(printf "$custom_showrev" $onerev)
--		done
--	fi
--}
--
--
--limit_lines()
--{
--	lines=0
--	skipped=0
--	while IFS="" read -r line; do
--		lines=$((lines + 1))
--		if [ $lines -gt $1 ]; then
--			skipped=$((skipped + 1))
--		else
--			printf "%s\n" "$line"
--		fi
--	done
--	if [ $skipped -ne 0 ]; then
--		echo "... $skipped lines suppressed ..."
--	fi
--}
--
--
--send_mail()
--{
--	if [ -n "$envelopesender" ]; then
--		/usr/sbin/sendmail -t -f "$envelopesender"
--	else
--		/usr/sbin/sendmail -t
--	fi
--}
--
--# ---------------------------- main()
--
--# --- Constants
--LOGBEGIN="- Log -----------------------------------------------------------------"
--LOGEND="-----------------------------------------------------------------------"
--
--# --- Config
--# Set GIT_DIR either from the working directory, or from the environment
--# variable.
--GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
--if [ -z "$GIT_DIR" ]; then
--	echo >&2 "fatal: post-receive: GIT_DIR not set"
--	exit 1
--fi
--
--projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
--# Check if the description is unchanged from it's default, and shorten it to
--# a more manageable length if it is
--if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
--then
--	projectdesc="UNNAMED PROJECT"
--fi
--
--recipients=$(git config hooks.mailinglist)
--announcerecipients=$(git config hooks.announcelist)
--envelopesender=$(git config hooks.envelopesender)
--emailprefix=$(git config hooks.emailprefix || echo '[SCM] ')
--custom_showrev=$(git config hooks.showrev)
--maxlines=$(git config hooks.emailmaxlines)
--diffopts=$(git config hooks.diffopts)
--: ${diffopts:="--stat --summary --find-copies-harder"}
--
--# --- Main loop
--# Allow dual mode: run from the command line just like the update hook, or
--# if no arguments are given then run as a hook script
--if [ -n "$1" -a -n "$2" -a -n "$3" ]; then
--	# Output to the terminal in command line mode - if someone wanted to
--	# resend an email; they could redirect the output to sendmail
--	# themselves
--	prep_for_email $2 $3 $1 && PAGER= generate_email
--else
--	while read oldrev newrev refname
--	do
--		prep_for_email $oldrev $newrev $refname || continue
--		generate_email $maxlines | send_mail
--	done
--fi
-diff --git a/contrib/hooks/pre-auto-gc-battery b/contrib/hooks/pre-auto-gc-battery
-deleted file mode 100755
-index 7ba78c4dff6..00000000000
---- a/contrib/hooks/pre-auto-gc-battery
+-# Unless required by applicable law or agreed to in writing, software
+-# distributed under the License is distributed on an "AS IS" BASIS,
+-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-# See the License for the specific language governing permissions and
+-# limitations under the License.
+-
+-# The default target of this Makefile is...
+-all::
+-
+-BUILD_LABEL=$(shell cut -d" " -f3 ../../GIT-VERSION-FILE)
+-TAR_OUT=$(shell go env GOOS)_$(shell go env GOARCH).tar.gz
+-
+-all:: git-remote-persistent-https git-remote-persistent-https--proxy \
+-	git-remote-persistent-http
+-
+-git-remote-persistent-https--proxy: git-remote-persistent-https
+-	ln -f -s git-remote-persistent-https git-remote-persistent-https--proxy
+-
+-git-remote-persistent-http: git-remote-persistent-https
+-	ln -f -s git-remote-persistent-https git-remote-persistent-http
+-
+-git-remote-persistent-https:
+-	case $$(go version) in \
+-	"go version go"1.[0-5].*) EQ=" " ;; *) EQ="=" ;; esac && \
+-	go build -o git-remote-persistent-https \
+-		-ldflags "-X main._BUILD_EMBED_LABEL$${EQ}$(BUILD_LABEL)"
+-
+-clean:
+-	rm -f git-remote-persistent-http* *.tar.gz
+-
+-tar: clean all
+-	@chmod 555 git-remote-persistent-https
+-	@tar -czf $(TAR_OUT) git-remote-persistent-http* README LICENSE
+-	@echo
+-	@echo "Created $(TAR_OUT)"
+diff --git a/contrib/persistent-https/README b/contrib/persistent-https/README
+deleted file mode 100644
+index 7c4cd8d257d..00000000000
+--- a/contrib/persistent-https/README
 +++ /dev/null
-@@ -1,42 +0,0 @@
--#!/bin/sh
--#
--# An example hook script to verify if you are on battery, in case you
--# are running Linux or OS X. Called by git-gc --auto with no arguments.
--# The hook should exit with non-zero status after issuing an appropriate
--# message if it wants to stop the auto repacking.
--#
--# This hook is stored in the contrib/hooks directory. Your distribution
--# may have put this somewhere else. If you want to use this hook, you
--# should make this script executable then link to it in the repository
--# you would like to use it in.
--#
--# For example, if the hook is stored in
--# /usr/share/git-core/contrib/hooks/pre-auto-gc-battery:
--#
--# cd /path/to/your/repository.git
--# ln -sf /usr/share/git-core/contrib/hooks/pre-auto-gc-battery \
--#	hooks/pre-auto-gc
+@@ -1,72 +0,0 @@
+-git-remote-persistent-https
 -
--if test -x /sbin/on_ac_power && (/sbin/on_ac_power;test $? -ne 1)
--then
--	exit 0
--elif test "$(cat /sys/class/power_supply/AC/online 2>/dev/null)" = 1
--then
--	exit 0
--elif grep -q 'on-line' /proc/acpi/ac_adapter/AC/state 2>/dev/null
--then
--	exit 0
--elif grep -q '0x01$' /proc/apm 2>/dev/null
--then
--	exit 0
--elif grep -q "AC Power \+: 1" /proc/pmu/info 2>/dev/null
--then
--	exit 0
--elif test -x /usr/bin/pmset && /usr/bin/pmset -g batt |
--	grep -q "drawing from 'AC Power'"
--then
--	exit 0
--fi
+-The git-remote-persistent-https binary speeds up SSL operations
+-by running a daemon job (git-remote-persistent-https--proxy) that
+-keeps a connection open to a server.
 -
--echo "Auto packing deferred; not on AC"
--exit 1
-diff --git a/contrib/hooks/setgitperms.perl b/contrib/hooks/setgitperms.perl
-deleted file mode 100755
-index 2770a1b1d20..00000000000
---- a/contrib/hooks/setgitperms.perl
+-
+-PRE-BUILT BINARIES
+-
+-Darwin amd64:
+-https://commondatastorage.googleapis.com/git-remote-persistent-https/darwin_amd64.tar.gz
+-
+-Linux amd64:
+-https://commondatastorage.googleapis.com/git-remote-persistent-https/linux_amd64.tar.gz
+-
+-
+-INSTALLING
+-
+-Move all of the git-remote-persistent-http* binaries to a directory
+-in PATH.
+-
+-
+-USAGE
+-
+-HTTPS requests can be delegated to the proxy by using the
+-"persistent-https" scheme, e.g.
+-
+-git clone persistent-https://kernel.googlesource.com/pub/scm/git/git
+-
+-Likewise, .gitconfig can be updated as follows to rewrite https urls
+-to use persistent-https:
+-
+-[url "persistent-https"]
+-	insteadof = https
+-[url "persistent-http"]
+-	insteadof = http
+-
+-You may also want to allow the use of the persistent-https helper for
+-submodule URLs (since any https URLs pointing to submodules will be
+-rewritten, and Git's out-of-the-box defaults forbid submodules from
+-using unknown remote helpers):
+-
+-[protocol "persistent-https"]
+-	allow = always
+-[protocol "persistent-http"]
+-	allow = always
+-
+-
+-#####################################################################
+-# BUILDING FROM SOURCE
+-#####################################################################
+-
+-LOCATION
+-
+-The source is available in the contrib/persistent-https directory of
+-the Git source repository. The Git source repository is available at
+-git://git.kernel.org/pub/scm/git/git.git/
+-https://kernel.googlesource.com/pub/scm/git/git
+-
+-
+-PREREQUISITES
+-
+-The code is written in Go (http://golang.org/) and the Go compiler is
+-required. Currently, the compiler must be built and installed from tip
+-of source, in order to include a fix in the reverse http proxy:
+-http://code.google.com/p/go/source/detail?r=a615b796570a2cd8591884767a7d67ede74f6648
+-
+-
+-BUILDING
+-
+-Run "make" to build the binaries. See the section on
+-INSTALLING above.
+diff --git a/contrib/persistent-https/client.go b/contrib/persistent-https/client.go
+deleted file mode 100644
+index 71125b5832d..00000000000
+--- a/contrib/persistent-https/client.go
 +++ /dev/null
-@@ -1,214 +0,0 @@
--#!/usr/bin/perl
--#
--# Copyright (c) 2006 Josh England
--#
--# This script can be used to save/restore full permissions and ownership data
--# within a git working tree.
--#
--# To save permissions/ownership data, place this script in your .git/hooks
--# directory and enable a `pre-commit` hook with the following lines:
--#      #!/bin/sh
--#     SUBDIRECTORY_OK=1 . git-sh-setup
--#     $GIT_DIR/hooks/setgitperms.perl -r
--#
--# To restore permissions/ownership data, place this script in your .git/hooks
--# directory and enable a `post-merge` and `post-checkout` hook with the
--# following lines:
--#      #!/bin/sh
--#     SUBDIRECTORY_OK=1 . git-sh-setup
--#     $GIT_DIR/hooks/setgitperms.perl -w
--#
--use strict;
--use Getopt::Long;
--use File::Find;
--use File::Basename;
+@@ -1,189 +0,0 @@
+-// Copyright 2012 Google Inc. All Rights Reserved.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
 -
--my $usage =
--"usage: setgitperms.perl [OPTION]... <--read|--write>
--This program uses a file `.gitmeta` to store/restore permissions and uid/gid
--info for all files/dirs tracked by git in the repository.
+-package main
 -
-----------------------------------Read Mode-------------------------------------
---r,  --read         Reads perms/etc from working dir into a .gitmeta file
---s,  --stdout       Output to stdout instead of .gitmeta
---d,  --diff         Show unified diff of perms file (XOR with --stdout)
+-import (
+-	"bufio"
+-	"errors"
+-	"fmt"
+-	"net"
+-	"net/url"
+-	"os"
+-	"os/exec"
+-	"strings"
+-	"syscall"
+-	"time"
+-)
 -
-----------------------------------Write Mode------------------------------------
---w,  --write        Modify perms/etc in working dir to match the .gitmeta file
---v,  --verbose      Be verbose
+-type Client struct {
+-	ProxyBin string
+-	Args     []string
 -
--\n";
+-	insecure bool
+-}
 -
--my ($stdout, $showdiff, $verbose, $read_mode, $write_mode);
--
--if ((@ARGV < 0) || !GetOptions(
--			       "stdout",         \$stdout,
--			       "diff",           \$showdiff,
--			       "read",           \$read_mode,
--			       "write",          \$write_mode,
--			       "verbose",        \$verbose,
--			      )) { die $usage; }
--die $usage unless ($read_mode xor $write_mode);
--
--my $topdir = `git rev-parse --show-cdup` or die "\n"; chomp $topdir;
--my $gitdir = $topdir . '.git';
--my $gitmeta = $topdir . '.gitmeta';
--
--if ($write_mode) {
--    # Update the working dir permissions/ownership based on data from .gitmeta
--    open (IN, "<$gitmeta") or die "Could not open $gitmeta for reading: $!\n";
--    while (defined ($_ = <IN>)) {
--	chomp;
--	if (/^(.*)  mode=(\S+)\s+uid=(\d+)\s+gid=(\d+)/) {
--	    # Compare recorded perms to actual perms in the working dir
--	    my ($path, $mode, $uid, $gid) = ($1, $2, $3, $4);
--	    my $fullpath = $topdir . $path;
--	    my (undef,undef,$wmode,undef,$wuid,$wgid) = lstat($fullpath);
--	    $wmode = sprintf "%04o", $wmode & 07777;
--	    if ($mode ne $wmode) {
--		$verbose && print "Updating permissions on $path: old=$wmode, new=$mode\n";
--		chmod oct($mode), $fullpath;
--	    }
--	    if ($uid != $wuid || $gid != $wgid) {
--		if ($verbose) {
--		    # Print out user/group names instead of uid/gid
--		    my $pwname  = getpwuid($uid);
--		    my $grpname  = getgrgid($gid);
--		    my $wpwname  = getpwuid($wuid);
--		    my $wgrpname  = getgrgid($wgid);
--		    $pwname = $uid if !defined $pwname;
--		    $grpname = $gid if !defined $grpname;
--		    $wpwname = $wuid if !defined $wpwname;
--		    $wgrpname = $wgid if !defined $wgrpname;
--
--		    print "Updating uid/gid on $path: old=$wpwname/$wgrpname, new=$pwname/$grpname\n";
--		}
--		chown $uid, $gid, $fullpath;
--	    }
+-func (c *Client) Run() error {
+-	if err := c.resolveArgs(); err != nil {
+-		return fmt.Errorf("resolveArgs() got error: %v", err)
 -	}
--	else {
--	    warn "Invalid input format in $gitmeta:\n\t$_\n";
+-
+-	// Connect to the proxy.
+-	uconn, hconn, addr, err := c.connect()
+-	if err != nil {
+-		return fmt.Errorf("connect() got error: %v", err)
 -	}
--    }
--    close IN;
--}
--elsif ($read_mode) {
--    # Handle merge conflicts in the .gitperms file
--    if (-e "$gitdir/MERGE_MSG") {
--	if (`grep ====== $gitmeta`) {
--	    # Conflict not resolved -- abort the commit
--	    print "PERMISSIONS/OWNERSHIP CONFLICT\n";
--	    print "    Resolve the conflict in the $gitmeta file and then run\n";
--	    print "    `.git/hooks/setgitperms.perl --write` to reconcile.\n";
--	    exit 1;
--	}
--	elsif (`grep $gitmeta $gitdir/MERGE_MSG`) {
--	    # A conflict in .gitmeta has been manually resolved. Verify that
--	    # the working dir perms matches the current .gitmeta perms for
--	    # each file/dir that conflicted.
--	    # This is here because a `setgitperms.perl --write` was not
--	    # performed due to a merge conflict, so permissions/ownership
--	    # may not be consistent with the manually merged .gitmeta file.
--	    my @conflict_diff = `git show \$(cat $gitdir/MERGE_HEAD)`;
--	    my @conflict_files;
--	    my $metadiff = 0;
+-	// Keep the unix socket connection open for the duration of the request.
+-	defer uconn.Close()
+-	// Keep a connection to the HTTP server open, so no other user can
+-	// bind on the same address so long as the process is running.
+-	defer hconn.Close()
 -
--	    # Build a list of files that conflicted from the .gitmeta diff
--	    foreach my $line (@conflict_diff) {
--		if ($line =~ m|^diff --git a/$gitmeta b/$gitmeta|) {
--		    $metadiff = 1;
--		}
--		elsif ($line =~ /^diff --git/) {
--		    $metadiff = 0;
--		}
--		elsif ($metadiff && $line =~ /^\+(.*)  mode=/) {
--		    push @conflict_files, $1;
--		}
--	    }
+-	// Start the git-remote-http subprocess.
+-	cargs := []string{"-c", fmt.Sprintf("http.proxy=%v", addr), "remote-http"}
+-	cargs = append(cargs, c.Args...)
+-	cmd := exec.Command("git", cargs...)
 -
--	    # Verify that each conflict file now has permissions consistent
--	    # with the .gitmeta file
--	    foreach my $file (@conflict_files) {
--		my $absfile = $topdir . $file;
--		my $gm_entry = `grep "^$file  mode=" $gitmeta`;
--		if ($gm_entry =~ /mode=(\d+)  uid=(\d+)  gid=(\d+)/) {
--		    my ($gm_mode, $gm_uid, $gm_gid) = ($1, $2, $3);
--		    my (undef,undef,$mode,undef,$uid,$gid) = lstat("$absfile");
--		    $mode = sprintf("%04o", $mode & 07777);
--		    if (($gm_mode ne $mode) || ($gm_uid != $uid)
--			|| ($gm_gid != $gid)) {
--			print "PERMISSIONS/OWNERSHIP CONFLICT\n";
--			print "    Mismatch found for file: $file\n";
--			print "    Run `.git/hooks/setgitperms.perl --write` to reconcile.\n";
--			exit 1;
--		    }
--		}
--		else {
--		    print "Warning! Permissions/ownership no longer being tracked for file: $file\n";
--		}
--	    }
--	}
--    }
--
--    # No merge conflicts -- write out perms/ownership data to .gitmeta file
--    unless ($stdout) {
--	open (OUT, ">$gitmeta.tmp") or die "Could not open $gitmeta.tmp for writing: $!\n";
--    }
--
--    my @files = `git ls-files`;
--    my %dirs;
--
--    foreach my $path (@files) {
--	chomp $path;
--	# We have to manually add stats for parent directories
--	my $parent = dirname($path);
--	while (!exists $dirs{$parent}) {
--	    $dirs{$parent} = 1;
--	    next if $parent eq '.';
--	    printstats($parent);
--	    $parent = dirname($parent);
--	}
--	# Now the git-tracked file
--	printstats($path);
--    }
--
--    # diff the temporary metadata file to see if anything has changed
--    # If no metadata has changed, don't overwrite the real file
--    # This is just so `git commit -a` doesn't try to commit a bogus update
--    unless ($stdout) {
--	if (! -e $gitmeta) {
--	    rename "$gitmeta.tmp", $gitmeta;
--	}
--	else {
--	    my $diff = `diff -U 0 $gitmeta $gitmeta.tmp`;
--	    if ($diff ne '') {
--		rename "$gitmeta.tmp", $gitmeta;
--	    }
--	    else {
--		unlink "$gitmeta.tmp";
--	    }
--	    if ($showdiff) {
--		print $diff;
--	    }
--	}
--	close OUT;
--    }
--    # Make sure the .gitmeta file is tracked
--    system("git add $gitmeta");
--}
--
--
--sub printstats {
--    my $path = $_[0];
--    $path =~ s/@/\@/g;
--    my (undef,undef,$mode,undef,$uid,$gid) = lstat($path);
--    $path =~ s/%/\%/g;
--    if ($stdout) {
--	print $path;
--	printf "  mode=%04o  uid=$uid  gid=$gid\n", $mode & 07777;
--    }
--    else {
--	print OUT $path;
--	printf OUT "  mode=%04o  uid=$uid  gid=$gid\n", $mode & 07777;
--    }
--}
-diff --git a/contrib/hooks/update-paranoid b/contrib/hooks/update-paranoid
-deleted file mode 100755
-index 0092d67b8a4..00000000000
---- a/contrib/hooks/update-paranoid
-+++ /dev/null
-@@ -1,421 +0,0 @@
--#!/usr/bin/perl
--
--use strict;
--use File::Spec;
--
--$ENV{PATH}     = '/opt/git/bin';
--my $acl_git    = '/vcs/acls.git';
--my $acl_branch = 'refs/heads/master';
--my $debug      = 0;
--
--=doc
--Invoked as: update refname old-sha1 new-sha1
--
--This script is run by git-receive-pack once for each ref that the
--client is trying to modify.  If we exit with a non-zero exit value
--then the update for that particular ref is denied, but updates for
--other refs in the same run of receive-pack may still be allowed.
--
--We are run after the objects have been uploaded, but before the
--ref is actually modified.  We take advantage of that fact when we
--look for "new" commits and tags (the new objects won't show up in
--`rev-list --all`).
--
--This script loads and parses the content of the config file
--"users/$this_user.acl" from the $acl_branch commit of $acl_git ODB.
--The acl file is a git-config style file, but uses a slightly more
--restricted syntax as the Perl parser contained within this script
--is not nearly as permissive as git-config.
--
--Example:
--
--  [user]
--    committer = John Doe <john.doe@example.com>
--    committer = John R. Doe <john.doe@example.com>
--
--  [repository "acls"]
--    allow = heads/master
--    allow = CDUR for heads/jd/
--    allow = C    for ^tags/v\\d+$
--
--For all new commit or tag objects the committer (or tagger) line
--within the object must exactly match one of the user.committer
--values listed in the acl file ("HEAD:users/$this_user.acl").
--
--For a branch to be modified an allow line within the matching
--repository section must be matched for both the refname and the
--opcode.
--
--Repository sections are matched on the basename of the repository
--(after removing the .git suffix).
--
--The opcode abbreviations are:
--
--  C: create new ref
--  D: delete existing ref
--  U: fast-forward existing ref (no commit loss)
--  R: rewind/rebase existing ref (commit loss)
--
--if no opcodes are listed before the "for" keyword then "U" (for
--fast-forward update only) is assumed as this is the most common
--usage.
--
--Refnames are matched by always assuming a prefix of "refs/".
--This hook forbids pushing or deleting anything not under "refs/".
--
--Refnames that start with ^ are Perl regular expressions, and the ^
--is kept as part of the regexp.  \\ is needed to get just one \, so
--\\d expands to \d in Perl.  The 3rd allow line above is an example.
--
--Refnames that don't start with ^ but that end with / are prefix
--matches (2nd allow line above); all other refnames are strict
--equality matches (1st allow line).
--
--Anything pushed to "heads/" (ok, really "refs/heads/") must be
--a commit.  Tags are not permitted here.
--
--Anything pushed to "tags/" (err, really "refs/tags/") must be an
--annotated tag.  Commits, blobs, trees, etc. are not permitted here.
--Annotated tag signatures aren't checked, nor are they required.
--
--The special subrepository of 'info/new-commit-check' can
--be created and used to allow users to push new commits and
--tags from another local repository to this one, even if they
--aren't the committer/tagger of those objects.  In a nut shell
--the info/new-commit-check directory is a Git repository whose
--objects/info/alternates file lists this repository and all other
--possible sources, and whose refs subdirectory contains symlinks
--to this repository's refs subdirectory, and to all other possible
--sources refs subdirectories.  Yes, this means that you cannot
--use packed-refs in those repositories as they won't be resolved
--correctly.
--
--=cut
--
--my $git_dir = $ENV{GIT_DIR};
--my $new_commit_check = "$git_dir/info/new-commit-check";
--my $ref = $ARGV[0];
--my $old = $ARGV[1];
--my $new = $ARGV[2];
--my $new_type;
--my ($this_user) = getpwuid $<; # REAL_USER_ID
--my $repository_name;
--my %user_committer;
--my @allow_rules;
--my @path_rules;
--my %diff_cache;
--
--sub deny ($) {
--	print STDERR "-Deny-    $_[0]\n" if $debug;
--	print STDERR "\ndenied: $_[0]\n\n";
--	exit 1;
--}
--
--sub grant ($) {
--	print STDERR "-Grant-   $_[0]\n" if $debug;
--	exit 0;
--}
--
--sub info ($) {
--	print STDERR "-Info-    $_[0]\n" if $debug;
--}
--
--sub git_value (@) {
--	open(T,'-|','git',@_); local $_ = <T>; chop; close T; $_;
--}
--
--sub match_string ($$) {
--	my ($acl_n, $ref) = @_;
--	   ($acl_n eq $ref)
--	|| ($acl_n =~ m,/$, && substr($ref,0,length $acl_n) eq $acl_n)
--	|| ($acl_n =~ m,^\^, && $ref =~ m:$acl_n:);
--}
--
--sub parse_config ($$$$) {
--	my $data = shift;
--	local $ENV{GIT_DIR} = shift;
--	my $br = shift;
--	my $fn = shift;
--	return unless git_value('rev-list','--max-count=1',$br,'--',$fn);
--	info "Loading $br:$fn";
--	open(I,'-|','git','cat-file','blob',"$br:$fn");
--	my $section = '';
--	while (<I>) {
--		chomp;
--		if (/^\s*$/ || /^\s*#/) {
--		} elsif (/^\[([a-z]+)\]$/i) {
--			$section = lc $1;
--		} elsif (/^\[([a-z]+)\s+"(.*)"\]$/i) {
--			$section = join('.',lc $1,$2);
--		} elsif (/^\s*([a-z][a-z0-9]+)\s*=\s*(.*?)\s*$/i) {
--			push @{$data->{join('.',$section,lc $1)}}, $2;
--		} else {
--			deny "bad config file line $. in $br:$fn";
+-	for _, v := range os.Environ() {
+-		if !strings.HasPrefix(v, "GIT_PERSISTENT_HTTPS_SECURE=") {
+-			cmd.Env = append(cmd.Env, v)
 -		}
 -	}
--	close I;
--}
--
--sub all_new_committers () {
--	local $ENV{GIT_DIR} = $git_dir;
--	$ENV{GIT_DIR} = $new_commit_check if -d $new_commit_check;
--
--	info "Getting committers of new commits.";
--	my %used;
--	open(T,'-|','git','rev-list','--pretty=raw',$new,'--not','--all');
--	while (<T>) {
--		next unless s/^committer //;
--		chop;
--		s/>.*$/>/;
--		info "Found $_." unless $used{$_}++;
+-	// Set the GIT_PERSISTENT_HTTPS_SECURE environment variable when
+-	// the proxy is using a SSL connection.  This allows credential helpers
+-	// to identify secure proxy connections, despite being passed an HTTP
+-	// scheme.
+-	if !c.insecure {
+-		cmd.Env = append(cmd.Env, "GIT_PERSISTENT_HTTPS_SECURE=1")
 -	}
--	close T;
--	info "No new commits." unless %used;
--	keys %used;
--}
 -
--sub all_new_taggers () {
--	my %exists;
--	open(T,'-|','git','for-each-ref','--format=%(objectname)','refs/tags');
--	while (<T>) {
--		chop;
--		$exists{$_} = 1;
--	}
--	close T;
--
--	info "Getting taggers of new tags.";
--	my %used;
--	my $obj = $new;
--	my $obj_type = $new_type;
--	while ($obj_type eq 'tag') {
--		last if $exists{$obj};
--		$obj_type = '';
--		open(T,'-|','git','cat-file','tag',$obj);
--		while (<T>) {
--			chop;
--			if (/^object ([a-z0-9]{40})$/) {
--				$obj = $1;
--			} elsif (/^type (.+)$/) {
--				$obj_type = $1;
--			} elsif (s/^tagger //) {
--				s/>.*$/>/;
--				info "Found $_." unless $used{$_}++;
--				last;
+-	cmd.Stdin = os.Stdin
+-	cmd.Stdout = os.Stdout
+-	cmd.Stderr = os.Stderr
+-	if err := cmd.Run(); err != nil {
+-		if eerr, ok := err.(*exec.ExitError); ok {
+-			if stat, ok := eerr.ProcessState.Sys().(syscall.WaitStatus); ok && stat.ExitStatus() != 0 {
+-				os.Exit(stat.ExitStatus())
 -			}
 -		}
--		close T;
+-		return fmt.Errorf("git-remote-http subprocess got error: %v", err)
 -	}
--	info "No new tags." unless %used;
--	keys %used;
+-	return nil
 -}
 -
--sub check_committers (@) {
--	my @bad;
--	foreach (@_) { push @bad, $_ unless $user_committer{$_}; }
--	if (@bad) {
--		print STDERR "\n";
--		print STDERR "You are not $_.\n" foreach (sort @bad);
--		deny "You cannot push changes not committed by you.";
--	}
--}
--
--sub load_diff ($) {
--	my $base = shift;
--	my $d = $diff_cache{$base};
--	unless ($d) {
--		local $/ = "\0";
--		my %this_diff;
--		if ($base =~ /^0{40}$/) {
--			# Don't load the diff at all; we are making the
--			# branch and have no base to compare to in this
--			# case.  A file level ACL makes no sense in this
--			# context.  Having an empty diff will allow the
--			# branch creation.
--			#
--		} else {
--			open(T,'-|','git','diff-tree',
--				'-r','--name-status','-z',
--				$base,$new) or return undef;
--			while (<T>) {
--				my $op = $_;
--				chop $op;
--
--				my $path = <T>;
--				chop $path;
--
--				$this_diff{$path} = $op;
+-func (c *Client) connect() (uconn net.Conn, hconn net.Conn, addr string, err error) {
+-	uconn, err = DefaultSocket.Dial()
+-	if err != nil {
+-		if e, ok := err.(*net.OpError); ok && (os.IsNotExist(e.Err) || e.Err == syscall.ECONNREFUSED) {
+-			if err = c.startProxy(); err == nil {
+-				uconn, err = DefaultSocket.Dial()
 -			}
--			close T or return undef;
 -		}
--		$d = \%this_diff;
--		$diff_cache{$base} = $d;
+-		if err != nil {
+-			return
+-		}
 -	}
--	return $d;
+-
+-	if addr, err = c.readAddr(uconn); err != nil {
+-		return
+-	}
+-
+-	// Open a tcp connection to the proxy.
+-	if hconn, err = net.Dial("tcp", addr); err != nil {
+-		return
+-	}
+-
+-	// Verify the address hasn't changed ownership.
+-	var addr2 string
+-	if addr2, err = c.readAddr(uconn); err != nil {
+-		return
+-	} else if addr != addr2 {
+-		err = fmt.Errorf("address changed after connect. got %q, want %q", addr2, addr)
+-		return
+-	}
+-	return
 -}
 -
--deny "No GIT_DIR inherited from caller" unless $git_dir;
--deny "Need a ref name" unless $ref;
--deny "Refusing funny ref $ref" unless $ref =~ s,^refs/,,;
--deny "Bad old value $old" unless $old =~ /^[a-z0-9]{40}$/;
--deny "Bad new value $new" unless $new =~ /^[a-z0-9]{40}$/;
--deny "Cannot determine who you are." unless $this_user;
--grant "No change requested." if $old eq $new;
+-func (c *Client) readAddr(conn net.Conn) (string, error) {
+-	conn.SetDeadline(time.Now().Add(5 * time.Second))
+-	data := make([]byte, 100)
+-	n, err := conn.Read(data)
+-	if err != nil {
+-		return "", fmt.Errorf("error reading unix socket: %v", err)
+-	} else if n == 0 {
+-		return "", errors.New("empty data response")
+-	}
+-	conn.Write([]byte{1}) // Ack
 -
--$repository_name = File::Spec->rel2abs($git_dir);
--$repository_name =~ m,/([^/]+)(?:\.git|/\.git)$,;
--$repository_name = $1;
--info "Updating in '$repository_name'.";
+-	var addr string
+-	if addrs := strings.Split(string(data[:n]), "\n"); len(addrs) != 2 {
+-		return "", fmt.Errorf("got %q, wanted 2 addresses", data[:n])
+-	} else if c.insecure {
+-		addr = addrs[1]
+-	} else {
+-		addr = addrs[0]
+-	}
+-	return addr, nil
+-}
 -
--my $op;
--if    ($old =~ /^0{40}$/) { $op = 'C'; }
--elsif ($new =~ /^0{40}$/) { $op = 'D'; }
--else                      { $op = 'R'; }
+-func (c *Client) startProxy() error {
+-	cmd := exec.Command(c.ProxyBin)
+-	cmd.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+-	stdout, err := cmd.StdoutPipe()
+-	if err != nil {
+-		return err
+-	}
+-	defer stdout.Close()
+-	if err := cmd.Start(); err != nil {
+-		return err
+-	}
+-	result := make(chan error)
+-	go func() {
+-		bytes, _, err := bufio.NewReader(stdout).ReadLine()
+-		if line := string(bytes); err == nil && line != "OK" {
+-			err = fmt.Errorf("proxy returned %q, want \"OK\"", line)
+-		}
+-		result <- err
+-	}()
+-	select {
+-	case err := <-result:
+-		return err
+-	case <-time.After(5 * time.Second):
+-		return errors.New("timeout waiting for proxy to start")
+-	}
+-	panic("not reachable")
+-}
 -
--# This is really an update (fast-forward) if the
--# merge base of $old and $new is $old.
--#
--$op = 'U' if ($op eq 'R'
--	&& $ref =~ m,^heads/,
--	&& $old eq git_value('merge-base',$old,$new));
--
--# Load the user's ACL file. Expand groups (user.memberof) one level.
--{
--	my %data = ('user.committer' => []);
--	parse_config(\%data,$acl_git,$acl_branch,"external/$repository_name.acl");
--
--	%data = (
--		'user.committer' => $data{'user.committer'},
--		'user.memberof' => [],
--	);
--	parse_config(\%data,$acl_git,$acl_branch,"users/$this_user.acl");
--
--	%user_committer = map {$_ => $_} @{$data{'user.committer'}};
--	my $rule_key = "repository.$repository_name.allow";
--	my $rules = $data{$rule_key} || [];
--
--	foreach my $group (@{$data{'user.memberof'}}) {
--		my %g;
--		parse_config(\%g,$acl_git,$acl_branch,"groups/$group.acl");
--		my $group_rules = $g{$rule_key};
--		push @$rules, @$group_rules if $group_rules;
+-func (c *Client) resolveArgs() error {
+-	if nargs := len(c.Args); nargs == 0 {
+-		return errors.New("remote needed")
+-	} else if nargs > 2 {
+-		return fmt.Errorf("want at most 2 args, got %v", c.Args)
 -	}
 -
--RULE:
--	foreach (@$rules) {
--		while (/\${user\.([a-z][a-zA-Z0-9]+)}/) {
--			my $k = lc $1;
--			my $v = $data{"user.$k"};
--			next RULE unless defined $v;
--			next RULE if @$v != 1;
--			next RULE unless defined $v->[0];
--			s/\${user\.$k}/$v->[0]/g;
--		}
+-	// Rewrite the url scheme to be http.
+-	idx := len(c.Args) - 1
+-	rawurl := c.Args[idx]
+-	rurl, err := url.Parse(rawurl)
+-	if err != nil {
+-		return fmt.Errorf("invalid remote: %v", err)
+-	}
+-	c.insecure = rurl.Scheme == "persistent-http"
+-	rurl.Scheme = "http"
+-	c.Args[idx] = rurl.String()
+-	if idx != 0 && c.Args[0] == rawurl {
+-		c.Args[0] = c.Args[idx]
+-	}
+-	return nil
+-}
+diff --git a/contrib/persistent-https/main.go b/contrib/persistent-https/main.go
+deleted file mode 100644
+index fd1b1077439..00000000000
+--- a/contrib/persistent-https/main.go
++++ /dev/null
+@@ -1,82 +0,0 @@
+-// Copyright 2012 Google Inc. All Rights Reserved.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
 -
--		if (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)\s+diff\s+([^\s]+)$/) {
--			my ($ops, $pth, $ref, $bst) = ($1, $2, $3, $4);
--			$ops =~ s/ //g;
--			$pth =~ s/\\\\/\\/g;
--			$ref =~ s/\\\\/\\/g;
--			push @path_rules, [$ops, $pth, $ref, $bst];
--		} elsif (/^([AMD ]+)\s+of\s+([^\s]+)\s+for\s+([^\s]+)$/) {
--			my ($ops, $pth, $ref) = ($1, $2, $3);
--			$ops =~ s/ //g;
--			$pth =~ s/\\\\/\\/g;
--			$ref =~ s/\\\\/\\/g;
--			push @path_rules, [$ops, $pth, $ref, $old];
--		} elsif (/^([CDRU ]+)\s+for\s+([^\s]+)$/) {
--			my $ops = $1;
--			my $ref = $2;
--			$ops =~ s/ //g;
--			$ref =~ s/\\\\/\\/g;
--			push @allow_rules, [$ops, $ref];
--		} elsif (/^for\s+([^\s]+)$/) {
--			# Mentioned, but nothing granted?
--		} elsif (/^[^\s]+$/) {
--			s/\\\\/\\/g;
--			push @allow_rules, ['U', $_];
+-// The git-remote-persistent-https binary speeds up SSL operations by running
+-// a daemon job that keeps a connection open to a Git server. This ensures the
+-// git-remote-persistent-https--proxy is running and delegating execution
+-// to the git-remote-http binary with the http_proxy set to the daemon job.
+-// A unix socket is used to authenticate the proxy and discover the
+-// HTTP address. Note, both the client and proxy are included in the same
+-// binary.
+-package main
+-
+-import (
+-	"flag"
+-	"fmt"
+-	"log"
+-	"os"
+-	"strings"
+-	"time"
+-)
+-
+-var (
+-	forceProxy = flag.Bool("proxy", false, "Whether to start the binary in proxy mode")
+-	proxyBin   = flag.String("proxy_bin", "git-remote-persistent-https--proxy", "Path to the proxy binary")
+-	printLabel = flag.Bool("print_label", false, "Prints the build label for the binary")
+-
+-	// Variable that should be defined through the -X linker flag.
+-	_BUILD_EMBED_LABEL string
+-)
+-
+-const (
+-	defaultMaxIdleDuration    = 24 * time.Hour
+-	defaultPollUpdateInterval = 15 * time.Minute
+-)
+-
+-func main() {
+-	flag.Parse()
+-	if *printLabel {
+-		// Short circuit execution to print the build label
+-		fmt.Println(buildLabel())
+-		return
+-	}
+-
+-	var err error
+-	if *forceProxy || strings.HasSuffix(os.Args[0], "--proxy") {
+-		log.SetPrefix("git-remote-persistent-https--proxy: ")
+-		proxy := &Proxy{
+-			BuildLabel:         buildLabel(),
+-			MaxIdleDuration:    defaultMaxIdleDuration,
+-			PollUpdateInterval: defaultPollUpdateInterval,
+-		}
+-		err = proxy.Run()
+-	} else {
+-		log.SetPrefix("git-remote-persistent-https: ")
+-		client := &Client{
+-			ProxyBin: *proxyBin,
+-			Args:     flag.Args(),
+-		}
+-		err = client.Run()
+-	}
+-	if err != nil {
+-		log.Fatalln(err)
+-	}
+-}
+-
+-func buildLabel() string {
+-	if _BUILD_EMBED_LABEL == "" {
+-		log.Println(`unlabeled build; build with "make" to label`)
+-	}
+-	return _BUILD_EMBED_LABEL
+-}
+diff --git a/contrib/persistent-https/proxy.go b/contrib/persistent-https/proxy.go
+deleted file mode 100644
+index bb0cdba3864..00000000000
+--- a/contrib/persistent-https/proxy.go
++++ /dev/null
+@@ -1,190 +0,0 @@
+-// Copyright 2012 Google Inc. All Rights Reserved.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
+-
+-package main
+-
+-import (
+-	"fmt"
+-	"log"
+-	"net"
+-	"net/http"
+-	"net/http/httputil"
+-	"os"
+-	"os/exec"
+-	"os/signal"
+-	"sync"
+-	"syscall"
+-	"time"
+-)
+-
+-type Proxy struct {
+-	BuildLabel         string
+-	MaxIdleDuration    time.Duration
+-	PollUpdateInterval time.Duration
+-
+-	ul        net.Listener
+-	httpAddr  string
+-	httpsAddr string
+-}
+-
+-func (p *Proxy) Run() error {
+-	hl, err := net.Listen("tcp", "127.0.0.1:0")
+-	if err != nil {
+-		return fmt.Errorf("http listen failed: %v", err)
+-	}
+-	defer hl.Close()
+-
+-	hsl, err := net.Listen("tcp", "127.0.0.1:0")
+-	if err != nil {
+-		return fmt.Errorf("https listen failed: %v", err)
+-	}
+-	defer hsl.Close()
+-
+-	p.ul, err = DefaultSocket.Listen()
+-	if err != nil {
+-		c, derr := DefaultSocket.Dial()
+-		if derr == nil {
+-			c.Close()
+-			fmt.Println("OK\nA proxy is already running... exiting")
+-			return nil
+-		} else if e, ok := derr.(*net.OpError); ok && e.Err == syscall.ECONNREFUSED {
+-			// Nothing is listening on the socket, unlink it and try again.
+-			syscall.Unlink(DefaultSocket.Path())
+-			p.ul, err = DefaultSocket.Listen()
+-		}
+-		if err != nil {
+-			return fmt.Errorf("unix listen failed on %v: %v", DefaultSocket.Path(), err)
+-		}
+-	}
+-	defer p.ul.Close()
+-	go p.closeOnSignal()
+-	go p.closeOnUpdate()
+-
+-	p.httpAddr = hl.Addr().String()
+-	p.httpsAddr = hsl.Addr().String()
+-	fmt.Printf("OK\nListening on unix socket=%v http=%v https=%v\n",
+-		p.ul.Addr(), p.httpAddr, p.httpsAddr)
+-
+-	result := make(chan error, 2)
+-	go p.serveUnix(result)
+-	go func() {
+-		result <- http.Serve(hl, &httputil.ReverseProxy{
+-			FlushInterval: 500 * time.Millisecond,
+-			Director:      func(r *http.Request) {},
+-		})
+-	}()
+-	go func() {
+-		result <- http.Serve(hsl, &httputil.ReverseProxy{
+-			FlushInterval: 500 * time.Millisecond,
+-			Director: func(r *http.Request) {
+-				r.URL.Scheme = "https"
+-			},
+-		})
+-	}()
+-	return <-result
+-}
+-
+-type socketContext struct {
+-	sync.WaitGroup
+-	mutex sync.Mutex
+-	last  time.Time
+-}
+-
+-func (sc *socketContext) Done() {
+-	sc.mutex.Lock()
+-	defer sc.mutex.Unlock()
+-	sc.last = time.Now()
+-	sc.WaitGroup.Done()
+-}
+-
+-func (p *Proxy) serveUnix(result chan<- error) {
+-	sockCtx := &socketContext{}
+-	go p.closeOnIdle(sockCtx)
+-
+-	var err error
+-	for {
+-		var uconn net.Conn
+-		uconn, err = p.ul.Accept()
+-		if err != nil {
+-			err = fmt.Errorf("accept failed: %v", err)
+-			break
+-		}
+-		sockCtx.Add(1)
+-		go p.handleUnixConn(sockCtx, uconn)
+-	}
+-	sockCtx.Wait()
+-	result <- err
+-}
+-
+-func (p *Proxy) handleUnixConn(sockCtx *socketContext, uconn net.Conn) {
+-	defer sockCtx.Done()
+-	defer uconn.Close()
+-	data := []byte(fmt.Sprintf("%v\n%v", p.httpsAddr, p.httpAddr))
+-	uconn.SetDeadline(time.Now().Add(5 * time.Second))
+-	for i := 0; i < 2; i++ {
+-		if n, err := uconn.Write(data); err != nil {
+-			log.Printf("error sending http addresses: %+v\n", err)
+-			return
+-		} else if n != len(data) {
+-			log.Printf("sent %d data bytes, wanted %d\n", n, len(data))
+-			return
+-		}
+-		if _, err := uconn.Read([]byte{0, 0, 0, 0}); err != nil {
+-			log.Printf("error waiting for Ack: %+v\n", err)
+-			return
+-		}
+-	}
+-	// Wait without a deadline for the client to finish via EOF
+-	uconn.SetDeadline(time.Time{})
+-	uconn.Read([]byte{0, 0, 0, 0})
+-}
+-
+-func (p *Proxy) closeOnIdle(sockCtx *socketContext) {
+-	for d := p.MaxIdleDuration; d > 0; {
+-		time.Sleep(d)
+-		sockCtx.Wait()
+-		sockCtx.mutex.Lock()
+-		if d = sockCtx.last.Add(p.MaxIdleDuration).Sub(time.Now()); d <= 0 {
+-			log.Println("graceful shutdown from idle timeout")
+-			p.ul.Close()
+-		}
+-		sockCtx.mutex.Unlock()
+-	}
+-}
+-
+-func (p *Proxy) closeOnUpdate() {
+-	for {
+-		time.Sleep(p.PollUpdateInterval)
+-		if out, err := exec.Command(os.Args[0], "--print_label").Output(); err != nil {
+-			log.Printf("error polling for updated binary: %v\n", err)
+-		} else if s := string(out[:len(out)-1]); p.BuildLabel != s {
+-			log.Printf("graceful shutdown from updated binary: %q --> %q\n", p.BuildLabel, s)
+-			p.ul.Close()
+-			break
 -		}
 -	}
 -}
 -
--if ($op ne 'D') {
--	$new_type = git_value('cat-file','-t',$new);
--
--	if ($ref =~ m,^heads/,) {
--		deny "$ref must be a commit." unless $new_type eq 'commit';
--	} elsif ($ref =~ m,^tags/,) {
--		deny "$ref must be an annotated tag." unless $new_type eq 'tag';
+-func (p *Proxy) closeOnSignal() {
+-	ch := make(chan os.Signal, 10)
+-	signal.Notify(ch, os.Interrupt, os.Kill, os.Signal(syscall.SIGTERM), os.Signal(syscall.SIGHUP))
+-	sig := <-ch
+-	p.ul.Close()
+-	switch sig {
+-	case os.Signal(syscall.SIGHUP):
+-		log.Printf("graceful shutdown from signal: %v\n", sig)
+-	default:
+-		log.Fatalf("exiting from signal: %v\n", sig)
 -	}
+-}
+diff --git a/contrib/persistent-https/socket.go b/contrib/persistent-https/socket.go
+deleted file mode 100644
+index 193b911dd13..00000000000
+--- a/contrib/persistent-https/socket.go
++++ /dev/null
+@@ -1,97 +0,0 @@
+-// Copyright 2012 Google Inc. All Rights Reserved.
+-//
+-// Licensed under the Apache License, Version 2.0 (the "License");
+-// you may not use this file except in compliance with the License.
+-// You may obtain a copy of the License at
+-//
+-//     http://www.apache.org/licenses/LICENSE-2.0
+-//
+-// Unless required by applicable law or agreed to in writing, software
+-// distributed under the License is distributed on an "AS IS" BASIS,
+-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-// See the License for the specific language governing permissions and
+-// limitations under the License.
 -
--	check_committers (all_new_committers);
--	check_committers (all_new_taggers) if $new_type eq 'tag';
+-package main
+-
+-import (
+-	"fmt"
+-	"log"
+-	"net"
+-	"os"
+-	"path/filepath"
+-	"syscall"
+-)
+-
+-// A Socket is a wrapper around a Unix socket that verifies directory
+-// permissions.
+-type Socket struct {
+-	Dir string
 -}
 -
--info "$this_user wants $op for $ref";
--foreach my $acl_entry (@allow_rules) {
--	my ($acl_ops, $acl_n) = @$acl_entry;
--	next unless $acl_ops =~ /^[CDRU]+$/; # Uhh.... shouldn't happen.
--	next unless $acl_n;
--	next unless $op =~ /^[$acl_ops]$/;
--	next unless match_string $acl_n, $ref;
--
--	# Don't test path rules on branch deletes.
--	#
--	grant "Allowed by: $acl_ops for $acl_n" if $op eq 'D';
--
--	# Aggregate matching path rules; allow if there aren't
--	# any matching this ref.
--	#
--	my %pr;
--	foreach my $p_entry (@path_rules) {
--		my ($p_ops, $p_n, $p_ref, $p_bst) = @$p_entry;
--		next unless $p_ref;
--		push @{$pr{$p_bst}}, $p_entry if match_string $p_ref, $ref;
+-func defaultDir() string {
+-	sockPath := ".git-credential-cache"
+-	if home := os.Getenv("HOME"); home != "" {
+-		return filepath.Join(home, sockPath)
 -	}
--	grant "Allowed by: $acl_ops for $acl_n" unless %pr;
--
--	# Allow only if all changes against a single base are
--	# allowed by file path rules.
--	#
--	my @bad;
--	foreach my $p_bst (keys %pr) {
--		my $diff_ref = load_diff $p_bst;
--		deny "Cannot difference trees." unless ref $diff_ref;
--
--		my %fd = %$diff_ref;
--		foreach my $p_entry (@{$pr{$p_bst}}) {
--			my ($p_ops, $p_n, $p_ref, $p_bst) = @$p_entry;
--			next unless $p_ops =~ /^[AMD]+$/;
--			next unless $p_n;
--
--			foreach my $f_n (keys %fd) {
--				my $f_op = $fd{$f_n};
--				next unless $f_op;
--				next unless $f_op =~ /^[$p_ops]$/;
--				delete $fd{$f_n} if match_string $p_n, $f_n;
--			}
--			last unless %fd;
--		}
--
--		if (%fd) {
--			push @bad, [$p_bst, \%fd];
--		} else {
--			# All changes relative to $p_bst were allowed.
--			#
--			grant "Allowed by: $acl_ops for $acl_n diff $p_bst";
--		}
--	}
--
--	foreach my $bad_ref (@bad) {
--		my ($p_bst, $fd) = @$bad_ref;
--		print STDERR "\n";
--		print STDERR "Not allowed to make the following changes:\n";
--		print STDERR "(base: $p_bst)\n";
--		foreach my $f_n (sort keys %$fd) {
--			print STDERR "  $fd->{$f_n} $f_n\n";
--		}
--	}
--	deny "You are not permitted to $op $ref";
+-	log.Printf("socket: cannot find HOME path. using relative directory %q for socket", sockPath)
+-	return sockPath
 -}
--close A;
--deny "You are not permitted to $op $ref";
+-
+-// DefaultSocket is a Socket in the $HOME/.git-credential-cache directory.
+-var DefaultSocket = Socket{Dir: defaultDir()}
+-
+-// Listen announces the local network address of the unix socket. The
+-// permissions on the socket directory are verified before attempting
+-// the actual listen.
+-func (s Socket) Listen() (net.Listener, error) {
+-	network, addr := "unix", s.Path()
+-	if err := s.mkdir(); err != nil {
+-		return nil, &net.OpError{Op: "listen", Net: network, Addr: &net.UnixAddr{Name: addr, Net: network}, Err: err}
+-	}
+-	return net.Listen(network, addr)
+-}
+-
+-// Dial connects to the unix socket. The permissions on the socket directory
+-// are verified before attempting the actual dial.
+-func (s Socket) Dial() (net.Conn, error) {
+-	network, addr := "unix", s.Path()
+-	if err := s.checkPermissions(); err != nil {
+-		return nil, &net.OpError{Op: "dial", Net: network, Addr: &net.UnixAddr{Name: addr, Net: network}, Err: err}
+-	}
+-	return net.Dial(network, addr)
+-}
+-
+-// Path returns the fully specified file name of the unix socket.
+-func (s Socket) Path() string {
+-	return filepath.Join(s.Dir, "persistent-https-proxy-socket")
+-}
+-
+-func (s Socket) mkdir() error {
+-	if err := s.checkPermissions(); err == nil {
+-		return nil
+-	} else if !os.IsNotExist(err) {
+-		return err
+-	}
+-	if err := os.MkdirAll(s.Dir, 0700); err != nil {
+-		return err
+-	}
+-	return s.checkPermissions()
+-}
+-
+-func (s Socket) checkPermissions() error {
+-	fi, err := os.Stat(s.Dir)
+-	if err != nil {
+-		return err
+-	}
+-	if !fi.IsDir() {
+-		return fmt.Errorf("socket: got file, want directory for %q", s.Dir)
+-	}
+-	if fi.Mode().Perm() != 0700 {
+-		return fmt.Errorf("socket: got perm %o, want 700 for %q", fi.Mode().Perm(), s.Dir)
+-	}
+-	if st := fi.Sys().(*syscall.Stat_t); int(st.Uid) != os.Getuid() {
+-		return fmt.Errorf("socket: got uid %d, want %d for %q", st.Uid, os.Getuid(), s.Dir)
+-	}
+-	return nil
+-}
 
 -- 
 2.49.0.1101.gccaa498523.dirty
