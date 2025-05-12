@@ -1,143 +1,117 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EE81AA791
-	for <git@vger.kernel.org>; Mon, 12 May 2025 22:04:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FA82522A5
+	for <git@vger.kernel.org>; Mon, 12 May 2025 22:42:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747087494; cv=none; b=QAzAOR7iipL9lbvOMnVz3IeZS+0nmvjto/YgFXEldiiIQTCLGPlO75b1KAJuXFJV9yS14YyxPWHmIpGLEtGpl4bA1c+H3jof4WqUZG+fY4p+yFBoZWdoGX+xG/0E2ECEOS8i0BWAvJb2XspSHc1myApLhHKZNhXsdTbx1/3IKBI=
+	t=1747089728; cv=none; b=hBUMoVjAHWVdeEP4WZVwSkoVj8z1wwr8Va2bT1ziLamFtJ9s/gT/smGH6j//1rGLotPHddNR/deF9OHDfq8fHspzojt8lx13Jt4W65P/DGu+d5n5Bhsp/DQMO5LTheunEQCipoC8JsTjEiEAPBP4eItru+8F5RnE7LEkmLJdH4s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747087494; c=relaxed/simple;
-	bh=OXNyTGYUnTUdhczFZ4Ubz9Sv/ppTv4tUr5siN27/XTw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Gd1ZaYljn+4mEjpHdagF3wZcQGp7nOos7hYFkuCEZ7TjB8UctuK75N5O3aY2JE3v/p/moiUREWajt1fWdag+hb/tHaWROREqTYD/qhVVJAVgNqQl64I3Mgn9oGt/XkT5e1fUrUA+eSXAwB33jVJqbJqYuJ7vjQXw3EtVX3sE9yk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hZQMU9Gh; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1747089728; c=relaxed/simple;
+	bh=VmFRgtL1IIr3IDkpv9TmPYUeMmQBrEmJsMFH//uWuEo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bzMpwk6N2+LBITuoaI2ATBplsB34sl0DChKgHIUNEpnrQURadkPg/j/WxHisv+35PYiw2F66UC8FCIwGu0fNe9U7WOQlg1EGgy0E6tUrvPkAERQh+DC0L3FnefNKL2PUjUuRiPcHCZRJeCwMbTbaXnv/O++W2+T3b98kYSWFGko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d/D1p0yt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JAf3H2OH; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hZQMU9Gh"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1747087490;
-	bh=OXNyTGYUnTUdhczFZ4Ubz9Sv/ppTv4tUr5siN27/XTw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=hZQMU9GhXkGYWFPM4LIsy/uH7o+ICENWTJ+d7ZV8NCkNONH2qs9YiYpgzPQ/K4Auj
-	 cDbgCX60TN+oKhdgS1d/1+Z5DKp/jQco4vu0jUUwgjilxmFX9giJAoRupeeg5Ddxq0
-	 o1v3Gj7tR2Ud8h+ODLxQkIaV7BrESdxk+ruPg/VVDHPG1XsNdJVVW8lx8X1kcdzsOG
-	 bMI9675DKmIazd3k6yjwQSmvfkiVicyeAB3eyCNehX9zWT9/ms/VkJ+39XPcJycokd
-	 85S4vfqes9Jk99YWALwTziWgkV15tkTM7+kHZe8kKsdKRKGdEiZdu5UfzVLd4l4gSI
-	 8VnwPXofiKY7bD12E3Ie2pREOVvoV2f2R6k/+ckWswxBbidasZbi66WByAhgK2KU6J
-	 yuVnporuHSKS815ag0/e9yKPvkCT8KDRSfy/yEz/8M/kKR8pFJOUIUJ6Chv5yEmk0+
-	 L+ay+OWom6NPNOyXDJ2OhQKEMCNAlolkZJ4b2nMj7i7TBq0HUDg
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C6E4D2010F;
-	Mon, 12 May 2025 22:04:50 +0000 (UTC)
-Date: Mon, 12 May 2025 22:04:49 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Martin von Zweigbergk <martinvonz@google.com>
-Cc: Nico Williams <nico@cryptonector.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Remo Senekowitsch <remo@buenzli.dev>, Theodore Ts'o <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-Message-ID: <aCJwgWaNoBVjvImJ@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Martin von Zweigbergk <martinvonz@google.com>,
-	Nico Williams <nico@cryptonector.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Remo Senekowitsch <remo@buenzli.dev>, Theodore Ts'o <tytso@mit.edu>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Edwin Kempin <ekempin@google.com>,
-	Scott Chacon <scott@gitbutler.com>,
-	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-References: <Z/amMj/eg0RbXdkS@ubby>
- <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
- <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <aAgWytQNqtLzg2TU@ubby>
- <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
- <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
- <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com>
- <aCJi+4q6DZhnfdy+@ubby>
- <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d/D1p0yt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JAf3H2OH"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id A276C11400DF;
+	Mon, 12 May 2025 18:42:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 18:42:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747089724; x=1747176124; bh=zpGUREuze6
+	n/nQHI6TKfAgIGFNTwM9sQWopYI61Fsnk=; b=d/D1p0ytH+wYpG14e1pogMpr5E
+	ZbhFcShcTp9lIbRSYbq5WX8b6/T1kWmfdHTOTuFtt6RqrJ+XAv+/uRplsJgzXld3
+	sp75o24XWnU+fUw2zRZY+fYm+l0EFWQHVQHSLY81744t8FQejYOUPmvG75IfMhNE
+	8MreQhwkpAE8yd4ta3F4S+YmU8ibL+KQ0p2kP5g2vhMPW4cOQBbVQ2YgXF0/RaQw
+	Rnw7VMmr/fOjJVLTHsPTYbgOm5aEM3hzyYuzaJpJX4o7Ue4vU/gar2chwDzhFIZz
+	JlQloaUA1qHRoAFtlFG/OzF9tuyudBQ+cbGAd7C05cAFmrBLg+2WDp1ZaFow==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747089724; x=1747176124; bh=zpGUREuze6n/nQHI6TKfAgIGFNTwM9sQWop
+	YI61Fsnk=; b=JAf3H2OHBsAyTBtFdmvJaHlYoo3oxl3Lc89QOY0UO4fO6/SZd8e
+	74Ww++gCVVhZ0/Ug1o4HWKA3E1dN7r3bCm8iCopipLvojUSeTkyaAO+M7IcC+bn8
+	eepAVMDueZZ5dQaQ6MvfNNYY+IQCR9cCE6EYJGHJWdchYp/F7E5UHvR+sXsi3IYJ
+	KCiNQeYCHcV/EW3Oyx4dteRVSdQoTGWvXHHFePMhTaWJomR5qrK8tDB1WB6USRI4
+	QWPc4EcFy+u9ez2gd/wpTofyA1GWpkg3ds3MOWDdpC2LF5zEqdUS50o6NmWack55
+	tEGnRY+32NqPjTX4SNYtnuEdBrlrFMm7Y6w==
+X-ME-Sender: <xms:PHkiaJa2YuP7pR7yyxaT8R69r_O0IGqKRwxE-BCcOWf7xwEI9ZAv0A>
+    <xme:PHkiaAaeUC_PVUlTW5cJxArJnNNOukRxbJ2tOrUpAxFvMNb0NiCqawPjPnZpPUEKW
+    xwbjw6MIIV-ZWkNIg>
+X-ME-Received: <xmr:PHkiaL8ENWyodFfnse97CRTbYEVL6HTUbRhjfzvutGGohuAbQn0m5hiQ1UVNlZ2ibTmm0N4vpLoIji2bsR2LabV6sXfSKhG4hJTWEEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvgeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:PHkiaHoLzvuif5vAaF2TWVuUmOtoJOTOMgr4tRgnzyOvXA6FX1bGtg>
+    <xmx:PHkiaEpDxvETkTDu8OpzmX8lLVN7bRTqgO8Mo8b6gfU50K78dGZaqw>
+    <xmx:PHkiaNS-_cYOW4xc0hfW01tAJ3RIYpNjKRGM-U1dgAGVRKmycNshmQ>
+    <xmx:PHkiaMpJium06G_r3cDkF6a7euJ_I0FOV11XqTZCuz8V2NUAuy1AWg>
+    <xmx:PHkiaEGNBQ_C-e8PeyfuCxfjO0d6jX-vWSid5zKSaUxnqQKfcvyzxk9d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 May 2025 18:42:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v4 0/6] Nominating "whatchanged" for removal
+In-Reply-To: <CABPp-BGUAyRWsnRc+rrsBfPg4hzAoKPMBiD0aH4jxwdO4mEk0w@mail.gmail.com>
+	(Elijah Newren's message of "Mon, 12 May 2025 14:21:33 -0700")
+References: <20250503005814.3030099-1-gitster@pobox.com>
+	<20250512190311.1451556-1-gitster@pobox.com>
+	<CABPp-BGUAyRWsnRc+rrsBfPg4hzAoKPMBiD0aH4jxwdO4mEk0w@mail.gmail.com>
+Date: Mon, 12 May 2025 15:42:02 -0700
+Message-ID: <xmqqbjrxjvt1.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="w+AybEXP+6e+vGLi"
-Content-Disposition: inline
-In-Reply-To: <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
+
+Elijah Newren <newren@gmail.com> writes:
+
+> The updates to patches 1-3 and patch 6 all look good, but...
+>
+>> 4:  2775f628c3 = 4:  01d4ed9acd whatchanged: require --i-still-use-this
+>> 5:  b3d4d1f46a = 5:  a7aca55d5d whatchanged: remove when built with WITH_BREAKING_CHANGES
+>
+> ...I was surprised to see no changes to either patches 4 or 5.  While
+> I didn't comment on those patches myself, Patrick did (and since he
+> already called out the missing word I also noticed, I just didn't call
+> it out again).
+
+The meson stuff did not exist in the codebase the topic was based
+on, so it won't be squashed into any of these individual patches,
+but if you take a look at
+
+    $ git show seen^{/^Merge.branch..jc/you-still}
+
+using any of the recent tip of 'seen', you'll see these changes
+applied as an evil merge to adjust the topic to an updated meson
+machinery in the more recent codebase.
+
+For other changes, "developped" was already fixed, but "the command
+was retained" was missed, so I'll locally amend.
+
+Thanks.
 
 
---w+AybEXP+6e+vGLi
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On 2025-05-12 at 21:43:46, Martin von Zweigbergk wrote:
-> On Mon, 12 May 2025 at 14:07, Nico Williams <nico@cryptonector.com> wrote:
-> >
-> > How is this stable ID constructed?
->=20
-> It's just random bytes (16 when using the Git backend, 32 in the
-> Google backend).
->=20
-> > How would things other than jj construct these?  We spent many messages
-> > trying to work that out and in my estimate that wasn't settled.
->=20
-> Random bytes has worked well for jj.
-
-I would like to suggest that we use a deterministic approach.  People
-rely on Git commits being deterministic, including in my stash
-import/export series[0].  In addition, it's important to avoid any
-allegations of side channels or leaking information in commits, which
-would be a concern in many environments and which a deterministic
-approach would avoid[1].
-
-I'd suggest a simple SHA-256 hash of the original commit data (for both
-SHA-1 and SHA-256 commits, but one that would change to a new hash if we
-added one) or an HMAC-SHA-256 with a fixed and documented key.
-
-I would also recommend a config option to avoid creating these IDs for
-those who don't want them included for privacy reasons.  I expect to set
-such an option, for instance.
-
-[0] That series will definitely require that they be disabled when
-creating commits, since the goal is to ensure bit-for-bit
-reproducibility between different Git versions so that users can
-immediately tell if the stash history is identical.
-
-[1] For instance, it's an easy way to leak keys or other credentials
-without people noticing just by pushing an innocuous-looking commit.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
-
---w+AybEXP+6e+vGLi
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmgicIAJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZ5juTIJl7cNbbuR8X7Nr0Mmxj64urZk7+e3aDUj8OY2E
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJqKAQCcZuNntbXaW+j9mI2ZFm2X4v72
-ams4AoG8NTggOk7wYQD/c6N1Ntt8lm6MJHmGs0Ubj4QNdgUpENdRoZDa6MMlEAI=
-=+iQG
------END PGP SIGNATURE-----
-
---w+AybEXP+6e+vGLi--
