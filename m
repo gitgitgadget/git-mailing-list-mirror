@@ -1,155 +1,103 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F55296FD9
-	for <git@vger.kernel.org>; Mon, 12 May 2025 19:03:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CC7296FDF
+	for <git@vger.kernel.org>; Mon, 12 May 2025 19:05:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747076605; cv=none; b=iZDrEKrUsZitxUzqxNaKjj3mONpYGEq3Q1r0+CtHm+t66CT4D4Rwa9o1DKr6bCca5cppnWlbfu2bq0MuMaFYLtQHhPo2WiOVK5Xa2v03oRwmUrTX+d5gLxAJiaasaj9GKzYRwmqNW4xVpcbTKkviwXpDTqkohlSX7eH20nmHJG8=
+	t=1747076753; cv=none; b=IoYcHQBltcXfpjchBPNVCgf7L+sduiil/L+0/+gLMhCuiC7XJIaXjGFwylAX77/ns4VFqEwj52kNcbbpoYdrXvaIHuUyC10gjvTavC07c0e/RMD8JMani2+aicE3TD/MdXsoqpJEw8oDIGTZofHW/HFQI5z2CWeiZ+AGvxpwVX0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747076605; c=relaxed/simple;
-	bh=8zirgTEdzne5epiX2juvRyzw0XJLdU30JLstkrLWoV0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=reY7oVztDqLUu/Dn0YqpInI1ncx3csRkqd8k9eaSMY+ZfWGwi/kX7gXF6nK8bSyvBrEDzDn4HPwy8Fs8D8mlfZKkAK64bK0NP/Y4AzLutqGj9YuiTDaspYorTDfIbln9AtoDnc3/AZRU9eYVNgEYweuuCt4Ku3fQHs9upKMti4I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NHPZppVn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jmNLiew6; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NHPZppVn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jmNLiew6"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 86FD71140090;
-	Mon, 12 May 2025 15:03:23 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Mon, 12 May 2025 15:03:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1747076603; x=
-	1747163003; bh=nxx+8fQR1Y14N3+Kwyrjj1R0M99gpeYNll8gZQLJC9Q=; b=N
-	HPZppVnV2JJYK4etZyZbpAi5bHZUTVsfCzG0HwDPJLAz8xENNEwRZ5zNONYDKKyo
-	9lbKChviCr4cCShvKCyC2d0886005IRy0bkU7f5rnaI9v3atS5GPEmCtIhaUrk0h
-	pkf951NrNXMp4foQGGL9Ybqersepw9SspfZyLo4VFBTFADgOBkdJqyn13hm5Z9gC
-	ocyQ2HO3TySJPiE6QdCvKKh/6DTt/HcCSiFJ/kia8rEdbBDI0T0OltB+7a/TMeh5
-	72QwU6rvMOw2nJ7GgHk+rQwU1soUrSQYcgeDeQre2S0dzztQHkhFZsyExEBuxbUM
-	slckZWwvmq0ksrpUEtmAw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1747076603; x=1747163003; bh=n
-	xx+8fQR1Y14N3+Kwyrjj1R0M99gpeYNll8gZQLJC9Q=; b=jmNLiew6mqoJmAHv0
-	/dsu6d1VrRQexzuBrK/11MlYmFQAh27eoBtM49nEt+DuKx/XTBaSK+Q5MMQ6qSiU
-	6CISW8vYA2a2TltIHWFXSJono3s7sGXtOSpY6Ztbr6jjlX/HvTR1DtPoTo5+P5bC
-	eFgARLa+/0EUiW8XVoSsaqG7L8uyIQyX6rMdlO6dfAYgWPK+7z4VV/jlmEgQfHjb
-	RJxyBYrhTJKZDiq8YXUY3TIy3H0Iwdp1ziRWEGhTRThbcAum/eyWbXxnFUQRE95G
-	574SL1MX4emH02/PIm2pbtqkyC5lGx+9Un8VVsQcH7Ecy28UHSHSGqIQylo8Cztf
-	+efNA==
-X-ME-Sender: <xms:-0UiaBHmaPAHnelJ8azgp6otCsQtLyOqR63Ls_lPfSkU6RpAgWY1Tg>
-    <xme:-0UiaGVX_7ioJ0gjPdlWGzngO2dZzQTu8q8maK2EeFTai2tCyxIhaekYNlgs1OyEx
-    NWsVOILwSSIGlTwaA>
-X-ME-Received: <xmr:-0UiaDJMuUu8lrpTJrFdnABaZEXYSX3_FKw4SbYEBX6aCd9qYPR_tNKEL2w-dCRpoFcFpktkgnUf4GANkMHxTMq3xCHbMIV7I6ngutk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvtdegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefufffkofgjfhgggfestdekredtredt
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdfflefhueetgfektedthfduleffudet
-    leefieeulefhvdduieeukefhtddvudeknecuvehluhhsthgvrhfuihiivgepvdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:-0UiaHHJVZfuZej_GZrLNPqB-lJNB8Jc8HZJ-5rgYg8D059MoukRuw>
-    <xmx:-0UiaHUP8nBj_LI-ZcNgUa2j58pM7chIb4ivWVbYAU42VBBGbqunvQ>
-    <xmx:-0UiaCNPtseNaJDvg0AyYj9oYG_LR84pAVyFJWBKMDhgoxILZkHJtQ>
-    <xmx:-0UiaG21mpThuyZ9HzGzV4Oh742tp5Am4cVfNaYsheWvXH3px0ablQ>
-    <xmx:-0UiaGATFw4Cn7m4LzzMXqEyVwAsmkqTwC9dHLT_pBgON508t2ytK8Xp>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 15:03:23 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 6/6] whatschanged: list it in BreakingChanges document
-Date: Mon, 12 May 2025 12:03:11 -0700
-Message-ID: <20250512190311.1451556-7-gitster@pobox.com>
-X-Mailer: git-send-email 2.49.0-674-gc1e4f99c0b
-In-Reply-To: <20250512190311.1451556-1-gitster@pobox.com>
-References: <20250503005814.3030099-1-gitster@pobox.com>
- <20250512190311.1451556-1-gitster@pobox.com>
+	s=arc-20240116; t=1747076753; c=relaxed/simple;
+	bh=YY5Qn+JKDGRQZlK0E2KVis/ep6q/qG/AImxiMdvX4AA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=L8vd8pQlcMidHJ33Pz06u2ABuxwRcgD8bpcyNXAaAKG4am4EUyqzSLG1Y1JmukhQwZaBYo+QHkZYZPQX3nB5hO1nMU/DHRCWE3UQiRQL3H9Xg9GfYwG/Wk/p7yTTMDjkhGP5+SNA9wjHmLefrxUv7kVMCwIfy+E2xAjuk29tPds=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-7caeeef9629so52127285a.3
+        for <git@vger.kernel.org>; Mon, 12 May 2025 12:05:51 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747076750; x=1747681550;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=x2GioJkEhSp0d9PbapBSsf767klhZ66L6k3xeXCckdc=;
+        b=sQ6moaoTMDaZ+QjnvJ3eiGnPzHSMrPo06GvHlNcvzPPJvHpzKRj7Dyrdd1NEBoXpgL
+         fuR+sTogk263t3qdAgjz34dzyunIgpKx9YQmEnQNIABYCthyur9nXZgstweGdaVNJVRb
+         dBbQa7Tjb8ZJ4psOguqZmGcWHcVMQDOUbYaWRPbvqkgSFfOkK1oQsMioUf/5vDNRVnI/
+         c1AZ0d9ezIKEXtUEmCNR0+EdMcy7gvU/rlW3Gc3vqOptGKTnlZDm8U7aWd3rHAjCirxv
+         DBKelN7yUi8bVNs+Qzm14gE0Qs4ASuvTvNWoqF8aX+R1V+4r2L+PpyRxdxy3d3gy7RhF
+         tbtg==
+X-Forwarded-Encrypted: i=1; AJvYcCUCF1feVpuU0YU4bsKRT1H3K0TZopvjM6EHoY9/O2IrJTGaQCJF4x3d6wgHWZlIkwYQ1iw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcJygJP4AU+/qRwWDGeub7ai/++l50zV2L3XhXc2nE5AQvjFNC
+	ILvIcncAu/vCmx6vpLdRAMHeOO/6veW/YLdCXdybMXQ1ZyzSPTbQJbgtIDoqkLibwvaki/qtbQv
+	mVJ7spo30xXxveSVbGG/N0uuP7pA=
+X-Gm-Gg: ASbGncvjpl5H8mnTAaIt46FvmRgh2UckjR/7F8S80O2LLGAB3nGdI5Gnj4IhHXQnIGl
+	vD9XSoh7BzvWD+2xTIEVP/gtRoIl6K0SoGsOPyGN5txjk2DSCmgKVOn0aCqvnP1p1z7er+ECSqs
+	PX2xrUe+7D70fKr0TgaJi2nHC3H/cJgQY=
+X-Google-Smtp-Source: AGHT+IEs4+LrCQUvg3zoq+eKnPZOdOVTmdgyrSv3HYW2OXJAK5aoa6Xci+nhWInNx3/S3Nn3DKfE4XBdTiYO3eR66Go=
+X-Received: by 2002:a05:6214:4111:b0:6f2:c10b:db11 with SMTP id
+ 6a1803df08f44-6f6e4815c38mr82836286d6.6.1747076749934; Mon, 12 May 2025
+ 12:05:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597BC2E1B526A11D21BAB24B895A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <D9U0KAX6KVXK.WCY7YGX2Q0A5@swagemakers.org> <xmqqa57hvl0f.fsf@gitster.g>
+ <PN3PR01MB9597D7CAABB0EEE93A5CC490B897A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <xmqq5xi5u401.fsf@gitster.g>
+In-Reply-To: <xmqq5xi5u401.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Mon, 12 May 2025 15:05:37 -0400
+X-Gm-Features: AX0GCFusmeiO92e7s7YrzSk4YaAMx-ooFb61YlOISkb4chYlTGZQa3fj4AZzAfQ
+Message-ID: <CAPig+cQCpWhJoouuzZu9HPy7Fj-T5RcNnAqryxQ=ATn37Os49Q@mail.gmail.com>
+Subject: Re: [PATCH v2] send-email: try to get fqdn by running hostname --fqdn
+ on Linux and macOS
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Aditya Garg <gargaditya08@live.com>, Julian Swagemakers <julian@swagemakers.org>, 
+	"git@vger.kernel.org" <git@vger.kernel.org>, 
+	"sandals@crustytoothpaste.net" <sandals@crustytoothpaste.net>, Zi Yao <ziyao@disroot.org>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This can be squashed into the previous step.  That is how our "git
-pack-redundant" conversion did.
+On Mon, May 12, 2025 at 1:34=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Aditya Garg <gargaditya08@live.com> writes:
+> >> On 12 May 2025, at 10:12=E2=80=AFPM, Junio C Hamano <gitster@pobox.com=
+> wrote:
+> >> =EF=BB=BF"Julian Swagemakers" <julian@swagemakers.org> writes:
+> >>> There are multiple implementations of the hostname command, and they
+> >>> don't all support `--fqdn`. For example this will not work on Alpine
+> >>> Linux as well as macOS.
+> >>> ...
+> >>> All seem to support `-f` though, maybe that would be the better optio=
+n.
+> >>
+> >> What makes me worried about such a proposed changes is if there are
+> >> implementations that takes `-f` but uses it to mean something
+> >> completely different from fqdn, and emits something that looks like
+> >> a hostname but is not.  At least an implementation that takes --fqdn
+> >> without erroring out would try to give what this code wants to find
+> >> out (or it is simply crazy), but -f does not feel specific enough.
+> >
+> > What we can do is use `hostname -f` for macOS, after all its the only d=
+arwin based
+> > OS used rn, and use hostname --fqdn for Linux.
+> >
+> > Although it still leaves out Alpine Linux.
+>
+> As long as we record the reasoning behind our decision to use `-f`,
+> with an explanation like "we can add a configuration to disable this
+> if an odd platform implementation of `hostname -f` truly misbehaves"
+> to suggest that we can, if needed, easily give an escape hatch if
+> this change breaks existing users, I think it is OK to just use
+> `-f`, which would be the simplest ;-)
 
-Theoretically, however, those who want to gauge the need to keep the
-command by exposing their users to patches before this one may want
-to wait until their experiment finishes before they formally say
-"this will go away".
-
-This change is made into a separate patch from the previous step
-precisely to help those folks.
-
-While at it, update the documentation page to use the new [synopsis]
-facility to mark-up the SYNOPSIS part.
-
-Helped-by: Elijah Newren <newren@gmail.com>
-[en: typofix]
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/BreakingChanges.adoc |  9 +++++++++
- Documentation/git-whatchanged.adoc | 10 ++++++++--
- 2 files changed, 17 insertions(+), 2 deletions(-)
-
-diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingChanges.adoc
-index bdfad29d8a..ac9a84c17b 100644
---- a/Documentation/BreakingChanges.adoc
-+++ b/Documentation/BreakingChanges.adoc
-@@ -178,6 +178,15 @@ references.
- +
- These features will be removed.
- 
-+* The git-whatchanged(1) command has outlived its usefulness more than
-+  10 years ago, and takes more keystrokes to type than its rough
-+  equivalent `git log --raw`.  We have nominated the command for
-+  removal, have changed the command to refuse to work unless the
-+  `--i-still-use-this` option is given, and asked the users to report
-+  when they do so.  So far there hasn't been a single complaint.
-++
-+The command will be removed.
-+
- == Superseded features that will not be deprecated
- 
- Some features have gained newer replacements that aim to improve the design in
-diff --git a/Documentation/git-whatchanged.adoc b/Documentation/git-whatchanged.adoc
-index 8e55e0bb1e..d21484026f 100644
---- a/Documentation/git-whatchanged.adoc
-+++ b/Documentation/git-whatchanged.adoc
-@@ -8,8 +8,14 @@ git-whatchanged - Show logs with differences each commit introduces
- 
- SYNOPSIS
- --------
--[verse]
--'git whatchanged' <option>...
-+[synopsis]
-+git whatchanged <option>...
-+
-+WARNING
-+-------
-+`git whatchanged` has been deprecated and is scheduled for removal in
-+a future version of Git, as it is merely `git log` with different
-+default; `whatchanged` is not even shorter to type than `log --raw`.
- 
- DESCRIPTION
- -----------
--- 
-2.49.0-674-gc1e4f99c0b
-
+The problem is not restricted only to macOS (and Alpine), but more
+generally to all BSD-lineage `hostname` which does not understand
+--fqdn but does understand -f.
