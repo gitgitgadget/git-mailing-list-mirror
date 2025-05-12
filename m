@@ -1,258 +1,212 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.223.130])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F60A9475
-	for <git@vger.kernel.org>; Mon, 12 May 2025 14:12:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDA2021ADA2
+	for <git@vger.kernel.org>; Mon, 12 May 2025 14:29:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.135.223.130
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747059133; cv=none; b=p+bj/ujZ80xXBG+5Qc/+WdPl8wdAtb0sczWbRXGyVXE9yyjJFowg+tX11OI0VXG+DJ3CZ45C90aEpb7STFe7SU+TOZpx7KIP90swFM1d9sSOjr4JsvdrXfvayCQA/bW5XivvfC1ZbfrkhtuR9vZJ9xqYcqHQljXMqWRjCMlgh68=
+	t=1747060154; cv=none; b=Mm8wBfaed7/58pusoXa6wGI2AVj+t3OdsU/LEl15VKsFScD8ykTYcqIO3IrxeNoD8U/hM6/gii4TKL3OvL65m0SQ04TxfeIp9rTDEmRiNbqFdLj9SlybWhvFhq+mPBugsV++0+t6gYI8gaoVtlF3skOL+0CS83Bh8mYXx1Rk27w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747059133; c=relaxed/simple;
-	bh=NgTAQXQy9AIMl3W4qE4g9MnD1V6fQGilw7VHZsxJCfY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=q1hSrlfhe5joXSIpocd/+/NbRlBgsw6MZpzKEGHMnEcrUSk2LZ9haCxymSX6ApysMIvN8BEG+qxiyNCdLTYqUwEE3gIa0gGbHgyretFEsgqWiUDgoFkSDlnfQoj/XVjkN8FO2FHNTY+ITBnf7Na+JjIeVBao/vzjQzvQjJ7yep0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HCY3SDtK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ksXZ6zZN; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747060154; c=relaxed/simple;
+	bh=Vw95G4k/+9RDvrw/1rtLE3U5uu+6gRcTWBXQ3cK+3Ag=;
+	h=Date:Message-ID:From:To:Cc:Subject:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=V6r+vi4Neo1GJM2oZ+OVkYOsAEg0A+zu4xjdoBg2fYfKk/LlJp5LHcwZf0CtQS47LsGx1l+NUhtS1vSb2u/xVq8e4RyzoRTrsIwOsG9dMnIUi4q5m1XbMdnZOb9d2i/OiHXapIcdXyehNrCDt91wpOubYVgQEoZ6IwFgS6Vr3tw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de; spf=pass smtp.mailfrom=suse.de; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=zUpUfJEO; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=T/sXNobx; dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b=IcPU0R44; dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b=ivZerfcY; arc=none smtp.client-ip=195.135.223.130
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=suse.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=suse.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HCY3SDtK";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ksXZ6zZN"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B9252540081;
-	Mon, 12 May 2025 10:12:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Mon, 12 May 2025 10:12:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747059129; x=1747145529; bh=X3JFzO2SiW
-	GzDt6//CeUPsbyvJBV1Km08SCsP1vCGmk=; b=HCY3SDtKYEEJrUVuBPcG9LdbCm
-	O88T4YZzaoYuRRAA/5MRXJgdPPPiMNyA5UcomxbcDQ7FvL//c4FotyZo4N7nUo0c
-	UkdrYu9NtNK+Xm9wnTH3gdajAU5qGgb4tINCN95Kep0NIqNt96k5i3wCyCCVLwA1
-	U383gaUO89BE+Miq9tfjH+RPFBkxf5bGNTGiyZh335r98kjm/cLEJbRqUCJRgCMd
-	p+TcFeipGqOvERSsDnPEK3ZDcnnJWEIHa11TfCcMi+TCj2c1vPVCb20MvtyvG8H/
-	EQdjf1e4ueZFoJXLqmhhbpKQwjFt2EMWR+4ppOiKn59XShdhlucQ7G9AaZ2w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747059129; x=1747145529; bh=X3JFzO2SiWGzDt6//CeUPsbyvJBV1Km08SC
-	sP1vCGmk=; b=ksXZ6zZNoQKBbZihmaPgNJ+49SetwiF8UWoroPUFlcnM1HdMic6
-	v2dkn3BHapEVP0XQDygsVdNLS8+jUXZ69FIa/GHaY1Y0hJSRWgX3is9ippAmq/Dh
-	OxeHQK6ljrIpdm+2jhxwby5EsCjCck9HT+bXtA4XHrELjzDRXT5V2zFkT0dWWmKE
-	Vn3+nXlVg770NUJ0LqEUC38aLnoeF2z+J+WCuDDL4K9Z9JnhYl9bgmeNftfHzb5C
-	I4hoOM4IqPdXl8yq1EDE63mhSIkG0xLx/H+kvSRnHgkykHOV9NjhIW4+QvIo6HYo
-	Q9vfXpv9gJ49ei16bRt8BDtz75VWO5HYZVw==
-X-ME-Sender: <xms:uQEiaKhuK9sBwy0UgnoENrIe1BeQYkkaAF4vD8jfLmR328f6-z0Qyw>
-    <xme:uQEiaLApv1H6TDlilvRzTuVvcTARXY0y2XVn5r9uAkAHp-lUdGtMMVT9RYbB8QqYF
-    0blj30iveTbVajSGg>
-X-ME-Received: <xmr:uQEiaCE4eZPGkmdCJF4MhOnnmfWkahKl4gTbM_ZlYdHNRc31AFpsO7kIfu9m_itgzqDLf_hMu94ZAGySbujyBqdrYnVtIsmaKB14-jk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddugeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
-    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
-    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephe
-    dtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:uQEiaDT4WVRCoWcPsNJqR5iT6KEtc5yC6Vmzwd0dlpRxp6zXEkSbBQ>
-    <xmx:uQEiaHwqgeO1viW_30Yr1VmNGglmAqdEm0H97xdaO0GXWWyK0AdJww>
-    <xmx:uQEiaB4bYR1j78PAzlH58a592ayuTsh8U7SxKvWN-mRVSP6VsQzegg>
-    <xmx:uQEiaEwR-zbb1WncDbS0qqy8F15GPof-oaL9oBt_BwMNVaxhehscgA>
-    <xmx:uQEiaF0-h-Z5ICDQitZGgC8nuJmvae22XL3Ta5SG6vbqidMESduBJWjS>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 10:12:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v2] mailinfo: fix pointential memory leak if
- `decode_header` failed
-In-Reply-To: <pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
-	(Lidong Yan via GitGitGadget's message of "Sun, 11 May 2025 16:14:57
-	+0000")
-References: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
-	<pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
-Date: Mon, 12 May 2025 07:12:08 -0700
-Message-ID: <xmqqcycdx6iv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="zUpUfJEO";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="T/sXNobx";
+	dkim=pass (1024-bit key) header.d=suse.de header.i=@suse.de header.b="IcPU0R44";
+	dkim=permerror (0-bit key) header.d=suse.de header.i=@suse.de header.b="ivZerfcY"
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id D49BB21174;
+	Mon, 12 May 2025 14:29:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1747060151; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8xrCoNLglaDt/jy3fOTOHOqkFtFOq3p8t7taoYkaL3k=;
+	b=zUpUfJEORLAvh1BVZlJvRQeSEWGO1jb7N8nMGv+SBkzFNjUDCle19XDBMkCme/ZkLqM1V5
+	NF8YeyxBIQCPT3JRbjJz6KI9X7zS5uK2cyPdg958orHNKX2SGbvmA89SPyKfhvRo2avway
+	XjWn8S/7YsXrOM1foHdAhAuqYQRquUY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1747060151;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8xrCoNLglaDt/jy3fOTOHOqkFtFOq3p8t7taoYkaL3k=;
+	b=T/sXNobxNksUwYjRW1CY0Fm2Wt3OamEC/VaIvnrOGtIQWZ9ERaFezwSJTAF46iBwNqarp0
+	++FZtU6MwSGle4CQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+	t=1747060150; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8xrCoNLglaDt/jy3fOTOHOqkFtFOq3p8t7taoYkaL3k=;
+	b=IcPU0R44knwk7V5LPAK3pFsYV3er1fZKtgLVQIp07QBFuXWoQmE+pcUJi2Fm993O98aFHF
+	cuXpSzMHH8OcFy78YhZZa9ucBUIczp5FRPcaBR/PuK4kiY3pItPbFCylDkZIov47jtUn+/
+	WP4gKaFuIWjSVjkkCO9Rxx69imGNjVw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+	s=susede2_ed25519; t=1747060150;
+	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	 mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=8xrCoNLglaDt/jy3fOTOHOqkFtFOq3p8t7taoYkaL3k=;
+	b=ivZerfcY4J1QBJPHB31Rkr0LB1xd0DM/5gve7IqcwzuY/Gxerav9sejA0cKtKuc2xFfve6
+	zGzniAhqdwgOQVAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 98B4A1397F;
+	Mon, 12 May 2025 14:29:10 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+	by imap1.dmz-prg2.suse.org with ESMTPSA
+	id Ik4EJLYFImjMPQAAD6G6ig
+	(envelope-from <tiwai@suse.de>); Mon, 12 May 2025 14:29:10 +0000
+Date: Mon, 12 May 2025 16:29:10 +0200
+Message-ID: <87v7q5ucll.wl-tiwai@suse.de>
+From: Takashi Iwai <tiwai@suse.de>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Takashi Iwai <tiwai@suse.de>,
+	Denton Liu <liu.denton@gmail.com>,
+	Eric Huber <echuber2@illinois.edu>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Avi Halachmi <avihpit@yahoo.com>,
+	Christoph Sommer <sommer@cms-labs.org>,
+	Paul Mackerras <paulus@ozlabs.org>,
+	git@vger.kernel.org
+Subject: Re: [PATCH 1/2] gitk: Add a basic support of SHA256 repositories into Gitk
+In-Reply-To: <9bb1699a-ec99-40b3-bd6a-00e809d77d0d@kdbg.org>
+References: <20250320154136.23262-1-tiwai@suse.de>
+	<20250320154136.23262-2-tiwai@suse.de>
+	<9bb1699a-ec99-40b3-bd6a-00e809d77d0d@kdbg.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) Emacs/27.2 Mule/6.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-Spam-Level: 
+X-Spam-Flag: NO
+X-Spamd-Result: default: False [-1.80 / 50.00];
+	BAYES_HAM(-3.00)[99.99%];
+	SUSPICIOUS_RECIPS(1.50)[];
+	MID_CONTAINS_FROM(1.00)[];
+	NEURAL_HAM_LONG(-1.00)[-1.000];
+	NEURAL_HAM_SHORT(-0.20)[-1.000];
+	MIME_GOOD(-0.10)[text/plain];
+	RCVD_VIA_SMTP_AUTH(0.00)[];
+	RCVD_TLS_ALL(0.00)[];
+	RCPT_COUNT_SEVEN(0.00)[9];
+	MIME_TRACE(0.00)[0:+];
+	ARC_NA(0.00)[];
+	TAGGED_RCPT(0.00)[];
+	FREEMAIL_ENVRCPT(0.00)[gmail.com,gmx.de,yahoo.com];
+	DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+	FROM_HAS_DN(0.00)[];
+	FREEMAIL_CC(0.00)[suse.de,gmail.com,illinois.edu,gmx.de,yahoo.com,cms-labs.org,ozlabs.org,vger.kernel.org];
+	TO_DN_SOME(0.00)[];
+	FROM_EQ_ENVFROM(0.00)[];
+	RCVD_COUNT_TWO(0.00)[2];
+	TO_MATCH_ENVRCPT_ALL(0.00)[];
+	FUZZY_BLOCKED(0.00)[rspamd.com];
+	DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid,suse.de:email]
+X-Spam-Score: -1.80
 
-"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Thu, 08 May 2025 08:20:40 +0200,
+Johannes Sixt wrote:
+> 
+> Am 20.03.25 um 16:41 schrieb Takashi Iwai:
+> > From: Rostislav Krasny <rosti.bsd@gmail.com>
+> > 
+> > This PR makes Gitk working on both SHA256 and SHA1 repositories without
+> > errors/crashes. I made it by changing and testing the gitk script of Git
+> > for Windows [https://gitforwindows.org/] version 2.32.0.windows.1 that
+> > is a little bit different than the mainstream 2.32.0 version.
+> > 
+> > Still not fixed functionality: [1] There is the "Auto-select SHA1
+> > (length)" configuration preference that affects "Copy commit reference"
+> > on both SHA1 and SHA256 repositories.
+> > 
+> > A new "Auto-select SHA256 (length)" configuration preference should be
+> > added and used on SHA256 repositories instead of the old one. Since I'm
+> > not familiar with Tcl/Tk and this issue isn't critical I didn't
+> > implement it.
+> > 
+> > [ Changes from the original patch:
+> >   * Discard the changes for generic words (e.g. "Commit ID"), so that
+> >     translations can be still applied after this patch
+> >   * Simplify the regexp check in gotocommit as suggested in the
+> >     previous review
+> >   -- tiwai ]
+> 
+> The message should be updated to not mention the evolution of the change
+> and what is not relevant anymore or not relevant in this patch.
+> 
+> > 
+> > Signed-off-by: Rostislav Krasny <rosti.bsd@gmail.com>
+> > Link: https://patchwork.kernel.org/project/git/patch/pull.979.git.1623687519832.gitgitgadget@gmail.com
+> > Signed-off-by: Takashi Iwai <tiwai@suse.de>
+> > ---
+> 
+> > @@ -8920,11 +8932,11 @@ proc gotocommit {} {
+> >          set id $headids($sha1string)
+> >      } else {
+> >          set id [string tolower $sha1string]
+> > -        if {[regexp {^[0-9a-f]{4,39}$} $id]} {
+> > +	if {[regexp {^[0-9a-f]{4,63}$} $id]} {
+> 
+> This doesn't use $hashlength. Should it?
 
-> From: Lidong Yan <502024330056@smail.nju.edu.cn>
->
-> In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
-> in dec will leak. Simply add strbuf_release and free(dec) will solve
-> this problem.
->
-> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-> ---
->     decode_header: fix pointential memory leak if decode_header failed
->     
->     In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
->     dec will leak. Simply add strbuf_release and free(dec) will solve this
->     problem.
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v2
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v2
-> Pull-Request: https://github.com/git/git/pull/1956
->
-> Range-diff vs v1:
->
->  1:  81fdfb94315 ! 1:  90dc9b0d49b decode_header: fix pointential memory leak if decode_header failed
->      @@ Metadata
->       Author: Lidong Yan <502024330056@smail.nju.edu.cn>
->       
->        ## Commit message ##
->      -    decode_header: fix pointential memory leak if decode_header failed
->      +    mailinfo: fix pointential memory leak if `decode_header` failed
->       
->      -    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
->      +    In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
->           in dec will leak. Simply add strbuf_release and free(dec) will solve
->           this problem.
+Not needed.  It's a range match, and can work in a shorter string,
+too.  And, that's what suggested in previous reviews (years ago!).
 
-Much better.
+> Also watch out space vs. TAB.
 
-> +static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
-> +			    int rfc2047)
->  {
->  	const char *in = q_seg->buf;
->  	int c;
-> -	struct strbuf *out = xmalloc(sizeof(struct strbuf));
->  	strbuf_init(out, q_seg->len);
+OK.
 
-Don't let the caller pass in an uninitialized thing and force the
-callee to initialize it.  Drop this strbuf_init(), and make the
-caller always do:
+> > @@ -12524,6 +12539,18 @@ if {$tclencoding == {}} {
+> >      puts stderr "Warning: encoding $gitencoding is not supported by Tcl/Tk"
+> >  }
+> >  
+> > +set objformat [exec git rev-parse --show-object-format]
+> > +if {$objformat eq "sha1"} {
+> > +    set hashlength 40
+> > +} elseif {$objformat eq "sha256"} {
+> > +    set hashlength 64
+> > +} else {
+> > +    error_popup "[mc "Not supported hash algorithm:"] {$objformat}"
+> 
+> This looks strange. Where is the $objformat substituted?
 
-	struct strbuf dec = STRBUF_INIT;
+Sorry, I don't understand your question here.  Isn't it what you see
+in your quoted line...?
 
-	...
-		decode_q_segment(&dec, ...);
+> > +    exit 1
+> > +}
+> > +set hashalgorithm [string toupper $objformat]
+> > +unset objformat
+> 
+> Why not set hashalgorithm right away, without using a temporary
+> objformat? Why set it at all here? It's unused.
 
-instead.  That makes the division of labor easier to see (e.g., what
-if the caller had a code path that never calls decode_x_segment()
-before it has to return?  it might want to add something to dec
-itself so that it can base its behaviour always on what is in dec,
-or at the end it may just be able to strbuf_release(&dec) without
-having to remember if it called decode_x_segment().  Which means it
-is more convenient for it to always assume that dec is initialized
-whether it called decode_x_segment() or not).
+The objformat is what git-rev-parse gives, and it's also referred to
+show in the error message.  You shouldn't convert it to the upper
+letters blindly there.
 
-> -static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
-> +static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
->  {
->  	/* Decode in..ep, possibly in-place to ot */
->  	int c, pos = 0, acc = 0;
->  	const char *in = b_seg->buf;
-> -	struct strbuf *out = xmalloc(sizeof(struct strbuf));
->  	strbuf_init(out, b_seg->len);
-
-Ditto.
-
-> @@ -530,18 +529,23 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
->  		default:
->  			goto release_return;
->  		case 'b':
-> -			dec = decode_b_segment(&piecebuf);
-> +			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
-> +				goto release_return;
-> +			}
-
-Don't enclose a single statement block inside {braces}.
-
->  			break;
->  		case 'q':
-> -			dec = decode_q_segment(&piecebuf, 1);
-> +			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
-> +				goto release_return;
-> +			}
-
-Ditto.
-
->  			break;
-
-Just a mental note (i.e., not anything wrong in the posted patch).
-Even though the caller is prepared to see decode_x_segment() to
-notice and report an error, the implementation just does not bother,
-and mostly skips a garbage in the input.  Outside the topic of this
-series, we may want to consider allowing the user to say "be strict
-and barf when encoded contents are broken".
-
->  		}
-> -		if (convert_to_utf8(mi, dec, charset_q.buf))
-> +		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
-> +			strbuf_release(&dec);
->  			goto release_return;
-> +		}
-
-This, together with ...
-
-> -		strbuf_addbuf(&outbuf, dec);
-> -		strbuf_release(dec);
-> -		free(dec);
-> +		strbuf_addbuf(&outbuf, &dec);
-> +		strbuf_release(&dec);
-
-... release here, look somewhat pointless.  As you declared "dec" at
-the outermost scope in this function, why not do the release at the
-place everybody else is released/freed, at release_return: label?
-
->  		in = ep + 2;
->  	}
->  	strbuf_addstr(&outbuf, in);
-> @@ -634,23 +638,24 @@ static int is_inbody_header(const struct mailinfo *mi,
->  
->  static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
->  {
-> -	struct strbuf *ret;
-> +	struct strbuf ret;
-
-Do the "= STRBUF_INIT" at the caller.
-
-> +	int found_error = 0;
->  
->  	switch (mi->transfer_encoding) {
->  	case TE_QP:
-> -		ret = decode_q_segment(line, 0);
-> +		found_error = decode_q_segment(&ret, line, 0);
->  		break;
->  	case TE_BASE64:
-> -		ret = decode_b_segment(line);
-> +		found_error = decode_b_segment(&ret, line);
->  		break;
->  	case TE_DONTCARE:
->  	default:
->  		return;
->  	}
->  	strbuf_reset(line);
-> -	strbuf_addbuf(line, ret);
-> -	strbuf_release(ret);
-> -	free(ret);
-> +	strbuf_addbuf(line, &ret);
-> +	if (!found_error)
-> +		strbuf_release(&ret);
->  }
-
-THis is puzzling.  We add whatever is in ret to line, but release it
-only when there is no error?  What happens when we did find error?
-There does not seem to be any caller-callee contract on what the out
-parameter should contain upon an error, which is a good thing, so we
-should release it unconditionally, no?
+The hashalgorithm is with upper letters for SHA1 and SHA256 to be
+shown correctly in other places.  It could be "SHA-1" or other
+strings, but it's done in that way because of simpleness.
 
 
+thanks,
 
+Takashi
