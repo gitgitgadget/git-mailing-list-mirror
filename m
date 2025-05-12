@@ -1,112 +1,137 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5A8B248F7D
-	for <git@vger.kernel.org>; Mon, 12 May 2025 16:42:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 495122522B9
+	for <git@vger.kernel.org>; Mon, 12 May 2025 16:43:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747068134; cv=none; b=N4KVLokI18VQU+zpSOqMp0bi7lZuJCLT6qDu5WW92rBssRnWEZtTNde6hlWxNkQs6+QOdg4d5lnu/hRl6FREdIwm68gd6H9HAxKLU4QvbRv/vAdQEvtozV/yLiM7ywJ/TvL6mv5Fu/BtKeHQ3QShDFQcoYDxLHVRyEDPbW/FFIc=
+	t=1747068183; cv=none; b=QV9p0buYLO4nXvx+A1qJcIXB/P80fTOMPxnwnXRb1WPE6LOZS9oGfIBdSmsnRtX65UwMz5ljKrpBRl1B5LIx4kzaXCwo5onVWhTmUdQYO12jkZZTOPT5IcBjcgJGeGNaf3QGnfknnlFQzxP793176lSctACX3xu2PSqAONEk+mc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747068134; c=relaxed/simple;
-	bh=efxIJjeZQh9vLLx0ihALVT7P1J4gvzcmLKOpk0bQKIo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oV0JH4PvDmVyyd9E5ujYOalGKUgPNb72hhg74HqXcPGv56/qHwqJQnsTjbFAVCSPgWkhzgUv6WmPjXKywWmSub7LF5q8beKnBMfeRqUktzcVWjf3FyIh1oXcMLwuwG9IUXaZM6jix0BDQ91J9uIoOqMYX2FR43PmjzNw/WzRiVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mK07YAFs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nNi+v0o0; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747068183; c=relaxed/simple;
+	bh=0JjbpvrAZSQMIh9V7Svv41tD0xpl1nppEEb//PUKmQY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=NaUh3u4178XlM/VVFvFci9lyPAnn/HNHovVH4TQm5avUuJ5BCgWG3iMhKkH49PuMDdcu2ucHeXunbct5f2HFD+XbKMtyzTCU+Ae/CC+c6iZgHtbJ82gOjOoMk7N49dkm0h3emtfMJj42Zv1DQA4232rq572igcAwJqH0CHpnClk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MPGF6Jif; arc=none smtp.client-ip=209.85.160.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mK07YAFs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nNi+v0o0"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 94F4D254010E;
-	Mon, 12 May 2025 12:42:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 12:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747068130; x=1747154530; bh=q9u9IeySeL
-	FRzioM9iT+M+qtoMxtWfZmyAC3iY78Sis=; b=mK07YAFsou9b+uCbIcCEtNJIFI
-	6cVbbLr7gbVhb6onUYkYcm6HUzwL3fGedBUlcVEIi5VxeFNdiXKCL6Jk0BfRjXyX
-	vg170j0YkTrkeyS7RCoHc56mxU+TZdDz9wY+es5DfiXfz4cMHi9rB5iwSBEgM6dd
-	MZx7tUNSbSba/fNv/33nZZ2uodKH4DyPdpAwCqLT5hcX9gTBhLQhsuZ4F0bRSKzK
-	rfTf7YSrLjR0tcnnKO6gAWTtfgJ8pVFgNI8gdCa0TuofXAg7Q2blK8+bc62c18Ht
-	0hk2PViIqGGVuiYN8O+YPNYId9On0CTwiTqy3A1aheWyHQPBfBXm6dt0z/jw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747068130; x=1747154530; bh=q9u9IeySeLFRzioM9iT+M+qtoMxtWfZmyAC
-	3iY78Sis=; b=nNi+v0o03gAk4PYtHLEBkRhDnBCI4VewosmkcGF9B0t3s9zKlgC
-	3pD+uuVmXNGbdTKUcxf0kNtHq+elNhlsTTUmvjuPupW8dwYE4n9+UDJGtpnzF6Vg
-	2JoqIk2DcylZXodB/vSwREGUWidlzQFIYSg7oLeu7Absm7A95zk3wrD7bX3cnYlE
-	0GgQmrbdQOT+LjsXLY+QWO5c+9/kHJtBug7cVEkoKSzRaDKhxC34+EYt9HfGdY9C
-	aaN97L7fvWTdc2xWoB1VQ8Fh4O82rHFKTRuhHzQGBN1w/FlyD8UBZQxkU/Q93BgV
-	R3jxhJH6AQyrhms8nbwEsygiV0/Xnj+o2aA==
-X-ME-Sender: <xms:4SQiaIXa8wbGDe1o4QGpK2kE9JS0bYj0pUoL-DjNB_i8Sf8F3DO_Ng>
-    <xme:4SQiaMmkuRzM7iMdwdzjN_gkB3jEVV0u_M_C3iDnxoIkLcJ3oKlrKqeytL6C9goL7
-    2kFrktD52ivQD4fRg>
-X-ME-Received: <xmr:4SQiaMYXxDMTy1aiLY8QHv_ivty3tzSipwzjgE_XH1LVj5SgR7OGHmAudWUhhJjrfNMShb8hVI8qFAZPZg9khf8KyrjGcjNmr4_XUnk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddujeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhhulhhirghnse
-    hsfigrghgvmhgrkhgvrhhsrdhorhhgpdhrtghpthhtohepghgrrhhgrgguihhthigrtdek
-    sehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgt
-    phhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprh
-    gtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhs
-    thhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:4SQiaHVvRRtdBFk0UO3iCPGlQt--o_LEXNShV15xc5lTYiruR_9sKA>
-    <xmx:4SQiaClX03AdLuh-IRBH26onNFYa3BY_99WY-IdcsPmpw_fXNWHKwA>
-    <xmx:4SQiaMeO_VJQRDynrCTCgY-IlQzwEPCcUc3yqnq8FvrmmCgddQjlPw>
-    <xmx:4SQiaEEmTshP8Oyr2UqCu9kAjendEB1pcpvYy0qN0vawvDzDlkZ9MA>
-    <xmx:4iQiaASsOuIMMqjQsbPhSEqKL1bBdIp2aRX-epENiW7tMyxEyBYvVVo3>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 12:42:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Julian Swagemakers" <julian@swagemakers.org>
-Cc: "Aditya Garg" <gargaditya08@live.com>,  <git@vger.kernel.org>,  "Eric
- Sunshine" <sunshine@sunshineco.com>,  <sandals@crustytoothpaste.net>,  "Zi
- Yao" <ziyao@disroot.org>,  "Kristoffer Haugsbakk"
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2] send-email: try to get fqdn by running hostname
- --fqdn on Linux and macOS
-In-Reply-To: <D9U0KAX6KVXK.WCY7YGX2Q0A5@swagemakers.org> (Julian Swagemakers's
-	message of "Mon, 12 May 2025 09:46:05 +0200")
-References: <PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597BC2E1B526A11D21BAB24B895A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<D9U0KAX6KVXK.WCY7YGX2Q0A5@swagemakers.org>
-Date: Mon, 12 May 2025 09:42:08 -0700
-Message-ID: <xmqqa57hvl0f.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MPGF6Jif"
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-4767e969b94so92904151cf.2
+        for <git@vger.kernel.org>; Mon, 12 May 2025 09:43:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747068181; x=1747672981; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=jiSMtWSLW1pfdnmfn3L9HZaxPd48IIXvqIclUvPBGy0=;
+        b=MPGF6Jif75vmPdqaKrYohK2oYre68JOHbzXWN+1HX6T7lzAPZVA39dyqtXhNXdOu68
+         ZmEHFU/hehpX1sVIOqYcJUVLFic0+P1Og8hITKfwevACIWf/B3Bj8YzMF/E9b4Y/2NDp
+         vSoItH/zNElz1R8/y/7sdbCBnmexJ17OOsT3GTbL9B3VnEuARQ+cisvuH8ynuas5Rl3+
+         klmzbm4LqNj2R+ZX96bsIEvrpvo5zcgdPqnBAxVQ6qhk1H/s5iRRrktCQ+royYTWx3M8
+         YNB+jrTNurPTtka+T1cawPiPkirs8ySSZi8EJtzXxmualxBqlW1MpE45ctYwj5C0sflK
+         lxfQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747068181; x=1747672981;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=jiSMtWSLW1pfdnmfn3L9HZaxPd48IIXvqIclUvPBGy0=;
+        b=KOCj6zuVNxs4mTU20pbffkvcoXVhHpmWCYcOP+m47C/ufvFqGMS5UGh+X/BXcdSLiw
+         1WAKN1TyLel0XpUqn7Uz7XhjkhTfj/oQC/eh6MLUrIQK140fH7saaVaL6j4RrHolGV48
+         HmqcjYQIst4hWuW5y3rfv0ks07bJUB0WtGxL8W0zTMMVHNMC7WBAouBHbS7WElUk496Z
+         DbY7QKmTkVHX+1P0vZXamnjlIHIwurzCFE/CqvUD4Cvx8XZG0/4de4GfcBMvWr6qgKud
+         EQweAjAg5Pv2IPNT+BzcbkoOIimP7/rTMkklheZUe9AUFWiKGhW+0SZRMovh1tcQ5K3d
+         EshA==
+X-Gm-Message-State: AOJu0YxbSRKG7ZM/qUZ5Z4teBUkuOBJ08uiabjKd6prpZYCPO5Fsf0rp
+	skgjNiIUnmQu/nLrs1q3tBbQhesuHW2XFZRaVQQMZujt/b5vnK8mgjY0vEQB1/4NyYDVbE8jdPh
+	xbrU0hAiTugWXNDvMceGWERANkYUXzdG+aOA=
+X-Gm-Gg: ASbGncs01vzbN0tEgWWOnZHM+5JzjWQ0VOE6hij+UJOjkDdX8uPGTZiz6HEqI5viWKM
+	Mnh8RyA+3AILawxLT19Sux9N2Sp72JPvQsVXu2BvvJUUmAjIRl58dOUbSNYuCDEpD6jtXACajW6
+	sXtZC3AUE+CRR8mWkzGl8CCm8O5mHwmypj5rBKx/2ierDrUPXbbpIULfj+IZMrqGvX
+X-Google-Smtp-Source: AGHT+IHxIM5M539Sv7UcidVpWLDdRcMGCW4kJ0MEPEL81EB8o1OJRCm3bAKQ/TwWGpJh4Bn270xvNClv7xAwy3KK464=
+X-Received: by 2002:ac8:578c:0:b0:480:9ba4:3022 with SMTP id
+ d75a77b69052e-4945273580cmr195941271cf.17.1747068181033; Mon, 12 May 2025
+ 09:43:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <TO1PPF29324B4CE2F822159A3F1C6A5F3B4CD97A@TO1PPF29324B4CE.CANPRD01.PROD.OUTLOOK.COM>
+ <20250512164001.62065-1-jayatheerthkulkarni2005@gmail.com>
+In-Reply-To: <20250512164001.62065-1-jayatheerthkulkarni2005@gmail.com>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Mon, 12 May 2025 22:12:50 +0530
+X-Gm-Features: AX0GCFtal82CWSnHV5XM1s837uf_qcbMTVH11QsjaEpC12j4C32htnOc5prX0xg
+Message-ID: <CA+rGoLfv6E7=TCm99yt4SYsZ1P-QRxD+vMuaHtDWX=ufneiYUA@mail.gmail.com>
+Subject: Re: [PATCH] stash: fix incorrect branch name in stash message
+To: smacdonald@kaimaging.com
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
-"Julian Swagemakers" <julian@swagemakers.org> writes:
+Changing this I found results to be correct
 
-> There are multiple implementations of the hostname command, and they
-> don't all support `--fqdn`. For example this will not work on Alpine
-> Linux as well as macOS.
-> ...
-> All seem to support `-f` though, maybe that would be the better option.
+I think you can use this patch if you want a solution on an immediate basis,
+testing and merging this into the master usually takes some time.
 
-What makes me worried about such a proposed changes is if there are
-implementations that takes `-f` but uses it to mean something
-completely different from fqdn, and emits something that looks like
-a hostname but is not.  At least an implementation that takes --fqdn
-without erroring out would try to give what this code wants to find
-out (or it is simply crazy), but -f does not feel specific enough.
+After testing with similar use case listed above
+
+jayatheerth@fedora:~/Documents/code/test$ # Clean up previous test directories
+rm -rf ~/Documents/code/test/ui ~/Documents/code/test/sdk
+mkdir -p ~/Documents/code/test && cd ~/Documents/code/test
+
+# Step 1: Create the submodule repo
+mkdir sdk && cd sdk
+git init
+echo "SDK file" > sdk.txt
+git add sdk.txt
+git commit -m "Initial commit in SDK"
+git stash listk stash messagextsh itbmodule add ../sdk
+hint: Using 'master' as the name for the initial branch. This default
+branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint:   git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint:   git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in
+/home/jayatheerth/Documents/code/test/sdk/.git/
+[master (root-commit) 033e72f] Initial commit in SDK
+ 1 file changed, 1 insertion(+)
+ create mode 100644 sdk.txt
+hint: Using 'master' as the name for the initial branch. This default
+branch name
+hint: is subject to change. To configure the initial branch name to use in all
+hint: of your new repositories, which will suppress this warning, call:
+hint:
+hint:   git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint:   git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in
+/home/jayatheerth/Documents/code/test/ui/.git/
+Cloning into '/home/jayatheerth/Documents/code/test/ui/sdk'...
+done.
+[master (root-commit) 870c575] Add SDK as submodule
+ 2 files changed, 4 insertions(+)
+ create mode 100644 .gitmodules
+ create mode 160000 sdk
+Switched to a new branch 'feature_foo'
+Switched to a new branch 'feature_sdk_foo'
+Switched to a new branch 'bugfix_bar'
+Saved working directory and index state On bugfix_bar: debugging
+stash@{0}: On bugfix_bar: debugging
+
+I found it to be on the bugfix_bar correctly as intended.
+
+-Jayatheerth
