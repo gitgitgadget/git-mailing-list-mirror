@@ -1,133 +1,78 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out-173.mta0.migadu.com (out-173.mta0.migadu.com [91.218.175.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A6A29D0E
-	for <git@vger.kernel.org>; Mon, 12 May 2025 02:10:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CF0A1E1E1F
+	for <git@vger.kernel.org>; Mon, 12 May 2025 02:13:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=91.218.175.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747015826; cv=none; b=CljOgFXIzKxUT7alAbevI97E802A5BxtSBi82z1WT+2RIZ1KzR7Ycccw4SDJMAuRijCJxrWGFe3fFNo+1Ukb2RGyPyNfHu8q7AD/MAZZWFlquiFE8QI6fKsaI9nd8fT6Fm+HaC4fAzg4x4iYQyo33CXKtAos5uCskRWERnz/KHg=
+	t=1747016041; cv=none; b=KosrdQLYJKxM7J1Mqxfw2OhSR4kEdY4vqMpq706Mi94h/8ILYlbjdQEXqqMOD9+El0DDGZPOvefOJ770eqXSZmj0a+YdxJVcZojRyCzSMEPfWlkYTd1YV5LGwUpKJckH+zWexmGw8bpfGdJFI6RPIVPw3Z6y/hQLBsQsROAMcqo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747015826; c=relaxed/simple;
-	bh=aTshTXGcOf0yGeUQlX0orRNOEBEA1eo8iaPHRSI3+1Y=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=sz4buvWb1kUL+XwpPKmsiWM0HzxFum4kfQlKyxci1XW8UXsAouJ/VCyJf8gBnRaa13+W+nZ7KmJT58xHzpYvv5c9Lk09Fnz7rPTSIw4FmTy0QbnPjItTOfW6NQXI7fYlL5pTrqeVCE0taurRXXcKYDbKSmnPOV/+WFcTn/aErK4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IydpPewf; arc=none smtp.client-ip=209.85.210.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747016041; c=relaxed/simple;
+	bh=5aK7BTdoZSG4JofxKUAE8MWA1OcgjshqAd0wkwW7Hwk=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=r43I8aqcSamh7FNugzclCRjfEK61+Qj1fc6DySNW+DLFLqjALbxAMZAUGCfWu605yFH7wfI4HLBd7/9Cn1/ChRrEgpB7GHJYktDBSxyG0CnWIo56aj7p92DSgA8tSKi0wdtwWD+qnG+/lSJtIn1FsbLh/SjKz7MOtixFD5LzSGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev; spf=pass smtp.mailfrom=ameretat.dev; dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b=o75js/Rx; arc=none smtp.client-ip=91.218.175.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=ameretat.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ameretat.dev
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IydpPewf"
-Received: by mail-pf1-f171.google.com with SMTP id d2e1a72fcca58-7376e311086so5497906b3a.3
-        for <git@vger.kernel.org>; Sun, 11 May 2025 19:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747015824; x=1747620624; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3j2Q+LxR4XinO28CM2ns7v6CPTp/sAFv23X+EchOv1c=;
-        b=IydpPewfFyRGAlKG+TB6D7dB94JmGkCGrnBfNKIiYMj6at+xqQ3FQJsee/XbB3fRcy
-         7vHgyJaWFqGmFNGnRcOVetVA/VKK1WuJYSrQ1l5OHz3pNKvvk1kBjMXAWv+Yn1NGGV0r
-         EUlzQ3SduMiP7kXvVKR1GiYD8oo3KEPg91a4lh1vyjaY/haY6CIJ4nvZRpnKTN06yxQE
-         vjS6y58Moi31JIGcDQUwMnBQhVjfrNw9e7iBC6kmi/W8IcqQ7PKZqQwuYSfgvIOwfln6
-         0owpENITjvUnInTzNXVLDmBcs/s5iESVKe6o4fS+jec85LHct0INpkmzYuT7d8h724NS
-         T44w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747015824; x=1747620624;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=3j2Q+LxR4XinO28CM2ns7v6CPTp/sAFv23X+EchOv1c=;
-        b=GeUsrOOfICILSV8+rN4Wa/WnZbKNOq9Xi7kEBrpy2xyHH+e2o30B38Uu4wgqINQdXM
-         cg41ALCNeh0lfNUJft+H+kNoRO408qDCRVeBpiyL664jba0GLUw8qJcb/Tw5QXL48v14
-         s2QYxVu0AF15/UxarVGEFdXJs87wSwupSvi+arrJHiJ5VRoAtCdwdSThsJngbofVe7jx
-         yk3Bj8eD3Yc/bb680Cd9G62KeqjuQGHPaIQdS1T3pkIj9E0/Lfzjw7DGbqXpEFx+8aNX
-         XggfNRsQFE89wOKHzEtnI/xr3S+DWfFCNBfDFsSRe/0ptDP6FiUq9GU3QmwKRMIOZg4U
-         iteQ==
-X-Gm-Message-State: AOJu0YzQ2etil92xdmyFaRyz6CN8P7jqBi8BezUU0rNAbN4HaimCcNUM
-	tM1qMS48D/dBTVS819L9HTdbaJ4bowIjIY+5+Wp9LJJIndQBVzKncWXSjvRr
-X-Gm-Gg: ASbGncuTGFmJGL/t1YVVp7eukRyl2OVCd0AfD7Nuu6YNs4UaKqFkelrRx6VmHibFdWy
-	pwAHqgV8Kg0K1+uRTFWEMBb2gzBY7wcdNhvQY9Et/SmcHvzHq6N454slfpcAYQ6o8/jTUd083T+
-	7U28GPYjn9E3dTJ4XG5zAXpG3gH9ojhLZg/tncQioJCDQl74wHg0+RZda7Xt+ajtupoXGhwRmmr
-	7Wsi6v50jkzSGetW60wGUj57V5S/WvZp0qnz6uVjumU4HEFJCMg+812SWtlA3RE5VlAj9sldJPK
-	Ju/v+vmeXmyQp3mnQbmITnoDT4kL9u0af6EFEq7SpBqTM1g44ruRWAJkt4MOQIQEjp8h7C56G1M
-	FovMKU4siWKa/h6TCBN89GXiIOv8=
-X-Google-Smtp-Source: AGHT+IHi6YYTnL/eQK+1uGSLkoO+/XCK66pxpiGEgrSrq0ELSaopHMUyNqdO2xpCtkfl6xIuEBG2XQ==
-X-Received: by 2002:a05:6a00:2347:b0:73e:23bd:fb9c with SMTP id d2e1a72fcca58-7423c038fb4mr14959122b3a.23.1747015824177;
-        Sun, 11 May 2025 19:10:24 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f0:b77d:e40:9405:a1de:10d2:a65b])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74237a0cdd7sm5212185b3a.90.2025.05.11.19.10.22
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Sun, 11 May 2025 19:10:23 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+	dkim=pass (1024-bit key) header.d=ameretat.dev header.i=@ameretat.dev header.b="o75js/Rx"
+Date: Sun, 11 May 2025 22:13:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ameretat.dev;
+	s=default; t=1747016036;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=FQWZ53kf/WisJVyqiF9S/8SdghP7n8SmOamn1qKGDVc=;
+	b=o75js/Rx5OIAzdvZmwlz8V7YMcXk6+rjjtKVHVzcNPB+qyrNbVRW9xJvIsAGpJ3OGC4Ymw
+	goU4Y8iLP/6tXuDJEbwdap3fweyxw/b92QMACz6CQpCYNIqCIkxrESSaj5aj0B/i19y2pE
+	3C3aPn1SfjiQsPJeet8XP8qev0aQN4w=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: "Raymond E. Pasco" <ray@ameretat.dev>
 To: git@vger.kernel.org
-Cc: gitster@pobox.com,
-	ps@pks.im,
-	karthik.188@gmail.com,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v2 2/2] json-writer: describe the usage of jw_* functions
-Date: Sun, 11 May 2025 23:09:35 -0300
-Message-Id: <20250512020935.73140-3-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250512020935.73140-1-lucasseikioshiro@gmail.com>
-References: <20250512020935.73140-1-lucasseikioshiro@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, 
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, Jason Cho <jason11choca@proton.me>, 
+	"aclopte@gmail.com" <aclopte@gmail.com>, Ryan Hodges <rhodges@cisco.com>
+Subject: Re: [PATCH 2/5] apply: read in the index in --intent-to-add mode
+Message-ID: <gz4sl3e3nqmkamkfmoktlqaefxteamj6v3fcs7dbavgys7ubng@utz2i5ahl77f>
+References: <4e2szrowd43w6lrzawqtddamdxvp6ke65jkzmdoru4gjin7xhn@kaqe7skrktgt>
+ <20250511003955.242889-1-ray@ameretat.dev>
+ <20250511003955.242889-3-ray@ameretat.dev>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250511003955.242889-3-ray@ameretat.dev>
+X-Migadu-Flow: FLOW_OUT
 
-Provide an overview of the set of functions used for manipulating
-json_writers by describing what functions should be used for each
-JSON-related task.
+On 25/05/10 08:36PM, Raymond E. Pasco wrote:
+> diff --git a/apply.c b/apply.c
+> index 5e39cadde4..3bde54a04a 100644
+> --- a/apply.c
+> +++ b/apply.c
+> @@ -4837,7 +4837,7 @@ static int apply_patch(struct apply_state *state,
+>  					       LOCK_DIE_ON_ERROR);
+>  	}
+>  
+> -	if (state->check_index && read_apply_cache(state) < 0) {
+> +	if (state->update_index && read_apply_cache(state) < 0) {
+>  		error(_("unable to read index file"));
+>  		res = -128;
+>  		goto end;
+> -- 
+> 2.49.0.1106.gc0efa3ba58
+> 
+> 
 
-Helped-by: Junio C Hamano <gitster@pobox.com>
-Mentored-by Patrick Steinhardt <ps@pks.im>
-Mentored-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- json-writer.h | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+For some reason, this causes checkout -p to break in a way which which I
+don't understand. Directly using (state->check_index || state->ita_only)
+doesn't break it, but because it doesn't seem logically possible to me
+for this to change any behavior besides behavior when ita_only is on
+(the update_index flag is in fact set just a few lines above!), I want
+to investigate a bit further to find out what I'm confused about.
 
-diff --git a/json-writer.h b/json-writer.h
-index aa513e86cb..8b7470af67 100644
---- a/json-writer.h
-+++ b/json-writer.h
-@@ -28,6 +28,34 @@
-  * object/array) -or- by building them inline in one pass.  This is a
-  * personal style and/or data shape choice.
-  *
-+ * USAGE:
-+ * ======
-+ *
-+ * - Initialize the json_writer with jw_init.
-+ *
-+ * - Open an object as the main data structure with jw_object_begin.
-+ *   Append a key-value pair to it using the jw_object_<type> functions.
-+ *   Conclude with jw_end.
-+ *
-+ * - Alternatively, open an array as the main data structure with
-+ *   jw_array_begin. Append a value to it using the jw_array_<type>
-+ *   functions. Conclude with jw_end.
-+ *
-+ * - Append a new, unterminated array or object to the current
-+ *   object using the jw_object_inline_begin_{array, object} functions.
-+ *   Similarly, append a new, unterminated array or object to
-+ *   the current array using the jw_array_inline_begin_{array, object}
-+ *   functions.
-+ *
-+ * - Append other json_writer as a value to the current array or object
-+ *   using the jw_{array, object}_sub_jw functions.
-+ *
-+ * - Extend the current array with an null-terminated array of strings
-+ *   by using jw_array_argv or with a fixed number of elements of a
-+ *   array of string by using jw_array_argc_argv.
-+ *
-+ * - Relase the json_writer after using it by calling jw_release.
-+ *
-  * See t/helper/test-json-writer.c for various usage examples.
-  *
-  * LIMITATIONS:
--- 
-2.39.5 (Apple Git-154)
-
+Either way, reroll coming, though I'd still appreciate review on the
+series in general.
