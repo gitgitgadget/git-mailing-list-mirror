@@ -1,67 +1,69 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C32905
-	for <git@vger.kernel.org>; Mon, 12 May 2025 12:49:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8020027511E
+	for <git@vger.kernel.org>; Mon, 12 May 2025 12:49:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747054150; cv=none; b=qswO3v1Cm+4e85nCgYLBPBnbNViUfCHZ+YXZb7EX3ihSyAQzR9qKIkQEjjwXRl7y2umK8kV+TPyNrCKd7k8kNHM/ucoziRYNfDrEG40BO5eMZ3f9TmGqtZzfS1QZOhxRZpEUoHJmVBClV3gcvUcxsqWodqjYsUoz8lPlwCwRq3s=
+	t=1747054152; cv=none; b=rMUEdYQgPlDGx+1Bc5LrBbOStehVDijYzYmzKy0EOUYKkNvU1TPTcjLO+nRuFVTYTNbaJxicJ2k05FVpJOLv7JiYSKmWhiQqk70GkR2c3wmVMzgI7eB43VCvpRJG8VQcIZqHGWwIZHGz8+vtjN9lj5IV2qbbldgXZB5INk0/o9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747054150; c=relaxed/simple;
-	bh=sYa7+lo2Lvp2oNBT1Dja7XHW9vlFcSPWAfIIUvO8qF8=;
+	s=arc-20240116; t=1747054152; c=relaxed/simple;
+	bh=/Ex1XeGcBVIVN+BSQKdYmZ7Anjyo75+M0r9hsp3sGGo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kP4qrHkPxUJ6EbQDyWwLKA5SRqLEzHmv+s1RDLjEAHwfXfI7oYRALYGSSLIrWbzdffO5Y/wGGSbiBu7sSS5cbnqBpkn6ssCN3XSV79W3sFsKDAbHzZLiDGQxPTluef/Y8h0ClgYLB1xA02nZsBZBk/mTYj9u97QXfQA+SUy//Fo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iBp8zYGb; arc=none smtp.client-ip=209.85.128.48
+	 MIME-Version:To:Cc; b=MCJHiRv5EbbtBdewRVq7TNw0eSWifI2xNzR12Jal+N3aOVqmPvrAkKtBMCCD/iVdKYbkJe25PbWvA/gc8LZr2Gh9a1saMafzi19711wekEcE9qH6vJxka7XwItwMxKvucId6GYf0JtmNwurIhEjuA/nyyRnrUC9Y9vQIOw1b/7Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m33bbfum; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBp8zYGb"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cfecdd8b2so32528755e9.2
-        for <git@vger.kernel.org>; Mon, 12 May 2025 05:49:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m33bbfum"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so45535405e9.1
+        for <git@vger.kernel.org>; Mon, 12 May 2025 05:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1747054147; x=1747658947; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ddrFfdBWw2FNpbTYcWtgw8aOQbGmRqj2M/TMc0c9d94=;
-        b=iBp8zYGbgADz/t+qQ2A55/lSvluTofrQwSMkFeUg3KOYPWS2M2ZgHJa/v3INqm1mNl
-         gzBx4XBVgBXOS8fJOsjWPjjcYOWR21JUJoOfzmQNr2ObX2qLHLVNo8DMy+rXi6DjBL01
-         jTGAti6LvKEoQKsAxL7eUn8BgJbBFoiBAlwXRzXn3T2YjFOeoPU5ZHZAhybbggoLkUAC
-         5GRrgY/r2WgdPNr4AfjdS8L47qlrZEOGr7WA5ICqt8YBxgZCm9AqbhV33SokPVv2+jiI
-         TwY3jvCqUMoZKqrGDQPoAABMbg95cDVwtfYTP07ynO+0gT6qw+VC5vRVJQHXZsXgMhNe
-         THFQ==
+        bh=bVT3OXSnnx2cMzNxja5B+ThuXocumv8v6ldV+xD81j4=;
+        b=m33bbfumFqDM4tQkyqY9lriAZfcy7wUPd3UIC3QcBb4gdnvrmrVa4x17M/eLn7Mdkm
+         jFS9aSHLcpkzu60R4qLh0eUHs/KvHdslfQSrRpLvNH2YL+ZIh3DPAXuhJDKYqbIWzVHK
+         vHnCNxfw9+y2V7ZNE8OZKDHsLedfIrQun+Cat2pkXtcGQcS2eVX7F8iQOUkB2av0Qj+0
+         4tLaqJRKFrXoSnI6rbmTruWMkRO9adOirrdMtFigPxkJWE/eyysw+dVE0D0xC9BD9vr9
+         7OL+p6bQg4l8ieC6tW5bMGT9kBrhPkENKPIzTtOV28yLpii2Q5+zrKKG5uBeLP9aETbU
+         ikDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1747054147; x=1747658947;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ddrFfdBWw2FNpbTYcWtgw8aOQbGmRqj2M/TMc0c9d94=;
-        b=oRefWBrV+9mWKXllDfg4l3Wvl7FZ4DzDk+fx8EmC4NxpaUzsGrzerJAL9Qy+ZPEJah
-         zGQIw1oM6KvsLGEWXPlnLjRVEjQ9rle1B6bT9O7419j/bOx36oBm+O676Ukm7VhxWRcx
-         SGRE9uwyqmatuKWx15enrj6C+Y/Jmeqbbg/28flYrMyt5cesiPibw4KExO+HvKrCL5BO
-         yEqOf0XOvdcC9k25rfkXcMcmTW2NJyovAAecapQz3Doy8Urb4bqb6DPJUsFBfEggB8YY
-         /yPZoUSr3hBdqVyLmNk+GBaX3PZoVQh2eqbNzmW92I3Fdn/J2MRdMEErXkX8DONQVy2u
-         6aYg==
-X-Gm-Message-State: AOJu0Yx+dgvzeJHn4yARJyrYU3eIhP+kmDUY4NIgSh4RPZuosBqUHiQD
-	1buYOwRN3ET1YekTSy3mPM5kzHBb+5bxTiKSCZlG11HhozE+DHbQceYtog==
-X-Gm-Gg: ASbGnctyZEIkL+iIxiux2NUnfjdTOCe5etDcZHZY2w0K3bcUIz1TNSk8J4oXtvtpmvm
-	fbCLPWPHNLCQVZxfLE08qLxuxDNjp+780sgvxnAqbYA8aaVQh2/S8szEP1oznNW9jQA+c9BX8G6
-	S7bTCGNS34hUX/BUBF/udT2qBoOHO9iYa0PunYsletx3bJZKJG4wLejCi4uzpFCRspeUi/qQlxi
-	E1gfAgVZET/mmGvgfQ5NDnkZMUFUUvZ2rygvwQhTqeewlMWo/LGaU8S5WXMO9EM1FIjSmn000Sh
-	e6l2J/iFk9s4LKEnV4k11bJK5Mn4keZ+/4gZFuCexK6RAzI7/rVo
-X-Google-Smtp-Source: AGHT+IFXMoWHpSJjug/JJeISnADr4Ny9VjAIbSGRn9UxtUxxPgkptSUA01TZ3SME8rFG0nZshhtDqA==
-X-Received: by 2002:a05:600c:510f:b0:442:e9ec:4654 with SMTP id 5b1f17b1804b1-442e9ec46a2mr6977065e9.8.1747054146530;
-        Mon, 12 May 2025 05:49:06 -0700 (PDT)
+        bh=bVT3OXSnnx2cMzNxja5B+ThuXocumv8v6ldV+xD81j4=;
+        b=P9OUYiBfSrclrrItC6/R6Wkcf5bkg8ii1CARlsccJBmaLtYmlYSaOtsY0w+ppMbmAz
+         xqUbrRT7Pl4EAsPlZJ4s9xQLQE6EplEV/54l+K9UijpAvbyEeqo2ADqO8tDgzzeOYsVt
+         +b0mEe9Ur/8aqzMuezyiqySJdTGw9JOodUIaYLOOVH3kifVsB3noNCJMoovKKVuI7IDb
+         r5VJ8Xx0WW1o+khGr/45yFiq23xNgWnXz2OyAdnfr+zuEzBdNWL5PSaVPbkaED9JS85X
+         HzJC6Fh8IRzGgqf15MHuaLvo8Pizxjaefy6811ck2fCJx8vmrRyav330OO/W1+dV1ZKZ
+         2NRg==
+X-Gm-Message-State: AOJu0Yyr4B77s+91tBezQo3J7850pHr1BSUNR4wpuBbs2t3274c1Sa46
+	KRlksnL0CKX/HW+vD7REyQX1BrlIDFgKjTESS+7SG81ijtidz6EAXIaIYA==
+X-Gm-Gg: ASbGncubyyDdk0NdCJDGmQdmk9TaKxoAIebUrYTSdvbRjEzpoK/p5Ggzn7ijkdnaP6d
+	mPTMhQcf3Qbanu/byk56QaVzisngTD9XSXLXSRPz1zhccLkfej9DX++YxFkFZ0ugT8vFfuChnWf
+	/2FXpfTmyY/fgj5298kp3aPvG0OsR3hRv4/We9B9gtt+14wAhyT5EVOltNU102oVrVJfZLNccB3
+	9FQ26mvFrukE6tbGlxkoQS+loFL46RbyZIEC6kinarQIudMvVR6xBy7EQ735mQm7LPsPOFAtTBS
+	yDw6jrgR9XOhvvhj2u60zA8qfc3gPop6+dTazV0+GsFBWEpLUlKP
+X-Google-Smtp-Source: AGHT+IFGE6vQR/xhRWEZyTf8OjG19IOkrVdBWdxrfBTXvtNL1IEs4UtXUFdo2FknrMHxJAxuJgzWLQ==
+X-Received: by 2002:a05:600c:3d05:b0:440:6a37:be09 with SMTP id 5b1f17b1804b1-442d6dbd4f3mr128008025e9.16.1747054147238;
+        Mon, 12 May 2025 05:49:07 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d68585d1sm125685025e9.31.2025.05.12.05.49.05
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd32f194sm168985135e9.10.2025.05.12.05.49.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 12 May 2025 05:49:06 -0700 (PDT)
-Message-Id: <pull.1958.v3.git.git.1747054145.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1958.v2.git.git.1746980165245.gitgitgadget@gmail.com>
+Message-Id: <13ebdd672ff1a76ef684d9260b782c750c65ddba.1747054145.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1958.v3.git.git.1747054145.gitgitgadget@gmail.com>
 References: <pull.1958.v2.git.git.1746980165245.gitgitgadget@gmail.com>
+	<pull.1958.v3.git.git.1747054145.gitgitgadget@gmail.com>
 From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 12 May 2025 12:49:02 +0000
-Subject: [PATCH v3 0/2] reftable/writer: fix memory leak when write fails
+Date: Mon, 12 May 2025 12:49:03 +0000
+Subject: [PATCH v3 1/2] reftable/writer: fix memory leak when `padded_write()`
+ fails
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,61 +75,38 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Patrick Steinhardt <ps@pks.im>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>,
     Lidong Yan <502024330056@smail.nju.edu.cn>
 
-Lidong Yan (2):
-  reftable/writer: fix memory leak when `padded_write()` fails
-  reftable/writer: fix memory leak when `writer_index_hash()` fails
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
- reftable/writer.c | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+In reftable/writer.c:padded_write(), if w->writer failed, zeroed
+allocated in `reftable_calloc` will leak. w->writer could be
+`reftable_write_data` in reftable/stack.c, and could fail due to
+some write error. Simply add reftable_free(zeroed) will solve this
+problem.
 
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+ reftable/writer.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1958%2Fbrandb97%2Ffix-reftable-padded-write-leak-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1958/brandb97/fix-reftable-padded-write-leak-v3
-Pull-Request: https://github.com/git/git/pull/1958
-
-Range-diff vs v2:
-
- 1:  9329ae2d478 ! 1:  13ebdd672ff reftable/writer: fix memory leak if write fails
-     @@ Metadata
-      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-       ## Commit message ##
-     -    reftable/writer: fix memory leak if write fails
-     +    reftable/writer: fix memory leak when `padded_write()` fails
-      
-          In reftable/writer.c:padded_write(), if w->writer failed, zeroed
-          allocated in `reftable_calloc` will leak. w->writer could be
-     @@ Commit message
-          some write error. Simply add reftable_free(zeroed) will solve this
-          problem.
-      
-     -    In reftable/writer.c:writer_index_hash(), if `reftable_buf_add` failed,
-     -    key allocated by `reftable_malloc` will not be insert into `obj_index_tree`
-     -    thus leaks. Simple add reftable_free(key) will solve this problem.
-     -
-          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
-      
-       ## reftable/writer.c ##
-     @@ reftable/writer.c: static int padded_write(struct reftable_writer *w, uint8_t *d
-       
-       		w->pending_padding = 0;
-       		reftable_free(zeroed);
-     -@@ reftable/writer.c: static int writer_index_hash(struct reftable_writer *w, struct reftable_buf *has
-     - 
-     - 		reftable_buf_reset(&key->hash);
-     - 		err = reftable_buf_add(&key->hash, hash->buf, hash->len);
-     --		if (err < 0)
-     -+		if (err < 0) {
-     -+			reftable_free(key);
-     - 			return err;
-     -+		}
-     - 		tree_insert(&w->obj_index_tree, key,
-     - 			    &obj_index_tree_node_compare);
-     - 	} else {
- -:  ----------- > 2:  64f778ce2ba reftable/writer: fix memory leak when `writer_index_hash()` fails
-
+diff --git a/reftable/writer.c b/reftable/writer.c
+index cb16f71be49e..3ceb37428887 100644
+--- a/reftable/writer.c
++++ b/reftable/writer.c
+@@ -57,8 +57,10 @@ static int padded_write(struct reftable_writer *w, uint8_t *data, size_t len,
+ 			return -1;
+ 
+ 		n = w->write(w->write_arg, zeroed, w->pending_padding);
+-		if (n < 0)
++		if (n < 0) {
++			reftable_free(zeroed);
+ 			return n;
++		}
+ 
+ 		w->pending_padding = 0;
+ 		reftable_free(zeroed);
 -- 
 gitgitgadget
+
