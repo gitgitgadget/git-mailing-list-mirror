@@ -1,120 +1,129 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94E9478F43
-	for <git@vger.kernel.org>; Mon, 12 May 2025 16:06:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FABA218AB9
+	for <git@vger.kernel.org>; Mon, 12 May 2025 16:12:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747065967; cv=none; b=Nn6Ht7286q9lojmJXAQMV8vNSudFb2j8RFOTpieNj+tjL/El+0WdPbILlI+4xJH97BtNYEA2wYdPTaxn5suSwcs+4KQ+H+2AnhSgBbXruRa1Rteuf4enrUjGL188VMAX9lsxZq/9aMkkYdanISzajKNpOL47lt7o4SIJNnN1DsI=
+	t=1747066380; cv=none; b=UZ2wNWzrTLFneuuXiLkAVFKY9LEIWF/pWn++z6OGabCXaU61h1EAsR3dSoDO4JUk5fJ43AqaPVNhxgvkv3a8GoqLcoPichaA/UWOLXc5SctqcUxCyGysZjgx/QZ2TP4e0rqhgswIR+tRP192Ze0oJ08qzh+JzmO1SYR+WMuvcz4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747065967; c=relaxed/simple;
-	bh=1X6KZHc1l4KpenoMxh2c/IP6wvWb0o7r3ZxZCogib8c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IrINfqmz+nN1Td5rzEIkaBVbN090YRWqTEHt2yaapTd/RvgwYmnoQd7YT3g8LBvbnJp3eXbw8MLSmSsXszCNFCLOuKkxpucUjZngZMk4EPNRCPxFcqRBRMoZ87NU25YHqMKpLIuttfRern0PrfoDXYsLmK0VGhcaNVzeBhAuJlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Jxe1F0lT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dn7QJMYE; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747066380; c=relaxed/simple;
+	bh=fboMPgFG9owt1BGaAW+5Vm2CHspA9fFGIQTJ96wQRY4=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=BESPFdkk+S8NaeXcgqoMsSzUDA1hhfpy3/H6lQ+A5474MwClj/NbQhjMD33N+YaNhKniFNDGveGIaaEjbS8j3V9zY5SjLsVb4j38twA3yS09IhEPQSi5gI34c9fiMKsPRi0C8cZjsvpyBwo0Hv6nZg9ZoMrzZvdfv+xeIpKlIxg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJmAOgmo; arc=none smtp.client-ip=209.85.216.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Jxe1F0lT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dn7QJMYE"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 80D2025400AF;
-	Mon, 12 May 2025 12:06:00 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Mon, 12 May 2025 12:06:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747065960; x=1747152360; bh=dtdqFvDOMJ
-	eL5Q2/+k7Lj4PXaL9hOyJS0Nt8uHqhWFI=; b=Jxe1F0lTlu3aF74VislMng4U/h
-	5NQ1jrKn7jhHHHZYsuIqfRHGviEGmEHem+7QJUzI3tpxaoPXeef3AQl5BOmZ1Ni5
-	FFmrrhZeQOUfFLFWf0tmAH7z23yau9qP+JXZJqKCwIwPQWxEEycQyRtcKTzEFZq2
-	w7bf5I0xxyorRtu22utRBprN9kTZN6LImklsLr71hjeD1d5pdzhnnSfF0bsvy+Bp
-	LMqDKOWZsto7Z75OufAER71II0d+sxJU9mkuVD6iORcE4JH2QmjA+KuJU216LfAk
-	m/XUra9Bjm4D6blxGZp3FTQD4TgWFLAJz729qcRBY6S13kZp0NR4QK1KqeTA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747065960; x=1747152360; bh=dtdqFvDOMJeL5Q2/+k7Lj4PXaL9hOyJS0Nt
-	8uHqhWFI=; b=dn7QJMYEu5dq3Zp12ndYwZywft8bdvWdWZPA7oS1SlYG6+jYcC2
-	fVdmHwKVD5JqCTH+dUhUPc+JldrCRNkt6agsYb68nqiiEyFjhxt7OxUK5nQhpC5G
-	EdHmOLwkr3ZcsNhsr0/lYPjpQoUQM2Ln81ZQIDlahM05vLG+z36DxfWhJhbYhy9c
-	px1YORoSb350lSBzjcEbIDZRfpXPBMaUUQj1TIbW8U4lqraSjRI03J2+JJT55pNj
-	x7nLXheFOZpFqB6P5rDt/1FmTpvsZIdT3s7hO1FWjH3Jx4dG3k5uH8UMDe7Pr+e/
-	rLNBE9tDp3wvZPT0yUep2xzkpCd9YMidRng==
-X-ME-Sender: <xms:aBwiaEk42o94tayjqSRUmx0IVThTquo323_6w4X9-R3a4yFKzLjmiA>
-    <xme:aBwiaD2pvcf2L6_bL34EIMr1dFtTh6_5J-AR1B2xL-83-hdlfYeWs_crKH2Is6gN6
-    stzI3PlqY3nhAfTAQ>
-X-ME-Received: <xmr:aBwiaCo1alNNBajHb-m5UP-4BcGBhzdpsNdkgfZXILlRhE5RT2E-jt4DMFuXYIwqLIzB_l4sWqrwly9j4CJtljGZr_czhv2bCh12AAg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdduieelucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:aBwiaAnLl6P6rWHslYj6hB_2XuaECzw-WvbgBS6-x7g5eL2KocFwHg>
-    <xmx:aBwiaC1Nmz6cLpGezZKlH9cVXCg0rLA305jtrD9d52_yFHXfr4QzhQ>
-    <xmx:aBwiaHvm2NvL8txanYdADVhKVCifd0I1COQCNjE9oFQjO_PyhNcFQw>
-    <xmx:aBwiaOU1bhDuR-JVZKjAwYOH-oO2yHyYCK_4r6_Fs3_mtg_IrOw1iw>
-    <xmx:aBwiaAWyN53hHn6XDM4vYXsAny-hu1VLDIGYhdFXhc9BwQWGG6j4OhdY>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 12:05:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 4/4] builtin/stash: provide a way to import stashes
- from a ref
-In-Reply-To: <20250512125825.GA1191360@coredump.intra.peff.net> (Jeff King's
-	message of "Mon, 12 May 2025 08:58:25 -0400")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-5-sandals@crustytoothpaste.net>
-	<20250510172107.GA601540@coredump.intra.peff.net>
-	<xmqq5xi6xaov.fsf@gitster.g>
-	<20250512125825.GA1191360@coredump.intra.peff.net>
-Date: Mon, 12 May 2025 09:05:58 -0700
-Message-ID: <xmqqldr1vmop.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJmAOgmo"
+Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-30a8cbddca4so5328284a91.3
+        for <git@vger.kernel.org>; Mon, 12 May 2025 09:12:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747066378; x=1747671178; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ID98vSkEiRPfyJPMw42q5L0vA2y6265kaedTxrJF2XQ=;
+        b=AJmAOgmo/A5qdVUVgWVpI5ogJ7KozTqrOPeCtfXAvKLSuFn0hPcrNC8/iaIbZ181qh
+         I5qQ2vaKNlNKudUR2bz5HvNVpbmJrCdsW19L1oDkcevjpDMmUGzt41pRNr2sK4vHiQkW
+         vca9Mx6fPWWd+nXsE1thbzAMsJAqjdqDZKrJP3bum5CpSdxDXjhqZ/y1n1YnIaBco5MI
+         TzjN9L+z7i7/zZhpjM1QQBquTEn5WBiNx4fAvbpPbNerStT73s36+TLSvJ5s5j4Upy+s
+         6690/K6S3Grjexbx5+OkJbWQZt58pFtptGK08ZsIiXzFIzrZ2cUOTP7Pcnk9YL+notjN
+         uM8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747066378; x=1747671178;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ID98vSkEiRPfyJPMw42q5L0vA2y6265kaedTxrJF2XQ=;
+        b=KsFjejSbShCbA8p2Zga0JoAODDRRJd4zQeuVxge8kdg2OLPDRhyYgKGLEKJwpj9ROx
+         snysNj6YvKT2WoNZA3l0llz1V3J9hgWjpqUKymkzoMUKQBnty4aH9CGcC0hlGHXwSagc
+         SFVCuBSkDU1fiBu/lDJO2CUedhe7edaNl8K+yTLhuZGrrTB9tuyfvom59VGqGAi0s5iK
+         EoP6JScJJog2mwcaoHM+rh5w8Ssb/XQroTerIUZ2EiFAXG7BEj6BHU+yCqDGifUQFtFk
+         iPs4OLA178GFG4IwhYe0ypOxygP/1HON1F90labYt+FrVfdUcAKj1ZlmG/5aR6WUy/Cs
+         +Mxw==
+X-Gm-Message-State: AOJu0YxUwJkJaRfROMxmSQA8jOeVshOLEP5NWGnA4mORjaDFnwxWZJ90
+	r4RuOF5kT6cKzaNnE3brQodBmrC+6vV5LAMuOFfa/9pYphRel8M2zVhaAQ==
+X-Gm-Gg: ASbGncuJvrAG0GmIJuXB83jCxFzd6Q0z7nocsV9ocXvYNS8gpRIXpk/VskGK+OJ2A3w
+	TmSw9k8sTlq0CrFPO5kpx1AgvlNSJ82vZZTGvlqoHb69FsliNPd1NSpdZv+kkHaIBuXSwh4NuwA
+	1H9Bw0W/NkOBWOg6gh7BoT46ZuSMbT9lcnTGY7MWmrl/62Y14BDKmD+3VVhSJxgFU+x/gwGUQOs
+	DIqcT3E6vgGLaJFOzTLxgIsUsGGfRwNBXxq0oZBBMrsLWY8IScgInPBELGW25K1S7qXx9Ea0DAl
+	fTEKZ1suN1LCY2Hy06kSXep4bZfInXANnjATNEBXFH99BiSw1XQShac60uoFFR5Wgro=
+X-Google-Smtp-Source: AGHT+IFOxj3G56zGY8NOfFSEAE6yoILxO+syiPrAJJuwWZkSGdm+rQ9kYtq2fw0moCOgS3VtF7ZZ0Q==
+X-Received: by 2002:a17:90b:1846:b0:2ff:58e1:2bb1 with SMTP id 98e67ed59e1d1-30c3d65cc2bmr18344402a91.32.1747066378222;
+        Mon, 12 May 2025 09:12:58 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30c39e61056sm6736561a91.39.2025.05.12.09.12.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 May 2025 09:12:57 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: smacdonald@kaimaging.com
+Cc: git@vger.kernel.org
+Subject: Re [BUG] git stash incorrectly showing submodule branch instead of superproject branch
+Date: Mon, 12 May 2025 21:42:52 +0530
+Message-ID: <20250512161253.58427-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.0.533.g80f4e02b4b
+In-Reply-To: <TO1PPF29324B4CE6D3518208073452C3C51CD97A@TO1PPF29324B4CE.CANPRD01.PROD.OUTLOOK.COM>
+References: <TO1PPF29324B4CE6D3518208073452C3C51CD97A@TO1PPF29324B4CE.CANPRD01.PROD.OUTLOOK.COM>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Jeff King <peff@peff.net> writes:
 
-> On Mon, May 12, 2025 at 05:42:08AM -0700, Junio C Hamano wrote:
->
->> > I noticed because I have a patch series from last summer tightening
->> > these rules (it got derailed by some conflicting work, and I've been
->> > meaning to pick it back up). I can certainly adjust these tests as part
->> > of that series, but if you're re-rolling anyway, it might be nice to do
->> > it now.
->> 
->> True, and exported one is a sort-of-normal-looking isolated history,
->> so it does not have any strong reason to be at the top level.  But I
->> am curious what your plans are to deal with .git/refs/stash itself?
->
-> My series is only about the absolute top-level, outside of refs/. So
-> "refs/stash" is OK, but "stash" is not.
 
-Ah, OK.  It would be good to forbid things outside refs/, and
-tightly control the top level, so $GIT_DIR/config and
-$GIT_DIR/objects/[0-9a-f]{2}/[0-9a-f]{38} won't be clobbered.
+Thank you for reporting the bug, Stuart.
 
-refs/stash is probably fine.  Creating refs/head to nuke all local
-branches might also be something we want to protect against, though.
+This is genuinely one of the most interesting Git bugs I’ve seen in a while 
+I was able to reproduce it with the following minimal steps:
 
-Thanks.
+    mkdir sdk && cd sdk
+    git init
+    echo "SDK file" > sdk.txt
+    git add sdk.txt
+    git commit -m "Initial commit in SDK"
+    cd ..
+
+    mkdir ui && cd ui
+    git init
+    git -c protocol.file.allow=always submodule add ../sdk
+    git commit -m "Add SDK as submodule"
+
+    git checkout -b feature_foo        # in main repo
+    cd sdk
+    git checkout -b feature_sdk_foo    # in submodule
+    cd ..
+    git checkout -b bugfix_bar         # still in main repo
+
+    echo "Bugfix content" > fix.txt
+    git add fix.txt
+    git stash push -m "debugging"
+
+    git stash list
+
+After this, the stash message shows:
+    stash@{0}: On feature_sdk_foo: debugging
+
+Which clearly leaks the submodule’s branch name into the superproject’s stash label.
+
+This is indeed a `git stash` problem 
+I verified that:
+- Branches were unchanged after stashing
+- Submodule state remained untouched
+- `git status` correctly reported the superproject branch
+- Yet the stash commit was labeled with the submodule’s branch name
+
+So the stash mechanism seems to be pulling `HEAD` information from the submodule 
+context by mistake, even when the stash is purely for the superproject.
+
+Also confirming that this is *not Windows-specific* — I reproduced it on Fedora as well.
+
+The historical detail you shared (that this used to work fine around 2021) is helpful. 
+I'll dig into the stash code paths to see if I can isolate a regression or misbehavior.
+
+ 
+-Jayatheerth
