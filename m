@@ -1,57 +1,57 @@
-Received: from mail-il1-f182.google.com (mail-il1-f182.google.com [209.85.166.182])
+Received: from mail-il1-f177.google.com (mail-il1-f177.google.com [209.85.166.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97CE61E2602
-	for <git@vger.kernel.org>; Mon, 12 May 2025 17:36:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3737925178A
+	for <git@vger.kernel.org>; Mon, 12 May 2025 17:37:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747071412; cv=none; b=XZttlHdW915gzE0XL5jnHHMkCavm+d2tvJjLLqzlIJxWA6cCVDJYThBVmmDdr/KtvqWqf5Sk1XtCivvIxyC9Bxn28aK2XY/KeBOzn33HhOuwueECTSWIvbpL83ApORAwYGI67uN4d3JfajQe1iZs1V5D3rkKlLL+SOJ6zieZ++M=
+	t=1747071435; cv=none; b=iMiYJs9h/s7LWq1T/q30+SFFBf0FN4AWqri3wd6zg0hGyo4wdvmn8VLRvf4etapNSWrV9Q0FeN1ZOR19jZTVIIZ3X6y4UF15Z0hslJw2nmp/pT8TVK3OvzStRI194ZC0xulcnXI/+3QsGsstP7jxTitVNXzb/hs5VRNdG2y8gwA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747071412; c=relaxed/simple;
-	bh=mOFOK+LSj6pKtFZGvYo4h+QVmxaBKQnV+UazWqYU214=;
+	s=arc-20240116; t=1747071435; c=relaxed/simple;
+	bh=4TjsDajlFHdXbTrh4khpoy6Vpxg7mp7VAwJZcgczYNE=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=Y/Da3Y5qEODog5QyAOeuOrXuRu+8uFFpl27DGxFyrQhod6Ky7ZeVEuzAW0ZulidoN5X4ykzNnPZ91jRy9GohEhFAuA4riCpzAewM1SVgapum+ekzDC+6c+Xyof6/pLToPsRJkFzVFPHXDOAvjsPYkIGRNM7k8Z9zHM7AbLE9dRc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hnzEERo0; arc=none smtp.client-ip=209.85.166.182
+	 To:Cc:Content-Type; b=hCXsDAlOkY+8Mgz8E0wab5oLy8NwWzdRl+tJeKP/ljQXdiomZHeH4y4JHunsMX+NHvRCkmVHWBbffV2ad+iM/gEPLN7laUJYL4KvGw7tymAayOOveS9qu++qkyUKKAXFY1jDJ1d9ilvIuXonWDF/Ex/WEXWXqfAz/u9toK0Fhz4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TSQQydl5; arc=none smtp.client-ip=209.85.166.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hnzEERo0"
-Received: by mail-il1-f182.google.com with SMTP id e9e14a558f8ab-3da7642b5deso33521415ab.2
-        for <git@vger.kernel.org>; Mon, 12 May 2025 10:36:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TSQQydl5"
+Received: by mail-il1-f177.google.com with SMTP id e9e14a558f8ab-3da7d0d7d58so33297295ab.0
+        for <git@vger.kernel.org>; Mon, 12 May 2025 10:37:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747071409; x=1747676209; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747071433; x=1747676233; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=4Sah/zZuyLezLG5mbBHoRNxkNiscIWCCIuoLDlszlxg=;
-        b=hnzEERo0DXKPniqH4hXs5pC6wIlkao0RaYjDIKoonVN/D2yKHOuRyi+kw+YsTbHZ38
-         PGRvCc6fkz4VTPgLpHC3sYhej92YDD1lRV8SFhKkT6cmDtFNCIDoDkMFyjhBjQ+Dnome
-         hFSPLgvdMFpu2nJAIsqJUi4/33DBTGIbJxrdWtzO4An70n2lHAr+Yvb2Ui3IRd7ZEL4M
-         igaal6Fxb+XPn5flAFFDtTdhUMMpK+GKiRWwxscO7Kk0FDVaduxisKSV/TsiE0Vj4FlN
-         AQjTkgwmcDIM0t1L/WgstXdOCaHaePRkK+Dovd3CUTR641DfKnXPrhTXPKsbpqwYh3TR
-         VPPA==
+        bh=2lDGquQIuhh8CKqCGlwkNG3AEQOXI4i55F9vnuTFmIA=;
+        b=TSQQydl5Q2v9+3dcmBd8RCxaiFBf9Y9tqj4Q7nkkQ0kRr1S15tMDQrVDZ3ibMXWYcL
+         Y8KbEIrIyiF4fdAapr8Sw7+ksttxiUQ+JrgoJcUuim2R5p9yZ37C2dT05Yt6qv8a6tSE
+         4rYYSnvQaXxvoBhqtmL76S6i/Un4mBLye9Kkp3xuaZxcwT0vbhxm2zEeQ6uwgUKdd/7w
+         j+eZMFkTBkE1KJM4jLOkqjnjdSR97FiJIOmuL53g2jdSeb19DfLYhIjEPchb2d+qDmCa
+         OxgFsVZSPQf+69pmz9lF5UnYPJybRz7aD4/5Y3NZXoBrDK9eDczne0il01FQttNGPqe/
+         0KLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747071409; x=1747676209;
+        d=1e100.net; s=20230601; t=1747071433; x=1747676233;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=4Sah/zZuyLezLG5mbBHoRNxkNiscIWCCIuoLDlszlxg=;
-        b=PXB5+9CHOF1z5pp+BtCndpYmdFkrNyCaalTstBaN0lxKEa/t3I0T94bXcW4AQOmXeB
-         uNejZQmLVKT6h5Frmdb23QTgIuDR9cC2omypqf8u+MXlwPNoAHHUq3ycdcop1U1oT8Cl
-         ICZsBcxF43y0jsANSWk9DlC6N9qfNbfh/C9c/w6BI33uTpK680Z6muPx5QWOdHCVrvCo
-         W9lo0G+DbY9/Ws3Hia0ZcENsyW5RpEFYGy8nGKYY5Gq7TVNp5Mr3p3vV/8nhluzh55av
-         hqAkGtxpQVm+NVf0rW/z+waScfNyGAvbfVct604KR/j7iCidGjWt2Zf02X8n05sRL0cb
-         QcrA==
-X-Gm-Message-State: AOJu0Yz59NpYd3mNP8+Ri5MZFjhnKsBXwbNo/guMD5+5VCXbA/hTSRAt
-	0cdIjqlHn4+dfVeNCdhYw/AsZqEIZ2E2+VjqYY2x9Dwx/w3Bj8Ceg0CnS1+5ruMzTlhsVVo9B9w
-	770pd10Fpf7V3P1V7u4ShbJLHOQ9MZFnS
-X-Gm-Gg: ASbGncvXIl6DT6gRxcHG/5Fs79j8pJQmAhkaN/296EVy+uTIslSmdbCHmsssfHk3EhG
-	XcMyf/8I7Oj/Cx+XpIh08tCeZG05SXDevH/rsUQimPimdwSNvTTHmyxGuLnJ7IeZ3inLM+fJjVF
-	ZR0OhbRS+fx+Tk731uydS5xAXJAOuWRvpTiEBrBzfXydxcyxHIojW74pibJ3o122XtwA==
-X-Google-Smtp-Source: AGHT+IFSsa3m6c3NTPI+PozgEfHY+zoUdZB8g2/EmaTg0Pberx/wpoP0UzLVVeriPesaD/0JRyu6iZwwsM0yTGfPz4s=
-X-Received: by 2002:a92:cdad:0:b0:3da:71c7:5c7f with SMTP id
- e9e14a558f8ab-3da7e203e03mr163523045ab.15.1747071409515; Mon, 12 May 2025
- 10:36:49 -0700 (PDT)
+        bh=2lDGquQIuhh8CKqCGlwkNG3AEQOXI4i55F9vnuTFmIA=;
+        b=M667NVNq0fgpY07joKpuD/bJwLOfT2O/3MMpAm8BbYGAN6JIVo8eHhZXVvMfNxWqt6
+         EFWV+ccMkVkGohfE1IZE+ijH9Kz4KS7zI/I0IPQQDz/iwb6JinBMHZXzvyDWewshV++7
+         sT0O48w3dalBvQOUAZ0z6Gle7rhzGqDJOdZAx6/oWjvdW5GQcrGUrCa0FgZ3YtdMtMyA
+         VNJ+Y/1xcXzZszbAV/fHS3hKoYb36z5RHAERdyYU1dU87WDxR8dsVpzogbwRUGaifWfx
+         HTx36XTXx43yOK6v8fDOj8G5JUgMKYg4n0r/u89iw9Q+2ofkF1pLTtl302US8djZT9X1
+         U4dg==
+X-Gm-Message-State: AOJu0YwzwZ3P5S1eyB+yLP4ibXK3mhmjY/QHWxX+99nbQ1evKwl8uulB
+	FcN2gYLAKpIyLSKviT8V8OLjZtsWsXNxQg8sDajgsSeDcttiCeWoB8sSXPebKfp9NS1Lsz8nYMZ
+	tvj1hdjRMleC087rKKiwHjgYeN9yHwq7D
+X-Gm-Gg: ASbGncvlwRXz0aM/L7c2S7N29CkYpeswCLpwELHbif3cPWuYOWfrFMyXnqJ0tPJe5bW
+	fPxBP5cQIF+NKtns/26en2AqrPvRp/Bz3aVsfmAbwnwjAr5f9JPwkc9WSXZEK9oBa2YUsjioVxD
+	2yDqXBMueAASlV9MsEJ9nyX9sHecKUeWuUgjI0GdR47tKuO6E6B83ozJJgtYCZB7WkDA==
+X-Google-Smtp-Source: AGHT+IG6pYBiSpjA9sh8Oy3XRwz1AsHCvTKWnR8S72TSVAAVEZ537v7Y7Ac+MewL9haheu4ncckBoEaLk1irrFkANPo=
+X-Received: by 2002:a05:6e02:1845:b0:3d8:2023:d057 with SMTP id
+ e9e14a558f8ab-3da7e1f4172mr131702955ab.11.1747071422380; Mon, 12 May 2025
+ 10:37:02 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,121 +59,85 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250501225958.2947677-1-gitster@pobox.com> <20250503005814.3030099-1-gitster@pobox.com>
- <20250503005814.3030099-4-gitster@pobox.com>
-In-Reply-To: <20250503005814.3030099-4-gitster@pobox.com>
+ <20250503005814.3030099-7-gitster@pobox.com>
+In-Reply-To: <20250503005814.3030099-7-gitster@pobox.com>
 From: Elijah Newren <newren@gmail.com>
-Date: Mon, 12 May 2025 10:36:38 -0700
-X-Gm-Features: AX0GCFvwAslTD7_AH36yUUq4WK7ul2EgCI8gntz-2iF0A6rTgn19sYnw4j-0Ffg
-Message-ID: <CABPp-BHWjspvWWXpv9ZYmbNzWBHe+w8nxDrpT-nebpZBYT_wSA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] tests: prepare for a world without whatchanged
+Date: Mon, 12 May 2025 10:36:50 -0700
+X-Gm-Features: AX0GCFsupzztXvTLdLfA8belQIgfefJ5rpdDhEn-RArS61pLEyU8-2lHThLK4Pc
+Message-ID: <CABPp-BE3Qh55=6GR7s-Wv2rS9+oAFokw=9R_1WiayLWDMsuAVA@mail.gmail.com>
+Subject: Re: [PATCH v3 6/6] whatschanged: list it in BreakingChanges document
 To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, May 2, 2025 at 5:58=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
+On Fri, May 2, 2025 at 5:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> w=
 rote:
 >
-> Some tests on fast-import run "git whatchanged" without even
-> checking the output from the command.  It is tempting to remove the
-> calls altogether since they are not doing anything useful, but they
-> presumably were placed while the tests were developped to manually
-
-Perhaps use "invoked" (or "used" or "employed") rather than "placed"?
-"placed" feels a bit awkward here.
-
-(and there's the developped typo that Patrick already pointed out.)
-
-> sanity check which paths were touched.
+> This can be squashed into the previous step.  That is how our "git
+> pack-redundant" conversion did.
 >
-> Replace these calls with "git log --raw", which is a rough
-> equivalent in the more modern Git.
+> Theoretically, however, those who want to gauge the need to keep the
+> command by exposing their users to patches before this one may want
+> to wait until their experiment finishes before they formally say
+> "this will go away".
 >
-> This does not remove "git whatchanged", but we no longer have to
-> worry about adjusting these places when we eventually do.
+> This change is made into a separate patch from the previous step
+> precisely to help those folks.
 
-Seems like a definite positive change.
+Were these three paragraphs intended to come after the "---" line, but
+accidentally placed in the commit message?
 
+>
 > Signed-off-by: Junio C Hamano <gitster@pobox.com>
 > ---
->  t/t9300-fast-import.sh       | 12 ++++++------
->  t/t9301-fast-import-notes.sh |  2 +-
->  2 files changed, 7 insertions(+), 7 deletions(-)
+>  Documentation/BreakingChanges.adoc | 9 +++++++++
+>  Documentation/git-whatchanged.adoc | 6 ++++++
+>  2 files changed, 15 insertions(+)
 >
-> diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-> index b258dbf1df..4dc3d645bf 100755
-> --- a/t/t9300-fast-import.sh
-> +++ b/t/t9300-fast-import.sh
-> @@ -120,7 +120,7 @@ test_expect_success 'A: create pack from stdin' '
+> diff --git a/Documentation/BreakingChanges.adoc b/Documentation/BreakingC=
+hanges.adoc
+> index bdfad29d8a..f9026d004c 100644
+> --- a/Documentation/BreakingChanges.adoc
+> +++ b/Documentation/BreakingChanges.adoc
+> @@ -178,6 +178,15 @@ references.
+>  +
+>  These features will be removed.
 >
->         INPUT_END
->         git fast-import --export-marks=3Dmarks.out <input &&
-> -       git whatchanged main
-> +       git log --raw main
->  '
+> +* The git-whatchanged(1) command has outlived its usefulness more than
+> +  10 years ago, and takes more keystrokes to type than its rough
+> +  equivalent `git log --raw`.  We have nominated the command for
+> +  removal, have changed the command to refuse to work unless the
+> +  `--i-still-use-this` option is given, and asked the users to report
+> +  when they do so.  So far there hasn't been a single complaint.
+> ++
+> +The command will be removed
+
+Missing period at the end of this sentence?
+
+
+> +
+>  =3D=3D Superseded features that will not be deprecated
 >
->  test_expect_success 'A: verify pack' '
-> @@ -279,7 +279,7 @@ test_expect_success 'A: verify marks import does not =
-crash' '
->         INPUT_END
+>  Some features have gained newer replacements that aim to improve the des=
+ign in
+> diff --git a/Documentation/git-whatchanged.adoc b/Documentation/git-whatc=
+hanged.adoc
+> index d400b68d4b..d21484026f 100644
+> --- a/Documentation/git-whatchanged.adoc
+> +++ b/Documentation/git-whatchanged.adoc
+> @@ -11,6 +11,12 @@ SYNOPSIS
+>  [synopsis]
+>  git whatchanged <option>...
 >
->         git fast-import --import-marks=3Dmarks.out <input &&
-> -       git whatchanged verify--import-marks
-> +       git log --raw verify--import-marks
->  '
+> +WARNING
+> +-------
+> +`git whatchanged` has been deprecated and is scheduled for removal in
+> +a future version of Git, as it is merely `git log` with different
+> +default; `whatchanged` is not even shorter to type than `log --raw`.
+> +
+>  DESCRIPTION
+>  -----------
 >
->  test_expect_success 'A: verify pack' '
-> @@ -652,7 +652,7 @@ test_expect_success 'C: incremental import create pac=
-k from stdin' '
->         INPUT_END
->
->         git fast-import <input &&
-> -       git whatchanged branch
-> +       git log --raw branch
->  '
->
->  test_expect_success 'C: verify pack' '
-> @@ -715,7 +715,7 @@ test_expect_success 'D: inline data in commit' '
->         INPUT_END
->
->         git fast-import <input &&
-> -       git whatchanged branch
-> +       git log --raw branch
->  '
->
->  test_expect_success 'D: verify pack' '
-> @@ -882,7 +882,7 @@ test_expect_success 'H: deletall, add 1' '
->
->         INPUT_END
->         git fast-import <input &&
-> -       git whatchanged H
-> +       git log --raw H
->  '
->
->  test_expect_success 'H: verify pack' '
-> @@ -2066,7 +2066,7 @@ test_expect_success 'Q: commit notes' '
->         INPUT_END
->
->         git fast-import <input &&
-> -       git whatchanged notes-test
-> +       git log --raw notes-test
->  '
->
->  test_expect_success 'Q: verify pack' '
-> diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
-> index 1ae4d7c0d3..e62173cf1f 100755
-> --- a/t/t9301-fast-import-notes.sh
-> +++ b/t/t9301-fast-import-notes.sh
-> @@ -76,7 +76,7 @@ INPUT_END
->  test_expect_success 'set up main branch' '
->
->         git fast-import <input &&
-> -       git whatchanged main
-> +       git log --raw main
->  '
->
->  commit4=3D$(git rev-parse refs/heads/main)
 > --
 > 2.49.0-601-ga5925c3955
-
-Looks good.
