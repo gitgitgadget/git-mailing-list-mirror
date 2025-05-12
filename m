@@ -1,131 +1,182 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1F68255F5A
-	for <git@vger.kernel.org>; Mon, 12 May 2025 08:49:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68FAB24EF91
+	for <git@vger.kernel.org>; Mon, 12 May 2025 08:50:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747039757; cv=none; b=gVZgGvPl98g2dZvuuCOObwfJ0Bu2p2J5VdKNQva8THLGnd/Xs11nLxkAnXx+YG0wR89uvUFLADv34BTT8eZ5nNvtloGi8pTFhd2UMD7uCkMhLYAFaH1IdpuXTzGSXNRqrpCDA7JpEBWJr1eIGlMxpC7J0ubpJQrrL3dia4Vm/Pg=
+	t=1747039848; cv=none; b=BzMiofS8Zvc7RZ4j/csdcPQDxtdoYv3qAF4NRkrTlx+eBgYrvJpY6HzZLw+oC5rnTmIh0TkbY0/6y/g1V5GC7SpH5rzmymB45lCsUYcP6HYotNx1OCb+ZOkH7fUSSt7b/+vaGsUxzW6GKxF0hcve07h6R40mHVnIT65zihMZRT8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747039757; c=relaxed/simple;
-	bh=EPLh4/ZTqQfWV74YKvfSWjxPBoR5NlmB0YvCPNpcGNE=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=SAnJzNqERqM1zyRz4hSAnv8DkZfnTWJYhOfUbXcWrfpJjUQiC/ret4n0e1O08s5MEEAwGZCZ0DTTJJOZm3U9SqOVzlO6TPSTz/0CsXGApTdwa5CXI98PG/Vk9dqqotCNgaDQ7QgNm+cMsk+PXWPYKKgj16zHyamw73zaFw8+6lg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Nvu/jjXM; arc=none smtp.client-ip=209.85.222.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747039848; c=relaxed/simple;
+	bh=yBRShAVbAwgA936Kmh+dPTEhXCZbw7xQ7eWwXf8F7qM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ia12BLozGRksyihuJSMIORTMbukQ54qKwvdwVfAQcMB9UTyp93gT/F2bIWMIgdxDKqv7CSl1hdwlx25zws2OblrFxU76FLRW9Lys+jv29v0pofe2zXZExY6uMl0zQr8nnp/p8Ely4WyFRqr1mjbUi1Xg6tTVkdKFbhTC66HgSMI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hwIOFiKQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YsQ05jD6; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Nvu/jjXM"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-878427f091eso1105187241.3
-        for <git@vger.kernel.org>; Mon, 12 May 2025 01:49:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747039754; x=1747644554; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=iX3eGo+6WfkDHSvaKMDvfZL1h9ZLKJxbJGLkIQ7gOI8=;
-        b=Nvu/jjXM7plXhWx8wWYnK9sfa6pgO4AjQ7VYJyxCj/rl6Q/ZkQIKlEL1t5aCEWu2jp
-         kuZEMpcavQFWs+qNdBoRWFstM6Mo2AgL1LhsqW0jyprerXZbjnPYMmoNYrnOKVAgNG2e
-         qtk6HG0y9117kV6Qn3zY2SjTU9RKMyO+989EmBeZnoA0cVSK6amgRkhqWVCaVD0o5KUZ
-         9vAgG6sYVCaD8y2Y4SiJTGXRDc0XCD0AZjUWNA/0DStehseB1aZH4YFZiX4pkT5AB1ZW
-         Tz2E+ejLKgPu40CYdDeoXuQiW/fGuMMPGOoWiVY2m2iuKlvjEmi398SHp2w3e+9waD9a
-         qb+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747039754; x=1747644554;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=iX3eGo+6WfkDHSvaKMDvfZL1h9ZLKJxbJGLkIQ7gOI8=;
-        b=cLNFSPGOU+kFBaZS2Q/ytB9SM20RlUsxpcNaY5V877OOPiLqToC44mz2LtFwsMHcJR
-         WIpMgYUigG1BycKDdJqEZNQOH0RhSIOYMQzqLiBHHfZUANskmeZxjpJUEFixi1Y7EiBm
-         yJ6PkYDvgudRpPBzaRbF7U/SbeYbYKeBlGuLHVQz55q8hOE0r+ezkiB1pr2bQ8OYtcLD
-         3FSc3gFYhJ5OqwNWOOzZuXrLzEyWCoYy7bRsRsQhh3Tcnyvhvd0gnuN3TvGOM+7DujjZ
-         6WOWhyHdesw7/Y57zVfT9K5TL2piFnU+lsTDBuNTgmpOQG/70L859iHxIb49pBtKdg63
-         ih4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCWK+PHekTPtczlLBj8B9WPz3AK3HYTm8WWy9A7huixIx8XPrv+XySV12i+6k48YU/ZRxls=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz36C1Tf40cyCbtdiN9bKR5Bdfc7DZLEjbrz+LPVWvp8odmNH9x
-	pN754hzx+E/tKnpAVWBCSkCHQJXHlTrKvZODGWiuplT1ciH7cmtumxWpEVIGdzdoSo1VUphTYi9
-	ubu3k14oHJNB9/fMMMnNAwdRT3yk=
-X-Gm-Gg: ASbGncvd84U15eYxZ2enJ0SQeOV26HwMR7T4NoY8+WwoDBGasTBw5CP/2GAs/2EUkNr
-	hwl/jh+JDx/g9Qa3YfnfYAb5cJvefVwk+ddUzbw3o8+ESevQvlZLyKfXkt98xKDN42ABgKMDdyr
-	wSj7Cbf9DuKXp5xMiyP/Ek+g9zidQeuE0TQLg1lhLsiqEQUzxtWH4LryY/+rSH4hv/Ox15EWaKk
-	FC1bw==
-X-Google-Smtp-Source: AGHT+IGAhxmLyzy0FW/4FxPQqKVvqD154TUronHYHbKHOY32kObMvZsdNS7VQeXdSOpobj2QkoF9NPSf2QQGuwCGAec=
-X-Received: by 2002:a67:e7cc:0:b0:4c1:85d9:5641 with SMTP id
- ada2fe7eead31-4deed370764mr10110307137.11.1747039754422; Mon, 12 May 2025
- 01:49:14 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 May 2025 03:49:13 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 12 May 2025 03:49:13 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250512020935.73140-1-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hwIOFiKQ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YsQ05jD6"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5C45D114016A;
+	Mon, 12 May 2025 04:50:45 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 12 May 2025 04:50:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747039845; x=1747126245; bh=k093zmjSxi
+	4ilm4v/r3YQPVGHKu4q9QADX3Wt6U81aA=; b=hwIOFiKQ2RxQJ2KN8qO82ZC4Gl
+	r0uWB6b8LfnOy5EI9DI/bk9SS1+ZBIFdCt+kPJ/bYZ9/OHYFYAMQ67HY9uuyY0M7
+	i6iSYrO4DxS0TUZU6khk86hcWE+f3kSdU7NPJjfqiaxYaS5MCuZMDF5jQvitBw+4
+	1ObUhKU+Ah6aVfp4cIp1kqkQxUNGpd3qDgDuaKzHRU5p1vHLEyyeiadsftvziCr8
+	FOq9+pSxBfZGpNkfyjAOcsSnpNxx8Zis4mr9J7MxKWvJB1MG/Gtx96+KvggcnRJV
+	Q5l9aDN13ArZ+SxyKJcsUZsulkhIL6sgIsAPqGpVGZeaFhKLQWSIanXG4cng==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747039845; x=1747126245; bh=k093zmjSxi4ilm4v/r3YQPVGHKu4q9QADX3
+	Wt6U81aA=; b=YsQ05jD6eEO2RLXOHTDntKk1SHZQb8S8xJrm2yJV+jdyZnswu0S
+	eBaGuq5IkgsiLpCtN2mDWd4xImmFlrcellUexUz7lYZPoVuTNYHEjRMl+XEnmeqd
+	6+RfZ0RKKUjUEvPVv3Ufyo3y/j6doYD0/sKEwDZSP0139WAWJY2xkAckiVjuS7Cp
+	Lyvwv4Mqp/A89OhoiaCwD93tIzEc0dvZvRQ7i6NhsV3eOHhuN3RNdeZdPJOeQayM
+	O4zSNkwHI7bCeOuqkIdYf3Q2tZHH5JDICffXsElofsSmKs+lbRzv29zOyKPe06dW
+	g3U/aVrTq8FZe/d71x5cpiNtp+5CYiD1azw==
+X-ME-Sender: <xms:ZbYhaCld_MojMpmWCL5UXLqyi6drgyDru_mUjWXQLpKiDuud3Bq-aA>
+    <xme:ZbYhaJ2c6OBrjlINt_Q0VdPBtga_mx3nqLTBjoEiAOJemEJOgmCMUzUlyJ9X4gAGJ
+    icpvCUex_5S_4Poyg>
+X-ME-Received: <xmr:ZbYhaAoV3D28HxTL5eZ0xmOKzwhbTzRCQ8zp_ClV9VlAjO5UlOavh6R9VdIGWWmWGwiGK9uBHRIFeG5PPMJSM7gXBVT7NJPoOqKIL51uWE4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddtkeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtgho
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepgh
+    hithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ZbYhaGldt2eYwSfqfrWqiBV0fSnlaAlS46EzGF9ZJj9QDNvqshg2GQ>
+    <xmx:ZbYhaA3gDk5qaFKCZ13RM9jhZfVM2Hvw19EAYOykRvby8RL_mFB-VQ>
+    <xmx:ZbYhaNuvg-xg3eB6A6t4gU25F3KavGLcx6eEF54RudCR5jfQcLcCqw>
+    <xmx:ZbYhaMUzkn75H1et9s4Cm5PPF4SsRE9mU8xUTTc7uOEYzTHczuiehQ>
+    <xmx:ZbYhaHFHmDQbskDtoiUZqQ2HwGATB2e0D5lkmU46G7kTERAiPaxNndBN>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 May 2025 04:50:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 6029a40f (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 12 May 2025 08:50:42 +0000 (UTC)
+Date: Mon, 12 May 2025 10:50:38 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+Cc: git@vger.kernel.org, gitster@pobox.com, karthik.188@gmail.com
+Subject: Re: [GSoC PATCH v2 1/2] json-writer: add docstrings to jw_* functions
+Message-ID: <aCG2XkW2lJ1qYHKW@pks.im>
 References: <20250512020935.73140-1-lucasseikioshiro@gmail.com>
+ <20250512020935.73140-2-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 12 May 2025 03:49:13 -0500
-X-Gm-Features: AX0GCFvYnI02Mjb3tDbZt4KdP864JP63ZbDEr2jZHMUMFqMt-9OfDo3gYrFdft0
-Message-ID: <CAOLa=ZRwGVdv-rJ+XtRyFfiqnqcwNZ5i-tWo+z11e5p1r_37xA@mail.gmail.com>
-Subject: Re: [GSoC PATCH v2 0/2] json-writer: describe the jw_* functions
-To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
-Cc: gitster@pobox.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000f8a5670634ec6320"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250512020935.73140-2-lucasseikioshiro@gmail.com>
 
---000000000000f8a5670634ec6320
-Content-Type: text/plain; charset="UTF-8"
+On Sun, May 11, 2025 at 11:09:34PM -0300, Lucas Seiki Oshiro wrote:
+> Add a docstring for each function that manipulates json_writers.
+> 
+> Helped-by: Junio C Hamano <gitster@pobox.com>
+> Mentored-by Patrick Steinhardt <ps@pks.im>
+> Mentored-by: Karthik Nayak <karthik.188@gmail.com>
 
-Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
+I don't think there's a need to add "Mentored-by" trailers to every
+commit just because we happen to be your mentors right now :) If we
+actually helped then sure, makes sense. But to the best of my knowledge
+we didn't, so I'd just leave them out for now.
 
-Hey Lucas,
+> diff --git a/json-writer.h b/json-writer.h
+> index 04413bd1af..aa513e86cb 100644
+> --- a/json-writer.h
+> +++ b/json-writer.h
+> @@ -69,42 +69,175 @@ struct json_writer
+>  	.open_stack = STRBUF_INIT, \
+>  }
+>  
+> +/*
+> + * Initialize a json_writer with empty values.
+> + */
+>  void jw_init(struct json_writer *jw);
+> +
+> +/*
+> + * Release the internal buffers of a json_writer.
+> + */
+>  void jw_release(struct json_writer *jw);
+>  
+> +/*
+> + * Begin the json_writer using an object as the top-level data structure. If
+> + * pretty is set to 1, the result will be a human-readable and indented JSON,
+> + * and if it is set to 0 the result will be minified single-line JSON.
+> + */
+>  void jw_object_begin(struct json_writer *jw, int pretty);
 
-> Hi!
->
-> Given that my GSoC project will need the json-writer module for serializing
-> JSON data, I studied this module and I thought it would be a nice contribution
-> to make it a little more clear on how to use it. This will be helpful for me and
-> I hope that it will also be for anyone who want to write JSON inside Git.
->
-> The main difference in this v2 is the second commit which provides an
-> overview on how to use the functions of this module, telling which one should
-> be used for each use case. Perhaps only this usage overview is enough, but I'm
-> open for suggestions!
->
+I think it would be interesting to learn _when_ to use this function. Is
+it mandatory to call it? Can it be nested? Why is there no corresponding
+`jw_object_end()`?
 
-It would be nice if you could reply in-line to previous versions or link
-the same here, to help navigate through the older versions :)
+> +/*
+> + * Begin the json_writer using an array as the top-level data structure. If
+> + * pretty is set to 1, the result will be a human-readable and indented JSON,
+> + * and if it is set to 0 the result will be minified single-line JSON.
+> + */
+>  void jw_array_begin(struct json_writer *jw, int pretty);
 
-> PS: this is the first patchset that I'm sending after being approved in GSoC, so
-> this is also the first one with Mentored-by :-)
->
-> Lucas Seiki Oshiro (2):
->   json-writer: add docstrings to jw_* functions
->   json-writer: describe the usage of jw_* functions
->
->  json-writer.h | 161 ++++++++++++++++++++++++++++++++++++++++++++++++++
->  1 file changed, 161 insertions(+)
->
-> --
-> 2.39.5 (Apple Git-154)
+Same questions here.
 
---000000000000f8a5670634ec6320
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 4440cd334e1cc054_0.1
+> +/*
+> + * Append a string field to the current object of the json_writer, given its key
+> + * and its value.
+> + */
+>  void jw_object_string(struct json_writer *jw, const char *key,
+>  		      const char *value);
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1naHRnUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL1hoREFDVXBSWXVSLzhkQzEwcWEwMjdPYXVOdmtSTApKRjExcC9YTVNC
-L0JSNTJuUHROMmx0Z3ZnQ3Brc3lrWWdySC9ranRWcll4NUN5dVdCZ29Md2VoNTFjbGRTSFlnCkIx
-OXA4d0pZek5UY21PWUJaMVlBamJEVE9NSzdsOU4wRGI4dC8rMEFFNUZrQk9pTTNtdHVqUHFmUUVT
-UndsWkUKbXFoNVI1QWZ0U1BJQmVJblN2dC9HR2lETE1waVdzSi9xbnpHWHZwMTYxbWcrU3pBRmZI
-bWs2U3FVa3ExZEJxaQpiSUNJK0orWXNFMS95S21EUFE0b3diVXZabk5UelVweW53dGxkaWRIQjZC
-dGNJd0FoaXlib3V4OFljcE9TTmF3CkljSkRtVWlDUThKc010K2dXWUdET2lNTmF4YXBveENvY0dy
-OXVmSTZYeTZRQzczbENiZlBMTWx3ZW5YeWNVNFMKMy8rU2FvVUtKZ2Fuanh2ejh4aURkVEp2V0k4
-anp5VmxXY3VONFRjRTNGaHpEcDN6VStxR256RDlDSWtPRndDegozcXgrb1ArQXJEdFFaNmZuTmlp
-c1dCRnN6eEhHQVlZZDF0K05FamlTM3h1Q0dneW5MaVgvK0cwdi9PK1JIbi9wCklaVlJWV1JuZmZv
-Zm1ESmZFQVFzWndsRUIwUXJMVXhrN3dEc3JvVT0KPW1lYmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000f8a5670634ec6320--
+What happens when called after `jw_array_begin()`? Same question is true
+for all the other `jw_object_*` functions.
+
+> +/*
+> + * Start an object as the value of a field in the current object of the
+> + * json_writer, given the field key.
+> + */
+>  void jw_object_inline_begin_object(struct json_writer *jw, const char *key);
+> +
+> +/*
+> + * Start an array as the value of a field in the current object of the
+> + * json_writer, given the field key.
+> + */
+>  void jw_object_inline_begin_array(struct json_writer *jw, const char *key);
+
+Do these nest? E.g. can you call `inline_begin_object()` multiple times?
+
+> +/*
+> + * Append a string value to the current array of the json_writer.
+> + */
+>  void jw_array_string(struct json_writer *jw, const char *value);
+
+Same question here as above: what happens when called after
+`jw_object_begin()`?
+
+> +/*
+> + * Return if the json_writer is terminated. In other words, if the all the
+
+s/if/whether/
+
+Otherwise it reads as if the function wouldn't return in case it's not
+terminated.
+
+Patrick
