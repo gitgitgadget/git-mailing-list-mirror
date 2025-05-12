@@ -1,151 +1,127 @@
-Received: from mail-il1-f170.google.com (mail-il1-f170.google.com [209.85.166.170])
+Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B736171CD
-	for <git@vger.kernel.org>; Mon, 12 May 2025 21:21:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DDC2E403
+	for <git@vger.kernel.org>; Mon, 12 May 2025 21:43:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747084907; cv=none; b=g3u5VCdX+fD6sNO41p7FF42YZr3qLNCktT/B0VHX4pWIt4twfy6/KROAb4xUjltW9tYRf2y7S4KP1hO3AJY1m3Y8zY/FesCeouo2XErTuSDYn0/Jb+L+29mKjSHM213G140ITdxvSsldxbstEO5dwr4ohRJ2KUMuJJUAGnFwwAo=
+	t=1747086241; cv=none; b=tpECqfevFKqSmDduHSGtGhu07JpYW/GrjPg791nUAKWlpLz5yqLOfREFII3FZqc3ePB6+OQgSDdq3X/9IxXvyNATVxdV9PaBwq0q6o+0xwblIOMbsJ9fWShH7kDVMnfRsornUsgWNRMPZWJCAQcue1VO6QLdHtRwR9Yef1ZXh+w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747084907; c=relaxed/simple;
-	bh=+/WXzdHklQoXVgL0jAM157CNH7rua6UUZOnzrvHXOAw=;
+	s=arc-20240116; t=1747086241; c=relaxed/simple;
+	bh=YejSyLgFw29dhH3sKhTeyZNi/LRKcvyXBfIRL5+/CiU=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=NStnJLDanq5s+EscAXFvwAGzQbQ2vCkQkqmqMnDxNbLuL48EWGi/SyQY+EXQDiLL7P0nI0p/SaYFtfssRD5zSZmfrMAmTG7gqR79eQKGh3s5znBTB54kHGhzf9nNPO0Cierrn9C6zMjfDd9UNbp5oApYOldvyswiabULBgmGicw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cbksWiHh; arc=none smtp.client-ip=209.85.166.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 To:Cc:Content-Type; b=JN3L4REP/WTcryYgRIs3diL+jsh/SpL7/gRN90SQuPkQPRJApHDAF1xyBUzfFEOdl2NLvAnuEh+a482YHqsGJLzbuy/8m7jrg8yeYDjpTLuW6Ev8GXgPKxjITfCmzPFhpCjQJbAP4L/GakG5TvGSaXWUMijDLz9dQpCyuG0D2C4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=W9k/6IjA; arc=none smtp.client-ip=209.85.208.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cbksWiHh"
-Received: by mail-il1-f170.google.com with SMTP id e9e14a558f8ab-3da6fb115a6so44465065ab.1
-        for <git@vger.kernel.org>; Mon, 12 May 2025 14:21:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W9k/6IjA"
+Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5fc4fc27983so1467a12.1
+        for <git@vger.kernel.org>; Mon, 12 May 2025 14:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747084904; x=1747689704; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=weOUGhnmSl8Kr8ZuIVc7yFjJuSb7fQ6K5A9nSGYwl4Y=;
-        b=cbksWiHhzVCpdyiAQXQhVwJjKcjS4COp9JsYair0+kk6ImurQ7XnXVod/Euihnvb6y
-         17tgbnEImXYqXEVgq97BavXRn9CCgF1cglR+DWaGo8U5NNDkDip4pPpxmjM7vAOyVBtA
-         KcgJfxJntG74LhBAP6N6knpucyLhlBqF8FWrmRGNJHefYDh1Svn6PmPL+c0VSKtUuxTU
-         PqDgolORb5m9V/NNIORzUJSBPltIdFWjesLDBtUBW62q8KhOgJy0vpnojjaFiAzTQBHr
-         E5R1MWMWkc9tTOfxqoA0HsdeIWo/FypFrmZYtMW91k0a7pjzXXyP5lBH9KzCmwH/OwHT
-         9ciw==
+        d=google.com; s=20230601; t=1747086238; x=1747691038; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=XCXXRJn0s/9Jr/wHJ2U5Fhqe+MCctkPyo3BFvSYwmpc=;
+        b=W9k/6IjADT+crhcmB8Ykp6WBblpI4sxnNI1FOEAoO/6RC028kaPunE5eAUg64pIjRs
+         MMGndmUK7DfaZyvC9LiNpqBEHaKwm0aY5BeseOja7AMJ3h5GjAEi1XNG4Vfr6hNcrm9h
+         tljlJOwRAQ8XBRDm/hKjBfr0YqJmxmd9gf2U7249JWzZ0A39iutCJgI9txT089AkkQ4g
+         G8QhqdFqOWsYER+U+fjO2f0DqhO4Be0FniITD9IcoWqFSG+OgpQmqHlo191el7HPgjss
+         XEcM1gUB37uVMjFxLXTXu2IEahSwmmXLwOL1vp7D9XAJaMbZ3cpcPRCWnEmiRlwt+6Lc
+         O6XQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747084904; x=1747689704;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=weOUGhnmSl8Kr8ZuIVc7yFjJuSb7fQ6K5A9nSGYwl4Y=;
-        b=Su912PevfhUEFWahAp3X14PMwE9x/EJrZ1UBcmbxoFBN4JhahZuzt638x5TlHS1Jsq
-         hRyC0ehE0bMjeNCAMFthqW1n8EKCWALCRlqprLYDOG/JeXKCoFlJR66jKX+7Uhi4gYNH
-         tVhNcB3xd9h8AyP5zi43P4nHBf51iLPlaK9e01R/glSIjAJ+dTwg3Oif6AVIdbvsce2R
-         ZAJ7Y9xSyuWkdNfslx+j6Ofi9BRQYnWxAkFDQdTzk3M9ilkgcLpub10DymURZ22Nn7RA
-         OuFGvgTvSYvIhp5N27c5OXxi+N08bgUgATmk4ghBqatAJuYG7vjFr1CP1YUv7Kd60I0V
-         oC8A==
-X-Gm-Message-State: AOJu0YwEmtUcF1fNGXu6T+nakR2DCm8Pzi3k+BO2CVVm47dVDMb+enz9
-	EDzEkuX5DQFCZPxzrhpT/SYEMvwUi5m6BfdNv1pxzupdDLshTpB4GI8/Vuqh7Do8oXf6N7rNT7/
-	FpRAqgogG58dJFbQIuXTLNX/jRhSbPS0U
-X-Gm-Gg: ASbGnct2lBTZoAEMMAhtsIrdTOtQxvj/OUg1IBovt6VKwjo/UVmcgFjg8eRGMfvU4jq
-	JPfSzgzuShPwa+lzFOuX9mDQlEP13BaDwxaIJ4orgd7AmbOAGLHR1egXzeVs5VCCikF2lMTSTSl
-	kDzEZg/vs4VEEtyromUCT3liFeHFe6aJXwtmJR1aNW0CzYF0lV/PkgxXAPceO2leAOzkRCJxsN1
-	bmm
-X-Google-Smtp-Source: AGHT+IG9qVx9FrqCKs8rU/N7cgwisKyaOJS0RqmFQ8TOXNehGx6mMQYKDUiSUFKVnVpjvb9yZcThcUt8qaQKG+Y/z6U=
-X-Received: by 2002:a05:6e02:1d8d:b0:3da:7161:23e5 with SMTP id
- e9e14a558f8ab-3da7e1e273cmr173575845ab.2.1747084904487; Mon, 12 May 2025
- 14:21:44 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747086238; x=1747691038;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=XCXXRJn0s/9Jr/wHJ2U5Fhqe+MCctkPyo3BFvSYwmpc=;
+        b=PhymB4WBgZNkXjKybZNE9Aumdm8Z1vzfV0ZGC0xh6yRzBf+qLuADxRM/bp4TES/3Lg
+         HYXMgh55l+Wj9+p8oyr0RmPdig8/fEPc6q8QMb2GImXvRgMEnbSn4VoAE8ALRJK0csGa
+         SyJquTh9nu8eJk6GjNqVOYMMSVKoPYo6JlZef1OD6QyQbzP+PN1pEUMwmBYC12BYrzto
+         5ub+vN3wA1HKqQM7MBOCVlji6hCpxlzv9oiksb2MdTmFe9QPvgzV3XjXPMlgGflmGVtN
+         FtZe5a7iUZjOkcYi13bMX2DIN15X7h2PmqPzE/Jb0ot8+JTXNhIJHXuTLUtb/S2+7M79
+         9GGA==
+X-Forwarded-Encrypted: i=1; AJvYcCXbO5/0iyktyr9JN6Ysg1efGEQArGjWMd/nUsXH2EBHemNZ6NH+OVxBiiZxD3Wxkve14cA=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyA+HBh8xWCN1DPoJlsp84qVkqNLdOgAsVGlJuK22PHB+pZBzvS
+	fvZlLI9HafbYjLWcYNuzmIN6E/SZkhm2X7Jprk9LUOwJrdhQ7vOhchGEEjm7u6mfAjMjran3aHn
+	eTGlTqQKEqsPkyb4AN7wz9L7FOiWalkz1LMpvcojl
+X-Gm-Gg: ASbGncslkyh1b2DGxU91/C2TejErj//jLWR5cMIFOqUDsccbSxOFAOYC7HQXDo8FLgW
+	0VH0Yz4Zm7o5Zc1kpwrJTzB/fYtT9YQOZTMvR5VtuvxeLzyKTRv4mphpkpXZErmee+qAV/TWICr
+	j1livz1HefCVYKuW7+J8cTnZB0B/aLiLlP8F20zfzoI8ty0hpkXFJdJppQ6Hxt8Xk=
+X-Google-Smtp-Source: AGHT+IG4JMZ6HJp680LmVZy2zOGZi6HwVAUUpkqkRsTsEpdIdM/8Xb+GX69N7VX9ErR5uWRVQjGQhPdC8ZPu6f+Xclg=
+X-Received: by 2002:a05:6402:2030:b0:5fd:6065:7bbc with SMTP id
+ 4fb4d7f45d1cf-5ff1974bdb0mr36661a12.0.1747086237584; Mon, 12 May 2025
+ 14:43:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250503005814.3030099-1-gitster@pobox.com> <20250512190311.1451556-1-gitster@pobox.com>
-In-Reply-To: <20250512190311.1451556-1-gitster@pobox.com>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 12 May 2025 14:21:33 -0700
-X-Gm-Features: AX0GCFu5u3P5euEZYfmeDOzubGUIKF6Jtsk_yvmsiwVwU31dEo_nG41Cc6Hp3rk
-Message-ID: <CABPp-BGUAyRWsnRc+rrsBfPg4hzAoKPMBiD0aH4jxwdO4mEk0w@mail.gmail.com>
-Subject: Re: [PATCH v4 0/6] Nominating "whatchanged" for removal
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
+References: <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu>
+ <Z/amMj/eg0RbXdkS@ubby> <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+ <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev> <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+ <aAgWytQNqtLzg2TU@ubby> <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
+ <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
+ <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com> <aCJi+4q6DZhnfdy+@ubby>
+In-Reply-To: <aCJi+4q6DZhnfdy+@ubby>
+From: Martin von Zweigbergk <martinvonz@google.com>
+Date: Mon, 12 May 2025 14:43:46 -0700
+X-Gm-Features: AX0GCFvmpjdHikKdkw34N7Kb0kusY6RJ94Zh2RqtPsu7KI7XKtdYoQ86B33brhs
+Message-ID: <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+To: Nico Williams <nico@cryptonector.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Remo Senekowitsch <remo@buenzli.dev>, 
+	"Theodore Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, 
+	Git Mailing List <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, 
+	Scott Chacon <scott@gitbutler.com>, "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 12, 2025 at 12:04=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
+On Mon, 12 May 2025 at 14:07, Nico Williams <nico@cryptonector.com> wrote:
 >
-> "git whatchanged" has outlived its usefulness when "git log" with
-> various diff-related options more than 10 years ago.  It is not even
-> shorter to type than its rough equivalent "git log --raw".  It is
-> high time to start seeing if it is still being used, declare its
-> official deprecation, and announce its removal in the future.
+> On Sat, May 10, 2025 at 01:31:32PM -0700, Martin von Zweigbergk wrote:
+> > To me, the main benefit is being able to refer to an evolving change
+> > by a stable ID. That enables things like `jj describe qx -m 'new
+> > description'; jj new qx` (update commit message, then switch to it)
+> > without having to look up the new commit ID after setting the
+> > description.
 >
-> This iteration is more complete than the previous two iterations:
+> Notionally this is not different from renaming a file.  You have a name
+> (file name, commit message subject) and you have the thing it refers to
+> (file contents, tree object).
 >
->  * The first step is to refactor the mechanism to show the message
->    to ask users to contact git@vger that they still use the command,
->    out of "git pack-redundant" implementation.  This message is
->    shown when the "--i-still-use-this" option is not passed to a
->    command that requires it.
+>   <insert sub-thread about why Git does not have inode numbers for
+>    files, does not record rename/copy intent, and depends on file
+>    content similarity checks to detect renames>
 >
->  * The second and the third step are to remove unnecessary mentions
->    of "whatchanged" from our documentation and tests.  With these,
->    we have fewer places that we need to adjust when the command gets
->    truly removed.
->
->  * Then we start to require that the "--i-still-use-this" option is
->    passed from the command line.  This requires adjustment for tests
->    that protect the behaviour of the command, as they must now pass
->    the required option just like end-users.
->
->  * The last two steps are for a future.  In order to make sure that
->    we can cleanly ditch the feature at some future date by removing
->    it from the build, test, and documentation when Git is built with
->    WITH_BREAKING_CHANGES.  And finally we add "whatchanged" to the
->    list of features to be removed in the BreakingChanges document.
->
-> This iteration incorporates updated log messages, and a missing
-> period in the documentation, helped by Elijah.
->
->
-> Junio C Hamano (6):
->   you-still-use-that??: help deprecating commands for removal
->   doc: prepare for a world without whatchanged
->   tests: prepare for a world without whatchanged
->   whatchanged: require --i-still-use-this
->   whatchanged: remove when built with WITH_BREAKING_CHANGES
->   whatschanged: list it in BreakingChanges document
->
->  Documentation/BreakingChanges.adoc           |  9 ++++++
->  Documentation/MyFirstObjectWalk.adoc         |  4 +--
->  Documentation/config/format.adoc             |  6 ++++
->  Documentation/config/log.adoc                | 11 +++++--
->  Documentation/git-whatchanged.adoc           | 10 ++++--
->  Documentation/pretty-options.adoc            |  5 +++
->  Documentation/rev-list-options.adoc          |  9 ++++--
->  Documentation/technical/sparse-checkout.adoc |  2 +-
->  Documentation/user-manual.adoc               |  2 +-
->  builtin/log.c                                | 19 +++++++++++
->  builtin/pack-redundant.c                     | 10 ++----
->  git-compat-util.h                            |  2 ++
->  git.c                                        |  2 ++
->  t/t4013-diff-various.sh                      | 27 ++++++++++++++--
->  t/t4202-log.sh                               | 34 ++++++++++++++------
->  t/t5323-pack-redundant.sh                    |  5 +++
->  t/t9300-fast-import.sh                       | 12 +++----
->  t/t9301-fast-import-notes.sh                 |  2 +-
->  usage.c                                      | 12 +++++++
->  19 files changed, 146 insertions(+), 37 deletions(-)
->
-> Range-diff against v3:
+> If Git can do file content similarity checking to discover renames, then
+> surely so can jj and other CR tools do commit similarity checking to
+> discover commit message changes.  Is there anything that makes the
+> preceding statement incorrect?
 
-The updates to patches 1-3 and patch 6 all look good, but...
+That wouldn't work in the `jj describe qx -m 'new description'; jj new
+qx` example I used above, right? I think you're suggesting that when
+the user runs `jj describe qx -m 'new description'`, we should compare
+the reachable commits before the command to the reachable commits
+after the command and then record in some storage that the new commit
+is part of the same "change" as the old commit. Is that what you
+meant? In this particular case, the commit message obviously changed,
+so comparing the commit messages will obviously fail. We could of
+course make this command record the information itself, however.
 
-> 4:  2775f628c3 =3D 4:  01d4ed9acd whatchanged: require --i-still-use-this
-> 5:  b3d4d1f46a =3D 5:  a7aca55d5d whatchanged: remove when built with WIT=
-H_BREAKING_CHANGES
+> > Given that we already have this stable ID, [...]
+>
+> "We" == jujutsu?
 
-...I was surprised to see no changes to either patches 4 or 5.  While
-I didn't comment on those patches myself, Patrick did (and since he
-already called out the missing word I also noticed, I just didn't call
-it out again).
+Yes, sorry :)
+
+> How is this stable ID constructed?
+
+It's just random bytes (16 when using the Git backend, 32 in the
+Google backend).
+
+> How would things other than jj construct these?  We spent many messages
+> trying to work that out and in my estimate that wasn't settled.
+
+Random bytes has worked well for jj.
