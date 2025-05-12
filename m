@@ -1,117 +1,81 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77C9B25A2B7
-	for <git@vger.kernel.org>; Mon, 12 May 2025 13:42:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E98511B3956
+	for <git@vger.kernel.org>; Mon, 12 May 2025 13:50:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747057335; cv=none; b=rO9Cw4SoDHButbsjoRtqffNzFmniheRzAHqmvb4deomnj+Cb+sTxJxE/RXxxZVqnvNuTnefV4+Vp8ITzsPkcykNxl2zKPWc3DQWhfqfVtyNGFxaD5yTH5O1t3Vc2o0U7JkZwu1nNrlAk43P7ktqgPNqFgU9KR2rT4LhCd8rBM9U=
+	t=1747057821; cv=none; b=Zj53WVMZjiuC99N08rFbt3zO0xst2ciWx7KKRLNkShAM0MmtAgxY8WVUwm/hkKmv844RmuOJeIQS9g2adEfHIfi+9PhkqmXuKe3QeGFU3NvCimTS9ORYwtWpIhhLRSA+5fpjV2y6Lh0iKsGH4GW6yf1esjBJd7cpY4tmIOt7MJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747057335; c=relaxed/simple;
-	bh=fK82MvLWo8yP9WlFNIgFgYol8LxLax8Yseq/i2PWy6c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=t7hfCCYLBEIPKlAfCVb/JVkW5y52FHKCQi6wntT2ejpbYC+NFZMSepI3F2qyQVoWPKEH4CILjc9msAXbke4TZ7rFCbo9j0aIwnSNQeoBR+194OAfcves8/fXNy0RYmPO6bFLsO2j9oPinyTWaQwJYxM7HIHOvxjYMhPB+Y2h5vQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LUW4cxuY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WbAYuHnH; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747057821; c=relaxed/simple;
+	bh=NxJLPop+P6nVAtmFe2/ypEANfn7ky66VmlTCyjEGcEY=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tcA3D8mpyhu8Y+PqTSuMEkIAUIFgJievtIwvligMEG+PIycc1HJ0vcYkTpXHGrcJPIhd8JiIcLLMJvSKhx84Nk55OHPldBOxgIDsxXsPD7KQHAV+UubMX8F4lsbkdyy7CWnkeNUSU+7vVtdlIIxc7yly3LEousTk63EN7xyDz4E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=bYzHBQ9b; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LUW4cxuY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WbAYuHnH"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 464CC25400A3;
-	Mon, 12 May 2025 09:42:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-04.internal (MEProxy); Mon, 12 May 2025 09:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747057330; x=1747143730; bh=MyIAZGJrva
-	rsNPeWKnoywh5KHlJpkydEBfdKL9wI6Us=; b=LUW4cxuYU7qZZqhgHHUtpxny9A
-	qiiOW97limeHp2LRlL+nsJ60mQDSyFQa5ECI61wrYciEZ3D4COSn2U0HuNh6nIK8
-	J/LddzSPdJUQzvGdLS8IvvXp6ByapPiIZidSxrL5VLZmqjJaFsFJ51RxkxYtbkQb
-	QPjuabaKKdW7Ohd8ddObtIVawBg/vLi8JIYIwoHtWOMJW6vzEJa+NjrMvzFcNTpq
-	C+GTY4odhyRZWLhLQurizfi7HQ7orPJaKp3wDAlU4h13fBoEDPSOZEMw+wDCQh+f
-	aLkB1zRCuygYhfM2eT89o91pcmpgHKhZMmj5yk8XhUAUDnnqZhYD1bg74NbA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747057330; x=1747143730; bh=MyIAZGJrvarsNPeWKnoywh5KHlJpkydEBfd
-	KL9wI6Us=; b=WbAYuHnHM+LZQHlVeIuZVtBju0GkX6Da9w0CqJ+KVPgqMtHxXnY
-	H1BpCzsg1dMr27ArgBMVKU8Tm50W3HIPPSx6rIieqfHFbhc9IEGFludYJiIQ63cT
-	cko6rljLblbi8wzHrlLNCDuC2NCN+3I5LU6fzpz1OganosiLVdEzLday6K/bdoR5
-	jxcYKw/E4TLRPl7UV5oxGUVtc8Mmres1mZmNV53kyVyvwHQLb1kkB+i6T8zzhoKb
-	Rr8yxE4pdOr/Wj6rWKh3J+jyE7GXyfx/+L9mQ4jULk/bGKp0eVSk1UGSPTV/lBfQ
-	DjW2pRymsqhocIrQajmUJKMbHEQ6Of1Rvsg==
-X-ME-Sender: <xms:sfohaDPox--cUDBsgkC2qCBVi0ykHSiHdpQkaAhYao3bseO08-Fthg>
-    <xme:sfohaN_LtUNcIgbUnNRJAAskA2TX99wrNeynPGBaJ1U2mWv_b5DK7_zCzaQpwl14C
-    7QlTh9uhEd4d9uVUg>
-X-ME-Received: <xmr:sfohaCSAhnR4w-Gf_Fj6-YTA2knkXF8KThSl2pjDAedlkyoGIOfgPp5dtpJdoyKImcqKsqXgvR-JmGn08CVdQ6_irLh9YNuQF5mybpA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddugedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhkse
-    hfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
-    nhgvtghordgtohhmpdhrtghpthhtoheptghhrhhishhtihgrnhdrtghouhguvghrsehgmh
-    grihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehlvghonhhmihgthhgrlhgrkheisehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:sfohaHtTeBK3w-h5uUYSKC0NL5LXRdvKiMbnGLaPFXY9fBO8mWDPEQ>
-    <xmx:sfohaLfR49M6q7KUL9sXFyFbFBMMseJ-6GwvLhQkYRY3nWiv3qvVCw>
-    <xmx:sfohaD1RBW67I3uNW6zFoY3_CBKD6E45T5mK7iORhDQi_1FFAWagIA>
-    <xmx:sfohaH_2Gdzo4S4e05qeZf9mYXkp8D7IYvFlL0iNQfoEsBi6ahmKZg>
-    <xmx:svohaEqXVhC7pXizXnVuimdlfoPNt4nIwJXfPax46eFvxqmbT7AWs2b_>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 09:42:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
- <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
-  Phillip Wood <phillip.wood123@gmail.com>,  Leon Michalak
- <leonmichalak6@gmail.com>
-Subject: Re: [PATCH v2 1/4] test: refactor to use "test_grep"
-In-Reply-To: <4f92a1b4c24a6942fc55d305865bb55833d13c45.1746884789.git.gitgitgadget@gmail.com>
-	(Leon Michalak via GitGitGadget's message of "Sat, 10 May 2025
-	13:46:26 +0000")
-References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
-	<pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
-	<4f92a1b4c24a6942fc55d305865bb55833d13c45.1746884789.git.gitgitgadget@gmail.com>
-Date: Mon, 12 May 2025 06:42:08 -0700
-Message-ID: <xmqqo6vyvtcf.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="bYzHBQ9b"
+Received: (qmail 1903 invoked by uid 109); 12 May 2025 13:50:18 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=NxJLPop+P6nVAtmFe2/ypEANfn7ky66VmlTCyjEGcEY=; b=bYzHBQ9bhcwbUjEhaZAtZ3vzoSlquu9iA7GJOCuhXwAV5wYjG19q9kjgWJeM6AtAbOSFeItAyPcp/c4eLPcWYnHnYWZqS/Ci0qH7HzFFgb5ot6ZdsAl9q0Stp9qyYBFrTAQS6ddql//n4E2WDTuUYtKtVDAP7EO8M1qIZGSQu+H6Nv82yGepdbje/mIAkjC9fNZPTrZo9XK7nvAUkPr0eULIDyAO81zsuWS6aHmGANbVjmy+5wfe0PNvZIP0oeprHE8ZPYE+WcwdjOL0hdDpXO1BK/CjkSvj79q32eXsPMoSh+AVu6PRRnn5xs92d1cuMrS/XLTRN2XPNs0NH+0DMA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 12 May 2025 13:50:18 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 6745 invoked by uid 111); 12 May 2025 13:50:18 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 12 May 2025 09:50:18 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 12 May 2025 09:50:17 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	BERENDSEN Arnoud <arnoud.berendsen@soprasteria.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Cleaning up "contrib/"
+Message-ID: <20250512135017.GC1191957@coredump.intra.peff.net>
+References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com>
+ <3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
+ <aBhZHA7av8bWH9Ac@pks.im>
+ <xmqq5xieq3fs.fsf@gitster.g>
+ <aBmg1_wlF2fuk96M@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aBmg1_wlF2fuk96M@pks.im>
 
-"Leon Michalak via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Tue, May 06, 2025 at 07:40:39AM +0200, Patrick Steinhardt wrote:
 
-> From: Leon Michalak <leonmichalak6@gmail.com>
->
-> Refactor to use the modern "test_grep" test utility instead of regular
-> "grep" which provides better debug information if tests fail.
->
-> This is a prerequisite to the commits that follow which add to both test
-> files.
->
-> Signed-off-by: Leon Michalak <leonmichalak6@gmail.com>
-> ---
+> Other than that we also have some bits and pieces that _are_ actively
+> maintained, but that just don't have a better place to live:
+> 
+> [...]
+>   - Diff-highlight.
+>   - git-jump.
 
-These mostly look sensible, but I would title & phrase the commit
-description to 'use "test_grep"', not 'refactor to &'.  It's shorter
-and more direct ;-)
+These two are due to me. I don't have a problem moving them into their
+own projects if we want to clean out contrib.
 
-Thanks.
+I think diff-highlight is something that _should_ eventually happen
+inside git-diff itself (because it would be more efficient and we could
+do a better job). But it wouldn't share any implementation with what's
+in contrib/.
+
+>   - Credential helpers.
+
+These ones are tricky. In theory they could be spun off into their own
+projects, and we already have examples in the wild of things like GCM
+which are maintained totally separately.
+
+But I think we may need to find people to step up as maintainers. In
+particular, I think osxkeychain is probably used by a lot of people, and
+probably shouldn't just go away. But I don't know how the maintainer
+would be. I wrote it originally, but don't (and never did) use it
+myself, or even have access to a macOS machine.
+
+-Peff
