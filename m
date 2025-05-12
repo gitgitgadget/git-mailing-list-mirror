@@ -1,270 +1,258 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D10379475
-	for <git@vger.kernel.org>; Mon, 12 May 2025 14:07:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F60A9475
+	for <git@vger.kernel.org>; Mon, 12 May 2025 14:12:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747058872; cv=none; b=gGCXUtwnPvd3Yyx5rmc9x1DrpURdRFF7DkgabRhpIudwup908/7nzfM5a502BJcCNWOwLQL+SfhLepDqCoc1sy6vvU4O6M2iIWkzOST6KkxAHYBf3PRsxhikpjAciDeuB8Wnp4j4u3RvnmzWmZsFUIZWDSf74k4Jj5p60uU2uR0=
+	t=1747059133; cv=none; b=p+bj/ujZ80xXBG+5Qc/+WdPl8wdAtb0sczWbRXGyVXE9yyjJFowg+tX11OI0VXG+DJ3CZ45C90aEpb7STFe7SU+TOZpx7KIP90swFM1d9sSOjr4JsvdrXfvayCQA/bW5XivvfC1ZbfrkhtuR9vZJ9xqYcqHQljXMqWRjCMlgh68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747058872; c=relaxed/simple;
-	bh=crQmYzMYL1bHTUV1Gjju2hKedp0Lk26vDpwnhrt5E4s=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=dWnH8oMpbooy8eS51HXcfPEPlTffQgYU+aWyeiknwbYshWsgWdlAYq/qn52JF9h/vPZ+kGejaX4o8sRsCoLtae2idUpEYyHyK53ZuncKeWAnPxqKsnJ8Ji24BF9OW1jhfDEbkmoW1WeA+ZIy6FyPNg7PUoP5KeZ+fXWOiywhFe8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c/2t6VlO; arc=none smtp.client-ip=209.85.128.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747059133; c=relaxed/simple;
+	bh=NgTAQXQy9AIMl3W4qE4g9MnD1V6fQGilw7VHZsxJCfY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=q1hSrlfhe5joXSIpocd/+/NbRlBgsw6MZpzKEGHMnEcrUSk2LZ9haCxymSX6ApysMIvN8BEG+qxiyNCdLTYqUwEE3gIa0gGbHgyretFEsgqWiUDgoFkSDlnfQoj/XVjkN8FO2FHNTY+ITBnf7Na+JjIeVBao/vzjQzvQjJ7yep0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HCY3SDtK; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ksXZ6zZN; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c/2t6VlO"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43ce70f9afbso48011885e9.0
-        for <git@vger.kernel.org>; Mon, 12 May 2025 07:07:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747058869; x=1747663669; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=i6Zg5VLa3jOR+P7xddo8DMp09S88xjGgcIP/bs3ftBg=;
-        b=c/2t6VlOFZmhj5PtouvcXttfSXHA90UvaN6gzT1QWXt4LMYs+/RPWgqbLA4XLi6bcI
-         YC8wBiyRSknFH9HAkTS+0lcK7TdANpFFWvXTt+6ZekS2z5XlBmp8ALVr+auvlGsO6/di
-         n+yVju9yyDoCaW1iZogk/2M/ui3pC600XnFoTGPZKccG5eRYTNoMe24pyhCHb21gZsjs
-         Va0hDpb0qSOHdE2BDbOyyqqpn7dSnoDbunPlNQ4l+tyZnK/9IDDf3Or6jvAshyfd3Mfe
-         OcUUyAI3+Tknu1N+w4/QA+uKfYRd33Izua696Dcph7qrA1Co22ktQkhxtG/muW4tj4UV
-         cw9A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747058869; x=1747663669;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=i6Zg5VLa3jOR+P7xddo8DMp09S88xjGgcIP/bs3ftBg=;
-        b=ibB7cCJ/IiEAX78fDJDdaeL5zy40/HjwkbtFM3TgNEGLWagrImpuLAfAj/66I9O9+P
-         nakFz1PGq/I0yyJgShehXrLsFWuti7uAMnw8+okRw8ZNQ9e3oNAiRTS57atAF9ElAkO4
-         z1QTdxk4rntzm167iLYlhs4i1D2bBXRQwsfQJxnVaXagM8w2RiKNj5oA1F3HaHrWkEUO
-         c/a8c/2RmUGUvu5RwYQuDlqo7xes2jCMdvHAl0qFYu1eZlEfp4f7vORzjyvbyvG6GZa9
-         F0VGTeicT2EK4zBuyTobLu4YCQR2TSOMXI0OMaWe9TFywVcZkNziWAdFwo9HuYYYx1RW
-         CZmw==
-X-Forwarded-Encrypted: i=1; AJvYcCXhBxLbPXs3KPrqc4BVGPB9QnebsYcN9uWw0OS9pxcmJufa+X94J+/gVsa+/BOX2spqm8E=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyb+5qhfOPmqdUNhklqXAPOWiq1vsP9ctqN14rkxf4HZlVd3NSl
-	kEqsVIACtMjVXRFIJy8F7iPTMur2PEHY05AAQQSUVxqnqdO+z/Sd
-X-Gm-Gg: ASbGncuB5VGdRi8KEYA5VKkDoNkRs2ymYzxK7dpgX2ZUsiT3LfmxMRwGKXOPFKMdaSO
-	fRgjkYqBECxhenvR4A1Zf/jXje/NdKVUTyol3oJKMwKvdlqGPpb063nJWB4SevOHcx6CzqHG6Gy
-	EkB5o3fcvx1zwCHX8ZmstD8IvqGFSXWN1A396IX8W44ugzUjp6mW7UJleyQ8OoiL/fDu/Jw1NP/
-	ZIyluNbgSJ4hddf1t97xEaSmTDdrSOCH6mtVI2KivYSipUD1bK6zJ7rGpJ8FrQA45O9yxvNbgEj
-	i6NLHowIVawssiXd/m8wAGQBUBBRbhZ8ieOhWdy9FSIL1f0RbycDDv3gH56PSqMHPV1FwWRhXsj
-	j+ezpTvVWsu/Iloxcq4+HW1jqLL0=
-X-Google-Smtp-Source: AGHT+IEWiiEegcnFI5JjRxI3Nzp5CiBgtJMCzylWdr+m4fyYrghw8CIZZoLl015EZgtOQGRqo0Tr/A==
-X-Received: by 2002:a05:600c:3d05:b0:43d:ac5:11e8 with SMTP id 5b1f17b1804b1-442d6db8d28mr100207895e9.21.1747058868667;
-        Mon, 12 May 2025 07:07:48 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d67d74b5sm128125335e9.2.2025.05.12.07.07.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 May 2025 07:07:48 -0700 (PDT)
-Message-ID: <6bebcee9-1315-4ec3-a49b-d767f0f67bf7@gmail.com>
-Date: Mon, 12 May 2025 15:07:46 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HCY3SDtK";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ksXZ6zZN"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 1B9252540081;
+	Mon, 12 May 2025 10:12:10 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 12 May 2025 10:12:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747059129; x=1747145529; bh=X3JFzO2SiW
+	GzDt6//CeUPsbyvJBV1Km08SCsP1vCGmk=; b=HCY3SDtKYEEJrUVuBPcG9LdbCm
+	O88T4YZzaoYuRRAA/5MRXJgdPPPiMNyA5UcomxbcDQ7FvL//c4FotyZo4N7nUo0c
+	UkdrYu9NtNK+Xm9wnTH3gdajAU5qGgb4tINCN95Kep0NIqNt96k5i3wCyCCVLwA1
+	U383gaUO89BE+Miq9tfjH+RPFBkxf5bGNTGiyZh335r98kjm/cLEJbRqUCJRgCMd
+	p+TcFeipGqOvERSsDnPEK3ZDcnnJWEIHa11TfCcMi+TCj2c1vPVCb20MvtyvG8H/
+	EQdjf1e4ueZFoJXLqmhhbpKQwjFt2EMWR+4ppOiKn59XShdhlucQ7G9AaZ2w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747059129; x=1747145529; bh=X3JFzO2SiWGzDt6//CeUPsbyvJBV1Km08SC
+	sP1vCGmk=; b=ksXZ6zZNoQKBbZihmaPgNJ+49SetwiF8UWoroPUFlcnM1HdMic6
+	v2dkn3BHapEVP0XQDygsVdNLS8+jUXZ69FIa/GHaY1Y0hJSRWgX3is9ippAmq/Dh
+	OxeHQK6ljrIpdm+2jhxwby5EsCjCck9HT+bXtA4XHrELjzDRXT5V2zFkT0dWWmKE
+	Vn3+nXlVg770NUJ0LqEUC38aLnoeF2z+J+WCuDDL4K9Z9JnhYl9bgmeNftfHzb5C
+	I4hoOM4IqPdXl8yq1EDE63mhSIkG0xLx/H+kvSRnHgkykHOV9NjhIW4+QvIo6HYo
+	Q9vfXpv9gJ49ei16bRt8BDtz75VWO5HYZVw==
+X-ME-Sender: <xms:uQEiaKhuK9sBwy0UgnoENrIe1BeQYkkaAF4vD8jfLmR328f6-z0Qyw>
+    <xme:uQEiaLApv1H6TDlilvRzTuVvcTARXY0y2XVn5r9uAkAHp-lUdGtMMVT9RYbB8QqYF
+    0blj30iveTbVajSGg>
+X-ME-Received: <xmr:uQEiaCE4eZPGkmdCJF4MhOnnmfWkahKl4gTbM_ZlYdHNRc31AFpsO7kIfu9m_itgzqDLf_hMu94ZAGySbujyBqdrYnVtIsmaKB14-jk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddugeeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeevfeehuddvjeduffeijeeg
+    fefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpehgihhthhhusgdrtghomh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohephe
+    dtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:uQEiaDT4WVRCoWcPsNJqR5iT6KEtc5yC6Vmzwd0dlpRxp6zXEkSbBQ>
+    <xmx:uQEiaHwqgeO1viW_30Yr1VmNGglmAqdEm0H97xdaO0GXWWyK0AdJww>
+    <xmx:uQEiaB4bYR1j78PAzlH58a592ayuTsh8U7SxKvWN-mRVSP6VsQzegg>
+    <xmx:uQEiaEwR-zbb1WncDbS0qqy8F15GPof-oaL9oBt_BwMNVaxhehscgA>
+    <xmx:uQEiaF0-h-Z5ICDQitZGgC8nuJmvae22XL3Ta5SG6vbqidMESduBJWjS>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 May 2025 10:12:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH v2] mailinfo: fix pointential memory leak if
+ `decode_header` failed
+In-Reply-To: <pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
+	(Lidong Yan via GitGitGadget's message of "Sun, 11 May 2025 16:14:57
+	+0000")
+References: <pull.1956.git.git.1746711521614.gitgitgadget@gmail.com>
+	<pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
+Date: Mon, 12 May 2025 07:12:08 -0700
+Message-ID: <xmqqcycdx6iv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: Bug report for pull --rebase
-To: Mr Bill <billc56196@gmail.com>, git@vger.kernel.org
-References: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>
-In-Reply-To: <8c075e6e-c28c-4146-66bc-9bd7bc705611@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 06/05/2025 22:36, Mr Bill wrote:
-> 
-> Hi, I ran across this doing a pull --rebase using the current master version of git
-> 
-> This happens on Slackware linux, using git HEAD, version 2.35.8, and 2.46.2
-> 
-> I have a clone of the ffmpeg video package, with a few custom commits on top of it,
-> I periodically fetch and "pull --rebase" to update the underlying ffmpeg code.
-> I tried this recently, and my custom commits disappeared.
-> 
-> 
-> I looked further with a small test, and it looks like this is happening:
-> 
-> The setup:
->     "base" repo with a few commits (A, B, C)
->     "clone_1" cloned from "base", with a few extra commits (F, G)
->     "clone_2" cloned from "clone_1"
-> 
-> Add a few more commits for base (D, E)
-> 
-> Then use "git remote set-url origin" to point "clone_2" to "base"
-> 
-> Then, in "clone_2" do "pull --rebase"; the F and G commits disappear.
+"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-After the url is updated the reflog for the upstream branch still has
-an entry for "G". When "git pull --rebase" runs "git merge-base
---fork-point <upstream-branch> HEAD" it will return "G" and so that
-commit will be excluded from the commits being rebased. Running
+> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+>
+> In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
+> in dec will leak. Simply add strbuf_release and free(dec) will solve
+> this problem.
+>
+> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+> ---
+>     decode_header: fix pointential memory leak if decode_header failed
+>     
+>     In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
+>     dec will leak. Simply add strbuf_release and free(dec) will solve this
+>     problem.
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v2
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v2
+> Pull-Request: https://github.com/git/git/pull/1956
+>
+> Range-diff vs v1:
+>
+>  1:  81fdfb94315 ! 1:  90dc9b0d49b decode_header: fix pointential memory leak if decode_header failed
+>      @@ Metadata
+>       Author: Lidong Yan <502024330056@smail.nju.edu.cn>
+>       
+>        ## Commit message ##
+>      -    decode_header: fix pointential memory leak if decode_header failed
+>      +    mailinfo: fix pointential memory leak if `decode_header` failed
+>       
+>      -    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored
+>      +    In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
+>           in dec will leak. Simply add strbuf_release and free(dec) will solve
+>           this problem.
 
-   git fetch && git rebase --no-fork-point
+Much better.
 
-should keep the commits "F" and "G". Alternatively instead of updating
-the url you could rename the "origin" remote and then add a new remote
-called "origin" pointing to base. That way when you pull the reflog
-for the upstream branch will not have entries from the previous
-remote url.
+> +static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
+> +			    int rfc2047)
+>  {
+>  	const char *in = q_seg->buf;
+>  	int c;
+> -	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+>  	strbuf_init(out, q_seg->len);
 
-> Then, in "clone_1" do "pull --rebase"; the F and G commits are retained.
+Don't let the caller pass in an uninitialized thing and force the
+callee to initialize it.  Drop this strbuf_init(), and make the
+caller always do:
 
-That's because "F" and "G" are not in the reflog of the upstream branch
-in clone_1.
+	struct strbuf dec = STRBUF_INIT;
 
-It's debatable whether "git pull --rebase" should use "--fork-point" by
-default. On the one hand it is convenient when the history of the
-upstream branch has been rewritten but on the other hand it leads to
-unexpected surprises like this. The fact that there isn't a way to
-disable it and it ignores the rebase.forkPoint config setting does not
-help.
+	...
+		decode_q_segment(&dec, ...);
 
-Best Wishes
+instead.  That makes the division of labor easier to see (e.g., what
+if the caller had a code path that never calls decode_x_segment()
+before it has to return?  it might want to add something to dec
+itself so that it can base its behaviour always on what is in dec,
+or at the end it may just be able to strbuf_release(&dec) without
+having to remember if it called decode_x_segment().  Which means it
+is more convenient for it to always assume that dec is initialized
+whether it called decode_x_segment() or not).
 
-Phillip
+> -static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
+> +static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
+>  {
+>  	/* Decode in..ep, possibly in-place to ot */
+>  	int c, pos = 0, acc = 0;
+>  	const char *in = b_seg->buf;
+> -	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+>  	strbuf_init(out, b_seg->len);
+
+Ditto.
+
+> @@ -530,18 +529,23 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+>  		default:
+>  			goto release_return;
+>  		case 'b':
+> -			dec = decode_b_segment(&piecebuf);
+> +			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
+> +				goto release_return;
+> +			}
+
+Don't enclose a single statement block inside {braces}.
+
+>  			break;
+>  		case 'q':
+> -			dec = decode_q_segment(&piecebuf, 1);
+> +			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
+> +				goto release_return;
+> +			}
+
+Ditto.
+
+>  			break;
+
+Just a mental note (i.e., not anything wrong in the posted patch).
+Even though the caller is prepared to see decode_x_segment() to
+notice and report an error, the implementation just does not bother,
+and mostly skips a garbage in the input.  Outside the topic of this
+series, we may want to consider allowing the user to say "be strict
+and barf when encoded contents are broken".
+
+>  		}
+> -		if (convert_to_utf8(mi, dec, charset_q.buf))
+> +		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
+> +			strbuf_release(&dec);
+>  			goto release_return;
+> +		}
+
+This, together with ...
+
+> -		strbuf_addbuf(&outbuf, dec);
+> -		strbuf_release(dec);
+> -		free(dec);
+> +		strbuf_addbuf(&outbuf, &dec);
+> +		strbuf_release(&dec);
+
+... release here, look somewhat pointless.  As you declared "dec" at
+the outermost scope in this function, why not do the release at the
+place everybody else is released/freed, at release_return: label?
+
+>  		in = ep + 2;
+>  	}
+>  	strbuf_addstr(&outbuf, in);
+> @@ -634,23 +638,24 @@ static int is_inbody_header(const struct mailinfo *mi,
+>  
+>  static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+>  {
+> -	struct strbuf *ret;
+> +	struct strbuf ret;
+
+Do the "= STRBUF_INIT" at the caller.
+
+> +	int found_error = 0;
+>  
+>  	switch (mi->transfer_encoding) {
+>  	case TE_QP:
+> -		ret = decode_q_segment(line, 0);
+> +		found_error = decode_q_segment(&ret, line, 0);
+>  		break;
+>  	case TE_BASE64:
+> -		ret = decode_b_segment(line);
+> +		found_error = decode_b_segment(&ret, line);
+>  		break;
+>  	case TE_DONTCARE:
+>  	default:
+>  		return;
+>  	}
+>  	strbuf_reset(line);
+> -	strbuf_addbuf(line, ret);
+> -	strbuf_release(ret);
+> -	free(ret);
+> +	strbuf_addbuf(line, &ret);
+> +	if (!found_error)
+> +		strbuf_release(&ret);
+>  }
+
+THis is puzzling.  We add whatever is in ret to line, but release it
+only when there is no error?  What happens when we did find error?
+There does not seem to be any caller-callee contract on what the out
+parameter should contain upon an error, which is a good thing, so we
+should release it unconditionally, no?
 
 
-> Something like this:
-> 
-> # commit trees:
-> #
-> #    base: A---B---C          (initial base repo with 3 commits)
-> # clone_1: A---B---C          (clone_1 cloned from base at commit C)
-> #    base: A---B---C---D---E  (base added extra commits D and E)
-> # clone_1: A---B---C---F---G  (clone_1 added extra commits F and G)
-> # clone_2: A---B---C---F---G  (clone_2 cloned from clone_1 at commit G)
-> #
-> # *** now, change clone_2 to use base as the upstream url, and fetch / pull / rebase to get up to date ***
-> #
-> # * set clone_2 upstream to point to base repo
-> # * "pull --rebase" in clone_2 (should fetch from base repo and rebase F and G after D and E)
-> #
-> #   expected result: A---B---C---D---E---F---G
-> #   actual result:   A---B---C---D---E
-> #   commits F and G are gone
-> #
-> # Doing "pull --rebase" in clone_1 gives the expected result:
-> #   expected result: A---B---C---D---E---F---G
-> #
-> 
-> This looks like either stale state info after the "set-url" command,
-> or I'm doing something wrong.
-> 
-> I can repeatedly cause this to happen in my local ffmpeg devel area, if that helps debug/test this.
-> ... and answer questions, if any.
-> 
-> Thanks for the help!
-> Bill
-> 
-> P.S. here's the test script I used for this:
-> 
-> --------------------------------------------------------------------------
-> 
-> #!/bin/bash
-> 
-> set -o errexit
-> 
-> BASE_WORKING_DIR="rebase_bug.working"
-> 
-> # Clean up the test area
-> rm -rf "${BASE_WORKING_DIR:?}"
-> mkdir  "${BASE_WORKING_DIR:?}"
-> cd     "${BASE_WORKING_DIR:?}"
-> 
-> WORKING_DIR="${PWD}"
-> 
-> mkdir test_rebase_base.git
-> cd test_rebase_base.git
-> 
->      # create the base git repo, with commit A, B and C
->      git init
->      echo "Commit A" > testfileA
->      git add testfileA
->      git commit -m "Commit A"
-> 
->      echo "Commit B" > testfileB
->      git add testfileB
->      git commit -m "Commit B"
-> 
->      echo "Commit C" > testfileC
->      git add testfileC
->      git commit -m "Commit C"
-> 
-> cd ..
-> 
->      # Clone the base area into the clone_1 area
->      git clone test_rebase_base.git test_rebase_clone_1.git
-> 
-> cd test_rebase_base.git
->      # Add commit D and E to the base area
-> 
->      echo "Commit D" > testfileD
->      git add testfileD
->      git commit -m "Commit D"
-> 
->      echo "Commit E" > testfileE
->      git add testfileE
->      git commit -m "Commit E"
-> 
-> cd ..
-> 
-> cd test_rebase_clone_1.git
->      # Add commit F and G to the clone_1 area
-> 
->      echo "Commit F" > testfileF
->      git add testfileF
->      git commit -m "Commit F"
-> 
->      echo "Commit G" > testfileG
->      git add testfileG
->      git commit -m "Commit G"
-> 
-> cd ..
-> 
->      # clone from clone_1 into clone_2
->      git clone test_rebase_clone_1.git test_rebase_clone_2.git
-> 
-> cd test_rebase_clone_2.git
-> 
->      # change clone_2 to point to base
-> 
->      git remote set-url origin "${WORKING_DIR:?}/test_rebase_base.git"
-> 
->      # expecting this to pull in the "base" extra commits, and move the local HEAD commit after it in sequence
->      git pull --rebase
-> 
-> cd ..
-> 
-> cd test_rebase_clone_1.git
->      # do the same pull --rebase in clone_1
->      git pull --rebase
-> 
-> cd ..
-> 
-> cd test_rebase_base.git
-> git log --oneline > "${WORKING_DIR:?}/test_rebase_base.oneline.log"
-> cd ..
-> 
-> cd test_rebase_clone_1.git
-> git log --oneline > "${WORKING_DIR:?}/test_rebase_clone_1.oneline.log"
-> cd ..
-> 
-> cd test_rebase_clone_2.git
-> git log --oneline > "${WORKING_DIR:?}/test_rebase_clone_2.oneline.log"
-> cd ..
-> 
-> # The test_rebase_clone_1.oneline.log and test_rebase_clone_2.oneline.log should match, but they don't
-> 
-> echo "done"
-> 
-> --------------------------------------------------------------------------------------------------
-> 
+
