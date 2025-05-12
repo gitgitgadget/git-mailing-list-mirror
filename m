@@ -1,121 +1,154 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9D42AE68
-	for <git@vger.kernel.org>; Mon, 12 May 2025 13:26:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E31114286
+	for <git@vger.kernel.org>; Mon, 12 May 2025 13:32:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747056402; cv=none; b=PvNekZaesiWVnDheSlSpTbeFiJl463nfPymadF9/9FXSA579vH/tFhtvTWDyEGx0MeshfRmr5+BL4xkT2GUWwOB1jjUG4ymsQ5YeNiOnN2h9inxRnQCcneggqYHUlh4gL0faeNUHH5o6f2Ss+OCFZ76MoFwQPqw1cJtOVvlnhag=
+	t=1747056733; cv=none; b=nnrqQrREOi36m+PMduYK5RCQtM7ZzvzTWXh51PuKGUrvDDLIv4z3pddRzauJWB1hn8nezCLU7nyZPBf77XrkgJs4bxPbOEUIdheNIJNYxB4NHtV0GrcaHAwWL1gK0M0Amh5Ab3h6xHoD2nHFxpErGn3mig0EWemZfVds+kg9gWY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747056402; c=relaxed/simple;
-	bh=pDlS/OhdhpmYOco0pBkD2uXnPkWvGG4JZ783JtJuuHA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=sBklHf/34B+IemypTVlxJeRv3BoL9N3zWMoZlaheecgNFRk13ZaPBCNzVorwuvglPBADD76P1dfH46+rHO0IS2EDbDz5WtjnKUaliZZM2YbYsNfLcJU5eCdqagMUNd4zyLkEv9G+XriDnSS8KW1fY4iYyTPk3dQvee89/Xroi9k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ED1ewD1V; arc=none smtp.client-ip=209.85.210.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747056733; c=relaxed/simple;
+	bh=mUf5qIeRTVaSnY9LRbnFJmHggKF4hxrrb0q3gXUoC8Y=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Rfjt5Hap7pNVjshup9dyZCYhGnYGhdR1UFDZgoHnBegPC/WJrRrnOacN8WlPH5p/xLgTBoqgTRciDRdx6ciw0z7TReOf6b5BrNFZ7GP6C/aPm8gn0loMkLfZBHWBOsJDvFGRQ/z1hjQ6/obYFG7JsyIcoSH9upMU9jbBtfKiroI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TseskDKv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a49u6cnX; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ED1ewD1V"
-Received: by mail-ot1-f45.google.com with SMTP id 46e09a7af769-72b0626c785so4021969a34.2
-        for <git@vger.kernel.org>; Mon, 12 May 2025 06:26:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747056400; x=1747661200; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=VVE/lRszhGWV7qNNRDvo2Kc6cjullVI+F1Jv9nnakzU=;
-        b=ED1ewD1VZtcbbISzRiggzB0f6Twi/tsGGtAlpDjIPhJKZmwklTuuGBr4esWokxsREM
-         6Fpui/ah9P3bxtFyaXl3ie4Ei/PfF9UW5HtF8bZj9kQ373KNDXoAMYL3bYMnc/DgbNab
-         7AEo+n914TpKAWqu2kqMChxuHvmt3EVMHI6AgjR2zGvZaDIxSZxuZgi1Xw2ySWcfVMSs
-         KXuoiIRh9DolDti5ylL4BtwVP1yN06P5/U9LYZEtTYdIXXL/9U8K5VJozbzsGBIBSxWP
-         E7QyIvAKgWXLjn240DihlK/wfErEalVrKUqlLLM491xNRpBYQY74c1Jf4xr6cNcVy+06
-         YAxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747056400; x=1747661200;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=VVE/lRszhGWV7qNNRDvo2Kc6cjullVI+F1Jv9nnakzU=;
-        b=mLR4BXJR2AIYVGO45VnS5zT7Q0n+AlfSzubi9xFSSOkEw3PEH1F0XUFGlPrMmuD4oh
-         INuZJDL07bbj9JvC6amC5tAQz/mQKyIFS75udyQMmlPedkA89G5PsNgkeeI/wzQ0ERiF
-         Qft7GG4Nd932/KjvYl7z8P0KlxwarswruZRxxSVA3d/EQV15IUTwBOtOOqYOiERzfBgL
-         r6a4MIeT/LMeoWFt4y9YmCnlPWzqPRx9pPJYGMiDlrpIg7i1rXnd48vCp091SfcYqTBA
-         rZte7l6qalN6Jp4vYd7XSDofLw0++psDsgkDMIHFl/dREpcUnyh1+4nj9hLhmiA883CR
-         SBBw==
-X-Gm-Message-State: AOJu0Ywuux0d4XguTQFKU8G14+bEdH8OrQ8XjMRCOxZSYRY71xiVgUjK
-	cpen9UxXV2DftcbEPmIk9Mad3eO6b4LkSUx7n2ffZHGo+dHqdy7TmMDxV94e4KBcPwFozx7ISDc
-	4Jdbd8gHG2CoAhrR5kKwitIu8eFYijkMZKa4=
-X-Gm-Gg: ASbGncsMrBToH7tDNkmsu9VugMUssk8bCyUzR5zmcet3dBz6PCfUYnpE5BwiPAMphdW
-	CSlfBc9hpvatEN43FsgUoDEJcP594cJQE5enL3m4x/r//09mx2EnMlnJpZUcS1CZW3/q0m4hlVt
-	CQvdZbBXRmcOm01D2mIjKkHbXM64rfN6ERo2HzEGLXGLlIiVnrOgNdiCzWWl2dX+/n
-X-Google-Smtp-Source: AGHT+IHB4FGmkftyNam+VGxJdbvcwp5u7tDf6vvFlQ9VsnD83M//xswaVOhOpc5dHF7gPWBUu58gxKVl42PC9tWiPXU=
-X-Received: by 2002:a05:622a:2612:b0:494:7e51:acce with SMTP id
- d75a77b69052e-4947e51b4acmr29457071cf.39.1747056390008; Mon, 12 May 2025
- 06:26:30 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TseskDKv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a49u6cnX"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 458BF25400DE;
+	Mon, 12 May 2025 09:32:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Mon, 12 May 2025 09:32:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747056730; x=1747143130; bh=X4LJa3qR17
+	ebVsl6f23MrAnyxRBQSxiJPHBOcJ8pWQs=; b=TseskDKvVt+6kZ3pVMBJdVYFv6
+	QbEYR32J2z7BApJyqMkxn+GpHDVlOvSsPk+mkoa3kkzIaJ3xe/C9xRqHCBNMqgsY
+	zLgPkssRp3WqHBH2aDsYlZx75nwdNlErv98eKPqDhrpaP+eHvfLaBSEYUB7yZDZ/
+	f/YZUJka17YeUEwvV2+IfkKOpyA/s+SabBGfOv6UJAm8UKrFf7DtxA27LOiZq/xj
+	C5YF8FyVZJV68n5DdBB7PnexJ4cW2sM2hkQtOpsxM1Wa1UAfCl9BZOgHVZZLhG7n
+	P7lsFqPOnfdxblPyU4barG6waUodnyQUzB5A+YP/kwe+2wj0+aFxt5YHyWHg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747056730; x=1747143130; bh=X4LJa3qR17ebVsl6f23MrAnyxRBQSxiJPHB
+	OcJ8pWQs=; b=a49u6cnX9vvyJ+2BpRvetxkbn5BmP2zYGGcQ2dPVdRHl3cxoI/+
+	UjSwGPyU7xff86109KAAp71MRUXOIHGPd1RacvRZ5RxL7vz5+d/uUvjHIIgpyEAG
+	5lpmJK7SbebUBTigBOmPrG4t5duOZOHrO8dwtlDzofjXFtoWSIrdK3grV+h93nUs
+	qnTfttLb+XAikPjWFrvwFV6g+zhQT8OlCx6jSqJFKkqzK7uP7JDPf5vjrTo1BsaJ
+	lxYiq1rMep0flrMhECjxqBGj72va7ONXOOHaDQ7wwMq0TCrJNYqFB/kWRiXm29Vp
+	EoQ87XdpsNQ+li9MeE459KXt8m8gdYeFTiQ==
+X-ME-Sender: <xms:WfghaPDpm2GPoOIXv_xP2klaHxabbJAopc50Po8YnPu13uPyrUYK4w>
+    <xme:WfghaFhXxrQvGgXNGizIcvbV6xHNrB4oDUWDW5UXPoolXKC7ejo-bU-EsYqruC2gP
+    xF6uIKN0oHfOaIUlA>
+X-ME-Received: <xmr:WfghaKmYbPcMPrOpecNk7b-FJnfhmZsgpoi7r8SnIhhJX1UGrlU9q1ngE8VmA3z5NmPv_6Xf-MS5_WDJKUOJIA8rerUK1bkKdPt1WP8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddufeelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepvdejledvveejheetffffjedvtdfhveet
+    geetueefteehjedvtefflefgfeevudefnecuffhomhgrihhnpehmrghnjedrohhrghdpgh
+    hithhhuhgsrdgtohhmpdguohhmrghinhdrphhmpdhhohhsthhnrghmvgdrphhmnecuvehl
+    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
+    esphhosghogidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtth
+    hopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhi
+    nhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrh
+    hushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopeiiihihrghoseguihhs
+    rhhoohhtrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
+    esfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:WfghaBxCFHkmDi47BeZzNBoEx50lfKN8me_Jn33IQQSutG9urKWfuQ>
+    <xmx:WfghaEQSGTcKfORF8tWwYX7MFn_1-LEE2p3DHsabhh0SBnTm9-HYKQ>
+    <xmx:WfghaEZ7rEs5gcNtH-mE2wRLKRwF5w6R7sUebSvGZHoDDSeV3qW35g>
+    <xmx:WfghaFTyVvrdOhxjISw2jwEY6Q47TDRZOlv7FN5l9CVTDwYjxP0SxA>
+    <xmx:WvghaMKZx7GZl-oPUl4gosIxarhHu-B5PFJo2fFWgkrxaNKC0sfYOpDP>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 May 2025 09:32:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,
+  sandals@crustytoothpaste.net,  Zi Yao <ziyao@disroot.org>,  Kristoffer
+ Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH v2] send-email: try to get fqdn by running hostname
+ --fqdn on Linux and macOS
+In-Reply-To: <PN3PR01MB9597BC2E1B526A11D21BAB24B895A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Sat, 10 May 2025 07:37:13 +0000")
+References: <PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB9597BC2E1B526A11D21BAB24B895A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Mon, 12 May 2025 06:32:08 -0700
+Message-ID: <xmqqtt5qvtt3.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250510054542.556401-1-jayatheerthkulkarni2005@gmail.com> <xmqqbjryxb5j.fsf@gitster.g>
-In-Reply-To: <xmqqbjryxb5j.fsf@gitster.g>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Mon, 12 May 2025 18:56:19 +0530
-X-Gm-Features: AX0GCFvZ2KblxlgmImiMsMuFUpbtmidREag1eyzkyiNWV9X7J3Vn2HgdpMBauJM
-Message-ID: <CA+rGoLdzT01jLigX=Z+_tw715O0BibgVA+Sj+65Qwee7i5gLfg@mail.gmail.com>
-Subject: Re: [PATCH] submodule: prevent overwriting .gitmodules entry on path reuse
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, May 12, 2025 at 6:02=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > When a submodule is added at a path that previously hosted another subm=
-odule
-> > (e.g., 'child'), Git reuses the submodule name derived from the path an=
-d
-> > updates the corresponding entry in .gitmodules. This can silently overw=
-rite
-> > existing configuration if the old submodule was only moved (e.g., to
-> > 'child_old') without renaming the submodule.
-> >
-> > This patch improves the `module_add()` logic by checking whether the
-> > submodule name already exists in the config but maps to a different pat=
-h.
->
-> Quite sensible description of the problem and the proposed course of
-> improvement.
->
-> I do not think `--force` that allows the same name to be reused a
-> good idea at all, though.  We shouldn't encourage its use to resolve
-> such a case.  If what used to be called `child` now sits elsewhere,
-> perhaps because the tree structure was reorganized due to mass
-> renaming, but if it still is being used in the project, there is no
-> good reason to nuke the configuration recorded for that existing
-> module.
->
-> The module name used in .git/config is purely local so the user
-> should just give a new one a name that does not conflict, or even
-> better yet, perhaps the tool should pick a unique and nonconflicting
-> name automatically, no?
->
+Aditya Garg <gargaditya08@live.com> writes:
 
+> `hostname` is a popular command available on both Linux and macOS. As
+> per the man-page[1], `hostname --fqdn` command returns the fully
+> qualified domain name (FQDN) of the system. The current Net::Domain
+> perl module being used in the script for the same has been quite
+> unrealiable in many cases. Thankfully, we now have a better check for
+> valid_fqdn, which does reject the invalid FQDNs given by this module
+> properly, but at the same time, it will result in a fallback to
+> 'localhost.localdomain' being used. `hostname --fqdn` has been quite
+> reliable (probably even more reliable than the Net::Domain module) and
+> before falling back to 'localhost.localdomain', we should try to use it.
+> Interestingly, the `hostname` command is actually used by perl modules
+> like Net::Domain[2] and Sys::Hostname[3] to get the hostname. So, lets
+> give `hostname --fqdn` a chance as well!
+>
+> [1]: https://man7.org/linux/man-pages/man1/hostname.1.html
+> [2]: https://github.com/Perl/perl5/blob/blead/cpan/libnet/lib/Net/Domain.pm#L88
+> [3]: https://github.com/Perl/perl5/blob/blead/ext/Sys-Hostname/Hostname.pm#L93
+>
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> ---
+> v2: Avoid chomping $domain and assigning it to $maildomain if the command fails.
+>
+>  git-send-email.perl | 16 +++++++++++++++-
+>  1 file changed, 15 insertions(+), 1 deletion(-)
 
-That makes sense
-I see the point in using --force to resolve name conflicts might not be ide=
-al,
-especially when the previous submodule config may still be valid and in use=
-.
+Looks sensible. Will queue. Thanks.
 
-As a potential improvement, I was thinking of mimicking how duplicate
-filenames are handled: if the default submodule name (derived from the
-path) already exists and maps to a different path, we could
-automatically append an incrementing number (foo, foo1, foo2, etc.)
-until a non-conflicting name is found.
-
--Jayatheerth
+> diff --git a/git-send-email.perl b/git-send-email.perl
+> index 55b7e00d29..511f627ba6 100755
+> --- a/git-send-email.perl
+> +++ b/git-send-email.perl
+> @@ -1393,8 +1393,22 @@ sub maildomain_mta {
+>  	return $maildomain;
+>  }
+>  
+> +sub maildomain_hostname_command {
+> +	my $maildomain;
+> +
+> +	if ($^O eq 'linux' || $^O eq 'darwin') {
+> +		my $domain = `(hostname --fqdn) 2>/dev/null`;
+> +		if (!$?) {
+> +			chomp($domain);
+> +			$maildomain = $domain if valid_fqdn($domain);
+> +		}
+> +	}
+> +	return $maildomain;
+> +}
+> +
+>  sub maildomain {
+> -	return maildomain_net() || maildomain_mta() || 'localhost.localdomain';
+> +	return maildomain_net() || maildomain_mta() ||
+> +		maildomain_hostname_command || 'localhost.localdomain';
+>  }
+>  
+>  sub smtp_host_string {
