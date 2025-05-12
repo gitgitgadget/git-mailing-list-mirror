@@ -1,117 +1,300 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96FA82522A5
-	for <git@vger.kernel.org>; Mon, 12 May 2025 22:42:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D73E679D2
+	for <git@vger.kernel.org>; Mon, 12 May 2025 23:42:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747089728; cv=none; b=hBUMoVjAHWVdeEP4WZVwSkoVj8z1wwr8Va2bT1ziLamFtJ9s/gT/smGH6j//1rGLotPHddNR/deF9OHDfq8fHspzojt8lx13Jt4W65P/DGu+d5n5Bhsp/DQMO5LTheunEQCipoC8JsTjEiEAPBP4eItru+8F5RnE7LEkmLJdH4s=
+	t=1747093328; cv=none; b=ciEZdnKH/uQZGGIWF48X7bdwp2J5N0k5kWLPnpM3/rM/XyMfc3B2udSHgtf8lzg5XRafMevqAYitm/DOfQNee/6MhhjMlf1T/iR5cx/J2oCwNZBcb/C9XERQHSYhkfqT6HxZ1nTG1qWy2st1oQF+oWZ5Z3/fCHQf55H9Kcp9VxE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747089728; c=relaxed/simple;
-	bh=VmFRgtL1IIr3IDkpv9TmPYUeMmQBrEmJsMFH//uWuEo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=bzMpwk6N2+LBITuoaI2ATBplsB34sl0DChKgHIUNEpnrQURadkPg/j/WxHisv+35PYiw2F66UC8FCIwGu0fNe9U7WOQlg1EGgy0E6tUrvPkAERQh+DC0L3FnefNKL2PUjUuRiPcHCZRJeCwMbTbaXnv/O++W2+T3b98kYSWFGko=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=d/D1p0yt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JAf3H2OH; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747093328; c=relaxed/simple;
+	bh=bzJXsZY6k4JKsZyRwTBB6CnhwJEEk7shP7XKNrwzIK8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=fntbuModpZ9V6ojb8ijiSRyKzieZIsP3bIhvwv7j3+MDi46sgbu+vMEZeebIRwr9Zk8e0haZvnCsfhpkyKj2JikmvDCu8HsksV+OBghw0HQ+3O6ztJaKW9AfWxeFM+ATs4lR1aH4i9v9VGZ2dYVGfWPSygkFtDUpQhTmP2NvJ9U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aSqLMlsM; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="d/D1p0yt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JAf3H2OH"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A276C11400DF;
-	Mon, 12 May 2025 18:42:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 18:42:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747089724; x=1747176124; bh=zpGUREuze6
-	n/nQHI6TKfAgIGFNTwM9sQWopYI61Fsnk=; b=d/D1p0ytH+wYpG14e1pogMpr5E
-	ZbhFcShcTp9lIbRSYbq5WX8b6/T1kWmfdHTOTuFtt6RqrJ+XAv+/uRplsJgzXld3
-	sp75o24XWnU+fUw2zRZY+fYm+l0EFWQHVQHSLY81744t8FQejYOUPmvG75IfMhNE
-	8MreQhwkpAE8yd4ta3F4S+YmU8ibL+KQ0p2kP5g2vhMPW4cOQBbVQ2YgXF0/RaQw
-	Rnw7VMmr/fOjJVLTHsPTYbgOm5aEM3hzyYuzaJpJX4o7Ue4vU/gar2chwDzhFIZz
-	JlQloaUA1qHRoAFtlFG/OzF9tuyudBQ+cbGAd7C05cAFmrBLg+2WDp1ZaFow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747089724; x=1747176124; bh=zpGUREuze6n/nQHI6TKfAgIGFNTwM9sQWop
-	YI61Fsnk=; b=JAf3H2OHBsAyTBtFdmvJaHlYoo3oxl3Lc89QOY0UO4fO6/SZd8e
-	74Ww++gCVVhZ0/Ug1o4HWKA3E1dN7r3bCm8iCopipLvojUSeTkyaAO+M7IcC+bn8
-	eepAVMDueZZ5dQaQ6MvfNNYY+IQCR9cCE6EYJGHJWdchYp/F7E5UHvR+sXsi3IYJ
-	KCiNQeYCHcV/EW3Oyx4dteRVSdQoTGWvXHHFePMhTaWJomR5qrK8tDB1WB6USRI4
-	QWPc4EcFy+u9ez2gd/wpTofyA1GWpkg3ds3MOWDdpC2LF5zEqdUS50o6NmWack55
-	tEGnRY+32NqPjTX4SNYtnuEdBrlrFMm7Y6w==
-X-ME-Sender: <xms:PHkiaJa2YuP7pR7yyxaT8R69r_O0IGqKRwxE-BCcOWf7xwEI9ZAv0A>
-    <xme:PHkiaAaeUC_PVUlTW5cJxArJnNNOukRxbJ2tOrUpAxFvMNb0NiCqawPjPnZpPUEKW
-    xwbjw6MIIV-ZWkNIg>
-X-ME-Received: <xmr:PHkiaL8ENWyodFfnse97CRTbYEVL6HTUbRhjfzvutGGohuAbQn0m5hiQ1UVNlZ2ibTmm0N4vpLoIji2bsR2LabV6sXfSKhG4hJTWEEw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
-    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
-    ghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:PHkiaHoLzvuif5vAaF2TWVuUmOtoJOTOMgr4tRgnzyOvXA6FX1bGtg>
-    <xmx:PHkiaEpDxvETkTDu8OpzmX8lLVN7bRTqgO8Mo8b6gfU50K78dGZaqw>
-    <xmx:PHkiaNS-_cYOW4xc0hfW01tAJ3RIYpNjKRGM-U1dgAGVRKmycNshmQ>
-    <xmx:PHkiaMpJium06G_r3cDkF6a7euJ_I0FOV11XqTZCuz8V2NUAuy1AWg>
-    <xmx:PHkiaEGNBQ_C-e8PeyfuCxfjO0d6jX-vWSid5zKSaUxnqQKfcvyzxk9d>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 18:42:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v4 0/6] Nominating "whatchanged" for removal
-In-Reply-To: <CABPp-BGUAyRWsnRc+rrsBfPg4hzAoKPMBiD0aH4jxwdO4mEk0w@mail.gmail.com>
-	(Elijah Newren's message of "Mon, 12 May 2025 14:21:33 -0700")
-References: <20250503005814.3030099-1-gitster@pobox.com>
-	<20250512190311.1451556-1-gitster@pobox.com>
-	<CABPp-BGUAyRWsnRc+rrsBfPg4hzAoKPMBiD0aH4jxwdO4mEk0w@mail.gmail.com>
-Date: Mon, 12 May 2025 15:42:02 -0700
-Message-ID: <xmqqbjrxjvt1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aSqLMlsM"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43cfebc343dso33656805e9.2
+        for <git@vger.kernel.org>; Mon, 12 May 2025 16:42:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747093324; x=1747698124; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1ri8Htqb1tcJ0/b9/FTKDyYxMmpgTgWvNj899rkIoQE=;
+        b=aSqLMlsM6k+juwgzzJz46Ebd8NdoN5FXG7PbBZlHPBHNgmIQOt1hysQYUDsVp8wOST
+         pnIajge1+RD7+1M0sWWg6xBB32ICzP7ajKiU+I2ryUk9vcXip7mEKIOf3SmzVkjZCqgu
+         kzIzEDSgdSEL9unyq8boqdfvZ4gf8z2eTVzFGupn6N6D6+d5M4SAUI9mhdOFs2zDbpNU
+         ECRgVRooyGKYLnzNaYOJZCUuu13KuAfSMctZi9110obUrBinBmazS0ICGOOk8833uDVh
+         AJXY+joTaDKrJ/8nRyVCwYDG9GspoqrikVsrhHG/E/8QPS6AX5Wzi11XGfMFlIQ241gf
+         KHzA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747093324; x=1747698124;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=1ri8Htqb1tcJ0/b9/FTKDyYxMmpgTgWvNj899rkIoQE=;
+        b=Aflic+xzVzmtK1X+zd5fjmu67inzoFU3emxPcRBR3+XHx4djtBtFs5azoNIyeyBGy3
+         ShCV8Zis11RX+znuagw7zD9ZyywX24QzlEWnm38nQLp7OYZMQQqS3DOinXGL6yfPbYBW
+         DW+DgiOj/cZAwDdOdtChERJ9/JQaH9RQvmETPsQw1nnsNQyJ15muOdvzg1TolHMyY+Nc
+         MZMWqUFQGKezlSSVM6Qu1XXvg4Rf2dDQKGno/NGISVeEGiUtDfOvVJ+y4wXFhi4bZ9wK
+         4T3z/Y0f+m5kGtfdb6/iPVaD1xrF08x1suC8zanWA5jDaH06fM1eQLqfiFyECt+Ok8gs
+         r7Iw==
+X-Gm-Message-State: AOJu0YwGKf3uEPlzyIghYczf5l5Kwl8t7/NG7nlLCbYquA2XVKHPa3sV
+	5GHytp0euoOLcYYXXRlTeoRjtaAJaquWCrVKU/iexwLfAruw8JQWAdbNfA==
+X-Gm-Gg: ASbGnctdQsAGg3fWxxrGUBraR2DgTBpGRnFSE2V4sHy/Nh2Hg+yX3Ic3FHxB8Ct8Uj6
+	pQoQib55lxXuZQclCaNnjZtpDXsO7q3e8RelQERPsVD4S4YWaElj6yF80Dptsqj39KL1GxEx9+Q
+	I1XMUtm5xnyzP0h9Vl8SQkDJFALV3fVZte8et+frWuWeht0fY5Rb1Xzx9kZNePFVQeFdP0bnO0f
+	gbAut7bM/HIJMWnqvzDdsYOgId9j7edRzb3E1hsuA2ICt85DHNVgeZIe6yWXmWoy9fKIj5+k0lD
+	WFmHgK2lSWZi0uovlFZZQKuZLCtKiHadTTb9fYlZf9CcGfFT4yHK
+X-Google-Smtp-Source: AGHT+IGbHlYuanRtUYPHH1vd1mTIhUV2R7kkB9M4fZ58IpnUS1WbxOzRYRffK/n9SbUJ23gdbYwvKg==
+X-Received: by 2002:a05:600c:8211:b0:43b:c0fa:f9dd with SMTP id 5b1f17b1804b1-442d6dd22edmr106116285e9.25.1747093324042;
+        Mon, 12 May 2025 16:42:04 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d5cf5d6bsm148693645e9.1.2025.05.12.16.42.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 May 2025 16:42:03 -0700 (PDT)
+Message-Id: <pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
+References: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 May 2025 23:42:00 +0000
+Subject: [PATCH v2 0/2] merge-tree: add new --dry-run option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-Elijah Newren <newren@gmail.com> writes:
+Changes since v1:
 
-> The updates to patches 1-3 and patch 6 all look good, but...
->
->> 4:  2775f628c3 = 4:  01d4ed9acd whatchanged: require --i-still-use-this
->> 5:  b3d4d1f46a = 5:  a7aca55d5d whatchanged: remove when built with WITH_BREAKING_CHANGES
->
-> ...I was surprised to see no changes to either patches 4 or 5.  While
-> I didn't comment on those patches myself, Patrick did (and since he
-> already called out the missing word I also noticed, I just didn't call
-> it out again).
+ * Renamed --mergeability-only flag to --dry-run, as per suggestion from
+   Junio
+ * added some commit message clarifications
 
-The meson stuff did not exist in the codebase the topic was based
-on, so it won't be squashed into any of these individual patches,
-but if you take a look at
+This adds a new flag, --dry-run, to git merge-tree, which suppresses all
+output and leaves only the exit status (reflecting successful merge or
+conflict). This is useful for Git Forges in cases where they are only
+interested in whether two branches can be merged, without needing the actual
+merge result or conflict details.
 
-    $ git show seen^{/^Merge.branch..jc/you-still}
+The advantage of the flag is two fold:
 
-using any of the recent tip of 'seen', you'll see these changes
-applied as an evil merge to adjust the topic to an updated meson
-machinery in the more recent codebase.
+ * The merge machinery can exit once it detects a conflict, instead of
+   continuing to compute merge result information
+ * The merge machinery can avoid writing merged blobs and trees to the
+   object store when in the outer layer of the merging process (more details
+   in the first commit message).
 
-For other changes, "developped" was already fixed, but "the command
-was retained" was missed, so I'll locally amend.
+Elijah Newren (2):
+  merge-ort: add a new mergeability_only option
+  merge-tree: add a new --dry-run flag
 
-Thanks.
+ Documentation/git-merge-tree.adoc |  6 +++++
+ builtin/merge-tree.c              | 22 ++++++++++++++++++
+ merge-ort.c                       | 38 +++++++++++++++++++++++++------
+ merge-ort.h                       |  1 +
+ t/t4301-merge-tree-write-tree.sh  | 38 +++++++++++++++++++++++++++++++
+ 5 files changed, 98 insertions(+), 7 deletions(-)
 
 
+base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1920%2Fnewren%2Fmergeability-only-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1920/newren/mergeability-only-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1920
+
+Range-diff vs v1:
+
+ 1:  09292804cff ! 1:  4757c4810d3 merge-ort: add a new mergeability_only option
+     @@ Commit message
+          Git Forges may be interested in whether two branches can be merged while
+          not being interested in what the resulting merge tree is nor which files
+          conflicted.  For such cases, add a new mergeability_only option.  This
+     -    option allows the merge machinery to, in the outer layer of the merge:
+     -      * exit upon first conflict
+     -      * avoid writing merged blobs/trees to the object store
+     +    option allows the merge machinery to, in the "outer layer" of the merge:
+     +      * exit upon first[-ish] conflict
+     +      * avoid (not prevent) writing merged blobs/trees to the object store
+     +
+     +    I have a number of qualifiers there, so let me explain each:
+     +
+     +    "outer layer":
+      
+          Note that since the recursive merge of merge bases (corresponding to
+     -    call_depth > 0) can conflict without the outer final merge (corresponding
+     -    to call_depth == 0) conflicting, we can't short-circuit nor avoid
+     -    writing merges blobs/trees to the object store during those inner
+     -    merges.
+     +    call_depth > 0) can conflict without the outer final merge
+     +    (corresponding to call_depth == 0) conflicting, we can't short-circuit
+     +    nor avoid writing merged blobs/trees to the object store during those
+     +    inner merges.
+     +
+     +    "first-ish conflict":
+     +
+     +    The current patch only exits early from process_entries() on the first
+     +    conflict it detects, but conflicts could have been detected in a
+     +    previous function call, namely detect_and_process_renames().  However:
+     +      * conflicts detected by detect_and_process_renames() are quite rare
+     +        conflict types
+     +      * the detection would still come after regular rename detection
+     +        (which is the expensive part of detect_and_process_renames()), so
+     +        it is not saving us much in computation time given that
+     +        process_entries() directly follows detect_and_process_renames()
+     +      * [this overlaps with the next bullet point] process_entries() is the
+     +        place where virtually all object writing occurs (object writing is
+     +        sometimes more of a concern for Forges than computation time), so
+     +        exiting early here isn't saving us much in object writes either
+     +      * the code changes needed to handle an earlier exit are slightly
+     +        more invasive in detect_and_process_renames() than for
+     +        process_entries().
+     +    Given the rareness of the even earlier conflicts, the limited savings
+     +    we'd get from exiting even earlier, and in an attempt to keep this
+     +    patch simpler, we don't guarantee that we actually exit on the first
+     +    conflict detected.  We can always revisit this decision later if we
+     +    decide that a further micro-optimization to exit slightly earlier in
+     +    rare cases is worthwhile.
+     +
+     +    "avoid (not prevent) writing objects":
+      
+     -    There is a further potential micro-optimization here.  rename/rename
+     -    conflicts have the potential for nested conflicts even without recursive
+     -    merges; because of that, handle_content_merge() can be called multiple
+     -    times and is done via different paths.  Currently, we only exit early in
+     -    process_entries(), which is where the final handle_content_merge() is
+     -    invoked.  Since rename/rename conflicts have an additional earlier
+     -    handle_content_merge() call that can be invoked from
+     -    detect_and_process_renames() (via process_renames()), we could
+     -    potentially exit earlier at that call point.  However, rename/rename
+     -    conflicts are exceptionally rare, and feeding the extra logic through
+     -    didn't seem worth it.  (And, if we don't exit early at that point, then
+     -    any resulting blobs need to be written to the store so that subsequent
+     -    handle_content_merge() calls trying to use the blob don't throw
+     -    exceptions.)
+     +    The detect_and_process_renames() call can also write objects to the
+     +    object store, when rename/rename conflicts involve one (or more) files
+     +    that have also been modified on both sides.  Because of this alternate
+     +    call path leading to handle_content_merges(), our "early exit" does not
+     +    prevent writing objects entirely, even within the "outer layer"
+     +    (i.e. even within call_depth == 0).  I figure that's fine though, since
+     +    we're already writing objects for the inner merges (i.e. for call_depth
+     +    > 0), which are likely going to represent vastly more objects than files
+     +    involved in rename/rename+modify/modify cases in the outer merge, on
+     +    average.
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+ 2:  0b32c80d286 ! 2:  1d18ab7feb8 merge-tree: add a new --mergeability-only flag
+     @@ Metadata
+      Author: Elijah Newren <newren@gmail.com>
+      
+       ## Commit message ##
+     -    merge-tree: add a new --mergeability-only flag
+     +    merge-tree: add a new --dry-run flag
+      
+          Git Forges may be interested in whether two branches can be merged while
+          not being interested in what the resulting merge tree is nor which files
+     -    conflicted.  For such cases, add a new --mergeability-only flag which
+     +    conflicted.  For such cases, add a new --dry-run flag which
+          will make use of the new mergeability_only flag added to merge-ort in
+          the previous commit.  This option allows the merge machinery to, in the
+          outer layer of the merge:
+     -          * exit upon first conflict
+     -          * avoid writing merged blobs/trees to the object store
+     +        * exit early when a conflict is detected
+     +        * avoid writing (most) merged blobs/trees to the object store
+      
+          Signed-off-by: Elijah Newren <newren@gmail.com>
+      
+     @@ builtin/merge-tree.c: int cmd_merge_tree(int argc,
+       	int original_argc;
+       	const char *merge_base = NULL;
+       	int ret;
+     -+	int mergeability_only = 0;
+     ++	int dry_run = 0;
+       
+       	const char * const merge_tree_usage[] = {
+       		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+     @@ builtin/merge-tree.c: int cmd_merge_tree(int argc,
+       			    N_("do a trivial merge only"), MODE_TRIVIAL),
+       		OPT_BOOL(0, "messages", &o.show_messages,
+       			 N_("also show informational/conflict messages")),
+     -+		OPT_BOOL_F(0, "mergeability-only",
+     -+			   &mergeability_only,
+     ++		OPT_BOOL_F(0, "dry-run",
+     ++			   &dry_run,
+      +			   N_("suppress all output; only exit status wanted"),
+      +			   PARSE_OPT_NONEG),
+       		OPT_SET_INT('z', NULL, &line_termination,
+     @@ builtin/merge-tree.c: int cmd_merge_tree(int argc,
+       	argc = parse_options(argc, argv, prefix, mt_options,
+       			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+       
+     -+	if (mergeability_only && o.show_messages == -1)
+     ++	if (dry_run && o.show_messages == -1)
+      +		o.show_messages = 0;
+     -+	o.merge_options.mergeability_only = mergeability_only;
+     -+	die_for_incompatible_opt2(mergeability_only, "--mergeability-only",
+     ++	o.merge_options.mergeability_only = dry_run;
+     ++	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+      +				  o.show_messages, "--messages");
+     -+	die_for_incompatible_opt2(mergeability_only, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+      +				  o.name_only, "--name-only");
+     -+	die_for_incompatible_opt2(mergeability_only, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+      +				  o.use_stdin, "--stdin");
+     -+	die_for_incompatible_opt2(mergeability_only, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+      +				  !line_termination, "-z");
+      +
+       	if (xopts.nr && o.mode == MODE_TRIVIAL)
+     @@ t/t4301-merge-tree-write-tree.sh: test_expect_success setup '
+       	git commit -m first-commit
+       '
+       
+     -+test_expect_success '--mergeability-only on clean merge' '
+     ++test_expect_success '--dry-run on clean merge' '
+      +	# Get rid of loose objects to start with
+      +	git gc &&
+      +	echo "0 objects, 0 kilobytes" >expect &&
+     @@ t/t4301-merge-tree-write-tree.sh: test_expect_success setup '
+      +	test_cmp expect actual &&
+      +
+      +	# Ensure merge is successful (exit code of 0)
+     -+	git merge-tree --write-tree --mergeability-only side1 side3 >output &&
+     ++	git merge-tree --write-tree --dry-run side1 side3 >output &&
+      +
+      +	# Ensure there is no output
+      +	test_must_be_empty output &&
+     @@ t/t4301-merge-tree-write-tree.sh: test_expect_success 'Failed merge without rena
+       	grep "CONFLICT (modify/delete): numbers deleted" out
+       '
+       
+     -+test_expect_success  '--mergeability-only on conflicted merge' '
+     ++test_expect_success  '--dry-run on conflicted merge' '
+      +	# Get rid of loose objects to start with
+      +	git gc &&
+      +	echo "0 objects, 0 kilobytes" >expect &&
+     @@ t/t4301-merge-tree-write-tree.sh: test_expect_success 'Failed merge without rena
+      +	test_cmp expect actual &&
+      +
+      +	# Ensure merge has conflict
+     -+	test_expect_code 1 git merge-tree --write-tree --mergeability-only side1 side2 >output &&
+     ++	test_expect_code 1 git merge-tree --write-tree --dry-run side1 side2 >output &&
+      +
+      +	# Ensure there is no output
+      +	test_must_be_empty output &&
+
+-- 
+gitgitgadget
