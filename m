@@ -1,55 +1,55 @@
 Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755062512EF
-	for <git@vger.kernel.org>; Mon, 12 May 2025 19:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3855827703A
+	for <git@vger.kernel.org>; Mon, 12 May 2025 19:03:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747076598; cv=none; b=U3MHhJk/tJ54APcWMpBh2Wt5nDrpTAXyztwXfNwky8Zsct0kZj+r0jBK5607SKCEIlPkBMATYKRhlufkWlMcQ1Co6WYWMGn55WSP8Vok7rVvu7zJaHV26ZDtxSRSYM6fw4qB5gjXzj3mssPgWvbHeJxGfypD16LIbJ7aNB1/7a4=
+	t=1747076599; cv=none; b=X3KmzfGz89INrV/M6Qz20EmuL3i6fpHetV9PqtfAV0XppkuOCpPWJP0hwmufBTgykJ21/gzocAb9JsbY+NkAKVWD5KEBGkwDgH5JtUd4MF1SyFx5Bjk6hc3EOoUPaQJUnKGT79J5ALo9JpTHGdbVgYJI9CN1xRMH++z+bXHvqoY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747076598; c=relaxed/simple;
-	bh=KhYWOd5VccIncvH4EBwP5GSpxFOiToyqnb6goTe8sQY=;
+	s=arc-20240116; t=1747076599; c=relaxed/simple;
+	bh=Vx0ukIBsC/PW5fOnATyXe5puxnmD25cK86KhSB0iTh8=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=gB8SyWLymG5hNRyfOp+lx/+zTu90V0aaefRJhIq2XOwt7G63TO4X4dPXc/rTqrYeVYsnHljwVKM78nW8jhcwqNGo+KhgbDaWia6m2VYBm2539PyXuvNdUO7nrlcWCoBWTNv/q6UyePaZ+2Y0YRYBGLdiIhJ0JHIhqsobVkTxepE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=OTgsD8xm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=crt9YE/C; arc=none smtp.client-ip=103.168.172.148
+	 MIME-Version; b=ePTdaent/lhQWtgd5UrGbL1Q4RVgu2RSm02PIMLptHNLdbGXzTnW+NNKdLEgaYVCRqRRrYFLR/owozvyHEoWqm1qAublkD1BhAeolw57fVaquSdMDGDpxGQF3UXg6uTt+HNh/oZyNfTAiUIZCht9BHiyJ6LaWmMtSfpVHOrAV+0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=nfYw8nXY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YAullJW6; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="OTgsD8xm";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="crt9YE/C"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="nfYw8nXY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YAullJW6"
 Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8614A138011C;
-	Mon, 12 May 2025 15:03:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 15:03:15 -0400
+	by mailfout.phl.internal (Postfix) with ESMTP id 1D45D13800D6;
+	Mon, 12 May 2025 15:03:17 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 15:03:17 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:date:date:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm2; t=1747076595; x=
-	1747162995; bh=WuDMIfw0LdPOGC9pGCivhtLgaZ9kZAAD4Ix+eh+53u8=; b=O
-	TgsD8xmqdNUW/U3dubzm+3GMT9DkWOdzP29Sdsx60u+LPXwMMXeZYhzmiSMCnWnn
-	ZaOtGhc1U8YoMPJtbKF09YY5pTR50tvN2Ff0DgmhprvI/OhmvpSbDEOTP1wOU3qD
-	OdhfYyIKmCcJqr4gD++PPBrXq4QhbA4Jh1n8I++R+mfDWnMheFEve/VWAaQMQ7PL
-	rIkx/R8pUufrvM33EImKyJqFo+GJ3dlaIN3cXcPYhAdovMsfoxN5IToLnI7hS8nr
-	D1E3oSaGZ52SBbS8xr3h0APvFKR8nXSiI5Jk6M3e2SK0vmyfFsG8Yq2X8OkDb0Ct
-	MvGslsSyOoS4UZhpnaUQg==
+	:reply-to:subject:subject:to:to; s=fm2; t=1747076597; x=
+	1747162997; bh=TKTUhbag6ST43Tx4L+5am4gJsbtAXM6wNJeE2cWFa84=; b=n
+	fYw8nXY09oz3a4DUqUmhpWAbBE1eqSOjE40wz1ETPpbxCw142lDWho/vyRNxo8jP
+	Cy8H2iQfz5JHptdyJfJSfzlV2pFtOMBHvLCdYYVVt7Rtzxskh5PD9ufbJhR0ehp7
+	QD20+IKgNrW3KwuVzvuCYJ3HgxSc9+I/sB+bBUtVOKcSzTeUkQup+9mas83HpcN/
+	0Vtw39JRmsYYV6f5a9QxgrEyTB20GVq+wqj9FGQoCkWOoZ0VEpGNu3su55UeUMx8
+	ej88KkG99gHg9PQVUpI+E8i8V6n1FYMLu1Lei4hUkK6f8qU1dq6EH+oqyAwPdOuv
+	jGHKjX1MPhcujZKHLfi5A==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:date:date:feedback-id:feedback-id:from:from
 	:in-reply-to:in-reply-to:message-id:mime-version:references
 	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1747076595; x=1747162995; bh=W
-	uDMIfw0LdPOGC9pGCivhtLgaZ9kZAAD4Ix+eh+53u8=; b=crt9YE/CvTdMvJVH4
-	DohLpHjbH43a+Ty2HYwF7QNkT55pYrew0bgLF2uHUEAGXZ7zrhbBTwZPTq41MvDG
-	aUZ9uq3DJ587Q4jamlupKLMIgwWbR6sDPzYfdzK4E3ZSrIk/pEPSLxRtPbuy7IE7
-	+CwMg0VdktZ2XDs8EoVdfuq4Eb6nlZSqRtQzFgN1AwruJJftM2xYNWR3SdSV1zg6
-	BLhdIdDe32fuq+w7Cs2+RMPUw81yyEGCx3mkeH+IeG/VwLqHyQsSPvv3Js7Vp/9O
-	IHzROhuy4e2TNEbgAtDV9opgg99EDf581U/9+xR1oTLExPq5Q1/ScsmG2w7Dugtj
-	uXLXQ==
-X-ME-Sender: <xms:80UiaOoYA2yEDn8jkWEqANhwKjISi-1LS9yuJIdL07tiZ3nJEyKgxg>
-    <xme:80UiaMrzYfHvtJO_yxoiamWCamM1oQKUg5DaS6WsFqdsBLTBU2rEFWuAnIoMXR6nn
-    t2YITSTyGrvwxxaEg>
-X-ME-Received: <xmr:80UiaDOhVKmuDdsC4B5wSbDiDJPJ6koXdUXHc8CRevQsKNcMK2E5UryBZrkL2ViyklNcsMFT5BxZYhnjjJxI16y00DIhDRqWvUy4Gjk>
+	:x-me-sender:x-sasl-enc; s=fm3; t=1747076597; x=1747162997; bh=T
+	KTUhbag6ST43Tx4L+5am4gJsbtAXM6wNJeE2cWFa84=; b=YAullJW6kRQ4LAy3B
+	CiLWfLqCv3a7AIP0aFSy/GmGqZEa0e/r+2mUnm06VDltbMoRs0G/O5cZZvsI/ol+
+	vAk7irrhmWNRhs3SM+0o7LCMFjr+s/yRFc0h/VCx46mJGpjqqg5Rc4Rg+NXckrjT
+	t33N/Z693pJ9cABDv3SnsriPSrxbzjCuRLWpjPiSeTWSMhCeWrcGPYvc4nU3iLX5
+	PTPT/qUYKkU0VbqiHtnVe3URN04hj00+0hAENHoOtWhySu9+naF5D+86DlK/i5Le
+	ltdo6DFIgCe2vrajaHmYLyUQWDxWOTkoZeKfcVi4p/Dza/eFUiTKXMgc8lad6lIU
+	XuQVg==
+X-ME-Sender: <xms:9EUiaOHaNTQF72UstF6t1QswkeUY2bNuXbetf9p0WBe8LsjVM9wqFg>
+    <xme:9EUiaPVz9spuUjDh4Ew22yKgVuTfy_FX6G89PXeHzI1yg6wpTIqNrWaH5ihey7_k9
+    EbjpqeP6fjwfDV-ew>
+X-ME-Received: <xmr:9EUiaILVWSrQIxthRv0kAHWerX_4eXsaV9KLSAkT1oKIUZQoBdWxGZ6oZAIrFBVNu26lwYXv40uFsjlfdnpHgb9QkPa0Nfoegidmgow>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvtdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -61,20 +61,20 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddvtdehucetufdote
     tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
     hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtgho
     mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:80UiaN7gwztebbuy1XhHTJvYWNIZYl6-K3inmPWtpj6oCNvDtkRJsg>
-    <xmx:80UiaN72WXvHr2v-u3DceaCjAk8FLoRpQmFzL6eM5XTjPiWUMRdglA>
-    <xmx:80UiaNgsqPJLOSJYo05fgY1JOWpQ2hPzqqRhdv-pHxNnr21jq3Bskw>
-    <xmx:80UiaH65ooPqDZmvoxW60fStqVzhxBvv1cK42kadOn45B5jxOtJsyg>
-    <xmx:80UiaAVArps4asluaQdnXFYUVr1P7dWdzoMudU3t2yv46KX5vbKDmH_e>
+X-ME-Proxy: <xmx:9EUiaIEgzpJREtFRL0fZ4KkKnI8-tqd8hXgA_aMdk6OfzPhDoeP-tg>
+    <xmx:9EUiaEWBJ8S9_ooRBJYIMDHmV0O5h4vob7vUGPf-tek1aR28HgkXlQ>
+    <xmx:9EUiaLOkeIU2zQQpDPNdtTaIf0n-wGasQ8CxLvn1zF-VZQkp203CcQ>
+    <xmx:9EUiaL2D-Lmxg0K2L0TAq7yoWeYnQtX5FA3yC5CFZ67UCYRZHSa86Q>
+    <xmx:9UUiaPCDyXqzwFBxa3v9JWeXm3VYPJ69ZLumSGThGWtlA7pudQO0ZgzV>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 15:03:15 -0400 (EDT)
+ 12 May 2025 15:03:16 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>
-Subject: [PATCH v4 1/6] you-still-use-that??: help deprecating commands for removal
-Date: Mon, 12 May 2025 12:03:06 -0700
-Message-ID: <20250512190311.1451556-2-gitster@pobox.com>
+Subject: [PATCH v4 2/6] doc: prepare for a world without whatchanged
+Date: Mon, 12 May 2025 12:03:07 -0700
+Message-ID: <20250512190311.1451556-3-gitster@pobox.com>
 X-Mailer: git-send-email 2.49.0-674-gc1e4f99c0b
 In-Reply-To: <20250512190311.1451556-1-gitster@pobox.com>
 References: <20250503005814.3030099-1-gitster@pobox.com>
@@ -87,97 +87,59 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Commands slated for removal like "git pack-redundant" now require
-an explicit "--i-still-use-this" option to run.  This is to
-discourage casual use and surface their pending deprecation to
-users.
+Some documentation examples reference "whatchanged", either as a
+placeholder command or an example of source structure.
 
-The warning message is long, so factor it into a helper function
-you_still_use_that() to simplify reuse by other commands.
+To reduce the need for future edits when `whatchanged` is removed,
+replace these references with alternatives:
 
-Also add a missing test to ensure this enforcement works for
-"pack-redundant".
+ - In `MyFirstObjectWalk.adoc`, use `version` as the nearby anchor
+   point for `walken`, instead of `whatchanged`.
+
+ - In `user-manual.adoc`, cite `show` instead of `whatchanged` as
+   a command whose source lives in the same file as `log`.
 
 Helped-by: Elijah Newren <newren@gmail.com>
 [en: log message]
 Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- builtin/pack-redundant.c  | 10 ++--------
- git-compat-util.h         |  2 ++
- t/t5323-pack-redundant.sh |  5 +++++
- usage.c                   | 12 ++++++++++++
- 4 files changed, 21 insertions(+), 8 deletions(-)
+ Documentation/MyFirstObjectWalk.adoc | 4 ++--
+ Documentation/user-manual.adoc       | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/pack-redundant.c b/builtin/pack-redundant.c
-index 3febe732f8..6dc9e020c7 100644
---- a/builtin/pack-redundant.c
-+++ b/builtin/pack-redundant.c
-@@ -625,14 +625,8 @@ int cmd_pack_redundant(int argc, const char **argv, const char *prefix UNUSED, s
- 			break;
- 	}
- 
--	if (!i_still_use_this) {
--		fputs(_("'git pack-redundant' is nominated for removal.\n"
--			"If you still use this command, please add an extra\n"
--			"option, '--i-still-use-this', on the command line\n"
--			"and let us know you still use it by sending an e-mail\n"
--			"to <git@vger.kernel.org>.  Thanks.\n"), stderr);
--		die(_("refusing to run without --i-still-use-this"));
--	}
-+	if (!i_still_use_this)
-+		you_still_use_that("git pack-redundant");
- 
- 	if (load_all_packs)
- 		load_all();
-diff --git a/git-compat-util.h b/git-compat-util.h
-index e123288e8f..21cab99567 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -703,6 +703,8 @@ void warning_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
- 
- void show_usage_if_asked(int ac, const char **av, const char *err);
- 
-+NORETURN void you_still_use_that(const char *command_name);
-+
- #ifndef NO_OPENSSL
- #ifdef APPLE_COMMON_CRYPTO
- #include "compat/apple-common-crypto.h"
-diff --git a/t/t5323-pack-redundant.sh b/t/t5323-pack-redundant.sh
-index 688cd9706c..f2f20cfa40 100755
---- a/t/t5323-pack-redundant.sh
-+++ b/t/t5323-pack-redundant.sh
-@@ -45,6 +45,11 @@ fi
- main_repo=main.git
- shared_repo=shared.git
- 
-+test_expect_success 'pack-redundant needs --i-still-use-this' '
-+	test_must_fail git pack-redundant >message 2>&1 &&
-+	test_grep "nominated for removal" message
-+'
-+
- git_pack_redundant='git pack-redundant --i-still-use-this'
- 
- # Create commits in <repo> and assign each commit's oid to shell variables
-diff --git a/usage.c b/usage.c
-index 38b46bbbfe..4aaad2b553 100644
---- a/usage.c
-+++ b/usage.c
-@@ -372,3 +372,15 @@ void bug_fl(const char *file, int line, const char *fmt, ...)
- 	trace2_cmd_error_va(fmt, ap);
- 	va_end(ap);
+diff --git a/Documentation/MyFirstObjectWalk.adoc b/Documentation/MyFirstObjectWalk.adoc
+index d6e9dfdbbe..102a465a48 100644
+--- a/Documentation/MyFirstObjectWalk.adoc
++++ b/Documentation/MyFirstObjectWalk.adoc
+@@ -83,13 +83,13 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
  }
-+
-+NORETURN void you_still_use_that(const char *command_name)
-+{
-+	fprintf(stderr,
-+		_("'%s' is nominated for removal.\n"
-+		  "If you still use this command, please add an extra\n"
-+		  "option, '--i-still-use-this', on the command line\n"
-+		  "and let us know you still use it by sending an e-mail\n"
-+		  "to <git@vger.kernel.org>.  Thanks.\n"),
-+		command_name);
-+	die(_("refusing to run without --i-still-use-this"));
-+}
+ ----
+ 
+-Also add the relevant line in `builtin.h` near `cmd_whatchanged()`:
++Also add the relevant line in `builtin.h` near `cmd_version()`:
+ 
+ ----
+ int cmd_walken(int argc, const char **argv, const char *prefix);
+ ----
+ 
+-Include the command in `git.c` in `commands[]` near the entry for `whatchanged`,
++Include the command in `git.c` in `commands[]` near the entry for `version`,
+ maintaining alphabetical ordering:
+ 
+ ----
+diff --git a/Documentation/user-manual.adoc b/Documentation/user-manual.adoc
+index d2b478ad23..7124345966 100644
+--- a/Documentation/user-manual.adoc
++++ b/Documentation/user-manual.adoc
+@@ -4240,7 +4240,7 @@ command `git`.  The source side of a builtin is
+ - an entry in `BUILTIN_OBJECTS` in the `Makefile`.
+ 
+ Sometimes, more than one builtin is contained in one source file.  For
+-example, `cmd_whatchanged()` and `cmd_log()` both reside in `builtin/log.c`,
++example, `cmd_show()` and `cmd_log()` both reside in `builtin/log.c`,
+ since they share quite a bit of code.  In that case, the commands which are
+ _not_ named like the `.c` file in which they live have to be listed in
+ `BUILT_INS` in the `Makefile`.
 -- 
 2.49.0-674-gc1e4f99c0b
 
