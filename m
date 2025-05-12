@@ -1,202 +1,134 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011039.outbound.protection.outlook.com [52.103.67.39])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91A7C25A2C5
-	for <git@vger.kernel.org>; Mon, 12 May 2025 17:18:46 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.39
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747070328; cv=fail; b=PVF4B9x+tv0kf+WlOVvsWhpfFouaoPQUS7FUFXYZd/lpzqfCeckTUm2mGueeQMDCI8nhmmQftXTcIELTzEFW9+sMDFuMEY79u+QgkT/z7ZhOCQXkuAOR1QDP/2yo2jOMnNA2QXYFzyAU6qPZO+cfL6Pd3YL/OuXxEirW/WEGZeo=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747070328; c=relaxed/simple;
-	bh=KKCteSIuI4RpNcurphjYr2DOzMLu67dgMwDBXTlrGBo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=F8TsYx3gK9w2ItPRi4wLjIGdwILYcNc6LptI1r3gaw72HQnnYtSyefd0DY6qiXcJmK/WfSsRkKMUwA6dGYLx5SxPXaqp6DtipRrppwSfBMN3JOh08KoV4GYQGz+yn8Z8ytitGnEHRIaRYI/fBSCp7d6OBD3K0JlFfCM0Jerf8GU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=czScf1O1; arc=fail smtp.client-ip=52.103.67.39
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFF7C25A2C5
+	for <git@vger.kernel.org>; Mon, 12 May 2025 17:19:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747070371; cv=none; b=GmZLxevUb7XrWtmU2dVk8ikbzSnkYoHgy8I+IKfMmAFugcfRdCJYUa+XWGbiVuIQzhR72YsArCNKzbLROHwIy+cn3PTFVf204Ua7b2THaRyZNzSHZhdiwSrFoHI7fd3cFEIQ64GU/uOKo8z0RmktlHL1y4oR6M6Ev2tj+LOWmw8=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747070371; c=relaxed/simple;
+	bh=gU94J4Bb6BvpE48bnyT6BHe0u2lXB/BhHHXeKasaUrE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Umcxtb0mD8w69P9GZlb0j0CLQwmCtehDkM1OwWRNjyVTI3pMKD261h7eoFt/tapi+ycWuVBGJxyqtOO1Rs2eK2R56yfgJbM03Jt7xd7G8vDtocVU5ay91CE1hWpdX0MHKQylgMAqSlCm2iA6FFXtGWO0bwrZdO0VHC4uD/aIU/c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=J2YclO04; arc=none smtp.client-ip=209.85.208.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="czScf1O1"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=X/7YkEon6nM8gdcaMBQ5V1kp8g2L52VnopoC31y0qQ2X7JUEmpUlU8+IgF1eI0EYHfJuWNKIduFibKHiADXzokO7u408ZNez3giomt5JhEEogp/2oUZUrUS0YSi4ZXPl4OtR/vSqzVjrZmBbyDUSWReqZZj4cj0014QXEP/vUFWNtw/Tt4r8GSIk2ruJuu+PieLFqZHIKlmB7QlwEXJwQnm9wlzj9l5bXpi62wTJgC1kf3V/jZR0DOoydrz03rS37lOOfDivbbIvJuz6YtfToZkvZ0iZ4PQlCRR5mzR0SOrYcXmgjdGcgnUqal16MLuiBI0qpPNNP/JCpZevSOHvuQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=W0DGFwuzkKBkZiauJpR9HfU2J0YiJ/z0SoiXAjOCBbM=;
- b=s6UI0MefgeQZJSFoD/ri4vD64eC15NM1cjbCldcXXyNSECT/sIvq8KWRs7IbkQ6EgP/csvdyy/grxrJpuRdmO1S+WcOe2QmT5U3jIUa5q+IcKXxeQmwwL+2u24wKSBfRo6EgFF5JQNc7+jkqzp1dnjCT0z8VLVlQ3Tfkg4Wv/qnM7vikujVrXNgzh0S2kdcCTC3AO7kx6MwKdXVMtLRyoRTlkjUuhPM0xP8e1l91d17KMCJNWPbYCHxUc+A5GdtkXBBdOM9y27b+tV+w8ys7a2OCi4IUxBpJ2ByE4hRMQ4/dI/cqFNg1EjzCAKmRcACfL5bk2OBJq5dsnprljgRE8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=W0DGFwuzkKBkZiauJpR9HfU2J0YiJ/z0SoiXAjOCBbM=;
- b=czScf1O1I9fE3ojTEAHoKBjnsXQYkQGAv9po4JD/jC2iZqdTX2LCZ7B0x+yROQBaCLFamYAfrDH6KuDEiEJuaBCWCSQAId3XZCXy7qaWXedU7rA6f5HC7wjYNuXUEcw3gX2b9QZAqKkZV0QbbaVcJQDmv1HCRK2C8W2Z3QgrGLJcv5vTWcj+2O65+5XV/WDP7vxhUnp7qoRzsCD/mCDIBt7zBCpAkSG1KOMGexAS+OYsDbQOTY9BeBLEgMs5d/K5rGx529p6W5LdmcNLkoVp9qL8ytbnQcYTxOBoHWTkol1NHGeSyAZTL1c1aRCiT30kkjgCMzAww1wht12dT/jTlg==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MAZPR01MB7262.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:45::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.29; Mon, 12 May
- 2025 17:18:41 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8722.027; Mon, 12 May 2025
- 17:18:41 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Julian Swagemakers <julian@swagemakers.org>
-Cc: sandals@crustytoothpaste.net,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Zi Yao <ziyao@disroot.org>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v4] send-email: try to get fqdn by running hostname -f on Linux and macOS
-Date: Mon, 12 May 2025 17:16:48 +0000
-Message-ID:
- <PN3PR01MB959755FD34845EC9026EFAA7B897A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References: <PN3PR01MB9597C419019DC28E489D2AF9B88AA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PNYPR01CA0071.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2ba::8) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <20250512171647.14525-2-gargaditya08@live.com>
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="J2YclO04"
+Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-5fce6c7598bso754a12.0
+        for <git@vger.kernel.org>; Mon, 12 May 2025 10:19:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747070368; x=1747675168; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=erKnu/R7OHI7jQlA3DCep4JWxuhlDeYYBJsCF7wTaQo=;
+        b=J2YclO04g5VmfrKWsKOBRoSvi5JDoMWyqRfPaRDzYfmRDWGLQ+uAP4jEzRzN2gHgbm
+         An4Z3uPfjQeGC4dnCKEMVgG4ebKAyN1Pzr7ARTOkOlrcYj4aI4iV4qyYmcigezqIX14I
+         IazGshpplLUfXs4xsYmd51x0GCxXmwVGqno7jaQGKu9QWDa8NFpm1slycD4uGlsxtR2F
+         NkH+8EXOnLZVUZ4HdMKIa46xlhGbJhbkWD0/jacS9XMMkr4v1SRtaeM2F97dakP4n+sy
+         381nHXeiIzH1xLgbHzfjvS8f1Gztfzx434Pa+GeSQr97bt8MNLiQYcmvDK3Nl+odaEr4
+         YyJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747070368; x=1747675168;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=erKnu/R7OHI7jQlA3DCep4JWxuhlDeYYBJsCF7wTaQo=;
+        b=JcGC+bbJG4ZMLhf1rgFWc6tIaTtN6PRDBVa4gwJNSyc1uE9YRYI+hhqdHHp7FTHiPD
+         j2A1SIAbx6nH/d94ama6Z6J3lJ0HBiftkOpeWamnahmANh0s5W5AIiqoODamCmiB1BnT
+         QWXPPiY93N8SDOJ+Hxy888Uxje12942tqpg7f5jma/DPTHED/kxVs+uqQeWCW2JAImYf
+         v/YvePxBs9YICplCPA+kFi5NYpOYecN94oBR19hVRI+IbTE/mxX0usRcYdIuZv1184Nc
+         wj0efP5IuMjAi1I/seqYQtF2zJhBSbegtjf1c9IkYVGBBRLBLihsHRy9ZZLvxM/+kJY7
+         VXWw==
+X-Forwarded-Encrypted: i=1; AJvYcCU2WiCNpEobSTECLS9JmUyW1yOh2Fb+aXCWzmkwOL5rmQS4mKN4Iy+VjQr1dWt9kmKBLBU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyycRg7f3eqxeBXrWrmSU0HEmGw9BUIw4aIsBY86bMUckiIvdLr
+	zpYU/hFsHnV3MxPly7lje2u7YiSw+eS9dVt1bew9cqXf8ravz/2V9BhUbhU6GQJ7muSiO4YMGnA
+	dsfE6EOHZf2cErAYA3rtpTjym22vkGvVTOeLH
+X-Gm-Gg: ASbGnctUVlSKguFsuhTyXDp/FxAXYO6x3VJaOy6er3r7BM8RgdewulHgvWCxkuI4MLx
+	ulbBbv7dCEW7cvey1GFB1Efu3tbIjpZHp+T3VDJFJPwUP4PNqlTLNCC7jeklHEjqQ+ZrK6BdzMx
+	zww11w3E9fNqeTrQFnZGx07wN/NF8OmCP3NzapmyNatASxL6keeFSPOynmuH6r6YEE2kaf7/Wex
+	Q==
+X-Google-Smtp-Source: AGHT+IEbQs5b7eq2h7/BfIya5SeWaCqa1c405PQRAyCi+wQmnmKJTefrJGG4CY/1A3Swb1B9xWJD6eaxN1ZCE75ILjo=
+X-Received: by 2002:a05:6402:12c6:b0:5fa:ac6f:ff97 with SMTP id
+ 4fb4d7f45d1cf-5fcc9387ce5mr166504a12.2.1747070367829; Mon, 12 May 2025
+ 10:19:27 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MAZPR01MB7262:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8c2d3a54-6e76-4b43-926b-08dd91790a89
-X-MS-Exchange-SLBlob-MailProps:
-	+b2+gf+2pHTK0hJWfIOsgR8XTzjzRgQkIb+q6ygzN9Y2Hj/nd9HxnRglps/T7pnq2hHfwW4dkTDXejJI3xr7xEH68xpWfyABnTY33V/xts8T4gAriXCEvz3MIaWQmcHlZY/xs/23xc8mH2YDiItt36a7Ljf6IIx867DQ58WZZjH7aQPpM6Y1IEvl8j8cpMGHQXsvdUQJmBOVAuMevlhU75t1HTo5xYZDZPbd+hgA8yFtXAwhft1ZgV/oVHmf9wiaRp49QorZP/tRFsAdBnCIKCBRn3NUP+up6pXWxqGbm3dGYjYUNVcwzoiE7nLKC9djke2yOkpoNp00Kl0/HQmfxqCSGsnvYP3GxMISDPfmMr5esFUxkPBvPbgQLOvJHeQQyN97DhTuIfrdpJhN+CsAfk4BR3e4d8dREKVBhkdkkFyAViEqSLeyQugqhNIJLZsCnSh1O42S3KszIWOohz8XIWIfWOEQDE0ai27uTn38uuGhiI86hldbaPFNnVfVJtxlWb21VcI6VSgOdF2+zjYwA5LRMHRfJAe1Q8ketHiFRJ3+rHOySYaZdXDg2SekhO/SDZuUXXKp3dCq7Sp0gZJ+q1B3pdQe4a7r/8tclinF8aEP2G070kV+dJ0lggV7p6aCxomSJW7xu/03YxL0xvqkwVVnLEWn9fjy0sA/OUNCEnWJKcpWg2ryVzyHp78KseGcq1LjlaZXDuakaz37BMY3H78qLkl2eEwHmvw6VJyXJpcPZiPIZxXQ/C02h8qM215Y+hhvc+swp4Kb76VciAzY51w2lugccYEeQBCpy199qek8Q+C6cBDfqdjLeiuKCaT3/2yV4Ruv26xJk5b4WXiYZPwmFaSs8V1eVlIW2hWr5pw2t7193yUSCw==
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|41001999006|8060799009|5072599009|7092599006|19110799006|15080799009|3412199025|440099028|34005399003|10035399007;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?vheb1Y+Wysu23Xua4RhpJecb95/5GC7wpcaPl4rh1V10TkJKpyAceXNPAbSS?=
- =?us-ascii?Q?piKioEVww1BI6U186Sqh9kUWMw/V+a2BVRfiC3yUWD1CHV5o6/7MHdFjfvhE?=
- =?us-ascii?Q?/DDlOdXIaRxLNupDoff8JEFIs2Ws5ODm1YZ8o0ye13Ot7V2tFAcVj7GxEBxC?=
- =?us-ascii?Q?jCvI16Nc7zEnigDKoUYZIAHlND0137FeypH8zzRcIUJTyVIjYnCmV5iPrsVX?=
- =?us-ascii?Q?2ON8w/bbywboSgYEfqti9UF8DMwbmf8UUdLNGbKjoT719vlQigCEw+O8J0sR?=
- =?us-ascii?Q?zfUK34JAYKE7LPfOJIsKp+tszeWEnyjm5xlhKf62llB2wqhPtwelf3/yieOA?=
- =?us-ascii?Q?Mr9MAXrURozlqpHRXmDCuy8kFHjyRnxaShmZk8HwymgSR2Y4YLBukb+Sm3Z6?=
- =?us-ascii?Q?CZ5H7KMO3hlxBFQBmL3mhjIvj4ZTZ32NAWhU48Gjgm6I0Vrmc4RETMyQcq2h?=
- =?us-ascii?Q?8iiSOAjN40lBTH1LXVXn7g0epbPNv6nfKwg6CX/mzPMgESoZB+XPny5ZKmec?=
- =?us-ascii?Q?4qXjVNK1g85LIPqR54P5IquCdOrUzPx/BV+Oce/PTtX/SPAuC8jXSd6FYgb4?=
- =?us-ascii?Q?YUZl1/7BYlCONFnceWz2/cOA3g9eC+ZKkyhuHiazOJLvhA7RJ3rw7s0xJbTO?=
- =?us-ascii?Q?bCrS7ldY9f2/q6YB0JVSChzq6Hjl6h7u3ookpqkkeJ7v4kRwyKYnFdWmiFuG?=
- =?us-ascii?Q?/XwmxyVvnUuVtzCbETXEI0b0Pub6GzrEUNRwlFhdgVybey5bzeKSTwmyaSGF?=
- =?us-ascii?Q?0HJAmKczhPPtXyp2icWj5s8J9kLK/PZ08fCZnS0HqojfdkwFNV7lsE7+dvuK?=
- =?us-ascii?Q?5j3XHg/ZuvT9JdCCKMfS47Wjz9sBqHp2CGu1+DRjsDGez7xdAi/fFe/jrGYW?=
- =?us-ascii?Q?aJoJMIFmigM1CLsPu2pbgyCCSg/caOJn+n+XvmBBM0UfRmckJbuivSS3tacP?=
- =?us-ascii?Q?x6IZpDq+a5Bj2g0CYMpfZA+3FC9FGfJIKCdG/G58wE0H3cqFijSPiBn7xX9g?=
- =?us-ascii?Q?lMxBtT7VEtgYZPkmjD4f7qyaKLbpnSvTE9iiS7Pxam2IBoF5Q33DnTuHPTXP?=
- =?us-ascii?Q?WjMsM1CPmIPTv//bVuYkTLO2x1OKlnOfQhPIqqmQmegOlnLAnQYcBVP2YZBj?=
- =?us-ascii?Q?pdJsq2erc/BMMHUOMAWU0d1d3+vSd07EO7VVUoPik+Vl0JidJARLdFXqWZa9?=
- =?us-ascii?Q?1n36UpePERntAFLGYC45BUKaUgumIoA6eLIENB3UAtWAiEU9nt5yMwHaRPs?=
- =?us-ascii?Q?=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?Y26LJcO7bdOmXW8tlU41x7zPaShnxrlIzPx/FB2NbP1WqTgI8o2I+X7bCBg6?=
- =?us-ascii?Q?WWLleEr9izKX43Jb/psFB8mT5wBSdfwCgh5IkhElGxlBmsg2XznG+LAJBHvq?=
- =?us-ascii?Q?b+Lsgvvc6VS3Lk2J54ONOj1g+pDGCxJgOMW8jvymw0BBELKUnwhcL8sjCEsO?=
- =?us-ascii?Q?s4Vxitp65/89WiKZcwZuUSKTkfyM6HjVQcBDg0QveIUsNIY6YyOSBq+u8vuR?=
- =?us-ascii?Q?vcMwNm696egNYz9LhhLju2ILWbdHc6+2r0UqotoNrX5ijW6lPvhAIkM+am+1?=
- =?us-ascii?Q?5f0bKLfuuvAy5HPAkwLxrRV9SKzgotA/abOSeVW3BH9I7lbMzwQfXy0hUpZe?=
- =?us-ascii?Q?/EVjYkld+1uQ1mi+yJ1oaxWh8XBm3eCZVHnqAdIMZW8ItCaAuhVw8MIl5YdW?=
- =?us-ascii?Q?3Zm1xVpD0w8x/RAtbTHws8iIzapPQRM9MUXMDQvTdRFP09iHgswQirzj7gOi?=
- =?us-ascii?Q?9m31rI/UqLrNYjwebh9s/ccc9wikO1ErURFuG66Tjwjq3WXs3KZdjMz20A50?=
- =?us-ascii?Q?eGT59dkq1G4ACxiL1PfCV/G/VO7tfHbanKhsJ1AusZ/C+4ZI8yvG8yYT0h9t?=
- =?us-ascii?Q?uko0R8vhOmPhKmUXVY8UidU6kCHF9t2ShZMh6JfbB0XQnnBNkl4MIPC4dMXl?=
- =?us-ascii?Q?GBH247avdSdzvidtVeS9TgsWd4nY6iDlpX75z639DIi1vKcDD+gdYKBDstk2?=
- =?us-ascii?Q?fDppDK9TINrTpwRCHP0Q4hIrAlPgqWOBjvWSFXFvogNzIwL8R1DnnLwDVG+I?=
- =?us-ascii?Q?KOJs3DJjQD1iw2V5jmvEERS1GS/GfSeY+lrhKcAyIQDM0vMmOo7K5VONLov7?=
- =?us-ascii?Q?z967s/dv7UYh1wXN8ijOUE3vhUIbvyxKRpfc74dawyFv8SF1AW3QyxKoQO8U?=
- =?us-ascii?Q?q5pC90uTfDaurLd7F6f9SX2h4I0f4YWDeTYABT8CbVyBKcBDH+du4UTrvQsv?=
- =?us-ascii?Q?ZlRh10EVQ6cF3VVRUtyWT/MCuWQfONPI2yKjOCth4XYJ6tyg3e89oCLgl3lB?=
- =?us-ascii?Q?Sl7EoX2GvR0YvEtiBMg6v/ta9nqw+jrTecp9nDee2qd9ZxPcu+g9SzewpC78?=
- =?us-ascii?Q?fR+AwOwt6I4Cv04cYkcRzQFezBH6Zat9wf69sqsX+jx9b56T7a34dJkq5U4u?=
- =?us-ascii?Q?2+GUAlendnufCd63EKuvcy08FpTgpzmHssUM8YWqLZnb9kCe56f4l3YrQJNW?=
- =?us-ascii?Q?idveeQFBihOc9KL1v/std/YeiRS6pAG6Bb9kcXYIeSkMl+Mc4Pwgwpj78Jg?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8c2d3a54-6e76-4b43-926b-08dd91790a89
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 May 2025 17:18:41.3619
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAZPR01MB7262
+References: <CAESOdVAspxUJKGAA58i0tvks4ZOfoGf1Aa5gPr0FXzdcywqUUw@mail.gmail.com>
+ <xmqq4iyzn0vn.fsf@gitster.g> <Z/RFQY433muaCW44@ubby> <20250408125521.GA17892@mit.edu>
+ <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu> <Z/amMj/eg0RbXdkS@ubby>
+ <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+ <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev> <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+ <aAgWytQNqtLzg2TU@ubby> <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
+ <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
+ <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com> <xmqqtt5pu5g8.fsf@gitster.g>
+In-Reply-To: <xmqqtt5pu5g8.fsf@gitster.g>
+From: Martin von Zweigbergk <martinvonz@google.com>
+Date: Mon, 12 May 2025 10:19:16 -0700
+X-Gm-Features: AX0GCFuIa0t2tO8hXLo6o17I_mvDp_Z4GeN07Mjsf4JN69xCdHuqCAAX9iaS-js
+Message-ID: <CAESOdVD-8j9k2Dq9WgiR9WWO09mpfR9Xxe3pMUWg-KoTfELG8w@mail.gmail.com>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Nico Williams <nico@cryptonector.com>, 
+	Remo Senekowitsch <remo@buenzli.dev>, "Theodore Ts'o" <tytso@mit.edu>, Git Mailing List <git@vger.kernel.org>, 
+	Edwin Kempin <ekempin@google.com>, Scott Chacon <scott@gitbutler.com>, 
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Content-Type: text/plain; charset="UTF-8"
 
-`hostname` is a popular command available on both Linux and macOS. As
-per the man-page[1], `hostname -f` command returns the fully qualified
-domain name (FQDN) of the system. The current Net::Domain perl module
-being used in the script for the same has been quite unrealiable in many
-cases. Thankfully, we now have a better check for valid_fqdn, which does
-reject the invalid FQDNs given by this module properly, but at the same
-time, it will result in a fallback to 'localhost.localdomain' being
-used. `hostname -f` has been quite reliable (probably even more reliable
-than the Net::Domain module) and before falling back to
-'localhost.localdomain', we should try to use it.
+On Mon, 12 May 2025 at 10:03, Junio C Hamano <gitster@pobox.com> wrote:
+>
+> Martin von Zweigbergk <martinvonz@google.com> writes:
+>
+> > If we instead had something like Mercurial's Changeset Evolution
+> > (explicitly recording how commits have evolved), then we could have a
+> > similar identifier that was based on the original version of a commit.
+> > To make lookup by this kind of change ID faster, we could have an
+> > index from commit ID to change ID (i.e. original commit ID). This
+> > seems to imply a commit can have 0 or 1 predecessors (0 for brand new
+> > commits, 1 for rewrites), which is different from Mercurial's
+> > Changeset Evolution, but not necessarily bad. For this kind of change
+> > ID to be the same across repos, and assuming the predecessor pointer
+> > is stored in the commit, we need to make sure to transfer all commits
+> > back to the original commit when we push to a remote. As I think we've
+> > talked about before here, that can be problematic because the user has
+> > to be careful to check that the intermediate commits did not have
+> > anything sensitive in them. It's also often wasteful to share all the
+> > intermediate commits with other developers. Another option is to
+> > transfer the predecessor pointer outside of the commit object. That
+> > has its own problems, like being able to create cycles in the
+> > predecessor graph.
+>
+> A few comments (not necessarily strong suggestions).
+>
+>  - I do not think you need to limit the predecessor pointers to 0 or
+>    1; when you started from N commits and worked to produce the
+>    final single commit, the result would naturally have N predecessors.
+>
+>  - The predecessor pointers do not necessarily have to participate
+>    in the object transfer, just like filtered/lazy clones can ignore
+>    the tree pointer in a commit object when making a commit-only
+>    clone and the contained trees are fetched from the promisor
+>    on-demand.  It can even be set to be filtered out by default,
+>    since it would make unnecessary transfer cost people would not
+>    care most of the time, and only made available when the user
+>    expresses that they want to know how the change resulted in the
+>    current shape.
 
-In this patch we shall be using `hostname --fqdn` command on Linux
-instead of `hostname -f`. This is because `hostname -f` could output
-something else in case a Linux distro uses some other implementation of
-`hostname`. On the other hand, `hostname --fqdn` is not valid on macOS,
-so we shall be using `hostname -f` there.
-
-Interestingly, the `hostname` command is actually used by perl modules
-like Net::Domain[2] and Sys::Hostname[3] to get the hostname. So, lets
-give `hostname -f` a chance as well!
-
-[1]: https://man7.org/linux/man-pages/man1/hostname.1.html
-[2]: https://github.com/Perl/perl5/blob/blead/cpan/libnet/lib/Net/Domain.pm#L88
-[3]: https://github.com/Perl/perl5/blob/blead/ext/Sys-Hostname/Hostname.pm#L93
-
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
----
-v2: Avoid chomping $domain and assigning it to $maildomain if the command fails.
-v3: Use `hostname -f` instead of `hostname --fqdn` since -f is supported everywhere.
-v4: Use `hostname --fqdn` on Linux and `hostname -f` on macOS.
-
- git-send-email.perl | 18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 55b7e00d29..bdbc7f8149 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1393,8 +1393,24 @@ sub maildomain_mta {
- 	return $maildomain;
- }
- 
-+sub maildomain_hostname_command {
-+	my $maildomain;
-+
-+	if ($^O eq 'linux' || $^O eq 'darwin') {
-+		my $domain = ($^O eq 'darwin') ?
-+			`(hostname -f) 2>/dev/null` :
-+			`(hostname --fqdn) 2>/dev/null`;
-+		if (!$?) {
-+			chomp($domain);
-+			$maildomain = $domain if valid_fqdn($domain);
-+		}
-+	}
-+	return $maildomain;
-+}
-+
- sub maildomain {
--	return maildomain_net() || maildomain_mta() || 'localhost.localdomain';
-+	return maildomain_net() || maildomain_mta() ||
-+		maildomain_hostname_command || 'localhost.localdomain';
- }
- 
- sub smtp_host_string {
--- 
-2.49.0
-
+Sorry, what I meant that those two things (limiting it to 0 or 1
+predecessor and transferring predecessors to the remote) would be
+needed if you want to be able to use the predecessor pointers to infer
+a "change ID" that allows you to do things like `jj describe qx -m
+'new
+description'; jj new qx`. Oh, I suppose the former can be relaxed by
+simply saying that the change ID is defined as (or derived from) the
+last commit ID you reach by walking predecessors backwards by
+following the first predecessor pointer if there are several. You
+still need to transfer at least that whole chain to the remote if you
+want to make sure that others agree about the change ID (though you
+only need to transfer the chain of first predecessors).
