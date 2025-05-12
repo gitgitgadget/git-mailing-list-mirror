@@ -1,66 +1,66 @@
-Received: from mail-wr1-f50.google.com (mail-wr1-f50.google.com [209.85.221.50])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FC1A255238
-	for <git@vger.kernel.org>; Mon, 12 May 2025 09:10:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E184D25A2CB
+	for <git@vger.kernel.org>; Mon, 12 May 2025 09:10:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747041033; cv=none; b=tSwtCbCGrfQUHFql7k6a6nwenyF28QcqTp1b4BHLzUCWvrFwiJMw9hzpjePVSB5oSp6JuTtoFq3GcXm+gE2IQRwvimJ0BI68oReXNcf1l83LnY5llYZefM3TGWddy4zuPvCJX4U3NulJZ3mB5aKwUlr43OdbayvNLEDGAdfRNP0=
+	t=1747041051; cv=none; b=ls5qav2g18+PvFZ/EOIViLkM/4lvxGtDxWk/gOFm2se/8/OjZSJn2rqS+OTDZiRylLPqH1zUrvi7C2TPzgh3dtu9N6sgxM6Segp9cmvSNj7KkvdPGRGPtdE6XyFF2nUJ0h3eKLwHNq4Fn6u7SDxrAK/GEKECUfUgSdrjFhlebNo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747041033; c=relaxed/simple;
-	bh=lHQZibul4HjdX+CjPZT0XFjdWZDQ94z8UieGahPYvs4=;
+	s=arc-20240116; t=1747041051; c=relaxed/simple;
+	bh=tAxMer+qhvA3jbyTX+ab8FbIXjSCaX5EH+oHaM89ARs=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=G6KwBswBG3PZYHyfNQ2MpC9HQJsOP/Y3Y1tgyS2GgourkW13WFwAn4FBi/nojPmH5waRJUZIiU7cwrapAKcLTyr4g8CTga4vprKkbAi2Ds+Y4a/cY6KAPXikp411J1k82tdP/hXEKN9ZS9YZt4it5KcMAOmnDXxAYKi0r22nIQ4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jHEUGa3M; arc=none smtp.client-ip=209.85.221.50
+	 In-Reply-To:Content-Type; b=Cz8gKcy6qDSXwrSyQ6xGgZOFMpUnq90tOFkwTMMiz4d/A14ziKf+xBKFGPq5NxFwG7i2g76vdyw3E1fPpRP3zaWFD9NoD9Aln5f/2gKSFzW+nb1sOiCHRcNunMIgDvt6u7rRnRj/PeQjdoLFL3o200528FDPzdurU5Dnb1iSoRg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqnPUTXp; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jHEUGa3M"
-Received: by mail-wr1-f50.google.com with SMTP id ffacd0b85a97d-3a1f8c85562so1741219f8f.1
-        for <git@vger.kernel.org>; Mon, 12 May 2025 02:10:31 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqnPUTXp"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-441d437cfaaso25182295e9.1
+        for <git@vger.kernel.org>; Mon, 12 May 2025 02:10:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747041030; x=1747645830; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747041048; x=1747645848; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=WNR4wxCTn0a+xg2fATZOH0EjTg3GgvUOpe7VEPd3EZA=;
-        b=jHEUGa3MK6M296fXe3zRGVPHTISQoaMa80UK0lMAfeifBMr6tCFrwhF47Byv22WiLI
-         kIvqjKnkIa2oNZVFBzmcCIGh74Iox9Q/fr6Ehu9DYhSAgRqNYBlfeShY0+1oP0Xc9Gxj
-         Xnm8lu23ihAoxUklIUUkDScGIcmN3nJLKOiNd11mWGqejUj79dkqVz/vOwVGJkbSo99N
-         nhWlDMbzHLU+tAnr27kVPta8Zxr+ZGvSL4G5h/fU0DD7re3Oi8Hs2RER9XGJhudsgZ3X
-         mF3quMSFmsZAh1PrMXUb0COXpG6w7nOkx2b7Qp43gjiAZ1wnYrDx6+UJIx6lK1cUiF9g
-         /W7Q==
+        bh=Rx2+3SvKXpjNRu2Cy2rXksb6oYZr7DxXEOYtFurIl0g=;
+        b=dqnPUTXpjGug+nGq5nEDuxhzXzKXhnlpBeNVgbChX7ZW6z7Khb7D6eoOth9h65P19S
+         IMNqsT4Is3FpWJxJ7iMn70uyYQaL5s5Stl6xGd9RaEf8LLfE3JNMGCSgO+6gW/1pd+AY
+         LGB81jrtI82ez5JOHqLP2uHViLLlC9kWeetXofs+MPSxyWGGa4IjEdCb3Gdsl28BdQqS
+         1K4HWnou2u0gdPgJiEaBfXzRQ9MQxRRxm80C2jUwEZnmlL8ntyLOU9I4bJ+eQaNeHyHx
+         mVblRPsnzA4LLKvaSvWO9V9JNNSVhGgsAKp3UQYqEtF9bHe9nBuktUH/hL3nmNUflUoe
+         caJQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747041030; x=1747645830;
+        d=1e100.net; s=20230601; t=1747041048; x=1747645848;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:reply-to:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=WNR4wxCTn0a+xg2fATZOH0EjTg3GgvUOpe7VEPd3EZA=;
-        b=fiSKVHAKOOJA8R9GY5UaYQ4rkClD0gRk0CNtwLkW0pemAX4XpMuj9is37iU8+aDxOX
-         S4OFw24TrBCprqc0s7jJCWPdwPqMnI/m3LAwP8NJlapA1PanMJN5QqBKJUj3UibVBEMO
-         ak5+32SmSq8iEb8WGiQCow0Z6VqJ80oAuk5GOPyFx5FC2J+nzjklAraJXHDEEydlDjdC
-         FtTiSjrk9PEMvzYabL/NiFFfHgX9EX1Wn4CPIOe62NGmdI/Qa80VjK9jgV4q5HVHrwG0
-         VRxEFuWwcABpUwzFCIEjBKUPSKPsrvYGgLVYOmSgNwol18ndytt3xLHXVrOj+9/4g0uB
-         BlhA==
-X-Forwarded-Encrypted: i=1; AJvYcCVft9nvqtUamZJUvIDq5S0jmUboT2elw86pA9okeQmjYtdKWfxEjcweDSdulQ0Ru4E1kk0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwugErDJT8yT5OXGJp9OfvNZbpA/O8qHWIpKrXrJow5ekha8w8L
-	HD0hlzx0lMCoaYzTSGZIQwUd3b755CZEeKNNLJAyFIm/W0XQGlvCkFNM+A==
-X-Gm-Gg: ASbGncu5mUKYR5B3C0WSv3jT0rOoRdWWFF9Zfzwo6mKEh6DMD0ruH0moJ9RzBRiUezi
-	OYQ1nUd6i5GdPZHi07MmWgFNHEwkEgr/FKE3OK19F/Dh7KoDQSB/0PIPWuI04O/GgTdM/ckByiv
-	1Go68SKOQ6IHNdEZSX4ic7Ylae+W8l5OYJJ9dFyncdBcK3K0JzsQdyUm23lxrkvtw6f1b9Kd52/
-	HAQboQl/JPcsDwakL/RJSVwUsTdyAhtGCy7eYsVpLSI2c4uCwu7P11h9TSNv0X6UwkLyOfS9moy
-	9BPOTl73G9egz3fbqUnGBnANA5WqANCXDsl4YGBJ4xMLfIlX3qT9x8z0Id5VUPSBk2wXKLNW1Jh
-	bZTEeMWBa9luWbjeK+AWhGujCQps=
-X-Google-Smtp-Source: AGHT+IEn6Nam59zrRe7O6tIIKG0RlngwPzRdhvrTo1FluN553VjLi41Gs/YOJJmP7CqTTlv1eJmhLw==
-X-Received: by 2002:a05:6000:381:b0:3a1:fa99:21df with SMTP id ffacd0b85a97d-3a1fa992269mr9795057f8f.57.1747041029488;
-        Mon, 12 May 2025 02:10:29 -0700 (PDT)
+        bh=Rx2+3SvKXpjNRu2Cy2rXksb6oYZr7DxXEOYtFurIl0g=;
+        b=Jaj/dyA4yslhrEMVT2qxDsjQfuuz4dEtDMQtk6vJnowa7FNV61vraW0fP/meBlPLza
+         +8X26SIUQnjVJLf7Vk3O69CIpwl+lql3S+dPtKd68g7nCfJQJIRsUHjqx3SGQrfyknA0
+         ni+SMLT2jSoVTbSh9x06/+JYEUxFm+JQLGILVfRJji1Ywv1duUiEYGsqgeKjJ/xMGN2P
+         SFcn3YjnwZFbIox2b9w9EPi/QMijx2Rr1YMVahrT2lA1kobsLGsSlr54CoVO0yn6FDC7
+         lqbG4sZ2hTPsaakDtZIoF97WqRpNadYwram/UY8lwDy35JCQ257QY9x8swanyRy82hge
+         O3xg==
+X-Forwarded-Encrypted: i=1; AJvYcCVNg4XVX6EJ7vExYAcMegXjFNhiDlXn34taNPlk+WVAHlp9juz8rD1kNwTg8YNnR7QO9rU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyZhI5QOV1v9EQp6RaExONalOCOtnmJXQaeb9R9LjnLx8hLHkEk
+	fn08+ktg1HMXDoEYGDHYUtsdwEVERf+Pvi3BWqeWjTktcGJ4r2xJ
+X-Gm-Gg: ASbGnctLpkIZ5K/IveuOiKUi1TDnO+0DyE7nUfZeWPCrR6mhdUnh/zFTEux6yVjDnHx
+	3FRR61o1+YaqcLuadhIxcYtQlCH/DPT6zjOsxzxzI1r4GHeRinyRwqyIdvX5QMBaVsgRvqOicZn
+	X9vTRC/E+pph5m68TYwocZ4Lk8pyJHsH5/kvO84DV7dEfJwIeckbsFkjeT4gq7XJ94jQNcjqHSg
+	o3d0FLkWs5lbBS9OYtD3CvXgw84XeklICmYHHl/gXhX5zfcWvvO+IxPUNNbR+lEp8TQxvn1iDS7
+	9TmE3PkwmqiR7VoR5xD3y/bIB3LQgzhq30HfKjLrZ1UOk+be7NF3e1tf4YUliv30AZrJxoDGPcS
+	7rg3lUY/TraYuV0VF6ehGfwrk1so=
+X-Google-Smtp-Source: AGHT+IGxmGJuES4zXJ6mls3Y05n92Uzy48CeqPYdDlriK9N2EsuM1goRn0wHbsxVPUaYDghvU3xBmw==
+X-Received: by 2002:a05:600c:548d:b0:43d:ea:51d2 with SMTP id 5b1f17b1804b1-442d6d44918mr98684735e9.14.1747041048101;
+        Mon, 12 May 2025 02:10:48 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a2d30asm11718510f8f.76.2025.05.12.02.10.28
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd3aecb0sm163555975e9.28.2025.05.12.02.10.46
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 May 2025 02:10:28 -0700 (PDT)
-Message-ID: <67ba7cf4-e6b9-4c05-9960-e95fdcd4ed97@gmail.com>
-Date: Mon, 12 May 2025 10:10:28 +0100
+        Mon, 12 May 2025 02:10:47 -0700 (PDT)
+Message-ID: <94b26c62-c8da-49ba-a4f1-66da20956c0b@gmail.com>
+Date: Mon, 12 May 2025 10:10:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -69,66 +69,119 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 3/4] builtin/stash: provide a way to export stashes to
- a ref
+Subject: Re: [PATCH v5 4/4] builtin/stash: provide a way to import stashes
+ from a ref
 To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>
 References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
- <20250508234458.3665894-4-sandals@crustytoothpaste.net>
+ <20250508234458.3665894-5-sandals@crustytoothpaste.net>
 Content-Language: en-US
 From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250508234458.3665894-4-sandals@crustytoothpaste.net>
+In-Reply-To: <20250508234458.3665894-5-sandals@crustytoothpaste.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 Hi brian
 
 On 09/05/2025 00:44, brian m. carlson wrote:
-> A common user problem is how to sync in-progress work to another
-> machine.  Users currently must use some sort of transfer of the working
-> tree, which poses security risks and also necessarily causes the index
-> to become dirty.  The experience is suboptimal and frustrating for
-> users.
 > 
-> A reasonable idea is to use the stash for this purpose, but the stash is
-> stored in the reflog, not in a ref, and as such it cannot be pushed or
-> pulled. 
-
-I think the commit message would be more convincing if it concentrated
-on the need to import / export chains of stashes and the convenience of
-having a dedicated command to import a stash as one can export a single
-stash with
-
-     git push <remote> refs/stash@{<n>}:refs/exported-stash
-
-and then import it with
-
-     git pull <remote> refs/exported-stash
-     git update-ref refs/stash FETCH_HEAD
-
-Having said that I do agree that adding these new commands is a good
-idea.
-
-> @@ -154,6 +155,12 @@ store::
->   	reflog.  This is intended to be useful for scripts.  It is
->   	probably not the command you want to use; see "push" above.
+> @@ -1962,6 +1971,99 @@ static int write_commit_with_parents(struct repository *r,
+>   	return ret;
+>   }
 >   
-> +export ( --print | --to-ref <ref> ) [<stash>...]::
+> +static int do_import_stash(struct repository *r, const char *rev)
+> +{
+> +	struct object_id chain;
+> +	struct oid_array items = OID_ARRAY_INIT;
+> +	int res = 0;
+> +	int i;
+> +	const char *buffer = NULL;
+> +	struct commit *this = NULL;
+> +	char *msg = NULL;
+> +
+> +	if (repo_get_oid(r, rev, &chain))
+> +		return error(_("not a valid revision: %s"), rev);
+> +
+> +	/*
+> +	 * Walk the commit history, finding each stash entry, and load data into
+> +	 * the array.
+> +	 */
+> +	for (i = 0;; i++) {
+> +		struct object_id tree, oid;
+> +		char revision[GIT_MAX_HEXSZ + 1];
+> +
+> +		oid_to_hex_r(revision, &chain);
+> +
+> +		if (get_oidf(&tree, "%s:", revision) ||
+> +		    !oideq(&tree, r->hash_algo->empty_tree)) {
+> +			res = error(_("%s is not a valid exported stash commit"), revision);
+> +			goto out;
+> +		}
+> +		if (get_oidf(&chain, "%s^1", revision) ||
+> +		    get_oidf(&oid, "%s^2", revision))
+> +			break;
+> +		oid_array_append(&items, &oid);
+> +	}
 
-I was surprised to see that --to-ref does not take an argument. I think
-that is confusing and it would be better to use OPT_STRING() rather than
-OPT_CMDMODE() and manually check that only one of "--print" or
-"--to-ref" is given. In the end it is no more work because now you have
-to manually check that we have a ref when "--to-ref" is given.
+This loop could use some improvement - it does not use the loop
+variable, it accepts any commit with an empty tree as a valid exported
+stash, it is pretty lax about checking that the commits in the chain
+have either zero or two parents, it does not check if the second parent
+looks like a stash and it is forever converting between strings and
+object_ids. I think it would be better to loop over commits rather than
+object ids then you can walk the history using the pointers to the
+parent commits. Something like
 
-I was also surprised to find that "git stash export HEAD" did not error
-out. I was looking for a function that checked the topology of a stash
-commit and could not find one so I thought I see how difficult it was to
-add that. The fixup commit below adds a new function to check that a
-commit looks like a stash and refuses to export anything else. The patch
-adds a new function rather than using assert_stash_like() because
-despite its name that function is pretty lax (any merge commit will
-satisfy it) and is more concerned about filling out a stash_info struct.
+	if (repo_get_oid(r, rev, &chain))
+		return error(_("not a valid revision: %s"), rev);
+
+	this = lookup_commit_reference(r, &chain);
+	if (!this)
+		return error(_("not a commit: %s"), rev);
+	/*
+	 * Walk the commit history, finding each stash entry, and load data into
+	 * the array.
+	 */
+	for (;;) {
+		struct commit *stash;
+		struct tree *tree = repo_get_commit_tree(r, this);
+
+		if (!tree ||
+		    !oideq(&tree->object.oid, r->hash_algo->empty_tree) ||
+		    (this->parents &&
+		     (!this->parents->next || this->parents->next->next))) {
+			res = error(_("%s is not a valid exported stash commit"),
+				    oid_to_hex(&this->object.oid));
+			goto out;
+		}
+		if (!this->parents)
+			break;
+		stash = this->parents->next->item;
+		if (repo_parse_commit(r, this->parents->item) ||
+		    repo_parse_commit(r, stash)) {
+			res = error(_("cannot parse parents of commit: %s"),
+				     oid_to_hex(&this->object.oid));
+			goto out;
+		}
+		if (check_stash_topology(r, stash)) {
+			res = error(_("%s does not look like a stash commit"),
+				    oid_to_hex(&stash->object.oid));
+			goto out;
+		}
+		/* TODO:
+		 *  - store commits, not objects
+		 */
+		oid_array_append(&items, &this->parents->next->item->object.oid);
+		this = this->parents->item;
+	}
+
+I've appended a fixup commit below that applies on top of your
+patch. The fixups for this patch and the previous one can be fetched
+with
+
+   git fetch https://github.com/phillipwood/git.git bc/stash-import-export-fixups
+
+if you want to use them.
 
 Best Wishes
 
@@ -136,96 +189,80 @@ Phillip
 
 ---- >8 ----
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] fixup! builtin/stash: provide a way to export stashes to a
+Subject: [PATCH] fixup! builtin/stash: provide a way to import stashes from a
   ref
 
-Reject commits that do not look like stashes.
+Strengthen the checks on imported commits to ensure that the chain of
+imported stashes consists of commits with exactly two parents where the
+first parent is either the root commit or another imported stash commit
+and the second parent looks like a stash commit.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
-  builtin/stash.c | 42 ++++++++++++++++++++++++++++++++++++++++++
-  1 file changed, 42 insertions(+)
+  builtin/stash.c | 43 +++++++++++++++++++++++++++++++------------
+  1 file changed, 31 insertions(+), 12 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index d8332af4017..02cf344ed96 100644
+index 02cf344ed9..7d3a8c03a0 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -180,6 +180,33 @@ static void free_stash_info(struct stash_info *info)
-  	strbuf_release(&info->revision);
-  }
-
-+static int check_stash_topology(struct repository *r, struct commit *stash)
-+{
-+	struct commit *p1, *p2, *p3 = NULL;
+@@ -2011,25 +2011,44 @@ static int do_import_stash(struct repository *r, const char *rev)
+  	if (repo_get_oid(r, rev, &chain))
+  		return error(_("not a valid revision: %s"), rev);
+  
++	this = lookup_commit_reference(r, &chain);
++	if (!this)
++		return error(_("not a commit: %s"), rev);
+  	/*
+  	 * Walk the commit history, finding each stash entry, and load data into
+  	 * the array.
+  	 */
+-	for (i = 0;; i++) {
+-		struct object_id tree, oid;
+-		char revision[GIT_MAX_HEXSZ + 1];
+-
+-		oid_to_hex_r(revision, &chain);
+-
+-		if (get_oidf(&tree, "%s:", revision) ||
+-		    !oideq(&tree, r->hash_algo->empty_tree)) {
+-			res = error(_("%s is not a valid exported stash commit"), revision);
++	for (;;) {
++		struct commit *stash;
++		struct tree *tree = repo_get_commit_tree(r, this);
 +
-+	/* stash must have two or three parents */
-+	if (!stash->parents || !stash->parents->next ||
-+	    (stash->parents->next->next && stash->parents->next->next->next))
-+		return -1;
-+	p1 = stash->parents->item;
-+	p2 = stash->parents->next->item;
-+	if (stash->parents->next->next)
-+		p3 = stash->parents->next->next->item;
-+	if (repo_parse_commit(r, p1) || repo_parse_commit(r, p2) ||
-+	    (p3 && repo_parse_commit(r, p3)))
-+		return -1;
-+	/* p2 must have a single parent, p3 must have no parents */
-+	if (!p2->parents || p2->parents->next || (p3 && p3->parents))
-+		return -1;
-+	if (repo_parse_commit(r, p2->parents->item))
-+		return -1;
-+	/* p2^1 must equal p1 */
-+	if (!oideq(&p1->object.oid, &p2->parents->item->object.oid))
-+		return -1;
-+
-+	return 0;
-+}
-+
-  static void assert_stash_like(struct stash_info *info, const char *revision)
-  {
-  	if (get_oidf(&info->b_commit, "%s^1", revision) ||
-@@ -2101,13 +2128,21 @@ static int do_export_stash(struct repository *r,
-  		 */
-  		for (i = 0; i < argc; i++) {
-  			struct object_id oid;
-+			struct commit *stash;
-+
-  			if (parse_revision(&revision, argv[i], 1) ||
-  			    get_oid_with_context(r, revision.buf,
-  						 GET_OID_QUIETLY | GET_OID_GENTLY,
-  						 &oid, &unused)) {
-  				res = error(_("unable to find stash entry %s"), argv[i]);
-  				goto out;
-  			}
-+			stash = lookup_commit_reference(r, &oid);
-+			if (!stash || check_stash_topology(r, stash)) {
-+				res = error(_("%s does not look like a stash commit"),
-+					    argv[i]);
-+				goto out;
-+			}
-  			oid_array_append(&items, &oid);
++		if (!tree ||
++		    !oideq(&tree->object.oid, r->hash_algo->empty_tree) ||
++		    (this->parents &&
++		     (!this->parents->next || this->parents->next->next))) {
++			res = error(_("%s is not a valid exported stash commit"),
++				    oid_to_hex(&this->object.oid));
+  			goto out;
   		}
-  	} else {
-@@ -2118,13 +2153,20 @@ static int do_export_stash(struct repository *r,
-  		for (i = 0;; i++) {
-  			char buf[32];
-  			struct object_id oid;
-+			struct commit *stash;
-
-  			snprintf(buf, sizeof(buf), "%d", i);
-  			if (parse_revision(&revision, buf, 1) ||
-  			    get_oid_with_context(r, revision.buf,
-  						 GET_OID_QUIETLY | GET_OID_GENTLY,
-  						 &oid, &unused))
-  				break;
-+			stash = lookup_commit_reference(r, &oid);
-+			if (!stash || check_stash_topology(r, stash)) {
-+				res = error(_("%s does not look like a stash commit"),
-+					    revision.buf);
-+				goto out;
-+			}
-  			oid_array_append(&items, &oid);
-  		}
+-		if (get_oidf(&chain, "%s^1", revision) ||
+-		    get_oidf(&oid, "%s^2", revision))
++		if (!this->parents)
+  			break;
+-		oid_array_append(&items, &oid);
++		stash = this->parents->next->item;
++		if (repo_parse_commit(r, this->parents->item) ||
++		    repo_parse_commit(r, stash)) {
++			res = error(_("cannot parse parents of commit: %s"),
++				     oid_to_hex(&this->object.oid));
++			goto out;
++		}
++		if (check_stash_topology(r, stash)) {
++			res = error(_("%s does not look like a stash commit"),
++				    oid_to_hex(&stash->object.oid));
++			goto out;
++		}
++		/* TODO:
++		 *  - store commits, not objects
++		 */
++		oid_array_append(&items, &this->parents->next->item->object.oid);
++		this = this->parents->item;
   	}
+  
+  	/*
 -- 
 2.49.0.300.g813f75aecee
+
