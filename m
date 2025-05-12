@@ -1,256 +1,229 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f177.google.com (mail-oi1-f177.google.com [209.85.167.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E4C42609CA
-	for <git@vger.kernel.org>; Mon, 12 May 2025 09:20:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17436257430
+	for <git@vger.kernel.org>; Mon, 12 May 2025 09:37:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747041617; cv=none; b=l5oL/aOERKP6GO+efK+Nhug96g4yrc7E9wkIxzj2qBwoi0FQhdBBTu9010dsCKlEUzOu1ChEoK8Qe8lGmsiN5VzydRzXiQnVjPnB5s1XLP6netX8KE+yFIfclqpgC3iZRgRD5i0YSmcKSAi40CuWjFO5ByyMr1LIViubDpr6oHg=
+	t=1747042628; cv=none; b=jnsDd9Ylvn+IfkcRI++ZxECPCU9ZZ/aJh4n1xHLN5cmCR7eYcpRzlmTF38FbYE45NtC5FAThaBtG1Lfz0D1VGNtvWY0uPrDuz6Qu4qTtcbUVtp91BwOo3owz2off2thBE1MnKHk5FQTlRaAC3/VFJUZD8W6NEC3D7zNKszSKfQ0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747041617; c=relaxed/simple;
-	bh=lcn5zLl9cakUmNZk5GV3613Nf7kq0kQ+ReTdEWJemB4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=tUbS+7eYWkpY3e+wwtgcC1XSK+waGGu4ya9tFSB7FW82NIfX/Oj9pdICJpUr88V5FEtBh+XNWj9iPno0o1lXs58a7rAGNYwAoiUSop9BEGz5m/JB6QYUt9XFckKKzkaqJrPEY/Ris+r9GJpvmggtpRoB4yWa2GqdoukOytNYF4o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Frbtg0fH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dNJxUU9S; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1747042628; c=relaxed/simple;
+	bh=tX9u6Jes/52JOleq5cgu2uMsj5o6FKfF0r7FSKBaC9c=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=S8gNg/0SBk+KzN0+X7I6IJANRaEqBOx5HWcfcHpdcENRLAesc7S+K+SXYP3ob4sbJjMLOmpWdJ3XeNru8F9UuWVEKMLrySulmq1HnjlBPA6jo3G95QvToj1ZO9omWIvSYkhu91fMXUHp8gbW2WOWceFYA5XQUok+y15FcZhv9cA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mifhuo9I; arc=none smtp.client-ip=209.85.167.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Frbtg0fH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dNJxUU9S"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 5335E25400E8;
-	Mon, 12 May 2025 05:20:13 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 12 May 2025 05:20:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747041613;
-	 x=1747128013; bh=Zs80N5ZzpgOAMErZzkO3XJAhvfjHegnjBbswb8cosEI=; b=
-	Frbtg0fH/pZfCBUF2RJveV2AHlplCso+/KHM4vsuAe0OgcjWjWqhpt0FDlyOS5wT
-	U3wWh/zHgrMIBfTvWk2O96l00Yhw/mAmIecE1aYEmZNoBcqfC7OfpnAcoV5VlNo7
-	wbvUhbQ9/vP6zwX4FwgdJyC9YsTLCGRbjLSJDSRgXBNg+d3JisG6nGXG0N1uuuoN
-	6BTfEbGttREbpwV/vQI3ZGNa8ciP+PIz95JJmmCeS54y/0GdGNNdVJaOMjp4ZcwM
-	nDr17cmBb+soZBraFZCPOmlC7cthDJUXviVe2/mErTcuUCcxACGIAkrzsJOlRBgE
-	Zq0lD0PLJj8hRpYYSAfC6Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747041613; x=
-	1747128013; bh=Zs80N5ZzpgOAMErZzkO3XJAhvfjHegnjBbswb8cosEI=; b=d
-	NJxUU9S8tP+WYmPDbfVVO6eon6HH7O8XbdgB5e8fmRPd8gIRE3G2Q9Uotre/JTIw
-	W30SDqqrs3p+9ixgxzTjS/De2RmcaHNN1M2VP7AGifRM9+IKFBTO3RMWHIhGOA9a
-	nGqL5V8ANxFkCpW9YNnkX4taO/P287AWdB2Rc2dIm4youwQjgeu0F05MpaVraWv/
-	TyFSvkEJ9cdCHR+YDveQ9rhm61Z4i3x+iwTMS21Zm6iX3TxepuVD7pdb6HnjJGRl
-	WSamUGIMegDXzKaNkS503KVNlxBdfojVoQ6tc5i5feHy7EWS1uFGRuEDBGP4HqwS
-	OdnmqHi4yP0i6nFm10+kg==
-X-ME-Sender: <xms:Tb0haOnOoVC2Un6rH1E3EITCfFT8aHLHaVq_xa5V5hQxzm6SLRZ2Bg>
-    <xme:Tb0haF2LjMm02a86oImLqArEgX1k2YX0fai5cEqSBkE554egQmASiPqu8cAHg0P74
-    WGF87ZEGB6Q6NdHEw>
-X-ME-Received: <xmr:Tb0haMo8KS33yYyCpoFFmYrTzhBWh1X_hevxg-ogjUWv87CXU0_SpSwA4KfA6m1n49PY-4ROg7QFKM1HlXDGuqkB0rED2zP27ZTm8TotnP4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddtkeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkh
-    hksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdr
-    tghomhdprhgtphhtthhopehgihhtsehmrghtthhhihgvuhdqmhhohidrfhhrpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehsuhhnshhhihhn
-    vgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvg
-    hrnhgvlhdrohhrghdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:Tb0haCnKR8IqWo_KL4aDlnEQKY3BJ2PohLRzulbA7Tj-07s7Ie-81Q>
-    <xmx:Tb0haM2tQWCvljmDlU-0ozCfln62cZfOmHxPZMiKw75P1cb5Sa7lCg>
-    <xmx:Tb0haJvK_33VKytwdMFhwKSNqMoeCkzIxjXqLWEkSkr1s4gMVCrJEg>
-    <xmx:Tb0haIUXchmkVqCPL9pwo2FXnp4w8_fTyY0AudCETcyt0sX88VX6wQ>
-    <xmx:Tb0haP3MFYuWg6bgYXbp3zsVgtbLUCnEAanH9gxn4q90giVBh_ayKgcJ>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 05:20:11 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 519fc3c5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 12 May 2025 09:20:11 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 May 2025 11:20:01 +0200
-Subject: [PATCH v3 11/11] contrib: remove some scripts in "stats" directory
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mifhuo9I"
+Received: by mail-oi1-f177.google.com with SMTP id 5614622812f47-3f7f7b70aebso3297144b6e.2
+        for <git@vger.kernel.org>; Mon, 12 May 2025 02:37:06 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747042626; x=1747647426; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=6HSnpNvW+lvzD6XVJfh+q8j894L5oC43B5BbRO1PL8Y=;
+        b=mifhuo9ITsjlJH0rL0UB0gjZU7ynnVkzhIOXdiUxpAFPlZsT6QJcjrUBNIW8lloPDh
+         SntRorfcASVSCw5kod0EheulSTKjCvTKuD1FYXxCkX0Ja6ilV8ZoVoJzPJw9r9jZRPsp
+         eeM3CLH3ljbAZQJQGVT2jZVrcefvAsgE3o+1oeKoQfloVo+COM78VJqGX4iJ6++GAn9k
+         3N8EQhhDPyS9RL5R5CcEoFwyn26oSM9Z4OdZW+4iAt84CVvau76SuodE0nEGi5woDRGl
+         3XOQO8kg05Qm4UvKXd+xcdIS/7KfQEnDGaAsTsjsckxU0+ZsWCxuOKradikgPz1ZEAAv
+         DRGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747042626; x=1747647426;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6HSnpNvW+lvzD6XVJfh+q8j894L5oC43B5BbRO1PL8Y=;
+        b=v/TPy6UzX4Nv1QsIgfzdP14CtIWLhsBUD8kmKCcrdhY1JSAgjsfySRy6JzWphA9SO+
+         Mo81xPfVUsz0H7am2hzuMY7ist6FX7a8/Qo2nCSnIxDAQTlZMSORFh4lXWkqStNvXHpN
+         iH8SvXQtCfnGAxUi1ugmCEYibvMZEIp4jpHdaID81ILxR20kfUnrfYyq+XRTOIadBGTU
+         FcJsTzxhVf8Ggib9CCs/pD22dgtHBUqaT6alEQ4aDbvY+xkiTT/Kfza8CgehQwQtA7E8
+         NZAmyviGNRr2bstswAg69nSz8p/8H5eR8A8FzFMor/uD85MvTgKynKuvlBo2+aXhJcF0
+         rCkw==
+X-Forwarded-Encrypted: i=1; AJvYcCU8s7ys11jTm14+ATTCt3HK6KogU9R3Tft7yj1gFvBJNzIVGcb3i+TNeBjbOe35CGfuHyw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzcG9joCdDMbubqMzqieNOlMuuTYUewNrJgt7qKKgWefzZbFVC8
+	G6ddK6T8AB5FH0OZbH0721LeWjNHqCBK2AjD7upBw+7/wDJLivaC/vKTcZ3m6O6rmf4qn959Ea7
+	rnxJd7kcF7yOOG3NmUI0jiQx9gWg3POqK
+X-Gm-Gg: ASbGncuz26jSm/pYonrK/EYgVn6ZPMXgRG+naZdJrV5dAt9DtaMsK+yesbZ3iQNUHjI
+	bW0a234xPliMfUZjXTZQfSx0QIrsed26qoGeTrzKSjnpWFZ9ChNCk0xQJ13zQC9de8M50sS/rTE
+	1gvZk2ttUDUl0rNDPmlxKDy1M2PCbRq5qicmzxC47G9eU9PQmKuCXADIov5B4jUvJs2SHmGhdxR
+	6ZN
+X-Google-Smtp-Source: AGHT+IF51Plp8rfckmTiiCT1fozj1YxrlWjsDjLypXx1Mj9zagZKfTnjdT2doOktqj4iXnSzwoj38WR6B4JcjG3ccSE=
+X-Received: by 2002:a05:6102:8097:b0:4c1:71b6:6c with SMTP id
+ ada2fe7eead31-4deed33c0ebmr10023968137.7.1747042614957; Mon, 12 May 2025
+ 02:36:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 May 2025 04:36:54 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 12 May 2025 04:36:54 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250512020935.73140-2-lucasseikioshiro@gmail.com>
+References: <20250512020935.73140-1-lucasseikioshiro@gmail.com> <20250512020935.73140-2-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250512-pks-contrib-spring-cleanup-v3-11-32e151b0bfb0@pks.im>
-References: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
-In-Reply-To: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, 
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
- Matthieu Moy <git@matthieu-moy.fr>, Eric Sunshine <sunshine@sunshineco.com>, 
- Todd Zullinger <tmz@pobox.com>, Elijah Newren <newren@gmail.com>
-X-Mailer: b4 0.14.2
+Date: Mon, 12 May 2025 04:36:54 -0500
+X-Gm-Features: AX0GCFsC0cWgqBmFGJLHM47uQcsqN5gNVOaj5JlUiVAQUA0G2SXUe4JUN2_y6oI
+Message-ID: <CAOLa=ZS15edO-qEfUdoiHA=P+ukaO=U49R2ZWhXtuuAWvLBZ1Q@mail.gmail.com>
+Subject: Re: [GSoC PATCH v2 1/2] json-writer: add docstrings to jw_* functions
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="00000000000078f3550634ed0edb"
 
-The "stats" directory contains a couple of scripts to do some statistics
-on a repository:
+--00000000000078f3550634ed0edb
+Content-Type: text/plain; charset="UTF-8"
 
-  - "git-common-hash" shows the longest common hash prefixes and can be
-    used to determine the minimum prefix length to use for object names
-    to be unique. The script has last been touched in 53474eb92ff
-    (contrib: update stats/mailmap script, 2012-12-12) and searching for
-    it on the internet doesn't really surface any potential use cases or
-    even mentions of it.
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-    Modern Git also shouldn't really need this tool as it knows to
-    automatically scale printed prefixes via some heuristics.
+[snip]
 
-  - "mailmap.pl" performs some statistics on the number of mailmapped
-    commits in a repository. It has last been modified in 53474eb92ff
-    (contrib: update stats/mailmap script, 2012-12-12) and has since
-    been bitrotting. It doesn't even compile nowadays anymore:
+> +/*
+> + * Append a double field to the current object of the json_writer, given its key
+> + * and its value. The precision parameter can be used for specifying the number
+> + * of decimals after the point, using -1 for formatting with the maximum
+> + * precision available.
 
-        $ perl contrib/stats/mailmap.pl
-        Experimental keys on scalar is now forbidden at contrib/stats/mailmap.pl line 57.
-        Type of arg 1 to keys must be hash or array (not hash element) at contrib/stats/mailmap.pl line 57, near "}) "
-        Experimental keys on scalar is now forbidden at contrib/stats/mailmap.pl line 57.
-        Type of arg 1 to keys must be hash or array (not private variable) at contrib/stats/mailmap.pl line 57, near "$h)"
-        Experimental keys on scalar is now forbidden at contrib/stats/mailmap.pl line 64.
-        Type of arg 1 to keys must be hash or array (not private variable) at contrib/stats/mailmap.pl line 64, near "$h)"
-        Execution of contrib/stats/mailmap.pl aborted due to compilation errors.
+Nit: I would perhaps switch s/using/use to make it present tense and
+easier to read.
 
-    This should be good-enough signal to indicate that nobody is using
-    this script at all anymore.
+[snip]
 
-  - "packinfo.pl" takes the output from git-verify-pack(1) and performs
-    some pretty printing thereof. On the one hand it reformats the
-    output to be easier to read and provide some summaries. On the other
-    hand it may also print filenames of blobs.
+> +/*
+> + * Append a field to the current object of the json_writer, given its key and
+> + * another json_writer that represents its content.
+> + */
+>  void jw_object_sub_jw(struct json_writer *jw, const char *key,
+>  		      const struct json_writer *value);
+>
 
-    We don't have any replacement for this tool. Ideally, we should move
-    its functionality into git-verify-pack(1) itself.
+`json-writer.c` also has a docstring for this function, perhaps we
+can remove that and keep the header file as the source of truth?
 
-Remove the first two scripts, but retain "packinfo.pl".
+> +/*
+> + * Start an object as the value of a field in the current object of the
+> + * json_writer, given the field key.
+> + */
+>  void jw_object_inline_begin_object(struct json_writer *jw, const char *key);
+> +
+> +/*
+> + * Start an array as the value of a field in the current object of the
+> + * json_writer, given the field key.
+> + */
+>  void jw_object_inline_begin_array(struct json_writer *jw, const char *key);
+>
+> +/*
+> + * Append a string value to the current array of the json_writer.
+> + */
+>  void jw_array_string(struct json_writer *jw, const char *value);
+> +
+> +/*
+> + * Append an int value to the current array of the json_writer.
+> + */
+>  void jw_array_intmax(struct json_writer *jw, intmax_t value);
+> +
+> +/*
+> + * Append a double value to the current array of the json_writer. The precision
+> + * parameter can be used for specifying the number of decimals after the point,
+> + * using -1 for formatting with the maximum precision available.
+> + */
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- contrib/stats/git-common-hash | 26 ----------------
- contrib/stats/mailmap.pl      | 70 -------------------------------------------
- 2 files changed, 96 deletions(-)
+Nit: wondering if it might be shorter/nicer to say
 
-diff --git a/contrib/stats/git-common-hash b/contrib/stats/git-common-hash
-deleted file mode 100755
-index e27fd088be1..00000000000
---- a/contrib/stats/git-common-hash
-+++ /dev/null
-@@ -1,26 +0,0 @@
--#!/bin/sh
--
--# This script displays the distribution of longest common hash prefixes.
--# This can be used to determine the minimum prefix length to use
--# for object names to be unique.
--
--git rev-list --objects --all | sort | perl -lne '
--  substr($_, 40) = "";
--  # uncomment next line for a distribution of bits instead of hex chars
--  # $_ = unpack("B*",pack("H*",$_));
--  if (defined $p) {
--    ($p ^ $_) =~ /^(\0*)/;
--    $common = length $1;
--    if (defined $pcommon) {
--      $count[$pcommon > $common ? $pcommon : $common]++;
--    } else {
--      $count[$common]++; # first item
--    }
--  }
--  $p = $_;
--  $pcommon = $common;
--  END {
--    $count[$common]++; # last item
--    print "$_: $count[$_]" for 0..$#count;
--  }
--'
-diff --git a/contrib/stats/mailmap.pl b/contrib/stats/mailmap.pl
-deleted file mode 100755
-index 9513f5e35b4..00000000000
---- a/contrib/stats/mailmap.pl
-+++ /dev/null
-@@ -1,70 +0,0 @@
--#!/usr/bin/perl
--
--use warnings 'all';
--use strict;
--use Getopt::Long;
--
--my $match_emails;
--my $match_names;
--my $order_by = 'count';
--Getopt::Long::Configure(qw(bundling));
--GetOptions(
--	'emails|e!' => \$match_emails,
--	'names|n!'  => \$match_names,
--	'count|c'   => sub { $order_by = 'count' },
--	'time|t'    => sub { $order_by = 'stamp' },
--) or exit 1;
--$match_emails = 1 unless $match_names;
--
--my $email = {};
--my $name = {};
--
--open(my $fh, '-|', "git log --format='%at <%aE> %aN'");
--while(<$fh>) {
--	my ($t, $e, $n) = /(\S+) <(\S+)> (.*)/;
--	mark($email, $e, $n, $t);
--	mark($name, $n, $e, $t);
--}
--close($fh);
--
--if ($match_emails) {
--	foreach my $e (dups($email)) {
--		foreach my $n (vals($email->{$e})) {
--			show($n, $e, $email->{$e}->{$n});
--		}
--		print "\n";
--	}
--}
--if ($match_names) {
--	foreach my $n (dups($name)) {
--		foreach my $e (vals($name->{$n})) {
--			show($n, $e, $name->{$n}->{$e});
--		}
--		print "\n";
--	}
--}
--exit 0;
--
--sub mark {
--	my ($h, $k, $v, $t) = @_;
--	my $e = $h->{$k}->{$v} ||= { count => 0, stamp => 0 };
--	$e->{count}++;
--	$e->{stamp} = $t unless $t < $e->{stamp};
--}
--
--sub dups {
--	my $h = shift;
--	return grep { keys($h->{$_}) > 1 } keys($h);
--}
--
--sub vals {
--	my $h = shift;
--	return sort {
--		$h->{$b}->{$order_by} <=> $h->{$a}->{$order_by}
--	} keys($h);
--}
--
--sub show {
--	my ($n, $e, $h) = @_;
--	print "$n <$e> ($h->{$order_by})\n";
--}
+  The precision parameter defines the number of significant digits,
+  where -1 can be used for maximum precision.
 
--- 
-2.49.0.1101.gccaa498523.dirty
+>  void jw_array_double(struct json_writer *jw, int precision, double value);
+> +
+> +/*
+> + * Append a true value to the current array of the json_writer.
+> + */
+>  void jw_array_true(struct json_writer *jw);
+> +
+> +/*
+> + * Append a false value to the current array of the json_writer.
+> + */
+>  void jw_array_false(struct json_writer *jw);
+> +
+> +/*
+> + * Append a boolean value to the current array of the json_writer.
+> + */
+>  void jw_array_bool(struct json_writer *jw, int value);
+> +
+> +/*
+> + * Append a null value to the current array of the json_writer.
+> + */
+>  void jw_array_null(struct json_writer *jw);
+> +
+> +/*
+> + * Append a value to the current array of the json_writer, given the
+> + * json_writer that represents its content.
+> + */
+>  void jw_array_sub_jw(struct json_writer *jw, const struct json_writer *value);
+> +
+> +/*
+> + * Append the first argc values from the argv array of strings to the current
+> + * array of the json_writer.
+> + *
+> + * This function does not provide safety for cases where the array has less than
+> + * argc values.
+> + */
+>  void jw_array_argc_argv(struct json_writer *jw, int argc, const char **argv);
+> +
+> +/*
+> + * Append a null-terminated array of strings to the current array of the
+> + * json_writer.
+> + */
+>  void jw_array_argv(struct json_writer *jw, const char **argv);
+>
+> +/*
+> + * Start an object as a value in the current array of the json_writer.
+> + */
+>  void jw_array_inline_begin_object(struct json_writer *jw);
+> +
+> +/*
+> + * Start an array as a value in the current array.
+> + */
+>  void jw_array_inline_begin_array(struct json_writer *jw);
+>
+> +/*
+> + * Return if the json_writer is terminated. In other words, if the all the
+> + * objects and arrays are already closed.
+> + */
+>  int jw_is_terminated(const struct json_writer *jw);
+> +
+> +/*
+> + * Terminates the current object or array of the json_writer. In other words,
+> + * append a ] if the current array is not closed or } if the current object
+> + * is not closed.
+> + *
+> + * Abort the execution if there's no object or array that can be terminated.
+> + */
+>  void jw_end(struct json_writer *jw);
 
+Thanks, overall this looks good, I would drop the 'given its key' or
+'given the value field' and similar  statements, as they don't provide
+any additional context, but that is probably just nitpicking.
+
+--00000000000078f3550634ed0edb
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: e5e4b728ccadc731_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1naHdUUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNXN4Qy8wUjBHTU82OGlDT2tPdTkxc3VDRGxxaGZsQgptcklMc2dzRmlu
+YnhBdXN2c3lXbTZZdnY5LzRlWENGQzA4NE15MElpNnZTMlEyRmxVSkFDdnZrakRxNDdIVnVFClNh
+VGJoSmdmdkExcUpZVnR0eksyNE5Wak9jRFRQS2w0Tk0xclNsekdEVTErK1IvTE1DMjFoT2RDOVZY
+ZnVqR0wKb0JuMVYzeUhxaTZNQ3hRMU5CcEprQyt1OElZVTAyL25OR1BkWENGbjFDVVhLTGNNb21R
+c3ljTnBPK2hSMGxuVQpaL1N5TU1jTmZMeDVMcUZsd1VKZ3dZZUZNUE5namxWSXJBMXFuYVRVN0tD
+MDUwaUdzSG9tUTBxK0FEN3o3RUQyCk9xZC8wenphZ1pkOE5QdFI0Unk3OGI3RGZZR2dDbEtHbUpw
+SUFTcTh3TURPcldYNkZsOGJ4QlBLU1Q1SWRDVDUKKzl2RDJQT2NGSVE3VXdKM09sZ1NRc0ppQUFD
+Z1BHdlhwL1pNZmcrem9IQktXNWJvNG5Ha0lXUE0yRlpqMVd2aAo0OVdSYWZUWmZzRUxWMlZJTThr
+NDF6QzVIUUNqbUdpM1EwZGhsYWFLa3NXY09MRURub3lpNUxaUE5meXNmMUdsCm9EcGZOVHVDQndL
+b3pKWlltRmJxNVA4SW90UURQWXQxbFMvTjdOQT0KPWoxLzUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000078f3550634ed0edb--
