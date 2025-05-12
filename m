@@ -1,129 +1,293 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FABA218AB9
-	for <git@vger.kernel.org>; Mon, 12 May 2025 16:12:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAB1B248F79
+	for <git@vger.kernel.org>; Mon, 12 May 2025 16:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747066380; cv=none; b=UZ2wNWzrTLFneuuXiLkAVFKY9LEIWF/pWn++z6OGabCXaU61h1EAsR3dSoDO4JUk5fJ43AqaPVNhxgvkv3a8GoqLcoPichaA/UWOLXc5SctqcUxCyGysZjgx/QZ2TP4e0rqhgswIR+tRP192Ze0oJ08qzh+JzmO1SYR+WMuvcz4=
+	t=1747066632; cv=none; b=I2mBuJwUWz+4VxKqxD4PZIWw0ty9+zqJgdmnI9+WvDtASSJbuDCXbtslCHYfhE5BawlfYMR7OUbuvdezg98NSvxMh+rsjnHi5+ZNZOfKsOixwrreF6NWkysoQjg8bGAixChFB2Ei0UTloPLOnmgJeNIiTFT1BWzpU5HOP//PAQY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747066380; c=relaxed/simple;
-	bh=fboMPgFG9owt1BGaAW+5Vm2CHspA9fFGIQTJ96wQRY4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=BESPFdkk+S8NaeXcgqoMsSzUDA1hhfpy3/H6lQ+A5474MwClj/NbQhjMD33N+YaNhKniFNDGveGIaaEjbS8j3V9zY5SjLsVb4j38twA3yS09IhEPQSi5gI34c9fiMKsPRi0C8cZjsvpyBwo0Hv6nZg9ZoMrzZvdfv+xeIpKlIxg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AJmAOgmo; arc=none smtp.client-ip=209.85.216.43
+	s=arc-20240116; t=1747066632; c=relaxed/simple;
+	bh=eaEsXzoOjr2KEPQToB1+ELX3ARJQIBMB6lCiUhCl/6g=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=Qr9Orv2GOcDEFvlCVIZUEN3oqnV8RX9TZ+NEzsFk83Z1h6RWLXQ3IhtmHga4KNUFZCFiYrLNtgQskalo2n2HVq0Gi6mzpdb5PJRd2hzHcgklfrT8xwOPCl3oAQgn2cF1X99Pkn1bs2tu7pwWGnf8ka0Y99Jny+pBJWkwYg6wiVY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iGCJGa4L; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AJmAOgmo"
-Received: by mail-pj1-f43.google.com with SMTP id 98e67ed59e1d1-30a8cbddca4so5328284a91.3
-        for <git@vger.kernel.org>; Mon, 12 May 2025 09:12:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iGCJGa4L"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-43cfdc2c8c9so26725895e9.2
+        for <git@vger.kernel.org>; Mon, 12 May 2025 09:17:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747066378; x=1747671178; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747066629; x=1747671429; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ID98vSkEiRPfyJPMw42q5L0vA2y6265kaedTxrJF2XQ=;
-        b=AJmAOgmo/A5qdVUVgWVpI5ogJ7KozTqrOPeCtfXAvKLSuFn0hPcrNC8/iaIbZ181qh
-         I5qQ2vaKNlNKudUR2bz5HvNVpbmJrCdsW19L1oDkcevjpDMmUGzt41pRNr2sK4vHiQkW
-         vca9Mx6fPWWd+nXsE1thbzAMsJAqjdqDZKrJP3bum5CpSdxDXjhqZ/y1n1YnIaBco5MI
-         TzjN9L+z7i7/zZhpjM1QQBquTEn5WBiNx4fAvbpPbNerStT73s36+TLSvJ5s5j4Upy+s
-         6690/K6S3Grjexbx5+OkJbWQZt58pFtptGK08ZsIiXzFIzrZ2cUOTP7Pcnk9YL+notjN
-         uM8Q==
+        bh=T4i79nVCaQzSnzt9VVqxtfgVud/se8GQ8mOsjmmB8MU=;
+        b=iGCJGa4LiF7u72l76H5VGp0CTu6JSGPuSk/hOHu6OOrRHRgMoExfDzHtUfHRcxkYeP
+         IaYzc9v+kgCDKS+khPBihOcaYnq2fY1b6DSdIDmzZKBkSQblg6p29SyFFPgDl/nvn3Zq
+         JPLz32q1xFhX+pdkCx2ap2d26m7A7UuYgitUXXFKR2WpjGKtEgPjsH/1iBJXS//7a7pI
+         ORBWIzjqGvxCekdQc7iOmgKtFCliL0bZ/KsKDUfCIkAsPLNAgaWkQkUFcqC2wVXS8USp
+         DMl/mBebi1Ymvh72QAGNATA+3za0TwxMvljdmiF9hyOyOsyGuO34IM1Ri5tf21+gVtkD
+         DUvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747066378; x=1747671178;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1747066629; x=1747671429;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ID98vSkEiRPfyJPMw42q5L0vA2y6265kaedTxrJF2XQ=;
-        b=KsFjejSbShCbA8p2Zga0JoAODDRRJd4zQeuVxge8kdg2OLPDRhyYgKGLEKJwpj9ROx
-         snysNj6YvKT2WoNZA3l0llz1V3J9hgWjpqUKymkzoMUKQBnty4aH9CGcC0hlGHXwSagc
-         SFVCuBSkDU1fiBu/lDJO2CUedhe7edaNl8K+yTLhuZGrrTB9tuyfvom59VGqGAi0s5iK
-         EoP6JScJJog2mwcaoHM+rh5w8Ssb/XQroTerIUZ2EiFAXG7BEj6BHU+yCqDGifUQFtFk
-         iPs4OLA178GFG4IwhYe0ypOxygP/1HON1F90labYt+FrVfdUcAKj1ZlmG/5aR6WUy/Cs
-         +Mxw==
-X-Gm-Message-State: AOJu0YxUwJkJaRfROMxmSQA8jOeVshOLEP5NWGnA4mORjaDFnwxWZJ90
-	r4RuOF5kT6cKzaNnE3brQodBmrC+6vV5LAMuOFfa/9pYphRel8M2zVhaAQ==
-X-Gm-Gg: ASbGncuJvrAG0GmIJuXB83jCxFzd6Q0z7nocsV9ocXvYNS8gpRIXpk/VskGK+OJ2A3w
-	TmSw9k8sTlq0CrFPO5kpx1AgvlNSJ82vZZTGvlqoHb69FsliNPd1NSpdZv+kkHaIBuXSwh4NuwA
-	1H9Bw0W/NkOBWOg6gh7BoT46ZuSMbT9lcnTGY7MWmrl/62Y14BDKmD+3VVhSJxgFU+x/gwGUQOs
-	DIqcT3E6vgGLaJFOzTLxgIsUsGGfRwNBXxq0oZBBMrsLWY8IScgInPBELGW25K1S7qXx9Ea0DAl
-	fTEKZ1suN1LCY2Hy06kSXep4bZfInXANnjATNEBXFH99BiSw1XQShac60uoFFR5Wgro=
-X-Google-Smtp-Source: AGHT+IFOxj3G56zGY8NOfFSEAE6yoILxO+syiPrAJJuwWZkSGdm+rQ9kYtq2fw0moCOgS3VtF7ZZ0Q==
-X-Received: by 2002:a17:90b:1846:b0:2ff:58e1:2bb1 with SMTP id 98e67ed59e1d1-30c3d65cc2bmr18344402a91.32.1747066378222;
-        Mon, 12 May 2025 09:12:58 -0700 (PDT)
-Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30c39e61056sm6736561a91.39.2025.05.12.09.12.56
+        bh=T4i79nVCaQzSnzt9VVqxtfgVud/se8GQ8mOsjmmB8MU=;
+        b=ewILFs9wJOZnJTrpiMOH7+y+ZAzLrg7iZ8csD8kmxrYB5s2uY3NZqFq68aIxpKciHX
+         2mj2ULqBNRt67Hdg5cXahlYq7FzipNlO/7eMvX7ocpJjzLvYksH7RT4412ziA6oPmTBz
+         hlBkD/SuGkWqMujPVLSyCGnaJ7ReDgF/KIkXx7L8JXokW4j863b7nA9AAef4afx/YgfN
+         kZxIMShwUruU9WCIy49IJU1dP16omi4AM9RrtyMUFS3/CF1poJ5X0DstZvlTx9RhuMWY
+         VQFsXAeWESiQLPXQjl7MEicK0OsR9nn75G65zC/QRRXjcXy9ZRSjJays/Wr37nRMdNKc
+         96LQ==
+X-Gm-Message-State: AOJu0Yy+2X47y5QJ60YzZF/9QSFQ9EEanEJejtoysL3C+SMZ5ZZhBRRE
+	2gEJbCNkS+zPL2djaXba2QvqVY5lGQRbeuSjwcNEO68i1RCSwBLkkda7CQ==
+X-Gm-Gg: ASbGncuGjNlaeoWnezqOPlxWMz3XI/aYIWGKfFqMogjhAR/4B4uRww1KkcWQcwA9MC1
+	WJ7Ry3IuSB+15egciiEDKGqBWXgVnNM4q5/pQMuhd/5cwtUfngwXrJaKUGs6JCPbXrFygx+X8xO
+	RFTuR5NRcUj3xiMRu0OFdBxCS/3FAco5qoiVRX9KCclhRIsJqh3t5QNbXYZRYPWw0uNpnQtFvUs
+	6ZEmNFnacmJcoZ/t4tup2U1Sml27Wy4rs9PNanZ8dvbtxMzrBX0iT1mRCqlCI3WV+uYZBB2RGEQ
+	vmdoRcVS9zrhpGGG22bZFt+n8gCYJ2wwGJ+3YimMtsaE6siwHL6f
+X-Google-Smtp-Source: AGHT+IEgQRs03BvHuRrk1DMzhVGsItNhPW9n0xUb+GvLnchnlYv7yJsb4qDaBz/EMiJYkGZI3MYIbQ==
+X-Received: by 2002:a05:600c:c10d:b0:442:dc75:5625 with SMTP id 5b1f17b1804b1-442dc755be9mr75911015e9.5.1747066628500;
+        Mon, 12 May 2025 09:17:08 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442e9d00bacsm13624625e9.12.2025.05.12.09.17.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 May 2025 09:12:57 -0700 (PDT)
-From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-To: smacdonald@kaimaging.com
-Cc: git@vger.kernel.org
-Subject: Re [BUG] git stash incorrectly showing submodule branch instead of superproject branch
-Date: Mon, 12 May 2025 21:42:52 +0530
-Message-ID: <20250512161253.58427-1-jayatheerthkulkarni2005@gmail.com>
-X-Mailer: git-send-email 2.49.0.533.g80f4e02b4b
-In-Reply-To: <TO1PPF29324B4CE6D3518208073452C3C51CD97A@TO1PPF29324B4CE.CANPRD01.PROD.OUTLOOK.COM>
-References: <TO1PPF29324B4CE6D3518208073452C3C51CD97A@TO1PPF29324B4CE.CANPRD01.PROD.OUTLOOK.COM>
+        Mon, 12 May 2025 09:17:08 -0700 (PDT)
+Message-Id: <pull.1956.v3.git.git.1747066627330.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
+References: <pull.1956.v2.git.git.1746980097510.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 May 2025 16:17:07 +0000
+Subject: [PATCH v3] mailinfo: fix pointential memory leak if `decode_header`
+ failed
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
+
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
+
+In mailinfo.c:decode_header, if convert_to_utf8 failed, the strbuf stored
+in dec will leak. Simply add strbuf_release and free(dec) will solve
+this problem.
+
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+    decode_header: fix pointential memory leak if decode_header failed
+    
+    In mailinfo.c line 539, if convert_to_utf8 failed, the strbuf stored in
+    dec will leak. Simply add strbuf_release and free(dec) will solve this
+    problem.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1956%2Fbrandb97%2Ffix-mailinfo-decode-header-leak-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1956/brandb97/fix-mailinfo-decode-header-leak-v3
+Pull-Request: https://github.com/git/git/pull/1956
+
+Range-diff vs v2:
+
+ 1:  90dc9b0d49b ! 1:  7f8ce472750 mailinfo: fix pointential memory leak if `decode_header` failed
+     @@ mailinfo.c: static void decode_header(struct mailinfo *mi, struct strbuf *it)
+       			goto release_return;
+       		case 'b':
+      -			dec = decode_b_segment(&piecebuf);
+     -+			if ((found_error = decode_b_segment(&dec, &piecebuf))) {
+     ++			if ((found_error = decode_b_segment(&dec, &piecebuf)))
+      +				goto release_return;
+     -+			}
+       			break;
+       		case 'q':
+      -			dec = decode_q_segment(&piecebuf, 1);
+     -+			if ((found_error = decode_q_segment(&dec, &piecebuf, 1))) {
+     ++			if ((found_error = decode_q_segment(&dec, &piecebuf, 1)))
+      +				goto release_return;
+     -+			}
+       			break;
+       		}
+      -		if (convert_to_utf8(mi, dec, charset_q.buf))
+      +		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
+     -+			strbuf_release(&dec);
+       			goto release_return;
+      +		}
+       
+     @@ mailinfo.c: static void decode_header(struct mailinfo *mi, struct strbuf *it)
+       		in = ep + 2;
+       	}
+       	strbuf_addstr(&outbuf, in);
+     +@@ mailinfo.c: release_return:
+     + 	strbuf_release(&outbuf);
+     + 	strbuf_release(&charset_q);
+     + 	strbuf_release(&piecebuf);
+     ++	strbuf_release(&dec);
+     + 
+     + 	if (found_error)
+     + 		mi->input_error = -1;
+      @@ mailinfo.c: static int is_inbody_header(const struct mailinfo *mi,
+       
+       static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+       {
+      -	struct strbuf *ret;
+     -+	struct strbuf ret;
+     -+	int found_error = 0;
+     ++	struct strbuf ret = STRBUF_INIT;
+       
+       	switch (mi->transfer_encoding) {
+       	case TE_QP:
+      -		ret = decode_q_segment(line, 0);
+     -+		found_error = decode_q_segment(&ret, line, 0);
+     ++		decode_q_segment(&ret, line, 0);
+       		break;
+       	case TE_BASE64:
+      -		ret = decode_b_segment(line);
+     -+		found_error = decode_b_segment(&ret, line);
+     ++		decode_b_segment(&ret, line);
+       		break;
+       	case TE_DONTCARE:
+       	default:
+     @@ mailinfo.c: static int is_inbody_header(const struct mailinfo *mi,
+      -	strbuf_release(ret);
+      -	free(ret);
+      +	strbuf_addbuf(line, &ret);
+     -+	if (!found_error)
+     -+		strbuf_release(&ret);
+     ++	strbuf_release(&ret);
+       }
+       
+       static inline int patchbreak(const struct strbuf *line)
 
 
+ mailinfo.c | 39 ++++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 19 deletions(-)
 
-Thank you for reporting the bug, Stuart.
-
-This is genuinely one of the most interesting Git bugs I’ve seen in a while 
-I was able to reproduce it with the following minimal steps:
-
-    mkdir sdk && cd sdk
-    git init
-    echo "SDK file" > sdk.txt
-    git add sdk.txt
-    git commit -m "Initial commit in SDK"
-    cd ..
-
-    mkdir ui && cd ui
-    git init
-    git -c protocol.file.allow=always submodule add ../sdk
-    git commit -m "Add SDK as submodule"
-
-    git checkout -b feature_foo        # in main repo
-    cd sdk
-    git checkout -b feature_sdk_foo    # in submodule
-    cd ..
-    git checkout -b bugfix_bar         # still in main repo
-
-    echo "Bugfix content" > fix.txt
-    git add fix.txt
-    git stash push -m "debugging"
-
-    git stash list
-
-After this, the stash message shows:
-    stash@{0}: On feature_sdk_foo: debugging
-
-Which clearly leaks the submodule’s branch name into the superproject’s stash label.
-
-This is indeed a `git stash` problem 
-I verified that:
-- Branches were unchanged after stashing
-- Submodule state remained untouched
-- `git status` correctly reported the superproject branch
-- Yet the stash commit was labeled with the submodule’s branch name
-
-So the stash mechanism seems to be pulling `HEAD` information from the submodule 
-context by mistake, even when the stash is purely for the superproject.
-
-Also confirming that this is *not Windows-specific* — I reproduced it on Fedora as well.
-
-The historical detail you shared (that this used to work fine around 2021) is helpful. 
-I'll dig into the stash code paths to see if I can isolate a regression or misbehavior.
-
+diff --git a/mailinfo.c b/mailinfo.c
+index 7b001fa5dbd..9bda2e8170f 100644
+--- a/mailinfo.c
++++ b/mailinfo.c
+@@ -381,11 +381,11 @@ static int is_format_patch_separator(const char *line, int len)
+ 	return !memcmp(SAMPLE + (cp - line), cp, strlen(SAMPLE) - (cp - line));
+ }
  
--Jayatheerth
+-static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
++static int decode_q_segment(struct strbuf *out, const struct strbuf *q_seg,
++			    int rfc2047)
+ {
+ 	const char *in = q_seg->buf;
+ 	int c;
+-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+ 	strbuf_init(out, q_seg->len);
+ 
+ 	while ((c = *in++) != 0) {
+@@ -405,15 +405,14 @@ static struct strbuf *decode_q_segment(const struct strbuf *q_seg, int rfc2047)
+ 			c = 0x20;
+ 		strbuf_addch(out, c);
+ 	}
+-	return out;
++	return 0;
+ }
+ 
+-static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
++static int decode_b_segment(struct strbuf *out, const struct strbuf *b_seg)
+ {
+ 	/* Decode in..ep, possibly in-place to ot */
+ 	int c, pos = 0, acc = 0;
+ 	const char *in = b_seg->buf;
+-	struct strbuf *out = xmalloc(sizeof(struct strbuf));
+ 	strbuf_init(out, b_seg->len);
+ 
+ 	while ((c = *in++) != 0) {
+@@ -447,7 +446,7 @@ static struct strbuf *decode_b_segment(const struct strbuf *b_seg)
+ 			break;
+ 		}
+ 	}
+-	return out;
++	return 0;
+ }
+ 
+ static int convert_to_utf8(struct mailinfo *mi,
+@@ -475,7 +474,7 @@ static int convert_to_utf8(struct mailinfo *mi,
+ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+ {
+ 	char *in, *ep, *cp;
+-	struct strbuf outbuf = STRBUF_INIT, *dec;
++	struct strbuf outbuf = STRBUF_INIT, dec = STRBUF_INIT;
+ 	struct strbuf charset_q = STRBUF_INIT, piecebuf = STRBUF_INIT;
+ 	int found_error = 1; /* pessimism */
+ 
+@@ -530,18 +529,20 @@ static void decode_header(struct mailinfo *mi, struct strbuf *it)
+ 		default:
+ 			goto release_return;
+ 		case 'b':
+-			dec = decode_b_segment(&piecebuf);
++			if ((found_error = decode_b_segment(&dec, &piecebuf)))
++				goto release_return;
+ 			break;
+ 		case 'q':
+-			dec = decode_q_segment(&piecebuf, 1);
++			if ((found_error = decode_q_segment(&dec, &piecebuf, 1)))
++				goto release_return;
+ 			break;
+ 		}
+-		if (convert_to_utf8(mi, dec, charset_q.buf))
++		if (convert_to_utf8(mi, &dec, charset_q.buf)) {
+ 			goto release_return;
++		}
+ 
+-		strbuf_addbuf(&outbuf, dec);
+-		strbuf_release(dec);
+-		free(dec);
++		strbuf_addbuf(&outbuf, &dec);
++		strbuf_release(&dec);
+ 		in = ep + 2;
+ 	}
+ 	strbuf_addstr(&outbuf, in);
+@@ -552,6 +553,7 @@ release_return:
+ 	strbuf_release(&outbuf);
+ 	strbuf_release(&charset_q);
+ 	strbuf_release(&piecebuf);
++	strbuf_release(&dec);
+ 
+ 	if (found_error)
+ 		mi->input_error = -1;
+@@ -634,23 +636,22 @@ static int is_inbody_header(const struct mailinfo *mi,
+ 
+ static void decode_transfer_encoding(struct mailinfo *mi, struct strbuf *line)
+ {
+-	struct strbuf *ret;
++	struct strbuf ret = STRBUF_INIT;
+ 
+ 	switch (mi->transfer_encoding) {
+ 	case TE_QP:
+-		ret = decode_q_segment(line, 0);
++		decode_q_segment(&ret, line, 0);
+ 		break;
+ 	case TE_BASE64:
+-		ret = decode_b_segment(line);
++		decode_b_segment(&ret, line);
+ 		break;
+ 	case TE_DONTCARE:
+ 	default:
+ 		return;
+ 	}
+ 	strbuf_reset(line);
+-	strbuf_addbuf(line, ret);
+-	strbuf_release(ret);
+-	free(ret);
++	strbuf_addbuf(line, &ret);
++	strbuf_release(&ret);
+ }
+ 
+ static inline int patchbreak(const struct strbuf *line)
+
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+-- 
+gitgitgadget
