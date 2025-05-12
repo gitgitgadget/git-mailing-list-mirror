@@ -1,268 +1,184 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E184D25A2CB
-	for <git@vger.kernel.org>; Mon, 12 May 2025 09:10:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F2D725B1CD
+	for <git@vger.kernel.org>; Mon, 12 May 2025 09:20:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747041051; cv=none; b=ls5qav2g18+PvFZ/EOIViLkM/4lvxGtDxWk/gOFm2se/8/OjZSJn2rqS+OTDZiRylLPqH1zUrvi7C2TPzgh3dtu9N6sgxM6Segp9cmvSNj7KkvdPGRGPtdE6XyFF2nUJ0h3eKLwHNq4Fn6u7SDxrAK/GEKECUfUgSdrjFhlebNo=
+	t=1747041609; cv=none; b=m4nyZCMkAE13dlITIvbeCoia5/X/4nPFHjMkg5Vxx7vafhrAJ0+YpU9MP+1AFk4H29WwOvlJwZZWcpxWxopRoOjscJMCwy8tXg/iJi/LP0OpVd27koFKWXJC+cGX1ijp7CJDvQ3js+w4CPivY/pfyUZzILE09fx+CFEBhrw7v3I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747041051; c=relaxed/simple;
-	bh=tAxMer+qhvA3jbyTX+ab8FbIXjSCaX5EH+oHaM89ARs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Cz8gKcy6qDSXwrSyQ6xGgZOFMpUnq90tOFkwTMMiz4d/A14ziKf+xBKFGPq5NxFwG7i2g76vdyw3E1fPpRP3zaWFD9NoD9Aln5f/2gKSFzW+nb1sOiCHRcNunMIgDvt6u7rRnRj/PeQjdoLFL3o200528FDPzdurU5Dnb1iSoRg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dqnPUTXp; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747041609; c=relaxed/simple;
+	bh=AF6wvG+DrZUBTx1cf39KNzEsH5OmzZr1GC2vqZvKF+g=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=XFEJcnopTzZMn2SDvRMWT9KrERlQ+9pKSesDSl6AQoapu7vuyw8UnqD90EaZ942rDGOvjj0u63n/8J7tbEYKAKCjyCEmhXD4klB8WdyJUaWDcoLltLA+GwZsFv1yfNsRHAPvWu9hnB0Eejrvr2o5s0+7Rc49yagmCddmE1DO5n0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=sWev3H57; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G+GDdq/8; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dqnPUTXp"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-441d437cfaaso25182295e9.1
-        for <git@vger.kernel.org>; Mon, 12 May 2025 02:10:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747041048; x=1747645848; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=Rx2+3SvKXpjNRu2Cy2rXksb6oYZr7DxXEOYtFurIl0g=;
-        b=dqnPUTXpjGug+nGq5nEDuxhzXzKXhnlpBeNVgbChX7ZW6z7Khb7D6eoOth9h65P19S
-         IMNqsT4Is3FpWJxJ7iMn70uyYQaL5s5Stl6xGd9RaEf8LLfE3JNMGCSgO+6gW/1pd+AY
-         LGB81jrtI82ez5JOHqLP2uHViLLlC9kWeetXofs+MPSxyWGGa4IjEdCb3Gdsl28BdQqS
-         1K4HWnou2u0gdPgJiEaBfXzRQ9MQxRRxm80C2jUwEZnmlL8ntyLOU9I4bJ+eQaNeHyHx
-         mVblRPsnzA4LLKvaSvWO9V9JNNSVhGgsAKp3UQYqEtF9bHe9nBuktUH/hL3nmNUflUoe
-         caJQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747041048; x=1747645848;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Rx2+3SvKXpjNRu2Cy2rXksb6oYZr7DxXEOYtFurIl0g=;
-        b=Jaj/dyA4yslhrEMVT2qxDsjQfuuz4dEtDMQtk6vJnowa7FNV61vraW0fP/meBlPLza
-         +8X26SIUQnjVJLf7Vk3O69CIpwl+lql3S+dPtKd68g7nCfJQJIRsUHjqx3SGQrfyknA0
-         ni+SMLT2jSoVTbSh9x06/+JYEUxFm+JQLGILVfRJji1Ywv1duUiEYGsqgeKjJ/xMGN2P
-         SFcn3YjnwZFbIox2b9w9EPi/QMijx2Rr1YMVahrT2lA1kobsLGsSlr54CoVO0yn6FDC7
-         lqbG4sZ2hTPsaakDtZIoF97WqRpNadYwram/UY8lwDy35JCQ257QY9x8swanyRy82hge
-         O3xg==
-X-Forwarded-Encrypted: i=1; AJvYcCVNg4XVX6EJ7vExYAcMegXjFNhiDlXn34taNPlk+WVAHlp9juz8rD1kNwTg8YNnR7QO9rU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZhI5QOV1v9EQp6RaExONalOCOtnmJXQaeb9R9LjnLx8hLHkEk
-	fn08+ktg1HMXDoEYGDHYUtsdwEVERf+Pvi3BWqeWjTktcGJ4r2xJ
-X-Gm-Gg: ASbGnctLpkIZ5K/IveuOiKUi1TDnO+0DyE7nUfZeWPCrR6mhdUnh/zFTEux6yVjDnHx
-	3FRR61o1+YaqcLuadhIxcYtQlCH/DPT6zjOsxzxzI1r4GHeRinyRwqyIdvX5QMBaVsgRvqOicZn
-	X9vTRC/E+pph5m68TYwocZ4Lk8pyJHsH5/kvO84DV7dEfJwIeckbsFkjeT4gq7XJ94jQNcjqHSg
-	o3d0FLkWs5lbBS9OYtD3CvXgw84XeklICmYHHl/gXhX5zfcWvvO+IxPUNNbR+lEp8TQxvn1iDS7
-	9TmE3PkwmqiR7VoR5xD3y/bIB3LQgzhq30HfKjLrZ1UOk+be7NF3e1tf4YUliv30AZrJxoDGPcS
-	7rg3lUY/TraYuV0VF6ehGfwrk1so=
-X-Google-Smtp-Source: AGHT+IGxmGJuES4zXJ6mls3Y05n92Uzy48CeqPYdDlriK9N2EsuM1goRn0wHbsxVPUaYDghvU3xBmw==
-X-Received: by 2002:a05:600c:548d:b0:43d:ea:51d2 with SMTP id 5b1f17b1804b1-442d6d44918mr98684735e9.14.1747041048101;
-        Mon, 12 May 2025 02:10:48 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442cd3aecb0sm163555975e9.28.2025.05.12.02.10.46
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 May 2025 02:10:47 -0700 (PDT)
-Message-ID: <94b26c62-c8da-49ba-a4f1-66da20956c0b@gmail.com>
-Date: Mon, 12 May 2025 10:10:46 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="sWev3H57";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G+GDdq/8"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0F1081140140;
+	Mon, 12 May 2025 05:20:06 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-02.internal (MEProxy); Mon, 12 May 2025 05:20:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747041605;
+	 x=1747128005; bh=pXlv1vV5mEvFitAzV7wVOmzx2JqQRoLQ1GWYauj00cw=; b=
+	sWev3H57eRj5bs5srJdmsgkdAfMfG8rqA/vvxpseV4G3nlhse2lsVOoz+PioQgNi
+	Bud5U8r578awSk1QqaGzeVfNVO091zDf8Fh/zvwby7eXFBX3lDS5RdNHRMC46NDE
+	uC7aLqMUzA+wevrqEKDFQZ+k478bEHK5JxVtTwiDlgXHJwlFvyomaOlsQt8vpZ+c
+	M/5mhR8HqVLLQod7XchDrx0+USpO18xwAsPEKDeG/hGLH5LWQVczgVdXp1C1yoFu
+	Ta+OLbojC8/GWnqpY7CrBPUS2Da+TpefsMxisX8zxZoOVbltbYqigDJRqUmaINbj
+	lHHJaNgRDNJue0jVFZT5AA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747041605; x=
+	1747128005; bh=pXlv1vV5mEvFitAzV7wVOmzx2JqQRoLQ1GWYauj00cw=; b=G
+	+GDdq/8Oxts5XQDyCVSDtFJQ7nLeWu79dy5La/jrr2WF+Vlbc+Os+otRb2FaevzM
+	LsydSFzaBKBGsPT+sCLlKy3Du2Mtzu1j+zf6QjU83DOW0a24nhW6e7An9FxJk7n0
+	bxdb0C3lI2BVa5qLlKIyYm0FzQmV5kXfDauDcLnIpEGO8X8ALo3NujZ1NW52dNgm
+	itcYyqqk3hD7tMk8u08PSF3nuQ7fNk9lIfQ6pfoNSOKueEh0+xdNs+w5wPOY1Whn
+	YtZeZOndV54kB73w2v9uFgjfbck9fp0hE6b1N9proMBPdG6ZGrAPH8u6l9NS0WBp
+	ABv4uZrC6fC/WqAQuFbuw==
+X-ME-Sender: <xms:Rb0haIMYDv1L5nS0Mvvu3dpmFm6JqxMqk8U-ULqtM9_SHjJb6scQsA>
+    <xme:Rb0haO89wOM2wWCLe-hWhuTM4Vtze9cWtXbTknxOxtWEfa4lL6rjkt0KSufFSKWkB
+    WL23k3jJbwl0PQbzQ>
+X-ME-Received: <xmr:Rb0haPRwMwJQuZeJ-YFBeBzC1fkkSZSFr_jZubaoJlTknrsdKJzKZsLZ4I0sraNtUpXUVga9zXTO-GqVUDeMmxjiHzte2ZkWJtWp--W0lrA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddtkeekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehmrghtthhhihgvuhdqmhhohidrfh
+    hrpdhrtghpthhtohepthhmiiesphhosghogidrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhih
+    hnvggtohdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhk
+    sehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtg
+    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Rb0haAu8NSWs-uM_eFbNZbSJUgvC4ElAiSZoKu2XVGRPAVs4CaUJUA>
+    <xmx:Rb0haAe3Oj_BT3KkbiXE0lQVxN4JlF7yOLllYs7ahwB2bxh7v8F1mg>
+    <xmx:Rb0haE3UyvnDOxDM9Z3l65PHoWSXTw4WHjfYxLU_CiNT83osa_Zg4Q>
+    <xmx:Rb0haE8ks4WQ3FXWTlcSKy3fW5Uy_jkWnVhVC0dJ5TLHhvSxmYuDMQ>
+    <xmx:Rb0haC8Wiu205WbqRRoYQJCU2U-Asg9t7Msvm_pgggv04V-RTNwxGmyA>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 May 2025 05:20:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 1dd09277 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 12 May 2025 09:20:01 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Mon, 12 May 2025 11:19:51 +0200
+Subject: [PATCH v3 01/11] contrib: remove "remotes2config.sh"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v5 4/4] builtin/stash: provide a way to import stashes
- from a ref
-To: "brian m. carlson" <sandals@crustytoothpaste.net>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
- <20250508234458.3665894-5-sandals@crustytoothpaste.net>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <20250508234458.3665894-5-sandals@crustytoothpaste.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20250512-pks-contrib-spring-cleanup-v3-1-32e151b0bfb0@pks.im>
+References: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
+In-Reply-To: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, 
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, 
+ Matthieu Moy <git@matthieu-moy.fr>, Eric Sunshine <sunshine@sunshineco.com>, 
+ Todd Zullinger <tmz@pobox.com>, Elijah Newren <newren@gmail.com>
+X-Mailer: b4 0.14.2
 
-Hi brian
+Remotes can be configured either via a repository's config or by using
+the ".git/branches/" or ".git/remotes/" directories. Back when the new
+config-based mechanism has been introduced we also introduced a helper
+script that migrates from the old-style remote configuration to the new
+config-based mechanism.
 
-On 09/05/2025 00:44, brian m. carlson wrote:
-> 
-> @@ -1962,6 +1971,99 @@ static int write_commit_with_parents(struct repository *r,
->   	return ret;
->   }
->   
-> +static int do_import_stash(struct repository *r, const char *rev)
-> +{
-> +	struct object_id chain;
-> +	struct oid_array items = OID_ARRAY_INIT;
-> +	int res = 0;
-> +	int i;
-> +	const char *buffer = NULL;
-> +	struct commit *this = NULL;
-> +	char *msg = NULL;
-> +
-> +	if (repo_get_oid(r, rev, &chain))
-> +		return error(_("not a valid revision: %s"), rev);
-> +
-> +	/*
-> +	 * Walk the commit history, finding each stash entry, and load data into
-> +	 * the array.
-> +	 */
-> +	for (i = 0;; i++) {
-> +		struct object_id tree, oid;
-> +		char revision[GIT_MAX_HEXSZ + 1];
-> +
-> +		oid_to_hex_r(revision, &chain);
-> +
-> +		if (get_oidf(&tree, "%s:", revision) ||
-> +		    !oideq(&tree, r->hash_algo->empty_tree)) {
-> +			res = error(_("%s is not a valid exported stash commit"), revision);
-> +			goto out;
-> +		}
-> +		if (get_oidf(&chain, "%s^1", revision) ||
-> +		    get_oidf(&oid, "%s^2", revision))
-> +			break;
-> +		oid_array_append(&items, &oid);
-> +	}
+With the recent removal announcement for the two directories we also
+started to instruct users to migrate repositories that still use these
+mechanism to use config-based remotes. Notably though, the migration
+path doesn't even use the migration script. Instead, git-remote(1)
+itself knows how to migrate any such remote via `git remote rename`.
 
-This loop could use some improvement - it does not use the loop
-variable, it accepts any commit with an empty tree as a valid exported
-stash, it is pretty lax about checking that the commits in the chain
-have either zero or two parents, it does not check if the second parent
-looks like a stash and it is forever converting between strings and
-object_ids. I think it would be better to loop over commits rather than
-object ids then you can walk the history using the pointers to the
-parent commits. Something like
+In fact, a full migration _cannot_ use the script as it only knows to
+migrate remotes from ".git/remotes/", but not ".git/branches/". As such,
+the migration path via `git remote rename` is the only feasible way to
+fully migrate repositories over to the new format.
 
-	if (repo_get_oid(r, rev, &chain))
-		return error(_("not a valid revision: %s"), rev);
+Last but not least, the script doesn't even work as-is as it sources
+"git-sh-setup". For this to work it would need to be invoked either via
+Git so that this script is in our PATH, users would have to manually
+call it with an adjusted PATH, or distributions need to install the
+script into "$prefix/libexec/git-core" with a "git-" prefix. All of
+these steps are unlikely enough to underpin the claim that this script
+is not used at all.
 
-	this = lookup_commit_reference(r, &chain);
-	if (!this)
-		return error(_("not a commit: %s"), rev);
-	/*
-	 * Walk the commit history, finding each stash entry, and load data into
-	 * the array.
-	 */
-	for (;;) {
-		struct commit *stash;
-		struct tree *tree = repo_get_commit_tree(r, this);
+So given that:
 
-		if (!tree ||
-		    !oideq(&tree->object.oid, r->hash_algo->empty_tree) ||
-		    (this->parents &&
-		     (!this->parents->next || this->parents->next->next))) {
-			res = error(_("%s is not a valid exported stash commit"),
-				    oid_to_hex(&this->object.oid));
-			goto out;
-		}
-		if (!this->parents)
-			break;
-		stash = this->parents->next->item;
-		if (repo_parse_commit(r, this->parents->item) ||
-		    repo_parse_commit(r, stash)) {
-			res = error(_("cannot parse parents of commit: %s"),
-				     oid_to_hex(&this->object.oid));
-			goto out;
-		}
-		if (check_stash_topology(r, stash)) {
-			res = error(_("%s does not look like a stash commit"),
-				    oid_to_hex(&stash->object.oid));
-			goto out;
-		}
-		/* TODO:
-		 *  - store commits, not objects
-		 */
-		oid_array_append(&items, &this->parents->next->item->object.oid);
-		this = this->parents->item;
-	}
+  - The script cannot perform a full migration of all deprecated remote
+    types.
 
-I've appended a fixup commit below that applies on top of your
-patch. The fixups for this patch and the previous one can be fetched
-with
+  - We don't advertise it anywhere.
 
-   git fetch https://github.com/phillipwood/git.git bc/stash-import-export-fixups
+  - It has been basically untouched since 2007.
 
-if you want to use them.
+  - It doesn't even work unless users do manual steps.
 
-Best Wishes
+It should be safe enough to just remove it. Do so.
 
-Phillip
-
----- >8 ----
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
-Subject: [PATCH] fixup! builtin/stash: provide a way to import stashes from a
-  ref
-
-Strengthen the checks on imported commits to ensure that the chain of
-imported stashes consists of commits with exactly two parents where the
-first parent is either the root commit or another imported stash commit
-and the second parent looks like a stash commit.
-
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-  builtin/stash.c | 43 +++++++++++++++++++++++++++++++------------
-  1 file changed, 31 insertions(+), 12 deletions(-)
+ contrib/remotes2config.sh | 33 ---------------------------------
+ 1 file changed, 33 deletions(-)
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index 02cf344ed9..7d3a8c03a0 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -2011,25 +2011,44 @@ static int do_import_stash(struct repository *r, const char *rev)
-  	if (repo_get_oid(r, rev, &chain))
-  		return error(_("not a valid revision: %s"), rev);
-  
-+	this = lookup_commit_reference(r, &chain);
-+	if (!this)
-+		return error(_("not a commit: %s"), rev);
-  	/*
-  	 * Walk the commit history, finding each stash entry, and load data into
-  	 * the array.
-  	 */
--	for (i = 0;; i++) {
--		struct object_id tree, oid;
--		char revision[GIT_MAX_HEXSZ + 1];
+diff --git a/contrib/remotes2config.sh b/contrib/remotes2config.sh
+deleted file mode 100755
+index 1cda19f66af..00000000000
+--- a/contrib/remotes2config.sh
++++ /dev/null
+@@ -1,33 +0,0 @@
+-#!/bin/sh
 -
--		oid_to_hex_r(revision, &chain);
+-# Use this tool to rewrite your .git/remotes/ files into the config.
 -
--		if (get_oidf(&tree, "%s:", revision) ||
--		    !oideq(&tree, r->hash_algo->empty_tree)) {
--			res = error(_("%s is not a valid exported stash commit"), revision);
-+	for (;;) {
-+		struct commit *stash;
-+		struct tree *tree = repo_get_commit_tree(r, this);
-+
-+		if (!tree ||
-+		    !oideq(&tree->object.oid, r->hash_algo->empty_tree) ||
-+		    (this->parents &&
-+		     (!this->parents->next || this->parents->next->next))) {
-+			res = error(_("%s is not a valid exported stash commit"),
-+				    oid_to_hex(&this->object.oid));
-  			goto out;
-  		}
--		if (get_oidf(&chain, "%s^1", revision) ||
--		    get_oidf(&oid, "%s^2", revision))
-+		if (!this->parents)
-  			break;
--		oid_array_append(&items, &oid);
-+		stash = this->parents->next->item;
-+		if (repo_parse_commit(r, this->parents->item) ||
-+		    repo_parse_commit(r, stash)) {
-+			res = error(_("cannot parse parents of commit: %s"),
-+				     oid_to_hex(&this->object.oid));
-+			goto out;
-+		}
-+		if (check_stash_topology(r, stash)) {
-+			res = error(_("%s does not look like a stash commit"),
-+				    oid_to_hex(&stash->object.oid));
-+			goto out;
-+		}
-+		/* TODO:
-+		 *  - store commits, not objects
-+		 */
-+		oid_array_append(&items, &this->parents->next->item->object.oid);
-+		this = this->parents->item;
-  	}
-  
-  	/*
+-. git-sh-setup
+-
+-if [ -d "$GIT_DIR"/remotes ]; then
+-	echo "Rewriting $GIT_DIR/remotes" >&2
+-	error=0
+-	# rewrite into config
+-	{
+-		cd "$GIT_DIR"/remotes
+-		ls | while read f; do
+-			name=$(printf "$f" | tr -c "A-Za-z0-9-" ".")
+-			sed -n \
+-			-e "s/^URL:[ 	]*\(.*\)$/remote.$name.url \1 ./p" \
+-			-e "s/^Pull:[ 	]*\(.*\)$/remote.$name.fetch \1 ^$ /p" \
+-			-e "s/^Push:[ 	]*\(.*\)$/remote.$name.push \1 ^$ /p" \
+-			< "$f"
+-		done
+-		echo done
+-	} | while read key value regex; do
+-		case $key in
+-		done)
+-			if [ $error = 0 ]; then
+-				mv "$GIT_DIR"/remotes "$GIT_DIR"/remotes.old
+-			fi ;;
+-		*)
+-			echo "git config $key "$value" $regex"
+-			git config $key "$value" $regex || error=1 ;;
+-		esac
+-	done
+-fi
+
 -- 
-2.49.0.300.g813f75aecee
+2.49.0.1101.gccaa498523.dirty
 
