@@ -1,83 +1,85 @@
 Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFE7125E44B
-	for <git@vger.kernel.org>; Mon, 12 May 2025 09:20:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1766B25C80F
+	for <git@vger.kernel.org>; Mon, 12 May 2025 09:20:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747041614; cv=none; b=UJ/ycWTJ6jDM8oNQtnw/3AJ8tsIPnCRb/CCozmtGVbfO3/B0VEKbLQ7gRpvw7/FjMSLQ7qpy+5TwE0EU5KGEwwZ5xVZ0Nzl/6Pq7LF7ffJU30pz0cJt+g1m41CYrOwhFN6+/OzWUCx9n7SGBZrroDUu4XURI4wq9LKM2AAXpf5g=
+	t=1747041617; cv=none; b=A4sPmC4j5d3P6gg0bCA9xf2Q76zT1ThueWk38JCEPj82+sJ00n5ODFXhKZSGbUN27F2xMKIEhyDOwZE66P9K+hYjrIwlXK9/XImTGLgP/2OOW+ap3ZdBH5/G2AiFQvGECzbXeDfDiNQVqWtvY7JqPsWB5S8W2616CBFIky4TMsc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747041614; c=relaxed/simple;
-	bh=I6bC0AdfYWYvTicb1KzSfRW1bqOzAeWzjQwhbIHhmOc=;
+	s=arc-20240116; t=1747041617; c=relaxed/simple;
+	bh=kGgG+uzt0Y3e2YSy67rtH1rm8mxuS/Y+zEHyYPnVPkg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=BQeY9oXLgbCozPpaMQotm4ptmsCLcb0f1gOjfizr4vcKqTTvVPajLHSIxqLoke4+AnHr8m3J6t6g7MuF6XVEno7fJYUmMEXQxlTJxmje1D3B1eTwIxWxIbjHLqstvKN2RzuYEHoaEAjSn+YRgK30uFPfWeFiPOnd+LSsYhCTUpQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=mE+S5h+9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ntmsWupd; arc=none smtp.client-ip=202.12.124.149
+	 In-Reply-To:To:Cc; b=GD2yL2Bj+Q265KaulZfTZl3xUP4thEoSGk31wLw69Di2o0qfo5qLTlwW+F36q02d8c00BaC9NoauKEELw1OvVwK/QUxSVIt4VbW3aiRkfAmsgkVijKPkTfk1Ck9DL+BD9H8GF/HRaG1PFHmt0iqxtoH80vG1Jewv6AXGhnm0f3U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=P3yVIKg7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XHf8uQfi; arc=none smtp.client-ip=202.12.124.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="mE+S5h+9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ntmsWupd"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id DF6BB1140148;
-	Mon, 12 May 2025 05:20:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="P3yVIKg7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XHf8uQfi"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.stl.internal (Postfix) with ESMTP id 07DB01140137;
+	Mon, 12 May 2025 05:20:10 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Mon, 12 May 2025 05:20:12 -0400
+  by phl-compute-11.internal (MEProxy); Mon, 12 May 2025 05:20:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747041611;
-	 x=1747128011; bh=ZQobDKF036Cw03Y3mUdhRS+IjB90+b62fAJ7IWl/oUY=; b=
-	mE+S5h+9eGk4Q21eXq8lnNIY0FdPedh1MPgaq2fBDMBlLX07QGKbfT2UeqlBoBIU
-	lgmZHrPBY7ePFC7Dl0JT6gXItUfszU+7pFqFbvkOox9FyO7oDvW2FqdssMmXjM9k
-	U1gy16aFp5yi/eg6mauk9VyTsat9bcqaEm8+DIVhAjd6aNPhskizmRppiDFdDIHW
-	UB69y6cvM3lh1ZhkiYMUTG+776sGIli5lRr/bz+tS76alGBYgRmf1xsQ+KXuR3Db
-	fv5iOcrUsX2b4xXHm/aCLIBoby79dYlLVFlINlS0ecq/IYFJje2g7iI70/0W1e+i
-	ivmoRYHvpJu5qoZIDYKNOg==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747041609;
+	 x=1747128009; bh=DpBGQeWhLqwy2hBaJ57N6MdRS++9t6MmFNMp9jvBqYo=; b=
+	P3yVIKg7FlfQPmA1QGcMYj13JOKIGfZtEFiiGHTiboavLXm/QydDOZRF+DS1AMir
+	ut9h3IXJxn9S+wshluSZ3kOmLYq4YmUR/iJT2S5sqF6KdqnUx6HAnKtWw/qiC8vX
+	G1di2RRanUIZEjfEXDGQYvqCtpLNimURV3Tn2I4AN1hI9g7B0AjOIlxesKD4JIDT
+	6kr8OmuwH3Bs+BPX9Wfd0UCmPAJquCgyqZbs2mwutlpD0LHRzcx/lSrmYtqt0oc1
+	WUh5noV8yZjqRKs926ZOvD7hkLN6Ke5ngrZicOrMD27O+uNsthUVSptIPBz/+6KZ
+	g9VtJx1Nathb6vqOq0WuVA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747041611; x=
-	1747128011; bh=ZQobDKF036Cw03Y3mUdhRS+IjB90+b62fAJ7IWl/oUY=; b=n
-	tmsWupdCJugnG0IHGi2F2uBV7FlLdC6t/lH86rC7xnIEqvgKML17A/4nA67DGY1w
-	tf9CtDCDkVEhz34XoxTS7d1B8BkKGUXScTvlkHfyghHnEUJ3d35amp9zbRFF4Z5T
-	bAXCoISkwYAmSb2n70YFyZhPgBC80cusG2YC4uR1A0FNRKeBrO1MAJvqCw+/zB5x
-	Kd28lBnUGdrzs7tSbhXSeS3QN9w1t4RxY/pwgiip82amSTzgoO119fbtQaoAwHya
-	l8T8x9hsMFW6rNyiIbiOpU6KFBDNDVSlVL9p5vNQyAhF1i9+Wd1T3l25E/iKvUxo
-	IRUeitOy9MzXgiF9nZBZg==
-X-ME-Sender: <xms:S70haGX7xL1HWgVTIopgo_CGKXc6bQp0tM3WuS57EK-9NmheIf8rww>
-    <xme:S70haCnkzWVdkXuPJ1k_LDOjM6-QxeWI_M1TkVDyuxgYczvgLCYdVGe1zECdBtYJW
-    fbx_N_M8uy9J8SWhw>
-X-ME-Received: <xmr:S70haKZT0y43PRMM0OmpC3UtBsePB265zAmE8ass_IVeHkt019LsC2u7nFSKz3He8UGxcAfJp1fP9DRfCcZTrPRGSKuK4jsl81lghd_55os>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747041609; x=
+	1747128009; bh=DpBGQeWhLqwy2hBaJ57N6MdRS++9t6MmFNMp9jvBqYo=; b=X
+	Hf8uQfi+RrkUr087bjjemt+4qcYvQuJCvubP/L9KpqrvxY+qEkyFVFL7FW/o66V3
+	6JoEkWdXdiGewPj0Mkxo817bBKGO70wNtB6Of0KAp2z4M4n0RQjN97Y75rPYdreO
+	3lM4Dc5q5YtwRhcHaJd4R6BUUHCEa7tM6fnfoHtWFwfod4SauNIXV5ZQfDwusVdS
+	y6BnDgEvZrJVwJbxKa9uxDaC6sjgTkjc80jZOLrRBCuO47lnTRtx8qggZdI6Hin1
+	UVaarEWaRxH8gQpRB2dxqImCv8DnunpSZpxQNW5nxs87q8tB3WfTT8uSl0ndhCqR
+	x9xMp0vwmynD1KqQs7nBw==
+X-ME-Sender: <xms:Sb0haOAMpogmWWq0QHMLFr0jTn7VnknAtDRCPshygkQjij31p4Y9EA>
+    <xme:Sb0haIjXusQjZ86g8m3SYd40To1A6330w9AFBDtFyh8JCyrVIUEjJ4gpnjy5KJldi
+    1P55HYGMkt9zp489Q>
+X-ME-Received: <xmr:Sb0haBlN8jm9r-nYrRh31aYNU7Ei445A73aDTDV5qw7510lScHTejBtWuPaum05ZI35BXOUdRoJB-ZVbRPwaFfXPgdfeNu3oGWnq8AGApsQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftddtkeekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeejpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtg
-    hordgtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrhhishhtohhffh
-    gvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehtmhii
-    sehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesmhgrthhthhhivghuqdhmohihrd
-    hfrhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:S70haNUtDSPiya3qMA0_5wG3HpLkv9j6j19jCyHMz6tu5-1iNvBcHA>
-    <xmx:S70haAmmafZzsC2bVR-e9ApmxQ6fSThDmXfrZ_0Gkj9GjuPm-nfeYA>
-    <xmx:S70haCdkWjW9yac87Sa1ho3-7o8C3dx-dhwLhMpLZyUWTb--N5QetA>
-    <xmx:S70haCFACYZ8B0f6BO2xXbQdT_H9Ukx63DmAqn3VvndGitChQWT08Q>
-    <xmx:S70haHnVRBwQbAy1GDRMW4SpJQxqfofgDP9FK9na2TsZPIV3K_q5V1ir>
+    gvnhhtshculddquddttddmnegoufhushhpvggtthffohhmrghinhculdegledmnecujfgu
+    rhephfffufggtgfgkfhfjgfvvefosehtkeertdertdejnecuhfhrohhmpefrrghtrhhitg
+    hkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhn
+    pedthfevudfhkeetjeffheeugeduueegkeejudetudfggeefteelheeijeegvdevtdenuc
+    ffohhmrghinhepghhithhhuhgsrdgtohhmpdgvgigrmhhplhgvrdgtohhmpdhhohhsthdr
+    tghomhdpvdhfohdrmhifpdhtgihtrdhmfienucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeej
+    pdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshh
+    hinhgvtghordgtohhmpdhrtghpthhtohepghhithesmhgrthhthhhivghuqdhmohihrdhf
+    rhdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhmpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhs
+    sggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesghhmrg
+    hilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:Sb0haMy1XmNSH-fXbMCZ6KzWJFLF_xhg1Dy_pPbNw51vlUTYNhY-Dw>
+    <xmx:Sb0haDR0_CLCKHyYdhwVIe70ihZKPyDTruLitSN7LaQi4wY0wR_WbA>
+    <xmx:Sb0haHbOum4mRbF_aKzB3mTond-Gp0qrCGdpBHWlJzl33iN_0j5CRw>
+    <xmx:Sb0haMR9bRbuvl61aqOWYgRZT6cN3H5_kQXXM7xmVRwNRTdHqENhGQ>
+    <xmx:Sb0haLD_3inPig25UGDRsX2PX-BqyrucaTKVXugaphUU-xkYP3OlGrk0>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 05:20:10 -0400 (EDT)
+ 12 May 2025 05:20:08 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bebd28e6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 12 May 2025 09:20:10 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 2a7d4a71 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 12 May 2025 09:20:06 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 12 May 2025 11:20:00 +0200
-Subject: [PATCH v3 10/11] contrib: remove "git-new-workdir"
+Date: Mon, 12 May 2025 11:19:56 +0200
+Subject: [PATCH v3 06/11] contrib: remove "mw-to-git"
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,8 +87,8 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250512-pks-contrib-spring-cleanup-v3-10-32e151b0bfb0@pks.im>
+Content-Transfer-Encoding: 8bit
+Message-Id: <20250512-pks-contrib-spring-cleanup-v3-6-32e151b0bfb0@pks.im>
 References: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
 In-Reply-To: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
 To: git@vger.kernel.org
@@ -96,250 +98,4097 @@ Cc: Junio C Hamano <gitster@pobox.com>,
  Todd Zullinger <tmz@pobox.com>, Elijah Newren <newren@gmail.com>
 X-Mailer: b4 0.14.2
 
-The "git-new-workdir" command has been introduced to make it possible to
-have a separate working directory in a different place. The command thus
-predates git-worktree(1), which is what people use nowadays to create
-any such working directory. As such, the script doesn't really have much
-of a reason to exist nowadays anymore.
+The "mw-to-git" directory contains tools for accessing MediaWiki via
+Git. The scripts are essentially unmaintained in Git: despite a couple
+of global cleanups, the last changes were a couple of security-related
+issues part of 9a8606465e8 (remote-mediawiki: use "sh" to eliminate
+unquoted commands, 2020-09-21) and its parents. We don't ever run any of
+the tests so it is more likely than not that many of the tests have been
+bitrotting, like e.g. documented in f8ab018dafc (remote-mediawiki tests:
+annotate failing tests, 2020-09-21).
 
-It also doesn't seem like the script is still in use: the last time it
-has received an update was in e32afab7b03 (git-new-workdir: don't fail
-if the target directory is empty, 2014-11-26), more than a decade ago.
-Remove it as well as the tests that depend on it.
+According to Matthieu Moy [1], one of the original developers of this
+tool, it didn't receive any attention recently and there is no
+motivation to keep maintaining it anymore in the community. The project
+has been spun out of Git [2] and thus has a new official home, but did
+not receive much attention over there, either.
+
+As such, it seems like the MediaWiki transport helper is slowly fading
+away. But given that there is a new home, it doesn't make sense to have
+it as part of Git anymore only to let it rot. Remove the directory.
+
+[1]: <108f297a-b415-4742-80e4-51ea02af18e9@matthieu-moy.fr>
+[2]: https://github.com/Git-Mediawiki/Git-Mediawiki
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/workdir/.gitattributes  |   1 -
- contrib/workdir/git-new-workdir | 105 ----------------------------------------
- t/meson.build                   |   1 -
- t/t1021-rerere-in-workdir.sh    |  58 ----------------------
- t/t3000-ls-files-others.sh      |  19 --------
- 5 files changed, 184 deletions(-)
+ contrib/mw-to-git/.gitignore                       |    2 -
+ contrib/mw-to-git/.perlcriticrc                    |   28 -
+ contrib/mw-to-git/Git/Mediawiki.pm                 |  101 --
+ contrib/mw-to-git/Makefile                         |   61 -
+ contrib/mw-to-git/bin-wrapper/git                  |   14 -
+ contrib/mw-to-git/git-mw.perl                      |  368 ------
+ contrib/mw-to-git/git-remote-mediawiki.perl        | 1390 --------------------
+ contrib/mw-to-git/git-remote-mediawiki.txt         |    7 -
+ contrib/mw-to-git/t/.gitignore                     |    4 -
+ contrib/mw-to-git/t/Makefile                       |   32 -
+ contrib/mw-to-git/t/README                         |  124 --
+ contrib/mw-to-git/t/install-wiki.sh                |   55 -
+ contrib/mw-to-git/t/push-pull-tests.sh             |  144 --
+ contrib/mw-to-git/t/t9360-mw-to-git-clone.sh       |  257 ----
+ contrib/mw-to-git/t/t9361-mw-to-git-push-pull.sh   |   24 -
+ contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh        |  347 -----
+ .../mw-to-git/t/t9363-mw-to-git-export-import.sh   |  218 ---
+ contrib/mw-to-git/t/t9364-pull-by-rev.sh           |   17 -
+ contrib/mw-to-git/t/t9365-continuing-queries.sh    |   23 -
+ contrib/mw-to-git/t/test-gitmw-lib.sh              |  432 ------
+ contrib/mw-to-git/t/test-gitmw.pl                  |  223 ----
+ contrib/mw-to-git/t/test.config                    |   40 -
+ 22 files changed, 3911 deletions(-)
 
-diff --git a/contrib/workdir/.gitattributes b/contrib/workdir/.gitattributes
+diff --git a/contrib/mw-to-git/.gitignore b/contrib/mw-to-git/.gitignore
 deleted file mode 100644
-index 1f78c5d1bd3..00000000000
---- a/contrib/workdir/.gitattributes
+index ae545b013dc..00000000000
+--- a/contrib/mw-to-git/.gitignore
 +++ /dev/null
-@@ -1 +0,0 @@
--/git-new-workdir eol=lf
-diff --git a/contrib/workdir/git-new-workdir b/contrib/workdir/git-new-workdir
+@@ -1,2 +0,0 @@
+-git-remote-mediawiki
+-git-mw
+diff --git a/contrib/mw-to-git/.perlcriticrc b/contrib/mw-to-git/.perlcriticrc
+deleted file mode 100644
+index b7333267ada..00000000000
+--- a/contrib/mw-to-git/.perlcriticrc
++++ /dev/null
+@@ -1,28 +0,0 @@
+-# These 3 rules demand to add the s, m and x flag to *every* regexp. This is
+-# overkill and would be harmful for readability.
+-[-RegularExpressions::RequireExtendedFormatting]
+-[-RegularExpressions::RequireDotMatchAnything]
+-[-RegularExpressions::RequireLineBoundaryMatching]
+-
+-# This rule says that builtin functions should not be called with parentheses
+-# e.g.: (taken from CPAN's documentation)
+-# open($handle, '>', $filename); #not ok
+-# open $handle, '>', $filename;  #ok
+-# Applying such a rule would mean modifying a huge number of lines for a
+-# question of style.
+-[-CodeLayout::ProhibitParensWithBuiltins]
+-
+-# This rule states that each system call should have its return value checked
+-# The problem is that it includes the print call. Checking every print call's
+-# return value would be harmful to the code readability.
+-# This configuration keeps all default function but print.
+-[InputOutput::RequireCheckedSyscalls]
+-functions = open say close
+-
+-# This rule demands to add a dependency for the Readonly module. This is not
+-# wished.
+-[-ValuesAndExpressions::ProhibitConstantPragma]
+-
+-# This rule is not really useful (rather a question of style) and produces many
+-# warnings among the code.
+-[-ValuesAndExpressions::ProhibitNoisyQuotes]
+diff --git a/contrib/mw-to-git/Git/Mediawiki.pm b/contrib/mw-to-git/Git/Mediawiki.pm
+deleted file mode 100644
+index 629c0cea442..00000000000
+--- a/contrib/mw-to-git/Git/Mediawiki.pm
++++ /dev/null
+@@ -1,101 +0,0 @@
+-package Git::Mediawiki;
+-
+-require v5.26;
+-use strict;
+-use POSIX;
+-use Git;
+-
+-BEGIN {
+-
+-our ($VERSION, @ISA, @EXPORT, @EXPORT_OK);
+-
+-# Totally unstable API.
+-$VERSION = '0.01';
+-
+-require Exporter;
+-
+-@ISA = qw(Exporter);
+-
+-@EXPORT = ();
+-
+-# Methods which can be called as standalone functions as well:
+-@EXPORT_OK = qw(clean_filename smudge_filename connect_maybe
+-				EMPTY HTTP_CODE_OK HTTP_CODE_PAGE_NOT_FOUND);
+-}
+-
+-# Mediawiki filenames can contain forward slashes. This variable decides by which pattern they should be replaced
+-use constant SLASH_REPLACEMENT => '%2F';
+-
+-# Used to test for empty strings
+-use constant EMPTY => q{};
+-
+-# HTTP codes
+-use constant HTTP_CODE_OK => 200;
+-use constant HTTP_CODE_PAGE_NOT_FOUND => 404;
+-
+-sub clean_filename {
+-	my $filename = shift;
+-	$filename =~ s{@{[SLASH_REPLACEMENT]}}{/}g;
+-	# [, ], |, {, and } are forbidden by MediaWiki, even URL-encoded.
+-	# Do a variant of URL-encoding, i.e. looks like URL-encoding,
+-	# but with _ added to prevent MediaWiki from thinking this is
+-	# an actual special character.
+-	$filename =~ s/[\[\]\{\}\|]/sprintf("_%%_%x", ord($&))/ge;
+-	# If we use the uri escape before
+-	# we should unescape here, before anything
+-
+-	return $filename;
+-}
+-
+-sub smudge_filename {
+-	my $filename = shift;
+-	$filename =~ s{/}{@{[SLASH_REPLACEMENT]}}g;
+-	$filename =~ s/ /_/g;
+-	# Decode forbidden characters encoded in clean_filename
+-	$filename =~ s/_%_([0-9a-fA-F][0-9a-fA-F])/sprintf('%c', hex($1))/ge;
+-	return substr($filename, 0, NAME_MAX-length('.mw'));
+-}
+-
+-sub connect_maybe {
+-	my $wiki = shift;
+-	if ($wiki) {
+-		return $wiki;
+-	}
+-
+-	my $remote_name = shift;
+-	my $remote_url = shift;
+-	my ($wiki_login, $wiki_password, $wiki_domain);
+-
+-	$wiki_login = Git::config("remote.${remote_name}.mwLogin");
+-	$wiki_password = Git::config("remote.${remote_name}.mwPassword");
+-	$wiki_domain = Git::config("remote.${remote_name}.mwDomain");
+-
+-	$wiki = MediaWiki::API->new;
+-	$wiki->{config}->{api_url} = "${remote_url}/api.php";
+-	if ($wiki_login) {
+-		my %credential = (
+-			'url' => $remote_url,
+-			'username' => $wiki_login,
+-			'password' => $wiki_password
+-		);
+-		Git::credential(\%credential);
+-		my $request = {lgname => $credential{username},
+-			       lgpassword => $credential{password},
+-			       lgdomain => $wiki_domain};
+-		if ($wiki->login($request)) {
+-			Git::credential(\%credential, 'approve');
+-			print {*STDERR} qq(Logged in mediawiki user "$credential{username}".\n);
+-		} else {
+-			print {*STDERR} qq(Failed to log in mediawiki user "$credential{username}" on ${remote_url}\n);
+-			print {*STDERR} '  (error ' .
+-				$wiki->{error}->{code} . ': ' .
+-				$wiki->{error}->{details} . ")\n";
+-			Git::credential(\%credential, 'reject');
+-			exit 1;
+-		}
+-	}
+-
+-	return $wiki;
+-}
+-
+-1; # Famous last words
+diff --git a/contrib/mw-to-git/Makefile b/contrib/mw-to-git/Makefile
+deleted file mode 100644
+index 497ac434d60..00000000000
+--- a/contrib/mw-to-git/Makefile
++++ /dev/null
+@@ -1,61 +0,0 @@
+-#
+-# Copyright (C) 2013
+-#     Matthieu Moy <Matthieu.Moy@imag.fr>
+-#
+-# To build and test:
+-#
+-#   make
+-#   bin-wrapper/git mw preview Some_page.mw
+-#   bin-wrapper/git clone mediawiki::http://example.com/wiki/
+-#
+-# To install, run Git's toplevel 'make install' then run:
+-#
+-#   make install
+-
+-# The default target of this Makefile is...
+-all::
+-
+-GIT_MEDIAWIKI_PM=Git/Mediawiki.pm
+-SCRIPT_PERL=git-remote-mediawiki.perl
+-SCRIPT_PERL+=git-mw.perl
+-GIT_ROOT_DIR=../..
+-HERE=contrib/mw-to-git/
+-
+-INSTALL = install
+-
+-SCRIPT_PERL_FULL=$(patsubst %,$(HERE)/%,$(SCRIPT_PERL))
+-INSTLIBDIR=$(shell $(MAKE) -C $(GIT_ROOT_DIR)/ \
+-                -s --no-print-directory prefix=$(prefix) \
+-                perllibdir=$(perllibdir) perllibdir)
+-DESTDIR_SQ = $(subst ','\'',$(DESTDIR))
+-INSTLIBDIR_SQ = $(subst ','\'',$(INSTLIBDIR))
+-
+-all:: build
+-
+-test: all
+-	$(MAKE) -C t
+-
+-check: perlcritic test
+-
+-install_pm:
+-	$(INSTALL) -d -m 755 '$(DESTDIR_SQ)$(INSTLIBDIR_SQ)/Git'
+-	$(INSTALL) -m 644 $(GIT_MEDIAWIKI_PM) \
+-		'$(DESTDIR_SQ)$(INSTLIBDIR_SQ)/$(GIT_MEDIAWIKI_PM)'
+-
+-build:
+-	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
+-                build-perl-script
+-
+-install: install_pm
+-	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
+-                install-perl-script
+-
+-clean:
+-	$(MAKE) -C $(GIT_ROOT_DIR) SCRIPT_PERL="$(SCRIPT_PERL_FULL)" \
+-                clean-perl-script
+-
+-perlcritic:
+-	perlcritic -5 $(SCRIPT_PERL)
+-	-perlcritic -2 $(SCRIPT_PERL)
+-
+-.PHONY: all test check install_pm install clean perlcritic
+diff --git a/contrib/mw-to-git/bin-wrapper/git b/contrib/mw-to-git/bin-wrapper/git
 deleted file mode 100755
-index 989197aace0..00000000000
---- a/contrib/workdir/git-new-workdir
+index 6663ae57e86..00000000000
+--- a/contrib/mw-to-git/bin-wrapper/git
 +++ /dev/null
-@@ -1,105 +0,0 @@
+@@ -1,14 +0,0 @@
 -#!/bin/sh
 -
+-# git executable wrapper script for Git-Mediawiki to run tests without
+-# installing all the scripts and perl packages.
+-
+-GIT_ROOT_DIR=../../..
+-GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd ${GIT_ROOT_DIR} && pwd)
+-
+-GITPERLLIB="$GIT_EXEC_PATH"'/contrib/mw-to-git'"${GITPERLLIB:+:$GITPERLLIB}"
+-PATH="$GIT_EXEC_PATH"'/contrib/mw-to-git:'"$PATH"
+-
+-export GITPERLLIB PATH
+-
+-exec "${GIT_EXEC_PATH}/bin-wrappers/git" "$@"
+diff --git a/contrib/mw-to-git/git-mw.perl b/contrib/mw-to-git/git-mw.perl
+deleted file mode 100755
+index eb52a53d320..00000000000
+--- a/contrib/mw-to-git/git-mw.perl
++++ /dev/null
+@@ -1,368 +0,0 @@
+-#!/usr/bin/perl
+-
+-# Copyright (C) 2013
+-#     Benoit Person <benoit.person@ensimag.imag.fr>
+-#     Celestin Matte <celestin.matte@ensimag.imag.fr>
+-# License: GPL v2 or later
+-
+-# Set of tools for git repo with a mediawiki remote.
+-# Documentation & bugtracker: https://github.com/Git-Mediawiki/Git-Mediawiki
+-
+-use strict;
+-use warnings;
+-
+-use Getopt::Long;
+-use URI::URL qw(url);
+-use LWP::UserAgent;
+-use HTML::TreeBuilder;
+-
+-use Git;
+-use MediaWiki::API;
+-use Git::Mediawiki qw(clean_filename connect_maybe
+-					EMPTY HTTP_CODE_PAGE_NOT_FOUND);
+-
+-# By default, use UTF-8 to communicate with Git and the user
+-binmode STDERR, ':encoding(UTF-8)';
+-binmode STDOUT, ':encoding(UTF-8)';
+-
+-# Global parameters
+-my $verbose = 0;
+-sub v_print {
+-	if ($verbose) {
+-		return print {*STDERR} @_;
+-	}
+-	return;
+-}
+-
+-# Preview parameters
+-my $file_name = EMPTY;
+-my $remote_name = EMPTY;
+-my $preview_file_name = EMPTY;
+-my $autoload = 0;
+-sub file {
+-	$file_name = shift;
+-	return $file_name;
+-}
+-
+-my %commands = (
+-	'help' =>
+-		[\&help, {}, \&help],
+-	'preview' =>
+-		[\&preview, {
+-			'<>' => \&file,
+-			'output|o=s' => \$preview_file_name,
+-			'remote|r=s' => \$remote_name,
+-			'autoload|a' => \$autoload
+-		}, \&preview_help]
+-);
+-
+-# Search for sub-command
+-my $cmd = $commands{'help'};
+-for (0..@ARGV-1) {
+-	if (defined $commands{$ARGV[$_]}) {
+-		$cmd = $commands{$ARGV[$_]};
+-		splice @ARGV, $_, 1;
+-		last;
+-	}
+-};
+-GetOptions( %{$cmd->[1]},
+-	'help|h' => \&{$cmd->[2]},
+-	'verbose|v'  => \$verbose);
+-
+-# Launch command
+-&{$cmd->[0]};
+-
+-############################# Preview Functions ################################
+-
+-sub preview_help {
+-	print {*STDOUT} <<'END';
+-USAGE: git mw preview [--remote|-r <remote name>] [--autoload|-a]
+-                      [--output|-o <output filename>] [--verbose|-v]
+-                      <blob> | <filename>
+-
+-DESCRIPTION:
+-Preview is an utiliy to preview local content of a mediawiki repo as if it was
+-pushed on the remote.
+-
+-For that, preview searches for the remote name of the current branch's
+-upstream if --remote is not set. If that remote is not found or if it
+-is not a mediawiki, it lists all mediawiki remotes configured and asks
+-you to replay your command with the --remote option set properly.
+-
+-Then, it searches for a file named 'filename'. If it's not found in
+-the current dir, it will assume it's a blob.
+-
+-The content retrieved in the file (or in the blob) will then be parsed
+-by the remote mediawiki and combined with a template retrieved from
+-the mediawiki.
+-
+-Finally, preview will save the HTML result in a file. and autoload it
+-in your default web browser if the option --autoload is present.
+-
+-OPTIONS:
+-    -r <remote name>, --remote <remote name>
+-        If the remote is a mediawiki, the template and the parse engine
+-        used for the preview will be those of that remote.
+-        If not, a list of valid remotes will be shown.
+-
+-    -a, --autoload
+-        Try to load the HTML output in a new tab (or new window) of your
+-        default web browser.
+-
+-    -o <output filename>, --output <output filename>
+-        Change the HTML output filename. Default filename is based on the
+-        input filename with its extension replaced by '.html'.
+-
+-    -v, --verbose
+-        Show more information on what's going on under the hood.
+-END
+-	exit;
+-}
+-
+-sub preview {
+-	my $wiki;
+-	my ($remote_url, $wiki_page_name);
+-	my ($new_content, $template);
+-	my $file_content;
+-
+-	if ($file_name eq EMPTY) {
+-		die "Missing file argument, see `git mw help`\n";
+-	}
+-
+-	v_print("### Selecting remote\n");
+-	if ($remote_name eq EMPTY) {
+-		$remote_name = find_upstream_remote_name();
+-		if ($remote_name) {
+-			$remote_url = mediawiki_remote_url_maybe($remote_name);
+-		}
+-
+-		if (! $remote_url) {
+-			my @valid_remotes = find_mediawiki_remotes();
+-
+-			if ($#valid_remotes == 0) {
+-				print {*STDERR} "No mediawiki remote in this repo. \n";
+-				exit 1;
+-			} else {
+-				my $remotes_list = join("\n\t", @valid_remotes);
+-				print {*STDERR} <<"MESSAGE";
+-There are multiple mediawiki remotes, which of:
+-	${remotes_list}
+-do you want ? Use the -r option to specify the remote.
+-MESSAGE
+-			}
+-
+-			exit 1;
+-		}
+-	} else {
+-		if (!is_valid_remote($remote_name)) {
+-			die "${remote_name} is not a remote\n";
+-		}
+-
+-		$remote_url = mediawiki_remote_url_maybe($remote_name);
+-		if (! $remote_url) {
+-			die "${remote_name} is not a mediawiki remote\n";
+-		}
+-	}
+-	v_print("selected remote:\n\tname: ${remote_name}\n\turl: ${remote_url}\n");
+-
+-	$wiki = connect_maybe($wiki, $remote_name, $remote_url);
+-
+-	# Read file content
+-	if (! -e $file_name) {
+-		$file_content = git_cmd_try {
+-			Git::command('cat-file', 'blob', $file_name); }
+-			"%s failed w/ code %d";
+-
+-		if ($file_name =~ /(.+):(.+)/) {
+-			$file_name = $2;
+-		}
+-	} else {
+-		open my $read_fh, "<", $file_name
+-			or die "could not open ${file_name}: $!\n";
+-		$file_content = do { local $/ = undef; <$read_fh> };
+-		close $read_fh
+-			or die "unable to close: $!\n";
+-	}
+-
+-	v_print("### Retrieving template\n");
+-	($wiki_page_name = clean_filename($file_name)) =~ s/\.[^.]+$//;
+-	$template = get_template($remote_url, $wiki_page_name);
+-
+-	v_print("### Parsing local content\n");
+-	$new_content = $wiki->api({
+-		action => 'parse',
+-		text => $file_content,
+-		title => $wiki_page_name
+-	}, {
+-		skip_encoding => 1
+-	}) or die "No response from remote mediawiki\n";
+-	$new_content = $new_content->{'parse'}->{'text'}->{'*'};
+-
+-	v_print("### Merging contents\n");
+-	if ($preview_file_name eq EMPTY) {
+-		($preview_file_name = $file_name) =~ s/\.[^.]+$/.html/;
+-	}
+-	open(my $save_fh, '>:encoding(UTF-8)', $preview_file_name)
+-		or die "Could not open: $!\n";
+-	print {$save_fh} merge_contents($template, $new_content, $remote_url);
+-	close($save_fh)
+-		or die "Could not close: $!\n";
+-
+-	v_print("### Results\n");
+-	if ($autoload) {
+-		v_print("Launching browser w/ file: ${preview_file_name}");
+-		system('git', 'web--browse', $preview_file_name);
+-	} else {
+-		print {*STDERR} "Preview file saved as: ${preview_file_name}\n";
+-	}
+-
+-	exit;
+-}
+-
+-# uses global scope variable: $remote_name
+-sub merge_contents {
+-	my $template = shift;
+-	my $content = shift;
+-	my $remote_url = shift;
+-	my ($content_tree, $html_tree, $mw_content_text);
+-	my $template_content_id = 'bodyContent';
+-
+-	$html_tree = HTML::TreeBuilder->new;
+-	$html_tree->parse($template);
+-
+-	$content_tree = HTML::TreeBuilder->new;
+-	$content_tree->parse($content);
+-
+-	$template_content_id = Git::config("remote.${remote_name}.mwIDcontent")
+-		|| $template_content_id;
+-	v_print("Using '${template_content_id}' as the content ID\n");
+-
+-	$mw_content_text = $html_tree->look_down('id', $template_content_id);
+-	if (!defined $mw_content_text) {
+-		print {*STDERR} <<"CONFIG";
+-Could not combine the new content with the template. You might want to
+-configure `mediawiki.IDContent` in your config:
+-	git config --add remote.${remote_name}.mwIDcontent <id>
+-and re-run the command afterward.
+-CONFIG
+-		exit 1;
+-	}
+-	$mw_content_text->delete_content();
+-	$mw_content_text->push_content($content_tree);
+-
+-	make_links_absolute($html_tree, $remote_url);
+-
+-	return $html_tree->as_HTML;
+-}
+-
+-sub make_links_absolute {
+-	my $html_tree = shift;
+-	my $remote_url = shift;
+-	for (@{ $html_tree->extract_links() }) {
+-		my ($link, $element, $attr) = @{ $_ };
+-		my $url = url($link)->canonical;
+-		if ($url !~ /#/) {
+-			$element->attr($attr, URI->new_abs($url, $remote_url));
+-		}
+-	}
+-	return $html_tree;
+-}
+-
+-sub is_valid_remote {
+-	my $remote = shift;
+-	my @remotes = git_cmd_try {
+-		Git::command('remote') }
+-		"%s failed w/ code %d";
+-	my $found_remote = 0;
+-	foreach my $remote (@remotes) {
+-		if ($remote eq $remote) {
+-			$found_remote = 1;
+-			last;
+-		}
+-	}
+-	return $found_remote;
+-}
+-
+-sub find_mediawiki_remotes {
+-	my @remotes = git_cmd_try {
+-		Git::command('remote'); }
+-		"%s failed w/ code %d";
+-	my $remote_url;
+-	my @valid_remotes = ();
+-	foreach my $remote (@remotes) {
+-		$remote_url = mediawiki_remote_url_maybe($remote);
+-		if ($remote_url) {
+-			push(@valid_remotes, $remote);
+-		}
+-	}
+-	return @valid_remotes;
+-}
+-
+-sub find_upstream_remote_name {
+-	my $current_branch = git_cmd_try {
+-		Git::command_oneline('symbolic-ref', '--short', 'HEAD') }
+-		"%s failed w/ code %d";
+-	return Git::config("branch.${current_branch}.remote");
+-}
+-
+-sub mediawiki_remote_url_maybe {
+-	my $remote = shift;
+-
+-	# Find remote url
+-	my $remote_url = Git::config("remote.${remote}.url");
+-	if ($remote_url =~ s/mediawiki::(.*)/$1/) {
+-		return url($remote_url)->canonical;
+-	}
+-
+-	return;
+-}
+-
+-sub get_template {
+-	my $url = shift;
+-	my $page_name = shift;
+-	my ($req, $res, $code, $url_after);
+-
+-	$req = LWP::UserAgent->new;
+-	if ($verbose) {
+-		$req->show_progress(1);
+-	}
+-
+-	$res = $req->get("${url}/index.php?title=${page_name}");
+-	if (!$res->is_success) {
+-		$code = $res->code;
+-		$url_after = $res->request()->uri(); # resolve all redirections
+-		if ($code == HTTP_CODE_PAGE_NOT_FOUND) {
+-			if ($verbose) {
+-				print {*STDERR} <<"WARNING";
+-Warning: Failed to retrieve '$page_name'. Create it on the mediawiki if you want
+-all the links to work properly.
+-Trying to use the mediawiki homepage as a fallback template ...
+-WARNING
+-			}
+-
+-			# LWP automatically redirects GET request
+-			$res = $req->get("${url}/index.php");
+-			if (!$res->is_success) {
+-				$url_after = $res->request()->uri(); # resolve all redirections
+-				die "Failed to get homepage @ ${url_after} w/ code ${code}\n";
+-			}
+-		} else {
+-			die "Failed to get '${page_name}' @ ${url_after} w/ code ${code}\n";
+-		}
+-	}
+-
+-	return $res->decoded_content;
+-}
+-
+-############################## Help Functions ##################################
+-
+-sub help {
+-	print {*STDOUT} <<'END';
+-usage: git mw <command> <args>
+-
+-git mw commands are:
+-    help        Display help information about git mw
+-    preview     Parse and render local file into HTML
+-END
+-	exit;
+-}
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.perl b/contrib/mw-to-git/git-remote-mediawiki.perl
+deleted file mode 100755
+index a5624413dc1..00000000000
+--- a/contrib/mw-to-git/git-remote-mediawiki.perl
++++ /dev/null
+@@ -1,1390 +0,0 @@
+-#! /usr/bin/perl
+-
+-# Copyright (C) 2011
+-#     Jérémie Nikaes <jeremie.nikaes@ensimag.imag.fr>
+-#     Arnaud Lacurie <arnaud.lacurie@ensimag.imag.fr>
+-#     Claire Fousse <claire.fousse@ensimag.imag.fr>
+-#     David Amouyal <david.amouyal@ensimag.imag.fr>
+-#     Matthieu Moy <matthieu.moy@grenoble-inp.fr>
+-# License: GPL v2 or later
+-
+-# Gateway between Git and MediaWiki.
+-# Documentation & bugtracker: https://github.com/Git-Mediawiki/Git-Mediawiki
+-
+-use strict;
+-use MediaWiki::API;
+-use Git;
+-use Git::Mediawiki qw(clean_filename smudge_filename connect_maybe
+-					EMPTY HTTP_CODE_OK);
+-use DateTime::Format::ISO8601;
+-use warnings;
+-
+-# By default, use UTF-8 to communicate with Git and the user
+-binmode STDERR, ':encoding(UTF-8)';
+-binmode STDOUT, ':encoding(UTF-8)';
+-
+-use URI::Escape;
+-
+-# It's not always possible to delete pages (may require some
+-# privileges). Deleted pages are replaced with this content.
+-use constant DELETED_CONTENT => "[[Category:Deleted]]\n";
+-
+-# It's not possible to create empty pages. New empty files in Git are
+-# sent with this content instead.
+-use constant EMPTY_CONTENT => "<!-- empty page -->\n";
+-
+-# used to reflect file creation or deletion in diff.
+-use constant NULL_SHA1 => '0000000000000000000000000000000000000000';
+-
+-# Used on Git's side to reflect empty edit messages on the wiki
+-use constant EMPTY_MESSAGE => '*Empty MediaWiki Message*';
+-
+-# Number of pages taken into account at once in submodule get_mw_page_list
+-use constant SLICE_SIZE => 50;
+-
+-# Number of linked mediafile to get at once in get_linked_mediafiles
+-# The query is split in small batches because of the MW API limit of
+-# the number of links to be returned (500 links max).
+-use constant BATCH_SIZE => 10;
+-
+-if (@ARGV != 2) {
+-	exit_error_usage();
+-}
+-
+-my $remotename = $ARGV[0];
+-my $url = $ARGV[1];
+-
+-# Accept both space-separated and multiple keys in config file.
+-# Spaces should be written as _ anyway because we'll use chomp.
+-my @tracked_pages = split(/[ \n]/, run_git_quoted(["config", "--get-all", "remote.${remotename}.pages"]));
+-chomp(@tracked_pages);
+-
+-# Just like @tracked_pages, but for MediaWiki categories.
+-my @tracked_categories = split(/[ \n]/, run_git_quoted(["config", "--get-all", "remote.${remotename}.categories"]));
+-chomp(@tracked_categories);
+-
+-# Just like @tracked_categories, but for MediaWiki namespaces.
+-my @tracked_namespaces = split(/[ \n]/, run_git_quoted(["config", "--get-all", "remote.${remotename}.namespaces"]));
+-for (@tracked_namespaces) { s/_/ /g; }
+-chomp(@tracked_namespaces);
+-
+-# Import media files on pull
+-my $import_media = run_git_quoted(["config", "--get", "--bool", "remote.${remotename}.mediaimport"]);
+-chomp($import_media);
+-$import_media = ($import_media eq 'true');
+-
+-# Export media files on push
+-my $export_media = run_git_quoted(["config", "--get", "--bool", "remote.${remotename}.mediaexport"]);
+-chomp($export_media);
+-$export_media = !($export_media eq 'false');
+-
+-my $wiki_login = run_git_quoted(["config", "--get", "remote.${remotename}.mwLogin"]);
+-# Note: mwPassword is discouraged. Use the credential system instead.
+-my $wiki_passwd = run_git_quoted(["config", "--get", "remote.${remotename}.mwPassword"]);
+-my $wiki_domain = run_git_quoted(["config", "--get", "remote.${remotename}.mwDomain"]);
+-chomp($wiki_login);
+-chomp($wiki_passwd);
+-chomp($wiki_domain);
+-
+-# Import only last revisions (both for clone and fetch)
+-my $shallow_import = run_git_quoted(["config", "--get", "--bool", "remote.${remotename}.shallow"]);
+-chomp($shallow_import);
+-$shallow_import = ($shallow_import eq 'true');
+-
+-# Fetch (clone and pull) by revisions instead of by pages. This behavior
+-# is more efficient when we have a wiki with lots of pages and we fetch
+-# the revisions quite often so that they concern only few pages.
+-# Possible values:
+-# - by_rev: perform one query per new revision on the remote wiki
+-# - by_page: query each tracked page for new revision
+-my $fetch_strategy = run_git_quoted(["config", "--get", "remote.${remotename}.fetchStrategy"]);
+-if (!$fetch_strategy) {
+-	$fetch_strategy = run_git_quoted(["config", "--get", "mediawiki.fetchStrategy"]);
+-}
+-chomp($fetch_strategy);
+-if (!$fetch_strategy) {
+-	$fetch_strategy = 'by_page';
+-}
+-
+-# Remember the timestamp corresponding to a revision id.
+-my %basetimestamps;
+-
+-# Dumb push: don't update notes and mediawiki ref to reflect the last push.
+-#
+-# Configurable with mediawiki.dumbPush, or per-remote with
+-# remote.<remotename>.dumbPush.
+-#
+-# This means the user will have to re-import the just-pushed
+-# revisions. On the other hand, this means that the Git revisions
+-# corresponding to MediaWiki revisions are all imported from the wiki,
+-# regardless of whether they were initially created in Git or from the
+-# web interface, hence all users will get the same history (i.e. if
+-# the push from Git to MediaWiki loses some information, everybody
+-# will get the history with information lost). If the import is
+-# deterministic, this means everybody gets the same sha1 for each
+-# MediaWiki revision.
+-my $dumb_push = run_git_quoted(["config", "--get", "--bool", "remote.${remotename}.dumbPush"]);
+-if (!$dumb_push) {
+-	$dumb_push = run_git_quoted(["config", "--get", "--bool", "mediawiki.dumbPush"]);
+-}
+-chomp($dumb_push);
+-$dumb_push = ($dumb_push eq 'true');
+-
+-my $wiki_name = $url;
+-$wiki_name =~ s{[^/]*://}{};
+-# If URL is like http://user:password@example.com/, we clearly don't
+-# want the password in $wiki_name. While we're there, also remove user
+-# and '@' sign, to avoid author like MWUser@HTTPUser@host.com
+-$wiki_name =~ s/^.*@//;
+-
+-# Commands parser
+-while (<STDIN>) {
+-	chomp;
+-
+-	if (!parse_command($_)) {
+-		last;
+-	}
+-
+-	BEGIN { $| = 1 } # flush STDOUT, to make sure the previous
+-			 # command is fully processed.
+-}
+-
+-########################## Functions ##############################
+-
+-## error handling
+-sub exit_error_usage {
+-	die "ERROR: git-remote-mediawiki module was not called with a correct number of\n" .
+-	    "parameters\n" .
+-	    "You may obtain this error because you attempted to run the git-remote-mediawiki\n" .
+-            "module directly.\n" .
+-	    "This module can be used the following way:\n" .
+-	    "\tgit clone mediawiki://<address of a mediawiki>\n" .
+-	    "Then, use git commit, push and pull as with every normal git repository.\n";
+-}
+-
+-sub parse_command {
+-	my ($line) = @_;
+-	my @cmd = split(/ /, $line);
+-	if (!defined $cmd[0]) {
+-		return 0;
+-	}
+-	if ($cmd[0] eq 'capabilities') {
+-		die("Too many arguments for capabilities\n")
+-		    if (defined($cmd[1]));
+-		mw_capabilities();
+-	} elsif ($cmd[0] eq 'list') {
+-		die("Too many arguments for list\n") if (defined($cmd[2]));
+-		mw_list($cmd[1]);
+-	} elsif ($cmd[0] eq 'import') {
+-		die("Invalid argument for import\n")
+-		    if ($cmd[1] eq EMPTY);
+-		die("Too many arguments for import\n")
+-		    if (defined($cmd[2]));
+-		mw_import($cmd[1]);
+-	} elsif ($cmd[0] eq 'option') {
+-		die("Invalid arguments for option\n")
+-		    if ($cmd[1] eq EMPTY || $cmd[2] eq EMPTY);
+-		die("Too many arguments for option\n")
+-		    if (defined($cmd[3]));
+-		mw_option($cmd[1],$cmd[2]);
+-	} elsif ($cmd[0] eq 'push') {
+-		mw_push($cmd[1]);
+-	} else {
+-		print {*STDERR} "Unknown command. Aborting...\n";
+-		return 0;
+-	}
+-	return 1;
+-}
+-
+-# MediaWiki API instance, created lazily.
+-my $mediawiki;
+-
+-sub fatal_mw_error {
+-	my $action = shift;
+-	print STDERR "fatal: could not $action.\n";
+-	print STDERR "fatal: '$url' does not appear to be a mediawiki\n";
+-	if ($url =~ /^https/) {
+-		print STDERR "fatal: make sure '$url/api.php' is a valid page\n";
+-		print STDERR "fatal: and the SSL certificate is correct.\n";
+-	} else {
+-		print STDERR "fatal: make sure '$url/api.php' is a valid page.\n";
+-	}
+-	print STDERR "fatal: (error " .
+-	    $mediawiki->{error}->{code} . ': ' .
+-	    $mediawiki->{error}->{details} . ")\n";
+-	exit 1;
+-}
+-
+-## Functions for listing pages on the remote wiki
+-sub get_mw_tracked_pages {
+-	my $pages = shift;
+-	get_mw_page_list(\@tracked_pages, $pages);
+-	return;
+-}
+-
+-sub get_mw_page_list {
+-	my $page_list = shift;
+-	my $pages = shift;
+-	my @some_pages = @{$page_list};
+-	while (@some_pages) {
+-		my $last_page = SLICE_SIZE;
+-		if ($#some_pages < $last_page) {
+-			$last_page = $#some_pages;
+-		}
+-		my @slice = @some_pages[0..$last_page];
+-		get_mw_first_pages(\@slice, $pages);
+-		@some_pages = @some_pages[(SLICE_SIZE + 1)..$#some_pages];
+-	}
+-	return;
+-}
+-
+-sub get_mw_tracked_categories {
+-	my $pages = shift;
+-	foreach my $category (@tracked_categories) {
+-		if (index($category, ':') < 0) {
+-			# Mediawiki requires the Category
+-			# prefix, but let's not force the user
+-			# to specify it.
+-			$category = "Category:${category}";
+-		}
+-		my $mw_pages = $mediawiki->list( {
+-			action => 'query',
+-			list => 'categorymembers',
+-			cmtitle => $category,
+-			cmlimit => 'max' } )
+-			|| die $mediawiki->{error}->{code} . ': '
+-				. $mediawiki->{error}->{details} . "\n";
+-		foreach my $page (@{$mw_pages}) {
+-			$pages->{$page->{title}} = $page;
+-		}
+-	}
+-	return;
+-}
+-
+-sub get_mw_tracked_namespaces {
+-    my $pages = shift;
+-    foreach my $local_namespace (sort @tracked_namespaces) {
+-        my $namespace_id;
+-        if ($local_namespace eq "(Main)") {
+-            $namespace_id = 0;
+-        } else {
+-            $namespace_id = get_mw_namespace_id($local_namespace);
+-        }
+-        # virtual namespaces don't support allpages
+-        next if !defined($namespace_id) || $namespace_id < 0;
+-        my $mw_pages = $mediawiki->list( {
+-            action => 'query',
+-            list => 'allpages',
+-            apnamespace => $namespace_id,
+-            aplimit => 'max' } )
+-            || die $mediawiki->{error}->{code} . ': '
+-                . $mediawiki->{error}->{details} . "\n";
+-        print {*STDERR} "$#{$mw_pages} found in namespace $local_namespace ($namespace_id)\n";
+-        foreach my $page (@{$mw_pages}) {
+-            $pages->{$page->{title}} = $page;
+-        }
+-    }
+-    return;
+-}
+-
+-sub get_mw_all_pages {
+-	my $pages = shift;
+-	# No user-provided list, get the list of pages from the API.
+-	my $mw_pages = $mediawiki->list({
+-		action => 'query',
+-		list => 'allpages',
+-		aplimit => 'max'
+-	});
+-	if (!defined($mw_pages)) {
+-		fatal_mw_error("get the list of wiki pages");
+-	}
+-	foreach my $page (@{$mw_pages}) {
+-		$pages->{$page->{title}} = $page;
+-	}
+-	return;
+-}
+-
+-# queries the wiki for a set of pages. Meant to be used within a loop
+-# querying the wiki for slices of page list.
+-sub get_mw_first_pages {
+-	my $some_pages = shift;
+-	my @some_pages = @{$some_pages};
+-
+-	my $pages = shift;
+-
+-	# pattern 'page1|page2|...' required by the API
+-	my $titles = join('|', @some_pages);
+-
+-	my $mw_pages = $mediawiki->api({
+-		action => 'query',
+-		titles => $titles,
+-	});
+-	if (!defined($mw_pages)) {
+-		fatal_mw_error("query the list of wiki pages");
+-	}
+-	while (my ($id, $page) = each(%{$mw_pages->{query}->{pages}})) {
+-		if ($id < 0) {
+-			print {*STDERR} "Warning: page $page->{title} not found on wiki\n";
+-		} else {
+-			$pages->{$page->{title}} = $page;
+-		}
+-	}
+-	return;
+-}
+-
+-# Get the list of pages to be fetched according to configuration.
+-sub get_mw_pages {
+-	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-
+-	print {*STDERR} "Listing pages on remote wiki...\n";
+-
+-	my %pages; # hash on page titles to avoid duplicates
+-	my $user_defined;
+-	if (@tracked_pages) {
+-		$user_defined = 1;
+-		# The user provided a list of pages titles, but we
+-		# still need to query the API to get the page IDs.
+-		get_mw_tracked_pages(\%pages);
+-	}
+-	if (@tracked_categories) {
+-		$user_defined = 1;
+-		get_mw_tracked_categories(\%pages);
+-	}
+-	if (@tracked_namespaces) {
+-		$user_defined = 1;
+-		get_mw_tracked_namespaces(\%pages);
+-	}
+-	if (!$user_defined) {
+-		get_mw_all_pages(\%pages);
+-	}
+-	if ($import_media) {
+-		print {*STDERR} "Getting media files for selected pages...\n";
+-		if ($user_defined) {
+-			get_linked_mediafiles(\%pages);
+-		} else {
+-			get_all_mediafiles(\%pages);
+-		}
+-	}
+-	print {*STDERR} (scalar keys %pages) . " pages found.\n";
+-	return %pages;
+-}
+-
+-# usage: $out = run_git_quoted(["command", "args", ...]);
+-#        $out = run_git_quoted(["command", "args", ...], "raw"); # don't interpret output as UTF-8.
+-#        $out = run_git_quoted_nostderr(["command", "args", ...]); # discard stderr
+-#        $out = run_git_quoted_nostderr(["command", "args", ...], "raw"); # ditto but raw instead of UTF-8 as above
+-sub _run_git {
+-	my $args = shift;
+-	my $encoding = (shift || 'encoding(UTF-8)');
+-	open(my $git, "-|:${encoding}", @$args)
+-	    or die "Unable to fork: $!\n";
+-	my $res = do {
+-		local $/ = undef;
+-		<$git>
+-	};
+-	close($git);
+-
+-	return $res;
+-}
+-
+-sub run_git_quoted {
+-    _run_git(["git", @{$_[0]}], $_[1]);
+-}
+-
+-sub run_git_quoted_nostderr {
+-    _run_git(['sh', '-c', 'git "$@" 2>/dev/null', '--', @{$_[0]}], $_[1]);
+-}
+-
+-sub get_all_mediafiles {
+-	my $pages = shift;
+-	# Attach list of all pages for media files from the API,
+-	# they are in a different namespace, only one namespace
+-	# can be queried at the same moment
+-	my $mw_pages = $mediawiki->list({
+-		action => 'query',
+-		list => 'allpages',
+-		apnamespace => get_mw_namespace_id('File'),
+-		aplimit => 'max'
+-	});
+-	if (!defined($mw_pages)) {
+-		print {*STDERR} "fatal: could not get the list of pages for media files.\n";
+-		print {*STDERR} "fatal: '$url' does not appear to be a mediawiki\n";
+-		print {*STDERR} "fatal: make sure '$url/api.php' is a valid page.\n";
+-		exit 1;
+-	}
+-	foreach my $page (@{$mw_pages}) {
+-		$pages->{$page->{title}} = $page;
+-	}
+-	return;
+-}
+-
+-sub get_linked_mediafiles {
+-	my $pages = shift;
+-	my @titles = map { $_->{title} } values(%{$pages});
+-
+-	my $batch = BATCH_SIZE;
+-	while (@titles) {
+-		if ($#titles < $batch) {
+-			$batch = $#titles;
+-		}
+-		my @slice = @titles[0..$batch];
+-
+-		# pattern 'page1|page2|...' required by the API
+-		my $mw_titles = join('|', @slice);
+-
+-		# Media files could be included or linked from
+-		# a page, get all related
+-		my $query = {
+-			action => 'query',
+-			prop => 'links|images',
+-			titles => $mw_titles,
+-			plnamespace => get_mw_namespace_id('File'),
+-			pllimit => 'max'
+-		};
+-		my $result = $mediawiki->api($query);
+-
+-		while (my ($id, $page) = each(%{$result->{query}->{pages}})) {
+-			my @media_titles;
+-			if (defined($page->{links})) {
+-				my @link_titles
+-				    = map { $_->{title} } @{$page->{links}};
+-				push(@media_titles, @link_titles);
+-			}
+-			if (defined($page->{images})) {
+-				my @image_titles
+-				    = map { $_->{title} } @{$page->{images}};
+-				push(@media_titles, @image_titles);
+-			}
+-			if (@media_titles) {
+-				get_mw_page_list(\@media_titles, $pages);
+-			}
+-		}
+-
+-		@titles = @titles[($batch+1)..$#titles];
+-	}
+-	return;
+-}
+-
+-sub get_mw_mediafile_for_page_revision {
+-	# Name of the file on Wiki, with the prefix.
+-	my $filename = shift;
+-	my $timestamp = shift;
+-	my %mediafile;
+-
+-	# Search if on a media file with given timestamp exists on
+-	# MediaWiki. In that case download the file.
+-	my $query = {
+-		action => 'query',
+-		prop => 'imageinfo',
+-		titles => "File:${filename}",
+-		iistart => $timestamp,
+-		iiend => $timestamp,
+-		iiprop => 'timestamp|archivename|url',
+-		iilimit => 1
+-	};
+-	my $result = $mediawiki->api($query);
+-
+-	my ($fileid, $file) = each( %{$result->{query}->{pages}} );
+-	# If not defined it means there is no revision of the file for
+-	# given timestamp.
+-	if (defined($file->{imageinfo})) {
+-		$mediafile{title} = $filename;
+-
+-		my $fileinfo = pop(@{$file->{imageinfo}});
+-		$mediafile{timestamp} = $fileinfo->{timestamp};
+-		# Mediawiki::API's download function doesn't support https URLs
+-		# and can't download old versions of files.
+-		print {*STDERR} "\tDownloading file $mediafile{title}, version $mediafile{timestamp}\n";
+-		$mediafile{content} = download_mw_mediafile($fileinfo->{url});
+-	}
+-	return %mediafile;
+-}
+-
+-sub download_mw_mediafile {
+-	my $download_url = shift;
+-
+-	my $response = $mediawiki->{ua}->get($download_url);
+-	if ($response->code == HTTP_CODE_OK) {
+-		# It is tempting to return
+-		# $response->decoded_content({charset => "none"}), but
+-		# when doing so, utf8::downgrade($content) fails with
+-		# "Wide character in subroutine entry".
+-		$response->decode();
+-		return $response->content();
+-	} else {
+-		print {*STDERR} "Error downloading mediafile from :\n";
+-		print {*STDERR} "URL: ${download_url}\n";
+-		print {*STDERR} 'Server response: ' . $response->code . q{ } . $response->message . "\n";
+-		exit 1;
+-	}
+-}
+-
+-sub get_last_local_revision {
+-	# Get note regarding last mediawiki revision.
+-	my $note = run_git_quoted_nostderr(["notes", "--ref=${remotename}/mediawiki",
+-					    "show", "refs/mediawiki/${remotename}/master"]);
+-	my @note_info = split(/ /, $note);
+-
+-	my $lastrevision_number;
+-	if (!(defined($note_info[0]) && $note_info[0] eq 'mediawiki_revision:')) {
+-		print {*STDERR} 'No previous mediawiki revision found';
+-		$lastrevision_number = 0;
+-	} else {
+-		# Notes are formatted : mediawiki_revision: #number
+-		$lastrevision_number = $note_info[1];
+-		chomp($lastrevision_number);
+-		print {*STDERR} "Last local mediawiki revision found is ${lastrevision_number}";
+-	}
+-	return $lastrevision_number;
+-}
+-
+-# Get the last remote revision without taking in account which pages are
+-# tracked or not. This function makes a single request to the wiki thus
+-# avoid a loop onto all tracked pages. This is useful for the fetch-by-rev
+-# option.
+-sub get_last_global_remote_rev {
+-	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-
+-	my $query = {
+-		action => 'query',
+-		list => 'recentchanges',
+-		prop => 'revisions',
+-		rclimit => '1',
+-		rcdir => 'older',
+-	};
+-	my $result = $mediawiki->api($query);
+-	return $result->{query}->{recentchanges}[0]->{revid};
+-}
+-
+-# Get the last remote revision concerning the tracked pages and the tracked
+-# categories.
+-sub get_last_remote_revision {
+-	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-
+-	my %pages_hash = get_mw_pages();
+-	my @pages = values(%pages_hash);
+-
+-	my $max_rev_num = 0;
+-
+-	print {*STDERR} "Getting last revision id on tracked pages...\n";
+-
+-	foreach my $page (@pages) {
+-		my $id = $page->{pageid};
+-
+-		my $query = {
+-			action => 'query',
+-			prop => 'revisions',
+-			rvprop => 'ids|timestamp',
+-			pageids => $id,
+-		};
+-
+-		my $result = $mediawiki->api($query);
+-
+-		my $lastrev = pop(@{$result->{query}->{pages}->{$id}->{revisions}});
+-
+-		$basetimestamps{$lastrev->{revid}} = $lastrev->{timestamp};
+-
+-		$max_rev_num = ($lastrev->{revid} > $max_rev_num ? $lastrev->{revid} : $max_rev_num);
+-	}
+-
+-	print {*STDERR} "Last remote revision found is $max_rev_num.\n";
+-	return $max_rev_num;
+-}
+-
+-# Clean content before sending it to MediaWiki
+-sub mediawiki_clean {
+-	my $string = shift;
+-	my $page_created = shift;
+-	# Mediawiki does not allow blank space at the end of a page and ends with a single \n.
+-	# This function right trims a string and adds a \n at the end to follow this rule
+-	$string =~ s/\s+$//;
+-	if ($string eq EMPTY && $page_created) {
+-		# Creating empty pages is forbidden.
+-		$string = EMPTY_CONTENT;
+-	}
+-	return $string."\n";
+-}
+-
+-# Filter applied on MediaWiki data before adding them to Git
+-sub mediawiki_smudge {
+-	my $string = shift;
+-	if ($string eq EMPTY_CONTENT) {
+-		$string = EMPTY;
+-	}
+-	# This \n is important. This is due to mediawiki's way to handle end of files.
+-	return "${string}\n";
+-}
+-
+-sub literal_data {
+-	my ($content) = @_;
+-	print {*STDOUT} 'data ', bytes::length($content), "\n", $content;
+-	return;
+-}
+-
+-sub literal_data_raw {
+-	# Output possibly binary content.
+-	my ($content) = @_;
+-	# Avoid confusion between size in bytes and in characters
+-	utf8::downgrade($content);
+-	binmode STDOUT, ':raw';
+-	print {*STDOUT} 'data ', bytes::length($content), "\n", $content;
+-	binmode STDOUT, ':encoding(UTF-8)';
+-	return;
+-}
+-
+-sub mw_capabilities {
+-	# Revisions are imported to the private namespace
+-	# refs/mediawiki/$remotename/ by the helper and fetched into
+-	# refs/remotes/$remotename later by fetch.
+-	print {*STDOUT} "refspec refs/heads/*:refs/mediawiki/${remotename}/*\n";
+-	print {*STDOUT} "import\n";
+-	print {*STDOUT} "list\n";
+-	print {*STDOUT} "push\n";
+-	if ($dumb_push) {
+-		print {*STDOUT} "no-private-update\n";
+-	}
+-	print {*STDOUT} "\n";
+-	return;
+-}
+-
+-sub mw_list {
+-	# MediaWiki do not have branches, we consider one branch arbitrarily
+-	# called master, and HEAD pointing to it.
+-	print {*STDOUT} "? refs/heads/master\n";
+-	print {*STDOUT} "\@refs/heads/master HEAD\n";
+-	print {*STDOUT} "\n";
+-	return;
+-}
+-
+-sub mw_option {
+-	print {*STDERR} "remote-helper command 'option $_[0]' not yet implemented\n";
+-	print {*STDOUT} "unsupported\n";
+-	return;
+-}
+-
+-sub fetch_mw_revisions_for_page {
+-	my $page = shift;
+-	my $id = shift;
+-	my $fetch_from = shift;
+-	my @page_revs = ();
+-	my $query = {
+-		action => 'query',
+-		prop => 'revisions',
+-		rvprop => 'ids',
+-		rvdir => 'newer',
+-		rvstartid => $fetch_from,
+-		rvlimit => 500,
+-		pageids => $id,
+-
+-		# Let MediaWiki know that we support the latest API.
+-		continue => '',
+-	};
+-
+-	my $revnum = 0;
+-	# Get 500 revisions at a time due to the mediawiki api limit
+-	while (1) {
+-		my $result = $mediawiki->api($query);
+-
+-		# Parse each of those 500 revisions
+-		foreach my $revision (@{$result->{query}->{pages}->{$id}->{revisions}}) {
+-			my $page_rev_ids;
+-			$page_rev_ids->{pageid} = $page->{pageid};
+-			$page_rev_ids->{revid} = $revision->{revid};
+-			push(@page_revs, $page_rev_ids);
+-			$revnum++;
+-		}
+-
+-		if ($result->{'query-continue'}) { # For legacy APIs
+-			$query->{rvstartid} = $result->{'query-continue'}->{revisions}->{rvstartid};
+-		} elsif ($result->{continue}) { # For newer APIs
+-			$query->{rvstartid} = $result->{continue}->{rvcontinue};
+-			$query->{continue} = $result->{continue}->{continue};
+-		} else {
+-			last;
+-		}
+-	}
+-	if ($shallow_import && @page_revs) {
+-		print {*STDERR} "  Found 1 revision (shallow import).\n";
+-		@page_revs = sort {$b->{revid} <=> $a->{revid}} (@page_revs);
+-		return $page_revs[0];
+-	}
+-	print {*STDERR} "  Found ${revnum} revision(s).\n";
+-	return @page_revs;
+-}
+-
+-sub fetch_mw_revisions {
+-	my $pages = shift; my @pages = @{$pages};
+-	my $fetch_from = shift;
+-
+-	my @revisions = ();
+-	my $n = 1;
+-	foreach my $page (@pages) {
+-		my $id = $page->{pageid};
+-		print {*STDERR} "page ${n}/", scalar(@pages), ': ', $page->{title}, "\n";
+-		$n++;
+-		my @page_revs = fetch_mw_revisions_for_page($page, $id, $fetch_from);
+-		@revisions = (@page_revs, @revisions);
+-	}
+-
+-	return ($n, @revisions);
+-}
+-
+-sub fe_escape_path {
+-    my $path = shift;
+-    $path =~ s/\\/\\\\/g;
+-    $path =~ s/"/\\"/g;
+-    $path =~ s/\n/\\n/g;
+-    return qq("${path}");
+-}
+-
+-sub import_file_revision {
+-	my $commit = shift;
+-	my %commit = %{$commit};
+-	my $full_import = shift;
+-	my $n = shift;
+-	my $mediafile = shift;
+-	my %mediafile;
+-	if ($mediafile) {
+-		%mediafile = %{$mediafile};
+-	}
+-
+-	my $title = $commit{title};
+-	my $comment = $commit{comment};
+-	my $content = $commit{content};
+-	my $author = $commit{author};
+-	my $date = $commit{date};
+-
+-	print {*STDOUT} "commit refs/mediawiki/${remotename}/master\n";
+-	print {*STDOUT} "mark :${n}\n";
+-	print {*STDOUT} "committer ${author} <${author}\@${wiki_name}> " . $date->epoch . " +0000\n";
+-	literal_data($comment);
+-
+-	# If it's not a clone, we need to know where to start from
+-	if (!$full_import && $n == 1) {
+-		print {*STDOUT} "from refs/mediawiki/${remotename}/master^0\n";
+-	}
+-	if ($content ne DELETED_CONTENT) {
+-		print {*STDOUT} 'M 644 inline ' .
+-		    fe_escape_path("${title}.mw") . "\n";
+-		literal_data($content);
+-		if (%mediafile) {
+-			print {*STDOUT} 'M 644 inline '
+-			    . fe_escape_path($mediafile{title}) . "\n";
+-			literal_data_raw($mediafile{content});
+-		}
+-		print {*STDOUT} "\n\n";
+-	} else {
+-		print {*STDOUT} 'D ' . fe_escape_path("${title}.mw") . "\n";
+-	}
+-
+-	# mediawiki revision number in the git note
+-	if ($full_import && $n == 1) {
+-		print {*STDOUT} "reset refs/notes/${remotename}/mediawiki\n";
+-	}
+-	print {*STDOUT} "commit refs/notes/${remotename}/mediawiki\n";
+-	print {*STDOUT} "committer ${author} <${author}\@${wiki_name}> " . $date->epoch . " +0000\n";
+-	literal_data('Note added by git-mediawiki during import');
+-	if (!$full_import && $n == 1) {
+-		print {*STDOUT} "from refs/notes/${remotename}/mediawiki^0\n";
+-	}
+-	print {*STDOUT} "N inline :${n}\n";
+-	literal_data("mediawiki_revision: $commit{mw_revision}");
+-	print {*STDOUT} "\n\n";
+-	return;
+-}
+-
+-# parse a sequence of
+-# <cmd> <arg1>
+-# <cmd> <arg2>
+-# \n
+-# (like batch sequence of import and sequence of push statements)
+-sub get_more_refs {
+-	my $cmd = shift;
+-	my @refs;
+-	while (1) {
+-		my $line = <STDIN>;
+-		if ($line =~ /^$cmd (.*)$/) {
+-			push(@refs, $1);
+-		} elsif ($line eq "\n") {
+-			return @refs;
+-		} else {
+-			die("Invalid command in a '$cmd' batch: $_\n");
+-		}
+-	}
+-	return;
+-}
+-
+-sub mw_import {
+-	# multiple import commands can follow each other.
+-	my @refs = (shift, get_more_refs('import'));
+-	my $processedRefs;
+-	foreach my $ref (@refs) {
+-		next if $processedRefs->{$ref}; # skip duplicates: "import refs/heads/master" being issued twice; TODO: why?
+-		$processedRefs->{$ref} = 1;
+-		mw_import_ref($ref);
+-	}
+-	print {*STDOUT} "done\n";
+-	return;
+-}
+-
+-sub mw_import_ref {
+-	my $ref = shift;
+-	# The remote helper will call "import HEAD" and
+-	# "import refs/heads/master".
+-	# Since HEAD is a symbolic ref to master (by convention,
+-	# followed by the output of the command "list" that we gave),
+-	# we don't need to do anything in this case.
+-	if ($ref eq 'HEAD') {
+-		return;
+-	}
+-
+-	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-
+-	print {*STDERR} "Searching revisions...\n";
+-	my $last_local = get_last_local_revision();
+-	my $fetch_from = $last_local + 1;
+-	if ($fetch_from == 1) {
+-		print {*STDERR} ", fetching from beginning.\n";
+-	} else {
+-		print {*STDERR} ", fetching from here.\n";
+-	}
+-
+-	my $n = 0;
+-	if ($fetch_strategy eq 'by_rev') {
+-		print {*STDERR} "Fetching & writing export data by revs...\n";
+-		$n = mw_import_ref_by_revs($fetch_from);
+-	} elsif ($fetch_strategy eq 'by_page') {
+-		print {*STDERR} "Fetching & writing export data by pages...\n";
+-		$n = mw_import_ref_by_pages($fetch_from);
+-	} else {
+-		print {*STDERR} qq(fatal: invalid fetch strategy "${fetch_strategy}".\n);
+-		print {*STDERR} "Check your configuration variables remote.${remotename}.fetchStrategy and mediawiki.fetchStrategy\n";
+-		exit 1;
+-	}
+-
+-	if ($fetch_from == 1 && $n == 0) {
+-		print {*STDERR} "You appear to have cloned an empty MediaWiki.\n";
+-		# Something has to be done remote-helper side. If nothing is done, an error is
+-		# thrown saying that HEAD is referring to unknown object 0000000000000000000
+-		# and the clone fails.
+-	}
+-	return;
+-}
+-
+-sub mw_import_ref_by_pages {
+-
+-	my $fetch_from = shift;
+-	my %pages_hash = get_mw_pages();
+-	my @pages = values(%pages_hash);
+-
+-	my ($n, @revisions) = fetch_mw_revisions(\@pages, $fetch_from);
+-
+-	@revisions = sort {$a->{revid} <=> $b->{revid}} @revisions;
+-	my @revision_ids = map { $_->{revid} } @revisions;
+-
+-	return mw_import_revids($fetch_from, \@revision_ids, \%pages_hash);
+-}
+-
+-sub mw_import_ref_by_revs {
+-
+-	my $fetch_from = shift;
+-	my %pages_hash = get_mw_pages();
+-
+-	my $last_remote = get_last_global_remote_rev();
+-	my @revision_ids = $fetch_from..$last_remote;
+-	return mw_import_revids($fetch_from, \@revision_ids, \%pages_hash);
+-}
+-
+-# Import revisions given in second argument (array of integers).
+-# Only pages appearing in the third argument (hash indexed by page titles)
+-# will be imported.
+-sub mw_import_revids {
+-	my $fetch_from = shift;
+-	my $revision_ids = shift;
+-	my $pages = shift;
+-
+-	my $n = 0;
+-	my $n_actual = 0;
+-	my $last_timestamp = 0; # Placeholder in case $rev->timestamp is undefined
+-
+-	foreach my $pagerevid (@{$revision_ids}) {
+-	        # Count page even if we skip it, since we display
+-		# $n/$total and $total includes skipped pages.
+-		$n++;
+-
+-		# fetch the content of the pages
+-		my $query = {
+-			action => 'query',
+-			prop => 'revisions',
+-			rvprop => 'content|timestamp|comment|user|ids',
+-			revids => $pagerevid,
+-		};
+-
+-		my $result = $mediawiki->api($query);
+-
+-		if (!$result) {
+-			die "Failed to retrieve modified page for revision $pagerevid\n";
+-		}
+-
+-		if (defined($result->{query}->{badrevids}->{$pagerevid})) {
+-			# The revision id does not exist on the remote wiki.
+-			next;
+-		}
+-
+-		if (!defined($result->{query}->{pages})) {
+-			die "Invalid revision ${pagerevid}.\n";
+-		}
+-
+-		my @result_pages = values(%{$result->{query}->{pages}});
+-		my $result_page = $result_pages[0];
+-		my $rev = $result_pages[0]->{revisions}->[0];
+-
+-		my $page_title = $result_page->{title};
+-
+-		if (!exists($pages->{$page_title})) {
+-			print {*STDERR} "${n}/", scalar(@{$revision_ids}),
+-				": Skipping revision #$rev->{revid} of ${page_title}\n";
+-			next;
+-		}
+-
+-		$n_actual++;
+-
+-		my %commit;
+-		$commit{author} = $rev->{user} || 'Anonymous';
+-		$commit{comment} = $rev->{comment} || EMPTY_MESSAGE;
+-		$commit{title} = smudge_filename($page_title);
+-		$commit{mw_revision} = $rev->{revid};
+-		$commit{content} = mediawiki_smudge($rev->{'*'});
+-
+-		if (!defined($rev->{timestamp})) {
+-			$last_timestamp++;
+-		} else {
+-			$last_timestamp = $rev->{timestamp};
+-		}
+-		$commit{date} = DateTime::Format::ISO8601->parse_datetime($last_timestamp);
+-
+-		# Differentiates classic pages and media files.
+-		my ($namespace, $filename) = $page_title =~ /^([^:]*):(.*)$/;
+-		my %mediafile;
+-		if ($namespace) {
+-			my $id = get_mw_namespace_id($namespace);
+-			if ($id && $id == get_mw_namespace_id('File')) {
+-				%mediafile = get_mw_mediafile_for_page_revision($filename, $rev->{timestamp});
+-			}
+-		}
+-		# If this is a revision of the media page for new version
+-		# of a file do one common commit for both file and media page.
+-		# Else do commit only for that page.
+-		print {*STDERR} "${n}/", scalar(@{$revision_ids}), ": Revision #$rev->{revid} of $commit{title}\n";
+-		import_file_revision(\%commit, ($fetch_from == 1), $n_actual, \%mediafile);
+-	}
+-
+-	return $n_actual;
+-}
+-
+-sub error_non_fast_forward {
+-	my $advice = run_git_quoted(["config", "--bool", "advice.pushNonFastForward"]);
+-	chomp($advice);
+-	if ($advice ne 'false') {
+-		# Native git-push would show this after the summary.
+-		# We can't ask it to display it cleanly, so print it
+-		# ourselves before.
+-		print {*STDERR} "To prevent you from losing history, non-fast-forward updates were rejected\n";
+-		print {*STDERR} "Merge the remote changes (e.g. 'git pull') before pushing again. See the\n";
+-		print {*STDERR} "'Note about fast-forwards' section of 'git push --help' for details.\n";
+-	}
+-	print {*STDOUT} qq(error $_[0] "non-fast-forward"\n);
+-	return 0;
+-}
+-
+-sub mw_upload_file {
+-	my $complete_file_name = shift;
+-	my $new_sha1 = shift;
+-	my $extension = shift;
+-	my $file_deleted = shift;
+-	my $summary = shift;
+-	my $newrevid;
+-	my $path = "File:${complete_file_name}";
+-	my %hashFiles = get_allowed_file_extensions();
+-	if (!exists($hashFiles{$extension})) {
+-		print {*STDERR} "${complete_file_name} is not a permitted file on this wiki.\n";
+-		print {*STDERR} "Check the configuration of file uploads in your mediawiki.\n";
+-		return $newrevid;
+-	}
+-	# Deleting and uploading a file requires a privileged user
+-	if ($file_deleted) {
+-		$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-		my $query = {
+-			action => 'delete',
+-			title => $path,
+-			reason => $summary
+-		};
+-		if (!$mediawiki->edit($query)) {
+-			print {*STDERR} "Failed to delete file on remote wiki\n";
+-			print {*STDERR} "Check your permissions on the remote site. Error code:\n";
+-			print {*STDERR} $mediawiki->{error}->{code} . ':' . $mediawiki->{error}->{details};
+-			exit 1;
+-		}
+-	} else {
+-		# Don't let perl try to interpret file content as UTF-8 => use "raw"
+-		my $content = run_git_quoted(["cat-file", "blob", $new_sha1], 'raw');
+-		if ($content ne EMPTY) {
+-			$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-			$mediawiki->{config}->{upload_url} =
+-				"${url}/index.php/Special:Upload";
+-			$mediawiki->edit({
+-				action => 'upload',
+-				filename => $complete_file_name,
+-				comment => $summary,
+-				file => [undef,
+-					 $complete_file_name,
+-					 Content => $content],
+-				ignorewarnings => 1,
+-			}, {
+-				skip_encoding => 1
+-			} ) || die $mediawiki->{error}->{code} . ':'
+-				 . $mediawiki->{error}->{details} . "\n";
+-			my $last_file_page = $mediawiki->get_page({title => $path});
+-			$newrevid = $last_file_page->{revid};
+-			print {*STDERR} "Pushed file: ${new_sha1} - ${complete_file_name}.\n";
+-		} else {
+-			print {*STDERR} "Empty file ${complete_file_name} not pushed.\n";
+-		}
+-	}
+-	return $newrevid;
+-}
+-
+-sub mw_push_file {
+-	my $diff_info = shift;
+-	# $diff_info contains a string in this format:
+-	# 100644 100644 <sha1_of_blob_before_commit> <sha1_of_blob_now> <status>
+-	my @diff_info_split = split(/[ \t]/, $diff_info);
+-
+-	# Filename, including .mw extension
+-	my $complete_file_name = shift;
+-	# Commit message
+-	my $summary = shift;
+-	# MediaWiki revision number. Keep the previous one by default,
+-	# in case there's no edit to perform.
+-	my $oldrevid = shift;
+-	my $newrevid;
+-
+-	if ($summary eq EMPTY_MESSAGE) {
+-		$summary = EMPTY;
+-	}
+-
+-	my $new_sha1 = $diff_info_split[3];
+-	my $old_sha1 = $diff_info_split[2];
+-	my $page_created = ($old_sha1 eq NULL_SHA1);
+-	my $page_deleted = ($new_sha1 eq NULL_SHA1);
+-	$complete_file_name = clean_filename($complete_file_name);
+-
+-	my ($title, $extension) = $complete_file_name =~ /^(.*)\.([^\.]*)$/;
+-	if (!defined($extension)) {
+-		$extension = EMPTY;
+-	}
+-	if ($extension eq 'mw') {
+-		my $ns = get_mw_namespace_id_for_page($complete_file_name);
+-		if ($ns && $ns == get_mw_namespace_id('File') && (!$export_media)) {
+-			print {*STDERR} "Ignoring media file related page: ${complete_file_name}\n";
+-			return ($oldrevid, 'ok');
+-		}
+-		my $file_content;
+-		if ($page_deleted) {
+-			# Deleting a page usually requires
+-			# special privileges. A common
+-			# convention is to replace the page
+-			# with this content instead:
+-			$file_content = DELETED_CONTENT;
+-		} else {
+-			$file_content = run_git_quoted(["cat-file", "blob", $new_sha1]);
+-		}
+-
+-		$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-
+-		my $result = $mediawiki->edit( {
+-			action => 'edit',
+-			summary => $summary,
+-			title => $title,
+-			basetimestamp => $basetimestamps{$oldrevid},
+-			text => mediawiki_clean($file_content, $page_created),
+-				  }, {
+-					  skip_encoding => 1 # Helps with names with accentuated characters
+-				  });
+-		if (!$result) {
+-			if ($mediawiki->{error}->{code} == 3) {
+-				# edit conflicts, considered as non-fast-forward
+-				print {*STDERR} 'Warning: Error ' .
+-				    $mediawiki->{error}->{code} .
+-				    ' from mediawiki: ' . $mediawiki->{error}->{details} .
+-				    ".\n";
+-				return ($oldrevid, 'non-fast-forward');
+-			} else {
+-				# Other errors. Shouldn't happen => just die()
+-				die 'Fatal: Error ' .
+-				    $mediawiki->{error}->{code} .
+-				    ' from mediawiki: ' . $mediawiki->{error}->{details} . "\n";
+-			}
+-		}
+-		$newrevid = $result->{edit}->{newrevid};
+-		print {*STDERR} "Pushed file: ${new_sha1} - ${title}\n";
+-	} elsif ($export_media) {
+-		$newrevid = mw_upload_file($complete_file_name, $new_sha1,
+-					   $extension, $page_deleted,
+-					   $summary);
+-	} else {
+-		print {*STDERR} "Ignoring media file ${title}\n";
+-	}
+-	$newrevid = ($newrevid or $oldrevid);
+-	return ($newrevid, 'ok');
+-}
+-
+-sub mw_push {
+-	# multiple push statements can follow each other
+-	my @refsspecs = (shift, get_more_refs('push'));
+-	my $pushed;
+-	for my $refspec (@refsspecs) {
+-		my ($force, $local, $remote) = $refspec =~ /^(\+)?([^:]*):([^:]*)$/
+-		    or die("Invalid refspec for push. Expected <src>:<dst> or +<src>:<dst>\n");
+-		if ($force) {
+-			print {*STDERR} "Warning: forced push not allowed on a MediaWiki.\n";
+-		}
+-		if ($local eq EMPTY) {
+-			print {*STDERR} "Cannot delete remote branch on a MediaWiki\n";
+-			print {*STDOUT} "error ${remote} cannot delete\n";
+-			next;
+-		}
+-		if ($remote ne 'refs/heads/master') {
+-			print {*STDERR} "Only push to the branch 'master' is supported on a MediaWiki\n";
+-			print {*STDOUT} "error ${remote} only master allowed\n";
+-			next;
+-		}
+-		if (mw_push_revision($local, $remote)) {
+-			$pushed = 1;
+-		}
+-	}
+-
+-	# Notify Git that the push is done
+-	print {*STDOUT} "\n";
+-
+-	if ($pushed && $dumb_push) {
+-		print {*STDERR} "Just pushed some revisions to MediaWiki.\n";
+-		print {*STDERR} "The pushed revisions now have to be re-imported, and your current branch\n";
+-		print {*STDERR} "needs to be updated with these re-imported commits. You can do this with\n";
+-		print {*STDERR} "\n";
+-		print {*STDERR} "  git pull --rebase\n";
+-		print {*STDERR} "\n";
+-	}
+-	return;
+-}
+-
+-sub mw_push_revision {
+-	my $local = shift;
+-	my $remote = shift; # actually, this has to be "refs/heads/master" at this point.
+-	my $last_local_revid = get_last_local_revision();
+-	print {*STDERR} ".\n"; # Finish sentence started by get_last_local_revision()
+-	my $last_remote_revid = get_last_remote_revision();
+-	my $mw_revision = $last_remote_revid;
+-
+-	# Get sha1 of commit pointed by local HEAD
+-	my $HEAD_sha1 = run_git_quoted_nostderr(["rev-parse", $local]);
+-	chomp($HEAD_sha1);
+-	# Get sha1 of commit pointed by remotes/$remotename/master
+-	my $remoteorigin_sha1 = run_git_quoted_nostderr(["rev-parse", "refs/remotes/${remotename}/master"]);
+-	chomp($remoteorigin_sha1);
+-
+-	if ($last_local_revid > 0 &&
+-	    $last_local_revid < $last_remote_revid) {
+-		return error_non_fast_forward($remote);
+-	}
+-
+-	if ($HEAD_sha1 eq $remoteorigin_sha1) {
+-		# nothing to push
+-		return 0;
+-	}
+-
+-	# Get every commit in between HEAD and refs/remotes/origin/master,
+-	# including HEAD and refs/remotes/origin/master
+-	my @commit_pairs = ();
+-	if ($last_local_revid > 0) {
+-		my $parsed_sha1 = $remoteorigin_sha1;
+-		# Find a path from last MediaWiki commit to pushed commit
+-		print {*STDERR} "Computing path from local to remote ...\n";
+-		my @local_ancestry = split(/\n/, run_git_quoted(["rev-list", "--boundary", "--parents", $local, "^${parsed_sha1}"]));
+-		my %local_ancestry;
+-		foreach my $line (@local_ancestry) {
+-			if (my ($child, $parents) = $line =~ /^-?([a-f0-9]+) ([a-f0-9 ]+)/) {
+-				foreach my $parent (split(/ /, $parents)) {
+-					$local_ancestry{$parent} = $child;
+-				}
+-			} elsif (!$line =~ /^([a-f0-9]+)/) {
+-				die "Unexpected output from git rev-list: ${line}\n";
+-			}
+-		}
+-		while ($parsed_sha1 ne $HEAD_sha1) {
+-			my $child = $local_ancestry{$parsed_sha1};
+-			if (!$child) {
+-				print {*STDERR} "Cannot find a path in history from remote commit to last commit\n";
+-				return error_non_fast_forward($remote);
+-			}
+-			push(@commit_pairs, [$parsed_sha1, $child]);
+-			$parsed_sha1 = $child;
+-		}
+-	} else {
+-		# No remote mediawiki revision. Export the whole
+-		# history (linearized with --first-parent)
+-		print {*STDERR} "Warning: no common ancestor, pushing complete history\n";
+-		my $history = run_git_quoted(["rev-list", "--first-parent", "--children", $local]);
+-		my @history = split(/\n/, $history);
+-		@history = @history[1..$#history];
+-		foreach my $line (reverse @history) {
+-			my @commit_info_split = split(/[ \n]/, $line);
+-			push(@commit_pairs, \@commit_info_split);
+-		}
+-	}
+-
+-	foreach my $commit_info_split (@commit_pairs) {
+-		my $sha1_child = @{$commit_info_split}[0];
+-		my $sha1_commit = @{$commit_info_split}[1];
+-		my $diff_infos = run_git_quoted(["diff-tree", "-r", "--raw", "-z", $sha1_child, $sha1_commit]);
+-		# TODO: we could detect rename, and encode them with a #redirect on the wiki.
+-		# TODO: for now, it's just a delete+add
+-		my @diff_info_list = split(/\0/, $diff_infos);
+-		# Keep the subject line of the commit message as mediawiki comment for the revision
+-		my $commit_msg = run_git_quoted(["log", "--no-walk", '--format="%s"', $sha1_commit]);
+-		chomp($commit_msg);
+-		# Push every blob
+-		while (@diff_info_list) {
+-			my $status;
+-			# git diff-tree -z gives an output like
+-			# <metadata>\0<filename1>\0
+-			# <metadata>\0<filename2>\0
+-			# and we've split on \0.
+-			my $info = shift(@diff_info_list);
+-			my $file = shift(@diff_info_list);
+-			($mw_revision, $status) = mw_push_file($info, $file, $commit_msg, $mw_revision);
+-			if ($status eq 'non-fast-forward') {
+-				# we may already have sent part of the
+-				# commit to MediaWiki, but it's too
+-				# late to cancel it. Stop the push in
+-				# the middle, but still give an
+-				# accurate error message.
+-				return error_non_fast_forward($remote);
+-			}
+-			if ($status ne 'ok') {
+-				die("Unknown error from mw_push_file()\n");
+-			}
+-		}
+-		if (!$dumb_push) {
+-			run_git_quoted(["notes", "--ref=${remotename}/mediawiki",
+-					"add", "-f", "-m",
+-					"mediawiki_revision: ${mw_revision}",
+-					$sha1_commit]);
+-		}
+-	}
+-
+-	print {*STDOUT} "ok ${remote}\n";
+-	return 1;
+-}
+-
+-sub get_allowed_file_extensions {
+-	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-
+-	my $query = {
+-		action => 'query',
+-		meta => 'siteinfo',
+-		siprop => 'fileextensions'
+-		};
+-	my $result = $mediawiki->api($query);
+-	my @file_extensions = map { $_->{ext}} @{$result->{query}->{fileextensions}};
+-	my %hashFile = map { $_ => 1 } @file_extensions;
+-
+-	return %hashFile;
+-}
+-
+-# In memory cache for MediaWiki namespace ids.
+-my %namespace_id;
+-
+-# Namespaces whose id is cached in the configuration file
+-# (to avoid duplicates)
+-my %cached_mw_namespace_id;
+-
+-# Return MediaWiki id for a canonical namespace name.
+-# Ex.: "File", "Project".
+-sub get_mw_namespace_id {
+-	$mediawiki = connect_maybe($mediawiki, $remotename, $url);
+-	my $name = shift;
+-
+-	if (!exists $namespace_id{$name}) {
+-		# Look at configuration file, if the record for that namespace is
+-		# already cached. Namespaces are stored in form:
+-		# "Name_of_namespace:Id_namespace", ex.: "File:6".
+-		my @temp = split(/\n/,
+-				 run_git_quoted(["config", "--get-all", "remote.${remotename}.namespaceCache"]));
+-		chomp(@temp);
+-		foreach my $ns (@temp) {
+-			my ($n, $id) = split(/:/, $ns);
+-			if ($id eq 'notANameSpace') {
+-				$namespace_id{$n} = {is_namespace => 0};
+-			} else {
+-				$namespace_id{$n} = {is_namespace => 1, id => $id};
+-			}
+-			$cached_mw_namespace_id{$n} = 1;
+-		}
+-	}
+-
+-	if (!exists $namespace_id{$name}) {
+-		print {*STDERR} "Namespace ${name} not found in cache, querying the wiki ...\n";
+-		# NS not found => get namespace id from MW and store it in
+-	        # configuration file.
+-	        my $query = {
+-	                action => 'query',
+-	                meta => 'siteinfo',
+-	                siprop => 'namespaces'
+-	        };
+-	        my $result = $mediawiki->api($query);
+-
+-	        while (my ($id, $ns) = each(%{$result->{query}->{namespaces}})) {
+-	                if (defined($ns->{id}) && defined($ns->{canonical})) {
+-				$namespace_id{$ns->{canonical}} = {is_namespace => 1, id => $ns->{id}};
+-				if ($ns->{'*'}) {
+-					# alias (e.g. french Fichier: as alias for canonical File:)
+-					$namespace_id{$ns->{'*'}} = {is_namespace => 1, id => $ns->{id}};
+-				}
+-			}
+-	        }
+-	}
+-
+-	my $ns = $namespace_id{$name};
+-	my $id;
+-
+-	if (!defined $ns) {
+-		my @namespaces = map { s/ /_/g; $_; } sort keys %namespace_id;
+-		print {*STDERR} "No such namespace ${name} on MediaWiki, known namespaces: @namespaces\n";
+-		$ns = {is_namespace => 0};
+-		$namespace_id{$name} = $ns;
+-	}
+-
+-	if ($ns->{is_namespace}) {
+-		$id = $ns->{id};
+-	}
+-
+-	# Store "notANameSpace" as special value for inexisting namespaces
+-	my $store_id = ($id || 'notANameSpace');
+-
+-	# Store explicitly requested namespaces on disk
+-	if (!exists $cached_mw_namespace_id{$name}) {
+-		run_git_quoted(["config", "--add", "remote.${remotename}.namespaceCache", "${name}:${store_id}"]);
+-		$cached_mw_namespace_id{$name} = 1;
+-	}
+-	return $id;
+-}
+-
+-sub get_mw_namespace_id_for_page {
+-	my $namespace = shift;
+-	if ($namespace =~ /^([^:]*):/) {
+-		return get_mw_namespace_id($namespace);
+-	} else {
+-		return;
+-	}
+-}
+diff --git a/contrib/mw-to-git/git-remote-mediawiki.txt b/contrib/mw-to-git/git-remote-mediawiki.txt
+deleted file mode 100644
+index 5da825f61e2..00000000000
+--- a/contrib/mw-to-git/git-remote-mediawiki.txt
++++ /dev/null
+@@ -1,7 +0,0 @@
+-Git-Mediawiki is a project which aims the creation of a gate
+-between git and mediawiki, allowing git users to push and pull
+-objects from mediawiki just as one would do with a classic git
+-repository thanks to remote-helpers.
+-
+-For more information, visit the wiki at
+-https://github.com/Git-Mediawiki/Git-Mediawiki
+diff --git a/contrib/mw-to-git/t/.gitignore b/contrib/mw-to-git/t/.gitignore
+deleted file mode 100644
+index 2b8dc30c6db..00000000000
+--- a/contrib/mw-to-git/t/.gitignore
++++ /dev/null
+@@ -1,4 +0,0 @@
+-WEB/
+-mediawiki/
+-trash directory.t*/
+-test-results/
+diff --git a/contrib/mw-to-git/t/Makefile b/contrib/mw-to-git/t/Makefile
+deleted file mode 100644
+index 6c9f377caac..00000000000
+--- a/contrib/mw-to-git/t/Makefile
++++ /dev/null
+@@ -1,32 +0,0 @@
+-#
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-#
+-## Test git-remote-mediawiki
+-
+-# The default target of this Makefile is...
+-all:: test
+-
+--include ../../../config.mak.autogen
+--include ../../../config.mak
+-
+-T = $(wildcard t[0-9][0-9][0-9][0-9]-*.sh)
+-
+-.PHONY: help test clean all
+-
+-help:
+-	@echo 'Run "$(MAKE) test" to launch test scripts'
+-	@echo 'Run "$(MAKE) clean" to remove trash folders'
+-
+-test:
+-	@for t in $(T); do \
+-		echo "$$t"; \
+-		"./$$t" || exit 1; \
+-	done
+-
+-clean:
+-	$(RM) -r 'trash directory'.*
+diff --git a/contrib/mw-to-git/t/README b/contrib/mw-to-git/t/README
+deleted file mode 100644
+index 72c4889db7a..00000000000
+--- a/contrib/mw-to-git/t/README
++++ /dev/null
+@@ -1,124 +0,0 @@
+-Tests for Mediawiki-to-Git
+-==========================
+-
+-Introduction
+-------------
+-This manual describes how to install the git-remote-mediawiki test
+-environment on a machine with git installed on it.
+-
+-Prerequisite
+-------------
+-
+-In order to run this test environment correctly, you will need to
+-install the following packages (Debian/Ubuntu names, may need to be
+-adapted for another distribution):
+-
+-* lighttpd
+-* php
+-* php-cgi
+-* php-cli
+-* php-curl
+-* php-sqlite
+-
+-Principles and Technical Choices
+---------------------------------
+-
+-The test environment makes it easy to install and manipulate one or
+-several MediaWiki instances. To allow developers to run the testsuite
+-easily, the environment does not require root privilege (except to
+-install the required packages if needed). It starts a webserver
+-instance on the user's account (using lighttpd greatly helps for
+-that), and does not need a separate database daemon (thanks to the use
+-of sqlite).
+-
+-Run the test environment
+-------------------------
+-
+-Install a new wiki
+-~~~~~~~~~~~~~~~~~~
+-
+-Once you have all the prerequisite, you need to install a MediaWiki
+-instance on your machine. If you already have one, it is still
+-strongly recommended to install one with the script provided. Here's
+-how to work it:
+-
+-a. change directory to contrib/mw-to-git/t/
+-b. if needed, edit test.config to choose your installation parameters
+-c. run `./install-wiki.sh install`
+-d. check on your favourite web browser if your wiki is correctly
+-   installed.
+-
+-Remove an existing wiki
+-~~~~~~~~~~~~~~~~~~~~~~~
+-
+-Edit the file test.config to fit the wiki you want to delete, and then
+-execute the command `./install-wiki.sh delete` from the
+-contrib/mw-to-git/t directory.
+-
+-Run the existing tests
+-~~~~~~~~~~~~~~~~~~~~~~
+-
+-The provided tests are currently in the `contrib/mw-to-git/t` directory.
+-The files are all the t936[0-9]-*.sh shell scripts.
+-
+-a. Run all tests:
+-To do so, run "make test" from the contrib/mw-to-git/ directory.
+-
+-b. Run a specific test:
+-To run a given test <test_name>, run ./<test_name> from the
+-contrib/mw-to-git/t directory.
+-
+-How to create new tests
+------------------------
+-
+-Available functions
+-~~~~~~~~~~~~~~~~~~~
+-
+-The test environment of git-remote-mediawiki provides some functions
+-useful to test its behaviour. for more details about the functions'
+-parameters, please refer to the `test-gitmw-lib.sh` and
+-`test-gitmw.pl` files.
+-
+-** `test_check_wiki_precond`:
+-Check if the tests must be skipped or not. Please use this function
+-at the beginning of each new test file.
+-
+-** `wiki_getpage`:
+-Fetch a given page from the wiki and puts its content in the
+-directory in parameter.
+-
+-** `wiki_delete_page`:
+-Delete a given page from the wiki.
+-
+-** `wiki_edit_page`:
+-Create or modify a given page in the wiki. You can specify several
+-parameters like a summary for the page edition, or add the page to a
+-given category.
+-See test-gitmw.pl for more details.
+-
+-** `wiki_getallpage`:
+-Fetch all pages from the wiki into a given directory. The directory
+-is created if it does not exists.
+-
+-** `test_diff_directories`:
+-Compare the content of two directories. The content must be the same.
+-Use this function to compare the content of a git directory and a wiki
+-one created by wiki_getallpage.
+-
+-** `test_contains_N_files`:
+-Check if the given directory contains a given number of file.
+-
+-** `wiki_page_exists`:
+-Tests if a given page exists on the wiki.
+-
+-** `wiki_reset`:
+-Reset the wiki, i.e. flush the database. Use this function at the
+-beginning of each new test, except if the test re-uses the same wiki
+-(and history) as the previous test.
+-
+-How to write a new test
+-~~~~~~~~~~~~~~~~~~~~~~~
+-
+-Please, follow the standards given by git. See git/t/README.
+-New file should be named as t936[0-9]-*.sh.
+-Be sure to reset your wiki regularly with the function `wiki_reset`.
+diff --git a/contrib/mw-to-git/t/install-wiki.sh b/contrib/mw-to-git/t/install-wiki.sh
+deleted file mode 100755
+index c215213c4bf..00000000000
+--- a/contrib/mw-to-git/t/install-wiki.sh
++++ /dev/null
+@@ -1,55 +0,0 @@
+-#!/bin/sh
+-
+-# This script installs or deletes a MediaWiki on your computer.
+-# It requires a web server with PHP and SQLite running. In addition, if you
+-# do not have MediaWiki sources on your computer, the option 'install'
+-# downloads them for you.
+-# Please set the CONFIGURATION VARIABLES in ./test-gitmw-lib.sh
+-
+-WIKI_TEST_DIR=$(cd "$(dirname "$0")" && pwd)
+-
+-if test -z "$WIKI_TEST_DIR"
+-then
+-	WIKI_TEST_DIR=.
+-fi
+-
+-. "$WIKI_TEST_DIR"/test-gitmw-lib.sh
 -usage () {
--	echo "usage:" $@
--	exit 127
+-	echo "usage: "
+-	echo "	./install-wiki.sh <install | delete | --help>"
+-	echo "		install | -i :	Install a wiki on your computer."
+-	echo "		delete | -d : Delete the wiki and all its pages and "
+-	echo "			content."
+-	echo "		start  | -s : Start the previously configured lighttpd daemon"
+-	echo "		stop        : Stop lighttpd daemon."
 -}
 -
--die () {
--	echo $@
--	exit 128
--}
 -
--failed () {
--	die "unable to create new workdir '$new_workdir'!"
--}
--
--if test $# -lt 2 || test $# -gt 3
--then
--	usage "$0 <repository> <new_workdir> [<branch>]"
--fi
--
--orig_git=$1
--new_workdir=$2
--branch=$3
--
--# want to make sure that what is pointed to has a .git directory ...
--git_dir=$(cd "$orig_git" 2>/dev/null &&
--  git rev-parse --git-dir 2>/dev/null) ||
--  die "Not a git repository: \"$orig_git\""
--
--case "$git_dir" in
--.git)
--	git_dir="$orig_git/.git"
--	;;
--.)
--	git_dir=$orig_git
--	;;
--esac
--
--# don't link to a configured bare repository
--isbare=$(git --git-dir="$git_dir" config --bool --get core.bare)
--if test ztrue = "z$isbare"
--then
--	die "\"$git_dir\" has core.bare set to true," \
--		" remove from \"$git_dir/config\" to use $0"
--fi
--
--# don't link to a workdir
--if test -h "$git_dir/config"
--then
--	die "\"$orig_git\" is a working directory only, please specify" \
--		"a complete repository."
--fi
--
--# make sure the links in the workdir have full paths to the original repo
--git_dir=$(cd "$git_dir" && pwd) || exit 1
--
--# don't recreate a workdir over an existing directory, unless it's empty
--if test -d "$new_workdir"
--then
--	if test $(ls -a1 "$new_workdir/." | wc -l) -ne 2
--	then
--		die "destination directory '$new_workdir' is not empty."
--	fi
--	cleandir="$new_workdir/.git"
--else
--	cleandir="$new_workdir"
--fi
--
--mkdir -p "$new_workdir/.git" || failed
--cleandir=$(cd "$cleandir" && pwd) || failed
--
--cleanup () {
--	rm -rf "$cleandir"
--}
--siglist="0 1 2 15"
--trap cleanup $siglist
--
--# create the links to the original repo.  explicitly exclude index, HEAD and
--# logs/HEAD from the list since they are purely related to the current working
--# directory, and should not be shared.
--for x in config refs logs/refs objects info hooks packed-refs remotes rr-cache svn reftable
--do
--	# create a containing directory if needed
--	case $x in
--	*/*)
--		mkdir -p "$new_workdir/.git/${x%/*}"
+-# Argument: install, delete, --help | -h
+-case "$1" in
+-	"install" | "-i")
+-		wiki_install
+-		exit 0
 -		;;
--	esac
--
--	ln -s "$git_dir/$x" "$new_workdir/.git/$x" || failed
--done
--
--# commands below this are run in the context of the new workdir
--cd "$new_workdir" || failed
--
--# copy the HEAD from the original repository as a default branch
--cp "$git_dir/HEAD" .git/HEAD || failed
--
--# the workdir is set up.  if the checkout fails, the user can fix it.
--trap - $siglist
--
--# checkout the branch (either the same as HEAD from the original repository,
--# or the one that was asked for)
--git checkout -f $branch
-diff --git a/t/meson.build b/t/meson.build
-index b09c0becb8d..9206090fedc 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -178,7 +178,6 @@ integration_tests = [
-   't1015-read-index-unmerged.sh',
-   't1016-compatObjectFormat.sh',
-   't1020-subdirectory.sh',
--  't1021-rerere-in-workdir.sh',
-   't1022-read-tree-partial-clone.sh',
-   't1050-large.sh',
-   't1051-large-conversion.sh',
-diff --git a/t/t1021-rerere-in-workdir.sh b/t/t1021-rerere-in-workdir.sh
-deleted file mode 100755
-index 0b892894eb9..00000000000
---- a/t/t1021-rerere-in-workdir.sh
+-	"delete" | "-d")
+-		wiki_delete
+-		exit 0
+-		;;
+-	"start" | "-s")
+-		start_lighttpd
+-		exit
+-		;;
+-	"stop")
+-		stop_lighttpd
+-		exit
+-		;;
+-	"--help" | "-h")
+-		usage
+-		exit 0
+-		;;
+-	*)
+-		echo "Invalid argument: $1"
+-		usage
+-		exit 1
+-		;;
+-esac
+diff --git a/contrib/mw-to-git/t/push-pull-tests.sh b/contrib/mw-to-git/t/push-pull-tests.sh
+deleted file mode 100644
+index 9da2dc5ff03..00000000000
+--- a/contrib/mw-to-git/t/push-pull-tests.sh
 +++ /dev/null
-@@ -1,58 +0,0 @@
+@@ -1,144 +0,0 @@
+-test_push_pull () {
+-
+-	test_expect_success 'Git pull works after adding a new wiki page' '
+-		wiki_reset &&
+-
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_1 &&
+-		wiki_editpage Foo "page created after the git clone" false &&
+-
+-		(
+-			cd mw_dir_1 &&
+-			git pull
+-		) &&
+-
+-		wiki_getallpage ref_page_1 &&
+-		test_diff_directories mw_dir_1 ref_page_1
+-	'
+-
+-	test_expect_success 'Git pull works after editing a wiki page' '
+-		wiki_reset &&
+-
+-		wiki_editpage Foo "page created before the git clone" false &&
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_2 &&
+-		wiki_editpage Foo "new line added on the wiki" true &&
+-
+-		(
+-			cd mw_dir_2 &&
+-			git pull
+-		) &&
+-
+-		wiki_getallpage ref_page_2 &&
+-		test_diff_directories mw_dir_2 ref_page_2
+-	'
+-
+-	test_expect_success 'git pull works on conflict handled by auto-merge' '
+-		wiki_reset &&
+-
+-		wiki_editpage Foo "1 init
+-3
+-5
+-	" false &&
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_3 &&
+-
+-		wiki_editpage Foo "1 init
+-2 content added on wiki after clone
+-3
+-5
+-	" false &&
+-
+-		(
+-			cd mw_dir_3 &&
+-		echo "1 init
+-3
+-4 content added on git after clone
+-5
+-" >Foo.mw &&
+-			git commit -am "conflicting change on foo" &&
+-			git pull &&
+-			git push
+-		)
+-	'
+-
+-	test_expect_success 'Git push works after adding a file .mw' '
+-		wiki_reset &&
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_4 &&
+-		wiki_getallpage ref_page_4 &&
+-		(
+-			cd mw_dir_4 &&
+-			test_path_is_missing Foo.mw &&
+-			touch Foo.mw &&
+-			echo "hello world" >>Foo.mw &&
+-			git add Foo.mw &&
+-			git commit -m "Foo" &&
+-			git push
+-		) &&
+-		wiki_getallpage ref_page_4 &&
+-		test_diff_directories mw_dir_4 ref_page_4
+-	'
+-
+-	test_expect_success 'Git push works after editing a file .mw' '
+-		wiki_reset &&
+-		wiki_editpage "Foo" "page created before the git clone" false &&
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_5 &&
+-
+-		(
+-			cd mw_dir_5 &&
+-			echo "new line added in the file Foo.mw" >>Foo.mw &&
+-			git commit -am "edit file Foo.mw" &&
+-			git push
+-		) &&
+-
+-		wiki_getallpage ref_page_5 &&
+-		test_diff_directories mw_dir_5 ref_page_5
+-	'
+-
+-	test_expect_failure 'Git push works after deleting a file' '
+-		wiki_reset &&
+-		wiki_editpage Foo "wiki page added before git clone" false &&
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_6 &&
+-
+-		(
+-			cd mw_dir_6 &&
+-			git rm Foo.mw &&
+-			git commit -am "page Foo.mw deleted" &&
+-			git push
+-		) &&
+-
+-		test_must_fail wiki_page_exist Foo
+-	'
+-
+-	test_expect_success 'Merge conflict expected and solving it' '
+-		wiki_reset &&
+-
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_7 &&
+-		wiki_editpage Foo "1 conflict
+-3 wiki
+-4" false &&
+-
+-		(
+-			cd mw_dir_7 &&
+-		echo "1 conflict
+-2 git
+-4" >Foo.mw &&
+-			git add Foo.mw &&
+-			git commit -m "conflict created" &&
+-			test_must_fail git pull &&
+-			"$PERL_PATH" -pi -e "s/[<=>].*//g" Foo.mw &&
+-			git commit -am "merge conflict solved" &&
+-			git push
+-		)
+-	'
+-
+-	test_expect_failure 'git pull works after deleting a wiki page' '
+-		wiki_reset &&
+-		wiki_editpage Foo "wiki page added before the git clone" false &&
+-		git clone mediawiki::'"$WIKI_URL"' mw_dir_8 &&
+-
+-		wiki_delete_page Foo &&
+-		(
+-			cd mw_dir_8 &&
+-			git pull &&
+-			test_path_is_missing Foo.mw
+-		)
+-	'
+-}
+diff --git a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh b/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
+deleted file mode 100755
+index f08890d9e7a..00000000000
+--- a/contrib/mw-to-git/t/t9360-mw-to-git-clone.sh
++++ /dev/null
+@@ -1,257 +0,0 @@
 -#!/bin/sh
+-#
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-#
+-# License: GPL v2 or later
 -
--test_description='rerere run in a workdir'
--GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME=main
--export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
 -
--. ./test-lib.sh
+-test_description='Test the Git Mediawiki remote helper: git clone'
 -
--test_expect_success SYMLINKS setup '
--	git config rerere.enabled true &&
--	>world &&
--	git add world &&
--	test_tick &&
--	git commit -m initial &&
+-. ./test-gitmw-lib.sh
+-. $TEST_DIRECTORY/test-lib.sh
 -
--	echo hello >world &&
--	test_tick &&
--	git commit -a -m hello &&
 -
--	git checkout -b side HEAD^ &&
--	echo goodbye >world &&
--	test_tick &&
--	git commit -a -m goodbye &&
+-test_check_precond
 -
--	git checkout main
+-
+-test_expect_success 'Git clone creates the expected git log with one file' '
+-	wiki_reset &&
+-	wiki_editpage foo "this is not important" false -c cat -s "this must be the same" &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_1 &&
+-	(
+-		cd mw_dir_1 &&
+-		git log --format=%s HEAD^..HEAD >log.tmp
+-	) &&
+-	echo "this must be the same" >msg.tmp &&
+-	test_cmp msg.tmp mw_dir_1/log.tmp
 -'
 -
--test_expect_success SYMLINKS 'rerere in workdir' '
--	rm -rf .git/rr-cache &&
--	"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" . work &&
+-
+-test_expect_success 'Git clone creates the expected git log with multiple files' '
+-	wiki_reset &&
+-	wiki_editpage daddy "this is not important" false -s="this must be the same" &&
+-	wiki_editpage daddy "neither is this" true -s="this must also be the same" &&
+-	wiki_editpage daddy "neither is this" true -s="same same same" &&
+-	wiki_editpage dj "dont care" false -s="identical" &&
+-	wiki_editpage dj "dont care either" true -s="identical too" &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_2 &&
 -	(
--		cd work &&
--		test_must_fail git merge side &&
--		git rerere status >actual &&
--		echo world >expect &&
--		test_cmp expect actual
--	)
+-		cd mw_dir_2 &&
+-		git log --format=%s Daddy.mw  >logDaddy.tmp &&
+-		git log --format=%s Dj.mw >logDj.tmp
+-	) &&
+-	echo "same same same" >msgDaddy.tmp &&
+-	echo "this must also be the same" >>msgDaddy.tmp &&
+-	echo "this must be the same" >>msgDaddy.tmp &&
+-	echo "identical too" >msgDj.tmp &&
+-	echo "identical" >>msgDj.tmp &&
+-	test_cmp msgDaddy.tmp mw_dir_2/logDaddy.tmp &&
+-	test_cmp msgDj.tmp mw_dir_2/logDj.tmp
 -'
 -
--# This fails because we don't resolve relative symlink in mkdir_in_gitdir()
--# For the purpose of helping contrib/workdir/git-new-workdir users, we do not
--# have to support relative symlinks, but it might be nicer to make this work
--# with a relative symbolic link someday.
--test_expect_failure SYMLINKS 'rerere in workdir (relative)' '
--	rm -rf .git/rr-cache &&
--	"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" . krow &&
+-
+-test_expect_success 'Git clone creates only Main_Page.mw with an empty wiki' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_3 &&
+-	test_contains_N_files mw_dir_3 1 &&
+-	test_path_is_file mw_dir_3/Main_Page.mw
+-'
+-
+-test_expect_success 'Git clone does not fetch a deleted page' '
+-	wiki_reset &&
+-	wiki_editpage foo "this page must be deleted before the clone" false &&
+-	wiki_delete_page foo &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_4 &&
+-	test_contains_N_files mw_dir_4 1 &&
+-	test_path_is_file mw_dir_4/Main_Page.mw &&
+-	test_path_is_missing mw_dir_4/Foo.mw
+-'
+-
+-test_expect_success 'Git clone works with page added' '
+-	wiki_reset &&
+-	wiki_editpage foo " I will be cloned" false &&
+-	wiki_editpage bar "I will be cloned" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_5 &&
+-	wiki_getallpage ref_page_5 &&
+-	test_diff_directories mw_dir_5 ref_page_5 &&
+-	wiki_delete_page foo &&
+-	wiki_delete_page bar
+-'
+-
+-test_expect_success 'Git clone works with an edited page ' '
+-	wiki_reset &&
+-	wiki_editpage foo "this page will be edited" \
+-		false -s "first edition of page foo" &&
+-	wiki_editpage foo "this page has been edited and must be on the clone " true &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_6 &&
+-	test_path_is_file mw_dir_6/Foo.mw &&
+-	test_path_is_file mw_dir_6/Main_Page.mw &&
+-	wiki_getallpage mw_dir_6/page_ref_6 &&
+-	test_diff_directories mw_dir_6 mw_dir_6/page_ref_6 &&
 -	(
--		cd krow &&
--		rm -f .git/rr-cache &&
--		ln -s ../.git/rr-cache .git/rr-cache &&
--		test_must_fail git merge side &&
--		git rerere status >actual &&
--		echo world >expect &&
--		test_cmp expect actual
--	)
+-		cd mw_dir_6 &&
+-		git log --format=%s HEAD^ Foo.mw > ../Foo.log
+-	) &&
+-	echo "first edition of page foo" > FooExpect.log &&
+-	diff FooExpect.log Foo.log
+-'
+-
+-
+-test_expect_success 'Git clone works with several pages and some deleted ' '
+-	wiki_reset &&
+-	wiki_editpage foo "this page will not be deleted" false &&
+-	wiki_editpage bar "I must not be erased" false &&
+-	wiki_editpage namnam "I will not be there at the end" false &&
+-	wiki_editpage nyancat "nyan nyan nyan delete me" false &&
+-	wiki_delete_page namnam &&
+-	wiki_delete_page nyancat &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_7 &&
+-	test_path_is_file mw_dir_7/Foo.mw &&
+-	test_path_is_file mw_dir_7/Bar.mw &&
+-	test_path_is_missing mw_dir_7/Namnam.mw &&
+-	test_path_is_missing mw_dir_7/Nyancat.mw &&
+-	wiki_getallpage mw_dir_7/page_ref_7 &&
+-	test_diff_directories mw_dir_7 mw_dir_7/page_ref_7
+-'
+-
+-
+-test_expect_success 'Git clone works with one specific page cloned ' '
+-	wiki_reset &&
+-	wiki_editpage foo "I will not be cloned" false &&
+-	wiki_editpage bar "Do not clone me" false &&
+-	wiki_editpage namnam "I will be cloned :)" false  -s="this log must stay" &&
+-	wiki_editpage nyancat "nyan nyan nyan you cant clone me" false &&
+-	git clone -c remote.origin.pages=namnam \
+-		mediawiki::'"$WIKI_URL"' mw_dir_8 &&
+-	test_contains_N_files mw_dir_8 1 &&
+-	test_path_is_file mw_dir_8/Namnam.mw &&
+-	test_path_is_missing mw_dir_8/Main_Page.mw &&
+-	(
+-		cd mw_dir_8 &&
+-		echo "this log must stay" >msg.tmp &&
+-		git log --format=%s >log.tmp &&
+-		test_cmp msg.tmp log.tmp
+-	) &&
+-	wiki_check_content mw_dir_8/Namnam.mw Namnam
+-'
+-
+-test_expect_success 'Git clone works with multiple specific page cloned ' '
+-	wiki_reset &&
+-	wiki_editpage foo "I will be there" false &&
+-	wiki_editpage bar "I will not disappear" false &&
+-	wiki_editpage namnam "I be erased" false &&
+-	wiki_editpage nyancat "nyan nyan nyan you will not erase me" false &&
+-	wiki_delete_page namnam &&
+-	git clone -c remote.origin.pages="foo bar nyancat namnam" \
+-		mediawiki::'"$WIKI_URL"' mw_dir_9 &&
+-	test_contains_N_files mw_dir_9 3 &&
+-	test_path_is_missing mw_dir_9/Namnam.mw &&
+-	test_path_is_file mw_dir_9/Foo.mw &&
+-	test_path_is_file mw_dir_9/Nyancat.mw &&
+-	test_path_is_file mw_dir_9/Bar.mw &&
+-	wiki_check_content mw_dir_9/Foo.mw Foo &&
+-	wiki_check_content mw_dir_9/Bar.mw Bar &&
+-	wiki_check_content mw_dir_9/Nyancat.mw Nyancat
+-'
+-
+-test_expect_success 'Mediawiki-clone of several specific pages on wiki' '
+-	wiki_reset &&
+-	wiki_editpage foo "foo 1" false &&
+-	wiki_editpage bar "bar 1" false &&
+-	wiki_editpage dummy "dummy 1" false &&
+-	wiki_editpage cloned_1 "cloned_1 1" false &&
+-	wiki_editpage cloned_2 "cloned_2 2" false &&
+-	wiki_editpage cloned_3 "cloned_3 3" false &&
+-	mkdir -p ref_page_10 &&
+-	wiki_getpage cloned_1 ref_page_10 &&
+-	wiki_getpage cloned_2 ref_page_10 &&
+-	wiki_getpage cloned_3 ref_page_10 &&
+-	git clone -c remote.origin.pages="cloned_1 cloned_2 cloned_3" \
+-		mediawiki::'"$WIKI_URL"' mw_dir_10 &&
+-	test_diff_directories mw_dir_10 ref_page_10
+-'
+-
+-test_expect_success 'Git clone works with the shallow option' '
+-	wiki_reset &&
+-	wiki_editpage foo "1st revision, should be cloned" false &&
+-	wiki_editpage bar "1st revision, should be cloned" false &&
+-	wiki_editpage nyan "1st revision, should not be cloned" false &&
+-	wiki_editpage nyan "2nd revision, should be cloned" false &&
+-	git -c remote.origin.shallow=true clone \
+-		mediawiki::'"$WIKI_URL"' mw_dir_11 &&
+-	test_contains_N_files mw_dir_11 4 &&
+-	test_path_is_file mw_dir_11/Nyan.mw &&
+-	test_path_is_file mw_dir_11/Foo.mw &&
+-	test_path_is_file mw_dir_11/Bar.mw &&
+-	test_path_is_file mw_dir_11/Main_Page.mw &&
+-	(
+-		cd mw_dir_11 &&
+-		test $(git log --oneline Nyan.mw | wc -l) -eq 1 &&
+-		test $(git log --oneline Foo.mw | wc -l) -eq 1 &&
+-		test $(git log --oneline Bar.mw | wc -l) -eq 1 &&
+-		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
+-	) &&
+-	wiki_check_content mw_dir_11/Nyan.mw Nyan &&
+-	wiki_check_content mw_dir_11/Foo.mw Foo &&
+-	wiki_check_content mw_dir_11/Bar.mw Bar &&
+-	wiki_check_content mw_dir_11/Main_Page.mw Main_Page
+-'
+-
+-test_expect_success 'Git clone works with the shallow option with a delete page' '
+-	wiki_reset &&
+-	wiki_editpage foo "1st revision, will be deleted" false &&
+-	wiki_editpage bar "1st revision, should be cloned" false &&
+-	wiki_editpage nyan "1st revision, should not be cloned" false &&
+-	wiki_editpage nyan "2nd revision, should be cloned" false &&
+-	wiki_delete_page foo &&
+-	git -c remote.origin.shallow=true clone \
+-		mediawiki::'"$WIKI_URL"' mw_dir_12 &&
+-	test_contains_N_files mw_dir_12 3 &&
+-	test_path_is_file mw_dir_12/Nyan.mw &&
+-	test_path_is_missing mw_dir_12/Foo.mw &&
+-	test_path_is_file mw_dir_12/Bar.mw &&
+-	test_path_is_file mw_dir_12/Main_Page.mw &&
+-	(
+-		cd mw_dir_12 &&
+-		test $(git log --oneline Nyan.mw | wc -l) -eq 1 &&
+-		test $(git log --oneline Bar.mw | wc -l) -eq 1 &&
+-		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
+-	) &&
+-	wiki_check_content mw_dir_12/Nyan.mw Nyan &&
+-	wiki_check_content mw_dir_12/Bar.mw Bar &&
+-	wiki_check_content mw_dir_12/Main_Page.mw Main_Page
+-'
+-
+-test_expect_success 'Test of fetching a category' '
+-	wiki_reset &&
+-	wiki_editpage Foo "I will be cloned" false -c=Category &&
+-	wiki_editpage Bar "Meet me on the repository" false -c=Category &&
+-	wiki_editpage Dummy "I will not come" false &&
+-	wiki_editpage BarWrong "I will stay online only" false -c=NotCategory &&
+-	git clone -c remote.origin.categories="Category" \
+-		mediawiki::'"$WIKI_URL"' mw_dir_13 &&
+-	wiki_getallpage ref_page_13 Category &&
+-	test_diff_directories mw_dir_13 ref_page_13
+-'
+-
+-test_expect_success 'Test of resistance to modification of category on wiki for clone' '
+-	wiki_reset &&
+-	wiki_editpage Tobedeleted "this page will be deleted" false -c=Catone &&
+-	wiki_editpage Tobeedited "this page will be modified" false -c=Catone &&
+-	wiki_editpage Normalone "this page wont be modified and will be on git" false -c=Catone &&
+-	wiki_editpage Notconsidered "this page will not appear on local" false &&
+-	wiki_editpage Othercategory "this page will not appear on local" false -c=Cattwo &&
+-	wiki_editpage Tobeedited "this page have been modified" true -c=Catone &&
+-	wiki_delete_page Tobedeleted &&
+-	git clone -c remote.origin.categories="Catone" \
+-		mediawiki::'"$WIKI_URL"' mw_dir_14 &&
+-	wiki_getallpage ref_page_14 Catone &&
+-	test_diff_directories mw_dir_14 ref_page_14
 -'
 -
 -test_done
-diff --git a/t/t3000-ls-files-others.sh b/t/t3000-ls-files-others.sh
-index 13f66fd649d..b41e7f0daa4 100755
---- a/t/t3000-ls-files-others.sh
-+++ b/t/t3000-ls-files-others.sh
-@@ -73,25 +73,6 @@ test_expect_success 'ls-files --others handles non-submodule .git' '
- 	test_cmp expected1 output
- '
- 
--test_expect_success SYMLINKS 'ls-files --others with symlinked submodule' '
--	git init super &&
--	git init sub &&
--	(
--		cd sub &&
--		>a &&
--		git add a &&
--		git commit -m sub &&
--		git pack-refs --all
--	) &&
--	(
--		cd super &&
--		"$SHELL_PATH" "$TEST_DIRECTORY/../contrib/workdir/git-new-workdir" ../sub sub &&
--		git ls-files --others --exclude-standard >../actual
--	) &&
--	echo sub/ >expect &&
--	test_cmp expect actual
+diff --git a/contrib/mw-to-git/t/t9361-mw-to-git-push-pull.sh b/contrib/mw-to-git/t/t9361-mw-to-git-push-pull.sh
+deleted file mode 100755
+index 9ea201459b5..00000000000
+--- a/contrib/mw-to-git/t/t9361-mw-to-git-push-pull.sh
++++ /dev/null
+@@ -1,24 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-#
+-# License: GPL v2 or later
+-
+-# tests for git-remote-mediawiki
+-
+-test_description='Test the Git Mediawiki remote helper: git push and git pull simple test cases'
+-
+-. ./test-gitmw-lib.sh
+-. ./push-pull-tests.sh
+-. $TEST_DIRECTORY/test-lib.sh
+-
+-test_check_precond
+-
+-test_push_pull
+-
+-test_done
+diff --git a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh b/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
+deleted file mode 100755
+index 526d92850ff..00000000000
+--- a/contrib/mw-to-git/t/t9362-mw-to-git-utf8.sh
++++ /dev/null
+@@ -1,347 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-#
+-# License: GPL v2 or later
+-
+-# tests for git-remote-mediawiki
+-
+-test_description='Test git-mediawiki with special characters in filenames'
+-
+-. ./test-gitmw-lib.sh
+-. $TEST_DIRECTORY/test-lib.sh
+-
+-
+-test_check_precond
+-
+-
+-test_expect_success 'Git clone works for a wiki with accents in the page names' '
+-	wiki_reset &&
+-	wiki_editpage féé "This page must be délétéd before clone" false &&
+-	wiki_editpage kèè "This page must be deleted before clone" false &&
+-	wiki_editpage hàà "This page must be deleted before clone" false &&
+-	wiki_editpage kîî "This page must be deleted before clone" false &&
+-	wiki_editpage foo "This page must be deleted before clone" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_1 &&
+-	wiki_getallpage ref_page_1 &&
+-	test_diff_directories mw_dir_1 ref_page_1
 -'
 -
- test_expect_success 'setup nested pathspec search' '
- 	test_create_repo nested &&
- 	(
+-
+-test_expect_success 'Git pull works with a wiki with accents in the pages names' '
+-	wiki_reset &&
+-	wiki_editpage kîî "this page must be cloned" false &&
+-	wiki_editpage foo "this page must be cloned" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_2 &&
+-	wiki_editpage éàîôû "This page must be pulled" false &&
+-	(
+-		cd mw_dir_2 &&
+-		git pull
+-	) &&
+-	wiki_getallpage ref_page_2 &&
+-	test_diff_directories mw_dir_2 ref_page_2
+-'
+-
+-
+-test_expect_success 'Cloning a chosen page works with accents' '
+-	wiki_reset &&
+-	wiki_editpage kîî "this page must be cloned" false &&
+-	git clone -c remote.origin.pages=kîî \
+-		mediawiki::'"$WIKI_URL"' mw_dir_3 &&
+-	wiki_check_content mw_dir_3/Kîî.mw Kîî &&
+-	test_path_is_file mw_dir_3/Kîî.mw &&
+-	rm -rf mw_dir_3
+-'
+-
+-
+-test_expect_success 'The shallow option works with accents' '
+-	wiki_reset &&
+-	wiki_editpage néoà "1st revision, should not be cloned" false &&
+-	wiki_editpage néoà "2nd revision, should be cloned" false &&
+-	git -c remote.origin.shallow=true clone \
+-		mediawiki::'"$WIKI_URL"' mw_dir_4 &&
+-	test_contains_N_files mw_dir_4 2 &&
+-	test_path_is_file mw_dir_4/Néoà.mw &&
+-	test_path_is_file mw_dir_4/Main_Page.mw &&
+-	(
+-		cd mw_dir_4 &&
+-		test $(git log --oneline Néoà.mw | wc -l) -eq 1 &&
+-		test $(git log --oneline Main_Page.mw | wc -l ) -eq 1
+-	) &&
+-	wiki_check_content mw_dir_4/Néoà.mw Néoà &&
+-	wiki_check_content mw_dir_4/Main_Page.mw Main_Page
+-'
+-
+-
+-test_expect_success 'Cloning works when page name first letter has an accent' '
+-	wiki_reset &&
+-	wiki_editpage îî "this page must be cloned" false &&
+-	git clone -c remote.origin.pages=îî \
+-		mediawiki::'"$WIKI_URL"' mw_dir_5 &&
+-	test_path_is_file mw_dir_5/Îî.mw &&
+-	wiki_check_content mw_dir_5/Îî.mw Îî
+-'
+-
+-
+-test_expect_success 'Git push works with a wiki with accents' '
+-	wiki_reset &&
+-	wiki_editpage féé "lots of accents : éèàÖ" false &&
+-	wiki_editpage foo "this page must be cloned" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_6 &&
+-	(
+-		cd mw_dir_6 &&
+-		echo "A wild Pîkächû appears on the wiki" >Pîkächû.mw &&
+-		git add Pîkächû.mw &&
+-		git commit -m "A new page appears" &&
+-		git push
+-	) &&
+-	wiki_getallpage ref_page_6 &&
+-	test_diff_directories mw_dir_6 ref_page_6
+-'
+-
+-test_expect_success 'Git clone works with accentsand spaces' '
+-	wiki_reset &&
+-	wiki_editpage "é à î" "this page must be délété before the clone" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_7 &&
+-	wiki_getallpage ref_page_7 &&
+-	test_diff_directories mw_dir_7 ref_page_7
+-'
+-
+-test_expect_success 'character $ in page name (mw -> git)' '
+-	wiki_reset &&
+-	wiki_editpage file_\$_foo "expect to be called file_$_foo" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_8 &&
+-	test_path_is_file mw_dir_8/File_\$_foo.mw &&
+-	wiki_getallpage ref_page_8 &&
+-	test_diff_directories mw_dir_8 ref_page_8
+-'
+-
+-
+-
+-test_expect_success 'character $ in file name (git -> mw) ' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_9 &&
+-	(
+-		cd mw_dir_9 &&
+-		echo "this file is called File_\$_foo.mw" >File_\$_foo.mw &&
+-		git add . &&
+-		git commit -am "file File_\$_foo.mw" &&
+-		git pull &&
+-		git push
+-	) &&
+-	wiki_getallpage ref_page_9 &&
+-	test_diff_directories mw_dir_9 ref_page_9
+-'
+-
+-
+-test_expect_failure 'capital at the beginning of file names' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_10 &&
+-	(
+-		cd mw_dir_10 &&
+-		echo "my new file foo" >foo.mw &&
+-		echo "my new file Foo... Finger crossed" >Foo.mw &&
+-		git add . &&
+-		git commit -am "file foo.mw" &&
+-		git pull &&
+-		git push
+-	) &&
+-	wiki_getallpage ref_page_10 &&
+-	test_diff_directories mw_dir_10 ref_page_10
+-'
+-
+-
+-test_expect_failure 'special character at the beginning of file name from mw to git' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_11 &&
+-	wiki_editpage {char_1 "expect to be renamed {char_1" false &&
+-	wiki_editpage [char_2 "expect to be renamed [char_2" false &&
+-	(
+-		cd mw_dir_11 &&
+-		git pull
+-	) &&
+-	test_path_is_file mw_dir_11/{char_1 &&
+-	test_path_is_file mw_dir_11/[char_2
+-'
+-
+-test_expect_success 'Pull page with title containing ":" other than namespace separator' '
+-	wiki_editpage Foo:Bar content false &&
+-	(
+-		cd mw_dir_11 &&
+-		git pull
+-	) &&
+-	test_path_is_file mw_dir_11/Foo:Bar.mw
+-'
+-
+-test_expect_success 'Push page with title containing ":" other than namespace separator' '
+-	(
+-		cd mw_dir_11 &&
+-		echo content >NotANameSpace:Page.mw &&
+-		git add NotANameSpace:Page.mw &&
+-		git commit -m "add page with colon" &&
+-		git push
+-	) &&
+-	wiki_page_exist NotANameSpace:Page
+-'
+-
+-test_expect_success 'test of correct formatting for file name from mw to git' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_12 &&
+-	wiki_editpage char_%_7b_1 "expect to be renamed char{_1" false &&
+-	wiki_editpage char_%_5b_2 "expect to be renamed char{_2" false &&
+-	(
+-		cd mw_dir_12 &&
+-		git pull
+-	) &&
+-	test_path_is_file mw_dir_12/Char\{_1.mw &&
+-	test_path_is_file mw_dir_12/Char\[_2.mw &&
+-	wiki_getallpage ref_page_12 &&
+-	mv ref_page_12/Char_%_7b_1.mw ref_page_12/Char\{_1.mw &&
+-	mv ref_page_12/Char_%_5b_2.mw ref_page_12/Char\[_2.mw &&
+-	test_diff_directories mw_dir_12 ref_page_12
+-'
+-
+-
+-test_expect_failure 'test of correct formatting for file name beginning with special character' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_13 &&
+-	(
+-		cd mw_dir_13 &&
+-		echo "my new file {char_1" >\{char_1.mw &&
+-		echo "my new file [char_2" >\[char_2.mw &&
+-		git add . &&
+-		git commit -am "committing some exotic file name..." &&
+-		git push &&
+-		git pull
+-	) &&
+-	wiki_getallpage ref_page_13 &&
+-	test_path_is_file ref_page_13/{char_1.mw &&
+-	test_path_is_file ref_page_13/[char_2.mw &&
+-	test_diff_directories mw_dir_13 ref_page_13
+-'
+-
+-
+-test_expect_success 'test of correct formatting for file name from git to mw' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_14 &&
+-	(
+-		cd mw_dir_14 &&
+-		echo "my new file char{_1" >Char\{_1.mw &&
+-		echo "my new file char[_2" >Char\[_2.mw &&
+-		git add . &&
+-		git commit -m "committing some exotic file name..." &&
+-		git push
+-	) &&
+-	wiki_getallpage ref_page_14 &&
+-	mv mw_dir_14/Char\{_1.mw mw_dir_14/Char_%_7b_1.mw &&
+-	mv mw_dir_14/Char\[_2.mw mw_dir_14/Char_%_5b_2.mw &&
+-	test_diff_directories mw_dir_14 ref_page_14
+-'
+-
+-
+-test_expect_success 'git clone with /' '
+-	wiki_reset &&
+-	wiki_editpage \/fo\/o "this is not important" false -c=Deleted &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_15 &&
+-	test_path_is_file mw_dir_15/%2Ffo%2Fo.mw &&
+-	wiki_check_content mw_dir_15/%2Ffo%2Fo.mw \/fo\/o
+-'
+-
+-
+-test_expect_success 'git push with /' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_16 &&
+-	echo "I will be on the wiki" >mw_dir_16/%2Ffo%2Fo.mw &&
+-	(
+-		cd mw_dir_16 &&
+-		git add %2Ffo%2Fo.mw &&
+-		git commit -m " %2Ffo%2Fo added" &&
+-		git push
+-	) &&
+-	wiki_page_exist \/fo\/o &&
+-	wiki_check_content mw_dir_16/%2Ffo%2Fo.mw \/fo\/o
+-
+-'
+-
+-
+-test_expect_success 'git clone with \' '
+-	wiki_reset &&
+-	wiki_editpage \\ko\\o "this is not important" false -c=Deleted &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_17 &&
+-	test_path_is_file mw_dir_17/\\ko\\o.mw &&
+-	wiki_check_content mw_dir_17/\\ko\\o.mw \\ko\\o
+-'
+-
+-
+-test_expect_success 'git push with \' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_18 &&
+-	echo "I will be on the wiki" >mw_dir_18/\\ko\\o.mw &&
+-	(
+-		cd mw_dir_18 &&
+-		git add \\ko\\o.mw &&
+-		git commit -m " \\ko\\o added" &&
+-		git push
+-	) &&
+-	wiki_page_exist \\ko\\o &&
+-	wiki_check_content mw_dir_18/\\ko\\o.mw \\ko\\o
+-
+-'
+-
+-test_expect_success 'git clone with \ in format control' '
+-	wiki_reset &&
+-	wiki_editpage \\no\\o "this is not important" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_19 &&
+-	test_path_is_file mw_dir_19/\\no\\o.mw &&
+-	wiki_check_content mw_dir_19/\\no\\o.mw \\no\\o
+-'
+-
+-
+-test_expect_success 'git push with \ in format control' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_20 &&
+-	echo "I will be on the wiki" >mw_dir_20/\\fo\\o.mw &&
+-	(
+-		cd mw_dir_20 &&
+-		git add \\fo\\o.mw &&
+-		git commit -m " \\fo\\o added" &&
+-		git push
+-	) &&
+-	wiki_page_exist \\fo\\o &&
+-	wiki_check_content mw_dir_20/\\fo\\o.mw \\fo\\o
+-
+-'
+-
+-
+-test_expect_success 'fast-import meta-characters in page name (mw -> git)' '
+-	wiki_reset &&
+-	wiki_editpage \"file\"_\\_foo "expect to be called \"file\"_\\_foo" false &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_21 &&
+-	test_path_is_file mw_dir_21/\"file\"_\\_foo.mw &&
+-	wiki_getallpage ref_page_21 &&
+-	test_diff_directories mw_dir_21 ref_page_21
+-'
+-
+-
+-test_expect_success 'fast-import meta-characters in page name (git -> mw) ' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir_22 &&
+-	(
+-		cd mw_dir_22 &&
+-		echo "this file is called \"file\"_\\_foo.mw" >\"file\"_\\_foo &&
+-		git add . &&
+-		git commit -am "file \"file\"_\\_foo" &&
+-		git pull &&
+-		git push
+-	) &&
+-	wiki_getallpage ref_page_22 &&
+-	test_diff_directories mw_dir_22 ref_page_22
+-'
+-
+-
+-test_done
+diff --git a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh b/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
+deleted file mode 100755
+index 7139995a405..00000000000
+--- a/contrib/mw-to-git/t/t9363-mw-to-git-export-import.sh
++++ /dev/null
+@@ -1,218 +0,0 @@
+-#!/bin/sh
+-#
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-#
+-# License: GPL v2 or later
+-
+-# tests for git-remote-mediawiki
+-
+-test_description='Test the Git Mediawiki remote helper: git push and git pull simple test cases'
+-
+-. ./test-gitmw-lib.sh
+-. $TEST_DIRECTORY/test-lib.sh
+-
+-
+-test_check_precond
+-
+-
+-test_git_reimport () {
+-	git -c remote.origin.dumbPush=true push &&
+-	git -c remote.origin.mediaImport=true pull --rebase
+-}
+-
+-# Don't bother with permissions, be administrator by default
+-test_expect_success 'setup config' '
+-	git config --global remote.origin.mwLogin "$WIKI_ADMIN" &&
+-	git config --global remote.origin.mwPassword "$WIKI_PASSW" &&
+-	test_might_fail git config --global --unset remote.origin.mediaImport
+-'
+-
+-test_expect_failure 'git push can upload media (File:) files' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	(
+-		cd mw_dir &&
+-		echo "hello world" >Foo.txt &&
+-		git add Foo.txt &&
+-		git commit -m "add a text file" &&
+-		git push &&
+-		"$PERL_PATH" -e "print STDOUT \"binary content: \".chr(255);" >Foo.txt &&
+-		git add Foo.txt &&
+-		git commit -m "add a text file with binary content" &&
+-		git push
+-	)
+-'
+-
+-test_expect_failure 'git clone works on previously created wiki with media files' '
+-	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
+-	git clone -c remote.origin.mediaimport=true \
+-		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
+-	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt &&
+-	(cd mw_dir_clone && git checkout HEAD^) &&
+-	(cd mw_dir && git checkout HEAD^) &&
+-	test_path_is_file mw_dir_clone/Foo.txt &&
+-	test_cmp mw_dir_clone/Foo.txt mw_dir/Foo.txt
+-'
+-
+-test_expect_success 'git push can upload media (File:) files containing valid UTF-8' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	(
+-		cd mw_dir &&
+-		"$PERL_PATH" -e "print STDOUT \"UTF-8 content: éèàéê€.\";" >Bar.txt &&
+-		git add Bar.txt &&
+-		git commit -m "add a text file with UTF-8 content" &&
+-		git push
+-	)
+-'
+-
+-test_expect_success 'git clone works on previously created wiki with media files containing valid UTF-8' '
+-	test_when_finished "rm -rf mw_dir mw_dir_clone" &&
+-	git clone -c remote.origin.mediaimport=true \
+-		mediawiki::'"$WIKI_URL"' mw_dir_clone &&
+-	test_cmp mw_dir_clone/Bar.txt mw_dir/Bar.txt
+-'
+-
+-test_expect_success 'git push & pull work with locally renamed media files' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	test_when_finished "rm -fr mw_dir" &&
+-	(
+-		cd mw_dir &&
+-		echo "A File" >Foo.txt &&
+-		git add Foo.txt &&
+-		git commit -m "add a file" &&
+-		git mv Foo.txt Bar.txt &&
+-		git commit -m "Rename a file" &&
+-		test_git_reimport &&
+-		echo "A File" >expect &&
+-		test_cmp expect Bar.txt &&
+-		test_path_is_missing Foo.txt
+-	)
+-'
+-
+-test_expect_success 'git push can propagate local page deletion' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	test_when_finished "rm -fr mw_dir" &&
+-	(
+-		cd mw_dir &&
+-		test_path_is_missing Foo.mw &&
+-		echo "hello world" >Foo.mw &&
+-		git add Foo.mw &&
+-		git commit -m "Add the page Foo" &&
+-		git push &&
+-		rm -f Foo.mw &&
+-		git commit -am "Delete the page Foo" &&
+-		test_git_reimport &&
+-		test_path_is_missing Foo.mw
+-	)
+-'
+-
+-test_expect_success 'git push can propagate local media file deletion' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	test_when_finished "rm -fr mw_dir" &&
+-	(
+-		cd mw_dir &&
+-		echo "hello world" >Foo.txt &&
+-		git add Foo.txt &&
+-		git commit -m "Add the text file Foo" &&
+-		git rm Foo.txt &&
+-		git commit -m "Delete the file Foo" &&
+-		test_git_reimport &&
+-		test_path_is_missing Foo.txt
+-	)
+-'
+-
+-# test failure: the file is correctly uploaded, and then deleted but
+-# as no page link to it, the import (which looks at page revisions)
+-# doesn't notice the file deletion on the wiki. We fetch the list of
+-# files from the wiki, but as the file is deleted, it doesn't appear.
+-test_expect_failure 'git pull correctly imports media file deletion when no page link to it' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	test_when_finished "rm -fr mw_dir" &&
+-	(
+-		cd mw_dir &&
+-		echo "hello world" >Foo.txt &&
+-		git add Foo.txt &&
+-		git commit -m "Add the text file Foo" &&
+-		git push &&
+-		git rm Foo.txt &&
+-		git commit -m "Delete the file Foo" &&
+-		test_git_reimport &&
+-		test_path_is_missing Foo.txt
+-	)
+-'
+-
+-test_expect_success 'git push properly warns about insufficient permissions' '
+-	wiki_reset &&
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir &&
+-	test_when_finished "rm -fr mw_dir" &&
+-	(
+-		cd mw_dir &&
+-		echo "A File" >foo.forbidden &&
+-		git add foo.forbidden &&
+-		git commit -m "add a file" &&
+-		git push 2>actual &&
+-		test_grep "foo.forbidden is not a permitted file" actual
+-	)
+-'
+-
+-test_expect_success 'setup a repository with media files' '
+-	wiki_reset &&
+-	wiki_editpage testpage "I am linking a file [[File:File.txt]]" false &&
+-	echo "File content" >File.txt &&
+-	wiki_upload_file File.txt &&
+-	echo "Another file content" >AnotherFile.txt &&
+-	wiki_upload_file AnotherFile.txt
+-'
+-
+-test_expect_success 'git clone works with one specific page cloned and mediaimport=true' '
+-	git clone -c remote.origin.pages=testpage \
+-		  -c remote.origin.mediaimport=true \
+-			mediawiki::'"$WIKI_URL"' mw_dir_15 &&
+-	test_when_finished "rm -rf mw_dir_15" &&
+-	test_contains_N_files mw_dir_15 3 &&
+-	test_path_is_file mw_dir_15/Testpage.mw &&
+-	test_path_is_file mw_dir_15/File:File.txt.mw &&
+-	test_path_is_file mw_dir_15/File.txt &&
+-	test_path_is_missing mw_dir_15/Main_Page.mw &&
+-	test_path_is_missing mw_dir_15/File:AnotherFile.txt.mw &&
+-	test_path_is_missing mw_dir_15/AnothetFile.txt &&
+-	wiki_check_content mw_dir_15/Testpage.mw Testpage &&
+-	test_cmp mw_dir_15/File.txt File.txt
+-'
+-
+-test_expect_success 'git clone works with one specific page cloned and mediaimport=false' '
+-	test_when_finished "rm -rf mw_dir_16" &&
+-	git clone -c remote.origin.pages=testpage \
+-			mediawiki::'"$WIKI_URL"' mw_dir_16 &&
+-	test_contains_N_files mw_dir_16 1 &&
+-	test_path_is_file mw_dir_16/Testpage.mw &&
+-	test_path_is_missing mw_dir_16/File:File.txt.mw &&
+-	test_path_is_missing mw_dir_16/File.txt &&
+-	test_path_is_missing mw_dir_16/Main_Page.mw &&
+-	wiki_check_content mw_dir_16/Testpage.mw Testpage
+-'
+-
+-# should behave like mediaimport=false
+-test_expect_success 'git clone works with one specific page cloned and mediaimport unset' '
+-	test_when_finished "rm -fr mw_dir_17" &&
+-	git clone -c remote.origin.pages=testpage \
+-		mediawiki::'"$WIKI_URL"' mw_dir_17 &&
+-	test_contains_N_files mw_dir_17 1 &&
+-	test_path_is_file mw_dir_17/Testpage.mw &&
+-	test_path_is_missing mw_dir_17/File:File.txt.mw &&
+-	test_path_is_missing mw_dir_17/File.txt &&
+-	test_path_is_missing mw_dir_17/Main_Page.mw &&
+-	wiki_check_content mw_dir_17/Testpage.mw Testpage
+-'
+-
+-test_done
+diff --git a/contrib/mw-to-git/t/t9364-pull-by-rev.sh b/contrib/mw-to-git/t/t9364-pull-by-rev.sh
+deleted file mode 100755
+index 5c22457a0b6..00000000000
+--- a/contrib/mw-to-git/t/t9364-pull-by-rev.sh
++++ /dev/null
+@@ -1,17 +0,0 @@
+-#!/bin/sh
+-
+-test_description='Test the Git Mediawiki remote helper: git pull by revision'
+-
+-. ./test-gitmw-lib.sh
+-. ./push-pull-tests.sh
+-. $TEST_DIRECTORY/test-lib.sh
+-
+-test_check_precond
+-
+-test_expect_success 'configuration' '
+-	git config --global mediawiki.fetchStrategy by_rev
+-'
+-
+-test_push_pull
+-
+-test_done
+diff --git a/contrib/mw-to-git/t/t9365-continuing-queries.sh b/contrib/mw-to-git/t/t9365-continuing-queries.sh
+deleted file mode 100755
+index d3e73126595..00000000000
+--- a/contrib/mw-to-git/t/t9365-continuing-queries.sh
++++ /dev/null
+@@ -1,23 +0,0 @@
+-#!/bin/sh
+-
+-test_description='Test the Git Mediawiki remote helper: queries w/ more than 500 results'
+-
+-. ./test-gitmw-lib.sh
+-. $TEST_DIRECTORY/test-lib.sh
+-
+-test_check_precond
+-
+-test_expect_success 'creating page w/ >500 revisions' '
+-	wiki_reset &&
+-	for i in $(test_seq 501)
+-	do
+-		echo "creating revision $i" &&
+-		wiki_editpage foo "revision $i<br/>" true || return 1
+-	done
+-'
+-
+-test_expect_success 'cloning page w/ >500 revisions' '
+-	git clone mediawiki::'"$WIKI_URL"' mw_dir
+-'
+-
+-test_done
+diff --git a/contrib/mw-to-git/t/test-gitmw-lib.sh b/contrib/mw-to-git/t/test-gitmw-lib.sh
+deleted file mode 100755
+index 64e46c16716..00000000000
+--- a/contrib/mw-to-git/t/test-gitmw-lib.sh
++++ /dev/null
+@@ -1,432 +0,0 @@
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-# License: GPL v2 or later
+-
+-#
+-# CONFIGURATION VARIABLES
+-# You might want to change these ones
+-#
+-
+-. ./test.config
+-
+-WIKI_BASE_URL=http://$SERVER_ADDR:$PORT
+-WIKI_URL=$WIKI_BASE_URL/$WIKI_DIR_NAME
+-CURR_DIR=$(pwd)
+-TEST_OUTPUT_DIRECTORY=$(pwd)
+-TEST_DIRECTORY="$CURR_DIR"/../../../t
+-
+-export TEST_OUTPUT_DIRECTORY TEST_DIRECTORY CURR_DIR
+-
+-if test "$LIGHTTPD" = "false" ; then
+-	PORT=80
+-else
+-	WIKI_DIR_INST="$CURR_DIR/$WEB_WWW"
+-fi
+-
+-wiki_upload_file () {
+-	"$CURR_DIR"/test-gitmw.pl upload_file "$@"
+-}
+-
+-wiki_getpage () {
+-	"$CURR_DIR"/test-gitmw.pl get_page "$@"
+-}
+-
+-wiki_delete_page () {
+-	"$CURR_DIR"/test-gitmw.pl delete_page "$@"
+-}
+-
+-wiki_editpage () {
+-	"$CURR_DIR"/test-gitmw.pl edit_page "$@"
+-}
+-
+-die () {
+-	die_with_status 1 "$@"
+-}
+-
+-die_with_status () {
+-	status=$1
+-	shift
+-	echo >&2 "$*"
+-	exit "$status"
+-}
+-
+-
+-# Check the preconditions to run git-remote-mediawiki's tests
+-test_check_precond () {
+-	if ! test_have_prereq PERL
+-	then
+-		skip_all='skipping gateway git-mw tests, perl not available'
+-		test_done
+-	fi
+-
+-	GIT_EXEC_PATH=$(cd "$(dirname "$0")" && cd "../.." && pwd)
+-	PATH="$GIT_EXEC_PATH"'/bin-wrapper:'"$PATH"
+-
+-	if ! test -d "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-	then
+-		skip_all='skipping gateway git-mw tests, no mediawiki found'
+-		test_done
+-	fi
+-}
+-
+-# test_diff_directories <dir_git> <dir_wiki>
+-#
+-# Compare the contents of directories <dir_git> and <dir_wiki> with diff
+-# and errors if they do not match. The program will
+-# not look into .git in the process.
+-# Warning: the first argument MUST be the directory containing the git data
+-test_diff_directories () {
+-	rm -rf "$1_tmp"
+-	mkdir -p "$1_tmp"
+-	cp "$1"/*.mw "$1_tmp"
+-	diff -r -b "$1_tmp" "$2"
+-}
+-
+-# $1=<dir>
+-# $2=<N>
+-#
+-# Check that <dir> contains exactly <N> files
+-test_contains_N_files () {
+-	if test $(ls -- "$1" | wc -l) -ne "$2"; then
+-		echo "directory $1 should contain $2 files"
+-		echo "it contains these files:"
+-		ls "$1"
+-		false
+-	fi
+-}
+-
+-
+-# wiki_check_content <file_name> <page_name>
+-#
+-# Compares the contents of the file <file_name> and the wiki page
+-# <page_name> and exits with error 1 if they do not match.
+-wiki_check_content () {
+-	mkdir -p wiki_tmp
+-	wiki_getpage "$2" wiki_tmp
+-	# replacement of forbidden character in file name
+-	page_name=$(printf "%s\n" "$2" | sed -e "s/\//%2F/g")
+-
+-	diff -b "$1" wiki_tmp/"$page_name".mw
+-	if test $? -ne 0
+-	then
+-		rm -rf wiki_tmp
+-		error "ERROR: file $2 not found on wiki"
+-	fi
+-	rm -rf wiki_tmp
+-}
+-
+-# wiki_page_exist <page_name>
+-#
+-# Check the existence of the page <page_name> on the wiki and exits
+-# with error if it is absent from it.
+-wiki_page_exist () {
+-	mkdir -p wiki_tmp
+-	wiki_getpage "$1" wiki_tmp
+-	page_name=$(printf "%s\n" "$1" | sed "s/\//%2F/g")
+-	if test -f wiki_tmp/"$page_name".mw ; then
+-		rm -rf wiki_tmp
+-	else
+-		rm -rf wiki_tmp
+-		error "test failed: file $1 not found on wiki"
+-	fi
+-}
+-
+-# wiki_getallpagename
+-#
+-# Fetch the name of each page on the wiki.
+-wiki_getallpagename () {
+-	"$CURR_DIR"/test-gitmw.pl getallpagename
+-}
+-
+-# wiki_getallpagecategory <category>
+-#
+-# Fetch the name of each page belonging to <category> on the wiki.
+-wiki_getallpagecategory () {
+-	"$CURR_DIR"/test-gitmw.pl getallpagename "$@"
+-}
+-
+-# wiki_getallpage <dest_dir> [<category>]
+-#
+-# Fetch all the pages from the wiki and place them in the directory
+-# <dest_dir>.
+-# If <category> is define, then wiki_getallpage fetch the pages included
+-# in <category>.
+-wiki_getallpage () {
+-	if test -z "$2";
+-	then
+-		wiki_getallpagename
+-	else
+-		wiki_getallpagecategory "$2"
+-	fi
+-	mkdir -p "$1"
+-	while read -r line; do
+-		wiki_getpage "$line" $1;
+-	done < all.txt
+-}
+-
+-# ================= Install part =================
+-
+-error () {
+-	echo "$@" >&2
+-	exit 1
+-}
+-
+-# config_lighttpd
+-#
+-# Create the configuration files and the folders necessary to start lighttpd.
+-# Overwrite any existing file.
+-config_lighttpd () {
+-	mkdir -p $WEB
+-	mkdir -p $WEB_TMP
+-	mkdir -p $WEB_WWW
+-	cat > $WEB/lighttpd.conf <<EOF
+-	server.document-root = "$CURR_DIR/$WEB_WWW"
+-	server.port = $PORT
+-	server.pid-file = "$CURR_DIR/$WEB_TMP/pid"
+-
+-	server.modules = (
+-	"mod_rewrite",
+-	"mod_redirect",
+-	"mod_access",
+-	"mod_accesslog",
+-	"mod_fastcgi"
+-	)
+-
+-	index-file.names = ("index.php" , "index.html")
+-
+-	mimetype.assign		    = (
+-	".pdf"		=>	"application/pdf",
+-	".sig"		=>	"application/pgp-signature",
+-	".spl"		=>	"application/futuresplash",
+-	".class"	=>	"application/octet-stream",
+-	".ps"		=>	"application/postscript",
+-	".torrent"	=>	"application/x-bittorrent",
+-	".dvi"		=>	"application/x-dvi",
+-	".gz"		=>	"application/x-gzip",
+-	".pac"		=>	"application/x-ns-proxy-autoconfig",
+-	".swf"		=>	"application/x-shockwave-flash",
+-	".tar.gz"	=>	"application/x-tgz",
+-	".tgz"		=>	"application/x-tgz",
+-	".tar"		=>	"application/x-tar",
+-	".zip"		=>	"application/zip",
+-	".mp3"		=>	"audio/mpeg",
+-	".m3u"		=>	"audio/x-mpegurl",
+-	".wma"		=>	"audio/x-ms-wma",
+-	".wax"		=>	"audio/x-ms-wax",
+-	".ogg"		=>	"application/ogg",
+-	".wav"		=>	"audio/x-wav",
+-	".gif"		=>	"image/gif",
+-	".jpg"		=>	"image/jpeg",
+-	".jpeg"		=>	"image/jpeg",
+-	".png"		=>	"image/png",
+-	".xbm"		=>	"image/x-xbitmap",
+-	".xpm"		=>	"image/x-xpixmap",
+-	".xwd"		=>	"image/x-xwindowdump",
+-	".css"		=>	"text/css",
+-	".html"		=>	"text/html",
+-	".htm"		=>	"text/html",
+-	".js"		=>	"text/javascript",
+-	".asc"		=>	"text/plain",
+-	".c"		=>	"text/plain",
+-	".cpp"		=>	"text/plain",
+-	".log"		=>	"text/plain",
+-	".conf"		=>	"text/plain",
+-	".text"		=>	"text/plain",
+-	".txt"		=>	"text/plain",
+-	".dtd"		=>	"text/xml",
+-	".xml"		=>	"text/xml",
+-	".mpeg"		=>	"video/mpeg",
+-	".mpg"		=>	"video/mpeg",
+-	".mov"		=>	"video/quicktime",
+-	".qt"		=>	"video/quicktime",
+-	".avi"		=>	"video/x-msvideo",
+-	".asf"		=>	"video/x-ms-asf",
+-	".asx"		=>	"video/x-ms-asf",
+-	".wmv"		=>	"video/x-ms-wmv",
+-	".bz2"		=>	"application/x-bzip",
+-	".tbz"		=>	"application/x-bzip-compressed-tar",
+-	".tar.bz2"	=>	"application/x-bzip-compressed-tar",
+-	""		=>	"text/plain"
+-	)
+-
+-	fastcgi.server = ( ".php" =>
+-	("localhost" =>
+-	( "socket" => "$CURR_DIR/$WEB_TMP/php.socket",
+-	"bin-path" => "$PHP_DIR/php-cgi -c $CURR_DIR/$WEB/php.ini"
+-
+-	)
+-	)
+-	)
+-EOF
+-
+-	cat > $WEB/php.ini <<EOF
+-	session.save_path ='$CURR_DIR/$WEB_TMP'
+-EOF
+-}
+-
+-# start_lighttpd
+-#
+-# Start or restart daemon lighttpd. If restart, rewrite configuration files.
+-start_lighttpd () {
+-	if test -f "$WEB_TMP/pid"; then
+-		echo "Instance already running. Restarting..."
+-		stop_lighttpd
+-	fi
+-	config_lighttpd
+-	"$LIGHTTPD_DIR"/lighttpd -f "$WEB"/lighttpd.conf
+-
+-	if test $? -ne 0 ; then
+-		echo "Could not execute http daemon lighttpd"
+-		exit 1
+-	fi
+-}
+-
+-# stop_lighttpd
+-#
+-# Kill daemon lighttpd and removes files and folders associated.
+-stop_lighttpd () {
+-	test -f "$WEB_TMP/pid" && kill $(cat "$WEB_TMP/pid")
+-}
+-
+-wiki_delete_db () {
+-	rm -rf \
+-	   "$FILES_FOLDER_DB"/* || error "Couldn't delete $FILES_FOLDER_DB/"
+-}
+-
+-wiki_delete_db_backup () {
+-	rm -rf \
+-	   "$FILES_FOLDER_POST_INSTALL_DB"/* || error "Couldn't delete $FILES_FOLDER_POST_INSTALL_DB/"
+-}
+-
+-# Install MediaWiki using its install.php script. If the database file
+-# already exists, it will be deleted.
+-install_mediawiki () {
+-
+-	localsettings="$WIKI_DIR_INST/$WIKI_DIR_NAME/LocalSettings.php"
+-	if test -f "$localsettings"
+-	then
+-		error "We already installed the wiki, since $localsettings exists" \
+-		      "perhaps you wanted to run 'delete' first?"
+-	fi
+-
+-	wiki_delete_db
+-	wiki_delete_db_backup
+-	mkdir \
+-		"$FILES_FOLDER_DB/" \
+-		"$FILES_FOLDER_POST_INSTALL_DB/"
+-
+-	install_script="$WIKI_DIR_INST/$WIKI_DIR_NAME/maintenance/install.php"
+-	echo "Installing MediaWiki using $install_script. This may take some time ..."
+-
+-	php "$WIKI_DIR_INST/$WIKI_DIR_NAME/maintenance/install.php" \
+-	    --server $WIKI_BASE_URL \
+-	    --scriptpath /wiki \
+-	    --lang en \
+-	    --dbtype sqlite \
+-	    --dbpath $PWD/$FILES_FOLDER_DB/ \
+-	    --pass "$WIKI_PASSW" \
+-	    Git-MediaWiki-Test \
+-	    "$WIKI_ADMIN" ||
+-		error "Couldn't run $install_script, see errors above. Try to run ./install-wiki.sh delete first."
+-	cat <<-'EOF' >>$localsettings
+-# Custom settings added by test-gitmw-lib.sh
+-#
+-# Uploading text files is needed for
+-# t9363-mw-to-git-export-import.sh
+-$wgEnableUploads = true;
+-$wgFileExtensions[] = 'txt';
+-EOF
+-
+-	# Copy the initially generated database file into our backup
+-	# folder
+-	cp -R "$FILES_FOLDER_DB/"* "$FILES_FOLDER_POST_INSTALL_DB/" ||
+-		error "Unable to copy $FILES_FOLDER_DB/* to $FILES_FOLDER_POST_INSTALL_DB/*"
+-}
+-
+-# Install a wiki in your web server directory.
+-wiki_install () {
+-	if test $LIGHTTPD = "true" ; then
+-		start_lighttpd
+-	fi
+-
+-	# In this part, we change directory to $TMP in order to download,
+-	# unpack and copy the files of MediaWiki
+-	(
+-	mkdir -p "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-	if ! test -d "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-	then
+-		error "Folder $WIKI_DIR_INST/$WIKI_DIR_NAME doesn't exist.
+-		Please create it and launch the script again."
+-	fi
+-
+-	# Fetch MediaWiki's archive if not already present in the
+-	# download directory
+-	mkdir -p "$FILES_FOLDER_DOWNLOAD"
+-	MW_FILENAME="mediawiki-$MW_VERSION_MAJOR.$MW_VERSION_MINOR.tar.gz"
+-	cd "$FILES_FOLDER_DOWNLOAD"
+-	if ! test -f $MW_FILENAME
+-	then
+-		echo "Downloading $MW_VERSION_MAJOR.$MW_VERSION_MINOR sources ..."
+-		wget "http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/$MW_FILENAME" ||
+-			error "Unable to download "\
+-			"http://download.wikimedia.org/mediawiki/$MW_VERSION_MAJOR/"\
+-			"$MW_FILENAME. "\
+-			"Please fix your connection and launch the script again."
+-		echo "$MW_FILENAME downloaded in $(pwd)/;" \
+-		     "you can delete it later if you want."
+-	else
+-		echo "Reusing existing $MW_FILENAME downloaded in $(pwd)/"
+-	fi
+-	archive_abs_path=$(pwd)/$MW_FILENAME
+-	cd "$WIKI_DIR_INST/$WIKI_DIR_NAME/" ||
+-		error "can't cd to $WIKI_DIR_INST/$WIKI_DIR_NAME/"
+-	tar xzf "$archive_abs_path" --strip-components=1 ||
+-		error "Unable to extract WikiMedia's files from $archive_abs_path to "\
+-			"$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-	) || exit 1
+-	echo Extracted in "$WIKI_DIR_INST/$WIKI_DIR_NAME"
+-
+-	install_mediawiki
+-
+-	echo "Your wiki has been installed. You can check it at
+-		$WIKI_URL"
+-}
+-
+-# Reset the database of the wiki and the password of the admin
+-#
+-# Warning: This function must be called only in a subdirectory of t/ directory
+-wiki_reset () {
+-	# Copy initial database of the wiki
+-	if ! test -d "../$FILES_FOLDER_DB"
+-	then
+-		error "No wiki database at ../$FILES_FOLDER_DB, not installed yet?"
+-	fi
+-	if ! test -d "../$FILES_FOLDER_POST_INSTALL_DB"
+-	then
+-		error "No wiki backup database at ../$FILES_FOLDER_POST_INSTALL_DB, failed installation?"
+-	fi
+-	wiki_delete_db
+-	cp -R "../$FILES_FOLDER_POST_INSTALL_DB/"* "../$FILES_FOLDER_DB/" ||
+-		error "Can't copy ../$FILES_FOLDER_POST_INSTALL_DB/* to ../$FILES_FOLDER_DB/*"
+-	echo "File $FILES_FOLDER_DB/* has been reset"
+-}
+-
+-# Delete the wiki created in the web server's directory and all its content
+-# saved in the database.
+-wiki_delete () {
+-	if test $LIGHTTPD = "true"; then
+-		stop_lighttpd
+-		rm -fr "$WEB"
+-	else
+-		# Delete the wiki's directory.
+-		rm -rf "$WIKI_DIR_INST/$WIKI_DIR_NAME" ||
+-			error "Wiki's directory $WIKI_DIR_INST/" \
+-			"$WIKI_DIR_NAME could not be deleted"
+-	fi
+-	wiki_delete_db
+-	wiki_delete_db_backup
+-}
+diff --git a/contrib/mw-to-git/t/test-gitmw.pl b/contrib/mw-to-git/t/test-gitmw.pl
+deleted file mode 100755
+index c5d687f078a..00000000000
+--- a/contrib/mw-to-git/t/test-gitmw.pl
++++ /dev/null
+@@ -1,223 +0,0 @@
+-#!/usr/bin/perl -w -s
+-# Copyright (C) 2012
+-#     Charles Roussel <charles.roussel@ensimag.imag.fr>
+-#     Simon Cathebras <simon.cathebras@ensimag.imag.fr>
+-#     Julien Khayat <julien.khayat@ensimag.imag.fr>
+-#     Guillaume Sasdy <guillaume.sasdy@ensimag.imag.fr>
+-#     Simon Perrat <simon.perrat@ensimag.imag.fr>
+-# License: GPL v2 or later
+-
+-# Usage:
+-#       ./test-gitmw.pl <command> [argument]*
+-# Execute in terminal using the name of the function to call as first
+-# parameter, and the function's arguments as following parameters
+-#
+-# Example:
+-#     ./test-gitmw.pl "get_page" foo .
+-# will call <wiki_getpage> with arguments <foo> and <.>
+-#
+-# Available functions are:
+-#     "get_page"
+-#     "delete_page"
+-#     "edit_page"
+-#     "getallpagename"
+-
+-use MediaWiki::API;
+-use Getopt::Long;
+-use DateTime::Format::ISO8601;
+-use constant SLASH_REPLACEMENT => "%2F";
+-
+-#Parsing of the config file
+-
+-my $configfile = "$ENV{'CURR_DIR'}/test.config";
+-my %config;
+-open my $CONFIG, "<",  $configfile or die "can't open $configfile: $!";
+-while (<$CONFIG>)
+-{
+-	chomp;
+-	s/#.*//;
+-	s/^\s+//;
+-	s/\s+$//;
+-	next unless length;
+-	my ($key, $value) = split (/\s*=\s*/,$_, 2);
+-	$config{$key} = $value;
+-	last if ($key eq 'LIGHTTPD' and $value eq 'false');
+-	last if ($key eq 'PORT');
+-}
+-close $CONFIG or die "can't close $configfile: $!";
+-
+-my $wiki_address = "http://$config{'SERVER_ADDR'}".":"."$config{'PORT'}";
+-my $wiki_url = "$wiki_address/$config{'WIKI_DIR_NAME'}/api.php";
+-my $wiki_admin = "$config{'WIKI_ADMIN'}";
+-my $wiki_admin_pass = "$config{'WIKI_PASSW'}";
+-my $mw = MediaWiki::API->new;
+-$mw->{config}->{api_url} = $wiki_url;
+-
+-
+-# wiki_login <name> <password>
+-#
+-# Logs the user with <name> and <password> in the global variable
+-# of the mediawiki $mw
+-sub wiki_login {
+-	$mw->login( { lgname => "$_[0]",lgpassword => "$_[1]" } )
+-	|| die "getpage: login failed";
+-}
+-
+-# wiki_getpage <wiki_page> <dest_path>
+-#
+-# fetch a page <wiki_page> from the wiki referenced in the global variable
+-# $mw and copies its content in directory dest_path
+-sub wiki_getpage {
+-	my $pagename = $_[0];
+-	my $destdir = $_[1];
+-
+-	my $page = $mw->get_page( { title => $pagename } );
+-	if (!defined($page)) {
+-		die "getpage: wiki does not exist";
+-	}
+-
+-	my $content = $page->{'*'};
+-	if (!defined($content)) {
+-		die "getpage: page does not exist";
+-	}
+-
+-	$pagename=$page->{'title'};
+-	# Replace spaces by underscore in the page name
+-	$pagename =~ s/ /_/g;
+-	$pagename =~ s/\//%2F/g;
+-	open(my $file, ">:encoding(UTF-8)", "$destdir/$pagename.mw");
+-	print $file "$content";
+-	close ($file);
+-
+-}
+-
+-# wiki_delete_page <page_name>
+-#
+-# delete the page with name <page_name> from the wiki referenced
+-# in the global variable $mw
+-sub wiki_delete_page {
+-	my $pagename = $_[0];
+-
+-	my $exist=$mw->get_page({title => $pagename});
+-
+-	if (defined($exist->{'*'})){
+-		$mw->edit({ action => 'delete',
+-				title => $pagename})
+-		|| die $mw->{error}->{code} . ": " . $mw->{error}->{details};
+-	} else {
+-		die "no page with such name found: $pagename\n";
+-	}
+-}
+-
+-# wiki_editpage <wiki_page> <wiki_content> <wiki_append> [-c=<category>] [-s=<summary>]
+-#
+-# Edit a page named <wiki_page> with content <wiki_content> on the wiki
+-# referenced with the global variable $mw
+-# If <wiki_append> == true : append <wiki_content> at the end of the actual
+-# content of the page <wiki_page>
+-# If <wik_page> doesn't exist, that page is created with the <wiki_content>
+-sub wiki_editpage {
+-	my $wiki_page = $_[0];
+-	my $wiki_content = $_[1];
+-	my $wiki_append = $_[2];
+-	my $summary = "";
+-	my ($summ, $cat) = ();
+-	GetOptions('s=s' => \$summ, 'c=s' => \$cat);
+-
+-	my $append = 0;
+-	if (defined($wiki_append) && $wiki_append eq 'true') {
+-		$append=1;
+-	}
+-
+-	my $previous_text ="";
+-
+-	if ($append) {
+-		my $ref = $mw->get_page( { title => $wiki_page } );
+-		$previous_text = $ref->{'*'};
+-	}
+-
+-	my $text = $wiki_content;
+-	if (defined($previous_text)) {
+-		$text="$previous_text$text";
+-	}
+-
+-	# Eventually, add this page to a category.
+-	if (defined($cat)) {
+-		my $category_name="[[Category:$cat]]";
+-		$text="$text\n $category_name";
+-	}
+-	if(defined($summ)){
+-		$summary=$summ;
+-	}
+-
+-	$mw->edit( { action => 'edit', title => $wiki_page, summary => $summary, text => "$text"} );
+-}
+-
+-# wiki_getallpagename [<category>]
+-#
+-# Fetch all pages of the wiki referenced by the global variable $mw
+-# and print the names of each one in the file all.txt with a new line
+-# ("\n") between these.
+-# If the argument <category> is defined, then this function get only the pages
+-# belonging to <category>.
+-sub wiki_getallpagename {
+-	# fetch the pages of the wiki
+-	if (defined($_[0])) {
+-		my $mw_pages = $mw->list ( { action => 'query',
+-				list => 'categorymembers',
+-				cmtitle => "Category:$_[0]",
+-				cmnamespace => 0,
+-				cmlimit => 500 },
+-		)
+-		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
+-		open(my $file, ">:encoding(UTF-8)", "all.txt");
+-		foreach my $page (@{$mw_pages}) {
+-			print $file "$page->{title}\n";
+-		}
+-		close ($file);
+-
+-	} else {
+-		my $mw_pages = $mw->list({
+-				action => 'query',
+-				list => 'allpages',
+-				aplimit => 500,
+-			})
+-		|| die $mw->{error}->{code}.": ".$mw->{error}->{details};
+-		open(my $file, ">:encoding(UTF-8)", "all.txt");
+-		foreach my $page (@{$mw_pages}) {
+-			print $file "$page->{title}\n";
+-		}
+-		close ($file);
+-	}
+-}
+-
+-sub wiki_upload_file {
+-	my $file_name = $_[0];
+-	my $resultat = $mw->edit ( {
+-		action => 'upload',
+-		filename => $file_name,
+-		comment => 'upload a file',
+-		file => [ $file_name ],
+-		ignorewarnings=>1,
+-	}, {
+-		skip_encoding => 1
+-	} ) || die $mw->{error}->{code} . ' : ' . $mw->{error}->{details};
+-}
+-
+-
+-
+-# Main part of this script: parse the command line arguments
+-# and select which function to execute
+-my $fct_to_call = shift;
+-
+-wiki_login($wiki_admin, $wiki_admin_pass);
+-
+-my %functions_to_call = (
+-	upload_file    => \&wiki_upload_file,
+-	get_page       => \&wiki_getpage,
+-	delete_page    => \&wiki_delete_page,
+-	edit_page      => \&wiki_editpage,
+-	getallpagename => \&wiki_getallpagename,
+-);
+-die "$0 ERROR: wrong argument" unless exists $functions_to_call{$fct_to_call};
+-$functions_to_call{$fct_to_call}->(map { utf8::decode($_); $_ } @ARGV);
+diff --git a/contrib/mw-to-git/t/test.config b/contrib/mw-to-git/t/test.config
+deleted file mode 100644
+index ed10b3e4a47..00000000000
+--- a/contrib/mw-to-git/t/test.config
++++ /dev/null
+@@ -1,40 +0,0 @@
+-# Name of the web server's directory dedicated to the wiki is WIKI_DIR_NAME
+-WIKI_DIR_NAME=wiki
+-
+-# Login and password of the wiki's admin
+-WIKI_ADMIN=WikiAdmin
+-WIKI_PASSW=AdminPass1
+-
+-# Address of the web server
+-SERVER_ADDR=localhost
+-
+-# If LIGHTTPD is not set to true, the script will use the default
+-# web server running in WIKI_DIR_INST.
+-WIKI_DIR_INST=/var/www
+-
+-# If LIGHTTPD is set to true, the script will use Lighttpd to run
+-# the wiki.
+-LIGHTTPD=true
+-
+-# The variables below are useful only if LIGHTTPD is set to true.
+-PORT=1234
+-PHP_DIR=/usr/bin
+-LIGHTTPD_DIR=/usr/sbin
+-WEB=WEB
+-WEB_TMP=$WEB/tmp
+-WEB_WWW=$WEB/www
+-
+-# Where our configuration for the wiki is located
+-FILES_FOLDER=mediawiki
+-FILES_FOLDER_DOWNLOAD=$FILES_FOLDER/download
+-FILES_FOLDER_DB=$FILES_FOLDER/db
+-FILES_FOLDER_POST_INSTALL_DB=$FILES_FOLDER/post-install-db
+-
+-# The variables below are used by the script to install a wiki.
+-# You should not modify these unless you are modifying the script itself.
+-# tested versions: 1.19.X -> 1.21.1 -> 1.34.2
+-#
+-# See https://www.mediawiki.org/wiki/Download for what the latest
+-# version is.
+-MW_VERSION_MAJOR=1.34
+-MW_VERSION_MINOR=2
 
 -- 
 2.49.0.1101.gccaa498523.dirty
