@@ -1,119 +1,129 @@
-Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16720298272
-	for <git@vger.kernel.org>; Mon, 12 May 2025 18:33:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 720D6296FAC
+	for <git@vger.kernel.org>; Mon, 12 May 2025 18:35:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747074812; cv=none; b=X4BHDFz6stxq3q85+QuGvGlKxTt6xgUHfOY/qRr4GD3ULFyyZ7VYVh3zLngZkLWxQdzozq8Wnd+deDZpCfBNR06PglZydA+Ec0rxYoKlckSDLgfGOdbOvLjuFe0Dqb9JGIomN2B4j8+kQaCzXPE/h4Ri2fylUHAlSlwOka68Rog=
+	t=1747074941; cv=none; b=ljdy0CzEUXEvU161El3p3Tljv4SokIEsYSJl+kSikDO6i2YwlziRAYMYmXGgc483Oh8UCCbFQ7/RMAd4Qg6qKtVk3NYUpUtOYxNq1iI8y5ZyRw8vUfYaPphtZVKcH34bjm+tqSC8hYcb+6fNj230cdSRJr3fl128znfzzaJivmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747074812; c=relaxed/simple;
-	bh=j1vRwwT9ZOuM+lRPZ2FX+83EVPgMTnuhKpTQL9/nvk8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=bxaSmY5qQ2+xad3nGXQZ2+xAJQqmvEzV7/jdaZ1tTN1m4HfLpOJSn3TkqZS9cLZVLwDXm4YA2YOtNKdJqhyR2fNkcOlx3bGVhZZ1osCpJWoK6Goo5s86jrszx+liZg+KAqFkAouBHmcYM+npzP6qik61hWDvBvUypSJ9msknEgs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ip6HJ0Lc; arc=none smtp.client-ip=209.85.219.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747074941; c=relaxed/simple;
+	bh=XJIfNswd/Uqys+VTq8F/XDXKgioSqHAot/ReF/SxL/8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ELX6zIzyZq0av7ly5YqW86G5GvWpMoXO6XRPFNwHtughbbUojvSumayoPdq+NwHU8/Q3JXk1LbVLuHV9Y8Pjb0H3qzBD3PbNV2KczX0zLnZLQt1x1Fk95ouzLi3Bq7mPUd+FxLXce/p3rSRUkpAiV+0HKmX8Q5yeUGRdpGQfIwQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Js4L9qwJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WKr0w8hg; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ip6HJ0Lc"
-Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e7adcaea616so650229276.0
-        for <git@vger.kernel.org>; Mon, 12 May 2025 11:33:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747074809; x=1747679609; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XZ4ZhGrjmRCAOCBw7hg7u+TSM2GWlFsX+XQeTf0fXNw=;
-        b=ip6HJ0LcBPpw1YT/X3e1edNFckHCFiGQ8y9dwZNLO085nE04M6puwqIz9lm5EbtCXx
-         Oo1CyvMSDd9DV/yH39D+4i2HzdLeDJJm1/KRhq6QqdnbntPENr4unIysGa6uVMhIHZSd
-         QhOkcs0BHdR8caq3HCgOnKAJJIslXBFgSe8LxodMCpUCpl7i5FSMj98ybENyg0JBZFAw
-         wojzCR5j3aVsn05Go6aKHOd2gTyjn990ktOR/Adipf8WZVqEwoUd5fFHMyoL+8aIwQOc
-         HdTRM+Tt+F2xaNTx0Mv/Z4UO1eHU4ZWz1e0N70P7+WME+GkfNmQhclsrCzD+b5VAQs2y
-         7CEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747074809; x=1747679609;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XZ4ZhGrjmRCAOCBw7hg7u+TSM2GWlFsX+XQeTf0fXNw=;
-        b=q2ASgV3a4NfZ8EeHWoqYx59zJ4uVnBWB4Ewtw1dEH0vtvVbZCiY0eiQeSsMgJL0K6V
-         2AuJaYzfRmUEyHJexPs3EaDlCt5arwjDc3U1niI030wFBJZqwxa3lNX2VAVGtUoNkqfT
-         ayUN/KZJZNPIaNh3jWu2zc1oWdwQZflASRsEfC3TgzIS0OGDLK4Ljid/n6LEwNpIWcrk
-         N3ujfWXEj54m45SKYzQuUAiwOJVhGqZsNe8yGDOBmO0pjgaiw8FPYNhSyeYMalMs8VkW
-         cjnYglDmN8hnN02F4BI+7ZSt9gq/6cFyptk80aHvPrrKVStDSKNmvxvVLmUVfmOfbAkT
-         p7Jg==
-X-Gm-Message-State: AOJu0Yxa1wiLORywnaWxLd/nrNoYQY5NdwAwgqpqmN1Y/yMKMO7Nk+GT
-	by59tBocBUwzy58eiNhsikkI69ZQv50ptbvWbKuiTTGeQkAa+csya4NpRg==
-X-Gm-Gg: ASbGncuzni16/ZxoSRp4Mvvyg/qWmVVhkq2O31GHJqX0s5zJC3mEE/ccVXZ8Bs4LdKm
-	Eqn3dkdFqbMlVoCP0CPDHRxqjcetB1ZrYcqEel1Yq8qo9syKqSJLtzn57P8fTA8KUApKm3dMyHN
-	iA+wKGLgvpRs+JSg5TEv1zSFOcxIC74HFoVSzIZQj0424/xOICT5ZinHvU13OFPpDiAYWtR7IOz
-	mvIVa7keA942qVDYxZ/iL/ZYPmHN7XCfnwOEbYHFIbH5CWkXr5oCCFNIz03Y0dsyFCjZs74KDvH
-	Oz3C3wrGMrl3nG2C/F+kSaneOQqlsOuyzL7FWv+4xdmepTICKXTyzjOsOpybEMcH6ixm8T6Pv2L
-	I6wBAOcrZ5Y9dzn17cAUs/kSQSuI1J1EnRG75GUo=
-X-Google-Smtp-Source: AGHT+IF7Iq15RHhghDiKNZtAkTlD9CRCgk2vQcpcvkeF+JQbXLPbXOGnA3eBV7Mov/6fUb/6UG/sYg==
-X-Received: by 2002:a05:6902:1009:b0:e75:bea4:5eab with SMTP id 3f1490d57ef6-e78fdd612a4mr17702732276.43.1747074809486;
-        Mon, 12 May 2025 11:33:29 -0700 (PDT)
-Received: from [192.168.1.237] (70-237-88-18.lightspeed.rlghnc.sbcglobal.net. [70.237.88.18])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e78fd651b3asm2216242276.40.2025.05.12.11.33.28
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 12 May 2025 11:33:29 -0700 (PDT)
-Message-ID: <21bccc17-7e8a-47cc-a48f-de16bf075e54@gmail.com>
-Date: Mon, 12 May 2025 14:33:28 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Js4L9qwJ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WKr0w8hg"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 835871140148;
+	Mon, 12 May 2025 14:35:38 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Mon, 12 May 2025 14:35:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1747074938;
+	 x=1747161338; bh=UlZjY7bZJe9FXDso/M54F8j0H7t0PvD4L0kL3k7sL1U=; b=
+	Js4L9qwJ+sD6FB1EzlhSnBOIMN8UbE/TQ3cqB3ytIku0CMOgV+2oCiQ7UCJqth1O
+	/XT33kUz3fP33ccTj3tbVki2gDTB3hG2NXeONEHk06bSMr2sAXWElqy0TfLWwa1b
+	B807yr9/Gs28qBu94NwJBEFUsmp5MQcZSprfXMB6UVaJp08HNoc5ZBnH4ta5f2lk
+	A9J+YtFK/nPR4fDKngXg+3f20BQ6LPQNZ6NL1JbpI49jwM16wi5HslHsSb4VDjRp
+	Z/Vvd3dFAnrmr8Vcnss1hZ7odctReGcpvEe0Z7vP6dHrcPhm8sjXqAqMr0HXRbPH
+	v1F8RTSGgxN0AxrQvc5azw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747074938; x=
+	1747161338; bh=UlZjY7bZJe9FXDso/M54F8j0H7t0PvD4L0kL3k7sL1U=; b=W
+	Kr0w8hgEzPjnpDyZsZW4o5W3nN5EYd0TQqZYyXQiEF6Kh0Yjh4Orn/OlC82C2XoO
+	WTSt2vXzsJXK8Q+Xmm0M+4PtbtSe2pTwBxgqPV497LdXbHE1v+pupV1X0VKAFMM8
+	f9V5i4FbQXsYIxMPyoXrrz5ZlT6orkLahI2SKbRFqnnhAXBKZdidU7GY/a3yAIHv
+	jvRGs850DWMSagCQWqZWZ6tudFhCseWYvHnFkMWaV01NLkqQ2pnvbFs1glunTQ4Z
+	pPz9qcSk5JOaCAEyucaL/XlkmgMbahq+3cPYcXxmIV41fI80EgHwskvXKNKNNs0k
+	u5OHR3P8kC+OpBVpmXvBA==
+X-ME-Sender: <xms:ej8iaE_GJ1Uq88YuWfeBSBRKAEm_hQ9fWZEv4GNk0E3u7S4HFTZonQ>
+    <xme:ej8iaMuF5JhXqqLFV8ZqCP6mV1MGc9Irjskz3KcvMC4HXImZGHbgTHNBUgF_KCPcw
+    SIeTI7BD3gOM2Qbog>
+X-ME-Received: <xmr:ej8iaKCxBcLeg9Jwg-fEprjbbWCmoL8x8zbPEj0co4lWrx9WRSgKVeGUboDI36Q7gBSeU72RB-UVWnIeCClZ8iMXgi9SIdTk5oVzmWw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdduleelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddt
+    reejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpoh
+    gsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefg
+    keefheeigfehveehvdekheelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurf
+    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
+    rhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehnvgifrhgvnh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ej8iaEfNZX6AaaKdqU3tHVSLDSgKpSLNlj0uv7vi-fu3TUi7A4Ch4A>
+    <xmx:ej8iaJP1fVNe-4U3JuQfCEBczLZ29ZP-gm3fNkV0iKkt24i6Gt9OgA>
+    <xmx:ej8iaOk9rhVVDE14VW1S8yH7WFqBXoIAitaR7gDTtpRgvn-Nk5dWTg>
+    <xmx:ej8iaLtDOVoTWVJE6BaPJ8aJp3mj_XW6Zk7z1uPwhsOUBMARbSkczg>
+    <xmx:ej8iaEb9uZTL77k9aXHnGz41OYQZoMp7jF29FVymLF3y78nup7G7Ezpq>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 12 May 2025 14:35:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v3 6/6] whatschanged: list it in BreakingChanges document
+In-Reply-To: <CABPp-BE3Qh55=6GR7s-Wv2rS9+oAFokw=9R_1WiayLWDMsuAVA@mail.gmail.com>
+	(Elijah Newren's message of "Mon, 12 May 2025 10:36:50 -0700")
+References: <20250501225958.2947677-1-gitster@pobox.com>
+	<20250503005814.3030099-1-gitster@pobox.com>
+	<20250503005814.3030099-7-gitster@pobox.com>
+	<CABPp-BE3Qh55=6GR7s-Wv2rS9+oAFokw=9R_1WiayLWDMsuAVA@mail.gmail.com>
+Date: Mon, 12 May 2025 11:35:36 -0700
+Message-ID: <xmqqh61psmmf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/17] object-store: carve out the object database
- subsystem
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
- <20250509-pks-object-store-wo-the-repository-v2-0-103f59bf8e28@pks.im>
- <xmqq8qn5zci8.fsf@gitster.g>
-Content-Language: en-US
-From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <xmqq8qn5zci8.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-On 5/9/2025 5:43 PM, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> 
->> Changes in v2:
->>   - Fix for a copy-and-pasted commit message.
->>   - Rename `struct odb_backend` to `struct odb_alternate`. I'm happy to
->>     revert to the previous name if we ultimately think it's the better
->>     suited one.
-> 
-> Diff between the previous iteration is quite noisy due to this; I do
-> not have strong opinion for or against either name myself.
+Elijah Newren <newren@gmail.com> writes:
 
-I agree the range-diff is noisy, so I had to reread the patches.
+> On Fri, May 2, 2025 at 5:59 PM Junio C Hamano <gitster@pobox.com> wrote:
+>>
+>> This can be squashed into the previous step.  That is how our "git
+>> pack-redundant" conversion did.
+>>
+>> Theoretically, however, those who want to gauge the need to keep the
+>> command by exposing their users to patches before this one may want
+>> to wait until their experiment finishes before they formally say
+>> "this will go away".
+>>
+>> This change is made into a separate patch from the previous step
+>> precisely to help those folks.
+>
+> Were these three paragraphs intended to come after the "---" line, but
+> accidentally placed in the commit message?
 
-Thankfully, the patch organization was already pretty good, so
-it was quick to validate that my earlier concerns were handled. 
->>   - A couple of fixes to move changes into the correct commit. `git
->>     rebase -x 'meson compile -C build'` is now clean.
-> 
-> Good to see that we care about bisectability.
-> 
->>   - I _didn't_ back out the rename to "odb.{c,h}". Junio has already
->>     fixed the fallout, so it's probably more work for him to kick it out
->>     again than to just leave it in.
-> 
-> You do not have to make me an excuse, if popular demand is not to
-> rename; I can cope with either one fine.
-I'm happy that you considered my advice as necessary.
+They are indeed meant above the "---" line to explain why this one
+is separate.
 
-Since the rename doesn't appear to have huge implications for
-ongoing series, I won't voice any further objections to this
-rename.
+>> +* The git-whatchanged(1) command has outlived its usefulness more than
+>> +  10 years ago, and takes more keystrokes to type than its rough
+>> +  equivalent `git log --raw`.  We have nominated the command for
+>> +  removal, have changed the command to refuse to work unless the
+>> +  `--i-still-use-this` option is given, and asked the users to report
+>> +  when they do so.  So far there hasn't been a single complaint.
+>> ++
+>> +The command will be removed
+>
+> Missing period at the end of this sentence?
 
-v2 LGTM.
+Indeed.
 
-Thanks,
--Stolee
+Thanks.
 
