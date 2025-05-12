@@ -1,129 +1,133 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E41B28D837
-	for <git@vger.kernel.org>; Mon, 12 May 2025 12:42:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0C32905
+	for <git@vger.kernel.org>; Mon, 12 May 2025 12:49:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747053733; cv=none; b=a9oCQhZA5Nwgf8Hw7z5Rp+fgLujfNyDmkUCY2/P4axIDLLQN75/WkgzBKJHXYa3c9i0xIxchmiSWS9elKOz7Z0WCjzRMxDaEM7Sm63nsMK7v4v6XQnA+zJou5ylMKLmjGuAWwr4HEIvV+yRiwAOGB9sGjPl5lAP8CdsNd3c0lU0=
+	t=1747054150; cv=none; b=qswO3v1Cm+4e85nCgYLBPBnbNViUfCHZ+YXZb7EX3ihSyAQzR9qKIkQEjjwXRl7y2umK8kV+TPyNrCKd7k8kNHM/ucoziRYNfDrEG40BO5eMZ3f9TmGqtZzfS1QZOhxRZpEUoHJmVBClV3gcvUcxsqWodqjYsUoz8lPlwCwRq3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747053733; c=relaxed/simple;
-	bh=1Ah8wB21CunzaMLcXcTFDhNQryp5u3MyXlrdybuATk0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=j9kUmDmXFi0alu/UyUj/+uhOJ7vGW6KJWTjSjD8iCsbLNoaVN99BSN5PPicygwQIT7g1iF8tPVoD8fqAnwbfgYXuOBNrkJ/kt8t0piCzDJ4fTDdffDSv9UTtEn+W0USikFrApF7mfl7Zqz3C84K6TyIAri6ycgPwfkZoYEtXriA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=F7XviWAS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XGl8kju/; arc=none smtp.client-ip=202.12.124.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747054150; c=relaxed/simple;
+	bh=sYa7+lo2Lvp2oNBT1Dja7XHW9vlFcSPWAfIIUvO8qF8=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=kP4qrHkPxUJ6EbQDyWwLKA5SRqLEzHmv+s1RDLjEAHwfXfI7oYRALYGSSLIrWbzdffO5Y/wGGSbiBu7sSS5cbnqBpkn6ssCN3XSV79W3sFsKDAbHzZLiDGQxPTluef/Y8h0ClgYLB1xA02nZsBZBk/mTYj9u97QXfQA+SUy//Fo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iBp8zYGb; arc=none smtp.client-ip=209.85.128.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="F7XviWAS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XGl8kju/"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id 3887D1140108;
-	Mon, 12 May 2025 08:42:10 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 12 May 2025 08:42:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747053730; x=1747140130; bh=yG9jGprwur
-	zEEkxHu1P2LgR6/68ZI9zMFCceqpfPsiI=; b=F7XviWASZy4VKwbbXSOT0xIPcy
-	0F3TKdSf60791tktq+tckkYsh1HQzlRd2ndykh/Z9dW9liAeuUQWwnvc1uTMvBzf
-	1FMD7BLC/Mgj+wDhNwT1sqPNdAbvHqg2qKUXeNA7YyiM9G1+eVGnBLLwmzypI7an
-	M5LyewU/QuR8j9q68jNq036yRT8IMxAVxqcjEEG5QhL0yfS8+NIxRncaiXxPRNkP
-	n5vKIiOVDDUe9DLCZLN3ZQQVMIwpiYI+MKCbQqxylD4rJ1k1qwKDfxFLAcvkrfxd
-	RH9W3F7C6eJ6HlaWF0ukUBhi20KgFRt+sOoaNUuyJf8qgobWTo7LhekjDDyA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747053730; x=1747140130; bh=yG9jGprwurzEEkxHu1P2LgR6/68ZI9zMFCc
-	eqpfPsiI=; b=XGl8kju/rTbLMgZ3w0ItzhWWG/6IZ80iQbTUWYD6ORsYoogp6e1
-	C7Uohw9S1iqgXdCb+9QZM6qgzpV+JyGhKigZT+3y3kKCZZCBJV7tqI96Oky+pzuC
-	91AsF7F/VQ7hbfEZEwIktyp742R6goN1ozwMmLVYnQKlOSVVgE7Gl26ovGF6oRp0
-	MBNChR4owDHjdNQyw4JV6uO/UTxDX8r4yRpIYwZyTV6gUIS/5TnxXCAsBqKZnyPg
-	qii6rhYKsXKDRcHv73/mN/pTc9psQr6KgTdoVdZ3V8Z+U8J0UK1muxJGjAlw1Bd0
-	7rAjFn/dT+qhOnjKVQI4vMTlIPnd5JWY1rw==
-X-ME-Sender: <xms:oewhaNtAUuZj9kkbux2V2EyLf_AZ1uvA0WbB9vHcSoGY45K4rjbnSw>
-    <xme:oewhaGd7JPN_5uNLo5uXbEDuAKkMhRtsAkwhhoHMWEF5CZZMvqo3SiDVHBsEokDOp
-    rDsGWV4AAUzXBBhIQ>
-X-ME-Received: <xmr:oewhaAxtu1nhmL1ajfqcEmQJinc7QuUZb1_Ovk3FhDzUNv2DvS2cg09fTiK07Vr3sJN_pqMApZmhVgpByhwZBbVVkN1fioQQOKRXUkM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdduvdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:oewhaEOiucxFnPZMiCxtcWrwvd23IqoXgmytA4pXUHIwzA-gXKbl4g>
-    <xmx:oewhaN8M2t6b4Z6gP-gwtCn73s-bXtjFf5yQKUs9Mm29bUn6xEGGIw>
-    <xmx:oewhaEVx4oplVwjFW0vd4K0-XO06nzOn-UoRCm_j3nW8LQ5iwyDdfg>
-    <xmx:oewhaOfJZ0gNcRHJK_mmxZwI_Y8DjhVpaK0oynqPJl2arirSpK1xtw>
-    <xmx:ouwhaDJAWxllym1wEfVd7lEQspyCOdXhLdpYOHv8ljLfIi9jctmiqzqM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 12 May 2025 08:42:09 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  git@vger.kernel.org,
-  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v5 4/4] builtin/stash: provide a way to import stashes
- from a ref
-In-Reply-To: <20250510172107.GA601540@coredump.intra.peff.net> (Jeff King's
-	message of "Sat, 10 May 2025 13:21:07 -0400")
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
-	<20250508234458.3665894-5-sandals@crustytoothpaste.net>
-	<20250510172107.GA601540@coredump.intra.peff.net>
-Date: Mon, 12 May 2025 05:42:08 -0700
-Message-ID: <xmqq5xi6xaov.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iBp8zYGb"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43cfecdd8b2so32528755e9.2
+        for <git@vger.kernel.org>; Mon, 12 May 2025 05:49:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747054147; x=1747658947; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ddrFfdBWw2FNpbTYcWtgw8aOQbGmRqj2M/TMc0c9d94=;
+        b=iBp8zYGbgADz/t+qQ2A55/lSvluTofrQwSMkFeUg3KOYPWS2M2ZgHJa/v3INqm1mNl
+         gzBx4XBVgBXOS8fJOsjWPjjcYOWR21JUJoOfzmQNr2ObX2qLHLVNo8DMy+rXi6DjBL01
+         jTGAti6LvKEoQKsAxL7eUn8BgJbBFoiBAlwXRzXn3T2YjFOeoPU5ZHZAhybbggoLkUAC
+         5GRrgY/r2WgdPNr4AfjdS8L47qlrZEOGr7WA5ICqt8YBxgZCm9AqbhV33SokPVv2+jiI
+         TwY3jvCqUMoZKqrGDQPoAABMbg95cDVwtfYTP07ynO+0gT6qw+VC5vRVJQHXZsXgMhNe
+         THFQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747054147; x=1747658947;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ddrFfdBWw2FNpbTYcWtgw8aOQbGmRqj2M/TMc0c9d94=;
+        b=oRefWBrV+9mWKXllDfg4l3Wvl7FZ4DzDk+fx8EmC4NxpaUzsGrzerJAL9Qy+ZPEJah
+         zGQIw1oM6KvsLGEWXPlnLjRVEjQ9rle1B6bT9O7419j/bOx36oBm+O676Ukm7VhxWRcx
+         SGRE9uwyqmatuKWx15enrj6C+Y/Jmeqbbg/28flYrMyt5cesiPibw4KExO+HvKrCL5BO
+         yEqOf0XOvdcC9k25rfkXcMcmTW2NJyovAAecapQz3Doy8Urb4bqb6DPJUsFBfEggB8YY
+         /yPZoUSr3hBdqVyLmNk+GBaX3PZoVQh2eqbNzmW92I3Fdn/J2MRdMEErXkX8DONQVy2u
+         6aYg==
+X-Gm-Message-State: AOJu0Yx+dgvzeJHn4yARJyrYU3eIhP+kmDUY4NIgSh4RPZuosBqUHiQD
+	1buYOwRN3ET1YekTSy3mPM5kzHBb+5bxTiKSCZlG11HhozE+DHbQceYtog==
+X-Gm-Gg: ASbGnctyZEIkL+iIxiux2NUnfjdTOCe5etDcZHZY2w0K3bcUIz1TNSk8J4oXtvtpmvm
+	fbCLPWPHNLCQVZxfLE08qLxuxDNjp+780sgvxnAqbYA8aaVQh2/S8szEP1oznNW9jQA+c9BX8G6
+	S7bTCGNS34hUX/BUBF/udT2qBoOHO9iYa0PunYsletx3bJZKJG4wLejCi4uzpFCRspeUi/qQlxi
+	E1gfAgVZET/mmGvgfQ5NDnkZMUFUUvZ2rygvwQhTqeewlMWo/LGaU8S5WXMO9EM1FIjSmn000Sh
+	e6l2J/iFk9s4LKEnV4k11bJK5Mn4keZ+/4gZFuCexK6RAzI7/rVo
+X-Google-Smtp-Source: AGHT+IFXMoWHpSJjug/JJeISnADr4Ny9VjAIbSGRn9UxtUxxPgkptSUA01TZ3SME8rFG0nZshhtDqA==
+X-Received: by 2002:a05:600c:510f:b0:442:e9ec:4654 with SMTP id 5b1f17b1804b1-442e9ec46a2mr6977065e9.8.1747054146530;
+        Mon, 12 May 2025 05:49:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442d68585d1sm125685025e9.31.2025.05.12.05.49.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 May 2025 05:49:06 -0700 (PDT)
+Message-Id: <pull.1958.v3.git.git.1747054145.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1958.v2.git.git.1746980165245.gitgitgadget@gmail.com>
+References: <pull.1958.v2.git.git.1746980165245.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 12 May 2025 12:49:02 +0000
+Subject: [PATCH v3 0/2] reftable/writer: fix memory leak when write fails
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-Jeff King <peff@peff.net> writes:
+Lidong Yan (2):
+  reftable/writer: fix memory leak when `padded_write()` fails
+  reftable/writer: fix memory leak when `writer_index_hash()` fails
 
-> On Thu, May 08, 2025 at 11:44:57PM +0000, brian m. carlson wrote:
->
->> +test_expect_success 'stash export and import round-trip stashes' '
->> [...]
->> +	git stash export --to-ref refs/heads/foo &&
->
-> Here we export to a name in the refs/heads/ namespace...
->
->> +test_expect_success 'stash export can accept specified stashes' '
->> [...]
->> +	git stash export --to-ref bar stash@{1} stash@{0} &&
->
-> ...but here we are writing to the top-level .git/bar. We do currently
-> allow that, but there's been discussion of locking this down a bit
-> further (requiring BAR or even BAR_HEAD at the top-level). Should this
-> be refs/heads/bar?
->
->> +test_expect_success 'stash can import and export zero stashes' '
->> [...]
->> +	git stash export --to-ref baz &&
->
-> Ditto here.
->
-> I noticed because I have a patch series from last summer tightening
-> these rules (it got derailed by some conflicting work, and I've been
-> meaning to pick it back up). I can certainly adjust these tests as part
-> of that series, but if you're re-rolling anyway, it might be nice to do
-> it now.
+ reftable/writer.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-True, and exported one is a sort-of-normal-looking isolated history,
-so it does not have any strong reason to be at the top level.  But I
-am curious what your plans are to deal with .git/refs/stash itself?
 
-Thanks.
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1958%2Fbrandb97%2Ffix-reftable-padded-write-leak-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1958/brandb97/fix-reftable-padded-write-leak-v3
+Pull-Request: https://github.com/git/git/pull/1958
+
+Range-diff vs v2:
+
+ 1:  9329ae2d478 ! 1:  13ebdd672ff reftable/writer: fix memory leak if write fails
+     @@ Metadata
+      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## Commit message ##
+     -    reftable/writer: fix memory leak if write fails
+     +    reftable/writer: fix memory leak when `padded_write()` fails
+      
+          In reftable/writer.c:padded_write(), if w->writer failed, zeroed
+          allocated in `reftable_calloc` will leak. w->writer could be
+     @@ Commit message
+          some write error. Simply add reftable_free(zeroed) will solve this
+          problem.
+      
+     -    In reftable/writer.c:writer_index_hash(), if `reftable_buf_add` failed,
+     -    key allocated by `reftable_malloc` will not be insert into `obj_index_tree`
+     -    thus leaks. Simple add reftable_free(key) will solve this problem.
+     -
+          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## reftable/writer.c ##
+     @@ reftable/writer.c: static int padded_write(struct reftable_writer *w, uint8_t *d
+       
+       		w->pending_padding = 0;
+       		reftable_free(zeroed);
+     -@@ reftable/writer.c: static int writer_index_hash(struct reftable_writer *w, struct reftable_buf *has
+     - 
+     - 		reftable_buf_reset(&key->hash);
+     - 		err = reftable_buf_add(&key->hash, hash->buf, hash->len);
+     --		if (err < 0)
+     -+		if (err < 0) {
+     -+			reftable_free(key);
+     - 			return err;
+     -+		}
+     - 		tree_insert(&w->obj_index_tree, key,
+     - 			    &obj_index_tree_node_compare);
+     - 	} else {
+ -:  ----------- > 2:  64f778ce2ba reftable/writer: fix memory leak when `writer_index_hash()` fails
+
+-- 
+gitgitgadget
