@@ -1,127 +1,143 @@
-Received: from mail-ed1-f54.google.com (mail-ed1-f54.google.com [209.85.208.54])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71DDC2E403
-	for <git@vger.kernel.org>; Mon, 12 May 2025 21:43:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49EE81AA791
+	for <git@vger.kernel.org>; Mon, 12 May 2025 22:04:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747086241; cv=none; b=tpECqfevFKqSmDduHSGtGhu07JpYW/GrjPg791nUAKWlpLz5yqLOfREFII3FZqc3ePB6+OQgSDdq3X/9IxXvyNATVxdV9PaBwq0q6o+0xwblIOMbsJ9fWShH7kDVMnfRsornUsgWNRMPZWJCAQcue1VO6QLdHtRwR9Yef1ZXh+w=
+	t=1747087494; cv=none; b=QAzAOR7iipL9lbvOMnVz3IeZS+0nmvjto/YgFXEldiiIQTCLGPlO75b1KAJuXFJV9yS14YyxPWHmIpGLEtGpl4bA1c+H3jof4WqUZG+fY4p+yFBoZWdoGX+xG/0E2ECEOS8i0BWAvJb2XspSHc1myApLhHKZNhXsdTbx1/3IKBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747086241; c=relaxed/simple;
-	bh=YejSyLgFw29dhH3sKhTeyZNi/LRKcvyXBfIRL5+/CiU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=JN3L4REP/WTcryYgRIs3diL+jsh/SpL7/gRN90SQuPkQPRJApHDAF1xyBUzfFEOdl2NLvAnuEh+a482YHqsGJLzbuy/8m7jrg8yeYDjpTLuW6Ev8GXgPKxjITfCmzPFhpCjQJbAP4L/GakG5TvGSaXWUMijDLz9dQpCyuG0D2C4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=W9k/6IjA; arc=none smtp.client-ip=209.85.208.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1747087494; c=relaxed/simple;
+	bh=OXNyTGYUnTUdhczFZ4Ubz9Sv/ppTv4tUr5siN27/XTw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Gd1ZaYljn+4mEjpHdagF3wZcQGp7nOos7hYFkuCEZ7TjB8UctuK75N5O3aY2JE3v/p/moiUREWajt1fWdag+hb/tHaWROREqTYD/qhVVJAVgNqQl64I3Mgn9oGt/XkT5e1fUrUA+eSXAwB33jVJqbJqYuJ7vjQXw3EtVX3sE9yk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=hZQMU9Gh; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="W9k/6IjA"
-Received: by mail-ed1-f54.google.com with SMTP id 4fb4d7f45d1cf-5fc4fc27983so1467a12.1
-        for <git@vger.kernel.org>; Mon, 12 May 2025 14:43:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747086238; x=1747691038; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XCXXRJn0s/9Jr/wHJ2U5Fhqe+MCctkPyo3BFvSYwmpc=;
-        b=W9k/6IjADT+crhcmB8Ykp6WBblpI4sxnNI1FOEAoO/6RC028kaPunE5eAUg64pIjRs
-         MMGndmUK7DfaZyvC9LiNpqBEHaKwm0aY5BeseOja7AMJ3h5GjAEi1XNG4Vfr6hNcrm9h
-         tljlJOwRAQ8XBRDm/hKjBfr0YqJmxmd9gf2U7249JWzZ0A39iutCJgI9txT089AkkQ4g
-         G8QhqdFqOWsYER+U+fjO2f0DqhO4Be0FniITD9IcoWqFSG+OgpQmqHlo191el7HPgjss
-         XEcM1gUB37uVMjFxLXTXu2IEahSwmmXLwOL1vp7D9XAJaMbZ3cpcPRCWnEmiRlwt+6Lc
-         O6XQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747086238; x=1747691038;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XCXXRJn0s/9Jr/wHJ2U5Fhqe+MCctkPyo3BFvSYwmpc=;
-        b=PhymB4WBgZNkXjKybZNE9Aumdm8Z1vzfV0ZGC0xh6yRzBf+qLuADxRM/bp4TES/3Lg
-         HYXMgh55l+Wj9+p8oyr0RmPdig8/fEPc6q8QMb2GImXvRgMEnbSn4VoAE8ALRJK0csGa
-         SyJquTh9nu8eJk6GjNqVOYMMSVKoPYo6JlZef1OD6QyQbzP+PN1pEUMwmBYC12BYrzto
-         5ub+vN3wA1HKqQM7MBOCVlji6hCpxlzv9oiksb2MdTmFe9QPvgzV3XjXPMlgGflmGVtN
-         FtZe5a7iUZjOkcYi13bMX2DIN15X7h2PmqPzE/Jb0ot8+JTXNhIJHXuTLUtb/S2+7M79
-         9GGA==
-X-Forwarded-Encrypted: i=1; AJvYcCXbO5/0iyktyr9JN6Ysg1efGEQArGjWMd/nUsXH2EBHemNZ6NH+OVxBiiZxD3Wxkve14cA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyA+HBh8xWCN1DPoJlsp84qVkqNLdOgAsVGlJuK22PHB+pZBzvS
-	fvZlLI9HafbYjLWcYNuzmIN6E/SZkhm2X7Jprk9LUOwJrdhQ7vOhchGEEjm7u6mfAjMjran3aHn
-	eTGlTqQKEqsPkyb4AN7wz9L7FOiWalkz1LMpvcojl
-X-Gm-Gg: ASbGncslkyh1b2DGxU91/C2TejErj//jLWR5cMIFOqUDsccbSxOFAOYC7HQXDo8FLgW
-	0VH0Yz4Zm7o5Zc1kpwrJTzB/fYtT9YQOZTMvR5VtuvxeLzyKTRv4mphpkpXZErmee+qAV/TWICr
-	j1livz1HefCVYKuW7+J8cTnZB0B/aLiLlP8F20zfzoI8ty0hpkXFJdJppQ6Hxt8Xk=
-X-Google-Smtp-Source: AGHT+IG4JMZ6HJp680LmVZy2zOGZi6HwVAUUpkqkRsTsEpdIdM/8Xb+GX69N7VX9ErR5uWRVQjGQhPdC8ZPu6f+Xclg=
-X-Received: by 2002:a05:6402:2030:b0:5fd:6065:7bbc with SMTP id
- 4fb4d7f45d1cf-5ff1974bdb0mr36661a12.0.1747086237584; Mon, 12 May 2025
- 14:43:57 -0700 (PDT)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="hZQMU9Gh"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1747087490;
+	bh=OXNyTGYUnTUdhczFZ4Ubz9Sv/ppTv4tUr5siN27/XTw=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=hZQMU9GhXkGYWFPM4LIsy/uH7o+ICENWTJ+d7ZV8NCkNONH2qs9YiYpgzPQ/K4Auj
+	 cDbgCX60TN+oKhdgS1d/1+Z5DKp/jQco4vu0jUUwgjilxmFX9giJAoRupeeg5Ddxq0
+	 o1v3Gj7tR2Ud8h+ODLxQkIaV7BrESdxk+ruPg/VVDHPG1XsNdJVVW8lx8X1kcdzsOG
+	 bMI9675DKmIazd3k6yjwQSmvfkiVicyeAB3eyCNehX9zWT9/ms/VkJ+39XPcJycokd
+	 85S4vfqes9Jk99YWALwTziWgkV15tkTM7+kHZe8kKsdKRKGdEiZdu5UfzVLd4l4gSI
+	 8VnwPXofiKY7bD12E3Ie2pREOVvoV2f2R6k/+ckWswxBbidasZbi66WByAhgK2KU6J
+	 yuVnporuHSKS815ag0/e9yKPvkCT8KDRSfy/yEz/8M/kKR8pFJOUIUJ6Chv5yEmk0+
+	 L+ay+OWom6NPNOyXDJ2OhQKEMCNAlolkZJ4b2nMj7i7TBq0HUDg
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C6E4D2010F;
+	Mon, 12 May 2025 22:04:50 +0000 (UTC)
+Date: Mon, 12 May 2025 22:04:49 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Martin von Zweigbergk <martinvonz@google.com>
+Cc: Nico Williams <nico@cryptonector.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Remo Senekowitsch <remo@buenzli.dev>, Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Edwin Kempin <ekempin@google.com>,
+	Scott Chacon <scott@gitbutler.com>,
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
+ projects collaborating on change-id commit footer)
+Message-ID: <aCJwgWaNoBVjvImJ@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Martin von Zweigbergk <martinvonz@google.com>,
+	Nico Williams <nico@cryptonector.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>,
+	Remo Senekowitsch <remo@buenzli.dev>, Theodore Ts'o <tytso@mit.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Edwin Kempin <ekempin@google.com>,
+	Scott Chacon <scott@gitbutler.com>,
+	"philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
+References: <Z/amMj/eg0RbXdkS@ubby>
+ <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
+ <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev>
+ <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
+ <aAgWytQNqtLzg2TU@ubby>
+ <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
+ <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
+ <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com>
+ <aCJi+4q6DZhnfdy+@ubby>
+ <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu>
- <Z/amMj/eg0RbXdkS@ubby> <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev> <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <aAgWytQNqtLzg2TU@ubby> <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
- <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
- <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com> <aCJi+4q6DZhnfdy+@ubby>
-In-Reply-To: <aCJi+4q6DZhnfdy+@ubby>
-From: Martin von Zweigbergk <martinvonz@google.com>
-Date: Mon, 12 May 2025 14:43:46 -0700
-X-Gm-Features: AX0GCFvmpjdHikKdkw34N7Kb0kusY6RJ94Zh2RqtPsu7KI7XKtdYoQ86B33brhs
-Message-ID: <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-To: Nico Williams <nico@cryptonector.com>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, Remo Senekowitsch <remo@buenzli.dev>, 
-	"Theodore Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, 
-	Git Mailing List <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, 
-	Scott Chacon <scott@gitbutler.com>, "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="w+AybEXP+6e+vGLi"
+Content-Disposition: inline
+In-Reply-To: <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-On Mon, 12 May 2025 at 14:07, Nico Williams <nico@cryptonector.com> wrote:
->
-> On Sat, May 10, 2025 at 01:31:32PM -0700, Martin von Zweigbergk wrote:
-> > To me, the main benefit is being able to refer to an evolving change
-> > by a stable ID. That enables things like `jj describe qx -m 'new
-> > description'; jj new qx` (update commit message, then switch to it)
-> > without having to look up the new commit ID after setting the
-> > description.
->
-> Notionally this is not different from renaming a file.  You have a name
-> (file name, commit message subject) and you have the thing it refers to
-> (file contents, tree object).
->
->   <insert sub-thread about why Git does not have inode numbers for
->    files, does not record rename/copy intent, and depends on file
->    content similarity checks to detect renames>
->
-> If Git can do file content similarity checking to discover renames, then
-> surely so can jj and other CR tools do commit similarity checking to
-> discover commit message changes.  Is there anything that makes the
-> preceding statement incorrect?
 
-That wouldn't work in the `jj describe qx -m 'new description'; jj new
-qx` example I used above, right? I think you're suggesting that when
-the user runs `jj describe qx -m 'new description'`, we should compare
-the reachable commits before the command to the reachable commits
-after the command and then record in some storage that the new commit
-is part of the same "change" as the old commit. Is that what you
-meant? In this particular case, the commit message obviously changed,
-so comparing the commit messages will obviously fail. We could of
-course make this command record the information itself, however.
+--w+AybEXP+6e+vGLi
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> > Given that we already have this stable ID, [...]
->
-> "We" == jujutsu?
+On 2025-05-12 at 21:43:46, Martin von Zweigbergk wrote:
+> On Mon, 12 May 2025 at 14:07, Nico Williams <nico@cryptonector.com> wrote:
+> >
+> > How is this stable ID constructed?
+>=20
+> It's just random bytes (16 when using the Git backend, 32 in the
+> Google backend).
+>=20
+> > How would things other than jj construct these?  We spent many messages
+> > trying to work that out and in my estimate that wasn't settled.
+>=20
+> Random bytes has worked well for jj.
 
-Yes, sorry :)
+I would like to suggest that we use a deterministic approach.  People
+rely on Git commits being deterministic, including in my stash
+import/export series[0].  In addition, it's important to avoid any
+allegations of side channels or leaking information in commits, which
+would be a concern in many environments and which a deterministic
+approach would avoid[1].
 
-> How is this stable ID constructed?
+I'd suggest a simple SHA-256 hash of the original commit data (for both
+SHA-1 and SHA-256 commits, but one that would change to a new hash if we
+added one) or an HMAC-SHA-256 with a fixed and documented key.
 
-It's just random bytes (16 when using the Git backend, 32 in the
-Google backend).
+I would also recommend a config option to avoid creating these IDs for
+those who don't want them included for privacy reasons.  I expect to set
+such an option, for instance.
 
-> How would things other than jj construct these?  We spent many messages
-> trying to work that out and in my estimate that wasn't settled.
+[0] That series will definitely require that they be disabled when
+creating commits, since the goal is to ensure bit-for-bit
+reproducibility between different Git versions so that users can
+immediately tell if the stash history is identical.
 
-Random bytes has worked well for jj.
+[1] For instance, it's an easy way to leak keys or other credentials
+without people noticing just by pushing an innocuous-looking commit.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--w+AybEXP+6e+vGLi
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgicIAJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ5juTIJl7cNbbuR8X7Nr0Mmxj64urZk7+e3aDUj8OY2E
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJqKAQCcZuNntbXaW+j9mI2ZFm2X4v72
+ams4AoG8NTggOk7wYQD/c6N1Ntt8lm6MJHmGs0Ubj4QNdgUpENdRoZDa6MMlEAI=
+=+iQG
+-----END PGP SIGNATURE-----
+
+--w+AybEXP+6e+vGLi--
