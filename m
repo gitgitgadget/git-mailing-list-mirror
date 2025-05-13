@@ -1,54 +1,54 @@
 Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE1A46B8
-	for <git@vger.kernel.org>; Tue, 13 May 2025 16:51:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB45F1AF0CE
+	for <git@vger.kernel.org>; Tue, 13 May 2025 16:59:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747155086; cv=none; b=ldE3EBsGqE7cy04QErMC0o/KqYOp5Vg38oGlIyCSdX++t9x5+EaS22QyRR0HM88ttipVBVvGOMpkTivLxzHXqbwpn2Gcx+J/CD7dEs/4bBdb6oo+9040w495fZjx143Qg5WGD+94yoH1HTQkDkVVCEI+g33M0726iMVNj2cR5MU=
+	t=1747155578; cv=none; b=F7vWjOgqr5tDWEsdPqEfUuoDX1wU4fKDfbhGL08tXZfuZI4jnnQRuUQGQv5SJDJzyQt2inNNYo8j7JTMWf+mit5qv3hJG+Xu/x8geuNCiFaGbnxYDyXtpT1a9vCb4BwpJTYRylaqsv1b5IkSaMpypOuOb/yyItQlkM3rZD1qmgM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747155086; c=relaxed/simple;
-	bh=3XI4l5ddRSGPYkBwRhHdOrRXmX48oiiyXZg5fLgyxME=;
+	s=arc-20240116; t=1747155578; c=relaxed/simple;
+	bh=IC4XRZDcDRklh3yneafizqYeUWp5Sf4VSynrQZ2hIQk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=fWBfxQG03kLQed4g4vSMyqm24WXgrBSkFtcdVxpRtmBVo7FW7caXXspYzoicTEwnYiHyggoZ4zC+PTbdzCXl6PI0a263Pom4sCL+fq+zPZ+P2AYgc8jNSRcBjq7OC82uRUVu6pnfq+X+CTouwKtdIHscp7x57mDwW2jFqi/qlIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Doq8AHP6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uZVz63M8; arc=none smtp.client-ip=202.12.124.159
+	 MIME-Version:Content-Type; b=BYDVEijOwCHcS9ImfiL8ruC/TxV6ZPFDvJ+2npPCKlTTYA6VgijwxZ+gFzmv3143ikCiaCPYc/cmfaVrc1oBCgMIIiVYC6tBveX1MpsSY63NiQyGuoaKDediC/Bly0fIh5pbH/6UA+vNGx//aX+Z2CtTupNo8Dq5lQmSEu+CdcE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PtzyllHb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nMUWIKIY; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Doq8AHP6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uZVz63M8"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 86C7B25400C9;
-	Tue, 13 May 2025 12:51:22 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Tue, 13 May 2025 12:51:22 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PtzyllHb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nMUWIKIY"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id A2A452540128;
+	Tue, 13 May 2025 12:59:35 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 13 May 2025 12:59:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747155082; x=1747241482; bh=F/2S2EYPtC
-	1fvX9exwXfUdvLD4pHo6/wKUfvyH8NXqQ=; b=Doq8AHP6RgW5YlLTNTcIObV2fd
-	KZgj72/VpIhK/Hd+5AC/o1pG7PsAU4j+IrcJHjJc1iGpAizbo+zymAC9481kxumT
-	rrhwWLPBsA7mCs6yFwPY+laCZBihj7etU8Ro89ttBFTqv/2kMLZgYvj8E7Hdkfkg
-	1wlA3jHc00ZorkBBoL7o2e8nNnOiQsURP2SjlBSwpBua8qncPDoTwgLKx71b4MIW
-	Mi0rMI+awTc3qiaeeBgoQpoXjxSQf9yZ+cO8MyKOZCKjdcCfxwQTUKVuF7LYXC10
-	pTLrBMQWDAF/RtVuFl+fgT/7UjtwbiLrJbYbXBoJ6ro6JQkkkkrcHSpH97AA==
+	:subject:to:to; s=fm2; t=1747155575; x=1747241975; bh=oCvMsfWax7
+	zZuZSpvN2kTfn0VackDjsCGWilGnaWexs=; b=PtzyllHbk2d8ueGqHkOGl+eTcF
+	jV8XGwFtAJrENOlQRQmT6tu8la3FhiT/Exjwj4nogl7tl7EtHpdcGNVbVbZlusdL
+	speDcFSlObed68tpxQZ+lkO9PrKGzLTn6e5I1eykBH46tMMdzoSOk1gWsNVQQmJi
+	BP7bvYvff23mipmHrHDx9cDuExfJU48Rg8jVCx/g3YsU4Tdn2A2O0nkxF+awUfFB
+	qu+mhTmuvscGPjTsnT9Fx8hLEALqPLkVp1xKA4Bd0CKuDoisHTfTbbQa68SBhtmN
+	yvq9BGGM8puqlcj9CUdsBxyw+ndlVCh+EpPLAxEm5fSnb/c7ISAQwJ4FRUvA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747155082; x=1747241482; bh=F/2S2EYPtC1fvX9exwXfUdvLD4pHo6/wKUf
-	vyH8NXqQ=; b=uZVz63M8nKlhlzK3Fo9BwqQwj79WmYk2FKmpJcVuv8OKM0PGil+
-	eHB8P0hGtkbWo8VZHp3HXFDrFkgS3KGBlx3qZ2r5/QUj4Sd3GYF9/08RahroWNi/
-	FM3Xwg3OvUXT8nj4VkSyk2lNvayLL0hVC9WF3ud4Ho47Ep2mKIGShk08ALxDpt+y
-	TWT7qcZcerw2woLkUuqVCAw4Zs6vEuhaxitRCJXfgU0mCyEm5wY0Sq7h6qzC+jMq
-	YCnJN8pqzPJvuW/YtSlO4tT8XKfjGQsmjrRiOw/64gL3QuTPkF9XnraSpF/Ba47g
-	K7y2fF/l3u8FnQ8JIKxsPjpHTtaasKgCOJw==
-X-ME-Sender: <xms:ingjaOXQszPDP59rRwy1qqzysu17C8Urin0jJ4GqTry9oofgoWoeAQ>
-    <xme:ingjaKnLTwJrrMSOZEQk-eQxsRs4iHvuDLRQJKRfGPSWiSw0vDNnr92_yhciigm_A
-    jXb51gGT4qVsFhb6w>
-X-ME-Received: <xmr:ingjaCblH_KMMvY21H5u0E61b9c28XpGKLLbeBCfr6tPx7wD64DZ5PbSVp63rLRQj4esmvPP3aZPi4sZGDRREFwImOmv2mEsR4zETeI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdegieefucetufdoteggodetrf
+	1747155575; x=1747241975; bh=oCvMsfWax7zZuZSpvN2kTfn0VackDjsCGWi
+	lGnaWexs=; b=nMUWIKIYClRtZjOvZ96p99k2mIBguB4qCsf6BGptbSUZjxeg9yW
+	A80yDpqKZdVrHVDppFvl9gDZhrd8Jarvug76dPHD2O9eDpcpzRM4Oofl3ukdGSZy
+	tPCFbp6BCKuLDfQgHjfWzcZu0rEWzi8pEL3JkjR+WrT/D5Kkw7CKmfE8Mns3NKYO
+	dsavsuhsX7Xd69zyH5DL5QPiwxMYfs2ZCZ2iSO9B8lQaxIEznqxf4ZbTRHdJAXB8
+	lmjFV+cI6MphlPZQSCTGP2xzs1RWCsux8O4xdxtdZSR0I0RI3A5psdnqKRRUj8aE
+	Px+vmXGJJqsyju1zG5m6eLiNY6qqaKnEFSg==
+X-ME-Sender: <xms:d3ojaO_63l6voTvvXErPR8rXGw3nqsrrt2Pv2yKPEGqL-F6MpPlyzA>
+    <xme:d3ojaOutrZg2R51bxdPuzfBXeUwFqwG_zNa7Y2pe4VDIZR-U2IKbliZEvWbVd0ALO
+    gRiReHnAf-MDqiyAQ>
+X-ME-Received: <xmr:d3ojaECHOCLXEb2Bamxm9S4spKSP3SvMX6x_xIa6zKse86GRuTbIF7KPfdtw2xiFlkzju5dJlQlel7Ddt_wNMYlyHmnOXKNNETqOWEU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdegieehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
@@ -56,29 +56,39 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdegieefucetufdote
     hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
     feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
     hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepshhhvghjihgrlh
-    huohesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehpsh
-    esphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:ingjaFUhYDeMFsvMl028ICsmHVwI2sCcZSW-nCY1IqB7KCstLzGIqw>
-    <xmx:ingjaIlTgJ5kUZHYX2xpSP3o8RsWQkX_sm5wej3a8ZcNGDgOgTy66w>
-    <xmx:ingjaKdD4xj6eNqW3lxza7UNAwloUwC01L5MnyeT5p4ARg_mj1TEbQ>
-    <xmx:ingjaKFpHWrX6-vnapVsQu-ehSF5a2vQdUzieS0bwvPYFd1eXhFjJg>
-    <xmx:ingjaLSJNhSuKcVjgMD2J0PWAzcgke0B3datr_l0VBq7UTFyxdQ6dlJh>
+    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
+    himhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdr
+    nhgvthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhohh
+    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheprghrnhho
+    uhgurdgsvghrvghnughsvghnsehsohhprhgrshhtvghrihgrrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:d3ojaGeCeM9OH0Mt7rhlcmGZxPHCbLava-fwcYG_e2msI6H5hL2JdQ>
+    <xmx:d3ojaDPUr2CfWNRsDV3ly7DQVpW0sJ-fGsPVsEOcoVetEIIQt-rBeQ>
+    <xmx:d3ojaAnIbX2c-wouhhNClkMBRqg6sANidD153tILFk-W2knhbPJUdw>
+    <xmx:d3ojaFvTX7Jx0mk60nOfF0L5-u0nGQXjMh2YKkqYMJbEjTlwixScbg>
+    <xmx:d3ojaFBrGHeuj5hZZpiU2oUWemg3BcqCioeyliJOq_BiueeS8JIW4mLr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 May 2025 12:51:21 -0400 (EDT)
+ 13 May 2025 12:59:34 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH v4 3/3] packed-backend: mmap large "packed-refs" file
- during fsck
-In-Reply-To: <aCMoD-c_oHlu0c5c@ArchLinux> (shejialuo@gmail.com's message of
-	"Tue, 13 May 2025 19:07:59 +0800")
-References: <aCMnrwkoJ2WyqGZT@ArchLinux> <aCMoD-c_oHlu0c5c@ArchLinux>
-Date: Tue, 13 May 2025 09:51:20 -0700
-Message-ID: <xmqqcycch2t3.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Jeff King
+ <peff@peff.net>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+  BERENDSEN Arnoud <arnoud.berendsen@soprasteria.com>,
+  "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Cleaning up "contrib/"
+In-Reply-To: <aCMLgaWXr_gM8g3l@pks.im> (Patrick Steinhardt's message of "Tue,
+	13 May 2025 11:06:09 +0200")
+References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com>
+	<3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
+	<aBhZHA7av8bWH9Ac@pks.im> <xmqq5xieq3fs.fsf@gitster.g>
+	<aBmg1_wlF2fuk96M@pks.im>
+	<20250512135017.GC1191957@coredump.intra.peff.net>
+	<aCKOqs52TDZDvAXJ@tapette.crustytoothpaste.net>
+	<aCMLgaWXr_gM8g3l@pks.im>
+Date: Tue, 13 May 2025 09:59:33 -0700
+Message-ID: <xmqq8qn0h2fe.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,63 +98,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-shejialuo <shejialuo@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> During fsck, we use "strbuf_read" to read the content of "packed-refs"
-> without using mmap mechanism. This is a bad practice which would consume
-> more memory than using mmap mechanism. Besides, as all code paths in
-> "packed-backend.c" use this way, we should make "fsck" align with the
-> current codebase.
->
-> As we have introduced the helper function "allocate_snapshot_buffer", we
-> could simple use this function to use mmap mechanism.
+> Yup. I think safe credential helpers should rather be moved into our
+> official tree. This includes at least libsecret and osxkeychain.
 
-"could simple" -> "can simply".
+Yes.  s|^contrib/|| should be sufficient for them.
 
-> Suggested-by: Jeff King <peff@peff.net>
-> Suggested-by: Patrick Steinhardt <ps@pks.im>
-> Signed-off-by: shejialuo <shejialuo@gmail.com>
-> ---
->  refs/packed-backend.c | 19 +++++++------------
->  1 file changed, 7 insertions(+), 12 deletions(-)
+> I'm not
+> sure about the netrc one though -- it's unsafe by nature, and I'm not
+> sure I would feel comfortable with shipping such a credential helper
+> that is known-unsafe.
 
-Nice loss of line count ;-)
+That depends.  It is a known-convenient helper that can often be
+used in an unsafe way, but when used with GPG encrypted netrc files,
+especially on a single user box that is reasonably secured, it is
+unfair to call it known-unsafe, I would have to say.
 
-> -	if (!st.st_size) {
-> +	if (!allocate_snapshot_buffer(&snapshot, fd, &st)) {
+Thanks.
 
-It is a bit funny to see that a helper function that works at a much
-higher conceptual level treat an empty file so specially (namely,
-should it be different from a header-only packed-refs file?).  If I
-were doing this refactoring in 2 & 3, I would probalby have made the
-helper return "void", and have callers who do care about st.st_size
-check that themselves.
 
-But I'll let it pass.
-
-> @@ -2121,21 +2121,16 @@ static int packed_fsck(struct ref_store *ref_store,
->  		goto cleanup;
->  	}
->  
-> -	if (strbuf_read(&packed_ref_content, fd, 0) < 0) {
-> -		ret = error_errno(_("unable to read '%s'"), refs->path);
-> -		goto cleanup;
-> -	}
-> -
-> -	ret = packed_fsck_ref_content(o, ref_store, &sorted, packed_ref_content.buf,
-> -				      packed_ref_content.buf + packed_ref_content.len);
-> +	ret = packed_fsck_ref_content(o, ref_store, &sorted, snapshot.start,
-> +				      snapshot.eof);
->  	if (!ret && sorted)
-> -		ret = packed_fsck_ref_sorted(o, ref_store, packed_ref_content.buf,
-> -					     packed_ref_content.buf + packed_ref_content.len);
-> +		ret = packed_fsck_ref_sorted(o, ref_store, snapshot.start,
-> +					     snapshot.eof);
->  
->  cleanup:
->  	if (fd >= 0)
->  		close(fd);
-> -	strbuf_release(&packed_ref_content);
-> +	clear_snapshot_buffer(&snapshot);
->  	return ret;
->  }
