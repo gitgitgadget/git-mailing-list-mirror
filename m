@@ -1,151 +1,170 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64DCE202C4A
-	for <git@vger.kernel.org>; Tue, 13 May 2025 21:22:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD112AD25
+	for <git@vger.kernel.org>; Tue, 13 May 2025 21:44:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747171344; cv=none; b=Hj/E0E1RA8aX2Ek/q7a2v7x85x9WPLn3I/Wk3bKzZeKLKuKd+t4SSP+ecfSLBiWOLrNyj7yXi2eYJYIOlAGnV0jgeMYWWeVzboSqMThqnolG4DoGJ+bBrRJWb1fuqO3tflgg2e+IjYz+mqojqrPUQFIJlAfbDBLVz2rGluYmGOw=
+	t=1747172679; cv=none; b=TWzJwI0TutL0KqmpXWaW0w3URwFplGEfUcOJj2bRMfyMfKgeu7hQIFXk+/xZDpBgOtaqVTHQmtaRCWDNkwygZheJEtUAfr+QdH1yrnuMNeTgGvaa4kkcwALvMFc7MWnAhJQA3CFyasaUEoqviM6/fWGxMtJQe3xoJ30PtTTRSLs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747171344; c=relaxed/simple;
-	bh=ckzgYSxN1tCXfDcjcfPjSKtLikQKbkcCk9k/UEz1GW8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=e0ZOqRrb0LoaF4uCCsjwX95eYWvkTvfvwOVJnQQWsytpeCaTPuu5KXX5j3XAt482RIBhtb/VG2B+4p0IeZMxZTJWsdqf8OwPt49qLj1N2U9JxHARpgZKlqZ7xTy37Nq0wGBC/6gvjkEHSzE28w/+6wi5MQciEBCgzCXVstafim4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CQjW85dL; arc=none smtp.client-ip=209.85.208.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747172679; c=relaxed/simple;
+	bh=XfR6EPtCz+6Jf82Q3pOIOvH5TyjdSoeL1pcHTL9yAfs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=nRfi1TT0Es2MAluXAIkanAzTJ96Kq/92RRj/SxqLfJisA8BiLSN91Q+5ZxbkQrflPHXVO2DTbhuOCn5w+mqrSw5tFuTObBqXUsMG1D0o3im0FSSI500thTqfztIQUCMGMBgcUOLi9bxTIo/828WQ8tiBEw2n/5L7SjcDa+h5KpY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RueEvSfE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vvgYup+l; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CQjW85dL"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-5fbf0324faaso12403842a12.1
-        for <git@vger.kernel.org>; Tue, 13 May 2025 14:22:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747171340; x=1747776140; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8xT6JRiRvdIVEJ9tjqc2CPHT1ZbxlgHU5ybpkkRnhnU=;
-        b=CQjW85dL2ykup9Rk1nJiW5ojOWdcPbq91RUsStllD9k1VcDG7srhKeRDvSKHsxdZ2c
-         /7yljUTvTSeRbxaTIT/3gIjJsWB8axLQpowUHhO4fC55hPjrfcdfm94E3MqZBvZawUKo
-         JfE6uB+lBomH+fXKqbWpOFRpcm9Pot8nGATW+X1UfB0vn3zBO5GrHV3cMcK1P6nMi5HC
-         0OHvuIBpCSZRXtaeDezAGiiDoweWpeSdK78pigPhMgIHv2BGYiiUYn0EKov7PDk9mJH3
-         9s/WeGgeDz3K1YGjMRpehTaiaRwMrNRB1Tcp43Lht1zkLTsZL/SufYfXZT3SKd9NazfW
-         7uHw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747171340; x=1747776140;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=8xT6JRiRvdIVEJ9tjqc2CPHT1ZbxlgHU5ybpkkRnhnU=;
-        b=plMX/AOUFRQ0zRyNdNNgYGMQmrY9YIM1e5avBxMeLONR6zJlQL/hy+eOOG5HQhYI//
-         SF/w4m9DfTStjMmvFQVeSnuSQn0VOEbG3nLWgt5zdJ4sSDFZNmJWLk5Um5i9aT6uW6+g
-         Cydbhixpf67ZxOYqEuLztfTvkNDmAZrY3DPiJ+f3H/eUCLvB8CQzF2ZD0fz/jr1y81nD
-         gfnvH2Nur0AdYqFFjWWD0BwXup68VWbvl3lOvxLYbLX4FK2ScU8uwSMR6nka847p9KMt
-         RW6Wr3CYcDlW19DcEwErt1eX6sn1ujEzDWhD+QL8TVEOOSVhi6tbPUemrKiDshEx85if
-         QO4Q==
-X-Forwarded-Encrypted: i=1; AJvYcCVxLrb0sQNcEFdXT3E5QMjCLnK485CMT17jlPIWvEJNZFWLq7hvABQDKgbUoxqmvrv1sXY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxhRkIw9vftdY/WK/LCN7FG8AncC+OduPDdnBtqZYUxGKXzeOEC
-	jDgMe2q3a9EipXBf6G04j7GejcKprJ5ZNgRB3kwT3+2IshLHH7NUDyv0qVCE/G+x2D1bU7V0kr0
-	LkiOKR894ALeyRLqjLqOMfWBaPZc=
-X-Gm-Gg: ASbGnctUX0QSCnd0pvJhJmiBNHt+XnQqxPSbkmgYcRq37Klahs/ar3aNjffydS3M3fd
-	kUkt1QsgV6JFBGlJ4tm8BoOS8n9KQUuXSvczdgAMHDXYcOYaZ7MNaZbpveGb4vQsqNf/U+wOFjq
-	Zg1SJVwrTRaI+jlCzXK+TvxNVLMLzLkz6bjUwa+y1LMIP0gTLVvrwbZuly9eJcEAMvVMY=
-X-Google-Smtp-Source: AGHT+IFKzXG8MC6++vZUyMuHTUUwCSQf/2mZk5mZcgcPqMArr8WEwnnscgo6zopoILSkqYZhiBX+YlGdE4DL3bOUfIA=
-X-Received: by 2002:a17:907:7f8a:b0:ad1:8b5c:114b with SMTP id
- a640c23a62f3a-ad4f71de01emr83029366b.18.1747171340299; Tue, 13 May 2025
- 14:22:20 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RueEvSfE";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vvgYup+l"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CD9181140112;
+	Tue, 13 May 2025 17:44:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 13 May 2025 17:44:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747172675; x=1747259075; bh=Z4F9wk98pu
+	/NCQDkRGX0sPOpppQuAc0A1pg3leZrDcc=; b=RueEvSfEln7IW2lVXHadAtf0UI
+	PsT4LkNgXj2gvlG0gdoDrCMJefZiuoyCb8QWxRCqeSufY/ysBLYwvelAUNQ+yP/F
+	ip5mkttNBoR1ZQsK+G1+adkmbW6jCZwkLW9ZH78vxr5P1ZgZQQD8PwVeMvZfKPeM
+	DLbScPWJftJ+10eZb0eiKcZCdqFN2xE4e08ytlR/3Hfhme+0woZhOIc3HSIvlYpW
+	4FH9rlaQ2ognlLljTEC2pX1sje/XHR90PYB72Bgrg3FyOyVdEV7hF7YRzwNPjSwH
+	AyzJ0ChkVpgwDnN86SgnmxJpGJwk29b4LKgmvz3p8y5HcIVBtV19N/GX1UKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747172675; x=1747259075; bh=Z4F9wk98pu/NCQDkRGX0sPOpppQuAc0A1pg
+	3leZrDcc=; b=vvgYup+l1mZCSuXCthKYyGz1ElnkidrKqdriAOQnhMNVrkjn+Ko
+	mv9OIspYQ6IST+17R1be3/87t9zLQXiOGvH4NS4Jx6nvyywwYHCdcowpBQku1xzW
+	makQXcSQQJiCdXqFL0V2QL1eCMD5xjDi9yv8Hf9QfapAaYwZsMMau5vMxTQYcKMU
+	gFl1vSW3/2eIzV1G09uJBrGc+tD1dIcVV4n4tXpyhPHw6ZznCJbr4GDXjnVp3GmN
+	YxlV6eVRwRKs2kd0ma9f0icIkPQ5riFiBI2eS+DNxiOCDd2t2mHo80vC2JjR21B1
+	jrjDE5B627xf5h/YAJUxnR9LAKwvjQia2Qw==
+X-ME-Sender: <xms:Q70jaLNVCIx4rXKN9Gv2mIxAeZrLpTEqTeBxbrmIZl-gV4vpdjS_pA>
+    <xme:Q70jaF9rhZ8o7FJGYunkZLuMyLr1vVrf6WlA7VVtyQKXCPIlLEYejYIiZAItLrulN
+    p3eFrFtzarKI15C7A>
+X-ME-Received: <xmr:Q70jaKRpOh-CgpsvZDFYlcp8xl8sxw-1FBZGFwtohdQuFsMiaTFCpa1Z5f0DLboUiNxRPhcppPNk9WKzm7zeuTl4OtoiTzo_mbdaEdk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdehvddvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
+    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehg
+    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:Q70jaPu-26a_k2qRdiREXmWPcdyI_A-SGcJR8UoWH8_pMeihP3sTEA>
+    <xmx:Q70jaDeXzW7--vdPpMf8KSm-MY2x63xQkicrcWqBsbFKMEa79C23cw>
+    <xmx:Q70jaL1o_3zeqHCUrjvC6QAon4dqktPig_KSYRzdTSAt6G8JZM8QvA>
+    <xmx:Q70jaP_3spcyWhxR0kZdUZZxOnEXB_ib1NazzE8VVCO7pQ8j9v0Fyg>
+    <xmx:Q70jaGK_eOl0KGEmJsbNjSbBMKyTNtwkBhvh5uFi4-89BXcXo7vYg_F7>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 May 2025 17:44:35 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2] submodule: prevent overwriting .gitmodules entry on
+ path reuse
+In-Reply-To: <20250513033403.91365-1-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Tue, 13 May 2025 09:04:03 +0530")
+References: <CA+rGoLdzT01jLigX=Z+_tw715O0BibgVA+Sj+65Qwee7i5gLfg@mail.gmail.com>
+	<20250513033403.91365-1-jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 13 May 2025 14:44:33 -0700
+Message-ID: <xmqq7c2kgp8e.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <Z/VGYrrVZYQ13TLj@ubby> <20250409121924.GA148735@mit.edu>
- <Z/amMj/eg0RbXdkS@ubby> <CALnO6CC_Gvqhcxp4AknwM+YSsngv_0zngKb2XHXN4u0AvKEMMg@mail.gmail.com>
- <D9816I5AX1RG.AA4A7H2D8SJ7@buenzli.dev> <CALnO6CCjkxv40+5wZ_vwZTKv7Te8Xh--M1fY2wbuOfgJm5LZxw@mail.gmail.com>
- <aAgWytQNqtLzg2TU@ubby> <CALnO6CBq2cqBAhzMh8rnXzc8cPTsB4hz98YVn3B4+PGdiyn9_A@mail.gmail.com>
- <CALnO6CD8JTnNGfuCtb1QKFhx+Vv1txUZ+wCL1nZCDGAvHx6A6g@mail.gmail.com>
- <CAESOdVCKTnUbVuXq-=F3df4i2T-GcDpJMENr8wwm-ZXR95+59w@mail.gmail.com>
- <aCJi+4q6DZhnfdy+@ubby> <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
-In-Reply-To: <CAESOdVD_Cse6AjwLb-4QKjdo4ESWwF3FzSS5JaHbE6ZrMjFeZw@mail.gmail.com>
-From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 13 May 2025 17:22:09 -0400
-X-Gm-Features: AX0GCFtBlGDEFWgP9tRb7Tz13rTfgzmrPgjHHDBuwn9NuIG8F8HJvnDXlLSyNIY
-Message-ID: <CALnO6CBSyCyJ_veinUndZNxBnDuwY4cn3RZu7Jcd3bM7pVV5xw@mail.gmail.com>
-Subject: Re: Semantics of change IDs (Re: Gerrit, GitButler, and Jujutsu
- projects collaborating on change-id commit footer)
-To: Martin von Zweigbergk <martinvonz@google.com>
-Cc: Nico Williams <nico@cryptonector.com>, Remo Senekowitsch <remo@buenzli.dev>, 
-	"Theodore Ts'o" <tytso@mit.edu>, Junio C Hamano <gitster@pobox.com>, 
-	Git Mailing List <git@vger.kernel.org>, Edwin Kempin <ekempin@google.com>, 
-	Scott Chacon <scott@gitbutler.com>, "philipmetzger@bluewin.ch" <philipmetzger@bluewin.ch>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Mon, May 12, 2025 at 5:43=E2=80=AFPM Martin von Zweigbergk
-<martinvonz@google.com> wrote:
->
-> On Mon, 12 May 2025 at 14:07, Nico Williams <nico@cryptonector.com> wrote=
-:
-> >
-> > On Sat, May 10, 2025 at 01:31:32PM -0700, Martin von Zweigbergk wrote:
-> > > To me, the main benefit is being able to refer to an evolving change
-> > > by a stable ID. That enables things like `jj describe qx -m 'new
-> > > description'; jj new qx` (update commit message, then switch to it)
-> > > without having to look up the new commit ID after setting the
-> > > description.
-> >
-> > Notionally this is not different from renaming a file.  You have a name
-> > (file name, commit message subject) and you have the thing it refers to
-> > (file contents, tree object).
-> >
-> >   <insert sub-thread about why Git does not have inode numbers for
-> >    files, does not record rename/copy intent, and depends on file
-> >    content similarity checks to detect renames>
-> >
-> > If Git can do file content similarity checking to discover renames, the=
-n
-> > surely so can jj and other CR tools do commit similarity checking to
-> > discover commit message changes.  Is there anything that makes the
-> > preceding statement incorrect?
->
-> That wouldn't work in the `jj describe qx -m 'new description'; jj new
-> qx` example I used above, right? I think you're suggesting that when
-> the user runs `jj describe qx -m 'new description'`, we should compare
-> the reachable commits before the command to the reachable commits
-> after the command and then record in some storage that the new commit
-> is part of the same "change" as the old commit. Is that what you
-> meant? In this particular case, the commit message obviously changed,
-> so comparing the commit messages will obviously fail. We could of
-> course make this command record the information itself, however.
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-I didn't follow the entirety of the example (since I think you'd have
-to have change ID "qx" to start with in that case), but:
+> When a submodule is added at a path that previously hosted another submodule
+> (e.g., 'child'), Git reuses the submodule name derived from the path and
+> updates the corresponding entry in .gitmodules. This can silently overwrite
+> existing configuration if the old submodule was only moved (e.g., to
+> 'child_old') without renaming the submodule.
 
-I think you'd compare commit /contents/ (aka the trees they point to)
-rather than /messages/, just like how rename detection compares blobs
-or trees? (Although I seem to recall a recent thread where a heuristic
-involving the old/new name went wrong because it was too short, so a
-heuristic in the messages is probably also reasonable. Doesn't
-range-diff do something similar?)
+OK.
 
->
-> > > Given that we already have this stable ID, [...]
-> >
-> > "We" =3D=3D jujutsu?
->
-> Yes, sorry :)
->
-> > How is this stable ID constructed?
->
-> It's just random bytes (16 when using the Git backend, 32 in the
-> Google backend).
->
-> > How would things other than jj construct these?  We spent many messages
-> > trying to work that out and in my estimate that wasn't settled.
->
-> Random bytes has worked well for jj.
+> This patch improves the `module_add()` logic by checking whether the
+> submodule name already exists in the config but maps to a different path.
 
+We frown upon a patch that says "This patch does X"; just give an
+order to the codebase to "be like so".  I.e. "Improve the module-add
+by doing X..." is how we phrase a proposed change.
 
+> In such a case, Git now errors out unless `--force` is specified, thus
+> preventing accidental overwrites. To proceed safely, the user can provide
+> a new name via `--name` or use `--force`.
 
---=20
-D. Ben Knoble
+The above explains what happens in module_add() quite well.
+
+What is puzzling about this change is that the new helper function
+and changes to configure_added_submodule() is not described at all
+in the proposed log message.  How are they relevant and why do we
+need them?
+
+> @@ -3443,6 +3452,7 @@ static int module_add(int argc, const char **argv, const char *prefix,
+>  	int force = 0, quiet = 0, progress = 0, dissociate = 0;
+>  	struct add_data add_data = ADD_DATA_INIT;
+>  	const char *ref_storage_format = NULL;
+> +	const struct submodule *existing;
+>  	char *to_free = NULL;
+>  	struct option options[] = {
+>  		OPT_STRING('b', "branch", &add_data.branch, N_("branch"),
+> @@ -3546,6 +3556,32 @@ static int module_add(int argc, const char **argv, const char *prefix,
+>  	if(!add_data.sm_name)
+>  		add_data.sm_name = add_data.sm_path;
+>  
+> +	existing = submodule_from_name(the_repository,
+> +					null_oid(the_hash_algo),
+> +					add_data.sm_name);
+> +
+> +	if (existing && strcmp(existing->path, add_data.sm_path)) {
+
+If the name is in use, and the submodule with that name is at a
+different path, then we are in trouble, OK.
+
+> +		if (!force)
+> +			die(_("submodule name '%s' already used for path '%s'"),
+> +			add_data.sm_name, existing->path);
+> +
+> +		/* --force: build <name><n> until unique */
+> +		struct strbuf buf = STRBUF_INIT;
+
+"-Wdeclaration-after-statement"
+
+> +		strbuf_addstr(&buf, add_data.sm_name);
+> +
+> +		for (int i = 1; ; i++) {
+> +			strbuf_setlen(&buf, 0);
+> +			strbuf_addf(&buf, "%s%d", add_data.sm_name, i);
+> +
+> +			if (!submodule_from_name(the_repository,
+> +						null_oid(the_hash_algo),
+> +						buf.buf))
+> +				break;
+> +		}
+> +
+> +		add_data.sm_name = strbuf_detach(&buf, NULL);
+> +	}
+> +
+
+What is the memory ownership rule for add_data.sm_name?  Earlier we
+saw in a pre-context of a hunk that this was assigned from
+add_data.sm_path, so in that codepath it is considered a borrowed
+piece of memory, but here the member has to be the one that owns the
+string detached from the strbuf, which eventually must be freed by
+somebody, or it would be a memory leak.
