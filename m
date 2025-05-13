@@ -1,130 +1,116 @@
-Received: from mail-il1-f178.google.com (mail-il1-f178.google.com [209.85.166.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3969BD529
-	for <git@vger.kernel.org>; Tue, 13 May 2025 03:37:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D447A8BE8
+	for <git@vger.kernel.org>; Tue, 13 May 2025 05:08:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747107460; cv=none; b=ShU3zsQ5puf4ZGF+Agd9ercRwDctT7LCkTVMmoVr5/bQ5/quZc/96yigck5qsf3p8HSZMFqu2N6xEQlPc73I6kGncS7WNDS4K7xY95N27RNNIlscvqVB25w2UdmW01iJG8gmy0sI4Rki8JMkF5e/V6ukkxv4spA03QINNoSAZIQ=
+	t=1747112891; cv=none; b=WkWzqD9j88wMchtAkeCg2wyjJhwSXjamR7QU/rNg93Bdo9fkAiNak3vClTBVTsgdY+sAG2dQJIwxtz7ciNKwnWMyFWGkwCKKLi7RaN/v8pyTaOG607VWQWCCKdWIiLw7Fc4D9nvo+Z4y+QdLe8gj5TKddACLdfHXfTlLpvZfpkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747107460; c=relaxed/simple;
-	bh=RY0FXJLupI/xp355c5IWodJVMR636CjSqj+d2EIC2I0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=YzcSM2dqKHOdPWAFdG3Zda3l+M60ZVFVYBlehsw56C2w6F6bRJolaYn1yZ1d+JAqw6vK2JqLNjnoaWkFch0vfaH+u5KYQY8wm7o5O6jY58flXFK+hGaP24NU/5LHTzL/J9lIf2mQRKPDK3mrKEtgENa78qdT7+ISaMUwAn/K1/I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MpvJeXfT; arc=none smtp.client-ip=209.85.166.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747112891; c=relaxed/simple;
+	bh=zI2uNmurVbSTerCA+ybWtArHpbTLVwiKznK0qeOM7HQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ixF3MzqsBMidVkYHM276x7NHnMgYo5JPyieLcGKXC1jkCd9MTWHIzFnDN427CRzlRAeWTEuDwFXVWSGpeOvfB9EWaSUttohe94ImC8tGliogzoou79vUILirc1w+qGYKvPGrCLcKVpZYzutSmmrihVc0V3o6znWgd5NdnbNN5fs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ATNBmbOV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=a83fuZE/; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MpvJeXfT"
-Received: by mail-il1-f178.google.com with SMTP id e9e14a558f8ab-3d8e9f26b96so49151545ab.1
-        for <git@vger.kernel.org>; Mon, 12 May 2025 20:37:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747107458; x=1747712258; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Awsv7EqkiZrxxpRR+QS+PAadUQorEiMhOwoXpaKRny4=;
-        b=MpvJeXfTLuPYx38J0m3QqzDZlG35LCjp6LLgfJXJKuuzy6cZvCbz2lgBdSkUxNezSN
-         72I4oIHsnI2lCZ9x0uah2ggn0af2GN0VqILGF/2WZQ/tCQ+0VosrtnpiOaQaJByRihlo
-         EceD9ON+iCr2LlFceitQIf+WxWzTFjCat3CdJ2XNt+Och7Y1eCTBO4itnFMnQ0SNUD9X
-         T5wY+YGOrQMN3lxc0qyp6Vo2sr5kRL4K8wxX1cFcFGBeUKlcV5L26XDr8QiW3WAoLBmM
-         WL3AH4NmxOD6KJ1l0xKFUX582JUyxDSSkrzOIBBYfQdVSiDuPnRJzL1fh4bvxDQuWmMo
-         GvLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747107458; x=1747712258;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Awsv7EqkiZrxxpRR+QS+PAadUQorEiMhOwoXpaKRny4=;
-        b=gteY5RmHAUSoC4uuN4Od0mfUBWD2hi07s6lrKb4pWJl1J+i/XWs7LCT8HTC+LzylkQ
-         smnEwIN4kkx22iGR/k1LubqOR+2WyEgWyyKRgIh/QtYefJm7t0oPv5fFN1iWP92Pln7S
-         Zgms0VJVxHJtqK8iZzUEG15AxY60Oy2UAfTRlRgrzTA1aZmsbmlJm6STMjjk8b4ECsji
-         dGP2Z6HNW8r+ocgxEKiYGXGXgC117w5jrZeaCtrfiQkexHQSxT4DlmFaGwUWxM1wCENU
-         /r7Oo5uuE0VeNa0bTpidWyFNrtnBRRz4b7yiicFORaTt6O+mbBvNPhFaSqS7WtfsZNLS
-         KBiw==
-X-Gm-Message-State: AOJu0YwK/+yjIEzsOwnWD1vDAHnml+9QHYeUDxYkwyReowx1LRnV9t4c
-	TuSaoavFJg+CQiLf1iAZxmf9FvAA1/kcUWl/RKPyJTZdtl05Hjru5U+0CO7jxwI8OwEFSq/fzoT
-	YkicNKfDXCYKBvsroRgHt24+6wws=
-X-Gm-Gg: ASbGncvcSVQLoQhe+cuzWcBMljNPXCOgPTOhp/h2KnkuH6IRIP0gjnOFAqh/hwgRVEe
-	6nyPPllLiVPoWnWjjqNBNbyrxLq3hSlsgf6sLLpgrmkoyg5zlV4JinRp0EOMPYwGMVCXayBomsZ
-	UrU3U/hRt0OSOmPzGIeqIxQlTGtvpIl5FQLfRvpDKbpgwRpQ3n0zQKQjHlLT3iuqLw8g==
-X-Google-Smtp-Source: AGHT+IHH0AWkLksLb2zbfsstpeEsHXIrCU1WPoUQ/hnrvBOA8Tl5So0j+7Sts8DdZz2Wu1ol6t+Qtm2MOZgaBjVeYi0=
-X-Received: by 2002:a05:6e02:1689:b0:3d5:8103:1a77 with SMTP id
- e9e14a558f8ab-3da7e1e1a71mr188326715ab.1.1747107458112; Mon, 12 May 2025
- 20:37:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ATNBmbOV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="a83fuZE/"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9C26013801BB;
+	Tue, 13 May 2025 01:08:06 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Tue, 13 May 2025 01:08:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747112886; x=1747199286; bh=Q4TPw6HCLO
+	9+Xo6b/YN8zvNGYm+GPGmcndROt8VMciI=; b=ATNBmbOVR8mV9ADrgsGkrb4uJG
+	qasSiEP4Cj8Vomf1++gJEr+6Q4eRGQozinfDJZgqKmWaBq/bN7QKjWhSzMSUw99m
+	UULYbMCC7lenbEhRnJ9DOBl524VmD1SLWwKcRx3cIrN7e6pllBDGu8hDS1wOH+DU
+	DeasSbKHM+QxpJcbQiFYfKvEWHhfl/o32PyGzOBlBUnzl4/D9ODiSV/7jv55GbEk
+	8kWkBrhdqhMtDzryPCC7RzektSN9zy3YCUyY9Fl4wuCcF6H0wVCWkBx9q8vdzRj3
+	K4kmvT/LSK2UdgmlMif2JZ2XGzthyxl1PGERnUSYzSIsA5vWJVy+vP4xEjIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747112886; x=1747199286; bh=Q4TPw6HCLO9+Xo6b/YN8zvNGYm+GPGmcndR
+	Ot8VMciI=; b=a83fuZE/8E79CRvgpUdHipJe2Nyl20/FG3zR86mmtAb7oqKhiS2
+	pXFfuWDQd/YFYpxHkLUD3aqrMJLpRsyp/3wZXhHy/qcb+iAMwYIb+h5/SS3M3cqg
+	zIQ3ZJy7JEVPxu+BnkZzvmqOqSvUHdLLRf6s2QzSCH7GgmLiKZwW+SZ93Rx9owcy
+	e3CMe5e3B5WN6we2Crg4IOyHzx3fEksl54wpYcD+sam7Tj2HkISG88rHGtlgxkxu
+	Nw/I7GZWy9mLjvIdNVkoOr2h4eNuBKkg3GxAz6x5PJwlpoKBdkYGBSsVmCLWEQwT
+	9J/MUPx8cS7mxyghg09HghIs2LeQ8WmsrlA==
+X-ME-Sender: <xms:ttMiaEheYQP9KgscdOXER66gEBZ-J1Zvnz8_6s9rr7fKfaI7yR29cA>
+    <xme:ttMiaNDwf422CzP29wkEIr7i2rNsvq2AWx3OlOVpbVGWzXHdTKvubV1LkrXO7xJ5n
+    HZ_R9HupLfg30PwaA>
+X-ME-Received: <xmr:ttMiaMHA9IjiEq1xIXMMGPFqR-krnDkvCf7lEj7tP6v7CV9LdLM3Pm6EgV3DP8p833azJHGDenG7AWQVwFNbwDFl0cm77HUJBHL22E3HsoERdw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdefvdeiucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrghdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:ttMiaFTkMoo7E57nPfHsBJG1F4frz8gxpT7z1ORZFMZeeenxllGVBg>
+    <xmx:ttMiaBx0giIVkzp9hC244OLjumuPattoOVt0c5Z1M7jjsPKu_NWIUA>
+    <xmx:ttMiaD40k7goE1HFNSLcAJCZsAeIB0FNxAU_fRoy9jX_JmV60PkG2Q>
+    <xmx:ttMiaOyDYjdT4moiMrQgWcU_UYQc-_OQSflZbqS0TuwK5iyfNEwvxg>
+    <xmx:ttMiaCpdjwqAZ5P7fp6a13gAn0SpOhFbeWV1K1cET0e-_w_Rnmpb8rbS>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 May 2025 01:08:05 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id ac364a79 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 13 May 2025 05:08:03 +0000 (UTC)
+Date: Tue, 13 May 2025 07:08:02 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jeff King <peff@peff.net>, shejialuo <shejialuo@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] packed-backend: fsck should allow an empty
+ "packed-refs" file
+Message-ID: <aCLTsqZSWklaEOq6@pks.im>
+References: <aCCtQDnWII-knmEc@ArchLinux>
+ <aCCtx2mqihlc0M7H@ArchLinux>
+ <aCGzIlLH_ESNg6-v@pks.im>
+ <aCHoovrKiSUemBCL@ArchLinux>
+ <aCIIL6IWiiWiGbFd@pks.im>
+ <20250512155654.GA1219668@coredump.intra.peff.net>
+ <xmqqh61pu4r9.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqqy0v1ia3m.fsf@gitster.g>
-In-Reply-To: <xmqqy0v1ia3m.fsf@gitster.g>
-From: Elijah Newren <newren@gmail.com>
-Date: Mon, 12 May 2025 20:37:26 -0700
-X-Gm-Features: AX0GCFtj4sQl6v7B_VFREW1hV7PUSN5e4tvRbaB6jla2sXuQK0kCRxrfhSyc9zI
-Message-ID: <CABPp-BEukTWwsuC7MMR8D5_UAhyw-LgT=DsPKAWeR_ZmVVhjzQ@mail.gmail.com>
-Subject: Re: What's cooking in git.git (May 2025, #04; Mon, 12)
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqh61pu4r9.fsf@gitster.g>
 
-On Mon, May 12, 2025 at 6:16=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> * ds/sparse-apply-add-p (2025-05-08) 3 commits
->   (merged to 'next' on 2025-05-09 at 11ce4306b9)
+On Mon, May 12, 2025 at 10:18:34AM -0700, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+> > It may be useful for fsck to detect this, though, even if the default
+> > message severity is set to "info" or even "ignore. That would allow
+> > people who know they are using modern Git to increase it themselves (I
+> > don't expect normal users to do this, but it would probably be useful
+> > for forges which run automated "fsck" across a lot of repos).
+> >
+> > And then the backwards-incompatible Git 3.0 thing would just be tweaking
+> > the severity of the config (and in the meantime, it would help flush out
+> > any unexpected instances people run into).
+> 
+> I came to make a same comment but the above has everything I wanted
+> to say (and more).
 
-That's unfortunate.  While we can't fix the second commit message
-anymore, can we at least hold off on merging to master until we get a
-new patch to fix the test cases?
+Yup, agreed, that sounds like a reasonable approach indeed.
 
-cf.
-https://lore.kernel.org/git/CABPp-BHkgvc0UQbhXfP4POtY8GPVpz9J8ZbX3_jyzL_V7G=
-yBbA@mail.gmail.com/
-https://lore.kernel.org/git/CABPp-BEmMaFQxE9NQgM8M=3DcgfBHY1p56vnBt7R4CfuiX=
-nq++4Q@mail.gmail.com/
-
-> * jc/you-still-use-whatchanged (2025-05-12) 6 commits
->  - whatschanged: list it in BreakingChanges document
->  - whatchanged: remove when built with WITH_BREAKING_CHANGES
->  - whatchanged: require --i-still-use-this
->  - tests: prepare for a world without whatchanged
->  - doc: prepare for a world without whatchanged
->  - you-still-use-that??: help deprecating commands for removal
->
->  "git whatchanged" that is longer to type than "git log --raw"
->  which is its modern rough equivalent has outlived its usefulness
->  more than 10 years ago.  Plan to deprecate and remove it.
->
->  Will merge to 'next'?
->  source: <20250512190311.1451556-1-gitster@pobox.com>
-
-Can we fix the missing word in 4/6 before merging down?  You said
-you'd fix it up locally, but my view of seen shows the word as still
-missing.
-
-Other than that, it looks good to me.
-
-> * tb/midx-avoid-cruft-packs (2025-04-15) 9 commits
->  - repack: exclude cruft pack(s) from the MIDX where possible
->  - pack-objects: introduce '--stdin-packs=3Dfollow'
->  - pack-objects: swap 'show_{object,commit}_pack_hint'
->  - pack-objects: fix typo in 'show_object_pack_hint()'
->  - pack-objects: perform name-hash traversal for unpacked objects
->  - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
->  - pack-objects: factor out handling '--stdin-packs'
->  - pack-objects: limit scope in 'add_object_entry_from_pack()'
->  - pack-objects: use standard option incompatibility functions
->
->  "pack-objects" has been taught to avoid pointing into objects in
->  cruft packs from midx.
->
->  Comments?
->  source: <cover.1744757204.git.me@ttaylorr.com>
-
-This round almost looked good.  I just replied to 9/9 mentioning I
-think he should send in a final re-roll including his fixup 2/9 and
-some wording improvements to the second paragraph of his commit
-message in 9/9, and should be good once we get that final re-roll.
+Patrick
