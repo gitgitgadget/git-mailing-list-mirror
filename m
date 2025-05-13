@@ -1,126 +1,72 @@
-Received: from avasout-ptp-004.plus.net (avasout-ptp-004.plus.net [84.93.230.250])
+Received: from out-186.mta1.migadu.com (out-186.mta1.migadu.com [95.215.58.186])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40C1D2BFC7A
-	for <git@vger.kernel.org>; Tue, 13 May 2025 19:21:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.250
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25AD51C84CE
+	for <git@vger.kernel.org>; Tue, 13 May 2025 19:27:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.186
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747164095; cv=none; b=UpLGEGkZvRCh+U253pZBIvsSqj6Cnxk1KYOmaxd077/wZHABKWtuOlpPGLSLx5s87OwF5ZseVw2dQFM2/bt3Hw2h+0ZyKtsKVmaoyiGHIBZApYgqaYU2GfBGR0mL3N8/gX5VYpFVXXAvM6JX0lrRhHcMqX+WZzfOtPSDDqaN4hI=
+	t=1747164462; cv=none; b=WEO8pLAM6UWJwjc4tINJw0TgGvXvyRANDRLWUrJkTcH9PGG5kDfWTzBI5Z+63m+HbnL6/tl0MGWK0j9w5etwm5PEVv0dhT2vfS+Hi+vfuvXlYupXp+2ijjiQ7Ul4n4HrwEfUl9jz4xrBk21TMf9AsqLhK6T4Qj7w56Spjd0tvmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747164095; c=relaxed/simple;
-	bh=gBK3fxJ8Rfgu2evrONWFutRNrVzTjz1cg46uYxfLj7c=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Uh9PGRWq2DsGQByGkLEOh5VjO3paRIdvg78NbZZt3gBNvvWWt5dho9zdzK/wqvZoRC5iqzDxK9fKDJ+7vzYnDgPeXcF/ar69iRXPBjwmDpRzEUvaDNsgLozu36jkXOdG4eSDQzAW1oJ1mv7oO0ssdaFxwuf+zikd+EaSSIXicTU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=UdObkRC8; arc=none smtp.client-ip=84.93.230.250
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1747164462; c=relaxed/simple;
+	bh=ZCVa0vUJzdMWRvgDDrNgtAkUpGkPKfHEQkYmvJnYYGY=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=tK/U7p11xt68OGPm6GpXWIuvzIUWlqQHCu3WTllYIg8iUoG4ocbZ0P6eQhE4HCECrzAbc4fiJtUbAenUuBr7d6AL32iW3fFfvMuoZ39h+2luu50SKRx4ee6nYNULCogsrBvz8ns54q4tLdUdTOH3eEA2JEZAR/4W/P8tNuc2hTg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com; spf=fail smtp.mailfrom=iotcl.com; dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b=twH/8J7P; arc=none smtp.client-ip=95.215.58.186
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=iotcl.com
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=iotcl.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="UdObkRC8"
-Received: from localhost.localdomain ([80.189.83.109])
-	by smtp with ESMTPA
-	id Ev8Rub969aTZGEv95uZHsH; Tue, 13 May 2025 20:18:33 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1747163913; bh=seJGXXuaU9kXKee3toweNPBrzXlCTymhFPaCgpk5lmw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References;
-	b=UdObkRC82BQAOmEidHy2RXUyusMvHsRJHWH3cWO0R8C8si1ToSUOP5ZG2IiTJjIoL
-	 D0nLWwcX0hr8DTyB71TFeaya4hO9laDuWeOXKaiCFcN1rXEXBEMk0dQa+HkuZZLus1
-	 UBtTd0pw1RDn5ebiUX1QcQYnDPup4rDgMaJoPl9cUwP/B3mhYwo/xYNA3E6U/ZeY6q
-	 3RJ2oi6MEMaORaKyQWLnI7ama1xa7WGyClWafCGIZFTlPZhrMiZjqZ5M8WiXxqLKMT
-	 GI/qG44JkCYsCnmftKfa8oXewN6L3GZ0o7+NhyhP6h1AhVPosKscistcfq4l4/1f0e
-	 IxbA03mf/MSxw==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=V9ne0vni c=1 sm=1 tr=0 ts=68239b09
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=EBOSESyhAAAA:8
- a=PEHzl5tTKJwClwjWz-kA:9 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: 'GIT Mailing-list ' <git@vger.kernel.org>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	=?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
-Subject: [PATCH v2 5/5] configure.ac: upgrade to a compilation check for sysinfo
-Date: Tue, 13 May 2025 20:17:26 +0100
-Message-ID: <20250513191739.1513460-6-ramsay@ramsayjones.plus.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
+	dkim=pass (1024-bit key) header.d=iotcl.com header.i=@iotcl.com header.b="twH/8J7P"
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=iotcl.com; s=key1;
+	t=1747164454;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references;
+	bh=ZCVa0vUJzdMWRvgDDrNgtAkUpGkPKfHEQkYmvJnYYGY=;
+	b=twH/8J7PskBiKq4pg4/EdZfFnIQkKQYzocxskuI8xYgp5X0peqCGcc1rO+VT4TI+Irl1FS
+	vY+0UijpA8zg1/X4GDW8rftWBAqCIW2PUOWI3KX5epMAsGoS7IAEQysMxs4+D+IKx1N9u3
+	nld/SfaOUu3wuIyO29BdhUZFt+AUBnA=
+From: Toon Claes <toon@iotcl.com>
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 01/17] object-store: rename `raw_object_store` to
+ `object_database`
+In-Reply-To: <20250509-pks-object-store-wo-the-repository-v2-1-103f59bf8e28@pks.im>
+References: <20250509-pks-object-store-wo-the-repository-v2-0-103f59bf8e28@pks.im>
+ <20250509-pks-object-store-wo-the-repository-v2-1-103f59bf8e28@pks.im>
+Date: Tue, 13 May 2025 21:27:20 +0200
+Message-ID: <87cyccjopz.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfLCF4J23Hx2DR/zVUfNojopoekj+bRVWtQXNIPoh36BHWuCLUWjcrnfgfCuI2b2tM/ZsNbEjjQXBahZ8ZSpz0XObQ5afOcGksgAQKfcEVtW7JUQTS+PU
- 5GqywsIClIA0b46eDQyBuMT58B60srP2iTS7HHGzan3NPixkhfiODk4XJ+o7MsDyUBjM20UQHJyrs8u6SRq5upEs4eL11lacT1M=
+Content-Type: text/plain
+X-Migadu-Flow: FLOW_OUT
 
-Commit f5e3c6c57d ("meson: do a full usage-based compile check for
-sysinfo", 2025-04-25) updated the 'sysinfo()' check, as part of the
-meson build, due to the failure of the check on Solaris. Prior to
-that commit, the meson build only checked the availability of the
-'<sys/sysinfo.h>' header file. On Solaris, both the header and the
-'sysinfo()' function exist, but are completely unrelated to the same
-function on Linux (and cygwin).
+Patrick Steinhardt <ps@pks.im> writes:
 
-Commit 50dec7c566 ("config.mak.uname: add sysinfo() configuration for
-cygwin", 2025-04-17) added a similar 'sysinfo()' check to the autoconf
-build. This check looked for the 'sysinfo()' function itself, rather
-that just the header, but it will fail (incorrectly set HAVE_SYSINFO)
-for the same reason.
+> The `raw_object_store` structure is the central entry point for reading
+> and writing objects in a repository. The main purpose of this structure
+> is to manage object directories and provide an interface to access and
+> write objects in those object directories.
+>
+> Right now, many of the functions associated with the raw object store
+> implicitly rely on `the_repository` to get access to its `objects`
+> pointer, which is the `raw_object_store`. As we want to generally get
+> rid of using `the_repository` across our codebase we will have to
+> convert this implicit dependency on this global variable into an
+> explicit parameter.
+>
+> This conversion can be done by simply passing in an explicit pointer to
+> a repository and then using its `->objects` pointer. But there is a
+> second effort underway, which is to make the object subsystem more
+> selfcontained so that we can eventually have pluggale object backends.
 
-In order to correctly identify the 'sysinfo()' function we require as
-part of 'git-gc' (used in the 'total_ram() function), we also upgrade
-to a compilation check, in a similar way to the meson commit. Note that
-since commit c9a51775a3 ("builtin/gc.c: correct RAM calculation when
-using sysinfo", 2025-04-17) both the 'totalram' and 'mem_unit' fields
-of the 'struct sysinfo' are used, so the new check includes both of
-those fields in the compile check.
+Tiniest nit, but worth mentioning in case of a reroll:
 
-Signed-off-by: Ramsay Jones <ramsay@ramsayjones.plus.com>
----
- configure.ac | 25 ++++++++++++++++++++++---
- 1 file changed, 22 insertions(+), 3 deletions(-)
+s/pluggale/pluggable/
 
-diff --git a/configure.ac b/configure.ac
-index d7e0503f1e..f6caab919a 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -1069,9 +1069,28 @@ GIT_CONF_SUBST([CHARSET_LIB])
- 
- #
- # Define HAVE_SYSINFO=YesPlease if sysinfo is available.
--GIT_CHECK_FUNC(sysinfo,
--	[HAVE_SYSINFO=YesPlease],
--	[HAVE_SYSINFO=])
-+#
-+AC_DEFUN([HAVE_SYSINFO_SRC], [
-+AC_LANG_PROGRAM([[
-+#include <stdint.h>
-+#include <sys/sysinfo.h>
-+]], [[
-+struct sysinfo si;
-+uint64_t t = 0;
-+if (!sysinfo(&si)) {
-+	t = si.totalram;
-+	if (si.mem_unit > 1)
-+		t *= (uint64_t)si.mem_unit;
-+}
-+return t;
-+]])])
-+
-+AC_MSG_CHECKING([for sysinfo])
-+AC_COMPILE_IFELSE([HAVE_SYSINFO_SRC],
-+	[AC_MSG_RESULT([yes])
-+	HAVE_SYSINFO=YesPlease],
-+	[AC_MSG_RESULT([no])
-+	HAVE_SYSINFO=])
- GIT_CONF_SUBST([HAVE_SYSINFO])
- 
- #
--- 
-2.49.0
-
+--
+Toon
