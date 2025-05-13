@@ -1,91 +1,87 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5352BFC89
-	for <git@vger.kernel.org>; Tue, 13 May 2025 18:43:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1ED4A49620
+	for <git@vger.kernel.org>; Tue, 13 May 2025 18:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747161784; cv=none; b=ZrwZCQ8rInRs85CrL4UU4Qen+l72IgOzal0d9Uzl07+rhtmry0EtQ/4HIgTJEJVnQbB09QoD5axNjMb/BmJqWoRlMo7wgkxltphM8wMlIaPC/dwlRrdpJbKi/n/y8Y8Mkb/JDoNZK2TZ4YdMzLc37nTlWPcTTUFMt0Bu6a87nis=
+	t=1747162250; cv=none; b=F5fhtUvyS1Q4J02Dz5OzFrI3rzIzF4lSXcGeMJVm8WihmRU2tGcfQwqVuG7evc1aNzdX6sBN8TWYP+jIxTaWYvsJFVUTH7hFmL50FUzuwlgKdcmKKjNhyBUkE+H59R8nhuAvOroq+Uk0kFswrgz9ep4g/gMBo/x8peHC5v0efMc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747161784; c=relaxed/simple;
-	bh=TZc+GdYMFQT8q/YAshKiiGzOByNwWDLBX7Ni8orsim0=;
+	s=arc-20240116; t=1747162250; c=relaxed/simple;
+	bh=g4h4v5OGbx6G7P0lEHHrmbAFGc0obRpmgkCKIsCNdkA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hLcWNL0++HlIoGe34IVOHdOfFU8N8/fIBI40MiU8BoLy5lM5nhoG+FonIC5jemDBvjk1gdDP3FOXChiboFgLIAWqhzSvHK/bccHJ7JjELHCxHFj/iO3j5YabEQj14Nm+qsdW7DYfDhwXiuW70yysVrg8d0H59KXEwPZjigtHvnk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jd+y9ZZ7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AVIUmkOI; arc=none smtp.client-ip=103.168.172.157
+	 MIME-Version:Content-Type; b=PoXLolH5Ue1dNLa8C/vTnp7RMIn+Vv87pz990Y22UxE3a2Tp2JwArVDgfwr9zNr0TxDb2Z0CJjVhyagTH2vXcC5hmT5jtLLjo9ONWMyiL8MoBvQ0yhbNjCE1C08BSTCVCq1vPUr4A1WOtH6AhQ1v7HfE/h/kW7MeQ/8cVrPDFCs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Btvv+RBm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MW+2xjg4; arc=none smtp.client-ip=103.168.172.147
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jd+y9ZZ7";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AVIUmkOI"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D58F511400B5;
-	Tue, 13 May 2025 14:42:59 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Btvv+RBm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MW+2xjg4"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0E86B1380155;
+	Tue, 13 May 2025 14:50:47 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Tue, 13 May 2025 14:42:59 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 13 May 2025 14:50:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747161779; x=1747248179; bh=TZc+GdYMFQ
-	T8q/YAshKiiGzOByNwWDLBX7Ni8orsim0=; b=jd+y9ZZ7AfaivQXUR5TbrqVMgh
-	jG4R4PXAMvk0VMe/CI00hxk2NezvyrVvg+ds3HbcUu/P6P17mcHT62iOFOVYexri
-	wGw/A8vdFYopmhqS/8bMJgWopJgyG067eCXRwnzn2Jo/Jk0dr3B0aYoAVNNfjU8h
-	6nQK+XTUsSvExQ8wV8WC1DzvbQeYx1ynBsgwa5UKOB8kk79orGB6QzlLeP5LSn7F
-	ajwpMxiBdgs63JJsu16WHwlkCJ7Mvrt11kFdmFaJz6w62rNlWVFDLyL6HFfBFQ+X
-	hJLbRd3WlARYNu6lLV4VFpM2HAe93rVjY7GjEgxSE5OpOlNfDVNaam8tbqWQ==
+	:subject:to:to; s=fm2; t=1747162247; x=1747248647; bh=4MIGM0Kh8F
+	1CfnZdENs3pgB773l5wZPtAfndM+W33+4=; b=Btvv+RBmD8KqU2icO0QYbkgi9Q
+	xVpLV7Rx8c6BBcKCvjAkZivaCms0o6vT6CtyZxVpe5tbAlSCWyMj7FtCSNL9Ior+
+	mV+LYbH19a/8wFp1KVTCtDubjxSLnodZIUtIAjyTKyhha2n9o1aveQpJz2J+l5JN
+	mR7jCL4rtzdYf2rA2nEjBWZ3rCSbe5x8XxNsFcd7fzq5p3eJ98J4tTN6QzIXJHVs
+	s1Kf5hdL/s7iijXazST/YYYrzKreHzB5iNY8b42LzkPUzLL/jZp+tdvzCRh19GWU
+	470cRrC6zDCAcqIsJrhc78wGY5K96ogX9W3ZShYacFvFd2khYRYYFI24q1Pw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747161779; x=1747248179; bh=TZc+GdYMFQT8q/YAshKiiGzOByNwWDLBX7N
-	i8orsim0=; b=AVIUmkOIXZUC5FRXgBk/Dsk3ITVQWAEBQDqdwX7+3b0GrAq84Ge
-	IxBCxUYRCMCUfmU61bmLFPf98NcV/O8BLT8LZdWnNOfXE+Hbg7Ymk71QrmbpAW32
-	rDssy54BqCYOBCg8jJFzshUnZ9UsO1bnK+nbnlTTCw+1JD6ELuuxKEaJaj9mK5hh
-	WteNjDLkmoqamtyG1+r4T3NxfmsSgEJv4AP/kZ6C4eiL726KjwYJytxSh5pLYEBP
-	Y2TEhAYITCiqmPLiruHLpgTULLGCF5oQ3U3pVAUCRYT4RRrl3oCEuZPH3Kn6I0Ly
-	KK//LT6Jut56WBHmYbyVnttxOPW9sy+6ZeA==
-X-ME-Sender: <xms:s5IjaJfinoOK3IAt14tJBdI01J_im4svYl68yCEy7eipi6Y8NlS7uA>
-    <xme:s5IjaHNAZOfJ8g-4Si29hbEXn_IHHYGfPqZQLjGPEemBknBIvdpi9dLNNIr3_bjnF
-    9lOr1ntb9S8XcBPqQ>
-X-ME-Received: <xmr:s5IjaCgb-7IjQDmYZToqKVsV5WN4lQqqU4nThFJ7gxIHtCkaY3RhlADJrp2V35eegEEASd1Vp-QIul2D74JDE5sA_zxgV0pZ0CDhiPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdegkeeiucetufdoteggodetrf
+	1747162247; x=1747248647; bh=4MIGM0Kh8F1CfnZdENs3pgB773l5wZPtAfn
+	dM+W33+4=; b=MW+2xjg4p2iGhFg0+695VwkWINDGWU4A1SfYhLqd6zezpqxmwCa
+	t2w0iVtPuxuyIHD7C53uuSPGyX2hGR43966tegEIvRsI3maeE+3u0UUkREQXqA5a
+	Iie/j/nSiH7dkhOIhgPL/OJcs9V6X43jmfZPVRnZiUXVR5DJnvrxNcpILY3cFsCi
+	Cbu58KLu6ukzAcxlM4hqGXqzB6eTtmCKuNtsK0cX8o4M3suqbf1nidak+SFOD0Ad
+	VeSUk2lRWr1f/1TIyXU3IcVGlXi+mtqy1gYwys42efzyCJsa2FFyqryn5vRXChyi
+	aPVStdRH60p0wD3IcwTv6mfZxiAWvhlb9+g==
+X-ME-Sender: <xms:hpQjaFIPIMJNBo72VlMcM-zD9C30JAnBCpCCuFWxyjLTMpRZCjddfg>
+    <xme:hpQjaBJO-PjW4TO7NNvKqb4nW47NDkb2bylGR_caGzCrdS4_okzlmK3IZt6NQs441
+    6gyyqh9c4rY7Xk6Og>
+X-ME-Received: <xmr:hpQjaNvB1aP4E8K-Ued9SpEC1XcBDLMeuQJJZEL_-6pHPtExFNCm9QocAkF_92JI-_-xGv1J9asmuCYDy6evUKoibfSEa-728p8FkCg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdegkeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepkeethefhvdduveevkeetieegteehtddt
-    gfffvefhheehudffheekiefggeehffeunecuffhomhgrihhnpehgihhtqdhstghmrdgtoh
-    hmpdhgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhep
-    mhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtth
-    hopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdt
-    keeslhhivhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
-    hrghdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrghkvghrshdrohhrghdprhgt
-    phhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtoh
-    epiihihigrohesughishhrohhothdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgv
-    rhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsrghnug
-    grlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:s5IjaC_sE81vg3o5ieaC6GYaaluY8AYnbfUcJTdhubV4Jz3ByA8p1Q>
-    <xmx:s5IjaFuORfG5utBUqSeoJtEETigVDeIZS2L-fWBDmt1KMt7ookHYYg>
-    <xmx:s5IjaBH7Td9Ht_7OApmh3HEf2OYoSq2bs5jMfjgdEcdzo4qDGpcJ6w>
-    <xmx:s5IjaMO9Dshyqel_hzuKT0xpDgBhEXt6ABJzdqARSJt2drQszRSErg>
-    <xmx:s5IjaLfJKp_PZQ0Ys9C6uavRd7m5db9KmXxHBDXaJNdg9zd73qH-L9N7>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepughhrghrieduhe
+    elheesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhgpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtghpthhtohepshhunh
+    hshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:hpQjaGa49bKfUjH-n7N8ZSN7YXdAlG7J48fD6xyIYbzQJL3jIQ_vRg>
+    <xmx:hpQjaMbrlqT_wVtcmAoexKpxHGAaNC0jB4Hdskd-Kp0QC-71PAWyVA>
+    <xmx:hpQjaKDjhDtui3Fgmbdru5ok004tBiRSJTrjgVtkvqLf5VOYzj_7Xg>
+    <xmx:hpQjaKY8NMbpcPWNwa9b88rEFZlHagPuODB-uG-4rxzbmSw3TW4YFg>
+    <xmx:h5QjaOpKoaV2aK7Fu0wwgAk4WyWu0W-UMKknIpesQnXKvYG71g3ZyPtP>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 May 2025 14:42:58 -0400 (EDT)
+ 13 May 2025 14:50:46 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org,  Julian Swagemakers <julian@swagemakers.org>,  Eric
- Sunshine <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,
-  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-  sandals@crustytoothpaste.net
-Subject: Re: [PATCH] docs: add instructions to use Yahoo with send-mail
-In-Reply-To: <PN3PR01MB9597AEC10C20F4B06C4BE254B896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Wed, 14 May 2025 00:03:59 +0530")
-References: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597AEC10C20F4B06C4BE254B896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Tue, 13 May 2025 11:42:57 -0700
-Message-ID: <xmqqzffgfj2m.fsf@gitster.g>
+To: Moumita <dhar61595@gmail.com>
+Cc: git@vger.kernel.org,  "Johannes Sixt" <j6t@kdbg.org>,  "Eric Sunshine"
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH v6 1/1] userdiff: extend Bash pattern to cover more
+ shell function forms
+In-Reply-To: <20250511141101.18450-2-dhar61595@gmail.com> (Moumita's message
+	of "Sun, 11 May 2025 19:41:01 +0530")
+References: <20250511125809.14180-1-dhar61595@gmail.com>
+	<20250511141101.18450-1-dhar61595@gmail.com>
+	<20250511141101.18450-2-dhar61595@gmail.com>
+Date: Tue, 13 May 2025 11:50:44 -0700
+Message-ID: <xmqqv7q4fipn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,14 +91,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Aditya Garg <gargaditya08@live.com> writes:
+Moumita <dhar61595@gmail.com> writes:
 
-> BTW, I could not get the source code for https://git-scm.com/doc/credential-helpers. It
-> seems to be a page for all credential helpers.
+> diff --git a/t/t4018/bash-posix-style-multiline-function b/t/t4018/bash-posix-style-multiline-function
+> new file mode 100644
+> index 0000000000..cc8727cbcd
+> --- /dev/null
+> +++ b/t/t4018/bash-posix-style-multiline-function
+> @@ -0,0 +1,4 @@
+> +RIGHT() \
+> +{
+> +    ChangeMe
+> +}
 
-Probably
+Not a review, but I am curious what this test is about.  Is it to
+ensure that the pattern does not get confused with the backslash
+that does not have to be (but it would not hurt to have one) there?
 
-https://github.com/git/git-scm.com/blob/gh-pages/content/doc/credential-helpers.html
+IOW, does
 
-See https://github.com/git/git-scm.com?tab=readme-ov-file#git-homepage--
-for the general notes to get changes to that repository.
+	RIGHT()
+	{
+		ChangeMe
+	}
+
+get processed just fine, and the above is to check the corner case
+where an unusual "\" on the same line as RIGHT does not break the
+funcline identification?
+
+Thanks.
