@@ -1,174 +1,146 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010010.outbound.protection.outlook.com [52.103.67.10])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E981743AA4
-	for <git@vger.kernel.org>; Tue, 13 May 2025 19:36:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.10
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747164983; cv=fail; b=uSSXQIK8Z4EgTQg81r6U+8GDpB2j6bTdbBcofBBhXdLcifk8F3aJrYFX9U23aOeIyhxiLRdiCtCfXgiwHT4MyWqibdyPuuuR83pK9EZgfbAe3Sj+5B6IDNAkbIHwB8MJr/lIkLsYVa0yM0uAQ14bkM9uhDSt5ixEVpRUbIhJ6vQ=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747164983; c=relaxed/simple;
-	bh=0cPoD6M8euZOpmLLwhLxwigZ4T7LuI4jgxNUr4J3aJM=;
-	h=Message-ID:Date:Subject:From:To:Cc:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=ZeiZMz0xoDcFwgvmrkw1DEZwueL8K5usP2GvGQzF8vhz9StyvcMghIKTTKbFcEuhcVke9yJio0Re8/ZuS2ih2EV8F5PfeGmtBaW8nC9+ifNbIeKp6bjrqNstFMZa4Qs80R7JNRR5v0NbS8SJgcdaz6eoOOVbxCFbopvn/0vkP+Q=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=lLB1YHWR; arc=fail smtp.client-ip=52.103.67.10
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF8F22BCF4B
+	for <git@vger.kernel.org>; Tue, 13 May 2025 20:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747167243; cv=none; b=h2q5zd/HUR+I8PqKRBdCzelThWh5w+v3rGWsBLI3lfBm3JYiXdwcoFeey+hUz9PMf1MWWd1wsRFLFi+Qu5baw07AtkNaOuBXEt4BuM0oqHcLEbYXB49MDlZKQYi527/3mTltmRbrKmUOdxfv+/Ehe5CP7ytQnqmufzMjkJWJthE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747167243; c=relaxed/simple;
+	bh=BkuuqjzvKwNjsWb4vP2PIWlQokcWblxknQybkWNsZoI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=LMwgP7a57R7haxMRJq/kpbAvn6gSb6n/aq4aX3yG1yBw4MJ7ffR4lexxkP1exAas2sHzlRBvwA8QsnASsX+xUm6kSQ1Q6OrOJ7B3CGabNGB/wWxTT9XhbON9ksBdr9jsPckif4RsjSpzDiAOMjLGB8AMUpNzS48s0b2CNF4oQFc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hsfzMdFm; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=coY40K8w; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="lLB1YHWR"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ENQuxkMlYM93pb5wWlj+kezpVxe+byfu7mfONssnBE8/qRHSCWhQkdHC/opbP9AoGD2KjCLmfzq6MP3pCnIaPJzkClrUy1OwoD+jT8R2IeOzJUjhEfp4fFr78H41PoBHMo9DncU9GrD5uoZMBPZGaGknjHTAZt/s6LSK4VAJIqFfJMj9ucjZ350m5GX55UvqOdIs3yNiZo4T0WKm2oEf+sA+Y+NlLW0t8RAMP03s1aeiR3FpwNR0tMNwSpLYsE+xSL9zKoxKMn4dEfn+5fdBhcnDtIqCcioHLvK3vipkYSgW+APCduwudAkkkNGOLg/QlnQJnCRrad9ENesQyESIXw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8FKtgk4F5gphzTQ5R3JHu3aec1aqydnIvHkuDqT9emM=;
- b=CetA7Pu0m+wZIW+caTrm0r6ESGClnd29nagzqLzgEgi7N3S74P54X9SJkyCzlzWd8uLdfPlD/xhdh2NVBl96bpvwDi4GffrXk1PDTIsUEURty1DFwfZnVn5VHQ/HACZSjCshvQOydC0BIyIIJ7kyn3n2OWDo3hPqiMciKU/xoFhIV7DJmOeM90RxPg3lfKRkeC+zqdRwImffgMsDfjUd8BYCf0stAkutFf9WprjNUL+7EaoMkrMgoIR/EEvxNWTce7Y0AYRvfDLTVOoSMH2ILPrjwCDXXvdXkxFRYhJfpET4sPi2I2oDcAiUE/4w6vzxq0b3fHvGSKGerMRFC/pgZQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8FKtgk4F5gphzTQ5R3JHu3aec1aqydnIvHkuDqT9emM=;
- b=lLB1YHWRkwfKh7Mr1iZcg3PdbiDLenktjVr0ydyfG0BH5DRm14Q2QRSzSjleU7nX/7eXmWQfjHYbQ9KzattB1xFOnCeoVuquEzR24FaVgZArDbx4nO3BaueJR9zjz6WBkuGSpNVztmB8R2Eo28w5p/GAPqmiJ+BcudM8Onw+r9+UWua3MlSI3eVsoJ3nyXWgVKQCkadd2MRlnTgtWrXhRfrexkEoFRq2UMsOzd0uSsEMJUUhUPkslppFKddl4DGoi8tWDnWblO/XuaFqZUpapGCpAHoi7XvVUxh+maxqP20k+lviiyW5OmOEYmeJAx6quhPJYitX7GEmPt7I31i0Qg==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MA0PR01MB8986.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:119::8) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.31; Tue, 13 May
- 2025 19:36:17 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8722.027; Tue, 13 May 2025
- 19:36:17 +0000
-Message-ID:
- <PN3PR01MB95977BF45DCF3E7F784FD909B896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Wed, 14 May 2025 01:06:13 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] docs: add instructions to use Yahoo with send-mail
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Julian Swagemakers <julian@swagemakers.org>,
- Eric Sunshine <sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>,
- Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
- sandals@crustytoothpaste.net
-References: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597AEC10C20F4B06C4BE254B896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqzffgfj2m.fsf@gitster.g>
- <PN3PR01MB9597028D4430E9C2C2BB1E5FB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Language: en-US
-In-Reply-To: <PN3PR01MB9597028D4430E9C2C2BB1E5FB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0091.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2af::9) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <1550e0ee-5955-4493-8bcc-5bc65ac81ca2@live.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hsfzMdFm";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="coY40K8w"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id C817313801AA;
+	Tue, 13 May 2025 16:13:59 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Tue, 13 May 2025 16:13:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747167239; x=1747253639; bh=d3qIDXLVgd
+	iEG2NwR9f3oM+RlaTXZHL33Y7NC125lmQ=; b=hsfzMdFm4oGcuWQQM7gZtVeRUw
+	yCTI1LO7g6S30wyBf37+eXz8OcXycyS1RYY+nX+toF/4ZFr6xYA0ZiM95Jz9aHyX
+	Cais/3x0HAFmtjcalcmQz41FmRRPZGhIA9f9GGUY7WlgYeh9r5uwdbeeMT2AMwYv
+	fwgVsiG4QeH/Vdrie/vRG9dPut9KfuiQN7TFKLEVBZkNv3Vgfx36VNhX8ZVnGSSv
+	HPxVhT6XJup7mzTZCmqzaLu4KZW6Ic9yZY9tExsYqXip4oDgY6336yrxniLWTYRV
+	0UpVk2QKn9DREi8HNoXM10X16gR5//No4NgstKTWdT65OnIS11Wy5lfi3Ukw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747167239; x=1747253639; bh=d3qIDXLVgdiEG2NwR9f3oM+RlaTXZHL33Y7
+	NC125lmQ=; b=coY40K8wS9oBTCNANlb43OscoIb2jlSYHlicHAKk8M3qzdlSzor
+	xozqWFP7W7P4s9fCaqWCpuR6kVauZqqWOefv2wHGD4AE1yFYaGFAxtjdWAgtjqyh
+	rJetEPDO9Nf8PJ0tts6ld8H2QdOEutEtFsClLtHW1RAGPTqSsl3bbqOG4RFrCeeU
+	3R/TJaoFuVLa27UsSyv60fmD1HkJ0OpJerJcNDCGY7YOTRIoj3zSx8/haseOQ5JO
+	MhYO4cyJ+PwHzWcSBwKLxzEVNn19l0xX4/tLrVFQWB1lYikBeBlzQtYvVydXnbfJ
+	wq8o/+zoNq1sh5rYSIpsVDNGLuX1fwgWVdg==
+X-ME-Sender: <xms:B6gjaPYCab2a_02UXIlv1KwTw2gCsvvDALk8Ihgaw6dRN_kRKZhSAw>
+    <xme:B6gjaOZiHVXzFChTSh3C4aFRcK4aBq0liKx2BfvObd_TA5J45cywa-teuu8wjM-Qa
+    RZB3S2iEzlVoCDNBw>
+X-ME-Received: <xmr:B6gjaB8Yxjt3MEPnPvegQuXy2vkxOqA7rSN9ZBCIAuiZQ5DG4Tb6h1ykvJuhXEFM-P2ZInxlWaqjJDAcCZiDVMezTzoHOFe8ljuWiJs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdehtdegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihse
+    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtth
+    hopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnghgu
+    rghnhhhqgiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:B6gjaFqLe9AAxZa5F2j70IUj8YeGR8_gl7gaGEEe5_PBouovKF2GXw>
+    <xmx:B6gjaKr1CIPJ74cvASXkWddooQjBkbs2tT3OQ643iGFnoShfs7PoTg>
+    <xmx:B6gjaLTxJT3t3YrzhbnWAX7Rfs27X6q5VUIytxZwI7Co9alpH1HVVQ>
+    <xmx:B6gjaCoz3Xys1Z81yLRs4xAFKI07s3IJFDwek5rGWqc0B1wXzJNLoA>
+    <xmx:B6gjaMU7dj3ZfP_dN-38T4h1Rr5DoTY9KRhYCJrmAbRnW4oHor-Z8UQa>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 13 May 2025 16:13:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: 'GIT Mailing-list ' <git@vger.kernel.org>,  Patrick Steinhardt
+ <ps@pks.im>,  Eli Schwartz <eschwartz@gentoo.org>,  =?utf-8?B?xJBvw6Bu?=
+ =?utf-8?B?IFRy4bqnbiBDw7RuZw==?= Danh
+ <congdanhqx@gmail.com>
+Subject: Re: [PATCH v2 0/5] miscellaneous build mods (part 2)
+In-Reply-To: <20250513191739.1513460-1-ramsay@ramsayjones.plus.com> (Ramsay
+	Jones's message of "Tue, 13 May 2025 20:17:21 +0100")
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+	<20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
+Date: Tue, 13 May 2025 13:13:57 -0700
+Message-ID: <xmqqr00sfeuy.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB8986:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4fd8ba80-b799-4054-4184-08dd92556cdd
-X-MS-Exchange-SLBlob-MailProps:
-	Mga27o8vReFQO+5d6ofa7WPjBVpSbrYuZq4V89O4AxzYAOF7hxqH6LIDOnEvoLTHRFLQhUyk7uWvHNW05nJJtkxgKBLNdKEUBGC65btXcKDN2OoP0xgygVgW5yuc7Oeq52/b4ELSLSNgJ5Rs6AstOcsbaPMl0HaYVKCWmnAlUdraiWDTluZCFBg1AAuOiqNlotBKqzx0lVqnxADmbcG5g1d6c1GJ7xtwH2/zd5+9cKgmN6b6yqlPBi0583UKhZEa4eicP4JXOPsDovlmIsavfV7Sl6uTrmIzjbSG2RXinkliZ+VlBIiCvnTOORf/NLR264OVAsXWxYp8w+2lK4Km+bPbutzVnNFNTFZDs50zcLpcUF5BYfy8cPPGgDpqF2jiP36Hi2GfXUy+n91ADj/hx8Vof1SSdN+sDUjAqbXongGczjeggnfKb5CN/kwazbJQip3ukwCqeZ9Oym6hWjod1IKY4mW/YNPVRXR0lvZqr5x3h7zEuG58gE65rtbnKIQHIALhrr8fjZtjkVp6Y3WKF6H4Sqi2ta083QlJAJWmG8enfzPfi5vAuoJApVTMVQQjIs1O3nwJF+Gv8tG80heaIxOGpCgZNjyfIsMQWiVMRg49hO1nsovkbEZSScDfvgkRhRwnIwJxGuBVug83UzoOHBYaQ94FymENYDokNBe07dlzUqN2gk7Hev3s23B3qS51F0eg3yle7BJ25PdYrD1NhJhkEjlyMKB0UEfFPAk/Z/AHcUiQDFO5ttZQEXyBzFs1POyGYCe+yVAh6AYc+eRishIyoDt+KTg5oD4Gtyj8G9fE/9zOoliisg==
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|461199028|6090799003|5072599009|15080799009|7092599006|19110799006|8060799009|440099028|3412199025|34005399003|10035399007;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?UzBjSzVTczdjMWxidGlTd3Fmb1o4blVuV29VOFNhTGhmdGRVSkk1WUxiZ3F2?=
- =?utf-8?B?UXpTV1BvaXNvRVdrUXdOREhlQlhRUkRuU1Q1OVg3ZkpEemlQM0FJS3QxTXNQ?=
- =?utf-8?B?c05LQUY3bk8zdHpSUms2Nzg4SDg2YXZiVVZzcWZUUklicms0ODlwandmdUtR?=
- =?utf-8?B?QkI4anBHQXI1elptcEU2Rlk2RlZJbm1LN1hUdXpUMFFENnJyajl3V2YxYlJq?=
- =?utf-8?B?TzFpT1hudkM4RFVJUzRNTDdnTkV2eCtpSWlDd1l1aUd1U1Jmd3p4b1BEajZm?=
- =?utf-8?B?SDVweDlGdnFIT0hCRWl0MTdLYnlCWkxiNzdOc3l0bk0zL1JKM3dBRmNZaVhr?=
- =?utf-8?B?VktOaXU3Wmlqa0JrVUlXcysvSXRKSEdDQXVneUN2VjdtaVRyRUZLUWc1MkpW?=
- =?utf-8?B?dGtoVWk4ZTVnUWRmUStSS2tUQTVmQXRhNFJ5Sjk1S2ZsOGtlSXlhc0h3OXhD?=
- =?utf-8?B?Ynp1N1l3WkNMajRReDhoTW12SnlONXZqK08vOVJaazc3T3ZpbUJWVjN6cUlI?=
- =?utf-8?B?NGhvRTFwNFlwOUlCRytWTVlGUHQ0c1Npb2ZuRjRaQncxTGQvKy9ESWM4UzEw?=
- =?utf-8?B?blZaTVoxMHlxd2dIR0RIejlTTUxrVVBYL1p6RlZkMmFWdW9uSU9PZlhRQTRC?=
- =?utf-8?B?Nm11UFBhTldYOTBGZFhKQ0g5STJUcHJJN2JXV0tYWEtBMmN2T09TSWZsUU04?=
- =?utf-8?B?ZDl6ZFdBUHN5ZFFxVVZ4QjhnbENvTTMvWDNBOFFObldVQy9XUVFMZUNHUFJY?=
- =?utf-8?B?UnNvTGFJRFBybGgyNktBeDhqL1FiL090cVFHR2RUL1cxMDRyRjF6ODhrSTFU?=
- =?utf-8?B?R1p4MFdFZURlWHo3ZksrYU5uZGNrZmVtNklJNjZHU05Ua0lRK3RlQXZoVE5m?=
- =?utf-8?B?eEpTaWkwQlVmSWMwYVBvTTFZNkNsK1lXS3czeEJucXRWMXlRL25kUDNMM08w?=
- =?utf-8?B?K1JtSCtjU3dHQ2V3RnNseUh2R3liWDAva2V1M3BQZWxadEJkSFBvRU05Z1hn?=
- =?utf-8?B?bmF4TTRZc3NPclBwd2JldVR4UXdYNTc5R2IxdGxDbGpUZWNWekQrMXF3ZnhG?=
- =?utf-8?B?eCtIYU9Qc2pNWFBoSU1kelJTM0NGMVJlY1ZsVEhNOGhSWDFCb0Uvb0pWbDZR?=
- =?utf-8?B?eDhrdFZLdGtrZEJRQUdwdE0xajRzcENuSVMxK3dRNWIrMlo0UUJJYXVWNXJ2?=
- =?utf-8?B?ZE1seUphWnZEekFMQ04xRUhGRTMzTDZMbW5SU1Y2aVVDNk5PeUpFUmNDSVla?=
- =?utf-8?B?dHdTeHlxbm5ya2YrWGw4K0RFd3hlUTZuSFNyc1lBN1dMTGk4bmREZUdxVmNu?=
- =?utf-8?B?WmIvYjhZcTVJdjkzQ1BVbEdOK1cwS01tRnZZTVQvN2VxalNsMlNENEpGaVE0?=
- =?utf-8?B?MVFtNW1lOFF4V0FvNnlidTBnOURGWG5ieUg0S09mV3BLWkhQY0hqM1ZVU1Zi?=
- =?utf-8?B?U005Umpyb2k5U0I2TE92OFFvdnhTbFAxKzVDMWFxME1ncm1Sa2QxbXpJZ0dR?=
- =?utf-8?B?djQyL1AyKzcrT2V4aU1PeDZ4cVdnNXVwbXl2cTBhWDAyTjJoZFpYc0R4MnBQ?=
- =?utf-8?B?Q3plYUVFRjNudTkzV2RCVHJaYjNnSjQyV3MxUUZWME5jSjlPOVJPaVRCZEor?=
- =?utf-8?Q?fN7UylqvJRJvGGqQ67QVBGtlByZiuEXJcNueJ1TA822k=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?RWh5TzlDWWYzcDMweGhzUmZzbFR4TS94Z2NvQmxucXFRUzkyNnk3N2NUaENK?=
- =?utf-8?B?VHVsNk90cTRFZFExRnFlR2Z6NHkrR1Jka0FpemxIUGFCemFNYy9YYkM2NVor?=
- =?utf-8?B?ekN2bmdrZzlRTXg1ZDd2dlpNZ3o2aEJHbWxaQ2d0ZjRxdEVlaW0veXZRcEE2?=
- =?utf-8?B?QkkvSDMrWHpyWHB0djREN01rK2VyRE1kUDZjb0xoZy9haE9JNFVlNXFrVzdr?=
- =?utf-8?B?ZU5mUEN3Tm5teWlEZU4xbHdNK05XeDVzNk11QVFxUGNSYTByWk9GRkVPOExz?=
- =?utf-8?B?UDJBQkZlb1NVN2FnMWZyWVZrZHZacWR1Y3VpTnFGUGFvbDJSQnhkTndnVGNH?=
- =?utf-8?B?V1RFSU9oaDBpOTFKNkZUaVRtRlNpbDJnVkRPN0pLSFpabFM5WEJ0SmhUc1E2?=
- =?utf-8?B?YXBaYTl3SU9YZGtkRnFrTzhCYlNTNDlPVTRGbWE4c3RhS3FXcDMxUDduVWdS?=
- =?utf-8?B?U0V5OGp5NUlTeXV2b0ZjZWJOTm8wcmRDUDRIRnZjYndJYis3NEViWGdhcjBh?=
- =?utf-8?B?UEpSdUpENDNIYWMraGlQV0pjWTE0Vkw3N2FCSnc4UWRJVEJ6eG1EOGdlcE85?=
- =?utf-8?B?bmtvUXpnSm9MUmk0dXV3eFphdVFCZk1OZjVGNHd4bFpEd2dOY2ltNGM3SjNh?=
- =?utf-8?B?Nlg3MmNQdGw1c1gxenhuZGhHMHp3MHV5Ykc5Q2dvZXVpWEVJd1Z3dXd2R2NR?=
- =?utf-8?B?dEZIWU1pZFpGeGcrOWlVT3k5cXhGU0g1WGdvZ3ZIeUlSbUpIeWR3Y1RqVWVY?=
- =?utf-8?B?VGhQNlhJdVlEVis2Kzh6WEZkSVZIbXlkbVV5aUg3VU9UWWlwT0UvWThtdVg2?=
- =?utf-8?B?dWo4dmQ2RHVmYWZBNjNCVWxXQWgySTlVTldQM0JhMXV5Sm1GRTJCaW1JaXVY?=
- =?utf-8?B?VG9HK0Z0UnJJRmQzcDV4VHVSdWVqWFdtSEhoSzJKTjVsaWcvQWZKbDRnTUVx?=
- =?utf-8?B?MlprSmI0dmd3QVI5TkhYK2wxVCt1LzQ2cnlPcHd6cExBbTRpTlc5MFJoU0lT?=
- =?utf-8?B?aEVMMGpmd1EvaExCMWlTaWpUV0ZtaS9NOE5FeC9HRCtGa05VWVJiWDJwZHI0?=
- =?utf-8?B?MG1jU204cjYwQ1gyU2JjRGVRdWFEMWZCenU2Qit0am9WaUNROXZpRWZOb3Z1?=
- =?utf-8?B?d3IwcGMrWDIvZXV2S0RzNCtPRmZtb3pxVERvdjE5blN0anVzR2lmNENqTHY4?=
- =?utf-8?B?TFQ5a0I1UHUzYkVhMWVKaG4ySDBYaTFoUGRhbGYwaGFmcTlLamZHdWRsSlFD?=
- =?utf-8?B?VDlBci9LQzlTckVoUzNMTHFsWkNlWnVtRWtjYkNDaUU5eXZZSHpNUUpFWExt?=
- =?utf-8?B?eksrU0ZwMXFsbzBQVVQrei9sazVwZnJ1UFFLdDVkVm85M0pDT3ZQUHY5QTdJ?=
- =?utf-8?B?V1FOWjB6Tmw0bGlieHRLSzBienh5aEFQSlRwZ3NHUGllZjdBNGcrSjZsbUUw?=
- =?utf-8?B?NnFTNzR5YmhVZGFlcWJNRTkzckp1S1ZkdHhld1lkV1pqMTNUV0RFaDcxb2h4?=
- =?utf-8?B?QmQ1YS8ySnZkUnVRWVpHbVdCNjNMRG5hTlAyekhsT3lEa1FUSkRibUljN2FB?=
- =?utf-8?B?enFUQnlWTnhrY3lYRHNIK2VDSnJqRGVuZFJWRWZXaWwzR05WYXFmOXZZekp3?=
- =?utf-8?B?UDFUMkx3TGVrcUhTaG11OU9vNlc2Sk45b0RFU2xiUXhBMGxOaW04amdRNk1z?=
- =?utf-8?B?RnFkb2F3T2w4dFNzTm9qMDh3OUJCeHlPSDlxOTlWSm1vQ1QyYUV3clNWODRG?=
- =?utf-8?Q?tYhU+02MkrWNSfW1oQ=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4fd8ba80-b799-4054-4184-08dd92556cdd
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2025 19:36:15.5952
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB8986
+Content-Type: text/plain
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
+> Changes in v2:
+>
+> Patch #3 is the only one changed (as a result of Patrick's review [0]):
+>
+>  - add some blank lines to make the option handling blocks
+>    easier to see.
+>  - add a comment to 'gitconfig' and 'gitattributes' options
+>    to indicate the default values.
+>
+> Note: The indicated defaults for the 'gitconfig' and 'gitattributes'
+> are only valid when the 'prefix' option is defaulted (or not /usr).
+> Indicating the 'correct' value when -Dprefix=/usr in the comment
+> would consume too much space. Is this acceptable, or is it too
+> confusing/misleading?
+>
+> Also, thanks to Eli for testing patch #5 on Solaris and confirming
+> that it fixes the regression [1].
 
-On 14/05/25 12:21 am, Aditya Garg wrote:
-> 
-> 
-> On 14/05/25 12:12 am, Junio C Hamano wrote:
->> Aditya Garg <gargaditya08@live.com> writes:
->>
->>> BTW, I could not get the source code for https://git-scm.com/doc/credential-helpers. It
->>> seems to be a page for all credential helpers.
->>
->> Probably
->>
->> https://github.com/git/git-scm.com/blob/gh-pages/content/doc/credential-helpers.html
->>
+Yeah, thanks, all.
 
-Ok so I'll just get the Yahoo docs merged before opening a PR in this repo.
+> A range-diff against v1 is given below.
+> ...
+> 3:  fece809f11 ! 3:  a385bbed83 meson: correct path to system config/attribute files
+>     @@ meson.build: libgit_c_args = [
+> ...
+>         description: 'Environment used when spawning the pager')
+> 4:  d49afaedf3 = 4:  0d00951475 meson.build: correct setting of GIT_EXEC_PATH
+> 5:  69848e557f = 5:  150e4110d2 configure.ac: upgrade to a compilation check for sysinfo
 
->> See https://github.com/git/git-scm.com?tab=readme-ov-file#git-homepage--
->> for the general notes to get changes to that repository.
-> 
-> Thanks!
-> 
+Hmph, For #5 I am seeing this difference:
+
+    @@ Commit message
+         Commit 50dec7c566 ("config.mak.uname: add sysinfo() configuration for
+         cygwin", 2025-04-17) added a similar 'sysinfo()' check to the autoconf
+         build. This check looked for the 'sysinfo()' function itself, rather
+    -    than just the header, but it will fail (incorrectly set HAVE_SYSINFO)
+    +    that just the header, but it will fail (incorrectly set HAVE_SYSINFO)
+         for the same reason.
+     
+         In order to correctly identify the 'sysinfo()' function we require as
+
+The original comes from what was posted in the first iteration, and
+somehow the change is not showing in your range-diff, which is a bit
+disturbing.
+
+I think for now I'll just amend the log message of #5 back to what
+was in the previous round locally.
+
+Thanks.
+
