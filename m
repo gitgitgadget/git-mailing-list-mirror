@@ -1,170 +1,147 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD112AD25
-	for <git@vger.kernel.org>; Tue, 13 May 2025 21:44:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCF274C14
+	for <git@vger.kernel.org>; Tue, 13 May 2025 22:05:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.176
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747172679; cv=none; b=TWzJwI0TutL0KqmpXWaW0w3URwFplGEfUcOJj2bRMfyMfKgeu7hQIFXk+/xZDpBgOtaqVTHQmtaRCWDNkwygZheJEtUAfr+QdH1yrnuMNeTgGvaa4kkcwALvMFc7MWnAhJQA3CFyasaUEoqviM6/fWGxMtJQe3xoJ30PtTTRSLs=
+	t=1747173939; cv=none; b=btiHw/iKEO0yz7pQs6wub3/IrrBO+8TELz8vf8V4V109NN2b/BMNybvpfnW2UFSGMa9Sh4xwqXfZNeamhkIENCcYO5SmxwJv9sHcAaeCncRG5iqM/v1Nv3ITaMr1iKsDkKYrNPe/REJy1dyfM1QHRw+RhpoupkrBDPr/A852Xvc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747172679; c=relaxed/simple;
-	bh=XfR6EPtCz+6Jf82Q3pOIOvH5TyjdSoeL1pcHTL9yAfs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=nRfi1TT0Es2MAluXAIkanAzTJ96Kq/92RRj/SxqLfJisA8BiLSN91Q+5ZxbkQrflPHXVO2DTbhuOCn5w+mqrSw5tFuTObBqXUsMG1D0o3im0FSSI500thTqfztIQUCMGMBgcUOLi9bxTIo/828WQ8tiBEw2n/5L7SjcDa+h5KpY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=RueEvSfE; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vvgYup+l; arc=none smtp.client-ip=103.168.172.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747173939; c=relaxed/simple;
+	bh=eNbx2ATQvDSk9ZZt6S9qNY1hVu/W1UrSUkksjV3I/rQ=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=GV+ZX26vxpWoNBIq39ypq4n2iismIdV3THyloltlAdei/IOJWKjdeQLd+KumPvCjFrIpPLC1bmHGNZ8oI1J6yGldVKeAib65bqR8zJrR/N0Ma4nX4eVHtTsR5lyW9HNDAV8+ptel40poo73XRggsCZV2njMv26gDyYTTDna8ykU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c9ZEnCTM; arc=none smtp.client-ip=209.85.221.176
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="RueEvSfE";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vvgYup+l"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id CD9181140112;
-	Tue, 13 May 2025 17:44:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 13 May 2025 17:44:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747172675; x=1747259075; bh=Z4F9wk98pu
-	/NCQDkRGX0sPOpppQuAc0A1pg3leZrDcc=; b=RueEvSfEln7IW2lVXHadAtf0UI
-	PsT4LkNgXj2gvlG0gdoDrCMJefZiuoyCb8QWxRCqeSufY/ysBLYwvelAUNQ+yP/F
-	ip5mkttNBoR1ZQsK+G1+adkmbW6jCZwkLW9ZH78vxr5P1ZgZQQD8PwVeMvZfKPeM
-	DLbScPWJftJ+10eZb0eiKcZCdqFN2xE4e08ytlR/3Hfhme+0woZhOIc3HSIvlYpW
-	4FH9rlaQ2ognlLljTEC2pX1sje/XHR90PYB72Bgrg3FyOyVdEV7hF7YRzwNPjSwH
-	AyzJ0ChkVpgwDnN86SgnmxJpGJwk29b4LKgmvz3p8y5HcIVBtV19N/GX1UKw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747172675; x=1747259075; bh=Z4F9wk98pu/NCQDkRGX0sPOpppQuAc0A1pg
-	3leZrDcc=; b=vvgYup+l1mZCSuXCthKYyGz1ElnkidrKqdriAOQnhMNVrkjn+Ko
-	mv9OIspYQ6IST+17R1be3/87t9zLQXiOGvH4NS4Jx6nvyywwYHCdcowpBQku1xzW
-	makQXcSQQJiCdXqFL0V2QL1eCMD5xjDi9yv8Hf9QfapAaYwZsMMau5vMxTQYcKMU
-	gFl1vSW3/2eIzV1G09uJBrGc+tD1dIcVV4n4tXpyhPHw6ZznCJbr4GDXjnVp3GmN
-	YxlV6eVRwRKs2kd0ma9f0icIkPQ5riFiBI2eS+DNxiOCDd2t2mHo80vC2JjR21B1
-	jrjDE5B627xf5h/YAJUxnR9LAKwvjQia2Qw==
-X-ME-Sender: <xms:Q70jaLNVCIx4rXKN9Gv2mIxAeZrLpTEqTeBxbrmIZl-gV4vpdjS_pA>
-    <xme:Q70jaF9rhZ8o7FJGYunkZLuMyLr1vVrf6WlA7VVtyQKXCPIlLEYejYIiZAItLrulN
-    p3eFrFtzarKI15C7A>
-X-ME-Received: <xmr:Q70jaKRpOh-CgpsvZDFYlcp8xl8sxw-1FBZGFwtohdQuFsMiaTFCpa1Z5f0DLboUiNxRPhcppPNk9WKzm7zeuTl4OtoiTzo_mbdaEdk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdehvddvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
-    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:Q70jaPu-26a_k2qRdiREXmWPcdyI_A-SGcJR8UoWH8_pMeihP3sTEA>
-    <xmx:Q70jaDeXzW7--vdPpMf8KSm-MY2x63xQkicrcWqBsbFKMEa79C23cw>
-    <xmx:Q70jaL1o_3zeqHCUrjvC6QAon4dqktPig_KSYRzdTSAt6G8JZM8QvA>
-    <xmx:Q70jaP_3spcyWhxR0kZdUZZxOnEXB_ib1NazzE8VVCO7pQ8j9v0Fyg>
-    <xmx:Q70jaGK_eOl0KGEmJsbNjSbBMKyTNtwkBhvh5uFi4-89BXcXo7vYg_F7>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 13 May 2025 17:44:35 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH v2] submodule: prevent overwriting .gitmodules entry on
- path reuse
-In-Reply-To: <20250513033403.91365-1-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Tue, 13 May 2025 09:04:03 +0530")
-References: <CA+rGoLdzT01jLigX=Z+_tw715O0BibgVA+Sj+65Qwee7i5gLfg@mail.gmail.com>
-	<20250513033403.91365-1-jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 13 May 2025 14:44:33 -0700
-Message-ID: <xmqq7c2kgp8e.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c9ZEnCTM"
+Received: by mail-vk1-f176.google.com with SMTP id 71dfb90a1353d-5240b014f47so2316778e0c.1
+        for <git@vger.kernel.org>; Tue, 13 May 2025 15:05:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747173936; x=1747778736; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HMjIVBhK2HtQ+fGwqlEgoktAC1k2RW0oxgaAoSI7w20=;
+        b=c9ZEnCTMNvUWxvh6hBTxUFYbSiyZ+JgLezpUP473HQggmGcgGWL9wTto9jOL8mJYy+
+         u73pZAI33YqkI1BPmxjvPseyFg7ZWP6CNIgygaXDCM6EMU2UUTNPGCCxNymjjaEMnQ8s
+         RT5DEPLYsWJXFb2QTcrURD9inXaEY+Wy7ATMlKyjJVTE+BrEo6982Tz9uoC4CcIpYjGd
+         YxRyxvGUyoFK7Ek3rps2Ceui808Y5DCs3HZsehGBm5mGUNFDx7ZmfvkfYSmQ0aoHWsfc
+         UMy6f5irOW5mPcF8iVLlt/6IESMs4wZCGJsmhu8wjgA95fE6ZbvMMvirNaEwph+RX+cJ
+         oH3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747173936; x=1747778736;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=HMjIVBhK2HtQ+fGwqlEgoktAC1k2RW0oxgaAoSI7w20=;
+        b=fLIz3upo1RufnHkb4lWsibq9a9fa7VlFZBk5VsHAyHtFwsRkoVR+RXXmh326+Zh6Hb
+         9cIkvp3hFwOknyTqL7cbdgI5L0IqOHX0vmVUrvhZhTBy6Y/JciL21xixkVB6BZIDS5e9
+         q3spGn6qhWWO1UuD5H2t4okaR6y2Q1XlwlotGCUjmFeqjX3BeyWFJOFENeaozn+rlCxN
+         6Dlo4SXpaxQ6Ijh69KgACecfvHPV2MEL1hcWLTZ6pRfg93/Xh/z1jXtFKlnqKw0rPZ3k
+         DzugpPBPlnYBIVtHRj0DkPUt3iqQ4ik352vFgYHOt+QOsMLwR7fdSPQF21DIzKThs+/s
+         j5ng==
+X-Gm-Message-State: AOJu0YwDWk8BReAAKLg3CpkiuxO9r8c8GMoQgMSTHMTtmZ1tGECwKEy7
+	M2F5nwMtlObeClm44+tgRTHLX7gP20YjA/R35JN6DB7LxSkbn50LWkKzEd0v
+X-Gm-Gg: ASbGncsDHyxk9vaKLDK4NaBFJpPjHFo8BOGh2zAgWsSYPD7Fb2UawQWJVpCv4uPhuF+
+	3ZThTX2D0gVhsFY+u+aIBsrv6SuPlaM86BqPxTcRk1+G8FC8TgIzlw9Ksz2ioInpm5JBFaf0ZwE
+	F1N2ayF1xMtkstxNLId2/+uFyqXH6VhbAJxiXtmeHPJqpIw3VAmDyLzOXqQOkk4nuHyLQhNTjSX
+	z6ZDnGhxLBTppHi/NxQqZahcnEqFZHyXp3ZY2MZZprv8w9xcXfyQF4iYWO8uX7+yzPU/fGLZKMJ
+	QHN26J7ShsgZm1F2/5gk92wutPPXKuwcVvT6oam/0zH+Y4/T4V+PB3yHIDy7fdvcOMY/MgzveIk
+	=
+X-Google-Smtp-Source: AGHT+IFxOEvDv5lFfh+a2j3+16aqxTYxXG/psYTzF4i3JBYYSw/owaR4K0ruLAEEvAKVbjlSTkX8Lg==
+X-Received: by 2002:a05:6122:2505:b0:52b:789:2d0 with SMTP id 71dfb90a1353d-52d9c5f36a3mr1073219e0c.5.1747173936585;
+        Tue, 13 May 2025 15:05:36 -0700 (PDT)
+Received: from smtpclient.apple ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-52c536fcc07sm8396916e0c.1.2025.05.13.15.05.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Tue, 13 May 2025 15:05:35 -0700 (PDT)
+Content-Type: text/plain;
+	charset=us-ascii
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
+Subject: Re: [GSoC PATCH v2 1/2] json-writer: add docstrings to jw_* functions
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <aCG2XkW2lJ1qYHKW@pks.im>
+Date: Tue, 13 May 2025 19:05:21 -0300
+Cc: git@vger.kernel.org,
+ gitster@pobox.com,
+ karthik.188@gmail.com
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CBE59EF3-4C4D-4FD0-80E7-D9BAF70EFDAB@gmail.com>
+References: <20250512020935.73140-1-lucasseikioshiro@gmail.com>
+ <20250512020935.73140-2-lucasseikioshiro@gmail.com> <aCG2XkW2lJ1qYHKW@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: Apple Mail (2.3826.500.181.1.5)
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-> When a submodule is added at a path that previously hosted another submodule
-> (e.g., 'child'), Git reuses the submodule name derived from the path and
-> updates the corresponding entry in .gitmodules. This can silently overwrite
-> existing configuration if the old submodule was only moved (e.g., to
-> 'child_old') without renaming the submodule.
+> I don't think there's a need to add "Mentored-by" trailers to every
+> commit just because we happen to be your mentors right now :) If we
+> actually helped then sure, makes sense. But to the best of my =
+knowledge
+> we didn't, so I'd just leave them out for now.
 
-OK.
+Ok! But given that now both of you are helping me here I think it's
+fair to give at least a Helped-by :-)
 
-> This patch improves the `module_add()` logic by checking whether the
-> submodule name already exists in the config but maps to a different path.
+> void jw_object_begin(struct json_writer *jw, int pretty);
+>=20
+> I think it would be interesting to learn _when_ to use this function. =
+Is
+> it mandatory to call it? Can it be nested? Why is there no =
+corresponding
+> `jw_object_end()`?
+>=20
+>> void jw_array_begin(struct json_writer *jw, int pretty);
+>=20
+> Same questions here.
 
-We frown upon a patch that says "This patch does X"; just give an
-order to the codebase to "be like so".  I.e. "Improve the module-add
-by doing X..." is how we phrase a proposed change.
+A JSON can be a list or an object, composed by other lists or objects.
+Those functions, then, define if the current json_writer will output a
+list or an object.
 
-> In such a case, Git now errors out unless `--force` is specified, thus
-> preventing accidental overwrites. To proceed safely, the user can provide
-> a new name via `--name` or use `--force`.
+Internal lists and objects are declared with
+jw_{array, object}_inline_begin_{array, object}, depending if we want
+to begin a list or an object and depending if we want to begin it
+inside a list or an object.
 
-The above explains what happens in module_add() quite well.
+In all those cases, there's no need to jw_object_end or jw_array_end.
+jw_end covers both.
 
-What is puzzling about this change is that the new helper function
-and changes to configure_added_submodule() is not described at all
-in the proposed log message.  How are they relevant and why do we
-need them?
+>> void jw_object_string(struct json_writer *jw, const char *key,
+>>      const char *value);
+>=20
+> What happens when called after `jw_array_begin()`? Same question is =
+true
+> for all the other `jw_object_*` functions.
 
-> @@ -3443,6 +3452,7 @@ static int module_add(int argc, const char **argv, const char *prefix,
->  	int force = 0, quiet = 0, progress = 0, dissociate = 0;
->  	struct add_data add_data = ADD_DATA_INIT;
->  	const char *ref_storage_format = NULL;
-> +	const struct submodule *existing;
->  	char *to_free = NULL;
->  	struct option options[] = {
->  		OPT_STRING('b', "branch", &add_data.branch, N_("branch"),
-> @@ -3546,6 +3556,32 @@ static int module_add(int argc, const char **argv, const char *prefix,
->  	if(!add_data.sm_name)
->  		add_data.sm_name = add_data.sm_path;
->  
-> +	existing = submodule_from_name(the_repository,
-> +					null_oid(the_hash_algo),
-> +					add_data.sm_name);
-> +
-> +	if (existing && strcmp(existing->path, add_data.sm_path)) {
+It raises a bug: "json-writer: array: not in array
 
-If the name is in use, and the submodule with that name is at a
-different path, then we are in trouble, OK.
+>=20
+>> void jw_object_inline_begin_object(struct json_writer *jw, const char =
+*key);
+>>=20
+>> void jw_object_inline_begin_array(struct json_writer *jw, const char =
+*key);
+>=20
+> Do these nest? E.g. can you call `inline_begin_object()` multiple =
+times?
 
-> +		if (!force)
-> +			die(_("submodule name '%s' already used for path '%s'"),
-> +			add_data.sm_name, existing->path);
-> +
-> +		/* --force: build <name><n> until unique */
-> +		struct strbuf buf = STRBUF_INIT;
+They are only tested up to the second nesting level. However, based
+on the source code it looks like they should.
 
-"-Wdeclaration-after-statement"
+json_writer has a stack. The *inline_begin* functions basically append { =
+or
+[ to the buffer and to the stack.
 
-> +		strbuf_addstr(&buf, add_data.sm_name);
-> +
-> +		for (int i = 1; ; i++) {
-> +			strbuf_setlen(&buf, 0);
-> +			strbuf_addf(&buf, "%s%d", add_data.sm_name, i);
-> +
-> +			if (!submodule_from_name(the_repository,
-> +						null_oid(the_hash_algo),
-> +						buf.buf))
-> +				break;
-> +		}
-> +
-> +		add_data.sm_name = strbuf_detach(&buf, NULL);
-> +	}
-> +
+Perhaps it would be a good idea to include a test for those cases?
 
-What is the memory ownership rule for add_data.sm_name?  Earlier we
-saw in a pre-context of a hunk that this was assigned from
-add_data.sm_path, so in that codepath it is considered a borrowed
-piece of memory, but here the member has to be the one that owns the
-string detached from the strbuf, which eventually must be freed by
-somebody, or it would be a memory leak.
+> Patrick
+
+Thanks!
+
