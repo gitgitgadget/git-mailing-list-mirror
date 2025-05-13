@@ -1,82 +1,145 @@
-Received: from mail-qt1-f175.google.com (mail-qt1-f175.google.com [209.85.160.175])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E876273FD
-	for <git@vger.kernel.org>; Tue, 13 May 2025 11:17:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 817C424C67B
+	for <git@vger.kernel.org>; Tue, 13 May 2025 12:20:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747135051; cv=none; b=do6vq/e4LePDVugf5VYXiGexqu+li4JGPKDxk5bppzY9rKUdaZec4lyY4AY7PiMP6VeL0INjYQALX2RyJiu8RqR98wVfWlLVIXHXoMCXa2Pf+EYedoPm7nszI8GwBSGa7ssjYzWeOPkbNlKWgZO3MakWhCjv5CP8jYkjfsuNexA=
+	t=1747138859; cv=none; b=t9vzDY1VgTMzugMfoGx8C1TerPsCz7B+QH4/cYZw6zZxQYBVcB1ySkH5m9aFQrxgtfnIGL5KOdvu9gcX2XtosH34PTFs6gFalP+W8VLTNih+45o54/a2Kw5qiDr9J39Wy52PO3bVPd+TLR0QVQjoufKjcJS+6bO68Z4+7Zh/8po=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747135051; c=relaxed/simple;
-	bh=y6rKQ1yE2Eus1BMMANvjkhw1Pn5Hs8NGKjsA0rxJLqA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=GCWwxq+cjm3um52Vpoa7g0Wn10fye6r+gcFUMRnC9df9k80Pb65gWsvmxV+JSSm97+0J1WBklvhr2Zy/JEpejJ6dToENCawX/x0OrZTML7pv1V/zGOx7U/HyRVOUuMIyFIN75zQcO9rSOLWwGb55fzG6cbEkUlybFzH2y22gZO8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ejrVqlX3; arc=none smtp.client-ip=209.85.160.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747138859; c=relaxed/simple;
+	bh=FJGPaOIvfMMGFsTt8ATv5Z41jKpXfkVOMsR8g5hqRbM=;
+	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=mmZVhDjd4T+/LjDLMW8l6KVlcfOX9hpYgaT/a0o0sYMzajWWxw9eWnKIVhZwJptJ5fmGHWlwAcd08FI+alJeZIKsCYIa9JYYG+jUDTF+xwp1FCSUaI/CzVMvVpMzTuyyNOfEgYVr9KAUe4WbZsQYRp0j9RpTa+kxK8ShIlZ3Qi0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name; spf=pass smtp.mailfrom=chrisdown.name; dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.b=jIMt7vlt; arc=none smtp.client-ip=209.85.221.49
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chrisdown.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ejrVqlX3"
-Received: by mail-qt1-f175.google.com with SMTP id d75a77b69052e-476a1acf61eso57867751cf.1
-        for <git@vger.kernel.org>; Tue, 13 May 2025 04:17:29 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.b="jIMt7vlt"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a0ba0b6b76so3928214f8f.1
+        for <git@vger.kernel.org>; Tue, 13 May 2025 05:20:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747135049; x=1747739849; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=y6rKQ1yE2Eus1BMMANvjkhw1Pn5Hs8NGKjsA0rxJLqA=;
-        b=ejrVqlX3Il9YnDV1uoWhyxsSnvSFFSHeS+VxLKFZtoNO87s1b4ysmTiCbRyJcCu0BZ
-         4n9tliK4z8Gq+izuei4TKoVvaJ3hyM2gGy57aP5KqDRN3pFHiXv1gyatjkZDYEXb/vrn
-         0mvUqgA87fhirl7ab5eTVJHgfaLcFuwKEkXgnQ7516ZVkCpkyYOD9a4VWbcMT134zrCQ
-         FBraLPA9rJFQ40rq7IG1oBC/PZst2qUFP7pAdM/v96/IOVJb9mdvD4/Tn8u9sHDsLBWR
-         ZWccQOheHj1dy+DnMGVq2mkcvR0LftO81pFROkf5PtZpRP40jB0M5GYpWa2whidtfZSS
-         5bRw==
+        d=chrisdown.name; s=google; t=1747138855; x=1747743655; darn=vger.kernel.org;
+        h=user-agent:content-transfer-encoding:content-disposition
+         :mime-version:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=p9aMHDGLeFULYaD1g74xtPsGOYdPM8i9QRXXULreWBc=;
+        b=jIMt7vltU+OwKskjXIY2bOfvYh0tZzK+wpWC6ZL2KlRPrre6hgSNgzfZNIG8BMgBt4
+         nCjKon8XSxB+Hs1169nGWnLqctmls7QlIdjOTv0OM6WwVeSLQCODP3jNAlDEcIVgLYkv
+         KpQ0qL4l+2ob+1LoJ3+8rfVm/Ih3pz3L8dJ3E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747135049; x=1747739849;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=y6rKQ1yE2Eus1BMMANvjkhw1Pn5Hs8NGKjsA0rxJLqA=;
-        b=hA0z4sSTNrsxg+viSUNBmcoJShSQ0WRpVCEF8JXgtmUfy/1NmEOYjCjTz913bkv7xz
-         bwZ1x7Gx8tNm9eCjoV38cTM2SiFWG59QkBTEyteqS6pMOo1u3DWNaI1oJmbWOGj6sr7a
-         VGoqcCFqhbdcZ2lx/ATLXEYkwI8HtnJhYu7nR3NwwkRa1hKmbpOwh0PwReTxZjnxAlnO
-         5q3SQD3qNuclCcu7mDqWhWH8vXPXXYrHA7mR03BUNV4wi9/vKc/rurlqFO0vcBpovc9b
-         8UgoBWBEvvSiibpZtadmE8KQxFBLWUhXlLNp0W+NtKbf7S/teR/4gLmaua3GlBdCdA73
-         LlyA==
-X-Gm-Message-State: AOJu0Yxhj9PF+fd3eADjJ1NDuWpO94syHizyDEU0dT0L4ivQbegx7DJm
-	eX1p+lhXg9EUd4jO9AO5y0nWHC0mJA/Yvn3ZebvQmK5TZIO/bSuZAyns6ohMb0NyeLNJG+JPAoG
-	tP1S6fOhDgacm3hSvGVWv6JTeZMS/LjOBe9Q=
-X-Gm-Gg: ASbGncv8jqsKAqQuPPykqvJR8FI13PdRn+VKKwAs8Mvqi/hY+e0JqcEdIzLLkGB35/c
-	JvbgESH4jLqEDwzvzIJwdofe1yvW5WnayKT451vWNRbUKzAg5NPVGBVSRPtBDEsccpL6CEeFVl0
-	miZ+1u5R8fRQF0YfjX1vzMqPhpD8sPY6liads7LaSg3Oc9oNMYe1+hSWfK97HX2wdI
-X-Google-Smtp-Source: AGHT+IGoe4FDZL2kPaoH2DuXHTgQNPJd8PbmbENjSplG/1KV0ibjDmS2w7Iw81ut3ore9IJLPqYmcV1Z+ZgGP1lpEXs=
-X-Received: by 2002:ac8:5a49:0:b0:47a:e6d1:4126 with SMTP id
- d75a77b69052e-494527d5368mr251580671cf.39.1747135049004; Tue, 13 May 2025
- 04:17:29 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747138855; x=1747743655;
+        h=user-agent:content-transfer-encoding:content-disposition
+         :mime-version:message-id:subject:cc:to:from:date:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=p9aMHDGLeFULYaD1g74xtPsGOYdPM8i9QRXXULreWBc=;
+        b=ClsaVGbD58/o9F0dI2X+IIga5vkAq5d9qhfjZLYj2dfsPztTDZbkVlUzVvDgpGVi3u
+         0nAEYA58rmz+zhoNkWzidiR9Py5kgYUTGvQMBZvbHYP1S4Q0CvH4Z/QqLHHCdFBEMyEh
+         APWWKTyFMsi++WQ34yVKKdECtazC2MaJdsukbMG3eaqkrbGk014Iem90d+R2jhu8RYj4
+         IvHBHG3t2hGvVe6NSG3MeVc2Ecg3X8jMmZSyZ2guuYi0NP3SpvmG3fPCEq8FPS6A95M9
+         lzZtD2/iuVa7OtXIqoBkTLweArZ4BbcCs32RntLXGR6FuOTHdG6J7wZZX0LKPHyUU7PP
+         F9Kw==
+X-Gm-Message-State: AOJu0YwtiBsJQaIu++uGotVfHw4zj/feA8p3pNafpeteTtX3Rkt45tQY
+	JLpmc3hiHksDO7wD8egM2CDSK0+PvOYLkIoCRsbFq4wnrx5t9Bk1A45PkYwU8z99KGD7YWHYAbG
+	C5Eo=
+X-Gm-Gg: ASbGncvBl56DjdJLfQ5+XPrsUFQ1ou2fo1qK+EPiizvpL49r/Wpu1K7Ofld7lptkOb+
+	buxX3zu+2igT3j8uXEmEojUP+B4p9aAjPv/JuRor05emJhaNvbZ1xNd4EtmpEZvezfx+qonqXjb
+	kNa+523wsZmGMCKdZGYxN2vgWwfwPNkqK5ylTeC45v8HPqBtXzbGkynIEtmBRepq5KoboMmFzhI
+	mx/MjSJJ6nn9cV7iJI1oCkZRI/E7uZsXPVuO0dkOszcvHcVsWWxWvSjAO2VmHIhLaPcMzHSBpU+
+	9w6mH8qjYK4RFMF1lOguOCCDT1g61jrfjedBhzBp9+FhFkcN0lRoMQ==
+X-Google-Smtp-Source: AGHT+IEazzLDeLV5mC1cWiXYvu8zOXIzqpmPXSxhCGC7T28/Ti/rfrkNAqaUFF1/mJfk3N6JCHpsqQ==
+X-Received: by 2002:a05:6000:2011:b0:3a0:9eb0:7628 with SMTP id ffacd0b85a97d-3a1f64b57b3mr15721310f8f.38.1747138855024;
+        Tue, 13 May 2025 05:20:55 -0700 (PDT)
+Received: from localhost ([2a01:4b00:8432:8600:46a3:bbff:fe27:9a9d])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3a1f5a2ca47sm16111283f8f.73.2025.05.13.05.20.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 May 2025 05:20:54 -0700 (PDT)
+Date: Tue, 13 May 2025 13:20:53 +0100
+From: Chris Down <chris@chrisdown.name>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, kernel-team@fb.com
+Subject: [PATCH] commit: Add commit.signoff configuration option
+Message-ID: <aCM5JY25NVPgyYRP@chrisdown.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqr01si441.fsf@gitster.g> <CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
-In-Reply-To: <CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Tue, 13 May 2025 16:47:18 +0530
-X-Gm-Features: AX0GCFudsHXc2zIZFdJp3jrZcayaW-tbzuiHWa2CdvFrCqN0bNUR5KvKoMJKE3w
-Message-ID: <CA+rGoLfx1fmCPvTRTMijAWOYT8JGGBkH9gqYsqVjwAVHXoX3eA@mail.gmail.com>
-Subject: Re: [PATCH 0/4] update MyFirstContribution with current code base
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+User-Agent: Mutt/2.2.14 (516568dc) (2025-02-20)
 
-Hey people from Git,
+Introduce a new `commit.signoff` config variable that mirrors the
+behavior of the -s/--signoff flag.
 
-Looks like this might have gotten lost in the void.
+We already have prior art in format-patch with `format.signoff`; this
+brings parity for those who don’t use a patch-based workflow but still
+rely on signoffs.
 
-Would appreciate it if someone could take a look at this series of patches.
-These are documentation-only changes and should not have any effect on
-the actual source code.
+Right now people who have to do this regularly often alias commit to
+`commit --signoff` in their shell, which is less than ideal -- this
+config option avoids having to do that.
 
-Thanks in advance!
+Signed-off-by: Chris Down <chris@chrisdown.name>
+---
+ Documentation/signoff-option.adoc         |  4 ++++
+ builtin/commit.c                          |  4 ++++
+ t/t7500-commit-template-squash-signoff.sh | 10 ++++++++++
+ 3 files changed, 18 insertions(+)
 
--Jayatheerth
+diff --git a/Documentation/signoff-option.adoc b/Documentation/signoff-option.adoc
+index cddfb225d1..0055874e84 100644
+--- a/Documentation/signoff-option.adoc
++++ b/Documentation/signoff-option.adoc
+@@ -13,6 +13,10 @@ endif::git-commit[]
+ 	Linux kernel and Git projects.)  Consult the documentation or
+ 	leadership of the project to which you're contributing to
+ 	understand how the signoffs are used in that project.
++ifdef::git-commit[]
++	The `commit.signoff` configuration variable may also be used to imply
++	`--signoff`.
++endif::git-commit[]
+ +
+ The `--no-signoff` option can be used to countermand an earlier `--signoff`
+ option on the command line.
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 66bd91fd52..da98895438 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -1670,6 +1670,10 @@ static int git_commit_config(const char *k, const char *v,
+ 							       &is_bool);
+ 		return 0;
+ 	}
++	if (!strcmp(k, "commit.signoff")) {
++		signoff = git_config_bool(k, v);
++		return 0;
++	}
+ 
+ 	return git_status_config(k, v, ctx, s);
+ }
+diff --git a/t/t7500-commit-template-squash-signoff.sh b/t/t7500-commit-template-squash-signoff.sh
+index 4dca8d97a7..03c20dcb1d 100755
+--- a/t/t7500-commit-template-squash-signoff.sh
++++ b/t/t7500-commit-template-squash-signoff.sh
+@@ -181,6 +181,16 @@ test_expect_success '--signoff' '
+ 	test_cmp expect output
+ '
+ 
++test_expect_success 'config commit.signoff implies signoff' '
++	git config commit.signoff true &&
++	echo "871119" >> bar &&
++	git add bar &&
++	echo "zort" | git commit -F - bar &&
++	git cat-file commit HEAD | sed "1,/^\$/d" > output &&
++	test_cmp expect output &&
++	git config --unset commit.signoff
++'
++
+ test_expect_success 'commit message from file (1)' '
+ 	mkdir subdir &&
+ 	echo "Log in top directory" >log &&
+-- 
+2.49.0
+
