@@ -1,71 +1,77 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pl1-f171.google.com (mail-pl1-f171.google.com [209.85.214.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72A2B1EF375
-	for <git@vger.kernel.org>; Tue, 13 May 2025 06:55:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.169
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A95C1862A
+	for <git@vger.kernel.org>; Tue, 13 May 2025 07:06:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.171
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747119328; cv=none; b=cWKEbvrpoIzwAT6g3oQm61hGY65gVSFdMxOQnr2KQCp73o+AnTV4czv7zP+LiUptmEj++w41KAHz5nVv01qKrVXjN6cE/P1Q8tZuUQn/LSFdaOAz4m5NKf/ReGsAgogVA8CrngobH9bX9RGUD+7iu1eVVAHR+50GHlHjPbJMzBE=
+	t=1747119984; cv=none; b=SeyUmn6LLOH54/FP6rjVpmb2rr0czP9gw/JguqZd5Y0313izSz1sHcnmQbNV/8uryPhr/DU8PEtyH8Noq+0IPBMePiey7t/S9bj3yTy3hxxaurxb6duvLOhckn2Clz171DSWEECqHvcp0QHQ+MBo5dymxR2K5SAgNmaHvOzLz6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747119328; c=relaxed/simple;
-	bh=0DbTo9I4O+q9QDYheOnPxq/My4/h8ZVCKRT4AX8SlTw=;
+	s=arc-20240116; t=1747119984; c=relaxed/simple;
+	bh=Q09oIjQIUDMeTvSNCjO6h7fR/CRQ6MhFhZ/LHqHlnl4=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WVSzjQJ0g09gbgoT1sfbfG6w4kv2NQel9kBEhfo8RlWSjaNROAb82/KJMxND5PRIWy/X8xfRDkSlKYp+VF4ipIP3975mVYwlrSgmpbl313lgSVHW6qNWuysiW3cuEo1MmCqZ1zJKaAtgwUKyXkh2FB3BWeOjp9VlvNRMRK07Kxw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nb0R1jfL; arc=none smtp.client-ip=209.85.214.169
+	 Content-Type:Content-Disposition:In-Reply-To; b=ryWqZcRACxsb+GZx7jhwS+sCPaACLt1XD3/27E7nK+9e4KkehTkg+Si014LTN9NU1GaDMzUtpBkw95LU4zugPgUK6Pt553GpcG+U3ic9mekipWH6OjTZnzqkAZnKpGAsPyIPgBSo5zCwTVDndoj1tHHTn0d7FuY7+nojU3D61kc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LFrFfnZp; arc=none smtp.client-ip=209.85.214.171
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nb0R1jfL"
-Received: by mail-pl1-f169.google.com with SMTP id d9443c01a7336-2317d94c9cdso4590465ad.2
-        for <git@vger.kernel.org>; Mon, 12 May 2025 23:55:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LFrFfnZp"
+Received: by mail-pl1-f171.google.com with SMTP id d9443c01a7336-22e4db05fe8so48507395ad.0
+        for <git@vger.kernel.org>; Tue, 13 May 2025 00:06:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747119327; x=1747724127; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747119982; x=1747724782; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=F7JSSpbgXOZxGAfW/cVUER6QbTluS8kQVXGxB/vAE2g=;
-        b=nb0R1jfL8119iaUkJKPAjF2bCYdWfqsC0gHhovwa1y+98ceRSTaeJNXH5q+XrfZfQy
-         4Ntwy5SJuo988zPAiigv6SDmyATXIltcyhRIuqQ+vPbTWzIZpwzw7gntegX82kdCWKn9
-         yajIuyOO7688cYlsnPsDXetfaoc4hBEHC4YQ+404FszFek4sLaQg4B4lOWl1dIE1JJiY
-         v2yiy8+ZN3qirt48z3JCqG67v5QiyeW3sHsW8g9JvfMd2WdAdcHqEcJ7m1kISopQ1Z0y
-         6x4j0HTWf1cGZb95cacmBUYt8i9DfRM1nPxQZY1XNWkBNrIT4RnfsQufy6lPHCYAruej
-         uzGg==
+        bh=GVwzM7AH0goZzku3KIXErQeiWMlnha3odZsjIQlNTmE=;
+        b=LFrFfnZppD0eHixJ/IyJR91nMwPKctq0CGPOjja2kJJ+QIHxNpixAME5LchIY7YjxR
+         9jXHi7wOdekpfnJZxkyy4kMQOiUAzWRaYYOVB7EbT1tUXdbYx8r3NyLhwfx+1I46tA90
+         8pEU4ClIA5m4sLnqsT639+V00gd55NgqIJOk+KlLhZJD5vkH7hf39gKlsfZCJOOD9LP/
+         dyn23hKAY3T6bUdOAdBgzqUCfk0BBhHiFIoszRb8aSzWJ+ftgFqrSLZ07oiuy+wSso5M
+         nEx2EYqotF42Bhr+XemccfB08C3TSlB0Rb0bIy7aXfCGcgMBkjqadotlVkm/PoKs1Kpj
+         fryQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747119327; x=1747724127;
+        d=1e100.net; s=20230601; t=1747119982; x=1747724782;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=F7JSSpbgXOZxGAfW/cVUER6QbTluS8kQVXGxB/vAE2g=;
-        b=v//lcjG7Mbnru01DMeEIkoANpN4WMKrs0JtfCDw+xXOIEmkpreX4uHbvZb+gUdu/9r
-         R2akKXL0eRt2i2ZKL7tsynQMwx8/0cZfHLJjqSb7RQrhkJCWEycac1Vr1iFJRSR0L6ZA
-         aQFSRngqew/MkaeR0GRQmkrsu7VxCAtJuoQr6ND1XbOFZR+Si4Kr2N06WjeRq2AQwpgI
-         2+mpI8v22NCURejVM7wP3cvTM/AEWgFm+kgXiB/jD9Gv0g5MeR+dslZlNxPR5EwjOawt
-         g08ufJOsnzNegPMJc63OrCtpWDODLc/iHUKI+e9OT/NoAP7jma7TYJIfLXq03heu4Ie0
-         qCFQ==
-X-Gm-Message-State: AOJu0YwxXjKZT9OU8UywLiNwrMSGg/qmjUwiCoGiXTriXGIq4kGoF48C
-	mx5sZi1esQv7jus11A7vF4nkRXPb/nPLTT/dOSB2B1UAhSrJzCPDM+XDmA==
-X-Gm-Gg: ASbGncuGtcngCSNcG7cuSodFwkbbmC7Be4w9zdhgB2FNCxCzu+ljdETT5C034uNUzRY
-	xsWghFb9moVMIBPoG/g8sqZCIKH1i7KoP90nrBLgfr/OWBIvf2SxQU98OcEvLSnl8DKjEj3K70z
-	9XFIBUVRs/5/+VvsqCMSJ3EGequeonObR3HQ3A07SRo4QQxa4r00+vwdG7UI6pFyJAWDnyLuZtV
-	FUosG8qmz4F6jtdcsQjPANo04+KNEmzWsU1tA3YPgkTHp1nVxgCquPb/XhXjkTf5IJe696dVTql
-	cIWjUG2DIK3gn2OY5EJKeeiaSrdONaJICmFVgQzuSeooPyI=
-X-Google-Smtp-Source: AGHT+IGc4fGj16g1myxve8JhdwuMUZjGqJ8U1ojohksAWgWYM2Y9qbkWId/tDozYJwMy6dwog+KeDw==
-X-Received: by 2002:a17:902:dacd:b0:22c:35c5:e30e with SMTP id d9443c01a7336-22fc8b519c5mr195156375ad.13.1747119326573;
-        Mon, 12 May 2025 23:55:26 -0700 (PDT)
+        bh=GVwzM7AH0goZzku3KIXErQeiWMlnha3odZsjIQlNTmE=;
+        b=tTVdInhf1rmJWxcHu4zbgG6/sbSYjaWiakGeNnG5Ov0sq7iMNt5y0J37Ygu3IpjTeK
+         OCrdeJ7QJoRovOQ1V5ScpzuG0zia4OMb6YwPvm9AjB0P+cCGBZ8szwQEgJwg2wI8gAf3
+         jf55L12Ob1N6ut3VKFzcbbaSH1TVJv5kJV3REjkLe9l8bNNOAdaFHAvBwelw2K8TJCdH
+         9uuUqMk1sSHcrG2LfzC48BSzwfibmkzjMwMqpF+TpW/OmNVzQ8DZWEItsnN1vtplKLmc
+         PwuUTcmr+9zAzxNkCkZLH7gwXn4KSfOCQuiwzgXd3FkDkhsipNjcqEdPLkGNUIkDckct
+         sYMg==
+X-Forwarded-Encrypted: i=1; AJvYcCWVkS0NR4oeuD0I9HT0Ny7GgiA/cLzp417asbbdEHVR12tt1Vlnvm3gzKGbzqZXQXReCEQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwXwzeUGaDtwmXOElyN94Liqcai7yUdCblaOH+qeiEVKwLEYKKt
+	TaiRVJ6mu1GlcyP2MPuOGFgwvz3ukto+UiwYuWjPF4z7ZgfERuQK
+X-Gm-Gg: ASbGnctm85ZN3hvzmsV3rTBV6m5IE/YR6upC6FpbYk2KE7H0ZRLJ6tFPSNWEka5HwsC
+	dZnOEdQ1SAO3rfqjLVWCwzYSfSxgDyEmoHi7vm1rmaFfH8tfFxBFERTfdI89qPK4rsrPAUZ7twN
+	Odt6YqBqd1lGwiUycD1k3QQA453i35MdM1sHrDvl24J0GmeGPBMcRKCzYu0pc2K8bBcjkJZ0+P3
+	GGQbB0HLypKCXsoHX8GbsnnbFb06lgeP6jj5lALZhZpRQV927RHZi1b3ga/ANHgx1fSK6d+qVht
+	vNTOQYCvNcLj869qkG8BFfyDNx9lwUjMlZ47vBLljlF4J7A=
+X-Google-Smtp-Source: AGHT+IEe4RrcMirG/sZEzBTH1bw038vDzeKpzJfn6wof5c2SF5ymgaVwdoirSZ+qvbm8okaVlBLs1Q==
+X-Received: by 2002:a17:903:3bc5:b0:22e:4cae:5965 with SMTP id d9443c01a7336-22fc8b597edmr220535345ad.29.1747119982242;
+        Tue, 13 May 2025 00:06:22 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22fc82a2e4fsm73951175ad.232.2025.05.12.23.55.25
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22fc82a4c41sm75108555ad.237.2025.05.13.00.06.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 12 May 2025 23:55:25 -0700 (PDT)
-Date: Tue, 13 May 2025 14:55:56 +0800
+        Tue, 13 May 2025 00:06:21 -0700 (PDT)
+Date: Tue, 13 May 2025 15:06:52 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v3 2/3] packed-backend: extract snapshot allocation in
- `load_contents`
-Message-ID: <aCLs_A1DV7ZQSm-O@ArchLinux>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v3 1/3] packed-backend: fsck should allow an empty
+ "packed-refs" file
+Message-ID: <aCLvjNrZYYROlIm3@ArchLinux>
 References: <aCCtQDnWII-knmEc@ArchLinux>
- <aCCtzm2bDRSTgEO-@ArchLinux>
- <20250512130619.GB1191360@coredump.intra.peff.net>
+ <aCCtx2mqihlc0M7H@ArchLinux>
+ <aCGzIlLH_ESNg6-v@pks.im>
+ <aCHoovrKiSUemBCL@ArchLinux>
+ <aCIIL6IWiiWiGbFd@pks.im>
+ <20250512155654.GA1219668@coredump.intra.peff.net>
+ <xmqqh61pu4r9.fsf@gitster.g>
+ <aCLTsqZSWklaEOq6@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,51 +80,31 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250512130619.GB1191360@coredump.intra.peff.net>
+In-Reply-To: <aCLTsqZSWklaEOq6@pks.im>
 
-On Mon, May 12, 2025 at 09:06:19AM -0400, Jeff King wrote:
-> On Sun, May 11, 2025 at 10:01:50PM +0800, shejialuo wrote:
-> 
-> > "load_contents" would choose which way to load the content of the
-> > "packed-refs". However, we cannot directly use this function when
-> > checking the consistency due to we don't want to open the file. And we
-> > also need to reuse the logic to avoid causing repetition.
+On Tue, May 13, 2025 at 07:08:02AM +0200, Patrick Steinhardt wrote:
+> On Mon, May 12, 2025 at 10:18:34AM -0700, Junio C Hamano wrote:
+> > Jeff King <peff@peff.net> writes:
 > > 
-> > Let's create a new helper function "allocate_snapshot_buffer" to extract
-> > the snapshot allocation logic in "load_contents" and update the
-> > "load_contents" to align with the behavior.
+> > > It may be useful for fsck to detect this, though, even if the default
+> > > message severity is set to "info" or even "ignore. That would allow
+> > > people who know they are using modern Git to increase it themselves (I
+> > > don't expect normal users to do this, but it would probably be useful
+> > > for forges which run automated "fsck" across a lot of repos).
+> > >
+> > > And then the backwards-incompatible Git 3.0 thing would just be tweaking
+> > > the severity of the config (and in the meantime, it would help flush out
+> > > any unexpected instances people run into).
+> > 
+> > I came to make a same comment but the above has everything I wanted
+> > to say (and more).
 > 
-> This looks good to me. One thing that did give me a slight pause while
-> reviewing:
-> 
-> >  static int load_contents(struct snapshot *snapshot)
-> >  {
-> > -	int fd;
-> >  	struct stat st;
-> > -	size_t size;
-> > -	ssize_t bytes_read;
-> > +	int ret = 1;
-> > [...]
-> > +	if (!allocate_snapshot_buffer(snapshot, fd, &st))
-> > +		ret = 0;
-> >  
-> > -	return 1;
-> > +	close(fd);
-> > +	return ret;
-> >  }
-> 
-> I wanted to see what the semantics of "ret" were, but there aren't any
-> other assignments. So I think this is equivalent to:
-> 
->   int ret;
->   ...
->   ret = allocate_snapshot_buffer(snapshot, fd, &st);
-> 
-> that function.
+> Yup, agreed, that sounds like a reasonable approach indeed.
 > 
 
-That's right, it would be more clear. I will update in the next version.
+Agree, I will use a "info" to report an empty "packed-refs" file. Thank
+everyone.
 
-> Probably not worth re-rolling for that, though.
-> 
-> -Peff
+> Patrick
+
+Jialuo
