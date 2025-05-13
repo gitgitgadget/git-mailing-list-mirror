@@ -1,188 +1,209 @@
-Received: from EUR02-VI1-obe.outbound.protection.outlook.com (mail-vi1eur02on2090.outbound.protection.outlook.com [40.107.241.90])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011028.outbound.protection.outlook.com [52.103.68.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC282AF1C
-	for <git@vger.kernel.org>; Tue, 13 May 2025 18:09:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.241.90
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D2BD433C8
+	for <git@vger.kernel.org>; Tue, 13 May 2025 18:29:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.28
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747159760; cv=fail; b=RpIVS0frAmkovVTNFTeNwagEMiEixes3KRiucWSPN3PQjKR32VCfkBQCdHjhS3ukDzLuEGRcVbXt0LRAwFBSIm9hvWgHJ6mAT3eRSc3BLi3fw6qXfQ/yLh35Di3d316CuBQxYH6Eb5VE2/IIbDG2oVrQnAxU5aMfdEU169vz3pE=
+	t=1747160960; cv=fail; b=K37d3fXFjciVN8a6PHXaohtpnjDuLrqUaq6ZFfA90Jq5VVRnfHDpF8zJtyujnqSHOfBDBch7EUGyqyKlVkQJTCQ8EKHQog7gO3J0Jm3+Fl4OXB20oYtUBkyNJx/jgZdHFWxaS20HNbRE7aH1xmzikJOq2MvY5DFAdIpZTMJSZqQ=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747159760; c=relaxed/simple;
-	bh=EatHPWN7oiedhJqytd6Vie1FHkhjvUIQ3zPShQUJDzo=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=GjPV0GH7KkKGiKtUJEo08Gqoxg4mZJUR99uFygMnX+m1/nQ6XQvd1QBvVltmRQUC+HjLpn46ekPS3sqAuLLtRvJh3NAV5cXMR60iJ8QAMQ8BaHtcUXIj+8qI/bWY4R8mVIT/6LmsUmeMBKu53a1i6/Oj+kj5eZUzLrIUEPIJBkk=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proekspert.ee; spf=fail smtp.mailfrom=proekspert.ee; dkim=pass (1024-bit key) header.d=proekspert.ee header.i=@proekspert.ee header.b=EoET+RfY; arc=fail smtp.client-ip=40.107.241.90
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=proekspert.ee
-Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=proekspert.ee
+	s=arc-20240116; t=1747160960; c=relaxed/simple;
+	bh=nrJBuQLVop2lhV6OZlBlG2/b4HciC8ljRqohEnvqQYY=;
+	h=From:To:Cc:Subject:Date:Message-ID:Content-Type:MIME-Version; b=rj+GXuJqcpp96NvRbGFAH2a2h8hC9a5lUpVwiG+VACy6kthxTxlJU9C+U6iQ/DN1cIzHrdErYtjpcK1nrYcpEMrOwu6H5/PKMl8WvvDLX7AMKY+uN+2XhBYMA8jZFM+qQl5l4lCXZSZBtCBo2AwPe8v3GmoPwUgPHNF7WKjgnZ0=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=a5+IgGBz; arc=fail smtp.client-ip=52.103.68.28
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=proekspert.ee header.i=@proekspert.ee header.b="EoET+RfY"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="a5+IgGBz"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=UWopfdAEw5Nmjw8iApOYYStP7rWhKi9B0CAurYhRep2Gx/mDHwzZuMQao7EhInVitC6XUqpPzHHVagLhLe8E1bO5jpzqxOexGtslKXBinT4McvKJTPf3wkGvVw4G7ApdyMWkt+Pybtvs50ym6h5s2NeYAZaTIpHjNHBN++wwfp+xTZKE8pOX8wVuZPn+cyHPgq32rGJKjuEx5vkxDRae87g+fsqcz591118yHi6hcM+tiPAAXadvpV8LkOtNxjVMckAQlJaBeFk4Xl7ZLzxIPjJWLq8cuqFvuDQrHRsY1tS5F6KtZEW+hwggl6S6rIsJ9z8VRgUw8NbbiI/HyO+IyA==
+ b=qE3R2fmCvKlMeCumUS9RPrXn4W4Gw2fyjYkM9FEd1hsrYMI4rrxkbWEwtf9sNG+gP0gB+pOKO7Woo/ClJEMzJ0jwTZo2tJa8N8US7+cTG4X/baTVzeo51TAGksnBppSR9Ubvn3Fmk9bOz5GYhIUv58Cu2Pj7dzRzqEIvYLbuYP+Kj5wBOOXtmGN7iTaOAqLWz9YJkf4E8KC4HE7qnPFvtxcTj+mlRLnOjC2ls3KybRHQH0Zf583pTIdqKwCkOZwxt0YOJik1hGS/KwDy57QFxzeZomyXYy0ZE0wMV8tHLnsiIPQ2ajb0O1EFeNIFUbem4zsR8B92ZsimaV9mORohwQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=EatHPWN7oiedhJqytd6Vie1FHkhjvUIQ3zPShQUJDzo=;
- b=JVapStQ1ASGSn6SLjzZgJ2nYJewkIAp2IYPA1YBq9zYdT0m71FPBx/UIRRNIbpZ5Qc4g9m8a+b/h8K0JTHYiAz5ooYvC/37mzuT0kwf9++Y2u3Bn/OHP7ZGpRp3kRT4FkXrk+FElKzzHPfk5xNxxJNZBF3zVi63YG52KTWdGAYFEc13fyrY+6OynYek4qm98aP+G0FYtJ29dfcjo37LdsQdDo9OnLLvUrBSa9UC3qbKC4iZuZvGWq/uktqNaAv3Xace2QH/RPVBnvmZXlGheHuHLU+oKBrnj3Mn41dp27iMWQGZk+EcT/C+Fpz9rDmMnTWAvY7whmQ2upI9wtqhCfA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=proekspert.ee; dmarc=pass action=none
- header.from=proekspert.ee; dkim=pass header.d=proekspert.ee; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=proekspert.ee;
- s=selector1;
+ bh=691k/wuKDXgBC1xdzCKjzKS7Zycavga2SltjtZv5sHI=;
+ b=iwXwROb63/Nj9geJUmwalXpiQCh/kLhXpMldChgMoJPwuPeNUF9R+9DoihlIvVIeHbgf76RlRPhNDRWoytEdjQpTQMvP2aBQFtGIj3WGHwB3WVJ+Qr6HIFiAQ8IIdvfHsoGtus39UdPDXbBXOLwu12LIMkC9cqc/TbHjfOHDJeUEIDkitSE8nVN4ODcjCO21z/ObxJxQ3F2mGlK4tAJtNuJWzQJ1Ua2ji1D5zLApBnGoOD0EKqKZzXrrXQDUfwrb3hJpFr12gygaSjCjL8ZYy1rfSgmV11oit8xQpqH7FtGvA84/UgysUnLKCuauXUa4tzp31U2+8zMds9ZwGrfGOA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=EatHPWN7oiedhJqytd6Vie1FHkhjvUIQ3zPShQUJDzo=;
- b=EoET+RfYn/YyPJJJcDxdRVI1WNpOpGJXdhqbu73Tsk+HtTEvro8y8C2pML1imnJNa9Tkd/Qy9gYa63lSwa9qpa6DZrsTMnDH9YFVP7RN0H3ZBgRST4yEm10qFAFFS/8PR6MaZpWHEfUiOHhVafAwkNPhpg0LBRW7TwP89AhvEuE=
-Received: from AS8P191MB2174.EURP191.PROD.OUTLOOK.COM (2603:10a6:20b:539::16)
- by DB8P191MB0904.EURP191.PROD.OUTLOOK.COM (2603:10a6:10:165::24) with
+ bh=691k/wuKDXgBC1xdzCKjzKS7Zycavga2SltjtZv5sHI=;
+ b=a5+IgGBzSb3B/AjzYZyainRHC1CmVh3SoBJeJjJ1+Qj3iB2IN7+F0Qe7+vZWCxdgS2j/BxMcrgexcuqIfzze1foHeRiZ6/FFQek/9PdXQrH4q7sgXOQGcmUyQBkAMGQvGkp/0x7d0l6yPPQsdUsGsj2AZJSNS6XEyG5Y1gIyXFi0Ign9Nsv1s/H3JiJH433jI0j1OKe+nOImvIZ1ugtIFd8LjjIlMPfoe2JmV8JgCLBTy19SubhMXyo4lywjvy2g+EK7ABH4hTky07XOdhTsRKKszXIWLfRJ83ex2cuoQ8x7oT5B9CBRG/7uiAxcPNJbJthdvAhhT7wz+/tQBrgeFw==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by PN0PR01MB9168.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:168::14) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.26; Tue, 13 May
- 2025 18:09:13 +0000
-Received: from AS8P191MB2174.EURP191.PROD.OUTLOOK.COM
- ([fe80::f543:e2b2:385d:af8a]) by AS8P191MB2174.EURP191.PROD.OUTLOOK.COM
- ([fe80::f543:e2b2:385d:af8a%4]) with mapi id 15.20.8722.027; Tue, 13 May 2025
- 18:09:12 +0000
-From: Lauri Reilson <Lauri.Reilson@proekspert.ee>
-To: Eric Sunshine <sunshine@sunshineco.com>
-CC: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: RE: Possible git-gui bug
-Thread-Topic: Possible git-gui bug
-Thread-Index: AdupPkrODeM5biBoRQ6P7hGlivxuEAAR54MABqEe6uA=
-Date: Tue, 13 May 2025 18:09:11 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8722.30; Tue, 13 May
+ 2025 18:29:10 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8722.027; Tue, 13 May 2025
+ 18:29:09 +0000
+From: Aditya Garg <gargaditya08@live.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Cc: Julian Swagemakers <julian@swagemakers.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Zi Yao <ziyao@disroot.org>,
+	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+	sandals@crustytoothpaste.net
+Subject: [PATCH] docs: add instructions to use Yahoo with send-mail
+Date: Tue, 13 May 2025 23:58:44 +0530
 Message-ID:
- <AS8P191MB2174A636B81F92212F4B0C03FA96A@AS8P191MB2174.EURP191.PROD.OUTLOOK.COM>
-References:
- <AS8P191MB2174CB58B1A29D1492EE7842FAB42@AS8P191MB2174.EURP191.PROD.OUTLOOK.COM>
- <CAPig+cTK+jz_kF7zd85nVRCn-6sqbH0o7N_ZDtDZDVjYbYgQtQ@mail.gmail.com>
-In-Reply-To:
- <CAPig+cTK+jz_kF7zd85nVRCn-6sqbH0o7N_ZDtDZDVjYbYgQtQ@mail.gmail.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=proekspert.ee;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: AS8P191MB2174:EE_|DB8P191MB0904:EE_
-x-ms-office365-filtering-correlation-id: 6e51f038-03e1-4895-4581-08dd924943aa
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|376014|366016|1800799024|38070700018;
-x-microsoft-antispam-message-info:
- =?utf-8?B?V1Q1U1VTZHFQbWhaNFM2N1B5TXpzSVdkbkU1NjBEcGhXQ01QTjBGT2hVY2NS?=
- =?utf-8?B?dG5admQvekdiZGYyOUJ1TVZKK2tja2NOem84aG9ZODBqTHptL1dOdGorbDFF?=
- =?utf-8?B?RkpXQXNNM0d1VWZQM0h1dUt2VFFmbVRDc3oxNWhFMG5LY3hXNk1OMGZ4TGhY?=
- =?utf-8?B?cjdyNGpKK0lwSFJqV0Q5dS9EWWVNR05lTUUwNElPR1JxRUpnWXIraVJsUnN0?=
- =?utf-8?B?YzhDT3lNRHA2YlNZSERjdGdCTXloSHlhTmJueHl0dDhPa2tJM3I2bEVwbWww?=
- =?utf-8?B?UTJEbWFnK1pjVWgrSFVBNGlLbEZ3T1ZFNE12cGJYeDdjSG5UZHNXZjVWZmJH?=
- =?utf-8?B?c2tDM1BwUThhZGJnZy9oWmZSNWNQSHYwY245MUpteFZWdHluMzJwblM1TjZE?=
- =?utf-8?B?clhSUXJDalZpeGxwdkNpSW1VK3FGK2pDN3lWM3VIRGxicnArcmRieWdPUVkx?=
- =?utf-8?B?amZTazhmRXJid3d3eWQxaVFlZWVvRlhwTXIwQ0MzTDg3QXN1Y3RNT0FWUk5C?=
- =?utf-8?B?Zlh1azlaMG5LZmNYTjBVR2JyMGc5emQwampMcm5WbUg0ZnFiblV6SGFaWkJl?=
- =?utf-8?B?ZVM3MFdEc3JUUHRZQjllQk5pVy92UDRnVWUzVU9XRXJsbkFyZS9SZ3hoY3pD?=
- =?utf-8?B?YmpHT1ZuY0ptZlZTRnlUelRFZlg4UzBYaXl5UjlycnZOK01KcGcvYjlKMTV5?=
- =?utf-8?B?Tys3S1kwd2RYYUxNUWh1S2h2NzV0bExWRFl2dTFEeVVqZy9IT0h4S3dGRnFK?=
- =?utf-8?B?SDZRemxIQm9ySnhDdGNDc05sa051RWJmS3RzMGZSemJSODRXVEdaQ1FINDBz?=
- =?utf-8?B?dGJvM3o4UWRmZDZ4dWgzTmY3WjErNmxEK3FoNHA4bXJZamVNVUhMZm5BbjBI?=
- =?utf-8?B?b2RxWEF5SGd3bDI3cTJUN3pwRXo5ck9TVFZsNHMyM0tnVFZXSXRUWEhRZlpl?=
- =?utf-8?B?NmFQU1d6MkdieURqODJaOFR3OHFPSUFxQXFoZHNuQjZwL2hwNUh3ci9ITXRC?=
- =?utf-8?B?cjlWV0RqWkFvdGFkRkFCSGVxSjZ5M01EWVovSnFqK1ZLaUIvZVpjU3FRaWI3?=
- =?utf-8?B?ZmVjUUZjTGRCMXNsQjc4TlBPQW0yb1o4MWNEUUlvdGRpUFVSeExVV2JlMVNB?=
- =?utf-8?B?djZaZzR1Yk9DaFA5UGErbTg4OUtleXpxK0RMR3crdnlicFo2YTNYZXFwdGZD?=
- =?utf-8?B?OXFFbkpNUnVENnNLRlFUSG5MK2J5dzZKRnhRQ2hIT0lHSmdzeWFPZCtBSXVI?=
- =?utf-8?B?bHIwUmhRWXZ2R3VFQ3F4MnpjYnRCaFdpUWZ6Y1lUNENPYzRnTGd5VitYajBn?=
- =?utf-8?B?SjJQenlTc0J6ZFRoamlJUlhreVl0NCtWMVlkRGNTWU5haUkzelpQQmNoOTFM?=
- =?utf-8?B?b3hOZEZReEMxd002MHp2ZU1heE90dFN4MTFQeGV4Mk1sS0xmTk9uZFJtcEI1?=
- =?utf-8?B?c1NwRHh6cVkwNVU5dEhpZnRIclR5SmNkcnY4bVpSY1d1NlVETGpBYzVCVSs1?=
- =?utf-8?B?S1pMYTNGaktpM2RmN3B6R3FEMVloWGh0cHVESHpQL0VGM0s2YzVwSWQxQ3Z2?=
- =?utf-8?B?cGJPUTczY1daZzhtSTFmTTJhT29DeHVkVHZva0xYdk05ZlZCbzB6ZWVXYTFy?=
- =?utf-8?B?Z3Nudjg3OXNxY1orODYwZDFqdlBiWkMzeVlENHEzR2JuYkcrL0g0M2xEMHNv?=
- =?utf-8?B?NzJNaGVld0tMcXluRllaUDU0aTZGS0t4MlNkN210NVFTeVNXejkxaU0vYWxM?=
- =?utf-8?B?RVBFd0cwUE9pQTF5MTUxQ09HV2gyODErSmxCdGFPWmhzbE8wKzA4RUw0YlA5?=
- =?utf-8?B?eXBFR20rZGJ1dnB3cS9TV3ZkWEpKNXVCbHVOcC80Q0NoSXNVTWl2a24rV1lh?=
- =?utf-8?B?RjY1RHdFUXhJa2dLN0pMbmlodWJBWk05STZCK0xtU3dFb3Z2bGorQmdlc2ZO?=
- =?utf-8?B?TXd4NDdrQ0NwQ0lmWFNlTTBTSEloNVBxSlA3WFNEWFdieFdmQTFISkkzVWFY?=
- =?utf-8?Q?q3JCRCyHV6KQDfI9YK3D4mHXVWVzsE=3D?=
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:AS8P191MB2174.EURP191.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(376014)(366016)(1800799024)(38070700018);DIR:OUT;SFP:1102;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?bSs4amF0eitVOW9pcVF0dTA0TlZoMzVCTmtqVjZDeFRhQ29JdWlnZUNOOFJZ?=
- =?utf-8?B?VlpLTjc1Rk03ZDhvYnUydXY0ZnBMbGpTcE5udGZ5R00rUEpQMkl4MWZwc096?=
- =?utf-8?B?SHgxK1hSbHF2aml2RHM4b0ZIVHJlZ1N6ZnVveFRtdnhTUC9RTGhuWmN3bTVp?=
- =?utf-8?B?SE9JUTdTV0Z6ZWxqKzFNREJzaDVRZDd5T3RZYnhRRGJYbHBBUGF1eExab25n?=
- =?utf-8?B?TjhXQjRMKzVPZWNTUWFFNHF0RW1ZbE1kN2VhMWcyblkrWjB2NVM4S3hhdlpK?=
- =?utf-8?B?VitQM0tKQ0gyS1JXZTJYaTdPYkl2ZVNBclR4Ui80bWRURHNGN2hHbGtyN29s?=
- =?utf-8?B?b29ta1psTGtyUGtGRzBIZGlTR004U25zN0dDbGtacXl4eEIrdjZoWlNLNE5h?=
- =?utf-8?B?V0JaSHZsQWpZSVFOL1d3dzhpQWMrQlZWM0MrQ1JMR3VGajVRRlpOeEErazI1?=
- =?utf-8?B?eXBJQWxsSWo0Z0QxYUdyQ3F4UDlEekdRTGdDUVZEZVRTclZTV2psOTRmY0o5?=
- =?utf-8?B?SE43SVp2d1phbzdNVFB3bVkrNXJYS2pWdmtaSENZWTVRT3NCR1NEYU1HOHFx?=
- =?utf-8?B?aXdwZWNhTjRJMU9IOGg3aGk4NTRLanZoZjE5VzlXSUtiQXJkajVSV1N6eG9j?=
- =?utf-8?B?bnFaZzdyTVhMcnF3WUVzNU1DSWpSekZMWklxTWRabzF4ZlZzMGQyUDY0T2VO?=
- =?utf-8?B?M3JXNVF3L29LalNESE1tNEhNdFJOejV1ejM5TWZhYVR2Q3ErYWc3K0luUk1P?=
- =?utf-8?B?YTVkbmNzeGlPWllQVk1ZYU5YaFoyZm4rVVVGQjg2MzZGZDhDSS9mWHFYTHJx?=
- =?utf-8?B?Q21vOS9vaFhvTDQ2LzVYUkNMSjBSdVdleWdvaDFLOUg2WWRNZWI3Z29CYStq?=
- =?utf-8?B?ZFlua1p4VW9XcUVSNS9ESGZrR0FqL25TaDAxQnNFMFFsQ0FjNHluWkZ5MkQ5?=
- =?utf-8?B?NzFaT201L3l2dDIvU3M4SnpsanNyYXlwQ21QZ0F3c08wOFM0K1FsUG1zWlEz?=
- =?utf-8?B?MlZYWE5tRE1CeDNrR0FlQ3lqMG9nWW5MdXo0M2w4THZVOVdTZEE0TnZ2U0pt?=
- =?utf-8?B?cXhiUnR4N2kySmJ5ZlprYWRscXpadVRlSzU0NGxPYm9DZVNDOXM1MFgzdjJP?=
- =?utf-8?B?RUhPSXRBb3MwcEhORXRNTGVPa1RzRU0zcGVpZ3lpd1JSZUNiNVVPKzdqbGt6?=
- =?utf-8?B?YWFUZkNZYng2bGZZdVVoM0RzeDhFUXJyRXJiYUNqZlFNaVJIVmQvMkY2T1Z0?=
- =?utf-8?B?Rjg4a25NUXhweE9MV0Z2M1Awd2xUVExGSlY5S2dQVXNmZk4wYWgrRVFMWlox?=
- =?utf-8?B?aDR3djFYcG9jT29adjNJamh2OG5VQU1DcUlsQVBFWm1MMTdjUWIwYUFRa0cx?=
- =?utf-8?B?YkN6aGo4bDlaQkh1Vzd2YVQ3L1hKWEIwa1Z2bHVQUmJYY2pZTkhjcjUwZ3lU?=
- =?utf-8?B?L0F6NzhKVnkzdG5YNUM5RU10ZHQ2cEhITHhTZjNTSkdYY01RNTUrK1NFcU1F?=
- =?utf-8?B?bXlMLzdJLzJDd3dwcGJzN1hyc2dBNUkzbktCUFlCd0ZvelJEUjFjMEdkdUZL?=
- =?utf-8?B?QW1UbXpQTmdEMnhyd096bVlVQUxQZUVlOU1IVVp0b0o5OVNNU0h6V3hTM0Nl?=
- =?utf-8?B?QkF5SHRqWmpFaGJ3N0JkU0lJT2tmbGg4bDYyV25ncVdDK0FCMWV3TVdSM3pl?=
- =?utf-8?B?cVhhVHhIa0xMNmsrbUhNTzdXTTRaeTBVMVF2NElkZitmYTlqTUdQMUphNGlM?=
- =?utf-8?B?UDNKYTBxSDlYdDNBY09wcXRBQTM5aGtJMkhPd21yc1hqRUZKOFBzb1RrNUVE?=
- =?utf-8?B?QUJTd3RxSlFCV1dGQnhDTHl6ZEtjV01OODlabU92NG9OWXFaQlFVc05LYStC?=
- =?utf-8?B?YWZjaVRROEhnYUc4b1I3UUFSd1dUdEptSGEwUWpDaGpLTU1sZnh0M3JCL2ht?=
- =?utf-8?B?QUVLVDBqcWwzNWoydVprSjdqamVCbS9NcjFXQlY1NHpBdGVWdG1NSEpsd3NU?=
- =?utf-8?B?S2xVb3g2YW9GSnJNdHRTenFIRlcrVGhwL0p4bmp2TFhxZFlhRmNnODRNT1dT?=
- =?utf-8?B?d3JqMkZDbGc5WnZHY0RhOTF4ZENxMnhiQWZHMUU2ZVhiTHFTOVh4UHFJa2xO?=
- =?utf-8?Q?k17rLbnhJRJ6y9UZP2uuppj/Y?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email @GIT_VERSION@
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: BMXPR01CA0077.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:b00:54::17) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID: <20250513182844.6963-1-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: proekspert.ee
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN0PR01MB9168:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97b39f4a-1fdc-440c-1908-08dd924c0d46
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|7092599006|8060799009|19110799006|15080799009|5062599005|461199028|12121999007|5072599009|1602099012|440099028|4302099013|3412199025|34005399003|10035399007;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?z/rZFTJcphgp9v0rkd/nEcDcoIzKRsNDHssnmV4mNlKoafFgBFYSWyawpQWV?=
+ =?us-ascii?Q?HW42ZVpj8dZtKQvMdW83fjbGQ9lfGKxyvt9GL4oKYek03q0bj2ovQ106TY2U?=
+ =?us-ascii?Q?RVbjttCvAySYSluiupGwIWLrFhZ+J/IJ+UonA/RVtHBM1HbkouoBbsc+i2nx?=
+ =?us-ascii?Q?TXfSP+zkzHEDNIsZd5eMkfYSC9K/i+obAzPCxQplUgNjjRfOxs+EEWvA29vr?=
+ =?us-ascii?Q?RPEpD2DuZoH6gFG9ogDZwzUYLVtr0EnUWrA+jSkZHvCITBH/IgQvLklSoKWa?=
+ =?us-ascii?Q?8e6p+RK3X9S25rSdQqTRq7QFJtGTz1jomrXTJGF5NoSN1t0W1mlbWoDJL2TA?=
+ =?us-ascii?Q?x7mcubJhDnrQatLieJQ+q0Xpw08XspLvQgY1Y0+Ofv3lHuI8Yew/7SvMUqBo?=
+ =?us-ascii?Q?EYFD8HgnX2H+lDm4AYQKlAj5psRmiojiPp6urP5Z2aQsqG4xTaGyPVNMtSyz?=
+ =?us-ascii?Q?UchThfX2nnj0eZWa4mBemVmJzb5MUqSZnrN1jNqRyePetD6zHR+8RwrlkOCb?=
+ =?us-ascii?Q?TmZ1cqNcxLTQPYXnNGoIk1f2GO3thyqNv0Xn7lG83/j+qzbt0O6AoTjJDdxj?=
+ =?us-ascii?Q?sE7Kz8GelyuaVmAujXyCXURn7NfPLVYc3U/HDXpB1xL8wNGXb41ErGIoGUK6?=
+ =?us-ascii?Q?UOtT7HEgFEkxoXZfO4bqn/Qo4d/FKZ6UvG+cEYRiABuWsir6/X8ztnIaOFnY?=
+ =?us-ascii?Q?rk26Q6c17Da5HAQtpsbYh0TZVv/kxk8hTL2N0Wrv+rY36F89T/RwdAsHT/Xx?=
+ =?us-ascii?Q?ppm9uSHIU9rndTyToJSm9lC+dLRVxgx73ckDmSXpn65iNHcCuqrEBHj6fK6a?=
+ =?us-ascii?Q?yiMvYTZx4M1Cp74uILxJ1jTnDhv5q5R5+fyvbKeUFILgWXXWWUCz+89aOkE9?=
+ =?us-ascii?Q?sBnCdaw3cMiJRFclyp6K7nSHh7gJCJhQ7BBx3WJw3q0kwvqiLOzCxSdc7b09?=
+ =?us-ascii?Q?h2i0R2Bvz4NrqQOJmG8F9bnCTt2LXkP6oszua+SrxNFMvL/aP69KX5KXUPQu?=
+ =?us-ascii?Q?ZMGseO67S9+4V8UhmUBR9TxF7z+PjGZOfqjdvyifdjnnXQONyf0D4v8k/3We?=
+ =?us-ascii?Q?SoFEXIjadIrw9lSX5uFOHfC3SfYYArknZXKrjcZg2QhQYO90RcRl7e1JK2xd?=
+ =?us-ascii?Q?O4tQkpjZgj3OAPpXoox3Pv8pNplsUddlpOl2+hjyp73Va4gKyJNfWA9LQLm0?=
+ =?us-ascii?Q?a30BDFrPt3epdHQRHZQftwssXkC2oAHcpEh+hkGbbFtqlGywjllwljSOQ2rk?=
+ =?us-ascii?Q?SmIST5rZAZUzHChjxTYIVU/BzmBRlze98I1m/fsmVVZutAJoSou8lZI1jqvu?=
+ =?us-ascii?Q?OqBHwaO0f9aNfx5lzG+iBrhqM0Exl33GW5N4uKWujBqebg=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?VBt3M4jC5wY50+tqZZ+UMNJE5OUe55vE+Y2H2Oq8pci8ZkcFp+lAmE8XuBDw?=
+ =?us-ascii?Q?oyLlbVmiKCXRpOmtcd2JX6jQUgrdIkrKpnZg7I6qWtyljGk/rvFeyzvSZghS?=
+ =?us-ascii?Q?1bnKnEBx1kiHaKOLL/kr34+sJ59TMAMtjgEo4uz3NXMJOfF1Ft5SCCJvMvvt?=
+ =?us-ascii?Q?kyJkYmRdCdR0sfUSvAB5z4OqX2wVyTGtzupaw1s3UHK2ji/tscvwpJa1pdBJ?=
+ =?us-ascii?Q?AvRGsutEZSRkWYjSvUr+mAv0WRuU3hdD7i4FuqpvF7pOcH3K/dskkGtVLb1t?=
+ =?us-ascii?Q?vyZAbIeuuTmFQ0YyAi5IzJD2JyfhKzuLgH/XmsPNQRfVVzGpEUITNdsGBmKB?=
+ =?us-ascii?Q?XPMBk6oy7REiJtpaR8sb2uB0Zk03n/p15z/GKE7v54eLa41O2Kgu6/1TDpaB?=
+ =?us-ascii?Q?iV9ur7jT7zBYUmC5Oy/2V5TvxOLaHiP6wy9XYkhcXf/Br/1tQyG9sqjLCZRU?=
+ =?us-ascii?Q?S9fdd1pUlxsC4Y3i9sr21oUbIoit3TWZR78UDrSlhSgxNPxuJP6zzGLRiQv+?=
+ =?us-ascii?Q?DW2w7D7vIuLT9YCdEGgffTZtgRvmd8yThSL2BSn2IgTJksm84X87mwc+zrti?=
+ =?us-ascii?Q?SCaDt+B3tw86d8hMFwTxrwJV9cdeYDiTcWdrT1Dx1Yz87zQI2PYRy+HCrUdn?=
+ =?us-ascii?Q?2RR9lkTE9FlFhXiGQK5NUB+sAiLKS5a8xSiNAqyZjwGXWpeQPMOdfz7RKIxv?=
+ =?us-ascii?Q?aDYmwkqRUy/VUhKs1xsfrkYU62gBCU7saLO40tUG3PcwDkpeXCU4+Vlj/Mhm?=
+ =?us-ascii?Q?Y1jsA1+ufZ8j/vvfMtSzy5E2/ms6WNx6oaGiSpNRgd6n/zwFIckwEz2bHspY?=
+ =?us-ascii?Q?zRakPcIqcoZAGLABj6fyRIJQQS1JdsMNeOUN+QCkWm07TEqi/IiR+hKzTAri?=
+ =?us-ascii?Q?BdehfRC9SeMmDtq1Az9mQO9f9ON9WqSt+tmxnzl4YMDkjZ7q7RQjVlcQoq35?=
+ =?us-ascii?Q?F0wrwjT1N8owewWTtmvfMzh8sLzuwaDLwcQra8P69iMSu3BCLeMoqo6SJXrG?=
+ =?us-ascii?Q?duwTCOhtP6f1daVVpL9rqdarTQPVVcqeS9ygH8A/GiAXlgYWdlqhcp3hE6Aw?=
+ =?us-ascii?Q?G97+DmX0HoxenUmvBmFZ/WpRXYzBaCnlVjsxJP+s0TROOCwjUpmB7slKQQhx?=
+ =?us-ascii?Q?y7O4B45JNwbuble2M3AuLvidgEZ/Yu8eLG3stdLqPJ2eiKJwPuQrGvOUssFW?=
+ =?us-ascii?Q?cm/dSZJknkforbJe1hC9txpiwZB6MfyqrJfYjboTprlEQppZTQw2meTTOcsm?=
+ =?us-ascii?Q?TORXtp9smgsarspm9dyv2YtdDPKICNrw3LvIPj1xQHs/qqAioSQko7HE4ch5?=
+ =?us-ascii?Q?MA8=3D?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-ae5c4.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97b39f4a-1fdc-440c-1908-08dd924c0d46
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: AS8P191MB2174.EURP191.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e51f038-03e1-4895-4581-08dd924943aa
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 May 2025 18:09:12.1673
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 May 2025 18:29:09.7184
  (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 4fc69ca6-ce6b-4059-8ad9-2049c3c135b3
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: CYinnQ6nG8/3pPyzjX2MkSjhARandZoP2QkjM9V6+PbYN4V3M1XzcVZwwf8wRvaxwRobOh5B1vgWIhMx1CGnug==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DB8P191MB0904
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0PR01MB9168
 
-SGksIEVyaWMhDQoNClNvcnJ5IGZvciB0aGlzIGxvbmcgcmVzcG9uc2UuIFRoYW5rIHlvdSBmb3Ig
-dGhlIGluZm9ybWF0aW9uLiBVbmZvcnR1bmF0ZWx5LCBJIGRvbid0IGZvbGxvdyBxdWl0ZSB3ZWxs
-LiBJcyB0aGlzIHRoaW5nIGdvaW5nIHRvIGJlIGZpeGVkIG9yIG5vdD8NCkl0IGhhcyBiZWNvbWUg
-cXVpdGUgYW5ub3lpbmcgdGhhdCBJIGNhbm5vdCBtYWtlIGNvbW1pdHMgd2l0aCBnaXQtZ3VpIGFu
-ZCB0aGVyZSBoYXNuJ3QgYmVlbiBhbnkgdXBkYXRlcy4NCg0KQmVzdCByZWdhcmRzLA0KDQpMYXVy
-aSBSZWlsc29uwqDigKLCoFNvZnR3YXJlIEVuZ2luZWVyDQpsYXVyaS5yZWlsc29uQHByb2Vrc3Bl
-cnQuZWUNClBST0VLU1BFUlTCoOKAosKgU8O1cHJ1c2UgcHN0IDE1NywgMTM0MTcgVGFsbGlubiwg
-RXN0b25pYSwgRVUNCg0KLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCkZyb206IEVyaWMgU3Vu
-c2hpbmUgPHN1bnNoaW5lQHN1bnNoaW5lY28uY29tPiANClNlbnQ6IFdlZG5lc2RheSwgQXByaWwg
-OSwgMjAyNSAxMDozMSBQTQ0KVG86IExhdXJpIFJlaWxzb24gPExhdXJpLlJlaWxzb25AcHJvZWtz
-cGVydC5lZT4NCkNjOiBnaXRAdmdlci5rZXJuZWwub3JnDQpTdWJqZWN0OiBSZTogUG9zc2libGUg
-Z2l0LWd1aSBidWcNCg0KT24gV2VkLCBBcHIgOSwgMjAyNSBhdCA3OjEx4oCvQU0gTGF1cmkgUmVp
-bHNvbiA8TGF1cmkuUmVpbHNvbkBwcm9la3NwZXJ0LmVlPiB3cm90ZToNCj4gSSBoYXZlIGEgc21h
-bGwgaXNzdWUgd2l0aCBnaXQtZ3VpLiBJIGFkZGVkIHRoZSBnaXQtYnVncmVwb3J0IHRvIHRoZSBh
-dHRhY2hlbWVudC4NCj4NCj4gPiBXaGF0ZCBkaWQgeW91IGV4cGVjdCB0byBoYXBwZW4/IChFeHBl
-Y3RlZCBiZWhhdmlvcikNCj4gRXhwZWN0ZWQgdG8gY29tbWl0IHVzaW5nIGdpdC1ndWkuIENvbW1p
-dCBtZXNzYWdlIHdhcyBpbiB0aGUgZm9ybWF0IDwjdGFzay1pZCBtZXNzYWdlPi4gSSB1c2UgIjsi
-IGluc3RlYWQgb2YgY29tbWVudCBzeW1ib2wgYXMgIiMiIGlzIHVzZWQgYXMgYSBtZWFucyB0byB0
-cmFjayB0YXNrIGlkLg0KPg0KPiA+IFdoYXQgaGFwcGVuZWQgaW5zdGVhZD8gKEFjdHVhbCBiZWhh
-dmlvcikNCj4gR2l0LWd1aSBnYXZlIGVycm9yIG1lc3NhZ2UsIHRoYXQgSSBuZWVkIHRvIHByb3Zp
-ZGUgY29tbWl0IG1lc3NhZ2UuIFRyaWVkIG9uZSBsaW5lLCBmb2xsZWQgdGhlIGVycm9yIG1lc3Nh
-Z2UgKGZpcnN0IGxpbmUsIGJsYW5rIGxpbmUsIHJlbWFpbmluZyBsaW5lcykuDQoNClRoaXMgc291
-bmRzIGxpa2UgdGhlIHByb2JsZW0gYWRkcmVzc2VkIGJ5IFsxXS4NCg0KWzFdOiBodHRwczovL2xv
-cmUua2VybmVsLm9yZy9naXQvMjAyNTAzMTUxNDA5MTMuNTc3NDIyLTEtb3N3YWxkLmJ1ZGRlbmhh
-Z2VuQGdteC5kZS8NCg==
+Just like Gmail and Outlook, Yahoo is another popular email service
+provider. This commit adds instructions for Yahoo users to be able
+to use it with `git send-email`. It also adds instructions for
+OAauth2.0 authentication for the same, and adds a link for a
+credential helper.
+
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ Documentation/git-send-email.adoc | 32 +++++++++++++++++++++++++++++++
+ Documentation/gitcredentials.adoc |  2 ++
+ 2 files changed, 34 insertions(+)
+
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+index 26fda63c2f..61a2d03546 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -561,6 +561,35 @@ SMTP server with `git send-email`:
+ 	smtpAuth = XOAUTH2
+ ----
+ 
++Use Yahoo as the SMTP Server
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++Just like Gmail, you can use an app-specific password for Yahoo as well. Visit
++https://help.yahoo.com/kb/SLN15241.html to get instructions for generating
++them. After generating, edit `~/.gitconfig` to specify your account settings
++for Yahoo and use its SMTP server with `git send-email`:
++
++----
++[sendemail]
++	smtpEncryption = tls
++	smtpServer = smtp.mail.yahoo.com
++	smtpUser = yourname@yahoo.com
++	smtpServerPort = 587
++----
++
++If you wish to use OAuth2.0 rather than an app-specific password, you can use
++either `OAUTHBEARER` or `XOAUTH2` as the authentication method. As an example,
++if you want to use `OAUTHBEARER`, edit your `~/.gitconfig` file and add
++`smtpAuth = OAUTHBEARER` to your account settings:
++
++----
++[sendemail]
++	smtpEncryption = tls
++	smtpServer = smtp.mail.yahoo.com
++	smtpUser = yourname@yahoo.com
++	smtpServerPort = 587
++	smtpAuth = OAUTHBEARER
++----
++
+ SENDING PATCHES
+ ---------------
+ Once your commits are ready to be sent to the mailing list, run the
+@@ -588,6 +617,9 @@ are also available:
+ 	- https://github.com/AdityaGarg8/git-credential-email[git-credential-outlook]
+ 	  (cross platform, dedicated helper for authenticating Microsoft Outlook accounts)
+ 
++	- https://github.com/AdityaGarg8/git-credential-email[git-credential-yahoo]
++	  (cross platform, dedicated helper for authenticating Yahoo accounts)
++
+ You can also see linkgit:gitcredentials[7] for more OAuth based authentication
+ helpers.
+ 
+diff --git a/Documentation/gitcredentials.adoc b/Documentation/gitcredentials.adoc
+index b49923db02..0c4fd0e8e7 100644
+--- a/Documentation/gitcredentials.adoc
++++ b/Documentation/gitcredentials.adoc
+@@ -137,6 +137,8 @@ Popular helpers with OAuth support include:
+ 
+     - https://github.com/AdityaGarg8/git-credential-email[git-credential-outlook] (cross platform, dedicated helper to authenticate Microsoft Outlook accounts for linkgit:git-send-email[1])
+ 
++    - https://github.com/AdityaGarg8/git-credential-email[git-credential-yahoo] (cross platform, dedicated helper to authenticate Yahoo accounts for linkgit:git-send-email[1])
++
+ CREDENTIAL CONTEXTS
+ -------------------
+ 
+-- 
+2.43.0
+
