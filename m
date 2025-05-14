@@ -1,82 +1,82 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72BD41FF1D9
-	for <git@vger.kernel.org>; Wed, 14 May 2025 05:12:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D67561FECAF
+	for <git@vger.kernel.org>; Wed, 14 May 2025 05:12:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747199563; cv=none; b=s8BPkvruUDkYrNjTycbjzkwyeGKvXO2w28TfT2WyklmNerx/0jMXUEfgROQQb7wM9C2a0gMKCSQLwwOiHcHkUCZQ6T9pDhHdDzfl+BYZlgXFheccza4Qi1m4sAmjAcBC6U7V677mKsrS1sdcS/Q6w7x3mkyD8ywsLzhpKuU/drU=
+	t=1747199564; cv=none; b=SVEM1OcvstuH1NgZg0ji4+oNu6aHTBOAnpZ9SSPkPgthc1feUsKFgQs4hrqrgmxK0j11zovcrKNce5G0/VNR03AB5oiICsL5TzKMDWwzfPcqwLkeOl9z2mttsqQDttd4VGw+L6aFq3JehM5VieTOHDJgoZPo+8jCXydR64zK/ZQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747199563; c=relaxed/simple;
-	bh=avbf8KfG1U2y1epiP9d7dsXmWeVRDCXj4T3w/XXQMu0=;
+	s=arc-20240116; t=1747199564; c=relaxed/simple;
+	bh=u5EHOCQx17OFqyYaArxcyUbgvXMVCMMlxPmRVg1YfOY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=ifo+zwLiqQf88issT8yjHS+1rvPmFi12vi8jeSm8E701iqTW4nBacFpseKlQcQ7yURrd9JSsMkeZKW+Jr3FIOKoSstc4Tyvr5cGppVZeah28wq1bhP+lCmohZyeG1isQ0TUy//ydHdDrWLQLcl45sBtZtZyfjtfK7vEZbADMARg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ABgNLKoo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qQIYcpRu; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=HgpII7G6V6CUi05/N/wT4D56wfCRIRL+mW/7CCw8VU6aItVHQ5K7Fo4XTaTo6Ks9v/CVte1dBvD4mUJ/NfyaSrLt2tDmviOg/GIrg7pe3rSfSgNVsDf77/0hMnR8+1cNO1oZ+Wb9MIjn9yadXa+S+MkDegRfnfOvW5DojC9VKak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=CRPVgbmy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S5CbKAHu; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ABgNLKoo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qQIYcpRu"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9709C1380145;
-	Wed, 14 May 2025 01:12:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="CRPVgbmy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S5CbKAHu"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id C9631114013A;
+	Wed, 14 May 2025 01:12:41 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Wed, 14 May 2025 01:12:40 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 14 May 2025 01:12:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747199560;
-	 x=1747285960; bh=wbGxOiwlYQp96n6opihtF7k4RaGHCXUDWudWKihqd3c=; b=
-	ABgNLKood+pXTS8EDZipQaoMiDqwByfLa1r99v9mBFq1tgca07ynubRbOuaHscCi
-	y/6ASRa9xRuYHctQY4e6cZnlYlkzhJVOCD4cGqv05Ex+vHGS1KLVN8bCuQrUa2B/
-	+hasUXWIT8/RsdoMPmiwz4yhVoPUJI2w29AoJgLYYs8rqjQj/Y7vfC+pBiGyh412
-	fBWpOBkQ7jV9adF59BW0FxjySk/Ar3FZcw6/zlxwsgCfY3X/mYEnZgyAiTSVb/Jq
-	UdyH0lX2j3NTl0j8f7tnqhPKsNV5W1/D96/ERrvY8TIAkkJ9a8PWVHDi5D/C9lZW
-	6uDP+KpV4FNOKimOjRnZhw==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747199561;
+	 x=1747285961; bh=TJhwW/S7yxvWaspReinSccKpMYnXqweyV9nCo6CXuBs=; b=
+	CRPVgbmynFDl0gj9VSJ0EpM3G6LizK0wCZoCtpKBtq/xHkbDKFVkLCvxyxP4OsT9
+	Gj7dMIrsQa9d3dI29+2KSXY5SBYD0yZ5gTB7Lj9JTeXJfIGtv63H2Mymb9qNcvYo
+	HMybwqksfMOPOk2ZtXVLL2aN2DNsTzdSyvQ3vDkkPnPgTgXId4e2G4g/0PR29uVZ
+	4yzCECqooT0rUptVHKeME6e0aISVjDWAwWijBUPMlO+9X+OzpwtkUWQHgLOqvpNC
+	1qIKUI6mPq9bAWYgjiYeb9d9+GqjZFWs4W3Bq5GyliJbyE365uXXOcHabm6Zw57M
+	YUSBvhnLdtETYgYWIlat1g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747199560; x=
-	1747285960; bh=wbGxOiwlYQp96n6opihtF7k4RaGHCXUDWudWKihqd3c=; b=q
-	QIYcpRuF6B8kSxAVHYNARNlV1daAB3YqF/L7oBmksltChlRaw6j+sMux49jCOfQv
-	ChYhrpWlEzEds2WQAiXXByWQXTTaAzJMKQVnyocVKJJEIjo0h+U3vqbfwCpOsNTL
-	TyFcSkx1AHyduLJUsp5eZuadqdODw0ICZhYLK4BD+B2XprupdjhtKLq1snBHov+K
-	Hjee+lNVXrBYRML+1TwLPEdKUop9QmeM/dPUttOKpE31MkGCgaTgFznc/2vbPRX9
-	xVfK7cp0FinfvNFvff65ulKL7v6P6d9qVNvf+PB+Lg1y5B+EOpUBx0ED4d7mKsB5
-	jeobPipcY4wQFbG9IHiJA==
-X-ME-Sender: <xms:SCYkaEgxikP6apIgGe4x3nhnWvSk9dOvmkPyg78ToDycD57d3nbtVA>
-    <xme:SCYkaNDHcxAlwZpQaKhpQK5OsLu9N4KkX0w2qK2fSg5ywG7pdp1uO8_vdZvPQrH3X
-    -04P78F5q3MX3819Q>
-X-ME-Received: <xmr:SCYkaMFL8ZHk9Lz36y3YMY2KYqSyjplLpVUraQ4X-QixP1AYKYiP6w0AMYYJMv64wa0Wsa_N0etQtrbIjqWma9GTNDLn-6oR90EUSuB04KU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeiudduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747199561; x=
+	1747285961; bh=TJhwW/S7yxvWaspReinSccKpMYnXqweyV9nCo6CXuBs=; b=S
+	5CbKAHuun4ONX3McC0INIkXKUaeeC5pV7DWzU6Sf0BlO54S2K464oda6Pbp9W/y/
+	oKerFYtBdtGW+7XIEUSp4GCpkpWZr5gdHFaMz8/nJXhTilKf3Cj8YNYPixHKgKeT
+	hitfMl9GvoPVYLRzPTZnFxwXHD6jDrDsJkPVMb7WMlYu7obBn8ALfy6XqkDPOAvo
+	0UIApbdutGIRGnCCQn7YLF3T3rTn22LH5a2X7P2vnjyxpkL62zeX76MIOn84AB3h
+	WPdDEF2dVRaq2xiUVSN8rDFafKpvkcXE9dw/Vm3QGFB3GBMFKdadAliiCw8eDcy4
+	KURe7iLGHFbO8Wpr502eQ==
+X-ME-Sender: <xms:SSYkaKhKJ1SYgi2tthICkZz2mTRwDr39DJYsKCf8yebfcCI8CkF9Rw>
+    <xme:SSYkaLDVo-yay1HeKa-XjcbVe0Agj0LtIfbT1z4uCY5SRkCtFvC9JcwE9c5gzxJ9j
+    bMyhMGXzWc5-zc8Nw>
+X-ME-Received: <xmr:SSYkaCF0Xok__oK76IFxRTtxBJt9ghrUHnW5MAAIbX4uNvPJHj8ZEtSmJVBnPQOPVkqifRFlM7frATgattGgQXZB_VMQrhqRNRMBxu833xQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeiuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedvnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtg
+    hgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthho
+    ohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
     homh
-X-ME-Proxy: <xmx:SCYkaFQTnGaXX4KRljMJf5qykqZJj3qgZU-955dOklY8p2wzaQVchw>
-    <xmx:SCYkaBx3hc-PyAwD3G2H3MyTwf0RHQ9rDbrAARSMOJHAoc8OOOWE9w>
-    <xmx:SCYkaD57jdsOq2kEJ9sVML_6tSOU3-98JLetriCkdOiOfEixi8JzUg>
-    <xmx:SCYkaOy-vGs-o2ufJjd10GBLxiz1JcaehjeAh2uNZa6gmWlkA02baA>
-    <xmx:SCYkaP1H-3o1352r_nHju2-jU8-nb8JJew8tJt9tGdQltHAWocRfVvwc>
+X-ME-Proxy: <xmx:SSYkaDSE3EpevDNXRRrIXHWKP7PBd57jo9bM5aM52IYT0u5EIRfziw>
+    <xmx:SSYkaHzG3jIbviP3zF9fA-dpSRZpleSop2B9GDvmDW9c6sszgS6yTg>
+    <xmx:SSYkaB6HZNKiNuUXYCIPklf5zumI0EuSaXp7uJBP_60Qy9LSDQp1NA>
+    <xmx:SSYkaEwNeOzz1z0eQcIjJ7FhsUUyWq0J4RUJPBEHzzbtkG52152gUg>
+    <xmx:SSYkaF26GnsmEcnNa8hOyzXniiDhQx4ClfAq_mEx9P_Jm5byTr4vMxzZ>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 May 2025 01:12:39 -0400 (EDT)
+ 14 May 2025 01:12:40 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 0fcf8564 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 14 May 2025 05:12:38 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 1d464bbe (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 14 May 2025 05:12:39 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 14 May 2025 07:12:34 +0200
-Subject: [PATCH v3 11/17] odb: get rid of `the_repository` when handling
- submodule alternates
+Date: Wed, 14 May 2025 07:12:35 +0200
+Subject: [PATCH v3 12/17] odb: trivial refactorings to get rid of
+ `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250514-pks-object-store-wo-the-repository-v3-11-47df1d4ead22@pks.im>
+Message-Id: <20250514-pks-object-store-wo-the-repository-v3-12-47df1d4ead22@pks.im>
 References: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
 In-Reply-To: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
 To: git@vger.kernel.org
@@ -93,253 +93,136 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-The "--recursive" flag for git-grep(1) allows users to grep for a string
-across submodule boundaries. To make this work we add each submodule's
-object alternate to our own object database so that the objects can be
-accessed directly.
+All of the external functions provided by the object database subsystem
+don't depend on `the_repository` anymore, but some internal functions
+still do. Refactor those cases by plumbing through the repository that
+owns the object database.
 
-The infrastructure for this depends on a global string list of submodule
-paths. The caller is expected to call `add_submodule_odb_by_path()` for
-each alternate and the object database will then eventually register all
-submodule alternates via `do_oid_object_info_extended()` in case it
-isn't able to look up a specific object.
-
-This reliance on global state is of course suboptimal with regards to
-our libification efforts.
-
-Refactor the logic so that the list of submodule alternates is instead
-tracked in the object database itself. This allows us to lose the
-condition of `r == the_repository` before registering submodule
-alternates as we only ever add submodule alternates to `the_repository`
-anyway. As such, behaviour before and after this refactoring should
-always be the same.
-
-Rename the functions accordingly.
+This change allows us to get rid of the `USE_THE_REPOSITORY_VARIABLE`
+preprocessor define.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/grep.c     |  3 ++-
- odb.c              | 37 +++++++++++++++++++++++++++++++------
- odb.h              | 15 +++++++++++++++
- submodule-config.c |  3 ++-
- submodule.c        | 26 --------------------------
- submodule.h        |  9 ---------
- 6 files changed, 50 insertions(+), 43 deletions(-)
+ odb.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index b19fee20425..277bc121e4e 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -505,7 +505,8 @@ static int grep_submodule(struct grep_opt *opt,
- 	 * lazily registered as alternates when needed (and except in an
- 	 * unexpected code interaction, it won't be needed).
- 	 */
--	add_submodule_odb_by_path(subrepo->objects->alternates->path);
-+	odb_add_submodule_alternate_by_path(the_repository->objects,
-+					    subrepo->objects->alternates->path);
- 	obj_read_unlock();
- 
- 	memcpy(&subopt, opt, sizeof(subopt));
 diff --git a/odb.c b/odb.c
-index 100dd39cbe8..72ff1ab5a7d 100644
+index 72ff1ab5a7d..c150c01db4a 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -24,6 +24,7 @@
- #include "strbuf.h"
- #include "strvec.h"
- #include "submodule.h"
-+#include "trace2.h"
- #include "write-or-die.h"
- 
- KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
-@@ -469,6 +470,12 @@ struct odb_alternate *odb_find_alternate(struct object_database *odb, const char
- 	return alternate;
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
+-
+ #include "git-compat-util.h"
+ #include "abspath.h"
+ #include "commit-graph.h"
+@@ -476,12 +474,13 @@ void odb_add_submodule_alternate_by_path(struct object_database *odb,
+ 	string_list_insert(&odb->submodule_alternate_paths, path);
  }
  
-+void odb_add_submodule_alternate_by_path(struct object_database *odb,
-+					 const char *path)
-+{
-+	string_list_insert(&odb->submodule_alternate_paths, path);
-+}
-+
- static void fill_alternate_refs_command(struct child_process *cmd,
+-static void fill_alternate_refs_command(struct child_process *cmd,
++static void fill_alternate_refs_command(struct repository *repo,
++					struct child_process *cmd,
  					const char *repo_path)
  {
-@@ -623,6 +630,23 @@ void disable_obj_read_lock(void)
+ 	const char *value;
  
- int fetch_if_missing = 1;
+-	if (!git_config_get_value("core.alternateRefsCommand", &value)) {
++	if (!repo_config_get_value(repo, "core.alternateRefsCommand", &value)) {
+ 		cmd->use_shell = 1;
  
-+static int register_all_submodule_alternates(struct object_database *odb)
-+{
-+	int ret = odb->submodule_alternate_paths.nr;
-+
-+	for (size_t i = 0; i < odb->submodule_alternate_paths.nr; i++)
-+		odb_add_to_alternates_memory(odb,
-+					     odb->submodule_alternate_paths.items[i].string);
-+	if (ret) {
-+		string_list_clear(&odb->submodule_alternate_paths, 0);
-+		trace2_data_intmax("submodule", odb->repo,
-+				   "register_all_submodule_alternates/registered", ret);
-+		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
-+			BUG("register_all_submodule_alternates() called");
-+	}
-+	return ret;
-+}
-+
- static int do_oid_object_info_extended(struct repository *r,
- 				       const struct object_id *oid,
- 				       struct object_info *oi, unsigned flags)
-@@ -678,13 +702,12 @@ static int do_oid_object_info_extended(struct repository *r,
+ 		strvec_push(&cmd->args, value);
+@@ -493,7 +492,7 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+ 		strvec_push(&cmd->args, "for-each-ref");
+ 		strvec_push(&cmd->args, "--format=%(objectname)");
+ 
+-		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
++		if (!repo_config_get_value(repo, "core.alternateRefsPrefixes", &value)) {
+ 			strvec_push(&cmd->args, "--");
+ 			strvec_split(&cmd->args, value);
  		}
- 
- 		/*
--		 * If r is the_repository, this might be an attempt at
--		 * accessing a submodule object as if it were in the_repository
--		 * (having called add_submodule_odb() on that submodule's ODB).
--		 * If any such ODBs exist, register them and try again.
-+		 * This might be an attempt at accessing a submodule object as
-+		 * if it were in main object store (having called
-+		 * `odb_add_submodule_alternate_by_path()` on that submodule's
-+		 * ODB). If any such ODBs exist, register them and try again.
- 		 */
--		if (r == the_repository &&
--		    register_all_submodule_odb_as_alternates())
-+		if (register_all_submodule_alternates(r->objects))
- 			/* We added some alternates; retry */
- 			continue;
- 
-@@ -977,6 +1000,7 @@ struct object_database *odb_new(struct repository *repo)
- 	INIT_LIST_HEAD(&o->packed_git_mru);
- 	hashmap_init(&o->pack_map, pack_map_entry_cmp, NULL, 0);
- 	pthread_mutex_init(&o->replace_mutex, NULL);
-+	string_list_init_dup(&o->submodule_alternate_paths);
- 	return o;
+@@ -503,7 +502,8 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+ 	cmd->out = -1;
  }
  
-@@ -1027,4 +1051,5 @@ void odb_clear(struct object_database *o)
- 	o->packed_git = NULL;
- 
- 	hashmap_clear(&o->pack_map);
-+	string_list_clear(&o->submodule_alternate_paths, 0);
- }
-diff --git a/odb.h b/odb.h
-index 0db4de38529..44326cb698d 100644
---- a/odb.h
-+++ b/odb.h
-@@ -5,6 +5,7 @@
- #include "object.h"
- #include "list.h"
- #include "oidset.h"
-+#include "string-list.h"
- #include "thread-utils.h"
- 
- struct oidmap;
-@@ -158,6 +159,12 @@ struct object_database {
- 	 * packs.
- 	 */
- 	unsigned packed_git_initialized : 1;
-+
-+	/*
-+	 * Submodule alternate paths that will be added as alternatives to
-+	 * allow lookup of submodule objects via the main object database.
-+	 */
-+	struct string_list submodule_alternate_paths;
- };
- 
- struct object_database *odb_new(struct repository *repo);
-@@ -183,6 +190,14 @@ void odb_restore_primary_alternate(struct object_database *odb,
- 				   struct odb_alternate *restore_alt,
- 				   const char *old_path);
- 
-+/*
-+ * Call odb_add_submodule_alternate_by_path() to add the submodule at the given
-+ * path to a list. The object stores of all submodules in that list will be
-+ * added as alternates in the object store when looking up objects.
-+ */
-+void odb_add_submodule_alternate_by_path(struct object_database *odb,
-+					  const char *path);
-+
- /*
-  * Iterate through all alternates of the database and execute the provided
-  * callback function for each of them. Stop iterating once the callback
-diff --git a/submodule-config.c b/submodule-config.c
-index 09034a587f1..0f775f93259 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -810,7 +810,8 @@ static void config_from_gitmodules(config_fn_t fn, struct repository *repo, void
- 			   repo_get_oid(repo, GITMODULES_HEAD, &oid) >= 0) {
- 			config_source.blob = oidstr = xstrdup(oid_to_hex(&oid));
- 			if (repo != the_repository)
--				add_submodule_odb_by_path(repo->objects->alternates->path);
-+				odb_add_submodule_alternate_by_path(the_repository->objects,
-+								    repo->objects->alternates->path);
- 		} else {
- 			goto out;
- 		}
-diff --git a/submodule.c b/submodule.c
-index 386be234230..788c9e55ed3 100644
---- a/submodule.c
-+++ b/submodule.c
-@@ -31,7 +31,6 @@
- #include "commit-reach.h"
- #include "read-cache-ll.h"
- #include "setup.h"
--#include "trace2.h"
- 
- static int config_update_recurse_submodules = RECURSE_SUBMODULES_OFF;
- static int initialized_fetch_ref_tips;
-@@ -176,31 +175,6 @@ void stage_updated_gitmodules(struct index_state *istate)
- 		die(_("staging updated .gitmodules failed"));
- }
- 
--static struct string_list added_submodule_odb_paths = STRING_LIST_INIT_DUP;
--
--void add_submodule_odb_by_path(const char *path)
--{
--	string_list_insert(&added_submodule_odb_paths, path);
--}
--
--int register_all_submodule_odb_as_alternates(void)
--{
--	int i;
--	int ret = added_submodule_odb_paths.nr;
--
--	for (i = 0; i < added_submodule_odb_paths.nr; i++)
--		odb_add_to_alternates_memory(the_repository->objects,
--					     added_submodule_odb_paths.items[i].string);
--	if (ret) {
--		string_list_clear(&added_submodule_odb_paths, 0);
--		trace2_data_intmax("submodule", the_repository,
--				   "register_all_submodule_odb_as_alternates/registered", ret);
--		if (git_env_bool("GIT_TEST_FATAL_REGISTER_SUBMODULE_ODB", 0))
--			BUG("register_all_submodule_odb_as_alternates() called");
--	}
--	return ret;
--}
--
- void set_diffopt_flags_from_submodule_config(struct diff_options *diffopt,
- 					     const char *path)
+-static void read_alternate_refs(const char *path,
++static void read_alternate_refs(struct repository *repo,
++				const char *path,
+ 				odb_for_each_alternate_ref_fn *cb,
+ 				void *payload)
  {
-diff --git a/submodule.h b/submodule.h
-index db980c1d083..b10e16e6c06 100644
---- a/submodule.h
-+++ b/submodule.h
-@@ -104,15 +104,6 @@ int submodule_uses_gitfile(const char *path);
- #define SUBMODULE_REMOVAL_IGNORE_IGNORED_UNTRACKED (1<<2)
- int bad_to_remove_submodule(const char *path, unsigned flags);
+@@ -511,7 +511,7 @@ static void read_alternate_refs(const char *path,
+ 	struct strbuf line = STRBUF_INIT;
+ 	FILE *fh;
  
--/*
-- * Call add_submodule_odb_by_path() to add the submodule at the given
-- * path to a list. When register_all_submodule_odb_as_alternates() is
-- * called, the object stores of all submodules in that list will be
-- * added as alternates in the_repository.
-- */
--void add_submodule_odb_by_path(const char *path);
--int register_all_submodule_odb_as_alternates(void);
--
- /*
-  * Checks if there are submodule changes in a..b. If a is the null OID,
-  * checks b and all its ancestors instead.
+-	fill_alternate_refs_command(&cmd, path);
++	fill_alternate_refs_command(repo, &cmd, path);
+ 
+ 	if (start_command(&cmd))
+ 		return;
+@@ -521,7 +521,7 @@ static void read_alternate_refs(const char *path,
+ 		struct object_id oid;
+ 		const char *p;
+ 
+-		if (parse_oid_hex(line.buf, &oid, &p) || *p) {
++		if (parse_oid_hex_algop(line.buf, &oid, &p, repo->hash_algo) || *p) {
+ 			warning(_("invalid line while parsing alternate refs: %s"),
+ 				line.buf);
+ 			break;
+@@ -559,7 +559,7 @@ static int refs_from_alternate_cb(struct odb_alternate *alternate,
+ 		goto out;
+ 	strbuf_setlen(&path, base_len);
+ 
+-	read_alternate_refs(path.buf, cb->fn, cb->payload);
++	read_alternate_refs(alternate->odb->repo, path.buf, cb->fn, cb->payload);
+ 
+ out:
+ 	strbuf_release(&path);
+@@ -677,7 +677,7 @@ static int do_oid_object_info_extended(struct repository *r,
+ 		if (oi->disk_sizep)
+ 			*(oi->disk_sizep) = 0;
+ 		if (oi->delta_base_oid)
+-			oidclr(oi->delta_base_oid, the_repository->hash_algo);
++			oidclr(oi->delta_base_oid, r->hash_algo);
+ 		if (oi->type_name)
+ 			strbuf_addstr(oi->type_name, type_name(co->type));
+ 		if (oi->contentp)
+@@ -765,10 +765,10 @@ static int oid_object_info_convert(struct repository *r,
+ 	void *content;
+ 	int ret;
+ 
+-	if (repo_oid_to_algop(r, input_oid, the_hash_algo, &oid)) {
++	if (repo_oid_to_algop(r, input_oid, r->hash_algo, &oid)) {
+ 		if (do_die)
+ 			die(_("missing mapping of %s to %s"),
+-			    oid_to_hex(input_oid), the_hash_algo->name);
++			    oid_to_hex(input_oid), r->hash_algo->name);
+ 		return -1;
+ 	}
+ 
+@@ -804,8 +804,8 @@ static int oid_object_info_convert(struct repository *r,
+ 		if (type == -1)
+ 			return -1;
+ 		if (type != OBJ_BLOB) {
+-			ret = convert_object_file(the_repository, &outbuf,
+-						  the_hash_algo, input_algo,
++			ret = convert_object_file(r, &outbuf,
++						  r->hash_algo, input_algo,
+ 						  content, size, type, !do_die);
+ 			free(content);
+ 			if (ret == -1)
+@@ -953,9 +953,9 @@ void *read_object_with_reference(struct repository *r,
+ 		}
+ 		ref_length = strlen(ref_type);
+ 
+-		if (ref_length + the_hash_algo->hexsz > isize ||
++		if (ref_length + r->hash_algo->hexsz > isize ||
+ 		    memcmp(buffer, ref_type, ref_length) ||
+-		    get_oid_hex((char *) buffer + ref_length, &actual_oid)) {
++		    get_oid_hex_algop((char *) buffer + ref_length, &actual_oid, r->hash_algo)) {
+ 			free(buffer);
+ 			return NULL;
+ 		}
 
 -- 
 2.49.0.1141.g47af616452.dirty
