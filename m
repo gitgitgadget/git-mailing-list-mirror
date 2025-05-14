@@ -1,122 +1,105 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A17F25C71A
-	for <git@vger.kernel.org>; Wed, 14 May 2025 12:44:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 944E6276038
+	for <git@vger.kernel.org>; Wed, 14 May 2025 12:48:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747226646; cv=none; b=CYUY9W86QjhVetdaMP34OWOTueNhNF+fi7MpV1dpQgj8zQZGbIPwODkJ9kWR6abtBnP82s/mx9RUoqRA0baCJn6HRWx33NFAlqUSY0UYuSx2VDMXkhGDzvrVbtRKn/E5Ft6RM5vtpU1wD2e8D3UMCihFyYs0HpuIdHj0XfNcpNM=
+	t=1747226942; cv=none; b=P7Ajtfw7Aq7IEyux9Ou8Xy75G1g3znscw0De5xcbi7qiPGVCUOPN5dMcHPSqrP/FuoryrGq9XFo5tuRjfihSRpO3tS9e/m1A4AR1iQYUUpU5kcRzNd4whXNINxU47ITo5uzvluB0XYeW2J2vFN4P09n+8GIk/HCEDRgXbX0yD24=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747226646; c=relaxed/simple;
-	bh=+U5Q0QhNQscFo2x+veU921WX9WKBWamTi7d+u9B4OV8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=sGO+q1BP4ZfUWrt2jO40vgXUKnLKAbGgbXbm0pWqnV/B7QdQ0JmW/C1R3L9dxSruLcajwxKUlAZV7pcCXxbPU8Szs5fiRv9wOXPg6ECl+/CQzVAZ9Wk5kDVWOc0ktqq6V1YPRFxE4qryZ6qQdKNNG6aegedLMH9QtY+4KEcsJsk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cunleZQx; arc=none smtp.client-ip=209.85.221.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747226942; c=relaxed/simple;
+	bh=ZCTymuapyT+vrI8C9CcU2eEiR6JXrsl4y/kwDPHAou8=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rXJZZ30qWyQpX1h/El0futEpBY5TBk5fW7wVv99qYc6dtbAgHQNtwJVqugyuuJex+qPkXYFXyLS8FvL6mKf0wm1IyAcy/24Unki5JRgxxHILWi38yjJVL/cH+CV/kND8GZ27KGBqfY9GVW/g3kSKmKL7qLBn3xlJVDSxdX5avoY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TL+VCCFS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OXbypy2q; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cunleZQx"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a064a3e143so3937463f8f.3
-        for <git@vger.kernel.org>; Wed, 14 May 2025 05:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747226642; x=1747831442; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=8K/vXnk6kdvU1h7XBgmCIopQjHwmgNXecCetdwyJeYo=;
-        b=cunleZQxn++7KsSZj9tEsZROTnuE3kPNvS7RgO2+NwLQgJ0ET1jZYi+r1qTNy82PMt
-         nfb0hc9Nr+VV+s7Sq6/88ZerYHsZUs6Zi5+HAakCYl4Kgm0/JBsa6tCaCoO8Mx1pVdKd
-         Wg3POhMpwi/GhZvA9W0JmVLTK/zTBa53Q3HTKKeV+UFEspGE3ZAY2Nt48K9jGqyU0VSq
-         4LCDEmcr5A5pjA1PO/KvfiXO/Ta63batgZtuVc1o8gGC2uCQ8XDOU39cwntImqllgDwC
-         BdJ+3A6zqjHKeDviUah7pwIPlCy2BxIZmM+SFuu5n7V6SVK5exKVPWXWM6AqzABefK9+
-         DRSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747226642; x=1747831442;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=8K/vXnk6kdvU1h7XBgmCIopQjHwmgNXecCetdwyJeYo=;
-        b=kknmsf6jLZntfZ0La29plrldI2/xH+3xQQRh9F7I8G/Kmlyhs65W7mAxaDpLcJ7xHJ
-         Nm5yjChHWirRqow77+DD+Ul1XwuGPFHLxfaFCyLVWqcc11Jkwo6zHQn7fNjn/L/R9zFm
-         Bc4S4P/1iULPjVKdgy+TX14gwn5q0uy0iXckoP7gwhaUHdRJ5HGt5EInf2mustdAykuR
-         y1hgCCYCP2aRUAzXqxz0vj+9wIqcVtbbGE2UypQA1MGrPT5J4uPBoc61F4ceY52LVd9K
-         wXC5oDqNCSb9rEyfN+Ux/eqiskMNU3H6AXTFdyXqTjA8xkDNcjUH0cEH9fUHXX35TyDr
-         DJaw==
-X-Gm-Message-State: AOJu0Yzmr+ufvgGsneEKssug+XX8anx1EIpXxf46Uucw+sOBVbTpdSJj
-	h/eLffhfqHWzGcyqHEkM+FjB4m/3RF9XoV73wMitxebXxH8JFLpMfHMCUA==
-X-Gm-Gg: ASbGnct3gGnMhhpllrJuGEUpisBKfztfyLGTbRBvT9cmDk4vEj46d47GNp66sfGEze8
-	QEjhAgs77kc7svOhGhH1NS/yBQZrNC8isToH4EfqtPIDSI+nC7YbFgBcWl28QEkJ+9Cb/CR8DQa
-	kvwmpMpqB+BqhyGZkckQi55rjOAiomjL3c/ej+ChRD3Nr0L05Xa30L2Y8nddMPJKhX4wPMKfkZx
-	lYhtr8TPudjME7pvyFeXhng1IGCzkzD1IqEub43hiMRNgiyjosnLG6vW1Ce3ozr48+hAPTvy2YP
-	NXImbtB0x8+BYF4EORhr19qFBuzpNI/USOObBcOlBPrg4jcUAXAk
-X-Google-Smtp-Source: AGHT+IEXeHLTlOTDitKOdaTunOqco1dbyYbAQiM51QEFP5rBcG3NOPEhXF4zTPeoKuG6ltWjCAO9EQ==
-X-Received: by 2002:a05:6000:1a8d:b0:3a0:ad33:c1b3 with SMTP id ffacd0b85a97d-3a349695bfdmr2746661f8f.3.1747226642361;
-        Wed, 14 May 2025 05:44:02 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f58f396asm19981921f8f.59.2025.05.14.05.44.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 05:44:01 -0700 (PDT)
-Message-Id: <pull.1964.git.git.1747226641249.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 May 2025 12:44:00 +0000
-Subject: [PATCH] sequencer: fix memory leak if `update_squash_messages()`
- failed
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TL+VCCFS";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OXbypy2q"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.phl.internal (Postfix) with ESMTP id 90D391380460;
+	Wed, 14 May 2025 08:48:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Wed, 14 May 2025 08:48:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747226938; x=1747313338; bh=fTZVR07NJb
+	9lAi0CVh1tT/MLg9Z7xe+QqLTI1J61aTo=; b=TL+VCCFSdUz6RReU6d5e6g2gAu
+	I5mXUGnTgJsAQxhUmzcuP4JUIRJauFB7XkwjCP9+kPCQmJHYCcWMa1JAx5fIa2KP
+	N7q/hRt88AqJLJsLiQaWY/lAUXTF7/7NQ7IvplHYP8a+HVk0nS63PqymJYhlYklQ
+	qprZK9H31WN4Ak/880jj28oyLcBP/4/otUoCmo5wDXbtXLAhc7URJPI+BVmWRS54
+	kOcjGHSbDGnPUpeC1bHTPQvhOCRWIk9/ZN0336+Z5a38jaSm27nxGrtlWYFsb2wz
+	H2TuSBoB1bd7/np4wNc5SSdpk0dfj95u7tYs+uUn/sypcK6X/YuqmxgrJEUg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747226938; x=1747313338; bh=fTZVR07NJb9lAi0CVh1tT/MLg9Z7xe+QqLT
+	I1J61aTo=; b=OXbypy2qMm9yXZtcHbq6ZoNh7Cjose6GndOhvnlArUaci+0CIr9
+	8BfMez55ctEz8yVhxbPxmeEescc5Kh6mqTftDuDT4dMqG1Zprr2m28g4eDSQVCm4
+	UasgfGg9YBQHxYyaOJSySCVUaEjvgvoYjT0KHoAuOOvNXkg6ixFuOQz2xiiwT4gy
+	obfgZuHho2eNk3/BGNPGgNt49GtDNbyb0SDkURFSPKYgMRVV+LPB0yGvIbV+fkC4
+	gR5gCps6nj2mLgMkNiGN6CZ0vT+PjFfywcA8QpM5o/h2u9X3mSJiQdnm3WXO/c8a
+	3bsYH3F1b4f0FQsF0ZFBQ5HeQ18r0R5Hh/w==
+X-ME-Sender: <xms:OpEkaDtKBg6Uk74Dc72J7lyLkzn7XS9OxQkew3WisVPyZyRlBdn61w>
+    <xme:OpEkaEe5uH8535ODSmh3NIMl67ABx2T9vXnhUPtpeTt8dr8dyxUIC9yJxw7RzkM0t
+    QTB7mzYt_Yom74Sow>
+X-ME-Received: <xmr:OpEkaGwF8a7LqdnGWsU4eamJyxWwiF2kjKlKO0LGZUMPhrsBU9HDYmdXVIOksivLkTDdBtnZ8nRtddTyMiJ2DAHTPPg06qInOX9M7TY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejtdefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
+    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
+    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
+    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
+    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
+    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
+    thdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrghrnhhivddttdehsehgmh
+    grihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:OpEkaCPD8fNw4p0T2XZBkHFY2WzV5Xai6Sbssq4SQoPhLK2tJupwUA>
+    <xmx:OpEkaD9MyY1kvq_c_oYEXF_lzeqXeNONEb3AIk5vzOyfOeyHYMKgig>
+    <xmx:OpEkaCWtMKbWvArXpq6QKv5AvmnysvZPcmNZfBEVoG2xrcbZ499_EQ>
+    <xmx:OpEkaEeIAqULDHcNMHu2aIVXpugcvtcrHr7huGtTwv7oa7o71VB_XQ>
+    <xmx:OpEkaMLjhuLOuj80mQZ7-ch30t0rrNHMxHZ0gWJp4m8OO8Pu20FZfmcH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 May 2025 08:48:58 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/4] update MyFirstContribution with current code base
+In-Reply-To: <CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
+	(JAYATHEERTH K.'s message of "Wed, 16 Apr 2025 20:08:24 +0530")
+References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
+	<xmqqr01si441.fsf@gitster.g>
+	<CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
+Date: Wed, 14 May 2025 05:48:56 -0700
+Message-ID: <xmqqtt5ncq87.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
 
-In sequencer.c:update_squash_messages, `repo_logmsg_reencode` returns
-either an allocated reencode string or commit buffer if no encode is
-needed. To free `repo_logmsg_reencode` result, `repo_unuse_commit_buffer`
-should be used. However, when encountering the error("unknown command..."),
-the absence of `repo_unuse_commit_buffer` results in a memory leak. I
-think we should add a `repo_unuse_commit_buffer` before return.
+> git shortlog --no-merges --since=6.years -- Documentation/MyFirstContributi
+> on.adoc
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    sequencer: fix memory leak if update_squash_messages() failed
-    
-    In sequencer.c:update_squash_messages, repo_logmsg_reencode returns
-    either an allocated reencode string or commit buffer if no encode is
-    needed. To free repo_logmsg_reencode result, repo_unuse_commit_buffer
-    should be used. However, when encountering the error("unknown
-    command..."), the absence of repo_unuse_commit_buffer results in a
-    memory leak. I think we should add a repo_unuse_commit_buffer before
-    return.
+That would not work; due to mass rename, you'd need
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1964%2Fbrandb97%2Ffix-sequencer-leak-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1964/brandb97/fix-sequencer-leak-v1
-Pull-Request: https://github.com/git/git/pull/1964
+  $ git shortlog --no-merges -- Documentation/MyFirstContribution.{adoc,txt}
 
- sequencer.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+or perhaps
 
-diff --git a/sequencer.c b/sequencer.c
-index b5c4043757e..f288a303eaa 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -2138,8 +2138,10 @@ static int update_squash_messages(struct repository *r,
- 		strbuf_addstr(&buf, "\n\n");
- 		strbuf_add_commented_lines(&buf, body, strlen(body),
- 					   comment_line_str);
--	} else
-+	} else {
-+		repo_unuse_commit_buffer(r, commit, message);
- 		return error(_("unknown command: %d"), command);
-+	}
- 	repo_unuse_commit_buffer(r, commit, message);
- 
- 	if (!res)
+  $ git log --no-merges --follow Documentation/MyFirstContribution.adoc |
+    git shortlog
 
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
--- 
-gitgitgadget
+or something like that.
+
