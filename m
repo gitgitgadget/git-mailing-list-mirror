@@ -1,173 +1,149 @@
-Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A90951C862D
-	for <git@vger.kernel.org>; Wed, 14 May 2025 19:18:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC5654A23
+	for <git@vger.kernel.org>; Wed, 14 May 2025 19:29:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747250303; cv=none; b=NQ4n4HeohtJ+j2RVMoAGcDzo+cf6/eF2uLze5dsRUN+W3K0lk7QcQQjTgRX4CdcadwhxPoVptejeRnXacodZDlanrg3ns50/U6/pS0lYH33juhthYU7fOvTLKqKOeP+ul0kgofsI8yckWVoHJwrgmTi9tvvbekE54HBC1/SXM9M=
+	t=1747250968; cv=none; b=tYkzwVrRwEZK443sdGMAV/JYCWf1Bf0BLNI4tSnp6dqkaQY2o1bz+XxJPDPinId1MFNIArSLJ9VsnnyP50kKZvxgfmI2am0Uf6vxMI1IqILQKRimj3SroT0q2OWb1rXcj5fZei2Vy47Q43JCLTOeTxGEF4U0eLMtYm/Hti26smc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747250303; c=relaxed/simple;
-	bh=XrXmnmRjncSSf1IHs/E2IvTF5foNI34I6tfdd0fnbFw=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Cc:Content-Type; b=lepakBJ4bkf2uwOYKcB3MAtz0seSHrKcFDM2dWxKJ73u9oh9xwd4i+C0Grd4aujILPLidxGCs9d/6QmXicmeAxTSMB26MwQWtZpF0CIoOLIYiUSp2TWZkj5vLa1xsu6s3J+8YSZIBSTw6NLw0yC/zFsczEB1/sI90xY5VRC/wHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=usp.br; spf=pass smtp.mailfrom=usp.br; dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b=FN/eWwrl; arc=none smtp.client-ip=209.85.208.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=usp.br
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=usp.br
+	s=arc-20240116; t=1747250968; c=relaxed/simple;
+	bh=l8pD38blgZbbDC73mU5Z7xzRAcZqvuY+r9L4Coq5qDM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DKDk0yooUX0oMl1vkE0SNt/Y+mpANkPQF8UOlXPV5y1ncnlZDYIHhvDWYWJkSGHaTNOpu9SuZiTtiVbLbYbNKKnFs5j6fSKMbELXye2FNduej9zpyL2hv4yJKfi+gfiEQFjnXAkeJRzib1xaGID8SN1wZDSsW2D4tpJpIre399g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hecZjHJy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KBINdmHK; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=usp.br header.i=@usp.br header.b="FN/eWwrl"
-Received: by mail-ed1-f52.google.com with SMTP id 4fb4d7f45d1cf-5fbf007ea38so275379a12.3
-        for <git@vger.kernel.org>; Wed, 14 May 2025 12:18:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=usp.br; s=usp-google; t=1747250297; x=1747855097; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=WzQk/AAR9p4FxY4gLbI9yzSEdp1QQ76d2Rjg+CLG1QM=;
-        b=FN/eWwrlnlJiKiysr0n8w90jDPdQ6FlAM6PZAoW+ltIt1aw6yprkKUPBBzKUmh8RcQ
-         77yJBTSEv0P045Qsw9EPeExKfr7hJPsRT9JrIGbY4esW9uzMV7EyBjL8ikVx0N5ceU74
-         5DNoZhKQAjB6EPheOY86AZNtC4ge42qw4EwYTPvjRR6IusyZb42dcDL0QhZ6Rwtq6zk9
-         wVPW/tfWZBJ83cE7vratxbOHP4spCKCPUrMTG11eHExDh4ofHevTRHkofF6Z3Xth2rwT
-         1wsPaT1sfnAZYSwYSPtN9kyxiHwESBgvJ02QNHxvRjG6G1jxfFKENUJB+rS3+KR9ypOg
-         K57g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747250297; x=1747855097;
-        h=cc:to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=WzQk/AAR9p4FxY4gLbI9yzSEdp1QQ76d2Rjg+CLG1QM=;
-        b=Foou4R02m0j/qWkBeCwazvsFqEbYvUJvrJnI+g4GVob3RnclzNgHAdbZKVqSsvIue3
-         55QYZfOUyYhdhSUAUCa1/OThmVPTnLsqG0koFL6EBdbQPlRgguEhIPLZpmo9vLl2OHAB
-         KAlCjp5WsF8+qOZ6KEcca1/o+c608S6VU+mlbJSKnrd/Dj7aJhbeAK9agl3v2BB/iQNr
-         zZlxVbzhI4qRU/h+AyI76fpYhSC0SC8W2pp/VMbEfYRLQNddyrkHuiw7cq8syWxdU6KA
-         d5BUJ+UEoVKDKqhbNWYNS5j/vwkGc37F1MO61I/ebDg5hxzL/v6fcfLCSOK0pdvn0qmB
-         VPJQ==
-X-Gm-Message-State: AOJu0YzuP2DyBXq7vO+h9FCpO3RNcoynfkFULiZk9rylQtb9DFKKN43n
-	2+tfs9Zm0blkA5n5kShdeGew7HftBFj2YnLWgzrXkLUOk7WYDlZLD64UVj0w7gydZBMrQk8ZO75
-	PP/L0zouPZp1yXac+NnzM5s5sPQzoVMElON7Y05gIcgu4Dg4mJ/k=
-X-Gm-Gg: ASbGncvyFEjLNgS24X2wUqFTv0bHAltKJZJgm0VaDghyQ2wJQwJzeXb65aLPEKk8OXj
-	GV+/Jr77jwefBqF9Pmw8Hq4XI+sCxiNjFOck8NaZWluOlAkwWXm7degS9Byb3agtxyseXZniIUj
-	OmoY0pWRX140iPgJliaWdTZ8LEBpDUV+A=
-X-Google-Smtp-Source: AGHT+IGimOnikjcroJJtfCA3QfndlI7N+zZ8s8wnDpYaNDrVQu1oJrbsX72aHCc4vB+AAFhg35NDsJWIwtJKTfkkKyQ=
-X-Received: by 2002:a05:6402:51d3:b0:5fc:4045:7d74 with SMTP id
- 4fb4d7f45d1cf-5ff988a55c4mr3356679a12.9.1747250296696; Wed, 14 May 2025
- 12:18:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hecZjHJy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KBINdmHK"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 9338525400FE;
+	Wed, 14 May 2025 15:29:25 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 14 May 2025 15:29:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747250965; x=1747337365; bh=SsLMhKVCmQ
+	tjTinbEvf5Mp3D6DjlnMgMFwvA1Qj7AD8=; b=hecZjHJy/nk+dOpgJHB5kfwiYp
+	b3UmxK42Pl7SlRGVuCPvGs4+uRLi9e2dEDjxUu7nInDTPUCcDpGRbiQ8vdk1jcQj
+	7lySa602M96D5QYbYak4szLyA8RnMCBIvZR3ZnVujH/HTCRHblJsOZAdk/w5Llxi
+	ClVzxh4uQlGARzG1xuwjdLWHtG9lpLumgSOlGVgFQ/QioPeYVVuSVdH0GAbleIdP
+	gyv1g1iFB0xxxMillZHBSt//To0Wo7NipKpZCLp52qdb1wXaZUdIdC5CYV0k3D6u
+	Rfaiocl3QZNJXvroWmszdVZqdcSxTgdcOzuYGXHpIVDh6Hn5c4bVp4gjft6g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747250965; x=1747337365; bh=SsLMhKVCmQtjTinbEvf5Mp3D6DjlnMgMFwv
+	A1Qj7AD8=; b=KBINdmHKe2E+CteMYcLIGeLHECVh/6iy1DMA666uUk9HvLroNGH
+	e0oyC7anP+73JlRLr2UENwW3CihAB7jAzr3yUNvckS4WNUQ32K/uTddJn08bZMTk
+	LfkpJFCy8Kkb7RxTDpN8EJVSOaqP5svb61p3gSZB2vYg/WRl+FxLVRr9D7mWtH/W
+	/j34ZlWa7k0ioXyxE3foKZmRqxoXL4wnWJZN8L3s9CPe98nGz4tjeyT4AN67PJAV
+	7ho6sPvBW8aF/k3jyLEXmRGk9hYzURxe/CkHWOGQDgY9pwrDVY5pBpbNtnCWMgc+
+	W3UPXbUmG3IzvCmvyAgHks4XqNVisxlPilQ==
+X-ME-Sender: <xms:FO8kaH1d1DXkBPz2nP_ITqdLrGt6zA1jmXmf0MDbGS4_Ytla2ljGQA>
+    <xme:FO8kaGE4nJRc_EvvkHN5N-6u866EsEbN6B5cszU6NYsAkH95LWoohFtWVepETHSxp
+    Rlpa2wsIzEUbqrp7Q>
+X-ME-Received: <xmr:FO8kaH5_96_W3boz47b61Y4FdJUov9Vh6X54TGgD6diozwNr0qI_88Fb4Zy82Po599F2tgFMaioeluVm_V9JhQInB5ieASQgf319OEM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejkeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehioh
+    httghlrdgtohhmpdhrtghpthhtohepmhgrrhgtnhgrrhgtseigihhplhhinhhkrdgtohhm
+    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepmhgvsehtthgrhihlohhrrhdrtgho
+    mhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopegrvh
+    grrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:FO8kaM3o91lpZNauqeWTZiqOVYuwcOeMZNZtXQOx87CVwmX7PSWoGg>
+    <xmx:FO8kaKER9qitlZQCZJ2Lz6UmkhdvpyuLkOpLsJegEZHd3G_8BJ1Z7w>
+    <xmx:FO8kaN_D7mPyE7ZjGQ9AU5ysT_U_SgVs_GQmWBtKf096eIp1OJ1Frw>
+    <xmx:FO8kaHlR1Xb0CAhjanNhBEDSHuiqP6ag3i9ymYs5qgq2PT3arLkbpA>
+    <xmx:Fe8kaPF_4-q0O5_JKniOS8Z8hstt7q_mn5v6wnRsPNKtEmIkS5__ts2S>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 May 2025 15:29:24 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: Marc Branchaud <marcnarc@xiplink.com>,  git@vger.kernel.org,  Jeff King
+ <peff@peff.net>,  Taylor Blau <me@ttaylorr.com>,  Derrick Stolee
+ <stolee@gmail.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH RFC 0/5] Introduce git-blame-tree(1) command
+In-Reply-To: <874ixnjltf.fsf@iotcl.com> (Toon Claes's message of "Wed, 14 May
+	2025 16:42:20 +0200")
+References: <20250422-toon-new-blame-tree-v1-0-fdb51b8a394a@iotcl.com>
+	<69a10929-0e44-4ce9-af91-048b8404c752@xiplink.com>
+	<87ecx0ijqt.fsf@iotcl.com>
+	<323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com>
+	<xmqqjz6sb15u.fsf@gitster.g>
+	<7a6afafc-6dee-4a09-8779-83748a4d3fc4@xiplink.com>
+	<xmqqldr789gr.fsf@gitster.g>
+	<9109a8ab-d4b2-4ada-8969-bc72edac5ecd@xiplink.com>
+	<874ixnjltf.fsf@iotcl.com>
+Date: Wed, 14 May 2025 12:29:22 -0700
+Message-ID: <xmqqy0uz7zzh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Lucas Eiji Uchiyama <eijiuchiyama@usp.br>
-Date: Wed, 14 May 2025 16:18:04 -0300
-X-Gm-Features: AX0GCFvAXvs-2uIi9dbSEFAHWi6f5S3OBSch7KAe4p5Di5ezkfbm62aJHB4LVkA
-Message-ID: <CACbT7NujbVnnktZVREAZUSSz0_X5ybcDR3S8kwbwzV_invDoQw@mail.gmail.com>
-Subject: /: [FirstTimer] Remove DISABLE_SIGN_COMPARE_WARNINGS from file add-interactive.c
-To: git@vger.kernel.org
-Cc: Lucas Eiji Uchiyama <eijiuchiyama@usp.br>
-Content-Type: multipart/mixed; boundary="00000000000044fbd606351d6910"
+Content-Type: text/plain
 
---00000000000044fbd606351d6910
-Content-Type: multipart/alternative; boundary="00000000000044fbd406351d690e"
+Toon Claes <toon@iotcl.com> writes:
 
---00000000000044fbd406351d690e
-Content-Type: text/plain; charset="UTF-8"
+>>> I thought you switch to blame-at-the-file-level only when you are
+>>> given a directory (or a tree)?  "git blame path/to/file" has ALWAYS
+>>> done "blame these lines that appear in this file", and cannot change.
+>
+> I don't know about that. What if you want to blame multiple files:
+>
+>   $ git blame-tree refs.c refs.h
 
-This is an initial contribution to git, based on the SoC 2025 ideas
-for microprojects. It removes the DISABLE_SIGN_COMPARE_WARNINGS macro and
-solves the warnings generated by running make DEVELOPER=1 -j4
+I do not mind "multiple files mean blame-tree mode" as a yet another
+heuristics to tell which mode we are talking about, as "blame these
+lines" mode would take just one pathname to a blob and never a tree.
 
---00000000000044fbd406351d690e
-Content-Type: text/html; charset="UTF-8"
+But the topic, IIRC, was about how "git blame" (with 'blame-tree'
+feature rolled into it) can tell which mode the request by the user
+is about.  So you should have said "git blame refs.c refs.h" above.
 
-<div dir="ltr">This is an initial contribution to git, based on the SoC 2025 ideas<br>for microprojects. It removes the DISABLE_SIGN_COMPARE_WARNINGS macro and<br>solves the warnings generated by running make DEVELOPER=1 -j4<br><br></div>
+> or (letting your shell do the globbing):
+>
+>   $ $ git blame-tree *.h
 
---00000000000044fbd406351d690e--
---00000000000044fbd606351d6910
-Content-Type: text/x-patch; charset="US-ASCII"; 
-	name="0001-FirstTimer-Remove-DISABLE_SIGN_COMPARE_WARNINGS-from.patch"
-Content-Disposition: attachment; 
-	filename="0001-FirstTimer-Remove-DISABLE_SIGN_COMPARE_WARNINGS-from.patch"
-Content-Transfer-Encoding: base64
-Content-ID: <f_maobnkca0>
-X-Attachment-Id: f_maobnkca0
+This one (with command name corrected) is questionable, as there
+could be a case where there is a single .h file, in which case, the
+command line would become "git blame that-single-header-file.h".
 
-RnJvbSA0YTBkZDhjNzk4NmJlZDFlYmE4MDZjNWRjZTI1NzE1ZmYwZDE3YzEzIE1vbiBTZXAgMTcg
-MDA6MDA6MDAgMjAwMQpGcm9tOiBFaWppIFVjaGl5YW1hIDxlaWppdWNoaXlhbWFAZ2l0aHViLmNv
-bT4KRGF0ZTogV2VkLCAxNCBNYXkgMjAyNSAxNToyNzo1MSAtMDMwMApTdWJqZWN0OiBbUEFUQ0hd
-IC86IFtGaXJzdFRpbWVyXSBSZW1vdmUgRElTQUJMRV9TSUdOX0NPTVBBUkVfV0FSTklOR1MgZnJv
-bQogZmlsZSBhZGQtaW50ZXJhY3RpdmUuYwoKVGhpcyBpcyBhbiBpbml0aWFsIGNvbnRyaWJ1dGlv
-biB0byBnaXQsIGJhc2VkIG9uIHRoZSBTb0MgMjAyNSBpZGVhcwpmb3IgbWljcm9wcm9qZWN0cy4g
-SXQgcmVtb3ZlcyB0aGUgRElTQUJMRV9TSUdOX0NPTVBBUkVfV0FSTklOR1MgbWFjcm8gYW5kCnNv
-bHZlcyB0aGUgd2FybmluZ3MgZ2VuZXJhdGVkIGJ5IHJ1bm5pbmcgbWFrZSBERVZFTE9QRVI9MSAt
-ajQKClNpZ25lZC1vZmYtYnk6IEx1Y2FzIEVpamkgVWNoaXlhbWEgPGVpaml1Y2hpeWFtYUB1c3Au
-YnI+Ci0tLQogYWRkLWludGVyYWN0aXZlLmMgfCAyNCArKysrKysrKysrKy0tLS0tLS0tLS0tLS0K
-IDEgZmlsZSBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCAxMyBkZWxldGlvbnMoLSkKCmRpZmYg
-LS1naXQgYS9hZGQtaW50ZXJhY3RpdmUuYyBiL2FkZC1pbnRlcmFjdGl2ZS5jCmluZGV4IDk3ZmYz
-NWI2ZjEuLjNhMGM0NGM0N2YgMTAwNjQ0Ci0tLSBhL2FkZC1pbnRlcmFjdGl2ZS5jCisrKyBiL2Fk
-ZC1pbnRlcmFjdGl2ZS5jCkBAIC0xLDUgKzEsMyBAQAotI2RlZmluZSBESVNBQkxFX1NJR05fQ09N
-UEFSRV9XQVJOSU5HUwotCiAjaW5jbHVkZSAiZ2l0LWNvbXBhdC11dGlsLmgiCiAjaW5jbHVkZSAi
-YWRkLWludGVyYWN0aXZlLmgiCiAjaW5jbHVkZSAiY29sb3IuaCIKQEAgLTIxMywxMCArMjExLDEw
-IEBAIHN0YXRpYyBzc2l6ZV90IGZpbmRfdW5pcXVlKGNvbnN0IGNoYXIgKnN0cmluZywgc3RydWN0
-IHByZWZpeF9pdGVtX2xpc3QgKmxpc3QpCiAJZWxzZSBpZiAoaW5kZXggPiAwICYmCiAJCSBzdGFy
-dHNfd2l0aChsaXN0LT5zb3J0ZWQuaXRlbXNbaW5kZXggLSAxXS5zdHJpbmcsIHN0cmluZykpCiAJ
-CXJldHVybiAtMTsKLQllbHNlIGlmIChpbmRleCArIDEgPCBsaXN0LT5zb3J0ZWQubnIgJiYKKwll
-bHNlIGlmIChpbmRleCArIDEgPCAobG9uZyBpbnQpKGxpc3QtPnNvcnRlZC5ucikgJiYKIAkJIHN0
-YXJ0c193aXRoKGxpc3QtPnNvcnRlZC5pdGVtc1tpbmRleCArIDFdLnN0cmluZywgc3RyaW5nKSkK
-IAkJcmV0dXJuIC0xOwotCWVsc2UgaWYgKGluZGV4IDwgbGlzdC0+c29ydGVkLm5yICYmCisJZWxz
-ZSBpZiAoaW5kZXggPCAobG9uZyBpbnQpKGxpc3QtPnNvcnRlZC5ucikgJiYKIAkJIHN0YXJ0c193
-aXRoKGxpc3QtPnNvcnRlZC5pdGVtc1tpbmRleF0uc3RyaW5nLCBzdHJpbmcpKQogCQlpdGVtID0g
-bGlzdC0+c29ydGVkLml0ZW1zW2luZGV4XS51dGlsOwogCWVsc2UKQEAgLTI0NCw3ICsyNDIsNyBA
-QCBzdGF0aWMgdm9pZCBsaXN0KHN0cnVjdCBhZGRfaV9zdGF0ZSAqcywgc3RydWN0IHN0cmluZ19s
-aXN0ICpsaXN0LCBpbnQgKnNlbGVjdGVkLAogCQljb2xvcl9mcHJpbnRmX2xuKHN0ZG91dCwgcy0+
-aGVhZGVyX2NvbG9yLAogCQkJCSAiJXMiLCBvcHRzLT5oZWFkZXIpOwogCi0JZm9yIChpID0gMDsg
-aSA8IGxpc3QtPm5yOyBpKyspIHsKKwlmb3IgKGkgPSAwOyBpIDwgKGxvbmcgaW50KShsaXN0LT5u
-cik7IGkrKykgewogCQlvcHRzLT5wcmludF9pdGVtKGksIHNlbGVjdGVkID8gc2VsZWN0ZWRbaV0g
-OiAwLCBsaXN0LT5pdGVtcyArIGksCiAJCQkJIG9wdHMtPnByaW50X2l0ZW1fZGF0YSk7CiAKQEAg
-LTM4NSw3ICszODMsNyBAQCBzdGF0aWMgc3NpemVfdCBsaXN0X2FuZF9jaG9vc2Uoc3RydWN0IGFk
-ZF9pX3N0YXRlICpzLAogCQkJCQl0byA9IGZyb20gKyAxOwogCQkJfQogCi0JCQlpZiAoZnJvbSA8
-IDAgfHwgZnJvbSA+PSBpdGVtcy0+aXRlbXMubnIgfHwKKwkJCWlmIChmcm9tIDwgMCB8fCBmcm9t
-ID49IChsb25nIGludCkoaXRlbXMtPml0ZW1zLm5yKSB8fAogCQkJICAgIChzaW5nbGV0b24gJiYg
-ZnJvbSArIDEgIT0gdG8pKSB7CiAJCQkJY29sb3JfZnByaW50Zl9sbihzdGRlcnIsIHMtPmVycm9y
-X2NvbG9yLAogCQkJCQkJIF8oIkh1aCAoJXMpPyIpLCBwKTsKQEAgLTM5NSw3ICszOTMsNyBAQCBz
-dGF0aWMgc3NpemVfdCBsaXN0X2FuZF9jaG9vc2Uoc3RydWN0IGFkZF9pX3N0YXRlICpzLAogCQkJ
-CWJyZWFrOwogCQkJfQogCi0JCQlpZiAodG8gPiBpdGVtcy0+aXRlbXMubnIpCisJCQlpZiAodG8g
-PiAobG9uZyBpbnQpKGl0ZW1zLT5pdGVtcy5ucikpCiAJCQkJdG8gPSBpdGVtcy0+aXRlbXMubnI7
-CiAKIAkJCWZvciAoOyBmcm9tIDwgdG87IGZyb20rKykKQEAgLTg1OSw3ICs4NTcsNyBAQCBzdGF0
-aWMgaW50IGdldF91bnRyYWNrZWRfZmlsZXMoc3RydWN0IHJlcG9zaXRvcnkgKnIsCiAJYWRkX3Bh
-dHRlcm5fbGlzdCgmZGlyLCBFWENfQ01ETCwgIi0tZXhjbHVkZSBvcHRpb24iKTsKIAlmaWxsX2Rp
-cmVjdG9yeSgmZGlyLCByLT5pbmRleCwgcHMpOwogCi0JZm9yIChpID0gMDsgaSA8IGRpci5ucjsg
-aSsrKSB7CisJZm9yIChpID0gMDsgKGxvbmcgaW50KShpKSA8IGRpci5ucjsgaSsrKSB7CiAJCXN0
-cnVjdCBkaXJfZW50cnkgKmVudCA9IGRpci5lbnRyaWVzW2ldOwogCiAJCWlmIChpbmRleF9uYW1l
-X2lzX290aGVyKHItPmluZGV4LCBlbnQtPm5hbWUsIGVudC0+bGVuKSkgewpAQCAtOTM5LDcgKzkz
-Nyw3IEBAIHN0YXRpYyBpbnQgcnVuX3BhdGNoKHN0cnVjdCBhZGRfaV9zdGF0ZSAqcywgY29uc3Qg
-c3RydWN0IHBhdGhzcGVjICpwcywKIAkJcmV0dXJuIC0xOwogCiAJaWYgKHVubWVyZ2VkX2NvdW50
-IHx8IGJpbmFyeV9jb3VudCkgewotCQlmb3IgKGkgPSBqID0gMDsgaSA8IGZpbGVzLT5pdGVtcy5u
-cjsgaSsrKSB7CisJCWZvciAoaSA9IGogPSAwOyBpIDwgKGxvbmcgaW50KShmaWxlcy0+aXRlbXMu
-bnIpOyBpKyspIHsKIAkJCXN0cnVjdCBmaWxlX2l0ZW0gKml0ZW0gPSBmaWxlcy0+aXRlbXMuaXRl
-bXNbaV0udXRpbDsKIAogCQkJaWYgKGl0ZW0tPmluZGV4LmJpbmFyeSB8fCBpdGVtLT53b3JrdHJl
-ZS5iaW5hcnkpIHsKQEAgLTk3Miw3ICs5NzAsNyBAQCBzdGF0aWMgaW50IHJ1bl9wYXRjaChzdHJ1
-Y3QgYWRkX2lfc3RhdGUgKnMsIGNvbnN0IHN0cnVjdCBwYXRoc3BlYyAqcHMsCiAJCXN0cnVjdCBz
-dHJ2ZWMgYXJncyA9IFNUUlZFQ19JTklUOwogCQlzdHJ1Y3QgcGF0aHNwZWMgcHNfc2VsZWN0ZWQg
-PSB7IDAgfTsKIAotCQlmb3IgKGkgPSAwOyBpIDwgZmlsZXMtPml0ZW1zLm5yOyBpKyspCisJCWZv
-ciAoaSA9IDA7IGkgPCAobG9uZyBpbnQpKGZpbGVzLT5pdGVtcy5ucik7IGkrKykKIAkJCWlmIChm
-aWxlcy0+c2VsZWN0ZWRbaV0pCiAJCQkJc3RydmVjX3B1c2goJmFyZ3MsCiAJCQkJCSAgICBmaWxl
-cy0+aXRlbXMuaXRlbXNbaV0uc3RyaW5nKTsKQEAgLTEwMTgsNyArMTAxNiw3IEBAIHN0YXRpYyBp
-bnQgcnVuX2RpZmYoc3RydWN0IGFkZF9pX3N0YXRlICpzLCBjb25zdCBzdHJ1Y3QgcGF0aHNwZWMg
-KnBzLAogCQkJICAgICBvaWRfdG9faGV4KCFpc19pbml0aWFsID8gJm9pZCA6CiAJCQkJCXMtPnIt
-Pmhhc2hfYWxnby0+ZW1wdHlfdHJlZSksCiAJCQkgICAgICItLSIsIE5VTEwpOwotCQlmb3IgKGkg
-PSAwOyBpIDwgZmlsZXMtPml0ZW1zLm5yOyBpKyspCisJCWZvciAoaSA9IDA7IGkgPCAobG9uZyBp
-bnQpKGZpbGVzLT5pdGVtcy5ucik7IGkrKykKIAkJCWlmIChmaWxlcy0+c2VsZWN0ZWRbaV0pCiAJ
-CQkJc3RydmVjX3B1c2goJmNtZC5hcmdzLAogCQkJCQkgICAgZmlsZXMtPml0ZW1zLml0ZW1zW2ld
-LnN0cmluZyk7CkBAIC0xMTQ2LDcgKzExNDQsNyBAQCBpbnQgcnVuX2FkZF9pKHN0cnVjdCByZXBv
-c2l0b3J5ICpyLCBjb25zdCBzdHJ1Y3QgcGF0aHNwZWMgKnBzKQogCXNzaXplX3QgaTsKIAlpbnQg
-cmVzID0gMDsKIAotCWZvciAoaSA9IDA7IGkgPCBBUlJBWV9TSVpFKGNvbW1hbmRfbGlzdCk7IGkr
-KykgeworCWZvciAoaSA9IDA7IGkgPCAobG9uZyBpbnQpKEFSUkFZX1NJWkUoY29tbWFuZF9saXN0
-KSk7IGkrKykgewogCQlzdHJ1Y3QgY29tbWFuZF9pdGVtICp1dGlsID0geGNhbGxvYygxLCBzaXpl
-b2YoKnV0aWwpKTsKIAkJdXRpbC0+Y29tbWFuZCA9IGNvbW1hbmRfbGlzdFtpXS5jb21tYW5kOwog
-CQlzdHJpbmdfbGlzdF9hcHBlbmQoJmNvbW1hbmRzLml0ZW1zLCBjb21tYW5kX2xpc3RbaV0uc3Ry
-aW5nKQpAQCAtMTE4Myw3ICsxMTgxLDcgQEAgaW50IHJ1bl9hZGRfaShzdHJ1Y3QgcmVwb3NpdG9y
-eSAqciwgY29uc3Qgc3RydWN0IHBhdGhzcGVjICpwcykKIAkJc3RydWN0IGNvbW1hbmRfaXRlbSAq
-dXRpbDsKIAogCQlpID0gbGlzdF9hbmRfY2hvb3NlKCZzLCAmY29tbWFuZHMsICZtYWluX2xvb3Bf
-b3B0cyk7Ci0JCWlmIChpIDwgMCB8fCBpID49IGNvbW1hbmRzLml0ZW1zLm5yKQorCQlpZiAoaSA8
-IDAgfHwgaSA+PSAobG9uZyBpbnQpKGNvbW1hbmRzLml0ZW1zLm5yKSkKIAkJCXV0aWwgPSBOVUxM
-OwogCQllbHNlCiAJCQl1dGlsID0gY29tbWFuZHMuaXRlbXMuaXRlbXNbaV0udXRpbDsKLS0gCjIu
-MzQuMQoK
---00000000000044fbd606351d6910--
+Again, I do not mind "even though I may have only a single blob
+specified on the command line, I want the blame-tree mode" command
+line option.  So to recap
+
+  $ git blame path-to-dir	 ;# blame-tree mode for paths in the directory
+  $ git blame path1 path2        ;# blame-tree mode
+  $ git blame path               ;# traditional blame-these-lines mode
+  $ git blame --tree path        ;# blame-tree mode
+  $ git blame --tree path1 path2 ;# blame-tree mode
+
+would work fine.
+
+Having said that, I personally do not think of what "blame-tree"
+does as "blame" at all, and there should be a better name for that
+operation that does not use "blame" or "annotate".  So a separate
+command that does not even hint it has any relationship with "blame"
+(because it doesn't; in my mental model, it does not do any "blame"
+at all---it just does "git log -1 path" for many paths in parallel)
+would be even more preferrable.
+
+Thanks.
