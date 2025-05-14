@@ -1,125 +1,316 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9F72951A6
-	for <git@vger.kernel.org>; Wed, 14 May 2025 20:05:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5530529616F
+	for <git@vger.kernel.org>; Wed, 14 May 2025 20:33:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747253142; cv=none; b=nj4rAzMjdlX5fsDuQ6bttVHcI/IM6MsMc/PBnr9oYmykFDn+DaYkXmUF/GDnMncSAaDQZJgpH2Y8WDYs1nLgJQeaOiU6eS9AfueOa/zRHPDBznHwBVRHEti1q2rmc4TlJG5kdaxpJk10gu3LTRE2hlBTRizy8HovO+sDtEUzSWQ=
+	t=1747254812; cv=none; b=gmA5gTVX4O2qsTwMeknbedYkubD7RuqHK3M4i2Wrg+N5zYY6KH1PJRY/XB2ksXQPGJPfNwnrpmDvhjjuAl0jNiLH4G60ERfd6HWiJmaPzrsn2im4oUrJKE2iqDpBtj6zwzmmlGSGdP9T4ntNqtfZz6FBOWYRI4QR2XzmNVI0eI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747253142; c=relaxed/simple;
-	bh=ugNb+HEOL/JVaPcw6BOLJNBbGuRnD5ILZDKUVsS4nFY=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ZKhIFTFlqubi2foLQLDnFR/A4XS5ZIwKB8DS1KaTO491W5+Chi7xg0JVTRA40HQQEWZ95lXTIuThqugLn0aGNC5PunAzb89DApOpeovOqmgIPfZIk0B9mkQXgxDQW6EFCAEEbq8GXDuk1Gm+chT0gCQYCdhVC7vpUynEzgTSOj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=R5PYr8iG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HQn0tqvu; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747254812; c=relaxed/simple;
+	bh=KY42Ux5RxNcLwCUwLfVXRDrRrrAQPBdFeCnOGD3eAyk=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZlM0avPr1iQ+9X0xHnRe8k/0U8CtzK3KcJevfaEIdPjWYNhU0WCNzX05OYeDHELpqR+udcHuf7vZC4R2BC1lW7NQXnj4N1kQSouV31DX28uM5g65jZadULrWoU2kC7AB4s7rNhbUOS91u/cfxPAIlREctMbUkZB/zZUpXUy1AEM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aNBSlJHA; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="R5PYr8iG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HQn0tqvu"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.stl.internal (Postfix) with ESMTP id 6BDA911400B7;
-	Wed, 14 May 2025 16:05:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Wed, 14 May 2025 16:05:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747253138; x=1747339538; bh=ugNb+HEOL/
-	JVaPcw6BOLJNBbGuRnD5ILZDKUVsS4nFY=; b=R5PYr8iGTb6JkUqmT1XAJddBuw
-	WRD04XgpBUqRgXk08M617s/o1O1QVuebu6+g2yQb5vz9QpfjvcQvej7ImyEhx88t
-	j9c2wv7cwPKUq9QI9OB31TbhBy60uSAJpKI2tCNevsVyT7a4OAWtVfPHI1Lnp8nL
-	Pae7zFImBzZkbM2F5AuwEk3CjrLA1clKZNHHqTQUuaFsLyX5v27BMr9qu1d7/nik
-	Rglzd5OcvVqdhJbGZPmCnWcZzP7bp6pGP0ZxtKgv2GHSGeKCsk7qoNIiO4aVkb7U
-	x9kVnRkidu08swT/nX5jELPMx/r0KHXDJiGg5Tm+OmKfc5IJGoMBvdRyKamQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747253138; x=1747339538; bh=ugNb+HEOL/JVaPcw6BOLJNBbGuRnD5ILZDK
-	UVsS4nFY=; b=HQn0tqvu09X0h4hqpBc19ybC2jIg4y1cTJxLY9Vqu9Rf2RQrXkn
-	29IOdpYKgvbprGfRfjZKAus54httZdGel2ljdqZdOelB+iJD3eo0mzk4R8cH7oHL
-	+55itbAqdfsdLzjvNllTBco4sCol2vdmrUSrzbMJoIyVlnOUOlGv+qaCOE/nECOD
-	VHzmvOJYD16IYDbggDdQPJUPhhz6OkfNtMkyU4WUeU2/j1QXIsDQUS9eAJSGqBS6
-	Q4cqhh0KILwC1VTaQ7sAGpJNchBfd9T6NgKmJBA9uCxUjFWF6WFWBFTc0mAGfYRB
-	oOo/ENh0apbwFiab6/EZHis0beSkSYZ928g==
-X-ME-Sender: <xms:kfckaGHuNybf955W85cYXqbi0WdYZ9_WUCFqzTnC0IlXLMgpWk1z-Q>
-    <xme:kfckaHXBXa33DmreQE_kkNa1IhxyxxFa9TuFJaS1PmNWrfntg5yF5cNOlw1jSAqQz
-    3HOQBHGLajMCWeuMA>
-X-ME-Received: <xmr:kfckaALV9tEScSeF5yXxGkubUTPWBF4Uq6bERKZsQno5kobErM_Smp4oXQ5390dODA6kOfb8UC333c5DCHoO2ZQ-qCzhtr9xK0IxCq4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejledtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfsehpvg
-    hffhdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgr
-    shhtvgdrnhgvthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohepjhhohh
-    grnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheprghrnhho
-    uhgurdgsvghrvghnughsvghnsehsohhprhgrshhtvghrihgrrdgtohhmpdhrtghpthhtoh
-    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
-    sehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:kfckaAHqM4hgHmP7kLZm5aCFawbTbFFE0qUaKgiU8rTuSlVk6W6doQ>
-    <xmx:kvckaMVMh3VWE-sWQ7u7omC9hXK7kp3g0i76QF6h1H6HCvWvnwdrWw>
-    <xmx:kvckaDNKF7Yhjihd6joYMtovrjuj8KvyEkAc4WzYMuabweV2HvHXYw>
-    <xmx:kvckaD37NYgTm4ERGVyQqUNsdcyjJ4N5RQmRukuZdwnnoOeiz0xeiQ>
-    <xmx:kvckaLrC2DreEgb9uy7Shx9Iqa5WJ9IzK7iE-Z8wia2cPa2cmllFsrGX>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 May 2025 16:05:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: "brian m. carlson" <sandals@crustytoothpaste.net>,  Patrick Steinhardt
- <ps@pks.im>,  Johannes Schindelin <Johannes.Schindelin@gmx.de>,  BERENDSEN
- Arnoud <arnoud.berendsen@soprasteria.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: Cleaning up "contrib/"
-In-Reply-To: <20250514181938.GC2196784@coredump.intra.peff.net> (Jeff King's
-	message of "Wed, 14 May 2025 14:19:38 -0400")
-References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com>
-	<3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
-	<aBhZHA7av8bWH9Ac@pks.im> <xmqq5xieq3fs.fsf@gitster.g>
-	<aBmg1_wlF2fuk96M@pks.im>
-	<20250512135017.GC1191957@coredump.intra.peff.net>
-	<aCKOqs52TDZDvAXJ@tapette.crustytoothpaste.net>
-	<20250514181938.GC2196784@coredump.intra.peff.net>
-Date: Wed, 14 May 2025 13:05:36 -0700
-Message-ID: <xmqqo6vv7yb3.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aNBSlJHA"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-440685d6afcso2585545e9.0
+        for <git@vger.kernel.org>; Wed, 14 May 2025 13:33:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747254808; x=1747859608; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=8WnOrTB/5gMIPAZ95/PQ1wY4v3UeWAE9tvGEQ1Wz4sU=;
+        b=aNBSlJHAMpMuhYVLODXNXZepyUsiCtbXuMLeWg68o2PQUSz5zzqJEroQ1nZsUVgRwn
+         4mrC1QhUkgCWbuQ0ekgvDbLr6H/EzgRx4OlyD7gJfSzH1pBxWwZAsI1wbRaI7gUzhAX5
+         wyL4TVL6ufodCS/7qwsFQLfPnLtMCod8zWW9Lyi0h+3i+Ih9pWtQ2ZSYW4uCbcB4OxZm
+         Yc3ORJRcSWSYIz1JhUEuPBxSsD9uq2/a6OR9NKAAtlh+W1YFRvQK+szrD8oUMTStNuom
+         aBG4NmYbxNr6/4rwrdnu2W9iVC6oR6pzN3ycaUIqroVdezNTJ7BoDJeYYxpw2SdZLCQM
+         istg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747254808; x=1747859608;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=8WnOrTB/5gMIPAZ95/PQ1wY4v3UeWAE9tvGEQ1Wz4sU=;
+        b=nxYhYZ1IIlUS5r7uakRcBBJzc5kO1dSxtlc+BJyYxBTeqo/aXebtVARFBvQpLGjj8p
+         9rhfwQZYvioRFY6qUN68kBBMeYkc4eXqC3bKvc6g0cMf0e7xhvUwHgU3RY7uPRz32YHR
+         qL+OPaB8BlVvqYaCmVR5vs9karGdoEImE+G/AYnSPO+EgZz1fmXo+IcLJ92Nsbo3ee/y
+         ZUKK57lZNnyPtWoexTqgAS5d6LymOqCkK/nHMwfOWrrWgYL7sxVFAZurZRmGExYBb+JM
+         Y1ZE76UjwKnj47BZIhSHsrzKGqEpZ0rHMdhMTA7T8U5xFl+cgN6P0gnFpHouOdQdGhvI
+         ZrfA==
+X-Gm-Message-State: AOJu0Yys7w39zCXpXsId3WdmF5Y32Pw/UhATB5M39Sy+4SroXVjpvyoo
+	Pru2WTHhpSMsqv+xGI/2LjNKQfHxaAJfjiryKrFevbBQ/BQxpq/rSVUVwQ==
+X-Gm-Gg: ASbGncu+g+HF4+ZYBEBbG8vMJMB0tR8/OHA4enMW35jc/Z32tCRM97Uk/qoC8jSazx6
+	CFIVi3+odcF6h5u6F/KCdTtq8muwfurjeYrZTf88ELt0gAQr+1MXJ/JWZNNA8O8/UG6qrMIFmzC
+	/r/7E3diL1ImJOGlC26HXQadYj6Gv6HZe408Cq2xEjjHcZQQLjqtRUAHKjfdOOVBDyOE3QlaZgI
+	+EPtqERdMGhyO+p7kBlsSvrI45gNW4RdkPEXKz3ywkT1b1YFRaQTCA3bXddT3ebjuvchMtuZiIK
+	fuJtpB/4D7OSkBin/vKHc2/sHQ725vhe1UDXgULo5Aw6C3uoLIf+
+X-Google-Smtp-Source: AGHT+IFBIDUG/znNDtKoYOSijL9Nd0cL3H8TYg5KodhpfZ0H2Gf06LshKriN2j6nbvvfOIgLbaH+RA==
+X-Received: by 2002:a05:600c:154a:b0:441:d437:e3b8 with SMTP id 5b1f17b1804b1-442f2161baamr39340845e9.23.1747254807365;
+        Wed, 14 May 2025 13:33:27 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f8fc4557sm1559675e9.6.2025.05.14.13.33.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 May 2025 13:33:26 -0700 (PDT)
+Message-Id: <pull.1921.git.1747254806067.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 14 May 2025 20:33:25 +0000
+Subject: [PATCH] replay: replace the_repository with repo parameter passed to
+ cmd_replay()
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-Jeff King <peff@peff.net> writes:
+From: Elijah Newren <newren@gmail.com>
 
-> Right, I know people use them. What I meant was that if we wanted to
-> spin them to out-of-tree projects, we'd need somebody to volunteer to be
-> the maintainer of those projects. If they stay in-tree we can be a bit
-> looser (your "I don't want to be _the_ maintainer, but I can
-> contribute").
->
-> It does put more load on Junio, though. E.g., if there is a security
-> problem the project has to deal with embargoed release engineering,
-> whereas a separate project would do its own releases.
+Replace the_repository everywhere with repo, feed repo from cmd_replay()
+to all the other functions in the file that need it, and remove the
+UNUSED annotation on repo.
 
-Well, but it certainly is not more than what I currently need to do;
-it does not make any difference whether it is housed in the contrib/
-directory or in the tools/ directory.
+Signed-off-by: Elijah Newren <newren@gmail.com>
+---
+    replay: replace the_repository with repo parameter passed to cmd_replay
+    
+    The point of this patch is not to remove USE_THE_REPOSITORY_VARIABLE; I
+    can't yet because DEFAULT_ABBREV and get_commit_output_encoding() both
+    require it and have no current alternatives. However, I still think it's
+    worthwhile to stop using the_repository everywhere while ignoring the
+    repo parameter explicitly passed in. That looks kinda ugly, and since
+    I'm poking around in replay right now, I don't want to push
+    the_repository in even more places when we have the appropriate value
+    available -- especially since that might make my local work conflict
+    should someone else come along and try to clean this up.
+    
+    --color-words is handy when viewing this patch; it may make it easier to
+    see the changes.
 
-> Last time wincred had a security hole (in 2020), the phrase "unsafe and
-> unmaintained" was thrown about on the security list, but we ultimately
-> fixed at least the immediate issue. But I find its general matching
-> strategy to be not very confidence-inspiring.
->
-> Dscho (or anybody else familiar with Windows) may want to comment
-> further.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1921%2Fnewren%2Freplay-repo-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1921/newren/replay-repo-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1921
 
-Thanks for a redirect.
+ builtin/replay.c | 65 ++++++++++++++++++++++++++----------------------
+ 1 file changed, 35 insertions(+), 30 deletions(-)
+
+diff --git a/builtin/replay.c b/builtin/replay.c
+index 032c172b65e..225cef08807 100644
+--- a/builtin/replay.c
++++ b/builtin/replay.c
+@@ -20,21 +20,22 @@
+ #include <oidset.h>
+ #include <tree.h>
+ 
+-static const char *short_commit_name(struct commit *commit)
++static const char *short_commit_name(struct repository *repo,
++				     struct commit *commit)
+ {
+-	return repo_find_unique_abbrev(the_repository, &commit->object.oid,
++	return repo_find_unique_abbrev(repo, &commit->object.oid,
+ 				       DEFAULT_ABBREV);
+ }
+ 
+-static struct commit *peel_committish(const char *name)
++static struct commit *peel_committish(struct repository *repo, const char *name)
+ {
+ 	struct object *obj;
+ 	struct object_id oid;
+ 
+-	if (repo_get_oid(the_repository, name, &oid))
++	if (repo_get_oid(repo, name, &oid))
+ 		return NULL;
+-	obj = parse_object(the_repository, &oid);
+-	return (struct commit *)repo_peel_to_type(the_repository, name, 0, obj,
++	obj = parse_object(repo, &oid);
++	return (struct commit *)repo_peel_to_type(repo, name, 0, obj,
+ 						  OBJ_COMMIT);
+ }
+ 
+@@ -50,7 +51,8 @@ static char *get_author(const char *message)
+ 	return NULL;
+ }
+ 
+-static struct commit *create_commit(struct tree *tree,
++static struct commit *create_commit(struct repository *repo,
++				    struct tree *tree,
+ 				    struct commit *based_on,
+ 				    struct commit *parent)
+ {
+@@ -62,7 +64,7 @@ static struct commit *create_commit(struct tree *tree,
+ 	struct commit_extra_header *extra = NULL;
+ 	struct strbuf msg = STRBUF_INIT;
+ 	const char *out_enc = get_commit_output_encoding();
+-	const char *message = repo_logmsg_reencode(the_repository, based_on,
++	const char *message = repo_logmsg_reencode(repo, based_on,
+ 						   NULL, out_enc);
+ 	const char *orig_message = NULL;
+ 	const char *exclude_gpgsig[] = { "gpgsig", NULL };
+@@ -79,7 +81,7 @@ static struct commit *create_commit(struct tree *tree,
+ 		goto out;
+ 	}
+ 
+-	obj = parse_object(the_repository, &ret);
++	obj = parse_object(repo, &ret);
+ 
+ out:
+ 	free_commit_extra_headers(extra);
+@@ -97,7 +99,8 @@ struct ref_info {
+ 	int negative_refexprs;
+ };
+ 
+-static void get_ref_information(struct rev_cmdline_info *cmd_info,
++static void get_ref_information(struct repository *repo,
++				struct rev_cmdline_info *cmd_info,
+ 				struct ref_info *ref_info)
+ {
+ 	int i;
+@@ -132,14 +135,14 @@ static void get_ref_information(struct rev_cmdline_info *cmd_info,
+ 
+ 		if (*refexpr == '^')
+ 			refexpr++;
+-		if (repo_dwim_ref(the_repository, refexpr, strlen(refexpr), &oid, &fullname, 0) != 1)
++		if (repo_dwim_ref(repo, refexpr, strlen(refexpr), &oid, &fullname, 0) != 1)
+ 			can_uniquely_dwim = 0;
+ 
+ 		if (e->flags & BOTTOM) {
+ 			if (can_uniquely_dwim)
+ 				strset_add(&ref_info->negative_refs, fullname);
+ 			if (!ref_info->negative_refexprs)
+-				ref_info->onto = lookup_commit_reference_gently(the_repository,
++				ref_info->onto = lookup_commit_reference_gently(repo,
+ 										&e->item->oid, 1);
+ 			ref_info->negative_refexprs++;
+ 		} else {
+@@ -152,7 +155,8 @@ static void get_ref_information(struct rev_cmdline_info *cmd_info,
+ 	}
+ }
+ 
+-static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
++static void determine_replay_mode(struct repository *repo,
++				  struct rev_cmdline_info *cmd_info,
+ 				  const char *onto_name,
+ 				  char **advance_name,
+ 				  struct commit **onto,
+@@ -160,14 +164,14 @@ static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+ {
+ 	struct ref_info rinfo;
+ 
+-	get_ref_information(cmd_info, &rinfo);
++	get_ref_information(repo, cmd_info, &rinfo);
+ 	if (!rinfo.positive_refexprs)
+ 		die(_("need some commits to replay"));
+ 
+ 	die_for_incompatible_opt2(!!onto_name, "--onto",
+ 				  !!*advance_name, "--advance");
+ 	if (onto_name) {
+-		*onto = peel_committish(onto_name);
++		*onto = peel_committish(repo, onto_name);
+ 		if (rinfo.positive_refexprs <
+ 		    strset_get_size(&rinfo.positive_refs))
+ 			die(_("all positive revisions given must be references"));
+@@ -175,8 +179,8 @@ static void determine_replay_mode(struct rev_cmdline_info *cmd_info,
+ 		struct object_id oid;
+ 		char *fullname = NULL;
+ 
+-		*onto = peel_committish(*advance_name);
+-		if (repo_dwim_ref(the_repository, *advance_name, strlen(*advance_name),
++		*onto = peel_committish(repo, *advance_name);
++		if (repo_dwim_ref(repo, *advance_name, strlen(*advance_name),
+ 			     &oid, &fullname, 0) == 1) {
+ 			free(*advance_name);
+ 			*advance_name = fullname;
+@@ -245,7 +249,8 @@ static struct commit *mapped_commit(kh_oid_map_t *replayed_commits,
+ 	return kh_value(replayed_commits, pos);
+ }
+ 
+-static struct commit *pick_regular_commit(struct commit *pickme,
++static struct commit *pick_regular_commit(struct repository *repo,
++					  struct commit *pickme,
+ 					  kh_oid_map_t *replayed_commits,
+ 					  struct commit *onto,
+ 					  struct merge_options *merge_opt,
+@@ -257,12 +262,12 @@ static struct commit *pick_regular_commit(struct commit *pickme,
+ 	base = pickme->parents->item;
+ 	replayed_base = mapped_commit(replayed_commits, base, onto);
+ 
+-	result->tree = repo_get_commit_tree(the_repository, replayed_base);
+-	pickme_tree = repo_get_commit_tree(the_repository, pickme);
+-	base_tree = repo_get_commit_tree(the_repository, base);
++	result->tree = repo_get_commit_tree(repo, replayed_base);
++	pickme_tree = repo_get_commit_tree(repo, pickme);
++	base_tree = repo_get_commit_tree(repo, base);
+ 
+-	merge_opt->branch1 = short_commit_name(replayed_base);
+-	merge_opt->branch2 = short_commit_name(pickme);
++	merge_opt->branch1 = short_commit_name(repo, replayed_base);
++	merge_opt->branch2 = short_commit_name(repo, pickme);
+ 	merge_opt->ancestor = xstrfmt("parent of %s", merge_opt->branch2);
+ 
+ 	merge_incore_nonrecursive(merge_opt,
+@@ -275,13 +280,13 @@ static struct commit *pick_regular_commit(struct commit *pickme,
+ 	merge_opt->ancestor = NULL;
+ 	if (!result->clean)
+ 		return NULL;
+-	return create_commit(result->tree, pickme, replayed_base);
++	return create_commit(repo, result->tree, pickme, replayed_base);
+ }
+ 
+ int cmd_replay(int argc,
+ 	       const char **argv,
+ 	       const char *prefix,
+-	       struct repository *repo UNUSED)
++	       struct repository *repo)
+ {
+ 	const char *advance_name_opt = NULL;
+ 	char *advance_name = NULL;
+@@ -329,7 +334,7 @@ int cmd_replay(int argc,
+ 		    "--advance", "--contained");
+ 	advance_name = xstrdup_or_null(advance_name_opt);
+ 
+-	repo_init_revisions(the_repository, &revs, prefix);
++	repo_init_revisions(repo, &revs, prefix);
+ 
+ 	/*
+ 	 * Set desired values for rev walking options here. If they
+@@ -380,7 +385,7 @@ int cmd_replay(int argc,
+ 		revs.simplify_history = 0;
+ 	}
+ 
+-	determine_replay_mode(&revs.cmdline, onto_name, &advance_name,
++	determine_replay_mode(repo, &revs.cmdline, onto_name, &advance_name,
+ 			      &onto, &update_refs);
+ 
+ 	if (!onto) /* FIXME: Should handle replaying down to root commit */
+@@ -391,7 +396,7 @@ int cmd_replay(int argc,
+ 		goto cleanup;
+ 	}
+ 
+-	init_basic_merge_options(&merge_opt, the_repository);
++	init_basic_merge_options(&merge_opt, repo);
+ 	memset(&result, 0, sizeof(result));
+ 	merge_opt.show_rename_progress = 0;
+ 	last_commit = onto;
+@@ -406,8 +411,8 @@ int cmd_replay(int argc,
+ 		if (commit->parents->next)
+ 			die(_("replaying merge commits is not supported yet!"));
+ 
+-		last_commit = pick_regular_commit(commit, replayed_commits, onto,
+-						  &merge_opt, &result);
++		last_commit = pick_regular_commit(repo, commit, replayed_commits,
++						  onto, &merge_opt, &result);
+ 		if (!last_commit)
+ 			break;
+ 
+
+base-commit: 1a8a4971cc6c179c4dd711f4a7f5d7178f4b3ab7
+-- 
+gitgitgadget
