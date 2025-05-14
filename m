@@ -1,65 +1,66 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCDC1DB13E
-	for <git@vger.kernel.org>; Wed, 14 May 2025 15:13:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A6252253FB
+	for <git@vger.kernel.org>; Wed, 14 May 2025 15:16:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747235599; cv=none; b=SXzA8IunSpdFqPwENwcqGLNdmoxdCNR/NvL+rOSVAWQmLljOlQXKGRrBFgn6JSDr2LDxhBQqKU0Yfo7y4dDUHuG6IDEawRwNuRUrPDP50fhlavJ0hSO1SqO8m1y95k05bPj/na8g5hssseJ4bptVwYJTgAmsIfzep+bamQa5FyE=
+	t=1747235799; cv=none; b=iZqfFhcGZBuSMj9RiorZy7dzeuiMI2YzdAgUwieONVPtuJeIow90wJdCBeJbVRC9/oTA/Xig8jdHF32GC/E0hKbRQeLp57lR33+LtOX9LcdZxj/ILH/C/Dh2KeYEXNA/dv2fYwNg7R1gI9s+t5EWzLPBaArzfsnbNVByBNqqUsA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747235599; c=relaxed/simple;
-	bh=P5A/f1PCLIJBhyqrNm9Aowp/WAqlFa+DIextYaig53U=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=am+x8pMjGWELRfzhR5o2rCotXcvN2PpSsIy3mtQzbRlr1IPWk4paAjMXUS/XIBv4WVEVkz9wDKmvubpN24kBivhq8AVu/TZb6fjcrECwMjU4uArkQNoZ7UzlTzhOnTArz19lFOJdtrFO2DPCZXBk02DJcT160ZxFeQuAiEh38ls=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fSY/dvEy; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1747235799; c=relaxed/simple;
+	bh=hamSteYIl2vY4vosEa0VmLvq24MvVeRVn6dNzUay0lg=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=sYcJUZBwwfeV8chGL1aP0GQyzq4NqcXi+TtEL7Ej5PxQlJADyjDCbHbZdWLaq0j08fZXTaGz0+k5GCEbX4E4g+Kico7ucp38YkskTf9OgY8xIeooPO4BY5I80rAQ+vmVbgIYKX3qK/bwqOjLqGWNrR0vi5ZEsXhEgV5o91k/4mg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=msMw/u6l; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fSY/dvEy"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-442ccf0e1b3so79771125e9.3
-        for <git@vger.kernel.org>; Wed, 14 May 2025 08:13:17 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="msMw/u6l"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a0b933f214so3423684f8f.0
+        for <git@vger.kernel.org>; Wed, 14 May 2025 08:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747235596; x=1747840396; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=xqy1jGtxI/31Mwn4FIyeFJ+dAtq/Cr0n2uvmZAgkYQ8=;
-        b=fSY/dvEyGcjLyMKPc3LU6HD/O8cJbYLplqLyAQ3v5pcuZa5tsfc+TmWrasXxEt2rd7
-         uuIOJ6o9UxnMzwewxiC5w5YwFjNVDOntW5unN7DeT/uYHX473nrwSmURSq6u/yNBuPUz
-         yAJt7r1r+AQgFnzUC04VllY0SNt5uPC+CuePVE1Ey78POrb97osGyXZb1oqlmkSEpZLm
-         n5ZmJf1IRtqA+g1lw+PvwfhPhHyLIHhJxfOwR/DRLfBJJK66Fdx7b/MTisXSDz+eP0WO
-         ZBWWmLOTMsk+j/n+zJjE9RuLgdpU3EGpG1CVuqZn816bqjwKvSjJ3ERPVkUXzcPi9ZaQ
-         ILPQ==
+        d=gmail.com; s=20230601; t=1747235796; x=1747840596; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=Pr9mt8/kTPmQWq9WlUyIihKI0omBcBgSJjZSrAtsBbw=;
+        b=msMw/u6lC+1hM6iP4pBtA8txIL35wqNUqTmay8funZdhFryV206oCjlfoQoq0ozPCo
+         iAULOBBep9/dcCVqYukE7z2Xv0qxRSV9csa8DF3cRI2zLuChZFAK6uR/uGlT/nzQSjZR
+         Zoqc9lBNF2HPm/8KrGRXuRyGYCkyHNoutt8WyY88Kf8jrEnf5I2g34er3H8zr1rJuzjL
+         Tktw1dontevQ296Wwcp0+Nr/agl6UNn7JqexQ0aIIOkTQ8LiGZ12m3+uBvP3jba/sJm7
+         L0cWxuPfLYtBkHqGpa32a8vWct+0A2BMWr2Lov0COMuFpQIzN98aTc+BfAOBHZnz7pOc
+         +59Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747235596; x=1747840396;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=xqy1jGtxI/31Mwn4FIyeFJ+dAtq/Cr0n2uvmZAgkYQ8=;
-        b=EXB64yXY6lkJyWkOHHaUn128SuC5fpIGtTgwkqv8fkoVuqBH7wF0s1Q4m0+r8vAUJe
-         4mMgxozfkhbHTX3Tg84EWKjGPkC1QdFSbsRS8DjpwUDHx5q2zC/4mMhjwBWdQ90jD1FI
-         eE4+H52B0+KMqQELmcVjYrO4lrjW8Q5RxZW6Rtp+a64ReC4sxnaNc0wy6SFHXa3iTNn5
-         nBeg42bqDl///Hl/e3GOUX7qS8eTXBAMMBct0wEz2K2loqCOPGw5M8rZIhZ3AVVJCBNP
-         d2xEDm8AzkmC9ZrIOdEIG57ijWud2m3XP/0qkHmwvDNdyMl+r23M/i5EqhPqMxaTJqIh
-         xiMA==
-X-Forwarded-Encrypted: i=1; AJvYcCWAaYrzTxKr6IsZALvAWhe7gx9lBXVW4drl50pXDbIt3Yy9nTY9ZgJ5aHeSFH6fFuChGeA=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyMHG9C6d9TbL0SJUZ2+IZC4YT4lMqnUbdrcNLYfbYVW5WUf0ZV
-	KaZtg58lIqcN4x/9tHNUciV3bFuiWOo0KKVYmDGkz8NzUbbymbDC
-X-Gm-Gg: ASbGncsfkDBUAsfUCC/OhCwF9A8Izf86vdSHHX2zaDtWAxA0NC/uhTK+xeT9Ml4G8xE
-	JpujU6lZbuO7BFYZ3GW/N+BnevQ6EQt2XdWyN3gKGJP3EBuvVe+doC/QjG6AxIr3lN6sBv1y3mO
-	lRS/qeWKXhcmSMRUok/xxJD0is4HHenl1w2CItDulO/GYAUAvNPVwFpS2M/fY7FkXyBy2lyCFZz
-	cUhtZ+AivpMwPtkXMI3zPkklwdehZTF19Gnd2mRqfWSRYWER9N6lPQ7loqD35DDTPcmXicdNXor
-	GH9HZEipnRgOqcGE4Z8ndCJxbk0gGvvbeILkat7/Wbqe6hQC71GTRa5E9NABdDeBlmTl9Onzsyr
-	JM2aeuOmlhnmdbly0DMq4DicFAK6vs0SHaNv1Ow==
-X-Google-Smtp-Source: AGHT+IEHiIJ/w5lV1KDRLXLrFQ5J0ysb4/5I/06x8O7XMlEjwpV+KVStFpTyODPhNOlWB5BJxH4GkQ==
-X-Received: by 2002:a05:600c:c059:10b0:43e:ee80:c233 with SMTP id 5b1f17b1804b1-442f21798c7mr19958465e9.32.1747235595637;
-        Wed, 14 May 2025 08:13:15 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747235796; x=1747840596;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=Pr9mt8/kTPmQWq9WlUyIihKI0omBcBgSJjZSrAtsBbw=;
+        b=SP8sBNJWkjqC0eikG1SYBmwJuyPqzPoBXVkGyZOuuHkZbg+tCvZ8DG2sEAvHx7o/GI
+         Bz+spsUF+q9L6pwyYIx1sRfbdYxhJpJGWF7qChY4Ov2ak08dIsXv2WllMRrab6/dadLM
+         R6kpQO9YJAJA7VKhG+F7rdM8yr33pvKg618RgcSlCQ1a521HvY5hdoq5vtblcv87vsnr
+         /e0A+rU99xMyWKuCb5FqFRqJg8uMGtgucjnjJP4yHb2rc+eVpRQqaj4GqRuEunCjSZya
+         tCiHliK8c4IOJ04NuxQv3i0zPi7H18G8H6ncBIgPXyobWzQgBIFK4eaKy1/nepM9qmHg
+         4tPw==
+X-Forwarded-Encrypted: i=1; AJvYcCVGf8ypXUAmFh3Zr21Mr7PFp/a4aMS4KDx8786bnKlDTJTkVOo6YrqNFOXHwPuMH2rDx/g=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwgW4RsGPBP/hPjhkEPoSfT5g6m9oeqbahajHebRCG4l1fJuauA
+	UMSW+dqc6i6ytxIFfSTAU7+zcZ8lYtOGJsao94U1eywzrp1w17dh
+X-Gm-Gg: ASbGnct4ktS4DKROaqDVJ93pkVyZu2qbFQjs+m8JSDkHgkwlrsyyx+v0ws4l/gFtIiy
+	ock6CcmTjB0O0OuT7G35Vx+N17LCijJZDwjFDkqbiD8IRIMuQHKdccapvKXn8GkA/VIBGIEEzpF
+	zIIIfMoNyqxnCVXiAVZzhyyZMisapM0s+NnF1kY6CJpCdx18Z9kxdLQJ5QYh60y+Aw4kWu5zogr
+	4FtEErMC+tHSZLgVF+qtvAtii64lEAMsHjo62chw7uZp2eWbQ7DTL4DyUb0Azzb5MejbKZ6amHm
+	AXs12qaZ4emt9zkr7pRcPvuN3yA2KB3Lw5JvObhss19CcNNA3DqN6/s/hlPL/9yJEyIlCBSHtum
+	orlOdOP2FOxszLqmHhE1Dek0zMXU=
+X-Google-Smtp-Source: AGHT+IFecdQP9/PXeVhxtf59prGb6AMEhgUas95jT7i+X+T+aXuzYUW7rM78p0PFA1/BYih44Mm0vQ==
+X-Received: by 2002:a05:6000:4202:b0:3a0:b9a9:2fd9 with SMTP id ffacd0b85a97d-3a34994f2f7mr2962854f8f.51.1747235795598;
+        Wed, 14 May 2025 08:16:35 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f33690a1sm35220805e9.3.2025.05.14.08.13.14
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4d0dbsm19718184f8f.88.2025.05.14.08.16.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 May 2025 08:13:15 -0700 (PDT)
-Message-ID: <d878fe4d-163d-415d-846f-f5541cacb22a@gmail.com>
-Date: Wed, 14 May 2025 16:13:11 +0100
+        Wed, 14 May 2025 08:16:35 -0700 (PDT)
+Message-ID: <c1f7a9d6-4a44-4c00-bf26-6852819361e9@gmail.com>
+Date: Wed, 14 May 2025 16:16:31 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,51 +68,77 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v2 3/4] add-patch: respect diff.context configuration
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
- Christian Couder <christian.couder@gmail.com>,
- Leon Michalak <leonmichalak6@gmail.com>
-References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
- <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
- <f16d3de86110ee61599459a25764248b52883b52.1746884789.git.gitgitgadget@gmail.com>
- <f00cdfa1-343a-4fa0-bce5-e06d1ed62c22@gmail.com> <xmqqzffgh5rf.fsf@gitster.g>
+Subject: Re: [PATCH 0/3] Integrate the sparse index with 'git apply' and 'git
+ add -p/-i'
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, newren@gmail.com, Derrick Stolee <stolee@gmail.com>
+References: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
 Content-Language: en-US
-In-Reply-To: <xmqqzffgh5rf.fsf@gitster.g>
+In-Reply-To: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 13/05/2025 16:47, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->> On 10/05/2025 14:46, Leon Michalak via GitGitGadget wrote:
->>
->>> @@ -78,6 +82,19 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
->>>    	repo_config_get_string(r, "diff.algorithm",
->>>    			       &s->interactive_diff_algorithm);
->>>    +	if (!repo_config_get_int(r, "diff.context", &context)) {
->>> +		if (context < 0)
->>> +			die(_("%s cannot be negative"), "diff.context");
->>> +		else
->>> +			s->context = context;
->>> +	};
->>> +	if (!repo_config_get_int(r, "diff.interHunkContext", &interhunkcontext)) {
->>> +		if (interhunkcontext < 0)
->>> +			die(_("%s cannot be negative"), "diff.interHunkContext");
->>> +		else
->>> +			s->interhunkcontext = interhunkcontext;
->>> +	};
->>
->> Thanks for changing this. This iteration of the code changes looks good
+Hi Stolee
+
+On 07/05/2025 01:55, Derrick Stolee via GitGitGadget wrote:
+> The sparse index helps make some Git commands faster when using
+> sparse-checkout in cone mode. However, not all code paths are aware that the
+> index can have non-blob entries, so we are careful about rolling this
+> feature out gradually. The cost of this rollout is that some commands are
+> slower with the sparse index as they need to expand a sparse index into a
+> full index in memory, which requires parsing tree objects to construct the
+> full path list.
 > 
-> Lose the ';' (semicolon) after closing {brace}s.
-> This is C; you do not need an empty statement after a {block}.
+> This patch series focuses on the 'git add -p' command, which is slow with
+> the sparse index for a couple of reasons, handled in the first two patches:
+> 
+>   1. 'git add -p' uses 'git apply' as a subcommand and 'git apply' needs
+>      integration with the sparse index. Luckily, we just need to add the repo
+>      setting and appropriate tests to confirm it behaves as expected.
+>   2. The interactive modes of 'git add' ('-p' and '-i') leave cmd_add()
+>      before the code that sets the repo setting to allow for a sparse index.
+>      Patch 2 fixes this and adds appropriate tests to confirm the behavior in
+>      a sparse-checkout.
 
-Oh well spotted, I'd missed that
+This made me wonder about the other commands that take "--patch" like 
+checkout and reset. Do you know how well they handle the sparse index? 
+They'll all benefit from the changes to git apply in this series but I 
+was wondering if they need any further changes.
 
-Thanks
+Best Wishes
 
 Phillip
+
+> A third patch adds a performance test to p2000-sparse-operations.sh to
+> confirm that we are getting the performance improvement we expect:
+> 
+>                          BASE    PATCH 1        PATCH 2
+> ---------------------------------------------------------
+> 2000.118: (full-v3)     0.80   0.84 +5.0%     0.84  +5.0%
+> 2000.119: (full-v4)     0.76   0.79 +3.9%     0.80  +5.3%
+> 2000.120: (sparse-v3)   2.09   1.39 -33.5%    0.07 -96.7%
+> 2000.121: (sparse-v4)   2.09   1.39 -33.5%    0.07 -96.7%
+> 
+> 
+> Thanks, -Stolee
+> 
+> Derrick Stolee (3):
+>    apply: integrate with the sparse index
+>    git add: make -p/-i aware of sparse index
+>    p2000: add performance test for 'git add -p'
+> 
+>   builtin/add.c                            |   7 +-
+>   builtin/apply.c                          |   7 +-
+>   t/perf/p2000-sparse-operations.sh        |   1 +
+>   t/t1092-sparse-checkout-compatibility.sh | 102 +++++++++++++++++++++++
+>   4 files changed, 113 insertions(+), 4 deletions(-)
+> 
+> 
+> base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1914%2Fderrickstolee%2Fapply-sparse-index-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1914/derrickstolee/apply-sparse-index-v1
+> Pull-Request: https://github.com/gitgitgadget/git/pull/1914
+
