@@ -1,102 +1,163 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f170.google.com (mail-yb1-f170.google.com [209.85.219.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 352AD274FD9
-	for <git@vger.kernel.org>; Wed, 14 May 2025 13:38:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9481627F75F
+	for <git@vger.kernel.org>; Wed, 14 May 2025 13:52:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747229940; cv=none; b=P226A502V/2s6icM0jjMNoW1Ex+iK/CqI+zYjFTaBUSJl4ztLgGYsydqvi2QscQCiw5w45I2WsQd3ubm6JLWcwIgnfTCOYTP/exB5yM7berLD8zNERxqGDV68kk/9GY2AchsxtKKGNy6qLhURv3C5WVEepQi7gRgLdLL5TDwP+c=
+	t=1747230768; cv=none; b=bQw0plSosnPOuuYnHP2qcRyIABuTDwPmwGWa7SPltKbzp4usgtbYf5RoqUQ8HKr7j9IkIqqWDm6MSPVY3qOdNnIetWb2XaVnEb+Ro0ssmYr2QZYFrMdQ0y/JHl6DZYGoRsU3RChUri/A48IynpoM+YE72w+8qWcexW6HyLDYqFU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747229940; c=relaxed/simple;
-	bh=wRt+0A9Uh531hkt3K5X3Zdh6/j+BmAwDJGoA3WVTgL4=;
-	h=From:To:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=rluqMZnKpFM817OT92Hu9Nq8WPQAYXHlMlbYYBWgzElpcaVpiA0di4Emy8kA8LEBaMlRXJDjZmlx7mfVSJPhODFS8KokP1IzPSeq7WjYyFWr3uuYcEl+pf92hcfH1QUOoW1uvX7CKoyZ3NmwZJbBQNXN4yU9exghkxaBRQCi0Cw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TqgnhHSW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UJMPo0D+; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747230768; c=relaxed/simple;
+	bh=wBgvLTmXEa+wzpzYfKPT/BRblgAb0TSGIbZy85CDnu8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HaQfupCAmZCdSGb18vUkOnPATuq8hQH80x2JrZb+/4sDqqSZL6vD8Ym2rP2srpYm3EY96A8WvxiQE85VrSPkgvVUigdizSUlgqJbtB1gQidqaQKy2F1OcgbD2T9SCZ4O2DrkiQH1jivq0JTHyVcdlkZ5Ay0CkYBEO0b1bLBqhV0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UwEpMqs7; arc=none smtp.client-ip=209.85.219.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TqgnhHSW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UJMPo0D+"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 47DF913800D3;
-	Wed, 14 May 2025 09:38:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 14 May 2025 09:38:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747229938; x=1747316338; bh=JoQQojGuAx
-	poBSk6vE3ccACs9ztjx0MkfGcydYbprZI=; b=TqgnhHSWFuu6FMZ+ZP7SOgSJuA
-	buiIkNjzPcxkvYPh0ZkYoYbn+d7a04/VAfw/XdhMYqDqgbE/6pqqfnD8ILAiW3QV
-	zpViBdeZNWAqHXy/8oF2p93hO6krWwSYgPD1oLxBFiRYnWHIHYHj/6/v0t5gcRZu
-	6lbHZrK8x6tD8xx6E5H4S1BVs/Zih3Mp1/ZBnaxzJszEpuBxQkXdvC+ob/3hTsyT
-	9DJxC/QU5d7nD4KN0gaH4U2LMmWRa45hj0UyimuEiPuFRyxfbr9pylqg7q/PGc8x
-	xgb8xlWhqNFDgVxwjIXn6DWzibr6WSTACX1/aSEX7ppMmbwcJECExnlm8R1w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747229938; x=1747316338; bh=JoQQojGuAxpoBSk6vE3ccACs9ztjx0MkfGc
-	ydYbprZI=; b=UJMPo0D+v2m7N9X2GtTCn2vbXC+ChQOSct+iYkEOkoVYPnKr8wg
-	K1plqjLRb0v81KdcSpdc0YiMeIzInDMv7i7xiRDMYyqh+pLQNa0j0pzO8ZKwxSQl
-	KOaV72BHO2j8NE04V2qNMn/b7LIZ1MUPHI/KsVyXdqmm37VUUmuhlG8b82EJjoEu
-	vHKwYCu22H7tWuk0m6qvywxi9lvnTaqhMDCeA0w0MXJhwkIFEH8VcDnTJO9EKzbW
-	9xQX/dIm3KB4c259iPW3VfGcZmz5pD5CbQFk9yvp3eZZsMe9Th/rh7vWIuWDtMTx
-	1RaBQXnNXki2BCkA35YrzWsK/TBUrtqHmQA==
-X-ME-Sender: <xms:8pwkaKVvyF47cDarVs2sMlnmHrxUbAym5koR0N47UvrcL-CXlTTh4w>
-    <xme:8pwkaGnjt7mUoeT8bt4KjTn0BQORsDUNRPPq6g5oRZmk86CkKicgMepGA3ubvvMcl
-    Hup9ehAtIQd6NwJQA>
-X-ME-Received: <xmr:8pwkaOaByPMB6Z7k0-s1sSBprHcsPrPuSHqDc_8oEAZKpLTZo6AXf-fsJyRc6zH2XNlaDr0_2aOjFoEXcaqv0S9C40Q4-s3aAWCQvAQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejudefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    fujghffffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgr
-    nhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepke
-    fhueduteekgfdtueegvdfgueeiuedvlefggfefkedvffduvddvkeeuhfeifeejnecuvehl
-    uhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrh
-    esphhosghogidrtghomhdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:8pwkaBVf_2lw41LsEpADuW1EEgWOOV7BjOYOuLu7eR4YeytCoqe5vw>
-    <xmx:8pwkaEkeyKqV9nAyeoo8vSZnXwB2YD833rK3AC3Qg7CvxtqF1QTo0w>
-    <xmx:8pwkaGcXnTwuobbaN_FGPXzL-cyEZDoBSzfEi_4YbaaMYwI2_a-oYQ>
-    <xmx:8pwkaGESe0njF2iBbYe9X0KqfsYgAu3xMB0wTwxkPGwCiWEeO7fquQ>
-    <xmx:8pwkaGVAb4XUbl-TCl6b46i-2ek6FfE0eNDUcs1cmpKh-W5OGHm51k78>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 May 2025 09:38:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Subject: Re: [PATCH v4 4/6] whatchanged: require --i-still-use-this
-In-Reply-To: <20250512190311.1451556-5-gitster@pobox.com> (Junio C. Hamano's
-	message of "Mon, 12 May 2025 12:03:09 -0700")
-References: <20250503005814.3030099-1-gitster@pobox.com>
-	<20250512190311.1451556-1-gitster@pobox.com>
-	<20250512190311.1451556-5-gitster@pobox.com>
-Date: Wed, 14 May 2025 06:38:56 -0700
-Message-ID: <xmqq1psrcnwv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UwEpMqs7"
+Received: by mail-yb1-f170.google.com with SMTP id 3f1490d57ef6-e78fc91f30dso5959916276.3
+        for <git@vger.kernel.org>; Wed, 14 May 2025 06:52:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747230765; x=1747835565; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=dlgXRsYPYw+9YRGjyoSuj5lC5Kb9k2HN9PczRXo3yNk=;
+        b=UwEpMqs7gHAG6QD7ueHGg1koyNSbKvgFBNzaj3zlB5sEfLqWCuew6tIjh5pCjkx1b8
+         VUvHMcc9nWX9tfCktLTcxORBV2qfrhAeZMB7kl9hqMSAu01H/moH6UBbekugbn3uS8NG
+         H9UGDBuH6r3r+yzodxkBs7L4KJuzTITXtha59hgCmZstIzNBxvpcnzEQ137EINMjahUn
+         j6CWrEbqNmLALcTP4+8Xo22EeKehjvbJf9KkJT7nxLU3ZxJ89rq8C/S+INJ6lYRndKWb
+         a85NUwP16/dkcV3qP7oifTcJT7/x9UWxOX2e+O8YrQn3R+HXcoILo/baMzFA+RGDfeMU
+         QWug==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747230765; x=1747835565;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=dlgXRsYPYw+9YRGjyoSuj5lC5Kb9k2HN9PczRXo3yNk=;
+        b=UGf1wWwViWG5fAY5rteIBkuxFdj/NGNg9DN07GqoUv3i5rWQRcavYEEZvEjWLdqlzM
+         PkmNhGibBOfXT9vZv5DRdnpOSYQILog1CsWYqYsfBqFQ0MuAfVkQONK3Ctg1201R6qtG
+         nrPUGLMjAlSk32i4eHe5SDSK5NqS9Q/sIobRkF9L1VhS3O2d69OkJSvNBhZ7CPZ8moRK
+         +eHIvhaMyC4OIVi6DSvjZBAH7xmP6e1eQYLI15lrbpAc71sQZJzVGVFKpiyUJAXEUOi8
+         SBiaUrN/WCVnHYFczJPsu2uZmxHIdT6awGEJOGbjFX2YiFhPmDGQyYW3Xl2K7l/80F9i
+         +BEw==
+X-Forwarded-Encrypted: i=1; AJvYcCVfAOnve4Te0A6XQZm2uhPqqGOmRNvlj9yblqd6shJVcaUUOY7W0A8ALM4gq8S7fkhOnRo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzOw4VQHuiYg4fOf+8SQ0f+KBUYGskHEK2e0tLb7LKFKe9ezu2v
+	HmUxigt44JjgcPqmOl29A+wes+M0WABjb3WxP+VRZNBZTqKAT3km
+X-Gm-Gg: ASbGncv/6khHyaROuBZfKEbcNC0W0HVP7BhnE/OXnsUJfDPd3a4STobPcjwXmG6oXHD
+	CABLEH7L5INQzXk7of5wAYgg96Qu2h3fBf3exvbXgHGuGvk7Cn/lJGkBZDFH+kYPExgfI5O3k0W
+	IGZeiMarUytEeea00330OQIf8lovJPiuPfIKNkMiPRuKsb50hM77x+JFTmP/tqGL9nBUG3e+87b
+	HS2Qielh0cLv47VRgOmDTNkxjsHVcY6TtBJsYXKCNNYPLJ/qH0FviLEfTD3NelqyQMcNCUoXPFg
+	B2at4BFXtqCR86PkrEGKXKEIPEfeveMIGO4AtYV9CdJh29ljnGb0m8x8fOFfV6iZoYra9cJrPzS
+	chgGf7J7F05QfMc8ndXsmk+yrAddo++d3HYwf0I0=
+X-Google-Smtp-Source: AGHT+IHOyaMV7fGZntRHlz/SJ4kQALZQtXJHqNdJIZ6oubCjYIPRXBAlrLcW+KLkFh+7tudQGm7XKw==
+X-Received: by 2002:a05:6902:230d:b0:e75:bea4:5ea4 with SMTP id 3f1490d57ef6-e7b3d5e5f95mr4305378276.46.1747230765472;
+        Wed, 14 May 2025 06:52:45 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:9ccc:beab:105c:f288? ([2600:1700:60ba:9810:9ccc:beab:105c:f288])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e78fd6518b1sm3170642276.45.2025.05.14.06.52.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 May 2025 06:52:44 -0700 (PDT)
+Message-ID: <7534cfc7-751c-488c-9a98-6f422e5d0a81@gmail.com>
+Date: Wed, 14 May 2025 09:52:44 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: [PATCH 5/4] scalar reconfigure: improve --maintenance docs
+To: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: gitster@pobox.com, johannes.schindelin@gmx.de,
+ Patrick Steinhardt <ps@pks.im>
+References: <pull.1913.v2.git.1746458844.gitgitgadget@gmail.com>
+ <pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+ From 0f5dc1cb6d697c7d8d3c126f3640c2f58fcfda43 Mon Sep 17 00:00:00 2001
+From: Derrick Stolee <stolee@gmail.com>
+Date: Wed, 14 May 2025 09:50:32 -0400
+Subject: [PATCH 5/4] scalar reconfigure: improve --maintenance docs
 
-> The documentation of "git whatchanged" is pretty explicit that this
-> has retained for historical reasons to help those whose fingers
+The --maintenance option for 'scalar reconfigure' has three possible
+values. Improve the documentation by specifying the option in the -h
+help menu and usage information.
 
-In 731a2c7d (whatchanged: require --i-still-use-this, 2025-05-12),
-the above has been rephrased to
+Signed-off-by: Derrick Stolee <stolee@gmail.com>
+---
 
-    The documentation of "git whatchanged" is pretty explicit that the
-    command was retained for historical reasons to help those whose fingers
+Adding this extra patch on top to improve the docs. I could resend
+as a full v4 if needed.
 
-I won't repost the whole series, though.
+Thanks,
+-Stolee
 
-Thanks.
+
+  Documentation/scalar.adoc | 13 ++++++-------
+  scalar.c                  |  4 ++--
+  2 files changed, 8 insertions(+), 9 deletions(-)
+
+diff --git a/Documentation/scalar.adoc b/Documentation/scalar.adoc
+index 387527be1ea..4bd5b150e8e 100644
+--- a/Documentation/scalar.adoc
++++ b/Documentation/scalar.adoc
+@@ -14,7 +14,7 @@ scalar list
+  scalar register [--[no-]maintenance] [<enlistment>]
+  scalar unregister [<enlistment>]
+  scalar run ( all | config | commit-graph | fetch | loose-objects | pack-files 
+) [<enlistment>]
+-scalar reconfigure [--maintenance=<mode>] [ --all | <enlistment> ]
++scalar reconfigure [--maintenance=(enable|disable|keep)] [ --all | <enlistment> ]
+  scalar diagnose [<enlistment>]
+  scalar delete <enlistment>
+
+@@ -165,14 +165,13 @@ reconfigure the enlistment.
+  	registered with Scalar by the `scalar.repo` config key. Use this
+  	option after each upgrade to get the latest features.
+
+---maintenance=<mode>::
++--maintenance=(enable|disable|keep)::
+  	By default, Scalar configures the enlistment to use Git's
+  	background maintenance feature; this is the same as using the
+-	`--maintenance=enable` value for this option. Use the
+-	`--maintenance=disable` to remove each considered enlistment
+-	from background maintenance. Use `--maitnenance=keep' to leave
+-	the background maintenance configuration untouched for These
+-	repositories.
++	`enable` value for this option. Use the	`disable` value to
++	remove each considered enlistment from background maintenance.
++	Use `keep' to leave the background maintenance configuration
++	untouched for these repositories.
+
+  Diagnose
+  ~~~~~~~~
+diff --git a/scalar.c b/scalar.c
+index 847d2dd2f58..355baf75e49 100644
+--- a/scalar.c
++++ b/scalar.c
+@@ -675,12 +675,12 @@ static int cmd_reconfigure(int argc, const char **argv)
+  		OPT_BOOL('a', "all", &all,
+  			 N_("reconfigure all registered enlistments")),
+  		OPT_STRING(0, "maintenance", &maintenance_str,
+-			 N_("<mode>"),
++			 N_("(enable|disable|keep)"),
+  			 N_("signal how to adjust background maintenance")),
+  		OPT_END(),
+  	};
+  	const char * const usage[] = {
+-		N_("scalar reconfigure [--maintenance=<mode>] [--all | <enlistment>]"),
++		N_("scalar reconfigure [--maintenance=(enable|disable|keep)] [--all | 
+<enlistment>]"),
+  		NULL
+  	};
+  	struct string_list scalar_repos = STRING_LIST_INIT_DUP;
+-- 
+2.47.2.vfs.0.2
+
 
