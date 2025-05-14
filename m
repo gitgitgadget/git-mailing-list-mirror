@@ -1,105 +1,156 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01E3D18DB37
-	for <git@vger.kernel.org>; Wed, 14 May 2025 17:36:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B10A2820CD
+	for <git@vger.kernel.org>; Wed, 14 May 2025 17:37:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747244215; cv=none; b=PJUjXcrEzfmm6grz5N+UN4rv52bkYNzhSXiBFQEpEn3/CRk+ZMVoFDxtDRjk6iF+xOP8CnnxXWADXdsQ1JUqe9DjtVsHVJnfNojLnY7E0pRsiKZkWHcZ7t/WkSxh08U7z5+BG1ZQPVSRn0C4V+RiMriwyWHkB/Cfsijqe+I+mfo=
+	t=1747244252; cv=none; b=Qz0m2dvz9hpAMj7JMBAKAZrdOBvpU4BznS7iKi6l+h54beoC+OAJK4enCiVGXyDUvwUGjbGvyBhkQjF35B0Lj0m8JDq85lcAtofPTtccdd4UgXPk96gpqzT2rzlqgUV8BBJXBoOPZaLLcaIABvCYUTsmCrE1MpgGg3tr3IIgGAk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747244215; c=relaxed/simple;
-	bh=D66/W10soIqPKNj131yVZpvLwJ4tSmCPOOLbqZPSXJ0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tZ/5c9A26p++/2AGI/6RVo84dh+OqwoR2nN7apIRlWxYWlQlWZIaDdSOZ/UVv4RCb2E0c5kJls0j9ONveEOzCSIF8Jh3cJWSSJE6cftosDGuU5rVKX1HYTNcZTjZv9PsvWzO8SVxpOhwgGLiClxdROOIGa/PpeLsm4zyKdEbOH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mx6LOvji; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=tMtZMZ0t; arc=none smtp.client-ip=103.168.172.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747244252; c=relaxed/simple;
+	bh=q4GvZBaPZB6gO4HxL09BsQld8GUJwIMvjej/DF6U3tg=;
+	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=Eo6tt6oT6yFeOf73SYTl9MsGmIznjTqgD3+AHTdhd7oGVBRtN9PIbPiIA8NT/l17dV2Mb5hUBxfkDbXAmGPdohp5XvLg+RspA6cBNgsSGxn//MW+Czl+Gplzd4WJ+Q9ne/hAxrZ7oa+wOBGngduWcMoWQJsgF5NJXFlaldZGCcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LLQZormw; arc=none smtp.client-ip=209.85.166.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mx6LOvji";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="tMtZMZ0t"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id C00751380196;
-	Wed, 14 May 2025 13:36:51 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 14 May 2025 13:36:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747244211; x=1747330611; bh=l1pWszyoq4
-	9ADQp9lIncwL+cCf0VzgL1PcnN5I+5tWk=; b=mx6LOvjiHsfEmXQjWZaq/3Zsfk
-	3Hy+v5vdG1f4qyPCIuLn5PkB6x3yVKNILzPX3CNjlBVcOXcVtYhdaMKySrzcN9eV
-	8qC7phHmH8FJm7QRNm97FO+VGvwOFyet5oeUTASy5ebVSW3zjdhXe2pcNGgXbcua
-	uqIFrRCzjtn15lLG5/0f/UVu0Ftu8gFAuIgAvng5DzGx9qb+6PWG+WrSnzGwabXw
-	ZJuU1WxCOSRz28SPgpSFDoSSBu7GeiKPx5EP+lV6Ps8MzqEq0GV0ge4Ll0Is1im1
-	ptBebH/HQ+QE5bOKZ/Eo5gYwTwRXWWZTdiMpKKUy77XoHsNx+8EF2DQ8qLcQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747244211; x=1747330611; bh=l1pWszyoq49ADQp9lIncwL+cCf0VzgL1Pcn
-	N5I+5tWk=; b=tMtZMZ0t2pDUpO9qfP2g5DL0BYGzoLZwxuIDKA9frhUohnhFmzt
-	TRHEf8i9JSazmLt/0EGtk8T0/SiSPLrxvUX7bDzsp3/fOO5Qw0Cib5FOPhXg82EB
-	2Xt/q1GoFJT17j57ykG5K+iEkqIoeCzR1mOxoaazBBsTFJYPaSaFof1EjItRBosj
-	hT/uJzLwyy7/UyxzjWvbPau7DvNQdY51KvQaSPsSsByTh2Ej3JYhmO/z40AfGzlD
-	lZ6ipkei2GzPNQzWf8eWBJuB9sT1GZ2RSlG+rsk5hRk8vYa7vHNGUIcm00k2oyvA
-	W2LESH8XNaNKXsZqQUwdoDSt1o51jswMXzQ==
-X-ME-Sender: <xms:s9QkaAy241cpJlaIbiK7FOX3bYicImqmIMqKJz3IyuEMrlt4ZhTCpA>
-    <xme:s9QkaERniYR95y9kWucdKJvt5NGoAiUkdWLcNmUMd7TTNP0tNRq4wIOCemWU3SSg4
-    9t0IB3mrnCuo60yrw>
-X-ME-Received: <xmr:s9QkaCVoWANaNqagF3jRYQ_jXBMF-dcICD6Dm61wrj7-2k82VvAtk0uJQqpAxGVT88ow5oac59UK4grxxplHbQUCV3kCpzEliaDWVfA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejiedtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
-    vghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
-    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:s9QkaOgBNTdnulTWlnElt3sTM4gTIyIrM5GgAlr5Wh1JNQ-Fi2kIAQ>
-    <xmx:s9QkaCAEbE9A5Y0OB3PBRHWrGTaN7vqfB0vICCmJ2-hAOXmTefs-3g>
-    <xmx:s9QkaPIdGesxMRrEEokvwRk7nNXI5qsV6smL3RX3ij38zhSBUk_Yug>
-    <xmx:s9QkaJC9TpQJnWRWG0AO6U0Rfl3P1vHxvyOF1nwIhb2FgEoZL3Aepw>
-    <xmx:s9QkaPIvBNll46DLfTUQJiBBU0grmcdtm2VSJ1PhDqpVDTNcBD_A4ixZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 May 2025 13:36:50 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  toon@iotcl.com,  ps@pks.im
-Subject: Re: [PATCH 1/3] fetch: use batched reference updates
-In-Reply-To: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-1-7c65f46493d4@gmail.com>
-	(Karthik Nayak's message of "Wed, 14 May 2025 11:03:47 +0200")
-References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
-	<20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-1-7c65f46493d4@gmail.com>
-Date: Wed, 14 May 2025 10:36:49 -0700
-Message-ID: <xmqqmsbf9jri.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LLQZormw"
+Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-8616987c261so235659739f.3
+        for <git@vger.kernel.org>; Wed, 14 May 2025 10:37:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747244249; x=1747849049; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:user-agent:date:message-id
+         :subject:from:to:from:to:cc:subject:date:message-id:reply-to;
+        bh=1UCo/OvSUT7ti1wAPamdZk4jc4Qq98lvdmETjO+H8Sc=;
+        b=LLQZormwxEzhLb/qaqPlgKdURXbWohAhl9ZoQfWP4QXsWAgojz5+fK/mvppK/Qdr4G
+         RvM0TUrkavZExR4mXf3dT5KcKUbXy0ixJmk5Opz+I+ajL/KfgiS6M2AYe6txZ2a82au9
+         D28nKA+wzaWEkDvTqvcIGkPNNU4fKw54m/e6Pl1Uaq3ypfdDLGwXqtf3tfGQL6HcZoql
+         6/CJkbSnEZTyr0z9X4yyZX0DSbRHQXfc92KVYCbfebLCTrGXRAYLEtGfKmSUWJdFRXoH
+         zrOpHYm72TLlDXOQKzJomcqNs9C4k2gwNSeiNAtCl/C28/zPsuww/YK4QmNSkPfiOgBQ
+         APKQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747244249; x=1747849049;
+        h=content-transfer-encoding:mime-version:user-agent:date:message-id
+         :subject:from:to:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=1UCo/OvSUT7ti1wAPamdZk4jc4Qq98lvdmETjO+H8Sc=;
+        b=uNr6aGonpeQ5OasNCJMRFwZIeMDTBWZzNrFPccpYrd51nrbTZYdJLJZDEnOgoWtnRi
+         69ToHqmz5hxU7yLVkdlgOhcZsS1hIl7Jov0OukPBQwA7fSOn9yPpGFWlx+kuFbWNVd16
+         k/zzB6doXH7Md1tF3BL9lU2Nm4t2/Bzi6E2ykP2fQ405LrR61XU7xXWBmFhpyIpJUSq1
+         QGLN0h4Ui+vrZm+NwW0eA3F82I5h6QRS9bGWLQBISGGSI1ezuBwTRcYOJkscPgNNzyMC
+         XomBUpo0sxv6E8pmxaBAOJnIUSVxcVroeOqd9ZcCYpWHr8BaSj6rha9OMyIi0ueyoahr
+         IdXQ==
+X-Gm-Message-State: AOJu0Yyi18UXY7o5mTB09HSJJhGVaVKlNSCIxgGrD7q8dHnKfnAj8dGw
+	1kORXVKm1OG9Q+mmVJb/LgNhDOX6su/qfiuE/QdsaIHW1OihkDECFP5paQ==
+X-Gm-Gg: ASbGncuzZNmDZJ2ffJvfUBCg0+iKDr7ni7Fsl70swC9qjP1zPXEV0li+Q1gzz056PIl
+	4WyMJ1cDB3hcg4s7U9SMvba5SNmdUcOHgGJDwUWKzilGoQ+vOY8lUHAdbRkRh8Nw/VBvuPkeVz8
+	ElWNWPoR4z+LsXZsjrfbGhm77KgaWHlcHcNQSPsmkHEk0kK0FoiEdaEVvWW8elqncQDtnLkYczJ
+	IkkRDzDKtwLZ5B+gcDhnYyzqgjt3ca2m2jlHmRAeKpYW6u1yXgTzjO0lEZ2ICnVHLTcYaNeyKV/
+	MicSKVnprciKMac6U4M8oF3PmM0uw4OkCcWtgYKtx7o7hU6Bi4SgEOHoHWoXvKnn5tSbN7TcYbi
+	BYACkTySffWwLnc44px3BgIodyZztrMU/
+X-Google-Smtp-Source: AGHT+IGKv0nkJy11apqWFFY+nbLGqag0NZKgJRvIEbP9hhsPDbXPQQEatoNxbR028unaq9HHKTbW7w==
+X-Received: by 2002:a05:6e02:1a6b:b0:3d8:1d2d:60b0 with SMTP id e9e14a558f8ab-3db6f79b896mr53703765ab.5.1747244248693;
+        Wed, 14 May 2025 10:37:28 -0700 (PDT)
+Received: from [192.168.1.253] (76-206-246-123.lightspeed.cicril.sbcglobal.net. [76.206.246.123])
+        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3da7e1049casm36012055ab.26.2025.05.14.10.37.27
+        for <git@vger.kernel.org>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 14 May 2025 10:37:28 -0700 (PDT)
+To: git@vger.kernel.org
+From: Mr Bill <billc56196@gmail.com>
+Subject: [PATCH] Handle rebase fork-point options in pull --rebase
+Message-ID: <06beff46-cdaf-91c8-e6a3-6557694af618@gmail.com>
+Date: Wed, 14 May 2025 12:37:26 -0500
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Karthik Nayak <karthik.188@gmail.com> writes:
 
-> With this we'll either be using a regular transaction or a batch update
-> transaction. This helps cleanup some code which is no longer needed as
-> we'll now always have some type of 'ref_transaction' object being
-> propagated.
+This is a patch to handle --fork-point and --no-fork-point in pull --rebase.
 
-Great.  From the above description, I imagined that the change
-involved would be removal of all "update one by one" code paths, and
-addition of a new line to set one bit in the transaction object that
-says "this is not the usual all-or-none transaction but is a
-best-effort batch", but it does not seem to lose as many lines as I
-hoped ;-)
+I had a recent bug report about pull --rebase not working correctly...
 
-But still, conceptually this change should simplify the things quite
-a bit.
+but it was working correctly, but not doing what I expected due to always
+
+using "merge-base --fork-point"
+
+This patch implements handling the --fork-point and --no-fork-point options,
+
+and also checks the config rebase.forkpoint value...
+
+and it works to resolve my prior bug report issue.
+
+If there are any questions or comments, let me know!
+
+Thanks to all for the help and comments on my prior bug report!
+
+-Bill
+
+
+diff --git a/builtin/pull.c b/builtin/pull.c
+index a1ebc6a..f2d405f 100644
+--- a/builtin/pull.c
++++ b/builtin/pull.c
+@@ -117,6 +117,10 @@ static int opt_show_forced_updates = -1;
+  static const char *set_upstream;
+  static struct strvec opt_fetch = STRVEC_INIT;
+
++/* options to include rebase fork-point preference */
++static int config_fork_point = -1;
++static int opt_fork_point = -1;
++
+  static struct option pull_options[] = {
+     /* Shared options */
+     OPT__VERBOSITY(&opt_verbosity),
+@@ -253,6 +257,10 @@ static struct option pull_options[] = {
+         N_("set upstream for git pull/fetch"),
+         PARSE_OPT_NOARG),
+
++   /* rebase option to use/not use merge-base --fork-point */
++   OPT_BOOL(0, "fork-point", &opt_fork_point,
++       N_("rebase with 'merge-base --fork-point' to refine upstream")),
++
+     OPT_END()
+  };
+
+@@ -366,6 +374,9 @@ static int git_pull_config(const char *var, const 
+char *value,
+     if (!strcmp(var, "rebase.autostash")) {
+         config_autostash = git_config_bool(var, value);
+         return 0;
++   } else if (!strcmp(var, "rebase.forkpoint")) {
++       config_fork_point = git_config_bool(var, value) ? -1 : 0;
++       return 0;
+     } else if (!strcmp(var, "submodule.recurse")) {
+         recurse_submodules = git_config_bool(var, value) ?
+             RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
+@@ -1059,7 +1070,17 @@ int cmd_pull(int argc,
+                 N_("pull with rebase"),
+                 _("Please commit or stash them."), 1, 0);
+
+-       if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
++       if (opt_fork_point == -1)
++           opt_fork_point = config_fork_point;
++       if (opt_fork_point < 0)
++           opt_fork_point = 1;
++       fprintf_ln(stderr, _("rebasing %s fork-point"), (opt_fork_point 
+? "with" : "without"));
++
++       /*
++        * If we're *not* using fork-point, or we don't find one in 
+get_rebase_fork_point(),
++        * clear the rebase_fork_point info.
++        */
++       if (!opt_fork_point || get_rebase_fork_point(&rebase_fork_point, 
+repo, *refspecs))
+             oidclr(&rebase_fork_point, the_repository->hash_algo);
+     }
+
+
