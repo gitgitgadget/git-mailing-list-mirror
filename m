@@ -1,154 +1,155 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37AFF272E7A
-	for <git@vger.kernel.org>; Wed, 14 May 2025 12:51:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06BB277808
+	for <git@vger.kernel.org>; Wed, 14 May 2025 12:58:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747227101; cv=none; b=YrWijCibYKl3LXa7oq0tr9jk6MWcEyxuPJYxs3itXWsEh4DqaGhuTE275lDASp107UKiFMtijDNbbwfog4RZZ24mjEtznlImoJJ4UmGll6cjxgPzw8MBdh9fJ4BSQDyIczQjlca9NaVD47Ei6+3KbcqTNzRCIKZ0NcaiwB+4LmI=
+	t=1747227541; cv=none; b=TAmT2T+6qBSgARXT2YrI6rDUd39FR9tt6b+c5UAUJwlsdX1qQ2BmgfaAJCgzuFVgSDTvtm5iagcZohmYyONOdTRbPuuqvq9BIIzAalYz4yClVoEwh9tzTDoQxcrxFqwyCQhf3YpXRnlYyvu3xug2XfkFiop6rOjlXfN3rOHmbTc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747227101; c=relaxed/simple;
-	bh=fOnOhuMn9S+LCFvhVbYUAxFhNWfhtj1HkEIHyI4DkRE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pqLrNeDRcLDnuNUJrsJfCxs8BEUQu9Y2x0D4aqXXuj8AQcYAO5kqQzttB5ue96E0i9+ND5Z/NZapBO2qMKV60Xz051+u7N9He3xY1K1Yq8CAcTHrclQt9sZPL2MflfGp15W0cEWNc1nV2za9xr2EkEpHp/FgQfUTfSCXe3IzuKE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=f6oavvZ2; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747227541; c=relaxed/simple;
+	bh=n6qmixKZvZ0jPmSUz3tvxU0ca2uX8v2Kz7PmmT2mWPg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=HETjEY0tmjFjajGSWfQr0NQ0EEz2xv9c4tosSGUZSVzAncc+R+cXTxSe5vbFW4iv6eopgYWejSMCmLHlKy6S+bAncvfMr41PGuiJ9vzZsp5CwtH54omN82NuhOW8yqXQow9Tq2w8BVbPHkDM8W10g1L/1Bqly+VItMFWsfDF8Sk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MT/Gp88c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ijqGUjiU; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="f6oavvZ2"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f0ad74483fso75367986d6.1
-        for <git@vger.kernel.org>; Wed, 14 May 2025 05:51:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747227099; x=1747831899; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=flGYQm0vXn0MfgRUsKaBWaBDGmn2t3WtMrjOqySHjs8=;
-        b=f6oavvZ2AwtpovD46E0R/PR462XOrde6/Iy3TINrlkVGeILi1b+8TF7W7F52IjNMm1
-         f7O7jM7FxIQggGn1EaFWOFIFlI8H3Svjbk5wu4s0wJXIVSxY9Wo+YlORe9mUqGvJpfZD
-         jMfL9ft46dYFBnUa1+oAx1NGZ5Wlmfw1TNRoWF+7+QTueA6MAUUqOFCDbURO3KpxXv6R
-         NdaAqB5vwBP5g5/el4P9Glp2C/iM6x3pzbiHRZj3lHv2d+PNizUbib3yDBXKjp7weajw
-         ooww3pkMISt2idFtAkQcLISVgwGlCmMmXAaNvjNoWD5TZZ7ZTTkFrr4Rvp/EL4xZ6CxZ
-         ekvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747227099; x=1747831899;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=flGYQm0vXn0MfgRUsKaBWaBDGmn2t3WtMrjOqySHjs8=;
-        b=tKq0UhC24+AfOkhnUUeMt6N8L45Clufl+Ad4OSn9oSzo7UWVUh5AuunpbmVvQfsDw/
-         4OQk0J/8zlPQ0/eMTUBLQBXVVf4EMydM0alf4Ln4ft8TPp3VoGXH1Pb39S9XksBKAL+m
-         pTQh3ZP627Y/tCg0Us6TLPVoyOklE+EYKfNey/yMe9OwuZqSzaQe8cyQsp+TROC9tu4l
-         VumTTndROIJsDiaQC8tQjOthvF5CfA3SAbvNUl0f98fTLCXL0YQvt+5e9xwDhKKYgkqo
-         ns3a6NMULlq27ABOIx4GafSmHLo9Yzs5PT+mlcuQC1Te/1XHsfxcuPoQ6+ITty946zjt
-         zibA==
-X-Gm-Message-State: AOJu0YxP0w3ApKH/4LtmoCNxzn/hRfcSTaMxY7Z5wINozLWdTxwOtV/C
-	3CFK1p73ww3hOFkNu08QGeTR7v5noe8E4hzBhJ5Ivvgaxaip+Wa5mUYohQ==
-X-Gm-Gg: ASbGncuvmva+Q9ltyHGGYsAJxvKyrATHrEyw3vn0XuJo/0cMLjMw5yZ8Jlv8qH33wKQ
-	B3Q1sXsFGKKF7TN0wD2HcpE2KIYIc8sqtxRb1W4+kqjxa2mmxM/lvO28xfOoVQMhJ3Z8L38MWU5
-	XB//uFzbmN0Y5UdcYOMktdpKagMQ2N0fnN9oeO3BAkxoFq3jpGvMuhbFuONx/VmrjoUM5/Pk9z2
-	kGwfX3c93ZAu/1V16Tx3kPAFQGpu9ONux1sNw7aFGa+bKozKAI75+sACToWSBw2wcvnzjOrSAsw
-	nXoZDYXHQ+CpCGkNGwlCMPvxf6+ffGm1zDMGtptDTfXOJJLBnbyS/HhZFQ==
-X-Google-Smtp-Source: AGHT+IH7RaxQPe2HT3r6ZMZFFts9GgZKLvNXPC4y3zCylURATLBNAQcZnYCtz8d9l47e98G5FOPgTw==
-X-Received: by 2002:a17:903:41c5:b0:21f:1bd:efd4 with SMTP id d9443c01a7336-231980d04a3mr49456165ad.19.1747227087883;
-        Wed, 14 May 2025 05:51:27 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22fc75469d3sm98273595ad.41.2025.05.14.05.51.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 05:51:27 -0700 (PDT)
-Date: Wed, 14 May 2025 20:51:59 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v4 1/3] packed-backend: fsck should warn when
- "packed-refs" file is empty
-Message-ID: <aCSR7wju99Eszv8d@ArchLinux>
-References: <aCMnrwkoJ2WyqGZT@ArchLinux>
- <aCMn_Ktrg4GY8jHe@ArchLinux>
- <xmqqplgch3r2.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MT/Gp88c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ijqGUjiU"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id E0BBB1140152;
+	Wed, 14 May 2025 08:58:58 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Wed, 14 May 2025 08:58:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747227538; x=1747313938; bh=MeELXb/FcI
+	VtPlnqGl/lk3qgQ732erxR3pfAgmlN1p0=; b=MT/Gp88crHrB3ksPYHWv8xfvRc
+	vpuEmnovjq0M5UlZpS+gEj4IULBqmkD9aLmxBFefpmChQXbA8iB4geIIlAx04mbC
+	YUfY5KzIRga0qatR7B1pIi4SucOn5g9rRBz+ODWPhQ+SGp1Cdn8htrFzGIB8WJsC
+	532Q2V9mm7FXWEe2IZgCxSrAGaIOGZocofOvvEzocCZ6Ep2E/Fm0llX90DWVfECT
+	F60QOxyA2ZDpVfIob3e66lLJasLHQNXdkMjwUbxNW3niyrcbrQscQSAA5tJX3y36
+	4HLRlMG/K+2gkcJnrXL8WYhgdHEc38zgDlz+jBnd7r06o5ae7pYl1GAybd0A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747227538; x=1747313938; bh=MeELXb/FcIVtPlnqGl/lk3qgQ732erxR3pf
+	AgmlN1p0=; b=ijqGUjiUBpt8olYA28gQ6DIIZx7F37JwywjMU883LsdpDB3et91
+	Wk5gOnRDO8afy8ZDQJTTj7f8waH1zGvKTQqdA1NqKENXyFkQKg4B9mhPho3R50Ri
+	KWyQm0IF/vB4gLJs1J20NePCEzoKA/YdVq3acMIUahnN6Z0chvyTg7lIjLOeUrDT
+	EqJd92VULdo+yTtpxepjE9DHOCVOx5hPpIv1omWcbR5F/EMQunEbn5gT7Wl4cmu2
+	X2GNuQrXRNL200QVAaf8Px4fXkWEsyKv3vVzwyk4qV5W6clYfmx7oYkpXKqDFAD7
+	vW9qzJBeUuZaTJxFzHbMTSkCO84MpLxdmSg==
+X-ME-Sender: <xms:kpMkaEPBxEM7Pm3idB0HeqfcQlH_R4Bs96mjzxqMRQMXzyB2cnkdrQ>
+    <xme:kpMkaK-XIixdNIJaneFkkp69ld8hnyABFptMRjnNGqTEFF9L7N-Wh_13F1h23LC3J
+    qvoFonetXQJyCXjXw>
+X-ME-Received: <xmr:kpMkaLQntm3tIk8COxiPi-Ho0WAINmTMRoce4zVhxRri69AVh97cC6NW-4qyOdZG0kOgUSbtZUTDwLcALB-5jj2jH8qD7hr4oUT-Ozs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejtdehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhephfeugfehkedtffdtuedtveekteelfffh
+    fefhvedvhfekjefhieevgeevuefhueeunecuffhomhgrihhnpeihrghhohhordgtohhmne
+    cuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhs
+    thgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhulh
+    hirghnsehsfigrghgvmhgrkhgvrhhsrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgv
+    sehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopeiiihihrghoseguihhsrhhooh
+    htrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhooh
+    hthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
+    mh
+X-ME-Proxy: <xmx:kpMkaMsLDlWR6lpTpKBDKvAd6zuNlTlWP3y8OjSRA7k4dtgPajJrpA>
+    <xmx:kpMkaMcr-_qExZyEzYPhzpuqEslfRH69xgDIKGOsdJr1SiWr9VHCSg>
+    <xmx:kpMkaA0KofTr7HBZQ6RhMzAbIMfN2xUHJIljstSAhBAwVKQxzoMglQ>
+    <xmx:kpMkaA-HMtRoRlllln6U-uPC5eO3-ACdRgk1p06dMtCKdtoO8z8YFw>
+    <xmx:kpMkaHKxuBiRU0nafgNe0qHk5bjAq9XfCkUqY-42fQu9_gXzXYpz5U4d>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 May 2025 08:58:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: git@vger.kernel.org,  Julian Swagemakers <julian@swagemakers.org>,  Eric
+ Sunshine <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,
+  Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+  sandals@crustytoothpaste.net
+Subject: Re: [PATCH] docs: add instructions to use Yahoo with send-mail
+In-Reply-To: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Tue, 13 May 2025 23:58:44 +0530")
+References: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 14 May 2025 05:58:56 -0700
+Message-ID: <xmqqo6vvcprj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqplgch3r2.fsf@gitster.g>
+Content-Type: text/plain
 
-On Tue, May 13, 2025 at 09:30:57AM -0700, Junio C Hamano wrote:
-> shejialuo <shejialuo@gmail.com> writes:
-> 
-> > During fsck, an empty "packed-refs" gives an error; this is unwarranted.
-> > The runtime code paths would accept an empty "packed-refs" file, such as
-> > "create_snapshot" would simply return the "snapshot" without checking
-> > the content of "packed-refs".
-> 
-> Perhaps "unwarranted" is now too strong a word; we still want to
-> consider it an anomaly (that is why emptyPackedRefsFile warning is
-> introduced after all). I think the problem description you want to
-> here in the above pragraph is that fsck giving an error and runtime
-> completely silent is inconsistent.  
-> 
->     Side note: and you'd probably want to say what "an error"
->     reported here is.  The problem, if I understand correctly, is
->     that the code assumes the file won't be empty and instead has at
->     least one line in it (even when there are no refs packed, there
->     is the file header line) and insists that all lines must be well
->     terminated---if we tolerate an empty file, of course such a
->     check will fail, as there is no terminating LF in a file with 0
->     lines in it.
-> 
+Aditya Garg <gargaditya08@live.com> writes:
 
-Good idea, I will improve the commit message.
+> Just like Gmail and Outlook, Yahoo is another popular email service
+> provider. This commit adds instructions for Yahoo users to be able
+> to use it with `git send-email`. It also adds instructions for
+> OAauth2.0 authentication for the same, and adds a link for a
+> credential helper.
 
-> And because versions of Git that are not too ancient never wrote an
-> empty packed-refs file, and often having an empty file there is/was
-> a sign of a filesystem-level issue, the way we want resolve this
-> inconsistency is not make everybody totally silent but notice and
-> report the anomaly.
-> 
+Heh, I didn't know they are still around ;-)
 
-That's right. I should talk about this problem.
+    $ git checkout master
+    $ for p in yahoo.com outlook.com gmail.com
+      do
+        echo "@$p"
+        git log --oneline --since=5.years --no-merges --author=@$p |
+        wc -l
+      done
+    @yahoo.com
+    12
+    @outlook.com
+    16
+    @gmail.com
+    4765
 
-> > But we need to consider the fsck message type carefully, it is not
-> > appropriate that we use "FSCK_ERROR". This is because we would
-> > definitely break the compatibility. Let's create a "FSCK_INFO" message
-> > id EMPTY_PACKED_REFS_FILE" to indicate that "packed-refs" is empty.
-> 
-> OK.
-> 
-> > Signed-off-by: shejialuo <shejialuo@gmail.com>
-> > ---
-> >  Documentation/fsck-msgids.adoc |  6 ++++++
-> >  fsck.h                         |  1 +
-> >  refs/packed-backend.c          |  9 +++++++++
-> >  t/t0602-reffiles-fsck.sh       | 17 +++++++++++++++++
-> >  4 files changed, 33 insertions(+)
-> >
-> > diff --git a/Documentation/fsck-msgids.adoc b/Documentation/fsck-msgids.adoc
-> > index 9601fff228..0ba4f9a27e 100644
-> > --- a/Documentation/fsck-msgids.adoc
-> > +++ b/Documentation/fsck-msgids.adoc
-> > @@ -59,6 +59,12 @@
-> >  `emptyName`::
-> >  	(WARN) A path contains an empty name.
-> >  
-> > +`emptyPackedRefsFile`::
-> > +	(INFO) "packed-refs" file is empty. Report to the
-> > +	git@vger.kernel.org mailing list if you see this error. As only
-> > +	very early versions of Git would create such an empty
-> > +	"packed_refs" file, we might tighten this rule in the future.
-> 
-> I am not too happy to see "Report to ..." and everything after that
-> here, primarily because it takes one extra step for the user to find
-> it out when they see such an informational message.  There are other
-> existing error classes, like refMissingNewline, etc., that have the
-> same problem.  One thing to make it easier for the users to report
-> is to put it in the error/info messages themselves, but I think it
-> is OK to make such a clean-up (including the existing offenders)
-> after the dust settles from this topic.
-> 
+> diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-email.adoc
+> index 26fda63c2f..61a2d03546 100644
+> --- a/Documentation/git-send-email.adoc
+> +++ b/Documentation/git-send-email.adoc
+> @@ -561,6 +561,35 @@ SMTP server with `git send-email`:
+>  	smtpAuth = XOAUTH2
+>  ----
+>  
+> +Use Yahoo as the SMTP Server
+> +~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> +Just like Gmail, you can use an app-specific password for Yahoo as well. Visit
+> +https://help.yahoo.com/kb/SLN15241.html to get instructions for generating
+> +them. After generating, edit `~/.gitconfig` to specify your account settings
+> +for Yahoo and use its SMTP server with `git send-email`:
 
-That's right. Actually we introduce redirection here. I think I will
-improve this in the next release cycle. I'll add this into my TODO list.
+I am starting to doubt the wisdom of giving one section per
+provider, especially since the delta between the section is so small
+(essentially, the server address, the smtpAuth supported, and their
+official documentation URL).  Would it make more sense to just have
+a template example with placeholders, and a table of placeholder
+values that has one row per provider?
+
+> +
+> +----
+> +[sendemail]
+> +	smtpEncryption = tls
+> +	smtpServer = smtp.mail.yahoo.com
+> +	smtpUser = yourname@yahoo.com
+> +	smtpServerPort = 587
+> +----
+> +
+> +If you wish to use OAuth2.0 rather than an app-specific password, you can use
+> +either `OAUTHBEARER` or `XOAUTH2` as the authentication method. As an example,
+> +if you want to use `OAUTHBEARER`, edit your `~/.gitconfig` file and add
+> +`smtpAuth = OAUTHBEARER` to your account settings:
