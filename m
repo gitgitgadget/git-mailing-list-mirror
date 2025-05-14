@@ -1,234 +1,243 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25E5A1EA73
-	for <git@vger.kernel.org>; Wed, 14 May 2025 00:24:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DFC374F1
+	for <git@vger.kernel.org>; Wed, 14 May 2025 02:01:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747182296; cv=none; b=F2J4az2yn2/onJeNz0UTBiO/x6PjiOabLdTwzcSq+0nnc00mQq1VwSxEkh2jInp5NeFXL1NM/jZAEA/1i/4O3j3hkNuKKsKTrAOePLBt0ORPNEe7UnzXkxyvPt62Co/PcQPGhoEnGCZou+YnNEbjf55p+0dK4dTnStWbrvY3TNE=
+	t=1747188083; cv=none; b=tdlrxnqC59mSGIOo1iofNr2yvFoybEN1GuPT7YFwf7m1EOj3aII5bozjuie5dfKXFf4+PCCvqnwa4+2opAQjeWheUcFq0NjAi2Bg6MDgQciwB8SmavqZZr5YdRyu+LK1OaWmimOa5plqSvpcK1/Uad7xMDEMoVE227vZ3pKklzg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747182296; c=relaxed/simple;
-	bh=BVbecQyt8S5dJe77Z8N351KKITwcLW1FvjZvcb+VLRk=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KOdIVcnUySdM6tAQgORKvh4zhH5ZBcov013sKSHMAHT+HTh0TwDHCG1zdQCUheL/WJdM8cFfh8AU64hi2ESv35A2xIS3Lu+90QpQXNv0ny9LL03Jh57qCNltg8JaBvQ6PxyB/ZvGAY9CxeNAABgaTwatYXLfD2MI8KXFsxRrihQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KuDchpjc; arc=none smtp.client-ip=209.85.128.44
+	s=arc-20240116; t=1747188083; c=relaxed/simple;
+	bh=/Ucm4Zh7Qt3tekEIW0DANqdF+oVrT468JS6LcHAFK8U=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=UyFLvVWxAu1sgLkBcPthwRC+Fm8hrHR6aOh/jVxmq2ndbLA/42Rr0YlsTqKa76yvPqo4F9Pm/xoQduLbWrz3YQO+4PMLTWm6Kf/dWXCra9aY9UDVYSBXEnQ2GQL+VG7tTgFj0fYk7H5F1kuo5j7mpRbXPxhP8kUnmwht3gBQ1Y4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ME8/HPck; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KuDchpjc"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43cf628cb14so2555435e9.1
-        for <git@vger.kernel.org>; Tue, 13 May 2025 17:24:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ME8/HPck"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22fa414c478so35675895ad.0
+        for <git@vger.kernel.org>; Tue, 13 May 2025 19:01:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747182292; x=1747787092; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747188080; x=1747792880; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=FjhPhjIA3dtqEDmtIMmYl7V8O0zaQjWrabky5ntdOPE=;
-        b=KuDchpjcb9wC9u6eC6hlU00JOpCuhK7dn1qexInCfJowEK18uKn7MMqOUvvsjK0foc
-         l17xwCfaVhghvc1k9A5NeRhk8guVRZus6wBOL8bjn9AwIaksthz8fJU/bc/NpDySA0Cb
-         DbeStpsX156ICiAQrXlZ7SmH5n1ljgq8fjerqZGhMdje2TWf9VfzYpgxmRGI16vjR7U0
-         fVs+qW8qb6ip5LpVLEJgKB0d8YkhxjMWjKeCk3ig8lyUEZE0nUDPuqT09DrFPpt1hrhv
-         kYBoQGZNO0047Wku638Eid/7ol53gQDv4ygqAkJzagPDZGeRIE4HoUWO42xoZUwrTdP1
-         ZOJg==
+        bh=3KJ5O3UXdUB35fI43iM3QQGGfX/atuJHwxx9HwDDLJk=;
+        b=ME8/HPckp1q8RSNOmxIPGE08YdE0a8XxEh4oYxTT9MmM4qRU6kn/rysETty1yGt+0d
+         qkcFm01TdRKOSXexTVwD50fcKLtfErHpELb8VH+Ut+sxIX91nHlcS13zhLebr3LiCBfb
+         vvRhZ+rdBK0aHrhRLcgr/ZMJeWRg+oOhO5AxznSZGtfFnrcU22Kh0v9svflD0Qhjq2h+
+         TkEWV8PrAnNsXeN9FfTvnaIjnN5zZ97ObX9eB/Gwwk0KtNgDjgsvYyX3EKTR9O2+oVMw
+         6UZZt5YZhR+Z1MmWKqOlqnAGcUbqulpKaKsemxrIqKwxLjiNRj2SMnftV5HurL25cJgb
+         sFrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747182292; x=1747787092;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1747188080; x=1747792880;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=FjhPhjIA3dtqEDmtIMmYl7V8O0zaQjWrabky5ntdOPE=;
-        b=n6Yl6+FhWUyx0NgU7I+yh6uT02Q+a37n6/PiD/gNccN4mXsrzQAM4sqBHHeNvB8tIK
-         WW+EoES7FMpW/XFAvBmD01PPVq+ry/AspoEWcnMvPch7cfZXgVZUi0b3trYPD/i1zyjQ
-         qP4Q0c/F4+wpJr/xITzuERkEYW9N7hUrL4KIsV6BK0lRYwhwMHk36y09VTt2v7KUiA6u
-         Qyg3cxffjptgConkLT2UKCdt8RsGzbPAQeQj+vSDkPbBeIdWaeAB/6uDiav+DhEXEAkH
-         dtasy4df6rhsdzmEQickrqGEBcqDW5YaSjNFaSr2+PZWvV5nN1lB+YWGw3BRz6rko4uA
-         HVhg==
-X-Gm-Message-State: AOJu0YwT0bEAPdlNTDNON5Gv9b/PxRrHorbTnDoqadtP4aBANYDfHosr
-	UOrjVVYEY0DWQrVLlnIDzyh7Jwz8MUfbom80/E+UDfCNK4t+UnwIgOy7iw==
-X-Gm-Gg: ASbGncvNQfFaWGb5/C4hRELPBSdM4y/S6A7+yFcxDdu89z/t5Q2H4I63fvyKtdG05YT
-	d9TOz7pLeTpr1bN4BjgkAioTa7zwxdHSQN/7H59G9i641/QrecEF30SMABClFMk5iSKglO/6XbK
-	tAgEiVS+yGns50tE1jgpsCMEyBYVSN5vdQUJBzhr2TnjwHSmNlnkLrqX95//jF3J0Yo0vy18uGA
-	08qd5Cau6/i3B2jtlD6euvwiXs6Qrf9Xwld9VJoGOaU8ezaDDhseFJ+aobkGQzO60272VPJg3Ub
-	ZOmsLiMs4XRKuObNXP6SwoIsLx7md4ZMCkhYmsrNeb///0/2aPwPr0RZ6MtaZo4=
-X-Google-Smtp-Source: AGHT+IEB9VZgOCLR/4W5y4zszKB4D0/sseLUJN+uWV4aPDFbM7UCQuEvJpAz3cE2qYukc/WMbQzoxA==
-X-Received: by 2002:a05:600c:1ca0:b0:43d:5264:3cf0 with SMTP id 5b1f17b1804b1-442eb8855bcmr35328715e9.11.1747182291967;
-        Tue, 13 May 2025 17:24:51 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f397926asm6206155e9.36.2025.05.13.17.24.51
+        bh=3KJ5O3UXdUB35fI43iM3QQGGfX/atuJHwxx9HwDDLJk=;
+        b=QVOTlaeUr75Vv7crrpSuV/AV1bfWNKfIXXGub5jC2/HOaUxdBMXBP2Oxw1VaFPt6vY
+         vsnSgeoDnT68yTtz76pjKCVk8h9zfD+W73p5zkA/3oJT5ya9a2w7KOv+HpOHl8bb8fVO
+         VSPA1Z0O5HEp1enY+ckAgd9GSpWE43dVqOWzkTVmRIKIkwE62rSjgTZ0YvEDxLRy98/Y
+         jO5LnPHmQPft9x4BeXjsE3LzQcDyIvCHxSKPF9TTVq6B8AU3krHYMb6OW19e+96tsKa7
+         L30Klabsj7FZ2Z1sZgiYmApGiQSASk7L3nEzdMqQyUodWVWD09HHzFTO5v+QiIYhxywU
+         QAiQ==
+X-Gm-Message-State: AOJu0YwGuVfXljhhcZTwIFJOgsbSZgqLT/Ug5amOhPo6nG1iBjxqMlHb
+	EEHhFK7Ffo9wA8miVVC6AQsokQGUxQv5FqtpjZDGGajIU7Wdm/ls2uPUMw==
+X-Gm-Gg: ASbGncsbm1ayGCQySlNdD77Ce/C0BoYFwbHFoTUieo/vzCxJZST/yiyK3ShrlQjEPYY
+	nbJSubp24nma5d3Phc6Bn+KhRidnWWvzw9RjyUzk0shiPQA+iLkSENedKz7V73ftlYG+OS7lP5p
+	82daQ8fit9UHW6JyPGP2NdY81KkOKygDVZ6zlyeDsLnQlt+Y4rmA9Nd1b7aDkog/V8y+KgXimdx
+	+7M/O3VZkN8C085ZkNUcihQRNFoiwlZTQaTjb7UYjm+hIPE9A7UjQlIWDu42+FYM35dv6o8RLW6
+	LI/AtEAKHe97qdpGqgMIWeJ4KZ36QOLWFt0Ops24kKR84xRKYhJWYhGscBUocEjtcuE=
+X-Google-Smtp-Source: AGHT+IGw7yol5SFxwwjjh1ZDEQMo/i23fLJw2QMcMyB8ReO949tYQBbnRyjkwIRNoTFzjuK22mf2hQ==
+X-Received: by 2002:a17:903:2443:b0:223:2630:6b82 with SMTP id d9443c01a7336-231981058d0mr27091825ad.10.1747188079716;
+        Tue, 13 May 2025 19:01:19 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-22fc8271c43sm88888395ad.139.2025.05.13.19.01.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 May 2025 17:24:51 -0700 (PDT)
-Message-Id: <f11824317a8050764fe35698039f863dd842b0c2.1747182288.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
-References: <pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
-	<pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 May 2025 00:24:47 +0000
-Subject: [PATCH v3 2/2] merge-tree: add a new --dry-run flag
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 13 May 2025 19:01:19 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	jayatheerthkulkarni2005@gmail.com
+Subject: [PATCH v3] submodule: prevent overwriting .gitmodules entry on path reuse
+Date: Wed, 14 May 2025 07:31:08 +0530
+Message-ID: <20250514020108.24396-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
+In-Reply-To: <xmqq7c2kgp8e.fsf@gitster.g>
+References: <xmqq7c2kgp8e.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Elijah Newren <newren@gmail.com>
+When a submodule is added at a path that previously hosted another submodule
+(e.g., 'child'), Git reuses the submodule name derived from the path and
+updates the corresponding entry in .gitmodules. This can silently overwrite
+existing configuration if the old submodule was only moved (e.g., to
+'child_old') without renaming the submodule.
 
-Git Forges may be interested in whether two branches can be merged while
-not being interested in what the resulting merge tree is nor which files
-conflicted.  For such cases, add a new --dry-run flag which
-will make use of the new mergeability_only flag added to merge-ort in
-the previous commit.  This option allows the merge machinery to, in the
-outer layer of the merge:
-    * exit early when a conflict is detected
-    * avoid writing (most) merged blobs/trees to the object store
+Teach `module_add()` to look up the chosen submodule name in the
+repository existing submodule config.  If that name is already in
+use and points at a *different* path, we now die with an error,
+prompting the user to supply `--name`. Increment the name to an
+appropriate unique name (Like file system) when --force is called upon.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
+Add helper `submodule_active_matches_path()` so we can
+re-implement the old “is this path already covered by
+submodule.active?” logic without re-reading the config twice.
+
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- Documentation/git-merge-tree.adoc |  6 +++++
- builtin/merge-tree.c              | 22 ++++++++++++++++++
- t/t4301-merge-tree-write-tree.sh  | 38 +++++++++++++++++++++++++++++++
- 3 files changed, 66 insertions(+)
+ builtin/submodule--helper.c | 62 ++++++++++++++++++++++++++++++-------
+ t/t7400-submodule-basic.sh  | 23 ++++++++++++++
+ 2 files changed, 74 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/git-merge-tree.adoc b/Documentation/git-merge-tree.adoc
-index cf0578f9b5e8..74716b910192 100644
---- a/Documentation/git-merge-tree.adoc
-+++ b/Documentation/git-merge-tree.adoc
-@@ -65,6 +65,12 @@ OPTIONS
- 	default is to include these messages if there are merge
- 	conflicts, and to omit them otherwise.
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 53da2116dd..ef9e733cfb 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -32,6 +32,8 @@
+ #include "advice.h"
+ #include "branch.h"
+ #include "list-objects-filter-options.h"
++#include "wildmatch.h"
++#include "strbuf.h"
  
-+--dry-run::
-+	Disable all output from the program.  Useful when you are only
-+	interested in the exit status.  Allows merge-tree to exit
-+	early when it finds a conflict, and allows it to avoid writing
-+	most objects created by merges.
+ #define OPT_QUIET (1 << 0)
+ #define OPT_CACHED (1 << 1)
+@@ -3323,6 +3325,23 @@ static int config_submodule_in_gitmodules(const char *name, const char *var, con
+ 	return ret;
+ }
+ 
++static int submodule_active_matches_path(const char *path)
++{
++	const struct string_list *values;
++	size_t i;
 +
- --allow-unrelated-histories::
- 	merge-tree will by default error out if the two branches specified
- 	share no common history.  This flag can be given to override that
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 4aafa73c6155..273ec171e988 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -490,6 +490,9 @@ static int real_merge(struct merge_tree_options *o,
- 	if (result.clean < 0)
- 		die(_("failure to merge"));
- 
-+	if (o->merge_options.mergeability_only)
-+		goto cleanup;
++	if (git_config_get_string_multi("submodule.active", &values))
++		return 0;
 +
- 	if (show_messages == -1)
- 		show_messages = !result.clean;
- 
-@@ -522,6 +525,8 @@ static int real_merge(struct merge_tree_options *o,
- 	}
- 	if (o->use_stdin)
- 		putchar(line_termination);
++	for (i = 0; i < values->nr; i++) {
++		const char *pat = values->items[i].string;
++		if (!wildmatch(pat, path, 0))
++			return 1;
++	}
 +
-+cleanup:
- 	merge_finalize(&opt, &result);
- 	clear_merge_options(&opt);
- 	return !result.clean; /* result.clean < 0 handled above */
-@@ -538,6 +543,7 @@ int cmd_merge_tree(int argc,
- 	int original_argc;
- 	const char *merge_base = NULL;
- 	int ret;
-+	int dry_run = 0;
- 
- 	const char * const merge_tree_usage[] = {
- 		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
-@@ -552,6 +558,10 @@ int cmd_merge_tree(int argc,
- 			    N_("do a trivial merge only"), MODE_TRIVIAL),
- 		OPT_BOOL(0, "messages", &o.show_messages,
- 			 N_("also show informational/conflict messages")),
-+		OPT_BOOL_F(0, "dry-run",
-+			   &dry_run,
-+			   N_("suppress all output; only exit status wanted"),
-+			   PARSE_OPT_NONEG),
- 		OPT_SET_INT('z', NULL, &line_termination,
- 			    N_("separate paths with the NUL character"), '\0'),
- 		OPT_BOOL_F(0, "name-only",
-@@ -583,6 +593,18 @@ int cmd_merge_tree(int argc,
- 	argc = parse_options(argc, argv, prefix, mt_options,
- 			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
- 
-+	if (dry_run && o.show_messages == -1)
-+		o.show_messages = 0;
-+	o.merge_options.mergeability_only = dry_run;
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
-+				  o.show_messages, "--messages");
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
-+				  o.name_only, "--name-only");
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
-+				  o.use_stdin, "--stdin");
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
-+				  !line_termination, "-z");
++	return 0;
++}
 +
- 	if (xopts.nr && o.mode == MODE_TRIVIAL)
- 		die(_("--trivial-merge is incompatible with all other options"));
- 	for (size_t x = 0; x < xopts.nr; x++)
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index f9c5883a7f7c..566a2b4ec737 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -54,6 +54,25 @@ test_expect_success setup '
- 	git commit -m first-commit
+ static void configure_added_submodule(struct add_data *add_data)
+ {
+ 	char *key;
+@@ -3370,17 +3389,7 @@ static void configure_added_submodule(struct add_data *add_data)
+ 	 * is_submodule_active(), since that function needs to find
+ 	 * out the value of "submodule.active" again anyway.
+ 	 */
+-	if (!git_config_get("submodule.active")) {
+-		/*
+-		 * If the submodule being added isn't already covered by the
+-		 * current configured pathspec, set the submodule's active flag
+-		 */
+-		if (!is_submodule_active(the_repository, add_data->sm_path)) {
+-			key = xstrfmt("submodule.%s.active", add_data->sm_name);
+-			git_config_set_gently(key, "true");
+-			free(key);
+-		}
+-	} else {
++	if (!submodule_active_matches_path(add_data->sm_path)) {
+ 		key = xstrfmt("submodule.%s.active", add_data->sm_name);
+ 		git_config_set_gently(key, "true");
+ 		free(key);
+@@ -3443,7 +3452,11 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 	int force = 0, quiet = 0, progress = 0, dissociate = 0;
+ 	struct add_data add_data = ADD_DATA_INIT;
+ 	const char *ref_storage_format = NULL;
++	const struct submodule *existing;
+ 	char *to_free = NULL;
++	struct strbuf buf = STRBUF_INIT;
++	int i;
++	int allocated_sm_name = 0;
+ 	struct option options[] = {
+ 		OPT_STRING('b', "branch", &add_data.branch, N_("branch"),
+ 			   N_("branch of repository to add as submodule")),
+@@ -3546,6 +3559,31 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 	if(!add_data.sm_name)
+ 		add_data.sm_name = add_data.sm_path;
+ 
++	existing = submodule_from_name(the_repository,
++					null_oid(the_hash_algo),
++					add_data.sm_name);
++
++	if (existing && strcmp(existing->path, add_data.sm_path)) {
++		if (!force) {
++			die(_("submodule name '%s' already used for path '%s'"),
++			add_data.sm_name, existing->path);
++		}
++
++		/* --force: build <name><n> until unique */
++		for (i = 1; ; i++) {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "%s%d", add_data.sm_name, i);
++			if (!submodule_from_name(the_repository,
++						null_oid(the_hash_algo),
++						buf.buf)) {
++				break;
++			}
++		}
++
++		add_data.sm_name = strbuf_detach(&buf, NULL);
++		allocated_sm_name = 1;
++	}
++
+ 	if (check_submodule_name(add_data.sm_name))
+ 		die(_("'%s' is not a valid submodule name"), add_data.sm_name);
+ 
+@@ -3561,6 +3599,8 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 
+ 	ret = 0;
+ cleanup:
++	if (allocated_sm_name)
++		free((char *)add_data.sm_name);
+ 	free(add_data.sm_path);
+ 	free(to_free);
+ 	strbuf_release(&sb);
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index d6a501d453..5c3f471338 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1482,4 +1482,27 @@ test_expect_success '`submodule init` and `init.templateDir`' '
+ 	)
  '
  
-+test_expect_success '--dry-run on clean merge' '
-+	# Get rid of loose objects to start with
-+	git gc &&
-+	echo "0 objects, 0 kilobytes" >expect &&
-+	git count-objects >actual &&
-+	test_cmp expect actual &&
++test_expect_success 'submodule add fails when name is reused' '
++	git init test-submodule &&
++	(
++		cd test-submodule &&
++		git commit --allow-empty -m "initial commit" &&
 +
-+	# Ensure merge is successful (exit code of 0)
-+	git merge-tree --write-tree --dry-run side1 side3 >output &&
++		git init ../child-origin &&
++		git -C ../child-origin commit --allow-empty -m "initial commit" &&
 +
-+	# Ensure there is no output
-+	test_must_be_empty output &&
++		git submodule add ../child-origin child &&
++		git commit -m "Add submodule child" &&
 +
-+	# Ensure no loose objects written (all new objects written would have
-+	# been in "outer layer" of the merge)
-+	git count-objects >actual &&
-+	test_cmp expect actual
++		git mv child child_old &&
++		git commit -m "Move child to child_old" &&
++
++		# Create another submodule repo
++		git init ../child2-origin &&
++		git -C ../child2-origin commit --allow-empty -m "initial commit" &&
++
++		test_must_fail git submodule add ../child2-origin child
++	)
 +'
 +
- test_expect_success 'Clean merge' '
- 	TREE_OID=$(git merge-tree --write-tree side1 side3) &&
- 	q_to_tab <<-EOF >expect &&
-@@ -72,6 +91,25 @@ test_expect_success 'Failed merge without rename detection' '
- 	grep "CONFLICT (modify/delete): numbers deleted" out
- '
- 
-+test_expect_success  '--dry-run on conflicted merge' '
-+	# Get rid of loose objects to start with
-+	git gc &&
-+	echo "0 objects, 0 kilobytes" >expect &&
-+	git count-objects >actual &&
-+	test_cmp expect actual &&
-+
-+	# Ensure merge has conflict
-+	test_expect_code 1 git merge-tree --write-tree --dry-run side1 side2 >output &&
-+
-+	# Ensure there is no output
-+	test_must_be_empty output &&
-+
-+	# Ensure no loose objects written (all new objects written would have
-+	# been in "outer layer" of the merge)
-+	git count-objects >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Content merge and a few conflicts' '
- 	git checkout side1^0 &&
- 	test_must_fail git merge side2 &&
+ test_done
 -- 
-gitgitgadget
+2.49.GIT
+
