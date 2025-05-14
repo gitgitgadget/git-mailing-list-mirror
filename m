@@ -1,100 +1,160 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-wr1-f46.google.com (mail-wr1-f46.google.com [209.85.221.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AAFF20C461
-	for <git@vger.kernel.org>; Tue, 13 May 2025 22:22:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3421CFBC
+	for <git@vger.kernel.org>; Wed, 14 May 2025 00:24:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747174963; cv=none; b=aX5iIXgUu5eXejM7s6l2SjusUPhBP3wMsXnR7Tszt0MK7Spju2+zv6O7f7tmyQ5VUKEFuPqcSxqQmX2vf2eQ0sNQ3HVmLM/34CO/5viZdE1zangoziCAsL/W4QqOVAq6Y4flQlYv9hm5Z537Lb+2HTZaBYYBOsGuttuacARt0Kk=
+	t=1747182293; cv=none; b=qRJ+/vB4bInH4zb1EoqUYDMp35kXlcbUDfeD2WJ+wOFu9yqfc96hZjj3Xbw2dO/m59U6R52cViQxNkFgZHwcpVpl9qX2Gl2p2Fb3zOqKagaWfTEIOYy7lWqH/nbsOPqwWp6O9tgbCD3T74nWOrmaztg7IC5Wot20KRPOw0ZQi/8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747174963; c=relaxed/simple;
-	bh=cGQYoxY0lX7K5xYcfyTksp8IhadvO0bSUH5ndOjFvxk=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=ipD4MiynNN1Cg7XQQe2V/7rJkYDAgg+rp/UF7bFGZS5achqtsuYhv+PyuZA212lH5CZD0IMgtJQcp8ENBwmIflxVkmay1fq8O8nLUdUARfxBwj5DzvhIjkZU4+dSOD95kXtOCrU2AP8tMHUlThz+Yx8f54vZdkdSJ++/ERQA+oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NkrlvQ/T; arc=none smtp.client-ip=209.85.221.182
+	s=arc-20240116; t=1747182293; c=relaxed/simple;
+	bh=78InPCyBI+M3q1zS74+Y5H3/+eL9uRnASZBdQCti9VI=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=uCbapT8fC2xtaZcNTMFxzZsdRBuB0RMgLY78PLuf7A8b1khFumvVorj3NcTbsM6OqnvPSM/0T/30JRCrmQPopuuwzYz2AZv12TUHJzn345KEFts4OiuVcDkR9XPF5R7l6LzctZjujVSIQKRY6qBGSOXp6oWCGmbmxbRF6XV3jxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LJQU75VB; arc=none smtp.client-ip=209.85.221.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NkrlvQ/T"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-52c7aa0c371so2124731e0c.2
-        for <git@vger.kernel.org>; Tue, 13 May 2025 15:22:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LJQU75VB"
+Received: by mail-wr1-f46.google.com with SMTP id ffacd0b85a97d-3a0b9625662so5094276f8f.3
+        for <git@vger.kernel.org>; Tue, 13 May 2025 17:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747174960; x=1747779760; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747182290; x=1747787090; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=cGQYoxY0lX7K5xYcfyTksp8IhadvO0bSUH5ndOjFvxk=;
-        b=NkrlvQ/TCpPPgcX5VDoyBcmXTj91K3J0lsWodbGAcsMqZqqwganFSbof2fNVq8FtNp
-         W5vcJIGA9pV8uc72LhmpSPdu7+Yq01IwDV8sj1MffNEo5Gjr6Pw+o8v1GsjExyGXHDz7
-         UkYF2odTR7AnNn2BGa2TvR4/u8JTDla/8BWX8GGuOG59b+66OPFqJQrCSSFI6S2WDm8H
-         RAVa/xoiuCtf22ZJbqC6tzBarg7HmK1cGNKPNwCJbOM0yBsUxNUqYvBalNUTH4Xng3fK
-         yHjiiz9UWNdzYzjCEBSh9mqYsnGZR/Vku8ZSl47mQC2/Cm5urV11y9lL1Kt7nf490VcA
-         po1g==
+        bh=wIsqXQaolsKsXBUzv5VyZwvmFoUxRu5pHJ+jebH7XQk=;
+        b=LJQU75VBI7zugVaXaZvxcICD+SRIHoz5wKj20UTd5mQQmxeiyDnlyr+6aEBBP9RM50
+         zYWWagGT6FwPyeClMbEy7ag28S1XmaF9LJoqf+md+G8ufWrMTRZE7YS4Lw3bz4Ag4u2a
+         MiG4lTaYBYP+3CDlIRXPuPOMUw3uDTjbtFpL77ThkJ1/gPbPa1anPU89g5STkm4tH993
+         gcPYm7eiQEatfj/FWvVtd16TLoPI9HckIxu2TUlfeDK2TaFMqukNjrVyLvfk1BdqvbYu
+         IgGuvnoRW81wkk85ClNPVByMBVIGQVI3kOPv+VRQt3Bj4AvnGWMA+NmgF/xpghAcoePh
+         cDnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747174960; x=1747779760;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1747182290; x=1747787090;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=cGQYoxY0lX7K5xYcfyTksp8IhadvO0bSUH5ndOjFvxk=;
-        b=C1bt6l6/zPg1r0snsopkm3TwcsDXK84UCoEhXH831x/zkSdDfWZj4xTzuFLbjwqxYx
-         M4fokHTAsoAwVY+vxMJ37CbP703YqggOZrHzoApoLswxC4NmtxNzqIzU6ySRKcPwGxZc
-         YU/gvg4YNnoqFMXxccovMQ6VL/O6HaRR05BlQo0MCtLBs9v7mYTN+OdXPDAKBmU8qFUR
-         GuplAHzO7iN0kPAZPpnFwwLWRRjgxJlf2Y+k4DIT9PnGhl7sqM5bNyK17hqaAGCb9Uiv
-         TZ6cpviKjd/JGuV2g1lFNzGxjpuiiEAqc6/uXfJnWkZly4VKC0z0K4rFW3Dx70/AjxeS
-         K7Vw==
-X-Gm-Message-State: AOJu0YwiXUpE3sAuQDnNulcB/2oJNY9cEji23HUQXgLRrGsadZ5YMoLj
-	mQ3gAsf3Dl3G1q3+ga9awGLlZNcFEUwmqk4rq7Vzo8rO8J/qvSXL
-X-Gm-Gg: ASbGncvHV5r7gTHehPAnKJw/FgjYOlL6FGkGU5EL4tO4hjTaHW+tAlCHYDXnPZwJgoC
-	2jylCcFqOtKfjKjsrVXC05/aLQDnX9C5bj7hjxIruSu6w5u0bj8/M30/ouw3ppbPLCIYX/7DMQj
-	QQsTXHOfilLw0Bjx3DnvDNyn13I387JNaQkGdLNJG1Z6/Vx37lmOeZkSBVCzAtDl/7NJm1knRvb
-	pg0iPVrXUaZTp3Z/9wMA4WQDfeEyJ2ztu2PnUkC8ETEMdOaDCdrPng3fIM3Xz5bMDlnpS2q2R7r
-	AHntJSoEat6if3kZ0GA1QGLFyFVHaThvgiDhCWJV7wSMubTeQxcL3/mBIMPMuKhdyU9DCI37Z5w
-	=
-X-Google-Smtp-Source: AGHT+IExVzR2ued5YK1nevM7hZIPBlcY3Agqz0feluIAkenA+8OWhHaCCiuGXjfl3O9e0qyXy2527w==
-X-Received: by 2002:a05:6122:65a9:b0:52c:5590:72c9 with SMTP id 71dfb90a1353d-52d9c5f2061mr1165461e0c.5.1747174960147;
-        Tue, 13 May 2025 15:22:40 -0700 (PDT)
-Received: from smtpclient.apple ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-52c538a7156sm8382792e0c.46.2025.05.13.15.22.38
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Tue, 13 May 2025 15:22:39 -0700 (PDT)
-Content-Type: text/plain;
-	charset=us-ascii
+        bh=wIsqXQaolsKsXBUzv5VyZwvmFoUxRu5pHJ+jebH7XQk=;
+        b=vCEtNfJdURZl2vbROsg+lJu9ySFYmz9xZwxcB9/DEQ6y2fDSy7Z6qP7YvzxGEDrzh1
+         Jviuj8f/JGY2p/rVQcJkZZjVdvAfFXGGgKmALelEB9sP3/Y1X23xKRQDUh3oC89Xcyf8
+         10gYvl9C/2P8RaCRdznZJb76FvyDTWLes0S6dIHX2x8MyMAHEBTiXPU1nEYsbSoNy3ef
+         LYyP+uaGxkDKSCwlaR9fickA1hR3B5sABd6y0/u27+lXDVqWCRUW3C0NlJWu7trpNrKC
+         oNip7BvFcMXc0f2dnrESKFmGm93GPy+hEkDnw8NiSUyM4yjL25vmKdTj6gCzlAEGC5ka
+         xP3w==
+X-Gm-Message-State: AOJu0Yz8EyKT0p1hdB5x4vtZT4m1i/uuHWci+RnA0Lq+pJ1UeXkblXLJ
+	4HdVdETZPi4SJ8U+eo+2B1xzSteHm4UwMR3dOEdkN7jj5TzYuYJFVALecg==
+X-Gm-Gg: ASbGncsG8PbCGeCmgRo0zb4gBTVTpJEhkwlKL4Uc/FjbtMS7xTqPxg1r99Bq0uDyFGj
+	cHIe/iJGLtJQPM6Z7d3rT353xMwlEmxBaGyn7DgnXFjQRmmxVYGrEQDUeUphAC9R02WKHT+gd03
+	IyRAdEuElkYH2iGt6wXB5+nKSqeeQ9Zj3lkI6zOH8P5r7iwAFeufB/ifbRSLRdXXBE8zAOaKDVJ
+	Ur5ZS98pHzUYJpo9NgXffu1oaTSD62b+KtjhZSPHZq6vBn/cdcxSjd37MNzzz/OO5fUzwQFL5ZF
+	5U7XPaauj7TyFb7WyGd7/vH1WNWZ5BUP/QrGM1jgH1LTflQUOPsczgVKMeCID6o=
+X-Google-Smtp-Source: AGHT+IFZUehg7zTn/iJGBy/ImATnYQFKeiFiuHbysItFu6LjXRkYwXuXQL6WymXNq5B5EAocPUl4hg==
+X-Received: by 2002:a05:6000:250a:b0:39c:cc7:3c97 with SMTP id ffacd0b85a97d-3a349966528mr844962f8f.50.1747182290007;
+        Tue, 13 May 2025 17:24:50 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4c599sm18169795f8f.94.2025.05.13.17.24.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 May 2025 17:24:49 -0700 (PDT)
+Message-Id: <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
+References: <pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
+From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Wed, 14 May 2025 00:24:45 +0000
+Subject: [PATCH v3 0/2] merge-tree: add new --dry-run option
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [GSoC PATCH v2 2/2] json-writer: describe the usage of jw_*
- functions
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAOLa=ZQooC0TsjGG109MY_njoTm5GjW-WNf7-L2W6BN8umRL2Q@mail.gmail.com>
-Date: Tue, 13 May 2025 19:22:26 -0300
-Cc: git@vger.kernel.org,
- gitster@pobox.com,
- ps@pks.im
-Content-Transfer-Encoding: 7bit
-Message-Id: <F862E606-C784-433C-BAB1-283C678E20D5@gmail.com>
-References: <20250512020935.73140-1-lucasseikioshiro@gmail.com>
- <20250512020935.73140-3-lucasseikioshiro@gmail.com>
- <CAOLa=ZQooC0TsjGG109MY_njoTm5GjW-WNf7-L2W6BN8umRL2Q@mail.gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
+MIME-Version: 1.0
+To: git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
+    Elijah Newren <newren@gmail.com>
 
-> Overall this looks good, but I do have to wonder if it is needed given
-> that your previous patch already has documentation for each function.
+Changes since v2:
 
-Agreed, it looks like too much information. This second patch was
-created after the review of v1, and to be honest, I think that this
-overview is more clear as it focus in the what we want (write a JSON)
-instead of documenting each function.
+ * Converted locations missed in v1 in changing --mergeability-only ->
+   --dry-run
 
-So, if I need to choose one of them, I'll choose this.
+Changes since v1:
 
-> But I'll leave that decision to you.
+ * Renamed --mergeability-only flag to --dry-run, as per suggestion from
+   Junio
+ * added some commit message clarifications
 
-Ok, I'll keep the second!
+This adds a new flag, --dry-run, to git merge-tree, which suppresses all
+output and leaves only the exit status (reflecting successful merge or
+conflict). This is useful for Git Forges in cases where they are only
+interested in whether two branches can be merged, without needing the actual
+merge result or conflict details.
 
-> Thanks for working on this!
+The advantage of the flag is two fold:
 
-Thank you!
+ * The merge machinery can exit once it detects a conflict, instead of
+   continuing to compute merge result information
+ * The merge machinery can avoid writing merged blobs and trees to the
+   object store when in the outer layer of the merging process (more details
+   in the first commit message).
+
+Elijah Newren (2):
+  merge-ort: add a new mergeability_only option
+  merge-tree: add a new --dry-run flag
+
+ Documentation/git-merge-tree.adoc |  6 +++++
+ builtin/merge-tree.c              | 22 ++++++++++++++++++
+ merge-ort.c                       | 38 +++++++++++++++++++++++++------
+ merge-ort.h                       |  1 +
+ t/t4301-merge-tree-write-tree.sh  | 38 +++++++++++++++++++++++++++++++
+ 5 files changed, 98 insertions(+), 7 deletions(-)
+
+
+base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1920%2Fnewren%2Fmergeability-only-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1920/newren/mergeability-only-v3
+Pull-Request: https://github.com/gitgitgadget/git/pull/1920
+
+Range-diff vs v2:
+
+ 1:  4757c4810d3 = 1:  4757c4810d3 merge-ort: add a new mergeability_only option
+ 2:  1d18ab7feb8 ! 2:  f11824317a8 merge-tree: add a new --dry-run flag
+     @@ Documentation/git-merge-tree.adoc: OPTIONS
+       	default is to include these messages if there are merge
+       	conflicts, and to omit them otherwise.
+       
+     -+--mergeability-only::
+     ++--dry-run::
+      +	Disable all output from the program.  Useful when you are only
+      +	interested in the exit status.  Allows merge-tree to exit
+     -+	early on the first conflict it finds, and allows it to avoid
+     -+	writing most objects created by merges.
+     ++	early when it finds a conflict, and allows it to avoid writing
+     ++	most objects created by merges.
+      +
+       --allow-unrelated-histories::
+       	merge-tree will by default error out if the two branches specified
+     @@ builtin/merge-tree.c: int cmd_merge_tree(int argc,
+      +	if (dry_run && o.show_messages == -1)
+      +		o.show_messages = 0;
+      +	o.merge_options.mergeability_only = dry_run;
+     -+	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--dry-run",
+      +				  o.show_messages, "--messages");
+     -+	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--dry-run",
+      +				  o.name_only, "--name-only");
+     -+	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--dry-run",
+      +				  o.use_stdin, "--stdin");
+     -+	die_for_incompatible_opt2(dry_run, "--mergeability-only",
+     ++	die_for_incompatible_opt2(dry_run, "--dry-run",
+      +				  !line_termination, "-z");
+      +
+       	if (xopts.nr && o.mode == MODE_TRIVIAL)
+
+-- 
+gitgitgadget
