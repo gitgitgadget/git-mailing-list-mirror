@@ -1,139 +1,101 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FAE227C15C
-	for <git@vger.kernel.org>; Wed, 14 May 2025 13:53:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63E2A17BA3
+	for <git@vger.kernel.org>; Wed, 14 May 2025 14:08:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747230814; cv=none; b=JttbNc1tuOy6FW7SHl4gg0Q/jGU5c72X3fEe5h1zMVN2A0ezgUOM2c1l5By6q4a0IMp6102/2Qco3N2KeD/B2cflH7F5EN2B6AWkjRhBNV1KG8KQ1tgCnQZYB1gFVqdX2irIj6DkhEeHCf0N7hKC1tCFiwGCuo3IRXOHoBrUpq8=
+	t=1747231741; cv=none; b=P54umjhkOykl8noSCA9I+qrmfl0U5r6FjwXLniP6vHIfYrkXkajMQLolkM9rEK6ZgFFaw89tIN/pRWISoCVmrjWRF5dPHahGiFuHVtoJALRQ0CynZ5o9RGPnKQmLyekK2WvnxW8dF3NixqD+cMRQ61xv5Vj+XkTpntWKl71fjkc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747230814; c=relaxed/simple;
-	bh=L42gZ5GdmuFrtm9M5k3dmuCmwAyTTsRLJqwqgHIXujg=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZN4m+W5MkNtDgFzobMbg/69TTnfkTlhg1JYUUKC1MHVQyInczYYT5MNNayZiXo/O9K0db+HrD9jYtnWp3RQsIUAQrMhPaew9NFmTLhPSsfeBQAWdpR6YrINzaxFV503CnLtrCGs/wvLTntgzXiiTpC+NlUjO8Sl7flPd9qlZcB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VLxR7YvN; arc=none smtp.client-ip=209.85.221.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747231741; c=relaxed/simple;
+	bh=z95Q5gVheJBHz576lKn28jwyIG6xzjXAJKE4kXFvXkk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d+PLqv2VDHMbdCALKWHkEkHYic7kww2z91GnbnPyYcVijKcyf4cfYTZ1pwVsKyKo1RElNq7j9fi8dJaRjFFGWxr/rh0ID7uNOCVDMN9SWkx1QiEyouQgibKbMSA1HVR07vqRV/SF37IcgWOYE6lA8AOxT4Bd9nwja+e5zxWcEoo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=c/Tgn4kA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=InvLzna9; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VLxR7YvN"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a0b646eff7so5915461f8f.2
-        for <git@vger.kernel.org>; Wed, 14 May 2025 06:53:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747230810; x=1747835610; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=FCVUOI1OjwbHbVVebihv21XSLHm04EBJQICxnZ9JmZU=;
-        b=VLxR7YvNtTRX7sIsO0KtPsBkIWG6bCU6oU/nXCv/zuAbhRvf69Vmn5GDeIFj6qN8S3
-         6zZmqv4bmTJu0aHgOk0YbyMrzPBqi1mY5LoxDtnIsySrfAhdV05eEtzrBv22dfnKpVg7
-         HZSWHLg3AyNR1dL9Sh6e/vwgA9vatEOLqTod44BTrp8cHeO5MZ5ZxGZlKwdrWCxMgWen
-         zCykuC7jb+CSMtBN2K5G0Hxbp+uJADqpWPoIDmhNdZWIV5g3kj1JoU1d3OdftdHQK5Fp
-         Na9Lsr6KV6lMW4+OPnbCpmGKIpj73P69+8K47N0YIYj41N1zuHGaP2Hnd2LgLPQC8a2D
-         aDHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747230810; x=1747835610;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=FCVUOI1OjwbHbVVebihv21XSLHm04EBJQICxnZ9JmZU=;
-        b=TjGK//PZPdbGYX0QSY7FpCU5+5hhwpBy+Xk4DAz+3Prv7W2NQ/WKLOqm6wsLFxMnhc
-         NizqA6zkYda47x+8by63qlXLw9oi18CXluhQFx7m9uaAYAJ3TKVbBAUT84f13dkA6C51
-         OISvW7fWzEWOFCgapfLbqUAIOZE4dLpb5Mu1hpXaF9SVAT33Mngy4RepX9hvhlG7IhZR
-         Bi6UWlxlnAegT+zsFLomPbdDkgBjwhrsvLDyyc7Gsybp38M/YHoPIvQBA+NyuNS4VKw+
-         yvqK6wadp3kpMl4NDeQZtYEsB6WwGMU7askz+YzmSZaMV35oa/ED6ETDXp4DVv537HZN
-         BZSw==
-X-Gm-Message-State: AOJu0YzFJVy8pIujCE01VCkBHkctYI0LF6MgUiYNxMsg82TyXnFVpfBz
-	sRd8opG0GSJovwWqfRCxyV0CqTT4eTQ+YUJiXgIKLtjnitomLY1uq6Hbow==
-X-Gm-Gg: ASbGncuI+sH14gO147Og+dNPgj9rNEDOximgFX6sR3WNVdrUaqlPI1OQrXqMiDAGvQn
-	j05Cyoee1LPrsR8B+Lmo98gAyBk3KDF5PlV9G9Q4O+JNy4/sN0M5D+Ixe0z6SOklJRD9PFhrZ8X
-	ukWmXyvLWo2Uq17NST4TAI4yxKJb+0gyGOwz0tziAI44RNXnAqTT2QqfifFt2Ed1+xAFBqr0GZx
-	pCBmz/D+hcWnt/XOWpEteS0YGCLIG+1zPGCqpXUwpsH6RhXqHArNUk3G7WnDS3N3Z7les1uUZrl
-	aYyb9SqWP6LCywQ1mMW2tU/NQ6aRvrlOMnNzy6vmbnFMlKO2zQqr
-X-Google-Smtp-Source: AGHT+IHY6efdFKCiZesbLLKnJyBf36oBr+B+cH2KyABLaOWzW3Y+b4MbJN3gDFvJYDF349jSAof4ww==
-X-Received: by 2002:a5d:64eb:0:b0:3a0:b635:ea43 with SMTP id ffacd0b85a97d-3a3496bfc96mr3053639f8f.33.1747230809896;
-        Wed, 14 May 2025 06:53:29 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3951854sm30735675e9.24.2025.05.14.06.53.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 May 2025 06:53:29 -0700 (PDT)
-Message-Id: <pull.1965.git.git.1747230808770.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 14 May 2025 13:53:28 +0000
-Subject: [PATCH] sequencer: fix memory leak if `todo_list_rearrange_squash()`
- failed
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="c/Tgn4kA";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="InvLzna9"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 6F7B91140143;
+	Wed, 14 May 2025 10:08:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 14 May 2025 10:08:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747231738; x=1747318138; bh=kSLXfIS+GH
+	l8We1huH102yZIstZKSSbXMVX1Ut697gY=; b=c/Tgn4kA8Iac/9NRfNrFuA9oeF
+	P9V/1iivoCYBSLfk/ljMCAfSrQpGxpcq4RpyZfcEqSmMqTl6jNZsgGZy5cNgVlAi
+	nm6YNL5B9bxKPO4YZVFCq0+qHHslwkSY5+t4Vx9WRGuDD06ArE55GL9qawVf2oQx
+	Sh0ZnS7P8y/K6ICewth0QvLpF5yt8MVLwlBQ+7UmFjkFgqUzOeTzIhFdB+BoXEH4
+	NFc0f7CRceiguzOv79iY3vuX7MvZrrwcXFYsMuaf8/oqyzyXSYmwZEmbwo4vjhP9
+	TD4r5RbYhBIknFdtXwvzihM7ooGUln5RWO67zt76DP9yxCR6WrmeBz20N1Xg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747231738; x=1747318138; bh=kSLXfIS+GHl8We1huH102yZIstZKSSbXMVX
+	1Ut697gY=; b=InvLzna96t5GxBhOncDvLkaBH5hEsQ9PzxU5TdESooUgy5rmBEm
+	p5agOC6lzUXqcLwrMTbo+yoc1SDcjyL/ueZy9IwgkzPT8J94a0w0dUSOZIutK0+o
+	tsRwOTxfEE/Ygf8cAr7wNytoeTJ7yKEk7ncgyhN1O/PC+sEBaOGnkvd/sb4Pb9TG
+	r0MEq07HNV/g0oxDX2b+Z+oA9yBCbLMxS0ZIRi/8ZFIqZ4FBtZAOAjXyGm/zFO5m
+	SO1BVwMv4Z27U7rDK6E2C1O7ikMGwVWFhzrS3N4dY/P/nhdkdYofGOShwECU0/Bk
+	nEBncekKl9UqPNx7IjtCgXOd2pKd7sl0u5w==
+X-ME-Sender: <xms:-qMkaGA4qYxVY72Pkv4DG_J9bYd7aDnlNR8Q34IlVW0WbB0kjvEI0A>
+    <xme:-qMkaAhdKW15W5n4FljO-UxxNzaI7-luCx1tDMNMnFz31qLpE0uHObllHYfe5TbbV
+    MUpm78sBHElYvgJzQ>
+X-ME-Received: <xmr:-qMkaJkk8k6DH4_e6BLHv_ck4J8iQGM1fqQ8GuigYbN7eWZAIa2OsJGhDZ8bD6WpmOaWKs-AG0ji81aQbBJGBdM8aOBIr1K1Rk_T1cU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejudelucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhgvfihrvghnse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhl
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:-qMkaEx36tlhzsf_gC3tcUyWeN4Ls0kV8OU_WvPLezyld0xrSav8Vw>
+    <xmx:-qMkaLTXVo4QvF3KhK-rxOOjkxvySMsY_CHeCReY1riU_-OTXdmA0A>
+    <xmx:-qMkaPYrnBPlGXIBHLIz3fQjw3-vWNDFCr1oCVQyXWjkgIkEbqVk-w>
+    <xmx:-qMkaERNY_YM6jhJBJOu7L7ZpIt2tRa6xOdpofo-O03npn5uIEVozA>
+    <xmx:-qMkaJfe9qeZFyu3hBeKXiu2_xlE7kZDpVVsnvq87HbS4xWW_29Gr1zW>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 May 2025 10:08:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Elijah Newren <newren@gmail.com>
+Cc: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] merge-tree: add a new --dry-run flag
+In-Reply-To: <CABPp-BHp7RXHFy18=fr1dqQgKiO3PNjXQkL2VX-cjSGsHp48aw@mail.gmail.com>
+	(Elijah Newren's message of "Tue, 13 May 2025 08:30:51 -0700")
+References: <pull.1920.git.1746914561.gitgitgadget@gmail.com>
+	<pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
+	<1d18ab7feb877a4173ac55814177aefe88cee658.1747093322.git.gitgitgadget@gmail.com>
+	<xmqqa57giqyi.fsf@gitster.g>
+	<CABPp-BHp7RXHFy18=fr1dqQgKiO3PNjXQkL2VX-cjSGsHp48aw@mail.gmail.com>
+Date: Wed, 14 May 2025 07:08:56 -0700
+Message-ID: <xmqqv7q3b7yf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+Elijah Newren <newren@gmail.com> writes:
 
-In sequencer.c:todo_list_rearrange_squash, if it fails, memory
-allocated in `next`, `tail`, `subjects` and `subject2item` will leak.
-Jump to cleanup label before return could fix this leak problem.
+> external; Kristoffer caught this oversight too.  I'll send a re-roll
+> with this fixed.  (I apparently also missed it in the
+> die-if-incompatible-options too, not sure how I missed all of these,
+> but I'll ensure they're all fixed up).
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
-    sequencer: fix memory leak if todo_list_rearrange_squash() failed
-    
-    In sequencer.c:todo_list_rearrange_squash, if it fails, memory allocated
-    in next, tail, subjects and subject2item will leak. Jump to cleanup
-    label before return could fix this leak problem.
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1965%2Fbrandb97%2Ffix-sequencer-todo-leak-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1965/brandb97/fix-sequencer-todo-leak-v1
-Pull-Request: https://github.com/git/git/pull/1965
-
- sequencer.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
-
-diff --git a/sequencer.c b/sequencer.c
-index b5c4043757e..5fb7b68a7ab 100644
---- a/sequencer.c
-+++ b/sequencer.c
-@@ -6596,6 +6596,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 	char **subjects;
- 	struct commit_todo_item commit_todo;
- 	struct todo_item *items = NULL;
-+	int ret = 0;
- 
- 	init_commit_todo_item(&commit_todo);
- 	/*
-@@ -6626,8 +6627,8 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 		}
- 
- 		if (is_fixup(item->command)) {
--			clear_commit_todo_item(&commit_todo);
--			return error(_("the script was already rearranged."));
-+			ret = error(_("the script was already rearranged."));
-+			goto cleanup;
- 		}
- 
- 		repo_parse_commit(the_repository, item->commit);
-@@ -6729,6 +6730,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 		todo_list->items = items;
- 	}
- 
-+cleanup:
- 	free(next);
- 	free(tail);
- 	for (i = 0; i < todo_list->nr; i++)
-@@ -6738,7 +6740,7 @@ int todo_list_rearrange_squash(struct todo_list *todo_list)
- 
- 	clear_commit_todo_item(&commit_todo);
- 
--	return 0;
-+	return ret;
- }
- 
- int sequencer_determine_whence(struct repository *r, enum commit_whence *whence)
-
-base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
--- 
-gitgitgadget
+Thanks.  Will hold.
