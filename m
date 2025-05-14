@@ -1,168 +1,206 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f180.google.com (mail-pg1-f180.google.com [209.85.215.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2404E18787A
-	for <git@vger.kernel.org>; Wed, 14 May 2025 15:34:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83E68221DA8
+	for <git@vger.kernel.org>; Wed, 14 May 2025 15:47:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747236867; cv=none; b=tsy0ad4Y5HSQubStUt3DkYSMm7nCxx6yUmf8fAwLpwJGRCEzplMb9MQWBgP9UxcK0SX2xFDrHc4LQ1Cr0hnNjnq5mEAChjDB2gwXUlaMNiBDAgD2aC7uSOnvjWP86M2+BJiezrppBcLlU03ryaXUdH9U1quEJazb5ib5dzsnFqk=
+	t=1747237663; cv=none; b=jlXKdsGdumc5TecHJB2ABtR1P09XTAnUnl0MM0tpBCMdB5U5ZfPPZb9O0P+NbZTpC+vvSSPhLc78uxTYccDKfmEO9ImHj1TEdTxoo0l8FEthDzuIPlpkOk5GehD9JgNbleid0E6RJP8A9P5cTQX36NWl/40VXPcKAhai9K/zTTg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747236867; c=relaxed/simple;
-	bh=9Av9XjaV6ofJ8OQq/+m+lkW0AM1H6PpfiA6GEH3M6dA=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=ELS9MO5Al9iHKSFnPKcDGbjCqCPzhIdarFgLKtTwo20VoCaxjHOiJc4nLfgpNaXLJfcRHhj5fG35xdsNB84wPJIrXKGSkQ8UBOJsROoYcUQ4mG9xH5Y29y2q4IiasFTEYFFjRNkgT3RHg+kXzRgwveYDFuAv05yWg2ZqFCrcepM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=gZ4PJk3x; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LLDU6z0O; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1747237663; c=relaxed/simple;
+	bh=Gqo7/xX/eCZF87ChJExToKohynJ+OjgeWaMFMnimOyc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=UNau/uMFNl7tANHvnx8gOExmTYSSb3JlB+Q7WRXalY4RgHRn12fX5YnqPoq5jfv2gPw4Naj6piYneDhqUr4iO8U/5CciuVBenT8PjwroIhPN1lJfS8wudNF9C5D4rGX6JkjUUVnb8hP5CwaBr08D26xmU3vVOhwLve36r5rPuZU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MAK7E50c; arc=none smtp.client-ip=209.85.215.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="gZ4PJk3x";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LLDU6z0O"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id DCE821380184;
-	Wed, 14 May 2025 11:34:23 -0400 (EDT)
-Received: from phl-imap-14 ([10.202.2.87])
-  by phl-compute-09.internal (MEProxy); Wed, 14 May 2025 11:34:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747236863;
-	 x=1747323263; bh=CP+PzCNkDt7Cbqf1vp+lZnI7aeKSND195mYWXDf6Kuw=; b=
-	gZ4PJk3xrblvm+3/gAEeJo1bFpf3q+OjBsBQq1M3QvCnef+turLWmLH//JVP2IPX
-	QbQhQfd/ncXUCOcC+HFDqYVWGlponp9ZP8KXnJ3iLdhw7ay1faZu1sh2r1xmEeQm
-	Oz4Qt3I4YyRxCMXbSBsUHvwA0ExbxfAmXO6jLDMfvZteUbTEeCCpdZFVCa79prnu
-	QSPZQaE1JFI76kggDe6ViL8jexMZXyx+6/2FAeHijNA1yghz5L62hIrmfwFkFaIq
-	/eHGc0o7h3XMo+AM0Wr0P9YNSnSqR1+9dxFPvHJdnJMSftzQ+LYSatnWurZ4qb+s
-	NXAEgq9x+Q4hqs2Triv89Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747236863; x=
-	1747323263; bh=CP+PzCNkDt7Cbqf1vp+lZnI7aeKSND195mYWXDf6Kuw=; b=L
-	LDU6z0OxrP+Mm/GFe+8gxMkNwdbf0LXiTvwp9uo2mllbkm+hIAqtnuLJ6FoOeiXY
-	lYeg8EqYWecU5eXk6Iz7H6jhBMNE1uyTJ9u6tPuFY2rWRovmSoeTRz4FpMi+XhsS
-	sW8TEAVkXgPOmP1PrvRBRyLSDc7rb6TzTI/DjuEVke62kY8iPPFb2P6Wvmhih4vn
-	DciAjglc0iOgrN4DDMoombH5apKTKHCT7YePHDGez0xgS0txOELlp0+pkXwfC6+7
-	ltHx+hINsTtX+IM6SZ7L6Nipnv48krc0nxU/nEMY6J3OJJJmzeTCq3vuQMPGbXcp
-	/JmCXGO5lUSzr0UZ3W6Ag==
-X-ME-Sender: <xms:_7ckaGTQ_e5IZHNDmgDi9tZf9RD6qpaT7UJlvwG2LFf0YieriCXnfK0>
-    <xme:_7ckaLyuced6qZxdZdxeI11frZecoHqTrGWRHqwwqS1wFMf6A7hoVeBAuR19Nud_q
-    Ul7rGtGt-eIUqNBaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejfeeiucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtjeertder
-    tddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrh
-    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggft
-    rfgrthhtvghrnhepgedtjeeiteeghfeutdeutddtiefgvdegteektdeutddugfekleeugf
-    elteffjeffnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
-    hnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:_7ckaD2mFMPdoOhUBq82QQJ3jZVtQeFGObfvcfj6r4jae3X0KBxY5w>
-    <xmx:_7ckaCACRQja0SWMPwBIqGRVKU5xuiPFeod1v0zeNTzLaq9_IzNH7g>
-    <xmx:_7ckaPhrDnf05o1aAXTJOPUpVsNGJNJKlJlC1wYZOjduHPMNJvXTKw>
-    <xmx:_7ckaOpkq7-E5NszzqjXQp5EVaf8DFFZE05aju7ALvv458Oa08rV_A>
-    <xmx:_7ckaG8Mv5IDpUupz6c0Ozqnzt3UaGNR1pF9hJ2vOictZn6aWFyPphfa>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id A462E2800087; Wed, 14 May 2025 11:34:23 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MAK7E50c"
+Received: by mail-pg1-f180.google.com with SMTP id 41be03b00d2f7-b1ff9b276c2so4329209a12.1
+        for <git@vger.kernel.org>; Wed, 14 May 2025 08:47:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747237660; x=1747842460; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=rdVghsJNkNuRJ3BLdCOMycrklMirpXXwXaE+tBC/z/A=;
+        b=MAK7E50cfsFygwyOuSS2DIRzoAYoxOoW6E5BBVjTtrafexoM4b4XbmMbfsqB2SFMlW
+         a2nTrdl86hmumzEWQ8OIjKfaiB7Nt/G5Tpe7ldjthnLAG5e8R3cdZsBL7puNwyKAfYU6
+         E/N7IfGyXFqZ7RaVmR7IqvM9o3jmXJ9Dx0QThq/2ILfc7/Wk1fjEKfVXzx9p4sb4yJR7
+         E0rgY+2WQJ6lpsW54ghbxU4DPssqgkstv/0r2HAE7l0uFSX10yko30Ont1GUHgO4v+Gu
+         Et1ruIwyOg9Tls9hDvutp3u46fxNIfY+ScwTnoQPkB3Zx2DUJ6zC5YLQKflqanRJpvuo
+         xVFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747237660; x=1747842460;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rdVghsJNkNuRJ3BLdCOMycrklMirpXXwXaE+tBC/z/A=;
+        b=AQbbgVa3Ml753YFD2N1/RXB7yumJKWYJXASKm6V8P9W6RTFoyvSWPCKsHUpZSXj0rc
+         lIQij/oKYYVeDPPVbk5PpvY61fX49C6LkDFjHnIEY9cC4XpyxF97+FUu+RNCk9WZKWJ5
+         sDZaNPbMo3hYOTgZnbtEsP4Cwx+7csEaEwm+uwOTPQd96OxRMlYKvvmQSdGinwR/d4oB
+         4bixxrwij98IEsWV0xDjIzKt86Pb7iRvPr4+i4CgOgNBG+BieEBwy+tuCNw21btCSduB
+         mrVHtR2bMEnzCBRk90h6nb8nCKSmLZyeDPohTwnxpfc1kOnZLuUv28Oa9U5LqRUxiZ1/
+         I33g==
+X-Gm-Message-State: AOJu0YzaUHx8ipbmSebAibYJCvOAfztsq8YK+28+I963yOt9vJavePIo
+	wRVFMfZkzNI+zfg90JNXUVvnNMJ4XVxzvouLrLmkCDfzKtHMJrLHU0A5lg==
+X-Gm-Gg: ASbGnctmhiM+cIh7cMeoqnt0fz401vFwOHAX4X2pDX77qLNDK3JDvtT2IgOHIA63ISl
+	y3t+6PC2EWme0q/6TlmjtD3ADYb2WV0hjWqq8zHjPm3E4z2aDJZCJ3LXGZNd6ipEppGBDQos3OW
+	umzgRjFIhYX7A40gkX6GKT1ndR66eTzX3Q3AXMqc8CMHx+kVENjIxC1WsGKRAcHWIJrKzqIBYqT
+	47h3YDUKVp7okT/9AXwgXm3BrkmAxYnYQ2LBynz4/GjtpRlOEt2EVtyzfZ6f79eVXrNgQLUsYTD
+	w0WSoCLClisKZ6ZgOxEMuFryuSDaQPcU7tKzFYw6egewHRc=
+X-Google-Smtp-Source: AGHT+IE548LDAE30M07a1EAImLQLAq7YUyLIcMc3ZozjoYX7iFg+999ASC+YdqlcOArM9lUC33lnEQ==
+X-Received: by 2002:a17:902:ea06:b0:223:2aab:462c with SMTP id d9443c01a7336-231981353b1mr50355615ad.15.1747237660025;
+        Wed, 14 May 2025 08:47:40 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-22fc8271cd9sm100256585ad.111.2025.05.14.08.47.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 May 2025 08:47:39 -0700 (PDT)
+Date: Wed, 14 May 2025 23:48:11 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v5 0/3] align the behavior when opening "packed-refs"
+Message-ID: <aCS7O8tNekg_u9Wp@ArchLinux>
+References: <aCMnrwkoJ2WyqGZT@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T21dafbefef3d3536
-Date: Wed, 14 May 2025 17:34:02 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Elijah Newren" <newren@gmail.com>
-Message-Id: <be8de818-0e04-442d-9639-d34888df10cf@app.fastmail.com>
-In-Reply-To: <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
-References: <pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
- <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
-Subject: Re: [PATCH v3 0/2] merge-tree: add new --dry-run option
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aCMnrwkoJ2WyqGZT@ArchLinux>
 
-On Wed, May 14, 2025, at 02:24, Elijah Newren via GitGitGadget wrote:
-> Changes since v2:
->
->  * Converted locations missed in v1 in changing --mergeability-only ->
->    --dry-run
->
-> Changes since v1:
->
->  * Renamed --mergeability-only flag to --dry-run, as per suggestion from
->    Junio
->  * added some commit message clarifications
->
-> This adds a new flag, --dry-run, to git merge-tree, which suppresses all
-> output and leaves only the exit status (reflecting successful merge or
-> conflict). This is useful for Git Forges in cases where they are only
-> interested in whether two branches can be merged, without needing the actual
-> merge result or conflict details.
->
-> The advantage of the flag is two fold:
->
->  * The merge machinery can exit once it detects a conflict, instead of
->    continuing to compute merge result information
->  * The merge machinery can avoid writing merged blobs and trees to the
->    object store when in the outer layer of the merging process (more details
->    in the first commit message).
->
-> Elijah Newren (2):
->   merge-ort: add a new mergeability_only option
->   merge-tree: add a new --dry-run flag
+Hi All:
 
-All I can say is that this looks good considering the comments on v2.
+As discussed in [1], we need to use mmap mechanism to open large
+"packed_refs" file to save the memory usage. This patch mainly does the
+following things:
 
-Interdiff:
+1: Fix an issue that we would report an error when the "packed-refs"
+file is empty, which does not align with the runtime behavior.
+2-4: Extract some logic from the existing code and then use these
+created helper functions to let fsck code to use mmap necessarily
 
-```
-diff --git a/Documentation/git-merge-tree.adoc b/Documentation/git-merge-tree.adoc
-index 7dcc1780619..74716b91019 100644
---- a/Documentation/git-merge-tree.adoc
-+++ b/Documentation/git-merge-tree.adoc
-@@ -65,11 +65,11 @@ OPTIONS
- 	default is to include these messages if there are merge
- 	conflicts, and to omit them otherwise.
+[1] https://lore.kernel.org/git/20250503133158.GA4450@coredump.intra.peff.net
 
----mergeability-only::
-+--dry-run::
- 	Disable all output from the program.  Useful when you are only
- 	interested in the exit status.  Allows merge-tree to exit
--	early on the first conflict it finds, and allows it to avoid
--	writing most objects created by merges.
-+	early when it finds a conflict, and allows it to avoid writing
-+	most objects created by merges.
+Really thank Peff and Patrick to suggest me to do above change.
 
- --allow-unrelated-histories::
- 	merge-tree will by default error out if the two branches specified
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 579e81d5184..273ec171e98 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -596,13 +596,13 @@ int cmd_merge_tree(int argc,
- 	if (dry_run && o.show_messages == -1)
- 		o.show_messages = 0;
- 	o.merge_options.mergeability_only = dry_run;
--	die_for_incompatible_opt2(dry_run, "--mergeability-only",
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
- 				  o.show_messages, "--messages");
--	die_for_incompatible_opt2(dry_run, "--mergeability-only",
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
- 				  o.name_only, "--name-only");
--	die_for_incompatible_opt2(dry_run, "--mergeability-only",
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
- 				  o.use_stdin, "--stdin");
--	die_for_incompatible_opt2(dry_run, "--mergeability-only",
-+	die_for_incompatible_opt2(dry_run, "--dry-run",
- 				  !line_termination, "-z");
+---
 
- 	if (xopts.nr && o.mode == MODE_TRIVIAL)
-```
+Change in v2:
+
+1. Update the commit message of [PATCH 1/4]. And use redirection to
+create an empty file instead of using `touch`.
+2. Don't use if for the refactored function in [PATCH 3/4] and then
+update the commit message to align with the new function name.
+3. Enhance the commit message of [PATCH 4/4].
+
+---
+
+Change in v3:
+
+1. Drop the patch which creates a new function
+"munmap_temporary_snapshot". As discussed, there is no need to munmap
+the file during fsck.
+2. Allocate snapshot variable in the stack instead of heap.
+3. Fix rebase issue, remove unneeded code to check the file size
+explicitly.
+
+---
+
+Change in v4:
+
+1. Report the "emptyPackedRefsFile(INFO)" to the user when the
+"packed-refs" is empty instead of ONLY skipping checking the content and
+update the shell script and commit message.
+2. Apply Peff's advice to make [PATCH v3 2/3] more clear.
+
+---
+
+Change in v5:
+
+1. Improve the commit message in the first patch to be more clear:
+    1. Talk about the current behavior, what error we would report if
+       "packed-refs" is empty.
+    2. To align with the runtime behavior, we should skip checking the
+       content of "packed-refs".
+    3. Why do we need to report to the user when the "packed-refs" is
+       empty
+2. Fix grammar issue in the last patch.
+
+Thanks,
+Jialuo
+
+shejialuo (3):
+  packed-backend: fsck should warn when "packed-refs" file is empty
+  packed-backend: extract snapshot allocation in `load_contents`
+  packed-backend: mmap large "packed-refs" file during fsck
+
+ Documentation/fsck-msgids.adoc |  6 +++
+ fsck.h                         |  1 +
+ refs/packed-backend.c          | 73 ++++++++++++++++++++--------------
+ t/t0602-reffiles-fsck.sh       | 17 ++++++++
+ 4 files changed, 67 insertions(+), 30 deletions(-)
+
+Range-diff against v4:
+1:  75636c9c85 ! 1:  3487692a03 packed-backend: fsck should warn when "packed-refs" file is empty
+    @@ Metadata
+      ## Commit message ##
+         packed-backend: fsck should warn when "packed-refs" file is empty
+     
+    -    During fsck, an empty "packed-refs" gives an error; this is unwarranted.
+    -    The runtime code paths would accept an empty "packed-refs" file, such as
+    -    "create_snapshot" would simply return the "snapshot" without checking
+    -    the content of "packed-refs".
+    +    We assume the "packed-refs" won't be empty and instead has at least one
+    +    line in it (even when there are no refs packed, there is the file header
+    +    line). Because there is no terminating LF in the empty file, we will
+    +    report "packedRefEntryNotTerminated(ERROR)" to the user.
+     
+    -    And we should also skip checking the content of "packed-refs" when it is
+    -    empty during fsck. However, we should think about whether we need to
+    -    report something to the users in this case.
+    +    However, the runtime code paths would accept an empty "packed-refs"
+    +    file, for example, "create_snapshot" would simply return the "snapshot"
+    +    without checking the content of "packed-refs". So, we should skip
+    +    checking the content of "packed-refs" when it is empty during fsck.
+     
+         After 694b7a1999 (repack_without_ref(): write peeled refs in the
+         rewritten file, 2013-04-22), we would always write a header into the
+    -    "packed-refs" file where we would never create empty file since then.
+    -    Because we only create empty "packed-refs" in the very early versions,
+    -    we may tighten this rule in the future. In order to notify the users
+    -    about this, we should at least report an warning to the users.
+    +    "packed-refs" file. So, versions of Git that are not too ancient never
+    +    write such an empty "packed-refs" file.
+     
+    -    But we need to consider the fsck message type carefully, it is not
+    -    appropriate that we use "FSCK_ERROR". This is because we would
+    -    definitely break the compatibility. Let's create a "FSCK_INFO" message
+    -    id EMPTY_PACKED_REFS_FILE" to indicate that "packed-refs" is empty.
+    +    As an empty file often indicates a sign of a filesystem-level issue, the
+    +    way we want to resolve this inconsistency is not make everybody totally
+    +    silent but notice and report the anomaly.
+    +
+    +    Let's create a "FSCK_INFO" message id "EMPTY_PACKED_REFS_FILE" to report
+    +    to the users that "packed-refs" is empty.
+     
+         Signed-off-by: shejialuo <shejialuo@gmail.com>
+     
+2:  1a5893379d = 2:  0d050849bc packed-backend: extract snapshot allocation in `load_contents`
+3:  31e272db7e ! 3:  fe5ffec8fb packed-backend: mmap large "packed-refs" file during fsck
+    @@ Commit message
+         current codebase.
+     
+         As we have introduced the helper function "allocate_snapshot_buffer", we
+    -    could simple use this function to use mmap mechanism.
+    +    can simply use this function to use mmap mechanism.
+     
+         Suggested-by: Jeff King <peff@peff.net>
+         Suggested-by: Patrick Steinhardt <ps@pks.im>
+-- 
+2.49.0
+
