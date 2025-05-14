@@ -1,112 +1,157 @@
-Received: from mail-qv1-f43.google.com (mail-qv1-f43.google.com [209.85.219.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87BB127702E
-	for <git@vger.kernel.org>; Wed, 14 May 2025 13:06:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD7022040AB
+	for <git@vger.kernel.org>; Wed, 14 May 2025 13:19:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747227982; cv=none; b=H/+TEpAiAnFdSJNiDw0cjUf5Kd3VgEn62KkIfcf4GJNzasQ6ABh2KoT+wPcpbOcNtnywoJ98BkytIymYEgftFmZF/3Orso6FZNW9LPj9KwlQ1LhCjf/HeHy2PgJMYeF8IKpNpWQECd5gilaAVEuPJfBRV0ylxYWBMiAeuopZz1M=
+	t=1747228742; cv=none; b=McLI4yX3bV+LLxU+wGyClNtOgEKCJ15IEU7JCzX6RIf2vsem8rfUzFMgSPC1ULs/ZohW18fNBAI9GNDd+RQPnFOOZUL7fHrI1yyn1Ryj+Nn/RJg58DNpSpGpC3DlQGp/rtroi80rRR7nf9/9CGtAKwKNbt7gsW9iyjUigk2wqzQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747227982; c=relaxed/simple;
-	bh=vK/ELqvxiKeB9TOnsDxqC/Zctk38fYQeZ9JcR2n2bmQ=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n0mKMGfeGvY9xo030UUFz+8cb9vcYhhnNN8TQew1bGHsZeFFmslk07q0G1v+KLVua3UoTs4J+f38IAmuK6/dLGb+mLEJNiFrP25mP8x+UHdvQI2nMp3xOisWjqBXNEOonHmVoDKxefZQEE/nLnZvYdiy4V2bbGbaaYpOQ9NxXhE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P2V74bSu; arc=none smtp.client-ip=209.85.219.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747228742; c=relaxed/simple;
+	bh=QEUIBpP8oczJj7yHJBmPC6Piqk+o3LBclAxXpLIH7bw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=ECl0Bj9aWQHvT5BHjWjoA3cG1GE9V1Qm0RWOkWHJTj5s2dQd2itAtErbWcJfR1a7w7gTbLjizQf/MxSwe4cftTPSQefeCySgqZG42l9xlXwX5hBFGKtomUTOquRFUjZ+DxKIXmeQWJS5Nm4NpQRp5UrKVVcyFn/PkkzK2JNSuB0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M01m4leV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XdWDZfRY; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P2V74bSu"
-Received: by mail-qv1-f43.google.com with SMTP id 6a1803df08f44-6f548a4ea4dso67905486d6.1
-        for <git@vger.kernel.org>; Wed, 14 May 2025 06:06:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747227979; x=1747832779; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=frd9JtgpXdpHPrmd8EnqZXHEuyE0vezdx0cN0cKuNvs=;
-        b=P2V74bSuUi0vfa7+VtADcpRG19Vr0T0uRmWHGCkzbJobuDTqzqbfMkCu8Ekbf+GMER
-         oycs1+0AcXZnRrBk1YzBesQfrqRN6keDatif2FiWqkkCxstxREAlEGabd20H3UhRg8GZ
-         peUTnZPS71N4MenbG8pewCjLDC3q+aLrJdUd0/vCKc7DzBifI+elDtW3uY3yP48IGjZT
-         IgR3ZfRtZvHty605io4l8fl+kLEOEjAKqHgFAzTdWEUzoBRAut1zNQQN/wAt0nAVL9Xe
-         z0Zxf0qR+KxCysWKGGlaWnkKAhKwu4HylrbxjdqN83FHiwqbdfwDwpRGr+mujC/8tchT
-         0UDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747227979; x=1747832779;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=frd9JtgpXdpHPrmd8EnqZXHEuyE0vezdx0cN0cKuNvs=;
-        b=qNoVn9s1Er4qGIXofBT+tkX8HC+Ef5ZuRH1hLGTxrrGGnf4BIGlKS+MmGiH29/P9B4
-         lCP8CDVj7wNV33sQbmpQ57QbIYiLOw2aBUpIe7G1aFg3aZbPVNmk3daGS7V1kS9eRMZQ
-         uQk3YRFHAGll9PTyUQoU3rTWNdaIA+m99EpUvTslGMofBw4wN+0pcznBtb4hiDtJiGMO
-         g8fBryjmkXifrRmsfrJjfxDUn3Mr5V6/Sl93aD/DYeP3ESLfn/P1IA/83tkGlhT/DGYW
-         CmKi2SCdXDCyp1eIdPGImEE2tUeZYubKU4kcCmwWgYXRXrP4xF1+HKSnk5qEv447XHFa
-         Vpbw==
-X-Gm-Message-State: AOJu0Yza6fc6F/kHNWE1CYE7Pu4MdJkHQ9aRzssYuDV88j2tiZfRhXnN
-	T4R+SNgzRAPUeNZsVuSl+IQsTCEi23qU9Ru3JmmhxQ7BptMEV+X5NSbhKPfiBnfgekQyrKxZ10C
-	6TDc1qW9UsG2HygvvF1WcUdHobw4=
-X-Gm-Gg: ASbGnctbkvMc8RV/w7lxx2VTCh3JHFYF6ekOsd7OnMBeEpAzEWJSIH07Jz4qrk5w6dF
-	AhSXg+yaLwlkgrcRmqOv5+UJQNqpxQcsJav1bfx0XDDgHkHE9RRbV0Az7XqnZfm/oFtilxoWO2a
-	iGJq2uPv8MtSDMe48gGpzItirBLin+B6PJXiA1YGQY4fob46ta6PF8W1hzaqW8T24jnJCmWKTXU
-	wk=
-X-Google-Smtp-Source: AGHT+IFMf24GPddJ0ZZ4IX5SnNhF7E5Fy1Tmz8IHL4QkYEWtWo+30ONWNuNTFVvROg12tNSZokESOhsAm7MCQsDDh38=
-X-Received: by 2002:a05:6214:2623:b0:6f5:421b:623c with SMTP id
- 6a1803df08f44-6f896e57a5dmr51585776d6.25.1747227979219; Wed, 14 May 2025
- 06:06:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M01m4leV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XdWDZfRY"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CE041114011A;
+	Wed, 14 May 2025 09:18:59 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Wed, 14 May 2025 09:18:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747228739; x=1747315139; bh=fN0Z3caMlD
+	/V8TklWUx4dAkDg8W2ozK2XE8lpK7frYg=; b=M01m4leVWDlaUrYv+4JA0BZMfN
+	u9BTN7AaMxA433wz0Tn/FhIk1rzCZOi/I2kG5/8SsRR7UcKdl9qj2J1MLkJfS1P9
+	frnZkydswlpjarTs0jAdmvb+pFBGyHGrwkbj8Mj02j2dIUbiuySoCXoNU6nBF8UD
+	2l4eXSjYmNT6G76fyc7LRd7BewXgdA1gSrVplcP6Sxx9nadp5OaWRIN4a8ScqTr/
+	SMOMfgkTdhfWp54WNPtBiXzB2fPsYgaYZ1bSLht8IXkjupwAUYBpL7rXL5JGbPra
+	ztUY+3XyxMs4y/EraWF2ZkV4fMGXxD89iHsx+jlEqGqEsDt1kxpfhfHk5Apw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747228739; x=1747315139; bh=fN0Z3caMlD/V8TklWUx4dAkDg8W2ozK2XE8
+	lpK7frYg=; b=XdWDZfRYHG7pl1Y596DuYGZH/+oeWm0Boxd560k23K6SXpZcXjy
+	y8aCyvwtFg8G/+EhRYCbrkHnm2TCTs2pCfB7/1AQyKl6kea8PC70nrDsEa9OB5aX
+	DvbqlW47ufRkBZ5qRM+PTd0h/EjTDgXqqobq+YEmTFbzsVtTuaDlU3KlekSm0JML
+	k2WFeZo1vBbRqd07H+lyu39GQtzuLHDYWYuFVTzdc5beEbU09VEbeYhCHSoM2dZJ
+	mb7rx4TijXH2kPDdRt+BV+I8y6QDclepxy8eRy9L2J5H5/W6AB6PExLiHaPoHG1n
+	3OXt+ce8rIVLKFR/2auDRJCh9xwjjFIYZ8g==
+X-ME-Sender: <xms:QpgkaJ0gGZzLAoSHgtccYW947sHOJ3JxUj9wYyA2MaHe3K1ExKpPrA>
+    <xme:QpgkaAENsoj2hTqCk5b4x-wAnGDJGkJCeS9OG86D3pRHz3H2wYU5p2ef37ccKkg_g
+    d4JByA14UZD3sQKHQ>
+X-ME-Received: <xmr:QpgkaJ7Hyv1FA5ZDwX5JiEq1ofE7sdQB-By5AqDjECm56oCG6NlJdNZiOlaBgNpfqKRJMP0fVfJYiECwbwCkOMqnX_hqbSS2KRP42bc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejtdekucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgvsehtthgrhi
+    hlohhrrhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeehtddvtddvgeeffedttdeh
+    ieesshhmrghilhdrnhhjuhdrvgguuhdrtghnpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomh
+X-ME-Proxy: <xmx:QpgkaG1eOo3aCrpUw4qfSzZX4fhPkUW6C5YWoLNktyrPjQIV67ddTA>
+    <xmx:QpgkaMHmb2HFxJ0vHhCNMImXuu0VdRUmfxV3rmRuNS3bCpr2eSugoA>
+    <xmx:QpgkaH9CyZ4aNjxO1yWqJh98Zg45-23E0o-L_HaVmDiej24OnzP88g>
+    <xmx:QpgkaJn7IE9LzLaHXvyH1wxe30sQ16nPxTi4oaKtAliJXY_E_A751A>
+    <xmx:Q5gkaLfkSsDTo8qV_Y90hi4F_nPz1jN-NhHIaCAVVSD_BtWb0LV4J5nC>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 May 2025 09:18:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Taylor Blau <me@ttaylorr.com>
+Cc: Jeff King <peff@peff.net>,  Lidong Yan via GitGitGadget
+ <gitgitgadget@gmail.com>,  git@vger.kernel.org,  Lidong Yan
+ <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH] pack-bitmap: fix memory leak if
+ `load_bitmap_entries_v1` failed
+In-Reply-To: <aCOFqYdnPp1Lne4Y@nand.local> (Taylor Blau's message of "Tue, 13
+	May 2025 13:47:21 -0400")
+References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
+	<20250512131315.GD1191360@coredump.intra.peff.net>
+	<aCOFqYdnPp1Lne4Y@nand.local>
+Date: Wed, 14 May 2025 06:18:56 -0700
+Message-ID: <xmqqcycbcou7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqr01si441.fsf@gitster.g> <CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
- <xmqqtt5ncq87.fsf@gitster.g>
-In-Reply-To: <xmqqtt5ncq87.fsf@gitster.g>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Wed, 14 May 2025 18:36:08 +0530
-X-Gm-Features: AX0GCFvXcM9JCTPJXjj0iHnem0wBvA9uiyUJFCuU-qOOkluqMlxX0_E5FmIjXTI
-Message-ID: <CA+rGoLfcJ2r8S515msG5L-59=0nOBvdOX2TTn+-iaHw8v6Ndtw@mail.gmail.com>
-Subject: Re: [PATCH 0/4] update MyFirstContribution with current code base
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, levraiphilippeblain@gmail.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Wed, May 14, 2025 at 6:18=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > git shortlog --no-merges --since=3D6.years -- Documentation/MyFirstCont=
-ributi
-> > on.adoc
->
-> That would not work; due to mass rename, you'd need
->
->   $ git shortlog --no-merges -- Documentation/MyFirstContribution.{adoc,t=
-xt}
->
-> or perhaps
->
->   $ git log --no-merges --follow Documentation/MyFirstContribution.adoc |
->     git shortlog
->
-> or something like that.
->
+Taylor Blau <me@ttaylorr.com> writes:
 
-Oh I totally forgot the extension was changed to adoc
-Thanks for pointing it out
+> After going through the "failed" label, load_bitmap() will return -1,
+> and its caller (either prepare_bitmap_walk() or prepare_bitmap_git())
+> will then call free_bitmap_index().
+>
+> That function would have done:
+>
+>     struct stored_bitmap *sb;
+>     kh_foreach_value(b->bitmaps, sb {
+>       ewah_pool_free(sb->root);
+>       free(sb);
+>     });
+>
+> , but won't since load_bitmap() already called kh_destroy_oid_map() and
+> NULL'd the "bitmaps" pointer from within its "failed" label.
 
-As far as I see
+Yikes.
 
-Emily Shaffer (9)
-Philippe Blain (5)
+> So I think if you got part of the way through loading bitmap entries and
+> then failed, you would leak all of the previous entries that you were
+> able to load successfully.
+>
+> I suspect the fix looks something like:
+> ...
+> --- 8< ---
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index 5299f49d59..7f28532a69 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -631,41 +631,28 @@ static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git,
+>  	bitmap_git->ext_index.positions = kh_init_oid_pos();
+>
+>  	if (load_reverse_index(r, bitmap_git))
+> -		goto failed;
+> +		return -1;
 
-Have the two highest logs
-I think Emily is not active in Git
-So for now I will cc Philippe
+(a lot of changes that simplifies the code snipped)
 
-Thank you,
+> -failed:
+> -	munmap(bitmap_git->map, bitmap_git->map_size);
+> -	bitmap_git->map = NULL;
+> -	bitmap_git->map_size = 0;
+> -
+> -	kh_destroy_oid_map(bitmap_git->bitmaps);
+> -	bitmap_git->bitmaps = NULL;
+> -
+> -	kh_destroy_oid_pos(bitmap_git->ext_index.positions);
+> -	bitmap_git->ext_index.positions = NULL;
+> -
+> -	return -1;
+>  }
+>
+>  static int open_pack_bitmap(struct repository *r,
+> --- >8 ---
+>
+> , since all callers of load_bitmap() will themselves call
+> free_bitmap_index(), so there is no need for us to open-code a portion
+> of that function's implementation ourselves.
 
--Jayatheerth
+It is rare for a fix to be removing and simplifying this much code
+;-)
