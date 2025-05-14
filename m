@@ -1,55 +1,55 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 369AE1C8614
-	for <git@vger.kernel.org>; Wed, 14 May 2025 12:31:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43A66221DA8
+	for <git@vger.kernel.org>; Wed, 14 May 2025 12:31:19 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747225881; cv=none; b=ZfxnXTWfXtjBgSXibKWeqXfEU6Zyoel/AXB2Qg/30uARLrcYyw09l/97VaCrZu/XEAsDcMlZYzSNQ2+MlGgxu3kjUuIAEmalqvORyH6QLDTykR6JnoVZgzKp+yk52XZD2WXIAwNRWW4W2Ndxv7jz/uE1aEQhBNZiPxzA04umxzI=
+	t=1747225883; cv=none; b=JERHLSzJ00tiM3eJRKmEzWnrq9eL2anucanrYFHdStN6aoLh9+Iyx/UuKiuAAFwEccGc3B0QhiorKAwdzSjDQfyxj4/KwsyttSxwmoSjp5F5JybMh9aNff9x1qXPBAqewpjDIBNC7H0/1q4TqFEigWB9teLqDLs5LLowFwdKzIw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747225881; c=relaxed/simple;
-	bh=mTFHKNpnxwJ/4mBSttIRTC4+aut+qAuQEMbzLf6X5h0=;
+	s=arc-20240116; t=1747225883; c=relaxed/simple;
+	bh=uFdlLqDoGYD81e7s/2Lk7Y7tuliBW2wJx+gqwDxUTxA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=GkW6s+Noirb+cvvxb/rY6xPpVYJnw+yIv0p7uOonrk7PsTpWM5xJNok8WrhiJ4c3vGOgLNpkRni04i9sO5RMFzpDmEx/iebdNrDexR3w225JbeSAMFFSb631CAAyGzpzhYRoocX51O1LfroY5wA3BWJ7Oh3ZxssJsSNKFRIbqIA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=0+91iPrT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bGBKYWqw; arc=none smtp.client-ip=103.168.172.149
+	 Content-Type:Content-Disposition:In-Reply-To; b=XP85GPDSJcDgsgRNYaOyX+h++0J1WHMTyMiNhX+/+9zYAT/5X+1fTzuIQbm5VPy0NskUrx38mhuyJuIDmlG3JNdeu0eI8Px7wuR779dywaExxMzZ3fmxd9hOOh/hsEJgr4qi8r1Ynp27l8N1bI+PdZCpTp0e8hyQVxY9GXBrSdM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=WQgkDXl8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gA8a6GLf; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="0+91iPrT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bGBKYWqw"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 116FE1380313;
-	Wed, 14 May 2025 08:31:17 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="WQgkDXl8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gA8a6GLf"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1ED661380418;
+	Wed, 14 May 2025 08:31:19 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Wed, 14 May 2025 08:31:17 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 14 May 2025 08:31:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747225877;
-	 x=1747312277; bh=TQYsqKrz1rojS8ashTsvEwkhSVIDjUfP2d/77qa6I6U=; b=
-	0+91iPrTL+El//UZ3Lm2+2MI+MD7iiiaj6wkQVZFJXIrwHgRloNucpjoFsU6cRmd
-	m+abRb5HpEUD3IB+KqWCWoPUK0HkuVYwCEhEB/OooPfs3uPgm0qopAzznjzQKJNe
-	fj3fTu3J5iIofHewu6zCKOum9vDQ73CScrbSBqLLany1nysjshHOvkCVnpZNGlPK
-	1/SBbQ45cJnwt87ozn8fYD4w9xwhwk5HX96olAH3MuYCLlO4uaaCoyb16yQYzFFQ
-	Jg+gTafGLmlEJ1Gba2VayvZ1i9m2hjFpQSrug65nZNwqCymITzigyLJTJ0beXMK1
-	GBEfQw8eXHxOB72BVp9etA==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747225879;
+	 x=1747312279; bh=IGEVLJKE8vFu9zCZnC2KQmfZzPl6Gr2f1/lkiZSJydI=; b=
+	WQgkDXl8EG21sBJNfmECQ8DDs4S2wXn39neOjnvN95JJJOoug7sh8H3DtCIIlY6O
+	p9GG9dZa9H5VOJdkRsiyPacASXidsKW1g0A+89+nhlhwe2gg/xygOLUdrbNNTCS5
+	LRLf+f4lwxuQHxsHR6BLPLp3gX0sC5lVDtQcnG9QQmkfucTU7Ml7IuXaPelVbvJF
+	lh7EMXKug915o/fcUWm8llvhZXmoba+Y9v3u3tMlkX6UJFLp5i2rwK9JGH8qAh8t
+	7Y0xzqqLBSMLnEg3jJPdHzWryV6J2YQod7U33wHYJjtcNxwdzax/7LcF+wFkKEwh
+	E84KIFOPR3qGlFT69n6Djw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747225877; x=
-	1747312277; bh=TQYsqKrz1rojS8ashTsvEwkhSVIDjUfP2d/77qa6I6U=; b=b
-	GBKYWqwrO/uPhFNJjAYacriJ9Q8poZC9bbPHev0Ui7g+5OYqi9Nk5ZknF/DnKRV/
-	44nT+MT6VdKt7ZUuQgXaXoI6NUY2xzIjVSA276xt1ngrldEE5LT/VHVV0s7mzCxd
-	ZlI8sSDpy8d4wpOQ56o8t58QeVxLcMErikAg6canUsTKXL0oTMx2JsDzIKzOS7Y4
-	ei5rQaiQBTihEtMf8O5bmj4ivjuIFK3INep03ox/4Rk+T4u/g8GeBKJGbGsKtf8c
-	PRRRbkUURQDDnzYECoNpO3qKHf0F1pCd2dYhLKayEgb3Mlqg3qkCy78JF9OU6vDc
-	C8g4YM2vYfBcWpWvWybRQ==
-X-ME-Sender: <xms:FI0kaMwCuIj1ZBIHsla4PLHdu3Z5bWa0c9c1vuD3f0LYd35kYqtWiw>
-    <xme:FI0kaASV4kxuoXqxWyWjk8PFfD1E3M621H2ElOL7C2o_FiGLUw26m2cHkkkpcmEA8
-    v7udjZXRyaSx4y4jA>
-X-ME-Received: <xmr:FI0kaOViax3GkDvCQ31CVA_RU8kdwh_AVCk2ouTmGHGKZ3CuJJMuQF1fZZWXZIc2SeMqBc1WD_5ceIQoqt5ytJpViIREJmy9Z1Vum0Q76lQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747225879; x=
+	1747312279; bh=IGEVLJKE8vFu9zCZnC2KQmfZzPl6Gr2f1/lkiZSJydI=; b=g
+	A8a6GLfFBt5x5u0N2VJcyXnM4tP3n0nZZtJbsoTQ+nfJXYdSUrH53BzKf+EF4HMt
+	n2CifvYTYVgLiPQObZH6AHkUgfx/jJgh5CBgwRcy2AF2KJVp5RALrR0nB1PbeKJ7
+	6lCpdYO7NF83SvpmmS56rM7uiC9bmadga6k6BSQNvqwdxtsDCnhkoy7kwUNt0YQ2
+	Shxr+VGIUNgSpKU82NaYTdDxI4OouCtc3kqbEcaPmNFDB8CYzslz2jy4QsueRPpu
+	xDZoGhZHQwVi8SLr3gEuaXIC+MKFd9XWcutyeGf97CNYYHu/2CHY3MO50+ttCRVm
+	ID6r8ojSPE70maBYYw+fA==
+X-ME-Sender: <xms:Fo0kaGQ3gO8HKO7T2O9OuaoycWXAXTdpKfbRN-U_KnZ1fErsghdHCw>
+    <xme:Fo0kaLyJgTtIPzRG40K2zhetsZmxfWr0Q8DhMxze1yioOuffTrIG-NT-4OzmP-SVC
+    wbs77-dDWI02TQdCA>
+X-ME-Received: <xmr:Fo0kaD3llrBQn8TWE2clyQyHSfjy8UYfe4oNuD4q-ARd34MCwCX4rm9-M2_xGJcJOrNVunXdIBArhXm4PclUmHUTlLz1TW2XrB4HvfBBVLs>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeileelucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -58,28 +58,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeileelucetufdote
     drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
     veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepkhgrrhht
-    hhhikhdrudekkeesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:FI0kaKhFkgcr37T8PTV62PYqT_tHMZgrg98juyqlQqqXcl8p7m2zmg>
-    <xmx:FI0kaOBcAMcxVD2PoX1Gkxl5IVg5Jg0P7KqwieWrr4BdTE8Eutchvg>
-    <xmx:FI0kaLJn_22l2p84B6Lt-dix7pG9Vty-erNi3SVB_22OLdm23_59aA>
-    <xmx:FI0kaFCknrMTpoPNR0uw1KwpBUT06oTWOdwZauDiZ15CtY9-4i2HpA>
-    <xmx:FY0kaL_tVIhxp8fDtNmET_pJJPrxSfZlonTih-pmlYozy0Pktxw44Eio>
+    vgepshhmthhpohhuthdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtph
+    htthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:Fo0kaCDVU0Eq8xfCQIfBtnmz2BEt0pd35b1IOyE_hI-P84HC0C_Y4Q>
+    <xmx:Fo0kaPhC8JdU0QH3L8tjBXV48mIFK4fUhxsmqHjm5U2VROPXxPQ5zg>
+    <xmx:Fo0kaOrv_dq1llxHciGr8iRtHCc-ch7V_Nax30RMA__pZ-q5lYRGPA>
+    <xmx:Fo0kaCj0AO7qdXGXNuWPRgrK6OstVSfJh1IIw-Q5pHunI_nEFydzBA>
+    <xmx:F40kaHf4t_-mUN6r_kbh2qz__HDCBUgaDAQVPfThmmZwdNZdH8jV8Cgz>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 May 2025 08:31:15 -0400 (EDT)
+ 14 May 2025 08:31:18 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id cdd0d1d9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 14 May 2025 12:31:13 +0000 (UTC)
-Date: Wed, 14 May 2025 14:31:09 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 43bb9d1e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 14 May 2025 12:31:17 +0000 (UTC)
+Date: Wed, 14 May 2025 14:31:16 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Karthik Nayak <karthik.188@gmail.com>
 Cc: git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH 3/3] receive-pack: use batched reference updates
-Message-ID: <aCSNDbUX-MMJZj5S@pks.im>
+Subject: Re: [PATCH 1/3] fetch: use batched reference updates
+Message-ID: <aCSNFMeh3WMav_Rn@pks.im>
 References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
- <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-3-7c65f46493d4@gmail.com>
+ <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-1-7c65f46493d4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,52 +89,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-3-7c65f46493d4@gmail.com>
+In-Reply-To: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-1-7c65f46493d4@gmail.com>
 
-On Wed, May 14, 2025 at 11:03:49AM +0200, Karthik Nayak wrote:
-[snip]
-> With the reftable backend there is a 18x performance improvement, when
-> performing receive-pack with 10000 refs:
+On Wed, May 14, 2025 at 11:03:47AM +0200, Karthik Nayak wrote:
+> The reference updates performed as a part of 'git-fetch(1)', take place
+
+s/,//
+
+> one at a time. For each reference update, a new transaction is created
+> and committed. This is necessary to ensure we can allow individual
+> updates to fail without failing the entire command. The command also
+> supports an '--atomic' mode, which uses a single transaction to update
+> all of the references. But this mode has an all-or-nothing approach,
+> where if a single update fails, all updates would fail.
 > 
->   Benchmark 1: receive: many refs (refformat = reftable, refcount = 10000, revision = master)
->     Time (mean ± σ):      4.276 s ±  0.078 s    [User: 0.796 s, System: 3.318 s]
->     Range (min … max):    4.185 s …  4.430 s    10 runs
+> In 23fc8e4f61 (refs: implement batch reference update support,
+> 2025-04-08), we introduced a new mechanism to batch reference updates.
+> Under the hood, this uses a single transaction to perform a batch of
+> reference updates, while allowing only individual updates to fail.
+> Utilize this newly introduced batch update mechanism in 'git-fetch(1)'.
+> This provides a significant bump in performance, especially when dealing
+> with repositories with large number of references.
 > 
->   Benchmark 2: receive: many refs (refformat = reftable, refcount = 10000, revision = HEAD)
->     Time (mean ± σ):     235.4 ms ±   6.9 ms    [User: 75.4 ms, System: 157.3 ms]
->     Range (min … max):   228.5 ms … 254.2 ms    11 runs
+> Adding support for batched updates is simply modifying the flow to also
+> create a batch update transaction in the non-atomic flow.
+> 
+> With the reftable backend there is a 22x performance improvement, when
+> performing 'git-fetch(1)' with 10000 refs:
+> 
+>   Benchmark 1: fetch: many refs (refformat = reftable, refcount = 10000, revision = master)
+>     Time (mean ± σ):      3.403 s ±  0.775 s    [User: 1.875 s, System: 1.417 s]
+>     Range (min … max):    2.454 s …  4.529 s    10 runs
+> 
+>   Benchmark 2: fetch: many refs (refformat = reftable, refcount = 10000, revision = HEAD)
+>     Time (mean ± σ):     154.3 ms ±  17.6 ms    [User: 102.5 ms, System: 56.1 ms]
+>     Range (min … max):   145.2 ms … 220.5 ms    18 runs
 > 
 >   Summary
->     receive: many refs (refformat = reftable, refcount = 10000, revision = HEAD) ran
->      18.16 ± 0.63 times faster than receive: many refs (refformat = reftable, refcount = 10000, revision = master)
-> 
-> In similar conditions, the files backend sees a 1.21x performance
+>     fetch: many refs (refformat = reftable, refcount = 10000, revision = HEAD) ran
+>      22.06 ± 5.62 times faster than fetch: many refs (refformat = reftable, refcount = 10000, revision = master)
+
+Nice. The speedup is larger than I have originally anticipated, but I
+certainly won't complain about that :) For a good part, the speedup
+should result from us not having to do 10000 auto-compactions anymore
+for each of the updates, as well as not having to write 10000 new
+tables. Instead, we only write a single new table and perform compaction
+a single time, only.
+
+> In similar conditions, the files backend sees a 1.25x performance
 > improvement:
 > 
->   Benchmark 1: receive: many refs (refformat = files, refcount = 10000, revision = master)
->     Time (mean ± σ):      1.121 s ±  0.021 s    [User: 0.128 s, System: 0.975 s]
->     Range (min … max):    1.097 s …  1.156 s    10 runs
+>   Benchmark 1: fetch: many refs (refformat = files, refcount = 10000, revision = master)
+>     Time (mean ± σ):     605.5 ms ±   9.4 ms    [User: 117.8 ms, System: 483.3 ms]
+>     Range (min … max):   595.6 ms … 621.5 ms    10 runs
 > 
->   Benchmark 2: receive: many refs (refformat = files, refcount = 10000, revision = HEAD)
->     Time (mean ± σ):     927.9 ms ±  22.6 ms    [User: 99.0 ms, System: 815.2 ms]
->     Range (min … max):   903.1 ms … 978.0 ms    10 runs
+>   Benchmark 2: fetch: many refs (refformat = files, refcount = 10000, revision = HEAD)
+>     Time (mean ± σ):     485.8 ms ±   4.3 ms    [User: 91.1 ms, System: 396.7 ms]
+>     Range (min … max):   477.6 ms … 494.3 ms    10 runs
 > 
 >   Summary
->     receive: many refs (refformat = files, refcount = 10000, revision = HEAD) ran
->       1.21 ± 0.04 times faster than receive: many refs (refformat = files, refcount = 10000, revision = master)
+>     fetch: many refs (refformat = files, refcount = 10000, revision = HEAD) ran
+>       1.25 ± 0.02 times faster than fetch: many refs (refformat = files, refcount = 10000, revision = master)
 
-We see almost the same speedups as we saw in git-fetch(1), and the
-reason why we see them is basically the same.
+Yup, this makes sense, as well. We lose a bunch of overhead by creating
+separate transactions for each of the updates, but the slow path is
+still that we have to create 10000 files for each of the references. So
+it's expected to see a small performance improvement, but nothing game
+changing.
 
-> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> index be314879e8..b4fceb3837 100644
-> --- a/builtin/receive-pack.c
-> +++ b/builtin/receive-pack.c
-> @@ -1843,35 +1843,91 @@ static void BUG_if_skipped_connectivity_check(struct command *commands,
->  	BUG_if_bug("connectivity check skipped???");
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 5279997c96..1558f6d1e8 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1688,6 +1644,32 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
+>  	return result;
 >  }
 >  
-> +static void ref_transaction_rejection_handler(const char *refname,
+> +struct ref_rejection_data {
+> +	int *retcode;
+> +	int conflict_msg_shown;
+> +	const char *remote_name;
+> +};
+> +
+> +static void ref_transaction_rejection_handler(const char *refname UNUSED,
 > +					      const struct object_id *old_oid UNUSED,
 > +					      const struct object_id *new_oid UNUSED,
 > +					      const char *old_target UNUSED,
@@ -142,122 +179,55 @@ reason why we see them is basically the same.
 > +					      enum ref_transaction_error err,
 > +					      void *cb_data)
 > +{
-> +	struct strmap *failed_refs = (struct strmap *)cb_data;
-
-This cast is unnecessary.
-
-> +	const char *reason = "";
+> +	struct ref_rejection_data *data = (struct ref_rejection_data *)cb_data;
 > +
-> +	switch (err) {
-> +	case REF_TRANSACTION_ERROR_NAME_CONFLICT:
-> +		reason = "refname conflict";
-> +		break;
-> +	case REF_TRANSACTION_ERROR_CREATE_EXISTS:
-> +		reason = "reference already exists";
-> +		break;
-> +	case REF_TRANSACTION_ERROR_NONEXISTENT_REF:
-> +		reason = "reference does not exist";
-> +		break;
-> +	case REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE:
-> +		reason = "incorrect old value provided";
-> +		break;
-> +	case REF_TRANSACTION_ERROR_INVALID_NEW_VALUE:
-> +		reason = "invalid new value provided";
-> +		break;
-> +	case REF_TRANSACTION_ERROR_EXPECTED_SYMREF:
-> +		reason = "expected symref but found regular ref";
-> +		break;
-> +	default:
-> +		reason = "unkown failure";
+> +	if (err == REF_TRANSACTION_ERROR_NAME_CONFLICT && !data->conflict_msg_shown) {
+> +		error(_("some local refs could not be updated; try running\n"
+> +			" 'git remote prune %s' to remove any old, conflicting "
+> +			"branches"), data->remote_name);
+> +		data->conflict_msg_shown = 1;
 > +	}
 > +
-> +	strmap_put(failed_refs, refname, xstrdup(reason));
+> +	*data->retcode = 1;
 > +}
-
-I'd have expected something like this for git-fetch(1), as well, so that
-we don't silently swallow failed ref updates. Would it make sense to
-maybe provide an array of reasons by enum so that we can reuse those
-messages?
-
->  static void execute_commands_non_atomic(struct command *commands,
->  					struct shallow_info *si)
->  {
->  	struct command *cmd;
->  	struct strbuf err = STRBUF_INIT;
-> +	const char *reported_error = "";
-> +	struct strmap failed_refs = STRMAP_INIT;
 > +
-> +	transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-> +						  REF_TRANSACTION_ALLOW_FAILURE, &err);
-> +	if (!transaction) {
-> +		rp_error("%s", err.buf);
-> +		strbuf_reset(&err);
-> +		reported_error = "transaction failed to start";
-> +		goto failure;
-> +	}
+>  static int do_fetch(struct transport *transport,
+>  		    struct refspec *rs,
+>  		    const struct fetch_config *config)
 
-Okay. We now create a single transaction with failures being allowed.
+Okay, so we now handle errors over here. Is the handled error the only
+error that we may see, or do we also accept other errors like D/F now?
+If the latter, wouldn't it mean that we don't print any error messages
+for those other failures at all? That might be quite confusing.
 
->  	for (cmd = commands; cmd; cmd = cmd->next) {
->  		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
->  			continue;
->  
-> -		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-> -							  0, &err);
-> -		if (!transaction) {
-> -			rp_error("%s", err.buf);
-> -			strbuf_reset(&err);
-> -			cmd->error_string = "transaction failed to start";
-> -			continue;
-> -		}
-> -
->  		cmd->error_string = update(cmd, si);
-> +	}
-
-So here we only need to queue each update.
-
-> -		if (!cmd->error_string
-> -		    && ref_transaction_commit(transaction, &err)) {
-> -			rp_error("%s", err.buf);
-> -			strbuf_reset(&err);
-> -			cmd->error_string = "failed to update ref";
-> -		}
-> -		ref_transaction_free(transaction);
-> +	if (ref_transaction_commit(transaction, &err)) {
-> +		rp_error("%s", err.buf);
-> +		reported_error = "failed to update refs";
-> +		goto failure;
+> @@ -1808,6 +1790,20 @@ static int do_fetch(struct transport *transport,
+>  			retcode = 1;
 >  	}
+>  
+> +	/*
+> +	 * If not atomic, we can still use batched updates, which would be much
+> +	 * more performent. We don't initiate the transaction before pruning,
+
+s/performent/performant/
+
+> +	 * since pruning must be an independent step, to avoid F/D conflicts.
+> +	 */
+> +	if (!transaction) {
+> +		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+> +							  REF_TRANSACTION_ALLOW_FAILURE, &err);
+> +		if (!transaction) {
+> +			retcode = -1;
+> +			goto cleanup;
+> +		}
+> +	}
 > +
-> +	ref_transaction_for_each_rejected_update(transaction,
-> +						 ref_transaction_rejection_handler,
-> +						 &failed_refs);
-> +
-> +	if (strmap_empty(&failed_refs))
-> +		goto cleanup;
-> +
-> +failure:
-> +	for (cmd = commands; cmd; cmd = cmd->next) {
-> +		if (strmap_empty(&failed_refs))
-> +			cmd->error_string = reported_error;
+>  	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
+>  				   &fetch_head, config)) {
+>  		retcode = 1;
 
-The reported error may have one of there values now:
-
-  - The empty string. Is it correct to set the error string to that
-    value? Shouldn't it rather be a `NULL` pointer?
-
-  - "transaction failed to start". It makes sense to update every
-    command accordingly, as we wouldn't have updated any of them.
-
-  - "failed to update refs", in case the commit failed. Does the commit
-    fail only in cases where we couldn't update _any_ reference, or does
-    it also retrun an error when only one of the updates failed? If the
-    latter, we shouldn't update all the others to "failed", should we?
-
-In any case, it feels weird that we use `strmap_empty()` to check for
-this condition. I'd have expected that we rather check for
-`reported_error` to be a non-empty string directly to figure out whether
-the transaction itself has failed as a whole. Like that, we'd know that
-we only ever do this if we hit a `goto failure` branch.
+Don't transactions handle D/F conflicts for us? Isn't that the sole
+reason why for example `refs_verify_refname_available()` accepts an
+"extras" parameter that is supposed to contain refs that are about to be
+deleted?
 
 Patrick
