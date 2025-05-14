@@ -1,120 +1,152 @@
-Received: from mail-ot1-f42.google.com (mail-ot1-f42.google.com [209.85.210.42])
+Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D74941F3B97
-	for <git@vger.kernel.org>; Wed, 14 May 2025 06:43:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6829C2222C3
+	for <git@vger.kernel.org>; Wed, 14 May 2025 09:03:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747205005; cv=none; b=r1WIbmPu0/xIES1ioQ+yDBnhcQN6qYDXbVGw+f7hengl5k3/5BV6lTQyJWG0F2UTuL/DrBrhjnAOk28pjyEjH1Zq22cNmFyPkdh2CtGASP5ed9IpIR4MG3bA+NpUD5806i3i5WyAHH9Wlfof3mlIrco81scgxMck7HJORegrfvM=
+	t=1747213440; cv=none; b=RxU6kHj/IevnmQ0eR2Z8IYmDOyntHqsr57F3nv82nKgb6o6HUvEOwuTgaJ/LHDmA7A9s9UXS0Fa04+vQsDy+ZdS8iAGt9oPs9IK2md4HtRX9Vi4khLq7Leia+jF4en07SPdC9np6sxH+rrj0/HaH7xPd7ZlkUa0/okBCNqIqArk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747205005; c=relaxed/simple;
-	bh=8FAr7rtBhFC7LPwio+r0i/n0XZ1u08wdRAh+R7c02T8=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=rUdEdkdlha6Lavtlav6Cq857HdW5gcmTeBI/X5NZ6rYE8dyGl+Jh7VK1GmLWDx0szwrM5d4JYX+AiiLzKs0/Bx3fwcOjZq+MWhT8tU1k1t6GpqkFg12cRBmgodoMPuzu3biUJHwKm62VaxX+VvbiDcqftMoVcVrQMThAJbZEoVk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MmaK28LV; arc=none smtp.client-ip=209.85.210.42
+	s=arc-20240116; t=1747213440; c=relaxed/simple;
+	bh=9nCtTrZmffBSba/dP/ItEcMHU+SeoM1Eq2yld/cblDA=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=UYwa/rgjqg/ZXUXp8qlzbbeDIICIbDoR370/KXfYtY6/n3Jo40I5jQANHXhRFVFZvpitR+kH2x/cKw102t5rzGqVGVoPnezPf0R0ylkzUzk5pLf1aS35sp/8ry8xECfZi03X8PUndIXa8MbfDAQUtPOEgba2tDs+3yfl1i40cuc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OwfpLvar; arc=none smtp.client-ip=209.85.221.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MmaK28LV"
-Received: by mail-ot1-f42.google.com with SMTP id 46e09a7af769-7304efb4b3bso3944698a34.0
-        for <git@vger.kernel.org>; Tue, 13 May 2025 23:43:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OwfpLvar"
+Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a0b308856fso4858148f8f.2
+        for <git@vger.kernel.org>; Wed, 14 May 2025 02:03:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747205003; x=1747809803; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=/6G/wT9eObDwv+qEC0LPiwU06S3t88lZz0CLmJt3Zg4=;
-        b=MmaK28LVA7CY4ff61aAlb4ZIDN65rDgcwtxCkfX2QJ0rU1S3oUdviZbeSbtlJ6OMRR
-         jKGRI9hQBVnmyqVXRjGBNCEVZR/Gc3OOcgZjhM3hRnJMxdKXluVQKnwtxMpj2L9gzz2y
-         UcZelAWNbcwfqb5K2npuOfaQq8au/g+QoMGKmdXtsX77D7lJCE2G8PiOz8OJippQHJ3I
-         0ogf/Ov8KqlC3VsBZDIJ1Vpt28FB77vH5Vn3Ha7gfee9m8bUd0GIncR7/8rn6jOHBiw0
-         nERQy2aVbk0sTXPuJpK6Xoz5W3sry4qPxPnkXqyPU/HXyyVfdkk5bCux4Rw8hJtGRwEw
-         HNzw==
+        d=gmail.com; s=20230601; t=1747213436; x=1747818236; darn=vger.kernel.org;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=88Qexm4Kzt/z1vK8CkhjAqWLo7l6xpmI7ElSlqXT8bg=;
+        b=OwfpLvar9/ryn+pdTAVBtu4p0ry6pAWkdeKaefaUfkzRRoUP4OFH9qq/Su2bbaigK3
+         815iLugNjiOW+Jn4OAAB9YwwTkYMSflzXDGjyONZeDVccmM86X8Mz8zkoFywVdn7V4MC
+         IQp61KEkoCl4FiEgaXhrAHpF1C8D9RF6fY47UuM90joQ2hyVlwfSunavmiHjpQWyRBNI
+         N+q6134INJzB1/NcI2UkfjsGM8ZIsoCy4rWXhyqrxxiYHe+zDK2foi94Gt8bHnXv6LDq
+         loiTZDuJqcLRVwzPm8qo5ZZcqm6XHjuD9a0wdX6YgyKdf+qK4R2plx6m7EXcLSHSOsU8
+         0x/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747205003; x=1747809803;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1747213436; x=1747818236;
+        h=cc:to:content-transfer-encoding:mime-version:message-id:date
+         :subject:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=/6G/wT9eObDwv+qEC0LPiwU06S3t88lZz0CLmJt3Zg4=;
-        b=jbDoRItvSi35mLIQ2KERa41tC2a6uaLHYiru3FxiZt1GDc46mM8psVX8vHYDVWVDsh
-         I8IcnkbruFPXuEYqwg/JvF7bJr73s9GmlFp/IvhC0GPWpv+5ct6X6agY+eGz+Fyo9+V/
-         /qTQp7g17Zp1f6w+7jxAs9nkOPAEGk/1MPFsaVWIORqdf6Sp7ZCg7Ia8F34FS8I4hXne
-         w3Yn9llL04yOpVR7V+Rck270WCl8aX7BZMmNo/ZugSitZ2ags0twa8rzMwuOKoRc2gCe
-         lvRfF/Z1I9ot4VR5VQ5iBidvLPNXARxCh+O0PxRB+Yxh1yBKWV2xvw0gtwq8jUi4MRcT
-         y9ww==
-X-Gm-Message-State: AOJu0Yz2Y1x/b+oGnRqPlv8kp4Vi+SVYbCO3MyxY3Req9paIpSW5TeSv
-	Ii0yrg4j5eiPFiHzHS/RwPG3BI9Vd5Izgh8eET+rHUPUcNULUcpkNz8v0wKeNNXRRGu86x8qr/N
-	2ku2uku2ccujXqmLDVaR9bej2zHw=
-X-Gm-Gg: ASbGnctClCXWcM/MjGhMwbn/oLALD+t7zoo/7UiE3iBawy7CnUdRozuYwqqnKHG0olp
-	SAn6pdGwP54PiZ/k/ylX1CJtE+Nq60dfFKWmP75Ih7EZvKP/wkuI3A5x6FfsTe25ZCQEklRYr11
-	cAicZvUMaUtAKzzd50atXssdgy0LvEGaXjo5SBncvFmdpnO55qQ6GtPZxu6jUDVUWhBco=
-X-Google-Smtp-Source: AGHT+IGgmukrayiyZ3FCKlttZ2bnZlDSQKd1hzr7bqFU8nvBcv4cZEhFj5U5ha5OQEPydfZ8gEW/dJmvu/Ql7R+6x4Y=
-X-Received: by 2002:a05:6870:96a6:b0:29d:c832:7ef6 with SMTP id
- 586e51a60fabf-2e3488725c5mr1108550fac.39.1747205002700; Tue, 13 May 2025
- 23:43:22 -0700 (PDT)
+        bh=88Qexm4Kzt/z1vK8CkhjAqWLo7l6xpmI7ElSlqXT8bg=;
+        b=H41EfYZYlISMkzneZk+4aeFSjgXbdFwh2qVseEac0IqWQlGa0ajQOaDfjPjiIzp3nZ
+         sUftir1WMOns+mVzOKDSVFwt5XJjJpAfK/xTejXTQ+ctHnz7d5VUWAmgN1rta/u8g0iX
+         kt3L8yZq4O34MHP1lLEh0CvU+98ulm0v8KJbMKF1l7GFLyv4eKs7k/hS3uaMfYEo+BZt
+         6HAWn+i4i42tAWQ89UDqNrbRYPgmu4P4nDwhnJg7vKAss7qo9EdVHmimyspiSVAJV6OR
+         ihiVtLH8qZVhYbgYE9nqNNPy6WaWL4JV924CxtPpiSBq/Rc8UIw/PEaMWf+7x8W3hkl+
+         TRJQ==
+X-Gm-Message-State: AOJu0Yx5qwH23uD6ZVyMSxDV7kwmiOqHqF4d0DWT3uXCTZ4eJcEqWt91
+	/2PWVRWaj8z0kDU9W6mHqFjMbOk0qYVbW32dQDbg6HttqR+h5L1XoJUiqHaY
+X-Gm-Gg: ASbGncuniKc8I3mPHAoTrcmie2f/13s12h3+f7lnlaDEMsau2MUkhRNE8rE7YKfw5ac
+	Go0WmZEdmSGh4N9ES2fAtkh1VTJsjc5YKaoMFwgNXPcVfIHmcoCBO35/ZrlF+s6ddMtC49auZVq
+	iv13egbXgrh/U74wYipbxcEMt62gFPA5SSMBWclmPJB+sGA8daMuHCpROBFhyJWIqlXa91eL3PG
+	VPFYfvRqqr2n3AtZarDz2zpYTDVY8j8GqAj+tvxglrJsLujjuCkbVQDlks1iHue1f/SddYE16Tu
+	9r0puZlCdKFiNTyhKVSYwpEmEVFaFx8dj01L1IIvMqbZghog4oohWAkvmA==
+X-Google-Smtp-Source: AGHT+IHXfAG/XtyxuIM8cjkCMsiYAedwnTetBPDYY866a8YxGvswSf5+mvt+7Rx3YWowe4ngV5X6xA==
+X-Received: by 2002:adf:e890:0:b0:391:139f:61af with SMTP id ffacd0b85a97d-3a3496c371cmr1595234f8f.32.1747213436364;
+        Wed, 14 May 2025 02:03:56 -0700 (PDT)
+Received: from [127.0.0.2] ([2a02:2455:8268:bc00:768c:74a5:aa9f:b39e])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a4c5b9sm19084461f8f.91.2025.05.14.02.03.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 May 2025 02:03:56 -0700 (PDT)
+From: Karthik Nayak <karthik.188@gmail.com>
+Subject: [PATCH 0/3] fetch/receive: use batched reference updates
+Date: Wed, 14 May 2025 11:03:46 +0200
+Message-Id: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250511125809.14180-1-dhar61595@gmail.com> <20250511141101.18450-1-dhar61595@gmail.com>
- <20250511141101.18450-2-dhar61595@gmail.com> <xmqqv7q4fipn.fsf@gitster.g>
-In-Reply-To: <xmqqv7q4fipn.fsf@gitster.g>
-From: MOUMITA DHAR <dhar61595@gmail.com>
-Date: Wed, 14 May 2025 12:03:51 +0530
-X-Gm-Features: AX0GCFvxbFf4GxONu6k9_d-VjGR3uqPgTdQ9OvC-6CKnLsB8wJKhmjOj70XJo4M
-Message-ID: <CAF=ncLaYAXF-bFjMaxa39oVFNNmk=-gUs0Abdf-dxSAEiD7Ltw@mail.gmail.com>
-Subject: Re: [PATCH v6 1/1] userdiff: extend Bash pattern to cover more shell
- function forms
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>, 
-	Eric Sunshine <sunshine@sunshineco.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAHJcJGgC/x3NTQqDMBBA4atI1h3IT1XsVYqLaZzoQIkhM5aCe
+ PeGLt/me6cRqkxiHt1pKn1YeM8t3K0zccO8EvDS2njre3v3AXrr4CgLKsHKCok0buBAdziEoGB
+ VxjdoxSwYtWkCY3oNQwhTonEyDS6VEn//0+d8XT+HXFqWhAAAAA==
+X-Change-ID: 20250423-501-update-git-fetch-1-to-use-partial-transactions-7fb66339fe79
+To: git@vger.kernel.org
+Cc: toon@iotcl.com, ps@pks.im, Karthik Nayak <karthik.188@gmail.com>
+X-Mailer: b4 0.15-dev
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2719; i=karthik.188@gmail.com;
+ h=from:subject:message-id; bh=9nCtTrZmffBSba/dP/ItEcMHU+SeoM1Eq2yld/cblDA=;
+ b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGgkXHp9ngCUSRyloxfXXq9sx6/+xlLWs+7l2
+ awlRmgRIw7maokBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoJFx6AAoJED7VnySO
+ Rox/QZQL/3hqbbO/p08zY64XZJj0KQYAJXK2pKBGWfESv7qk8+vs5lP5x9oQq952LEVGrBswISy
+ LPNk6cruhn/15hhAsC4U9kZX4yp8mBWBB0ErakgXwTPoPCKdK3vTAqiSi6dw5KYPARsyPdYI9HX
+ 6QsIo6jofh+iSCcU9o3EidbZj+snMPAf08iTh3pObiC8YBmHWWIPAE7A7nf1PN6AjAvaObjBtQx
+ hHKj5qkA9Iq2JaUQt6ZTX4dmpLJ/G0TBylIgwn58LPSotZHBpdAEGeWDBJBea3erjH+9API2qqR
+ JyzN9lLy6094/RHGgQmrXjzZ7GC1NQLIkdzRI2C4b6ZxOr4HqzKsCCgTfMD21KwCUp5jDogczbv
+ izNMNaI0yEWVgAGE51Ffil0RVs1DAPe9BM4yFX8lpX6gUUtLLMGbqctojqt+6odZBE+x5NzRNGZ
+ mBxrPI7SOpjQLGZMxyXB4p73s7O4VrMX5wIYBivdWUNCru9IzEFh/uHmrlXy2nzN0YbBdSABsI5
+ q4=
+X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
+ fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
 
-On Wed, 14 May 2025 at 00:20, Junio C Hamano <gitster@pobox.com> wrote:
->
-> Moumita <dhar61595@gmail.com> writes:
->
-> > diff --git a/t/t4018/bash-posix-style-multiline-function b/t/t4018/bash-posix-style-multiline-function
-> > new file mode 100644
-> > index 0000000000..cc8727cbcd
-> > --- /dev/null
-> > +++ b/t/t4018/bash-posix-style-multiline-function
-> > @@ -0,0 +1,4 @@
-> > +RIGHT() \
-> > +{
-> > +    ChangeMe
-> > +}
->
-> Not a review, but I am curious what this test is about.  Is it to
-> ensure that the pattern does not get confused with the backslash
-> that does not have to be (but it would not hurt to have one) there?
->
-> IOW, does
->
->         RIGHT()
->         {
->                 ChangeMe
->         }
->
-> get processed just fine, and the above is to check the corner case
-> where an unusual "\" on the same line as RIGHT does not break the
-> funcline identification?
->
-> Thanks.
+The git-fetch(1) and git-receive-pack(1) commands update references as
+part of the flow. Each reference update is treated as a single entity
+and a transaction is created for each update.
 
-I realise this test is redundant , The goal of my test was to ensure
-that the entire function header line is correctly captured, even when
-the opening brace is placed on the next line using a backslash.
-However, I now realize that the test case Johannes mentioned already
-covers this behavior. So rather than duplicating that, I think it
-would be more useful to add a similar test using the alternative,
-Bashism-style syntax:-
+This can be really slow, specifically in reference backends where there
+are optimizations which ensure a single transaction with 'N' reference
+update perform much faster than 'N' individual transactions. Also having
+'N' individual transactions has buildup and teardown costs. These costs
+add up in repositories with a large number of references.
 
-function myfunc # RIGHT
-{
-    echo 'ChangeMe'
-}
+Also specifically in the reftable backend, 'N' individual transactions
+would also trigger auto-compaction for every transaction.
 
-Thank You
-Moumita
+The reasoning for using individual transactions is because we want to
+allow partial updates of references in these commands. Using a single
+transaction would be an all-or-nothing scenario.
+
+Recently we introduced an in-between solution called batched reference
+updates in 23fc8e4f61 (refs: implement batch reference update support,
+2025-04-08). This allows us to batch a set of reference updates, where
+individual updates can pass/fail without affecting the batch.
+
+This patch series, modifies both 'git-fetch(1)' and
+'git-receive-pack(1)' to use this mechanism. With this, we see a
+significant performance boost:
+
++---------------------+---------------+------------------+
+|                     | files backend | reftable backend |
++---------------------+---------------+------------------+
+| git-fetch(1)        | 1.25x         | 22x              |
+| git-receive-pack(1) | 1.21x         | 18x              |
++---------------------+---------------+------------------+
+
+The first and third patch handle the changes for 'git-fetch(1)' and
+'git-receive-pack(1)' respectively. The second patch fixes a small
+memory leak I encountered while working on this series.
+
+This is based on top of master: 7a1d2bd0a5 (Merge branch 'master' of
+https://github.com/j6t/gitk, 2025-05-09). There were no conflicts 
+observed with next or seen.
+
+---
+ builtin/fetch.c                  | 119 +++++++++++++++++++++------------------
+ builtin/receive-pack.c           |  88 +++++++++++++++++++++++------
+ send-pack.c                      |   7 +++
+ t/t1416-ref-transaction-hooks.sh |   2 -
+ t/t5408-send-pack-stdin.sh       |  14 ++++-
+ 5 files changed, 155 insertions(+), 75 deletions(-)
+
+Karthik Nayak (3):
+      fetch: use batched reference updates
+      send-pack: fix memory leak around duplicate refs
+      receive-pack: use batched reference updates
+
+
+
+base-commit: 7a1d2bd0a596f42a8a7a68d55577967bb454fec0
+change-id: 20250423-501-update-git-fetch-1-to-use-partial-transactions-7fb66339fe79
+
+Thanks
+- Karthik
+
