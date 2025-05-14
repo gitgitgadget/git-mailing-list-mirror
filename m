@@ -1,156 +1,123 @@
-Received: from mail-io1-f53.google.com (mail-io1-f53.google.com [209.85.166.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B10A2820CD
-	for <git@vger.kernel.org>; Wed, 14 May 2025 17:37:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 170042AD2F
+	for <git@vger.kernel.org>; Wed, 14 May 2025 17:46:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747244252; cv=none; b=Qz0m2dvz9hpAMj7JMBAKAZrdOBvpU4BznS7iKi6l+h54beoC+OAJK4enCiVGXyDUvwUGjbGvyBhkQjF35B0Lj0m8JDq85lcAtofPTtccdd4UgXPk96gpqzT2rzlqgUV8BBJXBoOPZaLLcaIABvCYUTsmCrE1MpgGg3tr3IIgGAk=
+	t=1747244784; cv=none; b=rdWmCXa0kDx9FM+wKGNOxssCugbzWU4qP5GZDZX3nsWvFo+5JzNEL3sO04eOoBOi/jtlgaLnTtzvgZb48ny5tsK+nOGgwsx28kGrdhaXQIfU2Ibx87ekB1EfLsGQ+hmgDcLPMuucfwtwEiCBOGLze6wxZ2mV7jV6+UqM7KkBJak=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747244252; c=relaxed/simple;
-	bh=q4GvZBaPZB6gO4HxL09BsQld8GUJwIMvjej/DF6U3tg=;
-	h=To:From:Subject:Message-ID:Date:MIME-Version:Content-Type; b=Eo6tt6oT6yFeOf73SYTl9MsGmIznjTqgD3+AHTdhd7oGVBRtN9PIbPiIA8NT/l17dV2Mb5hUBxfkDbXAmGPdohp5XvLg+RspA6cBNgsSGxn//MW+Czl+Gplzd4WJ+Q9ne/hAxrZ7oa+wOBGngduWcMoWQJsgF5NJXFlaldZGCcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LLQZormw; arc=none smtp.client-ip=209.85.166.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747244784; c=relaxed/simple;
+	bh=3ovhGWPhpn4yJb9rywwOmc8xMQ5B8ED5gDaytJLmgGQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uiQ7EPMFO6GGpCFBsqF5/fYawjdUqL3jW6iWi1B3F6h9nXw9HjsKxltOvFeoqlmqFyFXugZ8MZJZHPZeOXFmmjwq67FBGFJ/IMW4e6Pi3FCBwlMZ7XwZFj6WaTfhxZjGJ7ASqHBR2ztjjigAWCZw7hdMofW+tkUoPX+OajrFXMc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=E2GnqcJZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vn3EV45H; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LLQZormw"
-Received: by mail-io1-f53.google.com with SMTP id ca18e2360f4ac-8616987c261so235659739f.3
-        for <git@vger.kernel.org>; Wed, 14 May 2025 10:37:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747244249; x=1747849049; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:user-agent:date:message-id
-         :subject:from:to:from:to:cc:subject:date:message-id:reply-to;
-        bh=1UCo/OvSUT7ti1wAPamdZk4jc4Qq98lvdmETjO+H8Sc=;
-        b=LLQZormwxEzhLb/qaqPlgKdURXbWohAhl9ZoQfWP4QXsWAgojz5+fK/mvppK/Qdr4G
-         RvM0TUrkavZExR4mXf3dT5KcKUbXy0ixJmk5Opz+I+ajL/KfgiS6M2AYe6txZ2a82au9
-         D28nKA+wzaWEkDvTqvcIGkPNNU4fKw54m/e6Pl1Uaq3ypfdDLGwXqtf3tfGQL6HcZoql
-         6/CJkbSnEZTyr0z9X4yyZX0DSbRHQXfc92KVYCbfebLCTrGXRAYLEtGfKmSUWJdFRXoH
-         zrOpHYm72TLlDXOQKzJomcqNs9C4k2gwNSeiNAtCl/C28/zPsuww/YK4QmNSkPfiOgBQ
-         APKQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747244249; x=1747849049;
-        h=content-transfer-encoding:mime-version:user-agent:date:message-id
-         :subject:from:to:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1UCo/OvSUT7ti1wAPamdZk4jc4Qq98lvdmETjO+H8Sc=;
-        b=uNr6aGonpeQ5OasNCJMRFwZIeMDTBWZzNrFPccpYrd51nrbTZYdJLJZDEnOgoWtnRi
-         69ToHqmz5hxU7yLVkdlgOhcZsS1hIl7Jov0OukPBQwA7fSOn9yPpGFWlx+kuFbWNVd16
-         k/zzB6doXH7Md1tF3BL9lU2Nm4t2/Bzi6E2ykP2fQ405LrR61XU7xXWBmFhpyIpJUSq1
-         QGLN0h4Ui+vrZm+NwW0eA3F82I5h6QRS9bGWLQBISGGSI1ezuBwTRcYOJkscPgNNzyMC
-         XomBUpo0sxv6E8pmxaBAOJnIUSVxcVroeOqd9ZcCYpWHr8BaSj6rha9OMyIi0ueyoahr
-         IdXQ==
-X-Gm-Message-State: AOJu0Yyi18UXY7o5mTB09HSJJhGVaVKlNSCIxgGrD7q8dHnKfnAj8dGw
-	1kORXVKm1OG9Q+mmVJb/LgNhDOX6su/qfiuE/QdsaIHW1OihkDECFP5paQ==
-X-Gm-Gg: ASbGncuzZNmDZJ2ffJvfUBCg0+iKDr7ni7Fsl70swC9qjP1zPXEV0li+Q1gzz056PIl
-	4WyMJ1cDB3hcg4s7U9SMvba5SNmdUcOHgGJDwUWKzilGoQ+vOY8lUHAdbRkRh8Nw/VBvuPkeVz8
-	ElWNWPoR4z+LsXZsjrfbGhm77KgaWHlcHcNQSPsmkHEk0kK0FoiEdaEVvWW8elqncQDtnLkYczJ
-	IkkRDzDKtwLZ5B+gcDhnYyzqgjt3ca2m2jlHmRAeKpYW6u1yXgTzjO0lEZ2ICnVHLTcYaNeyKV/
-	MicSKVnprciKMac6U4M8oF3PmM0uw4OkCcWtgYKtx7o7hU6Bi4SgEOHoHWoXvKnn5tSbN7TcYbi
-	BYACkTySffWwLnc44px3BgIodyZztrMU/
-X-Google-Smtp-Source: AGHT+IGKv0nkJy11apqWFFY+nbLGqag0NZKgJRvIEbP9hhsPDbXPQQEatoNxbR028unaq9HHKTbW7w==
-X-Received: by 2002:a05:6e02:1a6b:b0:3d8:1d2d:60b0 with SMTP id e9e14a558f8ab-3db6f79b896mr53703765ab.5.1747244248693;
-        Wed, 14 May 2025 10:37:28 -0700 (PDT)
-Received: from [192.168.1.253] (76-206-246-123.lightspeed.cicril.sbcglobal.net. [76.206.246.123])
-        by smtp.gmail.com with ESMTPSA id e9e14a558f8ab-3da7e1049casm36012055ab.26.2025.05.14.10.37.27
-        for <git@vger.kernel.org>
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 14 May 2025 10:37:28 -0700 (PDT)
-To: git@vger.kernel.org
-From: Mr Bill <billc56196@gmail.com>
-Subject: [PATCH] Handle rebase fork-point options in pull --rebase
-Message-ID: <06beff46-cdaf-91c8-e6a3-6557694af618@gmail.com>
-Date: Wed, 14 May 2025 12:37:26 -0500
-User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:45.0) Gecko/20100101
- Thunderbird/45.8.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="E2GnqcJZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vn3EV45H"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 28D5713801FA;
+	Wed, 14 May 2025 13:46:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 14 May 2025 13:46:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747244780; x=1747331180; bh=Fpkxop0i/H
+	1yoWzhUW496sRlGt0vrzlf8VbbsQRN3/8=; b=E2GnqcJZBFrGlL5sZeK7r0kBCX
+	Bxk0YOyB54k3vIZR4OlSAyPjBFcGIPGBYQKUD8ni3akBDpF1UK3RAVecNaDIBmFB
+	IWiM4B6vQXrpePqEhv83qW0KWNUzRok0octK1PwBd2Cvh8Ljc0fJ2Jkl/XXArASf
+	rEa6nScDDezmFgJ6LmI5EoKZC2SWkweCdNXbytAnuPj5uGBGbJNr/7WTWATyUetM
+	1LxgH60kVCGiw9ZW3/+O2W3sU4F49KTzVIzRzRj4XeAtkQvhCBhXAgIjiemho8k9
+	dkE7oA9nmbT0SikXnAppijIhcBOUxYx6JlyHuqjYzxNXgNI19GrzMI+MFhnw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747244780; x=1747331180; bh=Fpkxop0i/H1yoWzhUW496sRlGt0vrzlf8Vb
+	bsQRN3/8=; b=vn3EV45Ho5XEeWmF4kHroj+9Z8yovQhKih58cs5w064KHGFWIEG
+	fUQzit1ZFIKtHKsa+LyTmIMIERyTHg9dKvodJDOE+cTOtk6GFJ960vvLn1fCO2GN
+	urOt/yqdJvGSqp3nv8zOhlbN4fOKdOY2chKsn5Lia+5qE4em60yOSRzpV12MLhgl
+	j5Vn51VMTBf3C+pSZkVIaBRv1fKoOKjDAbskjOy13St0ThHfXE4NrE9EtU30rHKG
+	BuxgWcWYaGeOvVglCK5IJTgJb3C+DQkgq42B2/8Anp7HvY5DHenBM8+iZOHUl7df
+	zWqBbnNKw4vk3NW1tpXzbvk7guubXWo0AWA==
+X-ME-Sender: <xms:69YkaESzU0-T6Vjhz8zyHuZJQz1jXumlYBThOEXuabRA8D1_1GZX4A>
+    <xme:69YkaByIWHwv3T8YIoqG0DslkQH69PtF2f8yquFgQiib9od_L8SNm8MltqYMo_Xsv
+    P1EA7154yUcy496Uw>
+X-ME-Received: <xmr:69YkaB10KzVYzhYwcuN1bj5dSffY6Tg-Dom_zbBPkFNSzArdIdet2y3TWRG8TlZwztfZrrJW2h1QZCJ1i0zJaU9hXbreKdsZ5UgJh6s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdejiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
+    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhn
+    vghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtoh
+    epphhssehpkhhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:69YkaIDqcSNN-pOKrGLIl02VNpBmmMi83KR_Zq_SdZ2YhN7LuXZ4dg>
+    <xmx:69YkaNicc9oJLoBN_DKbCMgKs9NX2F6hwrON8U5ipS1DQaUseo3dfg>
+    <xmx:69YkaEp0Kkr_3WMNdELuKjX-C7vU2rXVNZ55L8xD7qAvLEs_GjA7Ng>
+    <xmx:69YkaAiRY4tRPNQ7ChnRNO3QKFZ78Yb82PdZYj_2gBypjaPrkAf6Lg>
+    <xmx:7NYkaAqDIA76StHKmeuxiITp3hqEZxqiiDnCeKjiB7889Do7Ik9HYpO5>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 14 May 2025 13:46:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org,  toon@iotcl.com,  ps@pks.im
+Subject: Re: [PATCH 2/3] send-pack: fix memory leak around duplicate refs
+In-Reply-To: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-2-7c65f46493d4@gmail.com>
+	(Karthik Nayak's message of "Wed, 14 May 2025 11:03:48 +0200")
+References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
+	<20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-2-7c65f46493d4@gmail.com>
+Date: Wed, 14 May 2025 10:46:18 -0700
+Message-ID: <xmqqikm39jbp.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-This is a patch to handle --fork-point and --no-fork-point in pull --rebase.
+> The 'git-send-pack(1)' allows users to push objects to a remote
+> repository and explicitly list the references to be pushed. The status
+> of each reference pushed is captured into a list mapped by refname.
+>
+> If a reference fails to be updated, its error message is captured in the
+> `ref->remote_status` field. While the command allows duplicate ref
+> inputs, the list of doesn't accommodate this behavior as a particular
 
-I had a recent bug report about pull --rebase not working correctly...
+-ECANNOTPARSE around "the list of doesn't accommodate".
 
-but it was working correctly, but not doing what I expected due to always
+> refname is linked to a single `struct ref*` element. So if the user
+> inputs a reference twice like:
+>
+>   git send-pack remote.git A:foo B:foo
+>
+> where the user is trying to update the same reference 'foo' twice and
+> the reference fails to be updated, we first fill `ref->remote_status`
+> with error message for the input 'A:foo' then we override the same field
+> with the error message for 'B:foo'. This override happens without first
+> free'ing the previous value. Fix this leak.
 
-using "merge-base --fork-point"
+OK.  A natural question is what happens when A successfully updates
+and B fails, or A fails but B successfully updates (failing both is
+much less interesting).  What should happen in such cases is unclear
+but my gut feeling is that the last-one wins (which you implemented)
+is probably just as OK as the first-one gets retained (which might
+be less work at runtime), and perhaps keeping-the-more-severe-one
+might be more useful than either of these two, but I didn't think
+it through.
 
-This patch implements handling the --fork-point and --no-fork-point options,
-
-and also checks the config rebase.forkpoint value...
-
-and it works to resolve my prior bug report issue.
-
-If there are any questions or comments, let me know!
-
-Thanks to all for the help and comments on my prior bug report!
-
--Bill
-
-
-diff --git a/builtin/pull.c b/builtin/pull.c
-index a1ebc6a..f2d405f 100644
---- a/builtin/pull.c
-+++ b/builtin/pull.c
-@@ -117,6 +117,10 @@ static int opt_show_forced_updates = -1;
-  static const char *set_upstream;
-  static struct strvec opt_fetch = STRVEC_INIT;
-
-+/* options to include rebase fork-point preference */
-+static int config_fork_point = -1;
-+static int opt_fork_point = -1;
-+
-  static struct option pull_options[] = {
-     /* Shared options */
-     OPT__VERBOSITY(&opt_verbosity),
-@@ -253,6 +257,10 @@ static struct option pull_options[] = {
-         N_("set upstream for git pull/fetch"),
-         PARSE_OPT_NOARG),
-
-+   /* rebase option to use/not use merge-base --fork-point */
-+   OPT_BOOL(0, "fork-point", &opt_fork_point,
-+       N_("rebase with 'merge-base --fork-point' to refine upstream")),
-+
-     OPT_END()
-  };
-
-@@ -366,6 +374,9 @@ static int git_pull_config(const char *var, const 
-char *value,
-     if (!strcmp(var, "rebase.autostash")) {
-         config_autostash = git_config_bool(var, value);
-         return 0;
-+   } else if (!strcmp(var, "rebase.forkpoint")) {
-+       config_fork_point = git_config_bool(var, value) ? -1 : 0;
-+       return 0;
-     } else if (!strcmp(var, "submodule.recurse")) {
-         recurse_submodules = git_config_bool(var, value) ?
-             RECURSE_SUBMODULES_ON : RECURSE_SUBMODULES_OFF;
-@@ -1059,7 +1070,17 @@ int cmd_pull(int argc,
-                 N_("pull with rebase"),
-                 _("Please commit or stash them."), 1, 0);
-
--       if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
-+       if (opt_fork_point == -1)
-+           opt_fork_point = config_fork_point;
-+       if (opt_fork_point < 0)
-+           opt_fork_point = 1;
-+       fprintf_ln(stderr, _("rebasing %s fork-point"), (opt_fork_point 
-? "with" : "without"));
-+
-+       /*
-+        * If we're *not* using fork-point, or we don't find one in 
-get_rebase_fork_point(),
-+        * clear the rebase_fork_point info.
-+        */
-+       if (!opt_fork_point || get_rebase_fork_point(&rebase_fork_point, 
-repo, *refspecs))
-             oidclr(&rebase_fork_point, the_repository->hash_algo);
-     }
-
+THanks.
 
