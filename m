@@ -1,41 +1,46 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A9B0280304
-	for <git@vger.kernel.org>; Wed, 14 May 2025 18:03:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AF031ACEDA
+	for <git@vger.kernel.org>; Wed, 14 May 2025 18:19:39 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747245809; cv=none; b=M8a5rzpAbYnbjzXX3zLEXnXK+3Qu7JwjMeKmA/1ja1EY8gafyJKwBRIgJdBw03SbQ3pJ0d7OPFXWElJuIEAeCfAeVnFVjAiSWvDe/Cs4C1b+z98a7s/0sk5WbcRD+I3B9bFnhbRkSDxIorCM4pal6fEiydmtFmU2+eqlzapPMhY=
+	t=1747246783; cv=none; b=rbqub/O9KYcBpG4fUBTQF/n7vXoA+YMq3gvxVaRV3gUaRVJPyySNancK9L/ifC5RXpwlmrGCh/EZmWnTkKRI9AkgPA5uW1CNeAJxTDJz/OclR/ei/IRBJMLVJ56Z25xKfGEt6K+lmKL58uOadcxuMPXHCnTi2vWKJ6hJzDtpFvY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747245809; c=relaxed/simple;
-	bh=Cxe4Pvlpg5Biay9+DBX4wZXR4xvibQLs1IBxkKwzywM=;
+	s=arc-20240116; t=1747246783; c=relaxed/simple;
+	bh=0NaUUGSakRUdXhcdR6SmbMoOjEsux/ZpqA9MzzJ30b0=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=G2u1/B2rTrSCWhr1w8xWskYFI/QSa4siToN8tZ7F2kP3vM65aNp/AE+yJZG/Z472aGEsnK+dtNfuEJLqJmETVrnoyCYe0sHKIUfpy9oNw5rolcm1BFzI/wChAWyXzGWxDGJbMqcC1RdK0PD7PgaTTjIq9TVPKMpGsFu6G7032Jo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=TEESqhzq; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=IRd45dGS0Q0NkGJAesdvd9kYDVd4qWiR3rIrKtwu0frVECy7CXo+QApfIVijmJKPNA45Ggyh/3Jv7bskG3w+sUJQB6ELcNKlEdBpg2djGzgvDC3IfTLpmRXw5tOWyzdds/jBJxF7UVbWtIhX6GEsp0YRnRhaSdOgMSP/AMOpKTc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=gXDffNTO; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="TEESqhzq"
-Received: (qmail 22812 invoked by uid 109); 14 May 2025 18:03:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Cxe4Pvlpg5Biay9+DBX4wZXR4xvibQLs1IBxkKwzywM=; b=TEESqhzqetc2GUPk8kj7jv8YtLeuj4jtO9i3GbQVo2gCejDQ21lUnT57Jud+ctNDer/HlXxPZX1aY7Qg3UXr2j9nc2m6trodtxbmUJQbYjzqk3HRUHuf5T4HIRfuKcvdLzhL9ElNu3cYtgNMEkN4ytbHZ7knqnU1yX3bolwJ2YKFmbZCeZEvpAduK2iHm8brkRm6/c/ifIgBExXMeuQZIh2owQz7npC2w8/9ZE5qm9eHLKgE7Z8cqoxxAJKXX0MgBE6kQ3ypIypnRG8kFamyYWCXsYy1j1ht7rKt2cYsqhhYW4pj3kBPkD4/YMqAUPhxmSKy8ND53EMHv6bOazLSlQ==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="gXDffNTO"
+Received: (qmail 22931 invoked by uid 109); 14 May 2025 18:19:39 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=0NaUUGSakRUdXhcdR6SmbMoOjEsux/ZpqA9MzzJ30b0=; b=gXDffNTOKZJ0p8Xi5TmR0fsWCXH7nDFNzFLqq2xz3dnqGhH+yRscxygew9NceASTzTBMOUN7Ljd6LvX2U43lYARsIYLolgK0QdiEpMkv7xt9AsHgN/uKtvSu746dl+3JRSX/yqgIUyNX0Pzg1I/9rbu6ojHVvq7X+2bN2cSFPZQMLiO59BQQetxAQIgJbd4A7m0VfHzzv72z2SNYqurvvGhV3ROAlwQfgMYFE7qsqbcTQhhfsj8uWzsyv7RpsMWQ88xJh1el7Zzg3IwEeW6+qrw7DhN9QcbQulqmZbhTEiZO4RxBAr4ddlou9f7D3tSessfIUlN19PT4uTk2+0dKjQ==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 May 2025 18:03:26 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Wed, 14 May 2025 18:19:39 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 12558 invoked by uid 111); 14 May 2025 18:03:27 -0000
+Received: (qmail 12769 invoked by uid 111); 14 May 2025 18:19:40 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 May 2025 14:03:27 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Wed, 14 May 2025 14:19:40 -0400
 Authentication-Results: peff.net; auth=none
-Date: Wed, 14 May 2025 14:03:25 -0400
+Date: Wed, 14 May 2025 14:19:38 -0400
 From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] pack-bitmap: fix memory leak if `load_bitmap_entries_v1`
- failed
-Message-ID: <20250514180325.GB2196784@coredump.intra.peff.net>
-References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
- <20250512131315.GD1191360@coredump.intra.peff.net>
- <aCOFqYdnPp1Lne4Y@nand.local>
+To: "brian m. carlson" <sandals@crustytoothpaste.net>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	BERENDSEN Arnoud <arnoud.berendsen@soprasteria.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Cleaning up "contrib/"
+Message-ID: <20250514181938.GC2196784@coredump.intra.peff.net>
+References: <DU0PR07MB8465C407519BD5A8C8F933CE9D8D2@DU0PR07MB8465.eurprd07.prod.outlook.com>
+ <3f3a0ee6-49a5-8013-7fe0-65c9ba8bfc3a@gmx.de>
+ <aBhZHA7av8bWH9Ac@pks.im>
+ <xmqq5xieq3fs.fsf@gitster.g>
+ <aBmg1_wlF2fuk96M@pks.im>
+ <20250512135017.GC1191957@coredump.intra.peff.net>
+ <aCKOqs52TDZDvAXJ@tapette.crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,40 +49,71 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aCOFqYdnPp1Lne4Y@nand.local>
+In-Reply-To: <aCKOqs52TDZDvAXJ@tapette.crustytoothpaste.net>
 
-On Tue, May 13, 2025 at 01:47:21PM -0400, Taylor Blau wrote:
+On Tue, May 13, 2025 at 12:13:30AM +0000, brian m. carlson wrote:
 
-> > > In pack-bitmap.c:load_bitmap_entries_v1, the function `read_bitmap_1`
-> > > allocates a bitmap and reads index data into it. However, if any of
-> > > the validation checks following the allocation fail, the allocated bitmap
-> > > is not freed, resulting in a memory leak. To avoid this, the validation
-> > > checks should be performed before the bitmap is allocated.
-> >
-> > Thanks, this looks correct to me.
+> > I think diff-highlight is something that _should_ eventually happen
+> > inside git-diff itself (because it would be more efficient and we could
+> > do a better job). But it wouldn't share any implementation with what's
+> > in contrib/.
 > 
-> It looks correct to me as well, and is a strict improvement. But I think
-> there is a leak outside of this function as well that is not touched by
-> this patch.
+> I think there are definitely users of diff-highlight.  I remember seeing
+> a reference to it recently and not realizing it was in contrib, but it
+> is actually used by others.  I don't use it myself, though.
 
-Good catch, and your analysis looks correct to me. I don't think that
-changes anything for this patch, which is fixing a more "inner" issue of
-the allocated memory hitting store_bitmap() at all.
+Oh, there definitely are users. Sometimes they contact me outside the
+list. ;) I thought the discussion around contrib/ here was more around
+"should things in contrib/ spin out to their own projects", and not
+"should they be removed and forgotten". :)
 
-So I think this can graduate independently, and then you can prepare
-your fix on top (but no rush).
+I am perfectly happy if these things stay in contrib/ forever. I was
+only voicing that I'd be OK taking them on as outside projects if we
+didn't want to keep them in-tree anymore.
 
-It would be nice if we triggered these cases in the test suite so that
-LSan could confirm that all leaks are covered. But I suspect it may not
-be worth the effort to craft a bitmap file that is broken in such
-particular ways.
+> > >   - Credential helpers.
+> > 
+> > These ones are tricky. In theory they could be spun off into their own
+> > projects, and we already have examples in the wild of things like GCM
+> > which are maintained totally separately.
+> > 
+> > But I think we may need to find people to step up as maintainers. In
+> > particular, I think osxkeychain is probably used by a lot of people, and
+> > probably shouldn't just go away. But I don't know how the maintainer
+> > would be. I wrote it originally, but don't (and never did) use it
+> > myself, or even have access to a macOS machine.
+> 
+> These are often shipped by distributors.  Apple ships osxkeychain, as
+> does Homebrew.  Many Linux distros ship libsecret and it's the
+> recommended choice for desktop Linux.
 
-> I suspect the fix looks something like:
-> [...]
-> , since all callers of load_bitmap() will themselves call
-> free_bitmap_index(), so there is no need for us to open-code a portion
-> of that function's implementation ourselves.
+Right, I know people use them. What I meant was that if we wanted to
+spin them to out-of-tree projects, we'd need somebody to volunteer to be
+the maintainer of those projects. If they stay in-tree we can be a bit
+looser (your "I don't want to be _the_ maintainer, but I can
+contribute").
 
-Deleting that extra code would be doubly satisfying.
+It does put more load on Junio, though. E.g., if there is a security
+problem the project has to deal with embargoed release engineering,
+whereas a separate project would do its own releases.
+
+> wincred, while not super popular, is still used and is smaller and
+> lighter than GCM.  It doesn't actually look like GCM is seeing a great
+> deal of maintenance either at this point, so I'd say they're about
+> equally well maintained.  Since I don't use Windows, I don't know if
+> there are other usecases (such as noninteractive uses) that are better
+> supported by wincred, but I'd recommend keeping it.
+
+I don't use Windows, so I don't have a personal opinion. Code may not
+see updates because it mostly works, or because hardly anybody is using
+it. Or people may be using it but it's still broken. ;)
+
+Last time wincred had a security hole (in 2020), the phrase "unsafe and
+unmaintained" was thrown about on the security list, but we ultimately
+fixed at least the immediate issue. But I find its general matching
+strategy to be not very confidence-inspiring.
+
+Dscho (or anybody else familiar with Windows) may want to comment
+further.
 
 -Peff
