@@ -1,81 +1,81 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2496A20297C
-	for <git@vger.kernel.org>; Wed, 14 May 2025 05:12:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2437A20298D
+	for <git@vger.kernel.org>; Wed, 14 May 2025 05:12:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747199568; cv=none; b=uAXe0dgcZQS80zMPQBbwEhGpC+WVXekghFo8G5vBkr9qsuXefnqiyfrfRmy9Ds5wYtPApIEI9cf16KRbVs3Lc3YHRGG8/uOtwU64hQ7JPVljrCZcl03xrzOvw981CrTIraC9YoztOzgzgzFTF6oyg96ywMLbRZbu6GmknuB9du0=
+	t=1747199568; cv=none; b=cHpv4rYIIO5D66wPMhd/Q8FIQBdnqDQvzVMFiDs3KeKPNykxm2b37kHJW0YPvo/mbnwiwb6QKinLuoCtPB7d2/UvyITsBa4grGChLeCXDheczeMMbZDcbrfRgsCP1m2BWQmj7oWkRQOXd4C+j75gra/qoy0dijWVLrWG35OVGLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747199568; c=relaxed/simple;
-	bh=YOgIE/wT7PgwgdH9Bm8KIsrdDc28M24z5iAEcEpMsEQ=;
+	bh=rLTU3LL4YPvSKNhPpt8GaHXX2kWl+oogoBv2PWKa8pg=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Zf4aPRJSyfkYBXVGSjsLtQmxbj6MkPvhtA8gZ32bKvLSdQWYBTHoNiH0GWHOwbA7rn7kG9sPQu21QY9JFuJGiXGRHdXO0wKNd448Gl/DQkMB3i4YB2/EEr8jENpjYF08vYBc3QqSUKIu7SSXN+uILvhlAP33AM2yAYtHi2fa40w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=zUBD85Ss; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RQc2pdtu; arc=none smtp.client-ip=103.168.172.145
+	 In-Reply-To:To:Cc; b=lMl1qCMFyn5CrJ52pfPGsRcLrN7iQSP4bOkxOh99a1st1MrKMWjG4ad6u0jkrH6Pu6qJdJe7k+pCNTV7K2yv5koFF85bnZQLuIaOciPclQZAMPI6bi5e9oboXU9p8xVgk7SOCBMgCBfSq2DMK3/FgyxZb4UOcH/uICg2Vun37Ho=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qKnYu71k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XBcGbmYQ; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="zUBD85Ss";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RQc2pdtu"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5A9B41380145;
-	Wed, 14 May 2025 01:12:44 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qKnYu71k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XBcGbmYQ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 7B2CB1140088;
+	Wed, 14 May 2025 01:12:45 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Wed, 14 May 2025 01:12:44 -0400
+  by phl-compute-09.internal (MEProxy); Wed, 14 May 2025 01:12:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747199564;
-	 x=1747285964; bh=t07pLt+HFIyixnA5pGCDTDDomT04ZMJdRQXOYcYKil8=; b=
-	zUBD85Ss8Je3NAuDQOaaQk/+e4xODX7845Ls9tfBtOv3xlPorsz6BZdjsiSIR5lr
-	R7uCvewwZgDsUL/C/wRoPhfESlewDX1dSSNS8HnEdD3hyptdO81Bz1AX4wuXF3wD
-	bu/jUjBXUtLlUScwoS78uEu1bYVGHTLXfkHQOtwZQd6kCuV6RnxbA3css+y4kzFP
-	B9PeyHTEVCX6XETw72j0hZaxtssXQ+JFulmep9t3VBTaiujgBxOr1fQ78hl+oO7o
-	i4PBVLgSWUgwMvuaesFk9PPqb3ofmRRJYSCWyTAwaokJnC5bbYpVSXf0dd/9wWnw
-	OatWEiwRstl0NTnXn1eMbQ==
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747199565;
+	 x=1747285965; bh=ZEZtU3Bzx//5hAaM/cJdPfn55S+aHLlw/wjjLCN40dA=; b=
+	qKnYu71kVnjdNaYGvg28h0z6Nz6GHUeii658c3wyCXCps0l1S/u2pJ6dqxzLkGVy
+	muXgFCT2nfoyLhKq5pWjJaldKKGOM7RHQCGz4o52gndZ0euTbjt0HHa54JDDqj29
+	hiCcUWVQuUbWORYVPDpX5gsTtxGQGf0yHbEE+gyDTeIVzTk1NRXFNvW5BaCw9a6+
+	6uWsKk0XalPXp9qX3ErU1RAEBVQWHzZ2qePK7a51CAQ1o8F6DcxLDX8ICfQ10VfB
+	KS0ZEjRxTrkWIAqxO8TNom5OVJI4PmlDTBSpElk8wYHScCOC/2YdB/QI4UL2XXhR
+	q1AAG8wnnnrzbBR4m4Iobw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747199564; x=
-	1747285964; bh=t07pLt+HFIyixnA5pGCDTDDomT04ZMJdRQXOYcYKil8=; b=R
-	Qc2pdtuVfMU4XlmD2RcwyCRp2iKy7tLpNuEYTrwG8vG611aafJwGyn0yg1Y/GqZl
-	1ozvmX3xl6/IbK1FNB49C3RVPvzOs3KgiIhVIEv0KLImp+ICAJ8OCCVRywI4Gfqe
-	lyXVX0SVtRWBaapXN0LeNBHKWv0zLNu6mR60DxXdx+aSU2fhkgiquxpe07HamFv8
-	YQQILFjSTW+KLx3z5AsIdaHAPA0S7u4wBvJm49QyUzp9WKhRQuJk6dz1AX8JhI1R
-	P2VvJYpzrdu1SSapvLOQsM7qRXTbNgTQui0QwYtuoyvP3NGLJK+NPpHlf5PHNwTy
-	+wG96XPUJOEUwc+qs2zFQ==
-X-ME-Sender: <xms:TCYkaNcU_Zvs-S6I1ZrT2Wa3pk-v8XmQUO1WfWy3B48ExlaA5GKffQ>
-    <xme:TCYkaLMlpbto0uFc61AZHC0tW9w-cT9dVU7fzzVPJo6MDgu4V835h39sWnAJmu1HU
-    oAfx-3f9vC3DhRJwQ>
-X-ME-Received: <xmr:TCYkaGg3lDdBrL4vmIGNM2DIVD8qOyrmWBtoHjycQzo08x9x260DIfeQeHSHrMnm3PRMwM1lGcSHmLhzXMv-Pt0RWPJwY5voQpyTC6KLMIo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeiudduucetufdoteggodetrf
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747199565; x=
+	1747285965; bh=ZEZtU3Bzx//5hAaM/cJdPfn55S+aHLlw/wjjLCN40dA=; b=X
+	BcGbmYQ8p9X6Dzh0Rc7+RiRGTHr2Ss9YiW4/WwwTyBX+mzr2HE3eNVom7sNB5eg7
+	/Fulk6zWDcXzueK3q6hhzuWVDLZwfk9lqKJlZ0rtNlqwZM/dqqMdiOp/3zSj02R+
+	6HU6EUfuecbueQx9LjdEKBFxr9gsYEl2gG7xuLIs99FbsW6zeXP4vwBWl+lhc9E7
+	Lg7xAt8wigf64gFQP2eU1X+Z/VZ06w/dVO/mUgtIZVVzRVvQpjqzT6FRlqGY5Oxu
+	pVHlPbAAU51r3nt+/i4IvluCt5K2C4SEFHwwT4mGqrE3LJ400fKoapLFWL9aUCdt
+	LuLZGIX0ZaTaFglTr/LVw==
+X-ME-Sender: <xms:TSYkaJ2n86uFQT1YJmOZv3XsG9oVLpkWbVT4YxiwrZwzhFnBg2QMZQ>
+    <xme:TSYkaAGIBxLOmtqLUFOnMy7ai4PH--4EOLPuCR_71DBlBPXjoDrfsLnSDwWMxL6JY
+    2Jp4hRqqldwsVIOAw>
+X-ME-Received: <xmr:TSYkaJ4msqfs18sddim3YLlhOoikoOQqIxN1hM4mqrj8A-cMXOkGM7P_pf0SkOcwmQkc-L9Z2WzAQ6sxhsOaQElTK6mvgh9zDtMjRe7fNzA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeiuddvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephfffufggtgfgkfhfjgfvvefosehtjeertder
     tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
     drihhmqeenucggtffrrghtthgvrhhnpeffueeiudejvdekheeuvdekfeffiedvueelteek
-    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpeefnecurfgrrhgrmh
+    udehjeetkeegvddugfdtgfeileenucevlhhushhtvghrufhiiigvpeegnecurfgrrhgrmh
     epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
     vgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepthho
-    ohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehs
+    thholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtg
     homh
-X-ME-Proxy: <xmx:TCYkaG9zply8G50kAUOcehgjlTVRJUe0Pi4hBDS2cQjZdtNaR8CpyQ>
-    <xmx:TCYkaJukLOfytoBUZl7yLRgt62FiMlQ1HvfcfNvmbm3fHeMRr6XkcQ>
-    <xmx:TCYkaFH0rzN1Y4H1vLsKSb2IShUIGxEUvlqoTNR0GmLwE2OYL54O3A>
-    <xmx:TCYkaANetQI9xCIXyf6jf8-UbCQZ2l-mH782CP9_UdtB1fsPeLp0oA>
-    <xmx:TCYkaLTNIfLdn4l6AaHKw4Q1hAZIkP06PaK-raRYgUAMisc7C8ch_DfS>
+X-ME-Proxy: <xmx:TSYkaG3RF1hd3PKzolg_2qNJt6rHhYgbgVMmb9ho_jyl1q5ovc5jVA>
+    <xmx:TSYkaMHdC7vsViZ_M5RrJuM_nP1q87WfWWrN6t_p-fCvjzpkB4-C8w>
+    <xmx:TSYkaH9tG5ramavS9fy_TSenk0mQHnbBI89m5rJx_fLvnS-bb8XKzQ>
+    <xmx:TSYkaJlKv8fb1vY1Lyrdeh3na1TzgE8zAIbUPBkKg3pZlykAePnsag>
+    <xmx:TSYkaIo-Y9bFQ1-raU4vqWLqq46wn1-RT601aeVeUSbjKstyZUtJxi1c>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 14 May 2025 01:12:43 -0400 (EDT)
+ 14 May 2025 01:12:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7c6db540 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 14 May 2025 05:12:40 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id db901460 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 14 May 2025 05:12:41 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Wed, 14 May 2025 07:12:37 +0200
-Subject: [PATCH v3 14/17] odb: rename `repo_read_object_file()`
+Date: Wed, 14 May 2025 07:12:38 +0200
+Subject: [PATCH v3 15/17] odb: rename `has_object()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +84,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250514-pks-object-store-wo-the-repository-v3-14-47df1d4ead22@pks.im>
+Message-Id: <20250514-pks-object-store-wo-the-repository-v3-15-47df1d4ead22@pks.im>
 References: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
 In-Reply-To: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
 To: git@vger.kernel.org
@@ -92,1131 +92,675 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>
 X-Mailer: b4 0.14.2
 
-Rename `repo_read_object_file()` to `odb_read_object()` to match other
-functions related to the object database and our modern coding
-guidelines.
+Rename `has_object()` to `odb_has_object()` to match other functions
+related to the object database and our modern coding guidelines.
 
 Introduce a compatibility wrapper so that any in-flight topics will
 continue to compile.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- apply.c                  | 10 +++++-----
- archive.c                |  2 +-
- attr.c                   |  2 +-
- bisect.c                 |  6 +++---
- blame.c                  | 13 ++++++-------
- builtin/cat-file.c       | 26 +++++++++++---------------
- builtin/difftool.c       |  2 +-
- builtin/fast-export.c    |  6 +++---
- builtin/fast-import.c    |  8 ++++----
- builtin/grep.c           |  8 ++++----
- builtin/index-pack.c     |  8 ++++----
- builtin/log.c            |  2 +-
- builtin/merge-tree.c     | 12 ++++++------
- builtin/mktag.c          |  4 ++--
- builtin/notes.c          |  6 +++---
- builtin/pack-objects.c   | 30 +++++++++++++++---------------
- builtin/tag.c            |  4 ++--
- builtin/unpack-file.c    |  2 +-
+ apply.c                  |  2 +-
+ builtin/backfill.c       |  4 ++--
+ builtin/cat-file.c       |  4 ++--
+ builtin/clone.c          |  2 +-
+ builtin/fetch.c          | 17 +++++++++--------
+ builtin/fsck.c           |  2 +-
+ builtin/index-pack.c     |  4 ++--
+ builtin/pack-objects.c   |  4 ++--
+ builtin/receive-pack.c   |  4 ++--
+ builtin/remote.c         |  4 ++--
+ builtin/show-ref.c       |  4 ++--
  builtin/unpack-objects.c |  4 ++--
- bundle.c                 |  2 +-
- combine-diff.c           |  2 +-
- commit.c                 |  6 +++---
- config.c                 |  2 +-
- dir.c                    |  2 +-
- entry.c                  |  4 ++--
- fmt-merge-msg.c          |  4 ++--
- fsck.c                   |  2 +-
- grep.c                   |  4 ++--
- http-push.c              |  4 ++--
- mailmap.c                |  2 +-
- match-trees.c            |  4 ++--
- merge-blobs.c            |  8 ++++----
- merge-ort.c              |  2 +-
- notes-cache.c            |  2 +-
- notes-merge.c            |  2 +-
- notes.c                  | 13 +++++++------
- object.c                 |  2 +-
- odb.c                    | 19 +++++++------------
- odb.h                    | 29 +++++++++++++++++++++++------
- read-cache.c             |  6 +++---
- reflog.c                 |  4 ++--
- rerere.c                 |  5 ++---
- submodule-config.c       |  4 ++--
- tag.c                    |  6 +++---
- tree-walk.c              |  6 +++---
- tree.c                   |  4 ++--
- xdiff-interface.c        |  2 +-
- 47 files changed, 157 insertions(+), 150 deletions(-)
+ bulk-checkin.c           |  4 ++--
+ cache-tree.c             | 15 ++++++++-------
+ commit-graph.c           |  2 +-
+ commit.c                 |  2 +-
+ fetch-pack.c             |  8 ++++----
+ http-push.c              | 14 ++++++++------
+ http-walker.c            |  8 ++++----
+ list-objects.c           |  4 ++--
+ notes.c                  |  4 ++--
+ odb.c                    |  6 +++---
+ odb.h                    | 12 ++++++++++--
+ reflog.c                 |  2 +-
+ refs.c                   |  3 ++-
+ remote.c                 |  2 +-
+ send-pack.c              |  2 +-
+ shallow.c                | 12 ++++++------
+ upload-pack.c            |  2 +-
+ walker.c                 |  4 ++--
+ 30 files changed, 87 insertions(+), 74 deletions(-)
 
 diff --git a/apply.c b/apply.c
-index 879f04df31e..56cd0540350 100644
+index 56cd0540350..7fb56517649 100644
 --- a/apply.c
 +++ b/apply.c
-@@ -3210,8 +3210,8 @@ static int apply_binary(struct apply_state *state,
- 		unsigned long size;
- 		char *result;
+@@ -3204,7 +3204,7 @@ static int apply_binary(struct apply_state *state,
+ 		return 0; /* deletion patch */
+ 	}
  
--		result = repo_read_object_file(the_repository, &oid, &type,
--					       &size);
-+		result = odb_read_object(the_repository->objects, &oid,
-+					 &type, &size);
- 		if (!result)
- 			return error(_("the necessary postimage %s for "
- 				       "'%s' cannot be read"),
-@@ -3273,8 +3273,8 @@ static int read_blob_object(struct strbuf *buf, const struct object_id *oid, uns
- 		unsigned long sz;
- 		char *result;
- 
--		result = repo_read_object_file(the_repository, oid, &type,
--					       &sz);
-+		result = odb_read_object(the_repository->objects, oid,
-+					 &type, &sz);
- 		if (!result)
- 			return -1;
- 		/* XXX read_sha1_file NUL-terminates */
-@@ -3503,7 +3503,7 @@ static int resolve_to(struct image *image, const struct object_id *result_id)
- 
- 	image_clear(image);
- 
--	data = repo_read_object_file(the_repository, result_id, &type, &size);
-+	data = odb_read_object(the_repository->objects, result_id, &type, &size);
- 	if (!data || type != OBJ_BLOB)
- 		die("unable to read blob object %s", oid_to_hex(result_id));
- 	strbuf_attach(&image->buf, data, size, size + 1);
-diff --git a/archive.c b/archive.c
-index f2511d530d5..f5a9d45c8d3 100644
---- a/archive.c
-+++ b/archive.c
-@@ -98,7 +98,7 @@ static void *object_file_to_archive(const struct archiver_args *args,
- 			       (args->tree ? &args->tree->object.oid : NULL), oid);
- 
- 	path += args->baselen;
--	buffer = repo_read_object_file(the_repository, oid, type, sizep);
-+	buffer = odb_read_object(the_repository->objects, oid, type, sizep);
- 	if (buffer && S_ISREG(mode)) {
- 		struct strbuf buf = STRBUF_INIT;
- 		size_t size = 0;
-diff --git a/attr.c b/attr.c
-index e5680db7f65..d1daeb0b4d9 100644
---- a/attr.c
-+++ b/attr.c
-@@ -779,7 +779,7 @@ static struct attr_stack *read_attr_from_blob(struct index_state *istate,
- 	if (get_tree_entry(istate->repo, tree_oid, path, &oid, &mode))
- 		return NULL;
- 
--	buf = repo_read_object_file(istate->repo, &oid, &type, &sz);
-+	buf = odb_read_object(istate->repo->objects, &oid, &type, &sz);
- 	if (!buf || type != OBJ_BLOB) {
- 		free(buf);
- 		return NULL;
-diff --git a/bisect.c b/bisect.c
-index a7939216d00..f24474542ec 100644
---- a/bisect.c
-+++ b/bisect.c
-@@ -155,9 +155,9 @@ static void show_list(const char *debug, int counted, int nr,
- 		unsigned commit_flags = commit->object.flags;
+-	if (has_object(the_repository, &oid, 0)) {
++	if (odb_has_object(the_repository->objects, &oid, 0)) {
+ 		/* We already have the postimage */
  		enum object_type type;
  		unsigned long size;
--		char *buf = repo_read_object_file(the_repository,
--						  &commit->object.oid, &type,
--						  &size);
-+		char *buf = odb_read_object(the_repository->objects,
-+					    &commit->object.oid, &type,
-+					    &size);
- 		const char *subject_start;
- 		int subject_len;
+diff --git a/builtin/backfill.c b/builtin/backfill.c
+index 0b49baa39fa..80056abe473 100644
+--- a/builtin/backfill.c
++++ b/builtin/backfill.c
+@@ -67,8 +67,8 @@ static int fill_missing_blobs(const char *path UNUSED,
+ 		return 0;
  
-diff --git a/blame.c b/blame.c
-index 97db3355af4..858d2d74df9 100644
---- a/blame.c
-+++ b/blame.c
-@@ -1041,9 +1041,9 @@ static void fill_origin_blob(struct diff_options *opt,
- 				    &o->blob_oid, 1, &file->ptr, &file_size))
- 			;
- 		else
--			file->ptr = repo_read_object_file(the_repository,
--							  &o->blob_oid, &type,
--							  &file_size);
-+			file->ptr = odb_read_object(the_repository->objects,
-+						    &o->blob_oid, &type,
-+						    &file_size);
- 		file->size = file_size;
+ 	for (size_t i = 0; i < list->nr; i++) {
+-		if (!has_object(ctx->repo, &list->oid[i],
+-				OBJECT_INFO_FOR_PREFETCH))
++		if (!odb_has_object(ctx->repo->objects, &list->oid[i],
++				    OBJECT_INFO_FOR_PREFETCH))
+ 			oid_array_append(&ctx->current_batch, &list->oid[i]);
+ 	}
  
- 		if (!file->ptr)
-@@ -2869,10 +2869,9 @@ void setup_scoreboard(struct blame_scoreboard *sb,
- 				    &sb->final_buf_size))
- 			;
- 		else
--			sb->final_buf = repo_read_object_file(the_repository,
--							      &o->blob_oid,
--							      &type,
--							      &sb->final_buf_size);
-+			sb->final_buf = odb_read_object(the_repository->objects,
-+							&o->blob_oid, &type,
-+							&sb->final_buf_size);
- 
- 		if (!sb->final_buf)
- 			die(_("cannot read blob %s for path %s"),
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index da172155c85..d6b9afca06e 100644
+index d6b9afca06e..571b5cc2ad5 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -74,7 +74,7 @@ static int filter_object(const char *path, unsigned mode,
- {
- 	enum object_type type;
+@@ -169,8 +169,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
+ 		goto cleanup;
  
--	*buf = repo_read_object_file(the_repository, oid, &type, size);
-+	*buf = odb_read_object(the_repository->objects, oid, &type, size);
- 	if (!*buf)
- 		return error(_("cannot read object %s '%s'"),
- 			     oid_to_hex(oid), path);
-@@ -206,8 +206,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 			ret = stream_blob(&oid);
- 			goto cleanup;
- 		}
--		buf = repo_read_object_file(the_repository, &oid, &type,
--					    &size);
-+		buf = odb_read_object(the_repository->objects, &oid,
-+				      &type, &size);
- 		if (!buf)
- 			die("Cannot read object %s", obj_name);
+ 	case 'e':
+-		ret = !has_object(the_repository, &oid,
+-				  HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR);
++		ret = !odb_has_object(the_repository->objects, &oid,
++				      HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR);
+ 		goto cleanup;
  
-@@ -228,10 +228,8 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name,
- 			struct object_id blob_oid;
- 			if (odb_read_object_info(the_repository->objects,
- 						 &oid, NULL) == OBJ_TAG) {
--				char *buffer = repo_read_object_file(the_repository,
--								     &oid,
--								     &type,
--								     &size);
-+				char *buffer = odb_read_object(the_repository->objects,
-+							       &oid, &type, &size);
- 				const char *target;
+ 	case 'w':
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 3aabdf6570b..6d08abed37c 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -506,7 +506,7 @@ static void write_followtags(const struct ref *refs, const char *msg)
+ 			continue;
+ 		if (ends_with(ref->name, "^{}"))
+ 			continue;
+-		if (!has_object(the_repository, &ref->old_oid, 0))
++		if (!odb_has_object(the_repository->objects, &ref->old_oid, 0))
+ 			continue;
+ 		refs_update_ref(get_main_ref_store(the_repository), msg,
+ 				ref->name, &ref->old_oid, NULL, 0,
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index 82e9603ccab..2000299bcc5 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -366,9 +366,9 @@ static void find_non_local_tags(const struct ref *refs,
+ 		 */
+ 		if (ends_with(ref->name, "^{}")) {
+ 			if (item &&
+-			    !has_object(the_repository, &ref->old_oid, 0) &&
++			    !odb_has_object(the_repository->objects, &ref->old_oid, 0) &&
+ 			    !oidset_contains(&fetch_oids, &ref->old_oid) &&
+-			    !has_object(the_repository, &item->oid, 0) &&
++			    !odb_has_object(the_repository->objects, &item->oid, 0) &&
+ 			    !oidset_contains(&fetch_oids, &item->oid))
+ 				clear_item(item);
+ 			item = NULL;
+@@ -382,7 +382,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 		 * fetch.
+ 		 */
+ 		if (item &&
+-		    !has_object(the_repository, &item->oid, 0) &&
++		    !odb_has_object(the_repository->objects, &item->oid, 0) &&
+ 		    !oidset_contains(&fetch_oids, &item->oid))
+ 			clear_item(item);
  
- 				if (!buffer)
-@@ -412,10 +410,8 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 				if (!textconv_object(the_repository,
- 						     data->rest, 0100644, oid,
- 						     1, &contents, &size))
--					contents = repo_read_object_file(the_repository,
--									 oid,
--									 &type,
--									 &size);
-+					contents = odb_read_object(the_repository->objects,
-+								   oid, &type, &size);
- 				if (!contents)
- 					die("could not convert '%s' %s",
- 					    oid_to_hex(oid), data->rest);
-@@ -432,8 +428,8 @@ static void print_object_or_die(struct batch_options *opt, struct expand_data *d
- 		unsigned long size;
- 		void *contents;
+@@ -403,7 +403,7 @@ static void find_non_local_tags(const struct ref *refs,
+ 	 * checked to see if it needs fetching.
+ 	 */
+ 	if (item &&
+-	    !has_object(the_repository, &item->oid, 0) &&
++	    !odb_has_object(the_repository->objects, &item->oid, 0) &&
+ 	    !oidset_contains(&fetch_oids, &item->oid))
+ 		clear_item(item);
  
--		contents = repo_read_object_file(the_repository, oid, &type,
--						 &size);
-+		contents = odb_read_object(the_repository->objects, oid,
-+					   &type, &size);
- 		if (!contents)
- 			die("object %s disappeared", oid_to_hex(oid));
+@@ -910,8 +910,8 @@ static int update_local_ref(struct ref *ref,
+ 	struct commit *current = NULL, *updated;
+ 	int fast_forward = 0;
  
-@@ -542,8 +538,8 @@ static void batch_object_write(const char *obj_name,
- 			size_t s = data->size;
- 			char *buf = NULL;
+-	if (!has_object(the_repository, &ref->new_oid,
+-			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++	if (!odb_has_object(the_repository->objects, &ref->new_oid,
++			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 		die(_("object %s not found"), oid_to_hex(&ref->new_oid));
  
--			buf = repo_read_object_file(the_repository, &data->oid, &data->type,
--						    &data->size);
-+			buf = odb_read_object(the_repository->objects, &data->oid,
-+					      &data->type, &data->size);
- 			if (!buf)
- 				die(_("unable to read %s"), oid_to_hex(&data->oid));
- 			buf = replace_idents_using_mailmap(buf, &s);
-diff --git a/builtin/difftool.c b/builtin/difftool.c
-index fac613e3bc3..e4bc1f83169 100644
---- a/builtin/difftool.c
-+++ b/builtin/difftool.c
-@@ -320,7 +320,7 @@ static char *get_symlink(struct repository *repo,
- 	} else {
- 		enum object_type type;
- 		unsigned long size;
--		data = repo_read_object_file(repo, oid, &type, &size);
-+		data = odb_read_object(repo->objects, oid, &type, &size);
- 		if (!data)
- 			die(_("could not read object %s for symlink %s"),
- 				oid_to_hex(oid), path);
-diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-index 6c93cf0a8aa..33f304dd0ad 100644
---- a/builtin/fast-export.c
-+++ b/builtin/fast-export.c
-@@ -323,7 +323,7 @@ static void export_blob(const struct object_id *oid)
- 		object = (struct object *)lookup_blob(the_repository, oid);
- 		eaten = 0;
- 	} else {
--		buf = repo_read_object_file(the_repository, oid, &type, &size);
-+		buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 		if (!buf)
- 			die("could not read blob %s", oid_to_hex(oid));
- 		if (check_object_signature(the_repository, oid, buf, size,
-@@ -869,8 +869,8 @@ static void handle_tag(const char *name, struct tag *tag)
- 		return;
+ 	if (oideq(&ref->old_oid, &ref->new_oid)) {
+@@ -1330,7 +1330,8 @@ static int check_exist_and_connected(struct ref *ref_map)
+ 	 * we need all direct targets to exist.
+ 	 */
+ 	for (r = rm; r; r = r->next) {
+-		if (!has_object(the_repository, &r->old_oid, HAS_OBJECT_RECHECK_PACKED))
++		if (!odb_has_object(the_repository->objects, &r->old_oid,
++				    HAS_OBJECT_RECHECK_PACKED))
+ 			return -1;
  	}
  
--	buf = repo_read_object_file(the_repository, &tag->object.oid, &type,
--				    &size);
-+	buf = odb_read_object(the_repository->objects, &tag->object.oid,
-+			      &type, &size);
- 	if (!buf)
- 		die("could not read tag %s", oid_to_hex(&tag->object.oid));
- 	message = memmem(buf, size, "\n\n", 2);
-diff --git a/builtin/fast-import.c b/builtin/fast-import.c
-index 2718376f2c9..1973c504e25 100644
---- a/builtin/fast-import.c
-+++ b/builtin/fast-import.c
-@@ -1265,7 +1265,7 @@ static void load_tree(struct tree_entry *root)
- 			die("Can't load tree %s", oid_to_hex(oid));
- 	} else {
- 		enum object_type type;
--		buf = repo_read_object_file(the_repository, oid, &type, &size);
-+		buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 		if (!buf || type != OBJ_TREE)
- 			die("Can't load tree %s", oid_to_hex(oid));
- 	}
-@@ -3002,7 +3002,7 @@ static void cat_blob(struct object_entry *oe, struct object_id *oid)
- 	char *buf;
+@@ -1485,7 +1486,7 @@ static void add_negotiation_tips(struct git_transport_options *smart_options)
+ 			struct object_id oid;
+ 			if (repo_get_oid(the_repository, s, &oid))
+ 				die(_("%s is not a valid object"), s);
+-			if (!has_object(the_repository, &oid, 0))
++			if (!odb_has_object(the_repository->objects, &oid, 0))
+ 				die(_("the object %s does not exist"), s);
+ 			oid_array_append(oids, &oid);
+ 			continue;
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 08a79fe044d..74bfa182597 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -161,7 +161,7 @@ static int mark_object(struct object *obj, enum object_type type,
+ 		return 0;
  
- 	if (!oe || oe->pack_id == MAX_PACK_ID) {
--		buf = repo_read_object_file(the_repository, oid, &type, &size);
-+		buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	} else {
- 		type = oe->type;
- 		buf = gfi_unpack_entry(oe, &size);
-@@ -3110,8 +3110,8 @@ static struct object_entry *dereference(struct object_entry *oe,
- 		buf = gfi_unpack_entry(oe, &size);
- 	} else {
- 		enum object_type unused;
--		buf = repo_read_object_file(the_repository, oid, &unused,
--					    &size);
-+		buf = odb_read_object(the_repository->objects, oid,
-+				      &unused, &size);
- 	}
- 	if (!buf)
- 		die("Can't load object %s", oid_to_hex(oid));
-diff --git a/builtin/grep.c b/builtin/grep.c
-index 311c940aa9e..f84298af0f6 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -573,8 +573,8 @@ static int grep_cache(struct grep_opt *opt,
- 			void *data;
- 			unsigned long size;
- 
--			data = repo_read_object_file(the_repository, &ce->oid,
--						     &type, &size);
-+			data = odb_read_object(the_repository->objects, &ce->oid,
-+					       &type, &size);
- 			if (!data)
- 				die(_("unable to read tree %s"), oid_to_hex(&ce->oid));
- 			init_tree_desc(&tree, &ce->oid, data, size);
-@@ -666,8 +666,8 @@ static int grep_tree(struct grep_opt *opt, const struct pathspec *pathspec,
- 			void *data;
- 			unsigned long size;
- 
--			data = repo_read_object_file(the_repository,
--						     &entry.oid, &type, &size);
-+			data = odb_read_object(the_repository->objects,
-+					       &entry.oid, &type, &size);
- 			if (!data)
- 				die(_("unable to read tree (%s)"),
- 				    oid_to_hex(&entry.oid));
+ 	if (!(obj->flags & HAS_OBJ)) {
+-		if (parent && !has_object(the_repository, &obj->oid, 1)) {
++		if (parent && !odb_has_object(the_repository->objects, &obj->oid, 1)) {
+ 			printf_ln(_("broken link from %7s %s\n"
+ 				    "              to %7s %s"),
+ 				  printable_type(&parent->oid, parent->type),
 diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 82cf80b89d1..d33392cab65 100644
+index d33392cab65..0aa2f099cbe 100644
 --- a/builtin/index-pack.c
 +++ b/builtin/index-pack.c
-@@ -914,8 +914,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
- 			die(_("cannot read existing object info %s"), oid_to_hex(oid));
- 		if (has_type != type || has_size != size)
- 			die(_("SHA1 COLLISION FOUND WITH %s !"), oid_to_hex(oid));
--		has_data = repo_read_object_file(the_repository, oid,
--						 &has_type, &has_size);
-+		has_data = odb_read_object(the_repository->objects, oid,
-+					   &has_type, &has_size);
+@@ -893,8 +893,8 @@ static void sha1_object(const void *data, struct object_entry *obj_entry,
+ 
+ 	if (startup_info->have_repository) {
+ 		read_lock();
+-		collision_test_needed = has_object(the_repository, oid,
+-						   HAS_OBJECT_FETCH_PROMISOR);
++		collision_test_needed = odb_has_object(the_repository->objects, oid,
++						       HAS_OBJECT_FETCH_PROMISOR);
  		read_unlock();
- 		if (!data)
- 			data = new_data = get_data_from_pack(obj_entry);
-@@ -1515,8 +1515,8 @@ static void fix_unresolved_deltas(struct hashfile *f)
- 
- 		if (objects[d->obj_no].real_type != OBJ_REF_DELTA)
- 			continue;
--		data = repo_read_object_file(the_repository, &d->oid, &type,
--					     &size);
-+		data = odb_read_object(the_repository->objects, &d->oid,
-+				       &type, &size);
- 		if (!data)
- 			continue;
- 
-diff --git a/builtin/log.c b/builtin/log.c
-index fe9cc5ebecb..f2040b18159 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -714,7 +714,7 @@ static int show_tag_object(const struct object_id *oid, struct rev_info *rev)
- {
- 	unsigned long size;
- 	enum object_type type;
--	char *buf = repo_read_object_file(the_repository, oid, &type, &size);
-+	char *buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	unsigned long offset = 0;
- 
- 	if (!buf)
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 709ae3966a6..21fb0b2df1d 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -75,9 +75,9 @@ static void *result(struct merge_list *entry, unsigned long *size)
- 	const char *path = entry->path;
- 
- 	if (!entry->stage)
--		return repo_read_object_file(the_repository,
--					     &entry->blob->object.oid, &type,
--					     size);
-+		return odb_read_object(the_repository->objects,
-+				       &entry->blob->object.oid, &type,
-+				       size);
- 	base = NULL;
- 	if (entry->stage == 1) {
- 		base = entry->blob;
-@@ -100,9 +100,9 @@ static void *origin(struct merge_list *entry, unsigned long *size)
- 	enum object_type type;
- 	while (entry) {
- 		if (entry->stage == 2)
--			return repo_read_object_file(the_repository,
--						     &entry->blob->object.oid,
--						     &type, size);
-+			return odb_read_object(the_repository->objects,
-+					       &entry->blob->object.oid,
-+					       &type, size);
- 		entry = entry->link;
  	}
- 	return NULL;
-diff --git a/builtin/mktag.c b/builtin/mktag.c
-index 1809b38f937..1b391119de8 100644
---- a/builtin/mktag.c
-+++ b/builtin/mktag.c
-@@ -54,8 +54,8 @@ static int verify_object_in_tag(struct object_id *tagged_oid, int *tagged_type)
- 	void *buffer;
- 	const struct object_id *repl;
  
--	buffer = repo_read_object_file(the_repository, tagged_oid, &type,
--				       &size);
-+	buffer = odb_read_object(the_repository->objects, tagged_oid,
-+				 &type, &size);
- 	if (!buffer)
- 		die(_("could not read tagged object '%s'"),
- 		    oid_to_hex(tagged_oid));
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 783d4932ca6..a9529b1696a 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -152,7 +152,7 @@ static void copy_obj_to_fd(int fd, const struct object_id *oid)
- {
- 	unsigned long size;
- 	enum object_type type;
--	char *buf = repo_read_object_file(the_repository, oid, &type, &size);
-+	char *buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (buf) {
- 		if (size)
- 			write_or_die(fd, buf, size);
-@@ -319,7 +319,7 @@ static int parse_reuse_arg(const struct option *opt, const char *arg, int unset)
- 	strbuf_init(&msg->buf, 0);
- 	if (repo_get_oid(the_repository, arg, &object))
- 		die(_("failed to resolve '%s' as a valid ref."), arg);
--	if (!(value = repo_read_object_file(the_repository, &object, &type, &len)))
-+	if (!(value = odb_read_object(the_repository->objects, &object, &type, &len)))
- 		die(_("failed to read object '%s'."), arg);
- 	if (type != OBJ_BLOB) {
- 		strbuf_release(&msg->buf);
-@@ -722,7 +722,7 @@ static int append_edit(int argc, const char **argv, const char *prefix,
- 		unsigned long size;
- 		enum object_type type;
- 		struct strbuf buf = STRBUF_INIT;
--		char *prev_buf = repo_read_object_file(the_repository, note, &type, &size);
-+		char *prev_buf = odb_read_object(the_repository->objects, note, &type, &size);
- 
- 		if (!prev_buf)
- 			die(_("unable to read %s"), oid_to_hex(note));
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index da35d684081..580a5c1996b 100644
+index 580a5c1996b..06bdeb4223b 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -337,13 +337,13 @@ static void *get_delta(struct object_entry *entry)
- 	void *buf, *base_buf, *delta_buf;
- 	enum object_type type;
- 
--	buf = repo_read_object_file(the_repository, &entry->idx.oid, &type,
--				    &size);
-+	buf = odb_read_object(the_repository->objects, &entry->idx.oid,
-+			      &type, &size);
- 	if (!buf)
- 		die(_("unable to read %s"), oid_to_hex(&entry->idx.oid));
--	base_buf = repo_read_object_file(the_repository,
--					 &DELTA(entry)->idx.oid, &type,
--					 &base_size);
-+	base_buf = odb_read_object(the_repository->objects,
-+				   &DELTA(entry)->idx.oid, &type,
-+				   &base_size);
- 	if (!base_buf)
- 		die("unable to read %s",
- 		    oid_to_hex(&DELTA(entry)->idx.oid));
-@@ -506,9 +506,9 @@ static unsigned long write_no_reuse_object(struct hashfile *f, struct object_ent
- 				       &size, NULL)) != NULL)
- 			buf = NULL;
- 		else {
--			buf = repo_read_object_file(the_repository,
--						    &entry->idx.oid, &type,
--						    &size);
-+			buf = odb_read_object(the_repository->objects,
-+					      &entry->idx.oid, &type,
-+					      &size);
- 			if (!buf)
- 				die(_("unable to read %s"),
- 				    oid_to_hex(&entry->idx.oid));
-@@ -1895,7 +1895,7 @@ static struct pbase_tree_cache *pbase_tree_get(const struct object_id *oid)
- 	/* Did not find one.  Either we got a bogus request or
- 	 * we need to read and perhaps cache.
+@@ -3968,7 +3968,7 @@ static void show_object__ma_allow_any(struct object *obj, const char *name, void
+ 	 * Quietly ignore ALL missing objects.  This avoids problems with
+ 	 * staging them now and getting an odd error later.
  	 */
--	data = repo_read_object_file(the_repository, oid, &type, &size);
-+	data = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (!data)
- 		return NULL;
- 	if (type != OBJ_TREE) {
-@@ -2762,9 +2762,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	/* Load data if not already done */
- 	if (!trg->data) {
- 		packing_data_lock(&to_pack);
--		trg->data = repo_read_object_file(the_repository,
--						  &trg_entry->idx.oid, &type,
--						  &sz);
-+		trg->data = odb_read_object(the_repository->objects,
-+					    &trg_entry->idx.oid, &type,
-+					    &sz);
- 		packing_data_unlock(&to_pack);
- 		if (!trg->data)
- 			die(_("object %s cannot be read"),
-@@ -2777,9 +2777,9 @@ static int try_delta(struct unpacked *trg, struct unpacked *src,
- 	}
- 	if (!src->data) {
- 		packing_data_lock(&to_pack);
--		src->data = repo_read_object_file(the_repository,
--						  &src_entry->idx.oid, &type,
--						  &sz);
-+		src->data = odb_read_object(the_repository->objects,
-+					    &src_entry->idx.oid, &type,
-+					    &sz);
- 		packing_data_unlock(&to_pack);
- 		if (!src->data) {
- 			if (src_entry->preferred_base) {
-diff --git a/builtin/tag.c b/builtin/tag.c
-index e0b27396c6b..46cbf892e34 100644
---- a/builtin/tag.c
-+++ b/builtin/tag.c
-@@ -244,7 +244,7 @@ static void write_tag_body(int fd, const struct object_id *oid)
- 	struct strbuf payload = STRBUF_INIT;
- 	struct strbuf signature = STRBUF_INIT;
- 
--	orig = buf = repo_read_object_file(the_repository, oid, &type, &size);
-+	orig = buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (!buf)
+-	if (!has_object(the_repository, &obj->oid, 0))
++	if (!odb_has_object(the_repository->objects, &obj->oid, 0))
  		return;
- 	if (parse_signature(buf, size, &payload, &signature)) {
-@@ -407,7 +407,7 @@ static void create_reflog_msg(const struct object_id *oid, struct strbuf *sb)
- 		strbuf_addstr(sb, "object of unknown type");
- 		break;
- 	case OBJ_COMMIT:
--		if ((buf = repo_read_object_file(the_repository, oid, &type, &size))) {
-+		if ((buf = odb_read_object(the_repository->objects, oid, &type, &size))) {
- 			subject_len = find_commit_subject(buf, &subject_start);
- 			strbuf_insert(sb, sb->len, subject_start, subject_len);
- 		} else {
-diff --git a/builtin/unpack-file.c b/builtin/unpack-file.c
-index b92fd4710a9..4360872ae07 100644
---- a/builtin/unpack-file.c
-+++ b/builtin/unpack-file.c
-@@ -14,7 +14,7 @@ static char *create_temp_file(struct object_id *oid)
- 	unsigned long size;
- 	int fd;
  
--	buf = repo_read_object_file(the_repository, oid, &type, &size);
-+	buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (!buf || type != OBJ_BLOB)
- 		die("unable to read blob object %s", oid_to_hex(oid));
+ 	show_object(obj, name, data);
+@@ -3982,7 +3982,7 @@ static void show_object__ma_allow_promisor(struct object *obj, const char *name,
+ 	 * Quietly ignore EXPECTED missing objects.  This avoids problems with
+ 	 * staging them now and getting an odd error later.
+ 	 */
+-	if (!has_object(the_repository, &obj->oid, 0) &&
++	if (!odb_has_object(the_repository->objects, &obj->oid, 0) &&
+ 	    is_promisor_object(to_pack.repo, &obj->oid))
+ 		return;
+ 
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index 8c157ea7d1b..27684dce3a4 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1508,8 +1508,8 @@ static const char *update(struct command *cmd, struct shallow_info *si)
+ 	}
+ 
+ 	if (!is_null_oid(new_oid) &&
+-	    !has_object(the_repository, new_oid,
+-			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
++	    !odb_has_object(the_repository->objects, new_oid,
++			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
+ 		error("unpack should have generated %s, "
+ 		      "but I can't find it!", oid_to_hex(new_oid));
+ 		ret = "bad pack";
+diff --git a/builtin/remote.c b/builtin/remote.c
+index ac5b8d2a1a6..7cbda285ebe 100644
+--- a/builtin/remote.c
++++ b/builtin/remote.c
+@@ -454,8 +454,8 @@ static int get_push_ref_states(const struct ref *remote_refs,
+ 			info->status = PUSH_STATUS_UPTODATE;
+ 		else if (is_null_oid(&ref->old_oid))
+ 			info->status = PUSH_STATUS_CREATE;
+-		else if (has_object(the_repository, &ref->old_oid,
+-				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
++		else if (odb_has_object(the_repository->objects, &ref->old_oid,
++					HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
+ 			 ref_newer(&ref->new_oid, &ref->old_oid))
+ 			info->status = PUSH_STATUS_FASTFORWARD;
+ 		else
+diff --git a/builtin/show-ref.c b/builtin/show-ref.c
+index 90ec1de78f9..117709cb076 100644
+--- a/builtin/show-ref.c
++++ b/builtin/show-ref.c
+@@ -35,8 +35,8 @@ static void show_one(const struct show_one_options *opts,
+ 	const char *hex;
+ 	struct object_id peeled;
+ 
+-	if (!has_object(the_repository, oid,
+-			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++	if (!odb_has_object(the_repository->objects, oid,
++			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 		die("git show-ref: bad ref %s (%s)", refname,
+ 		    oid_to_hex(oid));
  
 diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
-index 405e78bc592..4bc6575a574 100644
+index 4bc6575a574..a69d59eb50c 100644
 --- a/builtin/unpack-objects.c
 +++ b/builtin/unpack-objects.c
-@@ -516,8 +516,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
- 	if (resolve_against_held(nr, &base_oid, delta_data, delta_size))
- 		return;
- 
--	base = repo_read_object_file(the_repository, &base_oid, &type,
--				     &base_size);
-+	base = odb_read_object(the_repository->objects, &base_oid,
-+			       &type, &base_size);
- 	if (!base) {
- 		error("failed to read delta-pack base object %s",
- 		      oid_to_hex(&base_oid));
-diff --git a/bundle.c b/bundle.c
-index c67f85126da..66d0e8eaf0e 100644
---- a/bundle.c
-+++ b/bundle.c
-@@ -305,7 +305,7 @@ static int is_tag_in_date_range(struct object *tag, struct rev_info *revs)
- 	if (revs->max_age == -1 && revs->min_age == -1)
- 		goto out;
- 
--	buf = repo_read_object_file(the_repository, &tag->oid, &type, &size);
-+	buf = odb_read_object(the_repository->objects, &tag->oid, &type, &size);
- 	if (!buf)
- 		goto out;
- 	line = memmem(buf, size, "\ntagger ", 8);
-diff --git a/combine-diff.c b/combine-diff.c
-index cf23a753407..4ea2dc93c4f 100644
---- a/combine-diff.c
-+++ b/combine-diff.c
-@@ -325,7 +325,7 @@ static char *grab_blob(struct repository *r,
- 		*size = fill_textconv(r, textconv, df, &blob);
- 		free_filespec(df);
- 	} else {
--		blob = repo_read_object_file(r, oid, &type, size);
-+		blob = odb_read_object(r->objects, oid, &type, size);
- 		if (!blob)
- 			die(_("unable to read %s"), oid_to_hex(oid));
- 		if (type != OBJ_BLOB)
-diff --git a/commit.c b/commit.c
-index d4aa9c7a5f8..28ee6b73ae6 100644
---- a/commit.c
-+++ b/commit.c
-@@ -374,7 +374,7 @@ const void *repo_get_commit_buffer(struct repository *r,
- 	if (!ret) {
- 		enum object_type type;
- 		unsigned long size;
--		ret = repo_read_object_file(r, &commit->object.oid, &type, &size);
-+		ret = odb_read_object(r->objects, &commit->object.oid, &type, &size);
- 		if (!ret)
- 			die("cannot read commit object %s",
- 			    oid_to_hex(&commit->object.oid));
-@@ -1275,8 +1275,8 @@ static void handle_signed_tag(const struct commit *parent, struct commit_extra_h
- 	desc = merge_remote_util(parent);
- 	if (!desc || !desc->obj)
- 		return;
--	buf = repo_read_object_file(the_repository, &desc->obj->oid, &type,
--				    &size);
-+	buf = odb_read_object(the_repository->objects, &desc->obj->oid,
-+			      &type, &size);
- 	if (!buf || type != OBJ_TAG)
- 		goto free_return;
- 	if (!parse_signature(buf, size, &payload, &signature))
-diff --git a/config.c b/config.c
-index 883dd066827..142c37215a8 100644
---- a/config.c
-+++ b/config.c
-@@ -1942,7 +1942,7 @@ int git_config_from_blob_oid(config_fn_t fn,
- 	unsigned long size;
- 	int ret;
- 
--	buf = repo_read_object_file(repo, oid, &type, &size);
-+	buf = odb_read_object(repo->objects, oid, &type, &size);
- 	if (!buf)
- 		return error(_("unable to load config blob object '%s'"), name);
- 	if (type != OBJ_BLOB) {
-diff --git a/dir.c b/dir.c
-index e11342e1366..251dedf1f5e 100644
---- a/dir.c
-+++ b/dir.c
-@@ -302,7 +302,7 @@ static int do_read_blob(const struct object_id *oid, struct oid_stat *oid_stat,
- 	*size_out = 0;
- 	*data_out = NULL;
- 
--	data = repo_read_object_file(the_repository, oid, &type, &sz);
-+	data = odb_read_object(the_repository->objects, oid, &type, &sz);
- 	if (!data || type != OBJ_BLOB) {
- 		free(data);
- 		return -1;
-diff --git a/entry.c b/entry.c
-index 75d55038d7c..cae02eb5039 100644
---- a/entry.c
-+++ b/entry.c
-@@ -93,8 +93,8 @@ void *read_blob_entry(const struct cache_entry *ce, size_t *size)
+@@ -449,8 +449,8 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 		delta_data = get_data(delta_size);
+ 		if (!delta_data)
+ 			return;
+-		if (has_object(the_repository, &base_oid,
+-			       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++		if (odb_has_object(the_repository->objects, &base_oid,
++				   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 			; /* Ok we have this one */
+ 		else if (resolve_against_held(nr, &base_oid,
+ 					      delta_data, delta_size))
+diff --git a/bulk-checkin.c b/bulk-checkin.c
+index 55406a539e7..16df86c0ba8 100644
+--- a/bulk-checkin.c
++++ b/bulk-checkin.c
+@@ -130,8 +130,8 @@ static void flush_batch_fsync(void)
+ static int already_written(struct bulk_checkin_packfile *state, struct object_id *oid)
  {
- 	enum object_type type;
- 	unsigned long ul;
--	void *blob_data = repo_read_object_file(the_repository, &ce->oid,
--						&type, &ul);
-+	void *blob_data = odb_read_object(the_repository->objects, &ce->oid,
-+					  &type, &ul);
+ 	/* The object may already exist in the repository */
+-	if (has_object(the_repository, oid,
+-		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++	if (odb_has_object(the_repository->objects, oid,
++			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 		return 1;
  
- 	*size = ul;
- 	if (blob_data) {
-diff --git a/fmt-merge-msg.c b/fmt-merge-msg.c
-index 1a8c972adf3..40174efa3de 100644
---- a/fmt-merge-msg.c
-+++ b/fmt-merge-msg.c
-@@ -526,8 +526,8 @@ static void fmt_merge_msg_sigs(struct strbuf *out)
- 		struct object_id *oid = origins.items[i].util;
- 		enum object_type type;
- 		unsigned long size;
--		char *buf = repo_read_object_file(the_repository, oid, &type,
--						  &size);
-+		char *buf = odb_read_object(the_repository->objects, oid,
-+					    &type, &size);
- 		char *origbuf = buf;
- 		unsigned long len = size;
- 		struct signature_check sigc = { NULL };
-diff --git a/fsck.c b/fsck.c
-index e69baab3af7..23965e1880f 100644
---- a/fsck.c
-+++ b/fsck.c
-@@ -1293,7 +1293,7 @@ static int fsck_blobs(struct oidset *blobs_found, struct oidset *blobs_done,
- 		if (oidset_contains(blobs_done, oid))
- 			continue;
- 
--		buf = repo_read_object_file(the_repository, oid, &type, &size);
-+		buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 		if (!buf) {
- 			if (is_promisor_object(the_repository, oid))
- 				continue;
-diff --git a/grep.c b/grep.c
-index dc77e6c4631..932647e4a65 100644
---- a/grep.c
-+++ b/grep.c
-@@ -1931,8 +1931,8 @@ static int grep_source_load_oid(struct grep_source *gs)
- {
- 	enum object_type type;
- 
--	gs->buf = repo_read_object_file(gs->repo, gs->identifier, &type,
--					&gs->size);
-+	gs->buf = odb_read_object(gs->repo->objects, gs->identifier,
-+				  &type, &gs->size);
- 	if (!gs->buf)
- 		return error(_("'%s': unable to read %s"),
- 			     gs->name,
-diff --git a/http-push.c b/http-push.c
-index d1b1bb23711..9481825abfb 100644
---- a/http-push.c
-+++ b/http-push.c
-@@ -369,8 +369,8 @@ static void start_put(struct transfer_request *request)
- 	ssize_t size;
- 	git_zstream stream;
- 
--	unpacked = repo_read_object_file(the_repository, &request->obj->oid,
--					 &type, &len);
-+	unpacked = odb_read_object(the_repository->objects, &request->obj->oid,
-+				   &type, &len);
- 	hdrlen = format_object_header(hdr, sizeof(hdr), type, len);
- 
- 	/* Set it up */
-diff --git a/mailmap.c b/mailmap.c
-index b18e74c2110..56c72102d9e 100644
---- a/mailmap.c
-+++ b/mailmap.c
-@@ -196,7 +196,7 @@ int read_mailmap_blob(struct string_list *map, const char *name)
- 	if (repo_get_oid(the_repository, name, &oid) < 0)
+ 	/* Might want to keep the list sorted */
+diff --git a/cache-tree.c b/cache-tree.c
+index 9786b32b3a1..a4bc14ad15c 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -239,8 +239,8 @@ int cache_tree_fully_valid(struct cache_tree *it)
+ 	if (!it)
  		return 0;
- 
--	buf = repo_read_object_file(the_repository, &oid, &type, &size);
-+	buf = odb_read_object(the_repository->objects, &oid, &type, &size);
- 	if (!buf)
- 		return error("unable to read mailmap object at %s", name);
- 	if (type != OBJ_BLOB) {
-diff --git a/match-trees.c b/match-trees.c
-index 4704f95c340..5a8a5c39b04 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -63,7 +63,7 @@ static void *fill_tree_desc_strict(struct repository *r,
- 	enum object_type type;
- 	unsigned long size;
- 
--	buffer = repo_read_object_file(r, hash, &type, &size);
-+	buffer = odb_read_object(r->objects, hash, &type, &size);
- 	if (!buffer)
- 		die("unable to read tree (%s)", oid_to_hex(hash));
- 	if (type != OBJ_TREE)
-@@ -199,7 +199,7 @@ static int splice_tree(struct repository *r,
- 	if (*subpath)
- 		subpath++;
- 
--	buf = repo_read_object_file(r, oid1, &type, &sz);
-+	buf = odb_read_object(r->objects, oid1, &type, &sz);
- 	if (!buf)
- 		die("cannot read tree %s", oid_to_hex(oid1));
- 	init_tree_desc(&desc, oid1, buf, sz);
-diff --git a/merge-blobs.c b/merge-blobs.c
-index ba8a3fdfd82..6fc27994171 100644
---- a/merge-blobs.c
-+++ b/merge-blobs.c
-@@ -12,8 +12,8 @@ static int fill_mmfile_blob(mmfile_t *f, struct blob *obj)
- 	unsigned long size;
- 	enum object_type type;
- 
--	buf = repo_read_object_file(the_repository, &obj->object.oid, &type,
--				    &size);
-+	buf = odb_read_object(the_repository->objects, &obj->object.oid,
-+			      &type, &size);
- 	if (!buf)
- 		return -1;
- 	if (type != OBJ_BLOB) {
-@@ -79,8 +79,8 @@ void *merge_blobs(struct index_state *istate, const char *path,
- 			return NULL;
- 		if (!our)
- 			our = their;
--		return repo_read_object_file(the_repository, &our->object.oid,
--					     &type, size);
-+		return odb_read_object(the_repository->objects, &our->object.oid,
-+				       &type, size);
- 	}
- 
- 	if (fill_mmfile_blob(&f1, our) < 0)
-diff --git a/merge-ort.c b/merge-ort.c
-index 5d4501085e9..53417d399c7 100644
---- a/merge-ort.c
-+++ b/merge-ort.c
-@@ -3624,7 +3624,7 @@ static int read_oid_strbuf(struct merge_options *opt,
- 	void *buf;
- 	enum object_type type;
- 	unsigned long size;
--	buf = repo_read_object_file(the_repository, oid, &type, &size);
-+	buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (!buf) {
- 		path_msg(opt, ERROR_OBJECT_READ_FAILED, 0,
- 			 path, NULL, NULL, NULL,
-diff --git a/notes-cache.c b/notes-cache.c
-index 344f67762b8..dd56feed6e8 100644
---- a/notes-cache.c
-+++ b/notes-cache.c
-@@ -87,7 +87,7 @@ char *notes_cache_get(struct notes_cache *c, struct object_id *key_oid,
- 	value_oid = get_note(&c->tree, key_oid);
- 	if (!value_oid)
- 		return NULL;
--	value = repo_read_object_file(the_repository, value_oid, &type, &size);
-+	value = odb_read_object(the_repository->objects, value_oid, &type, &size);
- 
- 	*outsize = size;
- 	return value;
-diff --git a/notes-merge.c b/notes-merge.c
-index de6a52e2e7f..586939939f2 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -340,7 +340,7 @@ static void write_note_to_worktree(const struct object_id *obj,
- {
- 	enum object_type type;
- 	unsigned long size;
--	void *buf = repo_read_object_file(the_repository, note, &type, &size);
-+	void *buf = odb_read_object(the_repository->objects, note, &type, &size);
- 
- 	if (!buf)
- 		die("cannot read note %s for object %s",
-diff --git a/notes.c b/notes.c
-index fc000e501d2..73eb5f00cf5 100644
---- a/notes.c
-+++ b/notes.c
-@@ -816,15 +816,15 @@ int combine_notes_concatenate(struct object_id *cur_oid,
- 
- 	/* read in both note blob objects */
- 	if (!is_null_oid(new_oid))
--		new_msg = repo_read_object_file(the_repository, new_oid,
--						&new_type, &new_len);
-+		new_msg = odb_read_object(the_repository->objects, new_oid,
-+					  &new_type, &new_len);
- 	if (!new_msg || !new_len || new_type != OBJ_BLOB) {
- 		free(new_msg);
+ 	if (it->entry_count < 0 ||
+-	    has_object(the_repository, &it->oid,
+-		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++	    odb_has_object(the_repository->objects, &it->oid,
++			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
  		return 0;
- 	}
- 	if (!is_null_oid(cur_oid))
--		cur_msg = repo_read_object_file(the_repository, cur_oid,
--						&cur_type, &cur_len);
-+		cur_msg = odb_read_object(the_repository->objects, cur_oid,
-+					  &cur_type, &cur_len);
- 	if (!cur_msg || !cur_len || cur_type != OBJ_BLOB) {
- 		free(cur_msg);
- 		free(new_msg);
-@@ -880,7 +880,7 @@ static int string_list_add_note_lines(struct string_list *list,
- 		return 0;
- 
- 	/* read_sha1_file NUL-terminates */
--	data = repo_read_object_file(the_repository, oid, &t, &len);
-+	data = odb_read_object(the_repository->objects, oid, &t, &len);
- 	if (t != OBJ_BLOB || !data || !len) {
- 		free(data);
- 		return t != OBJ_BLOB || !data;
-@@ -1290,7 +1290,8 @@ static void format_note(struct notes_tree *t, const struct object_id *object_oid
- 	if (!oid)
- 		return;
- 
--	if (!(msg = repo_read_object_file(the_repository, oid, &type, &msglen)) || type != OBJ_BLOB) {
-+	if (!(msg = odb_read_object(the_repository->objects, oid, &type, &msglen)) ||
-+	    type != OBJ_BLOB) {
- 		free(msg);
- 		return;
- 	}
-diff --git a/object.c b/object.c
-index 868d89eed42..c1553ee4330 100644
---- a/object.c
-+++ b/object.c
-@@ -335,7 +335,7 @@ struct object *parse_object_with_flags(struct repository *r,
- 		return &lookup_tree(r, oid)->object;
+ 	for (i = 0; i < it->subtree_nr; i++) {
+ 		if (!cache_tree_fully_valid(it->down[i]->cache_tree))
+@@ -292,8 +292,8 @@ static int update_one(struct cache_tree *it,
  	}
  
--	buffer = repo_read_object_file(r, oid, &type, &size);
-+	buffer = odb_read_object(r->objects, oid, &type, &size);
- 	if (buffer) {
- 		if (!skip_hash &&
- 		    check_object_signature(r, repl, buffer, size, type) < 0) {
-diff --git a/odb.c b/odb.c
-index 3d5d4ff8454..5202f107af2 100644
---- a/odb.c
-+++ b/odb.c
-@@ -30,7 +30,7 @@ KHASH_INIT(odb_path_map, const char * /* key: odb_path */,
- 
- /*
-  * This is meant to hold a *small* number of objects that you would
-- * want repo_read_object_file() to be able to return, but yet you do not want
-+ * want odb_read_object() to be able to return, but yet you do not want
-  * to write them into the object store (e.g. a browse-only
-  * application).
-  */
-@@ -896,15 +896,10 @@ int pretend_object_file(struct repository *repo,
- 	return 0;
- }
- 
--/*
-- * This function dies on corrupt objects; the callers who want to
-- * deal with them should arrange to call odb_read_object_info_extended() and give
-- * error messages themselves.
-- */
--void *repo_read_object_file(struct repository *r,
--			    const struct object_id *oid,
--			    enum object_type *type,
--			    unsigned long *size)
-+void *odb_read_object(struct object_database *odb,
-+		      const struct object_id *oid,
-+		      enum object_type *type,
-+		      unsigned long *size)
- {
- 	struct object_info oi = OBJECT_INFO_INIT;
- 	unsigned flags = OBJECT_INFO_DIE_IF_CORRUPT | OBJECT_INFO_LOOKUP_REPLACE;
-@@ -913,7 +908,7 @@ void *repo_read_object_file(struct repository *r,
- 	oi.typep = type;
- 	oi.sizep = size;
- 	oi.contentp = &data;
--	if (odb_read_object_info_extended(r->objects, oid, &oi, flags))
-+	if (odb_read_object_info_extended(odb, oid, &oi, flags))
- 		return NULL;
- 
- 	return data;
-@@ -935,7 +930,7 @@ void *read_object_with_reference(struct repository *r,
- 		int ref_length = -1;
- 		const char *ref_type = NULL;
- 
--		buffer = repo_read_object_file(r, &actual_oid, &type, &isize);
-+		buffer = odb_read_object(r->objects, &actual_oid, &type, &isize);
- 		if (!buffer)
- 			return NULL;
- 		if (type == required_type) {
-diff --git a/odb.h b/odb.h
-index e521a608237..fb56cc9e1fe 100644
---- a/odb.h
-+++ b/odb.h
-@@ -133,7 +133,7 @@ struct object_database {
+ 	if (0 <= it->entry_count &&
+-	    has_object(the_repository, &it->oid,
+-		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++	    odb_has_object(the_repository->objects, &it->oid,
++			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 		return it->entry_count;
  
  	/*
- 	 * This is meant to hold a *small* number of objects that you would
--	 * want repo_read_object_file() to be able to return, but yet you do not want
-+	 * want odb_read_object() to be able to return, but yet you do not want
- 	 * to write them into the object store (e.g. a browse-only
- 	 * application).
+@@ -399,8 +399,9 @@ static int update_one(struct cache_tree *it,
+ 		ce_missing_ok = mode == S_IFGITLINK || missing_ok ||
+ 			!must_check_existence(ce);
+ 		if (is_null_oid(oid) ||
+-		    (!ce_missing_ok && !has_object(the_repository, oid,
+-						   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))) {
++		    (!ce_missing_ok &&
++		     !odb_has_object(the_repository->objects, oid,
++				     HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))) {
+ 			strbuf_release(&buffer);
+ 			if (expected_missing)
+ 				return -1;
+@@ -448,7 +449,7 @@ static int update_one(struct cache_tree *it,
+ 		struct object_id oid;
+ 		hash_object_file(the_hash_algo, buffer.buf, buffer.len,
+ 				 OBJ_TREE, &oid);
+-		if (has_object(the_repository, &oid, HAS_OBJECT_RECHECK_PACKED))
++		if (odb_has_object(the_repository->objects, &oid, HAS_OBJECT_RECHECK_PACKED))
+ 			oidcpy(&it->oid, &oid);
+ 		else
+ 			to_invalidate = 1;
+diff --git a/commit-graph.c b/commit-graph.c
+index 84cfaf87639..cb81a5ce228 100644
+--- a/commit-graph.c
++++ b/commit-graph.c
+@@ -1040,7 +1040,7 @@ struct commit *lookup_commit_in_graph(struct repository *repo, const struct obje
+ 		return NULL;
+ 	if (!search_commit_pos_in_graph(id, repo->objects->commit_graph, &pos))
+ 		return NULL;
+-	if (commit_graph_paranoia && !has_object(repo, id, 0))
++	if (commit_graph_paranoia && !odb_has_object(repo->objects, id, 0))
+ 		return NULL;
+ 
+ 	commit = lookup_commit(repo, id);
+diff --git a/commit.c b/commit.c
+index 28ee6b73ae6..15115125c36 100644
+--- a/commit.c
++++ b/commit.c
+@@ -575,7 +575,7 @@ int repo_parse_commit_internal(struct repository *r,
+ 		if (commit_graph_paranoia == -1)
+ 			commit_graph_paranoia = git_env_bool(GIT_COMMIT_GRAPH_PARANOIA, 0);
+ 
+-		if (commit_graph_paranoia && !has_object(r, &item->object.oid, 0)) {
++		if (commit_graph_paranoia && !odb_has_object(r->objects, &item->object.oid, 0)) {
+ 			unparse_commit(r, &item->object.oid);
+ 			return quiet_on_missing ? -1 :
+ 				error(_("commit %s exists in commit-graph but not in the object database"),
+diff --git a/fetch-pack.c b/fetch-pack.c
+index 0f5de1c94d1..5e74235fc06 100644
+--- a/fetch-pack.c
++++ b/fetch-pack.c
+@@ -142,7 +142,7 @@ static struct commit *deref_without_lazy_fetch(const struct object_id *oid,
+ 	commit = lookup_commit_in_graph(the_repository, oid);
+ 	if (commit) {
+ 		if (mark_tags_complete_and_check_obj_db) {
+-			if (!has_object(the_repository, oid, 0))
++			if (!odb_has_object(the_repository->objects, oid, 0))
+ 				die_in_commit_graph_only(oid);
+ 		}
+ 		return commit;
+@@ -770,7 +770,7 @@ static void mark_complete_and_common_ref(struct fetch_negotiator *negotiator,
+ 		if (!commit) {
+ 			struct object *o;
+ 
+-			if (!has_object(the_repository, &ref->old_oid, 0))
++			if (!odb_has_object(the_repository->objects, &ref->old_oid, 0))
+ 				continue;
+ 			o = parse_object(the_repository, &ref->old_oid);
+ 			if (!o || o->type != OBJ_COMMIT)
+@@ -1984,8 +1984,8 @@ static void update_shallow(struct fetch_pack_args *args,
+ 		struct oid_array extra = OID_ARRAY_INIT;
+ 		struct object_id *oid = si->shallow->oid;
+ 		for (i = 0; i < si->shallow->nr; i++)
+-			if (has_object(the_repository, &oid[i],
+-				       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++			if (odb_has_object(the_repository->objects, &oid[i],
++					   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 				oid_array_append(&extra, &oid[i]);
+ 		if (extra.nr) {
+ 			setup_alternate_shallow(&shallow_lock,
+diff --git a/http-push.c b/http-push.c
+index 9481825abfb..beb41732fb6 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1447,8 +1447,8 @@ static void one_remote_ref(const char *refname)
+ 	 * may be required for updating server info later.
  	 */
-@@ -252,10 +252,19 @@ void odb_add_to_alternates_file(struct object_database *odb,
- void odb_add_to_alternates_memory(struct object_database *odb,
- 				  const char *dir);
+ 	if (repo->can_update_info_refs &&
+-	    !has_object(the_repository, &ref->old_oid,
+-			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
++	    !odb_has_object(the_repository->objects, &ref->old_oid,
++			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
+ 		obj = lookup_unknown_object(the_repository, &ref->old_oid);
+ 		fprintf(stderr,	"  fetch %s for %s\n",
+ 			oid_to_hex(&ref->old_oid), refname);
+@@ -1653,14 +1653,16 @@ static int delete_remote_branch(const char *pattern, int force)
+ 			return error("Remote HEAD symrefs too deep");
+ 		if (is_null_oid(&head_oid))
+ 			return error("Unable to resolve remote HEAD");
+-		if (!has_object(the_repository, &head_oid, HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++		if (!odb_has_object(the_repository->objects, &head_oid,
++				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 			return error("Remote HEAD resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", oid_to_hex(&head_oid));
  
--void *repo_read_object_file(struct repository *r,
--			    const struct object_id *oid,
--			    enum object_type *type,
--			    unsigned long *size);
-+/*
-+ * Read an object from the database. Returns the object data and assigns object
-+ * type and size to the `type` and `size` pointers, if these pointers are
-+ * non-NULL. Returns a `NULL` pointer in case the object does not exist.
-+ *
-+ * This function dies on corrupt objects; the callers who want to deal with
-+ * them should arrange to call odb_read_object_info_extended() and give error
-+ * messages themselves.
-+ */
-+void *odb_read_object(struct object_database *odb,
-+		      const struct object_id *oid,
-+		      enum object_type *type,
-+		      unsigned long *size);
+ 		/* Remote branch must resolve to a known object */
+ 		if (is_null_oid(&remote_ref->old_oid))
+ 			return error("Unable to resolve remote branch %s",
+ 				     remote_ref->name);
+-		if (!has_object(the_repository, &remote_ref->old_oid, HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++		if (!odb_has_object(the_repository->objects, &remote_ref->old_oid,
++				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 			return error("Remote branch %s resolves to object %s\nwhich does not exist locally, perhaps you need to fetch?", remote_ref->name, oid_to_hex(&remote_ref->old_oid));
  
- /*
-  * Add an object file to the in-memory object store, without writing it
-@@ -366,7 +375,7 @@ void odb_assert_oid_type(struct object_database *odb,
+ 		/* Remote branch must be an ancestor of remote HEAD */
+@@ -1881,8 +1883,8 @@ int cmd_main(int argc, const char **argv)
+ 		if (!force_all &&
+ 		    !is_null_oid(&ref->old_oid) &&
+ 		    !ref->force) {
+-			if (!has_object(the_repository, &ref->old_oid,
+-					HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) ||
++			if (!odb_has_object(the_repository->objects, &ref->old_oid,
++					    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) ||
+ 			    !ref_newer(&ref->peer_ref->new_oid,
+ 				       &ref->old_oid)) {
+ 				/*
+diff --git a/http-walker.c b/http-walker.c
+index 4b1cdd25a80..4e7024ebc5f 100644
+--- a/http-walker.c
++++ b/http-walker.c
+@@ -138,8 +138,8 @@ static int fill_active_slot(void *data UNUSED)
+ 	list_for_each_safe(pos, tmp, head) {
+ 		obj_req = list_entry(pos, struct object_request, node);
+ 		if (obj_req->state == WAITING) {
+-			if (has_object(the_repository, &obj_req->oid,
+-				       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++			if (odb_has_object(the_repository->objects, &obj_req->oid,
++					   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 				obj_req->state = COMPLETE;
+ 			else {
+ 				start_object_request(obj_req);
+@@ -497,8 +497,8 @@ static int fetch_object(struct walker *walker, const struct object_id *oid)
+ 	if (!obj_req)
+ 		return error("Couldn't find request for %s in the queue", hex);
  
- /*
-  * Enabling the object read lock allows multiple threads to safely call the
-- * following functions in parallel: repo_read_object_file(),
-+ * following functions in parallel: odb_read_object(),
-  * read_object_with_reference(), odb_read_object_info() and odb().
-  *
-  * obj_read_lock() and obj_read_unlock() may also be used to protect other
-@@ -441,4 +450,12 @@ static inline int oid_object_info(struct repository *r,
- 	return odb_read_object_info(r->objects, oid, sizep);
+-	if (has_object(the_repository, &obj_req->oid,
+-		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
++	if (odb_has_object(the_repository->objects, &obj_req->oid,
++			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
+ 		if (obj_req->req)
+ 			abort_http_object_request(&obj_req->req);
+ 		abort_object_request(obj_req);
+diff --git a/list-objects.c b/list-objects.c
+index c50b9578584..42c17d95739 100644
+--- a/list-objects.c
++++ b/list-objects.c
+@@ -74,8 +74,8 @@ static void process_blob(struct traversal_context *ctx,
+ 	 * of missing objects.
+ 	 */
+ 	if (ctx->revs->exclude_promisor_objects &&
+-	    !has_object(the_repository, &obj->oid,
+-			HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
++	    !odb_has_object(the_repository->objects, &obj->oid,
++			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) &&
+ 	    is_promisor_object(ctx->revs->repo, &obj->oid))
+ 		return;
+ 
+diff --git a/notes.c b/notes.c
+index 73eb5f00cf5..97b995f3f2d 100644
+--- a/notes.c
++++ b/notes.c
+@@ -794,8 +794,8 @@ static int prune_notes_helper(const struct object_id *object_oid,
+ 	struct note_delete_list **l = (struct note_delete_list **) cb_data;
+ 	struct note_delete_list *n;
+ 
+-	if (has_object(the_repository, object_oid,
+-		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++	if (odb_has_object(the_repository->objects, object_oid,
++			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 		return 0; /* nothing to do for this note */
+ 
+ 	/* failed to find object => prune this note */
+diff --git a/odb.c b/odb.c
+index 5202f107af2..787611c8f60 100644
+--- a/odb.c
++++ b/odb.c
+@@ -880,7 +880,7 @@ int pretend_object_file(struct repository *repo,
+ 	char *co_buf;
+ 
+ 	hash_object_file(repo->hash_algo, buf, len, type, oid);
+-	if (has_object(repo, oid, 0) ||
++	if (odb_has_object(repo->objects, oid, 0) ||
+ 	    find_cached_object(repo->objects, oid))
+ 		return 0;
+ 
+@@ -962,7 +962,7 @@ void *read_object_with_reference(struct repository *r,
+ 	}
  }
  
-+static inline void *repo_read_object_file(struct repository *r,
-+					  const struct object_id *oid,
-+					  enum object_type *type,
-+					  unsigned long *size)
+-int has_object(struct repository *r, const struct object_id *oid,
++int odb_has_object(struct object_database *odb, const struct object_id *oid,
+ 	       unsigned flags)
+ {
+ 	unsigned object_info_flags = 0;
+@@ -974,7 +974,7 @@ int has_object(struct repository *r, const struct object_id *oid,
+ 	if (!(flags & HAS_OBJECT_FETCH_PROMISOR))
+ 		object_info_flags |= OBJECT_INFO_SKIP_FETCH_OBJECT;
+ 
+-	return odb_read_object_info_extended(r->objects, oid, NULL, object_info_flags) >= 0;
++	return odb_read_object_info_extended(odb, oid, NULL, object_info_flags) >= 0;
+ }
+ 
+ void odb_assert_oid_type(struct object_database *odb,
+diff --git a/odb.h b/odb.h
+index fb56cc9e1fe..3a96de56bd6 100644
+--- a/odb.h
++++ b/odb.h
+@@ -367,8 +367,9 @@ enum {
+  * Returns 1 if the object exists. This function will not lazily fetch objects
+  * in a partial clone by default.
+  */
+-int has_object(struct repository *r, const struct object_id *oid,
+-	       unsigned flags);
++int odb_has_object(struct object_database *odb,
++		   const struct object_id *oid,
++		   unsigned flags);
+ 
+ void odb_assert_oid_type(struct object_database *odb,
+ 			 const struct object_id *oid, enum object_type expect);
+@@ -458,4 +459,11 @@ static inline void *repo_read_object_file(struct repository *r,
+ 	return odb_read_object(r->objects, oid, type, size);
+ }
+ 
++static inline int has_object(struct repository *r,
++			     const struct object_id *oid,
++			     unsigned flags)
 +{
-+	return odb_read_object(r->objects, oid, type, size);
++	return odb_has_object(r->objects, oid, flags);
 +}
 +
  #endif /* ODB_H */
-diff --git a/read-cache.c b/read-cache.c
-index be664f857b4..46986798a38 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -254,7 +254,7 @@ static int ce_compare_link(const struct cache_entry *ce, size_t expected_size)
- 	if (strbuf_readlink(&sb, ce->name, expected_size))
- 		return -1;
- 
--	buffer = repo_read_object_file(the_repository, &ce->oid, &type, &size);
-+	buffer = odb_read_object(the_repository->objects, &ce->oid, &type, &size);
- 	if (buffer) {
- 		if (size == sb.len)
- 			match = memcmp(buffer, sb.buf, size);
-@@ -3514,8 +3514,8 @@ void *read_blob_data_from_index(struct index_state *istate,
- 	}
- 	if (pos < 0)
- 		return NULL;
--	data = repo_read_object_file(the_repository, &istate->cache[pos]->oid,
--				     &type, &sz);
-+	data = odb_read_object(the_repository->objects, &istate->cache[pos]->oid,
-+			       &type, &sz);
- 	if (!data || type != OBJ_BLOB) {
- 		free(data);
- 		return NULL;
 diff --git a/reflog.c b/reflog.c
-index 4f8a3b717cd..747b82eada8 100644
+index 747b82eada8..39c205fd26e 100644
 --- a/reflog.c
 +++ b/reflog.c
-@@ -140,8 +140,8 @@ static int tree_is_complete(const struct object_id *oid)
- 	if (!tree->buffer) {
- 		enum object_type type;
- 		unsigned long size;
--		void *data = repo_read_object_file(the_repository, oid, &type,
--						   &size);
-+		void *data = odb_read_object(the_repository->objects, oid,
-+					     &type, &size);
- 		if (!data) {
+@@ -152,7 +152,7 @@ static int tree_is_complete(const struct object_id *oid)
+ 	init_tree_desc(&desc, &tree->object.oid, tree->buffer, tree->size);
+ 	complete = 1;
+ 	while (tree_entry(&desc, &entry)) {
+-		if (!has_object(the_repository, &entry.oid,
++		if (!odb_has_object(the_repository->objects, &entry.oid,
+ 				HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR) ||
+ 		    (S_ISDIR(entry.mode) && !tree_is_complete(&entry.oid))) {
  			tree->object.flags |= INCOMPLETE;
- 			return 0;
-diff --git a/rerere.c b/rerere.c
-index 951e4bf8b41..8bb97c98229 100644
---- a/rerere.c
-+++ b/rerere.c
-@@ -1000,9 +1000,8 @@ static int handle_cache(struct index_state *istate,
- 			break;
- 		i = ce_stage(ce) - 1;
- 		if (!mmfile[i].ptr) {
--			mmfile[i].ptr = repo_read_object_file(the_repository,
--							      &ce->oid, &type,
--							      &size);
-+			mmfile[i].ptr = odb_read_object(the_repository->objects,
-+							&ce->oid, &type, &size);
- 			if (!mmfile[i].ptr)
- 				die(_("unable to read %s"),
- 				    oid_to_hex(&ce->oid));
-diff --git a/submodule-config.c b/submodule-config.c
-index 0f775f93259..2730a47fad1 100644
---- a/submodule-config.c
-+++ b/submodule-config.c
-@@ -743,8 +743,8 @@ static const struct submodule *config_from(struct submodule_cache *cache,
- 	if (submodule)
- 		goto out;
- 
--	config = repo_read_object_file(the_repository, &oid, &type,
--				       &config_size);
-+	config = odb_read_object(the_repository->objects, &oid,
-+				 &type, &config_size);
- 	if (!config || type != OBJ_BLOB)
- 		goto out;
- 
-diff --git a/tag.c b/tag.c
-index 144048fd5e0..1d52686ee10 100644
---- a/tag.c
-+++ b/tag.c
-@@ -60,7 +60,7 @@ int gpg_verify_tag(const struct object_id *oid, const char *name_to_report,
- 				repo_find_unique_abbrev(the_repository, oid, DEFAULT_ABBREV),
- 				type_name(type));
- 
--	buf = repo_read_object_file(the_repository, oid, &type, &size);
-+	buf = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (!buf)
- 		return error("%s: unable to read file.",
- 				name_to_report ?
-@@ -222,8 +222,8 @@ int parse_tag(struct tag *item)
- 
- 	if (item->object.parsed)
+diff --git a/refs.c b/refs.c
+index 82a70b502f8..d6475d5e745 100644
+--- a/refs.c
++++ b/refs.c
+@@ -376,7 +376,8 @@ int ref_resolves_to_object(const char *refname,
+ {
+ 	if (flags & REF_ISBROKEN)
  		return 0;
--	data = repo_read_object_file(the_repository, &item->object.oid, &type,
--				     &size);
-+	data = odb_read_object(the_repository->objects, &item->object.oid,
-+			       &type, &size);
- 	if (!data)
- 		return error("Could not read %s",
- 			     oid_to_hex(&item->object.oid));
-diff --git a/tree-walk.c b/tree-walk.c
-index 34b0fff4873..766af99f466 100644
---- a/tree-walk.c
-+++ b/tree-walk.c
-@@ -795,9 +795,9 @@ enum get_oid_result get_tree_entry_follow_symlinks(struct repository *r,
- 			 */
- 			retval = DANGLING_SYMLINK;
- 
--			contents = repo_read_object_file(r,
--						    &current_tree_oid, &type,
--						    &link_len);
-+			contents = odb_read_object(r->objects,
-+						   &current_tree_oid, &type,
-+						   &link_len);
- 
- 			if (!contents)
- 				goto done;
-diff --git a/tree.c b/tree.c
-index 341b7c2ff3f..1ef743d90f4 100644
---- a/tree.c
-+++ b/tree.c
-@@ -193,8 +193,8 @@ int parse_tree_gently(struct tree *item, int quiet_on_missing)
- 
- 	if (item->object.parsed)
+-	if (!has_object(repo, oid, HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
++	if (!odb_has_object(repo->objects, oid,
++			    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
+ 		error(_("%s does not point to a valid object!"), refname);
  		return 0;
--	buffer = repo_read_object_file(the_repository, &item->object.oid,
--				       &type, &size);
-+	buffer = odb_read_object(the_repository->objects, &item->object.oid,
-+				 &type, &size);
- 	if (!buffer)
- 		return quiet_on_missing ? -1 :
- 			error("Could not read %s",
-diff --git a/xdiff-interface.c b/xdiff-interface.c
-index 01e6e378ea6..0e5d38c9600 100644
---- a/xdiff-interface.c
-+++ b/xdiff-interface.c
-@@ -187,7 +187,7 @@ void read_mmblob(mmfile_t *ptr, const struct object_id *oid)
- 		return;
  	}
+diff --git a/remote.c b/remote.c
+index 72c36239d31..5edf2a9f4b2 100644
+--- a/remote.c
++++ b/remote.c
+@@ -1703,7 +1703,7 @@ void set_ref_status_for_push(struct ref *remote_refs, int send_mirror,
+ 		if (!reject_reason && !ref->deletion && !is_null_oid(&ref->old_oid)) {
+ 			if (starts_with(ref->name, "refs/tags/"))
+ 				reject_reason = REF_STATUS_REJECT_ALREADY_EXISTS;
+-			else if (!has_object(the_repository, &ref->old_oid, HAS_OBJECT_RECHECK_PACKED))
++			else if (!odb_has_object(the_repository->objects, &ref->old_oid, HAS_OBJECT_RECHECK_PACKED))
+ 				reject_reason = REF_STATUS_REJECT_FETCH_FIRST;
+ 			else if (!lookup_commit_reference_gently(the_repository, &ref->old_oid, 1) ||
+ 				 !lookup_commit_reference_gently(the_repository, &ref->new_oid, 1))
+diff --git a/send-pack.c b/send-pack.c
+index abca2dd38a7..d029f748232 100644
+--- a/send-pack.c
++++ b/send-pack.c
+@@ -45,7 +45,7 @@ int option_parse_push_signed(const struct option *opt,
+ static void feed_object(struct repository *r,
+ 			const struct object_id *oid, FILE *fh, int negative)
+ {
+-	if (negative && !has_object(r, oid, 0))
++	if (negative && !odb_has_object(r->objects, oid, 0))
+ 		return;
  
--	ptr->ptr = repo_read_object_file(the_repository, oid, &type, &size);
-+	ptr->ptr = odb_read_object(the_repository->objects, oid, &type, &size);
- 	if (!ptr->ptr || type != OBJ_BLOB)
- 		die("unable to read blob object %s", oid_to_hex(oid));
- 	ptr->size = size;
+ 	if (negative)
+diff --git a/shallow.c b/shallow.c
+index d379756e39a..ef3adb635fd 100644
+--- a/shallow.c
++++ b/shallow.c
+@@ -310,8 +310,8 @@ static int write_one_shallow(const struct commit_graft *graft, void *cb_data)
+ 	if (graft->nr_parent != -1)
+ 		return 0;
+ 	if (data->flags & QUICK) {
+-		if (!has_object(the_repository, &graft->oid,
+-				HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++		if (!odb_has_object(the_repository->objects, &graft->oid,
++				    HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 			return 0;
+ 	} else if (data->flags & SEEN_ONLY) {
+ 		struct commit *c = lookup_commit(the_repository, &graft->oid);
+@@ -477,8 +477,8 @@ void prepare_shallow_info(struct shallow_info *info, struct oid_array *sa)
+ 	ALLOC_ARRAY(info->ours, sa->nr);
+ 	ALLOC_ARRAY(info->theirs, sa->nr);
+ 	for (size_t i = 0; i < sa->nr; i++) {
+-		if (has_object(the_repository, sa->oid + i,
+-			       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
++		if (odb_has_object(the_repository->objects, sa->oid + i,
++				   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
+ 			struct commit_graft *graft;
+ 			graft = lookup_commit_graft(the_repository,
+ 						    &sa->oid[i]);
+@@ -515,8 +515,8 @@ void remove_nonexistent_theirs_shallow(struct shallow_info *info)
+ 	for (i = dst = 0; i < info->nr_theirs; i++) {
+ 		if (i != dst)
+ 			info->theirs[dst] = info->theirs[i];
+-		if (has_object(the_repository, oid + info->theirs[i],
+-			       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
++		if (odb_has_object(the_repository->objects, oid + info->theirs[i],
++				   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR))
+ 			dst++;
+ 	}
+ 	info->nr_theirs = dst;
+diff --git a/upload-pack.c b/upload-pack.c
+index cec12cb478a..98cda156434 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -509,7 +509,7 @@ static int got_oid(struct upload_pack_data *data,
+ {
+ 	if (get_oid_hex(hex, oid))
+ 		die("git upload-pack: expected SHA1 object, got '%s'", hex);
+-	if (!has_object(the_repository, oid, 0))
++	if (!odb_has_object(the_repository->objects, oid, 0))
+ 		return -1;
+ 	return do_got_oid(data, oid);
+ }
+diff --git a/walker.c b/walker.c
+index a8abe8a2e78..d131af04c7b 100644
+--- a/walker.c
++++ b/walker.c
+@@ -150,8 +150,8 @@ static int process(struct walker *walker, struct object *obj)
+ 		return 0;
+ 	obj->flags |= SEEN;
+ 
+-	if (has_object(the_repository, &obj->oid,
+-		       HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
++	if (odb_has_object(the_repository->objects, &obj->oid,
++			   HAS_OBJECT_RECHECK_PACKED | HAS_OBJECT_FETCH_PROMISOR)) {
+ 		/* We already have it, so we should scan it now. */
+ 		obj->flags |= TO_SCAN;
+ 	}
 
 -- 
 2.49.0.1141.g47af616452.dirty
