@@ -1,467 +1,224 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.20])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645DA1F5827
-	for <git@vger.kernel.org>; Thu, 15 May 2025 20:22:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.20
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747340578; cv=none; b=CWEWgAi+XSBxsVfPN6NPbaUySkL/sYGUvbdWr3qQ2gCKlBEXi3ey5LvcjIbNX2SxPxpSTvQ75HGi4dDoKjXolLLgOrpYoINfpDxPKQpK0GivQvwfa0miy01l806kg8OBCg6c5Z7BOIUjelNyp5B6SAeWsWYVtqL7sc1ZUX2EPac=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747340578; c=relaxed/simple;
-	bh=ap3szIxVcj/R/OKo2YMhJMU/roFllBmMTtU2IIa0CL0=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=L8oOSX3vQhT5bS+jGl7x6WZm+Qut/CsOoZ/PTlXrvxYAh2391XyyNn24pIK/ZOVXjYqQERqUVik7+x8+RQy/eRZFq2Zs7TwcS6HwpYGujGKGgaNRUZuC1DtYQzl8Jxu7FrxrUcECRwViaxFhGaCKXjvawL/Xch7R+TsFbZMCg8k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=ldadxDib; arc=none smtp.client-ip=198.175.65.20
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 850041F5827
+	for <git@vger.kernel.org>; Thu, 15 May 2025 20:24:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.7
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747340690; cv=fail; b=qDxev5j594LzPACELmSUIi++frVcUsJey0OurlQRT/C3d0p83Cw1HD4SEtnRR1BfcRIoEgguPQKl8lWO+OQVjYv8+pIFd44STyh5Sxctr/9njpWg76Z62spp8qAeTS7R60ntsWR1Y6RWm8Sc13q5OGzbeveiPFlkTgQ/7KJlhZE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747340690; c=relaxed/simple;
+	bh=fEHWBct16hqxgPi9pyiZmD/XtqS6rRadTYLpwjcfXQc=;
+	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
+	 Content-Type:MIME-Version; b=XaopGX+kLoehE7kbCzKAXnn5gmhiCg9gGtFufy6oGzbEqPA9zUHhW0C/dqH1KwLx52WRUxUKZMzse2PutQJkdMTroaOmBQzl/YpG7hJ5xIYZxkJvF87/BZVbtyTbDkhJ9sPQyUU9zb1N5ksMLl1VLGqLikZSaAnce1tc0xPNJTM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=NUXIXTC6; arc=fail smtp.client-ip=192.198.163.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="ldadxDib"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="NUXIXTC6"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747340577; x=1778876577;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=ap3szIxVcj/R/OKo2YMhJMU/roFllBmMTtU2IIa0CL0=;
-  b=ldadxDibNqW6AUSTwgbI/29684arEwvjjv4B/Tord14IHvUwre2uURWC
-   MhpidUrDmPz1gAvM56K3fiikykrWgqFmN9twbDmuufeK+9kuTy+1Dd/mc
-   qJzjV6hTS1NVkLSeYqmsxKKPjS8aWYhHKl4XReQxDYGeSNuOZ8oMOfZtb
-   IEY7Ycmft7zQUIWYSR2egNHQfPfj2zZta5JcdzQf3bXXCuj+ctbjCY+I8
-   6qWuomboAqb9QuPxZBKwUB9O73ZT2rniheKuwCPKETFi+8cvD3QUrP2qo
-   sUa3EBvVsMWe+5aaAgTDnTcKY8nwCXezjUDpP+4hI8ffLjpFOPRT+FmVn
-   w==;
-X-CSE-ConnectionGUID: 4G1WdhRXQG2zr4p6kK0avw==
-X-CSE-MsgGUID: RsiadFGJRHaEygDSXXnFNw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="48993245"
+  t=1747340689; x=1778876689;
+  h=message-id:date:subject:to:cc:references:from:
+   in-reply-to:content-transfer-encoding:mime-version;
+  bh=fEHWBct16hqxgPi9pyiZmD/XtqS6rRadTYLpwjcfXQc=;
+  b=NUXIXTC6zO4wC89mcPYesXXbAjfWOdITddE/jStqdxhGX0ZEwJlSNmsl
+   G3XKi8Rqfv/cJYSv55/s0yGJliHCWhEL8M51sj8JTgDDnsH8f3n4mATXL
+   z2/0hq3Z+p/B9TvQPH5eLSuWiVPvLqOGO8dNz+57ePcnZG9YrBZLQwI+G
+   rdgxw59EcxhwypCyw0il59opWMQMBszo7i/VM6/tNbkXqncHEzCuqV9i/
+   5qknQhD92DIvqA3k4cyBDvbO61QMGkEE4EJdx7TvEZ3PyJJ+IhyPHMtLC
+   GKz/RiMHDjPZpY8hpDHofChTmbwNTyaPKVdMLY1N1NlbxL7TvDnAGO9jZ
+   Q==;
+X-CSE-ConnectionGUID: Nn13VeP8TK236s6bW7aGkQ==
+X-CSE-MsgGUID: JW+Psc7NRHS1X43TtNYucg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11434"; a="74700528"
 X-IronPort-AV: E=Sophos;i="6.15,292,1739865600"; 
-   d="scan'208";a="48993245"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
-  by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2025 13:22:56 -0700
-X-CSE-ConnectionGUID: x7+18jr2Qkq+IydPHQ/WQg==
-X-CSE-MsgGUID: 1kMVEAhASRaJHRwI/FE8zg==
+   d="scan'208";a="74700528"
+Received: from fmviesa006.fm.intel.com ([10.60.135.146])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2025 13:24:48 -0700
+X-CSE-ConnectionGUID: WesnnyLhRvm+Pz79drU0Vg==
+X-CSE-MsgGUID: z+QoSMmmT56PD39XW9/cHw==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,292,1739865600"; 
-   d="scan'208";a="175602366"
-Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
-  by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2025 13:22:56 -0700
+   d="scan'208";a="138376920"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+  by fmviesa006.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 May 2025 13:24:48 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Thu, 15 May 2025 13:24:47 -0700
+Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14 via Frontend Transport; Thu, 15 May 2025 13:24:47 -0700
+Received: from NAM11-CO1-obe.outbound.protection.outlook.com (104.47.56.175)
+ by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.44; Thu, 15 May 2025 13:24:46 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=rfLhVhw39thFyQ8+BPVKn0ZOuB2nBPLcWhV2i3487WfUDjUI3e7SvwC/G/ChPZxaoiWMWHfSFvNrGkDpLDwaaIrTxwPbslHLn1nprow60e2wbVtWszVcjpRU0QoE4WTna43LI4PIOtUo94+NBCFI+X0nOcHCQuuBkun0so34yw2zaemz4L0S5verw2WS7GREYvTbXwsHXoaaOkwQMEUo6sPyVqD3yFoqppXeMYTX31RacYFt411rnfZCO4H92mMJUy/Lo04jGQ2Nj2WPGVSH8mOSMbXd/fKkogoNLC755IDchBeyfZcRCtweoJTbTS1Iuh4bfiX5/dkPkaseOhw9BQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=6Tu8IF0FJXMObMnQDmP8TAt5PHxCTfqV3gZtUUfzK/k=;
+ b=do+17K81D25f8wimOul27fUAs/ybhXqlif9sYuaiquIFoxBxRkHHs817P8qYoaJR7WJ7UN5E1Ive8S77lE27Mhk7Mf9PIJ6w9Db7LQ2EgXCcw3IxR/REjdp/0QHRdi9qZXCDTH3cKQvweq2rhcFS5JQ6hwiniG0QVaGoQv4NX0RYXb/Gd40L94cFSiPLx/tBcdtjfpiA9vkPiPFZZJobd3VRsklU39Aty6inGDwh3rUKnNYb6wZ6AVmvJ9Ri6GvQRPZ/Re3EhbA5RijkMD3J7z4cgmStra3b0hFylj0xQYtUzCHqm1Kh3JA5Tc9K/5f1pC66b4z78u6S6JVu/xLUyg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
+ by LV3PR11MB8727.namprd11.prod.outlook.com (2603:10b6:408:20d::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8699.24; Thu, 15 May
+ 2025 20:24:45 +0000
+Received: from CO1PR11MB5089.namprd11.prod.outlook.com
+ ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
+ ([fe80::7de8:e1b1:a3b:b8a8%4]) with mapi id 15.20.8722.031; Thu, 15 May 2025
+ 20:24:45 +0000
+Message-ID: <b7fda1fb-3d4e-4115-bca5-63f2e7829ee6@intel.com>
+Date: Thu, 15 May 2025 13:24:44 -0700
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RFC] diff --no-index: teach option to exclude files by
+ pattern
+To: Junio C Hamano <gitster@pobox.com>, Jacob Keller <jacob.keller@gmail.com>
+CC: <git@vger.kernel.org>
+References: <20250514204014.3106177-1-jacob.e.keller@intel.com>
+ <xmqqzffe7vbh.fsf@gitster.g>
+ <CA+P7+xqg3S0q=n3nrTUJJuYicooDm83Q32AkpzRt1u7rH3n3Pw@mail.gmail.com>
+ <xmqqtt5lzqxh.fsf@gitster.g>
+Content-Language: en-US
 From: Jacob Keller <jacob.e.keller@intel.com>
-To: <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH RFC v2] diff --no-index: support limiting by pathspec
-Date: Thu, 15 May 2025 13:22:50 -0700
-Message-ID: <20250515202250.3293814-1-jacob.e.keller@intel.com>
-X-Mailer: git-send-email 2.48.1.397.gec9d649cc640
+In-Reply-To: <xmqqtt5lzqxh.fsf@gitster.g>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: MW3PR06CA0004.namprd06.prod.outlook.com
+ (2603:10b6:303:2a::9) To CO1PR11MB5089.namprd11.prod.outlook.com
+ (2603:10b6:303:9b::16)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|LV3PR11MB8727:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0bbf0810-2180-49f2-46b1-08dd93ee87ea
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?MmFTOENidDd0SFZrRXpzc2FWMTdoZjJ2QzFZelFuZXFueURoNGYyUTEzQUNS?=
+ =?utf-8?B?ZGx5c0hrd3ViU3Jzb0V1OHJtVWExVG9qWnlpL2V5amRuY2I2c2hKT1VSUXFx?=
+ =?utf-8?B?YWJlYnhmZkFaTlVOSHlUWHdRakxBTTZ2N3pTbHlYWTFtUXU1VzE1SlFsSFE4?=
+ =?utf-8?B?WStGQWFCMHI0NU1iY2ZJdlZvZUhEMXRRL2plOXlnZEloNHdRMm4wK1VWVHk5?=
+ =?utf-8?B?UjZ6U2hBdktvZEIwTHA5VFFWMXZGYVB5Y0Q3Tlp0TUZNdzVFWmc3TytXRk1L?=
+ =?utf-8?B?OTkySVRwVURuQk1RR3dvWnZ6Sk12V2ttcnMvako5QUwzNGFCMytCNVNtdnZ2?=
+ =?utf-8?B?a1hsV1BjVUVwS3dvdDV3WmU3SU92U1FBaWVtSTZleTM3UEdTRjNKcGdRRlk0?=
+ =?utf-8?B?aXVEbS9leU5qaWRQNGQycHA0NU1FU1pHbDRTWnRBM1c3QVVKb0ZQUWVTT01u?=
+ =?utf-8?B?UWtGZWFIK0ZwSlU0QjVySHRqcjlFc1VPZGU2WnA3VS8rSSt1TG5LQ3ZzUXVt?=
+ =?utf-8?B?RnFDaFVwYUxTZ1duZXArWjhGbnJLUmNncStOVmtyVGRIbVBRdjQ3NUlwS2cz?=
+ =?utf-8?B?NzNPOEVQYURFTWFaQjdKaVUxNEJjcExtUEFndEQ1ZjM0Q3VmVllqREY5K3BY?=
+ =?utf-8?B?RENJSWVZRk0wN2lUNXpIQkQvcy9WeG9uY1hRa2NhR0c0MytQQlZBSDhKcEJJ?=
+ =?utf-8?B?cGRqbCtobHFFYWxMYnZSTmhEOStGNjNuZ0k0dE5JK0Uwczljbmc1QUNpekNU?=
+ =?utf-8?B?dCs4T21heUowRnE5N081Y2R6NHR4cGpiSnp1R2h2T1d0UzdhQ1Z4VFVSTjEr?=
+ =?utf-8?B?S1JPNlZnT1lVeitMOEFrSnJNTjFNTDdMR0V3Sm0yTDVncEd1TWVyUmtsT3Nk?=
+ =?utf-8?B?dlA4ZzlCc0Q2Mjc4NWhkTHBNdUxBN0VDWTRTdUlRVzFHY1FRRDR5UHlNTE4y?=
+ =?utf-8?B?cVZ2YW80Wm11dDhNZ05OQm4vMG1IVTJGcXNDU3Y4RHZoMncxK1hPUUx1K3hV?=
+ =?utf-8?B?MEs2UnNabVhqc0tla1VTaHRqeHh3R2hXZUNXR01lZG02WXJ5d2pZTjBEOTJG?=
+ =?utf-8?B?bFl0eSt6OVRIVDlTTXZBVVhQOEFTTzZyUTRRSHlqYXVNQXZUWFk2aGxFZVc2?=
+ =?utf-8?B?QnZlN3h3cUlORlo2L2syeDBnRXBOUjE5aEV1V3NhRHVZWkh4Q1hiVWcwZWZM?=
+ =?utf-8?B?ZlY5NFhrRm5XZmZRZjhFY2hVdlRLU3NvVU9lamJJSyt5YVdrYlU1c0VxWE1I?=
+ =?utf-8?B?Z000T2duQVl4R3hWdGJNQmk2aHhQbm1qcGk0b0dxNElYRUY0UVl3MGtDM0ow?=
+ =?utf-8?B?L08xTmpKZ2ptL0xXc3pvbXBLRGFkSUZQSEk4Z0UrTHY1U1I2TmdpdnIwRERn?=
+ =?utf-8?B?SUw2dXBtZWVIQWg3OXVqWkUrQWFGcituUmRPdWNIK1g2dXMrTnBaUytQOE9G?=
+ =?utf-8?B?M3ZsZmtkVkdEanM0aWdQelFSL2ZwWGsvMk1sa282QnRKUTV3UHdnTEN2blhB?=
+ =?utf-8?B?ZTljMmJzTW9COVVhUGFWL0RsajVkUmhtSWhjRnhaVitVdmtjc210NG9uejNU?=
+ =?utf-8?B?L25IY3U2bUJGeXRhZmFkQ2FUSy9DNnJjM1JTanN6eW5iay9kUVRyVVphSmpt?=
+ =?utf-8?B?UVM3dnlDYzV3dVJGdUt1ZnIyQjdFZ3hXTmQyaVUvTk1ncFRIaUsyRGxSc3hH?=
+ =?utf-8?B?aWZVYlVXNzJJYWJ5QWZTSk9COGRBS0p5amxWZDRYVzF5NElHT2FHVUVGSFZ1?=
+ =?utf-8?B?NGR4Y2Y2QnVPTUNJUDM1Kzh2RVN6WmJwYWx5MDkrU3BaOE5uZ3ZMMWJGNVJW?=
+ =?utf-8?B?TXhTc0I1NHBBZGs2SFlQNkF1Lzh2eHl1S2EwM21WSDUyRjdHcTl4YjlZT1dx?=
+ =?utf-8?B?NjhuWGJFRWIyUXR6bTB4YUlCeG14cU94ZVBFajBWNWJBYUdnVmhVcC9NZzls?=
+ =?utf-8?Q?dLgSXmNIX3w=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(1800799024)(376014);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZWhkR1dkS0FvUFR4ZnEwYnRWU2FHbXg4cllJMHJuN25aTTR0dXQ5cE1VUEtG?=
+ =?utf-8?B?UmJlVlEyZm0xelIzNnVJbUtBMGJFQkxFSmFmcEtOU2xXOTN0R1BDbHlrdTRI?=
+ =?utf-8?B?TTFZQmNVNHcrMHJUZ0Nyc2ZTN2NLYjJqYzhjbyszSTVTcXFJejVHODNRRTNh?=
+ =?utf-8?B?azRQaWgvQnhDT2FRWUwvbnhERStQWTU5VitYZWdyZkp4cGxZYjAyQUhFZ1dz?=
+ =?utf-8?B?TVJxUitHdkJQSGRleCt5TFpJTzNVZGsxQno0L3MwTEdMTFBFN1lsSURjbTl1?=
+ =?utf-8?B?ay80Tk5KMEtDT0RreERuRnVzOVNBRkpaR1ZhT0JxSXN1eEVVbVBsbExJS2FX?=
+ =?utf-8?B?dkdEMXNKQmJORjVmcjcxNFB2aW5LLzhiMVAxWGc3RlBERjRSN1BBRUYyRUVn?=
+ =?utf-8?B?NVR5VGY4YytGcDI2TVR6NGdHcmJRczhMeFA0UFJSeWh6R0Z4VGd5aVZrZjdG?=
+ =?utf-8?B?d3BlVTJCbEhURy9UMkZhRWVQc3BYV3ZuL2R5M3NrOVZGZjREQ21iZkpxdUxm?=
+ =?utf-8?B?SWd3dEsxSjlwakNjcjhVMUFOTk5ldGhTeUpKcjZjUU1xdUFEeU5CMU44TmZ5?=
+ =?utf-8?B?QTJydUFrajJRUmE2WHk4Z3d6cFJ5aU1pWFQzMXRpZjVYdjlBZm9pUmkxRXN5?=
+ =?utf-8?B?NW9ZdmpOcEFVdzJTQTIxQXVhOVhZM01KMkNINUFETEt4bm14YkZZeU5ZQmlX?=
+ =?utf-8?B?cHJZaVlyeG1lUE4wa2xtR09KZ290NkowcDdHTlo2eVZ5T2lYZVh6RERVN1dI?=
+ =?utf-8?B?dllNTE1ZUzhCK0sxbis5MDdvam5YcjdEYzBlQTlIanFHWjNEZFRBUXVrWVpG?=
+ =?utf-8?B?UmYrM0k0YWlpSU8wOU9DNDRmV082dTFrTVJMeURyUENZYnU2aWV4aHRqbFpw?=
+ =?utf-8?B?VWNBUjZJSHhnU1VtMmdVYlFGZ21XZWtXRThZcTJpT25lTnVQd3RXUjg4VGNZ?=
+ =?utf-8?B?bFA3Q0VTdDRPTmtSNWJLQUdSSHEySThYK2lRdGtnUW9WcmQ2ODVYZ2Fxdzgr?=
+ =?utf-8?B?eTVuSjhNN1BNa2VWUHhjK1U3U29sZXBSelpUQUlkZXpONnljN3F0emlyZmZq?=
+ =?utf-8?B?T1FPSnpuUE1PcU9JdVZxdkthdnhuWEZycmgweG8rUVhrYVpER3oxaXRKbXpS?=
+ =?utf-8?B?QWV4d1AxOWUvalNWazk0b2pqVmJCOTVoTkFDRmgyT0ExUWRkazRST3l5SDBy?=
+ =?utf-8?B?UG5YZVJiMEtVV3RIU00wSW4xQXd5TFNlakczbkh2Z1puVjVtSkYzUUE1eEt3?=
+ =?utf-8?B?dzl3dzRJOXhybCtrb0FRUThTRmZQV1BIZTdOcHB0NE5TUWVTUjI3Z1NldENr?=
+ =?utf-8?B?b2dDL3F0SVRucmNRbjZQcmRrcHd3T1NrQ2RlaWNtTzBYWkN4WHR1amhxOVpQ?=
+ =?utf-8?B?YXF1RnVPY1hxQ2ZadDIyOEpLU2Uyd0plL1czMHRXaGRNOE5sWE0raTV2aU9I?=
+ =?utf-8?B?S25EeURub3BGd09ZSnhGSFhtSEN1dVU5b3JRclZZOTBWMFJPczBWWlFuckJ4?=
+ =?utf-8?B?OVNoTmc1WkJBODBJQ1RsR1hLWWFwSmJZTFNnenFYenVaYkNaNVMvTDhIOGhk?=
+ =?utf-8?B?ZENRcGRIR01WekRUVGtPbFZ2R25DK3VBRmRUdlZDdjdKMGxKNlNTLysyamhr?=
+ =?utf-8?B?ZmFhUlRRTm50am5ZWkpybVJiMGV0YUxLcU5KeUkyUU1qbzlHZjdvcDRvOG41?=
+ =?utf-8?B?NVU3QzVhOTJEcWcxZUN1Qi9Pd25vMVFqOHl2bkQ0a0Qvczc1aFdMQnM1NTN0?=
+ =?utf-8?B?UjFHMjk0TE0yTWNCdTVuOXp3K3FyMHcyWXpPaWFkWUNvMXF3MmNaUlU3OERC?=
+ =?utf-8?B?M3NaSHVYMis4aXh2RlEzdVBLeExYRjFjb1Q0QmdQdnhrNzFyOEdNRTE5WEVj?=
+ =?utf-8?B?SUVUZ2IwRE51bDVZOEdBSmNQdE9nOTNlc25MT2dkcnFpLzhTQm1QTGtkSHdQ?=
+ =?utf-8?B?SDdnRXZRQjNLVnpsNXdZY2RtWjZiQ1JmaXZ5R0JXZlBuOS9hM1hQS0taRGZX?=
+ =?utf-8?B?QUI2NEZrUm0xTWNkenA1T2hCTHJRcjFWcG02a0xXNEdaMVQrS1EzSnVwSVJC?=
+ =?utf-8?B?WGNLNElFK2F6NkpzNGYxNTJWQlNveURzY2hXK3hTaThSYVYwZlB3QzZmc01D?=
+ =?utf-8?B?eFdiOXJqRDNaVDdoeVNBYTFGTCs4eW9kMVgrSzd2M1cwV2R0OVdNNGF2UFpj?=
+ =?utf-8?B?Y2c9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0bbf0810-2180-49f2-46b1-08dd93ee87ea
+X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 May 2025 20:24:44.9792
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: qsAu5JeJOiNhfl8tQKyRaHyI8FE6m8KLDsiaCWmd1tAfj+kuOYQLcn9TEJquVMIDD+nnp33eKeihIVvi3KIvx95gB+ohTLOavyTOf0LTAEY=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR11MB8727
+X-OriginatorOrg: intel.com
 
-From: Jacob Keller <jacob.keller@gmail.com>
 
-The --no-index option of git-diff enables using the diff machinery from
-git while operating outside of a repository. This mode of git diff is
-able to compare directories and produce a diff of their contents.
 
-When operating git diff in a repository, git has the notion of
-"pathspecs" which can specify which files to compare. In particular,
-when using git to diff two trees, you might invoke:
+On 5/15/2025 11:09 AM, Junio C Hamano wrote:
+> Jacob Keller <jacob.keller@gmail.com> writes:
+> 
+>> I guess the one weirdness is that pathspecs must come after the first
+>> 2 arguments, since we need to find 2 paths first. But this matches the
+>> way that treeish must come first in git diff-tree -r takes treeish and
+>> then pathspecs, and you can't re-order them arbitrarily either.
+>>
+>> Does this sound like a reasonable extension to the existing 2 argument
+>> form of git diff --no-index?
+> 
+> Absolutely.
+> 
+> Or you could even use "--" convention in the examples you would
+> write in the documentation, even though you may not absolutely need
+> it for the purpose of parsing the command line, to highlight the
+> fact that two things to be compared is given and then with an
+> optional pathspec after the two things, e.g.,
+> 
+>  $ git diff --no-index git-1.6.0 git-2.43.0 -- Documentation/
+> 
+> or something silly like that.
+> 
 
-  $ git diff-tree -r <treeish1> <treeish2>.
+Yea, I'll do that once I get a version with doc. I sent a v2 that works
+ok, but I think I need some feedback before I fully polish it, since
+there are a couple of hacks to get things working.
 
-where the treeish could point to a subdirectory of the repository.
-
-When invoked this way, users can limit the selected paths of the tree by
-using a pathspec. Either by providing some list of paths to accept, or
-by removing paths via a negative refspec.
-
-The git diff --no-index mode does not support pathspecs, and cannot
-limit the diff output in this way. Other diff programs such as GNU
-difftools have options for excluding paths based on a pattern match.
-However, using git diff as a diff replacement has several advantages
-over many popular diff tools, including coloring moved lines, rename
-detections, and similar.
-
-Teach git diff --no-index how to handle pathspecs to limit the
-comparisons. This will only be supported if both provided paths are
-directories.
-
-This is because the --no-index mode already employs some DWIM shortcuts
-when dealing with comparing a directory and a file.
-
-Executing git diff --no-index D F is interpreted as if:
-
-  $ git diff --no-index D/$(basename F) F
-
-Similarly, if you do git diff --no-index F D.
-
-Modify the fixup_paths function to return 1 if both paths are
-directories. If this is the case, interpret any extra arguments to git
-diff as pathspecs via parse_pathspec. Add a new PATHSPEC_NO_REPOSITORY
-flag to indicate to the parser that we do not have repository. Use this
-to aid in error message reporting in the event that the user happens to
-invoke git diff --no-index from a repository.
-
-Extend the prefix_path_gently function to correctly handle a prefix
-which does not end in '/', by inserting one as appropriate.
-
-Use parse_pathspec to load the remaining arguments (if any) to git diff
---no-index as pathspec items. Disable PATHSPEC_ATTR support since we do
-not have a repository to do attribute lookup. Disable PATHSPEC_FROMTOP
-since we do not have a repository root. All pathspecs are treated as
-rooted at the provided comparison paths.
-
-Load the pathspecs twice, once prefixed with paths[0] and once prefixed
-with paths[1]. I considered trying to avoid this, but don't yet have a
-workable solution that reuses the same pathspec objects. We need the
-directory paths as prefixes otherwise the match_pathspec won't compare
-properly.
-
-Pass the pathspec object for both paths into queue_diff, who in-turn
-passes these along to read_directory_contents.
-
-Modify read_directory_contents to check against the pathspecs when
-scanning the directory. In order to properly recurse, we must handle
-leading directory checks. Thus, a new "match_leading_pathspecs" variant
-is created, which sets the DO_MATCH_LEADING_PATHSPEC flag. This is
-required to correctly handle nested directories. Consider this:
-
-  $ git diff --no-index a b c/d
-
-This should include all paths in a and b which match the c/d pathspec.
-In particular, if there was 'a/c/d' we need to match it. But to check
-'a/c/d', we need to first get to that part, which requires comparing
-'a/c' first. Without DO_MATCH_LEADING_PATHSPEC, 'a/c' won't match the
-'a/c/d' pathspec string.
-
-This implementation appears to work ok, but I still need to create some
-unit tests. I also think this might be a little hacky, and I am not sure
-how folks feel about parsing separate pathspecs for both entries.
-
-Some other gotchas and open questions:
-
- 1) pathspecs must all come after the first two path arguments, you
-    can't re-arrange them to come first. I'm treating them sort of like
-    the treeish arguments to git diff-tree.
-
- 2) The pathspecs are interpreted relative to the provided paths, and
-    thus will always need to be specified as relative paths, and will be
-    interpreted as relative to the root of the search for each path
-    separately.
-
- 3) negative pathspecs have to be fully qualified from the root, i.e.
-    ':(exclude)file' will only exclude 'a/file' and not 'a/b/file'
-    unless you also use '(glob)' or similar. I think this matches the
-    other pathspec support, but I an not 100% sure.
-
-I feel like some of these changes are a bit hacky and could use some
-further refinement or suggestion, but the core idea appears to work
-reasonably well!
-
-Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
----
-This version uses pathspecs and hopefully works in a reasonable enough way
-to not be too confusing. Still needs tests, likely needs to be broken up
-into smaller pieces, or some of the hacks need to be smoothed over. I
-have executed this, but didn't run the full test suite yet.
-
- pathspec.h      | 10 ++++++
- diff-no-index.c | 85 ++++++++++++++++++++++++++++++++++++++++---------
- dir.c           | 24 ++++++++++++--
- pathspec.c      |  7 +++-
- setup.c         |  4 ++-
- 5 files changed, 110 insertions(+), 20 deletions(-)
-
-diff --git a/pathspec.h b/pathspec.h
-index de537cff3cb6..363fb6309663 100644
---- a/pathspec.h
-+++ b/pathspec.h
-@@ -76,6 +76,11 @@ struct pathspec {
-  * allowed, then it will automatically set for every pathspec.
-  */
- #define PATHSPEC_LITERAL_PATH (1<<6)
-+/*
-+ * For git diff --no-index, indicate that we are operating without
-+ * a repository or index.
-+ */
-+#define PATHSPEC_NO_REPOSITORY (1<<7)
- 
- /**
-  * Given command line arguments and a prefix, convert the input to
-@@ -184,6 +189,11 @@ int match_pathspec(struct index_state *istate,
- 		   const char *name, int namelen,
- 		   int prefix, char *seen, int is_dir);
- 
-+int match_leading_pathspec(struct index_state *istate,
-+			   const struct pathspec *ps,
-+			   const char *name, int namelen,
-+			   int prefix, char *seen, int is_dir);
-+
- /*
-  * Determine whether a pathspec will match only entire index entries (non-sparse
-  * files and/or entire sparse directories). If the pathspec has the potential to
-diff --git a/diff-no-index.c b/diff-no-index.c
-index 9739b2b268b9..4535d032c27f 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -15,20 +15,43 @@
- #include "gettext.h"
- #include "revision.h"
- #include "parse-options.h"
-+#include "pathspec.h"
- #include "string-list.h"
- #include "dir.h"
- 
--static int read_directory_contents(const char *path, struct string_list *list)
-+static int read_directory_contents(const char *path, struct string_list *list,
-+				   const struct pathspec *pathspec)
- {
-+	struct strbuf match = STRBUF_INIT;
-+	int len;
- 	DIR *dir;
- 	struct dirent *e;
- 
- 	if (!(dir = opendir(path)))
- 		return error("Could not open directory %s", path);
- 
--	while ((e = readdir_skip_dot_and_dotdot(dir)))
--		string_list_insert(list, e->d_name);
-+	if (pathspec) {
-+		strbuf_addstr(&match, path);
-+		strbuf_complete(&match, '/');
-+		len = match.len;
-+	}
- 
-+	while ((e = readdir_skip_dot_and_dotdot(dir))) {
-+		if (pathspec) {
-+			strbuf_setlen(&match, len);
-+			strbuf_addstr(&match, e->d_name);
-+
-+			if (!match_leading_pathspec(NULL, pathspec,
-+						    match.buf, match.len,
-+						    0, NULL,
-+						    e->d_type == DT_DIR ? 1 : 0))
-+				continue;
-+		}
-+
-+		string_list_insert(list, e->d_name);
-+	}
-+
-+	strbuf_release(&match);
- 	closedir(dir);
- 	return 0;
- }
-@@ -131,7 +154,8 @@ static struct diff_filespec *noindex_filespec(const struct git_hash_algo *algop,
- }
- 
- static int queue_diff(struct diff_options *o, const struct git_hash_algo *algop,
--		      const char *name1, const char *name2, int recursing)
-+		      const char *name1, const char *name2, int recursing,
-+		      const struct pathspec *ps1, const struct pathspec *ps2)
- {
- 	int mode1 = 0, mode2 = 0;
- 	enum special special1 = SPECIAL_NONE, special2 = SPECIAL_NONE;
-@@ -171,9 +195,9 @@ static int queue_diff(struct diff_options *o, const struct git_hash_algo *algop,
- 		int i1, i2, ret = 0;
- 		size_t len1 = 0, len2 = 0;
- 
--		if (name1 && read_directory_contents(name1, &p1))
-+		if (name1 && read_directory_contents(name1, &p1, ps1))
- 			return -1;
--		if (name2 && read_directory_contents(name2, &p2)) {
-+		if (name2 && read_directory_contents(name2, &p2, ps2)) {
- 			string_list_clear(&p1, 0);
- 			return -1;
- 		}
-@@ -218,7 +242,7 @@ static int queue_diff(struct diff_options *o, const struct git_hash_algo *algop,
- 				n2 = buffer2.buf;
- 			}
- 
--			ret = queue_diff(o, algop, n1, n2, 1);
-+			ret = queue_diff(o, algop, n1, n2, 1, ps1, ps2);
- 		}
- 		string_list_clear(&p1, 0);
- 		string_list_clear(&p2, 0);
-@@ -258,8 +282,10 @@ static void append_basename(struct strbuf *path, const char *dir, const char *fi
-  * DWIM "diff D F" into "diff D/F F" and "diff F D" into "diff F D/F"
-  * Note that we append the basename of F to D/, so "diff a/b/file D"
-  * becomes "diff a/b/file D/file", not "diff a/b/file D/a/b/file".
-+ *
-+ * Return 1 if both paths are directories, 0 otherwise.
-  */
--static void fixup_paths(const char **path, struct strbuf *replacement)
-+static int fixup_paths(const char **path, struct strbuf *replacement)
- {
- 	struct stat st;
- 	unsigned int isdir0 = 0, isdir1 = 0;
-@@ -282,25 +308,30 @@ static void fixup_paths(const char **path, struct strbuf *replacement)
- 	if ((isdir0 && ispipe1) || (ispipe0 && isdir1))
- 		die(_("cannot compare a named pipe to a directory"));
- 
--	if (isdir0 == isdir1)
--		return;
-+	/* if both paths are directories, we will enable pathspecs */
-+	if (isdir0 && isdir1)
-+		return 1;
-+
- 	if (isdir0) {
- 		append_basename(replacement, path[0], path[1]);
- 		path[0] = replacement->buf;
--	} else {
-+	} else if (isdir1) {
- 		append_basename(replacement, path[1], path[0]);
- 		path[1] = replacement->buf;
- 	}
-+
-+	return 0;
- }
- 
- static const char * const diff_no_index_usage[] = {
--	N_("git diff --no-index [<options>] <path> <path>"),
-+	N_("git diff --no-index [<options>] <path> <path> [<pathspec>...]"),
- 	NULL
- };
- 
- int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
- 		  int implicit_no_index, int argc, const char **argv)
- {
-+	struct pathspec pathspec1, pathspec2, *ps1 = NULL, *ps2 = NULL;
- 	int i, no_index;
- 	int ret = 1;
- 	const char *paths[2];
-@@ -317,7 +348,7 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
- 	options = add_diff_options(no_index_options, &revs->diffopt);
- 	argc = parse_options(argc, argv, revs->prefix, options,
- 			     diff_no_index_usage, 0);
--	if (argc != 2) {
-+	if (argc < 2) {
- 		if (implicit_no_index)
- 			warning(_("Not a git repository. Use --no-index to "
- 				  "compare two paths outside a working tree"));
-@@ -337,7 +368,27 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
- 		paths[i] = p;
- 	}
- 
--	fixup_paths(paths, &replacement);
-+	/* TODO: should we try to catch pathspec-like paths first and warn or
-+	 * error? We accepted those as valid 'paths' before so it seems
-+	 * unlikely we can change that behavior.
-+	 */
-+	if (fixup_paths(paths, &replacement)) {
-+		parse_pathspec(&pathspec1, PATHSPEC_FROMTOP | PATHSPEC_ATTR,
-+			       PATHSPEC_PREFER_FULL | PATHSPEC_NO_REPOSITORY,
-+			       paths[0], &argv[2]);
-+		if (pathspec1.nr)
-+			ps1 = &pathspec1;
-+
-+		parse_pathspec(&pathspec2, PATHSPEC_FROMTOP | PATHSPEC_ATTR,
-+			       PATHSPEC_PREFER_FULL | PATHSPEC_NO_REPOSITORY,
-+			       paths[1], &argv[2]);
-+		if (pathspec2.nr)
-+			ps2 = &pathspec2;
-+	} else if (argc > 2) {
-+		warning(_("Limiting comparison with pathspecs is only "
-+			  "supported if both paths are directories."));
-+		usage_with_options(diff_no_index_usage, options);
-+	}
- 
- 	revs->diffopt.skip_stat_unmatch = 1;
- 	if (!revs->diffopt.output_format)
-@@ -354,7 +405,7 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
- 	setup_diff_pager(&revs->diffopt);
- 	revs->diffopt.flags.exit_with_status = 1;
- 
--	if (queue_diff(&revs->diffopt, algop, paths[0], paths[1], 0))
-+	if (queue_diff(&revs->diffopt, algop, paths[0], paths[1], 0, ps1, ps2))
- 		goto out;
- 	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
- 	diffcore_std(&revs->diffopt);
-@@ -370,5 +421,9 @@ int diff_no_index(struct rev_info *revs, const struct git_hash_algo *algop,
- 	for (i = 0; i < ARRAY_SIZE(to_free); i++)
- 		free(to_free[i]);
- 	strbuf_release(&replacement);
-+	if (ps1)
-+		clear_pathspec(ps1);
-+	if (ps2)
-+		clear_pathspec(ps2);
- 	return ret;
- }
-diff --git a/dir.c b/dir.c
-index a374972b6243..7f6079475397 100644
---- a/dir.c
-+++ b/dir.c
-@@ -397,9 +397,13 @@ static int match_pathspec_item(struct index_state *istate,
- 	    strncmp(item->match, name - prefix, item->prefix))
- 		return 0;
- 
--	if (item->attr_match_nr &&
--	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
--		return 0;
-+	if (item->attr_match_nr) {
-+		/* TODO: is there a better way to handle this? */
-+		if (!istate)
-+			BUG("magic PATHSPEC_ATTR requires an index");
-+		if (!match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
-+			return 0;
-+	}
- 
- 	/* If the match was just the prefix, we matched */
- 	if (!*match)
-@@ -577,6 +581,20 @@ int match_pathspec(struct index_state *istate,
- 					 prefix, seen, flags);
- }
- 
-+int match_leading_pathspec(struct index_state *istate,
-+			   const struct pathspec *ps,
-+			   const char *name, int namelen,
-+			   int prefix, char *seen, int is_dir)
-+{
-+	unsigned flags = DO_MATCH_LEADING_PATHSPEC;
-+
-+	if (is_dir)
-+		flags |= DO_MATCH_DIRECTORY;
-+
-+	return match_pathspec_with_flags(istate, ps, name, namelen,
-+					 prefix, seen, flags);
-+}
-+
- /**
-  * Check if a submodule is a superset of the pathspec
-  */
-diff --git a/pathspec.c b/pathspec.c
-index 2b4e434bc0aa..7a46da50dc77 100644
---- a/pathspec.c
-+++ b/pathspec.c
-@@ -492,7 +492,12 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
- 		if (!match) {
- 			const char *hint_path;
- 
--			if (!have_git_dir())
-+			/* TODO: should we have a different error message?
-+			 * Really, we can't have absolute paths for pathspec
-+			 * in git diff --no-index since it must be relative to
-+			 * both directories in order to work at all.
-+			 */
-+			if ((flags & PATHSPEC_NO_REPOSITORY) || !have_git_dir())
- 				die(_("'%s' is outside the directory tree"),
- 				    copyfrom);
- 			hint_path = repo_get_work_tree(the_repository);
-diff --git a/setup.c b/setup.c
-index f93bd6a24a5d..56ebf1218442 100644
---- a/setup.c
-+++ b/setup.c
-@@ -139,7 +139,9 @@ char *prefix_path_gently(const char *prefix, int len,
- 			return NULL;
- 		}
- 	} else {
--		sanitized = xstrfmt("%.*s%s", len, len ? prefix : "", path);
-+		sanitized = xstrfmt("%.*s%s%s", len, len ? prefix : "",
-+				    len && prefix[len - 1] == '/' ? "" : "/",
-+				    path);
- 		if (remaining_prefix)
- 			*remaining_prefix = len;
- 		if (normalize_path_copy_len(sanitized, sanitized, remaining_prefix)) {
--- 
-2.48.1.397.gec9d649cc640
-
+Thanks for the feedback!
