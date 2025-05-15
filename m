@@ -1,131 +1,182 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f51.google.com (mail-ot1-f51.google.com [209.85.210.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F64321C160
-	for <git@vger.kernel.org>; Thu, 15 May 2025 16:20:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C97122B594
+	for <git@vger.kernel.org>; Thu, 15 May 2025 16:27:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747326009; cv=none; b=KSMR+Cw0S4Vn0Edc8PqMt14t6QGBlSaiDSzyBPcstxtJWvlB5iUVXUvL11kxGOp+wnnFLoNJ2GU+a+/X0vfriUSNbsw0SSMFkSqi7GlED7q2bUfcHgW1Gbv1ffAlteSuIKpvWwR8Sw4Hc/BKsEYbOeJLDaJ0SatAdD3ROBvvmKE=
+	t=1747326480; cv=none; b=LwOS68RC59VEkXnvWmEON9FmVG28C/XhE6Kwn19lUz+2+RuCRa3WUZNm1bpDtwtOxQou5fLhpMkcDNfj/PiLgtQGGsYHwgQ28luSN40dlGKpGFaNB36NZ/Zxi6AE0ULcqsVmGlix5dTUcs4C1ncY6ix1/qYrp6d82p10eWEhy1s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747326009; c=relaxed/simple;
-	bh=pi03BhGJIIfJ48TGlT4wPT3TTlJz3OSxQFXYeHlzFSs=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=dwQXtIDtC7kAeeqYdJRxpOywxATxZAZatZ9Ei04EcPKUPMCPu+icmhEhAl5UE632OjIdyezgsXD5E0SQ9K/+KcqTQar5W1bqHMSgeIK4L4AT/pXqibxpoGUaFa8TtZUu+6BCOPAMRHocyY78+aIqP7sCwk9vF7O6M7/2owoLWuY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=daku8Rd9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aOqHfMmr; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747326480; c=relaxed/simple;
+	bh=8EU1AM/2O5zY5zgA6DIdoIDUZ4Zi266UGcU7p21v5tg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XUA+P3Nl0VEU75xMUZpEq6OkGyu3UYbLdGBqRPL2bSFNfQ0lNH2Ns6Mo7yk0Ez6Vh2ZQeVt+kJKMzTBSSP5YpDpEKu1/5sXVhaJMskQXw/dd0hZr4DewQzFZMVa7j967PIf3ailXrfeXrWv3Xf7GHT0RE8V7lczHtb+8QnZGUtM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PuYHNgNG; arc=none smtp.client-ip=209.85.210.51
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="daku8Rd9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aOqHfMmr"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3F8C0254014C;
-	Thu, 15 May 2025 12:20:06 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 15 May 2025 12:20:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747326006; x=1747412406; bh=5CasUqXMve
-	T5vC4UPspWft576LYiOxTH4xIJFgwKP70=; b=daku8Rd9GcQJFZMtViR5xvnTqB
-	ek4yQa9AKE+TzWMmMYqfO+DX7Ud07dl+MaeRKi/aOxn3TwEHvqvSqYFZPaiW7nOO
-	/VXUHbxsRylBfQjSrOD12i3gQYf55UEvs2nj3tn0o/Mk1+2vYKuVfe0Ip35IF1/Z
-	J+gSsyIqQOX/tkeJakfbY/SbISuIOB365TrBV9KExmhP+NHAZQ7RmK8J0WzMhupf
-	p1K3uh5HUiuoFVZWJIgeq8fBmrLxrI0JAe4PYkChv3btFybc3WRRa6NmiahTfyY3
-	cLI64ORVT+iWxNkHm80bVQVB5n4s83LzVr/INPOyy0tsu/gnkuCdQlhYORLw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747326006; x=1747412406; bh=5CasUqXMveT5vC4UPspWft576LYiOxTH4xI
-	JFgwKP70=; b=aOqHfMmrg+Vt6bJe8fhKCTKZ/eRQHjwzMtglX4JQZARmJPBRh9W
-	k/T4QJmJ6PG4UeLsWJyjI9F1/hSi4MharNk+UVjVt6jvbQvVgLY030+vhVKlsefO
-	GgzFBxa2TPqUXrLfx9/RyIquuDHGeHsoGJ+9TtmB4CGR1YnoI6B73WYYcpkTmn22
-	ysqgGCQVwhgdkNgbvYUleq7xeutl9g1BN/seq4r26DNWgXsJF8WUnaz+rfztk1T7
-	AOZjmxu82vzW4xJtSjk4pu4PlIh3bzB5fWcDLkff/6+3VnWVSRkkPLfxJR1kznd3
-	m0IM+vZhuRPtRCYGpznmC0iRMX1awJV7mGg==
-X-ME-Sender: <xms:NBQmaAjtUict6sVxsxwi0zSZ_Cj4kabZKSFhnFJ9H0QgwLD10h-MmA>
-    <xme:NBQmaJA4mvqD2PTIdm1nY4fID4TC-oSBwdQ_CC0LeplsZkKxsgZLDXKzYucyaSFS5
-    1vQkLkAGZbR_4sOZw>
-X-ME-Received: <xmr:NBQmaIHNmz6RnNpp0Vzz8-17VYKInPiIVPuHeEZ3PgPJv4euiS9OF_aAmqOToasE3XV-NGtdbcf14OptoVlhwbtz9Cb5ws60BvuQNJk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddtfeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhephefhkeefkeeiveelveekveekkeelgedv
-    vdelgfeuhffhgffgieffjedviedvgfegnecuffhomhgrihhnpehsvghquhgvnhgtvghrrd
-    gtfienucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehg
-    ihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepsh
-    hmthhpohhuthdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeeh
-    tddvtddvgeeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdrtghnpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:NBQmaBTSxzhfEVMagQMsIp0SmR_Vqi-SNrQoNKg1_ILObiTsKfFKhg>
-    <xmx:NBQmaNwuhvJ0H0lYGuUy_T7dKNg_ivQTmEzc8F6QdpKtrLs93m6hCA>
-    <xmx:NBQmaP438kyDUZFINK8r4tbDrc5k7-wl1CVIa12IesIZYUe6pzE3JQ>
-    <xmx:NBQmaKycNbYHPJ_Q7dbKGc3M3kHtIp6MxJABl7bZ_UdpuQZCgptArQ>
-    <xmx:NhQmaF4HwMhDlfLVCBebclMHaS3xt_E5QbRZzztIzOD8DfKxXB7R1dge>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 12:20:03 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] sequencer: fix memory leak if
- `update_squash_messages()` failed
-In-Reply-To: <935822b9-33e5-457e-95a7-64058777b52a@gmail.com> (Phillip Wood's
-	message of "Thu, 15 May 2025 11:08:36 +0100")
-References: <pull.1964.git.git.1747226641249.gitgitgadget@gmail.com>
-	<935822b9-33e5-457e-95a7-64058777b52a@gmail.com>
-Date: Thu, 15 May 2025 09:20:00 -0700
-Message-ID: <xmqqldqx3ky7.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PuYHNgNG"
+Received: by mail-ot1-f51.google.com with SMTP id 46e09a7af769-7311a8bb581so1108571a34.0
+        for <git@vger.kernel.org>; Thu, 15 May 2025 09:27:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747326477; x=1747931277; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=6xxi19tQ/Gd0vucQB5YX2RiKSEdD0ExzJJFlSIQao1M=;
+        b=PuYHNgNG9XPyshp83zAhULJMhq22IFtG+wvsPlYOAPJcvEM876rBMa4pc099A4zkcI
+         xqO3rdHAGxmxdIikU9T3WzEYgNCF5GuQkL/2E8ENoQQj1nd5IGOWhHaxLUCQwB/bSLda
+         FgiExDCUYkJ5tMmzcolXNQ4yxDpqNalrnLAidtqU7yAHZUZ0e0a60CNswsNI5Nk+jY7s
+         1F0K90rDIzWEiFKczBTZ7dMZfYL71ZQnkOF71t4bvRHn5ydZdfmEiAuLC2Q3lwFcP61o
+         5iegdBJtAUzhRWJUptWNtbC4rGJUcRm6m6H7tjUQbpl3ghHb//Av9CA8azPqT57Hf4Gi
+         N7mw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747326477; x=1747931277;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=6xxi19tQ/Gd0vucQB5YX2RiKSEdD0ExzJJFlSIQao1M=;
+        b=BKkO5xeaagfCmCPnI1Tx8pzn08SxWd0Jrp6WroElHPEoSuOKFHhJVOWmIGwFCGKa8Y
+         rKzRm/4fCh+4K85TDw7r5TDnvI18DDmvh9cbonJpAGSmDOEzzt5yAQwj7KhixKATl4tH
+         zP6Kmeq2syX8JXHclvVLeCsYmLY5/BIxNYAdW3q3uGJs2+QMUV9l78A9D4rjIkw9bi1g
+         AAUID53/aBk/ow8hjMNAGGNobw+wD+6vLdCLj8JXjGGXMyvZ/JQOzY/MCs78g5tAQUyu
+         DCDNTd+zisgku2XB6akMtjJlYYWU3Py345sml33dLu67yYFiMysOmbWd0klxEXRKo8Cs
+         klHg==
+X-Forwarded-Encrypted: i=1; AJvYcCXmWB8bR7Q7pHz4muy5ZF24xoInpogv4TTnKzyZGs0OqXmW7ps/SfQhtIfeVELIjKs29H0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxUtSfWSJhYxJ06etjVW4YRYF5L5zaguZjAZUhxy2v3XLjiKDgu
+	DP49Hn/nNZLI7F2N8MOmoBgEbejFtV4aorcdSLmwlo/wyz0vv4PQ0roL9OiiJBMc/Ri4lVxYtwe
+	QHsBTBvhyWWQF2Ja3hcVQDq+PEy8mvp8=
+X-Gm-Gg: ASbGncsBGFO6JWNv5NvwyrneXzuD6m8Q2uBSI9Xo22EnDdMHBdnNJ+5vL3JuaVXvpK9
+	3Rt1lE+XEO0CXmXCLDVnrCkWPaiFxvSgrltquz+Kgt+uD1dvC2sdk8l0CPQAfIHLQFKC4yIpsDG
+	Rxhw3yCfjuuWQr/zJwEMR+Z5kVTtdPeXf3cQ==
+X-Google-Smtp-Source: AGHT+IHVpHNwgyxFWSJbB8mn4mTHmHJf2d0iolTgMnWVMyKFLn0LVltYb0mL2D95UXevpfItReegkYq1kz7FWDsBDdI=
+X-Received: by 2002:a05:6871:62c5:b0:2d8:957a:5165 with SMTP id
+ 586e51a60fabf-2e3c1c7f606mr74476fac.17.1747326477248; Thu, 15 May 2025
+ 09:27:57 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250514204014.3106177-1-jacob.e.keller@intel.com> <xmqqzffe7vbh.fsf@gitster.g>
+In-Reply-To: <xmqqzffe7vbh.fsf@gitster.g>
+From: Jacob Keller <jacob.keller@gmail.com>
+Date: Thu, 15 May 2025 09:27:45 -0700
+X-Gm-Features: AX0GCFtuDhv4RBZpMs7_a66X6v9RdF9vJy4DpBrThNFeRyBrhFhzxsxQ4J1AMvk
+Message-ID: <CA+P7+xqg3S0q=n3nrTUJJuYicooDm83Q32AkpzRt1u7rH3n3Pw@mail.gmail.com>
+Subject: Re: [PATCH RFC] diff --no-index: teach option to exclude files by pattern
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+On Wed, May 14, 2025 at 2:10=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Jacob Keller <jacob.e.keller@intel.com> writes:
+>
+> > From: Jacob Keller <jacob.keller@gmail.com>
+> >
+> > Teach git diff --no-index the ability to exclude files by wildmatch
+> > pattern when recursing through directories. The '--exclude' option
+> > builds up a string list containing the patterns. These are checked with
+> > wildmatch() in the read_directory_contents function. If any pattern
+> > matches, then the file is not included in the directory contents.
+>
+> A quite natural question that comes to mind is:
+>
+>     How would we do this for the normal "git diff" that is not the
+>     bolted on '--no-index' mode?
+>
+> but ...
+>
+> > The --exclude option is only supported by the --no-index mode. Standard
+> > diff modes support negative pathspecs which is more powerful. I tried t=
+o
+> > see if there was a way to add support for negative pathspecs themselves=
+,
+> > but haven't yet figured out if this is possible.
+>
+> ... of course you have thought about it already.  I do agree with
+> you that we should figure out how and teach this mode to also use
+> pathspec, not necessarily only the negative ones but positive ones.
+>
 
-> Looking at the code, if we reaching that call to error() is a
-> programming error as we should only call update_squash_messages() if
-> command is TODO_FIXUP or TODO_SQUASH so I think we'd be better to
-> replace error(...) with BUG(...) which calls abort() which means we
-> don't care if there is a leak or not.
+Sure, though I think we might need either an option or some other way
+to distinguish pathspec vs the existing non-pathspec mode.
 
-It is a valid way to "fix" a leak, certainly ;-).
+> After all,
+>
+>     $ git diff --no-index [<option>...] dirA dirB
+>
+> is like running
+>
+>     $ diff -r [<option>...] dirA dirB
+>
+> after preparing these two directories like so:
+>
+>     $ git archive revA | ( mkdir dirA && tar Cxf dirA - )
+>     $ git archive revB | ( mkdir dirB && tar Cxf dirB - )
+>
+> Hence it is natural for users to expect that anything you can do
+> with
+>
+>     $ git diff revA revB
+>
+> should be doable, in
+>
+>     $ git diff --no-index dirA dirB
+>
+> and vice versa.  And as you said, when comparing two revisions,
+> you'd use pathspec for this kind of thing.
+>
+>     $ git diff revA revB -- Documentation/ t/ ':!po/'
+>
+> So, I pretty much agree with the need to be able to exclude some
+> parts of the tree(s) from comparison in "diff --no-index" mode, but
+> I doubt it is a good idea to tell what to exclude the "--no-index"
+> mode in a completely different way.
+>
 
-I am curious if Lidong's tool would notice an unreachable code if
-only the first hunk of the attached patch is applied.  The "else"
-clause in the second hunk would become unreachable.
+Right. My main issue was that pathspec seemed to have a bunch of stuff
+baked into assuming it has a repository.
 
+> The last time I looked at it, I got an impression that the command
+> line argument parsing of "git diff --no-index" was messy (which is
+> sort of inevitable, since unlike the normal "git diff", it can
+> compare more than just two "collections"---it can take two paths to
+> regular files, for example, and in such a case pathspec arguments
+> can play no role), so teaching it pathspec parsing might be a bit of
+> work, though.
+>
 
-diff --git c/sequencer.c w/sequencer.c
-index b5c4043757..269637d427 100644
---- c/sequencer.c
-+++ w/sequencer.c
-@@ -2071,6 +2071,9 @@ static int update_squash_messages(struct repository *r,
- 	const char *message, *body;
- 	const char *encoding = get_commit_output_encoding();
- 
-+	if (!(command == TODO_FIXUP || command == TODO_SQUASH))
-+		BUG("update_squash_messages with command %d", command);
-+
- 	if (ctx->current_fixup_count > 0) {
- 		struct strbuf header = STRBUF_INIT;
- 		char *eol;
-@@ -2138,8 +2141,6 @@ static int update_squash_messages(struct repository *r,
- 		strbuf_addstr(&buf, "\n\n");
- 		strbuf_add_commented_lines(&buf, body, strlen(body),
- 					   comment_line_str);
--	} else
--		return error(_("unknown command: %d"), command);
- 	repo_unuse_commit_buffer(r, commit, message);
- 
- 	if (!res)
+Right. It currently requires finding two paths to compare, and some
+DWIM logic to make directory and file comparisons work.
+
+pathspec capability is about specifying which things to include or
+exclude from a given search. Hmm..
+
+Actually, I think I have a path forward:
+
+we teach git diff --no-index to treat the first 2 arguments as they
+are now: pointers to the things to compare.
+
+We check if either or both of those are directories. If they aren't,
+then additional arguments won't be accepted.
+
+If we have at least one directory, then instead of rejecting commands
+with >2 arguments, we interpret any remaining arguments as pathspecs,
+which apply to any directory path provided. These can limit the search
+when scanning through a directory, so both positive and negative ones
+would apply in the same say.
+
+I guess the one weirdness is that pathspecs must come after the first
+2 arguments, since we need to find 2 paths first. But this matches the
+way that treeish must come first in git diff-tree -r takes treeish and
+then pathspecs, and you can't re-order them arbitrarily either.
+
+Does this sound like a reasonable extension to the existing 2 argument
+form of git diff --no-index?
+
+> Thanks for starting an interesting topic.
