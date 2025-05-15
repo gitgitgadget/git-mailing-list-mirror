@@ -1,102 +1,102 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 973EB19CCEA
-	for <git@vger.kernel.org>; Thu, 15 May 2025 21:57:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B186171C9
+	for <git@vger.kernel.org>; Thu, 15 May 2025 22:39:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747346225; cv=none; b=UB64MNvOb4KEmvpUDRMLx49ir/qcuEbNXGuobs9RP1RtlF7/jL6V8TPdylahf6xxzK/myMOvS1gBtOxmpSuf2tcR7XmSAloCtwrWNppNAxQS2Q2Ro6IAyvLLYI6uVC2GtJs20o6QCNmUc2tCRIVwWn9lIr4HbJrmOj6qh1sGP4s=
+	t=1747348754; cv=none; b=OadO1CpP261nEImhc+VnSd8/EYfsoXCD20q0dBEwkIrhHULbH0WPc3qK/cznPx2LM12AgzoE/xtmmMQmC+H66JLUnMkCrhjle30stvnO+GzKy6nlBzbxcNWfaBG+Z7cQDKvl2d2gtLPdCCguX2/ylzzZQnpkZ1KtDYqBbqkYI4U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747346225; c=relaxed/simple;
-	bh=vebvctRupKv8nHE6vKAYQ9mq3pqZcLY/E0M0R3vsP9Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=PSY7olX0h4LFzgjlyfqrKzcEaip/SoKUSrYZtTVtZMRBJPx3LDVYRMqlvEvQWiII9vHOsAMoSmMAL7NGD8ZobmygOvFsYR3X4S4UcSIGSlh6rf7fNUbLR2mHJGYiIkF8UkBqPwji01E0JXMLlG2mPbS5h6DwFXe1v82zf8zQwRE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cRkOXeZq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qj8hceF1; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747348754; c=relaxed/simple;
+	bh=zbbR+IskSQZo15u6f/eV3iNa3VRSBC+u/ZpH6iWMzeA=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=W+g8gsSPHXbF0ETbKtyGjKqvI5ukEDnE6eOPLSzfzRK7FyCzXCL8WfYg+o4kjm15V7wzMLFs5EBsmP1klSIet4x82ZMsiggC5y+nJlqZw62cYL5Y4nOxPeB2Bd1YfdLpwf5nogK/tayh9qGk0ZTKmihYDgwCi1TLphgWqDZKmdU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BL2o9KAB; arc=none smtp.client-ip=209.85.160.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cRkOXeZq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qj8hceF1"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 945E0114012B;
-	Thu, 15 May 2025 17:57:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 15 May 2025 17:57:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747346222; x=1747432622; bh=1GVsrQ0IKq
-	fdWCCUWGijyZ/ssuVSDXuvHYlf0p1CuIY=; b=cRkOXeZqzvMSNpLzZlJtSPCbr/
-	KZ16luKziYhoUw/ZcR4QZSBbqYNj2iPg2UE4gGUD3Ac9GTQUadvfqfYzOgVnnhND
-	nlEXFwMlR0EN/xeU0494TYrTN2bHA49+OEE8cmeSR6ecRt/0Wen0IM6sGv8ndwC5
-	4T2STZ/OCrUm4uuYfUNQTOK6+vImUyt2F3FeVIryE1lOiEfOHeW7NKBqAEvfykn8
-	olbeS09iFz1iHYfgsF7Ue3K0FBFrorM1dLam9YtV3L+s4JvprlVr6f91sULQegMA
-	xE+xd4yUWp5mf0A8T6hRicc0TAnau7ZTOFZCjOlI/b74NRb9z75JeLlVDiqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747346222; x=1747432622; bh=1GVsrQ0IKqfdWCCUWGijyZ/ssuVSDXuvHYl
-	f0p1CuIY=; b=qj8hceF167HJDFXmuYvKsYVCZ0DxAnSFGiP8Rzj4CYU9MKrKT+W
-	eI3rreccD3v6yWp/Xl2gMsb6FTfdPXZSJszInD+xS/0e+NhoA7MzUYWq4PcVt6qW
-	Lab21u1Y6++OjhL39Hcm794yL98QR1e6MppSvSuzoNQbpocW5rUfDuTZJC4WJq6e
-	sjwaHpeXYmD977t6XPg5enMNmY8jEBlKqkM+GyCn/bvj3S5mQHscx5s58NMju8HP
-	6KKN6/bPvRV2h05PIy1a5RbLno9l7XqO71DqK4sREcwVN7/FbB/imtKe3saCkrRv
-	KcDjbPdjSeRiXON+fv0aRX53STHcO9dyVLg==
-X-ME-Sender: <xms:KWMmaE1SDSvPdq5NFWcMqNZXQaUjhQ0H4npEoC5CSh3GnVZaopNw4g>
-    <xme:KWMmaPFUjzm2djetRfw5GPj8sUUoz3S9UNyjyBDYEYgpwrR2UlEeoUyH0HoHLqhf8
-    8ORQeuvbzWAJQuVMg>
-X-ME-Received: <xmr:KWMmaM4I5Iu9KUhg3m6K6GmQVV-5VuSJD5A8ekl0hkiRG4tFUNs0kQDXdELbuz2KcBrwBlVtO9113U0opsz_0PZ4Jwpf2G1wi7Vlf58>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddutddtucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtohephedtvd
-    dtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:KWMmaN0_zHb-9bkic3NqKlS8bv52D0iIHTcFe-MQcpq1Nj02MIG3nA>
-    <xmx:KWMmaHGDV9jG5vixKnyvnBrU68eLgKH_pNRIAD_pME4JMvNZ-EwFEg>
-    <xmx:KWMmaG8ZbWiwgensyhVUBkgtAaDz8jlIcHkON5zTDtpk4ntccoEQeQ>
-    <xmx:KWMmaMkfP6J9JWJzHUC2vlWw9V6h3Y_Ey_Z8fiXb0KoNWCem-4K6Kg>
-    <xmx:LmMmaBcMCf2kINgjX-J1smOi0ex_KZGAvUQCxubqMyFJJxwUT-gr4S6S>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 17:56:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Lidong Yan
- <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v3] commit-grap: fix memory leak when
- `fill_oids_from_packs()` fails
-In-Reply-To: <pull.1957.v3.git.git.1746779435536.gitgitgadget@gmail.com>
-	(Lidong Yan via GitGitGadget's message of "Fri, 09 May 2025 08:30:35
-	+0000")
-References: <pull.1957.v2.git.git.1746774869081.gitgitgadget@gmail.com>
-	<pull.1957.v3.git.git.1746779435536.gitgitgadget@gmail.com>
-Date: Thu, 15 May 2025 14:56:55 -0700
-Message-ID: <xmqqr00py1ug.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BL2o9KAB"
+Received: by mail-qt1-f174.google.com with SMTP id d75a77b69052e-47666573242so126041cf.0
+        for <git@vger.kernel.org>; Thu, 15 May 2025 15:39:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1747348751; x=1747953551; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zbbR+IskSQZo15u6f/eV3iNa3VRSBC+u/ZpH6iWMzeA=;
+        b=BL2o9KAB24DzK1okZenBj3EIFRD0N3LkuuYlMdOzijQ2WebZmRboY1qNP2UOOqZ/vk
+         oulWoqmItM4p1lsx+aqragHIa8Q3WcM0gIqU0xOj5ZEEJK4wqjKtaTtcbsa+zmvAz23d
+         AVGMvPH3lhsQZd1DmHAy8Vyd3YGtdiqCwQ/rbjteIvXA8iKUzqNHyGAReOCUvqseDiH0
+         F+0g+KOq7zl2hTtKNq/49Jn54wBU7tUEKLRP1TB/YTzJG0FdahZ3LWqZMs8PS+j8wY10
+         oGAnJGljkXqaXErxb2jI+sZmBmN+LJxCf4uowiZxOYpDcNVHxsEJYGGU6fvZ/1bAk4d2
+         /5Tg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747348751; x=1747953551;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zbbR+IskSQZo15u6f/eV3iNa3VRSBC+u/ZpH6iWMzeA=;
+        b=DLCm5PhxjDAyQ0Lm/dfR92593MB9vd4bFsWcJoO7CAtLfIuE2mdSN5iDTys3shxS7A
+         4QADErrNy7wYpo8DrObPcfxGRz4w8oS8rqA6kO5K9i0gYwwkDyVUQvNbqr+CA3HxRSxY
+         ffv39XisITEawkG5yLAv2mQKQiGXgN0NAeL8WqxE2G5kw35qV3QTV7P4M53+JnasH2bX
+         RICgway+4KCZcP3l4CsDfTZvp0SHCPf+Zt4pJGQ9EPd5lO+FKcf9gxXRiu53VTPbZb++
+         IeE7BzSentj0W5BiSkXpeL7o0+hStQkmncnojiIEkQ9AH8HsUx1PZLN11pmxknq1yg59
+         Qrsg==
+X-Forwarded-Encrypted: i=1; AJvYcCU0ODpDfrp/MVIC4HmMl57nsAyK5E6tOXREO9sgQ8lHSZ3oBLzCp2QlNBqJLZLUhVdNuMQ=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzFVR2/VJk4KshwrDdmbUNt3NlA35+IT12Mdct2Z4y9qbXoeRPo
+	jBQq0orMu+zeVnJqlUGZjKnkp677oA5e3BXtGAuMPty7/KEwy+EHIDY1hb6NjJho8+TrUQu+n4F
+	cyaHv+f3/S0S53ntXB6S4+CYlu6ICj5+Muzf/4Bvj
+X-Gm-Gg: ASbGncv8TZf2XR4LbzgsRXELdJu5fedSuCvrp5bE6qq9NWSLQoPJxUFPFCXHZpTv/XB
+	jH1UubfVneryf8lt/8YgZIXVV6GFFAjWqr0juCsJnWOVBFU4q8AC882QpMO/f3eMTUKXTeh9gK1
+	Iz53Z687Dq4MIG/qClYQpiwkwrCJQklF4EK0HS6iaXSpGSR+oz5LBrpiZ1EYkkIoA=
+X-Google-Smtp-Source: AGHT+IEdasAZX0pdRmr9JulCLmTgAExk0+yr3TGJi2WzFT/zgXHGHCVmoMUwhOnfUMztRW2Xv0ANQtRC9cHdnm0jHWg=
+X-Received: by 2002:ac8:7f83:0:b0:47d:4e8a:97f0 with SMTP id
+ d75a77b69052e-494a339f327mr6124371cf.29.1747348751080; Thu, 15 May 2025
+ 15:39:11 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
+ <xmqqr01si441.fsf@gitster.g> <CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
+ <xmqqtt5ncq87.fsf@gitster.g> <CA+rGoLfcJ2r8S515msG5L-59=0nOBvdOX2TTn+-iaHw8v6Ndtw@mail.gmail.com>
+In-Reply-To: <CA+rGoLfcJ2r8S515msG5L-59=0nOBvdOX2TTn+-iaHw8v6Ndtw@mail.gmail.com>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Thu, 15 May 2025 15:38:58 -0700
+X-Gm-Features: AX0GCFv6Pq3fQb9ueI-Wpgnm7zW0s4x7qXr-3k0ILzZJ3Hi0L0R99gjuhJLZYhU
+Message-ID: <CAJoAoZnYOjqgeW8Stuj5T9qcxmUBE=_j_ufO8Hdbn3GV8LmMzA@mail.gmail.com>
+Subject: Re: [PATCH 0/4] update MyFirstContribution with current code base
+To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, levraiphilippeblain@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Wed, May 14, 2025 at 6:07=E2=80=AFAM JAYATHEERTH K
+<jayatheerthkulkarni2005@gmail.com> wrote:
+> As far as I see
+>
+> Emily Shaffer (9)
+> Philippe Blain (5)
+>
+> Have the two highest logs
+> I think Emily is not active in Git
 
->        ## Commit message ##
->      -    fill_oids_from_packs: fix memory leak when fill_oids_from_packs failed
->      +    commit-grap: fix memory leak when `fill_oids_from_packs()` fails
+Mostly I lurk these days :) I do still keep an eye on the list. Will
+happily take a look at your series tomorrow, I'm out of time for
+today. But per what I mention below, if you don't hear from me, please
+don't feel blocked by the review, as I think the MyFirstContribution
+doc is comfortably maintained by the whole project by now.
 
-I'll amend the title to add missing "h" after "grap" while queuing.
+> So for now I will cc Philippe
 
-Thanks.
+For what it's worth, I don't think it is harmful to CC people even if
+they will be inactive. CCing someone is not necessarily the same thing
+as saying that person needs to approve your code change, right? So I
+don't see the harm in CCing with low expectations - in fact, in my
+case it would help make the email stand out, so you'd be more likely
+to get a review from me (I missed this thread going by initially).
+
+
+ - Emily
