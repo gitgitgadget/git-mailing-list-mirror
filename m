@@ -1,102 +1,106 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1E0299A95
-	for <git@vger.kernel.org>; Thu, 15 May 2025 12:45:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F081C28E
+	for <git@vger.kernel.org>; Thu, 15 May 2025 12:58:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747313159; cv=none; b=Lz0rWGXGfUnnOpAx1HqN5UgjEJU93S/wMRajomjUqH1u0A4LwuiSTLG1/ScxbdaS/RLIqnfl9PMibqnRVj0RoyBCi5ryMY7o+07MBeb0LPeYpufVOvspKd5Ssh9Q56yGP/XXBJCANl76mf9s6XpGDb60U59woF7yfmphwqb5Ww8=
+	t=1747313885; cv=none; b=fCsW/iZOBUvLQJI+SDTGmR9TgOSmKq/XFukg1F9asCH7qs/drAEeVEr0jnY+gedmSdVDU1RpSJ6QwfAUGtL2dApMTX2xKsbSDTZEt1YbK5byPUG5k76Td4sPTPBqvB5MUkLpSTDhJ2teGMgV+5Uhduw+SrJQN77Z+jhtyHwVKcQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747313159; c=relaxed/simple;
-	bh=Llg1qR48imnazvw/pV3Il9BMAtAEA4TR2rUN2vBrVL0=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=XUd/C+uR9HUFKWQBX6X58XLlZsRB071rjTt/jeAz5Ag6JADmQ2BgpFj3nseoqVgLgrYX6fmyVvWs6SJ2Wp2fr44tCB0zhm6HoDN5eY7BO9OPnPbK/1bU9THSMjDkEYEMUpQXHaWFcsDW8xhTUI1LeZR+qbDdw/i8eHAdXz2dA3k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W6sY4EgI; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747313885; c=relaxed/simple;
+	bh=X6XU9Fx8JEjaX3WHkxk5Pj+LMOd72En8Xiq5tC6+ATg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sAWF7E82Suhnp/HyN2M013WxyWd6QLuLxLn6LvSm81j7L2hMbsg1ViT6ppOA26UfMTQzrZDtfwbTradpB7y6abFYPmasfW/grSzgdbUxmjrmOhAeN/j7dccp+4QPL6OnSLvntLqXinRdtEd4PW3xJ1LBXsHANIlvz76QGCsUBig=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iWjVBu/g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L+jGldg9; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W6sY4EgI"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so7074235e9.1
-        for <git@vger.kernel.org>; Thu, 15 May 2025 05:45:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747313156; x=1747917956; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=pGvdt0HEzuGqkCu7sUyHeMtlejGUAB5lqBe8rN6lONU=;
-        b=W6sY4EgIV/hDJjk9o07t0ENSvShURlQtvO4Vi/lXQgeCb/SFj/9RdcbzB9dM7RCQRn
-         jWEwmovfS1Y383ckZ65u1w5YoaDp0mlKyIyf46rUWFvFEOlLYfeTTg72tgzchVLshF4z
-         3qtJvjL/TtpE25dk2IaxWn8TUb24gq0YqCJMwbXp8PNnUO691Hk/DNc5GT+hZEff3ONJ
-         HyMQCElglH+4si8GGGC2OLPab65oxINlq088ZOsNukFkii8WO8Id5YaJWoKZEY1GGhUj
-         A8HmwcTmwbEVxdCh/Bb597qYCfucLrXrVmnYwm1WPrI/HX0vHL/D8UWpu6sayxEAhrMI
-         WcTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747313156; x=1747917956;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=pGvdt0HEzuGqkCu7sUyHeMtlejGUAB5lqBe8rN6lONU=;
-        b=CfI+I0FcXsLMVelqvQl/L7GlYagSVRD06CPIQHL9Re1xvgQQ4UC0YCowJ2C4JW7Mkj
-         H/btPXtect27bwBY/jGldGov7yo6TKMTJFusWMwnbvBle7F84nIlyDKfXUIZ7cSmcIsE
-         7FQunknWUUvoHTLrmjzJ21EGn6xV0dc3CZ8wcvPmLT9s39KCOZMQd8DMpokAaXCp6zQQ
-         YXCADD+BzXcTv2qF4ly8C2kA7u9VvZtU4FQuX146YpacBwM8SLYILVnTydTPY7xQSzMm
-         vnz9/foSK4FzvhgTXw70+kDFYquzrXIIDDkj81QcpPCRVe2fRP4M2j1bFfuq4qraxoL9
-         E/uQ==
-X-Gm-Message-State: AOJu0Yyh5nfPzrZL/x4In35seIBNFi4qEMrezQRz72CWAzomp0ion3We
-	pn9QteHepqTfpIk/IKIHcEJgc+i4O7jwBTOI5mxAZENuONyQFZmFTEAYDA==
-X-Gm-Gg: ASbGncsuZsZXLCspA4gqRpOKaO2Y1wHUsuVU63HMRA1M2zmr+NMGmJk74aKt0EYhRoX
-	PXRifeLT6vVnQ3dkbSlfy8EKeJSaAZ+c5HrD3T82xgESD3vp/W6eXpAxWMT+S4NGiGWQYqc6P/j
-	RTNoeZl5/wO6M0SjQ9Chx23u+JgqqG6R3fz2XkExfpUuTRL6/jEb1zM8+41f44YjHdU8Qm+lBVu
-	ws4pPiLHMpQJjPP2j9UpYH/2a9Zv6Cmec6hvQdlh1kSVMMJglQcISfPJwPkvUzeUt1YmnTx0y67
-	fuTcOZnQ1WKjYsc5ZSgeyAMqdLFLJIhHZid0sq7/Dj+VfCwoLyRw
-X-Google-Smtp-Source: AGHT+IEOEWnieBXkh8yHoiJv4uCG5NodcMt191Vz57GuKu6TeZoH/4v4uC1D/fsb/aKsRJs8UKO0JQ==
-X-Received: by 2002:a05:600c:154a:b0:43d:17f1:2640 with SMTP id 5b1f17b1804b1-442f2160dccmr62920575e9.26.1747313155929;
-        Thu, 15 May 2025 05:45:55 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f397926asm67324455e9.36.2025.05.15.05.45.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 05:45:55 -0700 (PDT)
-Message-Id: <17e9e9ae0e426728cb22927a26bbaf7191bc37cb.1747313140.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
-References: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
-From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 May 2025 12:45:39 +0000
-Subject: [PATCH 14/14] shallow: handle missing shallow commits gracefully
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iWjVBu/g";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L+jGldg9"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id 2BCB01140174;
+	Thu, 15 May 2025 08:58:02 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Thu, 15 May 2025 08:58:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747313882; x=1747400282; bh=/8it4td77h
+	Em29d7J5aiegSYi68O1tDbR3CQFF/e3bo=; b=iWjVBu/gkg9e62cWaRAz5s7jmc
+	0i5XLAZg4YZhJwVNC3lqNtA8pGRVWdAlFlqBtPcLDodXyEjPtjrHWRT7WJtVH527
+	VJ6bpK6arb2K62jbVek85XKf8jeQiqVoMgjOwY+YBMQy8HyVlOVEJzPFwq6f1vgh
+	nA42g1rfEq0k4kH5QB4olxz/fx/9aya7zjRA/+/DxttL4B8R9vKKVkMCWauddoEo
+	1JQ6yjYfWwn//mxJ5BuLM0tK1jhqWy57zVxwOX0fcGMfTVqccrdVnzQQVechkL7i
+	fuTv0/YjhjpEs97OiIo5ojHTOMWdTRxopVuHlz4SgdN/xX8QVU5TTXmw5rxQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747313882; x=1747400282; bh=/8it4td77hEm29d7J5aiegSYi68O1tDbR3C
+	QFF/e3bo=; b=L+jGldg9+QoAIQmML4vtMMCGgcGTF8PoY23X313Rmpn7Cj3fs5h
+	9aXca1JUBxMBrxikeL89I1pqAfX9H/9DgCO1PQu9V+g9A0aGjdkakgTxFFJP5kth
+	O6lrH0R1RCZ/SGjbtomZmEFgaftuMnR1jPDGdUd0Jam1qhuPaJPNpOvdPD1UTrPw
+	qnUiXZiD9PGYflu9Lr5bp7iKI/SvlxBVMEaSWoavULFQ8pRs2Rk/U4luTvXs7Hn3
+	TdR8crrIoq7+ng/NViSqyNXRrjeH8NoNax7XqvwWYK00cPOSyiaUTR1tbxJLUurX
+	FMHI/iAjlLaInRUn2tKnibKNYDLlv5Q8PcQ==
+X-ME-Sender: <xms:2eQlaBtXQ3Oh_2tL-hUALoAPD0dEHqpLjWyPsSUEQ0Bo3RIhsCGlCA>
+    <xme:2eQlaKd0yJKr15jhSjEtv7l44Y-n0VMw4tvu77es1Utu_kKRIFmAPx1-ZlEXMODyK
+    y8QNcjNc8mseVTb4g>
+X-ME-Received: <xmr:2eQlaEwNfOsk1vEmEyy7bWAwIH9qteFQQPmFUFDEXhZq3F2o5QXADz7MFPtXJIkZoF-14fg0yoB2d-UvK0ztM6pdJUQjklXyJqeNnoo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdelledvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffh
+    esphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:2eQlaINdtyZKU5PUMwWneJqk5B6vrcRQldtKWkvwkbV4g6NZ7HKXaQ>
+    <xmx:2eQlaB9HHkVKDhnENpVZtB6kCsE35zjOVJqsUzf1gw-QhGjo2rXcBA>
+    <xmx:2eQlaIW-RJWurAlQlFJZUQcQDM0Ga-k7aZo5VRGz9k9xrDdZKaVPSg>
+    <xmx:2eQlaCcuqrw3XOnE-Cia79jEg_cUAYvrc1Z5Ufus3iLpcv5TlJyJyA>
+    <xmx:2uQlaGjxNuju9nIdV4cx7MV1V3GQ_Hn_O7mUPd3Y0G-ol1_-m-k1wmFn>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 May 2025 08:58:01 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: shejialuo <shejialuo@gmail.com>
+Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
+ <ps@pks.im>
+Subject: Re: [PATCH v5 0/3] align the behavior when opening "packed-refs"
+In-Reply-To: <aCS7O8tNekg_u9Wp@ArchLinux> (shejialuo@gmail.com's message of
+	"Wed, 14 May 2025 23:48:11 +0800")
+References: <aCMnrwkoJ2WyqGZT@ArchLinux> <aCS7O8tNekg_u9Wp@ArchLinux>
+Date: Thu, 15 May 2025 05:57:59 -0700
+Message-ID: <xmqqmsbe3uaw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-    Johannes Schindelin <johannes.schindelin@gmx.de>
+Content-Type: text/plain
 
-From: Johannes Schindelin <johannes.schindelin@gmx.de>
+shejialuo <shejialuo@gmail.com> writes:
 
-As pointed out by CodeQL, `lookup_commit()` can return NULL.
+> As discussed in [1], we need to use mmap mechanism to open large
+> "packed_refs" file to save the memory usage. This patch mainly does the
+> following things:
+>
+> 1: Fix an issue that we would report an error when the "packed-refs"
+> file is empty, which does not align with the runtime behavior.
+> 2-4: Extract some logic from the existing code and then use these
+> created helper functions to let fsck code to use mmap necessarily
+>
+> [1] https://lore.kernel.org/git/20250503133158.GA4450@coredump.intra.peff.net
+>
+> Really thank Peff and Patrick to suggest me to do above change.
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
----
- shallow.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/shallow.c b/shallow.c
-index 4bd9342c9a74..011f262cc7d4 100644
---- a/shallow.c
-+++ b/shallow.c
-@@ -702,7 +702,8 @@ void assign_shallow_commits_to_refs(struct shallow_info *info,
- 	for (i = 0; i < nr_shallow; i++) {
- 		struct commit *c = lookup_commit(the_repository,
- 						 &oid[shallow[i]]);
--		c->object.flags |= BOTTOM;
-+		if (c)
-+			c->object.flags |= BOTTOM;
- 	}
- 
- 	for (i = 0; i < ref->nr; i++)
--- 
-gitgitgadget
+This round looks good to me.  Queued.  Thanks.
