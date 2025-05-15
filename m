@@ -1,39 +1,38 @@
 Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A932296FB0
-	for <git@vger.kernel.org>; Thu, 15 May 2025 19:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50DE54B1E42
+	for <git@vger.kernel.org>; Thu, 15 May 2025 19:48:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747338007; cv=none; b=TJWMiEYgUip+wCWdkTqyizXKC59jvvc7j1/cc2wV/pnEF3Put6E0NzafzK87CEoAZmFyI7TCb4adv5beOy9vTYUa7scdrBaelHJaOEfmBLqTIOPifKjLpxDg+OTtMY7VYpoe5pmGYFLH3KhHzgmicGtUZumrFzlYXBWGQ9iQ2e4=
+	t=1747338490; cv=none; b=ASmqbQaG6JB+qnhOvdAVoK4B9SJM6Z+uBgHFe3/JGvIAspSOGCwJsJ4xSTFWA/GmAIWXvZWi2RurC0xNif82EsPa5jZrtlCFEeTVCZw6Y6AaWeFrQE/BiL9To9YtoQECcSibgzUlUdL5PZOCbw9aqwwq2jDKgHR+GfE3Doualc0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747338007; c=relaxed/simple;
-	bh=B0ViITKlDYGU9AyNOfN2U5XFoBNazaY9KHq57mPrZ1k=;
+	s=arc-20240116; t=1747338490; c=relaxed/simple;
+	bh=ebsjq2Qxn97z2VM3Hk5XU5cVDgwN/zGkuqBdicw72B8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=btsAvziclDdwAibTbKxdiH/zaRNx/bD/LlyONRyGU3Ge0e1q65NvwPbokqrekrvS3jzYSpOjctD34X22M4ow+ajYI763oBwL+2YeKwoTneBsp62tLWRo0aqRBsugQ3yEVaTM4FD1tb3z/OoWDK1ptN/GSAguB34qyiOui8I3NL0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=MNV42ayA; arc=none smtp.client-ip=104.130.231.41
+	 Content-Type:Content-Disposition:In-Reply-To; b=KIdIEw5HiYBWDH9IkxkD0n7pS5y06ihuMAuVKAZFeAYg+Au9U4puAPhD1IpGBVU873tiSHQEQ1VHiurjtkO5AT6OIFWXxZUYfWJ1OqC+RGz4xcFKUlDon64LycQkS1pnhYd0TT6aWHowQAACP3aCe9v/lUF/hl4nn1uLlqz0PSw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=U9LhbDwX; arc=none smtp.client-ip=104.130.231.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="MNV42ayA"
-Received: (qmail 477 invoked by uid 109); 15 May 2025 19:40:04 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=B0ViITKlDYGU9AyNOfN2U5XFoBNazaY9KHq57mPrZ1k=; b=MNV42ayAk+LJtPA8XO7xenABtAEYdc9jwAyu9km3iqLGd7vS4NfF6DQCmbC1zpG21oT/Md+WSDSTDkimwulkOX70ix5mYwrsLeIoV00p4wy3C/GrFQgp8FfzrMIVFPm2MEhRoJAAlAP0HRPXXSJjkDapUYCoxweohN9rhdVbxNx1hJ03hkZCYPgIZK7Mgs8iPR6Hrp2sJGCoVkk3dllggJ6na47GfStJrSoLzhuSpRABmr5VJuT5iQ5hq9N7fhcagzMbHminRLHko+0vtFyVrIu9BqXe5PhNx60GvkZ8UXiu8GVvctVA85i0fAwMGZTo2eWWJ1QeRLcK8bUf/anprw==
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="U9LhbDwX"
+Received: (qmail 541 invoked by uid 109); 15 May 2025 19:48:07 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ebsjq2Qxn97z2VM3Hk5XU5cVDgwN/zGkuqBdicw72B8=; b=U9LhbDwXzweZOFZhZW6biNCRhma5bgdTyDGDRGQYypZi3TCW5+cH2XrhT6hQQ57jyhCqtbY/2ypRYzKjbGQS0cXghEQT/BePlPwXBAqsSlKSkFXi9tle54f4DWMc6aFHGZyC3gCrHxqWcbaTfaJpgR/uy8y2LtJ38GpcJu6G27zugckzwM7CUJjof921+MoBO/mhLtI/GafRbqn+B5AQ8RzDNG1anYm1NdCV33uRXVw5NSE9D5AqVJvPbLzntwLUhcccafVLa3GtD6pSN6cHSvg0TUag85gyxqsAzknvS+lxptB3NNfl7BiQDFEkkRkycuLVgX2Uz6FU4jCwYbzMCA==
 Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 May 2025 19:40:04 +0000
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 May 2025 19:48:07 +0000
 Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30323 invoked by uid 111); 15 May 2025 19:40:06 -0000
+Received: (qmail 30371 invoked by uid 111); 15 May 2025 19:48:08 -0000
 Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 May 2025 15:40:06 -0400
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 May 2025 15:48:08 -0400
 Authentication-Results: peff.net; auth=none
-Date: Thu, 15 May 2025 15:40:03 -0400
+Date: Thu, 15 May 2025 15:48:06 -0400
 From: Jeff King <peff@peff.net>
 To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 02/11] fetch: carefully clear local variable's address
- after use
-Message-ID: <20250515194003.GB3320240@coredump.intra.peff.net>
+Subject: Re: [PATCH 01/11] commit: simplify code
+Message-ID: <20250515194806.GC3320240@coredump.intra.peff.net>
 References: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
- <c66eaee64ad5484120f1905ce5501fd8b75b2266.1747314709.git.gitgitgadget@gmail.com>
+ <767b1e74fc70d78c7e3c84a2dc5eb7b607252f4f.1747314709.git.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -42,45 +41,46 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c66eaee64ad5484120f1905ce5501fd8b75b2266.1747314709.git.gitgitgadget@gmail.com>
+In-Reply-To: <767b1e74fc70d78c7e3c84a2dc5eb7b607252f4f.1747314709.git.gitgitgadget@gmail.com>
 
-On Thu, May 15, 2025 at 01:11:40PM +0000, Johannes Schindelin via GitGitGadget wrote:
+On Thu, May 15, 2025 at 01:11:39PM +0000, Johannes Schindelin via GitGitGadget wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> As pointed out by CodeQL, it is a potentially dangerous practice to
-> store local variables' addresses in non-local structs. Yet this is
-> exactly what happens with the `acked_commits` attribute that is used in
-> `cmd_fetch()`: The pointer to a local variable is assigned to it.
-> 
-> Now, it is Git's convention that `cmd_*()` functions are essentially
-> only returning just before exiting the process, therefore there is
-> little danger that this attribute is used after the code flow returns
-> from that function.
+> diff --git a/builtin/commit.c b/builtin/commit.c
+> index 66bd91fd523d..fba0dded64a7 100644
+> --- a/builtin/commit.c
+> +++ b/builtin/commit.c
+> @@ -1022,7 +1022,7 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+>  			for (i = 0; i < the_repository->index->cache_nr; i++)
+>  				if (ce_intent_to_add(the_repository->index->cache[i]))
+>  					ita_nr++;
+> -			committable = the_repository->index->cache_nr - ita_nr > 0;
+> +			committable = the_repository->index->cache_nr > ita_nr;
 
-I was going to say: the real sin here is using a global variable in the
-first place, without which gtransport would not survive outside of
-cmd_fetch(). But the issue is even worse than that. The acked_commits
-variable is inside a conditional block, so the address is stale for the
-rest of cmd_fetch(), too!
+I guess it is not possible for ita_nr to be greater than cache_nr, since
+we are counting up entries in the loop above. If ita_nr were greater,
+the original would wrap around and set committable to true, but yours
+would not.
 
-It doesn't look like we ever examine it after that, but it's hard to
-trace, since it's a global. ;)
+So really, I think the original was equivalent to:
 
-> diff --git a/builtin/fetch.c b/builtin/fetch.c
-> index cda6eaf1fd6e..c1a1434c7096 100644
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -2560,6 +2560,7 @@ int cmd_fetch(int argc,
->  		if (server_options.nr)
->  			gtransport->server_options = &server_options;
->  		result = transport_fetch_refs(gtransport, NULL);
-> +		gtransport->smart_options->acked_commits = NULL;
->  
->  		oidset_iter_init(&acked_commits, &iter);
->  		while ((oid = oidset_iter_next(&iter)))
+  committable = cache_nr != ita_nr;
 
-Here you unset it within that conditional block, which is the right
-spot. Looks good.
+but I think ">" probably expresses the intent better (we want to know if
+there are any non-ita entries). Though in that case I'd think:
+
+  committable = 0;
+  for (i = 0; i < cache_nr; i++) {
+	if (!ce_intent_to_add(...) {
+		committable = 1;
+		break;
+	}
+  }
+
+would be the most clear, since we do not otherwise care about the actual
+number of ita entries. And lets us break out of the loop early.
+
+I dunno if it is worth refactoring further, though. Your patch does the
+correct thing and fixes the codeql complaint (which I do think is a
+false positive, because ita_nr must be less than cache_nr).
 
 -Peff
