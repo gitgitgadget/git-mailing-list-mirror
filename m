@@ -1,156 +1,155 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f174.google.com (mail-vk1-f174.google.com [209.85.221.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3A429AAF8
-	for <git@vger.kernel.org>; Thu, 15 May 2025 11:31:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 340CC293B6A
+	for <git@vger.kernel.org>; Thu, 15 May 2025 11:35:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747308665; cv=none; b=OucNACp5N1+MpPIsb+a9msHaKNgQTP5JoZOpaZyF3toUR1oHlQxp8KnBamNp5y0ealy3mPnCJGX3Z6T4mxP95gbRT7xXGnE4tll0FnC/f2EUamGVF1h/SpnRKZKgPpIaFlSi9Tt7p7Awf6J6H23mXuUew2zM9xWF3ZoQy0mmJSE=
+	t=1747308932; cv=none; b=Tt170JVHCOS9LqWgIw10t6eGplEcWPerL8mIvJfnA4NB/c6z++EDZ1OupyloDX5QWjtcfoXSQ5/rJT/wrDcMX+igwiO7LzDPJ2Ldg7S0mCLbIw3AnYTuSUZ7dBaVOAuyrGLmN0MHRO/ltvUokKXRe7pe6+WDw3zlJB75PJNeupI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747308665; c=relaxed/simple;
-	bh=/JDz75w3tHgoK4e/krcEQ3zuP949+ye0RdL6v9T0YWg=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=riPr9HXWWxR3PHilChqhMjoKstLSU6Jy7ckaDYKuN7tocI/fJC7x7SiS8GBnUfBmbvoynMrB7vkMbUw8s1A9uTr3IQMcnfAJQLn9IThVkE5y2QdKamaetwxVSo5ubz+mPZMpPMhvMRSIRa3yP6DRLWz9ec/0peovZaoEpQngnt8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ycV8O18m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dS4/jgMy; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1747308932; c=relaxed/simple;
+	bh=32p4BbzB4HIP+vE1aYWdWq3BGO8xKWi4qzUWzoHexY8=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=b9tb9lGSc11Cs2BAe717vOiFI+wvCcnEuTUEgLGftm4T4jO6TeCn0YjFmcdgpvqstoiXHRtEoRUgzQ/tdrpqU0qgUpvazrq9tEkcs53uO3jvcCXyAH/3j/JW//OiAFCsG7nH0/TBPhqgBBcZsXoFPOzeg2vRcauJPp3Z/Tr1TLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Xfk91/Yy; arc=none smtp.client-ip=209.85.221.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ycV8O18m";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dS4/jgMy"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id F37F0114012D;
-	Thu, 15 May 2025 07:31:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Thu, 15 May 2025 07:31:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747308661;
-	 x=1747395061; bh=9kq+cdTw0Y3qd8qAYpklxgsgFc/F04ikUozTIZHD24A=; b=
-	ycV8O18mMniOi7kSJYtbTOwRoKI3GM+nMOd+6kPcHZPTKA1TAH2vI8mRMXcIwBN1
-	aAQ9zjLxcoaTwXJ5XYhsat7b8HfSqeF1FMHB3sq/YrPdVc4nKLKubtOhUNLzanKI
-	asyiY+++URaZ0vrhVkxdLvFtK8l5a3Hpha9sJHnJcdx/YBVjMEc3B+yn+dSHsIBi
-	n97XJNxRd7hAwhlc2ZTab+fnF+NdyN7tooMvTvXJJbdYC4tvJYZewsplssfKBkNX
-	jAjazVfaox+Y7Y2Uyxm1vP8Jpk/yvTjG0iDCWYi6KfPgTFlNcFx00O73YuHOvFK1
-	bLJ3ny4RLN0/oFoym4WSNA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747308661; x=
-	1747395061; bh=9kq+cdTw0Y3qd8qAYpklxgsgFc/F04ikUozTIZHD24A=; b=d
-	S4/jgMy+amLZdYRnQSrh4Ztx2B1H9V+C8w5Ks8x+3u/kqm1fP3MI05gcvNAejWbO
-	pARMysXbybB45+1iMMoLH8dbLrgq4JSGyPxbI8Q01BSfY74Se8FzDZKHzRlfDIsm
-	hevETCnCejbcp0TiHUK4WSo1wPThwXnsvN9gwRRsycyXqMrNrQbveFCjo3fXtZ3J
-	1vpHcmb4iwF+KpbbYv0DGDFTbX1wLpo/Z2T/G8hWiuZyHRiWfCU3GSjfSnbCvLRG
-	pHEbEMs0AajauYnGGvC3iisNiLtC74c6zOrer5k0BB8fWqnEtkXTsUn3hKN/aIkJ
-	dM6go/CneQ2pGkOmssBeQ==
-X-ME-Sender: <xms:ddAlaNnnSvKJOodEKCk96aL8ku9dViXKfcyH1BzaBFR_yCy0vs7qRQ>
-    <xme:ddAlaI3JM6iIok4stuRR2tw5t0NAYNz6FaMKdWdCIhSQ1iwvwGNikEHp38HCekCRc
-    fH4nAU5U8WZgrSv7A>
-X-ME-Received: <xmr:ddAlaDrXfTAbisoAJfSQH5wcHIZbHLc9J4EbdtTvMToPzNORoQS1btvfFHUoK6nRy-vPSNCr15wDetdo-pUllzVHipy2ApNVrG0wfw50Q3g>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeljeehucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
-    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
-    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
-    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
-    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:ddAlaNkrTq_nZiv7Z6eipZ-GqriDPC79ZKT_kz9tZFaQZ9gqa4575Q>
-    <xmx:ddAlaL1l_bUYbyboBlbGoj39pi5AOB2DgJDz3k1RSfkd0ec_yOyFSQ>
-    <xmx:ddAlaMu7blcaf0wsF5l13vozRwJyXGIEgKDKZhpK9-TRO8tafHH71g>
-    <xmx:ddAlaPXon1IkfAWj2cOQI_xNVLEi8NIWyapl98MEVGhvk30aR-_MDg>
-    <xmx:ddAlaIjHWEXorU--Hq9c3_dmMe6vPV5MqztzuWuMmkiYdu4qyTG60q-7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 07:31:00 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id e1daf749 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 15 May 2025 11:30:58 +0000 (UTC)
-Date: Thu, 15 May 2025 13:30:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, toon@iotcl.com
-Subject: Re: [PATCH 1/3] fetch: use batched reference updates
-Message-ID: <aCXQcSsc4p6u9ljZ@pks.im>
-References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
- <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-1-7c65f46493d4@gmail.com>
- <aCSNFMeh3WMav_Rn@pks.im>
- <CAOLa=ZRbEqs6X1KJj-CikCANX-BC8r4RqbwoT06qmtF=x+7hQA@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Xfk91/Yy"
+Received: by mail-vk1-f174.google.com with SMTP id 71dfb90a1353d-5240b014f47so264961e0c.1
+        for <git@vger.kernel.org>; Thu, 15 May 2025 04:35:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747308930; x=1747913730; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=KwnvFzPPfMdNlCsRoVVcYBwSbHNVL+cB6q2xugmNTVQ=;
+        b=Xfk91/Yyqgn/OkC7CtHTKlOF+2ixXMvqaMMR7vtOqcYEwyhKXZQ4Huq3IbN+AqrJ26
+         WdrZSYpASUk7ymxeyJH5QZ5fpYE4RfbX6RQqLIbijOh7u+Uya0/Fmw7l3llzk7PDjFxJ
+         gC3GwNaI3U2UplaJV7WdPaQzBvcxx9O4E41bHjJhgAX02Pr0TbTpTx1YwPWwEZSvK98N
+         2IH7PtIeYLfagwqyRUSQqPIWi2G+mGy33YEuJDS5/Zcska+Cg74D2XTwzTQgioEsPJ4E
+         WP/kmZtuoKQIRDesPuVzV8FolQ2QTjNdiWz+QnRypGZhjP+XGITwXI6w9RcbnYX6z3kQ
+         B9QQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747308930; x=1747913730;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=KwnvFzPPfMdNlCsRoVVcYBwSbHNVL+cB6q2xugmNTVQ=;
+        b=KZLtTII+dhTl5qcKmDTZzu9V6YApr/Vzm/myr4jYQN3Keer2Amkc3moQvRfuRwo7cX
+         RMY4B1zJANBb1BfgvSgS8vbNVFsipOd7Nm0MA3NvIJNbLzoDhl65FE2kRLHbTVxWZgKL
+         HEDf/7qARSzojSqt1od4vO8cUYXGVV3nVZCAHt9Bxzl20eyY5cqL71lXgB95vVHoAbYo
+         koWeaWWcOKxXTEGguIYqxgDo6df45aVeNS6mEMzTlG+wr9MNfJ3n8oAw6NEpA7ubSvtN
+         MvHm26EeYxy6EBr1q6Ea9lU6wFicr9lUqSE/eK7wwmyAZJHoX7oXJFa0FZhl+Lha2MFD
+         C49g==
+X-Gm-Message-State: AOJu0YxtbfM8WWWSz+jxXhHpSVMFPmB7Z64bhD/IdlI/pud/CL53NhP5
+	umKcD+37ZNs1jsZEBkD42NSxrjWB7GWJic/g54x4G5TGYDeYWTRfeXSXejtqW/jmvSi8rcstiwT
+	RtEA+wRqVeoC//P747yRc79E5jPqRoXe9
+X-Gm-Gg: ASbGncuM2eVGNst+rhG4AvTuDaX7JSvTrQCp7EMLjzMLqw+Cj/Zsjy2lAGmXGEOA8wP
+	8zwkIvxPUpROg6Uvf79zhO0rGbPHIUIeZKt/UbtUwZGgFaCK7xUKUj3OK+7EfNIvZhqapSO6OIx
+	N4OuixafQpGi8qVTTiXG93cXqkuTFKXz4=
+X-Google-Smtp-Source: AGHT+IFfLSWmJoQZdRdr9KYzsjJ2pQiYl67HoNibTRH9fglVwfq8E4rMNgl941/tmzfPZLmcjYuPErRJqe27R94gfIs=
+X-Received: by 2002:a05:6122:d02:b0:523:e9d2:404d with SMTP id
+ 71dfb90a1353d-52dabfc62c3mr1417546e0c.11.1747308929952; Thu, 15 May 2025
+ 04:35:29 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 15 May 2025 04:35:28 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 15 May 2025 04:35:28 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aCWj4Xi7SuG22_kK@pks.im>
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <20250506-pks-meson-tap-v1-4-5aaab2942a4c@pks.im> <CAOLa=ZSxPtMQdb8Hne6-WMEd9gKwWUC5hnCUCAaS2FfifqZHHA@mail.gmail.com>
+ <aCWj4Xi7SuG22_kK@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAOLa=ZRbEqs6X1KJj-CikCANX-BC8r4RqbwoT06qmtF=x+7hQA@mail.gmail.com>
+Date: Thu, 15 May 2025 04:35:28 -0700
+X-Gm-Features: AX0GCFtbLPNQ-2E9Cve0WaCq2HPhrKs9WT3cmqWtuCZJ2FwzViuIu6HG6duIohE
+Message-ID: <CAOLa=ZSde+HG+VMYHMTsiuERebiibh90e_Oqk2nZRbR7QzWicg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] meson: parse TAP output generated by our tests
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="00000000000015597806352b1027"
 
-On Thu, May 15, 2025 at 11:13:32AM +0000, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> >> +	 * since pruning must be an independent step, to avoid F/D conflicts.
-> >> +	 */
-> >> +	if (!transaction) {
-> >> +		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
-> >> +							  REF_TRANSACTION_ALLOW_FAILURE, &err);
-> >> +		if (!transaction) {
-> >> +			retcode = -1;
-> >> +			goto cleanup;
-> >> +		}
-> >> +	}
-> >> +
-> >>  	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
-> >>  				   &fetch_head, config)) {
-> >>  		retcode = 1;
-> >
-> > Don't transactions handle D/F conflicts for us? Isn't that the sole
-> > reason why for example `refs_verify_refname_available()` accepts an
-> > "extras" parameter that is supposed to contain refs that are about to be
-> > deleted?
-> >
-> 
-> My understanding was a little different, from the documentation for the
-> function:
-> 
->   If extras is non-NULL, it is a list of additional refnames with which
->   refname is not allowed to conflict.
-> 
-> This is to capture additional conflicts. We want a way to avoid said
-> conflicts. That said, there is a 'skip' parameter which does exactly
-> what you're saying.
+--00000000000015597806352b1027
+Content-Type: text/plain; charset="UTF-8"
 
-Oh, right, my mistake -- that's what I actually meant.
+Patrick Steinhardt <ps@pks.im> writes:
 
-> But the transaction logic doesn't incorporate this
-> entirely. Specifically in the files backend, where we create a lock in
-> the filesystem, this would cause a conflict, consider the following:
-> 
->   ❯ eza --tree .git/refs/remotes/
->   .git/refs/remotes
->   └── origin
->       ├── dir
->       │   └── file.lock
->       ├── dir.lock
->       └── HEAD
-> 
-> This is from the test 'branchname D/F conflict resolved by --prune', the
-> test prunes the existing reference 'refs/remotes/origin/dir/file' while
-> adding 'refs/remotes/origin/dir'. In 'lock_raw_ref()' we lock both and
-> read the reference, but this causes an issue since
-> 'refs/remotes/origin/dir' exists as a directory already.
-> 
-> I would say this is logically solvable if we start treating conflict
-> resolution within updates as a first class problem. But perhaps that's
-> something of a patch series in itself and better solved outside of this?
+> On Thu, May 15, 2025 at 12:48:23AM -0700, Karthik Nayak wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>> > diff --git a/meson.build b/meson.build
+>> > index 94bd525dd7b..cd8df189d79 100644
+>> > --- a/meson.build
+>> > +++ b/meson.build
+>> > @@ -2031,6 +2031,14 @@ if get_option('tests')
+>> >      'timeout': 0,
+>> >    }
+>> >
+>> > +  # The TAP protocol was already understood by previous versions of Meson, but
+>> > +  # it was incompatible with the `meson test --interactive` flag.
+>> > +  if meson.version().version_compare('>=1.8.0')
+>> > +    test_kwargs += {
+>> > +      'protocol': 'tap',
+>> > +    }
+>> > +  endif
+>> > +
+>> >
+>>
+>> The change itself looks good. But I do have a question about this:
+>>
+> [snip]
+>>
+>> Shouldn't the '--interactive' flag also produce 'Ok: 1'. Instead it is
+>> printing out 'Ignored: 1'. This is while I was testing on your series.
+>> Seems to be fine on master.
+>
+> The answer is unfortunately "no". In interactive mode the expectation is
+> that the user will, well, interact with the test. This has two
+> consequences:
+>
+>   - The standard streams will be directly connected to the user's
+>     console. This has the consequence that Meson won't be able to parse
+>     the generated output anymore, and thus it labels the tests as
+>     "ignored" because it cannot derive their status.
+>
+>   - Even if Meson intercepted the output it very likely wouldn't be able
+>     to parse it. After all, we're in interactive mode, which means that
+>     the user may be directly communicating with the tests. E.g. if you
+>     use `test_pause`, then you'll be dropped to a shell and communicate
+>     with it. The consequence is that the output won't follow proper TAP
+>     format anymore.
+>
+> So it's basically impossible to parse TAP in interactive mode, which is
+> why Meson then ignores the results. If all you want is to see verbose
+> output you can do that with `meson test -v`. But interactive mode really
+> indicates that you _want_ to get hands-on with the tests.
+>
 
-Fair enough, makes sense. Might be worth it to add a TODO comment there
-then?
+Okay I understand the constraints here, thanks for the explanation. I
+think the series looks good to me with this! :)
 
-Patrick
+> Patrick
+
+--00000000000015597806352b1027
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 43c5df9285058c7d_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nbDBYOFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOVowQy9zR0Q3Mk1URnhHK3ZQcUxOaGVrMERMaUpNZwpsV2hhREN6MGVz
+Z1hFbzRjSlh3RVZoa012bGxaRHgveWZ3YVpZd29kaW91MDJOOXZOZDZScFJpcVpmQ292WHplClVF
+YjhmcVFGODlWb0ZmeFMxcklOS3NVNWdlQ0lEdUp1YktEUGpBWWRFWGZZRXlFTk1Gb3pUckdJNWho
+d2tBVTUKNFJkWERtQXQrVyt1WUU0eUV2dnd0WVFqYklvTytGbHRNL2R0dUVMeE1zSkZldjBKaEx5
+a2hkcEU5RkVWZXlTNApHWmxrY04zRG5mWGhTSDYrRkhNWStsSCtldmZIYjBDSExXdS9EUVFGbjNz
+VFkxNWlGejNaRTlGbTIvYzVPcEVNCnRoZ0FmQVF6a1lsSTVOZ1RrYXV3MEhFbnFRUzVxUDMzSHB1
+R1lXcmdJdU56VVlLUENDSlRLM3lsZGJNdHhQczMKSTY3OVJxcEJMR2JYRVdGT2pUYnhPY3NIeE1V
+cVNyNVlNYUE0emkvOXhaaGlHK3Z4bGtiWVo0OFZaNURPY2IxKwpsRkxGN05iUTJTbkZ3eExybHN0
+S1BuTmV4UGpJMGRYdktLeURZd2I0NGJnY1BxWGsrQWVtOTVFaXZ6ZnZMaEJhCld4OXlCZmV2cDRy
+aUlWM21VSXZKRWg5Tmo0ZzdlbFFybW1KdjBTZz0KPUVwYksKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--00000000000015597806352b1027--
