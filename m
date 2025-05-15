@@ -1,281 +1,156 @@
-Received: from mail-vk1-f180.google.com (mail-vk1-f180.google.com [209.85.221.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFD0329898C
-	for <git@vger.kernel.org>; Thu, 15 May 2025 11:30:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3A429AAF8
+	for <git@vger.kernel.org>; Thu, 15 May 2025 11:31:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747308661; cv=none; b=AEkPVywE07q73WCNHi++7EOgufOPmTZw+LxF7S337sQWl7fGkFrOD5GWd4OVlxS3Psn0eGld2dYFcJd2jI8UbD+15wYj6X/hui/y10OFqFcZVVRLOe2a8Z7vCYiXUFuU8b4+x8kje1Ja+FhiyH+5bYfxvzbVz7rnUaxbTQGh2I0=
+	t=1747308665; cv=none; b=OucNACp5N1+MpPIsb+a9msHaKNgQTP5JoZOpaZyF3toUR1oHlQxp8KnBamNp5y0ealy3mPnCJGX3Z6T4mxP95gbRT7xXGnE4tll0FnC/f2EUamGVF1h/SpnRKZKgPpIaFlSi9Tt7p7Awf6J6H23mXuUew2zM9xWF3ZoQy0mmJSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747308661; c=relaxed/simple;
-	bh=6GtmAmsg+KnaezrHUVCSaFUY4Z8DFYbWCeOuqEPPwBs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MCO9/Bf5U924kWcHEVetmCutf3IFTbOSr3wf8Zhq4FO83mpeFCMrMbustrJfyKZRUfWcPQa7b6pi9ehMK5DENEn+gTOwmzbrvN2iCZGHPTmKTI/3aRZUq4KM1FlZJtBPQoDspdi0gVzueX/ruXVlK2seQXhod/i/zz/9aaj5K20=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lqiq4qyQ; arc=none smtp.client-ip=209.85.221.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747308665; c=relaxed/simple;
+	bh=/JDz75w3tHgoK4e/krcEQ3zuP949+ye0RdL6v9T0YWg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=riPr9HXWWxR3PHilChqhMjoKstLSU6Jy7ckaDYKuN7tocI/fJC7x7SiS8GBnUfBmbvoynMrB7vkMbUw8s1A9uTr3IQMcnfAJQLn9IThVkE5y2QdKamaetwxVSo5ubz+mPZMpPMhvMRSIRa3yP6DRLWz9ec/0peovZaoEpQngnt8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ycV8O18m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dS4/jgMy; arc=none smtp.client-ip=103.168.172.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lqiq4qyQ"
-Received: by mail-vk1-f180.google.com with SMTP id 71dfb90a1353d-5240764f7c1so250073e0c.2
-        for <git@vger.kernel.org>; Thu, 15 May 2025 04:30:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747308659; x=1747913459; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=OfmKsirsTSzywabgudqXP97f3YL6f6EK6zz/M/OqRoY=;
-        b=Lqiq4qyQpZZrawXB1fPf95Vk7Rs2JBgIuBX+aheosbG86JeFlKZ3vhj+/75O8EaV5v
-         JrARuZCy5+xO6s0DSG/XtMa4s0H+Yojm/qnLLmEXYQ6idcLRCAhILinHSz4v4dz77ghK
-         C0VTan310uds2CSoFZ4IoSxIbs7KbhURkXP5m6j992eWTalSPjlvohxMV/hhaaw4ioFi
-         kF0GrXmH02yT3AT1mACBeekTG7VwG8+T/lNeYCt9LdC8mONxfHQ7EUAY9JfnAk8CJiJr
-         uZ8EDeLdW2lh7EbDtiLIZg5bfUy38mowgxe3WKwfv4yeSBi9I1cyXoQuPFyLeW658DVt
-         D8LA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747308659; x=1747913459;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=OfmKsirsTSzywabgudqXP97f3YL6f6EK6zz/M/OqRoY=;
-        b=TBQSFRj86hpF7Jo2x3Um6v1bBFVyP8WDwrfBQ6JZgx2oBZzGbvKtSQEcshxjvVXzU0
-         UB+fTY12/7fGqGrMMBj8dq4/cccdl9CYB1O8JP26ccClIVmv/zuPnYWM8xfwoyz0uA5C
-         S2p/BMMhYLjVBHOYwQO9J49/I95rN+WmVioeFtRhfr89lzV0o1v2iHSSooIFQ9/xpRlw
-         Na2Cn6ag95lq28KSX4kTy1nzPsKAHnGkUpf3VaxRIXPVGP5IJkbTSV9SxGw7BEEsgoqy
-         cIRyqjXR2KtY/SVrAfezxvWdHKY7qP5me3eCiQr8MIy7fwcBx2AwZUv0ROJ5UjPAjZOd
-         vlnQ==
-X-Gm-Message-State: AOJu0YyPgnpHS9jhab4kqi3pZ2Hq/zUoC8VUfsD9w6a5jImWCtU+kbS8
-	RnncJYCFDw8kmvU4bYJ4rJxm3aU953yM2jyutBqKJmcArpynnCRL52mbcT66SWtxuyNxsM8h68k
-	TpxFyqA8tT4K9R0rOhPyCJm3WYyECmHOM
-X-Gm-Gg: ASbGncsZ//bDjKmyXXg/2vkscDK4fi5skWkfeW8jq1nw1SOWmBWQYpc+kzQSq9NgHUz
-	g80Tz5WiB67LEpNiyBXvpjyeXAz3lQpQ6ZDQdbNghDrM9ljcc5itIPTp6mOjbrJx2fnxpV8R//K
-	mF8vxmFtArvZrmg5hjhZCS875wZFp8BPc=
-X-Google-Smtp-Source: AGHT+IEaA0CoyUc9vZEt9hBrleewNtk1Tt2z8RW3d1Nn4skbxmlA9nH8gA+NsRDJyVPv6m8Cl2LoJADo7C9Q1vwqczI=
-X-Received: by 2002:a05:6122:250e:b0:52a:90d1:ed2d with SMTP id
- 71dfb90a1353d-52d9c5c48eamr6455290e0c.3.1747308658722; Thu, 15 May 2025
- 04:30:58 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 May 2025 04:30:57 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 15 May 2025 04:30:57 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aCSNDbUX-MMJZj5S@pks.im>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ycV8O18m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dS4/jgMy"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id F37F0114012D;
+	Thu, 15 May 2025 07:31:01 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Thu, 15 May 2025 07:31:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747308661;
+	 x=1747395061; bh=9kq+cdTw0Y3qd8qAYpklxgsgFc/F04ikUozTIZHD24A=; b=
+	ycV8O18mMniOi7kSJYtbTOwRoKI3GM+nMOd+6kPcHZPTKA1TAH2vI8mRMXcIwBN1
+	aAQ9zjLxcoaTwXJ5XYhsat7b8HfSqeF1FMHB3sq/YrPdVc4nKLKubtOhUNLzanKI
+	asyiY+++URaZ0vrhVkxdLvFtK8l5a3Hpha9sJHnJcdx/YBVjMEc3B+yn+dSHsIBi
+	n97XJNxRd7hAwhlc2ZTab+fnF+NdyN7tooMvTvXJJbdYC4tvJYZewsplssfKBkNX
+	jAjazVfaox+Y7Y2Uyxm1vP8Jpk/yvTjG0iDCWYi6KfPgTFlNcFx00O73YuHOvFK1
+	bLJ3ny4RLN0/oFoym4WSNA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747308661; x=
+	1747395061; bh=9kq+cdTw0Y3qd8qAYpklxgsgFc/F04ikUozTIZHD24A=; b=d
+	S4/jgMy+amLZdYRnQSrh4Ztx2B1H9V+C8w5Ks8x+3u/kqm1fP3MI05gcvNAejWbO
+	pARMysXbybB45+1iMMoLH8dbLrgq4JSGyPxbI8Q01BSfY74Se8FzDZKHzRlfDIsm
+	hevETCnCejbcp0TiHUK4WSo1wPThwXnsvN9gwRRsycyXqMrNrQbveFCjo3fXtZ3J
+	1vpHcmb4iwF+KpbbYv0DGDFTbX1wLpo/Z2T/G8hWiuZyHRiWfCU3GSjfSnbCvLRG
+	pHEbEMs0AajauYnGGvC3iisNiLtC74c6zOrer5k0BB8fWqnEtkXTsUn3hKN/aIkJ
+	dM6go/CneQ2pGkOmssBeQ==
+X-ME-Sender: <xms:ddAlaNnnSvKJOodEKCk96aL8ku9dViXKfcyH1BzaBFR_yCy0vs7qRQ>
+    <xme:ddAlaI3JM6iIok4stuRR2tw5t0NAYNz6FaMKdWdCIhSQ1iwvwGNikEHp38HCekCRc
+    fH4nAU5U8WZgrSv7A>
+X-ME-Received: <xmr:ddAlaDrXfTAbisoAJfSQH5wcHIZbHLc9J4EbdtTvMToPzNORoQS1btvfFHUoK6nRy-vPSNCr15wDetdo-pUllzVHipy2ApNVrG0wfw50Q3g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdeljeehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggugfgjsehtkeertddt
+    tdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhksh
+    drihhmqeenucggtffrrghtthgvrhhnpedvfeejiedtteelheeiteekveeftdefvdehkedv
+    veetffdvveevjeejleegtedvgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:ddAlaNkrTq_nZiv7Z6eipZ-GqriDPC79ZKT_kz9tZFaQZ9gqa4575Q>
+    <xmx:ddAlaL1l_bUYbyboBlbGoj39pi5AOB2DgJDz3k1RSfkd0ec_yOyFSQ>
+    <xmx:ddAlaMu7blcaf0wsF5l13vozRwJyXGIEgKDKZhpK9-TRO8tafHH71g>
+    <xmx:ddAlaPXon1IkfAWj2cOQI_xNVLEi8NIWyapl98MEVGhvk30aR-_MDg>
+    <xmx:ddAlaIjHWEXorU--Hq9c3_dmMe6vPV5MqztzuWuMmkiYdu4qyTG60q-7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 May 2025 07:31:00 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id e1daf749 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 15 May 2025 11:30:58 +0000 (UTC)
+Date: Thu, 15 May 2025 13:30:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com
+Subject: Re: [PATCH 1/3] fetch: use batched reference updates
+Message-ID: <aCXQcSsc4p6u9ljZ@pks.im>
 References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
- <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-3-7c65f46493d4@gmail.com>
- <aCSNDbUX-MMJZj5S@pks.im>
+ <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-1-7c65f46493d4@gmail.com>
+ <aCSNFMeh3WMav_Rn@pks.im>
+ <CAOLa=ZRbEqs6X1KJj-CikCANX-BC8r4RqbwoT06qmtF=x+7hQA@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 15 May 2025 04:30:57 -0700
-X-Gm-Features: AX0GCFsfhlRCNYppbM1K8dRYM5Gfh5cg7lua4jNS7BHC7EoH6b0Hs7TUCyJTGh8
-Message-ID: <CAOLa=ZSDvAqiebkHfSV_Z6dNiBzrPU-inxMnFP7-Kzs0VDXOTg@mail.gmail.com>
-Subject: Re: [PATCH 3/3] receive-pack: use batched reference updates
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, toon@iotcl.com
-Content-Type: multipart/mixed; boundary="000000000000eb05a106352aff8d"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAOLa=ZRbEqs6X1KJj-CikCANX-BC8r4RqbwoT06qmtF=x+7hQA@mail.gmail.com>
 
---000000000000eb05a106352aff8d
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, May 15, 2025 at 11:13:32AM +0000, Karthik Nayak wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> >> +	 * since pruning must be an independent step, to avoid F/D conflicts.
+> >> +	 */
+> >> +	if (!transaction) {
+> >> +		transaction = ref_store_transaction_begin(get_main_ref_store(the_repository),
+> >> +							  REF_TRANSACTION_ALLOW_FAILURE, &err);
+> >> +		if (!transaction) {
+> >> +			retcode = -1;
+> >> +			goto cleanup;
+> >> +		}
+> >> +	}
+> >> +
+> >>  	if (fetch_and_consume_refs(&display_state, transport, transaction, ref_map,
+> >>  				   &fetch_head, config)) {
+> >>  		retcode = 1;
+> >
+> > Don't transactions handle D/F conflicts for us? Isn't that the sole
+> > reason why for example `refs_verify_refname_available()` accepts an
+> > "extras" parameter that is supposed to contain refs that are about to be
+> > deleted?
+> >
+> 
+> My understanding was a little different, from the documentation for the
+> function:
+> 
+>   If extras is non-NULL, it is a list of additional refnames with which
+>   refname is not allowed to conflict.
+> 
+> This is to capture additional conflicts. We want a way to avoid said
+> conflicts. That said, there is a 'skip' parameter which does exactly
+> what you're saying.
 
-Patrick Steinhardt <ps@pks.im> writes:
+Oh, right, my mistake -- that's what I actually meant.
 
-[snip]
+> But the transaction logic doesn't incorporate this
+> entirely. Specifically in the files backend, where we create a lock in
+> the filesystem, this would cause a conflict, consider the following:
+> 
+>   ❯ eza --tree .git/refs/remotes/
+>   .git/refs/remotes
+>   └── origin
+>       ├── dir
+>       │   └── file.lock
+>       ├── dir.lock
+>       └── HEAD
+> 
+> This is from the test 'branchname D/F conflict resolved by --prune', the
+> test prunes the existing reference 'refs/remotes/origin/dir/file' while
+> adding 'refs/remotes/origin/dir'. In 'lock_raw_ref()' we lock both and
+> read the reference, but this causes an issue since
+> 'refs/remotes/origin/dir' exists as a directory already.
+> 
+> I would say this is logically solvable if we start treating conflict
+> resolution within updates as a first class problem. But perhaps that's
+> something of a patch series in itself and better solved outside of this?
 
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index be314879e8..b4fceb3837 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -1843,35 +1843,91 @@ static void BUG_if_skipped_connectivity_check(st=
-ruct command *commands,
->>  	BUG_if_bug("connectivity check skipped???");
->>  }
->>
->> +static void ref_transaction_rejection_handler(const char *refname,
->> +					      const struct object_id *old_oid UNUSED,
->> +					      const struct object_id *new_oid UNUSED,
->> +					      const char *old_target UNUSED,
->> +					      const char *new_target UNUSED,
->> +					      enum ref_transaction_error err,
->> +					      void *cb_data)
->> +{
->> +	struct strmap *failed_refs =3D (struct strmap *)cb_data;
->
-> This cast is unnecessary.
->
+Fair enough, makes sense. Might be worth it to add a TODO comment there
+then?
 
-Yes, will remove.
-
->> +	const char *reason =3D "";
->> +
->> +	switch (err) {
->> +	case REF_TRANSACTION_ERROR_NAME_CONFLICT:
->> +		reason =3D "refname conflict";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_CREATE_EXISTS:
->> +		reason =3D "reference already exists";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_NONEXISTENT_REF:
->> +		reason =3D "reference does not exist";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE:
->> +		reason =3D "incorrect old value provided";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_INVALID_NEW_VALUE:
->> +		reason =3D "invalid new value provided";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_EXPECTED_SYMREF:
->> +		reason =3D "expected symref but found regular ref";
->> +		break;
->> +	default:
->> +		reason =3D "unkown failure";
->> +	}
->> +
->> +	strmap_put(failed_refs, refname, xstrdup(reason));
->> +}
->
-> I'd have expected something like this for git-fetch(1), as well, so that
-> we don't silently swallow failed ref updates. Would it make sense to
-> maybe provide an array of reasons by enum so that we can reuse those
-> messages?
->
-
-I think you've convinced me of this, As Junio also mentions, I've now
-added a function to provide a mapping from 'enum -> char *'.
-
->>  static void execute_commands_non_atomic(struct command *commands,
->>  					struct shallow_info *si)
->>  {
->>  	struct command *cmd;
->>  	struct strbuf err =3D STRBUF_INIT;
->> +	const char *reported_error =3D "";
->> +	struct strmap failed_refs =3D STRMAP_INIT;
->> +
->> +	transaction =3D ref_store_transaction_begin(get_main_ref_store(the_rep=
-ository),
->> +						  REF_TRANSACTION_ALLOW_FAILURE, &err);
->> +	if (!transaction) {
->> +		rp_error("%s", err.buf);
->> +		strbuf_reset(&err);
->> +		reported_error =3D "transaction failed to start";
->> +		goto failure;
->> +	}
->
-> Okay. We now create a single transaction with failures being allowed.
->
->>  	for (cmd =3D commands; cmd; cmd =3D cmd->next) {
->>  		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
->>  			continue;
->>
->> -		transaction =3D ref_store_transaction_begin(get_main_ref_store(the_re=
-pository),
->> -							  0, &err);
->> -		if (!transaction) {
->> -			rp_error("%s", err.buf);
->> -			strbuf_reset(&err);
->> -			cmd->error_string =3D "transaction failed to start";
->> -			continue;
->> -		}
->> -
->>  		cmd->error_string =3D update(cmd, si);
->> +	}
->
-> So here we only need to queue each update.
->
->> -		if (!cmd->error_string
->> -		    && ref_transaction_commit(transaction, &err)) {
->> -			rp_error("%s", err.buf);
->> -			strbuf_reset(&err);
->> -			cmd->error_string =3D "failed to update ref";
->> -		}
->> -		ref_transaction_free(transaction);
->> +	if (ref_transaction_commit(transaction, &err)) {
->> +		rp_error("%s", err.buf);
->> +		reported_error =3D "failed to update refs";
->> +		goto failure;
->>  	}
->> +
->> +	ref_transaction_for_each_rejected_update(transaction,
->> +						 ref_transaction_rejection_handler,
->> +						 &failed_refs);
->> +
->> +	if (strmap_empty(&failed_refs))
->> +		goto cleanup;
->> +
->> +failure:
->> +	for (cmd =3D commands; cmd; cmd =3D cmd->next) {
->> +		if (strmap_empty(&failed_refs))
->> +			cmd->error_string =3D reported_error;
->
-> The reported error may have one of there values now:
->
->   - The empty string. Is it correct to set the error string to that
->     value? Shouldn't it rather be a `NULL` pointer?
->
->   - "transaction failed to start". It makes sense to update every
->     command accordingly, as we wouldn't have updated any of them.
->
->   - "failed to update refs", in case the commit failed. Does the commit
->     fail only in cases where we couldn't update _any_ reference, or does
->     it also retrun an error when only one of the updates failed? If the
->     latter, we shouldn't update all the others to "failed", should we?
->
-> In any case, it feels weird that we use `strmap_empty()` to check for
-> this condition. I'd have expected that we rather check for
-> `reported_error` to be a non-empty string directly to figure out whether
-> the transaction itself has failed as a whole. Like that, we'd know that
-> we only ever do this if we hit a `goto failure` branch.
->
-
-This is silly mistake on my side. This is exactly what I wanted to do,
-but instead of:
-
-  const char *reported_error =3D NULL;
-
-I did:
-
-  const char *reported_error;
-
-Which obviously raised:
-
-  In function =E2=80=98execute_commands_non_atomic=E2=80=99,
-      inlined from =E2=80=98execute_commands=E2=80=99 at ../builtin/receive=
--pack.c:2059:3,
-      inlined from =E2=80=98cmd_receive_pack=E2=80=99 at ../builtin/receive=
--pack.c:2636:3:
-  ../builtin/receive-pack.c:1899:43: warning: =E2=80=98reported_error=E2=80=
-=99 may be
-used uninitialized [-Wmaybe-uninitialized]
-   1899 |                         cmd->error_string =3D reported_error;
-        |                         ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~
-  ../builtin/receive-pack.c: In function =E2=80=98cmd_receive_pack=E2=80=99=
-:
-  ../builtin/receive-pack.c:1864:21: note: =E2=80=98reported_error=E2=80=99=
- was declared here
-   1864 |         const char *reported_error;
-        |                     ^~~~~~~~~~~~~~
-  [31/31] Linking target git-upload-archive
-
-prompting me to do this. Let me fix this. Thanks for pointing it out :)
-
-> Patrick
-
---000000000000eb05a106352aff8d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 94363cf7105a29dc_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nbDBIQVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMTdJQy85QmJSWUtROGRFQTZ4akNvQWpwYU43WUV1QwowV2NZODlNUWFC
-TGQ0SlhmYVg3Q0xmT0NQSHI0ZjZDemFHaEplRncwbnYxVmtTMFpYTnErbjErVzkreGhJSDVQCmxx
-SDlkb3JjVWo4ZmkveXhrbkVHZWVvdmUzUlArbVV0Ri9VK3VZKzB0YkgrWGVTTU1KcS9BVFFQTmtZ
-MHRWalgKR3dOZXJTUnFMaFZRazZIU2pMcWZuT3RHQlpsRnZEbGRCcEpleHNLblZxWnpQNFQvaHk0
-Q1liVGUrOUVTMmZLSgpNdU9xQWh4WGdIT25DdDNDV2VrYThEditUeTZRZndET05uc01XVzNyQWRC
-Q1RQajdKWGQvM3h5ajhndEtpM1RuCmVBbmdXZXZDR0pMRmkyMTZNenJzYjN0amlTMWE0YnVoNEVS
-b2pJdGhONlBKMjg1THFac0xMNXZORUR5L0pSWUgKRXlnLzZKeSsvd2FCYlYzQ2o0NEVSUm91MXhl
-MDVYV3dhRHg5UzZlQXFYMEMzbjhOWXVqOFZmRm9rZnFLVTBzSQpRR0xSUWFPeWdlci9xcjYvc004
-d1Z4Y2lEaE1sRTRMalpKYzBtRm1lWVk3RHluUkt2ZGt3TS9KZXpuOFJkM0pJClJtbFdHMmNucFFG
-ZDkrbmViWkhLNXEwY2lNU3RzTjVhVzhtdWtjZz0KPVZjenUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000eb05a106352aff8d--
+Patrick
