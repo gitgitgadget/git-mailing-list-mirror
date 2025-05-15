@@ -1,108 +1,169 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from mout.gmx.net (mout.gmx.net [212.227.15.15])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ECC288531
-	for <git@vger.kernel.org>; Thu, 15 May 2025 08:23:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77F6E29614F
+	for <git@vger.kernel.org>; Thu, 15 May 2025 09:20:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.15
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747297383; cv=none; b=LF2t6NFKJdwSpKY1dLl6JhSGX2069K5vkPGwYOmoa/sHnfK/s/rhJSJtVdMs26q6Hje1o31CSzW3YVF1S66BBzssLfAcEjJsnZA9rBPRa+JMelMUqOVMjvGv1gM3HAatKtKebcYUJ+/+CuFf5XV76J10AjEhbNwfBCmDl7/q5m0=
+	t=1747300845; cv=none; b=I4pq7staDnkHn/bs+Dw9WfZqZMoq2c5cYqWa6zDRmSrtbMmQ32DsOuN7zrkxnTck4HcjtuFr0G1Of8DbDTjVtXVC+vDE03is9rLKwvaxAox3eXrCMXT0S8nSTuGnLRz71Q5lAV2LOZYI54nPkm+9AaA1hSrN7XWOjpupDC159/Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747297383; c=relaxed/simple;
-	bh=LZflIv8jH+8w782sLHgjVFPGu3HX0FmQEJFVUoCGuKY=;
+	s=arc-20240116; t=1747300845; c=relaxed/simple;
+	bh=ha04QMCZ0Fq+U4zjvAqTDF/0QRZ3CMnmauTP3FKRUyg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PmqtujZDarfVhlqqNn+lbdn1B2J8hPSFY3hFLy8vwMgZt+zu6CG1EeOmgTI78ktpM0KLfrioOc5BlGn5s1JGHvV3K4Nlt65JjH+rT7+2n1VK6Eslk4Uh0Vuof1Nlg+fq0aduWSTOmdxzGL1erMjPTiV3Dl0hUdL3Lr5VnBUc48E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n36hKBy9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fdAbt1Dm; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=dH1E92ybvNqYxlJWGYM5wT6snTbLoGeEalADy/sf16MZ36wgcTe6pEv9BaYiAmihNpQghLH+2hKmBtVaQ3Vvd0ijTm5GMsgcGJ/JeRnfZuoZr30eUx32RAjovbhh0fksV6H3UVH7NHiCXcTl8sAmcuxUejFOwZ41fyoqSEsm6jk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de; spf=pass smtp.mailfrom=gmx.de; dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b=g++2O7fj; arc=none smtp.client-ip=212.227.15.15
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n36hKBy9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fdAbt1Dm"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 37F3511400CE;
-	Thu, 15 May 2025 04:23:00 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-05.internal (MEProxy); Thu, 15 May 2025 04:23:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747297380; x=1747383780; bh=LZflIv8jH+
-	8w782sLHgjVFPGu3HX0FmQEJFVUoCGuKY=; b=n36hKBy9gPPZC4fHSepvuq+ObN
-	HewHENm1y6XOU9MhHpzTvTY+MWeAZbo/waehHnKo5pkl22TwweXiL4G/nAiGphlU
-	PFcFlNv6r0FYek1OqyGwj+tuoAu406jR0OT9beqAIv2utZicMZLenZeCO8fthF8x
-	DgM+irddIrPld4ofdku4e1kvf7XJikQd5GPqMN18MZX6d1SlLMsMSuGkYlTfLIyk
-	z/gCpVuKHAuLjmmNFUJ2IWjEaqA6IWsYvEOdbWdrSFP3RRR88VX2cLxwW8ktCRYX
-	MavsO3uvBeunIg9HN/MoFSAJghVHbifD6iscXwEbzLl+T7uka8uI3UWFv1ww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747297380; x=1747383780; bh=LZflIv8jH+8w782sLHgjVFPGu3HX0FmQEJF
-	VUoCGuKY=; b=fdAbt1Dm8ZN2ny2LUtMLPBnYo45I6eyT4bFtWES/6mYOUdjgEYY
-	gxlRK12xsnPxUp8hGc0DIUG0v9hvxmm+QbyTZlC620nfSeMHl8HYjbhd3S8LChfa
-	C4Lg6+YWTHhjGas6ZZHpqiZ5WqUIa8HIrTkkbNCmMigcSAXC1dQ44YzNBoQGHXQQ
-	ttZOYNublrmbvIXbugsNiMyMdRONs2tG/wETQvNP/KEd1laCFh6HU/udbE+/B+Jv
-	4xUWj7vWFV4xsBzk3HPBXNQG8U5eGR6hLBOBW7XxYK1aLylnXN9NsG1qIfY0bhnx
-	6mbKZZJYNPJcEp9cLHP3GQvi4XhSlSl52Vg==
-X-ME-Sender: <xms:Y6QlaEt5Iv8JhkXs7lVLllvnrGVzHKJP0n5KDmTn83UER1bRfX_13Q>
-    <xme:Y6QlaBcjwb2Otct4YZjona_6jKBh8ZpU2LlDxzr8oohqepC4truRduvhAqvB8qGrq
-    ahu1I9GL4koejRZOQ>
-X-ME-Received: <xmr:Y6QlaPzyVpPi6Yver7fshRWVtgthEKBTbapIofmHElRVqT6t0ig94tSR-sxgrBlAXY-LBc0zCu0wn69H2DPoc1vc8WaZYUqzXCTGiPRHCBc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdelfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
-    hpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
-    hm
-X-ME-Proxy: <xmx:Y6QlaHNJh6f3YC2av_EuNZyn7pSsNItJh10p_Fk-x-vUrfv4619fCA>
-    <xmx:Y6QlaE9c34y6Yb559iWQqNdzYYG1d3YSHNKZYAs_4sJjtv2a8V-eYw>
-    <xmx:Y6QlaPXjw8O3jslZg2tEiFtr5XCJG7XpPfL4I5mZtQ1R7a55wraGbg>
-    <xmx:Y6QlaNe-r2e2cSW4XS5cWSpacD2zlmxz_9yUjLOd1fl1WJGnj5IQtg>
-    <xmx:ZKQlaAjm1s-5y8uH51JeYHivjFd8LEYpdZETiUJFrnJaRy1qo0dHDnFF>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 04:22:59 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b7138f12 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 15 May 2025 08:22:58 +0000 (UTC)
-Date: Thu, 15 May 2025 10:22:57 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 00/17] object-store: carve out the object database
- subsystem
-Message-ID: <aCWkYdRN1B__oYZ5@pks.im>
-References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
- <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
- <871psrjlio.fsf@iotcl.com>
+	dkim=pass (2048-bit key) header.d=gmx.de header.i=oswald.buddenhagen@gmx.de header.b="g++2O7fj"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
+	s=s31663417; t=1747300840; x=1747905640;
+	i=oswald.buddenhagen@gmx.de;
+	bh=Bl4ldLWg9RiYHDOpZ2VWZG2Ib2XFLJvjpgf3bNZjyug=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=g++2O7fjkBOIff5sgvzfBAKt6srHdakos6nKhvHI8dNzcXBcMLVor1i4U7HR4t/t
+	 gT6sJhIAg+6wwRSPkN73VkBeXP1CELrkmnseOnTaGJvWs1CdEvMA6mQc2maK0yLba
+	 3qImg7/QotDvX2EG9cus9f5PxnjdELxZwmTpwOKVUiZSbHbHGaLHyQ6b0+22ADCwx
+	 8AY68OF14IBVJHrKJtn804MiC2jLKjOotGjOQMpeud8mAWE5tQeHAc8thwTsMbCIq
+	 VbtMvgbhzVxZ4AjGdlfBuxiey8O/2MKdZ4XR87IQ1vRyqmMA926+TyFtgUBUT/3C4
+	 73piIzBvU69A0MA3tQ==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from ugly.fritz.box ([89.247.162.101]) by mail.gmx.net (mrgmx005
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1Mel3n-1unBQI3965-00d3Ij; Thu, 15
+ May 2025 11:20:39 +0200
+Received: by ugly.fritz.box (MasqMail 1.0.0, from userid 1000)
+	id 1uFUlb-DaS-00; Thu, 15 May 2025 11:20:39 +0200
+Date: Thu, 15 May 2025 11:20:39 +0200
+From: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+To: Johannes Sixt <j6t@kdbg.org>
+Cc: Gareth Fenn <garethfenn@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+Subject: Re: [PATCH] git-gui: do not end the commit message with an empty line
+Message-ID: <aCWx56e02RqAUZgw@ugly>
+References: <ed1ca9fa-15f0-4601-be31-8a578c7fb788@kdbg.org>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-In-Reply-To: <871psrjlio.fsf@iotcl.com>
+In-Reply-To: <ed1ca9fa-15f0-4601-be31-8a578c7fb788@kdbg.org>
+X-Provags-ID: V03:K1:j1BzBd2sEuCTGjGJmU1VTVVAhyUst0YpnFgx49p4DZkK1TqvUdQ
+ 0G39f9enOhgbk+Qd7yaqdOYA9uBKtFYPukMWPe/8EuHjShnWvKVegxwZgcD2uuGkCmd5Zr7
+ vz7KtiF4n6yi6OGNkIQEazYlowTN7Tb4ou1O6ISmMF3rRjidquGOykwgPrwOQJnqUdtsPdK
+ VFwq+dsE+YOwnoD5S1+AA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:oLAFQC8OTng=;rUoW1MH9cErhTQ0BDLIhLkBoR49
+ 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
+ y3VS9FfZ6P6VbkER6V/2404Qe91DW+k9JL
+Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 14, 2025 at 04:48:47PM +0200, Toon Claes wrote:
-> Only one small question though, what's the point of the compatibility
-> layer in the last 5(-ish) commits? I mean if we add temp wrappers for
-> other topics in flight, then when/how do we convert that new code to
-> stop using the wrappers? Won't we remain having issues because there's
-> always something in flight?
+On Wed, May 14, 2025 at 10:50:05PM +0200, Johannes Sixt wrote:
+>The commit message is processed to remove unnecessary empty lines.
+>In particular, it is ensured that the text ends with at most one LF
+>character. This one is always present, because the Tk text widget
+>ensures that is present.
+>
+>However, we forgot
 
-As mentioned in the comment for those wrappers the expectation is that
-those will be removed once Git 2.50 is out. This is a common approach we
-have used in the past, as well: for global changes to functions with a
-lot of users we introduce wrappers that remain for the current release
-cycle.
+"did not consider" would be more accurate.
 
-Patrick
+>that the processed text is written to the commit
+>message file using 'puts', which also appends a LF character, so that
+>the final commit message ends with two LF.
+
+one could suppress that with -nonewline, but the proposed code is=20
+shorter.
+
+>Trim all trailing LF
+>characters, and while we are here, use `string trim`, which lets us
+>remove the leading LF in the same command.
+>
+>Reported-by: Gareth Fenn <garethfenn@gmail.com>
+>Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+
+Reviewed-by: Oswald Buddenhagen <oswald.buddenhagen@gmx.de>
+
+>---
+> lib/commit.tcl | 6 ++----
+> 1 file changed, 2 insertions(+), 4 deletions(-)
+>
+>diff --git a/lib/commit.tcl b/lib/commit.tcl
+>index a570f9cdc6a4..f3c714e600ac 100644
+>--- a/lib/commit.tcl
+>+++ b/lib/commit.tcl
+>@@ -214,12 +214,10 @@ You must stage at least 1 file before you can commi=
+t.
+> 	global comment_string
+> 	set cmt_rx [strcat {(^|\n)} [regsub -all {\W} $comment_string {\\&}] {[=
+^\n]*}]
+> 	regsub -all $cmt_rx $msg {\1} msg
+>-	# Strip leading empty lines
+>-	regsub {^\n*} $msg {} msg
+>+	# Strip leading and trailing empty lines
+>
+pedantically, stripping the final LF doesn't strip a trailing empty=20
+line, but prevents one from being created - unless the commit message is=
+=20
+completely empty, where that would fail. i guess this case is not all=20
+that important, so we can ignore it. however, it may make sense to add=20
+another comment like "puts will re-add a trailing newline".
+
+>+	set msg [string trim $msg \n]
+> 	# Compress consecutive empty lines
+> 	regsub -all {\n{3,}} $msg "\n\n" msg
+>-	# Strip trailing empty line
+>-	regsub {\n\n$} $msg "\n" msg
+> 	if {$msg eq {}} {
+> 		error_popup [mc "Please supply a commit message.
+>=20
+>--=20
+>2.49.0.212.gc22db56b11
+>
