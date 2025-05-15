@@ -1,117 +1,289 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from avasout-peh-002.plus.net (avasout-peh-002.plus.net [212.159.14.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3FCEA220F36
-	for <git@vger.kernel.org>; Thu, 15 May 2025 16:39:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E2472614
+	for <git@vger.kernel.org>; Thu, 15 May 2025 16:42:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747327188; cv=none; b=BK90UG3Vcl4yzVAmgfvPP6sJIn72xUYQ0PaTJtdLdQouuRWaLBYJbIuPqYhn0FNK5Y2Rgk4LXZ04ntrOyjTia1Hg6DirL30GedB/BunnYOyeuODrL/c77KKnW9lMO8knO1qgs+9K2OTQr6y+VN0Kxdf5gnnqk7QyZG78zGv1qnE=
+	t=1747327337; cv=none; b=pJiKyokOa9dTrlXz7541gosSjGreR4JezL44mvaJYcBENjE3Ul0DZTFAHs4ricEtHfLipRAkPMSWhiL+6wj7vhCgJEfYseOsJjrCpzMgRuVHIkmDhc023YAMo+1BIPpFNNvnQujpAFdkUEZQ3oTH4nOOuGb6Y/zLd2vB15B+mE8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747327188; c=relaxed/simple;
-	bh=e63PUklaiWDKDo1l1FVKVjQv1uLEn0dGbNzNVcYlVW0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=X5Ep3QDeQZy+bMAlYyIwMj2F/TEm/jIUZJ5RFcxEHZD95pqF3YuoxmoK5y2vVv3QQWpY9SVgiTlZVCmUuD3xHZ8lVlvkmLaHxOoDv7bz4IN/PxagiigJ1Eao38VEg6Z0catq9BaL1qnzbO3t/lE2vN7EfI+4+429mrv3kE8rhlM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iAKbQBXW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OioXF0sz; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747327337; c=relaxed/simple;
+	bh=pH+ojN8gcOS5zEfdw+yaOLvwvsRUKLfmXpYvcC5YTv8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=BJjko9uKJobMfTsTfFvLurJ2PIPzvRj8qunjMFtjD2NmatkS6GP/XRNmkTtLES6iammI+dImOKVsxDkbXZeXRxoMvfCFba7mC0vW2Aw5W4M8Ch+bMsG1jkHjHt+6H8NLkqgKF3gC9t6YSdD32YwKEMuWqGgEx/kU3zvmm5JS3ko=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=T5CGL5N5; arc=none smtp.client-ip=212.159.14.18
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iAKbQBXW";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OioXF0sz"
-Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 124252540127;
-	Thu, 15 May 2025 12:39:45 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-07.internal (MEProxy); Thu, 15 May 2025 12:39:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747327184; x=1747413584; bh=e63PUklaiW
-	DKDo1l1FVKVjQv1uLEn0dGbNzNVcYlVW0=; b=iAKbQBXWxLfSzphdyNNNKyjW9W
-	Ft6MBNFIiFp8RYnb5iEiT0ZxaGOk/GFjzG/t27FBCI0jca/Dm8PlNz2ixHRmJTNl
-	nr/bwTuwDDpUNqgjN45FBfl5Me82kQSYuXauGMD2E18jOhXtavJ0jap3N6KVsi7W
-	ydn7dC9svXEVOuToTWGYKsb9LqqyKqv2aZMwEwlruMagw2dYHlh6bltAugNM198E
-	0QOtUJnbsR/t5/2ZCT1FzuR/kpm4uMWa2GC9NDn9HfKJMMpRJn+ZulMSKZJ7S+qu
-	5Oi+JpaKo043dJTjBDMtB25nmNx9BLmSdcOyEH87eQXufT4ePQ9KhzXqw3ww==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747327184; x=1747413584; bh=e63PUklaiWDKDo1l1FVKVjQv1uLEn0dGbNz
-	NVcYlVW0=; b=OioXF0szFMDsjJIOW35deZF/a/dahTl+p15Wu0BPyQkOOvGr3+d
-	tD6CdXbiHPh9tC+UZ9fOnpxIDJYx9ZqtklXkEPZTl4JG9cQDODB/Ef+XGZUvJAjU
-	xZGRfGouV5kfh9BSogg6R0J3UzRUU9juMOq7ITaVd+Dfo+4CVVhZuknFLwVrMLIk
-	lrgSwbj/ViKPyB4JEEMyC0xeNkPbS6LYHrIrK8eeL65mscDBtcX1Upfqz+IQBKKZ
-	KAKN1f6cqsXuK6rgHiLx5/VxSxtUG5OFtkqrBwRj6GPkN2T7Mxwhs0E0fppQe3f1
-	v7rCS0hDND0/zqPYF6R5eV6PYnwZ/m5rExg==
-X-ME-Sender: <xms:0BgmaNscJw2AbCMuc1IlqWBDqQ1XHC-uRBXU1XTTmCmCx_ocN43G2g>
-    <xme:0BgmaGcnbolZtzAcZcaUPS00EOhqQG4iASzAu86D1wzDatkc2sW916rLLfsFSvXQS
-    DT38sl9uyc7BM_BTQ>
-X-ME-Received: <xmr:0BgmaAypoRcVf3WEGEt4txAVjc4n9baPnA7dUYDm2RoeLxHRcbG-9WEety-HxYWr-eytPXptnFYV_R5TgNj5vNslftLqvXHR_MXBHHs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddtfeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehmrghrtghnrghrtgesgihiphhlihhnkhdrtghomhdprhgtphht
-    thhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphht
-    thhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmh
-    grihhlrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0BgmaEMuqdE0r-becDmvn1Yz8Vhc-KzODlx0cfxyXoz6l-te7Z4DZQ>
-    <xmx:0BgmaN-ooEDRs6EHWbcLclZGxlZk2zfmLAFy10k3Srqyw9urnlCRaA>
-    <xmx:0BgmaEXdmmx2ZB7c17rpdUp7HxE9a4-GKigdin589_1ZGKmRpbTh2w>
-    <xmx:0BgmaOfF9aSviW86keYufuHX8XMdBtGZ7Uxi_i7Hu3r7hHbtaJ-Qyw>
-    <xmx:0BgmaHRH8W2xyGhhnQnZ6N_kxDtLS4RrrFai8O9XNElEVBdm8PYpkfD8>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 12:39:43 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Marc Branchaud <marcnarc@xiplink.com>,  Toon Claes <toon@iotcl.com>,
-  git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,  Derrick Stolee <stolee@gmail.com>,  =?utf-8?B?w4Z2?=
- =?utf-8?B?YXIgQXJuZmrDtnLDsA==?=
- Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC 0/5] Introduce git-blame-tree(1) command
-In-Reply-To: <aCXsKHiP4uIzCMrt@pks.im> (Patrick Steinhardt's message of "Thu,
-	15 May 2025 15:29:12 +0200")
-References: <69a10929-0e44-4ce9-af91-048b8404c752@xiplink.com>
-	<87ecx0ijqt.fsf@iotcl.com>
-	<323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com>
-	<xmqqjz6sb15u.fsf@gitster.g>
-	<7a6afafc-6dee-4a09-8779-83748a4d3fc4@xiplink.com>
-	<xmqqldr789gr.fsf@gitster.g>
-	<9109a8ab-d4b2-4ada-8969-bc72edac5ecd@xiplink.com>
-	<874ixnjltf.fsf@iotcl.com> <xmqqy0uz7zzh.fsf@gitster.g>
-	<0f491261-bbe1-474d-a240-0ddbf22cc754@xiplink.com>
-	<aCXsKHiP4uIzCMrt@pks.im>
-Date: Thu, 15 May 2025 09:39:42 -0700
-Message-ID: <xmqqa57d3k1d.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="T5CGL5N5"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id FbeiuIwi5rWcqFbejuwX56; Thu, 15 May 2025 17:42:04 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1747327324; bh=C/ORhawS+hoopJsQYScVGJuP6bjXbssnZscjDLcfFHs=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=T5CGL5N5ormRB8XtnGor5uBn4YmPakdD0J/9T5ugmpAnsROdTpn9o5NKd5p6/KEQ2
+	 4OzAJr3uGxhkMvxWynZKQK/ByFOBAciBypIsrJgdbIuPKFVs70TyJP++phMMMWS9qN
+	 OnTl7wJ/typbqyHWO17BRAhUo05IQbMqurDOAlkCYfmEKqowELneUXY+KvcbAOKLXZ
+	 W4dZAPH/Q5gR7PGTjEWw42zgPHzKVk9RxN8BQ7jqz4faH7j3JePRT0nyp+CTIH7/Hw
+	 Cf69+6ge6SnbMCDDJaByWcqg9OYDbiyrxkGBhRZiEgPt0OiRGwQlU6Qpzyo1gRnce6
+	 c2sxDmSMQhNPg==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=OonsyD/t c=1 sm=1 tr=0 ts=6826195c
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=lgmUtR0casi4TW9MX6oA:9 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
+Date: Thu, 15 May 2025 17:42:00 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/5] meson: correct path to system config/attribute
+ files
+To: Patrick Steinhardt <ps@pks.im>
+Cc: 'GIT Mailing-list ' <git@vger.kernel.org>,
+ Junio C Hamano <gitster@pobox.com>, Eli Schwartz <eschwartz@gentoo.org>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
+ <20250513191739.1513460-4-ramsay@ramsayjones.plus.com>
+ <aCQdznsNfaIeSPDI@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <aCQdznsNfaIeSPDI@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfMyIltLJznhL82YY6jNSuuYzoQM+ZaPxYR6McDjg7UPvsbP8OFZnh1gTeXOXbl5Yp2/b0Ry63bEm9yydFJPRdik57zqSaniQaisVf19LOlblnVzgLWRN
+ 7Jb0eWcpzEFC/MwCmTLcTkkEVSGKFBilzD/3C+vQKJSbtY+sILRpn173u/oMgnGjgtPYFDN7Kub/SNUXaXD6c9Wl1NcO0AshETw=
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> Curious. Isn't it exactly the same what git-blame(1) does though? Taken
-> the textual representation of a tree object, we figure out when each of
-> the lines has last been changed. That to me sounds like exactly the same
-> thing as git-blame(1), but just for trees instead of for blobs.
 
-That's mechanical worldview from the viewpoint of those who know the
-internal representation and workings of Git, I would have to say.
+On 14/05/2025 05:36, Patrick Steinhardt wrote:
+> On Tue, May 13, 2025 at 08:17:24PM +0100, Ramsay Jones wrote:
+>> diff --git a/meson.build b/meson.build
+>> index 48f31157a0..7f811030bd 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -769,6 +767,20 @@ libgit_c_args = [
+>>    '-DSHELL_PATH="' + fs.as_posix(target_shell.full_path()) + '"',
+>>  ]
+>>  
+>> +system_attributes = get_option('gitattributes')
+>> +if system_attributes != ''
+>> +  libgit_c_args += '-DETC_GITATTRIBUTES="' + system_attributes + '"'
+>> +else
+>> +  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') + '/gitattributes"'
+>> +endif
+>> +
+>> +system_config = get_option('gitconfig')
+>> +if system_config != ''
+>> +  libgit_c_args += '-DETC_GITCONFIG="' + system_config + '"'
+>> +else
+>> +  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') + '/gitconfig"'
+>> +endif
+> 
+> Nit: I still think that we should use `get_option('sysconfdir') /
+> 'gitattributes'`, with the slash instead of a plus, mostly because it is
+> more idiomatic and reads better. But that alone doesn't warrant a
+> reroll.
 
-As an end-user, I view "where does the body of this function came
-from" and "when did I touch this file the last time" quite different
-and unrelated kind of queries.
+OK, if I need to re-roll, I will fix this up. (but see below)
+
+>>  editor_opt = get_option('default_editor')
+>>  if editor_opt != '' and editor_opt != 'vi'
+>>    libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
+>> diff --git a/meson_options.txt b/meson_options.txt
+>> index 8547c0eb47..ff877e67ce 100644
+>> --- a/meson_options.txt
+>> +++ b/meson_options.txt
+>> @@ -3,9 +3,9 @@ option('default_pager', type: 'string', value: 'less',
+>>    description: 'Fall-back pager.')
+>>  option('default_editor', type: 'string', value: 'vi',
+>>    description: 'Fall-back editor.')
+>> -option('gitconfig', type: 'string', value: '/etc/gitconfig',
+>> +option('gitconfig', type: 'string', # default 'etc/gitconfig'
+>>    description: 'Path to the global git configuration file.')
+>> -option('gitattributes', type: 'string', value: '/etc/gitattributes',
+>> +option('gitattributes', type: 'string', # default 'etc/gitattributes'
+>>    description: 'Path to the global git attributes file.')
+> 
+> I'd prefer if we documented the default value in the description.
+> Otherwise it is impossible to discover it without having a look at the
+> sources.
+
+Hmm, but how do you get the description! :)
+
+
+I applied the following patch on top:
+
+  diff --git a/meson.build b/meson.build
+  index 28276e5305..bd14bc15a1 100644
+  --- a/meson.build
+  +++ b/meson.build
+  @@ -771,14 +771,14 @@ system_attributes = get_option('gitattributes')
+   if system_attributes != ''
+     libgit_c_args += '-DETC_GITATTRIBUTES="' + system_attributes + '"'
+   else
+  -  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') + '/gitattributes"'
+  +  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') / 'gitattributes"'
+   endif
+   
+   system_config = get_option('gitconfig')
+   if system_config != ''
+     libgit_c_args += '-DETC_GITCONFIG="' + system_config + '"'
+   else
+  -  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') + '/gitconfig"'
+  +  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') / 'gitconfig"'
+   endif
+   
+   editor_opt = get_option('default_editor')
+  diff --git a/meson_options.txt b/meson_options.txt
+  index ff877e67ce..7a4b896f7e 100644
+  --- a/meson_options.txt
+  +++ b/meson_options.txt
+  @@ -4,9 +4,9 @@ option('default_pager', type: 'string', value: 'less',
+   option('default_editor', type: 'string', value: 'vi',
+     description: 'Fall-back editor.')
+   option('gitconfig', type: 'string', # default 'etc/gitconfig'
+  -  description: 'Path to the global git configuration file.')
+  +  description: 'Path to the global git configuration file. (default: etc/gitconfig)')
+   option('gitattributes', type: 'string', # default 'etc/gitattributes'
+  -  description: 'Path to the global git attributes file.')
+  +  description: 'Path to the global git attributes file. (default: etc/gitattributes)')
+   option('pager_environment', type: 'string', value: 'LESS=FRX LV=-c',
+     description: 'Environment used when spawning the pager')
+   option('perl_cpan_fallback', type: 'boolean', value: true,
+----
+
+So, the addition of the '(default: <value>)' to the description field is
+intended to mimic the setup help text for the built-in meson options:
+
+  $ meson help setup
+  usage: meson setup [-h] [--prefix PREFIX] [--bindir BINDIR] [--datadir DATADIR]
+  
+  ...
+  
+  options:
+    -h, --help                            show this help message and exit
+    --prefix PREFIX                       Installation prefix (default:
+                                          /usr/local).
+    --bindir BINDIR                       Executable directory (default: bin).
+    --datadir DATADIR                     Data file directory (default: share).
+    --includedir INCLUDEDIR               Header file directory (default:
+                                          include).
+    --infodir INFODIR                     Info page directory (default:
+                                          share/info).
+    --libdir LIBDIR                       Library directory (default:
+                                          lib/x86_64-linux-gnu).
+    --licensedir LICENSEDIR               Licenses directory (default: ).
+    --libexecdir LIBEXECDIR               Library executable directory (default:
+                                          libexec).
+    --localedir LOCALEDIR                 Locale data directory (default:
+                                          share/locale).
+    --localstatedir LOCALSTATEDIR         Localstate data directory (default:
+                                          var).
+    --mandir MANDIR                       Manual page directory (default:
+                                          share/man).
+    --sbindir SBINDIR                     System executable directory (default:
+                                          sbin).
+    --sharedstatedir SHAREDSTATEDIR       Architecture-independent data directory
+                                          (default: com).
+    --sysconfdir SYSCONFDIR               Sysconf data directory (default: etc).
+  
+  ...
+  
+  $ 
+
+Indeed, there appears to be no way to display the project specific options
+to the user *before* configuring a build directory. 
+
+  $ pwd
+  /home/ramsay/git
+  $ meson introspect --buildoptions
+  Current directory is not a meson build directory.
+  Please specify a valid build dir or change the working directory to it.
+  $ 
+
+Note that I don't recommend 'meson introspect --buildoptions' as a means
+for the user to inspect the available options, but it does allow me to
+check that the description field looks correct:
+
+  $ meson introspect --buildoptions build | jq | grep gitconfig
+      "name": "gitconfig",
+      "description": "Path to the global git configuration file. (default: etc/gitconfig)"
+  $ meson introspect --buildoptions build | jq | grep gitattributes
+      "name": "gitattributes",
+      "description": "Path to the global git attributes file. (default: etc/gitattributes)"
+  $ 
+
+The only way I have found to display the project options to the user (after
+configuring the project) is using 'meson configure', thus:  
+  
+  $ meson configure build
+  
+  ...
+  
+    Project options    Current Value        Possible Values      Description      
+    -----------------  -------------        ---------------      -----------      
+  benchmark_large_repo                                           Large repository 
+                                                                 to copy for the  
+                                                                 performance      
+                                                                 tests. Should be 
+                                                                 at least the size
+                                                                 of the Linux     
+                                                                 repository.      
+
+  ...
+
+    gitattributes                                                Path to the      
+                                                                 global git       
+                                                                 attributes file. 
+                                                                 (default: etc/git
+                                                                 attributes)      
+    gitconfig                                                    Path to the      
+                                                                 global git       
+                                                                 configuration    
+                                                                 file. (default:  
+                                                                 etc/gitconfig)   
+  
+  ...
+  
+  $ 
+
+[Yes, I use 80 column terminals! :) ]
+
+Note that this display shows the *current* value, not the default value, and
+(once again) in this case there really isn't a default value! ;) (iff prefix
+is exactly '/usr', then the 'default' is eg. '/etc/gitconfig').
+
+Of course, the current value would be the default value unless you have
+set the value on the command-line (of which you would presumably be aware).
+
+[Well, it can be argued that eg. 'etc/gitconfig' is the default value for
+the project option 'gitconfig', but that is just one input to determine
+the actual path compiled into git (which _may_depend on the value of another
+option ie. 'prefix')].
+
+Having said that, the --sysconfdir default is shown as 'etc' (see above) and
+that has (*is*) the same problem (ie it is '/etc' iff prefix is '/usr').
+
+Also, looking through that list, other options which are similarly specified
+to gitconfig/gitattributes don't have their 'default' noted in the description.
+Why make an exception for these options?
+
+Is this what you wanted to see? If so, then I can submit a v3 with the
+above changes. Just let me know.
+
+Thanks.
+
+ATB,
+Ramsay Jones
+
+
+ 
+
