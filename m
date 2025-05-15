@@ -1,68 +1,68 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB730299A8F
-	for <git@vger.kernel.org>; Thu, 15 May 2025 12:45:55 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B4F29ACC8
+	for <git@vger.kernel.org>; Thu, 15 May 2025 12:45:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747313157; cv=none; b=leMxVVVZeAJRnfmcCvHngIVC1th2Y/a9sYLhiktT1vyMbgQOM7zISWtKeslYp4N2QQqAAurAwEvbl23FJlcKJ/xFfr78Ej50gv0XfoaSUNcFurwwRDVaxYyCVP8cUcPza1msI8KHF9O4mrirrD3PPY5PCyZp5mFFYTU1C4qQYl8=
+	t=1747313158; cv=none; b=mJrNpHqfjPR0oXWdM9m7UztkXUH8ob/w4e154M5tILzSXPT1UY5guLVV+Nxw+t5b5mcQluOd3IxTFY2W5ngajmvlhu2/WtfhlZrtEAQ6zL0guAUyLxknCYQHSltPNib/lfc3D/3nu5JWEtsom8B2i1BZBvJf9BJ62itc4NR+lo4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747313157; c=relaxed/simple;
-	bh=s09d307bFvq5r9zY7L17mqJ7U0mLiV6+CK3PvjXPM4k=;
+	s=arc-20240116; t=1747313158; c=relaxed/simple;
+	bh=X9Hg+6xutcqOraSqGt4+A8V//Ox5lCoR3N9OH+0jD2M=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=a+fjTBMbGfX/TIAealD0yas/HUQ2iWtcHUb3uMckNECGCX2U5hI7NZDmwVlkXbg2c+8wJQUd5ZoI0CJ8Yx1Ur6Jfu5o+ny1/ngPaNEX66r84yYpKOUG7EbpGbLPROHptprjv3XJCPb3nnFXq2US2RwJsViBrJeRPEAs84nIajDU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=llO72F+W; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=rMc881HauiZbo/QEg94EejDT0U+AGv4MKEGjZK1vK/M1P+cHHRj8y5/UPNp1d5Xs8T/65RwArOzIgxF6fPQ/kE9iD3x0ftTVmRcFgHQNsu9Mhzg3/vh/8FlUc2L/ceman5/1Sl9EhpL1ipGTW7gSqx3eZbGVKyd6tk/zmIsQqOQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AwRaApwU; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="llO72F+W"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-441c99459e9so5828935e9.3
-        for <git@vger.kernel.org>; Thu, 15 May 2025 05:45:55 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AwRaApwU"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cf848528aso7480125e9.2
+        for <git@vger.kernel.org>; Thu, 15 May 2025 05:45:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747313153; x=1747917953; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747313155; x=1747917955; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=zo+HGu8VQ+HkwVUWccfXpE47X1RTXiuZPP1JqXZ3gBY=;
-        b=llO72F+W6wAwkgLWv/F7mCZwILv0eIKrl7b504crNlvWPtX4iXepnqZ5LnFQNRH7B+
-         ykoLYe/pw2F2nDcTwTdnk5W0xZGdWkx1Z7fgnxOgVg7gBeyK0p4BmlaE8UqSdco6jTdl
-         1qkDUhRq4BgOaI7Cz4MEmaa4UJYBIx66hlWhNBzNPUvzxieroPgHzvVGMm/Cn6jguZ7q
-         PoGGqL17G4GPmtj/WTDp/8I50anTn0y/cID1yxzcpzDCu9LgNWhDIzrdFgQKzIVb9rA4
-         GoyysJJ5nsZ9kSCh8GeMyqlssGchpdygK5slrA517jgHP1YTKy9f/ckTluzHmBr7rItg
-         EQYw==
+        bh=nNIBmt2wPkZw+QSZvZaZSXVmqhKb71upoYMFNuiTPtQ=;
+        b=AwRaApwUeI3+NiJ6XePWzztGBI22mNvvSIqH1pgB0J5xvyYeS4DBDaRb5IIOsjlGdD
+         oJ7V/71ubP410oojm6yJK22hvkpC4h9h/8H29+6Sk7f/Ba+CL+W/6/1GjY3WA5jcaV4O
+         ClvarsYPz+vFEdEmMc3zf7J56VJGKloyb4aU7pXMxUCrUFqofUiawqSXgM6O180+LleJ
+         lfpG+sBoalOJ17dtBuYxun8uKDD65XZucS6B8uqkWQ/bk5N4eBAc4mNgElQOWcntZImH
+         6VuVRmVXPjq7hNxOr2DvfSCWZz+t9EYyWFWa387ZQ5LHwcB8Op6Njlt5Gqpv7mcud/2A
+         Zr8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747313153; x=1747917953;
+        d=1e100.net; s=20230601; t=1747313155; x=1747917955;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=zo+HGu8VQ+HkwVUWccfXpE47X1RTXiuZPP1JqXZ3gBY=;
-        b=KfzwyH0lbfpH+xClmBH/AUd/PtCoKjoKIffImTct/KsuMfl6hVSTHbC2gdAVUv53qj
-         w3cRBurv7OIFplglQMK6nJaBBlD2iZIM+TugS8I0A4y/YltWuXLEYBMZ8TdNxj32YVI7
-         Oa6WsIqb/M2up8zUHh/0h0jwvRgTJCkc+NiMnA1nSf5UQ4HgP/AaaapLpWD/QBKcJawS
-         ZJywPDOsyLjgJTMBZnWcJwXYrz2V7ONuner8pI5lq4EuvonR8dpEX9WZKGpCPLB3KO6Q
-         gDQlFnbqEdmKr2raNrdCbR+Me3gi8MQcP5N8f4FN8zVFtsVZWPCRdW4afuzrLkIHQ22G
-         Wc6w==
-X-Gm-Message-State: AOJu0YwGI7tgx9jpvd1hwJCMP4AwIz0XLX8pQosuPz1Bq6mz/ixUAzLO
-	PF7Zn0KtvGUtC/xvLE29hhztf7rWOqt5HUkQSD+1jCIi3q6YIPx+M90qOg==
-X-Gm-Gg: ASbGnctVLFh06ITB1km5pcVkkpGVWWXIfzebt2z9LY7oK8kGK57AspnUaMmWLGjMgvg
-	UxAwoCsjcyzf/lMcch7s7YSl1lQGRB9mRJ++kon1PdIP86yBapjaPDfgfASbby5+Bpb9U1GMLGF
-	i/waGXuBGkp2zRFUo+YWEtX3wkTOCFmhZcF4jFPt0sOa55yraFmwnYZsCi8j4CoRbg8WUdbMgNI
-	F3sdZEkDeip4PjL8f+7s/05NkYZRP7SW1kET9jB32C6Ti1GwF7JeKt4cwAr9i8jH8OFEEOUGoCu
-	ZZosXz+bRcmBdmey0e35X1qC84ypuPo01GRyJH/T9AmFQjLFYCIL
-X-Google-Smtp-Source: AGHT+IE/qb9h63vxdx8e8WASin56rHkQFvonoamE6bRPg8oXIplQ7tVi78HnxhALWyMitoFG9mLV/w==
-X-Received: by 2002:a05:600c:3ba8:b0:439:8c80:6af4 with SMTP id 5b1f17b1804b1-442f2110f24mr67879905e9.19.1747313153258;
-        Thu, 15 May 2025 05:45:53 -0700 (PDT)
+        bh=nNIBmt2wPkZw+QSZvZaZSXVmqhKb71upoYMFNuiTPtQ=;
+        b=IvtyErc8qGsSDxaI4eEMk+z+cDZZUrf6EW+KA6/NFIiISoZBs0vplbM+lEv+Cp+wDd
+         aGfHycZMh/kjFkPsQZUvepSQWInq2HRWaHg4CvTFbVJmDCsRM2jcoNLQMZd5BEaGKbSr
+         Oy5zZlKM7v+YqPnQwJtGW8IJcFru6ssk+oZxkOyB/lqe299kAupYzBoVrnil/LH0XOcJ
+         5zZyEnvzjrdWD+e244LIQT3t6tfzGWi1NIGFS81hCqxvT9D8XQgV5jMOylIL/oL3soBm
+         cvE0EZ0Y4KwN/xdggcn1UdGypr2jm/Fh4tf3XRGVnADIdJznnmGCoX+KSajD/1F8SelO
+         Su+w==
+X-Gm-Message-State: AOJu0YzvlQUd4JZbbMYRrel4tIrZb2wqtf4LCKkcjAzigX3JIrb1E9U1
+	XkKXHQOxYT4Vl3OLBXbXx1fdEb3cIcQLHkj/5hiU8wyGwO3hk3OmS6Vs+g==
+X-Gm-Gg: ASbGncv+NF7b9LzR7OLl7GYV9sNjUM3uHNPKZSPKVYcKt0HfhmUq2PesmgFCHWF4NXO
+	jKlgZkTaZ22gQBvxg1M3gNg8jKSuVv6jRbWB4zHQYd73HKn70gt5Rr+5/szeviNISLKs07CMuvG
+	uvI6a3277nsRjPdL0t7w8RXEGRXxLeXgnSlTQ5mW8L09FZYz6fdE6SzWoOUGHzyBsndKS6WnMGq
+	XKkHh99JZUtge+VEWdbZk90OTs61JUX2saoeUf4EoiPpVVBhlLDVnEZuXvNMk1AMrHNC7d/GKRn
+	YrH2CdVvRlOard0vm12/oCNcHPdeHN5QQzygoRB46TOs4NjwaS4Wwhj2+lWv4Fo=
+X-Google-Smtp-Source: AGHT+IGZDNWnSG09LVL5At8ubYWWDyju27UAByoCnLTB7GKN7k/iSg/H3DJLF5c7QMeg3uer+gwqmw==
+X-Received: by 2002:adf:ffc9:0:b0:3a3:4b8a:8cf6 with SMTP id ffacd0b85a97d-3a34b8a8d92mr4553409f8f.57.1747313154676;
+        Thu, 15 May 2025 05:45:54 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3368e3fsm69778645e9.2.2025.05.15.05.45.52
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f57de0b2sm23025561f8f.19.2025.05.15.05.45.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 05:45:52 -0700 (PDT)
-Message-Id: <223a0053eb7f94dfd28db8f528b73a489f907444.1747313140.git.gitgitgadget@gmail.com>
+        Thu, 15 May 2025 05:45:53 -0700 (PDT)
+Message-Id: <137f6c45af74c718e7acf0e3a569633291dcbc43.1747313140.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
 References: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 May 2025 12:45:37 +0000
-Subject: [PATCH 12/14] submodule: check return value of
- `submodule_from_path()`
+Date: Thu, 15 May 2025 12:45:38 +0000
+Subject: [PATCH 13/14] test-tool repository: check return value of
+ `lookup_commit()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,28 +78,26 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-As pointed out by CodeQL, it could be NULL and we usually check for
-that.
+On the off-chance that it's NULL...
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- builtin/submodule--helper.c | 3 +++
- 1 file changed, 3 insertions(+)
+ t/helper/test-repository.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index c1a8029714bf..55826b82407c 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -1934,6 +1934,9 @@ static int determine_submodule_update_strategy(struct repository *r,
- 	const char *val;
- 	int ret;
+diff --git a/t/helper/test-repository.c b/t/helper/test-repository.c
+index 63c37de33d22..05417d8f43dc 100644
+--- a/t/helper/test-repository.c
++++ b/t/helper/test-repository.c
+@@ -27,6 +27,8 @@ static void test_parse_commit_in_graph(const char *gitdir, const char *worktree,
+ 	repo_set_hash_algo(the_repository, hash_algo_by_ptr(r.hash_algo));
  
-+	if (!sub)
-+		return error(_("could not retrieve submodule information for path '%s'"), path);
-+
- 	key = xstrfmt("submodule.%s.update", sub->name);
+ 	c = lookup_commit(&r, commit_oid);
++	if (!c)
++		die("Could not look up %s", oid_to_hex(commit_oid));
  
- 	if (update) {
+ 	if (!parse_commit_in_graph(&r, c))
+ 		die("Couldn't parse commit");
 -- 
 gitgitgadget
 
