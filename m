@@ -1,87 +1,159 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CE4B29B788
-	for <git@vger.kernel.org>; Thu, 15 May 2025 20:16:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26BDF29B766
+	for <git@vger.kernel.org>; Thu, 15 May 2025 20:18:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747340189; cv=none; b=p3MFDYza86BTjchMV6jA+s+blLVHNgh7qX03Ev0bioExRsisQjEpOeuQMmkxpIxdat54PSVfjSSkbWCe1zrdHq6IdWJGcT9vI3Ug4LXTLNsA4PqRPf43+mTfphcY01kl1FgVDf3ZicEg0PKJCkpqxrI8RLhk9yf/nai2jnoc4I0=
+	t=1747340285; cv=none; b=FW+qk0lC5v65z59kxUhNzLeE+kT00n7KjnOLJgEMHAqvkl2g2+u3mp8QZUGSmppYsdrTBMZyGwYRCOQ6tY7smpyMlJeLvdmfXOuT3bP37ZM0r1LdwoVY8EjL6QQJPPz8KoLcjJgsE0FmUrtEm+QpnegXd72kbWn27ZsczjgrA4I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747340189; c=relaxed/simple;
-	bh=h9FYn5PqYahcwa7o0BwJgu2xTaTrB/NFxUWLOz8Ll/8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SH8/VGQohk70A0yc3SoZstQ1/QKGcgRyMtwHVFCDcrYg+dAVfLjxT3xFVM8yiMIpN2R0q1wQsVzwB7nFZZtoIES1JF2imWRyvTz4tcmM+hTFxL0cNbfm394a0zn0RPNFATgFl8bLM1fa9oNq5LPq4wmpdbe6+dwDuyF+stpSjxU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=StLBGqYp; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="StLBGqYp"
-Received: (qmail 817 invoked by uid 109); 15 May 2025 20:16:26 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=h9FYn5PqYahcwa7o0BwJgu2xTaTrB/NFxUWLOz8Ll/8=; b=StLBGqYpv8irKYe5FsMMOba3KAq/kKbORkShk5Q5UgPUopMwK9iZdai/foqnVlR/aWTK2DwgUOHh86DsXHiOsX/Cwzy0T+LncS8auQ14gIvLWD8qZGeAvwTCX4/2oiLxvyZm91ehUeqGvA59u06agPs//f9GAJUo63StwAxkBMMMThz3YffOvFUNwxl/GI+d1/4MZG4olrxtkGZ2hcMB3Ag2ki4uPE9FWTaaa+7VQWtA2AazXUvi2vsQctM2wu34zj1pdTi6hCs8Xf8ouKHax60mcM592skynFtOoipXG9ITWpuzgQNvLP7QsUXMHaYvvzfxZGdKNkiJU2U3R7zmxw==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 May 2025 20:16:26 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 30744 invoked by uid 111); 15 May 2025 20:16:27 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 May 2025 16:16:27 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 15 May 2025 16:16:25 -0400
-From: Jeff King <peff@peff.net>
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 08/11] trace2: avoid "futile conditional"
-Message-ID: <20250515201625.GI3320240@coredump.intra.peff.net>
-References: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
- <a3f60183633eb17fb300309cf1a629234588418f.1747314709.git.gitgitgadget@gmail.com>
+	s=arc-20240116; t=1747340285; c=relaxed/simple;
+	bh=RUalCDstgRN76U6GhPYl7vRVy9ifnJ8+iFgglmP7wAc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=hkqMCO7wPOQnDWWCJsuIZKAfkcRre3LDrjKdmoy6GHm6Npi4lTiQpmY7rQGHlh+jI9XXSg+H+XfLbt2d7trCxDuk07Mf9oY0SW+ZpPv9GC+3iMtpJaGXYktGpxEnL5GQLKS0oIR97YclkWRkipcAzDXizNfEE6q87U+30Qmukvo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id E4B26343839;
+	Thu, 15 May 2025 20:18:01 +0000 (UTC)
+Message-ID: <44f2741b-a77d-4bac-b4ba-63e23cbc1901@gentoo.org>
+Date: Thu, 15 May 2025 16:17:59 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <a3f60183633eb17fb300309cf1a629234588418f.1747314709.git.gitgitgadget@gmail.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 5/5] configure.ac: upgrade to a compilation check for
+ sysinfo
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ GIT Mailing-list <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-5-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
+ <9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org>
+ <56706ad8-93c6-48cd-ad16-9d8b00a669c9@ramsayjones.plus.com>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <56706ad8-93c6-48cd-ad16-9d8b00a669c9@ramsayjones.plus.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------65yeUprQpdZbyJtMY7FuPfUi"
 
-On Thu, May 15, 2025 at 01:11:46PM +0000, Johannes Schindelin via GitGitGadget wrote:
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------65yeUprQpdZbyJtMY7FuPfUi
+Content-Type: multipart/mixed; boundary="------------p4MgkAH0Z1T00ivg8vYDvT7E";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+ GIT Mailing-list <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+Message-ID: <44f2741b-a77d-4bac-b4ba-63e23cbc1901@gentoo.org>
+Subject: Re: [PATCH 5/5] configure.ac: upgrade to a compilation check for
+ sysinfo
+References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-2-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-3-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-4-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-5-ramsay@ramsayjones.plus.com>
+ <20250508164443.1506440-6-ramsay@ramsayjones.plus.com>
+ <9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org>
+ <56706ad8-93c6-48cd-ad16-9d8b00a669c9@ramsayjones.plus.com>
+In-Reply-To: <56706ad8-93c6-48cd-ad16-9d8b00a669c9@ramsayjones.plus.com>
 
-> CodeQL reports empty `if` blocks that only contain a comment as "futile
-> conditional". The comment talks about potential plans to turn this into
-> a warning, but that seems not to have been necessary. Replace the entire
-> construct with a concise comment.
+--------------p4MgkAH0Z1T00ivg8vYDvT7E
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-OK...
+On 5/8/25 7:01 PM, Ramsay Jones wrote:
+>> So you are indeed teaching autoconf to check for this function, but
+>> should we also ask whether it's worth continued maintenance of autocon=
+f?
+>> It was/is not clear to me who the stakeholders are for the autoconf su=
+pport.
+>=20
+> Hmm, someone posted a list of people using autoconf somewhat recently
+> to the mailing-list ... I don't have it to hand, but cygwin was one
+> of the projects using it.
 
-> -		if (t->recursion_count) {
-> -			/*
-> -			 * The current thread is exiting with
-> -			 * timer[tid] still running.
-> -			 *
-> -			 * Technically, this is a bug, but I'm going
-> -			 * to ignore it.
-> -			 *
-> -			 * I don't think it is worth calling die()
-> -			 * for.  I don't think it is worth killing the
-> -			 * process for this bookkeeping error.  We
-> -			 * might want to call warning(), but I'm going
-> -			 * to wait on that.
-> -			 *
-> -			 * The downside here is that total_ns won't
-> -			 * include the current open interval (now -
-> -			 * start_ns).  I can live with that.
-> -			 */
-> -		}
-> +		/*
-> +		 * `t->recursion_count` could technically be non-zero, which
-> +		 * would constitute a bug. Reporting the bug would potentially
-> +		 * cause an infinite recursion, though, so let's ignore it.
-> +		 */
 
-The original doesn't talk about infinite recursion at all, though I can
-well believe that would be the case, having run into trace->die->trace
-types of bugs before. Did you trace out the actual path of recursion? If
-so, it might be worth summarizing it.
+Thanks for the correction. This solves my major concern...
 
-Obviously the code change itself cannot hurt anything, as it was a noop.
 
--Peff
+>> On the other hand, it sounds like this patch (and commit 50dec7c566
+>> "config.mak.uname: add sysinfo() configuration for cygwin") only modif=
+y
+>> autoconf out of a sense of duty, rather than finding autoconf useful.
+>=20
+> Hmm, I am not convinced (yet) that meson is all that useful either. ;)
+> =20
+>> What does it say about the autoconf support if the people finding bugs=
+
+>> in it don't even use it, but only discovered the bug while working on =
+a
+>> different build system they do use and depend on (config.mak.uname, or=
+
+>> meson.build, both count here).
+>=20
+> I am trying very hard not to express a view on this debate. :)
+>=20
+> [well, except that I find CMake to be absolutely awful!]
+
+
+
+=2E.. because to my way of thinking, the ultimate proof of usefulness is
+that people, well, *use* it. Gentoo uses Meson, ipso facto it is useful. =
+:)
+
+=46rom my experience with the ./configure script it wasn't clear to *me*
+that anyone did use it (and I did a non-exhaustive check of other
+distributors). If cygwin uses it, it is useful and the question becomes
+*whether* to (properly) deprecate it after evaluating the existing
+options and balancing use cases with maintenance burden, rather than
+"just let it rot until we finish discussing its likely deletion".
+
+
+I'm still not volunteering to do the actual fixing of ./configure :D but
+testing is easy if someone else wrote the fix...
+
+
+--=20
+Eli Schwartz
+
+--------------p4MgkAH0Z1T00ivg8vYDvT7E--
+
+--------------65yeUprQpdZbyJtMY7FuPfUi
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaCZL9wUDAAAAAAAKCRCEp9ErcA0vV9OX
+AQCfyBYVZu+B9J8XLVkLSVEhB2WLG3bc/Vpfcth8XrjQWQEAk4zaRSKGvidXBPQsbyI01rAfcU/d
+H5uHjRFhqFUKzAg=
+=ArjJ
+-----END PGP SIGNATURE-----
+
+--------------65yeUprQpdZbyJtMY7FuPfUi--
