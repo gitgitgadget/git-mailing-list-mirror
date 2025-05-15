@@ -1,67 +1,68 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED8029AB0E
-	for <git@vger.kernel.org>; Thu, 15 May 2025 12:45:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB730299A8F
+	for <git@vger.kernel.org>; Thu, 15 May 2025 12:45:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747313156; cv=none; b=s/lc+2ZFY8lImsDKeWB7i9LZnif7zuRNA9IAPzIgJxBP4OXuHghf3Bpm2C4BFo+eeYjJp4z98Vs+9bqkwgUqRWr11nHMOxGvOCOY+PxgovsndaSLHYMEumtb1F2B35CcJeobWoGLNmsEsUH4rIuYlk+KJz4LfKHFzz8Mi0HRwHE=
+	t=1747313157; cv=none; b=leMxVVVZeAJRnfmcCvHngIVC1th2Y/a9sYLhiktT1vyMbgQOM7zISWtKeslYp4N2QQqAAurAwEvbl23FJlcKJ/xFfr78Ej50gv0XfoaSUNcFurwwRDVaxYyCVP8cUcPza1msI8KHF9O4mrirrD3PPY5PCyZp5mFFYTU1C4qQYl8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747313156; c=relaxed/simple;
-	bh=Vf5uSo6mhDc+QPU1K4mx8mxhsdBmIBTW67yHkzjRWB8=;
+	s=arc-20240116; t=1747313157; c=relaxed/simple;
+	bh=s09d307bFvq5r9zY7L17mqJ7U0mLiV6+CK3PvjXPM4k=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=YyZ4XCcm+p3SPG0wpCZ4OY7slR4XUHxf4sr29SzkNu+0pfpcnR9s4QeFIP96Op521wE6dQ3n5NM7oVJzmLLMwY5NnjUNliPZxbHbHrk/aWzwRgUBz1vNVLKbtbFWpT5Dp/a/3IeH+267GZMsTrsWXTuRwWdTDWMXbMUh1FlCwC8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DwrBJxtq; arc=none smtp.client-ip=209.85.221.45
+	 MIME-Version:To:Cc; b=a+fjTBMbGfX/TIAealD0yas/HUQ2iWtcHUb3uMckNECGCX2U5hI7NZDmwVlkXbg2c+8wJQUd5ZoI0CJ8Yx1Ur6Jfu5o+ny1/ngPaNEX66r84yYpKOUG7EbpGbLPROHptprjv3XJCPb3nnFXq2US2RwJsViBrJeRPEAs84nIajDU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=llO72F+W; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DwrBJxtq"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a35919fa8bso221029f8f.0
-        for <git@vger.kernel.org>; Thu, 15 May 2025 05:45:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="llO72F+W"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-441c99459e9so5828935e9.3
+        for <git@vger.kernel.org>; Thu, 15 May 2025 05:45:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747313152; x=1747917952; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747313153; x=1747917953; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=VZ+Rp8Vuh1hwAKkXODQMHgTnhQSEeDc4lwJdK7+qpwE=;
-        b=DwrBJxtqX/Niu1OpFN9bET/62HC/v/wjKLOVWYzi7XG3VKL7hSa4tfgoYuTQtS+kfw
-         z/Id/8mDD95EGR7STat0oJc8/+hE4QoQYWbvxrSUsvjCaGT6g+XandecuphCDL+8NBsK
-         nYrywZPnEnJ8oUqosDt0rr98eakKtLnPx6bX4YR46kEfZgkloEckdBjOoA1QfKt/QT5N
-         SVi5EMVDpfuN8VZb2BzL0l4qY+XelJ4cUvWvvdpvKTmhdtrKN9B168T09TGFkpOZtKnc
-         3pa7jDeQcUpyaXyRc+AGgQCCBEfmqMeg2200wiwK/gBBZy44Dt94UaUJFHEOoxmjwAGi
-         I6Yg==
+        bh=zo+HGu8VQ+HkwVUWccfXpE47X1RTXiuZPP1JqXZ3gBY=;
+        b=llO72F+W6wAwkgLWv/F7mCZwILv0eIKrl7b504crNlvWPtX4iXepnqZ5LnFQNRH7B+
+         ykoLYe/pw2F2nDcTwTdnk5W0xZGdWkx1Z7fgnxOgVg7gBeyK0p4BmlaE8UqSdco6jTdl
+         1qkDUhRq4BgOaI7Cz4MEmaa4UJYBIx66hlWhNBzNPUvzxieroPgHzvVGMm/Cn6jguZ7q
+         PoGGqL17G4GPmtj/WTDp/8I50anTn0y/cID1yxzcpzDCu9LgNWhDIzrdFgQKzIVb9rA4
+         GoyysJJ5nsZ9kSCh8GeMyqlssGchpdygK5slrA517jgHP1YTKy9f/ckTluzHmBr7rItg
+         EQYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747313152; x=1747917952;
+        d=1e100.net; s=20230601; t=1747313153; x=1747917953;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=VZ+Rp8Vuh1hwAKkXODQMHgTnhQSEeDc4lwJdK7+qpwE=;
-        b=aZdQ4Mxm3y2WFPhSaKu45QmhHVB/D0XdMIrzCtvcJGOdHQRLNk5g2KXh8OcL7MpxtE
-         O/VcH00TdRKrteEb9R8Arl4tdbEdcWimdp4LvimX1jtUOX8ZuYNQWG7wmUF/NEhXDg4F
-         UVU9o6oLCfOMKkGrv4m4PoMpHWUNyshaeT31e0MIxwAPuzWba9utUEWim35ZbWHtKnTg
-         kfNI34QawzPS99j2Ic4jwra/i9KeTU6fs9nZqAdqbya9uy7eXVhJQbJ1UgzxnG+lsQbq
-         JhylIjYusRZtXwEniPvl8T4C+/nnVUutyVhva3hIWj+Osm1UrI/en/zL3qNgq7f3r4hC
-         HJdQ==
-X-Gm-Message-State: AOJu0Yw4/Z2L56dsNnTu3wKD6MURsUzuc78iEhM8T8FFWn2vDVSHVEA+
-	SFnbb3Js/AnaInOrbkpzCyKxsepjFZNt/5bKku/gFmm8c73RqnrqbrPsMQ==
-X-Gm-Gg: ASbGncv3m+DBiPwfvljBMK6qDAP40gwnqmDI0fsvFmjBAl1qMm/t1gv5rADKe3Xy0SS
-	QAUFkTOX0LGfl5V/uss28SeuomUC8A2BvJPWPJ7thax7ATvCCvGK4jrJPSDRNFkBmsu0o64lENj
-	HXJIwnblcuz+MuYoOAtB4wQggXC549HKjYMsVTfmvStn9QUlXMJT+X7SsXwpX5MM1ofkGiUieBX
-	Db8BKqlURetfWD28JH1ZkDkvNJYdMppQ9NSF6m5+gCIzbDcbhJAvE5mh7xpN3w5RtOaUeqcVTdp
-	I+zsmedM/bqtydxPac5N6Qnb6q4UnS2G/aPrwl1XWg6QaWTmh006UQKl78IxThI=
-X-Google-Smtp-Source: AGHT+IGZLfiBCxs8PEmgb+npB/xdb6LRJXx6h7N0pV6ZCB+L/RdXsIUR/Y1Qf0Z6wFnoWqYkITgJww==
-X-Received: by 2002:a05:6000:2913:b0:3a1:f6fd:89da with SMTP id ffacd0b85a97d-3a353751748mr2238940f8f.31.1747313152253;
-        Thu, 15 May 2025 05:45:52 -0700 (PDT)
+        bh=zo+HGu8VQ+HkwVUWccfXpE47X1RTXiuZPP1JqXZ3gBY=;
+        b=KfzwyH0lbfpH+xClmBH/AUd/PtCoKjoKIffImTct/KsuMfl6hVSTHbC2gdAVUv53qj
+         w3cRBurv7OIFplglQMK6nJaBBlD2iZIM+TugS8I0A4y/YltWuXLEYBMZ8TdNxj32YVI7
+         Oa6WsIqb/M2up8zUHh/0h0jwvRgTJCkc+NiMnA1nSf5UQ4HgP/AaaapLpWD/QBKcJawS
+         ZJywPDOsyLjgJTMBZnWcJwXYrz2V7ONuner8pI5lq4EuvonR8dpEX9WZKGpCPLB3KO6Q
+         gDQlFnbqEdmKr2raNrdCbR+Me3gi8MQcP5N8f4FN8zVFtsVZWPCRdW4afuzrLkIHQ22G
+         Wc6w==
+X-Gm-Message-State: AOJu0YwGI7tgx9jpvd1hwJCMP4AwIz0XLX8pQosuPz1Bq6mz/ixUAzLO
+	PF7Zn0KtvGUtC/xvLE29hhztf7rWOqt5HUkQSD+1jCIi3q6YIPx+M90qOg==
+X-Gm-Gg: ASbGnctVLFh06ITB1km5pcVkkpGVWWXIfzebt2z9LY7oK8kGK57AspnUaMmWLGjMgvg
+	UxAwoCsjcyzf/lMcch7s7YSl1lQGRB9mRJ++kon1PdIP86yBapjaPDfgfASbby5+Bpb9U1GMLGF
+	i/waGXuBGkp2zRFUo+YWEtX3wkTOCFmhZcF4jFPt0sOa55yraFmwnYZsCi8j4CoRbg8WUdbMgNI
+	F3sdZEkDeip4PjL8f+7s/05NkYZRP7SW1kET9jB32C6Ti1GwF7JeKt4cwAr9i8jH8OFEEOUGoCu
+	ZZosXz+bRcmBdmey0e35X1qC84ypuPo01GRyJH/T9AmFQjLFYCIL
+X-Google-Smtp-Source: AGHT+IE/qb9h63vxdx8e8WASin56rHkQFvonoamE6bRPg8oXIplQ7tVi78HnxhALWyMitoFG9mLV/w==
+X-Received: by 2002:a05:600c:3ba8:b0:439:8c80:6af4 with SMTP id 5b1f17b1804b1-442f2110f24mr67879905e9.19.1747313153258;
+        Thu, 15 May 2025 05:45:53 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a1f5a2d2d3sm23074494f8f.63.2025.05.15.05.45.51
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3368e3fsm69778645e9.2.2025.05.15.05.45.52
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 May 2025 05:45:51 -0700 (PDT)
-Message-Id: <dec21f89ffd06d8b307e7f46191be3824bd99b96.1747313140.git.gitgitgadget@gmail.com>
+        Thu, 15 May 2025 05:45:52 -0700 (PDT)
+Message-Id: <223a0053eb7f94dfd28db8f528b73a489f907444.1747313140.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
 References: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
 From: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 15 May 2025 12:45:36 +0000
-Subject: [PATCH 11/14] inherit_tracking(): defensive programming
+Date: Thu, 15 May 2025 12:45:37 +0000
+Subject: [PATCH 12/14] submodule: check return value of
+ `submodule_from_path()`
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -77,37 +78,28 @@ Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
 
 From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-CodeQL points out that `branch_get()` can return NULL values.
-
-Note that the error path in this instance calls `BUG()`, not `die()`,
-for two reasons:
-
-1. The code lives in `libgit.a` and calling `die()` from within those
-   library functions is a bad practice that needs to be reduced, rather
-   than increased.
-
-2. The `inherit_tracking()` function really should only be called with
-   the name of an existing branch, therefore a `NULL` return value would
-   indeed constitute a bug in Git's code.
+As pointed out by CodeQL, it could be NULL and we usually check for
+that.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 ---
- branch.c | 2 ++
- 1 file changed, 2 insertions(+)
+ builtin/submodule--helper.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/branch.c b/branch.c
-index 91297d55ac9f..a10b6119b214 100644
---- a/branch.c
-+++ b/branch.c
-@@ -224,6 +224,8 @@ static int inherit_tracking(struct tracking *tracking, const char *orig_ref)
- 	skip_prefix(orig_ref, "refs/heads/", &bare_ref);
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index c1a8029714bf..55826b82407c 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -1934,6 +1934,9 @@ static int determine_submodule_update_strategy(struct repository *r,
+ 	const char *val;
+ 	int ret;
  
- 	branch = branch_get(bare_ref);
-+	if (!branch)
-+		BUG("could not get branch for '%s", bare_ref);
- 	if (!branch->remote_name) {
- 		warning(_("asked to inherit tracking from '%s', but no remote is set"),
- 			bare_ref);
++	if (!sub)
++		return error(_("could not retrieve submodule information for path '%s'"), path);
++
+ 	key = xstrfmt("submodule.%s.update", sub->name);
+ 
+ 	if (update) {
 -- 
 gitgitgadget
 
