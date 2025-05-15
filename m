@@ -1,53 +1,53 @@
-Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 957E928751D
-	for <git@vger.kernel.org>; Thu, 15 May 2025 08:20:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50ECC288531
+	for <git@vger.kernel.org>; Thu, 15 May 2025 08:23:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747297257; cv=none; b=YuMCfMsPkJm62eXOLF8tOk0Qxtnew0mNyMbK3zgikjlJqiziTod+LikMHYYV6UG4p6Ggt8DqIQzA7hUZw76WLRaYHKUiP/wMfna41jDzZ+7hWRE/SVGzhRpQvb0REfpmn+wyktRM48Cg1ZxRByfU2ZiSIVwl/AVhv6L1xleGqlE=
+	t=1747297383; cv=none; b=LF2t6NFKJdwSpKY1dLl6JhSGX2069K5vkPGwYOmoa/sHnfK/s/rhJSJtVdMs26q6Hje1o31CSzW3YVF1S66BBzssLfAcEjJsnZA9rBPRa+JMelMUqOVMjvGv1gM3HAatKtKebcYUJ+/+CuFf5XV76J10AjEhbNwfBCmDl7/q5m0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747297257; c=relaxed/simple;
-	bh=gRh0mAF4o1NR9xwfpeMzh/lHuHzE4fZgrPFfLbyyL0M=;
+	s=arc-20240116; t=1747297383; c=relaxed/simple;
+	bh=LZflIv8jH+8w782sLHgjVFPGu3HX0FmQEJFVUoCGuKY=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=m18Bn+Fcs0Ai6hjRG4mal+6Z/nNbUgm6qnDsa7BQgD3/vK8YbTT0CaJPyElnECDQXVCnkxyg9AAFw4Qlw1Q70AqYPEUJtfOIMqI94mNg8i1lqQVj81uJY4vXG3L5KCN6KoiTpcFwkeNyiKufjFjTzQWYDZhKqxfNtOa+neWG1Hg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=PQEIfvaf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=WItkBCzk; arc=none smtp.client-ip=103.168.172.145
+	 Content-Type:Content-Disposition:In-Reply-To; b=PmqtujZDarfVhlqqNn+lbdn1B2J8hPSFY3hFLy8vwMgZt+zu6CG1EeOmgTI78ktpM0KLfrioOc5BlGn5s1JGHvV3K4Nlt65JjH+rT7+2n1VK6Eslk4Uh0Vuof1Nlg+fq0aduWSTOmdxzGL1erMjPTiV3Dl0hUdL3Lr5VnBUc48E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=n36hKBy9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fdAbt1Dm; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="PQEIfvaf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="WItkBCzk"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 2E5B013801EF;
-	Thu, 15 May 2025 04:20:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="n36hKBy9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fdAbt1Dm"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 37F3511400CE;
+	Thu, 15 May 2025 04:23:00 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Thu, 15 May 2025 04:20:53 -0400
+  by phl-compute-05.internal (MEProxy); Thu, 15 May 2025 04:23:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747297253; x=1747383653; bh=vZEYnTu5ZZ
-	V3nl3NWaZx7Nv90VmYAkvo3RZB5H5EtMA=; b=PQEIfvafCaYkq0IEHgpT2qR+PV
-	sT9jgWWmipjY4TsEBQ5MIznD4Bt5x1ngSU2ACZnYxevRpw8ZOOeLCaZzoX2uCHj/
-	5JJJEwszEXg5vMMxA8eTYUCVK5m37bXHeuLq0Gph1TyRNqI824//xsRa1c621YNE
-	BFHY6PJ3yGjqe4qDM/Q5U2aXH3BVxOszmcqYdCyH6KpRkpUc6YAWd9mgu6ESzDBC
-	9eik2VLPU4s1dsDjCDyD3uMbgyOpyyVC4yTWzw40fmd4/fmk9wLbJjMXqeWKmisP
-	MdqRA51QSVE58b+sbyOM6JVLNR+VsMafScCz+87n1zW3JXGhih0q6TBWpkOA==
+	:subject:to:to; s=fm3; t=1747297380; x=1747383780; bh=LZflIv8jH+
+	8w782sLHgjVFPGu3HX0FmQEJFVUoCGuKY=; b=n36hKBy9gPPZC4fHSepvuq+ObN
+	HewHENm1y6XOU9MhHpzTvTY+MWeAZbo/waehHnKo5pkl22TwweXiL4G/nAiGphlU
+	PFcFlNv6r0FYek1OqyGwj+tuoAu406jR0OT9beqAIv2utZicMZLenZeCO8fthF8x
+	DgM+irddIrPld4ofdku4e1kvf7XJikQd5GPqMN18MZX6d1SlLMsMSuGkYlTfLIyk
+	z/gCpVuKHAuLjmmNFUJ2IWjEaqA6IWsYvEOdbWdrSFP3RRR88VX2cLxwW8ktCRYX
+	MavsO3uvBeunIg9HN/MoFSAJghVHbifD6iscXwEbzLl+T7uka8uI3UWFv1ww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747297253; x=1747383653; bh=vZEYnTu5ZZV3nl3NWaZx7Nv90VmYAkvo3RZ
-	B5H5EtMA=; b=WItkBCzkkgS8gGMvH2eJvEB+DwDSSs6pmw/oIYBEbvYWeZEKV5e
-	ixweqKGSMipbxlw4hws4xbBSK+8aMn1oUHKPy19zUTsHneBMAk5+qZrhpPeq8zU6
-	L7Fu4PyJxAKv5SEIR/jcJ2rgpEJ3JVTD3rQtKFcaAz91qKlXbEq2kk8j0RZvBvRr
-	Ox84fVsbrHkjnm6AHK+Ohv5pfE2XTCbVBU8EZlYxaxuCcjhydILr3/RYB1D8/3TB
-	1HNJ7KI8NPD6BjU7c+99q7XTtcX++o4WL6aWqxu66acJsmsiopLYt0vOYIbj7EhR
-	ZlSBo1Joo4uefcetNVjKpQyWmQhCyWTbKDQ==
-X-ME-Sender: <xms:5KMlaOHNbJIsr1Q9QWBjCuC8zQ7lFiOpzkEjAwfXLLbVKcCZTyGXtQ>
-    <xme:5KMlaPXqrUoC_oajNBHKNbEjsvMwLHOt6vJW-zHRaJeOR-zCtVtWJWKQCTaEWWC5e
-    wLhxPLuHeL1nrcLYQ>
-X-ME-Received: <xmr:5KMlaIKAYRTlkOyWmqfqTvDARQIDxPiLhvIHMtqvKiLCHmq4anmkk_5UIrh-TlEOwkcaKgnfKNuV1AlkYt4xjE5t_uHW3xdrzqZxupJtAh4>
+	1747297380; x=1747383780; bh=LZflIv8jH+8w782sLHgjVFPGu3HX0FmQEJF
+	VUoCGuKY=; b=fdAbt1Dm8ZN2ny2LUtMLPBnYo45I6eyT4bFtWES/6mYOUdjgEYY
+	gxlRK12xsnPxUp8hGc0DIUG0v9hvxmm+QbyTZlC620nfSeMHl8HYjbhd3S8LChfa
+	C4Lg6+YWTHhjGas6ZZHpqiZ5WqUIa8HIrTkkbNCmMigcSAXC1dQ44YzNBoQGHXQQ
+	ttZOYNublrmbvIXbugsNiMyMdRONs2tG/wETQvNP/KEd1laCFh6HU/udbE+/B+Jv
+	4xUWj7vWFV4xsBzk3HPBXNQG8U5eGR6hLBOBW7XxYK1aLylnXN9NsG1qIfY0bhnx
+	6mbKZZJYNPJcEp9cLHP3GQvi4XhSlSl52Vg==
+X-ME-Sender: <xms:Y6QlaEt5Iv8JhkXs7lVLllvnrGVzHKJP0n5KDmTn83UER1bRfX_13Q>
+    <xme:Y6QlaBcjwb2Otct4YZjona_6jKBh8ZpU2LlDxzr8oohqepC4truRduvhAqvB8qGrq
+    ahu1I9GL4koejRZOQ>
+X-ME-Received: <xmr:Y6QlaPzyVpPi6Yver7fshRWVtgthEKBTbapIofmHElRVqT6t0ig94tSR-sxgrBlAXY-LBc0zCu0wn69H2DPoc1vc8WaZYUqzXCTGiPRHCBc>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdelfeejucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
@@ -55,29 +55,33 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdelfeejucetufdote
     vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepvddpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:5KMlaIHvs78PYribvp3BrrvsbCBz8AMlimk5NZx1XS9wFKevwP9Y3Q>
-    <xmx:5aMlaEWk-i2mZN1eE2Nj59YmuVm_eGK6ShcKg8wB2WmjCZb4jFmS_Q>
-    <xmx:5aMlaLOL0ImZMONR-mofR7oOuqqqjhCb0ClkzRJED9wncQjNYs7N8w>
-    <xmx:5aMlaL3e74Dj7Nj-skh-ma9rrVa3VaECtwlBUtRGUsbX9Lv5Ogkm1w>
-    <xmx:5aMlaLzZqP454nFMJUgmavzNBsJQczUZzX_1enfHSTk3qxn99I__Dovh>
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
+    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:Y6QlaHNJh6f3YC2av_EuNZyn7pSsNItJh10p_Fk-x-vUrfv4619fCA>
+    <xmx:Y6QlaE9c34y6Yb559iWQqNdzYYG1d3YSHNKZYAs_4sJjtv2a8V-eYw>
+    <xmx:Y6QlaPXjw8O3jslZg2tEiFtr5XCJG7XpPfL4I5mZtQ1R7a55wraGbg>
+    <xmx:Y6QlaNe-r2e2cSW4XS5cWSpacD2zlmxz_9yUjLOd1fl1WJGnj5IQtg>
+    <xmx:ZKQlaAjm1s-5y8uH51JeYHivjFd8LEYpdZETiUJFrnJaRy1qo0dHDnFF>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 04:20:52 -0400 (EDT)
+ 15 May 2025 04:22:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 34c1758c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Thu, 15 May 2025 08:20:50 +0000 (UTC)
-Date: Thu, 15 May 2025 10:20:49 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b7138f12 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Thu, 15 May 2025 08:22:58 +0000 (UTC)
+Date: Thu, 15 May 2025 10:22:57 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 4/4] meson: parse TAP output generated by our tests
-Message-ID: <aCWj4Xi7SuG22_kK@pks.im>
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
- <20250506-pks-meson-tap-v1-4-5aaab2942a4c@pks.im>
- <CAOLa=ZSxPtMQdb8Hne6-WMEd9gKwWUC5hnCUCAaS2FfifqZHHA@mail.gmail.com>
+To: Toon Claes <toon@iotcl.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 00/17] object-store: carve out the object database
+ subsystem
+Message-ID: <aCWkYdRN1B__oYZ5@pks.im>
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+ <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
+ <871psrjlio.fsf@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,55 +90,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CAOLa=ZSxPtMQdb8Hne6-WMEd9gKwWUC5hnCUCAaS2FfifqZHHA@mail.gmail.com>
+In-Reply-To: <871psrjlio.fsf@iotcl.com>
 
-On Thu, May 15, 2025 at 12:48:23AM -0700, Karthik Nayak wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > diff --git a/meson.build b/meson.build
-> > index 94bd525dd7b..cd8df189d79 100644
-> > --- a/meson.build
-> > +++ b/meson.build
-> > @@ -2031,6 +2031,14 @@ if get_option('tests')
-> >      'timeout': 0,
-> >    }
-> >
-> > +  # The TAP protocol was already understood by previous versions of Meson, but
-> > +  # it was incompatible with the `meson test --interactive` flag.
-> > +  if meson.version().version_compare('>=1.8.0')
-> > +    test_kwargs += {
-> > +      'protocol': 'tap',
-> > +    }
-> > +  endif
-> > +
-> >
-> 
-> The change itself looks good. But I do have a question about this:
-> 
-[snip]
-> 
-> Shouldn't the '--interactive' flag also produce 'Ok: 1'. Instead it is
-> printing out 'Ignored: 1'. This is while I was testing on your series.
-> Seems to be fine on master.
+On Wed, May 14, 2025 at 04:48:47PM +0200, Toon Claes wrote:
+> Only one small question though, what's the point of the compatibility
+> layer in the last 5(-ish) commits? I mean if we add temp wrappers for
+> other topics in flight, then when/how do we convert that new code to
+> stop using the wrappers? Won't we remain having issues because there's
+> always something in flight?
 
-The answer is unfortunately "no". In interactive mode the expectation is
-that the user will, well, interact with the test. This has two
-consequences:
-
-  - The standard streams will be directly connected to the user's
-    console. This has the consequence that Meson won't be able to parse
-    the generated output anymore, and thus it labels the tests as
-    "ignored" because it cannot derive their status.
-
-  - Even if Meson intercepted the output it very likely wouldn't be able
-    to parse it. After all, we're in interactive mode, which means that
-    the user may be directly communicating with the tests. E.g. if you
-    use `test_pause`, then you'll be dropped to a shell and communicate
-    with it. The consequence is that the output won't follow proper TAP
-    format anymore.
-
-So it's basically impossible to parse TAP in interactive mode, which is
-why Meson then ignores the results. If all you want is to see verbose
-output you can do that with `meson test -v`. But interactive mode really
-indicates that you _want_ to get hands-on with the tests.
+As mentioned in the comment for those wrappers the expectation is that
+those will be removed once Git 2.50 is out. This is a common approach we
+have used in the past, as well: for global changes to functions with a
+lot of users we introduce wrappers that remain for the current release
+cycle.
 
 Patrick
