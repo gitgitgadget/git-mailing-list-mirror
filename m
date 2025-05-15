@@ -1,372 +1,113 @@
-Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C7611DB128
-	for <git@vger.kernel.org>; Thu, 15 May 2025 17:51:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 335121361
+	for <git@vger.kernel.org>; Thu, 15 May 2025 18:09:48 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747331489; cv=none; b=AT0c5mV0XRyZDLRtGf8sgTQDd8/ks6Arsar8kf8oPx/5KNuQUp3kwiPoHwB1GSQM1/lxejshxIXxVmcStyobf3szxsCiPtS219EpcmdKD0fwdyb/dHYnZY7VEvZa5DUgueFGYFLk5TgtHfyEalvFXCNmp3/YrmIP/mcyDkSisus=
+	t=1747332591; cv=none; b=B8yzVojx7c/McjThSKpCfuXPdhyh0dW7kHaodbnSH3g4TfSKgKNKgb8zNLGsVb+Zmxhjuv8mMOm9Mk/Lpl+gHkRe35s/kaQ7wAKEIble5EtR3/rJQloKdD5i9rx7FQYbTcKpWstLXdG7Cp2GS5VaBgEEcinZT6uxXsA1/VPGPgo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747331489; c=relaxed/simple;
-	bh=OzfqOlbpYApaD1Swlp7PU5RsBYo9GUcINzpusaRj9vo=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=oMw+aEfT6f0GsIzydxpNEt42tCJmSIh7ZXK7Rk5vFGLkGnwd/Q6xCAGyZDBv5qNrnVkqQUQULFrD3JDbmsxX1+LfzcZf6I8cDizyhjgHef2T87euaqtIO27C+rWuArOnp4g4or/pryhgDXCHFFB353DrFzQQPxd86d92zn/Cq00=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
-Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: eschwartz)
-	by smtp.gentoo.org (Postfix) with ESMTPSA id 28A5234372D;
-	Thu, 15 May 2025 17:51:26 +0000 (UTC)
-Message-ID: <8ca4ebd7-1058-4694-ba50-baf248b45050@gentoo.org>
-Date: Thu, 15 May 2025 13:51:23 -0400
+	s=arc-20240116; t=1747332591; c=relaxed/simple;
+	bh=YoHft+tMPLWfkv4kTXP/p7VI7EcQOBd5kp6YEQygS54=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=d0TiPR+L68QAurQZFzCiky7SmKnjcLJ8iDI/9TKMaaI8UCkQvbTqH2cKe/N7RQ51UeM9R4K4OmWpXcuwEHQ0UPNLJ4K8pZC7iE9I2QVGVARFzEqBkDh2ufIfz0k+GS9ALNuTUZhW4gAm8r6WVAUF/tGBOf/2Cb9TYoSPy4qnrG0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M0gL/axo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=qdl3eGTh; arc=none smtp.client-ip=103.168.172.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M0gL/axo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="qdl3eGTh"
+Received: from phl-compute-07.internal (phl-compute-07.phl.internal [10.202.2.47])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 436A71140108;
+	Thu, 15 May 2025 14:09:48 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-07.internal (MEProxy); Thu, 15 May 2025 14:09:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747332588; x=1747418988; bh=YoHft+tMPL
+	Wfkv4kTXP/p7VI7EcQOBd5kp6YEQygS54=; b=M0gL/axoNJo0w5BxNXMK2XUo9K
+	6pKTJq7mY6tjTXQuglJaZYaK1Awe6chKjGFs0hmxmYf+dLAmLtyysyJMiqwOV0Qk
+	Hy6tQfrYn1vq5vR8gRYZDUJJg696176Tu5URwoR80wQf/o8vchY91mu7oO5AEg63
+	gOA+VplfLEPx7GncNfM80fboSR41cy2b5P6ruUkQe9X3hao3MW/Yo/LsBDTvkxE+
+	CU1LcD6VAvGoEKqye3Gyq2aqwYXJ/HhQ+r3RU4NUgSDSbhU+e2CbepaXS0m9aCKi
+	Pi99rfmApC7ws8pwahuMKknECueLt3Dh+Obo0EjkLRJF1i3pk00k2fI3h5Pw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747332588; x=1747418988; bh=YoHft+tMPLWfkv4kTXP/p7VI7EcQOBd5kp6
+	YEQygS54=; b=qdl3eGThmF/HhrZs8G+0JUHZpqrkuDEcbyhniXgbAm3UY9ZJ0mL
+	DT4s7WvdUR5EYCAS+9VK4QeFHH8U2GWWKclltOn4RhXbieD3aj7rAoQmKgPnPzRw
+	on2h0oyKSBkIBcLlYK59ADFSlGo7Kh7N16mmdfvwq2rueGqv8iba5i2VtJiLxFXF
+	sXYkaMInX+7hSK4E06wtJ5XB0eOCIgLbiOeR9J9z840xC02rBl6xa6OeZEYhEATQ
+	Amd7jQ45dijE0JK2+FsZlrWCONO3xKjse6vJin2+wPE6mmj9tR2H5l8FXL5vpnBd
+	Ku8q7Lo/W/4A9AS8IUALZkPoJP5sML8j4Sw==
+X-ME-Sender: <xms:7C0maKwv6ftSkdSYKjK01lc_0elaDf5xa3vaE-bWS-GLwKo1kUklcA>
+    <xme:7C0maGTwoyU5xXd4zzKGFmbNL-SVTpBYcA4Z6pHOoSNQm41BSmWYtm721PAhI1o8q
+    nInzNqQFlo83u-CEA>
+X-ME-Received: <xmr:7C0maMWKV5x5AxQyicEiVUB_sOFGbp07BoLvvhzspT7vP_BMi6t5ClFxrKw5h6Fr77BLhJlSmPAhPefH1FSDfxZjkuDu_Hivt0M_uGg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddtheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrtghosgdrkh
+    gvlhhlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepjhgrtghosgdrvgdrkhgvlhhl
+    vghrsehinhhtvghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7C0maAiAckCIPiRgoyusWkqkMF5Q7hokA-zVzlvgHc5SwuAhHWx8pQ>
+    <xmx:7C0maMB3a4PFPxrgOakxcOtQl6BRtQgbjXwCc6AdHG5mql4zYEqFLw>
+    <xmx:7C0maBIZP-iNmlsFdoAhklfaQ7H0jeeGHiZQyrBrp0FqcbED0Di3eQ>
+    <xmx:7C0maDBqmb5iYUjf7wZbKjSDq64pIVjbeVir_RYqMMl5hq6VG9ycKA>
+    <xmx:7C0maK6wy1A_EoGxVwAZpTuvk4KbGbhSz_RrPRIo9CvR_eTPCyjKpHyw>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 15 May 2025 14:09:47 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jacob Keller <jacob.keller@gmail.com>
+Cc: Jacob Keller <jacob.e.keller@intel.com>,  git@vger.kernel.org
+Subject: Re: [PATCH RFC] diff --no-index: teach option to exclude files by
+ pattern
+In-Reply-To: <CA+P7+xqg3S0q=n3nrTUJJuYicooDm83Q32AkpzRt1u7rH3n3Pw@mail.gmail.com>
+	(Jacob Keller's message of "Thu, 15 May 2025 09:27:45 -0700")
+References: <20250514204014.3106177-1-jacob.e.keller@intel.com>
+	<xmqqzffe7vbh.fsf@gitster.g>
+	<CA+P7+xqg3S0q=n3nrTUJJuYicooDm83Q32AkpzRt1u7rH3n3Pw@mail.gmail.com>
+Date: Thu, 15 May 2025 11:09:46 -0700
+Message-ID: <xmqqtt5lzqxh.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] meson: correct path to system config/attribute
- files
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, Patrick Steinhardt <ps@pks.im>
-Cc: 'GIT Mailing-list ' <git@vger.kernel.org>,
- Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-4-ramsay@ramsayjones.plus.com>
- <aCQdznsNfaIeSPDI@pks.im>
- <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
-Content-Language: en-US
-From: Eli Schwartz <eschwartz@gentoo.org>
-Autocrypt: addr=eschwartz@gentoo.org; keydata=
- xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
- I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
- CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
- CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
- mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
- 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
- Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
- TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
-In-Reply-To: <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------ZYJV3v0gzM3NtsxIZZiLQMmD"
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------ZYJV3v0gzM3NtsxIZZiLQMmD
-Content-Type: multipart/mixed; boundary="------------8Rk6aR7L2gwMIO6fGwmCMgk0";
- protected-headers="v1"
-From: Eli Schwartz <eschwartz@gentoo.org>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>, Patrick Steinhardt <ps@pks.im>
-Cc: 'GIT Mailing-list ' <git@vger.kernel.org>,
- Junio C Hamano <gitster@pobox.com>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-Message-ID: <8ca4ebd7-1058-4694-ba50-baf248b45050@gentoo.org>
-Subject: Re: [PATCH v2 3/5] meson: correct path to system config/attribute
- files
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-4-ramsay@ramsayjones.plus.com>
- <aCQdznsNfaIeSPDI@pks.im>
- <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
-In-Reply-To: <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
+Jacob Keller <jacob.keller@gmail.com> writes:
 
---------------8Rk6aR7L2gwMIO6fGwmCMgk0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+> I guess the one weirdness is that pathspecs must come after the first
+> 2 arguments, since we need to find 2 paths first. But this matches the
+> way that treeish must come first in git diff-tree -r takes treeish and
+> then pathspecs, and you can't re-order them arbitrarily either.
+>
+> Does this sound like a reasonable extension to the existing 2 argument
+> form of git diff --no-index?
 
-On 5/15/25 12:42 PM, Ramsay Jones wrote:
->=20
->=20
-> On 14/05/2025 05:36, Patrick Steinhardt wrote:
->> On Tue, May 13, 2025 at 08:17:24PM +0100, Ramsay Jones wrote:
->>> diff --git a/meson.build b/meson.build
->>> index 48f31157a0..7f811030bd 100644
->>> --- a/meson.build
->>> +++ b/meson.build
->>> @@ -769,6 +767,20 @@ libgit_c_args =3D [
->>>    '-DSHELL_PATH=3D"' + fs.as_posix(target_shell.full_path()) + '"',
->>>  ]
->>> =20
->>> +system_attributes =3D get_option('gitattributes')
->>> +if system_attributes !=3D ''
->>> +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + system_attributes +=
- '"'
->>> +else
->>> +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + get_option('sysconf=
-dir') + '/gitattributes"'
->>> +endif
->>> +
->>> +system_config =3D get_option('gitconfig')
->>> +if system_config !=3D ''
->>> +  libgit_c_args +=3D '-DETC_GITCONFIG=3D"' + system_config + '"'
->>> +else
->>> +  libgit_c_args +=3D '-DETC_GITCONFIG=3D"' + get_option('sysconfdir'=
-) + '/gitconfig"'
->>> +endif
->>
->> Nit: I still think that we should use `get_option('sysconfdir') /
->> 'gitattributes'`, with the slash instead of a plus, mostly because it =
-is
->> more idiomatic and reads better. But that alone doesn't warrant a
->> reroll.
->=20
-> OK, if I need to re-roll, I will fix this up. (but see below)
->=20
->>>  editor_opt =3D get_option('default_editor')
->>>  if editor_opt !=3D '' and editor_opt !=3D 'vi'
->>>    libgit_c_args +=3D '-DDEFAULT_EDITOR=3D"' + editor_opt + '"'
->>> diff --git a/meson_options.txt b/meson_options.txt
->>> index 8547c0eb47..ff877e67ce 100644
->>> --- a/meson_options.txt
->>> +++ b/meson_options.txt
->>> @@ -3,9 +3,9 @@ option('default_pager', type: 'string', value: 'less'=
-,
->>>    description: 'Fall-back pager.')
->>>  option('default_editor', type: 'string', value: 'vi',
->>>    description: 'Fall-back editor.')
->>> -option('gitconfig', type: 'string', value: '/etc/gitconfig',
->>> +option('gitconfig', type: 'string', # default 'etc/gitconfig'
->>>    description: 'Path to the global git configuration file.')
->>> -option('gitattributes', type: 'string', value: '/etc/gitattributes',=
+Absolutely.
 
->>> +option('gitattributes', type: 'string', # default 'etc/gitattributes=
-'
->>>    description: 'Path to the global git attributes file.')
->>
->> I'd prefer if we documented the default value in the description.
->> Otherwise it is impossible to discover it without having a look at the=
+Or you could even use "--" convention in the examples you would
+write in the documentation, even though you may not absolutely need
+it for the purpose of parsing the command line, to highlight the
+fact that two things to be compared is given and then with an
+optional pathspec after the two things, e.g.,
 
->> sources.
->=20
-> Hmm, but how do you get the description! :)
->=20
->=20
-> I applied the following patch on top:
->=20
->   diff --git a/meson.build b/meson.build
->   index 28276e5305..bd14bc15a1 100644
->   --- a/meson.build
->   +++ b/meson.build
->   @@ -771,14 +771,14 @@ system_attributes =3D get_option('gitattributes=
-')
->    if system_attributes !=3D ''
->      libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + system_attributes +=
- '"'
->    else
->   -  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + get_option('sysconf=
-dir') + '/gitattributes"'
->   +  libgit_c_args +=3D '-DETC_GITATTRIBUTES=3D"' + get_option('sysconf=
-dir') / 'gitattributes"'
->    endif
->   =20
->    system_config =3D get_option('gitconfig')
->    if system_config !=3D ''
->      libgit_c_args +=3D '-DETC_GITCONFIG=3D"' + system_config + '"'
->    else
->   -  libgit_c_args +=3D '-DETC_GITCONFIG=3D"' + get_option('sysconfdir'=
-) + '/gitconfig"'
->   +  libgit_c_args +=3D '-DETC_GITCONFIG=3D"' + get_option('sysconfdir'=
-) / 'gitconfig"'
->    endif
->   =20
->    editor_opt =3D get_option('default_editor')
->   diff --git a/meson_options.txt b/meson_options.txt
->   index ff877e67ce..7a4b896f7e 100644
->   --- a/meson_options.txt
->   +++ b/meson_options.txt
->   @@ -4,9 +4,9 @@ option('default_pager', type: 'string', value: 'less'=
-,
->    option('default_editor', type: 'string', value: 'vi',
->      description: 'Fall-back editor.')
->    option('gitconfig', type: 'string', # default 'etc/gitconfig'
->   -  description: 'Path to the global git configuration file.')
->   +  description: 'Path to the global git configuration file. (default:=
- etc/gitconfig)')
->    option('gitattributes', type: 'string', # default 'etc/gitattributes=
-'
->   -  description: 'Path to the global git attributes file.')
->   +  description: 'Path to the global git attributes file. (default: et=
-c/gitattributes)')
->    option('pager_environment', type: 'string', value: 'LESS=3DFRX LV=3D=
--c',
->      description: 'Environment used when spawning the pager')
->    option('perl_cpan_fallback', type: 'boolean', value: true,
-> ----
->=20
-> So, the addition of the '(default: <value>)' to the description field i=
-s
-> intended to mimic the setup help text for the built-in meson options:
->=20
->   $ meson help setup
->   usage: meson setup [-h] [--prefix PREFIX] [--bindir BINDIR] [--datadi=
-r DATADIR]
->  =20
->   ...
->  =20
->   options:
->     -h, --help                            show this help message and ex=
-it
->     --prefix PREFIX                       Installation prefix (default:=
+ $ git diff --no-index git-1.6.0 git-2.43.0 -- Documentation/
 
->                                           /usr/local).
->     --bindir BINDIR                       Executable directory (default=
-: bin).
->     --datadir DATADIR                     Data file directory (default:=
- share).
->     --includedir INCLUDEDIR               Header file directory (defaul=
-t:
->                                           include).
->     --infodir INFODIR                     Info page directory (default:=
+or something silly like that.
 
->                                           share/info).
->     --libdir LIBDIR                       Library directory (default:
->                                           lib/x86_64-linux-gnu).
->     --licensedir LICENSEDIR               Licenses directory (default: =
-).
->     --libexecdir LIBEXECDIR               Library executable directory =
-(default:
->                                           libexec).
->     --localedir LOCALEDIR                 Locale data directory (defaul=
-t:
->                                           share/locale).
->     --localstatedir LOCALSTATEDIR         Localstate data directory (de=
-fault:
->                                           var).
->     --mandir MANDIR                       Manual page directory (defaul=
-t:
->                                           share/man).
->     --sbindir SBINDIR                     System executable directory (=
-default:
->                                           sbin).
->     --sharedstatedir SHAREDSTATEDIR       Architecture-independent data=
- directory
->                                           (default: com).
->     --sysconfdir SYSCONFDIR               Sysconf data directory (defau=
-lt: etc).
->  =20
->   ...
->  =20
->   $=20
->=20
-> Indeed, there appears to be no way to display the project specific opti=
-ons
-> to the user *before* configuring a build directory.=20
->=20
->   $ pwd
->   /home/ramsay/git
->   $ meson introspect --buildoptions
->   Current directory is not a meson build directory.
->   Please specify a valid build dir or change the working directory to i=
-t.
->   $=20
->=20
-> Note that I don't recommend 'meson introspect --buildoptions' as a mean=
-s
-> for the user to inspect the available options, but it does allow me to
-> check that the description field looks correct:
->=20
->   $ meson introspect --buildoptions build | jq | grep gitconfig
->       "name": "gitconfig",
->       "description": "Path to the global git configuration file. (defau=
-lt: etc/gitconfig)"
->   $ meson introspect --buildoptions build | jq | grep gitattributes
->       "name": "gitattributes",
->       "description": "Path to the global git attributes file. (default:=
- etc/gitattributes)"
->   $=20
->=20
-> The only way I have found to display the project options to the user (a=
-fter
-> configuring the project) is using 'meson configure', thus: =20
->  =20
->   $ meson configure build
->  =20
->   ...
->=20
-> Note that this display shows the *current* value, not the default value=
-, and
-> (once again) in this case there really isn't a default value! ;) (iff p=
-refix
-> is exactly '/usr', then the 'default' is eg. '/etc/gitconfig').
->=20
-> Of course, the current value would be the default value unless you have=
-
-> set the value on the command-line (of which you would presumably be awa=
-re).
-
-
-Well, so-so.
-
-
-eschwartz@acleverhostname ~/git/git $ meson configure .
-
-meson.build:208:0: ERROR: None of values [] are supported by the C
-compiler. Possible values for option "C_std" are ['none', 'c89', 'c99',
-'c11', 'c17', 'c18', 'c2x', 'c23', 'gnu89', 'gnu99', 'gnu11', 'gnu17',
-'gnu18', 'gnu2x', 'gnu23']
-
-
-But also,
-
-$ sed -i '/c_std=3D/d' meson.build && PAGER=3Dcat COLUMNS=3D80 meson conf=
-igure .
-
-WARNING: The source directory instead of the build directory was specifie=
-d.
-WARNING: Only the default values for the project are printed.
-
-Core properties:
-  Source dir /home/eschwartz/git/git
-
-Main project options:
-
-  Core options       Default Value        Possible Values
-Description
-  --------------     -------------        ---------------
------------
-  auto_features      auto                 [enabled, disabled,  Override
-value of
-                                           auto]               all
-'auto'
-                                                               features
-
-
-[...]
-
-
-I'm not completely certain why this evaluates as an empty node:
-
-```(meson.version().version_compare('>=3D1.3.0') ? 'gnu99,c11' : 'gnu99')=
-
-```
-
-
-but it (meson configure) is part of the AST interpreter, not the runtime
-one, which I know less about...
-
-
---=20
-Eli Schwartz
-
---------------8Rk6aR7L2gwMIO6fGwmCMgk0--
-
---------------ZYJV3v0gzM3NtsxIZZiLQMmD
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaCYpmwUDAAAAAAAKCRCEp9ErcA0vV7nm
-AQDJRZ6VQVlQoMkNRqxbtYxvAWPA2I3Ot/z3hem5oBlw7wEAv3S/tOu3YJ1TayvST/p7NMlesv00
-sDQIX/1f20Ukhw8=
-=cEIR
------END PGP SIGNATURE-----
-
---------------ZYJV3v0gzM3NtsxIZZiLQMmD--
