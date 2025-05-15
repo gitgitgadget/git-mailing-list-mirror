@@ -1,84 +1,95 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54F081C28E
-	for <git@vger.kernel.org>; Thu, 15 May 2025 12:58:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E3202253B2
+	for <git@vger.kernel.org>; Thu, 15 May 2025 12:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747313885; cv=none; b=fCsW/iZOBUvLQJI+SDTGmR9TgOSmKq/XFukg1F9asCH7qs/drAEeVEr0jnY+gedmSdVDU1RpSJ6QwfAUGtL2dApMTX2xKsbSDTZEt1YbK5byPUG5k76Td4sPTPBqvB5MUkLpSTDhJ2teGMgV+5Uhduw+SrJQN77Z+jhtyHwVKcQ=
+	t=1747313887; cv=none; b=EOVoO8vUyD65y+vGC+Ov7jzxc5Ptz9ftwQOGbFVynK2lIIgWuD9qwh1Nd0gUxj+PdnGGBnkVwPOr1K/iNgBrIh3fzwUV355CGsGkPpTDJF3i0t1CoYU7IEGoIfwVnaKwvHHqZJfeHJBEsx7PGQSv3W+5afPy4GOB7wWxgrgEFdg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747313885; c=relaxed/simple;
-	bh=X6XU9Fx8JEjaX3WHkxk5Pj+LMOd72En8Xiq5tC6+ATg=;
+	s=arc-20240116; t=1747313887; c=relaxed/simple;
+	bh=vqUE5sDqcKxgpvqKb5uX++TzgHsup5f/zt3ttpgioKA=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=sAWF7E82Suhnp/HyN2M013WxyWd6QLuLxLn6LvSm81j7L2hMbsg1ViT6ppOA26UfMTQzrZDtfwbTradpB7y6abFYPmasfW/grSzgdbUxmjrmOhAeN/j7dccp+4QPL6OnSLvntLqXinRdtEd4PW3xJ1LBXsHANIlvz76QGCsUBig=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iWjVBu/g; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=L+jGldg9; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=ErKRZJL6Z9V1KND4OcXtbBpBYUabdkCd0kT5flq5Ub2zyOld9GBPzVWOaF3H30R0cRZk8sQzzDpn7J6AfnvjJDeaTLfGDqguDxGY4euU903H4JSOZtVqJMQviSdCOenA8g7TiETmwIt4P/Gam0/rQGMR1WZYRFbQe2h2L+sXBPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Sp7rBU2c; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PPWHIM3a; arc=none smtp.client-ip=202.12.124.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iWjVBu/g";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="L+jGldg9"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2BCB01140174;
-	Thu, 15 May 2025 08:58:02 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Sp7rBU2c";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PPWHIM3a"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3A16B2540116;
+	Thu, 15 May 2025 08:58:04 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Thu, 15 May 2025 08:58:02 -0400
+  by phl-compute-06.internal (MEProxy); Thu, 15 May 2025 08:58:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747313882; x=1747400282; bh=/8it4td77h
-	Em29d7J5aiegSYi68O1tDbR3CQFF/e3bo=; b=iWjVBu/gkg9e62cWaRAz5s7jmc
-	0i5XLAZg4YZhJwVNC3lqNtA8pGRVWdAlFlqBtPcLDodXyEjPtjrHWRT7WJtVH527
-	VJ6bpK6arb2K62jbVek85XKf8jeQiqVoMgjOwY+YBMQy8HyVlOVEJzPFwq6f1vgh
-	nA42g1rfEq0k4kH5QB4olxz/fx/9aya7zjRA/+/DxttL4B8R9vKKVkMCWauddoEo
-	1JQ6yjYfWwn//mxJ5BuLM0tK1jhqWy57zVxwOX0fcGMfTVqccrdVnzQQVechkL7i
-	fuTv0/YjhjpEs97OiIo5ojHTOMWdTRxopVuHlz4SgdN/xX8QVU5TTXmw5rxQ==
+	:subject:to:to; s=fm2; t=1747313884; x=1747400284; bh=VAlkFfT7/a
+	xCD8x502bE2Yx3eKeeCNkL0Qo00heLqbw=; b=Sp7rBU2cBcIOWXdYVzasKADdI3
+	1c7cQGU+8RY+CJI4BT3nlIMCQMFzp+Ux6mytXtS/nOVp1qBXD8+akuNr30qPdOP9
+	Qg/qwVoExpBT0YtZef+Hqo5CCG9CgGC4XYyTyIKmIX2+UvmlFcC1s/biFyC5kn+T
+	P6nPCgseMBfxd+1L/1CNdE4jycjYJ/BANOulsNsuUuqY001fAUCwpKzfb8o7kcQ+
+	G6HQyIvHacw0maP6xDDVB9AHUElXSXYCmTY2IL24sXZN5BeVeKcIUS9JXJpdoqd1
+	O0unB0WeP8VGiiws7qrj5cgaO+dKfcQwfj9tQGKWWaiZZvKcUd/nlomjstzw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747313882; x=1747400282; bh=/8it4td77hEm29d7J5aiegSYi68O1tDbR3C
-	QFF/e3bo=; b=L+jGldg9+QoAIQmML4vtMMCGgcGTF8PoY23X313Rmpn7Cj3fs5h
-	9aXca1JUBxMBrxikeL89I1pqAfX9H/9DgCO1PQu9V+g9A0aGjdkakgTxFFJP5kth
-	O6lrH0R1RCZ/SGjbtomZmEFgaftuMnR1jPDGdUd0Jam1qhuPaJPNpOvdPD1UTrPw
-	qnUiXZiD9PGYflu9Lr5bp7iKI/SvlxBVMEaSWoavULFQ8pRs2Rk/U4luTvXs7Hn3
-	TdR8crrIoq7+ng/NViSqyNXRrjeH8NoNax7XqvwWYK00cPOSyiaUTR1tbxJLUurX
-	FMHI/iAjlLaInRUn2tKnibKNYDLlv5Q8PcQ==
-X-ME-Sender: <xms:2eQlaBtXQ3Oh_2tL-hUALoAPD0dEHqpLjWyPsSUEQ0Bo3RIhsCGlCA>
-    <xme:2eQlaKd0yJKr15jhSjEtv7l44Y-n0VMw4tvu77es1Utu_kKRIFmAPx1-ZlEXMODyK
-    y8QNcjNc8mseVTb4g>
-X-ME-Received: <xmr:2eQlaEwNfOsk1vEmEyy7bWAwIH9qteFQQPmFUFDEXhZq3F2o5QXADz7MFPtXJIkZoF-14fg0yoB2d-UvK0ztM6pdJUQjklXyJqeNnoo>
+	1747313884; x=1747400284; bh=VAlkFfT7/axCD8x502bE2Yx3eKeeCNkL0Qo
+	00heLqbw=; b=PPWHIM3aL8tZEFduWxBiJUQyESsgTmknhRuzCbEUgi/1dPWx0Jt
+	JTLcSTTnMRE5t9v70eca4xr+X99UpI/me1x+OUBoGcET9h+9TWtEHdfLBV2R4LcA
+	pSZU+21+q4IJHCXQsd8+PjtK5t7ep1tP82aovVdojcHXncIIoqI0DPKtE3Cb7u11
+	8qWTyWfqtnaFoBCK29fAK7uDDjyDmcHOty8FECtpUuLqkSwAThPbXf1k+uttRtu7
+	Edsp68WAqB9l3cFa793PsRj2u5N2pJd05XljwESuWPPqz5WOSA4/hf5QqRLjWPoX
+	zHHemMR8F3uEHZu90B352ouO21BxS2TkpSQ==
+X-ME-Sender: <xms:2-QlaHmM2AZnR2cSX6n7ZHrCXPRpbo6-9rvNV1tSMyXM2wHt3DJncA>
+    <xme:2-QlaK2h6i1yV9x-ELItSLW4bicOXQh8GExOERIhahaWg2-wMsZR7hQ1iclS2OvKH
+    fVSwHUroQhPS7bMwg>
+X-ME-Received: <xmr:2-QlaNqcBGMcqEYjuqB024gMOVyJ7b0vFkHSIzJKrvajgN7wFEkZ2zCYdBKzXFrQkcGhTJIrNsyJtELniQKKel8lvapH6tVYRGA37cI>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdeftdelledvucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
     tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
-    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghffh
-    esphgvfhhfrdhnvghtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthhopehg
-    ihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:2eQlaINdtyZKU5PUMwWneJqk5B6vrcRQldtKWkvwkbV4g6NZ7HKXaQ>
-    <xmx:2eQlaB9HHkVKDhnENpVZtB6kCsE35zjOVJqsUzf1gw-QhGjo2rXcBA>
-    <xmx:2eQlaIW-RJWurAlQlFJZUQcQDM0Ga-k7aZo5VRGz9k9xrDdZKaVPSg>
-    <xmx:2eQlaCcuqrw3XOnE-Cia79jEg_cUAYvrc1Z5Ufus3iLpcv5TlJyJyA>
-    <xmx:2uQlaGjxNuju9nIdV4cx7MV1V3GQ_Hn_O7mUPd3Y0G-ol1_-m-k1wmFn>
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
+    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgr
+    shhtmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvg
+    gtohdrtghomhdprhgtphhtthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghi
+    lhdrtghomhdprhgtphhtthhopehlvghonhhmihgthhgrlhgrkheisehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2-QlaPkQvjdbtVS4SK1DKI9w1Pr9FEVjYxB0koMwrggdrbEZVuDLUA>
+    <xmx:2-QlaF20_E6S_X6e5tcwtudESfzZ6JO8Lkj0sQHFfnfTsXWjZVWOxQ>
+    <xmx:2-QlaOv1RhgGefYedCCNXEsXbFRrd6righeBX_PjNQIslUC37GS_0Q>
+    <xmx:2-QlaJVoaQiX994QwBeZ_AwB3hgNt6mmidasZwip5bCd3cDaCCy_3w>
+    <xmx:3OQlaADtRBz-ittWeMmHcE0iaMwUOXMKuXOMnTl6twrlGEGTax1Lmttr>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 08:58:01 -0400 (EDT)
+ 15 May 2025 08:58:03 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: shejialuo <shejialuo@gmail.com>
-Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Patrick Steinhardt
- <ps@pks.im>
-Subject: Re: [PATCH v5 0/3] align the behavior when opening "packed-refs"
-In-Reply-To: <aCS7O8tNekg_u9Wp@ArchLinux> (shejialuo@gmail.com's message of
-	"Wed, 14 May 2025 23:48:11 +0800")
-References: <aCMnrwkoJ2WyqGZT@ArchLinux> <aCS7O8tNekg_u9Wp@ArchLinux>
-Date: Thu, 15 May 2025 05:57:59 -0700
-Message-ID: <xmqqmsbe3uaw.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Leon Michalak via GitGitGadget <gitgitgadget@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>,  Christian Couder <christian.couder@gmail.com>,
+  Leon Michalak <leonmichalak6@gmail.com>
+Subject: Re: [PATCH v2 3/4] add-patch: respect diff.context configuration
+In-Reply-To: <d878fe4d-163d-415d-846f-f5541cacb22a@gmail.com> (Phillip Wood's
+	message of "Wed, 14 May 2025 16:13:11 +0100")
+References: <pull.1915.git.1746436719.gitgitgadget@gmail.com>
+	<pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
+	<f16d3de86110ee61599459a25764248b52883b52.1746884789.git.gitgitgadget@gmail.com>
+	<f00cdfa1-343a-4fa0-bce5-e06d1ed62c22@gmail.com>
+	<xmqqzffgh5rf.fsf@gitster.g>
+	<d878fe4d-163d-415d-846f-f5541cacb22a@gmail.com>
+Date: Thu, 15 May 2025 05:58:02 -0700
+Message-ID: <xmqqh61m3uat.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,19 +99,32 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-shejialuo <shejialuo@gmail.com> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> As discussed in [1], we need to use mmap mechanism to open large
-> "packed_refs" file to save the memory usage. This patch mainly does the
-> following things:
+> On 13/05/2025 16:47, Junio C Hamano wrote:
+>> Phillip Wood <phillip.wood123@gmail.com> writes:
+>>> On 10/05/2025 14:46, Leon Michalak via GitGitGadget wrote:
+>>>
+>>>> @@ -78,6 +82,19 @@ void init_add_i_state(struct add_i_state *s, struct repository *r)
+>>>>    	repo_config_get_string(r, "diff.algorithm",
+>>>>    			       &s->interactive_diff_algorithm);
+>>>>    +	if (!repo_config_get_int(r, "diff.context", &context)) {
+>>>> +		if (context < 0)
+>>>> +			die(_("%s cannot be negative"), "diff.context");
+>>>> +		else
+>>>> +			s->context = context;
+>>>> +	};
+>>>> +	if (!repo_config_get_int(r, "diff.interHunkContext", &interhunkcontext)) {
+>>>> +		if (interhunkcontext < 0)
+>>>> +			die(_("%s cannot be negative"), "diff.interHunkContext");
+>>>> +		else
+>>>> +			s->interhunkcontext = interhunkcontext;
+>>>> +	};
+>>>
+>>> Thanks for changing this. This iteration of the code changes looks good
+>> Lose the ';' (semicolon) after closing {brace}s.
+>> This is C; you do not need an empty statement after a {block}.
 >
-> 1: Fix an issue that we would report an error when the "packed-refs"
-> file is empty, which does not align with the runtime behavior.
-> 2-4: Extract some logic from the existing code and then use these
-> created helper functions to let fsck code to use mmap necessarily
->
-> [1] https://lore.kernel.org/git/20250503133158.GA4450@coredump.intra.peff.net
->
-> Really thank Peff and Patrick to suggest me to do above change.
+> Oh well spotted, I'd missed that
 
-This round looks good to me.  Queued.  Thanks.
+Heh, with enough number of eyeballs, all the bugs are shallow.
