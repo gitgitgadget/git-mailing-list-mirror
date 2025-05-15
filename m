@@ -1,151 +1,90 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F50525A2B2
-	for <git@vger.kernel.org>; Thu, 15 May 2025 18:51:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AB9528B414
+	for <git@vger.kernel.org>; Thu, 15 May 2025 18:55:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747335107; cv=none; b=d3ThZZXs0osv+dyAcQ+gRFp4uSDXomoYcdJ3INT6aoYMdgEYl6bxm/eWTI1HtJgDZrIAsp0/Q4/7UVWp9NA8aGmMwKOBq2R4TPsvcRy0vIIbi2wIh4zmVJoabt/hIwrLNgU0RGYBih8xtCkQAf+KFPHLX2jaS083OyvJqQ0vo1c=
+	t=1747335346; cv=none; b=t/tDhYN/K/D20Wf0DVu2S8s6q7q5C20lKpuP1Dw0lFpx5AOiR6jdyCiYrS3DrhPEg7I/xbORuVIh11x6Wu4f8wFJXQTksqJrxXX6FItd+N6iL5Wfo5pzaTGSnhTYO2hS4Oufr4imttKm6iXGqxWWhNUiSWJoZmKdo7UP0ovooGs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747335107; c=relaxed/simple;
-	bh=w6aqbIWDTjD8GDe59r20oyMh4GwAWHQS+j7u8d9oKB8=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IL9FAxE/sFPQ2XLGZSNstYlvX9FzVDzqed7RTjrMgs6L/Dx0W7wblECpckELPCR6S5LIOeAWlCP0LPbAKVMkD2h03MyLrocF6x8C2eCPu7gvnbJGFQgmC4yB9VljIwDQmDn1+9fyVh5SLyYu3tXuSifbFyYwtBgJ2Tqc6g7up8c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hlR8QVuF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=b9X+bAHN; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747335346; c=relaxed/simple;
+	bh=fuMPmQtvOng0t2UU0XZXSu5+osRDtFQIpj8l7whqN1Y=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tnpVb5hB6BnXX4nnswhsXtwNHcHqbkSHOORx9tpcPKYQhTjttvMliSMuWyj13BwE+8Cg7eao1BbMVGsGDUKjBbuSb16yHmLhp2Np4WXejCbqmLx6BbTW3fw3nbfVptTDl4TjzIOSypZ3jYDxtnVyX6ESVBXSLF+cafBDi9hAtcw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=dc/U1eiP; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hlR8QVuF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="b9X+bAHN"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 827691380205;
-	Thu, 15 May 2025 14:51:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Thu, 15 May 2025 14:51:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747335102; x=1747421502; bh=aaKMxwHNqv
-	q5wZvXzaNEoT72HhubJ3kBiYHaRx1hFO8=; b=hlR8QVuFfNSDEJwkKkny5PsClO
-	YfruqGFv+Ih6vsyE79e/j/wpenqT/pwf5w0N4dpiwzNDipwvq8d65ixsKIhQGriC
-	3cTe4ds2WvpgvYfmtGezTpk19VkS7u1H3Uzj5kg7dWEGc9+gGvFFJP4+pne/S/6C
-	ns193OG3xudS9RpRGJom1OQ3E7xDyzhdOffldDlZIMe58FN4o9NQWp0xrX869pmt
-	WSIAkDTfQCd0SUtOPbk+Yv13nBWukkpAIZsG2hPxfW4anW7XNogKp0h0PVOgYgao
-	76W4J4tlHf2d4c7YN6FSFKEizaIgtSXUCnjDzeVd0CsG3k4BUixNhmat4mxQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747335102; x=1747421502; bh=aaKMxwHNqvq5wZvXzaNEoT72HhubJ3kBiYH
-	aRx1hFO8=; b=b9X+bAHNfIeVLdjV1GX+HWdbLkIuQmrrVmyQ9ZDbJAxmuEtmkXP
-	v+7fCePxe91pqLSwu8X+yZBNI1ylOXFf+bPfSv1XrdiEWzwieVUKToa8uqbQQ7YZ
-	weW0cHTqms8yapJB6XU4mZHUccJVTRP/u5YH1ME7sDp9+puJ9hiEdeseQ+JR3VNS
-	UhvvaoSz34mxu01MdTP/IeTn8LgZRzqYxHbvYw4VIV/7uISo1QEdVz1/27DBr8BB
-	1ETuNGAnwgV+6Fd1iOd064B02p0E2+cfovc9mCO7zx4/qBLbfDSzdkmWktgjGLXy
-	0FCPRAKhFdyqawAkbu3juj2GdocyC1yCvsg==
-X-ME-Sender: <xms:vjcmaCMdvFzpGtJgPYt561AhP9E4UCiv2b3DTgwME--sDtoeV9HczA>
-    <xme:vjcmaA_2f_wyYlbgaXmtzVneyAeON63PcPr_HOUbKmLW99WluhRJ-fuGQsccGMFed
-    BjfyPb08FpJFzYprA>
-X-ME-Received: <xmr:vjcmaJSWwUj1w1O4a_kpwBl0gwHEB6INwG-jZ9UqP63DEscdxCXBiEl0xN7EyfVjDkWc7qWsQx4ieln49rmJgbaPDeJ35rmTNAMNtn0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddtieefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhgihhtgh
-    grughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghr
-    nhgvlhdrohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnse
-    hgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:vjcmaCuBCVUoyClMFxC9pb-s52yt_VlhNGY23CrNpKCftsGrjQbsPw>
-    <xmx:vjcmaKdlAFmFTCj8KxlTNJQV7xo40YiPLYqWl4su1wYWq8k4onA7TQ>
-    <xmx:vjcmaG3uWUmDPTN69GnVJwXYyf4ZQU21jDpmAyK08xtAsdwSytCl4w>
-    <xmx:vjcmaO8Dmsy3NZ3Z317S7Nz9nE4CeqJsPNjnSggcnK1Zs6IYSnPOmA>
-    <xmx:vjcmaLqVmbX5IJtVMyrAn19mA_O4x1IA6mlzWzGH74DJP6AUkGf7HKxc>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 15 May 2025 14:51:41 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH 11/11] sequencer: stop pretending that an assignment is
- a condition
-In-Reply-To: <7a54005bd26ac17cb6d99a2e18932f97575d4aca.1747314709.git.gitgitgadget@gmail.com>
-	(Johannes Schindelin via GitGitGadget's message of "Thu, 15 May 2025
-	13:11:49 +0000")
-References: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
-	<7a54005bd26ac17cb6d99a2e18932f97575d4aca.1747314709.git.gitgitgadget@gmail.com>
-Date: Thu, 15 May 2025 11:51:40 -0700
-Message-ID: <xmqqplg9zozn.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="dc/U1eiP"
+Received: (qmail 32586 invoked by uid 109); 15 May 2025 18:55:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=fuMPmQtvOng0t2UU0XZXSu5+osRDtFQIpj8l7whqN1Y=; b=dc/U1eiPx8JNczSqXQDMyvri3UytNQRkpQSQhYjPozXhRCMfQLuZu2atoxrqfilTEbUfHmQP4Y/NgukESy9ZdkufcoSKxmczSdgpG6q6keT0t2dYv4NHGXP5Wz7NES1F63cgZcuiZHfVd/WkLMmPgfLZNkITBVNXAeHaRVIYeAriDvii+XQHkKZuV2ZybVBrkglI53yi1t4Jk/Z2o5hd5F6ruX+I8n4Co4NmeA4D9LkHWqkJxxUWXvfCdDXwX89orQUudaX5BBg/FG1bDE9Kt8I7cxn9SN59249DXPIlcC22vwqp5Bk64+yfjlR61erPEfmbCFF/ja1S5XNefdXA5w==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 15 May 2025 18:55:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 29716 invoked by uid 111); 15 May 2025 18:55:37 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 15 May 2025 14:55:37 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 15 May 2025 14:55:35 -0400
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, ps@pks.im, gitster@pobox.com
+Subject: Re: [PATCH v2 4/4] receive-pack: use batched reference updates
+Message-ID: <20250515185535.GA3309052@coredump.intra.peff.net>
+References: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-0-80cbaaa55d2e@gmail.com>
+ <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-4-80cbaaa55d2e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-4-80cbaaa55d2e@gmail.com>
 
-"Johannes Schindelin via GitGitGadget" <gitgitgadget@gmail.com>
-writes:
+On Thu, May 15, 2025 at 04:07:28PM +0200, Karthik Nayak wrote:
 
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> In 3e81bccdf3 (sequencer: factor out todo command name parsing,
-> 2019-06-27), a `return` statement was introduced that basically was a
-> long sequence of conditions, combined with `&&`, except for the last
-> condition which is not really a condition but an assignment.
->
-> The point of this construct was to return 1 (i.e. `true`) from the
-> function if all of those conditions held true, and also assign the `bol`
-> pointer to the end of the parsed command.
+> +failure:
+> +	for (cmd = commands; cmd; cmd = cmd->next) {
+> +		if (reported_error)
+> +			cmd->error_string = reported_error;
+> +		else if (strmap_contains(&failed_refs, cmd->ref_name))
+> +			cmd->error_string = xstrdup(strmap_get(&failed_refs, cmd->ref_name));
+>  	}
 
-True, as the value of 'p' cannot be NULL at that point where it is
-stored to the pointer variable bol points at.  The second paragraph
-above does convey what the long expression really wants to achieve.
+Coverity complains about this code, claiming that strmap_get() could
+return NULL. At first glance, I thought it was being totally stupid,
+since we just called strmap_contains() above. But it's only being a
+little bit stupid: even if the entry exists, it is still possible for it
+to contain NULL.
 
-> Some static analyzers are really unhappy about such constructs. And
-> human readers are at least puzzled, if not confused, by seeing a single
-> `=` inside a chain of conditions where they would have expected to see
-> `==` instead and, based on experience, immediately suspect a typo.
+However, that won't ever be the case, since it is always fed from the
+set of ref transaction reasons.
 
-Yes.  Good thing to get rid of.
+Still, I wondered if:
 
->
-> Let's help all of this by turning this into the more verbose, more
-> readable form of an `if` construct that both assigns the pointer as well
-> as returns 1 if all of the conditions hold true.
+diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+index bd0fb729ff..fe001bbfe8 100644
+--- a/builtin/receive-pack.c
++++ b/builtin/receive-pack.c
+@@ -1897,10 +1897,11 @@ static void execute_commands_non_atomic(struct command *commands,
+ 
+ failure:
+ 	for (cmd = commands; cmd; cmd = cmd->next) {
++		const char *reason;
+ 		if (reported_error)
+ 			cmd->error_string = reported_error;
+-		else if (strmap_contains(&failed_refs, cmd->ref_name))
+-			cmd->error_string = xstrdup(strmap_get(&failed_refs, cmd->ref_name));
++		else if ((reason = strmap_get(&failed_refs, cmd->ref_name)))
++			cmd->error_string = xstrdup(reason);
+ 	}
+ 
+ cleanup:
 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->  sequencer.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/sequencer.c b/sequencer.c
-> index b5c4043757e9..e5e3bc6fa5ea 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2600,9 +2600,12 @@ static int is_command(enum todo_command command, const char **bol)
->  	const char nick = todo_command_info[command].c;
->  	const char *p = *bol;
->  
-> -	return (skip_prefix(p, str, &p) || (nick && *p++ == nick)) &&
-> -		(*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p) &&
-> -		(*bol = p);
-> +	if ((skip_prefix(p, str, &p) || (nick && *p++ == nick)) &&
-> +	    (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p)) {
-> +		*bol = p;
-> +		return 1;
-> +	}
-> +	return 0;
->  }
+might be simpler, and skip the extra lookup? I dunno, it is probably
+getting into bikeshedding, and it is not like this is the only Coverity
+false positive we have seen. So feel free to ignore. ;)
 
-Perfect.  That's quite a natural way to express the intention.
-
-
-
->  
->  static int check_label_or_ref_arg(enum todo_command command, const char *arg)
+-Peff
