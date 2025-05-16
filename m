@@ -1,108 +1,225 @@
-Received: from fhigh-a7-smtp.messagingengine.com (fhigh-a7-smtp.messagingengine.com [103.168.172.158])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E266923182F
-	for <git@vger.kernel.org>; Fri, 16 May 2025 13:09:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D137E14F90
+	for <git@vger.kernel.org>; Fri, 16 May 2025 13:18:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747400984; cv=none; b=m382061lgkCnalwCGe+E0vVQPVxnvyIz2T1GdzgfAFCfOuCLkAnQ+a+qJN9nKtDPekkUnbB6nOkvP50uXAj9zSjmAkBFvA8whXj4aP0L9cVWzOilvm5qSgC90sjodGiu86dlncFHMYXUS6GVi+gVZgz6bJ0VypCqsHcD3yBPLnI=
+	t=1747401506; cv=none; b=ndh5DdlzwF4pviujyRul1I78lxgmilW6rALQPjhfljzS3EnGzfjOiXvqYT5FMD+YpsKOwpl99/TVQZt74xYfg2su5yoRo1dLylRRDOKYQzYhTsIT710Sg/ABhPtYsspVfXW3imlUsve5JRFE5hXoEv9bhFwJYWbn8FiWUqy9msI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747400984; c=relaxed/simple;
-	bh=22whLj5ixfl/UEWaQig+oYQbU2p1WejfQMakA3j+R/o=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B20JkBaJOZ4g2jUWZ6L5xIsxYmm6KoTUPv3xOzUA8/PNB9l/RUrWruGXpwG/vNatr+NZ9pbyIWSlsdLikOf6t26BAqTELu2FGkYSMzaFjW1rDCuMLuxevvKJnzSSRZ9uDh/g/oxXeW5Nfudmj7CsJROd7U7mIm0kNuCmj7sDFas=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=e5XrtOcq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AhYDVcrQ; arc=none smtp.client-ip=103.168.172.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747401506; c=relaxed/simple;
+	bh=b1K41SBDMhT0CaOJzjAme8vQlykI1DZZ9aOCox7QUwk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=gBRkgJ/rWWiPOqY95SwtHH5dN4M0l49Ayd8zInqx8iOmQ9zndhk/0qbL3iycsl83mPC7Jj/Ta8iHVzkTkovut9PsfyVWWjTEIKrbdzQJAkBo7rqBjNwsd1fhlTeg+qvoqZwZXuWgD4LUZINMrCrhTkGA3aanzyJ1guGs2vomtso=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QV5gM0Jo; arc=none smtp.client-ip=209.85.128.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="e5XrtOcq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AhYDVcrQ"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E09C71140146;
-	Fri, 16 May 2025 09:09:40 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 16 May 2025 09:09:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747400980; x=1747487380; bh=3iiCl+2o/k
-	75LyRegQXjQ5zR4c351rnE0wygSkdyaEE=; b=e5XrtOcqLE/jDjgAbF94dzHgyv
-	jpEsKTAptHe1yFG8nzmqEOrCIopifdWkOc0gFamSudIFesy5emTSFAp+TiOPHJk8
-	L6S3yHk77UuMsnTtWKZv4YLVZy+zXDulp6BAzhzBBzypGbgEjF9fxFIRms+/qTwr
-	TeIP+7hHOPrKUYNzvEw+Bak30+6WUtTXCQ/gzBlI9UY1dYt6iH4syMC1XGcmdaaN
-	Gbczfk7d1RgBkSYUvR/LsdzaCsbaOrWD3T3psoar0Fmv8uraC/NXpsRqv5Q7HRxP
-	zxBfrXWnxHps1ASAg3IAaN3euVfsLEcZ6ZfZ/1IE9c9qd5soWjv6Dn+qTFcg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747400980; x=1747487380; bh=3iiCl+2o/k75LyRegQXjQ5zR4c351rnE0wy
-	gSkdyaEE=; b=AhYDVcrQL16KK79ef/b5lSjrpziKOQZ8zaSdqtWaRoGmCnGmqop
-	t2W59hF785mFO6OHmOB4ySND/dt9G1fxIrz/2e0I4MmHhfx73g+XGvbSuK4xYcrZ
-	UgDDXmUKOQIWQg7nl6tm3a44yo++z55Zv0v5E6Vb2O/N73rtqLwXYe/M03Lr39rH
-	KnB/kB3gdMptdxPxxufRtYX74DfPwnyMZEgy7xrj1TFQst0riKKYXT8BFjxUFNaF
-	tNprcKp4rY8RNT2cm+rngyqlgbiBwLF8PYxKA8ZGcSMTMy4GV3pGeAPmMYDwmjUx
-	ftqXQkaalMEQyrrAPrFCURIqNu3jEluTRhA==
-X-ME-Sender: <xms:FDknaDqy2is68VT6E3vJ1ZQqRZPLFJO_F1EPrxKdLdsDSMabtVNWkQ>
-    <xme:FDknaNoarAm284vcZyqu3bROmbJFGk3IQjllt4XvoYoxJgaQtxLJrLGsvrlL4VvjC
-    S4tkjZf8FwV4IGA5g>
-X-ME-Received: <xmr:FDknaAOjv4L-N5qJqccubs0malbABT51CkUrjEHH6s48NwUohRyMjXGfZeErRwZhgxnQm-v3Mk0S-EiJ95KyHaPy735Wi2E2elqFqC0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvkeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghhrhhishestg
-    hhrhhishguohifnhdrnhgrmhgvpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
-    gtphhtthhopehkvghrnhgvlhdqthgvrghmsehfsgdrtghomhdprhgtphhtthhopehgihht
-    shhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:FDknaG6GtP3HYqSK-ndsGj_ZtFEnnjm9y5onwCbzu5tIc4wMwgoT0A>
-    <xmx:FDknaC7VT8Sxs00Puo2QDAIOrNc6p7n6t7prmfkcLbY2qhsv8PYuqg>
-    <xmx:FDknaOi00zpt0EI0zc7dMwh82r6eKpOXkSvdot5CVLaS49jwesKuZg>
-    <xmx:FDknaE4IKqmIjTCjkUYJPKFp16TJtONgxiKLOSi7kYJAONliBZyElA>
-    <xmx:FDknaAW1I4nTfWlFXQ5zOHz3gLWU3sNqLVw68d--IFeQeMe4ai9xKNpx>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 09:09:40 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Chris Down <chris@chrisdown.name>
-Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  git@vger.kernel.org,
-  kernel-team@fb.com
-Subject: Re: [PATCH] commit: Add commit.signoff configuration option
-In-Reply-To: <aCXqqj6gKc7-fjoF@chrisdown.name> (Chris Down's message of "Thu,
-	15 May 2025 14:22:50 +0100")
-References: <aCM5JY25NVPgyYRP@chrisdown.name>
-	<CALnO6CBdhYFsDN=HPo9HbKeoZH7bb=xVVXUCK7nUdadLg-U_Pw@mail.gmail.com>
-	<aCTI7VjK5QMht3ws@chrisdown.name> <xmqqy0uy4thk.fsf@gitster.g>
-	<aCXqqj6gKc7-fjoF@chrisdown.name>
-Date: Fri, 16 May 2025 06:09:38 -0700
-Message-ID: <xmqqldqwya5p.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QV5gM0Jo"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-43d0618746bso16967385e9.2
+        for <git@vger.kernel.org>; Fri, 16 May 2025 06:18:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747401503; x=1748006303; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=zQS/7Of/o1HixbGdqFgSkx44+Ady5eRMH5awOWkYwOQ=;
+        b=QV5gM0JoNguptDTpTWsG1UHW5EQP/71UiEIuH2fBv/FRKe6Rp2HAQszM5U+nJu8NQI
+         DlF4K0iUY+RDG2vuNxBS3lwLX9aA3AZAua9iayRCbNVzjvHNtvBYazUlgusB2kl0hXsQ
+         5r9DSnIpDcpxdCRLC0HIqIg9AbYMf7B1Nylrz6KJsmyePnn+2OJwlCya38hKmQbAE+5k
+         nfvfMlAikEu3zAMcEZLoMM5T5cq+PK45UYj9hrrSn2/dj5BwT4gc5DIpkOPAlB+oNdG3
+         snMFMbo5DTNulUjYLNeIbNTg4udwSnGRwB8vMbSw08+mVWRKBWe+BLIKTdQyYS7ma4rp
+         iyfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747401503; x=1748006303;
+        h=content-transfer-encoding:in-reply-to:content-language:from
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zQS/7Of/o1HixbGdqFgSkx44+Ady5eRMH5awOWkYwOQ=;
+        b=Schbnagfti5YjOAh2h5WKKL2HJwX86FCtsi4a9qBqqKA1dFBsx4+WNwSG0yDE0P730
+         aOxSNwpLDRHHJrJOHHFd+PdJZ8mZWMXh8x7T2232sCZFxTnSAnPfRVtQE48MuR4s3yEb
+         aJeGT9dhSSQhzkxE+1i9Uff6dc1LzTnHkffDC+bk/u9DxVklV3hpWSg5Dubs+Av9YrZy
+         MgnQAvpM9mt+Ejkm2eC8OKrpr0BpMfQst6bwDBfpo9b5DtizCmw35j7z8KH94MB9uDiQ
+         h2urgKV61jbKenRzs+oZBRwCVSpLfd9JFAP5xLt6bjWrTXDxz83zeuH0C8nTes/r4I/O
+         C7yQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWNLVHYge9MXViTL5r8r/r8xWDU0VlJoX7ngB3uxeIwN/jhjkJO/ZpvVAflXZE4cdBsWXI=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyqOFCwvSctIv5+oZ9GvMFBhgoYYNDHdiiDIw9bEz64Es5L6NTt
+	5fZqrkVALQE5VS1mBHDLWZmTI1chfTW79nwxwrvLx1xQRtCLiGuFPI3N
+X-Gm-Gg: ASbGncur8ygg1oqC7EXjQ9s8YRCjOzNxejRgxROtJmuBsW2aVZvpzWsQ/pUchGeX4Bh
+	3Qx1pwG5GeMlN4WKctxh+J223y17usyOCISkQ8gqGJ0/+OT/aoco+2wv7rutg0u9QKBxhXrS6Ek
+	+rEgSLJ3FMpbczbXvn+E4pRMNWkzacBkCkbP1xDWcauVKgLEe4Nx2WaNkf/7kh/MacXiXvQEAdQ
+	QVGEvHuy5w/4nUuC2pdsizsZVd30aeAGGqupW3IeuhbiqhX4R7MHEFkt/SmfkqlUuVR7uswP5Lf
+	sL7W/xLXNY72YDhSDWz76zU/eP5MYl7/ABbD4vulkGVHXrQ6CwZvsRT3DgPJ/k7Jg0r+vvHGHa8
+	//TV1tQWEhfGtvUCcPwaTGZeHoIU=
+X-Google-Smtp-Source: AGHT+IF/j63V3o/05sjjn1P3Poxw1DuIqep9Ghe3hLrPgmEqmirimswXtW+5sJyyJdcu0j1AE2FWLw==
+X-Received: by 2002:a05:600c:468a:b0:43d:47e:3205 with SMTP id 5b1f17b1804b1-442fefee29dmr20813975e9.11.1747401502721;
+        Fri, 16 May 2025 06:18:22 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442fd583f07sm32654185e9.31.2025.05.16.06.18.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 16 May 2025 06:18:22 -0700 (PDT)
+Message-ID: <23e4267a-34fb-414d-bae3-7f607d3bdbec@gmail.com>
+Date: Fri, 16 May 2025 14:18:19 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 2/2] merge-tree: add a new --dry-run flag
+To: Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Elijah Newren <newren@gmail.com>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+References: <pull.1920.v2.git.1747093322.gitgitgadget@gmail.com>
+ <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
+ <f11824317a8050764fe35698039f863dd842b0c2.1747182288.git.gitgitgadget@gmail.com>
+From: Phillip Wood <phillip.wood123@gmail.com>
+Content-Language: en-US
+In-Reply-To: <f11824317a8050764fe35698039f863dd842b0c2.1747182288.git.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Chris Down <chris@chrisdown.name> writes:
+Hi Elijah
 
-> Junio C Hamano writes:
->>But an old mistake is never an excuse that we can pile more mistakes
->>of the same kind on top.  Otherwise we wouldn't have learned anything.
->
-> I'm curious about what specific issues format.signoff has caused that
-> make you consider it a mistake. Has there been evidence over the past
-> 16 years of it undermining the significance of signoffs or creating
-> other problems?
+On 14/05/2025 01:24, Elijah Newren via GitGitGadget wrote:
+> From: Elijah Newren <newren@gmail.com>
+> 
+> +--dry-run::
+> +	Disable all output from the program.  Useful when you are only
+> +	interested in the exit status.  Allows merge-tree to exit
+> +	early when it finds a conflict, and allows it to avoid writing
+> +	most objects created by merges.
 
-Regarding other problems, the fact that we are having this
-discussion is indication enough, isn't it?  If it didn't exist, we
-wouldn't have had folks who used it as an excuse to promote
-commit.signoff in the first place.
+I don't want to bike-shed but to me this feels more like "git diff 
+--quiet" than "git push --dry-run"  or "git send-email --dry-run" which 
+still print diagnostic messages.
+
+Best Wishes
+
+Phillip
+
+>   --allow-unrelated-histories::
+>   	merge-tree will by default error out if the two branches specified
+>   	share no common history.  This flag can be given to override that
+> diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
+> index 4aafa73c6155..273ec171e988 100644
+> --- a/builtin/merge-tree.c
+> +++ b/builtin/merge-tree.c
+> @@ -490,6 +490,9 @@ static int real_merge(struct merge_tree_options *o,
+>   	if (result.clean < 0)
+>   		die(_("failure to merge"));
+>   
+> +	if (o->merge_options.mergeability_only)
+> +		goto cleanup;
+> +
+>   	if (show_messages == -1)
+>   		show_messages = !result.clean;
+>   
+> @@ -522,6 +525,8 @@ static int real_merge(struct merge_tree_options *o,
+>   	}
+>   	if (o->use_stdin)
+>   		putchar(line_termination);
+> +
+> +cleanup:
+>   	merge_finalize(&opt, &result);
+>   	clear_merge_options(&opt);
+>   	return !result.clean; /* result.clean < 0 handled above */
+> @@ -538,6 +543,7 @@ int cmd_merge_tree(int argc,
+>   	int original_argc;
+>   	const char *merge_base = NULL;
+>   	int ret;
+> +	int dry_run = 0;
+>   
+>   	const char * const merge_tree_usage[] = {
+>   		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
+> @@ -552,6 +558,10 @@ int cmd_merge_tree(int argc,
+>   			    N_("do a trivial merge only"), MODE_TRIVIAL),
+>   		OPT_BOOL(0, "messages", &o.show_messages,
+>   			 N_("also show informational/conflict messages")),
+> +		OPT_BOOL_F(0, "dry-run",
+> +			   &dry_run,
+> +			   N_("suppress all output; only exit status wanted"),
+> +			   PARSE_OPT_NONEG),
+>   		OPT_SET_INT('z', NULL, &line_termination,
+>   			    N_("separate paths with the NUL character"), '\0'),
+>   		OPT_BOOL_F(0, "name-only",
+> @@ -583,6 +593,18 @@ int cmd_merge_tree(int argc,
+>   	argc = parse_options(argc, argv, prefix, mt_options,
+>   			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
+>   
+> +	if (dry_run && o.show_messages == -1)
+> +		o.show_messages = 0;
+> +	o.merge_options.mergeability_only = dry_run;
+> +	die_for_incompatible_opt2(dry_run, "--dry-run",
+> +				  o.show_messages, "--messages");
+> +	die_for_incompatible_opt2(dry_run, "--dry-run",
+> +				  o.name_only, "--name-only");
+> +	die_for_incompatible_opt2(dry_run, "--dry-run",
+> +				  o.use_stdin, "--stdin");
+> +	die_for_incompatible_opt2(dry_run, "--dry-run",
+> +				  !line_termination, "-z");
+> +
+>   	if (xopts.nr && o.mode == MODE_TRIVIAL)
+>   		die(_("--trivial-merge is incompatible with all other options"));
+>   	for (size_t x = 0; x < xopts.nr; x++)
+> diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
+> index f9c5883a7f7c..566a2b4ec737 100755
+> --- a/t/t4301-merge-tree-write-tree.sh
+> +++ b/t/t4301-merge-tree-write-tree.sh
+> @@ -54,6 +54,25 @@ test_expect_success setup '
+>   	git commit -m first-commit
+>   '
+>   
+> +test_expect_success '--dry-run on clean merge' '
+> +	# Get rid of loose objects to start with
+> +	git gc &&
+> +	echo "0 objects, 0 kilobytes" >expect &&
+> +	git count-objects >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Ensure merge is successful (exit code of 0)
+> +	git merge-tree --write-tree --dry-run side1 side3 >output &&
+> +
+> +	# Ensure there is no output
+> +	test_must_be_empty output &&
+> +
+> +	# Ensure no loose objects written (all new objects written would have
+> +	# been in "outer layer" of the merge)
+> +	git count-objects >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>   test_expect_success 'Clean merge' '
+>   	TREE_OID=$(git merge-tree --write-tree side1 side3) &&
+>   	q_to_tab <<-EOF >expect &&
+> @@ -72,6 +91,25 @@ test_expect_success 'Failed merge without rename detection' '
+>   	grep "CONFLICT (modify/delete): numbers deleted" out
+>   '
+>   
+> +test_expect_success  '--dry-run on conflicted merge' '
+> +	# Get rid of loose objects to start with
+> +	git gc &&
+> +	echo "0 objects, 0 kilobytes" >expect &&
+> +	git count-objects >actual &&
+> +	test_cmp expect actual &&
+> +
+> +	# Ensure merge has conflict
+> +	test_expect_code 1 git merge-tree --write-tree --dry-run side1 side2 >output &&
+> +
+> +	# Ensure there is no output
+> +	test_must_be_empty output &&
+> +
+> +	# Ensure no loose objects written (all new objects written would have
+> +	# been in "outer layer" of the merge)
+> +	git count-objects >actual &&
+> +	test_cmp expect actual
+> +'
+> +
+>   test_expect_success 'Content merge and a few conflicts' '
+>   	git checkout side1^0 &&
+>   	test_must_fail git merge side2 &&
+
