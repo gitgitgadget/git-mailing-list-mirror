@@ -1,189 +1,127 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f41.google.com (mail-ua1-f41.google.com [209.85.222.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111C922DA1B
-	for <git@vger.kernel.org>; Fri, 16 May 2025 08:55:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FA69282E1
+	for <git@vger.kernel.org>; Fri, 16 May 2025 08:59:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747385717; cv=none; b=MnOS4rHWzW9XgG6LzDZRVZCEuyOfeAfFd9BzpOF4Itea9nc8ZIP+CjZs0cbD8FKgRW6CaYdRkpY5cswzXKJpL97lRyYwNwEyrhtJtK4NsROsySXi520ZT0DWyjJqxBxAfpwcbKFNFqGyVB5sjd89lTQRpZSWTvUqyD/84buEVg4=
+	t=1747385967; cv=none; b=NWHzDY5wCDGMbsmsiVx344PQd4M7cozoGuz60KlhvFsKDuCjjnpL0/tHs530WesjgUFmpKg+v1FgMU4Gl3PeqGwGcv7SO1tPBi447biGmw3ilxudBXHvKmPrneNaWvvsV0RFtDVn9rUv+PbZkAJhojlYVmPrH/n9LzHDulP4U7c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747385717; c=relaxed/simple;
-	bh=+ETVTx6JHcKR8eakNaY0KESxsKuEl1gM42jrDjfmSv4=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gj4F5voQgsIEGXRTfFYQosRao8v1agvt4ZLISAh7i74gXCgpL2I/dmiwJqmYqjI/JgVO9fTistTWeCNHnT86oTDh+TSDJIUJH9GMJu3MH++uYTpPs4GvBzNS/bouaLOk8pI3GneSzb3QYVKv6IMDqlVUZ89WFKexSzP71ZcCtnc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vb46RhAt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rPMqw/WS; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1747385967; c=relaxed/simple;
+	bh=es+pHDdEEQBM9RL5XK+IgjwNCueEhTvvaD3jXKpjmVA=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=lkSdIgaPEcY3dZ+w/1hEOehY24/6VeBCZCtt6iTXc5ssHMIk0Q3fito2HQXNU10af2hplXdEsLPPA1+ve3dfs2CEDG/70fTzLATJ0y1nDOwskZF4ybX+/FshFRCRWZWwqT/RkX9UgW4gYhxiGPYdXv9GbxNFWSSgUz7MMSV53u4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BW/3xdg9; arc=none smtp.client-ip=209.85.222.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vb46RhAt";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rPMqw/WS"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id C708E1380422;
-	Fri, 16 May 2025 04:55:13 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-08.internal (MEProxy); Fri, 16 May 2025 04:55:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm3; t=1747385713; x=1747472113; bh=4Y1fZUU2UC
-	xvT3HZ7DTvJ7QWeCt27avxLIoEz9qdBEE=; b=vb46RhAtKdfQJM6fSHka1EwrOD
-	FScayZBu8jYJIlHPa8PIXIWbcPG9bD/m0EIsoTz1G6HWs+X3OmK8Rsyb/auSU+91
-	lbZZ2pxwhGI+ScoIJZFh98kKLLrtR1FRicU+kqkizfb24TAgpgcQ3E9ZeniG1hgT
-	wvZMq8c4EFqmBUAast7Hm35kUKJJL/dCktMM/T5mMVRpt2uyc0R7DBO+dKW8oaxR
-	fRpXgLjUA0OGQ/7hLfvh9gGW6vAqMUnqfyh9Mv+U6TG2aIZbFQrPhtPgNpo2CHjB
-	D9QmrIFcNmik4temDHlp0Yj2d0OvhWXEiyEt0RERtdeQ1BD7bGCnIfpA9ZDA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1747385713; x=1747472113; bh=4Y1fZUU2UCxvT3HZ7DTvJ7QWeCt2
-	7avxLIoEz9qdBEE=; b=rPMqw/WStrPZGhs9HqNKdX7M0hGLBfpJHdsEt9MXX42R
-	2ohr/smMyNL/aHykWc98CoW8MWtueLixlNm1UcJ4X2uwVET29hSrE4MflXpUL7eQ
-	ezQjLJopr5Iv4Vxsv1yF5b4Q74I6CDeBX0qaa+D2Nzvvt3VukgwxA01aaqGZNdNB
-	x5ouz3d8m5ntCc/FXO+/3EweExCn20961GBw9Wy5V2EvXYLN0wid2TQ1NIqfM08z
-	FRSQM3B1h7gEmN78nO5H8N8l7cjCqk78bupT642i4srLJvPEhvZO2HppzBQWMPrb
-	RzDUHlSVCfK0sDRiC98j2oPcJBeeMdzvkLZFq+SJBg==
-X-ME-Sender: <xms:cf0maLIzl_f5pBiA3LzudOck2y8aQuPlrcf_DaONPDBslmBPd_BSpA>
-    <xme:cf0maPIK4Y_DcBame9-QsXdz2vrSKtaMMRuw4U83aAEfWeHzcpSytY0u6LC3MNznM
-    VvxHgUAtIJWRnsZ1A>
-X-ME-Received: <xmr:cf0maDttH10i9JjlkUk78UqWDx3EOkA_-ddZeLy6V14O4JXiWUxwsgIErnxz4PPVb43Ugfar91GMq49fhoA97YJJ1uOF3N_emRNsqFSw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvfedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
-    fugggtgffkvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
-    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepiefgiedtff
-    ffvddvueehheejheehleduudfhheekkeeggefgueffheevgeetjeefnecuvehluhhsthgv
-    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
-    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
-    gtohhm
-X-ME-Proxy: <xmx:cf0maEbwywPdei1SrFGLZ7awtZaGSB-MEOMhs7msujiFGFwlRSkveg>
-    <xmx:cf0maCb2f0i7aUCBVr99z-nkUQz7zfEqSJq5G7MI-4nur2LBIftgVg>
-    <xmx:cf0maICOkDVjfVWK7l17R8YQEOznBIfBDpF7Kve9xuzjQB9h1u9gZw>
-    <xmx:cf0maAY-MX88pozdgYX3D2qXgjvEKb_cO3c0aNssp_rjeOWG3sap3w>
-    <xmx:cf0maMCyiv8JK_AGHczq2GDWlQs2xSiL-IKOXP8iEzu0uXF8B6RKEXh7>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 04:55:12 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d0caef0c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 16 May 2025 08:55:10 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 16 May 2025 10:55:10 +0200
-Subject: [PATCH] packfile: avoid access(3p) calls for missing packs
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BW/3xdg9"
+Received: by mail-ua1-f41.google.com with SMTP id a1e0cc1a2514c-875b8e006f8so459745241.0
+        for <git@vger.kernel.org>; Fri, 16 May 2025 01:59:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747385965; x=1747990765; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=2lROfrxJDMiKJu8/TShR07UNw/rYb+cJzyi/tBdbCc0=;
+        b=BW/3xdg9OJnZthYeuC9RKlfp0oho4f8kT0Nco/7MJ8OA3AQ1bzASpTVcnNTlfCZPb9
+         tETjWRxFR6U3McFQiDlJ2UVLm6A7ZVuzEhz0pbFCMM5yuZGXpiFfiujs7SvEjtO9/kPI
+         4JveOfSh+qZM3ZIvTRpZooCPeYcmOE2jnnPR8Crk6pN/lKYKgoU0L2zEo/aF8LK64erq
+         zyavgW+Xzems3KeLUIhOLAltZYC+8qlMakJeDft1/7ocP9IWvbFCcWH9s6GWUAQHZfni
+         hLdAO/hBuJGDSNMklInudDAxuwHRDvz51uXDbqw6X9JOQbHfAzzlUE1OTcG686rFY8CQ
+         ugig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747385965; x=1747990765;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=2lROfrxJDMiKJu8/TShR07UNw/rYb+cJzyi/tBdbCc0=;
+        b=pkv/D10pKPXC0ahiVCs6WgzPZKw4bFi8oHm+sDWg927ItfNIYeSooYIAdrpP5DWu9d
+         03AuQHp2RFfwBTmjnymG1xKeOAiij7fxMqqWOwOE6RnyYrASC1g4wj8vSANrhT/Vms4O
+         e/7dyU43phZ2jhgDtRW0kxyVs1AB0ctUOnAawfO1pTtxzwCIeYXZacz2eagcttNVkRoq
+         41c25O9amImwLWorzfWF0/k/A4r+92CyqlBeXf8KWop1RL0lXNQ30Q4+Rjf26GnLp//u
+         DqKzUrYjtCnps5UGHFaanNUKxbBJK5DF+WMFrGtYdyuk7ioJOXl0Sa+QUE/qUyGMqEz9
+         2GYQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU+HkYc29xnAAMi3XNzkh75db8a9wcTQU8yHxWLxNljtDdORs5bAV6LKOQIW1sBePLCmLs=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yydg+neehK5fpb8IN7qQ/6kWUcKAA8QxMvc024g+8ZPAUg8WGVW
+	wDODdbBVG7UvfApqVxRpCqFHEzcnEbnR+pnlBYUwe6qWxjFnHLlU5V2xnlX8FHtaz1yhYGXzlY0
+	fiFEQ0qDkcQCHmZVCNObjI3wCsh/J+No=
+X-Gm-Gg: ASbGncvqZMK3mi13gfusvQhQFnRNo5RBdmUVxUFngKZCKR9i4jJN09qB4VNAvDYe5tM
+	IUf2SBhtEWgzGYD4BRhi4xg0UOWa9V86GwdbMLjc4kGns5fFP+g3vhl28iJOjdLQBTUcX7G3U+d
+	KWEIXfttIoiWZeEK5sRxIelwv7FmrO17dHTx2dqsGj8NEBcOvsqJtYLrKb66GSEQNzZBU=
+X-Google-Smtp-Source: AGHT+IFi+Xk6zClgeE3zXwnAhgBWaXBlVm9IJjWBuAoZenkVV6LZWSFq+9hm36XGCWTWJti96CypbtDEoZEfPjN0Mcs=
+X-Received: by 2002:a05:6102:32d2:b0:4c3:6215:9f86 with SMTP id
+ ada2fe7eead31-4dfa6c10efamr3677720137.19.1747385964714; Fri, 16 May 2025
+ 01:59:24 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 16 May 2025 01:59:22 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 16 May 2025 01:59:22 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250516010159.27042-1-lucasseikioshiro@gmail.com>
+References: <20250516010159.27042-1-lucasseikioshiro@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
-X-B4-Tracking: v=1; b=H4sIAG39JmgC/x3NQQqDMBBA0avIrDsQLVOLV5Eu0mRiB2kSMhIE8
- e4Gl2/z/wHKRVhh6g4oXEUlxYb+0YH72bgwim+GwQxkqH9hXhWzdSvamsSjbnZTTBH/oipxwTc
- /vyONRC4YaJVcOMh+H+bPeV5O/5s2cQAAAA==
-X-Change-ID: 20250516-pks-pack-avoid-stats-on-missing-8e3b75755cf0
-To: git@vger.kernel.org
-Cc: Taylor Blau <me@ttaylorr.com>
-X-Mailer: b4 0.14.2
+Date: Fri, 16 May 2025 01:59:22 -0700
+X-Gm-Features: AX0GCFthhmzVf7YWO1zopvba6r4e3gaj58fyAZWWJztImKu7isdc2tbyahohiXI
+Message-ID: <CAOLa=ZSH4CUdAUOT7H4B+2dwgfx22wJxxjt0SqPavAnEsdkHMA@mail.gmail.com>
+Subject: Re: [GSoC PATCH v3 0/2] json-writer: describe the jw_* functions
+To: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, git@vger.kernel.org
+Cc: gitster@pobox.com, ps@pks.im
+Content-Type: multipart/mixed; boundary="000000000000b67c8606353cfff9"
 
-The function `add_packed_git()` adds a packfile to the known list of
-packs in case it exists. In case the packfile doesn't look like a pack
-though, or in case it doesn't exist, the function will simply return a
-`NULL` pointer.
+--000000000000b67c8606353cfff9
+Content-Type: text/plain; charset="UTF-8"
 
-The ordering in which those checks are done is somewhat curious though:
-we first perform a couple of access(3p) syscalls for auxiliary files
-like ".keep" before we determine whether the ".pack" file itself exists.
-And if we see that the ".pack" file does not exist, we bail out and thus
-effectively discard all the information. This means that the access(3p)
-calls were a complete waste of time.
+Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 
-The reason why we do this is likely because we reuse `p->pack_name` to
-derive the other files' names, as well, so that we only have to allocate
-this buffer once. As such, we have to compute the packfile name last so
-that it doesn't get overwritten by the other names.
+> Hello, again!
+>
+> In this v3 I did some minor adjustments based on the review of v2
+> (https://lore.kernel.org/git/20250512020935.73140-1-lucasseikioshiro@gmail.com/).
+>
 
-All of this likely doesn't matter in the general case: Git shouldn't end
-up looking too many nonexistent packfiles anyway. But there are edge
-cases where it _does_ matter. One such edge case that we have hit in our
-production systems was a stale "multi-pack-index" file that contained
-references to nonexistent packfiles. As there is no negative lookup
-cache this causes us to repeatedly look up the same packfiles via the
-multi-pack index, only to realize that they don't exist. This translated
-into hundreds of thousands of syscalls to access(3p) and stat(3p).
+This version looks good to me, thanks for the update.
 
-While the issue was entirely self-made because the multi-pack index
-should have been regenerated, we can still reduce the number of syscalls
-by 75% in the case of nonexistent packfiles by reordering these calls.
-This requires us to restore the final packfile name after the access(3p)
-calls. But given that this is a mere memory copy it is very unlikely to
-matter in comparison to the four syscalls we performed beforehand.
+I do have some general suggestions (not requirements):
+- It would be nice if these patch versions were inlined with the
+  previous ones. Makes it easier to compare versions while reviewing.
+- Perhaps include a range-diff to make it easier to review the changes
+  in the new version compared to the last one.
 
-Another mitigation would be to introduce a negative lookup cache so that
-we don't try to add missing packfiles repeatedly. But that refactoring
-would be a bit more involved for dubious gains, so for now the author
-has decided against it.
+I can totally recommend b4 (https://b4.docs.kernel.org/en/latest/), it
+helps manage both of the points I mentioned :)
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
-Hi,
+> Lucas Seiki Oshiro (2):
+>   json-writer: add docstrings to jw_* functions
+>   json-writer: describe the usage of jw_* functions
+>
+>  json-writer.c |   4 --
+>  json-writer.h | 171 ++++++++++++++++++++++++++++++++++++++++++++++++++
+>  2 files changed, 171 insertions(+), 4 deletions(-)
+>
+> --
+> 2.39.5 (Apple Git-154)
 
-this patch addresses an issue we have recently seen in our production
-systems due to a stale MIDX. The MIDX contained entries for packfiles
-that didn't exist anymore, which caused Git to repeatedly look up those
-packfiles. Each missing packfile resulted in four repeated syscalls:
-three access(3p) calls to check for supporting data structures, and one
-call to stat(3p) to check for the packfile itself. The first three calls
-are essentially wasted though when the stat(3p) call itself fails, which
-is being fixed by this patch.
+--000000000000b67c8606353cfff9
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: b7892c09113668c8_0.1
 
-I doubt that the patch matters in almost any repository, but given that
-the refactoring is trivial I thought to submit the patch regardless of
-that. Another step would be to introduce a negative lookup cache -- but
-that would be a bit more involved, so I decided against it for now as I
-don't want to introduce complexity for dubious gains.
-
-Thanks!
-
-Patrick
----
- packfile.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
-
-diff --git a/packfile.c b/packfile.c
-index d91016f1c7f..870d48bd949 100644
---- a/packfile.c
-+++ b/packfile.c
-@@ -737,6 +737,12 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
- 	p = alloc_packed_git(r, alloc);
- 	memcpy(p->pack_name, path, path_len);
- 
-+	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
-+	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
-+		free(p);
-+		return NULL;
-+	}
-+
- 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".keep");
- 	if (!access(p->pack_name, F_OK))
- 		p->pack_keep = 1;
-@@ -749,11 +755,8 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
- 	if (!access(p->pack_name, F_OK))
- 		p->is_cruft = 1;
- 
-+	/* Restore the final packfile name. */
- 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
--	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
--		free(p);
--		return NULL;
--	}
- 
- 	/* ok, it looks sane as far as we can check without
- 	 * actually mapping the pack file.
-
----
-base-commit: 1a8a4971cc6c179c4dd711f4a7f5d7178f4b3ab7
-change-id: 20250516-pks-pack-avoid-stats-on-missing-8e3b75755cf0
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nbS9tTVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mOHpRQy85YldoUWJjU21PN1FrRGtTcUc1MS93SzkzVgpIRnNZeWlpV2RU
+NU11TGNNNTZxazk5Wk5NZmx6MThSMGZVOU8rVm5lS3ZHb2dvd0Nta2xrZndFT3Bld0pna0x1Cm5P
+STF4ak9IVHVtWjQyWGs1dU05Uk5hR0xzdGhIK3VweFl3Zm54NWE2dXlJLzh4Um1ZaDgwUDZ1dGdo
+NjErOE8KM25tUU9lWWZJK25ud21NWE83RXpZOEwxQ0ZGMWI2Q2FPTXdMa0pNZGw0VmdGSThzczc3
+YzEzSm9qbWIxZDZkQwpZVzFwYnRqVHlMS2NGeHNRbERKQWdzNjJBRWwyVktaQ0hsNXBDeEFwYk9h
+VkkzMGVTejYvbjdvc2ZxVFBrNDhHCmJ1d1lnVzkrbnd2QXJEcGY1S0l4b2JYYmVmNFNsZEljbEhR
+UGpJNXBMdE9mN2ljMHQzMEU1Z241VHdMNGs3bW4KcUlqTHZxak1Kc3hDSGhLY1dvem45M2tRMHFw
+bU9PdnQ4LzNLUmUzM3d3aDBqdUg3TVM5MTNxRko0Y3lpbzZmMgpRZFR1U05NWTNBRDBkM3IxaThJ
+SUlsQUx4dWVrWHRPSllRWFNuL2lvUVpCRURsZ0NNZnVtWVhPNUxLTEtQbXlQCmRpOTlEUWlpbllQ
+L0dkb3NrbllaMjZUbGs5THo5YmZTQ2dYbHhhND0KPWR1dXoKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000b67c8606353cfff9--
