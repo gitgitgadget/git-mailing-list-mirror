@@ -1,128 +1,81 @@
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com [209.85.219.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343127D07D
-	for <git@vger.kernel.org>; Fri, 16 May 2025 15:41:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D1A11B4F09
+	for <git@vger.kernel.org>; Fri, 16 May 2025 15:42:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747410121; cv=none; b=CYwB81NIeTn5gkLjouyYKMVcLNFBzKxj2sroXOABiWTRKZuxwxc67L0N1V8ugLPrTZVBayUzHIb6NzoX4KoxBI7epILYrT+RG92RfndT0CBbSw8FX+FrEWjgKK9okCtV4whfXtfoOwMoDu79akIsH3VlIj3AFmadWNwp2r7eej4=
+	t=1747410176; cv=none; b=QoTxHH4kctjl2oEqu84gg3DufC1w4qvYB7xeo9mPvuE/g+AGSDI1QCP79fXcPEtBnj0Ju3rlQA2KjeyGXR10uMjLlpgkrCL1Q1XKFnZMku+KAoGsbzZhMzbJ056/ED+xZqt815JctjpORz6mm3S3+SsxcCXMMnLMSOJrfihX1MI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747410121; c=relaxed/simple;
-	bh=Mt/Ims2IO4JBOUQd1CDBvupQ+HldDYJP8m4Zjzyojlg=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=biAySkSL6PhX32C4OUsh1XcZuXweO4MXf+ArTg6on40Ma717AXBnCeg3tz07qZY89U1grEVhKwvbYWHDIchuiUAuIfMJ/CGF4WbxwlfNC4g0TZD9b/dGz29kqfiIHO/L7Ldly34NEaQP06VwuXTJGR20uQgxLGaOF0iOU7xvRUU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dxJWgaG/; arc=none smtp.client-ip=209.85.219.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747410176; c=relaxed/simple;
+	bh=/3ByuIebFUYxorPvwSc31A5K7Y7aZO+Nksw3oEcajXw=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nyX4PdA2vKlS1U6yxV+fh3gLw5GuCuLhdAXo/P20XPnZ1JHZ+7cuwmoij5Wb2zegD+zSoZCEp0rjhF++7vUTTC++rNavBfknsM2hZfV6leDYmdwKPi0kDk1Qxr+mFUhIRmFx1aYKqFL7/o1/Gvkn0M308mhbTtveGYqXqY9RpRw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=CzxurWy9; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dxJWgaG/"
-Received: by mail-yb1-f175.google.com with SMTP id 3f1490d57ef6-e7b451b708aso1714637276.3
-        for <git@vger.kernel.org>; Fri, 16 May 2025 08:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747410119; x=1748014919; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Mt/Ims2IO4JBOUQd1CDBvupQ+HldDYJP8m4Zjzyojlg=;
-        b=dxJWgaG/JYNcQdeYysiLbMycDwsgxmw3nsHdIzXlRj3AMLwf+zkUMsaJI2dSiYOv4R
-         Xt2rpozcsDsZqcJQhTX0DsNXiOC7TM5OFaoRMpHDpXqFAneZsfRpbT7GNQkzcEi2hNZm
-         2DxEBkbIj58x9PYKyqk3FI7Zj/3z2vQpYYr8HT7xyRFudkkFFsmYbULQjewsFiGTONMM
-         +pFKnZ3WNOcNxQiCx9Mv0Wg5Hl3jAnD96t2dFAGU4YS02Ok+RoVNgIqYpP2cEGuCD5mv
-         Zl1E2E+kXBynkqmTtULpLTF2jCMfxmSzJJYzKCPHge7qk1Hit+Edw31p7Lfy6BBHINer
-         cVOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747410119; x=1748014919;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:from:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Mt/Ims2IO4JBOUQd1CDBvupQ+HldDYJP8m4Zjzyojlg=;
-        b=AS+5uwXjn7qJiv4DWDwciCiP5+Ypj2vwLa14AM8raFSkyFTYMf0KVsquI5THGlhiki
-         4GryITcjOljm7DFe43KipA0E3kPIPB/CQv2HkNld1DWprKOauxhYT0pyCyX2dxPUTb3+
-         8oje0pK+KNGmIYKFJ8OOFJ5nsauV9GDDqxjCrbpKVugJiiGFG3RxmXiY7giA4ZK6Qn6H
-         df/+Bd/GwIDPjkgmTzoPJHOFbag0eZy9BHMLN/zg97+lZGM3uv2CvWtA8kir7KlNP+3h
-         Z3jbbRx0mwOJfxdSRsWpT1ywFdhsQ2Wxzmgf6L2UwRnIRclhwvT3vUdyOZXnp1F0N2Cf
-         6ftg==
-X-Gm-Message-State: AOJu0YxlYSzO/G5fOKgka27ULjzAR5nnsuBXrvrsvwdLVobxDxqz1VEe
-	FjnEiutT++rMxAzOq3cVDJtujou1uFKNsQ9mc8w4lw+dmV9Ctl2hlEqI
-X-Gm-Gg: ASbGnctpBW4cpwgiSysYHwSKw6FynaxnrIeFRhxBvjUgrCTO7BXzse9JZv8BXt6z5c4
-	gTTr4/QEuTCPoBswA9w1/hX1X5dZjuaIi85uL5HNTUg/+HrZC09DKWX+LdnXL7jZaTSfkPMvWUr
-	cExnePsZ/RWvjKl0CGhdq95K6OIlgAE3L9lSHYj3SSakJywbhfXZc3QeGhH2oGLCw+mb64pU4Vy
-	L3K3JcIdlmON6J2Meb8V6aGg646MCDEAj3bWyZ/V+QmB+yQwVtA3lt8QG7sF2y0Xnymbny6UdaV
-	YGlqLU6zO8R3f4BqBwN8G1vavRrI/k3ARPs0dhg+clzP2/9fj4db++8bDr2QgElTUv5izK2H/l6
-	TR6K1jg78jLMxBMKhXB89p4RB3cBoSZGI3SU4r9s=
-X-Google-Smtp-Source: AGHT+IE+tcQfHnYFaKmWd47rmhTss7NXps/DYQvVN6N8V1V10IBOauYxolgu59xxGZENAxABeXfsVw==
-X-Received: by 2002:a05:6902:2509:b0:e7a:a7fd:87f2 with SMTP id 3f1490d57ef6-e7b6a0d2920mr5771163276.28.1747410119119;
-        Fri, 16 May 2025 08:41:59 -0700 (PDT)
-Received: from ?IPV6:2600:1700:60ba:9810:9ccc:beab:105c:f288? ([2600:1700:60ba:9810:9ccc:beab:105c:f288])
-        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e7b6acb1ed4sm627066276.30.2025.05.16.08.41.58
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 08:41:58 -0700 (PDT)
-Message-ID: <c849a4e1-b409-4a2e-ae32-b72f53137133@gmail.com>
-Date: Fri, 16 May 2025 11:41:57 -0400
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="CzxurWy9"
+Received: (qmail 9289 invoked by uid 109); 16 May 2025 15:42:52 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=/3ByuIebFUYxorPvwSc31A5K7Y7aZO+Nksw3oEcajXw=; b=CzxurWy90eTmVxewGPrb8mHqQZnUNU2A+lyozrWrsYHSu5aDvzc3X679tPHNFBc34D/8uKWaOklxEgxaX3FQ/ll5+mxnPrCRgQw8AxBAYuzjnx/5eEmGVn9El1GMOPCIXGYYoGxxTaWMHGrhjbqBOOVBAEv6tBo3OEQNIMz41Fdeh7alRcM/3bhvLASsSP1aWChl/J8oeooRkxLbrxw6Q49Wc9kYWhi+p5twZkHpC6pIp+wnMlcXKOtlQD75SpugHbbqBfZXW0kECvKa+CzXbCiITk4L/IZcDEqKVJovBc0FZS+0XQICrV9sVr4NkOwWe/Xrz/ELv4uu5l6X4EeGGA==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 May 2025 15:42:52 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 12187 invoked by uid 111); 16 May 2025 15:42:52 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 May 2025 11:42:52 -0400
+Authentication-Results: peff.net; auth=none
+Date: Fri, 16 May 2025 11:42:50 -0400
+From: Jeff King <peff@peff.net>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, gitgitgadget@gmail.com, johannes.schindelin@gmx.de
+Subject: Re: [PATCH 10/11] bundle-uri: avoid using undefined output of
+ `sscanf()`
+Message-ID: <20250516154250.GA26009@coredump.intra.peff.net>
+References: <694d8e62-486b-43d4-966c-4fa1e5a95061@crinan.ddns.net>
+ <20250516134054.217202-1-phillip.wood123@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 08/13] pack-objects: enable --path-walk via config
-From: Derrick Stolee <stolee@gmail.com>
-To: Taylor Blau <me@ttaylorr.com>,
- Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, christian.couder@gmail.com, gitster@pobox.com,
- johannes.schindelin@gmx.de, johncai86@gmail.com, jonathantanmy@google.com,
- karthik.188@gmail.com, kristofferhaugsbakk@fastmail.com, newren@gmail.com,
- peff@peff.net, ps@pks.im
-References: <pull.1819.git.1741571455.gitgitgadget@gmail.com>
- <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
- <dd66a5b46f2ef52eedea323df891a2e24fcd48c1.1742829770.git.gitgitgadget@gmail.com>
- <aBVYa9SzXk7eguIz@nand.local>
- <ea342443-2c71-476d-ab45-86cbe711fec7@gmail.com>
-Content-Language: en-US
-In-Reply-To: <ea342443-2c71-476d-ab45-86cbe711fec7@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250516134054.217202-1-phillip.wood123@gmail.com>
 
-On 5/6/25 3:46 PM, Derrick Stolee wrote:
-> On 5/2/25 7:42 PM, Taylor Blau wrote:
->>>   pack.preferBitmapTips::
->>>       When selecting which commits will receive bitmaps, prefer a
->>>       commit at the tip of any reference that is a suffix of any value
->>> diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
->>> index a6b8a78d42a..0ea85754c52 100644
->>> --- a/builtin/pack-objects.c
->>> +++ b/builtin/pack-objects.c
->>> @@ -4652,6 +4652,9 @@ int cmd_pack_objects(int argc,
->>>           if (use_bitmap_index > 0 ||
->>>               !use_internal_rev_list)
->>>               path_walk = 0;
->>> +        else if (the_repository->gitdir &&
->>> +             the_repository->settings.pack_use_path_walk)
->>> +            path_walk = 1;
->>>           else
->>>               path_walk = git_env_bool("GIT_TEST_PACK_PATH_WALK", 0);
->>>       }
->>
->> The limited diff context makes it hard for me to tell for sure, but this
->> takes place after git_config(), right? If so, I think we can avoid using
->> the repository settings machinery here and just use the config API
->> directly.
->>
->> (FWIW, I typically think of repository settings as a way to expose
->> config information to some part of the codebase that doesn't otherwise
->> have easy access to, e.g., a static field that was set by a git_config()
->> callback).
+On Fri, May 16, 2025 at 02:40:54PM +0100, Phillip Wood wrote:
 
-Rereading these comments, I didn't adequately reply to "why use the
-repo settings?" and the reason comes due to the use of assigning the
-value in feature.experimental=true. This provides a common place for
-the logic around both path.usePathWalk and feature.experimental.
+> On 16/05/2025 11:11, Phillip Wood wrote:
+> 
+> > I had a similar thought, though to make sure that we parsed 64 bit 
+> > values correctly on windows so we'd need something based on strtoumax() 
+> > I think.
+> 
+> Perhaps something like the diff below which adds strtoul_u64() in a
+> similar vein to strtoul_ui(). I think it's debatable whether we really
+> want to skip leading whitespace so we could perhaps tighten things up
+> by replacing "if (strchr(s, '-'))" with "if (!isdigit(*s))" though
+> that would mean this function would behave slightly differently to
+> strtoul_ui().
 
-A similar behavior is already present for pack.useSparse, which was
-in feature.experimental for a while before it became enabled by
-default.
+It feels like we would had to have dealt with this before for other
+large values. But poking around at a few obvious suspects (e.g.,
+packSizeLimit), it looks like they are all constrained to "unsigned
+long".
 
-Thanks,
--Stolee
+So yeah, we probably do need something new. IMHO we should probably have
+repo_config_get_u64() or similar (with the appropriate underlying
+helpers as well) as use it here. But I am happy with any solution.
 
+And I do agree that we should consider banning *scanf(). With numeric
+placeholders I don't think they're a security problem (though they are
+easy to get wrnog, as this discussion shows). But using them with "%s"
+should generally be disallowed.
+
+There is an fscanf() in builtin/gc.c that uses "%s", but it is careful
+to construct a custom format string that limits the string size. Yuck.
+The usual thing in our code base would be to read into a buffer and
+parse from there.
+
+-Peff
