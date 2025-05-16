@@ -1,68 +1,68 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1872749DD
-	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1775327A44E
+	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747419150; cv=none; b=EWV01T5Quc29O0Xn2mK94cKNoHH2x101F1GJb96k8WZ16eYtoNTDz/hO4gxcWsFXkPGmknpVGx/QbgQd+bJ/fI8V74vsP1TQ/tT/3zhTAXPP2rQ7+vQMyygWquu8BBjcPt/N2OJYDMdn2QipuPs9QWyXFZrMAWtdGa/DUdwR7mo=
+	t=1747419152; cv=none; b=NwsCKQJ1CUMKl+gXl59yQz5LaSdhY9WgNPAXClaBoQoKref8iK+KNSxsfc02TxooPpRD10E4eFfAhjfgeVsPQENHaCIw2RxfJtt8EIiDdoYz1/hIJZnv3xYjH+vNl+mnHzeqP7TZqGFMdILbyXCPoMo+XI1nbXD7sF19t6BT4ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747419150; c=relaxed/simple;
-	bh=ZsDITxFZu5o6RoUA3ykAFP5S8KRHw5kELE8wctEgxcE=;
+	s=arc-20240116; t=1747419152; c=relaxed/simple;
+	bh=HrRbglbw4z7mqG0ill5qd7FSnyB1/K4up1AIrw2+wKM=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=KK0nnssJczt21Agd47eP8WvPLhFRNZ/ZQT6W++IQxxfJyx/BmEADvzCWV2yHW1ViABcxS0Q942vz2Qfzod/A2Bw30i/BwoOpIof+yqBzSzCK5D3Jqy0Bb38No8g2D6WE1kKE3HiU1/AAchG/MpLuH7mh+TrjRSOKkm+g/K2traw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mpTq16/9; arc=none smtp.client-ip=209.85.128.42
+	 MIME-Version:To:Cc; b=E641kUvylbphRcoR7SxKDoOLbZP++B87cEIcD1PNP+wbsQIbVVM9zmCbqONZ3F8ywVTBfKS8BthJBsVfksf50a+DK2wl3w++GFRHIhIpdBEaSvnc0QWDx1Gp09SdgSIOz+ZFHMEhDkUvnwFKdM8FmYwylhc7wEbPmozwr4ogkLE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dkdOMEFz; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mpTq16/9"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so23947995e9.1
-        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dkdOMEFz"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a363d15c64so375429f8f.3
+        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747419146; x=1748023946; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747419148; x=1748023948; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=40luNWIYsyvVAlNGTmQRf99rIflEZGIDRTpFvlvGP6U=;
-        b=mpTq16/9ynLl446/YQQXiTUVSB/RT2sYwoCCKWiIZsGi1lbzLYvxD0pV2tuxDUQA9+
-         deKJOhYnwEkhUm8XlWumyb0e1sn4tkm2NlSRprQYZzU6zz4PGApSwhozitboeQjWFCQX
-         M1iDP8Px69VBrYWs/TphszHQ0etBGBqyAHJBRxCQS0YftI7QkI4PZqH9dcitKE1XFb1F
-         T6r38np/tosF8NrfIX7ffwU9xSRGPxfUMqhMfxgthF5RCce0zjP+OvwoePfaPYc8QK1Y
-         up/Lk6cgpB/ukGWARXtaLq8sNPhb25qpJVwUmydI/heeoxcT3na7HHSDwh6f8B4FeSNz
-         GecQ==
+        bh=mCVt59wqTizhEjqN9CGd/aBsDvypmlAsO7O/nWNVYHE=;
+        b=dkdOMEFzLjQQ6DHbJabFaTWTD6vAXDNngEA17uZr7oQjwNxBXm9bEr1OKdK7jzhfcG
+         isa7m8QyXXvHKIEK7RabcKU2EhnJHRVdYA2SGSevyME9vNVE90D/A0NKKi/4mw4Oncni
+         E5R9yyoI69eHP05NhuFsVgxUAiB6YGpaJ/VJlg3FwbOknGO+K8EpOlFuSrx5if3BNWLW
+         YiUTgy5ZR+hYAKNgVqWAJFu/GOtepCOIGeBtK2uEpkQYIvuCm9CasDISR1tLYl52r4ZM
+         9F1kk3XrFZ18Q/w8auOjYvvWiH7HPgYQDyZRF0gRde+OrzbWmxMuXi7Wh8SpbR2f4rbz
+         IR8Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747419146; x=1748023946;
+        d=1e100.net; s=20230601; t=1747419148; x=1748023948;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=40luNWIYsyvVAlNGTmQRf99rIflEZGIDRTpFvlvGP6U=;
-        b=T+QhxMTMf/pUgOejsBiEYA+/KiqJ9uIOUn9DN357bXkBr6+IOxIwZwi1c6LSYkw9c4
-         VscqJrhFir9XI96Z+Z1jYG0hkMMdLVa8wl08mKvz+NDwrK5bB3Tc4NfLMjy5oSyfxLnd
-         8gxY2tJuEKZNKAEmrgFaP+QKC3LZSiKc7DidxePwJ/ddUNZrlFJxDSLKJbSdHM8FVQ7T
-         fFfaeLXs838jIUoN88/XaP/tiiPKF0JiAK+CYh40omEl396NFrFbi6GePl6dVBtd2SDP
-         fFYO4xzGj8JXCCJIDjhJcwoouYD4CsuxlZfu3LK1EfZZMXGnTOSkvJsrIdGMPbjEHTe5
-         mlnQ==
-X-Gm-Message-State: AOJu0YyP9WQT5oJOipdp5VfNmwAs8iTdS64LAiIKv9lAUF4xzchbO9qF
-	CsbRdUbEGdhCCJk/BVQaYkdGNaUyo8TGF/KI1Tj7RVqkF9BSpQ6y+9ZzobWUMA==
-X-Gm-Gg: ASbGncuPsfe3wyzrh8md+wmT95/z7ITxnm1alkrMxgH/1NtA9RhBfte4Yq+Dg7yv5sT
-	L3dhLwEhLjHh2SEL/icFEnMsfGqe1hGcBSAr+LfUwO2XhHAJ2SodoF8BDf9VmKs7OnfPJ5cWqZ6
-	5E8NKLWs3uPs9/9j8xEKc/l2ld5K/VXzwHKSvUrDbKA41lMrI2hmbh186iEf5AJDCCUCBJktqjO
-	ArZ6zEYY0R05z94XNYNGZ0pbCBdY/oxKCON/q2fBA0wOK5Q5qCX27qrE/8gbv5oNM95IZvZiWTX
-	xNi6/8CJnVdF79s2NIWXX9I/qQJchsgg7S/U8BUYMDkgxLzvnNQ/TjB9NCgPxHA=
-X-Google-Smtp-Source: AGHT+IFXuMNDJqsbXn9FUWttJTxVvu23VISZm6HMwmgnz6mRXJxc1MMJ0eHj13++sjFSYgXfh0JMRQ==
-X-Received: by 2002:a05:6000:144e:b0:39f:7e99:5e8c with SMTP id ffacd0b85a97d-3a35c84ae15mr5594017f8f.51.1747419146317;
-        Fri, 16 May 2025 11:12:26 -0700 (PDT)
+        bh=mCVt59wqTizhEjqN9CGd/aBsDvypmlAsO7O/nWNVYHE=;
+        b=b2IT62YPh7TM8iaYUBl6eLX7GGmSsuXRGfkAhllm+yWrsJawMqZvfeMsCjP7+ul5nA
+         daZFQTydRy6JQT0UOSAqRLKJsiSP4GQVHU9J0aCrtRSc9kfg/Q2hdqYexcg7Aqe7NF6G
+         WPSTC8EGdF2Dh9vIDw1LpG/EAt9Ya6IRm+7wrW9EO/4NSF9HmEaAal4gUb5Gi4IahoPz
+         vHIplf4BrZ6FWsV6p7IQn3rb7wh7sN2hc95uI2/XQTlqnVY9pM9PYtWQmO9i7/D2rLJ+
+         VT0emNHQIgR8aw3fBFbp76T4UDcoHbXkFOdgOyEUenMO1frZlBZ80XRPDuTVWE/RBZZM
+         TAPA==
+X-Gm-Message-State: AOJu0YyWPjIQV0riOVF9bztmNX8CBTqMSQP+7OrBAqEmfIrjFeogiE15
+	sNFL71MYILijx38xwlbKDphY678krUmFaVs4vuyL9ijyF+lBX4k36e3GeIcEOg==
+X-Gm-Gg: ASbGncvn1zWBMa1E05ICVyIfUWA8LebQniRKRbcFLmNJuwsb5X24halQgTFL2wA2jt5
+	MByG0z/V3Tp3L/DqlVUcMQgWUf6Xu4AvSrq/U5zFV1eDNW395vGWezN3ZFs+xlSRe4lMpwfEK1r
+	cT3SuUVQE1gNEV8vPaLu+eElQqztWv91/J3DDJ10TkMo3is5sxHVBV+Ozy6AXJM3iue0RUaH9CQ
+	UcB7/DUADAFyUH9h2iytFjHeB0WL9xNGipNR+HnGJkaQDxtpqe48VmEEccfy0V8K37uxydkt3K0
+	RcTw4pL02dXgy4n1z7IVaYf1szuSU8kGpqLGQZgYiIxo1mWNEwNa
+X-Google-Smtp-Source: AGHT+IHMQ4ancRnR8Ky+uAtXcihhvgpU4z6kI9OtSs3oTnHqnOofMWKZQxdIEm3w7gGKPH99InjOAQ==
+X-Received: by 2002:a05:6000:2012:b0:3a3:5b88:fb2a with SMTP id ffacd0b85a97d-3a35c808a9cmr4789284f8f.7.1747419147929;
+        Fri, 16 May 2025 11:12:27 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442fd50eda6sm40799185e9.13.2025.05.16.11.12.24
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca62204sm3535494f8f.42.2025.05.16.11.12.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 11:12:25 -0700 (PDT)
-Message-Id: <19c6651183a7daab4af7994f669aedc22f0a6746.1747419124.git.gitgitgadget@gmail.com>
+        Fri, 16 May 2025 11:12:27 -0700 (PDT)
+Message-Id: <7f9e6a077bc43aae55b2eb9ae5b4b10385cef11f.1747419124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 References: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
 	<pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 May 2025 18:11:56 +0000
-Subject: [PATCH v3 06/13] t5538: add tests to confirm deltas in shallow pushes
+Date: Fri, 16 May 2025 18:11:57 +0000
+Subject: [PATCH v3 07/13] repack: add --path-walk option
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,59 +89,196 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-It can be notoriously difficult to detect if delta bases are being
-computed properly during 'git push'. Construct an example where it will
-make a kilobyte worth of difference when a delta base is not found. We
-can then use the progress indicators to distinguish between bytes and
-KiB depending on whether the delta base is found and used.
+Since 'git pack-objects' supports a --path-walk option, allow passing it
+through in 'git repack'. This presents interesting testing opportunities for
+comparing the different repacking strategies against each other.
+
+Add the --path-walk option to the performance tests in p5313.
+
+For the microsoft/fluentui repo [1] checked out at a specific commit [2],
+the --path-walk tests in p5313 look like this:
+
+Test                                                     this tree
+-------------------------------------------------------------------------
+5313.18: thin pack with --path-walk                      0.08(0.06+0.02)
+5313.19: thin pack size with --path-walk                           18.4K
+5313.20: big pack with --path-walk                       2.10(7.80+0.26)
+5313.21: big pack size with --path-walk                            19.8M
+5313.22: shallow fetch pack with --path-walk             1.62(3.38+0.17)
+5313.23: shallow pack size with --path-walk                        33.6M
+5313.24: repack with --path-walk                         81.29(96.08+0.71)
+5313.25: repack size with --path-walk                             142.5M
+
+[1] https://github.com/microsoft/fluentui
+[2] e70848ebac1cd720875bccaa3026f4a9ed700e08
+
+Along with the earlier tests in p5313, I'll instead reformat the
+comparison as follows:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1             439.4M      87.24s
+Hash v2             161.7M      21.51s
+Path Walk           142.5M      81.29s
+
+There are a few things to notice here:
+
+ 1. The benefits of --name-hash-version=2 over --name-hash-version=1 are
+    significant, but --path-walk still compresses better than that
+    option.
+
+ 2. The --path-walk command is still using --name-hash-version=1 for the
+    second pass of delta computation, using the increased name hash
+    collisions as a potential method for opportunistic compression on
+    top of the path-focused compression.
+
+ 3. The --path-walk algorithm is currently sequential and does not use
+    multiple threads for delta compression. Threading will be
+    implemented in a future change so the computation time will improve
+    to better compete in this metric.
+
+There are small benefits in size for my copy of the Git repository:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1             248.8M      30.44s
+Hash v2             249.0M      30.15s
+Path Walk           213.2M     142.50s
+
+As well as in the nodejs/node repository [3]:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1             739.9M      71.18s
+Hash v2             764.6M      67.82s
+Path Walk           698.1M     208.10s
+
+[3] https://github.com/nodejs/node
+
+This benefit also repeats in my copy of the Linux kernel repository:
+
+Repack Method    Pack Size       Time
+---------------------------------------
+Hash v1               2.5G     554.41s
+Hash v2               2.5G     549.62s
+Path Walk             2.2G    1562.36s
+
+It is important to see that even when the repository shape does not have
+many name-hash collisions, there is a slight space boost to be found
+using this method.
+
+As this repacking strategy was released in Git for Windows 2.47.0, some
+users have reported cases where the --path-walk compression is slightly
+worse than the --name-hash-version=2 option. In those cases, it may be
+beneficial to combine the two options. However, there has not been a
+released version of Git that has both options and I don't have access to
+these repos for testing.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- t/t5538-push-shallow.sh | 33 +++++++++++++++++++++++++++++++++
- 1 file changed, 33 insertions(+)
+ Documentation/git-repack.adoc |  5 ++++-
+ builtin/repack.c              |  7 ++++++-
+ t/perf/p5313-pack-objects.sh  | 18 ++++++++----------
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
-index e91fcc173e81..c406f9d7ed5f 100755
---- a/t/t5538-push-shallow.sh
-+++ b/t/t5538-push-shallow.sh
-@@ -123,4 +123,37 @@ EOF
- 	git cat-file blob $(echo 1|git hash-object --stdin) >/dev/null
- 	)
- '
+diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
+index 5852a5c97368..aa1bc081e50a 100644
+--- a/Documentation/git-repack.adoc
++++ b/Documentation/git-repack.adoc
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
+ 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
+-	[--write-midx] [--name-hash-version=<n>]
++	[--write-midx] [--name-hash-version=<n>] [--path-walk]
+ 
+ DESCRIPTION
+ -----------
+@@ -255,6 +255,9 @@ linkgit:git-multi-pack-index[1]).
+ 	Provide this argument to the underlying `git pack-objects` process.
+ 	See linkgit:git-pack-objects[1] for full details.
+ 
++--path-walk::
++	Pass the `--path-walk` option to the underlying `git pack-objects`
++	process. See linkgit:git-pack-objects[1] for full details.
+ 
+ CONFIGURATION
+ -------------
+diff --git a/builtin/repack.c b/builtin/repack.c
+index 75e3752353a2..d7f798280c0e 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -43,7 +43,7 @@ static char *packdir, *packtmp_name, *packtmp;
+ static const char *const git_repack_usage[] = {
+ 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
+ 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
+-	   "[--write-midx] [--name-hash-version=<n>]"),
++	   "[--write-midx] [--name-hash-version=<n>] [--path-walk]"),
+ 	NULL
+ };
+ 
+@@ -63,6 +63,7 @@ struct pack_objects_args {
+ 	int quiet;
+ 	int local;
+ 	int name_hash_version;
++	int path_walk;
+ 	struct list_objects_filter_options filter_options;
+ };
+ 
+@@ -313,6 +314,8 @@ static void prepare_pack_objects(struct child_process *cmd,
+ 		strvec_pushf(&cmd->args, "--no-reuse-object");
+ 	if (args->name_hash_version)
+ 		strvec_pushf(&cmd->args, "--name-hash-version=%d", args->name_hash_version);
++	if (args->path_walk)
++		strvec_pushf(&cmd->args, "--path-walk");
+ 	if (args->local)
+ 		strvec_push(&cmd->args,  "--local");
+ 	if (args->quiet)
+@@ -1212,6 +1215,8 @@ int cmd_repack(int argc,
+ 				N_("pass --no-reuse-object to git-pack-objects")),
+ 		OPT_INTEGER(0, "name-hash-version", &po_args.name_hash_version,
+ 				N_("specify the name hash version to use for grouping similar objects by path")),
++		OPT_BOOL(0, "path-walk", &po_args.path_walk,
++				N_("pass --path-walk to git-pack-objects")),
+ 		OPT_NEGBIT('n', NULL, &run_update_server_info,
+ 				N_("do not run git-update-server-info"), 1),
+ 		OPT__QUIET(&po_args.quiet, N_("be quiet")),
+diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
+index cd6dd3abb710..98748b0e203a 100755
+--- a/t/perf/p5313-pack-objects.sh
++++ b/t/perf/p5313-pack-objects.sh
+@@ -55,23 +55,21 @@ test_all_with_args () {
+ 	test_size "shallow pack size with $parameter" '
+ 		test_file_size out
+ 	'
+-}
+-
+-for version in 1 2
+-do
+-	export version
+-
+-	test_all_with_args --name-hash-version=$version
+ 
+-	test_perf "repack with --name-hash-version=$version" '
+-		git repack -adf --name-hash-version=$version
++	test_perf "repack with $parameter" '
++		git repack -adf $parameter
+ 	'
+ 
+-	test_size "repack size with --name-hash-version=$version" '
++	test_size "repack size with $parameter" '
+ 		gitdir=$(git rev-parse --git-dir) &&
+ 		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
+ 		test_file_size "$pack"
+ 	'
++}
 +
-+test_expect_success 'push new commit from shallow clone has correct object count' '
-+	git init origin &&
-+	test_commit -C origin a &&
-+	test_commit -C origin b &&
-+
-+	git clone --depth=1 "file://$(pwd)/origin" client &&
-+	git -C client checkout -b topic &&
-+	git -C client commit --allow-empty -m "empty" &&
-+	GIT_PROGRESS_DELAY=0 git -C client push --progress origin topic 2>err &&
-+	test_grep "Enumerating objects: 1, done." err
-+'
-+
-+test_expect_success 'push new commit from shallow clone has good deltas' '
-+	git init base &&
-+	test_seq 1 999 >base/a &&
-+	test_commit -C base initial &&
-+	git -C base add a &&
-+	git -C base commit -m "big a" &&
-+
-+	git clone --depth=1 "file://$(pwd)/base" deltas &&
-+	git -C deltas checkout -b deltas &&
-+	test_seq 1 1000 >deltas/a &&
-+	git -C deltas commit -a -m "bigger a" &&
-+	GIT_PROGRESS_DELAY=0 git -C deltas push --progress origin deltas 2>err &&
-+
-+	test_grep "Enumerating objects: 5, done" err &&
-+
-+	# If the delta base is found, then this message uses "bytes".
-+	# If the delta base is not found, then this message uses "KiB".
-+	test_grep "Writing objects: .* bytes" err
-+'
-+
- test_done
++for version in 1 2
++do
++	test_all_with_args --name-hash-version=$version
+ done
+ 
+ test_all_with_args --path-walk
 -- 
 gitgitgadget
 
