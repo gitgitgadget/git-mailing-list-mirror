@@ -1,68 +1,68 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1775327A44E
-	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38CF279334
+	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747419152; cv=none; b=NwsCKQJ1CUMKl+gXl59yQz5LaSdhY9WgNPAXClaBoQoKref8iK+KNSxsfc02TxooPpRD10E4eFfAhjfgeVsPQENHaCIw2RxfJtt8EIiDdoYz1/hIJZnv3xYjH+vNl+mnHzeqP7TZqGFMdILbyXCPoMo+XI1nbXD7sF19t6BT4ts=
+	t=1747419153; cv=none; b=bWVC6rU4iXkL5FGGw5BGtxajGVHBSIK7Q0fIF4fkas4Cf66ArBKLbUFB9cZF6AP4NjjSgXNjlMflGS/Qm59wR++3OCgIZQgym0w9gcD7WcNeuxlCD7bPI2nsQEY0769d2xlenQeQWUCiATVBAFvYhqiOOKr8QweDcAIh/Qs5epA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747419152; c=relaxed/simple;
-	bh=HrRbglbw4z7mqG0ill5qd7FSnyB1/K4up1AIrw2+wKM=;
+	s=arc-20240116; t=1747419153; c=relaxed/simple;
+	bh=iy4bqEfmcE6f+20Zyp66iSW1zqpyXBBSbfYno0/5Zfs=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=E641kUvylbphRcoR7SxKDoOLbZP++B87cEIcD1PNP+wbsQIbVVM9zmCbqONZ3F8ywVTBfKS8BthJBsVfksf50a+DK2wl3w++GFRHIhIpdBEaSvnc0QWDx1Gp09SdgSIOz+ZFHMEhDkUvnwFKdM8FmYwylhc7wEbPmozwr4ogkLE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dkdOMEFz; arc=none smtp.client-ip=209.85.221.49
+	 MIME-Version:To:Cc; b=PSJYbe59FyhitjVVfzkZBMfd6Sxe/ZISWID/ROch8JxDeEow6ggX7874WiSN6Wtyn5cA9wAj39SnzKHo7btvQl4albBSkrYcrJgiN20BPiOVh0oFsssjIMovBp8+LhHStK52+v3T6rT29gdH2FYRyt+iQQftXz6rkr/34faUQNA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TZxjd7Im; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dkdOMEFz"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a363d15c64so375429f8f.3
-        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:29 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TZxjd7Im"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43cf257158fso17481375e9.2
+        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747419148; x=1748023948; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747419149; x=1748023949; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mCVt59wqTizhEjqN9CGd/aBsDvypmlAsO7O/nWNVYHE=;
-        b=dkdOMEFzLjQQ6DHbJabFaTWTD6vAXDNngEA17uZr7oQjwNxBXm9bEr1OKdK7jzhfcG
-         isa7m8QyXXvHKIEK7RabcKU2EhnJHRVdYA2SGSevyME9vNVE90D/A0NKKi/4mw4Oncni
-         E5R9yyoI69eHP05NhuFsVgxUAiB6YGpaJ/VJlg3FwbOknGO+K8EpOlFuSrx5if3BNWLW
-         YiUTgy5ZR+hYAKNgVqWAJFu/GOtepCOIGeBtK2uEpkQYIvuCm9CasDISR1tLYl52r4ZM
-         9F1kk3XrFZ18Q/w8auOjYvvWiH7HPgYQDyZRF0gRde+OrzbWmxMuXi7Wh8SpbR2f4rbz
-         IR8Q==
+        bh=eibB/W76p0D+v3cjJVOHkJYTdhG+ew5bx1u09qGqV4o=;
+        b=TZxjd7Imvj3pQ3Rp8IrYKRsJcb8JEzRnANr4P5ZHwGGd2j+dekphItGEKxAsp2ZceF
+         /uzgYFpPbOZVmmdmWLm8ZWxUnGY5/YhwCJuaOyQGHFxwRTxsae/rWFY4TPMKbCmJit0D
+         fbT4XVr/FXgZzy8jfTatZ0gDILr2FUQNwHY9dhXBXe3dbo+hlP/KHbbd/D6mK3MFQ6za
+         5wCNd4AffpwhjijUcp8Bnwm9lpEV264MB8m6sAZrTJ6menqhjojSUAI9L2V3EsLuFYQ+
+         5fA+eYpaNT7F05dXzVB6LjvSsXHHYyhJyRqBtQyVQ+zE11+fhJT4pc16LEzjaYb5pGUi
+         6kQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747419148; x=1748023948;
+        d=1e100.net; s=20230601; t=1747419149; x=1748023949;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mCVt59wqTizhEjqN9CGd/aBsDvypmlAsO7O/nWNVYHE=;
-        b=b2IT62YPh7TM8iaYUBl6eLX7GGmSsuXRGfkAhllm+yWrsJawMqZvfeMsCjP7+ul5nA
-         daZFQTydRy6JQT0UOSAqRLKJsiSP4GQVHU9J0aCrtRSc9kfg/Q2hdqYexcg7Aqe7NF6G
-         WPSTC8EGdF2Dh9vIDw1LpG/EAt9Ya6IRm+7wrW9EO/4NSF9HmEaAal4gUb5Gi4IahoPz
-         vHIplf4BrZ6FWsV6p7IQn3rb7wh7sN2hc95uI2/XQTlqnVY9pM9PYtWQmO9i7/D2rLJ+
-         VT0emNHQIgR8aw3fBFbp76T4UDcoHbXkFOdgOyEUenMO1frZlBZ80XRPDuTVWE/RBZZM
-         TAPA==
-X-Gm-Message-State: AOJu0YyWPjIQV0riOVF9bztmNX8CBTqMSQP+7OrBAqEmfIrjFeogiE15
-	sNFL71MYILijx38xwlbKDphY678krUmFaVs4vuyL9ijyF+lBX4k36e3GeIcEOg==
-X-Gm-Gg: ASbGncvn1zWBMa1E05ICVyIfUWA8LebQniRKRbcFLmNJuwsb5X24halQgTFL2wA2jt5
-	MByG0z/V3Tp3L/DqlVUcMQgWUf6Xu4AvSrq/U5zFV1eDNW395vGWezN3ZFs+xlSRe4lMpwfEK1r
-	cT3SuUVQE1gNEV8vPaLu+eElQqztWv91/J3DDJ10TkMo3is5sxHVBV+Ozy6AXJM3iue0RUaH9CQ
-	UcB7/DUADAFyUH9h2iytFjHeB0WL9xNGipNR+HnGJkaQDxtpqe48VmEEccfy0V8K37uxydkt3K0
-	RcTw4pL02dXgy4n1z7IVaYf1szuSU8kGpqLGQZgYiIxo1mWNEwNa
-X-Google-Smtp-Source: AGHT+IHMQ4ancRnR8Ky+uAtXcihhvgpU4z6kI9OtSs3oTnHqnOofMWKZQxdIEm3w7gGKPH99InjOAQ==
-X-Received: by 2002:a05:6000:2012:b0:3a3:5b88:fb2a with SMTP id ffacd0b85a97d-3a35c808a9cmr4789284f8f.7.1747419147929;
-        Fri, 16 May 2025 11:12:27 -0700 (PDT)
+        bh=eibB/W76p0D+v3cjJVOHkJYTdhG+ew5bx1u09qGqV4o=;
+        b=RboAni7tJK7xku9k0ioQNdYGW6GNwwXAoG8qUH8CNJVV/YdIfodeAAcveBHY3VBBJ3
+         nCdRggetHzX8dMpLoLr6EDtJQANkqvzK+WOtVc9YzNeWhFFtWFQKEzCM+VgclPbYbhs7
+         qMQMUYAuZLG1y39mgLdAgHk+9Zwm/0Pb8ei6857iR/qE0Pn+KpN8YcNtBuxNHYGepHN4
+         KiMvSb2MADOoRJ3GvRI92xiBv4hOFlmnNuOoLp6JdWsJu4TEkCBLpLXqM7qqB6mW7IOU
+         nqPJWuF9pM0fFHzalAKrG0dGU+ZoW2h5qMsFq6P32xXRhbHdkoA0ZE1+YNs+lL1Eh/sK
+         eHyA==
+X-Gm-Message-State: AOJu0YwZIRafoapH7YfCz39mlUqO3LiwTILgQ4Om2BugDxVZSZ0OC7yi
+	Zwbzt/W8af7iSmVYyAbZeSY3O6npRnxMZ0ccbNk8L8ELomM6OxxKkrLAi6F17w==
+X-Gm-Gg: ASbGncvInOUWsf5z043oJJhUYq5fBKw7QfsE1TwJ2drDHKb/1qMGcYgYUiMjlsjezkO
+	cVfWek5QC0zgC8/aDDXwJizQfdDuL5jxNyOQc2FQ84w1qdk/U/Pi5cY2qEMCFDnv5/7IZUis/8q
+	xOp4C2L3+p8o3h5y3TcEB5KO2bpHf7tg/WwualJ4qq5QmS241zu+W6v2irLSjBk6FwzYTGjmfYU
+	aeCmc2WP83XazaMXude2NboxDXzXN9qVyV537WGE58XZE4jPNEGn8oGjtC1HvZTrFSfMWTeYAWL
+	WuAqsNeWWet/FD+xUWVv54RcYfeokCqGqxy8qO0mrL/BBJbjj5hH
+X-Google-Smtp-Source: AGHT+IEN1DX4q5ql9AD+4Ch5SKcyQRPqxQQrrhMx9ftOJOHh8cFanqpzAG9gW8toWl5HtT2/y+nDGQ==
+X-Received: by 2002:a05:600c:8115:b0:441:b3eb:570a with SMTP id 5b1f17b1804b1-442fefdab8bmr37850605e9.2.1747419149503;
+        Fri, 16 May 2025 11:12:29 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca62204sm3535494f8f.42.2025.05.16.11.12.26
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442fd59704esm42011515e9.36.2025.05.16.11.12.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 11:12:27 -0700 (PDT)
-Message-Id: <7f9e6a077bc43aae55b2eb9ae5b4b10385cef11f.1747419124.git.gitgitgadget@gmail.com>
+        Fri, 16 May 2025 11:12:28 -0700 (PDT)
+Message-Id: <b98e71d6d549d916f3d827e1eb3da6ac7391392b.1747419124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 References: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
 	<pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 May 2025 18:11:57 +0000
-Subject: [PATCH v3 07/13] repack: add --path-walk option
+Date: Fri, 16 May 2025 18:11:58 +0000
+Subject: [PATCH v3 08/13] pack-objects: enable --path-walk via config
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,196 +89,163 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Since 'git pack-objects' supports a --path-walk option, allow passing it
-through in 'git repack'. This presents interesting testing opportunities for
-comparing the different repacking strategies against each other.
+Users may want to enable the --path-walk option for 'git pack-objects' by
+default, especially underneath commands like 'git push' or 'git repack'.
 
-Add the --path-walk option to the performance tests in p5313.
+This should be limited to client repositories, since the --path-walk option
+disables bitmap walks, so would be bad to include in Git servers when
+serving fetches and clones. There is potential that it may be helpful to
+consider when repacking the repository, to take advantage of improved deltas
+across historical versions of the same files.
 
-For the microsoft/fluentui repo [1] checked out at a specific commit [2],
-the --path-walk tests in p5313 look like this:
+Much like how "pack.useSparse" was introduced and included in
+"feature.experimental" before being enabled by default, use the repository
+settings infrastructure to make the new "pack.usePathWalk" config enabled by
+"feature.experimental" and "feature.manyFiles".
 
-Test                                                     this tree
--------------------------------------------------------------------------
-5313.18: thin pack with --path-walk                      0.08(0.06+0.02)
-5313.19: thin pack size with --path-walk                           18.4K
-5313.20: big pack with --path-walk                       2.10(7.80+0.26)
-5313.21: big pack size with --path-walk                            19.8M
-5313.22: shallow fetch pack with --path-walk             1.62(3.38+0.17)
-5313.23: shallow pack size with --path-walk                        33.6M
-5313.24: repack with --path-walk                         81.29(96.08+0.71)
-5313.25: repack size with --path-walk                             142.5M
-
-[1] https://github.com/microsoft/fluentui
-[2] e70848ebac1cd720875bccaa3026f4a9ed700e08
-
-Along with the earlier tests in p5313, I'll instead reformat the
-comparison as follows:
-
-Repack Method    Pack Size       Time
----------------------------------------
-Hash v1             439.4M      87.24s
-Hash v2             161.7M      21.51s
-Path Walk           142.5M      81.29s
-
-There are a few things to notice here:
-
- 1. The benefits of --name-hash-version=2 over --name-hash-version=1 are
-    significant, but --path-walk still compresses better than that
-    option.
-
- 2. The --path-walk command is still using --name-hash-version=1 for the
-    second pass of delta computation, using the increased name hash
-    collisions as a potential method for opportunistic compression on
-    top of the path-focused compression.
-
- 3. The --path-walk algorithm is currently sequential and does not use
-    multiple threads for delta compression. Threading will be
-    implemented in a future change so the computation time will improve
-    to better compete in this metric.
-
-There are small benefits in size for my copy of the Git repository:
-
-Repack Method    Pack Size       Time
----------------------------------------
-Hash v1             248.8M      30.44s
-Hash v2             249.0M      30.15s
-Path Walk           213.2M     142.50s
-
-As well as in the nodejs/node repository [3]:
-
-Repack Method    Pack Size       Time
----------------------------------------
-Hash v1             739.9M      71.18s
-Hash v2             764.6M      67.82s
-Path Walk           698.1M     208.10s
-
-[3] https://github.com/nodejs/node
-
-This benefit also repeats in my copy of the Linux kernel repository:
-
-Repack Method    Pack Size       Time
----------------------------------------
-Hash v1               2.5G     554.41s
-Hash v2               2.5G     549.62s
-Path Walk             2.2G    1562.36s
-
-It is important to see that even when the repository shape does not have
-many name-hash collisions, there is a slight space boost to be found
-using this method.
-
-As this repacking strategy was released in Git for Windows 2.47.0, some
-users have reported cases where the --path-walk compression is slightly
-worse than the --name-hash-version=2 option. In those cases, it may be
-beneficial to combine the two options. However, there has not been a
-released version of Git that has both options and I don't have access to
-these repos for testing.
+In order to test that this config works, add a new trace2 region around
+the path walk code that can be checked by a 'git push' command.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/git-repack.adoc |  5 ++++-
- builtin/repack.c              |  7 ++++++-
- t/perf/p5313-pack-objects.sh  | 18 ++++++++----------
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ Documentation/config/feature.adoc |  4 ++++
+ Documentation/config/pack.adoc    |  4 ++++
+ builtin/pack-objects.c            | 11 ++++++++++-
+ repo-settings.c                   |  3 +++
+ repo-settings.h                   |  1 +
+ t/t5516-fetch-push.sh             | 10 ++++++++++
+ 6 files changed, 32 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/git-repack.adoc b/Documentation/git-repack.adoc
-index 5852a5c97368..aa1bc081e50a 100644
---- a/Documentation/git-repack.adoc
-+++ b/Documentation/git-repack.adoc
-@@ -11,7 +11,7 @@ SYNOPSIS
- [verse]
- 'git repack' [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]
- 	[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]
--	[--write-midx] [--name-hash-version=<n>]
-+	[--write-midx] [--name-hash-version=<n>] [--path-walk]
+diff --git a/Documentation/config/feature.adoc b/Documentation/config/feature.adoc
+index f061b64b7484..cb49ff2604a6 100644
+--- a/Documentation/config/feature.adoc
++++ b/Documentation/config/feature.adoc
+@@ -20,6 +20,10 @@ walking fewer objects.
+ +
+ * `pack.allowPackReuse=multi` may improve the time it takes to create a pack by
+ reusing objects from multiple packs instead of just one.
+++
++* `pack.usePathWalk` may speed up packfile creation and make the packfiles be
++significantly smaller in the presence of certain filename collisions with Git's
++default name-hash.
  
- DESCRIPTION
- -----------
-@@ -255,6 +255,9 @@ linkgit:git-multi-pack-index[1]).
- 	Provide this argument to the underlying `git pack-objects` process.
- 	See linkgit:git-pack-objects[1] for full details.
+ feature.manyFiles::
+ 	Enable config options that optimize for repos with many files in the
+diff --git a/Documentation/config/pack.adoc b/Documentation/config/pack.adoc
+index da527377fafc..75402d5579d4 100644
+--- a/Documentation/config/pack.adoc
++++ b/Documentation/config/pack.adoc
+@@ -155,6 +155,10 @@ pack.useSparse::
+ 	commits contain certain types of direct renames. Default is
+ 	`true`.
  
-+--path-walk::
-+	Pass the `--path-walk` option to the underlying `git pack-objects`
-+	process. See linkgit:git-pack-objects[1] for full details.
- 
- CONFIGURATION
- -------------
-diff --git a/builtin/repack.c b/builtin/repack.c
-index 75e3752353a2..d7f798280c0e 100644
---- a/builtin/repack.c
-+++ b/builtin/repack.c
-@@ -43,7 +43,7 @@ static char *packdir, *packtmp_name, *packtmp;
- static const char *const git_repack_usage[] = {
- 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
- 	   "[--window=<n>] [--depth=<n>] [--threads=<n>] [--keep-pack=<pack-name>]\n"
--	   "[--write-midx] [--name-hash-version=<n>]"),
-+	   "[--write-midx] [--name-hash-version=<n>] [--path-walk]"),
- 	NULL
- };
- 
-@@ -63,6 +63,7 @@ struct pack_objects_args {
- 	int quiet;
- 	int local;
- 	int name_hash_version;
-+	int path_walk;
- 	struct list_objects_filter_options filter_options;
- };
- 
-@@ -313,6 +314,8 @@ static void prepare_pack_objects(struct child_process *cmd,
- 		strvec_pushf(&cmd->args, "--no-reuse-object");
- 	if (args->name_hash_version)
- 		strvec_pushf(&cmd->args, "--name-hash-version=%d", args->name_hash_version);
-+	if (args->path_walk)
-+		strvec_pushf(&cmd->args, "--path-walk");
- 	if (args->local)
- 		strvec_push(&cmd->args,  "--local");
- 	if (args->quiet)
-@@ -1212,6 +1215,8 @@ int cmd_repack(int argc,
- 				N_("pass --no-reuse-object to git-pack-objects")),
- 		OPT_INTEGER(0, "name-hash-version", &po_args.name_hash_version,
- 				N_("specify the name hash version to use for grouping similar objects by path")),
-+		OPT_BOOL(0, "path-walk", &po_args.path_walk,
-+				N_("pass --path-walk to git-pack-objects")),
- 		OPT_NEGBIT('n', NULL, &run_update_server_info,
- 				N_("do not run git-update-server-info"), 1),
- 		OPT__QUIET(&po_args.quiet, N_("be quiet")),
-diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
-index cd6dd3abb710..98748b0e203a 100755
---- a/t/perf/p5313-pack-objects.sh
-+++ b/t/perf/p5313-pack-objects.sh
-@@ -55,23 +55,21 @@ test_all_with_args () {
- 	test_size "shallow pack size with $parameter" '
- 		test_file_size out
- 	'
--}
--
--for version in 1 2
--do
--	export version
--
--	test_all_with_args --name-hash-version=$version
- 
--	test_perf "repack with --name-hash-version=$version" '
--		git repack -adf --name-hash-version=$version
-+	test_perf "repack with $parameter" '
-+		git repack -adf $parameter
- 	'
- 
--	test_size "repack size with --name-hash-version=$version" '
-+	test_size "repack size with $parameter" '
- 		gitdir=$(git rev-parse --git-dir) &&
- 		pack=$(ls $gitdir/objects/pack/pack-*.pack) &&
- 		test_file_size "$pack"
- 	'
-+}
++pack.usePathWalk::
++	Enable the `--path-walk` option by default for `git pack-objects`
++	processes. See linkgit:git-pack-objects[1] for full details.
 +
-+for version in 1 2
-+do
-+	test_all_with_args --name-hash-version=$version
- done
+ pack.preferBitmapTips::
+ 	When selecting which commits will receive bitmaps, prefer a
+ 	commit at the tip of any reference that is a suffix of any value
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index 4fd88476dd29..bdd20c074a9b 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -44,6 +44,7 @@
+ #include "blob.h"
+ #include "tree.h"
+ #include "path-walk.h"
++#include "trace2.h"
  
- test_all_with_args --path-walk
+ /*
+  * Objects we are going to pack are collected in the `to_pack` structure.
+@@ -4283,6 +4284,7 @@ static void get_object_list_path_walk(struct rev_info *revs)
+ {
+ 	struct path_walk_info info = PATH_WALK_INFO_INIT;
+ 	unsigned int processed = 0;
++	int result;
+ 
+ 	info.revs = revs;
+ 	info.path_fn = add_objects_by_path;
+@@ -4296,7 +4298,11 @@ static void get_object_list_path_walk(struct rev_info *revs)
+ 	 */
+ 	info.prune_all_uninteresting = sparse;
+ 
+-	if (walk_objects_by_path(&info))
++	trace2_region_enter("pack-objects", "path-walk", revs->repo);
++	result = walk_objects_by_path(&info);
++	trace2_region_leave("pack-objects", "path-walk", revs->repo);
++
++	if (result)
+ 		die(_("failed to pack objects via path-walk"));
+ }
+ 
+@@ -4652,6 +4658,9 @@ int cmd_pack_objects(int argc,
+ 		if (use_bitmap_index > 0 ||
+ 		    !use_internal_rev_list)
+ 			path_walk = 0;
++		else if (the_repository->gitdir &&
++			 the_repository->settings.pack_use_path_walk)
++			path_walk = 1;
+ 		else
+ 			path_walk = git_env_bool("GIT_TEST_PACK_PATH_WALK", 0);
+ 	}
+diff --git a/repo-settings.c b/repo-settings.c
+index 67e9cfd2e63d..9b5595c708e6 100644
+--- a/repo-settings.c
++++ b/repo-settings.c
+@@ -47,11 +47,13 @@ void prepare_repo_settings(struct repository *r)
+ 		r->settings.fetch_negotiation_algorithm = FETCH_NEGOTIATION_SKIPPING;
+ 		r->settings.pack_use_bitmap_boundary_traversal = 1;
+ 		r->settings.pack_use_multi_pack_reuse = 1;
++		r->settings.pack_use_path_walk = 1;
+ 	}
+ 	if (manyfiles) {
+ 		r->settings.index_version = 4;
+ 		r->settings.index_skip_hash = 1;
+ 		r->settings.core_untracked_cache = UNTRACKED_CACHE_WRITE;
++		r->settings.pack_use_path_walk = 1;
+ 	}
+ 
+ 	/* Commit graph config or default, does not cascade (simple) */
+@@ -66,6 +68,7 @@ void prepare_repo_settings(struct repository *r)
+ 
+ 	/* Boolean config or default, does not cascade (simple)  */
+ 	repo_cfg_bool(r, "pack.usesparse", &r->settings.pack_use_sparse, 1);
++	repo_cfg_bool(r, "pack.usepathwalk", &r->settings.pack_use_path_walk, 0);
+ 	repo_cfg_bool(r, "core.multipackindex", &r->settings.core_multi_pack_index, 1);
+ 	repo_cfg_bool(r, "index.sparse", &r->settings.sparse_index, 0);
+ 	repo_cfg_bool(r, "index.skiphash", &r->settings.index_skip_hash, r->settings.index_skip_hash);
+diff --git a/repo-settings.h b/repo-settings.h
+index ddc11967e015..a31decad2211 100644
+--- a/repo-settings.h
++++ b/repo-settings.h
+@@ -56,6 +56,7 @@ struct repo_settings {
+ 	enum untracked_cache_setting core_untracked_cache;
+ 
+ 	int pack_use_sparse;
++	int pack_use_path_walk;
+ 	enum fetch_negotiation_setting fetch_negotiation_algorithm;
+ 
+ 	int core_multi_pack_index;
+diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+index 85ed049627d2..33cd186cd7ca 100755
+--- a/t/t5516-fetch-push.sh
++++ b/t/t5516-fetch-push.sh
+@@ -1907,4 +1907,14 @@ test_expect_success 'push with config push.useBitmaps' '
+ 		--thin --delta-base-offset -q --no-use-bitmap-index <false
+ '
+ 
++test_expect_success 'push with config pack.usePathWalk=true' '
++	mk_test testrepo heads/main &&
++	git checkout main &&
++	test_config pack.usePathWalk true &&
++	GIT_TRACE2_EVENT="$(pwd)/path-walk.txt" \
++	git push --quiet testrepo main:test &&
++
++	test_region pack-objects path-walk path-walk.txt
++'
++
+ test_done
 -- 
 gitgitgadget
 
