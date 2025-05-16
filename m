@@ -1,68 +1,68 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCF1B1A9B53
-	for <git@vger.kernel.org>; Fri, 16 May 2025 14:55:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981181ADC7E
+	for <git@vger.kernel.org>; Fri, 16 May 2025 14:55:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747407337; cv=none; b=EDx/YqfH5Q0EXOmRuVwfKupu+GFIC+aI/QjmMXfiv7h/ndw6ENP1uKDW232IGOtXFZr3SN5/RHZI+CZ8c1ZsREZhU/wqLEhCp7W9ezOIgnSgmuUW9yjjxjnXhGV4fe4SoGAoQx3X36q5aRpKzaHazXQcC2LU/BvhZSkHWlSdYic=
+	t=1747407338; cv=none; b=JMRL2eYjTBUB83wu4qSXFS1pSVfDqJBe8YwZuOOYSWnK6fh7g7f+OOaPaWZ10NjDf8C+j8sT+tY1jfptaH5fPSibKpWkClT1ttmD+RrzozDL6zIOitnzCMAhRTx1as45A5KkNwF3YdPWuXMNofpiQj7YBSY3VDc/iJwGMBl5xJg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747407337; c=relaxed/simple;
-	bh=8SqWhoS+mXBDhIs7L1bhcIwSyXBA79Cak3bHSxl/5QU=;
+	s=arc-20240116; t=1747407338; c=relaxed/simple;
+	bh=UWIlnGRc29VFht/MkN8PDEiuvBKKpWhQtwROdI+ynwk=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=GKE1MnuqCO+0mOJlytsJvPiIjLvMxL1tI8jQmPTMWgG8YqxNenAxgzlAieQdS1Qw7QO1WaH7VtB+GtmyGpJTKXtVbMf3uCEumDYwcCaVTwgXrwIfae9G/4+8taj1ocHS5CTFb+OJItu9SLZ9RpdOLsr0oyxrQnBP3illVI1JoBY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M2FZAre1; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version:To:Cc; b=Al/ZZDVs+lp3n6V324Yf6Muy1l5pdeNIxnKGOikBMBrfSxl5GjgHCi0UnRg2S5oooeU7IbEmQkfbe6YMfshSLloa04t9hTlHAKPDwrveMB5yqIVjIF04+C6ft3UtMJfMDiOW5UWzbck4AZNGSDXwqhgbKQqzW0XYRXqzMAa8w6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JASNqLry; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M2FZAre1"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-43cfdc2c8c9so11791475e9.2
-        for <git@vger.kernel.org>; Fri, 16 May 2025 07:55:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JASNqLry"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43edecbfb94so23618505e9.1
+        for <git@vger.kernel.org>; Fri, 16 May 2025 07:55:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1747407334; x=1748012134; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oY/S2y+0QyoMc6kyodcL5r9LiaDP3bEc8vwg1PxTOGY=;
-        b=M2FZAre1Se7ryiMLqL+aPxoRjJArWh2NuPqd50aaPB00R6ALgVEHu4n2i0cfIewVFh
-         CqDPKEiI+zNpnnz+tzjkFfi337JOOxT+8IiZc61yOFZqQzq+x/wBAUUZheayB6CL2WxR
-         4G6NsQAFKJsklnmwg8TV68zfEk+EzEUUGxf2Ij+k7i4hHXGdu3xuyUf98UzSUhHUMVGl
-         0ZkVes9Ni1XNlWpULYOilH3lnlg8+goj/ZrXT4KSxWPGn3dMB9i8jfU5M069nyACDAyU
-         5nSJT2Ao+5Q9bRhni2Crlh7LjA+8Q3n4g/JYnJGrRHTBcLIr9H/5xMArOVkxHKBZBX+f
-         bgvQ==
+        bh=+72koXptMPUOvugF9nQGr99SCFVCjm+IJsjEboc6+F0=;
+        b=JASNqLryBe28p5f/IBs2xZu5D/Dz3JTqctw4NtTrn9u+KOhjv4t4ya5hVjq1GcKf8J
+         Axc9rZmtuDSwramGDsJ2ZGnX3djvtrZTLNi1z8dr7UhL/m2q36c4IMMUHxlMg3CtFJoD
+         lyoRUw68f/aaA0aochKm65k8IAVbpSkPP2a4OQAq8jrdCN3Sn2BuD2dJjoEJl+eTbBMt
+         ivdRCDPCjqMJ3uORiAyV6m9nb9ec222XOqpV5rVnQfBjUweUHvtB76Ng7NgY2gfZND/r
+         q9r3lFGk4t15aZWms7TphwkzSSXJfXmr7O5muxFXllXjF1sbpJcpP1fj6exMlh1YbIHa
+         Vr+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1747407334; x=1748012134;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oY/S2y+0QyoMc6kyodcL5r9LiaDP3bEc8vwg1PxTOGY=;
-        b=pg7iWbf9xMUzXSkXN+9+ZbBcaKi+hy4r2bEdN0R8qPWVCL7obUcsHd6TD1jJRbBqZ3
-         nScO46vMKg091ovpqJor6UbhzqMaVGSg3RPH/Nm6E46HVkHSOqxzCOZ1fAM0MCXQqpLh
-         KHPzq6Zp7JSuBNNqt7HNhzyJwz+WkhcFhcbOpcKdExQvt929CtLwd91ZJUb6bchQAJ+S
-         qEILGaZ9H99OcrV78Pi5K0VYZxlP/YXIpF0KzgV/ny+J4dpLvdDkJ+oZbViorPdXPBvX
-         HBhY44agDX7AlRdsvKbyzS7iwulfOnhNYsLwjpU+NCud1nl55TQCstolwHjv2oTu8fPf
-         u+rA==
-X-Gm-Message-State: AOJu0YyUHO3LLraTkdY0jPtXCo7ZfD+7D362YIvHmg8hJR1J+uC+RL0C
-	aolt+aVPOgQFb2rgdUAvEH0es3wO1OTckGvbvESzC5ZR0OnTFvC0MtdQSsVJOQ==
-X-Gm-Gg: ASbGncsk8J0hCC1Z+aEixFbSD01dBuLCz4+rMIqBXh8Y2cbjVhVG1/7bEx8xEU7aE+J
-	E7NFLtQcLuv0B7t5AwKAB+Ces9lWRH5r0uOemr/b0wKtm1ogmB1EilGrTWDeOaEoPtvFkMCsH46
-	6aCweR0WHRhYAaXZZ2aeykV33A9OcOXr18A/2bFvHSBloEu+qDn75DJGjNUezPhhPb3nzL5PsIl
-	c7QJ6fbHCy4yJFoIwKEJsVV82ysY2NOq8qCghAvykn58p+irLec7UcqiQb1+GxwpNu48dBUCjXS
-	258KTXAN30MktaQczV0p8L5OuApNDGvqzTdn4XvbTg+dOJTT1SQi
-X-Google-Smtp-Source: AGHT+IEG4FQbtKeK/Rhr8so1+I1IohwCLY5nFs87Ujh0eLNjGh8UVAclA/1B5Kq35Ap+bnBTGMXdzg==
-X-Received: by 2002:a05:600c:1553:b0:43d:cc9:b09d with SMTP id 5b1f17b1804b1-442fd66f30cmr34881805e9.20.1747407333290;
-        Fri, 16 May 2025 07:55:33 -0700 (PDT)
+        bh=+72koXptMPUOvugF9nQGr99SCFVCjm+IJsjEboc6+F0=;
+        b=THe5NqcXcY+fVRospjNT6+sn4V5KVoDp6z6l3gZmIq9QQYoJURPu7Q/mZbaGfTAci9
+         brflvXgZsyz0XMMxvMy0SxwC97LruHTd1UNigF44F4EGVnbhx2urTrXEzHDizbDG6tkH
+         5DJKlsRCF5yGZbbx1iRGAuPL+wbLxi7p54Is4PpKO5tvCVCDs1/go5Wfcv4qFm9un/K1
+         XXwV/7rIwUuhAxEBzeWq6oFfLopY3aViPLpbippy4loI+BdOxGd47APpSfOs+0+L0QLJ
+         lw63yLFI9uquarmTI+RCwcfOgxvTShdSmniT8BifU1eroVIAuLNlmq6dHrgrXwn+u6fD
+         blzQ==
+X-Gm-Message-State: AOJu0YzZ/Wz9iQNmvyyptt+VGnwK+HzVsTXwY0O/8fh/kvwKKOG4LulU
+	19dfIRjR7esqMYvqlAOwUFvyV/pcqcZRjng47+hM81rHDLXDFtwEzu8QuH5jSQ==
+X-Gm-Gg: ASbGncvbjAi0XVPYbQEjN2SznnagW7tS2U7EKDeExHsq9ftvJRb6oQyEzfcBh4HmBzH
+	zFoIA1m1UpSYo0l0Zz/U0a/o4/rmsoyO39KpQcTsuSpAfrcJgRcng/7ecpOAxflYpgQdgAaA+1a
+	/S+PoqkrLDqptpjuYxqtYlH/Ye9/nr+ZkptNGz101BI1nDi42QNWAMfmfOrC4J/XSbCQ36yY/OV
+	03HtD/OiMqaQqro+V7tOILbrULop7u7okoWxcv0OcukHgnZN0gg6MxsiwfzKamLp0dEArQ5EmwX
+	sfeVbkc8T5v9bjz9E7ar6THTmHm1e5Bwnhk5hwHJOOzow/TPXUwu0FOpGR+2RPw=
+X-Google-Smtp-Source: AGHT+IHStKQYJJfPE8SaCScuOTRhYlGI4it8h/x+pBulcSKYlo1bfN4BK92GN64V9hTYknKn9vSr0g==
+X-Received: by 2002:a5d:5983:0:b0:3a2:39d:f51d with SMTP id ffacd0b85a97d-3a35c835072mr3646474f8f.23.1747407334136;
+        Fri, 16 May 2025 07:55:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f3380539sm113443165e9.16.2025.05.16.07.55.32
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442fd59ab21sm35053745e9.38.2025.05.16.07.55.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 07:55:32 -0700 (PDT)
-Message-Id: <1adf81ecb2c45c2e90d9b5dcfb02c814ecce6d8d.1747407330.git.gitgitgadget@gmail.com>
+        Fri, 16 May 2025 07:55:33 -0700 (PDT)
+Message-Id: <0a2752721d0292c6e2527f7a95c846b280fda2a7.1747407330.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1914.v2.git.1747407330.gitgitgadget@gmail.com>
 References: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
 	<pull.1914.v2.git.1747407330.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 May 2025 14:55:27 +0000
-Subject: [PATCH v2 1/4] apply: integrate with the sparse index
+Date: Fri, 16 May 2025 14:55:28 +0000
+Subject: [PATCH v2 2/4] git add: make -p/-i aware of sparse index
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -81,122 +81,126 @@ Cc: gitster@pobox.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-The sparse index allows storing directory entries in the index, marked
-with the skip-wortkree bit and pointing to a tree object. This may be an
-unexpected data shape for some implementation areas, so we are rolling
-it out incrementally on a builtin-per-builtin basis.
+It is slow to expand a sparse index in-memory due to parsing of trees.
+We aim to minimize that performance cost when possible. 'git add -p'
+uses 'git apply' child processes to modify the index, but still there
+are some expansions that occur.
 
-This change enables the sparse index for 'git apply'. The main
-motivation for this change is that 'git apply' is used as a child
-process of 'git add -p' and expanding the sparse index for each of those
-child processes can lead to significant performance issues.
+It turns out that control flows out of cmd_add() in the interactive
+cases before the lines that confirm that the builtin is integrated with
+the sparse index.
 
-The good news is that the actual index manipulation code used by 'git
-apply' is already integrated with the sparse index, so the only product
-change is to mark the builtin as allowing the sparse index so it isn't
-inflated on read.
+Moving that integration point earlier in cmd_add() allows 'git add -p'
+and 'git add -p' to operate without expanding a sparse index to a full
+one.
 
-The more involved part of this change is around adding tests that verify
-how 'git apply' behaves in a sparse-checkout environment and whether or
-not the index expands in certain operations.
+Add test cases that confirm that these interactive add options work with
+the sparse index.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/apply.c                          |  7 +++-
- t/t1092-sparse-checkout-compatibility.sh | 53 ++++++++++++++++++++++++
- 2 files changed, 59 insertions(+), 1 deletion(-)
+ builtin/add.c                            |  7 +--
+ t/t1092-sparse-checkout-compatibility.sh | 60 ++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+), 3 deletions(-)
 
-diff --git a/builtin/apply.c b/builtin/apply.c
-index 84f1863d3ac3..a1e20c593d09 100644
---- a/builtin/apply.c
-+++ b/builtin/apply.c
-@@ -12,7 +12,7 @@ static const char * const apply_usage[] = {
- int cmd_apply(int argc,
- 	      const char **argv,
- 	      const char *prefix,
--	      struct repository *repo UNUSED)
-+	      struct repository *repo)
- {
- 	int force_apply = 0;
- 	int options = 0;
-@@ -35,6 +35,11 @@ int cmd_apply(int argc,
- 				   &state, &force_apply, &options,
- 				   apply_usage);
+diff --git a/builtin/add.c b/builtin/add.c
+index 747511b68bc3..7c292ffdc6c2 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -390,6 +390,10 @@ int cmd_add(int argc,
  
-+	if (repo) {
-+		prepare_repo_settings(repo);
-+		repo->settings.command_requires_full_index = 0;
-+	}
+ 	argc = parse_options(argc, argv, prefix, builtin_add_options,
+ 			  builtin_add_usage, PARSE_OPT_KEEP_ARGV0);
 +
- 	if (check_apply_state(&state, force_apply))
- 		exit(128);
++	prepare_repo_settings(repo);
++	repo->settings.command_requires_full_index = 0;
++
+ 	if (patch_interactive)
+ 		add_interactive = 1;
+ 	if (add_interactive) {
+@@ -426,9 +430,6 @@ int cmd_add(int argc,
+ 	add_new_files = !take_worktree_changes && !refresh_only && !add_renormalize;
+ 	require_pathspec = !(take_worktree_changes || (0 < addremove_explicit));
  
+-	prepare_repo_settings(repo);
+-	repo->settings.command_requires_full_index = 0;
+-
+ 	repo_hold_locked_index(repo, &lock_file, LOCK_DIE_ON_ERROR);
+ 
+ 	/*
 diff --git a/t/t1092-sparse-checkout-compatibility.sh b/t/t1092-sparse-checkout-compatibility.sh
-index f9b448792cb4..83353a7dbab4 100755
+index 83353a7dbab4..c419d8b57e84 100755
 --- a/t/t1092-sparse-checkout-compatibility.sh
 +++ b/t/t1092-sparse-checkout-compatibility.sh
-@@ -1340,6 +1340,30 @@ test_expect_success 'submodule handling' '
- 	grep "160000 $(git -C initial-repo rev-parse HEAD) 0	modules/sub" cache
+@@ -384,6 +384,38 @@ test_expect_success 'add, commit, checkout' '
+ 	test_all_match git checkout -
  '
  
-+test_expect_success 'git apply functionality' '
++test_expect_success 'git add -p' '
 +	init_repos &&
 +
-+	test_all_match git checkout base &&
++	write_script edit-contents <<-\EOF &&
++	echo text >>$1
++	EOF
 +
-+	git -C full-checkout diff base..merge-right -- deep >patch-in-sparse &&
-+	git -C full-checkout diff base..merge-right -- folder2 >patch-outside &&
++	# Does not expand when edits are within sparse checkout.
++	run_on_all ../edit-contents deep/a &&
++	run_on_all ../edit-contents deep/deeper1/a &&
 +
-+	# Apply a patch to a file inside the sparse definition
-+	test_all_match git apply --index --stat ../patch-in-sparse &&
++	test_write_lines y n >in &&
++	run_on_all git add -p <in &&
 +	test_all_match git status --porcelain=v2 &&
++	test_all_match git reset &&
 +
-+	# Apply a patch to a file outside the sparse definition
-+	test_sparse_match test_must_fail git apply ../patch-outside &&
-+	grep "No such file or directory" sparse-checkout-err &&
-+
-+	# But it works with --index and --cached
-+	test_all_match git apply --index --stat ../patch-outside &&
++	test_write_lines u 1 "" q >in &&
++	run_on_all git add -i <in &&
 +	test_all_match git status --porcelain=v2 &&
 +	test_all_match git reset --hard &&
-+	test_all_match git apply --cached --stat ../patch-outside &&
-+	test_all_match git status --porcelain=v2
++
++	run_on_sparse mkdir -p folder1 &&
++	run_on_all ../edit-contents folder1/a &&
++	test_write_lines y n y >in &&
++	run_on_all git add -p <in &&
++	test_sparse_match git status --porcelain=v2 &&
++	test_sparse_match git reset &&
++	test_write_lines u 2 3 "" q >in &&
++	run_on_all git add -i <in &&
++	test_sparse_match git status --porcelain=v2
 +'
 +
- # When working with a sparse index, some commands will need to expand the
- # index to operate properly. If those commands also write the index back
- # to disk, they need to convert the index to sparse before writing.
-@@ -2345,6 +2369,35 @@ test_expect_success 'sparse-index is not expanded: check-attr' '
- 	ensure_not_expanded check-attr -a --cached -- folder1/a
+ test_expect_success 'deep changes during checkout' '
+ 	init_repos &&
+ 
+@@ -2398,6 +2430,34 @@ test_expect_success 'sparse-index is not expanded: git apply' '
+ 	ensure_expanded apply --cached ../patch-outside
  '
  
-+test_expect_success 'sparse-index is not expanded: git apply' '
++test_expect_success 'sparse-index is not expanded: git add -p' '
 +	init_repos &&
 +
-+	git -C sparse-index checkout base &&
-+	git -C full-checkout diff base..merge-right -- deep >patch-in-sparse &&
-+	git -C full-checkout diff base..merge-right -- folder2 >patch-outside &&
++	# Does not expand when edits are within sparse checkout.
++	echo "new content" >sparse-index/deep/a &&
++	echo "new content" >sparse-index/deep/deeper1/a &&
++	test_write_lines y n >in &&
++	ensure_not_expanded add -p <in &&
++	git -C sparse-index reset &&
++	ensure_not_expanded add -i <in &&
 +
-+	# Apply a patch to a file inside the sparse definition
-+	ensure_not_expanded apply --index --stat ../patch-in-sparse &&
++	# -p does expand when edits are outside sparse checkout.
++	mkdir -p sparse-index/folder1 &&
++	echo "new content" >sparse-index/folder1/a &&
++	test_write_lines y n y >in &&
++	ensure_expanded add -p <in &&
 +
-+	# Apply a patch to a file outside the sparse definition
-+	# Fails when caring about the worktree.
-+	ensure_not_expanded ! apply ../patch-outside &&
-+
-+	# Expands when using --index.
-+	ensure_expanded apply --index ../patch-outside &&
-+
-+	# Does not when index is partially expanded.
-+	git -C sparse-index reset --hard &&
-+	ensure_not_expanded apply --cached ../patch-outside &&
-+
-+	# Try again with a reset and collapsed index.
++	# Fully reset the index.
 +	git -C sparse-index reset --hard &&
 +	git -C sparse-index sparse-checkout reapply &&
 +
-+	# Expands when index is collapsed.
-+	ensure_expanded apply --cached ../patch-outside
++	# -i does expand when edits are outside sparse checkout.
++	mkdir -p sparse-index/folder1 &&
++	echo "new content" >sparse-index/folder1/a &&
++	test_write_lines u 2 3 "" q >in &&
++	ensure_expanded add -i <in
 +'
 +
  test_expect_success 'advice.sparseIndexExpanded' '
