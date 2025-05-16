@@ -1,64 +1,66 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B99A2222D1
-	for <git@vger.kernel.org>; Fri, 16 May 2025 10:04:40 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6548623814D
+	for <git@vger.kernel.org>; Fri, 16 May 2025 10:12:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747389882; cv=none; b=p81BZP1S01glMb0391+pfqlVzovKx8YzG16jAbj8YkkrUXZGFVuFM7Z6uqiBhydtUPxbgxCpJcPWTfMT7RuvPCyX09iZU35SexXL/cQbf5ucCO9J3xOqKs6EqUhC5hb8jQw3pTPfQJxTqmQ0I1vxy6vifDeBWjJXnHki5ZPr5l8=
+	t=1747390324; cv=none; b=EEq75sulsPxBzezIil2yw0FD4tkGAYollLUbZRXQz7UG2VdIqNogUyt8bnBANtyHRmcG+QkczjkPOVPvBmhpVIpTC2OjhyPGTZs0MpW4i2zwBF2Ou421RC6UfwilbFx5YGngg8bUiRpXv74y3RaHUnUYZxobYHqSmxU6aoUwfPs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747389882; c=relaxed/simple;
-	bh=vTQkqVuKA51J6bmaq8JjJg11bhEQian5SrqpMlGEMQk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=pATiEZv6f71IKbj67XHO6yDeA3pFbF6AWogZDnY0WTuMrCaxvTKW/5C/xlfwSkFLZcb6WFybiKrps8QGnA9n8AdAYvSXHvrolOqVb8/1TqmkVfK9nfG1SSYv2CcKrmcUlAYgeuCZIM0X74DBryBqFTt4bycE5Yxou9IHbyXdJq4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HOF9PT0g; arc=none smtp.client-ip=209.85.128.50
+	s=arc-20240116; t=1747390324; c=relaxed/simple;
+	bh=Gs4fwkKwCYCbmPOiXys2lLO6Vhw9FJdmY4lo+uFfn1E=;
+	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=gNsv2GMs2id2DRLqfEOaCLZ10Q8D8dyyWhqAkFwnma+Slov792Vzj0q2xVUGassyzTlba3KCMvtxKUyXqRAlCL0Z9Ei4PFLWjWvHdp1i+028+hJW5QtI3CSXNsG8XWBpYuZIESfA6QgoaPmf0v2NwknIYlG3jOLGCQ9ZXi2Nb84=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jO0hENrS; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HOF9PT0g"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-43d04dc73b7so19574765e9.3
-        for <git@vger.kernel.org>; Fri, 16 May 2025 03:04:40 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jO0hENrS"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43edecbfb46so15173055e9.0
+        for <git@vger.kernel.org>; Fri, 16 May 2025 03:12:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747389879; x=1747994679; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=0kVB/BuzPo2OLOqA/s2wP0GzbAGtypaO/FTW2cEGJqc=;
-        b=HOF9PT0ga+s5HvaAReFI9VTBKxF9vCDaG8fM5iyhxyqWyBAwWGxp7wYmsM8a8mpjOm
-         RhvhGesRrAybaCAkwXrePtcniEP7J3kpmR5jkFDBE/CpvpQDSCY2+mpjRS3Fg5fWEBNw
-         DNBqLuQYiIIUgczTciIYAvyw+pkolkySazSDgehCqld5+1IRrfyRS43ELnNJ/ebQz9bf
-         sHCYp2SU8gZLWHyNHm/XdkH0HYXBE+Ir0zFv3DZkp8fT/qxEgvYyihWhxWsSQEWZxDvH
-         n+tR/7588sMb1kvpkkQ7FNXbPUWBa5ZflDOkezrdWp9e7VBt5GfK3UCD5wyRf3BuCq/9
-         j1SQ==
+        d=gmail.com; s=20230601; t=1747390321; x=1747995121; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=NwLtOkyPiunHoC0NM4lmz5Cv2m30Hjin2k1ixqDuSWg=;
+        b=jO0hENrST7TF2I1fbK+f7RymWkQxinYRcLECb3bIdeN8MIRGP8P9csQZZCMmeOfrCn
+         FlYOski4FflJIb+D0fxl4KyTT/z7rMcGowGQo0waarjJNPICClDlxT4tVkAQd9bqRFZG
+         dB8LxIT+EDk1PLFXEUnG+YJ6LvLkIpMgWQ4nLRtvnIPEHhIJMb4osJ1pdjw54o4NWGnp
+         aLz4EPezIaqDjnZOpFT1Dg5A35inwY/+zRy/qX1XhLI774ReCknQzpwJTAxBV+2/udbM
+         cQD1lHRMBnf+ykLCR4kQ7caRVTLxPKrAqjvTATxUqCSc8SriG4HUqzJGowon5mIXirIp
+         oAZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747389879; x=1747994679;
-        h=content-transfer-encoding:in-reply-to:content-language:from
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
+        d=1e100.net; s=20230601; t=1747390321; x=1747995121;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:user-agent:mime-version:date:message-id:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=0kVB/BuzPo2OLOqA/s2wP0GzbAGtypaO/FTW2cEGJqc=;
-        b=p4gckDGB9OGWzdpBhZDCEdDL4Z7QnC+d3XEhqsq/iBmXNGWjQWaE6vnArYnyatM+qD
-         fbpKjBJ+MT4VG9fsZPUXP6QmEomLEF2wu+br4mA01l6pD2IlOxmEtP/o3K7fVwqhgVPv
-         wuVkyJdA1olp1O8kX1BJi9d9bqBq/bcTKmDMDhHnCTRb9wPZPMoYf0Oa/MZ6Ok4yc6vn
-         UUxIqM08H5o0wOjQ6H8vek4HLU5VfHBWSp9mwgDsWAdYFTXYBBpGcixBVG3ZD7NT1qMc
-         +LbEDerSnOFdHNIOSPHnJqBhuzkYov4oBqePnMH2vXAdJGSk9ZREszakU5e8FRVwNAMF
-         heww==
-X-Gm-Message-State: AOJu0YyApOIjzqJWq+AX0LUMRo0d+OszI+BishNjvMDDkvJ9jlEqNUi6
-	oAe/vJVie66U9Z8C9RdcSznZI8zJHRn9wniluXU5ksa/fw0Dft4GgunC
-X-Gm-Gg: ASbGncvckCmVje0sx/Rk1pmQUF+weM3HaSPzlpYsafqESFsM0QjR0VU6Rk4N27mHCd2
-	sxIf3AoMPVJeUlFicsv3jvFlP4ev9nrgR2/F06ynJPUiIR29zcpEIQHKbNRaqQuUKN8pY2CTKq7
-	J4wPBHpdu/bB3Ia22OiKXsmFSMUNwWKUif+r8z3ZLSZ/uulUfeQtMNBWNPN1igDovndi8HHZNkc
-	CQUySlX0Fimt87732vR2Go/HRiFuCAHarcLUeCjzBDfJLJvYZGltbrvsAJ/qH9QfFU676vtacSX
-	1JJ63tUqhM3LHSGn5NMmtHQBV/y2wy1krniv2ZIVzgzGXYpRb0qgvGLKmRF1JGWYkd7i4yflKbm
-	k79d77aUpjcQlbVL3jo5N0BXOBPZ8Sf5PgDmazW/G7A==
-X-Google-Smtp-Source: AGHT+IHT2AJVSsRaaYBLBcW9HExZSBvSr11S1Lb7nX1cr1+l/Y3wb7ZSlvkceU1NRl7wr/OOgf5yPQ==
-X-Received: by 2002:a05:600c:3d11:b0:442:cab1:e092 with SMTP id 5b1f17b1804b1-442fd618f88mr27112355e9.11.1747389879116;
-        Fri, 16 May 2025 03:04:39 -0700 (PDT)
+        bh=NwLtOkyPiunHoC0NM4lmz5Cv2m30Hjin2k1ixqDuSWg=;
+        b=OmgYPWZxBDJG14VW5TQbO5Y3ZM1k7TR9/sE2xoU6wKF6edRkma5k8Dk5h9MMZzNgoa
+         GskOpSk1FtZsd9+KnO4QXDi78JZLYXXph5QZ1iRvSYjusZ2FpGXiCWJNgZX5mJcCE9OW
+         cvQcjaZJPOMhY5fXa0o9VmvOj3EakcwaEgw6WI73LZJruL1x7z8cFmX6YKFZPZza3fy9
+         EU+mmq/Ez44426oXC/fQkP6mAxqdYWc+DJiiCdw9E1gxhtabj1VPE+b1Zm0QPy8WeP9K
+         fSwGPrF2XPNtVstOfFukVKVPhNan6hPrnNWa3k0S8E7HmElOvYzWB9H6MA283jKF85Gx
+         GgJA==
+X-Gm-Message-State: AOJu0YzmIdmRm2lu0gpJ/tOU70tFHIb6PjnonLLjl60N70cv7me4YVtw
+	+qNpoqAdwtDFNv5d7+kSB5Krxr8AhJTduet1ERuiIHJTChdTBO98BwwR71KOJA==
+X-Gm-Gg: ASbGncsRMEX6FX0zFRElTvN8fw98qL0eJKNXuKWb2ssDWr7TXljkcnpeGhCUfDRT073
+	O4oZwZs1Ya3hfFzWk6oMLRhtujwplqRo1/ggPD7ssVMillmE0LDxk1/JyA+LDI1BfYsc3R+40KP
+	07j/IwdMNZQQdz9FIlsQ9qlM2moPfsHeD2k8U8SoSU9LESBC2TcGc0IMzbaf+tzCwWgl9R2hjlm
+	KwSnpWkNKTHSYf82rp4BniAuaLORRIHUgMu8O0uAfRG3NueICvL0z0mjSC5GvO5mSTCpx5OkuYI
+	PzzMOsioIHuN4D1nRgxIUanLRyifL1SUTeodRPEAxUmmojXl0LeiR192MxIcG3FOT+hlA/RcnN0
+	W8rGlQjd6OwDE7IAGG2I6TM52
+X-Google-Smtp-Source: AGHT+IErhkN9jOajV7Wo0Cmnq/w5Xaf/lO5mCBOgPAs5WyOxtu8rPmbn1ZzETcutikt63cbuceMLqg==
+X-Received: by 2002:a05:600c:4e0f:b0:43d:649:4e50 with SMTP id 5b1f17b1804b1-442feff05c2mr19456285e9.13.1747390320454;
+        Fri, 16 May 2025 03:12:00 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:8d23:ce23:3b:22a8? ([2a0a:ef40:700:a501:8d23:ce23:3b:22a8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442fd50b983sm27412125e9.11.2025.05.16.03.04.37
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f6f9b309sm79226665e9.30.2025.05.16.03.11.59
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 03:04:38 -0700 (PDT)
-Message-ID: <8b431310-ff03-424b-b24c-672d9b492057@gmail.com>
-Date: Fri, 16 May 2025 11:04:37 +0100
+        Fri, 16 May 2025 03:12:00 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+X-Google-Original-From: Phillip Wood <phil@crinan.ddns.net>
+Message-ID: <694d8e62-486b-43d4-966c-4fa1e5a95061@crinan.ddns.net>
+Date: Fri, 16 May 2025 11:11:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,64 +68,50 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/2] rebase: support --trailer
-To: Li Chen <me@linux.beauty>, phillipwood <phillip.wood@dunelm.org.uk>
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-References: <196a5ac1393.f5b4db7d187309.2451613571977217927@linux.beauty>
- <196a5ad7fff.c587c495188189.5980390754046003962@linux.beauty>
- <951d3343-fe97-4e7e-bb73-1c569ff10ee6@gmail.com>
- <196d79d922d.127d7eb7f870411.3309775784450179401@linux.beauty>
-From: Phillip Wood <phillip.wood123@gmail.com>
+Subject: Re: [PATCH 10/11] bundle-uri: avoid using undefined output of
+ `sscanf()`
+To: Jeff King <peff@peff.net>,
+ Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+References: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
+ <4dc3e2335afb42e5006ead7b9b18d33bdae7238f.1747314709.git.gitgitgadget@gmail.com>
+ <20250515202502.GK3320240@coredump.intra.peff.net>
 Content-Language: en-US
-In-Reply-To: <196d79d922d.127d7eb7f870411.3309775784450179401@linux.beauty>
+In-Reply-To: <20250515202502.GK3320240@coredump.intra.peff.net>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Hi Li
+On 15/05/2025 21:25, Jeff King wrote:
+> On Thu, May 15, 2025 at 01:11:48PM +0000, Johannes Schindelin via GitGitGadget wrote:
+> 
+>> In c429bed102 (bundle-uri: store fetch.bundleCreationToken, 2023-01-31)
+>> code was introduced that assumes that an `sscanf()` call leaves its
+>> output variables unchanged unless the return value indicates success.
+>>
+>> However, the POSIX documentation makes no such guarantee:
+>> https://pubs.opengroup.org/onlinepubs/9699919799/functions/sscanf.html
+>>
+>> So let's make sure that the output variable `maxCreationToken` is
+>> always well-defined.
+> 
+> Definitely an issue, but...why are we using sscanf() at all?
+> 
+> Wouldn't strtoul() be the usual thing in our code base? Or even just
+> repo_config_get_ulong()? The behavior of the latter would differ in that
+> we'd complain about a garbage value in fetch.bundlecreationtoken, but
+> wouldn't that be a good thing?
 
-On 16/05/2025 06:42, Li Chen wrote:
-> Hi Phillip,
-> 
->   ---- On Thu, 08 May 2025 22:17:17 +0800  Phillip Wood <phillip.wood123@gmail.com> wrote ---
->   >
->   > (c) Only adds the trailers on the commandline. I'm a bit confused by the
->   > various trailer config options - the man page reads to me like "git
->   > interpret-trailers" can add missing trailers that are configured but not
->   > passed on the commandline.
-> 
-> About part (c), just to be sure I understand correctly:
-> 
-> Do you want the trailer implementation to completely drop any handling of trailer configuration
-> (i.e. remove parse_trailers_from_config() and related config-based behavior from the codepath and man page/documents)?
-> 
-> Or would you rather leave the config machinery in place, but have rebase --trailer explicitly
-> ignore all trailer.* configuration and only append the exact trailers passed on its command line?
-
-I think I had misunderstood what trailer.ifMissing did. I was concerned 
-that it could add trailers that were not on the command-line but I don't 
-think that's the case. We certainly want to respect the config for 
-trailer.<alias>.key and trailer.<alias>.command as they make it possible 
-for the user to set "trailer.review.key=Reviewed-by" and 
-"trailer.review.command=git var GIT_COMMITTER_IDENT | sed 's/[^>]*$//' 
-#" and then run "git rebase --trailer=review" to add their Reviewed-by: 
-trailer. I think it makes sense to respect the other config as well - 
-that does mean that trailers that the user passes on the command-line 
-may not be added because they already exist or are configured not to be 
-added if they are missing but is consistent with "git 
-interpret-trailers". It means that the user can set 
-"trailer.myKey.ifExists=doNothing" and then run "git rebase --trailer 
-MyKey=value" to ensure all the commits have a MyKey trailer without 
-duplicating it in the commits where it already exists.
-
-That's a long-winded way of saying that on reflection I think respecting 
-the trailer config setting is the right thing to do after all.
+I had a similar thought, though to make sure that we parsed 64 bit 
+values correctly on windows so we'd need something based on strtoumax() 
+I think. There is another call to sscanf() in this file which the 
+analyzer does not complain about because it stores the result in a local 
+variable that is not used if the call to sscanf() fails. We should stop 
+using sscanf() there as well. I wonder if we should add something about 
+not using sscanf() to our coding guidelines. Apart from this file the 
+only other use of sscanf() is in a test helper which doesn't seem so bad 
+though if we removed that we could add sscanf() to banned.h.
 
 Best Wishes
 
 Phillip
-
-> Please let me know which you prefer (or if there’s a third path I’m missing) and I’ll add the patches accordingly.
-> 
-> Regards,
-> Li
 
