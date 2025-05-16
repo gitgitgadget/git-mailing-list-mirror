@@ -1,54 +1,54 @@
 Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 56D4C635
-	for <git@vger.kernel.org>; Fri, 16 May 2025 04:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66BC5206F23
+	for <git@vger.kernel.org>; Fri, 16 May 2025 04:38:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747369837; cv=none; b=EFptvOo/lMex9rdjPI5tPPQaVMOKHvGyHRqeueXfH4TcrFizONuyhn9cJDt33ToeYwxtm6wderwJzCKpLxxHI1OF5hMB4DMFd47R0fOrRUz78vqFUcJ9PZHMAnp66WCOsoyDOpTN1Spptf26csRCeTxKvtNJpiWgEba5VkByXxc=
+	t=1747370289; cv=none; b=aJ34w0unm9S7Uv5VT4zwz91O9aVP1mnZ0fJx5eU97SDfvSOOanl9kW7IErdSKMu8FhmtJfchGJxYUXUbHl+nX4EULu0kO36XCAJctbqYlTnRuT7Wz7zMX/EBFLu8ZXfUB8+Q/80XbuYI9dLt80paTzFGKIIG+8sg5umSf7Y5UZg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747369837; c=relaxed/simple;
-	bh=aeEIoSdDoij4wqpL7tqfeePkkrm6DhHphWdW5wlx/k4=;
+	s=arc-20240116; t=1747370289; c=relaxed/simple;
+	bh=mVThcKL7MwczK1yaJEUIok4Q66tOvMGG8/1yDCbddeg=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rvXd9iX6DZbK8VNEOzN+lQIhzyyWRm2mZy/plWLwROTitb2cMhbMIEQ+1QcI/BX5LnNeNI30TrzDwLKCwxFqECh8yjbvhJseILCNgnT0D9EVGF4FK/qxs4TcIMwykOiOqDDR0Hd1d9W9K3/pFyJG3G08PXQaoknzH6cbu8rFjik=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uRPCTpQ8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GpaeANH7; arc=none smtp.client-ip=103.168.172.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=Mdsm+qee32Da9PuhALI3QoHCfopCIa4TQLgWwMf+A03/buFBNhhp0vFtqNRg+rfc/wDfYJwIXGovEV194R9NzyyI5lUZ1XQmaVo2vn0MbglfaP75PYEWjProNheTAsSFLrGxvzhkZy1e+owyHFz5HWKrTI1ZlnbAqWQQmGc5OQg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aU1mF/G+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=VT2rJLRL; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uRPCTpQ8";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GpaeANH7"
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aU1mF/G+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="VT2rJLRL"
 Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 208A111400DA;
-	Fri, 16 May 2025 00:30:33 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 16 May 2025 00:30:33 -0400
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 643DF1140154;
+	Fri, 16 May 2025 00:38:06 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-06.internal (MEProxy); Fri, 16 May 2025 00:38:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747369833; x=1747456233; bh=DuXpP5rTZw
-	JNp2jhgsSHnKUCaoc2nIUVHHK12p+V/YI=; b=uRPCTpQ8HRgxks+DwHE+ynB52g
-	AnjSd/f/su3Tt5IQA4DcbstLCUDFGq1vMky2ta6xgnh/V7d9ujiE4hAsQ/omEtI3
-	7zEfpKOYSOsxPmuOyoVVZSH8nOESVKnGmuK39M+pSuTx3uI/mUUW+/a7iQanSyda
-	pbb+TvJNnxPZWFIJheEHiYymLWQUVWDs65WoAJoprFCyo1RHj4tjhD1UxxkZJM93
-	GY/JBNunQss7bgJolpF1QXmXZSpBsmzhvzK+5hS+SZm+oherngkZEgGaL4itWJEy
-	4EFuqs86Fu6lUXDHooA6W5L+WkKs2pUGYqR7F9Q/MLbFmDsTH9WjPGSfygoA==
+	:subject:to:to; s=fm3; t=1747370286; x=1747456686; bh=+AMz3dZBMl
+	bx8YTTyWm01m2lS5sySk7PzTTyvHB8t8s=; b=aU1mF/G+Jnik6RJ80cHf3AbpHk
+	csINEtRwRCk0LCLkr85C81yhZPrDaOCOQIBh9TSSlB23wq73+1IZOEYwt7PYrJ2+
+	txDwhk0lfLug6ITxnD0Dlw0Fh8kjuOcQhaSJdgHB5WU01FFiK8KX3wSXWyfOJQow
+	v8w1YqSDuAwi2XEV6x48ZTNtc/uHOm78EMLUvYdahhJqlHE0EYI4UHGRVuISVrPT
+	WwmlCRRBMn/A5JvlRlYVuQi7frdAEyPdNK5Il4F5hDJvIcJYs5GoUqc7g07CfPBq
+	Gszy0G+Rzez0uXB8Ukd7GZ95zo5ezoxFDjW2pINGHN30UoyckMdnDmsAMg5w==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747369833; x=1747456233; bh=DuXpP5rTZwJNp2jhgsSHnKUCaoc2nIUVHHK
-	12p+V/YI=; b=GpaeANH7nEZh+PBVJI731aq/b5fEos6FDk9+UjEqFJV1FNfHaMu
-	PC2UyGTqhkZUS7JIhl+BQWdQ5MtNEERkMRhksdZDPqH+aaoTle08Q8aw6QDqLaT+
-	dA3m1DwSvK+wUNpcQBUEYJDhruNRGCjf5uzDKE+xhqcDMa0w4VKwBnPKRTMaygOV
-	YkL3+qFI6SI431h+DpNkSDav5m/PcnnwF9XudHpcF5Gxkfm1f9GEqcgVhGFKC49B
-	6+9wZ1uPBQaegKZTm2xVxG0pwy1uEn5/enfQm4t5Fc5hoF7UjbFJ4c9SPTvrn2+v
-	84+U1IAg9oWL7qm+zdMy+OgC27QPJT2SsHA==
-X-ME-Sender: <xms:aL8maBiJODZ2OCy4p1f20MH5MukO56CYvZeeFo7Sknl4Va5otPYzNw>
-    <xme:aL8maGALVFs24XjI-iGrYrdR0kYf11W6yhlUJ6i5YhOs7iXsORqoRIZtJpnUgQ1AY
-    NWnCFnksc_NyZQ76w>
-X-ME-Received: <xmr:aL8maBFw4Rit4BZPI88B5ClUa0ylyoe7g4jIIBcGqF84GycQkMoE24XzKoFAKwideDlqrpGNNexuEtmRQeMEQ9q-B9_9K2ur2xqTB3Nw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddujeelucetufdoteggodetrf
+	1747370286; x=1747456686; bh=+AMz3dZBMlbx8YTTyWm01m2lS5sySk7PzTT
+	yvHB8t8s=; b=VT2rJLRLrQlVXP3YeDM1OvWhBNs8yslwnxy/pAIq86asriGw1JY
+	r8gOyiPcevNrlmNo1vb9fbv+0+bPEI3owsXQ1VfU+BYRte4G8J/ObEL+c6F+rniQ
+	sO3LGvo3ac8wwDWPO2DIhYRaHdc6JCfNDSSZfCG+024eo+5MIIp3YIPGXPnQTgbn
+	CxIryTtlQCwiWLJpCn1aa9cYD75mlHciUDA/SNbPooK6RiGrG26CBMmwKonZWyis
+	0NOvt19Yl5sUPdSGxiJvD5Cb6IveFHEWhdrOOrEMtRr9cWtcy72VSz9X0aXimJnE
+	qL4B40ZwAVz+h9k8w3XauUu50iP7TjiVacg==
+X-ME-Sender: <xms:LcEmaFKZW_hJbhgWSQMUAdOyHEPhM61SqNRCvH3VgCapJnTi9oK18w>
+    <xme:LcEmaBIQTsbHjvbyiXxzjbxfmqrHC_gA96odmbWFg8p9gU67KeiHQySm8mtRpnEQA
+    nmitILScnONALR3zg>
+X-ME-Received: <xmr:LcEmaNtbpfW94uMRKxxMVl7ddkaVjrBo1b7hVFE2EfzKJpixR1aH8vZXc4AGXRWNiQtaczynyLnLFwbAGUWvlnt1k-C9U8ovh_kRvGmC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddukedtucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
     gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
@@ -56,42 +56,43 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddujeelucetufdote
     himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
     ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
     hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepkedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepmhgrrhgtnhgrrhgtseigihhplhhinhhkrdgtoh
-    hmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehm
-    vgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
-    dprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepthhoohhnsehiohhttghlrd
-    gtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:aL8maGRpO3XHSvUbXyUn8qGiJLCriTvlX6oBFQ6AVk9K1XUXqArmdQ>
-    <xmx:aL8maOx7b2duiUzwtxEPrUAbZILxATg8yRk_QxS-g-XDSRYWgtQo3A>
-    <xmx:aL8maM5nRJr4VLDFcgHYtn0Mka7y8jEulQ3IVKmFV0KhuAmkwroD9w>
-    <xmx:aL8maDzY6OzVAktKS95JriyYNgFXHBgu1yyPvkbWlMAq4X8YdYE4VA>
-    <xmx:ab8maFwPrtc-xWBDyo1AMH32QQc8ictmsDDIzpXBFXtLx7jXt8aQNSIM>
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprh
+    gtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtoheprghvrghrrggs
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmrghr
+    tghnrghrtgesgihiphhlihhnkhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrd
+    hnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:LcEmaGZKtgTPuXypMdkVdc6dWfxAeVOnkHg6lamlokTKrwISJMUjGA>
+    <xmx:LsEmaMYVwQ6i10kIJSAm83h-Moz_3atFimSlbXdkMI1rGnJFX8l2ZQ>
+    <xmx:LsEmaKDFNAmvqxEMGu-7cqbu2UVqHVv4nAJ61_ydvjsaLY6IGgb7cw>
+    <xmx:LsEmaKZ2I7dult7eBs7fxBf-6dOZuGhflb3Zm89oaiVYdDGmMQidrA>
+    <xmx:LsEmaPaYmho1FR5hYj8C3hnJCi3VS7TWZ-TL1BiEtWsJC4zboW45ZySH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 00:30:30 -0400 (EDT)
+ 16 May 2025 00:38:04 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 95b3b68d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 16 May 2025 04:30:28 +0000 (UTC)
-Date: Fri, 16 May 2025 06:30:27 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 98eeab03 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 16 May 2025 04:38:03 +0000 (UTC)
+Date: Fri, 16 May 2025 06:38:02 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Marc Branchaud <marcnarc@xiplink.com>
-Cc: Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
-	git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
+To: Jeff King <peff@peff.net>
+Cc: Marc Branchaud <marcnarc@xiplink.com>,
+	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>,
+	git@vger.kernel.org, Taylor Blau <me@ttaylorr.com>,
+	Derrick Stolee <stolee@gmail.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
 Subject: Re: [PATCH RFC 0/5] Introduce git-blame-tree(1) command
-Message-ID: <aCa_Y2th6xaYeSs8@pks.im>
-References: <323dc2c8-41bb-433a-a1c9-662609e359ea@xiplink.com>
- <xmqqjz6sb15u.fsf@gitster.g>
- <7a6afafc-6dee-4a09-8779-83748a4d3fc4@xiplink.com>
+Message-ID: <aCbBKj7O9LjO3SMK@pks.im>
+References: <7a6afafc-6dee-4a09-8779-83748a4d3fc4@xiplink.com>
  <xmqqldr789gr.fsf@gitster.g>
  <9109a8ab-d4b2-4ada-8969-bc72edac5ecd@xiplink.com>
  <874ixnjltf.fsf@iotcl.com>
  <xmqqy0uz7zzh.fsf@gitster.g>
  <0f491261-bbe1-474d-a240-0ddbf22cc754@xiplink.com>
  <aCXsKHiP4uIzCMrt@pks.im>
- <f01e1e88-c161-43ba-9845-4fc7c9f85d0e@xiplink.com>
+ <xmqqa57d3k1d.fsf@gitster.g>
+ <a97db895-5121-427a-b64f-df225309f429@xiplink.com>
+ <20250515193046.GA3320240@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -100,26 +101,99 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <f01e1e88-c161-43ba-9845-4fc7c9f85d0e@xiplink.com>
+In-Reply-To: <20250515193046.GA3320240@coredump.intra.peff.net>
 
-On Thu, May 15, 2025 at 01:30:47PM -0400, Marc Branchaud wrote:
-> On 2025-05-15 09:29, Patrick Steinhardt wrote:
-> > On Wed, May 14, 2025 at 05:15:30PM -0400, Marc Branchaud wrote:
-> > > in its name.
-> > > 
-> > > How about [[consults thesaurus ...]] "git ascribe-tree"?
-> > > 
-> > > Or maybe fold it into ls-tree, e.g. "git ls-tree --ascribe"?
+On Thu, May 15, 2025 at 03:30:46PM -0400, Jeff King wrote:
+> On Thu, May 15, 2025 at 01:39:59PM -0400, Marc Branchaud wrote:
+> 
+> > > As an end-user, I view "where does the body of this function came
+> > > from" and "when did I touch this file the last time" quite different
+> > > and unrelated kind of queries.
 > > 
-> > I think anything that needs a thesaurus to come up with probably isn't a
-> > good name for non-native speakers. I personally had to look up what this
-> > word means.
+> > I can see them either way, depending on how I squint.  I have no objection
+> > if people want to think of this new operation as
+> > something-that-is-not-a-blame.  But then don't call it blame-tree!
+> > 
+> > How about last-touch?
 > 
-> Yeah, that was a bit tongue-in-cheek, sorry.
+> The name "blame-tree" is probably my fault, as that's what I called it
+> in 2012 when I originally wrote it. I don't have access to the adjacent
+> repos anymore, but I _think_ it was replacing a script that was in fact
+> called "git-last-modified" or something like that. So it all comes
+> around. ;)
 > 
-> (Honestly, "ascribe" would be really bad, precisely because it is a synonym
-> of "blame"...)
+> The debate has mostly been over "blame" here. But I think "tree" is also
+> inaccurate. Theoretically it can be about any set of paths in the repo,
+> not just the entries of a single tree. So:
+> 
+>   git last-modified Makefile Documentation/Makefile t/Makefile
+> 
+> would be a perfectly valid thing to ask about (and of course a
+> pathspec like '**Makefile' would be a simpler way to do so). The word
+> "tree" was there because the original use case at GitHub was getting
+> those values for all of the entries in a particular tree.
 
-There's no need to be sorry, even if it hadn't been tongue-in-cheek :)
+I like "git last-modified". It's name is very telling and it does just
+what it says.
+
+> But conceptually it is just about expanding a pathspec into a set of
+> paths, and then traversing and reporting the last time each path was
+> modified. It _almost_ fits into the "git-log" family, which is all about
+> traversing and pathspecs. The output is a bit different, but I almost
+> wonder if it would work as an option to continuously limit the pathspec.
+> Something like:
+> 
+>   $ git log --format=%H --last-modified --raw '**Makefile'
+>   89d557b950c7a0581c12452e8f9576c45546246b
+>   :100644 100644 13f9062a05 c4d21ccd3d M  Makefile
+>   [ skip a bunch of commits that touched only Makefile, nothing else ]
+>   a7fa5b2f0ccb567a5a6afedece113f207902fa6f
+>   :100644 100644 6485d40f62 b109d25e9c M  Documentation/Makefile
+>   [ skip more; now this one is interesting, because one commit touches a
+>     bunch of files! It also touches Documentation/Makefile, but we'd
+>     have already narrowed our pathspec to forget about it by this point ]
+>   5309c1e9fb399c390ed36ef476e91f76f6746fa9
+>   :100644 100644 3e67552cc5 97ce9c92fb M  contrib/credential/libsecret/Makefile
+>   :100644 100644 238f5f8c36 0948297e20 M  contrib/credential/osxkeychain/Makefile
+>   :100644 100644 6e992c0866 5b795fc9fe M  contrib/credential/wincred/Makefile
+>   :100644 100644 f2be7cc924 33c2ccc9f7 M  contrib/diff-highlight/Makefile
+>   :100644 100644 5ff5275496 2a98541477 M  contrib/diff-highlight/t/Makefile
+>   :100644 100644 4e603512a3 497ac434d6 M  contrib/mw-to-git/Makefile
+>   :100644 100644 f422203fa0 6c9f377caa M  contrib/mw-to-git/t/Makefile
+>   :100644 100644 52b84ba3d4 691737e76b M  contrib/persistent-https/Makefile
+>   :100644 100644 093399c788 2a85f5ee84 M  contrib/subtree/t/Makefile
+>   :100644 100644 667c39ed56 6c5a12bc32 M  git-gui/Makefile
+>   :100644 100644 749aa2e7ec e656b0d2b0 M  git-gui/po/glossary/Makefile
+>   :100644 100644 6911c2915a 4ff4ed0616 M  t/interop/Makefile
+>   :100644 100644 e4808aebed 9b3090c4ed M  t/perf/Makefile
+>   :100644 100644 bd1e9e30c1 722755338d M  templates/Makefile
+>   [ ... end immediately without traversing further here, since all
+>     paths have been reported ... ]
+> 
+> I dunno. I just made that up. The output is obviously quite different
+> than blame-tree produces, but it would be easy-ish to collect it in the
+> same way. And it's much more flexible, because you could use --format
+> and diff options to report as much or as little about each commit as
+> you'd want.
+> 
+> It is a bit different from regular log, though, in that we'd expand the
+> pathspec at the very start, rather than applying it continuously as we
+> traverse (otherwise we could never end early, since we'd never know if
+> there was a "foo/Makefile" deep in history).
+
+That's the biggest downside from my point of view: it works quite
+differently, so we can expect that many of the options that git-log(1)
+accepts wouldn't make sense at all. From my point of view we already
+have too many commands where we have different "modes" hidden behind
+options. They are hard to discover, and in theory you have to manually
+mark all incompatible options as such, which is bound to grow stale.
+
+> So you could argue that "git last-modified" could also just take
+> format and diff output options. ;)
+
+But this one I agree with -- if we had git-last-modified(1), then it
+would eventually make sense to have at least `--format`. I don't have a
+use case for diff output options, but if any come up it could probably
+be added at a later point, as well.
 
 Patrick
