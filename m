@@ -1,53 +1,53 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F8BB230BC1
-	for <git@vger.kernel.org>; Fri, 16 May 2025 09:52:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24155230BC1
+	for <git@vger.kernel.org>; Fri, 16 May 2025 09:52:45 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747389163; cv=none; b=dWMbjvft/bzXvT5aJ0OqJSeYeyP+kMqsnRw6PiGYhx3b+D+5GToqsPckwGLbSqk/DeybclRSs9/wp5J0MNao7t3il10+CU76U454QQpnz7NxAWgHP8n3eOdacsjo11iJkl6UDxjoWZ2UYCQaCJQxe1DeXhiWQz1TPjWp21q+I+c=
+	t=1747389167; cv=none; b=plnmSXgaA6eLhvCG8dne6kUcP/8uShsgwELIcBMpN+qDUOZ1LfEmtCXzPSe0V7+rgTRh95+oW+leGzEjZw81iMphhxVF58TzCjfBEy44EGEClbg9E9EKqtJB08D+Dt0+GmASusFFWR7qa0YiWMxO7r0oxOxOXeucPpoxmw9F4W4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747389163; c=relaxed/simple;
-	bh=cL3tZH5Oc0ugebZo+mURZjdRpweJei/3zTXEpsLY8D8=;
+	s=arc-20240116; t=1747389167; c=relaxed/simple;
+	bh=mQFB5EJmhn4nzKjUoiQOYHzMkBJKAV0VxXu9A3dIa9w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RUVkSSqENqvi1uxYUB/cc44cMGO8DfhbkZYzl7ZoYP6+mz5shetyM4NuXzER/7wbCu+l54WYoYblx/7gWgGzd1jMgyeoa3/ViFJehoZ6seVQQa2K+2WvJQV8wkJI8SH6jomZDj7Gt3ws/UNwID/66El2UfCqe0tzsG0JkYZW6Oo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pG7wc+4P; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZT6EwRjY; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=obJdBI1nHkx41HS0SJOXpqLOZ2Mtewz2hnUqbZSnAN3mTIuJ0LkfHmvGVrR/Wz0M+Iry5eescE+sN2b61TJ/mKy+G/J6ZOS/CW88kiNgIBaX9ubgcNVEp+Xu5y4nUrV95hWVWVYxjDjMMyYRer1/uWxQIkZ+YLBiTJDwzeMA3CE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yG5fmSIv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SMLCHOKm; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pG7wc+4P";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZT6EwRjY"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 27976114016F;
-	Fri, 16 May 2025 05:52:41 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yG5fmSIv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SMLCHOKm"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A6E5114016B;
+	Fri, 16 May 2025 05:52:45 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-12.internal (MEProxy); Fri, 16 May 2025 05:52:41 -0400
+  by phl-compute-05.internal (MEProxy); Fri, 16 May 2025 05:52:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747389161; x=1747475561; bh=WQhnbYwIzO
-	BPebihf9O7NJF5ossNdfdxTIP1w496RDY=; b=pG7wc+4P6/iUL6OMBgzq3Jk14r
-	qVb+mGgJVsrDFD/fvAFiVYa6jB9jXuz2uvZ7nuk323VA8VdweYIjMvf36c2UBK1M
-	DGCiCQ3b2btORmYlcQRCj4IUl5/zrjsV1iYpHuOhZ3wOve09XZiaTxm6wLEH9FWY
-	aoD6gH1p9l8GnNTcxRVyoHXv4RsmSvqpMIYPl0xF8B9MCKoS/uPoudeNLq6r9LNb
-	JBaUqRTXRQa8SDfLuDoOtzqjpzZ4TMd9uQAV5HZ+WjE3dxdMBpn4kt/DLcG/ARCG
-	IN08hQCFR41GIOMNPhy1Bl3r8qorD86QzuaWnLZropH8aIn8QCBSWFRk6pOQ==
+	:subject:to:to; s=fm3; t=1747389165; x=1747475565; bh=n6KZTHRoxw
+	HHH1BuTSul1GY1vxqa/mtmhkppb7JljRc=; b=yG5fmSIvNWWbHkVKEJyz3LFWHA
+	ZBm5Z8FpjJ19zhbt+eP6w40t9Vs1ZGB/tSVTlMheUCXMppHUzJqUQer0NfUOlsFm
+	kRcXjm2HgCGMdXuZx7sDSai8gjP96FW2x5cQYaPNNoR6jaxX6B30erJCL9aP+Z7f
+	rGVOFtfxnSIaKURqY0z9mGEPfY8LOCAkFfLrnfDJHIibaqks1lkJ4xi3vbt+Ns6H
+	9di8KjBPnEvZarVAz+jzCRkuODWqiFk58ZIT3rj2MCLhW/K8TWOB52MQasYuDrf6
+	J/cg3ce8cq2d/L2QuQ7eJ1v7X3BCA0hc82/Pr3SYdNQCbEOlZ82XGIiGHsPg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747389161; x=1747475561; bh=WQhnbYwIzOBPebihf9O7NJF5ossNdfdxTIP
-	1w496RDY=; b=ZT6EwRjYZlpX1uJQXQMW9eF2E6GAHHRmDIGgqHOHXwRTXQe7I9t
-	JWVrUDn0h037ORGczVEiVLz3e1e55KYPSeWT+GgEtBkt8ucP18F9H8DvRUfK3ec0
-	4uNq79U1EIkEy1TCWoM/3QZ5Pt4O3smC6/BmFxzyIJry2MrE3OHqClXGIuSZIzw6
-	GqCS9TcAA4JK8QF1imOleK9JKS4FU/HcOEYYKZgPs7v9klJIZodY51gL47sXkb+f
-	9SWOKgo8BPo803vrEFo8VAYw0MQRJOhaYJ7EYAOt+VuYJ3JCiEBePCBLvoFgo1dv
-	XNntuxPWAmGOT9hnk76rDbEfnVmm6UhZIzA==
-X-ME-Sender: <xms:6AonaBCb-ukafNiwD04rWKpRE7RBvvLUrgH-2Dr2KQPwHds6yvZ5Dg>
-    <xme:6AonaPiBuuHaCB0VSwaliBu2NZV8pKcJC7_GO_YXJ44QwVIOLMjJFScsRdYHMjTQi
-    UUGLP6kOQmHncdGZw>
-X-ME-Received: <xmr:6AonaMl-LoVBtIY3NlWuYm_r2nKRGAQAL0PqAmVfBdQLPtc8P39DLYI_OFWy0oJ49uqC1zclKSzvRCCKxj5siL3Dl5F8MtaJGw-i5XGZ>
+	1747389165; x=1747475565; bh=n6KZTHRoxwHHH1BuTSul1GY1vxqa/mtmhkp
+	pb7JljRc=; b=SMLCHOKm8AUNTuXvKZnjehAUjFOvh+OzhIeKHEaMH7EISVycpbQ
+	4/FJEJ9gC4d55jluDK2w1lEBTcOJijQ4oWf57D/pyFJhdowPvJX/RYYA3yEcAm8j
+	pAskfqgj+3IrAzbvn6e4eaA/uwUWdDNDMwxdSPDIBt6lS2XD2DB1uAhPL5O3zWRV
+	SKeF0QZJTaoxXghimAF4T2R9/HvSl254b9TmZw71esIBfTqKkVwknEQ3rYEvWara
+	2fq9jTA0f6IpC/ySDS4GKTgOgsRNV9OJDBKv14LSass1bhifI1tcuSzXpDKVGECB
+	iHBXdmXAb+MAkAE7fAj3BtNZRCAZWi+m2/A==
+X-ME-Sender: <xms:7AonaE7N8TaOt4LtbCIYdC835Ls7rWhO3Zu515WJNOEY6itxZileVw>
+    <xme:7AonaF6aRtMgKOezbzSf_H1rgoJClQdlu_-V4O1PxweUwL0xAWt1BGM7K7lktTv9f
+    3fl27FKUilvPIXysQ>
+X-ME-Received: <xmr:7AonaDeGyC0La1Xk54hoFabCON_nCM6FP5HcqWA7Kel6zETTyLS3oyyyi6NAACBy2c_oK8zcE22SEx3MTLAjLNVzdF8zgFpIoSMDBTdU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvgeefucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
@@ -58,25 +58,26 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvgeefucetufdote
     hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
     sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
     gvth
-X-ME-Proxy: <xmx:6AonaLz94-46fKPbdE9Zh4iIJOwi1_m168zztso8QqWIkAjS6KUG2A>
-    <xmx:6AonaGS1nbq9oWMN_hARjCmQvTms6-jLCBUsPEPg1dl4qMCEQChzYQ>
-    <xmx:6AonaOavNJcxBI7_EOwaWso4jzq4Erhv_b6x_Wc1jbanXshOLyv1qw>
-    <xmx:6AonaHQaHcbgHCUEyY9e0p5N3ioPySducT8fU2g7j9aE5iwa1m3wUg>
-    <xmx:6QonaHL-PmqynswzwxWT5wURdx9ga0xeMvEOMy1liZJAC0Bum099ynsd>
+X-ME-Proxy: <xmx:7AonaJL7jViIzegcCtTXUnKyEFzXzK_krKxdpte38Z6BLrTszVmcmg>
+    <xmx:7AonaIINVQc6vo4tQXiDiUceVcfi2cvnM3ceu8J9EYEIq7bJm0RBIg>
+    <xmx:7AonaKwoGDqjlHieKv5JI8pTtO5q4CLQqpQYhmEllANymWj4OpwOqw>
+    <xmx:7AonaMJqAYoGd8rfUMluUTItwAIfJwEDJ5hp3E8RcGG9iy2l_El7vA>
+    <xmx:7QonaE9xa4JEzcDUr7p7qbcztVYWWDUSy4qAapdR_vk3TQLFBJrtd_A2>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 05:52:40 -0400 (EDT)
+ 16 May 2025 05:52:44 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 2312b7d7 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 16 May 2025 09:52:39 +0000 (UTC)
-Date: Fri, 16 May 2025 11:52:38 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 33b668c3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 16 May 2025 09:52:43 +0000 (UTC)
+Date: Fri, 16 May 2025 11:52:42 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 11/13] hash-object: merge HASH_* and INDEX_* flags
-Message-ID: <aCcK5iF3h2j4gQf7@pks.im>
+Subject: Re: [PATCH 13/13] object-file: drop support for writing objects with
+ unknown types
+Message-ID: <aCcK6quAx_q28ltu@pks.im>
 References: <20250516044916.GA21985@coredump.intra.peff.net>
- <20250516045008.GK22242@coredump.intra.peff.net>
+ <20250516045013.GM22242@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,19 +86,26 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250516045008.GK22242@coredump.intra.peff.net>
+In-Reply-To: <20250516045013.GM22242@coredump.intra.peff.net>
 
-On Fri, May 16, 2025 at 12:50:08AM -0400, Jeff King wrote:
-> The hash-object command has its own custom flag bits that it sets based
-> on command-line options. But since we dropped hash_literally() in the
-> previous commit, the only thing we do with those flag bits is convert
-> them directly into "index_flags" to pass to index_fd().
+On Fri, May 16, 2025 at 12:50:13AM -0400, Jeff King wrote:
+> Since "hash-object --literally" no longer supports objects with unknown
+> types, there are now no callers of write_object_file_literally() and its
+> helpers. Let's drop them to simplify the code.
 > 
-> This extra layer of indirection makes the code harder to read and reason
-> about. Let's just use the INDEX_* flags directly.
+> In particular, this gets rid of some ugly copy-and-paste code from
+> write_object_file_literally(), which is a parallel implementation of
+> write_object_file(). When the split was originally made, the two weren't
+> that long, but commits like 63a6745a07 (object-file: update the loose
+> object map when writing loose objects, 2023-10-01) ended up having to
+> duplicate some tricky code.
+> 
+> This patch drops all of that duplication and should make things less
+> error-prone going forward.
 
-Heh, coming full circle with 70c0f9db4e0 (object-file: split up concerns
-of `HASH_*` flags, 2025-04-15). But I agree, now that we have dropped
-the `hash_literally()` function this is a sensible change.
+Just today I was looking at this code and pondered what to do about it
+with pluggable object databases. I started unifying those code paths,
+but all the results looked quite ugly. I am thus very happy to see that
+it just goes away completely. Thank you for making my life easier!
 
 Patrick
