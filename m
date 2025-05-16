@@ -1,81 +1,85 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16F7224F6
-	for <git@vger.kernel.org>; Fri, 16 May 2025 16:36:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC3771D5CD9
+	for <git@vger.kernel.org>; Fri, 16 May 2025 16:42:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747413415; cv=none; b=QALvErkvgAVG4lixM8rOy84EMXdrfW46mXhHf1o3K0BB452lBBAb+JUpv03UHOMIY8PqrQEzcGXrLUG9uw7yVrv8OC9pfaZI1GmP/d/aLpmABrFY9xS/WA3YhTa5P8Ixx3vn1UqBC7RCN3dWUMExRYK7AilnLxbI1SalLXfiOZ8=
+	t=1747413756; cv=none; b=cg8eWrrm+KKXQTRZYWPCxvZ5kVlowuZ/bOwJrAFai4XxhjidA4Jpfwn1w+4lv44sUkFpKs60mHZJvkj9kLB9WmFqhxtrLpainErNc/VZix33zWOVF2TVQuZ5C6zMZL/FvT4RtA86NFa5Xo/q3Huz6yLpLY0mqsV8GyHIuFKlzhA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747413415; c=relaxed/simple;
-	bh=FKQLh4RAWmIOY6NLE8PmxkJd2nLgZPRNjiuel3vosZ8=;
+	s=arc-20240116; t=1747413756; c=relaxed/simple;
+	bh=GwCItex5NAIGCZo+lRtexB1fcyV2RkrMWzmjTfCSJHo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hzgqzSQwJIWUrO+PI14Zj5ZxCg9v7mNc9fZkHsXZk8AETScte9FqnyuF6Engf3g7BPs3KlPVBqkHhw/xj25F2KswSN3HeFodPJBwtCBv6KzdFah+++C8Qw1f15LRRwrCoC0OxTkVpz1hKt84gtn6lHaop78SDxPA1CtZr//PIpU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YgzYnw6/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=r5JBJI1O; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=KgZr7cjkei56ChvTgM8nLBjTQ/BonYBI8t8yKakMx5iyai65EsgqXBldxS1bUvKdaLSIYVMiCn7ujJMTLaZW3h7TAD+YbyYDp2/v4vOwGXmFLv6GMU7Au07kmqoPgbCM0yaLWD9RGt0/HdpL7S8lzixlnlBcv5XrIIHVTuptIOM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=k4MYghgM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lmIlThnE; arc=none smtp.client-ip=103.168.172.152
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YgzYnw6/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="r5JBJI1O"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.phl.internal (Postfix) with ESMTP id 0602213803C3;
-	Fri, 16 May 2025 12:36:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="k4MYghgM";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lmIlThnE"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D18F911400EE;
+	Fri, 16 May 2025 12:42:33 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Fri, 16 May 2025 12:36:53 -0400
+  by phl-compute-03.internal (MEProxy); Fri, 16 May 2025 12:42:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747413413; x=1747499813; bh=0Jw7GMMxUy
-	HUoSHr/SNZnMieg27XNoHjdGJ7kcUdb8s=; b=YgzYnw6/4xgvQxzVfW8Qyxxuzs
-	tW0yyeqCWGfULats+azWwyd13u8C9bbmJfnpc0qQ2Zmo+b1W+uonfJr5u/F76rGz
-	7eq9v6gt/C6n0SOjvWV1b2Zb0/OwaETCI38H72PYTcNeqcLfpuCFTX4pgYCwaQhk
-	Ra2xh9PsWdEEsiCoAwCO0VdjZ4yZjjRcBS5dWd547jxyfRbunjXZ6mFnfHYbeXEt
-	3T15Lj1lAeY3l1tCBYdBfPG0jqd8VL/r6E8+qfxfp+L5xhH+awpoPRTke2V3ALzf
-	lS2jCsnJSLaNbGrm3KQdCBMEW14W2hI/umt6KYPmrbZBuEiNg531qmJ1wiwQ==
+	:subject:to:to; s=fm2; t=1747413753; x=1747500153; bh=leFUfl2iX9
+	YuxWN26z/9toCer1UXsozFeZonAoxH9tA=; b=k4MYghgMdPRwzkVu2IBrNo9UST
+	pNYi6U/XYzgAJOFlamQyi4W2KS+O48ltkxvqhszd2dY0ZT4UONuucsJrHaYLfh/r
+	6RVgVNUnPGKMxS4jfiaPAlV63X3DKrrJx27rGrJnYVF+P5pPykTNoPEZYydMi9l6
+	W+4fHD9zqLSd/72dYSDbpYSoJFHTasL1jIAHmMDHp7WPJ1qOTdUhSpCYqMooULuo
+	Ohi438UnbRysyoaoZtGItIB0sueVNGRsm/nVnq3fndPO+jG5rGBr8eUZoMZTgvRt
+	UyrzvzRFMB04zr9ESgeJMYBIIBfd4GEiA5KXJlh3WEVKIvYEd0JkWHJRrF4g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747413413; x=1747499813; bh=0Jw7GMMxUyHUoSHr/SNZnMieg27XNoHjdGJ
-	7kcUdb8s=; b=r5JBJI1OpAyiZcKz2BASO2gQ8tjFJlPs3Xlc+AmNsdAw68/Eakc
-	WKR6ql/CVBxLOAa6Bxo415r/5FbA70Hk/GjZfnO8HWcOQ6ynICUB1e2+oV5FMXZO
-	a8rbxXypcJuUp0kpnKDiOPQGGKbv7wByKUXFVL99djNLIvJiZ2yDM+EWtk7Ibzzh
-	zrR0ckTS8KSxuXou+YgV9hjyyXcR3XeqKr/WfDp/xRiKSZyiOh31DxvmYaULJWgO
-	g49XJVChLzbOY4a8ZiY7I4/nbsKA6d1k98xwT476CZM5bL1N6xmDQ3U2i8rTiids
-	ZjFIKOyRH9oniXUvDGOxkZFKcRAzZMZ/bqQ==
-X-ME-Sender: <xms:pGknaLELA0R77fM4aHUBAXVdYpa_ax5y-BSkhZJv_VCaWf8FG9rniQ>
-    <xme:pGknaIUc7z54Egi6aSZ31XnMjxYW4DUC19SM6rTiYzK3hYpSGnSEmU2P2RO8kMfSQ
-    se04BSS1NiKXeqXng>
-X-ME-Received: <xmr:pGknaNL6ajcoMEgLlYkpYuacnglKkExpi0zdpyY5qCtB96wQj4q0qd1dBjsqIs8RBchG3ghz6-HLa9q3_k2qYJ5GRgLyodRLKjz7gMg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefvdegucetufdoteggodetrf
+	1747413753; x=1747500153; bh=leFUfl2iX9YuxWN26z/9toCer1UXsozFeZo
+	nAoxH9tA=; b=lmIlThnEOsm5Jq9HrJYgA9BwbGdjRpfr4D5sk33b92xU6zoqCQf
+	E/zRmzOcEP7HaeVPX7Pf0d3iXK29EOhhIzsSfPJIDp2a6ZvosxXljT0j0he8G96t
+	cI8BknvZJgS6VnvUMlbHXnr/M/HyhoEDKQ9HanAOZNnPihHGe1CsDrUPunKoXPF7
+	NRgzduBk9iaHbEqS19k9I57XUHmy4/iL1WhalxPIi2GlMMWeZXGAdTvV6V3jXJO1
+	9rWRfWaEhG2HEvIlNtyjsMCuV4Pj3w00pkhRPJLENSzUW1k8UEVyCnIMgjN94EGH
+	FRhzXMSCQOjObxiZDSZL3x0CLyDze1Fpwfg==
+X-ME-Sender: <xms:-WonaIy3TMcX9ZEAIBcQpZM8ii0yC5n40QvkeHa8aGGGCxKsuBeq2A>
+    <xme:-WonaMQKmK001D6uQKu5a6uBGN6Rxlo-nQ8rQCe7_W3kcLTLbSCrxk5hf-c55RFkQ
+    lVsEsHtWCj69pBxfw>
+X-ME-Received: <xmr:-WonaKUFeV_Bgpyl5tQbA_6L6qHhO2crPkYZERgzRrvY4fNqYN6FmYt3wJSoVbpyNkLg3CWpzvxCMu9OE4TU2kRJwBTLfZ-dY2SneaA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefvdehucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:pGknaJHjYFDHawGwpdgrS9dfsR319ayYGQbmIuSZVD2O9K7ExZYLsg>
-    <xmx:pGknaBXvpAm_V4q2R0VLsnIXqI1VABVSCXYaJgPXcrZz_XOZVWX72Q>
-    <xmx:pGknaENGSWg_TQz2mrVWf8xn4WchJcKjt-VJ2tjTIHumNB1ZKdE98g>
-    <xmx:pGknaA2utI6cpYpd6mEsA0jVp6tD0tBuL73U_a6_Qhc3z7-FesBRBw>
-    <xmx:pGknaIzvyBqqENJS23tsI3sPSj5fumgiZKIjV4k2aZDxLF5yv7eAb8Xh>
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
+    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
+    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
+    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhr
+    tghpthhtoheplhhutggrshhsvghikhhiohhshhhirhhosehgmhgrihhlrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshes
+    phhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:-WonaGgRmfC4VjzCLQstimH17elM0VtYb-ESgPGdsD1YRF7LFxVmLQ>
+    <xmx:-WonaKCd8240mESnb__hOv35Hk_6tUW_ZRrXE02ckrulOtTFCOCzkQ>
+    <xmx:-WonaHJ5vq0FNBawmqr-0LD1MMA-0gSyQ-0zn3SO47Xp5OjLlhvtcg>
+    <xmx:-WonaBCz615G685t9uRTak0kpTeclFAzY4d1hGStS4lsPb1pYYmPNQ>
+    <xmx:-WonaDBQxDPAEXJR1fYXCfc6LlaXs6Wsoz0P95uPj16p9fZshIUcTta1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 12:36:52 -0400 (EDT)
+ 16 May 2025 12:42:33 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 0/13] dropping support for non-standard object types
-In-Reply-To: <20250516044916.GA21985@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 16 May 2025 00:49:16 -0400")
-References: <20250516044916.GA21985@coredump.intra.peff.net>
-Date: Fri, 16 May 2025 09:36:51 -0700
-Message-ID: <xmqqcyc8wlzw.fsf@gitster.g>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>,  git@vger.kernel.org,
+  ps@pks.im
+Subject: Re: [GSoC PATCH v3 0/2] json-writer: describe the jw_* functions
+In-Reply-To: <CAOLa=ZSH4CUdAUOT7H4B+2dwgfx22wJxxjt0SqPavAnEsdkHMA@mail.gmail.com>
+	(Karthik Nayak's message of "Fri, 16 May 2025 01:59:22 -0700")
+References: <20250516010159.27042-1-lucasseikioshiro@gmail.com>
+	<CAOLa=ZSH4CUdAUOT7H4B+2dwgfx22wJxxjt0SqPavAnEsdkHMA@mail.gmail.com>
+Date: Fri, 16 May 2025 09:42:32 -0700
+Message-ID: <xmqq7c2gwlqf.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -85,27 +89,33 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Jeff King <peff@peff.net> writes:
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-> While fixing some bugs last month in c39e5cbaa5 (Merge branch
-> 'jk/zlib-inflate-fixes', 2025-04-15), I noted that objects with
-> non-standard types are not really usable. You can get their size and
-> type, but nothing else, not even their contents. And you can't transfer
-> them to other repositories, as packfiles have no way to represent them.
+> Lucas Seiki Oshiro <lucasseikioshiro@gmail.com> writes:
 >
-> We've had that code since 2015, but beyond using it in a few tests,
-> it's never gone anywhere. So I'd like to consider the whole direction a
-> failed experiment and rip it out, which simplifies some of the core
-> object code.
+>> Hello, again!
+>>
+>> In this v3 I did some minor adjustments based on the review of v2
+>> (https://lore.kernel.org/git/20250512020935.73140-1-lucasseikioshiro@gmail.com/).
+>>
 >
-> IMHO this doesn't need to follow the breaking-change flow and wait until
-> Git 3.0, because what's there is not really usable in any useful way.
-> But others may disagree.
+> This version looks good to me, thanks for the update.
 
-FWIW, they weren't for exprimenting to see how feasible adding more
-types to the object system at all.  Rather, they were primarily to
-help testing how the production code reacted to unknown object type.
+Yup, the result reads very well.  Thanks, all.
 
-So I am all for removal of the support.  I didn't know its fallout
-was this widely spread across the system to need 13 patches to
-remove all ;-)
+> I do have some general suggestions (not requirements):
+> - It would be nice if these patch versions were inlined with the
+>   previous ones. Makes it easier to compare versions while reviewing.
+
+"git send-email --in-reply-to=..." is a good tool to use.
+
+> - Perhaps include a range-diff to make it easier to review the changes
+>   in the new version compared to the last one.
+
+Here, "git format-patch --range-diff=..." can help when preparing the
+patches to be sent.
+
+> I can totally recommend b4 (https://b4.docs.kernel.org/en/latest/), it
+> helps manage both of the points I mentioned :)
+
+... and more, by helping on the receiving end, too ;-).
