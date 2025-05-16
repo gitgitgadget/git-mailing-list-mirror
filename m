@@ -1,66 +1,67 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6548623814D
-	for <git@vger.kernel.org>; Fri, 16 May 2025 10:12:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38AF236431
+	for <git@vger.kernel.org>; Fri, 16 May 2025 10:13:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747390324; cv=none; b=EEq75sulsPxBzezIil2yw0FD4tkGAYollLUbZRXQz7UG2VdIqNogUyt8bnBANtyHRmcG+QkczjkPOVPvBmhpVIpTC2OjhyPGTZs0MpW4i2zwBF2Ou421RC6UfwilbFx5YGngg8bUiRpXv74y3RaHUnUYZxobYHqSmxU6aoUwfPs=
+	t=1747390388; cv=none; b=ayuMzR3TShROjhFvtF2ZAOPfaraUj9LWCtHL4D6L8e9d0tp1NnuGa0lGWX6HTB75fv/xeSlQd4eeNlN0nwteUHcFFn89Oip8Q0U/zsJred9bwBlOu1By7f499d2bOT5MEFrs478tq7Q26ga4QEkQXJBZH5XtvmcX1ryD8lXixZU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747390324; c=relaxed/simple;
-	bh=Gs4fwkKwCYCbmPOiXys2lLO6Vhw9FJdmY4lo+uFfn1E=;
+	s=arc-20240116; t=1747390388; c=relaxed/simple;
+	bh=+xAt6iU69womL4vebUAhfEHbzAP4Gx6ZC6E0qWk1tcw=;
 	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=gNsv2GMs2id2DRLqfEOaCLZ10Q8D8dyyWhqAkFwnma+Slov792Vzj0q2xVUGassyzTlba3KCMvtxKUyXqRAlCL0Z9Ei4PFLWjWvHdp1i+028+hJW5QtI3CSXNsG8XWBpYuZIESfA6QgoaPmf0v2NwknIYlG3jOLGCQ9ZXi2Nb84=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jO0hENrS; arc=none smtp.client-ip=209.85.128.41
+	 In-Reply-To:Content-Type; b=UcbRUtWNZTlWDd1bhw7hRDuFh+CWAev8wG/+BBxsOmsGQ+8+K4LkrpzQ+yd/+rzKTUEwbO9Db4T427msO8f33Et6vB7bJbSXEcAdzlnUvfHEUmXE0A1P4v3/6RFr1R115XbNsWSGclyhRQRb+MWp1dzuqLIcWlBZnxTRnYDGsws=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PS2SpuW0; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jO0hENrS"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-43edecbfb46so15173055e9.0
-        for <git@vger.kernel.org>; Fri, 16 May 2025 03:12:02 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PS2SpuW0"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a363d15c64so60133f8f.3
+        for <git@vger.kernel.org>; Fri, 16 May 2025 03:13:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747390321; x=1747995121; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747390385; x=1747995185; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
          :cc:subject:date:message-id:reply-to;
-        bh=NwLtOkyPiunHoC0NM4lmz5Cv2m30Hjin2k1ixqDuSWg=;
-        b=jO0hENrST7TF2I1fbK+f7RymWkQxinYRcLECb3bIdeN8MIRGP8P9csQZZCMmeOfrCn
-         FlYOski4FflJIb+D0fxl4KyTT/z7rMcGowGQo0waarjJNPICClDlxT4tVkAQd9bqRFZG
-         dB8LxIT+EDk1PLFXEUnG+YJ6LvLkIpMgWQ4nLRtvnIPEHhIJMb4osJ1pdjw54o4NWGnp
-         aLz4EPezIaqDjnZOpFT1Dg5A35inwY/+zRy/qX1XhLI774ReCknQzpwJTAxBV+2/udbM
-         cQD1lHRMBnf+ykLCR4kQ7caRVTLxPKrAqjvTATxUqCSc8SriG4HUqzJGowon5mIXirIp
-         oAZA==
+        bh=n3xVCHBNzAitp6xjpWFLAxIhBHIC5q4oCA1BQEsdXXk=;
+        b=PS2SpuW04IyCklhC6k0BTDa5JH3Loge0xiRw6iLwrxTnf6dqrHWb5hWAgKGy/iUXFg
+         rJEbdtoywe46F1+baqSDFgl+2rAEIciVfp1yI7JzXWJFQiJ2a7sIncyAJ95GD00eEg3o
+         cHRSz/NfKk1r45obSGOrPFPd5rKjVtJjSFbmikZHBJyLL5bfH32ls4dIXAA8yUK59zhc
+         OwVlyZUrsYyVPQSr+PG7k/B+nOJSHWTeNXzC0nehAjGBvimFZ3tq/0aKk94gU4+wzihJ
+         1nCTvIUFl8f4LaWMQmJtkw6TR79V53ki6gimO9IKrbzyrdksm/Iu+hgeRgCKlGWr99ry
+         FQLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747390321; x=1747995121;
+        d=1e100.net; s=20230601; t=1747390385; x=1747995185;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:user-agent:mime-version:date:message-id:from
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=NwLtOkyPiunHoC0NM4lmz5Cv2m30Hjin2k1ixqDuSWg=;
-        b=OmgYPWZxBDJG14VW5TQbO5Y3ZM1k7TR9/sE2xoU6wKF6edRkma5k8Dk5h9MMZzNgoa
-         GskOpSk1FtZsd9+KnO4QXDi78JZLYXXph5QZ1iRvSYjusZ2FpGXiCWJNgZX5mJcCE9OW
-         cvQcjaZJPOMhY5fXa0o9VmvOj3EakcwaEgw6WI73LZJruL1x7z8cFmX6YKFZPZza3fy9
-         EU+mmq/Ez44426oXC/fQkP6mAxqdYWc+DJiiCdw9E1gxhtabj1VPE+b1Zm0QPy8WeP9K
-         fSwGPrF2XPNtVstOfFukVKVPhNan6hPrnNWa3k0S8E7HmElOvYzWB9H6MA283jKF85Gx
-         GgJA==
-X-Gm-Message-State: AOJu0YzmIdmRm2lu0gpJ/tOU70tFHIb6PjnonLLjl60N70cv7me4YVtw
-	+qNpoqAdwtDFNv5d7+kSB5Krxr8AhJTduet1ERuiIHJTChdTBO98BwwR71KOJA==
-X-Gm-Gg: ASbGncsRMEX6FX0zFRElTvN8fw98qL0eJKNXuKWb2ssDWr7TXljkcnpeGhCUfDRT073
-	O4oZwZs1Ya3hfFzWk6oMLRhtujwplqRo1/ggPD7ssVMillmE0LDxk1/JyA+LDI1BfYsc3R+40KP
-	07j/IwdMNZQQdz9FIlsQ9qlM2moPfsHeD2k8U8SoSU9LESBC2TcGc0IMzbaf+tzCwWgl9R2hjlm
-	KwSnpWkNKTHSYf82rp4BniAuaLORRIHUgMu8O0uAfRG3NueICvL0z0mjSC5GvO5mSTCpx5OkuYI
-	PzzMOsioIHuN4D1nRgxIUanLRyifL1SUTeodRPEAxUmmojXl0LeiR192MxIcG3FOT+hlA/RcnN0
-	W8rGlQjd6OwDE7IAGG2I6TM52
-X-Google-Smtp-Source: AGHT+IErhkN9jOajV7Wo0Cmnq/w5Xaf/lO5mCBOgPAs5WyOxtu8rPmbn1ZzETcutikt63cbuceMLqg==
-X-Received: by 2002:a05:600c:4e0f:b0:43d:649:4e50 with SMTP id 5b1f17b1804b1-442feff05c2mr19456285e9.13.1747390320454;
-        Fri, 16 May 2025 03:12:00 -0700 (PDT)
+        bh=n3xVCHBNzAitp6xjpWFLAxIhBHIC5q4oCA1BQEsdXXk=;
+        b=EYU4USp6s96KuLkUNgxwW1uItoAFTZEcABddtC/zV1YWZIzBVUNLGuJ/DdhQy4H//G
+         g7IEsCnn+Swtdc/aWAZFbUI9Q6N0iS9d1QbyotfQaboVRdRstkvLaMZ3kcRG4+3LJWpA
+         q+h8eFTUA48pjn+Aovez1P7QwelO4GRNSrwmeCMEndJ9x8UAHY4QJFNEeMxHINzAmDNs
+         HVuXVvL4xl6kL2xEiKEA2C6oIZ+iDRVclVsi1TmYCkCVbrrbwCpoo750dTGW2FxWDCoy
+         q4LYrsFfgWb9D53kY8A8+8WbWtv0Npohv6drwWjISypZP7irBD4LMPaefu3Jtpd3Hg+D
+         KF+g==
+X-Forwarded-Encrypted: i=1; AJvYcCVg5zjWeMKTvlTyUowBNwCCgrmSQkgWow+mJR7cXoLXDbzK7yUYn0tkLLAGnr/F3B7l/9A=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxxHUM5zcMJWSBNCTMzGmt2CHCKYaY2mK9zzSGf0s99aeShLYTD
+	xj/dhUPEmYqIea7SPRtME58CIr9TJ64gBcxMS0TbPsqiRwjnVqIO1k5Q
+X-Gm-Gg: ASbGncsK9nKbzGINbYAlU5516/mhOT4LP7HZWm5rncS2BBXsjQN/9oExoemLwqaCspS
+	bTtcH/1rzwGTixljf9fKgLLn8gtrGIThzGaZyEtN5qMkLtwWUfjFTlQQQYEltf26T4dWfH303kZ
+	w3fetD71+SiuY3ESZnzCBmZx+eyxva+fXH6fnSbL+GP6f9EePA+gmUXoUo5WeYZr4hY8VERshSs
+	QCYbKc+0oBvNi0BR1B3sGawVhfi/urp5QOCFh+ULAPodMxpQHD1jQyPY3B/BLsbpjlMMXiBGHFk
+	Yyd3Yqq1hY5Oftz9IsGNR7kTbr/cqzlbtlhRKVIU0MQdZx/4QzD4z57U7O50u7eFtVA8pMTWsVP
+	UvNcW1/YiTO8m8Su6Xw2KgnLw
+X-Google-Smtp-Source: AGHT+IHsYfQJymjgMPEdvum5psSi7IKZ175GGDIUZb+eak0+npSDpGTt+ZysOBDz2UST46Uggx6adA==
+X-Received: by 2002:a05:6000:3110:b0:3a0:b550:ded4 with SMTP id ffacd0b85a97d-3a35c821bbcmr2770388f8f.13.1747390385035;
+        Fri, 16 May 2025 03:13:05 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:8d23:ce23:3b:22a8? ([2a0a:ef40:700:a501:8d23:ce23:3b:22a8])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442f6f9b309sm79226665e9.30.2025.05.16.03.11.59
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca62b5dsm2391208f8f.55.2025.05.16.03.13.04
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 03:12:00 -0700 (PDT)
+        Fri, 16 May 2025 03:13:04 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 X-Google-Original-From: Phillip Wood <phil@crinan.ddns.net>
-Message-ID: <694d8e62-486b-43d4-966c-4fa1e5a95061@crinan.ddns.net>
-Date: Fri, 16 May 2025 11:11:59 +0100
+Message-ID: <8641d540-516f-4dd2-bafa-cbc2568b5281@crinan.ddns.net>
+Date: Fri, 16 May 2025 11:13:04 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,50 +69,71 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/11] bundle-uri: avoid using undefined output of
- `sscanf()`
-To: Jeff King <peff@peff.net>,
- Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH 11/11] sequencer: stop pretending that an assignment is a
+ condition
+To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
 References: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
- <4dc3e2335afb42e5006ead7b9b18d33bdae7238f.1747314709.git.gitgitgadget@gmail.com>
- <20250515202502.GK3320240@coredump.intra.peff.net>
+ <7a54005bd26ac17cb6d99a2e18932f97575d4aca.1747314709.git.gitgitgadget@gmail.com>
 Content-Language: en-US
-In-Reply-To: <20250515202502.GK3320240@coredump.intra.peff.net>
+In-Reply-To: <7a54005bd26ac17cb6d99a2e18932f97575d4aca.1747314709.git.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 15/05/2025 21:25, Jeff King wrote:
-> On Thu, May 15, 2025 at 01:11:48PM +0000, Johannes Schindelin via GitGitGadget wrote:
-> 
->> In c429bed102 (bundle-uri: store fetch.bundleCreationToken, 2023-01-31)
->> code was introduced that assumes that an `sscanf()` call leaves its
->> output variables unchanged unless the return value indicates success.
->>
->> However, the POSIX documentation makes no such guarantee:
->> https://pubs.opengroup.org/onlinepubs/9699919799/functions/sscanf.html
->>
->> So let's make sure that the output variable `maxCreationToken` is
->> always well-defined.
-> 
-> Definitely an issue, but...why are we using sscanf() at all?
-> 
-> Wouldn't strtoul() be the usual thing in our code base? Or even just
-> repo_config_get_ulong()? The behavior of the latter would differ in that
-> we'd complain about a garbage value in fetch.bundlecreationtoken, but
-> wouldn't that be a good thing?
+Hi Johannes
 
-I had a similar thought, though to make sure that we parsed 64 bit 
-values correctly on windows so we'd need something based on strtoumax() 
-I think. There is another call to sscanf() in this file which the 
-analyzer does not complain about because it stores the result in a local 
-variable that is not used if the call to sscanf() fails. We should stop 
-using sscanf() there as well. I wonder if we should add something about 
-not using sscanf() to our coding guidelines. Apart from this file the 
-only other use of sscanf() is in a test helper which doesn't seem so bad 
-though if we removed that we could add sscanf() to banned.h.
+Thanks for cleaning this up - I'm not sure why I didn't just write 
+something like this in the first place.
 
 Best Wishes
 
 Phillip
+
+On 15/05/2025 14:11, Johannes Schindelin via GitGitGadget wrote:
+> From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> 
+> In 3e81bccdf3 (sequencer: factor out todo command name parsing,
+> 2019-06-27), a `return` statement was introduced that basically was a
+> long sequence of conditions, combined with `&&`, except for the last
+> condition which is not really a condition but an assignment.
+> 
+> The point of this construct was to return 1 (i.e. `true`) from the
+> function if all of those conditions held true, and also assign the `bol`
+> pointer to the end of the parsed command.
+> 
+> Some static analyzers are really unhappy about such constructs. And
+> human readers are at least puzzled, if not confused, by seeing a single
+> `=` inside a chain of conditions where they would have expected to see
+> `==` instead and, based on experience, immediately suspect a typo.
+> 
+> Let's help all of this by turning this into the more verbose, more
+> readable form of an `if` construct that both assigns the pointer as well
+> as returns 1 if all of the conditions hold true.
+> 
+> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>   sequencer.c | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
+> 
+> diff --git a/sequencer.c b/sequencer.c
+> index b5c4043757e9..e5e3bc6fa5ea 100644
+> --- a/sequencer.c
+> +++ b/sequencer.c
+> @@ -2600,9 +2600,12 @@ static int is_command(enum todo_command command, const char **bol)
+>   	const char nick = todo_command_info[command].c;
+>   	const char *p = *bol;
+>   
+> -	return (skip_prefix(p, str, &p) || (nick && *p++ == nick)) &&
+> -		(*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p) &&
+> -		(*bol = p);
+> +	if ((skip_prefix(p, str, &p) || (nick && *p++ == nick)) &&
+> +	    (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p)) {
+> +		*bol = p;
+> +		return 1;
+> +	}
+> +	return 0;
+>   }
+>   
+>   static int check_label_or_ref_arg(enum todo_command command, const char *arg)
 
