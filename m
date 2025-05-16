@@ -1,139 +1,110 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f44.google.com (mail-pj1-f44.google.com [209.85.216.44])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2928B27AC4C
-	for <git@vger.kernel.org>; Fri, 16 May 2025 18:55:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D87194A6C
+	for <git@vger.kernel.org>; Fri, 16 May 2025 18:55:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747421719; cv=none; b=DxUNXR5XB6uxRnjIpIMp56dTWMfM2nwU8Wv4p90LKwKGKi/m0O2B04+56lXNtYL4O4NqeJ1vkytMi5NXhE+MfR4xydaeU4AWPEClWcNDk4nEB+IUsX8ewJ81IgJPe4XoPmm+Y0RHr2GpN7/efDeSas1yo5Qp0SExYohkPAT2lRA=
+	t=1747421733; cv=none; b=q+vWJ+1lC35/s47oKzQn9v8c+gK1RFrF9hawIncKzftQYCAYbWRH99Zfo41BVtBvzXbdPGiDJ7NSmyVxt/DQTL+O1Ds08WKfLtxpad7gw+n8QUZdU8PVwf4rNfLdXGM65vUBkDTb2OXtmMMCxLww6+t2KrfsZX2YWP+gWYQ2CpU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747421719; c=relaxed/simple;
-	bh=Bls6HyJSbTbN3QWRUsgEoT6THQ5Clwr62X5VP2hHWWM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=EoStRakMHhR9SSKSuF8aTjes//08le0U/v7t6qmBTFfINcmd7pYeLbA7rts8YuoOEAox2NQBLC3AJ9fm0Z90t9mhHsGo3UIvI2qeY6YyfH+vbue8x7IbBqAISwnCu1LnrGivhxJhKt50YG36N8MbwHJkma4HGmXyazJTY52YZPg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WOb6ehZe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nzsSgKz4; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747421733; c=relaxed/simple;
+	bh=hMi2le6mMS89OjFgWbRcSCzYIcZu+YUMPShs0fmyg2I=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=fGQ3TPGL8zNoH+kUNu/9PhvkgVkbm5mYmTIRB4+cebfTiSFo3jjFMHso8L6SonJMEMM9FG29tarbRY3zh4aPUDI//qn8IEQD0AAq7JcDp8EVgQkCXM96K+fDF4oTN33bCf9fAapIXlCZwdNFRlHWc3Yjuptz/j7ClBDRwhaCIAs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LASJBm0q; arc=none smtp.client-ip=209.85.216.44
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WOb6ehZe";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nzsSgKz4"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 0110925400E7;
-	Fri, 16 May 2025 14:55:15 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 16 May 2025 14:55:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747421715; x=1747508115; bh=9TGFHxvU5j
-	UtkEeTt/KmpdcjeHgOBHbk/TPC7Hzgafo=; b=WOb6ehZeieJ9S622PIEARHmAz8
-	LQpJ9e2aRDDKVYgwy8qDP+0uuqYUEAFk0GIMQwcUoJgciR429MsHrVdLcB8EAY3A
-	gfE+QYdscRz8a59y2YZb0pEzZDRX1RLdSr+UGFUT7QqlKKKAbnWJDmi8x7evzmU/
-	ZsngXnCA6i4nKJaZIF3su9oFNcaiUt9ly4QhBcVPZ5NnU+TSeIhkIkA1axBVURf9
-	EPNrnG8no5NTK3/AyWI++EyG2Bb8voY/QII69FjxszV1ykTjjcMq+o/zSc8uiMEQ
-	ldUVsXzDUtXX5sSaHKPWlbxJg0TLplTfKXCoCTR1URdK220DZr2i/GRgV0eg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747421715; x=1747508115; bh=9TGFHxvU5jUtkEeTt/KmpdcjeHgOBHbk/TP
-	C7Hzgafo=; b=nzsSgKz4be+MVo2zjfjvcQGfr4NO9/aoSJq51dANzR1gHwVK3Kq
-	mrickUIyMR3bjMvjzqTsFw7MhniWuHbH0gX71qNXHTUqOlaxg6r+9dIQWF2dECrl
-	rgRqO7SdGSWgKhOzqAUUvITc0iLSFnFNhSD53qz2ICT1kiUmmmmouIMdXYr8KAtq
-	DXrBBDvW4PjoHasPJJvI5PKyfEeZsryBZT8dFEuEHIkDMUCoaOq0J4NLiIxcFZND
-	ukMLdHxC2RcRUYEA1CDtuYEXvhhfTHbey62wvtAr1kXbesQgh5sC3bAIJx47YGYt
-	lnEdPoBHC3sSsuRaEOzPg6VYkWUPUTVvFsQ==
-X-ME-Sender: <xms:E4onaAKD8A-Chu4zxInfaPnxAMtbfL7KjwAeGgwAFH8e2cwRxf5hKQ>
-    <xme:E4onaAKw6agMxC1COxFr10M-NCRYn21AnA99COErFDiZ8JSCt5dDjfESJCQu8haos
-    LhJpgHhKEdc7mWWYg>
-X-ME-Received: <xmr:E4onaAsV2tQWSTcQS9qGYDNb_L7Cixd4itf7pXiUFCgLF_mUeF--BNxbx-raIoFKCPANP5-hp-Uf5XxmncmGnpC5ovtOBeSySl2T2zI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefhedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
-    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthho
-    pehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfihoohgu
-    uddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtg
-    homhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:E4onaNZDysTuKtivqg9xIVIC5zquHluynB00q9TyjrqbT7y8ZQxIdw>
-    <xmx:E4onaHbqnNwbEBOwpCxKXc-R5QCOrzYzzTvtogXG9lKjjc-sPaAN6Q>
-    <xmx:E4onaJB0JOMd9NvAYDXRSLKENWB3rYzCvoKptAHKPnpfCtwgz0k9_A>
-    <xmx:E4onaNaSnD4EGE-vGEGdytUjqcifv7CLanyciSFWOmQD35BV8qxrlg>
-    <xmx:E4onaLkEb2fFjpar89MAp6LE45i4RaXUGRrEUFYEOT6tVoMwLd0cstqd>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 14:55:15 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Elijah Newren <newren@gmail.com>
-Cc: Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Derrick
- Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2 0/4] Integrate the sparse index with 'git apply' and
- interactive add, checkout, and reset
-In-Reply-To: <CABPp-BFmgAsps=Y+YE=dTUxnGSKj+49jNxODdQDOnvuF7XzKZA@mail.gmail.com>
-	(Elijah Newren's message of "Fri, 16 May 2025 08:32:11 -0700")
-References: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
-	<pull.1914.v2.git.1747407330.gitgitgadget@gmail.com>
-	<CABPp-BFmgAsps=Y+YE=dTUxnGSKj+49jNxODdQDOnvuF7XzKZA@mail.gmail.com>
-Date: Fri, 16 May 2025 11:55:13 -0700
-Message-ID: <xmqq34d4v10u.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LASJBm0q"
+Received: by mail-pj1-f44.google.com with SMTP id 98e67ed59e1d1-306bf444ba2so2418950a91.1
+        for <git@vger.kernel.org>; Fri, 16 May 2025 11:55:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747421731; x=1748026531; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=EOhp9PxnWodf9VjvfeLAyvb8F5mdVEsh2EXAixIoipU=;
+        b=LASJBm0q6Yhm1Z/HIW3E6vbUUotZztjxHKbKj/7r/ZiAuRds+3u0LSqMETb8vAgrvQ
+         Jo0kKUQRMTUivKhoZybayW2wUAzMAdyua4xiY+cGAXZWxiOYc+80CUFffGlNVd+N0C9P
+         GBYitGb5YEQS9lyX14s4MiRLC+hCSXfIxW+OId2yZhXdgm9jKZMkVQCMOR/GCMUYFEn9
+         gi4jGWAUNZKB9fJGT89TgGq8abD3z5OkChCtI6vD589DjipEbd5pOV2kJRKHTAyP8qxi
+         mmqDR5Vr7VVLXhOXy0+9dGzHZnGKPjxCdcI36pSYvsc91ljZCDNbU5tjp3/LF+5eEoPd
+         +GaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747421731; x=1748026531;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=EOhp9PxnWodf9VjvfeLAyvb8F5mdVEsh2EXAixIoipU=;
+        b=tbTzFJbacVgpUFXne4yDNgSROk1uE/ROM6np5XwxuSUmK+eLoq61BZvDCpO9JjcFxm
+         j8GqsaUA9Xns9AJiAOYlKhb9JXZ6G9pQ05uSbif7qrN2vudx+5bSIYa4IwyPMYaY1AML
+         6iVrkW2wxw0Xi5+sTl0dWPWdCbzzkIj0alzYvcPR5DloTzpQNL1mS9QsoDajpXqgdBs0
+         PxPE+4km9A4eCQrHzyIsoToTcjr1968FMIQHd12pfTKGX9Nno/aRGUlXed5XBTu+hqzY
+         /JJIoOM4nQqrZCyDMTslu1uRqV3klKzIlTXk2dij+/tHJHX69LHe1eMM9yij3dpqqSPP
+         ZTJA==
+X-Gm-Message-State: AOJu0YwPjhsq6MMCr8mHbUZUM7DEk0zv0HZCqVGcOcVSPvUlYlZhlqLR
+	t/RHC/u9jlrbKdRrH6Gno+fYo7cHDr9LVTMHjNii6bdz38I21vVbCd/r
+X-Gm-Gg: ASbGnctpfnjN/IKKXufucLdmDQfchfWI1wvs5Q8edosO0pNnEjyU/PzK1sTqJucGe9j
+	6iqzP6lARpBckeARlmGIYLmSFD2GD6A/7pDXgkoadeDpg9DeodOL/vBIBfTFBfuuc1Rr+EVkhGl
+	u93ohrYPJu7xQOW4nqS30euq9oSCeT6tx2RrjvFEvnpOZcf8v0XSdasfVyUSV5QkyfHINpXYoBd
+	44pn/i2m1guOr7mtLMRzhhXyGvPU1zsOgD+1qRCTdZjDlTpIPawQor4Kq4AhWHhm+4JaHTPrZy3
+	S09wvnhECI6daN+I9VRKmgaACbYBfYD9ngxKijsWPb1sk1FiImJ3SdSrrF6pkTiS/js=
+X-Google-Smtp-Source: AGHT+IH2DDJ1N3AETQftPoVyyynUSjGTl0U2voaqwYffxlykIMoNv5Ql9Ppol4Eay5vRFcZtj0sz0A==
+X-Received: by 2002:a17:90b:184d:b0:2ee:e317:69ab with SMTP id 98e67ed59e1d1-30e7d2fda18mr8511990a91.0.1747421731388;
+        Fri, 16 May 2025 11:55:31 -0700 (PDT)
+Received: from fedora.. ([2409:40f0:41:81bb:63e2:a167:6132:4460])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e3343a11csm5591224a91.20.2025.05.16.11.55.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 May 2025 11:55:31 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: nasamuffin@google.com
+Cc: git@vger.kernel.org,
+	gitster@pobox.com,
+	jayatheerthkulkarni2005@gmail.com
+Subject: [PATCH v2 1/3] docs: remove unused mentoring mailing list reference
+Date: Sat, 17 May 2025 00:25:14 +0530
+Message-ID: <20250516185516.52311-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
+In-Reply-To: <aCeAIqwvEVOdrsMg@google.com>
+References: <aCeAIqwvEVOdrsMg@google.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Elijah Newren <newren@gmail.com> writes:
+The git-mentoring group is being removed because new contributors
+now approach the main mailing list directly and
+almost always receive responses.
+To reflect current practices and avoid confusion,
+references to the unused mentoring list have been removed.
 
-> However, I think Junio already merged your v1 to next
-> (https://lore.kernel.org/git/CABPp-BEukTWwsuC7MMR8D5_UAhyw-LgT=DsPKAWeR_ZmVVhjzQ@mail.gmail.com/).
-> So he'll either have to revert your v1 in next and apply the new
-> series on top, or you'll need to re-roll as fixes on top of your v1.
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ Documentation/MyFirstContribution.adoc | 8 --------
+ 1 file changed, 8 deletions(-)
 
-Yup, the earlier one will be reverted when I queue this round.
+diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+index ca1d688c9b..ef190d8748 100644
+--- a/Documentation/MyFirstContribution.adoc
++++ b/Documentation/MyFirstContribution.adoc
+@@ -40,14 +40,6 @@ the list by sending an email to <git+subscribe@vger.kernel.org>
+ The https://lore.kernel.org/git[archive] of this mailing list is
+ available to view in a browser.
+ 
+-==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
+-
+-This mailing list is targeted to new contributors and was created as a place to
+-post questions and receive answers outside of the public eye of the main list.
+-Veteran contributors who are especially interested in helping mentor newcomers
+-are present on the list. In order to avoid search indexers, group membership is
+-required to view messages; anyone can join and no approval is required.
+-
+ ==== https://web.libera.chat/#git-devel[#git-devel] on Libera Chat
+ 
+ This IRC channel is for conversations between Git contributors. If someone is
+-- 
+2.49.GIT
 
-Thanks, both, for being careful.
-
-
-
->
->>  2:  63caae87634 ! 2:  0a2752721d0 git add: make -p/-i aware of sparse index
->>      @@ Commit message
->>
->>           It turns out that control flows out of cmd_add() in the interactive
->>           cases before the lines that confirm that the builtin is integrated with
->>      -    the sparse index. We need to move that earlier to ensure it prevents a
->>      -    full index expansion on read.
->>      +    the sparse index.
->>
->>      -    Add more test cases that confirm that these interactive add options work
->>      -    with the sparse index. One interesting aspect here is that the '-i'
->>      -    option avoids expanding the sparse index when a sparse directory exists
->>      -    on disk while the '-p' option does hit the ensure_full_index() method.
->>      -    This leaves some room for improvement, but this case should be atypical
->>      -    as users should remain within their sparse-checkout.
->>      +    Moving that integration point earlier in cmd_add() allows 'git add -p'
->>      +    and 'git add -p' to operate without expanding a sparse index to a full
->>      +    one.
->
-> Was the second 'git add -p' meant to be 'git add -i'?
-
-Good eyes.
-
->
->>  -:  ----------- > 3:  d1482a29d8f reset: integrate sparse index with --patch
->
-> Other than the one comment above, your changes from the range-diff
-> look good to me for patches 1 & 2, and the new 4.  I haven't looked at
-> this new patch 3 yet but wanted to comment on the merged-to-next
-> issue.
