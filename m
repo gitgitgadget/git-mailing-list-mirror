@@ -1,140 +1,223 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f169.google.com (mail-qt1-f169.google.com [209.85.160.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6655B2451F0
-	for <git@vger.kernel.org>; Fri, 16 May 2025 16:56:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80127257D
+	for <git@vger.kernel.org>; Fri, 16 May 2025 17:18:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.169
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747414598; cv=none; b=JAltNFz64VpScR5NGUcW+NSn9CtscKWapf0tzlrnwoFxekLHsZABkB0fXNmeid808Z8jUmjq1qEg2LN/Ii2atyIgCfvKOlHig9+fTeQo/V+VkE5qJtLrj24E3dXQeGgF3RWyut9EJGSmw3kt/NCT2eew3e0j7C0u+ie1UZ9h380=
+	t=1747415925; cv=none; b=tOxfzoCenzMnAJUPUFLrgs/2TTOLp73YMJqscSZyYI1ccQj6UUL8ukOyFEG8x9dNFeaZ9wrbyWrXivuw7fqYe2Wy3CqijtFkUYrq7NdXnw0+T42f19a9hTIa/lTVlTUVWYJrXoMGMo932JOVGpUWiNGgQivJ2oRGHSO7xmKtmiM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747414598; c=relaxed/simple;
-	bh=gryD+bV6jHSt9ZULAk5szuA26q4yojJPKdtSyc/hwF4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=S57h60y7vnkAqL1vVd/AgroBN04KSh7Z508WLJkc0VDI4dnceez4tY27ojYY9rB0L8y3pOHN7jYkADTHG8G7FXtKQLHrb4cm4mwIkNA4owWxsMMf5PjTXPvQ9NDpg9m1TTHf3Ngbd2yPIhUsZSrb7qhRms0pertKTLCO9Harhq8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QyFr2GNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=unP/J40u; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747415925; c=relaxed/simple;
+	bh=e8EgVwE+wrbPRIAZ4JYXDHv20QCG8AWdCiu6R9CzdDg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Sl2g6rMwgkfmdihCLehIGQhgaZlEpCBtxOn5HAkkOPx9BxSTfYHb/FPmuepgFRNVEj2DcMpnrKi5x9/cf5O3VUNrQs+bvyOq56wPnB2wvwTtw6LyCFacXvJJKH9Wx2JfHLA70GF2tWY86dcCOBkNDhl3e2TyrRabJ2cpMDUP1W4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gLJPtfZL; arc=none smtp.client-ip=209.85.160.169
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QyFr2GNP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="unP/J40u"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5980413803E8;
-	Fri, 16 May 2025 12:56:35 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 16 May 2025 12:56:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747414595; x=1747500995; bh=qGlgSXP3fR
-	dgWMRv/YKCFXpsqlGPcdzUo/peenJgiyQ=; b=QyFr2GNPcAcaYAUWt+FvoSXNX1
-	cbOyZ8WtUmLYWxjV8di6nDrWklk4oBIIBfRaDvPhmS7h7DAb0tN7SQ0yri82il9d
-	z/ge7E5RPdbC6JoKIFQWW9DayHBKSq3WjskPQ2ZZwDbL6hNc3TVsNngEHGbchzFn
-	rLqAaTWYlVE5md/5+X1k6p6HKVVu0AT3CKvBA0ReyZRAkorZWxa96Kzfc+F8boaS
-	o8b37LduFnkfX2F4vmuEA3FPCED4hWqxqUvjOktjgomWMhOwX5RvSYfWpu8XxOv8
-	Sdb3HyU4l+B59IETMOw9OQU7C74RFELIhXalo4TfkUSEt24PYzDstCuwllqg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747414595; x=1747500995; bh=qGlgSXP3fRdgWMRv/YKCFXpsqlGPcdzUo/p
-	eenJgiyQ=; b=unP/J40uyYTsF/Dmn+BnUP0/vCyzJuPyitp3ZxkbWqTX5BgX6Pt
-	XBPaDLUp9XvrwJY1KiRp4Y33APRSCVUopHRNOKBIgFQDcjW88xzxDZud97dveuRg
-	1Pdt9K0WNHpaADfXk5/rfd6kew5ypXT/zWFUEjDoSYslPIZmLqrf6Qp8ncjb3jTB
-	QuvBZrty2V07MR6jbMJ3IPxucbyJssBrQLyTpZDtW4b1SBnjeTdmNEW0GOSTWw3L
-	uwkPnEaJi9116Bldk2pWaMpD9Ab27MlUz/plABACWci80/Oq4ni2NdyW6abue1Ut
-	dspL2uyEgNorgNITM8Pu8sH4Evf27yEpSBQ==
-X-ME-Sender: <xms:Q24naKxdzqHlmvRf-TiG0brOeM2HpdBwognDu3c_G_PVXl_dvWUcKg>
-    <xme:Q24naGSGjBcRNvBks-Q54Q6ahTh-TKk4-loUfn9oACWVZqcq0K6IizZJLqDg0Mhq6
-    m2AWyj0Oe2wp4iGVw>
-X-ME-Received: <xmr:Q24naMVoI9t63Uk399S3qEhbTubjUtmpvjdpzDV8frywnUFNg86kamS1gRRKIdeGrp4WWsTYuV2GfGoEOePyB7g6zEd7ILmboat1MZo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefvdekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
-    evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
-    rghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpe
-    efveetteejheeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucev
-    lhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvg
-    hrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhu
-    thdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:Q24naAgGtM4BQ2w0E4C9C3shBBsPoGgJzIEk21LLiSZcFH0PHyWflg>
-    <xmx:Q24naMCFtXt-COo5jBt1_GHmeH_S40M1C-oj41dzHRLCnMvxqF-4qw>
-    <xmx:Q24naBIPWxDxLyYMtfc7N9X2FfHaIqXZNa-f3KUsfG3ISE9clZbCmg>
-    <xmx:Q24naDAohbk0UonX6hMyfXErBVxDzOX4PIOUC6WsY9FjOpm0Gory8Q>
-    <xmx:Q24naMthfWG4Rryr6ffDDFwBaxxmeoD6jG8fTtq0PsZFQBUO_EznB9XE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 12:56:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 04/13] cat-file: use type enum instead of buffer for -t
- option
-In-Reply-To: <20250516044947.GD22242@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 16 May 2025 00:49:47 -0400")
-References: <20250516044916.GA21985@coredump.intra.peff.net>
-	<20250516044947.GD22242@coredump.intra.peff.net>
-Date: Fri, 16 May 2025 09:56:33 -0700
-Message-ID: <xmqqy0uwv6im.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gLJPtfZL"
+Received: by mail-qt1-f169.google.com with SMTP id d75a77b69052e-4769f3e19a9so16726501cf.0
+        for <git@vger.kernel.org>; Fri, 16 May 2025 10:18:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747415922; x=1748020722; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=zX+qkwerbqw275/W26Rg23pWmu0woJxq9d5XPDJWnR4=;
+        b=gLJPtfZLar0G7wuM036sa/NbdFGu47f87UWkbALogm/nHp2x0EUcGOJgg3l+UTrNHg
+         Bu5Hz2RY+UyJYL8A1e64aHBu3k50hJSSql2UGVMUolMs9hj3eNk6pDOYFHLcyusm0niP
+         9Pja9oC1sWhJiELAuSTDgT7ba2INGcLBM+/XrtOX8ToKvYAtkOoZBVNZKYl7dWCGghZN
+         sgN28Do5G01lYjmLfNg+WYl/Z212t5IUJyCwr7NfYbyj9ZVl0V1fjGj3JpmRu4HsDwLN
+         JnWiJ40Q5ws7zpwMpogFF1YMzw7o+MPakKi1/4zD8owGkUEsQDqji7w9EhyyyrAMKXwG
+         QUSA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747415922; x=1748020722;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zX+qkwerbqw275/W26Rg23pWmu0woJxq9d5XPDJWnR4=;
+        b=GU2nxbwUMM5WbX4slsAaaxEq7emrtFSg6VUQMK8TAArVEXE1gElPjdEz0TeHDz1XCk
+         v9TsH+ibbV9hsS3KqHmDPB25HI6pPXn4HcZu53OpaI6chvC6JKgSGk9JnQFsMeaZtW8A
+         WiQfGFRu2HS/CNfVI1Iq7ZlmwdsaIMYUDWyCemvJi0B/zuuYXMzvkin8rcatbqhXR+5Y
+         ySLxY/xzbc69xS/rGXgWaKWI+ZHdu4qTdEXCAPLHKvxILFpjUDKQytLFasioUpQi3Nz1
+         DQgm2sqj1v93bFXwZaqq+f6KCB/1sOmfhEMIAuqQfr9pvXq6bYSpFM0GBtOl1bXSzYKG
+         +FYA==
+X-Forwarded-Encrypted: i=1; AJvYcCVhXSpXsF8XTLCggH4Mp6R7dbb9SKg/sdxMJUmJNeCDx9+1BzelxsnQFokuJF7p/A2Ag4E=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw1Y/WMYsTi1bwi2HG2fyHhxAxIrIzlqKtB913mLuZMvCS6vKIN
+	g+Ux8BuS5ZDkehPxlDUC+o5TIeJdEawfwuwf37YSqivFTiPbnGDJWFjLfIS529SeFEcVcBwFqsk
+	qNH1Zcl2cnVZe5cdEVcHjHtrXCT0NJVs=
+X-Gm-Gg: ASbGncuRezh5XyvjCK3pYYFa6NdHPQ5x9LDyAHJADvOhsH33nxQy57OPI9nwxf1u+ma
+	t0AFn9u5F2cLdbzTfgUi8zG7FXIRXJOv/fFXaHZoJd/oKd6oDylJz3WsJddwfpO+q8HuWgVXE7a
+	Gtqkg7af9WyoVpPyC8W9cSV9IdEnvOkA4jGxBwXd66NgEcX11nZmQr+NKbWqLbZFiE
+X-Google-Smtp-Source: AGHT+IFBwq4r6s36fOqrLBxnbV3QVBWljQgVk4ORRsnn+gcZNyvBaRTO6Sm/Uj/mkDJ/D2gYOPUzjNYi037XX4sc0FY=
+X-Received: by 2002:a05:622a:2619:b0:476:ac73:c3f3 with SMTP id
+ d75a77b69052e-494ae350226mr79781871cf.1.1747415922112; Fri, 16 May 2025
+ 10:18:42 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
+ <xmqqr01si441.fsf@gitster.g> <CA+rGoLfbshrkPvvQorMq4n1RkVnyL8XfJ9UjMFRA-6dG4QKdcw@mail.gmail.com>
+ <xmqqtt5ncq87.fsf@gitster.g> <CA+rGoLfcJ2r8S515msG5L-59=0nOBvdOX2TTn+-iaHw8v6Ndtw@mail.gmail.com>
+ <CAJoAoZnYOjqgeW8Stuj5T9qcxmUBE=_j_ufO8Hdbn3GV8LmMzA@mail.gmail.com>
+ <CA+rGoLf7jf5r3C2mN7X84HNrWqsA9mMueEkCowm7Ftsgcd5EbQ@mail.gmail.com> <xmqqmsbcwn6t.fsf@gitster.g>
+In-Reply-To: <xmqqmsbcwn6t.fsf@gitster.g>
+From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
+Date: Fri, 16 May 2025 22:48:30 +0530
+X-Gm-Features: AX0GCFtPfuHmUKtYFnrAWg5MKXLhFcuXHCUiMXhvRwDD9gztGmdgDUQ6__vEGl0
+Message-ID: <CA+rGoLfFVcUFctoEx6wshovGnRW8pTW--ZB42ntd01VHMJm_Rw@mail.gmail.com>
+Subject: Re: [PATCH 0/4] update MyFirstContribution with current code base
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Emily Shaffer <nasamuffin@google.com>, git@vger.kernel.org, 
+	levraiphilippeblain@gmail.com, Phillip Wood <phillip.wood@dunelm.org.uk>, 
+	Eric Sunshine <sunshine@sunshineco.com>, Todd Zullinger <tmz@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Jeff King <peff@peff.net> writes:
-
-> Now that we no longer support OBJECT_INFO_ALLOW_UNKNOWN_TYPE, there is
-> no need to pass a strbuf into oid_object_info_extended() to record the
-> type. The regular object_type enum is sufficient to capture all of the
-> types we will allow.
+On Fri, May 16, 2025 at 9:41=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
-> This simplifies the code a bit, and will eventually let us drop
-> object_info's type_name strbuf support.
+> JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
 >
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
->  builtin/cat-file.c | 13 ++++---------
->  1 file changed, 4 insertions(+), 9 deletions(-)
+> > On Fri, May 16, 2025 at 4:09=E2=80=AFAM Emily Shaffer <nasamuffin@googl=
+e.com> wrote:
+> >
+> >> Mostly I lurk these days :) I do still keep an eye on the list. Will
+> >> happily take a look at your series tomorrow, I'm out of time for
+> >> today. But per what I mention below, if you don't hear from me, please
+> >> don't feel blocked by the review, as I think the MyFirstContribution
+> >> doc is comfortably maintained by the whole project by now.
+> >>
+> >
+> > Understood!! thanks for letting me know
+> >
+> >> > So for now I will cc Philippe
+> >>
+> >> For what it's worth, I don't think it is harmful to CC people even if
+> >> they will be inactive. CCing someone is not necessarily the same thing
+> >> as saying that person needs to approve your code change, right? So I
+> >> don't see the harm in CCing with low expectations - in fact, in my
+> >> case it would help make the email stand out, so you'd be more likely
+> >> to get a review from me (I missed this thread going by initially).
+> >>
+> >>
+> >
+> > Oh, ok I will keep that in mind next time.
+> >
+> >>  - Emily
+> >
+> > Thank you,
+>
+> Thanks for a pleasant conversation; others can also learn from this
+> exchange, hopefully.  In Documentation/SubmittingPatches we have
+> "Choosing your reviewers" section lacks anything more concrete than
+> "who are involved in the area you are touching", and those who use
+> common sense may say, just like you did, "ah, most of the text I am
+> replacing was written N years ago by person X, whom I no longer see
+> on the list very often" and decide to omit it.  Perhaps we would
+> want to enhance the text there somewhat?  I dunno.
+>
 
-Nice.  It is sad that it takes more to lose .type_name but we'll see
-that happen in a later step.
+Agreed even a single practical example in the "Choosing your
+reviewers" section of SubmittingPatches could guide contributors
+better.
+I'd be happy to draft a patch that adds such a line, based on this
+thread=E2=80=99s discussion.
 
-> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-> index 4adc19aa29..67a5ff2b9e 100644
-> --- a/builtin/cat-file.c
-> +++ b/builtin/cat-file.c
-> @@ -109,7 +109,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
->  	unsigned long size;
->  	struct object_context obj_context = {0};
->  	struct object_info oi = OBJECT_INFO_INIT;
-> -	struct strbuf sb = STRBUF_INIT;
->  	unsigned flags = OBJECT_INFO_LOOKUP_REPLACE;
->  	unsigned get_oid_flags =
->  		GET_OID_RECORD_PATH |
-> @@ -132,16 +131,12 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
->  	buf = NULL;
->  	switch (opt) {
->  	case 't':
-> -		oi.type_name = &sb;
-> +		oi.typep = &type;
->  		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
->  			die("git cat-file: could not get object info");
-> -		if (sb.len) {
-> -			printf("%s\n", sb.buf);
-> -			strbuf_release(&sb);
-> -			ret = 0;
-> -			goto cleanup;
-> -		}
-> -		break;
-> +		printf("%s\n", type_name(type));
-> +		ret = 0;
-> +		goto cleanup;
->  
->  	case 's':
->  		oi.sizep = &size;
+> Since there were discussions on contrib/contacts recently (a few of
+> the participants there added to CC), I tried it and unfortunately I
+> was not very impressed by its output [*].
+>
+> After applying the four patches on top of 'master', you'd run the
+> tool like so:
+>
+>     $ contrib/contacts/git-contacts master..
+>     Jonathan Nieder <jrnieder@gmail.com>
+>     Jacob Stopak <jacob@initialcommit.io>
+>     Jeff King <peff@peff.net>
+>     Jean-No=C3=ABl Avila <jn.avila@free.fr>
+>     Emily Shaffer <nasamuffin@google.com>
+>     Atharva Raykar <raykar.ath@gmail.com>
+>     Junio C Hamano <gitster@pobox.com>
+>     Todd Zullinger <tmz@pobox.com>
+>     Kyle Lippincott <spectral@google.com>
+>
+> The tool gave output in a different order every time it was run.  It
+> wasn't obvious what the ordering meant.
+>
+> By looking at its source, I can tell that the names and addresses
+> are collected from trailers like reported-by, which are counted with
+> the same importance as the authorship, that the reason why the
+> output is different each time it is run is due to use of keys %hash
+> in a Perl script, etc., but counting sign-off would mean that I'd be
+> summoned for each and every change related in this project, which
+> would not be very productive use of everybody's time.
+>
+
+Agreed, but I don't know if there are any projects where there are no
+authorship names
+and direct commit details.
+Or maybe there are two commits where it must create more confusion.
+
+> And it of course is not clear who are still active in the recent
+> past and why the name was in the list (it would not be as productive
+> to ask for a review from somebody who was listed for reporting many
+> problems in the area affected by the proposed patch than those who
+> wrote the original) from this output.  There may want an "explain"
+> mode that lets you feed a patch and get observations like:
+>
+>     The majority of lines you are touching haven't changed much
+>     since person X wrote commit W 5 years ago, and the text turned
+>     into current shape with contributions by person Y and Z.  Here
+>     are the URLs into the lore archive for the discussion that you
+>     can see how X, Y, and Z participated in the original before you
+>     touched.  You may also want to look at commit V and U as well.
+>
+>     Last time we saw person X, Y, and Z on the list were ..., here
+>     are the URLs into the lore archive.
+>
+> Perhaps some AI minded folks can write such a service for us ;-)?
+>
+
+If we're talking about AI approaches, I do think this could be
+feasible with LLMs. I imagine a pipeline where:
+A patch is parsed and matched to the line-level history (via git blame
+or log -L)
+
+The commit history is summarized to extract contributor roles
+Activity is cross-checked on lore.kernel.org
+An LLM generates human-readable explanations with references and
+confidence indicators
+
+Of course, the risk of hallucinations is real but with a properly
+curated context (e.g., logs and emails as input, strict templates), I
+think we can keep it grounded.
+I'd like to prototype such a tool and would value the list's feedback
+on this idea.
+
+Also I think this idea would only make sense as a seperated solution
+and not adding in Git
+because it would cost a lot of compute to run LLMs locally, or perhaps like
+email the way we add config on the before hand, (if we are combining
+with git) giving people an option to add an API to their LLM would
+work
+But this is just a vague idea.
+
+Thanks again and truly find this thread constructive.
+
+
+>
+> [Footnote]
+>
+>  * I didn't try other alternatives which I didn't have, and the
+>    other thread there was a mention of "git related" with "seems
+>    like rather more work".
+>
+>    cf. https://lore.kernel.org/git/aBr9bwNQ1J46NNXI@pks.im/
+
+
+
+-Jayatheerth
