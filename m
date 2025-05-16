@@ -1,98 +1,84 @@
-Received: from mail-il1-f174.google.com (mail-il1-f174.google.com [209.85.166.174])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4A46FC1D
-	for <git@vger.kernel.org>; Fri, 16 May 2025 14:07:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BA0D1519AC
+	for <git@vger.kernel.org>; Fri, 16 May 2025 14:28:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747404436; cv=none; b=K+VmKQNkZ8VNLQHWbVhCHpkyo82gSlyKYF2cCTdt6efKM4aw5/g7EaEayHNCF8g8KdOl5ApwGA023MV+xrqm68l1PR2kw/rbD4yS0R3Ct2RmpC/N9byiYnG+ETAHb+gXfxLm8YhlIqiez4hfFOzLW9npfxHg3Jg/Bypl4u6fVDA=
+	t=1747405699; cv=none; b=DCq6/YggzccJyrhBEaHgPCQebii0XEE5KckVqJW8NOmTjM9Sq0lRQPGtdM7w6ffxXWhBHVNgi92TsSJhaKlr8Z3qFTc3Z9kouy9RiNjIcv04OBOnEChZcnDRE+iaIgA0NXqKb9UQLA2YH/kEamFmZqJsw/e4qh+pCf7FjHsSxuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747404436; c=relaxed/simple;
-	bh=99Ad/YZB6lLOKFEhYvDgP8SXgJqUWLN14fLbYN2HQik=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=GxGZQG54cQucP+FYh/Li0UCH5Y0bWU30bvs/k36JCOiyrpQqtM2K2WG+fUzm+Zp4kYYAiWqLB1nWOcBHSqgx9lYGqbGyfnzELBbSBn/ryBrp26vjdvJLBQ+xtYvbzj46Gl8DIhwis671N+bWxawhVxokhPkX1gOK3zkvATzTGXo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B3ZnaDyj; arc=none smtp.client-ip=209.85.166.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747405699; c=relaxed/simple;
+	bh=NjPGrwDQZBM3OXLpAvpnvqYvNH5svfNDppSdUZET0Qs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=cmyJxm1inEMB0tjyWKKZdgilYM8xcxltQ6XXjCZklNpRLZmwsVZAqw4Ol8xU7qWcntypH5vPFzgdpi/tOpPmn8/NX6GqI8LtIYCZXfmkuexWt8bgiABo4WhJcBYGzh0vU0QsAIn8vIx2QoJYqZNHylW4RkcSo5xmYmIJI7wDAEg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name; spf=pass smtp.mailfrom=chrisdown.name; dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.b=xCKxzYhM; arc=none smtp.client-ip=209.85.221.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chrisdown.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B3ZnaDyj"
-Received: by mail-il1-f174.google.com with SMTP id e9e14a558f8ab-3d80bbf3aefso5312565ab.1
-        for <git@vger.kernel.org>; Fri, 16 May 2025 07:07:14 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.b="xCKxzYhM"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a0ebf39427so2021473f8f.3
+        for <git@vger.kernel.org>; Fri, 16 May 2025 07:28:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747404433; x=1748009233; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=+bVOjCp7scOHIEYgmuwtJSItMuy+4V8SIspfW98k9VI=;
-        b=B3ZnaDyj9WD3YAuhqiG6Q7xh+YJ+ipwAL2lCqXkrGaZjcFFqe82+PeaEDlT9uwtBR7
-         8IGDKZOIJLf5TQCQSTDHZnXzcmLrFDYuQo0oBwFZyVu9YxRb/k2Kf747SLZ3kDg8sySh
-         YoVgsB+Ug75UFKCpna9wBK8leRIaj4Iuqnl1fz0L5bakU4bH8vlvplO81s35s5lmcXi7
-         cosMn29ZKHnhClFcd87OUlGAyWZ0AnlIoe7XDw0NoNhIdy914WBG6EADq3WMUE/gS5uF
-         gPVzG/kPDwpaKobstqNTEFO7KON2x+LPM6IFG0KFenPHt9W6krCCGaf7aF9gZNYepWp7
-         nImw==
+        d=chrisdown.name; s=google; t=1747405694; x=1748010494; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=mHwmhw/VTGZimy9fk1mggyfXDNa3Bmg1S2dA2A8f0h8=;
+        b=xCKxzYhMZBDxFjRprjoKzWRIROUyJuvxqmjZqG4NgbthfSOmR+awyAfstWbj92kA+B
+         xDV19/7RKwcgaSxg1LosMmP3npWjtA36mfSt+3d7uaIy27f5i3xaQkS2daIjGJ/PlaPW
+         bAoBwi1+tZTBC8MaKzs75gCwXZkpPp5KCOeXo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747404433; x=1748009233;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=+bVOjCp7scOHIEYgmuwtJSItMuy+4V8SIspfW98k9VI=;
-        b=OLdxWQ4M+2CGYh/1jmePEmfzfPM7TxCjP6PLDVf7lbDtiztqfBIODQnVc5MtroqzST
-         x4YJ3ZUmt8BxrJXHxUN9BOTJqFHQF3oXxE1NjLX6ByrDHB+ZjoGPgpfY5a/p/uBkdOvA
-         2okqGGC1BmSBqJ/Fwn4oImSW1OYp13lnWHVPL6xQjFxtbLGpSgDCGY9s+6SZav54tk7v
-         y4UfdcWfKxrjVSDUREBZJxytMiHYC4tNFQIbkKeslauVa+2osGVtXJTrbkivw8Li3lQF
-         ON+sCRNqGo+t6c07DMqYStpV8WSyEsTxmMnM+c63BhGfsVfUryQuDXWGETzYfT/nJcd6
-         8Mug==
-X-Forwarded-Encrypted: i=1; AJvYcCUlOGvGRalaQMff67GP0JhKXDWVkBDZNoiNE7vU68J2LS11pw+XHLLRG2ZpRdSEJduWN7w=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yys9uRmVPPyHgyTYsE1mI8pXduuZQjpsZb1rtPKVk+uEQDDli3R
-	ciMRnRmV7dy9he8qEliQAvre07BAidX7RJhayyVuLz+ij4ZdTssAhCASC+MTQByS
-X-Gm-Gg: ASbGncsnulWSxq8J0XciKt3bvPa0PCHtuZW8hdPwCgVAmPRvMKxF2eeuVle2kchvb+a
-	24RlUlniWQiK9waC05GrM0COCynxoku4Eq2QPaHp+CxN2Pqfj0vL6oBKyOqxKuPqeXEOEEFRCU9
-	gFp/gmSgoe/rT4PKh6O5/GZiY/cmI83vkj1PhwgQ+T/JmAkzT2KG1s8h6WH1xVqaZKk49Wk3r76
-	geEq3yPdL6GKG8as8v3vWF1YR1/pbOr1tPQ6ZmoE3pblnHdzPh+dlA7YMvUVvYW1Ag8K3CXPOxo
-	oPtw+VFXN0ooi9tSESqIjjNc414ACdWjvj2SaGzbtdpnDQlyIZ6riWAqr3TjuSHfhLO/1biLusQ
-	XmT2C
-X-Google-Smtp-Source: AGHT+IHM35UoVjp1NjVmAG+Yewa1D9Ey3r7XWZy9Gc+JFqyqauyJgrHCeuO6P4ACQmGtmcDogqABxA==
-X-Received: by 2002:a05:6e02:a:b0:3db:6cc1:36f9 with SMTP id e9e14a558f8ab-3db842ec6b8mr50465925ab.8.1747404433263;
-        Fri, 16 May 2025 07:07:13 -0700 (PDT)
-Received: from smtpclient.apple ([2600:100a:b123:13be:45c1:3f32:a927:b976])
-        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fbcc4eaa3csm397002173.143.2025.05.16.07.07.12
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 07:07:12 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+        d=1e100.net; s=20230601; t=1747405694; x=1748010494;
+        h=user-agent:in-reply-to:content-transfer-encoding
+         :content-disposition:mime-version:references:message-id:subject:cc
+         :to:from:date:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=mHwmhw/VTGZimy9fk1mggyfXDNa3Bmg1S2dA2A8f0h8=;
+        b=gEFexjtEB9jx43Izl4+8F/lrnz4dzOrKbcnkyCyFNlbv20jX1RJASIsPE36mo4nBU5
+         6KMUOT1FiQnd+gw0WF1mISs2RF5txT/FvRpodo9CI9y9YJtl+DGsKsaxE0DyPXaWpTeX
+         mXgJnY1F2lsokQTg6WGBOfqp1CyogrdJAHWYWbcwyE/2FCndjLD3OcSfr6pD80378v+8
+         EOFPbmVapluU5OEGw9fHpNFNnSmGM7nTQEO8WIy++5X87sAPRA+qnwUF8JkdCC3qXQVv
+         Z4Fa1r1kwgtGM2X9JJCiPGxj5TBNmx84hU1+QG1R1qHygd0YAVix4K8nH+hQfaFoB2bG
+         Aq4g==
+X-Gm-Message-State: AOJu0YxnSGNYAR+ODNlhuBfE/o/AYlbclA1Os7T3mB9cgKftn2FZ57kZ
+	Bs/duUSaruFFD3aRV+kSk3UF5V/K9/qCRxaUPyXOcRWyT6O9D4kLAMjIa7ivz//3yyk=
+X-Gm-Gg: ASbGncux7wdqcOpM1a16eZI1cFLY57WYjQB36ohoDw2XYIcVnZolvLOx2g37sSVk+n0
+	f/LL+h6ywi66+Vuof+L5/+L6FY1+raHQ7UbnBc9Z/iU/x+Ju9YJGBjO0XI/pOc3qmZ1ZElKT7A6
+	60h5lkD5Yo+UeAyxZ3fpmh2/Nt3hPEYf++UPZigIDBsIcsCTdUis7ZatPaffZxv3XxdKFOb8rZl
+	CSNRlW3MHVoHOk4AZbD2Q5apUiyTBRiEFTSZZLuna2DM/4t4JoSG7wdm8MtpP7GlwAiTRA8T9Aw
+	Syo2T3YodSs/uKjh24QUzTEBHQnDjPFgOSpEfy72aXWcZQJr
+X-Google-Smtp-Source: AGHT+IEMkGdwydSNfvcQLEJvxYKRrBgd87gU6v1pPYpSsO94z8lDORk8w/6nOL70tO+xWbd7KA4hQA==
+X-Received: by 2002:a05:6000:430b:b0:3a0:b9e1:2a1f with SMTP id ffacd0b85a97d-3a35c849ea5mr4383310f8f.51.1747405693725;
+        Fri, 16 May 2025 07:28:13 -0700 (PDT)
+Received: from localhost ([93.115.193.42])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3622b8a3esm1886850f8f.14.2025.05.16.07.28.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 16 May 2025 07:28:13 -0700 (PDT)
+Date: Fri, 16 May 2025 15:28:11 +0100
+From: Chris Down <chris@chrisdown.name>
+To: Ben Knoble <ben.knoble@gmail.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	kernel-team@fb.com
+Subject: Re: [PATCH] commit: Add commit.signoff configuration option
+Message-ID: <aCdLe_W4wg8q4pkx@chrisdown.name>
+References: <aCTI7VjK5QMht3ws@chrisdown.name>
+ <167ABBF2-8DFB-4F1B-B5AA-93024FE8CA9C@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH] sequencer: make it clearer that commit descriptions are just comments
-Date: Fri, 16 May 2025 08:04:25 -0400
-Message-Id: <ABFDED43-3AC7-455E-9736-A8D9AC0F3A40@gmail.com>
-References: <xmqqv7q13m15.fsf@gitster.g>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,
- Elijah Newren via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-In-Reply-To: <xmqqv7q13m15.fsf@gitster.g>
-To: Junio C Hamano <gitster@pobox.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <167ABBF2-8DFB-4F1B-B5AA-93024FE8CA9C@gmail.com>
+User-Agent: Mutt/2.2.13 (00d56288) (2024-03-09)
 
+Ben Knoble writes:
+>Just in case it wasn’t clear: I think the patch is reasonable ;) I only meant 
+>that Junio had provided some background material that should probably be 
+>addressed, and now you have. Thanks!
 
-
-> Le 15 mai 2025 =C3=A0 11:56, Junio C Hamano <gitster@pobox.com> a =C3=A9cr=
-it :
->=20
-> Phillip Wood <phillip.wood123@gmail.com> writes:
->=20
->>> -        grep -v -e \# -e ^$ work >patches &&
->>> +        sed -e s/#.*// work | grep -v ^$ >patches &&
->>=20
->> I think we could just use 'sed -n "!/^#/p work >patches &&" here
->=20
-> Or even "sed -e '/^#/d' -e '/^$/d'" ?
-
-I=E2=80=99m probably missing something obvious, but why step away from "grep=
- -v -e ^\# -e ^$"? A one character change from the original ;) If we must go=
- with Sed, I=E2=80=99d prefer Junio=E2=80=99s construct (combining, with obv=
-ious semantics via "d") over the sed|grep pipeline.=20=
+I didn't think that at all :-) I thought it was really helpful that you pointed 
+these out, thank you.
