@@ -1,213 +1,174 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F8CB22A1E4
-	for <git@vger.kernel.org>; Fri, 16 May 2025 04:50:14 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84F2517E4
+	for <git@vger.kernel.org>; Fri, 16 May 2025 05:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747371016; cv=none; b=uSWG4lZtSoYp5gR8pTlhixcTR6fAotsncuPrJOWF9uOUKysg+tV13aUzx9a+xvTi2ZDBnzcgXOTU2TNMqiLOou6M3TZmtx8zqBsqcnf2/Gzsy8Oiz0HrWBwhDgXgr5ym4MOgBBeAiJPG4O7S1aDZ1blvL+6F7tpxpzLPIA2ISvE=
+	t=1747374048; cv=none; b=i5ta6MJZr4nuygld08dghUCdnZLpdcCL3huL/78m3u+awaG3WbF8/krwT3ktzarp58oQupS3brh0TP+N2XfMDyl2RjPYc1M6ulm2xYcuuXSkT5MB3UQZuNJ/gC6Fp20T1/oPQhGkzhICigNtn9m/xLXDIbycPJpoueTpt/aOCLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747371016; c=relaxed/simple;
-	bh=bShpvm41F8OOfqFZJA694R7U0Mb+xo8xasXwsluQG2g=;
-	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=TlH9kN9oas2aQPinJuCTI0AJOAVKLG5aS6ZdxXcmW9jbmI1GP6rCyarDlviDm2yPUnLYD8UJnR3XwVgU2v9bOMe4tt+TCMxG7pwpffhNr3FAJucGBuO4o6zN9EUrJSphKs0nbGneGtkCHXpNk/TliBkky1w8TudeDVfxy7TZe0U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=Gxx6RQeO; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1747374048; c=relaxed/simple;
+	bh=qHlsd5i0qa2O4T9MxgkMggY+Pf/RDH7QdtWe3Okf0dI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tVtr9YK+Mo52dbE4fvK3YgPklnp/0Im3Ck7NvyOtfOmooYdA8NIYjzteM8DXrUmV+Jpm7FdaEuPF2vmAK+Sc8XUVgjxU2zaqqDjcmlnhBZ7Ufb4k8YwGCCTNSUU3ZgrftloK3n9niTKJQGg5A6cHXLJ8XaZCSxTvRHK86XAAGUQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tipMbSJr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=wBduXRjf; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="Gxx6RQeO"
-Received: (qmail 5191 invoked by uid 109); 16 May 2025 04:50:14 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=bShpvm41F8OOfqFZJA694R7U0Mb+xo8xasXwsluQG2g=; b=Gxx6RQeOt252S5ab4ucZbweM1/5z65HsmS72Fe1MuVzoIxrYQvJB7mmmFQTBF5JuobRYz8Ay39vZ34sqtdMrOBS281w5yYdd8WY0a/arvGvmIv29dJuOUpt7Fe8RX0LxOgHcAsuYmEZnb8eYkXscxTysoUoaAR1I1D4PvRvToFnX01GL1REb5c0RIvt1IsdkeeB/G2nobOjD9nvslyNz9qrmOSocQmoGWRiLna3p9VOH6c0w+Ff//3MTenL8hIWUwWK1+bsqOs//g+G/3EYw8sdgcVhR5Sa7SMXUqXcSCYmQ7hr4bWpTqvwxtf3piZaG0elB+2LNhFH/seU14mJyeQ==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 16 May 2025 04:50:14 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 4970 invoked by uid 111); 16 May 2025 04:50:17 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Fri, 16 May 2025 00:50:17 -0400
-Authentication-Results: peff.net; auth=none
-Date: Fri, 16 May 2025 00:50:13 -0400
-From: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-Subject: [PATCH 13/13] object-file: drop support for writing objects with
- unknown types
-Message-ID: <20250516045013.GM22242@coredump.intra.peff.net>
-References: <20250516044916.GA21985@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tipMbSJr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="wBduXRjf"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 786B4114016F;
+	Fri, 16 May 2025 01:40:45 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 16 May 2025 01:40:45 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747374045; x=1747460445; bh=aveSt08Nw/
+	nZMOa9SY3XJBx7yodTn0n2fqhsz+rX8yE=; b=tipMbSJrTmP/xbyEKUXnH9DQDe
+	w9WKFkLLB58efOIdUmu+CseSUkwQ46ZVk0eKdx/IdEfzmK5ss95R1NHWqELxX6iO
+	zUEmFLh8HiYXK7duC1KzafR68HJgnQeT2/u5ymgjBayBmHc537upigihNVSBaMaR
+	7eGBhU8PzBRtAw/e6VDt+BDrz3HwBewr/38yKQW1xZhg7XTNEYXm/fVVzITcjntn
+	PnuG2vzSIutxlt0gaSRuBR4OrMkAGbbsnTEi/QZd14STJ2BJtZOalApQt+YrqBZr
+	ByWdJoik+9d+JUsow+FZNUSlC/k2m8krFMHRU9cdx0gQM1VfJyE9Ap15hmXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747374045; x=1747460445; bh=aveSt08Nw/nZMOa9SY3XJBx7yodTn0n2fqh
+	sz+rX8yE=; b=wBduXRjfEwzgvhfKWxzf1ZeaiDv8ierwZzER9brh1Ol/7I/QeT7
+	2cQ7hHw/zLjl3fWX6uVtY3dDeEK7L7Zh8jf2OJEgw//m18twyXcyrylcvorNBs9u
+	Zi6yj6fnIdYPeFpnjUN2zGXnqZxOrEQRXK9fe5/gHcNeP/MdYkSSGB7+EX2weSaE
+	3Wd1nUeGifsSuTOm4I1Pbl5GWTuFq8ZFLgVjZuXGdC7Zw4Vq9agZfYDErKNzhKif
+	yDX9SfxQnAEJMbfFLqjN286cDt3FYeIDGMMZ3boRZebRwkdKxlcsiFQwvfchevOB
+	XkcdxGGii0gwpWkhImzmU5j3qX3lwQwVZEg==
+X-ME-Sender: <xms:3c8maNIPuRO0viCPgNWuyf2bDrtI8q-sMsLVjnGyqQ9HUK_eqnK58w>
+    <xme:3c8maJKEkKNELzj16FmgPaJYJ3ccftKa4dBl29dyP_cpQH3SU06Zm0Sxq9Ijol-7g
+    -GuYkFD_-erCugj2w>
+X-ME-Received: <xmr:3c8maFv2m0VIuxI568sAIUnL5T3cxbDV-Y4kT4_JMjOcvglgXgp2Ohjo4AD5DEm3DExlDkytHA3rXbLhjfnPAvlmZ2FAp9bfX6Sqafsx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudduleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+    dprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrg
+    hilhdrtghomh
+X-ME-Proxy: <xmx:3c8maOYShQ1DE1nMS_CxLINVlqxo40dPNhYwi1X4MDh-paB0TTLc3A>
+    <xmx:3c8maEZ072z2j6LoGeppEdjXwf47ZNYIJgc_XrMXuRiAJPRE79qrGg>
+    <xmx:3c8maCAC2ulwTEml8dpRnXJ_SzPce0L6uwLTa_imCKbChvGyhVIyzw>
+    <xmx:3c8maCY52ZeZUJJDyroQRBK-8l0zmbi_R5U0SEU9iCwtIXcknBvmFw>
+    <xmx:3c8maPdr7xvUoUBu8m-CP8HHx4acMz-SrPC5LPxWw1n4um8eN_XTQoGh>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 May 2025 01:40:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id becd4a77 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 16 May 2025 05:40:42 +0000 (UTC)
+Date: Fri, 16 May 2025 07:40:37 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org, toon@iotcl.com, gitster@pobox.com
+Subject: Re: [PATCH v2 2/4] fetch: use batched reference updates
+Message-ID: <aCbP1SxncSVw2fCa@pks.im>
+References: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-0-80cbaaa55d2e@gmail.com>
+ <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-2-80cbaaa55d2e@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250516044916.GA21985@coredump.intra.peff.net>
+In-Reply-To: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-2-80cbaaa55d2e@gmail.com>
 
-Since "hash-object --literally" no longer supports objects with unknown
-types, there are now no callers of write_object_file_literally() and its
-helpers. Let's drop them to simplify the code.
+On Thu, May 15, 2025 at 04:07:26PM +0200, Karthik Nayak wrote:
+> diff --git a/builtin/fetch.c b/builtin/fetch.c
+> index 5279997c96..15eac2b1c2 100644
+> --- a/builtin/fetch.c
+> +++ b/builtin/fetch.c
+> @@ -1688,6 +1644,37 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
+>  	return result;
+>  }
+>  
+> +struct ref_rejection_data {
+> +	int *retcode;
+> +	int conflict_msg_shown;
+> +	const char *remote_name;
+> +};
+> +
+> +static void ref_transaction_rejection_handler(const char *refname,
+> +					      const struct object_id *old_oid UNUSED,
+> +					      const struct object_id *new_oid UNUSED,
+> +					      const char *old_target UNUSED,
+> +					      const char *new_target UNUSED,
+> +					      enum ref_transaction_error err,
+> +					      void *cb_data)
+> +{
+> +	struct ref_rejection_data *data = (struct ref_rejection_data *)cb_data;
 
-In particular, this gets rid of some ugly copy-and-paste code from
-write_object_file_literally(), which is a parallel implementation of
-write_object_file(). When the split was originally made, the two weren't
-that long, but commits like 63a6745a07 (object-file: update the loose
-object map when writing loose objects, 2023-10-01) ended up having to
-duplicate some tricky code.
+Nit: unnecessary cast.
 
-This patch drops all of that duplication and should make things less
-error-prone going forward.
+> +	if (err == REF_TRANSACTION_ERROR_NAME_CONFLICT && !data->conflict_msg_shown) {
+> +		error(_("some local refs could not be updated; try running\n"
+> +			" 'git remote prune %s' to remove any old, conflicting "
+> +			"branches"), data->remote_name);
+> +		data->conflict_msg_shown = 1;
+> +	} else {
+> +		char *reason = ref_transaction_error_msg(err);
+> +
+> +		error(_("fetching ref %s failed: %s"), refname, reason);
+> +		free(reason);
+> +	}
+> +
+> +	*data->retcode = 1;
+> +}
 
-Signed-off-by: Jeff King <peff@peff.net>
----
- object-file.c | 81 ++++-----------------------------------------------
- object-file.h |  5 +---
- 2 files changed, 6 insertions(+), 80 deletions(-)
+Okay, we stopped ignoring generic errors now and will print them. What
+I'm still unclear about: which exact errors do we accept now that
+`REF_TRANSACTION_ALLOW_FAILURE` is specified? Most of the error codes we
+probably want to accept, but what about `REF_TRANSACTION_ERROR_GENERIC`?
 
-diff --git a/object-file.c b/object-file.c
-index b10e283529..1ac04c2891 100644
---- a/object-file.c
-+++ b/object-file.c
-@@ -130,12 +130,6 @@ int has_loose_object(const struct object_id *oid)
- 	return check_and_freshen(oid, 0);
- }
- 
--static int format_object_header_literally(char *str, size_t size,
--					  const char *type, size_t objsize)
--{
--	return xsnprintf(str, size, "%s %"PRIuMAX, type, (uintmax_t)objsize) + 1;
--}
--
- int format_object_header(char *str, size_t size, enum object_type type,
- 			 size_t objsize)
- {
-@@ -144,7 +138,7 @@ int format_object_header(char *str, size_t size, enum object_type type,
- 	if (!name)
- 		BUG("could not get a type name for 'enum object_type' value %d", type);
- 
--	return format_object_header_literally(str, size, name, objsize);
-+	return xsnprintf(str, size, "%s %"PRIuMAX, name, (uintmax_t)objsize) + 1;
- }
- 
- int check_object_signature(struct repository *r, const struct object_id *oid,
-@@ -558,17 +552,6 @@ static void write_object_file_prepare(const struct git_hash_algo *algo,
- 	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
- }
- 
--static void write_object_file_prepare_literally(const struct git_hash_algo *algo,
--				      const void *buf, unsigned long len,
--				      const char *type, struct object_id *oid,
--				      char *hdr, int *hdrlen)
--{
--	struct git_hash_ctx c;
--
--	*hdrlen = format_object_header_literally(hdr, *hdrlen, type, len);
--	hash_object_body(algo, &c, buf, len, oid, hdr, hdrlen);
--}
--
- #define CHECK_COLLISION_DEST_VANISHED -2
- 
- static int check_collision(const char *source, const char *dest)
-@@ -698,21 +681,14 @@ int finalize_object_file_flags(const char *tmpfile, const char *filename,
- 	return 0;
- }
- 
--static void hash_object_file_literally(const struct git_hash_algo *algo,
--				       const void *buf, unsigned long len,
--				       const char *type, struct object_id *oid)
--{
--	char hdr[MAX_HEADER_LEN];
--	int hdrlen = sizeof(hdr);
--
--	write_object_file_prepare_literally(algo, buf, len, type, oid, hdr, &hdrlen);
--}
--
- void hash_object_file(const struct git_hash_algo *algo, const void *buf,
- 		      unsigned long len, enum object_type type,
- 		      struct object_id *oid)
- {
--	hash_object_file_literally(algo, buf, len, type_name(type), oid);
-+	char hdr[MAX_HEADER_LEN];
-+	int hdrlen = sizeof(hdr);
-+
-+	write_object_file_prepare(algo, buf, len, type, oid, hdr, &hdrlen);
- }
- 
- /* Finalize a file on disk, and close it. */
-@@ -1114,53 +1090,6 @@ int write_object_file_flags(const void *buf, unsigned long len,
- 	return 0;
- }
- 
--int write_object_file_literally(const void *buf, unsigned long len,
--				const char *type, struct object_id *oid,
--				unsigned flags)
--{
--	char *header;
--	struct repository *repo = the_repository;
--	const struct git_hash_algo *algo = repo->hash_algo;
--	const struct git_hash_algo *compat = repo->compat_hash_algo;
--	struct object_id compat_oid;
--	int hdrlen, status = 0;
--	int compat_type = -1;
--
--	if (compat) {
--		compat_type = type_from_string_gently(type, -1, 1);
--		if (compat_type == OBJ_BLOB)
--			hash_object_file(compat, buf, len, compat_type,
--					 &compat_oid);
--		else if (compat_type != -1) {
--			struct strbuf converted = STRBUF_INIT;
--			convert_object_file(the_repository,
--					    &converted, algo, compat,
--					    buf, len, compat_type, 0);
--			hash_object_file(compat, converted.buf, converted.len,
--					 compat_type, &compat_oid);
--			strbuf_release(&converted);
--		}
--	}
--
--	/* type string, SP, %lu of the length plus NUL must fit this */
--	hdrlen = strlen(type) + MAX_HEADER_LEN;
--	header = xmalloc(hdrlen);
--	write_object_file_prepare_literally(the_hash_algo, buf, len, type,
--					    oid, header, &hdrlen);
--
--	if (!(flags & WRITE_OBJECT_FILE_PERSIST))
--		goto cleanup;
--	if (freshen_packed_object(oid) || freshen_loose_object(oid))
--		goto cleanup;
--	status = write_loose_object(oid, header, hdrlen, buf, len, 0, 0);
--	if (compat_type != -1)
--		return repo_add_loose_object_map(repo, oid, &compat_oid);
--
--cleanup:
--	free(header);
--	return status;
--}
--
- int force_object_loose(const struct object_id *oid, time_t mtime)
- {
- 	struct repository *repo = the_repository;
-diff --git a/object-file.h b/object-file.h
-index a979fd5e4d..6f41142452 100644
---- a/object-file.h
-+++ b/object-file.h
-@@ -159,7 +159,7 @@ int parse_loose_header(const char *hdr, struct object_info *oi);
- 
- enum {
- 	/*
--	 * By default, `write_object_file_literally()` does not actually write
-+	 * By default, `write_object_file()` does not actually write
- 	 * anything into the object store, but only computes the object ID.
- 	 * This flag changes that so that the object will be written as a loose
- 	 * object and persisted.
-@@ -187,9 +187,6 @@ struct input_stream {
- 	int is_finished;
- };
- 
--int write_object_file_literally(const void *buf, unsigned long len,
--				const char *type, struct object_id *oid,
--				unsigned flags);
- int stream_loose_object(struct input_stream *in_stream, size_t len,
- 			struct object_id *oid);
- 
--- 
-2.49.0.896.g93578ceaaf
+This makes me wonder a bit about the current layout of how we handle
+these errors. If the rejection handler was invoked while preparing the
+transaction for each reference as we go instead of afterwards we could
+decide on-the-fly whether a specific error should be ignored or not.
+That might lead to a design that is both more flexible and more obvious
+at the same time because error handling is now handled explicitly by the
+callsite that wants to ignore some errors.
+
+Last but not least, I think that it would also allow us to decide ahead
+of time whether we want to commit. Right now we basically say "just
+commit it, whatever happens". But if I'm not mistaken, all the errors
+that we care about and that callers may want to ignore are already
+detected at prepare time. So if we already bubbled up relevant info
+while calling `ref_transaction_prepare()` the caller may then decide to
+not commit at all based on some criteria.
+
+Sorry, I should've probably proposed this when you introducued this
+mechanism. But sometimes you only see things like that as we gain more
+users.
+
+> @@ -1808,6 +1795,24 @@ static int do_fetch(struct transport *transport,
+>  			retcode = 1;
+>  	}
+>  
+> +	/*
+> +	 * If not atomic, we can still use batched updates, which would be much
+> +	 * more performant. We don't initiate the transaction before pruning,
+> +	 * since pruning must be an independent step, to avoid F/D conflicts.
+> +	 *
+> +	 * TODO: if reference transactions gain logical conflict resolution, we
+> +	 * can delete and create refs (with F/D conflicts) in the same transaction
+> +	 * and this can be moved about the 'prune_refs()' block.
+
+s/about/above/?
+
+Patrick
