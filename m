@@ -1,54 +1,54 @@
 Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFA6B224F6
-	for <git@vger.kernel.org>; Fri, 16 May 2025 16:47:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6655B2451F0
+	for <git@vger.kernel.org>; Fri, 16 May 2025 16:56:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747414060; cv=none; b=kyH7z3GI/OcNExNrrRYY+Lqdm4GVO8da65kYTXwW2IDp9P3Vhyadg6PkVDkvQqFMYMcyjAb0WCbwa8GZe7j6qzMaO8x9+sEg4SZrfENu4P6X9e6IwxKAmiY2ZcrwslaYGgIA2duQo5n/SsuMMaEDPY9Bl/KVcfAVmDRR2OSYaQc=
+	t=1747414598; cv=none; b=JAltNFz64VpScR5NGUcW+NSn9CtscKWapf0tzlrnwoFxekLHsZABkB0fXNmeid808Z8jUmjq1qEg2LN/Ii2atyIgCfvKOlHig9+fTeQo/V+VkE5qJtLrj24E3dXQeGgF3RWyut9EJGSmw3kt/NCT2eew3e0j7C0u+ie1UZ9h380=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747414060; c=relaxed/simple;
-	bh=U16wavsHg0ZcfXZYay4cO1YXxHPnL5f5akY1XNYGuaY=;
+	s=arc-20240116; t=1747414598; c=relaxed/simple;
+	bh=gryD+bV6jHSt9ZULAk5szuA26q4yojJPKdtSyc/hwF4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=huSbBtMhG+vOaNEbndyIUCPSc9ZtfMfyMRGDeyEROSRwSIx4S87qZXGpSUGqVNxWfp6usLe9Uks9fUa0zuA8nYwoY3SkoGLhkC3TLMC0UfAjrGeHfYDRBOqzaDQfAZiUsDPh37CnBp5tmRLSRzToeZqopYbEG50K2iaZ5w5XupU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SmHZlfHq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BILXrEwv; arc=none smtp.client-ip=103.168.172.149
+	 MIME-Version:Content-Type; b=S57h60y7vnkAqL1vVd/AgroBN04KSh7Z508WLJkc0VDI4dnceez4tY27ojYY9rB0L8y3pOHN7jYkADTHG8G7FXtKQLHrb4cm4mwIkNA4owWxsMMf5PjTXPvQ9NDpg9m1TTHf3Ngbd2yPIhUsZSrb7qhRms0pertKTLCO9Harhq8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=QyFr2GNP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=unP/J40u; arc=none smtp.client-ip=103.168.172.149
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SmHZlfHq";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BILXrEwv"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id DC227138041B;
-	Fri, 16 May 2025 12:47:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 16 May 2025 12:47:37 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="QyFr2GNP";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="unP/J40u"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5980413803E8;
+	Fri, 16 May 2025 12:56:35 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 16 May 2025 12:56:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747414057; x=1747500457; bh=rwci5+0TtF
-	tIjXNaesvJW4vCqVF4crGnoNChmWHd6Wk=; b=SmHZlfHqcVYBdme6A7gXMdqYUK
-	B0t3y8Y/WQvQVjTgm7LFRFcyju9+4YXJzzw28ry3s7t8seG/4UbKdHZ3edL0t1ly
-	xA3lknGWW1WhqKwnVWomE5ImbbQJBMOW/mTOn6UvUoz5TvjGWp62k+FH7SeBKA2k
-	/7HWvnREITnvpts4M5vWDecTY9sTp0iWaPakj5yWfacWjQdNPerKSMdzDGDp3B/P
-	4BxMHqNb7yHqlDovUbwSiz5SRaUYcg09n8Wxpdn1S6emisB5YwakZ4nmxh2zDWpM
-	JwyZsN/PxnjuK1Hl/Fm4gSJnTt0GPKRU0d3CShYZwMxGjxhT6CCs63mv9fhg==
+	:subject:to:to; s=fm2; t=1747414595; x=1747500995; bh=qGlgSXP3fR
+	dgWMRv/YKCFXpsqlGPcdzUo/peenJgiyQ=; b=QyFr2GNPcAcaYAUWt+FvoSXNX1
+	cbOyZ8WtUmLYWxjV8di6nDrWklk4oBIIBfRaDvPhmS7h7DAb0tN7SQ0yri82il9d
+	z/ge7E5RPdbC6JoKIFQWW9DayHBKSq3WjskPQ2ZZwDbL6hNc3TVsNngEHGbchzFn
+	rLqAaTWYlVE5md/5+X1k6p6HKVVu0AT3CKvBA0ReyZRAkorZWxa96Kzfc+F8boaS
+	o8b37LduFnkfX2F4vmuEA3FPCED4hWqxqUvjOktjgomWMhOwX5RvSYfWpu8XxOv8
+	Sdb3HyU4l+B59IETMOw9OQU7C74RFELIhXalo4TfkUSEt24PYzDstCuwllqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747414057; x=1747500457; bh=rwci5+0TtFtIjXNaesvJW4vCqVF4crGnoNC
-	hmWHd6Wk=; b=BILXrEwvDgoZuQ+GIn+lg1Tpvn6GSN2PBD0Fbp9inrTLvXPJeBx
-	CVvji4I6befw13j4dS3C8xBi/ZSW41/2lXXoi5QI0rEqN9jNMd02BY6QlPeqwPaV
-	G3SAT9QcwnOnVoqdpfJo3hTVwoBoVuaivcS96MwOcM4WvVmUCMpJkZQ9qS1JutgE
-	EIYLT0brWqEzZSjK4Zepg/yvMhT+WrrF76bnXqIeYy5akrmhKwejQhbcMl//p2ul
-	7oH1TUrEbCChfG/2VfFhz8PmwPtwcaROvImQtO4rOOIdF/Dr/m9RoY6k+/wY5ie+
-	KfU3FwQZUlaMVZG8OVpS2XRxSLNHC4ETydA==
-X-ME-Sender: <xms:KWwnaHKeA1oiFLZPEIFNHAaoBH8p_xc1O7CMOdAurIE1nHFwrArZTQ>
-    <xme:KWwnaLL-8sj2q3kDztILc0OANN85nHl_MIC2dvEWUNZSebc2pL3FtJUC68NvJSNfw
-    gCh6zQTMlETm8WYBA>
-X-ME-Received: <xmr:KWwnaPu1wv-zJCMWfHYt_6EgWJl-0LlCI37-JB1qB4Q8_SWLqvuMEA6l6nvkqF-MW6_rhrHqZ5BFm6TPqkYmARA6hftEWgB9Ucl2In0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefvdeiucetufdoteggodetrf
+	1747414595; x=1747500995; bh=qGlgSXP3fRdgWMRv/YKCFXpsqlGPcdzUo/p
+	eenJgiyQ=; b=unP/J40uyYTsF/Dmn+BnUP0/vCyzJuPyitp3ZxkbWqTX5BgX6Pt
+	XBPaDLUp9XvrwJY1KiRp4Y33APRSCVUopHRNOKBIgFQDcjW88xzxDZud97dveuRg
+	1Pdt9K0WNHpaADfXk5/rfd6kew5ypXT/zWFUEjDoSYslPIZmLqrf6Qp8ncjb3jTB
+	QuvBZrty2V07MR6jbMJ3IPxucbyJssBrQLyTpZDtW4b1SBnjeTdmNEW0GOSTWw3L
+	uwkPnEaJi9116Bldk2pWaMpD9Ab27MlUz/plABACWci80/Oq4ni2NdyW6abue1Ut
+	dspL2uyEgNorgNITM8Pu8sH4Evf27yEpSBQ==
+X-ME-Sender: <xms:Q24naKxdzqHlmvRf-TiG0brOeM2HpdBwognDu3c_G_PVXl_dvWUcKg>
+    <xme:Q24naGSGjBcRNvBks-Q54Q6ahTh-TKk4-loUfn9oACWVZqcq0K6IizZJLqDg0Mhq6
+    m2AWyj0Oe2wp4iGVw>
+X-ME-Received: <xmr:Q24naMVoI9t63Uk399S3qEhbTubjUtmpvjdpzDV8frywnUFNg86kamS1gRRKIdeGrp4WWsTYuV2GfGoEOePyB7g6zEd7ILmboat1MZo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefvdekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhvf
     evufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghm
@@ -59,24 +59,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefvdeiucetufdote
     thdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvh
     hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
     rdgtohhm
-X-ME-Proxy: <xmx:KWwnaAZqrofaoXtIJhjMR3nbZKu9RsgnECtQMtjSr85UnlF5-4kDxg>
-    <xmx:KWwnaOZMUKbmz37Xdr2DP4NW69y1qqYBMWoHiHim20Nh078H6jMxiQ>
-    <xmx:KWwnaED-Nc7OpIZfxhIsse0CYudpN9caWXsfDBg4uqZr0K1QUsiDFg>
-    <xmx:KWwnaMZSCKXNJnCVuUCTKKLQy31DD6CAFzO3Wb2woyN7tGz43QrysQ>
-    <xmx:KWwnaNl0st9TVbpX9e-qxkvZEjf893G24tixB9soRWl9fmVKFy_IF7sa>
+X-ME-Proxy: <xmx:Q24naAgGtM4BQ2w0E4C9C3shBBsPoGgJzIEk21LLiSZcFH0PHyWflg>
+    <xmx:Q24naMCFtXt-COo5jBt1_GHmeH_S40M1C-oj41dzHRLCnMvxqF-4qw>
+    <xmx:Q24naBIPWxDxLyYMtfc7N9X2FfHaIqXZNa-f3KUsfG3ISE9clZbCmg>
+    <xmx:Q24naDAohbk0UonX6hMyfXErBVxDzOX4PIOUC6WsY9FjOpm0Gory8Q>
+    <xmx:Q24naMthfWG4Rryr6ffDDFwBaxxmeoD6jG8fTtq0PsZFQBUO_EznB9XE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 12:47:37 -0400 (EDT)
+ 16 May 2025 12:56:34 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Jeff King <peff@peff.net>
 Cc: git@vger.kernel.org
-Subject: Re: [PATCH 02/13] cat-file: make --allow-unknown-type a noop
-In-Reply-To: <20250516044935.GB22242@coredump.intra.peff.net> (Jeff King's
-	message of "Fri, 16 May 2025 00:49:35 -0400")
+Subject: Re: [PATCH 04/13] cat-file: use type enum instead of buffer for -t
+ option
+In-Reply-To: <20250516044947.GD22242@coredump.intra.peff.net> (Jeff King's
+	message of "Fri, 16 May 2025 00:49:47 -0400")
 References: <20250516044916.GA21985@coredump.intra.peff.net>
-	<20250516044935.GB22242@coredump.intra.peff.net>
-Date: Fri, 16 May 2025 09:47:36 -0700
-Message-ID: <xmqq34d4wlhz.fsf@gitster.g>
+	<20250516044947.GD22242@coredump.intra.peff.net>
+Date: Fri, 16 May 2025 09:56:33 -0700
+Message-ID: <xmqqy0uwv6im.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,18 +89,52 @@ Content-Type: text/plain
 
 Jeff King <peff@peff.net> writes:
 
-> However, we can't just rip out the option entirely. That would hurt a
-> caller who ran:
+> Now that we no longer support OBJECT_INFO_ALLOW_UNKNOWN_TYPE, there is
+> no need to pass a strbuf into oid_object_info_extended() to record the
+> type. The regular object_type enum is sufficient to capture all of the
+> types we will allow.
 >
->   git cat-file -t --allow-unknown-object <oid>
+> This simplifies the code a bit, and will eventually let us drop
+> object_info's type_name strbuf support.
 >
-> and fed it normal, well-formed objects. There --allow-unknown-type was
-> doing nothing, but we wouldn't want to start bailing with an error. So
-> to protect any such callers, we'll retain --allow-unknown-type as a
-> noop.
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  builtin/cat-file.c | 13 ++++---------
+>  1 file changed, 4 insertions(+), 9 deletions(-)
 
-Heh, unlike my usual self, I started reading this patch from the
-changes before coming back to the proposed log message, and was
-wondering why we still take the option.  It is obvious when the
-reason is spelled out like the above and I fully support it.  My
-sense of backward compatibility may have deteriorated over time X-<.
+Nice.  It is sad that it takes more to lose .type_name but we'll see
+that happen in a later step.
+
+> diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+> index 4adc19aa29..67a5ff2b9e 100644
+> --- a/builtin/cat-file.c
+> +++ b/builtin/cat-file.c
+> @@ -109,7 +109,6 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>  	unsigned long size;
+>  	struct object_context obj_context = {0};
+>  	struct object_info oi = OBJECT_INFO_INIT;
+> -	struct strbuf sb = STRBUF_INIT;
+>  	unsigned flags = OBJECT_INFO_LOOKUP_REPLACE;
+>  	unsigned get_oid_flags =
+>  		GET_OID_RECORD_PATH |
+> @@ -132,16 +131,12 @@ static int cat_one_file(int opt, const char *exp_type, const char *obj_name)
+>  	buf = NULL;
+>  	switch (opt) {
+>  	case 't':
+> -		oi.type_name = &sb;
+> +		oi.typep = &type;
+>  		if (oid_object_info_extended(the_repository, &oid, &oi, flags) < 0)
+>  			die("git cat-file: could not get object info");
+> -		if (sb.len) {
+> -			printf("%s\n", sb.buf);
+> -			strbuf_release(&sb);
+> -			ret = 0;
+> -			goto cleanup;
+> -		}
+> -		break;
+> +		printf("%s\n", type_name(type));
+> +		ret = 0;
+> +		goto cleanup;
+>  
+>  	case 's':
+>  		oi.sizep = &size;
