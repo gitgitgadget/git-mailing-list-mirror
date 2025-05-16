@@ -1,64 +1,64 @@
-Received: from mail-yw1-f177.google.com (mail-yw1-f177.google.com [209.85.128.177])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014CA235069
-	for <git@vger.kernel.org>; Fri, 16 May 2025 12:49:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D98221DFDE
+	for <git@vger.kernel.org>; Fri, 16 May 2025 12:54:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747399787; cv=none; b=Uc86mNFUbaTtoWh5AoQzvkwVOwNE7NuWm3cBJ9E5q2oLe/et2WQeeLFju/NsC7btJOdk0CYfQUXsDAAdy5KmgHgrR1j6pM3o9VZGnbn1L8XQeoZ0HuEcjXGpjOotFHjOXSt4YAtJTG4MmgSP2YtsyvGsk5IhY/vHEcNGTIe6Miw=
+	t=1747400054; cv=none; b=G1mYYSFLhpK3AefU2KM+ZV+Qn1E7++OdVjtdXcsMH+r4e+Lw/4tBE/h5mfNAQ4VqhrvqC1EdbHAdNWWkT12pwnvPK798++WhiTrflSo0x+TW+M5/1DYgxB90TD2hZBbVSfeNuRPCGWHLRkVcH6CDXWLwjNk8E2On2MZNHF8f3YU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747399787; c=relaxed/simple;
-	bh=sdxVV9V/zH36/2Z9HeZ2bH7SCZ37jZAHMb5aL5TJFcA=;
+	s=arc-20240116; t=1747400054; c=relaxed/simple;
+	bh=6FqVJfvD2bszvNNJIHO5FLBcoEFXHOCZA1Y0ubksjFA=;
 	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=jkEnJMjQrmvUWlo8InDCdjUUh39QPqrZmEOalbNPytt5kA7+X+gCAlfjY5MOGGr3SvepOExDEItddBNGcj228TtcNdBl81eiHBq1HCjxvVrJhTdDaBCnKlpRmMsFS1xTUdT3+AB+uYL99oirpC+qy2hArEdgGt54/SzA4A8LXMI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nlZxv2sc; arc=none smtp.client-ip=209.85.128.177
+	 In-Reply-To:Content-Type; b=ZbRr51gU/MQQbLc2cAX59M+vwjdJ6F9a48FocNwO2gh+D6+TrzUKMh+6RMyKZyjDyJcPabHph7MJpQmqMyCC/L2KFNNIDfS67ELEeo9fStFm1x/MXcZGS5AOgAZPqyOVzEPjj9mlhLTfNlGHfEzxLJnAXseUbjOZ3moPAd4Hxwg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PfCqab4T; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nlZxv2sc"
-Received: by mail-yw1-f177.google.com with SMTP id 00721157ae682-70a23f4fe8bso18926287b3.2
-        for <git@vger.kernel.org>; Fri, 16 May 2025 05:49:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PfCqab4T"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e740a09eb00so1846261276.0
+        for <git@vger.kernel.org>; Fri, 16 May 2025 05:54:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747399785; x=1748004585; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747400052; x=1748004852; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Owfx0CXnmkvfpKWlY7p3IDr+9bhJI4bcSLKjDLb8jAs=;
-        b=nlZxv2scKqU9Vlk2oTfG+Ujp+RjlILHtMX/5JeMWPAoh+VObsuCE3JVsw1DwUj2a9+
-         q5jfrlU3XArdgZQN0IRNxZerfrUp7xpSdTefzeqatn+iyXLbi+sP7x68IpVqaGKwERom
-         h0crSyFG0xJ/hdcYFQg9KLjNDCug9X5uOhFkauPtUX2yDYweT8i3v0KxV652X4SvMrEj
-         cLZPdO6GPqZjotVb+w0n6cdDaud2FQ4zIOuRcoSs/Cyj2arNT3KAx7pE+iWYjKKtDHPu
-         1ucoS4IEPzwaeCjrYDSgjH0eC1Sb6zeG6ndVnNGP2HKREOQhgsG9j/DEcRylYKoAUNFC
-         XUuw==
+        bh=8XdShncm4AknNO43f/v60+I0aTY2b7/QkYP8rUV4YZw=;
+        b=PfCqab4TEKPRYGs1dSvJQG06KR9/BHKCCRJY/3Hmf4TNaCOTIamdpT71Fc7cpUDfK9
+         31UB6BX+HyZZflZijc9RNlvIZfsOobUtgPITKcHzKNbcQmSMQXfUb6umlQi3hmpc3nCk
+         +Po+4aT+myEBuGY5XpPixwWQcaWm/AU9c6ON1bPXxRm7qbxLeBYIODh7GIOqHKvjKMvM
+         a7nR3PMTyt964jlKGNAJHg85u+X3Wv38zonPAJcPeF6Oe3epsb4b2krIxj2uX28NB4Il
+         DpIlAJTGhV/vpwPsmfKKHaFKgL2GKAZaZ081EeyoXUljgOHvoIsNi+Z6MZ0T2g1Hm+e+
+         +UKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747399785; x=1748004585;
+        d=1e100.net; s=20230601; t=1747400052; x=1748004852;
         h=content-transfer-encoding:in-reply-to:from:content-language
          :references:cc:to:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Owfx0CXnmkvfpKWlY7p3IDr+9bhJI4bcSLKjDLb8jAs=;
-        b=N3j0xuBtjX5ihs+5Tn3gCQI6hVavvZvYe5YJ3P4SVh8GhE2y7ScEqDG1kPj6bgpACH
-         UBeY81XUIWEJ1wbuPwoU5LYo5hYKE+WG5uVWzoN7sJstXpY44RRi70gieegf1u3h7/n3
-         p0rNeUQtjneMNzvIYZs33ankkESWNk6OohGt5c10ZiS4R6zILVgX7YxqpjQItL7p90rd
-         mPX/+Uv2CpxpUV7uG0n/l2GRzmfs+9tJaW4tNZdFApZFkdgm0XmojYRhY+AbRwifMDUi
-         LtUDZFtTbK1a6TzIG8DylzkiLp4bMCVkmLZ7rpgAyE0LgB6VjhS4Q69Er8iAlb3Dp0bG
-         z0DA==
-X-Gm-Message-State: AOJu0YwLwzTWdHQ6eL8gksQ5viLNrb79+lKhVExQ7eTR/0LrLfb5OB1k
-	JCXFUIOswsBpu84eLVaUHF4tWILV32yrQZlIirQQD2GvcE6OHLw2fzqO
-X-Gm-Gg: ASbGncsHiahtbBwDHAlSBKwNsdzNsrgxTOqliGj6obNy5SvE0Y6cj0QTmx1bTeqD5Vp
-	lBsSU2yWMJ+AKvaYijAoxWl8O9PuthI0uLlguTa8qRf1NqFdXgVeAVSJokY+3ZxP0Mbs1Nm5Lav
-	uJYmlwtfdKQEkWv8kL4PpIAlDERpK2df0BY9DEH4rZZDXvM9CEOVJx86pmpsW/EiLNCLqOTtGMN
-	DGsUp3Wp8PDQ4aA+LzWOLf/oWNxbAc2ROuA6woXodJulhGhVQ2AFRVNzqFJf4Gk7QL02drTk4lw
-	UpOQKwpxESQtygmFpGxks8/kBpzLwjOdqPKblsIl/dBuNmQBnOOZ6gVHbfOI12j8wouZuwlIoTP
-	Dq/dp6u2+XioWE4TkBDugo7M/OhCl5BKmysxhVLw=
-X-Google-Smtp-Source: AGHT+IGCJy89i/oxjq73Rz4DBpFzcWXlj/Gv9RHkeGjLEy5b1MwXceM2Cj2bOOx5iXZL4MBwx957WQ==
-X-Received: by 2002:a05:690c:618a:b0:706:aee5:162a with SMTP id 00721157ae682-70ca7c54d05mr48471577b3.36.1747399784487;
-        Fri, 16 May 2025 05:49:44 -0700 (PDT)
+        bh=8XdShncm4AknNO43f/v60+I0aTY2b7/QkYP8rUV4YZw=;
+        b=cSqcbyBPe+CShzwJ3vA1whLxODNxOg/TeEZ71M+ztlfFIt5h1moY3NGY9PlRjA3YT/
+         769SpK0f7FkzZRkUzc5OqmC6LrVbyL94iNrItNY0k0iYfWA802dftNg128/OdkOZu6vQ
+         KfHZEWp3WQGxRKflQdXqkMj9SxfaKgwWDkjuN0YLhti5pXtJrUsmlrPqbZTJmSjMZS0+
+         OAildpjZK4nUHNgXP/yTc4gl0yRyGl6DomulC5XdNJtR5mDx53DTyrBWrhxZKdR8OSnQ
+         bVP704SJQ8Mc0HMwa31tPnHIUB9+hXoVWsE1F3bf8aN1dZZ/nbyN3DqJXh3gAdHBwvW3
+         QJ3g==
+X-Gm-Message-State: AOJu0Yxa3G8dm0JFa/OwBYGjuSVhSeYmDWSCM28D7ydnC8R1oaHEEuuv
+	o1J3U02DLHfV8zqty3MKddK7xNpR78KSDBYXqdLRTE3rByveJssp0g0CT5dCaQ==
+X-Gm-Gg: ASbGncvTRL5ssgKuBwch/u2jrKV8PX0O8v9URGjnqskjGzhY35+/HQf16/p5levOlr9
+	LhN+3xbYRAr7uNke66L2LFSSBtIPdpDS68CTNh2bj/2dznwz852bmLSFeVTKXf2cF9DIX4343XT
+	4ugefLuDmiuo4YQzlwyCcLhb3rZWu9qLNDn3glB+mdFZfwnE/WpxaTpOsU5+6hK3H4UFDNI5+aB
+	AlK5oADNdWbdeVfHPNw3ExIgzke4wjGcf9/ZyutlmMwWBdB+EIgOEvJhXi4YsXBuWgbAQhIgUsI
+	Y1TArcqohdE4z7BLmcJK4v6Td9LjzAZbXMr8XoCZ5aBzosV67uCr9RVMdBiXGng6qBZMWmQtqi2
+	c0SqAvzxZA5qE64oUqJ6cHzNFk1clnWZc0pltCos=
+X-Google-Smtp-Source: AGHT+IG79Ri1n0+ANoxoYJAZHdTsK8SFvNa3Leftv5/Ik6LG9K0LO8/Z2PqeBUfpk0g3ijsUPgxhbQ==
+X-Received: by 2002:a05:6902:1808:b0:e7b:7dd5:3863 with SMTP id 3f1490d57ef6-e7b7dd539c8mr1160393276.41.1747400051659;
+        Fri, 16 May 2025 05:54:11 -0700 (PDT)
 Received: from ?IPV6:2600:1700:60ba:9810:9ccc:beab:105c:f288? ([2600:1700:60ba:9810:9ccc:beab:105c:f288])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-70ca831de79sm3875517b3.32.2025.05.16.05.49.43
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e7b6ac673fesm538218276.5.2025.05.16.05.54.10
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 05:49:43 -0700 (PDT)
-Message-ID: <3c4ef12a-3ad4-4078-a513-473f13a670fb@gmail.com>
-Date: Fri, 16 May 2025 08:49:43 -0400
+        Fri, 16 May 2025 05:54:11 -0700 (PDT)
+Message-ID: <bee620e4-1f45-4fff-a7d4-ecb5f99f4e0a@gmail.com>
+Date: Fri, 16 May 2025 08:54:10 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -66,94 +66,73 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/3] apply: integrate with the sparse index
+Subject: Re: [PATCH 2/3] git add: make -p/-i aware of sparse index
 To: Elijah Newren <newren@gmail.com>,
  Derrick Stolee via GitGitGadget <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org, gitster@pobox.com
 References: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
- <0e6e199cd19ef186fb10b192529269cafc47805a.1746579321.git.gitgitgadget@gmail.com>
- <CABPp-BHkgvc0UQbhXfP4POtY8GPVpz9J8ZbX3_jyzL_V7GyBbA@mail.gmail.com>
+ <63caae876343faa9609516b0797fd9ff19f7a881.1746579321.git.gitgitgadget@gmail.com>
+ <CABPp-BEmMaFQxE9NQgM8M=cgfBHY1p56vnBt7R4CfuiXnq++4Q@mail.gmail.com>
 Content-Language: en-US
 From: Derrick Stolee <stolee@gmail.com>
-In-Reply-To: <CABPp-BHkgvc0UQbhXfP4POtY8GPVpz9J8ZbX3_jyzL_V7GyBbA@mail.gmail.com>
+In-Reply-To: <CABPp-BEmMaFQxE9NQgM8M=cgfBHY1p56vnBt7R4CfuiXnq++4Q@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 
-On 5/9/25 11:18 PM, Elijah Newren wrote:
+On 5/10/25 12:38 AM, Elijah Newren wrote:
 > On Tue, May 6, 2025 at 5:55 PM Derrick Stolee via GitGitGadget
-
-
->> +       # Expands when using --index.
->> +       ensure_expanded apply --index ../patch-outside &&
->> +       git -C sparse-index reset --hard &&
+> <gitgitgadget@gmail.com> wrote:
+>>
+>> From: Derrick Stolee <stolee@gmail.com>
+>>
+>> It is slow to expand a sparse index in-memory due to parsing of trees.
+>> We aim to minimize that performance cost when possible. 'git add -p'
+>> uses 'git apply' child processes to modify the index, but still there
+>> are some expansions that occur.
 > 
-> All makes sense up to here.
+> still there are some expansions that occur...outside of those child
+> processes?  Is that what you're trying to say, or was it something
+> else?
 > 
+>> It turns out that control flows out of cmd_add() in the interactive
+>> cases before the lines that confirm that the builtin is integrated with
+>> the sparse index. We need to move that earlier to ensure it prevents a
+>> full index expansion on read.
+>>
+>> Add more test cases that confirm that these interactive add options work
+>> with the sparse index. One interesting aspect here is that the '-i'
+>> option avoids expanding the sparse index when a sparse directory exists
+>> on disk while the '-p' option does hit the ensure_full_index() method.
+>> This leaves some room for improvement, but this case should be atypical
+>> as users should remain within their sparse-checkout.
+> 
+> It's not clear whether this paragraph is talking about existing state
+> (before the patch) or desired state (after the patch).  I think based
+> on the context it's the former, but the last sentence sounds more like
+> a future work direction that makes it very unclear, to me at least.
+
+I'll try to rewrite to make this clearer.
+
+>> +       # -p does expand when edits are outside sparse checkout.
+>> +       test_write_lines y n y >in &&
+>> +       ensure_expanded add -p <in &&
 >> +
->> +       # Does not expand when using --cached.
->> +       ensure_not_expanded apply --cached ../patch-outside
+>> +       # but -i does not expand.
+>> +       git -C sparse-index reset &&
+>> +       test_write_lines u 2 3 "" q >in &&
+>> +       ensure_not_expanded add -i <in
 > 
-> Wait, what?  That makes no sense.
-> 
-> After some digging, I see why the test passed, but it's very
-> misleading.  Just before this command, if you ran the following
-> commands from the sparse-index directory, you'd see the following:
-> 
-> $ rm testme
-> $ GIT_TRACE2_EVENT=$(pwd)/testme git apply --cached ../patch-outside
-> $ grep ensure_full_index testme
-> $
-> 
-> Which matches what you were testing and shows why it passed for you.
-> But I'd argue the test is not correct and confusing for anyone that
-> reads it, because:
-> 
-> $ git ls-files -s --sparse | grep folder2
-> 040000 cb4007891397aa2a451037d1c69e57f0cf498c24 0    folder2/0/
-> 100644 78981922613b2afb6025042ff6bd878ac1994e85 0    folder2/a
-> 
-> In other words, the index was *already* (partially) expanded by the
-> `git apply --index`, and the `git reset --hard` did not fix that
-> contrary to expectations.  Continuing from here we see:
-> 
-> $ git reset --hard
-> HEAD is now at 703fd3e initial commit
-> $ git ls-files -s --sparse | grep folder2
-> 040000 cb4007891397aa2a451037d1c69e57f0cf498c24 0    folder2/0/
-> 100644 78981922613b2afb6025042ff6bd878ac1994e85 0    folder2/a
-> $ git sparse-checkout reapply
-> $ git ls-files -s --sparse | grep folder2
-> 040000 123706f6fc38949628eaf0483edbf97ba21123ae 0    folder2/
-> 
-> So, we need to do a `git sparse-checkout reapply` to make sure we were
-> actually in the expected fully sparse state.  From here...
-> 
-> $ rm testme
-> $ GIT_TRACE2_EVENT=$(pwd)/testme git apply --cached ../patch-outside
-> $ grep ensure_full_index testme
-> {"event":"region_enter","sid":"20250510T030856.854763Z-H8ec63c79-P0000371c","thread":"main","time":"2025-05-10T03:08:56.856008Z","file":"sparse-index.c","line":372,"repo":1,"nesting":1,"category":"index","label":"ensure_full_index"}
-> {"event":"region_leave","sid":"20250510T030856.854763Z-H8ec63c79-P0000371c","thread":"main","time":"2025-05-10T03:08:56.856454Z","file":"sparse-index.c","line":455,"repo":1,"t_rel":0.000446,"nesting":1,"category":"index","label":"ensure_full_index"}
-> {"event":"region_enter","sid":"20250510T030856.854763Z-H8ec63c79-P0000371c","thread":"main","time":"2025-05-10T03:08:56.857016Z","file":"sparse-index.c","line":372,"repo":1,"nesting":1,"category":"index","label":"ensure_full_index"}
-> {"event":"region_leave","sid":"20250510T030856.854763Z-H8ec63c79-P0000371c","thread":"main","time":"2025-05-10T03:08:56.857135Z","file":"sparse-index.c","line":455,"repo":1,"t_rel":0.000119,"nesting":1,"category":"index","label":"ensure_full_index"}
-> 
-> So, indeed, `git apply --cached ../patch-outside` DOES expand the
-> index, as I expected.  It has to when folder2/ is a directory in the
-> index, so that we can get a folder2/a entry that we can modify.  And
-> that's just what we see:
-> 
-> $ git ls-files -s --sparse | grep folder2
-> 040000 cb4007891397aa2a451037d1c69e57f0cf498c24 0    folder2/0/
-> 100644 50f4ca4e6265a0497ec2ee6782648138914ad398 0    folder2/a
-> 
-> 
-> Can you add a `git sparse-checkout reapply` right after your `git
-> reset --hard`, and then switch the ensure_not_expanded to
-> ensure_expanded for the apply --cached call?
+> This has the same error as patch 1, in that you assume your reset
+> above (which wasn't even a reset --hard) will re-sparsify the index.
+> Since it doesn't, your test is misleading and only shows that when
+> already expanded to include the files of interest it doesn't expand
+> any further.  To re-sparsify your index before the `add -i` call,
+> you'll need to do a `git reset --hard && git sparse-checkout reapply`
+> and then recreate folder1/a with "new content" again...and then run
+> your 'add -i' command.
+Thanks. I didn't like that this was different. I appreciate your
+expertise helping to clarify this issue.
 
-Thanks for digging in here. I'm going to augment the test to
-include both the ensure_expanded and ensure_not_expanded so we
-get the extra coverage for these two scenarios.
-
-Thanks for the careful eye!
+Thanks,
 -Stolee
 
