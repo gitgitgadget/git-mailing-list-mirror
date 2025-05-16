@@ -1,161 +1,215 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03F57280027
-	for <git@vger.kernel.org>; Fri, 16 May 2025 18:34:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 221EA1C8638
+	for <git@vger.kernel.org>; Fri, 16 May 2025 18:49:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747420456; cv=none; b=GxmOoH4OnzzvkWFTA9L9SvV1CKmxk00DkP6FMYb8h7l+FCQCBXMnqY+jbgOgQxHo/FN5ezn5KouI4L4OUSRMIA0RFR5aemw5wet5+SIo8uDKHaNnX2yvAGWQuQKhOrUKe1DHKZvo/7NXPM0zkKYb4K+YCQsezfANv2RTJc9KZN8=
+	t=1747421348; cv=none; b=q9HwrjEEJGndXW41Pf1UA0Q0Z2b7JK5JJppFhAlQlXQih2aZVPQ39bnzbVB/7iacuPsYKujl9TMXH+Elm+39xlz4Yu1q7fc6BNAJyrb1TGSaq1ETeN6QS94EtZUyTM6riXNedR7ZyVor23h2LPP2LD7Fb+Xh8EppugvvGzVtXoI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747420456; c=relaxed/simple;
-	bh=yVLFZ1XGT8JS3R4jLi9QBlMiFqVtcIamzkYUlzJ0ZYc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=XikRhWt6Nf3Jvsi4x+v5HkBCP7NXbYIXymvfhIX9hjiNUrx55GnMYijD5ThnR+BEVdKH8T4ZniInEWKn4jhWJwHKKuC3Wzj/uBNixAEQRk19Di+HAvjMPikp1EWQvA2iXDkk5m8jLMIvFEDritWPyh2HwtH1r4WH1os8R/uSvT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NgW2fUvF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cErQgdh2; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747421348; c=relaxed/simple;
+	bh=lLScpCosH0JFoWUe8AA6Ly+jkpEZdwfqeobqsQJD4zQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=bjihCQrO3vjr1zYGKXEjxm2/Sw5qopUfMKgZ+C9CCx/djsakV7kxNHo99jbjM974XB4TPpL5O2N6es5q5ULNX+yhQ6UrRZ+OfEqVk1NEJHXsCVbvGVCBaocHILP7WT/nP01ix/4P194RhKrQDLNUKSmnG2T4bfIdAoyZi2vXw/Y=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=qKBUmwYF; arc=none smtp.client-ip=84.93.230.235
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NgW2fUvF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cErQgdh2"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id AC7C1254010D;
-	Fri, 16 May 2025 14:34:12 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 16 May 2025 14:34:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747420452; x=1747506852; bh=ejBr/iU8VL
-	jKex2iKkFWL48sXyfZShT91sh6uLLMTNo=; b=NgW2fUvFXqo0GH+bEXuZqozxnh
-	Nn2RbZEZ7Vg59gLyV9jCAXDys9MmiGc/8bI5Qyp+OhT/OFfY10B5o+hrG1ZAaI8C
-	LLUbUM7/NFhkvbTpiR0RxsZxrTY2f8qCVarHpGWqR8WCmvQhZyX9pQ5y2p0JAvmi
-	vABA3/p5uDNuDHHPYzCnQbg4D07E2P20Kow87C9AV4PYTeaETbcYfVZ9lGvOl2Ft
-	4I6s1jJB/sfq0TPrJOXwNHYfdW9ZSfWpUsjNSSqw3B7iHncuUqH3R/Q/odAo6gkO
-	YgUK/2MZeq0+Vuc5KV/gF3mpab1fqk1tLk4I3frhghVeROwqm7Qz4kW/txyg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747420452; x=1747506852; bh=ejBr/iU8VLjKex2iKkFWL48sXyfZShT91sh
-	6uLLMTNo=; b=cErQgdh2S+TDkf0sRvouz9P1p6qZ9j7tTWse43ylwPJoyHsL2XB
-	ZqQYq2LSP12iPekXJ2QBpinnlQP9UKiA5lR98mkdw5wQKeibuHqsBfsInwM05+w0
-	EAm498GwPlZZw9Th+1GV0sIaT/19Pm5Di35nPLv/8t0Qq7Y43DGLMZjCQnNDZUU8
-	yrHbj88cGb4gTUNSjlHY+bVOs0jF6Ss/8IgZobTlSNWFoYpaHId9YftiKH9Nc75i
-	R98A9J8GXVjk1HkVG2JV4I6k5qn1KKawDTcV3sOuUDqN1hSv0wTnm0UL3S6jFVG5
-	/Bt/GI+qHNC2bietJ9V2HXvbk5qQuR5JEkg==
-X-ME-Sender: <xms:JIUnaEPhRi6EHynWleDGg0PMlZz-xqAKAqxt2WsEipK9yLNSc37c-w>
-    <xme:JIUnaK83Sm4W1UpPEq0Ns2ttHy18EE9ihwzwIlUNr3qlTxKg5LCAU2whXL4e_4pS4
-    yntx1d8bmWLkUqHvQ>
-X-ME-Received: <xmr:JIUnaLRHVbJfY8z7qPFsRkymP5dmmGFsE4LgWTNMWMhEWYwPbtDZuXSsHJmLV5iBR1JDoxLqVuw_IuVqJFgY63GtobwOsnODfCiSxSA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefgeekucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrd
-    himhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthht
-    ohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpoh
-    gsohigrdgtohhm
-X-ME-Proxy: <xmx:JIUnaMurjgPjyWIDlnh2NCAZR5NdsJuUGy1wz9kuFko8cX_DocmKSg>
-    <xmx:JIUnaMdLf1e-kCzAnh7Q7LWKiPEKwxj1JPnWLbW74dnjeiy14wuQ1w>
-    <xmx:JIUnaA2qoo3m2-2AzoapvEQRyBi-AAP6KDz9taoY_zfaRZX2oz6wmg>
-    <xmx:JIUnaA-no-_7857td6dFGWugPM_tsdoc7FeVe9hQtp-e3F_6X_G_vA>
-    <xmx:JIUnaAWfUlJijKBP6D4DN25UHtRXGB8wXTjin5jhda7QpP8svBQ_FpcL>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 14:34:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org,  Taylor Blau <me@ttaylorr.com>
-Subject: Re: [PATCH] packfile: avoid access(3p) calls for missing packs
-In-Reply-To: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
-	(Patrick Steinhardt's message of "Fri, 16 May 2025 10:55:10 +0200")
-References: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
-Date: Fri, 16 May 2025 11:34:10 -0700
-Message-ID: <xmqq7c2gv1zx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="qKBUmwYF"
+Received: from localhost.localdomain ([80.189.83.109])
+	by smtp with ESMTPA
+	id G071uFdJgJGekG07AuP0hJ; Fri, 16 May 2025 19:49:02 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1747421342; bh=c38Nc6ZMO0wCsDxafJFEeTuI5Mgu1VhbICgChcn2JD4=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References;
+	b=qKBUmwYFMDPIDLOmNDfx+A7R3S4xfmmPbVPAWsiAE3sWSTZKbczyRGEIW8Ddv9eg2
+	 EMx9yPB+oxi9+MLeNvJq08Y11IENLT7jOzckeuN+DVY/4D0xYgZoDOO4BmOu+X5qga
+	 uy1KYEDXQIkaVc2/HDSg71Up2WPGF4AL6bSU6kBJZYzehBTaK9N6aiOzBtSZKWbkYD
+	 ZehRp/ZOcF+pfPSY7o94vGO12fuzNK9yNDGeva1nCesquhUqR/XDTjo8ghg1+7hELF
+	 5T+/IFn3Py5foFP8z1dZd/EDZKc8eWfLGCtG34eY5DBqjeeAPQuIYzBei6GEjnKqHz
+	 GwHY9ePz4Nyew==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=FoOm/Hrq c=1 sm=1 tr=0 ts=6827889e
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17 a=VwQbUJbxAAAA:8
+ a=7mOBRU54AAAA:8 a=Mbj0Mp_t1QGgR0Hm3zoA:9 a=wa9RWnbW_A1YIeRBVszw:22
+X-AUTH: ramsayjones@:2500
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+To: GIT Mailing-list <git@vger.kernel.org>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	=?UTF-8?q?=C4=90o=C3=A0n=20Tr=E1=BA=A7n=20C=C3=B4ng=20Danh?= <congdanhqx@gmail.com>
+Subject: [PATCH v3 0/5] miscellaneous build mods (part 2)
+Date: Fri, 16 May 2025 19:48:38 +0100
+Message-ID: <20250516184843.1524925-1-ramsay@ramsayjones.plus.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
+References: <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfI7uaS7Xh+S0pjmKzBmsoVFEagflxk1nDh24OMZvuaJVYyhN8kgzBp/5vmnOOBnDkFDmJpKketmpdC8BLuDi1gFU1F+RkyEXM1zu0s0btJfuiT9nuHGo
+ 1k5PnMGrq3aMdiqDN9jBoeio5ZiL5DotwqvgxaHn8YAzlkpWrEc+q7bEeLe9XD8PHHKPvvTxtq8z+hpg6WW/YDcZuRx8shB3FLU=
 
-Patrick Steinhardt <ps@pks.im> writes:
+Changes in v3:
 
-> The function `add_packed_git()` adds a packfile to the known list of
-> packs in case it exists. In case the packfile doesn't look like a pack
-> though, or in case it doesn't exist, the function will simply return a
-> `NULL` pointer.
->
-> The ordering in which those checks are done is somewhat curious though:
-> we first perform a couple of access(3p) syscalls for auxiliary files
-> like ".keep" before we determine whether the ".pack" file itself exists.
-> And if we see that the ".pack" file does not exist, we bail out and thus
-> effectively discard all the information. This means that the access(3p)
-> calls were a complete waste of time.
->
-> The reason why we do this is likely because we reuse `p->pack_name` to
-> derive the other files' names, as well, so that we only have to allocate
-> this buffer once. As such, we have to compute the packfile name last so
-> that it doesn't get overwritten by the other names.
+Patch #3 changed as a result of Patrick's review [*]:
 
-I vaguely recall that the order of checks between .idx and .pack
-were deliberately chosen, as we do not want to add and attempt to
-use .pack file before its associated .idx file is ready since
-without the latter the former is unusable at runtime.  
+ - use the '/' magic string operator when setting the
+   ETC_GIT{CONFIG,ATTRIBUTES} build options.
+ - add the default values to the 'description' fields
+   for the 'gitconfig' and 'gitattributes' option
+   definitions
 
-    Side note: It may have been more important back when the name of
-    the packfile was a hash of names of the objects in the pack,
-    which meant that when you repack a quiescent and fully repacked
-    repository twice with different parameters, you could have ended
-    up with a packfile whose name is the same but the contents as a
-    bytestream (hence the object offset) are different, making a
-    stale .idx not pointing into the correct position in the new
-    .pack file.  These days the name of the packfile is based on the
-    contents of the pack as a bytestream, so we no longer suffer
-    in such a scenario.
+Also, Junio, the range-diff below shows the typo fixup, but
+you should find that it doesn't show for you this time. ;)
 
-But I wouldn't be surprised if checks for other auxiliary files were
-added later to come next to .idx not .pack, exactly because .pack is
-the primary thing.
+[yes, I did fix it up locally, but then overwrote it from
+my cygwin repo ... Ahem! ;) ]
 
-> All of this likely doesn't matter in the general case: Git shouldn't end
-> up looking too many nonexistent packfiles anyway.
+Again, I did a test merge to master@1a8a4971cc without issue and 
+to next@0be31eac6b and seen@d36a872499. The conflict which showed
+up in v1 against the 'seen' branch now appears in 'next' and has
+the same resolution as v1.
 
-In any case, we shouldn't attempt to use .pack when its associated
-files are missing.  It is not about nonexistent but about incomplete
-(including "in the process of being written").
+A range-diff against v2 is given below.
 
-> But there are edge
-> cases where it _does_ matter. One such edge case that we have hit in our
-> production systems was a stale "multi-pack-index" file that contained
-> references to nonexistent packfiles. As there is no negative lookup
-> cache this causes us to repeatedly look up the same packfiles via the
-> multi-pack index, only to realize that they don't exist. This translated
-> into hundreds of thousands of syscalls to access(3p) and stat(3p).
+[*] https://lore.kernel.org/git/aCbQ9OX2vqF82au8@pks.im/
 
-Ouch.  Multi-pack index is a more recent invention, and I am not
-surprised if such bugs still lurk.  And as you hinted, a solution
-may be a negative "known-not-to-exist" list, but given one such
-stale midx, would we try to open the same missing packfiles over and
-over within the same process?
 
-> while the issue was entirely self-made because the multi-pack index
-> should have been regenerated, we can still reduce the number of syscalls
-> by 75% in the case of nonexistent packfiles by reordering these calls.
+Changes in v2:
 
-That sounds more like a band-aid, if we still do the remaining 25%
-that we somehow know would be unnecessary.
+Patch #3 is the only one changed (as a result of Patrick's review [0]):
 
-Note that I do not know if the ordering that I think was originally
-introduced for correctness still matters for correctness.  The first
-paragraph of this message was written without consulting "git log",
-lore archive, or even the current state of the source, but from
-vague memory.
+ - add some blank lines to make the option handling blocks
+   easier to see.
+ - add a comment to 'gitconfig' and 'gitattributes' options
+   to indicate the default values.
+
+Note: The indicated defaults for the 'gitconfig' and 'gitattributes'
+are only valid when the 'prefix' option is defaulted (or not /usr).
+Indicating the 'correct' value when -Dprefix=/usr in the comment
+would consume too much space. Is this acceptable, or is it too
+confusing/misleading?
+
+Also, thanks to Eli for testing patch #5 on Solaris and confirming
+that it fixes the regression [1].
+
+Note that I did a test merge to master@38af977b81 without issue and
+to next@889b7c5bd8 and seen@d8088176ab. The conflict which showed
+up in v1 against the 'seen' branch now appears in 'next' and has
+the same resolution as v1.
+
+A range-diff against v1 is given below.
+
+[0] https://lore.kernel.org/git/aB3CDOljn9zJsVwt@pks.im/
+[1] https://lore.kernel.org/git/9baad29d-a5bf-443d-98a1-36d7020e5835@gentoo.org/
+
+v1 cover letter follows:
+
+This series (part 2) continues the miscellaneous changes to the make,
+meson and autoconf build systems. I am sending this part a little
+earlier than I expected, so there will now be a part 3!
+
+The reason for the early posting is to try and avoid an regression in
+the autoconf build system (see patch #5). Hopefully, we still have time
+in this cycle to get patch #5 included.
+
+This series is based on commit 6f84262c44 ("The eleventh batch", 2025-05-05)
+
+I did a test merge to 'next'@629a3ecd64 without issue, but 'seen'@71cfd25022
+had a small conflict with commit 1a2929c851 ("meson: allow customize perl
+installation path", 2025-04-24) on the 'dd/meson-perl-custom-path' branch.
+(I note that a new version of that patch was posted to the list today).
+
+The fixup looks like:
+
+    diff --cc perl/Git/SVN/Memoize/meson.build
+    index 4c589b30c3,8c2e80d2d2..d6209dc3bf
+    --- a/perl/Git/SVN/Memoize/meson.build
+    +++ b/perl/Git/SVN/Memoize/meson.build
+    @@@ -3,6 -3,6 +3,6 @@@ test_dependencies += custom_target
+        output: 'YAML.pm',
+        command: generate_perl_command,
+        install: true,
+    -   install_dir: perllibdir / 'Git/SVN',
+     -  install_dir: get_option('datadir') / 'perl5/Git/SVN/Memoize',
+    ++  install_dir: perllibdir / 'Git/SVN/Memoize',
+        depends: [git_version_file],
+      )
+
+ATB,
+Ramsay Jones
+
+Ramsay Jones (5):
+  meson.build: quote the GITWEBDIR build configuration
+  meson: correct install location of YAML.pm
+  meson: correct path to system config/attribute files
+  meson.build: correct setting of GIT_EXEC_PATH
+  configure.ac: upgrade to a compilation check for sysinfo
+
+ configure.ac                     | 25 ++++++++++++++++++++++---
+ meson.build                      | 30 +++++++++++++++++++++++++-----
+ meson_options.txt                |  8 ++++----
+ perl/Git/SVN/Memoize/meson.build |  2 +-
+ 4 files changed, 52 insertions(+), 13 deletions(-)
+
+range-diff against v2:
+
+1:  1f3d34eafd = 1:  ac97fdc76e meson.build: quote the GITWEBDIR build configuration
+2:  1b7751914a = 2:  181738d371 meson: correct install location of YAML.pm
+3:  a385bbed83 ! 3:  1f4c74973c meson: correct path to system config/attribute files
+    @@ meson.build: libgit_c_args = [
+     +if system_attributes != ''
+     +  libgit_c_args += '-DETC_GITATTRIBUTES="' + system_attributes + '"'
+     +else
+    -+  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') + '/gitattributes"'
+    ++  libgit_c_args += '-DETC_GITATTRIBUTES="' + get_option('sysconfdir') / 'gitattributes"'
+     +endif
+     +
+     +system_config = get_option('gitconfig')
+     +if system_config != ''
+     +  libgit_c_args += '-DETC_GITCONFIG="' + system_config + '"'
+     +else
+    -+  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') + '/gitconfig"'
+    ++  libgit_c_args += '-DETC_GITCONFIG="' + get_option('sysconfdir') / 'gitconfig"'
+     +endif
+     +
+      editor_opt = get_option('default_editor')
+    @@ meson_options.txt: option('default_pager', type: 'string', value: 'less',
+      option('default_editor', type: 'string', value: 'vi',
+        description: 'Fall-back editor.')
+     -option('gitconfig', type: 'string', value: '/etc/gitconfig',
+    -+option('gitconfig', type: 'string', # default 'etc/gitconfig'
+    -   description: 'Path to the global git configuration file.')
+    +-  description: 'Path to the global git configuration file.')
+     -option('gitattributes', type: 'string', value: '/etc/gitattributes',
+    +-  description: 'Path to the global git attributes file.')
+    ++option('gitconfig', type: 'string', # default 'etc/gitconfig'
+    ++  description: 'Path to the global git configuration file. (default: etc/gitconfig)')
+     +option('gitattributes', type: 'string', # default 'etc/gitattributes'
+    -   description: 'Path to the global git attributes file.')
+    ++  description: 'Path to the global git attributes file. (default: etc/gitattributes)')
+      option('pager_environment', type: 'string', value: 'LESS=FRX LV=-c',
+        description: 'Environment used when spawning the pager')
+    + option('perl_cpan_fallback', type: 'boolean', value: true,
+4:  0d00951475 = 4:  97ff1613f5 meson.build: correct setting of GIT_EXEC_PATH
+5:  150e4110d2 ! 5:  983488fe4e configure.ac: upgrade to a compilation check for sysinfo
+    @@ Commit message
+         Commit 50dec7c566 ("config.mak.uname: add sysinfo() configuration for
+         cygwin", 2025-04-17) added a similar 'sysinfo()' check to the autoconf
+         build. This check looked for the 'sysinfo()' function itself, rather
+    -    that just the header, but it will fail (incorrectly set HAVE_SYSINFO)
+    +    than just the header, but it will fail (incorrectly set HAVE_SYSINFO)
+         for the same reason.
+     
+         In order to correctly identify the 'sysinfo()' function we require as
+-- 
+2.49.0
 
