@@ -1,231 +1,229 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com [209.85.166.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4537D22C356
-	for <git@vger.kernel.org>; Fri, 16 May 2025 20:04:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 079D11F956
+	for <git@vger.kernel.org>; Fri, 16 May 2025 20:20:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747425867; cv=none; b=WyI5hILHeaJSXUkDLiuXNXnAcUvcfBAF4u3MuGB+gcf2Xt7htJ97f/8LQ6DyvTFk6juvea520BZecHAaukTBM3L95HA/wXM7MajTkg/ZWsLKRjsfB88S2QnppxoMdtygWE/MQZdlZNrTIEUQUz/lXfL1lYgbqH/tOtE9MbvyWvU=
+	t=1747426837; cv=none; b=BjjCioYbuP7L6FFBPuV8OjqX9A1Qr14byx2dU1WksenvxDE0Ti2QUWErroer/MME9QrHhDt6ushltTE7VaKI0NH6d7eDOk17ms4Rn1ny+ktxeV49SmFt/oBCDdyeuwhOl+NgGVJSF0L+oS6sIEAwuAexy7vQHBPdKhM5mtaJCCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747425867; c=relaxed/simple;
-	bh=m1tqQnkW+ZNN+C3aO+BMt9Lhi1qy34xkzM0bjdeQwSo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=NqPz7sFbf00Q0NOI5CPudzKIUzInKc8UPLdVFZVsyXjMPjBJiYno1ocFdk75FskU2kZ7ik03hgy1ifDeBhy5NzBkfwH8rwg8H+58TXWCGSAug7i3AKpkY/ihUzKjCbpMBYmMNW1kWmlyk672iegWWB1dqEuD5piirKhIcvgzJ0w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GJe/PBcg; arc=none smtp.client-ip=209.85.128.45
+	s=arc-20240116; t=1747426837; c=relaxed/simple;
+	bh=xSYotJ4wzJJQEHEC2apwmic8UQOYuTvjjxT4yTy/o58=;
+	h=Subject:To:References:Cc:From:Message-ID:Date:MIME-Version:
+	 In-Reply-To:Content-Type; b=ObaUUFzQRw0dYoJe4qiv1XglX0SzmP16RIqm453gsStsB8rv1O8qQLPlTMd4SwXIOV8VNPfLuuTeISeHg+4xtPD9b8pD8aYXvt86bJgecto/fgTnTp4OLWZ59rk9vgbOu1LHx0KOtCblK9vspF3hE2TM0Fxzn1eVi/KNagPQCkc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgzOnarK; arc=none smtp.client-ip=209.85.166.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GJe/PBcg"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43cf848528aso20340435e9.2
-        for <git@vger.kernel.org>; Fri, 16 May 2025 13:04:24 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgzOnarK"
+Received: by mail-il1-f173.google.com with SMTP id e9e14a558f8ab-3db8356ee37so6331355ab.3
+        for <git@vger.kernel.org>; Fri, 16 May 2025 13:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747425863; x=1748030663; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747426834; x=1748031634; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:cc:references:to:subject:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=SSppn+kbedhNwd8Uch9ncp9NG0M7AvhqbYcTfHJ+k88=;
-        b=GJe/PBcgxCCTNIKMKf2sXQj0av0Ks/J6ZY1LGRdy6E+9wJnPdZAp89O/2WCMnEF7UF
-         lg0iTbmsQS3FWQ9BvemWYvIkdq66tyIYxINZfHM+n1aKnTBL6FlAUAsfS3XXLydVZIvk
-         aBHd9pwFXAUmOEmzTHkTMO91MsGiSDYz4WxIMgcDVaWuosuYgYvkN+VYVX+VY4F1vdEY
-         0WRzMGwWxSeT9bWie4TmkhfFWec6bvJBzsGwkXEgNZ782YXwRBv7DOU8Bsc/c0WLrbgU
-         g5UkAdRDU3TwglC+Fy1ILUNRIOa8lioEC4ZbDJlTTr9V6ru+EugkfQ8TR81i8p7cscQf
-         ASoQ==
+        bh=7YMoJTEPx47OFzZlgN8E8CmqD9hXBVtbXN1OyenaxHc=;
+        b=NgzOnarKXYImwFpkuBRUxwRRrp0ay4gUfMVuncaLQKJCnWYIFTZVGQObq8qEgvTmrq
+         2W3MR2QY9rznKSpz2fjz4lTIaJFbg+8rq9nxj++IBGlJTCHWkIksiwglRcAN9HwhUImC
+         uBWgH9bQpQkKA4n9mCGBOjZFI0bxcilT7WWIBaSbaD/FVPUwgMbMkc0T642q2xl4EtA9
+         VtKCzc8pzYMLmm97NlfdWBrVyHFeRGL7em5sF1nBQOzxF1iOK6IimzVX40LKjk4v4Ldd
+         6neH2+4Jq6MtUcWeyvusAY+O3tIQMnA+VnE4ydes5iHLvym0G0y91XMI70t4ZbLQKw0V
+         VSbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747425863; x=1748030663;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=SSppn+kbedhNwd8Uch9ncp9NG0M7AvhqbYcTfHJ+k88=;
-        b=F9fviViGsEEQNJJzeglndPedvmAiauK3gF3/lDiNikpTJXP4p8qaGckAQbbcAjDCn2
-         JyUOebzfivUDUMyKdZ27D/i2LSklQDLeM8+0wq2KpmY6eHu8dXYK2n4Z8g9ymwC4+4z+
-         9RldgR8e11VW9DBcuS4GoWiQW562/eiTuoXn2uq+xx2zeeevzNMRioqIVO9J9FtcObXk
-         G6QzHEA/1a8XGD6bDI6WF+0SU9V7MfAG2Z0p1Cf21BDtfqe7RS+LsjgrX8DfpGE3COSF
-         4jhbAXnJ9w++I8CdU9Axhb3Q8pr+qVrvz0D6w713CnnXM5aibBAl1R/ufU9UWyi0PWEY
-         +58w==
-X-Gm-Message-State: AOJu0YxpmqrjwVv+0HTyqT7DsM2cxizEWxJJBG7TcfhgJ12iRyfSc7PU
-	FUB03AQfmxRtbMAZ3/xsewWNpbCnLyZEnjer8t151bIUG7WjzmjTYs7lnthwug==
-X-Gm-Gg: ASbGnct/LpBklbUeOq7iMVXKkcw02YJn+AsuwyZyEn5WkKpkx4DahJaFh0cQxsNjnJI
-	dqxpbE7f1OQh1QJ2X+d1bJ3UKIPbvVb0wyHTCNg3n4F2/EVMWasqtmz60hA1gFOIsMy/nlQB3dn
-	fTiBJbD1RMfFkRlWi8tRKGaaYmHMpS+S41eqOw9wMOgydotgtcE6II2w36W/tcSyD80QHDXQNlm
-	uOgX5hyO9bPvZvVN4KKKSRqoTSD7f9Bok2sQGXCfB8bAw9EcUPATSedrWFbpGgbx68k0RlgSrM/
-	RoXa6kPq6M1LOrxcUNuoZ4o2m2lRdAcUN7Ep9UBZi2akgu9JoEuWn81DeXvZv5s=
-X-Google-Smtp-Source: AGHT+IEbbwHUV2j9y65xjUZVBocB8DINEbzijISYAhgo60Wdj3Vm6YG1emR7ShJ+cEjj9xb1yOioyA==
-X-Received: by 2002:a05:600c:524d:b0:43d:49eb:9675 with SMTP id 5b1f17b1804b1-442fd6607dfmr39629525e9.22.1747425862568;
-        Fri, 16 May 2025 13:04:22 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d2ddsm3799142f8f.7.2025.05.16.13.04.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 13:04:21 -0700 (PDT)
-Message-Id: <7c40d3c921610576dc7947bc4c517055717dd94e.1747425858.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1920.v4.git.1747425858.gitgitgadget@gmail.com>
-References: <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
-	<pull.1920.v4.git.1747425858.gitgitgadget@gmail.com>
-From: "Elijah Newren via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 May 2025 20:04:18 +0000
-Subject: [PATCH v4 2/2] merge-tree: add a new --quiet flag
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1747426834; x=1748031634;
+        h=content-transfer-encoding:in-reply-to:mime-version:user-agent:date
+         :message-id:from:cc:references:to:subject:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7YMoJTEPx47OFzZlgN8E8CmqD9hXBVtbXN1OyenaxHc=;
+        b=tDkiLjFg4Eoe3gPAb7A/dHKF/051bPJ5i6z6hZcm4kPNIlSNlnu7S5SrbbmbreXDbs
+         gwzPkFF0UJ5PPH8jRIJdytgIghJ6Svw/9acn0EIBfzqb44lLOfpIMOYblLkSa8gJSgAk
+         vG5mIZxnrUsERfuK7zs7llOVsqd79etPs1vg4MmcPobeRBFEMoXI5lhYd44457KW0lS0
+         /U0UQy8bXLqzV/YgYpANBFn7nD06mVJvb5NULlnZMNrVHwBcSJNFuhI7Jr6x0fzXDkza
+         JvMh/iyrhqyTJbk1jssiDHJaVhjHZQ5FHdMef+0VvmP+qFnuKVMkNv5rU7Nkeu1OZDeI
+         KeFQ==
+X-Gm-Message-State: AOJu0YxS17dwqArJgU8wYtuOFNzCdH7PvgIwhVGW5pTiWEWgQjlN1q12
+	3dcymFGoOIiD3g2kAni7yW06rtRkYGqEopYtBFGNIZDLBWf13ArzX6jtZ//Wkg==
+X-Gm-Gg: ASbGnctfsmYeKAwNAgBItRp+8g4HE1dweMB3xJj/XphhoRi2UAdZ45cx64PCwDDIiGr
+	WmVL9fzuz9GN5Ie1EP2Zf43/Lak59ViIuVCuIscY/FI5ce6URUDwe/lsh2NuuH81wuFbze15XyV
+	rDCEcy+BLNXWfFpGJwF4LH8D9kYXme3I6ExvNXL3eRYYcKfsGmE6NODWq8RDc2NVCQQOnNRQw51
+	/1qjFOZ+TbolnE9DZswnHL3VC/sTrtk9r6XLqYumpiQgyJaKjrEp+wzA0c3pRnlkEnxECUTAzvU
+	CEbNaQ2ajjj69jtkoyo7sKFAiK9GsY21l+W1iRxiUtnGM15poCj7yUNopv1XKRJUPs1x+QlZmUD
+	+GXVITI31rZ2xs8N7ZyzYUaxzUN/3GxMK
+X-Google-Smtp-Source: AGHT+IGD5gBkdBKSN4pNxEzM+IGPjYJ/eXOJXUYFplkRNX4NAh0ROUb60SCTRmKNcL8jQKH0lFLi8A==
+X-Received: by 2002:a05:6e02:351d:b0:3d0:47cf:869c with SMTP id e9e14a558f8ab-3db857b6555mr43408825ab.19.1747426834027;
+        Fri, 16 May 2025 13:20:34 -0700 (PDT)
+Received: from [192.168.1.253] (76-206-246-123.lightspeed.cicril.sbcglobal.net. [76.206.246.123])
+        by smtp.gmail.com with ESMTPSA id 8926c6da1cb9f-4fbcc3b1bf6sm560490173.45.2025.05.16.13.20.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 16 May 2025 13:20:33 -0700 (PDT)
+Subject: Re: [PATCH] Handle rebase fork-point options in pull --rebase
+To: Junio C Hamano <gitster@pobox.com>
+References: <06beff46-cdaf-91c8-e6a3-6557694af618@gmail.com>
+ <xmqq5xi23riw.fsf@gitster.g>
+Cc: git@vger.kernel.org
+From: Mr Bill <billc56196@gmail.com>
+Message-ID: <106d9ce5-2c2f-9724-792a-b7ea46641c8b@gmail.com>
+Date: Fri, 16 May 2025 15:20:32 -0500
+User-Agent: Mozilla/5.0 (X11; Linux i686 on x86_64; rv:45.0) Gecko/20100101
+ Thunderbird/45.8.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Elijah Newren <newren@gmail.com>,
-    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>,
-    Phillip Wood <phillip.wood123@gmail.com>,
-    Elijah Newren <newren@gmail.com>,
-    Elijah Newren <newren@gmail.com>
+In-Reply-To: <xmqq5xi23riw.fsf@gitster.g>
+Content-Type: text/plain; charset=windows-1252; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Elijah Newren <newren@gmail.com>
+On 05/15/2025 08:57 AM, Junio C Hamano wrote:
+> Mr Bill <billc56196@gmail.com> writes:
+>
+> Welcome to the community and thanks for a patch.
 
-Git Forges may be interested in whether two branches can be merged while
-not being interested in what the resulting merge tree is nor which files
-conflicted.  For such cases, add a new --quiet flag which
-will make use of the new mergeability_only flag added to merge-ort in
-the previous commit.  This option allows the merge machinery to, in the
-outer layer of the merge:
-    * exit early when a conflict is detected
-    * avoid writing (most) merged blobs/trees to the object store
+Hi Junio,
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
----
- Documentation/git-merge-tree.adoc |  6 +++++
- builtin/merge-tree.c              | 18 +++++++++++++++
- t/t4301-merge-tree-write-tree.sh  | 38 +++++++++++++++++++++++++++++++
- 3 files changed, 62 insertions(+)
+Thank you for the review and suggestions. I'll look into making
+a more complete patch; however, I'm working on a major system
+cleanup and upgrade which may delay this until complete.
 
-diff --git a/Documentation/git-merge-tree.adoc b/Documentation/git-merge-tree.adoc
-index cf0578f9b5e8..f824eea61f1e 100644
---- a/Documentation/git-merge-tree.adoc
-+++ b/Documentation/git-merge-tree.adoc
-@@ -65,6 +65,12 @@ OPTIONS
- 	default is to include these messages if there are merge
- 	conflicts, and to omit them otherwise.
- 
-+--quiet::
-+	Disable all output from the program.  Useful when you are only
-+	interested in the exit status.  Allows merge-tree to exit
-+	early when it finds a conflict, and allows it to avoid writing
-+	most objects created by merges.
-+
- --allow-unrelated-histories::
- 	merge-tree will by default error out if the two branches specified
- 	share no common history.  This flag can be given to override that
-diff --git a/builtin/merge-tree.c b/builtin/merge-tree.c
-index 4aafa73c6155..7f41665dfd7e 100644
---- a/builtin/merge-tree.c
-+++ b/builtin/merge-tree.c
-@@ -490,6 +490,9 @@ static int real_merge(struct merge_tree_options *o,
- 	if (result.clean < 0)
- 		die(_("failure to merge"));
- 
-+	if (o->merge_options.mergeability_only)
-+		goto cleanup;
-+
- 	if (show_messages == -1)
- 		show_messages = !result.clean;
- 
-@@ -522,6 +525,8 @@ static int real_merge(struct merge_tree_options *o,
- 	}
- 	if (o->use_stdin)
- 		putchar(line_termination);
-+
-+cleanup:
- 	merge_finalize(&opt, &result);
- 	clear_merge_options(&opt);
- 	return !result.clean; /* result.clean < 0 handled above */
-@@ -538,6 +543,7 @@ int cmd_merge_tree(int argc,
- 	int original_argc;
- 	const char *merge_base = NULL;
- 	int ret;
-+	int quiet = 0;
- 
- 	const char * const merge_tree_usage[] = {
- 		N_("git merge-tree [--write-tree] [<options>] <branch1> <branch2>"),
-@@ -552,6 +558,10 @@ int cmd_merge_tree(int argc,
- 			    N_("do a trivial merge only"), MODE_TRIVIAL),
- 		OPT_BOOL(0, "messages", &o.show_messages,
- 			 N_("also show informational/conflict messages")),
-+		OPT_BOOL_F(0, "quiet",
-+			   &quiet,
-+			   N_("suppress all output; only exit status wanted"),
-+			   PARSE_OPT_NONEG),
- 		OPT_SET_INT('z', NULL, &line_termination,
- 			    N_("separate paths with the NUL character"), '\0'),
- 		OPT_BOOL_F(0, "name-only",
-@@ -583,6 +593,14 @@ int cmd_merge_tree(int argc,
- 	argc = parse_options(argc, argv, prefix, mt_options,
- 			     merge_tree_usage, PARSE_OPT_STOP_AT_NON_OPTION);
- 
-+	if (quiet && o.show_messages == -1)
-+		o.show_messages = 0;
-+	o.merge_options.mergeability_only = quiet;
-+	die_for_incompatible_opt2(quiet, "--quiet", o.show_messages, "--messages");
-+	die_for_incompatible_opt2(quiet, "--quiet", o.name_only, "--name-only");
-+	die_for_incompatible_opt2(quiet, "--quiet", o.use_stdin, "--stdin");
-+	die_for_incompatible_opt2(quiet, "--quiet", !line_termination, "-z");
-+
- 	if (xopts.nr && o.mode == MODE_TRIVIAL)
- 		die(_("--trivial-merge is incompatible with all other options"));
- 	for (size_t x = 0; x < xopts.nr; x++)
-diff --git a/t/t4301-merge-tree-write-tree.sh b/t/t4301-merge-tree-write-tree.sh
-index f9c5883a7f7c..6e117ee93c8b 100755
---- a/t/t4301-merge-tree-write-tree.sh
-+++ b/t/t4301-merge-tree-write-tree.sh
-@@ -54,6 +54,25 @@ test_expect_success setup '
- 	git commit -m first-commit
- '
- 
-+test_expect_success '--quiet on clean merge' '
-+	# Get rid of loose objects to start with
-+	git gc &&
-+	echo "0 objects, 0 kilobytes" >expect &&
-+	git count-objects >actual &&
-+	test_cmp expect actual &&
-+
-+	# Ensure merge is successful (exit code of 0)
-+	git merge-tree --write-tree --quiet side1 side3 >output &&
-+
-+	# Ensure there is no output
-+	test_must_be_empty output &&
-+
-+	# Ensure no loose objects written (all new objects written would have
-+	# been in "outer layer" of the merge)
-+	git count-objects >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Clean merge' '
- 	TREE_OID=$(git merge-tree --write-tree side1 side3) &&
- 	q_to_tab <<-EOF >expect &&
-@@ -72,6 +91,25 @@ test_expect_success 'Failed merge without rename detection' '
- 	grep "CONFLICT (modify/delete): numbers deleted" out
- '
- 
-+test_expect_success  '--quiet on conflicted merge' '
-+	# Get rid of loose objects to start with
-+	git gc &&
-+	echo "0 objects, 0 kilobytes" >expect &&
-+	git count-objects >actual &&
-+	test_cmp expect actual &&
-+
-+	# Ensure merge has conflict
-+	test_expect_code 1 git merge-tree --write-tree --quiet side1 side2 >output &&
-+
-+	# Ensure there is no output
-+	test_must_be_empty output &&
-+
-+	# Ensure no loose objects written (all new objects written would have
-+	# been in "outer layer" of the merge)
-+	git count-objects >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'Content merge and a few conflicts' '
- 	git checkout side1^0 &&
- 	test_must_fail git merge side2 &&
--- 
-gitgitgadget
+Thanks,
+Bill
+
+>
+>>> Content-Type: text/plain; charset=utf-8; format=flowed
+> That is a sign that the patch itself cannot be used mechanically, as
+> format=flawed is known to corrupt patches.  But still, let's read on.
+>
+>> This is a patch to handle --fork-point and --no-fork-point in pull --rebase.
+>>
+>> I had a recent bug report about pull --rebase not working correctly...
+>>
+>> but it was working correctly, but not doing what I expected due to always
+>>
+>> using "merge-base --fork-point"
+>>
+>> This patch implements handling the --fork-point and --no-fork-point options,
+>>
+>> and also checks the config rebase.forkpoint value...
+>>
+>> and it works to resolve my prior bug report issue.
+>>
+>> If there are any questions or comments, let me know!
+>>
+>> Thanks to all for the help and comments on my prior bug report!
+>>
+>> -Bill
+> The above is not quite usable as log message.
+>
+> The usual way to compose a log message of this project is to
+>
+>   - Give an observation on how the current system works in the present
+>     tense (so no need to say "Currently X is Y", just "X is Y"), and
+>     discuss what you perceive as a problem in it.
+>
+>   - Propose a solution (optional---often, problem description
+>     trivially leads to an obvious solution in reader's minds).
+>
+>   - Give commands to the codebase to "become like so".
+>
+> in this order.  You may want to check a few examples in "git log
+> --no-merges master..seen" to get yourself familialized to the style.
+>
+> Also check Documentation/SubmittingPatches; you'd need to sign off
+> your patch with your real name, which should match the authorship
+> identity (i.e. "From: " line of your message and "Signed-off-by: "
+> trailer should both have your real name plus e-mail address).
+>
+>> diff --git a/builtin/pull.c b/builtin/pull.c
+>> index a1ebc6a..f2d405f 100644
+>> --- a/builtin/pull.c
+>> +++ b/builtin/pull.c
+>> @@ -117,6 +117,10 @@ static int opt_show_forced_updates = -1;
+>>   static const char *set_upstream;
+>>   static struct strvec opt_fetch = STRVEC_INIT;
+>>
+>> +/* options to include rebase fork-point preference */
+>> +static int config_fork_point = -1;
+>> +static int opt_fork_point = -1;
+>> +
+>>   static struct option pull_options[] = {
+>>      /* Shared options */
+>>      OPT__VERBOSITY(&opt_verbosity),
+> As I already said, the patch part is all whitespace damaged and this
+> patch will not be usable as-is, but let's see if the logic is sound.
+>
+>> @@ -253,6 +257,10 @@ static struct option pull_options[] = {
+>>          N_("set upstream for git pull/fetch"),
+>>          PARSE_OPT_NOARG),
+>>
+>> +   /* rebase option to use/not use merge-base --fork-point */
+>> +   OPT_BOOL(0, "fork-point", &opt_fork_point,
+>> +       N_("rebase with 'merge-base --fork-point' to refine upstream")),
+>> +
+>>      OPT_END()
+>>   };
+>>
+>> @@ -366,6 +374,9 @@ static int git_pull_config(const char *var, const
+>> char *value,
+>>      if (!strcmp(var, "rebase.autostash")) {
+>>          config_autostash = git_config_bool(var, value);
+>>          return 0;
+>> +   } else if (!strcmp(var, "rebase.forkpoint")) {
+>> +       config_fork_point = git_config_bool(var, value) ? -1 : 0;
+>> +       return 0;
+> This is curious.  I would have expected it to return the value
+> returned by git_config_bool() as-is, because "-1" is used as
+> "unspecified" to initialize the config_fork_point variable.  With
+> this code, configuring "[rebase] forkpoint = true" is a no-op, no?
+>
+> Assuming that it is fixed ...
+>
+>> @@ -1059,7 +1070,17 @@ int cmd_pull(int argc,
+>>                  N_("pull with rebase"),
+>>                  _("Please commit or stash them."), 1, 0);
+>>
+>> +       if (opt_fork_point == -1)
+>> +           opt_fork_point = config_fork_point;
+>> +       if (opt_fork_point < 0)
+>> +           opt_fork_point = 1;
+> ... this code looks reasonable.  opt_ and config_ are both
+> initialized to "-1" (unspecified), so if there is no command line
+> option given to affect the setting, we read from config_, and if
+> neither specifies the settings, we enable the fork-point option.
+>
+>> +       fprintf_ln(stderr, _("rebasing %s fork-point"),
+>> (opt_fork_point ? "with" : "without"));
+> This looks like a debugging aid, not to be left for production.
+>
+> Besides, interpolating literal "with" in _("localizable string")
+> does not make much sense.
+>
+>> +       /*
+>> +        * If we're *not* using fork-point, or we don't find one in
+>> get_rebase_fork_point(),
+>> +        * clear the rebase_fork_point info.
+>> +        */
+>
+>> -       if (get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
+>> +       if (!opt_fork_point ||
+>> get_rebase_fork_point(&rebase_fork_point, repo, *refspecs))
+>>              oidclr(&rebase_fork_point, the_repository->hash_algo);
+> Doubly besides, until we pass this point, we do not know if we are
+> rebasing with fork-point.  The configuraiton, option, or the
+> hardcoded default might have made opt_fork_point to true, but if
+> get_rebase_fork_point() failed, we won't be rebasing with fork-point
+> so the above debugging aid message we saw earlier, even if it were
+> useful in production, is given way too early before we know enough
+> to choose between "with" or "without".
+>
+> This new feature needs to have tests.
+>
+> The new command line option needs documentation.
+>
+> The new configuration variable needs documentation.
+>
+> Thanks.
+>
+
