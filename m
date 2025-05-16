@@ -1,68 +1,68 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC85027C857
-	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3281FAA
+	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:36 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747419157; cv=none; b=sb17uPZEljeKzTumHf1uLK/z5mpuFfijdNS1ABFAg5kOgfez2qTuvrvFar7D6Ca704JHGHtBDdw7MoMeu3cB53qMeApTUzTvBFNdwInhXtQiOcPnnGnxDsPNyEs5PyL13v7HlzB+LJD6CnthuPkteFED/cYxkNk80SD/qP/Zdew=
+	t=1747419159; cv=none; b=RCMPw4fb8yUF5i86H57wsdk9xXEAfrzp2LqIW/8A0L/7s+mabBnecClaTP839bv+zr97m8BHVuHrUO6Hcasroeb5AOH4ZMOcOnx8oQ1OTEL3/oi8/rXr2GWmwS9TvktSSRmS+BUfE6JR0UrXvpAt1jRtm6AdeXyU/aD7bYot7Co=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747419157; c=relaxed/simple;
-	bh=fm5SaTJ8Lo+EONmG0h4BLqlV6jmw3p7QoDqrXwWah24=;
+	s=arc-20240116; t=1747419159; c=relaxed/simple;
+	bh=OcMe92oijd4gUoyyfsnCqe92jxpMcFr+6XO1BNBVI4I=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=kuX4RxQIqj5PZlNf5DDd3+QrltW8D+NbjB9ddNIQF+kCvSSK9TpJum2UOreKCDGVUwAetOKhNwr1ucFkSn6ka3bi87qKc5XtQV/gd1JUEwrChr/aKTuyY3ejv8oZRw9GLFiEzj2TLmHrXeKPD7NMScgOrrX5XLzHLo9zRI490Uo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mG1lzpsV; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version:To:Cc; b=UHrJBLWkaSKaoC0Lzxh7aeE+GzuGEkQA0AXWsRZjV+CBJzIZxblcWOlbqNr17O5GAXez1rrAy+bb3YKrG0NjEVKvdyN5L06xXqTLwBSi1yaxilVYUk3qQAzdvdS0rXKCDtPHht4jce02naQh7DLcJkMGnjisfbtwF/UMybj/TvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ox6KQJLO; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mG1lzpsV"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a0b9e2d640so2074770f8f.2
-        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ox6KQJLO"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so19485675e9.1
+        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747419153; x=1748023953; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747419155; x=1748023955; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=ctgoHMgFOBfvA/O4ZWt6TZTIgwRyK3QDb/RFmrD5klQ=;
-        b=mG1lzpsVTWmA/t+IoGiGJIBzYeT8TGNs/NGJi8iTeQ4mKbsC2p33lail1WFk4wp6eJ
-         0tq4xQin/t4dM5f9l74GR4ec2sMRqxh+mMa2qJqOfGV+G7wv1Cs7Y+98Chjp8CyTetPq
-         A4+ROVytPgCHrk/8I4yh4Z4/kjGP15v8+azLAqvxheyghw6/3eBdx6VIjcRbQ1sLtDOO
-         QnZSbbxST2vy88cssNsEMy/UnmOVmKxMkUl61csXyAiIRrnMMMog7JgSbDc3YKESQ/ka
-         a6m9vM4C31gPM0lmsf/39TWxSFIAPWSWUFLO8FG0M/XwUufXDqyZ+Oma3nXzcBPqVKbs
-         25rA==
+        bh=cikyuY8O6ttmQVDs99zNH0qAI/ApSu2tYqjXcVNoctg=;
+        b=Ox6KQJLOQ/BrpYotEhQoMOARBxJ0QN6UU51vCuxxQHb0dOLtfS7EnikN3upJy6iLt0
+         g8RsXRgFV52C8Io1BK7tlZEnZE7j5UuVW+HRIykYxkIqWDSvPhgB5EKH0nsd+0ans7Dz
+         /gyfTvSbjzOAJuFpYbbG+oyEcsN9Apf8Gp3TGtSSz39CfmkG2vRBq4pu/uoVfBXhd2cm
+         7nSgDQ+GBPgIlSodtCO1coH0zJO66zHPECetgG12PHUibdGU6SZC3QnUgoyvjnPFT75M
+         XVGLnRURoowLZWxaF9VYRA60ph8Biq0E+ABBZHGd6e6dmfo4GmPP575k8e229+bKyOmy
+         7GyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747419153; x=1748023953;
+        d=1e100.net; s=20230601; t=1747419155; x=1748023955;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=ctgoHMgFOBfvA/O4ZWt6TZTIgwRyK3QDb/RFmrD5klQ=;
-        b=m9r+j5GNWtmZTnPoL5KR0ikSTMB9h1DvODJhcW5sVLdMx4+heVaFnHynB9VCp+bT79
-         9PMFia/dfDWrZkpbmUPYv2cY2FyhdQTN9xbNf0Ns/OOgnOBugc76CvBitIXBsSVTEeR1
-         qqbxmAZnbzoOdWK2bojigWGwZgLNRCDG3KFQH0zlugYpTfUdK5ehFMzn4Gk8M6SGIitA
-         BCsXCnOJD/ehwt1SDdXMdKEyXDgMekTXPcch1+blYcmilYPYYEvncfigO8soH3c6fJuo
-         fO45PAjXs48S9pPR3N7Snl8nOqwXNSB9h3TCdiTULPlIXwO9ADcDNrtK6YUL4u+oPSZ/
-         7e7A==
-X-Gm-Message-State: AOJu0YyXFZp9QPc12L8Y+YwvpbepvGtfjaKUWpdeI5tIqHGhYs7tS0Ag
-	yjGVCdI7MHkrkm83DbRSW9kXNDj4VixxfwGJGRUiHyHqHZTWRgn+hAEZ2a/nmw==
-X-Gm-Gg: ASbGnctEbvInO5mN3Ns6626nyivg2DvUEVybCzDIyNJyTAz39G09+j/htqdjqoyDZvk
-	xE4Mxktmq1ebAkQS5jsbRMFiw2WN6ZIXzxm/uF1+y7JzZTyZvysLqUBoKHAnkGX8Fwr8LLInmDb
-	+8UroG4CzpyyOsz0H+1paDIY9Ggtb7k0ifRiRN2sr7VBDCqieFE5uxHqa81tFYQuuKr4HwaMijO
-	k6LMgC7oSuLpphuoYnZQzkiAE4sZT8haZPYXt1TP0tOzFTOoaXiI2nzTLEKBBLI4B7l3sj+6LV2
-	N9mdHju+W6iy6u+ptaXXYZ4Oebuv35G/bgymoQmrWYjMyk+G8h6R
-X-Google-Smtp-Source: AGHT+IEKC7ARmfIIJ11EAmfjvQRB94/pyB1zp+9ICf7pvmRQH1b1l8jO+8fBXR+uvpxZ3iiNAdZy9g==
-X-Received: by 2002:adf:e385:0:b0:3a3:6282:693a with SMTP id ffacd0b85a97d-3a362826998mr2386486f8f.44.1747419153143;
-        Fri, 16 May 2025 11:12:33 -0700 (PDT)
+        bh=cikyuY8O6ttmQVDs99zNH0qAI/ApSu2tYqjXcVNoctg=;
+        b=WBkqnTYalhW/z+NoW5LhCuFRrqC7uI63IxVPsLFHIsNYCiHavxNSXnwztP7Tkdoxex
+         6qPf1+1fIIlhmFwnYiJ+/xE1GdITshx8cUX93Hbcaas8MGaoswZ7pkdhagY9Q4AFB6ot
+         /jwdLcMesWyqPaHZzzeBILQ+iIgG4eT7LemlRbBBjkQPM+LQeQ3bZZhbQB0+fh1tPwhr
+         RV/ofCKJbvV9xeAyd09llP/eLs4LSLgeqxqFGIlOnfYMA6g/phGv2Hd1D3K8vnRZxqYB
+         HuOeIh25OWllpPmQ7D8kgB0euuLpGtdhEn4O7WQgvxlmHYbMjPtz2QpBQdjkLVifhqXb
+         SOJQ==
+X-Gm-Message-State: AOJu0YyHBhCyJhTRgt+GM+IZ9gg3NEJ/2582J7vY1Cpsb75ZPMkj9ScK
+	btVRd9GghKebjxqal51wZPPdN1ly7/SNtd5+S+KyWu0Vw5JQuXKmPXTnYgZcBA==
+X-Gm-Gg: ASbGncveRnZJpK7lCowEe7JPYRdRg2VpR4+h4+0lcoZLDMlqBGGw93NFrnr39qhsXLz
+	1Hgb2Yx1jj52mpUIMeCXdkn8k5hfseSMaiLQed84ERwHahfg8l1qy8tcviR5n39Uv0306Rg9sQ4
+	r54NsvIvkoDHE2kD/VBHQpTpTbwlmeMgGvhow1j6NzYCUgHIZbRDZWGl720Cc5xOsO+65UBdd2M
+	McbtgCWz4um41pUUplpWYxa0mRAR6yX3kV4RpZtntdvh5ioIrwcTWfOMGBy1WAd8II1sRj2tjYF
+	j83FVDKRvnrcdJZ7TsE8GU8kc5wzi1Aj2tXkYScHc4nJ6g9uVkmoTD+53m5W3Fc=
+X-Google-Smtp-Source: AGHT+IHz9aVwzFkJaey/lpd/OHjnuqe52Bq/N1nhYgQ1eKIAI2CnEwNy3bMyRdI9Qa2z6AKYCMsHag==
+X-Received: by 2002:a05:600c:6285:b0:43d:683:8caa with SMTP id 5b1f17b1804b1-442fd63c726mr56324785e9.15.1747419154979;
+        Fri, 16 May 2025 11:12:34 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3632a2bffsm1929332f8f.32.2025.05.16.11.12.31
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442fd51531dsm41251945e9.20.2025.05.16.11.12.33
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 11:12:31 -0700 (PDT)
-Message-Id: <2c1d847987285ab98abb6a21d7dcd0bbed750d75.1747419124.git.gitgitgadget@gmail.com>
+        Fri, 16 May 2025 11:12:33 -0700 (PDT)
+Message-Id: <623913f284eafae7dfb8b87f1183ef141cead62a.1747419124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 References: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
 	<pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 May 2025 18:12:00 +0000
-Subject: [PATCH v3 10/13] pack-objects: refactor path-walk delta phase
+Date: Fri, 16 May 2025 18:12:01 +0000
+Subject: [PATCH v3 11/13] pack-objects: thread the path-based compression
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,82 +89,261 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-Previously, the --path-walk option to 'git pack-objects' would compute
-deltas inline with the path-walk logic. This would make the progress
-indicator look like it is taking a long time to enumerate objects, and
-then very quickly computed deltas.
+Adapting the implementation of ll_find_deltas(), create a threaded
+version of the --path-walk compression step in 'git pack-objects'.
 
-Instead of computing deltas on each region of objects organized by tree,
-store a list of regions corresponding to these groups. These can later
-be pulled from the list for delta compression before doing the "global"
-delta search.
+This involves adding a 'regions' member to the thread_params struct,
+allowing each thread to own a section of paths. We can simplify the way
+jobs are split because there is no value in extending the batch based on
+name-hash the way sections of the object entry array are attempted to be
+grouped. We re-use the 'list_size' and 'remaining' items for the purpose
+of borrowing work in progress from other "victim" threads when a thread
+has finished its batch of work more quickly.
 
-This presents a new progress indicator that can be used in tests to
-verify that this stage is happening.
+Using the Git repository as a test repo, the p5313 performance test
+shows that the resulting size of the repo is the same, but the threaded
+implementation gives gains of varying degrees depending on the number of
+objects being packed. (This was tested on a 16-core machine.)
 
-The current implementation is not integrated with threads, but we are
-setting it up to arrive in the next change.
+Test                        HEAD~1      HEAD
+---------------------------------------------------
+5313.20: big pack             2.38      1.99 -16.4%
+5313.21: big pack size       16.1M     16.0M  -0.2%
+5313.24: repack             107.32     45.41 -57.7%
+5313.25: repack size        213.3M    213.2M  -0.0%
 
-Since we do not attempt to sort objects by size until after exploring
-all trees, we can remove the previous change to t5530 due to a different
-error message appearing first.
+(Test output is formatted to better fit in message.)
+
+This ~60% reduction in 'git repack --path-walk' time is typical across
+all repos I used for testing. What is interesting is to compare when the
+overall time improves enough to outperform the --name-hash-version=1
+case. These time improvements correlate with repositories with data
+shapes that significantly improve their data size as well. The
+--path-walk feature frequently takes longer than --name-hash-version=2,
+trading some extra computation for some additional compression. The
+natural place where this additional computation comes from is the two
+compression passes that --path-walk takes, though the first pass is
+naturally faster due to the path boundaries avoiding a number of delta
+compression attempts.
+
+For example, the microsoft/fluentui repo has significant size reduction
+from --name-hash-version=1 to --name-hash-version=2 followed by further
+improvements with --path-walk. The threaded computation makes
+--path-walk more competitive in time compared to --name-hash-version=2,
+though still ~31% more expensive in that metric.
+
+Repack Method       Pack Size       Time
+------------------------------------------
+Hash v1                439.4M      87.24s
+Hash v2                161.7M      21.51s
+Path Walk (Before)     142.5M      81.29s
+Path Walk (After)      142.5M      28.16s
+
+Similar results hold for the Git repository:
+
+Repack Method       Pack Size       Time
+------------------------------------------
+Hash v1                248.8M      30.44s
+Hash v2                249.0M      30.15s
+Path Walk (Before)     213.2M     142.50s
+Path Walk (After)      213.3M      45.41s
+
+...as well as the nodejs/node repository:
+
+Repack Method       Pack Size       Time
+------------------------------------------
+Hash v1                739.9M      71.18s
+Hash v2                764.6M      67.82s
+Path Walk (Before)     698.1M     208.10s
+Path Walk (After)      698.0M      75.10s
+
+Finally, the Linux kernel repository is a good test for this repacking
+time change, even though the space savings is more subtle:
+
+Repack Method       Pack Size       Time
+------------------------------------------
+Hash v1                  2.5G     554.41s
+Hash v2                  2.5G     549.62s
+Path Walk (before)       2.2G    1562.36s
+Path Walk (before)       2.2G     559.00s
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- builtin/pack-objects.c       | 83 +++++++++++++++++++++++++-----------
- pack-objects.h               | 12 ++++++
- t/t5300-pack-object.sh       |  8 +++-
- t/t5530-upload-pack-error.sh |  6 ---
- 4 files changed, 75 insertions(+), 34 deletions(-)
+ builtin/pack-objects.c | 166 ++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 164 insertions(+), 2 deletions(-)
 
 diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index bdd20c074a9b..c7bf3fbc0267 100644
+index c7bf3fbc0267..df3cca0a668a 100644
 --- a/builtin/pack-objects.c
 +++ b/builtin/pack-objects.c
-@@ -3237,6 +3237,51 @@ static int should_attempt_deltas(struct object_entry *entry)
- 	return 1;
+@@ -2965,6 +2965,7 @@ static void find_deltas(struct object_entry **list, unsigned *list_size,
+ struct thread_params {
+ 	pthread_t thread;
+ 	struct object_entry **list;
++	struct packing_region *regions;
+ 	unsigned list_size;
+ 	unsigned remaining;
+ 	int window;
+@@ -3282,6 +3283,167 @@ static void find_deltas_by_region(struct object_entry *list,
+ 	stop_progress(&progress_state);
  }
  
-+static void find_deltas_for_region(struct object_entry *list,
-+				   struct packing_region *region,
-+				   unsigned int *processed)
++static void *threaded_find_deltas_by_path(void *arg)
 +{
-+	struct object_entry **delta_list;
-+	unsigned int delta_list_nr = 0;
++	struct thread_params *me = arg;
 +
-+	ALLOC_ARRAY(delta_list, region->nr);
-+	for (size_t i = 0; i < region->nr; i++) {
-+		struct object_entry *entry = list + region->start + i;
-+		if (should_attempt_deltas(entry))
-+			delta_list[delta_list_nr++] = entry;
++	progress_lock();
++	while (me->remaining) {
++		while (me->remaining) {
++			progress_unlock();
++			find_deltas_for_region(to_pack.objects,
++					       me->regions,
++					       me->processed);
++			progress_lock();
++			me->remaining--;
++			me->regions++;
++		}
++
++		me->working = 0;
++		pthread_cond_signal(&progress_cond);
++		progress_unlock();
++
++		/*
++		 * We must not set ->data_ready before we wait on the
++		 * condition because the main thread may have set it to 1
++		 * before we get here. In order to be sure that new
++		 * work is available if we see 1 in ->data_ready, it
++		 * was initialized to 0 before this thread was spawned
++		 * and we reset it to 0 right away.
++		 */
++		pthread_mutex_lock(&me->mutex);
++		while (!me->data_ready)
++			pthread_cond_wait(&me->cond, &me->mutex);
++		me->data_ready = 0;
++		pthread_mutex_unlock(&me->mutex);
++
++		progress_lock();
 +	}
-+
-+	QSORT(delta_list, delta_list_nr, type_size_sort);
-+	find_deltas(delta_list, &delta_list_nr, window, depth, processed);
-+	free(delta_list);
++	progress_unlock();
++	/* leave ->working 1 so that this doesn't get more work assigned */
++	return NULL;
 +}
 +
-+static void find_deltas_by_region(struct object_entry *list,
-+				  struct packing_region *regions,
-+				  size_t start, size_t nr)
++static void ll_find_deltas_by_region(struct object_entry *list,
++				     struct packing_region *regions,
++				     uint32_t start, uint32_t nr)
 +{
++	struct thread_params *p;
++	int i, ret, active_threads = 0;
 +	unsigned int processed = 0;
-+	size_t progress_nr;
++	uint32_t progress_nr;
++	init_threaded_search();
 +
 +	if (!nr)
 +		return;
 +
-+	progress_nr = regions[nr - 1].start + regions[nr - 1].nr;
++	progress_nr =  regions[nr - 1].start + regions[nr - 1].nr;
++	if (delta_search_threads <= 1) {
++		find_deltas_by_region(list, regions, start, nr);
++		cleanup_threaded_search();
++		return;
++	}
++
++	if (progress > pack_to_stdout)
++		fprintf_ln(stderr,
++			   Q_("Path-based delta compression using up to %d thread",
++			      "Path-based delta compression using up to %d threads",
++			      delta_search_threads),
++			   delta_search_threads);
++	CALLOC_ARRAY(p, delta_search_threads);
 +
 +	if (progress)
 +		progress_state = start_progress(the_repository,
 +						_("Compressing objects by path"),
 +						progress_nr);
++	/* Partition the work amongst work threads. */
++	for (i = 0; i < delta_search_threads; i++) {
++		unsigned sub_size = nr / (delta_search_threads - i);
 +
-+	while (nr--)
-+		find_deltas_for_region(list,
-+				       &regions[start++],
-+				       &processed);
++		p[i].window = window;
++		p[i].depth = depth;
++		p[i].processed = &processed;
++		p[i].working = 1;
++		p[i].data_ready = 0;
++
++		p[i].regions = regions;
++		p[i].list_size = sub_size;
++		p[i].remaining = sub_size;
++
++		regions += sub_size;
++		nr -= sub_size;
++	}
++
++	/* Start work threads. */
++	for (i = 0; i < delta_search_threads; i++) {
++		if (!p[i].list_size)
++			continue;
++		pthread_mutex_init(&p[i].mutex, NULL);
++		pthread_cond_init(&p[i].cond, NULL);
++		ret = pthread_create(&p[i].thread, NULL,
++				     threaded_find_deltas_by_path, &p[i]);
++		if (ret)
++			die(_("unable to create thread: %s"), strerror(ret));
++		active_threads++;
++	}
++
++	/*
++	 * Now let's wait for work completion.  Each time a thread is done
++	 * with its work, we steal half of the remaining work from the
++	 * thread with the largest number of unprocessed objects and give
++	 * it to that newly idle thread.  This ensure good load balancing
++	 * until the remaining object list segments are simply too short
++	 * to be worth splitting anymore.
++	 */
++	while (active_threads) {
++		struct thread_params *target = NULL;
++		struct thread_params *victim = NULL;
++		unsigned sub_size = 0;
++
++		progress_lock();
++		for (;;) {
++			for (i = 0; !target && i < delta_search_threads; i++)
++				if (!p[i].working)
++					target = &p[i];
++			if (target)
++				break;
++			pthread_cond_wait(&progress_cond, &progress_mutex);
++		}
++
++		for (i = 0; i < delta_search_threads; i++)
++			if (p[i].remaining > 2*window &&
++			    (!victim || victim->remaining < p[i].remaining))
++				victim = &p[i];
++		if (victim) {
++			sub_size = victim->remaining / 2;
++			target->regions = victim->regions + victim->remaining - sub_size;
++			victim->list_size -= sub_size;
++			victim->remaining -= sub_size;
++		}
++		target->list_size = sub_size;
++		target->remaining = sub_size;
++		target->working = 1;
++		progress_unlock();
++
++		pthread_mutex_lock(&target->mutex);
++		target->data_ready = 1;
++		pthread_cond_signal(&target->cond);
++		pthread_mutex_unlock(&target->mutex);
++
++		if (!sub_size) {
++			pthread_join(target->thread, NULL);
++			pthread_cond_destroy(&target->cond);
++			pthread_mutex_destroy(&target->mutex);
++			active_threads--;
++		}
++	}
++	cleanup_threaded_search();
++	free(p);
 +
 +	display_progress(progress_state, progress_nr);
 +	stop_progress(&progress_state);
@@ -173,141 +352,17 @@ index bdd20c074a9b..c7bf3fbc0267 100644
  static void prepare_pack(int window, int depth)
  {
  	struct object_entry **delta_list;
-@@ -3261,6 +3306,10 @@ static void prepare_pack(int window, int depth)
- 	if (!to_pack.nr_objects || !window || !depth)
+@@ -3307,8 +3469,8 @@ static void prepare_pack(int window, int depth)
  		return;
  
-+	if (path_walk)
-+		find_deltas_by_region(to_pack.objects, to_pack.regions,
-+				      0, to_pack.nr_regions);
-+
+ 	if (path_walk)
+-		find_deltas_by_region(to_pack.objects, to_pack.regions,
+-				      0, to_pack.nr_regions);
++		ll_find_deltas_by_region(to_pack.objects, to_pack.regions,
++					 0, to_pack.nr_regions);
+ 
  	ALLOC_ARRAY(delta_list, to_pack.nr_objects);
  	nr_deltas = n = 0;
- 
-@@ -4214,10 +4263,8 @@ static int add_objects_by_path(const char *path,
- 			       enum object_type type,
- 			       void *data)
- {
--	struct object_entry **delta_list = NULL;
- 	size_t oe_start = to_pack.nr_objects;
- 	size_t oe_end;
--	unsigned int sub_list_nr;
- 	unsigned int *processed = data;
- 
- 	/*
-@@ -4250,33 +4297,17 @@ static int add_objects_by_path(const char *path,
- 	if (oe_end == oe_start || !window)
- 		return 0;
- 
--	sub_list_nr = 0;
--	if (oe_end > oe_start)
--		ALLOC_ARRAY(delta_list, oe_end - oe_start);
-+	ALLOC_GROW(to_pack.regions,
-+		   to_pack.nr_regions + 1,
-+		   to_pack.nr_regions_alloc);
- 
--	for (size_t i = 0; i < oe_end - oe_start; i++) {
--		struct object_entry *entry = to_pack.objects + oe_start + i;
-+	to_pack.regions[to_pack.nr_regions].start = oe_start;
-+	to_pack.regions[to_pack.nr_regions].nr = oe_end - oe_start;
-+	to_pack.nr_regions++;
- 
--		if (!should_attempt_deltas(entry))
--			continue;
-+	*processed += oids->nr;
-+	display_progress(progress_state, *processed);
- 
--		delta_list[sub_list_nr++] = entry;
--	}
--
--	/*
--	 * Find delta bases among this list of objects that all match the same
--	 * path. This causes the delta compression to be interleaved in the
--	 * object walk, which can lead to confusing progress indicators. This is
--	 * also incompatible with threaded delta calculations. In the future,
--	 * consider creating a list of regions in the full to_pack.objects array
--	 * that could be picked up by the threaded delta computation.
--	 */
--	if (sub_list_nr && window) {
--		QSORT(delta_list, sub_list_nr, type_size_sort);
--		find_deltas(delta_list, &sub_list_nr, window, depth, processed);
--	}
--
--	free(delta_list);
- 	return 0;
- }
- 
-diff --git a/pack-objects.h b/pack-objects.h
-index d73e3843c92e..51e1ff6b95bf 100644
---- a/pack-objects.h
-+++ b/pack-objects.h
-@@ -119,11 +119,23 @@ struct object_entry {
- 	unsigned ext_base:1; /* delta_idx points outside packlist */
- };
- 
-+/**
-+ * A packing region is a section of the packing_data.objects array
-+ * as given by a starting index and a number of elements.
-+ */
-+struct packing_region {
-+	size_t start;
-+	size_t nr;
-+};
-+
- struct packing_data {
- 	struct repository *repo;
- 	struct object_entry *objects;
- 	uint32_t nr_objects, nr_alloc;
- 
-+	struct packing_region *regions;
-+	size_t nr_regions, nr_regions_alloc;
-+
- 	int32_t *index;
- 	uint32_t index_size;
- 
-diff --git a/t/t5300-pack-object.sh b/t/t5300-pack-object.sh
-index 16420d128639..c8df6afd7844 100755
---- a/t/t5300-pack-object.sh
-+++ b/t/t5300-pack-object.sh
-@@ -725,7 +725,9 @@ test_expect_success '--name-hash-version=2 and --write-bitmap-index are incompat
- 
- test_expect_success '--path-walk pack everything' '
- 	git -C server rev-parse HEAD >in &&
--	git -C server pack-objects --stdout --revs --path-walk <in >out.pack &&
-+	GIT_PROGRESS_DELAY=0 git -C server pack-objects \
-+		--stdout --revs --path-walk --progress <in >out.pack 2>err &&
-+	grep "Compressing objects by path" err &&
- 	git -C server index-pack --stdin <out.pack
- '
- 
-@@ -734,7 +736,9 @@ test_expect_success '--path-walk thin pack' '
- 	$(git -C server rev-parse HEAD)
- 	^$(git -C server rev-parse HEAD~2)
- 	EOF
--	git -C server pack-objects --thin --stdout --revs --path-walk <in >out.pack &&
-+	GIT_PROGRESS_DELAY=0 git -C server pack-objects \
-+		--thin --stdout --revs --path-walk --progress <in >out.pack 2>err &&
-+	grep "Compressing objects by path" err &&
- 	git -C server index-pack --fix-thin --stdin <out.pack
- '
- 
-diff --git a/t/t5530-upload-pack-error.sh b/t/t5530-upload-pack-error.sh
-index 8eb6fea839a6..558eedf25a4c 100755
---- a/t/t5530-upload-pack-error.sh
-+++ b/t/t5530-upload-pack-error.sh
-@@ -34,12 +34,6 @@ test_expect_success 'upload-pack fails due to error in pack-objects packing' '
- 	hexsz=$(test_oid hexsz) &&
- 	printf "%04xwant %s\n00000009done\n0000" \
- 		$(($hexsz + 10)) $head >input &&
--
--	# The current implementation of path-walk causes a different
--	# error message. This will be changed by a future refactoring.
--	GIT_TEST_PACK_PATH_WALK=0 &&
--	export GIT_TEST_PACK_PATH_WALK &&
--
- 	test_must_fail git upload-pack . <input >/dev/null 2>output.err &&
- 	test_grep "unable to read" output.err &&
- 	test_grep "pack-objects died" output.err
 -- 
 gitgitgadget
 
