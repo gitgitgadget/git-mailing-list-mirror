@@ -1,317 +1,298 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8D3B192598
-	for <git@vger.kernel.org>; Fri, 16 May 2025 14:47:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0B251A0BE1
+	for <git@vger.kernel.org>; Fri, 16 May 2025 14:55:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747406833; cv=none; b=BtSsYGMl/I/Qjb+LlX37bAi9Yvpc3vkFPDNaAt3kFdhi/4XwUb6Ht6z2RkbAST7/B6vO/a+VeWYLf7Kaj27gISYFE2wLH9VH0DDstCi/3KbeqCPaFTmhNilfp+Q7jFWEWfzWmfrvwnDkzI1tA1Lhe9AeC2Ld0s3ngOrd4Ut0IcA=
+	t=1747407337; cv=none; b=Bv2lD5JnhD6hAg2zEUCD2wh2ezPDDNNaSuKlLZxej+4AjFz2noUhPsBE6LOXIVlsRNaCJh3TZvs3wwyxlsRn0ZNYFow7ABN0XRcNSL1BbGRi1rce9rcGuysDuDfVA0M+CgtM4n6XRy8FZU8kXG8gzAgyoKsI3uqkTk+cSlYw4mI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747406833; c=relaxed/simple;
-	bh=Bcqb4X3ZEc67Mn7OssoPTHFARG8yRRi2ovXQDQmsJfQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=RSmF9EmjlZ27Bg/pWfvJKWjqAkoYJ4SpRPpltk28wzou0WKIG7yPb5jv4ZCPS4q2E1EtXWba0AS8xQnuDdgbiPj/Wob919sXMKD/uYi51QbF2Bw2Qef7JpQtRMekn+9UGnYNBn1q7IZ8Bhcm447theyNnasgG0yPer7swQj8yD0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KEvybkCo; arc=none smtp.client-ip=209.85.216.50
+	s=arc-20240116; t=1747407337; c=relaxed/simple;
+	bh=jjlfhbilG0Eu3Um3+8EOVBVQUq8OQARXHGZ6xYdzd4I=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=YBtcLQKTym+/t21kT+1Q8dt9Qnv1V3/VxMmHTwfPeqXzGvgBO94pf7/ix4aSNPdx+c4LtMzkcIFOxVL/ED5HYowvl3N+lKRk81Bw9okOgaFe1OGtN9c/qkw0YwYhFo3gLM9XoCSjTPy3BOAamUWeIHTsC3acgRbKLydC3F3kN+c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fo8UqOD2; arc=none smtp.client-ip=209.85.221.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KEvybkCo"
-Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-30a894cc07cso2102389a91.2
-        for <git@vger.kernel.org>; Fri, 16 May 2025 07:47:11 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fo8UqOD2"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a363ccac20so311483f8f.2
+        for <git@vger.kernel.org>; Fri, 16 May 2025 07:55:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747406831; x=1748011631; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+        d=gmail.com; s=20230601; t=1747407333; x=1748012133; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Q68OMzukDNxhEh+Wrr+L9JyjhiM/0LgDqrdp6oXV1Nw=;
-        b=KEvybkCoEDHcVRPL2Iq4tYGO8x4o6oC4rjIfFIcjlAwka3GotGLIOLjGnMK0Nfnw4o
-         0gn+R1XFwFjT8s+bJYFTWtrWA8jrUuKc5gRBjyWlP6gvqQ34i8qSfpF2bMO6cu9+yDyd
-         7aEoUaFA/Jiq9dU8759nayLB+vIdqDOUWIAKcWXPu4oLSUJ91XKFTgbqz4yA6KYnJsV4
-         J0gCRgO+EGdwm3tqwJbkqzpus1x3N9Rjz6RrigcWAyR5Q1plYam/Rkaygq1+Vw2ffFlv
-         sRjujiGTQCkKCxkQ1idAqSslHjGKjZ+2Sf9m4mH5eNkbkHAouclbZPnZrjMwQly0uOLU
-         DyUw==
+        bh=x64x4zjwhSoEOkFUFzukV+LW4RTFRfRPRSGdWUFuZCs=;
+        b=fo8UqOD2m7qGc4x3kI5/4CHRLDulRXziQPeWhvD0+TUR6Z+UtBpZGYqFONpnqD54eW
+         XOcQ0d0xOG1WlQtCAbgFHk6NF1O4Ln36CWM8zHlpqvxZy9qj0rsNIpGoC3uCoPOWdjJd
+         kjAeIks4biSLao8mb5BBTQ4JpHmmob1q0cRpd5HThzDIAswimP1plf1Y6H0kNC1C/AKU
+         aLMBu1xVPTtT7AEjXmuTcVxj0eKp2v/+2Jve79t3esPyDETqggkC5JOfvUMSKtdD2MjG
+         Q43VPQ1+3Htlfn9NbYgTEjNwpYgjTPx9Syc7VMJ38wKx3h3/lLDzylpE7uttluHyMopF
+         /fzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747406831; x=1748011631;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1747407333; x=1748012133;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Q68OMzukDNxhEh+Wrr+L9JyjhiM/0LgDqrdp6oXV1Nw=;
-        b=h5QqQ+PrHhl8WiHYzcysvPTxC/w/iX7pPgBzN0Jrhr/hIgSdevgYcplIBRlnk6KeGi
-         4l6zpyrEkKk73FSRkfdPNR8SfjsihRky2yN/R8IRxpBxPIjYVzILQ/I6B5vhbpKIpfMJ
-         DNlUs6ADIkkrlWZeY8UIGOU4fK8gf/oVGyY+6fQ/hMRxuphKvwAOS4PCUYegNbRWgUPf
-         JHJxTB8aDIFshKQZyVhptZ6WzACQ5V2b2KyQGOTqriJMP4GTFnyUcUHGfKFEw7wp0mST
-         7Ki9ktD6ZjKqNkjilFakvHIw6FNYtDWcjx9Bi5NfTOJ7HVk0gfCxmJl1VSMycj/I5uca
-         j8yA==
-X-Gm-Message-State: AOJu0YwAqB28vObES2pOJOoGZmAqFpzc4BTCGs8W4lmijJJ5BA+m5rZe
-	cBmi8bNk9tgU8/CUPdR2Hmr6zmwV/1cgJKEEPTyhsNUv/mjBVTx5/6GXRUNsdg==
-X-Gm-Gg: ASbGncs+OcQrv1ddq8Tnj2M378hfuC+ppFVJoJphuKxxJhDLsPYhk9eeAR9jW81HJkt
-	2fspuxTJJPjczXxqeua1q9q4TOC/wHmx7uaoRVlre4R9JOqrdS1QH9t5ORCPegArxfKrKgJogZ1
-	j3Swlr96uPI7ufieVbNC5HXNKfjSITva1ZGcfglb32VSuosICcC+hlLNPS94vBtPGtNPgAVCloV
-	Zk/LweVRNkQeMBBLo2wbiRl/qflmmVNDLK8aOA/RPU5R2kE3xu6cnX644pLLZ3mtYp2ArKZPoad
-	ZK94K6aIU5pN9Z6X6Ktdqtr8jEy+QlZsjSpL6rNrCgEgLaeFsqdgQIqS3ZK0W8ha
-X-Google-Smtp-Source: AGHT+IH3HRGM1/lZRTIlhbw3kEIK5B0f6XA33FvSnAA9g1n5xT3pjOmvfZJtI/sDTTtCY4fKs7533Q==
-X-Received: by 2002:a17:90b:1f90:b0:304:ec28:4437 with SMTP id 98e67ed59e1d1-30e832162c8mr3485080a91.22.1747406830554;
-        Fri, 16 May 2025 07:47:10 -0700 (PDT)
-Received: from localhost.localdomain ([223.237.147.63])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e334e24f8sm5321322a91.30.2025.05.16.07.46.59
+        bh=x64x4zjwhSoEOkFUFzukV+LW4RTFRfRPRSGdWUFuZCs=;
+        b=OjoZD7RvZWb5hB8WSIY/WVn/To1FMKDwISjf30Rtgw6ZifrlvsPhnM0dQmL4ni9gEp
+         +w+67RVP2Zoxcxw6e1KATC3vcUDXsctWG8YXdNLFkDPLO2uAXbbaKwHmYTMcwBYENC3M
+         X8BVU/5hE30V9QO3gWlt4mRPqq3XdeJZoyzGwl1L6nIPr6szEFQmnM3SFTOPU6mE30iQ
+         hdFq64T4URoH7gDUda9idm2Ic++lJuGAXSHHx3b+yugMW9U9KEFceGCGC1Gqxw8VlisL
+         z0ycrkP/xzDp5ujYkbrk+lwuAoPxKmuh2D3SCLzXGDB2ikNvcn25RtVK4M5UgpE8dvO0
+         weVg==
+X-Gm-Message-State: AOJu0Yz0/hilf7omU92ZtUMKBueDICdhUO7xgDZUhmiuaHPwbuZDut8g
+	C4pu/5U7g2WFOybjDcAYWmMTYlQKFrvRuCYV8KWWJeoczpLzsFEaUtSKjpGsQw==
+X-Gm-Gg: ASbGnctjR2e7HJmYkE6Sww4vP0pyfeyYMAljLVkXvI5NTuO6LIolFgYXHY0A65Is/E0
+	nrHIKeFaRjmKST13cQ3TjolbHF7WjEy5v9ck+Db6lpHBpwhncW3D5UebZFW3QELgB/bbDVPe2yB
+	98fcrAKv6UKhmRAVn8HyiJ9HP1ibP7g8oiEp6JqMrC5vuqch5ZYUq5FMgOcSLqk34BpQGbzFNdk
+	nMxHgSasVjPDWrKL6KtI2EIoMICzxizTdaTExuO16bWIozl+n0ohItMB18IBp1x6grGokAFggsY
+	bFqtHbx0gkq1yKbGNzGZlaUjp47ScxF47f1krUPMmMriTvK2cqRU
+X-Google-Smtp-Source: AGHT+IEA6fio8sz0aLXt5OprYZFktYYU2bc63vaehqbF3GgJBRuCB2kJb0Nvv/KrGVBzQfmzpDqyDQ==
+X-Received: by 2002:a5d:59ab:0:b0:3a2:2ea9:4378 with SMTP id ffacd0b85a97d-3a35c83a1fcmr3823369f8f.31.1747407332432;
+        Fri, 16 May 2025 07:55:32 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca8d035sm3129320f8f.97.2025.05.16.07.55.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 07:47:10 -0700 (PDT)
-From: Moumita <dhar61595@gmail.com>
-To: git@vger.kernel.org
-Cc: Moumita Dhar <dhar61595@gmail.com>,
-	"Johannes Sixt" <j6t@kdbg.org>,
-	"Eric Sunshine" <sunshine@sunshineco.com>,
-	"Junio C Hamano" <gitster@pobox.com>
-Subject: [PATCH v7 1/1] userdiff: extend Bash pattern to cover more shell function forms
-Date: Fri, 16 May 2025 20:15:12 +0530
-Message-ID: <20250516144515.49514-2-dhar61595@gmail.com>
-X-Mailer: git-send-email 2.48.0
-In-Reply-To: <20250516144515.49514-1-dhar61595@gmail.com>
-References: <20250511141101.18450-1-dhar61595@gmail.com>
- <20250516144515.49514-1-dhar61595@gmail.com>
+        Fri, 16 May 2025 07:55:31 -0700 (PDT)
+Message-Id: <pull.1914.v2.git.1747407330.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
+References: <pull.1914.git.1746579320.gitgitgadget@gmail.com>
+From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 16 May 2025 14:55:26 +0000
+Subject: [PATCH v2 0/4] Integrate the sparse index with 'git apply' and interactive add, checkout,
+ and reset
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+    newren@gmail.com,
+    Phillip Wood <phillip.wood123@gmail.com>,
+    Derrick Stolee <stolee@gmail.com>
 
-From: Moumita Dhar <dhar61595@gmail.com>
+The sparse index helps make some Git commands faster when using
+sparse-checkout in cone mode. However, not all code paths are aware that the
+index can have non-blob entries, so we are careful about rolling this
+feature out gradually. The cost of this rollout is that some commands are
+slower with the sparse index as they need to expand a sparse index into a
+full index in memory, which requires parsing tree objects to construct the
+full path list.
 
-The previous function regex required explicit matching of function
-bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
+This patch series focuses on the 'git add -p' command, which is slow with
+the sparse index for a couple of reasons, handled in the first two patches:
 
-- It failed to capture valid functions where `{` was on the next line
-  due to line continuation (`\`).
-- It did not recognize functions with single  command body, such as
-  `x () echo hello`.
+ 1. 'git add -p' uses 'git apply' as a subcommand and 'git apply' needs
+    integration with the sparse index. Luckily, we just need to add the repo
+    setting and appropriate tests to confirm it behaves as expected.
+ 2. The interactive modes of 'git add' ('-p' and '-i') leave cmd_add()
+    before the code that sets the repo setting to allow for a sparse index.
+    Patch 2 fixes this and adds appropriate tests to confirm the behavior in
+    a sparse-checkout.
+ 3. The interactive mode of 'git reset' leaves cmd_reset() before the code
+    that sets the repo setting to allow for the sparse index.
 
-Replacing the function body matching logic with `.*$`, ensures
-that everything on the function definition line is captured.
+A third patch adds a performance test to p2000-sparse-operations.sh to
+confirm that we are getting the performance improvement we expect:
 
-Additionally, the word regex is refined to better recognize shell
-syntax, including additional parameter expansion operators and
-command-line options.
+  Test                                      BASE  PATCH 1      PATCH 2      PATCH 3
+  -------------------------------------------------------------------------------------
+  2000.118: ... git add -p (full-v3)        0.79  0.79  +0.0%  0.82  +3.8%  0.82  +3.8%
+  2000.119: ... git add -p (full-v4)        0.74  0.76  +2.7%  0.74  +0.0%  0.76  +2.7%
+  2000.120: ... git add -p (sparse-v3)      1.94  1.28 -34.0%  0.07 -96.4%  0.07 -96.4%
+  2000.121: ... git add -p (sparse-v4)      1.93  1.28 -33.7%  0.06 -96.9%  0.06 -96.9%
+  2000.122: ... git checkout -p (full-v3)   1.18  1.18  +0.0%  1.18  +0.0%  1.19  +0.8%
+  2000.123: ... git checkout -p (full-v4)   1.10  1.12  +1.8%  1.11  +0.9%  1.11  +0.9%
+  2000.124: ... git checkout -p (sparse-v3) 1.31  0.11 -91.6%  0.11 -91.6%  0.11 -91.6%
+  2000.125: ... git checkout -p (sparse-v4) 1.29  0.11 -91.5%  0.11 -91.5%  0.11 -91.5%
+  2000.126: ... git reset -p (full-v3)      0.81  0.80  -1.2%  0.83  +2.5%  0.83  +2.5%
+  2000.127: ... git reset -p (full-v4)      0.78  0.77  -1.3%  0.77  -1.3%  0.78  +0.0%
+  2000.128: ... git reset -p (sparse-v3)    1.58  0.92 -41.8%  0.91 -42.4%  0.07 -95.6%
+  2000.129: ... git reset -p (sparse-v4)    1.58  0.92 -41.8%  0.92 -41.8%  0.07 -95.6%
 
-Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
----
- .../bash-bashism-style-complete-line-capture  |  4 +++
- .../bash-posix-style-complete-line-capture    |  4 +++
- .../bash-posix-style-single-command-function  |  3 ++
- t/t4034-diff-words.sh                         |  1 +
- t/t4034/bash/expect                           | 36 +++++++++++++++++++
- t/t4034/bash/post                             | 31 ++++++++++++++++
- t/t4034/bash/pre                              | 31 ++++++++++++++++
- userdiff.c                                    | 26 +++++++++-----
- 8 files changed, 128 insertions(+), 8 deletions(-)
- create mode 100644 t/t4018/bash-bashism-style-complete-line-capture
- create mode 100644 t/t4018/bash-posix-style-complete-line-capture
- create mode 100644 t/t4018/bash-posix-style-single-command-function
- create mode 100644 t/t4034/bash/expect
- create mode 100644 t/t4034/bash/post
- create mode 100644 t/t4034/bash/pre
 
-diff --git a/t/t4018/bash-bashism-style-complete-line-capture b/t/t4018/bash-bashism-style-complete-line-capture
-new file mode 100644
-index 0000000000..070b979fa6
---- /dev/null
-+++ b/t/t4018/bash-bashism-style-complete-line-capture
-@@ -0,0 +1,4 @@
-+function myfunc # RIGHT
-+{
-+    echo 'ChangeMe'
-+}
-diff --git a/t/t4018/bash-posix-style-complete-line-capture b/t/t4018/bash-posix-style-complete-line-capture
-new file mode 100644
-index 0000000000..b56942f322
---- /dev/null
-+++ b/t/t4018/bash-posix-style-complete-line-capture
-@@ -0,0 +1,4 @@
-+func() { # RIGHT
-+
-+    ChangeMe
-+}
-diff --git a/t/t4018/bash-posix-style-single-command-function b/t/t4018/bash-posix-style-single-command-function
-new file mode 100644
-index 0000000000..398ae1c5d2
---- /dev/null
-+++ b/t/t4018/bash-posix-style-single-command-function
-@@ -0,0 +1,3 @@
-+RIGHT() echo "hello"
-+
-+    ChangeMe
-diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
-index f51d3557f1..0be647c2fb 100755
---- a/t/t4034-diff-words.sh
-+++ b/t/t4034-diff-words.sh
-@@ -320,6 +320,7 @@ test_expect_success 'unset default driver' '
- 
- test_language_driver ada
- test_language_driver bibtex
-+test_language_driver bash
- test_language_driver cpp
- test_language_driver csharp
- test_language_driver css
-diff --git a/t/t4034/bash/expect b/t/t4034/bash/expect
-new file mode 100644
-index 0000000000..1864ab25dc
---- /dev/null
-+++ b/t/t4034/bash/expect
-@@ -0,0 +1,36 @@
-+<BOLD>diff --git a/pre b/post<RESET>
-+<BOLD>index 09ac008..60ba6a2 100644<RESET>
-+<BOLD>--- a/pre<RESET>
-+<BOLD>+++ b/post<RESET>
-+<CYAN>@@ -1,31 +1,31 @@<RESET>
-+<RED>my_var<RESET><GREEN>new_var<RESET>=10
-+x=<RED>123<RESET><GREEN>456<RESET>
-+echo <RED>$1<RESET><GREEN>$2<RESET>
-+echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
-+${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
-+((a<RED>+<RESET><GREEN>+=<RESET>b))
-+((a<RED>*<RESET><GREEN>*=<RESET>b))
-+((a<RED>/<RESET><GREEN>/=<RESET>b))
-+((a<RED>%<RESET><GREEN>%=<RESET>b))
-+((a<RED>|<RESET><GREEN>|=<RESET>b))
-+((a<RED>^<RESET><GREEN>^=<RESET>b))
-+((a<RED>=<RESET><GREEN>==<RESET>b))
-+((a<RED>!<RESET><GREEN>!=<RESET>b))
-+((a<RED><<RESET><GREEN><=<RESET>b))
-+((a<RED>><RESET><GREEN>>=<RESET>b))
-+$((a<RED><<RESET><GREEN><<<RESET>b))
-+$((a<RED>><RESET><GREEN>>><RESET>b))
-+$((a<RED>&<RESET><GREEN>&&<RESET>b))
-+$((a<RED>|<RESET><GREEN>||<RESET>b))
-+${a<RED>:<RESET><GREEN>:-<RESET>b}
-+${a<RED>:<RESET><GREEN>:=<RESET>b}
-+${a<RED>:<RESET><GREEN>:+<RESET>b}
-+${a<RED>:<RESET><GREEN>:?<RESET>b}
-+${a<RED>#<RESET><GREEN>##<RESET>*/}
-+${a<RED>%<RESET><GREEN>%%<RESET>.*}
-+${a<RED>^<RESET><GREEN>^^<RESET>}
-+${a<RED>,<RESET><GREEN>,,<RESET>}
-+${<GREEN>!<RESET>a}
-+${a[<RED>*<RESET><GREEN>@<RESET>]}
-+ls <RED>-a<RESET><GREEN>-x<RESET>
-+ls <RED>--all<RESET><GREEN>--color<RESET>
-diff --git a/t/t4034/bash/post b/t/t4034/bash/post
-new file mode 100644
-index 0000000000..2bbee8936d
---- /dev/null
-+++ b/t/t4034/bash/post
-@@ -0,0 +1,31 @@
-+new_var=10
-+x=456
-+echo $2
-+echo $USERNAME
-+${HOMEDIR}
-+((a+=b))
-+((a*=b))
-+((a/=b))
-+((a%=b))
-+((a|=b))
-+((a^=b))
-+((a==b))
-+((a!=b))
-+((a<=b))
-+((a>=b))
-+$((a<<b))
-+$((a>>b))
-+$((a&&b))
-+$((a||b))
-+${a:-b}
-+${a:=b}
-+${a:+b}
-+${a:?b}
-+${a##*/}
-+${a%%.*}
-+${a^^}
-+${a,,}
-+${!a}
-+${a[@]}
-+ls -x
-+ls --color
-diff --git a/t/t4034/bash/pre b/t/t4034/bash/pre
-new file mode 100644
-index 0000000000..8d22039c40
---- /dev/null
-+++ b/t/t4034/bash/pre
-@@ -0,0 +1,31 @@
-+my_var=10
-+x=123
-+echo $1
-+echo $USER
-+${HOME}
-+((a+b))
-+((a*b))
-+((a/b))
-+((a%b))
-+((a|b))
-+((a^b))
-+((a=b))
-+((a!b))
-+((a<b))
-+((a>b))
-+$((a<b))
-+$((a>b))
-+$((a&b))
-+$((a|b))
-+${a:b}
-+${a:b}
-+${a:b}
-+${a:b}
-+${a#*/}
-+${a%.*}
-+${a^}
-+${a,}
-+${a}
-+${a[*]}
-+ls -a
-+ls --all
-diff --git a/userdiff.c b/userdiff.c
-index 340c4eb4f7..7b18cbb669 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -59,20 +59,30 @@ PATTERNS("bash",
- 	 "("
- 	 "("
- 	     /* POSIX identifier with mandatory parentheses */
--	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
-+	     "([a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
- 	 "|"
- 	     /* Bashism identifier with optional parentheses */
--	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
-+	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+)))"
- 	 ")"
--	 /* Optional whitespace */
--	 "[ \t]*"
--	 /* Compound command starting with `{`, `(`, `((` or `[[` */
--	 "(\\{|\\(\\(?|\\[\\[)"
-+	 /* Everything after the function header is captured  */
-+	 ".*$"
- 	 /* End of captured text */
- 	 ")",
- 	 /* -- */
--	 /* Characters not in the default $IFS value */
--	 "[^ \t]+"),
-+	 /* Identifiers: variable and function names */
-+	  "[a-zA-Z_][a-zA-Z0-9_]*"
-+	 /* Shell variables: $VAR, ${VAR} */
-+	  "|\\$[a-zA-Z0-9_]+|\\$\\{"
-+	  /*Command list separators and redirection operators  */
-+	 "|\\|\\||&&|<<|>>"
-+	 /* Operators ending in '=' (comparison + compound assignment) */
-+	 "|==|!=|<=|>=|[-+*/%&|^]="
-+	 /* Additional parameter expansion operators */
-+	 "|:=|:-|:\\+|:\\?|##|%%|\\^\\^|,,"
-+	 /* Command-line options (to avoid splitting -option) */
-+	 "|[-a-zA-Z0-9_]+"
-+	 /* Brackets and grouping symbols */
-+	 "|\\(|\\)|\\{|\\}|\\[|\\]"),
- PATTERNS("bibtex",
- 	 "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 /* -- */
+
+Updates in v2
+=============
+
+Thanks for the careful review from Elijah and the pointer from Phillip, we
+have these changes:
+
+ 1. The tests no longer have different expansion behaviors for 'git add -p'
+    and 'git add -i' due to partially-expanded indexes on disk.
+ 2. We now test 'git checkout -p' and 'git reset -p'.
+ 3. 'git reset -p' needed some changes to the builtin (similar to 'git add')
+    to be fast.
+
+Thanks, -Stolee
+
+Derrick Stolee (4):
+  apply: integrate with the sparse index
+  git add: make -p/-i aware of sparse index
+  reset: integrate sparse index with --patch
+  p2000: add performance test for patch-mode commands
+
+ builtin/add.c                            |   7 +-
+ builtin/apply.c                          |   7 +-
+ builtin/reset.c                          |   6 +-
+ t/perf/p2000-sparse-operations.sh        |   3 +
+ t/t1092-sparse-checkout-compatibility.sh | 151 +++++++++++++++++++++++
+ 5 files changed, 167 insertions(+), 7 deletions(-)
+
+
+base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1914%2Fderrickstolee%2Fapply-sparse-index-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1914/derrickstolee/apply-sparse-index-v2
+Pull-Request: https://github.com/gitgitgadget/git/pull/1914
+
+Range-diff vs v1:
+
+ 1:  0e6e199cd19 ! 1:  1adf81ecb2c apply: integrate with the sparse index
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is n
+      +
+      +	# Expands when using --index.
+      +	ensure_expanded apply --index ../patch-outside &&
+     ++
+     ++	# Does not when index is partially expanded.
+     ++	git -C sparse-index reset --hard &&
+     ++	ensure_not_expanded apply --cached ../patch-outside &&
+     ++
+     ++	# Try again with a reset and collapsed index.
+      +	git -C sparse-index reset --hard &&
+     ++	git -C sparse-index sparse-checkout reapply &&
+      +
+     -+	# Does not expand when using --cached.
+     -+	ensure_not_expanded apply --cached ../patch-outside
+     ++	# Expands when index is collapsed.
+     ++	ensure_expanded apply --cached ../patch-outside
+      +'
+      +
+       test_expect_success 'advice.sparseIndexExpanded' '
+ 2:  63caae87634 ! 2:  0a2752721d0 git add: make -p/-i aware of sparse index
+     @@ Commit message
+      
+          It turns out that control flows out of cmd_add() in the interactive
+          cases before the lines that confirm that the builtin is integrated with
+     -    the sparse index. We need to move that earlier to ensure it prevents a
+     -    full index expansion on read.
+     +    the sparse index.
+      
+     -    Add more test cases that confirm that these interactive add options work
+     -    with the sparse index. One interesting aspect here is that the '-i'
+     -    option avoids expanding the sparse index when a sparse directory exists
+     -    on disk while the '-p' option does hit the ensure_full_index() method.
+     -    This leaves some room for improvement, but this case should be atypical
+     -    as users should remain within their sparse-checkout.
+     +    Moving that integration point earlier in cmd_add() allows 'git add -p'
+     +    and 'git add -p' to operate without expanding a sparse index to a full
+     +    one.
+     +
+     +    Add test cases that confirm that these interactive add options work with
+     +    the sparse index.
+      
+          Signed-off-by: Derrick Stolee <stolee@gmail.com>
+      
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'add, commit, chec
+       	init_repos &&
+       
+      @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is not expanded: git apply' '
+     - 	ensure_not_expanded apply --cached ../patch-outside
+     + 	ensure_expanded apply --cached ../patch-outside
+       '
+       
+      +test_expect_success 'sparse-index is not expanded: git add -p' '
+     @@ t/t1092-sparse-checkout-compatibility.sh: test_expect_success 'sparse-index is n
+      +	git -C sparse-index reset &&
+      +	ensure_not_expanded add -i <in &&
+      +
+     ++	# -p does expand when edits are outside sparse checkout.
+      +	mkdir -p sparse-index/folder1 &&
+      +	echo "new content" >sparse-index/folder1/a &&
+     -+
+     -+	# -p does expand when edits are outside sparse checkout.
+      +	test_write_lines y n y >in &&
+      +	ensure_expanded add -p <in &&
+      +
+     -+	# but -i does not expand.
+     -+	git -C sparse-index reset &&
+     ++	# Fully reset the index.
+     ++	git -C sparse-index reset --hard &&
+     ++	git -C sparse-index sparse-checkout reapply &&
+     ++
+     ++	# -i does expand when edits are outside sparse checkout.
+     ++	mkdir -p sparse-index/folder1 &&
+     ++	echo "new content" >sparse-index/folder1/a &&
+      +	test_write_lines u 2 3 "" q >in &&
+     -+	ensure_not_expanded add -i <in
+     ++	ensure_expanded add -i <in
+      +'
+      +
+       test_expect_success 'advice.sparseIndexExpanded' '
+ -:  ----------- > 3:  d1482a29d8f reset: integrate sparse index with --patch
+ 3:  7a777281626 ! 4:  a50c57f7628 p2000: add performance test for 'git add -p'
+     @@ Metadata
+      Author: Derrick Stolee <dstolee@microsoft.com>
+      
+       ## Commit message ##
+     -    p2000: add performance test for 'git add -p'
+     +    p2000: add performance test for patch-mode commands
+      
+     -    The previous two changes contributed performance improvements to 'git
+     -    apply' and 'git add -p' when using a sparse index. Add a performance
+     -    test to demonstrate this (and to help validate that performance remains
+     -    good in the future).
+     +    The previous three changes contributed performance improvements to 'git
+     +    apply', 'git add -p', and 'git reset -p' when using a sparse index. The
+     +    improvement to 'git apply' also improved 'git checkout -p'. Add
+     +    performance tests to demonstrate this (and to help validate that
+     +    performance remains good in the future).
+      
+          In the truncated test output below, we see that the full checkout
+          performance changes within noise expectations, but the sparse index
+     -    cases improve 33% and then 96%.
+     -
+     -                          HEAD~3     HEAD~2         HEAD~1
+     -    ---------------------------------------------------------
+     -    2000.118: (full-v3)     0.80   0.84 +5.0%     0.84  +5.0%
+     -    2000.119: (full-v4)     0.76   0.79 +3.9%     0.80  +5.3%
+     -    2000.120: (sparse-v3)   2.09   1.39 -33.5%    0.07 -96.7%
+     -    2000.121: (sparse-v4)   2.09   1.39 -33.5%    0.07 -96.7%
+     +    cases improve 33% and then 96% for 'git add -p' and 41% and then 95% for
+     +    'git reset -p'. 'git checkout -p' improves immediatley by 91% because it
+     +    does not need any change to its builtin.
+     +
+     +      Test                                    HEAD~4  HEAD~3       HEAD~2       HEAD~1
+     +      -------------------------------------------------------------------------------------
+     +      2000.118: ... git add -p (full-v3)        0.79  0.79  +0.0%  0.82  +3.8%  0.82  +3.8%
+     +      2000.119: ... git add -p (full-v4)        0.74  0.76  +2.7%  0.74  +0.0%  0.76  +2.7%
+     +      2000.120: ... git add -p (sparse-v3)      1.94  1.28 -34.0%  0.07 -96.4%  0.07 -96.4%
+     +      2000.121: ... git add -p (sparse-v4)      1.93  1.28 -33.7%  0.06 -96.9%  0.06 -96.9%
+     +      2000.122: ... git checkout -p (full-v3)   1.18  1.18  +0.0%  1.18  +0.0%  1.19  +0.8%
+     +      2000.123: ... git checkout -p (full-v4)   1.10  1.12  +1.8%  1.11  +0.9%  1.11  +0.9%
+     +      2000.124: ... git checkout -p (sparse-v3) 1.31  0.11 -91.6%  0.11 -91.6%  0.11 -91.6%
+     +      2000.125: ... git checkout -p (sparse-v4) 1.29  0.11 -91.5%  0.11 -91.5%  0.11 -91.5%
+     +      2000.126: ... git reset -p (full-v3)      0.81  0.80  -1.2%  0.83  +2.5%  0.83  +2.5%
+     +      2000.127: ... git reset -p (full-v4)      0.78  0.77  -1.3%  0.77  -1.3%  0.78  +0.0%
+     +      2000.128: ... git reset -p (sparse-v3)    1.58  0.92 -41.8%  0.91 -42.4%  0.07 -95.6%
+     +      2000.129: ... git reset -p (sparse-v4)    1.58  0.92 -41.8%  0.92 -41.8%  0.07 -95.6%
+      
+          It is worth noting that if our test was more involved and had multiple
+          hunks to evaluate, then the time spent in 'git apply' would dominate due
+     @@ t/perf/p2000-sparse-operations.sh: test_perf_on_all git diff-tree HEAD
+       test_perf_on_all "git worktree add ../temp && git worktree remove ../temp"
+       test_perf_on_all git check-attr -a -- $SPARSE_CONE/a
+      +test_perf_on_all 'echo >>a && test_write_lines y | git add -p'
+     ++test_perf_on_all 'test_write_lines y y y | git checkout --patch -'
+     ++test_perf_on_all 'echo >>a && git add a && test_write_lines y | git reset --patch'
+       
+       test_done
+
 -- 
-2.48.0
-
+gitgitgadget
