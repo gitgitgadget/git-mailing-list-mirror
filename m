@@ -1,111 +1,227 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f181.google.com (mail-qk1-f181.google.com [209.85.222.181])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24155230BC1
-	for <git@vger.kernel.org>; Fri, 16 May 2025 09:52:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 453F9230BF9
+	for <git@vger.kernel.org>; Fri, 16 May 2025 09:53:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747389167; cv=none; b=plnmSXgaA6eLhvCG8dne6kUcP/8uShsgwELIcBMpN+qDUOZ1LfEmtCXzPSe0V7+rgTRh95+oW+leGzEjZw81iMphhxVF58TzCjfBEy44EGEClbg9E9EKqtJB08D+Dt0+GmASusFFWR7qa0YiWMxO7r0oxOxOXeucPpoxmw9F4W4=
+	t=1747389218; cv=none; b=LiLm1vwAf8tbXZRrUFcDy5VmpKOnAAACzjsbodikb9z1+fH5gthobElEjIxujHEn924HbN10WyEcrOuTO5CQ91cFd0Sc8V1kbJdinKgbprJKeO9d+UkEg87ffZtjSO6fTS2RrooHBjDicX9XHhFtib5hi9PpdRmdlNdJaRfGg5c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747389167; c=relaxed/simple;
-	bh=mQFB5EJmhn4nzKjUoiQOYHzMkBJKAV0VxXu9A3dIa9w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=obJdBI1nHkx41HS0SJOXpqLOZ2Mtewz2hnUqbZSnAN3mTIuJ0LkfHmvGVrR/Wz0M+Iry5eescE+sN2b61TJ/mKy+G/J6ZOS/CW88kiNgIBaX9ubgcNVEp+Xu5y4nUrV95hWVWVYxjDjMMyYRer1/uWxQIkZ+YLBiTJDwzeMA3CE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=yG5fmSIv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SMLCHOKm; arc=none smtp.client-ip=103.168.172.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1747389218; c=relaxed/simple;
+	bh=4Lyiuj3KY7c5N6EP5w54KlVyT/6sqlbdCYauTNht0SM=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=tzcqp6dKtL1QqfRy+BPZVkiBoM4pUCLilfZwdT5Eg+Gr/i+5kQOwVv01D8hWLBvwZ2IfK/b9cktdi+i10+lvURi1Ctp+RbqVqHXduROv+JwNLbila3SEdFHVIFEZTUK4K2A2U7QQtf1NYHIFvujGqk2SFg/GIjlA3A0KHq52K1U=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gfpCcxkp; arc=none smtp.client-ip=209.85.222.181
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="yG5fmSIv";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SMLCHOKm"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0A6E5114016B;
-	Fri, 16 May 2025 05:52:45 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 16 May 2025 05:52:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747389165; x=1747475565; bh=n6KZTHRoxw
-	HHH1BuTSul1GY1vxqa/mtmhkppb7JljRc=; b=yG5fmSIvNWWbHkVKEJyz3LFWHA
-	ZBm5Z8FpjJ19zhbt+eP6w40t9Vs1ZGB/tSVTlMheUCXMppHUzJqUQer0NfUOlsFm
-	kRcXjm2HgCGMdXuZx7sDSai8gjP96FW2x5cQYaPNNoR6jaxX6B30erJCL9aP+Z7f
-	rGVOFtfxnSIaKURqY0z9mGEPfY8LOCAkFfLrnfDJHIibaqks1lkJ4xi3vbt+Ns6H
-	9di8KjBPnEvZarVAz+jzCRkuODWqiFk58ZIT3rj2MCLhW/K8TWOB52MQasYuDrf6
-	J/cg3ce8cq2d/L2QuQ7eJ1v7X3BCA0hc82/Pr3SYdNQCbEOlZ82XGIiGHsPg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747389165; x=1747475565; bh=n6KZTHRoxwHHH1BuTSul1GY1vxqa/mtmhkp
-	pb7JljRc=; b=SMLCHOKm8AUNTuXvKZnjehAUjFOvh+OzhIeKHEaMH7EISVycpbQ
-	4/FJEJ9gC4d55jluDK2w1lEBTcOJijQ4oWf57D/pyFJhdowPvJX/RYYA3yEcAm8j
-	pAskfqgj+3IrAzbvn6e4eaA/uwUWdDNDMwxdSPDIBt6lS2XD2DB1uAhPL5O3zWRV
-	SKeF0QZJTaoxXghimAF4T2R9/HvSl254b9TmZw71esIBfTqKkVwknEQ3rYEvWara
-	2fq9jTA0f6IpC/ySDS4GKTgOgsRNV9OJDBKv14LSass1bhifI1tcuSzXpDKVGECB
-	iHBXdmXAb+MAkAE7fAj3BtNZRCAZWi+m2/A==
-X-ME-Sender: <xms:7AonaE7N8TaOt4LtbCIYdC835Ls7rWhO3Zu515WJNOEY6itxZileVw>
-    <xme:7AonaF6aRtMgKOezbzSf_H1rgoJClQdlu_-V4O1PxweUwL0xAWt1BGM7K7lktTv9f
-    3fl27FKUilvPIXysQ>
-X-ME-Received: <xmr:7AonaDeGyC0La1Xk54hoFabCON_nCM6FP5HcqWA7Kel6zETTyLS3oyyyi6NAACBy2c_oK8zcE22SEx3MTLAjLNVzdF8zgFpIoSMDBTdU>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvgeefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
-    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
-    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
-    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
-    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
-    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnh
-    gvth
-X-ME-Proxy: <xmx:7AonaJL7jViIzegcCtTXUnKyEFzXzK_krKxdpte38Z6BLrTszVmcmg>
-    <xmx:7AonaIINVQc6vo4tQXiDiUceVcfi2cvnM3ceu8J9EYEIq7bJm0RBIg>
-    <xmx:7AonaKwoGDqjlHieKv5JI8pTtO5q4CLQqpQYhmEllANymWj4OpwOqw>
-    <xmx:7AonaMJqAYoGd8rfUMluUTItwAIfJwEDJ5hp3E8RcGG9iy2l_El7vA>
-    <xmx:7QonaE9xa4JEzcDUr7p7qbcztVYWWDUSy4qAapdR_vk3TQLFBJrtd_A2>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 05:52:44 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 33b668c3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 16 May 2025 09:52:43 +0000 (UTC)
-Date: Fri, 16 May 2025 11:52:42 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH 13/13] object-file: drop support for writing objects with
- unknown types
-Message-ID: <aCcK6quAx_q28ltu@pks.im>
-References: <20250516044916.GA21985@coredump.intra.peff.net>
- <20250516045013.GM22242@coredump.intra.peff.net>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gfpCcxkp"
+Received: by mail-qk1-f181.google.com with SMTP id af79cd13be357-7c55500cf80so158531185a.1
+        for <git@vger.kernel.org>; Fri, 16 May 2025 02:53:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747389215; x=1747994015; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=aLVx31vtRJ4D4yyf8k4PBDipF+zm4DJLkQ9mvtAGdeA=;
+        b=gfpCcxkpF781Vi2xC3n30aotbYVZ/Knaz2+QnQfHIXnV/31axTB7+MjYptTJSVIqZo
+         EU99w8wzgUrWzwaqBjGvKcP/CCX8yJjRJsOsbUB3lWy43OpwKd8+K12EaqvS/RU37niW
+         qTPQppWKQbikfc5vlJBBFEr7VvN+xdSIvXY1mqcrrkkmaEDvfbDbVXt/p1s5ONyHtSvT
+         AZlyVpN38PnhoTtlsmdQmwowd/PG8CJ+AHNb6ovbSVgTo6cV8pJJ2uOefYcxPn0/Kv1m
+         4CmeaTeZ73J3YTjWnR6q8LCxXNnfg6YhAXyVNih7hPl6HUkhNqnTj5y7j3cLIVzlLc8e
+         X/bg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747389215; x=1747994015;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=aLVx31vtRJ4D4yyf8k4PBDipF+zm4DJLkQ9mvtAGdeA=;
+        b=ivOuiziREOsYHtKw77uIN3dt9gZeQQkvL8clZVSsws+sGZfWAJg6J6wDTUwB74UXkm
+         KGwArHdFY0O99CJsQ0DpIvEgG9BpD5UzDNY6hBEVZ/v4CRfdIs082bgZroGXoL1kEb1y
+         BMx2Tzy4C8ux97koUbQJXFd9/lmj060fQDI/SN/V9SY2bWNkFUG9QHaDeialP3BPBMuw
+         OH5Nz1RFemXAI7TDB93V9VTTb5Yr08E4hKGBpajmsYLJCJ5h/rSE73DuXARA36iCE/LU
+         Vkkg8QRYxzEmogztApV3dwFB7iRYR3pfYuCIEnFhKLiygfAAfeK6z0v33FTPNHexN+GI
+         BSag==
+X-Gm-Message-State: AOJu0YzKeT4Zbn7SHtlPjUpFyBhi4B0oyFdG5f+XtEHwfh7rUxZHPfxO
+	P1G/XsUp7tFSYQ2fAEceGl08tUcTeEknCUeexe4J3gWgD8CMJ7easm8ZvW0IviD6OZcoWhmj5yA
+	A5BmliwrtK6+4F2FAA84Y6iGdLHVqiM+2cOlD
+X-Gm-Gg: ASbGnctngHVnfVY+sqFsS3A3OYi/Mt9Fsnlnki5w9B5yc5R7hRirSI4+CizixeV0g+0
+	Q4dAexpQJ2ky94Ol9mi0tJx4qz32LhtnI9QBjyyevJWiBoaHb2rVeAazaM8Ohjt0EZPvGIDVdkS
+	qCs52GbGue65itEOJVBaW9G3If8kvig+bNrtK84VC2vX/nroAvuJ1vpsNiyHheyJAsQ2YTET8Il
+	cgc4A==
+X-Google-Smtp-Source: AGHT+IFTgdWg+s9dhSu5L4c3WxyD9mZ4/pbTOiD6zaW8n0t/m622tl1YZPutN8WuViGLTZ1FnNgb15v8y9k744yIN+A=
+X-Received: by 2002:a05:6122:31a0:b0:52c:5590:72c9 with SMTP id
+ 71dfb90a1353d-52dba8909a4mr3720579e0c.5.1747389203970; Fri, 16 May 2025
+ 02:53:23 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 16 May 2025 02:53:22 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 16 May 2025 02:53:22 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aCbP1SxncSVw2fCa@pks.im>
+References: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-0-80cbaaa55d2e@gmail.com>
+ <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-2-80cbaaa55d2e@gmail.com>
+ <aCbP1SxncSVw2fCa@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250516045013.GM22242@coredump.intra.peff.net>
+Date: Fri, 16 May 2025 02:53:22 -0700
+X-Gm-Features: AX0GCFuHgY1cdZ_u4cCFxmgbIlgEu3sarNBCLVQgKZzfxopFc1dExLiUuHYzW58
+Message-ID: <CAOLa=ZR+3RPDHucjEVx8s64nrVGjzNTu9gX6Nw5vwQGg8PtpUw@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] fetch: use batched reference updates
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, toon@iotcl.com, gitster@pobox.com
+Content-Type: multipart/mixed; boundary="000000000000c9a5f106353dc0d7"
 
-On Fri, May 16, 2025 at 12:50:13AM -0400, Jeff King wrote:
-> Since "hash-object --literally" no longer supports objects with unknown
-> types, there are now no callers of write_object_file_literally() and its
-> helpers. Let's drop them to simplify the code.
-> 
-> In particular, this gets rid of some ugly copy-and-paste code from
-> write_object_file_literally(), which is a parallel implementation of
-> write_object_file(). When the split was originally made, the two weren't
-> that long, but commits like 63a6745a07 (object-file: update the loose
-> object map when writing loose objects, 2023-10-01) ended up having to
-> duplicate some tricky code.
-> 
-> This patch drops all of that duplication and should make things less
-> error-prone going forward.
+--000000000000c9a5f106353dc0d7
+Content-Type: text/plain; charset="UTF-8"
 
-Just today I was looking at this code and pondered what to do about it
-with pluggable object databases. I started unifying those code paths,
-but all the results looked quite ugly. I am thus very happy to see that
-it just goes away completely. Thank you for making my life easier!
+Patrick Steinhardt <ps@pks.im> writes:
 
-Patrick
+> On Thu, May 15, 2025 at 04:07:26PM +0200, Karthik Nayak wrote:
+>> diff --git a/builtin/fetch.c b/builtin/fetch.c
+>> index 5279997c96..15eac2b1c2 100644
+>> --- a/builtin/fetch.c
+>> +++ b/builtin/fetch.c
+>> @@ -1688,6 +1644,37 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
+>>  	return result;
+>>  }
+>>
+>> +struct ref_rejection_data {
+>> +	int *retcode;
+>> +	int conflict_msg_shown;
+>> +	const char *remote_name;
+>> +};
+>> +
+>> +static void ref_transaction_rejection_handler(const char *refname,
+>> +					      const struct object_id *old_oid UNUSED,
+>> +					      const struct object_id *new_oid UNUSED,
+>> +					      const char *old_target UNUSED,
+>> +					      const char *new_target UNUSED,
+>> +					      enum ref_transaction_error err,
+>> +					      void *cb_data)
+>> +{
+>> +	struct ref_rejection_data *data = (struct ref_rejection_data *)cb_data;
+>
+> Nit: unnecessary cast.
+>
+>> +	if (err == REF_TRANSACTION_ERROR_NAME_CONFLICT && !data->conflict_msg_shown) {
+>> +		error(_("some local refs could not be updated; try running\n"
+>> +			" 'git remote prune %s' to remove any old, conflicting "
+>> +			"branches"), data->remote_name);
+>> +		data->conflict_msg_shown = 1;
+>> +	} else {
+>> +		char *reason = ref_transaction_error_msg(err);
+>> +
+>> +		error(_("fetching ref %s failed: %s"), refname, reason);
+>> +		free(reason);
+>> +	}
+>> +
+>> +	*data->retcode = 1;
+>> +}
+>
+> Okay, we stopped ignoring generic errors now and will print them. What
+> I'm still unclear about: which exact errors do we accept now that
+> `REF_TRANSACTION_ALLOW_FAILURE` is specified? Most of the error codes we
+> probably want to accept, but what about `REF_TRANSACTION_ERROR_GENERIC`?
+
+The current mechanism in `ref_transaction_maybe_set_rejected()` doesn't
+handle `REF_TRANSACTION_ERROR_GENERIC` errors. This was a design choice
+(more of a requirement of what this error represents), where
+`REF_TRANSACTION_ERROR_GENERIC` errors cannot be resolved on an
+individual reference level. It includes:
+
+  - System errors such as I/O errors
+  - Duplicates present
+
+Both of these represent issues which are bigger than a single ref
+update, so we have to propagate these errors up.
+
+>
+> This makes me wonder a bit about the current layout of how we handle
+> these errors. If the rejection handler was invoked while preparing the
+> transaction for each reference as we go instead of afterwards we could
+> decide on-the-fly whether a specific error should be ignored or not.
+> That might lead to a design that is both more flexible and more obvious
+> at the same time because error handling is now handled explicitly by the
+> callsite that wants to ignore some errors.
+>
+
+I did ponder on this while I was building the batched transaction
+mechanism. I decided to take it iteratively. We can, for instance,
+modify `ref_transaction_maybe_set_rejected()` to work with a callback
+function which would allow the users to accept/reject errors.
+
+However, even if we go down that route, `REF_TRANSACTION_ERROR_GENERIC`
+errors still cannot be overlooked, these errors will abort the entire
+transaction.
+
+That said, I'm not trying to avoid going down that route. I do agree
+with the flexibility it does provide. Once we hit such a usecase, we
+should make that change.
+
+For 'git-fetch(1)' and 'git-recieve-pack(1)', do you see a usecase?
+
+> Last but not least, I think that it would also allow us to decide ahead
+> of time whether we want to commit. Right now we basically say "just
+> commit it, whatever happens". But if I'm not mistaken, all the errors
+> that we care about and that callers may want to ignore are already
+> detected at prepare time. So if we already bubbled up relevant info
+> while calling `ref_transaction_prepare()` the caller may then decide to
+> not commit at all based on some criteria.
+>
+
+Indeed, that is correct. I can confirm that even now all the calls to
+`ref_transaction_maybe_set_rejected()` are made in the prepare phase, so
+we could already do this, since `transaction->rejections` is already
+populated at this stage.
+
+> Sorry, I should've probably proposed this when you introducued this
+> mechanism. But sometimes you only see things like that as we gain more
+> users.
+>
+
+You don't have to apologize. Such discussions are very important and you
+shouldn't hesitate to bring up such points.
+
+>> @@ -1808,6 +1795,24 @@ static int do_fetch(struct transport *transport,
+>>  			retcode = 1;
+>>  	}
+>>
+>> +	/*
+>> +	 * If not atomic, we can still use batched updates, which would be much
+>> +	 * more performant. We don't initiate the transaction before pruning,
+>> +	 * since pruning must be an independent step, to avoid F/D conflicts.
+>> +	 *
+>> +	 * TODO: if reference transactions gain logical conflict resolution, we
+>> +	 * can delete and create refs (with F/D conflicts) in the same transaction
+>> +	 * and this can be moved about the 'prune_refs()' block.
+>
+> s/about/above/?
+>
+
+Indeed!
+
+> Patrick
+
+--000000000000c9a5f106353dc0d7
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 88c6a161437359e6_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nbkN4RVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMmlXQy85bGFFS3VCMUYyR3Yrc2lpSU5UOFhtUGN3dQpMZWdpcEJxeVlI
+ZzZmZU43S1dwTyt6SC8zUDBiUHZmV3FqVDlZUmhHU3llSUorK0J4VFJRZGhZNU13Uk1DWlhhClVC
+VE05NGQyTTg5bHZFUjdIbzR4aHdRb29ZZC9GUTJrUkQwMlVqQ3IvSGlmZURXcnREYXpQMmNSSWRz
+d09PSHAKL21ZN3NXemt4cjJ5OEZQMDhSbnVRcGpZcEdBVWNBMDBHdVNyaTRQYTFTM2UxOUpVdWp2
+Q3gvVlQzYVJVS1M2WQpSZlYvSnRsbWl2WDJGOVZkeXV4WitqZzNibFhYaGZTd0F1b1FsYmZDWWZs
+Tnc5dHl6QjZuQzFrMEZsaTEvYzNiCnc3bk9taFR5YkFYSmIzaVR0cUI2N1FDK0NLbXhzNHFNcmc2
+UFREeUV1M0MyNEJpb0Z1YnJhSUlzaUVVTU9WYisKcmVqS1FJcTkwc3Fxb0MzK3QxQi9JRm9nNkZV
+N3dqMUN1SmNva1VhQkFxKzNtQStQUzRZYk9JYnZNOFJ6NyswUwpQRHZ2WC8yWktkK3Z3UmNCYVh4
+SlpERFVrQytYbHRxY0tKc1dmRlRqdEo0UEpNeU5tZVVPcDhLbVhvK3BuWmtNCklxbXBrTFQ3MGZm
+RXQrbW5KTjFyOUs2ZmlNb1lmQzJTKzFEcmI3MD0KPWNmZ2QKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000c9a5f106353dc0d7--
