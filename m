@@ -1,141 +1,189 @@
-Received: from mail-qv1-f48.google.com (mail-qv1-f48.google.com [209.85.219.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809BB282E1
-	for <git@vger.kernel.org>; Fri, 16 May 2025 08:52:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 111C922DA1B
+	for <git@vger.kernel.org>; Fri, 16 May 2025 08:55:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747385530; cv=none; b=pZR5nvnEdaCTXgX9ij6s/iIyb6YED8eHwAPSOHLZ+RBV/8ZQUQ2vxAMqbCCiyjmWd14wGKuRsh3eAOH0YtLgvewHUS2tmhBKJLmDHyqh8hx0elBFeoXR34Esbxc0mU1+ax2iBp+urlQuUUEyD3PbsnyN/a81ID+MzQ3WziJPFts=
+	t=1747385717; cv=none; b=MnOS4rHWzW9XgG6LzDZRVZCEuyOfeAfFd9BzpOF4Itea9nc8ZIP+CjZs0cbD8FKgRW6CaYdRkpY5cswzXKJpL97lRyYwNwEyrhtJtK4NsROsySXi520ZT0DWyjJqxBxAfpwcbKFNFqGyVB5sjd89lTQRpZSWTvUqyD/84buEVg4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747385530; c=relaxed/simple;
-	bh=SWfHbXDiTI24pPTghP+9CZTZB20tjSyLh88a7zeWpgU=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=cc8qIggg0gM1T/3c+MRTjGLU3wlbMJCmyuNDdxm7w0EBEnyx5BNyPhZFIEKNjXx8MhCseih+5kIeC+3p4qbKgHJ6ztO90y4f+/HVx1gK0zt2Qm7lRUlx7oJ7RxOma21HtMg53Gv9Ls//zb3oz0XWMTp1QLfDv1YwWLnAkdFJcSc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gcBqzaR/; arc=none smtp.client-ip=209.85.219.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747385717; c=relaxed/simple;
+	bh=+ETVTx6JHcKR8eakNaY0KESxsKuEl1gM42jrDjfmSv4=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=gj4F5voQgsIEGXRTfFYQosRao8v1agvt4ZLISAh7i74gXCgpL2I/dmiwJqmYqjI/JgVO9fTistTWeCNHnT86oTDh+TSDJIUJH9GMJu3MH++uYTpPs4GvBzNS/bouaLOk8pI3GneSzb3QYVKv6IMDqlVUZ89WFKexSzP71ZcCtnc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=vb46RhAt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=rPMqw/WS; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gcBqzaR/"
-Received: by mail-qv1-f48.google.com with SMTP id 6a1803df08f44-6f8b27c2d7bso6459216d6.1
-        for <git@vger.kernel.org>; Fri, 16 May 2025 01:52:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747385527; x=1747990327; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=vgG5QAXUZ/AR/PBe7uwYgRyjio+U27xt16RZj2q2BmM=;
-        b=gcBqzaR/0kb/6xqNsr062n8meMwma2q63Jv3o+1xADB+VO4gO2UVEnpsb4KXMveOL/
-         Wn6zW1hxSjsGS+yWsQ34ApVuw50Q638BZnx52eZ/71LPQxc66ZcMx7RD1p6v91lmiY07
-         y7abqhNs1H1IC+tHRmWs5SuuyMjSmLtw9PyfiH63QSc4Utgagv2KAw1yosFsOsMEhVw3
-         oQpXmoBOHWKAZrDJ7uEphwbx85aBdJ7Q1kyM+0Cvo7dYNZtMd9m11Xbi503vP3jB2EIv
-         1/5kEp073ATTNeceAQBl3OZNCRAjcZXJJ9vgpPccapNzUW9hq5XJk9Vxsc5jfKrSSAfv
-         r/xg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747385527; x=1747990327;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=vgG5QAXUZ/AR/PBe7uwYgRyjio+U27xt16RZj2q2BmM=;
-        b=vXOIsI1lbk4j/Gw9+L8cu0oFHezZnc3JNlD2MQPlBsz7xyWqXD/RUUGCRXZTs7A5Qi
-         JsTYnVAyj3P+WovRERXCVTZBY5QzgIN4G8iLYsH5KvXG1p8u8cJ1sowK5Uw4iOLdazXO
-         xWzG08/br7efz6U1sIu7XeHJTRtDeBhJpmLXDHDNExT4RPy3WpE4jyCFaSoos50bhP2s
-         P61ENUSM7f8fLzjC+SwHglCNHONOtD6qCuvFlk+p1XJlk6JCDxZ27HexrTXrrc+C5u8h
-         4ooJMc9qoIc4YLS7Y0IeMXLNWq8Wpk+kXgLWyGvMm45DZKPStdP2MI8k3FeMIZRqfQVW
-         3EmA==
-X-Gm-Message-State: AOJu0Yy0r9qpMGlGkHgqlMg3XaIkDdBvmLba8NprNLb/NoRe/9FuDW+9
-	RN02TbC/8xojpQVUXm1JJ+pqMU4KJYjuLgSHuevK7ZfQjs+Y/VRV//5x1IWeDwlu0hYoP4W8EfN
-	ZHwmvYGPsuNK5rf4FWSOdsxNwrgZxKoI=
-X-Gm-Gg: ASbGnct22CKTCM0sRFJPGA+Z2+WjdzEUNuqJaX36K0QdT58usCcVnEfZGoA9vfzRBIy
-	71115jG4xs3lOzC1O9zoR9M742VdmrRSc9l4GoNAY9VkfbXKpxV7MJSkrRpAsjs2cAz/amzH+1n
-	xEvL5k0JFO8ZXm28fiXG96dgZnPu5RfUu0cseozoqYz/wBKK400fE2ZRaqxN+22XQgUOsGEFbd3
-	m8=
-X-Google-Smtp-Source: AGHT+IH0Co0i35DuCLSjTeBRNOpAWq3FzG9L/2sfW2ACwhOYtqqJy6nmD9zvdJs2zWW/5BbJlnxd2B+GzpElVgTVXmA=
-X-Received: by 2002:a05:622a:995:b0:48a:bbd7:19c2 with SMTP id
- d75a77b69052e-494b079b8eemr27902951cf.15.1747385527371; Fri, 16 May 2025
- 01:52:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="vb46RhAt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="rPMqw/WS"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.phl.internal (Postfix) with ESMTP id C708E1380422;
+	Fri, 16 May 2025 04:55:13 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-08.internal (MEProxy); Fri, 16 May 2025 04:55:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to; s=fm3; t=1747385713; x=1747472113; bh=4Y1fZUU2UC
+	xvT3HZ7DTvJ7QWeCt27avxLIoEz9qdBEE=; b=vb46RhAtKdfQJM6fSHka1EwrOD
+	FScayZBu8jYJIlHPa8PIXIWbcPG9bD/m0EIsoTz1G6HWs+X3OmK8Rsyb/auSU+91
+	lbZZ2pxwhGI+ScoIJZFh98kKLLrtR1FRicU+kqkizfb24TAgpgcQ3E9ZeniG1hgT
+	wvZMq8c4EFqmBUAast7Hm35kUKJJL/dCktMM/T5mMVRpt2uyc0R7DBO+dKW8oaxR
+	fRpXgLjUA0OGQ/7hLfvh9gGW6vAqMUnqfyh9Mv+U6TG2aIZbFQrPhtPgNpo2CHjB
+	D9QmrIFcNmik4temDHlp0Yj2d0OvhWXEiyEt0RERtdeQ1BD7bGCnIfpA9ZDA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1747385713; x=1747472113; bh=4Y1fZUU2UCxvT3HZ7DTvJ7QWeCt2
+	7avxLIoEz9qdBEE=; b=rPMqw/WStrPZGhs9HqNKdX7M0hGLBfpJHdsEt9MXX42R
+	2ohr/smMyNL/aHykWc98CoW8MWtueLixlNm1UcJ4X2uwVET29hSrE4MflXpUL7eQ
+	ezQjLJopr5Iv4Vxsv1yF5b4Q74I6CDeBX0qaa+D2Nzvvt3VukgwxA01aaqGZNdNB
+	x5ouz3d8m5ntCc/FXO+/3EweExCn20961GBw9Wy5V2EvXYLN0wid2TQ1NIqfM08z
+	FRSQM3B1h7gEmN78nO5H8N8l7cjCqk78bupT642i4srLJvPEhvZO2HppzBQWMPrb
+	RzDUHlSVCfK0sDRiC98j2oPcJBeeMdzvkLZFq+SJBg==
+X-ME-Sender: <xms:cf0maLIzl_f5pBiA3LzudOck2y8aQuPlrcf_DaONPDBslmBPd_BSpA>
+    <xme:cf0maPIK4Y_DcBame9-QsXdz2vrSKtaMMRuw4U83aAEfWeHzcpSytY0u6LC3MNznM
+    VvxHgUAtIJWRnsZ1A>
+X-ME-Received: <xmr:cf0maDttH10i9JjlkUk78UqWDx3EOkA_-ddZeLy6V14O4JXiWUxwsgIErnxz4PPVb43Ugfar91GMq49fhoA97YJJ1uOF3N_emRNsqFSw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvfedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhff
+    fugggtgffkvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghi
+    nhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepiefgiedtff
+    ffvddvueehheejheehleduudfhheekkeeggefgueffheevgeetjeefnecuvehluhhsthgv
+    rhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnh
+    gspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithes
+    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrd
+    gtohhm
+X-ME-Proxy: <xmx:cf0maEbwywPdei1SrFGLZ7awtZaGSB-MEOMhs7msujiFGFwlRSkveg>
+    <xmx:cf0maCb2f0i7aUCBVr99z-nkUQz7zfEqSJq5G7MI-4nur2LBIftgVg>
+    <xmx:cf0maICOkDVjfVWK7l17R8YQEOznBIfBDpF7Kve9xuzjQB9h1u9gZw>
+    <xmx:cf0maAY-MX88pozdgYX3D2qXgjvEKb_cO3c0aNssp_rjeOWG3sap3w>
+    <xmx:cf0maMCyiv8JK_AGHczq2GDWlQs2xSiL-IKOXP8iEzu0uXF8B6RKEXh7>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 May 2025 04:55:12 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d0caef0c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 16 May 2025 08:55:10 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Date: Fri, 16 May 2025 10:55:10 +0200
+Subject: [PATCH] packfile: avoid access(3p) calls for missing packs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <xmqq7c2kgp8e.fsf@gitster.g> <20250514020108.24396-1-jayatheerthkulkarni2005@gmail.com>
- <xmqqplga6c80.fsf@gitster.g>
-In-Reply-To: <xmqqplga6c80.fsf@gitster.g>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Fri, 16 May 2025 14:21:56 +0530
-X-Gm-Features: AX0GCFtSwnsiUUKkBVzeNpj1eVTwDc7FrhmA_BXr7H-sVr-LCDqVj4XgLeP1xd0
-Message-ID: <CA+rGoLfYLcx+tM6nif7E5vZDce7PeGyGJkTRraT7kF3ACAzBfA@mail.gmail.com>
-Subject: Re: [PATCH v3] submodule: prevent overwriting .gitmodules entry on
- path reuse
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
+X-B4-Tracking: v=1; b=H4sIAG39JmgC/x3NQQqDMBBA0avIrDsQLVOLV5Eu0mRiB2kSMhIE8
+ e4Gl2/z/wHKRVhh6g4oXEUlxYb+0YH72bgwim+GwQxkqH9hXhWzdSvamsSjbnZTTBH/oipxwTc
+ /vyONRC4YaJVcOMh+H+bPeV5O/5s2cQAAAA==
+X-Change-ID: 20250516-pks-pack-avoid-stats-on-missing-8e3b75755cf0
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>
+X-Mailer: b4 0.14.2
 
-On Thu, May 15, 2025 at 4:18=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
->
-> > Add helper `submodule_active_matches_path()` so we can
-> > re-implement the old =E2=80=9Cis this path already covered by
-> > submodule.active?=E2=80=9D logic without re-reading the config twice.
->
-> Having duplicated code to implement what is supposed to be the same
-> thing is a bug waiting to happen by them diverging from each other.
->
-> Isn't the fact that our configuration reading code reads things just
-> once and the caches the result good enough for the purpose of this
-> code path?  Do we have a measurement that tells us that the extra
-> complexity is worth the maintenance headache?
->
+The function `add_packed_git()` adds a packfile to the known list of
+packs in case it exists. In case the packfile doesn't look like a pack
+though, or in case it doesn't exist, the function will simply return a
+`NULL` pointer.
 
-Well when I first sent this patch I didn't quite understand why test
-4137 was failing
-then I read the tests and I didn't have a lot of idea of the code. But
-I think it' better to remove helper as you said
-I will send a new patch with a different approach as I've spent some
-time understanding this now.
+The ordering in which those checks are done is somewhat curious though:
+we first perform a couple of access(3p) syscalls for auxiliary files
+like ".keep" before we determine whether the ".pack" file itself exists.
+And if we see that the ".pack" file does not exist, we bail out and thus
+effectively discard all the information. This means that the access(3p)
+calls were a complete waste of time.
 
-> > @@ -3443,7 +3452,11 @@ static int module_add(int argc, const char **arg=
-v, const char *prefix,
-> >       int force =3D 0, quiet =3D 0, progress =3D 0, dissociate =3D 0;
-> >       struct add_data add_data =3D ADD_DATA_INIT;
-> >       const char *ref_storage_format =3D NULL;
-> > +     const struct submodule *existing;
-> >       char *to_free =3D NULL;
-> > +     struct strbuf buf =3D STRBUF_INIT;
-> > +     int i;
-> > +     int allocated_sm_name =3D 0;
->
-> A separate flag is not wrong per-se, but the idiom used in this
-> project more often is to have an extra pointer variable that points
-> at an allocated piece of memory (or NULL), and free the piece of
-> memory unconditionally.
->
-> "git grep -e to_free" to see the idiom in action.  Even better yet,
-> this codepath already uses the idiom.
->
-> By doing so
->
-> > +     if (allocated_sm_name)
-> > +             free((char *)add_data.sm_name);
->
-> becomes
->
->         free(sm_name_to_free);
->
-> and we can keep the "add_data.sm_name is pointing at a borrowed
-> piece of memory, and we will _never_ free anything through that
-> pointer" memory ownership rule.  We were borrowing from a separate
-> variable sm_name_to_free, and we may free it when add_data is
-> getting destroyed, or we may be borrowing from the .sm_path string,
-> which we would free it when add_data is getting destroyed.
->
+The reason why we do this is likely because we reuse `p->pack_name` to
+derive the other files' names, as well, so that we only have to allocate
+this buffer once. As such, we have to compute the packfile name last so
+that it doesn't get overwritten by the other names.
 
-Interesting, this is good, I'm going to copy this : )
+All of this likely doesn't matter in the general case: Git shouldn't end
+up looking too many nonexistent packfiles anyway. But there are edge
+cases where it _does_ matter. One such edge case that we have hit in our
+production systems was a stale "multi-pack-index" file that contained
+references to nonexistent packfiles. As there is no negative lookup
+cache this causes us to repeatedly look up the same packfiles via the
+multi-pack index, only to realize that they don't exist. This translated
+into hundreds of thousands of syscalls to access(3p) and stat(3p).
 
-Thank you,
+While the issue was entirely self-made because the multi-pack index
+should have been regenerated, we can still reduce the number of syscalls
+by 75% in the case of nonexistent packfiles by reordering these calls.
+This requires us to restore the final packfile name after the access(3p)
+calls. But given that this is a mere memory copy it is very unlikely to
+matter in comparison to the four syscalls we performed beforehand.
 
--Jayatheerth
+Another mitigation would be to introduce a negative lookup cache so that
+we don't try to add missing packfiles repeatedly. But that refactoring
+would be a bit more involved for dubious gains, so for now the author
+has decided against it.
+
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
+---
+Hi,
+
+this patch addresses an issue we have recently seen in our production
+systems due to a stale MIDX. The MIDX contained entries for packfiles
+that didn't exist anymore, which caused Git to repeatedly look up those
+packfiles. Each missing packfile resulted in four repeated syscalls:
+three access(3p) calls to check for supporting data structures, and one
+call to stat(3p) to check for the packfile itself. The first three calls
+are essentially wasted though when the stat(3p) call itself fails, which
+is being fixed by this patch.
+
+I doubt that the patch matters in almost any repository, but given that
+the refactoring is trivial I thought to submit the patch regardless of
+that. Another step would be to introduce a negative lookup cache -- but
+that would be a bit more involved, so I decided against it for now as I
+don't want to introduce complexity for dubious gains.
+
+Thanks!
+
+Patrick
+---
+ packfile.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/packfile.c b/packfile.c
+index d91016f1c7f..870d48bd949 100644
+--- a/packfile.c
++++ b/packfile.c
+@@ -737,6 +737,12 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
+ 	p = alloc_packed_git(r, alloc);
+ 	memcpy(p->pack_name, path, path_len);
+ 
++	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
++	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
++		free(p);
++		return NULL;
++	}
++
+ 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".keep");
+ 	if (!access(p->pack_name, F_OK))
+ 		p->pack_keep = 1;
+@@ -749,11 +755,8 @@ struct packed_git *add_packed_git(struct repository *r, const char *path,
+ 	if (!access(p->pack_name, F_OK))
+ 		p->is_cruft = 1;
+ 
++	/* Restore the final packfile name. */
+ 	xsnprintf(p->pack_name + path_len, alloc - path_len, ".pack");
+-	if (stat(p->pack_name, &st) || !S_ISREG(st.st_mode)) {
+-		free(p);
+-		return NULL;
+-	}
+ 
+ 	/* ok, it looks sane as far as we can check without
+ 	 * actually mapping the pack file.
+
+---
+base-commit: 1a8a4971cc6c179c4dd711f4a7f5d7178f4b3ab7
+change-id: 20250516-pks-pack-avoid-stats-on-missing-8e3b75755cf0
+
