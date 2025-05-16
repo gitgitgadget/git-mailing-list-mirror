@@ -1,138 +1,178 @@
-Received: from mail-vk1-f179.google.com (mail-vk1-f179.google.com [209.85.221.179])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2F3B1A704B
-	for <git@vger.kernel.org>; Fri, 16 May 2025 09:12:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60A0B230BF9
+	for <git@vger.kernel.org>; Fri, 16 May 2025 09:52:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747386761; cv=none; b=oCBp2CGplaRwN4fNIYQ5Tl1K1Bb/z1IcERDJc6uASp0aAxrrvaqP7g52GWVS2vcg5J/S2N4I1H7lNcjZ5l0c2tU61Z8zYRVSTemo3aoTfSU5GXDBOsWTLm1OLYP2vrXwoexP6d8aYKcTGZUzt6gNXNGF8nCcXZTYK9K69qhRsM0=
+	t=1747389148; cv=none; b=SWFAts8H5NAtOLSPmbP/z32XahIZB/0RZTs4oc28rtfKelvIbq6saBKTzxPUJ2/D2Bxg/RL9BYbsIacfK7k6cjnhP8R7/Uio5oMCqJqvebWfPRwV0ag4X18AFESuWYqYaoN5tux9LokaiqsJ4auNaEBRJ8BRIoUqWY0k1jZiNjM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747386761; c=relaxed/simple;
-	bh=t4GVvwRaQcClmkrl+j/zxUbGhHYLUkxpvyq+wr8K9E4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=jlXUe2JJhA1fdnhZHcFoaQh5OPditXBkSyMOUEvV/K6LV1IrLvNUD8vmttILpKgdnVYRCRiVWvVRO8CANJdouyWcMcEsDz4yjygLSlHF/C+/6q7R9j0OrBpeVRb9uMBTMMr/T35tEL0ZwS24KsUExVuoWw+k9Bw1zbOfPUxyrwU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=W9BJrpNl; arc=none smtp.client-ip=209.85.221.179
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747389148; c=relaxed/simple;
+	bh=LIPLid4F0zocTk2hdje8kcVMRl4aNMeu0ToRDlSZFWs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iBNj/nYd0a+vi3ZFn6r3opnTmkWYS+VOexzl4ucsqYWm5B/DrWc7MTkYln4pkjBwEI13VyuMg86H+lUY0+TIHiYTDJEFa4XaYcLgafOailk/54Rn3hNbcKtDdeqlCPnkQhlsB87GuHub+A/lgJCs2iLa8CrT30iLIltocNaq5DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hTjrq9Hl; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fJYTPKOv; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="W9BJrpNl"
-Received: by mail-vk1-f179.google.com with SMTP id 71dfb90a1353d-52446b21cfdso605125e0c.1
-        for <git@vger.kernel.org>; Fri, 16 May 2025 02:12:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747386759; x=1747991559; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=AjnLmLDTgoP1dVnvkdkAvgmNRJ0DXKFYLR1OmAiLLQc=;
-        b=W9BJrpNl6/8wd9W/DypgzwkQACH91dW0JPqqbKXl418fkggwXi88tzdmRWAb2ajxHy
-         /dyEBjQm8AZgJ/JEAtLHGmPHeXxb8xtBEwSAgCEKiqgHEZH+zYCfEPO+mi8BEd3eXPMh
-         u40J0SlHf7VkqrSP8CuwLye6nKLxAU48Q8Vyoz14bSksw6fBtjpo4mRtEg6juJC84HyQ
-         rVQQ30xx56IhAhLfnT1x4mQWGhCxaiVz2LAw8DSGLZC2soQpbfM86tVJWU1zqZdpD1gC
-         MMGJQR9Uko1/Cbb7jcBr2nqH0dV0FJXvGlyTN7A4BU2Y35Kiz6JEhHkJgYbBafdSzT1h
-         B4Pg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747386759; x=1747991559;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=AjnLmLDTgoP1dVnvkdkAvgmNRJ0DXKFYLR1OmAiLLQc=;
-        b=FcipvjaKHvD8Z+w+ZVpHIpgL6v+pgfOansdr60t+5HPr5fQ1id7oN+4kngiLHG4ZKT
-         TrG7x5Cg8duySv7/qJzQsQSIsgl2t8zQFvrYHWJ7WzyZyC47GcpwC9sqmcLWFz+sdLcz
-         wUmCvq6TtTdcDuOvcr3znR2WQnYh0rzHXRoHISTGZwbORueFwQuGBlfGridi+Z1134hS
-         rqyQoxflbElfjvoDl9iKQ0cWvL7qUm2zPhK9fjputd5wnTZFhEyB7KI6sEOaAfVAGkRR
-         0dm9Sb+HxXX1yo4DieyyydhHrjXln6GLB83E6StefJLvieaLRRseZBdFEkqkjsbz96fc
-         sClg==
-X-Gm-Message-State: AOJu0YzJfwuFbiuJE7qwoyhtCHfahmszqPzHN+kjke+5DQuGPVfWPFoy
-	wIgwig+MnG++b+DaLZGI4rOj7CyHKH7D+jWDYfrrCJ7o0nNlTx0yOBPS3VoMjNRiYxjlem8NZlp
-	gtOs9nL5tPVUwkSeodiNZTI38ClyDUaZy2oDW
-X-Gm-Gg: ASbGncsv3eLo/g7kYW3gXigfyj7fftB9aWdTbFm+9o5TJY5Zy+azxIWsGltBm1VeJcw
-	rufYTRr93is664sRRcsFjKWcw9A5CgVv6DrhAVDtuTPJJnwVbAuYI4olIDvJ6m7HbRDHX44aMiW
-	kUDh6y2nVfVvdIhoszUFfG2WMLkuRqNtKXoutQAwMhwTB72Z7diyH8uJIb4vR7anyQ+No=
-X-Google-Smtp-Source: AGHT+IFQQwNIb48oG++VMYitrDykWgp8W0ZQqTKiKiTNmARqMhBxd+sdnI156DrXVkwUcGNLmYsknsV/W/KUxXA8oQo=
-X-Received: by 2002:a05:6122:da8:b0:52d:b855:e0b5 with SMTP id
- 71dfb90a1353d-52dba83a776mr3456000e0c.3.1747386758639; Fri, 16 May 2025
- 02:12:38 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 16 May 2025 02:12:36 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 16 May 2025 02:12:36 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqbjrtzkm1.fsf@gitster.g>
-References: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-0-80cbaaa55d2e@gmail.com>
- <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-1-80cbaaa55d2e@gmail.com>
- <xmqqbjrtzkm1.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hTjrq9Hl";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fJYTPKOv"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id 5725D138020F;
+	Fri, 16 May 2025 05:52:25 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 16 May 2025 05:52:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747389145; x=1747475545; bh=Ywto3E9cF/
+	DvsIZ3fCEN1HvhUCeAKzdevA1lQu2Q2gQ=; b=hTjrq9HlnDrcEk0Qoi2Jq7En1F
+	yVCSIcSnol7tTC3Hxf65UXWqveQ9F7X/+PfBQlS3tZSXzmcuaimIQDqRDe+1DjaT
+	jIcuj2afKRwrStBc6iu/6A/yMeqUNh+yYdGybaj8bJcHW/Hyhc4Qram7/BUqJpZc
+	e2jpr1lqx1aB7c57jU9UD9wMcGnxkxkDBhFdn2kn1iONTic7yJDcWHu+9dKbMt/4
+	tSI8wMoPfcBcQ5uPc5PxZPntgHJfruQBdx5wazdXHFLMV3hpL3Xo11hidEDusBRC
+	gloWYFxNkYxey6DD4KVb+GRXFC7WcfbAM+0eJyd04AJ2qmjaO+De31myXQFA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747389145; x=1747475545; bh=Ywto3E9cF/DvsIZ3fCEN1HvhUCeAKzdevA1
+	lQu2Q2gQ=; b=fJYTPKOvMqNVP8xA5N3ZGhfQYbQYiYYSzYO6tBWrtfckw+1gTAQ
+	hPYZ81b+fvMeGPMThtNw29eMDMB+4s90xnxTPtQHKcLx+JuoDQd1pVCq+hsr4XPm
+	oZHhqDiZ9iWYiXKhWIjiUpW7xf5Bn4rpqDoImhhoVfdxoJv/XM17AK7YLl6izzUF
+	mwz2eCh0GL1DO6WwQ4/pGiMM9/JwMS/8R8uDH7dLtnLax3Bu6HkWathXmhTW77iC
+	PGKfkFM87Ll2XnOPju3Vj1Wu6muMpiAdZE9+JFvTo3/9haO5+781zysMHEFOuMNs
+	fC97RUV7cWIpPmYq47MnshBJF8OpUqCbQOw==
+X-ME-Sender: <xms:2QonaDXNifMl0UmeXpRyeLttc50EMfvReeVMs6sS-Mt21QntRHHPBQ>
+    <xme:2QonaLkZ3OqHCL3n-vohIhmo_WTuPcRnlPRfk8LyRzOhF-EDCVpl44vSsw1yxacOP
+    oDncl91_eI6EIRptQ>
+X-ME-Received: <xmr:2QonaPaBv9o2XYquOmZAASDVzqFwe0NF6VFGkW5C2hPbiIeKZkEkWeTK00IXJNl0QwROpshi_91XvD2IpkO5F5l6Hez63vo3928kZmbd>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefuddvgeefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpeffhf
+    fvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgv
+    ihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekff
+    fhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushht
+    vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpd
+    hnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdroh
+    hrgh
+X-ME-Proxy: <xmx:2QonaOXF-JnVQhvrK5pNLMycbzCvbKRrQdGzOIy0dE9BAaCS0-lljw>
+    <xmx:2QonaNnEF1KZkh9E7XhLiQTSRh7jEFssJs1gpAYeFfc0rfKpacdufg>
+    <xmx:2QonaLdi7HV2ar4vimnRxgfzUSLp8Futz2tgo3XoIFZ81JmAlN4t_A>
+    <xmx:2QonaHEDqLvimngsvOJAHwJxtKEAWqPZ_VmyaqzsBXBLGx3_Ks3e7w>
+    <xmx:2QonaMcW_vHuUaWI5JCJ8YRjm-MhUCsleYNZ_poif5pYwwTVyiXhB-Xd>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 May 2025 05:52:24 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 2bf6812d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 16 May 2025 09:52:22 +0000 (UTC)
+Date: Fri, 16 May 2025 11:52:18 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] cat-file: make --allow-unknown-type a noop
+Message-ID: <aCcK0p7wMURHppe7@pks.im>
+References: <20250516044916.GA21985@coredump.intra.peff.net>
+ <20250516044935.GB22242@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Fri, 16 May 2025 02:12:36 -0700
-X-Gm-Features: AX0GCFvjvymrF7a0UZ3smFKM4mOzH3r14aAE58e3m6UX3biS1xDDKvtUxSLzhYo
-Message-ID: <CAOLa=ZTwchMMg81JnHagQ10rpRw6pR5+JQUWLUcaxusGFBL8PA@mail.gmail.com>
-Subject: Re: [PATCH v2 1/4] refs: add function to translate errors to strings
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, toon@iotcl.com, ps@pks.im
-Content-Type: multipart/mixed; boundary="00000000000008daa806353d2f51"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250516044935.GB22242@coredump.intra.peff.net>
 
---00000000000008daa806353d2f51
-Content-Type: text/plain; charset="UTF-8"
+On Fri, May 16, 2025 at 12:49:35AM -0400, Jeff King wrote:
+> The cat-file command has some minor support for handling objects with
+> "unknown" types. I.e., strings that are not "blob", "commit", "tree", or
+> "tag".
+> 
+> In theory this could be used for debugging or experimenting with
+> extensions to Git. But in practice this support is not very useful:
+> 
+>   1. You can get the type and size of such objects, but nothing else.
+>      Not even the contents!
+> 
+>   2. Only loose objects are supported, since packfiles use numeric ids
+>      for the types, rather than strings.
+> 
+>   3. Likewise you cannot ever transfer objects between repositories,
+>      because they cannot be represented in the packfiles used for the
+>      on-the-wire protocol.
 
-Junio C Hamano <gitster@pobox.com> writes:
+All of these are good reasons. To add one more: they would probably
+prove to be a pain for pluggable object databases, too. No need to add
+that to the list here though given that there isn't even a design doc
+for those yet.
 
-[snip]
+> The support for these unknown types complicates the object-parsing code,
+> and has led to bugs such as b748ddb7a4 (unpack_loose_header(): fix
+> infinite loop on broken zlib input, 2025-02-25). So let's drop it.
+> 
+> The first step is to remove the user-facing parts, which are accessible
+> only via cat-file. This is technically backwards-incompatible, but given
+> the limitations listed above, these objects couldn't possibly be useful
+> in any workflow.
 
->> +char *ref_transaction_error_msg(enum ref_transaction_error err)
->> +{
->> +	const char *reason = "";
->> +
->> +	switch (err) {
->> +	case REF_TRANSACTION_ERROR_NAME_CONFLICT:
->> +		reason = "refname conflict";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_CREATE_EXISTS:
->> +		reason = "reference already exists";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_NONEXISTENT_REF:
->> +		reason = "reference does not exist";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_INCORRECT_OLD_VALUE:
->> +		reason = "incorrect old value provided";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_INVALID_NEW_VALUE:
->> +		reason = "invalid new value provided";
->> +		break;
->> +	case REF_TRANSACTION_ERROR_EXPECTED_SYMREF:
->> +		reason = "expected symref but found regular ref";
->> +		break;
->> +	default:
->> +		reason = "unkown failure";
->> +	}
->> +
->> +	return xstrdup(reason);
->> +}
->
-> Why can't this return "const char *", without xstrdup()?
+I agree.
 
-Yeah I think that is much better, string literals are anyways not on the
-stack and can be passed around. Will change, this would make it much
-simpler.
+> However, we can't just rip out the option entirely. That would hurt a
+> caller who ran:
+> 
+>   git cat-file -t --allow-unknown-object <oid>
+> 
+> and fed it normal, well-formed objects. There --allow-unknown-type was
+> doing nothing, but we wouldn't want to start bailing with an error. So
+> to protect any such callers, we'll retain --allow-unknown-type as a
+> noop.
 
---00000000000008daa806353d2f51
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: be8a31fba054f773_0.1
+Okay, that sounds reasonable to me.
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nbkFZSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMnR4REFDRFI2cEZjNlhpZjhvR3FNRDZ1aTAxdExpWgowZ3hFY1Z2KzVM
-cnhYWVMxS0hOY2U5SGZnYmhRRG5pVHlYeXdqZnRac3VUM0ZKVHlnaXJrY3RFMUV5UWFkdk1VClZ3
-SWpVNm9zblAxdU9taUNjUlFuSm5PeTJLK01FOGI4L0dRSzNYNVJrNHFqUWRuVUZDVklFRHNBT3J1
-TU5UNGsKVnh0K01tSU9NU29CcXRzYWtBVWhXaThTUTdoMDNoQ3VVSnpBR0x4WktjWFhRYzhWejFY
-SW1BYVRMQXF1ZzV3UQp5aGZUZzRDcHRlK0ljMGh3TS9kQktBZTRLNms3Ly9SKzRoaHY4dDNkMnM1
-eEkxOWozY2UvNGtGS0J6MW1sZWtOCllpNVRuVm1WMTgvMTIyNCthMnRTTXUxbHFtcW5YQzVBOFFp
-TGF2YzRaMkxzdTdtdmdyaEN4a0k4ZnpoY255UWoKN3F3Rk9CTE1HQWVibzlsMUk5ajNBMWdHQTI2
-YmRxWkxVMWpjRHFUcDhTT0pZdmZ5OGV6Mi9BcUlWbmQySUdqUQpvNDBrY2hwcmZzajcyaTVCa3Q4
-RXByaVJhME5WYWRmYXZPNjd4ZTR6eS9hZ3FwRW5ZVXp3M1RUUUlrWVFWR0RtCmZmTkw3RERYTDdq
-M0hTV2pJaDBlQU5uMFZ3aWhRNmQ3aDUyUmVNQT0KPWhIbmYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000008daa806353d2f51--
+> The code change is fairly small (but we'll able to clean up more code in
+> follow-on patches). The test updates drop any use of the option. We
+> still retain tests that feed the broken objects to cat-file without
+> --allow-unknown-type, as we should continue to confirm that those
+> objects are rejected. Note that in one spot we can drop a layer of loop,
+> re-indenting the body; viewing the diff with "-w" helps there.
+
+Shouldn't we have a test though that the option is still accepted, even
+though it doesn't do anything?
+
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+>  Documentation/git-cat-file.adoc |   6 +-
+>  builtin/cat-file.c              |  18 +--
+>  t/t1006-cat-file.sh             | 211 ++++++++------------------------
+>  3 files changed, 56 insertions(+), 179 deletions(-)
+> 
+> diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
+> index fc4b92f104..cde79ad242 100644
+> --- a/Documentation/git-cat-file.adoc
+> +++ b/Documentation/git-cat-file.adoc
+> @@ -9,8 +9,7 @@ SYNOPSIS
+>  --------
+>  [verse]
+>  'git cat-file' <type> <object>
+> -'git cat-file' (-e | -p) <object>
+> -'git cat-file' (-t | -s) [--allow-unknown-type] <object>
+> +'git cat-file' (-e | -p | -t | -s) <object>
+>  'git cat-file' (--textconv | --filters)
+>  	     [<rev>:<path|tree-ish> | --path=<path|tree-ish> <rev>]
+>  'git cat-file' (--batch | --batch-check | --batch-command) [--batch-all-objects]
+> @@ -202,9 +201,6 @@ flush::
+>  	only once, even if it is stored multiple times in the
+>  	repository.
+>  
+> ---allow-unknown-type::
+> -	Allow `-s` or `-t` to query broken/corrupt objects of unknown type.
+> -
+
+Should we maybe introduce a "deprecated" section and spell out that this
+option is a no-op nowadays that will be removed for example in Git 3.0?
+
+Patrick
