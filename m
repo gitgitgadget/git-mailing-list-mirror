@@ -1,68 +1,68 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9008727FB29
-	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28BF279793
+	for <git@vger.kernel.org>; Fri, 16 May 2025 18:12:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747419160; cv=none; b=MkL6zc0XNbdbHxmP8GWdOxiSnY7EWS2T5GxbcNFdDe7ptZy0pXef/r7++/7ftPVWAzuINgbVeDZK/Iafz1zih1nUqrtXn3y4AKHDYEOBF37oPqaHJr85XZvYF51wslgquNZfMF9ckT0RI2j9d5mJA37PBW4I/ptnqHzy4A1OCzo=
+	t=1747419161; cv=none; b=jjuC6V8jQ4U+HIAJDMwW0w8ATiZStmNQ3t4Rlm9C+ansF+QeLp9bPKLwJH7Z9/v6mO/mogWnT1KIU7M9vSHd2Iqkm9FjvrSGCwIxMMjCVHK291RUqW4unTeWzVUnbkljRYWRWOoL6MQpvvG8vKI/STXjHDA00xwXmvzd8NFmNRU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747419160; c=relaxed/simple;
-	bh=4x+9RW7eIOQUcTMC50mDoeBRnCAKperKP6TtxSEfnZ0=;
+	s=arc-20240116; t=1747419161; c=relaxed/simple;
+	bh=qwpIY17GL0WTipGAN3jlCvk1fiLBPQ6hkVDTyH1hWJo=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JPINkhENbKuX2FHhr10VF18dskXpXvwuHgjPQOKBY+bBc8iDu1MkArE7nZUuu8CSA4lDyta1Ulsijx+s0OSxTNniOH9ZdCP1LH6NBe/b9g4axbdC2Gd5kTaolr5ihK88SOor5TBe2exwk7WP8FpcwVi+sKCygo4LxA519LaiaCA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P8zOojYL; arc=none smtp.client-ip=209.85.128.47
+	 MIME-Version:To:Cc; b=Vtr03txork7fB4eCiGSKCsjDgsBw9f3fjlrQcdZHkhBEuL0pEwz6QaC51zhbzX3/H9ko/FqMTnZbDflK1Ik0w7MuAN44lc2RQRHVQce8Ov5AJinVhF5Un98rfVcGMBiHYgf0r0O3n8nt1wB7HsEX2cpRZdPWbSXFc52Q5W7emdk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=P/FdOTQa; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P8zOojYL"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-441d1ed82faso17930585e9.0
-        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="P/FdOTQa"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-442d146a1aaso21322385e9.1
+        for <git@vger.kernel.org>; Fri, 16 May 2025 11:12:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747419157; x=1748023957; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747419158; x=1748023958; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=5tCZEKvMYln5+ei3+4PKUjzM6cnU7786BeL97DxUwBw=;
-        b=P8zOojYL+8wc2i8YCwVFkGL9HnJpNM14foYbFBrQS16JouPqz0reB7Ua3U7i0ahQr2
-         rvPKcJnjT7yS5bGpLD62cakPsE6+b/7/5cylPj0mlGjXDSdFbCiIXqykm7TGJNBxwnjO
-         dHx8yfJnlECDPvmPBLNtKXnyXRL33NhhmwFQx8ZwLwdFbiDGPYKUPZi3NW8LxjCYdblN
-         l7d34wd2s7DfdGtKm3UvtUx1TJ4DRPQmetzPT0suMfIpRpy41TUj/DijxT0RIU+JFBPO
-         nxVwNgmTw0nsA0fQ5+X51oEpQKjKt+zU85F7SJAp9pq538cRIHKcgkTHVYjE2vKhQ5eq
-         HJ+Q==
+        bh=M5FzD1eRSw6YykBNc0qDMIPthAstZGA4+28GDerX75k=;
+        b=P/FdOTQaNVJToNgPogELYSkHghw4SXfn6oJGepPkbQLkcKDVBnReR7C4xR2AX3Gj33
+         Oy3AF+bUrkxNmL9W8tr2lQjhSjYHyuu3Mo8iluiGfo8U1oXmxsQ+JY7qgQW6RV63HK0s
+         QloFkgEOJEsT2GTJt6lu51BvGhobMdHNmouC4LNxFvCufbKIwA7ZmRvZc76T6SWCezKK
+         76AAbEhQvz2xt3uZ3vKXp68UPx5RWMmLKsazqE2Z6kgNX8FqwY2lIYO9B2WXXxZz6KO5
+         Qc476C+OXaAvUes23/0omD1MfHhaqN5rGZIe249x6G1unvzV7o98cqkg9yszQZf5hFzF
+         fIdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747419157; x=1748023957;
+        d=1e100.net; s=20230601; t=1747419158; x=1748023958;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=5tCZEKvMYln5+ei3+4PKUjzM6cnU7786BeL97DxUwBw=;
-        b=K5jq85UrDcDlyUELIwczd+nKRMVk7V991wdEsgNae9LLIfA9leS/RwCU7W3fPxJVKB
-         4JJpLk5B8nDQKH/o6pDrW3EKsNAaPCaHQ0y/Jasa2iE7jEmjzGHna+Ft5IWLla23E6Nj
-         N+LqNEt0ub3LFvo2aWCZ/u++Ka2QhXOypxPYScBniZu0JwoJ29t6IbTECJoV9mdiA8SW
-         R50idbpZ7yMhqtvJxyZu0ABNGvdn3vnq3S/JixguNYlQleqBmphxVqhw4fwCQv2ob8qv
-         nLz5l/rt4zw74SXPk0rJGOmxY9PnRTMqXnVhyoKmRfxY0GelcjoVttF99qNCttTjUobf
-         YeYg==
-X-Gm-Message-State: AOJu0YwjYmMlZEqAFo7Cf1pUG9bXpt7kpOsewxgE4Yfyh5kmWJtgxuK6
-	LDd6KbEd3oh8caC4P4OV3TjVbChKbMNN3ey4XE+CM/Xx7iPy1S8Y+aW3bZGJHg==
-X-Gm-Gg: ASbGncue2C95Tt72A963uinTsepBfkdm4yfYMpZuFxqw6F3QuazZGCH0i35gGbS/38I
-	t1xqTm27g6W0ZnqXO0cslnXodMGG56VgmgXuRqGHX63dYh+NJaXfobcAqOmdROfRCk8Z75+OoIg
-	qAZptrywnVZwfUuY0ZyB5ifuc8Iyd46CV/eIw/U1ck/b0iTXuQfaQuOmoXu1ASjVj0d59hg2DsY
-	UmiBXr2tM6Rx+iAXlifXBOk9oo5uo3RrSHMxxg8/D8RfExkGlSnrkx6fTmmHoflTzDGcUUHSmWJ
-	CYdS0zIvUwLz5mkVXG9x7ktfeFwHK7Eq1QYTpA0DB6GEdV8fhD5y
-X-Google-Smtp-Source: AGHT+IHymFx+8ESFIFirGb70dRx0Y7pcfLnU0W/oPfedB9e+LaOJI9E4Z49Nrv7/czaTUneYZ5Ux3w==
-X-Received: by 2002:a05:600c:3511:b0:43c:eea9:f45d with SMTP id 5b1f17b1804b1-442feffb5e7mr38122525e9.18.1747419156417;
-        Fri, 16 May 2025 11:12:36 -0700 (PDT)
+        bh=M5FzD1eRSw6YykBNc0qDMIPthAstZGA4+28GDerX75k=;
+        b=svegK4j6n3ZRsWZyfGA+0nvLq9skdZihVeZSwcQTLc5yum0l6id7q58KWdW0kUcMgm
+         gOFSxfNdfzEOInI7aKuxDgdEJbpENH4qRUbVPqZqi5udLxb+P87YZNJPKV64TM7i716i
+         2C/MdDUs2oS0S4+XcYXcRWEfhOdzvqw4kV9cNwzf6IcAzTxYYSI6p80PPtaREIAk9Xj2
+         poOHrgbgQo4KRs5UbtlZ9lopHFOtc9N72iuk6CtxInehZH9NSQco90YQgjN6vsNdDrVL
+         FmxZact51If8y1s4ozddWl5nPnXV9GA1i24pdFooVwcblNCe9+/hWHy5XxhKV4mb/cyu
+         4t4w==
+X-Gm-Message-State: AOJu0YwI1i0B/UL1LopyXmJMC07FpOP1v3C7Yp65kDirdKfIN0m8myMi
+	CznnuFcg4mfJXBY/cQ8Ok4dbGIz1Ru+CyTSZkrxLZi+x9Q+DJ0OwalrEkf340A==
+X-Gm-Gg: ASbGncuOjPWkd9lSWPKkko210S2WqmfDIREjFdVF9zwZhbLjSn9V5Dj1IrSruRwJGyv
+	WCGP9i6D7HTunwKtKITWTw5DpeF3gVm4eKMhBEzoZGi1Sjx/olaIHTt5860gcRSw90DG2hiKmiS
+	pQMe9KlNi7IwIF1cltQBJYmqvKrJxmuumhzraqgUF6TCECwFHlMThScm+OqOrkgiTqPKJw8Pq8s
+	86ezxZFvVzyfZdMIrS7GBNMlwWv7laAO2GbYhUtZCedrNJ/+uixezgAFtKfXXMOtCxqRGU9f71L
+	CsPKjz5R/cDcWQm7Weaj1hzXQyL2sHQWFRAQQG0/BNj2xJtaMIRr
+X-Google-Smtp-Source: AGHT+IHKZqZOBbSiomrsc3BzBvzKPxBeeui8k+74J2X9hGpF8sTdkOnygwHDBc7/m+V5a+JwEfrbYw==
+X-Received: by 2002:a05:600c:1c12:b0:43c:fa52:7d2d with SMTP id 5b1f17b1804b1-442ff0316bamr27535575e9.20.1747419157742;
+        Fri, 16 May 2025 11:12:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-443003ab9e2sm25682625e9.7.2025.05.16.11.12.35
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca5a5b4sm3556124f8f.21.2025.05.16.11.12.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 May 2025 11:12:35 -0700 (PDT)
-Message-Id: <a14d447d35eb32effadf58d4f93fecdcccaa12cd.1747419124.git.gitgitgadget@gmail.com>
+        Fri, 16 May 2025 11:12:36 -0700 (PDT)
+Message-Id: <18241d382072a95463189d558d5873b867fe9bd4.1747419124.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 References: <pull.1819.v2.git.1742829769.gitgitgadget@gmail.com>
 	<pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
 From: "Derrick Stolee via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 16 May 2025 18:12:02 +0000
-Subject: [PATCH v3 12/13] path-walk: add new 'edge_aggressive' option
+Date: Fri, 16 May 2025 18:12:03 +0000
+Subject: [PATCH v3 13/13] pack-objects: allow --shallow and --path-walk
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -89,125 +89,86 @@ Cc: christian.couder@gmail.com,
 
 From: Derrick Stolee <stolee@gmail.com>
 
-In preparation for allowing both the --shallow and --path-walk options
-in the 'git pack-objects' builtin, create a new 'edge_aggressive' option
-in the path-walk API. This option will help walk the boundary more
-thoroughly and help avoid sending extra objects during fetches and
-pushes.
+There does not appear to be anything particularly incompatible about the
+--shallow and --path-walk options of 'git pack-objects'. If shallow
+commits are to be handled differently, then it is by the revision walk
+that defines the commit set and which are interesting or uninteresting.
 
-The only use of the 'edge_hint_aggressive' option in the revision API is
-within mark_edges_uninteresting(), which is usually called before
-between prepare_revision_walk() and before visiting commits with
-get_revision(). In prepare_revision_walk(), the UNINTERESTING commits
-are walked until a boundary is found.
+However, before the previous change, a trivial removal of the warning
+would cause a failure in t5500-fetch-pack.sh when
+GIT_TEST_PACK_PATH_WALK is enabled. The shallow fetch would provide more
+objects than we desired, due to some incorrect behavior of the path-walk
+API, especially around walking uninteresting objects.
+
+The recently-added tests in t5538-push-shallow.sh help to confirm this
+behavior is working with the --path-walk option if
+GIT_TEST_PACK_PATH_WALK is enabled. These tests passed previously due to
+the --path-walk feature being disabled in the presence of a shallow
+clone.
 
 Signed-off-by: Derrick Stolee <stolee@gmail.com>
 ---
- Documentation/technical/api-path-walk.adoc |  8 ++++++++
- path-walk.c                                |  6 +++++-
- path-walk.h                                |  7 +++++++
- t/helper/test-path-walk.c                  |  2 ++
- t/t6601-path-walk.sh                       | 20 ++++++++++++++++++++
- 5 files changed, 42 insertions(+), 1 deletion(-)
+ builtin/pack-objects.c  |  5 ++---
+ t/t5538-push-shallow.sh | 10 +++++++++-
+ 2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/technical/api-path-walk.adoc b/Documentation/technical/api-path-walk.adoc
-index e522695dd9fa..34c905eb9c31 100644
---- a/Documentation/technical/api-path-walk.adoc
-+++ b/Documentation/technical/api-path-walk.adoc
-@@ -56,6 +56,14 @@ better off using the revision walk API instead.
- 	the revision walk so that the walk emits commits marked with the
- 	`UNINTERESTING` flag.
- 
-+`edge_aggressive`::
-+	For performance reasons, usually only the boundary commits are
-+	explored to find UNINTERESTING objects. However, in the case of
-+	shallow clones it can be helpful to mark all trees and blobs
-+	reachable from UNINTERESTING tip commits as UNINTERESTING. This
-+	matches the behavior of `--objects-edge-aggressive` in the
-+	revision API.
-+
- `pl`::
- 	This pattern list pointer allows focusing the path-walk search to
- 	a set of patterns, only emitting paths that match the given
-diff --git a/path-walk.c b/path-walk.c
-index 341bdd2ba4ef..2d4ddbadd50f 100644
---- a/path-walk.c
-+++ b/path-walk.c
-@@ -503,7 +503,11 @@ int walk_objects_by_path(struct path_walk_info *info)
- 	if (prepare_revision_walk(info->revs))
- 		die(_("failed to setup revision walk"));
- 
--	/* Walk trees to mark them as UNINTERESTING. */
-+	/*
-+	 * Walk trees to mark them as UNINTERESTING.
-+	 * This is particularly important when 'edge_aggressive' is set.
-+	 */
-+	info->revs->edge_hint_aggressive = info->edge_aggressive;
- 	edge_repo = info->revs->repo;
- 	edge_tree_list = root_tree_list;
- 	mark_edges_uninteresting(info->revs, show_edge,
-diff --git a/path-walk.h b/path-walk.h
-index 473ee9d361c8..5ef5a8440e6b 100644
---- a/path-walk.h
-+++ b/path-walk.h
-@@ -50,6 +50,13 @@ struct path_walk_info {
+diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
+index df3cca0a668a..a87546530632 100644
+--- a/builtin/pack-objects.c
++++ b/builtin/pack-objects.c
+@@ -210,6 +210,7 @@ static int keep_unreachable, unpack_unreachable, include_tag;
+ static timestamp_t unpack_unreachable_expiration;
+ static int pack_loose_unreachable;
+ static int cruft;
++static int shallow = 0;
+ static timestamp_t cruft_expiration;
+ static int local;
+ static int have_non_local_packs;
+@@ -4490,6 +4491,7 @@ static void get_object_list_path_walk(struct rev_info *revs)
+ 	 * base objects.
  	 */
- 	int prune_all_uninteresting;
+ 	info.prune_all_uninteresting = sparse;
++	info.edge_aggressive = shallow;
  
-+	/**
-+	 * When 'edge_aggressive' is set, then the revision walk will use
-+	 * the '--object-edge-aggressive' option to mark even more objects
-+	 * as uninteresting.
-+	 */
-+	int edge_aggressive;
+ 	trace2_region_enter("pack-objects", "path-walk", revs->repo);
+ 	result = walk_objects_by_path(&info);
+@@ -4695,7 +4697,6 @@ int cmd_pack_objects(int argc,
+ 		     struct repository *repo UNUSED)
+ {
+ 	int use_internal_rev_list = 0;
+-	int shallow = 0;
+ 	int all_progress_implied = 0;
+ 	struct strvec rp = STRVEC_INIT;
+ 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
+@@ -4881,8 +4882,6 @@ int cmd_pack_objects(int argc,
+ 			option = "--filter";
+ 		else if (use_delta_islands)
+ 			option = "--delta-islands";
+-		else if (shallow)
+-			option = "--shallow";
+ 
+ 		if (option) {
+ 			warning(_("cannot use %s with %s"),
+diff --git a/t/t5538-push-shallow.sh b/t/t5538-push-shallow.sh
+index c406f9d7ed5f..dc0e972943a6 100755
+--- a/t/t5538-push-shallow.sh
++++ b/t/t5538-push-shallow.sh
+@@ -153,7 +153,15 @@ test_expect_success 'push new commit from shallow clone has good deltas' '
+ 
+ 	# If the delta base is found, then this message uses "bytes".
+ 	# If the delta base is not found, then this message uses "KiB".
+-	test_grep "Writing objects: .* bytes" err
++	test_grep "Writing objects: .* bytes" err &&
 +
- 	/**
- 	 * Specify a sparse-checkout definition to match our paths to. Do not
- 	 * walk outside of this sparse definition. If the patterns are in
-diff --git a/t/helper/test-path-walk.c b/t/helper/test-path-walk.c
-index 61e845e5ec25..fe63002c2be2 100644
---- a/t/helper/test-path-walk.c
-+++ b/t/helper/test-path-walk.c
-@@ -82,6 +82,8 @@ int cmd__path_walk(int argc, const char **argv)
- 			 N_("toggle inclusion of tree objects")),
- 		OPT_BOOL(0, "prune", &info.prune_all_uninteresting,
- 			 N_("toggle pruning of uninteresting paths")),
-+		OPT_BOOL(0, "edge-aggressive", &info.edge_aggressive,
-+			 N_("toggle aggressive edge walk")),
- 		OPT_BOOL(0, "stdin-pl", &stdin_pl,
- 			 N_("read a pattern list over stdin")),
- 		OPT_END(),
-diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index c89b0f1e19d9..785c2f22373d 100755
---- a/t/t6601-path-walk.sh
-+++ b/t/t6601-path-walk.sh
-@@ -378,6 +378,26 @@ test_expect_success 'topic, not base, boundary with pruning' '
- 	test_cmp_sorted expect out
++	git -C deltas commit --amend -m "changed message" &&
++	GIT_TRACE2_EVENT="$(pwd)/config-push.txt" \
++	GIT_PROGRESS_DELAY=0 git -C deltas -c pack.usePathWalk=true \
++		push --progress -f origin deltas 2>err &&
++
++	test_grep "Enumerating objects: 1, done" err &&
++	test_region pack-objects path-walk config-push.txt
  '
  
-+test_expect_success 'topic, not base, --edge-aggressive with pruning' '
-+	test-tool path-walk --prune --edge-aggressive -- topic --not base >out &&
-+
-+	cat >expect <<-EOF &&
-+	0:commit::$(git rev-parse topic)
-+	1:tree::$(git rev-parse topic^{tree})
-+	1:tree::$(git rev-parse base^{tree}):UNINTERESTING
-+	2:tree:right/:$(git rev-parse topic:right)
-+	2:tree:right/:$(git rev-parse base:right):UNINTERESTING
-+	3:blob:right/c:$(git rev-parse base:right/c):UNINTERESTING
-+	3:blob:right/c:$(git rev-parse topic:right/c)
-+	blobs:2
-+	commits:1
-+	tags:0
-+	trees:4
-+	EOF
-+
-+	test_cmp_sorted expect out
-+'
-+
- test_expect_success 'trees are reported exactly once' '
- 	test_when_finished "rm -rf unique-trees" &&
- 	test_create_repo unique-trees &&
+ test_done
 -- 
 gitgitgadget
-
