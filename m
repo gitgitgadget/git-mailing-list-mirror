@@ -1,139 +1,91 @@
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B38AF236431
-	for <git@vger.kernel.org>; Fri, 16 May 2025 10:13:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8682B233727
+	for <git@vger.kernel.org>; Fri, 16 May 2025 11:50:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747390388; cv=none; b=ayuMzR3TShROjhFvtF2ZAOPfaraUj9LWCtHL4D6L8e9d0tp1NnuGa0lGWX6HTB75fv/xeSlQd4eeNlN0nwteUHcFFn89Oip8Q0U/zsJred9bwBlOu1By7f499d2bOT5MEFrs478tq7Q26ga4QEkQXJBZH5XtvmcX1ryD8lXixZU=
+	t=1747396234; cv=none; b=pyE/3Q6GA0adSzxI1+pGTVqbpM+H20NfgVHeMNfbKaXXuIFEkEdhLlS3uDemSZJtDfJ3efW3Ka5Ikj7yT8R11e+sakXluQlrCZBI5lqNhZOwemRe5zGmh+pnVx1dmCya5FiACLosimuoO/a9ni1Gph13h5Wt6KNc6l799zh6RnA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747390388; c=relaxed/simple;
-	bh=+xAt6iU69womL4vebUAhfEHbzAP4Gx6ZC6E0qWk1tcw=;
-	h=From:Message-ID:Date:MIME-Version:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=UcbRUtWNZTlWDd1bhw7hRDuFh+CWAev8wG/+BBxsOmsGQ+8+K4LkrpzQ+yd/+rzKTUEwbO9Db4T427msO8f33Et6vB7bJbSXEcAdzlnUvfHEUmXE0A1P4v3/6RFr1R115XbNsWSGclyhRQRb+MWp1dzuqLIcWlBZnxTRnYDGsws=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PS2SpuW0; arc=none smtp.client-ip=209.85.221.54
+	s=arc-20240116; t=1747396234; c=relaxed/simple;
+	bh=7gEQT7Gk+X1TsnaXfdShYKJVbbhTSPoM4QxYR1oPEgo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Cc:Date:
+	 Message-Id:References:To; b=dx/1DcXW+fcYBbwcevKqc22SBeMhim8GWqFre5Gpzu7RpSY7hedphUFt+nGY4s/8/zebiCbV/E+Gcnu2VbQrszz66lXf6yJHjPlKnDqcHsT92zkgctZWQELzqxUpKh3czaxFLV1n6QTPBgCsn7zDaXh/G+NXT9h8vhM6wzG2m14=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ckQJTTHc; arc=none smtp.client-ip=209.85.219.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PS2SpuW0"
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a363d15c64so60133f8f.3
-        for <git@vger.kernel.org>; Fri, 16 May 2025 03:13:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckQJTTHc"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6f8b10b807fso11407876d6.1
+        for <git@vger.kernel.org>; Fri, 16 May 2025 04:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747390385; x=1747995185; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=n3xVCHBNzAitp6xjpWFLAxIhBHIC5q4oCA1BQEsdXXk=;
-        b=PS2SpuW04IyCklhC6k0BTDa5JH3Loge0xiRw6iLwrxTnf6dqrHWb5hWAgKGy/iUXFg
-         rJEbdtoywe46F1+baqSDFgl+2rAEIciVfp1yI7JzXWJFQiJ2a7sIncyAJ95GD00eEg3o
-         cHRSz/NfKk1r45obSGOrPFPd5rKjVtJjSFbmikZHBJyLL5bfH32ls4dIXAA8yUK59zhc
-         OwVlyZUrsYyVPQSr+PG7k/B+nOJSHWTeNXzC0nehAjGBvimFZ3tq/0aKk94gU4+wzihJ
-         1nCTvIUFl8f4LaWMQmJtkw6TR79V53ki6gimO9IKrbzyrdksm/Iu+hgeRgCKlGWr99ry
-         FQLA==
+        d=gmail.com; s=20230601; t=1747396231; x=1748001031; darn=vger.kernel.org;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7gEQT7Gk+X1TsnaXfdShYKJVbbhTSPoM4QxYR1oPEgo=;
+        b=ckQJTTHcnkCKPJC0TQ3BsAvYH4WgP7wCjIgWvlLx9FSNUDmlfl7Fh1eanmXsEkUWzK
+         Kar3ckZnYmthdslO+n6VX4PfGU1XqeOuVt4Urv2PxJndVevIG/zvsBTj3DDRA4UoGrb0
+         BHRSdvAnSlTbjJkDQCuYVK36m3cIipQSs65ytenZBRmvj5R+MA2TwB09209nv0NkjAr7
+         SlV8drPF0lf7/K1l7p2ZDahsl+kpOcD/m1jEY0iUbeYGnS0K55AL4a4uxQ7PvWJ5e5cM
+         pVyUz7aJqUpaPmIiK88Xo5oCHt0VfD1GyGMbqHKOWf3SIO3biQD/NBI/IoNnPiPyI2S4
+         6e8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747390385; x=1747995185;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:user-agent:mime-version:date:message-id:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=n3xVCHBNzAitp6xjpWFLAxIhBHIC5q4oCA1BQEsdXXk=;
-        b=EYU4USp6s96KuLkUNgxwW1uItoAFTZEcABddtC/zV1YWZIzBVUNLGuJ/DdhQy4H//G
-         g7IEsCnn+Swtdc/aWAZFbUI9Q6N0iS9d1QbyotfQaboVRdRstkvLaMZ3kcRG4+3LJWpA
-         q+h8eFTUA48pjn+Aovez1P7QwelO4GRNSrwmeCMEndJ9x8UAHY4QJFNEeMxHINzAmDNs
-         HVuXVvL4xl6kL2xEiKEA2C6oIZ+iDRVclVsi1TmYCkCVbrrbwCpoo750dTGW2FxWDCoy
-         q4LYrsFfgWb9D53kY8A8+8WbWtv0Npohv6drwWjISypZP7irBD4LMPaefu3Jtpd3Hg+D
-         KF+g==
-X-Forwarded-Encrypted: i=1; AJvYcCVg5zjWeMKTvlTyUowBNwCCgrmSQkgWow+mJR7cXoLXDbzK7yUYn0tkLLAGnr/F3B7l/9A=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxxHUM5zcMJWSBNCTMzGmt2CHCKYaY2mK9zzSGf0s99aeShLYTD
-	xj/dhUPEmYqIea7SPRtME58CIr9TJ64gBcxMS0TbPsqiRwjnVqIO1k5Q
-X-Gm-Gg: ASbGncsK9nKbzGINbYAlU5516/mhOT4LP7HZWm5rncS2BBXsjQN/9oExoemLwqaCspS
-	bTtcH/1rzwGTixljf9fKgLLn8gtrGIThzGaZyEtN5qMkLtwWUfjFTlQQQYEltf26T4dWfH303kZ
-	w3fetD71+SiuY3ESZnzCBmZx+eyxva+fXH6fnSbL+GP6f9EePA+gmUXoUo5WeYZr4hY8VERshSs
-	QCYbKc+0oBvNi0BR1B3sGawVhfi/urp5QOCFh+ULAPodMxpQHD1jQyPY3B/BLsbpjlMMXiBGHFk
-	Yyd3Yqq1hY5Oftz9IsGNR7kTbr/cqzlbtlhRKVIU0MQdZx/4QzD4z57U7O50u7eFtVA8pMTWsVP
-	UvNcW1/YiTO8m8Su6Xw2KgnLw
-X-Google-Smtp-Source: AGHT+IHsYfQJymjgMPEdvum5psSi7IKZ175GGDIUZb+eak0+npSDpGTt+ZysOBDz2UST46Uggx6adA==
-X-Received: by 2002:a05:6000:3110:b0:3a0:b550:ded4 with SMTP id ffacd0b85a97d-3a35c821bbcmr2770388f8f.13.1747390385035;
-        Fri, 16 May 2025 03:13:05 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:8d23:ce23:3b:22a8? ([2a0a:ef40:700:a501:8d23:ce23:3b:22a8])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca62b5dsm2391208f8f.55.2025.05.16.03.13.04
+        d=1e100.net; s=20230601; t=1747396231; x=1748001031;
+        h=to:references:message-id:date:cc:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=7gEQT7Gk+X1TsnaXfdShYKJVbbhTSPoM4QxYR1oPEgo=;
+        b=KFMqhSpqa2nH9zrezYyq/IgICfd8+qfjXU4G7QKfEpb0qhQBPhqYBY9u51g2T3mXwI
+         7tDTz2dXkCFIyEq8Ga5Ol6Bw5o3vFKZhse/KZecYX0UIXUv2O4EKv7QrsT4XPwEOsBps
+         qgnaVqxw9kneBDgGLWTQSoCQlPKqLiW+eNFfQyGonvC4z9YunJcnMgDIexPb39KYPMy8
+         dSzWqsQhzi0ipgI5t7ndyECiVA+htVA75z6X4ytq07g6Qzz9f4w8Ey695+rCarC9Yofj
+         UHLUxVDIQLXwq6VVkr7wTDW05rEIMuPTjLygfIImv2T4qHERpHwKw0RTLgsQaOlvKRtn
+         zC8A==
+X-Gm-Message-State: AOJu0YxN8K3zdqcnHS5tMkuzkHOOsmU1/sHHSzO30PoiRb/GHHhTn3vf
+	6akR08KJcjAqorLwphyuefb0QMuVt7aGHf3IY+iYPXxOqmluvd79m1xJpsq/aQ==
+X-Gm-Gg: ASbGncsz7dm+6EEbZ3le6HKmCzG3wwi+ySTzOSz7Ip1ULP9L9m+ArwJNtNK05FCLWuy
+	Gf37EwfveaaDyMyBrEcYK7sKsIzXO8Tp3doIzV2G/IfvUV7bNTaQlEQRTH8ROHzYKLov34XQbb8
+	RlcjaU4IUUTJda1Fm6mUXz3wNMEtZmINy4WekgFjAL+cz89GALCCsRJ+bGPsDVnQTfPkg98EY8k
+	R91q91Qn4HWlSfb9nEG2lCV1tjJBP/H2Cys2JXEfuio+THUGTpiZmHboVvWtdG+UGRCF5+QJ3dP
+	lB2lW8xiIjYM6WsuC3pPFfoXjmM6nR8yrO7Tbp+RAnVmHjqlo8r41+HP71s91i9ZzKbORCYTipt
+	ZJhM=
+X-Google-Smtp-Source: AGHT+IEDx+Fmh5cUM9jsoIjptjgq4Q2qAKx5Ze+l+etZnZ4drAmlK5tPHLgfDbrrhRLcGKE8bLltIg==
+X-Received: by 2002:a05:620a:240e:b0:7c5:4c49:76a5 with SMTP id af79cd13be357-7cd46718986mr382966185a.12.1747396220054;
+        Fri, 16 May 2025 04:50:20 -0700 (PDT)
+Received: from smtpclient.apple ([2600:1004:b011:c7b2:9c89:1d6f:e18:e3f4])
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7cd468cc89fsm106833385a.105.2025.05.16.04.50.18
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 16 May 2025 03:13:04 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-X-Google-Original-From: Phillip Wood <phil@crinan.ddns.net>
-Message-ID: <8641d540-516f-4dd2-bafa-cbc2568b5281@crinan.ddns.net>
-Date: Fri, 16 May 2025 11:13:04 +0100
+        Fri, 16 May 2025 04:50:19 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 11/11] sequencer: stop pretending that an assignment is a
- condition
-To: Johannes Schindelin via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>
-References: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
- <7a54005bd26ac17cb6d99a2e18932f97575d4aca.1747314709.git.gitgitgadget@gmail.com>
-Content-Language: en-US
-In-Reply-To: <7a54005bd26ac17cb6d99a2e18932f97575d4aca.1747314709.git.gitgitgadget@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH] commit: Add commit.signoff configuration option
+From: Ben Knoble <ben.knoble@gmail.com>
+In-Reply-To: <aCTI7VjK5QMht3ws@chrisdown.name>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+ kernel-team@fb.com
+Date: Fri, 16 May 2025 07:50:07 -0400
+Message-Id: <167ABBF2-8DFB-4F1B-B5AA-93024FE8CA9C@gmail.com>
+References: <aCTI7VjK5QMht3ws@chrisdown.name>
+To: Chris Down <chris@chrisdown.name>
+X-Mailer: iPhone Mail (21F90)
 
-Hi Johannes
 
-Thanks for cleaning this up - I'm not sure why I didn't just write 
-something like this in the first place.
+> Le 14 mai 2025 =C3=A0 12:46, Chris Down <chris@chrisdown.name> a =C3=A9cri=
+t :
+>=20
+> I understand where people are coming from for sure, but I think the conver=
+sation has moved on beyond many of those points, right? For example, some of=
+ the objections are about format.signoff in 2006, but we merged that into th=
+e tree since 2009 in commit 1d1876e9300c ("Add configuration variable for si=
+gn-off to format-patch").
 
-Best Wishes
-
-Phillip
-
-On 15/05/2025 14:11, Johannes Schindelin via GitGitGadget wrote:
-> From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> 
-> In 3e81bccdf3 (sequencer: factor out todo command name parsing,
-> 2019-06-27), a `return` statement was introduced that basically was a
-> long sequence of conditions, combined with `&&`, except for the last
-> condition which is not really a condition but an assignment.
-> 
-> The point of this construct was to return 1 (i.e. `true`) from the
-> function if all of those conditions held true, and also assign the `bol`
-> pointer to the end of the parsed command.
-> 
-> Some static analyzers are really unhappy about such constructs. And
-> human readers are at least puzzled, if not confused, by seeing a single
-> `=` inside a chain of conditions where they would have expected to see
-> `==` instead and, based on experience, immediately suspect a typo.
-> 
-> Let's help all of this by turning this into the more verbose, more
-> readable form of an `if` construct that both assigns the pointer as well
-> as returns 1 if all of the conditions hold true.
-> 
-> Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> ---
->   sequencer.c | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/sequencer.c b/sequencer.c
-> index b5c4043757e9..e5e3bc6fa5ea 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2600,9 +2600,12 @@ static int is_command(enum todo_command command, const char **bol)
->   	const char nick = todo_command_info[command].c;
->   	const char *p = *bol;
->   
-> -	return (skip_prefix(p, str, &p) || (nick && *p++ == nick)) &&
-> -		(*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p) &&
-> -		(*bol = p);
-> +	if ((skip_prefix(p, str, &p) || (nick && *p++ == nick)) &&
-> +	    (*p == ' ' || *p == '\t' || *p == '\n' || *p == '\r' || !*p)) {
-> +		*bol = p;
-> +		return 1;
-> +	}
-> +	return 0;
->   }
->   
->   static int check_label_or_ref_arg(enum todo_command command, const char *arg)
-
+Just in case it wasn=E2=80=99t clear: I think the patch is reasonable ;) I o=
+nly meant that Junio had provided some background material that should proba=
+bly be addressed, and now you have. Thanks!=
