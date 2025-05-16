@@ -1,71 +1,71 @@
-Received: from mail-pf1-f176.google.com (mail-pf1-f176.google.com [209.85.210.176])
+Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09FDE2E628
-	for <git@vger.kernel.org>; Fri, 16 May 2025 01:02:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E94432E628
+	for <git@vger.kernel.org>; Fri, 16 May 2025 01:03:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747357357; cv=none; b=UJKHx68aRerpcWpUji4n9kcwx+0E1+nVxeWIj/tQ5WprEH8gMQXNoKW1SL2HPpbKLqy1iyU0YVMTgYqaoUjZ2rhgiA5mJdOmaJnFR3KWErEdRoPuXqDRXLRQ0Orm1w9UXhfy9cjaFCCYBP2EIrRZWmzUNaI9zYPZwWay3NB7n+A=
+	t=1747357395; cv=none; b=nEzA40jeEm2jDWP2qi2SdJ8nCJGrU7iR9WkKmwO1YuMliHZEEI9Q8CcITkHblfngo/evXKEVo0K3ROynDvxW9MdeE3P0CQLcxE2i4UrdndyXyENwejLBUJX3PjhVWKj7jgUcJmrGExaBMcz1pt1w8n+0XvnjDS8L1uCk+yNQCzs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747357357; c=relaxed/simple;
-	bh=ytOYHabBNj/x6r/xnfXP0OV9Kt/m9q3lR55GqZjvLwc=;
+	s=arc-20240116; t=1747357395; c=relaxed/simple;
+	bh=IVJww+4GlLtAMVsokTKMIiE8dQS9CQc+LkulBess/5s=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=oY6HMsNaMDqp9tSBGDa5Myw+Yv0jyvQWuL9EtPEBCFyTtMHCHyS9J35FcyaIy2sUpCjkgUXDAtIRAxl3NYcRzzVFH/iudvUlJW/tsRhDZPZxuKAyCn4HAV49Qw7P7zS9ixo9HEGMuVG2dhH1vrlPbU6jbWwkQB3spzrD0w/oHjI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OaWhQQQp; arc=none smtp.client-ip=209.85.210.176
+	 MIME-Version; b=Op3G//GAX7ZNFlYzy3G6Fw/ED9jPid7osjc9E0tsr2oikA0CG0wopcwAN19QxltZLCGx/ROGzkCvZPH1s0B11JaP1fRc9VpI1NkUzjUiRFvjV20uWeta7kALUbVBgSHTlL9xnmb8XwRqBwywefy6aHZMRtT+uK4R1QTY53JuCtU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=LKakqeHe; arc=none smtp.client-ip=209.85.210.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OaWhQQQp"
-Received: by mail-pf1-f176.google.com with SMTP id d2e1a72fcca58-7423fb98cb1so1867533b3a.3
-        for <git@vger.kernel.org>; Thu, 15 May 2025 18:02:35 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="LKakqeHe"
+Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-742596d8b95so2129983b3a.1
+        for <git@vger.kernel.org>; Thu, 15 May 2025 18:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747357355; x=1747962155; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747357393; x=1747962193; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=WeVqv7CyMTDdlIx83Gpvr7aMs2DSstSLGdGqDCCpZps=;
-        b=OaWhQQQpQlgQLUJNWcWOThpFVOVhqM2K8s3rgQWSPZkSPnj0P9VLPgMrEN+3c0PtS/
-         1LmSKEgZkCnRuWJcBbdu8b22TQwIDqbrWULmbIKqHpCgxf8p8ZMj36wf1LYC1oVwSIzF
-         sXKh7t1IFaBz8SBpZQNsAIv2d7y8eF2kmK1ME69OG1X/PZAoCt94wLgDczZ2t9N076nC
-         9N82ldSJwe52VajTTh9w2yp6IOwhusIl2T7NV4Fl/BfP6PME9hmSlgE4BG564NaESHWp
-         JYZidyHWv1Mkj7oC2RxB9cNN9wLlKCAcKewoy/UMKponUqfyvjRApOlqLa8ivl+B1vgS
-         og8Q==
+        bh=FDAtJ4VTHEsXaoADe3OxtkRNpOW+E1knX0uh/RZ9pow=;
+        b=LKakqeHe99eFxkuFDtlunrZLPztujSWbYb0DQCD8t7/5oUBWrSSL7degg1vZmXhYvO
+         yjNJyB+j16jDGhq6GtAgE9cTY8pUs96BAfKDdeJD42F70u++AD25eITjdBzdguVU0jhy
+         H8Wf9lMl9tVWzllnZuWcDztXfeYzC0U487wppXLp4uR80+K8TZm2sTHutiOwm2WeZ2zt
+         2Rq/YBLxd1vkXxH2D8a6ciloHPQRWTgcbtrqpJkWSOZCGm8WIHvvjvUK5UVFKTdSQLyo
+         xIl/jq7pdL6KfiOWJVFGZXKQUD0p5BiRLSnAa7nmQw49IN2Z2dn3tRC3ikz+1tnChO3E
+         wrlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747357355; x=1747962155;
+        d=1e100.net; s=20230601; t=1747357393; x=1747962193;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WeVqv7CyMTDdlIx83Gpvr7aMs2DSstSLGdGqDCCpZps=;
-        b=XaQtzVkJWhT+f1NzQ/jdTGADd2/WwkxjrUbBzIgaYqQOZK/3A+o9yjcAAGTOhqXjWO
-         em4UPjnykmgSSVuBSqpkqKWbZ+lZpxfKhIQLO3C3JWOz+Y/EXJbgRDmhHHPJEl4DGvcP
-         ogCe6z+QlF99iMZwOiqFjT0ZWVQ2MP3d0Yy5/T5idO/Tv4mGDZqUjNdrVdqGisGsVa/i
-         TeZiJf6Yhub+Az0BOHK23DgXZn4U/7S6n/dBNBARKdSCq6NL41Lf1XhyZltLo8mwyxmA
-         0fqlm3rWY5vZJY6/A2y4xWC/oyKNEhDeizBE6A/1MwzPgHH4OefzFTvaI7sg73QBliwG
-         h3Lg==
-X-Gm-Message-State: AOJu0Yz7yDhgdPazCERfyXippICbvHll+uW74dBWn+G+sDR2hVn7nN6/
-	Pry/lHJNnjrASnmMvooCcBQAs1Y7FQSSQI+ldY+49n2arceBI/+vMO8ie53kwA==
-X-Gm-Gg: ASbGncvHpto4TgCWjeKeeuJu9mGsnAC7nIT9b4wSibs8JPkb9FI7OVpSCJhAis4K6S3
-	Bv2X5ipgC0aHm023gAu78IRrEiPKQMlqP9ECiAkp0y9FW4WHvngMBbUg4JW1+Y/b7GNvddmP82d
-	kfqImy7WV3FX9jiHKoP56v3AG8KtGI6B8knqGPFzYUwqPvDFq5LxlBYi7CDT0k2azuodWZvMxNu
-	4kj6fGoMZPJ3zDZNpbvITfGVVTaBH3QHujjbJXHnv/wG1NMKrERn+hEmHXviaiDzyqhfAyRrIng
-	3owaq32RmjbCXJR4x5GJ2RezXJcclhq37oUKh8IKPVl7KpxrNXIblEDxDymV84vauiqyTa68cpJ
-	puLf57KRiE5IPuIY=
-X-Google-Smtp-Source: AGHT+IEdPQOG6pIvB1Rt8YniC/xEX95KcIGQ247sJtZ4gqmIF2d9fPg2SWYYXOnxVfpxty0kYZ4dOw==
-X-Received: by 2002:a05:6a00:91d3:b0:73e:2d7a:8fc0 with SMTP id d2e1a72fcca58-742a9786a79mr1539018b3a.1.1747357354543;
-        Thu, 15 May 2025 18:02:34 -0700 (PDT)
+        bh=FDAtJ4VTHEsXaoADe3OxtkRNpOW+E1knX0uh/RZ9pow=;
+        b=lJqQEvWYmj6Z4Bw4rzzzm0G/sANcfMSgl7cTJ6uXyG3T7FePplKyEHbNiP2Mx7ACd6
+         8G46qsHD2LEM45ge8DLhlEvYhu+3KJOqBoGgTQvYlRxTl8EakK03ymkvPWLXF7k+j8x9
+         qIiO1ozUIdqjXf5MQLzH8Q+eyT22NSijxrC/slC8ERUdM11EAowkiLq56RxKk9+rVH6i
+         xF2UoTwvQ/cKxi0O/HMc2Grszte8UWoI0rYXRSmcxdMnkvvQu6G4lhDnPrT2HL6ot455
+         PJ4cToy0HJfqJHM8b3ecm0dUkDwsXIKHp4xeHGc74HL57C14bHkSJ30Wv+jNgasZDkgh
+         j3LQ==
+X-Gm-Message-State: AOJu0Yybjwq61Xrawd5bCd0LIW0uF7/AxXx+5P8izID9zBjqtPbT4w76
+	N+Aw9X1r76bkvWUR2iswth94cw3j+NQGuKRlHbJtgXjRXMvNuxNFUwMiEegbDg==
+X-Gm-Gg: ASbGnctoeUQmTtshYCu24nrVLPZJykp5KjPkvz2SAZ0qNsJhrv3o6X3djWyNHKkvEgC
+	CmxF38tHRn6eykS3EAaIfo08nQIE3wW+Z8pTbCZx4hmuAbD16hFrlJZlxVXXRpWQnD0tXwqOZFU
+	zeOSmp3MSn6Kvoyuc0C+4v7M3dTLDzewKALs7OK1/qDGfQ0oX63Q3/H4nC7mvonCmZDHzuxi8Ip
+	UC/53KLk54+nnEkqXiUdZEod2f31KJ6bFBcEPRHoS9PcTXBxXhhJcp069xKNi/AMVAzf7noxpEn
+	IKVu8CLts3qIeo2ZAx4WvzATHp/lEn2JAkiJOSuijnPlBZKCGpQoW7i7OamciXxYWGC51eE7n5i
+	QR5oLeSHoyr9GlPQ=
+X-Google-Smtp-Source: AGHT+IHZN341soxsNlzCpIgddPfEQhx05mgHSIPd2khL0YSDA0ExuZzti96RRWPQGTdlufUYb0tJYA==
+X-Received: by 2002:a05:6a00:114e:b0:740:6fa3:e429 with SMTP id d2e1a72fcca58-742a9802ff9mr1584705b3a.11.1747357392625;
+        Thu, 15 May 2025 18:03:12 -0700 (PDT)
 Received: from localhost.localdomain ([2804:14c:32:86ae:c830:7026:45db:9f87])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a9738f13sm437329b3a.74.2025.05.15.18.02.32
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-742a9738f13sm437329b3a.74.2025.05.15.18.03.10
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Thu, 15 May 2025 18:02:34 -0700 (PDT)
+        Thu, 15 May 2025 18:03:12 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: gitster@pobox.com,
 	ps@pks.im,
 	karthik.188@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v3 1/2] json-writer: add docstrings to jw_* functions
-Date: Thu, 15 May 2025 22:01:58 -0300
-Message-Id: <20250516010159.27042-2-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v3 2/2] json-writer: describe the usage of jw_* functions
+Date: Thu, 15 May 2025 22:01:59 -0300
+Message-Id: <20250516010159.27042-3-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250516010159.27042-1-lucasseikioshiro@gmail.com>
 References: <20250516010159.27042-1-lucasseikioshiro@gmail.com>
@@ -77,222 +77,57 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a docstring for each function that manipulates json_writers.
+Provide an overview of the set of functions used for manipulating
+`json_writer`s, by describing what functions should be used for
+each JSON-related task.
 
 Helped-by: Junio C Hamano <gitster@pobox.com>
 Helped-by: Patrick Steinhardt <ps@pks.im>
 Helped-by: Karthik Nayak <karthik.188@gmail.com>
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- json-writer.c |   4 --
- json-writer.h | 143 ++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 143 insertions(+), 4 deletions(-)
+ json-writer.h | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
-diff --git a/json-writer.c b/json-writer.c
-index 8c5187e9fd..34577dc25f 100644
---- a/json-writer.c
-+++ b/json-writer.c
-@@ -268,10 +268,6 @@ static void append_sub_jw(struct json_writer *jw,
- 	strbuf_addbuf(&jw->json, &value->json);
- }
- 
--/*
-- * Append existing (properly terminated) JSON sub-data (object or array)
-- * as-is onto the given JSON data.
-- */
- void jw_object_sub_jw(struct json_writer *jw, const char *key,
- 		      const struct json_writer *value)
- {
 diff --git a/json-writer.h b/json-writer.h
-index 04413bd1af..0e8e6c3ddc 100644
+index 0e8e6c3ddc..8f845d4d29 100644
 --- a/json-writer.h
 +++ b/json-writer.h
-@@ -69,42 +69,185 @@ struct json_writer
- 	.open_stack = STRBUF_INIT, \
- }
- 
-+/*
-+ * Initialize a json_writer with empty values.
-+ */
- void jw_init(struct json_writer *jw);
-+
-+/*
-+ * Release the internal buffers of a json_writer.
-+ */
- void jw_release(struct json_writer *jw);
- 
-+/*
-+ * Begin the json_writer using an object as the top-level data structure. If
-+ * pretty is set to 1, the result will be a human-readable and indented JSON,
-+ * and if it is set to 0 the result will be minified single-line JSON.
-+ */
- void jw_object_begin(struct json_writer *jw, int pretty);
-+
-+/*
-+ * Begin the json_writer using an array as the top-level data structure. If
-+ * pretty is set to 1, the result will be a human-readable and indented JSON,
-+ * and if it is set to 0 the result will be minified single-line JSON.
-+ */
- void jw_array_begin(struct json_writer *jw, int pretty);
- 
-+/*
-+ * Append a string field to the current object of the json_writer, given its key
-+ * and its value. Trigger a BUG when not in an object.
-+ */
- void jw_object_string(struct json_writer *jw, const char *key,
- 		      const char *value);
-+
-+/*
-+ * Append an int field to the current object of the json_writer, given its key
-+ * and its value. Trigger a BUG when not in an object.
-+ */
- void jw_object_intmax(struct json_writer *jw, const char *key, intmax_t value);
-+
-+/*
-+ * Append a double field to the current object of the json_writer, given its key
-+ * and its value. The precision parameter defines the number of significant
-+ * digits, where -1 can be used for maximum precision. Trigger a BUG when not in
-+ * an object.
-+ */
- void jw_object_double(struct json_writer *jw, const char *key, int precision,
- 		      double value);
-+
-+/*
-+ * Append a boolean field set to true to the current object of the json_writer,
-+ * given its key. Trigger a BUG when not in an object.
-+ */
- void jw_object_true(struct json_writer *jw, const char *key);
-+
-+/*
-+ * Append a boolean field set to false to the current object of the json_writer,
-+ * given its key. Trigger a BUG when not in an object.
-+ */
- void jw_object_false(struct json_writer *jw, const char *key);
-+
-+/*
-+ * Append a boolean field to the current object of the json_writer, given its
-+ * key and its value. Trigger a BUG when not in an object.
-+ */
- void jw_object_bool(struct json_writer *jw, const char *key, int value);
-+
-+/*
-+ * Append a null field to the current object of the json_writer, given its key.
-+ * Trigger a BUG when not in an object.
-+ */
- void jw_object_null(struct json_writer *jw, const char *key);
-+
-+/*
-+ * Append a field to the current object of the json_writer, given its key and
-+ * another json_writer that represents its content. Trigger a BUG when not in
-+ * an object.
-+ */
- void jw_object_sub_jw(struct json_writer *jw, const char *key,
- 		      const struct json_writer *value);
- 
-+/*
-+ * Start an object as the value of a field in the current object of the
-+ * json_writer. Trigger a BUG when not in an object.
-+ */
- void jw_object_inline_begin_object(struct json_writer *jw, const char *key);
-+
-+/*
-+ * Start an array as the value of a field in the current object of the
-+ * json_writer. Trigger a BUG when not in an object.
-+ */
- void jw_object_inline_begin_array(struct json_writer *jw, const char *key);
- 
-+/*
-+ * Append a string value to the current array of the json_writer. Trigger a BUG
-+ * when not in an array.
-+ */
- void jw_array_string(struct json_writer *jw, const char *value);
-+
-+/*
-+ * Append an int value to the current array of the json_writer. Trigger a BUG
-+ * when not in an array.
-+ */
- void jw_array_intmax(struct json_writer *jw, intmax_t value);
-+
-+/*
-+ * Append a double value to the current array of the json_writer. The precision
-+ * parameter defines the number of significant digits, where -1 can be used for
-+ * maximum precision. Trigger a BUG when not in an array.
-+ */
- void jw_array_double(struct json_writer *jw, int precision, double value);
-+
-+/*
-+ * Append a true value to the current array of the json_writer. Trigger a BUG
-+ * when not in an array.
-+ */
- void jw_array_true(struct json_writer *jw);
-+
-+/*
-+ * Append a false value to the current array of the json_writer. Trigger a BUG
-+ * when not in an array.
-+ */
- void jw_array_false(struct json_writer *jw);
-+
-+/*
-+ * Append a boolean value to the current array of the json_writer. Trigger a BUG
-+ * when not in an array.
-+ */
- void jw_array_bool(struct json_writer *jw, int value);
-+
-+/*
-+ * Append a null value to the current array of the json_writer. Trigger a BUG
-+ * when not in an array.
-+ */
- void jw_array_null(struct json_writer *jw);
-+
-+/*
-+ * Append a json_writer as a value to the current array of the
-+ * json_writer. Trigger a BUG when not in an array.
-+ */
- void jw_array_sub_jw(struct json_writer *jw, const struct json_writer *value);
-+
-+/*
-+ * Append the first argc values from the argv array of strings to the current
-+ * array of the json_writer. Trigger a BUG when not in an array.
+@@ -28,6 +28,34 @@
+  * object/array) -or- by building them inline in one pass.  This is a
+  * personal style and/or data shape choice.
+  *
++ * USAGE:
++ * ======
 + *
-+ * This function does not provide safety for cases where the array has less than
-+ * argc values.
-+ */
- void jw_array_argc_argv(struct json_writer *jw, int argc, const char **argv);
-+
-+/*
-+ * Append a null-terminated array of strings to the current array of the
-+ * json_writer. Trigger a BUG when not in an array.
-+ */
- void jw_array_argv(struct json_writer *jw, const char **argv);
- 
-+/*
-+ * Start an object as a value in the current array of the json_writer. Trigger a
-+ * BUG when not in an array.
-+ */
- void jw_array_inline_begin_object(struct json_writer *jw);
-+
-+/*
-+ * Start an array as a value in the current array. Trigger a BUG when not in an
-+ * array.
-+ */
- void jw_array_inline_begin_array(struct json_writer *jw);
- 
-+/*
-+ * Return whether the json_writer is terminated. In other words, if the all the
-+ * objects and arrays are already closed.
-+ */
- int jw_is_terminated(const struct json_writer *jw);
-+
-+/*
-+ * Terminates the current object or array of the json_writer. In other words,
-+ * append a ] if the current array is not closed or } if the current object
-+ * is not closed.
++ * - Initialize the json_writer with jw_init.
 + *
-+ * Abort the execution if there's no object or array that can be terminated.
-+ */
- void jw_end(struct json_writer *jw);
- 
- #endif /* JSON_WRITER_H */
++ * - Open an object as the main data structure with jw_object_begin.
++ *   Append a key-value pair to it using the jw_object_<type> functions.
++ *   Conclude with jw_end.
++ *
++ * - Alternatively, open an array as the main data structure with
++ *   jw_array_begin. Append a value to it using the jw_array_<type>
++ *   functions. Conclude with jw_end.
++ *
++ * - Append a new, unterminated array or object to the current
++ *   object using the jw_object_inline_begin_{array, object} functions.
++ *   Similarly, append a new, unterminated array or object to
++ *   the current array using the jw_array_inline_begin_{array, object}
++ *   functions.
++ *
++ * - Append other json_writer as a value to the current array or object
++ *   using the jw_{array, object}_sub_jw functions.
++ *
++ * - Extend the current array with an null-terminated array of strings
++ *   by using jw_array_argv or with a fixed number of elements of a
++ *   array of string by using jw_array_argc_argv.
++ *
++ * - Release the json_writer after using it by calling jw_release.
++ *
+  * See t/helper/test-json-writer.c for various usage examples.
+  *
+  * LIMITATIONS:
 -- 
 2.39.5 (Apple Git-154)
 
