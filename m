@@ -1,153 +1,246 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32195288DA
-	for <git@vger.kernel.org>; Fri, 16 May 2025 05:45:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE84222592
+	for <git@vger.kernel.org>; Fri, 16 May 2025 07:25:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747374331; cv=none; b=lvV4Oaxj4mrQC1UPLwrHeIpCDkfxLYs5HYQY64HxWjrLPEsqJ0uTxkXVFfi9lInuJXGQJxVKOCP492krsOHy7CCTPK2RDJSzRLMLeUTzHdkFGF2yE1VrU/H69Oy1qll2e2cBo5XQvj6iaQQy6YtHWHf0OVfgA4XP0uhyFE3sj5I=
+	t=1747380362; cv=none; b=qI/JSZC00eXLKoK+PzmadODEHu/0lhgh1iWUayiECFm3t/oK3YBDi/4M+HoILD08PXsm6bd7QVoMNsp70B3MsOvw3ssmqYVJSxRpdTnlcVCHspFbgMt5gW/CXYxJm8D+ocS+mwfn9V+YmVWvSmvbf+jCmhXlHz3PD3ixRX9oVzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747374331; c=relaxed/simple;
-	bh=gOaY34EL+tFBhl15mj6G+8iHGzio/xdzQTVGEojNWzA=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=R9cYIieLN1F6Q2GzttAfjo7rrZ01wlMzyfdzdnwBRWSsSmDcN7wsBv22BayQPCUwUV2lVg0R5U7mikQlck3eOfjnrMVueuWXN+qxSyMCMaW/BZMXVTCGuL7XiRh52cfirxR3uM2jfTTAnHaRKgsWxGGZByTo2dm7G7rOSoc9R1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GVG+ZTlT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jaiyPkPy; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GVG+ZTlT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jaiyPkPy"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3E18D13803DB;
-	Fri, 16 May 2025 01:45:28 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-02.internal (MEProxy); Fri, 16 May 2025 01:45:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747374328; x=1747460728; bh=XR/hDrBBrY
-	d14WfTAxWGhNxaeH8GZqWg46Ryledkynw=; b=GVG+ZTlTfegTWyy5Wh7GwdSzYo
-	XmswlvVcZyaRkLgzGN2HZy6rYLm0+RSwR0XVbr4L2nzldjxlPsqze3NHOn6L50Xn
-	dA3L3BswAxWRDuBbiqhYTMElMaBOAC3ynDxlNYxAESJNeOoT2eKAoi+s+gG1ce2v
-	zq6znztV+DnmwguPCmIY2g4fIpDHE5El+Gy4+0Eoy2FF7TJfTyQ/fEUJUjQEmDaC
-	4D9/Ox/VNLkJ6AJr7+xqSkeLxc5YwljfI2OHJdLncgDA3zhHmFxtMn/5KdJkXPAD
-	I9GeXNbbOYWaX3Uslt66qDl3pavNY8PvTziR673+WtzunCrpdV6BYOGP73Ew==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747374328; x=1747460728; bh=XR/hDrBBrYd14WfTAxWGhNxaeH8GZqWg46R
-	yledkynw=; b=jaiyPkPyr55zdgQ4x3c96U4nzp5XH1Dmr3t0Z7Kq1PAOHfse4N+
-	nGrR1ovo1fKvR8IZGYa1lm+PBCq1rnsF8la9W56B55DPf1BKhtrZZzxTolSuXPTh
-	JHTxRSafI5ZUbAP5+N9jFrjVNNr6RZ70Q1uVNlDli56uHwtO7WjDn+Cdvaz5Y12X
-	zc2ZKwfvUc09QPY/pTjl3+LFPpckPUlS8vhyDkCQkGLHb562fM2UXyt53eoX/m91
-	3PTqm2SDPhVCS7Cywt+UmA4yj0nieFePB0zNX3W1ZsUOyQfMnycAbfEr316Rx19E
-	v2H7HDxogcquEjk3Myj/JpRSg3Y+Sxyz5/w==
-X-ME-Sender: <xms:99AmaFgUeXLKl1FlLkNqnxxsZ0IYVeIOzRgRCvWMYk768Y7PUIyqMA>
-    <xme:99AmaKDV6t4MXPspH7grt6d8ufChm3Rocyv_2JdyidKNoSZbaMdwgENjAGZLRVTQq
-    q8azy0sPK0aMnEKRA>
-X-ME-Received: <xmr:99AmaFENy4wmU_sr12IZ0Kz29tPT11ZHmugxMAiCnWFOthquMu5KkH0dkeWf_OHZRgL2apBJsJQ_LFIRR7TiQYSfYJo5Ig9bHZDP1a6k>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudduleegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohephedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-    dprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthho
-    pehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtoh
-    eptghonhhguggrnhhhqhigsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:99AmaKTd-ilUHgw_ABdyg6tXd05MRQVc_7ZGA7R6RxiED2Rs71hxng>
-    <xmx:99AmaCx7ZQrr7Zi_CPC4eLrGGnS6fyIiOMy-wzmh88ONqlN5EMGp7A>
-    <xmx:99AmaA6WVc88haR_4on63vPkCywlphzZp-BE9D6GiPnbsIAZiaSdEg>
-    <xmx:99AmaHwJxxdWgVMQwYCkUz8qT8Gxu9ArPMveBaY4jB57cTDwz0k5Tg>
-    <xmx:-NAmaOjmcaYQ7kQMKFijanZffCpPxcfUgHid4PwgYCMmhrRA2HMug55c>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 16 May 2025 01:45:26 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 709e2643 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 16 May 2025 05:45:25 +0000 (UTC)
-Date: Fri, 16 May 2025 07:45:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: 'GIT Mailing-list ' <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eli Schwartz <eschwartz@gentoo.org>,
-	=?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
-Subject: Re: [PATCH v2 3/5] meson: correct path to system config/attribute
- files
-Message-ID: <aCbQ9OX2vqF82au8@pks.im>
-References: <20250508164443.1506440-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-1-ramsay@ramsayjones.plus.com>
- <20250513191739.1513460-4-ramsay@ramsayjones.plus.com>
- <aCQdznsNfaIeSPDI@pks.im>
- <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
+	s=arc-20240116; t=1747380362; c=relaxed/simple;
+	bh=a2k38XqyIBMp1mfyldUeqe82lsyzc5+uqeqsf7GsyKw=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=B5qMv6mmiN4CL/+k8DQ8n4sujzdVOxN/uMaKKA3sgHMKkAOrvsWpnmOoezFf7qEkxKU6nKEH4y2v0MnDMzVurHb9e2wsoHlVsHfV42DVapTs8X1aS5jZyKiQ7dkfdZCkZXPpYdTO1LuCADc/1ofu7jXqIW0GUtd0J5kn0rzXNv8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
+Received: from bsmtp2.bon.at (unknown [192.168.181.106])
+	by bsmtp5.bon.at (Postfix) with ESMTPS id 4ZzJXJ1yBqz7QtcW
+	for <git@vger.kernel.org>; Fri, 16 May 2025 09:25:52 +0200 (CEST)
+Received: from [192.168.0.101] (unknown [93.83.142.38])
+	by bsmtp2.bon.at (Postfix) with ESMTPSA id 4ZzJX72W6xzRnmF;
+	Fri, 16 May 2025 09:25:43 +0200 (CEST)
+Message-ID: <8343694f-6e05-43c5-862a-63702314760e@kdbg.org>
+Date: Fri, 16 May 2025 09:25:43 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <a163d515-2e71-4a42-b843-26d5d2ccdc59@ramsayjones.plus.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 1/1] userdiff: extend Bash pattern to cover more shell
+ function forms
+To: Moumita <dhar61595@gmail.com>
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+ Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <20250511125809.14180-1-dhar61595@gmail.com>
+ <20250511141101.18450-1-dhar61595@gmail.com>
+ <20250511141101.18450-2-dhar61595@gmail.com>
+Content-Language: en-US
+From: Johannes Sixt <j6t@kdbg.org>
+In-Reply-To: <20250511141101.18450-2-dhar61595@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, May 15, 2025 at 05:42:00PM +0100, Ramsay Jones wrote:
-> On 14/05/2025 05:36, Patrick Steinhardt wrote:
-> > On Tue, May 13, 2025 at 08:17:24PM +0100, Ramsay Jones wrote:
-> >> diff --git a/meson.build b/meson.build
-> >> index 48f31157a0..7f811030bd 100644
-> >> --- a/meson.build
-> >> +++ b/meson.build
-> >>  editor_opt = get_option('default_editor')
-> >>  if editor_opt != '' and editor_opt != 'vi'
-> >>    libgit_c_args += '-DDEFAULT_EDITOR="' + editor_opt + '"'
-> >> diff --git a/meson_options.txt b/meson_options.txt
-> >> index 8547c0eb47..ff877e67ce 100644
-> >> --- a/meson_options.txt
-> >> +++ b/meson_options.txt
-> >> @@ -3,9 +3,9 @@ option('default_pager', type: 'string', value: 'less',
-> >>    description: 'Fall-back pager.')
-> >>  option('default_editor', type: 'string', value: 'vi',
-> >>    description: 'Fall-back editor.')
-> >> -option('gitconfig', type: 'string', value: '/etc/gitconfig',
-> >> +option('gitconfig', type: 'string', # default 'etc/gitconfig'
-> >>    description: 'Path to the global git configuration file.')
-> >> -option('gitattributes', type: 'string', value: '/etc/gitattributes',
-> >> +option('gitattributes', type: 'string', # default 'etc/gitattributes'
-> >>    description: 'Path to the global git attributes file.')
-> > 
-> > I'd prefer if we documented the default value in the description.
-> > Otherwise it is impossible to discover it without having a look at the
-> > sources.
+Am 11.05.25 um 16:11 schrieb Moumita:
+> From: Moumita Dhar <dhar61595@gmail.com>
 > 
-> Hmm, but how do you get the description! :)
+> The previous function regex required explicit matching of function
+> bodies using `{`, `(`, `((`, or `[[`, which caused several issues:
+> 
+> - It failed to capture valid functions where `{` was on the next line
+>   due to line continuation (`\`).
+> - It did not recognize functions with single  command body, such as
+>   `x () echo hello`.
+> 
+> Replacing the function body matching logic with `.*$`, ensures
+> that everything on the function definition line is captured.
+> 
+> Additionally, the word regex is refined to better recognize shell
+> syntax, including additional parameter expansion operators and
+> command-line options.
+> 
+> Signed-off-by: Moumita Dhar <dhar61595@gmail.com>
+> ---
 
-[snip]
+Function patterns are looking good now. Let's focus on the worddiff
+pattern now.
 
-> The only way I have found to display the project options to the user (after
-> configuring the project) is using 'meson configure', thus:  
->   
+> diff --git a/t/t4034/bash/expect b/t/t4034/bash/expect
+> new file mode 100644
+> index 0000000000..17755e455f
+> --- /dev/null
+> +++ b/t/t4034/bash/expect
+> @@ -0,0 +1,38 @@
+> +<BOLD>diff --git a/pre b/post<RESET>
+> +<BOLD>index 09ac008..60ba6a2 100644<RESET>
+> +<BOLD>--- a/pre<RESET>
+> +<BOLD>+++ b/post<RESET>
+> +<CYAN>@@ -1,33 +1,33 @@<RESET>
+> +<RED>my_var<RESET><GREEN>new_var<RESET>=10
+> +x=<RED>123<RESET><GREEN>456<RESET>
+> +y=<RED>3.14<RESET><GREEN>2.71<RESET>
+> +z=<RED>.5<RESET><GREEN>.75<RESET>
 
-Yup, that's how I typically do it.
+When do decimal numbers occur in shell scripts? Wouldn't it be more
+often the case that a fullstop is part of a regular expression or a file
+name or version number that happens to be surrounded by numbers? In that
+case, we would prefer to capture the digit sequences as separate words.
 
-[snip]
-> Also, looking through that list, other options which are similarly specified
-> to gitconfig/gitattributes don't have their 'default' noted in the description.
-> Why make an exception for these options?
+> +echo <RED>$USER<RESET><GREEN>$USERNAME<RESET>
+> +${<RED>HOME<RESET><GREEN>HOMEDIR<RESET>}
+> +((a<RED>+<RESET><GREEN>+=<RESET>b))
+> +((a<RED>*<RESET><GREEN>*=<RESET>b))
+> +((a<RED>/<RESET><GREEN>/=<RESET>b))
+> +((a<RED>%<RESET><GREEN>%=<RESET>b))
+> +((a<RED>|<RESET><GREEN>|=<RESET>b))
+> +((a<RED>^<RESET><GREEN>^=<RESET>b))
+> +((a<RED>=<RESET><GREEN>==<RESET>b))
+> +((a<RED>!<RESET><GREEN>!=<RESET>b))
+> +((a<RED><<RESET><GREEN><=<RESET>b))
+> +((a<RED>><RESET><GREEN>>=<RESET>b))
+> +$((a<RED><<RESET><GREEN><<<RESET>b))
+> +$((a<RED>><RESET><GREEN>>><RESET>b))
+> +$((a<RED>&<RESET><GREEN>&&<RESET>b))
+> +$((a<RED>|<RESET><GREEN>||<RESET>b))
+> +${a<RED>:<RESET><GREEN>:-<RESET>b}
+> +${a<RED>:<RESET><GREEN>:=<RESET>b}
+> +${a<RED>:<RESET><GREEN>:+<RESET>b}
+> +${a<RED>:<RESET><GREEN>:?<RESET>b}
+> +${a<RED>#<RESET><GREEN>##<RESET>*/}
+> +${a<RED>%<RESET><GREEN>%%<RESET>.*}
+> +${a<RED>^<RESET><GREEN>^^<RESET>}
+> +${a<RED>,<RESET><GREEN>,,<RESET>}
+> +${<GREEN>!<RESET>a}
+> +${a[<RED>*<RESET><GREEN>@<RESET>]}
 
-It's not so much about one being exceptional, it's rather that I didn't
-think about it for the other options. Ideally, we'd document the default
-for all values where we don't have a hardcoded one.
+All good tests!
 
-> Is this what you wanted to see? If so, then I can submit a v3 with the
-> above changes. Just let me know.
+All of | || & && would more often than not occur in commands rather than
+expressions. But the way these operators are tested here is fine, too.
 
-Yup, the diff you had looks exactly like what I expected. Thanks!
+> +${a<RED>:2:3<RESET><GREEN>:4:6<RESET>}
 
-Patrick
+I am surprised to see :2:3 as a single token. It's bash's substring
+expansion. It would not be matched anyway in practice because these
+numbers are often variables or more complicated expressions, I would
+think, not integer constants.
+
+> +ls <RED>-a<RESET><GREEN>-x<RESET>
+> +ls <RED>--a<RESET><GREEN>--x<RESET>
+
+Can we extend the second of these two to have a multi-letter option?
+
+> diff --git a/userdiff.c b/userdiff.c
+> index 340c4eb4f7..655c8fe0b1 100644
+> --- a/userdiff.c
+> +++ b/userdiff.c
+> @@ -59,20 +59,32 @@ PATTERNS("bash",
+>  	 "("
+>  	 "("
+>  	     /* POSIX identifier with mandatory parentheses */
+> -	     "[a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+> +	     "([a-zA-Z_][a-zA-Z0-9_]*[ \t]*\\([ \t]*\\))"
+>  	 "|"
+>  	     /* Bashism identifier with optional parentheses */
+> -	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+))"
+> +	     "(function[ \t]+[a-zA-Z_][a-zA-Z0-9_]*(([ \t]*\\([ \t]*\\))|([ \t]+)))"
+>  	 ")"
+> -	 /* Optional whitespace */
+> -	 "[ \t]*"
+> -	 /* Compound command starting with `{`, `(`, `((` or `[[` */
+> -	 "(\\{|\\(\\(?|\\[\\[)"
+> +	 /* Everything after the function header is captured  */
+> +	 ".*$"
+>  	 /* End of captured text */
+>  	 ")",
+>  	 /* -- */
+
+In the operator patterns that follow, it is not necessary to match
+operators that are just a single punctuation character. They are matched
+automatically, IIRC (but please correct me if I am wrong). Only
+multi-character operators should be matched. That means that in all
+patterns where one character is optional due to the '?' in a
+two-character-operator, you should drop the '?'.
+
+> -	 /* Characters not in the default $IFS value */
+> -	 "[^ \t]+"),
+> +	 /* Identifiers: variable and function names */
+> +	  "[a-zA-Z_][a-zA-Z0-9_]*"
+
+OK. But see below.
+
+> +	 /* Numeric constants: integers and decimals */
+> +	  "|[0-9]+(\\.[0-9]*)?|[-+]?\\.[0-9]+"
+
+I would recommend not to match decimal numbers and instead have them as
+three words: integer-fullstop-integer.
+
+Generally, I advise to not include a sign in the word pattern of a
+number, because the sign is usually its own operator. But we do have
+numeric options, i.e., integers with a leading dash. But see below.
+
+> +	 /* Shell variables: $VAR, ${VAR} */
+> +	  "|\\$[a-zA-Z_][a-zA-Z0-9_]*|\\$\\{"
+
+Shell variables do not have to begin with a letter. We have $0, $1 etc.
+Just do not require the first character after the $ to be a letter.
+
+> +	  /* Logical and comparison operators */
+> +	 "|\\|\\||&&|<<|>>|==|!=|<=|>="
+
+I'd call || and && "Command list separators" in the context of shell
+language.
+
+> +	 /* Assignment and arithmetic operators */
+> +	 "|[-+*/%&|^!=<>]=?"
+
+These would then be only compund assignment operators. These patterns
+also match <= >= == != again. How about having all those (from this line
+and from the line above) that end in '=' into a single case?
+
+> +	 /* Additional parameter expansion operators */
+> +	 "|:?=|:-|:\\+|:\\?|:|#|##|%|%%|\\^\\^?|,|,,?|!|@|:[0-9]+(:[0-9]+)?"
+
+Remove all single-character operators.
+
+Also, the :digits:digits word is strange. What is your rationale that
+you included it?
+
+> +	 /* Command-line options (to avoid splitting -option) */
+> +	 "|--?[a-zA-Z0-9_-]+"
+
+This pattern is a beast for the matcher.Would it match the text "-----"?
+Yes, in more than one way! Would it match "--"? Yes! Would it match
+"-1000"? Yes!
+
+None of these are a problem, but actually desired. But it would not need
+the optional '-' in the second position. The '-' included in the range
+would match "--foo" just as well.
+
+This patter also matches negative numbers. So, here's the idea: Just
+turn this into
+
+	"|[-a-zA-Z0-9_]+"
+
+And we have a pattern that matches identifiers, function names,
+integers, short options, long options, numeric options a.k.a. negative
+integers.
+
+It might match more and I hope that I do not miss a case that we do
+*not* want to match. If you do, let me know. Until then I'd leave it at
+that and fix it up when we encounter an important case that is
+mishandled by this pattern.
+
+> +	 /* Brackets and grouping symbols */
+> +	 "|\\(|\\)|\\{|\\}|\\[|\\]"),
+
+OK.
+
+>  PATTERNS("bibtex",
+>  	 "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
+>  	 /* -- */
+
+-- Hannes
+
