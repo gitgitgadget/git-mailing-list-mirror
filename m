@@ -1,129 +1,149 @@
-Received: from mail-qt1-f178.google.com (mail-qt1-f178.google.com [209.85.160.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75DC4248891
-	for <git@vger.kernel.org>; Fri, 16 May 2025 19:06:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B088F27D776
+	for <git@vger.kernel.org>; Fri, 16 May 2025 19:10:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747422375; cv=none; b=qR7daVv2+2gOqBMw3nes8m0ecVqYzybLhOvwUbVgBKjaLVeuMCIuZ+IaMf1zZMC1AZD9zxC14LsGPo9MaWHImfiYoPBJofEXvYlUP3IYRTwtYgbJ/CQZxmiWH/inm1dfVltDLv4sRlh9ygTK+ule1qBt18+d1tX5Sm+lwgtFM84=
+	t=1747422647; cv=none; b=LTfRq5KSmB9Iu/A66whfD/r8qLXx4KKSOAmoJMIIjJvkuM+jVE902KS+4h2PqbOUlEelxokcdqLtHdC0FhLGSrlJB21KD4L/RgHhXlZ2T++RQhQOF5RDLQ8M2NLlEZe/ptryP6XNcHzq8pjWh7UBpDJVPaTsTnYyxneD3dvoakc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747422375; c=relaxed/simple;
-	bh=BKAEBKxWknV7M9D9bdwY1/1cbCgip99VcokWla7kub0=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=lxReqcZp5GELdlC1ZvrsEJJCbWYTNhVDJE3h8KCKNNrSQKdC6LzYYFEu74CLwcyAzFhwnZDM513ZdqyIN/8HmqBrvRJ4i9F2KIVUhqQYkzF3iOuVdqqrAA580tHXkuHyIVXzhCyM/PxEnPKOVMagnuCC4XHfARY8uUGpFQiHkYo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Z3bh99u5; arc=none smtp.client-ip=209.85.160.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747422647; c=relaxed/simple;
+	bh=86EjQVH+B3fqA+qSlZX2C5hP2a9P5/9NxafK4wVJhos=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=lfY2+Bl5Zw48pWXEpLyhox0IdkwXSJFojpI1MkF12tCsHSdeupb/PUBXW697dA8RWHNyXuIcjP9VKSwA1e7By3UYJ2CvnEXo0Gaij+gSzPObuNSHy5uZQ20QPutnOuCM9qVwW43FOGpTQdUa//oY5n6uhgadqQJJ/cY2W5ZQyu8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=evcuUuJh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=snI+Q8HO; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Z3bh99u5"
-Received: by mail-qt1-f178.google.com with SMTP id d75a77b69052e-47698757053so33355621cf.0
-        for <git@vger.kernel.org>; Fri, 16 May 2025 12:06:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747422372; x=1748027172; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=t+S2PgbzWyu8GAaXviOOQ1Mo4+/Qc/Gk2yo+yWVkLRE=;
-        b=Z3bh99u5IwEOupzbnQgJa9NY+kt0N40Jm0G//7CtqeATWUS80MIHDWn0NZB9UTpbJe
-         mybmUuaarc/DgaCUUOXbEsCC5LDgQSRpa+BKxhehA+b+cvNDJVIDJTmOHrEBH4cSyGvo
-         B4EOgp5OJQwhoWAhcilpbZqFpocVZaDHpfTHqjaa4XXK2xzpkf0H7QMVxrDGWA8owkjo
-         N+k66wfDMG3FRaiKU9L5LfiVIYRHI2sVMsjh9M7+ZC4BO/MVwF4F1Q7Y8/kdmrDBdnDs
-         XA4qakt+0r8v49Q968ieFI421JthmqveLnvB+mhSGnO20TyzYy9Eo99VqDjhLtAn5lE/
-         lAJw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747422372; x=1748027172;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=t+S2PgbzWyu8GAaXviOOQ1Mo4+/Qc/Gk2yo+yWVkLRE=;
-        b=Ey8PeYajJdYQVsIRSNY7kzzEw1NohPaddhKt1GfJYPIgBl1RlnXYM0ZhALRuiAaUMu
-         O3DOKaC18Cr7a1HNpX+GPEYjfTxAEQ7wpSHLd37pulUjNbwQNvQ+t/1AZ05DRGjhlgO3
-         /Sr1+en+uD7R2u8sX0k6rvk2thDSraoqHZu4BK3VyrVtIt3FgGI8EgfGpCxEpDN6E+aT
-         EKfwXhLxX3g8+mT7qlotx4ZFHVlVBlfOImqkfuvqxTRB/9bCvLau5ZPxCR+FlLb/n70j
-         15h0YzSZxBv4boPJkYWjfOjHZL7tVfCf3DAEbGW5gRXePsZccFXgfLqyTmjk0VWpnErs
-         hCNg==
-X-Gm-Message-State: AOJu0YznqKNfJOfwqUvCwsc7MuRWVsa8/VErVVPxDdaDtLYYSLQkGfDr
-	u9gKSfMgOlpvaRyZvOXh5R0BxenEIO5yBg7zZbG8kpgr7uza3STmgkkizO03Vgfd02Y9s6s9wNs
-	5l/I+rXNEkah647bT+CGCjAL2B/YH7bc=
-X-Gm-Gg: ASbGncupYPD1O/TzsyfMLhpKSnIq+EkXM0socIuRg2cpQQH2EpciwowNYs+HMVYbBTd
-	uhvpJatO77gpxsQ7g67w09xWNRbhPZ51b7iibd3vzjMNy93L7sFRyk8EvZAXsxe1xsXOwbAl1LP
-	HcoQCAQsTQ3B/BR2Rj8cOommofUyEgqVs7MjuxuGV6mGqigH29k7QjcGFqBwsY3HCXcvwtCwofo
-	QQ=
-X-Google-Smtp-Source: AGHT+IHGVWosQBsuchCIdv3vr+0exru878DpFbKunVYqIpzup/7thXCtkTgqVQZCQ2hchBmUaCKyLaTcncDmi48cmvc=
-X-Received: by 2002:a05:622a:22a9:b0:476:923a:f1cb with SMTP id
- d75a77b69052e-494ae4600damr77014341cf.41.1747422372120; Fri, 16 May 2025
- 12:06:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="evcuUuJh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="snI+Q8HO"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B42012540101;
+	Fri, 16 May 2025 15:10:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Fri, 16 May 2025 15:10:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747422643; x=1747509043; bh=IGrKkSr6Uq
+	zXfO/pPAwZPMOJ7i+0KiYuPzhmsPGKmeA=; b=evcuUuJhOYHhQkQFUOmmjDgV3W
+	KnOO5FMWEEaeJ4sH0b3ei7F6vzzcgCwS+WCWTIoSCmiDFMY9JR+ARAC6/YfWEmFe
+	7zGRbD+tgmottcppYjR0yF0hK3KC9eedr6j3TCMj1+CgKWBerGHTglUfbLqruBNt
+	rtSho37EHIMX/LCIwWzqDk6sydaC3vTF5+KwolRHmyBPhV6NzZ0t4Xbv9ZyEO2R6
+	r1N84q3K9Rq+8O8EclPCgL91sv0XBzQh15Nr4yu4MZlzo4otgMp4FrcUitRJhqV0
+	gCHr31XRg52wzs/St1v9c9LCAB+CeNs4UchJVUNfcx/sPfdkbpi109Na9j1g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747422643; x=1747509043; bh=IGrKkSr6UqzXfO/pPAwZPMOJ7i+0KiYuPzh
+	msPGKmeA=; b=snI+Q8HOpigiDetctcm5dISd6JzJztnqeDQbtUhYxwVepzDnNXi
+	EM/qw8o7GyRIKYh0x0sLzPUtr434wPJlClyndRyT3EWuDwxzNqnDKIFAwarv7ygm
+	ybC0NyqKlag4Jw40uBnjhTB5YmcCaeMA4A+QRkkXkQN+OwneRvawB8q4SRfu9WZF
+	Y8osNMsDk4gU1LxvGCimiFmFEJAHA1BcayLCOXdpXtC5pcXmb6n8jvWiCIFcXDlT
+	Hb8DYEdzbyhn1Kv8gwwk1gGREvZT3LXA6opaZxtkWuK7vn3tfCWprUNmEuD92VIz
+	72dp0T34Q0hx+LWtI6mApPr3DViTTF/jlZA==
+X-ME-Sender: <xms:s40naOgp3elCn7SLV_Emq1HBanoiEYbEE93o0B7Djl00gw6FwqQJWg>
+    <xme:s40naPBjp2C2eazvnMr64DuXR7VPW_480ggMJI_O0i3XT4rI_A_lmLzJoMM13wmnH
+    CFx5XKyAUHO8IyjKg>
+X-ME-Received: <xmr:s40naGGFr8MnjSuGZwOmUsrlRJ41dku5RE0NqNyNOFMAo5SZmWjpfoe0nFJX-V29H0dZA0aNDl5bWRuROaR7zs3Uqy5G9eRYNsd4IQs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudefheehucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:s40naHRc4FsuZXggxCEu8R82Y9aXdRrsfcBlft4mqXDoYBoV9lA5uw>
+    <xmx:s40naLxZy8DitOaOg1uZaFgOp_3VFid5fv5IPaWmOgOF7dl2HO7xyA>
+    <xmx:s40naF65aguaEFJw7DCv0MkWbTt_NcZxxgyI52rLKxGVa2SB773w7g>
+    <xmx:s40naIzyQJjCKqw8pzj8llvE6W7vTUjpiSjwlNIrPTozcx4YezsUZg>
+    <xmx:s40naKsbLbpBhCAwQ1AIpg8O-37T0wrYIhxbqvUQSyIZWHjtcpAG1qvJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 16 May 2025 15:10:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] stash: allow "git stash -p <pathspec>" to assume push
+ again
+In-Reply-To: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+	(Phillip Wood's message of "Fri, 16 May 2025 15:58:29 +0100")
+References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+Date: Fri, 16 May 2025 12:10:41 -0700
+Message-ID: <xmqqtt5ktlqm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250416061450.25695-1-jayatheerthkulkarni2005@gmail.com>
- <20250416061450.25695-5-jayatheerthkulkarni2005@gmail.com> <aCeDZgaNWPbDV0Ra@google.com>
-In-Reply-To: <aCeDZgaNWPbDV0Ra@google.com>
-From: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Date: Sat, 17 May 2025 00:36:01 +0530
-X-Gm-Features: AX0GCFuYrA9xiYCZNkFtSsnZ_NBls43Yj08J87equN57luIpB1xr7elFNQoBFn8
-Message-ID: <CA+rGoLfk=m4QzrRnCsweBsL35yiLEUHJagetEL9DD2Pty5FgAQ@mail.gmail.com>
-Subject: Re: [PATCH 4/4] cmd_psuh: Prefer repo_config for config lookup
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
 
-So, I've consolidated these patches in only 3 rather than 4,
-the UNUSED fix patch was actually delving into 2 patches so I fixed
-that in a single one.
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Also the commit messages, I gotta admit I was given the same feedback from Junio
-But these were actually written before that, Apologies I should've checked once.
-
-
-> I'd prefer to see this stick to the prior formula of including only
-> small chunks of the function, rather than a full function you can copy
-> and paste. Because this is a tutorial, and the goal is for learners to
-> understand each section of code as they add it, not just for them to
-> paste it into their editor and hit run.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >
+> Historically "git stash [<options>]" was assumed to mean "git stash save
+> [<options>]". Since 1ada5020b38 (stash: use stash_push for no verb form,
+> 2017-02-28) it is assumed to mean "git stash push [<options>]". As the
+> push subcommand supports pathspecs 9e140909f61 (stash: allow pathspecs
 
-Yes I've done this. I've just changed git_config to repo_config
-without changing the other parts.
+Can I safely do "pathspecs" -> "pathspecs," here?  I found this sentence
+hard to read without a comma.
 
-> So, I don't think it's necessary for you to add the rest of the function
-> here in the process of switching to repo_config from git_config.
+> in the no verb form, 2017-02-28) allowed "git stash -p <pathspec>" to
+> mean "git stash push -p <pathspec>". This was broken in 8c3713cede7
+> (stash: eliminate crude option parsing, 2020-02-17) which failed to
+> account for "push" being added to the start of argv in cmd_stash()
+> before it calls push_stash() and kept looking in argv[0] for "-p" after
+> moving the code to push_stash().
 >
->
-> Generally, I find the changes to update the code snippets
-> unobjectionable and don't have a problem with the added prose
-> beyond a couple nits. But as I assume you sent this series as a way to
-> learn more about the codebase, definitely please revisit your commit
-> messages to align their style with the rest of the codebase.
->
-> But I think with the stuff I called out taken into account in v2, this
-> series is good. Thanks for the effort to update it. I'd also like to
-> update github.com/nasamuffin/git/tree/psuh once this series lands, if
-> you can point me to a branch of yours with the sample code I can pull
-> from :)
+> The support for assuming "push" when "-p" is given introduced in
+> 9e140909f61 is very narrow, neither "git stash -m <message> -p
+> <pathspec>" nor "git stash --patch <pathspec>" imply "push" and die
+> instead. Fix the regression introduced by 8c3713cede7 and relax the
+> behavior introduced in 9e140909f61 by passing
 
-Surely, I will write the builtin function with a test case and make
-sure it compiles.
+Hmph, is it too much work to have a patch that only fixes the
+regression and another that extends the feature on top as a separate
+patch?  Not that I am opposed by the new feature, though.
 
-> (Or, as we discussed when I sent this doc in the first place, does it
-> make sense for a branch with the sample code to be maintained
-> only-best-effort on git/git itself?)
->
+> PARSE_OPT_STOP_AT_NON_OPTION when push is being assumed and then setting
+> "force_assume" if "--patch" was present. This means "git stash
+> <pathspec> -p" still dies so do assume the user meant "push" if they
+> mistype a subcommand name but "git stash -m <message> -p <pathspec>"
+> will now succeed.
 
-I think it's fine both ways as long as we link it to the proper place
-in the docs.
+> Tests are added to prevent future regressions.
 
->  - Emily
->
-> >
-> >  ----
-...
+Nice.
 
-In the new series I tried to keep commit messages as good as I could
-without naming every line I edited and just keeping it to why instead of what.
+> +test_expect_success 'stash --patch <pathspec> stash and restores the file' '
+> +	cat file >expect-file &&
+> +	echo changed-file >file &&
+> +	echo changed-other-file >other-file &&
+> +	echo a | git stash -m "stash bar" --patch file &&
+> +	test_cmp expect-file file &&
+> +	echo changed-other-file >expect &&
+> +	test_cmp expect other-file &&
+> +	git stash pop &&
+> +	test_cmp expect other-file &&
+> +	echo changed-file >expect &&
+> +	test_cmp expect file
+> +'
 
-Thank you,
+OK.
 
--Jayatheerth
+> +test_expect_success 'stash <pathspec> -p is rejected' '
+> +	test_must_fail git stash file -p 2>err &&
+> +	test_grep "subcommand wasn${SQ}t specified; ${SQ}push${SQ} can${SQ}t be assumed due to unexpected token ${SQ}file${SQ}" err
+> +'
+
+Good thing to test.
