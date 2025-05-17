@@ -1,325 +1,197 @@
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com [209.85.210.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F503219EB
-	for <git@vger.kernel.org>; Sat, 17 May 2025 13:11:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 075121DE3A8
+	for <git@vger.kernel.org>; Sat, 17 May 2025 13:39:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747487469; cv=none; b=WpAgNV9PBZW0gf7eKmDhMMPiqmZOBom8QaJOsiU1C/1oCqWVxCQ56SZVtLjrBFZ0ywcH1HXiv1nCYGedAIjQwkp6USei7xwIiNe7ueG3acgVn9LH3hIgAiTtbvALZq473vdDRbSgkiuRodMQ0SX7CC6CjH0TgU+ql9CDVwZWT5Y=
+	t=1747489184; cv=none; b=hcrBO3iu3p8G5F342pCjknArg3rxAI75oWnTCysy5GXgLJN4RD0EUtljZ/J70ymBI5iOkqufpUxN7uKrLBXtZj0QbSzLHcATRrzZaGIeujY7N01xgdHPa0ZCiaWK4Cd0RUCv6qeMqk1z9qW9k04kTVUUX/g6hOK/kwFNkgyacNc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747487469; c=relaxed/simple;
-	bh=CLwyMJbgsmsPFJY81w3f1kTra0jbqrmrkNHnksiMFdE=;
-	h=Date:From:Subject:To:Cc:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=UpLRjBxCRSQ0oulSuJ4NIK24RA6Fdl1TLwdsFOVsRLuM5z2yzvJkxmy+4iESTj2x1/04uNHMxGlWKleWwXd07yWHTHpAGVaEO/hoXDH2gmMvM2U6mJZXqZlDFRpum4p6CcXCaJUGAgPTfUN0LHnyHTaQB8ur6Bl/BhTH16ECcKI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unrealasia.net; spf=pass smtp.mailfrom=unrealasia.net; dkim=pass (2048-bit key) header.d=unrealasia-net.20230601.gappssmtp.com header.i=@unrealasia-net.20230601.gappssmtp.com header.b=hKJ150r1; arc=none smtp.client-ip=209.85.210.181
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unrealasia.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=unrealasia.net
+	s=arc-20240116; t=1747489184; c=relaxed/simple;
+	bh=3XakZub39tCjKsICFtP07ttXttFE2/+6ix8A+if+qtE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=sVCJhnzZIAT54fnnaRrA2bB79XXrS5/kCR7h4DfpwACX7Z0tNkWy84It5EnXuhrvuPGYJN2AlA52+zZoXQvhuCWUtAxKjbPtxnBp0nU5epzI7gg/lq9g5N8QSsfMpauMPh4TVOxI5FglICEUAovcDWpjB0pvkrPGkIbwiL6qiGQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HmUc4/Mq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iGp4+xA6; arc=none smtp.client-ip=202.12.124.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=unrealasia-net.20230601.gappssmtp.com header.i=@unrealasia-net.20230601.gappssmtp.com header.b="hKJ150r1"
-Received: by mail-pf1-f181.google.com with SMTP id d2e1a72fcca58-74068f95d9fso2823683b3a.0
-        for <git@vger.kernel.org>; Sat, 17 May 2025 06:11:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unrealasia-net.20230601.gappssmtp.com; s=20230601; t=1747487466; x=1748092266; darn=vger.kernel.org;
-        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EaTfArQu1SYDmVWISuIyE6251qXE0Rdqav/wfBZXvtI=;
-        b=hKJ150r1Zu+YgdHYqmunwL7fsWxpEUnA9iXs70kzHtkJy2MdY/jjD9MFwNW/uEiHOo
-         iV48lccgqNc9PF7plwfP+XfbfQEO/MR/m+Tfsy+JN04p7mrduUnDkIl8Sglod/zFyOl0
-         PJtmJ+COjTYgr4dosT0XiJ0HEV8k4EO9AvJ7ScJYrOnFDRhTXrNk85jiyeChe/F2aIRL
-         cYh4drLICzRzWJKZnlbSq2JlobWUsbSiCVY7aGv726T1ITnFywU58ipN6ALZdgiKwjdW
-         yMYI97KPzFEU6UckhCGEuBdOySotdKhdiI7l2QP/XD7+wsUrnjMcQQftReHjMFO4ZDQi
-         DmXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747487466; x=1748092266;
-        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=EaTfArQu1SYDmVWISuIyE6251qXE0Rdqav/wfBZXvtI=;
-        b=Oy7SouUNNRfxGXJUHwiL0Drccyt7O9g4OvmwWDDxRPl/jrxF+E7MvAtxwrL/owCKmT
-         4NcLXONMV+mOsrItNRihYWTlNU29yXdxahCIzE0d7dZLTqszBb1uAosxSPA6D7ZJPrFY
-         ATFgK5GtoxJh5FzT/7zVGH0MxgEd1Nlvq4oGFWsuWDiPFoI5+/wbYWmizP9ejey2G4lv
-         xw16WQn66KCBZXv7IwELI73lHGLN/hykySEGh/Ise+QNqrQmg5+C0idbDxhTfN/Mocsb
-         Dhb/JE6Ys3tFahp0+rZiT2UIdKlr3e4gZpA2jFt9IxM1rnBOrQgpK3EOPliSpdpG4d/0
-         HFNw==
-X-Gm-Message-State: AOJu0YyhmMM/o6y5sanhmp5YclkDdPOK8uKXqk5MnCYcFbOIvDO/nb2t
-	owRYz69pjGdlTxYIGPy6qbn1nD5cXYPVYSG//Uar/piMFYwWq8571fBhXy9LCdjJQ9azWHZKZdq
-	vBFh8
-X-Gm-Gg: ASbGncul7O0moNnm93n0FWahRIy4clArDXRcOOTSv5ECB+bXmDxGo6jQfmnHx37EC9I
-	EZKkr52vXG2MmZDCIrg7sPwE53VopVo/Me/3iJnIwCja/PPE86mrQa4Ec+LLkWBaph3hO8+vQg/
-	/MNrjiK7wt5LuTwNetIgZ1MAan7u5wVKcaXy+t74z24BKBs1hzl/swC8RFHPbam9fEra0TLkqMv
-	rTq/4iFXN22HDxh+QKhgBSd44geRU67EMlsb6XDfU8ovJvWTCMcT+62boICf2+/fIYbaJT+ziOm
-	c67WewfCEgNDwXZXuqM830QBSqE1KUIMfqkmI371rzG75aKMvpPafzV2T27lErco
-X-Google-Smtp-Source: AGHT+IFYg7heTxM6qZVg814guK/VyzwsGS8Xd/NuAzE3/1DqNXxBEe0WsQHulTy9Z8Im/cpdAUSl5A==
-X-Received: by 2002:a17:903:28d:b0:22d:b240:34c9 with SMTP id d9443c01a7336-231de37ff7bmr98789445ad.53.1747487466335;
-        Sat, 17 May 2025 06:11:06 -0700 (PDT)
-Received: from muhammads-ThinkPad ([2402:1980:245:6ef:bd3e:6a19:ff75:ab35])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4ebac6esm30313015ad.171.2025.05.17.06.11.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 May 2025 06:11:05 -0700 (PDT)
-Date: Sat, 17 May 2025 21:10:52 +0800
-From: Muhammad Nuzaihan <zaihan@unrealasia.net>
-Subject: Re: Small patch to add support for MPTCP on Linux
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: git@vger.kernel.org
-Message-Id: <4YPEWS.J5JRNETKLXF1@unrealasia.net>
-In-Reply-To: <aChhxRx7sMD47N_s@tapette.crustytoothpaste.net>
-References: <JH8DWS.72DKHPTI873H3@unrealasia.net>
-	<aCeg_wjLCf0Sz_7X@tapette.crustytoothpaste.net>
-	<BP9EWS.WTYEEEQZEN2U1@unrealasia.net>
-	<aChhxRx7sMD47N_s@tapette.crustytoothpaste.net>
-X-Mailer: geary/40.0
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HmUc4/Mq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iGp4+xA6"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id CFBA41140175;
+	Sat, 17 May 2025 09:39:40 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Sat, 17 May 2025 09:39:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747489180; x=1747575580; bh=ci7/C+WpBm
+	cqfLjQoOzjETk1621v3KvT8BLL9d7zJIg=; b=HmUc4/MqvAo9yYdMhXVcjblda/
+	2DSe8dz4OeLHA5Wp8Dbf1HniibUM3snLu0ZYORwwfGHgDqxkcWUP9VjwwA6hcVVQ
+	Sb5gJ0XJzMisOEoQJ8ZWpwcF+fGwF162G5AJJUVnP5xe6XgMvffIiITB1sZigGE3
+	0ubaPlnuYIyPBLsrVS46VV/OPRJg3qn9P1M3NQ7URBKXgpeDMPR3mu8WFer3Gx3w
+	/KqW8+bdEJ4Zhm3s9hJAUOHTln7LY8o+xoTo1Z7o2aiXNinUhvEJvb4KgboVFLw1
+	IiSchPvAtubXgGC2qBDg6sTwPQeem62RBT10cTYg2RyGsspkTPh8tIIH9LaQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747489180; x=1747575580; bh=ci7/C+WpBmcqfLjQoOzjETk1621v3KvT8BL
+	L9d7zJIg=; b=iGp4+xA6ZoKTUygEG2Jg76PC8oqBnCz8zwxriX+Q7IMP2QChZqh
+	yd+0T8+DoJEDgEzm+7ulyVjLQBOzPefMSfMJqTUhJ7gjUL7crGFRO/HOVPD35Ydc
+	YzqKo0LbPOcVIMn1F2euaqzWFglQKOrcH0sm+FxGKSrVoy+46OQAZTAc/quJC4qM
+	/+CEljhosYVNxjTguLW8HQ+HYNCjkfkiJUapxhC3aDAgedZV5XSi9JVJdakXyh0n
+	NsElLQplp7LcGMOqaTQUhbEHwuc21qayw/PzdJBDEkBWV8NE2vcc5WekMGHjAm4y
+	Hq2G6Ewx+nsnCzKJE0LbbUwBzQlbEMofJBQ==
+X-ME-Sender: <xms:nJEoaFgWnnbtIbPjwDxn-ypO0Q8gEgk1lAEcDE1cxunY26FhnI_c5g>
+    <xme:nJEoaKCveLp5ia9SxcYN5D_SDUnfG0lflosq5WRTrJPMrJ2HqNoSa9emVo4h2ibEL
+    nWNWXrbZhoTwUO6xg>
+X-ME-Received: <xmr:nJEoaFHfDHIBKDaX0aiymHvQe3o3C8exsZKqWxfRzRWJJnGV-XZNCTF4YCZBzCZ5_hC-LXvvNhcjwWup0gcsl4nw5jBS8pO6qAsPTk4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudehjeejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
+    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehn
+    rghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
+    ohhm
+X-ME-Proxy: <xmx:nJEoaKRHrYGzt3u5HTRChoaOG_-XM3ccgHrfIYaOM-kROiWoZyHW3w>
+    <xmx:nJEoaCydmGSMPeYuVlSnClvGNTCmmQVlqrhiOjqVylBAM5w1MQ_opQ>
+    <xmx:nJEoaA4Qp39hDjUsguOdRNWFW-pfA798qnCJeqX_j7vSznl33XRK0A>
+    <xmx:nJEoaHz7E9a90DC5G77tYWblGUO02mDe9JoE5bS8drp03v4HOrkPeQ>
+    <xmx:nJEoaGHCl8kCwWQD6OFoSI2fhHnRXdvwRIAeP2759UJU5BNt9Z4GAkoQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 17 May 2025 09:39:40 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: nasamuffin@google.com,  git@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] docs: clarify cmd_psuh signature and explain
+ UNUSED macro
+In-Reply-To: <20250516185516.52311-2-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Sat, 17 May 2025 00:25:15 +0530")
+References: <aCeAIqwvEVOdrsMg@google.com>
+	<20250516185516.52311-1-jayatheerthkulkarni2005@gmail.com>
+	<20250516185516.52311-2-jayatheerthkulkarni2005@gmail.com>
+Date: Sat, 17 May 2025 06:39:38 -0700
+Message-ID: <xmqq34d3s6ed.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Type: text/plain
+
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+
+> The documentation previously omitted the UNUSED macro,
+> which often led to confusion for new contributors
+> when they encountered compiler warnings related to unused parameters.
+
+The above is not quite easy to reason about.  It is more like we
+wrote this document, and then later tightened the default compiler
+warnings for developer builds.  So "omitted" may technically be
+correct, but it was more like "did not use it, because there was no
+need".
+
+    The sample program, as written, would not build for at least two
+    reasons:
+
+    - Since this document was first written, the calling convention
+      to subcommand implementation has changed, and now cmd_psuh()
+      needs to accept the third parameter, repository.
+
+    - These days, compiler warning options for developers include
+      one that detects and complains about unused parameters, so
+      ones that are deliberately unused have to be marked as such.
+
+After such observation on the status quo and description of the
+problem you are going to solve, you give an order to the code base
+to fix it, perhaps like:
+
+    Update the old-style examples to adjust to the current
+    practices, with explanations as needed.
 
 
+To recap, the usual way to compose a log message of this project is
+to
 
-On Sat, May 17 2025 at 10:15:33 AM +0000, brian m. carlson 
-<sandals@crustytoothpaste.net> wrote:
-> On 2025-05-17 at 07:19:59, Muhammad Nuzaihan wrote:
->>  Hi Brian.
->> 
->>  On Fri, May 16 2025 at 08:33:03 PM +0000, brian m. carlson
->>  <sandals@crustytoothpaste.net> wrote:
->>  > What happens here if I compile this on a system that has a kernel 
->> that
->>  > supports MPTCP but then switch to one that does not?  The reason 
->> I ask
->>  > is that I have worked at places where we shipped binaries, 
->> including
->>  > Git, based on a standard CentOS or RHEL system, but then some 
->> people
->>  > used our software on a system with a very stripped down kernel 
->> (in some
->>  > cases, where IPv6 was not even compiled in) because doing so 
->> meant that
->>  > they could make about $5 more per server per month.
->>  >
->>  MPTCP supports *both* IPv4 and IPv6. Don't tell me people would 
->> also remove
->>  even IPv4 as well? I had written an #ifdef statement to check if
->>  IPPROTO_MPTCP
->>  exists and enables that.
-> 
-> I provide this as an example of people compiling even "essential"
-> features out of their kernel.  The question remains: if I compile on,
-> say, Debian, which has this, and then I switch to the same version of
-> Debian, but with a custom kernel that removes MPTCP from the kernel
-> completely, does this change continue to work, or do we end up with an
-> EINVAL from the `socket` call?
-> 
-> I want to point out that the kernel and libc headers used to compile a
-> binary need not reflect the actual code in the running kernel.  With 
-> the
-> advent of containers, people frequently run a different operating 
-> system
-> inside a container than they do outside a container and thus we need 
-> to
-> consider all of the possible combinations.
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
 
-In that case, i'll add a check for the OS that git is built on with 
-"defined(__linux__)"
-if that helps.
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
 
-Also another check if a socket is supported by looking for a return 
-value of
-"EAI_SOCKTYPE" (not EINVAL) and fallback to regular TCP if that is 
-returned.
+ - Give commands to the codebase to "become like so".
 
-EAI_SOCKTYPE should work across different UNIX systems as this is a 
-posix error code.
+in this order.
 
-MPTCP has been in development for the last 15 years and the major 
-change/overhaul (MPTCP v1)
-occured in 2020 and now is accepted in Linux mainline kernel.
+>
+> Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+> ---
+>  Documentation/MyFirstContribution.adoc | 20 +++++++++++++++-----
+>  1 file changed, 15 insertions(+), 5 deletions(-)
+>
+> diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
+> index ef190d8748..f4320d8869 100644
+> --- a/Documentation/MyFirstContribution.adoc
+> +++ b/Documentation/MyFirstContribution.adoc
+> @@ -142,7 +142,15 @@ command in `builtin/psuh.c`. Create that file, and within it, write the entry
+>  point for your command in a function matching the style and signature:
+>  
+>  ----
+> -int cmd_psuh(int argc, const char **argv, const char *prefix)
+> +int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo)
+> +----
+> +
+> +We will use the UNUSED macro to make sure we don't recieve compiler warnings
+> +for unused arguments from the function cmd_psuh.
+> +----
+> +int cmd_psuh(int argc UNUSED, const char **argv UNUSED,
+> +	    const char *prefix UNUSED, struct repository *repo UNUSED)
+>  ----
 
-I am working on this git code change as i have large git repositories 
-with about 50 gigabytes
-of code and i have multiple WAN links which i can aggregate bandwidth 
-across and even
-when one path (even in between my CPE router to internet) is down, i 
-will not
-get interrupted.
+I do not quite understand.  Why do we need a new one here?  Wouldn't
+it be easier to read for a newcomer if you just give the last one
+and explain what UNUSED are for?  Perhaps like
 
-Also i am using a Linux laptop that has WiFi and 5G module. So this kind
-of adds my drive of adding support for git (on Linux)
+    ... matching the style and signature:
 
-MPTCP helps in situations when one of my WAN links have a high latency 
-and
-automatically choose a link with a path with less latency.
+    ----
+    int cmd_psuh(int argc UNUSED, const char **argv UNUSED,
+	         const char *prefix UNUSED, struct repository *repo UNUSED)
+    ----
 
-MPTCP aggregates the MPTCP connection by using subflows where two or 
-more
-links can be utilised with subflows. A single flow of data can have 
-multiple
-subflows across different IP interfaces and thus increases network
-throughput.
+    A few things to note:
 
-Apple for example had been using MPTCP for their cloud services since 
-MPTCP v0 which had
-issues (not MPTCP v1) since 2013.
+    * A subcommand implementation takes its command line arguments
+      in `int argc` + `const char **argv`, like `main()` would
 
-Compared to MultiPath QUIC which is still years away from being 
-implemented.
+    * It also takes two extra parameters, `prefix` and `repo`.  What
+      they mean will not be discussed until much later.
 
-The main issue back then with MPTCP v0 was middleboxes such as 
-firewalls and NAT gateways
-that discards TCP options header which is crucial when using MPTCP.
+    * Because this first example will not use any of the parameters,
+      your compiler will give warnings on unused parameters.  As the
+      list of these four parameters is mandated by the API to add
+      new built-in commands, you cannot omit them.  Instead, you add
+      `UNUSED` to each of them to tell the compiler that you _know_
+      you are not (yet) using it.
 
-> 
->>  > Do the operating systems which support MPTCP make it a compulsory 
->> part
->>  > of the TCP stack, or could we end up with cases where we're 
->> unable to
->>  > connect here?
->>  >
->>  > In addition, Wikipedia mentions that FreeBSD has only IPv4 
->> support, but
->>  > I don't know if that's up to date.  What happens if we run on a 
->> system
->>  > where MPTCP is used, but it doesn't work with IPv6 and the only 
->> remote
->>  > IP is IPv6?  Do we fall back properly, or do things fail?
->> 
->>  This patch *specifically* targets Linux to check if IPPROTO_MPTCP 
->> exists
->>  in the Linux system. I think you have not read my initial patch 
->> description
->>  properly nor even read about the new changes for MPTCP.
-> 
-> Git runs on lots of operating systems, not just Linux.  If the case is
-> that the `IPPROTO_MPTCP` #define is only ever available on Linux and 
-> no
-> other operating system ever ships that option or ever will, then 
-> that's
-> fine, but the commit message needs to say that.  I know that many
-> operating systems ship MPTCP, so I'm going to ask about how this works
-> on some non-Linux systems because your commit message didn't explain
-> that to me.
-> 
->>  Please read up on how MPTCP falls back to regular TCP if it could 
->> not
->>  connect using MPTCP.
-> 
-> Again, your patch tells me how things work on Linux.  I am interested 
-> in
-> patches that work across a variety of other operating systems as well.
+Take a special note on the last one.  There may be multiple ways to
+squelch warnings, but it is worth telling your readers that use of
+UNUSED is the right way.
 
-My main focus is Linux so i will add a check if it's built on a Linux 
-machine.
+I'll stop here for this patch.
 
-macOS would be a later focus but it's not a priority for now. I would 
-avoid
-adding MPTCP on other systems such as FreeBSD as their implementation
-for example is still considered experimental.
-> 
->>  > I ask these questions not because I'm opposed to this feature but
->>  > because I want to be sure we don't accidentally break things for 
->> users.
->>  >
->>  I'm not sure but you have not even bothered to read the 
->> documentation about
->>  MPTCP.
-> 
-> On the Git list, we try not to assume that everyone has read all of 
-> the
-> technical documentation about a subject and instead we explain, at a
-> high level, how the change is and how it's supposed to work.  Your
-> commit message should convince me (and everyone else, especially 
-> Junio,
-> the maintainer) that your change is valuable and should be applied.
-
-It's just a small trival amount of code but anyway.
-
-I will email my latest patch in a separate email.
-
-In my latest code i added checks for the OS it's built on 
-defined(__linux__) and if IPPROTO_MPTCP is
-defined. Additional checks for error if EAI_SOCKTYPE is returned, it 
-will revert to
-regular IPPROTO_TCP (regular TCP)
-> 
->>  > I know that for instance Go 1.24 enabled MPTCP and that ended up 
->> causing
->>  > problems in some environments, so I would recommend that we make 
->> this a
->>  > configurable option instead.  We can definitely default to MPTCP, 
->> but we
->>  > probably need an option to fall back.
->>  MPTCP v1 (again i am repeating myself) and not the old MPTCP v0 
->> does the
->>  fallback
->>  more effectively.
->> 
->>  Do you know of any references that mentions that Go 1.24 with MPTCP 
->> enabled
->>  (normally this is the current MPTCP v1) is causing the issues?
-> 
-> I know that there were circumstances in which there could be kernel
-> panics or similar problems with it enabled[0].  I haven't heard of
-> actual network problems, though.  Since most people were previously 
-> not
-> using MPTCP and Go 1.24 enabled it by default, upgrading to that 
-> version
-> caused some people's systems to panic under load.
-> 
-My initial patch deals with *client* side of git. Not the *server* end 
-of git (like daemon.c).
-
-The crash that was reported was about the network pressure of the 
-software that
-runs as on a *server*.
-
-But nevertheless it might still impact the client although the CVE does 
-not state
-that.
-
-Look, i'm really under an impression you didn't look at the patch that 
-says the code
-change is in "connect.c" and not "daemon.c". If you look closer it does 
-not have to do
-with server side of things.
-> 
-> I do think that enabling features that cause Git to induce a kernel
-> panic or the like, even though that's a bug in the kernel, should be
-> configurable.
-I've also added a flag for the git-daemon (git daemon.c code is a new 
-code).
-
-the flag would be `--mptcp` which can be enabled on the git-daemon 
-server
-side.
-
-Example: ./git-daemon --reuseaddr --base-path=/all/repos/here 
---export-all --mptcp
-> 
->>  But what you explained about the downsides of MPTCP (without 
->> evidences)
->>  and not even implementing MPTCP for git protocol does not make 
->> sense.
-> 
-> I'm not arguing any downsides of MPTCP.  I'm stating that we have a
-> large variety of platforms that have to be supported and you haven't
-> explained how this works or will work anywhere other than Linux; that
-> there are people who compile out important features from their kernel
-> and, though that is improvident, we should probably not break Git for
-> them; and that we should be careful about enabling features which have
-> been known to cause system problems.
-
-Got it. I'll be more informed the next time. Anyway, i'll pass some 
-links
-that you might be interested.
-
-https://www.mptcp.dev/faq.html#mptcpv0-vs-mptcpv1
-https://www.mptcp.dev/faq.html#what-about-middleboxes
-
-> 
-> [0] https://www.wiz.io/vulnerability-database/cve/cve-2022-49198
-> --
-> brian m. carlson (they/them)
-> Toronto, Ontario, CA
-
-
+Thanks.
