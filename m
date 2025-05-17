@@ -1,113 +1,263 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3A662A1D8
-	for <git@vger.kernel.org>; Sat, 17 May 2025 13:39:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BB72207E00
+	for <git@vger.kernel.org>; Sat, 17 May 2025 14:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747489185; cv=none; b=i2w1EpyLur0ci5+5geRg5nts5uKhJlQZrlRMT/F6lGfVI4yk5waQTG4IUp8obbmFOt9DsCS4+N4FczG/oSdvDjzuv2dDX8jBG+xnqwDa0xl+f8eF+hyliLf/ziZtymIpi8RvKxbkU6/5yaGMSReNTsAjKDlF3bBc5qvk7/BOnac=
+	t=1747491989; cv=none; b=ML7mwYkPbxMxZBmJmX4PVkyQ/P8NiXZIusiMXGQKzLuCadguY4pwenNRvwTjm1+lCyTjcxTXQEefHJjozvnkuGj2Qo8FpKwxZGGkzbdboav7iWrVw6j+/Ag+bsi1aX0Eg3BWi5EGiWXZPQwSLMM20zuwrCLQAJFm42LojcXg8Ws=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747489185; c=relaxed/simple;
-	bh=azfmvrk833J+UYgy9LtM0GW/sZ+GRIOWc1BAxHuBVLo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=IqBK82hd5ZF1wxWhCKDwPKMzQowSat81lvPUjL7c7snci57OAgUzOuP2e49eWLkc6jrPorxl5TTSPcFjMYFBujw0ZQsYTabQIFwix6k5Ggha8+D21umy84XcGT/AE2iNyGKPkwJY3ljLlj5MmIy2XXvvNyTyZy81Osj0nvANnqE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=pB7rmY8L; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JJH5P5Ig; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747491989; c=relaxed/simple;
+	bh=UsmS3/TA6VAWvp1WrlwNeLqFvR+gWNNdqYLFd1/bVV8=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=U0JBsFTtZjYgwvhPD3W7GL8BPvq8mP/B/aw7fWAHx/qAJ2oaiYidfIZYj/61GWOXc8a3qpBlPIeiUDL5nRnNwyxGxuWRcaR9jNBvZtkQ9kutgPgSOTM7rLBTXjYNSuzudyeJdeiJBx1LoRIPqnXsXB7Kf0AZDYAPLjBm4kHueyY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=STkS2MGP; arc=none smtp.client-ip=209.85.221.53
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="pB7rmY8L";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JJH5P5Ig"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D07BC25400FC;
-	Sat, 17 May 2025 09:39:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Sat, 17 May 2025 09:39:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747489182; x=1747575582; bh=lcFNbVUxoW
-	MPLZuszmtx02JDuivmHNmHyRAY24sP+Jg=; b=pB7rmY8LOag2PMFT+4QuZ9/DtJ
-	JrDqn5J9XcSzHD5toUTfNLslHePlu/xDAk1j9iol9/YPDO31xuFwYuvDx9dUxc09
-	KYh0xZ37rJTpV1q2C6zLvj9ss48dm8teqEwauD33RzCxfE2kquY3UCiwJbhmSbRT
-	0Z8tb6L2hhMreB5UBk5OkDU6xqxCWgdBP289sOZarlJT2WagBzcHiqgrgpYEjCbC
-	lj51iDUzv7DEDz/LO/sKQYRUh2fa28y2nnCWzXTB7TsDEuuFD38Gp50Qdhvl6xC8
-	xD/A5GqCAiOKI4EcCzznlaP+uz6lb/5blGYdS2adazZjMSgGSqTQ0nWU3DaQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747489182; x=1747575582; bh=lcFNbVUxoWMPLZuszmtx02JDuivmHNmHyRA
-	Y24sP+Jg=; b=JJH5P5IgHP3TNAuW8E7HjD+RVWmnH63z9N7Ivy0DRkS71T8cDn5
-	BLICd4pSHAGuUpdaPVepltYYgcv3UUZzqFF1P+4m9TjeQs40PRVW+kNryG5nHHsp
-	A8y5hWlENr8rqTPm7nT7Dna4wsea461byUZ/ZXuQULuCYsQPpmdBDN2KVTfE69v/
-	1b8QLJP/LOLGLSQBZqS4bhpMDQpQu/xw/n4EW4c7T8mjZObgut0JgKOvdVmMXHED
-	vAtr2jaCB+TJadsBsosTk8PaxEv43bcjo5jZfaX9ImdnpAmWoRQMxiVemvAmSktk
-	w1hDLy0axmx0EI2ahbN2eYHdFfGgAS65GVQ==
-X-ME-Sender: <xms:npEoaHGmlGOqDoSvhBdKL5Ts1JhUWns7AiBzrYfcTNmKG-f-z0HLhQ>
-    <xme:npEoaEWA9ql0wfWGfu-YJi3nDaLPrkylAJHQ46zmNkbCGBn9GiAZKzYyHm94E7nSD
-    Yh109vouKjEWR3zzQ>
-X-ME-Received: <xmr:npEoaJLzLuIMQKgxN8fGWYASntkJybwLx1edJLLfpYXBLDeYhd-pDBB-ajuDAXYvNd8wGS4TujzAZ-yuA7KaAHouMsWOpl5jyWU7JSE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudehjeejucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtofdttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefg
-    feeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjhgrhigrthhhvg
-    gvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdrtghomhdprhgtphhtthhopehn
-    rghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgt
-    ohhm
-X-ME-Proxy: <xmx:npEoaFFNTuhg2BDc3a_n7UugKrzfudLByUkDB5PLHoWyHI_EGKzVaw>
-    <xmx:npEoaNV1vQNBqu2jK_VoA-uN_aEkRvBXCfWrEbDHgOq_zEBzdNxP_w>
-    <xmx:npEoaAMmy6Y-UNe-noKn5oo6ajiXWenOIx35xfOp1pH3qx3nu3Xp2A>
-    <xmx:npEoaM1yB6BCmb7F8z1iwRacCxn0xMYjfsC6WnlFk1FeMiFQ6tmNZw>
-    <xmx:npEoaNp9Net7IvT_Qcv5fwPr-Py-lObY0ADFojo9uA0cVqoQj15sv6kz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 17 May 2025 09:39:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
-Cc: nasamuffin@google.com,  git@vger.kernel.org
-Subject: Re: [PATCH v2 3/3] docs: replace git_config to repo_config
-In-Reply-To: <20250516185516.52311-3-jayatheerthkulkarni2005@gmail.com>
-	(K. Jayatheerth's message of "Sat, 17 May 2025 00:25:16 +0530")
-References: <aCeAIqwvEVOdrsMg@google.com>
-	<20250516185516.52311-1-jayatheerthkulkarni2005@gmail.com>
-	<20250516185516.52311-3-jayatheerthkulkarni2005@gmail.com>
-Date: Sat, 17 May 2025 06:39:41 -0700
-Message-ID: <xmqqwmafqrtu.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="STkS2MGP"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a0b933f214so1958176f8f.0
+        for <git@vger.kernel.org>; Sat, 17 May 2025 07:26:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747491985; x=1748096785; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=17c1/8qz/6tqx3OppipXOVeph1eaJnwYC4GNP1wsv1k=;
+        b=STkS2MGP5OtSqrF7h3rFkQjcu4zK70z15EBZTh8HHHUoUDEeRNFAEOLBzKIGx/ZJo2
+         wssHGiWbi78yGHmWySlFC9bgFa3fUyVfKo3bomPQMClI1fnoTgE6Gltr+zYJIpCQfCBu
+         WdrwSvrFfiKulDfGRKppEpBCUB5TgZduM3pIm55zyhWvbx0VWulr3jQli1a5piaHorVD
+         p/zF45uACmf4ij1Ly8G3pY3+GFtpYwe3z4bBy7iUPMZ7UUltKa70UOL6Tjf4b4/g99Bo
+         jhaAlqQUivsttCa/vogJnfw+XWqUZ7+M0WDR83wELERt6MmJ/xM3qEwLDGqHiIizcORS
+         a/rg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747491985; x=1748096785;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=17c1/8qz/6tqx3OppipXOVeph1eaJnwYC4GNP1wsv1k=;
+        b=KZFymkbOgpFvnNeInAIv3NfuVDbs8Gv+2vCqjnutL4wAB22i5MvNpUOC85y0uo7ba1
+         H/s5NvpfL83ZgqN6IJKHdcbXx3+0JxPQ8/2Jvwn0MQCKD60ZLyZBHH/Y610B4GbAqi9R
+         3akSGyEujtchlsazKOiF41Uwp4lqQVWPrxvu0OsoaGz6RIDIMAy09b4sVK9gXamNhWlo
+         4z9ntV/68I83mKgKNF6qEKnd8MTqpHOOWLW2CHtDhn/rEKTzbnqluaRDT7Vwhkcksf/s
+         dnV0xGecjISv8WqTcgg1QOxiJl4p7mbIXUfiI99OmLWJfZ8ZFx43Gazn6cNtqgqf6H83
+         evmQ==
+X-Gm-Message-State: AOJu0YyuxEcYp90SRkpJbyTcD0tegn6E8h7mZ2afnfhRmSBfwuWKBtXI
+	6ukyCp49S2eHZ6R5sXTItaQUzoRvKl99HO9sRFhPhydoXeKg+vfYf6PjqOepvA==
+X-Gm-Gg: ASbGncuU1g5/nhv51HIbXio/Pz9nJtUBcrL4pOCzlVu+0XCjngFaM21abKZ2kA/R6t3
+	YXtYetTmkGgpKYWlaoxIWzyvm17uRKnm0jUVeb4+NUdqw95Iv1KOecNKrStfga121unl04p5uGb
+	oMYp71YgbU7XpNdlJj8QZ07iYGtdFCK3judF7eSIHtRrzZvJzgUDiLPSUR5NptaRLcXePRq4VE6
+	XpPwz+Lq/ffhU0O0G8d/B0p8/6bDU4HcW6NzoF8jNEon3IJvpSYWYub/aDtFAT6H2Bm5mgO+1MB
+	+m2AvfZy5y6l/CbTWRmcC1ODkNK+49wLFSlYZZ7oDElkXknWkMcY
+X-Google-Smtp-Source: AGHT+IEf/5AemM3GBrfLNShOOMincWvK5fvnppUmNNu/PDXXj3mfBS5n4jRSxzFfT0R0LprhZaHULg==
+X-Received: by 2002:a05:6000:420f:b0:3a3:62af:7c39 with SMTP id ffacd0b85a97d-3a362af7e45mr5241279f8f.31.1747491984717;
+        Sat, 17 May 2025 07:26:24 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a366e08747sm2741573f8f.95.2025.05.17.07.26.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 17 May 2025 07:26:24 -0700 (PDT)
+Message-Id: <pull.1967.git.git.1747491983066.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sat, 17 May 2025 14:26:22 +0000
+Subject: [PATCH] pack-bitmap: add loading corrupt bitmap_index test
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Lidong Yan <502024330056@smail.nju.edu.cn>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
-> This change updates the example in cmd_psuh to use repo_config and
-> repo_config_get_string_tmp instead of the global git_config functions.
->
-> While git_config() accesses global configuration via the_repository,
-> using repo_config() makes use of the repo parameter passed to built-in commands.
-> This is the preferred pattern in the Git codebase,
-> as it respects repository-specific configuration (e.g., .git/config)
-> and avoids relying on global state.
+This patch add a test function `test_bitmap_load_corrupt` in patch-bitmap.c
+, a `load corrupt bitmap` test case in t5310-pack-bitmaps.sh and
+a new command `load-corrupt` for `test-tool` in t/helper/test-bitmap.c.
 
-Again, do not start with "I did this, I did that".  The reason why
-you needed to do such things is a lot more important.
+To make sure we are loading a corrupt bitmap, we need enable bitmap table
+lookup so that `prepare_bitmap()` won't call `load_bitmap_entries_v1()`.
+So to test corrupt bitmap_index, we first call `prepare_bitmap()` to set
+everything up but `bitmap_index->bitmaps` for us. Then we do any
+corruption we want to the bitmap_index. Finally we can test loading
+corrupt bitmap by calling `load_bitmap_entries_v1()`.
 
-    Since this document was written, the built-in API has been
-    updated a few times, but the document was left stale.  Adjust to
-    the current best practices by calling repo_config() on the
-    repository instance the subcommand implementation receives as a
-    parameter, instead of calling git_config() that used to be the
-    common practice.
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+    pack-bitmap: add loading corrupt bitmap_index test
+    
+    This patch add a test function test_bitmap_load_corrupt in
+    patch-bitmap.c , a load corrupt bitmap test case in
+    t5310-pack-bitmaps.sh and a new command load-corrupt for test-tool in
+    t/helper/test-bitmap.c.
+    
+    To make sure we are loading a corrupt bitmap, we need enable bitmap
+    table lookup so that prepare_bitmap() won't call
+    load_bitmap_entries_v1(). So to test corrupt bitmap_index, we first
+    prepare_bitmap() to set everything up but bitmap_index->bitmaps for us.
+    Then we do any corruption we want to the bitmap_index. Finally we call
+    load_bitmap_entries_v1() to test loading corrupt bitmap.
 
-or something like that, perhaps.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1967%2Fbrandb97%2Fcorrupt-bitmap-test-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1967/brandb97/corrupt-bitmap-test-v1
+Pull-Request: https://github.com/git/git/pull/1967
+
+ pack-bitmap.c           | 65 +++++++++++++++++++++++++++++++++++++++++
+ pack-bitmap.h           |  1 +
+ t/helper/test-bitmap.c  |  8 +++++
+ t/t5310-pack-bitmaps.sh | 15 ++++++++++
+ 4 files changed, 89 insertions(+)
+
+diff --git a/pack-bitmap.c b/pack-bitmap.c
+index b9f1d866046..9642a06b3fe 100644
+--- a/pack-bitmap.c
++++ b/pack-bitmap.c
+@@ -3022,6 +3022,71 @@ cleanup:
+ 	return ret;
+ }
+ 
++typedef void(corrupt_fn)(struct bitmap_index *);
++
++static int bitmap_corrupt_then_load(struct repository *r, corrupt_fn *do_corrupt)
++{
++	struct bitmap_index *bitmap_git;
++	unsigned char *map;
++
++	if (!(bitmap_git = prepare_bitmap_git(r)))
++		die(_("failed to prepare bitmap indexes"));
++	/*
++	 * If the table lookup extension is not used,
++	 * prepare_bitmap_git has already called load_bitmap_entries_v1(),
++	 * making it impossible to corrupt the bitmap.
++	 */
++	if (!bitmap_git->table_lookup)
++		return 0;
++
++	/*
++	 * bitmap_git->map is read-only;
++	 * to corrupt it, we need a writable memory block.
++	 */
++	map = bitmap_git->map;
++	bitmap_git->map = xmalloc(bitmap_git->map_size);
++	if (!bitmap_git->map)
++		return 0;
++	memcpy(bitmap_git->map, map, bitmap_git->map_size);
++
++	do_corrupt(bitmap_git);
++	if (!load_bitmap_entries_v1(bitmap_git))
++		die(_("load corrupt bitmap successfully"));
++
++	free(bitmap_git->map);
++	bitmap_git->map = map;
++	free_bitmap_index(bitmap_git);
++
++	return 0;
++}
++
++static void do_corrupt_commit_pos(struct bitmap_index *bitmap_git)
++{
++	uint32_t *commit_pos_ptr;
++
++	commit_pos_ptr = (uint32_t *)(bitmap_git->map + bitmap_git->map_pos);
++	*commit_pos_ptr = (uint32_t)-1;
++}
++
++static void do_corrupt_xor_offset(struct bitmap_index *bitmap_git)
++{
++	uint8_t *xor_offset_ptr;
++
++	xor_offset_ptr = (uint8_t *)(bitmap_git->map + bitmap_git->map_pos +
++				     sizeof(uint32_t));
++	*xor_offset_ptr = MAX_XOR_OFFSET + 1;
++}
++
++int test_bitmap_load_corrupt(struct repository *r)
++{
++	int res = 0;
++	if ((res = bitmap_corrupt_then_load(r, do_corrupt_commit_pos)))
++		return res;
++	if ((res = bitmap_corrupt_then_load(r, do_corrupt_xor_offset)))
++		return res;
++	return res;
++}
++
+ int rebuild_bitmap(const uint32_t *reposition,
+ 		   struct ewah_bitmap *source,
+ 		   struct bitmap *dest)
+diff --git a/pack-bitmap.h b/pack-bitmap.h
+index 382d39499af..7770abe6bff 100644
+--- a/pack-bitmap.h
++++ b/pack-bitmap.h
+@@ -85,6 +85,7 @@ int test_bitmap_hashes(struct repository *r);
+ int test_bitmap_pseudo_merges(struct repository *r);
+ int test_bitmap_pseudo_merge_commits(struct repository *r, uint32_t n);
+ int test_bitmap_pseudo_merge_objects(struct repository *r, uint32_t n);
++int test_bitmap_load_corrupt(struct repository *r);
+ 
+ struct list_objects_filter_options;
+ 
+diff --git a/t/helper/test-bitmap.c b/t/helper/test-bitmap.c
+index 3f23f210726..7aabcfed2f9 100644
+--- a/t/helper/test-bitmap.c
++++ b/t/helper/test-bitmap.c
+@@ -20,6 +20,11 @@ static int bitmap_dump_pseudo_merges(void)
+ 	return test_bitmap_pseudo_merges(the_repository);
+ }
+ 
++static int bitmap_load_corrupt(void)
++{
++	return test_bitmap_load_corrupt(the_repository);
++}
++
+ static int bitmap_dump_pseudo_merge_commits(uint32_t n)
+ {
+ 	return test_bitmap_pseudo_merge_commits(the_repository, n);
+@@ -40,6 +45,8 @@ int cmd__bitmap(int argc, const char **argv)
+ 		return bitmap_dump_hashes();
+ 	if (argc == 2 && !strcmp(argv[1], "dump-pseudo-merges"))
+ 		return bitmap_dump_pseudo_merges();
++	if (argc == 2 && !strcmp(argv[1], "load-corrupt"))
++		return bitmap_load_corrupt();
+ 	if (argc == 3 && !strcmp(argv[1], "dump-pseudo-merge-commits"))
+ 		return bitmap_dump_pseudo_merge_commits(atoi(argv[2]));
+ 	if (argc == 3 && !strcmp(argv[1], "dump-pseudo-merge-objects"))
+@@ -48,6 +55,7 @@ int cmd__bitmap(int argc, const char **argv)
+ 	usage("\ttest-tool bitmap list-commits\n"
+ 	      "\ttest-tool bitmap dump-hashes\n"
+ 	      "\ttest-tool bitmap dump-pseudo-merges\n"
++	      "\ttest-tool bitmap load-corrupt\n"
+ 	      "\ttest-tool bitmap dump-pseudo-merge-commits <n>\n"
+ 	      "\ttest-tool bitmap dump-pseudo-merge-objects <n>");
+ 
+diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+index a62b463eaf0..042f62f16ea 100755
+--- a/t/t5310-pack-bitmaps.sh
++++ b/t/t5310-pack-bitmaps.sh
+@@ -486,6 +486,21 @@ test_bitmap_cases () {
+ 			grep "ignoring extra bitmap" trace2.txt
+ 		)
+ 	'
++
++	test_expect_success 'load corrupt bitmap' '
++		git init repo &&
++		test_when_finished "rm -fr repo" && (
++			cd repo &&
++			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
++
++			echo "Hello world" > hello_world.txt &&
++			git add hello_world.txt &&
++			git commit -am "add hello_world.txt" &&
++
++			git repack -adb &&
++			test-tool bitmap load-corrupt
++		)
++	'
+ }
+ 
+ test_bitmap_cases
+
+base-commit: 6f84262c44a89851c3ae5a6e4c1a9d06b2068d75
+-- 
+gitgitgadget
