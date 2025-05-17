@@ -1,285 +1,168 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A2A04B1E7B
-	for <git@vger.kernel.org>; Sat, 17 May 2025 17:02:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8536F1C861D
+	for <git@vger.kernel.org>; Sat, 17 May 2025 17:20:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747501364; cv=none; b=dA15CKndCeGqlyiRjp1K6NjV+IwaaQuJKt5vpKOcVJ6DgnQmJIZWAIvZIuWJMQJpxI3tiZIrEfhNwm41nlylCn110gF7SEu5xz6y7dEDnmj/0a9l7WJtkkDc1YvJStf84HCZNsyeGezUnYCeJWuSttbsrgfAbSIraBtobCsRqcQ=
+	t=1747502433; cv=none; b=moijbsosdJB9RWjsoz8bL1cDJx1dE/6m8+jY9UNNxYyGsf84B9jminNjyL5SEFDoVcRJRz0R0AUTUSOB1GgMo9ZMLktYJAhm1Z3974N4G2RvOKU9wzVAQdiGAcveutNlJJto+KizpwrPlspqobQ8ciCxyxuUamQSCKDtqdaKrEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747501364; c=relaxed/simple;
-	bh=j+iQJ5qsZbD/z4KkdfdnIeWMVxjP/UzOK8+b0zd+kjw=;
-	h=Date:From:Subject:To:Cc:Message-Id:MIME-Version:Content-Type; b=MvJkqrp4XOxiE13LR+6NKu24TgV17C/VwLDtxPUGH1Jy1fNWxn9hlbFJJvr9/MpbVB6QrEtgtQmaGvcznjH795WGEMFmVxzCP5f2BgYipAXLGhkpGuBaVNTaZnvwkdcToOxBIfpRpnkosrnLBDFUEWezN9XBlBgkvx2uMTlvoN8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unrealasia.net; spf=pass smtp.mailfrom=unrealasia.net; dkim=pass (2048-bit key) header.d=unrealasia-net.20230601.gappssmtp.com header.i=@unrealasia-net.20230601.gappssmtp.com header.b=Prq7/nZ0; arc=none smtp.client-ip=209.85.214.170
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unrealasia.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=unrealasia.net
+	s=arc-20240116; t=1747502433; c=relaxed/simple;
+	bh=dnFhv0racdzH3AIvQ2NJX0zU3bOh14aItlTRl2WRz4U=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=h/wnLyqR0wZcCP8qiVLr/0wb2dYCGJTwCh00xFU/MwbB9cZGRNsMJXD7msYY9tG8I/PnRtBBIXJL4thl09JNfRY1kFsufTxaLSSNArOhrKvXoxAfEjQVa9nVaLkxVdQs4IUxwrzZ6YrIRbIGT8ItX4rjdwcchdaP4dAT1WOrST4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QX88PbcR; arc=none smtp.client-ip=209.85.216.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=unrealasia-net.20230601.gappssmtp.com header.i=@unrealasia-net.20230601.gappssmtp.com header.b="Prq7/nZ0"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-231ecd4f2a5so12521855ad.0
-        for <git@vger.kernel.org>; Sat, 17 May 2025 10:02:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QX88PbcR"
+Received: by mail-pj1-f50.google.com with SMTP id 98e67ed59e1d1-30c1c4a8224so2492460a91.0
+        for <git@vger.kernel.org>; Sat, 17 May 2025 10:20:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=unrealasia-net.20230601.gappssmtp.com; s=20230601; t=1747501360; x=1748106160; darn=vger.kernel.org;
-        h=mime-version:message-id:cc:to:subject:from:date:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=j+iQJ5qsZbD/z4KkdfdnIeWMVxjP/UzOK8+b0zd+kjw=;
-        b=Prq7/nZ06P8j81gzMbHJ8R+KkWH82ThGa+gxdHEN7WxF8ObmScF/FJRSHlbTF+D01t
-         NOxFAA8TEzvkRims9yRV+OgdsqSMQ0WoBlWHbENdCC8Nm0LaScnjBSyETIslz9J1PC+L
-         vQ0CG3137n0g5sCs/j97ONTpAn8Io310FwmA04JvmCBAct8XjeBr92um6HPaHXD+f4nl
-         i+vfzxbym8sKEmO3ExK8rcCZs7SVW5Lry0FvVIqwAm3V4jNm7uUPrfPKK7IUrsOVLrb0
-         dgf+FEpBQSrxV2PBaeOVc0IQONJQrj8H98g0xRhfLKRC0wWSBFi33rw/J5UChhemZBsE
-         fxEw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747501360; x=1748106160;
-        h=mime-version:message-id:cc:to:subject:from:date:x-gm-message-state
+        d=gmail.com; s=20230601; t=1747502431; x=1748107231; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=j+iQJ5qsZbD/z4KkdfdnIeWMVxjP/UzOK8+b0zd+kjw=;
-        b=F5ea4NH9By1TCCFGnKiY2Rzd+GydUCUGPnFnuRZYqc1nx1OEdnJOAZX39Rd+PAWi6s
-         qqMzRs9RE940M3g5ZAkF8F9sL5mPID/3NLkc7YPq6lIQRTNuQ1SULOhMAg3MvCPQQYTg
-         qXPsfUbXK4xtWSbTpT1JDAc281D3ga5G0r1Sfsgr0lP/JOsmEUKJOop9pa2zY2SfolJQ
-         n3g5HBA8TpdBRIBT6567H/tgkzvXkH1HNzZcX6S8G6/rqTNE9J3QOufUwyFQRXAoHGuE
-         JchlnuqqXfaDruM6NqiSZ/gQ9ysPthGNbdprv1DyCiwhgrb22syYttpFkIFYZcfYl7so
-         6qYw==
-X-Gm-Message-State: AOJu0YzwUAS7d+inq35zCeimhr64ttFTOlghrIYqlR8b2saz6AwruEf3
-	QvbqNhxddsne0JUGoWYATOyiT2N7H9hASFGF3Rits0Pi2w2w2Y2NCbZy01LttfDuYTX7HpLEzOS
-	V6zZ2
-X-Gm-Gg: ASbGncuwNAwyehJB6WvITS31fB+bWluqwI5Y6PKwMk6qRd35MdHm+HBjQsnxpdRxyuQ
-	xDWOcEWR772P0Gh+JqCs3PCfVqEChbqxC607DUvYFqlACA1poZMbsf60YCwlQuhr6mTEz9rzcrR
-	6jHcNqCw43slbdfNpkCIMJlozZ/wteMrz4cdB0w/494DvhdvlTYCHTqaMZthy14uBIWC0zktMwa
-	vdLHHAOkUCrSGz+ct6wLUqfCSOeKwfxs8pnMUENvR9kS8phKbr9HOKKpKfYb8Vb2B/WYWauVuzu
-	e4CgSeGJua9w7LPB1ktmlNpYcDOjVAFo9KWakq5+Gw9mjAKk7R3xCT2+z82Z8bdABYQNp5gO324
-	=
-X-Google-Smtp-Source: AGHT+IF/szJG7qpA5IuE5vQaaXO28IL9KO+6r5uvv7MpnthU1u5P5rQvjlnmxvO5JVQZNQMVwQcEKA==
-X-Received: by 2002:a17:902:f706:b0:21f:6a36:7bf3 with SMTP id d9443c01a7336-231de3001cemr112047245ad.12.1747501360235;
-        Sat, 17 May 2025 10:02:40 -0700 (PDT)
-Received: from muhammads-ThinkPad ([2402:1980:245:6ef:bd3e:6a19:ff75:ab35])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4e97defsm32494185ad.118.2025.05.17.10.02.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 17 May 2025 10:02:39 -0700 (PDT)
-Date: Sun, 18 May 2025 01:02:30 +0800
-From: Muhammad Nuzaihan <zaihan@unrealasia.net>
-Subject: PATCH v2 [1/1]: MPTCP support for Git on Linux
-To: git@vger.kernel.org
-Cc: "phillip.wood" <phillip.wood@dunelm.org.uk>, "brian m. carlson"
-	<sandals@crustytoothpaste.net>
-Message-Id: <6O0FWS.8JJP67DO2U1M1@unrealasia.net>
-X-Mailer: geary/40.0
+        bh=usTi8547CQ6wcVjrcv4qysGK3GL88are/3JUd6KsrHA=;
+        b=QX88PbcR0JX3UYXmCLyvjt9SuSFYRVcnv9wDYGXfLoPuIjAy57abThTI+ZbB1Anr3l
+         OYgOTgPHebo0pOoObYtqQgOJwqU1qUKWjc6ds9H39aV/68Eaa7xS5gBQi96XFNa+89Lm
+         mPksYd8kBZ0eCkNDXgMjFYXH1ES/iCyp71UEKXy4UDSm+LkHwPDMr1YRjbywI1EnFvfo
+         ym8xAxS8FByG3USawDHx8Uz8hVpmTk6C4/e4BSneVKz6j6uTty/Az6hPeAvdvZcdAM1k
+         ho5Wmy2sFGhnI+4bvxhqAuUytDyHbQA7AFKcCgc5bB2JQh7xrksjahv/ENsZ9X0DOGOW
+         4AKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747502431; x=1748107231;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=usTi8547CQ6wcVjrcv4qysGK3GL88are/3JUd6KsrHA=;
+        b=exHnOaYJZW8Q4XdFy71a40h7bjhMjr+zrHUulAlFDJUX9zJOYFBoGFqXE3HJdKspHt
+         CKVYBmyQ1oXVYsWY3KJUUqi4o1C6qvrzP2kBNNZwMTRkzg/4dy2f2Q8HqLdQVDTuFPi3
+         QsBq9i/u3MQJNgFtHppPpMmo1ca/jJ/HhZ7pdMJM3Xqsy3+jgIRtB6hGMV2PpIccuN2N
+         VVpEqSRJXaio4YjDPI4aXXDEmWQ9guDvF4GAVWWa3RuMKXmXnWZYDWetjumR9s8kI39B
+         9jBa8BjfUmIHUyOPQ9ODxOdfPI8wkua/Tx40RMhSLG1VHCl94bAUL9K4TIiKxMRztGm5
+         k0kw==
+X-Gm-Message-State: AOJu0YxeLe2PBozHgH74XDOsxD6II44Es+To3BpiGz7HleS50uBchwRi
+	H0mJHzud7vOfQ3ycgBygvaDDpUSOe4gv7sUyhCGbP+Yg2C+pbeAQ39AjEG4sTg==
+X-Gm-Gg: ASbGncuA3fSslneDdRXs0OgBVEXWG1CMjYo8KrCUkmpIYu4i438QY5vjIzv9O9xVxnp
+	t1KBEc+LsqfZNTA3t25E4HaVDcnZxZJi6MU6k1+DlULxO8M+Uuy/prB/tosGcyu+BptxX7wAXln
+	T+ND1dNBvdZ2MmBbQPORfOIvL3pfCtRU2C0lJjvulFWgWY2K5sB2lOx2RNrpuDMSoctwRMlwDv0
+	gF7GGaOe39B/C/wVIYchTshGXn0Yw/LM/shPra/MsrlG7MQ4vhRGoeM4IRXvMsnSnXE44zSg1ig
+	zh9eugag0lp/luDiXKo4GpOTcYto1PbzHCCwx6E2YSFW0XEqrg/C8FNE88DseAadsElLQnZX759
+	qvqpHYTUxlDs6kWGe7EBA+g==
+X-Google-Smtp-Source: AGHT+IHPjEVqWv0zsyEGGPPp0mnD8cL1fDJ0LiXVLebVoyrepc3KR0KH/UJbkVwRHvRtfuLOatwMZQ==
+X-Received: by 2002:a17:90b:1d4f:b0:308:6d7a:5d30 with SMTP id 98e67ed59e1d1-30e7d5458dcmr13967489a91.18.1747502430438;
+        Sat, 17 May 2025 10:20:30 -0700 (PDT)
+Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
+        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e334e24d8sm7311301a91.37.2025.05.17.10.20.29
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 May 2025 10:20:30 -0700 (PDT)
+Message-ID: <49226f81-08df-4d35-861d-eca76fffa449@gmail.com>
+Date: Sat, 17 May 2025 10:20:29 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="=-KusR8qS7pSQt1ByS3hSy"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Re Question About Sorting the Index
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+References: <1008ijb$6j0$1@ciao.gmane.io>
+ <20250517034625.9100-1-jayatheerthkulkarni2005@gmail.com>
+Content-Language: en-US
+From: Jon Forrest <nobozo@gmail.com>
+In-Reply-To: <20250517034625.9100-1-jayatheerthkulkarni2005@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
---=-KusR8qS7pSQt1ByS3hSy
-Content-Type: text/plain; charset=us-ascii; format=flowed
+First of all, thanks for the very thoughtful response.
 
-Hi,
+On 5/16/25 8:46 PM, K Jayatheerth wrote:
 
-This patch is about Multi-Path TCP.
+> Correct the index maintains `struct cache_entry` entries in sorted
+> order by the file name. This is essential for fast lookup, diffing, and
+> pathspec-based operations.
 
-Multi-Path TCP (MPTCP) had been in development for the past 15 years
-which started with MPTCP v0 (version 0) which initially had issues
-for middleboxes and NAT Gateways.
+Somehow I hadn't realized that the index was also stored in
+memory. However, my concerns about index lookups where each
+entry in the index, in memory or on disk, isn't the same size
+still apply. How can you do a binary search if you don't know
+where the middle of the index is? Maybe I'd understand if I
+had studied the source code in more detail.
 
-The current iteration is MPTCP v1 which has a fallback mechanism to
-regular
-TCP to avoid issues with middleboxes and NAT Gateways.
+> Not exactly. Git keeps the index in memory as a sorted array, so adding
+> a new entry doesn't require a full resort just a binary search to find
+> the right insertion point. Only when the index is written to disk does
+> it serialize the in-memory array, which is already sorted.
 
-Started to add this code change as a need as i have large git codebases
-with around 50 gigabytes and i have multiple WAN links which i can
-aggregate
-bandwidth across and even when network one path (even in between my
-CPE router
-to internet) is down, i will not get interrupted.
+I see. However, my comment above still applies.
 
-Also i am using a Linux laptop that has WiFi and 5G module. So this kind
-of adds my reason of adding support for git (on Linux)
+>> If so, this seems like a lot of
+>> work, especially since not all the entries
+>> are the same size.
+> 
+> That's true in principle, but in practice, the memory layout of
+> `cache_entry` objects and memory mapping makes it quite efficient,
+> especially since typical index sizes are modest.
 
-To get MPTCP to be fully working, both ends of client and server must
-implement
-MPTCP.
+I guess you're right since the Git universe isn't clamoring
+about poor performance when accessing the index.
 
-My implementation adds support for the basic git protocol.
+> you're describing a secondary structure
+> like a sparse index or log-structured merge pattern. It has its appeal,
+> particularly for large repositories with high-churn working trees.
 
-MPTCP helps in situations when one of my WAN links have a high latency
-and
-automatically choose a link with a path with less latency.
+Right. I would think it would also add some degree of safety since
+the index file would only be rewritten when garbage collection is
+done. The "index index" would be much more volatile but since it
+could be easily and quickly recreated any time, there would be no added
+danger.
 
-Also, MPTCP aggregates the MPTCP connection by using subflows where two
-or more
-links can be utilised with subflows. A single flow of data can have
-multiple
-subflows across different IP interfaces and thus increases network
-throughput.
+> many Git operations rely on the index being sorted. Reads would
+> have to scan or use your "index index", which introduces more I/O and
+> complexity.
 
-Apple for example had been using MPTCP for their cloud services since
-MPTCP v0
-which had issues with middleboxes (not MPTCP v1) since 2013.
+I'm not convinced it would result in more I/O. The "index index" file
+would be written more often, true, but each entry in it is much smaller
+than the in the regular index.
 
-The downside, even though i had never experienced it for other
-applications
-on Linux like Google Chromium[1], is that the fallback might induce
-delays
-in connectivity, if i've read it somewhere which i cannot recall where.
+Maybe a better approach would only keep the "index index" in memory.
+This would result in less memory being used, with access to entries
+in the regular index being fast since the "index index" entries
+contain enough data to do random access to the desired entry
+in the on-disk index.
 
-How this patch works:
+On the third hand, all this might be unnecessary since the way
+Git currently works is good enough for most (maybe all) people
+most (maybe all) of the time.
 
-This patch enables MPTCP protocol option only when it's built on Linux
-with
-IPPROTO_MPTCP support in netinet/in.h.
+> This assumes laziness in cleanup, which is reasonable for append-only
+> systems. But Git today avoids keeping dead entries around for clarity
+> and correctness (especially under concurrent access).
 
-On Linux, if IPPROTO_MPTCP is not defined in netinet/in.h, it will
-skipped.
+If Postgres can do it, so could Git.
 
-IPPROTO_MPTCP should and never be enabled when it detects being built on
-an OS other than Linux with defined(__linux__) check.
+> Agreed but it's worth noting that sorting a relatively small
+> in-memory structure (as Git does now) is often cheaper than
+> maintaining two files in sync (your full index and index index).
 
-Another challenge is that although "getaddrinfo()" is a POSIX function,
-not all glibc "getaddrinfo()" implementation is written with
-IPPROTO_MPTCP support out of the box, especially on older glibc
-versions.
+With my in memory "index index", this would become easier.
 
-getaddrinfo() IPPROTO_MPTCP support had only been added to recent glibc
-in 2025 eventhough IPPROTO_MPTCP definition had been around for
-much longer in netinet/in.h.
+> You’re not missing much in fact, Git has features like the "split index",
+> "untracked cache", and "index v4" that address similar performance issues
+> through other means. Your idea would likely help in edge cases (very large
+> repos, massive parallelism), but the added complexity and I/O overhead of
+> maintaining multiple files likely outweighs the benefits for the common case.
 
-So we run getaddrinfo() which is a code in glibc and check for errors,
-specifically "EAI_SOCKTYPE" return value which tells us that the socket
-type
-is not supported and fallback to regular TCP (IPPROTO_TCP)
+That is indeed the question. I admittedly have no data either about how
+large a repo would have to be for a change like this to have any effect,
+or how many such repos exist. I notice that the currrent Git repo has
+4638 entries, which I suppose really isn't all that large.
 
-Also we will also check that we are building on Linux and depending on
-version number of Linux we will initialize the socket() accordingly and
-if
-there is an error return value (like
-EINVAL/EPROTONOSUPPORT/ENOPROTOOPT),
-we will fall back to regular TCP.
-
-Enabling and disabling MPTCP:
-
-By default on the client side, MPTCP will not be enabled in git client,
-however MPTCP
-can be enabled by setting an environment variable "GIT_ENABLE_MPTCP" to
-any value.
-
-Persisting the configuration can be done in your shell.
-
-Also for server side git server (daemon.c), there is a flag to
-optionally
-enable mptcp with "--mptcp", example:
-
-git-daemon --base-path=/all/my/repos --export-all --mptcp
-
-This will tell the git server daemon to accept mptcp connections but
-fallback to regular tcp when mptcp connection is not available.
-
-PS: Can someone point me about having a "knob" in Makefile or is this
-already sufficient?
-
-[1] https://chromium-review.googlesource.com/c/chromium/src/+/6355767
-
-Signed-off-by: Muhammad Nuzaihan Bin Kamal Luddin
-<zaihan@unrealasia.net>
+Thanks again,
+Jon
 
 
---=-KusR8qS7pSQt1ByS3hSy
-Content-Type: text/x-patch
-Content-Disposition: attachment; filename=git-mptcp-v2.diff
-Content-Transfer-Encoding: base64
-
-ZGlmZiAtLWdpdCBhL2Nvbm5lY3QuYyBiL2Nvbm5lY3QuYwppbmRleCAzMjgwNDM1MzMxLi44NDZm
-YTMxODUzIDEwMDY0NAotLS0gYS9jb25uZWN0LmMKKysrIGIvY29ubmVjdC5jCkBAIC0yMyw2ICsy
-Myw5IEBACiAjaW5jbHVkZSAiYWxpYXMuaCIKICNpbmNsdWRlICJidW5kbGUtdXJpLmgiCiAjaW5j
-bHVkZSAicHJvbWlzb3ItcmVtb3RlLmgiCisjaWZkZWYgX19saW51eF9fCisjaW5jbHVkZSA8bGlu
-dXgvdmVyc2lvbi5oPgorI2VuZGlmCiAKIHN0YXRpYyBjaGFyICpzZXJ2ZXJfY2FwYWJpbGl0aWVz
-X3YxOwogc3RhdGljIHN0cnVjdCBzdHJ2ZWMgc2VydmVyX2NhcGFiaWxpdGllc192MiA9IFNUUlZF
-Q19JTklUOwpAQCAtNzkzLDYgKzc5NiwxNiBAQCBzdGF0aWMgdm9pZCBlbmFibGVfa2VlcGFsaXZl
-KGludCBzb2NrZmQpCiAJCWVycm9yX2Vycm5vKF8oInVuYWJsZSB0byBzZXQgU09fS0VFUEFMSVZF
-IG9uIHNvY2tldCIpKTsKIH0KIAorc3RhdGljIGNvbnN0IGNoYXIgKmdpdF9lbmFibGVfbXB0Y3Ao
-dm9pZCkKK3sKKyAgICAgICAgY29uc3QgY2hhciAqbXB0Y3A7CisKKyAgICAgICAgaWYgKChtcHRj
-cCA9IGdldGVudigiR0lUX0VOQUJMRV9NUFRDUCIpKSkKKyAgICAgICAgICAgICAgICByZXR1cm4g
-bXB0Y3A7CisKKwlyZXR1cm4gTlVMTDsKK30KKwogI2lmbmRlZiBOT19JUFY2CiAKIHN0YXRpYyBj
-b25zdCBjaGFyICphaV9uYW1lKGNvbnN0IHN0cnVjdCBhZGRyaW5mbyAqYWkpCkBAIC04MTYsNiAr
-ODI5LDcgQEAgc3RhdGljIGludCBnaXRfdGNwX2Nvbm5lY3Rfc29jayhjaGFyICpob3N0LCBpbnQg
-ZmxhZ3MpCiAJc3RydWN0IGFkZHJpbmZvIGhpbnRzLCAqYWkwLCAqYWk7CiAJaW50IGdhaTsKIAlp
-bnQgY250ID0gMDsKKwljb25zdCBjaGFyICplbmFibGVfbXB0Y3A7CiAKIAlnZXRfaG9zdF9hbmRf
-cG9ydCgmaG9zdCwgJnBvcnQpOwogCWlmICghKnBvcnQpCkBAIC04MjcsMTIgKzg0MSwyOCBAQCBz
-dGF0aWMgaW50IGdpdF90Y3BfY29ubmVjdF9zb2NrKGNoYXIgKmhvc3QsIGludCBmbGFncykKIAll
-bHNlIGlmIChmbGFncyAmIENPTk5FQ1RfSVBWNikKIAkJaGludHMuYWlfZmFtaWx5ID0gQUZfSU5F
-VDY7CiAJaGludHMuYWlfc29ja3R5cGUgPSBTT0NLX1NUUkVBTTsKLQloaW50cy5haV9wcm90b2Nv
-bCA9IElQUFJPVE9fVENQOworI2lmIGRlZmluZWQoX19saW51eF9fKSAmJiBkZWZpbmVkKElQUFJP
-VE9fTVBUQ1ApCisgICAgICAgIGVuYWJsZV9tcHRjcCA9IGdpdF9lbmFibGVfbXB0Y3AoKTsKKwlp
-ZiAoZW5hYmxlX21wdGNwKQorICAgICAgICAgICAgICAgIGhpbnRzLmFpX3Byb3RvY29sID0gSVBQ
-Uk9UT19NUFRDUDsKKwllbHNlCisgICAgICAgICAgICAgICAgaGludHMuYWlfcHJvdG9jb2wgPSBJ
-UFBST1RPX1RDUDsKKyNlbHNlCisgICAgICAgIGhpbnRzLmFpX3Byb3RvY29sID0gSVBQUk9UT19U
-Q1A7CisjZW5kaWYKIAogCWlmIChmbGFncyAmIENPTk5FQ1RfVkVSQk9TRSkKIAkJZnByaW50Zihz
-dGRlcnIsIF8oIkxvb2tpbmcgdXAgJXMgLi4uICIpLCBob3N0KTsKIAotCWdhaSA9IGdldGFkZHJp
-bmZvKGhvc3QsIHBvcnQsICZoaW50cywgJmFpKTsKKyAgICAgICAgZ2FpID0gZ2V0YWRkcmluZm8o
-aG9zdCwgcG9ydCwgJmhpbnRzLCAmYWkpOworICAgICAgICAvLyBJZiBzeXN0ZW0ncyBnbGliYyBn
-ZXRhZGRyaW5mbygpIGRvZXMgbm90IGhhdmUKKyAgICAgICAgLy8gSVBQUk9UT19NUFRDUCBhcyBt
-ZW1iZXIgdHlwZSBpbiBzdHJ1Y3QgKGxpa2Ugb2xkZXIKKyAgICAgICAgLy8gZ2xpYmMgYW5kIG90
-aGVyIGxpYmMpLCB3ZSBmYWxsYmFjayB0byBJUFBST1RPX1RDUAorICAgICAgICBpZiAoZ2FpID09
-IEVBSV9TT0NLVFlQRSkgeworICAgICAgICAgICAgICAgIGhpbnRzLmFpX3Byb3RvY29sID0gSVBQ
-Uk9UT19UQ1A7CisgICAgICAgICAgICAgICAgZ2FpID0gZ2V0YWRkcmluZm8oaG9zdCwgcG9ydCwg
-JmhpbnRzLCAmYWkpOworICAgICAgICB9CisJCiAJaWYgKGdhaSkKIAkJZGllKF8oInVuYWJsZSB0
-byBsb29rIHVwICVzIChwb3J0ICVzKSAoJXMpIiksIGhvc3QsIHBvcnQsIGdhaV9zdHJlcnJvcihn
-YWkpKTsKIApAQCAtODg5LDYgKzkxOSw3IEBAIHN0YXRpYyBpbnQgZ2l0X3RjcF9jb25uZWN0X3Nv
-Y2soY2hhciAqaG9zdCwgaW50IGZsYWdzKQogCWNoYXIgKiphcDsKIAl1bnNpZ25lZCBpbnQgbnBv
-cnQ7CiAJaW50IGNudDsKKwljb25zdCBjaGFyICplbmFibGVfbXB0Y3A7CiAKIAlnZXRfaG9zdF9h
-bmRfcG9ydCgmaG9zdCwgJnBvcnQpOwogCkBAIC05MTcsNiArOTQ4LDIxIEBAIHN0YXRpYyBpbnQg
-Z2l0X3RjcF9jb25uZWN0X3NvY2soY2hhciAqaG9zdCwgaW50IGZsYWdzKQogCQlzYS5zaW5fcG9y
-dCA9IGh0b25zKG5wb3J0KTsKIAkJbWVtY3B5KCZzYS5zaW5fYWRkciwgKmFwLCBoZS0+aF9sZW5n
-dGgpOwogCisjaWZkZWYgX19saW51eF9fCisJCWVuYWJsZV9tcHRjcCA9IGdpdF9lbmFibGVfbXB0
-Y3AoKTsgCisJCWlmIChlbmFibGVfbXB0Y3ApIHsKKyAgICAgICAgICAgICAgICAgICAgICAgIHNv
-Y2tmZCA9IHNvY2tldChoZS0+aF9hZGRydHlwZSwgU09DS19TVFJFQU0sIElQUFJPVE9fTVBUQ1Ap
-OworI2lmIExJTlVYX1ZFUlNJT05fQ09ERSA+PSBLRVJORUxfVkVSU0lPTig1LDYsMCkKKyAgICAg
-ICAgICAgICAgICAgICAgICAgIC8vIE1QVENQIGNoZWNrIHJldHVybiB2YWx1ZSBmb3IgTGludXgg
-S2VybmVsID49IDUuNgorICAgICAgICAgICAgICAgICAgICAgICAgaWYgKHNvY2tmZCA9PSBFUFJP
-VE9OT1NVUFBPUlQgfHwgc29ja2ZkID09IEVOT1BST1RPT1BUKQorICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICBjb250aW51ZTsKKyNlbHNlCisgICAgICAgICAgICAgICAgICAgICAgICAv
-LyBNUFRDUCBjaGVjayByZXR1cm4gdmFsdWUgZm9yIExpbnV4IEtlcm5lbCA8IDUuNgorICAgICAg
-ICAgICAgICAgICAgICAgICAgaWYgKHNvY2tmZCA9PSBFSU5WQUwgfHwgc29ja2ZkID09IEVOT1BS
-T1RPT1BUKQorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb250aW51ZTsKKyNlbmRp
-ZgorICAgICAgICAgICAgICAgIH0KKyNlbmRpZgogCQlzb2NrZmQgPSBzb2NrZXQoaGUtPmhfYWRk
-cnR5cGUsIFNPQ0tfU1RSRUFNLCAwKTsKIAkJaWYgKChzb2NrZmQgPCAwKSB8fAogCQkgICAgY29u
-bmVjdChzb2NrZmQsIChzdHJ1Y3Qgc29ja2FkZHIgKikmc2EsIHNpemVvZiBzYSkgPCAwKSB7CmRp
-ZmYgLS1naXQgYS9kYWVtb24uYyBiL2RhZW1vbi5jCmluZGV4IGQxYmU2MWZkNTcuLjc5M2Y4YTQy
-MTkgMTAwNjQ0Ci0tLSBhL2RhZW1vbi5jCisrKyBiL2RhZW1vbi5jCkBAIC0yNSw2ICsyNSw3IEBA
-IHN0YXRpYyBlbnVtIGxvZ19kZXN0aW5hdGlvbiB7CiB9IGxvZ19kZXN0aW5hdGlvbiA9IExPR19E
-RVNUSU5BVElPTl9VTlNFVDsKIHN0YXRpYyBpbnQgdmVyYm9zZTsKIHN0YXRpYyBpbnQgcmV1c2Vh
-ZGRyOworc3RhdGljIGludCBtcHRjcDsKIHN0YXRpYyBpbnQgaW5mb3JtYXRpdmVfZXJyb3JzOwog
-CiBzdGF0aWMgY29uc3QgY2hhciBkYWVtb25fdXNhZ2VbXSA9CkBAIC0zOCw2ICszOSw3IEBAIHN0
-YXRpYyBjb25zdCBjaGFyIGRhZW1vbl91c2FnZVtdID0KICIgICAgICAgICAgIFstLWFjY2Vzcy1o
-b29rPTxwYXRoPl1cbiIKICIgICAgICAgICAgIFstLWluZXRkIHwgWy0tbGlzdGVuPTxob3N0X29y
-X2lwYWRkcj5dIFstLXBvcnQ9PG4+XVxuIgogIiAgICAgICAgICAgICAgICAgICAgICBbLS1kZXRh
-Y2hdIFstLXVzZXI9PHVzZXI+IFstLWdyb3VwPTxncm91cD5dXVxuIgorIiAgICAgICAgICAgWy0t
-bXB0Y3BdXG4iCiAiICAgICAgICAgICBbLS1sb2ctZGVzdGluYXRpb249KHN0ZGVycnxzeXNsb2d8
-bm9uZSldXG4iCiAiICAgICAgICAgICBbPGRpcmVjdG9yeT4uLi5dIjsKIApAQCAtOTc1LDEwICs5
-NzcsMjQgQEAgc3RhdGljIGludCBzZXR1cF9uYW1lZF9zb2NrKGNoYXIgKmxpc3Rlbl9hZGRyLCBp
-bnQgbGlzdGVuX3BvcnQsIHN0cnVjdCBzb2NrZXRsaXMKIAltZW1zZXQoJmhpbnRzLCAwLCBzaXpl
-b2YoaGludHMpKTsKIAloaW50cy5haV9mYW1pbHkgPSBBRl9VTlNQRUM7CiAJaGludHMuYWlfc29j
-a3R5cGUgPSBTT0NLX1NUUkVBTTsKLQloaW50cy5haV9wcm90b2NvbCA9IElQUFJPVE9fVENQOwor
-I2lmIGRlZmluZWQoX19saW51eF9fKSAmJiBkZWZpbmVkKElQUFJPVE9fTVBUQ1ApCisJaWYgKG1w
-dGNwKQorICAgICAgICAgICAgICAgIGhpbnRzLmFpX3Byb3RvY29sID0gSVBQUk9UT19NUFRDUDsK
-KyAgICAgICAgZWxzZQorICAgICAgICAgICAgICAgIGhpbnRzLmFpX3Byb3RvY29sID0gSVBQUk9U
-T19NUFRDUDsKKyNlbHNlCisgICAgICAgIGhpbnRzLmFpX3Byb3RvY29sID0gSVBQUk9UT19UQ1A7
-CisjZW5kaWYKIAloaW50cy5haV9mbGFncyA9IEFJX1BBU1NJVkU7CiAKLQlnYWkgPSBnZXRhZGRy
-aW5mbyhsaXN0ZW5fYWRkciwgcGJ1ZiwgJmhpbnRzLCAmYWkwKTsKKyAgICAgICAgZ2FpID0gZ2V0
-YWRkcmluZm8obGlzdGVuX2FkZHIsIHBidWYsICZoaW50cywgJmFpMCk7CisgICAgICAgIC8vIElm
-IHN5c3RlbSdzIGdsaWJjIGdldGFkZHJpbmZvKCkgZG9lcyBub3QgaGF2ZQorICAgICAgICAvLyBJ
-UFBST1RPX01QVENQIGFzIG1lbWJlciB0eXBlIGluIHN0cnVjdCAobGlrZSBvbGRlcgorICAgICAg
-ICAvLyBnbGliYyBhbmQgb3RoZXIgbGliYyksIHdlIGZhbGxiYWNrIHRvIElQUFJPVE9fVENQCisg
-ICAgICAgIGlmIChnYWkgPT0gRUFJX1NPQ0tUWVBFKSB7CisgICAgICAgICAgICAgICAgaGludHMu
-YWlfcHJvdG9jb2wgPSBJUFBST1RPX1RDUDsKKyAgICAgICAgICAgICAgICBnYWkgPSBnZXRhZGRy
-aW5mbyhsaXN0ZW5fYWRkciwgcGJ1ZiwgJmhpbnRzLCAmYWkwKTsKKyAgICAgICAgfQogCWlmIChn
-YWkpIHsKIAkJbG9nZXJyb3IoImdldGFkZHJpbmZvKCkgZm9yICVzIGZhaWxlZDogJXMiLCBsaXN0
-ZW5fYWRkciwgZ2FpX3N0cmVycm9yKGdhaSkpOwogCQlyZXR1cm4gMDsKQEAgLTEzNDIsNiArMTM1
-OCwxMCBAQCBpbnQgY21kX21haW4oaW50IGFyZ2MsIGNvbnN0IGNoYXIgKiphcmd2KQogCQkJcmV1
-c2VhZGRyID0gMTsKIAkJCWNvbnRpbnVlOwogCQl9CisJCWlmICghc3RyY21wKGFyZywgIi0tbXB0
-Y3AiKSkgeworCQkJbXB0Y3AgPSAxOworCQkJY29udGludWU7CisJCX0KIAkJaWYgKCFzdHJjbXAo
-YXJnLCAiLS11c2VyLXBhdGgiKSkgewogCQkJdXNlcl9wYXRoID0gIiI7CiAJCQljb250aW51ZTsK
-
-
---=-KusR8qS7pSQt1ByS3hSy--
 
