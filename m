@@ -1,247 +1,97 @@
-Received: from mail-ua1-f49.google.com (mail-ua1-f49.google.com [209.85.222.49])
+Received: from mail-pf1-f173.google.com (mail-pf1-f173.google.com [209.85.210.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947841FFC46
-	for <git@vger.kernel.org>; Sun, 18 May 2025 11:30:26 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EDDBD2FF
+	for <git@vger.kernel.org>; Sun, 18 May 2025 15:13:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747567828; cv=none; b=XM+3lN3hl0TczQPnr9lMHJjGD0X4Jrq6v/mo8DioL9IQ71IRwck1t7t0pArFQJ4HkEfHwmzUzEazOPf9pMGcrFGOAL3e7W4RCLOJP+PMi4eMOiBqp1SjNVZ/9n0IxJ2wfRxyhH04fmakhhA2eB745gyqvS28hzeBqMh+c3VX9rg=
+	t=1747581184; cv=none; b=IKiyyf0VMAtPSMFbCkeAXTa3jRtWc9dc9dERsSeLO2L2dWkcuPbQYAFbuz61MPH1IT9BLZ05ZxFrbNTMIz14apXDadH5ZqLTeKY3ZqV57LgfN9ZNdkNUnbP3KsuD9J/WjyWCVaOr/0ulrIlxUeLSzzJp62WQY1GIUAzOt4Xakro=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747567828; c=relaxed/simple;
-	bh=5HhgPfuLygUE/2BZUPtr/boTbWwBdZUNZTqQNm7G5R4=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=UqwrDxBvvFlkKMHlF1qzBUcywNH9o/bWeTvJ8NaXQFwAOKtaJfYOPH2PFnsI2GdtNC6+mFvU1gHIptCQ5R6zIog7egGANvydNP/qWZXDSwhHgAHQ+gn4mia3lJW4Kq+9FpZePCwKMgxKIfPaaHngXKCtYWnHqu7DnIkHaZJSC50=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kHQUoOyy; arc=none smtp.client-ip=209.85.222.49
+	s=arc-20240116; t=1747581184; c=relaxed/simple;
+	bh=l/TZc43yPpUL6oFnFCT6JBYM7tPJgjSA6bFjHn5jfwQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=HlhPc63hPomwARvUMnYnlSw/CbjB5h6mwd9r2luT+J5Wf7nUgub3nzPA2WAwbHiiwWotsR3q4bLwxGXEjB0tlKfnd2aQ1gRqwlWazFYWCxrVumj0dE2iSZ1o6xvXZom4aoSSaDR/S9DSVaeQdMRNcY/uPYSzQvTHqeBX+cxXfrk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XBlbg6mz; arc=none smtp.client-ip=209.85.210.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kHQUoOyy"
-Received: by mail-ua1-f49.google.com with SMTP id a1e0cc1a2514c-87bfd1499f0so252475241.0
-        for <git@vger.kernel.org>; Sun, 18 May 2025 04:30:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XBlbg6mz"
+Received: by mail-pf1-f173.google.com with SMTP id d2e1a72fcca58-7390d21bb1cso3217110b3a.2
+        for <git@vger.kernel.org>; Sun, 18 May 2025 08:13:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747567825; x=1748172625; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=fThJ/HWjs/+vpbIpIwF4SXoB2R3Qg/7e4eqqn36WoRE=;
-        b=kHQUoOyy7vQMJuruAZcqp2AvzaCG4/wI1P+YGKVX+k+gzZ30JLJGzptv2mzanulkvG
-         3x5I2ivSw9LV9IK8rH0Y+fXVdmIYjIliqBZDt832InlfnB7dXiccjLvgtMeGjKF4+pT0
-         FDML6IBYSHmXerAM9/+7Yq4OMyvJs6ksJUVhBrPKNSeNpalCRi5qhIy/ZTeePZ+43gYY
-         heyz6tlFZXVANrfaNNyDjqXfLCSu+dTbtI3/mQG+A3izXxcRtGTXS0VEs81T/ixPI0Jy
-         r555VJMByTCzfPEojDBKzCaiQvBQc0U6xgcLvJFgaIdFkvGMYni2AcX02NdJwdpOh52K
-         J4NA==
+        d=gmail.com; s=20230601; t=1747581182; x=1748185982; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=xZlPmJMjU/HDF7AyemEr/gQWOa3yDQ3OiZTWT9iAc+A=;
+        b=XBlbg6mzB+7nQyPuD1ytgZQdF1SRz3IdVUGi6QNRR1IvzCvaYp3ZqNF0vMDasu0L0U
+         PVkfVPx+prVCwiH1n1Ir8mKkss/NZn8aJ9n9w2Ps4WbOfW38M6L87zuumZMYJ0KKTEnk
+         mXfKXJOxt7l98SMJ8CwELuxa7FExgcc71XR6o5+iOGvZSFPMlSLQZS7NVEEGiwMz0Cqj
+         akpK4y+ILDjbltTRAYr8ElnIZmD+Rz+ty8r6n1A0q5/41w3wWeRwM5Ju61tyTUX/T0uK
+         ZQBpA/AKbySLAZkrrqajiAWJn4xnCGJPhDmN54gz0hOXZzW4M5+Ov4Isc2BiAI+A3vN+
+         w/Dw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747567825; x=1748172625;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=fThJ/HWjs/+vpbIpIwF4SXoB2R3Qg/7e4eqqn36WoRE=;
-        b=KCtzcLKw60WujPaRhvIXqssZHvGP/J/iogk/fLMWj6Dc7hyg5WjvenAy0x/4MIk3Eo
-         zsWUot9EAbPyNZ26S9otzTmvMckmJEivNW/oYfRVMtjfqBQpurKyL52Yr/Jj74rbVVGx
-         RPRdro1kitobRWMqK0bKIFnIZiWtNaf2MhMk5fiTYx3tfivjcVHEnQH/FN9R1yMP8f6p
-         EZqqXvjLsLZu1PVS+2lbO08fQH8yPlTCbX/96jKgjNYnqr/SUVhRdWfbrQtkARmzi04V
-         WDBXbhGXsVaCl5k8uU/K+8JcnXPq2OpUr/TMZgB/FZ9D5APrDmLwplCEVskdzdEmSjlI
-         ASqw==
-X-Gm-Message-State: AOJu0YyCI96UfARkq9canyU4m/VvWE++OB1CUaPxpdpcb/2PHWx3oqu+
-	GYJ3UVfdkMcSIc7/agJagVmJFCtiqRPxLTMSqho0Ys4bp66x578l4fAWrwQlqEInoAWeb768I75
-	fKerGJDjuMoLXpnISniK60K2nv+dN7sI=
-X-Gm-Gg: ASbGnctW4+Scm3IOKRCWguN9+WyzmYE94qg++c6jGI+LZ1IkjR+v9yCRjncLu6TFp0w
-	hjnr6aG97yrDt5US3wSW2nU8o9EbojcJCPJbric/nYfA7m6gyCnPRlywqu0uBME7ZYUP2o+oClU
-	AwQGl6ijNTkxZ0obEHDwlpuN/42uBCoAKfDM92baF04UgHmdVmNHJppd75YjHfpZiVWB4=
-X-Google-Smtp-Source: AGHT+IFmrIAAtEoIR6YUr6G8HhyaDdZhqqem2AC2uqLWOzJDyvxTLt4e/xQo+6HIzRlnUTLcZq3HRD0dt7LmA3qmbs0=
-X-Received: by 2002:a05:6122:65a0:b0:518:7ab7:afbb with SMTP id
- 71dfb90a1353d-52dba94a50amr8084882e0c.8.1747567825395; Sun, 18 May 2025
- 04:30:25 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 18 May 2025 04:30:24 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Sun, 18 May 2025 04:30:24 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <aCcM0QK6QBdWO2jj@pks.im>
-References: <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-0-80cbaaa55d2e@gmail.com>
- <20250515-501-update-git-fetch-1-to-use-partial-transactions-v2-2-80cbaaa55d2e@gmail.com>
- <aCbP1SxncSVw2fCa@pks.im> <CAOLa=ZR+3RPDHucjEVx8s64nrVGjzNTu9gX6Nw5vwQGg8PtpUw@mail.gmail.com>
- <aCcM0QK6QBdWO2jj@pks.im>
+        d=1e100.net; s=20230601; t=1747581182; x=1748185982;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=xZlPmJMjU/HDF7AyemEr/gQWOa3yDQ3OiZTWT9iAc+A=;
+        b=hhD9tMeqjQHbyEcLzeviEtA89Pnll7ZciVlRFPBxgWiMC7vdMhKqua/EYcm60BhU7C
+         EVJNFgEvEvtrgW9wYO9aRvepVgytp7KKqZGD53y14m2ESD7/g/SH1Xqupanr/vKlb9yZ
+         QLqYeOC9NwSZqOLw7FbWQsYFozhPSfNWmK+km6w0E8b4+iwn1hNRY0n1Wu5pBp798VlM
+         i6982Sy+sWYkzmNKjF7t1lN6sRHoNigkrESyCLXMcoKX5GshMMweyF4MkEiY28YMkyUB
+         2qbX65ADBmT+3oj2VjXOb4uB0nUw0F1RhD/clBWaW04eVOppWgxaizegYimgB8vVRWTx
+         YlRQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWKOuZNSnIPxd7NdFN8lxxFEDXxwZiq5Q7+zvoTuM50WlGEg3zl69zhPA95lDSbwk2Oxc0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIHEKklZ4W5dUYLl18EcTnfJa2ahuCIB0ijURYoHnvij7uaARJ
+	IZgMl3apt9a4rQ3NSI2HNQ4CVcrSkwkGbWh61HJAY1TgJfAXWwrlWCoT
+X-Gm-Gg: ASbGnctanMSE/4YmTuQklTG5Px/PrNO7PCSZRYV53v0+62jS9vDWM54P4mQMhVtPwnm
+	mAMb5cRfRabJfngvf5Mjg2CUvc21jtrF6r8A9Tur3yAaD5WTuucLc+FgSK2ovSlmOolwnHj8Gxi
+	CRpEzAQmm3IKIpxzEg8CI3pDSk5oeIIdx500foH/RcjAQCqe8SoQAWEh80Ni61L0FA64/Jz8uyq
+	Osdma0JOsQiXCJlq+S2aCFVDOy6/i0edK66IHJQ10Dn4QZyyqDrDK/KwmbbQGfriC6Nmew1x0yA
+	LE9VOPUaBANF3IlnzojDZhAopVQgGWVeFjG5BQXyeN0NniwJUXam9fm9vxaZLN7QhaW5yDaJiwe
+	auuvdWidrmWfQtrwx7iWZow==
+X-Google-Smtp-Source: AGHT+IH7CljgtwAgRw4coc6jw6J0bR9acoz9ETAM6Cutq5y1hLoABzQMN2LvpQeOxZreoAFV1bMhWQ==
+X-Received: by 2002:a05:6a20:d705:b0:215:de5f:febc with SMTP id adf61e73a8af0-216219bd5fcmr14067237637.27.1747581182463;
+        Sun, 18 May 2025 08:13:02 -0700 (PDT)
+Received: from [192.168.1.105] (23-93-88-48.fiber.dynamic.sonic.net. [23.93.88.48])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eaf5a357sm4653384a12.10.2025.05.18.08.13.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 18 May 2025 08:13:02 -0700 (PDT)
+Message-ID: <6c05cf29-3fd5-44b9-910b-0baf435027b9@gmail.com>
+Date: Sun, 18 May 2025 08:13:01 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Sun, 18 May 2025 04:30:24 -0700
-X-Gm-Features: AX0GCFtNsZay0SYRGeK4oD15OWYRZM3QdfygcCjjJXQH9jL9ZULRm0IglyMkKnw
-Message-ID: <CAOLa=ZT4LnyG33=atULuFxoCa2V5rO70aCmMQYsxzhieQDp5iA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/4] fetch: use batched reference updates
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, toon@iotcl.com, gitster@pobox.com
-Content-Type: multipart/mixed; boundary="00000000000074597e063567576d"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Question About Sorting the Index
+To: Elijah Newren <newren@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+References: <1008ijb$6j0$1@ciao.gmane.io> <xmqqfrh3qe2w.fsf@gitster.g>
+ <e2a24cbb-1438-46b9-b546-82c9f6dc7ebf@gmail.com>
+ <CABPp-BGRxierdcqWz2ZNdvLLrSSSR937CgOvC19vQkeUeC1pFg@mail.gmail.com>
+Content-Language: en-US
+From: Jon Forrest <nobozo@gmail.com>
+In-Reply-To: <CABPp-BGRxierdcqWz2ZNdvLLrSSSR937CgOvC19vQkeUeC1pFg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---00000000000074597e063567576d
-Content-Type: text/plain; charset="UTF-8"
 
-Patrick Steinhardt <ps@pks.im> writes:
 
-> On Fri, May 16, 2025 at 02:53:22AM -0700, Karthik Nayak wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->> > On Thu, May 15, 2025 at 04:07:26PM +0200, Karthik Nayak wrote:
->> >> diff --git a/builtin/fetch.c b/builtin/fetch.c
->> >> index 5279997c96..15eac2b1c2 100644
->> >> --- a/builtin/fetch.c
->> >> +++ b/builtin/fetch.c
->> >> @@ -1688,6 +1644,37 @@ static int set_head(const struct ref *remote_refs, struct remote *remote)
->> >>  	return result;
->> >>  }
->> >>
->> >> +struct ref_rejection_data {
->> >> +	int *retcode;
->> >> +	int conflict_msg_shown;
->> >> +	const char *remote_name;
->> >> +};
->> >> +
->> >> +static void ref_transaction_rejection_handler(const char *refname,
->> >> +					      const struct object_id *old_oid UNUSED,
->> >> +					      const struct object_id *new_oid UNUSED,
->> >> +					      const char *old_target UNUSED,
->> >> +					      const char *new_target UNUSED,
->> >> +					      enum ref_transaction_error err,
->> >> +					      void *cb_data)
->> >> +{
->> >> +	struct ref_rejection_data *data = (struct ref_rejection_data *)cb_data;
->> >
->> > Nit: unnecessary cast.
->> >
->> >> +	if (err == REF_TRANSACTION_ERROR_NAME_CONFLICT && !data->conflict_msg_shown) {
->> >> +		error(_("some local refs could not be updated; try running\n"
->> >> +			" 'git remote prune %s' to remove any old, conflicting "
->> >> +			"branches"), data->remote_name);
->> >> +		data->conflict_msg_shown = 1;
->> >> +	} else {
->> >> +		char *reason = ref_transaction_error_msg(err);
->> >> +
->> >> +		error(_("fetching ref %s failed: %s"), refname, reason);
->> >> +		free(reason);
->> >> +	}
->> >> +
->> >> +	*data->retcode = 1;
->> >> +}
->> >
->> > Okay, we stopped ignoring generic errors now and will print them. What
->> > I'm still unclear about: which exact errors do we accept now that
->> > `REF_TRANSACTION_ALLOW_FAILURE` is specified? Most of the error codes we
->> > probably want to accept, but what about `REF_TRANSACTION_ERROR_GENERIC`?
->>
->> The current mechanism in `ref_transaction_maybe_set_rejected()` doesn't
->> handle `REF_TRANSACTION_ERROR_GENERIC` errors. This was a design choice
->> (more of a requirement of what this error represents), where
->> `REF_TRANSACTION_ERROR_GENERIC` errors cannot be resolved on an
->> individual reference level. It includes:
->>
->>   - System errors such as I/O errors
->>   - Duplicates present
->>
->> Both of these represent issues which are bigger than a single ref
->> update, so we have to propagate these errors up.
->
-> The second case is also why the behaviour changes now, right? If we were
-> able to handle duplicates via the same mechanism then it would become
-> possible to retain current behaviour for git-receive-pack(1)?
->
+On 5/17/25 10:13 PM, Elijah Newren wrote:
 
-Yeah indeed, but if we want to allow users supporting conflict
-resolution of duplicates, we'll also have to think about how that would
-look. Our discussion till now was around allowing a callback for each
-reference update with the associated error.
+> Isn't the idea essentially the split index we already have?  (See the
+> "SPLIT INDEX" section of the git-update-index manual.)
 
-With duplicates, we'd also want to provide the context of which N
-updates are duplicated.
+I admittedly hadn't read that before. Yes, it's similar.
+But, I think I better become more familiar with this man
+page before I take up any more of this list's time.
 
-> Not that I'm proposing this -- I very much think that the current
-> behaviour in git-receive-pack(1) is a bug that should be fixed. Mostly
-> trying to understand.
->
+One observation - wouldn't things be nice if the index entries
+were (somehow) the same length.
 
-Yeah I agree with you on this!
+Jon
 
->> > This makes me wonder a bit about the current layout of how we handle
->> > these errors. If the rejection handler was invoked while preparing the
->> > transaction for each reference as we go instead of afterwards we could
->> > decide on-the-fly whether a specific error should be ignored or not.
->> > That might lead to a design that is both more flexible and more obvious
->> > at the same time because error handling is now handled explicitly by the
->> > callsite that wants to ignore some errors.
->> >
->>
->> I did ponder on this while I was building the batched transaction
->> mechanism. I decided to take it iteratively. We can, for instance,
->> modify `ref_transaction_maybe_set_rejected()` to work with a callback
->> function which would allow the users to accept/reject errors.
->>
->> However, even if we go down that route, `REF_TRANSACTION_ERROR_GENERIC`
->> errors still cannot be overlooked, these errors will abort the entire
->> transaction.
->
-> Okay, good.
->
->> That said, I'm not trying to avoid going down that route. I do agree
->> with the flexibility it does provide. Once we hit such a usecase, we
->> should make that change.
->>
->> For 'git-fetch(1)' and 'git-recieve-pack(1)', do you see a usecase?
->
-> No, I don't right now. I just want to avoid that we have to eventually
-> refactor all of this to support an alternative API. But agreed, there
-> isn't really much of a reason why we wouldn't be able to introduce such
-> a mechanism retroactively while keeping existing callers intact.
->
-> So let's stick with what we have and keep this in the back of our minds
-> if we ever need such a mechanism going forward.
->
-
-I think this makes sense!
-
->> > Last but not least, I think that it would also allow us to decide ahead
->> > of time whether we want to commit. Right now we basically say "just
->> > commit it, whatever happens". But if I'm not mistaken, all the errors
->> > that we care about and that callers may want to ignore are already
->> > detected at prepare time. So if we already bubbled up relevant info
->> > while calling `ref_transaction_prepare()` the caller may then decide to
->> > not commit at all based on some criteria.
->> >
->>
->> Indeed, that is correct. I can confirm that even now all the calls to
->> `ref_transaction_maybe_set_rejected()` are made in the prepare phase, so
->> we could already do this, since `transaction->rejections` is already
->> populated at this stage.
->
-> Good. After all, we shouldn't have to perform checks in the "commit"
-> phase. Things are locked, things have been checked, so it should
-> basically be a mere "let's move everything into place now". Which of
-> course can still fail, but the only valid reason should be system
-> failures.
->
-> Patrick
->
-
-Exactly, totally agreed.
-
-Thanks for the discussion Patrick!
-
---00000000000074597e063567576d
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f7601f28f5054cf4_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ncHhNMFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mM09pQy93UE5GWHRUaWl2YU85V01KbzhkKzBYelJWSApCRUhUUit6anlM
-S01qcEZsT0wwQW5lZXVuRWxzRXpGZEpPZDA1VXpKdENsMUpYNnVFcy85QTJ3VGVHRXV0enl5CnFa
-VXFjbmU2UXF5eElDNnIwWjZvT3Qyb0lCaFBpcjlaN1R5VHFoUVpaTTNyVUhob0NIYndDaHhRZTQ4
-NTl4cGIKNDlSMitWT1V2M3VsaGhoMnNoRTBlTEZ6M1ZkekdBMkU2czBuK1Npb1BzRGptVnI1SW1s
-aWE4SHFGWTZPZS90VwpvaEg2M0xTc0VWZmlqb21tR3ZobStzQlZGQVlVTy9BbXVseDFVRkEzK0U3
-UmN3d2h0eGVJY0x2Q25PZDhPS2pnCjFzcWVLRHdrT09UaVpWZGxWNmg2VEp2eDV2RVdvblk0bFBh
-bzVvaXp0YTN0YkxZMnJTaGlDMlBjSnRaUXlJelYKT1pxeWtMNzZKV2o5bmJWckplYlpuVHRNQjA5
-NkhNaTByY3Y5RGg5NUwxQkxmSjg1aTRtQVhIb1A0TDRSeUJHTAoxU0RVNGQrOGVjUmh6OTdkMk02
-MGNWRnJESHdoaUoyZW1FQ3RTa3Vrd2xFQjFkdGtyazlBV01nazhxd0VmdXNpClU5VDB4Ni9JUGVV
-b3pGSFpTSFAzZU5wQkdPMUMrRUNhZTNHcEJjOD0KPUVocnAKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---00000000000074597e063567576d--
