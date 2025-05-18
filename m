@@ -1,69 +1,92 @@
-Received: from bsmtp5.bon.at (bsmtp5.bon.at [195.3.86.187])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f177.google.com (mail-pg1-f177.google.com [209.85.215.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C06C9D2FB
-	for <git@vger.kernel.org>; Sun, 18 May 2025 07:41:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=195.3.86.187
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36CB272639
+	for <git@vger.kernel.org>; Sun, 18 May 2025 07:43:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747554087; cv=none; b=rj78lSazZv/e5J4fUv2mt+zzlq/Iv3nxO2IcqB00IcP9J6RZn8sqjlKp6iim9AjePh9UhjN3z+INZnDy6zwMrSGQQoAy3xmbXqjiijlZmk0LiRZ55zrZnFltBXaUs4sT50vjK2u3VSKtF5g00ButCfHagqB9QfpujUIhM2ojoZA=
+	t=1747554213; cv=none; b=S546W915pfHRfs+KQaM918Fn/3txA7SdI1+hGUsTVwT3e4AIoDo7jQ7IYFg7m8KCx5EFxVKz3ivxBaoeLLAmCjCKsnTPyTmbvzDYMdcelzPkaFGrCA2/AKYUH5eUq4bvtQ3JtclUYzTriSMWAi1YTPnfWrdaqlar56SKoCg8vmo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747554087; c=relaxed/simple;
-	bh=XDk29FqBdjUjLlNm83dsrEOiiYBqeo5y1av/ZyPHI8Q=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=mBr93rJ4l2Wsr3xWQLlMSA/EwFDO62W/qfI+TQdEeLlykggTTi9fpocl3hArqHLvKsvuTkAEmfJ5k8BKhne+QVYwn5sdV4Si5yV8hmh5MGHWIcIz7+CX+FSPMWZJFV81vW507vOJCmpuy7hl//lFd9DKQ7iIL/9tEO1kZNr1hHc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org; spf=pass smtp.mailfrom=kdbg.org; arc=none smtp.client-ip=195.3.86.187
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=kdbg.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kdbg.org
-Received: from bsmtp3.bon.at (unknown [192.168.181.107])
-	by bsmtp5.bon.at (Postfix) with ESMTPS id 4b0Xn50YHdz7QWFK
-	for <git@vger.kernel.org>; Sun, 18 May 2025 09:41:13 +0200 (CEST)
-Received: from [192.168.0.101] (unknown [93.83.142.38])
-	by bsmtp3.bon.at (Postfix) with ESMTPSA id 4b0Xmw64fJzRpKc;
-	Sun, 18 May 2025 09:41:04 +0200 (CEST)
-Message-ID: <613e934c-9236-411c-be37-a8db2e3a3b50@kdbg.org>
-Date: Sun, 18 May 2025 09:41:03 +0200
+	s=arc-20240116; t=1747554213; c=relaxed/simple;
+	bh=ZlYBiLF5i6IQSEBvePfdvhhc5ZlcBHzCUCy2y4qZrk0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=q3oiTZ6AV6dXavtoviTmX8TS7hRCwQVzl1Lbk9qE6nsVO2vsSSt9SMRcviyRuYfo4PGPohBLAVxGdxkKv728Bs2/p8o6swGhrIwS9/IAbZtb7iGmiDaDswzh/zQ+Ax3Qhl0VffALqEGw3Wpgneb0tpmVNNIdrzBIG4a81+Es+A4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HYEy1P/1; arc=none smtp.client-ip=209.85.215.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HYEy1P/1"
+Received: by mail-pg1-f177.google.com with SMTP id 41be03b00d2f7-b074d908e56so2141140a12.2
+        for <git@vger.kernel.org>; Sun, 18 May 2025 00:43:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747554211; x=1748159011; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ElxwHECmMhJf7y+DUrpk2gmbGEMKklDzMDV5M57jHqI=;
+        b=HYEy1P/182JsVqy+F/L60sK8KU6bwdwUOFrsvLe8dr52ZsH8QbmdZsz3FUj5ylHlZ4
+         rKjfCNpNdOAxnefRZyGLF1mAqVP+QGdJbVgUOwe/6BvlzZd2aN8hGbBhIGX5C437mpV9
+         /xvITelaSGr6pw3UnmzofsF/kB3ZpDfJ4y0iMbG6N7RCRq2WT3r3o8I49umpRNCkGzNc
+         T3AVXHCrAMQC+GhOW8oJIi3lbzY10LSzOhgSoICGr3sWZW4yxhso1pcYD99G/PyFVcOs
+         fRFw8oB2gjoMnUuU4vvkSv34qO956Rdn68Hc9LPCEahH5Xvt2xuP8DTwU5DIKeW8N6X1
+         IGag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747554211; x=1748159011;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ElxwHECmMhJf7y+DUrpk2gmbGEMKklDzMDV5M57jHqI=;
+        b=HmqslsrtzmZ0l5EvDbU5A9R6VIxQfXVZtUXCj71JYQCVGUCya97/j0/5ltfL/xLmGa
+         yDAOCN/tpdNrgk0GBEz93GwG9gIs9wxGav7vRmjvX8+yePvmeZfF+wYfiXnz6mzDJei5
+         7nqCrH00NNsRHoQVYQ7sLrjVf7K7F1pUNxz9rEqo+IuBoAUwvR4uzzI3YMtjAVUY3twE
+         8Vv8GffM5NpNZ2JflVbxlSwWTokg1r5kyoUVV/18W7vHYE8nhRIig7z/QhOCirgVnO+k
+         arfde4wfNNAZ99iwKgRbnbqt854xD0RWQ/RSgIMQpTD25l8blSiB2RmqmZQNJt0dGo82
+         QjVg==
+X-Gm-Message-State: AOJu0Yz0POTBMHrpH1kV7gveiYCovAScyxlJA7aPP66Tge0tcPM+ynVk
+	8zUqHzmfnysyalyYYb1C4smpL82c8yGozmWl1rHbsXeIO5Ll/dXyO0dOKQlHzdC6
+X-Gm-Gg: ASbGncuDvPqQwGf8KGryawERdo8196rz8uzMvWNvG5vX3nT67tgoAaDft/TR2wJaGrU
+	ozsFlHFYeB5VT+xWn2/1jMhglTjGMfX9fDrnrs/Nu18wTnWXOCInXR4bO4Q+x865FsxHDORm3au
+	sJNkPQLm0cjjadAtzRKgWRGLiAwNOKpvbHdg2prVpcqoKuLxCaUjITJ3QD58Md+lC4PJ8D1gC4/
+	LEnQymxPb0Pfr623l0bxYef3yQ9LK1ZRJuebVv+EUnaW/BA7ZTnjBsLfJLsOZhbPQ6fMJ85B9hb
+	5PL9VZQ51z868wWcEYixj215FS7anAOYpslbLNr3p2TMJcHM6Nid0JMi+q4twULlGIY=
+X-Google-Smtp-Source: AGHT+IEhyuuoFFRez8lEB0ilGNT9/2wI+hmUIPGIfrLBEwig6ny7AugTU2Ay1UWA/Uccx19OIw0j0Q==
+X-Received: by 2002:a17:903:41ce:b0:223:4d5e:789d with SMTP id d9443c01a7336-231de31207cmr115422385ad.19.1747554210972;
+        Sun, 18 May 2025 00:43:30 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4ac9fbdsm40131625ad.50.2025.05.18.00.43.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 18 May 2025 00:43:30 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: git@vger.kernel.org
+Cc: gitster@pobox.com,
+	jayatheerthkulkarni2005@gmail.com,
+	nasamuffin@google.com
+Subject: [PATCH v4 0/3] Update MyFirstContribution.adoc to follow modern practices
+Date: Sun, 18 May 2025 13:13:14 +0530
+Message-ID: <20250518074317.73367-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/1] userdiff: extend Bash pattern to cover more shell
- function forms
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Moumita <dhar61595@gmail.com>, Eric Sunshine <sunshine@sunshineco.com>,
- git@vger.kernel.org
-References: <20250511125809.14180-1-dhar61595@gmail.com>
- <20250511141101.18450-1-dhar61595@gmail.com>
- <20250511141101.18450-2-dhar61595@gmail.com>
- <8343694f-6e05-43c5-862a-63702314760e@kdbg.org> <xmqq8qmvs7sd.fsf@gitster.g>
-Content-Language: en-US
-From: Johannes Sixt <j6t@kdbg.org>
-In-Reply-To: <xmqq8qmvs7sd.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-Am 17.05.25 um 15:09 schrieb Junio C Hamano:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> 
->>> +y=<RED>3.14<RESET><GREEN>2.71<RESET>
->>> +z=<RED>.5<RESET><GREEN>.75<RESET>
->>
->> When do decimal numbers occur in shell scripts? Wouldn't it be more
->> often the case that a fullstop is part of a regular expression or a file
->> name or version number that happens to be surrounded by numbers? In that
->> case, we would prefer to capture the digit sequences as separate words.
-> 
-> Sorry but I am confused.  
-> 
-> Do you want a filename "sample.3gp" treated as having separate
-> parts, "sample", ".3", and "gp", instead of a single word?
+The following changes are made to MyFirstContribution.adoc 
+to make the tutorial follow modern git practices.
 
-I didn't consider such a case. The cited paragraph could be interpreted
-to say that we want the words "sample", ".", "3", and "gp". But the
-pattern that we have in round v7 by a lucky strike actually gives
-"sample", ".", and "3gp" (I think), which is much better.
+The tutorial codes actually help newbies like myself to actually know what is going on 
+in the source code as the Git source code is vast.
 
--- Hannes
+Therefore these patches.
+
+K Jayatheerth (3):
+  docs: remove unused mentoring mailing list reference
+  docs: clarify cmd_psuh signature and explain UNUSED macro
+  docs: replace git_config to repo_config
+
+ Documentation/MyFirstContribution.adoc | 55 +++++++++++++++-----------
+ 1 file changed, 33 insertions(+), 22 deletions(-)
+
+-- 
+2.49.GIT
 
