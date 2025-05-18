@@ -1,70 +1,69 @@
-Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+Received: from mail-pl1-f172.google.com (mail-pl1-f172.google.com [209.85.214.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77FD720297C
-	for <git@vger.kernel.org>; Sun, 18 May 2025 07:34:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B138207DFE
+	for <git@vger.kernel.org>; Sun, 18 May 2025 07:34:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747553692; cv=none; b=SpBQ19ThfDJ1PN043CIW0hkoVbOn/V7EKZTIo5RpGxYfeQlFWIDsWyG1RUHlMv/SNbV9LDhYUqJspNWZciZsiVYfvQhnp12p00BTdJ2iG2bsJ5Ada/CSKbQEt3ue9P9E1as8XVnSBkyLHGC7wbhY+67ua6b022tCgRDybA+pNHI=
+	t=1747553695; cv=none; b=uc+j+W9yAYdDjED9KrrVMUN2zUlUIFa94SIYgHMkEP2bCnpWg03HGyFlUeYu0XZtxNRqcOochO8RNIeceltjy11Twz57C9DzAXfn7ACCQQxfEid8cHhHARuGuZ1tKnrkSZMUwt6TSjJ764Co/1Q+kb2u2a4RfcCLFwHqPURGi7s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747553692; c=relaxed/simple;
-	bh=uc8jvo71wJ6T/di2Zhi1KXD4nBzo0nr0FaTxPIVlieo=;
+	s=arc-20240116; t=1747553695; c=relaxed/simple;
+	bh=Yb1ek0lClboIairr5Vk5ApHD+LIwZEvsKfwlWEKMWuU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=lKdLxg1ZAhubJoQZhY9RrXK5y05TVnZUurltWTM4Ahxywbcjruv3TxJcnFd9m9b1Y40RDll2J+u1E0IROm9p//30zK9cDIZr2k3aC0iwCKhdvBmc6fmdnajoq6D5eYngrqj7nE9KXAsf+PNiSxP4uxnXPW68k0k0rNPVIFwT90o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=adyk59Dq; arc=none smtp.client-ip=209.85.214.178
+	 MIME-Version; b=PB6sRexYyl9IIRkXwvcvKAR40v2bbODppnlqqT3UugwXw6/HwZguIXUOKAzsME9JPKuCA8wlrlPxUxT9FYEZSBTmsXnpHVV89LJUfH4qbPKCLIRhA5osTcIqHqRXoNXk9gUXZqF/Ps8XMqpxXIeqlVJ0csp45PtNG3WTEH9iNHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i+OXu+/k; arc=none smtp.client-ip=209.85.214.172
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="adyk59Dq"
-Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2302d90c7f7so43787185ad.3
-        for <git@vger.kernel.org>; Sun, 18 May 2025 00:34:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i+OXu+/k"
+Received: by mail-pl1-f172.google.com with SMTP id d9443c01a7336-22e033a3a07so33848105ad.0
+        for <git@vger.kernel.org>; Sun, 18 May 2025 00:34:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747553690; x=1748158490; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747553693; x=1748158493; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=6VvU/u9woi4obNyQvvteoZrePFEOoO1fNnsT9mP8MPI=;
-        b=adyk59DqDYldfAfmDLP+r/p//94ro75eNLixawmwAb0d8bXD28W62ylVyz6cOrWPse
-         ksqciga/bcCCmkaJ7mQA0v0n63eZ5jdOCh4x3PaFHE3Gef/YPpFAmHOcKz/uxGFWGsZk
-         mxHWHOISSZEzsyxxr7mDAJm4kz41A9udIg3JyOLQYzJ93K1zKv4YySwCM8aslJkp5fuI
-         eSX6Rub8cKU/XvVgx+ndwzR1XGiXh3YCOVS0qkfHubGUBwzxiim5o10mKexRTTUVH3hO
-         0gWPpAWIhJJSoq7Ow3kBDZinc97kIXug0KiFuc24A4E7GloDVXWSaHp1KgYPJMwnM7RS
-         L0tA==
+        bh=CdtSdPimipaF6pT2LJ2ParwcPUaiMGRS9ZOpCEqNRpM=;
+        b=i+OXu+/kAx7FEE3uttnqYzwPhauLiCMcBzFF3g9hgmwSzolHIaTspq9q9FLBwc6Ksy
+         m+lc4aO4pGSW8B35PZCSDMchm32QBG/9MCOxJBca/OmHoo/IGo3Kd14zIxYjgXedHU15
+         1GCiGlCxLiCI7HN2AsnNqDRu7N95QCSLL0RcOt/g5wSKLATB5JueRm0JCGeJfMrIPifZ
+         ZW3lamivI0s9n6KJIaTJTnWoJOx3zITGkoX1fVNo3ob8QV7aPlwP1cMyFzsGy1ZbWbUL
+         2iQtTq38EC0oW6AIvzMP/gZHedXs7aQp4yvBUcoczTHHZ9qXeioSvNuee/mYyhmgBdt8
+         pN6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747553690; x=1748158490;
+        d=1e100.net; s=20230601; t=1747553693; x=1748158493;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=6VvU/u9woi4obNyQvvteoZrePFEOoO1fNnsT9mP8MPI=;
-        b=pjR+YcjuCcGILDh1YNOxKopnS2lp4fjGFeits70Qw7HrkkbH4vtec9sUi4XmwZqgBD
-         rKywr0p1BcKMDuC7bJJh2V2fx1JDkWZklxz6Nv0zs5PQcS1WNjZy6LKgH7zd5f92pog6
-         FxveKmNyV6qXhfM5J3aOBo8xNHlSXUxliAWfOHnas/6/l475yYONrG6q/kZNAolhXL0W
-         72OpMWc3Q0u3VSWJaerks50Y/oD2armyfP9WMZpOoRDwTT8gqOtZJk9ndDEwT6EAxMMU
-         H4HxlDa9mGRQQU2fMvRYDoDqEqJzbVRHJSouPEKBbYSqVCrGWz6xVDwqVhklWl4tu3XR
-         SC9w==
-X-Gm-Message-State: AOJu0YxL3wdRI/gIR4P+OYnwJH+6kBZI/fKERNNufZJKGvBnW5uS7mAJ
-	bssqUZznSuLl02ny9rNrKnHkubmIgho3PQS2X5JKOgMgB0UN/Fve2mSP
-X-Gm-Gg: ASbGncuJNrp8VZ70O3S0xpzF2b2hunwwt6J9zGNzNY/0mBSb5OgCCNQYgKXZxVi+4MH
-	CZi0oR77yAc6au0+7Khm6zS35w5y2YDl1/2gmwY3wSEMt1efIN1B/bxRlEyT7lCURdBMSfxnap1
-	9dEPRzS4UtZa5bz6H7VSNEZBA7r89znlSL71YfjwcJcuAD0ie0LAW+b/sI4vUTdRmkncK741pKH
-	BCi1mxEfQqOA6WfGgVzQj6zi/xY8yNLzBZqQsWZJEoUBIL9oPVtw4//g3bxhopcrMuAcdTTyg37
-	nnwGt5HRgwWaAD6FafYVccgb62xGCV1FoBZqQiesd9OHRDCc07ftbprrc3Zc7O1dcU3HbJsl+pG
-	1HQ==
-X-Google-Smtp-Source: AGHT+IE2/w49qOvJJg682uu/mtGJGlARS9ZaJemKucMcfXHJz0hWxAAyR/0pgXxoTmj0I3+AZM/pjg==
-X-Received: by 2002:a17:903:19c4:b0:220:e655:d77 with SMTP id d9443c01a7336-231d452d0e3mr130447095ad.36.1747553690619;
-        Sun, 18 May 2025 00:34:50 -0700 (PDT)
+        bh=CdtSdPimipaF6pT2LJ2ParwcPUaiMGRS9ZOpCEqNRpM=;
+        b=KcKprSlyrKzuUEr1t8/9sSfuv480a7/QUk1TcoXZQYY+cU+heUdJPLJjWN1dsj6Yw8
+         HO9HetqQR2ITMsaAFzscNutLrYRIA76vkAsPGEa/8PsPtSFtZPPDpGcYyCQo59DAD3X4
+         71By9yqb3rdzEU3h18/hBPNNnWzm5sl/fJC/V1vrLvJsE9FuGmSL4fPb4LE/tbXRH/W0
+         wtzxyS+l9PN6kvri7ZsdR7YxZnIwG+t2++T69CWk5iZ5l/V576jL0y6rWJL2KSIS3Kmq
+         fO25q/NLncaiaownOq3UN6V+7uu8YgL70Q+54m91lk7EYc4Hqd4arjVKRNw8AqP5PnlL
+         1ATg==
+X-Gm-Message-State: AOJu0YxQffC5o6Nr+WRcEFHcwqfmNl4AatgnPOF521yfQ3YNJ/RJZCSV
+	u7tvzav9O+FVdffkOfkWxEYv9QQvuxHoxOTzLQQQflnOLJfwS4qB+Zx/
+X-Gm-Gg: ASbGncuREXgZMD/ojXDLaINBKX6nARe5o1dAXtC3bDNddjct2UqkrSdPO7Bzmp+2OQG
+	mrE63uHwQcFKj8w/Hb/GEWFEVygmcdWBr8HY6HjmWi2U6iBouMqcy+D6m9zXcATADNDY7/Bg2uM
+	tI8TO+aYhfmqTQijh6r7WQr+zGscZztOrLRr+9djjZ9SN8o1Xp9OpQY/jLE7gDMsxH2PVWzjC6t
+	/rwqJH7JCBLVDvScUG3tmrHu6vf42NjYZzmegmVtNmY/hp1ZGBQMYVejgm8oRdhDLQ/20DUL5DS
+	QBIC+TIQlUGn21f7fzM/hoP/pAhxEV+yUW/JyD1XteR38GrejGOaSswEb3U7DerxeC4=
+X-Google-Smtp-Source: AGHT+IFDp7g83Qyg3XTweafLAuDc5R1oenNM+LS+vgjCJjh4WAQxCwqgvGwlZwkguXsvw5mmSfoPww==
+X-Received: by 2002:a17:903:f8c:b0:223:50f0:b97 with SMTP id d9443c01a7336-231d45d67f2mr109303995ad.52.1747553692844;
+        Sun, 18 May 2025 00:34:52 -0700 (PDT)
 Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4ed897asm39847715ad.250.2025.05.18.00.34.48
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231d4ed897asm39847715ad.250.2025.05.18.00.34.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 May 2025 00:34:50 -0700 (PDT)
+        Sun, 18 May 2025 00:34:52 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: gitster@pobox.com
 Cc: git@vger.kernel.org,
 	jayatheerthkulkarni2005@gmail.com,
 	nasamuffin@google.com
-Subject: [PATCH v3 1/3] docs: remove unused mentoring mailing list reference
-Date: Sun, 18 May 2025 13:04:40 +0530
-Message-ID: <20250518073442.72666-2-jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH v3 2/3] docs: clarify cmd_psuh signature and explain UNUSED macro
+Date: Sun, 18 May 2025 13:04:41 +0530
+Message-ID: <20250518073442.72666-3-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.49.GIT
 In-Reply-To: <20250518073442.72666-1-jayatheerthkulkarni2005@gmail.com>
 References: <xmqqa57bqdxt.fsf@gitster.g>
@@ -77,38 +76,85 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The git-mentoring group was initially created to help newcomers
-with their development itches. However, in practice,
-most of their questions were already being addressed
-directly on the mailing list, and contributors consistently
-received helpful responses there.
+The sample program, as written, would no longer build for at least two
+reasons:
 
-Remove the mentoring group details from the Documentation.
+    - Since this document was first written, the calling convention
+      to subcommand implementation has changed, and now cmd_psuh()
+      needs to accept the fourth parameter, repository.
+
+    - These days, compiler warning options for developers include
+      one that detects and complains about unused parameters, so
+      ones that are deliberately unused have to be marked as such.
+
+Update the old-style examples to adjust to the current
+practices, with explanations as needed.
 
 Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 ---
- Documentation/MyFirstContribution.adoc | 8 --------
- 1 file changed, 8 deletions(-)
+ Documentation/MyFirstContribution.adoc | 28 +++++++++++++++++++++-----
+ 1 file changed, 23 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/MyFirstContribution.adoc b/Documentation/MyFirstContribution.adoc
-index ca1d688c9b..ef190d8748 100644
+index ef190d8748..da15d43d1f 100644
 --- a/Documentation/MyFirstContribution.adoc
 +++ b/Documentation/MyFirstContribution.adoc
-@@ -40,14 +40,6 @@ the list by sending an email to <git+subscribe@vger.kernel.org>
- The https://lore.kernel.org/git[archive] of this mailing list is
- available to view in a browser.
+@@ -142,15 +142,31 @@ command in `builtin/psuh.c`. Create that file, and within it, write the entry
+ point for your command in a function matching the style and signature:
  
--==== https://groups.google.com/forum/#!forum/git-mentoring[git-mentoring@googlegroups.com]
--
--This mailing list is targeted to new contributors and was created as a place to
--post questions and receive answers outside of the public eye of the main list.
--Veteran contributors who are especially interested in helping mentor newcomers
--are present on the list. In order to avoid search indexers, group membership is
--required to view messages; anyone can join and no approval is required.
--
- ==== https://web.libera.chat/#git-devel[#git-devel] on Libera Chat
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix)
++int cmd_psuh(int argc UNUSED, const char **argv UNUSED,
++	     const char *prefix UNUSED, struct repository *repo UNUSED)
+ ----
  
- This IRC channel is for conversations between Git contributors. If someone is
++A few things to note:
++
++* A subcommand implementation takes its command line arguments
++  in `int argc` + `const char **argv`, like `main()` would.
++
++* It also takes two extra parameters, `prefix` and `repo`. What
++  they mean will not be discussed until much later.
++
++* Because this first example will not use any of the parameters,
++  your compiler will give warnings on unused parameters. As the
++  list of these four parameters is mandated by the API to add
++  new built-in commands, you cannot omit them. Instead, you add
++  `UNUSED` to each of them to tell the compiler that you *know*
++  you are not (yet) using it.
++
+ We'll also need to add the declaration of psuh; open up `builtin.h`, find the
+ declaration for `cmd_pull`, and add a new line for `psuh` immediately before it,
+ in order to keep the declarations alphabetically sorted:
+ 
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix);
++int cmd_psuh(int argc, const char **argv, const char *prefix, struct repository *repo);
+ ----
+ 
+ Be sure to `#include "builtin.h"` in your `psuh.c`. You'll also need to
+@@ -166,7 +182,8 @@ Throughout the tutorial, we will mark strings for translation as necessary; you
+ should also do so when writing your user-facing commands in the future.
+ 
+ ----
+-int cmd_psuh(int argc, const char **argv, const char *prefix)
++int cmd_psuh(int argc UNUSED, const char **argv UNUSED, 
++	     const char *prefix UNUSED, struct repository *repo UNUSED)
+ {
+ 	printf(_("Pony saying hello goes here.\n"));
+ 	return 0;
+@@ -279,8 +296,9 @@ on the reference implementation linked at the top of this document.
+ It's probably useful to do at least something besides printing out a string.
+ Let's start by having a look at everything we get.
+ 
+-Modify your `cmd_psuh` implementation to dump the args you're passed, keeping
+-existing `printf()` calls in place:
++Modify your `cmd_psuh` implementation to dump the args you're passed,
++keeping existing `printf()` calls in place; because the args are now
++used, remove the `UNUSED` macro from them:
+ 
+ ----
+ 	int i;
 -- 
 2.49.GIT
 
