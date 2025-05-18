@@ -1,67 +1,67 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from mail-pf1-f180.google.com (mail-pf1-f180.google.com [209.85.210.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CD34B1E79
-	for <git@vger.kernel.org>; Sun, 18 May 2025 15:57:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6303B262A6
+	for <git@vger.kernel.org>; Sun, 18 May 2025 15:57:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747583859; cv=none; b=DuTbnh3sgKMF/C3Hg2K29IzLPcFsKGtWCWGsIdCRL2mzP/KEQGMPTOB3rdSLuprJShNNvJ2d8VEw5TDUxtnpbwyiS5Efs4zjZiWz9GXltM8C5mq5fG1G+4L4SLmbAZ41heZ1TYdXW6B5QITnhkCMVkTsxixWgIS0aw3k9crdbQw=
+	t=1747583866; cv=none; b=q9pfoNRf+kY7BxQYEjHrLgyKiP/fteZbAPza07WYWYBBdgN7c/eT0Oq1GVemd2YymDADxMkhb4TxiB3muiFialnm2QKTAEEzNHiw2NSxcij+Au4ZbSJA3DzCYNTzZOvU67XkJenPs+ybmLyAkKaEcsDIol9fsVjiww/PAbcs/Uw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747583859; c=relaxed/simple;
-	bh=6eXfGP1vb+fbfmSVZpvK5TtcYFdLF7YoFFLCnig41BM=;
+	s=arc-20240116; t=1747583866; c=relaxed/simple;
+	bh=EUBHGWi8YgIcjBxuh2xq1vZBukqpzRRHtb3Klreiffc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=T7tS1aV/MaA+3iK/gJjfOahp8AL2SlB0K3b9Sn4wRrnLBMRkBqWScC7OY4G7xjamBXbeHUws1YEDPgV8kmbvxu7CKK/wB95wjGzD0dGdRHAaCiyvWiyJGuVQFLD3t/FsJw7xszCtSfuDXkk6n1bQVreCiDwarEGO4GdEMYOEUdE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PIR1PG1c; arc=none smtp.client-ip=209.85.215.178
+	 Content-Type:Content-Disposition:In-Reply-To; b=cp7ciFzOdEXNj+WKiZwFK3zKKXHWp+sWVn4q3SaDbdOWqIo53r/whhKhtxlg7uAZObRvzF995N8UWD4aouD6e6SUqrER4lOzCv7nT4QNO1Pi6yoJuWQsu6RBVHq4Mu3u9b77GI9rhYNPtAM3wGw7t4susIILX1JbPMbMHJZEnS0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XvafqmFM; arc=none smtp.client-ip=209.85.210.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PIR1PG1c"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-af523f4511fso2816281a12.0
-        for <git@vger.kernel.org>; Sun, 18 May 2025 08:57:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XvafqmFM"
+Received: by mail-pf1-f180.google.com with SMTP id d2e1a72fcca58-736c277331eso4115901b3a.1
+        for <git@vger.kernel.org>; Sun, 18 May 2025 08:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747583857; x=1748188657; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747583864; x=1748188664; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=7Lb/bqIkPDzLhUhac+/o5cUDb0D2Y2N80LeniP2AFYo=;
-        b=PIR1PG1clSGCe5PAhDXp6FZmTyJHT4IWltQHgNC1TYp+txkjPK8myA3bwBZkHaVXvb
-         c0sgLwz1hIldcR2vnjLav5An8HWuS3E+Imdobjth3f7NF3d+l4RjirZ/BPEyyZqA3QRt
-         Xrr1K7pIbtgIdIj8mhUVnhdhOhIFbFtMttGbUzrrGndiiVtAq7C6WXGIGRwktd2dtVXD
-         I9OnCJxIkdaIatotJpazZG4UPGZgc7hCTgqYhq1+0qitAjLN5HdfhCRbgQdEsCBadu2C
-         xnF909f1B+dZfEaB+Eqo4SQc1szawxXqr1qZw68SfnSHm+AJHZSUlbJo/+Du2W12bjCF
-         jgEg==
+        bh=J7BFVstfEa0sC5BMA0Z5tOooM6cvS4iUMs2OSQete2s=;
+        b=XvafqmFMy6gPDKd5f+lAMqKbDh1CTamC2vojPyuSMK4nby3XLWsRHkty0fEo9K3sM0
+         ozRYPAdCfbvK2TukokrIGagZ/f91w2AaUr+evGJ1IJT0BxXd/XuahrmI736ym3m0uNYZ
+         AXGts1VEsTjG9nBLCz1WG3mh0j0gX7OS8y0EeORd1zmvsf3vd/YGWviPZjyaSPMxHmPw
+         ufuF1bLLPG4EyyDyNAw7LjSNBlhhiPZ5xHG9JrvtjwUqkkRsJzy+TvHZX51ess2Hwm8p
+         PDAuy2yzyTN1Dt5r9su3i+axPDVbQaiJLlST9v4Nwn8EKfTQg4n4zo8ft/qnS5bmLpJN
+         sOAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747583857; x=1748188657;
+        d=1e100.net; s=20230601; t=1747583864; x=1748188664;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=7Lb/bqIkPDzLhUhac+/o5cUDb0D2Y2N80LeniP2AFYo=;
-        b=cHQCa+ZMSoX+vADJMf3dTZaDpMmDrV4ENx0jqAmN9OYI+ifO4h6kKQlub72mJpBxxU
-         fUhm3VFezlhHxU23nXuZk0Rn1qO0BzcSQNe6hTlB7rb18SpErvBmeFrJWhE4Pg/2rbQg
-         wEGCTxmbkNWGPxh7dfrWSSP7a67yAmSMXRU2E8DmjfPhe4z5qyzrXHacCiD2Fp0OWA4o
-         nbuFbV8D98RVzHhBQcR2mLbiqsqLLL92haGjvsuGnwOEQjM8wG5jqq9G2pe+R9FvVStm
-         MOs/686YcD6qHesXuExkp6cVYxHUXqxr1opF5ztsqkvclJChRFh5XgAW95uyIWVXL77E
-         LP6A==
-X-Gm-Message-State: AOJu0Yy/kdGg66xK7aV9FI658HVsscYo4eNtJLxfGj7O6PbaWGdU6LzD
-	sJXdfIOTr76MUTnUUfKdx33vsdNntv0RHLEKbrE4hQCjqfi0IrDXlk4gk4KErLcLe5Q=
-X-Gm-Gg: ASbGncsyjbjIqaxoPBarc3IAYDom+6B5GToMG2vcDXzEekpyP2yKggCXDDz76CnSPzx
-	0ascQUlBtYeRbe0LcQDfYJIu/GmdhXA9va09zVpjuFLS97b2w5BP7V+gnL2c18DNiq+4iwggObk
-	R+sAtOlBhs/YUbOpmi+PqJQcTfCXMsv5K7zvFyUVPu+TnxLlwqHtNHLh1Mm40uvS3+/eJNqC9O0
-	3Gu3k1c1R5n06Cb3aCvcaU1vKSOOHmtV0jdJjHhKGYHSJf4d1RCotTSaHHbTdqLBEDLB8qJ3fGX
-	JS5yqDJ0XElu2om+rX3z5W3b9ShWrW/opW/gsqmGcfXSNiFXC71ecr2Kog==
-X-Google-Smtp-Source: AGHT+IH+3rxQOE6wf9msRgVS4EJAL7QrSbBQ5kHAuiz//0ZR7589nhW3pSJMO0e6uzXwcNJ3Ml/fyw==
-X-Received: by 2002:a17:903:f8d:b0:224:f12:3734 with SMTP id d9443c01a7336-231d43d36ffmr124733705ad.30.1747583856881;
-        Sun, 18 May 2025 08:57:36 -0700 (PDT)
+        bh=J7BFVstfEa0sC5BMA0Z5tOooM6cvS4iUMs2OSQete2s=;
+        b=SzRVQnbgkphl9SCpPOzydqZT2aPrDt//b0XSGIT1PAtur69v+Yb+wZVUbpzi+nFpPx
+         IqFGcbOyZJT2K41jwn57QNCjGf2r9se95vI0eX+6iqIAU5uRbn6dK733rt85gidgiSab
+         d3QgcO3jWrdxm+0gJXnxsYlmUqU2kRbBVdnxiMap6GRoULwzuB/i+6tzyP1VDxqSSeaa
+         T4jYTJml5s8lW+5MoWqkTMwUEe0g9HLyL1wpBonbZ09OzSHJh69sUhttVSFbRwSxm/MA
+         yREy5SQ0fHkENokZ1ZiIJ2WWeBm5eZxWRj5E1N2+ScRKniVAul21RgwXLKFoItF/Z0Ht
+         qAIQ==
+X-Gm-Message-State: AOJu0YxW0SgbSwl8NNRLZqHB6VyAQWvo0saFsW+fKPoLV/Ex3drG+KeB
+	RzMSBgswxlJ5N3Q5qbZoCnfNxax9q8ZuH92L59JZNWSrfBTtMyjIqNbGiSSLtVTCeU0=
+X-Gm-Gg: ASbGncuM5z9U5IPfrH2mvZNO7a2yZkTWj75XNXPt/55hbwKMwvbJ/msiC5DNM4RXuBR
+	/o8Yhwki0b/KnLpBir1JGNdQP0WB9A1NLpE303P5k0Z2fBbCwdzIXVSMJqcI+evHys77me6Th+n
+	zrrWrG1mCm74HWxfbk3Kuq+4nbALWhXRTmDZzTL/4jhwiPomatxRR/jgszfa441dPnlPt8kBYzw
+	EsLoy3UgbOBjF0b2vTntxyDALBNkLfJRmnc4Zwj70xNooEzgd4s7jaPWvkmc6SwwOWBFY1rFcpX
+	OS5XHlj9scBnWUhBc/N61AiEtVQa7UL6mrvpFyAO1+olkcAZtOz45qlpEg==
+X-Google-Smtp-Source: AGHT+IFJMdOodhViF4gXTccDOp+vG9RoZyeRs6QL+eFakdFZMisV6yp/pAmqUFwRjNTS0DdLelCgLQ==
+X-Received: by 2002:a17:90b:4cc8:b0:30a:204e:fe47 with SMTP id 98e67ed59e1d1-30e7e87e797mr13787179a91.16.1747583864060;
+        Sun, 18 May 2025 08:57:44 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-231d4e978adsm44707715ad.119.2025.05.18.08.57.35
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-30e934930fesm3720914a91.29.2025.05.18.08.57.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 May 2025 08:57:36 -0700 (PDT)
-Date: Sun, 18 May 2025 23:57:33 +0800
+        Sun, 18 May 2025 08:57:43 -0700 (PDT)
+Date: Sun, 18 May 2025 23:57:41 +0800
 From: shejialuo <shejialuo@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v2 5/8] u-string-list: move "test_split" into
+Subject: [PATCH v2 6/8] u-string-list: move "test_split_in_place" to
  "u-string-list.c"
-Message-ID: <aCoDbRCQSjAXV7H1@ArchLinux>
+Message-ID: <aCoDdf5IS3jkwpjl@ArchLinux>
 References: <aCoDB9P5XV1lHMil@ArchLinux>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -73,196 +73,134 @@ Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 In-Reply-To: <aCoDB9P5XV1lHMil@ArchLinux>
 
-We rely on "test-tool string-list" command to test the functionality of
-the "string-list". However, as we have introduced clar test framework,
-we'd better move the shell script into C program to improve speed and
-readability.
-
-Create a new file "u-string-list.c" under "t/unit-tests", then update
-the Makefile and "meson.build" to build the file. And let's first move
-"test_split" into unit test and gradually convert the shell script into
-C program.
-
-In order to create `string_list` easily by simply specifying strings in
-the function call, create "t_vcreate_string_list_dup" function to do
-this.
-
-Then port the shell script tests to C program and remove unused
-"test-tool" code and tests.
+We use "test-tool string-list split_in_place" to test the
+"string_list_split_in_place" function. As we have introduced the unit
+test, we'd better remove the logic from shell script to C program to
+improve test speed and readability.
 
 Signed-off-by: shejialuo <shejialuo@gmail.com>
 ---
- Makefile                     |  1 +
- t/helper/test-string-list.c  | 14 --------
- t/meson.build                |  1 +
- t/t0063-string-list.sh       | 53 -----------------------------
- t/unit-tests/u-string-list.c | 66 ++++++++++++++++++++++++++++++++++++
- 5 files changed, 68 insertions(+), 67 deletions(-)
- create mode 100644 t/unit-tests/u-string-list.c
+ t/helper/test-string-list.c  | 22 ----------------
+ t/t0063-string-list.sh       | 51 ------------------------------------
+ t/unit-tests/u-string-list.c | 39 +++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+), 73 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index de73c6ddcd..cdffa13aba 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1366,6 +1366,7 @@ CLAR_TEST_SUITES += u-prio-queue
- CLAR_TEST_SUITES += u-reftable-tree
- CLAR_TEST_SUITES += u-strbuf
- CLAR_TEST_SUITES += u-strcmp-offset
-+CLAR_TEST_SUITES += u-string-list
- CLAR_TEST_SUITES += u-strvec
- CLAR_TEST_SUITES += u-trailer
- CLAR_TEST_SUITES += u-urlmatch-normalization
 diff --git a/t/helper/test-string-list.c b/t/helper/test-string-list.c
-index 6f10c5a435..17c18c30f6 100644
+index 17c18c30f6..8a344347ad 100644
 --- a/t/helper/test-string-list.c
 +++ b/t/helper/test-string-list.c
-@@ -46,20 +46,6 @@ static int prefix_cb(struct string_list_item *item, void *cb_data)
+@@ -18,13 +18,6 @@ static void parse_string_list(struct string_list *list, const char *arg)
+ 	(void)string_list_split(list, arg, ':', -1);
+ }
+ 
+-static void write_list(const struct string_list *list)
+-{
+-	int i;
+-	for (i = 0; i < list->nr; i++)
+-		printf("[%d]: \"%s\"\n", i, list->items[i].string);
+-}
+-
+ static void write_list_compact(const struct string_list *list)
+ {
+ 	int i;
+@@ -46,21 +39,6 @@ static int prefix_cb(struct string_list_item *item, void *cb_data)
  
  int cmd__string_list(int argc, const char **argv)
  {
--	if (argc == 5 && !strcmp(argv[1], "split")) {
--		struct string_list list = STRING_LIST_INIT_DUP;
+-	if (argc == 5 && !strcmp(argv[1], "split_in_place")) {
+-		struct string_list list = STRING_LIST_INIT_NODUP;
 -		int i;
--		const char *s = argv[2];
--		int delim = *argv[3];
+-		char *s = xstrdup(argv[2]);
+-		const char *delim = argv[3];
 -		int maxsplit = atoi(argv[4]);
 -
--		i = string_list_split(&list, s, delim, maxsplit);
+-		i = string_list_split_in_place(&list, s, delim, maxsplit);
 -		printf("%d\n", i);
 -		write_list(&list);
 -		string_list_clear(&list, 0);
+-		free(s);
 -		return 0;
 -	}
 -
- 	if (argc == 5 && !strcmp(argv[1], "split_in_place")) {
- 		struct string_list list = STRING_LIST_INIT_NODUP;
- 		int i;
-diff --git a/t/meson.build b/t/meson.build
-index fcfc1c2c2b..a3dbe572d8 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -11,6 +11,7 @@ clar_test_suites = [
-   'unit-tests/u-reftable-tree.c',
-   'unit-tests/u-strbuf.c',
-   'unit-tests/u-strcmp-offset.c',
-+  'unit-tests/u-string-list.c',
-   'unit-tests/u-strvec.c',
-   'unit-tests/u-trailer.c',
-   'unit-tests/u-urlmatch-normalization.c',
+ 	if (argc == 4 && !strcmp(argv[1], "filter")) {
+ 		/*
+ 		 * Retain only the items that have the specified prefix.
 diff --git a/t/t0063-string-list.sh b/t/t0063-string-list.sh
-index aac63ba506..6b20ffd206 100755
+index 6b20ffd206..1a9cf8bfcf 100755
 --- a/t/t0063-string-list.sh
 +++ b/t/t0063-string-list.sh
-@@ -7,16 +7,6 @@ test_description='Test string list functionality'
+@@ -7,57 +7,6 @@ test_description='Test string list functionality'
  
  . ./test-lib.sh
  
--test_split () {
+-test_split_in_place() {
 -	cat >expected &&
--	test_expect_success "split $1 at $2, max $3" "
--		test-tool string-list split '$1' '$2' '$3' >actual &&
--		test_cmp expected actual &&
+-	test_expect_success "split (in place) $1 at $2, max $3" "
 -		test-tool string-list split_in_place '$1' '$2' '$3' >actual &&
 -		test_cmp expected actual
 -	"
 -}
 -
- test_split_in_place() {
- 	cat >expected &&
- 	test_expect_success "split (in place) $1 at $2, max $3" "
-@@ -25,49 +15,6 @@ test_split_in_place() {
- 	"
- }
- 
--test_split "foo:bar:baz" ":" "-1" <<EOF
--3
+-test_split_in_place "foo:;:bar:;:baz:;:" ":;" "-1" <<EOF
+-10
 -[0]: "foo"
--[1]: "bar"
--[2]: "baz"
--EOF
--
--test_split "foo:bar:baz" ":" "0" <<EOF
--1
--[0]: "foo:bar:baz"
--EOF
--
--test_split "foo:bar:baz" ":" "1" <<EOF
--2
--[0]: "foo"
--[1]: "bar:baz"
--EOF
--
--test_split "foo:bar:baz" ":" "2" <<EOF
--3
--[0]: "foo"
--[1]: "bar"
--[2]: "baz"
--EOF
--
--test_split "foo:bar:" ":" "-1" <<EOF
--3
--[0]: "foo"
--[1]: "bar"
--[2]: ""
--EOF
--
--test_split "" ":" "-1" <<EOF
--1
--[0]: ""
--EOF
--
--test_split ":" ":" "-1" <<EOF
--2
--[0]: ""
 -[1]: ""
+-[2]: ""
+-[3]: "bar"
+-[4]: ""
+-[5]: ""
+-[6]: "baz"
+-[7]: ""
+-[8]: ""
+-[9]: ""
 -EOF
 -
- test_split_in_place "foo:;:bar:;:baz:;:" ":;" "-1" <<EOF
- 10
- [0]: "foo"
+-test_split_in_place "foo:;:bar:;:baz" ":;" "0" <<EOF
+-1
+-[0]: "foo:;:bar:;:baz"
+-EOF
+-
+-test_split_in_place "foo:;:bar:;:baz" ":;" "1" <<EOF
+-2
+-[0]: "foo"
+-[1]: ";:bar:;:baz"
+-EOF
+-
+-test_split_in_place "foo:;:bar:;:baz" ":;" "2" <<EOF
+-3
+-[0]: "foo"
+-[1]: ""
+-[2]: ":bar:;:baz"
+-EOF
+-
+-test_split_in_place "foo:;:bar:;:" ":;" "-1" <<EOF
+-7
+-[0]: "foo"
+-[1]: ""
+-[2]: ""
+-[3]: "bar"
+-[4]: ""
+-[5]: ""
+-[6]: ""
+-EOF
+-
+ test_expect_success "test filter_string_list" '
+ 	test "x-" = "x$(test-tool string-list filter - y)" &&
+ 	test "x-" = "x$(test-tool string-list filter no y)" &&
 diff --git a/t/unit-tests/u-string-list.c b/t/unit-tests/u-string-list.c
-new file mode 100644
-index 0000000000..c304934de2
---- /dev/null
+index c304934de2..e4b8e38fb8 100644
+--- a/t/unit-tests/u-string-list.c
 +++ b/t/unit-tests/u-string-list.c
-@@ -0,0 +1,66 @@
-+#include "unit-test.h"
-+#include "string-list.h"
+@@ -64,3 +64,42 @@ void test_string_list__split(void)
+ 
+ 	t_string_list_clear(&list, 0);
+ }
 +
-+static void t_vcreate_string_list_dup(struct string_list *list,
-+				      int free_util, va_list ap)
-+{
-+	const char *arg;
-+
-+	cl_assert(list->strdup_strings);
-+
-+	string_list_clear(list, free_util);
-+	while ((arg = va_arg(ap, const char *)))
-+		string_list_append(list, arg);
-+}
-+
-+static void t_string_list_clear(struct string_list *list, int free_util)
-+{
-+	string_list_clear(list, free_util);
-+	cl_assert_equal_p(list->items, NULL);
-+	cl_assert_equal_i(list->nr, 0);
-+	cl_assert_equal_i(list->alloc, 0);
-+}
-+
-+static void t_string_list_equal(struct string_list *list,
-+				struct string_list *expected_strings)
-+{
-+	cl_assert_equal_i(list->nr, expected_strings->nr);
-+	cl_assert(list->nr <= list->alloc);
-+	for (size_t i = 0; i < expected_strings->nr; i++)
-+		cl_assert_equal_s(list->items[i].string,
-+				  expected_strings->items[i].string);
-+}
-+
-+static void t_string_list_split(struct string_list *list, const char *data,
-+				int delim, int maxsplit, ...)
++static void t_string_list_split_in_place(struct string_list *list, const char *data,
++					 const char *delim, int maxsplit, ...)
 +{
 +	struct string_list expected_strings = STRING_LIST_INIT_DUP;
++	char *string = xstrdup(data);
 +	va_list ap;
 +	int len;
 +
@@ -271,24 +209,28 @@ index 0000000000..c304934de2
 +	va_end(ap);
 +
 +	string_list_clear(list, 0);
-+	len = string_list_split(list, data, delim, maxsplit);
++	len = string_list_split_in_place(list, string, delim, maxsplit);
 +	cl_assert_equal_i(len, expected_strings.nr);
 +	t_string_list_equal(list, &expected_strings);
 +
++	free(string);
 +	string_list_clear(&expected_strings, 0);
 +}
 +
-+void test_string_list__split(void)
++void test_string_list__split_in_place(void)
 +{
-+	struct string_list list = STRING_LIST_INIT_DUP;
++	struct string_list list = STRING_LIST_INIT_NODUP;
 +
-+	t_string_list_split(&list, "foo:bar:baz", ':', -1, "foo", "bar", "baz", NULL);
-+	t_string_list_split(&list, "foo:bar:baz", ':', 0, "foo:bar:baz", NULL);
-+	t_string_list_split(&list, "foo:bar:baz", ':', 1, "foo", "bar:baz", NULL);
-+	t_string_list_split(&list, "foo:bar:baz", ':', 2, "foo", "bar", "baz", NULL);
-+	t_string_list_split(&list, "foo:bar:", ':', -1, "foo", "bar", "", NULL);
-+	t_string_list_split(&list, "", ':', -1, "", NULL);
-+	t_string_list_split(&list, ":", ':', -1, "", "", NULL);
++	t_string_list_split_in_place(&list, "foo:;:bar:;:baz:;:", ":;", -1,
++				     "foo", "", "", "bar", "", "", "baz", "", "", "", NULL);
++	t_string_list_split_in_place(&list, "foo:;:bar:;:baz", ":;", 0,
++				     "foo:;:bar:;:baz", NULL);
++	t_string_list_split_in_place(&list, "foo:;:bar:;:baz", ":;", 1,
++				     "foo", ";:bar:;:baz", NULL);
++	t_string_list_split_in_place(&list, "foo:;:bar:;:baz", ":;", 2,
++				     "foo", "", ":bar:;:baz", NULL);
++	t_string_list_split_in_place(&list, "foo:;:bar:;:", ":;", -1,
++				     "foo", "", "", "bar", "", "", "", NULL);
 +
 +	t_string_list_clear(&list, 0);
 +}
