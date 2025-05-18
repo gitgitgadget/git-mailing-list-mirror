@@ -1,106 +1,96 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9376D20408A
-	for <git@vger.kernel.org>; Sat, 17 May 2025 19:57:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F984548EE
+	for <git@vger.kernel.org>; Sun, 18 May 2025 05:14:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747511858; cv=none; b=loBK8SNsirJuZi7WiqeCe97va76H5Npgnm37wyt6vG6FIopUteg+qRFL+L8Xzdhf6zpuS79hpjqk2KjOeRwRwJ7he2HX63SGB7w5TGVOzKbnQmUNLAG8OAkKBOZgWm9xCWUkrpVUxBAJL9WC2rffu1iaX//7mGRW1fJuBWoLww0=
+	t=1747545242; cv=none; b=HBg7BfqLmpZtTZfVFp1TJqRyGXwgf8mLdjbJAhPVNzNzSHpuCV9qKDuVNyqy8lwNOF8PhFQhLoXnTkvbQ93ynHYT+8MIgpntiXQhGZLKvUUSay7gJKWioGgtxvR7INADqs5NbhE1skqlyCEaoOD7SYQ1/OkUZ+MeEN/FOc69nrA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747511858; c=relaxed/simple;
-	bh=sN5u0I1Zs0Y6jo2JN3P/wemHuShHD8LoRpmfIw0F50U=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=n151ZQOgMBr5R6Bp921AA+hRPtX+aqAvJAi481p6WI2wh3qcNCr9mVfiaYdU4u5kqBxOYfe74ihFBBkkp2tYucy/WrzNNeJdNjt6OI9sOIHZQ5A1UXaVgjLQRd0/x5sKrZ1b9HjX59B/WANq3lTSW1k59UyLv9cIRPyqQzBpFNc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=VlQmsKNL; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FfcQuzGY; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1747545242; c=relaxed/simple;
+	bh=kGioUELkxCGN7e+XLyD8UFahN1PCRwRIrhm8EMU6iKg=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=EXN3e6qKjXPsucJpCN8F9P2N4xzpATos9SiseMtL3l2Gn+5X625hTwR6biiIkyjBKLrIL08NsqpEJNw/K4cUMoreEDH4ROfMkBf3gr0iiMe1T6Rvnszememo50OwF0QJqmxaW1t1nVWOLaZ+O7FW7tzEGpgYIsB3HCx5l3gCvcU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lwng1307; arc=none smtp.client-ip=209.85.166.43
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="VlQmsKNL";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FfcQuzGY"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 7CD5C11400D4;
-	Sat, 17 May 2025 15:57:35 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Sat, 17 May 2025 15:57:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747511855;
-	 x=1747598255; bh=sN5u0I1Zs0Y6jo2JN3P/wemHuShHD8LoRpmfIw0F50U=; b=
-	VlQmsKNLbA3LTZGONBXD8pj2hT3c4nj6rutvrq3Lnlxofhdhbn+Ni0M4sth3Jtv1
-	tJxLdrcK1aQbsIYAMsTbnbzCr6+BFHY2lvjp9o6g/3HlDe1QKMJ+l09uKm21Uab2
-	Ief0lLc8Q2NBg+yrxcYsXf818wZLYPK5c5b8eai84Z0fhlMSYuDDXvBTq67zeDff
-	30m7BQE42Kk7r/Wn5ok/rj6y1wuxw/vt+sOobIhD8jswdPqZpK+Bxmb97OVQZJI/
-	E/HEJMkgOwKpY9XuRvdrCUpYKMeWH1NFubSkDYky7vsUbuBldrzfKP+JjtBUexYR
-	hKr1bldvUWywBZprRlsdPQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747511855; x=
-	1747598255; bh=sN5u0I1Zs0Y6jo2JN3P/wemHuShHD8LoRpmfIw0F50U=; b=F
-	fcQuzGYBzngKR3XuJlxENUGFchDBq3suyKRvS63seqtQ38m22t3FZt4/3fkD+2k5
-	Tion2L/vPOKdFgdccQ0WOahmkaP4cD3v//kTtgBWYlfL5cP/M6Y0eY/vFyomWdeY
-	PF1yFm9VdenQzb60ov3hfKAhOKicFC74WCrSsebdCb3h+4bwy94WcY7614CdFdDI
-	HBBJuzWeMQvsuT85I9efsGl/H+uwirVZtyQtHv4exvgdIpnvPn+XwY8a+nC5ClLZ
-	bXDr5F3crkDrb66rxckpn7vzSEhsKDjfHh8Oj74nlalZTUU7oI2AJKzY6+Z3CFOq
-	m4oWh+SpObDx38Kwo5QMw==
-X-ME-Sender: <xms:L-ooaLKI3Dfz27tiQXKxc5N76ctp1wpWNK1dVdnyBQnXiayh-M5Dm1o>
-    <xme:L-ooaPI7xJPkgKgbUl07Zc9g8Mt2wAyhqk7UyremFvIX2HlovdbJh22Jf_uyHkIq4
-    7grN4a02VXowVrYaw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefudeiheefucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgjfhfutgfgsehtqhertder
-    tdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghughhssggrkhhkfdcuoehkrh
-    hishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomheqnecuggft
-    rfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleeguddukeeljeektdevjefgie
-    fgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpd
-    hnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehnvgifrhgvnhesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgr
-    ihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:L-ooaDtK4U4lWhAPPyF5ZS63CedHZDRnqdE29RpwCi1uOQXCLRtpcQ>
-    <xmx:L-ooaEYJ5dvzMbrtSoRJ3ASg4lmY6FyNSGghT-kNBR9l35pg5174NQ>
-    <xmx:L-ooaCabpeODNNyRqSXBV9h3R6E_dvUSbEmprqF1wpDGVrjhomfCIQ>
-    <xmx:L-ooaIDP1TKfo4oaHuDtScMuIgxdksdx95Hy6PzS18qXY-ppzXgdcg>
-    <xmx:L-ooaFhEyyTWPIbOmVGr_JX8ROuYC9J47wfdX8A1048Mi0W-boN47Q2Q>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 440F5302005F; Sat, 17 May 2025 15:57:35 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lwng1307"
+Received: by mail-io1-f43.google.com with SMTP id ca18e2360f4ac-8616987c261so139638839f.3
+        for <git@vger.kernel.org>; Sat, 17 May 2025 22:14:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747545240; x=1748150040; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=ygZSQIdfijcyXW7JxNYAFCrHwJL58Pvt+EMxCrj5SGA=;
+        b=lwng1307V97/t8hGXmkH+5XoJmYtjSctNU7/OhK/PoCw8yL4ezTQY9+4ujwNZP+gKQ
+         Xn0ecx8d516+2AI61P2ctCz/ukjXcH0/fEkv4ee4VcutLGx4ofDSot9Krs89j/T+H/T1
+         9/GryKcOHKEhgUNwKZm7kb8+k/oxAD/JuYYkjZdfvYJadJ6V+2YrBRG9Df/kxbkKzz9I
+         wmjpTFUpTbMzdrP6T6cVNlhV5VWmk5s0s8sEt8oDay8XNRPci21q4AazcFIwRXcMcgNd
+         +kEFIytjaraj7Fl9zuA6Eaq/4bIfAJcwleOEufloYi70lUGurSfygK1g338PyjlcKZcp
+         L8pg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747545240; x=1748150040;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=ygZSQIdfijcyXW7JxNYAFCrHwJL58Pvt+EMxCrj5SGA=;
+        b=iV45PaVpFALZ0WU6APng8peNoXqLvc+xYNwNRb3OCIOb2vfjvHio8I3HrlAZapxIMZ
+         diVmKrRclD8VELi8OxMhhzhax0OM83OJN9eJtV7mVvWVTU4hws3BBRFYK0AAND9YGoLP
+         kOKgE0eZZBofLt0bpecNJQjE0jes8mFrd1ot3Om6HCeaJAJJxM9b2Ayt3qboO1reWaDT
+         PP9U1MBFhUkWutCpH9b2ary08T5fPVYSe2qxcxusZK3YmJXVkt+osvGEWRngrxjjD8N7
+         oFUqplyVKrIat+dJyEAvRfAwDkyIDzmmjouQsuePhazpmGBvDhHTN3UGvUhzDWrlKK3o
+         wNxQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV9rKIBSzqImSo+OGDHuzBBdZ9pHFkBnwOZfxMovlAqWgdwGXGdZs1qwjoM3dcsqEgGccE=@vger.kernel.org
+X-Gm-Message-State: AOJu0YydLzkkvy9OIVoNG9uwCK5FWBLrjkYZlBTjAf3oGpwjedGztQev
+	uxP4NVIFJTnASi5QPVBl8GrXbMgeNfbz5GwT/TW2JF+CFkAXWbuTnw2VXgth5lxI4Ln/XfXWzAQ
+	Say0G9wYwRM+g9vKCaK0RgKsbij8RAP0=
+X-Gm-Gg: ASbGncuO0g7fWLW9XC9vbVJX9rCYatCJ9zeUYuLqb9ADhJwmG/SUX2by4pjawNBltrp
+	KuPMjyCX/NjiRHCe6/vYwNjpu4zFWQfhlpwnSiQhpNQmEy8dPmo3GcUZyhoYfHptxeJCfhqjqf3
+	t4o12aGYf4BLNGw36je+pYWKcCeyUARUXrIvsrWviy73YjHNof9LYW0H/B2oeQ04O/jA==
+X-Google-Smtp-Source: AGHT+IGGinSApUIYK+1YLjXPD35Q84TRpRbTDZWz8dcXrEyCEsHv4gaSuj4j2dNjMjAi53lAh6pFXp3qaAKl3dYekCA=
+X-Received: by 2002:a05:6e02:2409:b0:3da:7cb7:78c with SMTP id
+ e9e14a558f8ab-3db84303117mr82348815ab.11.1747545240111; Sat, 17 May 2025
+ 22:14:00 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T370c812ec62578b2
-Date: Sat, 17 May 2025 21:57:13 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: "Elijah Newren" <newren@gmail.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Message-Id: <57dcdc06-d7f2-4661-a2bd-de48690eae6e@app.fastmail.com>
-In-Reply-To: <6cc85081-bbdd-43f6-b17d-8baffedec8c9@app.fastmail.com>
-References: <pull.1920.v3.git.1747182287.gitgitgadget@gmail.com>
- <pull.1920.v4.git.1747425858.gitgitgadget@gmail.com>
- <7c40d3c921610576dc7947bc4c517055717dd94e.1747425858.git.gitgitgadget@gmail.com>
- <6cc85081-bbdd-43f6-b17d-8baffedec8c9@app.fastmail.com>
-Subject: Re: [PATCH v4 2/2] merge-tree: add a new --quiet flag
-Content-Type: text/plain; charset=utf-8
+References: <1008ijb$6j0$1@ciao.gmane.io> <xmqqfrh3qe2w.fsf@gitster.g> <e2a24cbb-1438-46b9-b546-82c9f6dc7ebf@gmail.com>
+In-Reply-To: <e2a24cbb-1438-46b9-b546-82c9f6dc7ebf@gmail.com>
+From: Elijah Newren <newren@gmail.com>
+Date: Sat, 17 May 2025 22:13:49 -0700
+X-Gm-Features: AX0GCFuTQPc9FKdQBlR6x4C--la2yWHUNsavENkFs9WTw7Kgs9KaG6qPBGcw2vE
+Message-ID: <CABPp-BGRxierdcqWz2ZNdvLLrSSSR937CgOvC19vQkeUeC1pFg@mail.gmail.com>
+Subject: Re: Question About Sorting the Index
+To: Jon Forrest <nobozo@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Sat, May 17, 2025, at 21:52, Kristoffer Haugsbakk wrote:
-> Can=E2=80=99t they opt into a new informational mode where
-> `--stdin --quiet` can co-exist?
+On Sat, May 17, 2025 at 11:48=E2=80=AFAM Jon Forrest <nobozo@gmail.com> wro=
+te:
+>
+> On 5/17/25 11:36 AM, Junio C Hamano wrote:
+> > Jon Forrest <nobozo@gmail.com> writes:
+> >
+> >> P.S. I'm trying to read the Git source code to get a better handle
+> >> on what actually goes on in the index but this is taking some time.
+> >
+> > Depending on the style of the learner, I often recommend reading the
+> > very initial revision of Git, i.e.  e83c5163 (Initial revision of
+> > "git", the information manager from hell, 2005-04-07), to quickly
+> > get a feel of what various pieces there are and how they fit
+> > together, by doing
+> >
+> >      $ git checkout -b initial e83c5163316f89bfb
+>
+> Thanks for the suggestion. I'll do that.
+>
+> Meanwhile, do you see any merit to my idea?
 
-Yes, I now immediately see the contradiction in the
-literal text: =E2=80=9Cinformational mode=E2=80=9D and `--quiet`.=20
-But I shall not weigh in on the naming matter.
-
---=20
-Kristoffer Haugsbakk
-
+Isn't the idea essentially the split index we already have?  (See the
+"SPLIT INDEX" section of the git-update-index manual.)
