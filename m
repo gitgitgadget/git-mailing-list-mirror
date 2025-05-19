@@ -1,111 +1,111 @@
-Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2BF219A94
-	for <git@vger.kernel.org>; Mon, 19 May 2025 22:42:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A8B620C477
+	for <git@vger.kernel.org>; Mon, 19 May 2025 23:01:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747694559; cv=none; b=B3qoxNVZoelfAmVAI0atUAv+L9KSqxczfh45Fx1SfdusIwBwxhWRFxgys2JK4kJTF9HMlvLl/V0nv9zqUzXf4ImmhwlkEsOkdh5NiglgNEiZAk+vPLMf4D6yKuqTYc/BsK/tvYN1eVlp+A0Vjp5k3500r+UBh0b2N8HRKK+auVA=
+	t=1747695703; cv=none; b=KXPTW3UC6aILAIz3ZPDEfQDX/xhmEFxsZB6PPq4xRmH2khNx78PxsthAQVOAT19QWw4/sugVZXs4IDv+3fMqfjpD739ZXktZQFYTZlp2ZuLsKGvJCFwS7bvu95tlkHDjO0Pt9P0OwG+sn4AdBDGTgsWC+jyWGFYBcURWQ9EOkC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747694559; c=relaxed/simple;
-	bh=oW2+NBNDSNFa9pm0NsU9UkAnZEt+Bjz1Ut81tVYioRQ=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=IY7SJ8wav+cYDoR/yQqsAJyD58qvnHadqKQnUHeeV4Ca/lrZlodkqBMevMEjrrFXI2JTRDzVeWNtCX7K0AwUmAgQBFNYytWUJm2sEjexDhleId5zafKCUCC084UmM/Hvuc+7iFuQDtA4v6WqPS5fbLe1nt2a5udBoWKCpiD7jbY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=EYkL6+Ao; arc=none smtp.client-ip=84.93.230.235
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1747695703; c=relaxed/simple;
+	bh=HTftjrTidsxptsQH18R4EtVKvfkKLgySxrxsGd7gZns=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SVRU3q90/7vPOocpwqne2yItaVJ3WBIt3TH5xj3UMlNFKpvc35Pml+C7FHAQW7q1RA/RqaCw8EWJs1FapcccR270Z1xzNMhTpfW8gclaRijCcPkuSB7hHf6ja7jfvGkdfu/8rDi/oeRXgbQxzdo2VE9BFZA0gJvkMgWk/KF184k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=V9tdJ3K+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cWkoJF5O; arc=none smtp.client-ip=103.168.172.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="EYkL6+Ao"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id H9BguMMPmJGekH9BhuPwCm; Mon, 19 May 2025 23:42:28 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1747694548; bh=2kiOhaR40MkoP5dHkK7OWb8ef+2qN1gDwuetnNqwzkQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=EYkL6+Ao5hJh5NWIzQkFzENFsJP0JUD67VC1TWjEkaqYcrot5JdJbPuwhA+A3M9qM
-	 u5wpRYMIiLciKzss74OSJUTB9TevxRvPpeBrCq7hdXm953u1NeSi5q57POdPSQAUBq
-	 /xYbA40uNWkv59LIBBpllkIn5sHgXZi7cPYCGh7vxfEfwU462fD4yrK+jQw9EaMW3g
-	 O+yGjsxuyUMlxB7iopt0yQzLnZCpUB0ecM/jAg+6t9FwXzFEbfK2MIcNFwF8Ms4RgU
-	 u7F4DxwYaWG7HKI/zFLDmvjsLsjLzOcNjg/iSspfbQRiHRqP7w9y0L6gD86CQoQBhZ
-	 wCG7QAQSKNlew==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=FoOm/Hrq c=1 sm=1 tr=0 ts=682bb3d4
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=EBOSESyhAAAA:8 a=OEzAtxz5_KK2rLuguKcA:9
- a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
-X-AUTH: ramsayjones@:2500
-Message-ID: <b5d5953a-1b1d-4e0d-a908-07c569fa59d2@ramsayjones.plus.com>
-Date: Mon, 19 May 2025 23:42:24 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="V9tdJ3K+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cWkoJF5O"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 0438013803FA;
+	Mon, 19 May 2025 19:01:39 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 19 May 2025 19:01:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747695699; x=1747782099; bh=TaPswSaY6g
+	AvIqxiUCS8msLZ9EX3C2Z6t1FhyLd4HyI=; b=V9tdJ3K+cdfWfUvt/Vw8qe+Qpo
+	p1jOcNXIeHlOZcFgIjrioavtTziFwtNga5F4pb9NkQmdGrItYNNvhj5lfgKcEh/E
+	X2aJdXj+z2Ei1RbI2w7uqcHg+X5uV6d2DvQRYpDat9QQolFuEB7z+p4s8F8+3Vhr
+	ntFTyu11wzZu/pFbk/gj7vkmpww/o5riXDAaPqtjWiu/9GClMp0ywrTof8EUgnIx
+	OGMi5iBvbQjgXWmyKqxw0xcBRyd1h+HAFeIuYn+IjiMWqZa4kYj8nwec5MqbMTKa
+	OJe17iolHPO75QkDf2P8Rl3D9uOYaWnFRZ0s/HcvWD3q7q30OJFSOrmukSgQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747695699; x=1747782099; bh=TaPswSaY6gAvIqxiUCS8msLZ9EX3C2Z6t1F
+	hyLd4HyI=; b=cWkoJF5OT20tPjitGam25vuRsJ8KkcKaUYOG1wRPXoljMXVVdSK
+	+FaZme9E983UzLTyz5UMxsPzZYk1C80AQP5Q+ymjUASr0yHrOaMb0iUn2IXuq1R9
+	IAu2mmNI7To/AhiZIgzYfyRa15Y+XuzQvgBHO5LcB9Ho74JwdqGxNYgQozdXm/q9
+	WNUU4VbKvfkptGy6e/njesgdZAUYZUVOWwD5ipdpwxmTqgj4l0iukagLA8D4Ojz7
+	JPkgnBs7ColOXZC72a2o5jEFD2rah38MwULLRvrFBkExyUaTyGzkwM0l5ExfmdeO
+	nDbD1kCzhudt5UqmiupH9FFCudYQr8ABD8Q==
+X-ME-Sender: <xms:UrgraDjWW4v7IASmbwl98VC0lN7o1LhQrOQ1kxznC-HuK7F9-A-2eQ>
+    <xme:UrgraACiJiz1f9IWKZjqgfmuq5e4Y5GYfgj57e7uWHSKYiTP5pzOa4iQK-PWtYKsE
+    z9_3TRlPcn9OvGCnQ>
+X-ME-Received: <xmr:UrgraDFSX9HcinMEEslj1mBMrdFI0HkD3IR3FL4CwMMv1pcVmLzpxRAXtHc0Xy9TfmdVRaNbAS38ZUT6IYwkdZAYif0ik9B-XfXb6-Y>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddvieegucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
+    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
+    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
+    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
+    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihse
+    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehpshesphhkshdr
+    ihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopegtohhnghgu
+    rghnhhhqgiesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsoh
+    igrdgtohhm
+X-ME-Proxy: <xmx:UrgraARxfVH_xTgg5BSLF8SvwPbmnybTnFFPb27DCQzDEirsu1kPRQ>
+    <xmx:UrgraAx75km8HgTHCk34dAKOk4HsU1NefoqyApSz6oX4GdhwDJ65MQ>
+    <xmx:UrgraG7IpeELBp05ql2LzxNjzIVksd80m-aWWzBkv5YKG3i-73EjJQ>
+    <xmx:UrgraFy8rqH-Ddksnig31x6eKNy7ECXNuUXvwY5KBRfT-VpJBlmgZA>
+    <xmx:UrgraNdI5vCXc7QUEXgvKsDqOFqWd0GByTPAjRD61md6V8ezf88Ku4wH>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 May 2025 19:01:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  GIT Mailing-list <git@vger.kernel.org>,
+  Eli Schwartz <eschwartz@gentoo.org>,  =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?=
+ =?utf-8?B?Zw==?= Danh
+ <congdanhqx@gmail.com>
+Subject: Re: [PATCH v4 0/5] miscellaneous build mods (part 2)
+In-Reply-To: <b5d5953a-1b1d-4e0d-a908-07c569fa59d2@ramsayjones.plus.com>
+	(Ramsay Jones's message of "Mon, 19 May 2025 23:42:24 +0100")
+References: <20250516184843.1524925-1-ramsay@ramsayjones.plus.com>
+	<20250519162523.1001478-1-ramsay@ramsayjones.plus.com>
+	<xmqqo6vomo7y.fsf@gitster.g> <aCuBtP8-NmB0lKo-@pks.im>
+	<b5d5953a-1b1d-4e0d-a908-07c569fa59d2@ramsayjones.plus.com>
+Date: Mon, 19 May 2025 16:01:36 -0700
+Message-ID: <xmqqy0uskxwv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/5] miscellaneous build mods (part 2)
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,
- Eli Schwartz <eschwartz@gentoo.org>,
- =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
-References: <20250516184843.1524925-1-ramsay@ramsayjones.plus.com>
- <20250519162523.1001478-1-ramsay@ramsayjones.plus.com>
- <xmqqo6vomo7y.fsf@gitster.g> <aCuBtP8-NmB0lKo-@pks.im>
-Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <aCuBtP8-NmB0lKo-@pks.im>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-CMAE-Envelope: MS4xfDNLI/VojL11Djn948zGMjrZW0pyvZsEj4TJ6EynKnpHBY8VFHOWfoJF4GwoZ0RKIbuAQBiLylTjwkBcnFxRkdzdqb7BvXKHm66iYbbUjM4vGv2+b72l
- T8eDq6FKz4UFrJj0cElCN60maTgVl34M+L1WGNaWl1dQ7q9pkUGgaKXni8Usg/xQnGUDgbyP1J6/V8Qakmm0PgZaUXvhrvVXTlU=
+Content-Type: text/plain
 
+Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
 
+>>> Will queue.  Are we done with this series by now?
+>> 
+>> Yup, the range diff looks as expected, so this is ready to go from my
+>> point of view. Thanks!
+>
+> Yes, I think we're good to go.
+>
+> Also, the 'make test' on cygwin just finished and passed without issue! :)
+>
+> Thanks.
 
-On 19/05/2025 20:08, Patrick Steinhardt wrote:
-> On Mon, May 19, 2025 at 11:48:01AM -0700, Junio C Hamano wrote:
->> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
->>
->>> Again, I did a test merge to master@cb96e1697a, next@a128411c76
->>> and seen@df1b4f9cf9. The conflict which showed up in v1 against
->>> the 'seen' branch now appears in the 'master' branch and has the
->>> same resolution as v1.
->>
->> Thanks.
->>
->>> A range-diff against v3 is given below.
->>>
->>> [+] https://lore.kernel.org/git/aCrekcz6onTFgEWw@pks.im/
->>>
->>> Changes in v3:
->>>
->>> Patch #3 changed as a result of Patrick's review [*]:
->>>
->>>  - use the '/' magic string operator when setting the
->>>    ETC_GIT{CONFIG,ATTRIBUTES} build options.
->>>  - add the default values to the 'description' fields
->>>    for the 'gitconfig' and 'gitattributes' option
->>>    definitions
->>>
->>> Also, Junio, the range-diff below shows the typo fixup, but
->>> you should find that it doesn't show for you this time. ;)
->>
->> OK.  And changes in v4 are just that two redundant comments in the
->> option definitions are removed, which makes sense looking at the
->> discussion from the sidelines.
->>
->> Will queue.  Are we done with this series by now?
-> 
-> Yup, the range diff looks as expected, so this is ready to go from my
-> point of view. Thanks!
-
-Yes, I think we're good to go.
-
-Also, the 'make test' on cygwin just finished and passed without issue! :)
-
-Thanks.
-
-ATB,
-Ramsay Jones
-
+Thank you, all!
 
