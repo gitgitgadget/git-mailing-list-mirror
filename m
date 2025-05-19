@@ -1,57 +1,57 @@
-Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 186832798ED
-	for <git@vger.kernel.org>; Mon, 19 May 2025 14:11:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64440267B94
+	for <git@vger.kernel.org>; Mon, 19 May 2025 14:12:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747663900; cv=none; b=ox5qpCWYZNWkxBpkbK6VuDuehzzfNHDqqWRZ0shbLxbK3SJt73KRs22KKiWyiL5OqzYCi1TtpY5MPgzxf0Shd5E60eEkFVKXlQiORiz1DkIPlZ15B7J0IXVt2zzoDuX6MqB8mhcNJRKv1EwMV9IC00m14jRlvYskIM1IXJ9HsyI=
+	t=1747663934; cv=none; b=uBsJvj6t/tcwi9yIGvZOUdjAc4LwFzZdjMAvbNdP4vPNumQ2tkuFhyKH9rtKzrOc2v4Ex7aNAWhRltzwAw38pqIRSk9qK15MAwOrB1GrqnlKyi99NvpA533rAbJZUcvzDCJXJanlevkxgiHKj3EXkSNPbdeLPyfOskLVXsz4ocQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747663900; c=relaxed/simple;
-	bh=93+jmtvS3RrZL690SG7kNqbo8fPycnmOQ/tmJWcsM5I=;
+	s=arc-20240116; t=1747663934; c=relaxed/simple;
+	bh=cd1we/dfP9a1ySrpAoVP1qyx1aHqC6SvQEUB2ggEp9E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OJUwmLwwzTY0L7FO6Znu4t37EGfge0JDL6A177IXwD7hIuItcdYgqJESXCmOlkKdmlHX1uxkzMPxppgP3ZGAG/N2TbYGUI0mRoPUs6EnrmzP6/c6twPa7b8F80S8KLaXmGkgIgRD+ElzIUNXr7MPqoKmCaHCBbGgT/k/riqpGNs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dzUu1oXx; arc=none smtp.client-ip=209.85.208.45
+	 To:Cc:Content-Type; b=MoVON/ZmGll3a+DkAwm9OgaTmuuEwiN2RSFXmJCiLakRiAiU5StfjjmJ/GWmBY4sLVFaBux1AXw5VXq3W73uaguBKwsE9qLipoo4D/WeYMptwRWOV6TdZ4Wak1N9NfxwODijbSPkJhlG2zTOmwec33vGCL7nRMIF6fdgCfKfDVQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l1l+os3k; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dzUu1oXx"
-Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-601a9e65228so2902933a12.2
-        for <git@vger.kernel.org>; Mon, 19 May 2025 07:11:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l1l+os3k"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ad5740dd20eso169112066b.0
+        for <git@vger.kernel.org>; Mon, 19 May 2025 07:12:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747663897; x=1748268697; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747663930; x=1748268730; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=GAdT4C+zdH1Iq94hmsjr/v4d2kBoe2z82dSZ5nwhktM=;
-        b=dzUu1oXxyj/OozqYzr7ZiQCLv4We6QQHxjT6/yLMmtlwlvxr1Il3EQLhVoXFeLnCyA
-         YWyRG4qUpPQrSnnkFZmuVWws4yC1JsrXpN2m8i4lCZGw3wTcVBeE3xhWTL8BxXdd9c8l
-         dNPc1h/PVq3cCwnJbZYFPyEG809QrxP7/9hoUd72uYQduxam7rM8L4Dv8UPjjWT4KVMW
-         XsNjR0MEwvg7KnqvKM0WfFRisgjBiy3qmM3xah47CmDuRrY4J09vxeaA6Kcyr6+Exso1
-         XhpxXhkHGzCU2zn4/Ccrg4SIIqycUZv0HeGZL4i0py7CYEb6HxdxOFe8y7GZn8DYQ8zR
-         XH1Q==
+        bh=iPzzMdCtLNIhnbqIKTqqwgkEv++CjWjokTGQwvoGSH0=;
+        b=l1l+os3kdd2PqdNGsLpCMYU+rJ2LrdaJgYsYY/te1wl1Zv7s3Z5X/KguuYMCDCkvkX
+         xykXsWKJYn+bn3tAQS65psNUSVVt0P/NYoGqmCM52fr1nudtEHWp9aQtqDz7+LJsLAAj
+         qz2ZpNfRoDcDAynXURFZQDJOgSWW/WxJ7u0UJvLHDyQqpu9afWCA06WPSlyYAXE+bdHP
+         aX5E6UEbCqQzTjKLbfKE460YOOPtQiAAUe3MeV+9++1BxchvMk3QQ2hQwz11EggVcyaA
+         wR0u/ShkekL5rLBVC9o7ptltkUMvJzMRXxWruVNaK86YYKAQgATJ8codgz+A94BaDRo2
+         n+Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747663897; x=1748268697;
+        d=1e100.net; s=20230601; t=1747663930; x=1748268730;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=GAdT4C+zdH1Iq94hmsjr/v4d2kBoe2z82dSZ5nwhktM=;
-        b=WFOGwP1gVgXvVRUjqKdhTYBNK/orvaNp5TyCo0Xmqi9Da3DK2E1QJ5ktRmedqa95L5
-         qya481xpbtEg1p3c/9MIo6GVUs6YLWsDku37bYZEwXSwCwcKu+0IlmtJI4z1r5RefH1k
-         jNFzaFMFRX0CePNwsciEXQyR2a4h6Fue6SwsC11/WlrG//px0KM40UZNW/CrtZwraR2Q
-         4Lr3WcvzVh7UpnlIi3PujOqk1ZZFUsBD1TJwVTl1HGb+QB5m2yxV9M8+6MMZdC/QzKrB
-         yiDrae6vZKuXbqHYSA2I5bbyjyw+TrAt1byRHQ4Mz4kIhpa76M3P4QhGYo99zxyaTq2D
-         j04A==
-X-Gm-Message-State: AOJu0YyGugJFrcHMtvNxzE3ksO4pS9yjo0eNneMYNbYmjspc1Uk6pNPZ
-	5vD83X6D/foHK2zO+dJeyApPH2w7L7kdW2oXMfK//nqq4kMtjgBCw9px1M6VxlIAHTxat8xEhcM
-	aFn+5Wo+gLBrd9SxqFCXO5GY9CFcEXj0=
-X-Gm-Gg: ASbGncvVJ3k4DTEw6IOvsa1XgKHONR252iwEwm+D3oHyBAY+Zig2iw3j8kJLzBkFlC4
-	EiBIfd96PJA1RxpfKstGcxo5fJWYErFH/zOcVoEJb1qY/Ak0rljCI1PxbL1TBHcbJdsjGVpK+0v
-	ISxhsjjLwK2nj90IIHKSe+wPqbDgt+nuXP1Bo=
-X-Google-Smtp-Source: AGHT+IF23oFTTTilFct6G38otuiSzCyJP0JkdyuvdUdZ4QA7McWZVNQ8ygi3d8oaMAvxIKP0e3pIKeauoPaR7RNoY8Q=
-X-Received: by 2002:a17:907:3f21:b0:aca:c507:a4e8 with SMTP id
- a640c23a62f3a-ad52d4d1b56mr1019157966b.21.1747663897244; Mon, 19 May 2025
- 07:11:37 -0700 (PDT)
+        bh=iPzzMdCtLNIhnbqIKTqqwgkEv++CjWjokTGQwvoGSH0=;
+        b=Ro5hHS3Md7MCw2uQVJ5hrJS0EU9htBKIGnSf2lI0Vk+LGlb/Lc+xSbG5pg7ZfGMIHb
+         5UnbnPQrZEtFlsCfbJj7VhBVx/Ib6oTjWlcRLdNgOuYljxgY2jr3bJoBD7lCI97q9OU3
+         vr1XaukIW/T85iTYT2UM8APd6bw/vjMF0dtru7P0gKHizHmYq0xZSQnOmEDnjBWiiwBy
+         BELA/mv0PSEZREA9BADm1nOv7QBS3JL/2RKEfnq2Ajlg+pBDbbIQDAjZLeMMcdtzL7Ja
+         sqrSIxVk3GRUHFpXbfkQugv9l7LNk1+VCoQ0jm+/pqkPbd08hZi/e2oSkOVDapoJWHJn
+         ySwg==
+X-Gm-Message-State: AOJu0YxoEX9nIpe3Ggz8NK9vX3FbY9+oZI8wwE1GCIcAJ3w5HQKZlGEK
+	K2XlTMuC6bBBSMoOmj+wnoyXqaZJozHBG28VaTzHOVpMK+uP/ZZ+uTpGcvY2A8nmlxECfOeEcVA
+	/VpJbHlXG7foImHcqIRQ1gAatms+pldU=
+X-Gm-Gg: ASbGncsG4JrN7PMgQKCCywutfG6KO8rcFKoVWTItOkabp2jdJ9jdRhr/lYdIIx7oIv6
+	J1NJfpQcXe2VLjwcxeIdRwJkH92rMhiAni7Noohb5gSabS3Pnpj3Pgo99/RaRRt0+jsUXHxfOK3
+	apQeBHfWyjML8KD4OpTh18o1vfnxAb2mKj4yd1TuUFalJP+Q==
+X-Google-Smtp-Source: AGHT+IH/eU+IT/hrLXJ8Nbys7taXNy40k0HY87tz5KUH9FMjSLs6TuUmm51LRI7AVL3svf/dm2r/R6k7U3O09zpX3yo=
+X-Received: by 2002:a17:906:dc93:b0:ad5:6ca3:c795 with SMTP id
+ a640c23a62f3a-ad56ca3cb15mr449755866b.33.1747663930342; Mon, 19 May 2025
+ 07:12:10 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,176 +59,74 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250414160343.2216312-1-christian.couder@gmail.com>
- <20250429145243.992252-1-christian.couder@gmail.com> <20250429145243.992252-3-christian.couder@gmail.com>
- <CAOLa=ZSwzvfQ8MupFzuMEpHCKJRY8p06m-FfyE-deqOsgK_feg@mail.gmail.com>
-In-Reply-To: <CAOLa=ZSwzvfQ8MupFzuMEpHCKJRY8p06m-FfyE-deqOsgK_feg@mail.gmail.com>
+ <20250429145243.992252-1-christian.couder@gmail.com> <20250429145243.992252-4-christian.couder@gmail.com>
+ <aBsZC_MZw7BHxUiS@pks.im>
+In-Reply-To: <aBsZC_MZw7BHxUiS@pks.im>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 19 May 2025 16:11:24 +0200
-X-Gm-Features: AX0GCFtvKb145spfe0I54kiCzbwBLwTsdnHgHVyrN-d4jrXuDN9vNomcgT_ncYI
-Message-ID: <CAP8UFD31PfhJY3jQpBmvbAB6eh43GFfsKzcXby7LshX76Qjekw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] promisor-remote: allow a server to advertise more fields
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, 
-	Taylor Blau <me@ttaylorr.com>, Christian Couder <chriscool@tuxfamily.org>
+Date: Mon, 19 May 2025 16:11:58 +0200
+X-Gm-Features: AX0GCFtv7TIwzEqukqzmm88yp6Wkc2_9X-6MN1LSvlXHqU7-chh-1V_XKrQUWx8
+Message-ID: <CAP8UFD1mav=omMxSwWmrmORBnXKzKSp4C4FDNP8R9Q43hU77zw@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] promisor-remote: allow a client to check fields
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>, Taylor Blau <me@ttaylorr.com>, 
+	Karthik Nayak <karthik.188@gmail.com>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 7, 2025 at 2:45=E2=80=AFPM Karthik Nayak <karthik.188@gmail.com=
-> wrote:
+On Wed, May 7, 2025 at 1:14=E2=80=AFPM Patrick Steinhardt <ps@pks.im> wrote=
+:
 >
-> Christian Couder <christian.couder@gmail.com> writes:
->
-> [snip]
->
-> > diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitproto=
-col-v2.adoc
-> > index 5598c93e67..b4648a7ce6 100644
-> > --- a/Documentation/gitprotocol-v2.adoc
-> > +++ b/Documentation/gitprotocol-v2.adoc
-> > @@ -785,33 +785,52 @@ retrieving the header from a bundle at the indica=
-ted URI, and thus
-> >  save themselves and the server(s) the request(s) needed to inspect the
-> >  headers of that bundle or bundles.
-> >
-> > -promisor-remote=3D<pr-infos>
-> > +promisor-remote=3D<pr-info>
-> >  ~~~~~~~~~~~~~~~~~~~~~~~~~~
-> >
-> >  The server may advertise some promisor remotes it is using or knows
-> >  about to a client which may want to use them as its promisor remotes,
-> > -instead of this repository. In this case <pr-infos> should be of the
-> > +instead of this repository. In this case <pr-info> should be of the
-> >  form:
-> >
-> > -     pr-infos =3D pr-info | pr-infos ";" pr-info
-> > +     pr-info =3D pr-fields | pr-info ";" pr-info
-> >
-> > -     pr-info =3D "name=3D" pr-name | "name=3D" pr-name "," "url=3D" pr=
--url
-> > +     pr-fields =3D fld-name "=3D" fld-value | pr-fields "," pr-fields
-> >
->
-> From this, it seems like the order of the fields shouldn't matter, but
-> this is not the case.
-
-I would prefer to keep the simpler version as I find these grammar
-notations not very easy to understand.
-
-In v3 there is:
-
-=3D> The "name" and "url" fields MUST appear first in each pr-fields, in
-that order.
-
-And I think it's enough, especially since the parsing is relaxed so it
-will work if they are not in this order.
-
-> wouldn't it be better to say:
->
->   pr-infos =3D pr-info | pr-infos ";" pr-info
->
->   pr-info =3D "name=3D" pr-name | "name=3D" pr-name "," "url=3D" pr-url
->   pr-info =3D pr-info | pr-info "," fld-name "=3D" fld-value
-
-Could this be interpreted to mean that it is Ok to have "name=3D"
-pr-name "," "url=3D" pr-url several times in a single pr-info?
-
-This seems to me really more complex than needed, and I think it's
-better to keep the simple version and then clarify things with the
-above sentence.
-
-> [snip]
->
-> > diff --git a/promisor-remote.c b/promisor-remote.c
-> > index 24d0e70132..70abec4c24 100644
-> > --- a/promisor-remote.c
-> > +++ b/promisor-remote.c
-> > @@ -314,6 +314,84 @@ static int allow_unsanitized(char ch)
-> >       return ch > 32 && ch < 127;
-> >  }
-> >
-> > +/*
-> > + * List of field names allowed to be used in the "promisor-remote"
-> > + * protocol capability. Each field should correspond to a configurable
-> > + * property of a remote that can be relevant for the client.
-> > + */
-> > +static const char *allowed_fields[] =3D {
-> > +     "partialCloneFilter", /* Filter used for partial clone */
-> > +     "token",              /* Authentication token for the remote */
-> > +     NULL
-> > +};
+> On Tue, Apr 29, 2025 at 04:52:43PM +0200, Christian Couder wrote:
+> > diff --git a/Documentation/config/promisor.adoc b/Documentation/config/=
+promisor.adoc
+> > index 71311b70c8..4147d2cf44 100644
+> > --- a/Documentation/config/promisor.adoc
+> > +++ b/Documentation/config/promisor.adoc
+> > @@ -46,3 +46,28 @@ promisor.acceptFromServer::
+> >       lazily fetchable from this promisor remote from its responses
+> >       to "fetch" and "clone" requests from the client. Name and URL
+> >       comparisons are case sensitive. See linkgit:gitprotocol-v2[5].
 > > +
-> > +/*
-> > + * Check if 'field' is in the list of allowed field names for the
-> > + * "promisor-remote" protocol capability.
-> > + */
-> > +static int is_allowed_field(const char *field)
-> > +{
-> > +     const char **p;
-> > +
-> > +     for (p =3D allowed_fields; *p; p++)
-> > +             if (!strcasecmp(*p, field))
-> > +                     return 1;
-> > +     return 0;
-> > +}
-> > +
-> > +static int valid_field(struct string_list_item *item, void *cb_data)
-> > +{
+> > +promisor.checkFields::
+> > +     A comma or space separated list of additional remote related
+> > +     fields that a client will check before accepting a promisor
+> > +     remote. Currently, only the "partialCloneFilter" and "token"
+> > +     fields are supported.
+> > ++
+> > +When a field is part of this list and a corresponding
+> > +"remote.foo.<field>" config variable is set locally for remote "foo",
+> > +then the value of this config variable will be checked against the
+> > +value of the same field passed by the server for the remote "foo". The
+> > +remote "foo" will be rejected if the values don't match.
+> > ++
+> > +For the "partialCloneFilter" field, this allows the client to ensure
+> > +that the server's filter matches what it expects locally, preventing
+> > +inconsistencies in filtering behavior. For the "token" field, this can
+> > +be used to verify that authentication credentials match expected
+> > +values.
+> > ++
+> > +The fields should be passed by the server through the
+> > +"promisor-remote" capability by using the `promisor.sendFields` config
+> > +variable. The fields will be checked only if the
+> > +`promisor.acceptFromServer` config variable is not set to "None".  If
+> > +set to "None", this config variable will have no effect.  See
+> > +linkgit:gitprotocol-v2[5].
 >
-> Nit: Shouldn't this be `is_valid_field` similar to `is_allowed_field`?
-
-Yeah, I have renamed it `is_valid_field`
-
-> > +     const char *field =3D item->string;
-> > +     const char *config_key =3D (const char *)cb_data;
-> > +
-> > +     if (!is_allowed_field(field)) {
+> One thought that came to my mind is that inevitably, users will
+> eventually want to specify different conditions and combinations. E.g.
+> "accept a promisor remote if it's announced by GitLab and if the partial
+> filter strips blobs, but not if it requires additional authentication".
+> I don't think that "checkFields" would be able to implement such a use
+> case.
 >
-> Nit: Can't we just inline this?
+> What is the vision where we want to end up here? Should we maybe provide
+> some more flexibility now already so that we don't have to retrofit such
+> a mechanism in the future?
 
-We could, but I think the is_allowed_field() makes sense on its own
-too, while the current one is very specific to be used in
-filter_string_list(). So I prefer keeping is_allowed_field() separate.
-
-> > +             warning(_("unsupported field '%s' in '%s' config"), field=
-, config_key);
-> > +             return 0;
-> > +     }
-> > +     return 1;
-> > +}
-> > +
-> > +static char *fields_from_config(struct string_list *fields_list, const=
- char *config_key)
-> > +{
-> > +     char *fields =3D NULL;
-> > +
-> > +     if (!git_config_get_string(config_key, &fields) && *fields) {
-> > +             string_list_split_in_place(fields_list, fields, ", ", -1)=
-;
-> > +             filter_string_list(fields_list, 0, valid_field, (void *)c=
-onfig_key);
-> > +     }
-> > +
-> > +     return fields;
-> > +}
-> > +
-> > +static struct string_list *fields_sent(void)
-> > +{
-> > +     static struct string_list fields_list =3D STRING_LIST_INIT_NODUP;
-> > +     static int initialized =3D 0;
-> > +
-> > +     if (!initialized) {
-> > +             fields_list.cmp =3D strcasecmp;
-> > +             fields_from_config(&fields_list, "promisor.sendFields");
->
-> Nit: Here too, can't this be inlined? While the modularity is nice, I'm
-> not sure the redirection is warranted for such small functions with very
-> specific usecases.
-
-In a follow up patch in this series we reuse fields_from_config() so I
-think it's better to keep it separate.
-
-> [snip]
->
-> Apart from the nits, the patch looks good :)
-
-Thanks for the review!
+I'd prefer to wait until some concrete cases appear. It's possible
+that the current very simple mechanism will be enough for some time,
+or it's possible that some users will come soon with a complex use
+case where it might be necessary to have a hook or some kind of
+external script called. In those cases it would be sad if we added
+some flexibility in advance but it appears to be too much or not
+enough.
