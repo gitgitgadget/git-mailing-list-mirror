@@ -1,105 +1,191 @@
-Received: from mail-pj1-f45.google.com (mail-pj1-f45.google.com [209.85.216.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD901DBB13
-	for <git@vger.kernel.org>; Mon, 19 May 2025 05:51:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.216.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4451E8322
+	for <git@vger.kernel.org>; Mon, 19 May 2025 06:02:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747633862; cv=none; b=ssY9AB79Gevlq5mRemb+LWkpWasl70m4hGvnETX7+qHlZzoPPZ3GQNRFuDfuZwdO55U6Q6jd73PeSQShL0Zrf2LgBLIGi8tC3BnOZ0pXQFuOANsvnQLqaQcXjoOgqSntj6lPPalgh/Y0VmNV7G3XFfTYZx/mAM+cbw8xOXGyL0k=
+	t=1747634557; cv=none; b=XS+mRvUFEYQ0APbka+d+wDoAUIxFWA63sv/DCaXfierCOkGTnnuIIEMmOO13Zn6TL1W76YwNCfNSwNzA0qELvtHzr6LGDEE7oAmpWZeDM7sUYnoMsgWyZED0IJr7W3oK/M4mTQvvBqR704QdffftBaUGdMF1bzGrLMMmYwGacC4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747633862; c=relaxed/simple;
-	bh=s6eOBilTduGjosAKTVHkhAY+0N3cfBb0HGApao69f/Q=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Eb8DKefh0u+yEMzCsY3f8n6Wc6s6wnxlGac+4Rl/mbf9azMrJ6rjdu8qZjRkMo3ww0Qe9HrflDeCRW9pTVKKeGzR//M5/Jkl9SxWtvymWBC1x3KCYhhXeDHeEcQhMhtAMFRJFJymYdNHyM5n2KPGtPd5cRnQwyQ22VcbNpneolw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cE6j1P9L; arc=none smtp.client-ip=209.85.216.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747634557; c=relaxed/simple;
+	bh=j2iqiABJy0rStUDwfks7mjylrMU8u1K9BOGQrJggQUI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iXYeZj9teKdqDA0ppNxNBJ2H3n7SbqpxDausvYbtoh9Q+CYyNsc3LvvEShKaSILkcZ1HWtEnEGRhvuAAPzuL0Kcj725OinVFlc38aTagNrTHkINuKrGouySsMGgbhlfHzd38C4Vs4TNF2uOhBChXj9EOASt79EpWtA94Tb1oEfI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wfx05s3w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bs3lbz1O; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cE6j1P9L"
-Received: by mail-pj1-f45.google.com with SMTP id 98e67ed59e1d1-30dfd9e7fa8so4997838a91.2
-        for <git@vger.kernel.org>; Sun, 18 May 2025 22:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747633860; x=1748238660; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=RPs7J3NJJQZSJrtZktW5BsXIX83aZBLYSiPebWsw0CE=;
-        b=cE6j1P9LRaaUn6c6ykYbEfWTTQWYB8q81WVj4StyLfZkZH5mh9Q8BFPkVkAP5Y+fI8
-         XiYdTrQdZBhKb2l4y6pg3eRoOQznm69/HrNMUrCxPIkmfWL1IkMPdXPTF7QFAETQvcPq
-         jLSF5Ge6uQxghl2qc6WpUdAKS5/tSRtmjOlP7AmmjGzBflRIjOynFU8Q0bUoabaGMWUW
-         D6g2fLPd7JG8ynHrrCRDyl+RXoVwFgEzuw7ta5d2lpa/jYMDLjRL2KeKOjnziYrVtuJ+
-         Inu9LbcFXa1yP4ADLemT+5FH03m3AieBkzct4EJbSEp6NDZO7gzhtWWOa41wCLfXNL5h
-         Mmaw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747633860; x=1748238660;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=RPs7J3NJJQZSJrtZktW5BsXIX83aZBLYSiPebWsw0CE=;
-        b=cE+vndxgrTgv44PZtzkbAGPwOIWw3oEpVqJ3+BT0VmXhgJOZP7/ZtDwtRSsA7VYYM2
-         diU1GE8E4GRkHbQTE9OSzWWjjDOcfee/UZLn8iiPpZGI+Euyl77Sf9XGD6lMl2Q7IghW
-         2agIYUkhPb8JqUa2/IzuR2nudAgmuUnJQ+U4Gc615Enzs0Ofl0Jzc/S24LIBUgloXFg6
-         iYoUdZ3fKqBTIbgKqV6lDoC7ZlYtgT7Q5EJllD8K6M6j2HRjtMqWpZoeQmRWLwZK9QTU
-         CjIp78GdPGu+95j8aHjVGUofwBHODx2J2htuZ7j4vRuBKJBULekPGvs5a02ATpH+vIEU
-         d0Mw==
-X-Forwarded-Encrypted: i=1; AJvYcCUZXUedzPlvWetDSKuMOc1wdirL3TkIPuol6kvuNsvZ/kq0wDXZRghAnaZ8HsSEaUmOwxY=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzVc/sOO+UQhvifqAyTaeaLaYvjy/GLSb2mfFq+9M2Eldv8iUjj
-	CEzxXi8Myataw5gKHA+WJ2/i4FMfYjoERU5jReQ2kCOaNzbJS0BwNCYNX/yeOvI4
-X-Gm-Gg: ASbGncttBangHWqWlVkDw/pyhDrBfOYnm9qREPzUqkJSB8Uag1pwLyFoqVzcIHQNmRZ
-	pzQ8RFA3EhtzVSgpAX6UPvBa4RE5b/bb3YrVm5Kd6Zh7AQISO1tGMO+foU65WzYSdgYHBX690PB
-	pVRiyRkCGQdvFN5CNEdXkRhrksPK4GDwOnmmuvQ0eG63yXN8WT6N2pztEWURO0OphQsADk7IoFP
-	UzzESTS+nHG2zOL9xWRb3Ym9iJ+fb5Jm4UMbi9JkrZ3NAEBS7hQnzJyJ3seTd+kMk2idcGWU20Y
-	5KSaZRuCOjgAaUoKysojXH77yXS9lRjW0mspO6Cv0AHDXIQ=
-X-Google-Smtp-Source: AGHT+IHEU6bF8a/ZZiwRtSqsUFMwFbFJsumZxVcSNEjnx44zfl2e7susjRtiIlOzpWrYcWFTdmhbkA==
-X-Received: by 2002:a17:90b:2b45:b0:2ff:6a5f:9b39 with SMTP id 98e67ed59e1d1-30e8314fe2emr19847205a91.18.1747633860152;
-        Sun, 18 May 2025 22:51:00 -0700 (PDT)
-Received: from fedora ([138.199.43.83])
-        by smtp.gmail.com with ESMTPSA id 98e67ed59e1d1-30e33401a81sm10354880a91.2.2025.05.18.22.50.59
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 18 May 2025 22:50:59 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Phillip Wood <phillip.wood123@gmail.com>,  git@matthieu-moy.fr,
-  git@vger.kernel.org,  kristofferhaugsbakk@fastmail.com,
-  phillip.wood@dunelm.org.uk,  sunshine@sunshineco.com,  tmz@pobox.com
-Subject: Re: [PATCH v2] contrib: update thunderbird-patch-inline
-In-Reply-To: <aCrD6RlO0xUmXr6i@pks.im>
-References: <a3aaa11a-a842-4c10-8189-07b681663573@gmail.com>
-	<20250516135540.218937-1-phillip.wood123@gmail.com>
-	<aCrD6RlO0xUmXr6i@pks.im>
-Date: Sun, 18 May 2025 22:50:58 -0700
-Message-ID: <87zff9jghp.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wfx05s3w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bs3lbz1O"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id B57B72540074;
+	Mon, 19 May 2025 02:02:33 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 19 May 2025 02:02:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747634553; x=1747720953; bh=m45/LP/SvA
+	kgxttSe8Mv4d+yz3AKg/YOqXZlZQQvTEY=; b=Wfx05s3wdlNCDR8oY05sWhEH90
+	JbIRKK8X1KsOhS823Q6yHB5vvM+/f1pufWiO0O7fvumOw2+DYn5+y9V/InUlOEHS
+	EQoZ8+hUm1ho1mDK5Yye7v8ICBIcDYGu4G1f6v4osdWjMRF6a+gnG/Lx4uC3+FSz
+	Yy+jDYl/V4lNXDm9b23nx7Bj/90YiNETk9Ipeh9eFF2Mcq8Ug9HJrw/4jztOcg0/
+	0RB1paLvssGIeSIiy2D3nnx7SMxvEASENVVavEfZ34cZhGwdMfrrsX2VG1yyDGYM
+	fqgQHLz+728Zqo9zMVUni3Yu3Jp6dpk2I3i90g20GmH4Lnf3v+ndvqTd2ulw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747634553; x=1747720953; bh=m45/LP/SvAkgxttSe8Mv4d+yz3AKg/YOqXZ
+	lZQQvTEY=; b=bs3lbz1OCeAK/wMgPMd/aWboh6UHdotRDbupYQXtnHdX2O6rwZ8
+	erL6RM5891yV8yFiaS5Q93gZGy3vnTy5cHDg7vPXOVWt62Jecg85CigstE+8tDln
+	DCSzYBtdxMboT13UkT1jYngQmpJehWdptQtzrttSlbtLnrdtWAwCRHyoNF8fFCf/
+	YO/qp2/AZ5qqtdcknUeOuwP9Y7QtbHs+lgWqbnfY6vOzyTbIfNCYJWqPhXrQLovS
+	q+DKzBVwGQ/oMpQpzQcb9T2iYnezk5QMpOXtMPEhebXAMKgZ2gIpWH1s/o9RJgeF
+	EJY3WM4WAsiBGJzXbYwmq6NYtlarUZGPFzg==
+X-ME-Sender: <xms:eMkqaC4UvF4Z-cDNbYfGqRrnQfnaHE8mEr1JT5NrRUJh-JPvS0irZw>
+    <xme:eMkqaL4HlBb0DaFoz3jYG1QXYM93Yvg3e1hV84-Tw_cWGIRHQrwtEcyffX4IOTY90
+    OXWYFkEasFKWvfZMQ>
+X-ME-Received: <xmr:eMkqaBdYhHpVFUvr5-6ZGdOVG9a5AAzGGqs0j5FYGTLIeS_1S-4eVM31CJLwiQz_DFRqwKQBii8y6PtFUS_wToM1OLe8JAgqY3i6L5SjRWP9>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddtiedvucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
+    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
+    pehsmhhtphhouhhtpdhrtghpthhtohephedtvddtvdegfeeftddtheeisehsmhgrihhlrd
+    hnjhhurdgvughurdgtnhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:eMkqaPKXlX04mxlntrHIUJt_2XTWXmaP_bb0Xm6lknsft1g_mRD2Ig>
+    <xmx:eMkqaGLikArwn-wA_8S9rtD4wW1UBbTGkUGIU8Y6eeslK_hD-i59LQ>
+    <xmx:eMkqaAwMU9oXkzlL3xtMzvXLFHFqWI1PCPKp37szIlM1FVV8GXrTSw>
+    <xmx:eMkqaKJ63If-KGzqR9GKNT_6IqDBBLVW5-osCvN5L3I_rFF12OzKbw>
+    <xmx:eckqaPlMUXjaSg3ebnXhH5J1XFq6QAxbhZTVYDOXUPWNj3vUEiHC4mLf>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 May 2025 02:02:31 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id a6a1dbc0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 19 May 2025 06:02:29 +0000 (UTC)
+Date: Mon, 19 May 2025 08:02:24 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH] pack-bitmap: add loading corrupt bitmap_index test
+Message-ID: <aCrJcK6ml4r4S-mF@pks.im>
+References: <pull.1967.git.git.1747491983066.gitgitgadget@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <pull.1967.git.git.1747491983066.gitgitgadget@gmail.com>
 
-Patrick Steinhardt <ps@pks.im> writes:
+On Sat, May 17, 2025 at 02:26:22PM +0000, Lidong Yan via GitGitGadget wrote:
+> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+> 
+> This patch add a test function `test_bitmap_load_corrupt` in patch-bitmap.c
+> , a `load corrupt bitmap` test case in t5310-pack-bitmaps.sh and
+> a new command `load-corrupt` for `test-tool` in t/helper/test-bitmap.c.
+> 
+> To make sure we are loading a corrupt bitmap, we need enable bitmap table
+> lookup so that `prepare_bitmap()` won't call `load_bitmap_entries_v1()`.
+> So to test corrupt bitmap_index, we first call `prepare_bitmap()` to set
+> everything up but `bitmap_index->bitmaps` for us. Then we do any
+> corruption we want to the bitmap_index. Finally we can test loading
+> corrupt bitmap by calling `load_bitmap_entries_v1()`.
 
-> What I still don't quite understand: who is this update for? The
-> existing script is broken for years and nobody showed interest so far to
-> fix it. So I don't think it makes sense to fix the script just to keep
-> on dragging it with us.
->
-> If the answer is "you" then I'd be fine with it. But if the answer is
-> a hypothetical "someone" then I'd honestly prefer to just remove dead
-> weight and not bother with this update.
+Okay. We _can_ do that now, but the patch doesn't explain why we
+_should_.
 
-Without a further explanation, I agree.
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index b9f1d866046..9642a06b3fe 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -3022,6 +3022,71 @@ cleanup:
+>  	return ret;
+>  }
+>  
+> +typedef void(corrupt_fn)(struct bitmap_index *);
+> +
+> +static int bitmap_corrupt_then_load(struct repository *r, corrupt_fn *do_corrupt)
+> +{
+> +	struct bitmap_index *bitmap_git;
+> +	unsigned char *map;
+> +
+> +	if (!(bitmap_git = prepare_bitmap_git(r)))
+> +		die(_("failed to prepare bitmap indexes"));
+> +	/*
+> +	 * If the table lookup extension is not used,
+> +	 * prepare_bitmap_git has already called load_bitmap_entries_v1(),
+> +	 * making it impossible to corrupt the bitmap.
+> +	 */
+> +	if (!bitmap_git->table_lookup)
+> +		return 0;
+> +
+> +	/*
+> +	 * bitmap_git->map is read-only;
+> +	 * to corrupt it, we need a writable memory block.
+> +	 */
+> +	map = bitmap_git->map;
+> +	bitmap_git->map = xmalloc(bitmap_git->map_size);
+> +	if (!bitmap_git->map)
+> +		return 0;
+> +	memcpy(bitmap_git->map, map, bitmap_git->map_size);
+> +
+> +	do_corrupt(bitmap_git);
+> +	if (!load_bitmap_entries_v1(bitmap_git))
+> +		die(_("load corrupt bitmap successfully"));
+> +
+> +	free(bitmap_git->map);
+> +	bitmap_git->map = map;
+> +	free_bitmap_index(bitmap_git);
+> +
+> +	return 0;
+> +}
+> +
+> +static void do_corrupt_commit_pos(struct bitmap_index *bitmap_git)
+> +{
+> +	uint32_t *commit_pos_ptr;
+> +
+> +	commit_pos_ptr = (uint32_t *)(bitmap_git->map + bitmap_git->map_pos);
+> +	*commit_pos_ptr = (uint32_t)-1;
+> +}
+> +
+> +static void do_corrupt_xor_offset(struct bitmap_index *bitmap_git)
+> +{
+> +	uint8_t *xor_offset_ptr;
+> +
+> +	xor_offset_ptr = (uint8_t *)(bitmap_git->map + bitmap_git->map_pos +
+> +				     sizeof(uint32_t));
+> +	*xor_offset_ptr = MAX_XOR_OFFSET + 1;
+> +}
+> +
+> +int test_bitmap_load_corrupt(struct repository *r)
+> +{
+> +	int res = 0;
+> +	if ((res = bitmap_corrupt_then_load(r, do_corrupt_commit_pos)))
+> +		return res;
+> +	if ((res = bitmap_corrupt_then_load(r, do_corrupt_xor_offset)))
+> +		return res;
+> +	return res;
+> +}
+> +
 
-I feel like doing:
+Does all of this logic really have to be part of "pack-bitmap.c"? It
+would generally preferable to not have our production logic be cluttered
+with test logic. Sometimes we don't have a better way to do this, but
+you should explain why we cannot host the logic elsewhere in that case.
 
-    $ git format-patch -1
-    $ cat 0001-subject.patch | xclip
+My proposal would be to either move the logic into "test-bitmap.c", or
+to even better to write a unit test in "t/unit-tests/". After all, we
+expect that the code should fail gracefully, so a unit test might be a
+good fit after all.
 
-And then pasting in the external editor opened by Thunderbird and
-removing some headers is pretty simple. I'm not sure a script is really
-needed for that.
-
-And who knows when ExternalEditorRevivedRevived will end up being
-needed.
-
-Collin
+Patrick
