@@ -1,191 +1,115 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4451E8322
-	for <git@vger.kernel.org>; Mon, 19 May 2025 06:02:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 190DF23E229
+	for <git@vger.kernel.org>; Mon, 19 May 2025 06:16:24 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747634557; cv=none; b=XS+mRvUFEYQ0APbka+d+wDoAUIxFWA63sv/DCaXfierCOkGTnnuIIEMmOO13Zn6TL1W76YwNCfNSwNzA0qELvtHzr6LGDEE7oAmpWZeDM7sUYnoMsgWyZED0IJr7W3oK/M4mTQvvBqR704QdffftBaUGdMF1bzGrLMMmYwGacC4=
+	t=1747635387; cv=none; b=EvVG62jr9aYG50t66UeKNWHODFgVlrs3EJED2r9YptWR+eClRD4+OSpb/bXTPs+qiJBrrryo2AcqUJIxeydO3lZ+XNsrRvg7+kbvv6tg5U8jOS3a8L3/EPVDOtVkkgs6Lu0HCFBGvWlHk1zvbycrefMDxhZp/x3mU1ps+Wj/hLM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747634557; c=relaxed/simple;
-	bh=j2iqiABJy0rStUDwfks7mjylrMU8u1K9BOGQrJggQUI=;
+	s=arc-20240116; t=1747635387; c=relaxed/simple;
+	bh=ZSkC8mps38KGORKUFVlCKSG8w6quYQZhTNVekMcwKRw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=iXYeZj9teKdqDA0ppNxNBJ2H3n7SbqpxDausvYbtoh9Q+CYyNsc3LvvEShKaSILkcZ1HWtEnEGRhvuAAPzuL0Kcj725OinVFlc38aTagNrTHkINuKrGouySsMGgbhlfHzd38C4Vs4TNF2uOhBChXj9EOASt79EpWtA94Tb1oEfI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Wfx05s3w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bs3lbz1O; arc=none smtp.client-ip=202.12.124.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=CioDiAMtOz0NSpqbbcBZTknrj++9r2tRfWBDg0P83OpbzRwhbTq9JBqrxlU80xH+Sn9up+fkrr57TF5nnYlj0ijsmVQ9O35Lu+xfbTAbuDWb9Pyf2H3BJ1CYU+wNHKep7s5z6lOC6gfxeN2wRANPtLMoZIbZS16815fq6wQ+fLs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=PHBdnavG; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Wfx05s3w";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bs3lbz1O"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id B57B72540074;
-	Mon, 19 May 2025 02:02:33 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Mon, 19 May 2025 02:02:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747634553; x=1747720953; bh=m45/LP/SvA
-	kgxttSe8Mv4d+yz3AKg/YOqXZlZQQvTEY=; b=Wfx05s3wdlNCDR8oY05sWhEH90
-	JbIRKK8X1KsOhS823Q6yHB5vvM+/f1pufWiO0O7fvumOw2+DYn5+y9V/InUlOEHS
-	EQoZ8+hUm1ho1mDK5Yye7v8ICBIcDYGu4G1f6v4osdWjMRF6a+gnG/Lx4uC3+FSz
-	Yy+jDYl/V4lNXDm9b23nx7Bj/90YiNETk9Ipeh9eFF2Mcq8Ug9HJrw/4jztOcg0/
-	0RB1paLvssGIeSIiy2D3nnx7SMxvEASENVVavEfZ34cZhGwdMfrrsX2VG1yyDGYM
-	fqgQHLz+728Zqo9zMVUni3Yu3Jp6dpk2I3i90g20GmH4Lnf3v+ndvqTd2ulw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747634553; x=1747720953; bh=m45/LP/SvAkgxttSe8Mv4d+yz3AKg/YOqXZ
-	lZQQvTEY=; b=bs3lbz1OCeAK/wMgPMd/aWboh6UHdotRDbupYQXtnHdX2O6rwZ8
-	erL6RM5891yV8yFiaS5Q93gZGy3vnTy5cHDg7vPXOVWt62Jecg85CigstE+8tDln
-	DCSzYBtdxMboT13UkT1jYngQmpJehWdptQtzrttSlbtLnrdtWAwCRHyoNF8fFCf/
-	YO/qp2/AZ5qqtdcknUeOuwP9Y7QtbHs+lgWqbnfY6vOzyTbIfNCYJWqPhXrQLovS
-	q+DKzBVwGQ/oMpQpzQcb9T2iYnezk5QMpOXtMPEhebXAMKgZ2gIpWH1s/o9RJgeF
-	EJY3WM4WAsiBGJzXbYwmq6NYtlarUZGPFzg==
-X-ME-Sender: <xms:eMkqaC4UvF4Z-cDNbYfGqRrnQfnaHE8mEr1JT5NrRUJh-JPvS0irZw>
-    <xme:eMkqaL4HlBb0DaFoz3jYG1QXYM93Yvg3e1hV84-Tw_cWGIRHQrwtEcyffX4IOTY90
-    OXWYFkEasFKWvfZMQ>
-X-ME-Received: <xmr:eMkqaBdYhHpVFUvr5-6ZGdOVG9a5AAzGGqs0j5FYGTLIeS_1S-4eVM31CJLwiQz_DFRqwKQBii8y6PtFUS_wToM1OLe8JAgqY3i6L5SjRWP9>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddtiedvucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
-    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
-    himheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefg
-    ueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
-    hmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggv
-    pehsmhhtphhouhhtpdhrtghpthhtohephedtvddtvdegfeeftddtheeisehsmhgrihhlrd
-    hnjhhurdgvughurdgtnhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:eMkqaPKXlX04mxlntrHIUJt_2XTWXmaP_bb0Xm6lknsft1g_mRD2Ig>
-    <xmx:eMkqaGLikArwn-wA_8S9rtD4wW1UBbTGkUGIU8Y6eeslK_hD-i59LQ>
-    <xmx:eMkqaAwMU9oXkzlL3xtMzvXLFHFqWI1PCPKp37szIlM1FVV8GXrTSw>
-    <xmx:eMkqaKJ63If-KGzqR9GKNT_6IqDBBLVW5-osCvN5L3I_rFF12OzKbw>
-    <xmx:eckqaPlMUXjaSg3ebnXhH5J1XFq6QAxbhZTVYDOXUPWNj3vUEiHC4mLf>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 May 2025 02:02:31 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id a6a1dbc0 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 19 May 2025 06:02:29 +0000 (UTC)
-Date: Mon, 19 May 2025 08:02:24 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH] pack-bitmap: add loading corrupt bitmap_index test
-Message-ID: <aCrJcK6ml4r4S-mF@pks.im>
-References: <pull.1967.git.git.1747491983066.gitgitgadget@gmail.com>
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="PHBdnavG"
+Received: (qmail 14136 invoked by uid 109); 19 May 2025 06:16:19 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=ZSkC8mps38KGORKUFVlCKSG8w6quYQZhTNVekMcwKRw=; b=PHBdnavGh6+gOsGpMLSMTg0cYAU2CM98DknSp0XRqh7N/v0IvFZxITdRvkfOdd3bNT75J2OeDqoeCRZCTIs3Lz06+FSfpVDpynKdvaXTf5hDrzWdXjlve6NQp14eo6IRLBxsY6pRiSGc1ExH6xT1E/YMsWDS7gMfvc0WWSt+nccID9ZlVvmSSJWw2x/CLichgG8WgEXM0QCrmkoHNw/ncdVmI+MDAKHDTzEb6yRo5d3gJCoZsascQYi0sjYTrw4QEoCux2oJaNSOkIW30iTqDU3HQHquSCkV3lPh1lsGk4irkSuiiVUuiD1NIUbi59HNGfUv8N5B25Z4uEpMzbVUUw==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Mon, 19 May 2025 06:16:19 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24317 invoked by uid 111); 19 May 2025 06:16:21 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Mon, 19 May 2025 02:16:21 -0400
+Authentication-Results: peff.net; auth=none
+Date: Mon, 19 May 2025 02:16:17 -0400
+From: Jeff King <peff@peff.net>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 02/13] cat-file: make --allow-unknown-type a noop
+Message-ID: <20250519061617.GA102701@coredump.intra.peff.net>
+References: <20250516044916.GA21985@coredump.intra.peff.net>
+ <20250516044935.GB22242@coredump.intra.peff.net>
+ <aCcK0p7wMURHppe7@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <pull.1967.git.git.1747491983066.gitgitgadget@gmail.com>
+In-Reply-To: <aCcK0p7wMURHppe7@pks.im>
 
-On Sat, May 17, 2025 at 02:26:22PM +0000, Lidong Yan via GitGitGadget wrote:
-> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+On Fri, May 16, 2025 at 11:52:18AM +0200, Patrick Steinhardt wrote:
+
+> > The code change is fairly small (but we'll able to clean up more code in
+> > follow-on patches). The test updates drop any use of the option. We
+> > still retain tests that feed the broken objects to cat-file without
+> > --allow-unknown-type, as we should continue to confirm that those
+> > objects are rejected. Note that in one spot we can drop a layer of loop,
+> > re-indenting the body; viewing the diff with "-w" helps there.
 > 
-> This patch add a test function `test_bitmap_load_corrupt` in patch-bitmap.c
-> , a `load corrupt bitmap` test case in t5310-pack-bitmaps.sh and
-> a new command `load-corrupt` for `test-tool` in t/helper/test-bitmap.c.
+> Shouldn't we have a test though that the option is still accepted, even
+> though it doesn't do anything?
+
+I dunno. It is obvious-ish from looking at the code that the option does
+nothing, so we know that it will behave the same whether it is provided
+or not. I guess it depends on how white/black-box we want our tests to
+be.
+
+If we did this on top:
+
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 67a5ff2b9e..ff92b14201 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -1022,7 +1022,6 @@ int cmd_cat_file(int argc,
+ 	struct batch_options batch = {
+ 		.objects_filter = LIST_OBJECTS_FILTER_INIT,
+ 	};
+-	int unknown_type = 0;
+ 	int input_nul_terminated = 0;
+ 	int nul_terminated = 0;
+ 	int ret;
+@@ -1047,8 +1046,7 @@ int cmd_cat_file(int argc,
+ 		OPT_GROUP(N_("Emit [broken] object attributes")),
+ 		OPT_CMDMODE('t', NULL, &opt, N_("show object type (one of 'blob', 'tree', 'commit', 'tag', ...)"), 't'),
+ 		OPT_CMDMODE('s', NULL, &opt, N_("show object size"), 's'),
+-		OPT_HIDDEN_BOOL(0, "allow-unknown-type", &unknown_type,
+-			  N_("historical option -- no-op")),
++		OPT_NOOP_NOARG(0, "allow-unknown-type"),
+ 		OPT_BOOL(0, "use-mailmap", &use_mailmap, N_("use mail map file")),
+ 		OPT_ALIAS(0, "mailmap", "use-mailmap"),
+ 		/* Batch mode */
+
+that would perhaps remove the "-ish" from "obvious-ish". I had left the
+flag in place because I wondered if we might want to produce a
+deprecation warning before dropping it completely.
+
+> > @@ -202,9 +201,6 @@ flush::
+> >  	only once, even if it is stored multiple times in the
+> >  	repository.
+> >  
+> > ---allow-unknown-type::
+> > -	Allow `-s` or `-t` to query broken/corrupt objects of unknown type.
+> > -
 > 
-> To make sure we are loading a corrupt bitmap, we need enable bitmap table
-> lookup so that `prepare_bitmap()` won't call `load_bitmap_entries_v1()`.
-> So to test corrupt bitmap_index, we first call `prepare_bitmap()` to set
-> everything up but `bitmap_index->bitmaps` for us. Then we do any
-> corruption we want to the bitmap_index. Finally we can test loading
-> corrupt bitmap by calling `load_bitmap_entries_v1()`.
+> Should we maybe introduce a "deprecated" section and spell out that this
+> option is a no-op nowadays that will be removed for example in Git 3.0?
 
-Okay. We _can_ do that now, but the patch doesn't explain why we
-_should_.
+I don't have a strong opinion there. It mostly seems like clutter to me
+in the manpage. In theory it could help somebody who had learned about
+the option previously and wondered what happened. OTOH, the release
+notes can help with that. With the patch above, "cat-file --help-all"
+would also produce:
 
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index b9f1d866046..9642a06b3fe 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -3022,6 +3022,71 @@ cleanup:
->  	return ret;
->  }
->  
-> +typedef void(corrupt_fn)(struct bitmap_index *);
-> +
-> +static int bitmap_corrupt_then_load(struct repository *r, corrupt_fn *do_corrupt)
-> +{
-> +	struct bitmap_index *bitmap_git;
-> +	unsigned char *map;
-> +
-> +	if (!(bitmap_git = prepare_bitmap_git(r)))
-> +		die(_("failed to prepare bitmap indexes"));
-> +	/*
-> +	 * If the table lookup extension is not used,
-> +	 * prepare_bitmap_git has already called load_bitmap_entries_v1(),
-> +	 * making it impossible to corrupt the bitmap.
-> +	 */
-> +	if (!bitmap_git->table_lookup)
-> +		return 0;
-> +
-> +	/*
-> +	 * bitmap_git->map is read-only;
-> +	 * to corrupt it, we need a writable memory block.
-> +	 */
-> +	map = bitmap_git->map;
-> +	bitmap_git->map = xmalloc(bitmap_git->map_size);
-> +	if (!bitmap_git->map)
-> +		return 0;
-> +	memcpy(bitmap_git->map, map, bitmap_git->map_size);
-> +
-> +	do_corrupt(bitmap_git);
-> +	if (!load_bitmap_entries_v1(bitmap_git))
-> +		die(_("load corrupt bitmap successfully"));
-> +
-> +	free(bitmap_git->map);
-> +	bitmap_git->map = map;
-> +	free_bitmap_index(bitmap_git);
-> +
-> +	return 0;
-> +}
-> +
-> +static void do_corrupt_commit_pos(struct bitmap_index *bitmap_git)
-> +{
-> +	uint32_t *commit_pos_ptr;
-> +
-> +	commit_pos_ptr = (uint32_t *)(bitmap_git->map + bitmap_git->map_pos);
-> +	*commit_pos_ptr = (uint32_t)-1;
-> +}
-> +
-> +static void do_corrupt_xor_offset(struct bitmap_index *bitmap_git)
-> +{
-> +	uint8_t *xor_offset_ptr;
-> +
-> +	xor_offset_ptr = (uint8_t *)(bitmap_git->map + bitmap_git->map_pos +
-> +				     sizeof(uint32_t));
-> +	*xor_offset_ptr = MAX_XOR_OFFSET + 1;
-> +}
-> +
-> +int test_bitmap_load_corrupt(struct repository *r)
-> +{
-> +	int res = 0;
-> +	if ((res = bitmap_corrupt_then_load(r, do_corrupt_commit_pos)))
-> +		return res;
-> +	if ((res = bitmap_corrupt_then_load(r, do_corrupt_xor_offset)))
-> +		return res;
-> +	return res;
-> +}
-> +
+     --[no-]allow-unknown-type
+                            no-op (backward compatibility)
 
-Does all of this logic really have to be part of "pack-bitmap.c"? It
-would generally preferable to not have our production logic be cluttered
-with test logic. Sometimes we don't have a better way to do this, but
-you should explain why we cannot host the logic elsewhere in that case.
+though I don't really expect anybody to find that casually.
 
-My proposal would be to either move the logic into "test-bitmap.c", or
-to even better to write a unit test in "t/unit-tests/". After all, we
-expect that the code should fail gracefully, so a unit test might be a
-good fit after all.
-
-Patrick
+-Peff
