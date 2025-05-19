@@ -1,106 +1,111 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from avasout-ptp-002.plus.net (avasout-ptp-002.plus.net [84.93.230.235])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD60C21A94F
-	for <git@vger.kernel.org>; Mon, 19 May 2025 21:35:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E2BF219A94
+	for <git@vger.kernel.org>; Mon, 19 May 2025 22:42:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=84.93.230.235
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747690524; cv=none; b=S9ZwTA6K1466tQd8TUCq6BG5ecy4kenVI26DDxhv948L/trmdN7W20HwW5BISctBj+0wVNdi67Ekww9E+XC9H7coU2YscEY08qLBCc9GP6+DejVIU270tjnFTj6KkUeJZaEsGU1o8uCEacHFjLyvmnFGq5ZqjmC/6TM1+1Up3Zg=
+	t=1747694559; cv=none; b=B3qoxNVZoelfAmVAI0atUAv+L9KSqxczfh45Fx1SfdusIwBwxhWRFxgys2JK4kJTF9HMlvLl/V0nv9zqUzXf4ImmhwlkEsOkdh5NiglgNEiZAk+vPLMf4D6yKuqTYc/BsK/tvYN1eVlp+A0Vjp5k3500r+UBh0b2N8HRKK+auVA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747690524; c=relaxed/simple;
-	bh=OOFaazAIiSqDSCWqzepkLQWl+p/+vxRHyhDY59Nc+5E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tEXEQrrQ1r6nvh4HkihQ1iH/x6IExYWTgVLzY1Qp83B3pC1w3/7OXWNgMqv0GN9/LC7jyixDhFLp9OpsQOKSiwuF3d3gxKhVej87WDARKh2fL06Shg4MxGsCFPfbgD2aL2wCW4yTm+S75czVMCrwc9Kqc6/KApfe/z6pY1D/EOE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=YAEMmyM5; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1747694559; c=relaxed/simple;
+	bh=oW2+NBNDSNFa9pm0NsU9UkAnZEt+Bjz1Ut81tVYioRQ=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=IY7SJ8wav+cYDoR/yQqsAJyD58qvnHadqKQnUHeeV4Ca/lrZlodkqBMevMEjrrFXI2JTRDzVeWNtCX7K0AwUmAgQBFNYytWUJm2sEjexDhleId5zafKCUCC084UmM/Hvuc+7iFuQDtA4v6WqPS5fbLe1nt2a5udBoWKCpiD7jbY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=EYkL6+Ao; arc=none smtp.client-ip=84.93.230.235
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="YAEMmyM5"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1747690520;
-	bh=OOFaazAIiSqDSCWqzepkLQWl+p/+vxRHyhDY59Nc+5E=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=YAEMmyM5M8TK1FBIDWI0E3EbJHIbleQJPDbY7zeV+Gd5kGa9WnEvRxv7H4FobGgI/
-	 PLCfUOOE7Y40t72ojcISUCu+cqOGOXV0i5ep3ZIgt/RUD7PtOepW9J7t+BF9pm/wLb
-	 DdU2ZcuTE9eDi/iaMuDvr6hRv+vOJIAqvWzNCPwuNwKyPR001qaXRU/UkCJX01KrGg
-	 STpPGiTUGXbBoQSRxrm2/lQ1eg5q7YY7aEoUw7WCLOlPTmtXtyLZKmgi6mfEZ6N4lH
-	 lWQ6fEjMHPyXZRbTJEniB9n09Pgh9PHUtxnC4y0PHYlgdW5UTNmyd1TOIpCqIOGlg3
-	 2UzZrYEIiBnFPHf0FVd2t2UHRNAUuHA2ndhflFdqxTU+W9ruyWCZE5NAXXR+GrFhrN
-	 zKMI2JP5S+j2LC8c3Xermi8CNlD5P45S477wxvZaRdKE+DVp2GLFQyQIgmR67P9CBJ
-	 WgVOmukEdrs1gpxxaif65TNfIKF1axDYRgkYeftk8vNYDq0XVto
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 624282010F;
-	Mon, 19 May 2025 21:35:20 +0000 (UTC)
-Date: Mon, 19 May 2025 21:35:18 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Josh Bleecher Snyder <josharian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-Subject: Re: Feature request: make reset --hard add something to the reflog
-Message-ID: <aCukFlfmQcxRSqGz@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Josh Bleecher Snyder <josharian@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-References: <CAFAcib_PV4EB-i4PUmTxCx_6LX=8aWDNT_ZPrN0-EDsRwRfi4g@mail.gmail.com>
- <aCuMshOaqcuwMCpG@tapette.crustytoothpaste.net>
- <xmqqjz6cmgt4.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="EYkL6+Ao"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id H9BguMMPmJGekH9BhuPwCm; Mon, 19 May 2025 23:42:28 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1747694548; bh=2kiOhaR40MkoP5dHkK7OWb8ef+2qN1gDwuetnNqwzkQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=EYkL6+Ao5hJh5NWIzQkFzENFsJP0JUD67VC1TWjEkaqYcrot5JdJbPuwhA+A3M9qM
+	 u5wpRYMIiLciKzss74OSJUTB9TevxRvPpeBrCq7hdXm953u1NeSi5q57POdPSQAUBq
+	 /xYbA40uNWkv59LIBBpllkIn5sHgXZi7cPYCGh7vxfEfwU462fD4yrK+jQw9EaMW3g
+	 O+yGjsxuyUMlxB7iopt0yQzLnZCpUB0ecM/jAg+6t9FwXzFEbfK2MIcNFwF8Ms4RgU
+	 u7F4DxwYaWG7HKI/zFLDmvjsLsjLzOcNjg/iSspfbQRiHRqP7w9y0L6gD86CQoQBhZ
+	 wCG7QAQSKNlew==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=FoOm/Hrq c=1 sm=1 tr=0 ts=682bb3d4
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=VwQbUJbxAAAA:8 a=EBOSESyhAAAA:8 a=OEzAtxz5_KK2rLuguKcA:9
+ a=QEXdDO2ut3YA:10 a=yJM6EZoI5SlJf8ks9Ge_:22
+X-AUTH: ramsayjones@:2500
+Message-ID: <b5d5953a-1b1d-4e0d-a908-07c569fa59d2@ramsayjones.plus.com>
+Date: Mon, 19 May 2025 23:42:24 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="a0YvQaVScJKTqwHa"
-Content-Disposition: inline
-In-Reply-To: <xmqqjz6cmgt4.fsf@gitster.g>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 0/5] miscellaneous build mods (part 2)
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: GIT Mailing-list <git@vger.kernel.org>,
+ Eli Schwartz <eschwartz@gentoo.org>,
+ =?UTF-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZyBEYW5o?= <congdanhqx@gmail.com>
+References: <20250516184843.1524925-1-ramsay@ramsayjones.plus.com>
+ <20250519162523.1001478-1-ramsay@ramsayjones.plus.com>
+ <xmqqo6vomo7y.fsf@gitster.g> <aCuBtP8-NmB0lKo-@pks.im>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <aCuBtP8-NmB0lKo-@pks.im>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-CMAE-Envelope: MS4xfDNLI/VojL11Djn948zGMjrZW0pyvZsEj4TJ6EynKnpHBY8VFHOWfoJF4GwoZ0RKIbuAQBiLylTjwkBcnFxRkdzdqb7BvXKHm66iYbbUjM4vGv2+b72l
+ T8eDq6FKz4UFrJj0cElCN60maTgVl34M+L1WGNaWl1dQ7q9pkUGgaKXni8Usg/xQnGUDgbyP1J6/V8Qakmm0PgZaUXvhrvVXTlU=
 
 
---a0YvQaVScJKTqwHa
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On 2025-05-19 at 21:28:07, Junio C Hamano wrote:
-> I do not offhand have a strong objection for the _feature_, but if
-> the implementation uses the default "stash", that is a bit
-> worrysome, as anybody, even a script, using "reset --hard" would add
-> a new stash entry, shifting the end-user's expectation of what the
-> Nth stash entry records behind user's back.
+On 19/05/2025 20:08, Patrick Steinhardt wrote:
+> On Mon, May 19, 2025 at 11:48:01AM -0700, Junio C Hamano wrote:
+>> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>>
+>>> Again, I did a test merge to master@cb96e1697a, next@a128411c76
+>>> and seen@df1b4f9cf9. The conflict which showed up in v1 against
+>>> the 'seen' branch now appears in the 'master' branch and has the
+>>> same resolution as v1.
+>>
+>> Thanks.
+>>
+>>> A range-diff against v3 is given below.
+>>>
+>>> [+] https://lore.kernel.org/git/aCrekcz6onTFgEWw@pks.im/
+>>>
+>>> Changes in v3:
+>>>
+>>> Patch #3 changed as a result of Patrick's review [*]:
+>>>
+>>>  - use the '/' magic string operator when setting the
+>>>    ETC_GIT{CONFIG,ATTRIBUTES} build options.
+>>>  - add the default values to the 'description' fields
+>>>    for the 'gitconfig' and 'gitattributes' option
+>>>    definitions
+>>>
+>>> Also, Junio, the range-diff below shows the typo fixup, but
+>>> you should find that it doesn't show for you this time. ;)
+>>
+>> OK.  And changes in v4 are just that two redundant comments in the
+>> option definitions are removed, which makes sense looking at the
+>> discussion from the sidelines.
+>>
+>> Will queue.  Are we done with this series by now?
+> 
+> Yup, the range diff looks as expected, so this is ready to go from my
+> point of view. Thanks!
 
-Yes, this would need to live under a different ref.  We could use the
-same stash machinery, though, with a small refactor.
+Yes, I think we're good to go.
 
-> Doesn't "reset --hard" add record to the reflog already, by the way?
-> I agree that a way to recover the local modifications that "reset
-> --hard" is designed to get rid of is a good addition.  I just do not
-> know what the best vehicle to store the local modifications is.
+Also, the 'make test' on cygwin just finished and passed without issue! :)
 
-It does, at least when it changes HEAD.  But it doesn't preserve the
-local modifications anywhere, which is really the request that's being
-made.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Thanks.
 
---a0YvQaVScJKTqwHa
-Content-Type: application/pgp-signature; name="signature.asc"
+ATB,
+Ramsay Jones
 
------BEGIN PGP SIGNATURE-----
 
-wr0EABYKAG8FgmgrpBYJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZyj8JDSSZs0A9M9v8SMTCTYU217R7FBVTiIyd8Y9vyFi
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAADVMAQDeT+v5B4ZVyTITaJGJf36mHY0w
-LL1maaolZvvkHgzLpgD9GND9XGcx3KEMnreG+1YiSvLAb9wv/OxNjp4bRvH+Hwk=
-=CXjq
------END PGP SIGNATURE-----
-
---a0YvQaVScJKTqwHa--
