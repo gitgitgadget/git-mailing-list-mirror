@@ -1,145 +1,133 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 984BF2AEE9
-	for <git@vger.kernel.org>; Mon, 19 May 2025 18:48:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E7241E9B35
+	for <git@vger.kernel.org>; Mon, 19 May 2025 19:08:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747680487; cv=none; b=MNJAo8ny5rdcyD6mm9fKNxyZK/gcgYJoVXxMZsn7Zlkl8HVewlCf9jutynkoyi1a+XKKnVih5HDaOyhdhknxnBRE8NQKC+BmBXg7DkzXv/52vyjxt9oqq0lFmnV5A9E/ukSeh0c8BkEb3HMAIIEpgqMMUKw8jb3A5ZzbloDNXjg=
+	t=1747681727; cv=none; b=Zi6rFOpLqyaPKFpn1mCXYKGFDyOmX00LT15NPqm3m7MGb1ZTVb2rjJRGKaK4YaO+HOw1eGDjVKawo2x3cZUEHRZOX7QtMayXxxmKbgS/U6maXrFhOe7cNEdhLR4jbrjD1og2VmvKGyHc8fcTlkilPPbCkotaKSGNHhYgM4Rt0V4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747680487; c=relaxed/simple;
-	bh=KRbbxFfdQ0jSFTzHok6qUoGClkJiLRAQiKUR47xoomw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jZa5U0v5KfVPJf5N4tF+2OvUfbCTr9ms7+/ycA6VBZuRhw/by6IyP0YIB2BvaiHOrzGn5D5H+gMWFxatsY2w8Ny6EkAGjfWEtbAR9uk7VKGFsKu1vH6dC7U0fm/tI4UvAL3beifzbEWuRLnnuGBYPsKl1NmzqtZou8BQNdLsJBM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=JejiNIaj; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=deP30k0t; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747681727; c=relaxed/simple;
+	bh=J61a3zitKLM/onPGZJbl8/JVuqnZGHxxdTaJoxU6u7U=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=upZMaZdySVOW2hgnqbFhZglR829sKsPbfiYSRoDGSb/WLvWaBSWfzwOCxCAQW/n9ZNeJayhv6PhU1F66a9uFAp0JOH4F8BjHeLu0Ool/q9pjBWEz67mePZEQeiad0BvNsNEoZNfZ1KMCyXBCw0F6o53/F0u1lI8XAkRYGFosXRE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=1QvbAYbY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S0EopS3w; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="JejiNIaj";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="deP30k0t"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 6996E11400D9;
-	Mon, 19 May 2025 14:48:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Mon, 19 May 2025 14:48:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="1QvbAYbY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S0EopS3w"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.stl.internal (Postfix) with ESMTP id 69101114016B;
+	Mon, 19 May 2025 15:08:42 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Mon, 19 May 2025 15:08:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747680483; x=1747766883; bh=2E+lmiWxe/
-	LUo6s474oNq3bK202ga/FsTo2gPxFQHkQ=; b=JejiNIaj/xKy7Cyyc5OQjxXn6h
-	TrJxGOeqak67ODyVoAs12AhzvY5TiowfWomcl7d87gL2DuDvd1QDnmN7nl97LZh4
-	FiAX2wVbfv+0czjQ8RaItXxfZPC0l2Td0xP+2ksh6Sldpo4U5X/265duqE0s7wQL
-	TBRnInyxATsmYxXznpahO0sK5o3143mb5sDjKYqR1ZygkcUE++Iw8/OEDi8t7Jkk
-	gwGzxXcHOytJPSWX1Vzw9DHvCr2CDSMput/BeZJa4x8qMlstRZZqhONyvxnlR0I+
-	nUZaWg7dBqU8IZAhmSZ0EhmeepKP/QEZ5zqt6Da9hojIa/ASh2+OA4JDzmsQ==
+	:subject:to:to; s=fm3; t=1747681722; x=1747768122; bh=nKbPwv05/O
+	m/xlBI15Kpl14jpUEfhfatEKdzkCAAjP8=; b=1QvbAYbYCwTw1kq+4UpERH3IOx
+	jKkBPUiopTilLVQr21+07rnq78QmwIbCseKXkxaBVse9QjBDaSRCcyUL0TZB3uuX
+	+3iKE6joqHmbKUZ6b8JEoWt7AMy8isyDtjUELA6TeZCXb1ma8OtS+Yxo+UexCd9F
+	AeVPvIUbhf7k6qFEXARJCMZi6+I3xa3HqIVMIgFWSQD663ZKVsxFVK0g0Vo4Ldry
+	uhXFde9cK7nkloKBZDIt8K1TEN5HwtRTWLNgjlxoDByLlzDv/4N7fmcnNIA5lWQh
+	cAmLQLa4wbfjYZQkUokBmSuWKzGq9AxqPHXoNJvVzIS4J7G43vIEtrKuHDjw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747680483; x=1747766883; bh=2E+lmiWxe/LUo6s474oNq3bK202ga/FsTo2
-	gPxFQHkQ=; b=deP30k0t237Dz52xdcArRGhwI2TdUIAVTjhkhTaFFPJQjC8zDCi
-	zTZKI6pgNOu0l19a1/m1os6HsV6Q1nTNV1+wEqVH9ICG0ByWV/KzKS3BhpHhwD3r
-	jiMPIk0qD1S8DafJ89EbwW65KqrzD7MoBgfPrQy2/azpJRrOuQ5vOQeRc4ZIlh+0
-	zpGlHEs2QYET5UeI0/NsdnxUnWyYA4vP6k85JtkZxZmapDHBAij7mnOT21fQDdPF
-	3+EhNiQNZRwDa4MdZX71oG3lYYlNTy2yun0dxC6RWudSM6ojav/uhZKvg9PHjs3S
-	8D7AWFTgACzZ8kubL1Ua5xHAYqia52w9HVw==
-X-ME-Sender: <xms:4nwraHdrPXwAfZxtS_dTh92Ndy1X6IYOt-8B_D4KTTVS_ksUheQKCw>
-    <xme:4nwraNPHXaB-Wgn2hbT2kabMzr_vdAYElb1vbG8JIZzR-ZvFUr4kWNDlSAvTNSRrB
-    AAwetffkh3_VSi0lg>
-X-ME-Received: <xmr:4nwraAj_WbHZjHU-GqZ8Bvt_V7Qcd7j4FjFMPwfseZRWhYuouHGW8GOOR1-01iL6h4HRTMjwiWGwSAWgswTAmbpchbu-QjTCJMW-3jE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddvudefucetufdoteggodetrf
+	1747681722; x=1747768122; bh=nKbPwv05/Om/xlBI15Kpl14jpUEfhfatEKd
+	zkCAAjP8=; b=S0EopS3wviLp3SOlA3cU2GNdd/09QAjCS8H/N8/PcLiPk6M0nv2
+	Sm94VRICLWQ9HIhx01KVyq4KEh3Unt8TKkOOFDxFeLDTsjDrdZ94abFko0UOHelj
+	R9ow2CTMntBkpRIG1FtWvKV3M6YGw9taHUWVhqDpmaK4EyYQOZCUNH/ekmXFWgFK
+	Oczrs7tFthkMcgsfsBJ9yyWYeHjv4g4PTPOfFkYsMmRf26I9INh7tTIRADEMx2Iw
+	4McxGUmSSshjXl4kjjQrmU72z6pVwFuWOxTRYZD8ZqFMtR+DGrPl9Mbta2a0xyax
+	Xn++Fz0OiSsEtnm3kh7al/8BL9rNMEGZ2pg==
+X-ME-Sender: <xms:uYEraJB_zi0x5_JJgt5GMEfK2K7j2W_Z8BHoORJtJ6pnG0hGqfpsiQ>
+    <xme:uYEraHjMPcg4DsM-05uTXRARoCg72ExEwvpPLRjJi3tvdLkLqeEVLqkD0Wj45HPhu
+    77C-4tRYAlsmXhEgw>
+X-ME-Received: <xmr:uYEraEk3BE5lGmHLjeKAyOlmRx6Yh5hRZnbwW-zo5GzDxBDWMdJU1y4AcCUGUnK939fXLLRSNbDlNISnf7j-Olc9HjLzt7yaPyPX9Xojwcxx>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddvudekucetufdoteggodetrf
     dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
     pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeuieeilefffedtiefgfeek
-    veetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrgh
-    enucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihht
-    shhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
-    hpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhs
-    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhht
-    ohhordhorhhgpdhrtghpthhtoheptghonhhguggrnhhhqhigsehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:43wraI8ytq51U0QvUpGF6sQVfC-S1wF0__ye-Yv4EAJh3OLuuKphyg>
-    <xmx:43wraDvFF-_notBCP55X6F6ABC4Nhb3do1s5wReqrv1zdnnYQvqB1g>
-    <xmx:43wraHGYnKUj8pM3IhAqxHCSQlOlUcBH_JAOZ_CVF8cCeJziM60R6Q>
-    <xmx:43wraKP_ay0uU7iURGEivmq9BHLAd3kEzG5eIECEPsgDc0APGiW5Bw>
-    <xmx:43wraC7cPJ0sOxnAYY-P-nCtbkU0Yovo9XUGImY-eh4337UOi52pd_0X>
-Feedback-ID: if26b431b:Fastmail
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhepjeevudeggfffffeigeethffgieekveeffeehvedv
+    geeiteegueejleeihfeitdeunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoheptghonhhguggrnhhhqhig
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhord
+    horhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:uYEraDyMpotPrP02SmOMUe8CyZ6qHCf_PJelBraw03A3EEDYBjHaVQ>
+    <xmx:uYEraORhe6MkinkddN6hmAvntfRyKP8LJv4ouQOWLccj6wiyAcBQdQ>
+    <xmx:uYEraGYikuwPS07EYirDrqKTZfkg9rvmh3uElXZtK1j-oRnhw-uBWQ>
+    <xmx:uYEraPTaxaEpLMFqdmphn5nMvVxQDvEkv7UMU4ZSrU36xVAomJEDyg>
+    <xmx:uoEraMDBO_Pg9VpHfzkMh9VWxpnclUGni0oaJuboZSrY0ns2TI-n3CCv>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 May 2025 14:48:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Ramsay Jones <ramsay@ramsayjones.plus.com>
-Cc: GIT Mailing-list <git@vger.kernel.org>,  Patrick Steinhardt <ps@pks.im>,
-  Eli Schwartz <eschwartz@gentoo.org>,  =?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7Ru?=
- =?utf-8?B?Zw==?= Danh
- <congdanhqx@gmail.com>
+ 19 May 2025 15:08:40 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id c32a266d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 19 May 2025 19:08:37 +0000 (UTC)
+Date: Mon, 19 May 2025 21:08:36 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Eli Schwartz <eschwartz@gentoo.org>,
+	=?utf-8?B?xJBvw6BuIFRy4bqnbiBDw7RuZw==?= Danh <congdanhqx@gmail.com>
 Subject: Re: [PATCH v4 0/5] miscellaneous build mods (part 2)
-In-Reply-To: <20250519162523.1001478-1-ramsay@ramsayjones.plus.com> (Ramsay
-	Jones's message of "Mon, 19 May 2025 17:25:18 +0100")
+Message-ID: <aCuBtP8-NmB0lKo-@pks.im>
 References: <20250516184843.1524925-1-ramsay@ramsayjones.plus.com>
-	<20250519162523.1001478-1-ramsay@ramsayjones.plus.com>
-Date: Mon, 19 May 2025 11:48:01 -0700
-Message-ID: <xmqqo6vomo7y.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <20250519162523.1001478-1-ramsay@ramsayjones.plus.com>
+ <xmqqo6vomo7y.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqo6vomo7y.fsf@gitster.g>
 
-Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+On Mon, May 19, 2025 at 11:48:01AM -0700, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+> > Again, I did a test merge to master@cb96e1697a, next@a128411c76
+> > and seen@df1b4f9cf9. The conflict which showed up in v1 against
+> > the 'seen' branch now appears in the 'master' branch and has the
+> > same resolution as v1.
+> 
+> Thanks.
+> 
+> > A range-diff against v3 is given below.
+> >
+> > [+] https://lore.kernel.org/git/aCrekcz6onTFgEWw@pks.im/
+> >
+> > Changes in v3:
+> >
+> > Patch #3 changed as a result of Patrick's review [*]:
+> >
+> >  - use the '/' magic string operator when setting the
+> >    ETC_GIT{CONFIG,ATTRIBUTES} build options.
+> >  - add the default values to the 'description' fields
+> >    for the 'gitconfig' and 'gitattributes' option
+> >    definitions
+> >
+> > Also, Junio, the range-diff below shows the typo fixup, but
+> > you should find that it doesn't show for you this time. ;)
+> 
+> OK.  And changes in v4 are just that two redundant comments in the
+> option definitions are removed, which makes sense looking at the
+> discussion from the sidelines.
+> 
+> Will queue.  Are we done with this series by now?
 
-> Again, I did a test merge to master@cb96e1697a, next@a128411c76
-> and seen@df1b4f9cf9. The conflict which showed up in v1 against
-> the 'seen' branch now appears in the 'master' branch and has the
-> same resolution as v1.
+Yup, the range diff looks as expected, so this is ready to go from my
+point of view. Thanks!
 
-Thanks.
-
-> A range-diff against v3 is given below.
->
-> [+] https://lore.kernel.org/git/aCrekcz6onTFgEWw@pks.im/
->
-> Changes in v3:
->
-> Patch #3 changed as a result of Patrick's review [*]:
->
->  - use the '/' magic string operator when setting the
->    ETC_GIT{CONFIG,ATTRIBUTES} build options.
->  - add the default values to the 'description' fields
->    for the 'gitconfig' and 'gitattributes' option
->    definitions
->
-> Also, Junio, the range-diff below shows the typo fixup, but
-> you should find that it doesn't show for you this time. ;)
-
-OK.  And changes in v4 are just that two redundant comments in the
-option definitions are removed, which makes sense looking at the
-discussion from the sidelines.
-
-Will queue.  Are we done with this series by now?
-
-> range-diff against v3:
->
-> 1:  ac97fdc76e = 1:  247bc82c01 meson.build: quote the GITWEBDIR build configuration
-> 2:  181738d371 = 2:  a87f683a95 meson: correct install location of YAML.pm
-> 3:  1f4c74973c ! 3:  40ea59efca meson: correct path to system config/attribute files
->     @@ meson_options.txt: option('default_pager', type: 'string', value: 'less',
->      -  description: 'Path to the global git configuration file.')
->      -option('gitattributes', type: 'string', value: '/etc/gitattributes',
->      -  description: 'Path to the global git attributes file.')
->     -+option('gitconfig', type: 'string', # default 'etc/gitconfig'
->     ++option('gitconfig', type: 'string',
->      +  description: 'Path to the global git configuration file. (default: etc/gitconfig)')
->     -+option('gitattributes', type: 'string', # default 'etc/gitattributes'
->     ++option('gitattributes', type: 'string',
->      +  description: 'Path to the global git attributes file. (default: etc/gitattributes)')
->       option('pager_environment', type: 'string', value: 'LESS=FRX LV=-c',
->         description: 'Environment used when spawning the pager')
-> 4:  97ff1613f5 = 4:  a7d2f1e132 meson.build: correct setting of GIT_EXEC_PATH
-> 5:  983488fe4e = 5:  a45b9dc650 configure.ac: upgrade to a compilation check for sysinfo
+Patrick
