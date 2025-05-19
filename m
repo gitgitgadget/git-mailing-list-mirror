@@ -1,60 +1,125 @@
-Received: from outbound.pv.icloud.com (p-west1-cluster2-host1-snip4-5.eps.apple.com [57.103.64.176])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4B915B102
-	for <git@vger.kernel.org>; Sun, 18 May 2025 22:56:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=57.103.64.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E125D35897
+	for <git@vger.kernel.org>; Mon, 19 May 2025 05:38:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747608991; cv=none; b=lYT1hf8xSy5oH0YKanq5xVkscU55lec/X2PV4PtbXUqxY2pwuuuaYbhkMunjdnoGNn4GumLx0MZLf/psjFVF8eZzadWsJr7hctbuc2BJVqi9gbGhxJwMl5ZA/sqRR+vzJ7qnqtlGmC1lDh4qM6RvwOfYXDkhkaU6UGAPZTLMhyg=
+	t=1747633140; cv=none; b=tWFfRRoU3sqDJhChkGsVDmIFXSxItcb/R6a4LDSLEN4xFQBqf3UKfwxSPghTtnbda0uiwwR0lHxpAb4ssn09pLyMw66Oy1uvoObjLNXeLnrRlZlaUD83mMijH2cCQAG4Dl64Pz1fNAUqQPnjrI8oyvnykfT1lsPCuguFHmPkI8o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747608991; c=relaxed/simple;
-	bh=b2I46yt0tAAt3YLFsqPQvPX1j0nQZ5sqsz9nsYoL8SE=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:Cc:To; b=naytPyvRAcarWQ35K2rRe8UEP1mzLZHMOvYW9us75IP4GAk+sP8A2OZ8oapRnHs1J4Wa/xL2IMgTs2v6dFafd9e3AiA64d2Ltsq10QMdTdfuT5RSaTY9f+jBllhyWjO2XSRYPZsuxSJ/P05qAm0a5ueu+Hk0V7j+GsaK6FyUob0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com; spf=pass smtp.mailfrom=icloud.com; dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b=yj0Gok4O; arc=none smtp.client-ip=57.103.64.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=icloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=icloud.com
+	s=arc-20240116; t=1747633140; c=relaxed/simple;
+	bh=B/Nc7j42qeD1rygR2+XZ1g09M6JOFy3+dZC2QArg9nc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JdpcuoCQ7auySdP6VhUDijdtKMl4OM16zx0G3oGqbxHyoB6eUchUlb9Kjn5tqyL9v8wcGGbODiNe/3q+Q0oReTHwhNwCva1iHfTqru9WYyfy83v5pyxcQxdYoJmHPUs+b/ZJycEAxlMD6tyFtYq1KaFKCPuX/Uv7LxGSWwesTFE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ScQuxlgn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Aos4Vmj1; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=icloud.com header.i=@icloud.com header.b="yj0Gok4O"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=icloud.com;
-	s=1a1hai; bh=E5kErvsTc3BQd9hOaWnfoZ9I6Eqp9vog1tr10nf41CY=;
-	h=Content-Type:From:Mime-Version:Date:Subject:Message-Id:To:x-icloud-hme;
-	b=yj0Gok4OAm0HSpTGB4ootIfjF+8sW8XRF6+fBKIRWtX2Y5fiDFlsuoHgePxd+HMyh
-	 9uZBXPBUCsmzBzHgGt3DfeOWHCmsqSkSf+6XUQlOdphwtiOc9mJbIh2gVx5295yTui
-	 birjZRDVvhwBJGvqeCkY/JD9iXyzqCgnl+wht2s6/D9moV6DB2Ew+vXtVw3PlAag5G
-	 eQrcMQj0UXQKAvT+/ir0RlgtkggRsCoh1SQ2f82q1V9jdqJEbHtAuowlgy37EJr507
-	 fkch9wzx2xy5VfeHIpra3yxQonUigudbaH/BCR5AN7coLkWEdpRU5rVJey7dsQ2+7c
-	 m6/GZTB6XvtYQ==
-Received: from outbound.pv.icloud.com (localhost [127.0.0.1])
-	by outbound.pv.icloud.com (Postfix) with ESMTPS id 7C657180108E;
-	Sun, 18 May 2025 22:56:28 +0000 (UTC)
-Received: from smtpclient.apple (pv-asmtp-me-k8s.p00.prod.me.com [17.56.9.36])
-	by outbound.pv.icloud.com (Postfix) with ESMTPSA id 502BD1800094;
-	Sun, 18 May 2025 22:56:27 +0000 (UTC)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-From: Evaldas Svidras <svidrasevaldas5188@icloud.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ScQuxlgn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Aos4Vmj1"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 719161380158;
+	Mon, 19 May 2025 01:38:54 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-11.internal (MEProxy); Mon, 19 May 2025 01:38:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747633134; x=1747719534; bh=ordYHzOEv+
+	gLYFP5f1Ulid6y90khmL+Q5VU+Uw6a/vI=; b=ScQuxlgna72cYNSposn1Igsl1S
+	NWrykV++Df9H7fcgp3iwAx/XVngPPQ/d94fpfWP14IEG9qQ19gBl8vpx8D4VwaYV
+	O+AVkEHbbJjZ5jLhSo7xO/hY7z81Up9dyKWOrSKd9wAjoKQV/SAtqgTKw6TnBDvK
+	iYJxaTQtTVX1Esc3lKaSaBlYXN0XBhmOYQeK2z0WGBKVQPKNrsmY1hb/PkrGO7sT
+	gjAIx9eSwiSUTMqJVpZ0jJzkMhAVev11c51Y/ymz7+6RRabAOFZGwfQMtpuK5+BI
+	PjzbFcD2tTHpargVJ8lCjTEb2VKOygxwmeqPwfX3UJax0CbXOvZgHibMi3mA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747633134; x=1747719534; bh=ordYHzOEv+gLYFP5f1Ulid6y90khmL+Q5VU
+	+Uw6a/vI=; b=Aos4Vmj1OCHLY25qxEgFnAhEqhKYgzhp1mHEfbChWDuOgVxnuXc
+	zNr6pT1CwDAF6P2k2yjPnCuzAX43jZ4x1LKBGzMkkSCYP+qO2GT46ej9bN47cGkg
+	mKRmQCqDItu6Y9/bfmJbcMx8fVuV3Q1ezdb21J4H5hilwLHlq9c9EnxIRzHuT8IF
+	gxYVexmp02k1F351C6YwDpJJBYVS6p6ZogKhP16Pt6juqOLY7pbEKEnw+XOYx4SO
+	QDPR+Qm3RzPwYOKMk2DQGReU1Ad5e0FZcGbNZ+1dfBs7MNuoAr7MfLq7R6Z+ByTp
+	7IB50uPZaVmhAO2jSsLCKPZ2HbdA2Ux0LTQ==
+X-ME-Sender: <xms:7cMqaCtD8NhEHdMd9ejVKQg4V3fvmjin0erotW_47oA1vLD4iwy2cQ>
+    <xme:7cMqaHdXP7go46e3PRqIXcfK_p2z5eC7sxJu-IfGx52vIw5p9WMymvVIyMy-4YyG-
+    zzJCO52mGe3hhxXBw>
+X-ME-Received: <xmr:7cMqaNx_oSa3sKfCmALniaxE1b3PzmlbT4YgXXlWuaTNJOESUNFai8hYfHYVUm53fVpbI_JSspawCtYGMTTa5kn7-hAFDxyFLdA50w206URN>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddtheejucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
+    gvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddt
+    vdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrd
+    himheqnecuggftrfgrthhtvghrnhephfeigfdvffdvtdeuhfelgfelhefgfeevueetffdu
+    gfehtefgveelhfeuueevuedvnecuffhomhgrihhnpehgihhthhhusgdrtghomhenucevlh
+    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdr
+    ihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhope
+    gtohhllhhinhdrfhhunhhkudesghhmrghilhdrtghomhdprhgtphhtthhopehtmhiisehp
+    ohgsohigrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmh
+    drohhrghdruhhkpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdr
+    tghomhdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsth
+    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+    pdhrtghpthhtohepghhithesmhgrthhthhhivghuqdhmohihrdhfrhdprhgtphhtthhope
+    hphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:7cMqaNOEVne-OwSouSTp_7xflDC7TagPRIJWSwe_N0nZoiu6xe4LGg>
+    <xmx:7cMqaC_k8zNbb1Uuw3HzV9HIY4TCgbJFrogi6Z2iQcOho1XQZg7yZw>
+    <xmx:7cMqaFX-FNwMX7DkmpNQYK_2cO1liuitaHH91mrFeOnXTxqc_fY1eA>
+    <xmx:7cMqaLc5ajDapuACK6F8EvJJ7QGvBtDAI0zhPAcZjWToD-UwyPwPew>
+    <xmx:7sMqaMhe8Q7UFHMqguO7o7TLKKbG-UIIMB9rinOGklZ4avfMlH_61fLt>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 19 May 2025 01:38:52 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 9546f875 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 19 May 2025 05:38:50 +0000 (UTC)
+Date: Mon, 19 May 2025 07:38:49 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: collin.funk1@gmail.com, git@matthieu-moy.fr, git@vger.kernel.org,
+	kristofferhaugsbakk@fastmail.com, phillip.wood@dunelm.org.uk,
+	sunshine@sunshineco.com, tmz@pobox.com
+Subject: Re: [PATCH v2] contrib: update thunderbird-patch-inline
+Message-ID: <aCrD6RlO0xUmXr6i@pks.im>
+References: <a3aaa11a-a842-4c10-8189-07b681663573@gmail.com>
+ <20250516135540.218937-1-phillip.wood123@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Date: Sun, 18 May 2025 23:56:25 +0100
-Subject: Re: [BUG] commit fails with 'bus error' when working directory is on an NFS share
-Message-Id: <E691546A-1676-4435-8473-27C7CD638BE3@icloud.com>
-Cc: git@vger.kernel.org, peff@peff.net
-To: dpantel@gmail.com
-X-Mailer: iPhone Mail (22E252)
-X-Proofpoint-GUID: 64YZe1cUcedJp_y69Kpj9qObhh1lbCnX
-X-Proofpoint-ORIG-GUID: 64YZe1cUcedJp_y69Kpj9qObhh1lbCnX
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-18_11,2025-05-16_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- clxscore=1011 suspectscore=0 phishscore=0 malwarescore=0 mlxlogscore=723
- adultscore=0 spamscore=0 mlxscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2503310001 definitions=main-2505180228
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250516135540.218937-1-phillip.wood123@gmail.com>
 
+On Fri, May 16, 2025 at 02:53:55PM +0100, Phillip Wood wrote:
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> This script uses an extension to run an external editor from
+> thunderbird that is no-longer maintained. Replace it with a different
+> extension that is maintained[1]. The new extension uses a different
+> separator between the mail headers and message body so update the
+> script to accommodate that.
+> 
+> Signed-Off-By: Phillip Wood <phillip.wood@dunelm.org.uk>
+> 
+> [1] https://github.com/Frederick888/external-editor-revived
+> ---
+> Changes since V1:
+> 
+>   - removed the original definition of SEP (thanks to Junio for
+>     pointing that out)
 
-Efka 
+What I still don't quite understand: who is this update for? The
+existing script is broken for years and nobody showed interest so far to
+fix it. So I don't think it makes sense to fix the script just to keep
+on dragging it with us.
 
+If the answer is "you" then I'd be fine with it. But if the answer is
+a hypothetical "someone" then I'd honestly prefer to just remove dead
+weight and not bother with this update.
+
+Patrick
