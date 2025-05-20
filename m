@@ -1,132 +1,118 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.9])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F344421D58C
-	for <git@vger.kernel.org>; Mon, 19 May 2025 23:49:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D45E72472B1
+	for <git@vger.kernel.org>; Tue, 20 May 2025 00:01:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=198.175.65.9
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747698546; cv=none; b=NNNlk22dsTUIduMpJULBrTy1g467Qi1eAe0sY8OPZP/mF5Q6RlX4xCl9Hr5EwkQFGP7/UChRwRaJi0bOek4LLyyu7Jgcx+qaonBpiSeiK5vV4ZKBb53EXNy83HNWeYWgJMuGDluz3ZUivsyEUlHePajm1Jf4Ar/di8kyAs+c+/0=
+	t=1747699295; cv=none; b=NqLj2bsSwg1wT3ae5pJmjlU8jhaDeNSiLT4MO1gR7yqCEbVc7w5jnTN4nblynGjXEjRc+DyHv5p/+V9QiXgH8s4VtfpU0I9scBacAxrq06xCM6e6Xerkjqi42DwwjPpLomPHE7pFHYHQJohaLkJ93ajhrOBtoa6xbb4AKCj7E14=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747698546; c=relaxed/simple;
-	bh=6Df13D3lx3rrIADu6c2XgGkndTUvUBHiNEgnnS+pyxo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Bj1qaBpPO59QXon24LIsvzzVrGvJRonC9xIBwYnqCVmohfc2jCvkFpwMEPTgs65mljyulltvU+dOts/BbtZlUnyWbZfvfZiySpvegdXsfSjppieurpP0Ul1CcA9BPUY6ALxIU55hfPTlz1XQ3cyE0oF8Bgib45WvcSN+rSonqbc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EnZrY4EU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KQ+x+B85; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747699295; c=relaxed/simple;
+	bh=ras0SxXyWEFxbE0rZ9O1n+VdTzhwQQe4AkmSumHBhuA=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=joRAWJD7atRATqUodhJz9cThRWqQsA03GuuVWOVQAPKQ/jjPY1gb7aSBaJLyxtY4FoLOCBxQ9dXg12yMdD+nZi4ruT4BFLu5TARu/YTAPSBRSDlbdqvVj5WatmcPzE6MCYcEQO/5RQ+PP5AkrA7CAVwpnBo3Nr5pzioivh8pGU4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=aN47Q312; arc=none smtp.client-ip=198.175.65.9
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EnZrY4EU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KQ+x+B85"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D649011400B5;
-	Mon, 19 May 2025 19:49:02 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Mon, 19 May 2025 19:49:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747698542; x=1747784942; bh=39u2SyiIQz
-	JS3OuhbrayEnUZPW/771oct89DeIx7Fac=; b=EnZrY4EU1uz4VxawfYCQ7uOU7c
-	AbrAKxsKPdrIhoIe1/csYF5OWzJrhUxCnnbZZXNnzx2P1jCL6Gqb6g2zpp32GGYy
-	xogX/IzNVQ2w0t8ufTlsTTddH7PEQnAypUd4j0aQpW722Y8rQWFDydTgPI6CDSyE
-	bhvkiq0I5SLMxbPUVBjFtOIzXhU3xTmUllsmLnZJkz/kw5mP3nYXUbYHsMw+Y4Xl
-	q/u5AQt1zVvOsw1t0SXPYnXNDJoJ7xEkQomYQs0nzbyzEXbbJvCTF62EKIaI/DuV
-	aFnw6TUwdgDWaXDlR/2bxaO6kn5TSDUlX4vaCN1OyHQDLSvLeIimAmkqPa2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747698542; x=1747784942; bh=39u2SyiIQzJS3OuhbrayEnUZPW/771oct89
-	DeIx7Fac=; b=KQ+x+B8503tf2ErXkOk/qvxA6lGUcGuPkY6CdigSzfEC5fQGaBa
-	G4AbFCgEaJw9MNHavb9KFRIAhYtnkPith2Bo8CelBbKeV4Dc3gkGAJyaFXIZ4rDE
-	eNAlc4p75YC27/Q3KcftHjl3x9ZX5S0SO3CN5HFIoFjx5JivZiWbNpC3RxWAYJwF
-	WgNy1JH5gzXEX3gWFCJ70CzplNAU6R0WIYCylyVOlqDmFP27IdBjk+HlnrTPqb7+
-	ZhPEQhoCHzyvyB0SpMX1ti3HBvQMgUi6zybHT0CUux2hUsbtOeAW5Fvq36x9cePp
-	Q/oZqSrMT3ZmF0xdBNouWgWKaiMpBhbCp0w==
-X-ME-Sender: <xms:bsMraOrlzzsUVW1L-mB0x9qS0GZk1pRAGx8yN6UZxSESObZKD5yDwA>
-    <xme:bsMraMo8w2cUWDMJmc6BIW3J4eUkxiV-4pVJBE_caIcb3N0n45rFdNCJ5yPbl316y
-    -nrWpZJkGwAgnUHTw>
-X-ME-Received: <xmr:bsMraDO2VsTodmgirw2WMqOs_-SOlbyipsjlmG7K9tohrPtocrdGv_IQ5E3U41m0EIw_1uFRUv0ucM2AUDMEHpv66fe-XZjNmtPKU9U>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvddvjeegucetufdoteggodetrf
-    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
-    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpih
-    gvnhhtshculddquddttddmnecujfgurhephffvvefujghffffkfgggtgesthdtredttder
-    tdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosg
-    hogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeu
-    feejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrg
-    hrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopeiirghihhgrnhesuhhn
-    rhgvrghlrghsihgrrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthihth
-    hoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:bsMraN7RhPZgOZrTXaRH2xzxgpNZSSRxkTKT3m_pnTQF3bx20M3JkQ>
-    <xmx:bsMraN6TBoRxuZMJ3JXz-zxS8bpw1P_6xnGyHqrL3HaGnOvDr3VweA>
-    <xmx:bsMraNgFNXVkACioRh1-jYoE-_Df_iczqRuhgTr1gEwjh1cElJUGig>
-    <xmx:bsMraH4ekbDZ_xSS6WW06_xOPRZ-Il4f91FqXD5PiUdeNEvs_boHFQ>
-    <xmx:bsMraI0cwD00joreSNhk-DyTnP0XmGuAjd8mLxEy81YkzruhYAEJx8sH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 19 May 2025 19:49:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Muhammad Nuzaihan <zaihan@unrealasia.net>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  git@vger.kernel.org
-Subject: Re: Small patch to add support for MPTCP on Linux
-In-Reply-To: <a76dda61-f60c-4221-83db-5e165a2478b1@gmail.com> (Phillip Wood's
-	message of "Sat, 17 May 2025 14:39:38 +0100")
-References: <JH8DWS.72DKHPTI873H3@unrealasia.net>
-	<aCeg_wjLCf0Sz_7X@tapette.crustytoothpaste.net>
-	<BP9EWS.WTYEEEQZEN2U1@unrealasia.net>
-	<aChhxRx7sMD47N_s@tapette.crustytoothpaste.net>
-	<4YPEWS.J5JRNETKLXF1@unrealasia.net>
-	<a76dda61-f60c-4221-83db-5e165a2478b1@gmail.com>
-Date: Mon, 19 May 2025 16:49:00 -0700
-Message-ID: <xmqqo6vokvpv.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="aN47Q312"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747699293; x=1779235293;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=ras0SxXyWEFxbE0rZ9O1n+VdTzhwQQe4AkmSumHBhuA=;
+  b=aN47Q312qxWurRNDjJUU8pXv1FtWVxiRjfeR6C0k5t+UKUZcksr7ApoW
+   Vi45rKSK4apEXx0vg5HlLwDkLBD3IXWN62aXwEpjgnjFkILBx9D0SxeA1
+   MO+NI3G0rDcyrq5jctUA3ENsOXGOjcwXJyj51Uq9TbdsMSw8UbM264GHv
+   5TtJ6FL0c7N/m8IxYQfHG2d14kXamO2lYrNA24MR0tI36VbWMu3jeV2Wy
+   7Qqbd6xXDdPE8JCWdkK08jgj/ry++cdDgIwUfDeft1iL5/UJ3haAZD/4F
+   JfgUsvEdeJGdjGH17PMI15pqZdoP/jlsxA05DlGP4EDGRROhvJsueb7I0
+   g==;
+X-CSE-ConnectionGUID: DUI2cB+STzqUhXktG8Tf6A==
+X-CSE-MsgGUID: lmGbXCUdT3Gk42jnTZQE+Q==
+X-IronPort-AV: E=McAfee;i="6700,10204,11438"; a="72125816"
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; 
+   d="scan'208";a="72125816"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+  by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2025 17:01:32 -0700
+X-CSE-ConnectionGUID: 7qOavlY4Rc2NDuY6jTD6bA==
+X-CSE-MsgGUID: x8z6ouECTCyeXLbm3mZ9tA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,302,1739865600"; 
+   d="scan'208";a="139559135"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 May 2025 17:01:31 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v3 0/4] diff: add pathspec support to --no-index
+Date: Mon, 19 May 2025 17:01:21 -0700
+Message-ID: <20250520000125.2162144-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.48.1.397.gec9d649cc640
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> As brian has already said I think it would be better to have a
-> Makefile knob to control this which defaults to being on for
-> linux. Take a look at the various USE_xxx definitions in the Makefile
-> and config.mak.uname for setting default compile flags for different
-> operating systems.
->
->> Also another check if a socket is supported by looking for a return
->> value of
->> "EAI_SOCKTYPE" (not EINVAL) and fallback to regular TCP if that is
->> returned.
->> EAI_SOCKTYPE should work across different UNIX systems as this is a
->> posix error code.
->
-> That error is not mentioned in the documentation for MCTCP on Linux
-> [1]. Please make sure your code checks for the errno values described
-> in the documentation.
+This series adds support for using pathspecs to limit the comparison when
+using git diff --no-index. This is similar to how you can limit what is
+included with pathspecs when comparing inside a repository.
 
-Also according to RFC 6897, "MPTCP is designed to be totally
-backward compatible to applications".  I understand that this is
-quite unlike introducing IPv6 into IPv4-only world.  You can tell
-the system that supports MPTCP to use it in specific ways by
-updating your application, but your system's local policy may
-allow MPTCP to automatically set up multiple subflows even your
-application is not quite aware of MPTCP.
+This likely still needs some reworks, and I have some open questions in the
+final implementation:
 
-So, ... I somehow would be mildly surprised if Git were a kind of
-application that needs to take advantage of "several additional
-degrees of freedom that applications may wish to exploit" by using
-API that is "a simple extension of TCP's interface for MPTCP-aware
-applications".  Requiring a simple application like ours to tweak
-and rebuild in today's world does not sound like a winning strategy
-to promote a technology that "is designed to be totally backward
-compatible to applications", at least to me.
+ 1) pathspecs must all come after the first two path arguments, you
+    can't re-arrange them to come first. I'm treating them sort of like
+    the treeish arguments to git diff-tree.
 
+ 2) The pathspecs are interpreted relative to the provided paths, and
+    thus will always need to be specified as relative paths, and will be
+    interpreted as relative to the root of the search for each path
+    separately.
+
+ 3) negative pathspecs have to be fully qualified from the root, i.e.
+    ':(exclude)file' will only exclude 'a/file' and not 'a/b/file'
+    unless you also use '(glob)' or similar. I think this matches the
+    other pathspec support, but I an not 100% sure.
+
+  4) I'm not certain about exposing match_pathspec_with_flags as-is,
+     since DO_MATCH_EXCLUDE shouldn't be passed. I got the behavior I
+     expected with DO_MATCH_LEADING_PATHSPEC, but it feels a bit of a
+     weird API. Perhaps match_pathspec could set both flags when is_dir
+     is true? But would that break other callers?
+
+However, this version now has documentation and some test cases. I found a
+few issues with my original implementation in v2, which I've fixed.
+
+I also an open to suggestions on better ways to handle the matching.
+Currently I need a separate set of pathspecs for both paths, since I need to
+make sure they get rooted appropriately. I don't know if there is a better
+solution that would allow using the same pathspec structure for both
+comparisons.
+
+Jacob Keller (4):
+  prefix_path: support prefixes not ending in trailing slash
+  pathspec: expose match_pathspec_with_flags
+  pathspec: add flag to indicate operation without repository
+  diff --no-index: support limiting by pathspec
+
+ pathspec.h                  |  13 +++++
+ builtin/diff.c              |   2 +-
+ diff-no-index.c             |  91 ++++++++++++++++++++++++------
+ dir.c                       |  20 ++++---
+ pathspec.c                  |   6 +-
+ setup.c                     |   4 +-
+ Documentation/git-diff.adoc |  10 +++-
+ t/t0060-path-utils.sh       |  18 ++++++
+ t/t4053-diff-no-index.sh    | 107 ++++++++++++++++++++++++++++++++++++
+ 9 files changed, 240 insertions(+), 31 deletions(-)
+
+-- 
+2.48.1.397.gec9d649cc640
 
