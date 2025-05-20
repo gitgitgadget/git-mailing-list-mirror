@@ -1,83 +1,83 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84E5926A1CC
-	for <git@vger.kernel.org>; Tue, 20 May 2025 17:58:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E30B128032C
+	for <git@vger.kernel.org>; Tue, 20 May 2025 17:58:25 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747763904; cv=none; b=GVKeyzm9iaXJ0D2OK76y6zqQ68LZEpHvBYFWWrQdxqNwSdjd+pwCLJoo4rJFG2rqxjn6QhrKbbwStm+p5iS1oNRtJRL7Q3bzTxRnfP5ZtJptW/Vsh+vSESIW1E9SvPepvQYtXvxzzWp6Vk2hVceYUf5eMzVUPisGMI4nDAF1Vwk=
+	t=1747763907; cv=none; b=YAU8ffS+d8pY5jE9NQAypyhx95seNUwKFYLsS4df/jfGymXPQA2izisDZWEG7NTVM3NSLWGbFpAfQCDA+bbjefgoHNh+YSPz/Fde9ZpxQo90AJN7dV7khZWDqbNyYZ2NtSuTVF7CW0zOvKJ0Yu51nqiYQyrE7FnwG23sYnNYh7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747763904; c=relaxed/simple;
-	bh=+gw2TPf6iw6C2RzFQaKN07HOtFck+Txah/PpZ3vo17g=;
+	s=arc-20240116; t=1747763907; c=relaxed/simple;
+	bh=68bQx/+zdUijY2K6BU59Di2C8X+MSjVFopRSnzt7TJI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Eoe2hc/J8yperfAeEMiZSOMCdHmD+mqYfUeliXc/ZWoJIPiM1Salgc9/VY6MbiHGNMQpVFtIwAxyl/rcqDA/u3H37P8RZ6LNPUcXMvf7v3zcCz0DhZHXnmd5SrUHkwHCameQfU+MOxAy3UbEQmnmFPienpJHIKXPpAolWtKKTjU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=RX1fKlUn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SCW97Ltd; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=CFFt4opBIsYNkQ0Ml9qN5N7aUmUu59LSIYIJpU7zKi+HmmMu/f1d9Y2KA+Oihr3YRppSFET09xNlNAjgnX/SKohpW+GlEsTKRAPwek6LWKoLSY9+4jgGjyzOlDpNQp7qDV1LUTlX6vgVSo+IgVMx0nXvZBCrhVtbV1diK9yKMHQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=pyG81Vdf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=e5SqlAo+; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="RX1fKlUn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SCW97Ltd"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8F2B511400F2;
-	Tue, 20 May 2025 13:58:21 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Tue, 20 May 2025 13:58:21 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="pyG81Vdf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="e5SqlAo+"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D38CD11400F2;
+	Tue, 20 May 2025 13:58:24 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Tue, 20 May 2025 13:58:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:date:date:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to; s=fm3; t=1747763901; x=
-	1747850301; bh=mtmNmJ0yscILas2CM0M7A5UiwR8QDlEwlaYyFLgJOkw=; b=R
-	X1fKlUn8GLILUxyK2IU6V0DFLGCgDMgkAtUTYozqwbn/lnDwRF7Q/GiOFKDCdqwm
-	SrHs9J6o5zp/genUQAFEolW0SILnabZwFtsuOquuoRn9++Iy+BpOi1piLVWdPvfz
-	HDE7f0fP4b4SzQKtTJiFxq++Dss8/zsoL+/qwgzO6N+yifr+NeFqQWPZsNF0Ktyd
-	kO7Wh+NuDq7rS7LtvCX617JqlsQ1WEMo7ycgiJ6/kSKcfyalfmRIj9QCzFz05nmr
-	xT2IeT2dMI9W1b5dMTGWgCyDsZFEIGy43C/bQ5jcFmDbfEBtFchq7W7J57rpnaTp
-	+ZP1SJ8OfeyZasemf2Gyg==
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747763904;
+	 x=1747850304; bh=6boaIwnrmFzD6VIERC6rs91YLv/cnHzQSsafXm07HOo=; b=
+	pyG81VdfBI9rKylrL/Ojrsy6pVmrA5z0wpqdHUtGGsJCv3DGKR9uHjOWRkHkQZD/
+	uTJoST66bBp3XBP22x89QMhTz4oaejdNsJPx+TVcoZMWzthHg30esihEkoa8goSv
+	XyevlSosQ8sOZAmdYt4H9c6JcBJqlhBk29BDKa9GGQLo62yndpRATGlNqcU1eekx
+	iCWLmjMgL+gbyQunaDvAT9nPe/GqIdhRWZYxjcV3bCHIt/Gd4FUTbgN024rkRLxl
+	heJWEeqHYBiOhR+Ms9tMpSV+I5+TL7LCuu7R6cGOZtY8dcFChaJusTSwmHghXfEf
+	Vewu04AITlx5ia3P2EUtdQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm3; t=1747763901; x=1747850301; bh=m
-	tmNmJ0yscILas2CM0M7A5UiwR8QDlEwlaYyFLgJOkw=; b=SCW97LtdCVPFfliEm
-	7eXUYFhvWzCZ01+D2c+ReNlNQglyMX6ctIs13RW/KSiMpOsXx+dYGUqzbWY6qOhy
-	KaLtFvpO5Dch9Qa1x8SNezz0hy2KqKrEfwYWAUyegQhnOUsD8sHg9TfNP9Oimso1
-	DIFW7PjfdVsmgK/FcPgrL05lzDE5Pf8tt+7lv1l1lzMZeSEvkcBOj/8xCxBxRmZ8
-	8Dv0FWSHOqYUKh+sxW7is0SdguFTJA1+cOCrSjNN95ZQg+3vLy9uWooTULs+HtGm
-	a9Qos43h8BC4PAifRE11AwPGSKDAMbHUTvUoFgr1OqloFvM6WZaW3rBHp8Y41rWq
-	j9hEQ==
-X-ME-Sender: <xms:vcIsaCzeydC3xr3uEL54qPE_LnGlRs9aMCtR3iyOHkigNy8q6Zn98hA>
-    <xme:vcIsaOQ8FYS-Nliir2Q6VAuo3eMc6dd-MnVf8RKJhKBfYlG1Ha51KWFyiEBrR8Jfd
-    4SWnXRiSl4EHv-6-g>
-X-ME-Received: <xmr:vcIsaEUdUCMaTy7UGSG4griV1JYLvnXYsQAflj72OKGQjNHvyMAWwoBfjd8TG0cQsIq686tUydS5T4iWQwY58gph4bAI15p2UU8>
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747763904; x=
+	1747850304; bh=6boaIwnrmFzD6VIERC6rs91YLv/cnHzQSsafXm07HOo=; b=e
+	5SqlAo+LICUyiqeKN8Y4V2XP+uA47NE9Whp10fS5CeN0V/hG96rPIMCzXR+Vd9Je
+	rI3c+Zp/bh5pUm2odafG7LRBNa2Us/n2UMfT2iVW1TvkXRqLBeTVOZWf8PTVchgA
+	BDbbzwQMX0fzvBEAB5xMMtbDHdSQTi1RsDkGr/n3hDdEvrxrWOUYlnUj5VXeO+LS
+	b1kUy/AIuLXep+bE+Rh+MSBj3UVHXFiJER33FHQpa6a4xwxM4xEAM/5D+L/sl6Zh
+	tcCcXUxvuVZgDjnNR6o430rqRvD2xVfwzH4QK3s93JwpQcqCU6N4m+1NooLKYW+P
+	5r7V5KdfPXF9Lg4ZfoBLA==
+X-ME-Sender: <xms:wMIsaHKC6Qoy7ozRzY-I99pUOZih7F7sG-6vDN0BVezLJy8iVE1Hrh4>
+    <xme:wMIsaLISrdV43WTEEq_NO4VgZ_wzaU2nrJlQOfZS2-tmmwDfdCnRuF1nmd20nAQwJ
+    3WbwI4kzhMhW5kGPw>
+X-ME-Received: <xmr:wMIsaPs59QjqbY8vYnNe-YrlP-e2kJseOUySnmKLekyQeKoQfWHgTr1dnAeDSQ4BFG0rcdoF-YZtB3Xy1dRHBeareSSNYuKa9Go>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdekjeculddtuddrgeefvddrtddtmd
     cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghn
     shhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtne
-    cunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepkhhr
-    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrf
-    grthhtvghrnhepfeehteekfedtieffvdejteeutefhuefgtefgtdevhefhveffuefftdeh
-    iedtfedunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhn
-    sggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtse
-    hvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgs
-    rghkkhdrnhgrmhgvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtth
-    hopeguhihrohhnvghtvghnghesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:vcIsaIjg5xmtuwDji3Z1gSjkrlE-soxdHrDTjpv6lIMfzPKKI0kGyw>
-    <xmx:vcIsaECOGIW7ZyVWOsW9FQkLIzi3MS0txquaQUtLXosEMIX2NfdPRA>
-    <xmx:vcIsaJKtKN8P55fYeZwhDwkuBaby0nGE8JMsfzwgCPRBOvu3XczhNw>
-    <xmx:vcIsaLCkeKGoFSClNVKnF5efHC6OrTYnKxJEnuF-nTIyvrUItxPFkA>
-    <xmx:vcIsaC4zOO11arEsRITj_eGHevyteej7J1mI8JznRuqMq27OEzxT0M9l>
+    cunecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtf
+    frrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeiheegfedtudduffegjefhkeet
+    udeggffhkeenucevlhhushhtvghrufhiiigvpedunecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhs
+    sggrkhhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
+    htohepugihrhhonhgvthgvnhhgsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:wMIsaAaeyITDlvgfvC1t2F6ygH2-K7LPGC0Pio78BljspGhYLXdwjA>
+    <xmx:wMIsaOZwMOVoCEKWS_U7pKLXBdujcDcZC4CLm461Pd4ieDOrDwHwBw>
+    <xmx:wMIsaEBS_SN5lTaiU-zYTQYbWZmQay5VTZOYeiXr7ewd206frkJdaw>
+    <xmx:wMIsaMYWX7BSL4jgmxgyjutp8bXtRC9wxzjiglYR2_jCctBPM6OT_A>
+    <xmx:wMIsaCQgdQYLBaRItLnF1iN1kp7MwSgojX2yTw2OlvgslR7MYZ-BHs3t>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 May 2025 13:58:20 -0400 (EDT)
+ 20 May 2025 13:58:23 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Jeff King <peff@peff.net>,
 	Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH 5/6] doc: notes: point out copy --stdin use with argv
-Date: Tue, 20 May 2025 19:57:23 +0200
-Message-ID: <cbb177479cae24b85284d507beff4b7abe173dc8.1747763769.git.code@khaugsbakk.name>
+Subject: [PATCH 6/6] doc: notes: treat --stdin equally between copy/remove
+Date: Tue, 20 May 2025 19:57:24 +0200
+Message-ID: <68e5eb78040419ba64e256910501c7e37194b222.1747763769.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.49.0.780.g892193c3f50
 In-Reply-To: <cover.1747763769.git.code@khaugsbakk.name>
 References: <cover.1747763769.git.code@khaugsbakk.name>
@@ -87,32 +87,54 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Unlike `remove --stdin`, this option cannot be combined with object
-names given via the command line.
+46538012d94 (notes remove: --stdin reads from the standard input,
+2011-05-18) added `--stdin` for the `remove` subcommand, documenting it
+in the “Options” section.  But `copy --stdin` was added before that, in
+160baa0d9cb (notes: implement 'git notes copy --stdin', 2010-03-12).
+
+Treat this option equally between the two subcommands:
+
+• remove: mention `--stdin` on the subcommand as well, like for `copy`
+• copy: mention it as well under the option documentation
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/git-notes.adoc | 3 +++
- 1 file changed, 3 insertions(+)
+ Documentation/git-notes.adoc | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/git-notes.adoc b/Documentation/git-notes.adoc
-index 1b714eb9e81..d2d7dac8d41 100644
+index d2d7dac8d41..1542850eaaa 100644
 --- a/Documentation/git-notes.adoc
 +++ b/Documentation/git-notes.adoc
-@@ -87,6 +87,9 @@ In `--stdin` mode, take lines in the format
- on standard input, and copy the notes from each _<from-object>_ to its
- corresponding _<to-object>_.  (The optional _<rest>_ is ignored so that
- the command can read the input given to the `post-rewrite` hook.)
+@@ -127,6 +127,10 @@ When done, the user can either finalize the merge with
+ 	giving zero or one object from the command line, this is
+ 	equivalent to specifying an empty note message to
+ 	the `edit` subcommand.
 ++
-+`--stdin` cannot be combined with object names given on the command
-+line.
++In `--stdin` mode, also remove the object names given on standard
++input. In other words, `--stdin` can be combined with object names from
++the command line.
  
- `append`::
- 	Append new message(s) given by `-m` or `-F` options to an
+ `prune`::
+ 	Remove all notes for non-existing/unreachable objects.
+@@ -208,9 +212,9 @@ See `core.commentChar` in linkgit:git-config[1].
+ 	object that does not have notes attached to it.
+ 
+ `--stdin`::
+-	Also read the object names to remove notes from the standard
+-	input (there is no reason you cannot combine this with object
+-	names from the command line).
++	For `remove` and `copy`. See the respective subcommands. This
++	option can be combined with object names given via the command
++	line for `remove`. However, this is not the case for `copy`.
+ 
+ `-n`::
+ `--dry-run`::
 -- 
 2.49.0.780.g892193c3f50
 
