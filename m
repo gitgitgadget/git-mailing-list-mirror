@@ -1,164 +1,173 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55F35267AFD
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:23:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645DB1DE4FB
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:27:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747732999; cv=none; b=TmhNeaQ3TqKeTYCsAPjlX0yr+2FX8Thy/geHRJ948b55M8tT2hY0U8XU24W6zeX3CdndYxSEvlBj8t9/xPSa2DSMwWSZdVbFx2+o79gVYDgbKw/nDhVJ3J+O9ho+pekTfu85BftDXqiJMfWQbzRkeec9xro8Rb0/RIwCC319jF4=
+	t=1747733247; cv=none; b=e9hRfE2IAIx/f15IsY9cH/TyBO3M1dV18pns5WgKywPDRo5dORnxCmvlbxL72kkdGVne/SrB4sbmWfmkTJM8EZIyQg8cyvw+pBfxznnR/Y2B77lMYkSBiPXhdQoK0fO26y2GCxK95EjWgRCKSJaPePU4SHL0ns4JiSJC3mp7SzI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747732999; c=relaxed/simple;
-	bh=3qIkpHO1MFQzfshle/RL924tVd8jKmbzhjJ5dm9ssrM=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZzxG6pjgXb03giqa6CfAreAsgDnlC8OWLYgl4V3oFepfL9g0qdZbRhzyyHbVhh1hLe7SkVL9cEi5nO91ETWY+wDvcRiPSsI3ZgY/vrQ34N0uk2jGAiNWZxBdi03i1EqZI+7mBK0XjuywVGhMUOnmfKNGhxYRzWZWNaT1M6jKRDg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=AkqQuxTv; arc=none smtp.client-ip=209.85.221.53
+	s=arc-20240116; t=1747733247; c=relaxed/simple;
+	bh=as2LMvIOEQL0AVJBmHLMg7DAOQKXp1U0sBQ/X/uSlBI=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=jCwJuDF8g3ZmV5FqLJ8tcC7HZraGxrX2ijbYfDra/vZC09s02ll1ULOaR/KJvHjKysucaPERDvwnOWEccXWytxvbl5OO01HKWPn3uyxR7uHHnDjXepuNPKu4pATSF2XsFowwLoVd1kS2xN+ViJipV3J0CmGT/meDdLrMfp+FfgU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CeAC3QTq; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="AkqQuxTv"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a375d758a0so1152856f8f.0
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:23:16 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CeAC3QTq"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-442ed8a275fso67098215e9.2
+        for <git@vger.kernel.org>; Tue, 20 May 2025 02:27:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747732995; x=1748337795; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=38Nqbc/b0v9r9Gg21zBEWGo77DzQRbstcDPAXzqg1As=;
-        b=AkqQuxTvKgTvpTojovZVg2wGPXFf6k9V75148aS2JifMRH3RPnpiJuEmUZxfS1u547
-         sGQ+pvyU6dx7OHTQOMeYxYHUxdkF2Y6+jbzMZlbnqfkpDnTfZ4OlzJ02f0ywLPjDV02I
-         +g3DrPwY0uTFr4e9rjEVpgmLhdKd6EOVbrgEEOy7yM3KwrjFQs/mZzbH8FNBHA3XE7A/
-         17fspnOOk2SUMjHijRTHSATxkcF44en7WZCitDr2x+n8I1I1yM6Mcc8la9u2WBCN2BNR
-         IsABdxeL0Dq/33MsxSfQUrK9HxaepRsyMd9mJ2LoAWt9IlPBCsw6iWe/X1JfS7gJDBb4
-         7RcA==
+        d=gmail.com; s=20230601; t=1747733243; x=1748338043; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=a1k+3/nKPI8Za8vNwLrevH1iS9AsfG7pfbvSFP6t2cs=;
+        b=CeAC3QTqjyIiXja8B3QtWMCOdhhbWNISl/1SlvWVMT4r1V+737PJ07vdONaqjSUgjL
+         DMGUNlUXfQuInqNt4MblU4vLenOfV2ibXvegT8o2L84/XA7fNATqJaM0xOBSH38JCOZ5
+         sNGbVnW3hZPH6v4WR13fdMjEzO6CtQAsijDK9PwJLq1dgTWPkJG6Qauoj5Azp8njHvwU
+         amP3oLNcsyIlQ/kyWE5SO6kn0O0GPAasbG8Sq8MlP1zFM9yxkA3o6e+c/28fV+nfAOlK
+         Sww+gtWYaiMf5W3EwbtXXzRfzU3v+D/1SkK2F1eUa1ePH8R6fEE0GrbBXWK4z1vgEpJ8
+         6zPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747732995; x=1748337795;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=38Nqbc/b0v9r9Gg21zBEWGo77DzQRbstcDPAXzqg1As=;
-        b=fMxveNaJfFxXhid9Gcr9dJoIKas5LW/yDOFGF9kwH7s+yP70mif59gv6mI65oVxyw0
-         tRbIj6SkeBPTumnCTHqXdczJusqGt+9VktSdbTzlnMj5NtElS6PmetSOfyWmXoc/ED3a
-         O4PbCuCu4lcn6ev0SjBx7bQMbRs+Pnlng6Rflz0hOzzy1oIOmT81il2WOTAz+vS/z5XO
-         3SnnpIZwOmpiUvsx8RS/ANp6+SWJlh/9CHDHRPh47QFE+2xF22xGVwmuuvKSUeTWTkjW
-         Spy5cKHr8FwX/5psVEyEt7h6gfoG2tjeFqHFh539tm3Bzc4XPCepjEwj7Bsjwa4SZmk0
-         iq+w==
-X-Gm-Message-State: AOJu0Yw1fRUSAQUzP8L/VvgashM392nuq1mqKcoKlpSNvpMQ+O6SOVm5
-	MKVl4ijDxvZJZ78c382WUaQc2lH5kLPgpA8LAwaRTkCP9nHoxplkM5SG+1x5Xw==
-X-Gm-Gg: ASbGnct9L6YBBpHXfRNOzzmJOCxhnUpHHzrnI0Mi/oge3FlUaForsTTYA9zkGAKVzYa
-	3ylGPMr2ntvbJNi855ZiJTt8JpnXK9CJZDlqdUnsUg4HghkwUL+dHzLPiaAdVo4X7rDkNZJK8x0
-	cOwqPuFJHu84jvGabGdp24LHj9kPXfnRhg2JgoVDoYGXOzc0hbhmjILcC+7MbXdoaDTXDnv5CLj
-	1VWFvFPM4SrMaL9iJNF+5orHr8Er575mCcIIlwXaIX1FdK+Mr2LwefM6Vh8aCIHGKkuw4SLQy7A
-	ShMmcO+gb/ypKkSUROOAIx06NWh3qfj/2coMg8pZ3WmBKs4biplp
-X-Google-Smtp-Source: AGHT+IFWCofh23kj5TLQT0uO+t2s7rLgwMGnch3lN4DZB6bVa0V0Zw4t9DEs67MtneIzVmXCLzp4zg==
-X-Received: by 2002:a05:6000:1a88:b0:3a3:6595:921f with SMTP id ffacd0b85a97d-3a3659592b3mr9526831f8f.41.1747732995134;
-        Tue, 20 May 2025 02:23:15 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca5abaesm15760372f8f.39.2025.05.20.02.23.14
+        d=1e100.net; s=20230601; t=1747733243; x=1748338043;
+        h=content-transfer-encoding:mime-version:reply-to:references
+         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=a1k+3/nKPI8Za8vNwLrevH1iS9AsfG7pfbvSFP6t2cs=;
+        b=FPTRLkx0CIqbJsJyehSblb1hbVbkRram6mGh6KLB4x0MeCzTcNVN46+ibhZ5ZNODGG
+         Br7ZA+XiKjWT9IfzprB3M/IwPk+oHwSixTzIvHqm7AKXHwjn+496i5db+ru1ha6ZQNkc
+         lMmZo2LD+TiZIYgIQmra7M28lKc4LaeC3fW3svEiMPOXe8yNOlPfRreuCtgj1ItadYxb
+         Q8A1XAkgv4aYmG7Xk2CBLYLRosQYTA1y/uIdmQgYTFSTm7Lypq6dtXQlGGH5n0loFKRJ
+         iWdrs5R4cKRfn/1g6J5odXiB7jDnTLuTVsYyNCnztA8HosnL8Uw88QnBMajZQtWz2UJ5
+         c9rg==
+X-Gm-Message-State: AOJu0YxCsdTNjjCIFSOhIOpOrw4G1IoD2KtNgS5FwkWfuwATEP24Kbfx
+	WuB/KNZ9QFUS1GjYOSzbqz08oVzlOggRgwJ4gshIFnvWO9AbyXIrOa6HB2fRoQ==
+X-Gm-Gg: ASbGnctygJgxb2B2sG1pJvNaR6ewQFJNsujSjqT2OTjC4i5s57Zuw57dngWKwkJVgBh
+	w6ccrVCI3a/uvtZjmM1dBcOAde5DyUyyB9Rgrd0/OuEVO9RxY9uWtwivuKDsxAlYyJ/GE8MdqA2
+	MUDrtGAv+6ap+cTn7FkvEYnO3B6g78ZuKajY5BJNPlrHJvT4qUhGjFrDF/eOkMP+cnBVuVlu/OG
+	otAVAsATUq/87pAgzY+ljNyaJmoISYviR0P2pBVBoCvifYcTx9kac2fKxAzukGN5jepl/TZnW4x
+	55SRklr9NIy5ZhQMIQI6m5yuQom2BXGWkwJk5eUjxWoyygqTNcM1/cs8KB+4qveBiL8=
+X-Google-Smtp-Source: AGHT+IGNoIR9Mn5d5Bm+nnik9jd5LFmLvvw8HT92d4mNoF1FKAQBWIXp8rp31UF7NVnGKlH42RIMfQ==
+X-Received: by 2002:a05:600c:154a:b0:442:d9f2:c753 with SMTP id 5b1f17b1804b1-442fd6647e7mr128504895e9.26.1747733243249;
+        Tue, 20 May 2025 02:27:23 -0700 (PDT)
+Received: from berwick.broadband ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6f062c7sm23544255e9.14.2025.05.20.02.27.21
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 02:23:14 -0700 (PDT)
-Message-Id: <5be22d563af714ebb902506f12b4468a5348896c.1747732991.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
-References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
-	<pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 20 May 2025 09:23:10 +0000
-Subject: [PATCH v2 3/3] pack-bitmap: add loading corrupt bitmap_index test
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Tue, 20 May 2025 02:27:22 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v2 0/2] stash: fix and improve "git stash -p <pathspec>"
+Date: Tue, 20 May 2025 10:26:58 +0100
+Message-ID: <cover.1747733203.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
+In-Reply-To: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jeff King <peff@peff.net>,
-    Taylor Blau <me@ttaylorr.com>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Transfer-Encoding: 8bit
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-This patch add "load corrupt bitmap" test case in t5310-pack-bitmaps.sh.
+"git stash -p <pathspec>" should imply "git stash push -p <pathspec>"
+but that was broken by a code cleanup in c3713cede7 (stash: eliminate
+crude option parsing, 2020-02-17). This regression is fixed in the
+first patch. Although "-p" implies the "push" subcommand "--patch"
+has never implied "push". That is fixed in the second patch.
 
-This test case intentionally corrupt the "xor_offset" field of the first
-entry. To find position of first entry in *.bitmap, we need to skip 4
-ewah_bitmaps before entries. And I add a function `skip_ewah_bitmap()`
-to do this.
+Thanks to Junio for his comments on V1.
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
----
- t/t5310-pack-bitmaps.sh | 50 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 50 insertions(+)
+Changes since V1:
+ - Split out the regression fix into its own patch
 
-diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
-index a62b463eaf09..537a507957bb 100755
---- a/t/t5310-pack-bitmaps.sh
-+++ b/t/t5310-pack-bitmaps.sh
-@@ -26,6 +26,18 @@ has_any () {
- 	grep -Ff "$1" "$2"
- }
- 
-+skip_ewah_bitmap() {
-+	local bitmap="$1" &&
-+	local offset="$2" &&
-+	local size= &&
-+
-+	offset=$(($offset + 4)) &&
-+	size=0x$(od -An -v -t x1 -j $offset -N 4 $bitmap | tr -d ' \n') &&
-+	size=$(($size * 8)) &&
-+	offset=$(($offset + 4 + $size + 4)) &&
-+	echo $offset
-+}
-+
- # Since name-hash values are stored in the .bitmap files, add a test
- # that checks that the name-hash calculations are stable across versions.
- # Not exhaustive, but these hashing algorithms would be hard to change
-@@ -486,6 +498,44 @@ test_bitmap_cases () {
- 			grep "ignoring extra bitmap" trace2.txt
- 		)
- 	'
-+
-+	# A `.bitmap` file has the following structure:
-+	# | Header | Commits | Trees | Blobs | Tags | Entries... |
-+	#
-+	# - The header is 32 bytes long when using SHA-1.
-+	# - Commits, Trees, Blobs, and Tags are all stored as EWAH bitmaps.
-+	#
-+	# This test intentionally corrupts the `xor_offset` field of the first entry
-+	# to verify robustness against malformed bitmap data.
-+	test_expect_success 'load corrupt bitmap' '
-+		rm -fr repo &&
-+		git init repo &&
-+		test_when_finished "rm -fr repo" &&
-+		(
-+			cd repo &&
-+			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
-+
-+			test_commit base &&
-+
-+			git repack -adb &&
-+			bitmap="$(ls .git/objects/pack/pack-*.bitmap)" &&
-+			chmod +w "$bitmap" &&
-+
-+			hdr_sz=$((12 + $(test_oid rawsz))) &&
-+			offset=$(skip_ewah_bitmap $bitmap $hdr_sz) &&
-+			offset=$(skip_ewah_bitmap $bitmap $offset) &&
-+			offset=$(skip_ewah_bitmap $bitmap $offset) &&
-+			offset=$(skip_ewah_bitmap $bitmap $offset) &&
-+			offset=$((offset + 4)) &&
-+
-+			printf '\161' |
-+				dd of=$bitmap count=1 bs=1 conv=notrunc seek=$offset &&
-+
-+			git rev-list --count HEAD > expect &&
-+			git rev-list --use-bitmap-index --count HEAD > actual &&
-+			test_cmp expect actual
-+		)
-+	'
- }
- 
- test_bitmap_cases
+Base-Commit: 1a8a4971cc6c179c4dd711f4a7f5d7178f4b3ab7
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fstash-assume-push-with-dash-p%2Fv2
+View-Changes-At: https://github.com/phillipwood/git/compare/1a8a4971c...98ad3de97
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/stash-assume-push-with-dash-p/v2
+
+
+Phillip Wood (2):
+  stash: allow "git stash -p <pathspec>" to assume push again
+  stash: allow "git stash [<options>] --patch <pathspec>" to assume push
+
+ builtin/stash.c  | 10 +++++++---
+ t/t3903-stash.sh | 19 +++++++++++++++++++
+ 2 files changed, 26 insertions(+), 3 deletions(-)
+
+Range-diff against v1:
+1:  6292feee7c4 ! 1:  2cd67f5cd85 stash: allow "git stash -p <pathspec>" to assume push again
+    @@ Commit message
+         Historically "git stash [<options>]" was assumed to mean "git stash save
+         [<options>]". Since 1ada5020b38 (stash: use stash_push for no verb form,
+         2017-02-28) it is assumed to mean "git stash push [<options>]". As the
+    -    push subcommand supports pathspecs 9e140909f61 (stash: allow pathspecs
+    +    push subcommand supports pathspecs, 9e140909f61 (stash: allow pathspecs
+         in the no verb form, 2017-02-28) allowed "git stash -p <pathspec>" to
+         mean "git stash push -p <pathspec>". This was broken in 8c3713cede7
+         (stash: eliminate crude option parsing, 2020-02-17) which failed to
+         account for "push" being added to the start of argv in cmd_stash()
+         before it calls push_stash() and kept looking in argv[0] for "-p" after
+         moving the code to push_stash().
+     
+    -    The support for assuming "push" when "-p" is given introduced in
+    -    9e140909f61 is very narrow, neither "git stash -m <message> -p
+    -    <pathspec>" nor "git stash --patch <pathspec>" imply "push" and die
+    -    instead. Fix the regression introduced by 8c3713cede7 and relax the
+    -    behavior introduced in 9e140909f61 by passing
+    -    PARSE_OPT_STOP_AT_NON_OPTION when push is being assumed and then setting
+    -    "force_assume" if "--patch" was present. This means "git stash
+    -    <pathspec> -p" still dies so do assume the user meant "push" if they
+    -    mistype a subcommand name but "git stash -m <message> -p <pathspec>"
+    -    will now succeed. Tests are added to prevent future regressions.
+    +    Fix this by regression by checking argv[1] instead of argv[0] and add a
+    +    couple of tests to prevent future regressions.
+     
+         Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+     
+    @@ builtin/stash.c: static int push_stash(int argc, const char **argv, const char *
+      
+      	if (argc) {
+     -		force_assume = !strcmp(argv[0], "-p");
+    -+		int flags = PARSE_OPT_KEEP_DASHDASH;
+    -+
+    -+		if (push_assumed)
+    -+			flags |= PARSE_OPT_STOP_AT_NON_OPTION;
+    -+
+    ++		force_assume = argc > 1 && !strcmp(argv[1], "-p");
+      		argc = parse_options(argc, argv, prefix, options,
+      				     push_assumed ? git_stash_usage :
+    --				     git_stash_push_usage,
+    --				     PARSE_OPT_KEEP_DASHDASH);
+    -+				     git_stash_push_usage, flags);
+    -+		force_assume |= patch_mode;
+    - 	}
+    - 
+    - 	if (argc) {
+    + 				     git_stash_push_usage,
+     
+      ## t/t3903-stash.sh ##
+     @@ t/t3903-stash.sh: test_expect_success 'stash -- <pathspec> stashes and restores the file' '
+      	test_path_is_file bar
+      '
+      
+    -+test_expect_success 'stash --patch <pathspec> stash and restores the file' '
+    ++test_expect_success 'stash -p <pathspec> stash and restores the file' '
+     +	cat file >expect-file &&
+     +	echo changed-file >file &&
+     +	echo changed-other-file >other-file &&
+    -+	echo a | git stash -m "stash bar" --patch file &&
+    ++	echo a | git stash -p file &&
+     +	test_cmp expect-file file &&
+     +	echo changed-other-file >expect &&
+     +	test_cmp expect other-file &&
+-:  ----------- > 2:  98ad3de9770 stash: allow "git stash [<options>] --patch <pathspec>" to assume push
 -- 
-gitgitgadget
+2.49.0.897.gfad3eb7d210
+
