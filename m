@@ -1,146 +1,103 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 815FC248166
-	for <git@vger.kernel.org>; Tue, 20 May 2025 14:40:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A28424EAA3
+	for <git@vger.kernel.org>; Tue, 20 May 2025 15:04:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747752024; cv=none; b=TWZ05Cj78s1xH+9QCrJRrXkgnIytNdBgNwW60WbO/JXoUWOgzkDFxbOQowik82DZkgfdFyDRB5GF/bubv195nGMn4qZxciCAEcRIlhQ206Xx26MDiUBihAE13+5gSlIRd7uOYGe8/a4dMbI8z8RbGyG+xCxTVPCeQ+R7nKOgJ0I=
+	t=1747753484; cv=none; b=mWYxpr1DMJigXmFL9ocQK33bAn6PK1+RNkuyCagpa27FSPcLFy761mZm2BpvnW94lLFPmPEmf4R9ulrs251IuReHv4aLEETXp83jXKwJDVIAIbJXHIhPSgS2cFxxm93ri+kjXrscrEb+jkvtgEWFlpuefGKonMc1540T9CsZ17g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747752024; c=relaxed/simple;
-	bh=ftWoGnavDKZPcWY1sjKEFc8tMaf5bnIdNjl2S/eKZpU=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:To:Cc; b=SlSyj5vdS0ZAmF6yJUprjFYyF5DLspRG8mj+dKbtugTnOeL+VkqdXwTFbKm5jOHdvLB6UtSgAN74MPbfKvWN5maBY/p61YuhfeIfBYzAdCxGAQQmM0sNh1xy6PkQDKvNn323YGq+3oY2eTDFqp6QAHLjKyfpT+oZ7SmSl+xqRAU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dli8mlTm; arc=none smtp.client-ip=209.85.208.42
+	s=arc-20240116; t=1747753484; c=relaxed/simple;
+	bh=cmvgNiBaJh7Xl9jeKiKeDVp7+0Ft+/BWxwVwHJY5Ji0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=gRvMUhFNYr5MuKDNNmIHLyE84hvkocPFFHLHII296Kei6Exiuab1JqBh+I8Zp/6nNahu/ROgbaYaqIwyJcEK9KYc9AdV6fPTsBPJSU2zHWbYhF61nnINupz1aP8JKjb2YuOVlyXq7IzNGl/R9nC7TniQzRULrJVIeQItGb5Kijo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ADM0lPXa; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dli8mlTm"
-Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-601a9e65228so500574a12.2
-        for <git@vger.kernel.org>; Tue, 20 May 2025 07:40:22 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ADM0lPXa"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43cf257158fso42697565e9.2
+        for <git@vger.kernel.org>; Tue, 20 May 2025 08:04:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747752020; x=1748356820; darn=vger.kernel.org;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=TSeiCPC+so81SAf/0cWQLoBU19b5EVdLMkmhSrCT0ec=;
-        b=dli8mlTm/zskdemOGxbstSNLrLpjEKmHNTHKORysWvwYd2DeOScC/EITy5E2FZ8m8o
-         JP7i1QFzhfvuMzsSAq0cZzXZdnjQ9oac+drZ3YFotwT0hx2CdU7hRPB4sRBx3+9AdnyU
-         cjbdjK0JhpDURujBrRV2Llf1ESAfr+epykScbTmIbO2H1j+ENW1vLaPESECJWR77p1r4
-         x0dNg46HQIE2/i3MT3jxcZnFB15YYw1XbJzrcvIeD45+63MHzyaYOGs78DHwSrPdlszo
-         Xrlloedl3tXSZoPg1rbVmz0oBGKoReWt8cJgKMuu5TDbR1iHrVwypgFhRQc+TXfWOAk+
-         /lBQ==
+        d=gmail.com; s=20230601; t=1747753480; x=1748358280; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=IgIObNQ2W9BIdT8D9sXlqK3/Nam71p8fRI3JRLYQ5CE=;
+        b=ADM0lPXabHVNlVbJBLKtraMczuWr3f+V7sL6sYMZRfmMn/vrroz9wbfMsJbKBPieBr
+         FmjfB00hsC+Q73I8mi6owMzHp1T0yM/uo0eE2k4Tf1p3JQxoVAfVsLDuFYBqK53CIc93
+         Qo3aNbTMOv1dqXR9vhnHQJxapmWCz0X4UpjSsH8KhxKAIZk4oRx926GkaR3sJDFpOZ7L
+         CjVZCx9jem/Km1DXZaB5uelannq7Vxjq/5GkzUyNDNRL6lk6QJreGJK8+ofMczXVQyZM
+         +8FT4abuQgtoEAUPS8QK6aEPPr+8oJKxd+GCOvOJBibwmSEhg/nyO9wvJLyRttb6XR4r
+         SSsA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747752020; x=1748356820;
-        h=cc:to:message-id:content-transfer-encoding:mime-version:subject
-         :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=TSeiCPC+so81SAf/0cWQLoBU19b5EVdLMkmhSrCT0ec=;
-        b=r4NTc+gI8fbjWWWCOLGHwd0ad5Ie+ZhoCFH8fKSJb6CxTSDO2y5Hy3PrTNe/bGviHD
-         81bLkUVcH4Iq99KYCbobhJiFdtElg1CkUNRs3iymMY+eiLk8vofW87B0D6166/f1yrQp
-         8/JbKLcoIgCC2Cjf/nPp2+VmrBPSO+2esrmVM4SDzPYhctdW4+KKZhrQ/mGlLlmLsoh2
-         PD3P3P3mUOEvZI5UjkJuieC136NRtcWiZyHjlzmGBmGgbhX30el6nBrXt8xQsbFZbOvR
-         n023UEkWAGr8tM44hI/f8G0tufVFD+Fvej6hyXYcYT2WhuYYH95g5vj/dTWdLV+aK2p+
-         tSOg==
-X-Gm-Message-State: AOJu0Yzhmtlh4rWmEeLa56ztvDADP2FwFGkQC8wAQeuLVJy5xPZWP5qH
-	HkGUK7b+H/izkMJftWO39gXHOIws8m5HALOOKi0KQ7zSqQILuyvT2eccXUZLwPJL
-X-Gm-Gg: ASbGncvFFbmBEGSSpf+8x9z0Y8To1PmyvSrdS5hWZ8XcC5k6UOBUWmV3sNBOfWYsHkH
-	9rfB2J9CHxT67gp8rD6lqgVYsUy8qv9UNgiwtLYs69taEC0HW8xwshnq5ro1MbmRF3TPlggsyQ5
-	h1k3zkLjXnXkpFx/6fk4E0gq/35uiVeAZc3eVNohJfwKOSpbNSHpOVVj5GyMUSzgjo7oHtavIHo
-	z3//i/IQ8pV1trVaMNIOzScTxbAptGIuGMcmClK0Plt314DTs0LLH9gk4pazKy7qFdvtznnzjPQ
-	tcd5g6/aK4N0cE9cNFtR/btZqnzb
-X-Google-Smtp-Source: AGHT+IEkdLtJWj/RItWMMFh38iJa2AFhe/7yod5EngOYUN4KFVHlWkren+qXMej7Fu97DWL+ra7tLA==
-X-Received: by 2002:a17:907:3d0c:b0:ad2:378f:99ef with SMTP id a640c23a62f3a-ad52d45ad86mr1531496366b.8.1747752020224;
-        Tue, 20 May 2025 07:40:20 -0700 (PDT)
-Received: from [127.0.0.2] ([217.110.80.4])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d490a30sm725440866b.127.2025.05.20.07.40.19
+        d=1e100.net; s=20230601; t=1747753480; x=1748358280;
+        h=content-transfer-encoding:mime-version:reply-to:message-id:date
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=IgIObNQ2W9BIdT8D9sXlqK3/Nam71p8fRI3JRLYQ5CE=;
+        b=eABY1qX7JXsipwUgvzU8Mbg9tDxLFc6xh8hq7KzglC0gYZj0g1yr6GGzge3sNu3VRH
+         2mQMHlVvcw8Nc4kbUuqs+QPZVJvqj/LFbgheHhuk1Gysh0wp4QtoOhox1BJRnmR3DAJl
+         dqpxN8XglxRvbT3c9bFFyp4jjEvyFpju645v2NnS8/e9/xZDlXBatMS4SzTPhXwitpqt
+         56eyNm9PZJkJsk7fc9mcaH0KipAxL67y6QhSlAKmQUINDv5hNjLq5igvWGlhB1LZTrW5
+         YOpcdRX/O+VygRESx9FhEDayjAB8+fh3pB9WzD+8EaJu/CeqNYuQDFfb7S7groCqqDuR
+         ovRg==
+X-Gm-Message-State: AOJu0YzLL0VqnSq7gWAXx0UhTJRjCvlncPebWwLsS/0tvD2TJhiQpnsx
+	JRO3B4kPMtK8vlopYdCJdwbG8sBjSSu/nGhQwRuv8F3BRNDXgnIoxAq/+8VkhA==
+X-Gm-Gg: ASbGncstvrlYIeD6hAHKbgd4hssBQ+dZI+eVl2hsaP58F88N+hWk3+yiIHv3q4a8Ulq
+	uiOVsHqw+wmPwvdt+dGUflkCevwNonkZuWd8x2tEhCZc6DrKWZCKO/9klK3Xz8bZ/V2XqENOzon
+	KAEt/Nix+IQAIqtHu1AkEUXJohHIOIfl3jXXlM5byzMv1SQ9qpoifwnN6fss8S+nSKa5IpcZj2b
+	FULUOqMr56QgZY01Bu0Q2ek1bZmaY1dn2wFEm0wi+vNIglUjxy13Y6+w4yPFE5EHpHrIxJV0a8b
+	ZkFv6k00b+rc+btnB00vHFbfQEhzI6TcCdGkPPeXTbVSohKZ7cdn5kkFV8HxCc1y8nhEsPmmhNZ
+	L2Q==
+X-Google-Smtp-Source: AGHT+IHPH2PinbYhQ00EKIlvs+92Wes3qmH7ffz7x91/DxeHmbkteAhJrnLbruB/OPEg4taNs8LdjA==
+X-Received: by 2002:a05:6000:2908:b0:3a3:6c9e:1691 with SMTP id ffacd0b85a97d-3a36c9e17ffmr8012418f8f.53.1747753479808;
+        Tue, 20 May 2025 08:04:39 -0700 (PDT)
+Received: from berwick.broadband ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d105sm17014029f8f.11.2025.05.20.08.04.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 07:40:19 -0700 (PDT)
-From: Karthik Nayak <karthik.188@gmail.com>
-Date: Tue, 20 May 2025 16:40:12 +0200
-Subject: [PATCH] t: remove unexpected SANITIZE_LEAK variables
+        Tue, 20 May 2025 08:04:39 -0700 (PDT)
+From: Phillip Wood <phillip.wood123@gmail.com>
+To: git@vger.kernel.org
+Cc: Derrick Stolee <stolee@gmail.com>,
+	Taylor Blau <me@ttaylorr.com>
+Subject: [PATCH 0/4] midx repack: fix overflow on 32 bit systems
+Date: Tue, 20 May 2025 16:04:23 +0100
+Message-ID: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
+X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
+Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250520-kn-remove-unexpected-exported-v1-1-bb60cec57e84@gmail.com>
-X-B4-Tracking: v=1; b=H4sIAEuULGgC/x3MQQqDMBBG4avIrB2IESvxKsWF1d86iIlMrAji3
- U3dvW/zTopQQaQmO0mxS5TgE4o8o37q/BcsQzJZYytTWcOzZ8USdvDP41jRbxg4RdB/FK+yc3V
- dus/oKD1WxSjH83+313UD2eowrG8AAAA=
-X-Change-ID: 20250520-kn-remove-unexpected-exported-163a97739bf9
-To: git@vger.kernel.org
-Cc: stolee@gmail.com, Karthik Nayak <karthik.188@gmail.com>
-X-Mailer: b4 0.15-dev
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1642; i=karthik.188@gmail.com;
- h=from:subject:message-id; bh=ftWoGnavDKZPcWY1sjKEFc8tMaf5bnIdNjl2S/eKZpU=;
- b=owJ4nAHtARL+kA0DAAoBPtWfJI5GjH8ByyZiAGgslFCIHTZxhO7IK+FvWx4a+4OJHsJkk1AJE
- AqiYrNKVHjrC4kBswQAAQoAHRYhBFfOTH9jdXEPy2XGBj7VnySORox/BQJoLJRQAAoJED7VnySO
- Rox/nzcL/jB5o/b3DJo2a57mcq6rg4rpzTti6ebj0uzq48wV4Iu34KLeB8R6Mdtm/GRXPYmk34n
- sHidZrB0ktj28C68aZwS1gMMw+obFlg0NSk0wRjspPKFTXIaNrPaY2S9PH/Yoni5kapGJyBWvsC
- G86tAdq9vyhM1u+aZu+AGtnTidzfhxwJ7bI8EJKiJiFrLKzg4CWsC3LdFJESt1XVNmmwcqWZT0n
- kTIcJ5pU/81xz3WQzeikgeJvObSufaIkpjs0uoL29oeDUx04K9WRLemOsOcy4oCqd5lxAojnqLb
- sadRiJVpH1x/+ag0xQrMPAfh93do8sEdO+VpqgEsSvcn7QCU8EJOSiURiXfapnS81n8IaxkOaZ8
- GNJsZR1KFOqTcmNngoovH68P3mei9DK1SIQeaUaJxs5f2+uukJRtchRJ/DtrN/MAhl4/yRuFEe9
- YchXrJiAlMQNDqazezzRkCFiUvRpvhYICtXiGVzdFIpLyt3i02YlKSxNoQB7hhMoEaAxBleBPq6
- JA=
-X-Developer-Key: i=karthik.188@gmail.com; a=openpgp;
- fpr=57CE4C7F6375710FCB65C6063ED59F248E468C7F
+Content-Transfer-Encoding: 8bit
 
-As of 1fc7ddf35b (test-lib: unconditionally enable leak checking,
-2024-11-20), both the `GIT_TEST_PASSING_SANITIZE_LEAK` and
-`TEST_PASSES_SANITIZE_LEAK` variables no longer have any meaning, the
-leak checks are enabled by default. However, some newly added tests
-include them by mistake. Let's clean this up.
+From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
----
- t/perf/p5313-pack-objects.sh | 3 ---
- t/perf/p5314-name-hash.sh    | 3 ---
- t/t6601-path-walk.sh         | 2 --
- 3 files changed, 8 deletions(-)
+This series fixes an overflow when running "git multi-pack-index
+repack" on an old raspberry pi and a couple of other small issues I
+noticed while reading the code. I'm unsure how realistic the example
+of integer overflow on 64 bit systems in patch 2 is. I'm happy to drop
+it if people who work with large repositories think its not worth
+worrying about.
 
-diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
-index be5229a0ec..786a2c1c6f 100755
---- a/t/perf/p5313-pack-objects.sh
-+++ b/t/perf/p5313-pack-objects.sh
-@@ -3,9 +3,6 @@
- test_description='Tests pack performance using bitmaps'
- . ./perf-lib.sh
- 
--GIT_TEST_PASSING_SANITIZE_LEAK=0
--export GIT_TEST_PASSING_SANITIZE_LEAK
--
- test_perf_large_repo
- 
- test_expect_success 'create rev input' '
-diff --git a/t/perf/p5314-name-hash.sh b/t/perf/p5314-name-hash.sh
-index 4ef0ba7711..235cdfc824 100755
---- a/t/perf/p5314-name-hash.sh
-+++ b/t/perf/p5314-name-hash.sh
-@@ -3,9 +3,6 @@
- test_description='Tests pack performance using bitmaps'
- . ./perf-lib.sh
- 
--GIT_TEST_PASSING_SANITIZE_LEAK=0
--export GIT_TEST_PASSING_SANITIZE_LEAK
--
- test_perf_large_repo
- 
- test_size 'paths at head' '
-diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-index c89b0f1e19..8d187f7279 100755
---- a/t/t6601-path-walk.sh
-+++ b/t/t6601-path-walk.sh
-@@ -1,7 +1,5 @@
- #!/bin/sh
- 
--TEST_PASSES_SANITIZE_LEAK=true
--
- test_description='direct path-walk API tests'
- 
- . ./test-lib.sh
+Base-Commit: cb96e1697ad6e54d11fc920c95f82977f8e438f8
+Published-As: https://github.com/phillipwood/git/releases/tag/pw%2Fmidx-repack-overflow%2Fv1
+View-Changes-At: https://github.com/phillipwood/git/compare/cb96e1697...29769df1c
+Fetch-It-Via: git fetch https://github.com/phillipwood/git pw/midx-repack-overflow/v1
 
 
+Phillip Wood (4):
+  midx repack: avoid integer overflow on 32 bit systems
+  midx repack: avoid potential integer overflow on 64 bit systems
+  midx: avoid negative array index
+  midx docs: clarify tie breaking
+
+ Documentation/git-multi-pack-index.adoc |  6 ++++--
+ git-compat-util.h                       | 16 ++++++++++++++++
+ midx-write.c                            | 22 ++++++++++++++++------
+ 3 files changed, 36 insertions(+), 8 deletions(-)
+
+-- 
+2.49.0.897.gfad3eb7d210
 
