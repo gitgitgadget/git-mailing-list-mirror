@@ -1,68 +1,68 @@
-Received: from mail-wm1-f54.google.com (mail-wm1-f54.google.com [209.85.128.54])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4CBB217734
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:27:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ED92641EA
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:27:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747733259; cv=none; b=fr8B9Z4vOUDetP7hNAT2VtLwaV/b5Zgmanp/9VU+SF9awdfBek1sKAuj5ieyJ0feoJQ3+7i0PfeC3MkhnbApJLpoX+egEsPhNy9tHW6l6WOA7J0nhrb6o7BwQURJLyUr8UA+c0/93Jth0WkSuw7KDjNKK/d6NH4SC4XuVtYQ4As=
+	t=1747733261; cv=none; b=Ouc24OzGzKKtANWgI6vf+1phC9xbdb2AYp9mWRIRUOUe9VEduWUOrho06mQMf20xu3yE1d1FGVFXjkseLqdX73McVEj5b30PHAQi84BEHSAq43Hk4cCE88mVMaQ5UQVAr+KG36hx5cu5fCaw3mXFG0aAZYPV+uhJQn/Rt2gyWI0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747733259; c=relaxed/simple;
-	bh=LZ4faeMXE1Uv05Wj4y+iHSTNFl9mLnBHQAdctq/JmUg=;
+	s=arc-20240116; t=1747733261; c=relaxed/simple;
+	bh=0ay7jvGDPN3FAlsaH6FFE4bo7Bud715e3fOov0EoT9o=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=IK5ZBaWPHRSEenB/P5wSmpUmr0lz01KlDhqYfj8JLzh+nkxjjBhEIbBf311Z60gcjE9KzkoH4OJC90OGkEmXa6BRt/CDBIrs/jSRsLyEFgPgtEa4jfvhe1IjlB7XlCAhrzWWyQvs5FTHtxEtC+oJpq5ObjA8EpNk8XYTTWxWODc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e8KCmQAg; arc=none smtp.client-ip=209.85.128.54
+	 MIME-Version; b=rmzJO46/CSmKPpo1aKR1H5wZ9fdLrhX3KBeqHY3HSkPcnHQkb6FqaCsLsRkVuEjiMfpM2/+gOy9at5EJBngLGcPtMzkFlon3oDxk7eNvhwS73Anzh8TZI8mI9x2aMgsvu6ypEtdzOBz0D0QC4SZAPco9jK/GqE/aFmHPkee+i+4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V1zPpfc9; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e8KCmQAg"
-Received: by mail-wm1-f54.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so56138605e9.1
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:27:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V1zPpfc9"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43edecbfb46so43067425e9.0
+        for <git@vger.kernel.org>; Tue, 20 May 2025 02:27:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747733256; x=1748338056; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747733257; x=1748338057; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=ybsWjFwcPaoy2zXd0JYngbHU8acrbHandGLaUiZ3XMA=;
-        b=e8KCmQAg0WET5uvUgRrEpFxQwoHcgeH08LGcFmUFsLMLQFZT3X66cPsqzZxaZe22MH
-         qw+k7oxA/IZXJT2VXe3MZHPJqS8tFX13OYC4ERXTPijLOaRVCFYX3/vGFiA4GLaqOlN1
-         mRm4AQDEcN9/g/jAO03wJgJM22FMtTG4C7ok+bG7PZ0UEBU2FpS9lNJ0CsXu2VP574mY
-         1QospvUjnDLZvRY3uWy69pXy2hUUfX3NQvFMb2LZjgNibRt4/7XFt0a6kv6els2ChGFi
-         9exI1RdB6IhdzEe8yosj+kTIXpguZIodeR7lSEbQgGvsIiPVCQyLubdJTczq4n8r2ICC
-         pEKg==
+        bh=+4nMuBRHIBrIWvlanrmwkYN9W9UAKvbmj0KJb2uFwtw=;
+        b=V1zPpfc9jzH25mW46WOWVeCJGtJDQd9KZ+wjX3gBiAKf0fwWpMx5hF2ES+InTSYf/W
+         O5lSxXpmapZHWkWTOUvWlN1qkkro3MmNo+n4baMXczitLTs2tbnPrT65Or5CgR4RHpgM
+         rx2ciJ3jj0sb4aUo7hMIsuo1nJWgCcj2bAJEDHyqRdBUE9lN+vwmkCDuzLN6+rIGCHhK
+         2cimt+/XqUpa0ZxlQiQARSyz13wbCWSSHapGptzdHKGE2wXGVNizQAx9yiF2zkVmhr1+
+         jI4XcZLTMLDVoy+FZUDV1TS71s6fN6sjZbNNYxwl8meZL2F0LCSloCMns3V18FhgIXqx
+         RyhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747733256; x=1748338056;
+        d=1e100.net; s=20230601; t=1747733257; x=1748338057;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ybsWjFwcPaoy2zXd0JYngbHU8acrbHandGLaUiZ3XMA=;
-        b=oik0ryKCga0qR+yO5rW2jIrJ29FhLzb/maCudQz+UTK3gpVl7G8b2OreXxTwzcIQx9
-         nFqGzLYdS0WLy9TO+/gcOftX7dDcaqhK/eCjPMK3h4cguvACQg7RjxyPxPs1arF79BX5
-         EtVn5vFeUNKiB5As9ePDTjz58MKz7gZQRuBIXZXsBbfwNZTLMxjR1kJ3zNLrpIyizH08
-         fliOApQZdPe4yHSDg4d/QrPpa6GSEHq1FLbBeMTa2wJBQmgX5/T2n5i8OBVxhEG9gvGw
-         YuZpiN6zoIC8/C8k81KOWP3RbZ19umd5M9+rUMt2+tgTGkZKzKFpTVRZU7SKVM4U/FTR
-         IwNg==
-X-Gm-Message-State: AOJu0YzePa6vPzt0mH1MqnkndYM+sy6Urc0O3UxcPe4kavQTpn9BCSh2
-	hD33IS8iqaY7WLBLMT81xlxQSuVqMueB6f41S0I78eTNIkZu6QBiXuXbienFJw==
-X-Gm-Gg: ASbGncvZ1olURmta+cJHKR1tKWEAo57LB8IqplvQRNhmkv0R5Gk8Larb2aaoVqnPXhl
-	KgH52A6IgXswJN/DmTCdJhbKLfUVLmbRH8TE6eiDbiOK8AlmWpmDSYd0jU86ahZKlXPmHXZR1QD
-	R/y6XzlvFTGivIXpqlfjS6WDNUjVBmB+Zpfl/btWvxwJS00M037F27nvHFf6EWUXjclXQdS41D/
-	41SaCkOovUiTlX1QmgKWWk9jICptq1zKetmoTx6bqVPtv+zXbEN3Y+iANcpatqr6hzYeKOFHsXw
-	+Y6tY6/OeSSXRBjWearW7owQ0M4FUd6oCo2ufCqiAXiMhvr8h5mYDJm8WkgfEUPzF9Q=
-X-Google-Smtp-Source: AGHT+IEF9MuOEGFwIN9QRBkPldEtO6jYxRhBXXO3/8eRjkkZWtikLsW2/JajQ5SaQI4OYxRv3hy8IA==
-X-Received: by 2002:a05:600c:4687:b0:442:f98e:f37 with SMTP id 5b1f17b1804b1-442fd6607d4mr127548445e9.21.1747733255747;
-        Tue, 20 May 2025 02:27:35 -0700 (PDT)
+        bh=+4nMuBRHIBrIWvlanrmwkYN9W9UAKvbmj0KJb2uFwtw=;
+        b=wh/d6x8+++C1+Minmz3GYL/BvM7KVkwmfbz93ZM5edpENxHdA3iytZAn2g5eAlhrMs
+         Y1B6/4O2a01uFrvBTLMP+P24bOXjoqV78ndTWd2DRiigatJjDvp2OWry0MyHbiqNvHGo
+         AOzdg7nkYCmGHvfFNBKyzGQM+rAc8LTbZ7tdzz2Y0yTDR5QvT3TnLPfs2ZjAQRX0unGk
+         R76Do6gH0hddzs/H8kbXw/rF4R9+Odo4mryJTfsrsPHQmUTwdDLpx5+cBPjcrhQZbLcR
+         wq66e1zlheG9YliKgW2lMTNr9659KQ4x2tcT2piq9DM0e95w22R2iY6+fmk/je/FXw3t
+         hA9Q==
+X-Gm-Message-State: AOJu0YxIwMKa23XAgGw47Wz7xP2yEzN/xukrXX/54OJ7llDij7D/BPD2
+	VMuVu+zo6oSHFEduf9l49lyoBZWNCnihQSeohyTQGJGw0sRY/6lk09UcyLi0Ww==
+X-Gm-Gg: ASbGncs7URCe3+d8aU0c9+6D9etsRSUXaJg9k3f4jf3a6asvQwD/7xaAvTp8JJr6AcC
+	rhxKx7ER7uYZPS1h78HvdD/d3F+kp3XYu7NTzagOjWTL/pA/wiV2mYr/IJKhoCR+hyvuVAhSgs8
+	34SR74RtersTZuJUjRi/pbloTVTpQwwwg/912KjcnZrkc0apr82nmWkQweXt2U30jUUFZih6cV3
+	Tjoso5vkpW8poLvrBVA5IgTta8jY0M1rbtaDmdOQaDpdvES28BPT13r6QBi00Lizxq0xefgcqTa
+	+YLzC8QXRiYA9hLX0xCDyST04atOc2RDcfwpSv/EICNCTOAa5Tdt0kWGmMX+x7kpZss=
+X-Google-Smtp-Source: AGHT+IEJBAtomPB7gy9YdPA1pypAxP/Dv/4eR6dn/tnLOpeC3C42eDaxYRSm3vQUin5vczCtz4qshg==
+X-Received: by 2002:a05:600c:19c8:b0:43d:abd:ad0e with SMTP id 5b1f17b1804b1-442ff000bf6mr115561625e9.18.1747733257271;
+        Tue, 20 May 2025 02:27:37 -0700 (PDT)
 Received: from berwick.broadband ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6f062c7sm23544255e9.14.2025.05.20.02.27.34
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6f062c7sm23544255e9.14.2025.05.20.02.27.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 02:27:35 -0700 (PDT)
+        Tue, 20 May 2025 02:27:36 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 1/2] stash: allow "git stash -p <pathspec>" to assume push again
-Date: Tue, 20 May 2025 10:26:59 +0100
-Message-ID: <2cd67f5cd85af03ae99a2760a76e9df5a7edfd95.1747733203.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH v2 2/2] stash: allow "git stash [<options>] --patch <pathspec>" to assume push
+Date: Tue, 20 May 2025 10:27:00 +0100
+Message-ID: <98ad3de977090a793408b25ca880b65f058ea44e.1747733203.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1747733203.git.phillip.wood@dunelm.org.uk>
 References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk> <cover.1747733203.git.phillip.wood@dunelm.org.uk>
@@ -77,69 +77,65 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-Historically "git stash [<options>]" was assumed to mean "git stash save
-[<options>]". Since 1ada5020b38 (stash: use stash_push for no verb form,
-2017-02-28) it is assumed to mean "git stash push [<options>]". As the
-push subcommand supports pathspecs, 9e140909f61 (stash: allow pathspecs
-in the no verb form, 2017-02-28) allowed "git stash -p <pathspec>" to
-mean "git stash push -p <pathspec>". This was broken in 8c3713cede7
-(stash: eliminate crude option parsing, 2020-02-17) which failed to
-account for "push" being added to the start of argv in cmd_stash()
-before it calls push_stash() and kept looking in argv[0] for "-p" after
-moving the code to push_stash().
-
-Fix this by regression by checking argv[1] instead of argv[0] and add a
-couple of tests to prevent future regressions.
+The support for assuming "push" when "-p" is given introduced in
+9e140909f61 (stash: allow pathspecs in the no verb form, 2017-02-28) is
+very narrow, neither "git stash -m <message> -p <pathspec>" nor "git
+stash --patch <pathspec>" imply "push" and die instead. Relax this by
+passing PARSE_OPT_STOP_AT_NON_OPTION when push is being assumed and then
+setting "force_assume" if "--patch" was present. This means "git stash
+<pathspec> -p" still dies so that it does not assume the user meant
+"push" if they mistype a subcommand name but "git stash -m <message> -p
+<pathspec>" will now succeed. The test added in the last commit is
+adjusted to check that push is still assumed when "--patch" comes after
+other options on the command-line.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- builtin/stash.c  |  2 +-
- t/t3903-stash.sh | 19 +++++++++++++++++++
- 2 files changed, 20 insertions(+), 1 deletion(-)
+ builtin/stash.c  | 10 +++++++---
+ t/t3903-stash.sh |  4 ++--
+ 2 files changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/builtin/stash.c b/builtin/stash.c
-index cfbd92852a6..bc2c34fa048 100644
+index bc2c34fa048..b12fd6c40f1 100644
 --- a/builtin/stash.c
 +++ b/builtin/stash.c
-@@ -1789,7 +1789,7 @@ static int push_stash(int argc, const char **argv, const char *prefix,
+@@ -1789,11 +1789,15 @@ static int push_stash(int argc, const char **argv, const char *prefix,
  	int ret;
  
  	if (argc) {
--		force_assume = !strcmp(argv[0], "-p");
-+		force_assume = argc > 1 && !strcmp(argv[1], "-p");
+-		force_assume = argc > 1 && !strcmp(argv[1], "-p");
++		int flags = PARSE_OPT_KEEP_DASHDASH;
++
++		if (push_assumed)
++			flags |= PARSE_OPT_STOP_AT_NON_OPTION;
++
  		argc = parse_options(argc, argv, prefix, options,
  				     push_assumed ? git_stash_usage :
- 				     git_stash_push_usage,
+-				     git_stash_push_usage,
+-				     PARSE_OPT_KEEP_DASHDASH);
++				     git_stash_push_usage, flags);
++		force_assume |= patch_mode;
+ 	}
+ 
+ 	if (argc) {
 diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index 74666ff3e4b..d24559a328d 100755
+index d24559a328d..295cb508a35 100755
 --- a/t/t3903-stash.sh
 +++ b/t/t3903-stash.sh
-@@ -1177,6 +1177,25 @@ test_expect_success 'stash -- <pathspec> stashes and restores the file' '
+@@ -1177,11 +1177,11 @@ test_expect_success 'stash -- <pathspec> stashes and restores the file' '
  	test_path_is_file bar
  '
  
-+test_expect_success 'stash -p <pathspec> stash and restores the file' '
-+	cat file >expect-file &&
-+	echo changed-file >file &&
-+	echo changed-other-file >other-file &&
-+	echo a | git stash -p file &&
-+	test_cmp expect-file file &&
-+	echo changed-other-file >expect &&
-+	test_cmp expect other-file &&
-+	git stash pop &&
-+	test_cmp expect other-file &&
-+	echo changed-file >expect &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'stash <pathspec> -p is rejected' '
-+	test_must_fail git stash file -p 2>err &&
-+	test_grep "subcommand wasn${SQ}t specified; ${SQ}push${SQ} can${SQ}t be assumed due to unexpected token ${SQ}file${SQ}" err
-+'
-+
- test_expect_success 'stash -- <pathspec> stashes in subdirectory' '
- 	mkdir sub &&
- 	>foo &&
+-test_expect_success 'stash -p <pathspec> stash and restores the file' '
++test_expect_success 'stash --patch <pathspec> stash and restores the file' '
+ 	cat file >expect-file &&
+ 	echo changed-file >file &&
+ 	echo changed-other-file >other-file &&
+-	echo a | git stash -p file &&
++	echo a | git stash -m "stash bar" --patch file &&
+ 	test_cmp expect-file file &&
+ 	echo changed-other-file >expect &&
+ 	test_cmp expect other-file &&
 -- 
 2.49.0.897.gfad3eb7d210
 
