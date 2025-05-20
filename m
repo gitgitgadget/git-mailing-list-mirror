@@ -1,138 +1,151 @@
-Received: from mail-vs1-f43.google.com (mail-vs1-f43.google.com [209.85.217.43])
+Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F157267F70
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:16:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BAC288AD
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:21:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747732617; cv=none; b=jjijtIUpGRG9ejIE/odKZgMNYrMDdv2p4pYjKLLoI3MIhlXEVWPMLnsm2BfWutT38iUyqprQl05BjyKaD1TY3Yi2JEyNORDUSIKPeKia/InInuU0cZ0b2MQO6X+EOWfPW6vIn9WS3Bnc3bB/Ed/zH7ZDc7nP1+6bAIz6l0R1TDA=
+	t=1747732883; cv=none; b=rMShosLo3mzVPdK+nV9QTdfpX8PySRnNCT1US9YVK9c5exY/ZQYNsGEPj/WWJVs0uin1dkByseW+oZyEZg/zBjuVQsYVJceoWMRBflkK5+x30jw9l8tiwXyGl0RoAAqBVYNlBRBePO6uX3azkJOI/k06Z/5YJt4/ZOuMrsfajkI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747732617; c=relaxed/simple;
-	bh=26S/yt576/p5gUrgxoCAJisx9F8fWudieaCiqv89f/o=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=eMzwJg57hDweiQabApsUECaHhTgN22uKMuhu9OZzatSH8Tpc0ujDW3M0zZV571PO+C/Aq9qhq/aTN+pj2AqIHMXsQH0IE6rxIZth2yYhSyFsesVwyumExoV2+A+EosxM5QCOL3fXcXdq9OQOf8Okse4jIPNSVSxg9fCSaZxoVbg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=m13/w3Jv; arc=none smtp.client-ip=209.85.217.43
+	s=arc-20240116; t=1747732883; c=relaxed/simple;
+	bh=RyrLIcjVLAPsh2Ss2QECsns4607dDWV3a5c2U+rTgkU=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=lbNY5UFYK082Aq3ynS8Hd6zN6Zus6KxXsEjYP6DVs4Ffeg+LXAhiYjqTWXp4BE5pYZ41Hn9tcIQHgMMVvKDNkmnZw+9S6c6BVOlUkweEbppA/4i4jxdUsEht81E0xZ+f0u2xtRGarXBdCVAqhvHxoMv7qkIpKmgKvps2F0TqgcY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KyUbHa9U; arc=none smtp.client-ip=209.85.128.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="m13/w3Jv"
-Received: by mail-vs1-f43.google.com with SMTP id ada2fe7eead31-4c4ecf86e8bso1834792137.2
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:16:56 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KyUbHa9U"
+Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so34612515e9.0
+        for <git@vger.kernel.org>; Tue, 20 May 2025 02:21:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747732615; x=1748337415; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=26S/yt576/p5gUrgxoCAJisx9F8fWudieaCiqv89f/o=;
-        b=m13/w3JveT+tJD/g3vR0c3Jo0IJQuCF+fnGq8ER+Rune/KQFaEduHjrWNqs34fk+BB
-         XEWTJeqYHftaRcCdGeuOZPMvwaAPiGav3raTYpE2CyTbE1osqn+5NNptverT/ynJjMdI
-         DxOrqrf7V2htfhl+awk9YbXUUoDCM3mS6yKXCTkOBAmEy302Uk7CdMwm/Ji6Z89qKuUe
-         MnEBcid+RoH8qNBfPkz0czkPN0LWQy84YUg7TPAqHhrk42zfgWzup1wgeemf0ukgOSmv
-         j0XNI9zDeKVAditzdzsskY1JFOtFvlgCAcUVbJHrWEd4iTOTF7yPmAURk42vQbUbxS4d
-         JJqQ==
+        d=gmail.com; s=20230601; t=1747732880; x=1748337680; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=6Vpkcf0FOty4d585/A4MY56Gla1juoF7K1xHSc+tRv0=;
+        b=KyUbHa9UXlLfeVXcOMTDZJVFMoszLh4IrnpvnMxrc9OxHJdK8ktbnMEQWMquAOxoTA
+         r+c5e0+r9Fn2ZzAiPJAXDcC0FCoup9glu+nPXVYtQZ+RXL3cvuC3ymsKNj6bc7EAXLDc
+         GoaVVvNNLLbyPqPnD42gwtox3t7/xHc3Er7CJOiqzGC2ekWN6nta7FuyjypT17ioB8Xe
+         Vl0dlXWhBpwUF521C6whZmocacFY+eokgJ4w7VbuQGCNwox+3XIGKgl2PbXHpLN21N6F
+         JrKx/f++i0AnEHFujGyjiIjNk1VPCeCgXCxyf+UQf7fXwcq2cew5hHxkqdg1/eOxegxt
+         NP+w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747732615; x=1748337415;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=26S/yt576/p5gUrgxoCAJisx9F8fWudieaCiqv89f/o=;
-        b=Ypb5VQMKksg6apo8lAZN2SVWnWCze4I4KmLCDjio/lutgxBRogAKAb9v0v54Grnl75
-         5ex2eR6LrbtbMiktgkmlrzgLCAGkC6pIrsKDxjmjoWege5KxzShqqABe3VJ4rfnnxb5t
-         5WabU7UWiYezSAezLrFFbBPf7SMvnKjh8+kX0Hq6gCAijpotCd7poGgulvNAXhqppJME
-         G1eLeFDcHUBusq6YcDyu0MIFmUcCU3fYx5lP8BUzY8pQDj2cAMO6CU/zRMNUC0m1e8EC
-         5hxy3BqJSS2naF2trooEWgo0AsNtUJaTdtBaU0c9pirRyADiDW06DYmWcsWx8o4AcHZw
-         87ng==
-X-Forwarded-Encrypted: i=1; AJvYcCXFwjhf7yaxNms5DtjNG2NIWDsQBNCVFR6kA2uYDMOIcneczNRnHpPfmdQ71IeadMI/vEw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwArHZrhqZDci5dXtvmw9YmV6Vfc7apgB/dmU2ULYbUTzquSk4/
-	8hjcJVFH5+1HVE4khvKn4bt2icc6F5AN1wAIC3ykn4BvRIqD29+feiTp0zUfALSRdRBzZ4d3DAC
-	BPODVN68h465ePqkWl0xIqgb+eZanRtsgDvTv
-X-Gm-Gg: ASbGnctqlFe9SHRqBFfNOqqIyFjBW0UfRgf1uytJLRF+H0u7AulpMWOHYcM3KZhdj97
-	DRMvrIpHMxumQFx453jXqtAlcop3o/g5twHv+GCw8JFTldbfeBAk+bvY063tnw5VXRjHdIcXIh8
-	VBW3oUDcfIlK7UV8zYvdg3jxhZAeshDdg=
-X-Google-Smtp-Source: AGHT+IFqNSeyu5ysJRlmtT2ns0A0VAtvaCxW7keq4XHjht6CCd+aCS4HGus7JObaFmQciOHwXseQ92brZfzE7vb31ao=
-X-Received: by 2002:a05:6102:6d3:b0:4e2:872a:857b with SMTP id
- ada2fe7eead31-4e2872a85f1mr6164175137.7.1747732614991; Tue, 20 May 2025
- 02:16:54 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 May 2025 02:16:53 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 May 2025 02:16:53 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250520014920.201736-3-jltobler@gmail.com>
-References: <20250507030249.4802-1-jltobler@gmail.com> <20250520014920.201736-1-jltobler@gmail.com>
- <20250520014920.201736-3-jltobler@gmail.com>
+        d=1e100.net; s=20230601; t=1747732880; x=1748337680;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=6Vpkcf0FOty4d585/A4MY56Gla1juoF7K1xHSc+tRv0=;
+        b=md9Oe8UR2GUZawDawsi9NxCNcRjdwBu0hSplr+LFEvbIftExt9brwcgBqZR3OvMNS1
+         Ncx7UNevmNyWGvdaNOjOGGTTTqrkqvk60GLutP3Lhz7TtD68nwFbnbbSRJTBOSvWm85a
+         DAel4PIWafK/+NWyIoZizk+F7XJQU+F93FfEQh7fcjcwylxPeTdtUMyu1eFVKmNCuf1W
+         xlO83MnggeMX3MCx7acrB7Y5mVJ4FnrW0dXLrRz4SSYA+GrkRu3Tma2JfMBu+78/RlbV
+         zr+t8sulHLOSG1Uu7k77d2YEA6N/uNFyFTOScwO2GOIdBy0jrr0Kpb7AXuNBGcCuM88d
+         8JuA==
+X-Gm-Message-State: AOJu0YxZYtEjiIrQMgLaWmjouPaH25rPa1FwQAIpRQideiepglNXhdnz
+	Z6sflAQYsNhbPoHfRPj3TWaWcItPQi+dmxsUXqNVjyrQujguHsikZwj4
+X-Gm-Gg: ASbGnctnlr5wi0S2wAQcEv4fzNQrd2L0p++38puMRnk7IdjvLTziZZ0SlSePXznACQN
+	QLtk+aQs1GI+bCKcYtNwlCX9ZCFA6RTIobsqYAr+R+I5Ebb0gPAgOhe6c/1NI52XI0DRd8P7IWq
+	TTNND1IQxJlarDphc1beBUwDJjejPOYFJmIZT3/8oYlXHJp5qMGW2FggIk/KKPFHZDzMkL0QSj0
+	b6lDX0FmqRvBIAo+SmGTaLl5nQHVmb0A9BqBVyM3YQG/51FYIYTsJjdiWAZZ23SoaFSlp2xUReO
+	znFpiEgQnvokSQvLJ8Qoe0ww90wdC378kudXxAIr0XQ/J2AdJYMtzNkQoz00mC0zGY52ofPw+cM
+	b6Ga5IbOrprc/IRGdSEnhVtjAnXA=
+X-Google-Smtp-Source: AGHT+IE7lpQ6G2ehxl12lpPTkWAtq/koMFcsn9C+Yu9u2aB+IGQehuJ93aeouB/vW3qNUrJlClDUSw==
+X-Received: by 2002:a05:600c:821b:b0:43b:bfa7:c7d with SMTP id 5b1f17b1804b1-442f84c2008mr178912245e9.2.1747732880137;
+        Tue, 20 May 2025 02:21:20 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f23c07bfsm23825715e9.23.2025.05.20.02.21.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 20 May 2025 02:21:19 -0700 (PDT)
+Message-ID: <0ca879cf-303c-406f-8040-cc0c7e9b0964@gmail.com>
+Date: Tue, 20 May 2025 10:21:17 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 20 May 2025 02:16:53 -0700
-X-Gm-Features: AX0GCFtTN2cwRvNSQFg-j27XhWohSpNo-KCsllEYdilDq2ZOGlkmrmY7ZsntgEA
-Message-ID: <CAOLa=ZR3kVG+ob-pzH+eB+0W6+mFMSe3CBKotiCOOZzff0U9nw@mail.gmail.com>
-Subject: Re: [PATCH 2/2] builtin/receive-pack: add option to skip connectivity check
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im
-Content-Type: multipart/mixed; boundary="000000000000adeede06358db5d7"
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] stash: allow "git stash -p <pathspec>" to assume push
+ again
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+ <xmqqtt5ktlqm.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqtt5ktlqm.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---000000000000adeede06358db5d7
-Content-Type: text/plain; charset="UTF-8"
+On 16/05/2025 20:10, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>>
+>> Historically "git stash [<options>]" was assumed to mean "git stash save
+>> [<options>]". Since 1ada5020b38 (stash: use stash_push for no verb form,
+>> 2017-02-28) it is assumed to mean "git stash push [<options>]". As the
+>> push subcommand supports pathspecs 9e140909f61 (stash: allow pathspecs
+> 
+> Can I safely do "pathspecs" -> "pathspecs," here?  I found this sentence
+> hard to read without a comma.
 
-Justin Tobler <jltobler@gmail.com> writes:
+I'll fix that
+>> in the no verb form, 2017-02-28) allowed "git stash -p <pathspec>" to
+>> mean "git stash push -p <pathspec>". This was broken in 8c3713cede7
+>> (stash: eliminate crude option parsing, 2020-02-17) which failed to
+>> account for "push" being added to the start of argv in cmd_stash()
+>> before it calls push_stash() and kept looking in argv[0] for "-p" after
+>> moving the code to push_stash().
+>>
+>> The support for assuming "push" when "-p" is given introduced in
+>> 9e140909f61 is very narrow, neither "git stash -m <message> -p
+>> <pathspec>" nor "git stash --patch <pathspec>" imply "push" and die
+>> instead. Fix the regression introduced by 8c3713cede7 and relax the
+>> behavior introduced in 9e140909f61 by passing
+> 
+> Hmph, is it too much work to have a patch that only fixes the
+> regression and another that extends the feature on top as a separate
+> patch?  Not that I am opposed by the new feature, though.
 
-> During git-receive-pack(1), connectivity of the object graph is
-> validated to ensure that the received packfile does not leave the
-> repository in a broken state. This is done via git-rev-list(1) and
-> walking the objects which can be expensive for large repositories.
->
-> Generally, this check is critical to avoid an incomplete received
-> packfile from corrupting a repository. Server operators may have
-> additional knowledge though around exactly how Git is being used on the
-> server-side which can be used to facilitate more efficient connectivity
-> computatation of incoming objects.
->
+I can do that, I was just being lazy skipping the separate regression fix
 
-s/computatation/computation
+Thanks
 
->
-> For example, if it can be ensured that all objects in a repository are
-> connected and do not depend on any missing objects, the connectivity of
-> newly written objects can be checked by walking the object graph
-> containing only the new objects from the updated tips and identifying
-> the missing objects which represent the boundary between the new objects
-> and the repository. These boundary objects can be checked in the
-> canonical repository to ensure the new objects connect as expected and
-> thus avoid walking the rest of the object graph.
->
-> Git itself cannot make the guarantees required for such an optimization
-> as it is possible for a repository to contain an unreachable object that
-> references a missing object without the repository being considered
-> corrupt.
->
-> Introduce the --skip-connectivity-check option for git-receive-pack(1)
-> which bypasses this connectivity check to give more control to the
-> server-side. Note that without proper server-side validation of newly
-> received objects handled outside of Git, usage of this option risks
-> corrupting a repository.
->
+Phillip
 
-I don't have any comments for the patch itself, looked good to me!
+>> PARSE_OPT_STOP_AT_NON_OPTION when push is being assumed and then setting
+>> "force_assume" if "--patch" was present. This means "git stash
+>> <pathspec> -p" still dies so do assume the user meant "push" if they
+>> mistype a subcommand name but "git stash -m <message> -p <pathspec>"
+>> will now succeed.
+> 
+>> Tests are added to prevent future regressions.
+> 
+> Nice.
+> 
+>> +test_expect_success 'stash --patch <pathspec> stash and restores the file' '
+>> +	cat file >expect-file &&
+>> +	echo changed-file >file &&
+>> +	echo changed-other-file >other-file &&
+>> +	echo a | git stash -m "stash bar" --patch file &&
+>> +	test_cmp expect-file file &&
+>> +	echo changed-other-file >expect &&
+>> +	test_cmp expect other-file &&
+>> +	git stash pop &&
+>> +	test_cmp expect other-file &&
+>> +	echo changed-file >expect &&
+>> +	test_cmp expect file
+>> +'
+> 
+> OK.
+> 
+>> +test_expect_success 'stash <pathspec> -p is rejected' '
+>> +	test_must_fail git stash file -p 2>err &&
+>> +	test_grep "subcommand wasn${SQ}t specified; ${SQ}push${SQ} can${SQ}t be assumed due to unexpected token ${SQ}file${SQ}" err
+>> +'
+> 
+> Good thing to test.
 
---000000000000adeede06358db5d7
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: fbd632fd395cffc5_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nc1NJUVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mOTEvQy85NDBBcTRydkZjR0RweVlVbmVsaFVyMm5nMAo5R0l4WkhzdVd4
-aWpCMkc5ZkNuSmxraXVEc3BYUlJieFFySE53RnFPTXRqQ01BRmFKOXZQK05Gck5qcXRFRlBJCjdF
-UG9ESWxBZ1h1eisrWXlNNlRpQWUzNnk0b2FrdmQ3Rytqc3plbnROdlBQbTdhWmFkU2EzWFM2WVNQ
-bk1iRTgKS0syL09kZGNXL3Y0WmV1NGNZQUU2dW9FZGhQT1NBV2J4V1VsSHhkNmpMVDY0Um9zcXZo
-UEhNdE5ESEZsb3h2SQpaVER0bXNUeHpBU2FMeEZzTTl0elRuYndNcHVUVjVBN2g3ZjFFT2o5dk1N
-RTA1WGxnaVJxUjQ5aE16VFlGbXNICm45MlRySzRZSERldHFpclgvc2RYdnFWNnhUeWVJYWJpUDEw
-MXREdGRMVDVITkR0K0Ruekkxc0lWZHdON3JYb0wKeGxweUdWaE92RHdnNVp2b1QwQkp5NnpZTDVx
-TkJENitaVmppb1pFc2VNWkNmVjdCOUcvbUF3dWowVnVEeEtnQgo1Mm5FNGl5U2pXSVZSWmd6ckY1
-dVkvazQxUHR0cGlhNFdMcG9mVVlHeFNNb1VuSkdncmMxOE9pWWQxL3BGMVZOCnRSS25leFNxZHl6
-YnpnMSt2eVRYUDFNbER5ZG5Rd2F4SThDaWpIbz0KPXN5OGkKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---000000000000adeede06358db5d7--
