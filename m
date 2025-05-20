@@ -1,83 +1,84 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9484C27CB2C
-	for <git@vger.kernel.org>; Tue, 20 May 2025 17:58:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F406F26A1CC
+	for <git@vger.kernel.org>; Tue, 20 May 2025 17:58:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747763894; cv=none; b=BQdhgEidlcvmfJ6UWLoF/rRGRqy3lBv8MDqjexDH1sKbGuwFPY8Ey9atbG91mmu4C0itr15Q4LvTJ4lrhcMmXkq0SoO6HoU4rJJf+4YO2NcQZ9+6BJLuPHEF1cH+Hqgi5TrEbtXQGzE48FHd08OOGDs3V+BXXFy8e2mnZImbPuU=
+	t=1747763898; cv=none; b=L1rvVyYq8QBYThqzsNvp911a+W820K39iuzkmvvP6tTrTZqttTsLPqhnI05lYbxEVr9qAzcI7NWUTP6dyfU4qgpurOKqyZDp/Sj0UvKFLGFJ+V2fBnzDpNOcZ8PUWhDvYnTq9iUJ/E/mGR9qRwkF7zi04Ms7GSsPPO5IPRG9WKA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747763894; c=relaxed/simple;
-	bh=0OA3metDEtvIcw0CA8Vmv5buxw4sEHxrmvYKwEx3u/E=;
+	s=arc-20240116; t=1747763898; c=relaxed/simple;
+	bh=+UL1uhwyKF1ItQ2U72FLEEKrIv7xafd6TPBnlM8fSHA=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=Ig/UWxghCbSw38qpYql5a9e8TpNwlENZnAIyEUKnqByXZmkz2v/guHZX2snNZoErTB4+KOc+LqKvSiaRiTIwEzBROJcRTKQ++rxXMTrt8EpzpbFUCdoMQGHqdooCXN6Qc71aNVl1tR7O7etzRxnsLQqgN0BVq6V7VFccA1NFHC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=rwWVr3Th; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YCMBRgyg; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version; b=B0mm5izS5CYwiy6hlMsQHBQg+bQAd+CDfP24vh8K7JpLzYEltpscHFlsgXA29t9usJWTObb+PyUKL0uWYldmowuw6ajNoKBVgU+xO6AvCQHFbZXYBsTUGrG8lPhI6HHl3AanTgvyklaY4+YfepJTlmbYYZ7mytkdnj78X2fu81E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=yTbe4gBC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UPMNfxwL; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="rwWVr3Th";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YCMBRgyg"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 8417E11400F2;
-	Tue, 20 May 2025 13:58:11 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="yTbe4gBC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UPMNfxwL"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 09D181380421;
+	Tue, 20 May 2025 13:58:15 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Tue, 20 May 2025 13:58:11 -0400
+  by phl-compute-09.internal (MEProxy); Tue, 20 May 2025 13:58:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747763891;
-	 x=1747850291; bh=VpVdpoVTy2XWWkiZJB5OWfDUGbcSZhb3cboz/l0lJqI=; b=
-	rwWVr3ThQ4FhT5MmMCD8RLgvHyweT8HYTbhvgGnM4SwPrgbvuGboOOgLq9kdLo94
-	Hstd6jDQmYD3i0fOSQ6hwfR6JX0F3f7ImWHZKok6eczTjhx2NUV37+16IZNc5y5J
-	142w4yi/d8g9Hxgwq9GBsb3SolqzOTkSYIRiXvNaO+BB+2MK2hD73xG1kO/yYV2Q
-	DcJpfTKzrCHDMQioY2qWcrtsm3Qk1uwP3Ff+jzmFVPt/oaTK+2M8RNAY7fTa6xKp
-	Rbd5YMtFPYQH7P5CctnJDgqFHjwmVQlhZ8bpIywgRJdGlIOstkI1h/0bhjArpv3i
-	1zxSWYKwO915I0v53+8TrQ==
+	cc:cc:content-transfer-encoding:content-type:date:date:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to; s=fm3; t=1747763895; x=
+	1747850295; bh=7+i9KOzG9ReeocCrAmxvqpIMMztQFjPV3kk5Nj6E9wY=; b=y
+	Tbe4gBCt6OA6WpcoFEUn/hDMopX4MJlC9/CIyXrtUQhzCv5rR3UoB0vg3NdRdHBF
+	J52MF8ri0/RySB48dqhZaRLROLIg0QA0T5Yb8to6UG0UayPyoNr35kxrgYGVFbwb
+	dWKDF8MJAXni92g84XRZvYya621pDppsahe4CN0l7WHJAUGdmd2RmCsF8nz628c9
+	FwYRdDptxjuzWaGDZeHPRx2DtOZapHSy7JugftSkHo4R99uzawHdQ2eCBD2SM/aI
+	dJoJbLcQM9eTm6l8Go+AZhVFBEZKkQxEe2z1Vrujh3DltbOPvzKiH4fGwrXq2+ow
+	upLeDa1pnF/BmRtFy8kMw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747763891; x=
-	1747850291; bh=VpVdpoVTy2XWWkiZJB5OWfDUGbcSZhb3cboz/l0lJqI=; b=Y
-	CMBRgygGUe6cPifP9adawuDmIbIMyvc81M3gTFcATAee7Dr+BL39IYRW3d2dF9Q0
-	hHL8a0nljOvU5l1n3YiZtGtNmZehPJAhPC612rxmDIArhomFShwTuY0r1elFJUZy
-	L93KcAEdnUkW3mgxhCbBXPw3IfF7C531SBkLaWYoyOLBslsb4hcb9NNmOS6QqtzB
-	ANKFtkxb0/bSZJSu5X92QqDUo38Sh9Z+8Zi1tFDmykM0ACjM09+NFAZjsnII/iAG
-	7lPTUyUf0Kh3BIco0Y4ngTIrRcD0op8dg/DKoVYRuP8Q97Wwe/XtM/5XKxKhanQ6
-	u2ZwGN+5J2RzA4FWi3VYg==
-X-ME-Sender: <xms:s8IsaNa428q2iefSNPNwUPTO8CKsWodlUX83YkmgdorHYa89AOQV6aQ>
-    <xme:s8IsaEYT3AjJOq6ramem2mGUv0sSZ-xPkTCVaEuBfvXmGaaHfNSwgbFifDt4ZtoR_
-    jwQjcVUq_heRMBtiw>
-X-ME-Received: <xmr:s8IsaP9w7e71xDkBaDZCenelGReAzgWNLxSsR3GVCU5kTtBOaSfv7mTrv-04wbyued6TcRMGAlNSJyxGghzytgxW9McpnQGvkTw>
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm3; t=1747763895; x=1747850295; bh=7
+	+i9KOzG9ReeocCrAmxvqpIMMztQFjPV3kk5Nj6E9wY=; b=UPMNfxwLhgeG9/3JN
+	dhUelmrwzBR06ieG2gRNyEP2EkROSrcLtll26oGCO+uUJ4fEkY8jmaSNdWIsP0S3
+	AV0Unx566eD0/ib/BI1EZ9G+jIq4IxHbGS7rH57oLl98p9vwqhh3UXcLVKQEJr7T
+	TEwMzFxNWuLXCbv7UIgvT11MVwMSrtq89pz3fHoMiGZl0ZgZdUHH0TP9aQSWIdMF
+	DFUKY5SEzIdwIWQs3A93L3V4qqD0xoJY93gGw5NLpmcLh663H6wf2Qfag/EdH7tS
+	b8eSGG4Ye4Clbq/Bh8cZYzI3G/4Dv3BCq8KOOuvIRWNcY0PCY5/u4xV/OyMItegW
+	enN2g==
+X-ME-Sender: <xms:tsIsaGDEojXNIj1Tcmhw4e2ksZKFFUjcEcrMVhx9577vNKKcFR3hWWM>
+    <xme:tsIsaAj5MaMcYo_eHdRnySi8UJQy3PfL19G9Opzo09X5YOS_vgFp8MKgiOavA625s
+    7QliabSRRwWFc8sMg>
+X-ME-Received: <xmr:tsIsaJmQxNzq5qekmNoUS09plvFGk7ip69064ZmHCOn0axJT4xWPFBH31xlYnBENAtFgM8p55m3Ppv5vMEtWsLxAqvmxU0gqCU8>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdekjeculddtuddrgeefvddrtddtmd
     cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghn
     shhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtne
-    cunecujfgurhephffvvefufffkofgjfhggtgfgsehtkeertdertdejnecuhfhrohhmpehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtf
-    frrghtthgvrhhnpefhgfeglefhjeekgfetleetjefhteeiheegfedtudduffegjefhkeet
-    udeggffhkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    nhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhs
-    sggrkhhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpth
-    htohepugihrhhonhgvthgvnhhgsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:s8IsaLqilaATaQzbAaxRwAcZYj5JDqUVulccH8ptIjuS1ShSgWJKwg>
-    <xmx:s8IsaIoppVuuvS9d9WczD0a1xxTkLGcQlCOpp73ScHAitpZRQwT99g>
-    <xmx:s8IsaBRIw-Bz4HTe_Kwsh51aQW5sPQwdJ4LmDHCMHCTnK2adbfscAQ>
-    <xmx:s8IsaAo69WIQ5Kwe2Po3UCNmnxqB3Kc85Rqk_NwFgeb5jD3n9Gl4nA>
-    <xmx:s8IsaKjA2V_YYsMvVBcjgeTf1v2UapEwCCWVFw2hbPWUOssV8M66VrZK>
+    cunecujfgurhephffvvefufffkofgjfhgggfestdekredtredttdenucfhrhhomhepkhhr
+    ihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrf
+    grthhtvghrnhepvdfgteeiffefjefgiefgudekjeeluedttdegieelgeeileegvdekteej
+    heejkeefnecuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhs
+    sggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpe
+    hsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdp
+    rhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepugihrhhonhgvthgvnhhgsehgmhgr
+    ihhlrdgtohhm
+X-ME-Proxy: <xmx:tsIsaExzitkuPoFjCmCsccRFVqj-U-eyzzUD6j_lAKhoRqzSUSFsJg>
+    <xmx:tsIsaLQj3XG0KqAehDN501GsXs_Zl0ZUCBqGuerXjor7kh9P38A3Ew>
+    <xmx:tsIsaPaHEqzu39_mOuJMaAH6Hmy9lOBWWVdClWnkct6WHZMEjq8OCQ>
+    <xmx:tsIsaER5cAd89gIG3vESCj9MDXxidlRZWFGl080XrbtUlIappOhySA>
+    <xmx:t8IsaAJOa_D5xsOYjNn9jH4WkMgeO5qD6AP1zxzNZXfiNsszFnMAqzyc>
 Feedback-ID: i8b11424c:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 May 2025 13:58:10 -0400 (EDT)
+ 20 May 2025 13:58:13 -0400 (EDT)
 From: kristofferhaugsbakk@fastmail.com
 To: git@vger.kernel.org
 Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Jeff King <peff@peff.net>,
 	Teng Long <dyroneteng@gmail.com>
-Subject: [PATCH 2/6] doc: config: mention core.commentChar on commit.cleanup
-Date: Tue, 20 May 2025 19:57:20 +0200
-Message-ID: <b43b78aba63fe89fb0e85754f2124f96f3af01dd.1747763769.git.code@khaugsbakk.name>
+Subject: [PATCH 3/6] doc: notes: split out options with negations
+Date: Tue, 20 May 2025 19:57:21 +0200
+Message-ID: <d2b6864b7072faa2c804c98ce7758b666e11f00b.1747763769.git.code@khaugsbakk.name>
 X-Mailer: git-send-email 2.49.0.780.g892193c3f50
 In-Reply-To: <cover.1747763769.git.code@khaugsbakk.name>
 References: <cover.1747763769.git.code@khaugsbakk.name>
@@ -87,40 +88,42 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
 From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Mention it in parentheses since we are in a configuration context.
-Refer to the default as such, not as “the” character.
+Split these out so that they are easier to search for.[1]
 
-Also don’t mention `#` again; just say “comment character”.
+[1]: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
 
 Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- Documentation/config/commit.adoc | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ Documentation/git-notes.adoc | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/config/commit.adoc b/Documentation/config/commit.adoc
-index d3f4624fd27..208ae76c816 100644
---- a/Documentation/config/commit.adoc
-+++ b/Documentation/config/commit.adoc
-@@ -8,10 +8,11 @@ endif::git-commit[]
- 	This setting overrides the default of the `--cleanup` option in
- 	`git commit`. {see-git-commit} Changing the default can be useful
- 	when you always want to keep lines that begin
--	with the comment character `#` in your log message, in which case you
-+	with the comment character (`core.commentChar`, default `#`)
-+	in your log message, in which case you
- 	would do `git config commit.cleanup whitespace` (note that you will
--	have to remove the help lines that begin with `#` in the commit log
--	template yourself, if you do this).
-+	have to remove the help lines that begin with the comment character
-+	in the commit log template yourself, if you do this).
+diff --git a/Documentation/git-notes.adoc b/Documentation/git-notes.adoc
+index bcfe3dacd3f..8706b33f2ee 100644
+--- a/Documentation/git-notes.adoc
++++ b/Documentation/git-notes.adoc
+@@ -174,14 +174,16 @@ OPTIONS
+ 	Allow an empty note object to be stored. The default behavior is
+ 	to automatically remove empty notes.
  
- `commit.gpgSign`::
- 	A boolean to specify whether all commits should be GPG signed.
+-`--[no-]separator`::
+ `--separator=<paragraph-break>`::
++`--separator`::
++`--no-separator`::
+ 	Specify a string used as a custom inter-paragraph separator
+ 	(a newline is added at the end as needed). If `--no-separator`, no
+ 	separators will be added between paragraphs.  Defaults to a blank
+ 	line.
+ 
+-`--[no-]stripspace`::
++`--stripspace`::
++`--no-stripspace`::
+ 	Strip leading and trailing whitespace from the note message.
+ 	Also strip out empty lines other than a single line between
+ 	paragraphs. Lines starting with `#` will be stripped out
 -- 
 2.49.0.780.g892193c3f50
 
