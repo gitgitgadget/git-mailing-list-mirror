@@ -1,240 +1,255 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0F0255E2B
-	for <git@vger.kernel.org>; Tue, 20 May 2025 01:54:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 778872550A6
+	for <git@vger.kernel.org>; Tue, 20 May 2025 05:07:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747706049; cv=none; b=kDefb5uqS0jRpr9d1Wvyas6a6Tdd01KYxOh0pWpm3JQ78UT8n7Od1jrk4KMHQEth1NnX02vhbSrYnuDOyMH+OOxaM3eeZ3gj8hjgoQ67OfNix/2sOX7q3pQ4y9flKlaLmqE0s+EX8dtRfzGaWVT6neXPI/EJqjKNUi+/UnMArMk=
+	t=1747717634; cv=none; b=D3FQDI64oZ8vZ0RntHVveZ2gAwgPx837x5EUEJT7EwdDNff0iiPptcRKjO+FQs56UjVujF1pu84MnflvXgYU6Mbbs+W8CthjtlvL+S6DevsiMnKYemymtYeWO8tDejTMcL0do4Z1/odlIC5WF2Y+iDoI+85vMOMM7h95k8mss8E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747706049; c=relaxed/simple;
-	bh=VtpXFTCePBEZFOXcT24W+8tT9tpK40w38TnwwxJTIxo=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=ObBNT5CmRYbWxfTMmVaSQ5c/YiTBtgQvUAOLNEYTDgOMCDNZwAD9zxPSwhhoierMeCcPwLlCjJqO65v3ESd4WrV0q5XNmw3Zz3/MO8G4DvU9joIG/pe3y9ng7fqFUt1E29tX7D2kFAA530WgrhbjdvkUagZ2CbmLMEy38Ga3ph0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eyNvjoaI; arc=none smtp.client-ip=209.85.160.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747717634; c=relaxed/simple;
+	bh=HwnFI64sIT96t2/m4APljiRUdVu2w0m6r9w9FN+NA/U=;
+	h=Date:From:Subject:To:Cc:Message-Id:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=r5t/yE0HBPv6qfRiXgeCnhcV1ySWnuDyVLFiYsA6AmTPAsGOd8EbCZCoPtIKWTmNPt/wcPHSUDiJV7rv2s1FIp/CYm497ZEXizAHm/lfUPL9PHUlt8m+1uXuTn2fIDFfJf/0gl7dqnduZCgUPCCmFkRLaZyjbhQccUBJP2M6D3k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unrealasia.net; spf=pass smtp.mailfrom=unrealasia.net; dkim=pass (2048-bit key) header.d=unrealasia-net.20230601.gappssmtp.com header.i=@unrealasia-net.20230601.gappssmtp.com header.b=nF/Uq52D; arc=none smtp.client-ip=209.85.210.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=unrealasia.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=unrealasia.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eyNvjoaI"
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-2cc89c59cc0so2214285fac.0
-        for <git@vger.kernel.org>; Mon, 19 May 2025 18:54:06 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=unrealasia-net.20230601.gappssmtp.com header.i=@unrealasia-net.20230601.gappssmtp.com header.b="nF/Uq52D"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-742caef5896so1922580b3a.3
+        for <git@vger.kernel.org>; Mon, 19 May 2025 22:07:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747706045; x=1748310845; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tWSQOAEI0MiRAxWJhq0yqc86Br+tc/9i+4+fDZlBXIo=;
-        b=eyNvjoaItj73ccHaZVO9mV23S8+ASVTR2RpgaD65lSyQfShRD/PT/fbbXDjiJsypY+
-         N0nw2VseR2iPqGtJveiGYK5uckkc3NxDff9OlK2Dv6rBpFgNTi+ruGlTlgsff4CZuc3d
-         WC8wYI31mCvzdeRhZJ6DyPdboIcuJ7BWL4GQwZqUHyytoQRnUXyquh1W0hgkEhRzh+Oo
-         dOouzfXu/DfBzENnwCynT9KdLN2bx064TDK2cQgp9zm/FR4yjVN92XQCCYKKXOWPzMaP
-         /HrkHASU2LNMq4jIuDgkigAK90eF2hH4eyAkZZjIbVCPuLhMY7+rO+IUIwZsPFaikirj
-         l+Dw==
+        d=unrealasia-net.20230601.gappssmtp.com; s=20230601; t=1747717631; x=1748322431; darn=vger.kernel.org;
+        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZgsbQ0kPdMx1ebu5BCr73DeUmAdC1DU3pOMV2WMyeeA=;
+        b=nF/Uq52DqHjTk9oB5nuHhK8ECfPJfPESZc8+/mLIuT+RIeyhL7p/MNcPc0aadn89FI
+         S7hA2+lAwcNx9YJq9t/0xMYNHHEsCFzUrB5LFLEiJ4FUvKa6/GlGGnbi2yb4VX0zlVPW
+         zLdZItLy6tv3XdPjouWihxMw+PBgJtqA40uQPorO0VIwHH7fbWIWNc71OX6nWAPVHtFi
+         60PT+KrKDRaAsne4fxEysc94dFkdMsFtNJq9hgf3Ty8yIpPpeQEUa29mjFaraWpMbfzL
+         J0gFa5nDOd03Eho1LMaNxEzGLPCxlM0cs4/qUFgXeCkMgGbTztxV8fZcyRuYequlKfs5
+         ZWUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747706045; x=1748310845;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tWSQOAEI0MiRAxWJhq0yqc86Br+tc/9i+4+fDZlBXIo=;
-        b=K9JK4LszYyGpDi57laAFSvKA70BCfyvP7RhCLmlR0ICibDtZjTvgGVykY29tfHMQ/7
-         hgJya7qcF4o+Up+x+QpVJZb8HcoWhaJhEbBfeSQDsKCw560HeAEBDNiJ3fXpl1OaeJYY
-         JAVWLcceABk44nhqs9ScnycZq9zVbzhqteQt6Q0nTTyyZsFJfNFuBUKnyx+3p1QwNfq6
-         p/rb3bEmsUL0vwjveWzbf0WdBtcxLA9zxRvgdp00q241CF6RLQsboBHIqbqEZytanzDX
-         4ndtcHB5ZAz4mDYIYdKFR8D5PtG5hFsUul7dWhbXsM+cBXqU5lW98bGrwZNoFu0uOd2C
-         HqMA==
-X-Gm-Message-State: AOJu0Ywzj4u6WYmqZU766/UiT+7wyKxiti3a7se+xIHW0ag7WPByrCtF
-	3GeUP2fAMdWqpmVK5SiG2b5X+6slxby3lxmLZCyj7wRNwO/b+pNltM6MXCF4GSJy
-X-Gm-Gg: ASbGnct+RJiH9NGUUrI71o/Y7s0zvYRZssjl7tud9XMUFJA8kqVR+uBxs5q2/9K2wRn
-	tggMwHVqN9kwVX1VGiS+cX8giq26ZxnU2IRMbZDZoXXGE+469w7zDSUp9r7lizqeERQn5UKpD2Z
-	i6UsW/5FJtiwQSQXlrvrj2dLQC75+YQYIsG0mZ72ij/uke1zFwYqD6NoiNlSMRJey+SnS4Vrhlb
-	/toG5lllqh53NCkSgB1O2nT27imTRGYUA+04U+LxV49pmuCVEbkGYN/dTELJ0GYLgUpO0UqCiei
-	uyqRu2qbz5S96L87GpKLW0te/TjRLu5vFFpNEphuADCkzdtsHmC0sdTjQm0=
-X-Google-Smtp-Source: AGHT+IHVTLACsbmLo1cvqNxktd66JNlXIVeHOHco8HxvGemjbfxEUmSnXgPpCr24zcODHqKZVAliTw==
-X-Received: by 2002:a05:6870:ef84:b0:2d4:e101:13f1 with SMTP id 586e51a60fabf-2e3c2a988d6mr8967867fac.13.1747706044957;
-        Mon, 19 May 2025 18:54:04 -0700 (PDT)
-Received: from denethor.localdomain ([136.50.74.45])
-        by smtp.gmail.com with ESMTPSA id 586e51a60fabf-2e3c0b21fe5sm2006368fac.45.2025.05.19.18.54.03
+        d=1e100.net; s=20230601; t=1747717631; x=1748322431;
+        h=mime-version:references:in-reply-to:message-id:cc:to:subject:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZgsbQ0kPdMx1ebu5BCr73DeUmAdC1DU3pOMV2WMyeeA=;
+        b=fLyaPuHzkWhfch3N+byvPhBSzMCEVNSzoI5OL2x9k0eZjMcis8/c6BRC7vVlFJ3znO
+         SNXfbk2LPlW//XeQ9goCWgvW+OUhaFu53dR7726g/x8D0MJOwMbMeV/bYAnyX4nEN/SG
+         VxyIPf5y73AZwUZFmXqnyZ2qwb8/0kiswJZmq/76Yi+kGSgak6N8DP44MTU93UsuieA2
+         D8y29kJm5mVCFZIJNUsMZIyn7G8VToSZrnVEtio6dH8G0NK/NrmAu9Wp133c8YGpN0nu
+         9L2Wo6PqHVy3cOlJy0IRL03YIcGKEZtS1p7j3O/tK8LuANX5fDQMuKTuhrLSR9xy05b+
+         P0kw==
+X-Forwarded-Encrypted: i=1; AJvYcCVSFt4iZVlo+x/Wm9d3iP0W3kmOyk+aD59sUvQuSPaK0vpqEee6iSjKIjLPc0CuQ+NGHuo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzPPH0CKxaGuGsDdgsN+eRfLBDLdWxjRJipB1GdLUlvRC8TElrk
+	+OkUgr1MS4IdbD03PfechZ0jLb1La0imVyvnyGxyZuHocXNNpeevVgM0Cufqf+sIxkfrh/mc0Eg
+	2xJC5weQ=
+X-Gm-Gg: ASbGnculH0kZEauFO9jy8ekAlCltxW0gXJxfgDb+HEkBoB0VEIIm7FpHiIKGDkdXlbe
+	+OnAyKyfbQS+fdzbMkBnqF/WieTNOMcjvFx66d6khDO+ARiZwTk3/CmsaUP1x9+S5w7G27KcyOv
+	2twzZAA3D+HM4WW+NCBg+Z8a/XK85PBmZrkrhbi5S56k6J4DntqKwTATbOE/nFFadPt9gmBHSPh
+	RzOZnIygRaCB/BDMOerlt+QjCYD2T94hoxxyC0ZbiRldMinu91wZVlXk8oau2+JxBGyUvbwd+0J
+	wX5HkmhVQXyNfYxGCtG6aghCHMe2dk5C7arcs+8j5TAhowaEw+qcZiOivMNd51YJnPdTPho5gUA
+	mGA==
+X-Google-Smtp-Source: AGHT+IFcsE+hzPErI5FdBDDb2wb91k2tnf8KVe/suug/2cQW26XF6gLm68LNxjle1WLltRqXDz2aew==
+X-Received: by 2002:a05:6a20:6a10:b0:1f5:52fe:dcf8 with SMTP id adf61e73a8af0-216219b82a9mr22502163637.26.1747717631576;
+        Mon, 19 May 2025 22:07:11 -0700 (PDT)
+Received: from muhammads-ThinkPad ([2402:1980:8241:ad67:5c79:1831:62bb:6d8b])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eaf6f28csm7099220a12.22.2025.05.19.22.07.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 May 2025 18:54:04 -0700 (PDT)
-From: Justin Tobler <jltobler@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	Justin Tobler <jltobler@gmail.com>
-Subject: [PATCH 2/2] builtin/receive-pack: add option to skip connectivity check
-Date: Mon, 19 May 2025 20:49:20 -0500
-Message-ID: <20250520014920.201736-3-jltobler@gmail.com>
-X-Mailer: git-send-email 2.49.0.111.g5b97a56fa0
-In-Reply-To: <20250520014920.201736-1-jltobler@gmail.com>
-References: <20250507030249.4802-1-jltobler@gmail.com>
- <20250520014920.201736-1-jltobler@gmail.com>
+        Mon, 19 May 2025 22:07:09 -0700 (PDT)
+Date: Tue, 20 May 2025 12:32:23 +0800
+From: Muhammad Nuzaihan <zaihan@unrealasia.net>
+Subject: Re: Small patch to add support for MPTCP on Linux
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Phillip Wood <phillip.wood123@gmail.com>, "brian m. carlson"
+	<sandals@crustytoothpaste.net>, git@vger.kernel.org, Matthieu Baerts
+	<matttbe@kernel.org>
+Message-Id: <ZXLJWS.WPQLCXFNN8TH@unrealasia.net>
+In-Reply-To: <xmqqo6vokvpv.fsf@gitster.g>
+References: <JH8DWS.72DKHPTI873H3@unrealasia.net>
+	<aCeg_wjLCf0Sz_7X@tapette.crustytoothpaste.net>
+	<BP9EWS.WTYEEEQZEN2U1@unrealasia.net>
+	<aChhxRx7sMD47N_s@tapette.crustytoothpaste.net>
+	<4YPEWS.J5JRNETKLXF1@unrealasia.net>
+	<a76dda61-f60c-4221-83db-5e165a2478b1@gmail.com>
+	<Phillip Wood's
+ message of "Sat, 17 May 2025 14:39:38 +0100">
+X-Mailer: geary/40.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/mixed; boundary="=-tpQCJgcHCttYZZU1F0K1"
 
-During git-receive-pack(1), connectivity of the object graph is
-validated to ensure that the received packfile does not leave the
-repository in a broken state. This is done via git-rev-list(1) and
-walking the objects which can be expensive for large repositories.
+--=-tpQCJgcHCttYZZU1F0K1
+Content-Type: text/plain; charset=us-ascii; format=flowed
 
-Generally, this check is critical to avoid an incomplete received
-packfile from corrupting a repository. Server operators may have
-additional knowledge though around exactly how Git is being used on the
-server-side which can be used to facilitate more efficient connectivity
-computatation of incoming objects.
 
-For example, if it can be ensured that all objects in a repository are
-connected and do not depend on any missing objects, the connectivity of
-newly written objects can be checked by walking the object graph
-containing only the new objects from the updated tips and identifying
-the missing objects which represent the boundary between the new objects
-and the repository. These boundary objects can be checked in the
-canonical repository to ensure the new objects connect as expected and
-thus avoid walking the rest of the object graph.
 
-Git itself cannot make the guarantees required for such an optimization
-as it is possible for a repository to contain an unreachable object that
-references a missing object without the repository being considered
-corrupt.
+On Mon, May 19 2025 at 04:49:00 PM -0700, Junio C Hamano 
+<gitster@pobox.com> wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
+> 
+>>  As brian has already said I think it would be better to have a
+>>  Makefile knob to control this which defaults to being on for
+>>  linux. Take a look at the various USE_xxx definitions in the 
+>> Makefile
+>>  and config.mak.uname for setting default compile flags for different
+>>  operating systems.
+>> 
+>>>  Also another check if a socket is supported by looking for a return
+>>>  value of
+>>>  "EAI_SOCKTYPE" (not EINVAL) and fallback to regular TCP if that is
+>>>  returned.
+>>>  EAI_SOCKTYPE should work across different UNIX systems as this is a
+>>>  posix error code.
+>> 
+>>  That error is not mentioned in the documentation for MCTCP on Linux
+>>  [1]. Please make sure your code checks for the errno values 
+>> described
+>>  in the documentation.
+> 
+> Also according to RFC 6897, "MPTCP is designed to be totally
+> backward compatible to applications".  I understand that this is
+> quite unlike introducing IPv6 into IPv4-only world.  You can tell
+> the system that supports MPTCP to use it in specific ways by
+> updating your application, but your system's local policy may
+> allow MPTCP to automatically set up multiple subflows even your
+> application is not quite aware of MPTCP.
+> 
+> So, ... I somehow would be mildly surprised if Git were a kind of
+> application that needs to take advantage of "several additional
+> degrees of freedom that applications may wish to exploit" by using
+> API that is "a simple extension of TCP's interface for MPTCP-aware
+> applications".  Requiring a simple application like ours to tweak
+> and rebuild in today's world does not sound like a winning strategy
+> to promote a technology that "is designed to be totally backward
+> compatible to applications", at least to me.
+> 
+Taking into scenario that i have WiFi access and regular Ethernet access
+on my Laptop and i'm cloning or pulling a large set of code from git 
+(which uses
+regular ethernet as primary interface and WiFi as secondary.)
 
-Introduce the --skip-connectivity-check option for git-receive-pack(1)
-which bypasses this connectivity check to give more control to the
-server-side. Note that without proper server-side validation of newly
-received objects handled outside of Git, usage of this option risks
-corrupting a repository.
+On the regular TCP, my connection will reset when disconnecting 
+(plugging off) from Ethernet
+and switching to WiFi but MPTCP solves that issue for me and allows 
+uninterrupted
+work on git cloning/pulling, especially when i have to work with huge 
+codebases.
 
-Signed-off-by: Justin Tobler <jltobler@gmail.com>
----
- Documentation/git-receive-pack.adoc | 12 +++++++++
- builtin/receive-pack.c              | 40 ++++++++++++++++-------------
- t/t5410-receive-pack.sh             | 21 +++++++++++++++
- 3 files changed, 55 insertions(+), 18 deletions(-)
+I think that's the relevant use-case for a laptop user working with git.
 
-diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
-index 20aca92073..68427d93d9 100644
---- a/Documentation/git-receive-pack.adoc
-+++ b/Documentation/git-receive-pack.adoc
-@@ -46,6 +46,18 @@ OPTIONS
- 	`$GIT_URL/info/refs?service=git-receive-pack` requests. See
- 	`--http-backend-info-refs` in linkgit:git-upload-pack[1].
- 
-+--skip-connectivity-check::
-+	Bypasses the connectivity checks performed to validate incoming
-+	objects. This option exists for server operators that may want to
-+	implement their own object connectivity check outside of Git. This is
-+	useful in such cases where the server-side knows additional information
-+	about how Git is being used and thus can rely on guarantees to more
-+	efficiently compute object connectivity that Git itself cannot make.
-+	Usage of this option without a separate mechanism to validate and
-+	ensure incoming objects connect properly to the references risks a
-+	repository becoming corrupted and should not be used in the general
-+	case.
-+
- PRE-RECEIVE HOOK
- ----------------
- Before any ref is updated, if $GIT_DIR/hooks/pre-receive file exists
-diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-index be314879e8..66674bc408 100644
---- a/builtin/receive-pack.c
-+++ b/builtin/receive-pack.c
-@@ -81,6 +81,7 @@ static int prefer_ofs_delta = 1;
- static int auto_update_server_info;
- static int auto_gc = 1;
- static int reject_thin;
-+static int skip_connectivity_check;
- static int stateless_rpc;
- static const char *service_dir;
- static const char *head_name;
-@@ -1936,27 +1937,29 @@ static void execute_commands(struct command *commands,
- 		return;
- 	}
- 
--	if (use_sideband) {
--		memset(&muxer, 0, sizeof(muxer));
--		muxer.proc = copy_to_sideband;
--		muxer.in = -1;
--		if (!start_async(&muxer))
--			err_fd = muxer.in;
--		/* ...else, continue without relaying sideband */
--	}
-+	if (!skip_connectivity_check) {
-+		if (use_sideband) {
-+			memset(&muxer, 0, sizeof(muxer));
-+			muxer.proc = copy_to_sideband;
-+			muxer.in = -1;
-+			if (!start_async(&muxer))
-+				err_fd = muxer.in;
-+			/* ...else, continue without relaying sideband */
-+		}
- 
--	data.cmds = commands;
--	data.si = si;
--	opt.err_fd = err_fd;
--	opt.progress = err_fd && !quiet;
--	opt.env = tmp_objdir_env(tmp_objdir);
--	opt.exclude_hidden_refs_section = "receive";
-+		data.cmds = commands;
-+		data.si = si;
-+		opt.err_fd = err_fd;
-+		opt.progress = err_fd && !quiet;
-+		opt.env = tmp_objdir_env(tmp_objdir);
-+		opt.exclude_hidden_refs_section = "receive";
- 
--	if (check_connected(iterate_receive_command_list, &data, &opt))
--		set_connectivity_errors(commands, si);
-+		if (check_connected(iterate_receive_command_list, &data, &opt))
-+			set_connectivity_errors(commands, si);
- 
--	if (use_sideband)
--		finish_async(&muxer);
-+		if (use_sideband)
-+			finish_async(&muxer);
-+	}
- 
- 	reject_updates_to_hidden(commands);
- 
-@@ -2517,6 +2520,7 @@ int cmd_receive_pack(int argc,
- 
- 	struct option options[] = {
- 		OPT__QUIET(&quiet, N_("quiet")),
-+		OPT_HIDDEN_BOOL(0, "skip-connectivity-check", &skip_connectivity_check, NULL),
- 		OPT_HIDDEN_BOOL(0, "stateless-rpc", &stateless_rpc, NULL),
- 		OPT_HIDDEN_BOOL(0, "http-backend-info-refs", &advertise_refs, NULL),
- 		OPT_ALIAS(0, "advertise-refs", "http-backend-info-refs"),
-diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
-index 9afea54a26..10c67c2bf8 100755
---- a/t/t5410-receive-pack.sh
-+++ b/t/t5410-receive-pack.sh
-@@ -62,4 +62,25 @@ test_expect_success 'receive-pack missing objects fails connectivity check' '
- 	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
- '
- 
-+test_expect_success 'receive-pack missing objects bypasses connectivity check' '
-+	test_when_finished rm -rf repo remote.git setup.git &&
-+
-+	git init repo &&
-+	git -C repo commit --allow-empty -m 1 &&
-+	git clone --bare repo setup.git &&
-+	git -C repo commit --allow-empty -m 2 &&
-+
-+	# Capture git-send-pack(1) output sent to git-receive-pack(1).
-+	git -C repo send-pack ../setup.git --all \
-+		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
-+
-+	# Replay captured git-send-pack(1) output on new empty repository.
-+	git init --bare remote.git &&
-+	git receive-pack --skip-connectivity-check remote.git <out >actual 2>err &&
-+
-+	test_grep ! "missing necessary objects" actual &&
-+	test_must_be_empty err &&
-+	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
-+'
-+
- test_done
--- 
-2.49.0.111.g5b97a56fa0
+Apple had been using MPTCP for 12 years and their cloud services run on
+Linux servers with iOS clients and for that i can say that it's pretty 
+much production ready.
+
+And it's not just Apple. Intel and RedHat had been involved and 
+RedHat[1] pretty much
+are into MPTCP.
+
+Honestly, i love reading the git codebase as it is very simple and 
+straightforward and
+i think my previous patches were a bit too big and needs to be 
+simplified so,
+
+I have reached out to Matthieu Baerts <matttbe@kernel.org> who works on 
+Linux MPTCP
+on this issue and i've greatly simplified the code from his comments.
+(I've also added him to the loop in this email)
+
+The patch i am attaching is a preview (still WIP) as i need some 
+feedback from the linux
+mptcp developers if my implementation is correct. But it's greatly 
+simplified to follow
+git codebase's structure.
+
+Changed the part for the git server daemon to enable mptcp by 
+default[0] and modified
+the git client to use .gitconfig (global or per repository) with:
+
+git config --global core.mptcp true (or a single repo without --global)
+
+which defaults to false (mptcp disabled for client) as per[0] and 
+removed client-side the env var configuration.
+
+
+[0] 
+https://www.mptcp.dev/faq.html#why--when-should-mptcp-be-enabled-by-default 
+(Thanks @matt!)
+[1] 
+https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/8/html/configuring_and_managing_networking/getting-started-with-multipath-tcp_configuring-and-managing-networking#proc_monitoring-mptcp-sub-flows_getting-started-with-multipath-tcp
+
+
+> 
+
+
+--=-tpQCJgcHCttYZZU1F0K1
+Content-Type: text/x-patch
+Content-Disposition: attachment; filename=git-mptcp-temp.diff
+Content-Transfer-Encoding: base64
+
+ZGlmZiAtLWdpdCBhL2NhY2hlLmggYi9jYWNoZS5oCmluZGV4IGViYTEyNDg3YjkuLjY4MzliM2Fj
+YmMgMTAwNjQ0Ci0tLSBhL2NhY2hlLmgKKysrIGIvY2FjaGUuaApAQCAtOTQ0LDYgKzk0NCw3IEBA
+IGV4dGVybiBpbnQgdmVyaWZ5X2NlX29yZGVyOwogCiAvKiBFbnZpcm9ubWVudCBiaXRzIGZyb20g
+Y29uZmlndXJhdGlvbiBtZWNoYW5pc20gKi8KIGV4dGVybiBpbnQgdHJ1c3RfZXhlY3V0YWJsZV9i
+aXQ7CitleHRlcm4gaW50IGVuYWJsZV9tcHRjcDsKIGV4dGVybiBpbnQgdHJ1c3RfY3RpbWU7CiBl
+eHRlcm4gaW50IGNoZWNrX3N0YXQ7CiBleHRlcm4gaW50IHF1b3RlX3BhdGhfZnVsbHk7CmRpZmYg
+LS1naXQgYS9jb25maWcuYyBiL2NvbmZpZy5jCmluZGV4IDIzMTdhNzY2OTYuLjgzMzM5NmFhNGIg
+MTAwNjQ0Ci0tLSBhL2NvbmZpZy5jCisrKyBiL2NvbmZpZy5jCkBAIC0xNDY0LDYgKzE0NjQsMTEg
+QEAgc3RhdGljIGludCBnaXRfZGVmYXVsdF9jb3JlX2NvbmZpZyhjb25zdCBjaGFyICp2YXIsIGNv
+bnN0IGNoYXIgKnZhbHVlLCB2b2lkICpjYikKIAlpZiAoIXN0cmNtcCh2YXIsICJjb3JlLmVkaXRv
+ciIpKQogCQlyZXR1cm4gZ2l0X2NvbmZpZ19zdHJpbmcoJmVkaXRvcl9wcm9ncmFtLCB2YXIsIHZh
+bHVlKTsKIAorCWlmICghc3RyY21wKHZhciwgImNvcmUubXB0Y3AiKSkgeworCQllbmFibGVfbXB0
+Y3AgPSBnaXRfY29uZmlnX2Jvb2wodmFyLCB2YWx1ZSk7CisJCXJldHVybiAwOworCX0KKwogCWlm
+ICghc3RyY21wKHZhciwgImNvcmUuY29tbWVudGNoYXIiKSkgewogCQlpZiAoIXZhbHVlKQogCQkJ
+cmV0dXJuIGNvbmZpZ19lcnJvcl9ub25ib29sKHZhcik7CmRpZmYgLS1naXQgYS9jb25uZWN0LmMg
+Yi9jb25uZWN0LmMKaW5kZXggZWFmN2Q2ZDI2MS4uZWJlYWM5OWJkNiAxMDA2NDQKLS0tIGEvY29u
+bmVjdC5jCisrKyBiL2Nvbm5lY3QuYwpAQCAtNzIxLDYgKzcyMSwxNiBAQCBzdGF0aWMgdm9pZCBl
+bmFibGVfa2VlcGFsaXZlKGludCBzb2NrZmQpCiAJCWVycm9yX2Vycm5vKF8oInVuYWJsZSB0byBz
+ZXQgU09fS0VFUEFMSVZFIG9uIHNvY2tldCIpKTsKIH0KIAorc3RhdGljIGNvbnN0IGludCBuZWVk
+c19tcHRjcCh2b2lkKQoreworCWludCBtcHRjcCA9IDA7CisKKwlpZiAoZ2l0X2NvbmZpZ19nZXRf
+Ym9vbCgiY29yZS5tcHRjcCIsICZtcHRjcCkpCisJCXJldHVybiBtcHRjcDsKKworCXJldHVybiBt
+cHRjcDsKK30KKwogI2lmbmRlZiBOT19JUFY2CiAKIHN0YXRpYyBjb25zdCBjaGFyICphaV9uYW1l
+KGNvbnN0IHN0cnVjdCBhZGRyaW5mbyAqYWkpCkBAIC03NzAsNyArNzgwLDExIEBAIHN0YXRpYyBp
+bnQgZ2l0X3RjcF9jb25uZWN0X3NvY2soY2hhciAqaG9zdCwgaW50IGZsYWdzKQogCiAJZm9yIChh
+aTAgPSBhaTsgYWk7IGFpID0gYWktPmFpX25leHQsIGNudCsrKSB7CiAJCXNvY2tmZCA9IHNvY2tl
+dChhaS0+YWlfZmFtaWx5LAotCQkJCWFpLT5haV9zb2NrdHlwZSwgYWktPmFpX3Byb3RvY29sKTsK
+KwkJCQlhaS0+YWlfc29ja3R5cGUsCisjaWZkZWYgSVBQUk9UT19NUFRDUAorCQkJCW5lZWRzX21w
+dGNwKCkgPyBJUFBST1RPX01QVENQIDoKKyNlbmRpZgorCQkJCWFpLT5haV9wcm90b2NvbCk7CiAJ
+CWlmICgoc29ja2ZkIDwgMCkgfHwKIAkJICAgIChjb25uZWN0KHNvY2tmZCwgYWktPmFpX2FkZHIs
+IGFpLT5haV9hZGRybGVuKSA8IDApKSB7CiAJCQlzdHJidWZfYWRkZigmZXJyb3JfbWVzc2FnZSwg
+IiVzWyVkOiAlc106IGVycm5vPSVzXG4iLApAQCAtODE3LDYgKzgzMSw3IEBAIHN0YXRpYyBpbnQg
+Z2l0X3RjcF9jb25uZWN0X3NvY2soY2hhciAqaG9zdCwgaW50IGZsYWdzKQogCWNoYXIgKiphcDsK
+IAl1bnNpZ25lZCBpbnQgbnBvcnQ7CiAJaW50IGNudDsKKwljb25zdCBpbnQgbmVlZHNfbXB0Y3A7
+CiAKIAlnZXRfaG9zdF9hbmRfcG9ydCgmaG9zdCwgJnBvcnQpOwogCmRpZmYgLS1naXQgYS9kYWVt
+b24uYyBiL2RhZW1vbi5jCmluZGV4IGIxZmNiZTBkNmYuLjA4YTE2Y2NmMDMgMTAwNjQ0Ci0tLSBh
+L2RhZW1vbi5jCisrKyBiL2RhZW1vbi5jCkBAIC0xNyw2ICsxNyw3IEBAIHN0YXRpYyBlbnVtIGxv
+Z19kZXN0aW5hdGlvbiB7CiB9IGxvZ19kZXN0aW5hdGlvbiA9IExPR19ERVNUSU5BVElPTl9VTlNF
+VDsKIHN0YXRpYyBpbnQgdmVyYm9zZTsKIHN0YXRpYyBpbnQgcmV1c2VhZGRyOworc3RhdGljIGlu
+dCBtcHRjcDsKIHN0YXRpYyBpbnQgaW5mb3JtYXRpdmVfZXJyb3JzOwogCiBzdGF0aWMgY29uc3Qg
+Y2hhciBkYWVtb25fdXNhZ2VbXSA9CkBAIC0xMDA3LDYgKzEwMDgsMTAgQEAgc3RhdGljIGludCBz
+ZXR1cF9uYW1lZF9zb2NrKGNoYXIgKmxpc3Rlbl9hZGRyLCBpbnQgbGlzdGVuX3BvcnQsIHN0cnVj
+dCBzb2NrZXRsaXMKIAlmb3IgKGFpID0gYWkwOyBhaTsgYWkgPSBhaS0+YWlfbmV4dCkgewogCQlp
+bnQgc29ja2ZkOwogCisjaWYgZGVmaW5lZChfX2xpbnV4X18pICYmIGRlZmluZWQoSVBQUk9UT19N
+UFRDUCkKKwkJc29ja2ZkID0gc29ja2V0KGFpLT5haV9mYW1pbHksIGFpLT5haV9zb2NrdHlwZSwg
+SVBQUk9UT19NUFRDUCk7CisJCWlmIChzb2NrZmQgPCAwKQorI2VuZGlmCiAJCXNvY2tmZCA9IHNv
+Y2tldChhaS0+YWlfZmFtaWx5LCBhaS0+YWlfc29ja3R5cGUsIGFpLT5haV9wcm90b2NvbCk7CiAJ
+CWlmIChzb2NrZmQgPCAwKQogCQkJY29udGludWU7CkBAIC0xMzYwLDYgKzEzNjUsMTAgQEAgaW50
+IGNtZF9tYWluKGludCBhcmdjLCBjb25zdCBjaGFyICoqYXJndikKIAkJCXJldXNlYWRkciA9IDE7
+CiAJCQljb250aW51ZTsKIAkJfQorCQlpZiAoIXN0cmNtcChhcmcsICItLW1wdGNwIikpIHsKKwkJ
+CW1wdGNwID0gMTsKKwkJCWNvbnRpbnVlOworCQl9CiAJCWlmICghc3RyY21wKGFyZywgIi0tdXNl
+ci1wYXRoIikpIHsKIAkJCXVzZXJfcGF0aCA9ICIiOwogCQkJY29udGludWU7CmRpZmYgLS1naXQg
+YS9lbnZpcm9ubWVudC5jIGIvZW52aXJvbm1lbnQuYwppbmRleCA5ZGE3ZjNjMWExLi43MmYxYWRl
+ZjZjIDEwMDY0NAotLS0gYS9lbnZpcm9ubWVudC5jCisrKyBiL2Vudmlyb25tZW50LmMKQEAgLTMz
+LDYgKzMzLDcgQEAgaW50IHdhcm5fYW1iaWd1b3VzX3JlZnMgPSAxOwogaW50IHdhcm5fb25fb2Jq
+ZWN0X3JlZm5hbWVfYW1iaWd1aXR5ID0gMTsKIGludCByZXBvc2l0b3J5X2Zvcm1hdF9wcmVjaW91
+c19vYmplY3RzOwogaW50IHJlcG9zaXRvcnlfZm9ybWF0X3dvcmt0cmVlX2NvbmZpZzsKK2ludCBl
+bmFibGVfbXB0Y3A7CiBjb25zdCBjaGFyICpnaXRfY29tbWl0X2VuY29kaW5nOwogY29uc3QgY2hh
+ciAqZ2l0X2xvZ19vdXRwdXRfZW5jb2Rpbmc7CiBjaGFyICphcHBseV9kZWZhdWx0X3doaXRlc3Bh
+Y2U7Cg==
+
+--=-tpQCJgcHCttYZZU1F0K1--
 
