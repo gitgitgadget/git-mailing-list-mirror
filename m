@@ -1,97 +1,98 @@
-Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.13])
+Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE5BA25CC46
-	for <git@vger.kernel.org>; Tue, 20 May 2025 22:39:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=192.198.163.13
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3333F1F875C
+	for <git@vger.kernel.org>; Tue, 20 May 2025 22:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.17
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747780754; cv=fail; b=J2Mak6DyrnMs6bPsn1cxPd9TsAYWlrjTG6a+0/fq0Uj/7WnhtmILdrCeorMkF3oiEVJ31CJNCx/Tcb2j60ARR4XLQqGO76Ysv+iDlQhEcEEO0KsPc2r3vCxBjO3jnBNLx0UR2lRdJCLDn2uu3WvraGQCOCBMSurwSMCJN22HZ2s=
+	t=1747780943; cv=fail; b=K3zxl6+tFuRbqjYk0Oc4hxkaW/t8jHi7dS//qbO1SlozhUX8bQTpezr2eqI831/CeOUu9x3D0scPCMO9KBaI2JfTELA+eoH5xOrEe5dPXr+ZqpLlWo5Ny7LxsX43w+E7XWzKy3/PSTiajQEBRyrgmA9LQeLkDw4odhEleJR16Xo=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747780754; c=relaxed/simple;
-	bh=nrCa0ASUBP43jEakpfWyzTkhTjQGxZkGE+1EO7p38ZQ=;
+	s=arc-20240116; t=1747780943; c=relaxed/simple;
+	bh=NpSuq618YTqzbB7Ai/5GesYlgC3gB97yDt1Ly4aPNRw=;
 	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=oVl8Zgp9uBov7iJ2/0cBBqZG/Mn58i6qg5H13P5YUyTLeTligccKSwpV20hxCiUfNaBLBP4eE9W9h0JprIPS77SH0VCeCK1sF1dKHKY2z+Y0Z+IJIgaycaC97kgkNVbPNsxNWTqDVMHcZJXNROx1D0COYXnQSiry0b5KsMGVbfA=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=MpACrk7j; arc=fail smtp.client-ip=192.198.163.13
+	 Content-Type:MIME-Version; b=YMxxvyzYU2b6Na+rB5aG6e5HH6tZSgj0Un3e/McpdmZwri+lhUUAjuhmulProvt4fdtp3QSNSamwi8EjALJHqxhhjNDI5JBu7mlhJ90ZKV1JN4w+/AbmajmZRDDP5yFSFbaBuFyGeFSoAmiRuj5xHFx1vR0hCCjMo6Mr0AjYHtw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=AyPfjexu; arc=fail smtp.client-ip=198.175.65.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="MpACrk7j"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="AyPfjexu"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747780753; x=1779316753;
+  t=1747780942; x=1779316942;
   h=message-id:date:subject:to:cc:references:from:
    in-reply-to:content-transfer-encoding:mime-version;
-  bh=nrCa0ASUBP43jEakpfWyzTkhTjQGxZkGE+1EO7p38ZQ=;
-  b=MpACrk7jnX+uWLBC++QdY1KEJu1X9BVJKI6Rn2gZLqURoficseA+ySk3
-   Mbis4SK4uKIwjfr9lPg4Rn5ZNcBkyglwnLB++6UE9hQTST3vJK4qMHBow
-   ALtlv0ilIKkOHk9P3MP+wR6g+/oxYz0YOZtkgqO4KtxpVst2qHybMEsF2
-   N8gDG0RRDZKxYZhu50jPwl9cmKPxeTKYMfHLyILD/0VyhbCVZKOV7nXKL
-   z9sm0Zx9jaJi1J6mubwhO4UaVMEkOrJtIHcfvGtVgilKtcDboG52a7mkK
-   UZ9mbHoO88DGZStbFieKl8uQsegl6snRS3C1zQFFMtDdwnyk5n+RXn0mU
-   w==;
-X-CSE-ConnectionGUID: l1czC7+pS/G8Paietvd1WA==
-X-CSE-MsgGUID: qKrncgcGS1ymJgOhVVU+iA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="52364211"
+  bh=NpSuq618YTqzbB7Ai/5GesYlgC3gB97yDt1Ly4aPNRw=;
+  b=AyPfjexuva3cFhJE3RujxyWq/y8sbQ9Xg0aDyyGzLzv2lP+OIXyaovA0
+   ry/jDhzGU7u7NHFdJuynmI41u47uW8wqPGNFXr37/RkXwzIuXuJ+Qovki
+   pBRHWn/p3ls95h+Bx98s3CvBFr8qndOdO8CsvTX/lJYJ5L7GXejacdmwR
+   qXFrib4SbYf1yd956BDGhgfEvKh4zu6yh55GAycMDHuUkIOxYkolcoVBs
+   npnZBKTEvJev3mXzoJ6+rXRXO/DDyWUwjKYRjyA8wNuOSgODVQjIkWP62
+   AsXEGpDshLhKo5S9gUJ7MFpbfn4ph4s9zv06C4pPxKXLxkohoUYEPqO6l
+   g==;
+X-CSE-ConnectionGUID: wMG6YotUT/C4qjeEQqzJqw==
+X-CSE-MsgGUID: uv9MXz7zQx6fLLn5TuY1mA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="49719827"
 X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; 
-   d="scan'208";a="52364211"
-Received: from fmviesa002.fm.intel.com ([10.60.135.142])
-  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 15:39:12 -0700
-X-CSE-ConnectionGUID: gAaTUh3GQ0iUts7edcxhgg==
-X-CSE-MsgGUID: MjyO8ai7QQCrLEF+HHI2Qg==
+   d="scan'208";a="49719827"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 15:42:19 -0700
+X-CSE-ConnectionGUID: bRjhrJUfRAe8KUBHiZPNwA==
+X-CSE-MsgGUID: yxuwruIDS0ycuDYW4cOSTg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; 
-   d="scan'208";a="163110678"
+   d="scan'208";a="140760451"
 Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by fmviesa002.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 15:39:12 -0700
+  by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 15:42:18 -0700
 Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
  ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 20 May 2025 15:39:10 -0700
+ 15.2.1544.25; Tue, 20 May 2025 15:42:17 -0700
 Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
  ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 20 May 2025 15:39:10 -0700
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (104.47.56.47) by
+ 15.2.1544.25 via Frontend Transport; Tue, 20 May 2025 15:42:17 -0700
+Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.43) by
  edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Tue, 20 May 2025 15:39:10 -0700
+ 15.1.2507.55; Tue, 20 May 2025 15:42:17 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=IvaTnmvwFHdzaF67PfPAIhtrG/VKwc3qFj41u+/u6HbZ6nQpcO0GAmPbRCYlVBz8rI7GOIyozX8m53AK31Hu/xu0axSYxWUgHGQp2J9gf4jxUMFZ3HxgldMpvD4k6E+ABMpyhqTextC3L5Mq9UmDA7i4ZmmivzyMM69va0n7J+u3vnv6Jfpj2J8IbNrZofB7kBmB8bTaxj4KANSzZhS6gITCn3SBM+Bos+CEi7w4rS1TAHR/KHbyd+ErEX7FeucV2W4p8bDDY0Qg6UTCieBoySXE4KyRPAxNCKoQV1y4CUOkuGL5bhJVPyJOpD4beibCrYN8cWHy7QpRVc6CQ2sEhA==
+ b=ijdG4OD+oaoES5LxDNQt/XUNaNci6hVPz7wpBKudrLWJrEBGtzmsXbpqkZ4Af5+UHfUoWiequ6h6VLVS6XjebfpZp019r3OfsN6iERL5DYfNDDIWbNIhM2kUB21hAxoZguUurpdWDfJLuKhgZ6ASELh5dDDt3XtYfbBAE/tgsAXe5/Npkxltg4Na4vTVi7+jfHLtWM8DTpa1Glj6RYWZsX7nRXxM1rxqM3VYHq/TTk8qqgtNgBVC42ZMc61Dw1vI2Ay/Kw9oU9ehWESz5TY2iDWVrWkFPul5h0kI82y9cqeHjPS305F/eRmyTwhkkbew7gUbhshjh5TUQc0TVuEEJA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=IMTM7BhzId8VzKNEivcD9i6XK4Uv/bAD96RCSysZC1M=;
- b=RYR71A9vWN29c1j/Z2/2vQNcKJeYZbAUoRHRchyVlIflEEw59+PI5NxQp072LJHYf34p1z0ua0Gic+T3WXkB7RtwwJMw/nAsrZGDMjihCsZNSeqbbg5o8wii+tHlZn1wwoI33mEOufs83TFouIPH62UR6wVZxDxB/ldARqM5f1IA+6L8mpJ6BvT2ynjZprppzswoizs5Nq4kHsGCI6ZHpshy3biRT8YYlppArmROxsYqBIPYBvEVvcBmffNPzmK8CVllt05hhvB2YqhPsRyeg51aEw0fX1RlP8UuZ+D7ghzDSJYCNKZH0J5E72ARADySGLAlclny7QWmOj9OTVD81g==
+ bh=o8q76py3zKQpoEqvPXooGfTb2wri+fj3If02TVAoBvg=;
+ b=vWp2kuuAsl1IvPEybgRuPhR1kMkjUGEOBRcAAtrJB7mUQco0mLhvqW0TssIiE126o/VvrcymICOt4opvxTbEyyMJhUnDPW3hqu59mr87zdvlMX7KFdI6HoHsWe3qR1wYHvovmmjlKixeB6NEME4n4dkgsbUgIC6HBgwjGps3NjFn15gxOsOErT5HqPTfssFtYepzXB9st3gqOr/a2AYNchOg21UQiV24qZb4isjRlYaovxYTjk+R6FaasuvcZIX4QSZDQJkvpKGqhNWZIcEUp69wyCHGksI5uNRcbs5+0kC0Fd+GWRYS5gm7ESXr6NFfDhibexuWA18Qdh2/s+e/8Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by SJ0PR11MB5182.namprd11.prod.outlook.com (2603:10b6:a03:2ae::13) with
+ by IA4PR11MB8991.namprd11.prod.outlook.com (2603:10b6:208:55e::19) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.31; Tue, 20 May
- 2025 22:38:26 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.30; Tue, 20 May
+ 2025 22:42:10 +0000
 Received: from CO1PR11MB5089.namprd11.prod.outlook.com
  ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
  ([fe80::7de8:e1b1:a3b:b8a8%4]) with mapi id 15.20.8746.030; Tue, 20 May 2025
- 22:38:26 +0000
-Message-ID: <70e459b2-b80a-4de6-bf7d-47606b60608f@intel.com>
-Date: Tue, 20 May 2025 15:38:24 -0700
+ 22:42:10 +0000
+Message-ID: <85b74be2-6fb9-4a00-aa8f-f6e25c383e91@intel.com>
+Date: Tue, 20 May 2025 15:42:08 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/4] pathspec: expose match_pathspec_with_flags
+Subject: Re: [PATCH v3 3/4] pathspec: add flag to indicate operation without
+ repository
 To: Junio C Hamano <gitster@pobox.com>
 CC: <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>
 References: <20250520000125.2162144-1-jacob.e.keller@intel.com>
- <20250520000125.2162144-3-jacob.e.keller@intel.com>
- <xmqq7c2bl51c.fsf@gitster.g>
+ <20250520000125.2162144-4-jacob.e.keller@intel.com>
+ <xmqqwmabjoww.fsf@gitster.g>
 Content-Language: en-US
 From: Jacob Keller <jacob.e.keller@intel.com>
-In-Reply-To: <xmqq7c2bl51c.fsf@gitster.g>
+In-Reply-To: <xmqqwmabjoww.fsf@gitster.g>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW3PR05CA0028.namprd05.prod.outlook.com
- (2603:10b6:303:2b::33) To CO1PR11MB5089.namprd11.prod.outlook.com
+X-ClientProxiedBy: MW4PR03CA0319.namprd03.prod.outlook.com
+ (2603:10b6:303:dd::24) To CO1PR11MB5089.namprd11.prod.outlook.com
  (2603:10b6:303:9b::16)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -100,179 +101,196 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|SJ0PR11MB5182:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3eeade92-361b-4fc9-2b19-08dd97ef08e7
+X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|IA4PR11MB8991:EE_
+X-MS-Office365-Filtering-Correlation-Id: f73dee8a-1e09-443b-c981-08dd97ef8e8d
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?SG03WkEyaENGbmRWQzBCb3Rkb3JqNXE5Um5aZjMrcXF5RlN6eklEak16b25P?=
- =?utf-8?B?L2p0dVNFa3Y5K2pRNTV6MHFsbFptSW9XdVByNzhTVGJzeGpRUTdXRmVOZ3g5?=
- =?utf-8?B?SEJ2VFJTSzRrVkd6MytTRndWOGNTOHk4TVIySHRUQ3JPYkk2WG1HWnNyU1lW?=
- =?utf-8?B?Z3o4ZUxBRTI5TEorM3B1Um9QbGF6eHptRnJEcjZJOEFOQmFiQzR3R0hYcUtL?=
- =?utf-8?B?bW9EVEhYL1Q2L3NPNzRDa3dGTi9PMUE3b3pzdGFINGlZcXVxL1h2eEJ5ZTFh?=
- =?utf-8?B?R2wwc0dIVW0wbjExRnZjemlpL21Ma1hJaFpQRHhpUHlERXZ5MGIwNDlMTjg1?=
- =?utf-8?B?WGFwZXc5SXVYRWRQTzYwTzZ0U1lrUzhMWGRIVGpUa3NNWHpjUXF1VHpJNFVt?=
- =?utf-8?B?cW5sM2Evb1BqdTFqSmFuRFVrOUpIUDF5OU05b2ZteWFWaGtjYStObkNQQjNz?=
- =?utf-8?B?andJcngzLzF2RlNKWEREeUtqaWhicjRaT1htV1ZJVjFmNlVjRnAvTnhjeGow?=
- =?utf-8?B?Z0F4WHlrcDdGUHdlWExDTmprajRWTmJOc1o0dW1zcDFVOGZUUFBGVXFGWTRj?=
- =?utf-8?B?MGpxdXJwSFdzbDV0akk2RWl3UXhjb3BnbGkzWCtoY1VYV0wyWGppcGNnRkJl?=
- =?utf-8?B?WWV1cFRWTThVbGluVkpZRGY5RmlHVGR6NHBNWnhWOXJIc0hERzlDQVlFakhP?=
- =?utf-8?B?bjRITzNXZnJBVzhEYlFKRzA5VUMwbkxZUVcxZGxsRWRZbHA5c3Y2dGFyZ3l6?=
- =?utf-8?B?Q0NYdWtSRFBhUzBOK2hlMTFCSWQ0ckJtVGZZSWFHUzNrNCtxaEJFU2FvSTRU?=
- =?utf-8?B?WEM5V2owOThFc09NblNaV1Zzd2F0cWxFaGJ2M1p4djFYSTB4Q1p1VUZxN2pv?=
- =?utf-8?B?OVUxTFhic0xFT1BGK2VzWnFITkNUbjJUOFl0WHVIQWhHRk10bGxVUFpIVG5o?=
- =?utf-8?B?NFUrSTlkenJSeUV2UlZGeUFHQnFnS0Z5dlBJdDVOdUtiaWhKZUlFNzRkbnBJ?=
- =?utf-8?B?K3grY2F3WEFYbDJheUM2eWF1Qm5kdFRWcndSZG4zdkZWYjJsQTY0MkFzcnpR?=
- =?utf-8?B?NDVCTW1NNTdRbVVVSndtV2doRlZtMm1jeXF2WTJtOTRXT0FvV1luU1UzQ1NV?=
- =?utf-8?B?Z1NHRkF4UzdaL0ZyTXNVYlMwLzVxcDZvSTRUY2FQcHFQRzVYMDRRZWw5VkY4?=
- =?utf-8?B?aDRKSHBnRmUxSXgyQ2hLSVRKK2pQN3Y3enZXUWxOZ0N1RHZHMDNzNDhiUkZY?=
- =?utf-8?B?M3FnMlJJa1lKaU9xUEpnQXEvL3pydWxob2RLZE1GYlAvSDAxUE0yTmhGbzdV?=
- =?utf-8?B?dFl0eUQyRTd3Sk9WOGlXNzVuV1ROOGdoRjMxMjRnL1ZLTHJ2TXo3N1dpWGZ1?=
- =?utf-8?B?VzgrRzlwVllvMkVJdjcvWFAyQllsVmp4RkFrKzU2SGZSNFdyR01xYVBySjlO?=
- =?utf-8?B?VEgyL0FVVTdNQ0JWaU5SZk9UbkFycXJTUDhqWUlYVlBqNjBVclZwUHJjRnhj?=
- =?utf-8?B?b3ZnY3poaWhKVk5JOExiZWhRVGdDY2Y4eUZ1ZzM4c01ZVEQ5RjhnV0pzMEl4?=
- =?utf-8?B?MEpNdWtxWkVFY1BMSExmdmRTNDNEaXpiaEw2Z21tYVZ6M3ZweFlTekhCdTln?=
- =?utf-8?B?Q2w2K1BDaEZSWWNOMVIramNpVFdvckp6ZWdobCtmTlRvZGk2UUxLSGgrM04v?=
- =?utf-8?B?UWdrK2hmVWU3SUpGdXJsS3BYbmgxbEhlZGkvdFpPUWx0OEFMcjhXdW9uYTJj?=
- =?utf-8?B?SVVDVjZ0cWUwSThiVEJOWVNUS2ZONGx0U3daakU0Vzk1YlVXNVAyTjE4cC9r?=
- =?utf-8?B?cWNMNmMrdlozZDJtTTNVZFhzWkFvM3I3UzdoS09vbmI3M1JzYVFqODVGUVFp?=
- =?utf-8?B?OGxRMk8yV2h0YVI3eEZKTnhKVGdJWDFNMUtjRmJBcmlOaFlvQWFPOFNvaGYx?=
- =?utf-8?Q?5HAnRENBQ18=3D?=
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?T3IxVlZJcDdQbi84Sm9Ic3JCZlVxU0tkb0RJTWMwUmM1NnEwV3pWc2syUEEw?=
+ =?utf-8?B?NW5QdnV3S3AvbHE2K2JnUktzVE9TeU40bHVWMDJ1ZjVBNEVFWE15OVExOFMw?=
+ =?utf-8?B?YjNBNEFGUHVTSnI4TEdnRSsvUzFwSThIY0RwZDN0bElIbElxOXRkRU5zT0hZ?=
+ =?utf-8?B?R1owOSticEVvR3FkZEZKajNESnpHYkV2eDF0d2VkZDZwMTdmN25TZ0VPa3FK?=
+ =?utf-8?B?a1NpSjh3N3FZV0ZPVklMbnZqWER6bXVpZ2tnY1BJK3Awa0dHTThkSjJtQnFX?=
+ =?utf-8?B?dFd6a1loNmV5b0c5UHdRS3JoUWRMVGhWck5IOS9hMU5vS2ZCR29PNWxYTlJ3?=
+ =?utf-8?B?c3hqdnIvSU5BVHFTNmFaNC8wTlFFTjB0OXBsMUxBVlpTVzhwVGRQc0o0OWgz?=
+ =?utf-8?B?ZnJUS29ERHpPK1Q1NnlIeEFHdFc0UndwMW4wd0hkUG0vZWtxK3JNcE1CZEFR?=
+ =?utf-8?B?SHl1aDdMWlI1dkJFbUFISnArN1ZBYW94MGdGb3dTcTBGTGNDNTNUUzNNQVcz?=
+ =?utf-8?B?Szh6S3htN3NwckpHTVBTNHNqMVg0RGF3VVVRQVQwdUFDMDBaVEJabm1YeUph?=
+ =?utf-8?B?UVp1N0RIdVVHL1BzMmpyUmM0R2lKSlJXUE55U0h4SEdOK25vM2pwdVVuUEVp?=
+ =?utf-8?B?cGtFbnVvV3RLUEJ3TTA3UVRPVGlaRzBiSTczeDREaFFucjZIUWhGWXJXVHl1?=
+ =?utf-8?B?Tm1VeGdmOEdxdDV3S0I4dVFYaStZeHZzZWdIWitoYlI1WFlvcGpUY3JuTitm?=
+ =?utf-8?B?NmpoV0JINWR4Zjc4eURleUQ3S3FESGg4bG5rbm5ZSnZZa2pUcXNGYnZzUGJX?=
+ =?utf-8?B?SEpJUDBFMkRjV1NMbHBNOFAzY2pkZXJJM2c3SEx4ekV0WEFQdFp1NmV1MmdQ?=
+ =?utf-8?B?cml1eFUvQmpMTVo5Qkl6Q1Q0b0ZRSHBkc0JPL0UvMVhGQlFwN1hHQ1MxdVVv?=
+ =?utf-8?B?eDZRbEY3T0Z0R29BdndSRmJDRjNKOHBqK2ZOOEJZeU5jL1BIVjVKcVV1cmF1?=
+ =?utf-8?B?NTEzaHZ2R2NCV21TeWJJWlh3U0RDQXNSbUxFckpMdVdYWUZqbnEyNkxhV1Q5?=
+ =?utf-8?B?T0FudDR6dlp0cGt0enVkeW42bjJmbGYyenVGS3ZibTR3VEQ0VUZLcE1QU0Qx?=
+ =?utf-8?B?SnJMMkc5L0l5bnF3Q3pEOWIxTW5TYktpM0U5YWtVRmNNS0I0Wk5ZYVZNaXpo?=
+ =?utf-8?B?MnQzVzlUaHJraVBOaGwxQmhVNC95N1J0OXBUWjNVN0JtYTJYNE1YV2dVeUJo?=
+ =?utf-8?B?bTN2Tmpub1NMOHNhSjBnZmxZZjJkeWpmMk42OFNlT2FJbXZmaW1iUmxxTmw2?=
+ =?utf-8?B?NWJWV0tFb3k2VldsUjM4UTAwTzVaMDZIREZxNzlScEVza29MZmxsVXhLV00x?=
+ =?utf-8?B?WGltM2N0L0dZNC91SFRZS1JYTEJ4aHVCUEw2c2FyMlRQMzF0ZCtiZm1MZnRF?=
+ =?utf-8?B?ZlpZVVptMnVDaHYvaHErN1Y2d0Zob1UxTFZPZGplbXFGQzYramRvK0hRNUJp?=
+ =?utf-8?B?TG1qM2p6UWV4V0dsUVVyRXJqRXZQSHpQRUI2K1AzV0NuOU9qdG4zaEhFUGJP?=
+ =?utf-8?B?RGNkR2pTK3ptblk0NENScmpLYmY1Qy9Ka1lyeGZPeGNMc0ZjUVF3RGU1dGE3?=
+ =?utf-8?B?a2NuRFZ4MFFjWHc3ZmFlWWF4bm1aeUZHbFV1RnB5WDNEdHJhejBGeWs2WCtN?=
+ =?utf-8?B?WHNNbUdSWWxFaVMwclFsRlhpcEVTenRzdlN1UkZmYVJnMVBHZWttN3lnaXdQ?=
+ =?utf-8?B?bDNiZ3V5VnJZYW5sejhiZEh6QnRqaUNmcENER1lqWndXSmE5Zi9lV2k1K0JE?=
+ =?utf-8?B?R0UzTlZwYTNoa2ZhQUdmMzRjKzZNTzNBeVlpckVjZlJJWjFwUUNLbXl3MTJw?=
+ =?utf-8?B?QmlqV1dnRENxVC93OGorOC8xRnZZeGdQVEpQVi9wUG5nR1d5bE9aaUZ5Z1dz?=
+ =?utf-8?Q?sale/IPWquw=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(1800799024)(366016)(376014);DIR:OUT;SFP:1101;
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z3dxLzJveHJmdHBBc3Y0UWtUSml1ZUxqaXBCdUY1N05sUTZrNldxRy9jMFhL?=
- =?utf-8?B?WHF6dWd1Vnk1cGxGWmdVS2pzRERndGcvK0lmRko0akVaU2hseTV6eFBGYmZk?=
- =?utf-8?B?TGdYeUlsdTUvanhxSVpkSjNYN2E2L0RBMHcrN2JNZTU3MWUyeHVUT2ZKbzFv?=
- =?utf-8?B?QURucjdJSGZtanczblh3NVVrRFpjRTZYdGZpbkZCNlA1L3FhSDVjL0Z4OGZu?=
- =?utf-8?B?cTcxSFUxbTUxMVJOLy9rNkx1bk5lNVBseDc4cXVuKzZCZXRYdkIxSFdOTTdh?=
- =?utf-8?B?WW5LUE1tbTM4MzdaS3RzbTZXWTM4K2QwYU1ETGxpVlN3eHR3Yy82dmZIOGV5?=
- =?utf-8?B?ekQ0Y0NITmRubTFzTVRxL3IwT09XdUxxSmVHSTR2eDNwVDd1UUY0dlQ5UVRS?=
- =?utf-8?B?MHprYVVjTS9DYnhXdmdMQkRrZTFNN1ZtbjJLdTdpakdaajRKT245dDlWZ1VV?=
- =?utf-8?B?dXhmZm54MmdUQUtjSjBTNGRFUnpiVlhEZTNSKzQxdGVHeTlFbFU1eldPeXRO?=
- =?utf-8?B?ZkNTUE8va2Fvb1o4cHJHc2hSODFPUjRHaXdQa0lRTEpxRlg2dFZlR0ovVDdy?=
- =?utf-8?B?UFFFWTJweTRhb1l5UkYybFFjRVVnd0xVVEV2VHlPM3pHOEVhMEovamxBV1g5?=
- =?utf-8?B?QUI4TkFrU0JYTm50OW9QTkZPMExyWUs3Vy9MbnpMa0lkTnpZY2FtTWJ2L2R6?=
- =?utf-8?B?Q2Fld2FYQVI4V1NKTkNScTdSWHVDczJPK2sxelgwVldYRlZ3dGFHR25xMzZ0?=
- =?utf-8?B?clhtaTFnUXRzQWJmdCt3UkUrclB0aGVuYTUzQ1BHM015enhDOGZlQXM4clcw?=
- =?utf-8?B?V1dLcE5Oc2MwdnVCRk5PUTAwYnRvK3Z2MzRTeklPNE5kVXRKaWQzeEExRnFi?=
- =?utf-8?B?MWJPVFZEN21Hby9oM0NVUERsQ3o2OVVISEdFWm1jTlhIbDQvNlpCOVRRN0tz?=
- =?utf-8?B?VGxEKzJEWHBna2hOMHFiVWYwQmdVejA2Mmd5QTRjSlRaRmZ1RFg4VjRQRHBM?=
- =?utf-8?B?T1A0ZjFQNkJ2bWlnVTVTaXpha2p5c2liK2dMakFjbnVPSjJmQWNWOTNCNWs5?=
- =?utf-8?B?eHhHY0ExRXl6Ry9uelM2b3ljVVFydXA1MjBCdzVwbnV5cVdYRjRlNWR0WjVQ?=
- =?utf-8?B?bExiNFRoTU5jTEhBd3MwYmFSYVFJVVo2aVlkNUV0bTRTNzJDTEhCSG03U1U3?=
- =?utf-8?B?L0oyT3lYdG5VUDRVcy9MRjJEeTFUYy9BeWd6UEdFYWllNTFOVis5ZEhFeTJ0?=
- =?utf-8?B?enN3WHd6YmRFQktkMmdia0R0OWp6WlUvbUpLdFV4M2pzWWxZMm1XQ1RBSEsv?=
- =?utf-8?B?b1Q0TVE0NWdwdzkyUUdFVXA4ZnROcVgvUlZjd2NqSnZNRWZEcVJ4RUttV053?=
- =?utf-8?B?VTBsSk5ZWlNIaHF6bHhSbFZEVVhlYmZEZTRySTRUT1RKMDUrWjBKMlpXUGhv?=
- =?utf-8?B?K2dFV0tQUmxIeVZHOEgzZFZ2dytldFZ3THZRdWN0dTZwUFcvZ00rQitnTHlj?=
- =?utf-8?B?TytUR2N3QU83WEpFWHIyS3V6M2JRRnM2MXFJSElMVnBPdzdSR1RIQVR1dE13?=
- =?utf-8?B?cjdCNjhQeDNPUGVWdlk2NlpRTUZlaU03OGFWUnB1U3Q4NEFyNXVxWDBrbWNO?=
- =?utf-8?B?OHVWcUZlRDZ6SEx1dVphRkFCL21DNlFDT0t1UlpZYTlMbkIvTVJvTFlLbFVt?=
- =?utf-8?B?WjdKbFpudDhYUWdhMEZxV2pLL1dZUndzTmxsc3VBcjJqcEw2SmVmQ0hoSlFy?=
- =?utf-8?B?dHVzL1R1dmloWm04UGdYL3pLaWMzMThXRElYMkV5dGNaTVB2N0FIeW1GTXVr?=
- =?utf-8?B?Z1BJTS8wUDRhUTV1ZlhYOVJkQnN2eGxXSVJvano5am5WZjVHRmw2OEYveG9K?=
- =?utf-8?B?TUN5dzZRUlpQaFd6S1BGeWhwbjhpbnRVaDBjam1nOFhSdTNOcnV6MVpNeC8r?=
- =?utf-8?B?K3UrSGV0endXK3NYS0ZIVWJ5NitoN0VqU2tmVkMwSjEwZURNTFpVSTczVFVP?=
- =?utf-8?B?aWlQR1ZaVHFSMTI2L1VqSDRzdXoyV3JRcUtnS0Y5dzAzQitBdmRzUE9ydXkx?=
- =?utf-8?B?d1hhdi9xSzNibVNtV0ozM2lkM0tsNXhwNHZzYnFNQVVVbWpIcUFJWTU3R3U5?=
- =?utf-8?B?ZzJIWlp6cDNpNHhrMXl2cUxNTC9DWGtaOFZyU0h4cEJSYURkYVp3NnBhSVBr?=
- =?utf-8?B?d1E9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3eeade92-361b-4fc9-2b19-08dd97ef08e7
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MmJqV2pxdHhhTUl0OWRDZDFqVUt6RS80VU9HUHR3Z2xpUG44ektvTFZhRmd3?=
+ =?utf-8?B?RlQ2V2ppMzhISitiS2lEcW5lOTlUM2h6cXRDVzdOOHYwdHl5UlRZOEhUY2Fm?=
+ =?utf-8?B?N1VHUTRCRnhyR1FCNTA3R1pYNHErRCt0cmZqSmtiVUI0QUtoOHhwSDJhK2JO?=
+ =?utf-8?B?b2JpVWhMUUFyMmRqb1NHcGQ4TEtweUVjSFk2VnZNaGlGcDRZUVR2bWJJL24y?=
+ =?utf-8?B?clU1bllvV2U3Zm5uWjZkOW9rZExDWEFpNEcxcFlubGxMaXh2N2FDUUNUVjNT?=
+ =?utf-8?B?VnhPd3ByWE90dGJxbHdHelBTbGFta1oxYkRDa2tQOW1STzM1d0M0dTVCc09O?=
+ =?utf-8?B?NVhJam1HOHpBaXMxYVJ0UWVrT1J3ODZMU1FHZzlDK05TQVVTTjBlNmZMWWhq?=
+ =?utf-8?B?bHNMUXVhMFBTVWJiU2ZxdWR0VjZzSXZXWVczQUFxUDg5eTY4ekt5MU9POWND?=
+ =?utf-8?B?ZDNKMHdLSkllSU1nbkhsT2RLbnYveXB2NkZSSWI1RmhYenVLMXFKOE9rVEtQ?=
+ =?utf-8?B?Znc0djUvUEwyREFlVjhCekJKUHBRUFlGWkhjOVFISFNiRHp2Q25icmpCQXJ6?=
+ =?utf-8?B?MWdiSDJDWWpydHVQVWlkc25vZUZZMjBIcEV4Y2ZEeEtGSXB6VzJ3U014K2ZS?=
+ =?utf-8?B?Y2ozQnhRejNEL0J4VkNMNE40d3JKT2JjRTIybm9lV09QWUp0bVp4UDdvQTgz?=
+ =?utf-8?B?UTZBb0J4Rk9aOW9zc2l0TkRnREtSck5CNStxM2wvUUZmNnVtSjJDTHhQNzVz?=
+ =?utf-8?B?aFR4NTJhWkVlZjBBU2p3RlhabUl4bXF3SXdKUFpFTUZ0VzFPZnFUaHZSMVFm?=
+ =?utf-8?B?d3E2em5FYzJJYVhRd0lPQURIOGM0WUx1NHJBVW9UN3hTV0p2dkl6VW1TbUk5?=
+ =?utf-8?B?cEdYUjJNci9MZit4S2QyMWVwZ2NKTnVvRnlRSWw3WU4xcnFXcFhlbU9aZEJU?=
+ =?utf-8?B?eFQ1UlF5RFJ2Wld0cEEzT0dTa0owUUtQdXhvVzJFbldURG40b2lRSHhyTDVX?=
+ =?utf-8?B?TTRKWkQrTGF0NXIwbWFzbjErZlJOaHBlc0dFaWpKMlVzSittUHgxTlFCZVlm?=
+ =?utf-8?B?NkFiNW9jQ1ZpTXp3T01yVTJ0ZkpQQlBuWkVRTXZjb0Z1aWZLckFXSjc2NUhm?=
+ =?utf-8?B?UDVlcmtzWFFLeVRDL0tNdnZ6M3pZaVZlb2g2YnVDRDNQWU9CaDZkWUxoUGVh?=
+ =?utf-8?B?VzZueTc1TUx6cFptYXJOWU9LNCtKdUp1ZzJucGpBM1N5a09DLzJVUmtkVGNp?=
+ =?utf-8?B?YXhrUjlvaUJkWVlmYVAwVXEvd2NPZGlvVHRHTXlHVUliZ2FqU1NlS0dtTHNM?=
+ =?utf-8?B?WXBjbjJTODg2TkhiWTgzSUZ0dDZhL1hINmxqTXlsZ1VLNHlXYklWZVl6SEdz?=
+ =?utf-8?B?T2F6SmgxWEY4amtFRVA4MjZyaEZ3d0pxUS9kTi9FZGY5RllpSXdxVStOTUFL?=
+ =?utf-8?B?Qk9wNkRRcFFuUjRWZ2EzUjRzYUhFOUhNS2RLZ3plV3kyUWZjdzVXcU9vTU5i?=
+ =?utf-8?B?T3Zqb29JM3M3Z2hGUlBKdk8vaUFoZUF3ZExXL28xVFIvb29pYXQ0REdHSTdO?=
+ =?utf-8?B?WGpXL3U0MncvU0krSWcwTVNCN2lKcGN0OS90VS9qb3hEdGd0RUxta2RYeHRr?=
+ =?utf-8?B?YlRsWVJvL0E4Y1dmWTFnOGZPREJJTlhwMUpHaVM1T0d3SFA2L2krd0U2S0RI?=
+ =?utf-8?B?ZXR1b0dDZjI0QWtOR3NhS1NNeEhxV2s0ZWFLWjBLQloyMDh6Ujl4TElpUHNK?=
+ =?utf-8?B?V24zQTNjSjIrWHZwelFvM3gycHU0N3R6bHVVVjQ1TjQ0TytVYXhqbkI2NVpa?=
+ =?utf-8?B?Mm1XM2VJQzlVNUNTUWVFb2VTc245am9xbnFzekJ6VDdCMVpWSjAwbElTL2ly?=
+ =?utf-8?B?TTBDL2xrS0crMXBrajB2djJ3dXRxc1BHemlKY2gwUTNVa2x1L2pta0RHcGJx?=
+ =?utf-8?B?aW15em52NVM1N3dCSUhyWlhyYmFNQ0p1VWlJaDNOMGNrWCs1RHhOMnJhRlVY?=
+ =?utf-8?B?SnVnVk15M3NZUXMrRVg0ZXRRLzJHbGVOdkx6REtNVktDRkgvd0d1T3hUNk1V?=
+ =?utf-8?B?enVEMitUUEI2a3lpaGhEOUhPVitpeW9jbm8rZlE1ZCtnSUkwYzRLc0RpaDFU?=
+ =?utf-8?B?NHBTd1Q4N1V0S3hURkkxMWhvakRLb2ljMFVucVpONk5VanJrME9udXhmZ1lY?=
+ =?utf-8?B?dHc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: f73dee8a-1e09-443b-c981-08dd97ef8e8d
 X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 22:38:26.0220
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 22:42:10.7479
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Pjmn42rJofhNDUPXlXz7ypNVj3J7H7qe6LWw3jUBHdZljLGGP/+MPQhsTMz/yMR9b6n7KoOnLlqdnoQX8DhitGeBykQCuyLrC/8q8f+kFZU=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5182
+X-MS-Exchange-CrossTenant-UserPrincipalName: t+wKs4KzMPg+kY/grOHSnT1bloSGIy5z7IB/hlqV0ER+BkT0B/xk/aFefw9MYqwkkiBgE3iRz4cKv53e9ZS6gEpVAV1CRfdl9tzAqv8M+4I=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA4PR11MB8991
 X-OriginatorOrg: intel.com
 
 
 
-On 5/20/2025 7:39 AM, Junio C Hamano wrote:
+On 5/20/2025 8:13 AM, Junio C Hamano wrote:
 > Jacob Keller <jacob.e.keller@intel.com> writes:
 > 
 >> From: Jacob Keller <jacob.keller@gmail.com>
 >>
->> The do_match_pathspec() function has the DO_MATCH_LEADING_PATHSPEC
->> option to allow pathspecs to match when matching "src" against a
->> pathspec like "src/path/...". This support is not exposed by
->> match_pathspec, and the internal flags to do_match_pathspec are not
->> exposed outside of dir.c
+>> A following change will add support for pathspecs to the git diff
+>> --no-index command. This mode of git diff does not load any repository.
 >>
->> Make match_pathspec_with_flags public, and expose the
->> DO_MATCH_LEADING_PATHSPEC and DO_MATCH_DIRECTORY flags. The
->> DO_MATCH_EXCLUDE flag is kept private in dir.c
+>> Add a new PATHSPEC_NO_REPOSITORY flag indicating that we're parsing
+>> pathspecs without a repository.
 >>
->> This will be used in a an extension to support pathspec matching in git
->> diff --no-index.
+>> Both PATHSPEC_ATTR and PATHSPEC_FROMTOP require a repository to
+>> function. Thus, verify that both of these are set in magic_mask to
+>> ensure they won't be accepted when PATHSPEC_NO_REPOSITORY is set.
 >>
->> Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
->> ---
->>  pathspec.h |  8 ++++++++
->>  dir.c      | 11 +++++------
->>  2 files changed, 13 insertions(+), 6 deletions(-)
+>> Check PATHSPEC_NO_REPOSITORY when warning about paths outside the
+>> directory tree. When the flag is set, do not look for a git repository
+>> when generating the warning message.
+>>
+>> Finally, add a BUG in match_pathspec_item if the istate is NULL but the
+>> pathspec has PATHSPEC_ATTR set. Callers which support PATHSPEC_ATTR
+>> should always pass a valid istate, and callers which don't pass a valid
+>> istate should have set PATHSPEC_ATTR in the magic_mask field to disable
+>> support for attribute-based pathspecs.
 > 
-> You use diff.orderfile?  Not complaining, just finding it amusing
-> that somebody uses the feature ;-).
+> All very sensible considerations.
 > 
-
-One of my coworkers asked me to set it up so that header files appeared
-first in diffs. I kinda liked that, so I stuck with it.
-
->> diff --git a/pathspec.h b/pathspec.h
->> index de537cff3cb6..d22d4e80248d 100644
->> --- a/pathspec.h
->> +++ b/pathspec.h
->> @@ -184,6 +184,14 @@ int match_pathspec(struct index_state *istate,
->>  		   const char *name, int namelen,
->>  		   int prefix, char *seen, int is_dir);
->>  
->> +#define DO_MATCH_DIRECTORY (1<<1)
->> +#define DO_MATCH_LEADING_PATHSPEC (1<<2)
->> +
->> +int match_pathspec_with_flags(struct index_state *istate,
->> +			      const struct pathspec *ps,
->> +			      const char *name, int namelen,
->> +			      int prefix, char *seen, unsigned flags);
->> +
->>  /*
->>   * Determine whether a pathspec will match only entire index entries (non-sparse
->>   * files and/or entire sparse directories). If the pathspec has the potential to
 >> diff --git a/dir.c b/dir.c
->> index a374972b6243..2f2b654b0252 100644
+>> index 2f2b654b0252..45aac0bfacab 100644
 >> --- a/dir.c
 >> +++ b/dir.c
->> @@ -329,9 +329,8 @@ static int do_read_blob(const struct object_id *oid, struct oid_stat *oid_stat,
->>  	return 1;
->>  }
+>> @@ -396,9 +396,12 @@ static int match_pathspec_item(struct index_state *istate,
+>>  	    strncmp(item->match, name - prefix, item->prefix))
+>>  		return 0;
 >>  
->> +// DO_MATCH_EXCLUDE is not public
+>> -	if (item->attr_match_nr &&
+>> -	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
+>> -		return 0;
+>> +	if (item->attr_match_nr) {
+>> +		if (!istate)
+>> +			BUG("magic PATHSPEC_ATTR requires an index");
+>> +		if (!match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
+>> +			return 0;
+>> +	}
 > 
-> We do not use // comments (outside borrowed code anyway).
+> It is a bit curious why we do not check PATHSPEC_NO_REPOSITORY here,
+> but it is OK, because it is a BUG for istate to be NULL when we have
+> a repository anyway.
 > 
 
-Sure. I don't actually expect to keep this patch as-is anyways, since I
-think we might want to do something else... as exposing these flags
-seems incorrect to me...
+Right. We could check it here, but I actually had added this BUG first
+before I added PATHSPEC_NO_REPOSITORY.
 
->>  #define DO_MATCH_EXCLUDE   (1<<0)
->> -#define DO_MATCH_DIRECTORY (1<<1)
->> -#define DO_MATCH_LEADING_PATHSPEC (1<<2)
+>> diff --git a/pathspec.c b/pathspec.c
+>> index 2b4e434bc0aa..a3ddd701c740 100644
+>> --- a/pathspec.c
+>> +++ b/pathspec.c
+>> @@ -492,7 +492,7 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
+>>  		if (!match) {
+>>  			const char *hint_path;
 >>  
+>> -			if (!have_git_dir())
+>> +			if ((flags & PATHSPEC_NO_REPOSITORY) || !have_git_dir())
+>>  				die(_("'%s' is outside the directory tree"),
+>>  				    copyfrom);
+>>  			hint_path = repo_get_work_tree(the_repository);
+> 
+> This is a part of generating an error message.  We die early to
+> avoid having to call get-work-tree when we know we are not even in
+> any working tree, which makes sense.
+> 
+>> @@ -614,6 +614,10 @@ void parse_pathspec(struct pathspec *pathspec,
+>>  	    (flags & PATHSPEC_PREFER_FULL))
+>>  		BUG("PATHSPEC_PREFER_CWD and PATHSPEC_PREFER_FULL are incompatible");
+>>  
+>> +	if ((flags & PATHSPEC_NO_REPOSITORY) &&
+>> +	    (~magic_mask & (PATHSPEC_ATTR | PATHSPEC_FROMTOP)))
+>> +		BUG("PATHSPEC_NO_REPOSITORY is incompatible with PATHSPEC_ATTR and PATHSPEC_FROMTOP");
+> 
+> Hmph, I am not sure if this change is correct.  The magic_mask
+> parameter is passed by a caller to say "even if parsr_pathspec()
+> parses a pathspec using a certain set of features properly, the
+> caller is not prepared to handle the parsed result".  If magic_mask
+> lacks PATHSPEC_ATTR, that does not necessarily mean that the given
+> pathspec contains any pathspec items that do use the attr magic.  It
+> merely says that the caller is not prepared to handle a pathspec
+> item that uses the attr magic feature.
+> 
 
-I actually almost wonder if we should set both DO_MATCH_DIRECTORY and
-DO_MATCH_LEADING_PATHSPEC in match_pathspec when is_dir is true.
+Right. The magic_mask is a "these magic types are not allowed". I'm
+checking to make sure that if you set PATHSPEC_NO_REPOSITORY, you must
+also set PATHSPEC_ATTR and PATHSPEC_FROMTOP, because you cannot possibly
+handle these pathspecs without a repository.
 
-The DO_MATCH_DIRECTORY causes pathspecs to match if we have a path like
-"a/b/c/d" and a pathspec like "a/b/c".
+> If we are going to add a call to parse_pathspec() in a code path
+> that is specific to diff-no-index, isn't it sufficient to pass
+> PATHSPEC_ATTR and PATHSPEC_FROMTOP as magic_mask without this
+> change?
+> 
 
-The DO_MATCH_LEADING_PATHSPEC does the inverse: if we have a path like
-"a/b/c" then we match a pathspec like "a/b/c/d"
-
-I guess it really depends on the nature of the caller. In the normal
-case, I guess we don't check intermediate directory paths and only check
-the end resulting files. But in my case, we're checking "a/b/c" before
-we descend into it to check its inner contents.
+Strictly speaking, yes. This part is really just a "this would be a
+programmer error we should catch early".
