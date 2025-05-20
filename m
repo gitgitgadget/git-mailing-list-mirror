@@ -1,120 +1,144 @@
-Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a4-smtp.messagingengine.com (fout-a4-smtp.messagingengine.com [103.168.172.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C0221C9EE
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:37:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 317651BE251
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:53:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747733869; cv=none; b=qAYo5EH4Qp0xGDxFVeeTp7QlFbn28jHC4lOSunjaQxxHgKGK4EMSPEjY+sg+RpNYyTDFmw28Tf5EZJ1uXf3aWLlIcXsbF7v5KtnQgFVlTWuXHVqYN4ZFdUWTh3ry/vOrPZIjTeIojRdzooe0UGLBjnC1gfOvWJ5um+BpYlagisw=
+	t=1747734800; cv=none; b=elWP64eEzzxnCGoUgTKGSDpwPgeowKlS+fNbBvhxOeuo73VdYNIiKMmExrigJnO5gneKCG68fJZuTgo+XqD/dP+D+LMneIIGeAe59NbiET0Oy4fH+QpNh/kNo3JuhMDPXm4nTgekLFekEyMYV088Ph6lYzpz9lCvx8funkhKBCA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747733869; c=relaxed/simple;
-	bh=ASgL85X9W+TgbWgS7ltFeKjVnMk+PQ06ATOO3pAQYjw=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iDtV37Dmn7tD237numvfArhk3wWNkbeOEsW2NNuq8btYZ6siaZ3iab5kDEYdtF6Tl1ZWIuj42mkaXoo7Pdc3Te4laRT2aj5hfiZCWk9F8Gbv2XyEzoBjjvvOvGUZ7HXvlbJoDoinZmW0sAQXmTdR+moCS9mGAeXGOMktKYUNnPs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KXdB8IIB; arc=none smtp.client-ip=209.85.217.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747734800; c=relaxed/simple;
+	bh=xZiAuP6ICpHIKWE69WYBhEaI3lLFqOz8p+b9qGoTBM0=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=mMDyNwDWhLKBCH2DT3B73qqF1907Zk4C5vlPCwQvOW+IydbudIl8eYBLL7mX8zPyh2oemmyi89C4cNVZ/wMiKZ9qS+2NuXpZ/Y0SuuR4TBKR+Sqsq2XwDhbwVXzB8trtl9Kqh19StgfzQMO+SZed+uNd5d83kp6oCG3KtRHy3wE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=15in1oC7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hJABFBKo; arc=none smtp.client-ip=103.168.172.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KXdB8IIB"
-Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4e149bf7f4eso1364523137.2
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:37:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747733866; x=1748338666; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=r9k6eBrVqTMX6ef072oj/BPfGiP9oBgS+ia17ohaJiY=;
-        b=KXdB8IIBewn1A2cMJ3sJ56SIJvvVhB1kyPTUxkX8pnmRfIzH+WABcqP6EBORo1n7PZ
-         f6R+gCY29U/rBLgR50BPtzZfF9U0WXlG/jKIU5Qg4x/vYT6Xgm2FeFud7X6F7lSN1+WX
-         T+3mgUB2znBF/ldXQn3YwnJqYo+OvExnwliFqMIFrw4VyPeLkkfN4wSLKtp7snKsJdtB
-         u7SK4t7trISm6Emo7PDlSeUddJioVJFPVoJpO+G1UAMo+bZv4XKfM0H/70ej+OReE2XE
-         CYJ1GDdugn9Mr4G2wYMGEDnKbEJJib4sYRlBHqNEyZ7tm7DNpFkNqgDlojkl7YG6OIwR
-         qYGg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747733866; x=1748338666;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=r9k6eBrVqTMX6ef072oj/BPfGiP9oBgS+ia17ohaJiY=;
-        b=n211l4NvyqEeroEzMlIieIC1aK79sWf5/L4nwCx7SWCVe2sCjYbqXXFI4lX/IeRzAn
-         bzmQa/vqyhQG3Rv576zRjk9ba+g3GoOCq3VDdkRALpYIqXKVm2UyxiBViJKPLqkYaIbt
-         egSxFR18u1RvmfyO64HZu1CFlEOS+cWVuf9ISm55qPjl8rbGpiN3iVpilyT+85yvdB1U
-         fsMy9748Rec7/iweHkYOTEHzyjynIfd559oKTeNJljJ7BahEJDrkFSfIyAN6R/MMcPAa
-         1T7PmD8zvqS6pgk6OoxhTabK67f9QZQJgnH9XooJvgyBnQ13XuTV5zcbdjYd4e7ur7qu
-         sWTQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWOeRyq+r+5SzyiZa10qvYOz9bkbuDcBfto76crVr/LXIjqXn/cWJAPbu3LOWjkl84NzpU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyI8qndZmKOshM5lwAaDlITb07luyMk6Wg7ItzfBavLb6fRHCD7
-	VJNluvDwuriUe2k6WdXjPzT0sJmb/DRDY2Paiw0gMNFxNaSjr0ItCOGpVGXV31DojenQcYpyyy+
-	6nhJ8bnidGvdCPJLlTmqaGY3LGsjMU5s=
-X-Gm-Gg: ASbGncu3nPwaLGaNfn4yAXBSgCkGS/jS7HSM8B5gjGdm7+ImwREETK4+H9vJwD/FRgr
-	A+CljpRI2VDPhlghrFkqJV+QiFhHZA2/k932p+IYC/QRbK9j6oADZzspWUf0c/9SucYENzail8A
-	To0uOz57lptFWrPvvfveaEWN225L6W/C4=
-X-Google-Smtp-Source: AGHT+IHxgTh0R5FaGzf2i1RWXVYheGo5a49GC974vT97ua1lc/rCWKtGOjgVw1RhaMy0qeF2PM8JX5n1/8o/1vvGRi4=
-X-Received: by 2002:a05:6102:b15:b0:4df:8259:eab with SMTP id
- ada2fe7eead31-4dfa6c31c1fmr16164024137.19.1747733866045; Tue, 20 May 2025
- 02:37:46 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 May 2025 02:37:43 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 20 May 2025 02:37:43 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250519141259.3061550-2-christian.couder@gmail.com>
-References: <20250429145243.992252-1-christian.couder@gmail.com>
- <20250519141259.3061550-1-christian.couder@gmail.com> <20250519141259.3061550-2-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="15in1oC7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hJABFBKo"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 41108138044C;
+	Tue, 20 May 2025 05:53:17 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Tue, 20 May 2025 05:53:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747734797;
+	 x=1747821197; bh=fJTXA0NkmlQ/YPZZcBNspa8+bGQp/HH09hnq0AbMrDs=; b=
+	15in1oC73vvp+3AiXU6BLPzP4BlEnHbVukyLvAJAidQhp0xZ9kOwoq3e4AMHEh1E
+	ePJhAiWY1iCXpon74uUlAvvXqyTkZ2NwYCjbiGUpLU79CGhgJh6/Xz5b9WDHsGge
+	4AUGpIX3XamjFk3LooZBocvDfboTlDjvXo6Pxqkv6XFDHJ6jA5gr3wdrwBrbKcod
+	/drEzYuORP683/O6q0nt8AYLgbVeC1bN/8mOMTSe6ANACVBvvqil2j+Monolhwuv
+	EAPd82D3QmYM2HLHpaLOCvkXYoX+XRENSN7E0MNsFyQ1Sa+tOEuOq6hI/uXxhHLS
+	a27NrfDeGAOuzXmFOc5BUA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747734797; x=
+	1747821197; bh=fJTXA0NkmlQ/YPZZcBNspa8+bGQp/HH09hnq0AbMrDs=; b=h
+	JABFBKoCtVpq2KquCj7D74tes6ADaZ7U75VnnYFCdifTEznveDF/edPO2ddckb3O
+	Kr7hCegSsUo/4cbGqG6Oq5hGmSb52ccHFTQQq+K4l7WR+G1mMjt1usWJsJPWHgPf
+	ZPGFXu2vCigEYeIbAdBJpU4AoMSXfYikNuPdzXp79ZGuppZlkaQFdbGX/cLg/3uv
+	zIzWo09XpJEswaRfyJO1KO+xIe70P052qFPv2VMghPtJUXrzhCkvIPfFdUw8OyaW
+	N1PmOE44bXDYChUik4ynrRGqaazZAbwA6pSqPP+W/88T3fxL+SX9BFi2R/7L4Ckq
+	QrVwceMFUoBLInaSBsDFA==
+X-ME-Sender: <xms:DFEsaJvsk77V7xEUjchAUFsw3Empm1fxeM5mnr2dttz-WRQ6kCc8Xg>
+    <xme:DFEsaCccadzI4-5ZYkfXPf94BD-skXJ5Mb_JMFzWG9A0_-JXuZx2FV_DYKP0925rl
+    nLL2trNkvGQLEumkQ>
+X-ME-Received: <xmr:DFEsaMxeYAUtIy2uO47MFCAskIBPPf1rEAV8ymDFqSpg0acBs7VFiL6iBk8sYrU_x8IeyFPMUQo_CnsFr7vEQaPmjx00FSL4d2godFhZQGU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefvddrtddtgdefvdefleefucetufdoteggodetrf
+    dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggv
+    pdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucenucfjughrpefhuf
+    ffkfggtgfgjghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufht
+    vghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuue
+    ehhffhiedtueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecuffhomhgr
+    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohgu
+    vgepshhmthhpohhuthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtg
+    hpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpvghf
+    fhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:DFEsaAMRJ3ANdji35PKjcnya19Zrq6SIMw4T3KbfNtgz6IOTI1tVVw>
+    <xmx:DFEsaJ-08l57CjLS6VtFfqxrihoOj8xLyQk_RcjBxnl7D7HjO72Csg>
+    <xmx:DFEsaAVeGGGT2Ex2dNhuXg44U0x3s1QnCY9XnaesZ0HY9z1t14CbAA>
+    <xmx:DFEsaKcXErH8UKzeI6I9Fd3iQjIYgt1LpR2mabJlktalx2_H5fP4JQ>
+    <xmx:DVEsaIq2jUBWuaHHb1bZA5vKKf8trI0dIueNVMqVvPc7aMQ9j0ukgV2S>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 May 2025 05:53:15 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 8a6f59a2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 20 May 2025 09:53:13 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 0/2] packfile: avoid access(3p) calls for missing packs
+Date: Tue, 20 May 2025 11:53:08 +0200
+Message-Id: <20250520-pks-pack-avoid-stats-on-missing-v2-0-333c5217fb05@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Tue, 20 May 2025 02:37:43 -0700
-X-Gm-Features: AX0GCFvAQ06S7mr21pz4PPiShW1e-qErLzihIxiqf0Z5Fd3wqzu8GAeJ4znvjJI
-Message-ID: <CAOLa=ZRnL_PLVpQrmHPMXtJd9e965B5iz8widkk5GNSDvh21Pg@mail.gmail.com>
-Subject: Re: [PATCH v3 1/5] promisor-remote: refactor to get rid of 'struct strvec'
-To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000003f969f06358e006e"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAAVRLGgC/42NQQ6CMBBFr0Jm7RharKAr72FYVBhgQmhJhzQa0
+ rtbOYHL95P/3g5CgUngXuwQKLKwdxn0qYBusm4k5D4z6FKb0qgrrrPgarsZbfTco2x2E/QOFxZ
+ hN2JD1as2tTHdUEK2rIEGfh+FZ5t5Ytl8+BzBqH7r/+6oUCFpGi59U98aWz3y48wLtCmlL9mjM
+ sDLAAAA
+X-Change-ID: 20250516-pks-pack-avoid-stats-on-missing-8e3b75755cf0
+In-Reply-To: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
+References: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
+To: git@vger.kernel.org
+Cc: Taylor Blau <me@ttaylorr.com>, Jeff King <peff@peff.net>, 
+ Junio C Hamano <gitster@pobox.com>
+X-Mailer: b4 0.14.2
 
---0000000000003f969f06358e006e
-Content-Type: text/plain; charset="UTF-8"
+Hi,
 
-Christian Couder <christian.couder@gmail.com> writes:
+this patch addresses an issue we have recently seen in our production
+systems due to a stale MIDX. The MIDX contained entries for packfiles
+that didn't exist anymore, which caused Git to repeatedly look up those
+packfiles. Each missing packfile resulted in four repeated syscalls:
+three access(3p) calls to check for supporting data structures, and one
+call to stat(3p) to check for the packfile itself. The first three calls
+are essentially wasted though when the stat(3p) call itself fails, which
+is being fixed by this patch.
 
-[snip]
+I doubt that the patch matters in almost any repository, but given that
+the refactoring is trivial I thought to submit the patch regardless of
+that. Another step would be to introduce a negative lookup cache -- but
+that would be a bit more involved, so I decided against it for now as I
+don't want to introduce complexity for dubious gains.
 
->
->  /*
-> - * Find first index of 'nicks' where there is 'nick'. 'nick' is
-> - * compared case sensitively to the strings in 'nicks'. If not found
-> - * 'nicks->nr' is returned.
-> + * Find first element of 'p' where the 'name' member is 'nick'. 'nick'
-> + * is compared case sensitively to the strings in 'p'. If not found
-> + * NULL is returned.
->   */
-> -static size_t remote_nick_find(struct strvec *nicks, const char *nick)
-> +static struct promisor_info *remote_nick_find(struct promisor_info *p, const char *nick)
+Changes in v2:
+  - Drop the patch that reorders syscalls and add a comment explaining
+    why the order is important.
+  - Add a negative lookup cache for indexed packfiles.
+  - Link to v1: https://lore.kernel.org/r/20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im
 
-Nit: while we're here wouldn't be nicer to rename this to
-`promiser_info_list_find_name` or similar?
+Thanks!
 
-[snip]
+Patrick
 
---0000000000003f969f06358e006e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 9db33afe8d8b57c5_0.1
+---
+Patrick Steinhardt (2):
+      packfile: explain ordering of how we look up auxiliary pack files
+      midx: stop repeatedly looking up nonexistent packfiles
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nc1RXVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mL3ZBQy8wVndUL0xTSEY4RFpYZ3NtRkovNHdiVHoxNgplRk00aWdycEtL
-ZXlib1ZtZmZPUTdFR0NkR1IwTWppRWZPa3VKTXJTZDczUGdMbHlOZmcxell2ejBqTmoyazRHCmVh
-TW11a3E1WE5ZQVRHbFVnS3ZHWjRaQjZ6YXFVdlpqWmRsem4yOVg5cS85VkNCRFVrYXdnMDFMbDB4
-ckNzMXQKWHVXcEtRK05XT0pCVWE4eXl0MVlLT2FxMmhha0RuR2N3N0VLYkpQVEQwVVFZSzJINndi
-U3k0dnFYWXdid2ZjMAozRlNyVzZiT1c3UzRTR2R4SnJ2RDhCZkxNb2pMNFpweWZwck9lWXVXWVoy
-OWYvNjhadEtlV0FMZ21aNS9JdkhFCnJWZUJqdFM1OFVFMHh6WW9kMW1yK3o3dVJNMm4vTWk4RkR3
-M1dhaGF5bUtaRHAyMjdVS2N5OGZTeXFmejZua1AKeUh2RXdjbWZPWGt3NFQzME81VTRDa084QTBp
-UVdtem1XUkE5VlEydzU2V3lwNjdLdzgyRWFyKzU4Ui9iVnFydQpvSHRHdHJBVVllYWVvUjR3L3lX
-aGpIekY4YnZndExJNUV0ekczVDA3R3NmUkRjcjgwcGVnQzZTMW10aTBWa09FCk40SHdsOVlLc2pn
-ZThvdnBrbFVZNENDVHBuRVMwcE5ValdKblpacz0KPVRKeWEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003f969f06358e006e--
+ midx.c     | 10 ++++++++--
+ packfile.c | 11 +++++++++++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
+
+Range-diff versus v1:
+
+1:  31ffb3712ca < -:  ----------- packfile: avoid access(3p) calls for missing packs
+-:  ----------- > 1:  6125b84389d packfile: explain ordering of how we look up auxiliary pack files
+-:  ----------- > 2:  8cb82a771c0 midx: stop repeatedly looking up nonexistent packfiles
+
+---
+base-commit: 1a8a4971cc6c179c4dd711f4a7f5d7178f4b3ab7
+change-id: 20250516-pks-pack-avoid-stats-on-missing-8e3b75755cf0
+
