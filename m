@@ -1,141 +1,120 @@
-Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68ED92641EA
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:27:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60C0221C9EE
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:37:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747733261; cv=none; b=Ouc24OzGzKKtANWgI6vf+1phC9xbdb2AYp9mWRIRUOUe9VEduWUOrho06mQMf20xu3yE1d1FGVFXjkseLqdX73McVEj5b30PHAQi84BEHSAq43Hk4cCE88mVMaQ5UQVAr+KG36hx5cu5fCaw3mXFG0aAZYPV+uhJQn/Rt2gyWI0=
+	t=1747733869; cv=none; b=qAYo5EH4Qp0xGDxFVeeTp7QlFbn28jHC4lOSunjaQxxHgKGK4EMSPEjY+sg+RpNYyTDFmw28Tf5EZJ1uXf3aWLlIcXsbF7v5KtnQgFVlTWuXHVqYN4ZFdUWTh3ry/vOrPZIjTeIojRdzooe0UGLBjnC1gfOvWJ5um+BpYlagisw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747733261; c=relaxed/simple;
-	bh=0ay7jvGDPN3FAlsaH6FFE4bo7Bud715e3fOov0EoT9o=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rmzJO46/CSmKPpo1aKR1H5wZ9fdLrhX3KBeqHY3HSkPcnHQkb6FqaCsLsRkVuEjiMfpM2/+gOy9at5EJBngLGcPtMzkFlon3oDxk7eNvhwS73Anzh8TZI8mI9x2aMgsvu6ypEtdzOBz0D0QC4SZAPco9jK/GqE/aFmHPkee+i+4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V1zPpfc9; arc=none smtp.client-ip=209.85.128.48
+	s=arc-20240116; t=1747733869; c=relaxed/simple;
+	bh=ASgL85X9W+TgbWgS7ltFeKjVnMk+PQ06ATOO3pAQYjw=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=iDtV37Dmn7tD237numvfArhk3wWNkbeOEsW2NNuq8btYZ6siaZ3iab5kDEYdtF6Tl1ZWIuj42mkaXoo7Pdc3Te4laRT2aj5hfiZCWk9F8Gbv2XyEzoBjjvvOvGUZ7HXvlbJoDoinZmW0sAQXmTdR+moCS9mGAeXGOMktKYUNnPs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KXdB8IIB; arc=none smtp.client-ip=209.85.217.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V1zPpfc9"
-Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-43edecbfb46so43067425e9.0
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:27:38 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KXdB8IIB"
+Received: by mail-vs1-f44.google.com with SMTP id ada2fe7eead31-4e149bf7f4eso1364523137.2
+        for <git@vger.kernel.org>; Tue, 20 May 2025 02:37:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747733257; x=1748338057; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=+4nMuBRHIBrIWvlanrmwkYN9W9UAKvbmj0KJb2uFwtw=;
-        b=V1zPpfc9jzH25mW46WOWVeCJGtJDQd9KZ+wjX3gBiAKf0fwWpMx5hF2ES+InTSYf/W
-         O5lSxXpmapZHWkWTOUvWlN1qkkro3MmNo+n4baMXczitLTs2tbnPrT65Or5CgR4RHpgM
-         rx2ciJ3jj0sb4aUo7hMIsuo1nJWgCcj2bAJEDHyqRdBUE9lN+vwmkCDuzLN6+rIGCHhK
-         2cimt+/XqUpa0ZxlQiQARSyz13wbCWSSHapGptzdHKGE2wXGVNizQAx9yiF2zkVmhr1+
-         jI4XcZLTMLDVoy+FZUDV1TS71s6fN6sjZbNNYxwl8meZL2F0LCSloCMns3V18FhgIXqx
-         RyhA==
+        d=gmail.com; s=20230601; t=1747733866; x=1748338666; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=r9k6eBrVqTMX6ef072oj/BPfGiP9oBgS+ia17ohaJiY=;
+        b=KXdB8IIBewn1A2cMJ3sJ56SIJvvVhB1kyPTUxkX8pnmRfIzH+WABcqP6EBORo1n7PZ
+         f6R+gCY29U/rBLgR50BPtzZfF9U0WXlG/jKIU5Qg4x/vYT6Xgm2FeFud7X6F7lSN1+WX
+         T+3mgUB2znBF/ldXQn3YwnJqYo+OvExnwliFqMIFrw4VyPeLkkfN4wSLKtp7snKsJdtB
+         u7SK4t7trISm6Emo7PDlSeUddJioVJFPVoJpO+G1UAMo+bZv4XKfM0H/70ej+OReE2XE
+         CYJ1GDdugn9Mr4G2wYMGEDnKbEJJib4sYRlBHqNEyZ7tm7DNpFkNqgDlojkl7YG6OIwR
+         qYGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747733257; x=1748338057;
-        h=content-transfer-encoding:mime-version:reply-to:references
-         :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=+4nMuBRHIBrIWvlanrmwkYN9W9UAKvbmj0KJb2uFwtw=;
-        b=wh/d6x8+++C1+Minmz3GYL/BvM7KVkwmfbz93ZM5edpENxHdA3iytZAn2g5eAlhrMs
-         Y1B6/4O2a01uFrvBTLMP+P24bOXjoqV78ndTWd2DRiigatJjDvp2OWry0MyHbiqNvHGo
-         AOzdg7nkYCmGHvfFNBKyzGQM+rAc8LTbZ7tdzz2Y0yTDR5QvT3TnLPfs2ZjAQRX0unGk
-         R76Do6gH0hddzs/H8kbXw/rF4R9+Odo4mryJTfsrsPHQmUTwdDLpx5+cBPjcrhQZbLcR
-         wq66e1zlheG9YliKgW2lMTNr9659KQ4x2tcT2piq9DM0e95w22R2iY6+fmk/je/FXw3t
-         hA9Q==
-X-Gm-Message-State: AOJu0YxIwMKa23XAgGw47Wz7xP2yEzN/xukrXX/54OJ7llDij7D/BPD2
-	VMuVu+zo6oSHFEduf9l49lyoBZWNCnihQSeohyTQGJGw0sRY/6lk09UcyLi0Ww==
-X-Gm-Gg: ASbGncs7URCe3+d8aU0c9+6D9etsRSUXaJg9k3f4jf3a6asvQwD/7xaAvTp8JJr6AcC
-	rhxKx7ER7uYZPS1h78HvdD/d3F+kp3XYu7NTzagOjWTL/pA/wiV2mYr/IJKhoCR+hyvuVAhSgs8
-	34SR74RtersTZuJUjRi/pbloTVTpQwwwg/912KjcnZrkc0apr82nmWkQweXt2U30jUUFZih6cV3
-	Tjoso5vkpW8poLvrBVA5IgTta8jY0M1rbtaDmdOQaDpdvES28BPT13r6QBi00Lizxq0xefgcqTa
-	+YLzC8QXRiYA9hLX0xCDyST04atOc2RDcfwpSv/EICNCTOAa5Tdt0kWGmMX+x7kpZss=
-X-Google-Smtp-Source: AGHT+IEJBAtomPB7gy9YdPA1pypAxP/Dv/4eR6dn/tnLOpeC3C42eDaxYRSm3vQUin5vczCtz4qshg==
-X-Received: by 2002:a05:600c:19c8:b0:43d:abd:ad0e with SMTP id 5b1f17b1804b1-442ff000bf6mr115561625e9.18.1747733257271;
-        Tue, 20 May 2025 02:27:37 -0700 (PDT)
-Received: from berwick.broadband ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f6f062c7sm23544255e9.14.2025.05.20.02.27.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 02:27:36 -0700 (PDT)
-From: Phillip Wood <phillip.wood123@gmail.com>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v2 2/2] stash: allow "git stash [<options>] --patch <pathspec>" to assume push
-Date: Tue, 20 May 2025 10:27:00 +0100
-Message-ID: <98ad3de977090a793408b25ca880b65f058ea44e.1747733203.git.phillip.wood@dunelm.org.uk>
-X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
-In-Reply-To: <cover.1747733203.git.phillip.wood@dunelm.org.uk>
-References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk> <cover.1747733203.git.phillip.wood@dunelm.org.uk>
-Reply-To: Phillip Wood <phillip.wood@dunelm.org.uk>
+        d=1e100.net; s=20230601; t=1747733866; x=1748338666;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=r9k6eBrVqTMX6ef072oj/BPfGiP9oBgS+ia17ohaJiY=;
+        b=n211l4NvyqEeroEzMlIieIC1aK79sWf5/L4nwCx7SWCVe2sCjYbqXXFI4lX/IeRzAn
+         bzmQa/vqyhQG3Rv576zRjk9ba+g3GoOCq3VDdkRALpYIqXKVm2UyxiBViJKPLqkYaIbt
+         egSxFR18u1RvmfyO64HZu1CFlEOS+cWVuf9ISm55qPjl8rbGpiN3iVpilyT+85yvdB1U
+         fsMy9748Rec7/iweHkYOTEHzyjynIfd559oKTeNJljJ7BahEJDrkFSfIyAN6R/MMcPAa
+         1T7PmD8zvqS6pgk6OoxhTabK67f9QZQJgnH9XooJvgyBnQ13XuTV5zcbdjYd4e7ur7qu
+         sWTQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWOeRyq+r+5SzyiZa10qvYOz9bkbuDcBfto76crVr/LXIjqXn/cWJAPbu3LOWjkl84NzpU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyI8qndZmKOshM5lwAaDlITb07luyMk6Wg7ItzfBavLb6fRHCD7
+	VJNluvDwuriUe2k6WdXjPzT0sJmb/DRDY2Paiw0gMNFxNaSjr0ItCOGpVGXV31DojenQcYpyyy+
+	6nhJ8bnidGvdCPJLlTmqaGY3LGsjMU5s=
+X-Gm-Gg: ASbGncu3nPwaLGaNfn4yAXBSgCkGS/jS7HSM8B5gjGdm7+ImwREETK4+H9vJwD/FRgr
+	A+CljpRI2VDPhlghrFkqJV+QiFhHZA2/k932p+IYC/QRbK9j6oADZzspWUf0c/9SucYENzail8A
+	To0uOz57lptFWrPvvfveaEWN225L6W/C4=
+X-Google-Smtp-Source: AGHT+IHxgTh0R5FaGzf2i1RWXVYheGo5a49GC974vT97ua1lc/rCWKtGOjgVw1RhaMy0qeF2PM8JX5n1/8o/1vvGRi4=
+X-Received: by 2002:a05:6102:b15:b0:4df:8259:eab with SMTP id
+ ada2fe7eead31-4dfa6c31c1fmr16164024137.19.1747733866045; Tue, 20 May 2025
+ 02:37:46 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 20 May 2025 02:37:43 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 20 May 2025 02:37:43 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250519141259.3061550-2-christian.couder@gmail.com>
+References: <20250429145243.992252-1-christian.couder@gmail.com>
+ <20250519141259.3061550-1-christian.couder@gmail.com> <20250519141259.3061550-2-christian.couder@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Date: Tue, 20 May 2025 02:37:43 -0700
+X-Gm-Features: AX0GCFvAQ06S7mr21pz4PPiShW1e-qErLzihIxiqf0Z5Fd3wqzu8GAeJ4znvjJI
+Message-ID: <CAOLa=ZRnL_PLVpQrmHPMXtJd9e965B5iz8widkk5GNSDvh21Pg@mail.gmail.com>
+Subject: Re: [PATCH v3 1/5] promisor-remote: refactor to get rid of 'struct strvec'
+To: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>, Taylor Blau <me@ttaylorr.com>, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000003f969f06358e006e"
 
-From: Phillip Wood <phillip.wood@dunelm.org.uk>
+--0000000000003f969f06358e006e
+Content-Type: text/plain; charset="UTF-8"
 
-The support for assuming "push" when "-p" is given introduced in
-9e140909f61 (stash: allow pathspecs in the no verb form, 2017-02-28) is
-very narrow, neither "git stash -m <message> -p <pathspec>" nor "git
-stash --patch <pathspec>" imply "push" and die instead. Relax this by
-passing PARSE_OPT_STOP_AT_NON_OPTION when push is being assumed and then
-setting "force_assume" if "--patch" was present. This means "git stash
-<pathspec> -p" still dies so that it does not assume the user meant
-"push" if they mistype a subcommand name but "git stash -m <message> -p
-<pathspec>" will now succeed. The test added in the last commit is
-adjusted to check that push is still assumed when "--patch" comes after
-other options on the command-line.
+Christian Couder <christian.couder@gmail.com> writes:
 
-Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
----
- builtin/stash.c  | 10 +++++++---
- t/t3903-stash.sh |  4 ++--
- 2 files changed, 9 insertions(+), 5 deletions(-)
+[snip]
 
-diff --git a/builtin/stash.c b/builtin/stash.c
-index bc2c34fa048..b12fd6c40f1 100644
---- a/builtin/stash.c
-+++ b/builtin/stash.c
-@@ -1789,11 +1789,15 @@ static int push_stash(int argc, const char **argv, const char *prefix,
- 	int ret;
- 
- 	if (argc) {
--		force_assume = argc > 1 && !strcmp(argv[1], "-p");
-+		int flags = PARSE_OPT_KEEP_DASHDASH;
-+
-+		if (push_assumed)
-+			flags |= PARSE_OPT_STOP_AT_NON_OPTION;
-+
- 		argc = parse_options(argc, argv, prefix, options,
- 				     push_assumed ? git_stash_usage :
--				     git_stash_push_usage,
--				     PARSE_OPT_KEEP_DASHDASH);
-+				     git_stash_push_usage, flags);
-+		force_assume |= patch_mode;
- 	}
- 
- 	if (argc) {
-diff --git a/t/t3903-stash.sh b/t/t3903-stash.sh
-index d24559a328d..295cb508a35 100755
---- a/t/t3903-stash.sh
-+++ b/t/t3903-stash.sh
-@@ -1177,11 +1177,11 @@ test_expect_success 'stash -- <pathspec> stashes and restores the file' '
- 	test_path_is_file bar
- '
- 
--test_expect_success 'stash -p <pathspec> stash and restores the file' '
-+test_expect_success 'stash --patch <pathspec> stash and restores the file' '
- 	cat file >expect-file &&
- 	echo changed-file >file &&
- 	echo changed-other-file >other-file &&
--	echo a | git stash -p file &&
-+	echo a | git stash -m "stash bar" --patch file &&
- 	test_cmp expect-file file &&
- 	echo changed-other-file >expect &&
- 	test_cmp expect other-file &&
--- 
-2.49.0.897.gfad3eb7d210
+>
+>  /*
+> - * Find first index of 'nicks' where there is 'nick'. 'nick' is
+> - * compared case sensitively to the strings in 'nicks'. If not found
+> - * 'nicks->nr' is returned.
+> + * Find first element of 'p' where the 'name' member is 'nick'. 'nick'
+> + * is compared case sensitively to the strings in 'p'. If not found
+> + * NULL is returned.
+>   */
+> -static size_t remote_nick_find(struct strvec *nicks, const char *nick)
+> +static struct promisor_info *remote_nick_find(struct promisor_info *p, const char *nick)
 
+Nit: while we're here wouldn't be nicer to rename this to
+`promiser_info_list_find_name` or similar?
+
+[snip]
+
+--0000000000003f969f06358e006e
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 9db33afe8d8b57c5_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nc1RXVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mL3ZBQy8wVndUL0xTSEY4RFpYZ3NtRkovNHdiVHoxNgplRk00aWdycEtL
+ZXlib1ZtZmZPUTdFR0NkR1IwTWppRWZPa3VKTXJTZDczUGdMbHlOZmcxell2ejBqTmoyazRHCmVh
+TW11a3E1WE5ZQVRHbFVnS3ZHWjRaQjZ6YXFVdlpqWmRsem4yOVg5cS85VkNCRFVrYXdnMDFMbDB4
+ckNzMXQKWHVXcEtRK05XT0pCVWE4eXl0MVlLT2FxMmhha0RuR2N3N0VLYkpQVEQwVVFZSzJINndi
+U3k0dnFYWXdid2ZjMAozRlNyVzZiT1c3UzRTR2R4SnJ2RDhCZkxNb2pMNFpweWZwck9lWXVXWVoy
+OWYvNjhadEtlV0FMZ21aNS9JdkhFCnJWZUJqdFM1OFVFMHh6WW9kMW1yK3o3dVJNMm4vTWk4RkR3
+M1dhaGF5bUtaRHAyMjdVS2N5OGZTeXFmejZua1AKeUh2RXdjbWZPWGt3NFQzME81VTRDa084QTBp
+UVdtem1XUkE5VlEydzU2V3lwNjdLdzgyRWFyKzU4Ui9iVnFydQpvSHRHdHJBVVllYWVvUjR3L3lX
+aGpIekY4YnZndExJNUV0ekczVDA3R3NmUkRjcjgwcGVnQzZTMW10aTBWa09FCk40SHdsOVlLc2pn
+ZThvdnBrbFVZNENDVHBuRVMwcE5ValdKblpacz0KPVRKeWEKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003f969f06358e006e--
