@@ -1,70 +1,90 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6F22586E0
-	for <git@vger.kernel.org>; Tue, 20 May 2025 18:07:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB2EC25E80B
+	for <git@vger.kernel.org>; Tue, 20 May 2025 19:06:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747764459; cv=none; b=E/53oBSmxU9gY4yJ4tUCymM4XKxFPxDnaKa92PiIDLWSt+TOgYKPtgCbFo2bnydavftjEgOjYuArW3+v6nyoV9Gnt4lQsOIZQ/aeZ2c4ypwM4tMd3i3AVeDzuvov8eXGF52/R16opEkZ/M96bWeSqhwvkxYk8PHoOz9GO1aVERA=
+	t=1747767985; cv=none; b=HAYLKz12Y+4e3v1OINuRiuGSfzaciQrUkz8+EghcNenDtrDYW4Y9HO413e2HTzwsYRV74K+WmYbJRxLuLKbR6DsIoHhuwBAEWM3zIYk6yHQMbs0zYMnZkvxffrXb5E5PyTyLFaWRsanF6AV9WcqUQNRd1/H4QNC32x7ALBjoaac=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747764459; c=relaxed/simple;
-	bh=baCsWWyY9OXL74hHsbJOGJpZnqImO0f/Q/bcTdQu/go=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=FpapnhVuGn8aQEqcRvgGP1xkoChq2o0pKThT6dHBcXfsruNyJNnsGmz+6RC7Ku6KsNAEvwVVSoFJgfMevHdEN1seQmbLgkf0QjQ3JLKd1T3JTGueU+bFzQXd1vL9SoUZp/dtL2wNBoBCdDORNrFSJfWvwe3xB9QoA0k33F6ZXJU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=x1xQf6AB; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1747767985; c=relaxed/simple;
+	bh=I5KMOSktnfvnkbxJEp+P5/r4UAebGIM/IBiet2BVEFE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bwQcBqfByTbLfIbSbqzc3IZN7ty1f4/TTSUpdrpeITTCFuOISHyHlPXXerL7LMXyqWxKt+8rU2J14UpvA0fyNWqTG/oTFfeFAhXJXHMpOcCbORLqEXDIXqV6VevJj98ouNu7hjLO944xMKBO2J49hQZaQrDhj40bezN2pwNsWKc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bQEaY8nF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=efJJeYGc; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="x1xQf6AB"
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7c542ffec37so669045885a.2
-        for <git@vger.kernel.org>; Tue, 20 May 2025 11:07:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1747764457; x=1748369257; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=K+ht49giKO+vhoWvGqkYmOUKuDvUEsW0d8yv5Rjbj4E=;
-        b=x1xQf6AB4sumn2fGTie48S2Wz0LBSDpu+bdZYDRZwZp1uCnpxxjimxZrUW+EVc1rcf
-         UNh/dhbbaDO1HMPHuyFoUsmx6TH1eUbqjnz0dZnVZqGczGSymNcpMlOuV4AHb6OZNCdT
-         rMJKw4LhM489v1xl+1VT59ZTuIwMe5n5ZA+5qC21j325Gkd9178QKtCyicyHoo1B/UOv
-         KLgOTLE0RwJzOfr3wizBEi1J/zf75C27c/xiSpk/YfYt7ThkWdKSvlhZ1zpj5+qOcPHF
-         AS0hp27KvUhsRcmz8yhcAddslpiq3mZXU4dM5G9kVKCD6nLD7cgLpQpQZFNh11p9RTFP
-         yyHg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747764457; x=1748369257;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=K+ht49giKO+vhoWvGqkYmOUKuDvUEsW0d8yv5Rjbj4E=;
-        b=E8fzFyP90h3lrQ0jfKzK5y1AdXs3eFg/ZJjWzkpdcFEHQYu+0+pY3KlB5a+wmQ+NKf
-         ztq0T/XINWJZjWkValQzkOqt3PPmmFeAFwHPVkJRd4BBmMOibL9gU+ZUFQgFjfGTl+fo
-         EekRYPKYdP8b50cHLJbhUrHvSSVOGeHoPLKr1whEJJlUHrOf3FYcIkLHjst+gsnMgR4c
-         yhjxpYijEK8sMgZk+gkbZm+SQdx3sHc/rmtDDm9Kr8HZA3wAgxTLx8M3Mr1LgBi3Al0p
-         LdEqiFa1efGUbzjfl9t3IAxFHVbqb7c3alY2eSjUaBYe8si4rgGjpNTEzxeW6nZuOOUl
-         XVXg==
-X-Gm-Message-State: AOJu0Yz4UkEKnFoiXt4BHo5KjB6aKZifnB9GHqTx1LcCjHrf2mCMhIhb
-	oxMwMLUGbGxN542psnniSWXbts9+ca8qajstkhdMz9X15z/UQNWANa9s5Rf+K+773zM=
-X-Gm-Gg: ASbGncuvajFznt02JhSv+lWE75YPfG4ug0o7g34J8l7nKvowqrYYSa/0QKLRAH8hIw4
-	ARDGJknkZbIHSleyi7azMnTkRcld73BnvxeUWPMdAwWmqpD5DOPuBVAffxyo0PzoqEB38et8EIB
-	YfUU+A3XGhcEuteC0BTmTxuAunx4eF/rXcGz4e4E6MD085IFOAmv/EaM71hXpe64XmXK0njsN7G
-	HrAC8uZjfzN32w0xXQr2b3sTshp1wB0gbBwXxeumc+x6m+3AvTfBy7fGKFPUcMqpT9RCrkwQKr/
-	VApBBt6iK6Eala7rHa4kY/sDBLHDHoZ3SKs83JH94E7wZMfouzMNUE3nTAJ4F5XO4rxkZlCWAzO
-	2xOnfA2xsQudK7RM+QNSunpdxere4jXygNg==
-X-Google-Smtp-Source: AGHT+IH5YPmJCVy1jX9gGavtSvkaexJn+Z5NscdR9iw7bE7uhfcnMZ+YxfTMtB4KG8oIr98DTSw3Cw==
-X-Received: by 2002:a05:620a:290f:b0:7cd:1ebe:9ad8 with SMTP id af79cd13be357-7cd46708088mr2596677685a.10.1747764456752;
-        Tue, 20 May 2025 11:07:36 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cd467c08e1sm771561785a.17.2025.05.20.11.07.36
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 11:07:36 -0700 (PDT)
-Date: Tue, 20 May 2025 14:07:35 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 4/4] midx docs: clarify tie breaking
-Message-ID: <aCzE58GaA0uviPSs@nand.local>
-References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
- <29769df1c601c77031a27f3b3e5b571d5d7d043e.1747753388.git.phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bQEaY8nF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="efJJeYGc"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.stl.internal (Postfix) with ESMTP id DC84111400C6;
+	Tue, 20 May 2025 15:06:19 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Tue, 20 May 2025 15:06:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1747767979;
+	 x=1747854379; bh=g58KrY34y2+S1OqB7mKiAtORbMhXGOi5NeTyXAtaGC8=; b=
+	bQEaY8nFz1FAKmmRpr+yiiCnGzL1ZwGIlfJYKx93jD2T0jVwkGRPGIjJZIdSnKTo
+	UIwAtORhDXBH0twz7t0y0O1y8qrS/VWrypck0O8eDBivP0sNXU6bAR3gJSZXRJTe
+	fuRCABo1EV72v4N4sXd2MSh38pVVOMpreScJOpwa76uZNKglDOKZYdlx68ngLd1c
+	DZSDOcEMxJRK5m1gO3Z7YfyTLDf7SnW/7lofLDucVMRdbXzirisPOWsW3d1FgDHQ
+	rOyd799NNa00mZrdqf8brOKSrsC9KKouJRx3DMwkcwKATmXiHybsSKQHdQTP6an6
+	PkNU9nxrjBs9B7//AUjVeQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747767979; x=
+	1747854379; bh=g58KrY34y2+S1OqB7mKiAtORbMhXGOi5NeTyXAtaGC8=; b=e
+	fJJeYGcZI6Db7XPa0ucOxP++bxEcrnhdwYeL3NM1g28pawf50yMfQAQHzG4wT9kM
+	GWr8LRPLfzPmWRE7THrQkQIUXKSHX1lU1f6gDyTVEocMCPfrxA52EDAvt09aRGtV
+	U1O8WnMX5ZDoQ8IRLx+nX/UUp0Sl8uHIMF1r/SsXHC/fGq1m0sLG/5sOdVz//4Th
+	9aDZsepgqj5z0ofXIjFjkcbpNeYlCaGsY4uWtsOcem/CeoGxtw6OVHIYmt9GZY1j
+	h6HJN2SOGpL8zoKhDndvYDmBkGj2JTGGGXTxVFQhWSPn+TulbCQSBLFT/hDvOhWr
+	IXpZ7GMOtbd4hS4Nqmj/Q==
+X-ME-Sender: <xms:q9IsaHu56smRi5B4Ohi7iCN7j5j4SukhVDtMQkkMKQjlbgaIzmRREw>
+    <xme:q9IsaIeX78qZOvy0yw93HisR65ap1ywU7cT06kwkBpuModhaN3ajr8OkeuZnN7_y7
+    XmHqZa7qvxkJLhU_A>
+X-ME-Received: <xmr:q9IsaKwm-2OPbj1Nww8RXREFuuf9h_7AbFLRcaALzKXBZf6Zka33OGOWgy2RLCwh1OkWEpVt7BKvSh6DTrMtPoXwHRk-PDCJnNk7GBc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddutddtucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomhep
+    lfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqne
+    cuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedv
+    keehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrg
+    hmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepugihrhho
+    nhgvthgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:q9IsaGNrIUo7Xg64Pqqp7cPhT82-zI5T5R1w0lW924x-lSgHGHDd-g>
+    <xmx:q9IsaH9vPaygOSh_Lcclzm3XEub9bOM1zZkIoGlvqlLFY2nqZIgTWQ>
+    <xmx:q9IsaGUvT_RnG3XEXI0vuR63msL_d29UbebK3NQVu9CrPUDtWonijw>
+    <xmx:q9IsaId9BeRiDE96T3fq768s8CnNuwmQ3THYie669uy2bZ9gQrC8Tg>
+    <xmx:q9IsaMj9PyfSfC2XOoN-InEkK5Bq_zvU-gMpAgiItrbBKfSU0yIcQB3s>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 May 2025 15:06:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff
+ King <peff@peff.net>,  Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH 1/6] doc: stripspace: mention where the default comes from
+In-Reply-To: <630ef019786bdb0c7538cc9794a7ba53a0ac77d8.1747763769.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Tue, 20 May 2025
+	19:57:19 +0200")
+References: <cover.1747763769.git.code@khaugsbakk.name>
+	<630ef019786bdb0c7538cc9794a7ba53a0ac77d8.1747763769.git.code@khaugsbakk.name>
+Date: Tue, 20 May 2025 12:06:17 -0700
+Message-ID: <xmqqjz6bhzkm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -72,72 +92,48 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <29769df1c601c77031a27f3b3e5b571d5d7d043e.1747753388.git.phillip.wood@dunelm.org.uk>
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 20, 2025 at 04:04:27PM +0100, Phillip Wood wrote:
-> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+kristofferhaugsbakk@fastmail.com writes:
+
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 >
-> Clarify what happens when an object exists in more than one pack, but
-> not in the preferred pack. If the user does not pass a preferred pack
-> then the pack with the lowest mtime is chosen as the preferred pack. For
-> objects that are not in the preferred pack the pack with the highest
-> mtime is used. "git multi-pack-index repack" relies on this behavior. If
-> ties were resolved in favor of the oldest pack as the current
-> documentation suggests the multi-pack index would not reference any of
-> the objects in the pack created by "git multi-pack-index repack".
-
-This commit message could likely be shortened since it is repeating some
-information from the patch content itself, but I don't have a strong
-opinion here.
-
-> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> Also quote `#` in line with the modern formatting convention.
+>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 > ---
->  Documentation/git-multi-pack-index.adoc | 6 ++++--
->  1 file changed, 4 insertions(+), 2 deletions(-)
 >
-> diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
-> index 631d5c7d15c..1f016b2f682 100644
-> --- a/Documentation/git-multi-pack-index.adoc
-> +++ b/Documentation/git-multi-pack-index.adoc
-> @@ -40,8 +40,10 @@ write::
->  	--preferred-pack=<pack>::
->  		Optionally specify the tie-breaking pack used when
->  		multiple packs contain the same object. `<pack>` must
-> -		contain at least one object. If not given, ties are
-> -		broken in favor of the pack with the lowest mtime.
-> +		contain at least one object. If not given the pack with
-> +		the lowest mtime is used as the preferred pack. Ties
-> +		for objects that are not contained in the preferred
-> +		are resolved in favor of the pack with the newest mtime.
+> Notes (series):
+>     “modern formatting convention”
+>     
+>     It looks like characters are quoted with backticks in the commits I’ve
+>     seen by Jean-Noël Avila lately.
+>
+>  Documentation/git-stripspace.adoc | 3 ++-
+>  1 file changed, 2 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/git-stripspace.adoc b/Documentation/git-stripspace.adoc
+> index a293327581a..1132a4cf9a9 100644
+> --- a/Documentation/git-stripspace.adoc
+> +++ b/Documentation/git-stripspace.adoc
+> @@ -37,7 +37,8 @@ OPTIONS
+>  -------
+>  -s::
+>  --strip-comments::
+> -	Skip and remove all lines starting with a comment character (default '#').
+> +	Skip and remove all lines starting with a comment character (default `#`).
+> +	See `core.commentChar` in linkgit:git-config[1].
 
-I think the clarification here is good, but the structure makes it a
-little difficult to follow. The above reads to me like:
+I've seen this kind of thing treat the configuration as the first
+level default, with the hardcoded value as a fallback, i.e. spelling
+it more like this:
 
-    1. What does --preferred-pack do?
-    2. What restrictions are there on the pack?
-    3. What happens if --preferred-pack is not given?
-    4. What happens if the preferred pack does not contain the object?
+    ... a comment character.  Defaults to `core.commentChar`, which
+    in turn defaults to `#`.
 
-But I think it might be clearer to structure this like:
+The way you phrased is syntactically easier to parse, but to some
+readers, the readon why they are encouraged to learn about the
+`core.commentChar` configuration may not be immediately obvious, so
+I dunno.
 
-    1. What does --preferred-pack do for objects in the preferred pack?
-    2. What happens if the preferred pack does not contain the object?
-    3. What happens if --preferred-pack is not given?
-    4. What restrictions are there on the pack?
-
-I tried to write something like this below:
-
-    When specified, break ties in favor of this pack when there are
-    additional copies of its objects in other packs. Ties for objects
-    not found in the preferred pack are resolved in favor of the copy in
-    the pack with the highest mtime. If unspecified, the pack with the
-    lowest mtime is used by default. The preferred pack must have at
-    least one object.
-
-I think that the result here is a little easier to follow than what's
-proposed above, but I am obviously biased ;-). If you think the two are
-equivalent or mine is less clear than yours, feel free to ignore this.
-
-Thanks,
-Taylor
+Thanks.
