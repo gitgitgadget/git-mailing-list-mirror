@@ -1,69 +1,70 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185DB2512C3
-	for <git@vger.kernel.org>; Tue, 20 May 2025 15:04:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC4182528E0
+	for <git@vger.kernel.org>; Tue, 20 May 2025 15:04:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747753486; cv=none; b=ttrRMOH1I97/HY/N9Iv/Sw5m3aXJgMa3SiLjhcfMnTJFF5pjmLa2sqhYxH1DuhqJanTtinYZhijCPVqSrZp7slGCVc0io2gbYMT2Zhcfjl7FDr11KrltpPoCspK0Kf/vW9hAqR4Sttk4xLMUCAqSbBC7aGS4v3NKD/7Oq1uNQuo=
+	t=1747753488; cv=none; b=mEXQxTQ4uP/NF+v2eAHSk5gXI/jehcAtoMtQbjiXTm7uPw+YiDgrT949/RskAvIFQJ25RkRXzQan+3CBkGNatqbmOY9Fuk1ZnQGnKLLp2ZVLSL0kTc3Q5WSEm3hHDZDwBtpwARS0bsA3sFoqa3L2xuhadw42ec0TayOUU0Vijms=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747753486; c=relaxed/simple;
-	bh=rwdSW7E+3RVEN5iEX6gsTCMMMx9EFUwTd3txdt/a/J4=;
+	s=arc-20240116; t=1747753488; c=relaxed/simple;
+	bh=VoPZiAm+esnYeW0d101GSIAnInu5IQ68i19aaXX56Cs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=Tg5sPLsmmCZzzY54z3oR0hWa4aBwPuOSjy1QxISNbLiXqQskFUzo5E3IpBdXPOpKl1OcxCULcmBY1xO892ubNEvjKKJyVerY1Ie+r48x9CPcPU5xhIOC2wtmGkMIXwCELveExb/hoxTndPW03aTomMdqMxxiFITt0LCTrDYmXBw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IkmFFaq+; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version; b=OGamLeEWdPx0YgoUQOh11gfbJ/j07A4PDQ+8yT36k4BsD20JhAv2HkhkCqVUlA01SvZU6ZrtbyLge5FqnFIwG2WEGA9cvA+hE23X8GtRNVAiZf97Ny3a+5xEL+NiRQAu/KWHFfyGnWkRrXcdb4EJnvQLivn/5WADZP/ISM6S/9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cStNFe3G; arc=none smtp.client-ip=209.85.221.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IkmFFaq+"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a36ab95a13so1728037f8f.3
-        for <git@vger.kernel.org>; Tue, 20 May 2025 08:04:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cStNFe3G"
+Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a363ccac20so3432701f8f.2
+        for <git@vger.kernel.org>; Tue, 20 May 2025 08:04:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747753483; x=1748358283; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747753484; x=1748358284; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=h/st2tNLSRQHqyapqAU/nnJ/PuvVkbMwUSEdS6Btx90=;
-        b=IkmFFaq+rLW3oXnennZDZn3NKNG/miFnHmc8jWpLK4raBnaknilWDQwT4YDJJCRx37
-         sASIjvHpwN16R1D77Hx5wEinwFfO47nfb6Gsc6u+dW4sNeUk7r8+QvyBsTqNSDeY7pq/
-         hJ444paYvTf63KttJSngOKnkPH5Hc+LeNn+fcVuM4kPKDCRuiwtFdNOeq9VPAy4ztmQp
-         9HufOPX50MgkANacjNPQ36Ml1/K11hO5eoarBid3dmXT+T3oGr1tkdjfvZ0p0ZIUKtaK
-         1XWgP/BTPgKmxlj4OW3MuWhxu2svG6Y6282MHxjYCbC3umCoxLTtjOmbtTpdYTfdQ5y0
-         HktA==
+        bh=eeCMRX8vvTe9R3//xsdAlWl9luYzOv9tBZ3nft9sLEc=;
+        b=cStNFe3GQTciwuG6BZu14NGt869FifJKa0KXnWVLB4Xh2pcj3Ncvpx56r2QfEDuLpm
+         z4MRj+8NLUa9VJP885B3sQjvFcXuxKLHkbQp9R2KeWDuIonjqOzeibQEDAdtmO+Z0l4F
+         pcliMDsHSmRiV/pXdBx90zkDRxR+9pcFA/TcxlFIUQoj4VX0q6RFwdHJEqEe77u+rOKR
+         7oalBtLK0N/Ig9zvg8aF0scziBCmTX6Jlak83YQLzZnUZUS2y4jSi1lYBQOjZL0a+3yf
+         TQKO2qJyuqypJwkJQ5tZziFXgbWRg/TS6A8/5x0Sl77+SV6ULr6wDZI0JsQ4XrDj6Q40
+         IgDA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747753483; x=1748358283;
+        d=1e100.net; s=20230601; t=1747753484; x=1748358284;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=h/st2tNLSRQHqyapqAU/nnJ/PuvVkbMwUSEdS6Btx90=;
-        b=ZrRzFsZ0j4oR47ahRF/jwG/yls7Sf1OPAhCuYTTk+/trjS3BRWbHrRCi4odBP+wJ9V
-         XywobcUf93t9O+Vd8mX3zgUbGT7088QlUovQd5CgQpfTAVKc14OyI6PsBgG9F0YKfnKR
-         3ZW4z9iKfgjds+c36mfYdLAPaXXdRe8M5Pm54rBrFfhweAUA4Lqa9rggX6sOJAxmRZ1f
-         dlhIEo4u0yyaf69afo94PhS21rC8FR5vWdhQZBkU8ximoIPq4WMxTNmM3p3yrFcKqV1E
-         3zhloNTPnmNmZ+WraV/VMK2GGU28mR1UAntVMpIH30XfonKqkwk0cc8oZNK+wFyrEmgC
-         J6SQ==
-X-Gm-Message-State: AOJu0YwLN+7paHT475DjqTWhfZCMVLp8wngT90+bdqMbhhHvxAtZDZ/h
-	uyqXMKJ50Zd+/cJFWPSOy1Jb9hLgKgdau+WgS0dfA4z9WENf37ytp6Xt4Pxxmw==
-X-Gm-Gg: ASbGncudMegxFijveF9VsSMm4SZ6eVjdwZTOJu9rNYe3jK2YAES+UrjtPG8fPZxgbi4
-	aOxe2l0FY0t2mPny36BfJ/3UbKCKWiDA00Hv8QbhnDcY5FbgUWUeuxNDgri0XudPOuFZiEasw6S
-	KViRCAO899x2lbumvBgBQXMWuUWBkXsfoF6ZSPQAS74EaGZIXMNSlwn0O5fzqPMH+7xpA1Pn8Zv
-	VtgA6DBTmzBxMTpslhpwZHBMsIOJRS6+WgrLX4dConJ6opdItCXKZzJovdr21ia6Dk98rEh66r7
-	C3YQhwNnQOGyUjDuZghlZPnHKdZhXpSY95wNZc+SZgYgNUdpLiEA62k36NsENbVB5ec=
-X-Google-Smtp-Source: AGHT+IE/xew5sk3Z7iXYOOqDkUP15xTPetyx+3bROa91Yovn7x8LfHJ+jhYRYtF7b5DZdsy6FAo1rw==
-X-Received: by 2002:a5d:59a6:0:b0:3a3:7752:108a with SMTP id ffacd0b85a97d-3a377521242mr4358987f8f.25.1747753482859;
-        Tue, 20 May 2025 08:04:42 -0700 (PDT)
+        bh=eeCMRX8vvTe9R3//xsdAlWl9luYzOv9tBZ3nft9sLEc=;
+        b=nafTgtXsEaRrfCl51I/JX+od2P9fkalmE2ofY7qKKz0FEiy0uKjv4wE1SEBOViaSjx
+         lRDmEZ47xgI+GibEEZvoj29BGbZr7s5ooks7RxKV8oMV2T2o5ZRg3mTt7QKKInTaAMmr
+         hXwQFC7k9r9AU1nFCtf+DAcDUMwkqkXqXE5XMg6KWZdeWQH8xHGWj1hWXGueDv8OFWON
+         aR/wp68EsCBPNl5Yk7lsGVXIOE7J9V5c4SIvnRWCVKvuw0iPX4kwRnY80nH6nIBvXlCU
+         bHpBHukbggMomqRRkrGh66zcmb4vWL7tBEzxah5rBqr13rALY2GltWiNu66iHuw4zePy
+         ekCA==
+X-Gm-Message-State: AOJu0Yzuu667Rw+WZdMbyukg7fDXpv3W5sBOb3mcjeqByfTT7ZEigF5l
+	E5lHClSzUwFaJf42WHi2lcgydjqPSEER1OihUGfEtMRpuMs9IWlBKbrFHTcZCg==
+X-Gm-Gg: ASbGncthv4b+M1rDKHNdrdTmFsOqeCFgehnzBM2S6m75V4p6bJd06NuSl4T7FrhN2ZW
+	26NZZVpDHdkNHBdMDHcydjw/aJswcc5NGVJtoOueX4ZZlXjGIr2vYjAWi1onEsXLP/doUqA9fu0
+	Bwe2j22xU8+aF8A9UkSWqsLTvZItq5Hhu8XSgdHv1GENIgakFCiqd1jYXmGq9cZT2IxwXFTeVEf
+	oAmALA+qw+WfU/6ArvTt/P/BiEFglkmxKw4Al6b8esrlwQcwLLObWniGXCTkr0zkWRVobcAwX3g
+	CsZEhYWyJa9R6QJ6tUeqCy32c2Hw4RqgHpNUYE3jmE0n6IPMj9e8revdrBYA4CKUTuqtMcPutV0
+	BHw==
+X-Google-Smtp-Source: AGHT+IHSPq0sZbpnOZ2a2PXhGBCNeUUfUyQjXCSUn0kGOB2K+a4lxSCVca+ulu1eKxGEXs/Jto+cQg==
+X-Received: by 2002:a05:6000:2304:b0:3a3:5c61:591 with SMTP id ffacd0b85a97d-3a35c84afe5mr13447040f8f.41.1747753483773;
+        Tue, 20 May 2025 08:04:43 -0700 (PDT)
 Received: from berwick.broadband ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d105sm17014029f8f.11.2025.05.20.08.04.42
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d105sm17014029f8f.11.2025.05.20.08.04.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 08:04:42 -0700 (PDT)
+        Tue, 20 May 2025 08:04:43 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>,
 	Taylor Blau <me@ttaylorr.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 3/4] midx: avoid negative array index
-Date: Tue, 20 May 2025 16:04:26 +0100
-Message-ID: <688b0273604179b5bebe3748445158e09a7bf1a0.1747753388.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 4/4] midx docs: clarify tie breaking
+Date: Tue, 20 May 2025 16:04:27 +0100
+Message-ID: <29769df1c601c77031a27f3b3e5b571d5d7d043e.1747753388.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
 References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
@@ -78,40 +79,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-nth_midxed_pack_int_id() returns the index of the pack file in the multi
-pack index's list of packfiles that the specified object. The index is
-returned as a uint32_t. Storing this in an int will make the index
-negative if the most significant bit is set. Fix this by using uint32_t
-as the rest of the code does. This is unlikely to be a practical problem
-as it requires the multipack index to reference 2^31 packfiles.
+Clarify what happens when an object exists in more than one pack, but
+not in the preferred pack. If the user does not pass a preferred pack
+then the pack with the lowest mtime is chosen as the preferred pack. For
+objects that are not in the preferred pack the pack with the highest
+mtime is used. "git multi-pack-index repack" relies on this behavior. If
+ties were resolved in favor of the oldest pack as the current
+documentation suggests the multi-pack index would not reference any of
+the objects in the pack created by "git multi-pack-index repack".
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- midx-write.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/git-multi-pack-index.adoc | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/midx-write.c b/midx-write.c
-index 2ee381e8fcd..38a458d7322 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1566,7 +1566,7 @@ int expire_midx_packs(struct repository *r, const char *object_dir, unsigned fla
- 					  _("Counting referenced objects"),
- 					  m->num_objects);
- 	for (i = 0; i < m->num_objects; i++) {
--		int pack_int_id = nth_midxed_pack_int_id(m, i);
-+		uint32_t pack_int_id = nth_midxed_pack_int_id(m, i);
- 		count[pack_int_id]++;
- 		display_progress(progress, i + 1);
- 	}
-@@ -1697,7 +1697,7 @@ static void fill_included_packs_batch(struct repository *r,
+diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-multi-pack-index.adoc
+index 631d5c7d15c..1f016b2f682 100644
+--- a/Documentation/git-multi-pack-index.adoc
++++ b/Documentation/git-multi-pack-index.adoc
+@@ -40,8 +40,10 @@ write::
+ 	--preferred-pack=<pack>::
+ 		Optionally specify the tie-breaking pack used when
+ 		multiple packs contain the same object. `<pack>` must
+-		contain at least one object. If not given, ties are
+-		broken in favor of the pack with the lowest mtime.
++		contain at least one object. If not given the pack with
++		the lowest mtime is used as the preferred pack. Ties
++		for objects that are not contained in the preferred
++		are resolved in favor of the pack with the newest mtime.
  
- 	total_size = 0;
- 	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
--		int pack_int_id = pack_info[i].pack_int_id;
-+		uint32_t pack_int_id = pack_info[i].pack_int_id;
- 		struct packed_git *p = m->packs[pack_int_id];
- 		uint64_t expected_size;
- 
+ 	--[no-]bitmap::
+ 		Control whether or not a multi-pack bitmap is written.
 -- 
 2.49.0.897.gfad3eb7d210
 
