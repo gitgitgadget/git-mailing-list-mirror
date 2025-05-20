@@ -1,88 +1,93 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC5B19EEBF
-	for <git@vger.kernel.org>; Tue, 20 May 2025 15:28:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7914618BBAE
+	for <git@vger.kernel.org>; Tue, 20 May 2025 15:44:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747754937; cv=none; b=iFLIlcEq+UxugjsA4Sxn6+jq8TxYKNsfN6RWzyhq8C1aneYMlMvPB2WMl6Y3HwLkOV4trSlBZY2/51tMMDUu7RVyx7eI9kpraE/VqKPAWXe/xOWPmv4BFzu5CkrL1EIyqBK1OUQfo4QCIAgpHCbui0rAOPo652nwKAN5l+GifZc=
+	t=1747755874; cv=none; b=m7wSYQv+kWgWemVZikqgn0OUbWR+XyXoYp/gzBMyjg5rsBfUsczD/GeaqN4QsnLvUs7Zq6bmaZjOt+WV0yKMVXL4CdZvEXfIcY8GIY1sEilyadwmin7VKwDnRYGYjWTUnojDlCFTGPzEu1O+lnwPDgif1KYCrWAwZRVQ8Rm0swI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747754937; c=relaxed/simple;
-	bh=bVDrQTF44rWyDbVIH+bx+li56wlI0mw2gV9z+ijplsE=;
+	s=arc-20240116; t=1747755874; c=relaxed/simple;
+	bh=yOizMX7G40zSr67598Rc/qmuR2eVy/UzshVcTrBOmwE=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ku40SfJ6elKhLPp/mGOP/S/I7b+K3CvfVb0WHu3Bm7sUF3rffChyvToUlTjY87P3sAu2W5j3TT7H33w5RtQfKLg9XxIh75YQifD9eqcVUIQE3ygDIufpTe9P9j7/JK/0Mjr71BsTOoMKXFI8L+Id81s+lU9wDTGq0iQyFKNT29Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f8lV7D6F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T0loy8cU; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=DSTaDxEUVVwicily0vj3pEqFC7JRjn2wiJe1a/CWacpDwTJRx6eGlGMqfhvt8K68WXE1xrvDfALo1hFwiNvr1w99W3pqkudWDJ234ilWcuwlufjb4p/DRE27ViomdcARgbP5YQaMgp+4B3ChFv9bZUN2k5z6y1QOz3kakjqGTSo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cFoJPBGr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dEoUsVT0; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f8lV7D6F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T0loy8cU"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 7DF351380448;
-	Tue, 20 May 2025 11:28:53 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Tue, 20 May 2025 11:28:53 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cFoJPBGr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dEoUsVT0"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 532791380400;
+	Tue, 20 May 2025 11:44:30 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Tue, 20 May 2025 11:44:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1747754933;
-	 x=1747841333; bh=W96TmOkAcO3VZaMDDxNsANx+4eJGs71Ghvhgo1nEZO8=; b=
-	f8lV7D6Fduh6IhYJmTXewsV4GZuu3mybg17hKN+Vwjp9YnOQTjqwAMIR7qIQg96R
-	5ab4MqjUJxvyxbEUgoKLcZdr9P+o09QU57grnLWy6bFxRTMQC2uhbqBlTTcnqXzr
-	YSwmhswl07iCEwgOfCieJybRufve00aybxVsZK4wr20cPT/jPty5gU1Ai+ohbkZb
-	W6fhh72okX4Bsd1arkMHFnD/tVYJJlkaRHhhBaYsCU1hj1ELiSu3OmNtiYN4eRtw
-	KsOOMSPvGEJ2qUtzAk62UpPmJr2kHTLfP9alknWD45SrMR/+d1njuR5CBLHmLbTA
-	J8SLfHJLd4k0l/ML4Zavfw==
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747755870; x=1747842270; bh=fakCLIJ1Ox
+	yorwq2Wynkkrncq8Pacjsb322ruuSVWU0=; b=cFoJPBGrlmzuBu5/VCcl2nfviR
+	20UI4qA6fVH8Hj1qsw6iizjB5sJ7+SGi6YOyGYzXEi21dChnipcl4z7rTbI9hQu9
+	S3XUKWPOuyBlx5tMVRT7yx282uFzD/tyF3lE8WHMp7iFwZ8cJiOxjEiK8gQMqTh1
+	AFXsDKjTu38q7JWYugmBxcbarLbY3MJHm+iZJZ9mri5uui20j0/t0lzCErwDzr2C
+	4piBJSCw0OdplGWtc6dObYAYg1J6TgJeMMN+mT17NZ97TNfmDOgQ5lYG7vzl2VY6
+	DWigFBtVonsUfYy6UQiP6aZyJHslVYHDkUYO5lP7/WPOISLHn86fenPyV5ig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747754933; x=
-	1747841333; bh=W96TmOkAcO3VZaMDDxNsANx+4eJGs71Ghvhgo1nEZO8=; b=T
-	0loy8cUMXRRh3+9pPh5l3f2HoySOmGlOhW0MPxGWAW/PbqT/NT+ZyDrLJ2HOMRc4
-	qGwPlWgZ8yEVhhFMwXja5+dyqEOAclbmhf0RJWRZKfnbxBBlHN8ptrv4KQcbEJo4
-	/4k1wuCxswMQ0jq3SruCZH4akFIb/jGnUwzKlJ53HnzNhNQC8rkK1SRv0ymhO2dP
-	xjRMezlaiHhLeVr4BomofGNejsDcMN7HRRBImgvxlJzJz2rnoune38/CZX7bFInS
-	5ZVlifSqc5lCMZkcuf8ElGIgFrQcnT3SAfdUSVlx2RgEL8gIfJWv31GrQ1bAy44W
-	GSzBjMH5pYYZbq6h80zBA==
-X-ME-Sender: <xms:tZ8saNZ0Wfhuh_R_Om76GFJbcq2UDYlq1xZ0yF8gvE5P9BmVD29QBQ>
-    <xme:tZ8saEYfTa5mKyL3KJb-mMsrz0QHqO4oYunYl-ePbO2BtqAistqtH7I4aBM_Eb5ag
-    EG0eGS7AI2NhLDHIA>
-X-ME-Received: <xmr:tZ8saP-M1wAkD3RluJwxvhBZw0E02U0XfBJJqWvFjgdQtW9N4ogqdKkUxycV1WvJAhhi_WqgbJ930-eNiqnyMg1t1FxfD3Mclsv6sg4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdehjeculddtuddrgeefvddrtddtmd
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747755870; x=1747842270; bh=fakCLIJ1Oxyorwq2Wynkkrncq8Pacjsb322
+	ruuSVWU0=; b=dEoUsVT08ZnIuGU065EqHCPo28nmAv5x+4MZVS/4O9DF7H0jyLK
+	4TxSUjRJRibvVdiMztnGS+u3MrKeXj8vqroqyzT7kVg/M7bYdJt3FdGCjczz1NGo
+	W4N17IiEIr1sbEIHaMYV2bAOOEFa/pkP765c0ya89HW1UWUvGDtTP+0oOXWj8lHq
+	JISjjcTXNlLp0NEdcAzQwecnH+UKzZdyWFTurPQlahj3wWS/Li100lg5zRtMAc1Q
+	6OPlZRiBnLHad7N9wATpWOsOG5VB5OS3YyJ0th6d9o4qetSlQdsgQWb7yaAWP+1R
+	mG75vE2N6a28eDh8mcbgkm9z+yUG+l/u3qg==
+X-ME-Sender: <xms:XaMsaPWgSmNlyagVWq3VD5rl7U-CcrlqidC97jaRkGzHhE0n5MmBCA>
+    <xme:XaMsaHnCNHP1eYxMp-7O2xbYIQoKU1UT8yfidEhKW_bAIM3ZuZXAs4B5Gkuo6xLAs
+    HZ9YxRuGm8sISEA7A>
+X-ME-Received: <xmr:XaMsaLbbG6HrtIAr4mz_HEcI6V8peMRpWgEmSlkwOzh7Q9UE8sU_rIhhZRTJ6LIT9DNkCBU-87MElIfZfkkwmL6yAjcShqGHswnfsRg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeitdculddtuddrgeefvddrtddtmd
     cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghn
     shhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtne
-    cunecujfgurhephffvvefujghffffkfgggtgfgsehtkeertddtreejnecuhfhrohhmpefl
-    uhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenuc
-    ggtffrrghtthgvrhhnpedtffdvteegvddtkeetfeevueevlefgkeefheeigfehveehvdek
-    heelveevfedtheenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
-    hrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhm
-    ohguvgepshhmthhpohhuthdprhgtphhtthhopehjrgihrghthhgvvghrthhhkhhulhhkrg
-    hrnhhivddttdehsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
-    vghrnhgvlhdrohhrghdprhgtphhtthhopehmlhgvlhhltdeksehgmhgrihhlrdgtohhmpd
-    hrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:tZ8saLqOa2auttL3CD2pNj1TU0K_cQVIegsybR3wI21G6Zn7aWybUQ>
-    <xmx:tZ8saIqlwlkx9NLmYD6JuROE5gkCJ8-1s-_q9PqWOcJDAgj3h-Ft6g>
-    <xmx:tZ8saBQUueBiqMwYowWSk4p3rN-WVD12reoKSNSe6DKxTV2qIt3egQ>
-    <xmx:tZ8saAoW5UONde_Gqk2xnGUjGSyEHdL6Bn6uAday58ipdnToDFlHAg>
-    <xmx:tZ8saH2CZvOIqNABGebmeucxC5ijB1bUnsIX5-Da2XYlgOEiYkFtJpAm>
+    cusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgf
+    gggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgih
+    htshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedv
+    ffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghruf
+    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohig
+    rdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtth
+    hopehmrghtthhtsggvsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehphhhilhhlihhp
+    rdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthhtohepiigrihhhrghnsehunh
+    hrvggrlhgrshhirgdrnhgvthdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthiht
+    ohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
+    hlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:XaMsaKV87UQH012CSPp6PPeQDEtIkTu7dRAM73CLCqDjByjDiojbLQ>
+    <xmx:XaMsaJkUevGJpayMEwxP-7iaJEM1YyFcimDf393vsy7hYlg7YF4UXw>
+    <xmx:XaMsaHfXbquT_4J2FhydbbvlEML63wjyV01tvjUbMAKDO6ZL719DVA>
+    <xmx:XaMsaDE5GNopPEE8eTaioUp2nBmjplud4lok0WpG77Wao1EhqNRgrw>
+    <xmx:XqMsaB83JMo5WVR_luaec6aDAHg8z99aLiP-S6zMJ71ajfm2V_dsZTV5>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 May 2025 11:28:52 -0400 (EDT)
+ 20 May 2025 11:44:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com>
-Cc: git@vger.kernel.org,  mlell08@gmail.com
-Subject: Re: [PATCH v5] submodule: prevent overwriting .gitmodules entry on
- path reuse
-In-Reply-To: <CA+rGoLdbmRkk5b3LJ+n3HG6OJv7oURJaLuWs3tTymDfsbBgwjA@mail.gmail.com>
-	(JAYATHEERTH K.'s message of "Tue, 20 May 2025 07:01:24 +0530")
-References: <CA+rGoLfLA_s_xYN1N41w=vaOg0WPTNo_9TGKvG6ZQDqqWmzFPA@mail.gmail.com>
-	<20250518075436.75139-1-jayatheerthkulkarni2005@gmail.com>
-	<xmqqwmacobf0.fsf@gitster.g>
-	<CA+rGoLdbmRkk5b3LJ+n3HG6OJv7oURJaLuWs3tTymDfsbBgwjA@mail.gmail.com>
-Date: Tue, 20 May 2025 08:28:51 -0700
-Message-ID: <xmqqsekzjo7g.fsf@gitster.g>
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Muhammad Nuzaihan
+ <zaihan@unrealasia.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: Small patch to add support for MPTCP on Linux
+In-Reply-To: <7b3b8efa-4cc1-4547-b66a-c469626eac46@kernel.org> (Matthieu
+	Baerts's message of "Tue, 20 May 2025 12:54:41 +0200")
+References: <JH8DWS.72DKHPTI873H3@unrealasia.net>
+	<aCeg_wjLCf0Sz_7X@tapette.crustytoothpaste.net>
+	<BP9EWS.WTYEEEQZEN2U1@unrealasia.net>
+	<aChhxRx7sMD47N_s@tapette.crustytoothpaste.net>
+	<4YPEWS.J5JRNETKLXF1@unrealasia.net>
+	<a76dda61-f60c-4221-83db-5e165a2478b1@gmail.com>
+	<xmqqo6vokvpv.fsf@gitster.g>
+	<7b3b8efa-4cc1-4547-b66a-c469626eac46@kernel.org>
+Date: Tue, 20 May 2025 08:44:27 -0700
+Message-ID: <xmqqfrgzjnhg.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -90,122 +95,43 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-JAYATHEERTH K <jayatheerthkulkarni2005@gmail.com> writes:
+Matthieu Baerts <matttbe@kernel.org> writes:
 
-> On Mon, May 19, 2025 at 9:11 PM Junio C Hamano <gitster@pobox.com> wrote:
->>
->> K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
->>
->> > When a submodule is added, Git writes submodule.<name>.active = true
->> > to the repository configuration to mark it as active. This happens even
->> > when the submodule path already matches a pattern in submodule.active.
->> > This results in redundant configuration entries that are unnecessary
->> > and clutter the config, especially when pattern-based activation is used.
->> >
->> > Avoid writing the submodule.<name>.active entry if the path is already
->> > covered by a pattern in submodule.active.
->>
->> This explains why the part of the change that deals the .active bit
->> makes sense.
->>
->
-> Hmm, I look at it this way,
-> active and path problem are not different,
-> It's just that this has to follow t7413
-> submodule active too.
-> Therefore the submodule.<name>.active = true
-> logic exists
->  > >Avoid writing the submodule.<name>.active entry if the path is already
->  > >covered by a pattern in submodule.active.
-> I think this order makes sense to me, but I could change if you want me to.
+> @Junio: Good point! This RFC 6897 was a bit optimistic I think. To get
+> MPTCP in the upstream Linux kernel, we had to make it opt-in, and the
+> modifications we suggested couldn't impact "plain" TCP performances (or
+> any other sockets).
 
-Do you mean the problem "we add a submodule at 'foo/' but the name
-'foo' is taken already" does *not* happen when submodule.active
-patterns are *not* used?  If so, I understand that these two
-problems are linked together, but I got an impression that it is not
-what is happening.
+"Couldn't impact" meaning that unconditionally passing IPPROTO_MPTCP,
+even when MPTCP is not available, would not hurt at all and falls
+back on using regular TCP?
 
-And that is where this question ...
+I am assuming that that is not what you meant.  Otherwise, you would
+not be calling RFC 6897 optimistic, and either the kernel or libc
+layer would be tweaking the socket() call "to make the right thing
+happen transparently" for everybody, and there wouldn't be any need
+for this conversation to happen here.
 
->> Stepping back a bit, perhaps this patch addresses two independent
->> issues, both of which can trigger with"submodule add"?  If so, would
->> it make sense to have it in two separate patches?
+So I am assuming that at least for now, the choice to use or not use
+MPTCP needs to be made somehow.  Leaving it at the application
+level, by the way, does not sound like a winning strategy, but
+anyway, I think the reason why the platform folks do not take
+responsibility and make it up to the application is because MPTCP
+may not always be better than TCP; it may boost throughput by
+utilizing multiple links but may hurt latency, for example?
 
-... comes from.  The added test does not use submodule.active
-pattern, so I assumed that the pattern-based activation is a
-separate issue.
+What are the criteria the end-user may want to use to decide its
+use, then?  If interacting with a specific remote repository over
+MCTCP proves better, would the user safely be able to say "I'll
+always use MCTCP when talking to that repository"?  Would it be per
+host (i.e. if one repository on a host is better with MCTCP, would
+all other repositories on the same host better off using MCTCP)?
 
-The solution to pattern-based activation may have to happen by
-updating the same code path and it may turn out to be that having a
-single helper function that deals with both is the cleanest
-solution, but still if they are two different problems, a single
-patch should not try to solve both of them at the same time.  Solve
-one by introducing a helper function and make sure that the fix for
-that one problem will not get broken by adding tests, and then on
-top, solve the other, perhaps by modifying the same helper function,
-and make sure that the fix for the other problem will not get broken
-by adding further tests, prehaps?
+What I am getting at is that the choice between IPPROTO_TCP and
+_MPTCP may not be "If Git is compiled with MPTCP support, always use
+MPTCP", so we need to see where the configuration knob for end-users
+should be.
 
-> This would be the case if I wrote a separate helper function I guess
-> but the core issue still lies at the if else block
-> And the active part is just written to mark the submodule.<name>.active = true
-> So I think these are a part of the same problem.
->
->> > +test_expect_success 'submodule add fails when name is reused' '
->> > +     git init test-submodule &&
->> > +     (
->> > +             cd test-submodule &&
->> > +             git commit --allow-empty -m "initial commit" &&
->> > +
->> > +             git init ../child-origin &&
->> > +             git -C ../child-origin commit --allow-empty -m "initial commit" &&
->> > +
->> > +             git submodule add ../child-origin child &&
->> > +             git commit -m "Add submodule child" &&
->> > +
->> > +             git mv child child_old &&
->> > +             git commit -m "Move child to child_old" &&
->> > +
->> > +             # Create another submodule repo
->> > +             git init ../child2-origin &&
->> > +             git -C ../child2-origin commit --allow-empty -m "initial commit" &&
->> > +
->> > +             test_must_fail git submodule add ../child2-origin child
->> > +     )
->> > +'
->>
->> The test seems to be about "the other issue".  Shouldn't we also
->> have a test about "we no longer add redundant configuration entries"?
-
-> Actually t7413 has a detailed coverage of the _active_ logic.
-> I actually didn't consider submodule.<name>.active = true
-> but looking what failed in 7413 made me realise we have to
-> solve the core issue and then
-> submodule.<name>.active = true it too.
-> Therefore I didn't add extra test case too.
-
-When we re-read what you wrote as a proposed log message, you said
-that adding a new submodule that would match the "submodule.active"
-pattern will result in redundant configuration entries that are
-unnecessary.
-
-If you perceive it as a problem to be solved (and you do---otherwise
-you wouldn't have written that there), the existing tests do *not*
-consider it as a problem, so even if they have tests that does the
-pattern-based activation, they would not have any tests that make
-sure they do not create redundant configuration entries, would they?
-If we fixed that issue, then now we need to make sure that future
-changes will not break the fix and start adding redundant
-configuration entries, but because there is no test that does so
-(otherwise, you wouldn't have found a need to fix that "redundant
-configuration entries" problem in the first place), the patch that
-fixes the problem needs to add tests to do so, no?
-
-What "redundant" entries do you exactly mean?  If it is "we end up
-with the same submodule.<name>.active appearing twice", then the
-test should make sure the resulting .git/config file has only one
-(perhaps with "git config --get-all"), for example.
-
+Thanks.
