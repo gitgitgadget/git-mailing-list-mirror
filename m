@@ -1,151 +1,109 @@
-Received: from mail-wm1-f47.google.com (mail-wm1-f47.google.com [209.85.128.47])
+Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33BAC288AD
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:21:21 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486FB262807
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:23:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747732883; cv=none; b=rMShosLo3mzVPdK+nV9QTdfpX8PySRnNCT1US9YVK9c5exY/ZQYNsGEPj/WWJVs0uin1dkByseW+oZyEZg/zBjuVQsYVJceoWMRBflkK5+x30jw9l8tiwXyGl0RoAAqBVYNlBRBePO6uX3azkJOI/k06Z/5YJt4/ZOuMrsfajkI=
+	t=1747732996; cv=none; b=J2Ra6OAA5mwktPDJXMg0cK55tIqdUEr+OeCcqUB0nkQDc5DV9VEtse8Q1LsXWacoiRAT91a9ABJdA6ibKf3veHEqVsXFYYloQjrBUVuSBAEFu3yCHGu5gZFqk0UTDXAOrRCDqwcn1M8aGdCSFg/YI/n5PyWVMMvTkl6MUYU5J68=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747732883; c=relaxed/simple;
-	bh=RyrLIcjVLAPsh2Ss2QECsns4607dDWV3a5c2U+rTgkU=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lbNY5UFYK082Aq3ynS8Hd6zN6Zus6KxXsEjYP6DVs4Ffeg+LXAhiYjqTWXp4BE5pYZ41Hn9tcIQHgMMVvKDNkmnZw+9S6c6BVOlUkweEbppA/4i4jxdUsEht81E0xZ+f0u2xtRGarXBdCVAqhvHxoMv7qkIpKmgKvps2F0TqgcY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KyUbHa9U; arc=none smtp.client-ip=209.85.128.47
+	s=arc-20240116; t=1747732996; c=relaxed/simple;
+	bh=ZcbuYFgxpAYBKnD12RpDKzu8rlFCC3ZKRu1LCjjkqcM=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=SGmJf70AU/fR5q7eDNMSmekOnFk2/J+YnXX1ThgIsFOMkTJS5sCqQ+BuYlobbjAkU7K8pLpS0sbiq8gQlhTKxLDVB3ycX2dzzYY5QVUtvOSu7s79d634qY5bVHw4sJh3iM1DMjhH2qol+FAfOdhkDb6ii0NZIIdUq1+LFdu6uiU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=POPYd41N; arc=none smtp.client-ip=209.85.221.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KyUbHa9U"
-Received: by mail-wm1-f47.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so34612515e9.0
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:21:21 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="POPYd41N"
+Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a375d758a0so1152827f8f.0
+        for <git@vger.kernel.org>; Tue, 20 May 2025 02:23:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747732880; x=1748337680; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=6Vpkcf0FOty4d585/A4MY56Gla1juoF7K1xHSc+tRv0=;
-        b=KyUbHa9UXlLfeVXcOMTDZJVFMoszLh4IrnpvnMxrc9OxHJdK8ktbnMEQWMquAOxoTA
-         r+c5e0+r9Fn2ZzAiPJAXDcC0FCoup9glu+nPXVYtQZ+RXL3cvuC3ymsKNj6bc7EAXLDc
-         GoaVVvNNLLbyPqPnD42gwtox3t7/xHc3Er7CJOiqzGC2ekWN6nta7FuyjypT17ioB8Xe
-         Vl0dlXWhBpwUF521C6whZmocacFY+eokgJ4w7VbuQGCNwox+3XIGKgl2PbXHpLN21N6F
-         JrKx/f++i0AnEHFujGyjiIjNk1VPCeCgXCxyf+UQf7fXwcq2cew5hHxkqdg1/eOxegxt
-         NP+w==
+        d=gmail.com; s=20230601; t=1747732993; x=1748337793; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m+tt/5j68i8D52Nxn51Ia91D32+EPDn1zKmAKYiqA9U=;
+        b=POPYd41Nf4bzoJOdR+wuqDPLdPMpnOjVhS/UUUQPF2dM/C38nOCsAT6eyHF5DYxyMw
+         iMZAF7tC6dlZO2btkly0T6Q5MnZuAiB673bp9mQQSS2CQNuicBUZ/P3uw6NCW0hARpbn
+         vGDBPzRAc+0s5+CJwIYWubOhj0y8jpyZcryuFTuWVBeCer3nhWUJmaNjGyKdMo0yf1WG
+         Tk8EwOgh28FUu8Ly/rDDwlLR5v1EMOTaOsvQfpVJBflxkluYdlJlygNqWRi9pTHXvbB5
+         VmBL4L6cqjfr47YAYCRgftfA6UkNtsWN1hqU2Z0nH0Ek+8OM4v5acwdFk3mrA8jaNiJc
+         uZ6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747732880; x=1748337680;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=6Vpkcf0FOty4d585/A4MY56Gla1juoF7K1xHSc+tRv0=;
-        b=md9Oe8UR2GUZawDawsi9NxCNcRjdwBu0hSplr+LFEvbIftExt9brwcgBqZR3OvMNS1
-         Ncx7UNevmNyWGvdaNOjOGGTTTqrkqvk60GLutP3Lhz7TtD68nwFbnbbSRJTBOSvWm85a
-         DAel4PIWafK/+NWyIoZizk+F7XJQU+F93FfEQh7fcjcwylxPeTdtUMyu1eFVKmNCuf1W
-         xlO83MnggeMX3MCx7acrB7Y5mVJ4FnrW0dXLrRz4SSYA+GrkRu3Tma2JfMBu+78/RlbV
-         zr+t8sulHLOSG1Uu7k77d2YEA6N/uNFyFTOScwO2GOIdBy0jrr0Kpb7AXuNBGcCuM88d
-         8JuA==
-X-Gm-Message-State: AOJu0YxZYtEjiIrQMgLaWmjouPaH25rPa1FwQAIpRQideiepglNXhdnz
-	Z6sflAQYsNhbPoHfRPj3TWaWcItPQi+dmxsUXqNVjyrQujguHsikZwj4
-X-Gm-Gg: ASbGnctnlr5wi0S2wAQcEv4fzNQrd2L0p++38puMRnk7IdjvLTziZZ0SlSePXznACQN
-	QLtk+aQs1GI+bCKcYtNwlCX9ZCFA6RTIobsqYAr+R+I5Ebb0gPAgOhe6c/1NI52XI0DRd8P7IWq
-	TTNND1IQxJlarDphc1beBUwDJjejPOYFJmIZT3/8oYlXHJp5qMGW2FggIk/KKPFHZDzMkL0QSj0
-	b6lDX0FmqRvBIAo+SmGTaLl5nQHVmb0A9BqBVyM3YQG/51FYIYTsJjdiWAZZ23SoaFSlp2xUReO
-	znFpiEgQnvokSQvLJ8Qoe0ww90wdC378kudXxAIr0XQ/J2AdJYMtzNkQoz00mC0zGY52ofPw+cM
-	b6Ga5IbOrprc/IRGdSEnhVtjAnXA=
-X-Google-Smtp-Source: AGHT+IE7lpQ6G2ehxl12lpPTkWAtq/koMFcsn9C+Yu9u2aB+IGQehuJ93aeouB/vW3qNUrJlClDUSw==
-X-Received: by 2002:a05:600c:821b:b0:43b:bfa7:c7d with SMTP id 5b1f17b1804b1-442f84c2008mr178912245e9.2.1747732880137;
-        Tue, 20 May 2025 02:21:20 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f23c07bfsm23825715e9.23.2025.05.20.02.21.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 20 May 2025 02:21:19 -0700 (PDT)
-Message-ID: <0ca879cf-303c-406f-8040-cc0c7e9b0964@gmail.com>
-Date: Tue, 20 May 2025 10:21:17 +0100
+        d=1e100.net; s=20230601; t=1747732993; x=1748337793;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m+tt/5j68i8D52Nxn51Ia91D32+EPDn1zKmAKYiqA9U=;
+        b=PXzepMXPRIIkjQGSnvubiYhZZNZstw8B4SquwWLqRCiT40Kv5KMkXg2DmE1FNx+xkZ
+         2ldkvpoRvrCTgr7D9xoob/N1EB54ml+kNJevfhzYf5SW9juu+ah632IAHSaDIPWpH5kL
+         awJJHRgtPli503zWNlIM6sPvtXM6CsSOMS8fyVlunSdLU6URoZzTi84tOFSFXaVBlqgs
+         7pJ+UK9yJ8gzWZG0m3gG6jbmfzjN5NqxSEgLg06FHYz1q+dfHYqwEyrTxjzTogdCXvFw
+         SJEHnTm9gnAtW4N5dR/f4ZBvae/xh5uIJuDJeZOhro7zQHAWK4JEoIpA5GiDKokiOqpH
+         8QAg==
+X-Gm-Message-State: AOJu0YxhKzs3nOlyJJ24Y8ibYd4ad9ajmIWUA80JFxl3BX3R6LAchp3p
+	wbqG7MOTfvp2flWq7086DGbaDLZcpBFyMo7LxV5RJEkttTUdX1JvFSGRIb+14g==
+X-Gm-Gg: ASbGnctOowyPfEiU3efH/QoG+Vs/feekesiOLOtBAEqVgzA4VK0GpK12xHVF9270RPB
+	0DmDnKICKbxyUtkx5Yf9BAY7CubrCxMUI0LuQVCmA5UQ5hbFzqPsMQVjVxw+20dWi+o8UOjMMop
+	5e4mEvKn2N7vT0zfQTwwmBdwOsdGnwK55mAxQ5kZX2FO9nusLYT7lQMCCdrn8jhG3LuTVE4yjbN
+	sfQs7AW0OOtEIx7Tf1X9u674V0Ach8vDS4KTOCoHqVqzm9WMUzle0HLheLx7TUkjuZVVtvSlSs4
+	sB2wrTUf96O/uhdO0thcSvkVvogpHgwC0Q3u6/bhFVcjJj7ajmBOMS+J1AeJowA=
+X-Google-Smtp-Source: AGHT+IG5IeDqp8jyrXtOKT3Vs+RbebQoMXO/4EfLE+yBYKvWHeIATN+BoVejoCiB5pP0EhWSxefZww==
+X-Received: by 2002:a5d:64c7:0:b0:3a3:64c2:2a8b with SMTP id ffacd0b85a97d-3a364c22c3emr12321608f8f.49.1747732992847;
+        Tue, 20 May 2025 02:23:12 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca88957sm15528423f8f.75.2025.05.20.02.23.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 May 2025 02:23:12 -0700 (PDT)
+Message-Id: <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
+References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 20 May 2025 09:23:07 +0000
+Subject: [PATCH v2 0/3] pack-bitmap: fix memory leak if load_bitmap_entries_v1 failed
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] stash: allow "git stash -p <pathspec>" to assume push
- again
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org
-References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
- <xmqqtt5ktlqm.fsf@gitster.g>
-Content-Language: en-US
-In-Reply-To: <xmqqtt5ktlqm.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Taylor Blau <me@ttaylorr.com>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-On 16/05/2025 20:10, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> Historically "git stash [<options>]" was assumed to mean "git stash save
->> [<options>]". Since 1ada5020b38 (stash: use stash_push for no verb form,
->> 2017-02-28) it is assumed to mean "git stash push [<options>]". As the
->> push subcommand supports pathspecs 9e140909f61 (stash: allow pathspecs
-> 
-> Can I safely do "pathspecs" -> "pathspecs," here?  I found this sentence
-> hard to read without a comma.
+In pack-bitmap.c:load_bitmap_entries_v1, the function read_bitmap_1
+allocates a bitmap and reads index data into it. However, if any of the
+validation checks following the allocation fail, the allocated bitmap is not
+freed, resulting in a memory leak. To avoid this, the validation checks
+should be performed before the bitmap is allocated.
 
-I'll fix that
->> in the no verb form, 2017-02-28) allowed "git stash -p <pathspec>" to
->> mean "git stash push -p <pathspec>". This was broken in 8c3713cede7
->> (stash: eliminate crude option parsing, 2020-02-17) which failed to
->> account for "push" being added to the start of argv in cmd_stash()
->> before it calls push_stash() and kept looking in argv[0] for "-p" after
->> moving the code to push_stash().
->>
->> The support for assuming "push" when "-p" is given introduced in
->> 9e140909f61 is very narrow, neither "git stash -m <message> -p
->> <pathspec>" nor "git stash --patch <pathspec>" imply "push" and die
->> instead. Fix the regression introduced by 8c3713cede7 and relax the
->> behavior introduced in 9e140909f61 by passing
-> 
-> Hmph, is it too much work to have a patch that only fixes the
-> regression and another that extends the feature on top as a separate
-> patch?  Not that I am opposed by the new feature, though.
+Lidong Yan (2):
+  pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
+  pack-bitmap: add loading corrupt bitmap_index test
 
-I can do that, I was just being lazy skipping the separate regression fix
+Taylor Blau (1):
+  pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
 
-Thanks
+ pack-bitmap.c           | 29 +++++++-----------------
+ t/t5310-pack-bitmaps.sh | 50 +++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 58 insertions(+), 21 deletions(-)
 
-Phillip
 
->> PARSE_OPT_STOP_AT_NON_OPTION when push is being assumed and then setting
->> "force_assume" if "--patch" was present. This means "git stash
->> <pathspec> -p" still dies so do assume the user meant "push" if they
->> mistype a subcommand name but "git stash -m <message> -p <pathspec>"
->> will now succeed.
-> 
->> Tests are added to prevent future regressions.
-> 
-> Nice.
-> 
->> +test_expect_success 'stash --patch <pathspec> stash and restores the file' '
->> +	cat file >expect-file &&
->> +	echo changed-file >file &&
->> +	echo changed-other-file >other-file &&
->> +	echo a | git stash -m "stash bar" --patch file &&
->> +	test_cmp expect-file file &&
->> +	echo changed-other-file >expect &&
->> +	test_cmp expect other-file &&
->> +	git stash pop &&
->> +	test_cmp expect other-file &&
->> +	echo changed-file >expect &&
->> +	test_cmp expect file
->> +'
-> 
-> OK.
-> 
->> +test_expect_success 'stash <pathspec> -p is rejected' '
->> +	test_must_fail git stash file -p 2>err &&
->> +	test_grep "subcommand wasn${SQ}t specified; ${SQ}push${SQ} can${SQ}t be assumed due to unexpected token ${SQ}file${SQ}" err
->> +'
-> 
-> Good thing to test.
+base-commit: cb96e1697ad6e54d11fc920c95f82977f8e438f8
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1962%2Fbrandb97%2Ffix-pack-bitmap-leak-v2
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1962/brandb97/fix-pack-bitmap-leak-v2
+Pull-Request: https://github.com/git/git/pull/1962
 
+Range-diff vs v1:
+
+ 1:  00168766edf = 1:  130c3dc5dcd pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
+ -:  ----------- > 2:  b515c278a8f pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
+ -:  ----------- > 3:  5be22d563af pack-bitmap: add loading corrupt bitmap_index test
+
+-- 
+gitgitgadget
