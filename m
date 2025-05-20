@@ -1,178 +1,123 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 610341A83FB
-	for <git@vger.kernel.org>; Tue, 20 May 2025 17:54:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B1A61FECC3
+	for <git@vger.kernel.org>; Tue, 20 May 2025 17:58:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747763651; cv=none; b=cPs38uyS9xcN4kFQj3W3HFz9315ffDlWw1s4mubGmJfV7FamXEG/iXfPS7lerBpZbbFAu/sowPSuBiNb0iQxed0jY9dnZ2xQuqyC2pTEx0wtrE2WmP3//3TTmHm0DyAeU8P4lt7YYjegiJldiJIZq3AhXwAwfYDHoIDLId2TP3o=
+	t=1747763889; cv=none; b=ILva3Baysy5bPkyiaNI4vof1644pWir7/FSwaOKnp29Dh/2nfwiPkEp8tHlP53+3UNNdAUOrwPOjEVdhkssSiyBLjZVbKKqDQKKs8yc5yx8KLIn4SS8/psJQStN3ir6/R08j/m98cPzhRa6S930FWTlE8Q4Pc31KoooTzy5mFlk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747763651; c=relaxed/simple;
-	bh=R35Rqts1ZhNGNJTCyfL4OYg7blM4v4uvSbhT/brP7og=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=p9t5atewfIR0V6R0UiVXogFnN8DBlycU65DO/LdxiNI0AjC1tAY5zIlD0qwHyxhQP5NNpo5vRA0tzz6xge39BMoFgFzYsiNWMMgCYn8ufHanEUBj8pnlS0fb/XLMIUfgXFtKAvlOwVoFZxJWDKj5vcijXedIVmFWHhMss25dvR4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=TE302fXd; arc=none smtp.client-ip=209.85.160.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1747763889; c=relaxed/simple;
+	bh=4BtDaAuU/dm4uSvD+HLNbX/ZSlXJJTj/IdkZBRDXUW0=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=ntTafYjiO2hIyMttdCVkp569qq//7Q8tNXhIHM4BrfBwNnSinFnoBlQ8FDiU/MejAw/PZD3rQmXbRbaVsEFGrQ7qEQ29AkCtao0dFE/j5oCgJjMAiV5r6Dpk/kz/4ShRfe50NYJ+z6IjKKU7LceTyEeqa1TLoZmAc5ikoU564u0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=wgXRj9b3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cvcWzB9g; arc=none smtp.client-ip=103.168.172.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="TE302fXd"
-Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-476ae781d21so58136391cf.3
-        for <git@vger.kernel.org>; Tue, 20 May 2025 10:54:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1747763648; x=1748368448; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9OQaos0/rny7znF4TQvNZk/5ecpyTfGI/FpnkQxSkUc=;
-        b=TE302fXd5O9qQLlD0dxj5+ht525Ej3DRrb/fmacy89LmESpdBBW310Ldm7wNg7bd2N
-         TWhbbpIbUntP/Syl3YLZcJq0TG9J4YynRF51w38aLjpgOc+l8gIJnYVV75BSFmPl2qC/
-         CGr6L+RXgNZHAkvnvszojbFKqRhROYE9Epl5ZbZtMnolEAp03qMWUlkXnSVQ/72GvO03
-         nbBKcBEviq5B/eG2qb3WXwuRTZ3skECBv8PAGcikUH3oKUPZnclbVBcSp8DT4982Mtoo
-         EVPbH8FTFSbyJ1Jg719EVgTRNHQrYEh6jlRZhErX+bG8wPnqfOQG+5LAZbt8l1kmo4Yj
-         GLhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747763648; x=1748368448;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=9OQaos0/rny7znF4TQvNZk/5ecpyTfGI/FpnkQxSkUc=;
-        b=Mwu5uS4wJgfiL7IY4VWhFIIJ5sYLsfzt5TNqCPy8WqcTTEgLJ5aGbPiAVo6H90yg08
-         yloWrRHrJOiCt4uySa0AhZgUfSMAYE0l0lxQoZ9j0yG1JYrOjxpzczi4Qth8+P2k2yze
-         RbIaQmpQ1fmTa2IBnxLyt8vcVcrGoH6ja0h9vESnPpra6DD9Z84/5hNwmdMhA0tct6Jl
-         rflbK9L3ePWlNAcSRwOwJ/tYIsJHgLnSvtpIockkMw1pMOZcqOlUZyV+k2lr1r7IX7C9
-         kGDNLFfhycZ5LY/f1eU/rA8mGAVr32leZVOzb39oKCa4NraLdTqyKIAPv2bdLkU+ZOqA
-         7hyw==
-X-Gm-Message-State: AOJu0YwTAjvjYxsZhgFw1n0gSokQriM6tUD++CJDjSfprasQDxn5dhpe
-	rgXl65zXmewsg8CXDb6AKPFgoLbFFTjGyNNYLOlgoIIZO7bvRI8i5bDkFcX5ya6j87TI66fuiT7
-	l8L+p
-X-Gm-Gg: ASbGncuNg15y6Nds1OsRy8ifljIdA5gLlYI93y6Nw5FEmil+o+W3f42DeUxFvyuDXVQ
-	au/lniMnO1yEo4l9h0QwmP2aBw/XHw+HS7dG0+jB3PBNce4cnfBJzTa0pwHMNd8BNhnVt48BzK/
-	bGP8RqKPDW8/ObN8UoUF3RaQfQ1f9IQT6TnOB6TrdV1872GuTYh5bgp4IfwgJavm8W4zKo7HMaw
-	6cSkuCJjQGXda+GvHQlBaOZFmxROKg39mN4HWXPUWry9NphFSwrhGW8cKYqYsSQcNuzl6UNR4yg
-	GTwh8vwa0W1gn4fzCxFA02icWPPBWAUtRWo9Lx9UXFTqIHxf78r4sQCXa8ampY4mUqU990MNd6G
-	MVF4cu6TmSRXHUzg/VvC6x7k=
-X-Google-Smtp-Source: AGHT+IEqTIrs7c23Fp1Q7eKaMlmwJUzW506zyuIKTbFk63XbPEU5Kcibeb1xJDhTSYPzcCZlcfAe9g==
-X-Received: by 2002:a05:622a:1e92:b0:48c:512d:bd21 with SMTP id d75a77b69052e-494b00e973amr280034941cf.0.1747763648092;
-        Tue, 20 May 2025 10:54:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id d75a77b69052e-494ae3cef4csm73424511cf.1.2025.05.20.10.54.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 10:54:07 -0700 (PDT)
-Date: Tue, 20 May 2025 13:54:06 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
-	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH 1/4] midx repack: avoid integer overflow on 32 bit systems
-Message-ID: <aCzBvvZDS2OFJ30h@nand.local>
-References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
- <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="wgXRj9b3";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cvcWzB9g"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 90CAB1380421;
+	Tue, 20 May 2025 13:58:04 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Tue, 20 May 2025 13:58:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1747763884; x=1747850284; bh=2H
+	PnxGtF/cTHHJnIzoJRmH6zklmqXVTrhn4l0CyHuRc=; b=wgXRj9b3AiS+/M16pK
+	/qstWC017eg34k96k0EXkPeXWS0/pV7/iIQNgWN+dkbx0X8rH3SaPZB0+c2xCIQ5
+	CxJ9uHPWYqIbYkFikMMojIeu2vaTo7VPqhTZdn+4ZlxTdRRaXDgZKenDNK6W4XIp
+	tlup9cwmiSvZiIRlNH4LVM8oTA3FfBV1AeBJpK0rmiqLQMn3IVxOQV+ht3H8mJfy
+	R+r2jI0U8sqj3VL9OgFxcJwkCIGxxwzcpEyw1qLE9cMdrbKtwUuB8KyFQSsVhVAc
+	eb5pHtHBTn57mSRxoOgJaWiJu4XpWSm4ifOdxSN2j8MdujLXADPgHQ4vCTMTiByI
+	hMEQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1747763884; x=1747850284; bh=2HPnxGtF/cTHHJnIzoJRmH6zklmq
+	XVTrhn4l0CyHuRc=; b=cvcWzB9gQPo6GlzQ6NdY+Wg3WURiXvT/l1NHzJDSy8YQ
+	BExgQHw1NDH6p4Fwx4k/RKhdFtdPnXQ8UgyvuVUMQvwtxu1U0kcVe01jl5ow3oi1
+	1Lo7iMPuYF+7rr2H/DAAnOeUEh4ujJ/7iu/hxBWmtltCXxA0KrmwQ4bNJxVWTOpJ
+	Q63pXtxmu73V/ZHAjCWa0UnQTizf1Quw6AkyL1dYE8T0Y69tmffQFLXuGc53jMnD
+	JQBO09mDVT3VtPj7awaMgExlTHfibSMSxrpJHy6S8JYx7nhf2ermukKVs7fLY/ph
+	7MDcpfGTaXWZ47+D+RH6o4MZjj5ifTwbyj9zXFnWgQ==
+X-ME-Sender: <xms:rMIsaEaasglUIO_UISPfFtxyJKBYpQ5IlDVTXhBJ1g5suQp72wlVlkQ>
+    <xme:rMIsaPavJMwaGJ23NbcvW-agXs3Lhfx2ttdP7GSovfHrdBC332wMzYFH1XV05jEoz
+    gRptsKP5SagRDA6YA>
+X-ME-Received: <xmr:rMIsaO9H3mMp20hnkrrt2A8QC5zSyx94SUsYvHmYo78rai9B9Z49eaybJv_gwERERQUyX4heKVzX0iHVudQnR1W19h14G2NUfT4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdekjeculddtuddrgeefvddrtddtmd
+    cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghn
+    shhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtne
+    cunecujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpehkrhhi
+    shhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtffrrg
+    htthgvrhhnpeetgfekjeffudeffeffgeekvefgvedvgeffueejjeelgeduhfdtffeikeel
+    fefhgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgs
+    pghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggr
+    khhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epugihrhhonhgvthgvnhhgsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:rMIsaOrGfBEYrSo4om3EOFsDR_guhBNogqYqli7jvtQ3b9E8QfSkLw>
+    <xmx:rMIsaPqx0hR55Q68_EGD_QOs-I6LCv-smWhobnrIVRD7o7-WkX93sg>
+    <xmx:rMIsaMT_-ojeesTRo25GfDWh9ePViviJ6jAIGw_x1kLOO4AqvH4oxQ>
+    <xmx:rMIsaPqP9gdpEE0EVwQazIMJBfEntENEr6ZvXg4U4y0v24NYwmJJIA>
+    <xmx:rMIsaJgRcjki4vweB4DmKA2F4kg46lAUX5eeA29ZIhXFhzUU7s1E51SN>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 May 2025 13:58:02 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Jeff King <peff@peff.net>,
+	Teng Long <dyroneteng@gmail.com>
+Subject: [PATCH 0/6] doc: --stdin on notes and core.commentChar mentions
+Date: Tue, 20 May 2025 19:57:18 +0200
+Message-ID: <cover.1747763769.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.49.0.780.g892193c3f50
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, May 20, 2025 at 04:04:24PM +0100, Phillip Wood wrote:
-> diff --git a/midx-write.c b/midx-write.c
-> index dd3b3070e55..c7cb2315431 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -1699,19 +1699,23 @@ static void fill_included_packs_batch(struct repository *r,
->  	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
->  		int pack_int_id = pack_info[i].pack_int_id;
->  		struct packed_git *p = m->packs[pack_int_id];
-> -		size_t expected_size;
-> +		uint64_t expected_size;
->
->  		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
->  			continue;
->
-> -		expected_size = st_mult(p->pack_size,
-> -					pack_info[i].referenced_objects);
-> +		expected_size = uint64_mult(p->pack_size,
-> +					    pack_info[i].referenced_objects);
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-Makes sense.
+I wanted to fix `--stdin` in the git-notes(1) documentation.  Then I
+found some other things on that doc as well as things to do with
+`core.commentChar`.
 
->  		expected_size /= p->num_objects;
->
->  		if (expected_size >= batch_size)
->  			continue;
->
-> -		total_size += expected_size;
-> +		if (unsigned_add_overflows (total_size, (size_t)expected_size))
-> +			total_size = SIZE_MAX;
-> +		else
-> +			total_size += expected_size;
-> +
+I was unsure how I should refer to the config since `core.commentChar`
+and `core.commentString` are aliases.  I just went with the first since
+no other docs mention the second.
 
-But this part I am not totally following. Here we have 'total_size'
-declared as a size_t, and 'expected_size' as a uint64_t, and (on 32-bit
-systems) down-cast to a 32-bit unsigned value.
+§ CC
 
-So if 'expected_size' is larger than SIZE_MAX, we should set
-'total_size' to SIZE_MAX. But that may not happen, say if
-'expected_size' is (2^32-1<<32). Should total_size also be declared as a
-uint64_t here?
+Peff: for 9ccf3e9b22b (config: add core.commentString, 2024-03-27)
 
-I wondered if it might be easier to count down from the given batch_size
-instead of adding up to it (requiring the second
-unsigned_add_overflows() check). I tried it out and got this instead:
+Teng Long: for 3d6a3164649 (notes: introduce "--no-separator" option,
+2023-05-27)
 
---- 8< ---
-diff --git a/midx-write.c b/midx-write.c
-index 48a4dc5e94..f81dd9ff6d 100644
---- a/midx-write.c
-+++ b/midx-write.c
-@@ -1671,7 +1671,7 @@ static void fill_included_packs_batch(struct repository *r,
- 				      size_t batch_size)
- {
- 	uint32_t i;
--	size_t total_size;
-+	uint64_t remaining = batch_size;
- 	struct repack_info *pack_info;
- 	int pack_kept_objects = 0;
+Kristoffer Haugsbakk (6):
+  doc: stripspace: mention where the default comes from
+  doc: config: mention core.commentChar on commit.cleanup
+  doc: notes: split out options with negations
+  doc: notes: mention comment character configuration
+  doc: notes: point out copy --stdin use with argv
+  doc: notes: treat --stdin equally between copy/remove
 
-@@ -1695,23 +1695,23 @@ static void fill_included_packs_batch(struct repository *r,
+ Documentation/config/commit.adoc  |  7 ++++---
+ Documentation/git-notes.adoc      | 24 ++++++++++++++++++------
+ Documentation/git-stripspace.adoc |  3 ++-
+ 3 files changed, 24 insertions(+), 10 deletions(-)
 
- 	QSORT(pack_info, m->num_packs, compare_by_mtime);
 
--	total_size = 0;
--	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
-+	for (i = 0; i < m->num_packs; i++) {
- 		int pack_int_id = pack_info[i].pack_int_id;
- 		struct packed_git *p = m->packs[pack_int_id];
--		size_t expected_size;
-+		uint64_t expected_size, factor;
+base-commit: cb96e1697ad6e54d11fc920c95f82977f8e438f8
+-- 
+2.49.0.780.g892193c3f50
 
- 		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
- 			continue;
-
--		expected_size = st_mult(p->pack_size,
--					pack_info[i].referenced_objects);
--		expected_size /= p->num_objects;
-+		factor = pack_info[i].referenced_objects / p->num_objects;
-+		if (p->pack_size > UINT64_MAX / factor)
-+			die(...);
-
--		if (expected_size >= batch_size)
--			continue;
-+		expected_size = p->pack_size * factor;
-+		if (expected_size > remaining)
-+			break;
-
--		total_size += expected_size;
-+		remaining -= expected_size;
- 		include_pack[pack_int_id] = 1;
- 	}
---- >8 ---
-
-That reduces the two overflow checks down to one, and avoids the need to
-introduce a uint64_t-specific variant of the st_add() function.
-
-Thanks,
-Taylor
