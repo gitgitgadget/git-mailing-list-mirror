@@ -1,69 +1,69 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E69132500D0
-	for <git@vger.kernel.org>; Tue, 20 May 2025 15:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E75962505A9
+	for <git@vger.kernel.org>; Tue, 20 May 2025 15:04:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747753485; cv=none; b=BLpA4Si3UbvdNIzpDhBh8l8rrvskOUIuW9Oz3onah2Pv2bCSjp5GHSQXIppt+OOKhxyMBRSKdHv7NWYf+9w2gYfYUhFhrybOH4NaW2vHhyM9YaMRiH7/9DhwBEh0EjMydNX4+f/1kRV5Z1LXLB11OiiIG6645BeH/fXB1N/XknE=
+	t=1747753485; cv=none; b=RO1LdVaXoeGRXrWmNTztif7gCCPro8PgjpHQRbhKOG7UOLNlOWp3UxRRbjcpIlRl9ecIP36rMnFATiyO+edsNiBvECKh28hXtMkZQ9pZlhn58qEWB3VLqx9JhGRDZAVybMqvFly6uhAe+Be/zgLj1LfKqHjTgck5RF5c9Is/t3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747753485; c=relaxed/simple;
-	bh=aiKjQLjwlCkkqdoZMz0LO6sAQWe312WaScpDPiq48NE=;
+	bh=dSqgfVrfrJD4N4aOCkiob6f2a8HoTuzGzPcMgUyXQjw=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=la4WIqs0A6QGDKIWKWAr/2BUrcVVp1TRW2C4403fysuNeUTkkWrlbhY5fTSa+6WnjrPyeeyD0Onc35RhcSBRpHiQ8RKuu76TZQx9G7BdUVBvfvLoG5prnF1MfoVckR1VPNww7sq8CmPcH8xzX+6JzcYUGdpgs3FCAn9TfF3j9Ww=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=EqNWdq0C; arc=none smtp.client-ip=209.85.221.53
+	 MIME-Version; b=SWiY2imvP2eqA/tsKcSCT/kZtMldZOfe48D1JD2ZzxB4+7VHw5oOPYJlu6Q3c14ZMY73+18B01mEbOHZ/UuW9Fx7T++6SrPnxgW3Wjghf+v3Kp2HSeBxwUtj8B8OGx36cGpi/gGvWfbO61Wol2M/qMX4xqWV3wAtt9Z59A6LXVc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KMq5n465; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="EqNWdq0C"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a363ccac20so3432612f8f.2
-        for <git@vger.kernel.org>; Tue, 20 May 2025 08:04:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KMq5n465"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a365a6804eso2051872f8f.3
+        for <git@vger.kernel.org>; Tue, 20 May 2025 08:04:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747753481; x=1748358281; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747753482; x=1748358282; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=+3mGZuOqNHB0vHOpPWzjQuDOCn3aqSFWUy8/hjaTGEw=;
-        b=EqNWdq0Ct+Wrjp+l8ANIhmblC2LOcwgPadblzEq+0FG97ccQCv3g4zWQL7GC9xX6hE
-         uNgUx7HVd0oerYxCX0XUEIGhEAChsR+Aqjr8/AOl+Zb8QkoQv0P9n04OPOME24QHeU9w
-         cxN903+IAnhPX7uL87KnecUFKtFEZAlsSGtnSXROW5GoIxkaLnudNY6dITA3TNkBom/W
-         tpT6+zlZTrLa3Govw9uQE9WOJ25HXRQUMCsFIcreZYIpeLocTFIzyGvgjavR4ZVkd7j9
-         xB8F3ejxJ0ysYMy1qrjhCnAb8+jFIRptEpv8zK9v4KBf4KsA5Coz8oycFD5j+/rH/Djs
-         3VOQ==
+        bh=JmPZUzVb/NBLdHDlQ//SgzKw0bTBd72Qgib/n29xIHQ=;
+        b=KMq5n465JUSk79VvDkdgjeM3j6Ad60fUk3GJ4M9mLKacSEv6C1oP8Qhuno2xtS9v01
+         tLURtxJsCGhIQ3f0p1660NXdVjTk8G8iSj3IwF9rCc0QFm2cEoPYn7nSS+jhR2weQAS1
+         iBgE3EA17PpkVL6epkgBYLO5jRCluBX9GjH953r83jVL/GVeEkqWSJyOGv2sW3tiL0s2
+         K1P9diJ0Jq8NVeeiFzSYcbpwIvC8iClzPsFZuBTQNAUsQWPaN1bZbSR+X0jMYfZjXo5M
+         nj4YJ5Q07JsNlQVsB+cQxedv7JqVKhBSlzc8uG0y86uANsezZ414lyuZSM2NJbxL0NE4
+         uvhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747753481; x=1748358281;
+        d=1e100.net; s=20230601; t=1747753482; x=1748358282;
         h=content-transfer-encoding:mime-version:reply-to:references
          :in-reply-to:message-id:date:subject:cc:to:from:x-gm-message-state
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=+3mGZuOqNHB0vHOpPWzjQuDOCn3aqSFWUy8/hjaTGEw=;
-        b=M5N1+rB3tkejoyX7Ka6+p17on6fQzCvVvkwk3a4h8Urmp0P3480WTK6qoKSjkxaYiy
-         HXndy7zvz1CAm7Utmy4gLVKC3+nL4qKnuN9SQuubIk8zWfkADfpo/Olbt6h2hyGatRJW
-         2BikR0t0xicak5SJwSZ506HhQbh7SCgUPwMmmY2TzxEh31erj6BkdDkRe1y+i6WjrvZ6
-         MsKDOeF9CpZ/z51G0CIxko5jcIUp2+h2pVkIEkG7WlXTc0pRjk3+tPfRz6FZIP4lXA4u
-         ZKOfbjiQT1Bq7NeyBuiVQiG7rXsKq0ebjQDAKJjFcpBVUJm0wkNcguoepyAK02S7vv2Z
-         +7UQ==
-X-Gm-Message-State: AOJu0YyphG7to/AEimRdaXN6xq3PBGo7SIhinMX50bCk2pBJibQD5RfE
-	5kyGut+vXlFGHNznxGING1m0GGBLAUHX2s8vrW84Uw2nucu0IseooLejtRQPlQ==
-X-Gm-Gg: ASbGncv15okFk8PkCSV1MCyukFOlVmIe9vCx+ZsNcdA828KHwgAAcyK3hN/bq+jJLVG
-	g6USLHfzv5VjvSfGenuQCZraCYRbA9y5xL6hPSXW6TW6oSbV4cyB9lMAlm9UPP01Jw9eGC3hfQA
-	Xry9UGfQfJWbDcHEBGR/9Zuby4v8f0y+KtolC8ANyBKpwdhcbAKsVbn6z49E1ks5eXTSoW6XlHG
-	zeZxGyprvt89CIdazwb2LhofQr3Y45Zsj9oVl5z0TOOyUztWNi2Z5zDwc3S5roI6J4m3kBAGEw9
-	l+pcwdN+8Y7LWAixr20+rZaHDkw/o2wDkHcoGbmsa8ObUOgIPF7RGhTppO+D65RBoXY=
-X-Google-Smtp-Source: AGHT+IFdSeMpgpSrLx8R2RoPADmayDnkaiDttjwZdcJ83v2SGM+bA6CPCLQs9vclXSiOCnyi1O1PqA==
-X-Received: by 2002:a05:6000:2486:b0:3a3:6f54:fb0f with SMTP id ffacd0b85a97d-3a36f54fce7mr6456984f8f.42.1747753480735;
-        Tue, 20 May 2025 08:04:40 -0700 (PDT)
+        bh=JmPZUzVb/NBLdHDlQ//SgzKw0bTBd72Qgib/n29xIHQ=;
+        b=tAMEqeG8m+X+vOzcBcnudN8PDIsoWQMg83NM+kP8PxoW2XgTRmCroQRH00C/VnXMGs
+         wmP7miobw+zbQbz5mvYRt8X4kR7CeTUbyeVuQE6qqS62Th9r5/4clguJBugfbSliwMtS
+         J6idwn4kYDYG/ZQvoUP4ZWDMGlcs409Zf027KrGQrTGqj6fe6q0dejlL1NOHailxtGNy
+         eTdpLD8SGnFDF42oI+JvbE7oJXozuXK2YVJx3IUPTrDnG9cmKyv10eLp7PGJEr+uEZwc
+         mX+H0xauu3I1P8TufufEK9/L/VO91C9N6UFky04qUZXQZrN8ThyfU3kQ5C5GE30t4dWb
+         3kVg==
+X-Gm-Message-State: AOJu0YzzkW+da25MOyTqapSqraXqfBdzQIqmpMCwKlQvRwyyarfAHmQ2
+	BTlkZ8UYQY+lEu7EFGsIg9LFcdwcHZIqqI+250aE/yG1tMlWD8c72wQfPEv+4w==
+X-Gm-Gg: ASbGncvSCxKN3eogzYFRTHW13qD40N+6SmDVs8Ri33vtARMV/GmmDRQg2+fTjrgGZMv
+	FX0Ae/q3KTwERu7QIkaW7OdtCfPITIppl2w4mV+ZSv+q3IxeX+r0rabECyxX1IijBvkO0xDOu+s
+	biydPxqjgJLaDkI/RjVt/4Xr3XtJDQJKJiwKJbREFVRkw2+4nSZJroLBU/ia01SylgRtvhYE0ks
+	CRMDF7MoNkUCiWNJA3K/weECOQ6OZhTPcKUdFXJ889CDMVma5II0p5RkH1dP7aWsdk6Uzb6OomC
+	Yrm4UXrAesBAe4gawP41lLAT2neZfR2Xkw3O+yEBSTnfx4U8Aqra8TyhlzvUIOT2oro=
+X-Google-Smtp-Source: AGHT+IEx5SKkrJwM660KGvDJb2WYoIQbi6o8xNh/wCvRZaxvuaLjU0ftJZMYr2plrjD/ivgiwq9mbQ==
+X-Received: by 2002:a05:6000:230a:b0:3a3:64d2:cee2 with SMTP id ffacd0b85a97d-3a364d2d10dmr12007819f8f.45.1747753481755;
+        Tue, 20 May 2025 08:04:41 -0700 (PDT)
 Received: from berwick.broadband ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d105sm17014029f8f.11.2025.05.20.08.04.39
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d105sm17014029f8f.11.2025.05.20.08.04.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 08:04:40 -0700 (PDT)
+        Tue, 20 May 2025 08:04:41 -0700 (PDT)
 From: Phillip Wood <phillip.wood123@gmail.com>
 To: git@vger.kernel.org
 Cc: Derrick Stolee <stolee@gmail.com>,
 	Taylor Blau <me@ttaylorr.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH 1/4] midx repack: avoid integer overflow on 32 bit systems
-Date: Tue, 20 May 2025 16:04:24 +0100
-Message-ID: <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
+Subject: [PATCH 2/4] midx repack: avoid potential integer overflow on 64 bit systems
+Date: Tue, 20 May 2025 16:04:25 +0100
+Message-ID: <9f07da4fe71d21b14226d8f0132cd3c8600fba13.1747753388.git.phillip.wood@dunelm.org.uk>
 X-Mailer: git-send-email 2.49.0.897.gfad3eb7d210
 In-Reply-To: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
 References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
@@ -78,92 +78,47 @@ Content-Transfer-Encoding: 8bit
 
 From: Phillip Wood <phillip.wood@dunelm.org.uk>
 
-On a 32 bit system "git multi-pack-index --repack --batch-size=120M"
-failed with
+On a 64 bit system the calculation
 
-    fatal: size_t overflow: 6038786 * 1289
+    p->pack_size * pack_info[i].referenced_objects
 
-The calculation to estimated size of the objects in the pack referenced
-by the multi-pack-index uses st_mult() to multiply the pack size by the
-number of referenced objects before dividing by the total number of
-objects in the pack. As size_t is 32 bits on 32 bit systems this
-calculation easily overflows. Fix this by using 64bit arithmetic instead.
-
-Also fix a potential overflow when caluculating the total size of the
-objects referenced by the multipack index with a batch size larger
-than SIZE_MAX / 2. In that case
-
-    total_size += estimated_size
-
-can overflow as both total_size and estimated_size can be greater that
-SIZE_MAX / 2. This is addressed by using saturating arithmetic for the
-addition.
+could overflow. If a pack file contains 2^28 objects with an average
+compressed size of 1KB then the pack size will be 2^38B. If all of the
+objects are referenced by the multi-pack index the sum above will
+overflow. Avoid this by using shifted integer arithmetic and changing
+the order of the calculation so that the pack size is divided by the
+total number of objects in the pack before multiplying by the number of
+objects referenced by the multi-pack index. Using a shift of 14 bits
+should give reasonable accuracy while avoiding overflow for pack sizes
+less that 1PB.
 
 Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
 ---
- git-compat-util.h | 16 ++++++++++++++++
- midx-write.c      | 12 ++++++++----
- 2 files changed, 24 insertions(+), 4 deletions(-)
+ midx-write.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 36b9577c8d4..4678e21c4cb 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -668,6 +668,22 @@ static inline int cast_size_t_to_int(size_t a)
- 	return (int)a;
- }
- 
-+static inline uint64_t u64_mult(uint64_t a, uint64_t b)
-+{
-+	if (unsigned_mult_overflows(a, b))
-+		die("uint64_t overflow: %"PRIuMAX" * %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a * b;
-+}
-+
-+static inline uint64_t u64_add(uint64_t a, uint64_t b)
-+{
-+	if (unsigned_add_overflows(a, b))
-+		die("uint64_t overflow: %"PRIuMAX" + %"PRIuMAX,
-+		    (uintmax_t)a, (uintmax_t)b);
-+	return a + b;
-+}
-+
- /*
-  * Limit size of IO chunks, because huge chunks only cause pain.  OS X
-  * 64-bit is buggy, returning EINVAL if len >= INT_MAX; and even in
 diff --git a/midx-write.c b/midx-write.c
-index dd3b3070e55..c7cb2315431 100644
+index c7cb2315431..2ee381e8fcd 100644
 --- a/midx-write.c
 +++ b/midx-write.c
-@@ -1699,19 +1699,23 @@ static void fill_included_packs_batch(struct repository *r,
- 	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
- 		int pack_int_id = pack_info[i].pack_int_id;
- 		struct packed_git *p = m->packs[pack_int_id];
--		size_t expected_size;
-+		uint64_t expected_size;
- 
+@@ -1704,9 +1704,15 @@ static void fill_included_packs_batch(struct repository *r,
  		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
  			continue;
  
--		expected_size = st_mult(p->pack_size,
--					pack_info[i].referenced_objects);
-+		expected_size = uint64_mult(p->pack_size,
-+					    pack_info[i].referenced_objects);
+-		expected_size = uint64_mult(p->pack_size,
+-					    pack_info[i].referenced_objects);
++		/*
++		 * Use shifted integer arithmetic to calculate the
++		 * expected pack size to ~4 significant digits without
++		 * overflow for packsizes less that 1PB.
++		 */
++		expected_size = (uint64_t)pack_info[i].referenced_objects << 14;
  		expected_size /= p->num_objects;
++		expected_size = u64_mult(expected_size, p->pack_size);
++		expected_size = u64_add(expected_size, 1u << 13) >> 14;
  
  		if (expected_size >= batch_size)
  			continue;
- 
--		total_size += expected_size;
-+		if (unsigned_add_overflows (total_size, (size_t)expected_size))
-+			total_size = SIZE_MAX;
-+		else
-+			total_size += expected_size;
-+
- 		include_pack[pack_int_id] = 1;
- 	}
- 
 -- 
 2.49.0.897.gfad3eb7d210
 
