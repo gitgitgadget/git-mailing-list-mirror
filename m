@@ -1,57 +1,57 @@
-Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+Received: from mail-ed1-f41.google.com (mail-ed1-f41.google.com [209.85.208.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21001246327
-	for <git@vger.kernel.org>; Tue, 20 May 2025 14:37:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BAF248166
+	for <git@vger.kernel.org>; Tue, 20 May 2025 14:39:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747751827; cv=none; b=HtDTEC4CJqqtk+xLKGgEGgJ0ttANRE9zUgNpAGahygcooO/osLqwEBbFeiw9eoVuoCQUXpIfxG60TGNLM8N0WHcGLnt7SNrXvrIPHHSENB8VWpxMsmRQhWJu8IkJrm/ACI8JRsSlrF/0IIet2kysHEWVhgSf8/8SOjKeLV2DpZc=
+	t=1747751959; cv=none; b=uKrXHLxQCuc9Hzb6LRBxmbfBDCcs7jpwE5dIJRgWOpwoLZkcKeOIuufBERFbrUAdDWn3Iqzu0iskccRcpHj5zr7o4kRukbp1RnTvTZvpe6QZDrJGqppnUPRNPZsx7zXdh8QfnPvjg+JaUZG9m+QA/9JREGQSIptdaveOqOm7Prc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747751827; c=relaxed/simple;
-	bh=pJ+MP8nLXfemf7dhCYac+aE/Q480rX/9CQXpdMYC7aE=;
+	s=arc-20240116; t=1747751959; c=relaxed/simple;
+	bh=3BNad44s01WGP1oyKZdo9whx4nPvU1jZBEGwdV4Nm5E=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=pVZL9B+VOeqF7XIZCazJDoKeVumn9Ad7b4FBTntdhh+spdjc/Cwy7tuib2QoG5mhdY37egtw+XNmTCqbblH1Bt53OArUgMxUaQr6y0i1toKJuTMLWN07N1feODhHhEW5EScUvU63RD+bnSszhaUL+ftjdK9UcJb87rEwSXel5UQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mlAzQsUf; arc=none smtp.client-ip=209.85.218.49
+	 To:Cc:Content-Type; b=iLWT6sJ20a//jhmBESDLi/0xNpjeYTdbdx5PI7ysk+TY+049uydkRHIhLqn8LBzqQBpYmtzCoXa5AStjx0b/oPwkNxCED/bWay4viixWejdncbSwm9mn5N7cxROVvbxyTam92+hPn1MXcSjQHlgQpex0kPzEdpal+OPPRKqMoAc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dRCFH2kI; arc=none smtp.client-ip=209.85.208.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mlAzQsUf"
-Received: by mail-ej1-f49.google.com with SMTP id a640c23a62f3a-ac2bb7ca40bso947160966b.3
-        for <git@vger.kernel.org>; Tue, 20 May 2025 07:37:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dRCFH2kI"
+Received: by mail-ed1-f41.google.com with SMTP id 4fb4d7f45d1cf-6020ff8d54bso1318297a12.2
+        for <git@vger.kernel.org>; Tue, 20 May 2025 07:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747751824; x=1748356624; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=gmail.com; s=20230601; t=1747751956; x=1748356756; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=KjsJQju5to5PIJLOSxCrHEeJszejbpPKBsLlOOqloNw=;
-        b=mlAzQsUf5vk91CK14WQTL/LfWOpPfT7+oTprZ8rMm6waC03WBemXoNfe4/t08dhFi2
-         u7dTWqGaOaac6GRYeccRTCtWZpmWBRKNevORjMKKACqdl91n0C6BKZChIsy0yv/3naZz
-         JGlzT4/6R95DQ09L5c0x3o8gLIPeqWstTk9f+1KH9P27nmMQUZYzsI9R0Oxat6+jLD/i
-         /MHeDTs/aDZtduudlmD3Uk8HC5GzwODz38cG41Z8pSDkkYdLcGc4PrnvdFWI2YTtZdf4
-         qpVmO6hiwS/k78XkmlbypgYC9le8qwegXo7CemE3KzHsKGz443cUCUxIjmJuf97QYimK
-         HNQA==
+        bh=woTDtftsaBH0Rr+G34mrsCSDVGfzddCuj8vVrn5T6jk=;
+        b=dRCFH2kIRTIF97rPPO9+vgeJVbPOhQNWlUUpFgca7F6oHbaKVCiNm1Szr7nt3v4tDj
+         kXObU1IK+VNXCH1iLESnqsuRn+SnOQtHwdEF3bDkw9Ob6Zc2K8Zvno2L18co2oR7dPsQ
+         jGZgBSz0DDsBeLCKDJ8NOSniiPscrOw50W9DCAXbQ+wcGO3ht5KqnMJD8p3IdJx8BmIY
+         JNwZ5Jw2V5vxxWMum7kDfzmxV5OYqrrd6WI/Rjf5Vuyuv1Zb+RSCz8SFd6RGhvQ8awoh
+         6OyUU8fs21WdgDIFi4qR1FAs9LJKs0pCk6oIlInbtM9iqzGTyHdEXbs3dzwi11CAz8QT
+         E8xA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747751824; x=1748356624;
-        h=content-transfer-encoding:to:subject:message-id:date:from
+        d=1e100.net; s=20230601; t=1747751956; x=1748356756;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=KjsJQju5to5PIJLOSxCrHEeJszejbpPKBsLlOOqloNw=;
-        b=fbk/43V05Je/SnV7xdFNNXymc2bbV7PuPQEkvM/XrQMK3/jUAAvV0tMV0NSKcxhxox
-         HEyr/UaXSVoWcNi2V3E+RlAeonhDZ3gggurJbT9FImeqouF/Hrsn9qW4FPaNN2I6k9Z9
-         ZmgXrQjVPrdjYMZGg1IJ5i0iZKg1ea4qxdtYEIsDjteTSD1lMuY5E654wTMlJOp0qt+b
-         TSN2yiXbe4HLZbHqpjQ+zZP+sC6rVdkypHnL2Dffw6fLZgPBxyAbdLQwswW1T17fiIny
-         OaFnqZHJIi4OZwJ6DoBAMAAaCdobUxH63AzVU/wEVwmWd+jRnYYjuhJXptQMoHqFQT6s
-         VLfQ==
-X-Gm-Message-State: AOJu0YzkxbUDGyZl4xY9701s+U8XoBdRBYG/xS0ptgdeIWoAR9syM4ew
-	bUapbms26SBYFH1rFfxsqU5KJS7gTvEXsYxn/Y1FAiMsw+RfMPqd/fk4jejga1CEhzaxR/5PZ5l
-	sSag5L+v/okKmeYuov0Ih9poE6tMJGD+0Dg==
-X-Gm-Gg: ASbGncvX7gD0C/cF45n2uA6jV69uZmvhNn6pvAkbx/KhO59i3IuEjZnK1d/RdpFzLvc
-	eaVgrTJPV6AHG0ztIVV4UMOQWTiMoKYVuRO/fTq1vCMjf90t8/cketsY6ie5TEzAHji2urJhNQc
-	gK/VybE9njpePiML6QFa178c1cD/AHCUdhCi2oyQL+i1fm95JHqak+qmuNm9m3XTshhok=
-X-Google-Smtp-Source: AGHT+IH1VOwoZWztp/+UfP+N64wWK2gPquNkptTwTX5wyXS69F+OlrM1ZE5pAFAEIlC05g8qB56mLlv7yWgtBUlhRHE=
-X-Received: by 2002:a17:907:6d06:b0:ad5:7732:675b with SMTP id
- a640c23a62f3a-ad5773276demr655358166b.40.1747751813797; Tue, 20 May 2025
- 07:36:53 -0700 (PDT)
+        bh=woTDtftsaBH0Rr+G34mrsCSDVGfzddCuj8vVrn5T6jk=;
+        b=wBI316JMXFTCEYIGo2zaoKeXygs5ds8/1HCrNOSPBSb+nq/qXv4S00SdDUoHucxCkX
+         HcP9SmZvx9EU/IKE+r5Uvt7xYmYRB4yHyfvjkzfYihprfFDck3MQwP4GYlcT4+i8CON+
+         +l4PqO/Nbm48z74Jj7O2fyoejFrSzbpi9NaMaruOpz7X1viQyVeWkH4zlLEqGSn+Z2WA
+         0sDHDyy9UCFLs7K64Qq3uEf+6O3NO71igpDAfR+uoboHOO++zZARokssg+9JD+YIQswI
+         AXpVXsnRP5RpzHPrURR2SSyIpV+V8Ei9dATkpgVIbpevrEKcS4bgE3s+f5bG//RfcsAY
+         2EaQ==
+X-Gm-Message-State: AOJu0Yx5Uf9CTuFZYHNNSe6jJjl5lu8mjBb1OdANrm1pqfEElDVf54mY
+	5J9qO7VVQANXPCcdhHuzS9hPqDnMc1oPAK5H/77f/0g2Y/XlXUERMhyTXOQmVEc/G2mTtj6jK7q
+	pghI2FkMfLmnlFxnS9KVbjZyLZPZgEHAMVmxK
+X-Gm-Gg: ASbGncu+X6lQT5PMJ4rGWTaQUM4unzAt2F98DsZuWZEllURLzAzXPSf90hyoCgDlXYH
+	ASv3hgkSiifESYmmEXLedLEHNzh6MGlnz59Q2TKGHFmBiBXQA7+N9cDpbteiqBs/T9w8KMTxGyk
+	ueg3qoMpbrRJV1pYs+UNZ/7O+Tqbg8SZTp3hGtvLIFI1NOmdsELN1ia6w5QyMhWLmpF+Y=
+X-Google-Smtp-Source: AGHT+IENkjMDR1TFM7WVfrOYJmIsdXJRF71KEJUnJ46wSIwCYQtkhUlJH83EDxsjunkNFZu6rv4/ndy8VVr0JPKfIpY=
+X-Received: by 2002:a05:6402:2112:b0:602:266d:5865 with SMTP id
+ 4fb4d7f45d1cf-602266d5b7dmr725456a12.9.1747751955887; Tue, 20 May 2025
+ 07:39:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -61,13 +61,17 @@ MIME-Version: 1.0
 References: <20250510183358.36806-1-ben.knoble+github@gmail.com>
 In-Reply-To: <20250510183358.36806-1-ben.knoble+github@gmail.com>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Tue, 20 May 2025 10:36:42 -0400
-X-Gm-Features: AX0GCFs8FX2AYy9ZmNmMPpVs6nsNzDDarTc20LVzZEdAEHc6iEtwyb-kDdtSrm8
-Message-ID: <CALnO6CA0S_54HjyNDWyTAhfmRFcTsFEMF67yWjMeL526O14aQg@mail.gmail.com>
+Date: Tue, 20 May 2025 10:39:04 -0400
+X-Gm-Features: AX0GCFsxi6qqBBM5oqbVauln3tOtvt64NcLO7fayRJSS1Nsb8aUZA-hfjxeLdQA
+Message-ID: <CALnO6CB=2ih-_=VUth=PJZxGkz_GA_mUfWd6gQOFcd36eUpD4A@mail.gmail.com>
 Subject: Re: [PATCH 0/9] make stash apply with --index by default
 To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>, 
+	Denton Liu <liu.denton@gmail.com>, Junio C Hamano <gitster@pobox.com>, John Cai <johncai86@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
+
+[Apologies for re-send; mis-clicked]
 
 On Sat, May 10, 2025 at 2:34=E2=80=AFPM D. Ben Knoble
 <ben.knoble+github@gmail.com> wrote:
@@ -132,3 +136,6 @@ s of
 > --
 > 2.48.1
 >
+
+Any comments from others? CC'd folks from individual patches on cover lette=
+r.
