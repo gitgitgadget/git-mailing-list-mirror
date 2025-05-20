@@ -1,141 +1,144 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0EB4B1E7B
-	for <git@vger.kernel.org>; Tue, 20 May 2025 21:20:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E440219A71
+	for <git@vger.kernel.org>; Tue, 20 May 2025 22:02:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747776043; cv=none; b=nGEBX2bF6lX4J1OB+nZGS2nyGvmgo7/+6Eqkrv5TjiYrOYtg1gu9ujyO9wGM7SfLvDMNGsOreDcxusdCTMQNk3PbOb53FumY9BUxKBBNzl4OSmT+hKAtdQIjlcWJLQ5FteP+bnel+PHegeivGwODeLRZjblPMZN01p9FzVRlgzE=
+	t=1747778578; cv=none; b=KbrHOSgyIhiywrTmhDEPHUbDgAayGhr+Sasarq1RPg7XL6VkBUh9l9YxdnaszVtJFr3Z5MBfxOdhX4zNbP2lE7PniHiBV+HTJj7nQjP+Q9LPq741ojXzHoTQ9Cjx5TL0Ja4A/39M6c+0N5iL0EA2HO7ayWxwg2LILT4JvjCbJNs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747776043; c=relaxed/simple;
-	bh=tBpV5NpRSDXp+3QXyF9FeLZUoGrNNmtFCgao5BKf790=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=rRnucPXWUG6vZX+p7dcBU6/85u7Qk/LRh0qPQ2SAYK3+y4YnjlGJTNV53ZEGrgY/7GUnny1gYNVWJigwvdzCEMtjyNIA0Q5RH1caJ44YOKtltE68iWNb7SEVt39wYJ+uL6Z93/phD4fun/GErvMIJXOlhgBybRbOyLP1QdvIf4g=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ckNKMWn2; arc=none smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747778578; c=relaxed/simple;
+	bh=FJ1qnP1hXEvjTRS6D6Km3WMqTIODTpSRkp9sH90hrIM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oEIpFuCKQIX64ju69+srN7jhQ2KwJe2sd8zCZN3gAIxO8glJdT/BlGHlQQn+YlB1KEJYIWDvQqjJ1HxWs+9HMvK9CQVFoUlFbyaMGxoMz7r1smgnvyK49/6Mz9GUDL+puvRGOmG57WLpyUJJKkDPwhewxmnDnVjteJPajq/wBss=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=N4oThCK/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g+TqqtnL; arc=none smtp.client-ip=202.12.124.146
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ckNKMWn2"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-2da14a6f89aso1895601fac.2
-        for <git@vger.kernel.org>; Tue, 20 May 2025 14:20:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747776041; x=1748380841; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=hpHMbpoGZXxWnLzVqOyy+5bn2w+Y+PU42U+TtzgB6N8=;
-        b=ckNKMWn2KDkmQxWYulSHJYxmjV3n5Rh1H+hpu9lEhyuCQTLfuKBgWi3LkBYf0thxSM
-         Pg/zXMbclJJrgF/wQMQw0LFUSKqMYGtR6i4dZ8EfsLpuGzAR3VaQHYvTucMw6JphbLmB
-         4fxBr0KdlFG4iRmDqirVYFCOW8aOendT8pn05q2hwkRMKaOLf2EN01+K8wC78hIRcUbo
-         PrvpA1J/MrZVJeH1pKKqHysBBHxx7GrxQ9ZCvMde9AO2NJYnmEUQgYfK/sxTCbPtFBji
-         OBNim0zNTkoetBijODy7K1x44eWf0pQlc/kyk6kisQrqvcMOEmZQiKc4bDcmD/Dsn5pN
-         DInQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747776041; x=1748380841;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=hpHMbpoGZXxWnLzVqOyy+5bn2w+Y+PU42U+TtzgB6N8=;
-        b=g9YQCbQmzVT1qCuRkmQJQyiECvb7jS0e/IezV4UNTWZn7MKJkrfPAMnGl6+uYzLfBf
-         41vnhapqmOymhf4RzzZKFjGRbO89cgmvL801q1tlw2+R71gpxGwOZpxQ7byW+qJcM1hP
-         2Zf53vFEW9pN2EKmRiVdsPFMKyeaiwZF0WHKsxMDr/dwtIbSl1WFOPHDLQvPRUDmf7ty
-         n6xEpkpWSk8SPNAKbTZreH6DyWAw1JS9D2FaZ46UnUMINSUrfvJtedchSM+7g30ciLKK
-         2i+wW6l0yjvcXV2U5SbeGvePqQfAdv+hDiQeUkCAa9rivhC7ZKdj6+d7yCTlTCHsJT8y
-         69Gg==
-X-Gm-Message-State: AOJu0YwogkL/mKJmXDRQ5V/5ng+FnNvSM5EU4Brqc2dYIjPpPqysNwqp
-	g9X7P0g+cj1MySztMtCQccUn1hgBH4mNJkFbn+KVYiCMxmzNFwgwecFj8FqFtC3s
-X-Gm-Gg: ASbGnctjbPboePz+QuQWCwLLZqIyIlilmih+BM85QOj6wSUqiTZ11LgUPkndMsq46pZ
-	Y01cn0I5ii4Xu3ElAygDLpxnbnZjHzsfTn1WI0azbj8QynGzkkneJH1mHomuGONOfIkbh5TpMDl
-	FSrDM4BpsRcifDSYi/FztYgxuDGDUe2e4S7QlYus/R+Th26Z8IQQ24v06TuM4pL9ZXOfy941VIk
-	rxIl8QUHh9loDMXR0h00bvcVD3MFYlX4T/SqoXlG6SkqNXWPk69V8qdNLtDyn3jVD3CPXemNVgc
-	bSqFLdlcDeWW7YGMvVDP3YunaV4e3VaHUxcs2ktSACdZ
-X-Google-Smtp-Source: AGHT+IE2uobZYVOT3LndsgVUdDCTe+eBOsdS4m/jtIEpweFO7VQTq3rAPmigUHguijuGeiAmSTuLqQ==
-X-Received: by 2002:a05:6871:6281:b0:29e:5de2:cffb with SMTP id 586e51a60fabf-2e3c1c8d8bemr10893031fac.17.1747776040893;
-        Tue, 20 May 2025 14:20:40 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2e3c060c502sm2392883fac.2.2025.05.20.14.20.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 14:20:40 -0700 (PDT)
-Date: Tue, 20 May 2025 16:16:02 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org, stolee@gmail.com
-Subject: Re: [PATCH] t: remove unexpected SANITIZE_LEAK variables
-Message-ID: <dw57mhszlyk3s4rvitdthpbaoiicjnnraq24e6uxaeu2kze26d@xpiouvxmhowr>
-References: <20250520-kn-remove-unexpected-exported-v1-1-bb60cec57e84@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="N4oThCK/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g+TqqtnL"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 13E5011400E3;
+	Tue, 20 May 2025 18:02:55 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Tue, 20 May 2025 18:02:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747778574; x=1747864974; bh=d+4oR6i1dq
+	SHbSwegI77yAYYQJDC6cJpXlluUFAzyeA=; b=N4oThCK/Aia1dZC6yRohqwTyzO
+	2+zCdWC59CRCmkIQIOa6RbItytE8oic6wtrTGDuvglmA53L9DK9WKzuAnd5MMrvk
+	ogfSdJHjyCBol7OORSVnZ8J0YcggDk4aPmLth/F7Lk45qAz9wnPMy25AmIi9nSi9
+	qj60tAk0Z7/96bTy7Z++DHaIhzhvj8UH686LRrR8/UY+EzT86kBWz0naL5CNj388
+	oPUmEa50JgoWiYJ/Xt/mioAiEO+OATdGgIEbK4ZBcR8xIZ/qFfHEgaUd8Kb9VK2D
+	wLP8vxWcD/1vuF3b/Q/NfjtL8MIL/4RMuD3mxCURhHWyUItaTXCMOY/x7uTw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747778574; x=1747864974; bh=d+4oR6i1dqSHbSwegI77yAYYQJDC6cJpXll
+	uUFAzyeA=; b=g+TqqtnLnqFhPv8IUeBGIWUGHJqxFcUq65SaMUWSEoYKPBbXG3b
+	XRpT42yezBY7tf2rVWffC93Ypa+JOeCzWHynebr/6UuhXuy1SMjRgvmSb5LFqMYX
+	ya/O+5mTFteI0SMczpGvjyJUfpsLwLJe0mLte76AAhyrwojYDLr6V6P7EAV7HPSW
+	0O6+EXBxADiJBil5acrHQstxOmg41xG7H9Jxtus4W6/XRAR2UxGI8lomzGiiPzu1
+	kMqpZgQP6MSiInzl2F+NpSXAiaIKfWCyf4yb9UciaLn4di57CzyK9r49dTsbnuUs
+	NHswS/4c+Yp+XidrEIXaJ9TosB3Iu4z57Ig==
+X-ME-Sender: <xms:DvwsaAu0DOCg7jVDEghWESgfy2LV7HtuzDBGN3aQdq3HMkhDoNREGA>
+    <xme:DvwsaNemRJtLLkD2y-3IkbvD2OHUCZmwyciDwYJN7M6ydhX29dm9QXikZQffClIUx
+    Wg5f8cNaBcIx3EK1g>
+X-ME-Received: <xmr:DvwsaLyLtAFL4GlKgfE23f6-zTMimkNcXfs6M5OXzDNrXd-hC9a4xELRCW0blnyoq3O7i_teiPZOgANOQau24BUSEhG9I6MYNdBW6I8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddufeeiucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfet
+    vdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepmhgrthhtthgsvgeskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhi
+    phdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopeiirghihhgrnhesuh
+    hnrhgvrghlrghsihgrrdhnvghtpdhrtghpthhtohepshgrnhgurghlshestghruhhsthih
+    thhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:DvwsaDPTnQ2JAUef1-UdDyzXkU-3bcj3ZqZv42E-knklry2JeE9fkA>
+    <xmx:DvwsaA-DOsE2g49t9PupZpaXyyrLH2xdxhZzt1SJfUxnnJFlFZbB8A>
+    <xmx:DvwsaLXjYyxuufGtXRnrbO4074rrzGsPS5tSjR_U6PKWacToqf9phg>
+    <xmx:DvwsaJcjlvh5PeWGjq8A-hDVeHjC4ob3mF9TUVrO6ZpHqzcxQ6q_uQ>
+    <xmx:DvwsaDWZhzwzoJDXKXmafOc7gDdcCGFDLHlGc76FWdVZGKe4V1ynPMTQ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 May 2025 18:02:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Matthieu Baerts <matttbe@kernel.org>
+Cc: Phillip Wood <phillip.wood123@gmail.com>,  Muhammad Nuzaihan
+ <zaihan@unrealasia.net>,  "brian m. carlson"
+ <sandals@crustytoothpaste.net>,  git@vger.kernel.org
+Subject: Re: Small patch to add support for MPTCP on Linux
+In-Reply-To: <202e1a66-72af-48f6-9b3b-7d7473db699e@kernel.org> (Matthieu
+	Baerts's message of "Tue, 20 May 2025 22:34:56 +0200")
+References: <JH8DWS.72DKHPTI873H3@unrealasia.net>
+	<aCeg_wjLCf0Sz_7X@tapette.crustytoothpaste.net>
+	<BP9EWS.WTYEEEQZEN2U1@unrealasia.net>
+	<aChhxRx7sMD47N_s@tapette.crustytoothpaste.net>
+	<4YPEWS.J5JRNETKLXF1@unrealasia.net>
+	<a76dda61-f60c-4221-83db-5e165a2478b1@gmail.com>
+	<xmqqo6vokvpv.fsf@gitster.g>
+	<7b3b8efa-4cc1-4547-b66a-c469626eac46@kernel.org>
+	<xmqqfrgzjnhg.fsf@gitster.g>
+	<202e1a66-72af-48f6-9b3b-7d7473db699e@kernel.org>
+Date: Tue, 20 May 2025 15:02:52 -0700
+Message-ID: <xmqqfrgzgctv.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250520-kn-remove-unexpected-exported-v1-1-bb60cec57e84@gmail.com>
+Content-Type: text/plain
 
-On 25/05/20 04:40PM, Karthik Nayak wrote:
-> As of 1fc7ddf35b (test-lib: unconditionally enable leak checking,
-> 2024-11-20), both the `GIT_TEST_PASSING_SANITIZE_LEAK` and
-> `TEST_PASSES_SANITIZE_LEAK` variables no longer have any meaning, the
-> leak checks are enabled by default. However, some newly added tests
-> include them by mistake. Let's clean this up.
+Matthieu Baerts <matttbe@kernel.org> writes:
 
-Indeed, both `GIT_TEST_PASSING_SANITIZE_LEAK` and
-`TEST_PASSES_SANITIZE_LEAK` appear not have any purpose anymore.
-Removing all remaining instances where they appear makes sense and from
-a quick search it looks like this patch got them all. So this looks good
-to me.
+> Sorry, I was not clear. I meant "introducing MPTCP in the Linux kernel
+> couldn't impact other protocols in terms of memory allocated per socket
+> buffer or performances by adding extra checks a bit everywhere for example".
 
--Justin
+Ah, OK.  What you meant is that the networking maintainers did not
+allow you to affect the "normal" codepath when adding MPTCP support
+to their subsystem.
 
-> 
-> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
-> ---
->  t/perf/p5313-pack-objects.sh | 3 ---
->  t/perf/p5314-name-hash.sh    | 3 ---
->  t/t6601-path-walk.sh         | 2 --
->  3 files changed, 8 deletions(-)
-> 
-> diff --git a/t/perf/p5313-pack-objects.sh b/t/perf/p5313-pack-objects.sh
-> index be5229a0ec..786a2c1c6f 100755
-> --- a/t/perf/p5313-pack-objects.sh
-> +++ b/t/perf/p5313-pack-objects.sh
-> @@ -3,9 +3,6 @@
->  test_description='Tests pack performance using bitmaps'
->  . ./perf-lib.sh
->  
-> -GIT_TEST_PASSING_SANITIZE_LEAK=0
-> -export GIT_TEST_PASSING_SANITIZE_LEAK
-> -
->  test_perf_large_repo
->  
->  test_expect_success 'create rev input' '
-> diff --git a/t/perf/p5314-name-hash.sh b/t/perf/p5314-name-hash.sh
-> index 4ef0ba7711..235cdfc824 100755
-> --- a/t/perf/p5314-name-hash.sh
-> +++ b/t/perf/p5314-name-hash.sh
-> @@ -3,9 +3,6 @@
->  test_description='Tests pack performance using bitmaps'
->  . ./perf-lib.sh
->  
-> -GIT_TEST_PASSING_SANITIZE_LEAK=0
-> -export GIT_TEST_PASSING_SANITIZE_LEAK
-> -
->  test_perf_large_repo
->  
->  test_size 'paths at head' '
-> diff --git a/t/t6601-path-walk.sh b/t/t6601-path-walk.sh
-> index c89b0f1e19..8d187f7279 100755
-> --- a/t/t6601-path-walk.sh
-> +++ b/t/t6601-path-walk.sh
-> @@ -1,7 +1,5 @@
->  #!/bin/sh
->  
-> -TEST_PASSES_SANITIZE_LEAK=true
-> -
->  test_description='direct path-walk API tests'
->  
->  . ./test-lib.sh
-> 
-> 
-> 
-> 
+Which is conservative and probably a good thing, I guess.
+
+But that choice means each and every application need to opt-in,
+which is cumbersome, inconvenient, and hampers adoption X-<.
+
+> listening socket supporting MPTCP on the server side will return a
+> "plain" TCP socket to the userspace during the accept() call. That's why
+> we recommend enabling MPTCP on the server side by default if supported:
+> the impact is minimal, and MPTCP is only used when requested by the
+> clients -- which are usually the ones benefiting more from MPTCP
+> features. That's in fact the current behaviour for apps written in Go:
+> MPTCP is now enabled by default on the server side, and it is easy to
+> enable it on the client side when needed.
+
+That reminds me about one thing I forgot to ask.
+
+The git:// protocol is the only one we have control over what to ask
+to the socket() system call and the posted patch was about the
+client side [*].
+
+On the other end of the connection, even though you could use the
+dedicatd "git daemon" process sitting and listening on a socket, my
+understanding is it is more common to spawn it via inetd(8).  Does
+it mean that the host needs to run inetd with MPTCP enabled?  I do
+not know how common that is.
+
+Thanks.
+
+[Footnote]
+
+* On the public Internet, hopefully nobody is using that protocol
+  anymore, and instead using either https:// or ssh:// that gives
+  better integrity assurances.
