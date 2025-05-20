@@ -1,191 +1,159 @@
-Received: from mail-yw1-f174.google.com (mail-yw1-f174.google.com [209.85.128.174])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA51242D95
-	for <git@vger.kernel.org>; Tue, 20 May 2025 19:19:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EDBB22DA0D
+	for <git@vger.kernel.org>; Tue, 20 May 2025 19:19:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747768753; cv=none; b=MV1CVMYPx5B28STnV+cmJK5i0ApGdEDP7mhtIPh9nbZkHmCr2bHrHHV0SzsIvYoxfJ7J7FIA8SZwpfytggVEdUQbPb+dlJkI5bRNMISbQ/v3x1/k4wkkq9V4aSibamp+SBao1cVjNqK4bpKgiLms07oH4sAZQKC+DD60GTjLsOY=
+	t=1747768753; cv=none; b=UzBEt9yvTFLpUz0VIf95CI4Y7poeA8p2zMZaiRoony0PriwYM7IPZiVR7jgIg8qSAwSgE+HMWLJmRvpPgKqEbgnJ3nkSugrW5UJ4GdPAjmzfVSO/CBGRecGEs4MI774VKsSFxSoOncTWw/RHCp4XDcBIrLbVJR9dVPASU5pjIuw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1747768753; c=relaxed/simple;
-	bh=8yg1NXk6lM2Ifi2NLLtK+LlJf1bKBRAvypK/K3qKt6w=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=BDXSWU/TyU8D0dRE6Ip4BLlN/CCxw4698JPJIth1diDG7vz9YKC6NQFzrhIvh4HwvrDUqQ9DMxrcvg67sjZW7Kzm8KYuIriRS//4/mWRrCeOQJxHthNaQMkhWq6bIzKalp6pi+iQHQKsmuNFLgzQGOsoeMNJnqDFa/fqHcUiJ5M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PYUVuiA4; arc=none smtp.client-ip=209.85.128.174
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	bh=kaREy/yJ740ONa78eIOJ9G8K2Y0l2qzBoupjSMOohhM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=UF1rUuj2pxjgpjU1tfZNSyldUM/pcrp7LOFyF/FYxrgtkeZM/BsU57AvpPuHl6uSivtxmt0PigeLc1uXnikQoN9RyI7Gz3/E4Sj2mHj+Of5648B/FDunbJpyEAWOI/KnwAkz64IT/lKNsA5iyMQYOHMURdcDtaocmG5y1xSd/Jc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jp9BZQAc; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CsuWLVPP; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PYUVuiA4"
-Received: by mail-yw1-f174.google.com with SMTP id 00721157ae682-7086dcab64bso56224287b3.1
-        for <git@vger.kernel.org>; Tue, 20 May 2025 12:19:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747768749; x=1748373549; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=CkIAj+wiTOLWXHPxmJ8fDMLO8glkKvpQpKR/X86Vge4=;
-        b=PYUVuiA48QIeNaTHIfh4RLZMpRy/musouEewp5yegCZhmOrkAY3k2Pj4kTVwQJ8+5Y
-         FkDFTF0cKYczVfzPVqoIOAHjebYPNu8IPDCO6zRZ67m5ZEBL4ORjDVUvGHW4/oDR7sRQ
-         t6mzHOkMA2jZ+tkCkm2I/Zgot2RN1yBjBKIr8BbObJI/SHCf+l05pfjInO5Oans8a47e
-         BgW13kAn7CdqLY4F8uneZKo82ZmnRTQ1I97DXwZZrSwShhrxA0Jur+tZoOWltrdR/psn
-         GOikOgUwFG/MxbSQ7k78tvrO5yZLSunNWwwDKUVQmlRnKvBadhJ1+t0Yc06gYu/vVs1f
-         Z0eQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747768749; x=1748373549;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=CkIAj+wiTOLWXHPxmJ8fDMLO8glkKvpQpKR/X86Vge4=;
-        b=vD7/S7mNY4hf6bPVbDyR1tmmZ/F/Qy7mlTpRQq00PH/nXfvJCIuujPY/ONrnW4/cyn
-         NG/PC7w/TRGTekiew0tcGxTFI5UHqKk648K7yzHD9PhE3U3hrzI5pR83ji4lxQ0jmkf9
-         DIQHau3yC+wZnGuOcE4wgoGEmBi/+3saUDx00JgNkZmzE5zGw2Nf+pSjJ523Hm6XODL/
-         AudRzDxGyAzNVvAFxII/wNd0UOBM2j8GqlSw2g9a1GOdGltDolZ38mT2BJbfvp+0c3mr
-         NfVQgxScSi1pste2n6FEDelKHdeXjR7xVP66L8oUj58sz80AZOhTxIdzt+k3s4MBWln9
-         T+Wg==
-X-Gm-Message-State: AOJu0YxirTzAWERE3R83Hs1TyKDNUG1YlQap/PwvzbQu0xAgbm3D3PN2
-	GLP1kcPao1keaE7j3vW+QdJAf+hFd+kXHyW7sWyQK7NRR28DbxHWcwzz4IloMPO1
-X-Gm-Gg: ASbGncuqBnTFMCV+/xnpUDth519rGEa+2unAUNrgSyerZgvuJJJ31ywJ6GcB/rHct6r
-	8Gn0EigFHpxXbvF1L5C+tyPX5Mjegua5FlN6jG+sa+ikexcasGR34rqD8hFg2zZSly4nJyMU+bb
-	LLgUZSRn9h6IwPWgBUwIOaf/EKk7nO3Z+146iSMkvEk3V0P0O85s8uuDqnLPp0AjIzdGWjDpVGa
-	cxnfxH86ZfxFebH2af+qkJPjHcjYY9q2R6MsXn7NxBIFI63q4TkxMftJZ47Q/ey8XVuuc5/gSb7
-	u8GEgQW4dfP/QNs64gsDq1nTAlScwbhExCn+c7+nq1rCpI+8LmNOphQO3ZUMZzySd3+S10KQXrn
-	g4U9xzJSrjfCsSg==
-X-Google-Smtp-Source: AGHT+IGJpFGgh7KB1pAnqTulTKaCOjPAqFjJiv8qR1W6QI64lcnvH3GkyNZrrDJuDbgWhZtU2ZTzaw==
-X-Received: by 2002:a05:690c:6f85:b0:6f9:e609:6a4b with SMTP id 00721157ae682-70ca7b8a042mr247732367b3.23.1747768748629;
-        Tue, 20 May 2025 12:19:08 -0700 (PDT)
-Received: from eijiuchiyama-Dell-G15-5530.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-70ca8530d51sm23710547b3.115.2025.05.20.12.19.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 May 2025 12:19:07 -0700 (PDT)
-From: Lucas Eiji <lucaseiji54@gmail.com>
-To: git@vger.kernel.org
-Cc: Eiji Uchiyama <eijiuchiyama@github.com>,
-	Lucas Eiji Uchiyama <eijiuchiyama@usp.br>
-Subject: [PATCH] /: [FirstTimer] Remove DISABLE_SIGN_COMPARE_WARNINGS from file add-interactive.c
-Date: Tue, 20 May 2025 16:18:59 -0300
-Message-Id: <20250520191859.136798-1-lucaseiji54@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jp9BZQAc";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CsuWLVPP"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 3674E11400C3;
+	Tue, 20 May 2025 15:19:10 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 20 May 2025 15:19:10 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1747768750;
+	 x=1747855150; bh=wFIPSPQy16xly2hgqk11EP9PpcZ8Hj44qVhnAvLinXQ=; b=
+	jp9BZQAcp0t1XecyXkanQ5XT5shZFe4GXa4eAwDMwurG6fwdsRK2fUrEMWoc2ZK/
+	ZoUgfqfDG9vBoQC+ygJz1vbweU0a2jW3yQx2gBjATflI1dzNT9nMzbkn9mFFTUni
+	3EQ5/n1xiohpt3VplyJbACcaJ9vO/fiKTmz/r6bPTqQKXm9Pqqg0by1D39HQLjh3
+	qMPrl+mE+V1BIhCjZWyfLPCBJmp+Asu1vxpmSCcniVEJ3Zl/GehbZA8bBLw5KmKO
+	4pwHGLsPNW6ivwdqqPedKXSCzNvjmzdkZMN9HzE3bmHDyWGE5QzwhYkxj6MqXPOP
+	1pm//IJDUDieUtWUCyJvyA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747768750; x=
+	1747855150; bh=wFIPSPQy16xly2hgqk11EP9PpcZ8Hj44qVhnAvLinXQ=; b=C
+	suWLVPPa/yaiuG0Xc9SsE1+cbJvv8243j5NyHXfh11wTRsZvhs8tIsrqkBj4o1yj
+	I/G2lhqanB9RV38NshFNNCSTFZMPa+Qmf9th9C+KGR3B8nlotaJQ1CCIlIgxHqk+
+	i0nEB4PVP4osF56LoyX2MvhkWQ2VisUlmmSCNovj9NjFcsfyRrcC8NpfvffcuL+3
+	V1jetQk7xg9/Vbb0wgSYcUGauKm+SzFrvepzVa7cbcClgRBQ9rfK8DOWqZEOyiFE
+	q9UP0XCywsKQL7OTxsLdqRvj3ZPOjXnnVS1JIfxtzJuSt30k9tQkiTqGNOEYWGR0
+	gj3JEaWFtOcK3OCgdDaSg==
+X-ME-Sender: <xms:rdUsaA3lX_kgjSnSNm_GEoFkpmf79sS_4Boo2e2A5I9acHTv-cPkFg>
+    <xme:rdUsaLFQkAuGATqcj3TbBJENjztNaV4Ws3jEf17SpsmRKlqVvG5voe-Qk2Uls1qg4
+    66HWvaUMlj_1cq-Jg>
+X-ME-Received: <xmr:rdUsaI65fW2Ac0MS4IUdyb_tG5HshpSZyUrLtV3Dj7QlO61xdMbRJMmDzKnjemH5vyiAP4MsviDxOVOyqQMVZ1DbTp608uG1FaQT468>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddutdefucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucenucfjughrpefhvfevufgjfhffkfgfgggtgfesthekredttderjeenucfhrhhomhep
+    lfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqne
+    cuggftrfgrthhtvghrnheptdffvdetgedvtdekteefveeuveelgfekfeehiefgheevhedv
+    keehleevveeftdehnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepiedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhk
+    vghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrg
+    hmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepugihrhho
+    nhgvthgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:rdUsaJ0BCQsd9t6iv--qVNcEa1C4i_mtD736nT432OY8-6zUDbzbFg>
+    <xmx:rdUsaDGCSKkHMoOaXwk-iSbGpisln0u6I-6izdjNAN8FD_xVpleSqQ>
+    <xmx:rdUsaC8R6jzMFdAfXrQkdIxA_oovLR20Wi4G1Z2vfbNL4H63-2p94w>
+    <xmx:rdUsaIkcC0e3bbLs7l_2_Ebu5HinHMUxkFTNVDjFRjFXdAbUePNBPg>
+    <xmx:rtUsaDpX0RUe30nS6BbWbSdxt0vIecRxkdelukh0MzWo6r4TfSouaGsK>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 May 2025 15:19:09 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff
+ King <peff@peff.net>,  Teng Long <dyroneteng@gmail.com>
+Subject: Re: [PATCH 6/6] doc: notes: treat --stdin equally between copy/remove
+In-Reply-To: <68e5eb78040419ba64e256910501c7e37194b222.1747763769.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Tue, 20 May 2025
+	19:57:24 +0200")
+References: <cover.1747763769.git.code@khaugsbakk.name>
+	<68e5eb78040419ba64e256910501c7e37194b222.1747763769.git.code@khaugsbakk.name>
+Date: Tue, 20 May 2025 12:19:07 -0700
+Message-ID: <xmqq34czhyz8.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
 
-From: Eiji Uchiyama <eijiuchiyama@github.com>
+kristofferhaugsbakk@fastmail.com writes:
 
-This is an initial contribution to git, based on the SoC 2025 ideas
-for microprojects. It removes the DISABLE_SIGN_COMPARE_WARNINGS macro and
-solves the warnings generated by running make DEVELOPER=1 -j4
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+>
+> 46538012d94 (notes remove: --stdin reads from the standard input,
+> 2011-05-18) added `--stdin` for the `remove` subcommand, documenting it
+> in the “Options” section.  But `copy --stdin` was added before that, in
+> 160baa0d9cb (notes: implement 'git notes copy --stdin', 2010-03-12).
+>
+> Treat this option equally between the two subcommands:
+>
+> • remove: mention `--stdin` on the subcommand as well, like for `copy`
+> • copy: mention it as well under the option documentation
+>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> ---
+>  Documentation/git-notes.adoc | 10 +++++++---
+>  1 file changed, 7 insertions(+), 3 deletions(-)
+>
+> diff --git a/Documentation/git-notes.adoc b/Documentation/git-notes.adoc
+> index d2d7dac8d41..1542850eaaa 100644
+> --- a/Documentation/git-notes.adoc
+> +++ b/Documentation/git-notes.adoc
+> @@ -127,6 +127,10 @@ When done, the user can either finalize the merge with
+>  	giving zero or one object from the command line, this is
+>  	equivalent to specifying an empty note message to
+>  	the `edit` subcommand.
+> ++
+> +In `--stdin` mode, also remove the object names given on standard
+> +input. In other words, `--stdin` can be combined with object names from
+> +the command line.
+>  
+>  `prune`::
+>  	Remove all notes for non-existing/unreachable objects.
+> @@ -208,9 +212,9 @@ See `core.commentChar` in linkgit:git-config[1].
+>  	object that does not have notes attached to it.
+>  
+>  `--stdin`::
+> -	Also read the object names to remove notes from the standard
+> -	input (there is no reason you cannot combine this with object
+> -	names from the command line).
 
-Signed-off-by: Lucas Eiji Uchiyama <eijiuchiyama@usp.br>
----
- add-interactive.c | 24 +++++++++++-------------
- 1 file changed, 11 insertions(+), 13 deletions(-)
+The original was really bad, especially if it ignored the fact that
+the 'copy' action also took the option.
 
-diff --git a/add-interactive.c b/add-interactive.c
-index 97ff35b6f1..3a0c44c47f 100644
---- a/add-interactive.c
-+++ b/add-interactive.c
-@@ -1,5 +1,3 @@
--#define DISABLE_SIGN_COMPARE_WARNINGS
--
- #include "git-compat-util.h"
- #include "add-interactive.h"
- #include "color.h"
-@@ -213,10 +211,10 @@ static ssize_t find_unique(const char *string, struct prefix_item_list *list)
- 	else if (index > 0 &&
- 		 starts_with(list->sorted.items[index - 1].string, string))
- 		return -1;
--	else if (index + 1 < list->sorted.nr &&
-+	else if (index + 1 < (long int)(list->sorted.nr) &&
- 		 starts_with(list->sorted.items[index + 1].string, string))
- 		return -1;
--	else if (index < list->sorted.nr &&
-+	else if (index < (long int)(list->sorted.nr) &&
- 		 starts_with(list->sorted.items[index].string, string))
- 		item = list->sorted.items[index].util;
- 	else
-@@ -244,7 +242,7 @@ static void list(struct add_i_state *s, struct string_list *list, int *selected,
- 		color_fprintf_ln(stdout, s->header_color,
- 				 "%s", opts->header);
- 
--	for (i = 0; i < list->nr; i++) {
-+	for (i = 0; i < (long int)(list->nr); i++) {
- 		opts->print_item(i, selected ? selected[i] : 0, list->items + i,
- 				 opts->print_item_data);
- 
-@@ -385,7 +383,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
- 					to = from + 1;
- 			}
- 
--			if (from < 0 || from >= items->items.nr ||
-+			if (from < 0 || from >= (long int)(items->items.nr) ||
- 			    (singleton && from + 1 != to)) {
- 				color_fprintf_ln(stderr, s->error_color,
- 						 _("Huh (%s)?"), p);
-@@ -395,7 +393,7 @@ static ssize_t list_and_choose(struct add_i_state *s,
- 				break;
- 			}
- 
--			if (to > items->items.nr)
-+			if (to > (long int)(items->items.nr))
- 				to = items->items.nr;
- 
- 			for (; from < to; from++)
-@@ -859,7 +857,7 @@ static int get_untracked_files(struct repository *r,
- 	add_pattern_list(&dir, EXC_CMDL, "--exclude option");
- 	fill_directory(&dir, r->index, ps);
- 
--	for (i = 0; i < dir.nr; i++) {
-+	for (i = 0; (long int)(i) < dir.nr; i++) {
- 		struct dir_entry *ent = dir.entries[i];
- 
- 		if (index_name_is_other(r->index, ent->name, ent->len)) {
-@@ -939,7 +937,7 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
- 		return -1;
- 
- 	if (unmerged_count || binary_count) {
--		for (i = j = 0; i < files->items.nr; i++) {
-+		for (i = j = 0; i < (long int)(files->items.nr); i++) {
- 			struct file_item *item = files->items.items[i].util;
- 
- 			if (item->index.binary || item->worktree.binary) {
-@@ -972,7 +970,7 @@ static int run_patch(struct add_i_state *s, const struct pathspec *ps,
- 		struct strvec args = STRVEC_INIT;
- 		struct pathspec ps_selected = { 0 };
- 
--		for (i = 0; i < files->items.nr; i++)
-+		for (i = 0; i < (long int)(files->items.nr); i++)
- 			if (files->selected[i])
- 				strvec_push(&args,
- 					    files->items.items[i].string);
-@@ -1018,7 +1016,7 @@ static int run_diff(struct add_i_state *s, const struct pathspec *ps,
- 			     oid_to_hex(!is_initial ? &oid :
- 					s->r->hash_algo->empty_tree),
- 			     "--", NULL);
--		for (i = 0; i < files->items.nr; i++)
-+		for (i = 0; i < (long int)(files->items.nr); i++)
- 			if (files->selected[i])
- 				strvec_push(&cmd.args,
- 					    files->items.items[i].string);
-@@ -1146,7 +1144,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 	ssize_t i;
- 	int res = 0;
- 
--	for (i = 0; i < ARRAY_SIZE(command_list); i++) {
-+	for (i = 0; i < (long int)(ARRAY_SIZE(command_list)); i++) {
- 		struct command_item *util = xcalloc(1, sizeof(*util));
- 		util->command = command_list[i].command;
- 		string_list_append(&commands.items, command_list[i].string)
-@@ -1183,7 +1181,7 @@ int run_add_i(struct repository *r, const struct pathspec *ps)
- 		struct command_item *util;
- 
- 		i = list_and_choose(&s, &commands, &main_loop_opts);
--		if (i < 0 || i >= commands.items.nr)
-+		if (i < 0 || i >= (long int)(commands.items.nr))
- 			util = NULL;
- 		else
- 			util = commands.items.items[i].util;
--- 
-2.34.1
+> +	For `remove` and `copy`. See the respective subcommands. This
+> +	option can be combined with object names given via the command
+> +	line for `remove`. However, this is not the case for `copy`.
+
+During my first read of this paragraph, I somehow read the first two
+sentences as "if you want to learn how this option behaves with the
+remove and copy subcommands, go read the documentation for these
+subcommands", making me anticipate that the remainder of the
+paragraph would talks about what happens when --stdin is given to
+other subcommands.  Apparently that is not what is going on.
+
+It may be simpler to just say
+
+	Only valid for `remove` and `copy`.  See the respective
+	subcommands.
+
+and stop there.
 
