@@ -1,225 +1,179 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f173.google.com (mail-oi1-f173.google.com [209.85.167.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F0A22D78D
-	for <git@vger.kernel.org>; Tue, 20 May 2025 16:30:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D67324E010
+	for <git@vger.kernel.org>; Tue, 20 May 2025 16:37:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747758615; cv=none; b=VXWZw2TdRVEhXp6NsoZ2SgCo9MOrEwDk8fNqT+WcafgW3W6bjqBHabcw8lpWjwQQc1Aff7E+f+nIB2KQhH9S5S2fWcb8SOWr8muCl/Nup8UvcLTCttyizBXyEq1NHy6GzzzTqYQZRG6BY5YibUpLOtW0aMwq8OhWBq2GIRqpdOk=
+	t=1747759033; cv=none; b=YjKA1Fl+yVkIdqBewp8uymfdTJazDwrwnKUiZqWhfe/RBwAZzb2fKLv2vNeP6y4WSmzAlQcuor4cILrFlmk6RRpsel393OF+1WlpK+LRjfAsvCKhmUSu2Sqz66w+fHKUNZRY5YMuxLy6RPkh0n6QcTq0Inw0mFNLrHhFY3DGBQk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747758615; c=relaxed/simple;
-	bh=UIXEee5drpYePK53zhf0e1aqi28S1oeGVJNfC+oY6LI=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=B+r9Z10TkghWBFt2TxZ/2LF1E9x52Mcuei2CxeJoQ+rfTSpdo5eOAmVzo6kQP+pGhYMkvYHfP2DnOs1HwaAGnw/YHY+TGDfszd+TxHR8WgHGVAfKYs2cRP7KzGvqrxACtjeB1x5ivPpzbepHtmWbHuE+YZb4EoZxOu6xw5Tx5h0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jw3PSYWw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NY2sJflc; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747759033; c=relaxed/simple;
+	bh=0haLes/ZMIoQ/7OxNpbWLQcpDo6URgfPZFRsf6Wd3AQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=G5a/FKUe3TLscb16ResL6U2Lj/3INi7NA2hb8RYoyetLl4H1UNBsIGtYrWFiMQnhSeCfqasYe9PFc0zYb88yaBUFrB2kBBvef4j02Pp8B4A4BJaIzJo/L0m1N8tBMwt1Dpn58qfnARBZpxm+oMXxgKYQz93atLEMfD7pmcEjn28=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e1ksEWax; arc=none smtp.client-ip=209.85.167.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jw3PSYWw";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NY2sJflc"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id EEB5F1140148;
-	Tue, 20 May 2025 12:30:11 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-03.internal (MEProxy); Tue, 20 May 2025 12:30:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747758611; x=1747845011; bh=NHWe4UDpK9
-	8s2JrbsyaatMl664cU/pTNmy6fDmjyWSk=; b=jw3PSYWwP9qXiuYCxlszz1M6g0
-	6sQT06fNe5LL2DJvx8lMcY5wK9z2DvkE37EjygpZ+LddunKHukax/8Jw9mv/imvy
-	r0BhpTSscdOkukzthySfrfdqA68fYdgk1B/kGf12Bq0wBByWNPzT8AXe/Z3D/pDQ
-	mcwSaGigbQ6R1IqNz+RZvQO/rKO5e/QSSg+FEQf0rYoe3DGT50smUtLJ2sDaAMPI
-	Ft8+JbAqNC+ERDoarq1ifFqf+97cCFv1+AivzytmxC8C2DPWoJo6s4lukl4hScau
-	YaZoMIZ69JQk9QR4zNQXo0n+4TcMQm4OiDQxEyl/SLaPyeh7xepVNvcfhCOg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747758611; x=1747845011; bh=NHWe4UDpK98s2JrbsyaatMl664cU/pTNmy6
-	fDmjyWSk=; b=NY2sJflcnf8nx9Xu/PR73FAQgsv5c3coSAj1XDYnmJ5OssjGEB2
-	CSE1cqdBWkTLNCfEXe9+A7aLUqn/XnWWmrStpVMoqzJVV6ammXtb7zctDE6vX8bI
-	kxecxhmUZaOenWUDRADt9KU/aFA6UQthwbEUdjTp1swhP7EWQA1hoT9B3h1mt2z3
-	qvce3wN8wb+/qqj0Ba8/hYvkx5jMV0OFHqySty3/fAmZBbw3fpTAzV4Xs0kCoG1E
-	J25yQ5kUgRXY3KFZOT1hvAcnfIEjVCEYAC1j4oioTIueFe5uP4XJCWTK1dmxuhuM
-	yA1La4AUA7giUMv6UmsnI06XO9nej602j4g==
-X-ME-Sender: <xms:E64saJArAscspFD-N4w3Atkjcx_yEF3-jkmmEoP8iScfpbvoI2BPUw>
-    <xme:E64saHgIxv8hN3MLBTjdsxFriRkceb7IeErbUlvxAD1xMhJ6l7GOQR6D7sTkhxOmQ
-    _WqxGZKple_Y59wDg>
-X-ME-Received: <xmr:E64saEnD7agG6pxCvD5ZF6Bjaj_yDFSDElnkvDan2TcUfMVF85cWOtLsdbidM8Kc2n-JTTB_o0fHIrZwAsT-sz7t5IA4p0szagAMeoE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeileculddtuddrgeefvddrtddtmd
-    cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghn
-    shhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtne
-    cusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgf
-    gggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgih
-    htshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteejheeu
-    geffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohig
-    rdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtth
-    hopehjrggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgrtghosgdrkhgvlh
-    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:E64saDwo3yTwSKYsCoh73CDu40BLW59PXqVwUCueAY7eYMpYDaqaXg>
-    <xmx:E64saOTNvYztJo47enLR38DI8gLiklCwpxh9ALR7cvgI-pgJG2RP8A>
-    <xmx:E64saGYe4noAdfagVEMyIKfnz38gLzqoPuIocmxfe88wiKxO8rXzew>
-    <xmx:E64saPQmPGZLktMMZ7M7bE9WT4XDAcVjMFXYip-T6SObwyF00Pbnuw>
-    <xmx:E64saLLiuRkbBj5s588mhFeVqmSDiJJtKpeOnqcdRB2zb1BUm8yxQwV4>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 May 2025 12:30:11 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 4/4] diff --no-index: support limiting by pathspec
-In-Reply-To: <20250520000125.2162144-5-jacob.e.keller@intel.com> (Jacob
-	Keller's message of "Mon, 19 May 2025 17:01:25 -0700")
-References: <20250520000125.2162144-1-jacob.e.keller@intel.com>
-	<20250520000125.2162144-5-jacob.e.keller@intel.com>
-Date: Tue, 20 May 2025 09:30:10 -0700
-Message-ID: <xmqqy0uri6st.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e1ksEWax"
+Received: by mail-oi1-f173.google.com with SMTP id 5614622812f47-40331f302f1so3795589b6e.2
+        for <git@vger.kernel.org>; Tue, 20 May 2025 09:37:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747759030; x=1748363830; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=n+jyJZrhaosVJbak7yy6wM+4LI/Bs9RPINPRqfol31s=;
+        b=e1ksEWaxYKptZfMWtVCeaxwKzr/43nXg2n0HXypMFxKEo77CM5FyurDVcbHHYmmI5H
+         gGQv9/83wUM/JxB2imhB4qpjd2Zj7rA0Wx6GBppNFq9NLX3xPu/vDL8wLgxeB5OeFe7e
+         4NMqDZ9WyaGOzlP4y4rbQqjGUjwJVJnUDkM+2sT5lK7AHDICRXOFK07fntqz1FerZPrM
+         c672JiZZBL/sj+F56dk3RTOdb4UakQzK7sPXf4YpS2HsblDVk3MozX5XH28b1RQ7+LHY
+         z0CEXF/92tp06OjHNWBLB0OuZVuHu2WqUWMAfX8+DnOabQlYYApjZe0ZEKpKCHl6dJPn
+         XP+A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747759030; x=1748363830;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=n+jyJZrhaosVJbak7yy6wM+4LI/Bs9RPINPRqfol31s=;
+        b=HwLO+HEZmuoKKuUIjmg/6AsqvE52Et/GFBBMrBDMTYeeSYVo6wHh/KMmvlH8/oKJez
+         y4Ycl/paGfz8SdxXZO1dAZN82b5wPCI3cSJobmpEXbdwMMHoT3tTBhn5T5XkAxKWafIr
+         3ekpwI7c5mmo5XPxjVu4USTT+Ub8K7RO6oee+pVC9A6YzJ4LLhiPISiFsj+KfwyBf9jo
+         R0qERXMK462pYy0WsA+DezdjXivLE031AGqqFAhcf5rVAI6ZccwnUPlwQqDjPWhMUpLU
+         TXtJEjfSbhzQidrLGCfk0vMVr0oQ6JSUYaENeodFUhoSaWqsxpeWTg/Yd6YCCmaSbZEJ
+         xAiw==
+X-Gm-Message-State: AOJu0YyLzioH0LMu3aK4Rs1dpy+gbG6sebnO8BTQ/IzhOVshxRkLp71Q
+	zoCPP5BO7Ew2pbyah7HRUXljox7Q0TFN9SS49cOWvkeKyK04COJgUK5wmH0//mfv
+X-Gm-Gg: ASbGncuvv1a7m4O9xuQdz8stpECDgBn4HlpyEpzgBPeIGYKIUFGCYQINCwkYKwzBLuh
+	1yt3/xbNgUAcA5mAa2UZvF2/ZFW8AUwHoOOQmgVvEEKl6j1nZEFDD/Mp2vQl+/U+KQjoldoZIPl
+	VXor1ENR9LFfWucffaMyxWjUuuQyRsy9AROHCAIimFbxo4gGt8nIWacVzLPLLXxF8rTRVl7bdWL
+	jiyO6BEugMkK+LlcjrNFXQArrzMLAovOUPBbaec2AGhTbLHN3FKxQLicV3ClPmfXPzeirK+aN/i
+	EAPE/GO6h1xqqix8e/0YKLrbpbgZLyqq8RPo9vGvpv9G5vH58VDTQ5xV7+M=
+X-Google-Smtp-Source: AGHT+IGKL0j3zvO09hFCloxgNGCrmoTLuX3179WFX1f7uvQ9Hh3sTEFr9xnRMFlO0ClHNfbdLTstDQ==
+X-Received: by 2002:a05:6808:6f96:b0:3fa:8bfd:773f with SMTP id 5614622812f47-404d865e524mr11817545b6e.2.1747759029886;
+        Tue, 20 May 2025 09:37:09 -0700 (PDT)
+Received: from denethor.localdomain ([136.50.74.45])
+        by smtp.gmail.com with ESMTPSA id 006d021491bc7-609f4be9734sm1903975eaf.7.2025.05.20.09.37.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 May 2025 09:37:09 -0700 (PDT)
+From: Justin Tobler <jltobler@gmail.com>
+To: git@vger.kernel.org
+Cc: ps@pks.im,
+	karthik.188@gmail.com,
+	Justin Tobler <jltobler@gmail.com>
+Subject: [PATCH v2 0/2] builtin/receive-pack: introduce option to skip connectivity checks
+Date: Tue, 20 May 2025 11:32:16 -0500
+Message-ID: <20250520163218.263921-1-jltobler@gmail.com>
+X-Mailer: git-send-email 2.49.0.111.g5b97a56fa0
+In-Reply-To: <20250520014920.201736-1-jltobler@gmail.com>
+References: <20250520014920.201736-1-jltobler@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+Greetings,
 
-> The git diff --no-index mode does not support pathspecs, and cannot
-> limit the diff output in this way. Other diff programs such as GNU
-> difftools have options for excluding paths based on a pattern match.
+At GitLab, we are interested in introducing an optional means to bypass
+the connectivity checks performed through git-receive-pack(1). This
+series implements a `--skip-connectivity-check` option to facilitate
+this.
 
-True.
+For some background, we have a transaction management system that runs
+in our Git RPC service and wraps all repository operations. Operations
+that write to a repository are first recorded and staged outside of the
+repository. When committing a transaction, the connectivity of newly
+written objects is checked by walking the object graph containing only
+the new objects from the updated tips and identifying the missing
+objects which represent the boundary between the new objects and the
+repository. The boundary objects are then checked in the canonical
+repository to ensure the new objects will connect as expected. All
+repository operations are run in a transaction and conflict checked
+before being applied serially to the canonical repository. This ensures
+that operations that would break the repository are not applied.
 
-> However, using git diff as a diff replacement has several advantages
-> over many popular diff tools, including coloring moved lines, rename
-> detections, and similar.
+For our specific use case, the conflict checks performed by
+git-receive-pack(1) are redundant and thus we would like to introduce an
+option that allows connectivity checks to be skipped.
 
-I said this when we introduced "--no-index", but back when "git" was
-still young, it would have helped a lot wider developer populations
-if we didn't do "git diff --no-index" and instead donated these
-features to "many popular diff tools".  We however chose to be lazy
-and selfish---those who want to use these features are better off
-installing "git" even if they are not using it for version control,
-only to use it as "better diff".
+Thanks for taking a look.
 
-People are still welcome to add "coloring moved lines, rename
-detections and similar" to "many popular diff tools", but given that
-"git" has become fairly popular and widely used, it may not matter
-all that much any more that we were lazy and selfish ;-).
+-Justin
 
-> Teach git diff --no-index how to handle pathspecs to limit the
-> comparisons. This will only be supported if both provided paths are
-> directories.
+Justin Tobler (2):
+  t5410: test receive-pack connectivity check
+  builtin/receive-pack: add option to skip connectivity check
 
-Good.  If you are giving only two files, pathspec limiting would not
-make much sense.  If you are giving a file and a directory, lazily
-give only F and D to compare F with D/F, that is essentially giving
-only two files F and D/F, so pathspec limiting would not make much
-sense, either.  pathspec limited comparison would make sense only
-when you are talking about two sets of files.
+ Documentation/git-receive-pack.adoc | 12 ++++
+ builtin/receive-pack.c              | 40 +++++++------
+ t/meson.build                       |  2 +-
+ t/t5410-receive-pack-alternates.sh  | 44 ---------------
+ t/t5410-receive-pack.sh             | 87 +++++++++++++++++++++++++++++
+ 5 files changed, 122 insertions(+), 63 deletions(-)
+ delete mode 100755 t/t5410-receive-pack-alternates.sh
+ create mode 100755 t/t5410-receive-pack.sh
 
-> However, if we always passed DO_MATCH_LEADING_PATHSPEC, then we will
-> incorrectly match in certain cases such as matching 'a/c' against
-> ':(glob)**/d'. The match logic will see that a matches the leading part
-> of the **/ and accept this even tho c doesn't match. The trick seems to
-> be setting both DO_MATCH_LEADING_PATHSPEC and DO_MATCH_DIRECTORY when
-> checking directories, but set neither of them when checking files.
+Range-diff against v1:
+1:  f659612c9d = 1:  f659612c9d t5410: test receive-pack connectivity check
+2:  31e5f41983 ! 2:  f6dbb02778 builtin/receive-pack: add option to skip connectivity check
+    @@ Commit message
+         During git-receive-pack(1), connectivity of the object graph is
+         validated to ensure that the received packfile does not leave the
+         repository in a broken state. This is done via git-rev-list(1) and
+    -    walking the objects which can be expensive for large repositories.
+    +    walking the objects, which can be expensive for large repositories.
+     
+         Generally, this check is critical to avoid an incomplete received
+         packfile from corrupting a repository. Server operators may have
+         additional knowledge though around exactly how Git is being used on the
+         server-side which can be used to facilitate more efficient connectivity
+    -    computatation of incoming objects.
+    +    computation of incoming objects.
+     
+         For example, if it can be ensured that all objects in a repository are
+         connected and do not depend on any missing objects, the connectivity of
+    @@ Documentation/git-receive-pack.adoc: OPTIONS
+      	`--http-backend-info-refs` in linkgit:git-upload-pack[1].
+      
+     +--skip-connectivity-check::
+    -+	Bypasses the connectivity checks performed to validate incoming
+    -+	objects. This option exists for server operators that may want to
+    -+	implement their own object connectivity check outside of Git. This is
+    -+	useful in such cases where the server-side knows additional information
+    -+	about how Git is being used and thus can rely on guarantees to more
+    -+	efficiently compute object connectivity that Git itself cannot make.
+    -+	Usage of this option without a separate mechanism to validate and
+    -+	ensure incoming objects connect properly to the references risks a
+    -+	repository becoming corrupted and should not be used in the general
+    -+	case.
+    ++	Bypasses the connectivity checks that validate the existence of all
+    ++	objects in the transitive closure of reachable objects. This option is
+    ++	intended for server operators that want to implement their own object
+    ++	connectivity validation outside of Git. This is useful in such cases
+    ++	where the server-side knows additional information about how Git is
+    ++	being used and thus can rely on certain guarantees to more efficiently
+    ++	compute object connectivity that Git itself cannot make. Usage of this
+    ++	option without a reliable external mechanism to ensure full reachable
+    ++	object connectivity risks corrupting the repository and should not be
+    ++	used in the general case.
+     +
+      PRE-RECEIVE HOOK
+      ----------------
+    @@ t/t5410-receive-pack.sh: test_expect_success 'receive-pack missing objects fails
+     +
+     +	test_grep ! "missing necessary objects" actual &&
+     +	test_must_be_empty err &&
+    -+	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
+    ++	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD) &&
+    ++	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
+     +'
+     +
+      test_done
 
-Sounds sensible.
+base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
+-- 
+2.49.0.111.g5b97a56fa0
 
-> Some other gotchas and open questions:
->
->  1) pathspecs must all come after the first two path arguments, you
->     can't re-arrange them to come first. I'm treating them sort of like
->     the treeish arguments to git diff-tree.
-
-Exactly.  "git diff" proper is about comparing two sets of files,
-either comparing two tree-ishes "git diff master next", comparing a
-tree-ish and the index "git diff --cached HEAD", comparing a
-tree-ish and the working tree files "git diff HEAD", or comparing
-the index and the working tree files "git diff".  It is a natural
-extension that "git --no-index dirA dirB" compares contents of the
-two directories.  In all of these forms, it is common that the
-comparison can be pathspec limited by giving pathspec elements as
-the command line arguments at the end.
-
->  2) The pathspecs are interpreted relative to the provided paths, and
->     thus will always need to be specified as relative paths, and will be
->     interpreted as relative to the root of the search for each path
->     separately.
-
-Yes, that is not anything new or something we need to point out as
-if it is any different from the "normal" pathspec.
-
->  3) negative pathspecs have to be fully qualified from the root, i.e.
->     ':(exclude)file' will only exclude 'a/file' and not 'a/b/file'
->     unless you also use '(glob)' or similar. I think this matches the
->     other pathspec support, but I an not 100% sure.
-
-I think that is correct "git ls-files :(exclude)po" does not exclude
-git-gui/po, for example.
-
-> -`git diff [<options>] --no-index [--] <path> <path>`::
-> +`git diff [<options>] --no-index [--] <path> <path> [<pathspec>...]`::
-
-This is a bit unfortunate.  The disambiguating "--" should ideally
-be between the "things to be compared" and the pathspec, as the
-former corresponds to <rev> in the normal "git diff" invocation.
-
-> +	... If both
-> +	paths point to directories, additional pathspecs may be
-> +	provided. These will limit the files included in the
-> +	difference. All such pathspecs must be relative as they
-> +	apply to both sides of the diff.
-
-"as they" -> "and they"?
-
-> +test_expect_success 'diff --no-index with pathspec' '
-> +	test_expect_code 1 git diff --no-index a b 1 >actual &&
-> +	cat >expect <<-EOF &&
-> +	diff --git a/a/1 b/a/1
-> +	deleted file mode 100644
-> +	index d00491f..0000000
-> +	--- a/a/1
-> +	+++ /dev/null
-> +	@@ -1 +0,0 @@
-> +	-1
-> +	EOF
-> +	test_cmp expect actual
-> +'
-
-If you use --name-only or --name-status would the test become
-simpler?
-
-> +
-> +test_expect_success 'diff --no-index with pathspec no matches' '
-> +	test_expect_code 0 git diff --no-index a b missing
-> +'
-
-OK.
-
-> +test_expect_success 'diff --no-index with negative pathspec' '
-> +	test_expect_code 1 git diff --no-index a b ":!2" >actual &&
-> +	cat >expect <<-EOF &&
-> +	diff --git a/a/1 b/a/1
-> +	deleted file mode 100644
-> +	index d00491f..0000000
-> +	--- a/a/1
-> +	+++ /dev/null
-> +	@@ -1 +0,0 @@
-> +	-1
-> +	EOF
-> +	test_cmp expect actual
-> +'
-
-OK.
-
-All other tests also look sensible.
-
-Thanks.
