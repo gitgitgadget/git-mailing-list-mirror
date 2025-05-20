@@ -1,68 +1,68 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4BD26280C
-	for <git@vger.kernel.org>; Tue, 20 May 2025 09:23:15 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2510266EFB
+	for <git@vger.kernel.org>; Tue, 20 May 2025 09:23:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747732997; cv=none; b=L3kBVIVlXPMGivw52PTC0kreONu7IFyI21QgdJ4o3fh+H5OFjtIgm3iS9KPaJUuTgD7N8IosGaiBdlyUoNByR+dbHICo0LK2TeqZ6AGL2O84maUpNLVSa4mGYeBoL5AmXyNkyFSKK8GxK+ZCGbRNdrKNn3efOl9WuP2sb5RgIgA=
+	t=1747732998; cv=none; b=oS3cgGkvk538/973wG0Qd2QHCtdCMOULLaNxqpZvem9IfxqCttiR+z93JnhBVpuMqfFWO3a7ZkvV9U/Ya+EbRrWzIUL6Z6BQjwnvngV5IS+zW3uWEJBHfyhPkf/f3tE9tV27qrlmnoQtjEXn42SMZpvEYiIXWQCnj9vV54wdBEQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747732997; c=relaxed/simple;
-	bh=PlY+AKsSUCWgBNZyuYVk+M7FNolx6yM6+QSmcFijsIc=;
+	s=arc-20240116; t=1747732998; c=relaxed/simple;
+	bh=2che5DasQZJHufC5AUe2xOwDPTuD8Y/kz1HXq3Kx534=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=keBrRYFsAooSGJyORcdu6QEnTgGSYDrWOqKuexurdsMXo8pl+7ZyDnCQ5gSSbbUjDFoU+38ES5XaMDdwIh885/ckDrGLO3Nup4YryXTuR+7qUWlCO3NpjMMt8oIlCWQ4Hzt9SGeiXg+sh2o+kl4+zokMdbXXV1JMI8Z/coa0wEo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=D8mk424F; arc=none smtp.client-ip=209.85.128.43
+	 MIME-Version:To:Cc; b=YPd8JKrk1uBQOQ/pXTbL6evTrWafDAldarzHit+rsXLXg++3dUHuAH5GMs4KJ6BW9F35XmfwyKF2UcEfmn/3LuY48qRdREttYNFpTsY8O+KxFrGaUTJx1gLiazEZ1VlKZFu3lOtvSgrHlcsVTUchW6di/WPxHRCOa7srQclJLX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=nQHrvAAS; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="D8mk424F"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-441d1ed82dbso54040975e9.0
-        for <git@vger.kernel.org>; Tue, 20 May 2025 02:23:15 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="nQHrvAAS"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a3758b122cso933488f8f.1
+        for <git@vger.kernel.org>; Tue, 20 May 2025 02:23:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1747732994; x=1748337794; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PlzEpD5OwihySSST25m6ZqbzK9bWZK267oX/Ko4tAhU=;
-        b=D8mk424FGYIvDg8+fy6VW25UgoXm/jYYbyilPY5TS4YuURJQJZn6XXtQIlfovpmfG1
-         xTaccGZXPnjOEgUzosa4kcHJ8pVLGRndQgfWep7Oxt5Iav+ekHerooRZ1imoUAqKG2w9
-         cEsdK2I0MDn34XRIp3v9Mn5uaDSpb2YEgka9XNgBxRWHU/qMQcPbi48/QCQo5ho8EIyx
-         QNz39CSGB7AAGMNCVF97GPB3LmCc93lCqhtg7Cjlci1dyuxCxNi3NgU4jFkcqsqKK93c
-         c0A60G+CgSnNUARIfn0cpCWi7j1M8oy7PX2NT5PcBhGJpbOiyoiw9uo9XpFvZ17RvVHB
-         VZ0w==
+        bh=2BAB9TtnW5lFlrvp9c8YmiwGarQD9To36W8vCNbuIQk=;
+        b=nQHrvAASTmx5h0TFFH/F4jJGSePHAMcVT+Cfu27fGECVP19HjyWLAL3MqH1MEmoTEt
+         sbtzkRitXPz3Vv9P5gnjzUowk3IZIN6W2AFD+8lihuoGI5FYUwhfJpPmikAxPZdaR6lN
+         cm9agIa8JpU8NZ3r5whBmiTslcThhCxq1eawa7eTyacbr4hviuaXKGiIpPDlmqr/Qtgm
+         Zs09C/CJbsye7vI7cySssUbxoYUk5TD3gD3otMgbp6bBoL/nXMfjG1OuKLlka9Bf5dA3
+         YD811RcQ97OD7QoD92ecG+VHe8BITDEFpNhHsWxfH1ESUAjLKDx8qJ8TG13No1o1IoHg
+         bYOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1747732994; x=1748337794;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=PlzEpD5OwihySSST25m6ZqbzK9bWZK267oX/Ko4tAhU=;
-        b=TKh/blWXyxezocMymKCCyFdy9h2XSuUu9ZLWw7m0bs8lyKLWXh1eN+WZOUh7B6FBSu
-         pcWqy6GPzO+BrlW0fx0Kd3mmK2Z7ExmciDF0YWhw1wKl87tO8P5Car3nuujhdAQM342M
-         7x2NtlG42DSwc3Y4M1kayuD9Xj77Bunoo+Bwe0meHDm5DGBY7y6eXlL26k3zsaRz6TYz
-         EWadZjLJBEQ/A0ujeZieyWPxcmLOjmLT1WqbUN4zBdKFuxYZHTZJkLFp4M/Xj4YMdrag
-         hpE0ablwBhpaSO1IpwAUVqy8EwUIao4+0qaDVnXijTSZix8NUioRx8r77pqhGWhRHUEl
-         dtvw==
-X-Gm-Message-State: AOJu0Yyn22bRjBJxqVPM769RM/3BmOPmUs0eMFwlx7ziWgol8tzbGPM0
-	DeQUpRc9gbv09RMgdASM+n5NrBx6rI0SSl2hg1gJmjV0VvU2w9XTwAFmRP9n7A==
-X-Gm-Gg: ASbGncv9F42QvC4FHpvk6rkoXRuDgzGHimGcpnGt7xj6CeXTZVMP9L3n2vtrbaJScGb
-	uOzoUnJd5+LVhWpo0QbLI61b6fC0rhhnTjfLZswzl86TQTYcKSNMa+rv4CcwP6hYTGMEStlvbOk
-	HLr967ucyk3Fz/hCF1qWlLwz7KVzMW+mFQiu0UAlHyqdoLhI3FotLorGfyQtFy8l1kgEcg+EztX
-	R6ByWY4UDj80i4wlLRldGCt8wEWKtxTcG2sF8P50bydDaQ83f3vTKaBf2SXUCE7YkLcW+E0hFSo
-	bZViZErZH86KagZbZB7AUMYRh+DDyv53+SmkCj6naDzxnznrpAW5
-X-Google-Smtp-Source: AGHT+IHFXMUF6LYPxVE0uLxZ6Uz4R/LksUFmlhQmqVi/3hcZKNdpE9R38PJq5s8SxblOuJQH7FSFnw==
-X-Received: by 2002:a05:600c:64cf:b0:442:e9eb:cba2 with SMTP id 5b1f17b1804b1-442fd5a1054mr177058445e9.0.1747732993603;
-        Tue, 20 May 2025 02:23:13 -0700 (PDT)
+        bh=2BAB9TtnW5lFlrvp9c8YmiwGarQD9To36W8vCNbuIQk=;
+        b=qTkNNw4a35KJMRS22Y8mBd3ptHteWrVbQHt2Lq5yTCmLGLx5H7JNe8VX3BorjVkUoJ
+         GygO3WXRUkjS1U4Zbe1bNmQ5MbIEndapl895z59NON+RTozYBrGtz6geK04LdGGLrmoW
+         3r4FD4d/y0lTf6tNrwhL4KLY2ABr1BR5+DcbYlyV9e8BenBYY5uK8C6tBkeCbbGl9sGl
+         TX/R1YWIsgIiNZz+Uf427wfdj8IxfzgbyTjAXmDx9E3td2v2+S6zv3P8Mm7VMG+c3z8j
+         hFGP83Q/O9EIr/CEBT4l4+lep1zQ3XHQcCaBdMeAsjIHCr3KhS8LQyVQ3qaRDNSp5UYU
+         n4cA==
+X-Gm-Message-State: AOJu0YzFdVob3B2caIuI2wCzxvaWjvsKYGRifwzemgVDn5aDQRndL2fo
+	IWnyglo7aHY64TJbmmBKmUVTBnom+7r89USfenLIXdfAKM/JTZfRKMg1otlWRw==
+X-Gm-Gg: ASbGncumaKszpmmMZuNBzGtwsACB7EJmhpK2ncXpn2j+BuA63V0z0/J22LK+TdjoK7w
+	e6wP4tzVSsw4pi73FiFUXBlmxkrBhkijD6r2z4s6RUAxvtY/kNV5ga2pAfGjSgCNbEhBSuf0F0b
+	l5JXoNCbXVy4ggAlvhfKYWLLWzrHXM3AfSEfHZX5B+U423BveuN5HcKBLx++qXz2ObQLdnZXZX3
+	8S2sSLTfC8f7q8csyS3ekfWfpBcbiQi/PS27Nm5zsqykwuu0j7XZzHk0RY6w2uKt3VMJVwXv1pp
+	BAuukjf6BNug8onGeYdzjPD0eLA8lY6ookS9zeKOvliNEw5NJF4G
+X-Google-Smtp-Source: AGHT+IH/J9QimQaRzjtAoBCm+c+WiwGyzVgotdkx5SQ5RiKwkXkrXdDdBFNgBPV3bpC/E7fw1OYicw==
+X-Received: by 2002:a5d:5f46:0:b0:3a0:7017:61f6 with SMTP id ffacd0b85a97d-3a35c825eefmr15515607f8f.14.1747732994320;
+        Tue, 20 May 2025 02:23:14 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca889a7sm15811170f8f.72.2025.05.20.02.23.13
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d310sm15842286f8f.17.2025.05.20.02.23.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Tue, 20 May 2025 02:23:13 -0700 (PDT)
-Message-Id: <130c3dc5dcddf9a0b124a7d6f6d50b9787f389fb.1747732991.git.gitgitgadget@gmail.com>
+Message-Id: <b515c278a8fec6c2ab9d11a49261f44fe0f37bf5.1747732991.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
 References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
 	<pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Tue, 20 May 2025 09:23:08 +0000
-Subject: [PATCH v2 1/3] pack-bitmap: fix memory leak if
+From: "Taylor Blau via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Tue, 20 May 2025 09:23:09 +0000
+Subject: [PATCH v2 2/3] pack-bitmap: fix memory leak if
  `load_bitmap_entries_v1` failed
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
@@ -77,47 +77,87 @@ To: git@vger.kernel.org
 Cc: Jeff King <peff@peff.net>,
     Taylor Blau <me@ttaylorr.com>,
     Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+    Taylor Blau <me@ttaylorr.com>
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+From: Taylor Blau <me@ttaylorr.com>
 
-In pack-bitmap.c:load_bitmap_entries_v1, the function `read_bitmap_1`
-allocates a bitmap and reads index data into it. However, if any of
-the validation checks following the allocation fail, the allocated bitmap
-is not freed, resulting in a memory leak. To avoid this, the validation
-checks should be performed before the bitmap is allocated.
+After going through the "failed" label, load_bitmap() will return -1,
+and its caller (either prepare_bitmap_walk() or prepare_bitmap_git())
+will then call free_bitmap_index().
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+That function would have done:
+
+    struct stored_bitmap *sb;
+    kh_foreach_value(b->bitmaps, sb {
+      ewah_pool_free(sb->root);
+      free(sb);
+    });
+
+, but won't since load_bitmap() already called kh_destroy_oid_map() and
+NULL'd the "bitmaps" pointer from within its "failed" label.
+
+So I think if you got part of the way through loading bitmap entries and
+then failed, you would leak all of the previous entries that you were
+able to load successfully.
+
+The solution is to remove the error handling code in load_bitmap(), because
+its caller will always call free_bitmap_index() in case of an error.
+
+Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- pack-bitmap.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ pack-bitmap.c | 21 ++++-----------------
+ 1 file changed, 4 insertions(+), 17 deletions(-)
 
 diff --git a/pack-bitmap.c b/pack-bitmap.c
-index b9f1d866046b..ac6d62b980c5 100644
+index ac6d62b980c5..fd19c2255163 100644
 --- a/pack-bitmap.c
 +++ b/pack-bitmap.c
-@@ -388,10 +388,6 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
- 			return error(_("corrupt ewah bitmap: commit index %u out of range"),
- 				     (unsigned)commit_idx_pos);
+@@ -630,41 +630,28 @@ static int load_bitmap(struct repository *r, struct bitmap_index *bitmap_git,
+ 	bitmap_git->ext_index.positions = kh_init_oid_pos();
  
--		bitmap = read_bitmap_1(index);
--		if (!bitmap)
--			return -1;
--
- 		if (xor_offset > MAX_XOR_OFFSET || xor_offset > i)
- 			return error(_("corrupted bitmap pack index"));
+ 	if (load_reverse_index(r, bitmap_git))
+-		goto failed;
++		return -1;
  
-@@ -402,6 +398,10 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
- 				return error(_("invalid XOR offset in bitmap pack index"));
- 		}
+ 	if (!(bitmap_git->commits = read_bitmap_1(bitmap_git)) ||
+ 		!(bitmap_git->trees = read_bitmap_1(bitmap_git)) ||
+ 		!(bitmap_git->blobs = read_bitmap_1(bitmap_git)) ||
+ 		!(bitmap_git->tags = read_bitmap_1(bitmap_git)))
+-		goto failed;
++		return -1;
  
-+		bitmap = read_bitmap_1(index);
-+		if (!bitmap)
+ 	if (!bitmap_git->table_lookup && load_bitmap_entries_v1(bitmap_git) < 0)
+-		goto failed;
++		return -1;
+ 
+ 	if (bitmap_git->base) {
+ 		if (!bitmap_is_midx(bitmap_git))
+ 			BUG("non-MIDX bitmap has non-NULL base bitmap index");
+ 		if (load_bitmap(r, bitmap_git->base, 1) < 0)
+-			goto failed;
 +			return -1;
-+
- 		recent_bitmaps[i % MAX_XOR_OFFSET] = store_bitmap(
- 			index, bitmap, &oid, xor_bitmap, flags);
  	}
+ 
+ 	if (!recursing)
+ 		load_all_type_bitmaps(bitmap_git);
+ 
+ 	return 0;
+-
+-failed:
+-	munmap(bitmap_git->map, bitmap_git->map_size);
+-	bitmap_git->map = NULL;
+-	bitmap_git->map_size = 0;
+-
+-	kh_destroy_oid_map(bitmap_git->bitmaps);
+-	bitmap_git->bitmaps = NULL;
+-
+-	kh_destroy_oid_pos(bitmap_git->ext_index.positions);
+-	bitmap_git->ext_index.positions = NULL;
+-
+-	return -1;
+ }
+ 
+ static int open_pack_bitmap(struct repository *r,
 -- 
 gitgitgadget
 
