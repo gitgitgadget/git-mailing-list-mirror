@@ -1,180 +1,144 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f52.google.com (mail-oa1-f52.google.com [209.85.160.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2390124C06A
-	for <git@vger.kernel.org>; Tue, 20 May 2025 15:13:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FFE4A06
+	for <git@vger.kernel.org>; Tue, 20 May 2025 15:14:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747754022; cv=none; b=NnhsUDH98KQbxrUMrNzP5IHF3XmJ5PAEw+/jHuMEZP6pi0+TSkCALphkPp1QKt1lXvxQv6CPTS6M1CWSyEHXRzUz24bVyEzwpFYsTvLPhpcV86bFuoQHJjzxq7Jlrex0XtnAIgBeudV0DRsHopk5bYNZxoKghYip9B/m/t16LfA=
+	t=1747754099; cv=none; b=Gqfp0iSxbsTOEXmry7vHLPiUc1pLUL3pV5wAbGX6IwXhFojqbgTbyq0Gn7bwUarFdZ5cEALt9vwnDZA+QiH6iXTV8wUGC2b15gzRxEkRpZ5lww1y86N3FqTgYsWa+gok2ScNCqxTCaiWoI7oWJJMQ75ndja1TNUrHyztHKmiM0Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747754022; c=relaxed/simple;
-	bh=3sg3OfJlTsZuwRjLLfjq1WDmxCXMy/2H99n1qEqQoPw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Zyrttv63C2s8u5waJfh0e9ek1pTXDtGsXLY0UIfeTeB4AzmFzfanTf2YiVVcp5XFHto5SM3rbkmq6mgkxxUH5NSrqmQMv2yjNsapBCQrV3jGYaNaRPr2bqC5HFY/lT7M9dEG2wNRDhx/5VtM1PwtzBSX6jOTnLK+pJ78fqA858E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aDQDhCm3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Aqe3mpbj; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747754099; c=relaxed/simple;
+	bh=XmAJi/sf5WsVNGRBErfMsgtshWxxiNZIR01ovpMVpQs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iTUdnHV5hV2xH8aRm/PLfZUBmxdg+tlEgNJMfvxOG/ASUbJjc2drULhRsNHkWmdPU0OIDOqQ/tf5NQr1eJimEpGrsWrkG96YUnzsqA/JjjJ+5CIDh7r3/hgKApYYavLQ3qERp7ehfLetsbKZkam56WSrw+i0miMoq8Ed+t/0YfU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PPyufnKv; arc=none smtp.client-ip=209.85.160.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aDQDhCm3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Aqe3mpbj"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 38ED9138042D;
-	Tue, 20 May 2025 11:13:38 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Tue, 20 May 2025 11:13:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747754018; x=1747840418; bh=ohHvA6R3/V
-	+YkE+Boxza9+SM03EEO4WL3XCkqGVskcY=; b=aDQDhCm3/F++3+yPjTkI2cF2HQ
-	qLjBUPgUNe8YD7xyR2TD9seTRV2tObgdHWe6P8ubq8zF3U4J+G6jfLO0XUm7dDUH
-	rbz2j4lcxrle/cUois0dyCO0JSzOB3TSs5HHp/kqhWQ8+3A7WIS1Bq0BlifDMKCv
-	rczMko72rT4T5JGgKTiQYdQOQGzVvDocJGPVz+5cTZsBYF/t3DuMDTqui9c8T4en
-	DcexwRLRckC+F8N7brJIHBKgWuuLtpU77dAw3sZmKpjj8Xb7SeyKuMpSw09Q3uuo
-	pDN0HLHy64wLVjUHMT709rowZ7XfgxG95M5p9dq9WX3HkD8KcqBgHORE86DA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747754018; x=1747840418; bh=ohHvA6R3/V+YkE+Boxza9+SM03EEO4WL3XC
-	kqGVskcY=; b=Aqe3mpbjDaLuGtCuKtg8Xar1oS6PTWe510wNJN/DyfcgWOakWqg
-	kNFl0ZMup4R4XrXu/fHTTLJm4lEDfPk0dZ7zGWYic8i9oUAc1xRpe5v1TeKHDXb6
-	bGa3jMdRJPozwpbzE+Vug4vpEEpfnP5Cl3Gq9sRNppNkAEpAAKzJFo0bU2zSkU2M
-	HwI8Jwsy2BQCck8ml6wqZmZE5ywRySz09d8Zg6pQ8u55OYKSmxo7svXYQT/OcL45
-	7F1Z5FTuMre6hDu/FdTs+I5O6j5/+629ud4Zvm7fR/OH9nM2m+xTx4RJXgaoJ9TV
-	jD86P67hJs4n2vj2vnifzjn+vCNVr/8tWKQ==
-X-ME-Sender: <xms:IZwsaOceDAcvj2LKTSwKGL7WieMuemr6Z9pVyfEJX75LSLbMzYovSQ>
-    <xme:IZwsaIPO1vpPdX3pmHtV-VXgOgbf7GBApRCR7yODUVEQ_8coXh_lxB_boqF5RhA-e
-    T3BPB9amU2126brmg>
-X-ME-Received: <xmr:IZwsaPj3I72QzCOrIDR06Rzqxv9iwBekYbKfw3q-iACBCac8pPF1mjkASB1m3TQ6roR2AXvDEn-wEQcKI8n_OXtYyEQLNrF4BWpgPss>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdehheculddtuddrgeefvddrtddtmd
-    cutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghn
-    shhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtne
-    cusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfgf
-    gggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoehgih
-    htshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefhtedv
-    ffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvghruf
-    hiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohig
-    rdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtth
-    hopehjrggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhgrtghosgdrkhgvlh
-    hlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:IZwsaL_QnMbUQitZChVSSHD7P9ivT7FZjl6x_slU9_KP6WDZAah4xw>
-    <xmx:IZwsaKs_qMLZI_qzcfu0y_HiLfUhEJHi3AJeUYjrfIcOuACrk2UITg>
-    <xmx:IZwsaCFaYYc0yo2Nfnos3ZkuBRYG3gB4PEVu6kEYuF6Jm9B4tDCgHg>
-    <xmx:IZwsaJOXdkKDqVF_jAzMMQBMJ807LmHgZZWGVAULuZw7m0PqcJLdsQ>
-    <xmx:IpwsaAHH4xGEeKeurVtxsNnctuqJ7IH9KdT1pNUPLr9M89-KPSIvJ8Rg>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 20 May 2025 11:13:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v3 3/4] pathspec: add flag to indicate operation without
- repository
-In-Reply-To: <20250520000125.2162144-4-jacob.e.keller@intel.com> (Jacob
-	Keller's message of "Mon, 19 May 2025 17:01:24 -0700")
-References: <20250520000125.2162144-1-jacob.e.keller@intel.com>
-	<20250520000125.2162144-4-jacob.e.keller@intel.com>
-Date: Tue, 20 May 2025 08:13:35 -0700
-Message-ID: <xmqqwmabjoww.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PPyufnKv"
+Received: by mail-oa1-f52.google.com with SMTP id 586e51a60fabf-2d0920ce388so2006738fac.0
+        for <git@vger.kernel.org>; Tue, 20 May 2025 08:14:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747754097; x=1748358897; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=hsYfxKk1KElEYDjBY5c9ai7vzyA01LbLJ6K9YP5klLw=;
+        b=PPyufnKv0cGnA5gMjwHS6F02YphAdc/PAxbdtVUljK2DMP5nBHbOnMDxqreLa0n+B7
+         0BOukORtO2H/TzkcyUiRQFV2hnEYZ7SJFeUfEBd6MojI1f7/VMspjoUpT9Njsp9lmXqK
+         ju7NK69Xl5HpzYptSXT7V1hn3jkDJdriAAOw0CdEpflkHF/6sNq4lwLz5EH0vi0rrmOT
+         2XIBs2VJTx0zKUc4pSknjiz4L1I9un5R6/7J/Du/2W6HHCwFkVjXiq7g71JO4sIoshtZ
+         JYT4IJ4w3dzl8W9BrRLjesM/GGMER0oI+ee/OBpVa79eQqdnQu+wPrbx0yFzIlJH1hoA
+         nWpw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747754097; x=1748358897;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hsYfxKk1KElEYDjBY5c9ai7vzyA01LbLJ6K9YP5klLw=;
+        b=K2os65mLEhacB1uXGI+rfaFv4DF8Prcf5ouhqGxod3UMx+bblO1aVQ4vnuUOPP7FFu
+         xCcQd1Q2Im9tAUDgzSq0O6NlNiUlsrGomlFo4dJ5eDQmREm5UqHgeIka32nCxmw/cHXq
+         ItPff/0u1iDUjURXiSRi96ECs89uVkbmtzY82WyDq8dC1Vz44DmD0upmSMdafZAVaWGP
+         PL/zX73NAlARf3tyDbQ7VtrP3LcVQ0he27A2yzyAOZr+bE4sUxLo9DwRQx9MnY+PlVG3
+         am/NGRuVmxqAuGG6EMA0gQVEEZDjL68gZ5tG75I6tWl/YtdFFtcNULF1TVqNPGW18+mT
+         RKog==
+X-Gm-Message-State: AOJu0YxdZozASqL9VMC2skzGQg19/n8Kz7e9O6SFz8/+quRL5wGopjEB
+	VwH32i/MylZSB1gRnWi9B439/D5UrjeHalRBAX2s7cCgGs9lHmSC9K33
+X-Gm-Gg: ASbGncu2jsLDUKPB7z6QOtSg8EURuCqg2fMJKFGWMNkar7okqTCzfH/Vs2RbKHPzi1O
+	mnYvoRVLZECuBfNAMYjPUTNB6Fx2kv6aspBbBPlaac7Oe+bX9WxhkqK2RA5yuOFOXGYF7zJEMgW
+	JHbKMulEF05ktLGvFjjOloiLtgONvKBoIt+GzwHJNl+qr/lscvWBKa1iUOB6dhEWeVTpFSV42+W
+	DypfSMlPWtpAWfyia3FttjJkk7PyYRpTFEzvW8cKFQfs2Uz+Hf7j/9PtAnYFqxqwbhvNZr7Bk7N
+	wHsuy3JWZoJePWZmkuJP6geqSa4pS1zykT+MVuxcO7PP
+X-Google-Smtp-Source: AGHT+IEaYb4gk/3iQKPkehMZACs3UHLXw6ev8ej5Bq7KyZ5FF1kD4Clb4HlmbSyzdGNyqdRxbyMNJg==
+X-Received: by 2002:a05:6870:1b88:b0:2d4:ce45:6989 with SMTP id 586e51a60fabf-2e3c1b674a7mr9744675fac.3.1747754096698;
+        Tue, 20 May 2025 08:14:56 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2e3c060e1d8sm2234115fac.4.2025.05.20.08.14.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 20 May 2025 08:14:56 -0700 (PDT)
+Date: Tue, 20 May 2025 10:10:18 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, karthik.188@gmail.com
+Subject: Re: [PATCH 2/2] builtin/receive-pack: add option to skip
+ connectivity check
+Message-ID: <vgqluphl4wdyzlkyoxndm2kspeylpeqhdi2chusytowjhvvqie@ya3yqorppdo6>
+References: <20250507030249.4802-1-jltobler@gmail.com>
+ <20250520014920.201736-1-jltobler@gmail.com>
+ <20250520014920.201736-3-jltobler@gmail.com>
+ <aCwQU-SwlS8MR88l@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aCwQU-SwlS8MR88l@pks.im>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On 25/05/20 07:17AM, Patrick Steinhardt wrote:
+> On Mon, May 19, 2025 at 08:49:20PM -0500, Justin Tobler wrote:
+> > diff --git a/Documentation/git-receive-pack.adoc b/Documentation/git-receive-pack.adoc
+> > index 20aca92073..68427d93d9 100644
+> > --- a/Documentation/git-receive-pack.adoc
+> > +++ b/Documentation/git-receive-pack.adoc
+> > @@ -46,6 +46,18 @@ OPTIONS
+> >  	`$GIT_URL/info/refs?service=git-receive-pack` requests. See
+> >  	`--http-backend-info-refs` in linkgit:git-upload-pack[1].
+> >  
+> > +--skip-connectivity-check::
+> > +	Bypasses the connectivity checks performed to validate incoming
+> > +	objects. This option exists for server operators that may want to
+> > +	implement their own object connectivity check outside of Git. This is
+> > +	useful in such cases where the server-side knows additional information
+> > +	about how Git is being used and thus can rely on guarantees to more
+> > +	efficiently compute object connectivity that Git itself cannot make.
+> > +	Usage of this option without a separate mechanism to validate and
+> > +	ensure incoming objects connect properly to the references risks a
+> > +	repository becoming corrupted and should not be used in the general
+> > +	case.
+> 
+> Nit: the connectivity check doesn't only have to verify that objects
+> connect to existing refs, but also that all objects part of the
+> transitive closure of reachable objects exist. Might be worthwhile to
+> point out here.
 
-> From: Jacob Keller <jacob.keller@gmail.com>
->
-> A following change will add support for pathspecs to the git diff
-> --no-index command. This mode of git diff does not load any repository.
->
-> Add a new PATHSPEC_NO_REPOSITORY flag indicating that we're parsing
-> pathspecs without a repository.
->
-> Both PATHSPEC_ATTR and PATHSPEC_FROMTOP require a repository to
-> function. Thus, verify that both of these are set in magic_mask to
-> ensure they won't be accepted when PATHSPEC_NO_REPOSITORY is set.
->
-> Check PATHSPEC_NO_REPOSITORY when warning about paths outside the
-> directory tree. When the flag is set, do not look for a git repository
-> when generating the warning message.
->
-> Finally, add a BUG in match_pathspec_item if the istate is NULL but the
-> pathspec has PATHSPEC_ATTR set. Callers which support PATHSPEC_ATTR
-> should always pass a valid istate, and callers which don't pass a valid
-> istate should have set PATHSPEC_ATTR in the magic_mask field to disable
-> support for attribute-based pathspecs.
+That's a good point, I'll teak the wording here so something like this:
 
-All very sensible considerations.
+	Bypasses the connectivity checks that validate the existence of all
+	objects in the transitive closure of reachable objects. This option is
+	intended for server operators that want to implement their own object
+	connectivity validation outside of Git. This is useful in such cases
+	where the server-side knows additional information about how Git is
+	being used and thus can rely on certain guarantees to more efficiently
+	compute object connectivity that Git itself cannot make. Usage of this
+	option without a reliable external mechanism to ensure full reachable
+	object connectivity risks corrupting the repository and should not be
+	used in the general case.
 
-> diff --git a/dir.c b/dir.c
-> index 2f2b654b0252..45aac0bfacab 100644
-> --- a/dir.c
-> +++ b/dir.c
-> @@ -396,9 +396,12 @@ static int match_pathspec_item(struct index_state *istate,
->  	    strncmp(item->match, name - prefix, item->prefix))
->  		return 0;
->  
-> -	if (item->attr_match_nr &&
-> -	    !match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
-> -		return 0;
-> +	if (item->attr_match_nr) {
-> +		if (!istate)
-> +			BUG("magic PATHSPEC_ATTR requires an index");
-> +		if (!match_pathspec_attrs(istate, name - prefix, namelen + prefix, item))
-> +			return 0;
-> +	}
+> > +	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
+> 
+> And we do have the object now. Do we maybe also want to have a check
+> though that the repository itself _isn't_ fully connected to ensure that
+> the test setup isn't broken?
 
-It is a bit curious why we do not check PATHSPEC_NO_REPOSITORY here,
-but it is OK, because it is a BUG for istate to be NULL when we have
-a repository anyway.
+That makes sense. I'll do something like this in the next version:
 
-> diff --git a/pathspec.c b/pathspec.c
-> index 2b4e434bc0aa..a3ddd701c740 100644
-> --- a/pathspec.c
-> +++ b/pathspec.c
-> @@ -492,7 +492,7 @@ static void init_pathspec_item(struct pathspec_item *item, unsigned flags,
->  		if (!match) {
->  			const char *hint_path;
->  
-> -			if (!have_git_dir())
-> +			if ((flags & PATHSPEC_NO_REPOSITORY) || !have_git_dir())
->  				die(_("'%s' is outside the directory tree"),
->  				    copyfrom);
->  			hint_path = repo_get_work_tree(the_repository);
+diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
+index 10c67c2bf8..f76a22943e 100755
+--- a/t/t5410-receive-pack.sh
++++ b/t/t5410-receive-pack.sh
+@@ -80,7 +80,8 @@ test_expect_success 'receive-pack missing objects bypasses connectivity check' '
+ 
+ 	test_grep ! "missing necessary objects" actual &&
+ 	test_must_be_empty err &&
+-	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
++	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD) &&
++	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
+ '
+ 
+ test_done
 
-This is a part of generating an error message.  We die early to
-avoid having to call get-work-tree when we know we are not even in
-any working tree, which makes sense.
+Thanks for the review!
 
-> @@ -614,6 +614,10 @@ void parse_pathspec(struct pathspec *pathspec,
->  	    (flags & PATHSPEC_PREFER_FULL))
->  		BUG("PATHSPEC_PREFER_CWD and PATHSPEC_PREFER_FULL are incompatible");
->  
-> +	if ((flags & PATHSPEC_NO_REPOSITORY) &&
-> +	    (~magic_mask & (PATHSPEC_ATTR | PATHSPEC_FROMTOP)))
-> +		BUG("PATHSPEC_NO_REPOSITORY is incompatible with PATHSPEC_ATTR and PATHSPEC_FROMTOP");
-
-Hmph, I am not sure if this change is correct.  The magic_mask
-parameter is passed by a caller to say "even if parsr_pathspec()
-parses a pathspec using a certain set of features properly, the
-caller is not prepared to handle the parsed result".  If magic_mask
-lacks PATHSPEC_ATTR, that does not necessarily mean that the given
-pathspec contains any pathspec items that do use the attr magic.  It
-merely says that the caller is not prepared to handle a pathspec
-item that uses the attr magic feature.
-
-If we are going to add a call to parse_pathspec() in a code path
-that is specific to diff-no-index, isn't it sufficient to pass
-PATHSPEC_ATTR and PATHSPEC_FROMTOP as magic_mask without this
-change?
-
-
+-Justin
