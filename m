@@ -1,82 +1,121 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-ua1-f48.google.com (mail-ua1-f48.google.com [209.85.222.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ED1523D291
-	for <git@vger.kernel.org>; Wed, 21 May 2025 09:18:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 179712356DE
+	for <git@vger.kernel.org>; Wed, 21 May 2025 10:10:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747819122; cv=none; b=R4yHDiI0OopNZwgE/wzCp/S0S3s4HAsHdzVAe2Vj+aWjNebqpWgBT6k/LlVEZmN0X2Do2AuRyZRt4BrKTvtpSQ9WS0PpqIn3/ZIK+QAEOireXFqKj5P46AKaBAQbb9SrZwEgaubKos4ff06BnJN9jhZbebS7krhz8APE1MoBsIk=
+	t=1747822227; cv=none; b=fbDJ0X7bYhK4fE9R8y7VwIM9wqeG76kOQ/JqUezOZsujYd7+LlbCDWC9acL0kMQ7k1b5KtvVsdjLuY3WLTbiEjfSa7LqNonsaSIWrvSpAp1c8b1pgHDl2SRVH8ndIy0RFF9vqy7ZdGTVm7OniXhlSRZ5BqtBUQFl70ad1tS4P3o=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747819122; c=relaxed/simple;
-	bh=yBhBis0X6XcXxUVDya7ja0h+Gwp5G6ZUtb0Adp2Lp5M=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Content-Type; b=Isanw4UMCDOxVT+p7nKU9ejqVBoUK7DeA5nnrAVsY4RTWU2dHYcWci1lQT7c6BgyX2ZTJhOzqfoI6nvNFbBADXd58D2ZRWmTkJ20zbhlEYHzvESJRiBHEWmY0ph7YZdO2wENn55syUyLQqefFSi3VeQTBghaWIRTbdqc4GcpDug=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=UHjHu/Jl; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
+	s=arc-20240116; t=1747822227; c=relaxed/simple;
+	bh=p3EUgh/myT1Z8C2z+2HidsoreTeSt5N8n/s7vimjF6U=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Content-Type; b=EilbMQ7G5RFEtGrjCO5cJ65Tj92I2CX8cPnlKGPJhzROMSxDS6eMVyQd9q3K88XmUsbbC+nKnYKq8YljprVEGeFVsgY/1LsnzsUhrHPYQB/Xhjb7R+JfgCMpPl3xsm0GkMXpiiOuRmfsc7TaY27tcSlfvdEV+VkAMGo0oZ4Q4uw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=erkLFCU4; arc=none smtp.client-ip=209.85.222.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="UHjHu/Jl"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c5ba363f1aso933038485a.0
-        for <git@vger.kernel.org>; Wed, 21 May 2025 02:18:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="erkLFCU4"
+Received: by mail-ua1-f48.google.com with SMTP id a1e0cc1a2514c-87bfe95868cso985734241.2
+        for <git@vger.kernel.org>; Wed, 21 May 2025 03:10:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1747819118; x=1748423918; darn=vger.kernel.org;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=yBhBis0X6XcXxUVDya7ja0h+Gwp5G6ZUtb0Adp2Lp5M=;
-        b=UHjHu/Jlrms3+Ya2XPIIbNtYZSwQsu+QEPOMhkBo9sZugTJyStW4Q9RxyJRbWYbAY+
-         qj/63TPWL2VimYAiL6lcAc3xTlJFjmM9X+IjfX5YNmWOl/9I2aHKz+g6jJiHZBf4v6cx
-         B5WPdZkDlWj17/x3gGqjPiPGHjH2B9rcEiTEZUO3XjENWI9HsLUef093N6eV5mMcrKVb
-         y8i1yOry8TlDB95wxuEBnUYE7jbvGpTxXRUSb+3PUFYyH15cPhiAzTMehFOzhvyKb5hI
-         G4V2RaE2RemYMPV5FL0hHAy24BSvfYRm2R2cJi0vj78qNYeMeo4gO6pA7skRzKVRXMgX
-         I0BA==
+        d=gmail.com; s=20230601; t=1747822225; x=1748427025; darn=vger.kernel.org;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=JB+1+RXHyBt+yie6RrqV9T1PB0tYW72qS/SCaR3A7Uw=;
+        b=erkLFCU4R280DTny3YvsZhuq5RmsZUbVT3S/+ry2SvctyrTBHuLlQxxLpE/fGWnd9f
+         PyUQcnL+hECcB5t3IRmCxJjKj+NTI7OGZ08/a4iZa+RPnb8+eoSqJyOU4AfL9HQpUXt6
+         enVzb57wuUkpB/UqzoSnC4QVnt3PUdfecSdtVgc+lrqSPA4YLBr3IMpzuaFnyeOIibKl
+         1suTPAnC/411grVuce2sHYlnVWzURiMWd3S6WzTUrpsSu1LBYrdB/26HXBA4dLnf03sJ
+         vSazOgQeuyp+CiqAh3PlFx9Nauv5poX4QmMUk3ytnd/c3XJ2y1iVPJRai+Z9Ei57J8mz
+         7lxA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747819118; x=1748423918;
-        h=content-transfer-encoding:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=yBhBis0X6XcXxUVDya7ja0h+Gwp5G6ZUtb0Adp2Lp5M=;
-        b=R2szE4J0lAiO43S2SW1rFCR0zOKqFAwE7CRP5D8NfDXhb5DqGH2RMP+YvyapQJS9cE
-         2Wg/FlV34Yq9qq+vFhFrykfbnzDa9qwNnHVW9Gqj3/3/x16A53lE7SUOaISeMOagrTpn
-         9csCEn358y77pB4U/38KmpTOwIWfpWUg3t7DitRnKUFpBQ0ZTU+YlnV0Zn7Ii/rCTlsP
-         FMCNS6TsiAHh0fdIDsVINQaPA6inMXjiHObXGeHOIJm0FHkdb1c9WtvJdDJXeodAYuIL
-         fx6mFVDpbmFepWdjRjaimjH6/zNc2QkCQKGLQRjY1+lzjSm+CYStCNW92mBIRXqT3EV1
-         4n+g==
-X-Gm-Message-State: AOJu0YyYz4pfJOEGyO1dMGvkw6zIG4dLwTbDdOZg65EPy4yztP16biI0
-	sZZMxk+1JfGpvXAmZ43bGKGE0wpUyErdUieiX1P3MOUAlHDEIBVQSkaLIBPn/uZy3lGj/Z1nzoB
-	8dgqF9Te2hBpFDdzcCPtkYHKfhAri1U2Iiw3eb1Xc9Jk/OyKqbE8I
-X-Gm-Gg: ASbGnctsy5zlsnq2lHl52HkwlnEUm5PAkmOmbTD9AES+RP1LeI1La2RIOHRTdNtrT9I
-	io+KJ9wWJ+RMKmWwwzEt7vCblnuPwW3dsGEpf7fHNfR/MKkR+c4JmzB5LYgRJQrro12+Cq7Jj8L
-	BuW+T4pUNMp394C9hYgv+ZxPssqJc9o12xeA==
-X-Google-Smtp-Source: AGHT+IGyrHEkk11Pl/jg6KMED4UHvZHBjjW7SendgT3bjOwm0YeYdAjGIOqEFoUgHVtFlaJaqnGcnv0Rvfd/BNJf69Q=
-X-Received: by 2002:a17:902:c411:b0:227:e6fe:2908 with SMTP id
- d9443c01a7336-231de3bb4a4mr288160045ad.48.1747819108012; Wed, 21 May 2025
- 02:18:28 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1747822225; x=1748427025;
+        h=to:subject:message-id:date:mime-version:references:in-reply-to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=JB+1+RXHyBt+yie6RrqV9T1PB0tYW72qS/SCaR3A7Uw=;
+        b=shqe0zFEc7BGhadfc7cZJDltiWG/w+Y08IUeS/OQ0lpThzCB8vziSHMOGh8E7nDra1
+         bxIwWlsn5HH3MLB1FOCasb7ueyW8eqTX8A9klARPT3k+xP02504dQSbz/cD+cLgZ2uzw
+         xXrr8bZznRSD0OyH+ne0KMYacTrCdiNGVhpbZOyP5lvB4RiOBX4zFlJr06ISskW0pJkA
+         JBCQVzkWqt/HNqclMHXrGqMRiCB0qWvsSQdU87kiNbSpZj676DQFgvj4aTr3JvVtO/Qr
+         PUuA81+cFJv9AyFGXCQo4aMGhPEmucoAxL33BLx75jjRyARMM83ownE+6hrw44Z4rp8T
+         22OQ==
+X-Forwarded-Encrypted: i=1; AJvYcCU8Undi9EwbBXmWvnFwhb1aQnN3CfUEwWjIhEQ3QE8PAbVfKhGWkYVXCoOxrc/ADrxsL6o=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxnUXGy1i8HL1yKEOnIfE0KRs7RUDK9ufmqxs1n0H/rQL5VrZTm
+	EKai7UZQGDII0bEG4iatgjNvvrUadf1TQfjM8fk6i5DMKQglQf4k7tmSxu0a2VPd6EznfHf94j0
+	5Kn35biHWKhfPrCw6nK4tQWgWeoxL9FU=
+X-Gm-Gg: ASbGnctBZEQ5rt0JR5jHtkKcweA3eoC/8zvH7u0KBWfkfpO9smp5oPKk3TEdmJZ8y5E
+	gZdaJPLqzl0xENLLZHjvHmVzFQIlbpdhb583jMfqBKESGTqqN9aatBLzkVxlfWiO7F8R1/wjgPU
+	z35nKMzrlIcxAclZGVtEN6QO9wO74f17edmUSDn700sJ3hJPDL/uKjNclD4uDX6N7A63c=
+X-Google-Smtp-Source: AGHT+IHfryLce//bdtmmUC/PkMReaAIBVlEbkypbJpNCjRF1IzKQ1EuZup8p7rIoIg7klJpYeG6xvsVMLJe10PBFtAA=
+X-Received: by 2002:a05:6122:a1f:b0:50a:c70b:9453 with SMTP id
+ 71dfb90a1353d-52dbceb08d4mr16127658e0c.10.1747822224749; Wed, 21 May 2025
+ 03:10:24 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 21 May 2025 05:10:24 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 21 May 2025 05:10:24 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <xmqqy0uqg4w6.fsf@gitster.g>
+References: <xmqqy0uqg4w6.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250521083521.6552-1-hanyang.tony@bytedance.com>
-In-Reply-To: <20250521083521.6552-1-hanyang.tony@bytedance.com>
-From: Han Young <hanyang.tony@bytedance.com>
-Date: Wed, 21 May 2025 17:18:16 +0800
-X-Gm-Features: AX0GCFu2BXlbl_vrPW7-f20vWhL90IhiqFyMOiBfXdTDgEED2sla2Dyt1kPbTzI
-Message-ID: <CAG1j3zHUeGWQ-AD7bpJ=QBVAviBTcPi1yDRfM043+6sY4qkq9Q@mail.gmail.com>
-Subject: Re: [PATCH 0/2] report lock error in write_index
-To: git@vger.kernel.org
+Date: Wed, 21 May 2025 05:10:24 -0500
+X-Gm-Features: AX0GCFsCokRSQgO4a3-x5SsGOUeoxwzVgiteW5IojJpy3tgW5pqR1u9ywIoBmiU
+Message-ID: <CAOLa=ZR-OaLPueyRcXYrN0rKPnVXPPmJ6drsmM4eRs-6yKEgQQ@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2025, #06; Tue, 20)
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="000000000000d65bda0635a29270"
+
+--000000000000d65bda0635a29270
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 21, 2025 at 4:35=E2=80=AFPM Han Young <hanyang.tony@bytedance.c=
-om> wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We can let repo_hold_locked_index print the error message if the locking
-> failed.
+> * kn/fetch-push-bulk-ref-update (2025-05-19) 4 commits
+>  - receive-pack: use batched reference updates
+>  - send-pack: fix memory leak around duplicate refs
+>  - fetch: use batched reference updates
+>  - refs: add function to translate errors to strings
+>
+>  "git push" and "git fetch" are taught to update refs in batches to
+>  gain performance.
+>
+>  Will merge to 'next'?
+>  source: <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
 
-One downside of this is the command still prints "could not write index" be=
-low
-the lock error. The caller can't distinguish between the lock failure and t=
-he
-the actual writing failure.
+Incase you missed the cover letter: I would say that while this can be
+merged to 'next', we should delay the merge to 'master' for after the
+2.50 release since it can be disruptive. Mostly letting it bake for a
+longer time before hitting a major release.
+
+That said, I think it should be good to go to 'next', since all reviews
+were addressed!
+
+Thanks
+Karthik
+
+--000000000000d65bda0635a29270
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: c1bb3c7a1fbf8589_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ndHBvNFdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNEFYQy85TFFhcTV0QTNRUHdUNS8zM1cyQytMOENGZQplZ2tPMW94SENU
+STFTbnl2NDBlZXQyQkhTUi9IU1JoUUpIS2lQQVAxV2ZhSEROZFB1aVlxTkNOV3psNE9iQ2VECnlJ
+WkZZa21kTTNuaDRZQ1BjYWxxR0Z1Zk9ic0kwd25GcDQvR05KaFIyQVdHUkVoMTJONWluTENyNWpF
+RUQyVUoKVHkzUkFqODFzSGhNTjBaU2Rpajh6MThZeW1ldGg3RGVPWUM5MWwzZnluZldnbVFxQ3cy
+dkhqSEdGYXdsVTVPZwo1WlplNGZWYUswNFZlSndTeFJwZkwrTWREZGs4RGZEOFEwTUt3ZFEyK1Z1
+T0E0alczdE9lb2FPdEd3OHhLOVNpClJiV1REV3JHSExyUjllZk1vdFIzWFZodVE2dDJrbmxMWmdV
+OXJ3U2NCa3lCSFRpajlKQjkvSm1MWnRKSFdJcFMKUlg4UllMQmhDcDJUNWU4eGNKd1AvaWtoWXdV
+R0hCSVhKT09hQXVvVWw2MEN0M2VmRnMwTDB5WmVCUGg4WW5MNgpRd05vLzZCQWtpTktXdlozcTI4
+Ym1BZy90N0NxaTZSVFhsd0d0VjNTMVlsZkJTeHkzZW41UGVMMGxXc3V6eHQvCis5YjlOaVdBYlBW
+bldHSW5KVDZqZTB4eUJCNUlZallndjU1MDJVWT0KPVFJTWsKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--000000000000d65bda0635a29270--
