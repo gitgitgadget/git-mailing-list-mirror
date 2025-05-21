@@ -1,64 +1,64 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51741DD0EF
-	for <git@vger.kernel.org>; Wed, 21 May 2025 15:20:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6B82AF1E
+	for <git@vger.kernel.org>; Wed, 21 May 2025 15:20:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747840810; cv=none; b=EP+KBWmxHuuvaZoP5467hgBVSHTaoG06LXu70Ar9EviyoFhhw4cCN2tALnlen2S2nwKsJqW1ZmZgWyq5AgSUtHDh1y+HX8FtieLY3H2Kh52F/4E25uNVBbleoo1U9NALjdm/VpwZmqp6Oo1yQE1G7ocWqfZmAHGc1v48JI0eQ0k=
+	t=1747840837; cv=none; b=MAPQz+x+QWiGHgNaOCYg+cBWDSY9Q7CtybumExIN15lSe5NJQux86Bp2vzAiF5PDRGapUUxK/qezY58m8r46RGHSK/s4PHDsDwP9fdxSTpJAstqOjjAchakVc9WO1n0tkUKEeUw5VfhsIpxsKeZNTmCokJLkaOPYi6voXkpU8IQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747840810; c=relaxed/simple;
-	bh=Ti+DglXn2Jmq4ssccjxLMtn53YKgdVmGbWGVA9Vy/7E=;
+	s=arc-20240116; t=1747840837; c=relaxed/simple;
+	bh=kkNLDEkbdrdqIo63v/RfC/2avYPkSo94NKKmcrqfVro=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=ObzjvFMK9oe3tLxuDmXYFmpazM6t1Vn2G/Gfsif2xPfPDQpFk2Dz25rOCXjz/r/s+G4Hbp3dUMvfBXWu/hqR5oIqAGb1GxgCMByYvXFN5/TgOmq1TEyg7EoUsNhmSCS3XzNqY5XHgHI/jq8h5BJvwOjyS9gIVgh9JBcuFjiS7mk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ma8556IN; arc=none smtp.client-ip=209.85.221.45
+	 In-Reply-To:Content-Type; b=lmZwAnvWGI5lN8zqEHdLhuXBcCHHc73zhhwDO85PdFrV8ssckJG8TdUFr5giGgjT0L6e7Me64eDq53yWaZZ23oMiGK1g4wRSYlzYITF5aJEMOe/nJrUCp4PjZwqa9S/i4i+6F2OUCr1LrJUmwqC226VtN02U5B6eVpjp73XBnIg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JSBBM8MB; arc=none smtp.client-ip=209.85.221.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ma8556IN"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a37a243388so1902380f8f.1
-        for <git@vger.kernel.org>; Wed, 21 May 2025 08:20:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JSBBM8MB"
+Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a365a68057so3903571f8f.0
+        for <git@vger.kernel.org>; Wed, 21 May 2025 08:20:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747840807; x=1748445607; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747840834; x=1748445634; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=7C0R7+0NH2EUHxXHiLLl79rh84HGAnn74iSZ4fXg5do=;
-        b=ma8556INzGh9wFGUMgguY0+/xmPDJpVKKajuz5O4rD7E5Z4bvP7Angh3+Yn2w164NS
-         TWl7yjTqCI+L1GY1BkPQEkzFkCRph7niDAeVIHmT0NGkTCLRqkBExtR/1oo4w0kUZs7P
-         1D/WowEdqhzvlI8xJuM7abbT+MTwOX3UX4mU/sqoWtIrVXgxVEpb1ZZ0KpMrCD3HMO5A
-         2k8/A9sWKEp5a9xo7Ur+zZVbxRV1ds/3My46mUAHQv3SoucTJAFmLYgSO+8TknjRtxBa
-         xw37J2LXPloCa6KR5HIU6WLhamfkAZSVzvsRaGNF3uOPj5cyN9WTWMESQeRx57DabJ1Z
-         lvuQ==
+        bh=rR5ytDhV7H47uLQq/SjwwcyBQ+REALHJYxiI5GqPsCU=;
+        b=JSBBM8MBGBEkKhD+ew6lCEc6RN0R1FXPrZ1syJ22/k9HwcwCCNH6Ml6y88t6KmwVfA
+         j4i36lJ/42sSx5pCnYJTQb7CivtHWXo7f2ZA9Zy4w/I8hAfy7RDHZ+oQatpM/UdJPzVO
+         CcSFLlhI0tDRaH3AeenEeGpmYviulC0oZufK+whVB2CDFus93YxFvnd4hPve/iMTqz4R
+         ogDJuWHFN0Dxz6oeElCozhryijMq/qIgtwQNZ14wCnWElYDOHd7W+A+c6LXtlwSIKTta
+         VhILyfRE5leN4bWf5fW/raR08YwpDgsDC7WPoHJIgPaXaqAPq32RnXeB5OYZXaGGYyiS
+         u1rQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747840807; x=1748445607;
+        d=1e100.net; s=20230601; t=1747840834; x=1748445634;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=7C0R7+0NH2EUHxXHiLLl79rh84HGAnn74iSZ4fXg5do=;
-        b=k0MjG2HokBEvAdN86a//M1Kd/WwT8ULnE101tKmb4qeY9nyhXGw+SCTc/F/dWgmGOo
-         SahzWaHFVYGz7/DfSJjeTCYOTMfdpN/iCSY6fFnjBhDVVHHV89meECkkObAW7CW1i+ns
-         L3RR8bbjdoeILFd5br+3cD1tvHYdKeKQr54/aRgmPAPaRy7PEjRP5/tWQn41wTl6V8Bj
-         M+HIP5Oe98sYPvKhT6Eso7Bbnsm3uvbrp8GBa/AI0lrNluU6M1uzHkOiratZb7aK9Iqr
-         TcDhcO5pyT304/2s/ukUV7BJ9N3G6ucdLyHmj4oJBKk+VXI5SbdbZBREcQ5o6uywnqXt
-         WebQ==
-X-Gm-Message-State: AOJu0YyeE36KNps9CNZcHK3VGzZiiqyVInWdS2bp6MoweNagMAjras9p
-	v6y80LgF1vXQ5S5KEuVXA8qYlF90gOyWyQhGyYT12x0/93GbcyZw4/WH
-X-Gm-Gg: ASbGnct2ZVFD7sVBpbf+zz5lRryImWucyrP/EIrk53nZjJpTRCRkZQiP2rkI5yRmqY3
-	6DrVKM+MfMxmPG2I8/4MHYjS2bOORZtxPNt+smCGn6JF6A6XZ2PcZrFPY3GmHBHaWo9dCbQqjIP
-	iZ4NxRkNTfDoZwywQaIg5Q02pFJHnzZUIqezoJTZEn9FGrYZUkKG/pTaOg7Ntk2eVft3j0LdF7r
-	KXDlDJAf4HzACz73/B9DC66clLKDiDRNhRMTrsBdQP7SvNRfDCSZMT6mP4c0HW7PqE3bjPA9Tq4
-	WqlBuA9pre1I5hy9IfbS+x9zcKYpNZORdyMuGZeV+MriwiMg92eqPJ1fXdZbJuN7OFoi0mw4Pkl
-	m3B9Xw7E3uYOKOAHQ3zzYHMGvZ4k=
-X-Google-Smtp-Source: AGHT+IFkLdFLEoiIFawgQSQ5nAxCj81vqYxn+HxM/Z7sxunPR1kOh+hMHO2/BYTQQ/8dNrfjMqD3kA==
-X-Received: by 2002:a05:6000:2484:b0:3a3:7115:5e7a with SMTP id ffacd0b85a97d-3a371155f61mr9690373f8f.42.1747840806827;
-        Wed, 21 May 2025 08:20:06 -0700 (PDT)
+        bh=rR5ytDhV7H47uLQq/SjwwcyBQ+REALHJYxiI5GqPsCU=;
+        b=TMI8jWSuosWiis5HubxPMqyTWXnRjdtzAZSd1iSqHn4TweseV8ubKdyq9rdlopaKj2
+         btNgy3FFs6j2uXULIkxJKtxnZ5rBw+DXABerkDjC/uwzgRM1YINxkeDTmwY2ordC5lOr
+         D9unRK2y/r0uYL6kxKgj8MJ90+kAq2909VsPGawKJZTiVgXXFFdfR/C43DRpyEfeaYPn
+         8rWEStI7ItzWJjTWVV9s6If2tyCoDT4omU3AJtEM8GFcQWSO3wkxRd7rV/XunBtrivLf
+         yz+l1RCG37yoXBBrX4rhi1JH1DjOB2T8ho5BTYCbI/dXeZ+FXp1iUmf0XYqMCmvP0jzz
+         g5PQ==
+X-Gm-Message-State: AOJu0YzJiwJ40Loye9Gg+NYMdtZVLZru7U/NP2Hwc/ZnCOgm01QQseI7
+	3JEQR8bkQqOJBUtoHwH3WXKdgPpp3E1c9MEmxMuE0Qy/YDBLXXEl/v0Z
+X-Gm-Gg: ASbGncsdcVRO/ZhMvlgDTWsD+Gf0DT0cBc339WxU4BEb4g/TLDyQ5FB7uf7RCfoBVTu
+	toJjDsxPT4064rslIsZAoQSEZuHwKcpxSMe60EgdfPY3zoAL80prx7df484oU3XO8VsZN4OUgP3
+	mbMc1HYtaLWnzy3/xlqFtcfcszdeTB34RDr2HAcrh4QfoOvHFQ0fxfsekk/pSOVO6Ae8INMvf1a
+	2HaQX0i+8JQ0Dk/zcZb5EJr9dkLTwt7bUyNR8wuQaQVb15wRasy+DvJTxxEWHfFZcXWzb8Yy0iS
+	LhPWJyGUj3rjXrgwP2tFbQ8//6KEBOE+6odOsgpyJgoJwheqbRtvQW4qcpeapu1vR0dbZsdAYKO
+	9HPA9oh1UxE5zHYiMGdu5pL+tdP27mthlR6Z+Lw==
+X-Google-Smtp-Source: AGHT+IEoUQFXFe/ydbrUBW7MRVcNuwbocO3qaDq8SxXXZZm6o7uhdXSVMH6WctlXpBx27ObRVFLRLQ==
+X-Received: by 2002:a05:6000:290c:b0:3a3:61b8:a637 with SMTP id ffacd0b85a97d-3a361b8a7a8mr17706811f8f.22.1747840834072;
+        Wed, 21 May 2025 08:20:34 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d1fasm2239397f8f.1.2025.05.21.08.20.06
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a361a81fd8sm18708470f8f.81.2025.05.21.08.20.33
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 May 2025 08:20:06 -0700 (PDT)
-Message-ID: <a87e6f8f-e6b3-4d91-8b0a-312962819eb4@gmail.com>
-Date: Wed, 21 May 2025 16:19:59 +0100
+        Wed, 21 May 2025 08:20:33 -0700 (PDT)
+Message-ID: <7302bdf8-f713-43eb-aa78-759bb1e1b6b6@gmail.com>
+Date: Wed, 21 May 2025 16:20:27 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -68,135 +68,46 @@ MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 1/4] midx repack: avoid integer overflow on 32 bit systems
+Subject: Re: [PATCH 2/4] midx repack: avoid potential integer overflow on 64
+ bit systems
 To: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
 Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
 References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
- <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
- <aCzBvvZDS2OFJ30h@nand.local>
+ <9f07da4fe71d21b14226d8f0132cd3c8600fba13.1747753388.git.phillip.wood@dunelm.org.uk>
+ <aCzDCEK7OhCYyAZa@nand.local>
 Content-Language: en-US
-In-Reply-To: <aCzBvvZDS2OFJ30h@nand.local>
+In-Reply-To: <aCzDCEK7OhCYyAZa@nand.local>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-Hi Taylor
-
-On 20/05/2025 18:54, Taylor Blau wrote:
-> On Tue, May 20, 2025 at 04:04:24PM +0100, Phillip Wood wrote:
->> diff --git a/midx-write.c b/midx-write.c
->> index dd3b3070e55..c7cb2315431 100644
->> --- a/midx-write.c
->> +++ b/midx-write.c
->> @@ -1699,19 +1699,23 @@ static void fill_included_packs_batch(struct repository *r,
->>   	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
->>   		int pack_int_id = pack_info[i].pack_int_id;
->>   		struct packed_git *p = m->packs[pack_int_id];
->> -		size_t expected_size;
->> +		uint64_t expected_size;
+On 20/05/2025 18:59, Taylor Blau wrote:
+> On Tue, May 20, 2025 at 04:04:25PM +0100, Phillip Wood wrote:
+>> From: Phillip Wood <phillip.wood@dunelm.org.uk>
 >>
->>   		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
->>   			continue;
+>> On a 64 bit system the calculation
 >>
->> -		expected_size = st_mult(p->pack_size,
->> -					pack_info[i].referenced_objects);
->> +		expected_size = uint64_mult(p->pack_size,
->> +					    pack_info[i].referenced_objects);
-> 
-> Makes sense.
-> 
->>   		expected_size /= p->num_objects;
+>>      p->pack_size * pack_info[i].referenced_objects
 >>
->>   		if (expected_size >= batch_size)
->>   			continue;
->>
->> -		total_size += expected_size;
->> +		if (unsigned_add_overflows (total_size, (size_t)expected_size))
->> +			total_size = SIZE_MAX;
->> +		else
->> +			total_size += expected_size;
->> +
+>> could overflow. If a pack file contains 2^28 objects with an average
+>> compressed size of 1KB then the pack size will be 2^38B. If all of the
+>> objects are referenced by the multi-pack index the sum above will
+>> overflow. Avoid this by using shifted integer arithmetic and changing
+>> the order of the calculation so that the pack size is divided by the
+>> total number of objects in the pack before multiplying by the number of
+>> objects referenced by the multi-pack index. Using a shift of 14 bits
+>> should give reasonable accuracy while avoiding overflow for pack sizes
+>> less that 1PB.
 > 
-> But this part I am not totally following. Here we have 'total_size'
-> declared as a size_t, and 'expected_size' as a uint64_t, and (on 32-bit
-> systems) down-cast to a 32-bit unsigned value.
-> 
-> So if 'expected_size' is larger than SIZE_MAX, we should set
-> 'total_size' to SIZE_MAX. But that may not happen, say if
-> 'expected_size' is (2^32-1<<32). Should total_size also be declared as a
-> uint64_t here?
+> Ahhh, this renders some of comments on the previous patch moot. I think
+> that this is a not-unreasonable concern to be addressing even on modern
+> 64-bit systems, since I have definitely encountered packs that have on
+> the order of ~2^28 objects in them.
 
-By this point we know that expected_size < SIZE_MAX due to the test in 
-the context lines above this change. batch_size is declared as size_t 
-and to get here expected_size < batch_size. I'll add a sentence to the 
-commit message to make that clearer.
-
-> I wondered if it might be easier to count down from the given batch_size
-> instead of adding up to it (requiring the second
-> unsigned_add_overflows() check). I tried it out and got this instead:
-
-I think you're right that we if we counted down we'd need one less 
-comparison but I'm not sure if it is worth the churn. In the diff below
-
-     factor = pack_info[i].referenced_objects / p->num_objects;
-
-can only ever be zero or one as factor is declared as uint64_t so I 
-don't think it works as-is. If you're happy with the shifted-integer 
-approach in the next patch I'd rather just stick with that.
-
-Thanks
+Thanks, that's good to know
 
 Phillip
 
-> --- 8< ---
-> diff --git a/midx-write.c b/midx-write.c
-> index 48a4dc5e94..f81dd9ff6d 100644
-> --- a/midx-write.c
-> +++ b/midx-write.c
-> @@ -1671,7 +1671,7 @@ static void fill_included_packs_batch(struct repository *r,
->   				      size_t batch_size)
->   {
->   	uint32_t i;
-> -	size_t total_size;
-> +	uint64_t remaining = batch_size;
->   	struct repack_info *pack_info;
->   	int pack_kept_objects = 0;
-> 
-> @@ -1695,23 +1695,23 @@ static void fill_included_packs_batch(struct repository *r,
-> 
->   	QSORT(pack_info, m->num_packs, compare_by_mtime);
-> 
-> -	total_size = 0;
-> -	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
-> +	for (i = 0; i < m->num_packs; i++) {
->   		int pack_int_id = pack_info[i].pack_int_id;
->   		struct packed_git *p = m->packs[pack_int_id];
-> -		size_t expected_size;
-> +		uint64_t expected_size, factor;
-> 
->   		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
->   			continue;
-> 
-> -		expected_size = st_mult(p->pack_size,
-> -					pack_info[i].referenced_objects);
-> -		expected_size /= p->num_objects;
-> +		factor = pack_info[i].referenced_objects / p->num_objects;
-> +		if (p->pack_size > UINT64_MAX / factor)
-> +			die(...);
-> 
-> -		if (expected_size >= batch_size)
-> -			continue;
-> +		expected_size = p->pack_size * factor;
-> +		if (expected_size > remaining)
-> +			break;
-> 
-> -		total_size += expected_size;
-> +		remaining -= expected_size;
->   		include_pack[pack_int_id] = 1;
->   	}
-> --- >8 ---
-> 
-> That reduces the two overflow checks down to one, and avoids the need to
-> introduce a uint64_t-specific variant of the st_add() function.
+> I like this approach quite a bit, thanks!
 > 
 > Thanks,
 > Taylor
