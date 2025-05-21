@@ -1,142 +1,111 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 379F81C32
-	for <git@vger.kernel.org>; Wed, 21 May 2025 21:47:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F6521C32
+	for <git@vger.kernel.org>; Wed, 21 May 2025 21:49:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747864060; cv=none; b=CVBnGf/qDjWOi1qy9cH6yefuyVOzdPiMlEBJbko7jh1VgjoEfFRRoidIAcSblMY0JdGu95NYgTJ0SE0/USSAwUQMcfLMItOWOXruh4HCEpbIkL1eIqoQgHDTl28zvOmCya4w9ptuP/cpbih9b0M2S5xtJQMVlAeYQChRsIq49PU=
+	t=1747864143; cv=none; b=oZg0yeeFP88Pf88W9GbuxxL7hunKTMPPxsCl8jFerqpsWuNQwWGLWxDDWs0aFAUO1i3Ur2KcaIALIcA1CPrnyebh7/lTyNVQ3Nh/NWYoFevR00nyyhXmHlvOxi0ZDcApU/UjRYO+Mo0qQXG9KYEVHp0KwkMlG2BoDxYqdVgP3t4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747864060; c=relaxed/simple;
-	bh=eU0rI2qpwXQxnJ2eWKmI9Ree7vCn+kQX4IdZWrUV5yM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lOt7RMQn9wlWmwACY5muYxUMisGwOpFXlexhSmy6MASl70w9yj6WiYWDn8GLmrq17+EGrcZWAvN983w7GVkuG8RMh7KsWJW+3qS/15Afw1ST2ZicDoM3svDXDH9f6QtaqnXG/Q9dHc+gokAPjty4E0lg94cVpNJKdD29xhyPUAQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZGFaCM6I; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YKqw73xL; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747864143; c=relaxed/simple;
+	bh=AiyGJSkQVevxWeU00a66qW5ViHg/vuZpV629rwWGgfQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=QewxZylGF6sFXDGYRq3HeTcKdf/tq/NgjMZFOIprHGGCrUXcSruhxjSDDtV6GeBc4RBov2irgfwR0Ob+/KtWewMi0BHljeIhuA54rcIsxpnCLpHYJcuo5sS0J2nZh3nlncYUidx5sKN9TZb9BWYPzt/Yo7MHQFU1yjBp2RM2o+Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=q1NTSiLF; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZGFaCM6I";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YKqw73xL"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 346091140178;
-	Wed, 21 May 2025 17:47:37 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Wed, 21 May 2025 17:47:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747864057; x=1747950457; bh=8QAgol0mki
-	uB8QCTiUma8uBswD4f9R9e4w6QA4N0ATI=; b=ZGFaCM6IQZUEVxvyOP8kq3Ig35
-	nfaXInUUv37pcZLuuRvMMu0I3QaB8AhdtOgozjixuO/OHBzTblIZ4SBQpfhu4QH6
-	TPoY4EzopJ6U5jm3WmGwhfGxBbG0sqrMkVqs8aXvKePm+7e+UiLW3GAO4yL7Olod
-	Ojs4LIeYKcNJQThC/On/32VZgwRKn/VIUlW6EZf0GELzHu+r0kVOaSpke9HTw7ea
-	rorW/McWPM90cIZI5ZucgSUOfADiAL81DHw26IrZ6XEFBZbMPMAzk8obOu6ir7fU
-	fpdbfsvnRJIMe73ALNGiDuKnshBvLvwHrb7beucltpMU+tvch59OzrD10KEA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747864057; x=1747950457; bh=8QAgol0mkiuB8QCTiUma8uBswD4f9R9e4w6
-	QA4N0ATI=; b=YKqw73xLjyETEZKzHCtrtWRQXvUAzfKiISjnFvOajf9Rhz+yIs/
-	K8M6AyQv4nkwp53fKYPVgW61KUG3y8seKHH3d8v8UcqBp2hMLpX7LT4w2yE2Dkw/
-	uD2P6peDQkncSYC2XJ15RlFSofYZQ6P5SwHHXI9oJnGLlsADzvmwBkmsDQQVw39z
-	9g75AFkUzNjlJLQB6lL7TF8u3g42qTd+32lEr2EGjW8HoiHLsA3yHJsC8e3zh3RN
-	Bg02BU2V2QqB/bM+X8bkwlOyaFT4z+BMNXzRGyDvMJgsBx+ygxZXI5U4Vzmbw4zm
-	jGEhh47HyEDRnMqZaFl6H81N/kWcV1/ATzg==
-X-ME-Sender: <xms:-UkuaLBpSgBjG4bOHmWjzsim8G9kUh188X9Wc5n3GpqKpQsUtK7oIA>
-    <xme:-UkuaBg82VAc4ksG4WF7KfFgij1Jzn3pFJslH1K6gvR6JnhTdzaBb_G5tj4QbgMlT
-    lW8K92D7U1afy_ajw>
-X-ME-Received: <xmr:-UkuaGl-_MUC0pqh2pNQmI4Yp0qakp_0lPSIFHC4OTjyUHfb-fWdgk0UU3GOdV0jnRheKMB7ULK2WINt3QeInvVHUnZr0y19Uw1NqjY>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdegudelucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrg
-    hilhdrtghomhdprhgtphhtthhopegrlhgvgigrnhgurhhfohigsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-UkuaNyUwwFq4dB4L1iaJynl7sXhA-sFkDA7TYuBsEEAWvj5yaPDwQ>
-    <xmx:-UkuaATOF7fdxJ4CJaSbvgAP3ATHsSAuUYDCqB5AnpDeZ8niLM-iOg>
-    <xmx:-UkuaAbs0DzBWTC5f4yFoI6h5RbNFKFnVx8qmWWfvgD04_pdW9hFGg>
-    <xmx:-UkuaBR0J9WMjpVPE66HP8gQQDrM1YQCb9Vu2cWnJvY-lzxnTQ9dwg>
-    <xmx:-UkuaKQs9l0OFJJvG5W5AJNa0g-2163Hm-M4OEKf9T7VExkk7UijBzkE>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 17:47:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Alex Mironov via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Alex Mironov
- <alexandrfox@gmail.com>
-Subject: Re: [PATCH v3] name-hash: don't add sparse directories in threaded
- lazy init
-In-Reply-To: <pull.1970.v3.git.git.1747862971672.gitgitgadget@gmail.com> (Alex
-	Mironov via GitGitGadget's message of "Wed, 21 May 2025 21:29:31
-	+0000")
-References: <pull.1970.v2.git.git.1747858585623.gitgitgadget@gmail.com>
-	<pull.1970.v3.git.git.1747862971672.gitgitgadget@gmail.com>
-Date: Wed, 21 May 2025 14:47:35 -0700
-Message-ID: <xmqqa5758wlk.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="q1NTSiLF"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1747864133;
+	bh=AiyGJSkQVevxWeU00a66qW5ViHg/vuZpV629rwWGgfQ=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=q1NTSiLFwacEkcSvKdFgql5Ks4fGB0EISrw2e3b/LpZWqrfNtk4cQQ9AMwhjrHA4c
+	 MzVq1l9/GRrPObJuGi8tFAf/zwb/btwne1X+732RH/DIdMQG8Z4dTOYCqTXo98jz2h
+	 +8tpAJP8DjqmXr4Jsbp2IIo3TtA7S3uS6kA8dCBzX6rNccamxQOwsMdVTRHHGO9xRc
+	 X0h4lQA+zy3BrDvqVZta26wy/tOmoBrrDA4o88jY+C1YkOknix80MOcQ8lDB33a0yH
+	 BnReMPDiON7lCQigLg80f50I9hS9fMNixZAldxXKHGN2YqKuvCHXg9n4O4+OKLGixI
+	 C3te8EoqOMVirwHrCfs62TPNEB90hOZoMpJLNCeasFHCtG44QefcI5YZ+updwdZor8
+	 o1gxIfwQ8KYDnKW09aHRqbAEHn9GsB3m6ULTZgMTmen39wlX8F7ME/9WjmkQHq3sKO
+	 cPJ+kmvjiL76T59eJpaWNhVSwIZZjaJfI2Eew3Hj18ZRVaUG3O0
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D830E2010F;
+	Wed, 21 May 2025 21:48:53 +0000 (UTC)
+Date: Wed, 21 May 2025 21:48:52 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: =?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= <opohorel@redhat.com>
+Subject: Re: [PATCH] cvsserver: avoid precedence problem between ! and %s
+Message-ID: <aC5KRBop9m3K5JtE@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org,
+	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= <opohorel@redhat.com>
+References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
+ <xmqqplg2c8ow.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-
-"Alex Mironov via GitGitGadget" <gitgitgadget@gmail.com> writes:
-
-> From: Alex Mironov <alexandrfox@gmail.com>
->
-> Ensure that logic added in 5f11669586 (name-hash: don't add directories
-> to name_hash, 2021-04-12) also applies in multithreaded hashtable init
-> path.
->
-> As per the original single-threaded change above: sparse directory entries
-> represent a directory that is outside the sparse-checkout definition.
-> These are not paths to blobs, so should not be added to the name_hash
-> table. Instead, they should be added to the directory hashtable when
-> 'ignore_case' is true.
->
-> Add a condition to avoid placing sparse directories into the name_hash
-> hashtable. This avoids filling the table with extra entries that will
-> never be queried.
->
-> Signed-off-by: Alex Mironov <alexandrfox@gmail.com>
-> ---
-
-Sounds quite sensible and the above reads better.
-
-> diff --git a/name-hash.c b/name-hash.c
-> index d66de1cdfd5..b91e2762678 100644
-> --- a/name-hash.c
-> +++ b/name-hash.c
-> @@ -492,8 +492,10 @@ static void *lazy_name_thread_proc(void *_data)
->  	for (k = 0; k < d->istate->cache_nr; k++) {
->  		struct cache_entry *ce_k = d->istate->cache[k];
->  		ce_k->ce_flags |= CE_HASHED;
-> -		hashmap_entry_init(&ce_k->ent, d->lazy_entries[k].hash_name);
-> -		hashmap_add(&d->istate->name_hash, &ce_k->ent);
-> +		if (!S_ISSPARSEDIR(ce_k->ce_mode)) {
-> +			hashmap_entry_init(&ce_k->ent, d->lazy_entries[k].hash_name);
-> +			hashmap_add(&d->istate->name_hash, &ce_k->ent);
-> +		}
->  	}
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="vm4v/ua71WYkkbsH"
+Content-Disposition: inline
+In-Reply-To: <xmqqplg2c8ow.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
 
-This unfortunately gives us deeper nesting than your previous round,
-but the conditional matches the original commit and easier to see
-what is going on by comparing the uni- and multi-threaded variants.
+--vm4v/ua71WYkkbsH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Nicely done.  Will queue.
+On 2025-05-21 at 14:58:07, Junio C Hamano wrote:
+> "Ond=C5=99ej Poho=C5=99elsk=C3=BD via GitGitGadget" <gitgitgadget@gmail.c=
+om>
+> writes:
+>=20
+> > diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> > index a4e1bad33ca..076c10cb2c2 100755
+> > --- a/git-cvsserver.perl
+> > +++ b/git-cvsserver.perl
+> > @@ -5009,7 +5009,7 @@ sub escapeRefName
+> >      #   =3D "_-xx-" Where "xx" is the hexadecimal representation of the
+> >      #     desired ASCII character byte. (for anything else)
+> > =20
+> > -    if(! $refName=3D~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
+> > +    if(! ($refName=3D~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/))
+>=20
+> Interesting.  Shouldn't it be using !~ instead if it wants to assert
+> that the refname does not match the pattern?
 
-Thanks.
+Yes, it should.  It's likely the reason this is getting a warning is
+that `!` is higher precedence than `=3D~` and `!~` (see `man perlop`) and
+switching to `!~` is the customary way of writing this.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
+--vm4v/ua71WYkkbsH
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmguSkMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ+Pz6D3oomUWhH6DA5h9xwgAt6P8ufrnmZmbvesFogEb
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAAkIAP9P3qgGA3cFPMEMNWpzAC53iQBq
+UWyyTb/q8ofr+xgpKgD5AWYDPxObK6odFllgdP68I70fv5e/vG0va8YDQfQgoA8=
+=i+Hf
+-----END PGP SIGNATURE-----
+
+--vm4v/ua71WYkkbsH--
