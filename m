@@ -1,141 +1,97 @@
-Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B145A263F54
-	for <git@vger.kernel.org>; Wed, 21 May 2025 11:56:29 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5671627978E
+	for <git@vger.kernel.org>; Wed, 21 May 2025 13:04:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747828591; cv=none; b=cRq9DCTCkJhlrZkSceP6jP6CV+cA6MB9mt2t1QSjLaLCfFwrKo0f10d5UcPr1aNRc6DcZuYXVzFSxgaCmCC2jVyiTaBGSs4FhA0NcotPPNLgwVlOct3n/gTiugLkaVkBnsmWl6wQviz0YlW/vMBYVuaZxGE4wtY7JjasKx0iQEI=
+	t=1747832664; cv=none; b=rNb1rvW82EbMdH0X9O0hokzDWH36ckfU+vF33WFflz4LRfahRm+Oeix4gLQeNQMau1R6gibj+6MYRqz8NezV3PFKFOUDYwZJ3a2PgSV1Ua2DtUJKypR9ntuki0x/Zq6dGcouTXFm57I1wTi7QuR5cs4JILYG5eRXRTiKiDMjr+g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747828591; c=relaxed/simple;
-	bh=xxTr6+5XSPIOzlZxEq7ahURntrG5qosIZp3cjnJMXyI=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=LiClsqK6QpYKpYMxsMFaWjXsIku6wikxQbYIZFt+5Kw7y0waa1UExvPLZfrXbcC96tx5lnKnYFOGBGWk6ssdPPNirwj0aqTvKNXlYs0ItV20+/M8KO1B5YhdXY7XyYc8RLnTWOl1p5vQK0/Jy8nWhxqYXjUqnjBgb46miwWT4k4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E02i6lZ/; arc=none smtp.client-ip=209.85.208.49
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747832664; c=relaxed/simple;
+	bh=h6Vslfxy6hzBDedUHNsrnpn5XvwP3Qh4baso3zHDuYI=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gGp/ryWbuR+vT5qYH+7jwJSXVzZP97nBDtljGq5m74csHfn7eDEVNPlworPOVIdeB7myFGXYCPazsQLL0Uv1g7J4KMdceCaYiuUWDc4qeQ0OIL+st/lj9z/4PQZa5TKZlylKgk1lANPOWankJDErXRxSwRZojV+nw3yOsn/WxuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZbdwSm+F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PR/noBdd; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E02i6lZ/"
-Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-601fb2b7884so4931630a12.2
-        for <git@vger.kernel.org>; Wed, 21 May 2025 04:56:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747828588; x=1748433388; darn=vger.kernel.org;
-        h=to:references:message-id:cc:date:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=fDD46bAbx1J7HCV/evD/lOLJNOB4oZ9IRirhJFWGRNI=;
-        b=E02i6lZ/MQLNNjHcy44XSLOE98fNfVlRDblS1VxOGN6F/aIWJ/78Pe5j+Ai47bWZeH
-         v6NMSM7WM8gihyV1IIMGmlqmXYJwJ39D2+Av7XxSP/8T/wTRqvqbe+8It5LiV8hi88TN
-         cu3wc2qvEhXeHWDD52Eia+aRBQuLnoKrQfm33qyX7XTnf0mJkKlAzl5MHdkU5ybCHC5t
-         QhnNqdSKTIW1INYZiHIh+P6C5065czyB5MFLoa5Zr/vAI2LrrCcAFuNfkDn/qiUrfTB9
-         U3ZPA9r0WRGdQL4745h+jVge/wxzkBloC5FQaki3+Cqq/x2boiM+OdZ/usTWLI6mtpyX
-         cU8A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747828588; x=1748433388;
-        h=to:references:message-id:cc:date:in-reply-to:from:subject
-         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=fDD46bAbx1J7HCV/evD/lOLJNOB4oZ9IRirhJFWGRNI=;
-        b=odDT1og7ZjUwxpF/fjfUupUvmvWAspgaJNo8ohBPKoK0O+EuxV1CwgJTIfYanbow8O
-         cWr29x2PWj3qIrXLD/F11Ij7zpoeHotuGAk8RWmKEgUWwiUFvAK3UL7Dse2vXXlIqPbC
-         QL+8mOCI2Lf6r0f/HDULIm9IzsBCV8Ulb1WyoCAJFT8EOx28dmc/+eqCbPRCOBnw9KjB
-         wDyBVTPae9D2xxOW7m/pGjaVINbn/U7LdcW2gmj7GHcpgHG+p8dIUu6mqFo0kP2yTwR0
-         FvhFldw7XUhIgvR7K/pzrV+gf+LgmSjsQBLKdoml/1mDn1fUFvD0XQGRRV/BLwaEcis4
-         4raw==
-X-Gm-Message-State: AOJu0YycHbkvxILffObXFSxSieaQcBmM7lNe/pVlzMAQcX1JyyhKA/I9
-	b6P1CRNtOZCqEkA+P/p7oqNrmJyQ2IE6Ijt0xNKiqdX9qb1kurNDLjD+wmC0BsGafIA=
-X-Gm-Gg: ASbGncu6cehbnVwjC4omU9XuT2EiBMSr55cOglx+nfIzUqbkttfhen7VzD0eg2R0vQ0
-	uBHWhluaxWynz2Y4LSGQ+VKrUnxmm4dV+j3tD/pD208DcKBkC2gQr37XLfkYPs654te7lLo//2y
-	+o6Q4+K2bxXmrECMjRUbzoso2u5lhbfyuKI4gOhQga56eo9gCf0qSQPZgaqI7PCVTW1wDwxtgHp
-	9wdGroNqsjjcQvv+VnCAi0jpfijssy93t+BQ9vCVg4eSw1KmSPbTKFbhPiY9nNcgvpTzx0sNUDr
-	6y1lX7Ab9/rBftPWn9SFyoM5KXTgW/84aqDpUSM9mWK4VholwwYr9Tsr85NtX4IKJ82roFHnzzD
-	C1/LJKd/Mnech
-X-Google-Smtp-Source: AGHT+IG3Rqg0s6rIVe/1ReVe75C3MjwcVPRR5kEEVO1aguSv9/ipQTqm91vZ33W9ZQOrDcLECyIj3Q==
-X-Received: by 2002:a05:6402:50cb:b0:5e6:e842:f9d2 with SMTP id 4fb4d7f45d1cf-60119cdd6e4mr15443157a12.29.1747828586996;
-        Wed, 21 May 2025 04:56:26 -0700 (PDT)
-Received: from smtpclient.apple ([2a00:5400:f012:dc8e:4815:bfe3:d38c:4162])
-        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6004d4f2f06sm8721104a12.9.2025.05.21.04.56.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 May 2025 04:56:26 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZbdwSm+F";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PR/noBdd"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3BA14254011A;
+	Wed, 21 May 2025 09:04:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 21 May 2025 09:04:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747832660; x=1747919060; bh=iYUrAcyM6M
+	mjYAnx4BtpvEERBquEyCJM54E1jAxMKk8=; b=ZbdwSm+FCixQMOaBpRpeElrVDO
+	1CkSLAcqCDgOaNxwwlgG7VBdvH2YzoqgU/WgzD6E4AHMMirSfMTKbd3BxJOXypqY
+	8oyCjY7lH81OA/EhflTDCqMec+/ROMdTWhx37gKZ6bFiGaFUSbZzQa9XE8jv5o5n
+	ODPETgMy8uTpAhKNaoNyhZvJziNW5F8FccgOtm4Gr5xANmkSRZTP13KG+e045hmw
+	p46lFljI9Gb7CUPf+xPW0iFzEvLvBD1tNWN7CPOlslq0KfQ2vQqKpbg9OWJDm16I
+	WyAEWc6laT7otx9NBPEPvS5wEe8ZgXDWQBh/RIfzCOTww4JNe+pAaOPDHkFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747832660; x=1747919060; bh=iYUrAcyM6MmjYAnx4BtpvEERBquEyCJM54E
+	1jAxMKk8=; b=PR/noBddzCfMR9NgBpu+HYyy+gaLne3Ixw7bA75q95Crrm6rZLs
+	KC/Gwy8iDkSUmxh8YkpEzcPknO7Zwal+0iNSj3tXT2+8Nr/Xd9xPPp9rEa9SaHim
+	w2Wn2yAZuhi/COwdGo5qWDuLiOvF7C+mc7iV7RPluzIwgYqgiU4zq6rIlIlU0r/F
+	6KgFQb1oBWcyXMYtoqrkqF7Eu9Phjzp8szoPvZyi+pdUZiWa6zarcT2cmV7tvu/M
+	gA3b51ZHiSnATIUzda9PE08f3BTQ85kujnY5vo1rOnd5ioFZmUzWYf93EaJZ5rWk
+	PsuqzYXmRlRTseUcAlBwzFC9/DE8yHX0cPQ==
+X-ME-Sender: <xms:U88taJOCWWNmpooOuOvhwH8SPGeReq5zJ32DP2SQEvQjYj2VdfMUaA>
+    <xme:U88taL_G5tnBxo4Sz-vgk6AFydl1rG0Itn_Azj76SNrm7hRbLi7hFYJ6Vja16UDU3
+    SCJ_tcwphsasRps6w>
+X-ME-Received: <xmr:U88taISRRu8pjIKcz1oZwdrEzz1goCEXJbxjCG72jdY_qvwMKqJzFUzWQ36k7SnEbscVEvzsoRW-cN4R-V0aWfsJ-HiooO67tyS-Goc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefudehucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
+    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrh
+    esphhosghogidrtghomh
+X-ME-Proxy: <xmx:U88taFv5WyrFZ7WuwQ1RXCfYK1QgxO6lq_a1Ydxbqz4XJQR9Vk10hQ>
+    <xmx:U88taBeyWLEcdhNOPz0npHKCyedo7CokzHj6_lzwv0An_gNWcQpMaQ>
+    <xmx:U88taB0a39LEN2JKXtya5oBJYSWOLWQmMJDhx5LxJOfbq2BfjoUuZA>
+    <xmx:U88taN-9zeXx2AYR2kuynqDHMGECeUZiaavkkJGZTtGbB1aYaVfnrQ>
+    <xmx:VM8taDp3RxXbNWR7GLA1sKCjRWYLIH6HCrqOOe8gQqHpC0d6vp2HmQOL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 09:04:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v2 0/2] stash: fix and improve "git stash -p <pathspec>"
+In-Reply-To: <cover.1747733203.git.phillip.wood@dunelm.org.uk> (Phillip Wood's
+	message of "Tue, 20 May 2025 10:26:58 +0100")
+References: <6292feee7c4347efad31e9fb2a1763779b7df133.1747407473.git.phillip.wood@dunelm.org.uk>
+	<cover.1747733203.git.phillip.wood@dunelm.org.uk>
+Date: Wed, 21 May 2025 06:04:17 -0700
+Message-ID: <xmqqy0uqdsj2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
-From: Hridoy Ahmed <ariyanhridoy130@gmail.com>
-In-Reply-To: <aC2xp4Cdb0j6OX-G@pks.im>
-Date: Wed, 21 May 2025 14:56:25 +0300
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Message-Id: <C290941F-C1C1-40DE-A042-E71588229733@gmail.com>
-References: <aC2xp4Cdb0j6OX-G@pks.im>
-To: Patrick Steinhardt <ps@pks.im>
-X-Mailer: iPhone Mail (22F76)
+MIME-Version: 1.0
+Content-Type: text/plain
 
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-Hridoy Ahmed
-Hy I am back=20
+> Phillip Wood (2):
+>   stash: allow "git stash -p <pathspec>" to assume push again
+>   stash: allow "git stash [<options>] --patch <pathspec>" to assume push
 
-> On 21 May 2025, at 1:57=E2=80=AFPM, Patrick Steinhardt <ps@pks.im> wrote:
->=20
-> =EF=BB=BFOn Tue, May 06, 2025 at 12:59:49PM +0200, Patrick Steinhardt wrot=
-e:
->> Hi,
->>=20
->> this patch series starts to parse TAP output generated by our tests when
->> executing them via Meson. This has the benefit that Meson starts to
->> understand skipped tests and reports how many subtests have been
->> executed:
->>=20
->>    ```
->>    $ meson test t002*
->>    ninja: Entering directory `/home/pks/Development/git/build'
->>     1/10 t0024-crlf-archive                  OK              0.17s   2 su=
-btests passed
->>     2/10 t0022-crlf-rename                   OK              0.18s   2 su=
-btests passed
->>     3/10 t0029-core-unsetenvvars             SKIP            0.15s
->>     4/10 t0023-crlf-am                       OK              0.18s   2 su=
-btests passed
->>     5/10 t0025-crlf-renormalize              OK              0.21s   3 su=
-btests passed
->>     6/10 t0026-eol-config                    OK              0.25s   5 su=
-btests passed
->>     7/10 t0020-crlf                          OK              0.81s   36 s=
-ubtests passed
->>     8/10 t0028-working-tree-encoding         OK              0.85s   22 s=
-ubtests passed
->>     9/10 t0021-conversion                    OK              3.45s   38 s=
-ubtests passed
->>    10/10 t0027-auto-crlf                     OK             26.35s   2600=
- subtests passed
->>=20
->>    Ok:                9
->>    Fail:              0
->>    Skipped:           1
->>    ```
->>=20
->> This new feature is only enabled with Meson 1.8 and newer, which
->> contains a bugfix that we have upstreamed [1] to make the TAP parser
->> work in `meson test --interactive` mode.
->>=20
->> Despite the changes to Meson itself, this patch series also contains a
->> couple of fixes for our test suite that caused us to not generate proper
->> TAP output.
->>=20
->> Thanks!
->>=20
->> Patrick
->>=20
->> [1]: https://github.com/mesonbuild/meson/pull/13980
->=20
-> Junio, I noticed that this series isn't yet part of the "What's cooking"
-> report. Is that intentional or an oversight?
->=20
-> Thanks!
->=20
-> Patrick
->=20
+Thanks, queued.
+
