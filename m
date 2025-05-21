@@ -1,127 +1,129 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1C58148827
-	for <git@vger.kernel.org>; Wed, 21 May 2025 22:23:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86CA0190472
+	for <git@vger.kernel.org>; Wed, 21 May 2025 23:00:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747866219; cv=none; b=OLt8u7PenLTDNXrGv+xg9A7qTWgaCvKA5MFkE3n7s7CujA/krpJeQXCfEqN1URKtaG5po0/16BdtQgynx6t+seLpGzwUqRLWPIqOaTt+kCZAL7u4PnderSPH86mL4Q6+d7YWFRbiNscOwiP3lsivzLr9qb0zzOdzoeDW3nid0AE=
+	t=1747868457; cv=none; b=LgriKRIPgDIi2Z2/Lqyi7aSBmwuyZW3U7E/al4R3lnopN1amCSBpJV5B2GuXMALDnAgEkcBL8Doe+O0Txl7GrK0Jp1EUM5NtCD7q1oV+xwHd1fbgtVn2yRi6emOsS0WRDctkcxVuvBb7Exr9U6En8nhhc9IkSg1SBYiWjA4J2GA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747866219; c=relaxed/simple;
-	bh=6CkUQdWQxW8dk5YBSEX8NqXCymnCxPnDUf2KGhMEmdE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=GwruxKP0pTmzLwOMQ7FMhcGEqNyXm2WPpH9M6gAcbW3wwksGnRGOYw24SAsQdUOeaarpYyybXImzYHytF9BBApnce3HmeKGSyMz08U62fKdzsYk1TBl2w/VPdLIZoIbOdJJqi8rfTdO5KklKIHIGd11Y78MVW3GGnSZzo+3OYeE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=mCRdtzPV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ux/+oNbB; arc=none smtp.client-ip=103.168.172.157
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747868457; c=relaxed/simple;
+	bh=fezRLlJsm0CQ4xOfcnkqdB4zh+KVpz0RxcCnCHAnl6w=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=u6ifjoUmpT+zh2/HaZH+Lc5BFaL5fAvdxRYogQMekW5o+Modmx1wGeVyMhkK5pp7Pq9S2uA9j9k9n2Hgjr1Bil4G2eJ+/S3D1XGPzjGybc+qGTc3AgtSI4BCsaIOaf4QpGHojt/f+WdY6KpvMyFb4NTuMnW2DLqwLixV8TyzM9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=Uc59UNX/; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="mCRdtzPV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ux/+oNbB"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A81B211400DA;
-	Wed, 21 May 2025 18:23:35 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 21 May 2025 18:23:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1747866215;
-	 x=1747952615; bh=2dRJ0a5whaQYOrMi/Hj99i08g0UWUgGUW/OfFa2ev3A=; b=
-	mCRdtzPVoF7bxrsuCUJMg3RwLFTqsIy5oxxrb9Sw9KpbqGaPMsc0mhahRgR4GF9A
-	BTUVJSxPwHCO/hy4io3vqQ+AnZIUOyd19o183c/VTk3xkibr/XUFzyUn8CMW7VSO
-	ct1CrQDTwMOrunS/kYvrHg1s77Zzrf9aIh9RHbFeTIc9Ao6qxqVOSE5/zCQzXBgl
-	7nnFDV8BFh80I9aU2PRDad+Jluy/AvPzQ8yV4M9d5OpxZs/qqcO8omlqDgYLltEw
-	+YtZ6Nh6BZvjNmX6j5gWPOobaW6VoXH4pthHeCQa1yf48FGh7UMHdqFRE5S311df
-	8Po5DdI5gxTEaNxZABTVBg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747866215; x=
-	1747952615; bh=2dRJ0a5whaQYOrMi/Hj99i08g0UWUgGUW/OfFa2ev3A=; b=u
-	x/+oNbBkEJUFxBAWUj2AQLr5EB2VgyvyZVs/9S2DpCmKtPrM16eEaPPfU/1FgvnS
-	T1DTE8L/B+ufgnX26rvjWCsw9amUZoqHjoG+OE37cxsfZ2veEh8+3IYoh/ft3oRe
-	Stm0yY5clNCdIURVJvlo25upmS6+KyA54x1XhyOcsaBUsggEFttA1tZzNaFnOCK9
-	ygRK4LilFRmUa5gR2HPoSD89oPgy1L7h4LTuNIle2fdjBmeMY0MJhkg879VfJwHu
-	jVEsEMftzE8VP1lbAejOWF/oSUYNdsXLNAudwLbzUWSPCHSNwbZ1v9eKX1ISkThz
-	9UMMro71w3t2l8ox/jS5g==
-X-ME-Sender: <xms:Z1IuaEQrtd_F2vXAI3rRa8SakBzYwi4MZtC7BfI5GPagRU-Gf2RKyw>
-    <xme:Z1IuaBygqCeuOkjBU6h4y9hg3yHJ5L_mIZPbd9RZiclTZX3UdBlGFxM3UFWIiqBlw
-    hJTvhksrB1KZ1_4hQ>
-X-ME-Received: <xmr:Z1IuaB2s1TtXLxfdY1B_jxvRje9meHfhPv5eDVqR1ZNlej_PrL1XNy6bogQAgY0NnbVR7hkV2-KGGoVywxUki4mqn8mSlfWiwx9NvbM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdegvdejucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteeg
-    vddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgt
-    phhtthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepgh
-    hithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvges
-    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
-    drtghomh
-X-ME-Proxy: <xmx:Z1IuaIDCO4jib3hks8eTLDtxPj5YzwFiUkqsMFH6PmuSijXFZ3zQsA>
-    <xmx:Z1IuaNiUdDwN-nrQXcAwEP08KJWcbxVGDncqeLxwzjyWdhkELUwDJA>
-    <xmx:Z1IuaEoMZIOI46X2xNUxXjNGa2bKlzxc6slgkf6R2T2ONEZstKKUbg>
-    <xmx:Z1IuaAhJecffnC5FI6eU-fmnECM2Nn0BSy9rXCmxhHLogal0JDZ6IA>
-    <xmx:Z1IuaIMi-ZuAQMATZ4E7BmjtPwK6Pj2DZ1a7geqW4krUQICHqkczv9mh>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 18:23:34 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-Cc: Aditya Garg <gargaditya08@live.com>,  git@vger.kernel.org,  Eric
- Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] help: inform about 'git update-git-for-windows' on Windows
-In-Reply-To: <aC5MOl66YuIK1eyU@tapette.crustytoothpaste.net> (brian
-	m. carlson's message of "Wed, 21 May 2025 21:57:14 +0000")
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="Uc59UNX/"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1747868453;
+	bh=fezRLlJsm0CQ4xOfcnkqdB4zh+KVpz0RxcCnCHAnl6w=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=Uc59UNX/iDO6l6wcRKKwGn+efArnVpFAg7akJwAH4dposcxdyfcMKQNc1aizhySx3
+	 B8HofpL2iBiVY7WN8q+b8KA+2LPCzFJiGd1OPKBO+ZhKIisa1q8suJHqcRpF9n5g7t
+	 PKhczjCc0ywa46ZI2LNMALOZiHkmG7YF3GdbkwabW02kuQjry86n5vSC3q9HFUtYuv
+	 GbedzL/yrgf4VdxZTrPAQrRfjTa9LX53q65NCEYGH/VX+5hZbTvo0q49MU6hR8uSMO
+	 U5o3G+jEqve62GitRW5QEB8fPjtlcfyvYJosEikrQl/2nmEhqytDbA5ZH6RIAlF0rx
+	 qLPkAv5uvYG7SD2bJZ9G+IZljgLyqOObDJ6PmD+I+IWBLBf6WBS6058OV+CGdQlYk5
+	 0Pv96wXIC3n4fj/zBijFZeoorH8xBgAIHYk2LwfEdUHXO7ZI9DSXJzKDlPLvu+daHM
+	 139AiC8wFRYeNCYi/7PZgwlDJsqW7BBYFG7MtMpbJeU1wAy46u/
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 176742010F;
+	Wed, 21 May 2025 23:00:53 +0000 (UTC)
+Date: Wed, 21 May 2025 23:00:51 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Aditya Garg <gargaditya08@live.com>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH] help: inform about 'git update-git-for-windows' on
+ Windows
+Message-ID: <aC5bI_Y9-ZQPXJ4t@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Aditya Garg <gargaditya08@live.com>, git@vger.kernel.org,
+	Eric Sunshine <sunshine@sunshineco.com>
 References: <PN3PR01MB9597FDF30B7CE529985DE546B89FA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597AFD63B750703E90AD18BB89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<aC5MOl66YuIK1eyU@tapette.crustytoothpaste.net>
-Date: Wed, 21 May 2025 15:23:33 -0700
-Message-ID: <xmqq5xht8uxm.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ <PN3PR01MB9597AFD63B750703E90AD18BB89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <aC5MOl66YuIK1eyU@tapette.crustytoothpaste.net>
+ <xmqq5xht8uxm.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="Kbn7A01xZCch4MdL"
+Content-Disposition: inline
+In-Reply-To: <xmqq5xht8uxm.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--Kbn7A01xZCch4MdL
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-"brian m. carlson" <sandals@crustytoothpaste.net> writes:
+On 2025-05-21 at 22:23:33, Junio C Hamano wrote:
+> "brian m. carlson" <sandals@crustytoothpaste.net> writes:
+> > I don't think this belongs in our codebase.  It should instead be
+> > carried as a patch in Git for Windows.  The reason is that there are a
+> > variety of possible projects that compile for Windows=E2=80=94Git for W=
+indows,
+> > Cygwin, MINGW, etc.=E2=80=94and only one of them ships this binary.  It=
+ is even
+> > possible for users to compile their own Windows binaries, which I know
+> > is at least done by Microsoft as well as some Git contributors on
+> > Windows.
+> >
+> > This change might be misleading or incorrect as it might tell users to
+> > invoke a binary which is not present or to update software in a way
+> > which is not via the normal package mechanism.  For instance, telling a
+> > MINGW or Cygwin user to run that command would not result in anything
+> > useful or desired happening.
+>=20
+> Do you mean that this is OK if the #ifdef were more specific to
+> Git-for-Windows?  Just being curious.
 
-> On 2025-05-21 at 14:22:29, Aditya Garg wrote:
->> diff --git a/help.c b/help.c
->> index 6ef90838f1..238ed1913c 100644
->> --- a/help.c
->> +++ b/help.c
->> @@ -355,6 +355,9 @@ void list_common_cmds_help(void)
->>  	puts(_("These are common Git commands used in various situations:"));
->>  	putchar('\n');
->>  	print_cmd_by_category(common_categories, NULL);
->> +#ifdef _WIN32
->> +	printf("\n'git update-git-for-windows' can be used to update git.\n");
->> +#endif
->
-> I don't think this belongs in our codebase.  It should instead be
-> carried as a patch in Git for Windows.  The reason is that there are a
-> variety of possible projects that compile for Windows—Git for Windows,
-> Cygwin, MINGW, etc.—and only one of them ships this binary.  It is even
-> possible for users to compile their own Windows binaries, which I know
-> is at least done by Microsoft as well as some Git contributors on
-> Windows.
->
-> This change might be misleading or incorrect as it might tell users to
-> invoke a binary which is not present or to update software in a way
-> which is not via the normal package mechanism.  For instance, telling a
-> MINGW or Cygwin user to run that command would not result in anything
-> useful or desired happening.
+I don't think that would be a good idea, either.  There's no such #ifdef
+to my knowledge and we have lots of ways for people to update software.
+We don't tell people to run commands to update to a newer version of
+their Debian package because that's a responsibility of the packager or
+distributor, and so the same policy applies here.  If Debian wants that
+message to be included, then they can apply a patch and receive any bug
+reports or other feedback related to that message; same goes for Git for
+Windows.
 
-Do you mean that this is OK if the #ifdef were more specific to
-Git-for-Windows?  Just being curious.
+I also happen to know that in some corporate environments proxy problems
+cause the updater to break (which is not in any way a surprise) and
+there are also cases where antivirus false positives flag the updater or
+other tools.  We do not in any way want to receive reports about those
+problems or the updater and if we avoid recommending it, then we aren't
+responsible for it.  Otherwise, we'll inevitably get a request to allow
+people to configure that message because it doesn't work in their very
+special corporate environment and they don't want to confuse their
+users.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
+
+--Kbn7A01xZCch4MdL
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmguWyMJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ/BY1nUvS6RjatphpeulcmDvLf511TedwNNCl9PYbQsp
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAOa3AP91rFq7VodHEKwzHinA/FWL5GoE
+7auYqhTeGMXtFwdM2wD/f7B9gHv3sJqaRNNQGfpJJj+bpZKISWh8NSAeASqz7wI=
+=3TTG
+-----END PGP SIGNATURE-----
+
+--Kbn7A01xZCch4MdL--
