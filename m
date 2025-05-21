@@ -1,140 +1,119 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57AA17BD3
-	for <git@vger.kernel.org>; Wed, 21 May 2025 07:53:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1751A9B4C
+	for <git@vger.kernel.org>; Wed, 21 May 2025 07:56:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747814011; cv=none; b=uF9OAgTrTkgIgDnrqMBmhmkGSQSpbX4tn08A3MZ8rKPf3BjshlUsUOi9qTvYTb65p1xvfrDsJ5LpKCAnq2I4GcgOy6F74GumCJByTTpDTXBrk3ucw5cSZ1Zda/+OMdE+PMdJbGEp4rCf2swj8kAGBYQSUC2IbxzdD/hv8H3MtF8=
+	t=1747814183; cv=none; b=RSBKk8BUsMza5YiXSnbdZYb3pvw9TaK3CdteDUAJpIVloE6UD30NJYWwDHoj6fa/23q+a/G//i1c0gH8SRLEvy/iAq9UtgB+9GIIDAnhabaHVrRlsnHbn82JdZEQ3YuUfYteibGZvPObNBuMe2LApBXAVp7a6fxbKzVQcDBh5DU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747814011; c=relaxed/simple;
-	bh=rO2yL97vXKA2oTZDMtfY3mnDLRU9hPEG2NyiIq4znLg=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=uI6TgdHHzqKi5WEB1Lne8A1erfClVTBJ06bkBToxGGwRtqdHoxhnNge+VwmLflPGmMwooNp3mxLGw45GlWpWN0ruprmltbjq90v2W/Mt7n4aiKmjLf7Jta17Y0mlx4AWlAkehTgbBBCOZMFHwz3GLDx75uqZe1fesySTTM4uC9A=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=qnauPswd; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lF8Gt8DW; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1747814183; c=relaxed/simple;
+	bh=+Co9um485g3J884RubL1PJwXMXv4btdxMQcmxTmXZf4=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=mCqHjaEKtogYIvmSCLN2hKVNHMX7rbQwMeNCENaH1QP2A+j74qminyWAE7tZlHv7Tx7jUuEygNb+sfmBI5yv39P0o92OcaC+uSY3Yi+7OfongxtnX3xxR7owLQqaYsjPvlX2kGSFgFkyAwIqVD1MKIsmBcaQPTANDtJyxdPgK6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tvDHbjYb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EqG2E3qq; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="qnauPswd";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lF8Gt8DW"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id D5FB8254010F;
-	Wed, 21 May 2025 03:53:27 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Wed, 21 May 2025 03:53:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747814007;
-	 x=1747900407; bh=yAwEyZrlncWduCbQvHo2TdkLbhOrV2guJ60XTpNtXfM=; b=
-	qnauPswd/B+quoRmNgukFlevEskvssOyW7MSZAnkO/sRrNZpee62U/3HqZYbP2/z
-	WloH6At/xRqLXw8vhhkKDpG/i8hHuc+PyJpXujpCN45xJ8VU3OXNSWIxEePRsTj/
-	IU0Z+24zcp8nLfkDVsu+3ZPb4ug+1IgEqf36Jmyy493+iJ/I0btMed6j75JMUv1A
-	8DCsf9AiilBgBM6+0fa12zbrfFKMKnaDIXmWDF135ycLdH0wR0lI31ymT2/A4HMK
-	Ne3glb2elHmW7+1H4l4iVVbLVohBVrdSwF8gA3yTXmEkHTJHoLyEQpdHzGosN6xG
-	u+ZPDMdYY0CmT4fYTxViTQ==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tvDHbjYb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EqG2E3qq"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E967114008A;
+	Wed, 21 May 2025 03:56:19 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-03.internal (MEProxy); Wed, 21 May 2025 03:56:19 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1747814179; x=1747900579; bh=1lxrj4UNuV
+	wqTnUMyS0GSX5iGlL1AqZ/vdkr5/XWX7k=; b=tvDHbjYbTEuFhzfBDF/RxgSWff
+	K1TxXA6zQT3BpQqDLaIPqN3z7XEgQhHSjft15VRMZMr7cY1zU3HoiVssZnLtZtA3
+	5+f3QeSg0KhdyNCBdlrWQ2rsApa4qL6uozxNcL81B1lpRE2dXSqaIfGzS/SQKzx4
+	zIJ9sZVaz0k3/hpAYHfzsbAyv+rdve8e3zwxUfiZelHaeGjatHE3RBztyAn1w8k1
+	YCgtBx+rV7bIpNm84ez27qtZld+8ymwlEcM9h5bCbrM7Z5WA0cUOANrx0xTwJwVR
+	jc5jbQXbq1ZzmO7Etez8SWVrfso61BH+KkZ1pep5M9UAtcp3lMRQR8fbn4PA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747814007; x=
-	1747900407; bh=yAwEyZrlncWduCbQvHo2TdkLbhOrV2guJ60XTpNtXfM=; b=l
-	F8Gt8DW0QO/nD0FVPKFbRKpjFWLkPalxeeXG03z9v3/9GPYl9yt7sN8HsagnKevr
-	LM3LDusswXcYslFqUD7CLP8WlTALIJP/bOOq/+nF/4Htw6ksxKgHoTWHgVtJMsbz
-	Yo1cmeiQ/lJBnO+CUmG23xMIBx9ttECGzkju73rxQSepUUVz5mo2/4aSX+deUbRJ
-	e+vJEecrjH6f1BnBCIqNIgdzOje9nBIXMmJPVGuhAd+wxRdE1gsoRf4gpW4K+opM
-	t/LEhk3kdSLJ+HEeY9mzNpNg717KjOt3/LdTHFcWE1sKzV+4cANYxYI+pz75cXgZ
-	yH6+3MYupxAgaq4JekbQA==
-X-ME-Sender: <xms:d4YtaDL31a7hBJ2h74gZGG-cYi_jpsjAOb07HfYvpL0inndFBnKuWBc>
-    <xme:d4YtaHJIPzNKzg_0nfGtpDx6Yna79wP95Opl6FRzyCJwn44B6Zzo6caBGt96nORg0
-    -EPjANtCWbODYpD0A>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747814179; x=1747900579; bh=1lxrj4UNuVwqTnUMyS0GSX5iGlL1AqZ/vdk
+	r5/XWX7k=; b=EqG2E3qqURAYBbp+aAiXc9SV3WKj1XkOlDoNAUcNsCY0tGyFpg0
+	gaQaOsVMKaNdrAWVvxjdiOQ9oRLPl6M9GwTMGoDOvgvtMgmKVt6IEW7c3I66oFcE
+	1e9m+YVSEIl3uwfu9xNY2XTh/+DE8n6QC3cfThBCD/dB4q4uqNiYOowytc/tDKqp
+	XIhBRt5Ffdcc0CclGKlEGjk9H8uhDmsEllO4ndyWUQ1RJGoAMOxAz0aeROj4XjNG
+	ZjzkYLz8w5PhoY1mjn2XH70sOkhrOfSMwhXUnxmPs5v5CLpNe/sYBx9y8Lj5AegC
+	W3wXYTsRf9nhAIBobvhTdgYdFE1gDB0KvqQ==
+X-ME-Sender: <xms:IoctaETYob4s-9Uzs9Iaw17jet_8Vi4Ypeo0HIKZWqrZQpICIL11iw>
+    <xme:IoctaBxJ3DGdnLntnZRYBA_kDA7OgF_m7ophtF389ZxxGbZovsewWjBddL7eIffot
+    af8oHR0qt19-26Nlg>
+X-ME-Received: <xmr:IoctaB2hqslVEG0ZF6n1JbNAk2WbT2flCR8qBgTEXShEqajXZEyiqGaLbQ2c_BUnpp4pe_3Gxc1R6_f9TW3Z7KYfrJDNFqNqEQddxBzkwrlOUw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvheefucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgj
-    fhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghugh
-    hssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
-    lhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleegud
-    dukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtth
-    hopehophhohhhorhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepghhithesvhhg
-    vghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:d4YtaLucgEmtgV8viZQIPEJj1AiKGzWxuPI9B50l3mUVaUygrPnU9w>
-    <xmx:d4YtaMYp2sMvHPCd2soUsLSvwuhLB-7ZSMYT1cY2Ie9Sc7BhX7V9Dw>
-    <xmx:d4YtaKZxN9g1IJZLocr8OGcHOaNrpNWdBrJfv-ZW0noA2g2KdXkc-Q>
-    <xmx:d4YtaAAkpRnE4bGHLVoOPRA4bMSd6rhiabNoqQzUPjAggPJ4PP_4mQ>
-    <xmx:d4YtaP7po80syHzZs0yC4Lw8wOXqBSjMmVrNdi9UQIH_WCI1iJUBwWvl>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 72B4A302005F; Wed, 21 May 2025 03:53:27 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhgg
+    tggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrug
+    htuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludei
+    gfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
+    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesph
+    hosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
+    ohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtth
+    hopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
+    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrd
+    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
+    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
+X-ME-Proxy: <xmx:IoctaIATBhw3BUcaK1N9wEtWVawOXg-Y8nbxpmHTj_0yfXevRXwynQ>
+    <xmx:IoctaNgRX5q3AwKEYKztLv3m_70s1AjN-qfZVic7lfbRFb9mqeBqtQ>
+    <xmx:IoctaEpFiWg7d4ok5RocRxlso1oiOT1tvymoQ94m6SYmeRoqAmU1LQ>
+    <xmx:IoctaAiOiFX5Jp86Lh70MIMaPT7WyzaaAF2X0pFlGeV-_JDqWYHs1w>
+    <xmx:I4ctaEhONNvZbqsXsvn9up8jthibFZo3VpIQ2b98vOkJnlim6gmM7YRc>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 03:56:17 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id f1093ee5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 21 May 2025 07:56:15 +0000 (UTC)
+Date: Wed, 21 May 2025 09:56:07 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Calvin Wan <calvinwan@google.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/4] editor: use standard strvec API to receive
+ environment for external editors
+Message-ID: <aC2HF1VEosDMY_A2@pks.im>
+References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+ <20250520193506.95199-3-ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T4cc5a9967cd96d54
-Date: Wed, 21 May 2025 09:53:07 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Josh Soref" <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: =?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>
-Message-Id: <b2abe6c5-042d-4842-9928-39b7fb7b2c0a@app.fastmail.com>
-In-Reply-To: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
-References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
-Subject: Re: [PATCH] cvsserver: avoid precedence problem between ! and %s
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250520193506.95199-3-ben.knoble+github@gmail.com>
 
-Hi
+On Tue, May 20, 2025 at 03:34:56PM -0400, D. Ben Knoble wrote:
+> Going back to the introduction of the env parameter for the editor in
+> 8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor as
+> well., 2007-11-26), we pass a constant array of strings: as the
+> surrounding APIs evolved to use strvecs, the editor code did not.
+> 
+> There is only one caller of all 3 editor APIs that does not pass a NULL
+> environment (the same caller for which this parameter was added), and
+> it already has a strvec available to use.
 
-On Wed, May 21, 2025, at 09:45, Ond=C5=99ej Poho=C5=99elsk=C3=BD via Git=
-GitGadget wrote:
-> From: =3D?UTF-8?q?Ond=3DC5=3D99ej=3D20Poho=3DC5=3D99elsk=3DC3=3DBD?=3D=
- <opohorel@redhat.com>
->
-> With perl-5.41.4 and newer, git-cvsserver fails to build because of
-> possible precedence problem[0]
->
-> Added parentheses avoid this issue.
->
-> Full credit for finding the issue and coming up with the fix goes to
-> Jitka Plesnikova (jplesnik@redhat.com)
+Okay. It would've been nice to explain _why_ we want to do this change,
+but the change itself looks sensible.
 
-You can mention the person in the trailer section above your signoff.  F=
-or example:
+> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-    Helped-by: Jitka Plesnikova <jplesnik@redhat.com>
-    Signed-off-by: Ond=C5=99ej Poho=C5=99elsk=C3=BD <opohorel@redhat.com>
+The order of these trailers should be reversed -- your SOB should always
+come last.
 
-Or choose one of the other common ones (from `Documentation/SubmittingPa=
-tches`):
-
-    If you like, you can put extra trailers at the end:
-
-    . `Reported-by:` is used to credit someone who found the bug that
-      the patch attempts to fix.
-    . `Acked-by:` says that the person who is more familiar with the area
-      the patch attempts to modify liked the patch.
-    . `Reviewed-by:`, unlike the other trailers, can only be offered by =
-the
-      reviewers themselves when they are completely satisfied with the
-      patch after a detailed analysis.
-    . `Tested-by:` is used to indicate that the person applied the patch
-      and found it to have the desired effect.
-    . `Co-authored-by:` is used to indicate that people exchanged drafts
-       of a patch before submitting it.
-    . `Helped-by:` is used to credit someone who suggested ideas for
-      changes without providing the precise changes in patch form.
-    . `Mentored-by:` is used to credit someone with helping develop a
-      patch as part of a mentorship program (e.g., GSoC or Outreachy).
-    . `Suggested-by:` is used to credit someone with suggesting the idea
-      for a patch.
-
---=20
-Kristoffer Haugsbakk
-
-
+Patrick
