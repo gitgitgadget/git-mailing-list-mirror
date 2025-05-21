@@ -1,113 +1,132 @@
-Received: from mail-wr1-f53.google.com (mail-wr1-f53.google.com [209.85.221.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6B82AF1E
-	for <git@vger.kernel.org>; Wed, 21 May 2025 15:20:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D14B52AF1E
+	for <git@vger.kernel.org>; Wed, 21 May 2025 15:20:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747840837; cv=none; b=MAPQz+x+QWiGHgNaOCYg+cBWDSY9Q7CtybumExIN15lSe5NJQux86Bp2vzAiF5PDRGapUUxK/qezY58m8r46RGHSK/s4PHDsDwP9fdxSTpJAstqOjjAchakVc9WO1n0tkUKEeUw5VfhsIpxsKeZNTmCokJLkaOPYi6voXkpU8IQ=
+	t=1747840843; cv=none; b=Ebq3sy/DrQACMJQ4Cn1ED0wK9YstP+LqBZZ8wnBzHNeC8ylFiQrB2oBvMuXfKpaWxWoRu03Pu4mlLEHcXxAVNJ3ycT/yfHMIaI372NhIb2BwWYEXmwfJC8J3ivRP826gQ03rz4PH3m8cuSvkDgJ4jemG8O2Vc81c43u262FCyPw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747840837; c=relaxed/simple;
-	bh=kkNLDEkbdrdqIo63v/RfC/2avYPkSo94NKKmcrqfVro=;
-	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=lmZwAnvWGI5lN8zqEHdLhuXBcCHHc73zhhwDO85PdFrV8ssckJG8TdUFr5giGgjT0L6e7Me64eDq53yWaZZ23oMiGK1g4wRSYlzYITF5aJEMOe/nJrUCp4PjZwqa9S/i4i+6F2OUCr1LrJUmwqC226VtN02U5B6eVpjp73XBnIg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=JSBBM8MB; arc=none smtp.client-ip=209.85.221.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747840843; c=relaxed/simple;
+	bh=o7+fUpFXK+I8PohKE6uM9P0qcvow27E4X9IIBIz7+aM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=gAhV3cWuiyAKdCDMXGExc32vXAoggVP66dIu0PWEMm3VXPPPM5ez+7dElQ7Suc1gIOj2P7sDUWylWGO7dqvDapSSa9QaQnH3yqSY5w0zXlmrW88SyrI94ceqjus/KN7cDyF1eYGU7C5Liaw97EazG0hKZEpkpEtfnNZl4wCU438=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LFoFP5sB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=uNU4CZqj; arc=none smtp.client-ip=202.12.124.149
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="JSBBM8MB"
-Received: by mail-wr1-f53.google.com with SMTP id ffacd0b85a97d-3a365a68057so3903571f8f.0
-        for <git@vger.kernel.org>; Wed, 21 May 2025 08:20:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747840834; x=1748445634; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=rR5ytDhV7H47uLQq/SjwwcyBQ+REALHJYxiI5GqPsCU=;
-        b=JSBBM8MBGBEkKhD+ew6lCEc6RN0R1FXPrZ1syJ22/k9HwcwCCNH6Ml6y88t6KmwVfA
-         j4i36lJ/42sSx5pCnYJTQb7CivtHWXo7f2ZA9Zy4w/I8hAfy7RDHZ+oQatpM/UdJPzVO
-         CcSFLlhI0tDRaH3AeenEeGpmYviulC0oZufK+whVB2CDFus93YxFvnd4hPve/iMTqz4R
-         ogDJuWHFN0Dxz6oeElCozhryijMq/qIgtwQNZ14wCnWElYDOHd7W+A+c6LXtlwSIKTta
-         VhILyfRE5leN4bWf5fW/raR08YwpDgsDC7WPoHJIgPaXaqAPq32RnXeB5OYZXaGGYyiS
-         u1rQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747840834; x=1748445634;
-        h=content-transfer-encoding:in-reply-to:content-language:references
-         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rR5ytDhV7H47uLQq/SjwwcyBQ+REALHJYxiI5GqPsCU=;
-        b=TMI8jWSuosWiis5HubxPMqyTWXnRjdtzAZSd1iSqHn4TweseV8ubKdyq9rdlopaKj2
-         btNgy3FFs6j2uXULIkxJKtxnZ5rBw+DXABerkDjC/uwzgRM1YINxkeDTmwY2ordC5lOr
-         D9unRK2y/r0uYL6kxKgj8MJ90+kAq2909VsPGawKJZTiVgXXFFdfR/C43DRpyEfeaYPn
-         8rWEStI7ItzWJjTWVV9s6If2tyCoDT4omU3AJtEM8GFcQWSO3wkxRd7rV/XunBtrivLf
-         yz+l1RCG37yoXBBrX4rhi1JH1DjOB2T8ho5BTYCbI/dXeZ+FXp1iUmf0XYqMCmvP0jzz
-         g5PQ==
-X-Gm-Message-State: AOJu0YzJiwJ40Loye9Gg+NYMdtZVLZru7U/NP2Hwc/ZnCOgm01QQseI7
-	3JEQR8bkQqOJBUtoHwH3WXKdgPpp3E1c9MEmxMuE0Qy/YDBLXXEl/v0Z
-X-Gm-Gg: ASbGncsdcVRO/ZhMvlgDTWsD+Gf0DT0cBc339WxU4BEb4g/TLDyQ5FB7uf7RCfoBVTu
-	toJjDsxPT4064rslIsZAoQSEZuHwKcpxSMe60EgdfPY3zoAL80prx7df484oU3XO8VsZN4OUgP3
-	mbMc1HYtaLWnzy3/xlqFtcfcszdeTB34RDr2HAcrh4QfoOvHFQ0fxfsekk/pSOVO6Ae8INMvf1a
-	2HaQX0i+8JQ0Dk/zcZb5EJr9dkLTwt7bUyNR8wuQaQVb15wRasy+DvJTxxEWHfFZcXWzb8Yy0iS
-	LhPWJyGUj3rjXrgwP2tFbQ8//6KEBOE+6odOsgpyJgoJwheqbRtvQW4qcpeapu1vR0dbZsdAYKO
-	9HPA9oh1UxE5zHYiMGdu5pL+tdP27mthlR6Z+Lw==
-X-Google-Smtp-Source: AGHT+IEoUQFXFe/ydbrUBW7MRVcNuwbocO3qaDq8SxXXZZm6o7uhdXSVMH6WctlXpBx27ObRVFLRLQ==
-X-Received: by 2002:a05:6000:290c:b0:3a3:61b8:a637 with SMTP id ffacd0b85a97d-3a361b8a7a8mr17706811f8f.22.1747840834072;
-        Wed, 21 May 2025 08:20:34 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a361a81fd8sm18708470f8f.81.2025.05.21.08.20.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 May 2025 08:20:33 -0700 (PDT)
-Message-ID: <7302bdf8-f713-43eb-aa78-759bb1e1b6b6@gmail.com>
-Date: Wed, 21 May 2025 16:20:27 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LFoFP5sB";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="uNU4CZqj"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8EC73114017D;
+	Wed, 21 May 2025 11:20:38 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 21 May 2025 11:20:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747840838; x=1747927238; bh=phgggw6cJ1
+	U2NkNB2F2oyf3EuifzxkTpQBWX5hfh8HI=; b=LFoFP5sBLRtUC/FwjF4OFhGBFe
+	kJCquVuC6pFNOT781UP2iK/M3uMV/DnVit2g7iAl/+D5scUWTqt7Jt7xZl27bPqz
+	hr0JXfPMZxI4YPLV1Tl//PLcKXRartq8pSM3CYPhG+yJnrflLg3Rzg4sO7QG89Yw
+	px+xqQPSjunY6sVTAa4/EVI/kHI9BRCzULp9p0fxvOvYgOyCh1eYc0G8zVinaHa1
+	X2MVXyy5lhXSsBPzlShYyDP6zoXW2MMQJ3Txx2MYqZN54u1raPG0BvtXlBYCOEzX
+	2KvYnpdLKlZpu19dC55jPgQrata75NRPgMQPicJcYMJvUGFpcIPyTpecgk5A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747840838; x=1747927238; bh=phgggw6cJ1U2NkNB2F2oyf3EuifzxkTpQBW
+	X5hfh8HI=; b=uNU4CZqjGTZkMScPvfjV8n75WcoDxTLAGAAwH9u9k4sSoD+Mo3O
+	zws5G8V6QgXY0rYxcWWd8L5m3PHMMH4rpZGpouyb+udEHCGSIoqPqDa6Umj24Msc
+	OBhcQnrOhXxSHKk6wJNk3Q5PCqk6scrRKhgOfL/dzjW3C6hpu6X5BW7LknQst/61
+	Me1XXAlv9HpvCWIYY0HCwakj5FJgLUasinTJJyqYXGz8tHxS1B7J5he3hbCa518N
+	wnFEM6uZYr62gjE52naYmRQPG6QY/NZKRw8f/AbXAeray9i9AgQYXstkqCxIBqIO
+	v45hrre4TbieFFuvP2KqifCb3LXWAZumMhQ==
+X-ME-Sender: <xms:Re8taPoN2_In6KXs8sDPvY77IEv06wNYesfgR2yrSHyyUvSKWKWZ-g>
+    <xme:Re8taJqrQSzFwDNGaKdfDS2Y9Dj-RvjdX6yLHUaq98E-9IX4sPGcYj0pdrfy-tO61
+    wHyKW4sCop7AflENw>
+X-ME-Received: <xmr:Re8taMPEeo0rciJVLZW7xYwvDycoU_QwD-tKR7LUfyHWSt4pw4y9Ca7EQJC_SrT7LqebgicohjcZCabJ0v2V6jv0iGo4Bvq30WP15Oc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefgedvucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
+    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphht
+    thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
+    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfi
+    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhg
+    lhgvrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Re8taC5ltExgd4J3vNcLPzx1ixQBf8axlzePzyTjEXUutRTzH6GRQQ>
+    <xmx:Re8taO4sYiLO9yw1ovwJv4V08kAm1yOg-cwiKgaZcZEzkgx6WPKABg>
+    <xmx:Re8taKiReSiJLwRDhfAuzVhFJC8qYDu8pxzIougjfdf5dPKugg7wDg>
+    <xmx:Re8taA6GHd7kAYDNWWgHRURFFEURnX3h8lkfZzGPU2uJYX-dJF7fHg>
+    <xmx:Ru8taMwikHJ2qhBVuDq90GjkBDAfEXzzxqzChcaD7BDnl9IkVgSUfgDi>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 11:20:37 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>,  git@vger.kernel.org,  Johannes
+ Schindelin <johannes.schindelin@gmx.de>,  Jeff King <peff@peff.net>,
+  Elijah Newren <newren@gmail.com>,  Calvin Wan <calvinwan@google.com>,
+  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+Subject: Re: [PATCH 2/4] editor: use standard strvec API to receive
+ environment for external editors
+In-Reply-To: <CALnO6CDGGiw2HJTjfhvnmLQpQYDJqQux7UdO1tv0c9-LqNXMxg@mail.gmail.com>
+	(D. Ben Knoble's message of "Wed, 21 May 2025 09:26:50 -0400")
+References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+	<20250520193506.95199-3-ben.knoble+github@gmail.com>
+	<aC2HF1VEosDMY_A2@pks.im>
+	<CALnO6CDGGiw2HJTjfhvnmLQpQYDJqQux7UdO1tv0c9-LqNXMxg@mail.gmail.com>
+Date: Wed, 21 May 2025 08:20:36 -0700
+Message-ID: <xmqq1psic7nf.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Phillip Wood <phillip.wood123@gmail.com>
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 2/4] midx repack: avoid potential integer overflow on 64
- bit systems
-To: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
-References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
- <9f07da4fe71d21b14226d8f0132cd3c8600fba13.1747753388.git.phillip.wood@dunelm.org.uk>
- <aCzDCEK7OhCYyAZa@nand.local>
-Content-Language: en-US
-In-Reply-To: <aCzDCEK7OhCYyAZa@nand.local>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 
-On 20/05/2025 18:59, Taylor Blau wrote:
-> On Tue, May 20, 2025 at 04:04:25PM +0100, Phillip Wood wrote:
->> From: Phillip Wood <phillip.wood@dunelm.org.uk>
->>
->> On a 64 bit system the calculation
->>
->>      p->pack_size * pack_info[i].referenced_objects
->>
->> could overflow. If a pack file contains 2^28 objects with an average
->> compressed size of 1KB then the pack size will be 2^38B. If all of the
->> objects are referenced by the multi-pack index the sum above will
->> overflow. Avoid this by using shifted integer arithmetic and changing
->> the order of the calculation so that the pack size is divided by the
->> total number of objects in the pack before multiplying by the number of
->> objects referenced by the multi-pack index. Using a shift of 14 bits
->> should give reasonable accuracy while avoiding overflow for pack sizes
->> less that 1PB.
-> 
-> Ahhh, this renders some of comments on the previous patch moot. I think
-> that this is a not-unreasonable concern to be addressing even on modern
-> 64-bit systems, since I have definitely encountered packs that have on
-> the order of ~2^28 objects in them.
+"D. Ben Knoble" <ben.knoble+github@gmail.com> writes:
 
-Thanks, that's good to know
+> Thanks; I didn't know that! (Aside: rebase --signoff seems to add SOB
+> even when it's already present. Is that a bug in rebase --signoff or a
+> misuse of the trailer on my end? Setting "trailer.ifExists =
+> addIfDifferent" didn't seem to affect it.)
 
-Phillip
+Why do "rebase --signoff" in the first place?  Unless you forgot to,
+that is.  "I do not remember if I did, so I blindly add it" is
+something we do not want to see, as we want to keep signing-off a
+concious act.
 
-> I like this approach quite a bit, thanks!
-> 
-> Thanks,
-> Taylor
+Anyway, as the intent of the trailer is to record what happened
+until the patch was finalized and sent out with your sign-off
+chronologically, if the order of events were
+
+ - You wrote the patch, gave it to somebody else with your sign-off,
+   to show that it is shared under DCO (a).
+
+ - Somebody else may make modification, share it with their
+   sign-off under DCO (b).
+
+ - You find that their version is a good one, and with or without
+   further change of yours, you sign-off to show that you are
+   sharing this final version under DCO, either (b) or (c).
+
+it is perfectly fine for your sign-off to appear twice.
+
+The only case Git's built-in sign-off logic omits adding a sign-off
+is when the same sign-off is sitting at the end.  After the above
+event, if you took that "final" version and then gave it to somebody
+else, with or without further changes, that is still covered by the
+last sign-off you made, so there is no point adding a duplicate.
