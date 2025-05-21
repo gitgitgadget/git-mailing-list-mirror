@@ -1,105 +1,114 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB66233150
-	for <git@vger.kernel.org>; Wed, 21 May 2025 20:24:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5378329C34E
+	for <git@vger.kernel.org>; Wed, 21 May 2025 20:32:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747859070; cv=none; b=GYfK0LZwtjf1Mi4OC0veHg6nA9uIcUqPwpVYC/i27wAKOhgtXZHweRX/mIDeE9p+/hGd6Ge1YvLhctuX9COgzO0Y/iQSdPqF2AHGb7JMonoSLsMtAqMc4WRQ4sTLKaFakUGdKo/Bx78eCvua3b4MiGW/flJHbThDNSWU9AV5cEM=
+	t=1747859566; cv=none; b=nJ3Da1yMMlbRPIwJob4AI4mir5BdB95dcHCcUHSfdnSq+9d+xSJcLUt2FNdfefHneO+RS3kLa2pcnVnIa4/PWrI1X41wGw6TWVYqyM0PUggHUCR0AhK1iSuzbNnL6oOz6JL+pVlCn8C52A7n/Po3rmMGqMfqRe5TSYBC8qDCUzo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747859070; c=relaxed/simple;
-	bh=2DRP7Ckhyt6wzMKwlioGtEb1/3F/1v5JJLzgVLWaCzA=;
-	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=rgkDp0g6PnW4/FFL6UDz26PL0O1H+MmTvEz9po7VlElRzQJOYt407Hhd0cz5IaXgpE2LeO0Q5rlbcmqAvwtyF+eV2GJmfy7uHJOqvHyxcKpXNb3s+8oXhQa80Fe/6xMY7L34an4m1/KyMExJQXA7yp+WzuErov/rU/XhTFLPGH8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.128.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-7080dd5fe92so58703827b3.3
-        for <git@vger.kernel.org>; Wed, 21 May 2025 13:24:28 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747859068; x=1748463868;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lcJA9pi6KqOY7oNI8XU2XKlR5dOiIVAgp+oBFLkUIow=;
-        b=sJo7dT8tKAN5VPDYpXSZBlMQmAh5AxzLKeCn8SaEn/299yXGibqEtfXid07xFU0+nv
-         /kYiuF4cAk4455ir3+xc84epMT68KQFjZR1nLh1k8oI9M2psVoqUGVa1ib9n8HeCDXXC
-         qMJSSGcQ/CsV6YgTSo9JiUR/1dI63wFDLYS/SPSyRRVOUnKIslpeKAnxQ+Nnw1CfQ8zX
-         HdCjo+sThwiRScjNpS11ECNPYsZk+71O7cUoByTDTvkJ/oXKSrxveAAWyD8F+rqh97QX
-         dkGd/Syh0p8MXDd9MynbVWaXM/lVQH8xQpk7FRioHtu9d0zLWUx0S+3PZgBRg8oOi8zM
-         5LXw==
-X-Gm-Message-State: AOJu0YwcNRYNE7jd1/Wf0tXh2Mbe7m6yp/bY8uUQtPQ/zo1q/E71Gk0P
-	004osYVQkMyZvoLgvpq2n2nvz/algoO7oSzcyOQHso9TkJuQmASkBBnBQWze/xIfQwQ=
-X-Gm-Gg: ASbGncsRyxV2w1yBilHNJZcrd2a5R17r+nl/vOSwtrJaQFhIt8svb76WOyXCqUku/2d
-	jg3AvbLts4WX2L4AvnNjjUDTpNc5xwKE5G1EU9S7HqVSJUg1VGsnstEaoPKp5IdAto0wGx4NvrH
-	yx0gbM371LwzPiAhpcD8roN3Z8EmlDuUHCOORgVSDGpD09dgnUVHwP6uGrzkr/jo3QpRQM/oVNw
-	oZY6iTeN+PGdkJDn/hXQbi/nR/qGF1fQ4KFW7DuyZ8qC2RH5sF8sQuCenU51SN+GuEBWziq1npv
-	LosT4YZVZ5sagUa4aEEQBM4wO2nTK7N+vP8N49FrL2kMXUHLGquK033K7RKpFA==
-X-Google-Smtp-Source: AGHT+IHlKtb3Poo7d0eOdZQK5HVcnkDle9xQUtg6q/x4Nfo3ahEtde4E8Sw2v/5xJkCDBf2gzjyflw==
-X-Received: by 2002:a05:690c:3389:b0:708:3a47:3d2c with SMTP id 00721157ae682-70ca79cb5e9mr334653097b3.13.1747859067655;
-        Wed, 21 May 2025 13:24:27 -0700 (PDT)
-Received: from ferr-Latitude-3490.semfio.usp.br ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-70df5e02688sm3445237b3.16.2025.05.21.13.24.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 13:24:27 -0700 (PDT)
-From: Fernando Gouveia Lima fernandolimabusiness@gmail.com
-To: git@vger.kernel.org
-Cc: fernandolimabusiness@gmail.com,
-	gitster@pobox.com,
-	adlternative@gmail.com,
-	avarab@gmail.com,
-	stolee@gmail.com,
-	peff@peff.net
-Subject: [Newcomer PATCH] log-tree.c: Supress Wsign-compare-warning
-Date: Wed, 21 May 2025 17:24:09 -0300
-Message-Id: <20250521202409.26879-1-fernandolimabusiness@gmail.com>
-X-Mailer: git-send-email 2.34.1
+	s=arc-20240116; t=1747859566; c=relaxed/simple;
+	bh=rOX4g/he9psYd16edKqG3PByWBltE97uMW0aMC3Kxhg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Q3YjlqRm/Afi4sot66UKzcubWNmBb7K5j+W/LCSJ5lhlaCW8V1GZQAShMbZA+oSI68h/d9vOui1YdgVZ7uY/lBuE2pOOZSszSmOsHZlO3/HmC2d0e3PCWMpw3k/UqLOQauYNOL56/h0tTJvHEpCNLrXGR6wwt7g2R1j9lnWQF24=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NSJNnc6w; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=YqrSDxZJ; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NSJNnc6w";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="YqrSDxZJ"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 595871140095;
+	Wed, 21 May 2025 16:32:43 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Wed, 21 May 2025 16:32:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747859563; x=1747945963; bh=M/c1lPh6Ty
+	cBPkU3GWlFz/nViVLHi83noIPeniNkkfE=; b=NSJNnc6wDnVJNGSZzpWt9TTbr7
+	gGPAVpBsuT2sK/EdbEUmD4ZERaJw0Zjv9S+pAiI8AKOrqXTJenf+TS4rB9OO3Uub
+	Fjr7SBrt2FKO8bUhRbQQVYPV9gPOjghGEd1ONLJJ9H+I17shIrOV5444xoWJs7zf
+	9t6UWySWgF0JxJcEXbZ6mk7nNBypn5Aw3zynU1vlSjq/bqOu8mJJoeWm5QeYefYj
+	m+D8y+thIDvfFF/PMjv0F+sLyow3YXmpCdS6ex9dYsaP2lx1TBtxvf9wEsGH8UKJ
+	LQGvrbHo3Xpnmih/t8CNJl6VaycE12vFh2kpD04VrAhlLaLKzyL22XoZqJjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747859563; x=1747945963; bh=M/c1lPh6TycBPkU3GWlFz/nViVLHi83noIP
+	eniNkkfE=; b=YqrSDxZJJa00bJFxZpMeINSUFsB7jTTFgk0YUhiLiRKsGGXQEXv
+	j+rzGjwUUI82zkfuKcN/fgs1wwTUVmrraRUVYGujaov7V65VJSs4YLX0+QfNvBhN
+	JT204IbGOt3PWDh/4TnAWRCmJ/RkY9VRlZsfvSld/YNJ5+gkq/reqV5L9/wC3oUI
+	PELickTQJXxW8Z5BFlUyshwlALWGDl8Q+GA+L0dZbfFYXoxskyNR+2CvGv1T3SSc
+	XTc2mSqcepr/vuqrO9FaKitZGWndpfloAKykjSrGx3TXbC4xuxmai0ZJFn1FR4UF
+	0F4QjRPePq7clWfxTTBpf7os4EBoDii0VVw==
+X-ME-Sender: <xms:azguaB5Iqjwrh9E-Vqe3fEYValSXsAXEBu1XgSsbHimf9r0QoHpqyw>
+    <xme:azguaO7E6Zh1ZmDnC9xg5Egn6iu6ZmDElIUfbMwKPMaggpMYqHzRUG4o9TN67-Fba
+    HUNx2obDkMLTfthbQ>
+X-ME-Received: <xmr:azguaIcFPwn7S_c5XF6TlNVY_eZYriGRp9GhA5cIbS5OKY6h4iUpP6vHFqbt3IT6ubN7U0rXmV72UGDmTI1cBcmpYtqnxJvwhU_MAZ4>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdegtdegucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfet
+    vdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrg
+    hilhdrtghomhdprhgtphhtthhopegrlhgvgigrnhgurhhfohigsehgmhgrihhlrdgtohhm
+    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:azguaKIQJP6PEuI2I8IYp5K3KwAM2Gt1QIBlgTDdUesOLR9GFabgFg>
+    <xmx:azguaFJl6KlwV1HZ74GkOb5G-cKK12TySOUt_X2uRsLrGd_RvJNwzw>
+    <xmx:azguaDxseSfNNea-UZCQzlG0pjnmAKEXyNCfkT7XZB5fcS3Kb-wBLQ>
+    <xmx:azguaBKP3icbWiPM0TqgqyDzKgHc6p3SVE4XbO9UanyfsE_Frmf17g>
+    <xmx:azguaOrb1sW5OUi4PIY8YRZcrPB-IBc5h1Z1zXzXM1PIc8LKC9yd74G1>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 16:32:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Alex Mironov via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Alex Mironov
+ <alexandrfox@gmail.com>
+Subject: Re: [PATCH v2] name-hash: don't add sparse directories in threaded
+ lazy init
+In-Reply-To: <pull.1970.v2.git.git.1747858585623.gitgitgadget@gmail.com> (Alex
+	Mironov via GitGitGadget's message of "Wed, 21 May 2025 20:16:25
+	+0000")
+References: <pull.1970.git.git.1747827645129.gitgitgadget@gmail.com>
+	<pull.1970.v2.git.git.1747858585623.gitgitgadget@gmail.com>
+Date: Wed, 21 May 2025 13:32:41 -0700
+Message-ID: <xmqqecwhaemu.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-From: Fernando Gouveia Lima <fernandolimabusiness@gmail.com>
+"Alex Mironov via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-Two comparisions between int and size_t, and int and unsigned long int
-cause warning sign compare to fire.
+> From: Alex Mironov <alexandrfox@gmail.com>
+>
+> Ensure that logic added in 5f11669586 (name-hash: don't add directories
+> to name_hash, 2021-04-12) also applies in multithreaded hashtable init
+> path.
+>
+> Sparse directory entries represent a directory that is outside the
+> sparse-checkout definition. These are not paths to blobs, so should not
+> be added to the name_hash table as they must never be queried.
 
-Avoid this by changing the type of variable "i" in add_ref_decoration() to unsigned long int and
-casting the variable "filename->len" to int in fmt_output_subject().
+The second paragraph sounds as if this is a correctness fix,
+i.e. "should not be added" hints that we would see a wrong result
+returned from the hashmap if you added these entries to the
+name_hash.  If this is a performance-only fix, that should be more
+clearly stated.  Also, can we have performance numbers in the
+proposed log message as well, or is the improvement too small to
+measure?
 
-Signed-off-by: Fernando Gouveia Lima <fernandolimabusiness@gmail.com>
----
-This is my first contribution and i got this idea on the Microproject
-page. I hope this is the first of many contributions to the git
-community :).
-
- log-tree.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/log-tree.c b/log-tree.c
-index 1d05dc1c70..e0848fcccc 100644
---- a/log-tree.c
-+++ b/log-tree.c
-@@ -151,7 +151,7 @@ static int add_ref_decoration(const char *refname, const char *referent UNUSED,
- 			      int flags UNUSED,
- 			      void *cb_data)
- {
--	int i;
-+	long unsigned int i;
- 	struct object *obj;
- 	enum object_type objtype;
- 	enum decoration_type deco_type = DECORATION_NONE;
-@@ -458,7 +458,7 @@ void fmt_output_subject(struct strbuf *filename,
- 	}
- 	strbuf_addf(filename, "%04d-%s", nr, subject);
- 
--	if (max_len < filename->len)
-+	if (max_len < (int) filename->len)
- 		strbuf_setlen(filename, max_len);
- 	strbuf_addstr(filename, suffix);
- }
--- 
-2.34.1
-
+Thanks.
