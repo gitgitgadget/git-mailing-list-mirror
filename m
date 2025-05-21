@@ -1,160 +1,108 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F7723C8AE
-	for <git@vger.kernel.org>; Wed, 21 May 2025 23:08:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762391E98F8
+	for <git@vger.kernel.org>; Wed, 21 May 2025 23:29:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747868926; cv=none; b=ZmfHbjh6s2W+U71SvW8OUNKaSuKBxlfgqlRkuqD0/y58AEIr8oD0Z30mZ0TzL3tr+4i92YL4qHqsfjBFVw4lm38QtEd8LpjWK4r2+jlzHGJTx3pn/2nrjbN02Sl00F97SDHueLlAkgHMK8RDK6WdaSgrUHM4b3mIbLA8Eth9U9A=
+	t=1747870164; cv=none; b=YEOh2IL240wFXRqewJM2ChMpHcV9Ko7CztKZrRV/dzvBjYJEcjByQclRB23zIdXLapr0zgSwAqXzZVmSjGeJNGJ4Ws0R8xQ1xkEtwqExr9641KhPHZ1luJYOczcOqsV/6ZxKmN+i/gQVGY1JC57snILOSKrCqZobOal9i77dqCc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747868926; c=relaxed/simple;
-	bh=RuiXifb3epaQwRKcJaEc4vjLezn9zwfanTQaffm7eYw=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=KHhcgVkvxQY+yzOku1uEZdcq9SpGhyUSSy6QzcfvgK5z8k/WmU/R5QFGW8BM1QLAoWe7drVPN8PDjiDF1Sa/G9iL0Qxd2J7iCXaJRnYgNC6doifocbvoXB9d//YJ3Jz4vSYinPN1MLJJOxlzsuZTBk+vy4P2LfI0ON02BlUuYtI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ka4HUSy9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ARbkArOv; arc=none smtp.client-ip=103.168.172.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747870164; c=relaxed/simple;
+	bh=UiZJqYMVUUH9Qsv+CGBhfcs6RTuhrv+SwwLSb323JnY=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=l5BMsNMDrKrzS9x1zc9PrTVKgSF8G81gGwIqF8qtjQcKovgyuA67AmLsWJ/CR/Y51u04WIGuuz5fqMkJc0FbZXvnJ3cBJUO9KJcR/jVDVZPApDs2a/bp5me+EJjkfXHlY5ktzeSwXmbwOXdMNkQv5y8mWW3jDPeKUfV1lxnvrI0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a0EvE/ej; arc=none smtp.client-ip=192.198.163.7
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ka4HUSy9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ARbkArOv"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id AA6E713803F7;
-	Wed, 21 May 2025 19:08:42 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Wed, 21 May 2025 19:08:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747868922; x=1747955322; bh=BFieEgWUee
-	d+cFwrRsiSQijBNALWCVcndsLJHLwsYkg=; b=ka4HUSy9hFA7T5bpSRB6cFW7jn
-	qaGUjlQNhQeKsHpsuMM4tgcpnZ8YdLAzK1mLtgwWiegop7N7syp19NC14VIaa7cK
-	INtDBeMmFA/6MsDKuWzThMqu8SRQ1XhwzSMxwYpxcxBsBKiy0b1o4UYxzZhy6eyC
-	I072T4TGZUn5050l0jO9sX/dMeHmDeZakB2f7kT9Q6vPu7a38B2ZPhCLNM6Xf0mK
-	+oJ7FJZ7hZnCG4P4UDT/5kDdCOoOshQfolXGBwkQIrU1kVwJ1E8Lff4TjKyJGSim
-	lfdN1tbaDsm6S00vXoqgUGX8gHFmWBBUHOhO2mWPG8F20bQMDjTtpZdp6S9w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747868922; x=1747955322; bh=BFieEgWUeed+cFwrRsiSQijBNALWCVcndsL
-	JHLwsYkg=; b=ARbkArOvkSg4QQjgm7UM5dVa31Jx4w9JQh84Hg5ucn2Mw+EcXCP
-	JGmz/Emt7DysDfAr2TZ87oy7Ab/qR9VzFfE6H9mjhQbvRNPayB1+uPjehLUSl9BA
-	9Zryzq0ixtd6/OTr5vVMx3JyOmbD47UKpraTZiZrPBpx0nGccgccsDvAVdVrNM3j
-	hYhIb7ma9CngtRPpI9g4e7c5sfybLL4cSkI+Z9Av4dz42f4JixaCxgYiXY8lhUtW
-	CM/O7ow9ZN2jihloAHP7TQjeTkN1fn3O1bYxCJR6WOc7p3uZMUrK7LcJIVdEqDpl
-	W3gYN0Oi0uZ0AdlhK0xSAJI+Nm2SGDtfbxQ==
-X-ME-Sender: <xms:-lwuaM5_QnEFHpu6Oe4sLhyhRm3jVqLXvkIIJPSaMQVAtw7873nGdg>
-    <xme:-lwuaN6aAbbmuHRnmkGI8RsK9VK_qdfFGSAKV5p-FA_oT8NcvgjbK8W8D5ORJ3FZr
-    9OZnfQUIrnoY0Yw2A>
-X-ME-Received: <xmr:-lwuaLe82i9uz29GQCZJl_0Q5Hxxoz4XtXb6LFQ_FgE9XEkMoiubMGumafhmrpp5M-W7DR0tpPfsA8323Vh_AW4SUTgPsE0-oSOoOOQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdegfeeiucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepohgtrghrnhgvihhrohdusehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithes
-    vhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtg
-    hpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgv
-    rhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:-lwuaBIwRtXdqbvsbnUSktDSQa5RFdvJqwQ8kqW4h7yBMGnNkFq_FA>
-    <xmx:-lwuaAJo7gbILcviokit-GAcXfjpmi8LTNODnjhc8kCVhYkwBfSxsg>
-    <xmx:-lwuaCyxskPe_tbZbnzEtniJHKxGkuntwVcjWczTHxulD-R3OSZPHQ>
-    <xmx:-lwuaEKJcE17Rm3x6Heb2cncB_RWdv6dhS6F1EzBnNWOwSJMilIGUw>
-    <xmx:-lwuaFqnoGvPAX1iAN2lWBnqjr3ZsXb7tm0P-Fm7lYuzkHdwqEJQSJj0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 19:08:42 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Octavio Carneiro <ocarneiro1@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  newren@gmail.com
-Subject: Re: [Newcomer][PATCH] graph.c: change graph_line->width type to int
- to remove sign-compare warning
-In-Reply-To: <20250521191352.30849-1-ocarneiro1@gmail.com> (Octavio Carneiro's
-	message of "Wed, 21 May 2025 16:13:52 -0300")
-References: <20250521191352.30849-1-ocarneiro1@gmail.com>
-Date: Wed, 21 May 2025 16:08:40 -0700
-Message-ID: <xmqqtt5d7e9z.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a0EvE/ej"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1747870163; x=1779406163;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=UiZJqYMVUUH9Qsv+CGBhfcs6RTuhrv+SwwLSb323JnY=;
+  b=a0EvE/ejC+NOuevpgivroD4rx2lEdVd15ofF1JzFoO6iru4YJcbGMjvz
+   jH3Ahl89E2/6GWYTD4sJlK1CsAMzlZP+8u6sSFcRRmJOKmpGNDQCElFj/
+   Gi6GewQ9Y3/G3vph0zxdTQRSMXYemdNtZah3oZZHz900wL3g8HSjtEKW1
+   SqJm6qF6jsjCdzT4m0ydMLixzmhonPKerPGhXWexfunUaGzeWYsc9QCpw
+   g+3JDTlHkrq92h4wBuFqd+0qQuszBr10YIHQtRviYgzhh/C9mKziGMUN2
+   ciclH1fHUEhr9g+Jk43iq0VG9shOjOyb9GZgsVJam1EV1W65vqSQ8oQX2
+   g==;
+X-CSE-ConnectionGUID: lC/DQJPaQkiBnZe3yxw3Kw==
+X-CSE-MsgGUID: gazRODj6QwWIRXY8OvwIdg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11440"; a="75271675"
+X-IronPort-AV: E=Sophos;i="6.15,304,1739865600"; 
+   d="scan'208";a="75271675"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2025 16:29:22 -0700
+X-CSE-ConnectionGUID: y712KWwNS7iJkQ7zLit5Yg==
+X-CSE-MsgGUID: RENn2XetRZ6Z1EKJ4bf5iw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.15,304,1739865600"; 
+   d="scan'208";a="140072359"
+Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
+  by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2025 16:29:21 -0700
+From: Jacob Keller <jacob.e.keller@intel.com>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jacob Keller <jacob.keller@gmail.com>
+Subject: [PATCH v4 0/3] diff: add pathspec support to --no-index
+Date: Wed, 21 May 2025 16:29:14 -0700
+Message-ID: <20250521232917.2333291-1-jacob.e.keller@intel.com>
+X-Mailer: git-send-email 2.48.1.397.gec9d649cc640
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Octavio Carneiro <ocarneiro1@gmail.com> writes:
+From: Jacob Keller <jacob.keller@gmail.com>
 
-> A comparison between graph_line->width (of type size_t) and git_graph->width (of type int) causes -Wsign-compare to complain.
->
-> Looking at the git_graph struct definition, its size variables are int-typed.
->
-> Therefore, I changed the type of graph_line->width to also be a int, thus removing the warning trigger.
+This series adds support for using pathspecs to limit the comparison when
+using git diff --no-index. This is similar to how you can limit what is
+included with pathspecs when comparing inside a repository.
 
-An obvious question after reading the above explanation is if it
-also would be a valid solution to change the type of git_graph.width
-to match the type of graph_line.width instead.  And if so, what was
-the reason why you chose to match their types in this direction?
+This version uses only one set of pathspecs and instead uses some logic to
+skip past the root of each directory tree being scanned. This avoids needing
+to parse pathspecs multiple times, and is overall a simpler approach.
 
-    Side note: I personally prefer, when not dealing with things
-    whose size MUST be expressed with size_t, to use platform
-    natural "int" to count them, and on-display width of "git log
-    --graph" output is certainly something that should not exceed
-    thousands for sane people, so I am OK with using "int" myself,
-    but if there are obvious two choices and a commit chose one, we
-    want to see the reasoning behind the choice explained in the
-    proposed commit log message.
+I also opted to add a match_leading_pathspec() instead of exposing the
+match_pathspec_with_flags(), since I didn't how DO_MATCH_EXCLUDES wasn't
+exposed. It felt messy.
 
-By the way, these lines are overly long.  We aim to limit our (physical) line
-length to around 70 chars or so by line wrapping.
+I tried a couple of different methods for skipping past the leading portion
+of a path, including skip_prefix. Ultimately just the index to skip to
+seemed like the simplest solution. I like that it means we only need a
+single pathspec array now, and that we no longer have to worry about
+changing prefix_path_gently.
 
-> diff --git a/graph.c b/graph.c
-> index 26f6fbf000..cb2221700e 100644
-> --- a/graph.c
-> +++ b/graph.c
-> @@ -1,5 +1,3 @@
-> -#define DISABLE_SIGN_COMPARE_WARNINGS
-> -
->  #include "git-compat-util.h"
->  #include "gettext.h"
->  #include "config.h"
-> @@ -115,7 +113,7 @@ static const char *column_get_color_code(unsigned short color)
->  
->  struct graph_line {
->  	struct strbuf *buf;
-> -	size_t width;
-> +	int width;
->  };
+Changes since v3:
+* Drop the patch modifying prefix_path(_gently).
+* Instead of exposing the do_match_pathspec flags, create a
+  match_leading_pathspec() variant that sets both flags when is_dir is true.
+* Use some simple logic to skip past the starting portions of each path
+  before calling match_leading_pathspec
+* Re-write the commit message for the final patch
+* Add a couple more test cases
+* Simplify existing test cases to use --name-status
+* Drop remaining TODOs
 
-When functions like graph_line_addstr() widens the line width, it
-does things like
+Jacob Keller (3):
+  pathspec: add match_leading_pathspec variant
+  pathspec: add flag to indicate operation without repository
+  diff --no-index: support limiting by pathspec
 
-	line->width += strlen(s);
+ pathspec.h                  | 11 +++++
+ builtin/diff.c              |  2 +-
+ diff-no-index.c             | 89 ++++++++++++++++++++++++++++++-------
+ dir.c                       | 19 ++++++--
+ pathspec.c                  |  6 ++-
+ Documentation/git-diff.adoc | 10 +++--
+ t/t4053-diff-no-index.sh    | 75 +++++++++++++++++++++++++++++++
+ 7 files changed, 187 insertions(+), 25 deletions(-)
 
-which could make line->width eventually overflow no matter whether
-its type is "int" or "size_t".  Making .width that used to be
-"size_t" into "int" may make it easier (simply because "int" is
-often much narrower than "size_t") to happen, but your change does
-not make the code worse than the original.
-
-Since I anticipate some senior developers advocate for using
-"size_t" uniformly (instead of the platform natural "int"), I'll let
-them speak up before touching this patch.
-
-Thanks.
-
-
-P.S.  
-
-A totally unrelated tangent.
-
-I notice that graph->width and line->width code assumes that a
-single byte is always one display column wide.  It might be an
-intersting GSoC or Outreachy project to use Unicode graphics instead
-of limiting us to ASCII art to draw these graph.
+-- 
+2.48.1.397.gec9d649cc640
 
