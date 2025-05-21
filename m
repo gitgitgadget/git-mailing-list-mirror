@@ -1,92 +1,92 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7DC22206A8
-	for <git@vger.kernel.org>; Wed, 21 May 2025 15:47:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B12221FBC
+	for <git@vger.kernel.org>; Wed, 21 May 2025 15:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747842466; cv=none; b=u8Nc0h+0zF6A1w+Y38hr92q4F7zLHn/QBEnvMeAzGAmNulefU0j/clkAMSYaZ95hqfW2gmeKCifrlaroPJgnisNnN7JU/1gLwValzS1Dq1mYrE+5FlVGI0vFQQM60eWKQwMBHQJhBNM6ZrQJzgrMPLlkyUWLJfHENLwnwvckYhA=
+	t=1747842634; cv=none; b=MWpj2lS8fXrSJ0cKncz4PejXVrd5S5Q53On21MfpzoT9NKwAo0zKzDJtWIYV1azm68RXSVU7Fg/mPEPirgSP44Zin09uImBmkvWVZDLylur/ot2X/LNNDAiJv+qj9Pu9ja55uypVIqzxZzm/VleBry+TOBkr3HrttmGHSZA6EWU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747842466; c=relaxed/simple;
-	bh=yoBDWDSSc58wFyi4h1EruUPckEfACvCEMVBYynd10Nc=;
+	s=arc-20240116; t=1747842634; c=relaxed/simple;
+	bh=Gt6AhNy3dJMU8YSNe9x3VGOxT7nZtElGR3BnZ8ftcDk=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NPds812YGigXrEsjPdJBwoqSNVqh+utSkVQVC2tOEi+m6RPa17D2GVeykjALOwZqnIB9OjX1bBs8CmrN50hDfBqygvxGkPdiMWyM+DTtKrnydpLnOFMR8lpqf78Azk9SJTljO3QPQVPdNx9IBu1yA89RrlMXYAyY+jsLPTmA3Fs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CyyhL+nS; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=E1Jhg8Z1; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=lay0BXky7hWnQaC5eXkb//ft4unbq9WndwrbetkDSdjoB5qDgj2iZOedx2MznmBZ8CXLrvDy1kvph/KFHSQ2kNNqTY3pDVsKdH1YNsZfvxY0WVgq+RsFgEEKwKkh7CBr7DLkXpxS103LJPBnXc6otT7V+/GO2gtFKl8jVlwc/WU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=laYNdNow; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EI9fxUlu; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CyyhL+nS";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="E1Jhg8Z1"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfout.stl.internal (Postfix) with ESMTP id 654BE1140137;
-	Wed, 21 May 2025 11:47:42 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-10.internal (MEProxy); Wed, 21 May 2025 11:47:42 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="laYNdNow";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EI9fxUlu"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D01B62540155;
+	Wed, 21 May 2025 11:50:29 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Wed, 21 May 2025 11:50:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1747842462;
-	 x=1747928862; bh=kxIVI7qf1GZN+Uybv6wT6pgLJ4Fb2CrcgWZ7cn1mbvE=; b=
-	CyyhL+nS3OX7NVHKEn0+GOCiXjw35UKMfVuOA2xPC0e9IWVn1+jxgzhZ8sOwq2bZ
-	K7DUD+tcsUKTAkHD/0iROX/dilzIvSmIv3EyjeVKI8vWCNVZRkaRVVt95nrG2+iC
-	r+43epPjqyWifVZg/55CwBltUCdc9p4y53z4sVd/qjMMfwyMi2HNWiMbIeZNWmqS
-	Gtace0hVW8qUV05kakuAQkK+S2T1Myz7/F4SfIgtbrcn9imayVtnH5doY7qNoGeb
-	x59aaxNjLvChkOrMLzQtKCfDX/puuiFH4Lh2c3QkHwXrxhZeuqsDELQBbLa09DqN
-	+6dfy0VZgGm0rl2We3AY1A==
+	:references:reply-to:subject:subject:to:to; s=fm2; t=1747842629;
+	 x=1747929029; bh=Gt6AhNy3dJMU8YSNe9x3VGOxT7nZtElGR3BnZ8ftcDk=; b=
+	laYNdNowRcv0jEhd6qlG1lmYVf+EkvjOxzuRlTfP+m03mizbZ1b9op4kzlaE+z6Q
+	mwPwDJOqOPmar3PHk7x/fwXY22ALp7KRKENklJx9u9+5sUdAZ+0oN07NUZJxpFJl
+	4jvX0bCOIrHv0o3vmgz7oYyf6+d4VDazrBLfV2I4mwRBmI0a+uolwT3e/rCj7061
+	Ae6smC/dotko/mTRkqnCAOtaXbE91+mpV/24Hggwhg+uvpu8Q9+y4IHLdopzd8FZ
+	2a42/kXrmF2ZbY/u+VCt//ZGUSf7ydGD+tLhF9kipljMlNd71vSyIF6M6VSwIJwN
+	f2MqtV35vUVh9ReocZ+I/g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747842462; x=
-	1747928862; bh=kxIVI7qf1GZN+Uybv6wT6pgLJ4Fb2CrcgWZ7cn1mbvE=; b=E
-	1Jhg8Z1f9+GhpeEiBMd6Yq30n9xYv5gsIVY9gAMHK7RYk7Nt5i9HTK2BIxaEq8LZ
-	9qMiTMUGQBx0k9p4VNqtdb9tZMquQyWxMr0lYtRuVnA5tRfAWHfSv9aJlttQHARR
-	NkwVc19ovxQlTd/KY188D1NVXRAA8+srwXjliQ83JRs4GML9Uwb/DGK5L0u8PvAI
-	LLjNtwcjXiE2cQga5nTKbW8/pWW1pw0AogPnZa+ecBWuKxTNYlRTPj8ISyUH5Son
-	cYII4XTE4PIpK3vMqjt+7ExT9UNVFzTvjxihIMyUkUzduUJG0RIkZHJMnTm+06tU
-	kXsu91UB0XxOGpNy66Z1w==
-X-ME-Sender: <xms:nfUtaPMo_kGsIFFZirrokx9TIsn2Z0z7otpdKsybj602WHYoNSHf4w>
-    <xme:nfUtaJ_d-zM19XmdcKoLmq5aPPYQ9N2F39xEJ1XXRRcBuqOqbI75JcyHmMm71LbRQ
-    aq60-kgjKOoUlptZg>
-X-ME-Received: <xmr:nfUtaOSOTpOoiAnCFy9ZqXe4hY7-wLR9AEsLzrHc_sFOJIVXGBv3hlb3tkcq6k_j0w5ZrXR8WgOeKacDfm7AV6jOvcMYeaGhWzo9VCQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747842629; x=
+	1747929029; bh=Gt6AhNy3dJMU8YSNe9x3VGOxT7nZtElGR3BnZ8ftcDk=; b=E
+	I9fxUluXztYwZuVEaATvIyl2nKYeUUM4Q8CepCCecnS6JGdsY7TroM0f9mCe8Lul
+	T2BgiKDcFRN1GcW/SU6ibfM1egu/Gw6QDXFczV9AWGsm6gf3dGDz1JZ7IbVE5hCp
+	u3hXB9DMOpVA8W2fEI/Lr/4V2LdGDMlhAdEehHL0juyk9II1uCFbmg2tvyAQ/h+t
+	uFppGIBtrzB+nVk/2uFfCB9HwDsrd38hk3U+uJGGzvGH44o20W4R5Z3wWlENPsHs
+	fsw4JANsEar9tlVeFow4KpBxlaMAazEhoRm50iz3T50ZeFXvK2CyCLj6hJdizew/
+	Q7Q4xN9U3rzyHg7glqvGA==
+X-ME-Sender: <xms:RfYtaJnCvBgaTSDQFQ00A4kTv5dSw1FJmzUEMo_3YZo2BJ_9ddpw4Q>
+    <xme:RfYtaE1tNnpjSFAjC1feBcGM4_sqI5fTOy1Oy6b_bz1-rDE5qPMQ3sgxN7xExh7DR
+    URfTYii2sa55iDV9w>
+X-ME-Received: <xmr:RfYtaPoPvG-ejSUmVUa9Q4AEXTMklPXxEwcGs2adOhhaRr4NtT6AJ6gpZhAyavALdJO0XGsLTpNYFt7FiwpZEHgoo_A3omUINbwUAoU>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefgeekucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
     enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgfgsehtkefotddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeehveeiieef
-    heeuvddvvdfghfehudetfffhudelvdetudevgedvgfefieduledtvdenucffohhmrghinh
-    epkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
-    rghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtoh
-    epiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheptghouggvsehkhhgruhhgshgs
-    rghkkhdrnhgrmhgvpdhrtghpthhtohepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkh
-    esfhgrshhtmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepug
-    ihrhhonhgvthgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:nvUtaDsb5wMgSycGwN-VVpOAZJnB7FuWOLrMJyQCPCmwFVMZxWM2jw>
-    <xmx:nvUtaHdehcwguY-VTtdfVl5oErFO0LpowF-oTU6a_HMeZy0hfIoSFw>
-    <xmx:nvUtaP2-QrArMaREJhGS0ZS8ZVKKnEnyR3Wkop3uull1-drlk6MGHw>
-    <xmx:nvUtaD8x3O2xuHC0XXfobb6aDvIDkMAT4ilQAfaD4r3Y8N_24zLzzw>
-    <xmx:nvUtaMD5O23klW1hD8B1YwPr6KkLjysfeVqjAZVO-vtBHlvG8ByLXs19>
+    fgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteeg
+    vddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopegsvghn
+    rdhknhhosghlvgesghhmrghilhdrtghomhdprhgtphhtthhopehkrhhishhtohhffhgvrh
+    hhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehv
+    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvth
+    dprhgtphhtthhopeguhihrohhnvghtvghnghesghhmrghilhdrtghomhdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:RfYtaJnVyFReMM0-potHoC4MlwUapo8ITfw-p-AXBw2fYVNWxgmJHQ>
+    <xmx:RfYtaH0sulxAuhvJOzWf-a_-L0pAS2yNPNVrA2iYnFaRjfqJJnKV0w>
+    <xmx:RfYtaIvbX6mIQSvi4seXnrvUWL6-8IyTVAIVKLkuuR9Iul0e_YiIXQ>
+    <xmx:RfYtaLXt0J1D3tyIHyhac3dvO-yy0dm8qeg9e9XDpuH4lxHFZyLM9g>
+    <xmx:RfYtaLh12gc4ZFvSRn2ss1V6v8qodl1CnMfGsee1NsaS8AGZbeKfMRn1>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 11:47:41 -0400 (EDT)
+ 21 May 2025 11:50:29 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-Cc: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
-  git@vger.kernel.org,  "Jeff King" <peff@peff.net>,  "Teng Long"
- <dyroneteng@gmail.com>
-Subject: Re: [PATCH 3/6] doc: notes: split out options with negations
-In-Reply-To: <d4491de5-9482-4bd1-9fca-dd960a815f51@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Wed, 21 May 2025 16:42:15 +0200")
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>,  "Kristoffer Haugsbakk"
+ <kristofferhaugsbakk@fastmail.com>,  git@vger.kernel.org,  "Jeff King"
+ <peff@peff.net>,  "Teng Long" <dyroneteng@gmail.com>
+Subject: Re: [PATCH 6/6] doc: notes: treat --stdin equally between copy/remove
+In-Reply-To: <a9768fbd-7b94-4eb5-9906-0445c93be1d9@app.fastmail.com>
+	(Kristoffer Haugsbakk's message of "Wed, 21 May 2025 16:44:03 +0200")
 References: <cover.1747763769.git.code@khaugsbakk.name>
-	<d2b6864b7072faa2c804c98ce7758b666e11f00b.1747763769.git.code@khaugsbakk.name>
-	<xmqqfrgzhzbp.fsf@gitster.g> <xmqqsekyds2e.fsf@gitster.g>
-	<d4491de5-9482-4bd1-9fca-dd960a815f51@app.fastmail.com>
-Date: Wed, 21 May 2025 08:47:39 -0700
-Message-ID: <xmqqwmaaartw.fsf@gitster.g>
+	<68e5eb78040419ba64e256910501c7e37194b222.1747763769.git.code@khaugsbakk.name>
+	<CALnO6CAMgA1H3_Q+H6WRchMo4L2j_Qu8fdT4JVnfXyHwu97enQ@mail.gmail.com>
+	<a9768fbd-7b94-4eb5-9906-0445c93be1d9@app.fastmail.com>
+Date: Wed, 21 May 2025 08:50:27 -0700
+Message-ID: <xmqqsekyarp8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,27 +99,17 @@ Content-Transfer-Encoding: 8bit
 
 "Kristoffer Haugsbakk" <code@khaugsbakk.name> writes:
 
->> I guess this was left unresolved after the series, but it is
->> perfectly fine to leave it outside the topic.  Somebody else may
->> want to look into how exactly stripspace behaviour works by default
->> and how this option affects [*] and document it here.
+> On Wed, May 21, 2025, at 15:19, D. Ben Knoble wrote:
+>> On Tue, May 20, 2025 at 1:58 PM <kristofferhaugsbakk@fastmail.com> wrote:
+>>> • remove: mention `--stdin` on the subcommand as well, like for `copy`
+>>> • copy: mention it as well under the option documentation
 >>
->> [Footnote]
->>
->>  * IIRC, we made the default to strip, unless the message came from
->>    an existing note in which case it is left intact; but whoever
->>    does the documentation update should check it.
+>> Ooh, bullet characters. I haven't seen anything quite like that in a
+>> commit message in my short time watching the list. Neat!
 >
-> Good point. I looked over the options for any ambiguity but missed this
-> one.
+> They get through the reviews somehow. ;)
 
-Heh, that was one of the things the article you cited stressed on [*].
-
-> I’ll fix it on a separate patch in the next version.
-
-Thanks.
-
-
-[Reference]
-
-* https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
+The "downside" may be that they may inconvenience folks still living
+in ASCII-only world, but I suspect it is rather hard to find
+ASCII-only terminals that render not-so-uncommon Unicode characters
+as garbage, so perhaps there is no longer any such downside?
