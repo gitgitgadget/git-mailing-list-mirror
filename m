@@ -1,276 +1,819 @@
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.12])
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F52B255F49
-	for <git@vger.kernel.org>; Tue, 20 May 2025 22:47:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=198.175.65.12
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747781264; cv=fail; b=GGjF14gjDozWCkhwp81wgsLi5bsLcuaJUuXJjGo1eIaw6SacyRhnfmvxtJprhYO2wjA1DrKeGB2OlIPuKkyojMgZ7YDbNRfviuDaZRrpcYcdNRSimsIuTKKb88N2RF+zmyiheL0VNAqxASC/ZaM/nzJdHOw66skEBxd7uWpp0wU=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747781264; c=relaxed/simple;
-	bh=xFJ8Q8p3iasxoNO84+ZmbZMarXzSYlQGkFb/nXJSuEE=;
-	h=Message-ID:Date:Subject:To:CC:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=rQJzHoAVzHjQ311FQ0yvQsaT+hKQum2ri8tril0KraBB7Qfdkf5oDz/AUoMcqd1L3UW3ArkaxqeneSNFR/Vey5hVY+peNJWEEVMMpySBOncaHuCJ5nZ0QxwHSNMwt6U1iBAZ8SO9P6vO+s+bqtcumjg55G3JcpjVINrv4fFvrdU=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=LqVNj3aE; arc=fail smtp.client-ip=198.175.65.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B0D33D6F
+	for <git@vger.kernel.org>; Wed, 21 May 2025 00:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747788865; cv=none; b=SEfSjBATAxk59PPXauItf4AJQ8zD6hb1j7LUqsoX+ZqDEfrZO8/rVPYAZWnEvcsN408x9cvD/yetg7AKf3PbWa84RqaAP5UWIIgNOE99qlrnnLZ7bNFNe1Gu6a9AFvyQqG/IKZzz3jYnnXVPybZP/W6XIOQnHy22d5PY4mmNebI=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747788865; c=relaxed/simple;
+	bh=2J8u+z1ZDh7TQEMcaV8jbfmHqXKUVSgHcJTaJndNuTg=;
+	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=JI13ozQ0dn4jgbZwaSDgHF2gLAU3wKyUyMYFNQ7z8hlfmBwlpL982BLQCETRIVDHVUYTGowbgBotTwtqXiycZzNherGUnojt9HlzFFHuF1LF3MCoGn70DLmvHO03OIy4JHl8O2Kx6T4fVmW3j8gEBZRx2V+vrxLuKlTLbJGUBN8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AOSGm7EG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TbX+HqG0; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="LqVNj3aE"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747781263; x=1779317263;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=xFJ8Q8p3iasxoNO84+ZmbZMarXzSYlQGkFb/nXJSuEE=;
-  b=LqVNj3aE3DwxLO7TB6IZpPCNS5Ri3enr4k0ezoEPkrqXZGIzQvsq61Kn
-   KG1w6Wp7/5mbzRreJYG9rsRgCnmwG4KC46LnPtiqZx5WM4YNKQM2bdypM
-   UTBRJO8sF+SFv1CJ4PQXk/012QnrasXoFTMeL0HNBDbtXsA455/+o8gff
-   QSOATmrY1HQWA0XSQkEAB/q0dWXIwOHGaMsjQVgTr9bOVMpSTBlRQQjXv
-   jLuWyAr1wJfUnZ5bOWMYq5Kb7oaGWvp86mRXeHHSgPeoyK5ZeWeNrAo2O
-   Qe44kd6UdJV8hcgMmJS45uRnaFIyWCDqXAhd+rl+Wk0IxMpInclnreFO9
-   w==;
-X-CSE-ConnectionGUID: 2C1LEAe4TF6sQ3SB6IaFig==
-X-CSE-MsgGUID: PPcqUiNfQDOUhrWtXDQvOQ==
-X-IronPort-AV: E=McAfee;i="6700,10204,11439"; a="61135949"
-X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; 
-   d="scan'208";a="61135949"
-Received: from orviesa006.jf.intel.com ([10.64.159.146])
-  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 15:47:41 -0700
-X-CSE-ConnectionGUID: uGWrfhOoRz68bM3Q0EiECg==
-X-CSE-MsgGUID: +W7m+aTnT3mM9sfih/VBBQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.15,303,1739865600"; 
-   d="scan'208";a="139702102"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
-  by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 20 May 2025 15:47:41 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Tue, 20 May 2025 15:47:40 -0700
-Received: from ORSEDG602.ED.cps.intel.com (10.7.248.7) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Tue, 20 May 2025 15:47:40 -0700
-Received: from NAM11-BN8-obe.outbound.protection.outlook.com (104.47.58.168)
- by edgegateway.intel.com (134.134.137.103) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Tue, 20 May 2025 15:47:40 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=V7e7j89psVN1TYNVYH8zHfxFKeqlSr8Y1b2Ut+gu0/ETLk4XliG2yQG9SvvUQ4StJab/rs4ZjY1GMv/Towccz6yTTBfuhSBOTMpL4dbY0IxL8+fAivd1+Qdzm8EF1h2n41T/KrIYk2f5YYEfYveDKR7c3nr51rXq+1jNdOB+os+Mybma3ywN1ERb3w+J8RMUYzetpeoYPZmWUny49Gfs6ZT2yxKwC9kKzgpw5dgFSAGc0kZOrcmQtK9jvLHtFiHlE89nal5PRRaRFHOZr4s0b7W6lbfaIOxc0v1db6r8beW1vJju/is/Yav9wOQE06gthYuzUv6M0RjkuUcUz2qf2Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jCKK6PaEXyw5l/P+2AhGvKpTecm/Zzs17a9ACo7zi70=;
- b=cwufv4/33grG4DpH7NPNOrLma0Tn3prEUESKr5OlQv/KQ+4vKOM5yigiuFf9QsyyFaa3GDE+hfEL4LYzgpw2LEcUGzWIt7x7Hon8aawzE3S4EFpTPE5uEFOQ3s/nMz/tQiBSbUfgj4lCLtITnM/zicnuAgPyuCE/gVO2TgiJcmz7ZU9t7OwW9f3RcPO8yfpoK9HYg1TtRg5C17Vbl0XH8UMD9YzsBCKtEE6xIzAmrtIn2M6nFdYAclR2DsbQeWif5uFRZ8DbwuE+6CXkBXs6uoMh7zFCW0GW5J92N4SYy3dR5A/Hx3/tDtf1Wml97hitjgQMRQIoTKLCi8w3REYznw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com (2603:10b6:303:9b::16)
- by DS0PR11MB7623.namprd11.prod.outlook.com (2603:10b6:8:142::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.30; Tue, 20 May
- 2025 22:47:37 +0000
-Received: from CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::7de8:e1b1:a3b:b8a8]) by CO1PR11MB5089.namprd11.prod.outlook.com
- ([fe80::7de8:e1b1:a3b:b8a8%4]) with mapi id 15.20.8746.030; Tue, 20 May 2025
- 22:47:37 +0000
-Message-ID: <fd82cfe6-0a3b-4f1c-b9a2-91d61ddc9391@intel.com>
-Date: Tue, 20 May 2025 15:47:36 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/4] diff --no-index: support limiting by pathspec
-To: Junio C Hamano <gitster@pobox.com>
-CC: <git@vger.kernel.org>, Jacob Keller <jacob.keller@gmail.com>
-References: <20250520000125.2162144-1-jacob.e.keller@intel.com>
- <20250520000125.2162144-5-jacob.e.keller@intel.com>
- <xmqqy0uri6st.fsf@gitster.g>
-Content-Language: en-US
-From: Jacob Keller <jacob.e.keller@intel.com>
-In-Reply-To: <xmqqy0uri6st.fsf@gitster.g>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: MW4PR04CA0100.namprd04.prod.outlook.com
- (2603:10b6:303:83::15) To CO1PR11MB5089.namprd11.prod.outlook.com
- (2603:10b6:303:9b::16)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AOSGm7EG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TbX+HqG0"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 5F0B91140089;
+	Tue, 20 May 2025 20:54:20 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Tue, 20 May 2025 20:54:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:message-id:mime-version:reply-to:subject:subject:to:to; s=fm2;
+	 t=1747788860; x=1747875260; bh=mfsPsdvnwF2QAG2lDW0TAjUgTqwyDKWm
+	449cBjfcMfM=; b=AOSGm7EGPZyqUt5rlQBhGFnyJZ7NE7o72+BUCCwR24HH7vEj
+	xETeSXg7olmdad6AC6VfZdDDZd39VZFjFs4iHNS+D9KS/V945GVYZHC5sUdBjDbO
+	gVcnk1Sm4f6KSVey7LkeBljvI/zNx0B+3RBdPvwZf/R0pjT6NHYLcNcJ5AsUbSrO
+	iAn64VbZz5QcbmA0FfeuMUJynXNSU5mCUGwRXGOa78PgnudbyhEqJaBoxiE+Qd8/
+	6FNmMGWuOeISqWcCHz5nYEj0nmFMhwkHtj08QIaJhoFPW2t5NuZiaqnKfJ2pi4Ln
+	4qXK6/Z135y0JCloeDHHpmoGgc6g55pNLzANeg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:message-id
+	:mime-version:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747788860; x=
+	1747875260; bh=mfsPsdvnwF2QAG2lDW0TAjUgTqwyDKWm449cBjfcMfM=; b=T
+	bX+HqG03FE5Yw4QKYIxlMrfV1TljTBl7EgAH9yh8Spx6TAPKKcKO6Y15MMJtyrNT
+	ybLaDLrPTKMBRAvm3b4jKWuebKUpDvEYDDEZTJNNM1kdp2WxAwRy8CKgTPu6qbhq
+	AWnMI4bXZMjkHY6yf+ZXm+omEjwxbphKQxeUJyRHaNUZREL022nCgDepWTLlMn8R
+	76m5LOKCeolAanmXOmdzUVgwyxMNXy9ltXweNY7ds2A854jQClutR0Yce5O4XAny
+	nwz43OVHPPEep3WG7PTpFIxdVi8PT5UEaMW+NZArJQ1ColuNxi4kvCuYPzTGU7UA
+	FYxmnWWbHHZwHQxWeEZ3Q==
+X-ME-Sender: <xms:PCQtaOCaTc6jQAyX8XblOYQ8Tr_EOJyumxKw_MEEAsjHOm8WVZE_yg>
+    <xme:PCQtaIhNpt6xmVOTMr4A0KlAAZGoIBOKN0ygdB3XlPaXDXqpk3gscSnxS8XAhdz5y
+    EaoVLhqmBa-BKC_5A>
+X-ME-Received: <xmr:PCQtaBmLN5f5h2tsb5hXwBN41_xlcHtowh45CHTj4dJmjUV85QSYO1GY_chn4DG_wIinwF8uX0FAP_6YCAc6xpGGrAIy8uFJhaAS4pM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeduucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucenucfjughrpefhvffufffkfgggtgesthdtredttdertdenucfhrhhomheplfhunhhi
+    ohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrf
+    grthhtvghrnheptddtvdffleejvefhjeeigfelffefjefgfeegjeelheekffegiedvkedv
+    keeiledunecuffhomhgrihhnpehkvghrnhgvlhdrohhrghdpohhrrdgtiidpghhoohhglh
+    gvshhouhhrtggvrdgtohhmpdhgihhthhhusgdrtghomhdpghhithhlrggsrdgtohhmnecu
+    vehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsth
+    gvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphho
+    uhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtth
+    hopehlfihnsehlfihnrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:PCQtaMwbjnduRjiF2_ajqAQT-0CSU4wkO-15w_LShhz3b7OeXdk-wQ>
+    <xmx:PCQtaDTizliGBftKPqk-6q_V-A_0uuj2tNf7aFe7NdJm_NsyauakfA>
+    <xmx:PCQtaHakJ9CU_Z--T7kijbxD5W-SzSz0e2iA3TNTAgupLbf_9UgT9A>
+    <xmx:PCQtaMSbCKIMD7Ua2PdNNmc8AkHnna8Fkr_6tacUTkGt-UUXXzLO0Q>
+    <xmx:PCQtaHJ40O8kCOXfpJPjkw7HmI4dXYZ-xZT1pF_24t9s79MI78oZopwO>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 20 May 2025 20:54:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+Subject: What's cooking in git.git (May 2025, #06; Tue, 20)
+X-master-at: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
+X-next-at: 71687c7c1d2570cea317a8dc39fe58d4c5aeab6b
+Date: Tue, 20 May 2025 17:54:17 -0700
+Message-ID: <xmqqy0uqg4w6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CO1PR11MB5089:EE_|DS0PR11MB7623:EE_
-X-MS-Office365-Filtering-Correlation-Id: f917c1cd-ce23-435b-b894-08dd97f0518b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WWhaczJFd0xDM1V6YVYzOGlmMDNobmRjcmtrK1BMMTBkUU9PVzVJV05zK1BG?=
- =?utf-8?B?ZVJyN0tjNy95bVlXVHdtU0tEazRBUFYrZHNuSGQ1WmVMSHJ4aGVqTGc2a0Nx?=
- =?utf-8?B?SXhZZ2dYVHN2STI4KzQ0ZmFmZ2VucXFlbzhXUXlYbjZtekpjc0RHcDAxb1hy?=
- =?utf-8?B?SE0zOGptajVHRGdRNm02TWhqaHhYYUNQcmxmVHhDYll2Q3hLeFgzRktFcW5Z?=
- =?utf-8?B?dXlNT08zait1NHZhNHVmdTRCZUIzaFhrM2NZM0kycVJtZG4wTlp0SHFlaFg2?=
- =?utf-8?B?SWhqalRGMyttN1M3dXZUaVdNS0hhbW1JSElzK205R3NVTWJrWm9rVzVJT2t2?=
- =?utf-8?B?bXNMUitYVmE5RStjNEE4ZEpGZWJoV0RuTVVuamM4SWY4QTRFZ1BDMFZ3TVdy?=
- =?utf-8?B?clY1NXVqZ001Y2lqbTZYM0dVdldydE1SVHI1Y0ZtNUVScitFV0hJQ29pSDVq?=
- =?utf-8?B?Uk40UVlZb1M5SGxPajFFbTlUaDc1dE84dE1wNFFxc1lpUXB3Qlg0UXR1OElo?=
- =?utf-8?B?OFUzQkxtM3RtWEs4MUZHWmVkVzllaFFOWEkyaWNCOXZNMUEySnJHNGo2bXY4?=
- =?utf-8?B?NU5DYlUzelpJMERBd04yRGwvNXBVV01IKzhZUnI4N25PQW9TOEFUZjRONVNE?=
- =?utf-8?B?WlJMU0M5aWRKWnkxN2xGdW4yU2dWZWNmRlZNTVV4YXp1NnkvR0h3amE4Z09j?=
- =?utf-8?B?cWU0cEt3SFNqMi9yVUFGbFhkeFZJWnNYNWxkbHNkbXBTbm1iMXVyU3pUUTJU?=
- =?utf-8?B?ZUVXUllZK2k1cVpZMS9Wa0tjcU9tRldLN2FZWXJDZzhFVjZ6NVc5MXRub2h1?=
- =?utf-8?B?MnZlRmcrTE11UEZJcXR1RXlqRkpnUlIzMlVtS1U5eTRVUVg0SnBtREQ0eHpn?=
- =?utf-8?B?OWJpWkdJdXpiWEVnU0tXSXV4YlN1ZDA5QTNEczhiUXNZQ3AzeUV4eHdibngw?=
- =?utf-8?B?UFgycVF1OWFRWnJ3WnY0cmMvY3ZLb2xLY2VJTVBzQVlsNE90djZlMGttRFJB?=
- =?utf-8?B?ektLZEZweGwzYWR1VUFRWlRGSzFsUWJwTTluR0Niek1YTkFIMW5RK09Eb2Ns?=
- =?utf-8?B?cEd4Yk9OSnFpSWZQL1R4clFKSGl5RGtVNll2c2lQdzBNU0NoSDNFbzNSMUty?=
- =?utf-8?B?REFSUFhJRWdBYVRTMXFnWVFGOE5GWFZXN2hBVVUrRmlXQnNhTjRQbXZOSEQ0?=
- =?utf-8?B?WGZPeFFaSkwzZnJnSC8wNDEzUXY3NmxoSmN5Z2dlQzlxRGc1eU9ldmdRQTRR?=
- =?utf-8?B?MzBIZVJnMWIxWmhVaWtzWEtjOGprU3hYOU5DWnZxdWtnOVUyRi96dXJReEty?=
- =?utf-8?B?RnRybi9JeG1uVTlPajJncFBNU1NCSGlQenBCVG9RYzAvbnFBY0FFMGcrczIr?=
- =?utf-8?B?bEQ2QnF4eXB2ZVdFNkw3RmpnWDdRTkI0aERZcEJjSVM2TTRIOVRWL0pzQnFz?=
- =?utf-8?B?a1JlL0k0Q09JTS81MzNkQUwvcXd1VitWNFJKWFozQkVuRjBDMkMrZTBveExk?=
- =?utf-8?B?aldPTVVmc09Ic01HMlJWRFZYRzY1OG9XT09tSFgzeTVmbDRoMEZEL1NiYzRY?=
- =?utf-8?B?QXlHTlMraWplRWlmMW9xclpjK00wdmFON0VpRFFNWDREZWh2Y202V3ErNzZ5?=
- =?utf-8?B?UTFsYmhYRFhoMXlJU0ZQRUdBYlNvN2JMd0lXQ20wMVFFNmprUFpJT3M0cmUv?=
- =?utf-8?B?ZUM5cFVsczJVclNvL2I3bTg4ZjZTYmtINkFIZlA0TDZlQWVrdmhYNFdBVGhD?=
- =?utf-8?B?ck9YWisrbmtXNStIM3BCYzlZd1REanhjaW5rVWlYQzNTQWFZMFNyWnNkRkU5?=
- =?utf-8?B?cDREU0hsVDBGSGNIWEhUdXJYc1NMT0lGODJUOVpJZGl0ZTlyZk9GbkhmMHJK?=
- =?utf-8?B?ZXFDRWZuZldLbE1mR3U5RENSVHVFdHNoWXFQdnJpYm5Mc3hJamViMTdreU1q?=
- =?utf-8?Q?1d0R8i6IUMw=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:CO1PR11MB5089.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(366016)(376014)(1800799024);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dmRhalVjQlpUZ0h4S0paamUzRTJBZHZUQVg1TnYzYWtlZmRwa2NMRVpmRU0v?=
- =?utf-8?B?VDVJNFVGbG1qUXFnSnhJTDREYUR5UXd1eFBnclpLRmJoMzNZZ3hZOFRKQ3hh?=
- =?utf-8?B?eklPRjVocGNFbTh2Mi9zVG5SN0tQcCtNay9XZlFqdUVrTTdoSGt5NS85NnE3?=
- =?utf-8?B?ZnY0cW1mVGk3R09JZFc3YnVpVlcyZzRsRU1tVW90SE9LZS82Q3Z2RFZSUlhZ?=
- =?utf-8?B?dHdtT3lWZzdSejkvMkpubXBkNndnaW9mQ2t6aEdQRE1uS0tOYytscjdmRTR3?=
- =?utf-8?B?YXNHakZEWVVjWVpzekRSSkJ2L2NBRG5hZEJtZFEyc09zdFlrVzhqSFkxaFc0?=
- =?utf-8?B?YjZHK0tFZEdiU3hiMlFNZFpWRTFFM1MzTVlMS2N3UEZBeUwzOHJ5c3BXTTRo?=
- =?utf-8?B?d2JveS96dzNmcFhoTWx4R1FzYlFOMkZTZUhjczErMk9TVHZqVkRSbFRvc3Z3?=
- =?utf-8?B?T0JyTlNPdisxUjZMa1Y4ZmlSMGplZWduTmhFVUcxeWZwS3BoWWlncVN2U1JF?=
- =?utf-8?B?eDNYV29oak9hL0Y4ZHhqNkhoSXZMUXo5c05IeHYxdXhKakVBb2hoUDRTWXY2?=
- =?utf-8?B?N0lLa21hNkNvNWRtVWxLLzc4cndKT2pReTF3RlFOZVA5R2hLampYS1FJOElL?=
- =?utf-8?B?eSszeHRDR1VBZVRTSE5GTXFTN2VCbVNLL0d5KzVyNVFMcHNJWGxpeWM3cDg4?=
- =?utf-8?B?Sm1IdzNFK0lDY0VjRnZWOEpQNGpyK1lQWUpOeWlTRkJ0QlVRdXh0aXV1YVR1?=
- =?utf-8?B?VUV0MlhPS3BRWVo5NDVSUmNReTA3c1VOb0hEUEhnMm1GQkszRUlaRUEwVTdz?=
- =?utf-8?B?dzc0VDVlSzFSb0NseSsrVmw3NkpwSVovUzVHNncrbm1kSHg5OVBmNWdhRWp3?=
- =?utf-8?B?aHZNeG9QUDJ1S2N6NGJMSmdrL0ZxdWhoMUNvL3hSUlV0djhBMUhoaEt5UDVF?=
- =?utf-8?B?OWk3T0UrQlJoMXdacGZiOEtwdDA0allqdDFaMjJJdTB4TTNLaEZNaFd2bmlQ?=
- =?utf-8?B?R0VqV2hSRStWcXA4MERvaGtvemlHUmc2QTEvTmxpU2lTRmJTd2RNVHNlaGJZ?=
- =?utf-8?B?TXNURUNsRUQ4ay9MSUtuK0NocjMySWRScjYzc1BOUFhrNXR0OEU0QTM5S3FW?=
- =?utf-8?B?TGFORTVUcGdWNFhmVElhejFKbkViNTJ4UDNveHlacDkzS28wUW1hblB5REVD?=
- =?utf-8?B?Y0ViL1p3MlBIRGRPU2Y5MUovRFR6ZkJsdlJ6WlFsT2FRUnZjeTNSeTVqU25q?=
- =?utf-8?B?QlNuNnBndmpLVUhwSEtIWFA5ODBtMlNHclY5blhKaUkzK29POFRzWTdLa1Fj?=
- =?utf-8?B?Wm04N3ozSkQ0YVJ4dlRrejRsQjI4UHNHaTJJS1RGUkdWNWZmTW0yUlVIUW8x?=
- =?utf-8?B?MjBTV2ZhcDhHaGtmYUVwZ1hDUThpeEVYS0pPSWN0Y2s5NU1VbE1lVWMxSURK?=
- =?utf-8?B?alBwMnB1SGZ3N1c5ZGlHY094WjhUZmZTU2NMWUdMM1crUjZVMHdCLzNHZWpy?=
- =?utf-8?B?eVJxQmZjaXFJSG51dGJjbVBPWTlteDRyS1pBWGFadjhhNkZDcUlGaXl2V0VG?=
- =?utf-8?B?WUtReTJGem1wTGh1NEdCbWM3ZERDTW9SbjRFalVuZFdkY2xLRVBidGMxYWl6?=
- =?utf-8?B?Mm00QWpkdTVUWTBhQ1hLOTJRcG1SaFdjQktzY0Vpck1OYStndjdEcWE5UnJa?=
- =?utf-8?B?OGcvWWE4cmZncG4wWDdEdEI1ZTdBZit0dnpBQ2Y4WWNHd2tvZ0wwZ216MlZI?=
- =?utf-8?B?QktVNno5d2ZLU0dqRm1zbmpzQlBBRUNGbWhJTFAxcnpVQ3Nzb04rNUdmd1d6?=
- =?utf-8?B?NkVmVjBLaHYzZUk0RmEwVmhSbXVyQUZiWjB0WUpLMGJFMmJvMThKNHNlUVhh?=
- =?utf-8?B?aUNnVFRqS083Ykh4OWtTdzVXVTVXUjhuSzhUZE1nRHVhZ09nMXB3WUhuTVZm?=
- =?utf-8?B?NHJ3WEo1SlQrRkZvTysxWGVaVjNCWU1jaXArS0pmb0o0eFFScjBMbkRlLzR3?=
- =?utf-8?B?YXo1WFNvVTBVY3BweTMwN1RjQ0VkMzNzbFVLRkNaaVgrVnNoYWxNZGlzaU1v?=
- =?utf-8?B?UFIxV3BIc2NYZEgyVllFS2Q5QlJTU25mZXZxbFAvSTJwc0RZVGpLVjRMYmJB?=
- =?utf-8?B?bG42Z0dPdTJMUnF1WHVsNlpUM2tkdFpla1J3aXNFTUpveER6UVRISjM5bHhE?=
- =?utf-8?B?Unc9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: f917c1cd-ce23-435b-b894-08dd97f0518b
-X-MS-Exchange-CrossTenant-AuthSource: CO1PR11MB5089.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 May 2025 22:47:37.3810
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xT/nQKHPDTHYbsKJOwLbeqpRZdsZ+6SxcJPMeqgjPmPslZ/bwVIy2RyiWMxVkSyAEgPb70mhTNsKeUl4REjVEtykhLzbdeJR/JSir++5F5w=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7623
-X-OriginatorOrg: intel.com
+Content-Type: text/plain
+
+Here are the topics that have been cooking in my tree.  Commits
+prefixed with '+' are in 'next' (being in 'next' is a sign that a
+topic is stable enough to be used and are candidate to be in a
+future release).  Commits prefixed with '-' are only in 'seen', and
+aren't considered "accepted" at all and may be annotated with an URL
+to a message that raises issues but they are no means exhaustive.  A
+topic without enough support may be discarded after a long period of
+no activity (of course they can be resubmit when new interests
+arise).
+
+Copies of the source code to Git live in many repositories, and the
+following is a list of the ones I push into or their mirrors.  Some
+repositories have only a subset of branches.
+
+With maint, master, next, seen, todo:
+
+	git://git.kernel.org/pub/scm/git/git.git/
+	git://repo.or.cz/alt-git.git/
+	https://kernel.googlesource.com/pub/scm/git/git/
+	https://github.com/git/git/
+	https://gitlab.com/git-scm/git/
+
+With all the integration branches and topics broken out:
+
+	https://github.com/gitster/git/
+
+Even though the preformatted documentation in HTML and man format
+are not sources, they are published in these repositories for
+convenience (replace "htmldocs" with "manpages" for the manual
+pages):
+
+	git://git.kernel.org/pub/scm/git/git-htmldocs.git/
+	https://github.com/gitster/git-htmldocs.git/
+
+Release tarballs are available at:
+
+	https://www.kernel.org/pub/software/scm/git/
+
+--------------------------------------------------
+[Graduated to 'master']
+
+* ag/doc-send-email (2025-05-08) 3 commits
+  (merged to 'next' on 2025-05-13 at 6eb746c6c2)
+ + docs: add credential helper for outlook and gmail in OAuth list of helpers
+ + docs: improve send-email documentation
+ + send-mail: improve checks for valid_fqdn
+ (this branch is used by ag/doc-send-email-update-2.)
+
+ The `send-email` documentation has been updated with OAuth2.0
+ related examples.
+ 
+ source: <PN0PR01MB95882173451A6A7C28AD7BE7B88BA@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
 
 
+* bc/make-avoid-unneeded-rebuild-with-compdb-dir (2025-05-09) 1 commit
+  (merged to 'next' on 2025-05-13 at c36a91ba22)
+ + Makefile: avoid constant rebuilds with compilation database
 
-On 5/20/2025 9:30 AM, Junio C Hamano wrote:
-> Jacob Keller <jacob.e.keller@intel.com> writes:
-> 
->> The git diff --no-index mode does not support pathspecs, and cannot
->> limit the diff output in this way. Other diff programs such as GNU
->> difftools have options for excluding paths based on a pattern match.
-> 
-> True.
-> 
->> However, using git diff as a diff replacement has several advantages
->> over many popular diff tools, including coloring moved lines, rename
->> detections, and similar.
-> 
-> I said this when we introduced "--no-index", but back when "git" was
-> still young, it would have helped a lot wider developer populations
-> if we didn't do "git diff --no-index" and instead donated these
-> features to "many popular diff tools".  We however chose to be lazy
-> and selfish---those who want to use these features are better off
-> installing "git" even if they are not using it for version control,
-> only to use it as "better diff".
-> 
-> People are still welcome to add "coloring moved lines, rename
-> detections and similar" to "many popular diff tools", but given that
-> "git" has become fairly popular and widely used, it may not matter
-> all that much any more that we were lazy and selfish ;-).
-> 
->> Teach git diff --no-index how to handle pathspecs to limit the
->> comparisons. This will only be supported if both provided paths are
->> directories.
-> 
-> Good.  If you are giving only two files, pathspec limiting would not
-> make much sense.  If you are giving a file and a directory, lazily
-> give only F and D to compare F with D/F, that is essentially giving
-> only two files F and D/F, so pathspec limiting would not make much
-> sense, either.  pathspec limited comparison would make sense only
-> when you are talking about two sets of files.
-> 
->> However, if we always passed DO_MATCH_LEADING_PATHSPEC, then we will
->> incorrectly match in certain cases such as matching 'a/c' against
->> ':(glob)**/d'. The match logic will see that a matches the leading part
->> of the **/ and accept this even tho c doesn't match. The trick seems to
->> be setting both DO_MATCH_LEADING_PATHSPEC and DO_MATCH_DIRECTORY when
->> checking directories, but set neither of them when checking files.
-> 
-> Sounds sensible.
-> 
->> Some other gotchas and open questions:
->>
->>  1) pathspecs must all come after the first two path arguments, you
->>     can't re-arrange them to come first. I'm treating them sort of like
->>     the treeish arguments to git diff-tree.
-> 
-> Exactly.  "git diff" proper is about comparing two sets of files,
-> either comparing two tree-ishes "git diff master next", comparing a
-> tree-ish and the index "git diff --cached HEAD", comparing a
-> tree-ish and the working tree files "git diff HEAD", or comparing
-> the index and the working tree files "git diff".  It is a natural
-> extension that "git --no-index dirA dirB" compares contents of the
-> two directories.  In all of these forms, it is common that the
-> comparison can be pathspec limited by giving pathspec elements as
-> the command line arguments at the end.
-> 
->>  2) The pathspecs are interpreted relative to the provided paths, and
->>     thus will always need to be specified as relative paths, and will be
->>     interpreted as relative to the root of the search for each path
->>     separately.
-> 
-> Yes, that is not anything new or something we need to point out as
-> if it is any different from the "normal" pathspec.
-> 
->>  3) negative pathspecs have to be fully qualified from the root, i.e.
->>     ':(exclude)file' will only exclude 'a/file' and not 'a/b/file'
->>     unless you also use '(glob)' or similar. I think this matches the
->>     other pathspec support, but I an not 100% sure.
-> 
-> I think that is correct "git ls-files :(exclude)po" does not exclude
-> git-gui/po, for example.
-> 
-Sounds like you answered most of my open questions. I guess my remaining
-big question to you or others on the list is whether or not the overall
-algorithm makes sense, especially in regards to how we handle needing
-both DO_MATCH_DIRECTORY and DO_MATCH_LEADING_PATHSPEC, and in using two
-separate calls to parse_pathspec, one set for each path.
+ Build performance fix.
+ 
+ source: <20250509211202.3910761-1-sandals@crustytoothpaste.net>
+
+
+* jk/oidmap-cleanup (2025-05-12) 3 commits
+  (merged to 'next' on 2025-05-13 at 93bc7b6ab1)
+ + raw_object_store: drop extra pointer to replace_map
+ + oidmap: add size function
+ + oidmap: rename oidmap_free() to oidmap_clear()
+
+ Code cleanup.
+ 
+ source: <20250512185006.GA1275914@coredump.intra.peff.net>
+
+
+* ly/am-split-stgit-leakfix (2025-05-12) 1 commit
+  (merged to 'next' on 2025-05-13 at 6966c2adc1)
+ + builtin/am: fix memory leak in `split_mail_stgit_series`
+
+ Leakfix.
+ 
+ source: <pull.1961.git.git.1747015647505.gitgitgadget@gmail.com>
+
+
+* ly/reftable-writer-leakfix (2025-05-12) 2 commits
+  (merged to 'next' on 2025-05-13 at 57c58b60e8)
+ + reftable/writer: fix memory leak when `writer_index_hash()` fails
+ + reftable/writer: fix memory leak when `padded_write()` fails
+
+ Leakfix.
+ 
+ source: <pull.1958.v3.git.git.1747054145.gitgitgadget@gmail.com>
+
+
+* ps/reftable-read-block-perffix (2025-05-12) 1 commit
+  (merged to 'next' on 2025-05-13 at 3c150c7422)
+ + reftable: fix perf regression when reading blocks of unwanted type
+
+ Performance regression in not-yet-released code has been corrected.
+ 
+ source: <20250512-pks-reftable-perf-fix-v1-1-002cab9fdb08@pks.im>
+
+
+* pw/sequencer-reflog-use-after-free (2025-05-09) 2 commits
+  (merged to 'next' on 2025-05-12 at e7b8721456)
+ + sequencer: rework reflog message handling
+ + sequencer: move reflog message functions
+
+ Use-after-free fix in the sequencer.
+ 
+ source: <pull.1919.git.1746807747.gitgitgadget@gmail.com>
+
+
+* rc/t1001-test-path-is-file (2025-05-12) 1 commit
+  (merged to 'next' on 2025-05-13 at bc67be09c3)
+ + t1001: replace 'test -f' with 'test_path_is_file'
+
+ Test update.
+ 
+ source: <20250510230909.65519-1-rodrigorsdc@gmail.com>
+
+
+* sc/bundle-uri-use-all-refs-in-bundle (2025-04-25) 2 commits
+  (merged to 'next' on 2025-05-13 at df93f99c2b)
+ + bundle-uri: add test for bundle-uri clones with tags
+ + bundle-uri: copy all bundle references ino the refs/bundle space
+
+ Bundle-URI feature did not use refs recorded in the bundle other
+ than normal branches as anchoring points to optimize the follow-up
+ fetch during "git clone"; now it is told to utilize all.
+ 
+ source: <pull.1897.v7.git.git.1745609589.gitgitgadget@gmail.com>
+
+--------------------------------------------------
+[New Topics]
+
+* ag/doc-send-email-update-2 (2025-05-19) 4 commits
+ - docs: remove credential helper links for emails from gitcredentials
+ - docs: improve formatting in git-send-email documentation
+ - docs: add credential helper for yahoo and link Google's sendgmail tool
+ - Merge branch 'ag/doc-send-email' into ag/doc-send-email-update-2
+
+ Documentation for "git send-email" has been updated with a bit more
+ credential helper and OAuth information.
+
+ Comments?
+ source: <A84F634C-3423-48E2-B648-068A75423037@live.com>
+
+
+* es/meson-configure-build-options-fix (2025-05-19) 1 commit
+ - meson: reformat default options to workaround bug in `meson configure`
+
+ Build procedure updates.
+
+ Will merge to 'next'?
+ source: <20250519170945.57746-1-eschwartz@gentoo.org>
+
+
+* jt/receive-pack-skip-connectivity-check (2025-05-20) 2 commits
+ - builtin/receive-pack: add option to skip connectivity check
+ - t5410: test receive-pack connectivity check
+
+ source: <20250520163218.263921-1-jltobler@gmail.com>
+
+
+* kh/notes-doc-fixes (2025-05-20) 6 commits
+ - doc: notes: treat --stdin equally between copy/remove
+ - doc: notes: point out copy --stdin use with argv
+ - doc: notes: mention comment character configuration
+ - doc: notes: split out options with negations
+ - doc: config: mention core.commentChar on commit.cleanup
+ - doc: stripspace: mention where the default comes from
+
+ source: <cover.1747763769.git.code@khaugsbakk.name>
+
+
+* kn/passing-leak-tests (2025-05-20) 1 commit
+ - t: remove unexpected SANITIZE_LEAK variables
+
+ source: <20250520-kn-remove-unexpected-exported-v1-1-bb60cec57e84@gmail.com>
+
+
+* ps/midx-negative-packfile-cache (2025-05-20) 2 commits
+ - midx: stop repeatedly looking up nonexistent packfiles
+ - packfile: explain ordering of how we look up auxiliary pack files
+
+ source: <20250520-pks-pack-avoid-stats-on-missing-v2-0-333c5217fb05@pks.im>
+
+
+* pw/midx-repack-overflow-fix (2025-05-20) 4 commits
+ - midx docs: clarify tie breaking
+ - midx: avoid negative array index
+ - midx repack: avoid potential integer overflow on 64 bit systems
+ - midx repack: avoid integer overflow on 32 bit systems
+
+ source: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
+
+
+* pw/stash-p-pathspec-fixes (2025-05-20) 2 commits
+ - stash: allow "git stash [<options>] --patch <pathspec>" to assume push
+ - stash: allow "git stash -p <pathspec>" to assume push again
+
+ source: <cover.1747733203.git.phillip.wood@dunelm.org.uk>
+
+--------------------------------------------------
+[Cooking]
+
+* ps/ci-gitlab-enable-msvc-meson-job (2025-05-13) 1 commit
+  (merged to 'next' on 2025-05-16 at 81da2fbef9)
+ + gitlab-ci: always run MSVC-based Meson job
+
+ CI settings at GitLab has been updated to run MSVC based Meson job
+ automatically (as opposed to be done only upon manual request).
+
+ Will merge to 'master'.
+ source: <20250428-pks-gitlab-ci-execute-win-meson-v1-1-f68683552b9e@pks.im>
+
+
+* ag/send-email-hostname-f (2025-05-13) 1 commit
+  (merged to 'next' on 2025-05-16 at d5aa175e7d)
+ + send-email: try to get fqdn by running hostname -f on Linux and macOS
+
+ Teach "git send-email" to also consult `hostname -f` for mail
+ domain to compute the identity given to SMTP servers.
+
+ Will merge to 'master'.
+ source: <PN3PR01MB959701F40F805351472EA4CCB897A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+
+
+* kn/fetch-push-bulk-ref-update (2025-05-19) 4 commits
+ - receive-pack: use batched reference updates
+ - send-pack: fix memory leak around duplicate refs
+ - fetch: use batched reference updates
+ - refs: add function to translate errors to strings
+
+ "git push" and "git fetch" are taught to update refs in batches to
+ gain performance.
+
+ Will merge to 'next'?
+ source: <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
+
+
+* en/replay-wo-the-repository (2025-05-14) 1 commit
+  (merged to 'next' on 2025-05-16 at 23608dbaab)
+ + replay: replace the_repository with repo parameter passed to cmd_replay ()
+
+ The dependency on the_repository variable has been reduced from the
+ code paths in "git replay".
+
+ Will merge to 'master'.
+ source: <pull.1921.git.1747254806067.gitgitgadget@gmail.com>
+
+
+* js/misc-defensive (2025-05-15) 14 commits
+ - shallow: handle missing shallow commits gracefully
+ - test-tool repository: check return value of `lookup_commit()`
+ - submodule: check return value of `submodule_from_path()`
+ - inherit_tracking(): defensive programming
+ - describe: defensive programming
+ - fetch: defensive programming
+ - push: defensive programming
+ - stash: defensive programming
+ - stash: defensive programming
+ - verify_commit_graph(): defensive programming
+ - unparse_commit(): defensive programming
+ - fetch-pack: defensive programming
+ - get_parent(): defensive programming
+ - revision: defensive programming
+
+ Assorted changes that please CodeQL.
+
+ Comments?
+ source: <pull.1890.git.1747313139.gitgitgadget@gmail.com>
+
+
+* js/misc-fixes (2025-05-15) 11 commits
+ - sequencer: stop pretending that an assignment is a condition
+ - bundle-uri: avoid using undefined output of `sscanf()`
+ - commit-graph: avoid using stale stack addresses
+ - trace2: avoid "futile conditional"
+ - Avoid redundant conditions
+ - fetch: avoid unnecessary work when there is no current branch
+ - has_dir_name(): make code more obvious
+ - upload-pack: rename `enum` to reflect the operation
+ - commit-graph: avoid malloc'ing a local variable
+ - fetch: carefully clear local variable's address after use
+ - commit: simplify code
+
+ Assorted fixes for issues found with CodeQL.
+
+ Will merge to 'next'?
+ source: <pull.1891.git.1747314709.gitgitgadget@gmail.com>
+
+
+* ly/commit-graph-fill-oids-leakfix (2025-05-15) 1 commit
+  (merged to 'next' on 2025-05-19 at 972bbc7c11)
+ + commit-graph: fix memory leak when `fill_oids_from_packs()` fails
+
+ Leakfix.
+
+ Will merge to 'master'.
+ source: <pull.1957.v3.git.git.1746779435536.gitgitgadget@gmail.com>
+
+
+* ly/mailinfo-decode-header-leakfix (2025-05-15) 1 commit
+  (merged to 'next' on 2025-05-19 at 87066488fc)
+ + mailinfo: fix pointential memory leak if `decode_header` failed
+
+ Leakfix.
+
+ Will merge to 'master'.
+ source: <pull.1956.v4.git.git.1747104551204.gitgitgadget@gmail.com>
+
+
+* ly/sequencer-rearrange-leakfix (2025-05-15) 1 commit
+  (merged to 'next' on 2025-05-19 at f0ad6cfe21)
+ + sequencer: fix memory leak if `todo_list_rearrange_squash()` failed
+
+ Leakfix.
+
+ Will merge to 'master'.
+ source: <pull.1965.git.git.1747230808770.gitgitgadget@gmail.com>
+
+
+* en/sequencer-comment-messages (2025-05-16) 1 commit
+ - sequencer: make it clearer that commit descriptions are just comments
+
+ Prefix '#' to the commit title in the "rebase -i" todo file, just
+ like a merge commit being replayed.
+
+ Will merge to 'next'?
+ source: <pull.1923.v2.git.1747412786573.gitgitgadget@gmail.com>
+
+
+* jk/no-funny-object-types (2025-05-16) 13 commits
+  (merged to 'next' on 2025-05-19 at 4c995dbd23)
+ + object-file: drop support for writing objects with unknown types
+ + hash-object: handle --literally with OPT_NEGBIT
+ + hash-object: merge HASH_* and INDEX_* flags
+ + hash-object: stop allowing unknown types
+ + t: add lib-loose.sh
+ + t/helper: add zlib test-tool
+ + oid_object_info(): drop type_name strbuf
+ + fsck: stop using object_info->type_name strbuf
+ + oid_object_info_convert(): stop using string for object type
+ + cat-file: use type enum instead of buffer for -t option
+ + object-file: drop OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag
+ + cat-file: make --allow-unknown-type a noop
+ + object-file.h: fix typo in variable declaration
+
+ Support to create a loose object file with unknown object type has
+ been dropped.
+
+ Will merge to 'master'.
+ source: <20250516044916.GA21985@coredump.intra.peff.net>
+
+
+* kj/my-first-contribution-updates (2025-05-19) 3 commits
+ - docs: replace git_config to repo_config
+ - docs: clarify cmd_psuh signature and explain UNUSED macro
+ - docs: remove unused mentoring mailing list reference
+
+ Doc updates.
+
+ Will merge to 'next'?
+ source: <20250518074317.73367-1-jayatheerthkulkarni2005@gmail.com>
+
+
+* kj/renamed-submodule (2025-05-16) 1 commit
+ - submodule: prevent overwriting .gitmodules entry on path reuse
+
+ The case where a new submodule takes a path where used to be a
+ completely different subproject is now dealt a bit better than
+ before.
+
+ Comments?
+ source: <20250516174934.45008-1-jayatheerthkulkarni2005@gmail.com>
+
+
+* lo/json-writer-docs (2025-05-16) 2 commits
+  (merged to 'next' on 2025-05-16 at ab81da1b16)
+ + json-writer: describe the usage of jw_* functions
+ + json-writer: add docstrings to jw_* functions
+
+ In-code docstring updates.
+
+ Will merge to 'master'.
+ source: <20250516010159.27042-1-lucasseikioshiro@gmail.com>
+
+
+* ps/pack-check-pack-first (2025-05-16) 1 commit
+ - packfile: avoid access(3p) calls for missing packs
+
+ The packfile registration code used to check ".pack" file the last
+ after checking ".keep" and other files; the ordering is reversed.
+ source: <20250516-pks-pack-avoid-stats-on-missing-v1-1-e2ef4d8798a3@pks.im>
+
+
+* pw/update-thunderbird-patch-inline (2025-05-16) 1 commit
+ - contrib: update thunderbird-patch-inline
+
+ Update bitrotten instruction for sending patches via Thunderbird
+ (in contrib/).
+
+ Comments?
+ source: <20250516135540.218937-1-phillip.wood123@gmail.com>
+
+
+* bc/stash-export-import (2025-05-08) 4 commits
+ - builtin/stash: provide a way to import stashes from a ref
+ - builtin/stash: provide a way to export stashes to a ref
+ - builtin/stash: factor out revision parsing into a function
+ - object-name: make get_oid quietly return an error
+
+ An interchange format for stash entries is defined, and subcommand
+ of "git stash" to import/export has been added.
+
+ Comments?
+ source: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
+
+
+* ds/sparse-apply-add-p (2025-05-16) 4 commits
+ - p2000: add performance test for patch-mode commands
+ - reset: integrate sparse index with --patch
+ - git add: make -p/-i aware of sparse index
+ - apply: integrate with the sparse index
+
+ "git apply" and "git add -i/-p" code paths no longer unnecessarily
+ expand sparse-index while working.
+
+ Will merge to 'next'?
+ Kicked out of next and then is about to come back.
+ source: <pull.1914.v2.git.1747407330.gitgitgadget@gmail.com>
+
+
+* en/merge-tree-check (2025-05-16) 2 commits
+  (merged to 'next' on 2025-05-19 at c3278b91fa)
+ + merge-tree: add a new --quiet flag
+ + merge-ort: add a new mergeability_only option
+
+ "git merge-tree" learned an option to see if it resolves cleanly
+ without actually creating a result.
+
+ Will merge to 'master'.
+ source: <pull.1920.v4.git.1747425858.gitgitgadget@gmail.com>
+
+
+* lm/add-p-context (2025-05-12) 4 commits
+ - add-patch: add diff.context command line overrides
+ - add-patch: respect diff.context configuration
+ - test: refactor to use "test_config"
+ - test: refactor to use "test_grep"
+
+ "git add/etc -p" now honors diff.context configuration variable,
+ and learns to honor -U<n> option.
+
+ Comments?
+ source: <pull.1915.v2.git.1746884789.gitgitgadget@gmail.com>
+
+
+* ly/pack-bitmap-load-leakfix (2025-05-12) 1 commit
+  (merged to 'next' on 2025-05-14 at 0be31eac6b)
+ + pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
+
+ Leakfix.
+
+ Will merge to 'master'.
+ source: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
+
+
+* ps/contrib-sweep (2025-05-16) 12 commits
+ - Revert "contrib: remove "thunderbird-patch-inline""
+ - contrib: remove some scripts in "stats" directory
+ - contrib: remove "git-new-workdir"
+ - contrib: remove "emacs" directory
+ - contrib: remove "git-resurrect.sh"
+ - contrib: remove "persistent-https" remote helper
+ - contrib: remove "mw-to-git"
+ - contrib: remove "hooks" directory
+ - contrib: remove "thunderbird-patch-inline"
+ - contrib: remove remote-helper stubs
+ - contrib: remove "examples" directory
+ - contrib: remove "remotes2config.sh"
+
+ Remove bunch of stuff from contrib/ hierarchy.
+
+ I've reverted the thunderbird thing for now.
+ source: <20250512-pks-contrib-spring-cleanup-v3-0-32e151b0bfb0@pks.im>
+
+
+* rj/build-tweaks-part2 (2025-05-19) 5 commits
+  (merged to 'next' on 2025-05-19 at fea40b8fb1)
+ + configure.ac: upgrade to a compilation check for sysinfo
+ + meson.build: correct setting of GIT_EXEC_PATH
+ + meson: correct path to system config/attribute files
+ + meson: correct install location of YAML.pm
+ + meson.build: quote the GITWEBDIR build configuration
+
+ Updates to meson-based build procedure.
+
+ Will merge to 'master'.
+ source: <20250519162523.1001478-1-ramsay@ramsayjones.plus.com>
+
+
+* ps/object-store (2025-05-14) 18 commits
+ - odb: rename `read_object_with_reference()`
+ - odb: rename `pretend_object_file()`
+ - odb: rename `has_object()`
+ - odb: rename `repo_read_object_file()`
+ - odb: rename `oid_object_info()`
+ - odb: trivial refactorings to get rid of `the_repository`
+ - odb: get rid of `the_repository` when handling submodule alternates
+ - odb: get rid of `the_repository` when handling the primary alternate
+ - odb: get rid of `the_repository` in `for_each()` functions
+ - odb: get rid of `the_repository` when handling alternates
+ - odb: get rid of `the_repository` in `odb_mkstemp()`
+ - odb: get rid of `the_repository` in `assert_oid_type()`
+ - odb: get rid of `the_repository` in `find_odb()`
+ - odb: introduce parent pointers
+ - object-store: rename files to "odb.{c,h}"
+ - object-store: rename `object_directory` to `odb_alternate`
+ - object-store: rename `raw_object_store` to `object_database`
+ - Merge branch 'ps/object-store-cleanup' into ps/object-store
+
+ Code clean-up around object access API.
+
+ Comments?
+ source: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
+
+
+* sj/use-mmap-to-check-packed-refs (2025-05-14) 3 commits
+ - packed-backend: mmap large "packed-refs" file during fsck
+ - packed-backend: extract snapshot allocation in `load_contents`
+ - packed-backend: fsck should warn when "packed-refs" file is empty
+
+ The code path to access the "packed-refs" file while "fsck" is
+ taught to mmap the file, instead of reading the whole file in the
+ memory.
+
+ Will merge to 'next'?
+ source: <aCS7O8tNekg_u9Wp@ArchLinux>
+
+
+* js/ci-build-win-in-release-mode (2025-05-05) 1 commit
+ - ci(win+Meson): build in Release mode
+
+ win+Meson CI pipeline, unlike other pipelines for Windows,
+ used to build artifacts in develper mode, which has been changed to
+ build them in release mode for consistency.
+
+ WIll merge to 'next'.
+ source: <pull.1908.v2.git.1746282346370.gitgitgadget@gmail.com>
+
+
+* cc/promisor-remote-capability (2025-05-19) 5 commits
+ - promisor-remote: use string constants for 'name' and 'url' too
+ - promisor-remote: allow a client to check fields
+ - promisor-remote: refactor how we parse advertised fields
+ - promisor-remote: allow a server to advertise more fields
+ - promisor-remote: refactor to get rid of 'struct strvec'
+
+ Comments?
+ source: <20250519141259.3061550-1-christian.couder@gmail.com>
+
+
+* ds/scalar-no-maintenance (2025-05-14) 5 commits
+  (merged to 'next' on 2025-05-16 at f9364331c0)
+ + scalar reconfigure: improve --maintenance docs
+  (merged to 'next' on 2025-05-08 at 1006cdd399)
+ + scalar reconfigure: add --maintenance=<mode> option
+ + scalar clone: add --no-maintenance option
+ + scalar register: add --no-maintenance option
+ + scalar: customize register_dir()'s behavior
+
+ Two "scalar" subcommands that adds a repository that hasn't been
+ under "scalar"'s control are taught an option not to enable the
+ scheduled maintenance on it.
+
+ Will merge to 'master'.
+ source: <pull.1913.v3.git.1746582637.gitgitgadget@gmail.com>
+
+
+* jc/doc-synopsis-option-markup (2025-05-12) 4 commits
+ - git-var doc: fix usage of $ENV_VAR vs ENV_VAR
+ - git-verify-* doc: update mark-up of synopsis option descriptions
+ - git-{var,write-tree} docs: update mark-up of synopsis option descriptions
+ - git-daemon doc: update mark-up of synopsis option descriptions
+
+ Doc mark-up fixes.
+
+ Will merge to 'next'?
+ source: <20250510123346.20927-1-jn.avila@free.fr>
+
+
+* jc/you-still-use-whatchanged (2025-05-12) 6 commits
+ - whatschanged: list it in BreakingChanges document
+ - whatchanged: remove when built with WITH_BREAKING_CHANGES
+ - whatchanged: require --i-still-use-this
+ - tests: prepare for a world without whatchanged
+ - doc: prepare for a world without whatchanged
+ - you-still-use-that??: help deprecating commands for removal
+
+ "git whatchanged" that is longer to type than "git log --raw"
+ which is its modern rough equivalent has outlived its usefulness
+ more than 10 years ago.  Plan to deprecate and remove it.
+
+ Will merge to 'next'?
+ source: <20250512190311.1451556-1-gitster@pobox.com>
+
+
+* cc/fast-import-export-signature-names (2025-04-24) 1 commit
+ . fast-(import|export): improve on the signature algorithm name
+
+ Clean up the way how signature on commit objects are exported to
+ and imported from fast-import stream.
+
+ Expecting a reroll.
+ cf. <aAq1nvcPRlIPal5l@tapette.crustytoothpaste.net>
+ cf. https://github.com/git/git/actions/runs/14671270673/job/41178138711
+ source: <20250424203904.909777-1-christian.couder@gmail.com>
+
+
+* sj/string-list-typefix (2025-04-22) 5 commits
+ - u-string-list: move "remove duplicates" test to "u-string-list.c"
+ - u-string-list: move "filter string" test to "u-string-list.c"
+ - u-string-list: move "test_split_in_place" to "u-string-list.c"
+ - u-string-list: move "test_split" into "u-string-list.c"
+ - string-list: fix sign compare warnings
+
+ Code and test clean-up around string-list API.
+
+ Expecting a reroll.
+ cf. <aA8vSPKdznjzBf6W@pks.im>
+ source: <aAetW0dan8S3Fljq@ArchLinux>
+
+
+* tb/midx-avoid-cruft-packs (2025-04-15) 9 commits
+ - repack: exclude cruft pack(s) from the MIDX where possible
+ - pack-objects: introduce '--stdin-packs=follow'
+ - pack-objects: swap 'show_{object,commit}_pack_hint'
+ - pack-objects: fix typo in 'show_object_pack_hint()'
+ - pack-objects: perform name-hash traversal for unpacked objects
+ - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
+ - pack-objects: factor out handling '--stdin-packs'
+ - pack-objects: limit scope in 'add_object_entry_from_pack()'
+ - pack-objects: use standard option incompatibility functions
+
+ "pack-objects" has been taught to avoid pointing into objects in
+ cruft packs from midx.
+
+ Expecting a (hopefully small and final) reroll?
+ cf.<CABPp-BEukTWwsuC7MMR8D5_UAhyw-LgT=DsPKAWeR_ZmVVhjzQ@mail.gmail.com>
+ source: <cover.1744757204.git.me@ttaylorr.com>
+
+
+* tb/pack-bitmap-lookup-tables (2025-04-17) 4 commits
+ - t/perf/lib-bitmap.sh: avoid test_perf during setup
+ - t/perf: avoid testing bitmaps without lookup table
+ - p5312: removed duplicate performance test script
+ - pack-bitmap: write lookup table extension by default
+
+ Enable lookup tables extension in pack bitmap (and midx bitmap) by
+ default.
+
+ Comments?
+ source: <cover.1744924321.git.me@ttaylorr.com>
+
+
+* pb/status-rebase-fixes (2025-03-28) 4 commits
+ - wt-status: suggest 'git rebase --continue' to conclude 'merge' instruction
+ - wt-status: also abbreviate 'merge' and 'fixup -C' lines during rebase
+ - SQUASH??? - <CAPig+cS92W_gYuNsaTvQxiP3xBK7Wpg0__uVkgAU1x0OFJUZgQ@mail.gmail.com>
+ - rebase -r: do create merge commit after empty resolution
+
+ A few fixes around "git status" while "git rebase" is running,
+ plus a corner case bug fix for "git rebase -r".
+
+ Expecting a (small and hopefully final) clarifying reroll.
+ cf. <c2f93d99-2f4d-ee6d-7087-42320c6df0f2@gmx.de>
+ cf. <e9700234-324d-dc63-d91e-9b8f36fabc79@gmail.com>
+ source: <pull.1897.git.1743181401.gitgitgadget@gmail.com>
+
+
+* md/userdiff-bash-shell-function (2025-05-16) 1 commit
+  (merged to 'next' on 2025-05-16 at 1fe8b68a72)
+ + userdiff: extend Bash pattern to cover more shell function forms
+
+ The userdiff pattern for shell scripts has been updated to cope
+ with more bash-isms.
+
+ Will merge to 'master'.
+ cf. <a72235c1-625a-4b90-8111-629b5a6ee7c2@kdbg.org>
+ source: <20250516144515.49514-2-dhar61595@gmail.com>
+
+
+* ds/path-walk-2 (2025-05-16) 13 commits
+ - pack-objects: allow --shallow and --path-walk
+ - path-walk: add new 'edge_aggressive' option
+ - pack-objects: thread the path-based compression
+ - pack-objects: refactor path-walk delta phase
+ - scalar: enable path-walk during push via config
+ - pack-objects: enable --path-walk via config
+ - repack: add --path-walk option
+ - t5538: add tests to confirm deltas in shallow pushes
+ - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+ - p5313: add performance tests for --path-walk
+ - pack-objects: update usage to match docs
+ - pack-objects: add --path-walk option
+ - pack-objects: extract should_attempt_deltas()
+
+ "git pack-objects" learns to find delta bases from blobs at the
+ same path, using the --path-walk API.
+
+ Comments?
+ source: <pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
+
+
+* ib/diff-S-G-with-longhand (2025-02-12) 10 commits
+ - diff: docs: Use --patch-{grep,modifies} over -G/-S
+ - diff: --pickaxe-{all,regex} help: Add --patch-{grep,modifies}
+ - diff: test: Use --patch-{grep,modifies} over -G/-S
+ - completion: Support --patch-{grep,modifies}
+ - diff: --patch-{grep,modifies} arg names for -G and -S
+ - docs: gitdiffcore: -G and -S: Use regex/string placeholders
+ - diff: short help: Add -G and --pickaxe-grep
+ - diff: short help: Correct -S description
+ - diff: -G description: Correct copy/paste error
+ - t/t4209-log-pickaxe: Naming typo: -G takes a regex
+
+ The commands in the "diff" family learned longhands for "-S" and
+ "-G" options.
+
+ Expecting a reroll.
+ source: <20250212032657.1807939-1-illia.bobyr@gmail.com>
