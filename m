@@ -1,119 +1,101 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 031B31E3DF9
-	for <git@vger.kernel.org>; Wed, 21 May 2025 14:49:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E7F1F12FC
+	for <git@vger.kernel.org>; Wed, 21 May 2025 14:55:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747838974; cv=none; b=E84zCfkyPMuuYeUT/nsQtKLw5+aEYKE8KRGe/kfHhOtkFhl5rkTxiMLT5y3VrmMJnxhoW+gxSZNcql+7UPyL8KJGGs+T2KGcanDhf/VgEmLugcRkDU7P3ajGmpcZsE3Q/SlsvJmdXaHqngw0fV1wD/ZdKkcVHyMsFvfnBoxOvKM=
+	t=1747839343; cv=none; b=B0BJ+w/xSAF7FSlDwrSHrZSoiA05b5Aq6qXtaE8bqdqba1JcYW+f+ytcNjrIC6AwdSTww2i4l3OeuIPmW8OLSTmmzbM38019aXRwHrawB2Be+WmQhcCBoF9a2PFpiUDbpn1B806H/37DkUjBYodHIfh+hyhD6bUFAX5eq7G8HMI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747838974; c=relaxed/simple;
-	bh=DAgTn3QByYSb8GgM2/pfxIHpC9KybK0rKgbMqaqeNU8=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=LwBuzyp1OMfAdilKjSZAE5IOTQrJE1eY/JJ4fUD7xJUoEj/gFQXBks5qjIzQqeHiRTIJsDaF3HDsLlrSAGSidwe56XB4LxdLmXVwzTes4ccMQL+r6O3go08Df6USX60rEMPULfNMxgDHENBqnUtwBtUPS1HRtXc+tyIuTXr+ljw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=bIH6xWQP; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=i0DnKil+; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1747839343; c=relaxed/simple;
+	bh=71NTUpM9xUkiT56Fo4q6JRemsDrrY7LcXOrxcJOUayg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=bXTFmB1DKueHRa7jNY5C9pG7CwX2ItOGyA6S8X6tfw+oIlkwfo4K8+Eux5LjWG5qBFC5g26pZ1dnP2kSmkH7Bm8KXi3doumfsOZAwnmGADSuoQXAKpmYsn0ABGMBGd5nt//xod4cVuR/uVaCzpuTuH/fvbkXKoUkV35MsOlbqOg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=J3YJbgkI; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=SJPEhdZM; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="bIH6xWQP";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="i0DnKil+"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id E8CEC11400DE;
-	Wed, 21 May 2025 10:49:30 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Wed, 21 May 2025 10:49:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1747838970;
-	 x=1747925370; bh=0JZasy8NsiBJ5yj0000StlOr1jtD6wqggHTk3DF84iI=; b=
-	bIH6xWQP3wnOjZvEdj5aq5Gf3RoYp+Hp7r5qxw0aLlwbc7Au5R8adSspk1OIzy+Q
-	wddoyleYRO2QYCoa/5IJSMuloX/miguDHRef8ytKofS3FuQB+ip+Z62BdCXFEAsU
-	OpDHKjl7+dJSiXOUOJ9HU+PyaGco09JQ/L7brXThGfLcD3JDwD++s861je0piHjm
-	45uQyqNWQi5eLDvOEDytATGtHBsNKlKTmR0ElelLhYohyfpDT28KG66yHlrcX9Sz
-	4lVYepAc+fLg4beHpmly0gScdHrupc8lon87PgeTU8Pyqwt5FP0ua8D2KFapt+/v
-	XRp/Oq+N8bvAPw+1WZ101g==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="J3YJbgkI";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="SJPEhdZM"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id 0C18F1140158;
+	Wed, 21 May 2025 10:55:39 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 21 May 2025 10:55:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747839338; x=1747925738; bh=sbz2sJH9M0
+	aqGf+47fT7XAaFsOPBtKwU5SWRWBdDvw8=; b=J3YJbgkIvnwOxY3F/UTxV5+otX
+	8cX3HENFdV6S4NelJ9KO6NaZU6Y4lD7I3fQH52ZIIqzWL1HFBTuOQqIiYQzGsGh/
+	+SdU+CA4MsFANj7F47xYm7USzvMsxybRRVvCONe3oS/eVW7LfDhtpnEuEWSSG1iP
+	higtFHntyuIm5Rp7UIkiLzYuJ1u6UAN/mymNzeigvoWzlbajM0y3+QzCHsLOF2e3
+	KCTHBCmeXDfg7cIxXn++oukeJ0GfdWKul2cJco6EBlKdpzhOL6Gaw/wzoydnGzTH
+	wASxexChSo8RulBK2gl5G5gJ1rFYslSz8Pu4lSnLyjz++qjevS1UxxorMNtw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747838970; x=
-	1747925370; bh=0JZasy8NsiBJ5yj0000StlOr1jtD6wqggHTk3DF84iI=; b=i
-	0DnKil+yuqEh7szbiqfv613wRIlZKVWlQU10Iw/eXxm94k3ktVj1UYXLNrIDg6O8
-	AYgbZKQ8vH7qeuV1HXl8nNDvF9ac3xoQejvrLcwCqNmG+6gBBjREyGzg8NHhkn0i
-	OxFOxfI3EftxhT2qBif8NjX9k8B5Z5ZR3EiQs77pNVft2B9CrCQzLolL6HILputK
-	hIEyGwaKgGh560fg8HhTonthLI0OLNCHsHz3XQiRvUAeZWXcnn2vF4EPRlDlvVhl
-	7ImCkc8nVS4RvA+EkoyFH1QT15hxB/ztMvAAApPXqEs03A4EWGi68qpoZYKP4IYZ
-	0Si84xQQMVcJmnirgyKgg==
-X-ME-Sender: <xms:-uctaDRtwwEQszrIPVy_9nhR3M3yA8AaCxLCMaj63rHble4uprsTONQ>
-    <xme:-uctaExTOGCI7sRydkvdrCWqshzli3oDV1TAgbhf0CK8k7w5WqOOIDIIkcYr2ustU
-    MKZSodCrQRjy2zu7Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeffeeiucdltddurdegfedvrddttd
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747839338; x=1747925738; bh=sbz2sJH9M0aqGf+47fT7XAaFsOPBtKwU5SW
+	RWBdDvw8=; b=SJPEhdZMm2iPoKE9144BSpQmNarGt4vTHR5c0Tws9DWPmnIAuef
+	CDHh42EXpRXI2Mg02aZq0i79CKGgXBtXOIwdCHZWMo80eQ16ppKJkqRL8ScEM2RO
+	y8Iyyu5oA4oEf0arkExfOXIIdAFjY+tKGRmXbKFJQVH6p3K9ufELol/vW1U+BeyR
+	38r/D54NQa7X2bqGGIMv22GDOLuhzELkcggcFvPKTj5AKPL308sFPBNuJs1UH4Ut
+	kFz6ZmM9paFxatgb8a8plpYa9nsmeHJt89w6Vk8kkfU5KjAlg+HsMjYAiY2KWYYN
+	ZFS5EB9X4HB1Kf911As+PUS97eh2RJOXnzg==
+X-ME-Sender: <xms:auktaD3muKJfS618pdZLAxqB0wITcHWqDdi3QDlRgwBVlCI39lVHOw>
+    <xme:auktaCHyxtVbI2-4vMzsbRg-gcrfpXd7cJFNCWvjLH8qNlVKJeNsgC_Pp3BYK-ivQ
+    0eZt5bDlbIfIvU0fQ>
+X-ME-Received: <xmr:auktaD4WC4-7MI54jZl5U0QzfeYnrPIZIbN__5oO6zQRLWZkn65uhBck4gkMt26t7zOEQXMfJF1KjqR16hN67B3YuMRz-fbusoINnDg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeffeekucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucenucfjughrpefoggffhffvvefkjghfufgtgfesthejredtredttdenucfhrhhomhep
-    fdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhh
-    gruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmqeenucggtffrrghtthgvrhhnpeeg
-    tdejieetgefhuedtuedttdeigfdvgeetkedtuedtudfgkeeluefgleetffejffenucevlh
-    hushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdpnhgspghrtghpthhtoh
-    ephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepugihrhhonhgvthgvnhhgsehg
-    mhgrihhlrdgtohhmpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmh
-    gvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshht
-    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrgh
-X-ME-Proxy: <xmx:-uctaI0XQjwmMMA85PILomsnzaPUtVg0WybbCDtdPvy-PqbKe9iODA>
-    <xmx:-uctaDAhLEpKCVJXVLgMAa9lnx6Px8o4i7SS_fKuaunyyKcm9sLPfw>
-    <xmx:-uctaMgFH69QXRVVJL8KwJcwtqNMusPyGgjcRAhvAtoDQv-KKRggUQ>
-    <xmx:-uctaHrCrbQLq7mB39Rn8lZjuBgP1n-zBnAcRyDZ1dJNkMnGSu6gUA>
-    <xmx:-uctaK8B5GNetukiHIoLjsgZgo1Qt0fAh5C1BVHg6Qp5-Pg-yTrPR5g8>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 97B51302005F; Wed, 21 May 2025 10:49:30 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
+    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:auktaI2Yv2f9mLlyI26a2YH-QOcWqSobopAGCV0WdYzxFbb4ZEY8hg>
+    <xmx:auktaGFm4nOogo2lwKPrFu2yX-rcqhtGIWYAANt8MJxFiAnFBf09yQ>
+    <xmx:auktaJ9Zs78UruTuc9Mk5xyamb3NhLv6lw8j9wFuPOwHxAWMlPD4Mw>
+    <xmx:auktaDmUE7UiUWAh31WgIF2jn0nCVsK3hGTM-FSGz_hzTBkU4va7aA>
+    <xmx:auktaBzxKM60x1Gld9-rvthuVGuzbGwmZH7dotU0raha60Zyl-AY7VCb>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 10:55:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: What's cooking in git.git (May 2025, #06; Tue, 20)
+In-Reply-To: <CAOLa=ZR-OaLPueyRcXYrN0rKPnVXPPmJ6drsmM4eRs-6yKEgQQ@mail.gmail.com>
+	(Karthik Nayak's message of "Wed, 21 May 2025 05:10:24 -0500")
+References: <xmqqy0uqg4w6.fsf@gitster.g>
+	<CAOLa=ZR-OaLPueyRcXYrN0rKPnVXPPmJ6drsmM4eRs-6yKEgQQ@mail.gmail.com>
+Date: Wed, 21 May 2025 07:55:37 -0700
+Message-ID: <xmqqtt5ec8t2.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T35ee799f00e81f63
-Date: Wed, 21 May 2025 16:49:10 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Junio C Hamano" <gitster@pobox.com>
-Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
- "Jeff King" <peff@peff.net>, "Teng Long" <dyroneteng@gmail.com>
-Message-Id: <8ddf10d7-d666-4298-8319-7feba1af85a1@app.fastmail.com>
-In-Reply-To: <xmqq34czhyz8.fsf@gitster.g>
-References: <cover.1747763769.git.code@khaugsbakk.name>
- <68e5eb78040419ba64e256910501c7e37194b222.1747763769.git.code@khaugsbakk.name>
- <xmqq34czhyz8.fsf@gitster.g>
-Subject: Re: [PATCH 6/6] doc: notes: treat --stdin equally between copy/remove
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Tue, May 20, 2025, at 21:19, Junio C Hamano wrote:
->> +	For `remove` and `copy`. See the respective subcommands. This
->> +	option can be combined with object names given via the command
->> +	line for `remove`. However, this is not the case for `copy`.
->
-> During my first read of this paragraph, I somehow read the first two
-> sentences as "if you want to learn how this option behaves with the
-> remove and copy subcommands, go read the documentation for these
-> subcommands", making me anticipate that the remainder of the
-> paragraph would talks about what happens when --stdin is given to
-> other subcommands.  Apparently that is not what is going on.
->
-> It may be simpler to just say
->
-> 	Only valid for `remove` and `copy`.  See the respective
-> 	subcommands.
->
-> and stop there.
+Karthik Nayak <karthik.188@gmail.com> writes:
 
-Yep I agree.  Just leave it to the subcommand sections.
+>>  Will merge to 'next'?
+>>  source: <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
+>
+> Incase you missed the cover letter: I would say that while this can be
+> merged to 'next', we should delay the merge to 'master' for after the
+> 2.50 release since it can be disruptive. Mostly letting it bake for a
+> longer time before hitting a major release.
 
--- 
-Kristoffer Haugsbakk
-
+What are the things you are so unsure about and guinea pigs who use
+'next' as their daily driver should watch out for?
