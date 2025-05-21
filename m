@@ -1,172 +1,108 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-yb1-f177.google.com (mail-yb1-f177.google.com [209.85.219.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B39DDD2
-	for <git@vger.kernel.org>; Wed, 21 May 2025 19:05:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4284D28F925
+	for <git@vger.kernel.org>; Wed, 21 May 2025 19:14:12 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747854315; cv=none; b=PeacIUf0Wu/6Ehxi9ex+yOQYpRgIS9v6LM4NqQYtVOI2hsuGAXdvvw9AxIp0bsqeQWUSh/FjvYrsJiMbgLn++GZPHt3AK6jAB91N61r35rZ3DNi2OP0qYUIVxuN5OE/H5GDlsnNi5apLIihFcDMHlo4l6nGCvNA1nr4ZdV6DZBo=
+	t=1747854853; cv=none; b=dFWXuN5OrvGhhDJxTsD9rSYJfEzrMi2Pmiuq6lY0h/w4I2dtFYXozMA4zSCiq1rFgErMn3Hj8SFHfMTUX0psuSn8orU5b8fihICBStnMKqysmklFWg38OiM0en1X8ygwSvo5U8UDJ3/5G/GJjmxg8jK/wPwy+yOJXut27JUN9c8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747854315; c=relaxed/simple;
-	bh=3TYEI/xO8hfOZyoNEiTtfKjgaCpuTOTvQWrULHRKKuk=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=eCw3zaUIZXjEw2sFVS3NGzKnxO+WCvWXw5PYgXnUq3OYwlDj3xsz4MpbbrwhoJsQLsxaK831YKlx4Cg1f9B2GXdLtDECyAf6vYJmBVlmLajApEUA5tYRWOKUIFnCsOj4UYcN8LRG1J3LZc3fWLyPKA14QvyyO6PXFpPtgAqQ1Jw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dK4D69sq; arc=none smtp.client-ip=209.85.128.42
+	s=arc-20240116; t=1747854853; c=relaxed/simple;
+	bh=uH8cw5jUsWEa+TnbVhMXywHFZ4lItTU29zcBe0Bz1uU=;
+	h=From:To:Cc:Subject:Date:Message-Id:MIME-Version; b=fBwvLuswSkImDHzU3EOcN8xhtLvptLd0+IRsVmkBsN7u33Jluiu7F1B3oB4LRnUGqiMdBX18KkR6vM1f8dLsKBeP2QduGtPweCnihlWBUTN8jO8n8ivh2SOCjoCrwSOR1LZRA5eC8/otUCZGN6eOVw51EG9rU4TzcgYpFCa8e/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Kg2P092R; arc=none smtp.client-ip=209.85.219.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dK4D69sq"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-441c99459e9so47176915e9.3
-        for <git@vger.kernel.org>; Wed, 21 May 2025 12:05:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Kg2P092R"
+Received: by mail-yb1-f177.google.com with SMTP id 3f1490d57ef6-e75668006b9so7459777276.3
+        for <git@vger.kernel.org>; Wed, 21 May 2025 12:14:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747854312; x=1748459112; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hifqgyEYyTrf9aPY8dfNGHmJAZkscotv+RNYnxiZn5k=;
-        b=dK4D69sqgV9bjtzU/9umaMWYG0hhJcxKCdrOsvPyocT0F1h+BP+C4O7QJs3cqSTBtM
-         sCgj3Q8bZ17qC4KPuiL0R0IgPzT1jURFHmp+8XUVl+KnkjGuc2fNnjxNxUes3KPGGvjA
-         PEHoQeJ7o3X/HIThl7DLYNgxUaHUocKp2EmtR096RlgvoVCCTfm+EYOqHsc1n1CyWPow
-         xRttaCXqM9vrVmckF+cr4FHOcRmZIWL+/Xizncz4JMRFyMBoq8pfss7tnch6lDqJLbCC
-         94f2KNte3aWyUJWH7rjHOgxKaGxVlxV7kZuCzgzL55ZYazRHhteLEnMRgtoiJjXmBEIS
-         GtoA==
+        d=gmail.com; s=20230601; t=1747854850; x=1748459650; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=xVgeawBkBxiwWwcECtHxweMpgHX/Z73IOdtjiGTYpFg=;
+        b=Kg2P092RTxl2m+rQspeRSOQ+zFXbrOgCNLoF/FvG1hNvZD0VkWowQ136+Bh75IbY1V
+         SIS4kk4l/mjQomyk8tzAshu3LXU9j0mBrYQBL0wTysdZm1SX1pymW7EHnfo6SHNwtH3K
+         643pClg8GNDjmi6TI8A9CMTBx2h39j5Xr/Enj6GbZNFEHs5h3WLwrC9Xc92bEVHp61sy
+         eiiRwopqmbvx2BiaMT8ohhOrm92DrjnFzP1XSK1pG6qY5OuyizDFS0/SivXsDa4/eEPM
+         Anko81ba+1pGf09qi+n6MXguNI2r49L/hS7Eu2RUw9LUQ+G7YQx/shGZHx+Dv9ADt4Ec
+         +Hdw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747854312; x=1748459112;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1747854850; x=1748459650;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hifqgyEYyTrf9aPY8dfNGHmJAZkscotv+RNYnxiZn5k=;
-        b=N4AHawppA9XHSBJ4sSLnDZVBO/E6C2SMMoXgoal2HgE+/5FA4ePQeqd3EuxRRc4ggZ
-         OUPXQ1Tpg/RQc+TzJhyrf0O+FFdJ+BHGnD30GmOGRBiHyKGeiIaR6w1kUHThMPScHM8O
-         L+X5LIzGqqiucoGaNglMyggQOfHkZ6NevobbvFuiCRmvbgFj5F2k8pxEzegqudgYrbPg
-         NMVg/sTO3SkQFRAKn2Fetlzy0hlH6NTgxbWtZubXwO/0LUfNk55kEAK/1b+SsMKGbz3/
-         dTK519+vDgwV5WV7E/EyAUw+CnDbfOlGS1R/ySnujJE1iv15PnFW3Cd2ZmqkHeOwrS/n
-         V2/Q==
-X-Gm-Message-State: AOJu0Yxrkydg/Ludlt85uNKdx9GOeB9lECsIfGNK3zbSyxs/oNFiN9kB
-	V9EFWRw8+/J33fIWUzV5BMYEeszsDpuBBHSwMxaPMqkOhjeXpw8L5BVUm8UxXw==
-X-Gm-Gg: ASbGncvCo8aNwcirErlYdUCMrCBIRC0NL7EU8nXYD1SS5CMtna9q40BgsHvorfTQ6c3
-	GteSgHFylmpLCMo2NimZc833qFnUtVeJV67h5+foikbSoxRRNNmuRbda8xEzdk4VouC6Yl+deGp
-	SrVCnIqn52Acd37oqkHspjknA2xIaTpTv07Pk5JFwJ1+52ShH4R3YnvOVtpPvi+noyq8JWDw2Pf
-	X4N283U9L3FmFNXFps4Clg4uHM3MdO/OhxAwcPf6vbNCZf1g7oBDO8P9IXG0vJ+vvRJgqhFF9Ml
-	iDHAZP5Uk/+1wq5Creu55FMq3F7BgHHEMcpVkL2VRJZZi8z3iwlE
-X-Google-Smtp-Source: AGHT+IG8Idw3CjzFUqaRTob+Jof+cpkDYRE52jaZc6kgNVX3rFoGpwKn2VKPDLW5oiO36fpPOkbg5Q==
-X-Received: by 2002:a05:600c:a369:b0:43c:f1b8:16ad with SMTP id 5b1f17b1804b1-442fd678b83mr248749035e9.30.1747854311704;
-        Wed, 21 May 2025 12:05:11 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-442ebdc362fsm216705905e9.1.2025.05.21.12.05.11
+        bh=xVgeawBkBxiwWwcECtHxweMpgHX/Z73IOdtjiGTYpFg=;
+        b=szr+XcC1iivhTPI+0yP+7trQHQV7iDEZZlC5NXm8Tssa1U+fQsxFGVUutsVi+bRXSe
+         8/lmKPul8S97VjG4k5Tgo+FVNw8D/3USx8AnX9SMx0TAC2kxtb5tE0jSfwmV7+3fnc8k
+         2jmeR2pQE+E5d5ALJbqIYRWME0wK18OpoYYjCaNTBB6ylA9Me+mq9I92kyzgMqTLoXaO
+         UBeSkt06JhSJHzLFVlRw1r5A4dPhjivEoGvFYMhK8kUymlzaoHYnULY0z+3u7iSFKPhS
+         KEB2q3UnHo0doFFkA+QEwis5XjYuiEXaqM0fr3k1iZvAiYOE7gOfKAUZ0a8H022rLPcI
+         y0PA==
+X-Gm-Message-State: AOJu0Yx3CyBI7afdGQJ6lqz5IzHil7bkxAZU59fDFiSA5XUhGx5h4RDm
+	ymT1XNklABs4Po1iTkhsJXiTNZyhmb9zyUg4hz6pz4Enu+fiaJQbujD1GmlwWH2e
+X-Gm-Gg: ASbGnct8j6M9aKJCtOrKBY5YTX5rzu0ADeJl70cBPwNlMVvMXtaClxsHM6GFzBTUpje
+	ufTom1EAePA8TzcfzNZZ82O5MyksaY6HAd7hUsRTcIIn2hUbQ429QbBD3r6Fk61AzoH4mOhmKOD
+	VsMrBF83lLKpfYtnRucH0hMQaCXrLqlFQOzHTSHOA7g9d2iobStm94lEmCUPGmWwzenysVPga8R
+	9lD00RYJ12Whb62bhNmBCktqgVhH1rEjauvBgZBkquQUMjFWD7/kqUjcvgzhRjF7AKRp6wraIhR
+	Pp+v2BRKzBNN3rFeYbW1z7GkwcNBxnZx7aNaniPsQeFUPGNU9mV8RlMf96jJflmTuwE4aYZPRk0
+	zbtfd+fFIojA=
+X-Google-Smtp-Source: AGHT+IGv0WJet+Og+RCvLrR1eshsXTOCWHklW3rdXYrEJm71ZcUwR4wjVNbW6mjdlI4tWc9zm83NXA==
+X-Received: by 2002:a05:690c:6f85:b0:6f9:e609:6a4b with SMTP id 00721157ae682-70ca7b8a042mr305646907b3.23.1747854850438;
+        Wed, 21 May 2025 12:14:10 -0700 (PDT)
+Received: from octavuiPC.semfio.usp.br ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-70ca852db6fsm27415007b3.108.2025.05.21.12.14.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 12:05:11 -0700 (PDT)
-Message-Id: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com>
-From: "Jouke Witteveen via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 21 May 2025 19:05:10 +0000
-Subject: [PATCH] doc: update references to renamed AsciiDoc files
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        Wed, 21 May 2025 12:14:10 -0700 (PDT)
+From: Octavio Carneiro <ocarneiro1@gmail.com>
+To: git@vger.kernel.org
+Cc: ocarneiro1@gmail.com,
+	ps@pks.im,
+	gitster@pobox.com,
+	newren@gmail.com
+Subject: [Newcomer][PATCH] graph.c: change graph_line->width type to int to remove sign-compare warning 
+Date: Wed, 21 May 2025 16:13:52 -0300
+Message-Id: <20250521191352.30849-1-ocarneiro1@gmail.com>
+X-Mailer: git-send-email 2.34.1
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Jouke Witteveen <j.witteveen@gmail.com>,
-    Jouke Witteveen <j.witteveen@gmail.com>
+Content-Transfer-Encoding: 8bit
 
-From: Jouke Witteveen <j.witteveen@gmail.com>
+A comparison between graph_line->width (of type size_t) and git_graph->width (of type int) causes -Wsign-compare to complain.
 
-The .txt extensions were changed to .adoc in 1f010d6 (doc: use .adoc
-extension for AsciiDoc files, 2025-01-20). References to the renamed
-files were not updated yet.
+Looking at the git_graph struct definition, its size variables are int-typed.
 
-Signed-off-by: Jouke Witteveen <j.witteveen@gmail.com>
+Therefore, I changed the type of graph_line->width to also be a int, thus removing the warning trigger.
+
+Signed-off-by: Octavio Carneiro <ocarneiro1@gmail.com>
 ---
-    doc: update references to renamed AsciiDoc files
+ graph.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1971%2Fjoukewitteveen%2Frenamed-files-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1971/joukewitteveen/renamed-files-v1
-Pull-Request: https://github.com/git/git/pull/1971
-
- Documentation/gitprotocol-v2.adoc          | 4 ++--
- Documentation/technical/build-systems.adoc | 2 +-
- contrib/subtree/README                     | 2 +-
- mergetools/vimdiff                         | 4 ++--
- sub-process.h                              | 2 +-
- 5 files changed, 7 insertions(+), 7 deletions(-)
-
-diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-index 5598c93e67c3..abc42efcc774 100644
---- a/Documentation/gitprotocol-v2.adoc
-+++ b/Documentation/gitprotocol-v2.adoc
-@@ -54,7 +54,7 @@ In general a client can request to speak protocol v2 by sending
- `version=2` through the respective side-channel for the transport being
- used which inevitably sets `GIT_PROTOCOL`.  More information can be
- found in linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-http[5], as well as the
--`GIT_PROTOCOL` definition in `git.txt`. In all cases the
-+`GIT_PROTOCOL` definition in `git.adoc`. In all cases the
- response from the server is the capability advertisement.
+diff --git a/graph.c b/graph.c
+index 26f6fbf000..cb2221700e 100644
+--- a/graph.c
++++ b/graph.c
+@@ -1,5 +1,3 @@
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+-
+ #include "git-compat-util.h"
+ #include "gettext.h"
+ #include "config.h"
+@@ -115,7 +113,7 @@ static const char *column_get_color_code(unsigned short color)
  
- Git Transport
-@@ -99,7 +99,7 @@ Uses the `--http-backend-info-refs` option to
- linkgit:git-upload-pack[1].
+ struct graph_line {
+ 	struct strbuf *buf;
+-	size_t width;
++	int width;
+ };
  
- The server may need to be configured to pass this header's contents via
--the `GIT_PROTOCOL` variable. See the discussion in `git-http-backend.txt`.
-+the `GIT_PROTOCOL` variable. See the discussion in `git-http-backend.adoc`.
- 
- Capability Advertisement
- ------------------------
-diff --git a/Documentation/technical/build-systems.adoc b/Documentation/technical/build-systems.adoc
-index d9dafb407c40..1ae2a5292f3b 100644
---- a/Documentation/technical/build-systems.adoc
-+++ b/Documentation/technical/build-systems.adoc
-@@ -32,7 +32,7 @@ that generally have somebody running test pipelines against regularly:
-   - OpenBSD
- 
- The platforms which must be supported by the tool should be aligned with our
--[platform support policy](platform-support.txt).
-+xref:platform-support.adoc[platform support policy].
- 
- === Auto-detection of supported features
- 
-diff --git a/contrib/subtree/README b/contrib/subtree/README
-index c686b4a69b12..65d167b678c8 100644
---- a/contrib/subtree/README
-+++ b/contrib/subtree/README
-@@ -1,5 +1,5 @@
- 
--Please read git-subtree.txt for documentation.
-+Please read git-subtree.adoc for documentation.
- 
- Please don't contact me using github mail; it's slow, ugly, and worst of
- all, redundant. Email me instead at apenwarr@gmail.com and I'll be happy to
-diff --git a/mergetools/vimdiff b/mergetools/vimdiff
-index ffc9be86c83d..8fca3a2a2fda 100644
---- a/mergetools/vimdiff
-+++ b/mergetools/vimdiff
-@@ -274,8 +274,8 @@ gen_cmd () {
- 	# definition.
- 	#
- 	# The syntax of the "layout definitions" is explained in "Documentation/
--	# mergetools/vimdiff.txt" but you can already intuitively understand how
--	# it works by knowing that...
-+	# mergetools/vimdiff.adoc" but you can already intuitively understand
-+	# how it works by knowing that...
- 	#
- 	#   * "+" means "a new vim tab"
- 	#   * "/" means "a new vim horizontal split"
-diff --git a/sub-process.h b/sub-process.h
-index 6a61638a8ace..bfc3959a1b48 100644
---- a/sub-process.h
-+++ b/sub-process.h
-@@ -73,7 +73,7 @@ static inline struct child_process *subprocess_get_child_process(
- 
- /*
-  * Perform the version and capability negotiation as described in the
-- * "Handshake" section of long-running-process-protocol.txt using the
-+ * "Handshake" section of long-running-process-protocol.adoc using the
-  * given requested versions and capabilities. The "versions" and "capabilities"
-  * parameters are arrays terminated by a 0 or blank struct.
-  *
-
-base-commit: d50a5e8939abfc07c2ff97ae72e9330939b36ee0
+ static inline void graph_line_addch(struct graph_line *line, int c)
 -- 
-gitgitgadget
+2.34.1
+
