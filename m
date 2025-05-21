@@ -1,57 +1,58 @@
 Received: from mail-ej1-f47.google.com (mail-ej1-f47.google.com [209.85.218.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61645262FC7
-	for <git@vger.kernel.org>; Wed, 21 May 2025 13:27:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89432270570
+	for <git@vger.kernel.org>; Wed, 21 May 2025 13:33:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747834030; cv=none; b=ffm61+LFqQmtWcJekei0C0xFEisP6TeOi/CK60vY3nGOZGSkgQ48SlPak9JqedoX4eXfk/cm2eEShhvdmoelNxqMxuh4GZ8PLwfD6Jw1hmti8UlOC5h0hrzYIr/Sb6K0dtfPv4YVf7c0jZ2YA1OWzYSkxgEOPGo5bBxQ1jm2jbA=
+	t=1747834438; cv=none; b=AHdX7xljRklwCBTANshMuOemmg35rWG3eBb62HCBH40JRCJT/KSinNi1Wcvr6cdiTHEOSCqOu8BPlESXGJ3TNLzxdYwTWyHcqvCipJoNXonAs+QPrgLdASmr5I2xhgJP54md4RVF8+nS5ybIf3VGneJUrrUDtMCNgWr1+jc8n3g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747834030; c=relaxed/simple;
-	bh=DFVNr6e3KP8EMFTAu2A/u4h37f4DmK0YTrVJFyFwoTQ=;
+	s=arc-20240116; t=1747834438; c=relaxed/simple;
+	bh=NS9gYPeycf7GIoNLi6qBFjYCF6tFH3mRrXLz9yUN/g8=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=FNuo4ZJWpr5xya6STbLQvivgWzSeMlSLTl1zZJLeRL5frGFrfjeQX+ZvR1Is2OuvSAofLDxe2d3KINN+cWYbQ2SK6d73rU7P//L2EbqDhXau6O5kDmKlZNEierOdsRYNilQvN6rrSkpPIwe0qv2pU+qqwmO7ZTGTWyJvdDy6yoQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mntQeUzG; arc=none smtp.client-ip=209.85.218.47
+	 To:Cc:Content-Type; b=qLJZl3M0XTsukKIzxrjtFZ1bj+5rCfNj5pbEQDUIxLMw/mOaP3lVR5I5xwDd0OoX1VYyxE/pXe2Wj0BT9uDbArOYi9WHYiVT+XTDQNnU+WO/9C+iZ4HUnLrMysBET9vJYcc4cySxxSbk2PoLjIBanzrjETZHLqAl2rejqFfq7xw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XhsLKQy3; arc=none smtp.client-ip=209.85.218.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mntQeUzG"
-Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ad551342f08so257075966b.2
-        for <git@vger.kernel.org>; Wed, 21 May 2025 06:27:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XhsLKQy3"
+Received: by mail-ej1-f47.google.com with SMTP id a640c23a62f3a-ac2bb7ca40bso1142494566b.3
+        for <git@vger.kernel.org>; Wed, 21 May 2025 06:33:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747834027; x=1748438827; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747834434; x=1748439234; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DFVNr6e3KP8EMFTAu2A/u4h37f4DmK0YTrVJFyFwoTQ=;
-        b=mntQeUzG1lz4gwKQWbkuQTo9kbHVmxJtlINF0hN5zA4ViZrWvmVOSiFQaeWMAp9Z9K
-         yghV0A8bj0JCPiBB5gH6mUF75IwMchf+DGBlBkgevEPEYunruZ3owTEGgodGVdnMNXi6
-         GcnidcNIlhcq5cNDq8Q1VwO96NmWWk66JkggzUOIvYH6YPMe5kx90UtkLRjMD+iN7jY+
-         Dz+iz8yceV6XS6MpEEk1wxJ4WT5jRepqr14jG+38NH3qsQnvPu2jalMk6JdLH/JlqnIq
-         3wdtubygZGXTFmkx/Tr04PsnH7CQl6TmKlbIjuUu1GoZ8IdFiN8MBFfWGibqUUdUgG9R
-         kGhQ==
+        bh=NS9gYPeycf7GIoNLi6qBFjYCF6tFH3mRrXLz9yUN/g8=;
+        b=XhsLKQy35BgdQpwH2E6O8Sn+zsMOTA6ukbTLgFgXYlkdDIj5VMxbT5mdJYcy9djQAH
+         n74DrN5yQOnSgevCwet0GZQau9Mgp7rpIu2yp8BawgRJ8AnostlrlmxXbxDtKNPh8+Dp
+         qxF9qAhn3L4TmWDZXdFWTkAy0jGA+DnfUyhqknCtl1ObRi80QaZ3d2srrKTC/rD4KjrS
+         nU/ycNzWUCbMjY13MaRZjXdSP3Qq0i8FC74LtJoY4U35KfH2B8jBSb92PpPVyo/x67P1
+         WhP/kbITtKdJZJ8RhKV+d8BB5IKTnYz0sfMZyG4Y54Wzv8RBwUsCeb6LcdJnTkCo15JK
+         XKrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747834027; x=1748438827;
+        d=1e100.net; s=20230601; t=1747834434; x=1748439234;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DFVNr6e3KP8EMFTAu2A/u4h37f4DmK0YTrVJFyFwoTQ=;
-        b=H4Mm0c7heeFa6y4fVwN1HdJFqZytQKBCfrXXBAbU0biGIFNfe3PtuXmB0Fmos/IsuC
-         UBZ6gPFXyd1ioc/2UoStBTrNR1sCcB1hpBvb1k5a0ofejwWBqOd/btjH0ZY6yXGWberj
-         BS31NR/AjPHJzgvDWgfhBLrG1LG5s2FgdCEZvAPiCRllhxOuVZUrGQZbsNpwGY65sMxn
-         IVX9VGnZd5OiVKD2zwrInqwSQZQWtOgdNfl0J+Iiq/+IAmvZ2PiC0zCAIO+Qg73FOJB/
-         cT6W3/Vs2h2iUv2vHquKY3O0ciDxdKab8ouetbZGwxyz86NdEReHweY/mI7878h1qtzA
-         YPcw==
-X-Gm-Message-State: AOJu0Yxx/6TpgeViFT3J2Pqz0PkTgR3ULRemm55exUxzOIfG0JYeKO6p
-	6/A15VLzJZJjcpGekdBHboIjoRin4cSRt2Pz23kjJWYrcwCa5lkWfWj9p/677xfZparZD1EKXGU
-	wRWVs0SKpiFOiPk9bwmPgDDVAnIrbCdw=
-X-Gm-Gg: ASbGnctugwrgEyZLtECADWJnC3OW4vnfinjoxIvChBnV6XV6VDB5tuGJfoEL3fqoHa2
-	H9pn5MXkboyGKJ9I5ULZG+p0ortNlC0svw0wfxebTzpCYwyDQtlCN4Irx3SGVadLvoeh4mV5Fzs
-	PbmgMUZp6IyYfD00umXIu2ji/S5gk4c/9rYyQ10CNLzlOLksuj+2ib7xeJcN91+oyrsuI=
-X-Google-Smtp-Source: AGHT+IGfSlCsGaiBPWpq1tW6KmNFq5rb7VSiFJRzFnQBICIV4et0Ea6ORbeL5QvgXHUVensqaUq3qZkHAqd/XFoQlvc=
-X-Received: by 2002:a17:907:26c9:b0:ad2:3616:8c3d with SMTP id
- a640c23a62f3a-ad536bca53dmr1995825266b.26.1747834026573; Wed, 21 May 2025
- 06:27:06 -0700 (PDT)
+        bh=NS9gYPeycf7GIoNLi6qBFjYCF6tFH3mRrXLz9yUN/g8=;
+        b=EVErPxNO0+34CGe33ZwVoxjBT9Ha8dNFEo6SX5TrZbxkPTq5ddT/k/PeHB2QONwKJK
+         KLjuwjBoJgUaH8Aw6zxjp4vyIPi6fOJ8CJEBAvROuOsLcDjvXbjYW1aZQ1pGDyqwe1g0
+         1bXG4YS4ly+aK/H01nGVd0L+cDVJNS3/3Xx3L9JoAEc5dDXwqJW9XrJASwwXa2vPcLmh
+         QBWZz1zrA4rKpi8peaRydyP4tLhYESEZwizVi1aCrza+F8zj7VlwIU919LzlEW4BFIUI
+         +oIR2tbBMaZdaG9F4CG6ATT0E0y7+3/DkrHsWVQueiLEqOR/HwXQvW7Lf+dXVMpURxJV
+         9W7A==
+X-Forwarded-Encrypted: i=1; AJvYcCUZYMZ2+oq8WsOF1q2TGGBCPzL9ZwXL92SM1YCr/Y9SYsgvcIQpH+XK+GSEZcKWe+S0ZC4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwM61f8rJUz2qHPZ3D315XC/lhs8DCB8jUTmzRDlac7BZCrGsQK
+	qFq9c+TcsaQRN3wAauOXXwIWihnlLxvBIrpFIOkRARwHQiDzm7tEpsHVF2qSODwmWiXIIpdJyik
+	twepY4hDiYV4f21mdqjtniSgX1vHXklU=
+X-Gm-Gg: ASbGncvAANPMLdmhLABjI5M1ZkfmPCLTJdFZceiDCt6XNkxYlOfU28d4nuRumYMWu29
+	anIhvnNitjS05XnHyFA0asslkMtM5e60vMODJ1BYs14tftH9gM3reJc5zun7fz9wPWIMbjSK66T
+	56XZ7oCpGV9iH3mezrOMNUHPLNv8tbJmI7VKo96q0ckybDSBPz8uwGkQvXA+iMWeOUExk=
+X-Google-Smtp-Source: AGHT+IGZrspc4CXnoGqKk5TCr0sYd0GsqVZbHT0q4PL/wtk4iWRcOBLl9KQdaNPCwnZZ+DJuWJ8oMWIpakx8Uf2Fj08=
+X-Received: by 2002:a17:906:7950:b0:ad5:53e0:8dca with SMTP id
+ a640c23a62f3a-ad553e08ed5mr1356242666b.47.1747834433599; Wed, 21 May 2025
+ 06:33:53 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -59,53 +60,56 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
- <20250520193506.95199-3-ben.knoble+github@gmail.com> <aC2HF1VEosDMY_A2@pks.im>
-In-Reply-To: <aC2HF1VEosDMY_A2@pks.im>
+ <20250520193506.95199-4-ben.knoble+github@gmail.com> <aC2HJxvrorJdMkL9@pks.im>
+ <e5efc450-dfe1-48fa-9dcd-7e0634957e1f@crinan.ddns.net>
+In-Reply-To: <e5efc450-dfe1-48fa-9dcd-7e0634957e1f@crinan.ddns.net>
 From: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Date: Wed, 21 May 2025 09:26:50 -0400
-X-Gm-Features: AX0GCFv-WJDYjpPn4Eaz4HWh1F5P10oJWZ_1D87VVoBxavp0AP7v_E-x3szyjjg
-Message-ID: <CALnO6CDGGiw2HJTjfhvnmLQpQYDJqQux7UdO1tv0c9-LqNXMxg@mail.gmail.com>
-Subject: Re: [PATCH 2/4] editor: use standard strvec API to receive
- environment for external editors
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>, 
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
-	Calvin Wan <calvinwan@google.com>, =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Date: Wed, 21 May 2025 09:33:38 -0400
+X-Gm-Features: AX0GCFt2kKZU11WruRsuMxdbMAYdYv7jFU6VHRDd3IdHsjPn66ynvH2I9YSCujk
+Message-ID: <CALnO6CDWoOKZ6NHNT_Xh2Jd48cWU=qHkkwYbbZHfYGvEz5LWGw@mail.gmail.com>
+Subject: Re: [PATCH 3/4] run-command: prep_childenv on all platforms
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Ian Wienand <iwienand@redhat.com>, 
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 21, 2025 at 3:56=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
+On Wed, May 21, 2025 at 9:07=E2=80=AFAM Phillip Wood <phillip.wood123@gmail=
+.com> wrote:
 >
-> On Tue, May 20, 2025 at 03:34:56PM -0400, D. Ben Knoble wrote:
-> > Going back to the introduction of the env parameter for the editor in
-> > 8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor a=
-s
-> > well., 2007-11-26), we pass a constant array of strings: as the
-> > surrounding APIs evolved to use strvecs, the editor code did not.
+> On 21/05/2025 08:56, Patrick Steinhardt wrote:
+> > On Tue, May 20, 2025 at 03:34:57PM -0400, D. Ben Knoble wrote:
+> >> We only prepare the child environment on non-Windows platforms, but
+> >> prep_childenv is the natural interposition point for our subprocess
+> >> system to adjust the environment as needed. Use it for Windows
+> >> platforms, also. In subsequent commits we'll use this interposition
+> >> point to modify the environment on all platforms.
 > >
-> > There is only one caller of all 3 editor APIs that does not pass a NULL
-> > environment (the same caller for which this parameter was added), and
-> > it already has a strvec available to use.
+> > What is the consequence though of calling `prep_childenv()` on Windows
+> > now? Why didn't we call it before this change? Details like this should
+> > definitely go into the commit message to explain why it's safe to add
+> > the call now.
 >
-> Okay. It would've been nice to explain _why_ we want to do this change,
-> but the change itself looks sensible.
-
-Ah, yes. I think it's really just "cleanup" here=E2=80=94it started out as
-"maybe necessary prep for later work," and I kept it in this series.
-Will expand slightly in reroll.
-
+> The environment prep for windows is currently implemented in
+> compat/mingw.c:make_environment_block(). That function is careful to
+> handle unicode characters correctly, it is hard to see how that is
+> compatible this change.
 >
-> > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> > Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> Best Wishes
 >
-> The order of these trailers should be reversed -- your SOB should always
-> come last.
+> Phillip
 
-Thanks; I didn't know that! (Aside: rebase --signoff seems to add SOB
-even when it's already present. Is that a bug in rebase --signoff or a
-misuse of the trailer on my end? Setting "trailer.ifExists =3D
-addIfDifferent" didn't seem to affect it.)
+Ah, thanks both=E2=80=94I missed that it got special handling later (since
+run-command throws the char **env over to mingw_spawnvpe without
+modification). This patch is probably "obviously wrong" with that
+context.
 
->
-> Patrick
+That makes me wonder: per Junio's comments in another spot, we could
+be more targeted at the launch_editor family (which also requires a
+separate patch to contrib/git-jump to scratch my itch); or, we could
+try to push these modifications into both environment handling blocks.
+I lack the knowledge needed to do the right thing on the Windows side,
+though, so I'd probably leave it alone.
+
+Thoughts?
