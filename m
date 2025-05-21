@@ -1,113 +1,202 @@
-Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90FF1DE891
-	for <git@vger.kernel.org>; Wed, 21 May 2025 15:10:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C51741DD0EF
+	for <git@vger.kernel.org>; Wed, 21 May 2025 15:20:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747840261; cv=none; b=NEijH96aGmulIDvzU669HDH63Xd67FSZU8sEQJQUpwSio26A57Lg0Pc95nVy7TmeMOO6o2FDWIVzZxdLgP9ihkrb6sDXjRww6TKnSmBib+fC3DRFyYRft88D6sw5kwaisUqUn09/cRorNydrU9ihx0TJmv7jOnYi3WdemlpnxLo=
+	t=1747840810; cv=none; b=EP+KBWmxHuuvaZoP5467hgBVSHTaoG06LXu70Ar9EviyoFhhw4cCN2tALnlen2S2nwKsJqW1ZmZgWyq5AgSUtHDh1y+HX8FtieLY3H2Kh52F/4E25uNVBbleoo1U9NALjdm/VpwZmqp6Oo1yQE1G7ocWqfZmAHGc1v48JI0eQ0k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747840261; c=relaxed/simple;
-	bh=BmcaCL+7EgukYkn6pM4/qi3f/fPJxBbzEdByU/bphIE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=FQRBeVDoYct1d2a9uaWWZeTrIqF/nR3P59YEuun06V7KCwulnAfBAT0i5pYwIYMfzHz1S5w917r8upchVATAslxUGdt8SBRB5RQjum7XYT7lOOhfrJvcP8XulTnZh0wmVOcaDAUtqPR5+aNZtfZY0e3C/DLikhQPEn4Qn2wq5FA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dVrcbMWo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q3Ku5RhU; arc=none smtp.client-ip=202.12.124.148
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747840810; c=relaxed/simple;
+	bh=Ti+DglXn2Jmq4ssccjxLMtn53YKgdVmGbWGVA9Vy/7E=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=ObzjvFMK9oe3tLxuDmXYFmpazM6t1Vn2G/Gfsif2xPfPDQpFk2Dz25rOCXjz/r/s+G4Hbp3dUMvfBXWu/hqR5oIqAGb1GxgCMByYvXFN5/TgOmq1TEyg7EoUsNhmSCS3XzNqY5XHgHI/jq8h5BJvwOjyS9gIVgh9JBcuFjiS7mk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ma8556IN; arc=none smtp.client-ip=209.85.221.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dVrcbMWo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q3Ku5RhU"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id AE98D1140168;
-	Wed, 21 May 2025 11:10:58 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Wed, 21 May 2025 11:10:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747840258; x=1747926658; bh=v233Wm/7u/
-	tvK2Wb22XyHlfVDeK8KnEi27vaHm2kXFA=; b=dVrcbMWoF9qYwbYc9CeOBZ5RmM
-	k+pTal6jvjNp2XVeVboM6puckm0MfA4hiuK5I7VElTNH13rqTb46qtELi1nvL+a9
-	9QiKQrymZEIwbjYSF+ZO9XDTXWhcVgY9IN6q4cMAbP0WM9B9tHljOU3EPc5vtu8J
-	ahuTkuM3cYhj33X6+5oW4ffQrFfOR46ZJI0Asyf7/jds4oxOWjrI6Slh2uaznXh9
-	Wr1yVg9ouLEVvdZrR5m/KCBnu3ceZO5GXYUesS4U9kox2V9r3Qk+L8bFa6nSNTqp
-	lDNHww9GwZTJD4gEVgDxYGkONHsolcVPHvy9GsnuaxW1Ux1G8cKMFGJ5mcyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747840258; x=1747926658; bh=v233Wm/7u/tvK2Wb22XyHlfVDeK8KnEi27v
-	aHm2kXFA=; b=Q3Ku5RhUT70T7jzOEwfm1IQdO7+N47Aoh1Thp5di5olSn41izUg
-	eV3D498raB+AZlMEfzPu5lvqkt9Q66QPrxhySseg2bXJM4u3nshWV4YxKWbNbgJb
-	MSV7v1KDsp1FtDcPNpinohAApkYb2LVwjyzeVTdDqkylQaNB/gdvXeTT3KFss/IB
-	czcmA3bHU4/GsIZJYTA72nIE97LRUANrxjrUm1dBJ8h1DOxH+EF4UiRSO1c5paJa
-	chy59a4sI3kkAEpVAnIhBWsqbEUuOcagLniEiBGq1g0mYb0dZL7hmupyx7Hh4T9q
-	+x/i1lh1tLTwxRDb7PJRLXSFMORo3jG5MJg==
-X-ME-Sender: <xms:Au0taATchBzNJKNb60zMXM-3pH9pD88HDBpM3pbpe382Bcypjqp9tw>
-    <xme:Au0taNxh4xVWqG5DLT6Rlc2tcH1eobfWIpJXIpMcp6jBy613S-Ascx11Z-rKRpetD
-    4drFoseQSz-bq64gA>
-X-ME-Received: <xmr:Au0taN2q7JHlYU5XonaD0G_wmS1JGVof_2bII1xgDOF9TBa3NmrsjIpEzA7Gnn3XPk5c2HVFRFqcVFSFBbjokjCCsVDakH5_HYUmmZM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefgedtucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepphhssehpkhhsrdhimhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhh
-    uhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
-    drohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
-    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfi
-    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhg
-    lhgvrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpth
-    htohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:Au0taEC65jHZt6qs-0Pfr6cqfhHpTJxBg3Rs1FLMuB99qXlIBLX6iA>
-    <xmx:Au0taJiR1vnXAjIuJVRfJ36KgCZjAJz1U1xHKPYh9Pqn-_ZrOEBWiw>
-    <xmx:Au0taAoqMbAR_89vgWYfCDyldqniGM2l60mCDH8-OGKl7FL2hcr52A>
-    <xmx:Au0taMhziRB7E4xqUcaJ0P7CJzRLGWZO_x4ZzLFbA664OPBEdplctw>
-    <xmx:Au0taOjYj8Uq5LtllkdoK6xz1Y8ZP-YS-UAUo1hj0vwFz1RAyd5vyRIz>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 11:10:57 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,  git@vger.kernel.org,
-  Johannes Schindelin <johannes.schindelin@gmx.de>,  Jeff King
- <peff@peff.net>,  Elijah Newren <newren@gmail.com>,  Calvin Wan
- <calvinwan@google.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
- <avarab@gmail.com>
-Subject: Re: [PATCH 2/4] editor: use standard strvec API to receive
- environment for external editors
-In-Reply-To: <aC2HF1VEosDMY_A2@pks.im> (Patrick Steinhardt's message of "Wed,
-	21 May 2025 09:56:07 +0200")
-References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
-	<20250520193506.95199-3-ben.knoble+github@gmail.com>
-	<aC2HF1VEosDMY_A2@pks.im>
-Date: Wed, 21 May 2025 08:10:56 -0700
-Message-ID: <xmqqa576c83j.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ma8556IN"
+Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a37a243388so1902380f8f.1
+        for <git@vger.kernel.org>; Wed, 21 May 2025 08:20:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747840807; x=1748445607; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=7C0R7+0NH2EUHxXHiLLl79rh84HGAnn74iSZ4fXg5do=;
+        b=ma8556INzGh9wFGUMgguY0+/xmPDJpVKKajuz5O4rD7E5Z4bvP7Angh3+Yn2w164NS
+         TWl7yjTqCI+L1GY1BkPQEkzFkCRph7niDAeVIHmT0NGkTCLRqkBExtR/1oo4w0kUZs7P
+         1D/WowEdqhzvlI8xJuM7abbT+MTwOX3UX4mU/sqoWtIrVXgxVEpb1ZZ0KpMrCD3HMO5A
+         2k8/A9sWKEp5a9xo7Ur+zZVbxRV1ds/3My46mUAHQv3SoucTJAFmLYgSO+8TknjRtxBa
+         xw37J2LXPloCa6KR5HIU6WLhamfkAZSVzvsRaGNF3uOPj5cyN9WTWMESQeRx57DabJ1Z
+         lvuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747840807; x=1748445607;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7C0R7+0NH2EUHxXHiLLl79rh84HGAnn74iSZ4fXg5do=;
+        b=k0MjG2HokBEvAdN86a//M1Kd/WwT8ULnE101tKmb4qeY9nyhXGw+SCTc/F/dWgmGOo
+         SahzWaHFVYGz7/DfSJjeTCYOTMfdpN/iCSY6fFnjBhDVVHHV89meECkkObAW7CW1i+ns
+         L3RR8bbjdoeILFd5br+3cD1tvHYdKeKQr54/aRgmPAPaRy7PEjRP5/tWQn41wTl6V8Bj
+         M+HIP5Oe98sYPvKhT6Eso7Bbnsm3uvbrp8GBa/AI0lrNluU6M1uzHkOiratZb7aK9Iqr
+         TcDhcO5pyT304/2s/ukUV7BJ9N3G6ucdLyHmj4oJBKk+VXI5SbdbZBREcQ5o6uywnqXt
+         WebQ==
+X-Gm-Message-State: AOJu0YyeE36KNps9CNZcHK3VGzZiiqyVInWdS2bp6MoweNagMAjras9p
+	v6y80LgF1vXQ5S5KEuVXA8qYlF90gOyWyQhGyYT12x0/93GbcyZw4/WH
+X-Gm-Gg: ASbGnct2ZVFD7sVBpbf+zz5lRryImWucyrP/EIrk53nZjJpTRCRkZQiP2rkI5yRmqY3
+	6DrVKM+MfMxmPG2I8/4MHYjS2bOORZtxPNt+smCGn6JF6A6XZ2PcZrFPY3GmHBHaWo9dCbQqjIP
+	iZ4NxRkNTfDoZwywQaIg5Q02pFJHnzZUIqezoJTZEn9FGrYZUkKG/pTaOg7Ntk2eVft3j0LdF7r
+	KXDlDJAf4HzACz73/B9DC66clLKDiDRNhRMTrsBdQP7SvNRfDCSZMT6mP4c0HW7PqE3bjPA9Tq4
+	WqlBuA9pre1I5hy9IfbS+x9zcKYpNZORdyMuGZeV+MriwiMg92eqPJ1fXdZbJuN7OFoi0mw4Pkl
+	m3B9Xw7E3uYOKOAHQ3zzYHMGvZ4k=
+X-Google-Smtp-Source: AGHT+IFkLdFLEoiIFawgQSQ5nAxCj81vqYxn+HxM/Z7sxunPR1kOh+hMHO2/BYTQQ/8dNrfjMqD3kA==
+X-Received: by 2002:a05:6000:2484:b0:3a3:7115:5e7a with SMTP id ffacd0b85a97d-3a371155f61mr9690373f8f.42.1747840806827;
+        Wed, 21 May 2025 08:20:06 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca4d1fasm2239397f8f.1.2025.05.21.08.20.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 May 2025 08:20:06 -0700 (PDT)
+Message-ID: <a87e6f8f-e6b3-4d91-8b0a-312962819eb4@gmail.com>
+Date: Wed, 21 May 2025 16:19:59 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 1/4] midx repack: avoid integer overflow on 32 bit systems
+To: Taylor Blau <me@ttaylorr.com>, Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>
+References: <cover.1747753388.git.phillip.wood@dunelm.org.uk>
+ <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
+ <aCzBvvZDS2OFJ30h@nand.local>
+Content-Language: en-US
+In-Reply-To: <aCzBvvZDS2OFJ30h@nand.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Patrick Steinhardt <ps@pks.im> writes:
+Hi Taylor
 
->> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
->> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
->
-> The order of these trailers should be reversed -- your SOB should always
-> come last.
+On 20/05/2025 18:54, Taylor Blau wrote:
+> On Tue, May 20, 2025 at 04:04:24PM +0100, Phillip Wood wrote:
+>> diff --git a/midx-write.c b/midx-write.c
+>> index dd3b3070e55..c7cb2315431 100644
+>> --- a/midx-write.c
+>> +++ b/midx-write.c
+>> @@ -1699,19 +1699,23 @@ static void fill_included_packs_batch(struct repository *r,
+>>   	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
+>>   		int pack_int_id = pack_info[i].pack_int_id;
+>>   		struct packed_git *p = m->packs[pack_int_id];
+>> -		size_t expected_size;
+>> +		uint64_t expected_size;
+>>
+>>   		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
+>>   			continue;
+>>
+>> -		expected_size = st_mult(p->pack_size,
+>> -					pack_info[i].referenced_objects);
+>> +		expected_size = uint64_mult(p->pack_size,
+>> +					    pack_info[i].referenced_objects);
+> 
+> Makes sense.
+> 
+>>   		expected_size /= p->num_objects;
+>>
+>>   		if (expected_size >= batch_size)
+>>   			continue;
+>>
+>> -		total_size += expected_size;
+>> +		if (unsigned_add_overflows (total_size, (size_t)expected_size))
+>> +			total_size = SIZE_MAX;
+>> +		else
+>> +			total_size += expected_size;
+>> +
+> 
+> But this part I am not totally following. Here we have 'total_size'
+> declared as a size_t, and 'expected_size' as a uint64_t, and (on 32-bit
+> systems) down-cast to a 32-bit unsigned value.
+> 
+> So if 'expected_size' is larger than SIZE_MAX, we should set
+> 'total_size' to SIZE_MAX. But that may not happen, say if
+> 'expected_size' is (2^32-1<<32). Should total_size also be declared as a
+> uint64_t here?
 
-Yup.  The intent is to record what happened before the patch was
-sent out with your sign-off chronologically.  Dscho helped and then
-Ben finialized the patch by signing off, hence the author's sign-off
-comes the last.
+By this point we know that expected_size < SIZE_MAX due to the test in 
+the context lines above this change. batch_size is declared as size_t 
+and to get here expected_size < batch_size. I'll add a sentence to the 
+commit message to make that clearer.
 
-Thanks.
+> I wondered if it might be easier to count down from the given batch_size
+> instead of adding up to it (requiring the second
+> unsigned_add_overflows() check). I tried it out and got this instead:
+
+I think you're right that we if we counted down we'd need one less 
+comparison but I'm not sure if it is worth the churn. In the diff below
+
+     factor = pack_info[i].referenced_objects / p->num_objects;
+
+can only ever be zero or one as factor is declared as uint64_t so I 
+don't think it works as-is. If you're happy with the shifted-integer 
+approach in the next patch I'd rather just stick with that.
+
+Thanks
+
+Phillip
+
+> --- 8< ---
+> diff --git a/midx-write.c b/midx-write.c
+> index 48a4dc5e94..f81dd9ff6d 100644
+> --- a/midx-write.c
+> +++ b/midx-write.c
+> @@ -1671,7 +1671,7 @@ static void fill_included_packs_batch(struct repository *r,
+>   				      size_t batch_size)
+>   {
+>   	uint32_t i;
+> -	size_t total_size;
+> +	uint64_t remaining = batch_size;
+>   	struct repack_info *pack_info;
+>   	int pack_kept_objects = 0;
+> 
+> @@ -1695,23 +1695,23 @@ static void fill_included_packs_batch(struct repository *r,
+> 
+>   	QSORT(pack_info, m->num_packs, compare_by_mtime);
+> 
+> -	total_size = 0;
+> -	for (i = 0; total_size < batch_size && i < m->num_packs; i++) {
+> +	for (i = 0; i < m->num_packs; i++) {
+>   		int pack_int_id = pack_info[i].pack_int_id;
+>   		struct packed_git *p = m->packs[pack_int_id];
+> -		size_t expected_size;
+> +		uint64_t expected_size, factor;
+> 
+>   		if (!want_included_pack(r, m, pack_kept_objects, pack_int_id))
+>   			continue;
+> 
+> -		expected_size = st_mult(p->pack_size,
+> -					pack_info[i].referenced_objects);
+> -		expected_size /= p->num_objects;
+> +		factor = pack_info[i].referenced_objects / p->num_objects;
+> +		if (p->pack_size > UINT64_MAX / factor)
+> +			die(...);
+> 
+> -		if (expected_size >= batch_size)
+> -			continue;
+> +		expected_size = p->pack_size * factor;
+> +		if (expected_size > remaining)
+> +			break;
+> 
+> -		total_size += expected_size;
+> +		remaining -= expected_size;
+>   		include_pack[pack_int_id] = 1;
+>   	}
+> --- >8 ---
+> 
+> That reduces the two overflow checks down to one, and avoids the need to
+> introduce a uint64_t-specific variant of the st_add() function.
+> 
+> Thanks,
+> Taylor
