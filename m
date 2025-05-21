@@ -1,138 +1,113 @@
-Received: from fout-a6-smtp.messagingengine.com (fout-a6-smtp.messagingengine.com [103.168.172.149])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BA21EB5D8
-	for <git@vger.kernel.org>; Wed, 21 May 2025 15:04:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C90FF1DE891
+	for <git@vger.kernel.org>; Wed, 21 May 2025 15:10:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747839901; cv=none; b=qNxw97+Yv1SVikRJzriPpdRO/NpBALw2TVOmaGg48sF1BqOeaH5Fn9euqCXpkvAMnonMp4F5PHtCEizOA6Ymys080+CM8yMcm4auRUMnMT/x/8Ewr2agHOHBBfw78BDWkn8ZobVlGY3uqrePeQxTUj3+Po5AexslFPvYPEG5Ilw=
+	t=1747840261; cv=none; b=NEijH96aGmulIDvzU669HDH63Xd67FSZU8sEQJQUpwSio26A57Lg0Pc95nVy7TmeMOO6o2FDWIVzZxdLgP9ihkrb6sDXjRww6TKnSmBib+fC3DRFyYRft88D6sw5kwaisUqUn09/cRorNydrU9ihx0TJmv7jOnYi3WdemlpnxLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747839901; c=relaxed/simple;
-	bh=Shhv2UCFptOIuBWu6WeHELydpmJpEDmKo9mhntISf5Y=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=LdOkePLKqAeAZDoO8RS9+pqpwfV8DR8VUeKbLvGRLW1gLCWbnjZi6W2eNkaditsGWb0VIMKasobSuHnK/oq/3Fzfqc9VfbyesemIpGt//OWEKgWdx72s8Trf/HQ2WsoqZ+nJOaZ4KPQ4Sz+FKbZ8fnOh9ChYJPKwjUr0+saqwC0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=J/eHgHtJ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EfsKf/ke; arc=none smtp.client-ip=103.168.172.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1747840261; c=relaxed/simple;
+	bh=BmcaCL+7EgukYkn6pM4/qi3f/fPJxBbzEdByU/bphIE=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=FQRBeVDoYct1d2a9uaWWZeTrIqF/nR3P59YEuun06V7KCwulnAfBAT0i5pYwIYMfzHz1S5w917r8upchVATAslxUGdt8SBRB5RQjum7XYT7lOOhfrJvcP8XulTnZh0wmVOcaDAUtqPR5+aNZtfZY0e3C/DLikhQPEn4Qn2wq5FA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=dVrcbMWo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Q3Ku5RhU; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="J/eHgHtJ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EfsKf/ke"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id A4E81138040A;
-	Wed, 21 May 2025 11:04:58 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Wed, 21 May 2025 11:04:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm2;
-	 t=1747839898; x=1747926298; bh=6TU0TpGwfWBSi5pUMlNS0uDYghHE0Yr6
-	dUS4P6z31m0=; b=J/eHgHtJ40tknR9lVg0QE8af5kSHI9By6XihTy63/NwFn3vo
-	pZxvlumDauyQnKC8HCo/04UfwCDHTjlomrQlAgS2neiDvbM8OcW6gv4DFUmU7rUt
-	F2PL0bZfvBMDJyteypfrCSkQtYpBYRxv7UEJi632GEBINkHllpBVTTAvVvi8ekjB
-	3sWmTVocmN1dD9vxi8QlTCyBWEZleQhsS+KWsISJOpg68xdCcP/6tX0Uiw2fBsOW
-	lzPtMeOmnFdzCq2YJNzGKDTPS581Fqq0IYhBStnI9MO9j64E/M3t+sjp83vWTwi8
-	SuDnVZSMOBGBScpJ5t+mgQ5wylXTGA4cOcBcnQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="dVrcbMWo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Q3Ku5RhU"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.stl.internal (Postfix) with ESMTP id AE98D1140168;
+	Wed, 21 May 2025 11:10:58 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 21 May 2025 11:10:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747840258; x=1747926658; bh=v233Wm/7u/
+	tvK2Wb22XyHlfVDeK8KnEi27vaHm2kXFA=; b=dVrcbMWoF9qYwbYc9CeOBZ5RmM
+	k+pTal6jvjNp2XVeVboM6puckm0MfA4hiuK5I7VElTNH13rqTb46qtELi1nvL+a9
+	9QiKQrymZEIwbjYSF+ZO9XDTXWhcVgY9IN6q4cMAbP0WM9B9tHljOU3EPc5vtu8J
+	ahuTkuM3cYhj33X6+5oW4ffQrFfOR46ZJI0Asyf7/jds4oxOWjrI6Slh2uaznXh9
+	Wr1yVg9ouLEVvdZrR5m/KCBnu3ceZO5GXYUesS4U9kox2V9r3Qk+L8bFa6nSNTqp
+	lDNHww9GwZTJD4gEVgDxYGkONHsolcVPHvy9GsnuaxW1Ux1G8cKMFGJ5mcyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747839898; x=
-	1747926298; bh=6TU0TpGwfWBSi5pUMlNS0uDYghHE0Yr6dUS4P6z31m0=; b=E
-	fsKf/kewc0n1VY1KVQmmRboT7WckcARby8swg6px0FJzQtqvr3pVxb+pJ+3Y4XHB
-	WtigSilJOAhT7ideAJume4i91Pn5e7++Q4GcxEGqWo7DjpXEaWneqZI06oIzdL3X
-	8zZvXaQ37NGfHFx6Lejh0spDvpb+zif1oXNxBsni4F1fT21K4EE0RzhjlcGHWoxx
-	ZtMStueFhwODNuKbjvJF5fOz5bu+mzWj0zk+cXOe8iIXNO4AxROGr/I51HJJ3Q+n
-	RrrUTM3cI7IBVwfRk7c6sXj+L6jaTzkREodWJs1eWuLXYobPzhS/9wIma3y8/m68
-	uFO8HKhbNo1Hef2ECzWOg==
-X-ME-Sender: <xms:mustaIUxVqjIXFsC4b3x8MkPqz5Upuvcjdc0auDNvfwA8T7jQFlXsTQ>
-    <xme:mustaMmvwmFie5IY4zGX26XpP8dQMCv55yFLMoH29m29m8kc0yksMKiFEpUJpVhZ5
-    xx1iCJgsCWR44dQXA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeffeelucdltddurdegfedvrddttd
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747840258; x=1747926658; bh=v233Wm/7u/tvK2Wb22XyHlfVDeK8KnEi27v
+	aHm2kXFA=; b=Q3Ku5RhUT70T7jzOEwfm1IQdO7+N47Aoh1Thp5di5olSn41izUg
+	eV3D498raB+AZlMEfzPu5lvqkt9Q66QPrxhySseg2bXJM4u3nshWV4YxKWbNbgJb
+	MSV7v1KDsp1FtDcPNpinohAApkYb2LVwjyzeVTdDqkylQaNB/gdvXeTT3KFss/IB
+	czcmA3bHU4/GsIZJYTA72nIE97LRUANrxjrUm1dBJ8h1DOxH+EF4UiRSO1c5paJa
+	chy59a4sI3kkAEpVAnIhBWsqbEUuOcagLniEiBGq1g0mYb0dZL7hmupyx7Hh4T9q
+	+x/i1lh1tLTwxRDb7PJRLXSFMORo3jG5MJg==
+X-ME-Sender: <xms:Au0taATchBzNJKNb60zMXM-3pH9pD88HDBpM3pbpe382Bcypjqp9tw>
+    <xme:Au0taNxh4xVWqG5DLT6Rlc2tcH1eobfWIpJXIpMcp6jBy613S-Ascx11Z-rKRpetD
+    4drFoseQSz-bq64gA>
+X-ME-Received: <xmr:Au0taN2q7JHlYU5XonaD0G_wmS1JGVof_2bII1xgDOF9TBa3NmrsjIpEzA7Gnn3XPk5c2HVFRFqcVFSFBbjokjCCsVDakH5_HYUmmZM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefgedtucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucenucfjughrpefoggffhffvvefkjghfufgtgfesthhqredtredtjeenucfhrhhomhep
-    fdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgsh
-    gsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeefteeghfegfeevleeguddvkeet
-    heeiveffudejlefgudffffejleffffeludekjeenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghm
-    vgdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepugihrhhonhgvthgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphgvfh
-    hfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:mustaMbGf9zxvYsOIQoj-1SO8sQl9IBZ3vrSME_oM2TmbT4sslU8Og>
-    <xmx:mustaHXyaObeK0qyLrPicYsu_eoUqnuRHufdrR2QItFSUbv2Uy9r5Q>
-    <xmx:mustaCkepJqbN58_I6nAtgp3HudjwFKY4uADR7FqSXhPJk_AiCHoXA>
-    <xmx:mustaMdJrCefMg-ZzI-OTa-RFHSb8dL13_73NGJMAfhWrbp2yx6IJQ>
-    <xmx:mustaA_fuGcy6WgEOHEmJ_2myckdo7CPE4X6c6bT5sgu9FDAmnCJ5Emw>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 5AE233020061; Wed, 21 May 2025 11:04:58 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
+    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepphhssehpkhhsrdhimhdprhgtphhtthhopegsvghnrdhknhhosghlvgdoghhithhh
+    uhgssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrghdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
+    rdguvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepnhgvfi
+    hrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhg
+    lhgvrdgtohhmpdhrtghpthhtoheprghvrghrrggssehgmhgrihhlrdgtohhmpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Au0taEC65jHZt6qs-0Pfr6cqfhHpTJxBg3Rs1FLMuB99qXlIBLX6iA>
+    <xmx:Au0taJiR1vnXAjIuJVRfJ36KgCZjAJz1U1xHKPYh9Pqn-_ZrOEBWiw>
+    <xmx:Au0taAoqMbAR_89vgWYfCDyldqniGM2l60mCDH8-OGKl7FL2hcr52A>
+    <xmx:Au0taMhziRB7E4xqUcaJ0P7CJzRLGWZO_x4ZzLFbA664OPBEdplctw>
+    <xmx:Au0taOjYj8Uq5LtllkdoK6xz1Y8ZP-YS-UAUo1hj0vwFz1RAyd5vyRIz>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 11:10:57 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: "D. Ben Knoble" <ben.knoble+github@gmail.com>,  git@vger.kernel.org,
+  Johannes Schindelin <johannes.schindelin@gmx.de>,  Jeff King
+ <peff@peff.net>,  Elijah Newren <newren@gmail.com>,  Calvin Wan
+ <calvinwan@google.com>,  =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason
+ <avarab@gmail.com>
+Subject: Re: [PATCH 2/4] editor: use standard strvec API to receive
+ environment for external editors
+In-Reply-To: <aC2HF1VEosDMY_A2@pks.im> (Patrick Steinhardt's message of "Wed,
+	21 May 2025 09:56:07 +0200")
+References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+	<20250520193506.95199-3-ben.knoble+github@gmail.com>
+	<aC2HF1VEosDMY_A2@pks.im>
+Date: Wed, 21 May 2025 08:10:56 -0700
+Message-ID: <xmqqa576c83j.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Te5a6727d38adc038
-Date: Wed, 21 May 2025 17:04:37 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Junio C Hamano" <gitster@pobox.com>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, "Jeff King" <peff@peff.net>,
- "Teng Long" <dyroneteng@gmail.com>
-Message-Id: <817a28ae-b7dc-44ce-9ae4-2527081745da@app.fastmail.com>
-In-Reply-To: <xmqqjz6bhzkm.fsf@gitster.g>
-References: <cover.1747763769.git.code@khaugsbakk.name>
- <630ef019786bdb0c7538cc9794a7ba53a0ac77d8.1747763769.git.code@khaugsbakk.name>
- <xmqqjz6bhzkm.fsf@gitster.g>
-Subject: Re: [PATCH 1/6] doc: stripspace: mention where the default comes from
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Tue, May 20, 2025, at 21:06, Junio C Hamano wrote:
->> diff --git a/Documentation/git-stripspace.adoc b/Documentation/git-st=
-ripspace.adoc
->> index a293327581a..1132a4cf9a9 100644
->> --- a/Documentation/git-stripspace.adoc
->> +++ b/Documentation/git-stripspace.adoc
->> @@ -37,7 +37,8 @@ OPTIONS
->>  -------
->>  -s::
->>  --strip-comments::
->> -	Skip and remove all lines starting with a comment character (defaul=
-t '#').
->> +	Skip and remove all lines starting with a comment character (defaul=
-t `#`).
->> +	See `core.commentChar` in linkgit:git-config[1].
+Patrick Steinhardt <ps@pks.im> writes:
+
+>> Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
+>> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 >
-> I've seen this kind of thing treat the configuration as the first
-> level default, with the hardcoded value as a fallback, i.e. spelling
-> it more like this:
->
->     ... a comment character.  Defaults to `core.commentChar`, which
->     in turn defaults to `#`.
->
-> The way you phrased is syntactically easier to parse, but to some
-> readers, the readon why they are encouraged to learn about the
-> `core.commentChar` configuration may not be immediately obvious, so
-> I dunno.
->
-> Thanks.
+> The order of these trailers should be reversed -- your SOB should always
+> come last.
 
-I=E2=80=99m fine with that too.  I ended up with this version because I =
-tried to
-avoid complex sentences.  But it=E2=80=99s best to avoid a new paragraph.
+Yup.  The intent is to record what happened before the patch was
+sent out with your sign-off chronologically.  Dscho helped and then
+Ben finialized the patch by signing off, hence the author's sign-off
+comes the last.
 
-Another alternative:
-
-    a comment character (`core.commentChar`, default `#`)
-
-And the linkgit to git-config(1) is probably not needed on this kind
-of doc.
-
---=20
-Kristoffer
+Thanks.
