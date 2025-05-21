@@ -1,89 +1,83 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3636F1BCA0E
-	for <git@vger.kernel.org>; Wed, 21 May 2025 21:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9648F2BD008
+	for <git@vger.kernel.org>; Wed, 21 May 2025 21:26:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747862593; cv=none; b=c57pkI0BQjyjq2wXI19v77gvbEz2yYyeH/8ku/mwpNsyIKCeZUZcIUfKNAxNtx3kNp1UU1h01QvBd+9MICdlYJ+NLpRJWtvqKp0bMTTVQSQ47MBP0P0RXjNPyitWCJkqfVfLQPtcRoIZLriYy0+JmHP3+Kddoe9ExRQ1JMowzKs=
+	t=1747862788; cv=none; b=F0oIYItWTstN5rWOCDnyZ49coxOcQDS/4yNhARMXh2uER/zUxMp69r+BN3xvzexgzotb3vlsjov6ZDnmgY5vBX7UIINLcN/DCZkuykQP3jqTp3iFEzkXbqQQms1QCkIB/90KR5jKBipVkOznbrZQh7NOgiic8/Dpw+W4NgOa90Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747862593; c=relaxed/simple;
-	bh=nGB1BJFe5QdwbNWjygRj2JBZiKVOi+FFq8oVBY3ir6M=;
+	s=arc-20240116; t=1747862788; c=relaxed/simple;
+	bh=gDssZKWes656Nq+GruRzoKC+QeQJa6CLImBVuUa3Du8=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TUGZoNjjaDpiF69UNgMk4fnu6H2bZw510U6Je7KDvoSeqePqx80lO8pEvFbteMNrLUldBEb0CgQMPwSKcCi9A4pgWIPRnf1RR9/wNj5CQdNxppAqcp7HxTZ1s2figHPcrHZAwxII/C9Ogxq4VVoQClaS7VIiJNwKqGz1H+DuDkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=VZTTW7eM; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S5kemrrp; arc=none smtp.client-ip=103.168.172.156
+	 MIME-Version:Content-Type; b=T+UnxO+HXtxY/i4fNkDQN37R1fTjF4Fj3KQxtEPDWyHM5zobh+I+tDxf6XYWlutTdKWgaa/umWwwSnyptrKqdGFoxJZPi+3fESj9gHapvenQaAoexNTapocce3zakux+1Qo/flXhq9Dr0Xeg5FEj40Z5p27vlFkZlQjfkO1btXQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=NRXd9cZe; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o9aicLq1; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="VZTTW7eM";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S5kemrrp"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 27C0F1140132;
-	Wed, 21 May 2025 17:23:10 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 21 May 2025 17:23:10 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="NRXd9cZe";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o9aicLq1"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A133A1380473;
+	Wed, 21 May 2025 17:26:25 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 21 May 2025 17:26:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747862590; x=1747948990; bh=jDEn27OYCT
-	8ppQed0/hfPTwF/RQtQb8+9dXRDf/uyls=; b=VZTTW7eMWlJVilsQ+2OE6X1p4+
-	RSH54oOb64S9rbmBp2J76dqwVincIx/w+o2WvgERsctm8k1lzPaQvmqwJYfJzLUR
-	0CNdnJmS2m/jPnQbriShTR1RPmGZwQsJcxgjAJZ/Sr0oITp0waMOGIZ6SGPK6Rsy
-	02tD1E8S3y2MG0cavueiwB2Zpw0G8jY1t8F1RRSXw7+voT0yfF9ZLV/QfAJviKWc
-	EDLztPsWutvQAWyXGZcqqGiXxSjVqG1v+2sm4MncQ9QJS8TukZp/Sstvg1GIX7AZ
-	bR6g1rs+SkURya53KY7J/FTFX1yN+DOul2NZwWbSUmVIswY9dKiSVFcfCQnw==
+	:subject:to:to; s=fm2; t=1747862785; x=1747949185; bh=FVgaPoYX2B
+	zZWgxiWZ1FtfmnZmo3Pv7xE/PiFHoQCNQ=; b=NRXd9cZeQk+eysVDV2RIHDHkCo
+	bLyecVgqdW1vHnh2tiTcK8KjLDRusWJU4C3FOL3yYhlJyPKH2Kd/INJlBFn2RBDh
+	v/H0QLjiNpj0rrtgcnneyTif5TcQjcwuL/v7yczra+vcWCos/iLNTpctUkk6BAEI
+	gfO/nNCs2G6qLn1OB+Qluy/xFpKw/dgRnNl+R92AlZE/8oKBJvUMbebm+oeLkl4z
+	gFhHhxTQ5le+18/ZJbXg06bQfsjTYzwMYwN8rjp9ana3W5TWTCikjikbJMLPMZRl
+	Pw7MlBBCMu8z9w2OXVP68W945p1/uzc1EH13ikv4JbIey11Dk1+K8LeaDhhw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747862590; x=1747948990; bh=jDEn27OYCT8ppQed0/hfPTwF/RQtQb8+9dX
-	RDf/uyls=; b=S5kemrrpd05kz0pQdf17gxZZLwbq3EuX3OvHxTAgBnXFzBdVu/t
-	svOp9ckDwR7v0WUb1aedRXav32ZcXS8sgPs6pTXf3u094ZQfvBjwcnJsSKiifiYR
-	zMfZ7a1IHWdr8YX6xZN3tK3adVMSjBaZOTGDqq2I2pkPYbCJyr/L5iXyeqJzr2IV
-	CSLjybL1qLkDjT6xYRGaTn0iVvKo5I7CgF6+eamus6eeUOkHEV2++IUvKWQO74rn
-	5RWsBuf2z7Hojrq1DogQJxij7e6xAqF79ForJkPUiWpJEaYHBGNAKVba022I305E
-	+5Nfth/KEv0MGtdGUyMnW3nvJDE+28R+WNw==
-X-ME-Sender: <xms:PUQuaO7ZsnHGR24OjcidtUAh290Q5FSNREz1ns3bg93dzx5myFPk_w>
-    <xme:PUQuaH66UKx62hT3eFXChOGp75QiEDm20ndA3uRlfkhFqj0BLMgx13vWiq72BenAi
-    Q_KjOzwQLCWcrRmgg>
-X-ME-Received: <xmr:PUQuaNfzdA2oK-zNxpImDW_6mVawvJYIC6seBaHZmI-G8p-afgFewxOONKp11lIZrz9TYAzPHbVZguymuhZIW8W1t6Qpa6t9GQGvN_Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdegudehucdltddurdegfedvrddttd
+	1747862785; x=1747949185; bh=FVgaPoYX2BzZWgxiWZ1FtfmnZmo3Pv7xE/P
+	iFHoQCNQ=; b=o9aicLq194XxQIQ/kXjFl73dpUtQMnjYL1lnZh5MUHInd1CDE96
+	sug9/RM6fC2fQt3bvp6N0AM2VQqp4T+2tpF0NTBrwOSSQQxj2NY6eRgYPxiylhGh
+	+XC+Fu0kKu/XeICzwOSalWx8S1lvHjyEHWhHzEJqNQ/wzy4v3O7slDU/V0fDiAmz
+	gI0EpgVvF/lcVAilMEH5OGNLk39VWFEvfhksp3x2xl8LDSqH0nfdLrhajzjxhk+1
+	evhMFuBTGyk/M+fefG9SLYY4tqad5N4wgjU3Nh5Y/9UjZuBz3RxOO0qKyil13OyX
+	Y/+BPU+a+auqz2cD7vw9VBP0i1CQX96tAwQ==
+X-ME-Sender: <xms:AUUuaJAgEAYtx6YAXTHpAEFWTKgqQbYpfg-r3UBMyj6e1Houg0wwrg>
+    <xme:AUUuaHhZ1T4TWdwvBwVu570PXYLt_BqbAa05BMYkEqD5eCXk7EZpbV3jtVJ3GrtIV
+    DHnOk4FVAGnVFOmgg>
+X-ME-Received: <xmr:AUUuaElAOfGE2bmrg3V2ZAVHJXVhg0FUl14MKD04vHesvvUbxfjBby-lHzH-LuMG8f0gcO5lHq7Sj_hQUdpX3bL_rXNS_N0jtMvQ7BY>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdegudeiucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
     enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
     fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htoheprghlvgigrghnughrfhhogiesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:PkQuaLJo9k5OOYoGiYU5hvb2MlK5qFFriYwnqzhYTQ5gp9dSmbSG-Q>
-    <xmx:PkQuaCJEVh3y65g6Mfd2sspBPqeAMUy-jRXeC3XUrozCPbeYpEpDCQ>
-    <xmx:PkQuaMwqMMsqQyABs52bOz1ixwHhNsRtZ2PYGetfTTvCmI24pEseRA>
-    <xmx:PkQuaGISo5g_jsZCcjmlhICQ67VL8FQFxtKMQuknz_4iyHLrxMCg6Q>
-    <xmx:PkQuaPrn8fGZYCuXR3ygWBIpzsMP9JdzDrI98-rCVFB1hAHPI9mniSHC>
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepffeiteeujeev
+    feehuddvjeduffeijeegfefhtddvkeefjeejhedtgeefgfeijedtnecuffhomhgrihhnpe
+    hgihhthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhope
+    efpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:AUUuaDxhUfsipMskkDIOl_l57qOwI-joCoq9bMIdXrxBDtrh36Z9IA>
+    <xmx:AUUuaOQSlgZT6DPLSl4t9vMlNOntOlC3RcbvmwXz2JU0Ccpq1nRa4w>
+    <xmx:AUUuaGZ_9UW0VO0wRQKhm0SBBSWU9ZSCHACCWaF3Vu67SH-NVLNepQ>
+    <xmx:AUUuaPRzorLiCs_ryHkXRPDUzYo-ITFxDZwHsYGZS6DAioSUYa0WJA>
+    <xmx:AUUuaHBlXN0OxI5dIgBl0ws0LMv6xhIjo87_dL77GbfcXrc05mKY91QS>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 17:23:09 -0400 (EDT)
+ 21 May 2025 17:26:25 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Alex Mironov <alexandrfox@gmail.com>
-Cc: Alex Mironov via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] name-hash: don't add sparse directories in threaded
- lazy init
-In-Reply-To: <xmqqo6vl8y81.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	21 May 2025 14:12:30 -0700")
-References: <pull.1970.git.git.1747827645129.gitgitgadget@gmail.com>
-	<pull.1970.v2.git.git.1747858585623.gitgitgadget@gmail.com>
-	<xmqqecwhaemu.fsf@gitster.g>
-	<CAC97EbxRpG1ecWcQ=yJHnqe7gXYG7BNo1sF9e9Kf-EOkDySfpw@mail.gmail.com>
-	<xmqqo6vl8y81.fsf@gitster.g>
-Date: Wed, 21 May 2025 14:23:08 -0700
-Message-ID: <xmqqjz698xqb.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+In-Reply-To: <xmqqcyc2aqy7.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
+	21 May 2025 09:06:40 -0700")
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+	<aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
+Date: Wed, 21 May 2025 14:26:23 -0700
+Message-ID: <xmqqfrgx8xkw.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -95,38 +89,36 @@ Content-Type: text/plain
 
 Junio C Hamano <gitster@pobox.com> writes:
 
-> Alex Mironov <alexandrfox@gmail.com> writes:
+> Patrick Steinhardt <ps@pks.im> writes:
 >
->> Hey Junio,
+>>> This new feature is only enabled with Meson 1.8 and newer, which
+>>> contains a bugfix that we have upstreamed [1] to make the TAP parser
+>>> work in `meson test --interactive` mode.
+>>> 
+>>> Despite the changes to Meson itself, this patch series also contains a
+>>> couple of fixes for our test suite that caused us to not generate proper
+>>> TAP output.
+>>> 
+>>> Thanks!
+>>> 
+>>> Patrick
+>>> 
+>>> [1]: https://github.com/mesonbuild/meson/pull/13980
 >>
->> With respect to messaging I more or less copy-pasted Derricks message
->> from the original commit for non-threaded init: please check the
->> referenced commit. Let me know if another wording is needed/preferred.
+>> Junio, I noticed that this series isn't yet part of the "What's cooking"
+>> report. Is that intentional or an oversight?
 >
-> I know what you did.  Copying and pasting others fuzzy words into
-> your commit log message does not make your commit log message clear.
+> Neither.  I saw a lively discussion on the patches and was expecting
+> to see a finalized updated version, which I would apply.
 >
-> I already said the given message is less clear than desired, so do I
-> still have to let you know???
+> The "Please hold off" message in the middle did not help X-<.
 
-Actually after re-reading what Derrick wrote in that commit, I
-notice that you didn't even copy-pasted his message in full.  Here
-is the message in 5f116695 (name-hash: don't add directories to
-name_hash, 2021-04-12):
+So the four patches are now sitting somewhere in 'seen'.  Is it the
+one that causes this failure, I have to wonder?
 
-    name-hash: don't add directories to name_hash
-    
-    Sparse directory entries represent a directory that is outside the
-    sparse-checkout definition. These are not paths to blobs, so should not
-    be added to the name_hash table. Instead, they should be added to the
-    directory hashtable when 'ignore_case' is true.
-    
-    Add a condition to avoid placing sparse directories into the name_hash
-    hashtable. This avoids filling the table with extra entries that will
-    never be queried.
 
-Notice that the second paragraph here makes it clear that how extra
-entries would not contribute to or hurt the correctness?  You failed
-to copy-paste that crucial bit, which ended up making your version
-of the explanation much less clear why the change would not affect
-correctness than it could have been.
+https://github.com/git/git/actions/runs/15169816296/job/42656836511#step:4:2113
+
+It is curious that only osx-meson is affected.
+
+Thanks.
