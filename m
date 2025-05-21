@@ -1,152 +1,138 @@
-Received: from fout-b7-smtp.messagingengine.com (fout-b7-smtp.messagingengine.com [202.12.124.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f170.google.com (mail-yw1-f170.google.com [209.85.128.170])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7352E1CD1E4
-	for <git@vger.kernel.org>; Wed, 21 May 2025 17:03:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AADA280CFF
+	for <git@vger.kernel.org>; Wed, 21 May 2025 17:17:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747847022; cv=none; b=OWQ8bqfNlmEqo0mEJp8akSZVzT/+tl8SMX0q3+V/iP6YR1jeDgvha/DOn0t2oX85eXZNJYeKLkrIalpxH3+xj9qttyQEzz1g+QDEEjWRpimEv01mKpUd16SSgu7rq0k2SnpMuQ9elUCL0WhXweZehRP+AcxbWa4M9cG5VbaDDgw=
+	t=1747847832; cv=none; b=APIgzPs7QPGQtP4C+7rgHizdG+7ALn9OZet4xoH9s6yhFUW53+39oUF2TA7a/KCnkrbSfpuumwWGpZ39S30H9BRcwGrsWnmPaOvBfveme8u+9bWYILd7H9hjvUAU8aEAZczVcPhfaZgBpQKRMEreE/mzje4qlvKqTkJUF44fKeE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747847022; c=relaxed/simple;
-	bh=A4mDuiVKcMTmyzjqeqEmgunLeqG41ocYCUlIDbh3RuQ=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Ua/1oavvd1/017++DcoM0bgHn/aNNOstidKpIMlw9F1Yf2mWa7swmpw1qE/jQm/SdpErHt8xgtAE16h57gz9U9PzxKy8E/uYC0LAEN/9w87Yw8G7zK9OVtstnZQdN4ptrdL3ioaER7gXqNq8YeGdLgm52zJ2fMJAviqUTB9N3Nc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=MpodCwL9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=jUhuE4qF; arc=none smtp.client-ip=202.12.124.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747847832; c=relaxed/simple;
+	bh=AcpMpLTS5Rj0t19LNEQIQERwk/kWWFZWZb4IgN3ay5E=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=jqPhNNKID8+sc6U9RxAkMpHAsUOJVX5f71RhYRzfCbWNTqcFCTuRwiB9q7oXOzQaZOuk9P7rMpVaYinE7zx3s3Zg4g9UssStsJ3ZDE2UPFgWVF70rLjBhDcMwCeDe134qUEulHWFKxSYF7GNyQy1O6bL4JMYb978vpc7P8FMBao=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NNjU2Yws; arc=none smtp.client-ip=209.85.128.170
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="MpodCwL9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="jUhuE4qF"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 500C11140142;
-	Wed, 21 May 2025 13:03:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Wed, 21 May 2025 13:03:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm2; t=1747847018;
-	 x=1747933418; bh=4zaq4V8ArAGm/IokPJIhcgI1cvVRKmNjWmeWOaoookI=; b=
-	MpodCwL9yHPrcw+sGc2l4YXSuvlIjaCEXGZGfqE8Npu+PtwhPv9k/fmyembAkDdp
-	HPTHhTTbtY9hW6oZunz9UmUSZiI7d6UVuPxysPUV/fyyBAjb0R6LpXqKnjqqGaPB
-	nG8sEDhTdbr784CrRYHoFf34uVEwDAk+Aue/1OzFDdwtXXWQ5a0buTob/kPEH5mA
-	I/7/eDD7gq5bBraqWVB3ajzsbWEC5zyPZslHrXAb81aKrUfOJ/BFTfHbxZNSRIvp
-	S611sLPBp6x3hK0Zutz0Nolxf+ug7CN0+IR1MjINLT9d9N0kZR02vC+uvX9gb9Nc
-	C8jaTwgTZLaeh06Obw/F6w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747847018; x=
-	1747933418; bh=4zaq4V8ArAGm/IokPJIhcgI1cvVRKmNjWmeWOaoookI=; b=j
-	UhuE4qF9hgGQYyG5NlRbJ2KwJq0uoW+EqS+QzgT7s91gjpC5FxTuFO3qM03bRaW2
-	M3XejNIc3ULlh5qUs5OL9HxydDvprWBy1B8uhLJ25+RF4eTv+t9GFV7/zk8vcgs2
-	zPw3EHKjUYCTF1FzFzWjyOwVNo5VUYVDAjxo8UYrweTx/g9DGWqSev4AsRZKIJ3f
-	p9onSwPjnTWiWBODKXvqHYZKdhW8awKl8GKj9anXbEHRUtvElE2Vw8M99jwIEpP/
-	w3wGgo0IxL4wN525Tov4m+N2MVb8udPdEA/VhTygbHD4BmXnjHxRz+znKCsnYjdT
-	MZQebB+2DMOf6B6wOXWuQ==
-X-ME-Sender: <xms:aQcuaOWYxpX8ZIwRkBRbxGh4oUfYsqgzLdmwQpWJTkN5FAw95qD32g>
-    <xme:aQcuaKnz_gOj-r3p60EBiEt-V74DeVonqh2XevjTxF8C5qyEq96cwKN98NzDGToar
-    Kgc0VEVfeaj35ZGQA>
-X-ME-Received: <xmr:aQcuaCbto-cSJusxRk6qYulJ53Qutl5R6SdGzi506-wkViT8ZymhN9Fcfj2fDSkndGTmEkG7brilDlQyuvTtzqOxcq51MfLPGvN9bfQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefieefucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgfgsehtkeertddtreejnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpedtffdvteeg
-    vddtkeetfeevueevlefgkeefheeigfehveehvdekheelveevfedtheenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepohhpohhhohhrvghlse
-    hrvgguhhgrthdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:agcuaFWJx7_RYbPCbS1H4weHOndO2pGqj-rP_TslRVPi9n-GQ2f96w>
-    <xmx:agcuaImb93nS5zXPOeej7j1-Co2vDXs_pGRdHYeU98yJj9eD9GHuMw>
-    <xmx:agcuaKfrXBWCpwIwGsC4akTwOkuMsVt5C7LkaCNkDe29zgELCVB0eA>
-    <xmx:agcuaKHx2RYRKCe6_93cVWa1bVoAm_p1RUMMMc3SDyVRRzXKRBD7pw>
-    <xmx:agcuaJIYjs--nrfdxflAtVoyC9F-KeiNzle2BHvdF8vL6pl9cIkbzKZH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 13:03:37 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= via GitGitGadget
- <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  =?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?=
- <opohorel@redhat.com>
-Subject: Re: [PATCH v2] cvsserver: avoid precedence problem between ! and %s
-In-Reply-To: <xmqqh61ear4s.fsf@gitster.g> (Junio C. Hamano's message of "Wed,
-	21 May 2025 09:02:43 -0700")
-References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
-	<pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
-	<xmqqh61ear4s.fsf@gitster.g>
-Date: Wed, 21 May 2025 10:03:35 -0700
-Message-ID: <xmqq1pshc2vs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NNjU2Yws"
+Received: by mail-yw1-f170.google.com with SMTP id 00721157ae682-70ccf9a4ab3so39375957b3.1
+        for <git@vger.kernel.org>; Wed, 21 May 2025 10:17:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747847829; x=1748452629; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NedI+BADFKj42hDmlwQnG8MZHtP02gKJeED0NR3l68s=;
+        b=NNjU2Ywsyz+waAy2aQITFwP6waAereFZzVXWL5Ba3l/30nQcQdtH+7AQWsBYEA67L6
+         IwB+o6r9OXecLayqv1rQs8D/URnW85xERCtYdqBSvfzs4nQ24CGrzNttg+u0E9M3iR6x
+         YfQYYrix1hFGpuFcZwFsaqobnAHZls418w5kqDEt6+xU41I1+9vKbhhUcJfbduMOj38U
+         Gsog6m1Mj+URnRAP64vsminx+sLIu8dBFTpB2Dsga8mvel8nBqw5wZ7o/20Qs0YG8b7c
+         GV6vL+ld85jGkm/q0VA2iXueAUNi05A7VjXePWgRJ9iPtEPbRXyCe7W/ptVr96z0IRHj
+         JYGA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747847829; x=1748452629;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=NedI+BADFKj42hDmlwQnG8MZHtP02gKJeED0NR3l68s=;
+        b=ikWxlcP6PUrt5dTassXaiHF7NsVHlElggzo/GZbjNJamKPsHj1vZbI+dzMZnSTKWn/
+         7Jk9Fepf3SGTJ90smMWQahTFmVot9tREQm/gwsWkAJeTfTs3tkvnogdIDvQs3MtuuN7b
+         kjFpKwFIiJ6qakpbNOrSxJF8K1+YlrZ7BG6By7XLKI30DXT17J8vKDU+fOXA589oSA1c
+         ALJ2flQag0JLUNw/ap3bep9XFqACmVeX5ju8S0UkUw8cuWaOhlPwh9NgX4rYSgz4dQT1
+         LJ8LQpxivx2Wjj48KmKfTBnuQ4SQYuqQkt7vnQTVG6QuYfQ2VKRegpKYpRavpecxsOsb
+         lABA==
+X-Forwarded-Encrypted: i=1; AJvYcCX+1Iic5fXMXRqQsX26bEr/GzfubStGr8S/Bjry8cSycGPg6+vEHezNV0oQTcmNJBS0fSo=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwlFsIf5KXcO+8iB3UUVJrvAfbmc8+REQDwGIbdhRuwvkBKgt16
+	vzux7wYpV+8H+y8E1W9MAHqhcxhV9YSKA3/MO8Y6h90g6ff9CaW6rjZg
+X-Gm-Gg: ASbGncuYuoLnIp9/i8kuFgheDbRiYdMgvmAIwQwvpsjEWrdR3xJOsKSM7bsWtYNZXP7
+	H9Owh4ZOrhsjH32r0GWrkIk6m/da7oLumHbknCIRLFD1+SJKqeES+HFeL18qkSlosBJ9p6QWxGU
+	/5w6Dlv1TGDjAAmYxcXeMTwsBdx8rle5YV4aqx5m1VivgSp6bFWAQV029dhQx6QXeMFsodH5kVJ
+	QEbNU4VQj2E1t7FY6AFOrC5tBWE6jYcuffTpJsAICTyCOQsx3f5KI/eO6KemLRtvENvcu45ntYq
+	DhR1QfkyENtsLWcFNuo3z/dDSyTszeEVq+nU1gyNIIYOpoqBBSbrAjs2vblaLYZ+EV90uKi4bHx
+	x7SW4aYLR4FBjV4Mb6feL8QoqfmI=
+X-Google-Smtp-Source: AGHT+IE9g+OhFdQ9I0GhBDVkpapbql+0XkfxFBjWeUnSWRdzbtYR/P6nPIlaGTVkpAfyPdqkT+UHEg==
+X-Received: by 2002:a05:6902:988:b0:e6d:f287:bf3 with SMTP id 3f1490d57ef6-e7b6d44f287mr24945371276.28.1747847829207;
+        Wed, 21 May 2025 10:17:09 -0700 (PDT)
+Received: from ?IPV6:2600:1700:60ba:9810:d51c:763d:85e7:1777? ([2600:1700:60ba:9810:d51c:763d:85e7:1777])
+        by smtp.gmail.com with ESMTPSA id 3f1490d57ef6-e7b6ae034c8sm4096264276.57.2025.05.21.10.17.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 May 2025 10:17:08 -0700 (PDT)
+Message-ID: <9c26d844-6ac5-449b-a5ff-a842ed6ba8b9@gmail.com>
+Date: Wed, 21 May 2025 13:17:08 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] name-hash: don't add sparse directories in threaded lazy
+ init
+To: Alex Mironov via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org
+Cc: Junio C Hamano <gitster@pobox.com>, Alex Mironov <alexandrfox@gmail.com>
+References: <pull.1970.git.git.1747827645129.gitgitgadget@gmail.com>
+Content-Language: en-US
+From: Derrick Stolee <stolee@gmail.com>
+In-Reply-To: <pull.1970.git.git.1747827645129.gitgitgadget@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-Junio C Hamano <gitster@pobox.com> writes:
+On 5/21/2025 7:40 AM, Alex Mironov via GitGitGadget wrote:
+> From: Alex Mironov <alexandrfox@gmail.com>
+> 
+> Similarly to 5f116695864788d1fe45ff06bfad7a71a8d98d0a
 
-> "Ondřej Pohořelský via GitGitGadget" <gitgitgadget@gmail.com>
-> writes:
->
->> From: =?UTF-8?q?Ond=C5=99ej=20Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>
->>
->> With perl-5.41.4 and newer, git-cvsserver fails to build because of
->> possible precedence problem[0]
->
-> What is the exact symptom?  As Perl is not a language to compile and
-> run separately, "fails to build" does not look like what exactly is
-> going on.  "gives a warning and then refuses to run"?  "gives a warning
-> before running"?  Something else?
+nit: we typically use the "reference" style to refer to other
+commits, use 'git log -1 --pretty=reference <oid>' to get output
+like this:
 
-Stepping back a bit, the original that the new warning complains
-about is this:
+  5f116695864 (name-hash: don't add directories to name_hash, 2021-04-12)
 
--    if(! $refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
+> make sure to avoid placing sparse directories into the name_hash
+> hashtable whenever multithreaded initialization is performed.
+> 
+> Sparse directory entries represent a directory that is outside the
+> sparse-checkout definition. These are not paths to blobs, so should not
+> be added to the name_hash table as they must never be queried.
+> 
+> Signed-off-by: Alex Mironov <alexandrfox@gmail.com>
+> ---
+>     name-hash: don't add sparse directories in threaded lazy init
+> 
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1970%2Falexandrfox%2Ffix-threaded-hash-name-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1970/alexandrfox/fix-threaded-hash-name-v1
+> Pull-Request: https://github.com/git/git/pull/1970
+> 
+>  name-hash.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/name-hash.c b/name-hash.c
+> index d66de1cdfd5..03123a8779a 100644
+> --- a/name-hash.c
+> +++ b/name-hash.c
+> @@ -492,6 +492,9 @@ static void *lazy_name_thread_proc(void *_data)
+>  	for (k = 0; k < d->istate->cache_nr; k++) {
+>  		struct cache_entry *ce_k = d->istate->cache[k];
+>  		ce_k->ce_flags |= CE_HASHED;
+> +		if (S_ISSPARSEDIR(ce_k->ce_mode)) {
+> +			continue;
+> +		}
 
-And the complaint is that due to operator binding precedence, this
-does
+nit: for one-line blocks, we usually skip the braces. But I think
+that it might be better to reverse the logic to get something like:
 
-    (!$refname) =~ /pattern/
+	if (!S_ISSPARSEDIR(ce_k->ce_mode) {
+  		hashmap_entry_init(&ce_k->ent, d->lazy_entries[k].hash_name);
+ 		hashmap_add(&d->istate->name_hash, &ce_k->ent);
+	}
 
-Unless the behaviour has changed as well as warning, which is highly
-unlikely, doesn't it mean that the code was wrong, with or without
-the warning, all along?  The intent of the code was to see if the
-refname conformed to dotted decimal, and if it does not, the refname
-gets munged in the block guarded by that if (condition).  But the
-condition was a total nonsense.  !$refname would most likely to be
-an empty string (unless $refname contains '0' or an empty string),
-which would not match the /^[1-9][0-9]*(\.[1-9][0-9]*)*$/ pattern,
-so we probably have always munged the $refName in escapeRefName sub.
+This seems to be a performance-only fix, and it might be interesting
+to see if there is any impact on p2000-sparse-operations.sh. Those
+tests don't focus on many sparse-directory entries, so that may not
+demonstrate any meaningful difference.
 
-Which I do not see used anywhere in the program, though.  There is a
-call to unescapeRefname method, but it seems to me that
-escapeRefName is never called.
+Thanks,
+-Stolee
 
-What made you send a patch for this program?  Do you or anybody you
-know use git-cvsserver?  Unless I am reading the program
-incorrectly, despite the claim in front of that escapeRefName sub
-that we avoid sending a tag whose name is not something CVS would be
-happy with, we did not sanitize the refs and relied solely on the
-users' repository to use only safe characters in the refs to keep
-CVS clients happy, and the fact that this expression used as if()
-condition is totally broken does not really make any difference,
-since it is in an unused sub.  I have to wonder if (1) it is a
-better fix to just remove the unused sub, and/or (2) perhaps nobody
-uses cvsserver to allow cvs clients to talk to a Git repository?
-
->> Added parentheses avoid this issue.
->
-> We phrase such "this is how the patch addresses the issue" statement
-> in imperative, as if we are telling the codebase to become-like-so,
-> e.g., "Enclose the pattern matching =~ in parentheses to force the
-> right order of binding", or something like that.
