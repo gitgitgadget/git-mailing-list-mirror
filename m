@@ -1,155 +1,167 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011035.outbound.protection.outlook.com [52.103.67.35])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 386B6280311
-	for <git@vger.kernel.org>; Wed, 21 May 2025 19:24:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.35
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747855445; cv=fail; b=trtfcNa8cEt3aIafwp2p3dbJvOwPObD0OSXOmpaWcw5npL5TKj+yWJXi/itXaoq2PCCqJiUYqfeMNYxBkDY0JLgITUXxpPLK8vfO5mJVtVrQ5ouf8dgRRfz063GeFMUCBqQ0UWb50A/OVEo+BcxHgJJD/yGj4SEr2RlWzSWcFaw=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747855445; c=relaxed/simple;
-	bh=cieNvqWqlVnv33vWIRg5STmphF7udWpSUbxFP5TKay4=;
-	h=Message-ID:Date:To:From:Subject:Content-Type:MIME-Version; b=mF55MGJwQa7NQXxfLjI+kIfk6s9ZhpwnXWQDMbs0kZ+ASomWnpxZGljF5neLAmo+6to7fqrmi0zGutNxB1LaAjO2abxsbtPjra+Ihi/2LZn3KvtZlDjxeCrqmdudN7MK+IkxgwvxgtXV1rGK9dxDcZBIgsPBaB7li8Pwg7vYO94=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=TbfPbQTF; arc=fail smtp.client-ip=52.103.67.35
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2019822F15E
+	for <git@vger.kernel.org>; Wed, 21 May 2025 19:33:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747856004; cv=none; b=cthwqitygGPiuGS4uyv+Y7By72LYrpUF7PGT07iVWgfElCshDC+8nahcv/u/xs9QaZoeeZWAEOmN1TjoHoYE/budFi1TivqyblTjAkt9roTdcsX5NU5ksuDDgZAbLJHu0w2S9CkBMj3XRaGovkHE2vVVveL5AWiFoP/6R8+7TKc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747856004; c=relaxed/simple;
+	bh=KUSwEWtiSe+ToFmLhJNLtSW3szBA3atwjIUx5yAhWW4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=uj56sSW4mvrPdBIn0l6eQxeO37c8YuzATO7jmV/iF8haXxpP1Xo4VtN+oozQTneBnoHm+/tw87dgT0D3WHmofX0HSSbzuLNJC0Ft6KgRv2N2v5bwxt/ti6GtQd9ExivqHIIn+ELpSov/c0EMYN/mOJfVMdt+n7ksMkO4qn6rG58=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PkseDpJf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DPIJBT2V; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="TbfPbQTF"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=ITihpBOG5wSnN/wAh2qdb4707wnBr9PH1wM9Hd/Pv3QufWCg37BNppJHwbB7kpzToZlSTbNUgleIroCq6WIHW/EWw1BtlBVtz1mUO5f/6vaU3WcwBTZrCsQ62Vxk1ogFw+Ynks7lBK6/2yxnqP+SL2uL8KyVff5aihO03v68sGqHOi+TcYRwlMFr5F63RCNsy8MvZ60gAONsL1mfBfKT8mo/M1QpOE74nER4w5wRd9qU2Q+CdfA/7rbi7Eea9wuqjr7OXqu72Zr+M+gz3ZFHPnE6M0Xerwxg1Ryz5ZGUtF2kh8b17/8FlbZ2dB3DkaAOo8s0U3wzgXlP6wCT5e22Yw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cieNvqWqlVnv33vWIRg5STmphF7udWpSUbxFP5TKay4=;
- b=JiRM1OuWfkDz9vy2F2QULt16W2CXMd87DMLcyCDChZfqKGWYiTQj3KAVuT4isrYntWJ6kXG2mfAU0U8dK/ven22HYT2tSMSF4K6gUWap1khn9kkhDTMVayGZ73CxQt0biSHudkkqSbh/RsiADYYj/UzOc3LKDux0v7j5hQRsU8OsoNDbcdfNz/DEfXHdn3bxVyBRBiP4xOnTaw3A0jl20tmfBg0nDG5s2Tfke1qGshy6qHJ24xpuLghmvrkR7t23PeY0W8p1Tegn28NoIS14bDyKI028DIUgz5XG8ZtaleXVRIJa0Dc0BM6aMu45MwYwp4VKqDVCxHZFa3W1PE/G4w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cieNvqWqlVnv33vWIRg5STmphF7udWpSUbxFP5TKay4=;
- b=TbfPbQTF7e2g/X0jv7FycMkuabONi5p6R8vYH8rHi+vQG1v0Eg0dKko7zMz7rfSVmhcuRvIOQmcp4qdKiy3Po05BSPHl3tbiqnJD/GRYBfP+B25j7aolld0mR8grCK0kBdw3JXecEJKarm42Jjr8yuS/VN3QriRLjdaKuJKdcpD0Vw6u9/rMCRib4reHfRtiQnRRW05dTnkzl70kqJISILsNiDwb+709qPKzfEMy9p5HyqX9BvgzXeH/9WVLZrwWM/b8OIqUM99gSUubDgGSFjS7vxBJfPpQDGzE2QFYmdsyUTncsrdrEcIZQtMFHiETf8SPwKiVkB5vUYzIZ2gSRw==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN0PR01MB9069.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:167::5) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.19; Wed, 21 May
- 2025 19:23:59 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.019; Wed, 21 May 2025
- 19:23:59 +0000
-Message-ID:
- <PN3PR01MB9597D5EBF0A8D91737E4FE52B89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 22 May 2025 00:53:57 +0530
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-To: Junio C Hamano <gitster@pobox.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-From: Aditya Garg <gargaditya08@live.com>
-Subject: Add git imap-get-recipients command
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BM1P287CA0005.INDP287.PROD.OUTLOOK.COM
- (2603:1096:b00:40::18) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <bd40f2a0-0fbe-47b0-bcae-74aff4f3b095@live.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PkseDpJf";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DPIJBT2V"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id 3A6BC1380186;
+	Wed, 21 May 2025 15:33:20 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Wed, 21 May 2025 15:33:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747856000; x=1747942400; bh=8EoYKJXEQX
+	n7cJfyybB0UPEY/6c3GELI0CUEOaN989E=; b=PkseDpJfiudAbvT1QON+RC5yQK
+	/MIK4vIAxuGB8xTCKF4CKcjzwUYGnV3QSam/7tXPUFb+nJxpOg54b+vwJZGpV8X2
+	MXEE8fZrdeh3aaqMoSjT3nLx2uItvvtAfB4zObS9nnDlsQD1wfHluzwnZRAI5VnZ
+	MGF5dMUx3kv3/EEhRSG6lFBXkOmZmmRGXml2NwCBITBGO4ZXOgMhvSBKbQXyCCnb
+	LWhZ08XT8G/Tws4bsX1fQhs5zlgOIrJeAUockmKlrnts3WMppHVjHM/ILh191D6T
+	Gl1CaQ/XZoBB5EuJFXbbv4c5wuU1wb9mJIc4vv8d0jOoX4PnP4emQxVatX8w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747856000; x=1747942400; bh=8EoYKJXEQXn7cJfyybB0UPEY/6c3GELI0CU
+	EOaN989E=; b=DPIJBT2VCWzDtWiZWNxEKe3qOwBDYuDDmzpzsIhnaS5g780xeyP
+	PdE79SL6RB0J/hcgv3ZvFUkpgJLEEZdtFtYqWp/SI+zBtobmZgqRYOIFtk2CXHZi
+	sGhT6Cn37WjFqRs5G2KyItunZzQD6EG7kMKPN/T6aALfuUIADIWdVQA9HbHaiR3B
+	mh7G5B7o8Go1hCzPtuh9CjAkZuxfbsQXQLIIbxI1PqKh63oxtdbUXHfRAaXb8xN0
+	5Ocbyd+WczrJde4S5fmChASPyAveiLAVdiF5JLa1KyqgnKTw1h5IcYwNhNa+rBnB
+	V1b6sLAmetO+itz9cZxxPQDBfMjwLu0+a2Q==
+X-ME-Sender: <xms:gCouaPA9r7mmIgWA2hmlC4PZstul0rzpQS3MuU-pnC_YL4OxfztgCg>
+    <xme:gCouaFgbeQL_Xjg4NYcqJsSgiL3irp0VcXDz-bvdPsUwOBymXorTd8GdUflISV2MB
+    rd7uT9EJqq7_rNqJw>
+X-ME-Received: <xmr:gCouaKkMolg62Gd084Pv6MRLwv3wwdfbHpmnUGTMVTMwvyrTzqBs4WiHOXru2OH9SHJY5qaM7JUOWehPZdAJS-8-aW37q3FWFBpeaY0>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefleefucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdegtdeuffev
+    gefhheevveehkefhteeuffeifffhgfegieeifefgudefhfeuueeunecuffhomhgrihhnpe
+    hgihhthhhusgdrtghomhdpthigthdrihhnpdgrughotgdrihhnnecuvehluhhsthgvrhfu
+    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogi
+    drtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrdifihhtthgvvhgvvghn
+    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:gCouaBymDtOlxJTEeA3BZxt2y4o1KMyGAMuII0Fea4i0jS1wYIY_vw>
+    <xmx:gCouaESmjazbAI2mLe46btlpwvexdj6f_RN_CAfRBzrJa8RTzJavbg>
+    <xmx:gCouaEZ_R3v-w0Mg2e3RpXV9136gVrT0dp9cLrH9rw0CFYQWL3f0GA>
+    <xmx:gCouaFSm7zQcvREebgPutZ7Hs77Gd73oBcg0PgdcXcyzO_xAZFxRjw>
+    <xmx:gCouaKd6g6NvpUCF8e3aDmntKoTf27qV2XHcq2WysyLRR5OMZ16ZLTGJ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 15:33:19 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: "Jouke Witteveen via GitGitGadget" <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org,  Jouke Witteveen <j.witteveen@gmail.com>
+Subject: Re: [PATCH] doc: update references to renamed AsciiDoc files
+In-Reply-To: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com> (Jouke
+	Witteveen via GitGitGadget's message of "Wed, 21 May 2025 19:05:10
+	+0000")
+References: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com>
+Date: Wed, 21 May 2025 12:33:18 -0700
+Message-ID: <xmqqr00hahdt.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN0PR01MB9069:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1986d121-155f-4ff2-9b6f-08dd989d0954
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|19110799006|15080799009|7092599006|8060799009|6090799003|461199028|3412199025|440099028;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?bytrTlpjVUNCMlJYMklDcWtBQklJZm1McjZvRzFNdkZjdWlzbFBTSzFQQzAw?=
- =?utf-8?B?TWNZMWVxektEeTJKUDBXTHdPSVpiWGxMWDRyMmlWd0g3azRKK1hEeGcwNUpt?=
- =?utf-8?B?NnFCQVZwbXZhWU9sSmd4OWphNzNtcjR5SDdXS01penRER1JtNDluYXJZRk1t?=
- =?utf-8?B?ZHpHOGNPQ2pNdFlZWGZCYVM4ZnM1MFo1eUxGYm54MnF0OVl0bXY3ZFNqbFVs?=
- =?utf-8?B?SDFjREtoUHNwTC82VE44NUQ4SXNMSW5qdWFpQmZINUh1NXdDTmJYdTdUaVdk?=
- =?utf-8?B?M00zZ25QVG1hNTJIeVN0a01BcVRrWXFvRFdxTDk4a0l2VGVPdWN4V3dmK2hm?=
- =?utf-8?B?OWMrQlhQNms3Tmp4YUVkQ0NUYXNtSUF5TDA5MVhyQmUzKy9XeE5mZnNjY1Nz?=
- =?utf-8?B?SUpwZzVCaFFxalNxQ2RyTHFXR1ZZdG9aeGFhcDBmbkxiakpJeHNPTGtOK1Ay?=
- =?utf-8?B?OWZYSi9QUW5pM1E3NWZyZU0rVWl6OFBzSnJIeXErd3NBaFJGalE1R3pkcDZ5?=
- =?utf-8?B?by9vTHMyNnpSOGMvSzFka1MrODM5U3UzMW1NUXNHckxjZmN1djNxeWJqLzlD?=
- =?utf-8?B?YTQrSFlTUm0rSUZ0ZDJWRENaa0hxaVZUR1pFWmkwL1R2azFqQlJuQi9OamVx?=
- =?utf-8?B?dHpDbFZjMWZpVDBzSGxIV1QybERKZFdMa01KWUQrOXVjZXhWcXVwK3B1Z1k5?=
- =?utf-8?B?aUdYQ0o1bGZFRG9vYU5RbWFJMUNyZUIwdURQVHZpR05uWlY3OTBBNFRzQlBD?=
- =?utf-8?B?RElYdlYvUVNKSjdLejdxTGNwSkQ3a0FyYjJUWWVBcDc5TGgyWGZ4ZHYraFNO?=
- =?utf-8?B?azZoaWZmWjhlYWk1bE91TWU0Z3ZpbG9PcTRjL05heHU1UEJMV21NNTRxY2VD?=
- =?utf-8?B?d01qUHhTQmRYRWtPU0NuRDZseGtPM0VnNlBpcVp1ZmFUbTBYcDJxNDhBWkt6?=
- =?utf-8?B?dFZITmZsNGNiTXlCYjBXYVFCWlBObTZ4bVVNNVp5YjhoT3NMRVdWUlc2b0U1?=
- =?utf-8?B?RzFrTUdOUS9LclFpTUZkamo4cmJUZDExM2ZMbnBhMFg5d0tpbXVYRnUxNnRX?=
- =?utf-8?B?OXE1ZUNYVk4xeFNnS1d2cmJtZ2lhUkc0Z1cxaXZFUUI4b0RXU2VteDNUdTZF?=
- =?utf-8?B?cThpUCtabm9aVERqK3Z2aU1uTW9lWlZCYmdqL1pKM1R1Zko3TGE5U1NBR1RJ?=
- =?utf-8?B?QkdNdlI3SGo3eWJiak1DdnhYeTBrRjNnWC8zNDF1WTJURk9UNlIwSVNHT1Z5?=
- =?utf-8?B?dzE3RWRHMkFBWXRtWVNFNTdKMlYzOGJmYlZJVHRwVHAra29PQU1CSkloWnVR?=
- =?utf-8?B?Z2IxUTNxa1FDLy9yVnBIMzFQWWUyaThmcXhrVjFuN0cyNDl3bmlDL2MraWU4?=
- =?utf-8?B?aEJTK3drRWNBQjBvc2EweU96aWd0ekMvNUZkdUJGb2RwdTg0NEVYUmVLMmRW?=
- =?utf-8?B?eHgxRVNBdVJjVW51YmU1aFI4bVhkQUhtZlhCV0NvRk9PM1JrV3Q1V2JCL084?=
- =?utf-8?B?d2c3d2FBRFVlakhQSUxDSzR6YlNpYUhldzFZN0w2Q1VJWVcyZ0ZJVElvTmJK?=
- =?utf-8?B?ZmhIUT09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?dm1hWnVaajNqaHBWdEdNUUpTcjNweW1pUFhUZVd3VTFhRXI3Z25CbStQR3JV?=
- =?utf-8?B?OFZoTGR2bHRBcnJPaUtsU3QrVmdXNmNEUS85UDJoVTU3eEVFNkRrZ24zVE1W?=
- =?utf-8?B?cU0xZzZzRWxCamF1RzJMUFpXaDBtNEo4amN6Rmx0NndpbnFTdDVCb3l4MHZ2?=
- =?utf-8?B?T0hBZDZUWG1ZOWFwOThQUUpaT3FydmQxN3pzQnV1VEN5bXlnRDNXUyszSndl?=
- =?utf-8?B?ZVRTa2hLVCtvQ0RQWmUxb3lBQTRGWWRpcDUzYXY4WFdpSXd1WDNJSzRTN2Q1?=
- =?utf-8?B?bUNIWDc1dWRQeUNMNDZ3SXlONVRIUnptN25HV3dJcXlmYUwzYUFBVEpKTnY0?=
- =?utf-8?B?ZVFNRXZIZUN4UGdibzQrcUl2RTdCenRoU3A2WGk1YmUxVTNjY1NjNmZodGRR?=
- =?utf-8?B?TnYvY0JsRkxwRU9UL2V2K0V1VmNFU2I2Sk92MTMzVWF3Q1oxL0YrZFhBMi9O?=
- =?utf-8?B?ckovT1FiWERoTXVENUxyZnhrdCtvTFhsaXJzemRKSGxEb1c1amY3L0dSWWdQ?=
- =?utf-8?B?RUxhODJLWURTS25nN2xRTkkxYzFGaStwbkNBd3orUjZYZ0xUcVhHTkxreHBW?=
- =?utf-8?B?b3cwQmJzVldlUFlGK255Rm44OWxlVVJ4ck1HaVVLc1c2cXdNaVFBeEtOYkti?=
- =?utf-8?B?Unh5OWxNazV0S2NDb052c1VxSkU1RjFiTU4xeWVOT2V4My9YTHZZSGVrTkIw?=
- =?utf-8?B?ZXZNY1VwaGM2c21uT2l4akU4S0FiK1dPdktXNHRJYzBtVWFabXExMnl4TnFF?=
- =?utf-8?B?MFAxQWJ1bEVhdFNoYWZTOHZvdVdycElqM3czR1A0LzZvVGlkL0luY3dJY0VB?=
- =?utf-8?B?T2xLY2dDbzB1aWtEVXNTaVlGYUV4Vit0UlgrQ2EwWEEwMEVsY2RrOFlnaGlI?=
- =?utf-8?B?Q3FqY2tmVWpyaVVFYjlOUkZyaXArTTk5ZEM2djYzdlltOGQ2WElVRk5WWWtC?=
- =?utf-8?B?Y2dJWDBldjJadGdWUDNjNTl4L2psSVAwb0hVSktrOVd3SFF3RXQzdzVabndS?=
- =?utf-8?B?Q281KzhCOTYwOVdYa28zSk52UnVMKytHeVZKby9yTGs3V2lRSndxOWdQelRV?=
- =?utf-8?B?b3Brc3h3Uk9kUm9GV29PeHpDTXVKaTk5QVVrUW1ma3ZwRHlrK2ZlaUhRcWJx?=
- =?utf-8?B?MUh0cHY2eE1OMTloYjdYeHhSenFNN1BYRE1yT2JNRkVQSExaQXJnbzdBNTI0?=
- =?utf-8?B?T21wcFNKcnVsWitFdm44OUZ0eTJFb3ZaR1BKMU5OYkFCN2hSY09mUUJiakRS?=
- =?utf-8?B?aXR6d3lxMDdSRXEzeDZLdFpYQkpQUVFtVDZhd3dnblFFLzhSa0JvS3NFTlVR?=
- =?utf-8?B?TVNNRXRXdVB3R0YrR1NtSk9qWHlhU2doQWxVdGNYNFh5TXJ1WjB1Uit3M3JC?=
- =?utf-8?B?bVpGY3dMMDhGUG9WNWs3MkNsRU00WkhQM2dvZG03bFBRZnY5RXFqZVlwOHR2?=
- =?utf-8?B?aFgwOVppcVp4U3pVejdZVUUxYmpla0lYQ1ZQVVJsZVFDU3k4UUVmKytPWTJl?=
- =?utf-8?B?L1ZnTC9rWlN6cWttT3UvUzVuekk2Z1FLQzI2RXlFNlQyKzlGUDdNWmozM01M?=
- =?utf-8?B?UlRSVGdpNXZUNS9jNjlsSnBaN0FSdjZweURwOVV4QmtoK1lPSUNwU2tQUGZl?=
- =?utf-8?B?SFQrNFRvOFlTZUVhQ0lGczcvZHpKUnlUczVPemNoS081NDd6Q3F5bUtnM2pK?=
- =?utf-8?B?QldnWlI4Wm94b2wvdkYxcW9OZTZza21vUkxlT3krZld4Skg1Rkg5VzE3dFpp?=
- =?utf-8?Q?DrKunboKY5hAELomxU=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1986d121-155f-4ff2-9b6f-08dd989d0954
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 21 May 2025 19:23:59.2751
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0PR01MB9069
+Content-Type: text/plain
 
-Hi all
+"Jouke Witteveen via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-I was wondering if it would be acceptable for the maintainers to add a git imap-get-recipients
-command.
+> From: Jouke Witteveen <j.witteveen@gmail.com>
+>
+> The .txt extensions were changed to .adoc in 1f010d6 (doc: use .adoc
+> extension for AsciiDoc files, 2025-01-20). References to the renamed
+> files were not updated yet.
 
-I currently am working on it, and it would be a perl script. It would do a very simple thing,
-take the message id as an input, and output the To: and Cc: recipients of that message ID.
+Good spotting.  But ...
 
-This can be useful to be used alongwith git-send-email, when you send a v2 and you don't have to
-type all the sender mails again.
+> Signed-off-by: Jouke Witteveen <j.witteveen@gmail.com>
+> ---
+>     doc: update references to renamed AsciiDoc files
+>
+> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1971%2Fjoukewitteveen%2Frenamed-files-v1
+> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1971/joukewitteveen/renamed-files-v1
+> Pull-Request: https://github.com/git/git/pull/1971
+>
+>  Documentation/gitprotocol-v2.adoc          | 4 ++--
+>  Documentation/technical/build-systems.adoc | 2 +-
+>  contrib/subtree/README                     | 2 +-
+>  mergetools/vimdiff                         | 4 ++--
+>  sub-process.h                              | 2 +-
+>  5 files changed, 7 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
+> index 5598c93e67c3..abc42efcc774 100644
+> --- a/Documentation/gitprotocol-v2.adoc
+> +++ b/Documentation/gitprotocol-v2.adoc
+> @@ -54,7 +54,7 @@ In general a client can request to speak protocol v2 by sending
+>  `version=2` through the respective side-channel for the transport being
+>  used which inevitably sets `GIT_PROTOCOL`.  More information can be
+>  found in linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-http[5], as well as the
+> -`GIT_PROTOCOL` definition in `git.txt`. In all cases the
+> +`GIT_PROTOCOL` definition in `git.adoc`. In all cases the
+>  response from the server is the capability advertisement.
 
-I got inspired to make this when I saw that replying to a v1 in a GUI client was so easy since
-all the recipients got filled automatically.
+... shouldn't this reference be also linkgit:git[1] just like the
+two references on the previous line?  Given that such a correction
+needs to be made on exactly the same line, I wonder if we want to do
+the change we see here, which stops at an in-between state, rather
+than going to the end game of using linkgit: properly.
 
-I currently am using a basic version of this with the --to-cmd command of git-send-email,
-but can polish it for git.
+>  The server may need to be configured to pass this header's contents via
+> -the `GIT_PROTOCOL` variable. See the discussion in `git-http-backend.txt`.
+> +the `GIT_PROTOCOL` variable. See the discussion in `git-http-backend.adoc`.
+
+Ditto.  These are specifically so true because ...
+
+> diff --git a/Documentation/technical/build-systems.adoc b/Documentation/technical/build-systems.adoc
+> index d9dafb407c40..1ae2a5292f3b 100644
+> --- a/Documentation/technical/build-systems.adoc
+> +++ b/Documentation/technical/build-systems.adoc
+> @@ -32,7 +32,7 @@ that generally have somebody running test pipelines against regularly:
+>    - OpenBSD
+>  
+>  The platforms which must be supported by the tool should be aligned with our
+> -[platform support policy](platform-support.txt).
+> +xref:platform-support.adoc[platform support policy].
+
+... this one did not stop at "txt" -> "adoc" replacement, but
+attempts to make a proper link.
+
+    Side note: I do not think we are using an explicit xref: syntax
+    in our documentation anywhere; have you checked how this gets
+    rendered?
+
+>  === Auto-detection of supported features
+>  
+> diff --git a/contrib/subtree/README b/contrib/subtree/README
+
+Old names of documentation source pages that ends with .txt outside
+anything that themselves are .adoc files, like this one, unlike the
+above, should be just ".txt" -> ".adoc" replacements.  Everything
+below looked fine to me.
+
+Thanks.
