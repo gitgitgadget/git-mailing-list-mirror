@@ -1,69 +1,69 @@
-Received: from mail-pg1-f181.google.com (mail-pg1-f181.google.com [209.85.215.181])
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D913C38
-	for <git@vger.kernel.org>; Wed, 21 May 2025 08:35:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.181
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C735E3C38
+	for <git@vger.kernel.org>; Wed, 21 May 2025 08:35:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747816557; cv=none; b=GUyFN9AtItY0ajKq7qgjPHJiJ7M96S+ufxNgdBCAcncfRdu99cXjtUeBnF1v+VN8UCm6C5yfg04/KeO4O2b/h+0+49w28UWVC0hcZU9OrCpDu6Eyx/vafSs1UBUCkul35918Z2Y6E9jMQsZgO9QEnjGwgG3KmkPjJNldomTtheo=
+	t=1747816560; cv=none; b=G05pLD5pPeDkb5jjbIOIEBPLilqZV0VIWWcO0dunCpz2BUU0YsZeQuRD8Y+n4HWWkPFly9cqC02FydRxY3LqF5XV7OrS70m0PAUu3onkf9k+fzEeJtWSUHRq0MaFevUep0V3qDrwvY0phlFGfvoQdtKyrTEWrBchbW/blmZi40A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747816557; c=relaxed/simple;
-	bh=va0Zz/8vddD+GoZUZX8Fxx4h/xvWcc3QRyf2FO/K0XA=;
+	s=arc-20240116; t=1747816560; c=relaxed/simple;
+	bh=XT1WRk1bUn6WQVkwCQrF7nrSZWSgWT0G6OBKZqJ0/is=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=J5ZsJGH+tcA15GTssog07p/57L0mBE9dyb8HYeXxgcTRGYpcGENo6Ac/cm1TFA1Ze0GB1wDMOn3cKKa6m3QqtwbgjGMkGXhy9i3JbHikSN1Qs7Vd0HtQxF8jvR5N0pTFVDT63XydCI5qvpmJtxFRk1xOZ4duVNx7Xg1LH5eqqIM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=lIWfKKVH; arc=none smtp.client-ip=209.85.215.181
+	 MIME-Version; b=iSk/8r/Q2BGq2+2AWR1aUAxq+cj5oOoIpl7tOcUlpGgS3/c+my+XGVzmKyAapdUI5SsH5N1wL0fwGxn9wECRbRr6eAAlH9ObgB2kEZ8zJzlL9lkPA5yoUGUdTBXwCeFLsKFEpCcO6SH+wPplnl7ixgJv4A36gnz3d2s0rui3W/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com; spf=pass smtp.mailfrom=bytedance.com; dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b=djaZ2oa8; arc=none smtp.client-ip=209.85.214.180
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=bytedance.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="lIWfKKVH"
-Received: by mail-pg1-f181.google.com with SMTP id 41be03b00d2f7-879d2e419b9so5625047a12.2
-        for <git@vger.kernel.org>; Wed, 21 May 2025 01:35:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=bytedance.com header.i=@bytedance.com header.b="djaZ2oa8"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-231e011edfaso55381145ad.0
+        for <git@vger.kernel.org>; Wed, 21 May 2025 01:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=bytedance.com; s=google; t=1747816553; x=1748421353; darn=vger.kernel.org;
+        d=bytedance.com; s=google; t=1747816557; x=1748421357; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=qDPggQa81AjzTlUsmRN7Lo/e+MZSEpOnCHHiPb1sRP4=;
-        b=lIWfKKVHWOdCY90kdTYCKGADpOGCFoP+IGXk9jc0WjgrhgvW0Ig5KA5BcZZ8nmv/Gw
-         sjbIcIcTToYn0mBLT0AibJKESBWiYng5De6yyO/w9dQQGaZpqMOGWflQikn9kNFlqXT3
-         XubjmKQSbfxoBjwch1V4VIQ3Kjf3vdL4FP61T4yBY9CzHqQk+TWZ8efCBxlkDnXb9BNC
-         Kl5REH2JKeMHLC9BnyWr5K8X2dFJVrxuqt20D2Cy30jo/ihMG+xPuJxcmHojGMlAeE6U
-         tiB80qSiNXmZ52rdNXparonH45BE+3O3p2LstixvFRCma/8QsfLXId0CjFTu/cowwhyW
-         Cyvg==
+        bh=8DfBw3b5oC0NYRKdhBQPRiQBT+rBZmSG4c+kldbnHcA=;
+        b=djaZ2oa8hdKu68cxlXNMI0ksPg2oSxkMPBfp4t8tRKwY3n0y9r+eovSO4tXEB3FC3o
+         G5FTiShCOnYiGxtY2HK9ThySYnVlwJ9eBYlTBAhkwmGRN/AtUtzLh8NL+THXA670A5AC
+         IyshPefzLozqv8fIvElBAHRS5UbZhkAY/4QMyoWGN5vH/F7gfn4hsElKKuTCCoLa/n8Z
+         3hw1mKdyX35xdjc+Xfr+ZYrYw2dTCIiJa+mK7Y3pQJCiMlHqwZFg6vGZyVNEzVjXDSvG
+         Nn8gHM8j0Yx7OIA1SvKE63AfARecOvT5ftzAQZqepd4MqycLkYKM3G/YMTwXHDUFQ8xN
+         af6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747816553; x=1748421353;
+        d=1e100.net; s=20230601; t=1747816557; x=1748421357;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=qDPggQa81AjzTlUsmRN7Lo/e+MZSEpOnCHHiPb1sRP4=;
-        b=XZ6ZTDDYKeZ+iEhZfrb9KfD5uIEt5p52/WSm/blevA/WfT/JdcmZNHhG+g5tRI6aBN
-         x3p0x92J+Q5DvIOhb0Z4pyGn4/1fO0FJTrAMbBu1Xy4qt97ZTMptfTB8g0XUFSCNLYwf
-         Y6NYOUmQ1GvVN29IZ2u7IR/W0db+7fpiUBhmmUxsbKSY15GbtL1wMxT1iAovTcrGJ6H4
-         yL7UtNyRlyiP9G5a8RtkJ4nld2ceVaZ5rlfcOlAIkz4/M5qOuh0HSbJuvhhu2/4O8Kig
-         0JZ8985E5ZLBRi1w2kcypnK6QAerO2auRlOvAVm1VdsunTEOteQki4MkU/lHVhr2/SX1
-         wAJg==
-X-Gm-Message-State: AOJu0YwsAQge8iZAagGSvDI1t6UdHMd1Cm/4D1LC5NSnPgiJkjnkRfI4
-	f5kQ5EslwDb5UnMPo27wah7tY6KeKT4pySO+O+6IShsraXQcR3eX7ijSBDLVHbXH/NhA9NVGIWE
-	p6/r7
-X-Gm-Gg: ASbGnctNdzD5HPtBN5soHO7xwCeKbWhKUlWaE7wMW6w7OisFI/kh9Jqzdjo0A84J9mS
-	0HBFxp29SFbyokC4h+Dy36FT73m87irPZ3+ax0rH+kHHz5JM8DJePIYJgVvmOHeTQ0e6Qprps/S
-	/Cs5j5KTn2Rx5poQfaVaHrgAxFeJI5v6X0SeKrZ7SZk5V1lL1+ul9wErugtEAWwQGDv6c45e5ya
-	EAeuftkH11vsVfdpCfaO/stKRB+XlfJu7iccNXLnJkZUkzcj0q0NhiAjG7VQ/lHc3kmMxJEglbe
-	zxN1TlgQiYbWKk+1T1rjRJcdKe4IeDOLja7Nv/ssfqPeza92QLjy8p7gMVURl1rU90H0lYHJtEI
-	l9BND2YH4
-X-Google-Smtp-Source: AGHT+IH7RDhpfvOeDhNDWXkfMgc8b76Bf6dVMk3CX6r2BeRI689RWGhtmsH9wA6yv2wrH8fnBXLxhA==
-X-Received: by 2002:a17:903:1988:b0:22e:6cc6:cf77 with SMTP id d9443c01a7336-231d45d938cmr298744595ad.53.1747816553168;
-        Wed, 21 May 2025 01:35:53 -0700 (PDT)
+        bh=8DfBw3b5oC0NYRKdhBQPRiQBT+rBZmSG4c+kldbnHcA=;
+        b=lUL77doOXIAA+ZVeL+5LMkoFdjIygTuUcFg0NTUpNyIH2V5md7argzmC8yFoU1lIEP
+         gsjN1wuAHCoRW1nAxdJKMYH2C/T86tA/wY6dpfX3gEvdVMavSvvPJbdbcxoKMOB9Lbov
+         u9yP1PnudAYkSmcJiYrhs/0cd8zmtq3JqI2iLQDP4rQ+aX63slca3WRlrkXAXcX+cLU3
+         uZRkROjSOfyUup8FEM7eeQ953pQhpHSsc1OBC8U4XvJ/UGEsOhsW4ySwNTqf4V003ebA
+         0JF8ShNVw9JkuF6k9V90dKJQ8M2MthhhNNzLe8bZtK7MwEFd1ErBf9W+4evRIffHsLYH
+         BkEw==
+X-Gm-Message-State: AOJu0YwwOT6jcmUrGLDI6QKcvEcJ5/Wfew5U9PnKWCzqgGivzhwJyoDt
+	Z4wLEENAPcE8oqwS/T3IT4cE6NC6M4gZ7e3hYOEZtV4d3sTeR2rFYNEa25EtghHOV04ec+xAy2l
+	kxw2H
+X-Gm-Gg: ASbGnctVQQ4LSi4XbgXCMH8Qny/izBs9FdiRQRa+oEjrz8xEe6+7zANE2qMfVSRFZRs
+	mfwIhvp7DkU9mV//Y2ZOtCdUXpBcSZhJM5ymQa+qmy/XY5Hrocc+MRi+OE35W/4s35Qbn6JwgVn
+	/F/LgjIA+0Xacjwh+l6ISBMr4KAAIsD2IP7xnvehOoY0WPJ4wMM7GntIHkmNHsI+yH5lgVfXfl5
+	eCgbxpkctGDoJUJ8IUD8Ooad1gYgFNGcI3Rin3j3vtw9VyIVexXIFKZ5wWns+uQyo9OwogvBpEU
+	nGaKh83QB757xOH5e8qPrVxlWKCm+0PueuWgmB7NFW5Wdu9d8kIYCJ2BWM7haa93FNaY+ursfJF
+	Vq6jd52Lu
+X-Google-Smtp-Source: AGHT+IFLQynJGRrQ5wBFs4I4TddcF0iDH/ThJ0BoYFPU6WpgdTsFwB9XJBCjheNhHcWtjNCUBVF48w==
+X-Received: by 2002:a17:903:32cf:b0:22e:3f1e:a106 with SMTP id d9443c01a7336-231d43dc9bcmr290099905ad.5.1747816557408;
+        Wed, 21 May 2025 01:35:57 -0700 (PDT)
 Received: from localhost.localdomain ([63.216.146.178])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231f04e75bdsm78308495ad.216.2025.05.21.01.35.49
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-231f04e75bdsm78308495ad.216.2025.05.21.01.35.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 01:35:52 -0700 (PDT)
+        Wed, 21 May 2025 01:35:56 -0700 (PDT)
 From: Han Young <hanyang.tony@bytedance.com>
 To: git@vger.kernel.org
 Cc: Han Young <hanyang.tony@bytedance.com>
-Subject: [PATCH 1/2] read-cache: report lock error when refreshing index
-Date: Wed, 21 May 2025 16:35:20 +0800
-Message-ID: <20250521083521.6552-2-hanyang.tony@bytedance.com>
+Subject: [PATCH 2/2] read-cache: unify write index error message
+Date: Wed, 21 May 2025 16:35:21 +0800
+Message-ID: <20250521083521.6552-3-hanyang.tony@bytedance.com>
 X-Mailer: git-send-email 2.48.1
 In-Reply-To: <20250521083521.6552-1-hanyang.tony@bytedance.com>
 References: <20250521083521.6552-1-hanyang.tony@bytedance.com>
@@ -75,33 +75,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the repo_refresh_and_write_index of read-cache.c, we return -1 to
-indicate that writing the index to disk failed.
-However, callers do not use this information. Commands such as stash print
-  "could not write index"
-and then exit, which does not help to discover the exact problem.
-
-We can let repo_hold_locked_index print the error message if the locking
-failed.
+Currently, there are ten uses of "could not write index", two uses of
+"unable to write index file" and two uses of "Unable to write index.".
+Change them to the most Change them to the most common phrase.
 
 Signed-off-by: Han Young <hanyang.tony@bytedance.com>
 ---
- read-cache.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ builtin/am.c         | 2 +-
+ builtin/commit.c     | 2 +-
+ builtin/merge.c      | 2 +-
+ merge-ort-wrappers.c | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/read-cache.c b/read-cache.c
-index 73f83a7e7a..874f87d040 100644
---- a/read-cache.c
-+++ b/read-cache.c
-@@ -1485,7 +1485,7 @@ int repo_refresh_and_write_index(struct repository *repo,
- 	struct lock_file lock_file = LOCK_INIT;
- 	int fd, ret = 0;
+diff --git a/builtin/am.c b/builtin/am.c
+index e32a3b4c97..69f24df5c0 100644
+--- a/builtin/am.c
++++ b/builtin/am.c
+@@ -1816,7 +1816,7 @@ static void am_run(struct am_state *state, int resume)
  
--	fd = repo_hold_locked_index(repo, &lock_file, 0);
-+	fd = repo_hold_locked_index(repo, &lock_file, gentle ? 0 : LOCK_REPORT_ON_ERROR);
- 	if (!gentle && fd < 0)
- 		return -1;
- 	if (refresh_index(repo->index, refresh_flags, pathspec, seen, header_msg))
+ 	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET, 0, 0,
+ 					 NULL, NULL, NULL) < 0)
+-		die(_("unable to write index file"));
++		die(_("could not write index"));
+ 
+ 	if (repo_index_has_changes(the_repository, NULL, &sb)) {
+ 		write_state_bool(state, "dirtyindex", 1);
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 66bd91fd52..f60f85ea36 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -415,7 +415,7 @@ static const char *prepare_index(const char **argv, const char *prefix,
+ 				repo_get_git_dir(the_repository));
+ 		if (cache_tree_update(the_repository->index, WRITE_TREE_SILENT) == 0) {
+ 			if (reopen_lock_file(&index_lock) < 0)
+-				die(_("unable to write index file"));
++				die(_("could not write index"));
+ 			if (write_locked_index(the_repository->index, &index_lock, 0))
+ 				die(_("unable to update temporary index"));
+ 		} else
+diff --git a/builtin/merge.c b/builtin/merge.c
+index ce90e52fe4..876a2e04f3 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -736,7 +736,7 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 	if (repo_refresh_and_write_index(the_repository, REFRESH_QUIET,
+ 					 SKIP_IF_UNCHANGED, 0, NULL, NULL,
+ 					 NULL) < 0)
+-		die(_("Unable to write index."));
++		die(_("could not write index"));
+ 
+ 	if (!strcmp(strategy, "recursive") || !strcmp(strategy, "subtree") ||
+ 	    !strcmp(strategy, "ort")) {
+diff --git a/merge-ort-wrappers.c b/merge-ort-wrappers.c
+index c54d56b344..666ed27437 100644
+--- a/merge-ort-wrappers.c
++++ b/merge-ort-wrappers.c
+@@ -128,7 +128,7 @@ int merge_ort_generic(struct merge_options *opt,
+ 
+ 	if (write_locked_index(opt->repo->index, &lock,
+ 			       COMMIT_LOCK | SKIP_IF_UNCHANGED))
+-		return error(_("Unable to write index."));
++		return error(_("could not write index"));
+ 
+ 	return clean ? 0 : 1;
+ }
 -- 
 2.48.1
 
