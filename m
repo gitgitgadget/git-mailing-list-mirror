@@ -1,84 +1,82 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2019822F15E
-	for <git@vger.kernel.org>; Wed, 21 May 2025 19:33:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B87A028FA91
+	for <git@vger.kernel.org>; Wed, 21 May 2025 19:52:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747856004; cv=none; b=cthwqitygGPiuGS4uyv+Y7By72LYrpUF7PGT07iVWgfElCshDC+8nahcv/u/xs9QaZoeeZWAEOmN1TjoHoYE/budFi1TivqyblTjAkt9roTdcsX5NU5ksuDDgZAbLJHu0w2S9CkBMj3XRaGovkHE2vVVveL5AWiFoP/6R8+7TKc=
+	t=1747857160; cv=none; b=NMzRxMj+Y2WZOCccBv/IgCxxJhdH1lmlcYvW+rShqmYPaNsbC/5m1WdnZP0q0xx1kmLGPAIlRP0DjdXoIf2piAd+vNYBbKx+0iMx5sRVFJLG/z3sgZlkoAyESA6Cdat3CbCGoNsXEsG2EEm+VZTC6z5Vzh9fMoCBHpDeOy+E64U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747856004; c=relaxed/simple;
-	bh=KUSwEWtiSe+ToFmLhJNLtSW3szBA3atwjIUx5yAhWW4=;
+	s=arc-20240116; t=1747857160; c=relaxed/simple;
+	bh=dgmQD5Bf0gbhHwOzZybaE0oHLwH0WVN9LJM6AjLKMJo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=uj56sSW4mvrPdBIn0l6eQxeO37c8YuzATO7jmV/iF8haXxpP1Xo4VtN+oozQTneBnoHm+/tw87dgT0D3WHmofX0HSSbzuLNJC0Ft6KgRv2N2v5bwxt/ti6GtQd9ExivqHIIn+ELpSov/c0EMYN/mOJfVMdt+n7ksMkO4qn6rG58=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=PkseDpJf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DPIJBT2V; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=i7Ry7Bi3Dww8+SQ8X3ell7gjSOpI78Od/eWE+O8Ixk58elZR7AZgXU2ZcMzJywljvCB7bLWKjRF75WcAbaU/xen4m8PZOf1/KEPaP3viqlJUgFemoEYiUlGagxluJNyGRpcb+IGmyz4letCqNH3J+dv8fTukhm6KNMgH0NFX9xY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=CSg7UOg+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BXyF0Y5U; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="PkseDpJf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DPIJBT2V"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id 3A6BC1380186;
-	Wed, 21 May 2025 15:33:20 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="CSg7UOg+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BXyF0Y5U"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfout.phl.internal (Postfix) with ESMTP id B26F71380412;
+	Wed, 21 May 2025 15:52:36 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 21 May 2025 15:33:20 -0400
+  by phl-compute-03.internal (MEProxy); Wed, 21 May 2025 15:52:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747856000; x=1747942400; bh=8EoYKJXEQX
-	n7cJfyybB0UPEY/6c3GELI0CUEOaN989E=; b=PkseDpJfiudAbvT1QON+RC5yQK
-	/MIK4vIAxuGB8xTCKF4CKcjzwUYGnV3QSam/7tXPUFb+nJxpOg54b+vwJZGpV8X2
-	MXEE8fZrdeh3aaqMoSjT3nLx2uItvvtAfB4zObS9nnDlsQD1wfHluzwnZRAI5VnZ
-	MGF5dMUx3kv3/EEhRSG6lFBXkOmZmmRGXml2NwCBITBGO4ZXOgMhvSBKbQXyCCnb
-	LWhZ08XT8G/Tws4bsX1fQhs5zlgOIrJeAUockmKlrnts3WMppHVjHM/ILh191D6T
-	Gl1CaQ/XZoBB5EuJFXbbv4c5wuU1wb9mJIc4vv8d0jOoX4PnP4emQxVatX8w==
+	:subject:to:to; s=fm2; t=1747857156; x=1747943556; bh=qj79tZliZo
+	TIUepA6znNJdHV5qalbvDoV+xwXh9juZ0=; b=CSg7UOg+mH7TZ8lmnCDXIST0Z5
+	TqC6vq5T21v5rRj2E1HQVKS4UVeN+vVSDVJwpus25Z7d/ij5+3rbVqJvD2/FMegz
+	JYLoZ6XiT7Yu+qszkxiW5cyT9cP9zABMcnlo8sC0HLLAxqj99woFUwbfHyVT2TqI
+	oLGOOXaiKeBNYBsO3uo/J6CvDubYQfZWggcTk68NH41kdTicq9NAZpnUD//IMVQ7
+	FW1F3n6fuVa8CK51hzWI/BrbXcc/Poum9dkvqkQFz8HcGe4OzjLk8CbudnmK8mnW
+	DjlD+63kLiEEdtehk9zw9OVhPQJ9pOH0aFxxIMACLPEx3LcH0bVsiufcEDwQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747856000; x=1747942400; bh=8EoYKJXEQXn7cJfyybB0UPEY/6c3GELI0CU
-	EOaN989E=; b=DPIJBT2VCWzDtWiZWNxEKe3qOwBDYuDDmzpzsIhnaS5g780xeyP
-	PdE79SL6RB0J/hcgv3ZvFUkpgJLEEZdtFtYqWp/SI+zBtobmZgqRYOIFtk2CXHZi
-	sGhT6Cn37WjFqRs5G2KyItunZzQD6EG7kMKPN/T6aALfuUIADIWdVQA9HbHaiR3B
-	mh7G5B7o8Go1hCzPtuh9CjAkZuxfbsQXQLIIbxI1PqKh63oxtdbUXHfRAaXb8xN0
-	5Ocbyd+WczrJde4S5fmChASPyAveiLAVdiF5JLa1KyqgnKTw1h5IcYwNhNa+rBnB
-	V1b6sLAmetO+itz9cZxxPQDBfMjwLu0+a2Q==
-X-ME-Sender: <xms:gCouaPA9r7mmIgWA2hmlC4PZstul0rzpQS3MuU-pnC_YL4OxfztgCg>
-    <xme:gCouaFgbeQL_Xjg4NYcqJsSgiL3irp0VcXDz-bvdPsUwOBymXorTd8GdUflISV2MB
-    rd7uT9EJqq7_rNqJw>
-X-ME-Received: <xmr:gCouaKkMolg62Gd084Pv6MRLwv3wwdfbHpmnUGTMVTMwvyrTzqBs4WiHOXru2OH9SHJY5qaM7JUOWehPZdAJS-8-aW37q3FWFBpeaY0>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefleefucdltddurdegfedvrddttd
+	1747857156; x=1747943556; bh=qj79tZliZoTIUepA6znNJdHV5qalbvDoV+x
+	wXh9juZ0=; b=BXyF0Y5UW77ibjD9yCrmT7aspjMgwZjz5yFkabtm2jaTcLBGZlx
+	2O1T+XUZ5HU/hXs1+l9pfceOzgT5gyoyIFA32POfdlkEYkcBDGqOQQA+SA0VoCqo
+	OVy2repcMzlsBKBWIdwqsLgp0dRqe4pbGb0t/HPcaO8Lxd+7hEcYavoiocCSFpx8
+	2vmbbhgm/DuM1WfObZfq5DrEyThv8NRA8TDHljLdCQn46uwecaCf4dH/wc/rIJvr
+	IS8nmSeCmdhrn4/Aw6mDhx4N7WOfERVLlhILuXHIRAoDHYqTHqqhDFezg8rakcvm
+	uMK4KIgVP6fK8jpr/gRAEyd4puW4Bu9MvNw==
+X-ME-Sender: <xms:BC8uaI1tMduE3_gmGncbqVFeymusZvANUqXVwHL4gXF6yAZIRFkOAQ>
+    <xme:BC8uaDFvakidB20vngZ4A4_jZZGM4Co1QLe9VZ7FRx-QaLjLLdC_aCWekUGIx7mxn
+    OuIfiVkJ2z370a5-g>
+X-ME-Received: <xmr:BC8uaA62w2vfb2EcHcIOiBkiK4bYNgX1_L99hDmGALUSNH_mK9S38PK5ozWmi5Z_7IHijoSiw4iZgJXi2mtNcTvz5XPYmOTWwurslPc>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefleeiucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
     enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdegtdeuffev
-    gefhheevveehkefhteeuffeifffhgfegieeifefgudefhfeuueeunecuffhomhgrihhnpe
-    hgihhthhhusgdrtghomhdpthigthdrihhnpdgrughotgdrihhnnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosghogi
-    drtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
-    ohepghhithhgihhtghgrughgvghtsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrdifihhtthgvvhgvvghn
-    sehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:gCouaBymDtOlxJTEeA3BZxt2y4o1KMyGAMuII0Fea4i0jS1wYIY_vw>
-    <xmx:gCouaESmjazbAI2mLe46btlpwvexdj6f_RN_CAfRBzrJa8RTzJavbg>
-    <xmx:gCouaEZ_R3v-w0Mg2e3RpXV9136gVrT0dp9cLrH9rw0CFYQWL3f0GA>
-    <xmx:gCouaFSm7zQcvREebgPutZ7Hs77Gd73oBcg0PgdcXcyzO_xAZFxRjw>
-    <xmx:gCouaKd6g6NvpUCF8e3aDmntKoTf27qV2XHcq2WysyLRR5OMZ16ZLTGJ>
+    fgggtgesthdtofdttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepieekueefhfet
+    vdfftdegfeekhfffgefgfeeivddugeffgfffffevvedvieelffdunecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosg
+    hogidrtghomh
+X-ME-Proxy: <xmx:BC8uaB2EsPXfTYLPNx5m-O3KMrwKBYnLyzk7MhdLOkZxH0WJ6rWsDw>
+    <xmx:BC8uaLES2l_DE2LRYZqnRtNZjnMFYdYD7CYTrajoDP9bEDdoqCdbFg>
+    <xmx:BC8uaK-Xt_bN7WOiR2i-CZ0lUDz2dfkKJrrp0fWxMFHkjGXUl2dcmg>
+    <xmx:BC8uaAlhZAhmlMzfe4OgY7Fk9SZ7wwEk9Md_jqV3iGf5QRu2X7iAvg>
+    <xmx:BC8uaKEWU7lQ_ihaj8xwbk-6HmBZnRK3bZS-bMSQk2ifNQ2cOONG9HI6>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 15:33:19 -0400 (EDT)
+ 21 May 2025 15:52:36 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Jouke Witteveen via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Jouke Witteveen <j.witteveen@gmail.com>
-Subject: Re: [PATCH] doc: update references to renamed AsciiDoc files
-In-Reply-To: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com> (Jouke
-	Witteveen via GitGitGadget's message of "Wed, 21 May 2025 19:05:10
-	+0000")
-References: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com>
-Date: Wed, 21 May 2025 12:33:18 -0700
-Message-ID: <xmqqr00hahdt.fsf@gitster.g>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+Subject: Re: Add git imap-get-recipients command
+In-Reply-To: <PN3PR01MB9597D5EBF0A8D91737E4FE52B89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Thu, 22 May 2025 00:53:57 +0530")
+References: <PN3PR01MB9597D5EBF0A8D91737E4FE52B89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Wed, 21 May 2025 12:52:34 -0700
+Message-ID: <xmqqikltaghp.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -88,80 +86,55 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Jouke Witteveen via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Aditya Garg <gargaditya08@live.com> writes:
 
-> From: Jouke Witteveen <j.witteveen@gmail.com>
+> I was wondering if it would be acceptable for the maintainers to add a git imap-get-recipients
+> command.
 >
-> The .txt extensions were changed to .adoc in 1f010d6 (doc: use .adoc
-> extension for AsciiDoc files, 2025-01-20). References to the renamed
-> files were not updated yet.
+> I currently am working on it, and it would be a perl script. It would do a very simple thing,
+> take the message id as an input, and output the To: and Cc: recipients of that message ID.
 
-Good spotting.  But ...
+If you are selling this tool, you should clarify what the sources
+are for the information.  There has to be a database of some sort
+that you can query with a message-ID and get addresses in that
+message.  What are you using as that database (e.g., your personal
+mailbox?  lore archive?  an imap mailbox at your provider?) and how
+extensive and configurable is the data source?  What data are you
+picking up from that database to come up with To/Cc addresses?
 
-> Signed-off-by: Jouke Witteveen <j.witteveen@gmail.com>
-> ---
->     doc: update references to renamed AsciiDoc files
->
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1971%2Fjoukewitteveen%2Frenamed-files-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1971/joukewitteveen/renamed-files-v1
-> Pull-Request: https://github.com/git/git/pull/1971
->
->  Documentation/gitprotocol-v2.adoc          | 4 ++--
->  Documentation/technical/build-systems.adoc | 2 +-
->  contrib/subtree/README                     | 2 +-
->  mergetools/vimdiff                         | 4 ++--
->  sub-process.h                              | 2 +-
->  5 files changed, 7 insertions(+), 7 deletions(-)
->
-> diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitprotocol-v2.adoc
-> index 5598c93e67c3..abc42efcc774 100644
-> --- a/Documentation/gitprotocol-v2.adoc
-> +++ b/Documentation/gitprotocol-v2.adoc
-> @@ -54,7 +54,7 @@ In general a client can request to speak protocol v2 by sending
->  `version=2` through the respective side-channel for the transport being
->  used which inevitably sets `GIT_PROTOCOL`.  More information can be
->  found in linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-http[5], as well as the
-> -`GIT_PROTOCOL` definition in `git.txt`. In all cases the
-> +`GIT_PROTOCOL` definition in `git.adoc`. In all cases the
->  response from the server is the capability advertisement.
+> This can be useful to be used alongwith git-send-email, when you send a v2 and you don't have to
+> type all the sender mails again.
 
-... shouldn't this reference be also linkgit:git[1] just like the
-two references on the previous line?  Given that such a correction
-needs to be made on exactly the same line, I wonder if we want to do
-the change we see here, which stops at an in-between state, rather
-than going to the end game of using linkgit: properly.
+FWIW, if you're only duplicating the To/Cc list of the previous
+round, then I do not need it, and I do not want to see anybody,
+including you, to be using it.  To come up with a list of To/Cc
+addresses to use in v2, you should start from those who commented on
+v1, in addition to To/Cc used in v1, and then whittle it down.
 
->  The server may need to be configured to pass this header's contents via
-> -the `GIT_PROTOCOL` variable. See the discussion in `git-http-backend.txt`.
-> +the `GIT_PROTOCOL` variable. See the discussion in `git-http-backend.adoc`.
+Again, the description of the "tool" in the first paragraph was so
+sketchy that I cannot tell where you are gathering the To/Cc
+addresses from or if the tool is using only the named message, or
+considers messages sent as response to that named message, so it is
+impossible to give a meaningful response.  We cannot tell if the
+tool will be useful with given information.
 
-Ditto.  These are specifically so true because ...
+A more generic version of the response follows to outline the
+general principle for those who are watching from sidelines.
 
-> diff --git a/Documentation/technical/build-systems.adoc b/Documentation/technical/build-systems.adoc
-> index d9dafb407c40..1ae2a5292f3b 100644
-> --- a/Documentation/technical/build-systems.adoc
-> +++ b/Documentation/technical/build-systems.adoc
-> @@ -32,7 +32,7 @@ that generally have somebody running test pipelines against regularly:
->    - OpenBSD
->  
->  The platforms which must be supported by the tool should be aligned with our
-> -[platform support policy](platform-support.txt).
-> +xref:platform-support.adoc[platform support policy].
+----------------------------------------------------------------
+[make us come to you, begging]
 
-... this one did not stop at "txt" -> "adoc" replacement, but
-attempts to make a proper link.
+I've seen from time to time people ask "I am thinking of doing this;
+will a patch be accepted?  If so, I'll work on it." before showing
+any work, and my response always has been:
 
-    Side note: I do not think we are using an explicit xref: syntax
-    in our documentation anywhere; have you checked how this gets
-    rendered?
+ (1) We don't know how useful and interesting your contribution would
+     be for our audience, until we see it; and
 
->  === Auto-detection of supported features
->  
-> diff --git a/contrib/subtree/README b/contrib/subtree/README
+ (2) If you truly believe in your work (find it useful, find writing
+     it fun, etc.), that would be incentive enough for you to work
+     on it, whether or not the result will land in my tree.  You
+     should instead aim for something so brilliant that we would
+     come to you begging for your permission to include it in our
+     project.
 
-Old names of documentation source pages that ends with .txt outside
-anything that themselves are .adoc files, like this one, unlike the
-above, should be just ".txt" -> ".adoc" replacements.  Everything
-below looked fine to me.
-
-Thanks.
