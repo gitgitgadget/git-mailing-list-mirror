@@ -1,126 +1,180 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-ed1-f43.google.com (mail-ed1-f43.google.com [209.85.208.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F5A272E5E
-	for <git@vger.kernel.org>; Wed, 21 May 2025 13:07:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A5342673BA
+	for <git@vger.kernel.org>; Wed, 21 May 2025 13:11:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747832850; cv=none; b=H7+qfOl1jxqtTeLyufEU2mJbGicOq3OtNcCSzoR5YHaxGCOZ6nlYYFi5kEGZCuglQvywqKQ7HJeB/w4eM/uTVfPJJc6oEWG3G8uCXt0gXltVU+zZNTpmtf2cXTGYVykahlj+ipFw+j1pF7QTGfz+EC+FyGtyG/9bOj7qFJ2AMf0=
+	t=1747833079; cv=none; b=A0G0UKzzmaiAWBiK6sIB/Bn85uyyPhcps6hUc98otkR5hkG8C1GPVonHbAw1f1Bo7RICY7zBiLccFUbEC94VmJTY18DRTuxSjPYiJ1DZ2UgbE4hrxPxUHNdtfWuBfcH2LJpfi7tAuWf4CFI2H1pX6tROaOqSXPRICxCeJqHbgWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747832850; c=relaxed/simple;
-	bh=x/IkpqqqJPAH6bioSmFki4n1Q2ZDUwC3aO3pnUZQIJg=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=AmmfFBDIRAci43IJJlEuy9Jg3lNJMxeBZn5n/Gzds7nVIJfYv3rq9oeCzCqrRV1OOQ724HlHTUVbVwj1dKavhV3q/m2w92hCTEDuPlI2dzDOdK91V/dMLtH9WzhrN6kDyeouaSoGo+6MLFe2mL/dauSIEO2Gbzc0OfJ/CXrpkZo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJxjN4u8; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1747833079; c=relaxed/simple;
+	bh=h1E3pyf2G7BvH6gjPUG7ZSWBkBxakn27zU3GGJMtRUc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=LHTYLkzArsZB1Jsx8JThfiTUsHDlsYSY2Pam/F+5PcN5I5fIUIdDxMCljRYxeHDHqEc5wxiUX0eaqUBHE0FYmNo1dVLEBKO51B3twnGjVyTBd/hyXfhSC1N3G90SnhpTgLXYSbXORLGPC+K7apA+Y3g84G4Ce+1b3qSMTgVmCYo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eOyiF6mD; arc=none smtp.client-ip=209.85.208.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJxjN4u8"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-441d1ed82dbso68450575e9.0
-        for <git@vger.kernel.org>; Wed, 21 May 2025 06:07:28 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eOyiF6mD"
+Received: by mail-ed1-f43.google.com with SMTP id 4fb4d7f45d1cf-5f3f04b5dbcso9964089a12.1
+        for <git@vger.kernel.org>; Wed, 21 May 2025 06:11:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747832847; x=1748437647; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=e+sij93U/WIr7g960WCDgHO29kwTATUEkRySx3FQv8A=;
-        b=BJxjN4u86B0zSEI+n3KRbd/jF1ZUOImBJtmNf02qXCC0RiiQpOhQddAigJciky8fpi
-         9GBW7fI9mmYIyzELPLaLsTDIAFH0R8L/qHqOA23z2ZZ4cFOcciWPD9ZMKNDGPPEF+CRa
-         AJUI3+yklRt5mFmZ62TAe5zML+g+P5f88tytcHEEQZJZhW5GHkapO/2S4IxDI1wsKGD9
-         Vba+NPiH13iVUilqpqFfzRWXDGFAvXaU6t9iW7V4OjTUwgCy1CuNDVBXY9IzDdZ4TVUt
-         VLU3EV2hCevHhnWIlP5bGnvX7M/wxGPWJX5bn2HQe6a1pSdxjmejMNcx1OYHrOiwvZsV
-         56fQ==
+        d=gmail.com; s=20230601; t=1747833076; x=1748437876; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=+0DSCAcNT32Vp9hJd66DZTDVSJg8dn1C/CmsT4yrejo=;
+        b=eOyiF6mD0ZXx3xUCfHb4Yr/W0KF/w4zEWmf+cH4zvAmMcvWWGjabIKJDjssqVFO6Zj
+         RVc/5ywp94eDnFd/YPuzu90Kc6X0H1K+KE5QTqPlaDlsQM2b2Ol3qYTUZK5I5lnBG1Iw
+         479u6vLzh9fDLQmKbHf3NmNeHoa+j90ttiYAgDMJHpBqr1Tz7SCx8pHVecmGcbWtUJWS
+         jSKorktyRcmr3wsI/zyWaFs2G23xn6XcjuttQEYlUAORNcZwiJrlf1uh5hisfpQy/s7v
+         x8Nzl4jgd+Z100dAszBoTQ5pP8TOeuitvbMVOwj2a18Ba1jwkbsKNylL9UNFKytTQYe5
+         ufMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747832847; x=1748437647;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=e+sij93U/WIr7g960WCDgHO29kwTATUEkRySx3FQv8A=;
-        b=IvE91GRNskyRX6Ix65M4hOpgamL9ZTlzgWsPrRvlTJEoymL+CUfLmP35EY8cnVun8/
-         m4iKspZBCGRZT8uo9Qmnmyxkqnut+LPqCw99pE06mF9K2WHHdow6mpd+m5Q3sMLddS7j
-         Weo5xjLx8GIWQau3e7CSmSjNUw3NfPtbdadmpb/gLZgu7Z1MZjStFGOovpm9gT36/M2B
-         MfNII1tsq/E5ycbPbxsd+Ldrrn8qkJ9Q6ddonbT8AyKDqOAA4E44zaampAnJ34zktr1i
-         s+p1LIu2VF65pb35a93etNoUD3+haTBiaPsZbttt3c/mV7+3MEHca/vM7jWgs14MgrvA
-         p0KQ==
-X-Gm-Message-State: AOJu0Ywf9PhgVAN2xvebSCpyZX6FN3wLadW4e52Mrf08kjQgeg7EdqPT
-	6bCPbWuXGZEbKA5txoaNG4mopB0lkLYZLYF2ZTOONU8K2a5UA7PEEUhk
-X-Gm-Gg: ASbGncsOLTLGZs4yFD/y5whLVdS8cfY+pWX5M0yJDl9AbjN/Pt/yLotp1ynnZez7y/2
-	F6HHYbQ9oTBLQGOoClfId6oUDtmUv+EG2i8LwVeXrthXV37i8wtptdoC6ktUPIs9eVmQLdX78Mw
-	wt8Hv207vCUd58ZRFLSqYm2ixHy6fBqxCEEi+trwG8PXmEjVQ2misnmNyrQjc4w5Ko/4AjKD+mK
-	sDm1AR4rNPE+urbMneMhNg3H/9e251pQHG2gSk1ZzIKKOVXqUFX0HhHEW+QfeMDqf/oX4uFI9yE
-	dDh/hKgQDXNh/vchEsJJWe0ZnGk5n6+ofvqKp06YarRAY9p/6ecKmdlfuINMy31XOL4hqRl29Yj
-	kE4SXz9eSkES9MaGDBYy7ua1J7FQliyD7sw==
-X-Google-Smtp-Source: AGHT+IHGD46pcioTWvZeFBh1QsY+ThzPzmsdfPoRVzkg/2+o0zeObtz3MoUiFEqRfcauSiMlFzFLng==
-X-Received: by 2002:a05:600c:64cd:b0:43d:745a:5a50 with SMTP id 5b1f17b1804b1-442fd6313demr159586825e9.19.1747832846693;
-        Wed, 21 May 2025 06:07:26 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca8cfb8sm18953442f8f.85.2025.05.21.06.07.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 21 May 2025 06:07:26 -0700 (PDT)
-Message-ID: <01301fa6-eea7-427d-a61f-5cb8dac99afd@gmail.com>
-Date: Wed, 21 May 2025 14:07:25 +0100
+        d=1e100.net; s=20230601; t=1747833076; x=1748437876;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=+0DSCAcNT32Vp9hJd66DZTDVSJg8dn1C/CmsT4yrejo=;
+        b=IVxCq/aXYq/Bnd5i9y8uQIZ0UthhhKBLeF5lS88YqMu2c85iSw0gn9ggGGE090GZb9
+         CmOBychbdDJJojZAGX9x87I2nIiYGFHRZERvQP7j5u3Lcw6pHiiauTZ2NAFBXi0o+otY
+         YDps36SBykcW4cw8z2tU+2ZtZX9icUmwj1wGDGEsD+VpcdpWNDSJUxPLuJ3reZW7+NO1
+         cpX+ugPy7t02oh00NByabafMTPq+dXIeJm4CTb1RDASZNBiH5O+aEVoZEB7BhqkpJhnr
+         tld/LQK8/CTfYHK4V41GK6RASLo4sc7H9S92a7Fz0/XWC7SwekBeFdXoCAk59bzUl7zr
+         hnsA==
+X-Gm-Message-State: AOJu0YxSlQZFLKdjMkUelYj6dRJa88STpdKJoAh8X53iPNrokJEeeom2
+	+KIAlDIqFZFCla63EDVLqKEyeg6lNymXLNCWwvmThmKPLOAOrOlftfhgjXxlYCRzSBOIRRZVo9e
+	nYOcFbnh0icu0yfNZEp/B0Lb1AXgMCk0=
+X-Gm-Gg: ASbGncvt+LXn1EM70eGvXBeY9Y+jPxzmchTOrY6sTuSgpEF45OsPzTuyQNcXJyd9aa+
+	YN3AI8sGTcCT8jcmn9zyaCn1q9KFi1XHYhERgBX87bghv9f4ern9BcPP2j0zK4xaEMRJuPWJqYi
+	pcdzeV+dXbg0UZYJWHo6nd69sJMGikM7HR9joJMdg2HfhWf2kdJg/Mae5AxakCRE/MCeA=
+X-Google-Smtp-Source: AGHT+IEm2mUjYgW98JpES79XFlYTgswTUAQw+cHlkHFW+jUtxauAcLDnuiVU4rvLFfJjsDkjzqhUoSwU2bZTvGd40NU=
+X-Received: by 2002:a17:907:1b0c:b0:aca:c49a:aec5 with SMTP id
+ a640c23a62f3a-ad52d4302d5mr1839957566b.8.1747833075424; Wed, 21 May 2025
+ 06:11:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/4] drop git_exec_path() from non-Git commands' PATH
-To: Patrick Steinhardt <ps@pks.im>,
- "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
- Junio C Hamano <gitster@pobox.com>
-References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
- <20250520193506.95199-5-ben.knoble+github@gmail.com>
- <aC2OaeLYJQAOE_S1@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <aC2OaeLYJQAOE_S1@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+References: <cover.1747753388.git.phillip.wood@dunelm.org.uk> <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <cbc5e69b908cef3800569abe79cb9c107f72bfec.1747753388.git.phillip.wood@dunelm.org.uk>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 21 May 2025 09:10:58 -0400
+X-Gm-Features: AX0GCFucpNpoeatkqWtVhbYA_tIGLTA8uDCymKEG-bPrscniqQZ8Jm9n_MDke5A
+Message-ID: <CALnO6CAMqVvHbY2sR_+dt8vYHxDn4S7f4B2jq+HcMEXx7SLj9Q@mail.gmail.com>
+Subject: Re: [PATCH 1/4] midx repack: avoid integer overflow on 32 bit systems
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 21/05/2025 09:27, Patrick Steinhardt wrote:
-> On Tue, May 20, 2025 at 03:34:58PM -0400, D. Ben Knoble wrote:
->> We setup_path() with git_exec_path() unconditionally (8e3462837b (Modify
->> setup_path() to only add git_exec_path() to PATH, 2009-01-18)) when Git
->> starts; as a result, all child processes see Git's exec-path when run,
->> including editors and other programs that don't need it [1]. This can
->> cause confusion for such programs or shells, especially when they rely
->> on finding "git" in PATH to locate other nearby directories,
+On Tue, May 20, 2025 at 11:05=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
+>
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> On a 32 bit system "git multi-pack-index --repack --batch-size=3D120M"
+> failed with
+>
+>     fatal: size_t overflow: 6038786 * 1289
+>
+> The calculation to estimated size of the objects in the pack referenced
+> by the multi-pack-index uses st_mult() to multiply the pack size by the
+> number of referenced objects before dividing by the total number of
+> objects in the pack. As size_t is 32 bits on 32 bit systems this
+> calculation easily overflows. Fix this by using 64bit arithmetic instead.
+>
+> Also fix a potential overflow when caluculating the total size of the
+> objects referenced by the multipack index with a batch size larger
+> than SIZE_MAX / 2. In that case
+>
+>     total_size +=3D estimated_size
+>
+> can overflow as both total_size and estimated_size can be greater that
+> SIZE_MAX / 2. This is addressed by using saturating arithmetic for the
+> addition.
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  git-compat-util.h | 16 ++++++++++++++++
+>  midx-write.c      | 12 ++++++++----
+>  2 files changed, 24 insertions(+), 4 deletions(-)
+>
+> diff --git a/git-compat-util.h b/git-compat-util.h
+> index 36b9577c8d4..4678e21c4cb 100644
+> --- a/git-compat-util.h
+> +++ b/git-compat-util.h
+> @@ -668,6 +668,22 @@ static inline int cast_size_t_to_int(size_t a)
+>         return (int)a;
+>  }
+>
+> +static inline uint64_t u64_mult(uint64_t a, uint64_t b)
+> +{
+> +       if (unsigned_mult_overflows(a, b))
+> +               die("uint64_t overflow: %"PRIuMAX" * %"PRIuMAX,
+> +                   (uintmax_t)a, (uintmax_t)b);
+> +       return a * b;
+> +}
+> +
+> +static inline uint64_t u64_add(uint64_t a, uint64_t b)
+> +{
+> +       if (unsigned_add_overflows(a, b))
+> +               die("uint64_t overflow: %"PRIuMAX" + %"PRIuMAX,
+> +                   (uintmax_t)a, (uintmax_t)b);
+> +       return a + b;
+> +}
+> +
+>  /*
+>   * Limit size of IO chunks, because huge chunks only cause pain.  OS X
+>   * 64-bit is buggy, returning EINVAL if len >=3D INT_MAX; and even in
+> diff --git a/midx-write.c b/midx-write.c
+> index dd3b3070e55..c7cb2315431 100644
+> --- a/midx-write.c
+> +++ b/midx-write.c
+> @@ -1699,19 +1699,23 @@ static void fill_included_packs_batch(struct repo=
+sitory *r,
+>         for (i =3D 0; total_size < batch_size && i < m->num_packs; i++) {
+>                 int pack_int_id =3D pack_info[i].pack_int_id;
+>                 struct packed_git *p =3D m->packs[pack_int_id];
+> -               size_t expected_size;
+> +               uint64_t expected_size;
+>
+>                 if (!want_included_pack(r, m, pack_kept_objects, pack_int=
+_id))
+>                         continue;
+>
+> -               expected_size =3D st_mult(p->pack_size,
+> -                                       pack_info[i].referenced_objects);
+> +               expected_size =3D uint64_mult(p->pack_size,
+> +                                           pack_info[i].referenced_objec=
+ts);
+>                 expected_size /=3D p->num_objects;
+>
+>                 if (expected_size >=3D batch_size)
+>                         continue;
+>
+> -               total_size +=3D expected_size;
+> +               if (unsigned_add_overflows (total_size, (size_t)expected_=
+size))
 
-I'm skeptical that using the location of the git executable to find 
-"git-jump" and "git-completion.zsh" is a good idea. The location of 
-those (and whether they are packaged at all) is entirely at the 
-discretion of whoever packages git - they are not installed by the 
-Makefile and so there is no fixed relationship between their location in 
-the filesystem and the git executable. For instance the example in Ben's 
-blog post looks for "git-jump" at 
-"$prefix/share/git-core/contrib/git-jump" but on my system it is located 
-at "$prefix/share/git/contrib/git-jump"
+Style nit (only in case Taylor's approach doesn't prove better): I
+wasn't expecting a space between the function and its argument list.
 
-> I agree with what Junio mentioned in a parallel thread, especially
-> around Git hooks. The expectation there is that those may execute other
-> Git commands, and that should typically be using the same execution
-> environment as the original Git command that has been invoking the hook.
-> So refining this patch so that the mechanism is opt-in probably makes
-> sense.
-> 
->      A slight tangent: I wonder whether it is even required nowadays to
->      adapt PATH at all anymore. As far as I understand this was a
->      requirement back when people still executed dashed binaries
->      directly. But nowadays scripts don't really do that anymore, but
->      instead use the git binary. And that one doesn't need PATH to be
->      adapted at all, as it knows to listen to GIT_EXEC_PATH and its
->      built-in path anyway.
+> +                       total_size =3D SIZE_MAX;
+> +               else
+> +                       total_size +=3D expected_size;
+> +
+>                 include_pack[pack_int_id] =3D 1;
+>         }
+>
+> --
+> 2.49.0.897.gfad3eb7d210
+>
+>
 
-But don't we still need to change PATH so that hooks, shell aliases, git 
-rebase --exec, git bisect run, etc. still run the same git executable 
-that started them? For example "/usr/bin/git -c alias.g=!git g 
---version" should report the version of /usr/bin/git, not 
-~/.local/bin/git which comes first in my PATH if git doesn't change it.
 
-Best Wishes
-
-Phillip
-
+--=20
+D. Ben Knoble
