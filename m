@@ -1,114 +1,141 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FEAE1DB124
-	for <git@vger.kernel.org>; Wed, 21 May 2025 11:40:48 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B145A263F54
+	for <git@vger.kernel.org>; Wed, 21 May 2025 11:56:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747827650; cv=none; b=tDOSVemqym6Y/kKpQDIdy7oF5PvXiXvCIzILbBJ/OaO84a8jMIFVZxR5FzPCCMmFLKnqKWxmtxa8fh8i9222pt7FVAKDH2s0D1FJtH1lPU9gRo3doSrnQMz1uJgqeP6d5spmO4+uC/NBSGy8+wV19F04hwnJ7RzujpyyF9+BjJU=
+	t=1747828591; cv=none; b=cRq9DCTCkJhlrZkSceP6jP6CV+cA6MB9mt2t1QSjLaLCfFwrKo0f10d5UcPr1aNRc6DcZuYXVzFSxgaCmCC2jVyiTaBGSs4FhA0NcotPPNLgwVlOct3n/gTiugLkaVkBnsmWl6wQviz0YlW/vMBYVuaZxGE4wtY7JjasKx0iQEI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747827650; c=relaxed/simple;
-	bh=A8D3OZNuhfi2FF0F5VibvHtciR1g/LgNl+YStOSB4UM=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=A52Xi0+rr+khBUN26tJi1GG6mVz2hZcjRe8W9Rhqzd7lQiOa2ZrWPVH4cTzi/1vu+mazf76MGqEs9AxVvF+LSjJRSVoQHI4g8fegjsn6cxLyvLAqbo1PWn8AhENBnR3r6N9L6FocL5d4hnwitypeQ2MaYQnaBxMbeRYF+qMBHsc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M3RIZ3+V; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1747828591; c=relaxed/simple;
+	bh=xxTr6+5XSPIOzlZxEq7ahURntrG5qosIZp3cjnJMXyI=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=LiClsqK6QpYKpYMxsMFaWjXsIku6wikxQbYIZFt+5Kw7y0waa1UExvPLZfrXbcC96tx5lnKnYFOGBGWk6ssdPPNirwj0aqTvKNXlYs0ItV20+/M8KO1B5YhdXY7XyYc8RLnTWOl1p5vQK0/Jy8nWhxqYXjUqnjBgb46miwWT4k4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E02i6lZ/; arc=none smtp.client-ip=209.85.208.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M3RIZ3+V"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-3a37a243388so1675229f8f.1
-        for <git@vger.kernel.org>; Wed, 21 May 2025 04:40:48 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E02i6lZ/"
+Received: by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-601fb2b7884so4931630a12.2
+        for <git@vger.kernel.org>; Wed, 21 May 2025 04:56:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747827647; x=1748432447; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=zlJmqiuPIQLCetvYaojO4y02aBsD3JHXfb6GEsrRqWI=;
-        b=M3RIZ3+VMtkJvJF1Tti9AI66EE1rbo6nBQAPpiBvZN27EjUSdZrf+1Jyvhjl7TSNWW
-         Fucv+ePGQs1yBMnvvwd8nqwy7fVpYp1675RXCyOM9Fq5JiZpSsP3vXJlHVcWjefn3rEE
-         F5OUScyWABsgGjZSyTnoG++i0WiLh9P5Pan3qDY3dClDI+gO92GtC1Ro+3erWjhPgnSV
-         qdZ6Ji/jU0Mr7iq0xOro7hcYDISIiCu76bWcGl04jFGkcaA5vpfPIuHslunjMag5sics
-         CSRUG2NwYM71IprWnMKwkFzlVrbwdQe1HjFjYbPUkE9LB3ihLIqsZPVqfcfK6C+nY8FY
-         2JWQ==
+        d=gmail.com; s=20230601; t=1747828588; x=1748433388; darn=vger.kernel.org;
+        h=to:references:message-id:cc:date:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=fDD46bAbx1J7HCV/evD/lOLJNOB4oZ9IRirhJFWGRNI=;
+        b=E02i6lZ/MQLNNjHcy44XSLOE98fNfVlRDblS1VxOGN6F/aIWJ/78Pe5j+Ai47bWZeH
+         v6NMSM7WM8gihyV1IIMGmlqmXYJwJ39D2+Av7XxSP/8T/wTRqvqbe+8It5LiV8hi88TN
+         cu3wc2qvEhXeHWDD52Eia+aRBQuLnoKrQfm33qyX7XTnf0mJkKlAzl5MHdkU5ybCHC5t
+         QhnNqdSKTIW1INYZiHIh+P6C5065czyB5MFLoa5Zr/vAI2LrrCcAFuNfkDn/qiUrfTB9
+         U3ZPA9r0WRGdQL4745h+jVge/wxzkBloC5FQaki3+Cqq/x2boiM+OdZ/usTWLI6mtpyX
+         cU8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747827647; x=1748432447;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=zlJmqiuPIQLCetvYaojO4y02aBsD3JHXfb6GEsrRqWI=;
-        b=Y21xcJJ1l98Kl78nMOpYjIDNHLNnxFI4dCjejE5t1L6IYIgZDcDJhxyfcfRf6NLeOs
-         7ntkGM5HGHxuPT5vj7ImX3Hy1d3Kr26G2WGxsdt0cCCOct7vkBPMoW236pTDgXokefTG
-         ntK8/Mdznk5fdx+FPwEfSrvhJ/d9TUh0dWK16Z4TS3aNB+cg9boYyyJy45jpju7tDqJ4
-         9nbOcJw2IY1yWNKwKK8LwEHuUgAfHc5L4LuGDDF2cE/3qqDoJgvUKS+nLvvdGoqWofin
-         3LrEx1r1av6JJOqhum9VZzGlkB1FGiOVznwVYfGqUYOrkLB/6TCn5j4UTp3oZiNcGfGO
-         JwYA==
-X-Gm-Message-State: AOJu0Yzp+HiWmvyUu2bFH1iksLJL8R/LM4xk3PI27Fodfc8zuzu2WbL9
-	+JthiITF1uOCxmU4Jpzhe5kK37eVxnNlvTgOPn5y9JGI37WBkXc/sStHPwkTlA==
-X-Gm-Gg: ASbGncuDAO89IEsZTFDtUk/Z5Q2KzK+/VXSsGTRx2Il+jszBfQ415trkOkUz4ZDtThJ
-	KxK5VRASE1yIMlUNu8CZmzs3nl/xbS3EZqP03p4IaqhFQ1FF8ByArrRz+pgpZ8KjgOxuEzFqIgC
-	k43pB3jIukfDIDgPVje18c8B5Z/6T+Ks2nBKaRUHJRRJBR75lHXFk0fiSImTqmRzRVWc3Wwxcqq
-	wpRE2nIj+8X4vLgXEOxgYt/D/sFFRL2gLh+XdqcZ8h76aiHZBHNurrQbFsZyRZnt2a2VmSL1LnK
-	wGHSf9ZM4YI8Gi9UOCzUg23PdrWStjLUK1PMySsBL+ZpdNTAT3C0
-X-Google-Smtp-Source: AGHT+IEBu4Ls4TVHG5Fev3y6jiWWxYnU5gtZ2dawZkqyQDtR+zoqLzqkSHoX9NISDu22C6VeNQzD8A==
-X-Received: by 2002:a05:6000:2903:b0:3a3:6e62:d8d5 with SMTP id ffacd0b85a97d-3a36e62d9afmr8537737f8f.58.1747827646757;
-        Wed, 21 May 2025 04:40:46 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca5a841sm19768188f8f.34.2025.05.21.04.40.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 May 2025 04:40:46 -0700 (PDT)
-Message-Id: <pull.1970.git.git.1747827645129.gitgitgadget@gmail.com>
-From: "Alex Mironov via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Wed, 21 May 2025 11:40:44 +0000
-Subject: [PATCH] name-hash: don't add sparse directories in threaded lazy init
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1747828588; x=1748433388;
+        h=to:references:message-id:cc:date:in-reply-to:from:subject
+         :mime-version:content-transfer-encoding:x-gm-message-state:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=fDD46bAbx1J7HCV/evD/lOLJNOB4oZ9IRirhJFWGRNI=;
+        b=odDT1og7ZjUwxpF/fjfUupUvmvWAspgaJNo8ohBPKoK0O+EuxV1CwgJTIfYanbow8O
+         cWr29x2PWj3qIrXLD/F11Ij7zpoeHotuGAk8RWmKEgUWwiUFvAK3UL7Dse2vXXlIqPbC
+         QL+8mOCI2Lf6r0f/HDULIm9IzsBCV8Ulb1WyoCAJFT8EOx28dmc/+eqCbPRCOBnw9KjB
+         wDyBVTPae9D2xxOW7m/pGjaVINbn/U7LdcW2gmj7GHcpgHG+p8dIUu6mqFo0kP2yTwR0
+         FvhFldw7XUhIgvR7K/pzrV+gf+LgmSjsQBLKdoml/1mDn1fUFvD0XQGRRV/BLwaEcis4
+         4raw==
+X-Gm-Message-State: AOJu0YycHbkvxILffObXFSxSieaQcBmM7lNe/pVlzMAQcX1JyyhKA/I9
+	b6P1CRNtOZCqEkA+P/p7oqNrmJyQ2IE6Ijt0xNKiqdX9qb1kurNDLjD+wmC0BsGafIA=
+X-Gm-Gg: ASbGncu6cehbnVwjC4omU9XuT2EiBMSr55cOglx+nfIzUqbkttfhen7VzD0eg2R0vQ0
+	uBHWhluaxWynz2Y4LSGQ+VKrUnxmm4dV+j3tD/pD208DcKBkC2gQr37XLfkYPs654te7lLo//2y
+	+o6Q4+K2bxXmrECMjRUbzoso2u5lhbfyuKI4gOhQga56eo9gCf0qSQPZgaqI7PCVTW1wDwxtgHp
+	9wdGroNqsjjcQvv+VnCAi0jpfijssy93t+BQ9vCVg4eSw1KmSPbTKFbhPiY9nNcgvpTzx0sNUDr
+	6y1lX7Ab9/rBftPWn9SFyoM5KXTgW/84aqDpUSM9mWK4VholwwYr9Tsr85NtX4IKJ82roFHnzzD
+	C1/LJKd/Mnech
+X-Google-Smtp-Source: AGHT+IG3Rqg0s6rIVe/1ReVe75C3MjwcVPRR5kEEVO1aguSv9/ipQTqm91vZ33W9ZQOrDcLECyIj3Q==
+X-Received: by 2002:a05:6402:50cb:b0:5e6:e842:f9d2 with SMTP id 4fb4d7f45d1cf-60119cdd6e4mr15443157a12.29.1747828586996;
+        Wed, 21 May 2025 04:56:26 -0700 (PDT)
+Received: from smtpclient.apple ([2a00:5400:f012:dc8e:4815:bfe3:d38c:4162])
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-6004d4f2f06sm8721104a12.9.2025.05.21.04.56.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 21 May 2025 04:56:26 -0700 (PDT)
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>,
-    Junio C Hamano <gitster@pobox.com>,
-    Alex Mironov <alexandrfox@gmail.com>,
-    Alex Mironov <alexandrfox@gmail.com>
+Mime-Version: 1.0 (1.0)
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+From: Hridoy Ahmed <ariyanhridoy130@gmail.com>
+In-Reply-To: <aC2xp4Cdb0j6OX-G@pks.im>
+Date: Wed, 21 May 2025 14:56:25 +0300
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Message-Id: <C290941F-C1C1-40DE-A042-E71588229733@gmail.com>
+References: <aC2xp4Cdb0j6OX-G@pks.im>
+To: Patrick Steinhardt <ps@pks.im>
+X-Mailer: iPhone Mail (22F76)
 
-From: Alex Mironov <alexandrfox@gmail.com>
 
-Similarly to 5f116695864788d1fe45ff06bfad7a71a8d98d0a
-make sure to avoid placing sparse directories into the name_hash
-hashtable whenever multithreaded initialization is performed.
+Hridoy Ahmed
+Hy I am back=20
 
-Sparse directory entries represent a directory that is outside the
-sparse-checkout definition. These are not paths to blobs, so should not
-be added to the name_hash table as they must never be queried.
-
-Signed-off-by: Alex Mironov <alexandrfox@gmail.com>
----
-    name-hash: don't add sparse directories in threaded lazy init
-
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1970%2Falexandrfox%2Ffix-threaded-hash-name-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1970/alexandrfox/fix-threaded-hash-name-v1
-Pull-Request: https://github.com/git/git/pull/1970
-
- name-hash.c | 3 +++
- 1 file changed, 3 insertions(+)
-
-diff --git a/name-hash.c b/name-hash.c
-index d66de1cdfd5..03123a8779a 100644
---- a/name-hash.c
-+++ b/name-hash.c
-@@ -492,6 +492,9 @@ static void *lazy_name_thread_proc(void *_data)
- 	for (k = 0; k < d->istate->cache_nr; k++) {
- 		struct cache_entry *ce_k = d->istate->cache[k];
- 		ce_k->ce_flags |= CE_HASHED;
-+		if (S_ISSPARSEDIR(ce_k->ce_mode)) {
-+			continue;
-+		}
- 		hashmap_entry_init(&ce_k->ent, d->lazy_entries[k].hash_name);
- 		hashmap_add(&d->istate->name_hash, &ce_k->ent);
- 	}
-
-base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
--- 
-gitgitgadget
+> On 21 May 2025, at 1:57=E2=80=AFPM, Patrick Steinhardt <ps@pks.im> wrote:
+>=20
+> =EF=BB=BFOn Tue, May 06, 2025 at 12:59:49PM +0200, Patrick Steinhardt wrot=
+e:
+>> Hi,
+>>=20
+>> this patch series starts to parse TAP output generated by our tests when
+>> executing them via Meson. This has the benefit that Meson starts to
+>> understand skipped tests and reports how many subtests have been
+>> executed:
+>>=20
+>>    ```
+>>    $ meson test t002*
+>>    ninja: Entering directory `/home/pks/Development/git/build'
+>>     1/10 t0024-crlf-archive                  OK              0.17s   2 su=
+btests passed
+>>     2/10 t0022-crlf-rename                   OK              0.18s   2 su=
+btests passed
+>>     3/10 t0029-core-unsetenvvars             SKIP            0.15s
+>>     4/10 t0023-crlf-am                       OK              0.18s   2 su=
+btests passed
+>>     5/10 t0025-crlf-renormalize              OK              0.21s   3 su=
+btests passed
+>>     6/10 t0026-eol-config                    OK              0.25s   5 su=
+btests passed
+>>     7/10 t0020-crlf                          OK              0.81s   36 s=
+ubtests passed
+>>     8/10 t0028-working-tree-encoding         OK              0.85s   22 s=
+ubtests passed
+>>     9/10 t0021-conversion                    OK              3.45s   38 s=
+ubtests passed
+>>    10/10 t0027-auto-crlf                     OK             26.35s   2600=
+ subtests passed
+>>=20
+>>    Ok:                9
+>>    Fail:              0
+>>    Skipped:           1
+>>    ```
+>>=20
+>> This new feature is only enabled with Meson 1.8 and newer, which
+>> contains a bugfix that we have upstreamed [1] to make the TAP parser
+>> work in `meson test --interactive` mode.
+>>=20
+>> Despite the changes to Meson itself, this patch series also contains a
+>> couple of fixes for our test suite that caused us to not generate proper
+>> TAP output.
+>>=20
+>> Thanks!
+>>=20
+>> Patrick
+>>=20
+>> [1]: https://github.com/mesonbuild/meson/pull/13980
+>=20
+> Junio, I noticed that this series isn't yet part of the "What's cooking"
+> report. Is that intentional or an oversight?
+>=20
+> Thanks!
+>=20
+> Patrick
+>=20
