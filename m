@@ -1,92 +1,83 @@
-Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D1751A9B4C
-	for <git@vger.kernel.org>; Wed, 21 May 2025 07:56:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5ED23371E
+	for <git@vger.kernel.org>; Wed, 21 May 2025 07:56:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747814183; cv=none; b=RSBKk8BUsMza5YiXSnbdZYb3pvw9TaK3CdteDUAJpIVloE6UD30NJYWwDHoj6fa/23q+a/G//i1c0gH8SRLEvy/iAq9UtgB+9GIIDAnhabaHVrRlsnHbn82JdZEQ3YuUfYteibGZvPObNBuMe2LApBXAVp7a6fxbKzVQcDBh5DU=
+	t=1747814185; cv=none; b=aCQXXbsnjahqeDhaca5hHxZt7TTVAoCPGuhynblGUmyrS7WWNGzTg+K4miiC5Td5zzKaBORBApi1g8SE6bwdmDYsYFqQOSM9dmPXIkOnQDlU0aTGfokJ4eDs6yTR4jSK17O/gSxuWeQtP2BYbxXDPr12Vzq6fxWJI613spH8EBY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747814183; c=relaxed/simple;
-	bh=+Co9um485g3J884RubL1PJwXMXv4btdxMQcmxTmXZf4=;
+	s=arc-20240116; t=1747814185; c=relaxed/simple;
+	bh=asZIySz0q6YwE7xuCf+6u7IuBckfCH01iwZQDHi/20s=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=mCqHjaEKtogYIvmSCLN2hKVNHMX7rbQwMeNCENaH1QP2A+j74qminyWAE7tZlHv7Tx7jUuEygNb+sfmBI5yv39P0o92OcaC+uSY3Yi+7OfongxtnX3xxR7owLQqaYsjPvlX2kGSFgFkyAwIqVD1MKIsmBcaQPTANDtJyxdPgK6E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=tvDHbjYb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EqG2E3qq; arc=none smtp.client-ip=103.168.172.156
+	 Content-Type:Content-Disposition:In-Reply-To; b=fNQRrEuLqi+iSW+R4KXE/fr9Xyb2KNCX8aB8CCm9/1vosZCvYPLmaSCbLpoCdUq0k6/0oCS5A1wvCTRTeDU9z+qR7yaQ1QtCk7bLOqRvDmIBnwGntJoZvxslGjeiPqel+3WeWIHGiLvjos7SzjwTOYzntBMpCEak4PZ0PSEW5Vs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=b7rOFmXo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XS9kgzTF; arc=none smtp.client-ip=103.168.172.144
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="tvDHbjYb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EqG2E3qq"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0E967114008A;
-	Wed, 21 May 2025 03:56:19 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="b7rOFmXo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XS9kgzTF"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 1E66813800ED;
+	Wed, 21 May 2025 03:56:22 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-03.internal (MEProxy); Wed, 21 May 2025 03:56:19 -0400
+  by phl-compute-02.internal (MEProxy); Wed, 21 May 2025 03:56:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1747814179; x=1747900579; bh=1lxrj4UNuV
-	wqTnUMyS0GSX5iGlL1AqZ/vdkr5/XWX7k=; b=tvDHbjYbTEuFhzfBDF/RxgSWff
-	K1TxXA6zQT3BpQqDLaIPqN3z7XEgQhHSjft15VRMZMr7cY1zU3HoiVssZnLtZtA3
-	5+f3QeSg0KhdyNCBdlrWQ2rsApa4qL6uozxNcL81B1lpRE2dXSqaIfGzS/SQKzx4
-	zIJ9sZVaz0k3/hpAYHfzsbAyv+rdve8e3zwxUfiZelHaeGjatHE3RBztyAn1w8k1
-	YCgtBx+rV7bIpNm84ez27qtZld+8ymwlEcM9h5bCbrM7Z5WA0cUOANrx0xTwJwVR
-	jc5jbQXbq1ZzmO7Etez8SWVrfso61BH+KkZ1pep5M9UAtcp3lMRQR8fbn4PA==
+	:subject:to:to; s=fm3; t=1747814182; x=1747900582; bh=jlDkPH/8Yw
+	KKlCfzd/i8oAl6IsV3YFibcS7Bz7xj7eA=; b=b7rOFmXoVhoowfgQO/9hzeX/cL
+	Y+q3gcLvlJ9u/3d5nFB3el+RL+xbzmVSMttF2QIozHXsHJuFtHEFV/8EtfBT24va
+	SGuOE/iRRd4+iHXb/vnM+pB9Ed2YyHG0kFjsg8imisGhWGEgeflrGkhsAzaaWKkX
+	GtZFNBEAwUgmOUCAmrTpemy+58/eCN9LxW9DGbGr1Ukb22/3Y6ve/I3tu1gqoED3
+	NknIiypNaOIXdyu9hzVErUpjYBcQYbas/+PJsciJf4P0xijUL7SYaBDmD/7mNCq3
+	mjsndiQ+423TzCnBdidIu5wllO3H6dmKe3VZpVOen0MJLQPpveqDJMNVxMnQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747814179; x=1747900579; bh=1lxrj4UNuVwqTnUMyS0GSX5iGlL1AqZ/vdk
-	r5/XWX7k=; b=EqG2E3qqURAYBbp+aAiXc9SV3WKj1XkOlDoNAUcNsCY0tGyFpg0
-	gaQaOsVMKaNdrAWVvxjdiOQ9oRLPl6M9GwTMGoDOvgvtMgmKVt6IEW7c3I66oFcE
-	1e9m+YVSEIl3uwfu9xNY2XTh/+DE8n6QC3cfThBCD/dB4q4uqNiYOowytc/tDKqp
-	XIhBRt5Ffdcc0CclGKlEGjk9H8uhDmsEllO4ndyWUQ1RJGoAMOxAz0aeROj4XjNG
-	ZjzkYLz8w5PhoY1mjn2XH70sOkhrOfSMwhXUnxmPs5v5CLpNe/sYBx9y8Lj5AegC
-	W3wXYTsRf9nhAIBobvhTdgYdFE1gDB0KvqQ==
-X-ME-Sender: <xms:IoctaETYob4s-9Uzs9Iaw17jet_8Vi4Ypeo0HIKZWqrZQpICIL11iw>
-    <xme:IoctaBxJ3DGdnLntnZRYBA_kDA7OgF_m7ophtF389ZxxGbZovsewWjBddL7eIffot
-    af8oHR0qt19-26Nlg>
-X-ME-Received: <xmr:IoctaB2hqslVEG0ZF6n1JbNAk2WbT2flCR8qBgTEXShEqajXZEyiqGaLbQ2c_BUnpp4pe_3Gxc1R6_f9TW3Z7KYfrJDNFqNqEQddxBzkwrlOUw>
+	1747814182; x=1747900582; bh=jlDkPH/8YwKKlCfzd/i8oAl6IsV3YFibcS7
+	Bz7xj7eA=; b=XS9kgzTFLDIujT/A7yoIylcc0aDCSi9/M9crm9ODZMh3kMbQl/k
+	BRcUF6x9UfJiWnpc0BMexYIvcSafGs8JSCTiry6Lbkai0ocZeFuuUhGH2FMhHOTN
+	/wTVt7Z5h4IbCThKGfd8f9qt12nho882Cc2JMWLAzFTsGgxaxjd4XftT1u843HLN
+	QtTBtse5Nydq7oau3t/EPKFpEbukBuyx6lDvfJLy8uQCiy/mfcOgqIAQgb8aKYXN
+	ZeErfPu4vvHVdZWtU4MCrz2lb44QGJfIqqX8cAqYrRI4mQcJr05wUnd9k14STUmw
+	90lQIhpVXXONZJysRZXeBi7MphcJPpQIEVg==
+X-ME-Sender: <xms:JYctaOaX5YL82wgFKwLvDC8hknfMhFE0qWnJbPMqVVNgheWc92Va7g>
+    <xme:JYctaBZtOMbGsZLFNM149Bja1BMiJmhapmlCjINzr9k-oFBvWzXFqc4dncwBpVuZ0
+    h0ICOozLJAX5zCqrQ>
+X-ME-Received: <xmr:JYctaI-OsLMaagr2hvN2jDlz3On3c1PUtUMAVsLHJzZukBvx6-YUVrv1irRJOfa8jvP3RcjLA1kEdfeZafqCTS62QHVNTn5k9RzVCFiJdc8C7w>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvheefucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhgg
-    tggujgesthdtredttddtvdenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrug
-    htuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveekkeffhfeitdeludei
-    gfejtdetvdelvdduhefgueegudfghfeukefhjedvkedtnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
-    thhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthht
-    ohepsggvnhdrkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtth
-    hopegrvhgrrhgrsgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhgpdhrtghpthhtoheptggrlhhvihhnfigrnhesghhoohhglhgvrd
-    gtohhmpdhrtghpthhtohepnhgvfihrvghnsehgmhgrihhlrdgtohhmpdhrtghpthhtohep
-    jhhohhgrnhhnvghsrdhstghhihhnuggvlhhinhesghhmgidruggv
-X-ME-Proxy: <xmx:IoctaIATBhw3BUcaK1N9wEtWVawOXg-Y8nbxpmHTj_0yfXevRXwynQ>
-    <xmx:IoctaNgRX5q3AwKEYKztLv3m_70s1AjN-qfZVic7lfbRFb9mqeBqtQ>
-    <xmx:IoctaEpFiWg7d4ok5RocRxlso1oiOT1tvymoQ94m6SYmeRoqAmU1LQ>
-    <xmx:IoctaAiOiFX5Jp86Lh70MIMaPT7WyzaaAF2X0pFlGeV-_JDqWYHs1w>
-    <xmx:I4ctaEhONNvZbqsXsvn9up8jthibFZo3VpIQ2b98vOkJnlim6gmM7YRc>
+    enucenucfjughrpeffhffvvefukfhfgggtuggjsehttdertddttddvnecuhfhrohhmpefr
+    rghtrhhitghkucfuthgvihhnhhgrrhguthcuoehpshesphhkshdrihhmqeenucggtffrrg
+    htthgvrhhnpeevkeekfffhiedtleduiefgjedttedvledvudehgfeugedugffhueekhfej
+    vdektdenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+    hpshesphhkshdrihhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepsggvnh
+    drkhhnohgslhgvodhgihhthhhusgesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:JYctaAqZ-NTv1vjmTAPwlpCDg7r8k936Bet6l7Dal0IA0oTwqJecJA>
+    <xmx:JYctaJrp0wRTl1SoFngWxNE6UEKPN1bu6ZmY3MWIzO762Vkj4ccL4A>
+    <xmx:JYctaORu-dgHOAdRCdRORo9B8AuCLia56gJS2PzE80H6EYBQYnBqaQ>
+    <xmx:JYctaJqgouB6BMSKyWPoBZYsLJxg7z1QiPyPdYPhmTTTr3QznDKsmg>
+    <xmx:JoctaFHQEA_08aUNmozKu28Mnz3Gvti0iOymIdoBBT2djUrh9CCR74wN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 03:56:17 -0400 (EDT)
+ 21 May 2025 03:56:21 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id f1093ee5 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Wed, 21 May 2025 07:56:15 +0000 (UTC)
-Date: Wed, 21 May 2025 09:56:07 +0200
+	by mail (OpenSMTPD) with ESMTPSA id e150a89a (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Wed, 21 May 2025 07:56:20 +0000 (UTC)
+Date: Wed, 21 May 2025 09:56:19 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: "D. Ben Knoble" <ben.knoble+github@gmail.com>
-Cc: git@vger.kernel.org, Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Jeff King <peff@peff.net>, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Calvin Wan <calvinwan@google.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH 2/4] editor: use standard strvec API to receive
- environment for external editors
-Message-ID: <aC2HF1VEosDMY_A2@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/4] t7005: sanitize test environment for subsequent tests
+Message-ID: <aC2HI4sMF3t8K4Jv@pks.im>
 References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
- <20250520193506.95199-3-ben.knoble+github@gmail.com>
+ <20250520193506.95199-2-ben.knoble+github@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,25 +86,87 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250520193506.95199-3-ben.knoble+github@gmail.com>
+In-Reply-To: <20250520193506.95199-2-ben.knoble+github@gmail.com>
 
-On Tue, May 20, 2025 at 03:34:56PM -0400, D. Ben Knoble wrote:
-> Going back to the introduction of the env parameter for the editor in
-> 8babab95af (builtin-commit.c: export GIT_INDEX_FILE for launch_editor as
-> well., 2007-11-26), we pass a constant array of strings: as the
-> surrounding APIs evolved to use strvecs, the editor code did not.
+On Tue, May 20, 2025 at 03:34:55PM -0400, D. Ben Knoble wrote:
+> Some of the editor tests manipulate the environment or config in ways
+> that affect future tests (because they test a sequence of overrides),
+> but those modifications are visible to future tests and create a footgun
+> for them. Use test_config and undo environment modifications once
+> finished.
 > 
-> There is only one caller of all 3 editor APIs that does not pass a NULL
-> environment (the same caller for which this parameter was added), and
-> it already has a strvec available to use.
-
-Okay. It would've been nice to explain _why_ we want to do this change,
-but the change itself looks sensible.
-
 > Signed-off-by: D. Ben Knoble <ben.knoble+github@gmail.com>
-> Helped-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+> ---
+>  t/t7005-editor.sh | 7 +++----
+>  1 file changed, 3 insertions(+), 4 deletions(-)
+> 
+> diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
+> index 5fcf281dfb..06fa1ecd91 100755
+> --- a/t/t7005-editor.sh
+> +++ b/t/t7005-editor.sh
+> @@ -111,6 +111,8 @@
+>  	'
+>  done
+>  
+> +unset EDITOR VISUAL GIT_EDITOR
+> +git config --unset-all core.editor
+>  test_expect_success 'editor with a space' '
+>  	echo "echo space >\"\$1\"" >"e space.sh" &&
+>  	chmod a+x "e space.sh" &&
 
-The order of these trailers should be reversed -- your SOB should always
-come last.
+Could we maybe adapt the tests that set those envvars to use a
+`test_when_finished`? Something like this (untested) patch:
+
+diff --git a/t/t7005-editor.sh b/t/t7005-editor.sh
+index 5fcf281dfbf..a14ff4b38c4 100755
+--- a/t/t7005-editor.sh
++++ b/t/t7005-editor.sh
+@@ -93,17 +93,19 @@ unset EDITOR VISUAL GIT_EDITOR
+ git config --unset-all core.editor
+ for i in $vi EDITOR VISUAL core_editor GIT_EDITOR
+ do
+-	echo "Edited by $i" >expect
+-	case "$i" in
+-	core_editor)
+-		git config core.editor ./e-core_editor.sh
+-		;;
+-	[A-Z]*)
+-		eval "$i=./e-$i.sh"
+-		export $i
+-		;;
+-	esac
+ 	test_expect_success "Using $i (override)" '
++		echo "Edited by $i" >expect &&
++		case "$i" in
++		core_editor)
++			test_config core.editor ./e-core_editor.sh
++			;;
++		[A-Z]*)
++			test_when_finished "unset $i" &&
++			eval "$i=./e-$i.sh" &&
++			export $i
++			;;
++		esac &&
++
+ 		git --exec-path=. commit --amend &&
+ 		git show -s --pretty=oneline |
+ 		sed -e "s/^[0-9a-f]* //" >actual &&
+
+
+> @@ -119,13 +121,10 @@
+>  
+>  '
+>  
+> -unset GIT_EDITOR
+>  test_expect_success 'core.editor with a space' '
+> -
+> -	git config core.editor \"./e\ space.sh\" &&
+> +	test_config core.editor \"./e\ space.sh\" &&
+>  	git commit --amend &&
+>  	test space = "$(git show -s --pretty=format:%s)"
+> -
+>  '
+
+This hunk looks good to me.
 
 Patrick
