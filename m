@@ -1,55 +1,58 @@
 Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.7])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 762391E98F8
-	for <git@vger.kernel.org>; Wed, 21 May 2025 23:29:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AE423A9A0
+	for <git@vger.kernel.org>; Wed, 21 May 2025 23:29:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=192.198.163.7
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747870164; cv=none; b=YEOh2IL240wFXRqewJM2ChMpHcV9Ko7CztKZrRV/dzvBjYJEcjByQclRB23zIdXLapr0zgSwAqXzZVmSjGeJNGJ4Ws0R8xQ1xkEtwqExr9641KhPHZ1luJYOczcOqsV/6ZxKmN+i/gQVGY1JC57snILOSKrCqZobOal9i77dqCc=
+	t=1747870166; cv=none; b=H3h+Ofhimoe+fw6hN/q+7VuXsYv7uTLhBV/eD4X+GIGPRNJDvdPLMcT99YBU4ePFDOP9eYPg9gmcDKvRDNTOW9dENwdVdTMgwMM7nyxjvf/oZRuaHVIAarQ4cmLZ/rt4wkpyoAWtev11CC6D/1KlIe0FuYiCedvasrOSvwjlnJA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747870164; c=relaxed/simple;
-	bh=UiZJqYMVUUH9Qsv+CGBhfcs6RTuhrv+SwwLSb323JnY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=l5BMsNMDrKrzS9x1zc9PrTVKgSF8G81gGwIqF8qtjQcKovgyuA67AmLsWJ/CR/Y51u04WIGuuz5fqMkJc0FbZXvnJ3cBJUO9KJcR/jVDVZPApDs2a/bp5me+EJjkfXHlY5ktzeSwXmbwOXdMNkQv5y8mWW3jDPeKUfV1lxnvrI0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=a0EvE/ej; arc=none smtp.client-ip=192.198.163.7
+	s=arc-20240116; t=1747870166; c=relaxed/simple;
+	bh=ri4OAQ3BjJB5N+RvDF9TVjFGrLV3rWxmwhsMRgnHNCs=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=O83HFgNcY0EDg8P4XEUWkRMtYyhcRowoiyxcYVfpKNDsjcvGYaFD5SeE578OJropU99wDnG4XCJpxPJqicSTUifqPtNwTwWWp0EUyXuAtI5PTrEU6IhARXGqUPNq+fW6imdfnwhQOyt03Wd9Xl3r1QrI/1TxPjpc5s5/y9oMgZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com; spf=pass smtp.mailfrom=intel.com; dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b=esSYxRRW; arc=none smtp.client-ip=192.198.163.7
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="a0EvE/ej"
+	dkim=pass (2048-bit key) header.d=intel.com header.i=@intel.com header.b="esSYxRRW"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1747870163; x=1779406163;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=UiZJqYMVUUH9Qsv+CGBhfcs6RTuhrv+SwwLSb323JnY=;
-  b=a0EvE/ejC+NOuevpgivroD4rx2lEdVd15ofF1JzFoO6iru4YJcbGMjvz
-   jH3Ahl89E2/6GWYTD4sJlK1CsAMzlZP+8u6sSFcRRmJOKmpGNDQCElFj/
-   Gi6GewQ9Y3/G3vph0zxdTQRSMXYemdNtZah3oZZHz900wL3g8HSjtEKW1
-   SqJm6qF6jsjCdzT4m0ydMLixzmhonPKerPGhXWexfunUaGzeWYsc9QCpw
-   g+3JDTlHkrq92h4wBuFqd+0qQuszBr10YIHQtRviYgzhh/C9mKziGMUN2
-   ciclH1fHUEhr9g+Jk43iq0VG9shOjOyb9GZgsVJam1EV1W65vqSQ8oQX2
-   g==;
-X-CSE-ConnectionGUID: lC/DQJPaQkiBnZe3yxw3Kw==
-X-CSE-MsgGUID: gazRODj6QwWIRXY8OvwIdg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11440"; a="75271675"
+  t=1747870165; x=1779406165;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=ri4OAQ3BjJB5N+RvDF9TVjFGrLV3rWxmwhsMRgnHNCs=;
+  b=esSYxRRWBVlIOJJUxBguzvd/frolT4Ozu/US782vVilqCQsZ7j40IYY6
+   MlUE84K88cwsf/fL0YprZWg1L1CaD1ghWS1stE3y33/UwCAO08zPihVhu
+   yQBbYB5NoeCOnea4TecTtkdTgWpYqfzVtjB2SFNgE/WKVdAMlSkpJxGLG
+   5CAavn3FJzUcrtRaV88BJ7LwD4AXPVaS75nR38UFA+8D7r0/hRSgASIlu
+   fq8h3quM1lpX8czT3ydH5Su479JPH2RbkmWg6trmuh3+3im3kAvm3GIz+
+   gM+NVchz7Az5dCa74bzGzaBHFmFVb5/Pk/T/Ge24X60Sa7zVO40qRL79Q
+   A==;
+X-CSE-ConnectionGUID: 3RB7uzGvS6a8BzcpGViqyg==
+X-CSE-MsgGUID: /onP3aQpTW+ZQOCrX1TBvg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11440"; a="75271678"
 X-IronPort-AV: E=Sophos;i="6.15,304,1739865600"; 
-   d="scan'208";a="75271675"
+   d="scan'208";a="75271678"
 Received: from orviesa009.jf.intel.com ([10.64.159.149])
   by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2025 16:29:22 -0700
-X-CSE-ConnectionGUID: y712KWwNS7iJkQ7zLit5Yg==
-X-CSE-MsgGUID: RENn2XetRZ6Z1EKJ4bf5iw==
+X-CSE-ConnectionGUID: higxkGieScifhlF7YOTf0Q==
+X-CSE-MsgGUID: N+3GG5uxSA2mAQwNwXEGnQ==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.15,304,1739865600"; 
-   d="scan'208";a="140072359"
+   d="scan'208";a="140072360"
 Received: from jekeller-desk.jf.intel.com ([10.166.241.15])
   by orviesa009-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 21 May 2025 16:29:21 -0700
 From: Jacob Keller <jacob.e.keller@intel.com>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Jacob Keller <jacob.keller@gmail.com>
-Subject: [PATCH v4 0/3] diff: add pathspec support to --no-index
-Date: Wed, 21 May 2025 16:29:14 -0700
-Message-ID: <20250521232917.2333291-1-jacob.e.keller@intel.com>
+Subject: [PATCH v4 1/3] pathspec: add match_leading_pathspec variant
+Date: Wed, 21 May 2025 16:29:15 -0700
+Message-ID: <20250521232917.2333291-2-jacob.e.keller@intel.com>
 X-Mailer: git-send-email 2.48.1.397.gec9d649cc640
+In-Reply-To: <20250521232917.2333291-1-jacob.e.keller@intel.com>
+References: <20250521232917.2333291-1-jacob.e.keller@intel.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -60,49 +63,70 @@ Content-Transfer-Encoding: 8bit
 
 From: Jacob Keller <jacob.keller@gmail.com>
 
-This series adds support for using pathspecs to limit the comparison when
-using git diff --no-index. This is similar to how you can limit what is
-included with pathspecs when comparing inside a repository.
+The do_match_pathspec() function has the DO_MATCH_LEADING_PATHSPEC
+option to allow pathspecs to match when matching "src" against a
+pathspec like "src/path/...". This support is not exposed by
+match_pathspec, and the internal flags to do_match_pathspec are not
+exposed outside of dir.c
 
-This version uses only one set of pathspecs and instead uses some logic to
-skip past the root of each directory tree being scanned. This avoids needing
-to parse pathspecs multiple times, and is overall a simpler approach.
+The upcoming support for pathspecs in git diff --no-index need the
+LEADING matching behavior when iterating down through a directory with
+readdir.
 
-I also opted to add a match_leading_pathspec() instead of exposing the
-match_pathspec_with_flags(), since I didn't how DO_MATCH_EXCLUDES wasn't
-exposed. It felt messy.
+We could try to expose the match_pathspec_with_flags to the public API.
+However, DO_MATCH_EXCLUDES really shouldn't be public, and its a bit
+weird to only have a few of the flags become public.
 
-I tried a couple of different methods for skipping past the leading portion
-of a path, including skip_prefix. Ultimately just the index to skip to
-seemed like the simplest solution. I like that it means we only need a
-single pathspec array now, and that we no longer have to worry about
-changing prefix_path_gently.
+Instead, add match_leading_pathspec() as a function which sets both
+DO_MATCH_DIRECTORY and DO_MATCH_LEADING_PATHSPEC when is_dir is true.
 
-Changes since v3:
-* Drop the patch modifying prefix_path(_gently).
-* Instead of exposing the do_match_pathspec flags, create a
-  match_leading_pathspec() variant that sets both flags when is_dir is true.
-* Use some simple logic to skip past the starting portions of each path
-  before calling match_leading_pathspec
-* Re-write the commit message for the final patch
-* Add a couple more test cases
-* Simplify existing test cases to use --name-status
-* Drop remaining TODOs
+This will be used in a following change to support pathspec matching in
+git diff --no-index.
 
-Jacob Keller (3):
-  pathspec: add match_leading_pathspec variant
-  pathspec: add flag to indicate operation without repository
-  diff --no-index: support limiting by pathspec
+Signed-off-by: Jacob Keller <jacob.keller@gmail.com>
+---
+ pathspec.h |  6 ++++++
+ dir.c      | 10 ++++++++++
+ 2 files changed, 16 insertions(+)
 
- pathspec.h                  | 11 +++++
- builtin/diff.c              |  2 +-
- diff-no-index.c             | 89 ++++++++++++++++++++++++++++++-------
- dir.c                       | 19 ++++++--
- pathspec.c                  |  6 ++-
- Documentation/git-diff.adoc | 10 +++--
- t/t4053-diff-no-index.sh    | 75 +++++++++++++++++++++++++++++++
- 7 files changed, 187 insertions(+), 25 deletions(-)
-
+diff --git a/pathspec.h b/pathspec.h
+index de537cff3cb6..cda3eb5b91f7 100644
+--- a/pathspec.h
++++ b/pathspec.h
+@@ -184,6 +184,12 @@ int match_pathspec(struct index_state *istate,
+ 		   const char *name, int namelen,
+ 		   int prefix, char *seen, int is_dir);
+ 
++/* Set both DO_MATCH_DIRECTORY and DO_MATCH_LEADING_PATHSPEC if is_dir true */
++int match_leading_pathspec(struct index_state *istate,
++			   const struct pathspec *ps,
++			   const char *name, int namelen,
++			   int prefix, char *seen, int is_dir);
++
+ /*
+  * Determine whether a pathspec will match only entire index entries (non-sparse
+  * files and/or entire sparse directories). If the pathspec has the potential to
+diff --git a/dir.c b/dir.c
+index a374972b6243..86eb77b82a79 100644
+--- a/dir.c
++++ b/dir.c
+@@ -577,6 +577,16 @@ int match_pathspec(struct index_state *istate,
+ 					 prefix, seen, flags);
+ }
+ 
++int match_leading_pathspec(struct index_state *istate,
++			   const struct pathspec *ps,
++			   const char *name, int namelen,
++			   int prefix, char *seen, int is_dir)
++{
++	unsigned flags = is_dir ? DO_MATCH_DIRECTORY | DO_MATCH_LEADING_PATHSPEC : 0;
++	return match_pathspec_with_flags(istate, ps, name, namelen,
++					 prefix, seen, flags);
++}
++
+ /**
+  * Check if a submodule is a superset of the pathspec
+  */
 -- 
 2.48.1.397.gec9d649cc640
 
