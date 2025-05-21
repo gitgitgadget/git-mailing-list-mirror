@@ -1,123 +1,122 @@
-Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21DB826983B
-	for <git@vger.kernel.org>; Wed, 21 May 2025 13:14:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F25D6239585
+	for <git@vger.kernel.org>; Wed, 21 May 2025 13:14:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747833266; cv=none; b=SZZqKztkxiKEnzsgkhs37DJ/2A8gpEKG+ic14exwYXnznHw9KX+x2h7BHhSWaclFePSqb6HlhyWNuaoBd6CfP2C1Ht99PDDejisTi2hW07BvWjILa3xk3fhQM0B7Rt6wpbLQENuKpmZ/hnupCDE24RHiCYwBQjQKff65dRY1mI4=
+	t=1747833273; cv=none; b=bZ3kMLayqQeDDCQ+v8aYRTI3mSjmkNIycQJfOflXXy3JlBjfUYunCmbJTFjzf4Szcm5bXfg8uZd5Ng/la5rtB6oLcMPt0i5N2Kv3YtR7QcB8YVlaFZIQq2YYwbi9+Kd7FqDcAlK/2XAGsz87HvF9MxVkbMc7CJZpbw4t3cut/3s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747833266; c=relaxed/simple;
-	bh=p+ABMJwQfU1Vh02nl2cM5rJPJ8t5+6IIUK4NSZtLm6g=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=klQlZEF6dljtRUFNU7ooYAYAY/S5mxL6SCWgxdB3xt1WlkPpOp4aN3inaaMGingSNIQRZOZxAVUyt3EVWT9DAIYD/RFxtIfxR7o6q2HAjC/2Es4xroyOjInbDSOeAkkT5SGCsixt6Sf269iiFR4phffnKSTEspzoloNLDn4Em1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=FJ+txef6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ApxA/xe5; arc=none smtp.client-ip=202.12.124.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747833273; c=relaxed/simple;
+	bh=HsQX7Rl9Eh9N3RP34GWjDpD5IT/mN9T5P1hxzcQFLOY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=oGz4xMFfQegc9xt/OZ0eO2uvOzqxkoGCLWtLYsJoHctL/IJ4PsIa+x3bQbeeMAp9yZ440q9lgPQFNokhEgViCFhjbsybkJ3VLH1IaEkv8u4f9n+JIepQZysKmzF+3DBjrMbR+9uQBnpT67Rs1Afq7p8YHNEtrgfo5eQAdzUX2So=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VGgXkUCz; arc=none smtp.client-ip=209.85.208.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="FJ+txef6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ApxA/xe5"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 106902540139;
-	Wed, 21 May 2025 09:14:23 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-04.internal (MEProxy); Wed, 21 May 2025 09:14:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747833262; x=1747919662; bh=qBDd51H2Z7
-	JId5DBDC78HYI16FZekiZvPwpzVLEF4MM=; b=FJ+txef6JDXxro23sfsGFvQKfd
-	OCQYQYLrr9smzMfvEIkcog3yD6oMjofmtaQn9TDz1AAscE24qaJWpfjzPNj8Rw8d
-	6hD+nBf3Bp1hcckPCD29+lyOA5A4bhuSmNndTpXqnaBMEltWVJvgfVdmCNikYfr3
-	1lwMr7JZmG0qPyx43GjISoiY66WxgKP3iG+zGuG2lWWFmfzQay/L+yq7PZ+aJAeI
-	ryD/lqwkBVLhsS8XYTykhorNPOjM/bsXILgnvnuqa8yCYs9TMGru54B5dmuUX73g
-	XNHTtu8WTKFOG9TAQ+s3Xa3ILeORN0XtO4FtnBuOG6BOxemsrjeADsIrFOSQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747833262; x=1747919662; bh=qBDd51H2Z7JId5DBDC78HYI16FZekiZvPwp
-	zVLEF4MM=; b=ApxA/xe5PE5iCwDuh+cXRiuNW2/7i3whGdiX2l2LCEOPXBNNc18
-	5xHxV5ryTm+NQpkE6p2olS8IK9oKah+enVIvYZvH3EHuVxIoQs0U7MFZ+OW2GiPG
-	y8NdrvzvgPxGnTIudKl95grhTQicxe4eXcqSMT76r3Zv+y/nEoR3WrKAJUOUE0Ym
-	k8gwBf7ql6qC5rp2QLlE9/pqetE07n9dg92c8Y5P0V2viZ9yvacltU+nBWK3ZRkD
-	KLMX9KFwy4lSYMxwpm4c4WNP5SMGli3ZkCuZKRnWDr9Y6fbxG2snPJEL9NNret4n
-	EjyWHYdnZC/BIF/Lh/ixUQXGVfEnJ1MqATQ==
-X-ME-Sender: <xms:rtEtaG_mddv46swQrjgMJwtHe42gYJrJ98M01Pi-fiThcfxRkXunSQ>
-    <xme:rtEtaGvzhFarjmSNbqz28isTa9zMz5mYmNis406I3YI0QBzx4h2smg10vqv53bM7v
-    H7RgMRcdvDHEdeYiA>
-X-ME-Received: <xmr:rtEtaMAeUnE_bTdSIx3isQKX37nFVBM_sAV5nUCwfM-kb-WjRiuE2i32rvdGx5ZsIel19gzaCOksY-1_EtWfn2tWiD1Lojix7viY76o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefudekucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomh
-X-ME-Proxy: <xmx:rtEtaOcDeyXbT77B0YbmAthgZy1kzcpjQ1-6WTiD1CE3XBNQrGmaFg>
-    <xmx:rtEtaLP3GaLUkwPX5ieMzxgby4RCZV-w5GSU99LxV4CsI7EvsSiMzg>
-    <xmx:rtEtaInlg21WQvGaKxWvGzheyMlwNXnin5LxkYwFr88A3lg0eZS9mw>
-    <xmx:rtEtaNtiS_wi_oh2bJt_nNyGn8oSSyPhnSRQT0CKEjbirLsioKsuAQ>
-    <xmx:rtEtaAZnl6UW8ZHHGOXb5PUANiCQjA1xYZb56C-uodO2UAmIeFMx3mHv>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 21 May 2025 09:14:22 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Karthik Nayak <karthik.188@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  peff@peff.net
-Subject: Re: [PATCH v3 0/4] fetch/receive: use batched reference updates
-In-Reply-To: <CAOLa=ZTyE9myZqy8UHe=YeZ-diy0Q1UDTBTB3d1XGC09XvshAQ@mail.gmail.com>
-	(Karthik Nayak's message of "Tue, 20 May 2025 02:05:09 -0700")
-References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
-	<20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
-	<xmqqy0usmprh.fsf@gitster.g>
-	<CAOLa=ZTyE9myZqy8UHe=YeZ-diy0Q1UDTBTB3d1XGC09XvshAQ@mail.gmail.com>
-Date: Wed, 21 May 2025 06:14:20 -0700
-Message-ID: <xmqqmsb6ds2b.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VGgXkUCz"
+Received: by mail-ed1-f42.google.com with SMTP id 4fb4d7f45d1cf-60236e3d093so1273203a12.3
+        for <git@vger.kernel.org>; Wed, 21 May 2025 06:14:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747833270; x=1748438070; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tsxXG3IsOjFJNj/q+ke8BP4R4F7Jn7THSmzUHqTONM0=;
+        b=VGgXkUCzAqvMLu2RKdnlZ8s1SqYggpm00CqT/iVSM+lYWB44A72ezjVMNugp5wInkv
+         l1UlYzGGEazzH0nJaJZ57l6/qPphwf99tRVRwoj60wH0xxhMcCTTWbgq+QsWE0C8tvAE
+         EgMM9ces4dySy3KphGxBT4CQecWyrGA5diiGO2AXfZfhy9RIdyaTVfi1ZrXoifwKcZ1f
+         zq5GOl5a0Q1YPiAd5wn6cAdFmyXsu3qNrnR1TMkcU2acT0mTzQV9Bvtd2kRR2pANgBRj
+         A412uYjcRGXEiaNR0x0HZZZPQ4vddLaqnP/xciC/UgURUOScNR68Td1IuJBPYgdPoGwc
+         lDDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747833270; x=1748438070;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tsxXG3IsOjFJNj/q+ke8BP4R4F7Jn7THSmzUHqTONM0=;
+        b=aoL8cZNbS7feTGUrlRtS2mdzob6reaWGuc0w/AbR5lIfhsmpndA30R3EB5o2xAAbQT
+         tpxGvz+MItGN/2jEprgCyY4o93KG8wz7qaPhC0XZZsH6Hah31uiCNpYP9yy/RJ0kbTcb
+         v+nQgl6vbQzKsCnbMCuQGnQQ90Mfd1c50SA7rJDe1I0qUhNzZUaGv/AOtUEHe++H7L6T
+         M02h14m7t2I1z4EEz3EyDZ/h5vsuuxOnbYJkwVEZaNlck/cDet1+h7oz7sDaDBJYPXow
+         qmdR3//HdZLGxXykfvUr2kJ2Zxm8NEngXnsCkIPMuLG07fmLe9s2aaC3bzvjzP7QjCGD
+         fFRg==
+X-Gm-Message-State: AOJu0YzluJg6n3RHBPOpgAP81AqmcScX1pzVQRUGSFntBenduuNss4zE
+	G+WdxLKb5UbR/sIiqLJcyQThP8EcopK6lPOUf407ZaK4kn7K4S/Y8++KgsqJK0tcQxsEdLYiFnM
+	LHwaPAM9RrKqIVL0nKa5MW/wVIzYCyJo=
+X-Gm-Gg: ASbGncsOpN+W4wMiPM9FxEjpthI6oU4Of1KJbwpa1KUDAi+Y1krDLVqaju9po/TmEf2
+	JiK2GLNxk8LZhOsWB1nnTw9t7Ru4Leh6y8S8lPY3tLAxbB5mCb2QglKMZ3k/u9GZZfuWbX7JM/E
+	Zem1TM+vwNiA9SrZxsm3/t6v4Mm8MpeTIcT0UOgmTK9pwEn8YtzZoxX20tYqkBnlnJKmw=
+X-Google-Smtp-Source: AGHT+IFLzmcLSpSGp6ofkP+QV8otrj+dgiGTNbLji0winiU/ztjayGejoQ+EL9azxDIVDLgjJgsogCYGSqy/O0/RdLg=
+X-Received: by 2002:a17:907:3e05:b0:ad2:40ee:5e26 with SMTP id
+ a640c23a62f3a-ad52d46a3a8mr1934500466b.4.1747833270047; Wed, 21 May 2025
+ 06:14:30 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <cover.1747753388.git.phillip.wood@dunelm.org.uk> <29769df1c601c77031a27f3b3e5b571d5d7d043e.1747753388.git.phillip.wood@dunelm.org.uk>
+In-Reply-To: <29769df1c601c77031a27f3b3e5b571d5d7d043e.1747753388.git.phillip.wood@dunelm.org.uk>
+From: "D. Ben Knoble" <ben.knoble@gmail.com>
+Date: Wed, 21 May 2025 09:14:14 -0400
+X-Gm-Features: AX0GCFvzHbHFcnVBVq0JASZ_9P2nsAfSQfxA4dOt05dAysYMd2IGCWvctihzzQY
+Message-ID: <CALnO6CCAUjd=x2bJALyoPMBGeheQ=KMvc4MPx2TmNt1znxVosQ@mail.gmail.com>
+Subject: Re: [PATCH 4/4] midx docs: clarify tie breaking
+To: Phillip Wood <phillip.wood@dunelm.org.uk>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, Taylor Blau <me@ttaylorr.com>, 
+	Phillip Wood <phillip.wood123@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Karthik Nayak <karthik.188@gmail.com> writes:
-
->> Not an issue with this series at all, but one thing I wondered is if
->> it makes sense to change the type of strmap_get/strmap_put to deal
->> with "const void *".  That way, it would not be necessary to cast
->> away the constness like so:
->>
->>>     -+	strmap_put(failed_refs, refname, ref_transaction_error_msg(err));
->>>     ++	strmap_put(failed_refs, refname, (char *)ref_transaction_error_msg(err));
->>
->> without harming the other side, namely
->>
->>>     @@ builtin/receive-pack.c: static void BUG_if_skipped_connectivity_check(struct com
->>>      +		if (reported_error)
->>>      +			cmd->error_string = reported_error;
->>>      +		else if (strmap_contains(&failed_refs, cmd->ref_name))
->>>     -+			cmd->error_string = xstrdup(strmap_get(&failed_refs, cmd->ref_name));
->>>     ++			cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
->>
->> this piece of code.
->>
->> It may not make sense, and even if it did, of course, it is totally
->> outside of this series.
->>
->> Thanks.
+On Tue, May 20, 2025 at 11:15=E2=80=AFAM Phillip Wood <phillip.wood123@gmai=
+l.com> wrote:
 >
-> It definitely does, The only other typecast I did find for `strmap_put`
-> was within 'strmap.h'. Nevertheless, I think it makes sense to make that
-> change. strmap shouldn't modify the data provided. Perhaps #leftoverbits.
+> From: Phillip Wood <phillip.wood@dunelm.org.uk>
+>
+> Clarify what happens when an object exists in more than one pack, but
+> not in the preferred pack. If the user does not pass a preferred pack
+> then the pack with the lowest mtime is chosen as the preferred pack. For
+> objects that are not in the preferred pack the pack with the highest
+> mtime is used. "git multi-pack-index repack" relies on this behavior. If
+> ties were resolved in favor of the oldest pack as the current
+> documentation suggests the multi-pack index would not reference any of
+> the objects in the pack created by "git multi-pack-index repack".
+>
+> Signed-off-by: Phillip Wood <phillip.wood@dunelm.org.uk>
+> ---
+>  Documentation/git-multi-pack-index.adoc | 6 ++++--
+>  1 file changed, 4 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-multi-pack-index.adoc b/Documentation/git-=
+multi-pack-index.adoc
+> index 631d5c7d15c..1f016b2f682 100644
+> --- a/Documentation/git-multi-pack-index.adoc
+> +++ b/Documentation/git-multi-pack-index.adoc
+> @@ -40,8 +40,10 @@ write::
+>         --preferred-pack=3D<pack>::
+>                 Optionally specify the tie-breaking pack used when
+>                 multiple packs contain the same object. `<pack>` must
+> -               contain at least one object. If not given, ties are
+> -               broken in favor of the pack with the lowest mtime.
+> +               contain at least one object. If not given the pack with
+> +               the lowest mtime is used as the preferred pack. Ties
+> +               for objects that are not contained in the preferred
+> +               are resolved in favor of the pack with the newest mtime.
 
-OK.  Thanks.
+I think Taylor's reword caught this already: "preferred [what] are
+resolved =E2=80=A6"? (Probably "pack".)
+
+>
+>         --[no-]bitmap::
+>                 Control whether or not a multi-pack bitmap is written.
+> --
+> 2.49.0.897.gfad3eb7d210
+>
+>
+
+
+--=20
+D. Ben Knoble
