@@ -1,123 +1,185 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4909329B23A
-	for <git@vger.kernel.org>; Wed, 21 May 2025 20:38:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733562BE10F
+	for <git@vger.kernel.org>; Wed, 21 May 2025 21:08:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747859896; cv=none; b=LpbIQVIY6rDhSJy5SS9R9hn1iatXuGW+h3l70/IRFgGJkuw6SJHevd0JpVeyXa0XWTSltUBDOcMMQwlqotr4o6l2KMbLldy4TqkCZIa/x80z5ZmeG9LNERAHpt8qljWSMzVg8f2r1FqzhC3AeaAwuovpPr94GYDb/UGWpM2iONU=
+	t=1747861727; cv=none; b=chGofPmpPnsexIi/hooIWlBkx9bEJK23KHEB/I0zeL8UaDElE7KdsR6fsXLI5N2U9KDxVBXFaVfLa8lBdthNNSSrhCPjM9eTDSI/ToQj8dhCMOFewSVqnw9pYAlrUdyuuP0h0RqaBYZVL4lhGwYk9iW8jOz1pgu1BVXuO1wqOf4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747859896; c=relaxed/simple;
-	bh=+LxHowxVPhq7G8FdHRzUiWYhB+V1liY9fTm38Q8RXHM=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=BOsgSZ2btulId5pWoLLK06zCdw4/rObFThBvpyaxbzeyN4AOtNUbghp0xOP97NQ77Xkw/dlajy893VeqsmdW426ycqmOfXriTAYWkOb6Tur90BHGmH+RV4LURyaMxb4/9bQNKTMw+WsVCO9vnoNO2yfnfjakZBpx2MjZRoaqVms=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=d7/IWuiq; arc=none smtp.client-ip=209.85.167.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747861727; c=relaxed/simple;
+	bh=0mHJThcCjfgMjqb/IwItH0gWyZZH5gwRKBND0I+cMYs=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=EkvTqW3AQ3LllNvA+D13HPdzxB33Co8/0SgYnI+ckQafOPR4lJ8EEq5Oq9P0qc/9NhY4OrRe+4co8DNKH6qDKdHHme17LqYQ1TPNMpa47wCDDP2+W2BWtuAU44qYmLFxWTEXduOUA4vZBK6NqH5gT5v+jvYMrJBB7siks2+fd2s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EKRd5rWn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NofBNKj8; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="d7/IWuiq"
-Received: by mail-lf1-f46.google.com with SMTP id 2adb3069b0e04-551ed563740so5635102e87.2
-        for <git@vger.kernel.org>; Wed, 21 May 2025 13:38:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747859892; x=1748464692; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=np6sESoj/Aod7PLYr1rEzUaG/tBahbMy2byo/FhjOx8=;
-        b=d7/IWuiqKyMIcms1Tcn9cOmb45rPyYLxuIAH7NCvPs0vR0YmyPsCpjRMoNQU6e/txh
-         MBppDQ5Bw5osOXReUC1VAwfQ6yYDrzyna7iG6fqW9I6XkqCUqmfy+F1VC1GZOidTtHoU
-         veCkTe09FfQYVxeYKRq0F3zFc6TFYQaCDN7FfCGNdGPdMn45H47ef8yiIDuMQzjqu7+x
-         KDUGsNlZxiIpTp0CKWqn7uNm7krqx8s67RZIA04zKsLkHPy9iyUi8U2hDCkXPObHG8Wa
-         pBmMXUab4VUWADXD4BVooQhkFdffvDfhwLXmfnezQyN+MjmXuBxgVEEGRE5P6bFRuPFy
-         JROA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747859892; x=1748464692;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=np6sESoj/Aod7PLYr1rEzUaG/tBahbMy2byo/FhjOx8=;
-        b=CUs8PZlehLQnTQitbnLzYmmzdqB/RvLl2H+GvNUiJ2meoINAi5YR5bUS1zZ+LGkCKt
-         hct03ifpttWV9cppwH7QvKMeNdlG9ERwdsoUduq2Tm2/KpNBIVIlL9f5ZE8wmlfyyRCs
-         7bOQfX3suQs23kb9nDaErGz+o2BssVe+f1tr3LL4f7fHPTd1Mv/2zAQixnRQKi7TNBtM
-         j0cs7It6bUlU4JV0DR78AIiGz8/c/OxAN25OleVH1E3k8he5DvdsBIsJPnsp1yXibXWK
-         pD9SbUQUwPkw+/lAos3EnpmvPOS6A7sJtK6segtRHv5Pk3uh6opTsMsBV6slNQQdtoZZ
-         DXGA==
-X-Forwarded-Encrypted: i=1; AJvYcCUkNTuDTNxnAPU26i7VMkXUDo48yrM6kBAF6AGUqVNt1LxUAZQtavoP/3dv7DlPl+jqAL0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yy1+CV3jQTouAGd3Pf51U78XieVQididy02BpmjbQ8Ca6qFxV9A
-	czegzskv8cIxqI69v5mRTorRwdJ6zhbiu1s1YiIDSRmVMrJNhXu4Ga28tOkgH5Gf4S8jZkI5GzA
-	2OI87dn6VN2lrFZ71HW4e4zO3/9QRoSiQFnma+wA=
-X-Gm-Gg: ASbGncvgigeWVez6hizmTY5n+Emq9FOuLM7cHCXla4ATdHDLqETHy9Ik2oy7hjiO5/t
-	HM5fbhh10WoWuZs4LmeadJ+MJ6uYmLL1sQdKHeH3zBvhtoXJEXkhF0lHmLiEwwlUoJtef5ulBrI
-	q5Xy+niumSjRil4BmozsYS28Ev65CLAZ02YC+0XmTlLz7E4iQSGjvjc3t8cnbNyEHq8NM3RPBpF
-	A==
-X-Google-Smtp-Source: AGHT+IFRu8074Gk06XT1+pCceEn487d1W7mHI18AwvaDJb9WIPQJM6YJJJASQusuQWuIvqXkOBIMxjMAPAFnhRfaXP4=
-X-Received: by 2002:a05:6512:460f:b0:54a:fa5a:e9b1 with SMTP id
- 2adb3069b0e04-550e7193751mr7059269e87.10.1747859892198; Wed, 21 May 2025
- 13:38:12 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EKRd5rWn";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NofBNKj8"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4F22211400FE;
+	Wed, 21 May 2025 17:08:43 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Wed, 21 May 2025 17:08:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747861723; x=1747948123; bh=BLe6OYAPqf
+	BWLTgb+rkBtdq3WBs3Qex0pTzLqUrrCYs=; b=EKRd5rWnnyiCA9M87Vhd4RfYMV
+	tMtQIXrkl2tHJ5b10kRO/J1I97Zudqr0UW//QTHSmrLv6YKtc8UUk2am4AMDBfaY
+	ST4jimy0fQMFlgezG2amHc49wrXAEQJM19uDe5L7Gz2+bdiPDtNUhGj6ZGVc86Xo
+	1C5iaCP8KjMzsMctcM2ZlPi+yJNZdQbgedS7/fw+vXq3pDVqQ7sb+WHtQJ7vJ/cJ
+	YznhWsPy3NsP7hJ1oW36/aiLmVroeC261vwKiyU6jYBeEJ4qbzfUXml+klgAC65T
+	ZQ7xLbJIZ76l+Vj5SL79LlWCLQ8La4C6kmLyhtRjy7SnpmOVEE0JGl3pdBDw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747861723; x=1747948123; bh=BLe6OYAPqfBWLTgb+rkBtdq3WBs3Qex0pTz
+	LqUrrCYs=; b=NofBNKj8vLD3kFwaB1CwfXNnjKW889vKRpJfd7b60tE91ubNAyN
+	sp/i7tGE+T/sj2dXspoXoPCyZAQTTrnMx867VZW9xI7xoreU3bHeERo4fa3Xj6UZ
+	sDpuZH5aOKB8b7l5Zlslq8GRRXo+7LKqNjH6MjaTzSl0QVKfZ+Hs+B5JIbb0+I3F
+	arv7+IjWY8aPfStZf0fHLH3Aup8O5eWzsazUZx7IPJxAUuFgG28JJI9mTWKe6UPq
+	q6eB76RjVqOVL8OM4XroeVSjr3xovORgcviguSfhGNvyFDNI7B0KabR+nOoQSR8V
+	+7YFaHbyKtxxBeJ2XXajoRqOUNDcUzXqBRw==
+X-ME-Sender: <xms:2kAuaL9B8D-f_JpRxyUW6wWuM8A4KxAxUGEtPGTt3V2uYyPpZBKd_Q>
+    <xme:2kAuaHu0Z5ovPBuZQ7lMDPy-dwvyn7H0aOcP4fGk7apiTS3b5y2EbNJJflF8DOsJP
+    tBFF5MIhdFjffVHxA>
+X-ME-Received: <xmr:2kAuaJCyEu3JebIbLZf3hgV5Z3A3TJxR9h-VMqppcOUrbU0nh9Dbr0CdOc_O5x8s0umA4HiFV9pUKe9uy6so882OPWAajy66K4SbOPI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeguddvucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnegoufhushhpvggtthffohhmrghi
+    nhculdegledmnecujfgurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrh
+    homheplfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtgho
+    mheqnecuggftrfgrthhtvghrnhepieeuieffleehudelleeffeehudefveetuefhiedtff
+    egudeigeeigfefgeefgefgnecuffhomhgrihhnpehmrghkrdguvghvpdifohhrughprhgv
+    shhsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
+    homhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepkedpmhho
+    uggvpehsmhhtphhouhhtpdhrtghpthhtohepfhgvrhhnrghnugholhhimhgrsghushhinh
+    gvshhssehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoheptghhrhhish
+    gtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehsthholhgvvgesghhm
+    rghilhdrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoh
+    epghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:2kAuaHfTBn9AXA0wAOjpyteBQ2lnS-8pNArOZ7XB9HHTK1E3AcXcvQ>
+    <xmx:2kAuaAO43JeYsr3UyEkOk5Kb5Hg8oXaGXAblKF3FsWfZ2fT0QsA45Q>
+    <xmx:2kAuaJmn97Ox15mn22rdkDEsrPbgcgkesMceXvfZ2XBZo5lNBka63g>
+    <xmx:2kAuaKtjr8JOJSPE1MVlilgSeE7bdBr68Hd4eacNwi8CEFSKPJYApA>
+    <xmx:20AuaBSygk4cvK0qeIgyPKZAvzdh888f-cLZ861ieVKuAaxN0LK8ywA3>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 21 May 2025 17:08:42 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Fernando Gouveia Lima <fernandolimabusiness@gmail.com>
+Cc: git@vger.kernel.org,
+    Patrick Steinhardt <ps@pks.im>,
+    Christian Couder <chriscool@tuxfamily.org>,
+    fernandolimabusiness@gmail.com,  stolee@gmail.com,  peff@peff.net
+Subject: Re: [Newcomer PATCH] log-tree.c: Supress Wsign-compare-warning
+In-Reply-To: <20250521202409.26879-1-fernandolimabusiness@gmail.com> (Fernando
+	Gouveia Lima's message of "Wed, 21 May 2025 17:24:09 -0300")
+References: <20250521202409.26879-1-fernandolimabusiness@gmail.com>
+Date: Wed, 21 May 2025 14:08:40 -0700
+Message-ID: <xmqqsekx8yef.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1970.git.git.1747827645129.gitgitgadget@gmail.com>
- <pull.1970.v2.git.git.1747858585623.gitgitgadget@gmail.com> <xmqqecwhaemu.fsf@gitster.g>
-In-Reply-To: <xmqqecwhaemu.fsf@gitster.g>
-From: Alex Mironov <alexandrfox@gmail.com>
-Date: Wed, 21 May 2025 22:37:58 +0200
-X-Gm-Features: AX0GCFvvvGKAxDhAuFqJOq0Y2eR2IX8oIg69cTEcPWhtPRRadOxKwzqPNQxKPac
-Message-ID: <CAC97EbxRpG1ecWcQ=yJHnqe7gXYG7BNo1sF9e9Kf-EOkDySfpw@mail.gmail.com>
-Subject: Re: [PATCH v2] name-hash: don't add sparse directories in threaded
- lazy init
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Alex Mironov via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-Hey Junio,
+Fernando Gouveia Lima fernandolimabusiness@gmail.com writes:
 
-With respect to messaging I more or less copy-pasted Derricks message
-from the original commit for non-threaded init: please check the
-referenced commit. Let me know if another wording is needed/preferred.
+> @@ -151,7 +151,7 @@ static int add_ref_decoration(const char *refname, const char *referent UNUSED,
+>  			      int flags UNUSED,
+>  			      void *cb_data)
+>  {
+> -	int i;
+> +	long unsigned int i;
+>  	struct object *obj;
+>  	enum object_type objtype;
+>  	enum decoration_type deco_type = DECORATION_NONE;
 
->  Also, can we have performance numbers in the
-proposed log message as well, or is the improvement too small to
-measure?
+The complaint is about this line of code:
 
-In their current form benchmarks do not show major improvements
-outside of special casing I mentioned in my previous message
-(existence of files/objects outside of sparse cones in special VFS
-setups). So, for the general audience this indeed can be treated as a
-correctness fix.
+	for (i = 0; i < ARRAY_SIZE(ref_namespace); i++) {
 
-On Wed, May 21, 2025 at 10:32=E2=80=AFPM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> "Alex Mironov via GitGitGadget" <gitgitgadget@gmail.com> writes:
->
-> > From: Alex Mironov <alexandrfox@gmail.com>
-> >
-> > Ensure that logic added in 5f11669586 (name-hash: don't add directories
-> > to name_hash, 2021-04-12) also applies in multithreaded hashtable init
-> > path.
-> >
-> > Sparse directory entries represent a directory that is outside the
-> > sparse-checkout definition. These are not paths to blobs, so should not
-> > be added to the name_hash table as they must never be queried.
->
-> The second paragraph sounds as if this is a correctness fix,
-> i.e. "should not be added" hints that we would see a wrong result
-> returned from the hashmap if you added these entries to the
-> name_hash.  If this is a performance-only fix, that should be more
-> clearly stated.  Also, can we have performance numbers in the
-> proposed log message as well, or is the improvement too small to
-> measure?
->
-> Thanks.
+where ref_namespace array is of NAMESPACE__COUNT size, which is the
+last enum in "enum ref_namespace".  Anybody can tell it is a small
+integer (like 9) that would fit comfotably well within the platform
+natural "int" on anybody that can run Git.
+
+ARRAY_SIZE() is defined in turns of sizeof(), so its type is "size_t";
+it cannot be narrower than "int", but that is immaterial.  Comparing
+'i' that counts up from 0 will never cause a problem.
+
+And the compiler ought to know all of the above, or should stay
+silent.
+
+The compiler is wrong in this case.  As I already have said on this
+list a few times, -Wsign-compare is often garbage and we should not
+bend over backwards to butcher perfectly good code only to silence
+its false positives.
+
+> @@ -458,7 +458,7 @@ void fmt_output_subject(struct strbuf *filename,
+>  	}
+>  	strbuf_addf(filename, "%04d-%s", nr, subject);
+>  
+> -	if (max_len < filename->len)
+> +	if (max_len < (int) filename->len)
+>  		strbuf_setlen(filename, max_len);
+
+This conversion is wrong, even if your compiler is made silent with
+this change.  The function begins like this:
+
+        void fmt_output_subject(struct strbuf *filename,
+                                const char *subject,
+                                struct rev_info *info)
+        {
+                const char *suffix = info->patch_suffix;
+                int nr = info->nr;
+                int start_len = filename->len;
+                int max_len = start_len + info->patch_name_max - (strlen(suffix) + 1);
+
+The filename variable is a pointer to a strbuf, whose .len member is
+of type size_t, which can be wider than a platform natural "int".
+Assigning it to "int start_len" risks overflowing and wrapping
+around, and "int max_len" is also wrong.
+
+So casting a large filename->len that would not fit within platform
+natural "int" may make your compiler silent when you compare it with
+max_len that is also platform natural "int".  But at that point,
+what are you comparing with what?  Imagine on a platform with 32-bit
+int and when the actual value of filename->len is very very long and
+longer than say 3 billion bytes.
+
+In this function, I think a more reasonable thing to do is to
+express various length invoved in size_t, and make sure computations
+among them does not over/underflow.
+
+	Side note: Those who are maintaining GSoC microproject ideas
+	page.  This is the second time in a few days that I had to
+	look at a patch that makes the code worse by blindly trying
+	to squelch the -Wsign-compare warnings.  Can you please take
+	that out of the list of suggested tasks?  Thanks.
+
+Fernando, please do not get discouraged by _our_ code being sloppy
+and GSoC microproject ideas page being under-specified.  Neither is
+your fault.
+
+And welcome to Git development community.
 
 
+[Footnote]
 
---=20
-Best,
-Alex Mironov
+Quite honestly, -Wsign-compare is mostly garbage [*] and I wish we
+did not add it to the developer settings.  A more effective way to
+squelch them is not by sprinkling the casts like this, but to remove
+it from config.mak.dev ;-)
+
+https://staticthinking.wordpress.com/2023/07/25/wsign-compare-is-garbage/
