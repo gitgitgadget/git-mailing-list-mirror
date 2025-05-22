@@ -1,49 +1,49 @@
 Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7D511E1E04
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FFBD1E0B9C
 	for <git@vger.kernel.org>; Thu, 22 May 2025 18:56:15 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747940177; cv=none; b=Rulz6CbwrOOqF6QtwqJB8PocDIUIvWxhNkKxCjqxLn2MpmpEVg9x8cJ5ZeXq7qr3MdSYP2t9fckJUPCKQOnXkKc+PoCkkkuQI8oU0UPljsIGxxJQd4mIEDdnVGkzx18bhNH6oym1Ef8E8MgYIviN95qB+/BUc+5KXjatCapgTBw=
+	t=1747940178; cv=none; b=WMWYrrZbM91waAfsGCUS1pr7QwAtBJFu+dOZowr+o60v2S8QvMx27CoBZ+yfW+0XH7Hi1RrrPMv5CaC+dmaWWAsv30+w938+7tT4VoOUERZy/9RGVArJyEQp6J10oK4Pr0BnmPnX45QY0ubNeOCixCA57FmIZz5FZLNOQmUiy8s=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747940177; c=relaxed/simple;
-	bh=mm/CXiPL24fxrNwax6IM2yAhBOo1yCVajV1srcCb/H4=;
+	s=arc-20240116; t=1747940178; c=relaxed/simple;
+	bh=t4xBtxt2QlcbvG8geT38QUX7KCBXjs8fYqQjZG4ancU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=p2DRM4hUMetLwCFy9rfucV6JSC0D6kZGm2T1/EvKQUsGzKwuqz8h1zc3PJAbbo5AnlbXrUE70WD4M87WGsQtQWPg4ugugxP8KSYDjnmqB/4wFa61JwnVlujjwmeTfcoKBLNRbzQkvT+hpaS70BWsOlF2GocRNsRHTcXNxjbbrYE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=O+/ClFPk; arc=none smtp.client-ip=172.105.7.114
+	 MIME-Version:Content-Type; b=FFH03SAEvjb8QMBLhvZ4Aa54lU2+nvq2Y0IoyXC39Amip6foLW/mIS59kQa1s2zn3FsbtI0V0Fk3Al7AgSq6skOZsx7B4IsKQ37ctEcbJNszDYwhcG6Hp2XV1Znuf5Hx/vjmPAly9eRkuVe4kPvOhuqM295Gi/CIKWYHuhmcxUM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=K4xtKAy4; arc=none smtp.client-ip=172.105.7.114
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="O+/ClFPk"
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="K4xtKAy4"
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
 	s=default; t=1747940174;
-	bh=mm/CXiPL24fxrNwax6IM2yAhBOo1yCVajV1srcCb/H4=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
-	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
-	 In-Reply-To:References:Content-Type:Content-Disposition;
-	b=O+/ClFPkhP+NLbJplcWZY3I+NliZ+stKqwaGIO8hBES0/UE9yP025QnvVELV1S79X
-	 Mihe0pBy4udxO5h5TonFTyfAA9AozPJHb94XeeelTiB5cri9cKBDiYnC3eoJtScdo/
-	 veHBpFGw8BU2apW/RpwgpW5hlcGEK/nzpi7q8b5b3sTSg9KZyyHe2zmHlxAUmzZC+8
-	 gJN02wxmV+Tl7r8RrpExxtOV/86ckL5qjbATJ/eBKUl+LPmYRADJ+AwM4vJwWUGHzO
-	 oY0lLb2ng003DenfFvRCwiefWbRThdkxyvTJVtY0d83AmurTTEybG66+6nuDbiauab
-	 WdLVPKp9GN9cHaTdpv0LzmZynnVvSBS5OKQOEnWUxOYJCPc4x/kwcYYds/63Ehcqfm
-	 FPy9mKzXR7cg43UmAjZGP5w8nNYdV2+4SxflSM/2nSsIhyF3VihEb2iqOXjad2TbiJ
-	 Jmy28kOyccgOkud2FL/RnHeujfl8s/ASiuObl3G8qgI8rtVaUT9
+	bh=t4xBtxt2QlcbvG8geT38QUX7KCBXjs8fYqQjZG4ancU=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:Content-Type:From:
+	 Reply-To:Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:
+	 Resent-Cc:In-Reply-To:References:Content-Type:Content-Disposition;
+	b=K4xtKAy472wrCtqtv+d+6gP4xM3LkdrWdfPI9jKpJfhjfUQaQX/V8luGispf3MYsK
+	 uqxRZHBurWXD4+Q3pp9BmduJP/HzcIgi4gDZdvHFaTa53wa19mYQ6e5C3vmVVKKiP/
+	 8xEw29B8lqGoYJfNxVswvRVR+/SzlqepodL0GMYZDxJasQAuAQuDa8uRfGzlLxv3kY
+	 MPbg3ABMic2AQeQM9UMG6cvEfgA7nGujqDt9igVvFsbEOFAzOm8/kdXMQieuJ3DnRe
+	 VgFquWcqMIA9dV4mWj9o4hfnKHibLVW8pjAJyq9vaDBjAGCfxtxJ6awucBwpFjFnwn
+	 pZ9wcu9lGytlQ8rERL/yGqFGOCYvnXswyQoHl/kqP11AlToDGUHrupSsP1WMLN13pL
+	 aE0Sp6g7My349Q0EBbpufQDgxKN8rN866m6v6F5StXnJTgnc6gdTUYr4i+ZvC26oHV
+	 Qr5mK2W0eJruEHrpvV+BDVzGGqmi2HfFNvKxS9cbw5SOc8r2/FH
 Received: from tapette.. (unknown [104.129.158.231])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id B4D7C2018E;
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 267E02018A;
 	Thu, 22 May 2025 18:56:14 +0000 (UTC)
 From: "brian m. carlson" <sandals@crustytoothpaste.net>
 To: <git@vger.kernel.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	pwodd,
 	"D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: [PATCH v6 2/5] reflog-walk: expose read_complete_reflog
-Date: Thu, 22 May 2025 18:55:21 +0000
-Message-ID: <20250522185524.18398-4-sandals@crustytoothpaste.net>
+Subject: [PATCH v6 0/5] Importing and exporting stashes to refs
+Date: Thu, 22 May 2025 18:55:19 +0000
+Message-ID: <20250522185524.18398-2-sandals@crustytoothpaste.net>
 X-Mailer: git-send-email 2.49.0.395.g12beb8f557c
 In-Reply-To: <20250522185524.18398-1-sandals@crustytoothpaste.net>
 References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
@@ -54,96 +54,86 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-In a future commit, we'll use this function and the corresponding free
-function to read the entire reflog.  Expose it in the header so we can
-do so.
+Stashes are currently stored using the reflog in a given repository.
+This is an interesting and novel way to handle them, but there is no way
+to easily move a set of stashes across machines.  For example, groups of
+stashes cannot be bundled, pushed, or fetched.
 
-Include the appropriate header files so that our header is complete.
+Let's solve this problem by allowing users to import and export stashes
+to a chain of commits.  The commits used in a stash export contain two
+parents: one which is the pointer to the next exported stash (or to an
+empty commit with no parents if there are no more) and the second is the
+stash commit that would normally be stored in the reflog.
 
-Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
----
- reflog-walk.c | 17 ++---------------
- reflog-walk.h | 18 ++++++++++++++++++
- 2 files changed, 20 insertions(+), 15 deletions(-)
+I will need Phillip's sign-off for the last patch, since his fixup patch
+didn't include it.
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index c7070b13b0..b7a9d70966 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -9,19 +9,6 @@
- #include "string-list.h"
- #include "reflog-walk.h"
- 
--struct complete_reflogs {
--	char *ref;
--	char *short_ref;
--	struct reflog_info {
--		struct object_id ooid, noid;
--		char *email;
--		timestamp_t timestamp;
--		int tz;
--		char *message;
--	} *items;
--	int nr, alloc;
--};
--
- static int read_one_reflog(struct object_id *ooid, struct object_id *noid,
- 		const char *email, timestamp_t timestamp, int tz,
- 		const char *message, void *cb_data)
-@@ -41,7 +28,7 @@ static int read_one_reflog(struct object_id *ooid, struct object_id *noid,
- 	return 0;
- }
- 
--static void free_complete_reflog(struct complete_reflogs *array)
-+void free_complete_reflog(struct complete_reflogs *array)
- {
- 	int i;
- 
-@@ -64,7 +51,7 @@ static void complete_reflogs_clear(void *util, const char *str UNUSED)
- 	free_complete_reflog(array);
- }
- 
--static struct complete_reflogs *read_complete_reflog(const char *ref)
-+struct complete_reflogs *read_complete_reflog(const char *ref)
- {
- 	struct complete_reflogs *reflogs =
- 		xcalloc(1, sizeof(struct complete_reflogs));
-diff --git a/reflog-walk.h b/reflog-walk.h
-index 989583dc55..8f0640f662 100644
---- a/reflog-walk.h
-+++ b/reflog-walk.h
-@@ -1,9 +1,24 @@
- #ifndef REFLOG_WALK_H
- #define REFLOG_WALK_H
- 
-+#include "git-compat-util.h"
-+#include "hash.h"
-+
- struct commit;
- struct reflog_walk_info;
- struct date_mode;
-+struct complete_reflogs {
-+	char *ref;
-+	char *short_ref;
-+	struct reflog_info {
-+		struct object_id ooid, noid;
-+		char *email;
-+		timestamp_t timestamp;
-+		int tz;
-+		char *message;
-+	} *items;
-+	int nr, alloc;
-+};
- 
- void init_reflog_walk(struct reflog_walk_info **info);
- void reflog_walk_info_release(struct reflog_walk_info *info);
-@@ -24,4 +39,7 @@ int reflog_walk_empty(struct reflog_walk_info *walk);
- 
- struct commit *next_reflog_entry(struct reflog_walk_info *reflog_info);
- 
-+void free_complete_reflog(struct complete_reflogs *array);
-+struct complete_reflogs *read_complete_reflog(const char *ref);
-+
- #endif
+Original thread at message-ID: <20220310173236.4165310-1-sandals@crustytoothpaste.net>
+
+Changes from v5:
+* Rename `parse_revision`.
+* Remove extra call to `free_stash_info`.
+* Fix parsing of existing commit.
+* Add more validation of imported stash commits.
+* Add more tests for improved validation of imported stash commits.
+* Explicitly cast `items.nr` and make the iteration counter an `ssize_t`
+  to avoid casting problems.
+* Don't require a trailing `\n\n` in commit messages.
+* Use `read_complete_reflog` to walk reflogs.
+* Be more defensive when using `lookup_commit_reference`.
+* Apply parts of Phillip's patches for improved robustness.
+* Update commit message to explain additional use cases.
+* Use `OPT_STRING` for `--to-ref`.
+
+Changes from v4:
+* Fix another use of oid_array.
+* Fix various memory leaks.
+* Fix a segfault which appeared after a rebase.
+* Use strstr for commits since we don't need to worry about NUL.
+* Added some additional tests.
+* Verify the ident values we're using to avoid using bad values.
+* Various other code cleanups.
+* Rebase on `master`.
+
+Changes from v3:
+* Fix strbuf handling to avoid leaks and generally be more sensible.
+* Make use of the error return code more often.
+* Use oid_array.
+* Tidy various parts of the code and fix long lines.
+* Simplify tests using git tag.
+* Shorten and tidy tests.
+* Add an additional test covering the base commit OID and importing and
+  exporting empty stashes.
+
+Changes from v2:
+* Fix uninitialized strbuf.
+* Avoid C99-style initializations.
+
+Changes from v1:
+* Change storage format as suggested by Junio.
+* Rename to GIT_OID_GENTLY.
+* Remove unnecessary initializations.
+* Use ALLOC_GROW_BY.
+* Ensure completely reproducible exports.
+* Avoid size_t.
+* Various other code cleanups.
+
+brian m. carlson (5):
+  object-name: make get_oid quietly return an error
+  reflog-walk: expose read_complete_reflog
+  builtin/stash: factor out revision parsing into a function
+  builtin/stash: provide a way to export stashes to a ref
+  builtin/stash: provide a way to import stashes from a ref
+
+ Documentation/git-stash.adoc |  29 ++-
+ builtin/stash.c              | 450 ++++++++++++++++++++++++++++++++++-
+ hash.h                       |   1 +
+ object-name.c                |   6 +-
+ reflog-walk.c                |  17 +-
+ reflog-walk.h                |  18 ++
+ t/t3903-stash.sh             |  94 ++++++++
+ 7 files changed, 587 insertions(+), 28 deletions(-)
+
