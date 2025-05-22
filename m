@@ -1,158 +1,159 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout-p-102.mailbox.org (mout-p-102.mailbox.org [80.241.56.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E65F2236E0
-	for <git@vger.kernel.org>; Thu, 22 May 2025 13:21:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8C628D832
+	for <git@vger.kernel.org>; Thu, 22 May 2025 14:45:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=80.241.56.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747920105; cv=none; b=tHbtPUnAih6adC8SEHrwKH5os5NeB1CLryFSd8q9JBF4icpJhoi4ijDDdob56uIF6tT635X0/YHdZYLIhjcyHxUmdpRtr/BKc3iTOVzV2drw2/Jxir6Vxx+/VOUh2xm7wT44IHHTLMmUfdJCrtk1rnHch61NdQEUYvidxZFMLh4=
+	t=1747925109; cv=none; b=I9GUVg7IyiK0JhcndHbfI1PX62lWl8n8govNxYg7rX/Sj5ed3CdoHqbeG8Oi4YVwpf0FDIj/RmqdcqLf166KDqhtCaHk/6V75UxIrRNG85Xgon51MJ3l4q2dAhc3ORjsIF5GRRiZ9qJ+4K7OpZAeMZjhmbgVZqX3T5v/Ve//8uc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747920105; c=relaxed/simple;
-	bh=Mvw0zxsxZieQoc26phMj75kutjg+KPuY5F0dD+ImxV8=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
-	 In-Reply-To:Content-Type; b=jAsaB2kQdb/ygtGOH06ZB+hC2qU6BfOvCWcRLchilYSdO9zz2aiccsgrImLrFVc+6DI18SpQmDE1vb6OxLGYpPMVNCMW+uvEy6bfJ60DX8uYUuNjhkS/qbg9sZR7BwZ7Nmq9ld6NiLlYKOfSP5olCUHR90Sj/oA2EIDQWR0u2DA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dsTk8Igk; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747925109; c=relaxed/simple;
+	bh=q5fTfPLULs/1S+U9da4KeAk78abVRcDxeKrA1BOErp8=;
+	h=Message-ID:Date:MIME-Version:To:From:Subject:Content-Type; b=U5G7YxSpsiasUVPVNrgIRMSNO2qU3CPMLsCycboNI45+oWdSmLO3NGh3iRjZY2FiA/t7g4R/LywJNiRUWDkHL+pHKS9Ybf2ktOuMzNXNG2+eOmDUwkQqtCZBmGtNJuAYqvMidwXCRQuXV7Uic/NfYP5ASfdk9Vtz1YMJDpjrQpQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roelsengers.nl; spf=pass smtp.mailfrom=roelsengers.nl; dkim=pass (2048-bit key) header.d=roelsengers.nl header.i=@roelsengers.nl header.b=MAhM6x79; arc=none smtp.client-ip=80.241.56.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=roelsengers.nl
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=roelsengers.nl
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dsTk8Igk"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a35b7e60cbso5466868f8f.1
-        for <git@vger.kernel.org>; Thu, 22 May 2025 06:21:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747920102; x=1748524902; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id:from
-         :to:cc:subject:date:message-id:reply-to;
-        bh=E1mJLv9x0C1VmoFVdzq5GIROGBhFfc11wh+Do5IsGhs=;
-        b=dsTk8Igk+4iuUpXlEVek+H6k1Jhh17ar6C4x0KtdWf6ZWmsy+wVSW9v/zJFQPIIYtc
-         jATohi6mpFoEjU9k7Vfqzl5StmVu8bloY4/F9TyeevIkKFE2MjFm4KUUJASXIRanAGV9
-         J51sv0kUOddeBxiFGDl4GCa0K1ULWXwAHtHwMO9ge/4NzD/h05+ADq6L77tsZ1ly1Zq6
-         W2ihxRQSeRQ7xlal3gRx0knNnPtfV//Sf7EZLGzziEhrfAYhLWKtSTS4ZGeZRBnAiW9E
-         HxTDY26sU4CkNzX+dMtijQUAeiYKtt/DkfT9ZpqDrzlKuxd7hNSKTuNEd+qOb4W0RM0+
-         L10g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747920102; x=1748524902;
-        h=content-transfer-encoding:in-reply-to:cc:from:content-language
-         :references:to:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=E1mJLv9x0C1VmoFVdzq5GIROGBhFfc11wh+Do5IsGhs=;
-        b=r7QMfniAWcG2CBMqK1+JfYgxinfB2Qi5rgJm25voaNjkyTlIHBVXaTvH3U6wUaAqC5
-         ry+MsLl6BH0TAyBYbzNKliKk0V4MYtTxMn1VJl7ySfgYetHrZ0wZqR4ydw/BwQMZsi9v
-         myhlTtFK7NqNo+YU0KCI7/LOGYCbZQkQVEY+odpdWptT9x49Utvegf+j1biLcwFEd3tK
-         LP4hQ6e5aELpWt+g3T7ZA93x9R+leVZ7CeN7tee9iCnBNkXa4/GVKlZUDvDizsW5hjtO
-         pmZKn7nl4kWIA/VXLDk7Th9CgP+PyPfsVaGY7MbGiwZE5cfAtUPI3vQdHRJLcvn04alg
-         Tg3Q==
-X-Forwarded-Encrypted: i=1; AJvYcCUA08IPTGB1KLvqgj3eg6ytvdC4DNZoYqul3p3h63lfcgtOVclQArBU2aTYAEGoppbTwyg=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXJSZwnGQp8vxl7WOBlJKBHhHybRNSeQ5LHGsGCSVVvCRZ/dYF
-	HaqQVeIDefuncPtVcahfoMut26V8F7y487wwgdmjqQUK087tk0NWRd9k
-X-Gm-Gg: ASbGnctInrEm98P93ty2/3egp5RCjdaIcuujRjCiGVP0sFUDNIhRZTJdc7zJJPiH3Ds
-	nqmGgDnLJXThVVk547wh0B5lAmaloxuTvZ2bht5AxQkpCoGW52x+INrGdwsPOyQFEfCZ1MK1cwc
-	wl5Mis5ymSNpLv9i5opyF6VvC2vJpNb6Nb22ehGzzmuNu2QmG5Ls4E+mzuXCtreAMgFPJKsgi3X
-	53w5jq6pxtPoSD4E6tR+EXs8amHlOB6yavpQoLbRbu7Jjz95oEvosdTMGObNSTUMt7HK6WqxvyT
-	rSj6c3+tbV7QOXyFkmMnkA6F0HS+zXOcO/nBaiGsFz+XazdrMZJ2uDx7AeuEk6A8WX04I0kexz4
-	VY+OHt3eDNcS0Cw7QpOz8YeQ7BkSqCVj2hg==
-X-Google-Smtp-Source: AGHT+IG5v3g80kcl05qOUW/Ji0WgIKVOQ1OZr99dDO8EP/9I5C4BP0oVYxDBcsb8Rjf3W6HxbP/Iew==
-X-Received: by 2002:a05:6000:4308:b0:3a3:728b:b8f0 with SMTP id ffacd0b85a97d-3a3728bbaf5mr12997159f8f.8.1747920101932;
-        Thu, 22 May 2025 06:21:41 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca5a5b4sm22770676f8f.21.2025.05.22.06.21.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 May 2025 06:21:41 -0700 (PDT)
-Message-ID: <aa1f960a-e7a5-4ada-84c0-fbf86a6c873f@gmail.com>
-Date: Thu, 22 May 2025 14:21:38 +0100
+	dkim=pass (2048-bit key) header.d=roelsengers.nl header.i=@roelsengers.nl header.b="MAhM6x79"
+Received: from smtp102.mailbox.org (smtp102.mailbox.org [IPv6:2001:67c:2050:b231:465::102])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by mout-p-102.mailbox.org (Postfix) with ESMTPS id 4b3B0F5t3nz9t46
+	for <git@vger.kernel.org>; Thu, 22 May 2025 16:45:01 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=roelsengers.nl;
+	s=MBO0001; t=1747925101;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:mime-version:mime-version:content-type:content-type:
+	 content-transfer-encoding:content-transfer-encoding;
+	bh=rpLXRis6Uppfnaa/nVNBbKCOc1bX/X0qm9K4QgIUueE=;
+	b=MAhM6x79PNjzaoWPwdI7zX+MBZ9rwt8Qm9E44EvmN/WK6N4m8bxBm8UWsBEdH96ts15Ea2
+	dEBhM6/9dnMKHBlecG9aK/8wjsBj7Nwz8AgDE2HJILQDCcDcg3s5ACK73xDxUZcD0MAYc4
+	zUgWSbM78Qi0I9wLGqaBSJPnlb7U5tb9tAFmQ936Js+PKmadztHXozWcyvkLXyIv1dhWqW
+	YAAr1bHa+NXMfs5uKCMX5tDDE/yvOa9aihOUl9INyShqv76UnMa+5dmYdMhu3o0T6pgJno
+	53FfxBm0Mbie4JOtGuiH8Y++Kbj7AFmGBqfdeypxSrpBOjbGrh3/CGOr3JJ4JA==
+Message-ID: <195d93de-1d5d-40f3-8139-b73a447b356f@roelsengers.nl>
+Date: Thu, 22 May 2025 16:45:00 +0200
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] Drop git-exec-path from non-Git child programs
-To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
-References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-In-Reply-To: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+Content-Language: en-US, nl
+To: git@vger.kernel.org
+From: Roel Sengers <roel@roelsengers.nl>
+Subject: [BUG] Hard links to large files cause unexpected refresh
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
+X-Rspamd-Queue-Id: 4b3B0F5t3nz9t46
 
-Hi Ben
+Thank you for filling out a Git bug report!
+Please answer the following questions to help us understand your issue.
 
-On 20/05/2025 20:34, D. Ben Knoble wrote:
-> This has caused trouble in the past [1] [2];
+What did you do before the bug happened? (Steps to reproduce your issue)
 
-Another way of looking at this is that the trouble is caused by a script 
-that makes incorrect assumptions about git.
+In my workflow there is a step which hard-links about 80GB of such files 
+to locations where a 3rd party application can find them. However, after 
+this hard-linking step, git status (or other git commands) hang for a 
+long time. Note that making a copy of the file does not cause such 
+slowdowns, which was surprising to me.
 
-The assumption that the scripts from contrib as installed at a fixed 
-location relative to the git binary is false. Where they are installed 
-and whether they are installed at all is down to the discretion of the 
-distribution that you're using. Looking for "git jump" at a fixed offset 
-from the git binary is no more portable than looking for it in a fixed 
-location.
+I am using Git with git-lfs for these large files, however I was able to 
+reproduce this issue without LFS enabled.
 
-I think that the assumption that git should not change the environment 
-when it runs the editor is unrealistic. "git commit file" will use a 
-temporary index to create the commit and sets GIT_INDEX_FILE when 
-running the editor. This means that if the editor wants to display the 
-staged changes by running "git diff --cached HEAD" the diff will 
-accurately represent the changes being committed. Adding GIT_EXEC_PATH 
-to the beginning of PATH ensures that the diff will be created by the 
-same version of git the the user ran which avoids subtle bugs where a 
-sub-process of git runs a git command using an incompatible version of 
-git. There are several other environment variables that may be set when 
-running the editor such as GIT_DIR if the command is run from a linked 
-wortree.
+The script below reproduces the environment which triggers the issue:
 
-To create a clean environment when opening a terminal from your editor 
-you can add
+mkdir git-hardlink-test
+cd git-hardlink-test
 
-     PATH="${PATH#$GIT_EXEC_PATH:}"
-     unset $(git rev-parse --local-env-vars)
+git init
+echo ignore.bin > .gitignore
+git add .gitignore
+git commit -m 'Initial commit'
 
-to your shell setup script.
+dd if=/dev/urandom of=file.bin bs=1M count=1000
+git add file.bin
+git commit -m 'Add file.bin'
 
-I think the first two patches are very welcome cleanups but I'm not 
-convinced by the rationale for patches 3 & 4.
+# $ cp file.bin ignore.bin; time git status
+# On branch main
+# nothing to commit, working tree clean
+#
+# real	0m0,002s
+# user	0m0,000s
+# sys	0m0,002s
 
-Best Wishes
+# $ ln file.bin ignore.bin; time git status
+# Refresh index: 100% (2/2), done.
+# On branch main
+# nothing to commit, working tree clean
+#
+# real	0m16,100s
+# user	0m15,700s
+# sys	0m0,255s
 
-Phillip
 
-> after attempting to help
-> Git-for-Windows avoid that problem in Vim [3] by recommendation [4], it
-> was suggested that upstreaming the change instead would be a better
-> solution. Indeed, this should work for more uses/editors/etc.
-> 
-> [1]: https://public-inbox.org/git/CALnO6CDtGRRav8zK2GKi1oHTZWrHFTxZNmnOWu64-ab+oY3_Lw@mail.gmail.com/
-> [2]: https://benknoble.github.io/blog/2020/05/22/libexec-git-core-on-path/
-> [3]: https://github.com/git-for-windows/build-extra/pull/616
-> [4]: https://github.com/benknoble/Dotfiles/issues/143#issuecomment-2869525481
-> 
-> I haven't managed to test this on Windows, so any extra eyeballs there
-> are greatly appreciated. I'd also appreciate suggestions to fix the
-> memory leak.
-> 
-> Structure: patches 1 & 2 are cleanups. In particular, patch 1 is essential to
-> the tests in patch 4. I don't think patch 2 is strictly needed. Patch 3
-> refactors a little to make patch 4 take effect on all platforms. Patch 4 does
-> the real work.
-> 
-> D. Ben Knoble (4):
->    t7005: sanitize test environment for subsequent tests
->    editor: use standard strvec API to receive environment for external
->      editors
->    run-command: prep_childenv on all platforms
->    drop git_exec_path() from non-Git commands' PATH
-> 
->   builtin/commit.c  |  2 +-
->   editor.c          | 10 ++++-----
->   editor.h          |  7 +++---
->   run-command.c     | 55 ++++++++++++++++++++++++++++++++++++++++++-----
->   t/t7005-editor.sh | 18 +++++++++++++---
->   5 files changed, 75 insertions(+), 17 deletions(-)
-> 
-> 
-> base-commit: 7a1d2bd0a596f42a8a7a68d55577967bb454fec0
+What did you expect to happen? (Expected behavior)
 
+After creating a hard link to a checked-in object, I expected the final 
+git status to finish in a time that is barely noticeable.
+
+The file itself is large, so having Git taking its time to refresh the 
+state of the working directory would not be suspicious were it not for 
+the fact that creating a copy of the same file does not suffer from the 
+same performance penalty.
+
+I expected Git to be as fast for both copied and hard-linked files.
+
+
+What happened instead? (Actual behavior)
+
+git status takes an unusual amount of time to complete when an 
+uncommitted hard link is created to a prior committed file.
+
+What's different between what you expected and what actually happened?
+
+Timing git status tells me that it took 2 milliseconds to complete after 
+a copy was made.
+
+Running git status after creating a hard link took 16 seconds instead, I 
+expected these times to be similar as the file contents do not differ.
+
+The target file is also listed in .gitignore, so I would not expect Git 
+to read it at all.
+
+
+Anything else you want to add:
+
+Making copies of these files instead is not desirable as this would 
+double the storage capacity needed and copying itself would also take a 
+long time.
+
+Please review the rest of the bug report below.
+You can delete any lines you don't wish to share.
+
+
+[System Info]
+git version:
+git version 2.49.0
+cpu: x86_64
+no commit associated with this build
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /nix/store/xy4jjgw87sbgwylm5kn047d9gkbhsr9x-bash-5.2p37/bin/bash
+libcurl: 8.13.0
+OpenSSL: OpenSSL 3.4.1 11 Feb 2025
+zlib-ng: 2.2.4
+uname: Linux 6.12.28 #1-NixOS SMP PREEMPT_DYNAMIC Fri May  9 07:50:53 
+UTC 2025 x86_64
+compiler info: gnuc: 14.2
+libc info: glibc: 2.40
+$SHELL (typically, interactive shell): /run/current-system/sw/bin/bash
+
+
+[Enabled Hooks]
+
+
+With kind regards,
+Roel Sengers
