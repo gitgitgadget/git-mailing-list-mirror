@@ -1,54 +1,54 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10871241697
-	for <git@vger.kernel.org>; Thu, 22 May 2025 21:22:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6909C2566FE
+	for <git@vger.kernel.org>; Thu, 22 May 2025 21:37:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747948948; cv=none; b=jBomEA7X9Wea/f7J2HAwbAJqVMNa9LSyXGeBWPb3PlUEmB7uo4LlKVHUYx67Mu8zj8mzBHs7/g7dJb6N/dQq0BZmSuVPxOVpkyaul4f6IoZ2ji3Jyl8XyxbEzj48dSnyyAC9qajmIGg1GF91a+v8oGpq7giZOLLLPMr9JxoG5aw=
+	t=1747949880; cv=none; b=o2B1aUhGV0aDIEE3h8uLAkIIocxKVn2WdBSayeS1W9V8qBfYUdFfPi7kcQh+RwERJvHxsExfV4EhYaTl1xyv5kEqWJfTxcK79qWCZ/lt2JzIv2rdKPK+MjDcK0awIQbA5Xhm27o7QHfudKWfaFoCPv75UOVbmRJfJVkLgYTa6vo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747948948; c=relaxed/simple;
-	bh=YgQ9n8xvr8oeKHkQCcVLIP0lZxVuny50woOAFBwiKRM=;
+	s=arc-20240116; t=1747949880; c=relaxed/simple;
+	bh=/V3N9FQkA+2gHuxITruqKmV0pAIi2YY88+GiLqlnYns=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L535AtRkwG60CorVk3KG+zZyEWCky8V5l1WT2jVVtNSi0jBzH3BucBC/yuRkaZCQeN37CMWO+qpvUL5tNawuTWc8J+KA2hfHXaMWNRG48QB2hCJVYzy6a85SwqyMsULTGkBCV3ZJa5mPbmUYcv9nZuzgmIqWNIvWjUYlTo0zHMs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jxkCt/hs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=aCatY+5p; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=OJzaS0R8hjUfvOOqKy8XzJBG5Gqj2GXqaUSnNIs6IfOrfx3tB6M3NNqHpCLK3YJXzvROJgbnwpz0Fep0lgMxt/g8njVKMy6Dz0+J6o21SaV/jv8947YhPBgXzB5JBbVoNkzh2D3l40//auXAYNwwjJmHcF4/V9uy79kGmkZU2bE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Yc0D5pMi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cl+258LS; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jxkCt/hs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="aCatY+5p"
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Yc0D5pMi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cl+258LS"
 Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.stl.internal (Postfix) with ESMTP id E31F911400E2;
-	Thu, 22 May 2025 17:22:24 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Thu, 22 May 2025 17:22:25 -0400
+	by mailfhigh.stl.internal (Postfix) with ESMTP id AF800254010F;
+	Thu, 22 May 2025 17:37:56 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Thu, 22 May 2025 17:37:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747948944; x=1748035344; bh=i6LFBTKv7w
-	rbBD4JEc4tV34wmBlLgK4YVerAY4yl8TU=; b=jxkCt/hsKpbdlNhqMomVuD43c5
-	Uleb1mSGQVaAVoUh+e6HWjxIAKL4Y6PcRsjIlxXoKWNmdtg3KoZmHzcVnRCohAps
-	3hYsgUB/+Rl/aEUsh1Qf5neNOhElzQirtuL7w7Ih3CylOSmN5c9/gGvTY7oR77/m
-	gKVOTU74RtO6y0Ka4vEi4IUtyW50cOWq10FKLogZzgk2LUzb1HUanNI2a5HJmR0l
-	H3C+IMziBoV/mIehfAuqbq07tKoiNY2bmowJ6gv8KiW3tajEPmjeyx/s6wPj3MTa
-	eDn9/sdomlB3KxN/r7EQ3ltTC/DLYWIop71N+KOrmDlA+k7q4NCuaASzwxbA==
+	:subject:to:to; s=fm2; t=1747949876; x=1748036276; bh=ymKtMhgjQ7
+	4bGDdj2OnoynCDfrsRYIGf3hM/7K14Mxk=; b=Yc0D5pMiC4Pf9KbCg4VJSKct+G
+	ewKkbzEdVVhJafp3xAZLIPfhEzpxidIDYhQVUFt1GFEv8lsfpHwuvjFtFjWk6d0v
+	fxlDIvAYz1nHHBuzxMkXEo1yXQtub57PyoMgm7lQiEzcz1tzCBQhyZNMTohCns11
+	AAd+UdZoxmk/LmxUwndUvs9hEPQJ+5gQdr7F6RFNfnUAhxIw4W0u5vXz/i5zp7u8
+	z6QI55R0TJSDpHSe4GM3EoUG0H0GCar2uFb/hLyR6mqHBCMAkqxK5Poc+u8bfqeK
+	xABiHUmh6eAtxdMqAvZIcTiEjubHXFlfeO3RetOJ9B/couGo34yDktgbBNpg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747948944; x=1748035344; bh=i6LFBTKv7wrbBD4JEc4tV34wmBlLgK4YVer
-	AY4yl8TU=; b=aCatY+5pPnEzuYlnYpxaoEH2YcVyTlAcRIVs27BpJe3nwv/b3QN
-	EKJY8N3KcZ/qZjzbF+kK8GTBPgS+7nW+VmBTpGwLw5aJVSYcR3t2L+mQ5VFQHIML
-	rfkaC+8bq0XhQ/dzafw70Mv71wrwTR/ZqP60+poXiVAfag4CLoUtcq9A0VKXP1FV
-	f1hesmRu8Z2Qd8/PicdCkb9opJRJtiiLDO0se0wilsFCuz1XSVHexwZly4n1toVV
-	tZGVq8q6x0sRS3dnGanIYsza0DJ/g1brrCPqnh8zcF2pcp0lxU04QtNE6aQ3/1z6
-	4MEHtGpjQBIiRM1GqvFXXnS7ezZv/Jfa+Hw==
-X-ME-Sender: <xms:j5UvaKPkOXEAXOv3A8cuJCNb8qalr-9Oc-QS1Fgii3ZIh4ntFmts0A>
-    <xme:j5UvaI_nSqHT7fwb7sI3G2uJE3RW0_BWnlk_cY1ksiN2M0xgy98y28Dk7lBeZ4I15
-    SagnQPycvOlaz1eMw>
-X-ME-Received: <xmr:j5UvaBRqI2oYHk84XJkSm8p4bnM4osfuUyAISMA-uNVql0xoe6NTqRhON9lfQSdhx0rnx5eZN5mN6R0M19bIsMFqoUVABT04we9_Xb8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdejtddvucdltddurdegfedvrddttd
+	1747949876; x=1748036276; bh=ymKtMhgjQ74bGDdj2OnoynCDfrsRYIGf3hM
+	/7K14Mxk=; b=cl+258LS7argO9phMxj79rKgh9ZOgPWnavIrJ4ZCFH+V7WG3bbt
+	eVHWJJpdDsSepcB21bYKht+CRbedCAAmtjky8EJW+EjL7nqHs2SY3c2SS7yWVGrd
+	VyxzEjpJxpqsLbPPioB94ICXilHPTwuHdrQ35Ekn3TI2/b3AN/LINxH/mK69CTZA
+	r7UAZtR2PFehUJzdtwu+CtElzO2bHPgWgXfAoogl3konGUHcPB9Gq6ri+HJRxz+n
+	hWMkx9V4NSUEqvczZIhM9cK0ifQwnvL0N5/eZBQ9PO6ds0/pvHjtEoUD9YJ3NskC
+	9u8dGQBok56ptyh+G0JLZ8QDsDt65ktHnfg==
+X-ME-Sender: <xms:NJkvaN39FsdTdDUE4mSDpqfILL1aLU_4fpQHYZa4d6tmH_8FHuFdTw>
+    <xme:NJkvaEHBkGK893wBBVj_9LeP-xRm6OgriZXwEzc8CDEt8_VLPlzktQiAAUCIZC99A
+    fXcTl9TLTuN0_MMzA>
+X-ME-Received: <xmr:NJkvaN4Gj4I6fRMnkBsYeBJ89_jO6F4hwFhEzEUnCaQKe6NrbhMX4lxP-9F5e0goj951A6M60OWFEXRoxSDptfXm7gUrJM3BJCjm1cQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdejtdeiucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
     enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
@@ -56,35 +56,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdejtddvucdltddurdegfe
     hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
     ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
     fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepmhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehgihhtghhithhgrggu
-    ghgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvg
-    hlrdhorhhgpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopeeh
-    tddvtddvgeeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdrtghnpdhrtghpthhtoh
-    epghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:j5UvaKuOtWnv5BdOSRXNf88qzMXalnoH3uZXDaURvomgnu9e8kmesg>
-    <xmx:kJUvaCclYyyiNiyH9CK5LCZulhcG5YCf-XK3-TkBVGz3GT5b5LWWng>
-    <xmx:kJUvaO13cox9wTgV_VpcwYntgs5oEfVMlUcbfLE7Oqa198SQMxKcWw>
-    <xmx:kJUvaG-PlSu299FkBsnZyT4YuSzs0iiz4nRipyJ5p2HMBb1ZXdN4EQ>
-    <xmx:kJUvaNnvPFjpZC3T2RJYdjCkheGhEOg4qLKypXnMakqUhMdMhCYO7ITG>
+    gidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepjhgrtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvg
+    hllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:NJkvaK3MnDSV7qtjw2AI6r9OeS3GhHMzcu3H2uqbZZSoQtJ0MU_Diw>
+    <xmx:NJkvaAFYZjhtG2sbu_t5igpB_4s_y6IE0g0KFLoAUGp1ZueU0YN_sQ>
+    <xmx:NJkvaL_6dnaH25uPNtwg5GCdVASsIrHnUDlFf-ojfOrZg6NNa3lUWw>
+    <xmx:NJkvaNnuoZLo2LiAktTko0Jcp2VSAzxja984nhe9aWCqtj28QKqsqw>
+    <xmx:NJkvaAymEJO4EoLigikU3btA3ScOmP2Z2ISbl5Oxc2AMvohT_uEZqYHZ>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 May 2025 17:22:23 -0400 (EDT)
+ 22 May 2025 17:37:56 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Taylor Blau via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org,  Jeff King <peff@peff.net>,  Lidong Yan
- <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v2 2/3] pack-bitmap: fix memory leak if
- `load_bitmap_entries_v1` failed
-In-Reply-To: <aC5nxa0uTb+ieiML@nand.local> (Taylor Blau's message of "Wed, 21
-	May 2025 19:54:45 -0400")
-References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
-	<pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
-	<b515c278a8fec6c2ab9d11a49261f44fe0f37bf5.1747732991.git.gitgitgadget@gmail.com>
-	<aC5nxa0uTb+ieiML@nand.local>
-Date: Thu, 22 May 2025 14:22:22 -0700
-Message-ID: <xmqq4ixc49yp.fsf@gitster.g>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
+Subject: Re: [PATCH v4 0/3] diff: add pathspec support to --no-index
+In-Reply-To: <20250521232917.2333291-1-jacob.e.keller@intel.com> (Jacob
+	Keller's message of "Wed, 21 May 2025 16:29:14 -0700")
+References: <20250521232917.2333291-1-jacob.e.keller@intel.com>
+Date: Thu, 22 May 2025 14:37:54 -0700
+Message-ID: <xmqqzff42uod.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,33 +87,27 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Taylor Blau <me@ttaylorr.com> writes:
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-> On Tue, May 20, 2025 at 09:23:09AM +0000, Taylor Blau via GitGitGadget wrote:
->> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> From: Jacob Keller <jacob.keller@gmail.com>
 >
-> This commit forges my Signed-off-by, but I am happy with the result
-> here.
+> This series adds support for using pathspecs to limit the comparison when
+> using git diff --no-index. This is similar to how you can limit what is
+> included with pathspecs when comparing inside a repository.
 >
-> I do think the series is structured a little awkwardly as a result of
-> adding this patch to it. That this and the previous patch have the
-> subject "pack-bitmap: fix memory leak if `load_bitmap_entries_v1`
-> failed" make the series not quite as clear as it could be.
->
-> I think there are a couple of things going on:
->
->   - This patch is a bug fix that could be applied independently of the
->     first one. The rationale there would be that we shouldn't be leaking
->     the EWAH bitmaps in 'b->bitmaps', but we are as a result of NULL'ing
->     the pointer in the "failed" label. That patch can stand alone.
->
->   - The first patch (yours) is no longer fixing a leak, at least after
->     this patch. But it does delay reading the bitmap until we have
->     validated its XOR offset for sanity, which is a good thing mostly
->     from a performance perspective.
->
-> I would probably swap the two patches around so that yours applies on
-> top of mine, and then rewords the patch message in yours to reflect that
-> it is no longer fixing a leak.
+> This version uses only one set of pathspecs and instead uses some logic to
+> skip past the root of each directory tree being scanned. This avoids needing
+> to parse pathspecs multiple times, and is overall a simpler approach.
+> ...
+> I tried a couple of different methods for skipping past the leading portion
+> of a path, including skip_prefix. Ultimately just the index to skip to
+> seemed like the simplest solution. I like that it means we only need a
+> single pathspec array now, and that we no longer have to worry about
+> changing prefix_path_gently.
 
-Sounds like a plausible structure.
+
+Nice.  I kept the previous iteration out of 'seen' primarily because
+it seemed to break the tests (even though it passed standalone).
+Let me see how well we do with this iteration.
+
+Will queue.  Thanks.
