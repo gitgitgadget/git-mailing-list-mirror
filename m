@@ -1,98 +1,113 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EE5F217679
-	for <git@vger.kernel.org>; Thu, 22 May 2025 19:00:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387DC150997
+	for <git@vger.kernel.org>; Thu, 22 May 2025 19:02:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747940447; cv=none; b=UVfQCkGWjaduH47m0UiFVAIf+g+KCvDE6bXfVE54j3PncK/wc1E2yoZQRUTBZg73Uvuo8Li8mffLD0pbUMny+0TpIUXY1kIMpMXxWX652YWsVFK7MZwXdyxhJB3ejU4EVpxCZXnpzOUDfhVZW/m7y9GuPVsYil+tYYA6Pf/MLag=
+	t=1747940579; cv=none; b=MtrA7lLw7+rg9NCL1UsyJti6tSY6Ck0iDjGHDMirBsDi+HLzfyUhM+sUlE+sp4XlF25uAXl8BrYYc86gRsWIeUZ9YJPhICkh0ABe9asVmnPCBnwKKQj2xv2Xf1KWmjFy22NGZAKdDGasqKoP2oEExlnsyGrPO2Vi2eShR0XHXNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747940447; c=relaxed/simple;
-	bh=zaE/+RzKzb3Vr9j7m9R8qjvuKRQ1ITZedT98xHytcHQ=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WamiCfXqgdnc5hUqgd4Q0bdpCQek6md5L0b/jXW9Y3XFZFmCDJL9O/053f20Z4XEc8GBaUNBnctf+M+zUT6VPi/pbRgBwgFO8JH/oK7hADraPbl86faU57MmJUzwXeMVdbJmK9x4+5BV1rAbd9+P3Fbr6zb9Dc9bpJRQmdXoFZw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=uorEYR7J; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1747940579; c=relaxed/simple;
+	bh=8uEG6kjTMQAiPsnnH/S2VlRRNKdiVkK+Uj3TWOHLDWk=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=M2NT+Iy4qXz9RPVjpXr94J8X0l6VxeFHOc76o/wbJuVSmtUNInfKjDhWNMjHWjslvBuL8NcnJGCOdYSKdUQs98C1BEbiaUjx8II5kMKDct3B6o5mVHRp7SO0GUyKM5Gtoq4jPOevFIPipKlnVVaQ6KYmNKai1w/G6+WjFV+4ShM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ZfsFs6A1; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=sy8MvdC1; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="uorEYR7J"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1747940442;
-	bh=zaE/+RzKzb3Vr9j7m9R8qjvuKRQ1ITZedT98xHytcHQ=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=uorEYR7JhyJkaupWKo3pCGSdTxRX2SWFsl/cMj5OSyuIQ2N7A5xI6NmcigTXbksYS
-	 zCfykP3DWmcGBKyU8rl0C4MNz4DNC6rVZKemCKspDcfn/56/H602ulkeelR2cEyZFS
-	 qg5xBd/IOPH/JbE0JF7q9jUVlhq6nTebBTPNI4PsEOcrc85XAr96H5eJ2lOcrgiyyV
-	 Re7lExvMBHBBiAXgXURybB0lACIAVEto+yZfOxhkmaonNMh9Lu3qeOnEpPTkUo5mrR
-	 nwrzk46Ry0axYjWtAo6mHAbYY474ggfg7Lu2UT6ytvUoYY8kFZ1KMB4Mbnc/VLkjBs
-	 H+OI5kdhcmc3YrtfbDMdZ7lCySgaWvje5jo2EkMytoWhTy7OVuLuAFD/sQ4r/HT1Ed
-	 1deLOnEDf5cdqyFn+Ezg4zYguizZFN6z//TVihcGp5KCLkHtQoNDhIX8F4joYkXXXo
-	 FRoRVgQNoYgHKJLqZsqgy0XDx1HDBCosFqIs5jDIc9ASsw5BNuL
-Received: from tapette.crustytoothpaste.net (unknown [104.129.158.231])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 889C52010F;
-	Thu, 22 May 2025 19:00:42 +0000 (UTC)
-Date: Thu, 22 May 2025 19:00:27 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: git@vger.kernel.org
-Cc: Junio C Hamano <gitster@pobox.com>, pwodd@web.codeaurora.org,
-	"D. Ben Knoble" <ben.knoble@gmail.com>,
-	Philippe Blain <levraiphilippeblain@gmail.com>
-Subject: Re: [PATCH] Makefile: avoid constant rebuilds with compilation
- database
-Message-ID: <aC90SzSUkhVvahvU@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	pwodd@web.codeaurora.org, "D. Ben Knoble" <ben.knoble@gmail.com>,
-	Philippe Blain <levraiphilippeblain@gmail.com>
-References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
- <20250522185524.18398-1-sandals@crustytoothpaste.net>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ZfsFs6A1";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="sy8MvdC1"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EEA1F25400D6;
+	Thu, 22 May 2025 15:02:55 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-04.internal (MEProxy); Thu, 22 May 2025 15:02:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747940575; x=1748026975; bh=8uEG6kjTMQ
+	AiPsnnH/S2VlRRNKdiVkK+Uj3TWOHLDWk=; b=ZfsFs6A1lxt4tT1/DGzFjpo6ol
+	zjP3bhgbCEgcVmaIRY/qqCNFoHzmq4xMyadDRycgRp4OxQyBfxL3e1eYOFPELE4e
+	bpU5TPE4b0dNu5E3is2vLpedfQNp22rFJ7JwG5vQIQNdQiqm/lU5bPw6zuH04Xlh
+	qu6cJhp7NbIdw5ohSJLG9h5gFwvrIVpjy5GgQ+tzFI//FNzexJ3NToiK64MnUcOU
+	Qm3jzT1fskersBGx/4B1uqvagLfId0YtPNV/KkJuO2+nNK5iJBGjahpV6ZqE0Pff
+	L+JQhf1tTalKGbxWwPbJtqy1zxQfDD3I3KdOFWGU9/76cWK9l6C50bTk/s8Q==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747940575; x=1748026975; bh=8uEG6kjTMQAiPsnnH/S2VlRRNKdiVkK+Uj3
+	TWOHLDWk=; b=sy8MvdC1zPKakXnj8xmVzJwqIg1IdA0n0Fm9dgDj0eYs5ozNjZn
+	GG5FKhBdr7oBUdZXasUilE69HZ0caBeN4/MnLPA7JNkpnz2XNIgJviC/IaFleK6V
+	LvYKHB6Q/iMW1XdqvpPexSfvY1G5hXLaB5bfj9r8Ycgr2fLY7fNv8qCoWL7qpkTZ
+	ntXJ8tHKRS1f+EKCEkIRzG+9ZRvMEnrPEznH9eZpofHXd+/qTpgbhNDFVfuWbHfD
+	1xyruSJ1LbSC75sVc7pcWVK8+WXg3rfjv+vRw13BvEgMCHA2vmrF5PAbguft7n1o
+	zCPbbq+Ztvx/jHCsaFUsQQNpsRxGgUqbicA==
+X-ME-Sender: <xms:3nQvaAVlrkzMO_fZx3J9xhTvsY_0ep26jqlH8d96j39aU9YTae7bkA>
+    <xme:3nQvaEmdlROKsCZ2zgtSac8sUGukB0zTQZ9IuJkLU1gxhQPUmawEbCrir3JHNodQ7
+    d_Ak2vKT0uVcDb1FQ>
+X-ME-Received: <xmr:3nQvaEbmrwYyGOmogJ8EzUlWZzUNmtFk6fGRxob4S8zrA8a6nXj7dQck1OwkaPLNxM_6qqDDsAFoM7Z9o_Ykf7ca2ZvJmkZxMngXoAM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeijeehucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
+    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehg
+    rghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthiht
+    ohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrg
+    hkvghrshdrohhrghdprhgtphhtthhopeifihgrghhnvdeffeesohhuthhlohhokhdrtgho
+    mhdprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhrtghpthhtohepgh
+    hithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:3nQvaPVbMyP-XRnKdVlT7h8jYviOz1kTsMGAEfCL9t6L7LmCUhjkMw>
+    <xmx:3nQvaKkJnJk8imDrdL8rl_xPqAEH7zSH9vOG_apDAlrBcgwG_R48qw>
+    <xmx:3nQvaEeP0I72ma3VHTwc-cWNBzA6JlZakrSiV0tyIcGy_qes5mZCAA>
+    <xmx:3nQvaMFcmEnXx0OPij-NQXu-WEgPP36or5HIwMSwTw3Gk4uHkahGEQ>
+    <xmx:33QvaLIbG-VpnbHiXr6InTotARrNJsCxBKYRoxbc4zWXx6qaDvHo_lIE>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 May 2025 15:02:54 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: Aditya Garg <gargaditya08@live.com>,  git@vger.kernel.org,  "brian m .
+ carlson" <sandals@crustytoothpaste.net>,  Julian Swagemakers
+ <julian@swagemakers.org>,  Shengyu Qu <wiagn233@outlook.com>,  Zi Yao
+ <ziyao@disroot.org>
+Subject: Re: [PATCH 1/2] imap-send: fix bug causing cfg->folder being set to
+ NULL
+In-Reply-To: <CAPig+cRNyEC5LjK1GhGBbEtf3xRu_ZS4RKizFhwjE8fP8sGwTA@mail.gmail.com>
+	(Eric Sunshine's message of "Thu, 22 May 2025 14:00:18 -0400")
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<PN3PR01MB95970F8CF7527648EC4BE907B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<CAPig+cRNyEC5LjK1GhGBbEtf3xRu_ZS4RKizFhwjE8fP8sGwTA@mail.gmail.com>
+Date: Thu, 22 May 2025 12:02:53 -0700
+Message-ID: <xmqqldqo5uzm.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="BwaWb+y5KOgk/rQh"
-Content-Disposition: inline
-In-Reply-To: <20250522185524.18398-1-sandals@crustytoothpaste.net>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Type: text/plain
 
+Eric Sunshine <sunshine@sunshineco.com> writes:
 
---BwaWb+y5KOgk/rQh
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Okay, makes sense. It might be worth mentioning in the commit message
+> that these copy/paste bugs were introduced by 6d1f198f34 (imap-send:
+> fix leaking memory in `imap_server_conf`, 2024-06-07).
 
-On 2025-05-22 at 18:55:18, brian m. carlson wrote:
-> Many contributors to software use a Language Server Protocol
-> implementation to allow their editor to learn structural information
-> about the code they write and provide additional features, such as
-> jumping to the declaration or definition of a function or type.  In C,
-> the usual implementation is clangd, which requires compiling with clang.
+Definitely a good thing to note in the message, together with the
+subtlety that the bug is dependenty on the order in which these
+configuration variables appear in the file.
 
-Oops, my apologies.  My patch directory was unclean.  Junio already
-picked this up, I believe.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+In any case, this may indicate that the population of those who
+tried to use imap-send since mid last year, whether they used to use
+it happily before last year or they tried to use it anew, must be
+very small, or we would have heard about this obvious gotcha by now.
 
---BwaWb+y5KOgk/rQh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8FgmgvdEsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZyDjDtUyaaLKxhWK8Gx/7oIEhlD12kllsEJkatFdhKTS
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAALYQAQDC8+QWvULF5Hydmf4tdXseAbSv
-GDgzhb4E1dV14ebmfwD+Idmyn+1cDQRjDb/F2QXdUDKRJgx5OFh83lNZI7s3Tw0=
-=pZbX
------END PGP SIGNATURE-----
-
---BwaWb+y5KOgk/rQh--
