@@ -1,104 +1,152 @@
-Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FFE225FA26
-	for <git@vger.kernel.org>; Thu, 22 May 2025 22:04:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B0533DB
+	for <git@vger.kernel.org>; Thu, 22 May 2025 22:15:25 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747951453; cv=none; b=cCh0ucdyFMLpQ4mecAIGTKimzez5RQ7M69nXNeiGysyV4i8rJd0ojoliSgGkGmFZNM/sT/WBzVNul9gtgMniHYZecyhgec1WkeiDUVUt/dpyrW38jt24ZLsG1nRF7yydB+omrLfxbOtP+ISEnNtFF9Yy1g1RFEeXLGYzRWvbKLE=
+	t=1747952127; cv=none; b=RtOyJFxGguvlvx33sE5OzvVyBIcgvxNcXVEqXjIAcElQaE88rnK7HpXvexQdEc1xxob9Yoseq3v1JeVUPr2T6vRptlrsLsy1PCoAjIHAE4HXcGeuTxo/a2WkjB/7t6DBIaMwldnIJJtrIpOIxwYCcLRwCGe4/17uLub4oKkpeNM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747951453; c=relaxed/simple;
-	bh=BIWwI1yozkm2dDMGFkfXjLeI+2YBYvXw4Sg2BBOU0cc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=g/o1fOZ43N811ZPcx9rvP1CsoYXPUpswHNKGZZ1p5EbJzaQr/pI+duZnNr47LelOOuEzSQZSivWCvkNSnByumWHe23myRi0qTyHxj50joI7wKShx2OArLlY+FfRfb9CQxe7CLTtittS9LHHvhukX6uDb/SjYck2XAdwE85u0iCU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=P6aLsBQo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=agpoaXMW; arc=none smtp.client-ip=202.12.124.158
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747952127; c=relaxed/simple;
+	bh=yq2VMQ3oNyI6RUATrOMX2ZXrHcLUtC+MrwUhhsElpn0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=TJGCIGlXQsiSga8inBx+ac1cz7jvyNlc5mMwBum4AGtaijzUk/MfVX7UKJEHEQMJbVFRLraoC4ACZopVFj3K/3Lak4+O1/9bwAIOiYN2UgV/RcmZ0nV4xk+UIiizCfbpjinQv7Smks/mJS5kfQerGoA9E7xWvEeIoDf1YujGSKA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=H23NatoU; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="P6aLsBQo";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="agpoaXMW"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6191B2540105;
-	Thu, 22 May 2025 18:04:09 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 22 May 2025 18:04:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747951449; x=1748037849; bh=gYaMERS16W
-	XPMZNtAC6/rUv2fKT/qr17lWMkJcgI8AM=; b=P6aLsBQoEAxmgr84eFE2fWarMX
-	3C3wFAVsCR9QtnaKD7e+SrpdloNFRXJSjCPiupfaXE/L8CapghcMEWEU2Bm1PjrW
-	3+Yik9PyQ99/AttD0n5lr6E9pgsWeMe8/zg3nZ8I35dJMUgu+qoqnIbIO5sHrANC
-	LKb4QUUqO5E0cnaC2kaEGKLkP6GgKkqPBOH94huXkzNwIhvKym6gE+yZKYUnT2gF
-	MqiDjAE0pAlZPNNJ8usGV+NtdpM032pDtJ0JshImVVu7zvZ9ITsTBgr0oWnJf8jz
-	zHbI0zxpK991btW+vyuMkrh7/nlqNhgor515qVaZ9dl94GC8zBIntQp0RU2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747951449; x=1748037849; bh=gYaMERS16WXPMZNtAC6/rUv2fKT/qr17lWM
-	kJcgI8AM=; b=agpoaXMWnTSIR7rnaFiLS5MBYlBCGU4lcN++uQrwFgCACEFYxJK
-	vEfpfnwP2mnHFr/oNfGfOpdClx6LchPhQMSoliFTuq7LGp+ZobTHejmpzeTZR8P6
-	4a9bcx02aE+WjZzl6RqbKMJ1ZyuHGMzdy5Zx99TMV3ddid820Tz6lGh2xufxbbUN
-	/9j5gneUzqzLRisj9d0CKNhMzChzwjemf1P7AqHM+WYpqXXTr9BWIEQJaYpbq2TZ
-	FqM9Y5Loia9lyUBVK1WgUpcKB26sG9rH4iJXBG0sdU5BDavGHVmA23LCl0FejTfI
-	Cc6w+YgvN+ZlsoRLc2R7S7TmVR/L1oAk//g==
-X-ME-Sender: <xms:WZ8vaNoTZVANAxFn1OXVY9mDu659Rlha7BzjJf5NqR_S5jLAo1Wn0Q>
-    <xme:WZ8vaPprzavNHb1TbnCNw_-5Zg_8oZizJhck3Ua3kZJdFMMahGud0HeN-BmRfTtOM
-    8BySrvweOlAXlhM7A>
-X-ME-Received: <xmr:WZ8vaKPtUQOa8oJZ2Ab6cbN1hTalZmMZ0OlIG5KGpAOmX8dnng3_1vdpkxAu-Oi94DO80Ro_qtQ-lgKypfAnuz8aJRVPh21KhzhtS4A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdejudduucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepjhgrtghosgdrvgdrkhgvlhhlvghrsehinhhtvghlrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjrggtohgsrdhkvg
-    hllhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:WZ8vaI4MirY1ou7XG01Vyy-37D8cjyBF1oRhBLGwoCkqbgqsnaXeDg>
-    <xmx:WZ8vaM6wOrMge6Xxx0csnTFFzaxwUfvre8LLhK52cS0I7pD0xw39EQ>
-    <xmx:WZ8vaAj4pC00oko2CC-qIj8PjHS4ISMFKu-O7pf4NIzRH7P5V4L7Jw>
-    <xmx:WZ8vaO5cErDU1L8JyOhNiPubcsLYOqAruIBV1u2v2vGuScRykAH4-w>
-    <xmx:WZ8vaE0MnorUWp74l94T0k3C9donLXszWskKqFLlwO9156EBA4QVVbT2>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 May 2025 18:04:08 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jacob Keller <jacob.e.keller@intel.com>
-Cc: <git@vger.kernel.org>,  Jacob Keller <jacob.keller@gmail.com>
-Subject: Re: [PATCH v4 0/3] diff: add pathspec support to --no-index
-In-Reply-To: <4d0366fa-3584-4d6d-810e-855b9ec23121@intel.com> (Jacob Keller's
-	message of "Thu, 22 May 2025 14:50:04 -0700")
-References: <20250521232917.2333291-1-jacob.e.keller@intel.com>
-	<xmqqzff42uod.fsf@gitster.g>
-	<4d0366fa-3584-4d6d-810e-855b9ec23121@intel.com>
-Date: Thu, 22 May 2025 15:04:07 -0700
-Message-ID: <xmqqv7ps2tgo.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="H23NatoU"
+Received: (qmail 1644 invoked by uid 109); 22 May 2025 22:15:24 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=yq2VMQ3oNyI6RUATrOMX2ZXrHcLUtC+MrwUhhsElpn0=; b=H23NatoUTxd6LEpm7DtfXBmU7pj2yV9f33BB8ZDU7aVBfazJGHcB2laXwFvR9G0ooSVmAYSScOYzW9G+pCaDjzwiuQgjoMncLPdr6lyGL4iOej64gIPuNfoSZNI7Z3jkVSQ0wUyuWP6BaU8saMRm1AI8Bub4oyKkLBokKW8v3EKdgsiS9xXhXm/u7tDgRfKbElGPJ5uc6BvPgi938CYK+OG+vfdqOmJU1BhKrrplycoRY7795RQZtXM2Na6LbZo0qVEjEzppxmv+XY3q7LSVQd94qJuXERQJITQ6NrlhPtiqI0DSpqqWTepi04lmGROFgXucem3BBGtvJizwSSVKcg==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 May 2025 22:15:24 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 24846 invoked by uid 111); 22 May 2025 22:15:26 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 May 2025 18:15:26 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 22 May 2025 18:15:23 -0400
+From: Jeff King <peff@peff.net>
+To: Joey Hess <id@joeyh.name>
+Cc: git@vger.kernel.org
+Subject: Re: buggy smudge/clean of empty files
+Message-ID: <20250522221523.GA21347@coredump.intra.peff.net>
+References: <aC90kn2mE93DCJEH@kitenet.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <aC90kn2mE93DCJEH@kitenet.net>
 
-Jacob Keller <jacob.e.keller@intel.com> writes:
+On Thu, May 22, 2025 at 03:01:38PM -0400, Joey Hess wrote:
 
->> Nice.  I kept the previous iteration out of 'seen' primarily because
->> it seemed to break the tests (even though it passed standalone).
->> Let me see how well we do with this iteration.
->> 
->> Will queue.  Thanks.
->
-> The tests all passed for me on their own, but maybe something is flaky?
+> git seems to be buggy in its handling of empty files when smudge/clean filters
+> are used.
+> 
+> I've attached a script setup_smudge_clean.sh, which configures a git
+> repository to use a very simple smudge and clean filter pair for all
+> files. The clean filter prepends a line "hi" to the file content, and the
+> smudge filter removes the line. There is nothing very special about this
+> smudge/clean, it's just a simple one for the sake of an example.
+> 
+> Here's the bug:
 
-Do not recall the details, but it is possible there were some
-interactions with topics in flight.  I am in the middle of day's
-second integration cycles, so we'll see how it goes soon.
+Thanks for a reproducible example. Running it through the debugger, I'd
+guess the problem is in ce_match_stat_basic(), specifically this bit:
+
+          /* Racily smudged entry? */
+          if (!ce->ce_stat_data.sd_size) {
+                  if (!is_empty_blob_oid(&ce->oid, the_repository->hash_algo))
+                          changed |= DATA_CHANGED;
+          }
+
+That comes from f49c2c22fe (racy-git: an empty blob has a fixed object
+name, 2008-06-10), which says:
+
+      We use size=0 as the magic token to say the entry is known to be racily
+      clean, but a sequence that does:
+  
+       - update the path with a non-empty blob and write the index;
+       - update an unrelated path and write the index -- this smudges
+         the above entry;
+       - truncate the path to size zero.
+  
+      would make both the size field for the path in the index and the size on
+      the filesystem zero.  We should not mistake it as a clean index entry.
+
+but I suspect the is_empty_blob_oid() check is out of date for a world
+with clean/smudge filters. The blob content inside the repository is
+going to be "hi\n" in this case, so we will mark it as DATA_CHANGED. But
+what we really want to know is: when smudged for the worktree, is the
+content expected to be empty?
+
+Something like the patch below, but it feels very dirty.
+
+I wondered if we might be able to just catch these cases later in
+diffcore (like we do for other stat-unmatch cases), but I do think this
+conditional has false positives and false negatives. Your case is
+confusing an empty file in the worktree which fails to match its smudged
+content. But the opposite one is where the file should have content in
+the worktree (due to smudging), but is cleaned to empty inside the
+repository.
+
+So I dunno. I'm hoping somebody more familiar with the index and/or
+clean/smudge conversions can show a better way.
+
+-Peff
+
+diff --git a/read-cache.c b/read-cache.c
+index 73f83a7e7a..0f19440514 100644
+--- a/read-cache.c
++++ b/read-cache.c
+@@ -48,6 +48,7 @@
+ #include "csum-file.h"
+ #include "promisor-remote.h"
+ #include "hook.h"
++#include "convert.h"
+ 
+ /* Mask for the name length in ce_flags in the on-disk index */
+ 
+@@ -342,8 +343,37 @@ static int ce_match_stat_basic(const struct cache_entry *ce, struct stat *st)
+ 
+ 	/* Racily smudged entry? */
+ 	if (!ce->ce_stat_data.sd_size) {
+-		if (!is_empty_blob_oid(&ce->oid, the_repository->hash_algo))
++		/*
++		 * Yuck, we'd really like to be able to ask if there is any
++		 * conversion configured so we can just check the oid in
++		 * the common non-smudge case. But there is no worktree
++		 * equivalent to would_convert_to_git().
++		 *
++		 * It would not be correct to check is_empty_blob_oid() first
++		 * here (and skip the more expensive check). I think that would
++		 * be wrong for cases where the clean in-repo blob is empty,
++		 * but the smudged version has data.
++		 */
++		char *data;
++		unsigned long len;
++		enum object_type type;
++		struct strbuf expected_wt = STRBUF_INIT;
++
++		/*
++		 * skip error handling for this example. What would we do? Set
++		 * DATA_CHANGED pessimistically?
++		 */
++		data = repo_read_object_file(the_repository,
++					     &ce->oid,
++					     &type, &len);
++		convert_to_working_tree(the_repository->index,
++					ce->name, data, len,
++					&expected_wt, NULL);
++
++		if (expected_wt.len)
+ 			changed |= DATA_CHANGED;
++		strbuf_release(&expected_wt);
++		free(data);
+ 	}
+ 
+ 	return changed;
