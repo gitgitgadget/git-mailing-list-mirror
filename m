@@ -1,161 +1,121 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A415C2D8DA3
-	for <git@vger.kernel.org>; Thu, 22 May 2025 23:27:38 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D290186295
+	for <git@vger.kernel.org>; Thu, 22 May 2025 23:48:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747956460; cv=none; b=RCM2xVABzeOaYec+zLATdkqwg8lW1RLmKU7ou0sqLec9G3Wix7wKfxieN600yqkB/9vDsbFVxFAeYthtjnhFuwiJeHLCuapsIhLy3/G7x21eYfWioiKfdb89QnuIFvgEeOhwqM3KQCJeMfi9p+nX3atkfUqMRyz2r7bxUr+m/Kg=
+	t=1747957706; cv=none; b=N0pkP3BJlTIWdKFi9WBozftMCUjhZkMb7r8ttNBsKHcJWkb+F0HQmIsoZX6BT6hWJOOy83a+46TfvAgavEFGtetzQgv6RR3gbnl1aNlh15fSLO9JSGcbpaVuyR0XRZktRn/Xh4VCAg+gTopOZm5z6VDuRTGR5qNT2ZvvTQrfbYI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747956460; c=relaxed/simple;
-	bh=l3P3mSOPBlkdIqceRZGeeGsH4g1JBLwZaNJlDGyFl7k=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=NRaOMaPAs5b8QxLT+v0ugpwuRmvTJievamnsQfE6vlZ54E4w8g6mtQ0xgxRarJGbpkg24holwbvrbOhtbv5VRmrgIwnVUWFeOR0rHVyXPURwTaR4XiOJPVTHH9n6wiX7ehHo3AHDS7Fz/Ku1tserjedml7XCy+T22AIjv1amzWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=drhCeZ/6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=f477844+; arc=none smtp.client-ip=202.12.124.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747957706; c=relaxed/simple;
+	bh=RDEDvVjbUGdl/tx/oY4XD4+pC2cJP0a2LmErUI2fwT8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=Ieg+myPqMnYPflH2BBWJumMu8yxjCqX2/OrEhUUC62XnZW2XSqcoG3PCdDfL5MAQRh7NRLiLfeK8cjCzEqw9rZFnX+Krr0gbEGqQkSw186n2lBvI5tmROQr9tUyf4kcGXfkMQTFkxXhpkSCNBujFtwVKvo0ig7P/04jtK7bB8/M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=RzZvjd3Q; arc=none smtp.client-ip=209.85.160.173
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="drhCeZ/6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="f477844+"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 807C01140116;
-	Thu, 22 May 2025 19:27:37 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 22 May 2025 19:27:37 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747956457; x=1748042857; bh=xqylww+oNO
-	Iea24Rh0iXTI17iKnEzFCyR2M8deA4Hn4=; b=drhCeZ/6aTFAMlVdbpy710ixVi
-	WH1iCSkvWYgMuKS/Jk2SvuMqT174C/rwTUgZgbJcsTnljrDEt4SErKUX+J0NrV4g
-	IF8Vz6ACi/5lG5OGSgsAilksyPxkfAz6ok2vzZxQpvgPBKoWA15Vj8XPJZpjQr6b
-	zLgEHFNvy3dkaKbxPbDcVUfa8XUasOWUvaA4/G0YIiHUcEWbmSMw6HxYC3QHtnSA
-	KCjS3uRddR2JrHCGgXQ53xxKczRdblGyNBaHY0NImgDOqKwD5OOIBJ72JhLXV3s5
-	FAJGAK1sxtPcbBapO9YSjDAs9bY4r2AYOzTSXZTMbgJbbwksaIH7n5nlvXsQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747956457; x=1748042857; bh=xqylww+oNOIea24Rh0iXTI17iKnEzFCyR2M
-	8deA4Hn4=; b=f477844+pK6nMCPUxCyPXtJ0ZGICWoknE4W/AIwqXxOlIF/Ebhu
-	jMM/8SaL6u2ywZx1w01SxKQoIjZiTT8MnzLCV534NV1z4yn4m6WcV8OVxbXS/rRU
-	VtuV6OPaPAw0y3z6EdLbl88+Vecg2/p7IBHzUIK5ki0iU1ebGMb8c/SPfbp/eVQE
-	ecPw+5XuGbSByaMcro3i/hnvAbIImKFrG/g4GHtrBVabFVV3S2st6W9pvX/lB4Td
-	Yx3DqpXQjPyuS1Q5n8FuBWOHiumPm8HO8RciMjqlgOPkIyojlZb5HqAX6yFG0t5D
-	CNxOuWJNTItpbhAJK0EZUyyk1s3yYDIephQ==
-X-ME-Sender: <xms:6LIvaOrh-mzlAt12hExSu1B0anSNuNv7ydHRsvZakegCNKWEBa4iHQ>
-    <xme:6LIvaMqIeEXSOTon0WI93xqgKJMM_L8HZguXrU8CbZBqsnSPBNucH6pjvjUJPZedO
-    HqNRdpsvMRuMc4QZw>
-X-ME-Received: <xmr:6LIvaDMS0BwYtArcKnma2i_wfE80F4mxJgBFmw3RHtATvvaE0X8Xf60lyWIkOacBMgx0PuHr4U1RYGXRXrtcfykLFvKFHtQnYmEfb6w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdejvdejucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuh
-    hnshhhihhnvggtohdrtghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthiht
-    ohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehjuhhlihgrnhesshifrghgvghmrg
-    hkvghrshdrohhrghdprhgtphhtthhopeiiihihrghoseguihhsrhhoohhtrdhorhhgpdhr
-    tghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:6bIvaN792HpWXbrtY9lSwyRFfMTxUN3M_vYtpor1-2lDBQVi2MFU3A>
-    <xmx:6bIvaN5PZQsJhd3dAqQZ8PeYnmgpAoqOeFtaGDcNM9mplseyGfeqrg>
-    <xmx:6bIvaNgRc4VIEeHl5Y7IOd9F1rhxFn7W8ymmJkL9lwuu2xhRAemyEA>
-    <xmx:6bIvaH46xGnIugWE9IyvjUYfMoPlQKgk6BMbNzmN0L5je_lp3IH_HQ>
-    <xmx:6bIvaFz9eSZ-hybja8941x-nLrU03VxjBflTej8jdrk9Xho2ei9To3f0>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 May 2025 19:27:36 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  "brian m
- . carlson" <sandals@crustytoothpaste.net>,  Julian Swagemakers
- <julian@swagemakers.org>,  Zi Yao <ziyao@disroot.org>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH v2 1/3] imap-send: fix bug causing cfg->folder being set
- to NULL
-In-Reply-To: <PN3PR01MB9597488E63B9C1565EFD9631B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Thu, 22 May 2025 19:49:52 +0000")
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597EC279126820B74D2D6A5B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597488E63B9C1565EFD9631B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 22 May 2025 16:27:35 -0700
-Message-ID: <xmqq7c281b14.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="RzZvjd3Q"
+Received: by mail-qt1-f173.google.com with SMTP id d75a77b69052e-4775ccf3e56so4501441cf.0
+        for <git@vger.kernel.org>; Thu, 22 May 2025 16:48:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1747957703; x=1748562503; darn=vger.kernel.org;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=CzjZNQwOcyxqch6oePIWBCEBwKi82hMlovO/B6rtJ4o=;
+        b=RzZvjd3QbiSSlRa3K8i9NmHlSL9ESAvvGuAZViTXvBZ1LuptGCXcxJnG8o9vunFb50
+         hqgybYrFLPRxHUiNVNC2Q4arkIdL2IAPXrerEucRIEu/+jSZiCoHm6CFHl+zQcR+Awro
+         VRHni3ZQq0lGzK4DxjeQalUbc7OV9faqsFPHQ=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747957703; x=1748562503;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=CzjZNQwOcyxqch6oePIWBCEBwKi82hMlovO/B6rtJ4o=;
+        b=TjpgaaPoOeglwx0VXSA/M2b4Wt4DYoK4xAkaK1Pfif6zWC2ACMy423o6z3a3qI2EL+
+         tzNnj9t5yMluy5vRP5M9C3LvZIfmSAxPDpZOVsd0ITPV6BS1fHIpSG/9ANrcFKt+N5JE
+         asEvyAlFQLeBCNr8UcPpiaiK0TAKOQtZdJjB83+S3xMQiI9zBSUQNnCnTALRpVOdFBfC
+         3eNadw2BznRvmnycQG4YhutdaBcRSZTsRr4F3DuknT32QuRZfpt57+CD5br38fiX38XJ
+         WlIaVgEJdTuoF0AJIP3zrRFWt9dFqxLUX4z67m3aIXv5qCbwBC38IreA72u/iCMFtZm8
+         +X4w==
+X-Gm-Message-State: AOJu0YwlImAsqrhGTPVQBDJUb2LVs8xKNr0Sm+QdRqkCQrzvYhqKJbNd
+	+CQKdIceibzgtx3UoLeEQwjo3a+zRgfTmEgk1LHDZm+U+BiIVNpRNiMekvWcrs6RpQ==
+X-Gm-Gg: ASbGnctV5wO0dxC+WE3vnoflD60b0Q7cBCzFX7xsevyFEJknfb1jo777i5Vf3w9962a
+	qjb8zfCXY/Ippqa7/ceHXcYCxw76PvF8A/M2IwuoR6s2I1sb29q8pxiqMAGEvtqVW9XHuXbtxVT
+	U0xfrC78s1WVir+JAxzNed99m90GG0iytpClZ+DyEYRsDAuw1yvhzrtiQQNzWIo+EKOzVzUKEjT
+	0XDex6RicjlkhOKVV2DxWYpDl2B6lwTwu1iUS+JSj1jNKSd1yagJd5IbtsFBArgInsTEFyz+k1h
+	1xleBMa9yDeT/RvRkqFcW0y06JjUrLpknR1jcc5lZf2thgXToBRDsKzdLW51VVr79g4JGMQLOPq
+	QK5L9s+3b28nPyy510Fv/DU11eEPGNxRORYvGapgrzHjuNVeS+Q==
+X-Google-Smtp-Source: AGHT+IHlkij9cASgUZZyWwNBizy2ByHCrf2OzZLsb1wigGZ3AQAiRVuxINZjEL4CELFw5BsXs9BTng==
+X-Received: by 2002:a05:622a:2b4b:b0:476:fd4a:e885 with SMTP id d75a77b69052e-49dfc77e5bamr21836201cf.20.1747957703141;
+        Thu, 22 May 2025 16:48:23 -0700 (PDT)
+Received: from [2600:4040:9ce0:6400:55e7:9db3:2295:29f0] ([2600:4040:9ce0:6400:55e7:9db3:2295:29f0])
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-494ae3f9450sm106173141cf.28.2025.05.22.16.48.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 May 2025 16:48:22 -0700 (PDT)
+Date: Thu, 22 May 2025 19:48:05 -0400 (EDT)
+From: Mark Mentovai <mark@chromium.org>
+To: Junio C Hamano <gitster@pobox.com>
+cc: Git Development <git@vger.kernel.org>, 
+    Chandra Pratap <chandrapratap3519@gmail.com>, 
+    Johannes Schindelin <johannes.schindelin@gmx.de>, 
+    Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
+Subject: Re: [PATCH] apply: set file mode when --reverse creates a deleted
+ file
+In-Reply-To: <xmqqtt5c1ccs.fsf@gitster.g>
+Message-ID: <76ce493d-d5bd-fc63-8942-76d0b3cebbf9@chromium.org>
+References: <20250522220235.8650-1-mark@chromium.org> <xmqqtt5c1ccs.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; format=flowed; charset=US-ASCII
 
-Aditya Garg <gargaditya08@live.com> writes:
+Junio C Hamano wrote:
+> Mark Mentovai <mark@chromium.org> writes:
 
-> Upon setting up imap-send config file, I encountered the very first bug.
-> An error showing "no imap store specified" was being displayed on the
-> terminal. Upon investigating further, in static int git_imap_config,
-> cfg->folder was being incorrectly set to NULL in case imap.user, imap.pass,
-> imap.tunnel and imap.authmethod were defined. Because of this, git imap-send
-> was basically not usable at all. The bug seems to be there for quite a while,
-> and has not yet been detected, likely due to better options like git send-email
-> being available.
+>> +     git checkout -- data.txt &&
 >
-> Fixes: 6d1f198f34 (imap-send: fix leaking memory in `imap_server_conf`, 2024-06-07)
+> This should be a no-op, right?  What are we testing here?
 
-This project frowns upon this trailer.  One reason is that it may
-later turn out that this does not fix ;-) And no, this is to suggest
-using "attempts-to-fix" or anything of that sort.  Most other
-trailers are declaration of facts.  "Fixes:" is not.
+This syncs the executable bit to the working tree.
 
-Also, in the long run, first-person experience of an author is not
-all that interesting to "git log" readers.  "I did this, I saw that"
-is something we try not to use too often.
+I found it useful when developing the test, but it's probably not strictly 
+necessary as the test is intentionally independent of the executable bit 
+in the local filesystem. I can drop this if you think it's unnecessary.
 
-Rather, flow it in the problem description, perhaps like
-
-    6d1f198f (imap-send: fix leaking memory in `imap_server_conf`,
-    2024-06-07) broken imap-send with mistaken copy-and-paste and
-    cleared cfg->folder when it should have cleared other members in
-    the structure the code is about to overwrite.  git-imap-send
-    since Git 2.46.0 is unusable due to this bug.
-
-or something to start the description.
-
-
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> ---
->  imap-send.c | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>> +'
+>> +
+>> +test_expect_success 'git apply --reverse restores file modes' '
+>> +	test_config core.fileMode false &&
+>> +	echo true >tool.sh &&
 >
-> diff --git a/imap-send.c b/imap-send.c
-> index 27dc033c7f..37f94a37e8 100644
-> --- a/imap-send.c
-> +++ b/imap-send.c
-> @@ -1316,16 +1316,16 @@ static int git_imap_config(const char *var, const char *val,
->  		FREE_AND_NULL(cfg->folder);
->  		return git_config_string(&cfg->folder, var, val);
->  	} else if (!strcmp("imap.user", var)) {
-> -		FREE_AND_NULL(cfg->folder);
-> +		FREE_AND_NULL(cfg->user);
->  		return git_config_string(&cfg->user, var, val);
->  	} else if (!strcmp("imap.pass", var)) {
-> -		FREE_AND_NULL(cfg->folder);
-> +		FREE_AND_NULL(cfg->pass);
->  		return git_config_string(&cfg->pass, var, val);
->  	} else if (!strcmp("imap.tunnel", var)) {
-> -		FREE_AND_NULL(cfg->folder);
-> +		FREE_AND_NULL(cfg->tunnel);
->  		return git_config_string(&cfg->tunnel, var, val);
->  	} else if (!strcmp("imap.authmethod", var)) {
-> -		FREE_AND_NULL(cfg->folder);
-> +		FREE_AND_NULL(cfg->auth_method);
->  		return git_config_string(&cfg->auth_method, var, val);
->  	} else if (!strcmp("imap.port", var)) {
->  		cfg->port = git_config_int(var, val, ctx->kvi);
+> I we took the above approach to prepare patches in separate files,
+> we do not have to set up a different scenario completely anew.
+> Instead, we can start from a state where data.txt is missing, and
+> then reverse-apply the remove patch we used in the previous test
+> first (and make sure the mode is without executable bit), then
+> reverse-apply the chmod-x patch (and make sure the file is now
+> executable), and then reverse-apply the creatoin patch (to ensure it
+> is gone).
+
+The file that I deleted at the end of the previous (apply "forward") test 
+was not executable. It's important that this (apply --reverse) test begin 
+by reversing a delete of an executable file. That was the reason I built 
+up a second, separate set of patches to apply: I wanted to give better 
+coverage to git-apply setting the executable bit when it creates a file, 
+whether it's in the forward direction or reversing a deletion, because 
+that's the harder case (and the one which wasn't working correctly, and 
+which prompted this patch).
+
+If you like that better, I could achieve this with yet another mode 
+transition, but that would produce a stack of 4 patches that would need to 
+be applied in each direction, or 12 operations in total (4 to create, 4 to 
+apply forward, and 4 to apply in reverse). Or I can keep the existing 
+structure, which is still 12 operations in total (3 to create, 3 to apply 
+forward, 3 more to create, and finally 3 to apply in reverse). On the 
+balance, I chose to keep the tests more isolated, but I'm happy to revise 
+if that's what you prefer.
+
+I'll also integrate the rest of your feedback, and Kristoffer's. Thanks!
