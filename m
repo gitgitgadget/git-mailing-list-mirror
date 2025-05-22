@@ -1,151 +1,158 @@
-Received: from mail-wr1-f45.google.com (mail-wr1-f45.google.com [209.85.221.45])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23206223719
-	for <git@vger.kernel.org>; Thu, 22 May 2025 11:26:49 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E65F2236E0
+	for <git@vger.kernel.org>; Thu, 22 May 2025 13:21:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747913211; cv=none; b=oZ+jcxrWokx5y9G85Sb8GM7zg4/sqcgu+/IqaFRNYb2PoxXDUBlDW76u2SHAh+zvLPCpszl7phyA3NiL/IzIMjPrPSedhhGCNmXWqBx4HVHEAcwecn7ogHsgWfNj9W9cIismBRLEXNdcpYyImXvEC1guQbe28wXoH61Uoj+mULM=
+	t=1747920105; cv=none; b=tHbtPUnAih6adC8SEHrwKH5os5NeB1CLryFSd8q9JBF4icpJhoi4ijDDdob56uIF6tT635X0/YHdZYLIhjcyHxUmdpRtr/BKc3iTOVzV2drw2/Jxir6Vxx+/VOUh2xm7wT44IHHTLMmUfdJCrtk1rnHch61NdQEUYvidxZFMLh4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747913211; c=relaxed/simple;
-	bh=zdX09u7P/xv3qOwPav0nVw7WEWFPE+mJEKc/LJWb+Uo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=Fdv5TCW1ABjb/le3b3h9az7G04a/cbhNsoVZDeFV/CL52hmJQOdz1qBPM50ZAZb6mqBH5/KYTUonfqsIkC/U7u6uTyhSXJLIOx4VJe79sdRY3F5PlDgYUhwEXCDco/ihNgjJXAXhLKGvJYVBvMN+nD/BFrNO8987OwDvbi+vlT8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=aaqBiKpg; arc=none smtp.client-ip=209.85.221.45
+	s=arc-20240116; t=1747920105; c=relaxed/simple;
+	bh=Mvw0zxsxZieQoc26phMj75kutjg+KPuY5F0dD+ImxV8=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:Cc:
+	 In-Reply-To:Content-Type; b=jAsaB2kQdb/ygtGOH06ZB+hC2qU6BfOvCWcRLchilYSdO9zz2aiccsgrImLrFVc+6DI18SpQmDE1vb6OxLGYpPMVNCMW+uvEy6bfJ60DX8uYUuNjhkS/qbg9sZR7BwZ7Nmq9ld6NiLlYKOfSP5olCUHR90Sj/oA2EIDQWR0u2DA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=dsTk8Igk; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="aaqBiKpg"
-Received: by mail-wr1-f45.google.com with SMTP id ffacd0b85a97d-3a35919fa8bso3367034f8f.0
-        for <git@vger.kernel.org>; Thu, 22 May 2025 04:26:49 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="dsTk8Igk"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a35b7e60cbso5466868f8f.1
+        for <git@vger.kernel.org>; Thu, 22 May 2025 06:21:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747913208; x=1748518008; darn=vger.kernel.org;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HO3IyRRNUOslkHuIg5kOXC0SYH2+Vh79ezE354GyJ+I=;
-        b=aaqBiKpgdEIqwBW5q3dc4kga6tBUohUQXet3arcsTvfgejVyakahaz7ol8XA7UYqBa
-         9255EXZfTEuqhDVnLWnadx77/t05quqZdtm0RtcDLXJQjgJgZyVnqtHjDUiv4ED/gYn3
-         2L/bvA6LFvZOpushADfrk2ROEIRpcb8atnUksm9cX3gagdYtfzYFMPhPv1pVNbL8m86A
-         EeJG5IZmv6onszZlay4wX3rw7C1yQlYuiHOXw2w0JePUNx57LyhycyaO18zYWCixoue3
-         N3jCr9xzLfl0GIvG8iMJlXuWR5X1cUkmQ2JtPvcK/WhFlR49X6XP9ql1eDgRJMGfX9JF
-         UnSw==
+        d=gmail.com; s=20230601; t=1747920102; x=1748524902; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=E1mJLv9x0C1VmoFVdzq5GIROGBhFfc11wh+Do5IsGhs=;
+        b=dsTk8Igk+4iuUpXlEVek+H6k1Jhh17ar6C4x0KtdWf6ZWmsy+wVSW9v/zJFQPIIYtc
+         jATohi6mpFoEjU9k7Vfqzl5StmVu8bloY4/F9TyeevIkKFE2MjFm4KUUJASXIRanAGV9
+         J51sv0kUOddeBxiFGDl4GCa0K1ULWXwAHtHwMO9ge/4NzD/h05+ADq6L77tsZ1ly1Zq6
+         W2ihxRQSeRQ7xlal3gRx0knNnPtfV//Sf7EZLGzziEhrfAYhLWKtSTS4ZGeZRBnAiW9E
+         HxTDY26sU4CkNzX+dMtijQUAeiYKtt/DkfT9ZpqDrzlKuxd7hNSKTuNEd+qOb4W0RM0+
+         L10g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747913208; x=1748518008;
-        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HO3IyRRNUOslkHuIg5kOXC0SYH2+Vh79ezE354GyJ+I=;
-        b=ZUY2GbBl5HLhKOtwDwK0mupuZw0RiAXloJ5nz18klCB/xikk6A9hp9BfC61mUCphtO
-         RyM9OQEuO79vGBPtKMsxQbTjcraaqktawn4sxyXTrjQQNCiMSmo31tQjp3Wa0NajyCK4
-         icF02zdwOrgZcwfg6HZx735jAT6p/pGJzUV3UtzhiCv9+TR5bGy8LBtrQ4sRh6ntfXvC
-         YDF/THzkOuaYaHp/ZFhelkY+t4rni4pQLmRSTkWGpN4RUbUX1ux+KRFw9Xmpo48HWfX7
-         9WCUkC92lhVz0I9yOo1LaKpVkWd4ejI17TAuhZmpbId5YTQRCOd098vf/VKk7kq62Teo
-         twHg==
-X-Gm-Message-State: AOJu0YxpCpb3yrD60WXRMuD5ysts3sBxqJwnNcUJTh0M4ogEAgTaWkdJ
-	SrtNdUIKTW+Z6ar7VQB0f6BlWVrS6kPqagfFRLYdmt5mJXP/s1MSqECeGpv6fA==
-X-Gm-Gg: ASbGncvhJ6SdIDcpol2iHdDfE4dGB3T0YwOGCIlnwrAM5MI8gcwJpOwmwug1eW1ZSKl
-	NQUKYl0XijoxWwoyino+4/WqXlR+1e5k1Koo1fVCj8OvIxFlCP7Osq8XUd/s6dGqZoQJ83jyB/z
-	DBjPJJi6t6NpFTyHdewZoty9Z/n1nwP1FbK1APln07FVLh5FSUaJaBjAFfI9Tc1L3Y511vasn4z
-	QTlM2ZvT07JSsI1SWCWV8ICWF32DZ3VE/OLNx5AziclBkUwWDCTYJxkr2QTMbX87RusjpTjl6If
-	xAelgQ6nACodds0kShBWOTMvjImTXAQ3t/tdCf/B2AQFiXyMEDWY
-X-Google-Smtp-Source: AGHT+IGoNdd0DE57hpWSVZkb+THvQCa94U5MVLFrFuRZYoI9Lf3m6wAKxDb5wHS8lXompF4kXBDmPw==
-X-Received: by 2002:a05:6000:4285:b0:3a3:71c2:f753 with SMTP id ffacd0b85a97d-3a371c2f94dmr13129281f8f.34.1747913207887;
-        Thu, 22 May 2025 04:26:47 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a3631c728esm21541549f8f.60.2025.05.22.04.26.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 May 2025 04:26:47 -0700 (PDT)
-Message-Id: <pull.1925.v3.git.1747913206622.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
-References: <pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
-From: "=?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Thu, 22 May 2025 11:26:46 +0000
-Subject: [PATCH v3] cvsserver: avoid precedence problem between ! and %s
+        d=1e100.net; s=20230601; t=1747920102; x=1748524902;
+        h=content-transfer-encoding:in-reply-to:cc:from:content-language
+         :references:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=E1mJLv9x0C1VmoFVdzq5GIROGBhFfc11wh+Do5IsGhs=;
+        b=r7QMfniAWcG2CBMqK1+JfYgxinfB2Qi5rgJm25voaNjkyTlIHBVXaTvH3U6wUaAqC5
+         ry+MsLl6BH0TAyBYbzNKliKk0V4MYtTxMn1VJl7ySfgYetHrZ0wZqR4ydw/BwQMZsi9v
+         myhlTtFK7NqNo+YU0KCI7/LOGYCbZQkQVEY+odpdWptT9x49Utvegf+j1biLcwFEd3tK
+         LP4hQ6e5aELpWt+g3T7ZA93x9R+leVZ7CeN7tee9iCnBNkXa4/GVKlZUDvDizsW5hjtO
+         pmZKn7nl4kWIA/VXLDk7Th9CgP+PyPfsVaGY7MbGiwZE5cfAtUPI3vQdHRJLcvn04alg
+         Tg3Q==
+X-Forwarded-Encrypted: i=1; AJvYcCUA08IPTGB1KLvqgj3eg6ytvdC4DNZoYqul3p3h63lfcgtOVclQArBU2aTYAEGoppbTwyg=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxXJSZwnGQp8vxl7WOBlJKBHhHybRNSeQ5LHGsGCSVVvCRZ/dYF
+	HaqQVeIDefuncPtVcahfoMut26V8F7y487wwgdmjqQUK087tk0NWRd9k
+X-Gm-Gg: ASbGnctInrEm98P93ty2/3egp5RCjdaIcuujRjCiGVP0sFUDNIhRZTJdc7zJJPiH3Ds
+	nqmGgDnLJXThVVk547wh0B5lAmaloxuTvZ2bht5AxQkpCoGW52x+INrGdwsPOyQFEfCZ1MK1cwc
+	wl5Mis5ymSNpLv9i5opyF6VvC2vJpNb6Nb22ehGzzmuNu2QmG5Ls4E+mzuXCtreAMgFPJKsgi3X
+	53w5jq6pxtPoSD4E6tR+EXs8amHlOB6yavpQoLbRbu7Jjz95oEvosdTMGObNSTUMt7HK6WqxvyT
+	rSj6c3+tbV7QOXyFkmMnkA6F0HS+zXOcO/nBaiGsFz+XazdrMZJ2uDx7AeuEk6A8WX04I0kexz4
+	VY+OHt3eDNcS0Cw7QpOz8YeQ7BkSqCVj2hg==
+X-Google-Smtp-Source: AGHT+IG5v3g80kcl05qOUW/Ji0WgIKVOQ1OZr99dDO8EP/9I5C4BP0oVYxDBcsb8Rjf3W6HxbP/Iew==
+X-Received: by 2002:a05:6000:4308:b0:3a3:728b:b8f0 with SMTP id ffacd0b85a97d-3a3728bbaf5mr12997159f8f.8.1747920101932;
+        Thu, 22 May 2025 06:21:41 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:efb:6e00:24f3:2d85? ([2a0a:ef40:700:a501:efb:6e00:24f3:2d85])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca5a5b4sm22770676f8f.21.2025.05.22.06.21.40
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 May 2025 06:21:41 -0700 (PDT)
+Message-ID: <aa1f960a-e7a5-4ada-84c0-fbf86a6c873f@gmail.com>
+Date: Thu, 22 May 2025 14:21:38 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Fcc: Sent
-To: git@vger.kernel.org
-Cc: =?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>,
-    =?UTF-8?q?Ond=C5=99ej=20Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] Drop git-exec-path from non-Git child programs
+To: "D. Ben Knoble" <ben.knoble+github@gmail.com>, git@vger.kernel.org
+References: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+In-Reply-To: <20250520193506.95199-1-ben.knoble+github@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: =?UTF-8?q?Ond=C5=99ej=20Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>
+Hi Ben
 
-With perl-5.41.4 and newer, test t9402-git-cvsserver-refs.sh
-(specifically t9402.30, t9402.31, t9402.32, t9402.34) fails, because
-of the new warnings[0] populating cvs.log.
+On 20/05/2025 20:34, D. Ben Knoble wrote:
+> This has caused trouble in the past [1] [2];
 
-Use the 'does not match' operator '!~' directly to express the
-negated pattern match, resolving the precedence issue.
+Another way of looking at this is that the trouble is caused by a script 
+that makes incorrect assumptions about git.
 
-[0] https://metacpan.org/release/ETHER/perl-5.41.12/view/pod/perl5414delta.pod#New-Warnings
+The assumption that the scripts from contrib as installed at a fixed 
+location relative to the git binary is false. Where they are installed 
+and whether they are installed at all is down to the discretion of the 
+distribution that you're using. Looking for "git jump" at a fixed offset 
+from the git binary is no more portable than looking for it in a fixed 
+location.
 
-Reported-by: Jitka Plesnikova <jplesnik@redhat.com>
-Suggested-by: Jitka Plesnikova <jplesnik@redhat.com>
-Signed-off-by: Ondřej Pohořelský <opohorel@redhat.com>
----
-    cvsserver: avoid precedence problem between ! and %s
-    
-    cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com cc: "brian
-    m. carlson" sandals@crustytoothpaste.net
+I think that the assumption that git should not change the environment 
+when it runs the editor is unrealistic. "git commit file" will use a 
+temporary index to create the commit and sets GIT_INDEX_FILE when 
+running the editor. This means that if the editor wants to display the 
+staged changes by running "git diff --cached HEAD" the diff will 
+accurately represent the changes being committed. Adding GIT_EXEC_PATH 
+to the beginning of PATH ensures that the diff will be created by the 
+same version of git the the user ran which avoids subtle bugs where a 
+sub-process of git runs a git command using an incompatible version of 
+git. There are several other environment variables that may be set when 
+running the editor such as GIT_DIR if the command is run from a linked 
+wortree.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1925%2Fopohorel%2Fcvsserver_parentheses-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1925/opohorel/cvsserver_parentheses-v3
-Pull-Request: https://github.com/gitgitgadget/git/pull/1925
+To create a clean environment when opening a terminal from your editor 
+you can add
 
-Range-diff vs v2:
+     PATH="${PATH#$GIT_EXEC_PATH:}"
+     unset $(git rev-parse --local-env-vars)
 
- 1:  a15f924657c ! 1:  b7563182492 cvsserver: avoid precedence problem between ! and %s
-     @@ Metadata
-       ## Commit message ##
-          cvsserver: avoid precedence problem between ! and %s
-      
-     -    With perl-5.41.4 and newer, git-cvsserver fails to build because of
-     -    possible precedence problem[0]
-     +    With perl-5.41.4 and newer, test t9402-git-cvsserver-refs.sh
-     +    (specifically t9402.30, t9402.31, t9402.32, t9402.34) fails, because
-     +    of the new warnings[0] populating cvs.log.
-      
-     -    Added parentheses avoid this issue.
-     +    Use the 'does not match' operator '!~' directly to express the
-     +    negated pattern match, resolving the precedence issue.
-      
-          [0] https://metacpan.org/release/ETHER/perl-5.41.12/view/pod/perl5414delta.pod#New-Warnings
-      
-     @@ git-cvsserver.perl: sub escapeRefName
-           #     desired ASCII character byte. (for anything else)
-       
-      -    if(! $refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
-     -+    if(! ($refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/))
-     ++    if ($refName !~ /^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
-           {
-               $refName=~s/_-/_-u--/g;
-               $refName=~s/\./_-p-/g;
+to your shell setup script.
 
+I think the first two patches are very welcome cleanups but I'm not 
+convinced by the rationale for patches 3 & 4.
 
- git-cvsserver.perl | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Best Wishes
 
-diff --git a/git-cvsserver.perl b/git-cvsserver.perl
-index a4e1bad33ca..7ccd720019b 100755
---- a/git-cvsserver.perl
-+++ b/git-cvsserver.perl
-@@ -5009,7 +5009,7 @@ sub escapeRefName
-     #   = "_-xx-" Where "xx" is the hexadecimal representation of the
-     #     desired ASCII character byte. (for anything else)
- 
--    if(! $refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
-+    if ($refName !~ /^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
-     {
-         $refName=~s/_-/_-u--/g;
-         $refName=~s/\./_-p-/g;
+Phillip
 
-base-commit: cb96e1697ad6e54d11fc920c95f82977f8e438f8
--- 
-gitgitgadget
+> after attempting to help
+> Git-for-Windows avoid that problem in Vim [3] by recommendation [4], it
+> was suggested that upstreaming the change instead would be a better
+> solution. Indeed, this should work for more uses/editors/etc.
+> 
+> [1]: https://public-inbox.org/git/CALnO6CDtGRRav8zK2GKi1oHTZWrHFTxZNmnOWu64-ab+oY3_Lw@mail.gmail.com/
+> [2]: https://benknoble.github.io/blog/2020/05/22/libexec-git-core-on-path/
+> [3]: https://github.com/git-for-windows/build-extra/pull/616
+> [4]: https://github.com/benknoble/Dotfiles/issues/143#issuecomment-2869525481
+> 
+> I haven't managed to test this on Windows, so any extra eyeballs there
+> are greatly appreciated. I'd also appreciate suggestions to fix the
+> memory leak.
+> 
+> Structure: patches 1 & 2 are cleanups. In particular, patch 1 is essential to
+> the tests in patch 4. I don't think patch 2 is strictly needed. Patch 3
+> refactors a little to make patch 4 take effect on all platforms. Patch 4 does
+> the real work.
+> 
+> D. Ben Knoble (4):
+>    t7005: sanitize test environment for subsequent tests
+>    editor: use standard strvec API to receive environment for external
+>      editors
+>    run-command: prep_childenv on all platforms
+>    drop git_exec_path() from non-Git commands' PATH
+> 
+>   builtin/commit.c  |  2 +-
+>   editor.c          | 10 ++++-----
+>   editor.h          |  7 +++---
+>   run-command.c     | 55 ++++++++++++++++++++++++++++++++++++++++++-----
+>   t/t7005-editor.sh | 18 +++++++++++++---
+>   5 files changed, 75 insertions(+), 17 deletions(-)
+> 
+> 
+> base-commit: 7a1d2bd0a596f42a8a7a68d55577967bb454fec0
+
