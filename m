@@ -1,117 +1,83 @@
-Received: from smtpbg151.qq.com (smtpbg151.qq.com [18.169.211.239])
+Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C53A2AE9A
-	for <git@vger.kernel.org>; Thu, 22 May 2025 15:16:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.169.211.239
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 759F83D76
+	for <git@vger.kernel.org>; Thu, 22 May 2025 15:31:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747927009; cv=none; b=txMJoqhDfE/qapdJyha2rhmbzfetfZHGokOgi4BPsVFrS0KMcAI0Knig6K0ed/VMT80jVRxDwOiCMfoaJi8EZTb/mueYP5ManeVjKEPDl9C5loHQZai/WURwjXqkbQVGg7hNgtjV3rDimJor7Qfs48AoKEqT9r7IKWBBXdNrBhw=
+	t=1747927900; cv=none; b=FKGVdJlLNxDgpMAkgZj4T6W7CxWZaUChyrNlIeid6HGg89dSVxqD1BooUZJj/pA/A1ssi5VqtVuFB+hGOpNAYQK+CZOGC4pSxkRyP1t21uzgRPCMT6s6iL1sX7xFQQXtcXAEYAmKIoz4AzfN/f+bsHufFfr6eQAWB2ySs9RKXEM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747927009; c=relaxed/simple;
-	bh=cnSz9eKHX8Kp9I/iZKPaN2UhjwRRH4xCW4HuY2C+/Cc=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=lN6lUR2MctU+Ky1cydEQqxC06cR/LPwI5qItjQs2N881PQFEmTpMxQRq2zObNBsSBgMhDKR9nAOlL1OeCD7dUt7uBDVtQGhsf1XrAj6Z47H1TVR8SMrxLRo69Z6TSa0aPnSftrtvW2oMLZjWORv+IqvNZCncTqZwjCW9ri+Sk3Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=18.169.211.239
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
-X-QQ-mid: esmtpsz20t1747926960teda00e5a
-X-QQ-Originating-IP: ucEIP+PGGPV4UBqs5VuloGQocstMsp1v4HV9bCZIWlw=
-Received: from smtpclient.apple ( [202.119.43.147])
-	by bizesmtp.qq.com (ESMTP) with 
-	id ; Thu, 22 May 2025 23:15:58 +0800 (CST)
-X-QQ-SSF: 0000000000000000000000000000000
-X-QQ-GoodBg: 1
-X-BIZMAIL-ID: 7699032716330446919
-Content-Type: text/plain;
-	charset=utf-8
+	s=arc-20240116; t=1747927900; c=relaxed/simple;
+	bh=qJGpGOWrzn+al4Q5HvzE17WrCbMXE5JfX8hTMFzH+kU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=pwoCRrquWWRlKUSZXsa3iBTeEkK2ICqjHXeU/e+USs6c8OXmLiMn3TAeYecVji2S6gRAee5UQbgMzY+CNnOTlBY6Vo5sL02qKTSBv5VtstbD4sUgNxaY21Eag/BEyOifwAsSFa3lw/4NF72IhfLlyBgpWd/14HJpEicBLYPTEEU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=SN6XUq/k; arc=none smtp.client-ip=104.130.231.41
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="SN6XUq/k"
+Received: (qmail 415 invoked by uid 109); 22 May 2025 15:31:37 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=qJGpGOWrzn+al4Q5HvzE17WrCbMXE5JfX8hTMFzH+kU=; b=SN6XUq/kZQStMDQAje2x7T5EI6WPj8rhWldLv6REfZOmeP3pGmrpjn9xJkpc21yaJmcaFyJi+4b2OPXpnjpCI9fYdzBDQA5f1lU3Toj9JtDjsjPUWmWYRXLpOkKffHVzELMx2cvDMoGor3awl3FO2pCVTcBn4+Z0z+jdMa+Byg7+Pw7XyXdtnmYOclWR5qRaahcVO6SH7G+1LdVN/N9DXzkSQNs/v2tAMM9auLJZs1B5AwlVXlhH7xanEgVEF5WQr6E2FgzAjmMCMr0Op5ELUMIvEQDoLK3cSx3mI9CUgmfAKoeMqmEsCGeU2jkZe2yLMkHv1Us1RglkVrI9n5dy6Q==
+Received: from Unknown (HELO peff.net) (10.0.1.2)
+ by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Thu, 22 May 2025 15:31:37 +0000
+Authentication-Results: cloud.peff.net; auth=none
+Received: (qmail 19242 invoked by uid 111); 22 May 2025 15:31:38 -0000
+Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
+ by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 May 2025 11:31:38 -0400
+Authentication-Results: peff.net; auth=none
+Date: Thu, 22 May 2025 11:31:36 -0400
+From: Jeff King <peff@peff.net>
+To: Karthik Nayak <karthik.188@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v3 0/4] fetch/receive: use batched reference updates
+Message-ID: <20250522153136.GA1150962@coredump.intra.peff.net>
+References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
+ <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
+ <xmqqy0usmprh.fsf@gitster.g>
+ <CAOLa=ZTyE9myZqy8UHe=YeZ-diy0Q1UDTBTB3d1XGC09XvshAQ@mail.gmail.com>
+ <20250522060044.GB1135327@coredump.intra.peff.net>
+ <CAOLa=ZQhaPXS1y5zkRv2CQ_S5=8+XRg_A1snXHVYXz3uvVgZSg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.500.181.1.5\))
-Subject: Re: [PATCH v2 2/3] pack-bitmap: fix memory leak if
- `load_bitmap_entries_v1` failed
-From: lidongyan <502024330056@smail.nju.edu.cn>
-In-Reply-To: <aC5nxa0uTb+ieiML@nand.local>
-Date: Thu, 22 May 2025 23:15:48 +0800
-Cc: Taylor Blau via GitGitGadget <gitgitgadget@gmail.com>,
- git@vger.kernel.org,
- Jeff King <peff@peff.net>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <457DC23C-A052-416A-B181-A1EC48AD91A1@smail.nju.edu.cn>
-References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
- <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
- <b515c278a8fec6c2ab9d11a49261f44fe0f37bf5.1747732991.git.gitgitgadget@gmail.com>
- <aC5nxa0uTb+ieiML@nand.local>
-To: Taylor Blau <me@ttaylorr.com>
-X-Mailer: Apple Mail (2.3826.500.181.1.5)
-X-QQ-SENDSIZE: 520
-Feedback-ID: esmtpsz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
-X-QQ-XMAILINFO: MjlOSqg8Riw0DbAmIB0M/azcpdeXYXu9Lj+IlTAeBfVhRLRXL9gcaa0/
-	CbiFPyavv6eg1cU6UwdZU1DDv3VOi5AN56E+AaCci4isVbs7S3nRN5Yvn0olvl6ES5jZszb
-	x26+cqGTFwAzzdMmSS6vpUfmr2EzbAzeQBPBLt6SqVnYTmzUlj1uZRGRoG1PyoL0h9zCpW7
-	DRqV2TEwudMXw8596lCAUCAYA2tSzPdyr4VOZj4c6eEDQV4c8NT0ZRTxnO4HeYpJtv5IxlY
-	HfqlvSNEwp4/ynnqr0lrCAI7EiPL2fXd8+DDT9b/JaNwh3EnQkHRltPJ8LYUnNj1hOiwL+E
-	YOi3jt4ZeQU9Lr+ppMxOhPtC6tqwWtTJ/DiOtVVvUy9We5XpYiie1nBjwirdH45YXpQahWD
-	TNr9ylc1ZsjAfmreVKC1nEFIbpDM5wZVPG3VzoH5zR7vXcG5X5b66AdV9KNq2EgQl8DwTl3
-	uI4O7mdEJR2lVK65OuVL7BckKCwr2kZbraxzC0mtr13YSSA+WjKS3JEGONi6eFgxPGtbQHu
-	/UGRlmK0zLxfOeAshYdGx6Ho3Y0g/hrVcuFDtV4XPdAy2OFLZD45R0O/JiPoOcwUybNrKcD
-	0dfUOn96m1cEil/rLUxLFTR+wGLl/jsOVfYjF+kHjOXtkucOuIAkuNhAoA8sIB0BnZiQpyz
-	o7fzIICaLeY1yr7tF8QmSt1Huhqlf5AiKZu0CMssyuOPEsww+rIweQJCw1mg+sqdUvnYnvL
-	ZtV3f5UHpX65SA3Dch9F0/d45L4x7c8VKqJuKlqpZnjcrNp5kD3gq/MHw3xbc1JQNMqGUeu
-	hhdHDZjGKxb/5Bo04ZraGPfHXI2G95kK9FZxedJsh4TKxMYmK+mxJyc4a4wk26Wbs3klLdP
-	cEXq9Ju+DzxD9FVxvzQP/2g48nrq/pHJM3zeeneqvZ8BCINNbbFLqrNbHhS+EMWV9sM9/LG
-	PCCP5Ts8aKnjFCXSaXlp9RSn17du5NoS6t5N4AhcUqikjjbOq3OgLltFvDmRFHT0jL1A=
-X-QQ-XMRINFO: NI4Ajvh11aEj8Xl/2s1/T8w=
-X-QQ-RECHKSPAM: 0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAOLa=ZQhaPXS1y5zkRv2CQ_S5=8+XRg_A1snXHVYXz3uvVgZSg@mail.gmail.com>
 
-2025=E5=B9=B45=E6=9C=8822=E6=97=A5 07:54=EF=BC=8CTaylor Blau =
-<me@ttaylorr.com> =E5=86=99=E9=81=93=EF=BC=9A
->=20
-> On Tue, May 20, 2025 at 09:23:09AM +0000, Taylor Blau via GitGitGadget =
-wrote:
->> Signed-off-by: Taylor Blau <me@ttaylorr.com>
->=20
-> This commit forges my Signed-off-by, but I am happy with the result
-> here.
->=20
-> I do think the series is structured a little awkwardly as a result of
-> adding this patch to it. That this and the previous patch have the
-> subject "pack-bitmap: fix memory leak if `load_bitmap_entries_v1`
-> failed" make the series not quite as clear as it could be.
->=20
+On Thu, May 22, 2025 at 01:50:18AM -0700, Karthik Nayak wrote:
 
-Agreed. I=E2=80=99ve definitely learned a lot about how to write commit =
-messages
- and cover letters through this process
+> > If we store and return a "void *" pointer as we do now, but accept a
+> > const pointer via strmap_put(), then we're casting away potentially
+> > important const-ness without the caller even seeing it. I think it's
+> > safer for the client to do the cast explicitly (since they are the ones
+> > who know how they plan to use it).
+> >
+> 
+> But isn't that the case now anyways? We always lose the const-ness since
+> we only accept a 'void *'. But by only changing 'strmap_put()' to accept
+> a 'const void *', but storing and returning a 'void *'. We simply modify
+> the current construct to also say that any data received is not
+> modified. But I do see your point, we'll have to cast there anyways and
+> might as well do it on the client side.
 
-> I think there are a couple of things going on:
->=20
->  - This patch is a bug fix that could be applied independently of the
->    first one. The rationale there would be that we shouldn't be =
-leaking
->    the EWAH bitmaps in 'b->bitmaps', but we are as a result of =
-NULL'ing
->    the pointer in the "failed" label. That patch can stand alone.
->=20
->  - The first patch (yours) is no longer fixing a leak, at least after
->    this patch. But it does delay reading the bitmap until we have
->    validated its XOR offset for sanity, which is a good thing mostly
->    from a performance perspective.
->=20
-> I would probably swap the two patches around so that yours applies on
-> top of mine, and then rewords the patch message in yours to reflect =
-that
-> it is no longer fixing a leak.
->=20
-> That all said, if you feel strongly that the structure is fine/better
-> as-is, I'd be more than happy to discuss it further.
->=20
-> Thanks,
-> Taylor
->=20
+Right, there is no winning here in the type system. But by pushing the
+cast onto the calling side, it is more visible and closer to the code
+that knows how the result will be used.
 
-I think I can do this in third version, and I have to submit patch v3 =
-after
-we decide if patch v2 3/3 in this series should live or not.=20=
+> > I don't think we can really represent what we want in C's type system.
+> > But if we wanted a safe(r) interface that didn't involve type-casting,
+> > we might be able to do something like:
+> [...]
+> Agreed, and then there is additional load to ensure users will use
+> 'strmap_put()' and 'strmap_put_const()' as required and simply not cast
+> away.
+
+That part I'm not too worried about, since casts are easy-ish to catch
+and flag in reviews. But I'm not sure if it's materially making the
+world a better place to have the extra complexity.
+
+-Peff
