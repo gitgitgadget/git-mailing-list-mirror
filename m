@@ -1,164 +1,167 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 463AF19994F
-	for <git@vger.kernel.org>; Thu, 22 May 2025 17:54:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82304178CC8
+	for <git@vger.kernel.org>; Thu, 22 May 2025 17:56:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747936477; cv=none; b=GsbdWMspN4SUXfppHMj+tFdTw4mVIwOe8jB3K3/U/KD8+wJBJiVdDeUU1KVWVohaFjQComaDQlalynYjrvA3sW3f6eR80rVacx6rNUcgxCjhzSOwwz4JQRLE8F89G8wViSiyADbYIlJFCGLDtXjyLeSH/6piDHf2XXRGBx/vmOM=
+	t=1747936569; cv=none; b=eYFJLrO8DdHqKP0fLIELM/K0Nz7yLAaeSB+QCjdIQYXSxBe4uO7b9LL9lFdFKV/qKCKkZDXG1b0NFCGYk26vX/ur3KAx93vKW4/rW9hrdzmbUAHoNiZ04Yd5z7YDAPcGAoXOoz2X8ZJZVqkvBR2WikKGwZ0Vu76u+ofNMTXR5pc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747936477; c=relaxed/simple;
-	bh=BNOkK0cUkpVeXdEe/Q8QuO80mqJjeeYBewHmxSfhA9Y=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=u7ejxeojAAq9vRhloBG71ilw32PLMZAiseSZktiq7/gFfypaJE3klbGTQG68CLbZhsUmHSzz5lzIjgpckRixiOXSPG3xa8sPV5veWHNQR1ZsjxGC4cizWn7oMBGXDU3r+ttJ4cC4B/3G5l+LikoWce5f2vRpzJ/tWBwmtYmjZ1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=BNbaKcj2; arc=none smtp.client-ip=209.85.214.177
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	s=arc-20240116; t=1747936569; c=relaxed/simple;
+	bh=8n7EYZ7a+0maw7G/TlJYf6SgDc1RSBDTt9ZKzCcFa5M=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=JxdwDJLFNUXOHYH6gDm4CZIOx+VkRbTmKhfm+0vXONcQG91WaMcvDc384wtf26ZburVU4MaZYEsC9DINQlzwl91KRVFknD79H+odlZFZekI+xTMLE39cT8sbNmg6nHJIcCXhBC4c3jDDhL+8tIXM+sPl5o6PSBERdUZskgbbE6M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=iDXzLpc8; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=flyeUA4S; arc=none smtp.client-ip=103.168.172.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="BNbaKcj2"
-Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-231f37e114eso21085ad.1
-        for <git@vger.kernel.org>; Thu, 22 May 2025 10:54:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1747936475; x=1748541275; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Z3UzBWLPGk+v0c/GG4qa0lwy2xfg+OMGZQJRmiHKFpY=;
-        b=BNbaKcj25SOsZjYQKKcl83NWuILg01ReIPyoMd7nugP2YoThWehtKR0w+lqZv34C8d
-         v8VBoM22d3EHnrIC8abk73L9BNHxdtjyGlw+1pXWJehfL/WaJMzfJIbzwmL84P9ulL0S
-         x/jtT1qMfK8eDFpnWRjmq/rtlhUWec7I7VWnqWkHJr0d3yahWS3jQxNv4XHjQb28jhCw
-         XyC+965logfp/LdSrqvbyDFm55gnXNI/nqx61EMCz5IrBla0HsR/4uUyclvRzprRExzH
-         oy9YkplCNlfm28p9JVBtY1W8peFcXEEFn7TlZ6oP/HrxBfQD2GFYXoyqa9Kd/zpnmkLI
-         rHwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747936475; x=1748541275;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Z3UzBWLPGk+v0c/GG4qa0lwy2xfg+OMGZQJRmiHKFpY=;
-        b=fxYdaDpBxpCfsX93gHC6HMZ9QXFqe2hKQcLUEaDnOxsSkKBzPZvmn7uiafKh0r4eau
-         CXEGXF8SWSOIMBZdQu5T/hFuUjq5TAwlaVG1L2u8DdiTC9VAjIFyDkEGEY8UZTBFH0F2
-         c3iUM6oHB3SHwPNUqlliQmnwFd1ARSS4EO4vtzYFlU1qQEIcjK/KRJVRpgY4Obr0Ez9S
-         DtzS2xkdVJ+CaALYzMTFoSasISxMRWvnTk8inOgO3PUGzrYqurD5QlBrB/67umdEPYsT
-         T0XoW/J5vkIJYCWWYKKLjXZhyc086pRwrzAU+7f0b71xNETuk0zGP7kLk+b01c3kEhkV
-         rqqA==
-X-Forwarded-Encrypted: i=1; AJvYcCX4Q0+BWIS8yDufFnuPClQXLaR4Hu7u7m3kWf9UQFiA0DgCq6FxpyNvUa7L5Adr2Vogtg0=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxUQQqEhLGuj894TXIxheEO0a0AR2iTLsYH17WZwsUbClUOf4LT
-	MhRN8x2P4vosT7IB+8LdO1KpO1vQzMS+ZiFGiaDeoBNp8z3EeYTsfDqHoyt/zVxCXR+AUU1KSPY
-	uq9Wa9nvgKgs5GJX3O0l8BedYbr8jI3atWbgio9atipQyCTs7CSxb9cdJ
-X-Gm-Gg: ASbGncv+psxpFby5UCCFsgMzJjiRNKHscHM2d0sf2R/mdX0MHsluOwwoaLVBhJ49t9B
-	tPszYOuHr0Rd5FGEn28VwdgbYk9PI9aVwOXXyYoT/T4EAFpcnFZICd4/V8hI5e226ye6ZthcesH
-	wldF1EKb/SkiQ2I9JXXSNSOM/p2BSmCzmcRDiQ0WdfFxIgM5i3JQF9+jdZRaClMpBzL1MtY6Mn
-X-Google-Smtp-Source: AGHT+IGIF7aZs/huN7nfNlUv7ayh28sQc55UH97kcocLuPg1k81mIV5w68eGZ/7xBreXNlvSR+6S69ZMrlPLDnOU6JE=
-X-Received: by 2002:a17:902:ecca:b0:231:bed7:1746 with SMTP id
- d9443c01a7336-233f1e6a663mr3505ad.15.1747936474984; Thu, 22 May 2025 10:54:34
- -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="iDXzLpc8";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="flyeUA4S"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 886F71140132;
+	Thu, 22 May 2025 13:56:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Thu, 22 May 2025 13:56:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1747936565; x=1748022965; bh=9VtMACgEGB
+	pxaAOybdr2vrZoomZxjcwDuoh/qFzHUIU=; b=iDXzLpc8IUCP8tzP1u+dFvn9aF
+	calG0Vz1TTLGJ7Er6oRw8EVmfktnLm0kE+iMlccUQJhABiUlLPawdwvznndPM1Ec
+	vLKdE1QVhyGwV3XO99WtIjBxCp3AlTPnR34Ygi/AFS77/hyGJRixltEI6+4hmVQS
+	W4VkolrbBP9WQ+R/siSkKIarrCxOO6kuaHWyZvffQnOvlOcgPTOqfP7rgN6bYTjj
+	xarFvQNd+l8X1dBWCTuFWAuA/Ts5KO+ofoxmfRGnPgKeBkhLmSGHF8l64gts+0Sm
+	N1ZJoY/qItEuyN/Rr7vRack5gIxXz+gO9ROErQxU2rGF3Tt65rnZ4AApjveg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1747936565; x=1748022965; bh=9VtMACgEGBpxaAOybdr2vrZoomZxjcwDuoh
+	/qFzHUIU=; b=flyeUA4SiGOwJrhE+l/XrM7EDBTk7IQEDY5qDy6xlloNBmk5enG
+	/hLixWTvamIxHsunSu/5Eu92gGQAqqik8cUdSrLytlHUyPazaWs0wiDO7Sw3ZYqi
+	7D8fkjpW+kGwVNsUCan+AyFLFC3MwVGwP2FH7UevVKRjaaPAGQIDC6yxvdZW+wcI
+	bF/sHxPtcmdO6jUweRbldoT6H1yW1QzS9TONlnG0jaPQ6/KTi4p5bYacrYRMDHeQ
+	zORJJItyzqdwenMNH4PiV83/2ey0FoO7Ul8qljtLK8hHODyfgBYwTR5qIkc1voJk
+	ciqnx7SzrV/hroNs80z+6IDQjwDBTo2+6uA==
+X-ME-Sender: <xms:NWUvaFszStt1dOrpFQeNivRrzg5PjoBvBHavnp9qeucIjOP9YdYuUQ>
+    <xme:NWUvaOe7lZLGJADjtGkDiaUEgg0FdBOybxIKqbaiSx83BiKwnuVu8PBWlCukZZBkY
+    8LqTPRScUAaW8XoOg>
+X-ME-Received: <xmr:NWUvaIzj5nIFUNO_3HENPJzFIceFIVppzmovCriKo-4_qX4SE-0hwEEmDfzb8iTaLcnrtdP-FwYm330LfK5wNzZS2andhRqtbvth0UPqHc3szD63PkoL>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeiiedvucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhgg
+    tggujgesthdtredttddtvdenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruceoth
+    hmiiesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepgfevfeeviefhheehhfeg
+    tefhvdffheefheeuleehieffuedvvdeuhfevffeigfeunecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdpnhgs
+    pghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphgvfhhfse
+    hpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhr
+    tghpthhtohepohhpohhhohhrvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehgih
+    htghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgv
+    rhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:NWUvaMMWss5FYd6GMPzsN25fZgX_AgkUsU-0x_ueDCMawprYOqqzPA>
+    <xmx:NWUvaF-nTlRm9bChOESEpCO8UkgFJuvHKslk7zNulenTKxW-Dnuhgg>
+    <xmx:NWUvaMU5V74CrCSc_h-eJSixa6NTNTQNiKXDu_IR_8hre9KXDQMd9A>
+    <xmx:NWUvaGcoRPNQle5gZ9nHuUw5rwUXnqrZIk0SILGi2okrYLuJBnskpA>
+    <xmx:NWUvaHnMFO9WOykm0fn9bfymMLkEEj8PmvVEF-k8sICsBnDBsoXQ720B>
+Feedback-ID: ia13843cf:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 22 May 2025 13:56:05 -0400 (EDT)
+Date: Thu, 22 May 2025 13:56:03 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ondrej Pohorelsky <opohorel@redhat.com>,
+	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= via GitGitGadget <gitgitgadget@gmail.com>,
+	git@vger.kernel.org
+Subject: Re: [PATCH v2] cvsserver: avoid precedence problem between ! and %s
+Message-ID: <aC9lM12GyntAp2tR@teonanacatl.net>
+References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
+ <pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
+ <xmqqh61ear4s.fsf@gitster.g>
+ <xmqq1pshc2vs.fsf@gitster.g>
+ <CA+B51BGLK-3R9ev4a8EwkGHQEBi2QhgxvAd0CHMbphrxPM74eg@mail.gmail.com>
+ <xmqq7c287i7n.fsf@gitster.g>
+ <20250522170536.GB1613@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <PN3PR01MB9597D5EBF0A8D91737E4FE52B89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <xmqqikltaghp.fsf@gitster.g> <PN3PR01MB9597F61508C56A33136B3844B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-In-Reply-To: <PN3PR01MB9597F61508C56A33136B3844B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Thu, 22 May 2025 10:54:22 -0700
-X-Gm-Features: AX0GCFtLOdKr4egLELCk44ZybARpVudY_oHpu6blGLcO5w38McpzMq2SwnOjvEQ
-Message-ID: <CAJoAoZm_fsfhq2gD4JVCihf5do-+CurFRBfw8PX8-0QbSKk-VA@mail.gmail.com>
-Subject: Re: Add git imap-get-recipients command
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org" <git@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250522170536.GB1613@coredump.intra.peff.net>
 
-On Wed, May 21, 2025 at 8:21=E2=80=AFPM Aditya Garg <gargaditya08@live.com>=
- wrote:
->
->
->
-> > On 22 May 2025, at 1:22=E2=80=AFAM, Junio C Hamano <gitster@pobox.com> =
-wrote:
-> >
-> > =EF=BB=BFAditya Garg <gargaditya08@live.com> writes:
-> >
-> >> I was wondering if it would be acceptable for the maintainers to add a=
- git imap-get-recipients
-> >> command.
-> >>
-> >> I currently am working on it, and it would be a perl script. It would =
-do a very simple thing,
-> >> take the message id as an input, and output the To: and Cc: recipients=
- of that message ID.
-> >
-> > If you are selling this tool, you should clarify what the sources
-> > are for the information.  There has to be a database of some sort
-> > that you can query with a message-ID and get addresses in that
-> > message.  What are you using as that database (e.g., your personal
-> > mailbox?  lore archive?  an imap mailbox at your provider?) and how
-> > extensive and configurable is the data source?  What data are you
-> > picking up from that database to come up with To/Cc addresses?
->
-> My plan was to select the Mailbox specified by the user and use the IMAP
-> commands to search by message id
-> >
-> >> This can be useful to be used alongwith git-send-email, when you send =
-a v2 and you don't have to
-> >> type all the sender mails again.
-> >
-> > FWIW, if you're only duplicating the To/Cc list of the previous
-> > round, then I do not need it, and I do not want to see anybody,
-> > including you, to be using it.  To come up with a list of To/Cc
-> > addresses to use in v2, you should start from those who commented on
-> > v1, in addition to To/Cc used in v1, and then whittle it down.
->
-> Fair
-> >
-> > Again, the description of the "tool" in the first paragraph was so
-> > sketchy that I cannot tell where you are gathering the To/Cc
-> > addresses from or if the tool is using only the named message, or
-> > considers messages sent as response to that named message, so it is
-> > impossible to give a meaningful response.  We cannot tell if the
-> > tool will be useful with given information.
-> >
-> > A more generic version of the response follows to outline the
-> > general principle for those who are watching from sidelines.
-> >
-> > ----------------------------------------------------------------
-> > [make us come to you, begging]
->
-> No intentions to make come to me begging :(. But I do get the point.
-> It's best to keep it to myself.
+Jeff King wrote:
+> On Thu, May 22, 2025 at 08:55:56AM -0700, Junio C Hamano wrote:
+> 
+>> Ondrej Pohorelsky <opohorel@redhat.com> writes:
+>> 
+>>>> What made you send a patch for this program?  Do you or anybody you
+>>>> know use git-cvsserver?  Unless I am reading the program
+>>>> incorrectly, despite the claim in front of that escapeRefName sub
+>>>> that we avoid sending a tag whose name is not something CVS would be
+>>>> happy with, we did not sanitize the refs and relied solely on the
+>>>> users' repository to use only safe characters in the refs to keep
+>>>> CVS clients happy, and the fact that this expression used as if()
+>>>> condition is totally broken does not really make any difference,
+>>>> since it is in an unused sub.  I have to wonder if (1) it is a
+>>>> better fix to just remove the unused sub, and/or (2) perhaps nobody
+>>>> uses cvsserver to allow cvs clients to talk to a Git repository?
+>> 
+>> Below you mention you found it from test failures.  Nice to know
+>> that you weren't actually using it ;-)
+>> 
+>> Still, I would welcome second and third set of eyeballs to see if
+>> this is a dead code that the "compiler" is complaining about.  If
+>> so, we can remove that unused code instead of fixing it.
+> 
+> I agree that the code does not appear to be called, and doing this:
+> 
+> diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+> index a4e1bad33c..cc891eba67 100755
+> --- a/git-cvsserver.perl
+> +++ b/git-cvsserver.perl
+> @@ -5009,6 +5009,7 @@ sub escapeRefName
+>      #   = "_-xx-" Where "xx" is the hexadecimal representation of the
+>      #     desired ASCII character byte. (for anything else)
+>  
+> +    die "foo";
+>      if(! $refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
+>      {
+>          $refName=~s/_-/_-u--/g;
+> 
+> still lets t9402 pass. I suspect the issue is that perl complains to
+> stderr while parsing the file (polluting the log), not when actually
+> running the code.
 
-I actually don't think this is the point Junio was trying to make -
-rather that you should not need to feel like you have to ask for our
-permission to write this tool which can also stand alone and improve
-your own workflow. Rather, if you do write it and you find it useful,
-it'd be cool to see it sent to the mailing list alongside a cover
-letter like "would anybody else find value in this? It improved my
-workflow because <measurements/reasons>".
+Just for curiosity, the only commit found with escapeRefName
+is when it was added:
 
-Definitely I don't believe Junio's point was "don't send us this
-patch, I don't care" - but rather "how do we know we care until we see
-how you've implemented it". (One reinforcement here is his question
-about where the Cc list is being queried from; local mbox vs. b4 vs.
-using a direct clone from lore.kernel.org would definitely change who
-this workflow will work well for.)
+    $ git log -G '\bescapeRefName\b' -- git-cvsserver.perl
+    commit 51a7e6dbc9
+    Author: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+    Date:   Sat Oct 13 23:42:26 2012 -0600
 
- - Emily
+	cvsserver: define a tag name character escape mechanism
+	
+	CVS tags are officially only allowed to use [-_0-9A-Za-f].  Git
+	refs commonly uses other characters, especially [./].  Such characters
+	need to be escaped from CVS in order to be referenced.
+	
+	This just defines functions to escape/unescape names.  The functions
+	are not used yet.
+	
+	Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+	Signed-off-by: Junio C Hamano <gitster@pobox.com>
 
-> >
-> > I've seen from time to time people ask "I am thinking of doing this;
-> > will a patch be accepted?  If so, I'll work on it." before showing
-> > any work, and my response always has been:
-> >
-> > (1) We don't know how useful and interesting your contribution would
-> >     be for our audience, until we see it; and
-> >
-> > (2) If you truly believe in your work (find it useful, find writing
-> >     it fun, etc.), that would be incentive enough for you to work
-> >     on it, whether or not the result will land in my tree.  You
-> >     should instead aim for something so brilliant that we would
-> >     come to you begging for your permission to include it in our
-> >     project.
-> >
+A subsequent commit, 658b57ad52 (cvsserver: add misc commit
+lookup, file meta data, and file listing functions,
+2012-10-13), made use of unescapeRefName; escapeRefName
+seems to have _never_ been used.
+
+-- 
+Todd
