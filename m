@@ -1,136 +1,147 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ot1-f52.google.com (mail-ot1-f52.google.com [209.85.210.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27EAE2620FC
-	for <git@vger.kernel.org>; Thu, 22 May 2025 16:13:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE21323C4E8
+	for <git@vger.kernel.org>; Thu, 22 May 2025 16:44:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747930384; cv=none; b=dtd23mjDIapvQKoL9kKBMIzH0dvc5PYEjVuypSSROFlXu96GekGgTfuK5uba6pNJpsBqpf6eYOnl4ZUFscHQv0jMnmrbXR3RQvM74qRvZ8WXINf2dUtHBxc1M64ki/FQbdfUeKa4QRvGSGSlDIJyVU5bHP5MbK9wMoghpRuV/m8=
+	t=1747932301; cv=none; b=lIRjr/jVN2ohdOq0hiGVIIYszRGspmriRoM+x32p/8oUCPOSzSI3hvtfajPcqCMmbUQXaQsMYfdZR8+aglrRq9OdfyeMPqSYvxegM0GwX7CZLXGzstuzJTL896yh0Uo5oGBTBZ91jCfbFys7FlGqy65d4hOktxjaj1X1HnL3cLQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747930384; c=relaxed/simple;
-	bh=PEZ8gauTWLpQQfHdi7g17174uyER52dEhhvmrJU/Be0=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aHJalR6ULThOIesMV1Y9XpGiHieShDavrDbuKby8LTThTu3P6a/cVWOsfHu1/0sktzXYs5YVVa6ias1cfjK+y6dmcHjXZl+aT9Z9v9DqIxg3jPJyik9AWNqeK+e55ZsetxoZPWlaOBKJQzNmTDsjo2DmfyJEPvu4qn28o2ymiEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DS0cwKUN; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ugKtX2JT; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747932301; c=relaxed/simple;
+	bh=aYRqI0ExK7MxSy64V/FixZBMa5V20D7pYMmYigFebFc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=iUyFu8hhfy91QxUq6+ZIoawxaJzHtiIMUELz4Wl74tLXSOTOA8aBuCqNzZVl/Dy4dW1KoPngi8Rv5Bu/fayb41ZOadqFe5/zDFNTCXrC2gqgX6MR15FGF539DD6fziKQzKVssIBd2JnWxcB4ZuSBuyGMjlXq3yFdHzAO5Y9OdDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V/oYWWR3; arc=none smtp.client-ip=209.85.210.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DS0cwKUN";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ugKtX2JT"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 28A4011400E8;
-	Thu, 22 May 2025 12:13:01 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 22 May 2025 12:13:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747930381; x=1748016781; bh=MkP4QJhyZZ
-	3kfAFeDe6VByPsCLUa8ZqAE/IPdmncrEk=; b=DS0cwKUNWEV+6g36Kh/WcdzJ6s
-	KRIssqIbKLcnRmSgavsQGjJj7vXfes6MCnBDHLtpskcQAbPPDlNyqf1Teh1KxFQs
-	2fv1qnGRmMGVNbs0wLgX9aLx+0bxM8Z12hHwkRTs0KLIzUEWhPg3mi+BQP24VE6L
-	VwmpDYoegr0zT48A32Zqsb48CbqGX7ax/YsXwr4nR7TqiNjnK83BCJyBbOANQFnb
-	UTmCd0v2vPZvuOCX4H0mQSMU3sMNp2CT256Hqb9N3vk5LSbN/IbjuOyj7xiuHeUZ
-	KrZbZDBQc3CKPwU+g1UvPb8ZaVCWdbuDeECeYduAk56h/YZenxScnUZzlCGQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747930381; x=1748016781; bh=MkP4QJhyZZ3kfAFeDe6VByPsCLUa8ZqAE/I
-	PdmncrEk=; b=ugKtX2JT1gdm6pTwo/KvgJDdsKpaIFhw4BUDFuG1F+8r6sdX7zp
-	Okg1pPkbjcp7xduUhDwlgi7g6GD3CeEqkWWNHwlAycJv1wgA4bVowtQirwz3YE41
-	EyutMs8IHZGYIGgBjDvMR1RJkFtKs/U2fye0ltrOLizwxRzyQC9mFp8/87fdULSu
-	peoOFLWZDnQ0vok66fEJQV0xcqZAf1NHCJQAiZHmOGbfOaHynGAQwjsmKOY27WpR
-	xyJDlKsXa9jicr3eKduwtgxKW4PlhdMeSPr2tsS4ICwo2cJa6yKc4lmoIw1U/WPg
-	JbTpH5mHhALFKY+KecMRvFPhWxNuT82WvOQ==
-X-ME-Sender: <xms:DE0vaNa6BzVNYygR6Yl_fg-D0T4swQGPCF2d4JxtcL88-qHTr1y9Wg>
-    <xme:DE0vaEbtZJ8pwtbFLvqQQ7THWfEqSY21HLJH8zv2nAAOI547WzHjdRpR79_wBeYDP
-    Ha_w0Nsb9JR1Y3htA>
-X-ME-Received: <xmr:DE0vaP9CDvOPJJcCsKLjCwDmKbjL97koyasT3l7PJ0r5YDti3PflpFWW2-tWawabaqffBlMqYrERrmcBUAd0U4m3qXW54y4vdAfuQfE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeigedtucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepjhdrfihithhtvghvvggvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:DU0vaLoMO3fowXWdQY5fVpiwSxFRvQ2vwC5cac3-FL-ACakzq0C96A>
-    <xmx:DU0vaIpLTxWV6IBaERF8H861-W4FmK_G-0f434SqSdMlKpRQMiU7dQ>
-    <xmx:DU0vaBTCvyDsLO7wmGtB8tqfsBZbibfumNJCkJgJfTr8O3ZwVdoWxQ>
-    <xmx:DU0vaAosEe_hHSSg2alAGZzDOQsbH_U6ZMHvkQf1xFirPR5p0DlVpg>
-    <xmx:DU0vaH243NKfJePYMIfFsIjZQ_4kryGKUTxpRco8mQlnC_yhOPatnEWI>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 May 2025 12:13:00 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jouke Witteveen <j.witteveen@gmail.com>
-Cc: Jouke Witteveen via GitGitGadget <gitgitgadget@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH] doc: update references to renamed AsciiDoc files
-In-Reply-To: <CAJ2ouazRuF8CGddobgV=xJr8=1RQ4Pv8+ndH0E4qxk-gJhG4AQ@mail.gmail.com>
-	(Jouke Witteveen's message of "Thu, 22 May 2025 11:23:29 +0200")
-References: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com>
-	<xmqqr00hahdt.fsf@gitster.g>
-	<CAJ2ouazRuF8CGddobgV=xJr8=1RQ4Pv8+ndH0E4qxk-gJhG4AQ@mail.gmail.com>
-Date: Thu, 22 May 2025 09:12:59 -0700
-Message-ID: <xmqq34cw7hf8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V/oYWWR3"
+Received: by mail-ot1-f52.google.com with SMTP id 46e09a7af769-72c14138668so2579074a34.2
+        for <git@vger.kernel.org>; Thu, 22 May 2025 09:44:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747932299; x=1748537099; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=dCT7QHrlH0Q/wEiKBprfe66/IgM4ngk7nsbM4pIMzdQ=;
+        b=V/oYWWR3Pzvr/MCVeEezjEUil7ptj+nUOolYbwTA/fsoJm8TNFXy3OpY7EQDyZF8S5
+         Fb+JrTu6tWrPvn/rdw4UpNElT8jIs066HJXaQ/EsMw0N3wQD1oIJ4ud9AoT3vTbiuxZU
+         zJ4KFWJKXHkrN+5/+tvbGPvEDcLEjfXpFmq2EI4aNoTxQlORqDOcMAzlZS7J7vy+DWtH
+         NbWoBdUHuO2+8fBGTS8UZ7y7s9m2QKGNIUXoRv4tDquXpF+IRBTU6QPUdUWDHSBV6zgB
+         Kasx1altO3FuzVj7+1EtuKQPgSAgymIMIZaZlBfw5aWr6DYQBXXG/vna3vCV/IfYeTev
+         0RXg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747932299; x=1748537099;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=dCT7QHrlH0Q/wEiKBprfe66/IgM4ngk7nsbM4pIMzdQ=;
+        b=BrAJizt2OXPf1n/S67UDq0w/GFjiXbu85LbswZ652KtMchoWKXye+1ZB5nCtyQXn96
+         T5vx628h3ft8I0q57e/v+/6L3H3GecWkSPLwZGxm8YZ007XLydzNwPKrK6uaeStpvPhb
+         R/1cwHYbkfskMdO6TMAIxLjVSWNzTf0Vqd734YPrBtM/juqFhxKldFNrbM6TgwZb0Ah6
+         fKO6xlK6apZc3ZhQ6deaPF2iZNOX1C/sR1xjqe52sMPX88fRSRB1w2KyHkcwgXgck1la
+         LeKeDGxO+HdISzJFj+XbLi2cZ0Lp+MrKoKDc/y37Hu6tPOrK02Qa6hyRXdnMaEEvRuT3
+         9dPg==
+X-Gm-Message-State: AOJu0YxUr9mWM1aq1wp4e8tRYNjHhkZfCEcx/ymW0l/8r5u1LuGEYjP2
+	/RproiASxG+ekB8C7G6Hqb30d7nDrzB/sYn/eCuxyQX70R+vJfe0jgeoCepsmsTn
+X-Gm-Gg: ASbGncvKicqAjGF+Rfp0uQCxkml/D8nO01jYfa8JXHfqC3WxVAatd5JgN/hhukoFMQN
+	Wr2K0x1HoEHrq0iwIxGge4DYfF4nVAeta1dHjwVguMvY9d/evNaHtuJS7UjznTyAIDysBHhveDh
+	XlhNaE3lrJd1PIXrm4aazs00ldsuDK8PyQw+EbZCASwLn7eSmG87nmW1DjlOlxivRnedhLN2xiW
+	24FmZJR63GNs+jaCh2+cUqZCknAQfOv/DRXwxx8zFZ0fkmtatwW3QkARafzE4j0LJ2IdphkK48k
+	Mm5kGd6V1ujYJokJoOZR+5W0jt43uUPPtjxqvjmoGL8C
+X-Google-Smtp-Source: AGHT+IHpeF3HKkOCtwUEzNvrz9MTuEwvqzaBOQipwZBuQM7iJ5dyUBKJhShIAEZ2hpKvm2pWAOPQcQ==
+X-Received: by 2002:a05:6830:611a:b0:72a:327:eed3 with SMTP id 46e09a7af769-734f9844038mr16788688a34.5.1747932298659;
+        Thu, 22 May 2025 09:44:58 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 46e09a7af769-734f6a4b272sm2549170a34.5.2025.05.22.09.44.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 May 2025 09:44:58 -0700 (PDT)
+Date: Thu, 22 May 2025 11:40:18 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Roel Sengers <roel@roelsengers.nl>
+Cc: git@vger.kernel.org
+Subject: Re: [BUG] Hard links to large files cause unexpected refresh
+Message-ID: <66wu7zyhsi5arpujp4mkidafzbu7fj6jfrqzv4e4smtjev6zd7@cmm3doo3w7ky>
+References: <195d93de-1d5d-40f3-8139-b73a447b356f@roelsengers.nl>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <195d93de-1d5d-40f3-8139-b73a447b356f@roelsengers.nl>
 
-Jouke Witteveen <j.witteveen@gmail.com> writes:
+On 25/05/22 04:45PM, Roel Sengers wrote:
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+> 
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> 
+> In my workflow there is a step which hard-links about 80GB of such files to
+> locations where a 3rd party application can find them. However, after this
+> hard-linking step, git status (or other git commands) hang for a long time.
+> Note that making a copy of the file does not cause such slowdowns, which was
+> surprising to me.
+> 
+> I am using Git with git-lfs for these large files, however I was able to
+> reproduce this issue without LFS enabled.
+> 
+> The script below reproduces the environment which triggers the issue:
+> 
+> mkdir git-hardlink-test
+> cd git-hardlink-test
+> 
+> git init
+> echo ignore.bin > .gitignore
+> git add .gitignore
+> git commit -m 'Initial commit'
+> 
+> dd if=/dev/urandom of=file.bin bs=1M count=1000
+> git add file.bin
+> git commit -m 'Add file.bin'
+> 
+> # $ cp file.bin ignore.bin; time git status
+> # On branch main
+> # nothing to commit, working tree clean
+> #
+> # real	0m0,002s
+> # user	0m0,000s
+> # sys	0m0,002s
+> 
+> # $ ln file.bin ignore.bin; time git status
+> # Refresh index: 100% (2/2), done.
+> # On branch main
+> # nothing to commit, working tree clean
+> #
+> # real	0m16,100s
+> # user	0m15,700s
+> # sys	0m0,255s
+> 
+> 
+> What did you expect to happen? (Expected behavior)
+> 
+> After creating a hard link to a checked-in object, I expected the final git
+> status to finish in a time that is barely noticeable.
+> 
+> The file itself is large, so having Git taking its time to refresh the state
+> of the working directory would not be suspicious were it not for the fact
+> that creating a copy of the same file does not suffer from the same
+> performance penalty.
 
->> >  The platforms which must be supported by the tool should be aligned with our
->> > -[platform support policy](platform-support.txt).
->> > +xref:platform-support.adoc[platform support policy].
->>
->> ... this one did not stop at "txt" -> "adoc" replacement, but
->> attempts to make a proper link.
->>
->>     Side note: I do not think we are using an explicit xref: syntax
->>     in our documentation anywhere; have you checked how this gets
->>     rendered?
->>
->
-> Turns out I was too lazy and blindly replaced what I recognized as a
-> Markdown link to the appropriate AsciiDoc link. However, the
-> inter-document xref functionality is unavailable in the legacy
-> AsciiDoc processor (`asciidoc`) and is disabled in Asciidoctor by our
-> use of `--atribute compat-mode`. I'm not sure what the right course of
-> action is now. The old link was wrong, but the suggested change only
-> starts working when we drop support for `asciidoc` :-(.
+When git-status(1) is run, the index state is checked to see if any
+changes have occurred. From the provided example, while the contents of
+"file.bin" remain unchanged, the act of creating the hardlink does
+update metadata such as the number of links and the file ctime. You can
+see this when you stat(1) "file.bin" before and after creating
+"ignore.bin". 
 
-Perhaps let the sleeping dog lie for now by doing "txt" -> "adoc"
-only, with a bit of comment why we are not doing xref: yet next to
-it, perhaps like:
+Git sees these changes and then refreshes the index entry. When the file
+is copied, no such modification happens to "file.bin" and thus that
+entry does not need to be refreshed.
 
-diff --git c/Documentation/technical/build-systems.adoc w/Documentation/technical/build-systems.adoc
-index d9dafb407c..3c5237b9fd 100644
---- c/Documentation/technical/build-systems.adoc
-+++ w/Documentation/technical/build-systems.adoc
-@@ -32,7 +32,10 @@ that generally have somebody running test pipelines against regularly:
-   - OpenBSD
- 
- The platforms which must be supported by the tool should be aligned with our
--[platform support policy](platform-support.txt).
-+platform support policy (see platform-support.adoc).
-+// once we lose AsciiDoc compatibility, we can start writing the above as:
-+// xref:platform-support.adoc#platform-support-policy[platform support policy]
-+// or something like that, but until then....
- 
- === Auto-detection of supported features
- 
+To workaround this problem, you could set `core.trustCTime=false` which
+tells Git to ignore ctime differences between the index and working
+tree.
 
-Thanks.
+-Justin
