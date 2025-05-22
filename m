@@ -1,185 +1,124 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35EDF250BF6
-	for <git@vger.kernel.org>; Thu, 22 May 2025 08:50:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE0B22259B
+	for <git@vger.kernel.org>; Thu, 22 May 2025 08:57:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747903821; cv=none; b=MYWB72/poQ5LuuLHclYlVj525Hkchhq8MjzgsdRbP62NHgX0JfK8XzrGqT0fxzUd4YwG5NHGqrNv0zzos5ok/RS0e+zfgkFkpIiiJMCqWwsNcyXS4hzQaZDsnbT5vrUzhEzp5U4BgJxh7k/avRyHFum1H0SRtXlmbTuk2O2Cm/k=
+	t=1747904272; cv=none; b=flRQMWuQ6XZDaa/NLp9OQLrV2lnALQ9iyogsLGVsY9d36wr5hwn366fJ3SXeaHOo44Lmp6pVd+eZe4ZGF+6NoQjooMq8H2tzZeQR4QIPJxpsb5u30JIwVT0wIAqhMaN7bE7PsYXb8n06FlDpWEmSnzyAsHoeY+WdJsw72guvHlo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747903821; c=relaxed/simple;
-	bh=aqFCnEyEMJ7o2MgnUMR5gqTQFkRHeDvk+9snSfsu/o8=;
+	s=arc-20240116; t=1747904272; c=relaxed/simple;
+	bh=869mmJD5gQzY0j95EtpuBkd2avsYd+7+I0Oj9yv8x+k=;
 	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=CzutVgvBBrcf4JkrJbrJnWlACtxSH3/TJElmHh4cN6IIK+M9T+p7ZRkifCRMzTQBOoX/ca3PYOCJgfmzHjFSotOQlUGjQsQ04NgMTV/advi2QNU+bWnJQ3XJV70TSaEE3/Z0VB9Ob3q2mXJPCe+VCZpJmIav/X+RyjwT77W5wWY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=hGyv09ge; arc=none smtp.client-ip=209.85.217.50
+	 To:Cc:Content-Type; b=kDkgX9fhvJH3imtLIqudHN3X4UCSnwpBeBtSht6kNcNCsxTA1w8rCyiaCCaIPRlf0qR0Y7zWopBoL8KFokaL8FDgcc7Q+MnPB05IWVW2M2lFyrlKy/K66WlZNs2ew6ksPVNlrppJjuHUf9sdq09wt2+sWGqj78a8uAqtVStaQA4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TYIbQpVL; arc=none smtp.client-ip=209.85.217.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="hGyv09ge"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4c4ecf86e8bso2561185137.2
-        for <git@vger.kernel.org>; Thu, 22 May 2025 01:50:19 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TYIbQpVL"
+Received: by mail-vs1-f42.google.com with SMTP id ada2fe7eead31-4c6cf5e4cd5so5260018137.2
+        for <git@vger.kernel.org>; Thu, 22 May 2025 01:57:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747903819; x=1748508619; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1747904270; x=1748509070; darn=vger.kernel.org;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=u8Js0ARfMizDXN3TXXpeF0MNjEpL6sn1OEUih8BanVk=;
-        b=hGyv09ge8TGu0JLl/Xd2dPR1eUoDKsF3u/fp6s5IV0yiUYUmNo/OYPk0qOeq4mn1RZ
-         oe3mLSBcWIQC94M9datQDpzrjcw+ECqBIwPSvV3B/8maWcwftoTXvWaze1RC9WAO8931
-         MOsv95w7/HhZpAk87rtn/Fkrf13ENg8h9wjk4AlU1ktmQ2KBWGJrAkj9ycoVW8O1gm3G
-         FklUdQ3agY6T5LPRHOrOI4exaxPh8pEbR9dl+O/rI0iPe5XHM7glOG8LSn7r8toPpRAc
-         Tshl1yEuvmoDT+TBOa/zkcp76NKkDvULU64wF5wg1ZG2Ei30wFSex9FV1l9ZLWRj8MIW
-         0ecg==
+        bh=A82LqCPKyfKdVnraRlx8ok/jnSbhKz9rQJc6DFLgRH0=;
+        b=TYIbQpVL9zXleUzEs1iB8X/wsqN4PVjKHZkwJ8ThMw8gFceU2wxZznYk9p1rzF4PM4
+         DzeR/dwq+NxY2blOYmt6PnHVPnsK7KMtrdyaW93ggE5NscZ3x/rMA3ZvvQrycmqLObwb
+         3ixfwzpCLTMrUt1936Qt9EqkqWbx/nHBnDai18hrKwCMc38TFkuEB/XI5IklfT7LvonP
+         lHYCBiDiu/WPDX6GjI2PStSOTqQxhHHwfNcgIn22vmcq0IOzEEKD+DGIDiaVtIS19EnE
+         grcYbvab1oUSNcOEwhm0zKcKzrFDPjLWX2liUdQMGAWT5SDNJ8ByvYFfvDF/khC8k9Ex
+         /5rA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747903819; x=1748508619;
+        d=1e100.net; s=20230601; t=1747904270; x=1748509070;
         h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
          :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=u8Js0ARfMizDXN3TXXpeF0MNjEpL6sn1OEUih8BanVk=;
-        b=Nw7oKOcKK3Ag4Ku4Sm2Bt2Wq1QJUzBVUe69qBG2dcEjIqFuirvUKs7I4b4fLlY5ewT
-         emgtApKQWyCOvA4I+mu/5p1CCHZJEQKzT4/ehHahaBDSeWwComwHlhsBSi3MJ9K2rk8m
-         E0L3ExM0kCuiXQnTRrPyA/EtQSVVyZ8bOzRsYuvYEtcYvpRu8HEHkHkyq2WIwSjIsTHB
-         hXiSBaRA0EYa70rKxDCBvPpxa6A8zfwidl2MNdfH2/dzMRyaw8vmacK2Y36VI2w/pf51
-         kJ169x0LP7UxBXs5YgjNNV+SDHhEs0Egu+M8w5L058Vww5Umer3Pf2k6cQ/LSRmkagaN
-         qocQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVff7QXxxksWPhB0UsovKC4/fbUR4xobRUkHqpXHa/peukRUYJwCuqNu/7ATVJGNzWxvGo=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5b6plQ+q0SptB7WJDzemKM0hO0Rsc65Btp8nGKIK+0efLPwIM
-	03Xhalx4trHEt2jH4HZpjR6PWn8XXSdqIa1QZBHDJ42C67nr10vmj9nHtt4fGwOEP7Djbgx4Slw
-	U4lEHy+fkw4JMMIlHBsQFPR9qsJub3BU=
-X-Gm-Gg: ASbGncvwh8oMuxOyVheaBaHfsvPrx2y1fACCXK/vWhhjBCbI6X85vLMQVzi1qnKSeOU
-	RqNtNJxfbVSsZ3WCA9nEipUqCizt6Cfqy87+ep75PHUtg7lal7wbFWNw//VNPInCRJ/m+livAnf
-	UvQlWU0/Gsv41V7rSXKRIWfZAkT5oOBdIxt5YNn4bYikNkuWSf84BUMiyV64LV0oXWG3o=
-X-Google-Smtp-Source: AGHT+IHqUilXhHQvmmwVbhB5TXrj5vDPdzHx3qyIXHUUTU0JOkR+QZHEIe2VgdJ7sQT7ar8el/2FTfkP6NV8R7NkNBw=
-X-Received: by 2002:a05:6102:cce:b0:4da:e6e1:c59b with SMTP id
- ada2fe7eead31-4dfa6b94016mr23372280137.13.1747903818929; Thu, 22 May 2025
- 01:50:18 -0700 (PDT)
+        bh=A82LqCPKyfKdVnraRlx8ok/jnSbhKz9rQJc6DFLgRH0=;
+        b=ETXfTG3RWkHAUdv9rbZ5FmWSEFT23YGaCJMHdk+m8+z4SE3QmAHI75jYwEuCgpl5/+
+         p7DRpTxjcZ011bFbj/SfvtyF6RCAVTL+sNd9TRMxcW4kkTF2+0cd6+eB89uuXKodtqfL
+         t3mAMfn/jaqjdk75b+6rxalHvu//JUX30FQfQJfAVQFmg8UEqqbYaSqxgPUmxng/sR/M
+         1MT2TeolGe4QjYDRjsyCey/NRPWcpKjBu0eReRliydQnQ4R/uxkT6otW3P4SpsMwvblw
+         FcAIpFofXJqCI2QZUvEaDhoE53ChHxHt8Q4gw8bbP6phZvDU29GMw/sMXS4A8EtrALaz
+         T3Qg==
+X-Gm-Message-State: AOJu0Yw8wtIiJga2+O1Xob/IBkrhxL37F6n2A5GcqHgP6FeaLCRfcRZH
+	jQN0Xslj4wdySiLTIBjmCBA31yql4fvIlSOZ0ofge6pRmeMsQXu18N344Zu8bgf9fIJ1Vs4en7h
+	QUrMrn1h2NBAKDxWG1KI4P8VjkElk//0=
+X-Gm-Gg: ASbGncuDHLbedzo+AgfDbm2WvIcSXKKBL0eIK5fdkJ/A1PaTGvCzCb4kCV3bbjC5ugr
+	gfdOqnf+B6Lkiy5nI2bR8lHdDgt2oTE+yirxRRec1Np1J9NKHJ1N7jGlS5OX+4ZgVYWgPVYJeXj
+	gE58hvLBVa9p3OaXb8DUrS4HTCoUFjkaHiIxY3EspECc5cOuAFCCzfkKX3c+MlhRWlTA0=
+X-Google-Smtp-Source: AGHT+IFVdfSjMmI4LqMkBe4lXSGO3nv8TTac6+Q/bCduWua/LaLKtDUlbCj50cMW4/PUnoUdiNFHmG6x+VTQzNJgsyo=
+X-Received: by 2002:a05:6102:91a:b0:4bb:de88:d027 with SMTP id
+ ada2fe7eead31-4dfa6b7d4d6mr21233611137.7.1747904269937; Thu, 22 May 2025
+ 01:57:49 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 May 2025 01:50:18 -0700
+ HTTPREST; Thu, 22 May 2025 01:57:49 -0700
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 May 2025 01:50:18 -0700
+ HTTPREST; Thu, 22 May 2025 01:57:49 -0700
 From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250522060044.GB1135327@coredump.intra.peff.net>
-References: <20250514-501-update-git-fetch-1-to-use-partial-transactions-v1-0-7c65f46493d4@gmail.com>
- <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
- <xmqqy0usmprh.fsf@gitster.g> <CAOLa=ZTyE9myZqy8UHe=YeZ-diy0Q1UDTBTB3d1XGC09XvshAQ@mail.gmail.com>
- <20250522060044.GB1135327@coredump.intra.peff.net>
+In-Reply-To: <xmqqtt5ec8t2.fsf@gitster.g>
+References: <xmqqy0uqg4w6.fsf@gitster.g> <CAOLa=ZR-OaLPueyRcXYrN0rKPnVXPPmJ6drsmM4eRs-6yKEgQQ@mail.gmail.com>
+ <xmqqtt5ec8t2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 22 May 2025 01:50:18 -0700
-X-Gm-Features: AX0GCFu19cfCE8RhWpxl9Jp-vX5mnyqvMSSArOtT_hq-fsW4XZ_ijhoQTA9qFvU
-Message-ID: <CAOLa=ZQhaPXS1y5zkRv2CQ_S5=8+XRg_A1snXHVYXz3uvVgZSg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] fetch/receive: use batched reference updates
-To: Jeff King <peff@peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>
-Content-Type: multipart/mixed; boundary="0000000000003ab1aa0635b592a2"
+Date: Thu, 22 May 2025 01:57:49 -0700
+X-Gm-Features: AX0GCFu0fyN0CdfQ6VnsEipgrrYQbNjV88PdE-Wxgj9pl4E70pknjrRGZOnswig
+Message-ID: <CAOLa=ZQvow9wkxKPFtfLHFxXvBvnZ-U6+qgfVxWoLfuH190Qjg@mail.gmail.com>
+Subject: Re: What's cooking in git.git (May 2025, #06; Tue, 20)
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org
+Content-Type: multipart/mixed; boundary="0000000000001c96830635b5ade8"
 
---0000000000003ab1aa0635b592a2
+--0000000000001c96830635b5ade8
 Content-Type: text/plain; charset="UTF-8"
 
-Jeff King <peff@peff.net> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> On Tue, May 20, 2025 at 02:05:09AM -0700, Karthik Nayak wrote:
+> Karthik Nayak <karthik.188@gmail.com> writes:
 >
->> > Not an issue with this series at all, but one thing I wondered is if
->> > it makes sense to change the type of strmap_get/strmap_put to deal
->> > with "const void *".  That way, it would not be necessary to cast
->> > away the constness like so:
->> >
->> >>     -+	strmap_put(failed_refs, refname, ref_transaction_error_msg(err));
->> >>     ++	strmap_put(failed_refs, refname, (char *)ref_transaction_error_msg(err));
->> >
->> > without harming the other side, namely
->> >
->> >>     @@ builtin/receive-pack.c: static void BUG_if_skipped_connectivity_check(struct com
->> >>      +		if (reported_error)
->> >>      +			cmd->error_string = reported_error;
->> >>      +		else if (strmap_contains(&failed_refs, cmd->ref_name))
->> >>     -+			cmd->error_string = xstrdup(strmap_get(&failed_refs, cmd->ref_name));
->> >>     ++			cmd->error_string = strmap_get(&failed_refs, cmd->ref_name);
->> >
->> > this piece of code.
->> >
->> > It may not make sense, and even if it did, of course, it is totally
->> > outside of this series.
->> >
->> > Thanks.
+>>>  Will merge to 'next'?
+>>>  source: <20250519-501-update-git-fetch-1-to-use-partial-transactions-v3-0-6cdfd4f769b9@gmail.com>
 >>
->> It definitely does, The only other typecast I did find for `strmap_put`
->> was within 'strmap.h'. Nevertheless, I think it makes sense to make that
->> change. strmap shouldn't modify the data provided. Perhaps #leftoverbits.
+>> Incase you missed the cover letter: I would say that while this can be
+>> merged to 'next', we should delay the merge to 'master' for after the
+>> 2.50 release since it can be disruptive. Mostly letting it bake for a
+>> longer time before hitting a major release.
 >
-> I'm not sure that is a good idea. Even though strmap does not touch the
-> void data pointer itself, it is accessible to the callers, and we do not
-> know if they stored const data or not, or how they plan to access it.
->
-> If we store a "const void *" pointer and returned that via strmap_get(),
-> then there will be callers who need to cast away the constness.
->
-> If we store and return a "void *" pointer as we do now, but accept a
-> const pointer via strmap_put(), then we're casting away potentially
-> important const-ness without the caller even seeing it. I think it's
-> safer for the client to do the cast explicitly (since they are the ones
-> who know how they plan to use it).
->
+> What are the things you are so unsure about and guinea pigs who use
+> 'next' as their daily driver should watch out for?
 
-But isn't that the case now anyways? We always lose the const-ness since
-we only accept a 'void *'. But by only changing 'strmap_put()' to accept
-a 'const void *', but storing and returning a 'void *'. We simply modify
-the current construct to also say that any data received is not
-modified. But I do see your point, we'll have to cast there anyways and
-might as well do it on the client side.
+The patch series changes two critical sections of the code base and
+could contain bugs which would disrupt regular workflows. There's no
+particular part I'm unsure about. But being cautious since the release
+cycle is coming to the end. So this won't bake in master for long before
+it gets released.
 
+That said, the series primarily touches The pull and push flow, so any
+edge cases is something to look out for. Specifically around the usage
+of hooks with reference updates ('update' and 'reference-transaction').
 
-> I don't think we can really represent what we want in C's type system.
-> But if we wanted a safe(r) interface that didn't involve type-casting,
-> we might be able to do something like:
->
->   - the strmap stores an extra flag for "the data pointer is const",
->     which can be set by strmap_init(). (It is tempting to replace
->     strmap_clear()'s free_entries parameter by checking this flag, but
->     the two are not always going to be exactly the same).
->
->   - introduce strmap_get_const() and strmap_put_const() which give and
->     receive const pointers
->
->   - in the const functions, BUG() if the "pointers are const" flag is
->     not set
->
-> But it feels gross, and it only gives runtime checking, not
-> compile-time. What we really want are generics that can carry the type
-> annotation for a particular instantiated map. That is probably pretty
-> easy in most modern languages, but not really in C without horrible
-> macros. :)
->
-> -Peff
+Thanks
 
-Agreed, and then there is additional load to ensure users will use
-'strmap_put()' and 'strmap_put_const()' as required and simply not cast
-away.
-
-Overall I agree with what you're saying. Thanks for spelling it out.
-
-Karthik
-
---0000000000003ab1aa0635b592a2
+--0000000000001c96830635b5ade8
 Content-Type: application/pgp-signature; name="signature.asc"
 Content-Disposition: attachment; filename="signature.asc"
 Content-Transfer-Encoding: base64
-X-Attachment-Id: 3a36fba5597a890b_0.1
+X-Attachment-Id: 2982d4c2a4c0ce88_0.1
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ndTVVVVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1md0FNQy80MS94NnJES0JHSXA1VjNVN1JHeGw2VWJBRQp1a3VjeEYxOEtD
-M0wxNmRrK2hyci9rNmUyTXd5WUZpZzhEOGpTdUpwTjJjWDl1c0htd0Z4aHB5dmNDU08xaVZGCjQz
-VERLc3E0TisvU21vRzlBekg0YzBrNWRWdkJPUWpwUVc4MVR6MkFmUUtpVFFRQmR2dllORUdPanBK
-K2JnNDIKMlFiK01meGduc1p1c25Nd3RIeWlRUXJnNGZsK2pZMUd1Nm1UcmMzWFdvQTJkTGVaTVJj
-NGNSTXdYMUs3ZElmdwpOOStKYlhFdHQwK1lrM1o2U29LeVQweDAyelBmRy9BVTdVbzRyc2hyYXUv
-bU5pQzEzK2djV3RzSm9SbnBCaWdHCjcrTjhxOUdzODFCZzB5dlNpQXV0RHlLWS9qZnRINk5QMk9G
-M3lNOEsxMzJrNU01bVlZTkREeUU0eXZuZGR6eWwKcDVMOGtzc09SYWVoUURLRE1rZGlhcSs0NE1i
-cWtpMEZlRDdHT0x5SzMrcTUvd1d0QmZoRnlOVUl1T3B2VDhUUQpvUUpsWEk0dm1ic3ZUL3N6a3JD
-Sk82MHlqL21QaWk1U01mNGxIdmRlMHZrdDhCVWgySGFFTWhxL3ViQ2l3YUlqCk5wd1paQUkzSGNp
-cnVjYy9Udm03RE9aV052cFUwWm5LS2NGcWlpYz0KPXU4NUUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEpCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1ndTV3b1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mNWljQy9pL0htWktOUlptL2QxVmoyMHlWY1cvR0JYSgowVDc0Nk1aaHJN
+YTdaRUprV0ZWVjdCbktFMkFRc3FhTzBScENlZlBITUpqUHhIMWFtUGpWNGtFL2VlUUlZZ3k5CnZK
+bUh6Qm1CbHBRSzNqUkZuZnpDTkFzRFV3dFZRWjNVS1pzclQwRFNoMnA0WkRJOHRYc2tDazhZVW5n
+YVU3dG0KUWZOd3MrL1Iwa3FFSFMxeXdlMmIzNmpMUmZwQjNPck11RmhaZHZsVWZ6TCsxckxJUEZC
+OVFPQjR6YmdxZlpPdQpjbkRDV2dHQXQvMnRxWFpHZEloeEM1UFJMeTl2YnBTMEVrMHBmTzFCWHdo
+ZGMxVnVwcC9acjNZMnFqZ1ZRODV3CjhlRmNaU2hnNWw4U3ZwYU51d2xoTDJRamtRRDNpdTNIWEJv
+MG1QOXdobHZ0TGdBYmJGbG5CUFByZ1VGdWE4cEkKd3VpWnEyeTd2dUh6WWVOT0xqTGtwYSsrdTd0
+WkFIT2YzcFVGb3NqeStPL3ZXL2xkTzVkQko1QS8rVzY4eFZrcwpVQjRoRkJQVUdMa0FZN2pUOHFm
+elU4M1dhTXdnVTlmWVRYQWVFMDZmaUQzOWJ0OTVYN0JrT2EwRTJ3UU9ycHFmCjhKNmFiT3pWeUF6
+VUtPY0JHaWRFQm05M0plZkh6N1JJWGdZVG1nPT0KPTIydEYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
 RS0tLS0t
---0000000000003ab1aa0635b592a2--
+--0000000000001c96830635b5ade8--
