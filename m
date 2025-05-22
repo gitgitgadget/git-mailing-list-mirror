@@ -1,244 +1,121 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-oi1-f179.google.com (mail-oi1-f179.google.com [209.85.167.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F0CA25FA26
-	for <git@vger.kernel.org>; Thu, 22 May 2025 22:02:37 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7404825FA26
+	for <git@vger.kernel.org>; Thu, 22 May 2025 22:03:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747951359; cv=none; b=JsYp5GTGHOui3znEd4PrSoI3tW1bfpBHcFp+dTzyJcRsrFvNIGUXqhaGLYIFMPqn8g1HlhkzkE4+aAgZN1YmXQcOcupJC9swYCI5fBABg2vs1CQN6QhVKxiq30tsPUiQJTqSCOUE+M5236cXZjPfm+smO8OSutQT7KgJCfbWJHY=
+	t=1747951426; cv=none; b=K0L2fuS4wy2NOyo1gV9zWHGAqFNZkoHr+wSiNvd6ZUePNZuwTwbA6pKlIUH0QO5dt4nBDSGH3k60X1ln2sT2nra48JZblqZOmZE/IvmGGSCvIsJw3VRY1jfVZ/itB1yHAMzoCLrL+bsLxK1dgGE1CLassTVaC11wCvCXeKcojU4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747951359; c=relaxed/simple;
-	bh=Vr3sIZLajGJzB/ZRTwQzaI/+u6F6Aqe+6ir/O2K5gBg=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=KwXzrK6oJm0mR+GqfLwqKPx2mNM7yN357UPtr0Zxria1eZh667BIGsEY9nXoFgcSGHZNTRC43ctXVxEABL4vil4+oloojKxEaI2KZIBbRH+3uwbXnqOGrrxwTO4PyMSavYJto7ksy8l4BzWB/YRZpr1w0R68OlTkmhtthb384eA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=KnNPTeSl; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1747951426; c=relaxed/simple;
+	bh=Qt8m2DbL1ISevMfaHTgveknJTWQMTiCtMz6oAqX2QQg=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ph3XIusWzOS1ihtq8DN6BThazyVZwZeFXMijSon8auDa0UxP2qrO3U/afPBHN4HIs2GRK+vAYMYJYg2ELWSNT71hXpQgWnaU9Uf6IBOTLrTdaH4qGxueVnXfMXvCJTT5CcO2Dh0kHgBiIjKz4tfou5gZ4b9VT3b6HnGnUt8Wfzw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X1z0Myah; arc=none smtp.client-ip=209.85.167.179
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="KnNPTeSl"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f8ce89468cso55687256d6.3
-        for <git@vger.kernel.org>; Thu, 22 May 2025 15:02:37 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X1z0Myah"
+Received: by mail-oi1-f179.google.com with SMTP id 5614622812f47-3feb3f54339so8727755b6e.1
+        for <git@vger.kernel.org>; Thu, 22 May 2025 15:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1747951356; x=1748556156; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=07Uh+oxecFokcYod6iakj4SQyQWJrEcl/yn+JSG8P8U=;
-        b=KnNPTeSlaKGi3vyeap+y2QqHzg7TElbSHLs8RqBgjOm+tb3Yw0oHd4yRgPZmkFdXB1
-         Hm/nmfdhjuGw+vHIYL30e4lQNefHlnsJIAjNi7FrMVSapEOYcx46iRa6V8I4BF2rRidw
-         PIKchT099NzRyBUaxpw2/1mkGHQg/+5bHfDZU=
+        d=gmail.com; s=20230601; t=1747951423; x=1748556223; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PFyVNc4o+1tBbCuUqFG8TsUcsgwrBkpRaR3mB0SBMIc=;
+        b=X1z0Myah3di3ChOpOy9082vEAZSm1wzUnK/kcLwDyRdZxzDvF9dkePMsT+Ka0WQOOh
+         uF3Jnd2zk9rljWVkvx2PtZccNe/8aPY2tmNbFU2TcUo7snBKiGPt85LZMahMVM1fZvBr
+         wcv7eviL6Z+IP2ywxHteJK9KlOW90j5MjqVsK4rBtT5G+TtZLIZXIYAiwOD1/mqSEc+1
+         tdvt3N0HowHEpvMe2Y2i5eax02xdt5L4MjpqlHe/Jw9UHiqF+MLe+xOYRC0UCNo5UuK3
+         55h3PrUSDj+127ZRfD3X1Q0HVCj6C6f4WRg+GYsQn+QcbyvnwMK8IHRUSD/9x9CZJlHN
+         Ko7w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747951356; x=1748556156;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=07Uh+oxecFokcYod6iakj4SQyQWJrEcl/yn+JSG8P8U=;
-        b=M7pWYySu2mrT9V1+galELGSWE5cMbhGH8LaW4wnr2NE4/ug0npPZmdkMxNo5oF56pp
-         4iZuNXZ6TVmazeGabKtBQz+uB7siwZKrTv6URideq7xs4XwrbJHr3wT0WDgrOfittx4l
-         FyGFZMdVKdvizMM8AFA564SzhvwwbZiHeJOgPjjGGduxbbMNrPrqXy2iNAkUcGZNMDDU
-         c4kVU1UR9uqaXz0EbM0RXLD9rh2a2XlGexlC8zxT7UuSN7wZxCgVDxKPk0d+kH7ZQpoK
-         csSJKHcKNST2jJJ3fY45syCKzWiI13maLD7vXZ+XYwhJE6ZTC4uEqkcHUdOZkOsO1Pnt
-         3F4A==
-X-Gm-Message-State: AOJu0YyKf/QJ88m9gG/yUuWYbmG8bxzNH7/nf2imvrvdNSd7v5flUqIG
-	K3HiQQkMIiLG997V5msDj/yidssRO21WEY+/xCX4FzY7Scy+k6/2DU16fiRX+PF0Apqj0a6EsVi
-	qTIIdQw==
-X-Gm-Gg: ASbGncuWuJuGALFwdNlz3qKkRkqq+TMpnZNmL/ScWs9LFiMvWbDeaakodf6WSntixFz
-	L5HZJxkPD+18grnUx1GfSAStRpJ5ZT3VdL3gzDkGfTtZP9ghgHfHiGTFX5fOcCfNDh0kiF0zQVT
-	f0knwhmDtia4I90A32nzLVRXJ7gerWgMrthP4/VBe6iusPIvhlWOgrLE5jnzmOB/lpBE9PwmguP
-	aOfo2azYhzvzdehomlviRCeaR+e8uPkQonGSA0+p/OaRzxBr1XpqTp2LTujYBnqRXjaPwsvct/R
-	vYXyyVjhuykNRhFJwVpetlcf/tLsO2ZEBius48HdIXM2SUvuZ8/gF0/94waw1XWR1820ffc=
-X-Google-Smtp-Source: AGHT+IFSriJ9zmz1RuKfut7gqaL2epUE6iz7kbrzP/AnYIv2BN3kQpzffYR2R1DnXAJOTFs3evcR8Q==
-X-Received: by 2002:a05:6214:1c4f:b0:6f8:c23c:525c with SMTP id 6a1803df08f44-6f8c23c8530mr402565156d6.7.1747951356483;
-        Thu, 22 May 2025 15:02:36 -0700 (PDT)
-Received: from redacted ([2600:4040:9ce0:6400:419d:cdd5:ee68:cf36])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f8b8778237sm96450076d6.17.2025.05.22.15.02.35
+        d=1e100.net; s=20230601; t=1747951423; x=1748556223;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PFyVNc4o+1tBbCuUqFG8TsUcsgwrBkpRaR3mB0SBMIc=;
+        b=P4ufKBo6o8naXh8BhadOUhxkAWY4vImOvjvxRXcjjGJEZN4RkIE/QCFBKzaFMmccNH
+         UXNR+ZIHE9i4KCzYwFdUICAopg7+PdtW/GW2HVTHtakg2GBcnoRL9wgaKJQ0jlhkr94a
+         arq1VSPvEczrEe1apP/UIhaHBsci0zH2D2ykcLM6prkfD4fpII1NMfIRUI8pSNkVO6gl
+         UeskJN5SxhohEkLQjnURPPoys+5MmzeeSskEvewZ2B3m5z799urDgbefZdpuxsoKtLcn
+         /ZB2oHA5HI0CabRcKjFGr5axtsYrMnsePEU/0z5DiJS3U7i3Wae0T4ZYippvV1gtt8Er
+         kLZw==
+X-Gm-Message-State: AOJu0YzrvGUqmxd8Ecjc27Ez1XU68YBNEv+wTGBJnVTMBQU7ZKobcEIC
+	CzhC8cyWcBUK1DFJxqQxa/RoYnxYLqs515EyftaLLBCeLgXOWQdyWz7iq5fhfaN2
+X-Gm-Gg: ASbGncvbTZNK77QfI7GK9AMmTdN1s2vK+UBT/baES7WTr50C6Zd8RnXDgEPRQutJWs/
+	kejFXjASow3o58mP7XXsFdlEXxOKlPQJf7CUDqtx5t112spYjvksshsXLA4FFpl5JR4Uzlyn5AY
+	LQlP8UF6C22394Z2DM3YvqNj193l2Mym6p24rCnblFpHV2SHhtu9eJ0hmJZj+BiwGio1dtpFrrY
+	jMk2Yttokwgowc1UCRIzLwmjmF6GnJRFIYtkEuV7rUn0HhcxM7WWgNq4mjzF+bjF/cZIQVknDaR
+	MRSokfZoOYy4dgwn8oZTOSshkRiepRAhORE63QVNIYUDdL6OCD33yIw=
+X-Google-Smtp-Source: AGHT+IFVVd+RBtz4GaHVrgrYtbkk4NxNixYi0+cqN9lKGr8T4qG/kr4PPBpW3Ij+vUakjv5IDvhyGQ==
+X-Received: by 2002:a05:6808:2029:b0:3fb:2e8f:4de5 with SMTP id 5614622812f47-4063d9e4051mr638077b6e.17.1747951423307;
+        Thu, 22 May 2025 15:03:43 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 006d021491bc7-609f2f58d19sm2956027eaf.21.2025.05.22.15.03.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 May 2025 15:02:36 -0700 (PDT)
-From: Mark Mentovai <mark@chromium.org>
-To: Git Development <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Subject: [PATCH] apply: set file mode when --reverse creates a deleted file
-Date: Thu, 22 May 2025 18:02:35 -0400
-Message-ID: <20250522220235.8650-1-mark@chromium.org>
-X-Mailer: git-send-email 2.49.0
+        Thu, 22 May 2025 15:03:42 -0700 (PDT)
+Date: Thu, 22 May 2025 16:59:02 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v3 01/17] object-store: rename `raw_object_store` to
+ `object_database`
+Message-ID: <mghywdyktv654vqywde2exazfr2zproisnojmb62vjsrhdessx@nxmj3m3pfuxn>
+References: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
+ <20250514-pks-object-store-wo-the-repository-v3-1-47df1d4ead22@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250514-pks-object-store-wo-the-repository-v3-1-47df1d4ead22@pks.im>
 
-Commit 01aff0a (apply: correctly reverse patch's pre- and post-image
-mode bits; 2023-12-26) revised reverse_patches() to maintain the desired
-property that when only one of patch::old_mode and patch::new_mode is
-set, the mode will be carried in old_mode. That property is generally
-correct, with one notable notable exception: when creating a file, only
-new_mode will be set. Since reversing a deletion results in a creation,
-new_mode must be set in that case.
+On 25/05/14 07:12AM, Patrick Steinhardt wrote:
+> The `raw_object_store` structure is the central entry point for reading
+> and writing objects in a repository. The main purpose of this structure
+> is to manage object directories and provide an interface to access and
+> write objects in those object directories.
+> 
+> Right now, many of the functions associated with the raw object store
+> implicitly rely on `the_repository` to get access to its `objects`
+> pointer, which is the `raw_object_store`. As we want to generally get
+> rid of using `the_repository` across our codebase we will have to
+> convert this implicit dependency on this global variable into an
+> explicit parameter.
+> 
+> This conversion can be done by simply passing in an explicit pointer to
+> a repository and then using its `->objects` pointer. But there is a
+> second effort underway, which is to make the object subsystem more
+> selfcontained so that we can eventually have pluggable object backends.
+> As such, passing in a repository wouldn't make a ton of sense, and the
+> goal is to convert the object store interfaces such that we always pass
+> in a reference to the `raw_object_store` instead.
+> 
+> This will expose the `raw_object_store` type to a lot more callers
+> though, which surfaces that this type is named somewhat awkwardly. The
+> "raw_" prefix makes readers wonder whether there is a non-raw variant of
+> the object store, but there isn't. Furthermore, we nowadays want to name
+> functions in a way that they can be clearly attributed to a specific
+> subsystem, but calling them e.g. `raw_object_store_has_object()` is just
+> too unwieldy, even when dropping the "raw_" prefix.
+> 
+> Instead, rename the structure to `object_database`. This term is already
+> used a lot throughout our codebase, and it cannot easily be mistaken for
+> "object directories", either. Furthermore, its acronym ODB is already
+> well-known and works well as part of a function's name, like for example
+> `odb_has_object()`.
 
-Omitting handling for this case meant that reversing a patch that
-removed an executable file would not result in the executable permission
-being set on the re-created file.
+Renaming to `struct object_database` is a good change here. One oddity
+is that it still contains the `struct object_directory` field named
+"odb", but that gets cleared up in the next patch. So no issue there.
 
-When git apply --reverse is used, reverse_patches() will now additionaly
-swap old_mode and new_mode for what's represented in the patch as a file
-deletion, as it is transformed into a file creation under reversal.
+The patch itself just a bunch renames to adapt users of `struct
+object_database` and some function renames to use the new prefix. This
+patch looks good to me.
 
-Tests are added that ensure that git apply sets file modes correctly on
-file creation, both in the normal (forward) and reverse direction.
-Existing test coverage for file modes focused only on mode changes of
-existing files, and only in the forward direction.
-
-Signed-off-by: Mark Mentovai <mark@chromium.org>
----
- apply.c                   |   2 +-
- t/t4129-apply-samemode.sh | 117 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 117 insertions(+), 2 deletions(-)
-
-diff --git a/apply.c b/apply.c
-index f274a3794877..bd4571f89358 100644
---- a/apply.c
-+++ b/apply.c
-@@ -2219,7 +2219,7 @@ static void reverse_patches(struct patch *p)
- 		struct fragment *frag = p->fragments;
- 
- 		SWAP(p->new_name, p->old_name);
--		if (p->new_mode)
-+		if (p->new_mode || p->is_delete)
- 			SWAP(p->new_mode, p->old_mode);
- 		SWAP(p->is_new, p->is_delete);
- 		SWAP(p->lines_added, p->lines_deleted);
-diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
-index 2149ad5da44c..036613ad8fed 100755
---- a/t/t4129-apply-samemode.sh
-+++ b/t/t4129-apply-samemode.sh
-@@ -124,9 +124,124 @@ test_expect_success 'git apply respects core.fileMode' '
- 
- 	git apply patch 2>err &&
- 	test_grep ! "has type 100644, expected 100755" err &&
-+	git reset --hard &&
- 
- 	git apply --cached patch 2>err &&
--	test_grep ! "has type 100644, expected 100755" err
-+	test_grep ! "has type 100644, expected 100755" err &&
-+	git reset --hard
-+'
-+
-+test_expect_success 'git apply restores file modes' '
-+	test_config core.fileMode false &&
-+	echo "This is data, do not execute!" >data.txt &&
-+	git add --chmod=+x data.txt &&
-+	git ls-files -s data.txt >ls-files-output &&
-+	test_grep "^100755" ls-files-output &&
-+	test_tick && git commit -m "Add data" &&
-+	git ls-tree -r HEAD data.txt >ls-tree-output &&
-+	test_grep "^100755" ls-tree-output &&
-+	git checkout -- data.txt &&
-+
-+	git add --chmod=-x data.txt &&
-+	git ls-files -s data.txt >ls-files-output &&
-+	test_grep "^100644" ls-files-output &&
-+	test_tick && git commit -m "Make data non-executable" &&
-+	git ls-tree -r HEAD data.txt >ls-tree-output &&
-+	test_grep "^100644" ls-tree-output &&
-+	git checkout -- data.txt &&
-+
-+	git rm data.txt &&
-+	git ls-files -s data.txt >ls-files-output &&
-+	test_must_be_empty ls-files-output &&
-+	test_tick && git commit -m "Remove data" &&
-+	git ls-tree -r HEAD data.txt >ls-tree-output &&
-+	test_must_be_empty ls-tree-output &&
-+
-+	git format-patch HEAD~3..HEAD~2 --stdout >patch &&
-+	test_grep "^new file mode 100755$" patch &&
-+	git apply --index patch &&
-+	git ls-files -s data.txt >ls-files-output &&
-+	test_grep "^100755" ls-files-output &&
-+	test_tick && git commit -m "Re-add data" &&
-+	git ls-tree -r HEAD data.txt >ls-tree-output &&
-+	test_grep "^100755" ls-tree-output &&
-+
-+	git format-patch HEAD~3..HEAD~2 --stdout >patch &&
-+	test_grep "^old mode 100755$" patch &&
-+	test_grep "^new mode 100644$" patch &&
-+	git apply --index patch 2>err &&
-+	test_grep ! "has type 100644, expected 100755" err &&
-+	git ls-files -s data.txt >ls-files-output &&
-+	test_grep "^100644" ls-files-output &&
-+	test_tick && git commit -m "Redo data mode change" &&
-+	git ls-tree -r HEAD data.txt >ls-tree-output &&
-+	test_grep "^100644" ls-tree-output &&
-+
-+	git format-patch HEAD~3..HEAD~2 --stdout >patch &&
-+	test_grep "^deleted file mode 100644$" patch &&
-+	git apply --index patch 2>err &&
-+	test_grep ! "has type 100755, expected 100644" err &&
-+	git ls-files -s data.txt >ls-files-output &&
-+	test_must_be_empty ls-files-output &&
-+	test_tick && git commit -m "Redo data removal" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_must_be_empty ls-tree-output
-+'
-+
-+test_expect_success 'git apply --reverse restores file modes' '
-+	test_config core.fileMode false &&
-+	echo true >tool.sh &&
-+	git add --chmod=-x tool.sh &&
-+	git ls-files -s tool.sh >ls-files-output &&
-+	test_grep "^100644" ls-files-output &&
-+	test_tick && git commit -m "Add tool" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_grep "^100644" ls-tree-output &&
-+
-+	git add --chmod=+x tool.sh &&
-+	git ls-files -s tool.sh >ls-files-output &&
-+	test_grep "^100755" ls-files-output &&
-+	test_tick && git commit -m "Make tool executable" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_grep "^100755" ls-tree-output &&
-+	git checkout -- tool.sh &&
-+
-+	git rm tool.sh &&
-+	git ls-files -s tool.sh >ls-files-output &&
-+	test_must_be_empty ls-files-output &&
-+	test_tick && git commit -m "Remove tool" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_must_be_empty ls-tree-output &&
-+
-+	git format-patch -1 --stdout >patch &&
-+	test_grep "^deleted file mode 100755$" patch &&
-+	git apply --index --reverse patch &&
-+	git ls-files -s tool.sh >ls-files-output &&
-+	test_grep "^100755" ls-files-output &&
-+	test_tick && git commit -m "Undo tool removal" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_grep "^100755" ls-tree-output &&
-+
-+	git format-patch HEAD~3..HEAD~2 --stdout >patch &&
-+	test_grep "^old mode 100644$" patch &&
-+	test_grep "^new mode 100755$" patch &&
-+	git apply --index --reverse patch 2>err &&
-+	test_grep ! "has type 100644, expected 100755" err &&
-+	git ls-files -s tool.sh >ls-files-output &&
-+	test_grep "^100644" ls-files-output &&
-+	test_tick && git commit -m "Undo tool mode change" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_grep "^100644" ls-tree-output &&
-+
-+	git format-patch HEAD~5..HEAD~4 --stdout >patch &&
-+	test_grep "^new file mode 100644$" patch &&
-+	git apply --index --reverse patch 2>err &&
-+	test_grep ! "has type 100755, expected 100644" err &&
-+	git ls-files -s tool.sh >ls-files-output &&
-+	test_must_be_empty ls-files-output &&
-+	test_tick && git commit -m "Undo tool addition" &&
-+	git ls-tree -r HEAD tool.sh >ls-tree-output &&
-+	test_must_be_empty ls-tree-output
- '
- 
- test_expect_success POSIXPERM 'patch mode for new file is canonicalized' '
--- 
-2.49.0
-
+-Justin
