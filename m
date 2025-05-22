@@ -1,126 +1,151 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19ADE26E164
-	for <git@vger.kernel.org>; Thu, 22 May 2025 22:18:36 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF0ED2571AE
+	for <git@vger.kernel.org>; Thu, 22 May 2025 22:24:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747952318; cv=none; b=lw3eyMquklQnWGuB7+yq4vHE8znAhGBzvmXIln5NROSLXFA4LmIUXqjhspdqkmjUNOYrniOWK11w2oZPcuSyBNXAjuEF8db9SLO99Yg876wFMPKGvhloOYLAB9rVQo7pr2AqlBAgxlYUMF6vU3dzckg3KMPN9/Qvchk8GrFpOVI=
+	t=1747952676; cv=none; b=XQE5q9Z8Bunv1Y9Lwe7JChEMWNsZh4bARgHgGNdXLWxpxx/YYvwgXwsEQMppyjmdV4H/LKEAhi/IqMVEkhqCw/dAq1VYVQv7JZqTbTkcwBgZ9NPJ9OU8NDE17JFsEcLM9GLfA1bGNkGivsTR8jif1sG/E385SiijM+8G2yZdPRk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747952318; c=relaxed/simple;
-	bh=xJfWbmARrsl+AoIobNBtYlv665wDlEi0xsh7Aox6T7I=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=VX55jGmI17Ai3oahZRW+6XQcx5/7WLapHIE850CAjHjTOssqSplyqdAgDlETVoCQ6KtDCD+b1ROBowu84uSFxyhiFOdXIK5syx7Qa/gn9Yezfhh+dShPgUfWBraBpXDPV/pLyyofiwDdLe3F3Wat6dOgkZ9GUXp+Ymjd9mMwkAM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=bPEJr/tS; arc=none smtp.client-ip=209.85.160.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1747952676; c=relaxed/simple;
+	bh=9pApZ4RWhFYYhjsdT5ZH1mWLbcU2j8FzUYeuvyGjHdA=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=MnBOywPvtQ33Yq9BDXLV8vylX+f/r5f84jJ10LQ9Cq/mez8niRZjqwjvJqGRXQOaieOEs8yDqEFY3han7xQHq74s4+2rEYivwAmCqOMFBsdXj08+KUOtWdRh4dAeIWXOtFQeXizGHE2OpuHJjcTDybVbDn3b/L/NOq0HoyQ/38c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=buAxKsIw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kWvZZdFQ; arc=none smtp.client-ip=103.168.172.145
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="bPEJr/tS"
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-2da14a6f89aso2762007fac.2
-        for <git@vger.kernel.org>; Thu, 22 May 2025 15:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747952316; x=1748557116; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=3bwZuzHYiZ/BogGmmyNB2HJttRJUqcgvnF/LXfpg0kU=;
-        b=bPEJr/tS57T7Mh+vetM2ktbuIKEAL1SdEHz5NHGXHJIJsQUBH+VzI/34XMtypngSpi
-         WVmFtM8QgSmJMLiky82Qq5B7PYL8Nh+Bn9mcNKeSDKXIzKAYcLr1SGX3p8AIGM7Yqzi+
-         +QT8jF7FVLcSbI9ctpzFbrhdhzIbQ4U+L5bMOeKvWbHppjjFgjm0LBFFF2doyzugOgMu
-         nLQH8sHKvQz8Pcdqvolp5+rvw+lKExN5RX6ZdmrhLm3qVRCxGqHOUIF0FB2WxlIQG/1I
-         GOwKU/8SNdA0rbheEfLE63gwffQdNYkJqutNkO+JejJuZ85Bt8fQp+O5s6ufYpAfJfyl
-         fjCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747952316; x=1748557116;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=3bwZuzHYiZ/BogGmmyNB2HJttRJUqcgvnF/LXfpg0kU=;
-        b=bO3iB+S2AWIKG8pH8QShHQRO4JD1brlW/SLOxykTEXEIrytHkh7HvG82yL7vdfI9aw
-         T/aNxW+8TCmqRVbkrB+kuvjqolZKe0r4X+vnjoLJ7jif4rXUWiqeErKi0jTmHCvaNUis
-         HhBWlV8rHunYBnYeiMduNc0SQOqg+xzCfDG+8Myt9q0Oxh/LWYj82DpFaUX6HezRwB6Q
-         olkVBHw21n/YGAj4ySom/Hgdwq/cy6OFYzFZnYY8ElWFtAcNVcqcKzS2sMn2oyq5XgCr
-         qY6BVQzYLWUMfB4bioOUHDCwbEvs9ZEjSup3TI2BvtQ/OsoWqpOcCsLf9n5CjAYo38HM
-         uQjg==
-X-Gm-Message-State: AOJu0Yy0vuLI8CtgphuiG6MeMJxnTBoNFyPkFHT5/1Dzj/ZlNjIp+Ngj
-	2FLpwCSjqnL9skSXdFo1qtNxei88MSvSV66bfUPJ88CimQX5fGY9P0iH
-X-Gm-Gg: ASbGnctg9Xk8YrE4NbGOpXOieW5PDF9cERarFKgzXJZnmrzdq2cJ/b2qoYLGdh8znIm
-	5zo87vanDuP+5IxHriZZNSFYEAiTOO7EqaVCc06cWOD8Axd5weC1oKd/b+9uU2JF9+qJmZrYrB5
-	PEb+i1NSkeENSFRrhzq7HNXEtxhdeDUk0hsswDdfQk7WgLHDihOrncINjHuwDfMgF3n8ps7H8LZ
-	p1NhZVlZ6xrq9h/Vb83TTyQBENjJh9bCOMkC7hKM6vNq4grF1CzsdYyW6V/HOyam69ldo/sPTtt
-	IHCEEdTC7js7YJH1S5OoVrHqMytwtpn6BEAYHMGpflmN
-X-Google-Smtp-Source: AGHT+IG0akQ4jFOsAnKFqnIuWbVFqbq08C0QDWDwpucacRQKFfiSjNXn9MGbiNx/w1w43zoXr9juUg==
-X-Received: by 2002:a05:6870:2484:b0:2d5:a360:7df9 with SMTP id 586e51a60fabf-2e3c1b67803mr17113096fac.5.1747952315975;
-        Thu, 22 May 2025 15:18:35 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2e3c0609a43sm3248799fac.6.2025.05.22.15.18.35
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 22 May 2025 15:18:35 -0700 (PDT)
-Date: Thu, 22 May 2025 17:13:55 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
-Subject: Re: [PATCH v3 02/17] object-store: rename `object_directory` to
- `odb_alternate`
-Message-ID: <tjsbotrnrffykmi3letktpb3bly4nqw4wxzyrszgbln7pznem4@3kwiq4zvaebw>
-References: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
- <20250514-pks-object-store-wo-the-repository-v3-2-47df1d4ead22@pks.im>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="buAxKsIw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kWvZZdFQ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id E37A513805F5;
+	Thu, 22 May 2025 18:24:32 -0400 (EDT)
+Received: from phl-imap-09 ([10.202.2.99])
+  by phl-compute-09.internal (MEProxy); Thu, 22 May 2025 18:24:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1747952672;
+	 x=1748039072; bh=vyByY5ZOqJqJaZ8iuoyIFpNIIc6vkgrUTSr7Sz3wUBU=; b=
+	buAxKsIwNs1d9IbE6d+F4TtThYOIJnh7qXRwWMMLakCHIrETRnyhegQyEojUMY08
+	48iKMrP23Nnt82oGqnDvz04sLo5qdjxENTyKYuha5CQ3dRsX2HSMV9Sfyg5HpRzY
+	JzCQ4jj8Popb4Ck/Lx7IzHK0Exl4aOKnB/o/NckqhdQOLKpER6k+I8oCIp2sYjmg
+	0nRpuCnwEFKnU+FXe5eI3BdCJg1da/S+OoV8tiqqQ0a5rIjBWBWpujeYFID0p00s
+	BjrwRxO/TwID6UtrOUOwbI+j2ZqUvJoVX0KHcNj57/1BSYELJGakZsFI+85mW5Vr
+	A2SR/TD2u+rgtEd/Jzp3Eg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1747952672; x=
+	1748039072; bh=vyByY5ZOqJqJaZ8iuoyIFpNIIc6vkgrUTSr7Sz3wUBU=; b=k
+	WvZZdFQ5A47zu+oj3S5cvk+wSKe4DxXS800LIwIVEgOPnYiLosrR0yCYRnNGKac8
+	k73lXxCbSIiM0ZG2q/YXmzD4I4k/whprVKuExOwrVFw8jDNwtQM1fNce/alAYDQh
+	cJSVBJ0XKwSV59WB0FOT8cWs11vtg+3vkRTRg0ldmfunfs7BIePKMUhya6mDz/bU
+	JoG1yBcGs6E2evHn31sM4zCbd4rYGP/BY6VS6F4dUPl6M+Cn5Wri8TsJaa3M3kuC
+	XpOHnynTbf/IFx/chNHO9d9/7u4SetiYE2P+KSqgn5yOcmVigic3xYVG1KbiAXaw
+	cA7vgeWPJZVPmoPmiTUJQ==
+X-ME-Sender: <xms:IKQvaG1Crs7fzReoxB8JyzmkbGtXQynSAIHhBOSKNwJBoIakNOqyE-U>
+    <xme:IKQvaJFSUpqRQeSDK3iqhmQ_-C2jMlcoWnVB54Z_5qIgJwam2V-NcpNEpOqiubyyQ
+    JbZP3lTOJYPmYTx7A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdejudehucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepofggfffhvfevkfgj
+    fhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghugh
+    hssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomheqnecuggftrfgrthhtvghrnheptdeigfegjeegjefhheeuvdegjeekleegud
+    dukeeljeektdevjefgiefgfeekudfgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehmrghrkhestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtoheptghhrg
+    hnughrrghprhgrthgrphefheduleesghhmrghilhdrtghomhdprhgtphhtthhopehjohhh
+    rghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtsh
+    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrgh
+X-ME-Proxy: <xmx:IKQvaO7FR34Kxm6Z0u8vkq9lMXyw8S1SHaTlK8Ktzr3qBMVzDuZwLg>
+    <xmx:IKQvaH2GrmDPJloyTBeYZ5AOzL7FL-oQ9m6PuIFAXVl52VyJjleqDA>
+    <xmx:IKQvaJFVo5T0SD55VriN95jaD7FnGmWC75nwRLKIp51lytnJi9T1Bw>
+    <xmx:IKQvaA9R_ihhDQbFLtHVQ7syytr85CpESdaIpA2txdRXBS3kB2HpMA>
+    <xmx:IKQvaMUsRDChWSjk5bc-nAD53UrZxxGM6PgxYG0zJPpYLA4MCs0KdPL6>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 9A7EC3020061; Thu, 22 May 2025 18:24:32 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250514-pks-object-store-wo-the-repository-v3-2-47df1d4ead22@pks.im>
+X-ThreadId: T69771ca448226c1b
+Date: Fri, 23 May 2025 00:24:11 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Mark Mentovai" <mark@chromium.org>,
+ "Git Development" <git@vger.kernel.org>
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+ "Chandra Pratap" <chandrapratap3519@gmail.com>,
+ "Johannes Schindelin" <johannes.schindelin@gmx.de>
+Message-Id: <91c86145-1a78-465e-a08c-2fb727dc5a02@app.fastmail.com>
+In-Reply-To: <20250522220235.8650-1-mark@chromium.org>
+References: <20250522220235.8650-1-mark@chromium.org>
+Subject: Re: [PATCH] apply: set file mode when --reverse creates a deleted file
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-On 25/05/14 07:12AM, Patrick Steinhardt wrote:
-> The `object_directory` structure is used as an access point for a single
-> object directory like ".git/objects". While the structure isn't yet
-> fully self-contained, the intent is for it to eventually contain all
-> information required to access objects in one specific location.
-> 
-> While the name "object directory" is a good fit for now, this will
-> change over time as we continue with the agenda to make pluggable object
-> databases a thing. Eventually, objects may not be accessed via any kind
-> of directory at all anymore, but they could instead be backed by any
-> kind of durable storage mechanism. While it seems quite far-fetched for
-> now, it is thinkable that eventually this might even be some form of a
-> database, for example.
-> 
-> As such, the current name of this structure will become worse over time
-> as we evolve into the direction of pluggable ODBs. Immediate next steps
-> will start to carve out proper self-contained object directories, which
-> requires us to pass in these object directories as parameters. Based on
-> our modern naming schema this means that those functions should then be
-> named after their subsystem, which means that we would start to bake the
-> current name into the codebase more and more.
-> 
-> Let's preempt this by renaming the structure to `odb_alternate` now
-> already. This name is agnostic of how exactly objects are stored while
-> still specifically pinpointing that this is about an alternate object
-> database. Furthermore, it is already used in Git to represent this
-> context -- the only stretch is that the primary object directory is now
-> the primary alternate.
+On Fri, May 23, 2025, at 00:02, Mark Mentovai wrote:
+> Commit 01aff0a (apply: correctly reverse patch's pre- and post-image
+> mode bits; 2023-12-26) revised reverse_patches() to maintain the desir=
+ed
 
-I know the naming here has been discussed in other threads, but
-`odb_alternate` doesn't feel quite right to me. When I think of an
-object database alternate, I think of the additional object sources that
-may be configured for a repository.
+The way the commit is referred to is almost like the usual
+and recommended
 
-From my understanding, the `odb_alternate` here applies to any object
-source, even the main one. Using "alternate" makes me think there is
-another object database somewhere which may be confusing in scenarios
-where there would only be one.
+    git show -s --pretty=3Dreference
 
-Ultimately I don't want to bikeshed too much on names, but wanted to
-voice my thoughts. As an alternative to "alternate", maybe we could do
-`object_source`? :)
+But with a semicolon instead of a comma.
 
-> In the future, this change allows us to easily introduce for example a
-> `odb_files_alternate` and other format-specific implementations.
+> property that when only one of patch::old_mode and patch::new_mode is
+> set, the mode will be carried in old_mode. That property is generally
+> correct, with one notable notable exception: when creating a file, only
 
-I look forward to seeing this. The patch itself looks good.
+s/notable notable/notable/
 
--Justin
+> new_mode will be set. Since reversing a deletion results in a creation,
+> new_mode must be set in that case.
+>
+> Omitting handling for this case meant that reversing a patch that
+> removed an executable file would not result in the executable permissi=
+on
+> being set on the re-created file.
+>
+> When git apply --reverse is used, reverse_patches() will now additiona=
+ly
+> swap old_mode and new_mode for what's represented in the patch as a fi=
+le
+> deletion, as it is transformed into a file creation under reversal.
+
+The usual way to refer to code behavior is to talk about the code
+without this patch/commit in the present tense.  I think this is talking
+about how the code behaves with this patch applied/with this commit.
+
+In my opinion it helps the narrative flow since something right-now is
+problematic.  Therefore (see next point) do this and that to fix the
+situation.
+
+> Tests are added that ensure that git apply sets file modes correctly on
+> file creation, both in the normal (forward) and reverse direction.
+> Existing test coverage for file modes focused only on mode changes of
+> existing files, and only in the forward direction.
+
+It=E2=80=99s recommended to describe changes as =E2=80=9Cdo this and tha=
+t=E2=80=9D to the code.
+=E2=80=9CAdd tests=E2=80=9D, not =E2=80=9Cadded tests=E2=80=9D or =E2=80=
+=9Ctests are added=E2=80=9D (and the latter here
+seems to use a passive construct that doesn=E2=80=99t feel in line with =
+the
+preceding paragraphs).
+
+--=20
+Kristoffer
