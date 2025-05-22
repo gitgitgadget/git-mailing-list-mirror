@@ -1,104 +1,118 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE481DE2C2
-	for <git@vger.kernel.org>; Thu, 22 May 2025 18:55:03 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCC5E1E1DF8
+	for <git@vger.kernel.org>; Thu, 22 May 2025 18:56:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747940105; cv=none; b=ZD5/lQVvztYCYJTHdmoKsfoK1MPGtq3gSLOQY0S6kSpMWicbLke5V3pExIcd+hE23JGZvFrTql614acf5YliBtWDZ3YEtbpGBBUjKCz5pBRY786zyzedO0okR78j45jmix3nftrFsSj7SrdY68G1ZmzPTy/3JPlly22lfDtDPF8=
+	t=1747940177; cv=none; b=d7d8BSpJgsxd9/eFthg2xZmqZXLMV58+PsEqH29qoSMRecD5Sed2n4Ki21E20yQKI7z4or6yKhlvslI396m0nAaVkizgwbpdYjLNOLDhqccjgF8HQBAqh+4r9DAnvWu93UqG34Nj0jU/1nmeLPHJTz84EpdxQoFCcFYpAZE9mPo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747940105; c=relaxed/simple;
-	bh=VEgw/wc4OFgpwSviGnr97jCTwovN8j+2OBxAZJE8CDU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=hYMfDicwTfsPhWDC/EZSVSqJMQNkZWMh5xI9F/0h/tdFTjouM9Lw8acWFdkqPdEtPc+Th8nojM0GoRwxswaKliQ0fueby512/nBABgsjnbDnZqsGi1cnbIIcJDiAKpSKVydhwCLGSLWiRd1HElDhafCxrEmvqlIfGLh6LxImNzg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=TngYZxKb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=osEulL7K; arc=none smtp.client-ip=202.12.124.149
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1747940177; c=relaxed/simple;
+	bh=RlE+KHR/v4l25IQFQsKG8Bb3rdOyP9uZR6YN1cMs3s0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=mHlrvY/Ctw+K6HPPD/KV3scqRiNQ2hyj4tg43Faq49i1B4Cj2annM+4w8+vgdwDjjQf8mDfsYFE5KVNEjOIwXrvkhJbEa4i1G0msg+FyeP47xuIF0XpRj26mtqGlQYdGVEkNVtoBPAYGl3OREnsp1NDcqepOLmFYpwHTb2V11pY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=0bHAFT6R; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="TngYZxKb";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="osEulL7K"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 2118D1140051;
-	Thu, 22 May 2025 14:55:03 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Thu, 22 May 2025 14:55:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1747940102; x=1748026502; bh=VEgw/wc4OF
-	gpwSviGnr97jCTwovN8j+2OBxAZJE8CDU=; b=TngYZxKbyv2zUZrDIfcRHArQfM
-	Dzfvq32FNdiPU1jvSqJg0SCp5f3CFoqtAXm7gUHwz9/xUkYVnc/8FDE/PppaytSC
-	ov8K5aqujJTgjxad07Rb8I0bpwN5j/hxnQ34sUgmU8X0jCQRjH+ESrw7sIdQ+GCa
-	LK9e9+qPOk7p62cL0aFZuOlc4Fi+LCDMb9xZ75p/Jh25Tp9HEzJj5ZGQ7lBWtskS
-	qaDAvvANEWECOrZKuH0KUF1gnDOYpsUByFiQhKuuw8gWCRNZ5ukQ+Uz3GF62lFA5
-	aazEQStkYJu3m2vp31Zs1IAPAP4L4TRcQRsdaNCushjehpLBk0pW3xuvciWg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1747940102; x=1748026502; bh=VEgw/wc4OFgpwSviGnr97jCTwovN8j+2OBx
-	AZJE8CDU=; b=osEulL7KcFrYs37WecJaoauB88KGF7A3zEVmyk3e97Lp0hAy4rN
-	CRONSFrZ6yb0jTGqffn6LAGQi4NsrXf/QlL5cK3mFysMsifaZLGGxPR/FjdHBzCq
-	cM6e5qclfs18friLYoOAgD1sajL9ry/os2Gl7/dGRg3Gd1sdR2MABQNjmFzUx9xh
-	omYrx+IIZM1KWn140TEeOhbyM080lEP0w7HcrpsBECX/+UMB0b2e7oq5XpDJuVZk
-	smkB1K+SJ55R5LKIkgDnidyMrhJoEPzcUsfQ0vUDUFg3ZjQ30baqMwCRHRd1Q6bL
-	ZFwxJ/mPM/MSlCW6nGm49KwXnja+dWRpE9w==
-X-ME-Sender: <xms:BnMvaOl5PFiwW93IKVbVGfWX-jyUMYEHs0n9c9hpDABrgsk4psau1Q>
-    <xme:BnMvaF1aCaBJPWtXq-XavsO7F5XyZy-3weyXKS3IQ5CXNFC7bZLcwTeP5jCPR0119
-    pxKyq2Tn95F1Efwwg>
-X-ME-Received: <xmr:BnMvaMpfR3aCw4r_SdTOJUiX6SW3jb2ak38Qxf0xKt3URbEKnxGHRF7daBqRxs8VdT9OktT7cugryrDwOF52ctUD_IuYYOYxFYHvFps>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeijeefucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdprhgtphhtthhopehgrghr
-    ghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:BnMvaCmxjjvOvJXb0c_w_kerKW8DLnmtMY8vQnMeo0sWJyN4NIc-5w>
-    <xmx:BnMvaM0I_KoXEa5hOCFOl3nf1dprAbH4Q2cLUF--mb3XCw2i5wEgdQ>
-    <xmx:BnMvaJuJGqH9yt8tKFtob-mi0rrl2auKWsbgfihxNw4J7DQrKXXChA>
-    <xmx:BnMvaIVqbyea-hMe9OnGuqeG3riT-msDe0xv4OdHgmp4cf2CxkOfSw>
-    <xmx:BnMvaFqFnttG12IcTOaeNcsuVPzBVgL6BolB9yZzUMDQKCaAdHKctPWH>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 22 May 2025 14:55:02 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Emily Shaffer <nasamuffin@google.com>
-Cc: Aditya Garg <gargaditya08@live.com>,  "git@vger.kernel.org"
- <git@vger.kernel.org>
-Subject: Re: Add git imap-get-recipients command
-In-Reply-To: <CAJoAoZm_fsfhq2gD4JVCihf5do-+CurFRBfw8PX8-0QbSKk-VA@mail.gmail.com>
-	(Emily Shaffer's message of "Thu, 22 May 2025 10:54:22 -0700")
-References: <PN3PR01MB9597D5EBF0A8D91737E4FE52B89EA@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqqikltaghp.fsf@gitster.g>
-	<PN3PR01MB9597F61508C56A33136B3844B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<CAJoAoZm_fsfhq2gD4JVCihf5do-+CurFRBfw8PX8-0QbSKk-VA@mail.gmail.com>
-Date: Thu, 22 May 2025 11:55:00 -0700
-Message-ID: <xmqqplg05vcr.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="0bHAFT6R"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1747940174;
+	bh=RlE+KHR/v4l25IQFQsKG8Bb3rdOyP9uZR6YN1cMs3s0=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From:Reply-To:
+	 Subject:Date:To:CC:Resent-Date:Resent-From:Resent-To:Resent-Cc:
+	 In-Reply-To:References:Content-Type:Content-Disposition;
+	b=0bHAFT6Rxx/EL8pd3Un+bwkaHweCIOeNl1jGE1CqezAOBmdG267dAW1sRfLMrm7Jf
+	 dDR9SjnPTfc4kBcTqMnRmA0WShE4udKcj3ZRb08b07stM8X+Tmjax4J9OWxc4gxB6Q
+	 d85/wmmiRQZkMXXBXRTz1Tem/zeYaz0tyzDbQPkAgbxGT0xXc5avD6/dicKmYCxn+m
+	 nvQ2REVJFovvUlMwZrUOnN+1TwkSXzXVIDx2/16L1vQdCIr3X6YDaxawyvQFheq3Rk
+	 lML9Wnuo0jRYUXtDwShkyNQ0/xasc/en2UFCNVbAG1nLXWaTA7yTkU2s8XmwkNlkxR
+	 6KMQGpSgDIinL51QSWPz5fYboeZ9BiuVOPWVZiwvmStGdp1mbDnbAOb7q9Gf9ajQLu
+	 rjvoeTUWegHsZA79d9GclEOkDcItAb/P2WqRJXCpoyw8SIWViHbrB+Dvywrhf8vTU4
+	 b73UGPh/skxzGYTznQlS61tAGGZSX5rfh8vQ9bp1cAMQauP597o
+Received: from tapette.. (unknown [104.129.158.231])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id D8D8520190;
+	Thu, 22 May 2025 18:56:14 +0000 (UTC)
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: <git@vger.kernel.org>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	pwodd,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH v6 3/5] builtin/stash: factor out revision parsing into a function
+Date: Thu, 22 May 2025 18:55:22 +0000
+Message-ID: <20250522185524.18398-5-sandals@crustytoothpaste.net>
+X-Mailer: git-send-email 2.49.0.395.g12beb8f557c
+In-Reply-To: <20250522185524.18398-1-sandals@crustytoothpaste.net>
+References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
+ <20250522185524.18398-1-sandals@crustytoothpaste.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-Emily Shaffer <nasamuffin@google.com> writes:
+We allow several special forms of stash names in this code.  In the
+future, we'll want to allow these same forms without parsing a stash
+commit, so let's refactor this code out into a function for reuse.
 
-> Definitely I don't believe Junio's point was "don't send us this
-> patch, I don't care" - but rather "how do we know we care until we see
-> how you've implemented it".
+Signed-off-by: brian m. carlson <sandals@crustytoothpaste.net>
+---
+ builtin/stash.c | 33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-Thanks for clarification.
-
-Even without an implementation, a clear description of design (no, a
-design document on large swath of paper is often not what you want
-to come up with, as there clearly is a chicken-and-egg problem to
-convince others that the design is worth taking a look) would help.
+diff --git a/builtin/stash.c b/builtin/stash.c
+index cfbd92852a..ab491d5ff6 100644
+--- a/builtin/stash.c
++++ b/builtin/stash.c
+@@ -169,6 +169,25 @@ static void assert_stash_like(struct stash_info *info, const char *revision)
+ 		die(_("'%s' is not a stash-like commit"), revision);
+ }
+ 
++static int parse_stash_revision(struct strbuf *revision, const char *commit, int quiet)
++{
++	strbuf_reset(revision);
++	if (!commit) {
++		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
++			if (!quiet)
++				fprintf_ln(stderr, _("No stash entries found."));
++			return -1;
++		}
++
++		strbuf_addf(revision, "%s@{0}", ref_stash);
++	} else if (strspn(commit, "0123456789") == strlen(commit)) {
++		strbuf_addf(revision, "%s@{%s}", ref_stash, commit);
++	} else {
++		strbuf_addstr(revision, commit);
++	}
++	return 0;
++}
++
+ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ {
+ 	int ret;
+@@ -196,17 +215,9 @@ static int get_stash_info(struct stash_info *info, int argc, const char **argv)
+ 	if (argc == 1)
+ 		commit = argv[0];
+ 
+-	if (!commit) {
+-		if (!refs_ref_exists(get_main_ref_store(the_repository), ref_stash)) {
+-			fprintf_ln(stderr, _("No stash entries found."));
+-			return -1;
+-		}
+-
+-		strbuf_addf(&info->revision, "%s@{0}", ref_stash);
+-	} else if (strspn(commit, "0123456789") == strlen(commit)) {
+-		strbuf_addf(&info->revision, "%s@{%s}", ref_stash, commit);
+-	} else {
+-		strbuf_addstr(&info->revision, commit);
++	strbuf_init(&info->revision, 0);
++	if (parse_stash_revision(&info->revision, commit, 0)) {
++		return -1;
+ 	}
+ 
+ 	revision = info->revision.buf;
