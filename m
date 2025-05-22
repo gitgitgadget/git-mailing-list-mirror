@@ -1,169 +1,136 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3B996ADD
-	for <git@vger.kernel.org>; Thu, 22 May 2025 09:09:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EECEC267F5D
+	for <git@vger.kernel.org>; Thu, 22 May 2025 09:23:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747904987; cv=none; b=UwG7G0IVFBHmx6gvHOYGH3uJkKhX35bnOkTkkP9UxajP9j3qfmqQ7UxT7Wd56F7CudRxpMNHV1ruZppAWZF8CVTYGwznqXTNEI34OqmdQnB/ATiJT1QrBHgf7+DmCD584QF5vXtSPHGissLILI5DdhzhS25u0Hyy7gA0on1AZAQ=
+	t=1747905824; cv=none; b=J2fWYeyO1ZgYgepJ3pZQsM2Kdsj/tZY8NAfgxlj4apm025ftaJnowAkah1zeTxwF2ym20gsqgVKwJz/1dxwyA0ug1cVPES3PAAwjwEYhvR4T5zXcgaujF67/HrXKptlHY/GkO0SPZ+1Zb3q7OiQMYDjVJahGW7pt9YEwAZjU/Ts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747904987; c=relaxed/simple;
-	bh=7tDZvErsPIt6aSQoLS27OVwjtLKqazVV6WznA9RwK7w=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gAoPfROxMIpyMu8nNn+GF7i7Gm64beRJRBYmikXrWfgZ7st2YgeNOIwjl6lcIVKc1VLFuly+bEhMbV/Fb+4K/f1A8u70ycZoukAh1mgR6uqvj/jeyZSr5yDR/hR8kG0iSSgmzs+7E+gd3JJTS6Lz/x7J/5V7noL88SJdvAw36lo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Ql8UFVtW; arc=none smtp.client-ip=209.85.219.42
+	s=arc-20240116; t=1747905824; c=relaxed/simple;
+	bh=p4HrtwMxNW9lJwAwJuL/6PJEuhSN4/HpOH8xlUC7eFc=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=uvRn7lq03gqiISF6TkYQf21jFW0rM7clfpW/gNg4iDXY0D3SJhxBK4o8I/O5qKA0qHOQAMh4CtkCTGESQF879i410SpVOOVifetXLps3YbV6AZAIbU2cCYqe3V+mVYFg9R/UIGCu9GVFNcVD3gPLYIdvU7+f/X7PoQhc5EDTwPg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=DroQSrAv; arc=none smtp.client-ip=209.85.218.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Ql8UFVtW"
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6f8b10b807fso84614176d6.1
-        for <git@vger.kernel.org>; Thu, 22 May 2025 02:09:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="DroQSrAv"
+Received: by mail-ej1-f41.google.com with SMTP id a640c23a62f3a-ad1b94382b8so1407294766b.0
+        for <git@vger.kernel.org>; Thu, 22 May 2025 02:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1747904984; x=1748509784; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=MqleNCScFnwoiBuQngMTjtP38RQzlQc4BVyg3yCS3lM=;
-        b=Ql8UFVtWa59C/ioNe6wJkBmderKB9JLfoxiMM38mmjCi+TtHJ6ZrlO6hjrrUpgZMaq
-         8h9vw4FA8h7Q2S6sArQsbKm+Vsg5+BkN9HLi8dTroc3klmYqK038jrej4ygAUtwxf3ga
-         01vdf8aR0xVkmGpdVd+Am+CjbL4yx+p/eGcOtVXEzp3H0g4cXYwENGRDyhaG0IpQiZxr
-         u06iE2M/AXx9LnX04hb/0cW0M83zvmCjY7znIJHzHvHdYE3M5dz0HcN6E4r3a2yHQiXp
-         s3omKUWDv1eQ/5bCsYcWKRKyqDeC8iaNdT3PqY+w1InbKTWnAKQe4SQiO7kge8NFJtBw
-         1kuQ==
+        d=gmail.com; s=20230601; t=1747905821; x=1748510621; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=hLkaQf3w0Sd/tspMZmz8DuOefZPa80/9UfbyfNHV8iA=;
+        b=DroQSrAvSuP1Z0Rd9LRgX/0XKDF6cMeFCbnKurU17NanokBco2Mu+dM5zX0W+nKZcN
+         cRdDWkCpCyTcCuRPFlKIPhTlgTLvT0MvQQuVlisB+R4gMDLKIW8/UznpmXNuTje6EBMp
+         d2QIXHyqifKJHBShkxSoxtLfWYn9506yikH59bNjCe3L7wQ32D2wiLnSfPD72uGjhqOH
+         ds2hbtTrSu9Pi2IBE2qcMF7o73WNhWg5hxv+jzyZlN3JSAHtK0FpXUwmRPaEEuA9RK1O
+         VxuQ0GzXZrm83ZA+XKBRdKvla/2DwasaRRX6+TvL42KjtM/ZaGUcaAagB4RZOTQt6WMY
+         8cMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1747904984; x=1748509784;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=MqleNCScFnwoiBuQngMTjtP38RQzlQc4BVyg3yCS3lM=;
-        b=kaHv1sN0IRaUKyjrQJOg8MhfFDDQHQHrkblLZfTMWYqon9rbMm9tylWDzkcE1GxLxN
-         sVtv1MIDDqDnib33yJouVv8WRVUxbwKKF/coDBhuw05f9Jg/nUAsYopZ3ZrblQpHsOC8
-         6YTNi4lvRTtKHicSVXlOvO2t+4ygD8GOdKtV4TGd2ih92Jf854K62Up1vbtAQrlZG4W3
-         qn3oNS5LQXVZe70GHubnrjAWoWT8yUs1KPNQ56sBBYbUFXgo/fhW5bPVFsjIqcMXtzKm
-         C5XZM5qAZYOD6IrQ6+dPHzSbUPX1ClOIZDo33z2eWKNqlvQ8TcM31eYLIHLuP0c/uNbz
-         N3aA==
-X-Forwarded-Encrypted: i=1; AJvYcCUnlmHVQ9ZK79zUi6wSIOyaxha+SWcrtevjqym3s7Bu7ugo6K9qP5ZrckmKgnzvuw8Duj4=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwKsIRzi479uniDIoRdXfwj9or3DHuGlqPe9VFFztyOUSQjQ2mG
-	IMvv8nMwv3lM5VjYEZAKLMvDTrMQ8Bs5uuHww/WHYxDlqVm98YyT9KTvjz0WAXbbAmVbGPdZSyX
-	sve3YKUbw3q7AxNMWq9e4iRpHnioetekSy4AF
-X-Gm-Gg: ASbGncsHVFrEFcYORIypli2FgBQoNBnSAEcTR8+EtPvm3WWUK64QGdyWhhGLQAGYNJb
-	drvwJvn6ZXpIi6NQ5P2Ww0uJt9BccClZpyZ/pUN3kYEmK65/x8QoovumEEJoxjxNnb1R/+PL221
-	VAkDGBgYzgTLkzhvAzGZz7yTEoP2SVChFTbk4o34QdKsLzdWm1VMs31FGI/cEBPxyOKW0=
-X-Google-Smtp-Source: AGHT+IFDWHN58QNJ+kaXa3RIx0CdF1EATxp2G2nwnXD+z6AnAG47ykFiAz1hTkYnKko3uS1qQM3L/7v1M6C6GnGb0xM=
-X-Received: by 2002:a05:6122:1e02:b0:520:61ee:c821 with SMTP id
- 71dfb90a1353d-52dba83a7damr22909990e0c.3.1747904974111; Thu, 22 May 2025
- 02:09:34 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 May 2025 04:09:32 -0500
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 22 May 2025 04:09:32 -0500
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <20250520163218.263921-1-jltobler@gmail.com>
-References: <20250520014920.201736-1-jltobler@gmail.com> <20250520163218.263921-1-jltobler@gmail.com>
+        d=1e100.net; s=20230601; t=1747905821; x=1748510621;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=hLkaQf3w0Sd/tspMZmz8DuOefZPa80/9UfbyfNHV8iA=;
+        b=jhEUoBSbxxa505r/lwY5Wq+FAtYJISsOgVUmhCS4kmOrm7hEUEumbz0TRuibr7OS4g
+         L1v25JNUoo3KTdPpWgx46Ah8TvekgVy/JCA/1ZtyMBCPs5z7eFOR8Ok1slRJl+c4pxZH
+         ikZ5/grVTL/hnyma2/mUXByft3BywIpd7R6SnjOGdLXYEXVWDk1AB4vBCwPSxCh7yl4u
+         FiHx+oK2WWyMNhgxhdHZYQ/ERrYKbmy1ZMNmq8vw3mdVZD0suuW/H/2NBE/ek3+YP9zp
+         zbSqjZuMCoO6L3vQk7GZ0HLvtrlGJg08GTjzzzY4AxEo+YM8PuUOICGrOoI4Vym0eHxx
+         utdw==
+X-Forwarded-Encrypted: i=1; AJvYcCXW+cnVNeXpe3uEQICLr1uWSSy1l5wlSiBrDj1SI7mBvbpaET9A4pWy9hfAVg16stD8i/A=@vger.kernel.org
+X-Gm-Message-State: AOJu0Ywl6CBAzbhVkzqOZNXYxWcKpjLguB/ewgpX9Vn8j7mqRUaMxKKa
+	Ate/7Xg66PHlRuvXLJuv+K1VLeFwP37AUS2olA9kgpdRj5f7berwaAHb8ItSHt485CUAPcrWKKi
+	Lx4d1b3D0NSaDRHJxmXGfyyTL3OG6o/Q=
+X-Gm-Gg: ASbGnct2qG7DnBCdCXluWS0tItCTMT3H/20NMr/ttz/oHdF09LBrQCSjUHf5Uxjtc0R
+	7vwiZxK2bsuE9poAg8kSlKWK0T2jPFLiBFCkTHsiJGgOQ62LAi7Z/sizNwUQEZ+0O6LnNure5cH
+	EjHRL8UOZrifo4bBgspYrTFL5f52BOVxbiwheAKUMLbByElUaPRIZn
+X-Google-Smtp-Source: AGHT+IEp+oUWHn1O+UoU0ECWlU7ISAYKdpJizFxKWhvHyspurjmPfi9kZDz0qbn6gpSdvqOiXooJcpoN+OlLwtxneVA=
+X-Received: by 2002:a17:907:868f:b0:ad5:45d6:5fd5 with SMTP id
+ a640c23a62f3a-ad545d66146mr2117876266b.30.1747905820712; Thu, 22 May 2025
+ 02:23:40 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Thu, 22 May 2025 04:09:32 -0500
-X-Gm-Features: AX0GCFv7VkeyaMtRJJ4wLYMMTt8ErqdGoMg8Cmlq9Dh94A4iUoBV6iv3-xv83MM
-Message-ID: <CAOLa=ZTYR1JnVzgYMMLsnmFaOJy=EBTKADxV--zAT1AALvH2eQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] builtin/receive-pack: introduce option to skip
- connectivity checks
-To: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org
-Cc: ps@pks.im
-Content-Type: multipart/mixed; boundary="0000000000001575030635b5d701"
-
---0000000000001575030635b5d701
+References: <pull.1971.git.git.1747854310479.gitgitgadget@gmail.com> <xmqqr00hahdt.fsf@gitster.g>
+In-Reply-To: <xmqqr00hahdt.fsf@gitster.g>
+From: Jouke Witteveen <j.witteveen@gmail.com>
+Date: Thu, 22 May 2025 11:23:29 +0200
+X-Gm-Features: AX0GCFuxXezncYqcLfuZeo1JQp5xIYwJR8bhfh92mhBKRUzzs7fxSQfu6KUBXcE
+Message-ID: <CAJ2ouazRuF8CGddobgV=xJr8=1RQ4Pv8+ndH0E4qxk-gJhG4AQ@mail.gmail.com>
+Subject: Re: [PATCH] doc: update references to renamed AsciiDoc files
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Jouke Witteveen via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Justin Tobler <jltobler@gmail.com> writes:
-
-[snip]
-
-> Range-diff against v1:
-> 1:  f659612c9d = 1:  f659612c9d t5410: test receive-pack connectivity check
-> 2:  31e5f41983 ! 2:  f6dbb02778 builtin/receive-pack: add option to skip connectivity check
->     @@ Commit message
->          During git-receive-pack(1), connectivity of the object graph is
->          validated to ensure that the received packfile does not leave the
->          repository in a broken state. This is done via git-rev-list(1) and
->     -    walking the objects which can be expensive for large repositories.
->     +    walking the objects, which can be expensive for large repositories.
+On Wed, May 21, 2025 at 9:33=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
 >
->          Generally, this check is critical to avoid an incomplete received
->          packfile from corrupting a repository. Server operators may have
->          additional knowledge though around exactly how Git is being used on the
->          server-side which can be used to facilitate more efficient connectivity
->     -    computatation of incoming objects.
->     +    computation of incoming objects.
+> "Jouke Witteveen via GitGitGadget" <gitgitgadget@gmail.com> writes:
 >
->          For example, if it can be ensured that all objects in a repository are
->          connected and do not depend on any missing objects, the connectivity of
->     @@ Documentation/git-receive-pack.adoc: OPTIONS
->       	`--http-backend-info-refs` in linkgit:git-upload-pack[1].
+> > From: Jouke Witteveen <j.witteveen@gmail.com>
+> >
+> > diff --git a/Documentation/gitprotocol-v2.adoc b/Documentation/gitproto=
+col-v2.adoc
+> > index 5598c93e67c3..abc42efcc774 100644
+> > --- a/Documentation/gitprotocol-v2.adoc
+> > +++ b/Documentation/gitprotocol-v2.adoc
+> > @@ -54,7 +54,7 @@ In general a client can request to speak protocol v2 =
+by sending
+> >  `version=3D2` through the respective side-channel for the transport be=
+ing
+> >  used which inevitably sets `GIT_PROTOCOL`.  More information can be
+> >  found in linkgit:gitprotocol-pack[5] and linkgit:gitprotocol-http[5], =
+as well as the
+> > -`GIT_PROTOCOL` definition in `git.txt`. In all cases the
+> > +`GIT_PROTOCOL` definition in `git.adoc`. In all cases the
+> >  response from the server is the capability advertisement.
 >
->      +--skip-connectivity-check::
->     -+	Bypasses the connectivity checks performed to validate incoming
->     -+	objects. This option exists for server operators that may want to
->     -+	implement their own object connectivity check outside of Git. This is
->     -+	useful in such cases where the server-side knows additional information
->     -+	about how Git is being used and thus can rely on guarantees to more
->     -+	efficiently compute object connectivity that Git itself cannot make.
->     -+	Usage of this option without a separate mechanism to validate and
->     -+	ensure incoming objects connect properly to the references risks a
->     -+	repository becoming corrupted and should not be used in the general
->     -+	case.
->     ++	Bypasses the connectivity checks that validate the existence of all
->     ++	objects in the transitive closure of reachable objects. This option is
->     ++	intended for server operators that want to implement their own object
->     ++	connectivity validation outside of Git. This is useful in such cases
->     ++	where the server-side knows additional information about how Git is
->     ++	being used and thus can rely on certain guarantees to more efficiently
->     ++	compute object connectivity that Git itself cannot make. Usage of this
->     ++	option without a reliable external mechanism to ensure full reachable
->     ++	object connectivity risks corrupting the repository and should not be
->     ++	used in the general case.
->      +
->       PRE-RECEIVE HOOK
->       ----------------
->     @@ t/t5410-receive-pack.sh: test_expect_success 'receive-pack missing objects fails
->      +
->      +	test_grep ! "missing necessary objects" actual &&
->      +	test_must_be_empty err &&
->     -+	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
->     ++	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD) &&
->     ++	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
->      +'
->      +
->       test_done
+> ... shouldn't this reference be also linkgit:git[1] just like the
+> two references on the previous line?  Given that such a correction
+> needs to be made on exactly the same line, I wonder if we want to do
+> the change we see here, which stops at an in-between state, rather
+> than going to the end game of using linkgit: properly.
+
+Yeah, I should have looked a bit further and done that. I see you did
+it for me. Thanks!
+
+> > diff --git a/Documentation/technical/build-systems.adoc b/Documentation=
+/technical/build-systems.adoc
+> > index d9dafb407c40..1ae2a5292f3b 100644
+> > --- a/Documentation/technical/build-systems.adoc
+> > +++ b/Documentation/technical/build-systems.adoc
+> > @@ -32,7 +32,7 @@ that generally have somebody running test pipelines a=
+gainst regularly:
+> >    - OpenBSD
+> >
+> >  The platforms which must be supported by the tool should be aligned wi=
+th our
+> > -[platform support policy](platform-support.txt).
+> > +xref:platform-support.adoc[platform support policy].
 >
-> base-commit: 6c0bd1fc70efaf053abe4e57c976afdc72d15377
-> --
-> 2.49.0.111.g5b97a56fa0
+> ... this one did not stop at "txt" -> "adoc" replacement, but
+> attempts to make a proper link.
+>
+>     Side note: I do not think we are using an explicit xref: syntax
+>     in our documentation anywhere; have you checked how this gets
+>     rendered?
+>
 
-The range-diff looks good, and seems to address the review comments from
-the previous iteration. The series looks good to me!
+Turns out I was too lazy and blindly replaced what I recognized as a
+Markdown link to the appropriate AsciiDoc link. However, the
+inter-document xref functionality is unavailable in the legacy
+AsciiDoc processor (`asciidoc`) and is disabled in Asciidoctor by our
+use of `--atribute compat-mode`. I'm not sure what the right course of
+action is now. The old link was wrong, but the suggested change only
+starts working when we drop support for `asciidoc` :-(.
 
-Thanks,
-Karthik
-
---0000000000001575030635b5d701
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 45c2e8e5a327d10b_0.1
-
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1ndTZjb1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1meHhGQy8wWUprdElRaVp2V2hLbXdGWTZldmh0SVE3WAo4NEI0R2VXWFIw
-TkxtVjk4OVlxd0JadWZqOEswODI1Zm5kN3VWbVBxcmx1a1dtdlZ5amRrTDBtUzRFWm1KL2YrClNm
-NklnRUZWREc5OW91ekJNdnQxSHRwOU1BWHRNRkE5aDdZOHR4clVTckkyTlVJdnNTU1lCb0hSbDEx
-SUh1b0oKNmc0SXpmSXJvM1BLbVFHcGVhSzZaUTRId0hDL1pUV2xkY3ZrZnJIaHpFNzZjdXVFc2lN
-clNHcnpPNDl6ajN5ZApFa1ZZaVdURjhGdzI0Nm16STFCejErcVFnR2NNVFJOSDNmRGVaNnlOODIv
-WVRJMzdPZUY5WEExTUdiQXBDUlNoCkhxTm1nWDUzVFhFTTlYRnNPVVdEc0VlMGl4S01vZFlCRnQx
-ZU42eFFWbkZRNXdoT0Jja1pySkdpaUxKSytpWTAKQWUrcTg3eSt4TXFTeGVQZzRWMkhvNTVLQ2lr
-a1pXVmRJdnRZSkNtbGZGSFhWM0R0d3FzYjlBb04vY0psUGdnSgpkcHhiYmozSjY3bVh4WVdkazRq
-cUNlY3hlUFM3YkFGL045YWdhTnhBeWxnMkdsbno0VlJlK1g0OGJNM3dUUEhKClRFY3RqMGpmd1Ey
-ODFUbHYyRFhSU2NEVDlqR09PanVndlVQU2NBWT0KPVF2QTMKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000001575030635b5d701--
+Sorry to introduce more worries than fixing.
