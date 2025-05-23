@@ -1,106 +1,109 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E488E1B3950
-	for <git@vger.kernel.org>; Fri, 23 May 2025 19:37:25 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420E37E1
+	for <git@vger.kernel.org>; Fri, 23 May 2025 19:45:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748029047; cv=none; b=lSa2e17aZ3fpBqGANIWtRQzxrVvr9kmBilI2uan3UjFrciLABP60FPv8BXNRMnXipXWjWJ3hQMxBCtMJvLnEAL74nY1JdUM+IIkTkoto2+Vur9DanjOVkObjewPWaee1WTdlvnlHsjZc1UengqIAgEGGE4+X9OQmWtUkauGU/FQ=
+	t=1748029532; cv=none; b=IowXbNo0ocJgthiVBH1dCUU+1TyfyovxBm6NZa4/LBsL1D6jwFmMGbB5E9IALR3SpW3lyrrm+yaPfg0J2KL1/l2DL4FNgvlwhG1i9ZBHqto0iixQkBOlfuynQABWKVsiwXXKXp5X8siM6gKLoNSGu+6laqKWW/bps0xqBA2n4bk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748029047; c=relaxed/simple;
-	bh=0+BPKQJ3Du//ZB9lUc/RyHdZalVTkaZGwfTnIUY92qY=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=JvA5rUM/GyP/TAsooGVdMPE++syiZsJN0uP3CjCo7ymxOdU2hbDW7P854j8bc7db3XckcNdc9Dxo9CARyT653HzH6Pte/m9GJUYr7uJRTxkbKCTPaDTAkkIakCLfs3400GGNcWF0sLBkSaNNQ/PhRn0xGiMohNkqejdg186WsN4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=HodLEU2F; arc=none smtp.client-ip=209.85.222.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1748029532; c=relaxed/simple;
+	bh=DoLwRL8nzSvsNNdwSlB+VwrSpYoXd0yCFCNnV0ziMZo=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=lBbit2J6E/k5ZQysE3VSyv+4dBwk+I2DO1dK4WPeDUvX28CJBhVPAIo1exnCQyqwClVYY/kLyINGmK3HMdtcm785N5tPNwk9vv20mKgjR0Dsnh9XdTs8iQs6VmvXwEd2D3HCy0Gra2K0fvVRBb91ERpWvGAbw+Nia7jnIBYag/0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WJas1tV1; arc=none smtp.client-ip=209.85.221.182
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="HodLEU2F"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7c9376c4dbaso33220385a.0
-        for <git@vger.kernel.org>; Fri, 23 May 2025 12:37:25 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJas1tV1"
+Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-52dbcd398f9so156542e0c.0
+        for <git@vger.kernel.org>; Fri, 23 May 2025 12:45:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1748029044; x=1748633844; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=2dNip2mL94DBhWvPk7o+9Rm5QVtxU8W1NmbeDEbAvvA=;
-        b=HodLEU2Fm63ylpA3vbqyYi7Clzl6HxqQL3FvCMA/Gab0CkaP0EWk2++oI+zOdPauJL
-         TWUF7kaI6/167yEsw5AlUSggrQto5o1mgH6lIV/1Ma2eUj35jdTFBTYcOqeWs7qzbn72
-         TPypyUnpWMuCcNRHoUic26xNZxkGrTCXRX7mE=
+        d=gmail.com; s=20230601; t=1748029530; x=1748634330; darn=vger.kernel.org;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=gE4jl+uH/mQfMcIjQZzY7iA48V0awJjfBTVpq/1Kk5Q=;
+        b=WJas1tV1l0wxcizOsCXJNLJYigG8DYOw+sAUNbT7HjiXjo5tenZI6ay55ePmpFJFoR
+         wI0vW5fH3UpTu7VFE5FwPdJypEjOV8yPag3RpEa0vH46vmlOgK2ZljD6K06EwZ7nap0g
+         xxfK97LHDvxCfm+Ci8WZpbZcpOhzsWDLm6RfutKOW3/64AuKKuZhT/fPD0fP6dzf7AHT
+         R3v6nRCsh3y8/HndLzgDk/WsV1HU5vIGczWq4p16fjMGyYyYSDY2DllXeA2aAo0mYqw7
+         FYe0Et/7eWohMRHN2fGpXNw/SV2fqsORCXAZWctu3nJG9SowNSzC7HYxUEGa96Xa3/Ok
+         qYxg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748029044; x=1748633844;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=2dNip2mL94DBhWvPk7o+9Rm5QVtxU8W1NmbeDEbAvvA=;
-        b=wfbaBcicufIaSJQJyzQYuvdd+y0wiD40295gGhrEw4W/MTS8XKJFE5cePXZrR2E8F6
-         TQDKpJXfcxCGZQO+1LFSLOPOutULADwOrC+MrRmI9IiAQw/aLSsqXKMM/kpIrDOB1Lpk
-         2XWcmVV7pRjf6abNKmRPxGM8JChmAMHMNKFGj08S+y6qgbhlHNdfMxzJrUZJTQqZ4Yuz
-         jcd7EWbN2Tbkn0dMn5akUTJOCnvQz1Ecqt0FcRinASdgyj5pdPLgJcWZIj2kMsVf/qWI
-         N/8ZDyDDA7PPrtHEbMJD9E3hgXgBYlbYflfFz1fTSe+x31NNach5icATOaQ1E3ypkvbL
-         wPnw==
-X-Gm-Message-State: AOJu0YxxDOn1+bM/ns322FlOXnLJPdeoD3Kt2HPMxLuvu4YjB7rWRf64
-	y2oOG/zTXKbylBNhCxpsiwyiq7vzzjjofDMruM8sHRqbVX0qEuYBW3UFtlZivfyNRqK1Jh3UJBH
-	VjSw5Pw==
-X-Gm-Gg: ASbGncsv69ViTskIYG3KcKtv4baw0BLrlsXuBJO2aOeJqvVzSASTioJ7FdyhsiU9ZLz
-	iXGo1Vptg/UlSsll1WgIiwZSPhvR+qDqUhu6+wwWiQdHgT1PDbL55gn6GWRIvfIG0aiOWbpnv0c
-	prd1g5/huPMj3gAu2uOARa9RqHYUCT4y5A2yweH5sswNp+qZoLiHYxaIy+ZpxxGmI4dxCSXjYoK
-	xQ/wCzvYtRzJ18aO1qLwJyxuKpLic+rKpdYDNPudyziYL6YqfxhOe7cVGFp0Z3huS3tDU/pfR0Z
-	kpRv2OmW6y8wnVoLNt9CbpWRrqsBa/Ue+prclaF3N/K/fzqiuClIW70WlZGOaH9X8osrWN0=
-X-Google-Smtp-Source: AGHT+IEtqlKlilIb4uEQ9Bzjz5ONzPxrw9j22MMH6mi317X2v1bbx67aectyQdqY2Ssq+XTDMm7+3A==
-X-Received: by 2002:a05:620a:31a0:b0:7c5:95e6:62c9 with SMTP id af79cd13be357-7ceec4b8fb9mr115201285a.29.1748029044416;
-        Fri, 23 May 2025 12:37:24 -0700 (PDT)
-Received: from redacted ([2600:4040:9ce0:6400:e585:dc50:f5e1:64e7])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7cd468b6c7fsm1213825585a.68.2025.05.23.12.37.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 12:37:23 -0700 (PDT)
-From: Mark Mentovai <mark@chromium.org>
-To: Git Development <git@vger.kernel.org>
-Cc: Derrick Stolee <stolee@gmail.com>
-Subject: [PATCH] t7900: use pwd -P in macOS maintenance test
-Date: Fri, 23 May 2025 15:37:22 -0400
-Message-ID: <20250523193722.68344-1-mark@chromium.org>
-X-Mailer: git-send-email 2.49.0
+        d=1e100.net; s=20230601; t=1748029530; x=1748634330;
+        h=to:references:message-id:content-transfer-encoding:cc:date
+         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=gE4jl+uH/mQfMcIjQZzY7iA48V0awJjfBTVpq/1Kk5Q=;
+        b=bpZZdUHoa4Fc2zcmQ8HnIIrymaj5yCbeJgAoPv1KGhbQiKYu0ohme5dTTLlGSDgXPt
+         2/F9xjTi6+Y4ArTUZn5Dj50fVx2wYRp4AqyATFcBx0cZSnNjRP47BbJA011TWVMOBrOK
+         zSiEbx6NMTLB7NvAiwQ3uAf9gcu7v0f1PngeA56CqXyxSDlDB+1BVFrQqx5XPV6a0Z8R
+         PfaTBuWn+sUoixWmr44t/jxFKGGSOtgt5nTjnvHlX/JU1WXLY48zOo/FIysruOkBKx3h
+         LAv+gdemzSznoxozgSX0kbCLeo3lU0n0sNKLB9v+oljZYJoKD+YkXDNht6hPn1C8KpMJ
+         vQOQ==
+X-Gm-Message-State: AOJu0YyjAZba5SEqKJN++2W1ry2WijL1qNfNEbJtReGlpVsx6LRs7+Ge
+	1gT7Y23DSESevc76KOdry3X+ruKQWz+pPp2iPGyXzWfKm3CsWhldvQHpJEmUwOC+
+X-Gm-Gg: ASbGnctcdVPUm8SF/0UpFKTOgW1DMRnZuiG6vDKbv5/sM+7xeWbgW8e0uafyJFcSkRp
+	580ys/+EsCFTq70doZfo0mRy25MXALsjDBL1WdW+GRznCWfFK5tQ1Qh8sab3H5eVK3hjdO3lOZ7
+	NKMBi9xw8HCs6Cl5WjMGuVqrrqr1WLmei626HGbyDM022FLexHD594LGNH3/m8agg2sAYD+2TwT
+	PaoT7hUbvZY0BCZDCiYY2+ZVI4TwTN0RKVCKkPhPr4LZUbKXWym95fVdKky3eKM4hCurXcpfEea
+	3bO6mrDqTwi44c9BpykBbTISfufJ3PhB3801rqrgGOdteAOnvbcddmEVbzZCN8VOiNkJoKeOZe+
+	k4xmN
+X-Google-Smtp-Source: AGHT+IFpS59c69lVchLt2vfjk4ANDSuJNAPQwSKNJCCJY0BmdahIq1+FgS6XjqwYq4jvWmLkLTr8Pg==
+X-Received: by 2002:a05:6122:488f:b0:52d:d4cf:5754 with SMTP id 71dfb90a1353d-52f1ebd2b74mr5441566e0c.0.1748029529927;
+        Fri, 23 May 2025 12:45:29 -0700 (PDT)
+Received: from smtpclient.apple ([143.107.45.1])
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87bec027524sm12709467241.0.2025.05.23.12.45.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Fri, 23 May 2025 12:45:29 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: =?utf-8?Q?Re=3A_=5BRFC=5D_git-ghost=3A_preserve_=E2=80=9Cwhy?=
+ =?utf-8?Q?=E2=80=9D_on_deleted_lines?=
+From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
+In-Reply-To: <CAOc+UT0n9pRGur0d4cORU0SMQY-PNs5ekLd=LX9xc940Og+nrQ@mail.gmail.com>
+Date: Fri, 23 May 2025 16:45:15 -0300
+Cc: git@vger.kernel.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <9F0F0FF5-85D8-48E8-B056-F71F56AEB915@gmail.com>
+References: <CAOc+UT0n9pRGur0d4cORU0SMQY-PNs5ekLd=LX9xc940Og+nrQ@mail.gmail.com>
+To: Max Rhodin <max@ux.se>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
-$pfx is the basis for the expectation that launchd plist paths formed by
-`git maintenance start` will be compared against. These paths are formed
-in `git maintenance` by builtin/gc.c launchctl_service_filename(), which
-calls path.c interpolate_path() with real_home = 1, causing abspath.c
-strbuf_realpath() to resolve a canonical absolute path. Since $pfx is
-not determined according to the same realpath semantics, when t7900 is
-run from a working directory that contains a symbolic link in its path,
-the realpath operation will produce a different path than $pfx contains,
-although both paths logically reference the same directory. The test
-fails in this case.
 
-Base $pfx on the physical working directory (pwd -P), with all symbolic
-links fully resolved, so that the path that the test expects matches
-what `git maintenance` generates, even when running from a working
-directory whose path contains a symbolic link.
+> Hi,
 
-Signed-off-by: Mark Mentovai <mark@chromium.org>
----
- t/t7900-maintenance.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Hi, Max!
 
-diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
-index 8cf89e285f49..677e92f1490e 100755
---- a/t/t7900-maintenance.sh
-+++ b/t/t7900-maintenance.sh
-@@ -882,7 +882,7 @@ test_expect_success 'stop preserves surrounding schedule' '
- 
- test_expect_success 'start and stop macOS maintenance' '
- 	# ensure $HOME can be compared against hook arguments on all platforms
--	pfx=$(cd "$HOME" && pwd) &&
-+	pfx=$(cd "$HOME" && pwd -P) &&
- 
- 	write_script print-args <<-\EOF &&
- 	echo $* | sed "s:gui/[0-9][0-9]*:gui/[UID]:" >>args
--- 
-2.49.0
+> I hate losing the why behind a deleted line.
+>=20
+> When you drop code in a review, being able to attach a brief comment
+> to that line would save a lot of head-scratching.
+
+Sorry if I misunderstood you, but I can't see the difference of that
+to committing empty lines + giving a meaningful commit message.
+
+> Git-ghost =E2=80=93 see the remnants of days past in a file.
+>=20
+> git-ghost hooks into commit to stash deleted lines in a `.ghost` file
+> and enables maintainers to prompt for a short reason. Later you can =
+run:
+>=20
+>    git ghost view <file>
+>=20
+> to see what vanished and why. Blame also becomes easier.
+
+I still don't see the difference of that to git log -- <file>. I
+understand that git blame doesn't show what has been deleted, only what
+is new and what has changed. But ok, git blame has it's limitations of
+being a quick line-wise inspection tool, while more deeper analysis
+would require more powerful tools. It looks to me that git log with
+some flags would do what you need.
 
