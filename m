@@ -1,114 +1,117 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D033F1DE4D3
-	for <git@vger.kernel.org>; Fri, 23 May 2025 20:51:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656B61F3B87
+	for <git@vger.kernel.org>; Fri, 23 May 2025 21:24:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748033507; cv=none; b=fYCIILq+YSBoZVeJk8qrcZMB1YDSZxoyA6Wt78FAQenFl5FNX0vY8xYU/jDWOTJppBPkInZUEug8uCwASLc97y3VN+7actjL0Zi/2qDW7AO9bWAuTEgWYPqGWkF7kAbAvQSY/m6PY2q1JyRPrg38SXtIu9FlWVwQCm0GeObU1TQ=
+	t=1748035492; cv=none; b=s3Yz2VrcVidpWKRVH66bMWwT1DkdGejpri077QdNAf7o8b5zV6bnAD8KBpC9iy4H3aO/H7j9LI4Mi/Jj069kiexhsBPvqPsl+bN/+801S9zmdJLAw8/IHZMdvwuY45XO2Njj3qpxgSmDoIc+iEBG92uX3jdpTP/QvNxN46bYfkw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748033507; c=relaxed/simple;
-	bh=pit+Y/Y/ZrFDXtK0TpnEe69DLkqZqGMe356TCVTMif0=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=rvMtTmHyIzTwGvQdkwiVEudm32RX1QmZxmdodaB0RkORB3Wfbfu6g9+ISXu2cHblzP32Mm+cHqAlKqRnmEWEXf7gMyFI2miTJdU8eRbhBO1wF04ekAqXttcj0BzKIoBG62vNo9YRnlW2lczCIpmZI39ezbr/EfVbBS2HKkHGkZ0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNhhm8so; arc=none smtp.client-ip=209.85.221.47
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1748035492; c=relaxed/simple;
+	bh=o5NkzcllJyzajIgfAxxnFdFMoRhFJUFkJ9TBnK89ysI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=XowR5sj+dvLRut72WVxO1SP/kpwliLok+m69MqfHXmHlsNeYMfzmiyLs0x0MrYVVN25zrs5cJjCh+zExqOpHY3CzcDI98YK0wSCuAw7+BTroftg3jAaK3SwgvfA+caDYj4mXylrPFnEUpxdnBmguXYoyyecmm2PnnGXGL1BxA5k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNhhm8so"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a3771c0f8cso208278f8f.3
-        for <git@vger.kernel.org>; Fri, 23 May 2025 13:51:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748033503; x=1748638303; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=yCQ9SE3Js2TcEWdD6/nkxAK1t6kl6eJ0qaCIAp53gUM=;
-        b=PNhhm8soYuzvKokUoBVp0Lw8eJpIjld/HrK8w4fp5emJ68NQl55rEqevBBiWwqeI7Y
-         pq546j4G83jljaRa0QggytYPG4N4LtJcTOBZBo5dPoa2LUoQXlnfU02KKgWqGkzoIwKY
-         xjQCbGxdgOANZP9YOMQIwe3x4/6eYH+GrYBicQe08n3XF44mfnuuh8o8Nl6dUjG+evpT
-         H1PB0XITX/l94wqzw2efZ4MQNTqpO/Q9dM/oF5cH6DZUiRHhv+/KpOJ5EfrofqLI1JMK
-         h74Xcr1VTmhcMj4oNmhS0nZyjzHczgrLxcPNjF/bIx3Mz38LFl3cZEDFI6dyBT++sXIp
-         x3ZQ==
+Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6fa9c907cacso499206d6.1
+        for <git@vger.kernel.org>; Fri, 23 May 2025 14:24:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748033503; x=1748638303;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=yCQ9SE3Js2TcEWdD6/nkxAK1t6kl6eJ0qaCIAp53gUM=;
-        b=L8wCpmXXmpzt+pBY5G5fvisvtddAmoC/+9Ks8u/Op2cDDN2WNZ+rjlsREVeF0r42GA
-         9mMYxqP8ekFHNoiRVKPP525pHAx6SXAI59SrVwc/EFSGguMQXX9qnSVCDmLYpqp6O8pr
-         6IO3bFHN7s3fZRYauHraA+Fo0IQhUKUMa3orlUIq+KfgCWeeszu1OW+/JIPmu7KL8/ab
-         JPl+bb38CbEfkT8A/y2JreLv46wswDYWIgiSyL8U0dG3sTcYYcFZpZ8qf/RLlLntdcYE
-         uLR69hfw2LLm+GCdgGWWRt/NuRvlU73qEGyJaSceP4lXDIpTtdvbx4UURdbkJj3nEKn2
-         BMEw==
-X-Gm-Message-State: AOJu0YxBRUKX8mLy9QCqENzxz6OCFMyqYtwJxvalqU/sext099EqBm9f
-	UqA+znRagekAfOSQ8yXGNGMDhgxMg/iYVPgYU2OQaIXCmxYx3syXSxcswI1wfw==
-X-Gm-Gg: ASbGncvEm7zV5UNYnpleVHriXhngZLoeB0N0bOxy6vECFPqnbSvlj4zKmB3eVdW8R1y
-	JunKdYejxTNOlEGCU+W+EgH8wK7GgRUQrLs4C6f8YereT0AP/LAKd9EQ95K1MAkAFki42CQnljq
-	FdWt/8k6SnXJwdp10hCrffcsk2lw+Jz5j6x3gfa8EO+5pLySg2qAB8n1/IMnBrsvJNHcEEPudDo
-	tD+jitKU6kbPVulIaZWrzqTZe0yxVj2saFJnMJv13l/iql6uFr+fPFAJVgXLhqoPhCpaQQkL4ao
-	1umdQJpcyg6ECYKHFnHK0NBLT3ERwE/UcE6D8xQzZ6AhytUbe8vn
-X-Google-Smtp-Source: AGHT+IHxUKQlDmty7rrJ3kkczissyBGpP4RuaB+62CE3+0y8qcQBbP+7MJgoPjENj0W6Th5XjvENvw==
-X-Received: by 2002:a05:6000:2083:b0:399:71d4:a2 with SMTP id ffacd0b85a97d-3a4cb431fc3mr605781f8f.14.1748033502876;
-        Fri, 23 May 2025 13:51:42 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca8874bsm28082320f8f.67.2025.05.23.13.51.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 13:51:41 -0700 (PDT)
-Message-Id: <pull.1976.git.git.1748033500935.gitgitgadget@gmail.com>
-From: "Alex via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 May 2025 20:51:40 +0000
-Subject: [PATCH] Fix buffer underflow in xdl_build_script
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+        d=1e100.net; s=20230601; t=1748035489; x=1748640289;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xZpO4QBndLtKldyiWk9vOIbPxaBDkAs/Q7naHsRKJMg=;
+        b=OgFtzgWndIYXeZPKL876EFG8A5FbZHyZzzSgM3ZNXzDoAhu2OwpS8xFkxqC4do1W0K
+         oyuxyEGaBgG3lR4/O2tzAMjbpdxwVxVjed+Xp1YgdwyogjmnFseFPlxeCPR79N21SQg2
+         ZoQjhXLznNt5Qz6qtVAJBqa93VAijARis7Bp0CeJQzbABVu3NN5jVvI7YI8qMUDvHuTU
+         XQEkzo0i7/nnyK+tBpChLTK99xRHTTRh2kXf/nsmE+NJw5fTlwpIYQdIVcmenpa9pssW
+         2w6gPPp444M6M6uttIB5X8KOfdmTjOKIFN+lp0Pvw6gsfXvY1VNXZcogfaFPCIXxChnD
+         PueA==
+X-Forwarded-Encrypted: i=1; AJvYcCWG1Lq28SvyUFZwPMf9IqrLSWqHZrhenFuO+p+M901osm4UUmrC1Kb+tms+dGUOI0kDQ/k=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzIjPS4snAsOWCJwUY9NVt+YViTK4cv0lVNjcvWtFV2IwIhyS1+
+	8jvkXqybRJ8NHAeICMi7R7v/6AqXn2KM3sMcmbM/GHUWatPPC/+QwvIbVHfKlXuS/WtheXHuXyq
+	K+yZYdfu6CxxeqrcsQ3Hxxet1wonNdwo=
+X-Gm-Gg: ASbGncvj1+TEE6jWDGmHdX99wIMUvSPbmNrB0wODf/B6xUPaH8sSl5akXozRG59mRrc
+	UrAYvDz98JQTrfhd7dVhh6NzwTWZbkmayq4g1lXhyQNrhQLTcrLGDIyp3gjVWP22rBW5ZIkHwjx
+	Mb77Oecx0ezRWs2wap9ePLAMCd7I4SK2k=
+X-Google-Smtp-Source: AGHT+IH8v9hc8VmNG0bBFv0gCnLg8WohvMBmMD1kqCvcN6qsOvu7t0qc4/2julLGkS9VX1GQRxY7U363uZDDCnrq2KQ=
+X-Received: by 2002:a05:6214:4115:b0:6f8:b104:4186 with SMTP id
+ 6a1803df08f44-6fa9d0318b7mr6091326d6.2.1748035489258; Fri, 23 May 2025
+ 14:24:49 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alex <alexguo1023@gmail.com>,
-    jinyaoguo <guo846@purdue.edu>
+References: <20250523193722.68344-1-mark@chromium.org> <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
+ <xmqqsekvvz1t.fsf@gitster.g>
+In-Reply-To: <xmqqsekvvz1t.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 23 May 2025 17:24:38 -0400
+X-Gm-Features: AX0GCFsfyfnQb9IuARRMbkicSKn6C7oV_YjkMvelHtpHXIuvLUorbhX8Cy15x-0
+Message-ID: <CAPig+cQLG+zveZg73E=TiC5uShhhRXKmK5Z_M8zN3fpGNEN1ng@mail.gmail.com>
+Subject: Re: [PATCH] t7900: use pwd -P in macOS maintenance test
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Mark Mentovai <mark@chromium.org>, Git Development <git@vger.kernel.org>, 
+	Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-From: jinyaoguo <guo846@purdue.edu>
+On Fri, May 23, 2025 at 4:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> Eric Sunshine <sunshine@sunshineco.com> writes:
+> >> -       pfx=3D$(cd "$HOME" && pwd) &&
+> >> +       pfx=3D$(cd "$HOME" && pwd -P) &&
+> >
+> > However, have you tested this on Windows? I ask because, despite the
+> > test's name, this and most of the tests in this script, are actually
+> > run on all platforms, and because `pwd` is overridden by a shell
+> > function for MinGW on Windows:
+> >
+> >     # t/test-lib.sh
+> >     ...
+> >     # git sees Windows-style pwd
+> >     pwd () {
+> >         builtin pwd -W
+> >     }
+>
+> Because pwd emulation we use on Windows ignores -P the updated
+> caller, pfx with this change would not change the existing
+> behaviour.
 
-The loop in xdl_build_script used `i1 >= 0 || i2 >= 0`, causing
-`i1` (or `i2`) to reach 0 and then access `rchg1[i1-1]` (or
-`rchg2[i2-1]`), which underflows the buffer.
-This commit adds explicit `i1 > 0` and `i2 > 0` checks around
-those array accesses to prevent invalid negative indexing.
+True. I overlooked that[*].
 
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
----
-    Fix buffer underflow in xdl_build_script
+[*]: This is the second time in two days I made a stupid mistake when
+replying to a patch. I should probably stop trying to read/review
+patches while my mind is more focused on whatever task I'm actually
+working on despite having a few moments available while waiting for a
+compilation or other lengthy operation to finish.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1976%2Fmugitya03%2Fbuf-1-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1976/mugitya03/buf-1-v1
-Pull-Request: https://github.com/git/git/pull/1976
+> How would one test this situation on Windows, I wonder?  Create a
+> directory that is pointed at by a symbolic link, and use it as the
+> test directory (either have the checkout there, or use --root to
+> have the trash directory there)?
 
- xdiff/xdiffi.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+Perhaps(?). The Windows experts on the list are probably better suited
+to answer.
 
-diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-index 5a96e36dfbe..2e983965328 100644
---- a/xdiff/xdiffi.c
-+++ b/xdiff/xdiffi.c
-@@ -951,9 +951,10 @@ int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
- 	 * Trivial. Collects "groups" of changes and creates an edit script.
- 	 */
- 	for (i1 = xe->xdf1.nrec, i2 = xe->xdf2.nrec; i1 >= 0 || i2 >= 0; i1--, i2--)
--		if (rchg1[i1 - 1] || rchg2[i2 - 1]) {
--			for (l1 = i1; rchg1[i1 - 1]; i1--);
--			for (l2 = i2; rchg2[i2 - 1]; i2--);
-+		if ((i1 > 0 && rchg1[i1 - 1]) ||
-+			(i2 > 0 && rchg2[i2 - 1])) {
-+			for (l1 = i1; i1 > 0 && rchg1[i1 - 1]; i1--);
-+            for (l2 = i2; i2 > 0 && rchg2[i2 - 1]; i2--);
- 
- 			if (!(xch = xdl_add_change(cscr, i1, i2, l1 - i1, l2 - i2))) {
- 				xdl_free_script(cscr);
+> > [*]: In the long run, a better fix would probably be for the tests to
+> > sanitize the output of the Git command, replacing (via `sed`) the
+> > actual emitted path with some placeholder, such as "%HOME%" or
+> > something, and then have the tests look for (`grep` or whatnot)
+> > needles using that literal placeholder rather than trying to perfectly
+> > match the path emitted by Git. This approach makes sense since these
+> > tests are about overall functionality of git-maintenance, not about
+> > the specific path in which the person happens to be running the tests.
+>
+> Another approach may be to do a form of chdir that forces the shell
+> to figure out where it really is upfront at the beginning of a test
+> script, perhaps inside test-lib.sh which happend before anything
+> meaningful happens in the test (i.e. "cd -P ." or something).
 
-base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
--- 
-gitgitgadget
+Hmm, I'm not sure how that would help this particular case which wants
+to know the path of $HOME:
+
+    pfx=3D$(cd "$HOME" && pwd -P) &&
