@@ -1,117 +1,169 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656B61F3B87
-	for <git@vger.kernel.org>; Fri, 23 May 2025 21:24:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0314E2DCBE6
+	for <git@vger.kernel.org>; Fri, 23 May 2025 21:36:09 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748035492; cv=none; b=s3Yz2VrcVidpWKRVH66bMWwT1DkdGejpri077QdNAf7o8b5zV6bnAD8KBpC9iy4H3aO/H7j9LI4Mi/Jj069kiexhsBPvqPsl+bN/+801S9zmdJLAw8/IHZMdvwuY45XO2Njj3qpxgSmDoIc+iEBG92uX3jdpTP/QvNxN46bYfkw=
+	t=1748036172; cv=none; b=l++VUDIgE3l3a+l0zLYos76ntX2wV+HcyWAL3EZ6CrupVtHEz8TPQtPQ0bhWwAOhM5iuYdUZyeleveyK7IBd46gkBFnoI3z9MOB2Z7A8uVqH5BRKVl6rk0FCYdXumIHXe4LzUz7D5YzNBgmio8sS1vzIJVfItkfVL5HvIGDwQj0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748035492; c=relaxed/simple;
-	bh=o5NkzcllJyzajIgfAxxnFdFMoRhFJUFkJ9TBnK89ysI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=XowR5sj+dvLRut72WVxO1SP/kpwliLok+m69MqfHXmHlsNeYMfzmiyLs0x0MrYVVN25zrs5cJjCh+zExqOpHY3CzcDI98YK0wSCuAw7+BTroftg3jAaK3SwgvfA+caDYj4mXylrPFnEUpxdnBmguXYoyyecmm2PnnGXGL1BxA5k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.42
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qv1-f42.google.com with SMTP id 6a1803df08f44-6fa9c907cacso499206d6.1
-        for <git@vger.kernel.org>; Fri, 23 May 2025 14:24:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748035489; x=1748640289;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=xZpO4QBndLtKldyiWk9vOIbPxaBDkAs/Q7naHsRKJMg=;
-        b=OgFtzgWndIYXeZPKL876EFG8A5FbZHyZzzSgM3ZNXzDoAhu2OwpS8xFkxqC4do1W0K
-         oyuxyEGaBgG3lR4/O2tzAMjbpdxwVxVjed+Xp1YgdwyogjmnFseFPlxeCPR79N21SQg2
-         ZoQjhXLznNt5Qz6qtVAJBqa93VAijARis7Bp0CeJQzbABVu3NN5jVvI7YI8qMUDvHuTU
-         XQEkzo0i7/nnyK+tBpChLTK99xRHTTRh2kXf/nsmE+NJw5fTlwpIYQdIVcmenpa9pssW
-         2w6gPPp444M6M6uttIB5X8KOfdmTjOKIFN+lp0Pvw6gsfXvY1VNXZcogfaFPCIXxChnD
-         PueA==
-X-Forwarded-Encrypted: i=1; AJvYcCWG1Lq28SvyUFZwPMf9IqrLSWqHZrhenFuO+p+M901osm4UUmrC1Kb+tms+dGUOI0kDQ/k=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzIjPS4snAsOWCJwUY9NVt+YViTK4cv0lVNjcvWtFV2IwIhyS1+
-	8jvkXqybRJ8NHAeICMi7R7v/6AqXn2KM3sMcmbM/GHUWatPPC/+QwvIbVHfKlXuS/WtheXHuXyq
-	K+yZYdfu6CxxeqrcsQ3Hxxet1wonNdwo=
-X-Gm-Gg: ASbGncvj1+TEE6jWDGmHdX99wIMUvSPbmNrB0wODf/B6xUPaH8sSl5akXozRG59mRrc
-	UrAYvDz98JQTrfhd7dVhh6NzwTWZbkmayq4g1lXhyQNrhQLTcrLGDIyp3gjVWP22rBW5ZIkHwjx
-	Mb77Oecx0ezRWs2wap9ePLAMCd7I4SK2k=
-X-Google-Smtp-Source: AGHT+IH8v9hc8VmNG0bBFv0gCnLg8WohvMBmMD1kqCvcN6qsOvu7t0qc4/2julLGkS9VX1GQRxY7U363uZDDCnrq2KQ=
-X-Received: by 2002:a05:6214:4115:b0:6f8:b104:4186 with SMTP id
- 6a1803df08f44-6fa9d0318b7mr6091326d6.2.1748035489258; Fri, 23 May 2025
- 14:24:49 -0700 (PDT)
+	s=arc-20240116; t=1748036172; c=relaxed/simple;
+	bh=paOVB9MCxz+l9lgzbufhhhxEieK5ztIvY66Za2ulls4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=mXcpbdgwkOwcVALoT22Fyh8O63tQdCe1ipE6rbOtjSJsMR7w5Ldfz0aLf0zJPp/Xw6YRYi+i3q4nNmVniIWcNqNKa1Uoc7QqBTmO5A/L7ndEN3WySj332p+ydZeynLG+cq1s4hAfJgl8k3Lz1KtIbbWBTeCu3G/MNMPISFNJ0Sg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jP+CxErw; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OhhPouTH; arc=none smtp.client-ip=103.168.172.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jP+CxErw";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OhhPouTH"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 02C7B11400F8;
+	Fri, 23 May 2025 17:36:09 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Fri, 23 May 2025 17:36:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1748036168; x=1748122568; bh=CQFMKNmlyQ
+	1nppy42hOfIVPbvkuvymlv9vqboATYU3w=; b=jP+CxErwQDabbvaQqjv2ZTiGzo
+	ysAbdwlVBFsAWxdsei/FqwPbwqUPsTpiN0fwvxhYCZGphxbSQEnit1Dy+VFJm1Dz
+	2bG5Lrcd71vJQSAvVA09q5Nn/frGf7C4imWLSYEVQqmB/pzytO4Igg9s2cgy5a0/
+	f6flEFq4F/k30gYBk0HoavBzyaTWJn/9fACv6TFY4Pi0Xy13J1RYvq8jy4pefEE4
+	1mqRcqwhkcoVcavzV4n4ApYhEJP4nxtVQuXD5NArG4B62MjW15jDgLdva4CKPRzY
+	K0j/1mSx1eDotJ78uUw5lyqivog+mIdyX8w7MtUlLhaKHLs5OR0Dcwt5bnPA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1748036168; x=1748122568; bh=CQFMKNmlyQ1nppy42hOfIVPbvkuvymlv9vq
+	boATYU3w=; b=OhhPouTHetcfGEfVZmQVGfWSYBMzDCx7kDfOwX/PHAtrMScCtH4
+	Zm+dpr5tPyq3LC1HUlSnt7dkO9T6L5ciRZBjrk73+R6SaJqxoFxiPTkzMJ6y4vfy
+	LSyvALGG9tGy77iHVg9KdKN6XybHhSqq6Ni2oo3/rYI7aFOyJXSaCheoeSCnu9FK
+	zCXp+9g5+Fdf27rrN/SXO9VLAXJx/aRwvi4d6SRJbTnf7qQdJiYjh/YE3V8c9nC8
+	psKiuNddHuO8KA/1ILZx8+rQlENrZTKnwXXkpkNTfYAXoyyG635FWbJQvLNeWf01
+	0m7l6JHt3hRUuH/dLwDcm13VRr8CV6GzhDg==
+X-ME-Sender: <xms:SOowaJD_zvatQqqRB0UyesJpLB_weEbrBkBOdQ_Byzrm7UJ65P-uqg>
+    <xme:SOowaHhMdNB4R_7FtfHsQbK6WaNSRJOe21gvRM-Kji33dks9jK7bq4CR36NhOtWuv
+    NLqm-a1sBis-Fuuug>
+X-ME-Received: <xmr:SOowaEm3OMTS4SJYqFy9_QZuennJRmH4w6El-eoS7a2o6NIA0HmEC3LkUPXjaHXuVYaqBCIX552Nzuc8oAMCO3LHhW0AakB-TyFmtGo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelleehucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptedttdevffeu
+    ieeilefffedtiefgfeekveetveevuedtlefhtddugfeltdejledunecuffhomhgrihhnpe
+    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhope
+    ejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdr
+    nhgrmhgvpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopeguhi
+    hrohhnvghtvghnghesghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghl
+    vgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:SOowaDwMAQuhzWDbm1xU4jRn19qYcv893FG_lnYLtfv2EN5tVgdwXg>
+    <xmx:SOowaOThAyzskEyRY1E7OzW_hh8KTnV_0vIZz0TR2ZVSyFCWuZnVdw>
+    <xmx:SOowaGaisLFyPexoiiD2LPQH7dehaFKUODPe8LSP_c4iRCde8dm2vQ>
+    <xmx:SOowaPRawvZRUt49h5DYTvjxCiH6mtG4CC4ocj6eozK18OXGYniLXA>
+    <xmx:SOowaLNUdbkf-2uT7ivaSHE0VJGi74PzJS7x_r7Eso6Ggya1ESmaT37b>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 May 2025 17:36:08 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,  Jeff
+ King <peff@peff.net>,  Teng Long <dyroneteng@gmail.com>,  "D . Ben Knoble"
+ <ben.knoble@gmail.com>
+Subject: Re: [PATCH v2 6/9] doc: notes: clearly state that --stripspace is
+ the default
+In-Reply-To: <be89c3349d24e47a38f04538d3d1e3730dfc37a9.1748028010.git.code@khaugsbakk.name>
+	(kristofferhaugsbakk@fastmail.com's message of "Fri, 23 May 2025
+	21:29:52 +0200")
+References: <cover.1747763769.git.code@khaugsbakk.name>
+	<cover.1748028010.git.code@khaugsbakk.name>
+	<be89c3349d24e47a38f04538d3d1e3730dfc37a9.1748028010.git.code@khaugsbakk.name>
+Date: Fri, 23 May 2025 14:36:07 -0700
+Message-ID: <xmqqiklrvwl4.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250523193722.68344-1-mark@chromium.org> <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
- <xmqqsekvvz1t.fsf@gitster.g>
-In-Reply-To: <xmqqsekvvz1t.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 23 May 2025 17:24:38 -0400
-X-Gm-Features: AX0GCFsfyfnQb9IuARRMbkicSKn6C7oV_YjkMvelHtpHXIuvLUorbhX8Cy15x-0
-Message-ID: <CAPig+cQLG+zveZg73E=TiC5uShhhRXKmK5Z_M8zN3fpGNEN1ng@mail.gmail.com>
-Subject: Re: [PATCH] t7900: use pwd -P in macOS maintenance test
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Mark Mentovai <mark@chromium.org>, Git Development <git@vger.kernel.org>, 
-	Derrick Stolee <stolee@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, May 23, 2025 at 4:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> Eric Sunshine <sunshine@sunshineco.com> writes:
-> >> -       pfx=3D$(cd "$HOME" && pwd) &&
-> >> +       pfx=3D$(cd "$HOME" && pwd -P) &&
-> >
-> > However, have you tested this on Windows? I ask because, despite the
-> > test's name, this and most of the tests in this script, are actually
-> > run on all platforms, and because `pwd` is overridden by a shell
-> > function for MinGW on Windows:
-> >
-> >     # t/test-lib.sh
-> >     ...
-> >     # git sees Windows-style pwd
-> >     pwd () {
-> >         builtin pwd -W
-> >     }
->
-> Because pwd emulation we use on Windows ignores -P the updated
-> caller, pfx with this change would not change the existing
-> behaviour.
+kristofferhaugsbakk@fastmail.com writes:
 
-True. I overlooked that[*].
+>       See the review on the patch:
+>     
+>          https://lore.kernel.org/git/xmqq4jp326oj.fsf@gitster.g/
+>     
+>       There was concern about the order of options:
+>     
+>           >     ... One more thing need to note is "the order of
+>           >     the options matter", [...]
+>     
+>           This sounds more like a design/implementation mistake that we may
+>           want to fix.
 
-[*]: This is the second time in two days I made a stupid mistake when
-replying to a patch. I should probably stop trying to read/review
-patches while my mind is more focused on whatever task I'm actually
-working on despite having a few moments available while waiting for a
-compilation or other lengthy operation to finish.
+That is a comment on the 8th iteration of the series, which is
+different from what you are documenting, which is 11th if I am
+reading the thread correctly.
 
-> How would one test this situation on Windows, I wonder?  Create a
-> directory that is pointed at by a symbolic link, and use it as the
-> test directory (either have the checkout there, or use --root to
-> have the trash directory there)?
+Comparing [v8 6/6] with [v11 6/7],
 
-Perhaps(?). The Windows experts on the list are probably better suited
-to answer.
+https://lore.kernel.org/git/f60f743203d78a489b90df81472e71391b45367d.1682429602.git.dyroneteng@gmail.com/
+https://lore.kernel.org/git/19865941bb29c28a690ed3e28fc4f6870e352923.1685174012.git.dyroneteng@gmail.com/
 
-> > [*]: In the long run, a better fix would probably be for the tests to
-> > sanitize the output of the Git command, replacing (via `sed`) the
-> > actual emitted path with some placeholder, such as "%HOME%" or
-> > something, and then have the tests look for (`grep` or whatnot)
-> > needles using that literal placeholder rather than trying to perfectly
-> > match the path emitted by Git. This approach makes sense since these
-> > tests are about overall functionality of git-maintenance, not about
-> > the specific path in which the person happens to be running the tests.
->
-> Another approach may be to do a form of chdir that forces the shell
-> to figure out where it really is upfront at the beginning of a test
-> script, perhaps inside test-lib.sh which happend before anything
-> meaningful happens in the test (i.e. "cd -P ." or something).
+I notice that the later version has .stripspace member in note_msg
+as well as note_data.  note_data has a collection of multiple
+note_msg instances.  Each of note_msg comes from various sources,
+like '-m', '-C', etc., and each of these types have hardcoded
+default values for note_msg.stripspace (mostly to strip but note_msg
+that comes from an existing note blob has stripspace unset).  When
+concat_messages() takes note_msg instances in a note_data together,
+it _could_ do:
 
-Hmm, I'm not sure how that would help this particular case which wants
-to know the path of $HOME:
+ - if note_data.stripspace is explicitly specified, use that,
+   otherwise use note_msg.stripspace, to cleanse the message
+   contained in note_msg.
 
-    pfx=3D$(cd "$HOME" && pwd -P) &&
+and concatenate the results.  But even at v11 of the series, the
+implementation of concat_messages() uses the stripspace determined
+to instead cleanse the concatenated result.
+
+Which I think is simply buggy.
+
+What it should do probably is
+
+ - Loop over d->messages[] and:
+   - if d->stripspace is set or d->messages[]->stripspace is set,
+     cleanse the message (i.e. d->messages[]->buf) and append to d->buf
+   - otherwise append d->messages[]->buf as-is to d->buf
+
+ - If d->stripspace is set, cleanse d->buf (may not be necessary, as
+   the messages that are concatenated have _all_ lost leading and
+   trailing blank lines before concatenation).
+
+and that would truly fix the problem pointed out during the review
+of v8.
+
+> +--
+> ++
+> +`--stripspace` is the default except for
+> +`-C`/`--reuse-message`. However, keep in mind that this depends on the
+> +order of similar options. For example, for `-C <object> -m<message>`,
+> +`--stripspace` will be used because the default for `-m` overrides the
+> +previous `-C`.
+
+So, I think this is an accurate description of the current
+behaviour, but we might want to phrase the part that comes after
+"however" as documenting a known bug, which we would want to fix
+later.
+
+Thanks.
+
