@@ -1,214 +1,128 @@
-Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41412221547
-	for <git@vger.kernel.org>; Fri, 23 May 2025 16:53:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3156221547
+	for <git@vger.kernel.org>; Fri, 23 May 2025 16:54:17 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748019225; cv=none; b=l8ooobcrUHxjzJO1RK5JppGSzh/75PquK0c8HzhtsmNwNAOax9lZtLxwcOvzM03DjOx3GQ7JWC3bB3i4LydGmQZ9VEXxdXsUTG4wtpmgJW+JxYg+oscfibWr4kwUOYrBOqlP9S/YMVdZM+0H8l3U88zYiSRBml50m5JtoyQQdWE=
+	t=1748019260; cv=none; b=BeatcCaPoJ/OygkLvB5RPHQeiI0XRWkjpAZVFeTSuPcAyeT6NNLfEAW571ZlVCgcon+D4VVGmiYXivC7lvhnCuWN3AZpfyrViNWY+0WtWXiiD1ae0/BDZ3y/4iIj7UTlPL7+Y+MGm6ShNTweUXWJ+phrpqPYgV6l13bMYmxB26Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748019225; c=relaxed/simple;
-	bh=klQ4ahcPCPKgButRzwz+I6i+9qX011cJ5y0QwD4mlX4=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
-	 In-Reply-To:Content-Type; b=o1318dDpbh0wyD2MI2LH1miHEEdLLFM6GDwNiZtX69dXoubXRCRGqqTp0eDpmW1G7NCpY8fp6+MTwLcSazcfebXu9sFakbd4tRv5hlfw4O/MrAUCq+E2SRapxINexfqfUGfOrzJ9BGUiiYs+1dp/33aciFghGhKAb1coIaZ4QzI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=MrBmCLtA; arc=none smtp.client-ip=212.159.14.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
-Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
+	s=arc-20240116; t=1748019260; c=relaxed/simple;
+	bh=GlS6lvnZNCDowv9IY8jWSopmXfpILJGkjFQD5Ncw4vM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=oXz7NqbrJYGkSASM7pxqVKUo53kgGLvWHVankqDZo4lByNPQzwZ9H1uJfSDnT4uAv9qv0vx7+EwsprBCwdqVgfSLUuN4PxhpHsyTkAvDt1ZEGFBo7Lny+Gyap8WJiJZ18CiFEzjFFs6zuJxPhRzDHofce2t34Odn/NvM6IlMkcI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D+lWrunH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z479TVLH; arc=none smtp.client-ip=202.12.124.154
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="MrBmCLtA"
-Received: from [10.0.2.15] ([80.189.83.109])
-	by smtp with ESMTPA
-	id IVeMuDgYjUuMSIVeNulBqa; Fri, 23 May 2025 17:53:40 +0100
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1748019220; bh=9SRarGfQxoSO6D7535SRPCibeo/mao6Exy864uMbXDM=;
-	h=Date:Subject:From:To:Cc:References:In-Reply-To;
-	b=MrBmCLtAixe5g5evxeVc3shhsLmvQGVFrbLJyj3Odz0oDWz4A1qD5kkLqK0cQYMS4
-	 c/1jeYjF0aT6YItbVGk0q+5aKntthR7oG8JjfmEU17umadF1utEiI7QvMVLWC49tAi
-	 lWpkOAkDORCPyKggXPBN+RP3hDGvIPxSXsdswpeqUw0/rOMYep+LpvV7gKehlrUflT
-	 QP0ijdUQNKB/KU2hrMopeBHJggzqdeC2YHkWeQHZbwUv0UO+YH9KYhzaP4ZYLABbwu
-	 k9wP5fq9VA56KMSnP5HtVGRlOWVk9GUDj5a6pnG+nLnVpL/0HFS3ZaqirzTmI3KwhP
-	 HmKA/fEoEjyIQ==
-X-Clacks-Overhead: "GNU Terry Pratchett"
-X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=K/eBHDWI c=1 sm=1 tr=0 ts=6830a814
- a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=ojQv-v3Qa_FW3A0bdv4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-AUTH: ramsayjones@:2500
-Message-ID: <e972c5f3-f9f6-4ff9-b794-17535521fdda@ramsayjones.plus.com>
-Date: Fri, 23 May 2025 17:53:38 +0100
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D+lWrunH";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z479TVLH"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 8457C25400DC;
+	Fri, 23 May 2025 12:54:16 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Fri, 23 May 2025 12:54:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1748019256; x=1748105656; bh=EfnEEgwEFd
+	4lShm9jIuwfVpw8k+yYeG7uKbJL0uG1bA=; b=D+lWrunHImbqrH5b7CDsTu7jCP
+	38bChHIfJQhjdNSydP6CTRYd8K2yMuMfDZBET9mOY9Pe5m2vkH/v+lUNXWzL8oRT
+	Y0bC6Wux3xJLLUH6N6SZ8a+sSAnbBdL9KKNp+6SVGzVx5c8u6d7O3oFnsj8dlQvm
+	RCA69Yhr6fvj+HbWskmTahrKAWtu4L/NNE2TM2YgsNcgqIcFe7kPCnmp3HcAGY0n
+	iEVm0PnirubgMOA9qwnKZLukMVXLnZjm2BoT/VqQ/XqpkoUuCHr5zibu6khyuynq
+	dxWT4ihUP+OzzoVdQMmIm+eDF38Wf10LDqO3tPINS1OifAcpoCjbn5xIIFAg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1748019256; x=1748105656; bh=EfnEEgwEFd4lShm9jIuwfVpw8k+yYeG7uKb
+	JL0uG1bA=; b=Z479TVLHqDWYTAztAumSYbmssL1cBO/gaGgV4I8er+FR7czhiMz
+	1kqvERgBwn3YZXQyd5Jq7Bp293KvBtj2NkpMMqOVbKZz2XpD47dIEFbIRkk3bJp/
+	f/P/OuDSLb6mJlaBstYVsBH3ivFUT5f4fpSaArURQQT4naZWd8VdFVwem8ynzbAV
+	I6q+AuUoYOyCjITAqoVpERrS0b5CC5Q+VqV5XiQ/zfqHSdDlj633KXPNO8LxIt+5
+	kuYJhOud1xE1/5+r1qqY+AaEQcKfQ3J1tYFc5cGhXNO9Ms20WKgy76vZ6PAVsMiX
+	g5cqoboZ4wIarbmOnh/JdurjzsTySb1wvkg==
+X-ME-Sender: <xms:N6gwaPOsvhyWZqTwsEximYwwilhRKVGcOZgkfCSB4c2C8DRkw1PV5A>
+    <xme:N6gwaJ8RjP6UHuLr5pP4AEkuP-t0SdAifpzQaXPGVGFi_V9nNDDxvYqKt5xuHGeia
+    Kwzyuz_0MnOcZJj9w>
+X-ME-Received: <xmr:N6gwaOSybFFPQWYr922RvX2b9oogRc0BBhQ9v6iG3ELOHY-ccRNskhjP4mjBXjz8A98RGhAeuYVQumojM1wCXFxvVChN5HgHBZbo7bw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelfeekucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
+    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
+    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
+    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
+    gidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehfvghrnhgrnhguohhlihhmrggsuhhs
+    ihhnvghsshesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
+    hnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidr
+    ohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhope
+    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomh
+X-ME-Proxy: <xmx:N6gwaDtvFDslOduom12Jv8BIdlALqZTDhzn5upo6Bygeuvl4SI_EIg>
+    <xmx:N6gwaHciSnSyOzguX7i4zytBYEVcRohk2M0qjxn_x7OZXVozgK7cxA>
+    <xmx:N6gwaP0yIpchJjAnQPMcKJ9ygnBK5ywTy3SD2wh40YUjkDd6PQoHHg>
+    <xmx:N6gwaD-VOO1pyjhBRe9ZHdPQeSXQKeteMj3KMAbR0aY2plEgpTkiHQ>
+    <xmx:OKgwaP8IrqMJCHtJLG9oTCt56OWpOJs9iYYsibLcoc8xMsfkYjsCXyNR>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 May 2025 12:54:15 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Fernando Gouveia Lima <fernandolimabusiness@gmail.com>,
+  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,
+  stolee@gmail.com,  peff@peff.net
+Subject: Re: [Newcomer PATCH] log-tree.c: Supress Wsign-compare-warning
+In-Reply-To: <aDCQWr3MBX4L7sbA@pks.im> (Patrick Steinhardt's message of "Fri,
+	23 May 2025 17:12:26 +0200")
+References: <20250521202409.26879-1-fernandolimabusiness@gmail.com>
+	<xmqqsekx8yef.fsf@gitster.g> <aDCQWr3MBX4L7sbA@pks.im>
+Date: Fri, 23 May 2025 09:54:14 -0700
+Message-ID: <xmqqy0unxo7d.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
- <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
- <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
- <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
- <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
-Content-Language: en-US
-In-Reply-To: <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfOCIqzYg9WDAYagyVsoZ47c4hui90pycLfAV7bBFQ63WsoIaqOhsM72TYTo+jp4rtBe8Cn2u+6VM7RLLE58pN/WxrGe8eEjBwYyjD6RmBgt7H4o5ulLY
- k36SF/Zdg3akE4cfh2T0JytQ6UQcQDOEDto2/Cbpywm8Mud77kxkXvg1cIU9TTQoM4QojtjNtHYhCPwXSe1BXcKU9MW380RW8PA=
+Content-Type: text/plain
 
+Patrick Steinhardt <ps@pks.im> writes:
 
+> I'm still not of the opinion that it is garbage. We have tons of
+> locations where we mismatch integer types only because we never got a
+> warning from the compiler, and these have caused multiple stack
+> overflows in the past.
 
-On 23/05/2025 17:40, Ramsay Jones wrote:
-> 
-> 
-> On 23/05/2025 16:58, Junio C Hamano wrote:
->> Patrick Steinhardt <ps@pks.im> writes:
->>
->>> ... The problem is that we have a test that unexpectedly
->>> passes on macOS:
->>>
->>>     ▶  868/1023 - git grep .fi a                             UNEXPECTEDPASS
->>>
->>> The test in question is this one:
->>>
->>>     test_expect_failure !CYGWIN 'git grep .fi a' '
->>>         git grep .fi a
->>>     '
->>>
->>> The test passes if '.' matches a NUL byte, which we expect to only
->>> happen on Cygwin. 064eed36c7f (config.mak.uname: only set NO_REGEX on
->>> cygwin for v1.7, 2025-04-17) mentions that this behaviour was probably
->>> imported from FreeBSD, which makes me wonder whether macOS eventually
->>> also inherited the same code given its BSD lineage.
->>
->> Yup, I was wondering about the same thing.  Thanks for confirming.
->> It is unfortunate that we have blanket USES_BSD_REGEXP prerequisite
->> ;-)
->>
->>> I think we probably want something like the below patch to fix this. We
->>> could also have a prereq, but that prereq would look almost the exact
->>> same as the test. It does make me question the value of the test itself
->>> as the behaviour is completely platform specific.
-> 
-> Yep, I very nearly sent that patch with a hunk which deleted that
-> test. In the end, I decided to play it more conservatively. :)
-> 
->> Curious.
->>
->> Don't we run the same set of tests on macOS without Meson?  the
->> exact same test must be passing unexpectedly.  Why do we see the
->> complaint on only osx-meson job without osx-{clang,reftable,gcc}
->> jobs?
-> 
-> Yes, for about a decade, git built on cygwin with the system regex library
-> would have shown an 'unexpected pass' on this test. However, unless you
-> look for it, you wouldn't know; make and prove are quite happy with the
-> situation, since it is an unexpected _pass_:
-> 
->   $ git diff
->   diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
->   index b7d83f9a5d..3bd91da970 100755
->   --- a/t/t7815-grep-binary.sh
->   +++ b/t/t7815-grep-binary.sh
->   @@ -63,7 +63,7 @@ test_expect_success 'git grep ile a' '
->           git grep ile a
->    '
->    
->   -test_expect_failure !CYGWIN 'git grep .fi a' '
->   +test_expect_failure 'git grep .fi a' '
->           git grep .fi a
->    '
->    
->   $ cd t
->   $ ./t7815-grep-binary.sh
->   ok 1 - setup
->   ok 2 - git grep ina a
->   ok 3 - git grep -ah ina a
->   ok 4 - git grep -I ina a
->   ok 5 - git grep -c ina a
->   ok 6 - git grep -l ina a
->   ok 7 - git grep -L bar a
->   ok 8 - git grep -q ina a
->   ok 9 - git grep -F ile a
->   ok 10 - git grep -Fi iLE a
->   ok 11 - git grep ile a
->   not ok 12 - git grep .fi a # TODO known breakage
->   ok 13 - grep respects binary diff attribute
->   ok 14 - grep --cached respects binary diff attribute
->   ok 15 - grep --cached respects binary diff attribute (2)
->   ok 16 - grep revision respects binary diff attribute
->   ok 17 - grep respects not-binary diff attribute
->   ok 18 - setup textconv filters
->   ok 19 - grep does not honor textconv
->   ok 20 - grep --textconv honors textconv
->   ok 21 - grep --no-textconv does not honor textconv
->   ok 22 - grep --textconv blob honors textconv
->   # still have 1 known breakage(s)
->   # passed all remaining 21 test(s)
->   1..22
->   $ echo $?
->   0
->   $ 
-> 
-> Again, prove doesn't care:
-> 
->   $ prove t7815-grep-binary.sh
->   t7815-grep-binary.sh .. ok    
->   All tests successful.
->   Files=1, Tests=22,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.13 csys =  0.25 CPU)
->   Result: PASS
->   $ echo $?
->   0
->   $ 
+I know we spotted many possible overflows and wraparound in the
+past, but -Wsign-compare being not about sizes but signedness, I'd
+consider them more as happy accidents, rather than intended outcome.
 
-Sigh! Of course, when I did the above I was on Linux! It looks like the
-following on cygwin:
+If the code had 'a < (int)b' comparison where 'a' is 'int' and 'b'
+is 'size_t' [*], the code would still be wrong, but the compiler
+would not have said anything.
 
-  $ ./t7815-grep-binary.sh
-  ok 1 - setup
-  ok 2 - git grep ina a
-  ok 3 - git grep -ah ina a
-  ok 4 - git grep -I ina a
-  ok 5 - git grep -c ina a
-  ok 6 - git grep -l ina a
-  ok 7 - git grep -L bar a
-  ok 8 - git grep -q ina a
-  ok 9 - git grep -F ile a
-  ok 10 - git grep -Fi iLE a
-  ok 11 - git grep ile a
-  ok 12 - git grep .fi a # TODO known breakage vanished
-  ok 13 - grep respects binary diff attribute
-  ok 14 - grep --cached respects binary diff attribute
-  ok 15 - grep --cached respects binary diff attribute (2)
-  ok 16 - grep revision respects binary diff attribute
-  ok 17 - grep respects not-binary diff attribute
-  ok 18 - setup textconv filters
-  ok 19 - grep does not honor textconv
-  ok 20 - grep --textconv honors textconv
-  ok 21 - grep --no-textconv does not honor textconv
-  ok 22 - grep --textconv blob honors textconv
-  # 1 known breakage(s) vanished; please update test(s)
-  # passed all remaining 21 test(s)
-  1..22
-  $ echo $?
-  0
-  $ 
+	[*] which is what a typical "I've suppressed the compiler
+	warning that was annoying me" patch would do if the original
+	were written 'a < b'.
 
-Note that #12 is 'ok' and '... please update test(s)'
+'a -= b' can be equally bad depending on the value range of 'b', but
+it is not about -Wsign-compare and would go unreported, right?
 
-Sorry about that!
+So I think noise from -Wsign-compare are certainly not "false
+positives" (in the sense that the comparisons are between signed and
+unsigned---the warning option is reporting what it was asked to
+report), but are not-false-but-useless positives; what they try to
+catch is somehow different from what they could catch to help us.
+And that is why I have been skeptical.
 
-> When I tested the patch (without !CYGWIN) with 'meson test' it didn't care
-> either - that was *before* Patrick's recent patch to make meson parse TAP
-> output. ;)
-> 
-> Question: should meson (or indeed prove) fail the test because of an
-> unexpected _pass_?
+> I do agree though this not a good project for newcomers, as fixing those
+> bugs is quite intricate overall. So we should definitely remove this
+> project from the microprojects page.
 
-ATB,
-Ramsay Jones
-
-
+Yeah, that is something I am quite certain about.
