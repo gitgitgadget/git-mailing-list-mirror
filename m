@@ -1,117 +1,121 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA18B29713F
-	for <git@vger.kernel.org>; Fri, 23 May 2025 15:59:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA05115A85A
+	for <git@vger.kernel.org>; Fri, 23 May 2025 16:20:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748015942; cv=none; b=vDxYDIcIWfmYw/zOUztiz+xjuqTrstCeLTx9yY7llPeS4Fv7Gc1+UD4UzTT3J2z2gFyUc41sRHa2LKeMnqI9rWn4amgtQkPVFMWBTctOXAbPRZ8Yq2DfXwiu3mXpWYHR2N0jGu25K9e0YVm5UAwmaG47JYYgneDhE8id4PdjiW0=
+	t=1748017246; cv=none; b=mGL+tJiH0YnpwMLKGpeF6pTCEFs4R5xbJVGnNMmZMhgysvjJWGZfar6lXuLpglcdm2T7l1bZLFNsbPWMtLfOPzL7ofwGVUwit30ZGlgU5ZMNh3pustqW3yQ7WsDdDjQkNyXu9G5GOJx+X1O/62jvjjwD+CVXSbHdcqo+wjgwRO4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748015942; c=relaxed/simple;
-	bh=oOjRJvDsNrEVgQkgDqYj2kCmKELkwJ8bbEbbX/ZptgU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=Qf9Q/EPU/A2zRiK9h0SksYfwCDa30P2Z1IXuSgFfJq6sFJEN9DWcfUBhGHiWPJmo+TMlZIaI1Gdta1XzknOQ5/tgfhP8HRNW4a52tYv/yyOdvRientleUwL5o3bY1YzoPiaZLvihCF3KAUv3X0JCybVJC74MjVx/XHolBWIR4O8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hTqDy0w6; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=EYxxmFnC; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748017246; c=relaxed/simple;
+	bh=10cJHPvAeVjwn/t3P8Dxyf2Z2+MhhEDhG9mYnJtA4ko=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZI/d2DUK3RsscQ327xa9VdXZLWyIkDKzrpxxykxF/bVWMs1745A7W2qafBZRIW5OIo8NCAPRtWPVouP8Hg+raN+lY9IeggvRKM0IoZVcYoWDGKdyxrtlyeclQmlZQdWarlSApJ0mQ2lROluh/NzHQcu8WIMGeRMonAcKlxbGar0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H34gblUR; arc=none smtp.client-ip=209.85.128.50
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hTqDy0w6";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="EYxxmFnC"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id E87661140159;
-	Fri, 23 May 2025 11:58:59 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-05.internal (MEProxy); Fri, 23 May 2025 11:59:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1748015939; x=1748102339; bh=mnGO5Mvmrc
-	r9XI0ucKwZCSyGC4OZbBuBFX3RsH9cG5w=; b=hTqDy0w6bKPcpGxijmjjCRtEmW
-	0qbG4SxEUqBg0ZDCMe/rVhQk0mzkx3g9F9yOujLARnZa2bi8KUg78EvEaJHpVSTe
-	AVUf5I89TJoD9vbRQplrcI8px6dUyEkCZ8VL+BeCBgNdkOD+JOzfSMOG/3dODBlv
-	jwSPLx7z5IE403vpG9aZVgkH7KlHwrsU8GEqjZP6gUoxn8hMnP6aI1iHm5027YJ8
-	XQGbbNB0ICVKIeetQCbOxWU0912hN+XUu4Pol+/qn/b4bODW0iUV1nr95Bagktm+
-	kUFIeLJVu8oEOZhZS6dS+gNA1+2foaC1d/8NOdb40G3qwdEQURX65CKNnSNw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1748015939; x=1748102339; bh=mnGO5Mvmrcr9XI0ucKwZCSyGC4OZbBuBFX3
-	RsH9cG5w=; b=EYxxmFnCqZNVgyDucYrnu8/pnevRkWEmw2zKvRIH/q1253MuXKT
-	+Cwqcqa66OTubKY0/im4XN8r5sysMUxjuY9ZqbD3e2P537ZAwSfgASuvzCFjUaAU
-	ojkbqe3zJkfaSHnVaNeGL2pM9Dra5zTZjjMYjuE6WaAbci3690eKpn2K/z4hjhfa
-	PDsUVNKcBhEXvxyTwhiYPG58LTTyO85xVnR+1Bz722yBhRsSiTDdCZKLv5DyV8jE
-	jIBMUn7le2AjTPxGORMmDcS+Y/lIMkWt6CMVkT006Jdp4Giimh+KMEPp51yarweV
-	W9M8nTqzCFNUP2+RtsJyPWRsW/jDenEgswg==
-X-ME-Sender: <xms:Q5swaH6oNSvl7UxpDtOLzaFn94ySaPn4UMxjjwIeDx6dJ4YBmmwKsQ>
-    <xme:Q5swaM4NWHs24C_GTPXMu9s6XyXTQ4SLDPTnNl5Wa-XsF3qmlgdbk0WYc2thz0xMr
-    BsjF6GVdxofDQlqpQ>
-X-ME-Received: <xmr:Q5swaOdMLfYV2Wb3l1hm2AaPnVZl-WXNiFyWiHvDYd1LjJKfDpQHYhGzll_pNznS5m_DvM9UYVLJgMYpEicTWwQfXBhiGtn-AcIlK-Y>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelvdejucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhr
-    tghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:Q5swaIK0OAAGSFaLhxPKUj1bdi8MevE58lMUwjWnN5EaVF0jOitGgg>
-    <xmx:Q5swaLJrbWq08V17kqCjkOWePy1TcYhF2p6mXToqd_zxBsZ2srr7EQ>
-    <xmx:Q5swaBxjV8SZU6lwA97c6BxA2GbVDElD_M1KOP2ENlqVjNPa2-43Zg>
-    <xmx:Q5swaHLsrTQfU2Ny9HLnnM8MBkvFE_AYGj_vmxGjbK4IZfyxVl4VjQ>
-    <xmx:Q5swaMFXDjFoc7Wyorw4e3junhTm6Wfb-jBHe1_1aAKPyR9ZO5uhZjxj>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 May 2025 11:58:59 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Jeff King <peff@peff.net>,  shejialuo <shejialuo@gmail.com>,
-  git@vger.kernel.org
-Subject: Re: [PATCH v5 0/3] align the behavior when opening "packed-refs"
-In-Reply-To: <aDBCdoNPkTq0xzOP@pks.im> (Patrick Steinhardt's message of "Fri,
-	23 May 2025 11:40:06 +0200")
-References: <aCMnrwkoJ2WyqGZT@ArchLinux> <aCS7O8tNekg_u9Wp@ArchLinux>
-	<xmqq7c2aapte.fsf@gitster.g>
-	<20250522055006.GA1135327@coredump.intra.peff.net>
-	<aDBCdoNPkTq0xzOP@pks.im>
-Date: Fri, 23 May 2025 08:58:58 -0700
-Message-ID: <xmqqjz67z5bx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H34gblUR"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-44a57d08bbfso16496445e9.2
+        for <git@vger.kernel.org>; Fri, 23 May 2025 09:20:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748017242; x=1748622042; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=T9MVPxAbRfA0/40zoPvTVimakbzlXZXWesvI1TX6lwQ=;
+        b=H34gblURxYsFssW/p+62v6PUDJt8dMF6AeX81v24wP9CIm17giC8qz7jsNNgK92UtH
+         Ej8dSLPTT60IU/Bfo9RjLsAQ2KjpB+wV/QeuGzOuhfYvZ7EkK6r5olVPk1urXLQmpEeL
+         CbpnB2xjLX2z3gUFhuj+yRNh37NlTn7/fFIF29AFAUwlAeQgwnMr0wgpceG1Sv6tTpLc
+         Q0mDldWRHG2BJccK+I0ve9mj1uLajW2RDoFB5MPhEo/6hJwkjYDx/g1FVRe4tSijL/sH
+         VHdUKiQIZC/Bo+OMosilJaGMKhnPqvRzg9P+r7azA7ZZ5my/ywZmQa28thK9uBchmWnZ
+         y4jQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748017242; x=1748622042;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=T9MVPxAbRfA0/40zoPvTVimakbzlXZXWesvI1TX6lwQ=;
+        b=BG2MP5GO8d3bhN2t4SXapdaarue7O+5J3nVB5A7cKoi0iRi4qKquhEoMWLrTeM0Ku5
+         hkx/Uq0HRDD25WBNIWBfAL54VeUS6TwJmq37plp5jRUmsOlcIn4yL4WD1Hd17dceRAwL
+         11FEmb015aOSkMVOv24ZAq1Jt4s42LeTbOGcpVITek/g2K1tZbgauOwdIN6SlAPgNNvz
+         GO0M4XQuGZaHxCJhfwxkRWKCKjwWXTfP9zyvpd63GDkrh0rxaYXdyLjUtaInuGwxZEOq
+         KDi71nGTurJ9raNP9+TYP/sxatc1yhOYKgJhCgScct1fKoD/QD+LR3/Bww47Ps/jdggc
+         ajoA==
+X-Gm-Message-State: AOJu0YwGd9kE38rDh0mazT2+faC6BgHYfKl0tBCo+ciQU5VHyGwgyiab
+	sKKnSvdB+0EXVLCqAwVYFGBpzockb3QLZ35UVCQlZPspONKPQmowpTE/VCqJCA==
+X-Gm-Gg: ASbGncvxhWgI8Msd62xwJGjqIaLaVJ9Yspev4/dPmr08S7FV4lFYZfMfTkgn+57ZWEC
+	AIjDvNJwWcNVp8VZAdtm1avLFslr4pUfOE/84UpKpQaREFtt8jg1QCN4SNkMZpKml8bdfzhSy6F
+	V1h1KfqwNfHQZnmVRouaRkaohRNcQ7Y820B2Xa768cLELOp+30aNBQny5FRZYYDTjtHlyRV8eZ6
+	S8fKtqiRewKnSNtwEq1Kkt/ShvJ0H8rSWZOvlMGiBbdhnAqvbpjb7jHowkjvvjbt6+nSF/YGOXz
+	ojg08RPVbQgcG9kQjbJHRvlyFkfMyYIjG3R0jWDFnL/lprZu7dzY
+X-Google-Smtp-Source: AGHT+IH1iySWcgGp25bfY8Wry7UbtuCHthUPfrV4GgaUemHzSEfWAN8JbFlg49rNYFrRHZAfTiD23g==
+X-Received: by 2002:a05:600c:37cf:b0:442:f485:6fa4 with SMTP id 5b1f17b1804b1-442ff03c45amr332430685e9.31.1748017241924;
+        Fri, 23 May 2025 09:20:41 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f7d975f4sm144543295e9.39.2025.05.23.09.20.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 May 2025 09:20:39 -0700 (PDT)
+Message-Id: <pull.1975.git.git.1748017238130.gitgitgadget@gmail.com>
+From: "Alex via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 23 May 2025 16:20:37 +0000
+Subject: [PATCH] Add a check to prevent max_children from being 0.
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+To: git@vger.kernel.org
+Cc: Alex <alexguo1023@gmail.com>,
+    jinyaoguo <guo846@purdue.edu>
 
-Patrick Steinhardt <ps@pks.im> writes:
+From: jinyaoguo <guo846@purdue.edu>
 
-> On Thu, May 22, 2025 at 01:50:06AM -0400, Jeff King wrote:
->> On Wed, May 21, 2025 at 09:31:09AM -0700, Junio C Hamano wrote:
->> 
->> > > Change in v5:
->> > >
->> > > 1. Improve the commit message in the first patch to be more clear:
->> > >     1. Talk about the current behavior, what error we would report if
->> > >        "packed-refs" is empty.
->> > >     2. To align with the runtime behavior, we should skip checking the
->> > >        content of "packed-refs".
->> > >     3. Why do we need to report to the user when the "packed-refs" is
->> > >        empty
->> > > 2. Fix grammar issue in the last patch.
->> > 
->> > The thread has gone quiet on this topic.  Is everybody happy with
->> > this version?
->> 
->> Yep, it looks good to me. Thanks.
->
-> Didn't have anything else to add, either. Thanks!
+In function fetch_multiple and fetch_submodules, `multiple` is
+stored in `opt.process` and later used as a divisor in function
+`pp_collect_finished`, creating a potential divide-by-zero if it
+remains zero.
 
-Thanks, all.  Let's merge it down.
+Signed-off-by: Alex Guo <alexguo1023@gmail.com>
+---
+    Add a check to prevent max_children from being 0, which may cause
+    potential divide-by-zero.
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1975%2Fmugitya03%2Fint2-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1975/mugitya03/int2-v1
+Pull-Request: https://github.com/git/git/pull/1975
+
+ builtin/fetch.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index cda6eaf1fd6..b668187627a 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -2591,7 +2591,7 @@ int cmd_fetch(int argc,
+ 			die(_("--stdin can only be used when fetching "
+ 			      "from one remote"));
+ 
+-		if (max_children < 0)
++		if (max_children <= 0)
+ 			max_children = config.parallel;
+ 
+ 		/* TODO should this also die if we have a previous partial-clone? */
+@@ -2613,9 +2613,9 @@ int cmd_fetch(int argc,
+ 		struct strvec options = STRVEC_INIT;
+ 		int max_children = max_jobs;
+ 
+-		if (max_children < 0)
++		if (max_children <= 0)
+ 			max_children = config.submodule_fetch_jobs;
+-		if (max_children < 0)
++		if (max_children <= 0)
+ 			max_children = config.parallel;
+ 
+ 		add_options_to_argv(&options, &config);
+
+base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
+-- 
+gitgitgadget
