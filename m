@@ -1,138 +1,127 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAC7C101FF
-	for <git@vger.kernel.org>; Fri, 23 May 2025 22:19:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEBBB21579F
+	for <git@vger.kernel.org>; Fri, 23 May 2025 23:22:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748038750; cv=none; b=A5TPPJdjp1LKlYSHUygW+BEstg/DJHjL+BSBRnHiE9wIw6kn0lAhCfWOoG2piELSLs/woe7jXZv65Cw4mamqojIbPh9A7YT2aoRHhZJm8qFgr7RKSPwlePondi+HS7jmraPR6p6m5X1ISdsY1J1AA85CI/TvdxvmptH1FgiEScQ=
+	t=1748042533; cv=none; b=kedm0GLE2qXOyNjzc3aAK72Pu5JWz7SOMPpfau4rrqLF6/MENElcf9f4HtDUDxzEtIUpF+9i7QTNfgOCwJZWWl/rWt4DjsqpZulTpg+lOvKSaP8aETv7YYftxh9WorbpqfINrkufpZeQ/wpJZjCWG4innVpCoEkoTc7k3fMfQ+U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748038750; c=relaxed/simple;
-	bh=xXlYEZMs5MHaZMRtSz+DdrzzE0oLf5U5ru34hDqWxx4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=jTacrumsVSf7fWs76RRaHPQ6ia/CQzsVLkQxUiGjfatmpzspyClIHx22Nob8/m5ERUQamo+fyfCLJYXAiBi69zx/f7wPwyXd++hbU754xLNfOYQBmQ8BiKoT4esHjTHAS+7WRMrvZ7HzkdMUf2l1gK+v3Q8hA2W/4X2TYYqahQA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=eJvU7hF+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ITcGaIpP; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748042533; c=relaxed/simple;
+	bh=5ZELYiFdbBn0kPu0648JwOo//GKSmYDPhF9OYJ6heWo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Y2qd2gSwYcuIxixs8fot4/KHtlssUsKH5q1UhRroVeIioKX7UPNATJJNW6HBCMHGaNF7WdzXyrWRckblg7Lix6PBSONVvuvrK8YvAuTu/sDuCVMyNFKhRR9Ui7qKFqg68Q/dcnOFBqUEvjeAND1pOWDzM93nRlqTBVVyiYzVhDY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=mwDoogfP; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="eJvU7hF+";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ITcGaIpP"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A750811400D6;
-	Fri, 23 May 2025 18:19:07 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-01.internal (MEProxy); Fri, 23 May 2025 18:19:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1748038747; x=1748125147; bh=U8pALAACfB
-	NI9kGmwSWOxKEA0rJ2FGayEvSQn15vlLw=; b=eJvU7hF+k3Sgxp8fSB6xzlG4dX
-	wm/xZbFtNB6/Aq1u/nVklF8Pj+tSe45/6iOQqWijPtRuVItS+n2vD/GrLBJ4Vj+l
-	jHdfw88yvRb3vCwidORez+Vdrd3BPHRU7wyuCqEwSFig0b/DPxrNiUxOS5Ytshpe
-	fYQ0jQh16u1lhAAdL8gk69+Y4w0p9oiKhxx0q8O4QTLJs9H2jrAHg3kchKzGFU79
-	11OZ4xIE7o13KJ7cAwj23Lopgw4LlZiRP3ERDfSeZ61c5eShpMC8xJX8prDi2/5p
-	As1YCXaQ9JKts/G8UdTutHtoaUl+EjWh3gedxoNxEKwBpnct/apPPsIOAOtw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1748038747; x=1748125147; bh=U8pALAACfBNI9kGmwSWOxKEA0rJ2FGayEvS
-	Qn15vlLw=; b=ITcGaIpPDhhkrB26dyQw3fB3vx87nNVEc4r6ZNA1vK7tY9kzfBL
-	iVo0YEd0w2QPRdto2A1oPTgo2xV8ikUDoUecZfGhj52JHHkhRczZEBPs5G2PCdlo
-	SIQF6bXhAT8D7DDhWAtY1+lunCQ1cGYYtCHNuw/q9kuerw8KT4eJesagJ2asN7Mb
-	H7TO7dzBJyQ1+DDbMugoh/FUgWhnp/qi7hhVs2dnJAbNPKNxO6ZvFtA40bo1F5kx
-	TUPzJRS5to67Hg6+KDU/Jzak/rnQRuON00AaGN7GAYCDV8nAGL7Pi+FKLBwe9yDi
-	SqlFUnkCCCQW9KzjXm4IsP4MDsIQVd5IM2A==
-X-ME-Sender: <xms:WvQwaJmOfdMihIdGXq_-tYD4XkUyZCzWeqyNpyc65tqBhfWcnXs_YA>
-    <xme:WvQwaE1JlUUfPA20vHeE3akDf8cWCdnGIqE0oaSZwj9MFhYl_yGkBOAYkevKZ3ccz
-    LKj9qT5-ONZLspRSA>
-X-ME-Received: <xmr:WvQwaPq7xxBzDuZsrY3pMYhTCGG5ubpi56s3HrVHdD7MRah5FvZWn3qI1jPOvOdEGUYYfFYrZxVcWoP2SYPhQF0Fbae766ytO-LGjTk>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddutddtfeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgessh
-    hunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepshgrnhgurghlshestghruhhsthih
-    thhoohhthhhprghsthgvrdhnvghtpdhrtghpthhtohepjhhulhhirghnsehsfigrghgvmh
-    grkhgvrhhsrdhorhhgpdhrtghpthhtohepiihihigrohesughishhrohhothdrohhrghdp
-    rhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrh
-    esphhosghogidrtghomh
-X-ME-Proxy: <xmx:WvQwaJkRSfPaL53CUB7UmQ4fZzYQpNL1ozBybD6Z4i_G0CPdB2CCUg>
-    <xmx:WvQwaH24O194QvsHL3I-jNut6pd8oa2JCt5VHN8j6NGIdvLfy1kOSQ>
-    <xmx:WvQwaIt3UC7pxPSc5e5IH9GXY4HugwY-3sGVW6Vo4defOmA8FavYpQ>
-    <xmx:WvQwaLVZazRftFMjmqRQ9G9XJH8EcswLq-u17GLs7R3psGBMY-4qvg>
-    <xmx:W_QwaMPvJXJo1EcgmR0X7zeAV86BQsaQlR-FXHK_757FvwzTuNAu6eIQ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 May 2025 18:19:06 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
- <sunshine@sunshineco.com>,  "brian m. carlson"
- <sandals@crustytoothpaste.net>,  Julian Swagemakers
- <julian@swagemakers.org>,  Zi Yao <ziyao@disroot.org>,  Jeff King
- <peff@peff.net>
-Subject: Re: [PATCH] send-email: fix bug breaking shallow threading if the
- first patch is edited
-In-Reply-To: <73234CC5-8712-4B7B-94BE-F643345677BD@live.com> (Aditya Garg's
-	message of "Fri, 23 May 2025 15:36:19 +0000")
-References: <73234CC5-8712-4B7B-94BE-F643345677BD@live.com>
-Date: Fri, 23 May 2025 15:19:04 -0700
-Message-ID: <xmqqwma7ug13.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="mwDoogfP"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1748042523;
+	bh=5ZELYiFdbBn0kPu0648JwOo//GKSmYDPhF9OYJ6heWo=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=mwDoogfP9z8XGSvm77MGtgMTuFIFH22ru3pSx7Gx6qORGWxKIp0Cnt/ccj/EEsDp4
+	 KcJtXe7tmLHAEqvt77EiM/cn7rYeRK+RawmBjrbUFnD++3QuBIPdaERNknLmCwX+r3
+	 3+NyBMdrwbYMZKdRrLXsRUYbLBhLCwkFQaDq3MKevSGh3Hm0MuzyLiY48dUN+dOZLB
+	 mfvaoyCMsl1yM0CpvO47Iuq6Nx3fK00+KngzL9NF8lyg1szoFrPu1lVsyay+vGcjJI
+	 8p88qMjhpnpRK1IK0wZqj3Aur5WngHWUnSk8LDEuDgRaDBmfoXN79/lGAtTQ2qDVcX
+	 TRO6poN1HNTVCPESXEeNAcvz/JhZfLtXA4Na7IpIyS6+Kto9WO2SM2msMkrYz/CSOg
+	 rPIVBfVidjiQ/9eaSX+LUX/xSgyaDbqmcnAnk1H0s4zp/u040p/XR7gFE9qgNE6uH9
+	 7Qxw3jEN8OYrPnuIk9YRjSkx2b3RHrHDI9pPPMz6B4ky6DFtcuK
+Received: from tapette.crustytoothpaste.net (syn-071-015-116-126.biz.spectrum.com [71.15.116.126])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 8136B2010F;
+	Fri, 23 May 2025 23:22:03 +0000 (UTC)
+Date: Fri, 23 May 2025 23:22:01 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v6 2/5] reflog-walk: expose read_complete_reflog
+Message-ID: <aDEDGfyvkTFyf0I8@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
+ <20250522185524.18398-1-sandals@crustytoothpaste.net>
+ <20250522185524.18398-4-sandals@crustytoothpaste.net>
+ <2e8e7eb0-f526-49cb-8f75-379fa7ef6446@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="TL7peQkXR9zzoaWk"
+Content-Disposition: inline
+In-Reply-To: <2e8e7eb0-f526-49cb-8f75-379fa7ef6446@ramsayjones.plus.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-Aditya Garg <gargaditya08@live.com> writes:
 
-> So, whenever the first patch is sent, $num_sent will become 1.
+--TL7peQkXR9zzoaWk
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-The reverse is not always true, though.
+On 2025-05-22 at 21:53:27, Ramsay Jones wrote:
+>=20
+>=20
+> On 22/05/2025 19:55, brian m. carlson wrote:
+> > diff --git a/reflog-walk.h b/reflog-walk.h
+> > index 989583dc55..8f0640f662 100644
+> > --- a/reflog-walk.h
+> > +++ b/reflog-walk.h
+> > @@ -1,9 +1,24 @@
+> >  #ifndef REFLOG_WALK_H
+> >  #define REFLOG_WALK_H
+> > =20
+> > +#include "git-compat-util.h"
+>=20
+> Why? 'git-compat-util.h' must be #include-d in any compilation
+> unit before 'reflog-walk.h', so ...
 
-> 	# set up for the next message
-> +	$num_sent++;
-> 	if ($thread) {
-> 		if ($message_was_sent &&
-> 		  ($chain_reply_to || !defined $in_reply_to || length($in_reply_to) == 0 ||
-> -		  $message_num == 1)) {
-> +		  $num_sent == 1)) {
+One of the CI jobs fails if we don't include `hash.h` for `struct
+object_id`.  I don't remember which one.  The rule is that we always
+include that header before any other header, so that's what I did here.
+It is also needed for `timestamp_t`.
 
-This sais "enter this block if we have sent a message and one of
-(num_set is 1, or we are told to chain-reply-to, or we do not have
-in-reply-to) holds true".
+I will also mention that having complete headers makes clangd and other
+LSPs work better because then they don't warn about undefined types and
+they can actually warn when we have failed to include the relevant type,
+and since we actually both headers here, I decided that was the right
+thing to do.
 
-But is $num_set == 1 really limited to "the first message"?  Given
-that ...
+If we're dead set against it, I can remove it.
 
-> 			$in_reply_to = $message_id;
-> 			if (length $references > 0) {
-> 				$references .= "\n $message_id";
-> @@ -2060,7 +2061,6 @@ sub process_file {
-> 		$references = '';
-> 	}
-> 	$message_id = undef;
-> -	$num_sent++;
-> 	if (defined $batch_size && $num_sent == $batch_size) {
-> 		$num_sent = 0;
+> (Sorry, I have not studied these patches, they were just floating
+> in front of my eyes ... so, please ignore me if the reason is
+> obvious! :) ).
+>=20
+> ATB,
+> Ramsay Jones
+>=20
+> > +#include "hash.h"
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-... the counter is reset when we send out the batch_size message
-(and we sleep in this block, which is outside the post-context of
-this hunk).  So when you send the first message of the next batch,
-you'd do the same, no?  By that time, we have in_reply_to set, but
-that does not prevent from $num_sent, which was reset to 0 at the
-batch boundary and then incremented to 1, to reenter the block in
-the first hunk, no?
+--TL7peQkXR9zzoaWk
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> 		$smtp->quit if defined $smtp;
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8FgmgxAxgJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ3cLLXctd6eHOut6ghrz436GdS2PKUeK6r+xHAm91XRE
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJvHAQCn/KpAN6GvhcWf7DbMOUtqjiHO
+4t/y6CGzLZPGTXUBtgEAr72gZ/ZtGgu7yVK0lFcoSz6YVwuNTXEANDO3ks1hSgA=
+=KjYX
+-----END PGP SIGNATURE-----
+
+--TL7peQkXR9zzoaWk--
