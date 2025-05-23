@@ -1,109 +1,123 @@
-Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+Received: from mail-qv1-f54.google.com (mail-qv1-f54.google.com [209.85.219.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 420E37E1
-	for <git@vger.kernel.org>; Fri, 23 May 2025 19:45:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB4E61A315A
+	for <git@vger.kernel.org>; Fri, 23 May 2025 20:08:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748029532; cv=none; b=IowXbNo0ocJgthiVBH1dCUU+1TyfyovxBm6NZa4/LBsL1D6jwFmMGbB5E9IALR3SpW3lyrrm+yaPfg0J2KL1/l2DL4FNgvlwhG1i9ZBHqto0iixQkBOlfuynQABWKVsiwXXKXp5X8siM6gKLoNSGu+6laqKWW/bps0xqBA2n4bk=
+	t=1748030898; cv=none; b=F+8ayK10/jxhnfMg5wPqTdIdkJ/uKTvtuej5769A6wRkd54VRFOILUT7J4zTEEu9+IM1v9gH0NdERk7wBpdTm4eg26lza6M+pP3UPxJk5uGXkVrLcrcHMKUIsMYGVwRLfKAuVhIVmRTsxYJHeXuauZfzr8HOeHIc51d/ek7toGo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748029532; c=relaxed/simple;
-	bh=DoLwRL8nzSvsNNdwSlB+VwrSpYoXd0yCFCNnV0ziMZo=;
-	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
-	 Message-Id:References:To; b=lBbit2J6E/k5ZQysE3VSyv+4dBwk+I2DO1dK4WPeDUvX28CJBhVPAIo1exnCQyqwClVYY/kLyINGmK3HMdtcm785N5tPNwk9vv20mKgjR0Dsnh9XdTs8iQs6VmvXwEd2D3HCy0Gra2K0fvVRBb91ERpWvGAbw+Nia7jnIBYag/0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WJas1tV1; arc=none smtp.client-ip=209.85.221.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1748030898; c=relaxed/simple;
+	bh=bHooQxQDRMZuiwjhn1Miw+gGO5RIHgzJxzByfwwAHJQ=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Sei7GPsEHiP7JLCs4WQK85PAcsss6aFcoqH+h65fvRtVAdp9RY4dLWLA/dHjf1C2ZQ3MVYdmrAGhQdmcB6sX3pSkzyNBsT+LXMtZpkjVkntLTNu698JAtncZMmkQOcp3fvHGcX1w8+6EKC4uzs2jUhlikVXYzDXnzxAXzNPhOzs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.219.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WJas1tV1"
-Received: by mail-vk1-f182.google.com with SMTP id 71dfb90a1353d-52dbcd398f9so156542e0c.0
-        for <git@vger.kernel.org>; Fri, 23 May 2025 12:45:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748029530; x=1748634330; darn=vger.kernel.org;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=gE4jl+uH/mQfMcIjQZzY7iA48V0awJjfBTVpq/1Kk5Q=;
-        b=WJas1tV1l0wxcizOsCXJNLJYigG8DYOw+sAUNbT7HjiXjo5tenZI6ay55ePmpFJFoR
-         wI0vW5fH3UpTu7VFE5FwPdJypEjOV8yPag3RpEa0vH46vmlOgK2ZljD6K06EwZ7nap0g
-         xxfK97LHDvxCfm+Ci8WZpbZcpOhzsWDLm6RfutKOW3/64AuKKuZhT/fPD0fP6dzf7AHT
-         R3v6nRCsh3y8/HndLzgDk/WsV1HU5vIGczWq4p16fjMGyYyYSDY2DllXeA2aAo0mYqw7
-         FYe0Et/7eWohMRHN2fGpXNw/SV2fqsORCXAZWctu3nJG9SowNSzC7HYxUEGa96Xa3/Ok
-         qYxg==
+Received: by mail-qv1-f54.google.com with SMTP id 6a1803df08f44-6ef0537741dso317506d6.2
+        for <git@vger.kernel.org>; Fri, 23 May 2025 13:08:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748029530; x=1748634330;
-        h=to:references:message-id:content-transfer-encoding:cc:date
-         :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1748030893; x=1748635693;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gE4jl+uH/mQfMcIjQZzY7iA48V0awJjfBTVpq/1Kk5Q=;
-        b=bpZZdUHoa4Fc2zcmQ8HnIIrymaj5yCbeJgAoPv1KGhbQiKYu0ohme5dTTLlGSDgXPt
-         2/F9xjTi6+Y4ArTUZn5Dj50fVx2wYRp4AqyATFcBx0cZSnNjRP47BbJA011TWVMOBrOK
-         zSiEbx6NMTLB7NvAiwQ3uAf9gcu7v0f1PngeA56CqXyxSDlDB+1BVFrQqx5XPV6a0Z8R
-         PfaTBuWn+sUoixWmr44t/jxFKGGSOtgt5nTjnvHlX/JU1WXLY48zOo/FIysruOkBKx3h
-         LAv+gdemzSznoxozgSX0kbCLeo3lU0n0sNKLB9v+oljZYJoKD+YkXDNht6hPn1C8KpMJ
-         vQOQ==
-X-Gm-Message-State: AOJu0YyjAZba5SEqKJN++2W1ry2WijL1qNfNEbJtReGlpVsx6LRs7+Ge
-	1gT7Y23DSESevc76KOdry3X+ruKQWz+pPp2iPGyXzWfKm3CsWhldvQHpJEmUwOC+
-X-Gm-Gg: ASbGnctcdVPUm8SF/0UpFKTOgW1DMRnZuiG6vDKbv5/sM+7xeWbgW8e0uafyJFcSkRp
-	580ys/+EsCFTq70doZfo0mRy25MXALsjDBL1WdW+GRznCWfFK5tQ1Qh8sab3H5eVK3hjdO3lOZ7
-	NKMBi9xw8HCs6Cl5WjMGuVqrrqr1WLmei626HGbyDM022FLexHD594LGNH3/m8agg2sAYD+2TwT
-	PaoT7hUbvZY0BCZDCiYY2+ZVI4TwTN0RKVCKkPhPr4LZUbKXWym95fVdKky3eKM4hCurXcpfEea
-	3bO6mrDqTwi44c9BpykBbTISfufJ3PhB3801rqrgGOdteAOnvbcddmEVbzZCN8VOiNkJoKeOZe+
-	k4xmN
-X-Google-Smtp-Source: AGHT+IFpS59c69lVchLt2vfjk4ANDSuJNAPQwSKNJCCJY0BmdahIq1+FgS6XjqwYq4jvWmLkLTr8Pg==
-X-Received: by 2002:a05:6122:488f:b0:52d:d4cf:5754 with SMTP id 71dfb90a1353d-52f1ebd2b74mr5441566e0c.0.1748029529927;
-        Fri, 23 May 2025 12:45:29 -0700 (PDT)
-Received: from smtpclient.apple ([143.107.45.1])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87bec027524sm12709467241.0.2025.05.23.12.45.28
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Fri, 23 May 2025 12:45:29 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
+        bh=tP8Yb4/ILBBe/g3X6vfquTJywsB9RfBoD33M9FzI6EU=;
+        b=M9oX+zltiMEKscUlWOL63yGeAtieaOUzzZh7as9QKChFnIHSYKHtX6VL7A6aawQJ02
+         0K+Yk28ARj/JgruhOFYmeE+wYhovWuCpc9+sSVN03VGlsyupw/pgXCbl2OsJE7hYcoyn
+         oLoM6LIaXgZ0i/zRxZ4xEosW1OgR+6HDpteQ+ZplN6vP14eqcpjsE8xDfQy95P9d419w
+         FsLzG660mkaeHhc02hLpfJWrB3IKiMRDMINuC/2bh3L2pc02HT2odzEm2NwFQimj5SNi
+         PNqwgHMEwkEW4GyIFGVH4yFBKpvFrCMJyrSAcblcO2O/Bx5jPSkF0jWQ6C2YongNuFoG
+         UNJg==
+X-Gm-Message-State: AOJu0YwOc45Hcm2qOrEjyUov94BH+zh9PDdlkws1atb728jV++07mD8F
+	OXp8fnswxCPKv9Qx1nessJAqyfZsOIdklSRhj6aHE47RERtugTy36L4R/IvFwtIjc1XYXCjIOWl
+	/YDUhAULhi/2ZQ2+RrNNU6yz3IFl1xZ4=
+X-Gm-Gg: ASbGncujK1J51fT0XuWVnlhz0rf9SQkIa8+Ebj9OsSUsiCfpuGiVNxFL/XDdgMoFl2T
+	qOSK0ikqN/MXkkCVc03UxGUONvaXvYraF0EKZYx9/58wX3aPib4zY/IWIUI0R69672wItQQUTt8
+	KTrHNhKQy5D3ILENoCCfEPtnhJ+64EIcz6BVnmnKpNhTpjMgkycSpxeOeyOOq4eBvVNA==
+X-Google-Smtp-Source: AGHT+IFlX78+bwRgYSgXQ/90u8f5m+7eur3tZLsYbGf8qKcOgCWx+D9CNoVPZiYMqQriDmCiHDqlHCXudJRHeKp7ewk=
+X-Received: by 2002:a05:6214:5095:b0:6f8:daec:8b7c with SMTP id
+ 6a1803df08f44-6fa9d32662bmr4567766d6.6.1748030893615; Fri, 23 May 2025
+ 13:08:13 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: =?utf-8?Q?Re=3A_=5BRFC=5D_git-ghost=3A_preserve_=E2=80=9Cwhy?=
- =?utf-8?Q?=E2=80=9D_on_deleted_lines?=
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-In-Reply-To: <CAOc+UT0n9pRGur0d4cORU0SMQY-PNs5ekLd=LX9xc940Og+nrQ@mail.gmail.com>
-Date: Fri, 23 May 2025 16:45:15 -0300
-Cc: git@vger.kernel.org
+MIME-Version: 1.0
+References: <20250523193722.68344-1-mark@chromium.org>
+In-Reply-To: <20250523193722.68344-1-mark@chromium.org>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 23 May 2025 16:08:02 -0400
+X-Gm-Features: AX0GCFvNRef3U5VSfjA-Amm3FijUdGI9lmJZGTM_fdFkZ4pGCzkJW671dRGxc2w
+Message-ID: <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
+Subject: Re: [PATCH] t7900: use pwd -P in macOS maintenance test
+To: Mark Mentovai <mark@chromium.org>
+Cc: Git Development <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <9F0F0FF5-85D8-48E8-B056-F71F56AEB915@gmail.com>
-References: <CAOc+UT0n9pRGur0d4cORU0SMQY-PNs5ekLd=LX9xc940Og+nrQ@mail.gmail.com>
-To: Max Rhodin <max@ux.se>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
 
+On Fri, May 23, 2025 at 3:37=E2=80=AFPM Mark Mentovai <mark@chromium.org> w=
+rote:
+> $pfx is the basis for the expectation that launchd plist paths formed by
+> `git maintenance start` will be compared against. These paths are formed
+> in `git maintenance` by builtin/gc.c launchctl_service_filename(), which
+> calls path.c interpolate_path() with real_home =3D 1, causing abspath.c
+> strbuf_realpath() to resolve a canonical absolute path. Since $pfx is
+> not determined according to the same realpath semantics, when t7900 is
+> run from a working directory that contains a symbolic link in its path,
+> the realpath operation will produce a different path than $pfx contains,
+> although both paths logically reference the same directory. The test
+> fails in this case.
+>
+> Base $pfx on the physical working directory (pwd -P), with all symbolic
+> links fully resolved, so that the path that the test expects matches
+> what `git maintenance` generates, even when running from a working
+> directory whose path contains a symbolic link.
+>
+> Signed-off-by: Mark Mentovai <mark@chromium.org>
+> ---
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> @@ -882,7 +882,7 @@ test_expect_success 'stop preserves surrounding sched=
+ule' '
+>  test_expect_success 'start and stop macOS maintenance' '
+>         # ensure $HOME can be compared against hook arguments on all plat=
+forms
+> -       pfx=3D$(cd "$HOME" && pwd) &&
+> +       pfx=3D$(cd "$HOME" && pwd -P) &&
 
-> Hi,
+Okay, this seems like the minimum fix[*], and -P is POSIX.
 
-Hi, Max!
+However, have you tested this on Windows? I ask because, despite the
+test's name, this and most of the tests in this script, are actually
+run on all platforms, and because `pwd` is overridden by a shell
+function for MinGW on Windows:
 
-> I hate losing the why behind a deleted line.
->=20
-> When you drop code in a review, being able to attach a brief comment
-> to that line would save a lot of head-scratching.
+    # t/test-lib.sh
+    ...
+    # git sees Windows-style pwd
+    pwd () {
+        builtin pwd -W
+    }
 
-Sorry if I misunderstood you, but I can't see the difference of that
-to committing empty lines + giving a meaningful commit message.
+My quick testing suggests that this patch's change might be problematic:
 
-> Git-ghost =E2=80=93 see the remnants of days past in a file.
->=20
-> git-ghost hooks into commit to stash deleted lines in a `.ghost` file
-> and enables maintainers to prompt for a short reason. Later you can =
-run:
->=20
->    git ghost view <file>
->=20
-> to see what vanished and why. Blame also becomes easier.
+    # on Windows
+    $ pwd
+    /home/me
+    $ pwd -W
+    C:/msys64/home/me
+    $ pwd -P
+    /home/me
+    $ pwd -W -P
+    /home/me
 
-I still don't see the difference of that to git log -- <file>. I
-understand that git blame doesn't show what has been deleted, only what
-is new and what has changed. But ok, git blame has it's limitations of
-being a quick line-wise inspection tool, while more deeper analysis
-would require more powerful tools. It looks to me that git log with
-some flags would do what you need.
+FOOTNOTES
 
+[*]: In the long run, a better fix would probably be for the tests to
+sanitize the output of the Git command, replacing (via `sed`) the
+actual emitted path with some placeholder, such as "%HOME%" or
+something, and then have the tests look for (`grep` or whatnot)
+needles using that literal placeholder rather than trying to perfectly
+match the path emitted by Git. This approach makes sense since these
+tests are about overall functionality of git-maintenance, not about
+the specific path in which the person happens to be running the tests.
