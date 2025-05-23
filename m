@@ -1,41 +1,41 @@
 Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4E44120B
-	for <git@vger.kernel.org>; Fri, 23 May 2025 16:40:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41412221547
+	for <git@vger.kernel.org>; Fri, 23 May 2025 16:53:41 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748018424; cv=none; b=H2LcrZRvNT57VraMjeU2lmzFmYNuXHaaI3+zhjv80lu85b0gy39ZUcqEHW+D1R2NVuhj9vxT0WW+V6LoBy41nbE4Ifrjl6Smizts+U125W7SkuKj726QSIomQtNH6s4j8CviATdTZmrERFLQ2iaYpsD1+yd9o3vAPBXD57F8sDY=
+	t=1748019225; cv=none; b=l8ooobcrUHxjzJO1RK5JppGSzh/75PquK0c8HzhtsmNwNAOax9lZtLxwcOvzM03DjOx3GQ7JWC3bB3i4LydGmQZ9VEXxdXsUTG4wtpmgJW+JxYg+oscfibWr4kwUOYrBOqlP9S/YMVdZM+0H8l3U88zYiSRBml50m5JtoyQQdWE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748018424; c=relaxed/simple;
-	bh=dvNyephJcgBIH9xedmdYLEVgo9t0mgv8SSf4C2uH5Oc=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=UIwd2jBy8lhA4UvTl6nTnjTLVWn3HD2x0/jvvW5Go1V16YeV3jGUKGdSOIMf8RDYkVMr0078fPNE6O01BTY8nDIQyBWB77TNgkiMVhC1caD/5111i+8KqiKYF4fIeHECYScMhjbA4y1OlK5vtM7lMKvmNQVyYcx3lKJNyQ/t1rw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=nYgF0pjt; arc=none smtp.client-ip=212.159.14.17
+	s=arc-20240116; t=1748019225; c=relaxed/simple;
+	bh=klQ4ahcPCPKgButRzwz+I6i+9qX011cJ5y0QwD4mlX4=;
+	h=Message-ID:Date:MIME-Version:Subject:From:To:Cc:References:
+	 In-Reply-To:Content-Type; b=o1318dDpbh0wyD2MI2LH1miHEEdLLFM6GDwNiZtX69dXoubXRCRGqqTp0eDpmW1G7NCpY8fp6+MTwLcSazcfebXu9sFakbd4tRv5hlfw4O/MrAUCq+E2SRapxINexfqfUGfOrzJ9BGUiiYs+1dp/33aciFghGhKAb1coIaZ4QzI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=MrBmCLtA; arc=none smtp.client-ip=212.159.14.17
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="nYgF0pjt"
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="MrBmCLtA"
 Received: from [10.0.2.15] ([80.189.83.109])
 	by smtp with ESMTPA
-	id IVROuDfQvUuMSIVRPulBZv; Fri, 23 May 2025 17:40:18 +0100
+	id IVeMuDgYjUuMSIVeNulBqa; Fri, 23 May 2025 17:53:40 +0100
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
-	t=1748018418; bh=TCPxEjSG9jgZAyxMRP5X3FClXzxJoHbgxOI9KX6YeLI=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To;
-	b=nYgF0pjthdJ9pjoPfQyJqUC7RyV+VaBQrWYx+FyEeTcTYWhzFqzYRjH3mwEg2Oy/o
-	 6poRC6OrMnKtTHIuWcweJfSHWrsPAeG6HzEmE5RF4XefhkDT4BgowSsZwHC6IuwP2r
-	 dfn6dTFY64kBClJ8ICNyj0y4CHLI4YPGF7PL1uJzGVfTaZ7/TVQsvpCqBFD0YG7VyJ
-	 +u12s0ZkpZrpsTwgKuapTFFk1vyu8au8liccgSoTtYT+iveJNaEQqmIiclGUfMS6pY
-	 cdduYIfizPykp7En3lppeP0m/90yBEr6NlD4trxfqFm5FAw+apv7GghBn+aycLMVRF
-	 gwOJlhcjwiHhA==
+	t=1748019220; bh=9SRarGfQxoSO6D7535SRPCibeo/mao6Exy864uMbXDM=;
+	h=Date:Subject:From:To:Cc:References:In-Reply-To;
+	b=MrBmCLtAixe5g5evxeVc3shhsLmvQGVFrbLJyj3Odz0oDWz4A1qD5kkLqK0cQYMS4
+	 c/1jeYjF0aT6YItbVGk0q+5aKntthR7oG8JjfmEU17umadF1utEiI7QvMVLWC49tAi
+	 lWpkOAkDORCPyKggXPBN+RP3hDGvIPxSXsdswpeqUw0/rOMYep+LpvV7gKehlrUflT
+	 QP0ijdUQNKB/KU2hrMopeBHJggzqdeC2YHkWeQHZbwUv0UO+YH9KYhzaP4ZYLABbwu
+	 k9wP5fq9VA56KMSnP5HtVGRlOWVk9GUDj5a6pnG+nLnVpL/0HFS3ZaqirzTmI3KwhP
+	 HmKA/fEoEjyIQ==
 X-Clacks-Overhead: "GNU Terry Pratchett"
 X-CM-Score: 0.00
-X-CNFS-Analysis: v=2.4 cv=K/eBHDWI c=1 sm=1 tr=0 ts=6830a4f2
+X-CNFS-Analysis: v=2.4 cv=K/eBHDWI c=1 sm=1 tr=0 ts=6830a814
  a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
- a=IkcTkHD0fZMA:10 a=SyKQ5haGT6oBuqEuQl0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=IkcTkHD0fZMA:10 a=ojQv-v3Qa_FW3A0bdv4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
 X-AUTH: ramsayjones@:2500
-Message-ID: <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
-Date: Fri, 23 May 2025 17:40:14 +0100
+Message-ID: <e972c5f3-f9f6-4ff9-b794-17535521fdda@ramsayjones.plus.com>
+Date: Fri, 23 May 2025 17:53:38 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -44,81 +44,129 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
 To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org
 References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
  <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
  <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
  <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
+ <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
 Content-Language: en-US
-From: Ramsay Jones <ramsay@ramsayjones.plus.com>
-In-Reply-To: <xmqqo6vjz5cn.fsf@gitster.g>
+In-Reply-To: <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CMAE-Envelope: MS4xfESGtdaFEXGH3WzBQGc3NIFdum190Kmxx4JLZCXy0Sl0k/vey5tBelDR8TJASfWECgJBhsD55R26R7/BbOpi8P3yZgjGyKkbEWMrHBxKTWkcglpWczkT
- TXfLNLFmCVbPSG/hinPfVvAp7ktA6hdrxJZ8XDMkDgwwULKu1hqns5cmma/w85NloOpG8nSvH+pTWTgR9ZAfPWDMpiVxAaBuwkY=
+X-CMAE-Envelope: MS4xfOCIqzYg9WDAYagyVsoZ47c4hui90pycLfAV7bBFQ63WsoIaqOhsM72TYTo+jp4rtBe8Cn2u+6VM7RLLE58pN/WxrGe8eEjBwYyjD6RmBgt7H4o5ulLY
+ k36SF/Zdg3akE4cfh2T0JytQ6UQcQDOEDto2/Cbpywm8Mud77kxkXvg1cIU9TTQoM4QojtjNtHYhCPwXSe1BXcKU9MW380RW8PA=
 
 
 
-On 23/05/2025 16:58, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
+On 23/05/2025 17:40, Ramsay Jones wrote:
 > 
->> ... The problem is that we have a test that unexpectedly
->> passes on macOS:
->>
->>     ▶  868/1023 - git grep .fi a                             UNEXPECTEDPASS
->>
->> The test in question is this one:
->>
->>     test_expect_failure !CYGWIN 'git grep .fi a' '
->>         git grep .fi a
->>     '
->>
->> The test passes if '.' matches a NUL byte, which we expect to only
->> happen on Cygwin. 064eed36c7f (config.mak.uname: only set NO_REGEX on
->> cygwin for v1.7, 2025-04-17) mentions that this behaviour was probably
->> imported from FreeBSD, which makes me wonder whether macOS eventually
->> also inherited the same code given its BSD lineage.
 > 
-> Yup, I was wondering about the same thing.  Thanks for confirming.
-> It is unfortunate that we have blanket USES_BSD_REGEXP prerequisite
-> ;-)
+> On 23/05/2025 16:58, Junio C Hamano wrote:
+>> Patrick Steinhardt <ps@pks.im> writes:
+>>
+>>> ... The problem is that we have a test that unexpectedly
+>>> passes on macOS:
+>>>
+>>>     ▶  868/1023 - git grep .fi a                             UNEXPECTEDPASS
+>>>
+>>> The test in question is this one:
+>>>
+>>>     test_expect_failure !CYGWIN 'git grep .fi a' '
+>>>         git grep .fi a
+>>>     '
+>>>
+>>> The test passes if '.' matches a NUL byte, which we expect to only
+>>> happen on Cygwin. 064eed36c7f (config.mak.uname: only set NO_REGEX on
+>>> cygwin for v1.7, 2025-04-17) mentions that this behaviour was probably
+>>> imported from FreeBSD, which makes me wonder whether macOS eventually
+>>> also inherited the same code given its BSD lineage.
+>>
+>> Yup, I was wondering about the same thing.  Thanks for confirming.
+>> It is unfortunate that we have blanket USES_BSD_REGEXP prerequisite
+>> ;-)
+>>
+>>> I think we probably want something like the below patch to fix this. We
+>>> could also have a prereq, but that prereq would look almost the exact
+>>> same as the test. It does make me question the value of the test itself
+>>> as the behaviour is completely platform specific.
 > 
->> I think we probably want something like the below patch to fix this. We
->> could also have a prereq, but that prereq would look almost the exact
->> same as the test. It does make me question the value of the test itself
->> as the behaviour is completely platform specific.
-
-Yep, I very nearly sent that patch with a hunk which deleted that
-test. In the end, I decided to play it more conservatively. :)
-
-> Curious.
+> Yep, I very nearly sent that patch with a hunk which deleted that
+> test. In the end, I decided to play it more conservatively. :)
 > 
-> Don't we run the same set of tests on macOS without Meson?  the
-> exact same test must be passing unexpectedly.  Why do we see the
-> complaint on only osx-meson job without osx-{clang,reftable,gcc}
-> jobs?
+>> Curious.
+>>
+>> Don't we run the same set of tests on macOS without Meson?  the
+>> exact same test must be passing unexpectedly.  Why do we see the
+>> complaint on only osx-meson job without osx-{clang,reftable,gcc}
+>> jobs?
+> 
+> Yes, for about a decade, git built on cygwin with the system regex library
+> would have shown an 'unexpected pass' on this test. However, unless you
+> look for it, you wouldn't know; make and prove are quite happy with the
+> situation, since it is an unexpected _pass_:
+> 
+>   $ git diff
+>   diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
+>   index b7d83f9a5d..3bd91da970 100755
+>   --- a/t/t7815-grep-binary.sh
+>   +++ b/t/t7815-grep-binary.sh
+>   @@ -63,7 +63,7 @@ test_expect_success 'git grep ile a' '
+>           git grep ile a
+>    '
+>    
+>   -test_expect_failure !CYGWIN 'git grep .fi a' '
+>   +test_expect_failure 'git grep .fi a' '
+>           git grep .fi a
+>    '
+>    
+>   $ cd t
+>   $ ./t7815-grep-binary.sh
+>   ok 1 - setup
+>   ok 2 - git grep ina a
+>   ok 3 - git grep -ah ina a
+>   ok 4 - git grep -I ina a
+>   ok 5 - git grep -c ina a
+>   ok 6 - git grep -l ina a
+>   ok 7 - git grep -L bar a
+>   ok 8 - git grep -q ina a
+>   ok 9 - git grep -F ile a
+>   ok 10 - git grep -Fi iLE a
+>   ok 11 - git grep ile a
+>   not ok 12 - git grep .fi a # TODO known breakage
+>   ok 13 - grep respects binary diff attribute
+>   ok 14 - grep --cached respects binary diff attribute
+>   ok 15 - grep --cached respects binary diff attribute (2)
+>   ok 16 - grep revision respects binary diff attribute
+>   ok 17 - grep respects not-binary diff attribute
+>   ok 18 - setup textconv filters
+>   ok 19 - grep does not honor textconv
+>   ok 20 - grep --textconv honors textconv
+>   ok 21 - grep --no-textconv does not honor textconv
+>   ok 22 - grep --textconv blob honors textconv
+>   # still have 1 known breakage(s)
+>   # passed all remaining 21 test(s)
+>   1..22
+>   $ echo $?
+>   0
+>   $ 
+> 
+> Again, prove doesn't care:
+> 
+>   $ prove t7815-grep-binary.sh
+>   t7815-grep-binary.sh .. ok    
+>   All tests successful.
+>   Files=1, Tests=22,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.13 csys =  0.25 CPU)
+>   Result: PASS
+>   $ echo $?
+>   0
+>   $ 
 
-Yes, for about a decade, git built on cygwin with the system regex library
-would have shown an 'unexpected pass' on this test. However, unless you
-look for it, you wouldn't know; make and prove are quite happy with the
-situation, since it is an unexpected _pass_:
+Sigh! Of course, when I did the above I was on Linux! It looks like the
+following on cygwin:
 
-  $ git diff
-  diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
-  index b7d83f9a5d..3bd91da970 100755
-  --- a/t/t7815-grep-binary.sh
-  +++ b/t/t7815-grep-binary.sh
-  @@ -63,7 +63,7 @@ test_expect_success 'git grep ile a' '
-          git grep ile a
-   '
-   
-  -test_expect_failure !CYGWIN 'git grep .fi a' '
-  +test_expect_failure 'git grep .fi a' '
-          git grep .fi a
-   '
-   
-  $ cd t
   $ ./t7815-grep-binary.sh
   ok 1 - setup
   ok 2 - git grep ina a
@@ -131,7 +179,7 @@ situation, since it is an unexpected _pass_:
   ok 9 - git grep -F ile a
   ok 10 - git grep -Fi iLE a
   ok 11 - git grep ile a
-  not ok 12 - git grep .fi a # TODO known breakage
+  ok 12 - git grep .fi a # TODO known breakage vanished
   ok 13 - grep respects binary diff attribute
   ok 14 - grep --cached respects binary diff attribute
   ok 15 - grep --cached respects binary diff attribute (2)
@@ -142,32 +190,25 @@ situation, since it is an unexpected _pass_:
   ok 20 - grep --textconv honors textconv
   ok 21 - grep --no-textconv does not honor textconv
   ok 22 - grep --textconv blob honors textconv
-  # still have 1 known breakage(s)
+  # 1 known breakage(s) vanished; please update test(s)
   # passed all remaining 21 test(s)
   1..22
   $ echo $?
   0
   $ 
 
-Again, prove doesn't care:
+Note that #12 is 'ok' and '... please update test(s)'
 
-  $ prove t7815-grep-binary.sh
-  t7815-grep-binary.sh .. ok    
-  All tests successful.
-  Files=1, Tests=22,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.13 csys =  0.25 CPU)
-  Result: PASS
-  $ echo $?
-  0
-  $ 
- 
-When I tested the patch (without !CYGWIN) with 'meson test' it didn't care
-either - that was *before* Patrick's recent patch to make meson parse TAP
-output. ;)
+Sorry about that!
 
-Question: should meson (or indeed prove) fail the test because of an
-unexpected _pass_?
+> When I tested the patch (without !CYGWIN) with 'meson test' it didn't care
+> either - that was *before* Patrick's recent patch to make meson parse TAP
+> output. ;)
+> 
+> Question: should meson (or indeed prove) fail the test because of an
+> unexpected _pass_?
 
 ATB,
 Ramsay Jones
 
- 
+
