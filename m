@@ -1,135 +1,110 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9B8E35976
-	for <git@vger.kernel.org>; Fri, 23 May 2025 20:42:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B3935976
+	for <git@vger.kernel.org>; Fri, 23 May 2025 20:43:50 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748032980; cv=none; b=Tu6rWYM6mARCV7hZMhjac/xKXS5rhbivGIs0UDyku9lD6VKg3cPSG+zLx0GkXlw+UCLzRHy/45JJmQDETk2AGi16hxwRSLzDVrsca5cKh8G+9aDNKZg3R+BEfo/NTEmqHI4yBhevJZS8wRVZ6wSIZn5bxkmHPvngTXsv3xYLIe8=
+	t=1748033032; cv=none; b=TeN1r68O7sOw5WdvFuhe199nHJpgiYEkbfWi4fG5hx4udc/u/fFtGG11UYNAhqaEhOGh00Xa7a70GLtOmXZZDJlhqMaudrJk/JM2zLCO2/lwIs/UoIIAlimcOR9Nqfs7KElja7A+B9s97LGYQMmN2OEqV+lTNLP7lzzWCgP+nto=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748032980; c=relaxed/simple;
-	bh=q1Zewqc0TutBjAVykidFLiiV1s7DuC0QA5bkIx9A7EM=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=tzGSayRAvz5II2GqgjqPgXlMGlA7a7Z/fDn+yyg3zrOfCRAt1tUipLitMEW3gwcuwRRprs/Vkl7hnnL5hu7HWkbdeRz6iW5e/LZHEiRYBJXgp5L5TNgCYCkumeSKH8+UKgRYpX1EnSHwK4RKaZcP4qVmF47JmF6Yt3Dc/Tm2jz4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=jzRGt0LG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=gNj5sn5H; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748033032; c=relaxed/simple;
+	bh=HDuYRso+slWw6xDQBED9NI3w5cE9Jg6eC8Qhct5orb8=;
+	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
+	 MIME-Version:Content-Type; b=AY2FvtMgvCQ9iV7OiJ6qZEpLJva/HQkZlqWSwgDq0yXHNJsuGEi6oKyxCdgt5v4Tw3N09A4ohcwbaKk5+Fe1PX2vMK3hF5UfjQRIrEkTz8NR6xpnoaS2SlC09dh5hMI9ziw0sp8Snw1oJUch242dsOorx9DkPKAGhIeq6mQH9+o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Ablkxl5t; arc=none smtp.client-ip=209.85.219.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="jzRGt0LG";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="gNj5sn5H"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A179B11400CC;
-	Fri, 23 May 2025 16:42:56 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 23 May 2025 16:42:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1748032976; x=1748119376; bh=UP8fTIm/A9
-	RmLMrcxQ7uVoszK9+sESSBRPx0/wnmwoc=; b=jzRGt0LG3zXr9XK+e7WsnWSPVk
-	cfOHpobmLCAVzFhoJWcc+B9rV9gWd7FhgJHO1ugM9qVThMZLyWdy0ZyAap95FBuA
-	ThP3vj3fgtMdcebv0HycXrzqeK3g1SR5RAbEqeFDakHKRh1VCxxabq1vhVGXhnQv
-	5edidxLuUf0rJuO8D+UlEpHU3BwsGS1n0No4e4lz8g+0vIo0ENPgdrwitEjbNUhL
-	h1DmM8yKwN0cqM94fAKk75zsFB/jv5Tk9XSavnxmohhXzeQXxPI2BzlfqUrxpgw1
-	Rfkd42bbemxjegszbLHJRX8McBmNyqlNtvBoRevFJrTlyCU2owfcSzXlW8Ow==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1748032976; x=1748119376; bh=UP8fTIm/A9RmLMrcxQ7uVoszK9+sESSBRPx
-	0/wnmwoc=; b=gNj5sn5H0GP/6GqJORpFCnvATFQJyD1KJ7QyV4bh7rnF9KnHj/t
-	x2kzNhJ6lwtJLm7wW0HqmVwp401l392UBT9KXuiF2jL7xfL/UhD+POD0hrQzAhhq
-	Mks1N701tQc2CN2BI4QLbKc1kLnxM9pl8DaFMQaxyPlJNi/IPqBuK1cda82cojBT
-	1fmMyWFJFbXbDTBF8pPPI2xgs6fHgyjltglxM6RN0/Luy3ZlW1YB8diUmR3WW4JS
-	1hHjGzd0uRoYz6aLY8Yn3/j64jFWsucQHlrjwVaiJGLNS7kQqTPO7XAhlCVLFQDf
-	gk4EvNCBWNOQbpAYb2qRSW9tsx5D2r2iSHg==
-X-ME-Sender: <xms:0N0waMyiSz6yJOQEAkwxpR3P5IQxBzs_y3z8QtltOkk2zSZXvb8iUA>
-    <xme:0N0waAS1fb5aitJC_SABEDKlha8dp_K6sNOzlOAOaydgild2iN3y55qF8RpB7qYWr
-    X3cJRjz-_l8WSmAjg>
-X-ME-Received: <xmr:0N0waOUCOFsdMgI-Xp6a5fFtC__pxMEtRVQINLPClFv7dj7RKTqGYaQwEQGC-4rdCSXiYPYKF4_Q81PS0DIN_eFsZ3oWItvMOALvj_M>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelkeegucdltddurdegfedvrddttd
-    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
-    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghfkgff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeetleevffeg
-    gfelveeujeeiiefgiefhveelgeefudelkeettedvleffudegffdtfeenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohep
-    mhgrrhhksegthhhrohhmihhumhdrohhrghdprhgtphhtthhopehgihhtsehvghgvrhdrkh
-    gvrhhnvghlrdhorhhgpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:0N0waKhlcq_UUpKpGHRF0LCEeeEylnIcmmragDKnu4GPxNWnYjqrhg>
-    <xmx:0N0waOD8LR68GKRM53Cafqkzx5-rIaoGsFSFDZns4mWbCF9wpAXPgw>
-    <xmx:0N0waLKHLArsLROsL2lTct3JgW5K8Ss5C9_pZFv3gNsT9uW_4Hl67w>
-    <xmx:0N0waFBElT0d4k74qi1r2kgW5uIMMVIky977ZzWPwv6RqWFwSApsoA>
-    <xmx:0N0waEP3Nvp83XUsbqECZgpFHZ2Cki2cT5_BCQRvIErccjbxRWVmhFi9>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 May 2025 16:42:56 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Ablkxl5t"
+Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f8d96499e7so3787886d6.3
+        for <git@vger.kernel.org>; Fri, 23 May 2025 13:43:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google; t=1748033029; x=1748637829; darn=vger.kernel.org;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:from:to:cc:subject:date:message-id:reply-to;
+        bh=k/cFSvn5v/M7mwNyLbfzk0zcEncYGChZIPLBVGce4+4=;
+        b=Ablkxl5tzUHvJzcRRh95CSXlcFN0szaOA3rn/kk+bJbZQdDTMEoKSgPzxMWpWz+tnp
+         Am7C1l2QgnVZvARtYXuLq2S02japH+zHdC9YsZrl/6hSjYSidZYpSHMec5ysp/IEsbuI
+         SOYpTZ4kj/pzuimk4DfHp/+MVBUjk7GggMdUU=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748033029; x=1748637829;
+        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
+         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=k/cFSvn5v/M7mwNyLbfzk0zcEncYGChZIPLBVGce4+4=;
+        b=k1QLhdAmZPkRnsf8Smo7fY8Uo2dYW08ED7Cem44+idNRLvRwFWGwpVAtuf9bMUoNVR
+         90cS1Nf9c9VUe1pLYnmneF8ExORcd/scwQ8PUQj5mx4g9qUj7rUoRPk2jVZOTpeYjFH1
+         wcw2V9+hG/RUz4J1QNIwoiV945AUX22dFUNFWSUW5aOkBe2YcuZcCBIsRjF4h0n2fE6F
+         ATefBt7lrnwn3GDRGYG6qfHUf1dT7bwDz6kduaBhwdbaDxjLtjdpws5mhJnVdI2B5upd
+         ikx7r3ScvYBPq7QXoHz2UZIBOq0Xw/6soKz1igINvPjWIIlCUK0TH86omR9wiBvBm4uX
+         y2bw==
+X-Gm-Message-State: AOJu0Yz1YGQPX2od/DWm1WQ1yke3ykgaf2f8hBlhA6120XqLtrxjb6SV
+	mXIYk98q+HH7uVQ7h8cU58AVp+iGXE+oqBRw7Kt/7Pc0aqYEEIA2MrVUrwsARlqkZQ==
+X-Gm-Gg: ASbGnct95zrDO3NDwyCmU6VRGjRnBCPuM1ZRZxTFZqVMqtg8eJVTR9s/DyEaorPFU1E
+	8wqhqLqtw6jUBRs2H/ovtfKabTjQRF46veQ71vFmg97Cvq9rXETbA84UrneXl2cwttbvY1dM7SG
+	wm/haYzA7R9zwxQ4Smw01Lw+E+DOPnv5Q8Es+iyqx+U1JRRJ5y0eRMOiQKdXT9op1yiqtNLUpuk
+	Za9Kq1Ffr1goo93rX/FjkY5yx2/tKq9eJHywFnBG7Ez262eVyWWcqpRFBkissY9tQUKl4mS6EDR
+	+kQM5E9MSx2fqMGgL0FYB3/gh9NxvNT4PH9mk9Duqn7d1cAHbQOPP5HN0UxOqcpG+MZrF5qdUoN
+	N4C5qoRmQ06/10beNUZFMQAv2omAbBPYq59j2NdA=
+X-Google-Smtp-Source: AGHT+IEh0cbFsvA6C+a5fOUZZCvN5FH6DWKk7L5/lzHXZMKZgyuZNqEjcjtLaXj1k7yZ1ghqriEdGQ==
+X-Received: by 2002:a05:6214:5198:b0:6e8:f470:2b11 with SMTP id 6a1803df08f44-6fa9d2ae87dmr15373556d6.23.1748033029461;
+        Fri, 23 May 2025 13:43:49 -0700 (PDT)
+Received: from [2600:4040:9ce0:6400:e585:dc50:f5e1:64e7] ([2600:4040:9ce0:6400:e585:dc50:f5e1:64e7])
+        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f8b0883f2esm120956346d6.25.2025.05.23.13.43.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 May 2025 13:43:49 -0700 (PDT)
+Date: Fri, 23 May 2025 16:43:40 -0400 (EDT)
+From: Mark Mentovai <mark@chromium.org>
 To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Mark Mentovai <mark@chromium.org>,  Git Development
- <git@vger.kernel.org>,  Derrick Stolee <stolee@gmail.com>
+cc: Git Development <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>, 
+    Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] t7900: use pwd -P in macOS maintenance test
 In-Reply-To: <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 23 May 2025 16:08:02 -0400")
-References: <20250523193722.68344-1-mark@chromium.org>
-	<CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
-Importance: high
-Date: Fri, 23 May 2025 13:42:54 -0700
-Message-ID: <xmqqsekvvz1t.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Message-ID: <88e8231f-7c08-652d-f734-22c4632aa728@chromium.org>
+References: <20250523193722.68344-1-mark@chromium.org> <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
+Eric Sunshine wrote:
+> However, have you tested this on Windows?
 
->> -       pfx=$(cd "$HOME" && pwd) &&
->> +       pfx=$(cd "$HOME" && pwd -P) &&
->
-> Okay, this seems like the minimum fix[*], and -P is POSIX.
->
-> However, have you tested this on Windows? I ask because, despite the
+Yes, via the CI: 
+https://github.com/markmentovai/git/actions/runs/15217563313.
+
+> I ask because, despite the
 > test's name, this and most of the tests in this script, are actually
 > run on all platforms, and because `pwd` is overridden by a shell
 > function for MinGW on Windows:
 >
->     # t/test-lib.sh
->     ...
->     # git sees Windows-style pwd
->     pwd () {
->         builtin pwd -W
->     }
->
+>    # t/test-lib.sh
+>    ...
+>    # git sees Windows-style pwd
+>    pwd () {
+>        builtin pwd -W
+>    }
+
+That MinGW fallback pwd ignores arguments, so any pwd in a test regardless 
+of whether it's specified as pwd or pwd -P will result in an underlying 
+pwd -W. The t7900 test's behavior should not change as a result of this 
+patch. If it's succeeding in some MinGW environment before this patch, 
+it'll continue to succeed after.
+
 > My quick testing suggests that this patch's change might be problematic:
 >
->     # on Windows
->     $ pwd
->     /home/me
->     $ pwd -W
->     C:/msys64/home/me
->     $ pwd -P
->     /home/me
->     $ pwd -W -P
->     /home/me
-
-Because pwd emulation we use on Windows ignores -P the updated
-caller, pfx with this change would not change the existing
-behaviour.
-
-How would one test this situation on Windows, I wonder?  Create a
-directory that is pointed at by a symbolic link, and use it as the
-test directory (either have the checkout there, or use --root to
-have the trash directory there)?
-
+>    # on Windows
+>    $ pwd
+>    /home/me
+>    $ pwd -W
+>    C:/msys64/home/me
+>    $ pwd -P
+>    /home/me
+>    $ pwd -W -P
+>    /home/me
+>
 > FOOTNOTES
 >
 > [*]: In the long run, a better fix would probably be for the tests to
@@ -141,7 +116,13 @@ have the trash directory there)?
 > tests are about overall functionality of git-maintenance, not about
 > the specific path in which the person happens to be running the tests.
 
-Another approach may be to do a form of chdir that forces the shell
-to figure out where it really is upfront at the beginning of a test
-script, perhaps inside test-lib.sh which happend before anything
-meaningful happens in the test (i.e. "cd -P ." or something).
+The specific front of the path is not important, but the tail should be as 
+expected, and I suspect that it remains much less fragile and complex to 
+perform this equality comparison than it would be to try to reason about 
+the path's inner components.
+
+The existing print-args in this test could be modified as you propose, but 
+the changes would also need to spill into the "start and stop when several 
+schedulers are available" test later in the same file. That seems more 
+invasive and produces less clear test code than just calculating a path 
+expectation in line with what git maintenance uses in the first place.
