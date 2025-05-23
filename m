@@ -1,128 +1,114 @@
-Received: from mail-qv1-f52.google.com (mail-qv1-f52.google.com [209.85.219.52])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B3935976
-	for <git@vger.kernel.org>; Fri, 23 May 2025 20:43:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D033F1DE4D3
+	for <git@vger.kernel.org>; Fri, 23 May 2025 20:51:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748033032; cv=none; b=TeN1r68O7sOw5WdvFuhe199nHJpgiYEkbfWi4fG5hx4udc/u/fFtGG11UYNAhqaEhOGh00Xa7a70GLtOmXZZDJlhqMaudrJk/JM2zLCO2/lwIs/UoIIAlimcOR9Nqfs7KElja7A+B9s97LGYQMmN2OEqV+lTNLP7lzzWCgP+nto=
+	t=1748033507; cv=none; b=fYCIILq+YSBoZVeJk8qrcZMB1YDSZxoyA6Wt78FAQenFl5FNX0vY8xYU/jDWOTJppBPkInZUEug8uCwASLc97y3VN+7actjL0Zi/2qDW7AO9bWAuTEgWYPqGWkF7kAbAvQSY/m6PY2q1JyRPrg38SXtIu9FlWVwQCm0GeObU1TQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748033032; c=relaxed/simple;
-	bh=HDuYRso+slWw6xDQBED9NI3w5cE9Jg6eC8Qhct5orb8=;
-	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=AY2FvtMgvCQ9iV7OiJ6qZEpLJva/HQkZlqWSwgDq0yXHNJsuGEi6oKyxCdgt5v4Tw3N09A4ohcwbaKk5+Fe1PX2vMK3hF5UfjQRIrEkTz8NR6xpnoaS2SlC09dh5hMI9ziw0sp8Snw1oJUch242dsOorx9DkPKAGhIeq6mQH9+o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=Ablkxl5t; arc=none smtp.client-ip=209.85.219.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1748033507; c=relaxed/simple;
+	bh=pit+Y/Y/ZrFDXtK0TpnEe69DLkqZqGMe356TCVTMif0=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=rvMtTmHyIzTwGvQdkwiVEudm32RX1QmZxmdodaB0RkORB3Wfbfu6g9+ISXu2cHblzP32Mm+cHqAlKqRnmEWEXf7gMyFI2miTJdU8eRbhBO1wF04ekAqXttcj0BzKIoBG62vNo9YRnlW2lczCIpmZI39ezbr/EfVbBS2HKkHGkZ0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PNhhm8so; arc=none smtp.client-ip=209.85.221.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="Ablkxl5t"
-Received: by mail-qv1-f52.google.com with SMTP id 6a1803df08f44-6f8d96499e7so3787886d6.3
-        for <git@vger.kernel.org>; Fri, 23 May 2025 13:43:50 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PNhhm8so"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a3771c0f8cso208278f8f.3
+        for <git@vger.kernel.org>; Fri, 23 May 2025 13:51:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1748033029; x=1748637829; darn=vger.kernel.org;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=k/cFSvn5v/M7mwNyLbfzk0zcEncYGChZIPLBVGce4+4=;
-        b=Ablkxl5tzUHvJzcRRh95CSXlcFN0szaOA3rn/kk+bJbZQdDTMEoKSgPzxMWpWz+tnp
-         Am7C1l2QgnVZvARtYXuLq2S02japH+zHdC9YsZrl/6hSjYSidZYpSHMec5ysp/IEsbuI
-         SOYpTZ4kj/pzuimk4DfHp/+MVBUjk7GggMdUU=
+        d=gmail.com; s=20230601; t=1748033503; x=1748638303; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=yCQ9SE3Js2TcEWdD6/nkxAK1t6kl6eJ0qaCIAp53gUM=;
+        b=PNhhm8soYuzvKokUoBVp0Lw8eJpIjld/HrK8w4fp5emJ68NQl55rEqevBBiWwqeI7Y
+         pq546j4G83jljaRa0QggytYPG4N4LtJcTOBZBo5dPoa2LUoQXlnfU02KKgWqGkzoIwKY
+         xjQCbGxdgOANZP9YOMQIwe3x4/6eYH+GrYBicQe08n3XF44mfnuuh8o8Nl6dUjG+evpT
+         H1PB0XITX/l94wqzw2efZ4MQNTqpO/Q9dM/oF5cH6DZUiRHhv+/KpOJ5EfrofqLI1JMK
+         h74Xcr1VTmhcMj4oNmhS0nZyjzHczgrLxcPNjF/bIx3Mz38LFl3cZEDFI6dyBT++sXIp
+         x3ZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748033029; x=1748637829;
-        h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
-         :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=k/cFSvn5v/M7mwNyLbfzk0zcEncYGChZIPLBVGce4+4=;
-        b=k1QLhdAmZPkRnsf8Smo7fY8Uo2dYW08ED7Cem44+idNRLvRwFWGwpVAtuf9bMUoNVR
-         90cS1Nf9c9VUe1pLYnmneF8ExORcd/scwQ8PUQj5mx4g9qUj7rUoRPk2jVZOTpeYjFH1
-         wcw2V9+hG/RUz4J1QNIwoiV945AUX22dFUNFWSUW5aOkBe2YcuZcCBIsRjF4h0n2fE6F
-         ATefBt7lrnwn3GDRGYG6qfHUf1dT7bwDz6kduaBhwdbaDxjLtjdpws5mhJnVdI2B5upd
-         ikx7r3ScvYBPq7QXoHz2UZIBOq0Xw/6soKz1igINvPjWIIlCUK0TH86omR9wiBvBm4uX
-         y2bw==
-X-Gm-Message-State: AOJu0Yz1YGQPX2od/DWm1WQ1yke3ykgaf2f8hBlhA6120XqLtrxjb6SV
-	mXIYk98q+HH7uVQ7h8cU58AVp+iGXE+oqBRw7Kt/7Pc0aqYEEIA2MrVUrwsARlqkZQ==
-X-Gm-Gg: ASbGnct95zrDO3NDwyCmU6VRGjRnBCPuM1ZRZxTFZqVMqtg8eJVTR9s/DyEaorPFU1E
-	8wqhqLqtw6jUBRs2H/ovtfKabTjQRF46veQ71vFmg97Cvq9rXETbA84UrneXl2cwttbvY1dM7SG
-	wm/haYzA7R9zwxQ4Smw01Lw+E+DOPnv5Q8Es+iyqx+U1JRRJ5y0eRMOiQKdXT9op1yiqtNLUpuk
-	Za9Kq1Ffr1goo93rX/FjkY5yx2/tKq9eJHywFnBG7Ez262eVyWWcqpRFBkissY9tQUKl4mS6EDR
-	+kQM5E9MSx2fqMGgL0FYB3/gh9NxvNT4PH9mk9Duqn7d1cAHbQOPP5HN0UxOqcpG+MZrF5qdUoN
-	N4C5qoRmQ06/10beNUZFMQAv2omAbBPYq59j2NdA=
-X-Google-Smtp-Source: AGHT+IEh0cbFsvA6C+a5fOUZZCvN5FH6DWKk7L5/lzHXZMKZgyuZNqEjcjtLaXj1k7yZ1ghqriEdGQ==
-X-Received: by 2002:a05:6214:5198:b0:6e8:f470:2b11 with SMTP id 6a1803df08f44-6fa9d2ae87dmr15373556d6.23.1748033029461;
-        Fri, 23 May 2025 13:43:49 -0700 (PDT)
-Received: from [2600:4040:9ce0:6400:e585:dc50:f5e1:64e7] ([2600:4040:9ce0:6400:e585:dc50:f5e1:64e7])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6f8b0883f2esm120956346d6.25.2025.05.23.13.43.48
+        d=1e100.net; s=20230601; t=1748033503; x=1748638303;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=yCQ9SE3Js2TcEWdD6/nkxAK1t6kl6eJ0qaCIAp53gUM=;
+        b=L8wCpmXXmpzt+pBY5G5fvisvtddAmoC/+9Ks8u/Op2cDDN2WNZ+rjlsREVeF0r42GA
+         9mMYxqP8ekFHNoiRVKPP525pHAx6SXAI59SrVwc/EFSGguMQXX9qnSVCDmLYpqp6O8pr
+         6IO3bFHN7s3fZRYauHraA+Fo0IQhUKUMa3orlUIq+KfgCWeeszu1OW+/JIPmu7KL8/ab
+         JPl+bb38CbEfkT8A/y2JreLv46wswDYWIgiSyL8U0dG3sTcYYcFZpZ8qf/RLlLntdcYE
+         uLR69hfw2LLm+GCdgGWWRt/NuRvlU73qEGyJaSceP4lXDIpTtdvbx4UURdbkJj3nEKn2
+         BMEw==
+X-Gm-Message-State: AOJu0YxBRUKX8mLy9QCqENzxz6OCFMyqYtwJxvalqU/sext099EqBm9f
+	UqA+znRagekAfOSQ8yXGNGMDhgxMg/iYVPgYU2OQaIXCmxYx3syXSxcswI1wfw==
+X-Gm-Gg: ASbGncvEm7zV5UNYnpleVHriXhngZLoeB0N0bOxy6vECFPqnbSvlj4zKmB3eVdW8R1y
+	JunKdYejxTNOlEGCU+W+EgH8wK7GgRUQrLs4C6f8YereT0AP/LAKd9EQ95K1MAkAFki42CQnljq
+	FdWt/8k6SnXJwdp10hCrffcsk2lw+Jz5j6x3gfa8EO+5pLySg2qAB8n1/IMnBrsvJNHcEEPudDo
+	tD+jitKU6kbPVulIaZWrzqTZe0yxVj2saFJnMJv13l/iql6uFr+fPFAJVgXLhqoPhCpaQQkL4ao
+	1umdQJpcyg6ECYKHFnHK0NBLT3ERwE/UcE6D8xQzZ6AhytUbe8vn
+X-Google-Smtp-Source: AGHT+IHxUKQlDmty7rrJ3kkczissyBGpP4RuaB+62CE3+0y8qcQBbP+7MJgoPjENj0W6Th5XjvENvw==
+X-Received: by 2002:a05:6000:2083:b0:399:71d4:a2 with SMTP id ffacd0b85a97d-3a4cb431fc3mr605781f8f.14.1748033502876;
+        Fri, 23 May 2025 13:51:42 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a35ca8874bsm28082320f8f.67.2025.05.23.13.51.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 13:43:49 -0700 (PDT)
-Date: Fri, 23 May 2025 16:43:40 -0400 (EDT)
-From: Mark Mentovai <mark@chromium.org>
-To: Eric Sunshine <sunshine@sunshineco.com>
-cc: Git Development <git@vger.kernel.org>, Derrick Stolee <stolee@gmail.com>, 
-    Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t7900: use pwd -P in macOS maintenance test
-In-Reply-To: <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
-Message-ID: <88e8231f-7c08-652d-f734-22c4632aa728@chromium.org>
-References: <20250523193722.68344-1-mark@chromium.org> <CAPig+cRpS=t-wNLxdV_WoKF0Wzy-S1oLUEyS18S9r-4OBQ87VQ@mail.gmail.com>
+        Fri, 23 May 2025 13:51:41 -0700 (PDT)
+Message-Id: <pull.1976.git.git.1748033500935.gitgitgadget@gmail.com>
+From: "Alex via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Fri, 23 May 2025 20:51:40 +0000
+Subject: [PATCH] Fix buffer underflow in xdl_build_script
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
+To: git@vger.kernel.org
+Cc: Alex <alexguo1023@gmail.com>,
+    jinyaoguo <guo846@purdue.edu>
 
-Eric Sunshine wrote:
-> However, have you tested this on Windows?
+From: jinyaoguo <guo846@purdue.edu>
 
-Yes, via the CI: 
-https://github.com/markmentovai/git/actions/runs/15217563313.
+The loop in xdl_build_script used `i1 >= 0 || i2 >= 0`, causing
+`i1` (or `i2`) to reach 0 and then access `rchg1[i1-1]` (or
+`rchg2[i2-1]`), which underflows the buffer.
+This commit adds explicit `i1 > 0` and `i2 > 0` checks around
+those array accesses to prevent invalid negative indexing.
 
-> I ask because, despite the
-> test's name, this and most of the tests in this script, are actually
-> run on all platforms, and because `pwd` is overridden by a shell
-> function for MinGW on Windows:
->
->    # t/test-lib.sh
->    ...
->    # git sees Windows-style pwd
->    pwd () {
->        builtin pwd -W
->    }
+Signed-off-by: Alex Guo <alexguo1023@gmail.com>
+---
+    Fix buffer underflow in xdl_build_script
 
-That MinGW fallback pwd ignores arguments, so any pwd in a test regardless 
-of whether it's specified as pwd or pwd -P will result in an underlying 
-pwd -W. The t7900 test's behavior should not change as a result of this 
-patch. If it's succeeding in some MinGW environment before this patch, 
-it'll continue to succeed after.
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1976%2Fmugitya03%2Fbuf-1-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1976/mugitya03/buf-1-v1
+Pull-Request: https://github.com/git/git/pull/1976
 
-> My quick testing suggests that this patch's change might be problematic:
->
->    # on Windows
->    $ pwd
->    /home/me
->    $ pwd -W
->    C:/msys64/home/me
->    $ pwd -P
->    /home/me
->    $ pwd -W -P
->    /home/me
->
-> FOOTNOTES
->
-> [*]: In the long run, a better fix would probably be for the tests to
-> sanitize the output of the Git command, replacing (via `sed`) the
-> actual emitted path with some placeholder, such as "%HOME%" or
-> something, and then have the tests look for (`grep` or whatnot)
-> needles using that literal placeholder rather than trying to perfectly
-> match the path emitted by Git. This approach makes sense since these
-> tests are about overall functionality of git-maintenance, not about
-> the specific path in which the person happens to be running the tests.
+ xdiff/xdiffi.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-The specific front of the path is not important, but the tail should be as 
-expected, and I suspect that it remains much less fragile and complex to 
-perform this equality comparison than it would be to try to reason about 
-the path's inner components.
+diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
+index 5a96e36dfbe..2e983965328 100644
+--- a/xdiff/xdiffi.c
++++ b/xdiff/xdiffi.c
+@@ -951,9 +951,10 @@ int xdl_build_script(xdfenv_t *xe, xdchange_t **xscr) {
+ 	 * Trivial. Collects "groups" of changes and creates an edit script.
+ 	 */
+ 	for (i1 = xe->xdf1.nrec, i2 = xe->xdf2.nrec; i1 >= 0 || i2 >= 0; i1--, i2--)
+-		if (rchg1[i1 - 1] || rchg2[i2 - 1]) {
+-			for (l1 = i1; rchg1[i1 - 1]; i1--);
+-			for (l2 = i2; rchg2[i2 - 1]; i2--);
++		if ((i1 > 0 && rchg1[i1 - 1]) ||
++			(i2 > 0 && rchg2[i2 - 1])) {
++			for (l1 = i1; i1 > 0 && rchg1[i1 - 1]; i1--);
++            for (l2 = i2; i2 > 0 && rchg2[i2 - 1]; i2--);
+ 
+ 			if (!(xch = xdl_add_change(cscr, i1, i2, l1 - i1, l2 - i2))) {
+ 				xdl_free_script(cscr);
 
-The existing print-args in this test could be modified as you propose, but 
-the changes would also need to spill into the "start and stop when several 
-schedulers are available" test later in the same file. That seems more 
-invasive and produces less clear test code than just calculating a path 
-expectation in line with what git maintenance uses in the first place.
+base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
+-- 
+gitgitgadget
