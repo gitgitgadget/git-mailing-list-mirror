@@ -1,134 +1,99 @@
-Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
+Received: from smtpbg150.qq.com (smtpbg150.qq.com [18.132.163.193])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D2C28FD
-	for <git@vger.kernel.org>; Fri, 23 May 2025 04:47:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.54
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747975650; cv=pass; b=TBbITQSZDETmIEZJszyDyLvTkw7NhaUdKSKR0Ui29NTqPn5J2e7KFolNjJ7RZiH4iWuoAvieJpGYKBTEH99O0G5M4nizQ2BCCmF60QxIXEpgcWhlwa3fZULzFNfS7qxicOAaygx4whnsxjvZRL+GxbPzR9JvhMoIwPXJM4K9SNc=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747975650; c=relaxed/simple;
-	bh=Lu0x23Ho+QXhsDTLvgxCIwmo2kzig+TMg5YhU2yOn3g=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=nf1ZYbAxjl5FQPZsMVerKWSlrlWNTEgVWpfnoAzifhdJNoXPCyZDGGB/mz2idQrpk/w5RDmVuWwsbNZ6T0sQsygdjiQPVjuVN4pbI3cU/i5yx7uiO/5Tx40ofsEv3PCxjQK9JjKpMKjZx8I0J47zNdlV5R719A/Erty953Rw0vs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zoho.com; spf=pass smtp.mailfrom=zoho.com; dkim=pass (1024-bit key) header.d=zoho.com header.i=mmogilvi+git@zoho.com header.b=ENwomRZi; arc=pass smtp.client-ip=136.143.188.54
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zoho.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zoho.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=zoho.com header.i=mmogilvi+git@zoho.com header.b="ENwomRZi"
-ARC-Seal: i=1; a=rsa-sha256; t=1747975635; cv=none; 
-	d=zohomail.com; s=zohoarc; 
-	b=dW5q4X8DO0Rz5aid21PWiwRz8bGXlRHODMXG1P3lUInan9t8n4I2P9V4qhP3g7heqObFDHCFQlCURuslaygLVSIAoFL3+DYzTlIoDYtjX35VmIy9JojFB/kGQ0sfCZOD2OgAG80yB16BFjfV8m80ZjlDBCNIqPHceCyg7mD+eEs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
-	t=1747975635; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
-	bh=+v5fPt0W8zAWe/3AzcteT2rS3lK95WZUNyNUtpUoR4I=; 
-	b=QnMpRfZjBAPraq2w6d/bhSPUf52Qz2RxyVatxQyFvqQctDqzaKZUKL3Nc3Op9w453JmW78r/NaW+m03R6947S4g74RI8q1eKJyKdxClHZN+OGixi+NulrzNTvABUW8IXfciVLab2EBS96dcUGjnKp2ywVreryRHDR0urzJAHf5w=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
-	dkim=pass  header.i=zoho.com;
-	spf=pass  smtp.mailfrom=mmogilvi+git@zoho.com;
-	dmarc=pass header.from=<mmogilvi+git@zoho.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747975635;
-	s=zm2022; d=zoho.com; i=mmogilvi+git@zoho.com;
-	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
-	bh=+v5fPt0W8zAWe/3AzcteT2rS3lK95WZUNyNUtpUoR4I=;
-	b=ENwomRZiDZS3ljHfMilVEKHvSKUXa5ZKA8y2uutNriTMsx/UVUdeLJl7ZFXwFuxr
-	URL+3UUr6kWfxPC3PSD/K2pcdvwMWiIyya9IgqbzlNC4hhaaHjeFX4F4XOX7eS9kYXC
-	1l8ABADzpR2EhOlIQtz0WzKicRPHMSgtJIDZmSQI=
-Received: by mx.zohomail.com with SMTPS id 1747975634554914.7492976425184;
-	Thu, 22 May 2025 21:47:14 -0700 (PDT)
-Received: by mmogilvi.dynu.net (Postfix, from userid 501)
-	id 2DB7947C4319; Thu, 22 May 2025 22:47:13 -0600 (MDT)
-Date: Thu, 22 May 2025 22:47:13 -0600
-From: Matthew Ogilvie <mmogilvi+git@zoho.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
-	Ondrej Pohorelsky <opohorel@redhat.com>,
-	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= via GitGitGadget <gitgitgadget@gmail.com>,
-	git@vger.kernel.org
-Subject: Re: [PATCH v2] cvsserver: avoid precedence problem between ! and %s
-Message-ID: <aC_90R3ohRRBVIV7@comcast.net>
-References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
- <pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
- <xmqqh61ear4s.fsf@gitster.g>
- <xmqq1pshc2vs.fsf@gitster.g>
- <CA+B51BGLK-3R9ev4a8EwkGHQEBi2QhgxvAd0CHMbphrxPM74eg@mail.gmail.com>
- <xmqq7c287i7n.fsf@gitster.g>
- <20250522170536.GB1613@coredump.intra.peff.net>
- <aC9lM12GyntAp2tR@teonanacatl.net>
- <xmqqtt5c5viq.fsf@gitster.g>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83B572DCC0E
+	for <git@vger.kernel.org>; Fri, 23 May 2025 07:17:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=18.132.163.193
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1747984677; cv=none; b=QqfoK9QH1xVf5r/yGg7jnwcR+ffEo71g5vPxbRuJD4aKs5xZnVj+InImWsxqTrK+rRvV554XSfERiWAgAcRDUVf16PNOI4tC5Vf5+yOItIuWvJ5OkKQgN/Hr3USRHXDv5TYun1xH7Je5G1s2Iwmnl+FYZ8TGbLLjnS6NedauvjE=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1747984677; c=relaxed/simple;
+	bh=FAOplS4EjpJiweaSl3gtzPPEqdmt36mkNVoiz2rr8/E=;
+	h=Content-Type:Mime-Version:Subject:From:In-Reply-To:Date:Cc:
+	 Message-Id:References:To; b=VTWkIW5zCd5ixD9XX7xAfJy0QcTn0PfXjHy1ueOynRfIQ0UHcPVNzPDBMiKl+HepHK2IREkNgw8hgYw+ltSwkux1KEMt8/QgVZ2v+ah814GlT5TZx0IX2h/OhhufzrO5Xh80k4IHjP8/wU3U85/crQ806zICcfvYPbmN9oIxNBk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn; spf=pass smtp.mailfrom=smail.nju.edu.cn; arc=none smtp.client-ip=18.132.163.193
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=smail.nju.edu.cn
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=smail.nju.edu.cn
+X-QQ-mid: esmtpgz11t1747984636tefd3dd1f
+X-QQ-Originating-IP: vzzYXJDEcTD6Wl7MirUkVR4c1iM0sYYfIQ26u79dSck=
+Received: from smtpclient.apple ( [58.213.8.94])
+	by bizesmtp.qq.com (ESMTP) with 
+	id ; Fri, 23 May 2025 15:17:15 +0800 (CST)
+X-QQ-SSF: 0000000000000000000000000000000
+X-QQ-GoodBg: 1
+X-BIZMAIL-ID: 6046107806945990938
+Content-Type: text/plain;
+	charset=utf-8
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtt5c5viq.fsf@gitster.g>
-X-ZohoMailClient: External
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
+Subject: Re: [PATCH v2 3/3] pack-bitmap: add loading corrupt bitmap_index test
+From: lidongyan <502024330056@smail.nju.edu.cn>
+In-Reply-To: <aC/B21ZYCixgFSfe@nand.local>
+Date: Fri, 23 May 2025 15:17:05 +0800
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>,
+ git@vger.kernel.org,
+ Jeff King <peff@peff.net>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <CD2E6414-76C3-4A0B-A625-C3146BEF2686@smail.nju.edu.cn>
+References: <pull.1962.git.git.1747052530271.gitgitgadget@gmail.com>
+ <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
+ <5be22d563af714ebb902506f12b4468a5348896c.1747732991.git.gitgitgadget@gmail.com>
+ <aC5rCRJd3GaTNgL5@nand.local>
+ <013153DA-8314-429B-8408-9A79A3304013@smail.nju.edu.cn>
+ <aC/B21ZYCixgFSfe@nand.local>
+To: Taylor Blau <me@ttaylorr.com>
+X-Mailer: Apple Mail (2.3826.600.51.1.1)
+X-QQ-SENDSIZE: 520
+Feedback-ID: esmtpgz:smail.nju.edu.cn:qybglogicsvrsz:qybglogicsvrsz4a-0
+X-QQ-XMAILINFO: NvjhxCSDgXICTYmzxuODQF1xu2b1L5MRvrvRUJoUekX/h2QTgm40ugPJ
+	vsuSfxOZ/5BY0kqpwUP4pHAOw87c30pm76729FjQwwcjGHG3lE5OggxdOmXMC2m82VGWPwp
+	Il1IVWIKIAlYCXGwB2mQzNH6y1H0SFL0tlc86Tjc/TQXOAVjuEsRIhb6mv4rRA1aDO4gt0F
+	pE61opLGzJDd5YOf3ZqWvGunFp547zdeF0SrGU8HFQJEldh9XaEpWleneELzccdEhodqf3r
+	EfwE9QR3RdBSz04m43H3swttSHI8RiS/z8ZHzObDEzgtN80JtHoqHbBtK1nxiYASKFxvcgW
+	CGqHyon5T4l36jO/bVquwh+WV/TYfCwuJ3la2ZVBgHihqPEPKCKPe8XDKYTs9Q61FXgYoj7
+	aoYmlEiorW7QgJrdAm/zIrkDWlo6e1rRTx+IYd3k6IOZPRgkO6xPIa2NAkNyWqv59IkIYVd
+	Sjtw1V1GvALuILoTFuf/hXm2l4lkEPv6xzzD+Xre0aadTmAEnqfRgdf8jXTlFaIPLSuAAPL
+	ed9I/opBsJ3NtSSFGZezwieodaBSU1gZpAFfGAacGfll8JjXxlmF2pkkBX7mlL0UXwsGhgu
+	Pq73zFCjKK7/esgPtDyeca6jqkSQEnbTH18ezdfVGpxNhl3BO5JUHKZ1ou0aU9p0nHe6bd9
+	qQcGAX1k46umRoToEmXedeRvneGkuSlWmGrgGtY1OE1jEgDf23ECzktbwnVUKjRbJBy3oeB
+	cOjdV8zPpe7J2d9MIgHQCJEJfFRJPau1XibI8tRxePdIrpwTFK60HDTINmfqe5QM3hRSoiM
+	t9UfY3fCHmRxqyY+TFK7gR3iNVEPlCOLcAn/9qEfjp0zBK70Er86loS0HYZh3sIRs00botO
+	kH4pno06A4+6RaxumwWC8pE0CU8ei4Ke5mGIaj60eYvrbn3oscMZRmTVu/pw6u3T2kBM1fK
+	nnVer7wgC0fqG6F/MOHAK+DZuWi6VFduCqmWZe0lJrZF9fA==
+X-QQ-XMRINFO: MSVp+SPm3vtS1Vd6Y4Mggwc=
+X-QQ-RECHKSPAM: 0
 
-On Thu, May 22, 2025 at 11:51:25AM -0700, Junio C Hamano wrote:
-> Todd Zullinger <tmz@pobox.com> writes:
-> 
-> > Just for curiosity, the only commit found with escapeRefName
-> > is when it was added:
-> >
-> >     $ git log -G '\bescapeRefName\b' -- git-cvsserver.perl
-> >     commit 51a7e6dbc9
-> >     Author: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-> >     Date:   Sat Oct 13 23:42:26 2012 -0600
-> >
-> > 	cvsserver: define a tag name character escape mechanism
-> > 	
-> > 	CVS tags are officially only allowed to use [-_0-9A-Za-f].  Git
-> > 	refs commonly uses other characters, especially [./].  Such characters
-> > 	need to be escaped from CVS in order to be referenced.
-> > 	
-> > 	This just defines functions to escape/unescape names.  The functions
-> > 	are not used yet.
-> > 	
-> > 	Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
-> > 	Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> >
-> > A subsequent commit, 658b57ad52 (cvsserver: add misc commit
-> > lookup, file meta data, and file listing functions,
-> > 2012-10-13), made use of unescapeRefName; escapeRefName
-> > seems to have _never_ been used.
-> 
-> OK, so we can safely remove it, it seems ;-)  I wonder what, if any,
-> the unescaping side is unescaping, if we are not doing the escaping.
-> 
-> Thanks for digging.
+2025=E5=B9=B45=E6=9C=8823=E6=97=A5 08:31=EF=BC=8CTaylor Blau =
+<me@ttaylorr.com> =E5=86=99=E9=81=93=EF=BC=9A
+> But the (elided) code below isn't quite what I was thinking. I think =
+the
+> "write garbage data" part is fine as-is and can continue to be written
+> in shell. We have lots of examples of using dd to write garbage data
+> into files (see for e.g., the "corrupt_data()" function in t5319).
+>=20
+> What I was thinking is the test helper would print (via some new mode,
+> or bolted onto "list-commits") line-delimited output like the =
+following:
+>=20
+>    $COMMIT_OID $BITMAP_OFFSET $FLAGS $XOR_OFFSET
+>=20
+> or similar. Then you could use the output of that to determine the
+> location (replacing everything up to the actual "printf | dd
+> of=3D$bitmap ...", which is the most fragile in my opinion).
 
-FYI:
+Agreed, I would add a `test-tool bitmap dump-entries` helper which dumps
+the output you suggest.
 
-One intent is that the user might do the escaping manually, if
-they need to refer to a git refspec that is not legal in CVS.
-For example, "cvs update -r pu_-s-mo_-s-experiment1" instead of
-"cvs update -r pu/mo/experiment1".  To some extent the function
-could be considered a form of documentation of how you would do
-this manually.
+> I think the above scenario (writing a test that would have leaked =
+memory
+> otherwise behind a SANITIZE_LEAK prerequisite) is reasonable.
 
-Also, the fact escapeRefName() isn't called suggests that there
-might be other bugs.  There is a test case in t9402 that
-tests arguments "-r heads/b1" with a comment that "This is not
-really legal CVS, but it seems to work anyway".  I haven't fully
-tracked it down, but I suspect that might end up putting a
-literal "heads/b1" in the CVS sandbox's "CVS/Entries" file.  If so,
-that is invalid, because Entries uses slash for its own field
-separator.  If we added more tests immediately after it
-*without* a different "-r" (which is very high priority
-when resolving which version to update to), they would likely fail.
-It might make sense to put an escapeRefName(unescapeRefName()) nested
-call somewhere to protect against things like this test case...
+I will submit patch v3 with better structure and cover letter soon.
 
-However, despite writing and (incompletely) testing this code, I
-have never *really* used it, and probably never will.  So I'm not
-in a hurry to try to test or fix it further...
+Thanks,
+Lidong
 
-(For that matter, has anyone ever heard of anyone actually using
-git-cvsserver at all?  I think I would be surprised if there was anyone
-using it, especially so many years after CVS stopped being maintained
-at all.)
-
-        - Matthew Ogilvie
