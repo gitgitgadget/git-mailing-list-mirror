@@ -1,181 +1,105 @@
-Received: from mail-ot1-f53.google.com (mail-ot1-f53.google.com [209.85.210.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27010298253
-	for <git@vger.kernel.org>; Fri, 23 May 2025 17:22:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA3218E1A
+	for <git@vger.kernel.org>; Fri, 23 May 2025 17:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748020934; cv=none; b=S5Qx+JTwEtmNrYvirN+HqTfPp3gMZ8WKjVDN9vl0S3Xu8QpFvZwkntZmcS9lryfXXVqPKwtJUQxAqIqIfubm4i8hiOwvT9xYa3Pbk/DPQaSqrGEPdaFkvMHr7Ho8bD8bHZ+8qV08C85Qp5aDVrHVBldrPbE+T8p9pvVLehmf7SM=
+	t=1748021090; cv=none; b=BPLdyt/ndqxTlwV+ckwrTzwTlzcvWnvWDO8FyPlQdFuf1Qwa+ulg8e4wW4JSKztsn4+1j7PT2ladqZ5sj6kTUEilLDQxOyrdij6s8j0BVFz0YJ8BzogYNMOxiLuuo28fjU96XbaEZRlJPZYYCnyZP/Ra2MNn6s1g7ZYN983Wjfo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748020934; c=relaxed/simple;
-	bh=CXkfgIHmUe49JwpZrteoU5tkp5u/V3m2nIuAFLmwhDk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=jE3a6uwI5ymZ5qZDQCUZcmBDx7lS4lgJ7sdyJEm32XN8zKRS/gFku0PXXgxv5NpH8CDn4hnqsEX7SxPiMXjgt5p+p2Id4M4gg9oJq/wtz2egD7zGaByIJaJsOlFk93+pihmjfeFoFXwOtt3Lvh0NOLUuVyPcCqwUiONAFlQ2z9Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=lK4XiDsK; arc=none smtp.client-ip=209.85.210.53
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
+	s=arc-20240116; t=1748021090; c=relaxed/simple;
+	bh=EhXeB/VxkHEemYQ/etlNlkxCgHxjAZrpchpe8WeqQlA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=jOHBEOyOfmW3RXjK26+CTIBbTbSj5Ff8Fi0be3hsMIs9PtUaZLAKCyOcfJGT8OrL8LuUVhI+wkbBcCRK9aV6pe95dSbVdusT8VdIvyKVtZQ3KFLF+wfaY5jIUk0c5Sy16F1oIL4ZoFkE2Pluw+rpnzXsEO5B1sUT4yXLCN8qZ2w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bZh2sOSC; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KMlMlaOk; arc=none smtp.client-ip=202.12.124.147
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="lK4XiDsK"
-Received: by mail-ot1-f53.google.com with SMTP id 46e09a7af769-731e277a6b0so69709a34.1
-        for <git@vger.kernel.org>; Fri, 23 May 2025 10:22:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1748020928; x=1748625728; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G8S0N2DtxhIpiQtf6Th97SxAoapYsrIMt2RQke2/VY4=;
-        b=lK4XiDsKwupguBVI+tDTfhSiOYWX5Uk+enRvcYoqkppNGLyGthA8RJAxQsTisLIeRP
-         Vft5WNy0lZAPN7t1Yj4fhFM7+nYPHYijiH6E7JR6h5HRwViV6BRZrp8tcvDAP1rHWN8q
-         +lGj/ul3tMD64xamHRRawvzKY1JzNP/BZnhXA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748020928; x=1748625728;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=G8S0N2DtxhIpiQtf6Th97SxAoapYsrIMt2RQke2/VY4=;
-        b=P1KeiiFjK0DqyQ2NuvHnbU29gnCv8FS9iirDX58bSmXPRDGcUrs6AvWu4Su3E9aCur
-         YGuDjCcR4Z7riYE3ASDcxcmc95j/1js6hI51J8pV0caVShzulA2KkokRt85l00vb4Gfp
-         yXGE5IDRdiHyF/DJpTkIlsqSJeNFKRt1YA8S29CpnjbwGkl3FAYOuX9glm0fOFYf9fuL
-         EFZm6XgfKLFoSvjU+OztbpobnRSk74oMeDnaU+5+gleOvvrETsCmxS/xnnDIA3LY8rh0
-         7fpojBxZdj2U21QX6jfOD6u6FnQwE1sm/6mT4xoLO1mvIutwZlSWX1/QE3m1jRV5LW6W
-         HsIQ==
-X-Gm-Message-State: AOJu0Yxzw4gIlUcCDZoHHXyrOvGf3YNcUWnIqynU5K2UNTxBrf+UALrE
-	xyYpIhc2Gn9cnTMNM8U/lreC64o4KckJFFuoExPjUNSHwxZrpzw0hIySwPpaGYuiNAMPLZkmwxH
-	O9fTngQ==
-X-Gm-Gg: ASbGncsgPEprLe9gczX2Y412aHBpZox6qrIlGrZqXUviaN/EIuUDXQxpgbgzMVBhEhE
-	d9JqhUsWO7PQwDZtlVakdimFlIOng6MxRpwjd+G/RINVSb7SHRFnU0ZngMBToOZmFdHPcZYvZeA
-	jzdXOAD4QZadedPH1dZ3c5/Ypdk5EQ/SRwJFdl0q+hVVOA4V3VnRf56kHr9KrGOsKJghlQB0D09
-	rfnyEMi7OK+LldUlGBYhwDzMaFAGtglrFNXUWELYpWlnRchvCMFA2Z7Xnee4vQB7BdE29ZSA8k+
-	RDWlkJoSzl9wUWPyOnB+ytokW+ouZFOi2t7+CpdYH0dmoPlYW1vGiPbvsWGB8NVO79AxcUU=
-X-Google-Smtp-Source: AGHT+IFy9myNfJLcniYFJBP9dmJ2ZHU5hvGYmWnzq9Ol3X9007bDB1ZvJIDpMHFUOafe4PJ/b2axnQ==
-X-Received: by 2002:a05:622a:114f:b0:494:993d:ec30 with SMTP id d75a77b69052e-49f465595d0mr297521cf.16.1748020917004;
-        Fri, 23 May 2025 10:21:57 -0700 (PDT)
-Received: from redacted ([2600:4040:9ce0:6400:e585:dc50:f5e1:64e7])
-        by smtp.gmail.com with ESMTPSA id d75a77b69052e-494ae3cd517sm116219891cf.10.2025.05.23.10.21.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 10:21:56 -0700 (PDT)
-From: Mark Mentovai <mark@chromium.org>
-To: Git Development <git@vger.kernel.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Chandra Pratap <chandrapratap3519@gmail.com>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v2 1/2] t4129: test that git apply warns for unexpected mode changes
-Date: Fri, 23 May 2025 13:21:53 -0400
-Message-ID: <20250523172154.93810-2-mark@chromium.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250523172154.93810-1-mark@chromium.org>
-References: <20250522220235.8650-1-mark@chromium.org>
- <20250523172154.93810-1-mark@chromium.org>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bZh2sOSC";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KMlMlaOk"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfout.stl.internal (Postfix) with ESMTP id E918111400A4;
+	Fri, 23 May 2025 13:24:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-10.internal (MEProxy); Fri, 23 May 2025 13:24:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm2; t=1748021086; x=1748107486; bh=cxR2IyY4sA
+	aM/+iMNwWsVr7WwheCjcIXSyBR2ZRDwVg=; b=bZh2sOSC3SJo5XUGqhYZ7qYOyU
+	qm6ZpN/RGau0MFRUyvxAbJ322qKeMO6zQz/U2A6w7m0eHSr/tWkTwWz+A/2sQULZ
+	qeUimIv/ONcCIOnMOzrp3oIwzTCIkOI0f9D6eBBBST9s1/fjz3ZuYp756363Y5Wf
+	YNJEqy+OLkQSClEo0HsmKtaIQI+xB/Hr3m9FyMvnAMxXmxYlZnnmqNcmk8t2RnZ6
+	IstNA1p9d6o+i+PD+6O0hp2Sm8JZ8kRlRjRz7XUM8TSF4n0C7Wh4imQDvYhCiDzs
+	HVZBYLI7+0DYqdc0IthbdVf87DFL/8HO45BBhJrF8RWaEPXqnScqg6q1YUXg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
+	1748021086; x=1748107486; bh=cxR2IyY4sAaM/+iMNwWsVr7WwheCjcIXSyB
+	R2ZRDwVg=; b=KMlMlaOkRtlWZSBFS5MbsigMn++dYo1a4+cXYyfidjhg+IaYqkx
+	QKIsCWcx91KY26IbLLuq9QWryJHwYg96wDPQmgT/EhHV8UHSvuR0DnlHjaQbWlKm
+	eJ2ktNXA5GdnwUpU5XMz+dpQvjHvUIsDveTUDSHKkdhqG/vfRzdNi4/I/MTCp0/X
+	8XQm9Ps0O1tFGMxUh+Ba8TTstAiV+hd5fqZB9bYZH5dJ4WDrJWDZmdWyxPsMrehC
+	9wx9YDY58xzJlyINQdpCYxQGo8EaB8vGn+XPwdusCKQwpg6V4movI8TkXp2pae1B
+	szMOcBMj+LGXklfHSZvI7mWvjMJswrzOxDw==
+X-ME-Sender: <xms:Xq8waDu_4kn_FS5U7a1seA0nZyQSyilyB3SjXALu4hfxp_BhFIoWYA>
+    <xme:Xq8waEeKtOliCBIlV4wo02IkRjK0Cezq8AyqJcfFcwj6_P1tw4NjYkFNyfiWRqoZO
+    GB5XiSLOAWAvG4n5g>
+X-ME-Received: <xmr:Xq8waGwC77iaIQzo4QIzzg3_X4Gi00CTg10PZCdSmN_s1rBu6CtOzvMO-u-L5oLX9dVbVp7h0vmG9RGH7laAUkASfoJyd7Gl1BKFlYs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelgeehucdltddurdegfedvrddttd
+    dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
+    nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
+    enucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtreejnecuhfhrohhmpefl
+    uhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenuc
+    ggtffrrghtthgvrhhnpefgteehueekjeekffehudfhgfelgfdvvefhleeludduudffjeej
+    gfetledtieeuieenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfh
+    hrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhm
+    ohguvgepshhmthhpohhuthdprhgtphhtthhopehmrgigsehugidrshgvpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:Xq8waCN8ZKIw6viQFN4PY1dRsSCcDi0CK2nFRLEYpUhfzHqXp0DQiQ>
+    <xmx:Xq8waD8R2HJncQxSq0yJMXXYji7nuxU0ZsyNShLlKLdmEsuyZnsocA>
+    <xmx:Xq8waCWOeA6TWrr6adRxDFLt6l3Jvwqt85nmvwJMgyN4OnbOtzd1gA>
+    <xmx:Xq8waEdVwws8NzteyxiKy1z2hFjUQcxxmot5BNaL_jcrmLpsBPcdFw>
+    <xmx:Xq8waML0Eb5Cb7G6G7z2hn34GT2mPYm-1AoUTqtKPGAFwqXchZXBR2_v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 23 May 2025 13:24:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Max Rhodin <max@ux.se>
+Cc: git@vger.kernel.org
+Subject: Re: [RFC] git-ghost: preserve =?utf-8?B?4oCcd2h54oCd?= on deleted
+ lines
+In-Reply-To: <CAOc+UT0n9pRGur0d4cORU0SMQY-PNs5ekLd=LX9xc940Og+nrQ@mail.gmail.com>
+	(Max Rhodin's message of "Fri, 23 May 2025 14:32:28 +0200")
+References: <CAOc+UT0n9pRGur0d4cORU0SMQY-PNs5ekLd=LX9xc940Og+nrQ@mail.gmail.com>
+Date: Fri, 23 May 2025 10:24:44 -0700
+Message-ID: <xmqqh61bxmsj.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-There is no test covering what commit 01aff0a (apply: correctly reverse
-patch's pre- and post-image mode bits, 2023-12-26) addressed. Prior to
-that commit, git apply was erroneously unaware of a file's expected mode
-while reverse-patching a file whose mode was not changing.
+Max Rhodin <max@ux.se> writes:
 
-Add the missing test coverage to assure that git apply is aware of the
-expected mode of a file being patched when the patch does not indicate
-that the file's mode is changing. This is achieved by arranging a file
-mode so that it doesn't agree with patch being applied, and checking git
-apply's output for the warning it's supposed to raise in this situation.
-Test in both reverse and normal (forward) directions.
+> Comments?
 
-Signed-off-by: Mark Mentovai <mark@chromium.org>
----
- t/t4129-apply-samemode.sh | 61 +++++++++++++++++++++++++++++++++++----
- 1 file changed, 56 insertions(+), 5 deletions(-)
+Would running "git blame" in reverse work for your use case?
 
-diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
-index 2149ad5da44c..082e56db651e 100755
---- a/t/t4129-apply-samemode.sh
-+++ b/t/t4129-apply-samemode.sh
-@@ -102,15 +102,23 @@ test_expect_success POSIXPERM 'do not use core.sharedRepository for working tree
- 	)
- '
- 
-+test_file_mode_staged () {
-+	git ls-files --stage -- "$2" >ls-files-output &&
-+	test_grep "^10$1 " ls-files-output
-+}
-+
-+test_file_mode_HEAD () {
-+	git ls-tree HEAD -- "$2" >ls-tree-output &&
-+	test_grep "^10$1 " ls-tree-output
-+}
-+
- test_expect_success 'git apply respects core.fileMode' '
- 	test_config core.fileMode false &&
- 	echo true >script.sh &&
- 	git add --chmod=+x script.sh &&
--	git ls-files -s script.sh >ls-files-output &&
--	test_grep "^100755" ls-files-output &&
-+	test_file_mode_staged 0755 script.sh &&
- 	test_tick && git commit -m "Add script" &&
--	git ls-tree -r HEAD script.sh >ls-tree-output &&
--	test_grep "^100755" ls-tree-output &&
-+	test_file_mode_HEAD 0755 script.sh &&
- 
- 	echo true >>script.sh &&
- 	test_tick && git commit -m "Modify script" script.sh &&
-@@ -126,7 +134,50 @@ test_expect_success 'git apply respects core.fileMode' '
- 	test_grep ! "has type 100644, expected 100755" err &&
- 
- 	git apply --cached patch 2>err &&
--	test_grep ! "has type 100644, expected 100755" err
-+	test_grep ! "has type 100644, expected 100755" err &&
-+	git reset --hard
-+'
-+
-+test_expect_success 'setup: git apply [--reverse] warns about incorrect file modes' '
-+	test_config core.fileMode false &&
-+
-+	touch mode_test &&
-+	git add --chmod=-x mode_test &&
-+	test_file_mode_staged 0644 mode_test &&
-+	test_tick && git commit -m "add mode_test" &&
-+	test_file_mode_HEAD 0644 mode_test &&
-+
-+	echo content >>mode_test &&
-+	test_tick && git commit -m "append to mode_test" mode_test &&
-+	test_file_mode_HEAD 0644 mode_test &&
-+
-+	git format-patch -1 --stdout >patch &&
-+	test_grep "^index .* 100644$" patch &&
-+
-+	git add --chmod=+x mode_test &&
-+	test_file_mode_staged 0755 mode_test &&
-+	test_tick && git commit -m "make mode_test executable" &&
-+	test_file_mode_HEAD 0755 mode_test
-+'
-+
-+test_expect_success 'git apply --reverse warns about incorrect file modes' '
-+	test_config core.fileMode false &&
-+
-+	git apply --index --reverse patch 2>err &&
-+	test_grep "has type 100755, expected 100644" err &&
-+	test_file_mode_staged 0755 mode_test &&
-+	test_tick && git commit -m "undo append" &&
-+	test_file_mode_HEAD 0755 mode_test
-+'
-+
-+test_expect_success 'git apply warns about incorrect file modes' '
-+	test_config core.fileMode false &&
-+
-+	git apply --index patch 2>err &&
-+	test_grep "has type 100755, expected 100644" err &&
-+	test_file_mode_staged 0755 mode_test &&
-+	test_tick && git commit -m "redo append" &&
-+	test_file_mode_HEAD 0755 mode_test
- '
- 
- test_expect_success POSIXPERM 'patch mode for new file is canonicalized' '
--- 
-2.49.0
+Tracing deleted contents is much harder than tracing contents in the
+current revision, simply because you have to find where to start
+digging.  In order to find where the contents were removed, you
+first need to know what exact contents you are looking for (which
+by definition you cannot do with the current revision), and then you
+need to know what revision had that code.
+
+What I do in practice is to randomly check out an old revision to
+find sufficiently old one that still contains the contents ("git
+bisect" can help), and then go from there.
 
