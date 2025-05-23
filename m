@@ -1,124 +1,104 @@
-Received: from cloud.peff.net (cloud.peff.net [104.130.231.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7232DCC12
-	for <git@vger.kernel.org>; Fri, 23 May 2025 02:18:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=104.130.231.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E7217A31E
+	for <git@vger.kernel.org>; Fri, 23 May 2025 03:26:03 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747966712; cv=none; b=pJ4b6zDntP9q9oq44/n6n1IetJGt5kRdNl63h8YVeXGLKD7Wg5HS72G9rYZDn7YZu36jxCsk/ml2FqK/fW5y40XLHBSEu0BoUQrPAFD94mS5qDkRu5fDxlANuT/1TuOz0hYh0N89LvY0MVJcgjq1+jgxFaNukUTyIEvyZytce3s=
+	t=1747970765; cv=none; b=M7NnrMejRJflnLYCFIgr6158VzeyhkpNvAdrnNOcFIKAdTzdbRg7CWXVhxJKCi/di2wxzHpOmlExmtNbtvRPZS3FlR0Ia3z+vcOb8t7XCZJr3fHEP/5szma+zxcwK6IYKxAV+HCb1B3iJUaA+S7tiojAzORgHmYR3EQAWKyrGgk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747966712; c=relaxed/simple;
-	bh=Qbd64pPGFtKLwr/vq26QTPiQjPtGGsf0+Aw6SrleqUE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dOAP3GXSQTgbrt0BgYlO1jR7pr+/xSteKTmBTszcDliMiL1NU6JmEDO0U32yyS9am3dJ+HF5Tg8hWt8ts6pgUdPYKYSBiIJhjuqfrEe6XrNJvs9DRRUHI/Q+tfleF3nITWcWqpneWhtU5OAy8Vl5K/OWdOLrfE7jSV/fqK6X7rM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net; spf=pass smtp.mailfrom=peff.net; dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b=X8zK9Las; arc=none smtp.client-ip=104.130.231.41
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=peff.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=peff.net
+	s=arc-20240116; t=1747970765; c=relaxed/simple;
+	bh=yGYZ9DHFpg18CPglIEMyfDL/mB0Sds9xMSOuzkwMSDk=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VH+AJNurcvLvm6NwpfY0iTA94tz166vS5CgZ33axoY6rBiXylIv+7dqA+qRM0qmPAKuURS9uPnyDcoCxoWaWbbfSe5ADLieABMjI9A1NlrY+Hs3r5S8kDyijgfuLLbSgiJSVKeBI6REc7O0BVmlUFJISV16oLI9EW/1xM5KaRDs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Exk52W3u; arc=none smtp.client-ip=209.85.208.45
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=peff.net header.i=@peff.net header.b="X8zK9Las"
-Received: (qmail 2625 invoked by uid 109); 23 May 2025 02:18:29 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=peff.net; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=20240930; bh=Qbd64pPGFtKLwr/vq26QTPiQjPtGGsf0+Aw6SrleqUE=; b=X8zK9LasZQhF6wJ6YaYpXs0/f0rPtUpzgWguic1jVTA5hP+EjE0L4DYVQ+IJl1/jhv3k18tGIiVktMCmN9VE/zO220JByL45eaFtDm9nCDLu/PpNDIJb/SZchKW1C4oQILWk89CBEvSfqXVU6sFZXwlJsdvTMy5C2amvhp8XZDn6iJSvwn7lPoE86uc1xIwd4PaayDct5hc7KVksuZWj5rnDrvV+V5eIFM1vRt87jJu424liuYii4ryov4sSqEjK/uYh/XTRmX5lZOHFgInZZlIYLkMKsrISaHe42JUyvHn/tmh6f37k3CQgwYnPujEFOND6qKbnpuMiA9a/BttEbg==
-Received: from Unknown (HELO peff.net) (10.0.1.2)
- by cloud.peff.net (qpsmtpd/0.94) with ESMTP; Fri, 23 May 2025 02:18:29 +0000
-Authentication-Results: cloud.peff.net; auth=none
-Received: (qmail 28176 invoked by uid 111); 23 May 2025 02:18:32 -0000
-Received: from coredump.intra.peff.net (HELO coredump.intra.peff.net) (10.0.0.2)
- by peff.net (qpsmtpd/0.94) with (TLS_AES_256_GCM_SHA384 encrypted) ESMTPS; Thu, 22 May 2025 22:18:32 -0400
-Authentication-Results: peff.net; auth=none
-Date: Thu, 22 May 2025 22:18:28 -0400
-From: Jeff King <peff@peff.net>
-To: Taylor Blau <me@ttaylorr.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/2] midx: stop repeatedly looking up nonexistent
- packfiles
-Message-ID: <20250523021828.GC559000@coredump.intra.peff.net>
-References: <20250520-pks-pack-avoid-stats-on-missing-v2-0-333c5217fb05@pks.im>
- <20250520-pks-pack-avoid-stats-on-missing-v2-2-333c5217fb05@pks.im>
- <20250522053235.GB1134267@coredump.intra.peff.net>
- <aC/QBHBbmYaVUzHV@nand.local>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Exk52W3u"
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-6019b564d0bso12557473a12.2
+        for <git@vger.kernel.org>; Thu, 22 May 2025 20:26:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747970762; x=1748575562; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LJ/DekXYEB/fIPcsL6+jMbU7rDBLW07SQpPJ1SivX4k=;
+        b=Exk52W3ubrhAyIbcHPnYyU2BAkyT5sTftcEHFdFQz4fAmiXfRvnB6BHTnwNPC1CLTS
+         1OnKVztgFjfJzvQ72OVFovvDueBMmaZIns85JaDbV1DcbT8Gj34BCKAWtlxZxcrYW4w9
+         e5kgKhRnan0liElDb3gqUOVQnO89lN0ZdY3dqBmFXMQRsYhrVAvQUck981QGWn8OIWgH
+         Cs+8uT6GgRCWaFppi3LDYsB7/7bL2CXFRXV+x/aj+P9OlXIBpC9gUJSGm5h3SaAvCMdW
+         xXy5OIRoOJgQ1oJF+pK8d2CErQl164Fm5HViY9GB17McPIZfjDGDHxldkw4FPsyARlq6
+         ijHA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747970762; x=1748575562;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=LJ/DekXYEB/fIPcsL6+jMbU7rDBLW07SQpPJ1SivX4k=;
+        b=IMkvsSun0It0YfmF5Q2ToUJMj/Fgy/G81Siyc4JSIjqykFhuMAhyPJIZYKppPErVES
+         YMe2Ry7aDqH51oRZKnPATyr9wl3xu/YwhlrN/rV02sJ/s6VhH6nBx90DdNkyaC2byv3l
+         n0ZzY126aJU0WXl1MbAC+JEzx1rxP90ne5o+li9sBqCGj5sAkitlvC0Y9EUQQcmmIgVj
+         7xoPkQGiwm7kmDPk7tFQmZzZmgVkFLlnUkC13jQMsV9Wy/5Um3dG7MipQDow/7emBnb/
+         JoF/kH8nSiSSIdlp/Ef3+vHJXsATX5QENp79B4eaBiwg1NXk8sYIXh07pfUL5GeHo6/5
+         G66Q==
+X-Gm-Message-State: AOJu0Ywc6jIOVtSiUNqXDmc8bu/vta+YjdjK72+LFBXMCtUdmPp9tQ2O
+	2grKt/AgHyBBAY45nzbOYJ2XD0TRKpPYq6d5wOQQuInQt1HkCaV5QEBU14XhlJx9BaLLAUQZ93T
+	j5GbfMux0hRYcNoCU/tD+BS75gMSVx74=
+X-Gm-Gg: ASbGncsdbuC+nor9693ThOT12+AKSTG6X1hl9wdhb6xlMC/f9Gw7SgJeclJfibjDfPx
+	l7arfGzYvvvPwDoM3zN4v0fPYV/7lw+wZ3XniMUZwklUXEZwheuF0cSSoSvdtUg3qihcHjq5GIt
+	UB/a46GsHhOcJ0REAJi2KDtK1HPT0yjB9NFpeX0KtG4NqHmKuaSgkc+pep3ul9gdnH
+X-Google-Smtp-Source: AGHT+IHfajLoIb6tXGyYb1ZqOAXhFpkAZfWjHAvpaykANj76rAXZn++ikqc2SLpCPmr5KlX9lQWssr0cGdMaaVQWsLQ=
+X-Received: by 2002:a17:906:f5a3:b0:ad5:57e0:c3b1 with SMTP id
+ a640c23a62f3a-ad557e0cc21mr2014666266b.23.1747970761539; Thu, 22 May 2025
+ 20:26:01 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aC/QBHBbmYaVUzHV@nand.local>
+References: <20250521191352.30849-1-ocarneiro1@gmail.com> <xmqqtt5d7e9z.fsf@gitster.g>
+In-Reply-To: <xmqqtt5d7e9z.fsf@gitster.g>
+From: "O. C." <ocarneiro1@gmail.com>
+Date: Fri, 23 May 2025 00:25:50 -0300
+X-Gm-Features: AX0GCFsuLRyXNaQfrTPX_h4vqikWF_PUKXiJIgYvseaKYX6ZGKkBdbc8vndxzUY
+Message-ID: <CADHqMhY85ZUd=NVq9dfUrBZEzEhfqwc-iYh=gcQ9J1hg=EkAsg@mail.gmail.com>
+Subject: Re: [Newcomer][PATCH] graph.c: change graph_line->width type to int
+ to remove sign-compare warning
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, ps@pks.im, newren@gmail.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, May 22, 2025 at 09:31:48PM -0400, Taylor Blau wrote:
+On Wed, May 21, 2025 at 8:08=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> An obvious question after reading the above explanation is if it
+> also would be a valid solution to change the type of git_graph.width
+> to match the type of graph_line.width instead.  And if so, what was
+> the reason why you chose to match their types in this direction?
 
-> > Yuck, yet another spot that needs to be aware of the new tri-state
-> > value. One alternative is using an auxiliary array to cache the errors,
-> > and then only the lookup function needs to care. Like:
-> 
-> I like this direction, though I dislike having a separate array that we
-> need to keep in sync with m->packs. It might be nice to have an array
-> like:
-> 
->   struct {
->       struct packed_git *p;
->       unsigned err:1;
->   } *packs;
-> 
-> , which would allow you to keep the error state next to the packed_git
-> itself.
+While writing the patch, I saw how the git_graph and graph_line structs
+related to each other, and understood git_graph as being the "more
+important" struct in this context. So, it seemed more reasonable to
+have graph_line.width comply with git_graph.width type.
 
-In general, yes, I think array-of-struct is better than struct-of-array.
-In this particular case the latter is not too bad because the management
-is all handled centrally in the midx constructor.
+I do see the opposite point, taking notice of graph_line.width interactions
+with "size_t". With those in mind, having the type as "size_t" does
+also make a lot of sense.
 
-The downside of doing array-of-struct as you propose is that every site
-that uses it will need to be modified. But that is at least a one-time
-pain and not an ongoing maintenance burden (unlike the "magic" value
-approach).
+However, considering that:
+> "git log --graph" output is certainly something that should not exceed
+> thousands for sane people
+It feels intuitive to " use platform natural "int" " as you put it.
 
-> I wonder if changing the signature to:
-> 
->     int prepare_midx_pack(struct repository *r,
->                           struct multi_pack_index *m,
->                           uint32_t pack_int_id,
->                           struct packed_git **p_out);
-> 
-> would be a good idea. It allows you to pass garbage input (like a
-> non-existent pack_int_id) and get a useful error back. It also allows
-> you to pass a pack_int_id that is valid, but cannot be loaded and get a
-> useful error back via the return value.
+> By the way, these lines are overly long.  We aim to limit our (physical) =
+line
+> length to around 70 chars or so by line wrapping.
+Sorry about that, I'll keep them shorter.
 
-Would the return value be a richer set of values than the current
-success/fail? If not, then I think just returning the pack pointer does
-that fine.
+Lastly, thanks for the quick and careful response to the patch. As a
+first timer
+I appreciate the discussion.
 
-I was also tempted to suggest that it should take a "struct
-multi_pack_index **", to return the matching midx as an out-parameter.
-That would "just work" for callers that want to look at the surrounding
-midx, too.
-
-But maybe it gets weird for ones that are (correctly) expecting to find
-the pack within the same midx. I.e., code like this:
-
-  for (i = 0; i < m->num_packs; i++) {
-	if (prepare_midx_pack(r, m, i + m->num_packs_in_base))
-		die(...);
-	/* do something with m->pack[i] */
-  }
-
-is correct now, and we _shouldn't_ ever need to switch to a different
-"m" inside prepare_midx_pack(). But if we ever did, propagating that up
-to the caller would be mighty confusing.
-
-So perhaps better to leave it as-is, and let the caller explicitly do
-midx_for_pack() or whatever to find the right "m" as necessary.
-
-> But I think without actually trying it and seeing what the fallout looks
-> like, it's hard to say whether or not the above is a step in the right
-> direction.
-
-Yup. All of this can wait, too. Patrick's series is fixing its own
-localized issue (however he wants to structure the extra bit of
-storage). Most of what we're talking about here is future-proofing so it
-can happen at our leisure. I think the only other actual bug is the
-want_included_pack() one discussed in the other part of the thread.
-
--Peff
+- Octavio
