@@ -1,88 +1,82 @@
 Received: from fhigh-b3-smtp.messagingengine.com (fhigh-b3-smtp.messagingengine.com [202.12.124.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3156221547
-	for <git@vger.kernel.org>; Fri, 23 May 2025 16:54:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D187297B75
+	for <git@vger.kernel.org>; Fri, 23 May 2025 17:17:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748019260; cv=none; b=BeatcCaPoJ/OygkLvB5RPHQeiI0XRWkjpAZVFeTSuPcAyeT6NNLfEAW571ZlVCgcon+D4VVGmiYXivC7lvhnCuWN3AZpfyrViNWY+0WtWXiiD1ae0/BDZ3y/4iIj7UTlPL7+Y+MGm6ShNTweUXWJ+phrpqPYgV6l13bMYmxB26Y=
+	t=1748020681; cv=none; b=pNoZpi54Q1ryqAgbSmhCpvJMt8WARirb07giO8V966re+QEd36bGnYWUcx8fD02QixC/N8llGDHmFvnyEWpCRoXb1k5Pdw3DF+ph1bVWItMIJ3ZaqgXJqi2kODL9RXOO/e1iZYL1MZomrUGQy3wTfqgaTCRZPVMH0TPZd+k6ErM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748019260; c=relaxed/simple;
-	bh=GlS6lvnZNCDowv9IY8jWSopmXfpILJGkjFQD5Ncw4vM=;
+	s=arc-20240116; t=1748020681; c=relaxed/simple;
+	bh=r71C8iN0k0pGnlze4UK9OVXEZVRr10sZy2AIo6f2j+U=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=oXz7NqbrJYGkSASM7pxqVKUo53kgGLvWHVankqDZo4lByNPQzwZ9H1uJfSDnT4uAv9qv0vx7+EwsprBCwdqVgfSLUuN4PxhpHsyTkAvDt1ZEGFBo7Lny+Gyap8WJiJZ18CiFEzjFFs6zuJxPhRzDHofce2t34Odn/NvM6IlMkcI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=D+lWrunH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z479TVLH; arc=none smtp.client-ip=202.12.124.154
+	 MIME-Version:Content-Type; b=tQoZAyhGRs4H3V6lW9c5Hpd3zlHtQJ0ImTeX4BMpX+5aZmMJ+oICvHIvSkEYo2OOB9M+MMw6zYR+RjQUi2h7kAr+d1H5nfA9eH73opSUfnHCpLkjIfkWMFzKeSyIOGNC2gcB847vUkgu9mC4jVgl4rhQR85BVP92/wBrd21dwIk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=SNLPKBF2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hSTEw/8e; arc=none smtp.client-ip=202.12.124.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="D+lWrunH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z479TVLH"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 8457C25400DC;
-	Fri, 23 May 2025 12:54:16 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Fri, 23 May 2025 12:54:16 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="SNLPKBF2";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hSTEw/8e"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EC0302540149;
+	Fri, 23 May 2025 13:17:57 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Fri, 23 May 2025 13:17:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1748019256; x=1748105656; bh=EfnEEgwEFd
-	4lShm9jIuwfVpw8k+yYeG7uKbJL0uG1bA=; b=D+lWrunHImbqrH5b7CDsTu7jCP
-	38bChHIfJQhjdNSydP6CTRYd8K2yMuMfDZBET9mOY9Pe5m2vkH/v+lUNXWzL8oRT
-	Y0bC6Wux3xJLLUH6N6SZ8a+sSAnbBdL9KKNp+6SVGzVx5c8u6d7O3oFnsj8dlQvm
-	RCA69Yhr6fvj+HbWskmTahrKAWtu4L/NNE2TM2YgsNcgqIcFe7kPCnmp3HcAGY0n
-	iEVm0PnirubgMOA9qwnKZLukMVXLnZjm2BoT/VqQ/XqpkoUuCHr5zibu6khyuynq
-	dxWT4ihUP+OzzoVdQMmIm+eDF38Wf10LDqO3tPINS1OifAcpoCjbn5xIIFAg==
+	:subject:to:to; s=fm2; t=1748020677; x=1748107077; bh=3G9CUgXGSr
+	2+NQFwcXzDASGRFs/sohsjLBTk3wzgjFA=; b=SNLPKBF2mEWgX5kvAJx43ba788
+	XA/UjrmpxrsVBFz2WzoCy2CFKyWunxDg5HDAuZGvC84fxo338aWfdY1+5C+4l2iN
+	zcRaY2i5yyQiWF9RbIaCL3aOnpBHIPw7JYziBtqa+XrB+1srutHclz73g3jITKTW
+	2H+G2hmYhq7JCdOBde3+kyuP2KCl6TpP+Oo3v/oh/GVxRHfdeTESa3CwinytOZiH
+	XE4tR1LjqrWGlp73pxQmZ5Gnv2G/kHuhgIFN3Za4e3dEZTMQqrlW3kcQSqEncIDO
+	tLTJG/lchQ9G+K+UfPv3DDavAp9fCjPQGgUs46da4vSyGkehPE9WZZc538vQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1748019256; x=1748105656; bh=EfnEEgwEFd4lShm9jIuwfVpw8k+yYeG7uKb
-	JL0uG1bA=; b=Z479TVLHqDWYTAztAumSYbmssL1cBO/gaGgV4I8er+FR7czhiMz
-	1kqvERgBwn3YZXQyd5Jq7Bp293KvBtj2NkpMMqOVbKZz2XpD47dIEFbIRkk3bJp/
-	f/P/OuDSLb6mJlaBstYVsBH3ivFUT5f4fpSaArURQQT4naZWd8VdFVwem8ynzbAV
-	I6q+AuUoYOyCjITAqoVpERrS0b5CC5Q+VqV5XiQ/zfqHSdDlj633KXPNO8LxIt+5
-	kuYJhOud1xE1/5+r1qqY+AaEQcKfQ3J1tYFc5cGhXNO9Ms20WKgy76vZ6PAVsMiX
-	g5cqoboZ4wIarbmOnh/JdurjzsTySb1wvkg==
-X-ME-Sender: <xms:N6gwaPOsvhyWZqTwsEximYwwilhRKVGcOZgkfCSB4c2C8DRkw1PV5A>
-    <xme:N6gwaJ8RjP6UHuLr5pP4AEkuP-t0SdAifpzQaXPGVGFi_V9nNDDxvYqKt5xuHGeia
-    Kwzyuz_0MnOcZJj9w>
-X-ME-Received: <xmr:N6gwaOSybFFPQWYr922RvX2b9oogRc0BBhQ9v6iG3ELOHY-ccRNskhjP4mjBXjz8A98RGhAeuYVQumojM1wCXFxvVChN5HgHBZbo7bw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelfeekucdltddurdegfedvrddttd
+	1748020677; x=1748107077; bh=3G9CUgXGSr2+NQFwcXzDASGRFs/sohsjLBT
+	k3wzgjFA=; b=hSTEw/8ethHXOSOD2FfwGBn13keIhyrR7P6PoqJPNaA5Mn4R7kJ
+	bbbkaFGCjQUvn98Q3pr0juMGYZLVzYsmzr635Hpi+WRsLyr7Lt/xcSQ0j0owJLuL
+	56mrg5YJERoBPwo71ZEwO9Vh4aezwIhqgs1DBVz4ktzRHRP7PSYbOvuyKv4f8ic2
+	YiUFtja41U87oSRXnpDBKTS/Z1xIVWdH6rexDzF/R9hmNv55VyB9BB6avrVqF+72
+	Z4PSp7vs+ZcrC2f0zzjYRmGf4kVL6lygZ4wBsc31Zpl1MmJsQsi5PlzIHI6yr5fM
+	79ucjyZdTwIkKdgA3n+/0dgXk3Wl8yza/cw==
+X-ME-Sender: <xms:xa0waKb7oMmlzYLFw9itidznyk27hVwdMZ4Lv_-exG9_4vttyZ_RDA>
+    <xme:xa0waNZloLRpopqTqd7yyC2x6WJzh32AsORN-eZafIKU3ZuIuncmggrKh33F2pC7Y
+    CgqHQ74qZAc9d344w>
+X-ME-Received: <xmr:xa0waE_4cXDJqszw3Y-xCbU3vWGJdCWBeGfjQVsfgAcXLZqtBAlByUc5xJp6HK2SIJyNGn5uprW3fY2irIcfWclYUrHCW_Xes6pYq8s>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdelgeefucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
+    enucenucfjughrpefhvfevufgjfhffkfgfgggtsehttdertddtredtnecuhfhrohhmpefl
+    uhhnihhoucevucfjrghmrghnohcuoehgihhtshhtvghrsehpohgsohigrdgtohhmqeenuc
+    ggtffrrghtthgvrhhnpeettddtveffueeiieelffeftdeigfefkeevteevveeutdelhfdt
+    udfgledtjeeludenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrh
     fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepphhssehpkhhsrdhimhdprhgtphhtthhopehfvghrnhgrnhguohhlihhmrggsuhhs
-    ihhnvghsshesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrh
-    hnvghlrdhorhhgpdhrtghpthhtoheptghhrhhishgtohholhesthhugihfrghmihhlhidr
-    ohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhope
-    hpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomh
-X-ME-Proxy: <xmx:N6gwaDtvFDslOduom12Jv8BIdlALqZTDhzn5upo6Bygeuvl4SI_EIg>
-    <xmx:N6gwaHciSnSyOzguX7i4zytBYEVcRohk2M0qjxn_x7OZXVozgK7cxA>
-    <xmx:N6gwaP0yIpchJjAnQPMcKJ9ygnBK5ywTy3SD2wh40YUjkDd6PQoHHg>
-    <xmx:N6gwaD-VOO1pyjhBRe9ZHdPQeSXQKeteMj3KMAbR0aY2plEgpTkiHQ>
-    <xmx:OKgwaP8IrqMJCHtJLG9oTCt56OWpOJs9iYYsibLcoc8xMsfkYjsCXyNR>
+    gidrtghomhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
+    htoheprhhosggvrhhtrdgsvghllhesuggvlhhlrdgtohhmpdhrtghpthhtohepphgvfhhf
+    sehpvghffhdrnhgvthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:xa0waMofVfXTcMFKXb17gRjhRgXGmh6T9DWKJw2XARAKgWa6xjTrjA>
+    <xmx:xa0waFrJSaZLFa82t5ygT5BYiaYwkGEKFTm9BThuY6VngUcsjTDdNA>
+    <xmx:xa0waKQzMEThExaqfVMrce32aCss9iuFxTuwm07p01TLT5oGEFtLEA>
+    <xmx:xa0waFrmuJw1jTr14F_sw_goXs91X9FwP_VF9sIuXdnKznBykfweUg>
+    <xmx:xa0waKNY3bdHRDV3_5LGiK5LWQwE0NjFmVW5a6l8ou9NQ5_TibwZphwA>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 May 2025 12:54:15 -0400 (EDT)
+ 23 May 2025 13:17:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Fernando Gouveia Lima <fernandolimabusiness@gmail.com>,
-  git@vger.kernel.org,  Christian Couder <chriscool@tuxfamily.org>,
-  stolee@gmail.com,  peff@peff.net
-Subject: Re: [Newcomer PATCH] log-tree.c: Supress Wsign-compare-warning
-In-Reply-To: <aDCQWr3MBX4L7sbA@pks.im> (Patrick Steinhardt's message of "Fri,
-	23 May 2025 17:12:26 +0200")
-References: <20250521202409.26879-1-fernandolimabusiness@gmail.com>
-	<xmqqsekx8yef.fsf@gitster.g> <aDCQWr3MBX4L7sbA@pks.im>
-Date: Fri, 23 May 2025 09:54:14 -0700
-Message-ID: <xmqqy0unxo7d.fsf@gitster.g>
+To: "Bell, Bob (ISG)" <Robert.Bell@dell.com>, Jeff King <peff@peff.net>
+Cc: <git@vger.kernel.org>
+Subject: Re: Bug Report: git show unnecessarily requires parent tree
+In-Reply-To: <IA1PR19MB88859FF5C7E547010E555E7F8198A@IA1PR19MB8885.namprd19.prod.outlook.com>
+	(Bob Bell's message of "Fri, 23 May 2025 06:15:04 +0000")
+References: <IA1PR19MB88859FF5C7E547010E555E7F8198A@IA1PR19MB8885.namprd19.prod.outlook.com>
+Date: Fri, 23 May 2025 10:17:55 -0700
+Message-ID: <xmqqldqnxn3w.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -92,37 +86,44 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+"Bell, Bob (ISG)" <Robert.Bell@dell.com> writes:
 
-> I'm still not of the opinion that it is garbage. We have tons of
-> locations where we mismatch integer types only because we never got a
-> warning from the compiler, and these have caused multiple stack
-> overflows in the past.
+> What did you do before the bug happened? (Steps to reproduce your issue)
+> Tree-less git partial clone: git clone --filter=tree:0 https://...
+> Remove the promisor to prevent retrieving more objects: git config --local --unset remote.origin.promisor
 
-I know we spotted many possible overflows and wraparound in the
-past, but -Wsign-compare being not about sizes but signedness, I'd
-consider them more as happy accidents, rather than intended outcome.
+At this point, your repository is officially corrupt, but it is a
+very effective way to demonstrate the underlying issue that exists
+even if your repository weren't corrupt.
 
-If the code had 'a < (int)b' comparison where 'a' is 'int' and 'b'
-is 'size_t' [*], the code would still be wrong, but the compiler
-would not have said anything.
+I do agree with you that "git show -s", without any other options
+like --diff-filter that affects the commit selection [*], should not
+have to look into its tree.  Unlike "git log -p", it should not have
+to see the tree of the commit is the same or different from the tree
+of the parent commit in order to decide if the commit should be
+shown.
 
-	[*] which is what a typical "I've suppressed the compiler
-	warning that was annoying me" patch would do if the original
-	were written 'a < b'.
+The fact that it gave an error "attempting to read the tree" is your
+own making by corrupting your repository ;-), but it is done as an
+easy way to demonstrate the underlying issue, which is that it is
+suboptimal for it to try to access the tree of the commit in a case
+where it should not have to.
 
-'a -= b' can be equally bad depending on the value range of 'b', but
-it is not about -Wsign-compare and would go unreported, right?
+Is this essentially the same issue as these?
 
-So I think noise from -Wsign-compare are certainly not "false
-positives" (in the sense that the comparisons are between signed and
-unsigned---the warning option is reporting what it was asked to
-report), but are not-false-but-useless positives; what they try to
-catch is somehow different from what they could catch to help us.
-And that is why I have been skeptical.
+https://lore.kernel.org/git/YqEyh5opAaJxph2+@coredump.intra.peff.net/
+https://lore.kernel.org/git/20250504082715.GA6257@coredump.intra.peff.net/
 
-> I do agree though this not a good project for newcomers, as fixing those
-> bugs is quite intricate overall. So we should definitely remove this
-> project from the microprojects page.
 
-Yeah, that is something I am quite certain about.
+[Footnote]
+
+ * "git show -s --diff-filter=D" on a commit that does not delete
+   any paths is silent.  "-s" merely says "do not show the output
+   from the diff machinery".  The same for pathspec, to wit:
+
+   $ git commit --allow-empty -m empty
+   $ git show -s .
+
+   It asks "if there are any changes to paths that match the
+   pathspec, show the commit but do not show the diff output".
+
