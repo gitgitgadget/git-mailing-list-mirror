@@ -1,121 +1,173 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from avasout-peh-001.plus.net (avasout-peh-001.plus.net [212.159.14.17])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA05115A85A
-	for <git@vger.kernel.org>; Fri, 23 May 2025 16:20:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E4E44120B
+	for <git@vger.kernel.org>; Fri, 23 May 2025 16:40:19 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.159.14.17
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748017246; cv=none; b=mGL+tJiH0YnpwMLKGpeF6pTCEFs4R5xbJVGnNMmZMhgysvjJWGZfar6lXuLpglcdm2T7l1bZLFNsbPWMtLfOPzL7ofwGVUwit30ZGlgU5ZMNh3pustqW3yQ7WsDdDjQkNyXu9G5GOJx+X1O/62jvjjwD+CVXSbHdcqo+wjgwRO4=
+	t=1748018424; cv=none; b=H2LcrZRvNT57VraMjeU2lmzFmYNuXHaaI3+zhjv80lu85b0gy39ZUcqEHW+D1R2NVuhj9vxT0WW+V6LoBy41nbE4Ifrjl6Smizts+U125W7SkuKj726QSIomQtNH6s4j8CviATdTZmrERFLQ2iaYpsD1+yd9o3vAPBXD57F8sDY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748017246; c=relaxed/simple;
-	bh=10cJHPvAeVjwn/t3P8Dxyf2Z2+MhhEDhG9mYnJtA4ko=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=ZI/d2DUK3RsscQ327xa9VdXZLWyIkDKzrpxxykxF/bVWMs1745A7W2qafBZRIW5OIo8NCAPRtWPVouP8Hg+raN+lY9IeggvRKM0IoZVcYoWDGKdyxrtlyeclQmlZQdWarlSApJ0mQ2lROluh/NzHQcu8WIMGeRMonAcKlxbGar0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=H34gblUR; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748018424; c=relaxed/simple;
+	bh=dvNyephJcgBIH9xedmdYLEVgo9t0mgv8SSf4C2uH5Oc=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=UIwd2jBy8lhA4UvTl6nTnjTLVWn3HD2x0/jvvW5Go1V16YeV3jGUKGdSOIMf8RDYkVMr0078fPNE6O01BTY8nDIQyBWB77TNgkiMVhC1caD/5111i+8KqiKYF4fIeHECYScMhjbA4y1OlK5vtM7lMKvmNQVyYcx3lKJNyQ/t1rw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com; spf=none smtp.mailfrom=ramsayjones.plus.com; dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b=nYgF0pjt; arc=none smtp.client-ip=212.159.14.17
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ramsayjones.plus.com
+Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=ramsayjones.plus.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="H34gblUR"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-44a57d08bbfso16496445e9.2
-        for <git@vger.kernel.org>; Fri, 23 May 2025 09:20:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748017242; x=1748622042; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=T9MVPxAbRfA0/40zoPvTVimakbzlXZXWesvI1TX6lwQ=;
-        b=H34gblURxYsFssW/p+62v6PUDJt8dMF6AeX81v24wP9CIm17giC8qz7jsNNgK92UtH
-         Ej8dSLPTT60IU/Bfo9RjLsAQ2KjpB+wV/QeuGzOuhfYvZ7EkK6r5olVPk1urXLQmpEeL
-         CbpnB2xjLX2z3gUFhuj+yRNh37NlTn7/fFIF29AFAUwlAeQgwnMr0wgpceG1Sv6tTpLc
-         Q0mDldWRHG2BJccK+I0ve9mj1uLajW2RDoFB5MPhEo/6hJwkjYDx/g1FVRe4tSijL/sH
-         VHdUKiQIZC/Bo+OMosilJaGMKhnPqvRzg9P+r7azA7ZZ5my/ywZmQa28thK9uBchmWnZ
-         y4jQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748017242; x=1748622042;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=T9MVPxAbRfA0/40zoPvTVimakbzlXZXWesvI1TX6lwQ=;
-        b=BG2MP5GO8d3bhN2t4SXapdaarue7O+5J3nVB5A7cKoi0iRi4qKquhEoMWLrTeM0Ku5
-         hkx/Uq0HRDD25WBNIWBfAL54VeUS6TwJmq37plp5jRUmsOlcIn4yL4WD1Hd17dceRAwL
-         11FEmb015aOSkMVOv24ZAq1Jt4s42LeTbOGcpVITek/g2K1tZbgauOwdIN6SlAPgNNvz
-         GO0M4XQuGZaHxCJhfwxkRWKCKjwWXTfP9zyvpd63GDkrh0rxaYXdyLjUtaInuGwxZEOq
-         KDi71nGTurJ9raNP9+TYP/sxatc1yhOYKgJhCgScct1fKoD/QD+LR3/Bww47Ps/jdggc
-         ajoA==
-X-Gm-Message-State: AOJu0YwGd9kE38rDh0mazT2+faC6BgHYfKl0tBCo+ciQU5VHyGwgyiab
-	sKKnSvdB+0EXVLCqAwVYFGBpzockb3QLZ35UVCQlZPspONKPQmowpTE/VCqJCA==
-X-Gm-Gg: ASbGncvxhWgI8Msd62xwJGjqIaLaVJ9Yspev4/dPmr08S7FV4lFYZfMfTkgn+57ZWEC
-	AIjDvNJwWcNVp8VZAdtm1avLFslr4pUfOE/84UpKpQaREFtt8jg1QCN4SNkMZpKml8bdfzhSy6F
-	V1h1KfqwNfHQZnmVRouaRkaohRNcQ7Y820B2Xa768cLELOp+30aNBQny5FRZYYDTjtHlyRV8eZ6
-	S8fKtqiRewKnSNtwEq1Kkt/ShvJ0H8rSWZOvlMGiBbdhnAqvbpjb7jHowkjvvjbt6+nSF/YGOXz
-	ojg08RPVbQgcG9kQjbJHRvlyFkfMyYIjG3R0jWDFnL/lprZu7dzY
-X-Google-Smtp-Source: AGHT+IH1iySWcgGp25bfY8Wry7UbtuCHthUPfrV4GgaUemHzSEfWAN8JbFlg49rNYFrRHZAfTiD23g==
-X-Received: by 2002:a05:600c:37cf:b0:442:f485:6fa4 with SMTP id 5b1f17b1804b1-442ff03c45amr332430685e9.31.1748017241924;
-        Fri, 23 May 2025 09:20:41 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-447f7d975f4sm144543295e9.39.2025.05.23.09.20.38
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 09:20:39 -0700 (PDT)
-Message-Id: <pull.1975.git.git.1748017238130.gitgitgadget@gmail.com>
-From: "Alex via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 23 May 2025 16:20:37 +0000
-Subject: [PATCH] Add a check to prevent max_children from being 0.
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=plus.com header.i=@plus.com header.b="nYgF0pjt"
+Received: from [10.0.2.15] ([80.189.83.109])
+	by smtp with ESMTPA
+	id IVROuDfQvUuMSIVRPulBZv; Fri, 23 May 2025 17:40:18 +0100
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=plus.com; s=042019;
+	t=1748018418; bh=TCPxEjSG9jgZAyxMRP5X3FClXzxJoHbgxOI9KX6YeLI=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To;
+	b=nYgF0pjthdJ9pjoPfQyJqUC7RyV+VaBQrWYx+FyEeTcTYWhzFqzYRjH3mwEg2Oy/o
+	 6poRC6OrMnKtTHIuWcweJfSHWrsPAeG6HzEmE5RF4XefhkDT4BgowSsZwHC6IuwP2r
+	 dfn6dTFY64kBClJ8ICNyj0y4CHLI4YPGF7PL1uJzGVfTaZ7/TVQsvpCqBFD0YG7VyJ
+	 +u12s0ZkpZrpsTwgKuapTFFk1vyu8au8liccgSoTtYT+iveJNaEQqmIiclGUfMS6pY
+	 cdduYIfizPykp7En3lppeP0m/90yBEr6NlD4trxfqFm5FAw+apv7GghBn+aycLMVRF
+	 gwOJlhcjwiHhA==
+X-Clacks-Overhead: "GNU Terry Pratchett"
+X-CM-Score: 0.00
+X-CNFS-Analysis: v=2.4 cv=K/eBHDWI c=1 sm=1 tr=0 ts=6830a4f2
+ a=oM5NSl/Bl4BpjFr0C8iQlQ==:117 a=oM5NSl/Bl4BpjFr0C8iQlQ==:17
+ a=IkcTkHD0fZMA:10 a=SyKQ5haGT6oBuqEuQl0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-AUTH: ramsayjones@:2500
+Message-ID: <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+Date: Fri, 23 May 2025 17:40:14 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Alex <alexguo1023@gmail.com>,
-    jinyaoguo <guo846@purdue.edu>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+To: Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
+ <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
+Content-Language: en-US
+From: Ramsay Jones <ramsay@ramsayjones.plus.com>
+In-Reply-To: <xmqqo6vjz5cn.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-CMAE-Envelope: MS4xfESGtdaFEXGH3WzBQGc3NIFdum190Kmxx4JLZCXy0Sl0k/vey5tBelDR8TJASfWECgJBhsD55R26R7/BbOpi8P3yZgjGyKkbEWMrHBxKTWkcglpWczkT
+ TXfLNLFmCVbPSG/hinPfVvAp7ktA6hdrxJZ8XDMkDgwwULKu1hqns5cmma/w85NloOpG8nSvH+pTWTgR9ZAfPWDMpiVxAaBuwkY=
 
-From: jinyaoguo <guo846@purdue.edu>
 
-In function fetch_multiple and fetch_submodules, `multiple` is
-stored in `opt.process` and later used as a divisor in function
-`pp_collect_finished`, creating a potential divide-by-zero if it
-remains zero.
 
-Signed-off-by: Alex Guo <alexguo1023@gmail.com>
----
-    Add a check to prevent max_children from being 0, which may cause
-    potential divide-by-zero.
+On 23/05/2025 16:58, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> 
+>> ... The problem is that we have a test that unexpectedly
+>> passes on macOS:
+>>
+>>     ▶  868/1023 - git grep .fi a                             UNEXPECTEDPASS
+>>
+>> The test in question is this one:
+>>
+>>     test_expect_failure !CYGWIN 'git grep .fi a' '
+>>         git grep .fi a
+>>     '
+>>
+>> The test passes if '.' matches a NUL byte, which we expect to only
+>> happen on Cygwin. 064eed36c7f (config.mak.uname: only set NO_REGEX on
+>> cygwin for v1.7, 2025-04-17) mentions that this behaviour was probably
+>> imported from FreeBSD, which makes me wonder whether macOS eventually
+>> also inherited the same code given its BSD lineage.
+> 
+> Yup, I was wondering about the same thing.  Thanks for confirming.
+> It is unfortunate that we have blanket USES_BSD_REGEXP prerequisite
+> ;-)
+> 
+>> I think we probably want something like the below patch to fix this. We
+>> could also have a prereq, but that prereq would look almost the exact
+>> same as the test. It does make me question the value of the test itself
+>> as the behaviour is completely platform specific.
 
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1975%2Fmugitya03%2Fint2-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1975/mugitya03/int2-v1
-Pull-Request: https://github.com/git/git/pull/1975
+Yep, I very nearly sent that patch with a hunk which deleted that
+test. In the end, I decided to play it more conservatively. :)
 
- builtin/fetch.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> Curious.
+> 
+> Don't we run the same set of tests on macOS without Meson?  the
+> exact same test must be passing unexpectedly.  Why do we see the
+> complaint on only osx-meson job without osx-{clang,reftable,gcc}
+> jobs?
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index cda6eaf1fd6..b668187627a 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -2591,7 +2591,7 @@ int cmd_fetch(int argc,
- 			die(_("--stdin can only be used when fetching "
- 			      "from one remote"));
+Yes, for about a decade, git built on cygwin with the system regex library
+would have shown an 'unexpected pass' on this test. However, unless you
+look for it, you wouldn't know; make and prove are quite happy with the
+situation, since it is an unexpected _pass_:
+
+  $ git diff
+  diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
+  index b7d83f9a5d..3bd91da970 100755
+  --- a/t/t7815-grep-binary.sh
+  +++ b/t/t7815-grep-binary.sh
+  @@ -63,7 +63,7 @@ test_expect_success 'git grep ile a' '
+          git grep ile a
+   '
+   
+  -test_expect_failure !CYGWIN 'git grep .fi a' '
+  +test_expect_failure 'git grep .fi a' '
+          git grep .fi a
+   '
+   
+  $ cd t
+  $ ./t7815-grep-binary.sh
+  ok 1 - setup
+  ok 2 - git grep ina a
+  ok 3 - git grep -ah ina a
+  ok 4 - git grep -I ina a
+  ok 5 - git grep -c ina a
+  ok 6 - git grep -l ina a
+  ok 7 - git grep -L bar a
+  ok 8 - git grep -q ina a
+  ok 9 - git grep -F ile a
+  ok 10 - git grep -Fi iLE a
+  ok 11 - git grep ile a
+  not ok 12 - git grep .fi a # TODO known breakage
+  ok 13 - grep respects binary diff attribute
+  ok 14 - grep --cached respects binary diff attribute
+  ok 15 - grep --cached respects binary diff attribute (2)
+  ok 16 - grep revision respects binary diff attribute
+  ok 17 - grep respects not-binary diff attribute
+  ok 18 - setup textconv filters
+  ok 19 - grep does not honor textconv
+  ok 20 - grep --textconv honors textconv
+  ok 21 - grep --no-textconv does not honor textconv
+  ok 22 - grep --textconv blob honors textconv
+  # still have 1 known breakage(s)
+  # passed all remaining 21 test(s)
+  1..22
+  $ echo $?
+  0
+  $ 
+
+Again, prove doesn't care:
+
+  $ prove t7815-grep-binary.sh
+  t7815-grep-binary.sh .. ok    
+  All tests successful.
+  Files=1, Tests=22,  0 wallclock secs ( 0.03 usr  0.00 sys +  0.09 cusr  0.13 csys =  0.25 CPU)
+  Result: PASS
+  $ echo $?
+  0
+  $ 
  
--		if (max_children < 0)
-+		if (max_children <= 0)
- 			max_children = config.parallel;
- 
- 		/* TODO should this also die if we have a previous partial-clone? */
-@@ -2613,9 +2613,9 @@ int cmd_fetch(int argc,
- 		struct strvec options = STRVEC_INIT;
- 		int max_children = max_jobs;
- 
--		if (max_children < 0)
-+		if (max_children <= 0)
- 			max_children = config.submodule_fetch_jobs;
--		if (max_children < 0)
-+		if (max_children <= 0)
- 			max_children = config.parallel;
- 
- 		add_options_to_argv(&options, &config);
+When I tested the patch (without !CYGWIN) with 'meson test' it didn't care
+either - that was *before* Patrick's recent patch to make meson parse TAP
+output. ;)
 
-base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
--- 
-gitgitgadget
+Question: should meson (or indeed prove) fail the test because of an
+unexpected _pass_?
+
+ATB,
+Ramsay Jones
+
+ 
