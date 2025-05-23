@@ -1,160 +1,134 @@
-Received: from MA0PR01CU009.outbound.protection.outlook.com (mail-southindiaazolkn19010015.outbound.protection.outlook.com [52.103.67.15])
+Received: from sender4-of-o54.zoho.com (sender4-of-o54.zoho.com [136.143.188.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B40122258E
-	for <git@vger.kernel.org>; Fri, 23 May 2025 04:04:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.15
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49D2C28FD
+	for <git@vger.kernel.org>; Fri, 23 May 2025 04:47:27 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=136.143.188.54
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1747973058; cv=fail; b=t9pJiKNMt+ZnJgTUxzUgrr8GKk8vSA7/ni+QBBlig5KcU966mcu7lKceXMQk9Uww3zeLJce6i3il4f7BXVJ+APGkjZX/NumLOiy3zcRs2krFgKQ0dOs/lshQdd+TbiubaUzhiF+E3Yiy10LMDNRaSrVqs9UGlGA3LGsDyvmnDNo=
+	t=1747975650; cv=pass; b=TBbITQSZDETmIEZJszyDyLvTkw7NhaUdKSKR0Ui29NTqPn5J2e7KFolNjJ7RZiH4iWuoAvieJpGYKBTEH99O0G5M4nizQ2BCCmF60QxIXEpgcWhlwa3fZULzFNfS7qxicOAaygx4whnsxjvZRL+GxbPzR9JvhMoIwPXJM4K9SNc=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1747973058; c=relaxed/simple;
-	bh=6UzPqVZzPGFmWKE96ihPgVlO6fj6Qe53TcwWXVkxShU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=u6U1y6iKAEeyo2yslIMvmuhA+Z4WnKVmlXeoHVise5YbFPHD2Lz7jVdiT3voQPVHYFvoC+loVjh2khrQGOITCpOW/zih82bna/ckUQQ+2QBpaw4wLKmmrtekesXIBi20ITYdGDEUGNS6a53qglQYdWTogfBI1nTBkU63SLFUQWs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=U1s4nXd/; arc=fail smtp.client-ip=52.103.67.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	s=arc-20240116; t=1747975650; c=relaxed/simple;
+	bh=Lu0x23Ho+QXhsDTLvgxCIwmo2kzig+TMg5YhU2yOn3g=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=nf1ZYbAxjl5FQPZsMVerKWSlrlWNTEgVWpfnoAzifhdJNoXPCyZDGGB/mz2idQrpk/w5RDmVuWwsbNZ6T0sQsygdjiQPVjuVN4pbI3cU/i5yx7uiO/5Tx40ofsEv3PCxjQK9JjKpMKjZx8I0J47zNdlV5R719A/Erty953Rw0vs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zoho.com; spf=pass smtp.mailfrom=zoho.com; dkim=pass (1024-bit key) header.d=zoho.com header.i=mmogilvi+git@zoho.com header.b=ENwomRZi; arc=pass smtp.client-ip=136.143.188.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=zoho.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=zoho.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="U1s4nXd/"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PV1zHJC/o5cbACtSDi034wzEYrwcpTSfqJxKIdquvQYAjmFBCVbkowVAp4Dz7ho6XCQVNeVmMFGW1Cxr7QvWCY59Kg6iwBtzxENlTC9PlgAoOBQrPUcRgi4XLUWqn38VQ62/ANhvWFrO7cIsDFXKG7EQg9OhXGx6ZFzQwvMt9f4Jixj0uyAaB9KjB0f6uWq9E/W+XlBdJ8m4Fu/sIkKHx1Hn6FoNnGjmQRvfNN99yDYLU1uDWsZnHVgqQQhyuJN6yXYWxp+85RHabKcefdKScfai0kLa12+ZY/2hKttbppFSsfqEA5KN1fXijbidFu5Xfcw1/JxikxAfF4O2SNJhHA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=po/mF64P7QEydfDR4LcIKR9jVVfkzdoFqKbvZsmwL+w=;
- b=H6s5uguqQHY2KvtuSFxkuuPWd/FCDjHwlX7Q7JQBxxZssqszP2uoAGfCGQzENSDTXag6/L49eEn0SckPjLYvfWdPUJJNJhtBs+G+kcEGg8nD5f1zHdOCHqf4wLJ0BIr6IJov4+glZjZVFWXeZJvwFXTOmhdMaZJhQ8EpPd6/CydIZUznP26zrDmodBHpU7wYwXpHwk51gyAAKWGe3YLc5b932LVT00PbaLS6e/hRCh4m65rx7Nsd6xXXLBwgCgC8nJxB327vpA6OJMclAvZ3A2GJ7VN8/Lk/eSuzSiChR4sKYLdZyKWiy94jbWqFi1kXAXDIAfPVA+F6dV16cqyarA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=po/mF64P7QEydfDR4LcIKR9jVVfkzdoFqKbvZsmwL+w=;
- b=U1s4nXd/Q/9ORWLhwZyCW6KYXCVgkWefUqP3tu+2ImEOCdzBOAPSOvGGLhhgxjwq9Vfljn9AIGluKIVPKOwXDKtJibg6MAvWm4T+s2NkXh8NNkilnEs5xEYRvSzo2i9iBXm9hbsJJCWdHOd8sDo5Rpau4isBOQ5NiAm/DWuzHe+1y8Ie0FNozL4s3hNQSrQJqvt9F0CdAvAIPbMHQ2WpIxmAti53RTcxvH/dtM0lRZLaA/vV+MmlXc+nfGKSb/56Lh7hfLrpOmc2TghpZ4D044JtnvZQnGY073yCo9EgwYc5Yp9xGn69VEmY8b2i9ESzi0xlyAeMjojua0MaaoZIXw==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN3PR01MB10178.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1e2::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.22; Fri, 23 May
- 2025 04:04:07 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.021; Fri, 23 May 2025
- 04:04:07 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: Junio C Hamano <gitster@pobox.com>,
+	dkim=pass (1024-bit key) header.d=zoho.com header.i=mmogilvi+git@zoho.com header.b="ENwomRZi"
+ARC-Seal: i=1; a=rsa-sha256; t=1747975635; cv=none; 
+	d=zohomail.com; s=zohoarc; 
+	b=dW5q4X8DO0Rz5aid21PWiwRz8bGXlRHODMXG1P3lUInan9t8n4I2P9V4qhP3g7heqObFDHCFQlCURuslaygLVSIAoFL3+DYzTlIoDYtjX35VmIy9JojFB/kGQ0sfCZOD2OgAG80yB16BFjfV8m80ZjlDBCNIqPHceCyg7mD+eEs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com; s=zohoarc; 
+	t=1747975635; h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To; 
+	bh=+v5fPt0W8zAWe/3AzcteT2rS3lK95WZUNyNUtpUoR4I=; 
+	b=QnMpRfZjBAPraq2w6d/bhSPUf52Qz2RxyVatxQyFvqQctDqzaKZUKL3Nc3Op9w453JmW78r/NaW+m03R6947S4g74RI8q1eKJyKdxClHZN+OGixi+NulrzNTvABUW8IXfciVLab2EBS96dcUGjnKp2ywVreryRHDR0urzJAHf5w=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+	dkim=pass  header.i=zoho.com;
+	spf=pass  smtp.mailfrom=mmogilvi+git@zoho.com;
+	dmarc=pass header.from=<mmogilvi+git@zoho.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1747975635;
+	s=zm2022; d=zoho.com; i=mmogilvi+git@zoho.com;
+	h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+	bh=+v5fPt0W8zAWe/3AzcteT2rS3lK95WZUNyNUtpUoR4I=;
+	b=ENwomRZiDZS3ljHfMilVEKHvSKUXa5ZKA8y2uutNriTMsx/UVUdeLJl7ZFXwFuxr
+	URL+3UUr6kWfxPC3PSD/K2pcdvwMWiIyya9IgqbzlNC4hhaaHjeFX4F4XOX7eS9kYXC
+	1l8ABADzpR2EhOlIQtz0WzKicRPHMSgtJIDZmSQI=
+Received: by mx.zohomail.com with SMTPS id 1747975634554914.7492976425184;
+	Thu, 22 May 2025 21:47:14 -0700 (PDT)
+Received: by mmogilvi.dynu.net (Postfix, from userid 501)
+	id 2DB7947C4319; Thu, 22 May 2025 22:47:13 -0600 (MDT)
+Date: Thu, 22 May 2025 22:47:13 -0600
+From: Matthew Ogilvie <mmogilvi+git@zoho.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Todd Zullinger <tmz@pobox.com>, Jeff King <peff@peff.net>,
+	Ondrej Pohorelsky <opohorel@redhat.com>,
+	=?utf-8?B?T25kxZllaiBQb2hvxZllbHNrw70=?= via GitGitGadget <gitgitgadget@gmail.com>,
 	git@vger.kernel.org
-Cc: Eric Sunshine <sunshine@sunshineco.com>,
-	sandals@crustytoothpaste.net,
-	Julian Swagemakers <julian@swagemakers.org>,
-	Zi Yao <ziyao@disroot.org>,
-	Jeff King <peff@peff.net>
-Subject: [PATCH v3 3/3] imap-send: fix memory leak in case auth_cram_md5 fails
-Date: Fri, 23 May 2025 03:58:34 +0000
-Message-ID:
- <PN3PR01MB9597F251FC1AE6A78CC92C93B898A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-X-Mailer: git-send-email @GIT_VERSION@
-In-Reply-To: <PN3PR01MB9597F89DF32B700ABB8AEE11B898A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597F89DF32B700ABB8AEE11B898A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: PN5P287CA0033.INDP287.PROD.OUTLOOK.COM
- (2603:1096:c01:263::12) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:f7::14)
-X-Microsoft-Original-Message-ID:
- <20250523040347.25483-4-gargaditya08@live.com>
+Subject: Re: [PATCH v2] cvsserver: avoid precedence problem between ! and %s
+Message-ID: <aC_90R3ohRRBVIV7@comcast.net>
+References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
+ <pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
+ <xmqqh61ear4s.fsf@gitster.g>
+ <xmqq1pshc2vs.fsf@gitster.g>
+ <CA+B51BGLK-3R9ev4a8EwkGHQEBi2QhgxvAd0CHMbphrxPM74eg@mail.gmail.com>
+ <xmqq7c287i7n.fsf@gitster.g>
+ <20250522170536.GB1613@coredump.intra.peff.net>
+ <aC9lM12GyntAp2tR@teonanacatl.net>
+ <xmqqtt5c5viq.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN3PR01MB10178:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7008afce-5c68-42d7-261a-08dd99aedcba
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|41001999006|8060799009|19110799006|15080799009|7092599006|8022599003|461199028|440099028|3412199025|12091999003;
-X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?NaQNZhb0RkNmVzuTGnKuc6IQH6eX24YVhTDtFwbQIbXlnGOT1DlGKg34FiG4?=
- =?us-ascii?Q?kgZ/mvrRCWBGWNtk2Ai5bx/1wF1xUc6j0Nx/H6itvUzSZD/HH3L0msV7SFo0?=
- =?us-ascii?Q?+9pXXoQWANgXX9teFH/b9XpizpMyn5xWTH2grRyA/ruooQl7BH/WQX4oAl+4?=
- =?us-ascii?Q?dBtLhw6jEJltuwqTwPJ2wjmd1ylBCpMBLe3igEJUCgB3GCsco0o5P9VfL59X?=
- =?us-ascii?Q?E0BVeHtswktSXb+vicFbHRHg8m/LY4uWJuwHJFM3MW7WESpVBG18gYfQkPxi?=
- =?us-ascii?Q?hcDSDXE/uIrLwjYKLFjJ3+vu+err4YPxZ4ELOGuq0yLyZ6KGfgerdR/fN0nQ?=
- =?us-ascii?Q?7stpKJvDGbpg6vm7zo7p8iETCricwjHMsi1hGTnOxl8JwlxyAwWnNyo9Uvvm?=
- =?us-ascii?Q?ZAkAtOuPYErVwa8QWpwjqLKQqXLWFd8RhreXFOKrHLdQ7AEyhtaLPJhj/JP+?=
- =?us-ascii?Q?tvla+oeI9fVWAX/cvbJPVpSCxo3Vjbvnv8l/8j4woHx8HQKAa6VcM97ft3fT?=
- =?us-ascii?Q?RzUhaTzZ24mOia1L4yZPygWUTx3VNkPl2rVeW4aWDiSWN6gxdowHF8OvkoM/?=
- =?us-ascii?Q?Odcz9PYfJWMaaD4IGYVpN2PF0rQqhMXnRz8FSaSOqIwCAj+ClrxVHs7i3+m3?=
- =?us-ascii?Q?Eh+ikrwPvxjadgU8LTZ3lSmT+BWsEuzqFXgeUeuX31iGN79DrKKR/KHxkoSn?=
- =?us-ascii?Q?qKb/XSEjop/zlQ91Uu2MS0DV0b1oOfoy9hMwu939l/Fb2TZYXw5ZGLsaYa5+?=
- =?us-ascii?Q?bK1TZUkXVVmtrseXI8py7nxROWzQ0D3wbC9atPqbHXWhxEueF9iTohs+ZrUx?=
- =?us-ascii?Q?K1n98uLtvsX7hCCYI0EuSXXMuavkaTmcMYF9tV7StbRQyFUGcUyOXuIMPDOj?=
- =?us-ascii?Q?AyFC32cUoP6ToivRMDo8NT9MSSBI7TPwlhvxlYr7ONXM1ofp5T8K73Q5WVCP?=
- =?us-ascii?Q?LGXlF/aKQHDJ5L/C/Ah7aItKtRXbKOCtrjDKAZOz2cHgZM8gAKvc5XTwQw/J?=
- =?us-ascii?Q?ZzWiwgYlYXWl8Nc5GT3A4o1zQ+D8zT3iMyKnmBJ9eRDNqQwMvGYaM7EAmSdZ?=
- =?us-ascii?Q?Yfmc6pEeqXprNlWOwFfoQT0j6HxPX6ELLB+HhePcUmlX0KEf6p2S9J3o57Kc?=
- =?us-ascii?Q?2YGhRgX2+907fUByAsO6SXv/jV8SO/ipetqoeUUGeohQ88zJT4E+v6mCEQbK?=
- =?us-ascii?Q?l781ylEmDosMnhVb2eAd6hJlvQ70qrRNvAPTAA=3D=3D?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?3uyOhwO6610+7m6PrJQgAzdsMzmhB2PMHvEhxd50WY7tvsj8dBW5Ak6np+L+?=
- =?us-ascii?Q?5hv6HbMa2GWZCYWkojybls9OvtXzmX9uRWeIDY/5Zp77GiDQs/LkAstzDeU2?=
- =?us-ascii?Q?iYi0Dk4g1iF1k6Bx1Zzznpu+3dSGJfctFkjsDC3MRpEPyLzwnp3NMWJcwTjI?=
- =?us-ascii?Q?2gtA+BVbucogQpHhFOALpsnC0HRnL+D01GSm4L2XNzcogWF6Zzc1cXq0Oenf?=
- =?us-ascii?Q?trGEyTCVwy4PRyo1p/TElOHZJOLDnlZZOMs/1D85MgsFGzH0Q++a9+SO2Q4D?=
- =?us-ascii?Q?zIdL2W7HaUuR0MMj4GDfO5EWroDbHPdQwquVJ37hgoIOQF9syVEHN0a3ZF5O?=
- =?us-ascii?Q?6XY3S8dvWjbTB418K5GWlmolyJxcUlWrFu+vsnLtHpe8/Id0PkSNeTnAK0ba?=
- =?us-ascii?Q?XRjflJbqqz1lUQhAyNOp92i6ZY9tC6492Ottem4sYkncYMGIJl4iomEPv0JL?=
- =?us-ascii?Q?TwVmd1v8I3tR3McOF3idVvsqBjlSnw9xo5v8FOIoOM4xYUDdvh4dl3BIw7m4?=
- =?us-ascii?Q?QTWcq1Xce4HvUUQXxREEVpbk7COKwzLMYS02yh4w7at0PhcfG+CPqbkDhjBw?=
- =?us-ascii?Q?Dd9GwtaAbhc7BHTeEWDIsQrrcm8cMZnIYJ4eVO5q7CWAI6n+vG9krVHcT7K9?=
- =?us-ascii?Q?/8htTGEvVfTXQmyN6Memn3twT7J4MeUSP+VgP+x6Ctb63Znan5Cjn8PM4LyU?=
- =?us-ascii?Q?yQYSqaoL/Acf91JJlILI5DYbT8Bd7DcyyoHdvGoNKPHOIPxXvUI2gPNuQwqe?=
- =?us-ascii?Q?C6YypGb5PU7B9k4oUBfJMc4MRKnR9XmcCoS/yvlnSW9gltPmZrhUCKYzDJcV?=
- =?us-ascii?Q?6AaK6/EqptMu0ErVBXt/THhxYyb2SY6ETNPFSLbkvqLiB6DEHGGfRxfTO9Uu?=
- =?us-ascii?Q?EMBZwbmivZv8FfEGnlTRCS8tOkpNQl7LbI3It2Pepcad05GzZ8Z3JBOrPCdW?=
- =?us-ascii?Q?upFNQx/eL49c3JI3JIPj/GU642IV0fX1wdidN+QdEueJ3plx4FeqJMEFAX7h?=
- =?us-ascii?Q?9a4A3TV8CRfo+DYO5QA3VZIhTzHjXhhrzGLRAuuhq2I2ITPpXp94LEZfqxmz?=
- =?us-ascii?Q?etBI1nthS8lM4OKDgt6KlyYrf00Ii2g1KskLeeNEyAE2VJuISD2mcfZoITbQ?=
- =?us-ascii?Q?iw4lYaItK/GMBHyObS+XLu+VUIBZ9Vdm9mYKS62pN2hRf9OLuD+f/JdI3CzC?=
- =?us-ascii?Q?ekODsdi62zRuyUywPQXYflyfbUUPgVIR4UR7ID7ioA1+2SROe491DFwZJ/E?=
- =?us-ascii?Q?=3D?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7008afce-5c68-42d7-261a-08dd99aedcba
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 23 May 2025 04:04:06.6057
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB10178
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtt5c5viq.fsf@gitster.g>
+X-ZohoMailClient: External
 
-This patch fixes a memory leak by running free(response) in case
-auth_cram_md5 fails.
+On Thu, May 22, 2025 at 11:51:25AM -0700, Junio C Hamano wrote:
+> Todd Zullinger <tmz@pobox.com> writes:
+> 
+> > Just for curiosity, the only commit found with escapeRefName
+> > is when it was added:
+> >
+> >     $ git log -G '\bescapeRefName\b' -- git-cvsserver.perl
+> >     commit 51a7e6dbc9
+> >     Author: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+> >     Date:   Sat Oct 13 23:42:26 2012 -0600
+> >
+> > 	cvsserver: define a tag name character escape mechanism
+> > 	
+> > 	CVS tags are officially only allowed to use [-_0-9A-Za-f].  Git
+> > 	refs commonly uses other characters, especially [./].  Such characters
+> > 	need to be escaped from CVS in order to be referenced.
+> > 	
+> > 	This just defines functions to escape/unescape names.  The functions
+> > 	are not used yet.
+> > 	
+> > 	Signed-off-by: Matthew Ogilvie <mmogilvi_git@miniinfo.net>
+> > 	Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> >
+> > A subsequent commit, 658b57ad52 (cvsserver: add misc commit
+> > lookup, file meta data, and file listing functions,
+> > 2012-10-13), made use of unescapeRefName; escapeRefName
+> > seems to have _never_ been used.
+> 
+> OK, so we can safely remove it, it seems ;-)  I wonder what, if any,
+> the unescaping side is unescaping, if we are not doing the escaping.
+> 
+> Thanks for digging.
 
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
----
- imap-send.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+FYI:
 
-diff --git a/imap-send.c b/imap-send.c
-index 04b507fc14..e19dc69b7c 100644
---- a/imap-send.c
-+++ b/imap-send.c
-@@ -983,8 +983,10 @@ static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
- 	response = cram(prompt, ctx->cfg->user, ctx->cfg->pass);
- 
- 	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
--	if (ret != strlen(response))
-+	if (ret != strlen(response)) {
-+		free(response);
- 		return error("IMAP error: sending response failed");
-+	}
- 
- 	free(response);
- 
--- 
-2.49.0
+One intent is that the user might do the escaping manually, if
+they need to refer to a git refspec that is not legal in CVS.
+For example, "cvs update -r pu_-s-mo_-s-experiment1" instead of
+"cvs update -r pu/mo/experiment1".  To some extent the function
+could be considered a form of documentation of how you would do
+this manually.
 
+Also, the fact escapeRefName() isn't called suggests that there
+might be other bugs.  There is a test case in t9402 that
+tests arguments "-r heads/b1" with a comment that "This is not
+really legal CVS, but it seems to work anyway".  I haven't fully
+tracked it down, but I suspect that might end up putting a
+literal "heads/b1" in the CVS sandbox's "CVS/Entries" file.  If so,
+that is invalid, because Entries uses slash for its own field
+separator.  If we added more tests immediately after it
+*without* a different "-r" (which is very high priority
+when resolving which version to update to), they would likely fail.
+It might make sense to put an escapeRefName(unescapeRefName()) nested
+call somewhere to protect against things like this test case...
+
+However, despite writing and (incompletely) testing this code, I
+have never *really* used it, and probably never will.  So I'm not
+in a hurry to try to test or fix it further...
+
+(For that matter, has anyone ever heard of anyone actually using
+git-cvsserver at all?  I think I would be surprised if there was anyone
+using it, especially so many years after CVS stopped being maintained
+at all.)
+
+        - Matthew Ogilvie
