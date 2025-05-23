@@ -1,172 +1,168 @@
-Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
+Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6347D296162
-	for <git@vger.kernel.org>; Fri, 23 May 2025 14:49:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFA8B2DCC08
+	for <git@vger.kernel.org>; Fri, 23 May 2025 15:01:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748011752; cv=none; b=mnH2X7gKF9QbRT4ifAcFYFT0OIEJCeTyFujbT/13Tdl1bjsce+wxs/QwCuKnSjLnxlS457yxr/QFI3Tn2EzAuIdz/EONTOjJeCDpnWDxALRdB1mfkaysvy1n1i3udLbtokebxZQGeSlkJzpVweF8h3+XLQlRNgV3szi7puj8Yxg=
+	t=1748012470; cv=none; b=pHByZsSivNa40CxTK8sKoJNzrHgAW5XRs+xXpvemzJWgDRSMVzLVaBsvKg/4j1CS+hXCVCJbODsGkfKtxMD+mUJdl9eYCxdG/VsJ0vIxwNM7XXX4HBmIRKsIwpsjF5zLDICt0u+gNNm/kiJVI8MVCH2ZCXYVMU4Sm24ITyrWuD8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748011752; c=relaxed/simple;
-	bh=rCrhUi+ehWkj1Qtx/RcqDYWr5K7prgDBS2BbW1k8ZNc=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=lUOWZFvFxazzwz6NSpgx7dFmuAiCHsAiAcZvcWyzf9aIyKi1H/jDh03T0L/bleMrsLAuIDitcoIM/KC+aJML2wiP+OXLqs5ySoif/f7hqKUs/1I0jbcaUMqnY+1Q9x29KI8NEBUIMNv/xZcK8koJ9OcsaW8CUyHBtoMfE+ILBeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=HBJXAEN/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LXj3hVyQ; arc=none smtp.client-ip=202.12.124.146
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748012470; c=relaxed/simple;
+	bh=W/7isK1XkMvgzV7lTU8naj4g3jDxQZF7ThZbyow7uBI=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=KH4GaaJaCfz0PVWCmkYLgmcGGI4ZZfT+IS4pD4mVWe+B/kxpAgHVpbog4Vpo67qpkGjqRwNckWo+EllU1vIzZUXxi/S1cRt6ZF6XFBeAmscsJQg0hInNeK2WNaJ8xA+OhStOA/9vlczecjpfyqOntgu+uFgV4TT+eM0ORXqhmjE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=uWF3S1k5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P6T3gLCB; arc=none smtp.client-ip=103.168.172.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="HBJXAEN/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LXj3hVyQ"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id 367AE1140151;
-	Fri, 23 May 2025 10:49:08 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-03.internal (MEProxy); Fri, 23 May 2025 10:49:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm2; t=1748011748; x=1748098148; bh=nsd1fbn1hO
-	jq7wqSiSEEGPTnnbaga5U4bGJ/LQmJS2c=; b=HBJXAEN/YqRhhc5wrIVxg+eByv
-	n1lyKV0gE2hG+n1dLddIwONgBN4x0aob4uQrJ4J3dDhyUOaau9jal0NSFUNW31wH
-	RjpDKMXsleJ9JQAkaYKMnMUzayJwJvJ5plHRG6umv073S+T/UWw503XSOI+eo3ml
-	X2SwEqw5zydHHbLZi+4qj0PcBmp0nIbxi6C1buU31NbZ7Dx4iI4iM3b7bX/zWIw5
-	MyQixBelPLd+Y0iXO2KablMLN3uooevZ3dRxxE1DEQxnzmHEiDEmzimwhDOA53v1
-	BU5Piu1Ye3AFyGS83loGCMBtge0Amnue3yQas+uK4U5E3F8OFZxBZqe6YxeA==
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="uWF3S1k5";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P6T3gLCB"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id CE068114018D;
+	Fri, 23 May 2025 11:01:05 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Fri, 23 May 2025 11:01:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1748012465;
+	 x=1748098865; bh=GVeRoZ2xr1DecS6vEztPZjSmtWdWg50ATRRQMN1g37c=; b=
+	uWF3S1k5HsJ6mKTOI1yc3ZofNbQ91ONe4XvQBwiYII9ykpmIWQQf0oEkP+HoWCCH
+	aWcJQrmhSFUuoRHL2nsDuIiD+aKnGvUR3qBI9IvSEPPyaFYw6LG1zcCujRKYWG+2
+	/xGke5rBXB4rVumI5LmUMzNa3GFfF9rUb1np9nrRUy9oRYM/1XQsV0an97rbAQvi
+	50esdxpj/Sa7FoIaOeZhlbywDyRkdauhZTCajjzDxD7Sin1lyYQg4RBrkfSHs7Kl
+	jXyS73o1AeISUgI5WCRE/zCrQ6Uk0l8BJj9a29VV8r4SuUnilEerbcpDmQ/j8vpu
+	OPgzO36/DakMnrcDFXuI2g==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=
-	1748011748; x=1748098148; bh=nsd1fbn1hOjq7wqSiSEEGPTnnbaga5U4bGJ
-	/LQmJS2c=; b=LXj3hVyQyu9TM89XASfGYHLaKp6qLFZUNiaxGd4fd5zqpDUGBtZ
-	N/IVspW64Eb466D3pjenOZANWzd/p+TUO/8vfcLrk4BqoAD1bVx+Uxf35VOVuQou
-	ZhPJbOnYcqjhrJ3s79oosiXgrjdkTolDVQ/6VV92rahuTw+3iXL9h830gpnxNaal
-	szkEMXIWIpWbp59AfFVSzKfaODpf5F1s6/40iekWYgWuQEb8tA6UAwC7CGhjCpUk
-	iqjkFPAPbKiroKxQ0FDOHMCrZhplvZKcR1wv7jaeMOuydOyyeF6x5XINBh6Y18mK
-	5cum8GpPFzWYzCm7U42l59Kxz5Gm6ElCpCQ==
-X-ME-Sender: <xms:44owaNXx4zFYFR45NwfsywV3w2vn2Wu4uUR2etlroqy1idzZGh8hBA>
-    <xme:44owaNlxpfe_VbkijgNSOQD2CWPvas-WleY6ThNS7pW0r3bQCF6cRpfgjmxr_VJqa
-    3bs-LHYHiwFHQwgnA>
-X-ME-Received: <xmr:44owaJbHJi9ucIcUz-KbX73gUIkhMxcqW_Lvaef1yLwofL39i99s_9dCvm0wD1pEHnWGBL7uAtwAxWP2I0IM4Y0P119z5gpHNNo-hi4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeludefucdltddurdegfedvrddttd
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; t=1748012465; x=
+	1748098865; bh=GVeRoZ2xr1DecS6vEztPZjSmtWdWg50ATRRQMN1g37c=; b=P
+	6T3gLCBl0FvgvUV08kJQUmmeh4JyiTFJSksuIARXenR+LAvVbR0AnwFIrcQBYDqu
+	EYsosRRFJhtyRB5daUbhbEih3ezCge6cJrWKtmdt80XAejwhaQ4RfWCG/syh9Rpe
+	PNnX8yQtI/u/qF3B6mwVC4LCtkVWWAvydXfEY8tE8dU1gYiPDdm+dEJApOADYilP
+	N6BSxCxwexIAaEDoUxh1Y0ja5x7sjerBNUHFJXCD7sSlF8hgnwuMXines32W6kzI
+	SIJymznA1LHYqjd95JVU2F72T9nYK/iXo7bUJu/IoLzv4huvb9qqZAEcOcU1XY1B
+	W3JiPDxA8U1Ni7v4XwrgQ==
+X-ME-Sender: <xms:sY0waLRV2irDncURdL4yzWzXXknpahNygApigpECE8reTYuOMTQG2Q>
+    <xme:sY0waMxR3MmW2eOj8MX8G63z9hCm2Mle6i0DfeL6Uh1D9Gx5dQAxB89jgbEgtXkKL
+    oBilD2QCBOZmrjuMQ>
+X-ME-Received: <xmr:sY0waA10vCuBtqTET-D3qh5obqMZW3vdGyNndx_BUblzEzY52hNA55JqFS1Lh3JDebJMdIuAd1-TRvuHi4MXUQAIYee8Wzi4Rgx1ky0yyJ_qOw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeludeiucdltddurdegfedvrddttd
     dmucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgf
     nhhsuhgsshgtrhhisggvpdfurfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttd
-    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvvefujghffffk
-    fgggtgesthdtredttdertdenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepfeevteetjeeh
-    ueegffelvdetieevffeufeejleeuffetiefggfeftdfhfeeigeeinecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphhosgho
-    gidrtghomhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpth
-    htohepmhgrrhhksegthhhrohhmihhumhdrohhrghdprhgtphhtthhopehgihhtsehvghgv
-    rhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheptghhrghnughrrghprhgrthgrphefhe
-    duleesghhmrghilhdrtghomhdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhgu
-    vghlihhnsehgmhigrdguvgdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssg
-    grkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:44owaAUr_0FbRbEdELgIx-GGLlScF27zqj7Z2JJoUQjXexOCFuaDkw>
-    <xmx:44owaHmTK5XLD2z5IpNwC8mC8r4keppuXCkDeOhfrTpY2ztSr8Grcg>
-    <xmx:44owaNccfwxM7mtH98DcxaLyHuDrIRqLtYs3kZlRNhv7sIH50ngU3w>
-    <xmx:44owaBED2gDgEYAuzaSFBWjCyHNfR6GYOUZxsXU2RF-ZUHnrStoiqA>
-    <xmx:5IowaFcaMhifK6TlhLgRnhDpo_wpcuy4DVPQuV3_czJHOSYte5CLgz2o>
-Feedback-ID: if26b431b:Fastmail
+    enucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhepfffhvfevuffkfhgg
+    tggugfgjsehtkeortddttdejnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpefguedukeekffdtfeel
+    leelffffffevveejieeffffffeejffefgfetueetgfefheenucffohhmrghinhepghhith
+    hhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthho
+    pehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtoh
+    epghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:sY0waLCDYHZ3fpbG3jgO79BawuzgfA4mnLdQ5yYlJrderLO1eqqfIg>
+    <xmx:sY0waEj261-S0uzcEa49KFOWaiu458zp9J5hocvDmBq_SX91hed4jw>
+    <xmx:sY0waPooA9Ik_h80vlig_bzeHCbkJI5sDQ1BZz_s1wZ-J-tjz-I_pA>
+    <xmx:sY0waPifPkcZ2jfIiOpC5pS9_1wYSb70iTYcZisZxkdcCFACSm280A>
+    <xmx:sY0waDOGHMefic-ZsOw3DH7zoFjyqedMJG7fwiWl0d4hAF1jMu5CJpLu>
+Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 23 May 2025 10:49:07 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Mark Mentovai <mark@chromium.org>
-Cc: Git Development <git@vger.kernel.org>,  Chandra Pratap
- <chandrapratap3519@gmail.com>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH] apply: set file mode when --reverse creates a deleted file
-In-Reply-To: <76ce493d-d5bd-fc63-8942-76d0b3cebbf9@chromium.org> (Mark
-	Mentovai's message of "Thu, 22 May 2025 19:48:05 -0400 (EDT)")
-References: <20250522220235.8650-1-mark@chromium.org>
-	<xmqqtt5c1ccs.fsf@gitster.g>
-	<76ce493d-d5bd-fc63-8942-76d0b3cebbf9@chromium.org>
-Date: Fri, 23 May 2025 07:49:06 -0700
-Message-ID: <xmqq1psf1ixp.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ 23 May 2025 11:01:04 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id bb849f47 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 23 May 2025 15:01:02 +0000 (UTC)
+Date: Fri, 23 May 2025 17:00:57 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: git@vger.kernel.org, Ramsay Jones <ramsay@ramsayjones.plus.com>
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+Message-ID: <aDCNqRAoGygwnAbq@pks.im>
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <aC2xp4Cdb0j6OX-G@pks.im>
+ <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g>
+ <aDBH7G-oKKxAXWBp@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aDBH7G-oKKxAXWBp@pks.im>
 
-Mark Mentovai <mark@chromium.org> writes:
+On Fri, May 23, 2025 at 12:03:24PM +0200, Patrick Steinhardt wrote:
+> On Wed, May 21, 2025 at 02:26:23PM -0700, Junio C Hamano wrote:
+> > So the four patches are now sitting somewhere in 'seen'.  Is it the
+> > one that causes this failure, I have to wonder?
+> > 
+> > 
+> > https://github.com/git/git/actions/runs/15169816296/job/42656836511#step:4:2113
+> > 
+> > It is curious that only osx-meson is affected.
+> 
+> Ah, interesting. Seems like macOS has since updated to a newer version
+> of Meson, so it now uses the TAP parser. And there are some tests that
+> only execute on macOS and that cause us to emit output to stdout/stderr,
+> which will thus break the TAP format.
+> 
+> I'll have a look and will send a newer version soonish.
 
-> Junio C Hamano wrote:
->> Mark Mentovai <mark@chromium.org> writes:
->
->>> +     git checkout -- data.txt &&
->>
->> This should be a no-op, right?  What are we testing here?
->
-> This syncs the executable bit to the working tree.
+Okay, the problem actually isn't the TAP format -- Meson copes with the
+broken output, but I'll fix it regardless in the next version of this
+patch series. The problem is that we have a test that unexpectedly
+passes on macOS:
 
-Ah, OK, you are simulating a filesystem that is unaware of
-executable bit, so the bit on the file is ignored as long as the
-file is registered in the index, and the executable bit in the index
-is used instead.  There is no need to sync, and it would truely be a
-no-op on a filesystem without executable hit, but when emulating
-with forced core.filemode on a filesystem with executable bit, doing
-so may make test writer feel better for whatever reason, since they
-can look at the "ls -l" output insteadof "ls-files -s" output to see
-if it is executable.
+    ▶  868/1023 - git grep .fi a                             UNEXPECTEDPASS
 
-> I found it useful when developing the test, but it's probably not
-> strictly necessary as the test is intentionally independent of the
-> executable bit in the local filesystem. I can drop this if you think
-> it's unnecessary.
+The test in question is this one:
 
-Yeah, I understand the intention.  It is more like debugging printf
-left over from development of the test.  It is misleading in the
-final product, though---makes it look as if the executable bit on
-the filesystem must match that of the index entry when running with
-core.filemode=off on executable-capable filesystems (to be honest, I
-am not sure how burdensome it is to the code base to support this
-mode of operation, where core.filemode lies to the system---but it
-is handy so let's keep the promise, "filesystem executable bits do
-not matter when core.filemode is off, even if you are on a
-filesystem that does store execuable bits", which the current code
-makes).
+    test_expect_failure !CYGWIN 'git grep .fi a' '
+        git grep .fi a
+    '
 
-> The file that I deleted at the end of the previous (apply "forward")
-> test was not executable. It's important that this (apply --reverse)
-> test begin by reversing a delete of an executable file.
+The test passes if '.' matches a NUL byte, which we expect to only
+happen on Cygwin. 064eed36c7f (config.mak.uname: only set NO_REGEX on
+cygwin for v1.7, 2025-04-17) mentions that this behaviour was probably
+imported from FreeBSD, which makes me wonder whether macOS eventually
+also inherited the same code given its BSD lineage.
 
-Yes, if we are trying to see how "removal of an executable" when
-applied in reverse turns into "addition of an executable", we need a
-sample patch that removes an executable.
+I think we probably want something like the below patch to fix this. We
+could also have a prereq, but that prereq would look almost the exact
+same as the test. It does make me question the value of the test itself
+as the behaviour is completely platform specific.
 
-But you can certainly flip the order in the first test to commit an
-unexecutable, turn it to executable, and then remove ;-)
+Patrick
 
-In any case, for a better coverage, you'd probably want to do both,
-i.e. reverse apply a patch that removes an executable, another patch
-that removes a non-executable, yet another patch that adds an
-executable, and the fourth patch that adds a non-executable.
+diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
+index b7d83f9a5de..55d5e6de17c 100755
+--- a/t/t7815-grep-binary.sh
++++ b/t/t7815-grep-binary.sh
+@@ -63,7 +63,7 @@ test_expect_success 'git grep ile a' '
+ 	git grep ile a
+ '
+ 
+-test_expect_failure !CYGWIN 'git grep .fi a' '
++test_expect_failure !CYGWIN,!MACOS 'git grep .fi a' '
+ 	git grep .fi a
+ '
+ 
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 6ce8570226c..fef522327f2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -1636,6 +1636,9 @@ fi
+ # Fix some commands on Windows, and other OS-specific things
+ uname_s=$(uname -s)
+ case $uname_s in
++Darwin)
++	test_set_prereq MACOS
++	;;
+ *MINGW*)
+ 	# Windows has its own (incompatible) sort and find
+ 	sort () {
 
-And the two tests that applies additions in reverse would probably
-need three states to start from (i.e. the file does not exist, the
-file does exist but with a wrong mode, the file exists with the
-right mode).
-
-> I wanted
-> to give better coverage to git-apply setting the executable bit when
-> it creates a file, whether it's in the forward direction or reversing
-> a deletion, because that's the harder case (and the one which wasn't
-> working correctly, and which prompted this patch).
-
-Understood.
-
-> On the balance, I chose to keep the tests more isolated,
-> but I'm happy to revise if that's what you prefer.
-
-I would prefer more smaller tests than fewer larger tests, so that a
-breakage can be identified more easily.  &&- chaining 20 related
-tests that checks 20 different conditions is rather cumbersome--you
-need to find which step failed first.
-
-Thanks.
