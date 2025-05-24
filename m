@@ -1,70 +1,70 @@
-Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+Received: from mail-oo1-f44.google.com (mail-oo1-f44.google.com [209.85.161.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338D27E9
-	for <git@vger.kernel.org>; Sat, 24 May 2025 03:10:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39D0E1993A3
+	for <git@vger.kernel.org>; Sat, 24 May 2025 03:19:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.161.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748056244; cv=none; b=WRbWBACKVo0vGFM3RSUEw0BWnDW+v4cDFVTj81tGmnU8t7NVjG4taTT91jz44sM7mDl/rBK0LE/LsOp9mhow8o26Y4K7nJuVLD52QZuAfu/S46MHJvTSKdsT27s6IKGUJjrhY87PiFVDglNF2c+GUH8QovO6euPcsCTdCYqcwvg=
+	t=1748056779; cv=none; b=UCLyKfUnWMs9rwooeB+2/HVam7C2V51UU8que2dyEXPNu7nZtri7lpFVLWEePlNToaoAqB8LrMBmoiQvXP/h6GdbGdmI7PkUH3qzxVzKwO9gR/FXOQwDlDRfW1EjXBr4OHz4Joolye098XNieOMiyN+ds+cviVAB9KRkX/jFDUI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748056244; c=relaxed/simple;
-	bh=uZzCpscutYkhUoejP7QA4OpSnEr9JH8LsBVAIm/qgSs=;
+	s=arc-20240116; t=1748056779; c=relaxed/simple;
+	bh=IXQI9oYTJLEwE9l5NAAel8hkH7v6Xp7JhDj/wUewlqc=;
 	h=Date:From:To:cc:Subject:In-Reply-To:Message-ID:References:
-	 MIME-Version:Content-Type; b=R7Jf41rKpKARzScfFYsxemJDK9tOGCRNHvlCm34nDKcdJt5F7GisreaJk4ZOb3bvEE/F7UQVpYr2xWHSerdcW58fHcMDqIdnzO61R20h76eFSMiK3UdAK8n66J0KyN6kqXYp4+/Yan2TZCt+TkbxPUHySTdTdxKW1bZ0eKOMcW4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=nBrqoktD; arc=none smtp.client-ip=209.85.222.172
+	 MIME-Version:Content-Type; b=b8NMiS0MZEOiM7OpAIQ0G/ogBLK7JDmdEOyerYaNqSqWaiqr5SaToxlPR3yEFteNpeUoyq2CYx58IiUtCC/xStJfh62EFbxjEBNvYZ+U23xxH9EKQT9njnpEyz0Ol4sC7+vuNbhDxI0sxcBoZL8GxJ4EMVQVGWL551AmfPsper0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org; spf=pass smtp.mailfrom=chromium.org; dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b=fnqrJO7R; arc=none smtp.client-ip=209.85.161.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=chromium.org
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chromium.org
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="nBrqoktD"
-Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c54f67db99so158580185a.1
-        for <git@vger.kernel.org>; Fri, 23 May 2025 20:10:42 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=chromium.org header.i=@chromium.org header.b="fnqrJO7R"
+Received: by mail-oo1-f44.google.com with SMTP id 006d021491bc7-60219a77334so236254eaf.1
+        for <git@vger.kernel.org>; Fri, 23 May 2025 20:19:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1748056242; x=1748661042; darn=vger.kernel.org;
+        d=chromium.org; s=google; t=1748056777; x=1748661577; darn=vger.kernel.org;
         h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
          :date:from:to:cc:subject:date:message-id:reply-to;
-        bh=dkfsGfWimu++csueREGcugWZbW/pbu4DPgJR6AjOHqk=;
-        b=nBrqoktDiv041K4+NF1tZyCYyOLC8UKH6PStuc+eD9d5sdI/Cw7bp1Qx8ztSNhHrAj
-         FUW/NL1vkmzVhQAKB8G3K+vwyQD4P7Xbvql6qtYHFMh9N7dRpoeqk5kxIm97YWr/icR1
-         WA6UU2fB8zjCGExAE+TweMKOlSnYanV9wms+I=
+        bh=IbyODfXb7uMorRatiQ3KF0JbO6aiAMY/yQ8U3DulDKY=;
+        b=fnqrJO7Rwk2Oz81Cn7klx/smWiNeCD3uAwtE2zI5v8Ra+EY/uleKvoQiwqqW8NvFFd
+         syEFzDVq+pL+7omeaGabJRirxMkv0tohj6q6UAHUC6oMX5h3xxevNIiGd3HtFrc1txtu
+         WVRHfcZQab9DD8VR4ZdBXDp//UGGfL2KR4DsI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748056242; x=1748661042;
+        d=1e100.net; s=20230601; t=1748056777; x=1748661577;
         h=mime-version:references:message-id:in-reply-to:subject:cc:to:from
          :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=dkfsGfWimu++csueREGcugWZbW/pbu4DPgJR6AjOHqk=;
-        b=ofbpW6An+YUp8X3z9xYwmjjr5gQJlsImr7K1sPDymwr+v4Z5HIj7+kUX+gGU1nP5G8
-         Uc/ohuBMSt7ktOXMCFFvqcY0nIVaNlupX1/9kN0un9SvedU2qg7dmiqx3TFsKvFcWt7s
-         MLm90CrzdlfClaCBkicrcTVd1wXm1oZZC73h7VpjvaZnzJqbMAMT5FM3NGZU3cgTKrpy
-         gknb/NZ9q4oA5ij0iIdQOPdoRyNbkSz0Dy6QsBdqYpjM0FhR6KFLgzThBknPlp9nDQOo
-         pLvNhbcVCdvG5m6HpO4xtOL75QUzl2Vc6nyaACN3ZtbLoDffl9pg6qANwobtXbZbsOG9
-         C6eg==
-X-Gm-Message-State: AOJu0YyRh7hHUWcvKM+zynPLWSLFpi6gpkXvPmLWbP0wxAWXGVp0YYvn
-	UkfP9nGBXWG9+HlUIN96h4mZAsoDQTu7TUIilsmU2fHjqjlAAGq67RBtltDWnuoj6xPtWyluF9l
-	scffNpQ==
-X-Gm-Gg: ASbGncta4YFzmiW0OsqygaxfIk1ajewXBsfPjuXCd7+LgIkIfoXhLIiygYw7YMvCk/E
-	lBUDh0ynU9r8KrWpTJEBUvO2AqgBkvmbxl2SSelqAaNzq0SzGVjmGz/ekVhQppDZ70gAS6ELrYu
-	2jblSQJpM+gr/d04UwNzNaPQ0GVuauzTNXljGUGlTTcXAWf6peSbTjaUg/BONeLevnhOJ076Iif
-	dvrBR/N0tm4rcc+jdmjGOrxFTzY0eMzQByusSyhZtRF6vMR9iOiPmgWRMaCKfzrO17d1TVkQwQ1
-	o9QgRMQwQsi6AbzKV7dWR59LiYol1qo2+1nla3n7rgTAtzjbtbNBwrBnPq9pMq85ppRwCGRk42J
-	i0ULDEQ3Tl3CHXWmv7yhYcgRj76hKmyCnBCZoI0A=
-X-Google-Smtp-Source: AGHT+IE2pIPzWf3doJtJB4WYmjXHo488kgk+Z5daNdiDACaaeAqGX7aM+dFEZmvwhsKRB+RyqWeKOQ==
-X-Received: by 2002:a05:620a:4246:b0:7c9:38ce:becd with SMTP id af79cd13be357-7ceec49d71bmr260653385a.22.1748056242039;
-        Fri, 23 May 2025 20:10:42 -0700 (PDT)
+        bh=IbyODfXb7uMorRatiQ3KF0JbO6aiAMY/yQ8U3DulDKY=;
+        b=ftQWHOIwTuxZG4PVFv3y9KttN7pEHb9IKXc0nHh+YK86Fa26BhYzbeJ3vQroWrScW8
+         pUu3qjb5p6Co5OV6j0ldMSNNgQYKQ0g3FKJaF52WNrELyFNrrf2ZDQuD0cq/v0IKqfnO
+         AosxFg7vywQI5G54hvH4wKZq3PWuDr0VHVyFpVrBIpBSOGLBimDaD8u2Id7ATIt4HaFf
+         CMoDw9TXFkPjqkww/nVja+vtJNTZa5jfrZxJHZmSvfC+KPABJWX8/oB6NvT1n0jnMjLM
+         6e51EB6THAHaV0n04/GYAAE+tKL9a8gp4C6LWHkth8ebKaaP+szgu61E2q7e68UYiYKY
+         9yMg==
+X-Gm-Message-State: AOJu0Yz+MODjClloN/4eYniTzmtv4B/Mg00SZpgOKwtec2Uval0VCEJ7
+	esRSOqxBTabojlWjzkya57a4EtAEEi5/Z3+0ZX7MImEF63FZm4Jx3sh1xpyB8rpSKgGBxW9kx9b
+	dE20Nhg==
+X-Gm-Gg: ASbGnctWeMfnzP9OSGOVCgTg2ilNQClhlz22OSi+JnE8Qb/8KB/Y12wVb2oXfI/AmH4
+	4qNvrRPel8OzHResyRvW+IgUUKl+wsL9bXz4jKplDVIicTuPMPSAzmMngbzYYFBKMsUXZGM53jR
+	+PKPuRUoMkxd7DZSH2flA/sDCSqCyF/7aATwXpJbv6g+PCtFDEQnt/lT3TJGPvQtX2X70+qc1sW
+	krRFREWvaLGoM2LhQfvvmWrXK55HyMZgG7C0J505J6C2YpQjSWOvtJPRZs3aGZTiTEBt6eT1LHH
+	FAkRO4W//xLBsbLok43I/gJUKny/z4vPH6OjqWakTtWuKFOk64Mn/XBdFsipejXYQ5bzo3WqoiS
+	BWXQ9esjeMwVc9BD91+NRyfp68iVhsT4FGYVj1UI=
+X-Google-Smtp-Source: AGHT+IF1DBYknz4ZVEuBzBNzVQfOZXipk1Y2OqqTKOsaOWj21LrArWbH9TfNj7LWJgSIypy+2ss6Fw==
+X-Received: by 2002:a05:620a:288f:b0:7c5:5e9f:eb2d with SMTP id af79cd13be357-7ceecc7943emr251741385a.44.1748056766944;
+        Fri, 23 May 2025 20:19:26 -0700 (PDT)
 Received: from [2600:4040:9ce0:6400:e585:dc50:f5e1:64e7] ([2600:4040:9ce0:6400:e585:dc50:f5e1:64e7])
-        by smtp.gmail.com with ESMTPSA id af79cd13be357-7cd468edf57sm1265816885a.114.2025.05.23.20.10.41
+        by smtp.gmail.com with ESMTPSA id d75a77b69052e-494b8fa2cebsm113606271cf.34.2025.05.23.20.19.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 20:10:41 -0700 (PDT)
-Date: Fri, 23 May 2025 23:10:27 -0400 (EDT)
+        Fri, 23 May 2025 20:19:26 -0700 (PDT)
+Date: Fri, 23 May 2025 23:19:25 -0400 (EDT)
 From: Mark Mentovai <mark@chromium.org>
 To: Junio C Hamano <gitster@pobox.com>
 cc: Git Development <git@vger.kernel.org>, 
     Chandra Pratap <chandrapratap3519@gmail.com>, 
     Johannes Schindelin <johannes.schindelin@gmx.de>, 
     Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Subject: Re: [PATCH v2 1/2] t4129: test that git apply warns for unexpected
- mode changes
-In-Reply-To: <xmqqmsb2vr6z.fsf@gitster.g>
-Message-ID: <d14135de-ddbc-0875-3ffe-700a2fd33d90@chromium.org>
-References: <20250522220235.8650-1-mark@chromium.org> <20250523172154.93810-1-mark@chromium.org> <20250523172154.93810-2-mark@chromium.org> <xmqqmsb2vr6z.fsf@gitster.g>
+Subject: Re: [PATCH v2 2/2] apply: set file mode when --reverse creates a
+ deleted file
+In-Reply-To: <xmqqbjrivqn2.fsf@gitster.g>
+Message-ID: <cdca6dcb-3a78-fa0d-b58b-8dfd92924e96@chromium.org>
+References: <20250522220235.8650-1-mark@chromium.org> <20250523172154.93810-1-mark@chromium.org> <20250523172154.93810-3-mark@chromium.org> <xmqqbjrivqn2.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -75,39 +75,43 @@ Content-Type: text/plain; format=flowed; charset=US-ASCII
 
 Junio C Hamano wrote:
 > Mark Mentovai <mark@chromium.org> writes:
->> diff --git a/t/t4129-apply-samemode.sh b/t/t4129-apply-samemode.sh
->> index 2149ad5da44c..082e56db651e 100755
->> --- a/t/t4129-apply-samemode.sh
->> +++ b/t/t4129-apply-samemode.sh
->> @@ -102,15 +102,23 @@ test_expect_success POSIXPERM 'do not use core.sharedRepository for working tree
->>  	)
->>  '
->>
->> +test_file_mode_staged () {
->> +	git ls-files --stage -- "$2" >ls-files-output &&
->> +	test_grep "^10$1 " ls-files-output
->> +}
->> +
->> +test_file_mode_HEAD () {
->> +	git ls-tree HEAD -- "$2" >ls-tree-output &&
->> +	test_grep "^10$1 " ls-tree-output
->> +}
 >
-> The script is about testing executable bits, so it is fine that the
-> above cannot be used to expect a symbolic link (if we wanted to
-> support it, we'd just take the whole 100644 vs 120000 without
-> support to let the caller give abbreviated input).
+>> +test_file_mode_common() {
 >
-> But then it is curious that this asks the caller to say 0755 vs 0644,
-> not 755 vs 644, which would be sufficient.
+> Unlike the two callers, this lacks SP before "()".
+>
+> I would have expected that "no such file" would be expressed with
+> mode 000000 (taken from "git diff --raw" for a removal/creation
+> patch), but an empty string works just as well.  The same comment
+> about requiring 0-prefix before 644 and 755 applies here, but as
+> long as it is done consistently, I wouldn't complain too loudly ;-)
 
-The leading 0 was because I prefer to present numbers represented in octal 
-in this form.
+No, it's fine. I'll switch to the 6-digit form.
 
-On the basis of your comment in the 2/2 patch about using 000000 for an 
-absent file, I'll change this to use the six-digit form uniformly.
+>> +	test -n "$1" && test_grep "^10$1 " "$2" || test_must_be_empty "$2"
 
-> Very portable way to add an executable file.  Would work regardless
-> of the filesystem.  Very nice.
+This requires attention anyway. Reading it back, it's buggy: if there's a 
+mode in $1, but the file $2 is erroneously empty, test_grep will evaluate 
+false and evaluation will advance to test_must_be_empty, which will cause 
+the whole expression to evaluate true. This construct only works properly 
+as an if-then-else when the "then" clause can't fail. I will revise this.
 
-Thanks!
+>> +test_expect_success 'git apply restores file modes (change_x_to_notx)' '
+>> +	test_config core.fileMode false &&
+>
+> Wouldn't this and the subsequent tests want to begin with
+>
+> 	git reset --hard <commit> &&
+>
+> to a known good state?  We expect that after successfully running
+> this test piece, for example, the path is removed after the last
+> patch that removes change-x-to-notx is applied.
+
+Yes, good point. And with just slightly more effort, I can use the same 
+strategy to eliminate the ordering dependency between the the tests in the 
+1/2 patch.
+
+> Other than that, we seem to have a very good coverage of the
+> combinations now.  Thanks for a thorough work.
+
+Thanks for your thoughtful reviews. v3 incoming shortly.
