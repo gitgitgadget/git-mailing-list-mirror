@@ -1,173 +1,103 @@
-Received: from mout.web.de (mout.web.de [212.227.15.14])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45899225D7
-	for <git@vger.kernel.org>; Sat, 24 May 2025 05:57:35 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.14
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B32F19B3EE
+	for <git@vger.kernel.org>; Sat, 24 May 2025 06:48:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748066259; cv=none; b=ULeoZcu+NRmMGnnCXIAm0J4EOd02RRTl5kcL7758kdHkyz5w/iAx5UoqEPNx0b3hZURR2OzhUB+wrmo0TbLK5lzi7zjlhdcmmPurN+gCO2R+nnbLzSS+UpM03W3wd/bbkJvQJ5GFtCKW/ZBaRFMFQtLM1Nnsw0ij+06vkPOUJPM=
+	t=1748069337; cv=none; b=eXMV6l7snzrEJQw5/yKBLTObDpEasaRXJkHD6c72gaqAQLmS1zgCjQZx83JtsFkwHARLppQT8N2Ez775D4otaEsOrMweWiMWxa7mieg5xDL0ENB4g/BhT2iRsjnFt/LMRCpifwoH8EiHgzCRDAQFr9AzsoDfF29DbQ+mJgTwNZo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748066259; c=relaxed/simple;
-	bh=vSKy+oyZh/oNlSso+OsE9vP8WWGkz61bKPyjGH7fxJs=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=VCgWx7fuAYS6YMbLYInekOELQqdqbTDA9EwXQAQnsvrrjRLNt4eVWME4L+T3/EFYqSw8LhL15pPQEA7AG7ut49b4mp0GtPp/fm9ALx+BneF8azfuHbcpsLTM9nxUnLmjECGaT6/FvcvR4SC0sP6xPXM5H2RJCRo3SNsVdVHMWhM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b=toTeTN8E; arc=none smtp.client-ip=212.227.15.14
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1748069337; c=relaxed/simple;
+	bh=ou5yoeCavpZrLmuMLNl0kpWeCFuEpp+L+ERAK6SNVkY=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=CWaQRFodSjAtdFiFYhOBbzdmhEeJiz4JErpKl8zLnaZXQNATK23sj77oC6qvqc1RT+MIjDpscWkeU3CcuzYc4XFTh93+vFFjzdhYQyoRin+LxRvYlB8QkCRaZc++blueo39MCMD1qtQAz5DvhGzVTUSF/eXEc8J8cE0X/Y9alM4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IRME4qII; arc=none smtp.client-ip=209.85.210.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=l.s.r@web.de header.b="toTeTN8E"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1748066248; x=1748671048; i=l.s.r@web.de;
-	bh=5Rvp6cc5mTW/LYckDI1AH60QmBz6ipWJsg5GzdYidrU=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
-	 References:From:In-Reply-To:Content-Type:
-	 Content-Transfer-Encoding:cc:content-transfer-encoding:
-	 content-type:date:from:message-id:mime-version:reply-to:subject:
-	 to;
-	b=toTeTN8ETUxTSCbzBJLp1P/IKTIOGu+J0jDhPeFOcL3gJncpQwnnglqbu1B9gIkZ
-	 fCgrDTJa6wZN4LYPVvhdMteEJ3Jl/zBVnpzAvr9r1cSoQV2SOhEiKyyTBXDMpV7a0
-	 k2rS4AvhQibFE4EPrcaG+TMR5O586AEpD2ZtjyChvbj5HqmK8oPnl3Dp9XeWWumkg
-	 oDUfqMwMsmNrX85OwwBH4axDgfMd5Bt0bu+nRDRtg1k2gUHfVh/aE8eTLwzcqPRnr
-	 YVXms4x7g9IJXtDIlNhgh1Cb/KEkGNE4OqD7tqlV1WSHbZLU8VYngBk6scsZKCD5R
-	 oGMl/rafRja356LApA==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from [192.168.2.31] ([79.203.29.133]) by smtp.web.de (mrweb006
- [213.165.67.108]) with ESMTPSA (Nemesis) id 1MrOdf-1ugE8u3lP5-00djQq; Sat, 24
- May 2025 07:57:27 +0200
-Message-ID: <037b4612-ea92-45bf-bacb-ba66204f941e@web.de>
-Date: Sat, 24 May 2025 07:57:27 +0200
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IRME4qII"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-742b0840d98so453287b3a.1
+        for <git@vger.kernel.org>; Fri, 23 May 2025 23:48:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748069334; x=1748674134; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=m/YYX88WUvy9WZR33dMxLcnFHWy0EBm8InyeOngWWng=;
+        b=IRME4qIInKEQUKlxo25q4U9kpL8m2/pD4FV/VFSNh94ONePqF19WwTurpB/6uuRxG+
+         nA90mBN4u0P1gZU8Rl8etawr2LoIuUe8dUsth99kgZDiL4sB8Zf/MNU3skq0GPCfSy/Q
+         CLnRC1tGI7JF1BhEgTyYP9aV1Bbwooujz5MAvH8NZ1H6uO1zjqCpO8IgNp1WMaqRnvci
+         crm8ocgZGbJtKCKVNRMHzNNLMPKB5IYJH52+lPQI3oZUEJbxOqrzvcFGxwUbdVUU1wO1
+         /lZCl68CUV1mAAUlEaODy89Qsd7DCcPCoYzWS8GZHeozZuvf9wNG7Cp6BJaBAGui6Jpt
+         lAXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748069334; x=1748674134;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=m/YYX88WUvy9WZR33dMxLcnFHWy0EBm8InyeOngWWng=;
+        b=D927LNCyQl87V+8pWR0ewpomNuRvTep+yON3zVhPUIfSddLyNeOcwZTcrsJjm0DBZe
+         X0QcfPoWW+RtCa9Z47PSiZ0ys3LW9D2lrZnjYWh3Ch1GDriDqw0rhXPa4PBf+Sj0SF9A
+         MqwzTKE4sVkR+jCucnoD5Vfj0nOTUVZyG3Uyxv2hGxN4kAj7IqJklGOkXRU2Z29rFnhn
+         hmc+feKFege0BGV8XRiAINfdBVA+3gkwo5IUYGmXEigWs0fdW4OPyBRJtbDFw7/LahDP
+         CAjNfeLAqDUOPnZxHOWyf9X59rlzUTOHvTzFMkAVzwGmgJwEAFmgDrwn38kwEwYDROTX
+         LrXA==
+X-Gm-Message-State: AOJu0YySTq65xYDhPaT+cBnFf3FvZxGGgMe1w8cTLAipJy+8W4psFs0l
+	NYtMWKgkNee5UCWUVa5RLODiQlNZ32CiN5JaX9+b180up+yixK1SymqyqPz7Cbuf
+X-Gm-Gg: ASbGncvoHS7hyXYyDMr938wQaY05UgQQRHljq2hNZRFdwS1C8eeYWhC1+DuJF3VJFZO
+	Wjh/RhG/vi5LRZTwV81nW5vLUmv376SNBMxNK6p+oFSOSj3mVPQ4O/AqdtMHKo7SHl1pHchWns7
+	OxZB+AJdLCvhSvaOhol3NxOhjP8pOCpdcv0A1PxVbZTUIlofkVOSZEb9acCJe9ZHUF3sbdsOgqR
+	batdLox9Yc6H1EQY7Rb4DwW8RKuVCyEcCaVpCJ7toEeEkyzuYHZBg2FLtOS5I3NpJ8ZtuXxSsqD
+	Z0t0/z+QzTlECFuQFxs1GmEWSnY6lmhz1M5cvXmByYSFq2wIW/iaUoZH7/ZVFWbSTCauhPT/2sB
+	A5A==
+X-Google-Smtp-Source: AGHT+IGCheAbysMTE61Ilwp3QdOmqQ/9nX2D2dxUrdkWobnzURxYbtS8l9dLq4e1brpzINN3awNs8A==
+X-Received: by 2002:a05:6a20:ce43:b0:1f5:8479:dfe2 with SMTP id adf61e73a8af0-2188c1ed38emr3327912637.6.1748069334250;
+        Fri, 23 May 2025 23:48:54 -0700 (PDT)
+Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eaf8e05fsm11862401a12.39.2025.05.23.23.48.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 23 May 2025 23:48:53 -0700 (PDT)
+From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+To: gitster@pobox.com
+Cc: git@vger.kernel.org,
+	jayatheerthkulkarni2005@gmail.com,
+	mlell08@gmail.com
+Subject: [PATCH v6 0/2] Avoid submodule overwritten and skip redundant active entries
+Date: Sat, 24 May 2025 12:18:45 +0530
+Message-ID: <20250524064847.51900-1-jayatheerthkulkarni2005@gmail.com>
+X-Mailer: git-send-email 2.49.GIT
+In-Reply-To: <xmqqsekzjo7g.fsf@gitster.g>
+References: <xmqqsekzjo7g.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] Fix buffer underflow in xdl_build_script
-To: Alex via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org
-Cc: Alex <alexguo1023@gmail.com>, jinyaoguo <guo846@purdue.edu>
-References: <pull.1976.git.git.1748033500935.gitgitgadget@gmail.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Ren=C3=A9_Scharfe?= <l.s.r@web.de>
-In-Reply-To: <pull.1976.git.git.1748033500935.gitgitgadget@gmail.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:4ngkdEtReZu6pDOyTRrxN03Qg49zzfn7AliYZNQQI9MzNRDyxPP
- LMKvaaeUo8hvr+bGK2rvtNCNKQ6HAgYhtgV7SO31+YFMAEN7DFPXthAW6PShsuhcdPeR3Lz
- lPgf3si08VuETgMkB6cs3jRhxECusneG8QOgsZdKHopdMpsygH7x55swNGU6o8JuBPiwEL2
- pwNh+mpOQewPMW16DbLEQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:cIc/OK4K/sw=;EqhbkLdN2UwcIJNAVlnsEcVRzxR
- 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
+Content-Transfer-Encoding: 8bit
 
-Am 23.05.25 um 22:51 schrieb Alex via GitGitGadget:
-> From: jinyaoguo <guo846@purdue.edu>
->=20
-> The loop in xdl_build_script used `i1 >=3D 0 || i2 >=3D 0`, causing
-> `i1` (or `i2`) to reach 0 and then access `rchg1[i1-1]` (or
-> `rchg2[i2-1]`), which underflows the buffer.
-> This commit adds explicit `i1 > 0` and `i2 > 0` checks around
-> those array accesses to prevent invalid negative indexing.
+This series of patch covers mainly two areas
 
-xdl_prepare_ctx() in xdiff/xprepare.c allocates an extra entry at both
-ends for rchg arrays, so an index of -1 should be within the bounds. =20
+1. The bug report where after submodule was moved and the path remained same
+   when a new submodule was added then it directly was overwriting the 
+   moved submodule as the present submodule since the path matched.
 
-i1 and i2 are decreased in lockstep, though, so one of them can become
-smaller than -1 if nrec is different between the files.  And that's how
-this code run can indeed run off into the weeds.
+2. The configure_added_submodule was writing submodule.<name>.active
+   entry, even when the new path is already matched by submodule.active
+   patterns.
 
-Curiously, AddressSanitizer doesn't report anything, but if I add the
-following line after the outer for, I can trigger it to report a
-heap-buffer-overflow with e.g., git show 8613c2bb6c:
+Below is a helper function and 2 new tests with fixes of the above problem.
 
-	if (i1 < 0 || i2 < 0) fprintf(stderr, "Oops: %ld %ld\n", i1, i2);
+K Jayatheerth (2):
+  submodule: prevent overwriting .gitmodules entry on path reuse
+  submodule: skip redundant active entries when pattern covers path
 
->=20
-> Signed-off-by: Alex Guo <alexguo1023@gmail.com>
-> ---
->     Fix buffer underflow in xdl_build_script
->=20
-> Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-19=
-76%2Fmugitya03%2Fbuf-1-v1
-> Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1976/=
-mugitya03/buf-1-v1
-> Pull-Request: https://github.com/git/git/pull/1976
->=20
->  xdiff/xdiffi.c | 7 ++++---
->  1 file changed, 4 insertions(+), 3 deletions(-)
->=20
-> diff --git a/xdiff/xdiffi.c b/xdiff/xdiffi.c
-> index 5a96e36dfbe..2e983965328 100644
-> --- a/xdiff/xdiffi.c
-> +++ b/xdiff/xdiffi.c
-> @@ -951,9 +951,10 @@ int xdl_build_script(xdfenv_t *xe, xdchange_t **xsc=
-r) {
->  	 * Trivial. Collects "groups" of changes and creates an edit script.
->  	 */
->  	for (i1 =3D xe->xdf1.nrec, i2 =3D xe->xdf2.nrec; i1 >=3D 0 || i2 >=3D =
-0; i1--, i2--)
+ builtin/submodule--helper.c    | 60 +++++++++++++++++++++++++++-------
+ t/t7400-submodule-basic.sh     | 23 +++++++++++++
+ t/t7413-submodule-is-active.sh | 15 +++++++++
+ 3 files changed, 87 insertions(+), 11 deletions(-)
 
-Should the || be a && instead?  From a birds-eye view I would assume we
-can stop scanning for changes when we exhaust (reach the top) of either
-side.  We just have to make sure everything from the other side is
-accounted for in the last added change.
-
-> -		if (rchg1[i1 - 1] || rchg2[i2 - 1]) {
-> -			for (l1 =3D i1; rchg1[i1 - 1]; i1--);
-> -			for (l2 =3D i2; rchg2[i2 - 1]; i2--);
-> +		if ((i1 > 0 && rchg1[i1 - 1]) ||
-> +			(i2 > 0 && rchg2[i2 - 1])) {
-> +			for (l1 =3D i1; i1 > 0 && rchg1[i1 - 1]; i1--);
-> +            for (l2 =3D i2; i2 > 0 && rchg2[i2 - 1]; i2--);
-
-Nit: The indentation of that line is off.
-
-> =20
->  			if (!(xch =3D xdl_add_change(cscr, i1, i2, l1 - i1, l2 - i2))) {
->  				xdl_free_script(cscr);
->=20
-> base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
+-- 
+2.49.GIT
 
