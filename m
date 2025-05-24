@@ -1,103 +1,186 @@
 Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com [209.85.210.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B32F19B3EE
-	for <git@vger.kernel.org>; Sat, 24 May 2025 06:48:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ADE51C84D9
+	for <git@vger.kernel.org>; Sat, 24 May 2025 06:48:57 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748069337; cv=none; b=eXMV6l7snzrEJQw5/yKBLTObDpEasaRXJkHD6c72gaqAQLmS1zgCjQZx83JtsFkwHARLppQT8N2Ez775D4otaEsOrMweWiMWxa7mieg5xDL0ENB4g/BhT2iRsjnFt/LMRCpifwoH8EiHgzCRDAQFr9AzsoDfF29DbQ+mJgTwNZo=
+	t=1748069339; cv=none; b=Ht55bIBSndTPjMjXmX70iwepZxjMVSSvP2tC8uKQsAHgy0E7VUesKVJbskGO8FRL1VIGyO4sLe44Y/8Oox3y9L3pAubygo/aH4E74qtDypXn0728Q/xetoK04UlM6ym4Bhdy8Oqqb1UzcMmw13km/StHbo3P4krMi7wYXhl6m6I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748069337; c=relaxed/simple;
-	bh=ou5yoeCavpZrLmuMLNl0kpWeCFuEpp+L+ERAK6SNVkY=;
+	s=arc-20240116; t=1748069339; c=relaxed/simple;
+	bh=RIcm9wzSBH+VCdhhaobteW0T/mSiZTSTllqVZc7vqYs=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=CWaQRFodSjAtdFiFYhOBbzdmhEeJiz4JErpKl8zLnaZXQNATK23sj77oC6qvqc1RT+MIjDpscWkeU3CcuzYc4XFTh93+vFFjzdhYQyoRin+LxRvYlB8QkCRaZc++blueo39MCMD1qtQAz5DvhGzVTUSF/eXEc8J8cE0X/Y9alM4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=IRME4qII; arc=none smtp.client-ip=209.85.210.178
+	 MIME-Version; b=MZgduJ6yKKnble4t8Z52Y/cdkZ3XGWOnOruWjidYWDPr1zyg6OaM2HmaqcUAqS2fB9sw3RsGuBmfGbpe+hmvpJAID2KCSLj8A3cc3x2Q3iZzDmqoKAAl0tdXr7wn7pyw7C+10jQfVdvSy3uhzkwGBtyZPx4wDzjWgnJXcqJC2lc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L+2FHhto; arc=none smtp.client-ip=209.85.210.178
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="IRME4qII"
-Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-742b0840d98so453287b3a.1
-        for <git@vger.kernel.org>; Fri, 23 May 2025 23:48:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L+2FHhto"
+Received: by mail-pf1-f178.google.com with SMTP id d2e1a72fcca58-736c277331eso1224449b3a.1
+        for <git@vger.kernel.org>; Fri, 23 May 2025 23:48:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748069334; x=1748674134; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748069337; x=1748674137; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=m/YYX88WUvy9WZR33dMxLcnFHWy0EBm8InyeOngWWng=;
-        b=IRME4qIInKEQUKlxo25q4U9kpL8m2/pD4FV/VFSNh94ONePqF19WwTurpB/6uuRxG+
-         nA90mBN4u0P1gZU8Rl8etawr2LoIuUe8dUsth99kgZDiL4sB8Zf/MNU3skq0GPCfSy/Q
-         CLnRC1tGI7JF1BhEgTyYP9aV1Bbwooujz5MAvH8NZ1H6uO1zjqCpO8IgNp1WMaqRnvci
-         crm8ocgZGbJtKCKVNRMHzNNLMPKB5IYJH52+lPQI3oZUEJbxOqrzvcFGxwUbdVUU1wO1
-         /lZCl68CUV1mAAUlEaODy89Qsd7DCcPCoYzWS8GZHeozZuvf9wNG7Cp6BJaBAGui6Jpt
-         lAXw==
+        bh=RQbaj/RIzBOHmGGrqN6md9lnFUWIA21VM3Lkt+luIHs=;
+        b=L+2FHhtoy/wQk2JYKswdE1+fwsQwxfyLxmwUW9VP+UB1y+75vuECxrSIQhf8XIn9qz
+         eVa0BpUdqpdC4aQcbFnooU3NBvc7d8PI5aWz1n70GB9lgBVYRLGWJrX/v67xV2qX5E/F
+         rvMnMYrdO4GB6rDdccHaazQu1qlqp/lzt/JeEahnDmfjXxmAX+giFmE27YSPglybZu+J
+         XQuQuOhUpWbpYeBRHiWVa66lznRNZagUeHP/NaF0t6014HFQm2OJyKkpKdw16xAeIzhB
+         Rpb03m7ZVeXLuDd7BOIH4z2oVYTcLKCUYnzQQ4VmoaUr2poG618R+DqCJbI9b1zYZ+6A
+         v6vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748069334; x=1748674134;
+        d=1e100.net; s=20230601; t=1748069337; x=1748674137;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=m/YYX88WUvy9WZR33dMxLcnFHWy0EBm8InyeOngWWng=;
-        b=D927LNCyQl87V+8pWR0ewpomNuRvTep+yON3zVhPUIfSddLyNeOcwZTcrsJjm0DBZe
-         X0QcfPoWW+RtCa9Z47PSiZ0ys3LW9D2lrZnjYWh3Ch1GDriDqw0rhXPa4PBf+Sj0SF9A
-         MqwzTKE4sVkR+jCucnoD5Vfj0nOTUVZyG3Uyxv2hGxN4kAj7IqJklGOkXRU2Z29rFnhn
-         hmc+feKFege0BGV8XRiAINfdBVA+3gkwo5IUYGmXEigWs0fdW4OPyBRJtbDFw7/LahDP
-         CAjNfeLAqDUOPnZxHOWyf9X59rlzUTOHvTzFMkAVzwGmgJwEAFmgDrwn38kwEwYDROTX
-         LrXA==
-X-Gm-Message-State: AOJu0YySTq65xYDhPaT+cBnFf3FvZxGGgMe1w8cTLAipJy+8W4psFs0l
-	NYtMWKgkNee5UCWUVa5RLODiQlNZ32CiN5JaX9+b180up+yixK1SymqyqPz7Cbuf
-X-Gm-Gg: ASbGncvoHS7hyXYyDMr938wQaY05UgQQRHljq2hNZRFdwS1C8eeYWhC1+DuJF3VJFZO
-	Wjh/RhG/vi5LRZTwV81nW5vLUmv376SNBMxNK6p+oFSOSj3mVPQ4O/AqdtMHKo7SHl1pHchWns7
-	OxZB+AJdLCvhSvaOhol3NxOhjP8pOCpdcv0A1PxVbZTUIlofkVOSZEb9acCJe9ZHUF3sbdsOgqR
-	batdLox9Yc6H1EQY7Rb4DwW8RKuVCyEcCaVpCJ7toEeEkyzuYHZBg2FLtOS5I3NpJ8ZtuXxSsqD
-	Z0t0/z+QzTlECFuQFxs1GmEWSnY6lmhz1M5cvXmByYSFq2wIW/iaUoZH7/ZVFWbSTCauhPT/2sB
-	A5A==
-X-Google-Smtp-Source: AGHT+IGCheAbysMTE61Ilwp3QdOmqQ/9nX2D2dxUrdkWobnzURxYbtS8l9dLq4e1brpzINN3awNs8A==
-X-Received: by 2002:a05:6a20:ce43:b0:1f5:8479:dfe2 with SMTP id adf61e73a8af0-2188c1ed38emr3327912637.6.1748069334250;
-        Fri, 23 May 2025 23:48:54 -0700 (PDT)
+        bh=RQbaj/RIzBOHmGGrqN6md9lnFUWIA21VM3Lkt+luIHs=;
+        b=vplusoIOvwrHw3CYXdLr2SR+bFqfZgcty5LGAxdXzfxEho7n5JobsSqxiN5q7EAlsF
+         Lq/M1t/Dtlboq4PMzFscwVf+Lxv6+xxHUDX3RMJY/yh8W8n89IYlGrpGIGG6d3rYusau
+         iuhzqRCJ5pPvnzFXY73bqnp3pm7oLtzmt0A0YyVqn4ilgxeqObjXJgRV6ZJwQ1q5gB4a
+         czyUhaloxh8o8KIRRdibwWGqJs5/jkeOnce6nt5tMvIzRefv+1FQbZcCQvRupEbymkfn
+         p0I1iZntYMpBcwYjnwl7GEHc+B/GOxjzHVM3w/qLd0hPXI+JJilj8ZuKk6nSpt0L/PPx
+         dsNQ==
+X-Gm-Message-State: AOJu0Yx3REBdnA/5UDynmFxguCTK9d+ILZDdrqX+Aw9BnhQSHVGpYAH3
+	DPkBMjFEKdUrFVAlNAne9/RVzHYwrvbFhlTfE0yTAanqq9wYLOnyg/qz
+X-Gm-Gg: ASbGncvivOpgn0tyuWAQwQOmAhWPJ8i8n9v6iIpPHtG/iBEaS1OH2etnUY2SzzpWvUa
+	Sx4E0E3AN/m60URIhJmB0Zf9KMJgkj1Ht3Qcvw5Q9RSCAc8QMdHn21JHpReiv9Sq8Iz+d2/jPjO
+	fVcPeA1NbkJEVFM895ajhluvbN9XmwhrFNPihTbhoWpfgLlgK3USiknMNDOpmE9m41z/zE/9fvg
+	sFH3cWRFFx6ya3UNVRnq62CNShIukqr7soGI80b7jnNppetjolyHXvTLxwaa8Oo1aNfqBiqR5uj
+	zw4SVA19LA4Xm93CfmqlMUY3iluMm36EsW8QyctBnC0N+oR6tePHn5YdJiV8NQ0JO3M=
+X-Google-Smtp-Source: AGHT+IG8xYIWmHZTSDC8ukyfHQVlAAcxqqdtTM8jwOUk9cjndtmky7VPVtc3TRVGTQcP89PU3YP5YA==
+X-Received: by 2002:a05:6a21:9004:b0:218:2b6e:711f with SMTP id adf61e73a8af0-21877b03f89mr9419682637.14.1748069336767;
+        Fri, 23 May 2025 23:48:56 -0700 (PDT)
 Received: from fedora.. ([2405:201:c005:b018:6a51:b86d:8d8d:758])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eaf8e05fsm11862401a12.39.2025.05.23.23.48.51
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b26eaf8e05fsm11862401a12.39.2025.05.23.23.48.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 May 2025 23:48:53 -0700 (PDT)
+        Fri, 23 May 2025 23:48:56 -0700 (PDT)
 From: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
 To: gitster@pobox.com
 Cc: git@vger.kernel.org,
 	jayatheerthkulkarni2005@gmail.com,
 	mlell08@gmail.com
-Subject: [PATCH v6 0/2] Avoid submodule overwritten and skip redundant active entries
-Date: Sat, 24 May 2025 12:18:45 +0530
-Message-ID: <20250524064847.51900-1-jayatheerthkulkarni2005@gmail.com>
+Subject: [PATCH v6 1/2] submodule: prevent overwriting .gitmodules entry on path reuse
+Date: Sat, 24 May 2025 12:18:46 +0530
+Message-ID: <20250524064847.51900-2-jayatheerthkulkarni2005@gmail.com>
 X-Mailer: git-send-email 2.49.GIT
-In-Reply-To: <xmqqsekzjo7g.fsf@gitster.g>
+In-Reply-To: <20250524064847.51900-1-jayatheerthkulkarni2005@gmail.com>
 References: <xmqqsekzjo7g.fsf@gitster.g>
+ <20250524064847.51900-1-jayatheerthkulkarni2005@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This series of patch covers mainly two areas
+Adding a submodule at a path that previously hosted another submodule
+(e.g., 'child') reuses the submodule name derived from the path. If the
+original submodule was only moved (e.g., to 'child_old') and not renamed,
+this silently overwrites its configuration in .gitmodules.
 
-1. The bug report where after submodule was moved and the path remained same
-   when a new submodule was added then it directly was overwriting the 
-   moved submodule as the present submodule since the path matched.
+This behavior loses user configuration and causes confusion when the
+original submodule is expected to remain intact. It assumes that the
+path-derived name is always safe to reuse, even though the name might
+still be in use elsewhere in the repository.
 
-2. The configure_added_submodule was writing submodule.<name>.active
-   entry, even when the new path is already matched by submodule.active
-   patterns.
+Teach `module_add()` to check if the computed submodule name already
+exists in the repository's submodule config, and if so, refuse the
+operation unless the user explicitly renames or uses force to auto increment.
 
-Below is a helper function and 2 new tests with fixes of the above problem.
+Signed-off-by: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+---
+ builtin/submodule--helper.c | 28 ++++++++++++++++++++++++++++
+ t/t7400-submodule-basic.sh  | 23 +++++++++++++++++++++++
+ 2 files changed, 51 insertions(+)
 
-K Jayatheerth (2):
-  submodule: prevent overwriting .gitmodules entry on path reuse
-  submodule: skip redundant active entries when pattern covers path
-
- builtin/submodule--helper.c    | 60 +++++++++++++++++++++++++++-------
- t/t7400-submodule-basic.sh     | 23 +++++++++++++
- t/t7413-submodule-is-active.sh | 15 +++++++++
- 3 files changed, 87 insertions(+), 11 deletions(-)
-
+diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
+index 53da2116dd..9f6df833f0 100644
+--- a/builtin/submodule--helper.c
++++ b/builtin/submodule--helper.c
+@@ -3444,6 +3444,10 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 	struct add_data add_data = ADD_DATA_INIT;
+ 	const char *ref_storage_format = NULL;
+ 	char *to_free = NULL;
++	const struct submodule *existing;
++	struct strbuf buf = STRBUF_INIT;
++	int i;
++	char *sm_name_to_free = NULL;
+ 	struct option options[] = {
+ 		OPT_STRING('b', "branch", &add_data.branch, N_("branch"),
+ 			   N_("branch of repository to add as submodule")),
+@@ -3546,6 +3550,29 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 	if(!add_data.sm_name)
+ 		add_data.sm_name = add_data.sm_path;
+ 
++	existing = submodule_from_name(the_repository,
++					null_oid(the_hash_algo),
++					add_data.sm_name);
++
++	if (existing && strcmp(existing->path, add_data.sm_path)) {
++		if (!force) {
++			die(_("submodule name '%s' already used for path '%s'"),
++			add_data.sm_name, existing->path);
++		}
++
++		/* --force: build <name><n> until unique */
++		for (i = 1; ; i++) {
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "%s%d", add_data.sm_name, i);
++			if (!submodule_from_name(the_repository,
++						null_oid(the_hash_algo),
++						buf.buf)) {
++				break;
++			}
++		}
++
++		add_data.sm_name = sm_name_to_free = strbuf_detach(&buf, NULL);
++	}
+ 	if (check_submodule_name(add_data.sm_name))
+ 		die(_("'%s' is not a valid submodule name"), add_data.sm_name);
+ 
+@@ -3561,6 +3588,7 @@ static int module_add(int argc, const char **argv, const char *prefix,
+ 
+ 	ret = 0;
+ cleanup:
++	free(sm_name_to_free);
+ 	free(add_data.sm_path);
+ 	free(to_free);
+ 	strbuf_release(&sb);
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index d6a501d453..07951f0c6d 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -1482,4 +1482,27 @@ test_expect_success '`submodule init` and `init.templateDir`' '
+ 	)
+ '
+ 
++test_expect_success 'submodule add fails when name is reused' '
++  git init test-submodule &&
++  (
++    cd test-submodule &&
++    git commit --allow-empty -m init &&
++
++    git init ../child-origin &&
++    git -C ../child-origin commit --allow-empty -m init &&
++
++    git submodule add ../child-origin child &&
++    git commit -m "Add submodule child" &&
++
++    git mv child child_old &&
++    git commit -m "Move child to child_old" &&
++
++    # Now adding a *new* repo at the old name must fail
++    git init ../child2-origin &&
++    git -C ../child2-origin commit --allow-empty -m init &&
++    test_must_fail git submodule add ../child2-origin child
++  )
++'
++
++
+ test_done
 -- 
 2.49.GIT
 
