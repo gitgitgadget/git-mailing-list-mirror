@@ -1,102 +1,137 @@
-Received: from mail-yw1-f175.google.com (mail-yw1-f175.google.com [209.85.128.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EF8A1E51FB
-	for <git@vger.kernel.org>; Sat, 24 May 2025 16:32:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B9D1D6193
+	for <git@vger.kernel.org>; Sat, 24 May 2025 21:35:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748104367; cv=none; b=bHAjvZl3jM9etGHly6P9UMJOtV87Vn9ke1GZ+1yrw4rK6tUcGImdjXczyxzEdEPVk3LHio0YsG+HMr819XdMNiMLxBM+ATbLlkyg6gdTZikEa1HCigGsiS4/mHRrif4DBp1xSr6DGh5ZTbePwshnRYvRGxt96YryRAF0fH5Vl2I=
+	t=1748122515; cv=none; b=fGkIn8XZZhPVIT19Z4A7CAZG4xN3hvs27Akm0xKhgmgKhIICiI0GEMT/C+wIKP6SSfKot7WKE/UImgv9nYbyjFTPSSpUBAOKqMLVj9C2bkKiDQVcyGlX7V3MrfIOwDPwDfSwSR2bDkDvorockZ1jzpoZ1qYPFRZD2Z0bNDgqbWc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748104367; c=relaxed/simple;
-	bh=oJqlFK0Exay8eVtjK0E/jFWrX6VDe5chPgZnY0ewIOw=;
-	h=Content-Type:From:Mime-Version:Subject:Date:Message-Id:References:
-	 Cc:In-Reply-To:To; b=BFebTSVJk+acBA8h3RyruqxPh3NEn/TPf5gC/aCRbAWM5hkNdidDs3oEJ+AN6A8vvAZdwc0wfclmdruGPKHQaLrndHZ3wBO5hf626AIVmClBG6XJG8jn+VzUn02SzfQbiovLCJfMFNyUG3IMZM0F8N0lnM+OI++04b85jjuFQ1o=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OA7QWvlG; arc=none smtp.client-ip=209.85.128.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748122515; c=relaxed/simple;
+	bh=6w9adMarJ21aRWtIiKR0C/MCqZWsmRSitx9ricZ8uSw=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sY6oJJuHbttaR3wdSprrNjhVRLkaZ45guQRi5xItQ7e/rCAZn8MwglSZdJSCXa2Z+1VNdh5kNThzjs5W4K7lGGD5BC0l40/InT4fNH3AmqzwV+SrYSODYYyANeb4cWHyYz7IKxYO7ZYazFYgP6IRg65UwUUvvLr3IzPJ/TpJShA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=xmhR7Tx/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vpA2+IBH; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OA7QWvlG"
-Received: by mail-yw1-f175.google.com with SMTP id 00721157ae682-70cca430085so8075877b3.3
-        for <git@vger.kernel.org>; Sat, 24 May 2025 09:32:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748104365; x=1748709165; darn=vger.kernel.org;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EZnl4gNJqFXHAsNRVe5unJj3TtxLvYOSDlQ8QnhKEfk=;
-        b=OA7QWvlGEgH7tgMvt0uN00nTQKCQvEMGlKEAToN317LuchST/pa//YR4SasWZkA8JS
-         WnHSJMPZek8f/ahIo62LSu/2ucprAKQXFPIljPM8Y1jITlatsGDk8LT+KGDCGV7GIXkt
-         YMQyKEVaJjlP7P8owcXR/G8e+5YkTVEv7j6I/rrC8yXYxrJoIn9RS4ybFggEP4Cd0IJE
-         P/FSbvM+ooMkN0AG27mPzHPWo50w/KhnktpnXqwb+jrsCsBRl19RvNJm4iXf5oUuFhPo
-         zrwF3jb/NtHWJmja7dEgEmB8Z1ja1xDvxUJuxtBw84Qr5Gj4JPU79sYqJS7dlxZ8gpHF
-         oGyA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748104365; x=1748709165;
-        h=to:in-reply-to:cc:references:message-id:date:subject:mime-version
-         :from:content-transfer-encoding:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=EZnl4gNJqFXHAsNRVe5unJj3TtxLvYOSDlQ8QnhKEfk=;
-        b=nhrhXkOCu4N7vJku82XJDGhxAtB5sjTMzz6QbBsZ8960/EU2rfztv8MkW/Fjtrw35l
-         Ad+iVpeqPzmBOoo60aTTOxiNqq7t9IYufMnj3trVgNG4FA1iHIXr8YOiVq7xUQQQNnkH
-         oQRNTMGbeVB97r8Juoy/qNIBP+ESApUk1/+d2yrj39FM1qA3oaGQh8pXnM1gpzZckIoo
-         MeINvvhIgPD2zsjAkBUch3H1vN6uIU2OgJv88rmYWoWk2vHe4aYNeHd1MwQTznKsGl5u
-         +3L4QNTzPf0A+AuJuRMdPu1rztNyN0UsieehNYZxRG/kcp9q6S9g2Bcvr4CwNvU8Fvp1
-         3qXQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVlyAUJIlvjoTF0siM06rXCGiuhmmyKjsUREJ5AAONr6Ph/ZYHm7lZIXy6rSkBCq8sZvS8=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzsG2Y/ftPI6cIeby2jN6wTCR3rM7CLs0LICXwUu6LOA7cYcnYX
-	LFSZTIUAmqemPITE+r5rm82S6XmnGcFy/ikjm8pDEVMQuy6yE+g6kmDw
-X-Gm-Gg: ASbGnctAYmMe4Gq6w/UUMxy4q4aUvhigWXou/3x4QLYZPpx3ub2khkdwzfJapU0Tih9
-	Of/J5dcCqFSYlCa+FbzkJI9oktn0Ugm4/y7gixL9pQV2XJSiOMWtdUD2beUApMH2jgxeDfgZCkW
-	fX9+1BqBuzzeWusKxhtHGnr4qTbMTU+SX8UTY1wUhTKm46rFBTSP9KroTOE7R9Wvm2MFlGKE1bs
-	PaCCfgu8RjRoAxATl7WBsbiVis+vRGrpgeOW9dpMUMTrBMFZD2qP4z5Gxja2FeKL6+uWUs2VaqI
-	N6SWD7rGmPz6ioTXUGPGxvXCyZJyhxy4Gv1HL7yaX68gPENBhR5BAJt4ZSWX3lKRju1EUoGYJgZ
-	jPr/0bOdAzVZn86WggvkY9WV4tbHDKqCLCWIwJ8FpAzMY
-X-Google-Smtp-Source: AGHT+IHf9nmskurxGFqOxT67zXgWM0TKN1Z0qJK0O415rr6vWWly8WqWpEQ+7eCV6K+1bDqYg5BF4A==
-X-Received: by 2002:a05:690c:8c06:b0:70e:23e6:60f7 with SMTP id 00721157ae682-70e2dabb3a3mr24214337b3.27.1748104365203;
-        Sat, 24 May 2025 09:32:45 -0700 (PDT)
-Received: from smtpclient.apple (99-144-70-174.lightspeed.chrlnc.sbcglobal.net. [99.144.70.174])
-        by smtp.gmail.com with ESMTPSA id 00721157ae682-70dff0227f3sm13881437b3.27.2025.05.24.09.32.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 24 May 2025 09:32:44 -0700 (PDT)
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-From: Ben Knoble <ben.knoble@gmail.com>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="xmhR7Tx/";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vpA2+IBH"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 52276138043F;
+	Sat, 24 May 2025 17:35:12 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-02.internal (MEProxy); Sat, 24 May 2025 17:35:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm3; t=1748122512; x=1748208912; bh=7A
+	qEoF2o4F8Fc0Nuh2nJOsDjCYBxDFaZU7NWGNq4meI=; b=xmhR7Tx/h9Y7pCwJxD
+	QC9IBdB90f9qJN1gzeJoSpm5RZ93IKF3SrOI7NKAHtmiCWewgf7UfJihpsERW5lY
+	GNoO5Z+99tk+fxvqRs7d8kaTBc/8oyhIj47JdrG8E/hd/mvafkSLSp2Yq0GcP1Hn
+	F1uJyxPTCwTSJ0BD0qU00NJKh9dU10Hxum5IUSw6dKBq6iCkOHOl7ExzQCXx/PN2
+	Hd8CCgcOTwfYO3nokjhOBR0+naREj47YWBFUasedwwhxNZTut9PebCjcRklRHL1m
+	4RRL/aPIZRJrTCuWmkmP/Hj6FlSBpKmiPr9Il8QOylwlohw2ZyNUmKRRpUy65zf2
+	XoIQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1748122512; x=1748208912; bh=7AqEoF2o4F8Fc0Nuh2nJOsDjCYBx
+	DFaZU7NWGNq4meI=; b=vpA2+IBHZCVffxdnxaiKQbp7Do+DsZD9AF6/V5HometG
+	1rQ6fL9yU+/x/5ZhD2pduWKKwYytkBgHm9nXeNUtt8i+fS42us6srFXb2YC9ggvK
+	VBMANv6exkdqn/1+KXR0bOfovUG4FA0cfA5icIPUWkKOYhLpcP2eM28WOBzLJ8CQ
+	G4vYBYbfh9C/xuREWfRkJ4pWfXARREsFhWWA1UU91r5NtmFl/G4lVbuahAAUSHsk
+	JbUrpNNCOwt2FqhR8d/loEsJYWuwdshJomp36MEBO+TI+x4GipRHgVM3SO13Y0KP
+	a2MVVFCfebWh3va9YPMEsGyx72UIP5dvW0julNIMUQ==
+X-ME-Sender: <xms:jzsyaE1Wbn1sSF8i6MNE8J2N4lFLPf3sy5qg5XtRHd3KE9MTqM4FvJk>
+    <xme:jzsyaPEIdia56dJRJoau0de69terDldUjPYbJXSHGT2pqdueFZ4pWhPyqkrRHBpLc
+    YC_2g0Yk-MyvW4neg>
+X-ME-Received: <xmr:jzsyaM6s1p_pVcQsqABs7ISGtJK_QvXAQ8VnDi12HcmUfVfM191BONbh0BmyfPJZpJlSk-Atd1okp0hGap59Wc8jNAtqFmzScEUH-8aC0vKCPQTOmfnkG2-Aug>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduvdektdculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecunecujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpehk
+    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtf
+    frrghtthgvrhhnpeetgfekjeffudeffeffgeekvefgvedvgeffueejjeelgeduhfdtffei
+    keelfefhgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
+    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
+    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhs
+    sggrkhhkrdhnrghmvg
+X-ME-Proxy: <xmx:jzsyaN0TdCS_U3lvF8FCpCWbLT-9KsXGpwfTmmHHMpgxuAQU_sWk6w>
+    <xmx:jzsyaHHHRAHwS-D4QGqwO9GQooIofstBUMbJeDdswErLd0GFPobYqg>
+    <xmx:jzsyaG8Ni7DlY7W5lj0Y9pUiPC5aYmiSZDORdwXTFvMVP0TIco3nIA>
+    <xmx:jzsyaMkDODAney90EObk0ZrWEzVY_D__N5DxoVgZTZR-5ip6_4c_CA>
+    <xmx:kDsyaA2blQaVTaTL9UTmpj92wcUP34Cs-t4-oKNaZDfM9Dh3q1dsRmx4>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
+ 24 May 2025 17:35:10 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] notes: remove trailing whitespace from editor template
+Date: Sat, 24 May 2025 23:35:02 +0200
+Message-ID: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.49.0.780.g892193c3f50
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
-Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 1/2] imap-send: fix bug causing cfg->folder being set to NULL
-Date: Sat, 24 May 2025 12:32:34 -0400
-Message-Id: <C0BA42B3-D312-4575-A326-23E56D0EE8B5@gmail.com>
-References: <E78F34A7-359E-4049-9780-30FC290DA7E2@gmail.com>
-Cc: Aditya Garg <gargaditya08@live.com>,
- Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
- "brian m . carlson" <sandals@crustytoothpaste.net>,
- Julian Swagemakers <julian@swagemakers.org>,
- Shengyu Qu <wiagn233@outlook.com>, Zi Yao <ziyao@disroot.org>
-In-Reply-To: <E78F34A7-359E-4049-9780-30FC290DA7E2@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-Mailer: iPhone Mail (21F90)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-> Le 24 mai 2025 =C3=A0 12:28, Ben Knoble <ben.knoble@gmail.com> a =C3=A9cri=
-t :
->=20
-> =EF=BB=BF
->> Le 22 mai 2025 =C3=A0 14:26, Eric Sunshine <sunshine@sunshineco.com> a =C3=
-=A9crit :
->>=20
->>   ret =3D socket_write(&ctx->imap->buf.sock, response, strlen(response));=
+The editor template for editing a note consists of the commented block:
 
->>   free(response);
->>   if (ret !=3D strlen(response))
->>       return error("IMAP error: sending response failed");
->>   return 0;
->=20
-> Apologies if I missed something , but : strlen _after_ free?
+    git show --stat --no-notes <object>
 
-Ah, others caught this already (and I hadn=E2=80=99t finished reading yet). I=
- really need to find a way to queue up my messages and then go back after fi=
-nishing a thread and edit before sending ;)=
+The indented commit message will introduce trailing whitespace for
+paragraph breaks (blank lines).  Some editors will highlight those lines
+as an error immediately when you open the editor.
+
+Let’s strip all unnecessary whitespace from the template to avoid that
+very small problem.
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+---
+ builtin/notes.c  | 2 ++
+ t/t3301-notes.sh | 6 ++++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/builtin/notes.c b/builtin/notes.c
+index a3f433ca4c0..ca4782eca19 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -180,6 +180,8 @@ static void write_commented_object(int fd, const struct object_id *object)
+ 	if (strbuf_read(&buf, show.out, 0) < 0)
+ 		die_errno(_("could not read 'show' output"));
+ 	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
++	/* strip trailing whitespace introduced by blank lines */
++	strbuf_stripspace(&cbuf, NULL);
+ 	write_or_die(fd, cbuf.buf, cbuf.len);
+ 
+ 	strbuf_release(&cbuf);
+diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
+index d6c50460d08..70a21be54fc 100755
+--- a/t/t3301-notes.sh
++++ b/t/t3301-notes.sh
+@@ -1629,4 +1629,10 @@ test_expect_success 'git notes append aborts when editor fails with -e' '
+ 	test_must_fail git notes show
+ '
+ 
++test_expect_success 'git notes add has no trailing whitespace in the editor template' '
++	test_commit --signoff 23rd &&
++	GIT_EDITOR="cat >actual" git notes add &&
++	test_grep ! " $" actual
++'
++
+ test_done
+
+base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
+-- 
+2.49.0.780.g892193c3f50
+
