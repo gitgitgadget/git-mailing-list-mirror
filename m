@@ -1,137 +1,390 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wr1-f48.google.com (mail-wr1-f48.google.com [209.85.221.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63B9D1D6193
-	for <git@vger.kernel.org>; Sat, 24 May 2025 21:35:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E025E6FC5
+	for <git@vger.kernel.org>; Sun, 25 May 2025 02:06:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748122515; cv=none; b=fGkIn8XZZhPVIT19Z4A7CAZG4xN3hvs27Akm0xKhgmgKhIICiI0GEMT/C+wIKP6SSfKot7WKE/UImgv9nYbyjFTPSSpUBAOKqMLVj9C2bkKiDQVcyGlX7V3MrfIOwDPwDfSwSR2bDkDvorockZ1jzpoZ1qYPFRZD2Z0bNDgqbWc=
+	t=1748138771; cv=none; b=praU5BA6r+24l06exTMKFCyVFw8xDeg7f/QsHg9pcb86m+UZnpKSokTrAjIU9zmPlWocIhSCQSeUpw7kBzE+rJyjfbiCqS7olrf3ztng4SX60m9scdiugHdYKezTBKdlquUrkE8ErRk0IAurPKlhUgwnEljAcNG0je+LJPaKwio=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748122515; c=relaxed/simple;
-	bh=6w9adMarJ21aRWtIiKR0C/MCqZWsmRSitx9ricZ8uSw=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=sY6oJJuHbttaR3wdSprrNjhVRLkaZ45guQRi5xItQ7e/rCAZn8MwglSZdJSCXa2Z+1VNdh5kNThzjs5W4K7lGGD5BC0l40/InT4fNH3AmqzwV+SrYSODYYyANeb4cWHyYz7IKxYO7ZYazFYgP6IRg65UwUUvvLr3IzPJ/TpJShA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=xmhR7Tx/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=vpA2+IBH; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1748138771; c=relaxed/simple;
+	bh=1nyrgTj0RJYo4xCSuw0Zzuxf0HLnO30pPm2gE1cb7rQ=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=unI0HOftIsaKuxAUr9DUrIfPb2Uwk388MyhFsbwuWkQK6PU07rMayB5qOmWwu3xThpW/JyjAClc15yZ+vg2U0ilX4JGV4ADxBmVNwwvfo3eirtRPIlQsNtOsyKTvhAF7t48VKXT5UmsbR40BN9hb9b3av6jTflrvuIIp40+LYRA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PBoBBJV8; arc=none smtp.client-ip=209.85.221.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="xmhR7Tx/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="vpA2+IBH"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 52276138043F;
-	Sat, 24 May 2025 17:35:12 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-02.internal (MEProxy); Sat, 24 May 2025 17:35:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm3; t=1748122512; x=1748208912; bh=7A
-	qEoF2o4F8Fc0Nuh2nJOsDjCYBxDFaZU7NWGNq4meI=; b=xmhR7Tx/h9Y7pCwJxD
-	QC9IBdB90f9qJN1gzeJoSpm5RZ93IKF3SrOI7NKAHtmiCWewgf7UfJihpsERW5lY
-	GNoO5Z+99tk+fxvqRs7d8kaTBc/8oyhIj47JdrG8E/hd/mvafkSLSp2Yq0GcP1Hn
-	F1uJyxPTCwTSJ0BD0qU00NJKh9dU10Hxum5IUSw6dKBq6iCkOHOl7ExzQCXx/PN2
-	Hd8CCgcOTwfYO3nokjhOBR0+naREj47YWBFUasedwwhxNZTut9PebCjcRklRHL1m
-	4RRL/aPIZRJrTCuWmkmP/Hj6FlSBpKmiPr9Il8QOylwlohw2ZyNUmKRRpUy65zf2
-	XoIQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1748122512; x=1748208912; bh=7AqEoF2o4F8Fc0Nuh2nJOsDjCYBx
-	DFaZU7NWGNq4meI=; b=vpA2+IBHZCVffxdnxaiKQbp7Do+DsZD9AF6/V5HometG
-	1rQ6fL9yU+/x/5ZhD2pduWKKwYytkBgHm9nXeNUtt8i+fS42us6srFXb2YC9ggvK
-	VBMANv6exkdqn/1+KXR0bOfovUG4FA0cfA5icIPUWkKOYhLpcP2eM28WOBzLJ8CQ
-	G4vYBYbfh9C/xuREWfRkJ4pWfXARREsFhWWA1UU91r5NtmFl/G4lVbuahAAUSHsk
-	JbUrpNNCOwt2FqhR8d/loEsJYWuwdshJomp36MEBO+TI+x4GipRHgVM3SO13Y0KP
-	a2MVVFCfebWh3va9YPMEsGyx72UIP5dvW0julNIMUQ==
-X-ME-Sender: <xms:jzsyaE1Wbn1sSF8i6MNE8J2N4lFLPf3sy5qg5XtRHd3KE9MTqM4FvJk>
-    <xme:jzsyaPEIdia56dJRJoau0de69terDldUjPYbJXSHGT2pqdueFZ4pWhPyqkrRHBpLc
-    YC_2g0Yk-MyvW4neg>
-X-ME-Received: <xmr:jzsyaM6s1p_pVcQsqABs7ISGtJK_QvXAQ8VnDi12HcmUfVfM191BONbh0BmyfPJZpJlSk-Atd1okp0hGap59Wc8jNAtqFmzScEUH-8aC0vKCPQTOmfnkG2-Aug>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduvdektdculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecunecujfgurhephffvvefufffkofggtgfgsehtkeertdertdejnecuhfhrohhmpehk
-    rhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhenucggtf
-    frrghtthgvrhhnpeetgfekjeffudeffeffgeekvefgvedvgeffueejjeelgeduhfdtffei
-    keelfefhgfenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhroh
-    hmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdp
-    nhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhith
-    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrghughhs
-    sggrkhhkrdhnrghmvg
-X-ME-Proxy: <xmx:jzsyaN0TdCS_U3lvF8FCpCWbLT-9KsXGpwfTmmHHMpgxuAQU_sWk6w>
-    <xmx:jzsyaHHHRAHwS-D4QGqwO9GQooIofstBUMbJeDdswErLd0GFPobYqg>
-    <xmx:jzsyaG8Ni7DlY7W5lj0Y9pUiPC5aYmiSZDORdwXTFvMVP0TIco3nIA>
-    <xmx:jzsyaMkDODAney90EObk0ZrWEzVY_D__N5DxoVgZTZR-5ip6_4c_CA>
-    <xmx:kDsyaA2blQaVTaTL9UTmpj92wcUP34Cs-t4-oKNaZDfM9Dh3q1dsRmx4>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 24 May 2025 17:35:10 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Subject: [PATCH] notes: remove trailing whitespace from editor template
-Date: Sat, 24 May 2025 23:35:02 +0200
-Message-ID: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.49.0.780.g892193c3f50
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PBoBBJV8"
+Received: by mail-wr1-f48.google.com with SMTP id ffacd0b85a97d-3a365a6804eso651977f8f.3
+        for <git@vger.kernel.org>; Sat, 24 May 2025 19:06:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748138767; x=1748743567; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4RTt5Rw94eQw7NMFQTxg/Ndmnz2XoHS0Zw4sEz1OjQc=;
+        b=PBoBBJV87b3zl1HcPhbP1uFElWaPqpW7PSnKWQqbx4i9WS/wphGI4rNPXd13zrSDH/
+         4uUzLsKbZArnshTFvc3ftsZ9dwEq34iF25TZJqUdBt4Cg13l8GLaA7bEqc4e/p+c6Afx
+         OPHHCCbEMSIAu/o7zttxE5jJShuYQG39edGSNCeOCahmHUDPjX6UPlzPvIiu2bQsNLdD
+         o9xeEIhpu7IXerE5aYqodyvR5qNYnn4hUUak70AIGWevrM2z+vugT3FOl3g5YakQ7CQm
+         3vKbLWfNSs9cyxSY/kWRjRyIYb49A6DokShm2gzcz9x43319zSjcdb64lns2ibjvrqva
+         NW9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748138767; x=1748743567;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4RTt5Rw94eQw7NMFQTxg/Ndmnz2XoHS0Zw4sEz1OjQc=;
+        b=a89bu84QkLFbE3isfq/Cep8XPwPZyVq3DS9HgUxybr1AHvQengqXA7tnzKp6SnoR7Z
+         Gl6aOqQqtcgy3lC6Q28bE4fKlAq++6p8HLJjhAz/IGD9cCuvIsusn34QUhF9QE9ZDJCB
+         Ei4MDfOvQKLB91NRlV0qejCxZwRygHcRpB5yGM/cSFuNVn/FmxQNYyoEIdFgbrF9XMIU
+         Cjr/MiaGm+TdSyAXkmjq3Wp2LhTGcxFHkX2q+p7Nb2cCukPz6z/f13LRx5sjpLREtHXv
+         AaNFNJYB1qI5Sg5+sb4XKG4GU+G1Ppga1yfMaUPH7JODCUqe8+RJnVM5GyR1uZuAq3f0
+         bwPw==
+X-Gm-Message-State: AOJu0Ywr6kFD9hPTXr/CQ1KEVmXK3jUxBTiRx7epGR3S73WK09Elffbh
+	n6kuUV9fpFFbvpWb8dcGNYjDit4yS1zetrb8lEPmwACP1zYWRVAhlDEFaAcwdw==
+X-Gm-Gg: ASbGncubgFkNtzyP8ZJBMOJHdTsy85ZUio8QOQxhYq8yEgKjWwO8hk3UUho8LwC/Icd
+	njiecdJZHZeVzzsVbLtBAQbujQvIuRLeWeDweg7aI2l0IIk6QUoyxaq/dXaQ4tFC8VzUiUAvqSF
+	KVEVdNChU6W5roELchm3J9k5Uo4uR9h+Qmk2QU/qMBUzjSvzO0cAXdVEb7bQmVkr9zqFCf4826z
+	c78cAZpA3G5qMfa9zv1TzUmb9rDBBTbPW5VXSVPwo4MizL2YwCejjpeKm5jkncxATAxsPbI/nhM
+	GaR9b1EgOwYuCuGfOhEaX31nPpHeNL+pDPNFhN4xbWCHP7eDBUs5
+X-Google-Smtp-Source: AGHT+IEI1V/hhenIGEx4UhbFaZhnWDyrTbdIAN60eeXdXKYQdurwfhcPI2zDvxP70Jqz0bfRJw2OAg==
+X-Received: by 2002:a05:6000:4313:b0:3a3:6cf9:9b65 with SMTP id ffacd0b85a97d-3a4cb44f709mr3658298f8f.20.1748138766426;
+        Sat, 24 May 2025 19:06:06 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d15523a9sm1727402f8f.72.2025.05.24.19.06.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 24 May 2025 19:06:05 -0700 (PDT)
+Message-Id: <pull.1962.v3.git.git.1748138764.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
+References: <pull.1962.v2.git.git.1747732991.gitgitgadget@gmail.com>
+From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Sun, 25 May 2025 02:06:02 +0000
+Subject: [PATCH v3 0/2] pack-bitmap: fix memory leak if load_bitmap_entries_v1 failed
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: Jeff King <peff@peff.net>,
+    Taylor Blau <me@ttaylorr.com>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+In pack-bitmap.c:load_bitmap_entries_v1, the function read_bitmap_1
+allocates a bitmap and reads index data into it. However, if any of the
+validation checks following the allocation fail, the allocated bitmap is not
+freed, resulting in a memory leak. To avoid this, the validation checks
+should be performed before the bitmap is allocated.
 
-The editor template for editing a note consists of the commented block:
+Lidong Yan (1):
+  pack-bitmap: add load corrupt bitmap test
 
-    git show --stat --no-notes <object>
+Taylor Blau (1):
+  pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
 
-The indented commit message will introduce trailing whitespace for
-paragraph breaks (blank lines).  Some editors will highlight those lines
-as an error immediately when you open the editor.
+ pack-bitmap.c           | 94 +++++++++++++++++++++++++++++++----------
+ pack-bitmap.h           |  1 +
+ t/helper/test-bitmap.c  |  8 ++++
+ t/t5310-pack-bitmaps.sh | 27 ++++++++++++
+ 4 files changed, 107 insertions(+), 23 deletions(-)
 
-Let’s strip all unnecessary whitespace from the template to avoid that
-very small problem.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
- builtin/notes.c  | 2 ++
- t/t3301-notes.sh | 6 ++++++
- 2 files changed, 8 insertions(+)
+base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1962%2Fbrandb97%2Ffix-pack-bitmap-leak-v3
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1962/brandb97/fix-pack-bitmap-leak-v3
+Pull-Request: https://github.com/git/git/pull/1962
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index a3f433ca4c0..ca4782eca19 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -180,6 +180,8 @@ static void write_commented_object(int fd, const struct object_id *object)
- 	if (strbuf_read(&buf, show.out, 0) < 0)
- 		die_errno(_("could not read 'show' output"));
- 	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
-+	/* strip trailing whitespace introduced by blank lines */
-+	strbuf_stripspace(&cbuf, NULL);
- 	write_or_die(fd, cbuf.buf, cbuf.len);
- 
- 	strbuf_release(&cbuf);
-diff --git a/t/t3301-notes.sh b/t/t3301-notes.sh
-index d6c50460d08..70a21be54fc 100755
---- a/t/t3301-notes.sh
-+++ b/t/t3301-notes.sh
-@@ -1629,4 +1629,10 @@ test_expect_success 'git notes append aborts when editor fails with -e' '
- 	test_must_fail git notes show
- '
- 
-+test_expect_success 'git notes add has no trailing whitespace in the editor template' '
-+	test_commit --signoff 23rd &&
-+	GIT_EDITOR="cat >actual" git notes add &&
-+	test_grep ! " $" actual
-+'
-+
- test_done
+Range-diff vs v2:
 
-base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0
+ 1:  130c3dc5dcd < -:  ----------- pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
+ 2:  b515c278a8f = 1:  cf87aad7c99 pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
+ 3:  5be22d563af ! 2:  f5371d7daa9 pack-bitmap: add loading corrupt bitmap_index test
+     @@ Metadata
+      Author: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+       ## Commit message ##
+     -    pack-bitmap: add loading corrupt bitmap_index test
+     +    pack-bitmap: add load corrupt bitmap test
+      
+     -    This patch add "load corrupt bitmap" test case in t5310-pack-bitmaps.sh.
+     +    This patch add test_bitmap_list_commits_offset() in patch-bitmap.c,
+     +    a new test helper command `test-tool bitmap list-commits-offset`,
+     +    and a `load corrupt bitmap` test case in t5310.
+      
+     -    This test case intentionally corrupt the "xor_offset" field of the first
+     -    entry. To find position of first entry in *.bitmap, we need to skip 4
+     -    ewah_bitmaps before entries. And I add a function `skip_ewah_bitmap()`
+     -    to do this.
+     +    The `load corrupt bitmap` test case intentionally corrupt the
+     +    "xor_offset" field of the first entry. And the newly added helper
+     +    can help to find position of "xor_offset" in bitmap file.
+      
+          Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+      
+     - ## t/t5310-pack-bitmaps.sh ##
+     -@@ t/t5310-pack-bitmaps.sh: has_any () {
+     - 	grep -Ff "$1" "$2"
+     + ## pack-bitmap.c ##
+     +@@ pack-bitmap.c: struct stored_bitmap {
+     + 	int flags;
+     + };
+     + 
+     ++struct stored_bitmap_tag_pos {
+     ++	struct stored_bitmap stored;
+     ++	size_t map_pos;
+     ++};
+     ++
+     + /*
+     +  * The active bitmap index for a repository. By design, repositories only have
+     +  * a single bitmap index available (the index for the biggest packfile in
+     +@@ pack-bitmap.c: static int existing_bitmaps_hits_nr;
+     + static int existing_bitmaps_misses_nr;
+     + static int roots_with_bitmaps_nr;
+     + static int roots_without_bitmaps_nr;
+     ++static int tag_pos_on_bitmap;
+     + 
+     + static struct ewah_bitmap *lookup_stored_bitmap(struct stored_bitmap *st)
+     + {
+     +@@ pack-bitmap.c: static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+     + 					  struct ewah_bitmap *root,
+     + 					  const struct object_id *oid,
+     + 					  struct stored_bitmap *xor_with,
+     +-					  int flags)
+     ++					  int flags, size_t map_pos)
+     + {
+     + 	struct stored_bitmap *stored;
+     ++	struct stored_bitmap_tag_pos *tagged;
+     + 	khiter_t hash_pos;
+     + 	int ret;
+     + 
+     +-	stored = xmalloc(sizeof(struct stored_bitmap));
+     ++	tagged = xmalloc(tag_pos_on_bitmap ? sizeof(struct stored_bitmap_tag_pos) :
+     ++					     sizeof(struct stored_bitmap));
+     ++	stored = &tagged->stored;
+     ++	if (tag_pos_on_bitmap)
+     ++		tagged->map_pos = map_pos;
+     + 	stored->root = root;
+     + 	stored->xor = xor_with;
+     + 	stored->flags = flags;
+     +@@ pack-bitmap.c: static int load_bitmap_entries_v1(struct bitmap_index *index)
+     + 		struct stored_bitmap *xor_bitmap = NULL;
+     + 		uint32_t commit_idx_pos;
+     + 		struct object_id oid;
+     ++		size_t entry_map_pos;
+     + 
+     + 		if (index->map_size - index->map_pos < 6)
+     + 			return error(_("corrupt ewah bitmap: truncated header for entry %d"), i);
+     + 
+     ++		entry_map_pos = index->map_pos;
+     + 		commit_idx_pos = read_be32(index->map, &index->map_pos);
+     + 		xor_offset = read_u8(index->map, &index->map_pos);
+     + 		flags = read_u8(index->map, &index->map_pos);
+     +@@ pack-bitmap.c: static int load_bitmap_entries_v1(struct bitmap_index *index)
+     + 		if (!bitmap)
+     + 			return -1;
+     + 
+     +-		recent_bitmaps[i % MAX_XOR_OFFSET] = store_bitmap(
+     +-			index, bitmap, &oid, xor_bitmap, flags);
+     ++		recent_bitmaps[i % MAX_XOR_OFFSET] =
+     ++			store_bitmap(index, bitmap, &oid, xor_bitmap, flags,
+     ++				     entry_map_pos);
+     + 	}
+     + 
+     + 	return 0;
+     +@@ pack-bitmap.c: static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+     + 	int xor_flags;
+     + 	khiter_t hash_pos;
+     + 	struct bitmap_lookup_table_xor_item *xor_item;
+     ++	size_t entry_map_pos;
+     + 
+     + 	if (is_corrupt)
+     + 		return NULL;
+     +@@ pack-bitmap.c: static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+     + 			goto corrupt;
+     + 		}
+     + 
+     ++		entry_map_pos = bitmap_git->map_pos;
+     + 		bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
+     + 		xor_flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
+     + 		bitmap = read_bitmap_1(bitmap_git);
+     +@@ pack-bitmap.c: static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+     + 		if (!bitmap)
+     + 			goto corrupt;
+     + 
+     +-		xor_bitmap = store_bitmap(bitmap_git, bitmap, &xor_item->oid, xor_bitmap, xor_flags);
+     ++		xor_bitmap = store_bitmap(bitmap_git, bitmap, &xor_item->oid,
+     ++					  xor_bitmap, xor_flags, entry_map_pos);
+     + 		xor_items_nr--;
+     + 	}
+     + 
+     +@@ pack-bitmap.c: static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+     + 	 * Instead, we can skip ahead and immediately read the flags and
+     + 	 * ewah bitmap.
+     + 	 */
+     ++	entry_map_pos = bitmap_git->map_pos;
+     + 	bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
+     + 	flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
+     + 	bitmap = read_bitmap_1(bitmap_git);
+     +@@ pack-bitmap.c: static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+     + 	if (!bitmap)
+     + 		goto corrupt;
+     + 
+     +-	return store_bitmap(bitmap_git, bitmap, oid, xor_bitmap, flags);
+     ++	return store_bitmap(bitmap_git, bitmap, oid, xor_bitmap, flags,
+     ++			    entry_map_pos);
+     + 
+     + corrupt:
+     + 	free(xor_items);
+     +@@ pack-bitmap.c: int test_bitmap_commits(struct repository *r)
+     + 	return 0;
+       }
+       
+     -+skip_ewah_bitmap() {
+     -+	local bitmap="$1" &&
+     -+	local offset="$2" &&
+     -+	local size= &&
+     ++int test_bitmap_commits_offset(struct repository *r)
+     ++{
+     ++	struct object_id oid;
+     ++	struct stored_bitmap_tag_pos *tagged;
+     ++	struct bitmap_index *bitmap_git;
+     ++	size_t commit_idx_pos_map_pos, xor_offset_map_pos, flag_map_pos,
+     ++		ewah_bitmap_map_pos;
+     ++
+     ++	tag_pos_on_bitmap = 1;
+     ++	bitmap_git = prepare_bitmap_git(r);
+     ++	if (!bitmap_git)
+     ++		die(_("failed to load bitmap indexes"));
+      +
+     -+	offset=$(($offset + 4)) &&
+     -+	size=0x$(od -An -v -t x1 -j $offset -N 4 $bitmap | tr -d ' \n') &&
+     -+	size=$(($size * 8)) &&
+     -+	offset=$(($offset + 4 + $size + 4)) &&
+     -+	echo $offset
+     ++	/*
+     ++	 * As this function is only used to print bitmap selected
+     ++	 * commits, we don't have to read the commit table.
+     ++	 */
+     ++	if (bitmap_git->table_lookup) {
+     ++		if (load_bitmap_entries_v1(bitmap_git) < 0)
+     ++			die(_("failed to load bitmap indexes"));
+     ++	}
+     ++
+     ++	kh_foreach (bitmap_git->bitmaps, oid, tagged, {
+     ++		commit_idx_pos_map_pos = tagged->map_pos;
+     ++		xor_offset_map_pos = tagged->map_pos + sizeof(uint32_t);
+     ++		flag_map_pos = xor_offset_map_pos + sizeof(uint8_t);
+     ++		ewah_bitmap_map_pos = flag_map_pos + sizeof(uint8_t);
+     ++
+     ++		printf_ln("%s %"PRIuMAX" %"PRIuMAX" %"PRIuMAX" %"PRIuMAX,
+     ++			  oid_to_hex(&oid),
+     ++			  (uintmax_t)commit_idx_pos_map_pos,
+     ++			  (uintmax_t)xor_offset_map_pos,
+     ++			  (uintmax_t)flag_map_pos,
+     ++			  (uintmax_t)ewah_bitmap_map_pos);
+     ++	})
+     ++		;
+     ++
+     ++	free_bitmap_index(bitmap_git);
+     ++
+     ++	return 0;
+     ++}
+     ++
+     + int test_bitmap_hashes(struct repository *r)
+     + {
+     + 	struct bitmap_index *bitmap_git = prepare_bitmap_git(r);
+     +
+     + ## pack-bitmap.h ##
+     +@@ pack-bitmap.h: void traverse_bitmap_commit_list(struct bitmap_index *,
+     + 				 show_reachable_fn show_reachable);
+     + void test_bitmap_walk(struct rev_info *revs);
+     + int test_bitmap_commits(struct repository *r);
+     ++int test_bitmap_commits_offset(struct repository *r);
+     + int test_bitmap_hashes(struct repository *r);
+     + int test_bitmap_pseudo_merges(struct repository *r);
+     + int test_bitmap_pseudo_merge_commits(struct repository *r, uint32_t n);
+     +
+     + ## t/helper/test-bitmap.c ##
+     +@@ t/helper/test-bitmap.c: static int bitmap_list_commits(void)
+     + 	return test_bitmap_commits(the_repository);
+     + }
+     + 
+     ++static int bitmap_list_commits_offset(void)
+     ++{
+     ++	return test_bitmap_commits_offset(the_repository);
+      +}
+      +
+     - # Since name-hash values are stored in the .bitmap files, add a test
+     - # that checks that the name-hash calculations are stable across versions.
+     - # Not exhaustive, but these hashing algorithms would be hard to change
+     + static int bitmap_dump_hashes(void)
+     + {
+     + 	return test_bitmap_hashes(the_repository);
+     +@@ t/helper/test-bitmap.c: int cmd__bitmap(int argc, const char **argv)
+     + 
+     + 	if (argc == 2 && !strcmp(argv[1], "list-commits"))
+     + 		return bitmap_list_commits();
+     ++	if (argc == 2 && !strcmp(argv[1], "list-commits-offset"))
+     ++		return bitmap_list_commits_offset();
+     + 	if (argc == 2 && !strcmp(argv[1], "dump-hashes"))
+     + 		return bitmap_dump_hashes();
+     + 	if (argc == 2 && !strcmp(argv[1], "dump-pseudo-merges"))
+     +@@ t/helper/test-bitmap.c: int cmd__bitmap(int argc, const char **argv)
+     + 		return bitmap_dump_pseudo_merge_objects(atoi(argv[2]));
+     + 
+     + 	usage("\ttest-tool bitmap list-commits\n"
+     ++	      "\ttest-tool bitmap list-commits-offset\n"
+     + 	      "\ttest-tool bitmap dump-hashes\n"
+     + 	      "\ttest-tool bitmap dump-pseudo-merges\n"
+     + 	      "\ttest-tool bitmap dump-pseudo-merge-commits <n>\n"
+     +
+     + ## t/t5310-pack-bitmaps.sh ##
+      @@ t/t5310-pack-bitmaps.sh: test_bitmap_cases () {
+       			grep "ignoring extra bitmap" trace2.txt
+       		)
+       	'
+      +
+     -+	# A `.bitmap` file has the following structure:
+     -+	# | Header | Commits | Trees | Blobs | Tags | Entries... |
+     -+	#
+     -+	# - The header is 32 bytes long when using SHA-1.
+     -+	# - Commits, Trees, Blobs, and Tags are all stored as EWAH bitmaps.
+     -+	#
+     -+	# This test intentionally corrupts the `xor_offset` field of the first entry
+     -+	# to verify robustness against malformed bitmap data.
+      +	test_expect_success 'load corrupt bitmap' '
+      +		rm -fr repo &&
+      +		git init repo &&
+     @@ t/t5310-pack-bitmaps.sh: test_bitmap_cases () {
+      +
+      +			git repack -adb &&
+      +			bitmap="$(ls .git/objects/pack/pack-*.bitmap)" &&
+     -+			chmod +w "$bitmap" &&
+     -+
+     -+			hdr_sz=$((12 + $(test_oid rawsz))) &&
+     -+			offset=$(skip_ewah_bitmap $bitmap $hdr_sz) &&
+     -+			offset=$(skip_ewah_bitmap $bitmap $offset) &&
+     -+			offset=$(skip_ewah_bitmap $bitmap $offset) &&
+     -+			offset=$(skip_ewah_bitmap $bitmap $offset) &&
+     -+			offset=$((offset + 4)) &&
+     ++			chmod +w $bitmap &&
+      +
+     ++			read oid commit_off xor_off flag_off ewah_off <<-EOF &&
+     ++				$(test-tool bitmap list-commits-offset | head -n 1)
+     ++			EOF
+      +			printf '\161' |
+     -+				dd of=$bitmap count=1 bs=1 conv=notrunc seek=$offset &&
+     ++				dd of=$bitmap count=1 bs=1 conv=notrunc seek=$xor_off &&
+     ++
+      +
+      +			git rev-list --count HEAD > expect &&
+      +			git rev-list --use-bitmap-index --count HEAD > actual &&
+
 -- 
-2.49.0.780.g892193c3f50
-
+gitgitgadget
