@@ -1,199 +1,174 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
+Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011032.outbound.protection.outlook.com [52.103.68.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5272115530C
-	for <git@vger.kernel.org>; Sun, 25 May 2025 18:49:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748198987; cv=none; b=G+11vA29AcQ7DUAF10lAQvi0zOdaylovYuKitlwAbvxBD2LC3h5IgmNa/tRyQNKr9RkyKVYwdPYnja6Yiud+JFRhFJJW8BL8j0BQoLZqheZORrGh09m8ac/kfAgiTrmbaK+oNtRdRmGRsswDkT8/Frb2+wXhyQirAuVOIOD/Ph8=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748198987; c=relaxed/simple;
-	bh=d3qozxj40KbSWj7mqeTpv2iyQCMjjy7GRxM0lkOyjSQ=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=FI7b9wkRj54ITsXHYlOUsnwEumIJ2Pfbag8H2ZVEZTw2Qn1vi6f17/4zBkBqy6YsKtLQT1tcriJzeuOYeY36GdNpZ8cLCLRQ7bExNhn+pscNVtmZtDw28njuh6+CyWSFzcKG3li7R9ppi4seS2hEjyn/ZxYKfM34NqstouT7stw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=b9r36agA; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DLExoO+v; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5331A1A26B
+	for <git@vger.kernel.org>; Sun, 25 May 2025 18:54:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.32
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748199301; cv=fail; b=sIIvX+5loHybfLWRJyMAxCzjszcXvth/mR+9kn/Fu6kr49lMCBEY0kgs0NQBaXneuJWP7zXleXYKnzMQ2YB57p3nyZuY6kYmz63d9Lsl/r0A9Vk9+M1YJKyP7BqLGTi0dvsf/leYhoMKYJ60FYtWUMLA2l7tzhRABPwqp0nMYps=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748199301; c=relaxed/simple;
+	bh=n6uzIocZ9Dh6uUHJEIt3dXiH1pT3J/0M91sd4uNUwG8=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=W89nyHHlSbTBnFfg69kdoRFbtGqv3ouwbvXjLS5rlLQtYWvr0u0PQ3imX+UQKQFI1pXJFNdLUEtGJuySLqKRfep2ogn83ualucryIgzdip2sm3CNvk3BYLk2YIDygm0YwvphGno3xFTYWdCg/YF6xgBYTd1XvcyL0ilaKf357hg=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=c/5Imcin; arc=fail smtp.client-ip=52.103.68.32
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="b9r36agA";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DLExoO+v"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 255FA11400F6;
-	Sun, 25 May 2025 14:49:44 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Sun, 25 May 2025 14:49:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748198983;
-	 x=1748285383; bh=ZcruD5fT5J616HrgqPAvn3vf5CaE7uiOtVVDy256L2o=; b=
-	b9r36agA6+lmm7NYLu5IqDLt9i1EQaWlcQ90fiMJW5GueJOjM/BLGrdd8ZrHXZZh
-	VJEvvG6d1XBwnh8MCfTWHyFLkPqteV4XpY+YKfFrEtykhG+Fc8Xyb06eklc4PRYz
-	XyIBF7UogZx7tTrEag1pS7pOYgVyypS30g/ZO8sVFqEFbrAGPgSokymJig+eXsZE
-	38mlirbhKKztYoCZfLVe0zfHv4A2cwdfHWsyIYDY6mecvDIrCJnbo4E1UnZ1v5Jz
-	KXvEDQXGuA3IvG9MYS+4o9Nj8vpDwJ5Zu6B2IYjYP/N7zRCEJiT2EqrMl/HUmI+Q
-	gkDlJ8wVRIZ1BbQ9hquCmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748198983; x=
-	1748285383; bh=ZcruD5fT5J616HrgqPAvn3vf5CaE7uiOtVVDy256L2o=; b=D
-	LExoO+vXdTyHajSTQgNOTjTB1wtNDeDEpGzbqMZgOnllpBGuRY0fKuvzy7hue0J5
-	55OqSRbf3DTtqnK6crJP9evNxI6MthU/3f5kwz9QxdIl1+FzlPjfOsOPGGQDgCMd
-	ZEe0pFWiUYPXzuBK42tEYx4578KKuSI6KTqv3sXV4c+8x0ngHkt4KbsY3B5Wx9lM
-	t9Lr01FDZtqvW4uV8bhvkF8jL95XaJQ0KlAP3pI6k2pGbXf1VrVvLZtlhmLi9q9h
-	XJSJo1/0Z6VglE0Y1nAfDa5OUgXyEP4+uJsIKFr6gy6vOI8EsOUOEI+dXbx70rDr
-	NZABesdiGCaatCuldkmjw==
-X-ME-Sender: <xms:RmYzaLGSa6X0Rh-cybo9I9KaO-oBXQOhFU0W_1RwQGLI_hmHuifaDZ0>
-    <xme:RmYzaIWXuhXRyuNrhGpHWIfdeytDQ-E3JMER1btT_f4SilJZxWHfzK9YXOCEloC7G
-    sDcqUs7me4Kriz_Fw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduheefjeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefk
-    jghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruh
-    hgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
-    ihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelge
-    duudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgr
-    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
-    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohepledpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepshgrnhgurghlshestghruhhsthihthhoohhthhhprghsthgvrdhnvg
-    htpdhrtghpthhtohepiihihigrohesughishhrohhothdrohhrghdprhgtphhtthhopehj
-    rggtohgsrdgvrdhkvghllhgvrhesihhnthgvlhdrtghomhdprhgtphhtthhopehgrghrgh
-    grughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdr
-    nhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtoh
-    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehjuhhl
-    ihgrnhesshifrghgvghmrghkvghrshdrohhrghdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:RmYzaNJZkOAkYg4AZ9GW4nQ8-Ft8qGWLZjOdHKni8rXfD1jGElwj3g>
-    <xmx:RmYzaJFWpHwqjXx51Iq6VMgq0YR0quM8uW4osfBvFqd_ot61f3AskQ>
-    <xmx:RmYzaBXmrn_8O9KdX5p4v4gqi3WNt_G3XYztTlmEGilcSt_b2knE5w>
-    <xmx:RmYzaENxcVKYFKqbGBTUs8jLcuWBVIT-xYXTX8b6JtbMT6alCAVxzw>
-    <xmx:R2YzaPg92OE3VJmI2UpSuvzhY6NCCSQjZATofVgMGfuIhKZnbuBC2en5>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id ACBF13020061; Sun, 25 May 2025 14:49:42 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="c/5Imcin"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=y+vCoJvD6EZJrG0EZyTATLraN5xpYsKoijo2UTuqK/iYzNqDfbGh38Oxj5tDRpFm6ilFJvOiAuHX8qYXDiPWFH879q9dlqS0FeCncOu0jiuOnglDMkrO5/WKDJuFEaZ+cyD84/gsvloH5MzqLnAi0lxXWg4RoJzCNh55nfOzaaDZ8NGRo/Jv7Y9/xTzk58ACrXEsx8d2oTL+PowmZrEHesB5RM6jZMJevlo5PpSo+347ZqXylUCGkGUaJyt9iubSblIbTqrHSFcTLG6PVZZwtoYUqLk58owXIkbJO0YpjXNQbhc9ZzqBRx/ONdziiP0mgUpbBfFP/PsQFJWFA2N1XQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=13UjRHYXRl81s7D4l1d0+9bqo7/aXWYo+YXWFSRj7x0=;
+ b=kQBStHfTavlZf4wTkyQgqOgUDgkCZjeUpbvF8io1sd+SGxIHtXOpUslPKNB/LRUTQLBux9BAx5fUmPbMxrYEO43jWTaJBRvvURQVReKdBkLJfojdxrIKOBk6OIzhOVzRPPC57nSkgnwVdUNxZYwtOMoioLWLzFnVpklRn2EQM63e/87KItqsKKWibAvxadlat6o3vJ3pYFLamX7p471lWp93PpIPKGn7cSRHwBISDbNrqn3m1ibM54UkSdTSmkHzCTh8beIeqS8cX+nmoVs2vObzYo8wB2QhQWwcCkvDAU6XuU+SkDlaTalfLdRL4MYn6neP+q5lNSPHnIu/mIb9AA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=13UjRHYXRl81s7D4l1d0+9bqo7/aXWYo+YXWFSRj7x0=;
+ b=c/5ImcingBHUQBlpm91YD2jPDUwv5Q7cdIkEKqf3iTiQ3u6Jk6rY57ttoqui7yxFVhJncl4gV8abqvNCjKtH0ND9r2TQioWNoSW7LaSG/sfJLsHghLgE3hu6QADSQmafiLt/rB9k3ZJIguUF/8ywL7wz/q2nvh4tNSJdmps/q9wdOIb5ybMwyPRhlsmwqG/lfD1zBA4CJ8/h8godPEDbiT4u0QqfKT2smTnAiNxH5KOOaTAdxn7eqAgg3ZQlTr3DsosseFQqstHUOnczwn0QDhBeN8yCyFrZrYPh7QHBUz0lP6J95O3R6YE5gIAD7OurMkiRqJXf+tAmaJS2q5/+gg==
+Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:10c::9)
+ by PN3PR01MB10362.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1e4::12) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.24; Sun, 25 May
+ 2025 18:54:54 +0000
+Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5b05:29d:5646:39aa]) by PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::5b05:29d:5646:39aa%7]) with mapi id 15.20.8769.025; Sun, 25 May 2025
+ 18:54:54 +0000
+From: Aditya Garg <gargaditya08@live.com>
+To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
+	<git@vger.kernel.org>
+CC: Eric Sunshine <sunshine@sunshineco.com>, "sandals@crustytoothpaste.net"
+	<sandals@crustytoothpaste.net>, Julian Swagemakers <julian@swagemakers.org>,
+	Zi Yao <ziyao@disroot.org>, Jeff King <peff@peff.net>, Ben Knoble
+	<ben.knoble@gmail.com>
+Subject: [PATCH v5 0/6] imap-send: make it usable again and add OAuth2.0
+ support
+Thread-Topic: [PATCH v5 0/6] imap-send: make it usable again and add OAuth2.0
+ support
+Thread-Index: AQHbzaZ/y83S182Z/0G7/Vz3wrSleA==
+Date: Sun, 25 May 2025 18:54:52 +0000
+Message-ID: <20250525185447.29982-1-gargaditya08@live.com>
+References:
+ <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+In-Reply-To:
+ <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Accept-Language: en-IN, en-US
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: PN0PR01MB9588:EE_|PN3PR01MB10362:EE_
+x-ms-office365-filtering-correlation-id: 74afbd72-1a06-415c-4b65-08dd9bbda22c
+x-microsoft-antispam:
+ BCL:0;ARA:14566002|8022599003|8062599006|8060799009|461199028|7092599006|38102599003|15080799009|19110799006|440099028|3412199025|102099032;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?h2OSKCrnebP1kz0IA+mTdH9EAqwWYHoJEDdsALhqWCEmMls84+lfdy7tmE?=
+ =?iso-8859-1?Q?VadZJBo8Vmt+ZpEnOHU1DX0NfWgWHWXz9zu8561AEaE9QGHyY1vltDso4D?=
+ =?iso-8859-1?Q?+vGpsVsKjWbJvT6Fe5+3HCS37CzovSFpkDFECvcQhmN8/LEYiX1+pYI3MK?=
+ =?iso-8859-1?Q?L/eBTN7SbiD9hfhg+F9iv90IfrexuVoGzf7OsyxBMu2fOkvE6N63ntu1zy?=
+ =?iso-8859-1?Q?Ds5IAnu+MOPqltiF0lqmSjylEK7Dj+EjDPhmNQagOKaTmBqyTfsaMdynTf?=
+ =?iso-8859-1?Q?TGeh61ud8TvOquO149RmqWOUZUPTGjyxzpVFyMnkxGBZLpFq9E4kWKdThB?=
+ =?iso-8859-1?Q?odX28gBAwwE0LU/IUAPsOJAgJCgf2gfowLev9vY4HKpcpoc5tLumaqd3Yi?=
+ =?iso-8859-1?Q?rmNWe953ZUVQcc+BFAUUcM9UZaBx+YOw1pVATj2oZjVyh77vAbIO4hoVIQ?=
+ =?iso-8859-1?Q?Gas9myH1PP4fG4JGkZAPWyPfbcBgkInuNb1GMxaHysLlTYw4JC8MUCYist?=
+ =?iso-8859-1?Q?yVAlqcvDKp9v17kXoRW2JUEuQCJqyCLQP/XLSLl/zxeS7vJWnP7v/biUTN?=
+ =?iso-8859-1?Q?z4/2hHpxInwVh1v78Zw+tvNQPmVLojChExjehlcytg6MTMea8p966XjhqE?=
+ =?iso-8859-1?Q?aS5Pr46JGJjPTEPQQ6jxlyKds1NCCnE9Rx8y+c6xVBSNS1VvyvlpPnV62S?=
+ =?iso-8859-1?Q?b+5DYcrTk7jH59Ykei/033qK7+B4OXwkOxo+OhTo5SX428QJLgjZ9NFv9l?=
+ =?iso-8859-1?Q?oWKhTDahv5kY1C7Xy1k2DL0OgkdlCiZ/1jYAbFnU1CCOpl9JOiganPNyuJ?=
+ =?iso-8859-1?Q?wd+zK7j+NbLYObv4fNIw8RW1J2YBOqSU118jqP0TZQ//YZRG3XwhtXV6Hi?=
+ =?iso-8859-1?Q?pVvJSQ+R9/GactuyTtYSDOyfNHEDcSPbtunjKCaxI9gWY6tVqXO81xN8Hb?=
+ =?iso-8859-1?Q?fqFgzsdPOTV+Gu8S5I1wECkEXRJKa+t+Vi01qbBI18yJNv1X7as3edRRAm?=
+ =?iso-8859-1?Q?5ziSmZTrw5LPw2/s+bWOaXFP0eYV6PCP86/8PyvLEnQcYjcGMTG1J7B1Z4?=
+ =?iso-8859-1?Q?xS4iSQn0mz7WrqpszoW0HujooCfjLfVg3t7f+h70pOrctmhH+mVbkHutso?=
+ =?iso-8859-1?Q?09EodoWw9At+HobX7gZQVjyFZFn9WkLGtHU/eM4kYZMlwfpY/ycFjadEfd?=
+ =?iso-8859-1?Q?rb9uOlCKslkSQ2W1nwL/6VchDusDpYVEcuQ=3D?=
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?3AdybMl4dcKz1k4D8E1oNcPnYCySYoiilmtrhu+f/iv0EY7+3k1PudcbPb?=
+ =?iso-8859-1?Q?/FbgKymC26aIjQTUsHGtwWsmmN4tSxTJLGq6TiYussJpCJCb9QlkpIphfj?=
+ =?iso-8859-1?Q?YVKspsF52WRpO97dcMps+yd9828kyj/hlHZQThDTSO0F/rVMM4tiPgUaQh?=
+ =?iso-8859-1?Q?WQLv4UdJ9emLuA1qOPCtdQu6Zn6+QAFUeKoJZdJiRRaZYi652yo81dOPMd?=
+ =?iso-8859-1?Q?xy9dflp/yXB3wFlgaYr8c0HMzdRJ3hesmpbYyLaslTSdyd9umjj//KuSgX?=
+ =?iso-8859-1?Q?BNX47uT9NzMu0O9HDJn68kSln40RUsjAha11fEa+4ivtmFA3+c7D+3XU+W?=
+ =?iso-8859-1?Q?AxA90OyrdJ5ttqkI02DYxRdr2yP6X9y+vwR2o9z0SlrIh+75Uo+M8PM1IT?=
+ =?iso-8859-1?Q?/QbqjW9Pq9DtFgmsr4mIGQ7VatVgsarCPVVWhah/Ljh0LK0vNSD2Z+0vh8?=
+ =?iso-8859-1?Q?rQwmahctcRST4uQRv2xGgHrdIdMc6Hb0cghIotBWjCXrPRtoMjxvWZMaKb?=
+ =?iso-8859-1?Q?GYR7SOshWdiH48FPt8AmK5P1+LgPo76huiJb/f//2xxMoVCt2cZmsUltiO?=
+ =?iso-8859-1?Q?0mW6dpb0QX9hLo1VwINZDrEB2iJC6nU1EqvrK7yR37SqLrxkraYUYS0k0E?=
+ =?iso-8859-1?Q?jpvg9AHx3gZYwXrXYS5Z1me4Lpm8mSXuM4Ed0QQXDug+CtHLXn1TpwP5yE?=
+ =?iso-8859-1?Q?8GxwFKOyqXws1fSKQshttXWu2suWFtsi0Kl5MuGfwelWurAbC7wkBKUSaC?=
+ =?iso-8859-1?Q?t5ACxtq3tFpEVdCUklp8aj1Lg1nbTQkdt1Vd8VOWS4RIz3jxDst0bXIV5/?=
+ =?iso-8859-1?Q?kXqQu/pHtVhkn/st2WMy3pbFmnawfsy2GEBnsjB8j2hikFG6n/sPbZH5+H?=
+ =?iso-8859-1?Q?vvn1/NML/wjNTtgqOW9X8mP3giwcx2ZcG4iCaqG1IfzZeSkCGEB784d47r?=
+ =?iso-8859-1?Q?lmofv/pP6nE34C3MDkolm+N60vENlYvu5o3Zv7g0iC4WqhuEXhmHwtUetu?=
+ =?iso-8859-1?Q?2O6MQ4IuyYhvidLV/LjejwUYShSeRrb20QxMBKiyuwT8sSaECLBBFijPEc?=
+ =?iso-8859-1?Q?PA86EdlEcMBavPISpvwAJrzMF5J5DmSVvGVxDsIylBX/qevTsxZ/6Peeqk?=
+ =?iso-8859-1?Q?K8rM5r883aEyYmZACBUPDrjbeuMklwYGXkX+dpYOdfgYhfZQKaJv045g80?=
+ =?iso-8859-1?Q?Klgs9JqCDAtSZ6P8pckpcgDQl/Zrgp242P8RJlNVo6KtCMp1okWyD5OwTK?=
+ =?iso-8859-1?Q?RLMMW6MqL9ff/9Ad5oJcgrlcekqoDj6iDvrsc0VBI=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T2b5ee76eedcd71f6
-Date: Sun, 25 May 2025 20:49:22 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Aditya Garg" <gargaditya08@live.com>
-Cc: "Eric Sunshine" <sunshine@sunshineco.com>,
- "brian m. carlson" <sandals@crustytoothpaste.net>,
- "Julian Swagemakers" <julian@swagemakers.org>, "Zi Yao" <ziyao@disroot.org>,
- "Jeff King" <peff@peff.net>, "Jacob Keller" <jacob.e.keller@intel.com>,
- "Junio C Hamano" <gitster@pobox.com>,
- "git@vger.kernel.org" <git@vger.kernel.org>
-Message-Id: <7f5b2891-262f-48e7-9c29-7f3265abd07a@app.fastmail.com>
-In-Reply-To: 
- <259e20261e35908d5c7f6c36352f1f03be6da6ff.1748192784.git.gargaditya08@live.com>
-References: <cover.1748192784.git.gargaditya08@live.com>
- <259e20261e35908d5c7f6c36352f1f03be6da6ff.1748192784.git.gargaditya08@live.com>
-Subject: Re: [PATCH v3 1/2] send-email: fix bug resulting in increased message number
- if a message is edited
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-CrossTenant-Network-Message-Id: 74afbd72-1a06-415c-4b65-08dd9bbda22c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2025 18:54:52.8229
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB10362
 
-Hi
+This patch series does the following things:
+Firstly it basically makes the imap-send command usable again since it
+was broken because of not being able to correctly parse the config file.
 
-> send-email: fix bug resulting in increased message number if a message=
- is edited
+Further it adds support for OAuth2.0 and PLAIN authentication to git
+imap-send.
 
-I don=E2=80=99t understand what the bug is from the title.  =E2=80=9CMes=
-sage number=E2=80=9D
-sounds harmless.  It breaks the threading?  The summary/subject could
-say that instead.  Fix threading bug.
+Last, it does some minor improvements including adding the ability to
+specify the folder using the command line and set a default between
+curl and openssl using the config.
 
-On Sun, May 25, 2025, at 19:12, Aditya Garg wrote:
-> In case a message is edited before it is sent, its message number gets
-> increased by 1, and so does its order in the message id.
+P.S.: I am surprised this thing even exists xD.
 
-It feels like this part about increasing by one and if-editing gets
-repeated at least two times in this paragraph.
+v2: - Added support for OAuth2.0 with curl.
+    - Fixed the memory leak in case auth_cram_md5 fails.
+v3: - Improve wording in first patch
+    - Change misleading message if OAuth2.0 is used without OpenSSL
+v4: - Add PLAIN authentication mechanism for OpenSSL
+    - Improved wording in the first patch a bit more
+v5: - Add ability to specify destination folder using the command line
+    - Add ability to set a default between curl and openssl using the confi=
+g
 
-> The cause of this bug was that when a person attempts to edit the
-> message, the whole sub process_file gets terminated, and the user is
-> asked to edit the message.
+Aditya Garg (6):
+  imap-send: fix bug causing cfg->folder being set to NULL
+  imap-send: add support for OAuth2.0 authentication
+  imap-send: add PLAIN authentication method to OpenSSL
+  imap-send: fix memory leak in case auth_cram_md5 fails
+  imap-send: enable specifying the folder using the command line
+  imap-send: enable user to choose between libcurl and openssl using the
+    config
 
-Here=E2=80=99s the repetition.
+ Documentation/config/imap.adoc   |  17 +-
+ Documentation/git-imap-send.adoc |  55 +++++-
+ imap-send.c                      | 277 +++++++++++++++++++++++++++++--
+ 3 files changed, 326 insertions(+), 23 deletions(-)
 
-Also I am not familiar with the code.  Just testing it I get this `6` he=
-re:
+--=20
+2.43.0
 
-    Message-ID: <20250525181003.40129-6-kristofferhaugsbakk@fastmail.com>
 
-Which was incremented every time I did an edit with:
-
-    send-email --suppress-cc=3Dall --to=3D<me> \
-        --confirm=3Dalways one two
-
-But that turned out to be benign in my simple case since the next email
-used the correct In-Reply-To.
-
-So at this point (reading the paragraph) I don=E2=80=99t know what the b=
-ug is.
-
-> After necessary edits are done, the whole sub process_file is executed=
- again.
-> The way sub process_file is designed, every time is runs, it increases=
- the
-> $message_num variable by 1. The reason for this was that the function =
-ran
-> again everytime a next message was sent in a thread, and thus we need =
-to
-> increase the message number for that message. In case a user edits the=
- message,
-> there is no check for the same and the new message gets treated as a s=
-ubsequent
-> message of a thread, therefore increasing its message number by one.
-
-This feels like repetition again.  You say that a variable is
-incremented because the message is edited.
-
-> This breaks the shallow thread logic which relies on $message_num
-> being 1 for the first message, and it gets changed in case the user
-> edits the first message.
-
-If I=E2=80=99m right in my assumption that this number is the `4` here:
-
-    Message-ID: <20250525182426.41076-4-kristofferhaugsbakk@fastmail.com>
-
-This was the first proposed email I got with =E2=80=9Cshallow thread=E2=80=
-=9D (all in
-reply to first):
-
-    git send-email --suppress-cc=3Dall --to=3D<me> \
-        --thread --no-chain-reply-to --confirm=3Dalways one two three
-
-Then I edit all the messages.  They still all manage to refer to the
-first message id in the thread.
-
-I still don=E2=80=99t understand what the bug is.
-
-=E2=9D=A6
-
-    $ git diagnose
-    Collecting diagnostic info
-
-    git version 2.49.0.780.g892193c3f50
-    cpu: x86_64
-    built from commit: 892193c3f509fb8a9e4e7a5a19a2e24137befda8
-    sizeof-long: 8
-    sizeof-size_t: 8
-    shell-path: /bin/sh
-    libcurl: 7.81.0
-    OpenSSL: OpenSSL 3.0.2 15 Mar 2022
-    zlib: 1.2.11
-    SHA-1: SHA1_DC
-    SHA-256: SHA256_BLK
-    Repository root: /home/kristoffer/programming/git
-    Available space on '/home/kristoffer/programming/git': 200.56 GiB (m=
-ount flags 0x1000)
