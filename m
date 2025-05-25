@@ -1,43 +1,43 @@
 Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011027.outbound.protection.outlook.com [52.103.68.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 518A014B086
-	for <git@vger.kernel.org>; Sun, 25 May 2025 17:12:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8261F463C
+	for <git@vger.kernel.org>; Sun, 25 May 2025 17:12:24 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.27
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748193144; cv=fail; b=iMMejhwy13ByDHOymHWrguCydEbtamrx0LoMwc/WA7YS4Xwc9oKBzma0WvyCQ+EfMCY5/AOkq0g+1NW1+M2mRtzOmScdXikkurMPuDOe0pq2WZf9xA+xkcZkGQSe+HTuJrlTiolG5qm28yHs9v1nAW0d5AUnnxZ5Q3oqgSVBwWA=
+	t=1748193146; cv=fail; b=I4P28xDF9qaq2yMAQvWZgh4OCp6HL8QTYJS3iSk6DtuHSnOOjkorBYUFH7iECr4UVjZi8/mAQU2NtYtuQoiiifdN5I/PIhJPtngKXMn/TRgXcbBzkKQit3EGq/JxqardV4YPlU53sbtG7O8KH78NuCd0jg83bGbyLt0T1WPYZJk=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748193144; c=relaxed/simple;
-	bh=riWvlmArkS+4+e9qXMH9K82bkyN+RWBhBre7QLFe3S8=;
+	s=arc-20240116; t=1748193146; c=relaxed/simple;
+	bh=eaoCJ2DDCSu1v1mk+pFNhXsiaQs5O6Xr9vmR0G3jSuA=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=gXVw1+K7aE92aM6oniEUSZE+aJbjol3z3huzY00q903VvwLfBRcnX2SjVqJGYAjhezWy3upD0nHMyonj8gfg6AhqHgGrdU7fXlgDzJ+AM6pwqPMufJjJ6osCOoSMYofciBM9/uZDD79FVm8UtJCsHVmJQf2k7UIsiDWsiqOiF/U=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=h1GZs9hz; arc=fail smtp.client-ip=52.103.68.27
+	 Content-Type:MIME-Version; b=q2eTciTon9dphA2+QxTZgCQASB/7NVVgmUge4leRsQhEDpBJ2baO4QIiz4JIJjX3qNAm6DYDDRpHnQ7UREFGpXvwyJRltyGlQDjAAezEbu/gRRHY7kgUOdJ/VVAMoJ3WeAOvAjXkPSNAykHtnuP18U1s+/Enct1zSpFbalbUFFw=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=Gc96JaPm; arc=fail smtp.client-ip=52.103.68.27
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="h1GZs9hz"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="Gc96JaPm"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=M5UNHLVUc97thxZEDjz1t0WzuyE/Dr9Qj5cqMNpnq389uTsh0S49YO79sHE7mvPJfz4wDxddwzf8nJTymgHmGsq0/VfXV60hNBn+IFwQoKa/qBGk6HHrCOZrL8gghxEJNAG73STHWRSEThWaeGdTWhy4pQXzahPusIslCqEXQ9BT8zHTktkMw2Qb0rLtpV2guLr45JyNRVpvFx8G6ZdEB1tv72sKahPVThVziB6/Xx3FZqe6WCcyHtAVtSErU/Vj9nlc7mT4oXFlGJhF4Ue0ShlagE33kLfb28L3njECxyt0ElBN5tqgqJXR+jAOtfKdz2UtJa2zMDAyr3DhoZVNzQ==
+ b=pG/W8JlV4taBNw8UC3fv74gKRGb+5yXIMo7AnIxiO2iheYA9vVUjAdhr/WHE4/KI8NKBxPXUIN0oPmhmNWYQIUcuGeBXE/+dpWH4ag/dKuE+xj+JH1ka2O62IwaWFPhlMPA5qJj4apyV/yH5s85v5wlJIR6StlwWhiqxPjHyOZlrDzxyNeXnPoQC00uIHoGt6aSWuIczsOX9xutxWEhkn74ogm359PLVdwolr4uTVv+e11c7tBd8pKpkRwb1Cdgvj38cFFQI4NpvzgBLPGTke00LmTEy6SausOomrGZS7mEGPyEVOeiK/6T2BL6dYoISVx/+B5q2kG664j/mE8AjfQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=UmdOH30SIQg9Lz0PtSTDGGK4Q5ZBwLE4/kLp6x/g8Eg=;
- b=yA1Ulhe66xOSJGmZ0DRsvbodqKcSkFKNmWJLPnWKqeF+UTKsgCTSIa/pXFJLNpYvR6oVRruvFAhbbhPSRJbFNZ0hdv3hSbfKfXvDchlSGUdsxeuCA4YgQb6ioL5e/4sKRkTbcGnG/AHUiUpwbSWRbDTkUbcXu+29WiXKzIf46YYGbwhxCsGpVt4kNZJzWhwQ25TDD44XMwdFG4IbHpp1Qg+Gw5ppmsGob3OgeoJh1h5wAoSjkqgshg8KImD1htxVr+fy59dyki/+GznFDfKyVoiJPC2ntWXNeT5DTPTHkDqXSeY8HI3wpj46iiGF8no3UeYpxZC4aZrLmVv26U5D/g==
+ bh=r3og6h7lFw6L4BTONRInSSww2Cyze6vAbrfpxX/DFf8=;
+ b=dZBN62rCcbnBv0PbHm8MB17y/UkEjjnnrB/1049rHGVLW2BfMqxg2x20FX8/ow0UsCTaA/74hHtbYDYqfDeymyNaBLhpdRrZ4GN1XR0/8gHVpjwbm1ZQxeBtii9555OInMwef5t1BTqRTN8iLXRD0XiZ2SJnGBQRtLiIZUSOlrY+7w5OayG4S02fw1Ny1aEmCYYjNs4GhQz5XXQCbSQNbeykFg0Xfv/+2RBNLDdgW/0Q7dOBh6MJcNyLt/jZ935WWcigUp2jNsY5KoSYKyvw+tjZLHqkg5U/rQZlvlGGetK7NY91MAK/QL5bK581Sb4kWFyr7b0Sb5SkBbQ355ZUAg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=UmdOH30SIQg9Lz0PtSTDGGK4Q5ZBwLE4/kLp6x/g8Eg=;
- b=h1GZs9hzCNB4Hu5siaI+e6u9MpddpXwa3znaN8563PLjcjB8bvhVXeToPl2VdqyRVeD3T6OJStJfjZZhMbPy+c+5ocQnsG2f9jXOFrELfGLFeeEcGjo+B8uex3avjQB9xPyqIe3fqsRkvawbMVSklluf3xB7pODQ9tCYzLVeLIYWFxa/QWScXzZ5U2JiC07TdQMvTKgetx85vv+ZPX8hnNfl0Bk2+U3x1Ei7MdzrmfN85PuRKq5T6t5aAjjmu7pPY1zyv89+b/uvKJUeQ4a2vD7Ckq3qz6NCtOAQ3tuSO4TNcTeawwag8gELfYodzKviK707vx4+Xa66xk2wvftOvA==
+ bh=r3og6h7lFw6L4BTONRInSSww2Cyze6vAbrfpxX/DFf8=;
+ b=Gc96JaPmB6oro/KTySL24SKFCwBcyWLNXlbkT8Yo+TY7PbuKnSAULX+tmgtrmZCiPGLWndedzERmZpNDbnQ3/T9jPf6kkmWs8GSAzxG0z2dZWqwg81GEqGXU6sUaQCtVqEska/hP6Wkojh+POcfAKfzEIEMwhZo6lMJBs2fiFEwnbkCGrVglKIfXDIJ4iQHkjBU0us5wNVZbgSaVhAZ0/MdrKd0kVnZMbTm3+hGR1mX9whEHl8Tim1BxHkid+z+kJ6HkJytQJoe2fRCs1YNO6DVjwghuNj6n0jbZlCEX2FYMY38bOL/7DTe5dhthGXG9jI0E9IcwiusrR/OoYGd2vQ==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PNXPR01MB6803.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:a4::8) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.26; Sun, 25 May
- 2025 17:12:17 +0000
+ 2025 17:12:18 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.022; Sun, 25 May 2025
- 17:12:17 +0000
+ 17:12:18 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
 	<git@vger.kernel.org>
@@ -45,70 +45,71 @@ CC: Eric Sunshine <sunshine@sunshineco.com>, "sandals@crustytoothpaste.net"
 	<sandals@crustytoothpaste.net>, Julian Swagemakers <julian@swagemakers.org>,
 	Zi Yao <ziyao@disroot.org>, Jeff King <peff@peff.net>, Jacob Keller
 	<jacob.e.keller@intel.com>
-Subject: [PATCH v3 0/2] send-email: fix threads breaking in case user edits
- emails and improvements to outlook ID fix.
-Thread-Topic: [PATCH v3 0/2] send-email: fix threads breaking in case user
- edits emails and improvements to outlook ID fix.
-Thread-Index: AQHbzZgq4nUk74uLpk2oTl9TF7Z+nA==
-Date: Sun, 25 May 2025 17:12:16 +0000
-Message-ID: <cover.1748192784.git.gargaditya08@live.com>
-References: <20250524123911.1160-1-gargaditya08@live.com>
-In-Reply-To: <20250524123911.1160-1-gargaditya08@live.com>
+Subject: [PATCH v3 1/2] send-email: fix bug resulting in increased message
+ number if a message is edited
+Thread-Topic: [PATCH v3 1/2] send-email: fix bug resulting in increased
+ message number if a message is edited
+Thread-Index: AQHbzZgriz80RC7Pk06fJDqlkHBMXA==
+Date: Sun, 25 May 2025 17:12:18 +0000
+Message-ID:
+ <259e20261e35908d5c7f6c36352f1f03be6da6ff.1748192784.git.gargaditya08@live.com>
+References: <cover.1748192784.git.gargaditya08@live.com>
+In-Reply-To: <cover.1748192784.git.gargaditya08@live.com>
 Accept-Language: en-IN, en-US
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PNXPR01MB6803:EE_
-x-ms-office365-filtering-correlation-id: c504ff4c-3d79-4c3d-e7dd-08dd9baf4cff
+x-ms-office365-filtering-correlation-id: e1c37cd1-6b2d-453e-02c4-08dd9baf4e1e
 x-microsoft-antispam:
- BCL:0;ARA:14566002|8062599006|8060799009|7092599006|19110799006|15080799009|461199028|38102599003|3412199025|440099028|102099032;
+ BCL:0;ARA:14566002|8062599006|8060799009|7092599006|19110799006|15080799009|461199028|41001999006|38102599003|3412199025|440099028|102099032;
 x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?aYjUCwyIMGspJvCkjlEYxmjqCfZuZvVL3vO8kqOi2wNLl+9V/O1/LVEvb0?=
- =?iso-8859-1?Q?nJiLPo20OZvZchqKdzOD9pK8f4naq1/hIcNQ1zbS8XDHqWn41BnOjRsbgU?=
- =?iso-8859-1?Q?Y+p5LOfB2x52PN/FeZunLp7UHNvWGfNOeBTW5LQm4MnaouWlR6RI6EL7KE?=
- =?iso-8859-1?Q?+f6tmVnDuWXFA+6t+n/WWGij76Vsaaah7haAqqd6+TRIPM0KHlJFqCeOkj?=
- =?iso-8859-1?Q?q05MHBujiHGix20xc9luo0/luYwSPFMKTnGuqLKSscA34t9T8gYpq85/Tm?=
- =?iso-8859-1?Q?ghN/xxdPdkIT9U7lMagNeoiIfOcZihx2/zhP1R4HQBUQt90iC793Ooy/RC?=
- =?iso-8859-1?Q?zBPx/0V7Jm3yTHEV2Ek/3oJn6unZ/D/r+HE3kmKWMtnZFoZNuYAoRplzc7?=
- =?iso-8859-1?Q?6wjlzzzWVY/C7kNQmC8+wjbb7c8KnUbrwXNqp5RSyyHqQco5HrU6M4PzK9?=
- =?iso-8859-1?Q?bmR/O7V8ZlvMqlHrS/DyHQZsT2ZcbXt7KT9Q8bBxoxBS7JN2eE7idLPjZw?=
- =?iso-8859-1?Q?eM0Isv+9wfZyzhbMS0EPQuILq5+FBKoYcTsr9DpQbNH0fBDnwGKPrUeF36?=
- =?iso-8859-1?Q?sxpx7zdnKIjh/w9fMgxCzeMXqlLSx9j+95hhivVAsStJcJzBHEsiHCBurF?=
- =?iso-8859-1?Q?R5CADBgIMDsr4FCVCIqev/DepOxCMOw6hDIU1Q3mHozpIrnuKCgaSJWWNb?=
- =?iso-8859-1?Q?sdffjQ1sHMa1CrP9WY0Mu/V1GgJ89jC+ehCvQtx6HxdTMEfo/rawX3SoCB?=
- =?iso-8859-1?Q?9h8eb6aa0DG+KZSiyQBXZcJALv7zzCz82YpN9KfbC1Tn6CwRXsEP0JYO9H?=
- =?iso-8859-1?Q?ktguGTEIYLjcShdKIVsXwg8hDgQYumkew8BUgt9JGOtfvbfPn19/Rvme+D?=
- =?iso-8859-1?Q?Ax+cui60MjpDQh4TP51kEEGfSHbowFX0F/Z+88ExdjowcwR14geEYhltYj?=
- =?iso-8859-1?Q?WODJbMyUMPveiadwhAPm7l2HI82H6Me985kp5qlPEVfNpyUKpvngqO78Cl?=
- =?iso-8859-1?Q?uTqU/kdE4+sWL3eQYmmwcBBpX6m8t13rPHfEuaFGWa5kHLKpAI5oPfEbUZ?=
- =?iso-8859-1?Q?4e9WbiASsQR3GRaiN6rom/sohD6dl13QQHLHuWBXoAnJIpUlFtZc7RqU5b?=
- =?iso-8859-1?Q?K7UA9jfBaTJUDmyJoDCtzGJLqxeY4An0xrqs4TywUe5BF12rZdGmpXoIZs?=
- =?iso-8859-1?Q?pykjy7zJjGQPUQ=3D=3D?=
+ =?iso-8859-1?Q?20k0hVymuiShBA1z9Hy/xUp4+EmmeSkld8uBB55a9tFTYxfwSg5BORlsgl?=
+ =?iso-8859-1?Q?pN+j+NbsDtjVo3woC1eYE8tagD8pAh7BuoANLtG33fuRaDEFxtup5rlQZt?=
+ =?iso-8859-1?Q?r5p0DNcr/5zvYRyzh4jTwB3xJTxXkokWO7Lc5eHC7oLadUpqupXo+wcK05?=
+ =?iso-8859-1?Q?Np356R3lARQLly70hBmrtVahctMC67iEsJ3GPSLqwg/mf4m6UrNZiiPXsG?=
+ =?iso-8859-1?Q?VgIgT2zIahskCL8znMVGc68WPagad2VLcPciFUOGbYMgdwH1JlnLNC6YuX?=
+ =?iso-8859-1?Q?X5ck/gfMnMQk+0wXdwKnS1fPQzGUp05+Lh+6gH2vG4Nf+dGEiOxL9L+QhA?=
+ =?iso-8859-1?Q?OR1r2UAv6dg2ITXvdmAzvdHuXQkayrROMsEn992LMW+/JamwlY6S+gTiA8?=
+ =?iso-8859-1?Q?SqrIeHfsGxDW/hgecMugPJgTdvJq3FyWOtlb1osl7iYr54hwWN9KNJ77Nc?=
+ =?iso-8859-1?Q?Chz/V3Ov8yapNqGvCjWRUx9nYhOgWBx3QhTU1BSyKAOajwjHpgxvAXiogW?=
+ =?iso-8859-1?Q?DAHh2y5rI8sKlRJTvXGs/E3OKZeVM8xjP5oqCnP1tu6FDxnhc7jt2omzwj?=
+ =?iso-8859-1?Q?NmkwhnXN/b/e2mU+fdMFkMYmssJmst4cgsrYNkPaYGaaLKhIUWRKusks2+?=
+ =?iso-8859-1?Q?SWn+ipLdjPNkxou3FQfdxaWR8W2FrSZOjwdsuetqzAKmBuN5Ex/lejRX8t?=
+ =?iso-8859-1?Q?Hh/Xox3pCqWwG+0XuOmFIXCTQSGRZDgUhUV2YUK5P4ahMqcYw7iFOMHd4H?=
+ =?iso-8859-1?Q?uZfuuxkrrB6ZarYOIhri0q9tljgX6ZCdM72zCsXeV75yI2DRCIWb6qLeHG?=
+ =?iso-8859-1?Q?7u2HdagPRtMYZrjqS95NVNn3Dwcz5itiRW7pLjatb6SGkMvvidUnOtBUja?=
+ =?iso-8859-1?Q?veOXXaO7RMRyzEuO1NRlvAxJdwD7pSLQ1XxhU+oQLV9P1M23jfzh5kHvNd?=
+ =?iso-8859-1?Q?/yYYqCczvNOo6NdTH8A+R3Jk+mkVOOPnH2vR8T1G2mGqENESlUxBtDr66T?=
+ =?iso-8859-1?Q?PGIcnp9h0zjwlqATeUuSB0zHtDQqYZMxn7wN3ZiMNw1bHlxwQ8NteGaLsk?=
+ =?iso-8859-1?Q?N6UvuajYRww+Pg59p7YiZmhl3g3/qzz+0bF5DIJdK3SdsFck4VDAW9xxQm?=
+ =?iso-8859-1?Q?jToizaGukYnJS+hzizagrzj/gdGwPnOLtTCjpcuhpjbY/yUuz+KKUdc0Lo?=
+ =?iso-8859-1?Q?qfd3Ah3hpJtCmjhyrQdjE41D+j9H3Xcf3LE=3D?=
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?XGotYMEDs0O2Tndvf3EDnpqalxeghHecO5Ad4useM9qHc6NUQsuLhECSZa?=
- =?iso-8859-1?Q?ubRlQaWrVS4m9bCILj5pCLR0sP7i1muTACFWIhV6r6jdJ8NyR5iK7JaQZN?=
- =?iso-8859-1?Q?bGesZN985YpQvzjsg/vu00hriE4ZoIKtFn43F4LEkp3qeB3yOOQ/IKmZAg?=
- =?iso-8859-1?Q?wrgVrH3EXq9enqSrnz+rDGsrJ2i8WKsU39RrulOHjrMhDrBrsLstvJgdO3?=
- =?iso-8859-1?Q?ejwxF3Nlc46AmCrT1uX9CqVn6RCvhoacpDY9/sd3CCRp/FlFbxAN+a25hw?=
- =?iso-8859-1?Q?IS5qidC/ti4OmI6ii4YToXhuifRFX/YqaL3kLlpz2dTH45QLK8p9HnTaMo?=
- =?iso-8859-1?Q?H+KRDvg9UGFmLegj3RTZFs497TMqqGc8iZzuf6QeQKV2Vz5TpJJGnfYATr?=
- =?iso-8859-1?Q?k7c0sTBuD5k8i2hhMIubMOegszyyH2rppp41irpB6TOkMeSyS03VNsqnsr?=
- =?iso-8859-1?Q?FhDkJt6HOW3Kk8eQQDorVEY3h9zQjY/w81flqv8ySVWfJ+DAzItvooUGTo?=
- =?iso-8859-1?Q?krTXsGKljVcefMHIK23Z8QfP3I6KU6Ugy8q9Iz/MwDrxGhxcXvBk0MYxpz?=
- =?iso-8859-1?Q?QcCbREYeMtQ8u9FAQ/OSFxxm2cCibfAGtonBd4/FMuWbFyOgKRRdvyXwsn?=
- =?iso-8859-1?Q?WKkSq9jJTexdhDkzJH0T0Kk0wPDDXkVzuJjX7tyMo/HWoMzZwY+b4WGShz?=
- =?iso-8859-1?Q?H2SgrbHmcR8wXony9LpknSDWd/2yNGvXNfugtNTbb/NxdbJme8OPI2GvsP?=
- =?iso-8859-1?Q?GKjDsGiZcoiDrPfQhvsQ9Ahxp/Wlv/jiyBLAL6o66ue0L1HkVkAYeOYHwk?=
- =?iso-8859-1?Q?xvAJUHYkBmglQnVk1FRH00Y9SSHln6i5XHZc27rIrPEzoPPrdATF/bKjQc?=
- =?iso-8859-1?Q?ES5frZf6F9LATGbGji+t5oz0df5/dWNTgH3RHpFheA+UHkiV0TMbgmrNDd?=
- =?iso-8859-1?Q?6raFbRbqKIC3MeUpRYWVvFv0n7H5qoKR5e1sDNGpRHRK/MZUcI0hy2HAQj?=
- =?iso-8859-1?Q?pzMoZWQAdxjDg8qFQBQLz04ZB4HLY2DZO+9AmhmQM2c33keKgn3KuIFVUB?=
- =?iso-8859-1?Q?U/g2CVtYrQbrHIjNAEJxGCS0zrUi/6kmflTFT603kknGeVU3pX08Rd/Tnn?=
- =?iso-8859-1?Q?/6jFKaXppwc0KNcMUy8XrHuvuSQ9cAuWPpa+o2CYLvHvnY8KLCP/seQ7+7?=
- =?iso-8859-1?Q?v+AYBShpnSrjqQAMECIASU2cW3KtLco8xwt5VI6ydZUyZBMS1TMuUTHFPg?=
- =?iso-8859-1?Q?i0R0R5h1IvePuB/tyM13AA8SmDeyDOSsvlj6wydKc=3D?=
+ =?iso-8859-1?Q?/xMv/YojEdBpCCGYkFKM28CZU9B6KHjXZv+me3SwW+7fadvpJ1RJ36VoCy?=
+ =?iso-8859-1?Q?P+Q0sEKw94pL1UNMQORqo+x45X1vdArOPrwv6MAHETFoI47H09H2j0bgWE?=
+ =?iso-8859-1?Q?t+VI0KtWabTFPRScZXG5zecRAquGkiDtRBTHGpcBUk3EPdCTaSe9cUPO/7?=
+ =?iso-8859-1?Q?kzfdTNnR2G6rjqmizV1naQ1yXpelIrUq8PH+CKXNdRRAqm8ZrZkMpD3Zys?=
+ =?iso-8859-1?Q?jTINbnvr0dAaJOWVwa3b3nL9yWMlT9kTaboWlWkiBApgbG0IOn/2R/JxAe?=
+ =?iso-8859-1?Q?r2SeJTlFdUWuoFzQK+i/i0lsRg+hYwr2IxX6VVBuhRMreBUEbogOb1Vqui?=
+ =?iso-8859-1?Q?OXq0ibcVzHXGqT4yP16TBcINj1EqahqHZpd5/aOgP1sLEsSa1A+PvgtsXL?=
+ =?iso-8859-1?Q?0Anc4I37jc7ZZMxKfCFarJFhvCSAgplhjngEvnJki9ZbugidI0OfPyiIbv?=
+ =?iso-8859-1?Q?WAzTNCxgxLa0ORDCE1BfnH2beNBwEZGtjHo0ChpxFXTxmRU2+Wi+Ah6jn1?=
+ =?iso-8859-1?Q?ZprfdyW9dhSRemYejkNo/P14Sw82SN1rODsbR3MP3xhXR0fX855SZ+p6Wi?=
+ =?iso-8859-1?Q?K34Ru8J2tz3f34bCSVzNxhwVtiaJb+tr1SwVhP/hoh8Lne1yvOJEgrOeJo?=
+ =?iso-8859-1?Q?Ud+kwvXeN6K/zu6sRwgQs/oBJ40/lZMK2wcDVU5Ln8FAo+LrDxY5s8DZsn?=
+ =?iso-8859-1?Q?a9PduLiUS9re1sGpeKMdJ4u23RHB5m45pYQElyoHtIAln9ac2T2516ZSqY?=
+ =?iso-8859-1?Q?D62ighLIMt4tambxEPgCiuzwE9vKI8aOmssHgRk+TgZKWuOVEgfcyfkD1d?=
+ =?iso-8859-1?Q?bTVmY2NEExqzsEqDggo/rawamFSeANKjgVWj2Ckp5CKEESkHQ2OwpvJ8+l?=
+ =?iso-8859-1?Q?nSme6nRbfmxo4cZGqw0Uq7nqACsR/GrfFeOaEYsLMPcUAFEzJvYC7x/dot?=
+ =?iso-8859-1?Q?cGaO4lO7khgBbtR9AeblxlXggCB9m3zFpWX4tjvQi4XaRakORGhTGX8KL1?=
+ =?iso-8859-1?Q?YX7TICcL9dQS+6YLpPwEdeF4iScKE4dkh5ZeWNBzwjs4r5tlLI9BfQdpwX?=
+ =?iso-8859-1?Q?f4SwdJ1H02+jwI28YX1y5A20gYtpakDCqap7w3pKzHX7+NJPDJ1ve9BUrs?=
+ =?iso-8859-1?Q?yo9bZSHtjhI3RVYaJnti8cOeoOJJNf044GOZQMH3ze/4wKi6KKBuiQl6q3?=
+ =?iso-8859-1?Q?LDbCd5PrezQSv1fWXdJofYqjIdtxtUtdZWtSHfdazWjqmt7ZIc1ofvOkbb?=
+ =?iso-8859-1?Q?Bqrv97AfQ4JST9kbdvEiK8nGx3bPq/2aStgZZffEI=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -121,33 +122,82 @@ X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: c504ff4c-3d79-4c3d-e7dd-08dd9baf4cff
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2025 17:12:16.9649
+X-MS-Exchange-CrossTenant-Network-Message-Id: e1c37cd1-6b2d-453e-02c4-08dd9baf4e1e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2025 17:12:18.8136
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNXPR01MB6803
 
-Hi all,
+In case a message is edited before it is sent, its message number gets
+increased by 1, and so does its order in the message id. The cause of
+this bug was that when a person attempts to edit the message, the whole
+sub process_file gets terminated, and the user is asked to edit the message=
+.
+After necessary edits are done, the whole sub process_file is executed agai=
+n.
+The way sub process_file is designed, every time is runs, it increases the
+$message_num variable by 1. The reason for this was that the function ran
+again everytime a next message was sent in a thread, and thus we need to
+increase the message number for that message. In case a user edits the mess=
+age,
+there is no check for the same and the new message gets treated as a subseq=
+uent
+message of a thread, therefore increasing its message number by one. This
+breaks the shallow thread logic which relies on $message_num being 1 for th=
+e
+first message, and it gets changed in case the user edits the first message=
+.
 
-This patch series fixes two minor issues with git-send-email.
+So, upon scanning the whole code, there are two significant variables at pl=
+ay
+here. First is $message_num, responsible for the message number and second
+is $message_id_serial, responsible for showing the message number in the
+Message-ID header. So, whenever we edit a message, lets just decrease them
+by 1, so that when the whole process to compose and send the message starts=
+,
+these variables increase by 1 again, thus get set to the original values fo=
+r
+that message.
 
-The first patch fixes a bug that caused the message number to increase
-when a user edits an email. As a result of this bug, threads would
-break when a user edits an email.
+We also are doing the same thing in case the user chooses to not send a mes=
+sage
+out of many messages in a thread. By doing so, we will simply decrease thes=
+e
+variables by 1 for further messages, thus ensuring the whole thread doesn't
+break.
 
-The second patch improves the logging of the new message ID assigned by
-Outlook when a user edits an email.
+Signed-off-by: Aditya Garg <gargaditya08@live.com>
+---
+ git-send-email.perl | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-Aditya Garg (2):
-  send-email: fix bug resulting in increased message number if a message
-    is edited
-  send-email: show the new message id assigned by outlook in the logs
-
- git-send-email.perl | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
-
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 55b7e00d29..b09251c4fc 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -1639,8 +1639,20 @@ sub send_message {
+ 		         default =3D> $ask_default);
+ 		die __("Send this email reply required") unless defined $_;
+ 		if (/^n/i) {
++			# If we are skipping a message, we should make sure that
++			# the next message is treated as the successor to the
++			# previously sent message, and not the skipped message.
++			$message_num--;
++			$message_id_serial--;
+ 			return 0;
+ 		} elsif (/^e/i) {
++			# Since the same message will be sent again, we need to
++			# decrement the message number to the previous message.
++			# Otherwise, the edited message will be treated as a
++			# different message sent after the original non-edited
++			# message.
++			$message_num--;
++			$message_id_serial--;
+ 			return -1;
+ 		} elsif (/^q/i) {
+ 			cleanup_compose_files();
 --=20
 2.43.0
 
