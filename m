@@ -1,121 +1,98 @@
-Received: from fout-b4-smtp.messagingengine.com (fout-b4-smtp.messagingengine.com [202.12.124.147])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f42.google.com (mail-ua1-f42.google.com [209.85.222.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C466B187FE4
-	for <git@vger.kernel.org>; Sun, 25 May 2025 20:47:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.147
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A98741A275
+	for <git@vger.kernel.org>; Sun, 25 May 2025 21:03:10 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748206025; cv=none; b=P1W5BqtfFzNV6BpfvLahTe6qbSl9+Z68VDWAkurKUfqr20/SyO/2f21sQ3hHSQHXDr4cssnThOvmTdBlIKr5/yeRidF8mXQLtMqHUrvtkjmWqZrSgAfX/A3kU+2/gRO/w+pJDy3mj48VBnFN/DNxnjR3EAIu9kUY3QzzwlfsunI=
+	t=1748206992; cv=none; b=QyT5jeUgDPc4qZXUv7Ps1EO7MisFDsCrVHVHKrqya+oIGIJ4BDCA4Zdhvx/bz4if0TvA51sZYcHOQVm60VGsXnMi3P+jayhdJOtisCCbsE1/wYvpmgCtmgiD8VZTT4gWcBA3ikt+I0KucKwNNdnjS8X7zjsTl+vxuzXxRFUSxXQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748206025; c=relaxed/simple;
-	bh=w3GyFBP40Utdwog+5pxrs9sX9uiCJeJ+LgTB4fJqEGA=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=LAG/BBB1UnITNfkj4eouEImX5EoDr1Vyi3cWHTSpCmZHKPdFsGTiYHyTmp3JuVSXxa2604wc+qwL6xU36oe29extDoOjI3k8MllEgKbV7qEVtFMdWQr4U1EYq2PGVEDmZScSRLIJWdxBxsTwhS/WuEohTJZoDGp3m0Z89oqSNxc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=ijO659Ky; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PT9HFZWF; arc=none smtp.client-ip=202.12.124.147
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1748206992; c=relaxed/simple;
+	bh=vOUT3B+HDJ82rfUGrUp1uK4Clj/oPtS3OECd02i2MH8=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=OgEZjjXVIoDqu7uv+0iQzHiBjN+OPRAmkHAzoUd0LE9oAqB5dJdhuD0phOCCtuE98Pj4dkxbI/dcIU4zm7XHGi0x4qEkyXOJE9WuSZuS0OjGz8msBLl3TOyzv+CY/NOum+Aa22ORizSj7dW6CtteefQjJYsUkDqHdXX/5JD7P6E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l/LcZvHF; arc=none smtp.client-ip=209.85.222.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="ijO659Ky";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PT9HFZWF"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id A783111400DB;
-	Sun, 25 May 2025 16:47:01 -0400 (EDT)
-Received: from phl-imap-09 ([10.202.2.99])
-  by phl-compute-09.internal (MEProxy); Sun, 25 May 2025 16:47:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1748206021;
-	 x=1748292421; bh=KC9oMlvbc0gwX0xARetdoZ/3FOVgfvdqK/iqLWkmR/g=; b=
-	ijO659Kyt01XCWpc7293zkEWFXXWxtqKdCyuysf2AND96sv/hfA63krdCTJNKmHG
-	1r74xzevWcipE+a2v3aFGLvmZDQIbKTsS4Pw8s0szi6PDBpzrppRWgH9pwvbI1JL
-	b6V90kLn5ZTUZOx1yKs4jXVKDJTbZ/96ii+z8oabIKhBel6pVGSy/sab6XW9OD+d
-	m4psL8WQhawSkzJqNcsWNq2RuXC6DJt9N2REaXRThrE1cdULtG0wEpN451mNapBd
-	f7J8fROgW6ysKcChrAlDF6PGTT645DeQ7HMnveDtJW5YuqvqnhycSmBLErFNkA8A
-	hW+hFbmy8zZTB9K7/cMJyw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1748206021; x=1748292421; bh=K
-	C9oMlvbc0gwX0xARetdoZ/3FOVgfvdqK/iqLWkmR/g=; b=PT9HFZWFDW7qDq+ZI
-	L6VAYNMEtUowyzdMapj3f7Ciy62YpV1wg0i7/d35uNNTxx3LukmSiENNt99sSuV9
-	TSWYGtonTWJLdS6eePcDDggY+iPG5EaB5tX4rtU2TOn5v0Xxm24swb1fpHhv0AGt
-	r4V6Qw8MN+JSRiEVgPhx+GTLDq8tck6eGyMLWRDxH4rrDPeVHiu14uDJQP0ZiNgG
-	s9UrBUETCP3vb8CpO2EyVmo5wODgYOYMsAWFz3JfWu6KJEtSjQrkBv5MbTQGJiaj
-	JJADas6FJ2NxIhtMu4WKoYiiwWHixxXa/SAoNMUUpm6wLV5OrFs2wQfIx6gwVa7T
-	DPc0g==
-X-ME-Sender: <xms:xIEzaM1lmX7bvWMXk1rvvLmQV9NEWrGPfJt_9mVf08iah2TdrMQPVyo>
-    <xme:xIEzaHGiuJ9oWbcpDDijiSb0AiDdP8TaOZS5DRU__SDklLtu0rWd88c7Fea8ZCUSr
-    -leQSBnipBZV5odmA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduheeiudculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecunecujfgurhepofggfffhvffkjghfufgtgfesthejredtredttdenucfhrhhomhep
-    fdfmrhhishhtohhffhgvrhcujfgruhhgshgsrghkkhdfuceotghouggvsehkhhgruhhgsh
-    gsrghkkhdrnhgrmhgvqeenucggtffrrghtthgvrhhnpeeuffehteefleeggfefheekjeek
-    vedtveeulefhueetjeetjeehkedtfefgieeghfenucevlhhushhtvghrufhiiigvpedtne
-    curfgrrhgrmhepmhgrihhlfhhrohhmpegtohguvgeskhhhrghughhssggrkhhkrdhnrghm
-    vgdpnhgspghrtghpthhtohepvddpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkh
-    hrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:xIEzaE4IG5krK4KhdDyTbj_81YXaaXvGOSM1ntG0Appm7KuDgO6qwg>
-    <xmx:xIEzaF0JxAoZZsW6K0Fm2r2tOokbMlxnimwakFKjBPsXIeSmtlVl3g>
-    <xmx:xIEzaPFO4TlXwz-c6uik6g3MGnXY_R5CD2664RckDiZa86JC1KjPfg>
-    <xmx:xIEzaO--7VZWUXGPLtz8k8yO7T-zhHYIsiA31O-SaajEslBOu2aJEw>
-    <xmx:xYEzaHNlUWl6m4I5BgSnFxq-_mqvNti11XR7cJf-uCUCfS9ah8-KhsEK>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id D3FF23020064; Sun, 25 May 2025 16:47:00 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l/LcZvHF"
+Received: by mail-ua1-f42.google.com with SMTP id a1e0cc1a2514c-87dfe906a87so112466241.0
+        for <git@vger.kernel.org>; Sun, 25 May 2025 14:03:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748206989; x=1748811789; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=LDr78Vw2mMGX9q8ZbO7vvTVLmHsaw71JMSgw+UETQlc=;
+        b=l/LcZvHFjXfA9v3zeAEbI93F9Bx7plP/07TRZYDbpewPfdfljlEKkO1alEzNscVFID
+         vZTNibk2ZY6x/ePqFCW8Zr10Q5SgldGyP69/u9Kq2B084RyoL2+zpzJhqe9PCvrCsHif
+         Qx8FnMif0NBjJ8fxRZYoikmF5KLBwTrmvuamcioYbPy0GtZg3lGddbfbe60FVjgvHKQ2
+         KDprAPRFQIzQ8SUP+Ftm6T8Rnkf3dYLbziM5APisn9sZMn+I8V8mkfJ2x+r934jfRvxk
+         tfY3ITNv+ZKheVaua43fIVLdsz3815lyINi45jccPAZ+mlRNeVKOqIjVibcIiwKRu13a
+         /zTQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748206989; x=1748811789;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=LDr78Vw2mMGX9q8ZbO7vvTVLmHsaw71JMSgw+UETQlc=;
+        b=Pq0rrkr+RETY62LJo4Y6BUVuOhJjjD23N3j4CdqecSZHqstkQT+Tmt0gW8xkBeeq77
+         tnj2nu1IplhO4TFvdUtgfIBYdBYrq8Yf+cQQkXck38tg6TWoDOQVnZRHLbYGjVd/wwt5
+         B+IT2Uws2yLl0TFldSsgX0RqLEFAI4wzmquyzZvyVPl7EjpGbVvX7XR/uw5Ix+tWspcz
+         BpWKt3iCq71K45ri7rppdv9frK9gdcvc6toFgoLiFWfN0Qd5ia6Q2bM/nAGThBA4l5sF
+         hp8C2frrqBst6li5I1gk9ilWHeX172bkoBBe35VsgT0EVofqGjabh87iVZMSiu4+CePj
+         /NPQ==
+X-Gm-Message-State: AOJu0YzXtkC8CZUBo86YPyoDA+mHrLbzQywQjHwS10UGoged43Lt8GQw
+	XiZb9XspDfCJYMCTtGaCjYsoD1KD3f63DsCmN+0ogazRkHFkQh8kG0pEeacJ+g==
+X-Gm-Gg: ASbGncvvtZvh4s4WhzjQxOerF8+c1AMb3KrEcPwzK4jS69avYTiKiVQ3YGFI+gmBn7z
+	/H2Mvv1h6JOhMPPWlZq5VL+S4PgOj/NUXixk7K4pcdzi0Rdv4qx5vSCcajXZMc4nOQlUaBlVFPD
+	VncZuwDhzNUfYZ9PC2sNPzjm9RAvEX/RgIhMX7AgvfNj03VPm3yL0HtQ3RvyJyMJ4i4I3+U2KoN
+	f+yIYRlFAC3WkKlwDONV6jatsOpQRRMksATMWaovsFd23nlqk+jw4SHKMRXfO5dCKBF7q43FYnv
+	1pPwwRYre78BJ1JYe9zJBlMNzLV5NMl48jZfawMdT2vko/Og04w=
+X-Google-Smtp-Source: AGHT+IHWR/AlFLkn94vMPqFzWUY3wp68YFSnJKAGC+bdKlzWa9G1Uo6V5XZtGF4znvcZa33KXnuP6Q==
+X-Received: by 2002:a05:6122:82a6:b0:50b:e9a5:cd7b with SMTP id 71dfb90a1353d-52f2c58ca11mr5314052e0c.9.1748206988850;
+        Sun, 25 May 2025 14:03:08 -0700 (PDT)
+Received: from rodrigo-pc.. ([179.99.7.58])
+        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-52f45695f31sm188808e0c.43.2025.05.25.14.03.06
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sun, 25 May 2025 14:03:08 -0700 (PDT)
+From: Rodrigo Carvalho <rodrigorsdc@gmail.com>
+To: git@vger.kernel.org
+Cc: Rodrigo Carvalho <rodrigorsdc@gmail.com>
+Subject: [PATCH 1/2] userdiff: add support for R programming language
+Date: Sun, 25 May 2025 18:02:35 -0300
+Message-ID: <20250525210236.116342-1-rodrigorsdc@gmail.com>
+X-Mailer: git-send-email 2.43.0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Taf9fec3ba48f0e1f
-Date: Sun, 25 May 2025 22:46:35 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Message-Id: <a3c252cf-dec3-4b2c-828e-f25e48853585@app.fastmail.com>
-In-Reply-To: 
- <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
-References: 
- <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On Sat, May 24, 2025, at 23:35, kristofferhaugsbakk@fastmail.com wrote:
-> +	test_commit --signoff 23rd &&
-> +	GIT_EDITOR="cat >actual" git notes add &&
-> +	test_grep ! " $" actual
-> +'
-> +
->  test_done
+The patch appends userdiff.c file in order to support R programming
+language function header. This will be useful for those who use Git
+for versioning .R files.
 
-Or alternatively I could assert on the whole template:
+Signed-off-by: Rodrigo Carvalho <rodrigorsdc@gmail.com>
+---
+ userdiff.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-```
-test_expect_success 'git notes add editor template' '
-	test_commit --signoff 23rd &&
-	cat <<-EOF >expect &&
-
-	#
-	# Write/edit the notes for the following object:
-	#
-	$(git show --stat --no-notes 23rd |
-		    git stripspace |
-		    git stripspace --comment-lines)
-	EOF
-	GIT_EDITOR="cat >actual" git notes add &&
-	test_cmp expect actual
-'
-```
-
+diff --git a/userdiff.c b/userdiff.c
+index da75625020..d1d31ea67e 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -317,6 +317,10 @@ PATTERNS("python",
+ 	 "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
+ 	 "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
+ 	 /* -- */
++PATTERNS("r",
++	"^[ \t]*([a-zA-z][a-zA-Z0-9_.]*[ \t]*<-[ \t]*function.*)$",
++	/* -- */
++	"[a-zA-Z_][a-zA-Z0-9_.]*"),
+ PATTERNS("ruby",
+ 	 "^[ \t]*((class|module|def)[ \t].*)$",
+ 	 /* -- */
 -- 
-Kristoffer
+2.43.0
 
