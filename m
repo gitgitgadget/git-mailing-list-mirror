@@ -1,114 +1,79 @@
-Received: from mail-qv1-f45.google.com (mail-qv1-f45.google.com [209.85.219.45])
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9F191A2C25
-	for <git@vger.kernel.org>; Sun, 25 May 2025 21:03:12 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7951917D0
+	for <git@vger.kernel.org>; Sun, 25 May 2025 22:42:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748206994; cv=none; b=GuiWDrKmN8jfbLRt59xBhACTV3Ecz7CdcyEa5PW1KycJs9FHdsbnb5jnJyqI6VT9+5ecXmEoi4C40kz9N25eChTkx96Hvj5vNCXgNSzWXdEXizUFbzJp4BfdHfR24vlpR3P9IOtRiyu8vonPOvTDNlDUoYBmfpIJi6u8N1iFJ9s=
+	t=1748212977; cv=none; b=QbFoG7tNPSrDpd8mLpOJW2jof5F1uRAX0msI6m3EB5Bo8Eo37WYNCiFCpqm7AoaF4G+cgGCKj2noKJQYizK4OCHvRwgxjNWusGYAWrJp1X9GkbgUBbjc74mbKv8nlbRtQm4oS2Nrvu8YgWWnP0DILXFoqg2bzosV6EXk0Z1bCUg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748206994; c=relaxed/simple;
-	bh=oWKvy9w7gFLFxI+WkkLL6h7t6kpxKGqxofTWvsL+OVU=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=BDnuPuChksvGwYLnMIOkTUV1DqVB8dCRVt2iTXVCB6upaZKsYXsnIHxMLfty4QLWc1hC2O/jD22GzebwKNI8sgTmvscjniXP9lhrQhAckvPC1JtdUviWv2I0Shfh6hCBGR2KZMaW/1MtmcsXFdqzhwiYEbeiOVud9ilrNXQ+5yc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iWTdMqPb; arc=none smtp.client-ip=209.85.219.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+	s=arc-20240116; t=1748212977; c=relaxed/simple;
+	bh=qGllS4yQs6qxf6WOd4A7em07YKUUnoWqdGoAFbyE4YE=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hp5ThJ2B4e8PPdAIE0xM7/93nBikwjJf3bYRjBJdw0dHiC75Eqyd1eWyVMIUMTD07IJzvXXFJRyPfQdgZKCEIXCqWEQZH0bTvIW1CdhG10XiIAw9ExkBs/8pWiiOzcOFmbI15VBInixlLHEVGWyFnLFEhDm4dIYC3MksedD4KpI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iWTdMqPb"
-Received: by mail-qv1-f45.google.com with SMTP id 6a1803df08f44-6faa543d8bcso7478146d6.3
-        for <git@vger.kernel.org>; Sun, 25 May 2025 14:03:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748206991; x=1748811791; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WVcE6KZoDyRlS/kRW/SFLDz5CoqLaekPebD4P8xkcsg=;
-        b=iWTdMqPbsL3VruWOfw0yKr5w4MpixBBazBw8gPIHIQBm6K89tr29H2mnjo0QHpk0gV
-         +ppjLy9k2JqAVwbqrVA7IyTgYinTDiCgdIFFZlvcbh8h7Jnl6bmmohobaV7rFOez/rrA
-         x4gtrKa6S8pZm3F/LDjxQwDC4MAeoISdYhnVJg8F1xPDHOjjx8WVVkicyQNX6jbWspVH
-         6/tv8cV1Aw9kx/RvQfyG2b/xdFIakMXlphEG88VwuZJeMOhDfqyM60s5PkLPzl2WniYq
-         nKz6gj8f5exjiuZx9RIXL43vyP1M4f6VQAuj1BDbndq6CNqqP3V8jywgEwbDUC5hXSyH
-         s2FQ==
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7c5a3334fddso36500985a.1
+        for <git@vger.kernel.org>; Sun, 25 May 2025 15:42:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748206991; x=1748811791;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+        d=1e100.net; s=20230601; t=1748212974; x=1748817774;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=WVcE6KZoDyRlS/kRW/SFLDz5CoqLaekPebD4P8xkcsg=;
-        b=mwJ7JKScdlIfyqd/pbBL6Yr43QDW4f6JuqwuFGSYIkw0JAULeDWP1OH0V8tI5HaXzX
-         cA2pczarWjBNw2VZL65ir1hZqrTzpquGHoQO/aXMjTbAy0MlQ3rMBB31mlyhOaFmrv4F
-         ehefruQOGJN/JeT6xKJhnZUhGSiJwdZy7kxyfHE1I99sjjfrOQ4jRjlv9tzO17VAim8U
-         uKRfn24g/1gMXSoBj/vpw1EDuMGaBfTY/xXfOrtzAxPmOwIhbY8vFb8PgdaDsppe2K3B
-         jxSy9j7Su+fUt97l/u2s/8cpiohtKnkWgWyHOf7sDq0ovKJyDc/0aahemzmgdHIrn5H9
-         9bew==
-X-Gm-Message-State: AOJu0YyJ9KJ136/jB6DgFeOfKbJfmK+LW+9Q3aJELFBpsMNy++uX3uQI
-	xC0gWNFSdp1VU7zAFTruIN4wMX+ZeSGbAOLyiiCSAivDMzBEjZVKzzaR2ZGr3g==
-X-Gm-Gg: ASbGncsl/xhQhBwfGcLq5ZCDzU8LtZM/tWnzHrEDfK11wiATLypeDlTt+u3DznxCQI8
-	MBDDSNupZWEbHTvUUjDLmoYhherSyVR5S0wFSoE8aKlOrqioTbox9qHz3oKCngYV6cDpuhB5xAQ
-	x9q0RtYkfK6bGsX/N+yN4lWJPG/jfnJ6rKFf1JoehGRkSaZPDbTCo9iLJ31RkKoR73znc/sIILN
-	/TMJVmszCza/Mi6H1j1IOicQbcy02BE/b9dJ6dgplfk6JbrZIAbrywwtnnouv4zsTMZZa6jPDdC
-	bGxoYDABADr4DO9eVKU0FJmzIIjwGnHAFL5zcx5H94UOZapWw2n4YOLOFKd8LQ==
-X-Google-Smtp-Source: AGHT+IE2nqksskcHCHbzWnOoa0TYIpMv+ihiVCuB45yKl7/Wesggo1H5Zx2V7QVUfghg2CILfJR5Sg==
-X-Received: by 2002:ad4:410b:0:b0:6fa:9d79:eb70 with SMTP id 6a1803df08f44-6fa9d79ebb9mr88983346d6.34.1748206990917;
-        Sun, 25 May 2025 14:03:10 -0700 (PDT)
-Received: from rodrigo-pc.. ([179.99.7.58])
-        by smtp.gmail.com with ESMTPSA id 71dfb90a1353d-52f45695f31sm188808e0c.43.2025.05.25.14.03.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 May 2025 14:03:10 -0700 (PDT)
-From: Rodrigo Carvalho <rodrigorsdc@gmail.com>
-To: git@vger.kernel.org
-Cc: Rodrigo Carvalho <rodrigorsdc@gmail.com>
-Subject: [PATCH 2/2] t4018: add two userdiff tests for R language
-Date: Sun, 25 May 2025 18:02:36 -0300
-Message-ID: <20250525210236.116342-2-rodrigorsdc@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250525210236.116342-1-rodrigorsdc@gmail.com>
-References: <20250525210236.116342-1-rodrigorsdc@gmail.com>
+        bh=eHoc6d7XuNF1J2/lsgvVERVVC1eE4FK/mE0G4scBLW4=;
+        b=Yu8qyFkpoKDKYB6MHgqBScZ3QzLvkYkDpZYEP17BQU7iE9JwLZWqlzaAwgN9M3stog
+         7ISmoBfZx4JaXOXGh8h0QXZ6g2fsPDB3yf8vQxNCKT2yg0Ow7JqZAhuSsLBxOmHCjcOM
+         /meZZWltrDXe75cSR22cbZKqer48FL96dlM8ztIxUacX7Zsq5h6nQp6ub1QVwEbCzJY7
+         GCSHabYvvdkt3MYfiPXbYi9B2u/TaQQ9nG4r5RYzpcgFzQQ9ME0v5NjXzUxE0ehCYqMp
+         6yd2Lh0KaP/dmZV/5WrBEVi4s+MmnM73+/8AMWlFqSS9Kwt2aqyrwh1ecDUthd08YktQ
+         5RnQ==
+X-Gm-Message-State: AOJu0Yz23mEgGKAHH6H06193FZvXV8pFdXdQyZjeRUuo1qv626jMDB2n
+	JFapd3BTosQ8GXdRyx02ZktaPVpvFJwWc4evxgDiSiw/hxRXHnzecKbXW8Lc3LdaksDAa5mUy8p
+	GCMtUB/q8nbiHd/Bz8BsW7aUdhHy1d5A=
+X-Gm-Gg: ASbGncu6zcpJYcS+w539MmjtM0dwB3x/5OYv1CehWlMxGK1JTqZZtOfoBY34ZfTw7OA
+	5v0sdhtcUOkf9bvh7Y1LO+rhXrGCN641E6OOxwfkfbxXpmhAXvf/HKEigmC9nnADwrjiOGRv1U9
+	Ou5/+AqYEswFNG8KhH2TXItLpRfAr/cd3Paw209H7DuA==
+X-Google-Smtp-Source: AGHT+IHeFK9xuaTmfAiZs8yV8FMrG8vt8WFH3h3BdZLg7KDaHgpp4IHA7JLNZ0OqQcnjPtYDCInWL6b8AG05lroF050=
+X-Received: by 2002:a05:6214:19c2:b0:6fa:a0ac:8d44 with SMTP id
+ 6a1803df08f44-6faa0ac8de6mr37248166d6.0.1748212974002; Sun, 25 May 2025
+ 15:42:54 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20250525210236.116342-1-rodrigorsdc@gmail.com> <20250525210236.116342-2-rodrigorsdc@gmail.com>
+In-Reply-To: <20250525210236.116342-2-rodrigorsdc@gmail.com>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Sun, 25 May 2025 18:42:43 -0400
+X-Gm-Features: AX0GCFu6drjEs3J6FNPRTEUYs7lVkWa0iO2kpQuggPvg5yR7FVlrR1n9DrVEyuk
+Message-ID: <CAPig+cQ07SMbfD8Er1Ukdpih_8AL_exbz7U6WzZ3b2js2ge1cg@mail.gmail.com>
+Subject: Re: [PATCH 2/2] t4018: add two userdiff tests for R language
+To: Rodrigo Carvalho <rodrigorsdc@gmail.com>
+Cc: git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This patch adds two userdiff tests for R programming language
-files. These files define a simple function, with and without
-indentation.
+On Sun, May 25, 2025 at 5:03=E2=80=AFPM Rodrigo Carvalho <rodrigorsdc@gmail=
+.com> wrote:
+> This patch adds two userdiff tests for R programming language
+> files. These files define a simple function, with and without
+> indentation.
+>
+> Signed-off-by: Rodrigo Carvalho <rodrigorsdc@gmail.com>
+> ---
+> diff --git a/t/t4018/r-indent b/t/t4018/r-indent
+> @@ -0,0 +1,6 @@
+> +RIGHT <- function(a, b) {
+> +    c =3D mean(a, b)
+> +    d =3D c + 2
+> +    ChangeMe()
+> +    return (d)
+> +}
 
-Signed-off-by: Rodrigo Carvalho <rodrigorsdc@gmail.com>
----
- t/t4018/r-indent   | 6 ++++++
- t/t4018/r-noindent | 6 ++++++
- 2 files changed, 12 insertions(+)
- create mode 100644 t/t4018/r-indent
- create mode 100644 t/t4018/r-noindent
+Although nontraditional, do we care that some people define functions
+using `=3D` rather than `<-`?
 
-diff --git a/t/t4018/r-indent b/t/t4018/r-indent
-new file mode 100644
-index 0000000000..9df440f2a4
---- /dev/null
-+++ b/t/t4018/r-indent
-@@ -0,0 +1,6 @@
-+RIGHT <- function(a, b) {
-+    c = mean(a, b)
-+    d = c + 2
-+    ChangeMe()
-+    return (d)
-+}
-diff --git a/t/t4018/r-noindent b/t/t4018/r-noindent
-new file mode 100644
-index 0000000000..6d9b01ffe3
---- /dev/null
-+++ b/t/t4018/r-noindent
-@@ -0,0 +1,6 @@
-+RIGHT <- function(a, b) {
-+c = mean(a, b)
-+d = c + 2
-+ChangeMe()
-+return (c)
-+}
--- 
-2.43.0
-
+    foo =3D function(x) {...}
