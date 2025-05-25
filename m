@@ -1,67 +1,67 @@
-Received: from mail-wr1-f49.google.com (mail-wr1-f49.google.com [209.85.221.49])
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B988C1990B7
-	for <git@vger.kernel.org>; Sun, 25 May 2025 20:27:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61D2A1C6FEC
+	for <git@vger.kernel.org>; Sun, 25 May 2025 20:27:20 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748204840; cv=none; b=OHIXxj5pl8Lp8LBIO6UtcSmJMkCttDcI8ZUcz8/zegB6ymur3JglASkkMHL3SmAWf9gaDwjMlzLdYsBrAVhDIz7mKNxY5I58J9WYU+f+PmLOwFXvPgPzauLLXOupKAix1pk+N1dOVwHphTaS7IJf27d3/M7eDhXSaubUk66uaLQ=
+	t=1748204842; cv=none; b=PrCpJBiPlBEfFv0kSGRjV44xzu4Qdq+2p+c4w0v2XYgXJqKic6VFZI0Yq/EKqnWLYGaoRoQBzWN3N447hGLSbt+3Wl+dbDFdZOST+9TzeWaQjpOZo3+fSkJT6E3/NHD/vnlT0rnYgYuOUZQg9MSDZ2YSSaskxi8A4oiD933VHMo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748204840; c=relaxed/simple;
-	bh=pHtoRzycBVOBasIDOMPe65Ckk4dTOu63rrfWB+85LVI=;
+	s=arc-20240116; t=1748204842; c=relaxed/simple;
+	bh=2D/TpcErbm2osXn/yCQv19Bf5WvGPlFTWATaip2dr+k=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
-	 Content-Type:To:Cc; b=XDoH0kuMrumdzunWMO/Uo98ZH2UyG8QIWHBLsUuYCOb3IWIR/4+5O/KMoY5mguBtTuKMba+iLtNvh8jqmO5/ddmjvo5ma2WdwEIQfmLtjD62F53DxIVLkF7c+yfHDdLi6x1S21nP9oE/i/XxwKvRhG12y7VooH0FqAX+wTUgOhs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=iH0w5/2+; arc=none smtp.client-ip=209.85.221.49
+	 Content-Type:To:Cc; b=hyUKPQv6qgN2eOde/PH/FnpqczT4+yToRCffyRkAV+5XJmGZ48PgchVFljxctyNRabrYFPFIlGOLM+Zq3Jm5ugaiEiI/NP50+bsNVmEj5OC4vhs4FZp3AClXP/5MgXFKDJhLF+WTCbfLYD6yD+K+iYSoDXPKLdh0BcIUanN2fLc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GfrWOD/n; arc=none smtp.client-ip=209.85.128.42
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="iH0w5/2+"
-Received: by mail-wr1-f49.google.com with SMTP id ffacd0b85a97d-3a3798794d3so1684866f8f.1
-        for <git@vger.kernel.org>; Sun, 25 May 2025 13:27:18 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GfrWOD/n"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-43edb40f357so13468125e9.0
+        for <git@vger.kernel.org>; Sun, 25 May 2025 13:27:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748204837; x=1748809637; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748204838; x=1748809638; darn=vger.kernel.org;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=oRoWlTIpRr3ppPRHsQDTXR34ZVN2UoBBMKuKXuwjLXM=;
-        b=iH0w5/2+sQE5DU1JntulGC2I3QqW+9N6NSQZAcoi7tuutElJI3b5+1X+Ma9nvqxlXA
-         WsndUHdPgqCMEjxAPRhWnHYyZV6tEWPAA+3i9zMEjcmL+4kBvDrWaLQNspf3ogHm3Xmw
-         RWzMK42PMpn1GOoK4iEgTKhMll8kncA4B4TX2eeGyKn0cLddMcjW+GRbdVivGH1tTP+l
-         tlFRtYDiQeM7Ju0JqMzrIF9EZ/zLFWa2mCRQll7wFCFEo/41K3d5ojaSwl3d4Q+Q+ihn
-         K4S3Z4VRWsKe1mrd9MAUnpy7hYij6QCc2YMMKs0HkR9TT1sjsFV5T/89g5OnMJm9+mJX
-         aGXw==
+        bh=4vGTj4D8FmIC95y38Tb76glNjLDCAa4LydZTX4VLu68=;
+        b=GfrWOD/nxM4TDtzOwX5GjYtZhxJXJjtrQTANsJ4zhblU0dI6PFIXWRJ/n2pWbOenZr
+         uf9aXzAYbWwn7NY+3d6rDiMBz2sazaL6xRlGN8EQJEtZPDmsyF1He+BrF+jyQbuTDvoM
+         KEFFeodOk9R8ERQPA1jfRMuo5g1xipA3hy3el87G1Y+tP9FPcWVUmsYJRCUreqkW5NZe
+         JUUvOrho4UcJJsW+m3tfgLunnTe7virYhJzhVWHenGWsCLHC1G7/kw3DfFVQCAqsNGTP
+         zc4bQVLN2zgBWeTYhupN+YFgkDnpDKpYvNdAt/YbH0hVkwcEvieIkfkQn/60xOA/6bD3
+         5q0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748204837; x=1748809637;
+        d=1e100.net; s=20230601; t=1748204838; x=1748809638;
         h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=oRoWlTIpRr3ppPRHsQDTXR34ZVN2UoBBMKuKXuwjLXM=;
-        b=myZRCehUBoZaPoRJjVK+p85Cof4gvu//QZW5fRtvHDsU1wQdRZviTvOTSa+HUewV+p
-         p0cNAd3HWuHJoKyeq3wo3k9QPYMe0ApQYphceO7F31tH8HWcbOUNcTNHow6clWBGB1XW
-         w1azDoruquuaTA8T0MfgLevxmOfdENyxf3SVjzBS12fuAiigBRiwfg6C97PXyTeQYDaW
-         mUn6NcPrxbBspHbl/6noDnt+tcglXJ7mRoglc8A2MZTFOuwcGWPvt3oJaZRw1kg7/NOM
-         wpIbrZ2FgYVdU+n3R1EaBSaI6v35XFTDAFIUJC/IE80245GTKR6pdzHykS1nS/8U0pjk
-         qbEg==
-X-Gm-Message-State: AOJu0YwVVCLZ7KFGRIQhM0IKnJzn9K3s287waDGl3Yq8e77rU4PvXTCR
-	aom6gtQuAkxDbQI9vGTm5WPsH5eTltRw2JpqDycbAx4977hpoWICAd9jNX4LXg==
-X-Gm-Gg: ASbGncvqsiufCUzE8KSiCZ1wMtT44Y9JWvqa6mHjRiL4P59hEnQm9WWN0UYBV/Sn1jD
-	vB+X/WOIXCreF9G/SRv/g4d8KJN7oghYyYxLRjaB/uLe9Kuhm5yGTveNS3JppfrRwBwZXDOHZua
-	lYxeTbo8XS8v2/Pg16f94eI4xuWzndlXB/BTfkQ00oXui9+hzYcxHRFBi1rPEPmLll5sce1v89a
-	522CZgD99JqZJs03YH1hzYt4yfQdoSAbMIX6iw++VuQ0vmSJt/hPpLqGC7ETVWgAlFtcQOpToGn
-	E8DBiNeApQ85gqpr7/Ihc4BSF8ceCTHzdvLvvRTfdtttoESVjNLA
-X-Google-Smtp-Source: AGHT+IFAYyo2jFEKxW1oYD+14WTKUDo1SizZs4KddeDA1i1cHYMCyVCMsvbKa5gNQ94G8twx2CGrkQ==
-X-Received: by 2002:a5d:64cd:0:b0:3a1:fcd6:1e6b with SMTP id ffacd0b85a97d-3a4cb4c622emr6211117f8f.57.1748204836560;
-        Sun, 25 May 2025 13:27:16 -0700 (PDT)
+        bh=4vGTj4D8FmIC95y38Tb76glNjLDCAa4LydZTX4VLu68=;
+        b=e6qNf4lxemqi3iMS3iCC7uoVnvDkfGjb/NKgroRGu2r2ZR61v/5XkpDxV4nsSD6FRY
+         ZUALtutSAQZgaJtXyxESIRgGVVq3ApSl7mSjeeOA1NME2/Rkak1MsiHLiCevPEtNyWqI
+         itF98XBD7bJ51i9hcEM4c3ukzDV3lja310s3ShOd1nz9QCwSlMaRJDtN0f1dmmmt/UL6
+         oXaFdKYFHYw1XVSSYnvFjH19OoFpAdEOB9wlsbrr59IDj4F3l4guaQEkrjP3NZJO5fjs
+         /6y/CIdsL0nx3udEAlh1IwhsRsNcofYWiHM4esg6H0VaxtUtUIfpzqbd4W4loj1N0gdI
+         qaPw==
+X-Gm-Message-State: AOJu0YwJqSX2SKAhVhH3kSM2ezPUFHtgoU5nRzmIMZCXaqaV2xXKzRok
+	V6vSlK3iFIZPIYEf6mYj99jqfw031g4kyrBJCnysorOm5fPFHURDxvbvzFaxMA==
+X-Gm-Gg: ASbGncvRxVMu6H+iAMdaUS56n6jYkXA5zdfgRmTM5fbRFGMnettZUUEoKAR0NprP+0x
+	CAiVjbLyaXq71N/gJUZLOFQZjSXHB5avPDajQ8jmiYySSFg841VN/PBbAfrxoZo/mhwdL5FAS5K
+	0+sMtA88JypvOWarIrC86c3mwMGU81dfie6WINiT9t094gcu9seDvM1zQR4iZm9LS+yu8PUFePV
+	T/vJvg+JJ7r3ICPK8He1KZNeyvNED01CIZ/kDS+emSSbUKYYTjJnwZzA6Unhv5jDPwm5iy736uc
+	roF4ruzHY6iDvQAQ75xIcl/XuQ4of65cg8O4dZiDtli/qLH4gY3GuWfe3z54Tp0=
+X-Google-Smtp-Source: AGHT+IER8XTDik/qhEuf/wnKRB1zPzQnowSd8hpLsc1MN9lcE0NSYf4bJ7+1y3l7+bDP0r6m2sAQxg==
+X-Received: by 2002:a05:6000:2909:b0:3a3:5c05:d98b with SMTP id ffacd0b85a97d-3a4cb44533fmr5628982f8f.5.1748204838051;
+        Sun, 25 May 2025 13:27:18 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d1d2f788sm3603730f8f.65.2025.05.25.13.27.16
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d54af5c9sm2334779f8f.40.2025.05.25.13.27.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 25 May 2025 13:27:16 -0700 (PDT)
-Message-Id: <2e3200c0f6f35c3de777c8ccf72a54b8da62dada.1748204829.git.gitgitgadget@gmail.com>
+        Sun, 25 May 2025 13:27:17 -0700 (PDT)
+Message-Id: <907bbb46c4bac448ed6666e1e95bda7df8d7e010.1748204829.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1927.git.1748204829.gitgitgadget@gmail.com>
 References: <pull.1927.git.1748204829.gitgitgadget@gmail.com>
 From: "=?UTF-8?q?Jean-No=C3=ABl=20Avila?= via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Sun, 25 May 2025 20:27:07 +0000
-Subject: [PATCH 7/9] doc: convert git-mergetool manpage to new synopsis style
+Date: Sun, 25 May 2025 20:27:08 +0000
+Subject: [PATCH 8/9] doc: convert git-mergetool options to new synopsis style
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -77,8 +77,6 @@ Cc: =?UTF-8?Q?Jean-No=C3=ABl?= Avila <jn.avila@free.fr>,
 
 From: =?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>
 
-- Switch the synopsis to a synopsis block which will automatically
-  format placeholders in italics and keywords in monospace
 - Use _<placeholder>_ instead of <placeholder> in the description
 - Use `backticks` for keywords and more complex option
 descriptions. The new rendering engine will apply synopsis rules to
@@ -86,140 +84,164 @@ these spans.
 
 Signed-off-by: Jean-Noël Avila <jn.avila@free.fr>
 ---
- Documentation/git-mergetool.adoc | 62 ++++++++++++++++----------------
- 1 file changed, 31 insertions(+), 31 deletions(-)
+ Documentation/config/mergetool.adoc   | 54 +++++++++++++--------------
+ Documentation/mergetools/vimdiff.adoc | 16 ++++----
+ 2 files changed, 35 insertions(+), 35 deletions(-)
 
-diff --git a/Documentation/git-mergetool.adoc b/Documentation/git-mergetool.adoc
-index 046c3258f050..77d0b5055057 100644
---- a/Documentation/git-mergetool.adoc
-+++ b/Documentation/git-mergetool.adoc
-@@ -7,95 +7,95 @@ git-mergetool - Run merge conflict resolution tools to resolve merge conflicts
+diff --git a/Documentation/config/mergetool.adoc b/Documentation/config/mergetool.adoc
+index 00bf665aa09b..6be506145c15 100644
+--- a/Documentation/config/mergetool.adoc
++++ b/Documentation/config/mergetool.adoc
+@@ -1,24 +1,24 @@
+-mergetool.<tool>.path::
++`mergetool.<tool>.path`::
+ 	Override the path for the given tool.  This is useful in case
+-	your tool is not in the PATH.
++	your tool is not in the `$PATH`.
  
- SYNOPSIS
- --------
--[verse]
--'git mergetool' [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
-+[synopsis]
-+git mergetool [--tool=<tool>] [-y | --[no-]prompt] [<file>...]
+-mergetool.<tool>.cmd::
++`mergetool.<tool>.cmd`::
+ 	Specify the command to invoke the specified merge tool.  The
+ 	specified command is evaluated in shell with the following
+-	variables available: 'BASE' is the name of a temporary file
++	variables available: `BASE` is the name of a temporary file
+ 	containing the common base of the files to be merged, if available;
+-	'LOCAL' is the name of a temporary file containing the contents of
+-	the file on the current branch; 'REMOTE' is the name of a temporary
++	`LOCAL` is the name of a temporary file containing the contents of
++	the file on the current branch; `REMOTE` is the name of a temporary
+ 	file containing the contents of the file from the branch being
+-	merged; 'MERGED' contains the name of the file to which the merge
++	merged; `MERGED` contains the name of the file to which the merge
+ 	tool should write the results of a successful merge.
  
- DESCRIPTION
- -----------
+-mergetool.<tool>.hideResolved::
++`mergetool.<tool>.hideResolved`::
+ 	Allows the user to override the global `mergetool.hideResolved` value
+ 	for a specific tool. See `mergetool.hideResolved` for the full
+ 	description.
  
- Use `git mergetool` to run one of several merge utilities to resolve
--merge conflicts.  It is typically run after 'git merge'.
-+merge conflicts.  It is typically run after `git merge`.
+-mergetool.<tool>.trustExitCode::
++`mergetool.<tool>.trustExitCode`::
+ 	For a custom merge command, specify whether the exit code of
+ 	the merge command can be used to determine whether the merge was
+ 	successful.  If this is not set to true then the merge target file
+@@ -26,7 +26,7 @@ mergetool.<tool>.trustExitCode::
+ 	if the file has been updated; otherwise, the user is prompted to
+ 	indicate the success of the merge.
  
- If one or more <file> parameters are given, the merge tool program will
- be run to resolve differences in each file (skipping those without
- conflicts).  Specifying a directory will include all unresolved files in
--that path.  If no <file> names are specified, 'git mergetool' will run
-+that path.  If no _<file>_ names are specified, `git mergetool` will run
- the merge tool program on every file with merge conflicts.
+-mergetool.meld.hasOutput::
++`mergetool.meld.hasOutput`::
+ 	Older versions of `meld` do not support the `--output` option.
+ 	Git will attempt to detect whether `meld` supports `--output`
+ 	by inspecting the output of `meld --help`.  Configuring
+@@ -35,7 +35,7 @@ mergetool.meld.hasOutput::
+ 	to `true` tells Git to unconditionally use the `--output` option,
+ 	and `false` avoids using `--output`.
  
- OPTIONS
- -------
---t <tool>::
----tool=<tool>::
--	Use the merge resolution program specified by <tool>.
--	Valid values include emerge, gvimdiff, kdiff3,
--	meld, vimdiff, and tortoisemerge. Run `git mergetool --tool-help`
--	for the list of valid <tool> settings.
-+`-t <tool>`::
-+`--tool=<tool>`::
-+	Use the merge resolution program specified by _<tool>_.
-+	Valid values include `emerge`, `gvimdiff`, `kdiff3`,
-+	`meld`, `vimdiff`, and `tortoisemerge`. Run `git mergetool --tool-help`
-+	for the list of valid _<tool>_ settings.
- +
--If a merge resolution program is not specified, 'git mergetool'
-+If a merge resolution program is not specified, `git mergetool`
- will use the configuration variable `merge.tool`.  If the
--configuration variable `merge.tool` is not set, 'git mergetool'
-+configuration variable `merge.tool` is not set, `git mergetool`
- will pick a suitable default.
- +
- You can explicitly provide a full path to the tool by setting the
- configuration variable `mergetool.<tool>.path`. For example, you
- can configure the absolute path to kdiff3 by setting
--`mergetool.kdiff3.path`. Otherwise, 'git mergetool' assumes the
--tool is available in PATH.
-+`mergetool.kdiff3.path`. Otherwise, `git mergetool` assumes the
-+tool is available in `$PATH`.
- +
- Instead of running one of the known merge tool programs,
--'git mergetool' can be customized to run an alternative program
-+`git mergetool` can be customized to run an alternative program
- by specifying the command line to invoke in a configuration
- variable `mergetool.<tool>.cmd`.
- +
--When 'git mergetool' is invoked with this tool (either through the
-+When `git mergetool` is invoked with this tool (either through the
- `-t` or `--tool` option or the `merge.tool` configuration
--variable), the configured command line will be invoked with `$BASE`
-+variable), the configured command line will be invoked with `BASE`
- set to the name of a temporary file containing the common base for
--the merge, if available; `$LOCAL` set to the name of a temporary
-+the merge, if available; `LOCAL` set to the name of a temporary
- file containing the contents of the file on the current branch;
--`$REMOTE` set to the name of a temporary file containing the
--contents of the file to be merged, and `$MERGED` set to the name
-+`REMOTE` set to the name of a temporary file containing the
-+contents of the file to be merged, and `MERGED` set to the name
- of the file to which the merge tool should write the result of the
- merge resolution.
- +
- If the custom merge tool correctly indicates the success of a
- merge resolution with its exit code, then the configuration
- variable `mergetool.<tool>.trustExitCode` can be set to `true`.
--Otherwise, 'git mergetool' will prompt the user to indicate the
-+Otherwise, `git mergetool` will prompt the user to indicate the
- success of the resolution after the custom tool has exited.
+-mergetool.meld.useAutoMerge::
++`mergetool.meld.useAutoMerge`::
+ 	When the `--auto-merge` is given, meld will merge all non-conflicting
+ 	parts automatically, highlight the conflicting parts, and wait for
+ 	user decision.  Setting `mergetool.meld.useAutoMerge` to `true` tells
+@@ -45,15 +45,15 @@ mergetool.meld.useAutoMerge::
+ 	value of `false` avoids using `--auto-merge` altogether, and is the
+ 	default value.
  
----tool-help::
-+`--tool-help`::
- 	Print a list of merge tools that may be used with `--tool`.
+-mergetool.<vimdiff variant>.layout::
+-	Configure the split window layout for vimdiff's `<variant>`, which is any of `vimdiff`,
++`mergetool.<variant>.layout`::
++	Configure the split window layout for vimdiff's _<variant>_, which is any of `vimdiff`,
+ 	`nvimdiff`, `gvimdiff`.
+ 	Upon launching `git mergetool` with `--tool=<variant>` (or without `--tool`
+-	if `merge.tool` is configured as `<variant>`), Git will consult
++	if `merge.tool` is configured as _<variant>_), Git will consult
+ 	`mergetool.<variant>.layout` to determine the tool's layout. If the
+-	variant-specific configuration is not available, `vimdiff`'s is used as
++	variant-specific configuration is not available, `vimdiff` ' s is used as
+ 	fallback.  If that too is not available, a default layout with 4 windows
+-	will be used.  To configure the layout, see the `BACKEND SPECIFIC HINTS`
++	will be used.  To configure the layout, see the 'BACKEND SPECIFIC HINTS'
+ ifdef::git-mergetool[]
+ 	section.
+ endif::[]
+@@ -61,39 +61,39 @@ ifndef::git-mergetool[]
+ 	section in linkgit:git-mergetool[1].
+ endif::[]
  
---y::
----no-prompt::
-+`-y`::
-+`--no-prompt`::
- 	Don't prompt before each invocation of the merge resolution
- 	program.
- 	This is the default if the merge resolution program is
- 	explicitly specified with the `--tool` option or with the
- 	`merge.tool` configuration variable.
+-mergetool.hideResolved::
++`mergetool.hideResolved`::
+ 	During a merge, Git will automatically resolve as many conflicts as
+-	possible and write the 'MERGED' file containing conflict markers around
+-	any conflicts that it cannot resolve; 'LOCAL' and 'REMOTE' normally
+-	represent the versions of the file from before Git's conflict
+-	resolution. This flag causes 'LOCAL' and 'REMOTE' to be overwritten so
++	possible and write the `$MERGED` file containing conflict markers around
++	any conflicts that it cannot resolve; `$LOCAL` and `$REMOTE` normally
++	are the versions of the file from before Git`s conflict
++	resolution. This flag causes `$LOCAL` and `$REMOTE` to be overwritten so
+ 	that only the unresolved conflicts are presented to the merge tool. Can
+ 	be configured per-tool via the `mergetool.<tool>.hideResolved`
+ 	configuration variable. Defaults to `false`.
  
----prompt::
-+`--prompt`::
- 	Prompt before each invocation of the merge resolution program
- 	to give the user a chance to skip the path.
+-mergetool.keepBackup::
++`mergetool.keepBackup`::
+ 	After performing a merge, the original file with conflict markers
+ 	can be saved as a file with a `.orig` extension.  If this variable
+ 	is set to `false` then this file is not preserved.  Defaults to
+ 	`true` (i.e. keep the backup files).
  
---g::
----gui::
--	When 'git-mergetool' is invoked with the `-g` or `--gui` option,
-+`-g`::
-+`--gui`::
-+	When `git-mergetool` is invoked with the `-g` or `--gui` option,
- 	the default merge tool will be read from the configured
- 	`merge.guitool` variable instead of `merge.tool`. If
- 	`merge.guitool` is not set, we will fallback to the tool
- 	configured under `merge.tool`. This may be autoselected using
- 	the configuration variable `mergetool.guiDefault`.
+-mergetool.keepTemporaries::
++`mergetool.keepTemporaries`::
+ 	When invoking a custom merge tool, Git uses a set of temporary
+ 	files to pass to the tool. If the tool returns an error and this
+ 	variable is set to `true`, then these temporary files will be
+ 	preserved; otherwise, they will be removed after the tool has
+ 	exited. Defaults to `false`.
  
----no-gui::
-+`--no-gui`::
- 	This overrides a previous `-g` or `--gui` setting or
- 	`mergetool.guiDefault` configuration and reads the default merge
- 	tool from the configured `merge.tool` variable.
+-mergetool.writeToTemp::
+-	Git writes temporary 'BASE', 'LOCAL', and 'REMOTE' versions of
++`mergetool.writeToTemp`::
++	Git writes temporary `BASE`, `LOCAL`, and `REMOTE` versions of
+ 	conflicting files in the worktree by default.  Git will attempt
+ 	to use a temporary directory for these files when set `true`.
+ 	Defaults to `false`.
  
---O<orderfile>::
-+`-O<orderfile>`::
- 	Process files in the order specified in the
--	<orderfile>, which has one shell glob pattern per line.
-+	_<orderfile>_, which has one shell glob pattern per line.
- 	This overrides the `diff.orderFile` configuration variable
- 	(see linkgit:git-config[1]).  To cancel `diff.orderFile`,
- 	use `-O/dev/null`.
+-mergetool.prompt::
++`mergetool.prompt`::
+ 	Prompt before each invocation of the merge resolution program.
+ 
+-mergetool.guiDefault::
++`mergetool.guiDefault`::
+ 	Set `true` to use the `merge.guitool` by default (equivalent to
+ 	specifying the `--gui` argument), or `auto` to select `merge.guitool`
+ 	or `merge.tool` depending on the presence of a `DISPLAY` environment
+diff --git a/Documentation/mergetools/vimdiff.adoc b/Documentation/mergetools/vimdiff.adoc
+index ab915df408e8..abfd426f74a0 100644
+--- a/Documentation/mergetools/vimdiff.adoc
++++ b/Documentation/mergetools/vimdiff.adoc
+@@ -183,13 +183,13 @@ latter will be used as fallback if the variant-specific one is not set).
+ In addition, for backwards compatibility with previous Git versions, you can
+ also append `1`, `2` or `3` to either `vimdiff` or any of the variants (ex:
+ `vimdiff3`, `nvimdiff1`, etc...) to use a predefined layout.
+-In other words, using `--tool=[g,n,]vimdiffx` is the same as using
+-`--tool=[g,n,]vimdiff` and setting configuration variable
+-`mergetool.[g,n,]vimdiff.layout` to...
++In other words, using `--tool=[g|n]vimdiff<x>` is the same as using
++`--tool=[g|n]vimdiff` and setting configuration variable
++`mergetool.[g|n]vimdiff.layout` to...
+ 
+-  * `x=1`: `"@LOCAL, REMOTE"`
+-  * `x=2`: `"LOCAL, MERGED, REMOTE"`
+-  * `x=3`: `"MERGED"`
++  * `<x>=1`: `"@LOCAL, REMOTE"`
++  * `<x>=2`: `"LOCAL, MERGED, REMOTE"`
++  * `<x>=3`: `"MERGED"`
+ 
+-Example: using `--tool=gvimdiff2` will open `gvim` with three columns (LOCAL,
+-MERGED and REMOTE).
++Example: using `--tool=gvimdiff2` will open `gvim` with three columns (`LOCAL`,
++`MERGED` and `REMOTE`).
 -- 
 gitgitgadget
 
