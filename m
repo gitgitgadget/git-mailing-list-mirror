@@ -1,43 +1,43 @@
 Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011032.outbound.protection.outlook.com [52.103.68.32])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 876F725D559
-	for <git@vger.kernel.org>; Sun, 25 May 2025 18:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3FC920B1F7
+	for <git@vger.kernel.org>; Sun, 25 May 2025 18:55:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.32
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748199305; cv=fail; b=K6PvDhjlzfhZzoc8+8m2NjoEzEYngmGUUhkPjnWilBZUFC+6il8/LQs62yJXaTrq5naDZFVTtUeSFDDwbuV5KmKeZgDMDXRoLmwG1/sYLczOscu06QDyLlycMckcvdzyuqHCpsgpz3wM/efC5UTq3KbmSCPh2S+PgJ/3EVnOoWA=
+	t=1748199308; cv=fail; b=Slwx37wecj+yl36iGFokQOJTQnHe7ktos/xl8ZKLadR8BJbSljUF86bTdGumL46Q09GCYKxAi7HFklYbW/PDGpp5h3Kzz/o8Kq/vdRJfPv3U6lTbpq8zGpyyzjclL8ZnYx0737wMJqHFRk3kQ6iJ5kYPsTKYdi7oEyzhV2VLwxI=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748199305; c=relaxed/simple;
-	bh=RefKcpH+2pgsWIn+nD38ejdGH+1D3VMxR/HJB4V+Q0k=;
+	s=arc-20240116; t=1748199308; c=relaxed/simple;
+	bh=PvhBmLOu8O4GNNRFsDqjuFPFlTUL5TYIdhC6QJWsmRo=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=DXJ65FYNVc+l/vP8WlpJyAZ48kyD2nyNwQC3e2CA+RyGJvqgQI5jUXcG3fBb/2b7hE9sgRHFk6qB5Qy1JB+iqe3nU5DMcitwUeXeX4n5h4LDXWTIoMO2mUzCFlmQC/Pp4iz37I9+2N/dHVtvvXFVXn0600lgR9HWZ3x4xGTIZK0=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=DatALsF8; arc=fail smtp.client-ip=52.103.68.32
+	 Content-Type:MIME-Version; b=cnoSMJQp1MtPkHYrYu1H6mHnz40m0qJvp5IpyWYkRnKPGqs8l3nb6qOic3NQMiKlysvv+FDFpVp74PCJn/Uz5z+K5oq4hHUrqb9zDKbXEjnqzpxQjro4TC4/uVd9AKmTEqSlAZU2xExVRrSCO/CiCRtjVJJWGmm/f720Rk9xvfM=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=teECUQKw; arc=fail smtp.client-ip=52.103.68.32
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="DatALsF8"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="teECUQKw"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=A+eWDzD/VCMNyqw/HhAOacr83uYMU9WazC8ReLKXiGIi78M8S9dtBE/ecyWfP20zcMB4TqDbp5WUHtgY9R/2+55SpycyFdAwGEZ6FvZFFH0fdoKIf7b3v3GRpHBS6mZyQPhFUQV9/eMjInjXp0WSSiaE3oW/OXb+H70z8IXpjLH20IruA4Ra3PLOeB3qYVJt3gNSDXHOk8ck5Th/B5S3tI4YhtqvzIA173IxigA1k/yNyhTZ/sZhVC43DZpNgG7ElwU5KhQpbYuVRVjeqch1B581MhNvqTvR5xOm6ZGrfFVjEIbLrxa7wi/hOAmYdICDaMP266K122TZ2q7sS5xItA==
+ b=kvsDnjT3go7wCd1fy77UBMv66CIjeCuOIlAhcfNqTnWwXOzapVMqlKksFXJttSjvfuhmfJR8Hwjmw8PsyPWVBo1xXZe+fdHsJNS1fkpEYy6Sf7a+TEVoHRIjHQ2s6Zw/4UsluYndihw4TwpGEtpimZmV+SNud4Y1imAYgjAhc/susj0mz5UZDYSDVaALJz6sXmqQCMSHU7//5mCVXW2DVNO7ygheozEU/o2ebT79fyPbGMHipWDn5PoJ5UqEHVBQD91Vy/5u4E+QnLO67e7OIfcV5E0QIicfy+cKVUv1T6nfRRnCi5Lp7ZV5lPNRz2eJ6Mmctsa9w+rAfe1lf2fPaQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qbDn7xyU+rC4Zh7renE8IwGforSr4VXyIva6MzurVSg=;
- b=OPNHTCVm2MS3NjpR4mEu/g3QIP6o3D8QUXhrftIIh7CRmXsuBpIFnzLLjWUlKBXlFRrYU4F85is64l9F3HbayUUdd7S2M5kuhPr2aIT6cGvzyfUcdjdFSfyHMDIZVTRNZVZYCo/j5ehOkTLAplmHHlYEJ7Z5LWDtSb/DJvyObGaD2sNdcLrksBxrxDUTvRbf1Td/m+jQBYY2xr+vevLPQkv78hWePdHKxGsrkQJfgggbX+Fal3XQuU2WG1pk2v/5rfbOuqw9rXFkbZ1rNKfioGK+HN4xPKOPjjlD6T0Zia79WWBBIPdh8ErmefXhiykySkphnArL7BmP5LdSjzDiKQ==
+ bh=U083B8Mnuvp36Ri3sJkXSjmMJD9lB//jajN34y4DJCc=;
+ b=Z9oKmkLyvoveLlyazu1SXIsRxPc1GDRqq73s5L46Jn0Nveqmpwz2Razuel6YNY4G7ViSb0Ir9A/IffwJaJTYLTeCnlHTXL8w/61h5p2HzCw28EDbEEj5ESYJ0ThEcIa/ZcGGshxfD9XUnN+Rd+bgGPYl7Ar5YBQv+B0J5Ckiuz7HpL46kJxtYs/FJB8W/tKRMl0b65YYol/7kObY84fcsSRbkogsjZPnOBWfpY2VUpZlgnAtdz2X9OCQoUbkK/E8gBvO7W2QDhdKipbDadlX47S1FN1VVRlsJKqANt2LQF4YfzowFCFRNRifFKapcvyr1ELKABsuZqP1486lvc7k7A==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qbDn7xyU+rC4Zh7renE8IwGforSr4VXyIva6MzurVSg=;
- b=DatALsF8/zhuEbIS+heJHU0AhvKYzESWFb8YiIJhQ8RiX6/UJUQJREGQ0309AiuNQmx5F1AdIYbqqCfMEeCAMMPf+VqEpHBPUonP/0i2COJMYQdoEWhVqd+IzTSgWdBp5kT7SVAs1QOy3ZN+Bcbd6h6KFabePvJ0Hh+us/B+BUE7+793Kcfee/4YChS5YILfVA0XqEHElpDaq+JaWrL0qsRVj/VvWz4Yi0GtHCgFWi6iIasEeH/KFlg9rcmf8VRJaEEne2F9yPrsbg3siknxPLVIiWo0CZZW84bDuIcYLdwclo17J+PNSmdVvJ/qPHqa3tZTcGTWoEWdc33A1714gw==
+ bh=U083B8Mnuvp36Ri3sJkXSjmMJD9lB//jajN34y4DJCc=;
+ b=teECUQKwiFam15o5xJmMF3xLD6zHbYNE1KWlgfPVLuf5XDP4C+NZD8JOMJ6GA9Hm3wowzgKbBA4V2ESJGWccKuxB5c6eH1xoR49lQtQTXGEnOrzm3n5JhsPII6AewI/Nf9/hxsjGgm8w0bZl7mK0gg14u+fuhuJaSliJI16gfOxyNo+wwN2GuxbEMApPvIVFAx1n9xSHHptinKSmAREyDb55jM4qy6K03U7xynNZFZk4Dc+uHSXC6+6h8dijymFGT9mzJaMytq7esoBSXgUpg9+9azKg2nMtxqgfn76LHHoIsjsvkjy190GVWR0IAeioevPk0ASLOy5IL39S/nsi/Q==
 Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:10c::9)
  by PN3PR01MB10362.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1e4::12) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.24; Sun, 25 May
- 2025 18:54:57 +0000
+ 2025 18:54:59 +0000
 Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::5b05:29d:5646:39aa]) by PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::5b05:29d:5646:39aa%7]) with mapi id 15.20.8769.025; Sun, 25 May 2025
- 18:54:57 +0000
+ 18:54:59 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
 	<git@vger.kernel.org>
@@ -45,12 +45,12 @@ CC: Eric Sunshine <sunshine@sunshineco.com>, "sandals@crustytoothpaste.net"
 	<sandals@crustytoothpaste.net>, Julian Swagemakers <julian@swagemakers.org>,
 	Zi Yao <ziyao@disroot.org>, Jeff King <peff@peff.net>, Ben Knoble
 	<ben.knoble@gmail.com>
-Subject: [PATCH v5 2/6] imap-send: add support for OAuth2.0 authentication
-Thread-Topic: [PATCH v5 2/6] imap-send: add support for OAuth2.0
- authentication
-Thread-Index: AQHbzaaCvUB/SF5LiUW7MyxPsxK5bA==
-Date: Sun, 25 May 2025 18:54:57 +0000
-Message-ID: <20250525185447.29982-3-gargaditya08@live.com>
+Subject: [PATCH v5 3/6] imap-send: add PLAIN authentication method to OpenSSL
+Thread-Topic: [PATCH v5 3/6] imap-send: add PLAIN authentication method to
+ OpenSSL
+Thread-Index: AQHbzaaDlmWbsNp8K0K1+L8LqzPl9A==
+Date: Sun, 25 May 2025 18:54:59 +0000
+Message-ID: <20250525185447.29982-4-gargaditya08@live.com>
 References:
  <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
  <20250525185447.29982-1-gargaditya08@live.com>
@@ -61,60 +61,59 @@ X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: PN0PR01MB9588:EE_|PN3PR01MB10362:EE_
-x-ms-office365-filtering-correlation-id: a12ef744-bfa7-4a90-56f9-08dd9bbda4f0
+x-ms-office365-filtering-correlation-id: e13cac58-e125-467b-25a4-08dd9bbda624
 x-microsoft-antispam:
- BCL:0;ARA:14566002|8022599003|8062599006|8060799009|461199028|7092599006|38102599003|15080799009|19110799006|12121999007|41001999006|12091999003|19111999003|1602099012|4302099013|440099028|3412199025|10035399007|102099032;
+ BCL:0;ARA:14566002|8062599006|8060799009|461199028|7092599006|38102599003|15080799009|19110799006|41001999006|12091999003|19111999003|1602099012|4302099013|440099028|3412199025|10035399007|102099032;
 x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?2kDBtdkF93rc0m97NHB1POEcPfYXNa1SyQgWHc4t7w6QB29OV4DSKmd7gc?=
- =?iso-8859-1?Q?SIX/iMcMXsTBZ+I8XoWx5RXhJ65JSmYcSn4w5PyhXsXmfaPZ9x2CPkvOHF?=
- =?iso-8859-1?Q?IQViiochCEIqhf9IL/JTouzbP7gL0HZmavqWMCi+T6qaAdCUtbPlNDRiX8?=
- =?iso-8859-1?Q?e2T+IwT3euOIVR9hhrIn0WnW0PX2Gt8yKPAD4GhCMboyAdL792NvQ6NVN1?=
- =?iso-8859-1?Q?TkLT997R89pxG+zOTyM1t5iWB7XzprbSnuqDe3R1oM9EKdlDoIok/WGi4K?=
- =?iso-8859-1?Q?kJRpJVVfJ0lqU0Hd8b5avSH4bMw6e4tosB/aPHaD1RUh2LuNJPA3HHkkvq?=
- =?iso-8859-1?Q?BbnpopvMCnurUPEtpPEzjrC42ysJmwGyhr0QbsPKRE6v18jniQz6uAuQp4?=
- =?iso-8859-1?Q?SPA5dO6/453ILRNq4TdgD7DLRCxpT2hANjEaXBzU0EItHwlh6/PV8nBf/H?=
- =?iso-8859-1?Q?LFU2K25izqU6bEGimozZ66i4cSU/hYCJq3kAL8wTK1NzY+LYLgpWOSrxWd?=
- =?iso-8859-1?Q?fvudL3mj70IPRas/8ozrerte9vleB8ud8UT9QNMxRxw3NKOSwaO1sxznXS?=
- =?iso-8859-1?Q?PzCJyZOUU2/qSh0tz2SH84g8S7eaJzozbh99c8cFmcpWzwG2Xu5Wle4C6j?=
- =?iso-8859-1?Q?wK4l+elGgVDcCzUjbvTHOjnQTBNlCF/QxyVLTl18TPMfhqju3NdO/2wTNL?=
- =?iso-8859-1?Q?d+FAqvQk5HnMbUa/sKkjB0da6mDbGAonIKG5AHu12bEMlsnVzwQdzcR0b9?=
- =?iso-8859-1?Q?8j+9fJHf7IHUv9eZySs5pyyHWR00akRMJ02OeaU1eY2opyneZT2JAmjt/a?=
- =?iso-8859-1?Q?Ei+xElVL220NNHEkdznmh6G37V0miALbacijVbXPPkNvRQjIqCYncVGVfe?=
- =?iso-8859-1?Q?dzNKxzS/p+EpUGT5xWGl8/i4DU7T6WYQDBAKfFjh9g6sh2MImduOnsMwtD?=
- =?iso-8859-1?Q?0Lbm7EtDrkDiTgoX/9KfbIYe46Z5GZpSLORDZ4IJDgYB0hL8hP//RphDo9?=
- =?iso-8859-1?Q?i8UVj/bdEbq9ttZfWICgo0zXQPIwJlx/75aOo/2S2QZogT7jwGes+gjjMX?=
- =?iso-8859-1?Q?sFlZXlwELEhn/Pab4krCpJeTyqyTAph5266LYl6/fS34FNYkUFR11IZ7JI?=
- =?iso-8859-1?Q?Oi6NPme6C+Wp3jebqTDcPMiQzQ/2wijsaQXlH7uirUmUIXWGyMPf+dfGyC?=
- =?iso-8859-1?Q?ZfERF6F3XOlSNQsoyraDHJFy8n7qhMBi1GEV6nIA70PguS2Cnq30zG6fRH?=
- =?iso-8859-1?Q?NjgjKq9c9Uo8mFc8W0mi2IOQkkwZZ7DYJ4CsEikK3/KkE3GI+U17VqKl08?=
- =?iso-8859-1?Q?lAkTawib5Yl0cQiVZkFOuA4DgT7B5LaM0j6+/he52DVMm57DVJYR+RZbCN?=
- =?iso-8859-1?Q?sNvKEaOBBvpuH9piyVfolF/JuJwWXp47jcXeUIN8xHNWd/iBJRZafbXtqC?=
- =?iso-8859-1?Q?93zVHC0PW9Riqo+rJO/MflLVmwkAivxQAz0pIqb6p9im3tw2xwmxEx3GDT?=
- =?iso-8859-1?Q?8=3D?=
+ =?iso-8859-1?Q?0g18XRxxtCX+KbhO5GmaKko73G/WbqrsTqHS5Wuq1kLxVGjWmu/A5mmsVL?=
+ =?iso-8859-1?Q?ldkwCyFrUxi6Y+wqBK5RAMURQMfvtLo/ZOwYWT/eafhfTQMTy6CU7sd0dK?=
+ =?iso-8859-1?Q?YVZ7IykiX4ZDVIeXtG2xGD1iAkVZBv6XL/9PPVAVjDxHtxiz5fOozYg1J6?=
+ =?iso-8859-1?Q?EZlv5SkUeXI0h8MMlM9K4NnCDJrEJp+KK9/CjeZmplw2uAYJympXkYbpv7?=
+ =?iso-8859-1?Q?I7X7kjk6MyvGDE3AU87OYdGznoFwB5i/380CywAuYtHv+FDnNK8r3nTRvh?=
+ =?iso-8859-1?Q?u/oHuIvyHG+Tal3OzH/91kp9qSpcyO6TrXu6GACJtgE9qeun3R+8w7HvPO?=
+ =?iso-8859-1?Q?WU9XMgDW/0/2566frhspbmiK/rg90M4CodaeLMNCMFuiOEyEdMJN56bMyv?=
+ =?iso-8859-1?Q?m6G0Pmlm5Vl0Iq2iRqXF+21Hw+ij/Qw8nkNsrtAQRptP2csxbuM1YgSpuG?=
+ =?iso-8859-1?Q?4N4ZECtLyz39B33Z5yf32D7taRYRnd8CfsPw3u3tcxl+dq2NP/jEWZN6SV?=
+ =?iso-8859-1?Q?uIqTTN3D/OOWRBuvknEfln+8kvWbJaKAWGzzWjRH9D5rYG/5OZ508C/g5u?=
+ =?iso-8859-1?Q?4yuyhrGBm+FUXeloB9uJRrafEKVhykw8huo5rxlvk1W0zWvGmDgqvzzAW6?=
+ =?iso-8859-1?Q?YEi+gAw3AGvvYHCK/Xv/2Bowihj0RWyQwGILciOskxT0gR1+fZg8Ljs9Zx?=
+ =?iso-8859-1?Q?Npv0GTxoOlCimdbeoEBJpLcFCGvTn7OFLjKk87UDNGtj5QqhswN/w6g1aw?=
+ =?iso-8859-1?Q?/3Yt7+bvs+vmHprX2la+kVDDMBVwF7EWWvHfx3/i1Q1DUMFXXVeyykTxOI?=
+ =?iso-8859-1?Q?CJISvHgdw92GBhPMznh5aBYfeXVOfnuwfzv4W8ZwOJt0lf/9AtjicLCJwc?=
+ =?iso-8859-1?Q?n75H/TS12ml74O6c8dg7V0A9uu07eufyHcYX3OoBVHfruxUtzhjug7w1qN?=
+ =?iso-8859-1?Q?jauAUwZ8+DRoUg5mGEwFsJGIgPZ+5ePWBjiuL6WDpyFLIfcrh1G+bjGrPq?=
+ =?iso-8859-1?Q?ag/Gu+SWCX2fFxi8s22iYIOIPGO8ihOJi/xJwF3osBhCiC4TmJLv8X0oi8?=
+ =?iso-8859-1?Q?qKw2FL9j41LCtS+laX+DZ+C1JvyQXGunzCWOB+V1SugXSw5yw/cYs9pWEb?=
+ =?iso-8859-1?Q?TI21CN/yMaAKmnVPTrfVooKGg0MI/7FzzP1+7qeLAHy+OyXc00bcdEJR47?=
+ =?iso-8859-1?Q?hhUahaCDieYaDwtUPtY9/zFaekpVqvH7v66kyPQMN9IIzntNuYa7EYmwbx?=
+ =?iso-8859-1?Q?7XeMegbRvC2CFDo9VyzkPXITUt//MYxwWPGU0fGzfXmirx2WBqL3GfNYlB?=
+ =?iso-8859-1?Q?9Uk/XGr463E83CcKXLWN6HMSJqoeV4VFHSlW+qVModyRS6uS5XCPllD3nl?=
+ =?iso-8859-1?Q?yFWCG7kCNVFoRfl0C8f1XlQdq+77W8HfJ8pAoZpZ9yiB9PWaIfwN8/PYKp?=
+ =?iso-8859-1?Q?yIUrxuihFWChLVpI9JGfImSCRpfwJyLZmZbU7w=3D=3D?=
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?Zhgx0AqGRHXAG5agDo2YxT+WbB0IHlExw6/QmbOdQBpYnMQqUWHf55mKpe?=
- =?iso-8859-1?Q?T7n4ADfeFTKW3OMZoQoTxX+rGHildeyDQOD6MVOHBM30/gdBQ/4xtPsoP4?=
- =?iso-8859-1?Q?N6YMQU8gq3Cy87EkSYciqUp14OqzXp23aJ+z2SzbSTAVyicKxDRuJi9Ui3?=
- =?iso-8859-1?Q?xHxNTaIK/LFZ+K8Hy8lrqMI+0+AZLz1uQqDuwahqaD6ohkTi1p7nxTxgLJ?=
- =?iso-8859-1?Q?vDG6v9vJ4AKqD508pGeZ8ZshD9B9822UJWdr/pFK8XZBuiDGA3+oiFUaPj?=
- =?iso-8859-1?Q?9Eyqm3Oq9Ve1AYDOr0dD0AvYYBo27DGDzGYzXOENI+gMctJ0rPdFkNuewv?=
- =?iso-8859-1?Q?ym72oxFDQlWM2IKUqIB8fFWzt4dSLgzx6zlb7/VItsinG+IQoOy3ZYyDbH?=
- =?iso-8859-1?Q?eONrFhSKFrgeGpyuuuq1rByZsuM4tKOTkHfOhKIqiYz1E3avNxU3iN0vgK?=
- =?iso-8859-1?Q?mfh837nvhuPk1orUaNyxoK4BJd9QNVD/93eB5SWMbobpfn/X1zqJXHdDip?=
- =?iso-8859-1?Q?DyEf/UvvfD/rPkmB14VeIf6ZsZZ1v5hvifiNhYxnwHmcHFWWjh+U33JY/i?=
- =?iso-8859-1?Q?u+jA9bTJq1/Yf5fsTvJEfDa+cqx4K2L4jLcUO0HJOp8TA0xOr+EB5qiX+F?=
- =?iso-8859-1?Q?RREdaLfFZqza3UISdj1DvsZElq7bCu7toMOFDex0W43RQHKtn5AB1INQnQ?=
- =?iso-8859-1?Q?uxAn8HSMXCjRrwEIbZCAxUxvmZFgiJzzN40SSGfr0sdRO37Uz3c74M+na1?=
- =?iso-8859-1?Q?BW52lS1t3cK5E4qu9RJ6jADFIYRYXQfWbFNU3+sxJ8C1T4ITtYIPzVes18?=
- =?iso-8859-1?Q?pwWfGwy5auAGFTtLdKivCbE2Njk9jt/+veKcnLs7qeDzjJUqjeuY0cWGZ7?=
- =?iso-8859-1?Q?XlAPtB0RBuDNZnEocKlGweXvMisGJP/MLMbm9onbf/W6ux5ywQsTjLfrds?=
- =?iso-8859-1?Q?Ooic/cgbOWuU2lWuPLcxMjroY6SxHABfFX/l/4U/uq6KCyxKEeU/gES5oi?=
- =?iso-8859-1?Q?PsNv18bdZTEwjAFRqUEmwr31p5auM8y/gXXdhdTQQmePMYoRudXFwU0mbS?=
- =?iso-8859-1?Q?il5oV6gTQ2lxY2ogSa+6Ezd3yPte8dwyPDzmJTFzqJqvvGlBZH3x3jmXO9?=
- =?iso-8859-1?Q?32JnFSHbNwD4D5ZXmixfwwPFx+BEzjQmy2Wy3mI0neS2MK4lweuSXAMjqp?=
- =?iso-8859-1?Q?+7vwPSes2+q9O9hvl8tsgAxAo7qd5S/qjufWwKuo4AgX5eewYqUSpu2bLV?=
- =?iso-8859-1?Q?IjxlcPKUcfvhL3yIf+UF8Z5BNBQsYaoNv0dBv9LUQ=3D?=
+ =?iso-8859-1?Q?/blgamGX436ke9T8UgSCGwC3bRPNcFtLHadvTO2SKAp0lgb4El3VpREQBP?=
+ =?iso-8859-1?Q?rjj+lVGmoti16qWWyk1mleMcyXiQaHcNOERKE+K+nYaUxngdRx+DkYGKyY?=
+ =?iso-8859-1?Q?0DvW1cbek/3+3KMsEJ1ihS7gfguxtK8KIL3elz/qZizRxahSHI32E30PFl?=
+ =?iso-8859-1?Q?QUsR8AfsCfFj97gPxEvBgRXIyAo32f48C2wdQFDg+ybsFrKKf0JzHZ9HyC?=
+ =?iso-8859-1?Q?QvBG6PV9vt+0JOdwAeUnezgYBPOnrQvNV67E8lzUQbCejcq2drOlTnnB77?=
+ =?iso-8859-1?Q?4IXKlvJUYgUM+R16pG/Qs9dx51CKZRmAWSQ47gAglV6s0UvY42jlQlngKJ?=
+ =?iso-8859-1?Q?J2TeKirEpj6sS8I5mQKiFKT1rJ4jriZH9REVTMP2WIeIeKqnMF4gPYRD8A?=
+ =?iso-8859-1?Q?WiABmCrmmqDMwIq2QeTp3ABRPsVX893UrbCxmIe0C2dVxP25SlyjJu4I/u?=
+ =?iso-8859-1?Q?LOITAVxU369jgkNWvKVawWpaIq4TVloTzPmFXjkrBC/sPpcvn4WrWPn0TR?=
+ =?iso-8859-1?Q?ElaquaEuofOy5t037g5xMuaJF8kJLrVL++ywwiypYlFlgcxwXmy7geaXxC?=
+ =?iso-8859-1?Q?YgmHTRIzQKUfDfzVSPQykB7VKeyUcPfxCZtrkxiZ/x+qEeVUUo9ZwAzuN7?=
+ =?iso-8859-1?Q?D/IqdneQNpidHuaYWJCDXuwRvpbjiZsc+MLo+VyCH5qm2yTyOr2kBqGaep?=
+ =?iso-8859-1?Q?1ecV0dMa5vycpMDzMzC4ejMyR2NEcyI3SRwW9Abc36Lopnxv1vhdzvWClx?=
+ =?iso-8859-1?Q?F6PjjAT7LrL9H3cYaAGxr+gTQCmDl5KzS8uxKGbmXW2Cn4AedR/1OmYBFy?=
+ =?iso-8859-1?Q?RmsR+BhgE2EgH2WsV2tmSrhU5BRBpcE+gwB6J2tbzvlrZ/9kbr61tWG3g2?=
+ =?iso-8859-1?Q?UjwKnpr7Jvm3SCK1Eut455yYY2NXSV2VZRk33jg8DNIKBnQkYEVvWRIsae?=
+ =?iso-8859-1?Q?ATFONIEEtqlKhP+aQTUc6hxLGE2hU+jbJpKc3BCxIPZqy0BaDSG1Yqyhzu?=
+ =?iso-8859-1?Q?i9/aTflEFqFves14RdFq+Khvkga2rkxxKlnlAJHLo/mwXpTkhUtZaJFoFl?=
+ =?iso-8859-1?Q?QTS3JTr5Wp3oWqMzbwt6DqUUj9ovinRSpwmUfeRH/O+Gz/CUiEJGS8env+?=
+ =?iso-8859-1?Q?UGztTzWRfcLyyeCFBplUi4HbiuiSzqsku3vCW9on+nQrbV1IOOmZ38EEBY?=
+ =?iso-8859-1?Q?TS9m3LFG4/WjL97kB/bnND+brUuDtKkzgLmliJUOG8NPxy/pcZIByy8bzK?=
+ =?iso-8859-1?Q?V4yoqQ1OS6+xHk5lf0yjOpj0bU9KKLdGIP1mcRIRU=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -127,194 +126,95 @@ X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: a12ef744-bfa7-4a90-56f9-08dd9bbda4f0
-X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2025 18:54:57.4303
+X-MS-Exchange-CrossTenant-Network-Message-Id: e13cac58-e125-467b-25a4-08dd9bbda624
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2025 18:54:59.4134
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PR01MB10362
 
-OAuth2.0 is a new way of authentication supported by various email provider=
-s
-these days. OAUTHBEARER and XOAUTH2 are the two most common mechanisms used
-for OAuth2.0. OAUTHBEARER is described in RFC5801[1] and RFC7628[2], wherea=
-s
-XOAUTH2 is Google's proprietary mechanism (See [3]).
-
-[1]: https://datatracker.ietf.org/doc/html/rfc5801
-[2]: https://datatracker.ietf.org/doc/html/rfc7628
-[3]: https://developers.google.com/workspace/gmail/imap/xoauth2-protocol#in=
-itial_client_response
+The current implementation for PLAIN in imap-send works just fine
+if using curl, but if attempted to use for OpenSSL, it is treated
+as an invalid mechanism. The default implementation for OpenSSL is
+IMAP LOGIN command rather than AUTH PLAIN. Since AUTH PLAIN is
+still used today by many email providers in form of app passwords,
+lets add an implementation that can use AUTH PLAIN if specified.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- Documentation/config/imap.adoc   |   5 +-
- Documentation/git-imap-send.adoc |  46 +++++++-
- imap-send.c                      | 176 +++++++++++++++++++++++++++++--
- 3 files changed, 214 insertions(+), 13 deletions(-)
+ Documentation/config/imap.adoc |  4 +-
+ imap-send.c                    | 80 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 81 insertions(+), 3 deletions(-)
 
 diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.ado=
 c
-index 3d28f72643..fef6487293 100644
+index fef6487293..24e88228d0 100644
 --- a/Documentation/config/imap.adoc
 +++ b/Documentation/config/imap.adoc
-@@ -40,5 +40,6 @@ imap.authMethod::
+@@ -40,6 +40,6 @@ imap.authMethod::
  	Specify the authentication method for authenticating with the IMAP server=
 .
  	If Git was built with the NO_CURL option, or if your curl version is olde=
 r
  	than 7.34.0, or if you're running git-imap-send with the `--no-curl`
--	option, the only supported method is 'CRAM-MD5'. If this is not set
--	then 'git imap-send' uses the basic IMAP plaintext LOGIN command.
-+	option, the only supported methods are 'CRAM-MD5', 'OAUTHBEARER' and
-+	'XOAUTH2'. If this is not set then `git imap-send` uses the basic IMAP
-+	plaintext LOGIN command.
-diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send=
-.adoc
-index 26ccf4e433..c3a46070ac 100644
---- a/Documentation/git-imap-send.adoc
-+++ b/Documentation/git-imap-send.adoc
-@@ -102,12 +102,19 @@ Using Gmail's IMAP interface:
-=20
- ---------
- [imap]
--	folder =3D "[Gmail]/Drafts"
--	host =3D imaps://imap.gmail.com
--	user =3D user@gmail.com
--	port =3D 993
-+    folder =3D "[Gmail]/Drafts"
-+    host =3D imaps://imap.gmail.com
-+    user =3D user@gmail.com
-+    port =3D 993
- ---------
-=20
-+Gmail does not allow using your account password for `git imap-send`.
-+If you have multi-factor authentication set up on your Gmail account, you =
-can generate
-+an app-specific password for use with `git imap-send`.
-+Visit https://security.google.com/settings/security/apppasswords to create=
- it.
-+If you do not want to enable multi-factor authentication, you can use OAut=
-h2.0
-+authentication as described below.
-+
- [NOTE]
- You might need to instead use: `folder =3D "[Google Mail]/Drafts"` if you =
-get an error
- that the "Folder doesn't exist".
-@@ -116,6 +123,33 @@ that the "Folder doesn't exist".
- If your Gmail account is set to another language than English, the name of=
- the "Drafts"
- folder will be localized.
-=20
-+If you want to use OAuth2.0 based authentication, you can specify `OAUTHBE=
-ARER`
-+or `XOAUTH2` mechanism in your config. In such a case you will have to use=
- an
-+OAuth2.0 access token in place of your password.
-+
-+---------
-+[imap]
-+    folder =3D "[Gmail]/Drafts"
-+    host =3D imaps://imap.gmail.com
-+    user =3D user@gmail.com
-+    port =3D 993
-+    authmethod =3D OAUTHBEARER
-+---------
-+
-+Using Outlook's IMAP interface:
-+
-+Unlike Gmail, Outlook only supports OAuth2.0 based authentication. Also, i=
-t
-+supports only `XOAUTH2` as the mechanism.
-+
-+---------
-+[imap]
-+    folder =3D "Drafts"
-+    host =3D imaps://outlook.office365.com
-+    user =3D user@outlook.com
-+    port =3D 993
-+    authmethod =3D XOAUTH2
-+---------
-+
- Once the commits are ready to be sent, run the following command:
-=20
-   $ git format-patch --cover-letter -M --stdout origin/master | git imap-s=
-end
-@@ -124,6 +158,10 @@ Just make sure to disable line wrapping in the email c=
-lient (Gmail's web
- interface will wrap lines no matter what, so you need to use a real
- IMAP client).
-=20
-+In case you are using OAuth2.0 authentication, it is easier to use credent=
-ial
-+helpers to generate tokens. Credential helpers suggested in
-+linkgit:git-send-email[1] can be used for `git imap-send` as well.
-+
- CAUTION
- -------
- It is still your responsibility to make sure that the email message
+-	option, the only supported methods are 'CRAM-MD5', 'OAUTHBEARER' and
+-	'XOAUTH2'. If this is not set then `git imap-send` uses the basic IMAP
++	option, the only supported methods are 'PLAIN', 'CRAM-MD5', 'OAUTHBEARER'
++	and 'XOAUTH2'. If this is not set then `git imap-send` uses the basic IMA=
+P
+ 	plaintext LOGIN command.
 diff --git a/imap-send.c b/imap-send.c
-index 37f94a37e8..04b507fc14 100644
+index 04b507fc14..ad54aceb28 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -139,7 +139,9 @@ enum CAPABILITY {
+@@ -139,6 +139,7 @@ enum CAPABILITY {
  	LITERALPLUS,
  	NAMESPACE,
  	STARTTLS,
--	AUTH_CRAM_MD5
-+	AUTH_CRAM_MD5,
-+	AUTH_OAUTHBEARER,
-+	AUTH_XOAUTH2
- };
-=20
- static const char *cap_list[] =3D {
-@@ -149,6 +151,8 @@ static const char *cap_list[] =3D {
++	AUTH_PLAIN,
+ 	AUTH_CRAM_MD5,
+ 	AUTH_OAUTHBEARER,
+ 	AUTH_XOAUTH2
+@@ -150,6 +151,7 @@ static const char *cap_list[] =3D {
+ 	"LITERAL+",
  	"NAMESPACE",
  	"STARTTLS",
++	"AUTH=3DPLAIN",
  	"AUTH=3DCRAM-MD5",
-+	"AUTH=3DOAUTHBEARER",
-+	"AUTH=3DXOAUTH2",
- };
-=20
- #define RESP_OK    0
-@@ -885,6 +889,66 @@ static char *cram(const char *challenge_64, const char=
- *user, const char *pass)
- 	return (char *)response_64;
+ 	"AUTH=3DOAUTHBEARER",
+ 	"AUTH=3DXOAUTH2",
+@@ -851,6 +853,40 @@ static char hexchar(unsigned int b)
  }
 =20
-+static char *oauthbearer_base64(const char *user, const char *access_token=
-)
+ #define ENCODED_SIZE(n) (4 * DIV_ROUND_UP((n), 3))
++static char *plain_base64(const char *user, const char *pass)
 +{
-+	int raw_len, b64_len;
++	int user_len =3D strlen(user);
++	int pass_len =3D strlen(pass);
++	int raw_len =3D 1 + user_len + 1 + pass_len;
++	int b64_len;
 +	char *raw, *b64;
 +
-+	/* Compose the OAUTHBEARER string
++	/* Compose the PLAIN string
 +	 *
-+	 * "n,a=3D" {User} ",^Ahost=3D" {Host} "^Aport=3D" {Port} "^Aauth=3DBeare=
-r " {Access Token} "^A^A
++	 * The username and password are combined to one string and base64 encode=
+d.
++	 * "\0user\0pass"
 +	 *
-+	 * The first part `n,a=3D" {User} ",` is the gs2 header described in RFC5=
-801.
-+	 * * gs2-cb-flag `n` -> client does not support CB
-+	 * * gs2-authzid `a=3D" {User} "`
++	 * The method has been described in RFC4616.
 +	 *
-+	 * The second part are key value pairs containing host, port and auth as
-+	 * described in RFC7628.
-+	 *
-+	 * https://datatracker.ietf.org/doc/html/rfc5801
-+	 * https://datatracker.ietf.org/doc/html/rfc7628
++	 * https://datatracker.ietf.org/doc/html/rfc4616
 +	 */
-+	raw_len =3D strlen(user) + strlen(access_token) + 20;
-+	raw =3D xmallocz(raw_len + 1);
-+	snprintf(raw, raw_len + 1, "n,a=3D%s,\001auth=3DBearer %s\001\001", user,=
- access_token);
++	raw =3D xmallocz(raw_len);
++	raw[0] =3D '\0';
++	memcpy(raw + 1, user, user_len);
++	raw[1 + user_len] =3D '\0';
++	memcpy(raw + 2 + user_len, pass, pass_len);
 +
-+	/* Base64 encode */
-+	b64 =3D xmallocz(ENCODED_SIZE(strlen(raw)));
-+	b64_len =3D EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw, s=
-trlen(raw));
++	b64 =3D xmallocz(ENCODED_SIZE(raw_len));
++	b64_len =3D EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw, r=
+aw_len);
 +	free(raw);
 +
 +	if (b64_len < 0) {
@@ -324,188 +224,77 @@ trlen(raw));
 +	return b64;
 +}
 +
-+static char *xoauth2_base64(const char *user, const char *access_token)
-+{
-+	int raw_len, b64_len;
-+	char *raw, *b64;
-+
-+	/* Compose the XOAUTH2 string
-+	 * "user=3D" {User} "^Aauth=3DBearer " {Access Token} "^A^A"
-+	 * https://developers.google.com/workspace/gmail/imap/xoauth2-protocol#in=
-itial_client_response
-+	 */
-+	raw_len =3D strlen(user) + strlen(access_token) + 20;
-+	raw =3D xmallocz(raw_len + 1);
-+	snprintf(raw, raw_len + 1, "user=3D%s\001auth=3DBearer %s\001\001", user,=
- access_token);
-+
-+	/* Base64 encode */
-+	b64 =3D xmallocz(ENCODED_SIZE(strlen(raw)));
-+	b64_len =3D EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw, s=
-trlen(raw));
-+	free(raw);
-+
-+	if (b64_len < 0) {
-+		free(b64);
-+		return NULL;
-+	}
-+	return b64;
-+}
-+
+ static char *cram(const char *challenge_64, const char *user, const char *=
+pass)
+ {
+ 	int i, resp_len, encoded_len, decoded_len;
+@@ -951,6 +987,13 @@ static char *xoauth2_base64(const char *user, const ch=
+ar *access_token)
+=20
  #else
 =20
++static char *plain_base64(const char *user UNUSED,
++		  const char *access_token UNUSED)
++{
++	die("You are trying to use PLAIN authenticate method "
++	    "with OpenSSL library, but it's support has not been compiled in.");
++}
++
  static char *cram(const char *challenge_64 UNUSED,
-@@ -895,6 +959,20 @@ static char *cram(const char *challenge_64 UNUSED,
- 	    "you have to build git-imap-send with OpenSSL library.");
- }
+ 		  const char *user UNUSED,
+ 		  const char *pass UNUSED)
+@@ -975,6 +1018,26 @@ static char *xoauth2_base64(const char *user UNUSED,
 =20
-+static char *oauthbearer_base64(const char *user UNUSED,
-+		  const char *access_token UNUSED)
-+{
-+	die("You are trying to use OAUTHBEARER authenticate method "
-+	    "with OpenSSL library, but it's support has not been compiled in.");
-+}
-+
-+static char *xoauth2_base64(const char *user UNUSED,
-+		  const char *access_token UNUSED)
-+{
-+	die("You are trying to use XOAUTH2 authenticate method "
-+	    "with OpenSSL library, but it's support has not been compiled in.");
-+}
-+
  #endif
 =20
++static int auth_plain(struct imap_store *ctx, const char *prompt UNUSED)
++{
++	int ret;
++	char *b64;
++
++	b64 =3D plain_base64(ctx->cfg->user, ctx->cfg->pass);
++	if (!b64)
++		return error("PLAIN: base64 encoding failed");
++
++	/* Send the base64-encoded response */
++	ret =3D socket_write(&ctx->imap->buf.sock, b64, strlen(b64));
++	if (ret !=3D (int)strlen(b64)) {
++		free(b64);
++		return error("IMAP error: sending PLAIN response failed");
++	}
++
++	free(b64);
++	return 0;
++}
++
  static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
-@@ -913,6 +991,46 @@ static int auth_cram_md5(struct imap_store *ctx, const=
- char *prompt)
- 	return 0;
- }
-=20
-+static int auth_oauthbearer(struct imap_store *ctx, const char *prompt UNU=
-SED)
-+{
-+	int ret;
-+	char *b64;
-+
-+	b64 =3D oauthbearer_base64(ctx->cfg->user, ctx->cfg->pass);
-+	if (!b64)
-+		return error("OAUTHBEARER: base64 encoding failed");
-+
-+	/* Send the base64-encoded response */
-+	ret =3D socket_write(&ctx->imap->buf.sock, b64, strlen(b64));
-+	if (ret !=3D (int)strlen(b64)) {
-+		free(b64);
-+		return error("IMAP error: sending OAUTHBEARER response failed");
-+	}
-+
-+	free(b64);
-+	return 0;
-+}
-+
-+static int auth_xoauth2(struct imap_store *ctx, const char *prompt UNUSED)
-+{
-+	int ret;
-+	char *b64;
-+
-+	b64 =3D xoauth2_base64(ctx->cfg->user, ctx->cfg->pass);
-+	if (!b64)
-+		return error("XOAUTH2: base64 encoding failed");
-+
-+	/* Send the base64-encoded response */
-+	ret =3D socket_write(&ctx->imap->buf.sock, b64, strlen(b64));
-+	if (ret !=3D (int)strlen(b64)) {
-+		free(b64);
-+		return error("IMAP error: sending XOAUTH2 response failed");
-+	}
-+
-+	free(b64);
-+	return 0;
-+}
-+
- static void server_fill_credential(struct imap_server_conf *srvc, struct c=
-redential *cred)
  {
- 	if (srvc->user && srvc->pass)
-@@ -1104,6 +1222,36 @@ static struct imap_store *imap_open_store(struct ima=
+ 	int ret;
+@@ -1207,7 +1270,22 @@ static struct imap_store *imap_open_store(struct ima=
 p_server_conf *srvc, const c
- 					fprintf(stderr, "IMAP error: AUTHENTICATE CRAM-MD5 failed\n");
- 					goto bail;
- 				}
-+			} else if (!strcmp(srvc->auth_method, "OAUTHBEARER")) {
-+				if (!CAP(AUTH_OAUTHBEARER)) {
+ 		if (srvc->auth_method) {
+ 			struct imap_cmd_cb cb;
+=20
+-			if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
++			if (!strcmp(srvc->auth_method, "PLAIN")) {
++				if (!CAP(AUTH_PLAIN)) {
 +					fprintf(stderr, "You specified "
-+						"OAUTHBEARER as authentication method, "
++						"PLAIN as authentication method, "
 +						"but %s doesn't support it.\n", srvc->host);
 +					goto bail;
 +				}
-+				/* OAUTHBEARER */
++				/* PLAIN */
 +
 +				memset(&cb, 0, sizeof(cb));
-+				cb.cont =3D auth_oauthbearer;
-+				if (imap_exec(ctx, &cb, "AUTHENTICATE OAUTHBEARER") !=3D RESP_OK) {
-+					fprintf(stderr, "IMAP error: AUTHENTICATE OAUTHBEARER failed\n");
++				cb.cont =3D auth_plain;
++				if (imap_exec(ctx, &cb, "AUTHENTICATE PLAIN") !=3D RESP_OK) {
++					fprintf(stderr, "IMAP error: AUTHENTICATE PLAIN failed\n");
 +					goto bail;
 +				}
-+			} else if (!strcmp(srvc->auth_method, "XOAUTH2")) {
-+				if (!CAP(AUTH_XOAUTH2)) {
-+					fprintf(stderr, "You specified "
-+						"XOAUTH2 as authentication method, "
-+						"but %s doesn't support it.\n", srvc->host);
-+					goto bail;
-+				}
-+				/* XOAUTH2 */
-+
-+				memset(&cb, 0, sizeof(cb));
-+				cb.cont =3D auth_xoauth2;
-+				if (imap_exec(ctx, &cb, "AUTHENTICATE XOAUTH2") !=3D RESP_OK) {
-+					fprintf(stderr, "IMAP error: AUTHENTICATE XOAUTH2 failed\n");
-+					goto bail;
-+				}
- 			} else {
- 				fprintf(stderr, "Unknown authentication method:%s\n", srvc->host);
- 				goto bail;
-@@ -1405,7 +1553,11 @@ static CURL *setup_curl(struct imap_server_conf *srv=
-c, struct credential *cred)
-=20
- 	server_fill_credential(srvc, cred);
- 	curl_easy_setopt(curl, CURLOPT_USERNAME, srvc->user);
--	curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
-+
-+	if (!srvc->auth_method ||
-+	    strcmp(srvc->auth_method, "XOAUTH2") ||
-+	    strcmp(srvc->auth_method, "OAUTHBEARER"))
-+		curl_easy_setopt(curl, CURLOPT_PASSWORD, srvc->pass);
-=20
- 	strbuf_addstr(&path, srvc->use_ssl ? "imaps://" : "imap://");
- 	strbuf_addstr(&path, srvc->host);
-@@ -1423,11 +1575,21 @@ static CURL *setup_curl(struct imap_server_conf *sr=
-vc, struct credential *cred)
- 	curl_easy_setopt(curl, CURLOPT_PORT, srvc->port);
-=20
- 	if (srvc->auth_method) {
--		struct strbuf auth =3D STRBUF_INIT;
--		strbuf_addstr(&auth, "AUTH=3D");
--		strbuf_addstr(&auth, srvc->auth_method);
--		curl_easy_setopt(curl, CURLOPT_LOGIN_OPTIONS, auth.buf);
--		strbuf_release(&auth);
-+		if (!strcmp(srvc->auth_method, "XOAUTH2") ||
-+		    !strcmp(srvc->auth_method, "OAUTHBEARER")) {
-+
-+			/* While CURLOPT_XOAUTH2_BEARER looks as if it only supports XOAUTH2,
-+			 * upon debugging, it has been found that it is capable of detecting
-+			 * the best option out of OAUTHBEARER and XOAUTH2.
-+			 */
-+			curl_easy_setopt(curl, CURLOPT_XOAUTH2_BEARER, srvc->pass);
-+		} else {
-+			struct strbuf auth =3D STRBUF_INIT;
-+			strbuf_addstr(&auth, "AUTH=3D");
-+			strbuf_addstr(&auth, srvc->auth_method);
-+			curl_easy_setopt(curl, CURLOPT_LOGIN_OPTIONS, auth.buf);
-+			strbuf_release(&auth);
-+		}
- 	}
-=20
- 	if (!srvc->use_ssl)
++			} else if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
+ 				if (!CAP(AUTH_CRAM_MD5)) {
+ 					fprintf(stderr, "You specified "
+ 						"CRAM-MD5 as authentication method, "
 --=20
 2.43.0
 
