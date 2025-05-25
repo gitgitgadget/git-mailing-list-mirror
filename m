@@ -1,348 +1,277 @@
-Received: from mx0b-00169c01.pphosted.com (mx0b-00169c01.pphosted.com [67.231.156.123])
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (mail-bn7nam10on2098.outbound.protection.outlook.com [40.107.92.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB6584683
-	for <git@vger.kernel.org>; Sun, 25 May 2025 14:46:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=67.231.156.123
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748184372; cv=none; b=jl5FuaxbziRqnWuWQQCzJ65ArnHS7ohMFchHmbY5SXFl29H06jDEFVliraVpiNw+TBDX+kKoGDIwvzcT4uhwlzw3gfA+WEEMi49V9eOlgU+iWUgaW8ltU5H5nGkgq5FgXVJItW3NBmIaVkkqfQ8XtZdOSl3gtt18ZvD5xUkPJYk=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748184372; c=relaxed/simple;
-	bh=PSGfCq91nTFwxVzaViDZA9kas4BkG4d+3MaPywNPbJI=;
-	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=JjloQE1LOySe/6s5MBEiRA2ztf6eEx/jlHGN2uVWT7klkXvJy7nlmRxWWOgDlPk9iBgdlteO0t6ecWRj2FdkgD1H9pzVAWyMtwjK7aPrrYPW1z02JFm6FrzyONj3DIyg67vSNmvQ92XyyAUPPTKqYta2G0r3wKJJx+AYuZGfNPc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=paloaltonetworks.com; spf=pass smtp.mailfrom=paloaltonetworks.com; dkim=pass (2048-bit key) header.d=gtest.emaildlpdev.com header.i=@gtest.emaildlpdev.com header.b=Z4UlO63Q; dkim=pass (2048-bit key) header.d=paloaltonetworks.com header.i=@paloaltonetworks.com header.b=mZxZV0cq; dkim=pass (2048-bit key) header.d=paloaltonetworks.com header.i=@paloaltonetworks.com header.b=cDwlQ4+n; arc=none smtp.client-ip=67.231.156.123
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=paloaltonetworks.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=paloaltonetworks.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 763BB53363
+	for <git@vger.kernel.org>; Sun, 25 May 2025 15:20:02 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=40.107.92.98
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748186404; cv=fail; b=T+7FTjHbI6KreZMm3DeyT5ZGecJ9Mf+kIP4PiESi6I64sIcXjlwbNjOzhJfqh9XvVMkWUowqfcCbe7NEuJPjP+uIT+z9SlAOoEtxeJVs/T3UcTn0fIRuHoUA4hcy7kHUGarYTd95odN1+oANAhCEjcO1FF4KMj6GfhfVNcv72aM=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748186404; c=relaxed/simple;
+	bh=ON1t+t1qY4VfI9A+IXEJ4gLW2mWc3hjfh8nCyTn4k3o=;
+	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
+	 Content-Type:MIME-Version; b=XBcL7u3CUKPNU19VOkkX1bt+HlErXBYLJrK1mX8gWcIoMJULOT+Rpeu6K0dgtVUtnEi79D1oQvlGV7eq6WWWFN/Fj/KFHexZ7kN+ojPFKgeG3aaspEQadsggWqiqW3O8VRLmrEDJ7Gsha+OMTyOnFrZvA4HJpJe9nSdIx5PaY4g=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=purdue.edu; spf=fail smtp.mailfrom=purdue.edu; dkim=pass (1024-bit key) header.d=purdue.edu header.i=@purdue.edu header.b=fVWi45ZY; arc=fail smtp.client-ip=40.107.92.98
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=purdue.edu
+Authentication-Results: smtp.subspace.kernel.org; spf=fail smtp.mailfrom=purdue.edu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gtest.emaildlpdev.com header.i=@gtest.emaildlpdev.com header.b="Z4UlO63Q";
-	dkim=pass (2048-bit key) header.d=paloaltonetworks.com header.i=@paloaltonetworks.com header.b="mZxZV0cq";
-	dkim=pass (2048-bit key) header.d=paloaltonetworks.com header.i=@paloaltonetworks.com header.b="cDwlQ4+n"
-Received: from pps.filterd (m0048189.ppops.net [127.0.0.1])
-	by mx0b-00169c01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54P9Ubk5032605
-	for <git@vger.kernel.org>; Sun, 25 May 2025 07:13:43 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	gtest.emaildlpdev.com; h=content-type:date:from:message-id
-	:mime-version:subject:to; s=panwdlp; bh=PSGfCq91nTFwxVzaViDZA9ka
-	s4BkG4d+3MaPywNPbJI=; b=Z4UlO63QgFLVOMXP2A9VHEM4nsMqbNEHJwwWNOvA
-	GMM5YcgXX70HX8Di3hKCORA7ZNWGUvYMw8EklScxg9rJPfWzZo04bzkNcvQmCepC
-	mspR5FgXIPTiBEp2mrX14zdwc3aWJ2LZ5aN3YM+04spi9BlZ5vhNQYO3HH1cMYXr
-	4pM+1g2JrbajPW+h/zA2jSSQHUkxvMzVo2qQ2Xm59LujpemafWasFcPAfGiZ17j1
-	KhTy1xfs53Hr+q5xeQV4ejBy+9lcbIV4bPkURvorO25eZ9SJI50YhTeFLDiRcN2w
-	L3PBxfPv+YePzlJ46wtBHfMeGWFUhvy8BvdJDb4xZyKdCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	paloaltonetworks.com; h=content-type:date:from:message-id
-	:mime-version:subject:to; s=PPS12012017; bh=PSGfCq91nTFwxVzaViDZ
-	A9kas4BkG4d+3MaPywNPbJI=; b=mZxZV0cq3cofB8h4c9Py8D7f0Xy9YckF7jWr
-	fWtCnHzVIZDICsMMG1vwrgNT1JvhUBKZD2wE1FctsxVe9zjJNutvo+cTJBgiw8/y
-	CkHqLQRdMmH10wg1AXraCyrIqqqWW56vkxCEhN3HnGYY9LzVjzgg0r6/ZudHYab9
-	4Tz3ESNsyVDuxEBF8pGTJYOyVO8f8D/5LcVnv1eeIn/CpakHET2LgA8ZhCwAd4SX
-	2D2QwhbY1FWQixMY0fLJmPG+4Jr871lHhcurXvipe+3OqWM1TPG3WNCDUcEhsKdS
-	XLVm25R2q72dK3FahNDPCb+BWMIchUyzZ5xflvURtMthMDkbrw==
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com [209.85.128.197])
-	by mx0b-00169c01.pphosted.com (PPS) with ESMTPS id 46udm6k680-1
-	(version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
-	for <git@vger.kernel.org>; Sun, 25 May 2025 07:13:43 -0700 (PDT)
-Received: by mail-yw1-f197.google.com with SMTP id 00721157ae682-70df446e876so24927907b3.0
-        for <git@vger.kernel.org>; Sun, 25 May 2025 07:13:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=paloaltonetworks.com; s=google.paloaltonetworks.com; t=1748182422; x=1748787222; darn=vger.kernel.org;
-        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
-         :date:message-id:reply-to;
-        bh=PSGfCq91nTFwxVzaViDZA9kas4BkG4d+3MaPywNPbJI=;
-        b=cDwlQ4+nTKT3WTjxgOAyYpDglglDyyi9HZhsceXwtkPibu7PF1/DPttFLHtrcnqjpP
-         RV6b6oR7y3SUrIATq8Z4L3GCPzFV8KkhYRPHKqGO8v1mpnP6f+cnlnes+ESWiniwU9xt
-         2UveBfeAy+OthE1clUpjL0sTZRWZYeG6JZDfBLM5KKZfIc5qKS7uypeXWzGcyxLiE9p+
-         n3MLVn1/X5WkA1IognDWE5o29HApDxOzwxCVtnuJGziMmZMRvJ/y7c31grpAli2Cd1wq
-         444p6rK9S+nd1sLwgdQVDWkMgTShO5XhwWpZqVhoH7SwcATxuYWdJf7KMBo3nY2BWR5Q
-         XDLQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748182422; x=1748787222;
-        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=PSGfCq91nTFwxVzaViDZA9kas4BkG4d+3MaPywNPbJI=;
-        b=o7UAnAFn+u1u1ZjqMbMhl0wiHPN5bA6LsIrRiv5pP6q1iXfZW9PnjqY87s4ZO7Kbah
-         H0sFDRSdiOTIewpwiQFNfBEgvcanJdcxWbMASEmCix9GGtCtI5aM7obPvzHuoyG/nzaI
-         fu62CdFcgaH5fWay1pK6KfM2W44NOPY9+nz2YOXDK3bdYfEpgBJBwrN3fvL90on6yGfU
-         w81tQhh+qX76+92EGKuHw3qAQrHGVmUhe5GXzTZAKavfI8/kcyBKUqXrN8wvu1W0aIYy
-         44q5lLukTRx7IQ9OEZNViz1BEJwew4GFhlKQ8QpeD9yfXHu5e0B7P0hAVcrw2trySuuC
-         AAVQ==
-X-Gm-Message-State: AOJu0YyV3YMhS+obfLlo9Vow7JrZGorm6G+nDBtV4Im98N6t0hK+SVFn
-	xb7vTG/0SvOe1N2c3OxH9XvKLg0lY2CAvgtSpeMla7Ei0N/OLUETn/nsTv2P9dkesT76iyeNMln
-	PpYRHJBgsYpRGOVG8Xy9v/aINMRR/RbqdAATUeHee5UobZDzd1QeXoWDpVbR9PjYu0eKN8SuRz4
-	37zQkf3+oLvwJ3BhbOxGxnrlIml0mv/FdMISOCI8U=
-X-Gm-Gg: ASbGncsAdeYmqnfgoPhRuqzuwQyaAlL9J1wGa4JoAUnbfgt8krwyWa1EJ7ZEWOwNWgF
-	Hl3T2mb8js8CzsKM6SBtK6dY2/kBMXAqiHlCJdd3bOvfo4bOCbDoPNrIJVKRiktLw5KXWoA==
-X-Received: by 2002:a05:690c:6288:b0:703:b47a:7312 with SMTP id 00721157ae682-70e2cc54c90mr61550857b3.15.1748182422229;
-        Sun, 25 May 2025 07:13:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFCUEWoLha8q9G/w+MCc5A5e9rG3Dqzbf5p1W34bVqARN/DoZ2C351MPCC/sWU+wcwp4lKVJsK2Ya9RIwTqoho=
-X-Received: by 2002:a05:690c:6288:b0:703:b47a:7312 with SMTP id
- 00721157ae682-70e2cc54c90mr61550627b3.15.1748182421870; Sun, 25 May 2025
- 07:13:41 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=purdue.edu header.i=@purdue.edu header.b="fVWi45ZY"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=g9Bj+rOy+naUc2xCg42Tfh3vV49HBwNySFfzEPv43zt7xmmqr0VHkUjjT9qikAdiKcDIKQYn2Zm2BQ7SlotQ/6CJZZ38z/ooZVKiQ/SFcU7Uw899O0SJ9rrrylHHR3HsA4mwZBdD0fQF1rUQ6reQ5E98a1h0qzLgGsfFyCMzmeLVBhNMkJ/pSh23XeosDp/ba32bjZoRjUuVI7r885EEpXc0C3QhhasuzsA6LXD65lNWWNlEb337eNDzttqElL6Rk9HhrotnoJp6lnT3Dac4rA5vPaiNGYuhiwy7hWJmFErTKUuARqByK4bLducuqYPHDSlBTKUqwzuwMiS2HKVrCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ON1t+t1qY4VfI9A+IXEJ4gLW2mWc3hjfh8nCyTn4k3o=;
+ b=MEKHwXsqs1KuvAKErqp/EimGKfUVE/6fyNUQSqEer9YUEemtBEDzg4SUvVikfPzX+GsBTD8dxnqOmAfo1+7sWHt85BcNChY1plvk7irJ0KCwBljkRXvdsNfAH7XDQ9gBiqURQpwqyKcnuaDx/RAtZ5E+4tfVc7I4r5iE7vO+U2ye89UL+DJ2cFojI5XBxr8PeQ7XVFbJSLoAQyQddRX3C1c7HwcXhpP8TVYDhcX14MuDTB8xD+R0c7Vtdu35n+xo17JRdknH0zVy3zJZwnCPlGsWE4PP5Jq4/8qeJyhCa2PaY0IqCJFs4UazbXVwM1AEGGxServsDFfjUAF9YhOfag==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=purdue.edu; dmarc=pass action=none header.from=purdue.edu;
+ dkim=pass header.d=purdue.edu; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=purdue.edu;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ON1t+t1qY4VfI9A+IXEJ4gLW2mWc3hjfh8nCyTn4k3o=;
+ b=fVWi45ZYtfnZxSjKBx8vvPDpNZtzLRRxTomB7wPhiTXTyqzMibWnlye8zi61c82aAUSM25eu7bldT9zHNmS7//yu2WiaW855BATDTTaI/G/unidsyrX3oZsfMPDEGdHB865QGX3j4qURcSXHMwj+OVO4tfbLr6S0ZKmkKEsWjgE=
+Received: from SA1PR22MB3999.namprd22.prod.outlook.com (2603:10b6:806:324::10)
+ by MN0PR22MB5688.namprd22.prod.outlook.com (2603:10b6:208:4c1::20) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.34; Sun, 25 May
+ 2025 15:19:59 +0000
+Received: from SA1PR22MB3999.namprd22.prod.outlook.com
+ ([fe80::a1f7:3705:aa9c:6392]) by SA1PR22MB3999.namprd22.prod.outlook.com
+ ([fe80::a1f7:3705:aa9c:6392%4]) with mapi id 15.20.8746.031; Sun, 25 May 2025
+ 15:19:59 +0000
+From: Jinyao Guo <guo846@purdue.edu>
+To: Junio C Hamano <gitster@pobox.com>, Alex via GitGitGadget
+	<gitgitgadget@gmail.com>
+CC: "git@vger.kernel.org" <git@vger.kernel.org>, Alex <alexguo1023@gmail.com>
+Subject: Re: [PATCH] Add a check to prevent max_children from being 0.
+Thread-Topic: [PATCH] Add a check to prevent max_children from being 0.
+Thread-Index: AQHby/6tNZB2LRwtvEiHrzIKEY8GNbPgmlfPgALdJIU=
+Date: Sun, 25 May 2025 15:19:59 +0000
+Message-ID:
+ <SA1PR22MB3999A0C9E99E607A793A591DE49AA@SA1PR22MB3999.namprd22.prod.outlook.com>
+References: <pull.1975.git.git.1748017238130.gitgitgadget@gmail.com>
+ <xmqq1psfxgyv.fsf@gitster.g>
+In-Reply-To: <xmqq1psfxgyv.fsf@gitster.g>
+Accept-Language: en-US, zh-CN
+Content-Language: en-US
+X-MS-Has-Attach:
+X-MS-TNEF-Correlator:
+msip_labels:
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=purdue.edu;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: SA1PR22MB3999:EE_|MN0PR22MB5688:EE_
+x-ms-office365-filtering-correlation-id: d0122fa8-f78e-45b2-68e9-08dd9b9f9d26
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam:
+ BCL:0;ARA:13230040|10070799003|366016|1800799024|376014|38070700018;
+x-microsoft-antispam-message-info:
+ =?iso-8859-1?Q?P3ZjJ4NEo9NWazqFua3IgMJIUnO4IY8Y3OeHt8Hu5URSwQs1JmyM87hqqn?=
+ =?iso-8859-1?Q?5rE3MhR0YF3Pnv58LkVDVIKustq0I8oeIQ+WIec+b5MrsidBKUPJLx5JM8?=
+ =?iso-8859-1?Q?kh2fEPimG7yv/6kgvu3+A8wZjbeZdib2FqzPKXGaAsOmeSRWkoLC1OkwWi?=
+ =?iso-8859-1?Q?Z5bZzHiI+oM6NnZ/WYnQno+ljzSIJWRV87gPTHHL6BlvEj0TariRglkWEq?=
+ =?iso-8859-1?Q?C31KJOsVt3qR6BACXo5MT9pkYUrqraBU0Uoditq38dz+EdEhx5/RLiGk0w?=
+ =?iso-8859-1?Q?t95s+K6HaPPsNDSMhJVYR8dK7vRBOl+wW8j1NftMZpSU3X3bqmZ6GNRLXF?=
+ =?iso-8859-1?Q?0FzAwmhh1FTCv32R0wThwn9wMqq019V8ucl8LXaVe7LhYvDnIYqHGK6gF0?=
+ =?iso-8859-1?Q?83Xh2EXXc0xBmA9JUfNK0PivdfpD15KHEuJmP7fZQl8sRUbV3o0eBFaY6z?=
+ =?iso-8859-1?Q?AIJADLatGbk3zhjdi7xB0SFhTis1WNmGpxQdkEAaVqj1f70dR1N6JLm2OI?=
+ =?iso-8859-1?Q?ZwHtsuXv8q2CatX99zPV/+I0dhL4xzEkCMg8iG/msrOnTuM1kzL4XitfkQ?=
+ =?iso-8859-1?Q?6hpx9zTzkuWJ+/wsPehaHNYYmeU5aD7/yThWA6XcSXW7M4ZfnQx8aj5EiN?=
+ =?iso-8859-1?Q?AIbVMezQ/oF4T4BYFjGEvdcJC2k77tS24p6cYUWX17LruEORKBbUhhRXPz?=
+ =?iso-8859-1?Q?GQz7GK+R4CX2fE0MDe+LTnMxaEVIzV69dE8ITjSte3+vRmTaIGtW8A40K2?=
+ =?iso-8859-1?Q?b5ANdYohGpNw/AB+g7JZ9rBNwfiUzMmGIHBXqUscAPedbtDpzI2qrOJXy9?=
+ =?iso-8859-1?Q?x0rEawV76u/8P534Jrnj7C/ennpglUnUuCXzLQgMYWiXrlBIHy1ZXgherb?=
+ =?iso-8859-1?Q?EakbOjOCECEbRAt1oUITn11lKIVRA34eoFt3IwNsIFHXSc0sDmkRzYpfqn?=
+ =?iso-8859-1?Q?+2qIK7efLl6VEga1x8daVy+R8rkBpGydVBthQVQ6XozD2bq/hmbm3eLoFf?=
+ =?iso-8859-1?Q?OOLJQTzZejoEJWm1XAtM1oW6v4s5zT5Zh3AALs2j2sYI28zLGgfznHI4Ft?=
+ =?iso-8859-1?Q?UsJCLfbzERLU/I7CQb73GwgrVF/l5ieygDODwuhEquIfNHR8VG4Cj5P+E5?=
+ =?iso-8859-1?Q?EK5u5glskB65//JisubG5qDd/i3W/ZhDgbp60MOkhNYUpErarrv+yYlTub?=
+ =?iso-8859-1?Q?hXZanOrs60FxuEMHcIuB/twZOlBSk/JcJ3p5SYkQ1mSIbO9aiOu5tbS9dd?=
+ =?iso-8859-1?Q?lVR9n9f3LnCGCtOT9GVHHYo5SpORZSKERGj+O1TTzOjlAnLV3I5mkWHV7c?=
+ =?iso-8859-1?Q?Tdji/wOFHNjb6OhvvhydUVzUgI+AiH7PVqwrmoNtLqfchqW24AtZMYlrHG?=
+ =?iso-8859-1?Q?RTtKScxLItv4lJ9RJoiwRkUqi3SBQJ60+XaOzvcel2P/YxrGLv9QJbNjyE?=
+ =?iso-8859-1?Q?5rT28HJ7usTMlENbVZ/naJ4Dz8yHH/90IoFk45Nq1abScSdEiX1WH1LpHM?=
+ =?iso-8859-1?Q?TsDVTpbabmjqIMr1Y6zZpuR0QEJ4+JL0M7ETxLfpIjqQ=3D=3D?=
+x-forefront-antispam-report:
+ CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SA1PR22MB3999.namprd22.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(366016)(1800799024)(376014)(38070700018);DIR:OUT;SFP:1102;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0:
+ =?iso-8859-1?Q?Ax4PhtnO6Mwoy9mX8vAp3PlgJlBojWi7WdIh6JiFfeQ+lfOo1LEjrpi3SF?=
+ =?iso-8859-1?Q?0NP4Husrxky4kb8IOgcGbTMnspmu5xiTJ7CxawQoIgO+ssgAGtmJK0dPWl?=
+ =?iso-8859-1?Q?j+dCOUSn1eWDvULYw5KJFClrcX2yvwvxU7E+phNDl4dpHI1qfmHk+Ign71?=
+ =?iso-8859-1?Q?OltYq++o6vM3v5YCAqeEU49eVkiqd0hxO1y2xuXlkb5PfqjFnH0tBcuaEi?=
+ =?iso-8859-1?Q?ARhNEoHe9lM9+5x5PAnDqCaXVhcrs3DJew2Qvc7UvL4Rt3JcbGwQlWQ6oV?=
+ =?iso-8859-1?Q?k+mTI0e34e1TX0FlGXPEUn7F2+fCDcGQk0icDHGVVDfadSx8ZxcWdphVy6?=
+ =?iso-8859-1?Q?NqN+ziWb3KpOy1J0GaZMO3/mdx9aFeGlbnpkL/5Ax+wjsn/AhWNd+fsJaG?=
+ =?iso-8859-1?Q?xisFsesqzxqLSpVAs918eAbTb+MHslvFx8TdpHl8on6jYQPlnhD0YzmuV5?=
+ =?iso-8859-1?Q?Nry0DZhm8MvTAx1Pi9sRL6RETgKmNFjGxbAgeaLpzHls0zWEByQPjjoQD6?=
+ =?iso-8859-1?Q?LINYxaBg1in3dkcAKBFRRO1BbvYONLehfPgyAp+JKflVpaqqY5JtEJltc1?=
+ =?iso-8859-1?Q?ScK2Y2Iyt3gbb8qmp93JsuUdZxCr1KdI5+W1vpqqBlqPoxHT4Qw4NJqttQ?=
+ =?iso-8859-1?Q?x3bAXHVIX2ylqpiB4rb/5EszsAGJXeOWUdIOkZgxNIymMv06NfSxOl5TtX?=
+ =?iso-8859-1?Q?MUCulUqyr/HhsB7UQORlfdFRes+t89gZHgn5sddNr7QLOA29ot+DNC4pZo?=
+ =?iso-8859-1?Q?7iK668XXyLv9654MQVthv378wIR17WWCxWYUrNFGQJndiLbxAcYCoBSvAs?=
+ =?iso-8859-1?Q?sBtZqbo1Mj7TV4C59fAQAC3/0aiCBrmdGIaHy9oLtrqogc2UppJFHkOo8d?=
+ =?iso-8859-1?Q?Fn+1lZQjIFLTWNmnShaY6gxMj/KlrQIy3KnO0DDtY2BCv4J63IlZAEt0XF?=
+ =?iso-8859-1?Q?tq5Qet7SYTxGVmw4LWzoXD6yrL71mqCqcGYL5XvOLadrVsfUJMB+8kGezv?=
+ =?iso-8859-1?Q?4KIc+HSM8mMMtRnLrkGAPiHy5qfj8xYxQpDD/LxdXTSL649qKae2wQaSCg?=
+ =?iso-8859-1?Q?gw7UZLSvRsRejumvHDh5MyXYM8cBsqueXaUUvDOS9d6fsLk+aXgwFpLkpp?=
+ =?iso-8859-1?Q?AIUiMny4jasA+mnt0k4lZpQxUpdehN4+iAdQj4X9/e6Nt1po/RpyzkMJIa?=
+ =?iso-8859-1?Q?KpMURAB3t3oSkTgf5Lakoh3rDr05P5GslG7OM+K8xPKK+rLx2AfiyBCUnW?=
+ =?iso-8859-1?Q?5NXISilVXLdG+61iKxjHOvCCqwMnUNa+BUOCN6MB/VQLbq6KbWOnqX50ym?=
+ =?iso-8859-1?Q?ui+OkhVEGwoYkcDltquaYUUjEh5kNB30GuofExN722N0dROBiV2olhwre8?=
+ =?iso-8859-1?Q?IwKNoQ/iietcIA0cX2FGB4hlR/YKXwFehQkLR4IWAqFskVfup+PAsYjfUt?=
+ =?iso-8859-1?Q?Cl86Nn+HEv4TRGem3iAeD7V76qqgOQEGom21EqgbgSPE4ca2LrMSHNC0ho?=
+ =?iso-8859-1?Q?M93MvIFtqJfZNIb8ArheA6TUR9beXaWgUvnK5PP3TPpT/ikIxYqe8zdFnk?=
+ =?iso-8859-1?Q?7extengoQS8X8n2TsZed4ACC+IWRvAm0I/Ppfjof1b95bo4/vT8UA89WQu?=
+ =?iso-8859-1?Q?grC7hI3zFlkgTp4BADOCWYWjWd3P9WvnLFDOz+luKs0BMj2SuYn1TIXQ0P?=
+ =?iso-8859-1?Q?FKePfubnv5BnjsWKOxM=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-From: Yonatan Roth <yroth@paloaltonetworks.com>
-Date: Sun, 25 May 2025 17:13:30 +0300
-X-Gm-Features: AX0GCFv-XaUU6fw0Gix1lySS0O2tshwkgoEd_37jGsh1lVK6LIjE1qUWTsjqXUg
-Message-ID: <CAJR-fbZ4X1+gN75m2dUvocR6NkowLOZ9F26cjBy8w1qd181OoQ@mail.gmail.com>
-Subject: ISSUE - Sequential execution failure - Lock auto created between git commands
-To: git@vger.kernel.org
-Content-Type: multipart/mixed; boundary="000000000000431ea00635f6700b"
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI1MDEzMSBTYWx0ZWRfXx6PbD1omgH1g gAVAvmQOMGw/mLj0EHgCgaKMVNYihdot3BCVUNjEOiVLcDV2+Ula8YroIJTtHipfAjFI56vpSUN /JWLcdEX9jQeTJdUQ1+6Cj49V/c5bddY2XI8i7z0e4c+4DADXigQ3RZpymMqt7vkj+KEIkzeCb4
- bGXu0OzuDMlk8qoG/P0r7k5bEUL5NaV9G+Wvuz86WF0wcbWKxxtqD0d/1Wm3T64U27A59hMYlDx VlEWtt9rm5nIj6ruIK8CXaVOAk/NsCHUlvXnmnLXkU0DURT6/KfFCTR+G1+N0u/qw4vqejxNQqF n0fsareJ9zaoPDUzB0csw4XuA5oLh/EFnS/7HSBZYMKXiHWmvDFtXGKgFnC89T5tBZ7u7eDtHsh
- XsSghoA71MfmI2og0r4zUzUKgCQyvelv38ngGM5qgIlyDeS5cNZ8ToNpqtG1Hs2MTZEemxbK
-X-Proofpoint-ORIG-GUID: PqQvGUu6xN6GiwQ6__pN1RSgF4YRXZXM
-X-Authority-Analysis: v=2.4 cv=Zp3tK87G c=1 sm=1 tr=0 ts=68332597 cx=c_pps a=0mLRTIufkjop4KoA/9S1MA==:117 a=dt9VzEwgFbYA:10 a=bx0yk3aoy5EA:10 a=BroVbnHxh2rjp3QAcLIA:9 a=QEXdDO2ut3YA:10 a=F_lHtKWMV5agRiRyRgsA:9 a=5ravA__WFRVXFabt:21 a=XRzbzrBOJSnW-ypgALEA:9
- a=CjuIK1q_8ugA:10 a=m-Z_27IZkzAA:10 a=WgItmB6HBUc_1uVUp3mg:22
-X-Proofpoint-GUID: PqQvGUu6xN6GiwQ6__pN1RSgF4YRXZXM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-05-25_05,2025-05-22_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0 adultscore=0 malwarescore=0
- bulkscore=0 suspectscore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
- phishscore=0 clxscore=1015 mlxlogscore=999 priorityscore=1501 spamscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505160000
- definitions=main-2505250131
+X-OriginatorOrg: purdue.edu
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: SA1PR22MB3999.namprd22.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: d0122fa8-f78e-45b2-68e9-08dd9b9f9d26
+X-MS-Exchange-CrossTenant-originalarrivaltime: 25 May 2025 15:19:59.5108
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 4130bd39-7c53-419c-b1e5-8758d6d63f21
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: h9sZHLejlFRJeJ7UzP8tm/2nsxpDJIQBNQz1o0aa87XofSfE66joc2CwqOvHyJvgXXjUShFB2GFjeXgwQkmM6Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR22MB5688
 
---000000000000431ea00635f6700b
-Content-Type: multipart/alternative; boundary="000000000000431e9f0635f67009"
-
---000000000000431e9f0635f67009
-Content-Type: text/plain; charset="UTF-8"
-
-Hi,
-
-
-Using a script we run the following set of git commands:
-
-git branch -a
-
-git remote -v
-
-git stash push --all --include-untracked
-
-git checkout test_git_ver
-
-git remote -v
-
-git fetch
-
-git status --branch --porcelain=v1 -u
-
-git checkout test_git_ver_workspace
-
-
-
-
-After upgrading the git version to - *2.47.2*, we started getting the
-following error:
-
-error: cannot lock ref 'HEAD': Unable to create '.../.git/*HEAD.lock*':
-File exists.
-
-
-Another git process seems to be running in this repository, e.g.
-
-an editor opened by 'git commit'. Please make sure all processes
-
-are terminated then try again. If it still fails, a git process
-
-may have crashed in this repository earlier:
-
-remove the file manually to continue.
-
-fatal: unable to update HEAD
-
-
-
-
-Investigating the issue on our side, we found that the failure occurs when
-running the last command -
-git checkout test_git_ver_workspace.
-
-As well, we noticed that after the "git fetch" command there is an *auto *
-*maintenance* execution, it looks like there was a change between git
-versions and now there is an additional flag *--detach *added to
-maintenance.
-Therefore, we suspect that as a result of git fetch a maintenance detached
-(background) process is created, running in parallel to the general script,
-creating a lock file that fails the script.
-
-
-Attached trace logs.
-
-
-This script was running for multiple versions without any issue, it looks
-like the changes introduce a *regression*.
-
-Please assist in resolving the issue.
-
-
-
-
-Best regards,
-Yonatan Roth
-Palo Alto Networks
-
---000000000000431e9f0635f67009
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div>Hi,</div><div><br></div><div><br></div><div><font col=
-or=3D"#000000">Using a script we run the following=C2=A0set of git commands=
-</font>:</div><div><br></div><div><p style=3D"margin:0px;font-variant-numer=
-ic:normal;font-variant-east-asian:normal;font-variant-alternates:normal;fon=
-t-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stre=
-tch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Ne=
-ue&quot;">git branch -a</p><p style=3D"margin:0px;font-variant-numeric:norm=
-al;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-=
-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:nor=
-mal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
-;">git remote -v</p><p style=3D"margin:0px;font-variant-numeric:normal;font=
--variant-east-asian:normal;font-variant-alternates:normal;font-size-adjust:=
-none;font-kerning:auto;font-feature-settings:normal;font-stretch:normal;fon=
-t-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">git =
-stash push --all --include-untracked</p><p style=3D"margin:0px;font-variant=
--numeric:normal;font-variant-east-asian:normal;font-variant-alternates:norm=
-al;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;fon=
-t-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvet=
-ica Neue&quot;">git checkout test_git_ver</p><p style=3D"margin:0px;font-va=
-riant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates=
-:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:norma=
-l;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;H=
-elvetica Neue&quot;">git remote -v</p><p style=3D"margin:0px;font-variant-n=
-umeric:normal;font-variant-east-asian:normal;font-variant-alternates:normal=
-;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-=
-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetic=
-a Neue&quot;">git fetch</p><p style=3D"margin:0px;font-variant-numeric:norm=
-al;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-=
-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:nor=
-mal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot=
-;">git status --branch --porcelain=3Dv1 -u</p><p style=3D"margin:0px;font-v=
-ariant-numeric:normal;font-variant-east-asian:normal;font-variant-alternate=
-s:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings:norm=
-al;font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;=
-Helvetica Neue&quot;">git checkout test_git_ver_workspace</p><p style=3D"ma=
-rgin:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-va=
-riant-alternates:normal;font-size-adjust:none;font-kerning:auto;font-featur=
-e-settings:normal;font-stretch:normal;font-size:13px;line-height:normal;fon=
-t-family:&quot;Helvetica Neue&quot;"><br></p></div><div><div><br></div></di=
-v><div><br></div><div>After upgrading=C2=A0the git version to -=C2=A0<span =
-style=3D"font-size:13px;font-family:&quot;Helvetica Neue&quot;"><b>2.47.2</=
-b>, we started getting the following error:</span></div><div><span style=3D=
-"font-family:&quot;Helvetica Neue&quot;;font-size:13px"><br></span></div><d=
-iv><p style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asi=
-an:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning=
-:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-=
-height:normal;font-family:&quot;Helvetica Neue&quot;">error: cannot lock re=
-f &#39;HEAD&#39;: Unable to create &#39;.../.git/<b>HEAD.lock</b>&#39;: Fil=
-e exists.</p><p style=3D"margin:0px;font-variant-numeric:normal;font-varian=
-t-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;fo=
-nt-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:=
-13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;;min-height:1=
-5px"><br></p><p style=3D"margin:0px;font-variant-numeric:normal;font-varian=
-t-east-asian:normal;font-variant-alternates:normal;font-size-adjust:none;fo=
-nt-kerning:auto;font-feature-settings:normal;font-stretch:normal;font-size:=
-13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;">Another git=
- process seems to be running in this repository, e.g.</p><p style=3D"margin=
-:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-varian=
-t-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-se=
-ttings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-fa=
-mily:&quot;Helvetica Neue&quot;">an editor opened by &#39;git commit&#39;. =
-Please make sure all processes</p><p style=3D"margin:0px;font-variant-numer=
-ic:normal;font-variant-east-asian:normal;font-variant-alternates:normal;fon=
-t-size-adjust:none;font-kerning:auto;font-feature-settings:normal;font-stre=
-tch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvetica Ne=
-ue&quot;">are terminated then try again. If it still fails, a git process</=
-p><p style=3D"margin:0px;font-variant-numeric:normal;font-variant-east-asia=
-n:normal;font-variant-alternates:normal;font-size-adjust:none;font-kerning:=
-auto;font-feature-settings:normal;font-stretch:normal;font-size:13px;line-h=
-eight:normal;font-family:&quot;Helvetica Neue&quot;">may have crashed in th=
-is repository earlier:</p><p style=3D"margin:0px;font-variant-numeric:norma=
-l;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-a=
-djust:none;font-kerning:auto;font-feature-settings:normal;font-stretch:norm=
-al;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;=
-">remove the file manually to continue.</p><p style=3D"margin:0px;font-vari=
-ant-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:n=
-ormal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;=
-font-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Hel=
-vetica Neue&quot;">fatal: unable to update HEAD</p><p style=3D"margin:0px;f=
-ont-variant-numeric:normal;font-variant-east-asian:normal;font-variant-alte=
-rnates:normal;font-size-adjust:none;font-kerning:auto;font-feature-settings=
-:normal;font-stretch:normal;font-size:13px;line-height:normal;font-family:&=
-quot;Helvetica Neue&quot;"><br></p><div><br></div><div><br></div><div>Inves=
-tigating the issue on our side, we found that the failure occurs when runni=
-ng the last command -=C2=A0</div><div><span style=3D"font-family:&quot;Helv=
-etica Neue&quot;;font-size:13px">git checkout test_git_ver_workspace.</span=
-></div><div><br></div><div>As well, we noticed that after the &quot;git fet=
-ch&quot; command there is an=C2=A0<b>auto=C2=A0</b><span style=3D"font-size=
-:13px;font-family:&quot;Helvetica Neue&quot;"><b>maintenance</b>=C2=A0execu=
-tion, it looks like there was a change between git versions and now there i=
-s an additional flag=C2=A0</span><b><span style=3D"font-family:&quot;Helvet=
-ica Neue&quot;;font-size:13px">--detach=C2=A0</span></b><span style=3D"font=
--size:13px;font-family:&quot;Helvetica Neue&quot;">added to=C2=A0</span><sp=
-an style=3D"font-size:13px;font-family:&quot;Helvetica Neue&quot;">maintena=
-nce.</span></div><div><font face=3D"Helvetica Neue">Therefore, we suspect t=
-hat as a result of git fetch a=C2=A0</font><span style=3D"font-family:&quot=
-;Helvetica Neue&quot;;font-size:13px">maintenance detached (background) pro=
-cess is created, running in parallel to the general script, creating a lock=
- file that fails the script.</span></div><div><span style=3D"font-family:&q=
-uot;Helvetica Neue&quot;;font-size:13px"><br></span></div><div><span style=
-=3D"font-family:&quot;Helvetica Neue&quot;;font-size:13px"><br></span></div=
-><div><div>Attached trace logs.</div></div></div><div><br></div><div><br></=
-div><div><p style=3D"margin:0px;font-variant-numeric:normal;font-variant-ea=
-st-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-k=
-erning:auto;font-feature-settings:normal;font-stretch:normal;font-size:13px=
-;line-height:normal;font-family:&quot;Helvetica Neue&quot;">This script was=
- running for multiple versions without any issue, it looks like the changes=
- introduce a=C2=A0<b>regression</b>.</p><p style=3D"margin:0px;font-variant=
--numeric:normal;font-variant-east-asian:normal;font-variant-alternates:norm=
-al;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;fon=
-t-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helvet=
-ica Neue&quot;">Please assist in resolving the issue.</p><p style=3D"margin=
-:0px;font-variant-numeric:normal;font-variant-east-asian:normal;font-varian=
-t-alternates:normal;font-size-adjust:none;font-kerning:auto;font-feature-se=
-ttings:normal;font-stretch:normal;font-size:13px;line-height:normal;font-fa=
-mily:&quot;Helvetica Neue&quot;"><br></p><p style=3D"margin:0px;font-varian=
-t-numeric:normal;font-variant-east-asian:normal;font-variant-alternates:nor=
-mal;font-size-adjust:none;font-kerning:auto;font-feature-settings:normal;fo=
-nt-stretch:normal;font-size:13px;line-height:normal;font-family:&quot;Helve=
-tica Neue&quot;"><br></p><p style=3D"margin:0px;font-variant-numeric:normal=
-;font-variant-east-asian:normal;font-variant-alternates:normal;font-size-ad=
-just:none;font-kerning:auto;font-feature-settings:normal;font-stretch:norma=
-l;font-size:13px;line-height:normal;font-family:&quot;Helvetica Neue&quot;"=
-><br></p><p style=3D"margin:0px;font-variant-numeric:normal;font-variant-ea=
-st-asian:normal;font-variant-alternates:normal;font-size-adjust:none;font-k=
-erning:auto;font-feature-settings:normal;font-stretch:normal;line-height:no=
-rmal;font-family:&quot;Helvetica Neue&quot;">Best regards,<br>Yonatan Roth<=
-br>Palo Alto Networks</p></div></div>
-
---000000000000431e9f0635f67009--
---000000000000431ea00635f6700b
-Content-Type: text/plain; charset="US-ASCII"; name="trace.txt"
-Content-Disposition: attachment; filename="trace.txt"
-Content-Transfer-Encoding: base64
-Content-ID: <f_mb3qn6h40>
-X-Attachment-Id: f_mb3qn6h40
-
-VHJhY2UgbG9nczoKCgoxMjo1NDo1Mi40MDA4NjkgcnVuLWNvbW1hbmQuYzo2NjYgICAgICAgdHJh
-Y2U6IHJ1bl9jb21tYW5kOiBnaXQgcmV2LWxpc3QgLS1vYmplY3RzIC0tc3RkaW4gLS1ub3QgLS1l
-eGNsdWRlLWhpZGRlbj1mZXRjaCAtLWFsbCAtLXF1aWV0IC0tYWx0ZXJuYXRlLXJlZnMKCjEyOjU0
-OjUyLjQwMDkzNiBydW4tY29tbWFuZC5jOjc1OCAgICAgICB0cmFjZTogc3RhcnRfY29tbWFuZDog
-L3Vzci9sb2NhbC9saWJleGVjL2dpdC1jb3JlL2dpdCByZXYtbGlzdCAtLW9iamVjdHMgLS1zdGRp
-biAtLW5vdCAtLWV4Y2x1ZGUtaGlkZGVuPWZldGNoIC0tYWxsIC0tcXVpZXQgLS1hbHRlcm5hdGUt
-cmVmcwoKMTI6NTQ6NTIuNDgzMzI5IHJ1bi1jb21tYW5kLmM6MTUzNCAgICAgIHJ1bl9wcm9jZXNz
-ZXNfcGFyYWxsZWw6IHByZXBhcmluZyB0byBydW4gdXAgdG8gMSB0YXNrcwoKMTI6NTQ6NTIuNDgz
-Mzg0IHJ1bi1jb21tYW5kLmM6MTU2MSAgICAgIHJ1bl9wcm9jZXNzZXNfcGFyYWxsZWw6IGRvbmUK
-CjEyOjU0OjUyLjQ4MzM5NSBydW4tY29tbWFuZC5jOjY2NiAgICAgICB0cmFjZTogcnVuX2NvbW1h
-bmQ6IGdpdCBtYWludGVuYW5jZSBydW4gLS1hdXRvIC0tbm8tcXVpZXQgLS1kZXRhY2gKCjEyOjU0
-OjUyLjQ4MzQ3NSBydW4tY29tbWFuZC5jOjc1OCAgICAgICB0cmFjZTogc3RhcnRfY29tbWFuZDog
-L3Vzci9sb2NhbC9saWJleGVjL2dpdC1jb3JlL2dpdCBtYWludGVuYW5jZSBydW4gLS1hdXRvIC0t
-bm8tcXVpZXQgLS1kZXRhY2gKCjEyOjU0OjUyLjQ5NDgyNiBnaXQuYzo0NzkgICAgICAgICAgICAg
-ICB0cmFjZTogYnVpbHQtaW46IGdpdCBtYWludGVuYW5jZSBydW4gLS1hdXRvIC0tbm8tcXVpZXQg
-LS1kZXRhY2g=
---000000000000431ea00635f6700b--
+"Alex via GitGitGadget" <gitgitgadget@gmail.com> writes:=0A=
+=0A=
+> From: jinyaoguo <guo846@purdue.edu>=0A=
+=0A=
+This name (i.e. the author ident when you do "git comimt") ...=0A=
+=0A=
+>=0A=
+> In function fetch_multiple and fetch_submodules, `multiple` is=0A=
+> stored in `opt.process` and later used as a divisor in function=0A=
+> `pp_collect_finished`, creating a potential divide-by-zero if it=0A=
+> remains zero.=0A=
+>=0A=
+> Signed-off-by: Alex Guo <alexguo1023@gmail.com>=0A=
+=0A=
+... must match the name used here you sign your work off as.=0A=
+=0A=
+Unless you are forwarding a patch that is signed-off by somebody=0A=
+else, in which case, their sign-off comes first and then yours.=0A=
+=0A=
+> diff --git a/builtin/fetch.c b/builtin/fetch.c=0A=
+> index cda6eaf1fd6..b668187627a 100644=0A=
+> --- a/builtin/fetch.c=0A=
+> +++ b/builtin/fetch.c=0A=
+> @@ -2591,7 +2591,7 @@ int cmd_fetch(int argc,=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die(_("--stdin can only be us=
+ed when fetching "=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 "from one remote"=
+));=0A=
+>=0A=
+> - =A0 =A0 =A0 =A0 =A0 =A0 if (max_children < 0)=0A=
+> + =A0 =A0 =A0 =A0 =A0 =A0 if (max_children <=3D 0)=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 max_children =3D config.paral=
+lel;=0A=
+>=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* TODO should this also die if we have a pre=
+vious partial-clone? */=0A=
+> @@ -2613,9 +2613,9 @@ int cmd_fetch(int argc,=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 struct strvec options =3D STRVEC_INIT;=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 int max_children =3D max_jobs;=0A=
+>=0A=
+> - =A0 =A0 =A0 =A0 =A0 =A0 if (max_children < 0)=0A=
+> + =A0 =A0 =A0 =A0 =A0 =A0 if (max_children <=3D 0)=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 max_children =3D config.submo=
+dule_fetch_jobs;=0A=
+> - =A0 =A0 =A0 =A0 =A0 =A0 if (max_children < 0)=0A=
+> + =A0 =A0 =A0 =A0 =A0 =A0 if (max_children <=3D 0)=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 max_children =3D config.paral=
+lel;=0A=
+>=0A=
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 add_options_to_argv(&options, &config);=0A=
+>=0A=
+> base-commit: 8613c2bb6cd16ef530dc5dd74d3b818a1ccbf1c0=0A=
+=0A=
+I think you may have identified the right problem to fix, but I do=0A=
+not know if the solution is correct.=0A=
+=0A=
+If max_children can be 0 at this point due to loose parsing of the=0A=
+end-user input, the config.parallel or config.submodule_fetch_jobs=0A=
+configuration variables may be set to 0 due to the same kind of=0A=
+loose parsing.=0A=
+=0A=
+The command line parser parses -j0 as max_jobs=3D=3D0 and then calls=0A=
+online_cpus() to use. =A0If the function returned 0 on a platform=0A=
+whose online_cpus() implementation is buggy, max_children may be=0A=
+initialized to 0 there. =A0If fetch.parallel is given 0 by the user,=0A=
+config.parallel gets value from online_cpus(), so it has the same=0A=
+problem. =A0submodule.fetchjobs has exactly the same issue in=0A=
+submodule-config.c::parse_submodule_fetchjobs().=0A=
+=0A=
+But otherwise, I see no plausible way to have max_children to be 0=0A=
+here.=0A=
+=0A=
+And if we want to protect a buggy online_cpus() that returns 0 or=0A=
+negative, which probably is a good thing to do anyway, perhaps we=0A=
+should do so at the source of the issue, perhaps like the attached=0A=
+patch.=0A=
+=0A=
+Or if you are trying to be defensive to withstand the change to=0A=
+other parts of the code that may affect max_children coming into=0A=
+this function, I think it is better to add=0A=
+=0A=
+=0A=
+=A0 =A0 =A0 =A0 if (max_children <=3D 0)=0A=
+=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 max_children =3D 1;=0A=
+=0A=
+before we enter the trace2_region that calls fetch_multiple() and=0A=
+fetch_submodules().=0A=
+=0A=
+Hmm?=0A=
+=0A=
+=0A=
+=A0thread-utils.c | 9 ++++++---=0A=
+=A01 file changed, 6 insertions(+), 3 deletions(-)=0A=
+=0A=
+diff --git c/thread-utils.c w/thread-utils.c=0A=
+index 1f89ffab4c..a5d644bb38 100644=0A=
+--- c/thread-utils.c=0A=
++++ w/thread-utils.c=0A=
+@@ -36,7 +36,8 @@ int online_cpus(void)=0A=
+=A0#elif defined(hpux) || defined(__hpux) || defined(_hpux)=0A=
+=A0 =A0 =A0 =A0 struct pst_dynamic psd;=0A=
+=0A=
+- =A0 =A0 =A0 if (!pstat_getdynamic(&psd, sizeof(psd), (size_t)1, 0))=0A=
++ =A0 =A0 =A0 if (!pstat_getdynamic(&psd, sizeof(psd), (size_t)1, 0) &&=0A=
++ =A0 =A0 =A0 =A0 =A0 0 < psd.psd_proc_cnt)=0A=
+=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return (int)psd.psd_proc_cnt;=0A=
+=A0#elif defined(HAVE_BSD_SYSCTL) && defined(HW_NCPU)=0A=
+=A0 =A0 =A0 =A0 int mib[2];=0A=
+@@ -47,12 +48,14 @@ int online_cpus(void)=0A=
+=A0# =A0ifdef HW_AVAILCPU=0A=
+=A0 =A0 =A0 =A0 mib[1] =3D HW_AVAILCPU;=0A=
+=A0 =A0 =A0 =A0 len =3D sizeof(cpucount);=0A=
+- =A0 =A0 =A0 if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))=0A=
++ =A0 =A0 =A0 if (!sysctl(mib, 2, &cpucount, &len, NULL, 0) &&=0A=
++ =A0 =A0 =A0 =A0 =A0 0 < cpucount)=0A=
+=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return cpucount;=0A=
+=A0# =A0endif /* HW_AVAILCPU */=0A=
+=A0 =A0 =A0 =A0 mib[1] =3D HW_NCPU;=0A=
+=A0 =A0 =A0 =A0 len =3D sizeof(cpucount);=0A=
+- =A0 =A0 =A0 if (!sysctl(mib, 2, &cpucount, &len, NULL, 0))=0A=
++ =A0 =A0 =A0 if (!sysctl(mib, 2, &cpucount, &len, NULL, 0) &&=0A=
++ =A0 =A0 =A0 =A0 =A0 0 < cpucount)=0A=
+=A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 return cpucount;=0A=
+=A0#endif /* defined(HAVE_BSD_SYSCTL) && defined(HW_NCPU) */=0A=
+=0A=
+=0A=
+The patch to `online_cpus` looks good to me. We can ensure online_cpus() wi=
+ll never return 0 or a negative value under any circumstance.=A0=0A=
