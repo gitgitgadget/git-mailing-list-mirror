@@ -1,62 +1,62 @@
-Received: from mail-wr1-f44.google.com (mail-wr1-f44.google.com [209.85.221.44])
+Received: from mail-wm1-f48.google.com (mail-wm1-f48.google.com [209.85.128.48])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953F41A5BA9
-	for <git@vger.kernel.org>; Mon, 26 May 2025 10:33:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125CF1F4E48
+	for <git@vger.kernel.org>; Mon, 26 May 2025 10:33:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748255621; cv=none; b=fO14e9PF2yZj6hBr2ugdI/n6uwaWoA5UNErZOmcX0veGT7sL2qaPNdg0pET4tg5ibsChBQry9Ik/iKJW5UuOqUS2unP1DGmcfD7WLNPPq/U646wa/aw6mX55S9z9zE1i+/88SvFkxnAkBqQuRfY7Rb2oUFck2pgXkZkcBILs6H0=
+	t=1748255623; cv=none; b=NnDrpVTYZepbl1AekQK8siyLC33hvg15cy9d2vW+7PhEPQ7qf3XlcUY8xkD3en1LYTzmjrwrNDB1qYoAwAd/za3lEuOWEcOnvOU9AnrZSEjZ21/NUcc6fUUXUjIE21b+hB1xYyxnDBw3FpkWWh2MngZtt69jdKx+mJtXmWUCiew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748255621; c=relaxed/simple;
-	bh=TVq6MoRg+0DRnPoab3J4MeZgjGiIsUpkZv1UUzlfxb0=;
+	s=arc-20240116; t=1748255623; c=relaxed/simple;
+	bh=ykg2cLYMnSCfld8+ZYPK2TvwpQCas09KaXJBqem//9E=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=dYoCPNVZBKcnmP6hAoocbZr5DPbmuS5Z5V4NmqI3hbPJNji5ARsODMAF9WD6SSVD8tsA31UhLEgOOb9J0pVDuo04J88XitDJOdtyHTWXWS/pqwdeBpfhBsIF5/vxXMHklvdXAsh+JFCYsho+zg8dKQiNhMudXtCblc0OUwCrZbw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S5ZRnxCW; arc=none smtp.client-ip=209.85.221.44
+	 MIME-Version; b=Y/QPRq3fTYfwsGVTcIdBeshEQSG8A+1xTXTEhQwHghd7kjGovosIM55eChjx+wmcRa+CIB6jgVskQhiEC/cSX2yLbw6yx2a5Y6SeDTJMmtHcHGzpnmDDRt91B2OhCXnZW1WxWDoMa/VNt8LtcArc0WSad4u7kIH6jUwEkwNvrkU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=B0vSZ9Jz; arc=none smtp.client-ip=209.85.128.48
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S5ZRnxCW"
-Received: by mail-wr1-f44.google.com with SMTP id ffacd0b85a97d-3a4cad7d6bdso1300217f8f.0
-        for <git@vger.kernel.org>; Mon, 26 May 2025 03:33:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="B0vSZ9Jz"
+Received: by mail-wm1-f48.google.com with SMTP id 5b1f17b1804b1-442e9c00bf4so14204495e9.3
+        for <git@vger.kernel.org>; Mon, 26 May 2025 03:33:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748255617; x=1748860417; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748255619; x=1748860419; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3bMel5U6Z5yUT3l5DdciANEr3shfKxWw9kGTwhJFyc0=;
-        b=S5ZRnxCW4x4TTBtKtrypEx+c/RwEaIGsjAb8RBdeUoYmWVTsl1h43EF+WuYlXDq1wP
-         2asgrqV+kWOXi3Z11B8Mnvg89g4x4ayhkWwQOOZBLxs3NsYCh8/U0gaoJUgLRsuwsPQN
-         hyrkUOGMCH70kHV6oDR+5cLa3/6AE2bjrb+kUOrKIxb8s+ETsRhV6FXu44ticP4emxk9
-         g3yQXig31XTHLwrhjDXGaBQLvbnLSaW2eTjdQ4Wprh6DbgtenkDpeYhdSpc33flSKmfG
-         bSeeJZglWiWgOuPlhcJwLkqeZE2l9Gc2y4fMoHrHbuZZr1ai/sLqBzm5bXTdtlucbAaH
-         jlcA==
+        bh=R3JgXwKJDNifj1Yet5oTI+H0cWgDMNLJhlFyGgVwMOI=;
+        b=B0vSZ9Jzjpssikega8IsKoTiA+JriebmDF/z99FEuOH5tkiVuoDBXlfDXm46iKrbpv
+         ugGO3VLDmV67wD509L2I7SajINwmqsxmZpY3LKAb36roLfKKX6xasydQwFtgiyTzd7u9
+         5XbHoJopJWgF2L1wjquHdxeQVm5Txm4NtEvAcVQQ5DOIq8IhBSUq5B2e8JlITKTr2nzN
+         PH5hrXOy3L2T2mPEJ1XFEpRRrAs3nJ4fGUoInD5nPKf3wqJQx1+DPKtAK02YxwRDgoNW
+         SPJ33s/SNqGY2jPKnX1QmC+Cla0/uvnXSN+PIE0GnYTVGUs4XbkmA12mDB5Hkbm7RRVp
+         NJrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748255617; x=1748860417;
+        d=1e100.net; s=20230601; t=1748255619; x=1748860419;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3bMel5U6Z5yUT3l5DdciANEr3shfKxWw9kGTwhJFyc0=;
-        b=OkSy6isqKB84lU282nlaCzHHJGUmU5SxaotG7yvqb1fHt+YNqqDVmQ6YBdrzPS8n6u
-         GyFJjei0euM2a4ZeOnHK0HPoOQdnlmd7p+lnCUsxB8DfWFM8qARMm0fuoYnVRXU/o8PQ
-         TjaxZdJ0EHC0YW2xjaDWkiEMpGvjaQDB/hxs6TYW8m7kPYiI1OaCL7pDRb9wlJgnSyAM
-         f0cwNG9PGNubF4QQQbWCyypeAMRUnP52agw3X6i3lDRp7xNHUdBcxgemNvBoIfaAB2pn
-         xu7g1k3SeiHETp7qvJ5IWEhsy5Ybhv+bGynUUDXH1lKMT7aQNYrJXx3jYMx/cZjUWDzB
-         0ljw==
-X-Gm-Message-State: AOJu0YxciDwv9C1YJr0AKR3y7rAdQUNUdXVGiVihhG5s9ZWkdJx4hZI3
-	POpnIDuY1b0Qi/fT3yp7T+Lr/WWV/eJ/w4RN5ujM7wQX9iPbrwToK1m/9/RBc8Mf
-X-Gm-Gg: ASbGncvYYxnIv70bcf1IJ647pqmyUaYEJmU4aNjfLzrB/BQBj61I583ObOg9aHZH5Lq
-	DDq3SzCOjMNFA3h9C+VX/OcODMJleyx910NHqtaPoPCx50uF8KqPgRrpw7ivSXHojOTbzyJoTQA
-	FNb+OHKuQvUFJV8L+aDFyo4ZCzxcmH5iD2FWDT3kC5wp2YyI8NOb0Xip7dW2/H1MJJ1vxwTCdl+
-	MnWW0JWB6c1w7NJbf8iSKMhHC0uXZxF6PKYHHDvpcuY/jzzWss49O2lXSsviVe79jHOmaIMem4A
-	AaBMXuh5Hp8GrHpPbk70dTZrQLYnCr8sc+lPhDrnDSw+d6qxGZsD7PFlFJL4JOv/OyyRgKDqnUJ
-	aiXA0uVhnOILvL+B5xMxr33mYdmx5EeFPurw+YzcUH3+lHPg=
-X-Google-Smtp-Source: AGHT+IG9El6UKcY8zAdeGeC7wv8mcFdcolSAQWwL43h9PN67Vi4akkC+rQzCLdmlp8+rygspKHEsDw==
-X-Received: by 2002:adf:f303:0:b0:3a4:d367:c586 with SMTP id ffacd0b85a97d-3a4d367c6d5mr3146011f8f.13.1748255617218;
-        Mon, 26 May 2025 03:33:37 -0700 (PDT)
+        bh=R3JgXwKJDNifj1Yet5oTI+H0cWgDMNLJhlFyGgVwMOI=;
+        b=nKmWN1rHmNApeV3A2zUvF7ujAoKUJ9cQfdp66KXebbNcAnsRS28a8amHwix1m75dhU
+         WUFiIreliUNe152TGHInTR6NprFDxqShwQqZ/HdgGjS0OIUyzuvnkClaml2MCoGL2u3f
+         nhJR5MKsNtdu7AVwBvxch8BhAlqO7JO/90BURwtxQ9D0PM7iDcNHse+EwhdkcIIY9rkz
+         c+mwJ8a7E9lIhkun2fyZeXVTn4bwRdBIFxnZKcVCEbgC3HFMxNFJAMC0gMNgJh/uovfp
+         vFKI+Y0CSNslqDUzOEuaASoJxFNhGM9iBjLE1MhKmy/2qynJxz0cBTmx9Ob5LDGRvtdV
+         OBFA==
+X-Gm-Message-State: AOJu0YzsZ8OGz0Qb3PlSkPWMXMqFeszViZVus5+ZCoE5a6C80D2hV+GS
+	T3VGia3Oc2eMVl5xU8i81ZL7f08W6PtaC7Rw0x8rvI10fj7+7bN6PBcx7UnjdsUJ
+X-Gm-Gg: ASbGncu39M4qahXfMGQMlW7hpdnfIkXy+6ZRS8G+d1imiUkyq5yoL1KL4pq3iJi0NPy
+	VBaum26BCT93Yy7E33waYSIMOD4ACMeqovKZVxbM3UJZJDyoyLtcn3TV8kBupiqlrioFayU9zPF
+	qbpc+NY05PDS6cmyN0OcU8TtHoG2dgvcfve58cCodMne9eG5mtcg+u6IKJzE1xj449u2r5yGJoz
+	27Mml2AMXjYcusahANvwhCtZ7ZQCGfaOKkJl7hSP67B3OrP0kcQwCmTMgHHXGPT9X7ZhKYclKTC
+	TT0unngblst7BJdZdThkD0kOrt+gbPAzQ8yfBCl9Hfu6ISc4FS4RCPHqMJnGJ1ArNS/9Sz1e/GF
+	8P/RYYI+m++BAmPbQC8o6FatOB1+aTPu+R5EEC0ysps/thbE=
+X-Google-Smtp-Source: AGHT+IHZN0DTK55bFnJPxemy9J+s8pgMngUVChQtsWWVmftaC2gotto5UCv+8iExO3tg8icf7fWTDw==
+X-Received: by 2002:a05:600c:138f:b0:43d:fa5d:9315 with SMTP id 5b1f17b1804b1-44c94c2d54emr69862985e9.33.1748255619175;
+        Mon, 26 May 2025 03:33:39 -0700 (PDT)
 Received: from christian--20230123--2G7D3.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d26caf92sm5071512f8f.66.2025.05.26.03.33.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d26caf92sm5071512f8f.66.2025.05.26.03.33.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 03:33:36 -0700 (PDT)
+        Mon, 26 May 2025 03:33:37 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 1/6] gpg-interface: simplify ssh fingerprint parsing
-Date: Mon, 26 May 2025 12:33:09 +0200
-Message-ID: <20250526103314.1542316-2-christian.couder@gmail.com>
+Subject: [PATCH v2 2/6] gpg-interface: use left shift to define GPG_VERIFY_*
+Date: Mon, 26 May 2025 12:33:10 +0200
+Message-ID: <20250526103314.1542316-3-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.49.0.614.g649fb04ae6
 In-Reply-To: <20250526103314.1542316-1-christian.couder@gmail.com>
 References: <20250424203904.909777-1-christian.couder@gmail.com>
@@ -82,37 +82,36 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In "gpg-interface.c", the 'parse_ssh_output()' function takes a
-'struct signature_check *sigc' argument and populates many members of
-this 'sigc' using information parsed from 'sigc->output' which
-contains the ouput of an `ssh-keygen -Y ...` command that was used to
-verify an SSH signature.
+In "gpg-interface.h", the definitions of the GPG_VERIFY_* boolean flags
+are currently using 1, 2 and 4 while we often prefer the bitwise left
+shift operator, `<<`, for that purpose to make it clearer that they are
+boolean.
 
-When it populates 'sigc->fingerprint' though, it uses
-`xstrdup(strstr(line, "key ") + 4)` while `strstr(line, "key ")` has
-already been computed a few lines above and is already available in
-the `key` variable.
-
-Let's simplify this.
+Let's use the left shift operator here too. Let's also fix an indent
+issue with "4" while at it.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- gpg-interface.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ gpg-interface.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/gpg-interface.c b/gpg-interface.c
-index 0896458de5..e7af82d123 100644
---- a/gpg-interface.c
-+++ b/gpg-interface.c
-@@ -431,7 +431,7 @@ static void parse_ssh_output(struct signature_check *sigc)
+diff --git a/gpg-interface.h b/gpg-interface.h
+index e09f12e8d0..9a32dd6ce8 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -3,9 +3,9 @@
  
- 	key = strstr(line, "key ");
- 	if (key) {
--		sigc->fingerprint = xstrdup(strstr(line, "key ") + 4);
-+		sigc->fingerprint = xstrdup(key + 4);
- 		sigc->key = xstrdup(sigc->fingerprint);
- 	} else {
- 		/*
+ struct strbuf;
+ 
+-#define GPG_VERIFY_VERBOSE		1
+-#define GPG_VERIFY_RAW			2
+-#define GPG_VERIFY_OMIT_STATUS	4
++#define GPG_VERIFY_VERBOSE	(1<<0)
++#define GPG_VERIFY_RAW		(1<<1)
++#define GPG_VERIFY_OMIT_STATUS	(1<<2)
+ 
+ enum signature_trust_level {
+ 	TRUST_UNDEFINED,
 -- 
 2.49.0.609.g63c55177e5
 
