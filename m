@@ -1,128 +1,146 @@
-Received: from fout-a1-smtp.messagingengine.com (fout-a1-smtp.messagingengine.com [103.168.172.144])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73F1C202998
-	for <git@vger.kernel.org>; Mon, 26 May 2025 14:21:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A28660B8A
+	for <git@vger.kernel.org>; Mon, 26 May 2025 14:23:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748269280; cv=none; b=iE4HTIA1FfhHPcEjrf9SBbizaGrLZ288blIObcKuTy3acBX1QwKUz31liwELvq/rEqYlsAeTdY6kS0pFPNwiUbyQGMOeuaBasazXWt0DIXTWGFTjSsGdxKyIUbPF9L+MV27pEt3g95+pjSyDC8sXau28kmRgsKyCm5/grU0fkFk=
+	t=1748269391; cv=none; b=Axrb40VEIh51oqy1Ojfl9qCuatuIJb7oJzqRiLBr9FjraQtczzT+YNclrqPTgrLb0QKw3fP8Jap42QpWQM4lprx6nxSR/8cf/x1PY30zUKbSRq09RTq4tSAlkK2z7BGBV4qMLnMeYxDQgF4bPsRNGk/K78iEbef6VBrG4GJYfec=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748269280; c=relaxed/simple;
-	bh=kXbQmPQtQxGLHydteYCOEQfF76NsYJogiHQaIq4XbeU=;
+	s=arc-20240116; t=1748269391; c=relaxed/simple;
+	bh=gM4sZkaqlmgRHT2Ny1nGrqX1NWzk4HHmjeIaNU4se8w=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RtIwmYZZzsHrknOUaF6IMl9c2Wopxws8WiA2IfIaWWUJ2WUv95lDdcEatCl2KsKhlFHSb5ewKPxNcEoxZeV5toNJ6aY0EhNUFuGFrSvm8Jm/i2yQIQRelKoT9R4tVEb6TO6JKfUwDXNIXL5XXDWUmNrorXTOzcm8x7MY5pIjVN0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=eF7+AG0p; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BwYcJOzj; arc=none smtp.client-ip=103.168.172.144
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=OrffuBQOLqJEftYzWzJTGtg6tmB5Wtgpkomdw3Yk25a/8xixg4vJVmhmJjUjFm7olyy5ergery1Rzs55LkOC5nKoVJxLOs3gBThBxeURG+CxoOdx9qsSPcZl7YXzxeHwY38NzjrAKilfDveC/rnChLEqyeh2Y+e1+9hZS40bbOc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=kj3/V91k; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Wmr7siYi; arc=none smtp.client-ip=202.12.124.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="eF7+AG0p";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BwYcJOzj"
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
-	by mailfout.phl.internal (Postfix) with ESMTP id 4FE4A1380321;
-	Mon, 26 May 2025 10:21:16 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-08.internal (MEProxy); Mon, 26 May 2025 10:21:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748269276; x=1748355676; bh=Em9AxiPvjC
-	u6FWNBb4YF3DE3DNkxLaAZDjDGPePpLdA=; b=eF7+AG0p8NXT0vGvfidIcY3Rxr
-	DdAxX8w9Q2pOYPyLOLtJtF/sF3hELrIeHB2RszgQ5vo8peqj0t/4FY8p4XYoPUKy
-	LV7NkDXiESVOkHWeB66f5hRKpTQ2Zlqkp7z6gTuI4lJSUoXONhb8Hu08TlCDyeIU
-	Jtetb9eBc2nNu8l41d3Gwxd8wg2Bz7RcLDPulxSEOpf1JALSL7mDYiPijPZ//wjR
-	S+FeYCPCnG78idLmtjChURMUFuO+j4iJTeWxuc7U+L84qsfzIlabW8hyOZbVuekb
-	0zYOe2gewWLe4sSiQGrZTaAUFprkkU30krVSIYzETAvEN838hcHjMS6B7fRQ==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="kj3/V91k";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Wmr7siYi"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 2A7DE254019B;
+	Mon, 26 May 2025 10:23:08 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Mon, 26 May 2025 10:23:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1748269388;
+	 x=1748355788; bh=T5Pc3QaqwNJY/qj27pJMRsm/BeI2DR3J1yxuFMLfTs4=; b=
+	kj3/V91kvlpArlmh1PSZ2zw6jMf/pozamEdIjbOVNqbh2cohJjUZBTHgA9bhGovT
+	Ax+WAxBuCYQRBVPlpTQvWCR3Oc3Pb4/sIz36f+PqsY0KZmTq4nBIHAuISWr9VuC+
+	tpyEq0usA8qNG0P7vVfy+xjzFjO+/nusD1Mfdfjr7RRHF9rCkwuKV1snwUIasPvt
+	B7lUtVerqDJrZPo9OF+nialStNx0Fwwa58TykthC1gnEcv6uCzZnGrlOcbkXGLMm
+	R5cSTrcpVKMI70xTWbsbM+whgXPpxs6BWX2cDBTT45nUQ4l6CP4chROqdmb3SJvV
+	wYPebjklb0p8+msnXf5qSg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748269276; x=1748355676; bh=Em9AxiPvjCu6FWNBb4YF3DE3DNkxLaAZDjD
-	GPePpLdA=; b=BwYcJOzjAF8a2ZC0ENvOT4p+wrqb59uDmzXZPZ2UwnnviMXXfDd
-	fzMd7iDMdjzEvqKeM1YSDC5h7cht44guiqwI78VcPMLaRd0azNXvUNOkXPTwGR8x
-	L5nLosIILaBaAfUjPS5begBvzamBi//0f+TwdIQf/jDCyW/TddbbvEIojKduHiHF
-	QnaFQRpWE2BBwMXYsUzl8z8FQeW3kJ4GVNMnxjhbHsYZAALM/bazUf/3PLMAlvw+
-	C01yauXzefAWHzlo1caK162IvvQWXXkaxVhflGspERSEhpPNJgMNQV6/csK6lt9k
-	xQdWurJ2zgQ3GeSsjRRU4kXuXW8fswH5oqA==
-X-ME-Sender: <xms:3Hg0aNsDiWS_AVakRegQQuBjnCGJqRKs5yDKD1tht0t4OrCdEFlacg>
-    <xme:3Hg0aGeCp6fgpDNpc23AXMLza8HBv1yrWfcHhVlJe98sw75LM_BWnd8q24Vz9FVrh
-    K7xgLS2Mzr8KKF4SQ>
-X-ME-Received: <xmr:3Hg0aAxoz2H1BLbHgoWRmyNcyED2Y7G-y7fpULKfK-9CwiE8jKH-vLTdqBjYCHYTlRFgBNsYY6btNDM0edH7JzXCUPHI4NkBRgzqTlw4yBCrhg>
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748269388; x=
+	1748355788; bh=T5Pc3QaqwNJY/qj27pJMRsm/BeI2DR3J1yxuFMLfTs4=; b=W
+	mr7siYiA3LEp5REMj2Orriox3JQ433oDeeqX1cuaW8qYl1Anjs1xiv1fOMntBJtC
+	6APYXlbSrS2othjNi53zx5IUUCY3se7zpFgen1ryGqiHSebZwf5ALnr/ZgBIe+CR
+	O3Gyuif1zcj1GnIuY5TFuejB5gxWRxfOj5pnJz0tR17ScH0sEjwuu+wPSpB7Zuoo
+	0kMJ8lP+5cDU/5uOC91jRx7CJZNmpy0lXwAkExE04jNzzPfuW7n5zwLbe4MMXDC7
+	58VCF8knA2WdIYmBU2iq+SrvdTETkZoLyUEQsV/Jlq80zoO+ZxcBWTpFFD2jHqim
+	oIcGay0kNRmlci1cBFtww==
+X-ME-Sender: <xms:Snk0aGtS4lXUdXXPcVBk818FumxYb9FVxNq0TDCqP2Y-WX72AlxQbw>
+    <xme:Snk0aLdVA_Tz9ffs78UtcYCwoJVZp78dz0LZoHJtbjgBVVdF5JtYBoLugCKNE8gRE
+    2_luyC2CFL5KyRmuQ>
+X-ME-Received: <xmr:Snk0aBxBgpK9fH-x5UQVihz00J3gwAY_-o3xWXqOWdC7QGzTHadA2FofCyZas_hUuoaGu-z6CmEOztOzXzJEp9OzUGudzRMojVC0CYS-UyZHffkPVJ9H>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeejheculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecunecujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhep
-    rfgrthhrihgtkhcuufhtvghinhhhrghrughtuceophhssehpkhhsrdhimheqnecuggftrf
-    grthhtvghrnhepveekkeffhfeitdeludeigfejtdetvdelvdduhefgueegudfghfeukefh
-    jedvkedtnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomh
-    epphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouhht
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hshhgvjhhirghluhhosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhes
-    phhosghogidrtghomhdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
-X-ME-Proxy: <xmx:3Hg0aEOBvZQWX4BoxBPH4WaRgUjlK-4ILK7BVmwX75FG25mIsxwxWw>
-    <xmx:3Hg0aN__2RaA1Xm_z7wF7trIH2IcrS_2gLcrXAJXatZaZwQpLbOYdQ>
-    <xmx:3Hg0aEXoLls-V8EopRqlca-PzYnSePoNm6Vtu0Wh0yBr4oLrDMVWRA>
-    <xmx:3Hg0aOd04F9gFyiVopE7pWE7-tHC1GGU1lszbwRsH2IuXyzAdfIN9A>
-    <xmx:3Hg0aJUm-pGYbQj7u7mUgLjuqxN7DJ6QXq_NQEBpqYXjuxrnDj9jkFI_>
-Feedback-ID: i197146af:Fastmail
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
+    gggtugfgjgesthekredttddtudenucfhrhhomhepvfhougguucgkuhhllhhinhhgvghruc
+    eothhmiiesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepieetkeehiefhtdff
+    udfguedvfeekgeeijedvgfejfefgvdfgueegvdeliefgveffnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepthhmiiesphhosghogidrtghomhdp
+    nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhih
+    hllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepphhssehp
+    khhsrdhimhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpth
+    htoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepvghstghhfi
+    grrhhtiiesghgvnhhtohhordhorhhg
+X-ME-Proxy: <xmx:Snk0aBNNqPqmItHdoS1h0MqxJDLwMghe4c7KUGaTxC9AqdheMyrOtQ>
+    <xmx:Snk0aG-nr7JgJVzjAglqgez4RcMOJXuRgrdm_WOuhEG-iZ_I3X2oQg>
+    <xmx:Snk0aJWgcgL9rhxTgFXu0fskJGQjqpSANVJJFUg7OhjDLoRqqTYWjA>
+    <xmx:Snk0aPfODblrdQ7uHdBxrXtnnP7ZRuBCMPPs5lHjDPN57akXqCVA5g>
+    <xmx:THk0aEkB4d7VOcVGUNK6CXv0UtEbaaoMOaZpFfJ04ZdUyo-a8ZdfiC2Y>
+Feedback-ID: ia13843cf:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 May 2025 10:21:15 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 748f6e5e (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 26 May 2025 14:21:13 +0000 (UTC)
-Date: Mon, 26 May 2025 16:21:12 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: shejialuo <shejialuo@gmail.com>
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/8] string-list: remove unused "insert_at" parameter
- from add_entry
-Message-ID: <aDR42KocPhLEZCbn@pks.im>
-References: <aCoDB9P5XV1lHMil@ArchLinux>
- <aCoDU46MmoGPB60b@ArchLinux>
- <20250519075119.GE102701@coredump.intra.peff.net>
- <aDR0VS_4n8Io0QYp@ArchLinux>
+ 26 May 2025 10:23:06 -0400 (EDT)
+Date: Mon, 26 May 2025 10:23:04 -0400
+From: Todd Zullinger <tmz@pobox.com>
+To: phillip.wood@dunelm.org.uk
+Cc: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+Message-ID: <aDR5SDrrOEpNFhvv@teonanacatl.net>
+References: <aC2xp4Cdb0j6OX-G@pks.im>
+ <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g>
+ <aDBH7G-oKKxAXWBp@pks.im>
+ <aDCNqRAoGygwnAbq@pks.im>
+ <xmqqo6vjz5cn.fsf@gitster.g>
+ <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+ <xmqqwma7w29o.fsf@gitster.g>
+ <aDRiLdUCEVQHq26z@pks.im>
+ <74c03ad4-b132-4cad-b65d-821324380343@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <aDR0VS_4n8Io0QYp@ArchLinux>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <74c03ad4-b132-4cad-b65d-821324380343@gmail.com>
 
-On Mon, May 26, 2025 at 10:01:57PM +0800, shejialuo wrote:
-> On Mon, May 19, 2025 at 03:51:19AM -0400, Jeff King wrote:
-> > The answer in this case is that we used to have another function,
-> > string_list_insert_at_index(), which used the extra insert_at parameter.
-> > The idea being that you could call string_list_find_insert_index(),
-> > decide whether there was something already there, and then insert
-> > without repeating the binary search.
-> > 
-> > But you can see in callers like 63226218ba (mailmap: use higher level
-> > string list functions, 2014-11-24) that this was not really that useful
-> > (in that commit we just try to insert and check the util pointer to see
-> > if we need to add the auxiliary structure).
-> > 
-> > So the function went away in f8c4ab611a (string_list: remove
-> > string_list_insert_at_index() from its API, 2014-11-24), and I suspect
-> > we won't need it again. (Also, I think these days we'd probably use a
-> > strmap instead anyway).
-> > 
+Phillip Wood wrote:
+> On 26/05/2025 13:44, Patrick Steinhardt wrote:
+>> 
+>> I don't think it's inherently a bad thing to fail on unexpected passes.
+>> After all, it shows that our assumption that the test fails is broken,
+>> and that we should have a look why that is. But I can see arguments both
+>> ways.
 > 
-> Thanks for the hint. By seeing this commit, I totally understand the
-> history. Because we delete `string_list_insert_at_index`, we simply call
-> "add_entry" by specifying "auto" mode and somehow we don't delete the
-> legacy check in "add_entry".
-> 
-> But I have one question: should I include the information in the commit
-> message? I feel doing this would be chaty. But I somehow think we should
-> do this.
+> Personally I'd be very happy if our test suite failed on an unexpected pass.
+> Currently it is easy to miss, especially if the unexpected pass occurs in a
+> CI run. Missing an unexpected pass means we don't change
+> 'test_expect_failure' to 'test_expect_pass' and a future regression that
+> causes the test to fail again will go unnoticed.
 
-I would recommend including such information in the commit message, yes.
-It helps the reviewer to understand the context and makes it easier for
-them to figure out why this seemingly nonsensical parameter exists in
-the first place.
+Indeed.  Perhaps related (apologies if it's a wild tangent),
+having a way to expose an unexpectedly failed prereq would
+be nice.
 
-Patrick
+For example, we currently (well, last time I checked, which
+was a month or so ago) fail the GPG2 prereq.  I submitted
+small patch series to fix that nearly a year ago¹, but when
+I ran the tests in our CI, they turned up some preexisting
+failures.
+
+I spent a little time trying to reproduce and resolve the
+failures, but was never able to make it work.  These tests
+pass when run locally which makes it painful to track down.
+
+It would have been ideal if they failed when added, so that
+it could have been worked out during the review period,
+while it was fresh in the minds of the folks working in that
+area.
+
+We are simply not noticing these failures in our CI, which
+feels worse than simply not having test coverage.  It gives
+a false of security that t/t1016-compatObjectFormat.sh is
+passing.  In reality, the tests might be reporting a real
+issue that we've been missing for ages.
+
+¹ <20240703153738.916469-1-tmz@pobox.com>
+
+-- 
+Todd
