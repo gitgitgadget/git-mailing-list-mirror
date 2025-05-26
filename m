@@ -1,104 +1,242 @@
-Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CCD76410
-	for <git@vger.kernel.org>; Mon, 26 May 2025 13:31:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9237A8488
+	for <git@vger.kernel.org>; Mon, 26 May 2025 13:48:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748266315; cv=none; b=Bgz9bpTd4cCtqy53OgITWS0TCfODyWVeKIzV3zFQtKDeE+UsBte9aGwZyRqbXKQG3JqPi/M3B7Y6gCgkTCZIvczFzVZFcn8wXzUrYVnhIZO+9a0DsAF3t1oK1aOHFl46WZ5QSas3Esw/KZWtdz+M5ALDdpaW7q/4nQ/a0L9euqk=
+	t=1748267311; cv=none; b=B31c2N5q6P8slSiwv0vDOZdnzL48RCbfyXBYtVF7Nbcee0nkZtPq0UEuPNHLhOdxPU9IYneRG2fyGBnOJwo51t5n52j4Fvj/STNbR76A5m5nYCh/v/lFYUNdxs/wrofHpVhhEJT/RGhEaI8Z2v5Ltb9GLc+cV9GrjS4sFvURnIQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748266315; c=relaxed/simple;
-	bh=FX7kAlNgKcfWqgm4jW98d3kfQ2pZ9ImOSdStLPs/Eq4=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=Nvh8Tw+u7eINynCUifxl2psDE4oAJDTPDgTq8MJ+QsqLAEHUn+EjMnP2MkD0JgABfqVvISg9pIbeTvMSYuA8p02RK8bz+YBI9WdeWPMp33RcmlbsxTbLrau25SGPDoe+Abg4yNR7emHbRsxjX9r/Qcw+RYb+57AmC/Yx/f9mbb8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cBT9CmCY; arc=none smtp.client-ip=209.85.208.47
+	s=arc-20240116; t=1748267311; c=relaxed/simple;
+	bh=7YzriAL7T1n+P1yVDfisnJp+a6JsgU+j05X5vhoDRyU=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:MIME-Version:
+	 Content-Type:To:Cc; b=uCy3eiNf00G3y6onv9kjtmcm93s4K6q96BrTy3hFOsg24+F9TizAMl1MioEY2XFvwyLogcow+LwTSWm3/rr4KN6rhtLImo6FjDyzEQesv+JoqEnEWPIFZ8ZJ0C/qgbI2tpLRs+/d5pOp7hFqdOueBlkfV3uoh1MDSYTcug001Zk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OhlXbH6h; arc=none smtp.client-ip=209.85.128.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cBT9CmCY"
-Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-60477f1a044so1730596a12.0
-        for <git@vger.kernel.org>; Mon, 26 May 2025 06:31:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OhlXbH6h"
+Received: by mail-wm1-f52.google.com with SMTP id 5b1f17b1804b1-43ce71582e9so20691755e9.1
+        for <git@vger.kernel.org>; Mon, 26 May 2025 06:48:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748266312; x=1748871112; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=/SPb2VJlV6Re6EWseqZdkz9TWfm+ovfMsR/AmijPuUg=;
-        b=cBT9CmCYbPBv2YelNd0kMlDSqzKFAj1Na/smaifi1TobXMV+vrdPRiR6YCvkPdxhyS
-         liqAiJQztnaBDzUuA9IT1rQBcUHGldlZrnCCEvxzWal0axYbtHB3Fr/HGmaml7n6ewHq
-         mQ6ny+Zmd9FgNo0wc+fsky5lNhJDFWCAk8Fqa2TbRaby4RUuNStv02DbpbhAOhaeZGXq
-         xZHnRq+IyFUCZ6ElFBL/RE6uTr41lcE686++ILSoDcG3sJ8FMzasAKMYdCo8fU7OJuVP
-         CeHan0CE6/1FMMD6q6gKbwGWZ5OC4h7LtYtsscRFX6WkZYq9vtdD1uRanYexcJiTB3i/
-         Ks6w==
+        d=gmail.com; s=20230601; t=1748267307; x=1748872107; darn=vger.kernel.org;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=7X6Yf/DYNG7Af67EzzxvJdHkoibMAcm4d9rsljSIAsI=;
+        b=OhlXbH6hK6QDyTG59XWo0aCQTsRYafUrnm6kGDirdifjNnAMbgLbH2bEuCdIoKDdV4
+         oSYpXnLbq421hmr6FqZIukKZqq1kaUgeSBXWoOAkBPndvpGmk8qYiBV+xeayA8AyLWvU
+         zHR6oCYIWgF+ZVjOIavza7KgO1hcKCx6E/nrwD0CIFfJxN/pcewHSEo+dzQ93UEWgZJJ
+         SDbZ91ynqJmoSEdcJk3lmttiHyvPplXl+C73xjAfatCp3c3ZdcAtzfaYv0bNuzPlcY/O
+         FhJTY3K708M620U4VbuiXB1wNDTs1/bMnB2FCb9aY+zY09YVuzYd5O19bDAzpzIpPO0p
+         L1sA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748266312; x=1748871112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=/SPb2VJlV6Re6EWseqZdkz9TWfm+ovfMsR/AmijPuUg=;
-        b=OujO6ZKnOiRnHRQTMFE1CfN8e/lF4TvAv5yemsQCEWI7QTECpYJ8ILiDOYhgSWRmyl
-         41890yUc4o79i8DAsCr1l2zHidsI3I9LHbKn1Ek0a2pQXGz6Ay/BYgcbYL27wJ/NcGAf
-         N1hwfbFgAe1yToL/o3lQIeb8gs7/Y0YgoU04iJkUS9B8Vr6JhVfpG5QB9baDsws2TEpv
-         4cW/myNLLcexgLTSszMK0Uc9Qsltg4/bZEs6jZJiVl5z21ce+XyFjAUze5zrEG7DNMt2
-         htr0lpUXQxTmt6UVh+ZEgZSFFFJJElD+9l3q6URq2Ns+z2xTmkeR6JPm2aBIuxY2CKWW
-         ryYA==
-X-Forwarded-Encrypted: i=1; AJvYcCWlaj3SGGQrEiMGtUiyklui1OirZtUMVw2ll9nDFbvJ8/4cz9XwWF7RNzHkRMWUWPZR4VM=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw9WBOc9M38Jdp0zE1g+MOR0jYM4ELfDa8VIMwCrEJ/AythFybj
-	pl04SFCebBMBLdt4Z4aK9e9rxWbq2qkWTcqYFcQkSvccw7s9HXFJy4tr
-X-Gm-Gg: ASbGncvzP+MNb0TJnvqICdUGlf0EELTTKMBC7geVHrDoPC8E9wCz+GVC/CZN5YQgnWw
-	ctaTwcyL5jxiPMsN1sVJ1PQ4n9mSJoleacOEXqP/Axss4W8WaL9H11Q75e0RAzJqkc8FtY7Xwn7
-	tNljxLGeeSlMSeXGxSK1skljdpAyydnk8KUOl73gWnqnkcReIxzpXCjAuoLuTzj1fXhmvH4gDX/
-	U6t/RwbF05q3hE0pIQ4cVsi5IpMpZ9ErHrrdTJF4b0q91RpN1IFpkRiuv4dmaPqWP3spKHQ63an
-	vwQqQm4j3MsCV9OMI3xjOgqUD6IZyIjjx+nUaeYfx/8zHEPNBmyq0IlD6ddBZcSOs2/vJk4Y9uX
-	Hyi7+ALKWODbbO79ew1twU0bSiP0=
-X-Google-Smtp-Source: AGHT+IFSHvK+MtQl51cBPhTVs4L+LikXWGuZ6waW9Mr8SvGxfH9fnfNmuRL6DpgRiATRfA6dSdYfsg==
-X-Received: by 2002:a17:907:3da7:b0:ad5:9ff4:62e6 with SMTP id a640c23a62f3a-ad85b0d6281mr728344666b.23.1748266312269;
-        Mon, 26 May 2025 06:31:52 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d06ad94sm1685163166b.38.2025.05.26.06.31.51
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 May 2025 06:31:51 -0700 (PDT)
-Message-ID: <74c03ad4-b132-4cad-b65d-821324380343@gmail.com>
-Date: Mon, 26 May 2025 14:31:35 +0100
+        d=1e100.net; s=20230601; t=1748267307; x=1748872107;
+        h=cc:to:fcc:content-transfer-encoding:mime-version:subject:date:from
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=7X6Yf/DYNG7Af67EzzxvJdHkoibMAcm4d9rsljSIAsI=;
+        b=hDjvQ6OoUOQYH/jMlqM0T3eJPxuUj4pn1TOmDrTR652B/YZeLy7Gzv0ImpfjvRZedc
+         eFyTJexkqKHkVIuANy+VFUxbX/FAnskR4fADmaeZYHR0501p/Gv+Y2ojkcQJVvyORu37
+         7vUMqKyuEWz2b3X0CvGMW+vwwlQplCDfvo70RXXQ8mm7OhRlP2KudeH373hiyc3jhj6d
+         PSdvp3OLhGtl/KuDAXjwvZidwEpxrtE2pIa4BKFyEo2TfkBdJcTNpQJzGJgKQU7mftVd
+         rx3Ud8rhNOqpBPAXTe7B7/yRYfR581QByPeDZegDNTE9mTyuyUJBsBldpnywfSdAH4cN
+         PgvA==
+X-Gm-Message-State: AOJu0YzSA5pLy9ZUX1qR4hPv4WW7rL1HdiYgHrSzX8kxzumXU8sPv75N
+	33jEmjK73hC+Gt0RaXaoKLE+yZ/HQbHSTuDCBf91hvv88fBPuGgGr8VPyY5qeg==
+X-Gm-Gg: ASbGnct3yCEegEdcRNZB00Np/MxTewf51W++Y2R1czZV82ucABCN0Hww1XfyKIlltuz
+	eAk8JuFsqvmEHp/TOwcMO88JIyUSqqp7U/FKecVTO1f36eK7e0SE+cwTpwkoSFesnUqREABW93w
+	n4W702fKd2gfumogodvZL1BOdGrsMjzFBVcqgvCjNOu5BD+porXjeFbud31s7U4+ejtXk6rVIlp
+	vTKg02dJBxMm1sTpu63Jg/M2zfMQrF2ojCtIF3YMCYJOZUvfm+m6IQbUl3fyU3Tc6T3s9mbpsuM
+	3PCJouv6xCPY1gTNcy6FheaNktkRXZUql6DWyjKuwK2YZqBuC+Yq
+X-Google-Smtp-Source: AGHT+IG3nrK7Ye0IgGtOl+9EE+m5CQqkM6fPjBGNdsapSrrQV7iS25ZjeXyK9CJf6c/qvLU9XwJfgA==
+X-Received: by 2002:a05:6000:22c3:b0:3a1:f78a:42f7 with SMTP id ffacd0b85a97d-3a4cb464890mr6251095f8f.32.1748267307289;
+        Mon, 26 May 2025 06:48:27 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a37fb452e5sm17364428f8f.20.2025.05.26.06.48.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 May 2025 06:48:26 -0700 (PDT)
+Message-Id: <pull.1925.v4.git.1748267305871.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1925.v3.git.1747913206622.gitgitgadget@gmail.com>
+References: <pull.1925.v3.git.1747913206622.gitgitgadget@gmail.com>
+From: "=?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 26 May 2025 13:48:25 +0000
+Subject: [PATCH v4] cvsserver: remove unused escapeRefName function
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
-To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
-Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
- Eli Schwartz <eschwartz@gentoo.org>
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
- <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
- <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
- <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
- <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
- <xmqqwma7w29o.fsf@gitster.g> <aDRiLdUCEVQHq26z@pks.im>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <aDRiLdUCEVQHq26z@pks.im>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Fcc: Sent
+To: git@vger.kernel.org
+Cc: =?UTF-8?Q?Ond=C5=99ej_Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>,
+    =?UTF-8?q?Ond=C5=99ej=20Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>
 
-On 26/05/2025 13:44, Patrick Steinhardt wrote:
-> 
-> I don't think it's inherently a bad thing to fail on unexpected passes.
-> After all, it shows that our assumption that the test fails is broken,
-> and that we should have a look why that is. But I can see arguments both
-> ways.
+From: =?UTF-8?q?Ond=C5=99ej=20Poho=C5=99elsk=C3=BD?= <opohorel@redhat.com>
 
-Personally I'd be very happy if our test suite failed on an unexpected 
-pass. Currently it is easy to miss, especially if the unexpected pass 
-occurs in a CI run. Missing an unexpected pass means we don't change 
-'test_expect_failure' to 'test_expect_pass' and a future regression that 
-causes the test to fail again will go unnoticed.
+Function 'escapeRefName' introduced in 51a7e6dbc9 has never been used.
 
-Best Wishes
+Despite being dead code, changes in Perl 5.41.4 exposed precedence
+warning withing its logic, which then caused test failures in t9402 by
+logging the warnings to stderr while parsing the code. The affected
+tests are t9402.30, t9402.31, t9402.32 and t9402.34.
 
-Phillip
+Remove this unused function to simplify the codebase and stop the
+warnings and test failures. Its corresponding unescapeRefName function,
+which remains in use, has had its comments updated.
 
+Reported-by: Jitka Plesnikova <jplesnik@redhat.com>
+Signed-off-by: Ondřej Pohořelský <opohorel@redhat.com>
+---
+    cvsserver: avoid precedence problem between ! and %s
+    
+    cc: "Kristoffer Haugsbakk" kristofferhaugsbakk@fastmail.com cc: "brian
+    m. carlson" sandals@crustytoothpaste.net cc: Jeff King peff@peff.net cc:
+    Todd Zullinger tmz@pobox.com cc: Matthew Ogilvie mmogilvi+git@zoho.com
+
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1925%2Fopohorel%2Fcvsserver_parentheses-v4
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1925/opohorel/cvsserver_parentheses-v4
+Pull-Request: https://github.com/gitgitgadget/git/pull/1925
+
+Range-diff vs v3:
+
+ 1:  b7563182492 ! 1:  ce853594ceb cvsserver: avoid precedence problem between ! and %s
+     @@ Metadata
+      Author: Ondřej Pohořelský <opohorel@redhat.com>
+      
+       ## Commit message ##
+     -    cvsserver: avoid precedence problem between ! and %s
+     +    cvsserver: remove unused escapeRefName function
+      
+     -    With perl-5.41.4 and newer, test t9402-git-cvsserver-refs.sh
+     -    (specifically t9402.30, t9402.31, t9402.32, t9402.34) fails, because
+     -    of the new warnings[0] populating cvs.log.
+     +    Function 'escapeRefName' introduced in 51a7e6dbc9 has never been used.
+      
+     -    Use the 'does not match' operator '!~' directly to express the
+     -    negated pattern match, resolving the precedence issue.
+     +    Despite being dead code, changes in Perl 5.41.4 exposed precedence
+     +    warning withing its logic, which then caused test failures in t9402 by
+     +    logging the warnings to stderr while parsing the code. The affected
+     +    tests are t9402.30, t9402.31, t9402.32 and t9402.34.
+      
+     -    [0] https://metacpan.org/release/ETHER/perl-5.41.12/view/pod/perl5414delta.pod#New-Warnings
+     +    Remove this unused function to simplify the codebase and stop the
+     +    warnings and test failures. Its corresponding unescapeRefName function,
+     +    which remains in use, has had its comments updated.
+      
+          Reported-by: Jitka Plesnikova <jplesnik@redhat.com>
+     -    Suggested-by: Jitka Plesnikova <jplesnik@redhat.com>
+          Signed-off-by: Ondřej Pohořelský <opohorel@redhat.com>
+      
+       ## git-cvsserver.perl ##
+     +@@ git-cvsserver.perl: sub gethistorydense
+     +     return $result;
+     + }
+     + 
+     +-=head2 escapeRefName
+     ++=head2 unescapeRefName
+     + 
+     +-Apply an escape mechanism to compensate for characters that
+     ++Undo an escape mechanism to compensate for characters that
+     + git ref names can have that CVS tags can not.
+     + 
+     + =cut
+     +-sub escapeRefName
+     ++sub unescapeRefName
+     + {
+     +     my($self,$refName)=@_;
+     + 
+      @@ git-cvsserver.perl: sub escapeRefName
+           #   = "_-xx-" Where "xx" is the hexadecimal representation of the
+           #     desired ASCII character byte. (for anything else)
+       
+      -    if(! $refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
+     -+    if ($refName !~ /^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
+     -     {
+     -         $refName=~s/_-/_-u--/g;
+     -         $refName=~s/\./_-p-/g;
+     +-    {
+     +-        $refName=~s/_-/_-u--/g;
+     +-        $refName=~s/\./_-p-/g;
+     +-        $refName=~s%/%_-s-%g;
+     +-        $refName=~s/[^-_a-zA-Z0-9]/sprintf("_-%02x-",$1)/eg;
+     +-    }
+     +-}
+     +-
+     +-=head2 unescapeRefName
+     +-
+     +-Undo an escape mechanism to compensate for characters that
+     +-git ref names can have that CVS tags can not.
+     +-
+     +-=cut
+     +-sub unescapeRefName
+     +-{
+     +-    my($self,$refName)=@_;
+     +-
+     +-    # see escapeRefName() for description of escape mechanism.
+     +-
+     +     $refName=~s/_-([spu]|[0-9a-f][0-9a-f])-/unescapeRefNameChar($1)/eg;
+     + 
+     +     # allowed tag names
+
+
+ git-cvsserver.perl | 27 +++------------------------
+ 1 file changed, 3 insertions(+), 24 deletions(-)
+
+diff --git a/git-cvsserver.perl b/git-cvsserver.perl
+index a4e1bad33ca..d8d5422cbca 100755
+--- a/git-cvsserver.perl
++++ b/git-cvsserver.perl
+@@ -4986,13 +4986,13 @@ sub gethistorydense
+     return $result;
+ }
+ 
+-=head2 escapeRefName
++=head2 unescapeRefName
+ 
+-Apply an escape mechanism to compensate for characters that
++Undo an escape mechanism to compensate for characters that
+ git ref names can have that CVS tags can not.
+ 
+ =cut
+-sub escapeRefName
++sub unescapeRefName
+ {
+     my($self,$refName)=@_;
+ 
+@@ -5009,27 +5009,6 @@ sub escapeRefName
+     #   = "_-xx-" Where "xx" is the hexadecimal representation of the
+     #     desired ASCII character byte. (for anything else)
+ 
+-    if(! $refName=~/^[1-9][0-9]*(\.[1-9][0-9]*)*$/)
+-    {
+-        $refName=~s/_-/_-u--/g;
+-        $refName=~s/\./_-p-/g;
+-        $refName=~s%/%_-s-%g;
+-        $refName=~s/[^-_a-zA-Z0-9]/sprintf("_-%02x-",$1)/eg;
+-    }
+-}
+-
+-=head2 unescapeRefName
+-
+-Undo an escape mechanism to compensate for characters that
+-git ref names can have that CVS tags can not.
+-
+-=cut
+-sub unescapeRefName
+-{
+-    my($self,$refName)=@_;
+-
+-    # see escapeRefName() for description of escape mechanism.
+-
+     $refName=~s/_-([spu]|[0-9a-f][0-9a-f])-/unescapeRefNameChar($1)/eg;
+ 
+     # allowed tag names
+
+base-commit: cb96e1697ad6e54d11fc920c95f82977f8e438f8
+-- 
+gitgitgadget
