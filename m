@@ -1,191 +1,157 @@
-Received: from MA0PR01CU012.outbound.protection.outlook.com (mail-southindiaazolkn19011027.outbound.protection.outlook.com [52.103.67.27])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87AC843AA9
-	for <git@vger.kernel.org>; Mon, 26 May 2025 03:38:19 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.67.27
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748230703; cv=fail; b=gb3SK8LtViLOM2BcwiuKFcuToLFXhSBRbXn0vH5JCbLKsbs18tPB7Hy5Sb/mXEgLTnCCl0xWr2g4RqMXCFLI1Rn72VID4SbLMm3C5BCMALCdy+S1lkp1F+/STplLtVUy2adZx8MH6Q3AQKzmOGSSYuB6NTmOKDHAoeo5/CmvNec=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748230703; c=relaxed/simple;
-	bh=CqkrAMI9PTIaatGoraGKi0Za8VGkVnHCN7NZeS1pvws=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=hnW5VLEZl+NSA8UCQELC3004vdXj5KZs6jZDSkWyO1uTJc0FgY8ddTu87lneiaAygFfd1j+09FKwGXcsmzUc1cjT1eqDVa/5a2UWJQUPhT99F1kbvp3Z09k46RLAksyjf5Z9iT+W+DNchBVeJSS47bZBYMtVa2SU4wg+KEcxCxw=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=kyxNxlCo; arc=fail smtp.client-ip=52.103.67.27
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F335E1863E
+	for <git@vger.kernel.org>; Mon, 26 May 2025 05:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748238336; cv=none; b=qLYnz8cf5B+njYa5Yp3t0sv0xF8jQEJXBcd5fO/IQ5swVk6XsoHlwRDWCJcug0pYYMNhqkRuWNmw+F4obQadOHbjE86Bb/P/azGtLETfMW2WE/1uCu//EgiIQ/9MaFErK5s3YvvPmMf43qbwAPJ2KUAsVKIToaPb1jY+9nLThIA=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748238336; c=relaxed/simple;
+	bh=Uf6xowtWVWzZU8hGDpCSGC9s24VKiJNxU95+xtkPaFs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=MFOuo34V1fNNxjh+mrXPfDOQWWbInXr+rs+Ku3mHThTASvRV4af/xacCNn/3I47hbrM8nu5tNKHmZKf53BSq+6B5JFaFZUhbcV+qT+6nhNkX/l0FVmZSas3FfSVIn+klzUxyohj+PFv4WZQgyxRjpZu8McrGPwLOyNAsmIS+Wtw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZYAiFko9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nJGCvgjB; arc=none smtp.client-ip=202.12.124.159
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="kyxNxlCo"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=exm46PxTlv8IB6XjZE9G5G4IXcM67m7VvlI8RCdYWMA1pf+gL9WgS2W1njQxC19qlyK7LoJ/lME/e3ShoBz52KuXKULO83vdhFmIwuOyFdWi0GJ7VgAsfDzDyeh+YaeIMzh7WagZBNfCMDff3GknNQg983H3lMqwaNAmf6Un9xLaIxuGxo6a1+qbE8BPbw3xmDA/F1opgItsCiGKl6GVrJILEtNGmx4tANkeuvMxS/tZ0Lp7/KWamO+cyNOGgvjsMpt6EIQd1mwITOEc0gBBcTfhV+iusDVP6DgF1Yc+FIBGZr+JMFZcMePCab5/m0t6YXPUO45OLg3Qgs4R0zPLsw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=CqkrAMI9PTIaatGoraGKi0Za8VGkVnHCN7NZeS1pvws=;
- b=D3nkW43PB1End7oiKm03YmK4q5O+020YC4hL8BdqNjbaaSrT3pCvA1vOVywJIpgtr0dIyFCLDNsEwphJZk/4naWpobtzWtxGlpgBMwKb2No/VLWy3WTgCQDTd0HBItDmx55YlcowAdCLOm6WhKGlaM9PZvEvPsEzEzdVhJA7whRregJpfue0HdowBqCJDL0gqrghEJMYpoUVV6zikyNaElytOsvVLAfRqinPBWoNCRxAfcAdwUgNcgktiU0Nvt6ReAqxuKQV6tsR6wS/MLxlJ7ujnZ8JUf6RkgiG9EvSLVLfs+xR6QKEbpgVVvqSI6xGdRYe61dxbOQyvVvwqSSuyg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=CqkrAMI9PTIaatGoraGKi0Za8VGkVnHCN7NZeS1pvws=;
- b=kyxNxlCoVvJtXJirnuuEXVpXOK3HTw9jgBwW2CVdlZ2bpHuwyVi2BOSo+bRj+Q4eVDctNF+NU0pca7+x28F67MpWKPkqeAUcg0NpjeUlHtlEvfMnMht6tRO7F/E7Sl7gXWa+U0m7HQTlY/njNWHY2jeCTwzyVG91BCCh8PVx9psiXsvFIzrnBhNyJolQCaBj6sDdSErVLTOUM49s5+Nx0f1sKZ/J0vkDzGEjweqZqYhX7SY2LxsnHiWeF65W2rd+D7XPLbt9VSFW++VBjXqVVinxwlZEk4yPAMemIw5+oPzz3pzwFh4GbVSD8gH6fVm7oXHXwjHoZawdBziJcP4xkg==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by MAXPR01MB4182.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:2::12) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.26; Mon, 26 May
- 2025 03:38:14 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.025; Mon, 26 May 2025
- 03:38:13 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: "brian m. carlson" <sandals@crustytoothpaste.net>
-CC: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
-	<git@vger.kernel.org>, Eric Sunshine <sunshine@sunshineco.com>, Julian
- Swagemakers <julian@swagemakers.org>, Jeff King <peff@peff.net>, Zi Yao
-	<ziyao@disroot.org>, Rens Oliemans <hallo@rensoliemans.nl>, Drew DeVault
-	<drew@ddevault.org>
-Subject: Re: [PATCH RFC] send-mail: add support for Microsoft Graph API
-Thread-Topic: [PATCH RFC] send-mail: add support for Microsoft Graph API
-Thread-Index: AQHbzWUSqVJsjYz9NU+BJwLg9+xtcrPjy1+AgAB5Dac=
-Date: Mon, 26 May 2025 03:38:13 +0000
-Message-ID:
- <PN3PR01MB959731DDE3E22C88211A84C2B865A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References: <20250525110621.64308-1-gargaditya08@live.com>
- <aDN8mYEJS0ARD1d7@tapette.crustytoothpaste.net>
-In-Reply-To: <aDN8mYEJS0ARD1d7@tapette.crustytoothpaste.net>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|MAXPR01MB4182:EE_
-x-ms-office365-filtering-correlation-id: bdbddee9-8847-4acd-8436-08dd9c06be73
-x-microsoft-antispam:
- BCL:0;ARA:14566002|461199028|6072599003|8062599006|8060799009|7092599006|41001999006|19110799006|15080799009|3412199025|440099028|102099032;
-x-microsoft-antispam-message-info:
- =?utf-8?B?V0xRZ0RvQUhLd1ZDcnVRaDEzRVo5NXBSVGRnNXV4b0luUVdJZU9lR1RSbEpa?=
- =?utf-8?B?OXNZZWNub0JVV1lOSGlwZ2pmU214K3REaU11YUoyelBRWkhCVVJwaTVSWnB0?=
- =?utf-8?B?K09BT2FLVTk2dWNuc2dXUGgrMlp3dHBrYUE2S295cEdPMUVrUElvVytkVTdL?=
- =?utf-8?B?aXNjTEtEaGpDb09PckJqYlJGM2tCbHk3dWZvMEJ6c1pzeFJvcC83dEJ4dWRY?=
- =?utf-8?B?YlBFcEhqaGdkTmNOUDc5dFZxRDJyVDFwZWhSOWdMMmQ4eHBYWTY5ZHpBNXZO?=
- =?utf-8?B?SUl0UmkyMTlMUVd6aVUyb29hYXpQem5Nb2F5K1hMdC8zK3BISXhOUW12aGVi?=
- =?utf-8?B?NlNGTEcyOGVjS3lTVXdSZkcvRlliM0lSOFcxWUtkR2ZJd0QyWWo3dE9QSVlB?=
- =?utf-8?B?b3hyd0wzMFRIM29LWE9TcUx0WlRlMGlsVzhEUHc1Tks2d1YrYmJkUXpPTVNa?=
- =?utf-8?B?OWlsRFpPaFF4UHAxaEEzKzAySkh5d01iaGxPbXU5Wlc1dVg4T3hIdEExVy8w?=
- =?utf-8?B?L1FBRHBoYzJtWW12VlFWd3NZM0U3U2RFTFVZbmJGcDVocGRSMUtaNkpYNlJD?=
- =?utf-8?B?SDNBUDMzYnJRS3FVSmZobFl0L3hrRnNXUnJZM0RJRFhHQVlLVUVpK1lzWDBD?=
- =?utf-8?B?VmVJZjNzRUN5RzZBMitpUGhxanZEaEh3cjJZZy9hMFJ6ZzZXSW03MktGYVpi?=
- =?utf-8?B?WXNjdXRLZnhvZ2VBc0VnYUdNalBWMmxwdmp4dFFkRjc3K0xoTlU4M0d0anBo?=
- =?utf-8?B?NjFNWXM4eE1heGo2N25vMjVsV3R6QlhzamZLNzZ3dVhQaGMrU1ZnMUcrME1G?=
- =?utf-8?B?S0lObkMzTjhLaGdtVzFKSDNUSi9UWVpNT3ppZG0zVVlCbVRMT296MTVPZ2RP?=
- =?utf-8?B?VWgvVGlYd3VtZHNMTlFiOHVXb2JVOWRTMW9iUGVXN2lLSGJZbVQyU2gwbzkv?=
- =?utf-8?B?WlRLVW9pODBsclE3SU1hdVJObVBQOGxTZEI2cEFUblpzdUlWcnhsRUlQMGtB?=
- =?utf-8?B?dEFFOGhjTHJhaGlTVm9TdSs4QjRXTFF2cTh3WW1lWTJESWtSVVBKL0FMdmNT?=
- =?utf-8?B?ckcweWpzNlNXYm9iNFhtUzBnbERCTnkrdmw4L0x1K045T1dCNG5jK3JEU0tj?=
- =?utf-8?B?eHZIMWpkRUlGUlBoM2pObkp6RGFQRHV1OC9mOUNJczVIZEpIemFlbUszK2VB?=
- =?utf-8?B?NnpVdWJOSy9QdTVBOHdKU1FZSFViczhORjlYd0F3ZWVxSFE1SENUTGZXYTBw?=
- =?utf-8?B?QStxaWNHcHF3ckNuTkRrMzR1UGxBYkVjd0IwT2FYakRXaVh2OGV4SVRydmU4?=
- =?utf-8?B?aDRFWGljREVWYXNrMFBDTUtRSnJGbHh2Zm9KSFNLTkNwMnRmR215UzJLL0Mz?=
- =?utf-8?B?cWttU051dUJrKzdWdXV6Z25ub09QajAwUGZBWjlxRTQxR01talIwSGZVTXdZ?=
- =?utf-8?B?TmM3VVNMdkEvNVVlRGE4bUJ3ZVRzTjBaSzNSRktKbkRCbUVBK0tCd0Yyb1E5?=
- =?utf-8?B?YUc5akd1YUJrcmJjYTBVOFowL25jUk9kWTY4QTV6a1JlcW9oY2E5cGdWUkVR?=
- =?utf-8?Q?/YgYnO8OCGdqPWeJ+QDA+WraY=3D?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?bWREVkUzb283Z1B1RDI4L1h5U0lTODFhaUZnSy9xU1hodUJLUVNsdkRTeU9a?=
- =?utf-8?B?a3RxTjhDbkpSTnNTSmY4Q3A0NGpVVFNoaFVQeDkvVzMrQTV4R1lwRTBTcGRN?=
- =?utf-8?B?L2NSMThxWXRaSGoyQzZtR3c2WEdqejJobU16R2ZaMDY2bXhIOWJmN3UvZEtY?=
- =?utf-8?B?WSsvbWhnVHl0QytaWUdra0I0MHFPRTRvc3ZvaUVSN0pxQ2U0Sjlxb2Y5N1ph?=
- =?utf-8?B?Sk5ETnU5RXAyQm9NeFpJRFozbC9MczJZM0RDY05TblZJM2piSlg5Yk1OMWVW?=
- =?utf-8?B?UWhCQTRHdFpGOFNYUWlwSjk3OTVXUjYvcXBvY0s1YS9NcWxITHlEcTZLb2o4?=
- =?utf-8?B?clI4OW9WZ3dpUzQ4MjZtKzBUVml4UkZnbzlMd1hlaFU1OUhLWGJuNysxVWFH?=
- =?utf-8?B?aS8vK0pTNjg3bEZTQml5ZFgwSXZrY0Y3VkxWZHROTmdpQXkzVUdqMWpQZ0RL?=
- =?utf-8?B?OFlmUjR1eURWYmpWcTdVL3dkVU1OSGY2RWpSOUR6N0xOOTgrOWRxU1FzVUI4?=
- =?utf-8?B?SlJUS0JDcFZiRFFLcUhyNEJ5R2RmanY0aTFSNkhSdXd2WkRhRVA5bmtXc1RT?=
- =?utf-8?B?ZE43UFRpVU9qeTNjT2hXZnA2Szhya21hL21INnBDMmwyUjErV0Ixd2N2SXU0?=
- =?utf-8?B?ZVdTMjd0aUZla1ZvR2s5V0cxSjFHclRBWHNnMm1NVWkxNG90OWhlckNQalo2?=
- =?utf-8?B?WmpGa1hzOThrc3Y0NkR5VlcvWTJyWThVVnNIZnExb3N4Y0l5ckNwTDV3SFFS?=
- =?utf-8?B?dW9xZ1hJd3lXcEo3MEtaalJ0QXNNNVNIcFJ5SDZ1RmNwSUxIVWpLakFFL2lW?=
- =?utf-8?B?eUV0enU0am9Ha1ltWjdLNVBUb29maW82VHRoV1JoOWFuSm1UN09lMzdvUmww?=
- =?utf-8?B?UU9mcTUrbjV4VkR2UDdPQi9HVGE4eW1EYjV0L1F1SGxELzhDSGYyejZLT1RW?=
- =?utf-8?B?ajFwK0xpY2gwUWk1WUl5R2JPNjlzZ0l6eE84RHlpSFJCRGw4V2RETVNlaHk1?=
- =?utf-8?B?WkxMTzJQMGpNVkRhVzlmU0h0RWxyMHoyYU5mVjRFQzJ5UG1vK0Rxb1lIVk1I?=
- =?utf-8?B?WVpYV3RpNkZLemg1VzNqVEV2dTMzSVBiYUhxUjZVUjhyekQzclZ3Q0NiTnEz?=
- =?utf-8?B?ZXBuRi8wbVI3R2pwUTNURzFGRHRuWS9IT1FGQ2JMWWFFTnFQekdOREJXbFd2?=
- =?utf-8?B?eSt2RFBlWmY1eC8yb0ZtVVM4eUFJZ3ZLTHNpTlFnZGVSWE5UTk0zQVBETUlD?=
- =?utf-8?B?emRCaERIK3MvL2lFQUlJeGNKVWdnNWhod0IrWDRNNEQzQzJnUE5Pd28yOVBG?=
- =?utf-8?B?ZGl3UTZUNE5TU0R6UHRPZ3B3eGlGbHdBdFY2dXZka1Z4NHdvTEN4VkNpWkVs?=
- =?utf-8?B?amlwd213MXp1R2Vka3RJT0JLNHMvOEYrbkJIcEJDYWRxRmh2b2hySkZ2bW1Y?=
- =?utf-8?B?c1VJQWgxSWpQMjRCZG9TQW9sSWR2ZzdJWkQvdXE0MG55WVV6T3l1V1RtdUl0?=
- =?utf-8?B?SzlnWStjT0tTYUdiczRZd0lOQS9wQVNrUTFhRnVBU0t3MFY1dW41WXBkQ3J3?=
- =?utf-8?B?Y1BHL3NpcU42ZzF1ZmtsYm1pVGZQRXpLcllOdlRVWVhVQ3JDeGtSamFPVE9Y?=
- =?utf-8?Q?XLz1bVVoiRahD1024ETwN8cHYuOBPKdMkk1IZAmQPMUY=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZYAiFko9";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nJGCvgjB"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id BB2CB2540103;
+	Mon, 26 May 2025 01:45:32 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Mon, 26 May 2025 01:45:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1748238332; x=1748324732; bh=V4t6gOVudM
+	ZqCDOPUIprqEe61oY9O5394olaHI3mJC8=; b=ZYAiFko9Q5I6Vm6EsvnxSO9Cei
+	cyo6HA79o+vu5rgn/Ji5GiLHgIM+kDK8UsmyRERU2pdR1tGIy18wsoKsjj8LooKN
+	OtHLMMVH4MqSDhXGfmFRU4cUMXLu9HxMn6AJT5iv7IhYSCwBCMjrLuAhLcIoBL/w
+	2zOsfIP+DRxG049XT0r7DKuKGTqWFRugkF7bZQ9OTooUOBJEGmXTyQoOjD4w1lYt
+	VeN8m434SZSEP4QGft+T3W7dgdTGk3rQsflDfqrJYToAcgxCxctjn5i1DDFRcj6q
+	X0O3qMb9C+rNQCqMts+a4J31qHDSa81g7Q52qreWO5vzqlgOQcKm5/Z/o1Lg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748238332; x=1748324732; bh=V4t6gOVudMZqCDOPUIprqEe61oY9O5394ol
+	aHI3mJC8=; b=nJGCvgjB2zdywpYuGgPhPv24ek4ZxbTSt+QoAzXn3oCXF84CYQ1
+	bit8OTv2tfCr4Y5Le3p72vib5kTg48qCbTSumCdcCOkHFJDFJmhXLP9SRftWZHX/
+	uCwhIhz3Spw1M5ebCJsF0LR9Au+ORwN9u3fJQxoJQdEbJ7Xcf0SG8ORwx2rdfPv3
+	s9kaHqWpKdtWX5684dYhYyMyoZfT51o1TSsfLpHppAvQDQV01IjvzOJ0Zn0Ce5yc
+	9QzQ3UszFTmAb72rUXGmph3Pj3ntsgz56Oz0mTux/FozP0h8yck9PdLCc61Pettp
+	KLR3wmqHdVrmq9n9G3a54WFfKzitbatF+4w==
+X-ME-Sender: <xms:_P8zaMkNFtyKF72NDzD7AQOjXH56kb3VABuogRl0ixoezoINxise4A>
+    <xme:_P8zaL2QCNH5EfIFQtT75nigCxrHcYEsNzcSownxZpC-vcg_8aQhNMSvKj9WYh0Dr
+    0qPVyka3DbhJfX_cQ>
+X-ME-Received: <xmr:_P8zaKrGS_5t-snJlhFcJ07CL6qvOyxOxxjNQNgBPHc383mro9gFiQdMr1bwret7dg2vDdDd533vqagOHsscbIaLc48QKpBzhVred9xFJif58w>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduieejvdculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
+    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
+    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdp
+    rhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhith
+    esvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdr
+    tghomh
+X-ME-Proxy: <xmx:_P8zaIm-WzDSOL1Wt_DPJomfFdlZnn1vnNnN6MoYgiODtKngbAxY-g>
+    <xmx:_P8zaK36zrTe1NFa5AgqAPR9_hjNSq4_JTqliGwm8jSA1AF0bwIDEA>
+    <xmx:_P8zaPvFuo8uuW6221rC4WZ3Sce-NtGQjuD5peOBN-BUaUgYkut6Qg>
+    <xmx:_P8zaGVfZ6Ad1Ynqd4JlYhdkyIZY46CYCONJshh-2Cw_86uN49432g>
+    <xmx:_P8zaANquwWui55BvoFXGc3MfqbwIJ98RpQlCx0qwB0FLH6wxDbNvovx>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 May 2025 01:45:31 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 62bc5fc3 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 26 May 2025 05:45:30 +0000 (UTC)
+Date: Mon, 26 May 2025 07:45:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: git@vger.kernel.org, Derrick Stolee <stolee@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, Toon Claes <toon@iotcl.com>
+Subject: Re: [PATCH v3 02/17] object-store: rename `object_directory` to
+ `odb_alternate`
+Message-ID: <aDP_-VX_Rz-MqiAS@pks.im>
+References: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
+ <20250514-pks-object-store-wo-the-repository-v3-2-47df1d4ead22@pks.im>
+ <tjsbotrnrffykmi3letktpb3bly4nqw4wxzyrszgbln7pznem4@3kwiq4zvaebw>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: bdbddee9-8847-4acd-8436-08dd9c06be73
-X-MS-Exchange-CrossTenant-originalarrivaltime: 26 May 2025 03:38:13.5257
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MAXPR01MB4182
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <tjsbotrnrffykmi3letktpb3bly4nqw4wxzyrszgbln7pznem4@3kwiq4zvaebw>
 
-DQoNCj4gT24gMjYgTWF5IDIwMjUsIGF0IDE6NTXigK9BTSwgYnJpYW4gbS4gY2FybHNvbiA8c2Fu
-ZGFsc0BjcnVzdHl0b290aHBhc3RlLm5ldD4gd3JvdGU6DQo+IA0KPiDvu79PbiAyMDI1LTA1LTI1
-IGF0IDExOjA2OjMyLCBBZGl0eWEgR2FyZyB3cm90ZToNCj4+IEFwYXJ0IGZyb20gU01UUCwgTWlj
-cm9zb2Z0IGFsc28gcHJvdmlkZXMgYSBSRVNUIEFQSSwgYnJhbmRlZCBhcw0KPj4gTWljcm9zb2Z0
-IEdyYXBoIGZvciBzZW5kaW5nIG1haWxzLiBVcG9uIHRlc3RpbmcgYSBiaXQsIEkgaGF2ZQ0KPj4g
-Zm91bmQgYSBmZXcgYmVuZWZpdHMgb3ZlciBTTVRQLiBGaXJzdGx5LCBTTVRQIHNlcnZlcnMgb2Yg
-TWljcm9zb2Z0DQo+PiBhcmUga2luZGEgc2xvdy4gT24gYW4gYXZlcmFnZSwgaW5pdGlhbGlzaW5n
-IHRoZSBTTVRQIHNlcnZlciBldmVuDQo+PiBvbiBhIGZhc3QgaW50ZXJuZXQgY29ubmVjdGlvbiB0
-YWtlcyBhcm91bmQgOC0xMCBzZWNvbmRzIHdpdGgNCj4+IHNlbmQtZW1haWwuIE9uY2UgaW5pdGlh
-bGlzZWQsIHN1YnNlcXVlbnQgbWVzc2FnZXMgc29tZXRpbWVzIGFsc28NCj4+IGZhY2UgZGVsYXlz
-LCB0YWtpbmcgYXJvdW5kIDMtNSBzZWNvbmRzIHBlciBtZXNzYWdlLCBhbmQgb3RoZXINCj4+IHRp
-bWVzIHRoZXkgYXJlIHNlbnQgYWxtb3N0IGluc3RhbnRhbmVvdXNseS4gU2Vjb25kbHksIHRoZWly
-IFNNVFANCj4+IHNlcnZlciBkb2VzIG5vdCByZXNwZWN0IHRoZSBNZXNzYWdlLUlEIHNwZWNpZmll
-ZCBieSB0aGUgdXNlciBhbmQNCj4+IHJlcGxhY2VzIGl0IHdpdGggdGhlaXIgb3duIGdlbmVyYXRl
-ZCBzdHJpbmcuDQo+PiANCj4+IE1pY3Jvc29mdCBHcmFwaCBBUEkgc29sdmVzIGJvdGggdGhlc2Ug
-cHJvYmxlbXMuIEl0IGlzIGV4dHJlbWVseQ0KPj4gZmFzdCwgdGFraW5nIGFyb3VuZCAxIHNlY29u
-ZCB0byBzZW5kIGEgc2VyaWVzIG9mIDUgcGF0Y2hlcywgYW5kDQo+PiBhbHNvIHJlc3BlY3RzIHRo
-ZSBNZXNzYWdlLUlEIHNwZWNpZmllZCBieSB0aGUgdXNlci4NCj4gDQo+IEkgZG9uJ3QgdGhpbmsg
-d2Ugc2hvdWxkIGJlIGFkZGluZyBzdXBwb3J0IGZvciBwcm9wcmlldGFyeSBtZXRob2RzIG9mDQo+
-IHNlbmRpbmcgbWFpbC4gIFRoZXJlIGFyZSB0d28gc3RhbmRhcmQgbWV0aG9kcywgd2hpY2ggYXJl
-IFNNVFAgYW5kIHRoZQ0KPiBzZW5kbWFpbCBiaW5hcnksIHRoYXQgYXJlIHdlbGwga25vd24sIHdl
-bGwgdW5kZXJzdG9vZCwgYW5kIHdpZGVseQ0KPiBkZXBsb3llZC4NCj4gDQo+IEl0IGlzIHdlbGwg
-a25vd24gdGhhdCBNaWNyb3NvZnQgaGFzIGludmVudGVkIGEgbG90IG9mIHByb3ByaWV0YXJ5DQo+
-IE91dGxvb2stc3BlY2lmaWMgZm9ybWF0cyBmb3IgbWVzc2FnZXMsIHN1Y2ggYXMgVE5FRiBhbmQg
-TUFQSSwgd2hpY2ggd2UNCj4gc2hvdWxkIGFsc28gbm90IHN1cHBvcnQgYmVjYXVzZSB0aGV5IGFy
-ZSBwb29ybHkgZGVmaW5lZCBhbmQgbm90DQo+IHNwZWNpZmllZCBpbiBhbiBvcGVuIHN0YW5kYXJk
-LiAgSSB3b3VsZCBhbHNvIGJlIG9wcG9zZWQgdG8gc2VuZGluZyBtYWlsDQo+IGluIGZvcm1hdHMg
-b3IgdXNpbmcgbWV0aG9kcyB0aGF0IGFyZSBwcm9wcmlldGFyeSB0byBHb29nbGUsIEFtYXpvbiwg
-b3INCj4gYW55IG90aGVyIHByb3ZpZGVyLCBzaW5jZSB3ZSBhbHJlYWR5IGhhdmUgY2xlYXIgc3Bl
-Y2lmaWNhdGlvbnMgb24gaG93DQo+IG1haWwgaXMgdG8gYmUgc2VudCB0aGF0IHByZWNlZGUgdGhp
-cyBwcm9qZWN0J3MgZXhpc3RlbmNlIGJ5IHNvbWUgdGltZS4NCj4gDQo+IEkgdW5kZXJzdGFuZCB0
-aGF0IHRoZSBPdXRsb29rIHNlcnZlcnMgbWF5IGJlIHNsb3cgYW5kIGluZWZmaWNpZW50IGFzDQo+
-IHdlbGwgYXMgbW9kaWZ5IHRoZSBNZXNzYWdlLUlELCBidXQgdGhhdCdzIHVsdGltYXRlbHkgYSBw
-cm9ibGVtIHlvdSBuZWVkDQo+IHRvIGFkZHJlc3Mgd2l0aCB0aGVtIGFuZCBnZXQgdGhlbSB0byBm
-aXguICBJIHNob3VsZCBub3RlIHRoYXQgSSBkb24ndA0KPiBoYXZlIHRoYXQgcHJvYmxlbTogSSBy
-dW4gbXkgb3duIFBvc3RmaXggYW5kIERvdmVjb3Qgc2VydmVycyB3aGljaCBhcmUNCj4gdmVyeSBz
-cGVlZHksIGFuZCBJIGZlZWwgY29uZmlkZW50IGFueSBvdGhlciBwcm92aWRlciBjb3VsZCBkbyBz
-byBhcw0KPiB3ZWxsLiAgSSBhbHNvIGhhdmUgbmV2ZXIgaGFkIHRoYXQgcHJvYmxlbSBzZW5kaW5n
-IG1haWwgdGhyb3VnaCBHb29nbGUncw0KPiBTTVRQIHNlcnZlciBhdCB3b3JrLg0KPiANCj4gSWYg
-dGhpcyBSRVNUIEFQSSBhcHByb2FjaCBpcyB3ZWxsIGRlZmluZWQgYnkgYW4gUkZDIG9yIHNvbWUg
-b3RoZXIgb3Blbg0KPiBzcGVjaWZpY2F0aW9uIHByb2Nlc3MgdGhhdCB0aGUgcHVibGljIGNhbiBw
-YXJ0aWNpcGF0ZSBpbiBhbmQgZGVwbG95ZWQNCj4gYW1vbmcgYSBsYXJnZSBudW1iZXIgb2YgcHJv
-dmlkZXJzLCBpbmNsdWRpbmcgc2V2ZXJhbCBvcGVuIHNvdXJjZQ0KPiBpbXBsZW1lbnRhdGlvbnMs
-IHRoZW4gd2UgbWlnaHQgY29uc2lkZXIgYWRvcHRpbmcgaXQuDQoNCkZhaXIsIEkgd2FzIHRoaW5r
-aW5nIHByb3ByaWV0YXJ5IHByb3RvY29scyBtaWdodCBub3QgYmUgYWNjZXB0ZWQgdXBzdHJlYW0u
-DQpJIHRoaW5rIGl0cyBiZXN0IHRvIHVzZSBhbiBTTVRQIGJyaWRnZSwgb3IgdXNlIHRoZSBzZW5k
-bWFpbC1jbWQgbGlrZQ0KY2FwYWJpbGl0aWVzIG9mIHNlbmQtZW1haWwu
+On Thu, May 22, 2025 at 05:13:55PM -0500, Justin Tobler wrote:
+> On 25/05/14 07:12AM, Patrick Steinhardt wrote:
+> > The `object_directory` structure is used as an access point for a single
+> > object directory like ".git/objects". While the structure isn't yet
+> > fully self-contained, the intent is for it to eventually contain all
+> > information required to access objects in one specific location.
+> > 
+> > While the name "object directory" is a good fit for now, this will
+> > change over time as we continue with the agenda to make pluggable object
+> > databases a thing. Eventually, objects may not be accessed via any kind
+> > of directory at all anymore, but they could instead be backed by any
+> > kind of durable storage mechanism. While it seems quite far-fetched for
+> > now, it is thinkable that eventually this might even be some form of a
+> > database, for example.
+> > 
+> > As such, the current name of this structure will become worse over time
+> > as we evolve into the direction of pluggable ODBs. Immediate next steps
+> > will start to carve out proper self-contained object directories, which
+> > requires us to pass in these object directories as parameters. Based on
+> > our modern naming schema this means that those functions should then be
+> > named after their subsystem, which means that we would start to bake the
+> > current name into the codebase more and more.
+> > 
+> > Let's preempt this by renaming the structure to `odb_alternate` now
+> > already. This name is agnostic of how exactly objects are stored while
+> > still specifically pinpointing that this is about an alternate object
+> > database. Furthermore, it is already used in Git to represent this
+> > context -- the only stretch is that the primary object directory is now
+> > the primary alternate.
+> 
+> I know the naming here has been discussed in other threads, but
+> `odb_alternate` doesn't feel quite right to me. When I think of an
+> object database alternate, I think of the additional object sources that
+> may be configured for a repository.
+> 
+> From my understanding, the `odb_alternate` here applies to any object
+> source, even the main one. Using "alternate" makes me think there is
+> another object database somewhere which may be confusing in scenarios
+> where there would only be one.
+
+Yeah, I do get that. On the other hand I don't think it's too much of a
+stretch: the local object directory of one repository is another repo's
+alternate. Furthermore, we already do have the distinction between
+"local" and "non-local" objects, which translates quite well into this
+new naming schema.
+
+> Ultimately I don't want to bikeshed too much on names, but wanted to
+> voice my thoughts. As an alternative to "alternate", maybe we could do
+> `object_source`? :)
+
+If we were picking something more "generic" I'd favor `odb_backend` over
+`object_source`, to be honest. But we have agreed in the previous
+version of this patch series that this isn't the way to go.
+
+So I'm not quite convinced that `object_source` is better, and if we
+were to go this way I'd also rather call it `odb_source`. If others
+agree that `odb_source` is better than `odb_alternate` I'm happy to
+adapt. But until then I'd rather leave things as-is.
+
+Thanks!
+
+Patrick
