@@ -1,163 +1,117 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB16528EB
-	for <git@vger.kernel.org>; Mon, 26 May 2025 13:59:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A68920DD40
+	for <git@vger.kernel.org>; Mon, 26 May 2025 14:01:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748267986; cv=none; b=gqwHzggw2jKm3GIsHgDfPn07XTKSaYY76VpLNnAvMjTZdzChWebDR+qmWxj3uU0d4XIQTyba/0PrNJJWSTMWJmUTu6cj4NUbgFkSpY416vJ9JO6/zuekZ0QggYOQ0bczwK1wQvl2B7qrAnFLIjvqIx0+ZJR3d1hbAuL7mJpknfs=
+	t=1748268069; cv=none; b=M5kBp4NJT0uc977UIrqPm5R6SztRKwNHzcJw4cWpi7fk54SU3SHxlqmsPpdjy28ArEcFpILkjVgFSg3rm8DSNhgrV7XHhTnUj98wsVuZuveyf+6iMeYC2fG0XNC4Zhsgv80J//94mB/acHndWKp6VyJca5ja7MilgaFVFUjGHmU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748267986; c=relaxed/simple;
-	bh=G6gkfXWz1yPyh0dH9C3Xkmf2L+VnL00FkWd1rLncr1E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=u2Neyj0IiBSJ4Q0YfmPnrBO8qGYT/SMBBlcVlOjeqQSeXV3VY0wB5xaQe9UBolbdMsL3p3sjPLwR2d8UybExMurr0tWin6l7iYKUInAW4qh1i3//qL7PhjGL9NBoIyKBrdPecGmzVTgALnEcCE+rH6DCs1sYhgrQ69xwu0KYgI8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fGnCOECB; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BzcX9SkM; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748268069; c=relaxed/simple;
+	bh=vmqOWkKPyAPvinOcat/W0KG3TLwI+vS0nEtGc1qmsU0=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=ds6fNstxUtUn1Gt9qvAUyDL5QUkZYH4ap5bN6azvVY+zkOvTKnutKxFVqLBMFtrhEfCdeH1DaOtXE0WMLB3f8iE80W/Kt8QjhUH4Y4ToZ4UQ/HTgnsqgZSjJkbtqpzYxn2v8PIkxxEOhQnlI/SioY8pYAe1H88PkdS8Srztci9c=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTGeEwkr; arc=none smtp.client-ip=209.85.218.48
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fGnCOECB";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BzcX9SkM"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A7B9E1140183;
-	Mon, 26 May 2025 09:59:43 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 26 May 2025 09:59:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748267983;
-	 x=1748354383; bh=8SI1zeyChLDP1HpIeebuabK3hkd8cJNtpvlBsyiG8hg=; b=
-	fGnCOECBxtzfgdF/TdG1Z4X681hx7240xTHSiIUuBwUfiOfs3BSkSPMv+dttKBRu
-	0nyeMBUZl1jImpsPPA5zBf6pOglm/b3IJMYgRWylk3W0qhNZKCS+D8/1GBGBnaIn
-	LMNBqutjRJmuVlQABWtJzMpNi9rwk4Q+o/Y/GZt9TdKu0kNWZUWoyPXSABiRvF7w
-	i0ZNXG0PkUZB/AbGlFi5YdtApRNn1tefNxkjA5Om+mWCqnRfhxmT1XObUbpoBTho
-	5NCJ2UxSf9tHkGUup4Kzj+slFUcwkSPQtgyCXcod54XLZc26uUlKJyA/cq1ow/Za
-	M0tsCw8rXrV7yETUr14tFg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748267983; x=
-	1748354383; bh=8SI1zeyChLDP1HpIeebuabK3hkd8cJNtpvlBsyiG8hg=; b=B
-	zcX9SkMyn5PELXjfn8Tv4m6odbimsXTGG+4beRrkkUlerS5qDqI8rPlniKSZj3vF
-	uSKc1ztxeqATSOuE8cW2KTtsXR+rUYVjN2LM9J2V/ZbaULoUZleqiRU0jBfWZWzG
-	eZ7sP09cQdEwzxlcHnKq+AvN/JGxvonxlxmS9nbBHsRu161cfbXKYBXtqfBpf4Gi
-	qFv5ggDnbWj0wtjEvuBK4H3ic7i1OPq+m9zYxde19+q9DiuPArd/o7MJG6lzLTKZ
-	RiMDiTNrDPcBQpyGxXfomIoWmPlsd/6XrRVSFaXTU5qFy35HLnSM000SPkWVRzfo
-	rXdrHCn1+pjueRxpwx+tw==
-X-ME-Sender: <xms:z3M0aFL2Nt-QG9KMRAE3YVp7q_Dq4N_IQ-QnshoLLeNMIF0exV3Oew>
-    <xme:z3M0aBKpQuP4dCqycI99G5L1NeJbLNeyn-wRo6pdRxs-2lTlFYjzf018hEjpv79oi
-    sspcgLMha4-S-HPfA>
-X-ME-Received: <xmr:z3M0aNuAQBeTzX1kr5yzsToxoC6xZ49pYxwPlHchq2rwgAuzNA3YoqFae8pfX2GZjSWnOpcqtJKtfuPEy_Mp5LHO6VrHQvXypbgU_Bd1xsEWzg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeejtdculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
-    gggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
-    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnheptedtueetfeeutdei
-    vdegvefgtdehjeejieekfffhleefieehudfhkeekkeevtdevnecuffhomhgrihhnpehgnh
-    hurdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhho
-    mhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhouggvpehsmhhtphhouh
-    htpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthht
-    ohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhn
-    vghsrdhplhhushdrtghomh
-X-ME-Proxy: <xmx:z3M0aGYLA9MyxLBWkXZGoB5BzZJ-iD6m-_fhiASVjvOF-fR5AlAPTw>
-    <xmx:z3M0aMZC1cYfpHTtL-cnJNcCNcwa2zq-A0qiVzHK9T7Kh8jvWuTCAg>
-    <xmx:z3M0aKDuOQaSkdw0X94Xft0dfg74e6Ws3hgRKQYIjF3zV34IRSbkrQ>
-    <xmx:z3M0aKbrK-FoICiF4WyDTIct5_51wQsnEFpmDsYHlqMs4nj6YBq9nQ>
-    <xmx:z3M0aFhaF8m7-3ARc_E6k-ANbSn2EGZcsqs2c7mc9WmXLMP0SPobeB9J>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 May 2025 09:59:42 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 46e50136 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 26 May 2025 13:59:40 +0000 (UTC)
-Date: Mon, 26 May 2025 15:59:39 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Eli Schwartz <eschwartz@gentoo.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
-Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
-Message-ID: <aDRzy37ZbH9_Qo5B@pks.im>
-References: <aC2xp4Cdb0j6OX-G@pks.im>
- <xmqqcyc2aqy7.fsf@gitster.g>
- <xmqqfrgx8xkw.fsf@gitster.g>
- <aDBH7G-oKKxAXWBp@pks.im>
- <aDCNqRAoGygwnAbq@pks.im>
- <xmqqo6vjz5cn.fsf@gitster.g>
- <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
- <xmqqwma7w29o.fsf@gitster.g>
- <aDRiLdUCEVQHq26z@pks.im>
- <4c06724e-f6dd-46b2-9955-57501f8a4e0c@gentoo.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTGeEwkr"
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ad574992fcaso432120266b.1
+        for <git@vger.kernel.org>; Mon, 26 May 2025 07:01:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748268066; x=1748872866; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=5nnX6HF5FDW5bfd8/1at8hNrjEhYkjYdnKMC3LVaOtk=;
+        b=XTGeEwkrv9zckz6onShtJ1yMvAYUoZfV60QrMQ2HBugiYBtznnNO6nKVGHKvsuEeXq
+         at13+QAXecYbOxFckDkPo4ImZmlAmrq8iA47Nqih29HtcnAUjGtpTAfokd9jrj2nwcXp
+         hMB6P9GujMxsFwtR/mM800fbFkej54AxEsXXWHEAFGMjqiLO2qzbMD63b43jW6zGdW03
+         irajNBOnnBfV2MjWTxNL5P6468mwNhqgPlo512+7KlY/30vjDyhusWPZrtvXPkmLlJSt
+         /gjIhE7N4IlZMUAYGnQKKH7qNfoQnd4cT5/4/d7BSlwb4GEBMsrjYlSZ3jltA4Wcav6b
+         5DGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748268066; x=1748872866;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=5nnX6HF5FDW5bfd8/1at8hNrjEhYkjYdnKMC3LVaOtk=;
+        b=r9PQrciW91WvA0TQl8xdXWNgV2AZamDERzSgKyl/6O5ZK+WzhV1dXhJ0RfRpf69HA+
+         mNwKv+suQJHdSYfc/pFTaLukT2a+a8yZ5x+De4HNin2jX49COCyYjV2qZuGJloavovTc
+         s2vmyT2RUSn1foVvQgZE79DIrVdOL/20LyGB8jIuySbTgEyjKPEQu+q7JpxyqCl3Snbd
+         rMgrfWpZ7NEa2IjaeYmTuMB8wBI9iyF9VTbFdSsFYIi/8rSK5Q0KKS770PzDDs7Oiw77
+         Sg1gEY3JOTzw5TnqyL0yNSqAgNS7xuBr1g7Yy9oNzW5lEujeWlvPTZUDKsch/8dEyyxQ
+         XHoQ==
+X-Forwarded-Encrypted: i=1; AJvYcCV414pm/OXiUb75/DYM60XhZbhbJD8Hd2AHyEiJWPKZRhyDZaGdxisfrkECaKZGBHkjSmk=@vger.kernel.org
+X-Gm-Message-State: AOJu0YwU9FAqU3WehXwYYuoI9/Zrm9rVLpzkecU4QMjeygxeT3CGq6eU
+	bWLlqt9Sj7k6rjSWSBp1IF3I3oNgteG4tlb3rW0h4raqbcD98iFl1D76
+X-Gm-Gg: ASbGnctNQHjliTA44BDzDWTjzzWn56+pR5OyQ1FUxpNwVl227y6nwsWpwQWtkSYE6w2
+	sO2ObCOwzcrk5TeAzmkmqdAoqoBgRJUbpxpc4Ot4oG+k6gJuBYanXFZ8yVdybs+oABZPxm5pFXq
+	+3qvPbAKJ1J8i7wQ+yfRMU9cf1moEDNmq7U6u5XdscOy8CcEfG1sJauPrlqWq9ubiAVKANt3PJL
+	DBsnDfNeGJM548oFFGMZh1Y+VG6DPoB0Rw1p3pfd6HGi55BD0vs8jOR+jI3Tub6i5OJzhVlMeVj
+	oa11vWsby5s3vPcTGgDbTD3zbLiRul9Lp5ynG1h6P6JYzPyBhrWxrBexocnfRygWRol6Lk+2HgS
+	MICN1+AOuJBcBrLhBWYbAP98+yHw=
+X-Google-Smtp-Source: AGHT+IFLmn9x+dlDHA4A9LDMBykdS/w1Xm0Pfaw7AwL8uw4tI6rS00bj+AIkGl1EEmTEy7nUztFWMA==
+X-Received: by 2002:a17:907:7ea3:b0:ac2:a50a:51ad with SMTP id a640c23a62f3a-ad85b0d1dcemr857200966b.14.1748268065321;
+        Mon, 26 May 2025 07:01:05 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d490910sm1694223066b.135.2025.05.26.07.01.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 May 2025 07:01:04 -0700 (PDT)
+Message-ID: <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
+Date: Mon, 26 May 2025 15:01:04 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4c06724e-f6dd-46b2-9955-57501f8a4e0c@gentoo.org>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
+References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, May 26, 2025 at 09:54:40AM -0400, Eli Schwartz wrote:
-> On 5/26/25 8:44 AM, Patrick Steinhardt wrote:
-> > On Fri, May 23, 2025 at 12:33:23PM -0700, Junio C Hamano wrote:
-> >> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
-> >>
-> >>> Question: should meson (or indeed prove) fail the test because of an
-> >>> unexpected _pass_?
-> >>
-> >> Yes, it is a very good question.  I do not mind if the answer is "it
-> >> should, and the make and prove shouldn't let unexpected pass go
-> >> unnoticed".  The difference between the build systems bothers me
-> > 
-> > Indeed, a good question. The TAP specification [1] has this to say:
-> > 
-> >     Should a todo test point begin succeeding, the harness may report it
-> >     in some way that indicates that whatever was supposed to be done has
-> >     been, and it should be promoted to a normal Test Point.
-> > 
-> >     Harnesses must not treat failing TODO test points as a test failure.
-> > 
-> >     Harneses should report TODO test points found as a list of items
-> >     needing work, if that is appropriate for their use case.
-> > 
-> > So if my reading of this is correct then Meson isn't wrong in reporting
-> > this as an error -- "in some way" basically gives it full permission to
-> > do so. So this is plain old undefined behaviour we rely on :/
-> 
-> 
-> I don't see how you can possibly compare this to UB. It is a documented
-> variant behavior and thus "implementation-defined", not "undefined".
+Hi Kristoffer
 
-Fair enough, "implementation-defined" is the better way to put it.
+On 24/05/2025 22:35, kristofferhaugsbakk@fastmail.com wrote:
+> 
+> diff --git a/builtin/notes.c b/builtin/notes.c
+> index a3f433ca4c0..ca4782eca19 100644
+> --- a/builtin/notes.c
+> +++ b/builtin/notes.c
+> @@ -180,6 +180,8 @@ static void write_commented_object(int fd, const struct object_id *object)
+>   	if (strbuf_read(&buf, show.out, 0) < 0)
+>   		die_errno(_("could not read 'show' output"));
+>   	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
+> +	/* strip trailing whitespace introduced by blank lines */
+> +	strbuf_stripspace(&cbuf, NULL);
 
-> Also,
-> 
-> https://www.gnu.org/software/automake/manual/automake.html#Generalities-about-Testing
-> 
-> """
-> It’s not uncommon, especially during early development stages, that some
-> tests fail for known reasons, and that the developer doesn’t want to
-> tackle these failures immediately (this is especially true when the
-> failing tests deal with corner cases). In this situation, the better
-> policy is to declare that each of those failures is an expected failure
-> (or xfail). In case a test that is expected to fail ends up passing
-> instead, many testing environments will flag the result as a special
-> kind of failure called unexpected pass (or xpass).
-> """
-> 
-> > I don't think it's inherently a bad thing to fail on unexpected passes.
-> > After all, it shows that our assumption that the test fails is broken,
-> > and that we should have a look why that is. But I can see arguments both
-> > ways.
-> 
-> As Phillip noted, treating them as ordinary passes undermines the reason
-> for having them.
+It doesn't make any difference at the moment but I'd be happier if we 
+stripped the trailing space from the commit message before commenting it 
+out. That way we know we are only stripping space from the indented 
+lines produced by "git show". If in the future this function were to 
+start appending the commented log message to a buffer passed in by the 
+caller rather than a file passed by the caller we wont mess up the rest 
+of the buffer content.
 
-Yup, and I tend to agree.
+>   	write_or_die(fd, cbuf.buf, cbuf.len);
+ > [...]> +test_expect_success 'git notes add has no trailing whitespace 
+in the editor template' '
+> +	test_commit --signoff 23rd &&
+> +	GIT_EDITOR="cat >actual" git notes add &&
+> +	test_grep ! " $" actual
 
-Patrick
+Should that be " \$"? What you've got seems to work with dash but I'm 
+not sure if it is POSIX compliant or not.
+
+Best Wishes
+
+Phillip
