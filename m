@@ -1,128 +1,104 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f47.google.com (mail-ed1-f47.google.com [209.85.208.47])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E0F7483
-	for <git@vger.kernel.org>; Mon, 26 May 2025 13:23:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42CCD76410
+	for <git@vger.kernel.org>; Mon, 26 May 2025 13:31:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748265792; cv=none; b=ld0ErjqIHpQ7g1fQD6DY99scHXo+PekpsNATNZQNy2s/tTdzYlUIPdOEgI1vRGAGAqR8FzrcexC3s5N1/I+NAd8zi6lIxNVBxu//Rf92s4Rq771bry7OuMevZenRafugCy8hkJ5U1lNHbRSOQaF0yJNrHK8nzn+WX2DFKMzqkWo=
+	t=1748266315; cv=none; b=Bgz9bpTd4cCtqy53OgITWS0TCfODyWVeKIzV3zFQtKDeE+UsBte9aGwZyRqbXKQG3JqPi/M3B7Y6gCgkTCZIvczFzVZFcn8wXzUrYVnhIZO+9a0DsAF3t1oK1aOHFl46WZ5QSas3Esw/KZWtdz+M5ALDdpaW7q/4nQ/a0L9euqk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748265792; c=relaxed/simple;
-	bh=D3HzVlGqVCHkJjFMUH/i5AC18OBjPYWwPus2KWjg1og=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=puMLyObFs7UQhReXdMlReBQFHs1J20r5LNOhcyHyKQJE4OTAKCzJFt01PlI5Kky/KdnaK89ITr2Jm8AY9daZyWz1SJoBWqF7SkxdjY0Oi0/28UtiSo2d8xmplmqj6s9e6PvuC/BYRrv4wmJf9AOCVImyYAuHJe+/7usrOePh9E0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OGWui3Im; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=oDAyhGa4; arc=none smtp.client-ip=103.168.172.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748266315; c=relaxed/simple;
+	bh=FX7kAlNgKcfWqgm4jW98d3kfQ2pZ9ImOSdStLPs/Eq4=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=Nvh8Tw+u7eINynCUifxl2psDE4oAJDTPDgTq8MJ+QsqLAEHUn+EjMnP2MkD0JgABfqVvISg9pIbeTvMSYuA8p02RK8bz+YBI9WdeWPMp33RcmlbsxTbLrau25SGPDoe+Abg4yNR7emHbRsxjX9r/Qcw+RYb+57AmC/Yx/f9mbb8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cBT9CmCY; arc=none smtp.client-ip=209.85.208.47
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OGWui3Im";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="oDAyhGa4"
-Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 224BE114015C;
-	Mon, 26 May 2025 09:23:10 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-10.internal (MEProxy); Mon, 26 May 2025 09:23:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748265790; x=1748352190; bh=mbg/RhoHx7
-	L2owRu/Cmv7x6De6AZF9GknwHqN57bae0=; b=OGWui3ImzMzIQVEYa8k0QMfGpU
-	wS45dehLRt1FizD2bp639xpTFtYbYZlCYvweqnMrwo8ptUyN5NKq20OV9P2wAah1
-	BCDNtBbHi0h7rBtFJVfs/E1cD3HQA02pLwDykySnh0y1/tZ1tlZnElH5+uySaBPp
-	lOKHC24uK0qZaAIoFvX9p0K0WZbNYP/3MGUFPC8EAKAsjYhLuloDhVvO8xT28NAy
-	GHULVJZBooycYLyDfDLnGz+AIU9o9spfjV4zx0VpqZx5N/Nr2Y9acUt2TpK1V4LC
-	vv+O1qxvRpFzzm7wEFrwbsIGOXHxS7JwbJUMbi7067FCLB44Na8Q24jE2jng==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748265790; x=1748352190; bh=mbg/RhoHx7L2owRu/Cmv7x6De6AZF9GknwH
-	qN57bae0=; b=oDAyhGa4V/mXn19g1bpSibvHmPj62vLbH731XJAv86OTuXo0iIU
-	0BWdkXRdDDk79UwPRLgSNlDvd7E8La096YaqC27R+9Eosja/buDN4WtHRu+a3/iI
-	GKs0zUPmA5UbFH4Hq3yBobr/93m8v2iPIGq4E9BylOwwfsXkVrmJPUfoUKE4tzXI
-	/nr1GGzkyZnBULhZV9Scr0xsFjsVVWmYEVt43dbUGU+xJM7pZuH4LhPx6jMPlquf
-	uMNfhy0d2Bx5cBeohjacEr428MmtOSv132/QLmk/sNUvCR53cy0K5MoXd3IEt8WP
-	nUmGCn8CwYvRgVv8VHpe2/bWLegJK+a6fCQ==
-X-ME-Sender: <xms:PWs0aP7h4id2jDcZHxwFn4JpjBrwhxxaqXZqEhDb2nc-pZMdjlpeJw>
-    <xme:PWs0aE6JwrQFUKPWgsobtAFu2Bbucts986EXmRJV7Z47cTJAIGhTWzg0_3Y5nvbAy
-    ioz5hcBJE-TfWNlmg>
-X-ME-Received: <xmr:PWs0aGfieO0tKJ-WbLRosqeW1WR7OopQnuePPttq-XvxdOg9O8Q6DrJezxMd90lDsxMILoZHnqgA0szKF0ic1uAqbtvnyKPwZjpDeR5-4NCOjA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeeifeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
-    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
-    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
-    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
-    phhtthhopedvpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopeihrhhothhhsehprg
-    hlohgrlhhtohhnvghtfihorhhkshdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdr
-    khgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:PWs0aAJcuAWL-Fqh36BENpRuvyN9EEIhLtao4HLVpMzCxeGV2wjWDQ>
-    <xmx:PWs0aDK9RNz5eRQAVcH4rwW88PQuj5wHve1fj7Uo32eb5yaedaIuCg>
-    <xmx:PWs0aJwWPtLsXkWYBG_XVaM5mn7_D9vhKQPisdV4C30IAEqWBQVh2A>
-    <xmx:PWs0aPJZLd-lioumkUeZRgkGygs3VfWa3MWTE0WkYsdxMaBxW1-zaA>
-    <xmx:Pms0aOehJIqz1m8eH2j4SXRAUvH5R528cQIjF21LmNXDuMcmvwq3c4dg>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 26 May 2025 09:23:09 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id c89ad1df (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 26 May 2025 13:23:08 +0000 (UTC)
-Date: Mon, 26 May 2025 15:23:07 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Yonatan Roth <yroth@paloaltonetworks.com>
-Cc: git@vger.kernel.org
-Subject: Re: ISSUE - Sequential execution failure - Lock auto created between
- git commands
-Message-ID: <aDRrO4x0o0Hit6au@pks.im>
-References: <CAJR-fbZ4X1+gN75m2dUvocR6NkowLOZ9F26cjBy8w1qd181OoQ@mail.gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cBT9CmCY"
+Received: by mail-ed1-f47.google.com with SMTP id 4fb4d7f45d1cf-60477f1a044so1730596a12.0
+        for <git@vger.kernel.org>; Mon, 26 May 2025 06:31:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748266312; x=1748871112; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=/SPb2VJlV6Re6EWseqZdkz9TWfm+ovfMsR/AmijPuUg=;
+        b=cBT9CmCYbPBv2YelNd0kMlDSqzKFAj1Na/smaifi1TobXMV+vrdPRiR6YCvkPdxhyS
+         liqAiJQztnaBDzUuA9IT1rQBcUHGldlZrnCCEvxzWal0axYbtHB3Fr/HGmaml7n6ewHq
+         mQ6ny+Zmd9FgNo0wc+fsky5lNhJDFWCAk8Fqa2TbRaby4RUuNStv02DbpbhAOhaeZGXq
+         xZHnRq+IyFUCZ6ElFBL/RE6uTr41lcE686++ILSoDcG3sJ8FMzasAKMYdCo8fU7OJuVP
+         CeHan0CE6/1FMMD6q6gKbwGWZ5OC4h7LtYtsscRFX6WkZYq9vtdD1uRanYexcJiTB3i/
+         Ks6w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748266312; x=1748871112;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=/SPb2VJlV6Re6EWseqZdkz9TWfm+ovfMsR/AmijPuUg=;
+        b=OujO6ZKnOiRnHRQTMFE1CfN8e/lF4TvAv5yemsQCEWI7QTECpYJ8ILiDOYhgSWRmyl
+         41890yUc4o79i8DAsCr1l2zHidsI3I9LHbKn1Ek0a2pQXGz6Ay/BYgcbYL27wJ/NcGAf
+         N1hwfbFgAe1yToL/o3lQIeb8gs7/Y0YgoU04iJkUS9B8Vr6JhVfpG5QB9baDsws2TEpv
+         4cW/myNLLcexgLTSszMK0Uc9Qsltg4/bZEs6jZJiVl5z21ce+XyFjAUze5zrEG7DNMt2
+         htr0lpUXQxTmt6UVh+ZEgZSFFFJJElD+9l3q6URq2Ns+z2xTmkeR6JPm2aBIuxY2CKWW
+         ryYA==
+X-Forwarded-Encrypted: i=1; AJvYcCWlaj3SGGQrEiMGtUiyklui1OirZtUMVw2ll9nDFbvJ8/4cz9XwWF7RNzHkRMWUWPZR4VM=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yw9WBOc9M38Jdp0zE1g+MOR0jYM4ELfDa8VIMwCrEJ/AythFybj
+	pl04SFCebBMBLdt4Z4aK9e9rxWbq2qkWTcqYFcQkSvccw7s9HXFJy4tr
+X-Gm-Gg: ASbGncvzP+MNb0TJnvqICdUGlf0EELTTKMBC7geVHrDoPC8E9wCz+GVC/CZN5YQgnWw
+	ctaTwcyL5jxiPMsN1sVJ1PQ4n9mSJoleacOEXqP/Axss4W8WaL9H11Q75e0RAzJqkc8FtY7Xwn7
+	tNljxLGeeSlMSeXGxSK1skljdpAyydnk8KUOl73gWnqnkcReIxzpXCjAuoLuTzj1fXhmvH4gDX/
+	U6t/RwbF05q3hE0pIQ4cVsi5IpMpZ9ErHrrdTJF4b0q91RpN1IFpkRiuv4dmaPqWP3spKHQ63an
+	vwQqQm4j3MsCV9OMI3xjOgqUD6IZyIjjx+nUaeYfx/8zHEPNBmyq0IlD6ddBZcSOs2/vJk4Y9uX
+	Hyi7+ALKWODbbO79ew1twU0bSiP0=
+X-Google-Smtp-Source: AGHT+IFSHvK+MtQl51cBPhTVs4L+LikXWGuZ6waW9Mr8SvGxfH9fnfNmuRL6DpgRiATRfA6dSdYfsg==
+X-Received: by 2002:a17:907:3da7:b0:ad5:9ff4:62e6 with SMTP id a640c23a62f3a-ad85b0d6281mr728344666b.23.1748266312269;
+        Mon, 26 May 2025 06:31:52 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d06ad94sm1685163166b.38.2025.05.26.06.31.51
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 26 May 2025 06:31:51 -0700 (PDT)
+Message-ID: <74c03ad4-b132-4cad-b65d-821324380343@gmail.com>
+Date: Mon, 26 May 2025 14:31:35 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAJR-fbZ4X1+gN75m2dUvocR6NkowLOZ9F26cjBy8w1qd181OoQ@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+ Eli Schwartz <eschwartz@gentoo.org>
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
+ <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
+ <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+ <xmqqwma7w29o.fsf@gitster.g> <aDRiLdUCEVQHq26z@pks.im>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <aDRiLdUCEVQHq26z@pks.im>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Sun, May 25, 2025 at 05:13:30PM +0300, Yonatan Roth wrote:
-> Hi,
+On 26/05/2025 13:44, Patrick Steinhardt wrote:
 > 
-> 
-> Using a script we run the following set of git commands:
-> 
-> git branch -a
-> 
-> git remote -v
-> 
-> git stash push --all --include-untracked
-> 
-> git checkout test_git_ver
-> 
-> git remote -v
-> 
-> git fetch
-> 
-> git status --branch --porcelain=v1 -u
-> 
-> git checkout test_git_ver_workspace
-> 
-> 
-> 
-> 
-> After upgrading the git version to - *2.47.2*, we started getting the
-> following error:
-> 
-> error: cannot lock ref 'HEAD': Unable to create '.../.git/*HEAD.lock*':
-> File exists.
+> I don't think it's inherently a bad thing to fail on unexpected passes.
+> After all, it shows that our assumption that the test fails is broken,
+> and that we should have a look why that is. But I can see arguments both
+> ways.
 
-This sounds similar to the issue reported in [1], please see my reply
-there. I'll send a patch series the over the next days to address the
-issue.
+Personally I'd be very happy if our test suite failed on an unexpected 
+pass. Currently it is easy to miss, especially if the unexpected pass 
+occurs in a CI run. Missing an unexpected pass means we don't change 
+'test_expect_failure' to 'test_expect_pass' and a future regression that 
+causes the test to fail again will go unnoticed.
 
-Patrick
+Best Wishes
 
-[1]: <CANi7bVAkNc+gY1NoXfJuDRjxjZLTgL8Lfn8_ZmWsvLAoiLPkNg@mail.gmail.com>
+Phillip
+
