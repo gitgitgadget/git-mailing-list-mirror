@@ -1,117 +1,130 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A68920DD40
-	for <git@vger.kernel.org>; Mon, 26 May 2025 14:01:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B67A433AC
+	for <git@vger.kernel.org>; Mon, 26 May 2025 14:01:54 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748268069; cv=none; b=M5kBp4NJT0uc977UIrqPm5R6SztRKwNHzcJw4cWpi7fk54SU3SHxlqmsPpdjy28ArEcFpILkjVgFSg3rm8DSNhgrV7XHhTnUj98wsVuZuveyf+6iMeYC2fG0XNC4Zhsgv80J//94mB/acHndWKp6VyJca5ja7MilgaFVFUjGHmU=
+	t=1748268115; cv=none; b=cygQTOiO8l8CJHpMPsOC5GmhgvfNJtfh1e3JC4QMeld1IRr6INUp4iwNMLSpzX2hMTxwKhFcqKYvXaQKlXyeuVIxbtHY6KAFUJntwVH3LNJwPhqhbZLczvnkuazBB/+4dI87dkC8zBR08xyEh31hEFTU7O/JBcuGcKUUHifUe7I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748268069; c=relaxed/simple;
-	bh=vmqOWkKPyAPvinOcat/W0KG3TLwI+vS0nEtGc1qmsU0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=ds6fNstxUtUn1Gt9qvAUyDL5QUkZYH4ap5bN6azvVY+zkOvTKnutKxFVqLBMFtrhEfCdeH1DaOtXE0WMLB3f8iE80W/Kt8QjhUH4Y4ToZ4UQ/HTgnsqgZSjJkbtqpzYxn2v8PIkxxEOhQnlI/SioY8pYAe1H88PkdS8Srztci9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=XTGeEwkr; arc=none smtp.client-ip=209.85.218.48
+	s=arc-20240116; t=1748268115; c=relaxed/simple;
+	bh=z3U9mBBaV2PBgeoNYidjHDx4DN3fFPYGNBziWZpEOBM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=L9QfvPQjYEHMgamLe5kWkvZuyIYXryiAP49+a/qRlg3XT1oUBq3eIo0GUQIs2TXowKlAba0lFwo7HJb+5iF2fDgGFsUexf86Ang0tnEa4Piy6j2zjiRUA1W/yLRSC3c0g5A8dTN4o+bnCZKLrsRcFCiUTAzp38AKmI+blDZIsSY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPqUZltc; arc=none smtp.client-ip=209.85.210.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="XTGeEwkr"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ad574992fcaso432120266b.1
-        for <git@vger.kernel.org>; Mon, 26 May 2025 07:01:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPqUZltc"
+Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-742af84818cso1336998b3a.1
+        for <git@vger.kernel.org>; Mon, 26 May 2025 07:01:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748268066; x=1748872866; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=5nnX6HF5FDW5bfd8/1at8hNrjEhYkjYdnKMC3LVaOtk=;
-        b=XTGeEwkrv9zckz6onShtJ1yMvAYUoZfV60QrMQ2HBugiYBtznnNO6nKVGHKvsuEeXq
-         at13+QAXecYbOxFckDkPo4ImZmlAmrq8iA47Nqih29HtcnAUjGtpTAfokd9jrj2nwcXp
-         hMB6P9GujMxsFwtR/mM800fbFkej54AxEsXXWHEAFGMjqiLO2qzbMD63b43jW6zGdW03
-         irajNBOnnBfV2MjWTxNL5P6468mwNhqgPlo512+7KlY/30vjDyhusWPZrtvXPkmLlJSt
-         /gjIhE7N4IlZMUAYGnQKKH7qNfoQnd4cT5/4/d7BSlwb4GEBMsrjYlSZ3jltA4Wcav6b
-         5DGg==
+        d=gmail.com; s=20230601; t=1748268114; x=1748872914; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=w3DVayddKESmzGGtRIb8oNnXhCqPed0dGJpIjDs5Mk0=;
+        b=GPqUZltceXif8Oj7dNeHmPcvRo7wabTciMG3sX825KzZi/9RMf5oQ3C5Yc6AqxWz/k
+         Sv7v8jWj2biSbTkW7D8WJOVqf6uuDvH8+OJ/UXHN3vkLphI3EeWSFjWU0AoGKPfZnEtb
+         DNIjNo/YRJKrS76GvVkm5VD+SQfMzFrhirWxadUdO5hd9GEvBwihPO9IpETBbm+hWVDz
+         4M4aiC+H7dK7iMH9yeA8BVO05eu2898URzImgurDQuMGToEqPC+VOvL5pq0B5OWxMl7j
+         Izq/AuxQ8jI514JtL2KHEPfEZt0DqO9ZyThyBWxlmR0lqeR7xsg/E6a0u2cmVXNTM9db
+         NQrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748268066; x=1748872866;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=5nnX6HF5FDW5bfd8/1at8hNrjEhYkjYdnKMC3LVaOtk=;
-        b=r9PQrciW91WvA0TQl8xdXWNgV2AZamDERzSgKyl/6O5ZK+WzhV1dXhJ0RfRpf69HA+
-         mNwKv+suQJHdSYfc/pFTaLukT2a+a8yZ5x+De4HNin2jX49COCyYjV2qZuGJloavovTc
-         s2vmyT2RUSn1foVvQgZE79DIrVdOL/20LyGB8jIuySbTgEyjKPEQu+q7JpxyqCl3Snbd
-         rMgrfWpZ7NEa2IjaeYmTuMB8wBI9iyF9VTbFdSsFYIi/8rSK5Q0KKS770PzDDs7Oiw77
-         Sg1gEY3JOTzw5TnqyL0yNSqAgNS7xuBr1g7Yy9oNzW5lEujeWlvPTZUDKsch/8dEyyxQ
-         XHoQ==
-X-Forwarded-Encrypted: i=1; AJvYcCV414pm/OXiUb75/DYM60XhZbhbJD8Hd2AHyEiJWPKZRhyDZaGdxisfrkECaKZGBHkjSmk=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwU9FAqU3WehXwYYuoI9/Zrm9rVLpzkecU4QMjeygxeT3CGq6eU
-	bWLlqt9Sj7k6rjSWSBp1IF3I3oNgteG4tlb3rW0h4raqbcD98iFl1D76
-X-Gm-Gg: ASbGnctNQHjliTA44BDzDWTjzzWn56+pR5OyQ1FUxpNwVl227y6nwsWpwQWtkSYE6w2
-	sO2ObCOwzcrk5TeAzmkmqdAoqoBgRJUbpxpc4Ot4oG+k6gJuBYanXFZ8yVdybs+oABZPxm5pFXq
-	+3qvPbAKJ1J8i7wQ+yfRMU9cf1moEDNmq7U6u5XdscOy8CcEfG1sJauPrlqWq9ubiAVKANt3PJL
-	DBsnDfNeGJM548oFFGMZh1Y+VG6DPoB0Rw1p3pfd6HGi55BD0vs8jOR+jI3Tub6i5OJzhVlMeVj
-	oa11vWsby5s3vPcTGgDbTD3zbLiRul9Lp5ynG1h6P6JYzPyBhrWxrBexocnfRygWRol6Lk+2HgS
-	MICN1+AOuJBcBrLhBWYbAP98+yHw=
-X-Google-Smtp-Source: AGHT+IFLmn9x+dlDHA4A9LDMBykdS/w1Xm0Pfaw7AwL8uw4tI6rS00bj+AIkGl1EEmTEy7nUztFWMA==
-X-Received: by 2002:a17:907:7ea3:b0:ac2:a50a:51ad with SMTP id a640c23a62f3a-ad85b0d1dcemr857200966b.14.1748268065321;
-        Mon, 26 May 2025 07:01:05 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad52d490910sm1694223066b.135.2025.05.26.07.01.04
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 May 2025 07:01:04 -0700 (PDT)
-Message-ID: <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
-Date: Mon, 26 May 2025 15:01:04 +0100
+        d=1e100.net; s=20230601; t=1748268114; x=1748872914;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=w3DVayddKESmzGGtRIb8oNnXhCqPed0dGJpIjDs5Mk0=;
+        b=AmSlDGjiCm3nOZWe9IdZ58acGgGn8arU9eR4R1j1J7yeUD2V434np/GhfAQC3NwQML
+         x+QdoDltG9ER0CETnjyX7f03FcUmv+dng9+3pBKpP6PZX5YE9kD1noG6lvqPCmberTcZ
+         DjWzOehp9vdL7GsbZXkMgULjHNmPbzTxsopCEZ6fEF6RpHKkNXCzBpIn9hJFATNMa+QO
+         KbL52H81gMSgbSURRAszfWB8UXDkwzsxCC4Lf1HhDKgWzB5K/bigYrF1ZosN6T5hKgyL
+         mzknPG0Q9c70V7GRHS7s1UehXniUEz9raajpwe1ERDaphh27lrzFynxsdrB1i0JhF1Pw
+         pvXA==
+X-Gm-Message-State: AOJu0YyiRrK2lD7dYqbDcG7t8JnkUifkOHZj1J0D56R8MC/9/WWFfUv5
+	RcDQY2rw+11bsNwBMgV+M+RnM6XncWLiSLTwj7m0HTEJeUcz2uojDsnw
+X-Gm-Gg: ASbGncsU+SUS0fPkamNGdhO+agiyQ7cpKsSxYlYpNClI4Gr4fr9nOx+svNS9Y7cyonX
+	n4J07/2INAJPvBc2iyxJzwH9DVXB7sT1NcPEbMwALjSw3TCXXYHALGTpmAWyfOqXwwbwFX6rbZo
+	c6t7/+ps1spNSdQ8iNcePOW6yMVwmYkg1FHq9y0Qx624quAD1c2eaz/sOmkI+nYXBckgVpdls7w
+	9v/NDz2q4KYpE0QyyNP9ry/FFsBGEUQdv33iL2atuC2VkbdYzbtrTcQTBoiCQ5sBpYMNeHnWwtS
+	56wJNsZbm2ImavC99QLPjJeOET8/mVOP8jhsvoFA6yRxcak=
+X-Google-Smtp-Source: AGHT+IGc9//tMTyaKx8W4i7+IDrZgeCqkd2QuC25YhBOCLXNSgZkvrSEJ+kMKbUl80PTcK7g7m5kQg==
+X-Received: by 2002:a05:6a20:4393:b0:1f5:6d00:ba05 with SMTP id adf61e73a8af0-2188c3c6d1amr13258001637.38.1748268113233;
+        Mon, 26 May 2025 07:01:53 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74615cac674sm1400326b3a.153.2025.05.26.07.01.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 May 2025 07:01:52 -0700 (PDT)
+Date: Mon, 26 May 2025 22:01:57 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Jeff King <peff@peff.net>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Patrick Steinhardt <ps@pks.im>
+Subject: Re: [PATCH v2 2/8] string-list: remove unused "insert_at" parameter
+ from add_entry
+Message-ID: <aDR0VS_4n8Io0QYp@ArchLinux>
+References: <aCoDB9P5XV1lHMil@ArchLinux>
+ <aCoDU46MmoGPB60b@ArchLinux>
+ <20250519075119.GE102701@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-To: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>
-References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250519075119.GE102701@coredump.intra.peff.net>
 
-Hi Kristoffer
-
-On 24/05/2025 22:35, kristofferhaugsbakk@fastmail.com wrote:
+On Mon, May 19, 2025 at 03:51:19AM -0400, Jeff King wrote:
+> On Sun, May 18, 2025 at 11:57:07PM +0800, shejialuo wrote:
 > 
-> diff --git a/builtin/notes.c b/builtin/notes.c
-> index a3f433ca4c0..ca4782eca19 100644
-> --- a/builtin/notes.c
-> +++ b/builtin/notes.c
-> @@ -180,6 +180,8 @@ static void write_commented_object(int fd, const struct object_id *object)
->   	if (strbuf_read(&buf, show.out, 0) < 0)
->   		die_errno(_("could not read 'show' output"));
->   	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
-> +	/* strip trailing whitespace introduced by blank lines */
-> +	strbuf_stripspace(&cbuf, NULL);
+> > In "add_entry", we accept "insert_at" parameter which must be either -1
+> > (auto) or between 0 and `list->nr` inclusive. Any other value is
+> > invalid. When caller specify any invalid "insert_at" value, we won't
+> > check the range and move the element, which would definitely cause the
+> > trouble.
+> > 
+> > However, we only use "add_entry" in "string_list_insert" function and we
+> > always pass the "-1" for "insert_at" parameter. So, we never use this
+> > parameter to insert element in a user specified position. Let's delete
+> > this parameter. If there is any requirement later, we need to use a
+> > better way to do this.
+> 
+> We can see from looking at the code that removing this will not change
+> the behavior. But that always makes me wonder why it was there in the
+> first place, and whether we might ever want it.
+> 
 
-It doesn't make any difference at the moment but I'd be happier if we 
-stripped the trailing space from the commit message before commenting it 
-out. That way we know we are only stripping space from the indented 
-lines produced by "git show". If in the future this function were to 
-start appending the commented log message to a buffer passed in by the 
-caller rather than a file passed by the caller we wont mess up the rest 
-of the buffer content.
+Yes, I agree. Actually, in my first implementation, I didn't realise
+that this is redundant. However, when inspecting the code carefully, I
+find out this is useless.
 
->   	write_or_die(fd, cbuf.buf, cbuf.len);
- > [...]> +test_expect_success 'git notes add has no trailing whitespace 
-in the editor template' '
-> +	test_commit --signoff 23rd &&
-> +	GIT_EDITOR="cat >actual" git notes add &&
-> +	test_grep ! " $" actual
+> The answer in this case is that we used to have another function,
+> string_list_insert_at_index(), which used the extra insert_at parameter.
+> The idea being that you could call string_list_find_insert_index(),
+> decide whether there was something already there, and then insert
+> without repeating the binary search.
+> 
+> But you can see in callers like 63226218ba (mailmap: use higher level
+> string list functions, 2014-11-24) that this was not really that useful
+> (in that commit we just try to insert and check the util pointer to see
+> if we need to add the auxiliary structure).
+> 
+> So the function went away in f8c4ab611a (string_list: remove
+> string_list_insert_at_index() from its API, 2014-11-24), and I suspect
+> we won't need it again. (Also, I think these days we'd probably use a
+> strmap instead anyway).
+> 
 
-Should that be " \$"? What you've got seems to work with dash but I'm 
-not sure if it is POSIX compliant or not.
+Thanks for the hint. By seeing this commit, I totally understand the
+history. Because we delete `string_list_insert_at_index`, we simply call
+"add_entry" by specifying "auto" mode and somehow we don't delete the
+legacy check in "add_entry".
 
-Best Wishes
+But I have one question: should I include the information in the commit
+message? I feel doing this would be chaty. But I somehow think we should
+do this.
 
-Phillip
+Thanks,
+Jialuo
