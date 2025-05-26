@@ -1,71 +1,70 @@
-Received: from mail-pf1-f175.google.com (mail-pf1-f175.google.com [209.85.210.175])
+Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B67A433AC
-	for <git@vger.kernel.org>; Mon, 26 May 2025 14:01:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF95A1B87D9
+	for <git@vger.kernel.org>; Mon, 26 May 2025 14:12:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.170
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748268115; cv=none; b=cygQTOiO8l8CJHpMPsOC5GmhgvfNJtfh1e3JC4QMeld1IRr6INUp4iwNMLSpzX2hMTxwKhFcqKYvXaQKlXyeuVIxbtHY6KAFUJntwVH3LNJwPhqhbZLczvnkuazBB/+4dI87dkC8zBR08xyEh31hEFTU7O/JBcuGcKUUHifUe7I=
+	t=1748268780; cv=none; b=rr+JA6cF/13RpfI36JtwhF+ddl5D9XutM7Sm33OItK8IkLE+txrS4g++WqT+PtX3jhxUdQX+E9v/oWUj/JiMrDxxSJqfpmflisLWeD5vdDZDPf+dSTRPJhdeuRzxXaCf7rKE9VYISAjzuXUTDibztYGg6GbUTTC/lM95RZwiwEE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748268115; c=relaxed/simple;
-	bh=z3U9mBBaV2PBgeoNYidjHDx4DN3fFPYGNBziWZpEOBM=;
+	s=arc-20240116; t=1748268780; c=relaxed/simple;
+	bh=XVqnyBfvdzmbDoDXshXePdzI0L+Qq9vGXbkNJGr85CI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=L9QfvPQjYEHMgamLe5kWkvZuyIYXryiAP49+a/qRlg3XT1oUBq3eIo0GUQIs2TXowKlAba0lFwo7HJb+5iF2fDgGFsUexf86Ang0tnEa4Piy6j2zjiRUA1W/yLRSC3c0g5A8dTN4o+bnCZKLrsRcFCiUTAzp38AKmI+blDZIsSY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=GPqUZltc; arc=none smtp.client-ip=209.85.210.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=bGRFamGaZvlgqQLvRMSzuDB6F+Mk24spvkPVB/neR+WYmZbZG1zFeoh3ulq6echvHb/ZiZc5He+sSuoU3XfZfqUKMRTAsdnMeQEbDB2iGp3jhnT9QI5z3ayzOhsUuv56Ia9MoQpzAPsxjGTCSO3Buu6z8o5pwYSQrQf98ri7/jw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=g+IzWn7o; arc=none smtp.client-ip=209.85.215.170
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="GPqUZltc"
-Received: by mail-pf1-f175.google.com with SMTP id d2e1a72fcca58-742af84818cso1336998b3a.1
-        for <git@vger.kernel.org>; Mon, 26 May 2025 07:01:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="g+IzWn7o"
+Received: by mail-pg1-f170.google.com with SMTP id 41be03b00d2f7-b07d607dc83so1359463a12.1
+        for <git@vger.kernel.org>; Mon, 26 May 2025 07:12:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748268114; x=1748872914; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748268778; x=1748873578; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=w3DVayddKESmzGGtRIb8oNnXhCqPed0dGJpIjDs5Mk0=;
-        b=GPqUZltceXif8Oj7dNeHmPcvRo7wabTciMG3sX825KzZi/9RMf5oQ3C5Yc6AqxWz/k
-         Sv7v8jWj2biSbTkW7D8WJOVqf6uuDvH8+OJ/UXHN3vkLphI3EeWSFjWU0AoGKPfZnEtb
-         DNIjNo/YRJKrS76GvVkm5VD+SQfMzFrhirWxadUdO5hd9GEvBwihPO9IpETBbm+hWVDz
-         4M4aiC+H7dK7iMH9yeA8BVO05eu2898URzImgurDQuMGToEqPC+VOvL5pq0B5OWxMl7j
-         Izq/AuxQ8jI514JtL2KHEPfEZt0DqO9ZyThyBWxlmR0lqeR7xsg/E6a0u2cmVXNTM9db
-         NQrQ==
+        bh=jzRMaGtCND9koZkgL3nNbeYy9ZKvvQc8pb28dqadRXU=;
+        b=g+IzWn7oVXgtLoAvY900YTic9y796bIB5YNhtMKPkGJ37qKtLz48IpV1cmORdkcQ7Y
+         PuKtGbV1S7x06K8FCXK0rRJnWT1DOTLQPPPm7/6ZI18t0V5/oqjVDcpkcaSWFu9NpVnJ
+         UoYJ9iIs9pnPo8BRz+qwBEFT2hxAZb7elARpJwudbO30eB07t3uf2xT+bPknfQRFenr0
+         RJ5DA5JD8dlnxmCwPdhgcr4AHOK8w3Zs4UpVshdmnJiI7493O7LftQPr/MqDTI3mzI3F
+         cN0Key3OwEol4sEsxzdcOX1mwNxdN1fHabNLBtwQN1d05MpA7td21UrsTeyYbyJQvarm
+         ZYAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748268114; x=1748872914;
+        d=1e100.net; s=20230601; t=1748268778; x=1748873578;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=w3DVayddKESmzGGtRIb8oNnXhCqPed0dGJpIjDs5Mk0=;
-        b=AmSlDGjiCm3nOZWe9IdZ58acGgGn8arU9eR4R1j1J7yeUD2V434np/GhfAQC3NwQML
-         x+QdoDltG9ER0CETnjyX7f03FcUmv+dng9+3pBKpP6PZX5YE9kD1noG6lvqPCmberTcZ
-         DjWzOehp9vdL7GsbZXkMgULjHNmPbzTxsopCEZ6fEF6RpHKkNXCzBpIn9hJFATNMa+QO
-         KbL52H81gMSgbSURRAszfWB8UXDkwzsxCC4Lf1HhDKgWzB5K/bigYrF1ZosN6T5hKgyL
-         mzknPG0Q9c70V7GRHS7s1UehXniUEz9raajpwe1ERDaphh27lrzFynxsdrB1i0JhF1Pw
-         pvXA==
-X-Gm-Message-State: AOJu0YyiRrK2lD7dYqbDcG7t8JnkUifkOHZj1J0D56R8MC/9/WWFfUv5
-	RcDQY2rw+11bsNwBMgV+M+RnM6XncWLiSLTwj7m0HTEJeUcz2uojDsnw
-X-Gm-Gg: ASbGncsU+SUS0fPkamNGdhO+agiyQ7cpKsSxYlYpNClI4Gr4fr9nOx+svNS9Y7cyonX
-	n4J07/2INAJPvBc2iyxJzwH9DVXB7sT1NcPEbMwALjSw3TCXXYHALGTpmAWyfOqXwwbwFX6rbZo
-	c6t7/+ps1spNSdQ8iNcePOW6yMVwmYkg1FHq9y0Qx624quAD1c2eaz/sOmkI+nYXBckgVpdls7w
-	9v/NDz2q4KYpE0QyyNP9ry/FFsBGEUQdv33iL2atuC2VkbdYzbtrTcQTBoiCQ5sBpYMNeHnWwtS
-	56wJNsZbm2ImavC99QLPjJeOET8/mVOP8jhsvoFA6yRxcak=
-X-Google-Smtp-Source: AGHT+IGc9//tMTyaKx8W4i7+IDrZgeCqkd2QuC25YhBOCLXNSgZkvrSEJ+kMKbUl80PTcK7g7m5kQg==
-X-Received: by 2002:a05:6a20:4393:b0:1f5:6d00:ba05 with SMTP id adf61e73a8af0-2188c3c6d1amr13258001637.38.1748268113233;
-        Mon, 26 May 2025 07:01:53 -0700 (PDT)
+        bh=jzRMaGtCND9koZkgL3nNbeYy9ZKvvQc8pb28dqadRXU=;
+        b=qQfEFoA6usDCj5EpdxxG42FyMq3PntORv1QcYYpPxbfo9iYolkwW+8mELF9hOMMDPB
+         V2UJeh4rnjNUHvDr2Zxske+rfW8tZbCUSdVeQyfxHssmCkzEt3DJuyDvtaJkn8luFac6
+         9kFtRzRnDHSB5PIbQa9x4LnI1cyPtIFUCouhepXIObS6DTIeXMt6SDEcqTGuMyyTA+x0
+         mhbUQeOOijbGp/PBpRAeFjmf0YGRDILAvQM5yjxjt1MZi5h2/x3dkaSyNmz59u1bsIay
+         jUC4QaDDIMH00tq1f7+tjjJsmBG1ZuEUMOY56tBtUQ/7Fd9XaYZjA0wM4CszI0XcrhzR
+         gpBA==
+X-Gm-Message-State: AOJu0YwASJ5knHHw2PwUkPaElf0VJY4zUxtIx8m9sj3k6YdzHba1gKg3
+	jY9FfTrPswFxNedPCcS/NWdMxtFKQfalYZyuACqs1VNMk+ayG7OciA+hyPzzuBj6
+X-Gm-Gg: ASbGncsi07BL6zsnEKnRRWwrMIBUxEikjlvmGYWBUEceMjkiukD9HiTjeaIAV/Us7q2
+	rHxgbqxPspfQKlzxg+tsvE4+D35ghqqxvDwzRK1874qNXer/ZXKaTzk2iVdsER8tXqcz5D8/UY/
+	8kB4GayxrciEETVQQZSI81foUPnvhkWgSx4iVjsDjlKsEgNK9tFG+HWs0ND+sOz+BurHC+V5WvL
+	bkWTnkHS5QhfUePHe7pbhL3IguIVKcv7aGN9DgzEtOHhlc2MIHcKhtECO3GZN7tqrg4T5i38EOM
+	dBsp5XdfR3YQ09Nrr4Y18bBYU9QDjIU9uImKvAkOppvAjX1NUNN52HyQhQ==
+X-Google-Smtp-Source: AGHT+IG4xCmH5sMKCSaBZTEIW7/rsyiuYBGfV0K9fG0azEslxMXRiZSFYz6kYm6MhKZp29In5AEYkg==
+X-Received: by 2002:a17:90b:4b51:b0:30a:214a:c64f with SMTP id 98e67ed59e1d1-311106b339fmr11359034a91.32.1748268777747;
+        Mon, 26 May 2025 07:12:57 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-74615cac674sm1400326b3a.153.2025.05.26.07.01.52
+        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-30e5545849asm12711082a91.0.2025.05.26.07.12.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 07:01:52 -0700 (PDT)
-Date: Mon, 26 May 2025 22:01:57 +0800
+        Mon, 26 May 2025 07:12:57 -0700 (PDT)
+Date: Mon, 26 May 2025 22:13:02 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Jeff King <peff@peff.net>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>
-Subject: Re: [PATCH v2 2/8] string-list: remove unused "insert_at" parameter
- from add_entry
-Message-ID: <aDR0VS_4n8Io0QYp@ArchLinux>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2 3/8] string-list: return index directly when inserting
+ an existing element
+Message-ID: <aDR27iI_cAFAnTWI@ArchLinux>
 References: <aCoDB9P5XV1lHMil@ArchLinux>
- <aCoDU46MmoGPB60b@ArchLinux>
- <20250519075119.GE102701@coredump.intra.peff.net>
+ <aCoDW8CcWeq8T9hp@ArchLinux>
+ <aCrbKI_c5Bma8ZDQ@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -74,57 +73,77 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250519075119.GE102701@coredump.intra.peff.net>
+In-Reply-To: <aCrbKI_c5Bma8ZDQ@pks.im>
 
-On Mon, May 19, 2025 at 03:51:19AM -0400, Jeff King wrote:
-> On Sun, May 18, 2025 at 11:57:07PM +0800, shejialuo wrote:
-> 
-> > In "add_entry", we accept "insert_at" parameter which must be either -1
-> > (auto) or between 0 and `list->nr` inclusive. Any other value is
-> > invalid. When caller specify any invalid "insert_at" value, we won't
-> > check the range and move the element, which would definitely cause the
-> > trouble.
+On Mon, May 19, 2025 at 09:18:00AM +0200, Patrick Steinhardt wrote:
+> On Sun, May 18, 2025 at 11:57:15PM +0800, shejialuo wrote:
+> > When inserting an existing element, "add_entry" would convert "index"
+> > value to "-1-index" to indicate the caller that this element is in the
+> > list already.
 > > 
-> > However, we only use "add_entry" in "string_list_insert" function and we
-> > always pass the "-1" for "insert_at" parameter. So, we never use this
-> > parameter to insert element in a user specified position. Let's delete
-> > this parameter. If there is any requirement later, we need to use a
-> > better way to do this.
+> > However, in "string_list_insert", we would simply convert this to the
+> > original positive index without any further action. Let's directly
+> > return the index as we don't care about whether the element is in the
+> > list by using "add_entry".
+> > 
+> > In the future, if we want to let "add_entry" tell the caller, we may add
+> > "int *exact_match" parameter to "add_entry" instead of converting the
+> > index to negative to indicate.
+> > 
+> > Signed-off-by: shejialuo <shejialuo@gmail.com>
+> > ---
+> >  string-list.c | 6 +-----
+> >  1 file changed, 1 insertion(+), 5 deletions(-)
+> > 
+> > diff --git a/string-list.c b/string-list.c
+> > index 8540c29bc9..171cef5dbb 100644
+> > --- a/string-list.c
+> > +++ b/string-list.c
+> > @@ -40,14 +40,13 @@ static int get_entry_index(const struct string_list *list, const char *string,
+> >  	return right;
+> >  }
+> >  
+> > -/* returns -1-index if already exists */
+> >  static int add_entry(struct string_list *list, const char *string)
+> >  {
+> >  	int exact_match = 0;
+> >  	int index = get_entry_index(list, string, &exact_match);
+> >  
+> >  	if (exact_match)
+> > -		return -1 - index;
+> > +		return index;
+> >  
+> >  	ALLOC_GROW(list->items, list->nr+1, list->alloc);
+> >  	if (index < list->nr)
 > 
-> We can see from looking at the code that removing this will not change
-> the behavior. But that always makes me wonder why it was there in the
-> first place, and whether we might ever want it.
+> Okay, let's assume that "index == 2" here and we have an exact match.
+> We'd thus return `-1 - 2 == -3`.
+> 
+> > @@ -65,9 +64,6 @@ struct string_list_item *string_list_insert(struct string_list *list, const char
+> >  {
+> >  	int index = add_entry(list, string);
+> >  
+> > -	if (index < 0)
+> > -		index = -1 - index;
+> > -
+> >  	return list->items + index;
+> >  }
+> 
+> So we'd now realize that `index < 0` and thus calculate `-1 - -3 == 2`,
+> which is the original index indeed. So this is a nice simplification
+> that retains the original behaviour indeed.
 > 
 
-Yes, I agree. Actually, in my first implementation, I didn't realise
-that this is redundant. However, when inspecting the code carefully, I
-find out this is useless.
+That's right. Actually, when I find out this by simply calculating `(-1
+- (-1 - index)) == index`, I am a little surprised.
 
-> The answer in this case is that we used to have another function,
-> string_list_insert_at_index(), which used the extra insert_at parameter.
-> The idea being that you could call string_list_find_insert_index(),
-> decide whether there was something already there, and then insert
-> without repeating the binary search.
-> 
-> But you can see in callers like 63226218ba (mailmap: use higher level
-> string list functions, 2014-11-24) that this was not really that useful
-> (in that commit we just try to insert and check the util pointer to see
-> if we need to add the auxiliary structure).
-> 
-> So the function went away in f8c4ab611a (string_list: remove
-> string_list_insert_at_index() from its API, 2014-11-24), and I suspect
-> we won't need it again. (Also, I think these days we'd probably use a
-> strmap instead anyway).
+> I think we could simplify the code even further by inlining
+> `get_entry_index()` now that `string_list_insert()` is a trivial wrapper
+> around it. But I'll leave it up to you whether we want to do it or not.
 > 
 
-Thanks for the hint. By seeing this commit, I totally understand the
-history. Because we delete `string_list_insert_at_index`, we simply call
-"add_entry" by specifying "auto" mode and somehow we don't delete the
-legacy check in "add_entry".
-
-But I have one question: should I include the information in the commit
-message? I feel doing this would be chaty. But I somehow think we should
-do this.
+That's right. But as code it is, let's just keep this which won't hurt
+too much.
 
 Thanks,
 Jialuo
