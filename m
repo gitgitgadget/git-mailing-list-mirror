@@ -1,152 +1,108 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E9919995E
-	for <git@vger.kernel.org>; Mon, 26 May 2025 19:45:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE7E914830A
+	for <git@vger.kernel.org>; Mon, 26 May 2025 19:55:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748288714; cv=none; b=HpTKdR3RggSH/EKaGH0/HreCl3M+APrWypmEmflZlf08V2/UBqnlvuBIGCkuYMxNuMN8VUEsdQUd4h2ympqBvFi88Q8Tai0nLSVdHlUQHlSTT5KWdXrUQW1rrjzJanjt2Uxpf+0YFspmdpYLd2zdTx1yGk0HnDrfp0GpByCQ8Ug=
+	t=1748289358; cv=none; b=DG07wIBdUp3UKPf5rkI6475TdjwIuTQvFsVnmfOHRKi5Z8qiyQS1pKRxQC8h/FlGmmTvIkzps7Og5bK2/bHaxvtJvLcMt36vEVUfwOkjDFNb3tcFl9noD62lUkNUlXbaj6cR6lMCwD5hG/5tX8nLdXxfaJGtH29d8ZpRWn4OMBg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748288714; c=relaxed/simple;
-	bh=FWu4VbZgKo4JZtgRQzZhIeiejRezZ4PeGWcPiCqRT4w=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=rJKU1Ir0KnKK9z5HFPK3iU5NBb0MpyhEIMc2op9G9o49/6EiMaee3nVqEn+244LpM++EGCGahGaiYBNIQW4+W8g42HIf5IqKy8v+moXNyqPIWfRR29cHEN4E6lO1ZOJBWl7o8QS6bptEPej5ZlVilkB93AvKVtPSpd76R3lgZ9E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=VPb6ojYy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ICxsbmrI; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1748289358; c=relaxed/simple;
+	bh=rdcxtSKduE8LefUxLXe0gyzfSf4RDa+3pxeo93X2Y5s=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=j+03uIsGqYsujrxPxp17eKuLUMbAKA6GQFceo03C981X2NzvJgB/eX/MTl/rg8Gidx0E6TNiD/SCCSDV9R6dyeI7jkcK9vmsfQSU9TU/9z5kGCD2+zTYC/AzDLZmYEGnWkL0zfosVtXKeamGEomhG/yfSZJia/R6phfoM251NXU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=IL4IGxJx; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="VPb6ojYy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ICxsbmrI"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 756F225400F4;
-	Mon, 26 May 2025 15:45:10 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 26 May 2025 15:45:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm3; t=1748288710;
-	 x=1748375110; bh=osSJtxtUw6fWP6Q5GNLlm7JuByFzjhPrG8pTH3xQcSs=; b=
-	VPb6ojYyi75fq2PMmZHH/p1gTd8AlMPv+y5L+f1gUOxRc6oeq3o9FkAYkph2mJ5R
-	Oz06k2e6jPe7g0V01HNfYSfZZvpPyaGreRDza2j4PdO4pBWJuw2Ku+B9UwoGvHaq
-	+1t9YvB9rWO2NK3yTicYSHzXOy3sCWto0nG55Kbmulk+Jic5L3NAZ1bbchCzcwuq
-	fZG8eA9Ibmgnyh2w6mBXGbFrHlbf2ytUQS28Ww4WRfaaJAAIepB+Sv6erjXsAe5M
-	CpF33WNFOWjDkaUNlmWdRJM/KLMHXN3IOH2veb26VdiM4lXPyEgccSL9YdhvDhkl
-	Lz7KiexJVKYWykw/5/SVrA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1748288710; x=1748375110; bh=o
-	sSJtxtUw6fWP6Q5GNLlm7JuByFzjhPrG8pTH3xQcSs=; b=ICxsbmrI1p6XXVGzq
-	DNsRJFaR21srp/t+b0kk4HJ2PUqHhiP+vUuCfN9WrEqaDnK5fa07YLRQI9hzb2Vj
-	65dAlOxLGoz4DuVLtYib0AhY2EIY6DwhcwQYSppIlnuE+hlMlwrQqSlUIRzV86Sr
-	EirJ2Vomio7wrjurKULXU8yR2d0rEr7TCpm8k+R9eXeViqtnqWCv8Bmcwqsl9EJB
-	17xn+Bn8jYQDd62usQXS2XqsVI+VdNgMkcmER+BuH27X8YFE0bIzF7IOLKqUTtPj
-	vsHF+Ii8U9zUC91D452qwW3Nc5VM6TGO9TRp87uU9X+rEjFH/NlmlVyGL4HzmI+J
-	gDiig==
-X-ME-Sender: <xms:xMQ0aEuObjhJWiD9KB5IpbPKQWMUJpkbtWHayP6o0yY8XRI9EM17H_w>
-    <xme:xMQ0aBcUBNqcGz-MMuEXOBsYPJtTH2HrsbvW2So0GlOSrL1j_fhsUNIaTXAbE2Zxc
-    J2eG4U6kySWgA5pdQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddukeefleculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvkfgj
-    fhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghugh
-    hssggrkhhkfdcuoegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgeqnecuggftrfgr
-    thhtvghrnhepudeihfeigfethfekgfeghffhgfeuffdvtddtvdeuhfdukeeuudduteeitd
-    ekheeinecuffhomhgrihhnpehophgvnhhgrhhouhhprdhorhhgnecuvehluhhsthgvrhfu
-    ihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomheptghouggvsehkhhgruhhgshgsrg
-    hkkhdrnhgrmhgvpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgt
-    phhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgtph
-    htthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:xcQ0aPyPXezs5K9xP4mwkTvizBS7MANu0hykdLc8jtTkQOCu5pr84A>
-    <xmx:xcQ0aHMiZjyqWAFe31bylupM2r5zxzqfOUu6f7hdR6e39dFU4kSPng>
-    <xmx:xcQ0aE_BtzJHrJ8bc885kEPOqFyehoPKh7OuCrsKIuCm9b3sFbCHkQ>
-    <xmx:xcQ0aPXkpOfL9V8yKzQgCO925sMrLm0fsLz1YDKy1wpRwhQIvR_GbQ>
-    <xmx:xsQ0aN-lv82LiYTxQlPoIlUHoIzxFULBqA67_C6o85juvPRUfj_h4YK1>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id E60AB1EA005E; Mon, 26 May 2025 15:45:08 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="IL4IGxJx"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1748289354;
+	bh=rdcxtSKduE8LefUxLXe0gyzfSf4RDa+3pxeo93X2Y5s=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=IL4IGxJx8FLGqi0X4FogEUdcnC7FHrqdW8Fw2x24uw+6OCRv3m3TcDPNK/8eFF63n
+	 h1bLL7hs1zm69Q+iWH6x9HIlDgz0VM26P0J4Z21IZSEugmzPGt8q19KzPyD7yyVzqJ
+	 FFWq10WNZX+XVNfE5AfpSClSnQhnQv9q6aEKHHL2SRyb7mW0CwQHQxnYf3xwH+Ksz0
+	 vPMU7yl0eQSuW6KCaeAHOdmMsle/LR0o0KheuxiJORvUZOtaDOI6+4cu7VzbyoCWbD
+	 51JAGEB/Sm0LEt6TPZJApLf9lTMgWqagMkU+JhLRx9Lpk9lOn0YAfwdiu7lC0YZZdM
+	 CKxy1JpBKqpX6+DRng5jDpVq7l2Oww0vaFBckLPgnVkPz4s2r7bREF/IMwfIzWxz4g
+	 IZE/kES9YYBnYSrzWtX8ymg4wdQom298jbVQrn2DUW1H1VgqLOxUgVZy1YZ8q7Pn1+
+	 CSrCVn62oiu2FviS0E/B3MgYk9/sGTRAGvZmYbUkDaek06LyUl/
+Received: from tapette.crustytoothpaste.net (unknown [204.148.157.38])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 5891D20038;
+	Mon, 26 May 2025 19:55:54 +0000 (UTC)
+Date: Mon, 26 May 2025 19:55:52 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Ramsay Jones <ramsay@ramsayjones.plus.com>
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+Subject: Re: [PATCH v6 2/5] reflog-walk: expose read_complete_reflog
+Message-ID: <aDTHSOodIuhBgZ_x@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	"D. Ben Knoble" <ben.knoble@gmail.com>
+References: <20250508234458.3665894-1-sandals@crustytoothpaste.net>
+ <20250522185524.18398-1-sandals@crustytoothpaste.net>
+ <20250522185524.18398-4-sandals@crustytoothpaste.net>
+ <2e8e7eb0-f526-49cb-8f75-379fa7ef6446@ramsayjones.plus.com>
+ <aDEDGfyvkTFyf0I8@tapette.crustytoothpaste.net>
+ <b8a94020-0a7c-4d3b-92bc-a8a80b8d7af0@ramsayjones.plus.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Taf9fec3ba48f0e1f
-Date: Mon, 26 May 2025 21:44:48 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>,
- git@vger.kernel.org
-Message-Id: <10280d7d-af36-468d-82b8-e0e780c38ef1@app.fastmail.com>
-In-Reply-To: <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
-References: 
- <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
- <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="fd7MV+EJYDAcl4/Z"
+Content-Disposition: inline
+In-Reply-To: <b8a94020-0a7c-4d3b-92bc-a8a80b8d7af0@ramsayjones.plus.com>
+User-Agent: Mutt/2.2.13 (2024-03-09)
+
+
+--fd7MV+EJYDAcl4/Z
 Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi there Phillip
+On 2025-05-24 at 01:09:49, Ramsay Jones wrote:
+> So, at this point, 'git-compat-util.h' will already have been seen
+> by the compiler (so it won't cause any problem, but equally it is
+> not needed). In order to determine if the header can stand alone
+> you should just need to:
+>=20
+>     $ make reflog-walk.hco
+>=20
+> [That is what the hdr-check target is for].
+>=20
+> So, yes, include 'hash.h' to make the header file stand alone,
+> but 'git-compat-util.h' should not be needed.
 
-On Mon, May 26, 2025, at 16:01, Phillip Wood wrote:
->> diff --git a/builtin/notes.c b/builtin/notes.c
->> index a3f433ca4c0..ca4782eca19 100644
->> --- a/builtin/notes.c
->> +++ b/builtin/notes.c
->> @@ -180,6 +180,8 @@ static void write_commented_object(int fd, const =
-struct object_id *object)
->>   	if (strbuf_read(&buf, show.out, 0) < 0)
->>   		die_errno(_("could not read 'show' output"));
->>   	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_s=
-tr);
->> +	/* strip trailing whitespace introduced by blank lines */
->> +	strbuf_stripspace(&cbuf, NULL);
->
-> It doesn't make any difference at the moment but I'd be happier if we
-> stripped the trailing space from the commit message before commenting =
-it
-> out. That way we know we are only stripping space from the indented
-> lines produced by "git show". If in the future this function were to
-> start appending the commented log message to a buffer passed in by the
-> caller rather than a file passed by the caller we wont mess up the rest
-> of the buffer content.
+Okay, I'll change that here, but it does make clangd much less useful
+because `hash.h` does actually depend on `git-compat-util.h` and so
+clangd flags lots of missing types.  Perhaps we should revisit that in
+the future.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-Do you mean doing the operation on the output buffer instead?:
+--fd7MV+EJYDAcl4/Z
+Content-Type: application/pgp-signature; name="signature.asc"
 
-	if (strbuf_read(&buf, show.out, 0) < 0)
-		die_errno(_("could not read 'show' output"));
-	/* strip trailing whitespace introduced by blank lines */
-	strbuf_stripspace(&buf, NULL);
-	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
-	write_or_die(fd, cbuf.buf, cbuf.len);
+-----BEGIN PGP SIGNATURE-----
 
-I think that=E2=80=99s cleaner.  But I don=E2=80=99t see how it makes th=
-e code more
-future-proof.
+wr0EABYKAG8Fgmg0x0cJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ7TiXTjc2UJJVB4sfcuyPXMMIYTDZg42aWI4vAKGczWZ
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAAHz+AQCQevrqYl3g/7hj4xMvuwmqMj5W
+IA2y3I9sEvhzJC3BVQD+J+8bBrMxBZyLsIhqL9qBUX4PqWdC/iH0H2MRAa9JRwE=
+=Tc5y
+-----END PGP SIGNATURE-----
 
->
->>   	write_or_die(fd, cbuf.buf, cbuf.len);
->  > [...]> +test_expect_success 'git notes add has no trailing whitespa=
-ce
-> in the editor template' '
->> +	test_commit --signoff 23rd &&
->> +	GIT_EDITOR=3D"cat >actual" git notes add &&
->> +	test_grep ! " $" actual
->
-> Should that be " \$"? What you've got seems to work with dash but I'm
-> not sure if it is POSIX compliant or not.
-
-`$` is the anchor metacharacter in this context (end of string)
-according to Posix.
-
-https://pubs.opengroup.org/onlinepubs/9699919799/basedefs/V1_chap09.html=
-#tag_09_03
-
-    $
-        The <dollar-sign> shall be special when used as an anchor.
+--fd7MV+EJYDAcl4/Z--
