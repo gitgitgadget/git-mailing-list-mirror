@@ -1,131 +1,136 @@
-Received: from mail-ej1-f44.google.com (mail-ej1-f44.google.com [209.85.218.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DBEC41C64
-	for <git@vger.kernel.org>; Mon, 26 May 2025 10:36:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1C5B192D87
+	for <git@vger.kernel.org>; Mon, 26 May 2025 12:44:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748255764; cv=none; b=IAgsaZRm2/cKIPIVHuXWOkgxankNdDO083EQvCJBIOko27QqgKFkUQHfpXbJum7PuzYWaw4O9CGLbPDFNUivE1m/oC5gsp7HZvVCuM9TcRi8qUqPQyvsWTpsiSDsulxML0Ix+NxEZIg5Gn5B0ACg1lXEV/sELJqAF8bZzGnbQuM=
+	t=1748263482; cv=none; b=MGOwQrTbDWefi2+Fz+K1aeO/TfdP7BGl+y6s5b8tb81iuE1RtaZvtgMZVLeR6AxyQPpnDuUms3B1enRevYifxUw6fQ/1NMVo+ekJWoWNTRM1suJkp+0ulgMYcM+Bz1OPwmLCWF1RsO56UGZlzdUtR6xcm9HVWdmXuCoBQ+/a+n4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748255764; c=relaxed/simple;
-	bh=BXUgwVqPgrv7ehewT6bTZr9fz+mWJj+zgF52XmEsK7o=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=n+g5DmDyH1PzJQnYDzvv4l/F3FfqE8e0oRQKOxU/8xMOx6/yWZavx9mKRWDzf953wgUA80B1H1bTAUfrUqOPi9XnkIw7seJNOd6WxPmi1DR4YI/y3qwSjyZ6oNz17g/DRHIV6eno33NWmXdnwswxoHuhbgC3x0fuNvIeFgZtPeg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=en4izyip; arc=none smtp.client-ip=209.85.218.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748263482; c=relaxed/simple;
+	bh=nf7lwgtPtIxNY0mRvNc/VIMryqfI1JSxVnumdMG41qM=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=sCIp8FHA3iJGJFFP3fdkApOi87quN3GkEqFHm8m1XgjUkOu/XWQ1XnPrVugw7tqRQI5mHs7lf8OwBs92vwTjqgmvE1MPAO58BIo8j2czXZJsOLCVqdxerfd2W4GBEyZDqJDzJ2oiFyv4+H0EXOK9Iwu0+3UiTAr/XQ7IFuqQfeo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=dRDyvYQT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LX8c2j8v; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="en4izyip"
-Received: by mail-ej1-f44.google.com with SMTP id a640c23a62f3a-ad52d9be53cso285852666b.2
-        for <git@vger.kernel.org>; Mon, 26 May 2025 03:36:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748255761; x=1748860561; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Tdin52J04ij7RJ1WTrN7KKzIzzFZXnVxC9MBUsUh0nM=;
-        b=en4izyipZLlu9uco5alydUhNErdoQMQjlPylULnVVGrIhMnwKUZQDrAitBD1ZgZgcS
-         DRKv9T/yGLvdlVuqGKRYrbFC3VqND65leb6gviTIVaogsQVyCJW9gi7bJIO+q/gWICJD
-         peayCQVojMW0tzhpLxSC8J9D6Ld+X8ZPAyHoqq8ZKlUCLXK2PflRuUxhUJwdgy7Ouu+R
-         QeZ07TnMCxcBErJoWgfpdu5ZtfdsOjjCNx4buyA7KmMCmgmZRWF/HH2029X+U2zc7h1I
-         pAgRPptruRYudoFw/yzbREmxafcxbILkobdsBHAwHgbSaZnkKOq7M/Zu0Vsok2udo1HI
-         2jHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748255761; x=1748860561;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Tdin52J04ij7RJ1WTrN7KKzIzzFZXnVxC9MBUsUh0nM=;
-        b=EQtG20B7i0D5IFiCPkTjXVQ3Ch2ZVD2JXHOYO0+EjbXdBK5xYjOBFBZp9G9LU7v7l3
-         rEBlA+xmUUF8wC4Ie+CmJqsVl7hQ0XI/3PYPUp8x6R0nH5NLgX9/MJFN+NrCmCWaSM/z
-         hN1wM4hJv8VkU92Ylh9CCvxC7C4eCaEVp83dpPV7UOa9YO4xvl3mB8WphafEHBOVShxr
-         Dx5y/wazSgdc3xzLPitg8W2SA/mNt8S8nqMFNHSXojF4MkpyK1sm3A3nAP98FiQhUOrr
-         9shukkJoBk7JIsab1WjjuX6QmN59VVkgtVxbzR+VtuVhS0CKp2x+sPAsPeVuCeSxaW9L
-         6oRg==
-X-Forwarded-Encrypted: i=1; AJvYcCUhGw3ylH3WUzea1Iqt3bpjSqMHISa0uMDsinARwHBDADg7Ok6I3H/G12r61L2Q9OPOn78=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyZ3aQvrWdx/U3vxJ8TqIeg6KWF6Ll7M07PpHJEQ/+22ZMSi0oE
-	javRqmlIERgOmlEHMcw2OaeA8cKYH/moUR195iMxRPd5sOde7WUJYRJkXfS8au2piJdqoopV6xI
-	ZkmEbEj7eJ+Y3LldvIoL4WhEYpEpzyh8=
-X-Gm-Gg: ASbGnctDfpdalOv8f5HJCRYLh6abHN5Nx8hInuif6DNj5jic9gPLyUIYpTI9GdJzbLn
-	0kIMAGqjkP23QaeQr2h0Mc2ntec20w3R82pvTqknQjZq8SxqG/lIReLRyLjI75AS5L0nIcf13+X
-	jdEIL8bKZYl0TsppVBTlYJRvfO5JiB2NCnrxE=
-X-Google-Smtp-Source: AGHT+IEmPWjqfLKRDUwziKxLEX0ttzi5qSbVQOlcYHTLLtf5IsMZU6Z8AX6schSWlV1PN79i3ikpZJ1kwP0UyADrk4I=
-X-Received: by 2002:a17:907:96a8:b0:ad2:48f4:596b with SMTP id
- a640c23a62f3a-ad85b0d2377mr778360366b.19.1748255760894; Mon, 26 May 2025
- 03:36:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="dRDyvYQT";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LX8c2j8v"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfout.phl.internal (Postfix) with ESMTP id 9FA601380659;
+	Mon, 26 May 2025 08:44:38 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-09.internal (MEProxy); Mon, 26 May 2025 08:44:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1748263478; x=1748349878; bh=cN961JcUxd
+	H8lHssHZ5Oa6uLhmDjjgcn8D655Sa/MEk=; b=dRDyvYQTxaRvwaWBfdhiRxd7ti
+	aBpKihpNBUivTxJLbcNgYqfwd/BDV0BspLX2sR/QRBtk9UCGYox9RBekTqtsAsfr
+	/r9799U44sDw0x1xS3+Gam4O9IkAFtnAyqbglouSn7L2XpjOFraFm3WcQZfuJbUS
+	J7cKhwaYnu+BMxcT+QAiqrt1zub+fe0kgmPIJlqW27q09+IHZmC9Ql7P1x5mhci7
+	qycR72X6cHYXhNsRKM7+vmGOS1YkANP5V5K5EH5m1fFTw+Xh0c6HSfDExgesw1AS
+	caapIPxGXAhKn4CSckcMPDVIw+aq4ZTg7rSiPma8LQVEh3JSV/ClwxUZUt9g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748263478; x=1748349878; bh=cN961JcUxdH8lHssHZ5Oa6uLhmDjjgcn8D6
+	55Sa/MEk=; b=LX8c2j8vUzRvYgCvKa3XLPIHN8V/6XLmdIfG89PmNak9LNPbmYY
+	P6VVPF105FlsktVJSul9jcEQTMu0hYD1VSWdz9M5CJzmSDisH5s5e4mH74/snG9A
+	IilXDqwKj0Gia7G3HUzN6Rj1lDRTJHlbqaVXD5NZhgXIJLBMWS6UigZjipwr80NW
+	OWnQiPq+H2lBT3YUGe2BHiPKtaOHSf2jYCDxx2LNul5B0WPHc460cQNxMPVf1csF
+	v9NydbxH2iU46X0AqF5rT4kxU98BNKOSw0bmgQJ8Iqnyt4XenIL0zwwNJRV0ZOnl
+	P5TEeySXRSHSCL4waMsRPEwkZ1szRkKgnkA==
+X-ME-Sender: <xms:NWI0aGc7HszbRuxSWUZVx7VvrNg6dx7VDPn1pNnfI-_lvo_l_d7DhA>
+    <xme:NWI0aAPxJ28U5K0uyB36LJ-MGUNPnBFYRvOd_I9bHBTls6LCuoOkmTAkliuEy6DKW
+    WBVCUamTv0YNfHSAQ>
+X-ME-Received: <xmr:NWI0aHiorvb56qwLpyKqRD_y4d8cuTkGrsGr8rHpLp42qqc2ejZ9FEVAjXsrtgoe-AwRrnGPQBBP6iVShx6rp0cqSBEJtSFwb90vRy1YC3vKEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddujeehheculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
+    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeehkeevffffgeeltddt
+    iedtgfeuteettdehheehtddtvdekgeegleefkefgkefghfenucffohhmrghinhepthgvsh
+    htrghnhihthhhinhhgrdhorhhgnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghm
+    pehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepgedpmhhoug
+    gvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghs
+    rdhplhhushdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpd
+    hrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
+X-ME-Proxy: <xmx:NWI0aD_3PJfMt_uTHfjkpN2ili1L_dOYfd4E1T3kQUtDtDMmp6Kllw>
+    <xmx:NWI0aCukb_eq4jpG_gTA9N8nGR6glwIy4_jbQo5buQHOi8nk2YrDmQ>
+    <xmx:NWI0aKEkksoYyBPPEEfpxENGBv-NpiFRYMQqGhhnXfOplECDysTbUQ>
+    <xmx:NWI0aBPQK2IVVMswhos0Fd-HWvaKLgYnf4LhdUbjdG84JrjozvsGcA>
+    <xmx:NmI0aC3d_9lWlz-A2upNEl-oaCVMBPLkVaXEWmYI3xGJGVAQM86_3Or2>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 26 May 2025 08:44:36 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id d37347f1 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 26 May 2025 12:44:34 +0000 (UTC)
+Date: Mon, 26 May 2025 14:44:29 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org,
+	Eli Schwartz <eschwartz@gentoo.org>
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+Message-ID: <aDRiLdUCEVQHq26z@pks.im>
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <aC2xp4Cdb0j6OX-G@pks.im>
+ <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g>
+ <aDBH7G-oKKxAXWBp@pks.im>
+ <aDCNqRAoGygwnAbq@pks.im>
+ <xmqqo6vjz5cn.fsf@gitster.g>
+ <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+ <xmqqwma7w29o.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250424203904.909777-1-christian.couder@gmail.com>
- <xmqqselxtfyf.fsf@gitster.g> <CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
- <xmqq1pthtbdg.fsf@gitster.g>
-In-Reply-To: <xmqq1pthtbdg.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 26 May 2025 12:35:49 +0200
-X-Gm-Features: AX0GCFvUt6hpwlnfmZ9R5EdjAd5COAns9aUvyAAE4OQzNqzuFNquhqytkkZtZtQ
-Message-ID: <CAP8UFD0OdqnoFeYY+7y-No_x_DknapoLzvqvsy-+x_602sYQbg@mail.gmail.com>
-Subject: Re: [PATCH] fast-(import|export): improve on the signature algorithm name
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>, 
-	Jeff King <peff@peff.net>, Johannes Schindelin <Johannes.Schindelin@gmx.de>, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqwma7w29o.fsf@gitster.g>
 
-On Fri, Apr 25, 2025 at 12:58=E2=80=AFAM Junio C Hamano <gitster@pobox.com>=
- wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> >> The fast-export stream produced by the code with d9cb0e6f
-> >> (fast-export, fast-import: add support for signed-commits,
-> >> 2025-03-10) used to identify a signature algorithm "sha1", but this
-> >> new version of fast-import lost the support for it, and will barf
-> >> when seeing such an existing fast-export stream?  I am not sure what
-> >> is going on around this code.
-> >>
-> >> I am not so worried about the other case, where the stream produced
-> >> by fast-export contained in this version may or may not be readable
-> >> by an older version of fast-import.
-> >
-> > I certainly can't answer anything here as I know little about
-> > signatures, but your comment brought up a different question for me:
-> > Given that d9cb0e6ff8b3 (fast-export, fast-import: add support for
-> > signed-commits, 2025-03-10) isn't part of any release (not even a
-> > release candidate), do we need to have backward compatibility with
-> > that version?
->
-> I think we will lose all the credibility if we said "that's not in
-> an official release, so we are free to break early adopters", once
-> something is in 'master'.
+On Fri, May 23, 2025 at 12:33:23PM -0700, Junio C Hamano wrote:
+> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+> 
+> > Question: should meson (or indeed prove) fail the test because of an
+> > unexpected _pass_?
+> 
+> Yes, it is a very good question.  I do not mind if the answer is "it
+> should, and the make and prove shouldn't let unexpected pass go
+> unnoticed".  The difference between the build systems bothers me
 
-I agree that we should have at least said in big letters that the
-improved support for signed commits in fast-export/import is very
-experimental and very likely to change in the future.
+Indeed, a good question. The TAP specification [1] has this to say:
 
-We could still do so. This could give us a bit of time and flexibility
-until we agree on and implement something better and backward
-compatible. (Hopefully the v2 will help us move forward.)
+    Should a todo test point begin succeeding, the harness may report it
+    in some way that indicates that whatever was supposed to be done has
+    been, and it should be promoted to a normal Test Point.
 
-> As some corp environment are know to run
-> 'next' and indeed we do encourage more folks to do so so that we can
-> catch breakages before they escape to 'master', I actually am equally
-> worried about things in 'next'.
+    Harnesses must not treat failing TODO test points as a test failure.
 
-Yeah, right.
+    Harneses should report TODO test points found as a list of items
+    needing work, if that is appropriate for their use case.
 
-On the other hand I think it's fair for us to experiment in some
-areas, at least when we document that we are experimenting, which
-means that running 'master' or 'next' and blindly using any feature we
-have just added is not the right thing to do if people don't want to
-be exposed to not just bugs but also some possible backward
-incompatibilities in some areas.
+So if my reading of this is correct then Meson isn't wrong in reporting
+this as an error -- "in some way" basically gives it full permission to
+do so. So this is plain old undefined behaviour we rely on :/
 
-So yeah, we should definitely have said that we are experimenting. Let
-me know if you want me to prepare a patch to add such wordings on top
-of d9cb0e6f (fast-export, fast-import: add support for signed-commits,
-2025-03-10). Otherwise we will have to be backward compatible, which
-is not ideal, but might not be a very big issue either.
+I don't think it's inherently a bad thing to fail on unexpected passes.
+After all, it shows that our assumption that the test fails is broken,
+and that we should have a look why that is. But I can see arguments both
+ways.
+
+The pragmatic solution would be to just fix the unexpected pass and then
+proceed with wiring up TAP support.
+
+Patrick
+
+https://testanything.org/tap-version-14-specification.html
