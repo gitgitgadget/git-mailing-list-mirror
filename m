@@ -1,62 +1,62 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E921F5437
-	for <git@vger.kernel.org>; Mon, 26 May 2025 10:33:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD3D1F582A
+	for <git@vger.kernel.org>; Mon, 26 May 2025 10:33:43 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748255624; cv=none; b=Vdr18jyyYxZqa5jhoQ8PwTn+Zn255/6iuPmwQyHCS9vbYLcBROJKD5nJ8Fq+G9Ta7eps8Sqs0gNoceO1HwoxYwVeYjDbTzpupsER4Z0N+4x8ryk6fsh78gRGm6MnDVEweyGObd4W7SjyFh9dEPkIYeV5jMsIBQ5fc4V1s8dM8Jw=
+	t=1748255626; cv=none; b=WfiVo5XuZYCtkHgwms/EuZw1CrwvJRlAZlpVqZe8W88KUXa/NpkStscI87l2rVjIlxt5DmXyL+GQ9o0SrUK1TeT/tgWINOKSu66B4oyjEElkrj3o6dVy0hc0zdlMEYvYVsIGtci6Wd5Er0hrAND9RDmYg8gdzq1XY+ElO6IA1xo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748255624; c=relaxed/simple;
-	bh=IoTUHU+x0vMnfXQXi/2jjUPQ0vAIJtILQcuvsGsQS9A=;
+	s=arc-20240116; t=1748255626; c=relaxed/simple;
+	bh=q/gcZZZa/QP5Cjz/a0LcGYL+6De3petWiNjVH3gr+ms=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=rvp07s7wTjcRF9fMXT3WAOOXNc9c9Hwzc6LOqvbp8082VNTMWcE99ccnePJ5q3BoxjUvi/JbPJ8UopKJCInmY6ssua0ZBtx5O2ieK2diR1kbwrCkA/IDFaFxrAuOmS8AVQmx3xsR8WmfG6mRcnvAW/nz8zW0L8TgMjwxX50V6rg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=fThWHj/f; arc=none smtp.client-ip=209.85.128.51
+	 MIME-Version; b=bVNZnUVpYFl6C9eITztblUkxX4nNsdWsRSQhjr/81aJHNnCWjQD2K0ZZYahW6890ObEkAyyF/kbDlqqPes5d7tlpyQpCwbaXOXQYOdBlfttpciK5Ihr+zPqmC86BZBSCw/pNgWdljwPSLpxV4K8BrQ4XO9NEoUhZgtdKNCHyUMQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8sU+ks0; arc=none smtp.client-ip=209.85.128.49
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="fThWHj/f"
-Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43cfe574976so15607645e9.1
-        for <git@vger.kernel.org>; Mon, 26 May 2025 03:33:42 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8sU+ks0"
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so14008965e9.0
+        for <git@vger.kernel.org>; Mon, 26 May 2025 03:33:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748255620; x=1748860420; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748255622; x=1748860422; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=JLvbYEHj1q4sNnYaaxN4Zn9FrKMZMu98NMgWjQPcxuo=;
-        b=fThWHj/fLuo245EWettwBf5LAodiPmDQPGK7F8PDQmFMT3qMufx3LgqCWaWTOZdyyw
-         yYSFNI+SkfwI17j75Ss9db5njArSci6rdguBwVaseWjTsavH96kkKMXnnOl2Q7lbrZdt
-         /kS0z/u64aZQgvyDJWf+2tDVNVCzEKm0ZvrJEABpjq8l/93OpcH+BNJYTYaTXfZe856c
-         2VWMuZyCMPjet+NFnxaFBo7hPdm5CiXGOAh5b22C6UBJSq64tPfEf2r22tQCfW9kfSA1
-         mltEoXUlJvjUkw0acO25BZ9nXdsWHnvnUJY5EePE0gwmhjQX0qxWEKm7sP6ZSbEjFlPK
-         +5vw==
+        bh=DZ8FPghasBfj4AT0ZAOgURMbadEFYLYDVR096cMJmuQ=;
+        b=l8sU+ks0A7y/tPBtIqUGvRoiEzynv0RB+XjUpCFdnwFfyGR4Q3mODDFy3xX7gsQNTu
+         qmVKHh2BnzashiYFtUSSUxxT/dzcjFlowL6s1nw+zobK3mQEyV/oFzCa4XWsSw9FtmyT
+         L4+jeUrEteQbP9ujBU2aUzpAqGIvtZprEHo5UKz/oak63VLhGFVnBQQ+GUd9bpxM1AKX
+         5WuWAXuLhXD1QT5Cl58/OtslWIavI7S5jgWHTkXlUeeyb7U4lgEYr0GdYdWPcQy9lyO4
+         BCukEqvtqr2cypVj/fd+VYrnZn1aphnsIu/l/8wDyHieievvSw2dVHCu8aVPc/iZcYnW
+         BHnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748255620; x=1748860420;
+        d=1e100.net; s=20230601; t=1748255622; x=1748860422;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=JLvbYEHj1q4sNnYaaxN4Zn9FrKMZMu98NMgWjQPcxuo=;
-        b=DRwBfUHpnhMxwT5AVWoeMP9eiPsy1fiEIBHRyOevYOzyAYYbCJH13mwwScJ8g0w633
-         w6O/AbvM3QJPdMuz+ahJvdonCKab+T104sqsIb9WGxAtdn6NPD7Ap+RJKn70etYCWlFF
-         3DxdeU1ypgQ10HEUj0dlQquXUIaqyAbAqFSXWfDjZDZWXkwmD6dTH1IlGk5YZ52FS3me
-         /Y0tmdSD2IfgOzcaflv1wADFjRDJz8EpeSnzZqxO8JW0xtW2og6ZD13MyZzJAiobC70Z
-         1trkJkSmB8p4fL63rt4atOHw4aOMoLKmuXZ2xvId3ddelONE4+ACA+AQVohImH/7QyQ4
-         InWA==
-X-Gm-Message-State: AOJu0YxfjaYXnpYwwlCWNp7DR1eJnTIU+S61rmki8lZSTAlMJLtVwMgo
-	c4SSSSOxGCSx29bn2lL5rHwxgnsz17fivyWxz5e08g602A8Ombll7RTAJsmQ6RQB
-X-Gm-Gg: ASbGncu0DglNaVPyQdg0HdOFtj88oPoxQ1JYgtCfAe7SH7EF1WgARiD14ZdGYtBe1b6
-	pl+gMNihSjFmqoSfQl55+KIw2dqLuWNq6kQgVp8vf/UanY5/9ZzIjxCYnVFgavOk82h1t80wWKZ
-	TClR0a8CCQ7YBYha9y7i8nSMH9QXg82s2v8pee0U8yVMP4N7uS/CnkDdNMzmLhFs5O/Y7w1yOQG
-	i9tK8mGpEQ7KSBfif+4PxJ7PVEBvgpq08ieAl0vTG/LNP1mg0a9TyYX3ARnXyC9F4KSP4cFANBY
-	Zo45amJP9sFsj1UGoP9olz1oFsqjnRoqs+XxKnwQBhnKWtOF4TQ6Ip0kqsjwRW5yTUjTLQ/7xTA
-	vpTDjGZqwPxZ5ucBPUU1dN6yqjsQiRh35WX9Z
-X-Google-Smtp-Source: AGHT+IEJFcjx2oFAT4+iXrGFjK83nBOxKrzrSkzQYb3/BKcOlZK+cmZEeyVd99Se6puFnPF4ZbFZWA==
-X-Received: by 2002:a05:6000:288e:b0:3a3:55e6:eaaf with SMTP id ffacd0b85a97d-3a4cb44eccbmr5950002f8f.24.1748255620176;
-        Mon, 26 May 2025 03:33:40 -0700 (PDT)
+        bh=DZ8FPghasBfj4AT0ZAOgURMbadEFYLYDVR096cMJmuQ=;
+        b=WJFFLhheK56hW8+aMNOHill/jcmFlgTW9LB6BV2UwjbPO5KrvjqbhfOGi4dD5hPUt/
+         PczMUZWnmS8vTIkcL/aJ9emDSymtiE9xJeDPCBSIDzNG+3hnRR+1SXvwOqH2SD52E2DO
+         dP4v69+DWpOhLWhQl/TyPfFJU5LsXnsWLJdnVvl1XXWiKGf6lKlbHjGjfp/oRGTmhFC5
+         EPK3vEoH9ENUy7HPlrw4VN3Qa3O7XhMbBnnEWvUdOZ2rnNpkTQHByP3tjU9HjJVHJ4Ca
+         eTGAySeuPsEgZWOpgA/4AwkrAZXZ2lV8Cyxw3Bfwi4Ma4uVkOqxybVBqCFjWxNZJrIjx
+         XZlA==
+X-Gm-Message-State: AOJu0YwIh6CRVTOX2Tt+S5Tz+G8HrtXsPDva4kWRx0e3dPrVlIET9DMS
+	TRBiuHhSXIlVLnD/PdQHikYarEmQXA28VE7yXbX7uOCidKuycmzty7heKTT1BH4w
+X-Gm-Gg: ASbGncuioiiJVLbltDpTw6fsTK2rEot8S0hTqiN7L9zK5nsKsaQ4tdpIXVvlHF7N7pb
+	9rrUTjATVa6BDfwbD9ei3D4aCLluPHSdmyg6vzafyalNomFQxgQjv63T9rMI38KSLB6Zajwp0R8
+	EReVWDNbG29nVWNTa1a6Dzpgtv+NjzZuK/8kHbxWgnqlKc1aCzmPLydQ4mVCaMhx2aTzIadfX/R
+	DVMvkBXUkdDWNtjziz5dB1+7vMb9mkkmjhOJfGAtpld4FCQUygSNwET1QjKT0b94eyB4AH+cWNQ
+	84gZC624Qn/4EAMLNUAzs2RegL/vUcbzJiaUxQ5u6aYsMezduDjU2WUatPRS0MnF9nx1gNhuKcE
+	229rIKXqIsj0O5jM/PZz2ZwPaU4ZPVDTr+BZVrRNDgnunH2g=
+X-Google-Smtp-Source: AGHT+IFeIRrOGx5chO+icvXG60zrIA/zpaypZhsn+1/z/JJPRDl/dVkRDfffFPLkstjxYqeoJXtkpw==
+X-Received: by 2002:a05:600c:848e:b0:43b:c6a7:ac60 with SMTP id 5b1f17b1804b1-44c7bda05dcmr81337405e9.10.1748255621537;
+        Mon, 26 May 2025 03:33:41 -0700 (PDT)
 Received: from christian--20230123--2G7D3.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d26caf92sm5071512f8f.66.2025.05.26.03.33.39
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d26caf92sm5071512f8f.66.2025.05.26.03.33.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 03:33:39 -0700 (PDT)
+        Mon, 26 May 2025 03:33:40 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 3/6] doc/verify-commit: update and improve the whole doc
-Date: Mon, 26 May 2025 12:33:11 +0200
-Message-ID: <20250526103314.1542316-4-christian.couder@gmail.com>
+Subject: [PATCH v2 4/6] gpg-interface: extract hash algorithm from signature status output
+Date: Mon, 26 May 2025 12:33:12 +0200
+Message-ID: <20250526103314.1542316-5-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.49.0.614.g649fb04ae6
 In-Reply-To: <20250526103314.1542316-1-christian.couder@gmail.com>
 References: <20250424203904.909777-1-christian.couder@gmail.com>
@@ -82,90 +82,164 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The documentation of the `git verify-commit` commands currently looks
-very outdated and minimal. Especially it has the following issues:
+When using GPG/GPGSM to verify OpenPGP/X.509 signatures, the
+verification result (good/bad/etc.), signer, and key fingerprint are
+extracted from the output, but not the specific hash algorithm (e.g.,
+"sha1", "sha256") reported by GPG as having been used for the
+signature itself.
 
-  - It only talks about verifying GPG signatures while the command
-    actually supports verifying other signatures like SSH ones.
+Let's improve the `gpg-interface` parsing logic to capture this
+information.
 
-  - It's not clear what the exit code of the command is.
+This information can be useful for Git commands or external tools
+that process signature information. For example, it could be used
+when displaying signature verification results to users or when
+working with various signature formats in tools like fast-export and
+fast-import.
 
-  - It talks about the `<commit>...` arguments only as "SHA-1
-    identifiers" while SHA-256 as well as any committish is actually
-    supported.
+GPG provides the hash algorithm ID used for the signature within
+its machine-readable status output, specifically in the fields
+following the `VALIDSIG` and `ERRSIG` keywords, as documented in
+GnuPG's `doc/DETAILS`.
 
-Let's fix all those issues by updating and improving the whole
-documentation.
+The implementation follows RFC 4880 (OpenPGP Message Format) section
+9.4 for the mapping between hash algorithm IDs and their
+corresponding names.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- Documentation/git-verify-commit.adoc | 36 ++++++++++++++++++++++++----
- 1 file changed, 31 insertions(+), 5 deletions(-)
+ gpg-interface.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++++
+ gpg-interface.h |  4 +++
+ 2 files changed, 78 insertions(+)
 
-diff --git a/Documentation/git-verify-commit.adoc b/Documentation/git-verify-commit.adoc
-index aee4c40eac..6a208a0c2a 100644
---- a/Documentation/git-verify-commit.adoc
-+++ b/Documentation/git-verify-commit.adoc
-@@ -3,7 +3,7 @@ git-verify-commit(1)
+diff --git a/gpg-interface.c b/gpg-interface.c
+index e7af82d123..15687ede43 100644
+--- a/gpg-interface.c
++++ b/gpg-interface.c
+@@ -153,6 +153,7 @@ void signature_check_clear(struct signature_check *sigc)
+ 	FREE_AND_NULL(sigc->key);
+ 	FREE_AND_NULL(sigc->fingerprint);
+ 	FREE_AND_NULL(sigc->primary_key_fingerprint);
++	FREE_AND_NULL(sigc->sig_algo);
+ }
  
- NAME
- ----
--git-verify-commit - Check the GPG signature of commits
-+git-verify-commit - Check the signature of commits
+ /* An exclusive status -- only one of them can appear in output */
+@@ -221,6 +222,65 @@ static int parse_gpg_trust_level(const char *level,
+ 	return 1;
+ }
  
- SYNOPSIS
- --------
-@@ -12,20 +12,46 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Validates the GPG signature created by 'git commit -S'.
-+Validates the cryptographic signature of commits. This is typically
-+a GPG signature created by 'git commit -S', but other signature
-+formats like SSH may also be verified depending on Git configuration
-+(see linkgit:git-config[1] and the `gpg.format` option).
++/* See RFC 4880: OpenPGP Message Format, section 9.4. Hash Algorithms */
++static struct sigcheck_gpg_hash_algo {
++	const char *id;
++	const char *name;
++} sigcheck_gpg_hash_algo[] = {
++	{ "1", "md5" },       /* deprecated */
++	{ "2", "sha1" },      /* mandatory */
++	{ "3", "ripemd160" },
++	{ "8", "sha256" },
++	{ "9", "sha384" },
++	{ "10", "sha512" },
++	{ "11", "sha224" },
++};
 +
-+By default, the command prints human-readable verification results to
-+standard error.
++static const char *lookup_gpg_hash_algo(const char *algo_id)
++{
++	if (!algo_id)
++		return NULL;
 +
-+EXIT STATUS
-+-----------
-+If all the specified commits are successfully verified and their
-+signatures are good and trusted according to the configured trust
-+requirements, the command exits with 0.
++	for (size_t i = 0; i < ARRAY_SIZE(sigcheck_gpg_hash_algo); i++) {
++		if (!strcmp(sigcheck_gpg_hash_algo[i].id, algo_id))
++			return sigcheck_gpg_hash_algo[i].name;
++	}
 +
-+If any commit fails verification (e.g., due to a bad signature, a
-+missing or untrusted key), if a specified object cannot be found or is
-+not a commit object, or if another error occurs during verification,
-+the command exits with a non-zero status.
- 
- OPTIONS
- -------
- --raw::
--	Print the raw gpg status output to standard error instead of the normal
--	human-readable output.
-+	Print the raw signature verification status output to standard
-+	error instead of the normal human-readable output. The format
-+	of this output is specific to the signature format being used.
- 
- -v::
- --verbose::
- 	Print the contents of the commit object before validating it.
- 
- <commit>...::
--	SHA-1 identifiers of Git commit objects.
-+	Commit objects to verify. Can be specified using any format
-+	accepted by linkgit:git-rev-parse[1].
++	return NULL;
++}
 +
-+SEE ALSO
-+--------
-+linkgit:git-commit[1],
-+linkgit:git-config[1],
-+linkgit:git-verify-tag[1],
-+linkgit:git-log[1]
++static char *extract_gpg_hash_algo(const char *args_start,
++				   const char *line_end,
++				   int field_index)
++{
++	const char *p = args_start;
++	int current_field = 0;
++	char *result = NULL;
++
++	while (p < line_end && current_field < field_index) {
++		/* Skip to the end of the current field */
++		while (p < line_end && *p != ' ')
++			p++;
++		/* Skip spaces to get to the start of the next field */
++		while (p < line_end && *p == ' ') {
++			p++;
++			current_field++;
++		}
++	}
++
++	if (p < line_end && current_field == field_index) {
++		/* Found start of the target field */
++		const char *algo_id_end = strchrnul(p, ' ');
++		char *algo_id = xmemdupz(p, algo_id_end - p);
++		const char *hash_algo = lookup_gpg_hash_algo(algo_id);
++		if (hash_algo)
++			result = xstrdup(hash_algo);
++		free(algo_id);
++	}
++
++	return result;
++}
++
+ static void parse_gpg_output(struct signature_check *sigc)
+ {
+ 	const char *buf = sigc->gpg_status;
+@@ -242,6 +302,18 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 		/* Iterate over all search strings */
+ 		for (size_t i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
+ 			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
++
++				/* Do we have hash algorithm? */
++				if (!sigc->sig_algo) {
++					const char *line_end = strchrnul(line, '\n');
++					if (!strcmp(sigcheck_gpg_status[i].check, "VALIDSIG "))
++						/* Hash algorithm is the 8th field in VALIDSIG */
++						sigc->sig_algo = extract_gpg_hash_algo(line, line_end, 7);
++					else if (!strcmp(sigcheck_gpg_status[i].check, "ERRSIG "))
++						/* Hash algorithm is the 3rd field in ERRSIG */
++						sigc->sig_algo = extract_gpg_hash_algo(line, line_end, 2);
++				}
++
+ 				/*
+ 				 * GOODSIG, BADSIG etc. can occur only once for
+ 				 * each signature.  Therefore, if we had more
+@@ -323,6 +395,7 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 			}
+ 		}
+ 	}
++
+ 	return;
  
- GIT
- ---
+ error:
+@@ -332,6 +405,7 @@ static void parse_gpg_output(struct signature_check *sigc)
+ 	FREE_AND_NULL(sigc->fingerprint);
+ 	FREE_AND_NULL(sigc->signer);
+ 	FREE_AND_NULL(sigc->key);
++	FREE_AND_NULL(sigc->sig_algo);
+ }
+ 
+ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+diff --git a/gpg-interface.h b/gpg-interface.h
+index 9a32dd6ce8..2b7701ca2c 100644
+--- a/gpg-interface.h
++++ b/gpg-interface.h
+@@ -42,6 +42,10 @@ struct signature_check {
+ 	char *key;
+ 	char *fingerprint;
+ 	char *primary_key_fingerprint;
++
++	/* hash algo for GPG/GPGSM, key type for SSH */
++	char *sig_algo;
++
+ 	enum signature_trust_level trust_level;
+ };
+ 
 -- 
 2.49.0.609.g63c55177e5
 
