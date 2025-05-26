@@ -1,93 +1,164 @@
-Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+Received: from smtp.gentoo.org (woodpecker.gentoo.org [140.211.166.183])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D427D81724
-	for <git@vger.kernel.org>; Mon, 26 May 2025 13:52:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.215.178
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54EFC1FE470
+	for <git@vger.kernel.org>; Mon, 26 May 2025 13:54:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=140.211.166.183
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748267565; cv=none; b=JZiKRZR9mZSQmMnBT/fOT81JiG1WR8jsV0V5eNiU29hNRF192lTQQr4ulrR1XQwXN4QrVAOir6mqpVKr9+n6BwQL1g1Jmuqs2l0qFClXVLxyJtxDmpHZd6QV5KFw3qEAlrEKHL8Wot82G6Nm0NXUpnB/hfMUv0qTzsCDO2GCb10=
+	t=1748267688; cv=none; b=q63J6lcTBEUhF+En96NtRmB9u0ZmcEVg0K5SLKEi48TE5HbNGgTwhdpD2WYjodBozhQBgPuXp+XEjFWvtii7GMtVxisGMyBL0RcgreFvsrQOjXsiZFcX+8N7w/882D9FE3ivs59wtfx8b9+k8et4hFiGsDR6ptGcc3LP9PUGalo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748267565; c=relaxed/simple;
-	bh=irJ1QDhyDpRu0ufBYIzKzrmA1rDFaJPvJVHQg2FahDM=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SFUxcaYbhUmYj0GcEZrqzanlalK7WkQZN2HkFeucQyW6sg6+LcHmqoR68baOrXoEl4yWR6kBQwRdGzftecTaW4OP4UKVmECuYqDCTwNb5flrlbxNuWCmGQ4hRWeFnckuIr9Ij1maP66F6pI9xF25vTzhlLobTuPIh027ck9XyW0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=U3FSsYAR; arc=none smtp.client-ip=209.85.215.178
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="U3FSsYAR"
-Received: by mail-pg1-f178.google.com with SMTP id 41be03b00d2f7-b271f3ae786so1250200a12.3
-        for <git@vger.kernel.org>; Mon, 26 May 2025 06:52:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748267563; x=1748872363; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=uMiIOI06enoBY5DooD0cXWYtt4Cbrx33MB66yZpwAbk=;
-        b=U3FSsYARm22gyOnoq1oUJviLcafZB1hti8A1/Yx1otRoP+aA0hPQY5eB+nWzimqSzq
-         VjN+jbp064JCw4WMW0MJIuUl90to0Nyl1S9sIHkFvw5I91OHd/pp0HtwIHT+5caFFS+v
-         gbF8U5FhNm03tMsIwvXrD9NGepdjlYQWVWhgQcfOhtz/5ZksuGOziQZyTRAW+xZzb0RK
-         VqRO+l3YqA+WjXNsIj1EJIwlYYbj9WR6DUT43b4TqveN9/ae3K7jn5RH+1NGRVeXsUjk
-         GRdO2KKbXenLoqiDHX0v2KMhB6HWFVMW/QQB3og62zNdEKY+qSd/telqzBV/8chZnyUN
-         fvig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748267563; x=1748872363;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=uMiIOI06enoBY5DooD0cXWYtt4Cbrx33MB66yZpwAbk=;
-        b=IjZ7mAODQpeNAHXqLcLxZGfFAiPu08Q9n7m0XPckfrPoAEd3HRk2el2sWYomzIPBkF
-         Xr1W90USLdOpBv19IpQv03OB4uk3B/U2iFbWjF3BsTOOg9em1W57+GdJKVoW7khx9D19
-         D2tH2CJAerv7qdMtRNkT/7IMBuiYaFcIUn4cfkCPKE0JNtDNDPE61uhg1OkmsFX+IO7P
-         zmaxSL1QigMhxDOFyoPYiTLtyzZqKJv0N3JgPgGkqaJIyaQDtS02p5B2cSlQiRRTRnsb
-         zWfQq5Cxj+sDSIqgTs0tj0COYieG4wrQhAYEuc5R3tNzsPx+syYe8OvrN/MT62EvDAfb
-         u7hw==
-X-Gm-Message-State: AOJu0Yws4DC2FF6kwax2geQ+2juTnEIb3JQoSt8M5gZ7J5xRpWFTw8wS
-	ptU2/i0ZdutFK90TMIyKMwSOXxiW62ZDdcewWgXLO/JLNlBBA+vGhg+d
-X-Gm-Gg: ASbGncuYeHG0zZ5buzyuNs89VnyzK1XXBLDxDJeTw1kpXLcafXfoIcWR3kkbAlfbSs2
-	yt17FBdITLfV1p07HoK4R+tsuqpWMEdhOsgkAoG71iQFaD0dyJyd1/Ub2KK8hXgGC42LPpHOqdE
-	3zZqc5NXMWE/Z79lCZockHRmKVF4bj94jQSKJYsGTZ8CdqBvDDr6z/MGZLB2MfTyHazQZAlFCHI
-	hJO1sg5V/dO8FWmISCjSLKco9AGPNBJXU5WD5R3Yhg7PLwq70E/LHHHKnaBuGNtJ/uNblFLvvlL
-	0YkzyWrPEZfgk0lGEmlb2eZVpN26RDdWxW+tdGfetwclXsU=
-X-Google-Smtp-Source: AGHT+IHnDVqstCzk4bajpiidyp9AE8mx5srBsahcvXI5tP0PdP9kn19C8YiCG1Co3Ol5bVUnxlVJjQ==
-X-Received: by 2002:a17:90b:33cc:b0:30c:4b1d:330 with SMTP id 98e67ed59e1d1-311103c048emr14707577a91.27.1748267563145;
-        Mon, 26 May 2025 06:52:43 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id 98e67ed59e1d1-31198443104sm582287a91.13.2025.05.26.06.52.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 06:52:42 -0700 (PDT)
-Date: Mon, 26 May 2025 21:52:47 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2 2/8] string-list: remove unused "insert_at" parameter
- from add_entry
-Message-ID: <aDRyL57_jkyNjaGQ@ArchLinux>
-References: <aCoDB9P5XV1lHMil@ArchLinux>
- <aCoDU46MmoGPB60b@ArchLinux>
- <aCrbIbB8DDw0eeae@pks.im>
+	s=arc-20240116; t=1748267688; c=relaxed/simple;
+	bh=yx0K3/oHL+dfNBoanQXq+snrQnVnMMcMPLoBV1Z3fqk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type; b=q+nhhZ1EXo+CTPd+BBX0ZfbK2oyziz9e9rSGtaHtgUEoOAttXJarvEQOJvqL6wZMUBSzP7TkEz8Y/r16Q4A02AhGt8eLzh/SPA3tC09tBbDm3tW1b5Hl28qH/wyDm7C+/L1nGAAzBQhOfVYYjBZcKA0tllMq0ur1yDIMbukDt6A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org; spf=pass smtp.mailfrom=gentoo.org; arc=none smtp.client-ip=140.211.166.183
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gentoo.org
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gentoo.org
+Received: from [IPV6:2603:6011:3f0:6f00::12ac] (unknown [IPv6:2603:6011:3f0:6f00::12ac])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: eschwartz)
+	by smtp.gentoo.org (Postfix) with ESMTPSA id 3235C3430FD;
+	Mon, 26 May 2025 13:54:44 +0000 (UTC)
+Message-ID: <4c06724e-f6dd-46b2-9955-57501f8a4e0c@gentoo.org>
+Date: Mon, 26 May 2025 09:54:40 -0400
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aCrbIbB8DDw0eeae@pks.im>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
+ <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
+ <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+ <xmqqwma7w29o.fsf@gitster.g> <aDRiLdUCEVQHq26z@pks.im>
+Content-Language: en-US
+From: Eli Schwartz <eschwartz@gentoo.org>
+Autocrypt: addr=eschwartz@gentoo.org; keydata=
+ xjMEZmeRNBYJKwYBBAHaRw8BAQdAYNZ7pUDWhx1i2f3p6L2ZLu4FcY18UoeGC04Gq/khqwfN
+ I0VsaSBTY2h3YXJ0eiA8ZXNjaHdhcnR6QGdlbnRvby5vcmc+wpYEExYKAD4WIQTvUdMIsc4j
+ CIi+DYTqQj6ToWND8QUCZoRL+gIbAwUJBKKGAAULCQgHAwUVCgkICwUWAgMBAAIeBQIXgAAK
+ CRDqQj6ToWND8aB5AP9r4kB691nNtNwKkdRiOdl7/k6WYzokvHvDamXxRJ0I+gEAjZqR5V8y
+ mfR3fy2Z+r2Joeqdt3CIv5IwPs64spBvigLOOARmZ5E0EgorBgEEAZdVAQUBAQdATT46Z06b
+ 1X9xjXFCYFxmq/Tj3tSEKZInDWTpoHQp4l8DAQgHwn4EGBYKACYWIQTvUdMIsc4jCIi+DYTq
+ Qj6ToWND8QUCZmeRNAIbDAUJBKKGAAAKCRDqQj6ToWND8a2RAP40KPfbfoiZAJW5boFmFJ3G
+ TUBDJRh9CWHyaPqq2PN+0wD/R07oLzfnJUN209mzi9TuTuHjeZybysyqXSw4MAxkMAY=
+In-Reply-To: <aDRiLdUCEVQHq26z@pks.im>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------OWTcOYdm2noSQjbScqjbLvhX"
 
-On Mon, May 19, 2025 at 09:17:53AM +0200, Patrick Steinhardt wrote:
-> On Sun, May 18, 2025 at 11:57:07PM +0800, shejialuo wrote:
-> > In "add_entry", we accept "insert_at" parameter which must be either -1
-> > (auto) or between 0 and `list->nr` inclusive. Any other value is
-> > invalid. When caller specify any invalid "insert_at" value, we won't
-> > check the range and move the element, which would definitely cause the
-> > trouble.
-> 
-> Maybe "which may easily cause an out-of-bounds write" instead of vague
-> "trouble"?
-> 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------OWTcOYdm2noSQjbScqjbLvhX
+Content-Type: multipart/mixed; boundary="------------vrHBxnm0V5SI1T0r304B48Bx";
+ protected-headers="v1"
+From: Eli Schwartz <eschwartz@gentoo.org>
+To: Patrick Steinhardt <ps@pks.im>, Junio C Hamano <gitster@pobox.com>
+Cc: Ramsay Jones <ramsay@ramsayjones.plus.com>, git@vger.kernel.org
+Message-ID: <4c06724e-f6dd-46b2-9955-57501f8a4e0c@gentoo.org>
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+ <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
+ <xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
+ <aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
+ <57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+ <xmqqwma7w29o.fsf@gitster.g> <aDRiLdUCEVQHq26z@pks.im>
+In-Reply-To: <aDRiLdUCEVQHq26z@pks.im>
 
-Make sense. I will improve this in the next version.
+--------------vrHBxnm0V5SI1T0r304B48Bx
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
 
-Thanks,
-Jialuo
+On 5/26/25 8:44 AM, Patrick Steinhardt wrote:
+> On Fri, May 23, 2025 at 12:33:23PM -0700, Junio C Hamano wrote:
+>> Ramsay Jones <ramsay@ramsayjones.plus.com> writes:
+>>
+>>> Question: should meson (or indeed prove) fail the test because of an
+>>> unexpected _pass_?
+>>
+>> Yes, it is a very good question.  I do not mind if the answer is "it
+>> should, and the make and prove shouldn't let unexpected pass go
+>> unnoticed".  The difference between the build systems bothers me
+>=20
+> Indeed, a good question. The TAP specification [1] has this to say:
+>=20
+>     Should a todo test point begin succeeding, the harness may report i=
+t
+>     in some way that indicates that whatever was supposed to be done ha=
+s
+>     been, and it should be promoted to a normal Test Point.
+>=20
+>     Harnesses must not treat failing TODO test points as a test failure=
+=2E
+>=20
+>     Harneses should report TODO test points found as a list of items
+>     needing work, if that is appropriate for their use case.
+>=20
+> So if my reading of this is correct then Meson isn't wrong in reporting=
+
+> this as an error -- "in some way" basically gives it full permission to=
+
+> do so. So this is plain old undefined behaviour we rely on :/
+
+
+I don't see how you can possibly compare this to UB. It is a documented
+variant behavior and thus "implementation-defined", not "undefined".
+
+Also,
+
+https://www.gnu.org/software/automake/manual/automake.html#Generalities-a=
+bout-Testing
+
+"""
+It=E2=80=99s not uncommon, especially during early development stages, th=
+at some
+tests fail for known reasons, and that the developer doesn=E2=80=99t want=
+ to
+tackle these failures immediately (this is especially true when the
+failing tests deal with corner cases). In this situation, the better
+policy is to declare that each of those failures is an expected failure
+(or xfail). In case a test that is expected to fail ends up passing
+instead, many testing environments will flag the result as a special
+kind of failure called unexpected pass (or xpass).
+"""
+
+
+
+> I don't think it's inherently a bad thing to fail on unexpected passes.=
+
+> After all, it shows that our assumption that the test fails is broken,
+> and that we should have a look why that is. But I can see arguments bot=
+h
+> ways.
+
+
+As Phillip noted, treating them as ordinary passes undermines the reason
+for having them.
+
+
+--=20
+Eli Schwartz
+
+--------------vrHBxnm0V5SI1T0r304B48Bx--
+
+--------------OWTcOYdm2noSQjbScqjbLvhX
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+wnsEABYIACMWIQTnFNnmK0TPZHnXm3qEp9ErcA0vVwUCaDRyoAUDAAAAAAAKCRCEp9ErcA0vV51y
+AQDFJjHDyFG/ZgIV8KYUTxG8UIx94v/VW7RKQyWeXwWO5gD/RiWd0VwH4r3UTwo0rIdG9D28wqT7
+keg7Z7AsDFpf8QM=
+=7/3I
+-----END PGP SIGNATURE-----
+
+--------------OWTcOYdm2noSQjbScqjbLvhX--
