@@ -1,62 +1,62 @@
-Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD3D1F582A
-	for <git@vger.kernel.org>; Mon, 26 May 2025 10:33:43 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.49
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A728A1F6694
+	for <git@vger.kernel.org>; Mon, 26 May 2025 10:33:44 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748255626; cv=none; b=WfiVo5XuZYCtkHgwms/EuZw1CrwvJRlAZlpVqZe8W88KUXa/NpkStscI87l2rVjIlxt5DmXyL+GQ9o0SrUK1TeT/tgWINOKSu66B4oyjEElkrj3o6dVy0hc0zdlMEYvYVsIGtci6Wd5Er0hrAND9RDmYg8gdzq1XY+ElO6IA1xo=
+	t=1748255626; cv=none; b=QJ8cjTKF/2IaQCZPBWjpv4A9jvHEuZeQSzTY0rhRYKCZoeeaTK0t8Nx68fLvy5tekKz/TMD1Sv0oyCBOyEZErLX8qaEDmXc/OoAkZoQtv9Tg8SNLw57/e33jwJ63l6DQaRgdGXHeu4ag/wJeYoJaqWntVnGnyvaGOoK63EUrf70=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748255626; c=relaxed/simple;
-	bh=q/gcZZZa/QP5Cjz/a0LcGYL+6De3petWiNjVH3gr+ms=;
+	bh=5E86UAIRVki/RstuLbimFv8YluuLCUF4L1rwW3v4fpI=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bVNZnUVpYFl6C9eITztblUkxX4nNsdWsRSQhjr/81aJHNnCWjQD2K0ZZYahW6890ObEkAyyF/kbDlqqPes5d7tlpyQpCwbaXOXQYOdBlfttpciK5Ihr+zPqmC86BZBSCw/pNgWdljwPSLpxV4K8BrQ4XO9NEoUhZgtdKNCHyUMQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=l8sU+ks0; arc=none smtp.client-ip=209.85.128.49
+	 MIME-Version; b=BQ3DxxWfB3bMvKI7Cyp++UU+P+t8jSSI5rOIyKZGZbghyBzP3TLeVUG/XKQX2SHZ9TXCu+SrkQQcbiYLUnEzBk8pnSnpI7db3dC5z+K8MlaDMyKBa/eV1KYfOhelibZ3qLbMlIUuOrYL+G+1LZ7FIOj6xY9L9AKhh+6e4+bLr7g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=QJ1MatV6; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="l8sU+ks0"
-Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so14008965e9.0
-        for <git@vger.kernel.org>; Mon, 26 May 2025 03:33:43 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="QJ1MatV6"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a3673e12c4so1293025f8f.2
+        for <git@vger.kernel.org>; Mon, 26 May 2025 03:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1748255622; x=1748860422; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DZ8FPghasBfj4AT0ZAOgURMbadEFYLYDVR096cMJmuQ=;
-        b=l8sU+ks0A7y/tPBtIqUGvRoiEzynv0RB+XjUpCFdnwFfyGR4Q3mODDFy3xX7gsQNTu
-         qmVKHh2BnzashiYFtUSSUxxT/dzcjFlowL6s1nw+zobK3mQEyV/oFzCa4XWsSw9FtmyT
-         L4+jeUrEteQbP9ujBU2aUzpAqGIvtZprEHo5UKz/oak63VLhGFVnBQQ+GUd9bpxM1AKX
-         5WuWAXuLhXD1QT5Cl58/OtslWIavI7S5jgWHTkXlUeeyb7U4lgEYr0GdYdWPcQy9lyO4
-         BCukEqvtqr2cypVj/fd+VYrnZn1aphnsIu/l/8wDyHieievvSw2dVHCu8aVPc/iZcYnW
-         BHnw==
+        bh=msKT2lRY4c5xL4RndDLKP5KXYary1q5q86Mjofq2u5o=;
+        b=QJ1MatV6X42L38rk/NS+JN9XrFqQC5D2EQAtZYQVuqjbAZSKReyI6ZEcu0pUlDteR6
+         GV64RuozKLTJ2s1seHLZBXGShw6qi3wqN4IUGm85MiWSkDqYfrto8LeFc4AUIq4Pi9ry
+         YsmQPMOzvOKCYhBLJMcYBnncE2kQ0w0zD0sqF5l9LNZhqtk5X0DVonhUjvulD0kHIcnD
+         zB2yPNWC4jeHq71+DjfFNmJqF8po4YEONlySP1QgsEfdfgd5AH5qizrXccZ/LRDi7yU3
+         HLMDmtqeyXnnsaPDxinlfo47KoeDCgG7K3b8tMXIvE427m7F4BQRFXrjabxdVuLmQk0Q
+         Ljnw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1748255622; x=1748860422;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DZ8FPghasBfj4AT0ZAOgURMbadEFYLYDVR096cMJmuQ=;
-        b=WJFFLhheK56hW8+aMNOHill/jcmFlgTW9LB6BV2UwjbPO5KrvjqbhfOGi4dD5hPUt/
-         PczMUZWnmS8vTIkcL/aJ9emDSymtiE9xJeDPCBSIDzNG+3hnRR+1SXvwOqH2SD52E2DO
-         dP4v69+DWpOhLWhQl/TyPfFJU5LsXnsWLJdnVvl1XXWiKGf6lKlbHjGjfp/oRGTmhFC5
-         EPK3vEoH9ENUy7HPlrw4VN3Qa3O7XhMbBnnEWvUdOZ2rnNpkTQHByP3tjU9HjJVHJ4Ca
-         eTGAySeuPsEgZWOpgA/4AwkrAZXZ2lV8Cyxw3Bfwi4Ma4uVkOqxybVBqCFjWxNZJrIjx
-         XZlA==
-X-Gm-Message-State: AOJu0YwIh6CRVTOX2Tt+S5Tz+G8HrtXsPDva4kWRx0e3dPrVlIET9DMS
-	TRBiuHhSXIlVLnD/PdQHikYarEmQXA28VE7yXbX7uOCidKuycmzty7heKTT1BH4w
-X-Gm-Gg: ASbGncuioiiJVLbltDpTw6fsTK2rEot8S0hTqiN7L9zK5nsKsaQ4tdpIXVvlHF7N7pb
-	9rrUTjATVa6BDfwbD9ei3D4aCLluPHSdmyg6vzafyalNomFQxgQjv63T9rMI38KSLB6Zajwp0R8
-	EReVWDNbG29nVWNTa1a6Dzpgtv+NjzZuK/8kHbxWgnqlKc1aCzmPLydQ4mVCaMhx2aTzIadfX/R
-	DVMvkBXUkdDWNtjziz5dB1+7vMb9mkkmjhOJfGAtpld4FCQUygSNwET1QjKT0b94eyB4AH+cWNQ
-	84gZC624Qn/4EAMLNUAzs2RegL/vUcbzJiaUxQ5u6aYsMezduDjU2WUatPRS0MnF9nx1gNhuKcE
-	229rIKXqIsj0O5jM/PZz2ZwPaU4ZPVDTr+BZVrRNDgnunH2g=
-X-Google-Smtp-Source: AGHT+IFeIRrOGx5chO+icvXG60zrIA/zpaypZhsn+1/z/JJPRDl/dVkRDfffFPLkstjxYqeoJXtkpw==
-X-Received: by 2002:a05:600c:848e:b0:43b:c6a7:ac60 with SMTP id 5b1f17b1804b1-44c7bda05dcmr81337405e9.10.1748255621537;
-        Mon, 26 May 2025 03:33:41 -0700 (PDT)
+        bh=msKT2lRY4c5xL4RndDLKP5KXYary1q5q86Mjofq2u5o=;
+        b=fHuDSP6ARs1KzlojDt3m+mluSnpSV1RA939PMPrZYXPHRlORW/+kUzHZKHuLxQu+1D
+         Glcu/lrdVaup/z+0SLL8MPzDAm+zdMV/cWdyToZ0IQDuK5LMI/A9xdjOGL3gNhl9BMAB
+         /+TW+94IgKWRehF8fiXniA+N2zmYsFSbzTIfNpSMouM4Nr/2lMEKufNulQQXhSrXz2/j
+         8JhzN1REMaMsXCiaKcc3Em56K95c4rXlZ+L25xz3enTxCxK1xl79Bam+ImR6qYXZYE73
+         Rjhw/L5XgYRWOBjj+LQN02jMnpOBgMmUG6DgySDyowrvCcBu/1qWScDPIKmAzj1qAA3w
+         J1gw==
+X-Gm-Message-State: AOJu0Yz1qj2nQWzznwQy6RTTM6xX8MkPX652GR1jiVJ9vL8iYXXYtZye
+	2BYB3rmqQoaM3Snry7GexKE/jpyFEQdXjbXCkL32UY8IWU8lPr4i9HGp0SB7HuFX
+X-Gm-Gg: ASbGnctJAS3aiOiBSQaHwmfExvD7KY7exCi9mdgbvqwZ8C3GMwO+WFOxjmdds0YPVaD
+	l3ZyHImfRhftCZ+J8aEleyXuOCh091WCx1kBK5f0QcxRblKxwTgH/j9QiLH4CwmEczUmv2hRsl3
+	joECny+5qmuR5otK4rrhpsObcVpbowdxCQEaXv+HQcx5yS/KGimIFuTEPzY3ffA0xUU1XpxVXTI
+	MekBwO4SHjxyy2/k76IVc42kPFzpsDkok6E42GqFpgNOIEGssuUxp6nt4N+aFsyUHLIhn/SaKa5
+	SyOHFY8c6nu3uNkQukjY1ZJEujLHG9ZKtJmuz3Nt9ygxL0zRtj/hkRQEqcW4oJ95i/oglNnC05X
+	kvy+jMoIceAqN2g5e27Jkti6Dh7I5tsMgde/h
+X-Google-Smtp-Source: AGHT+IFfdKk9Cca95Cx02tKrAHokn8rGTGvWgErSZoz4C8DHUlWw/qsaAhy1UuooWqtUCGJrjTmqYQ==
+X-Received: by 2002:a05:6000:178d:b0:3a1:f5c4:b81b with SMTP id ffacd0b85a97d-3a4cb45f8e9mr6664781f8f.23.1748255622366;
+        Mon, 26 May 2025 03:33:42 -0700 (PDT)
 Received: from christian--20230123--2G7D3.. (176-138-135-207.abo.bbox.fr. [176.138.135.207])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d26caf92sm5071512f8f.66.2025.05.26.03.33.40
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4d26caf92sm5071512f8f.66.2025.05.26.03.33.41
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 May 2025 03:33:40 -0700 (PDT)
+        Mon, 26 May 2025 03:33:41 -0700 (PDT)
 From: Christian Couder <christian.couder@gmail.com>
 To: git@vger.kernel.org
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -67,9 +67,9 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Christian Couder <christian.couder@gmail.com>,
 	Christian Couder <chriscool@tuxfamily.org>
-Subject: [PATCH v2 4/6] gpg-interface: extract hash algorithm from signature status output
-Date: Mon, 26 May 2025 12:33:12 +0200
-Message-ID: <20250526103314.1542316-5-christian.couder@gmail.com>
+Subject: [PATCH v2 5/6] gpg-interface: extract SSH key type from signature status output
+Date: Mon, 26 May 2025 12:33:13 +0200
+Message-ID: <20250526103314.1542316-6-christian.couder@gmail.com>
 X-Mailer: git-send-email 2.49.0.614.g649fb04ae6
 In-Reply-To: <20250526103314.1542316-1-christian.couder@gmail.com>
 References: <20250424203904.909777-1-christian.couder@gmail.com>
@@ -82,164 +82,95 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-When using GPG/GPGSM to verify OpenPGP/X.509 signatures, the
-verification result (good/bad/etc.), signer, and key fingerprint are
-extracted from the output, but not the specific hash algorithm (e.g.,
-"sha1", "sha256") reported by GPG as having been used for the
-signature itself.
+A previous commit extracted the hash algorithm from GPG/GPGSM signature
+status output and stored it in a new 'sig_algo' member of 'struct
+signature_check'.
 
-Let's improve the `gpg-interface` parsing logic to capture this
-information.
+For SSH signatures, it's more interesting and easier to extract the key
+type (like "RSA", "ECDSA", "Ed25519", ...) rather than the hash
+algorithm which often depends on the key type. For example "Ed25519"
+has SHA-512 integrated into its design, and "ECDSA" and "RSA" are
+typically used with SHA-256.
 
-This information can be useful for Git commands or external tools
-that process signature information. For example, it could be used
-when displaying signature verification results to users or when
-working with various signature formats in tools like fast-export and
-fast-import.
+Let's improve the `gpg-interface` parsing logic to capture the SSH key
+type when parsing the SSH signature status output.
 
-GPG provides the hash algorithm ID used for the signature within
-its machine-readable status output, specifically in the fields
-following the `VALIDSIG` and `ERRSIG` keywords, as documented in
-GnuPG's `doc/DETAILS`.
+Similarly as the hash algorithm for GPG/GPGSM signatures, this
+information can be useful for Git commands or external tools that
+process signature information. For example, it could be used when
+displaying signature verification results to users or when working with
+various signature formats in tools like fast-export and fast-import.
 
-The implementation follows RFC 4880 (OpenPGP Message Format) section
-9.4 for the mapping between hash algorithm IDs and their
-corresponding names.
+As they share a common usage, we also store the SSH key type in the new
+'sig_algo' member of 'struct signature_check'.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- gpg-interface.c | 74 +++++++++++++++++++++++++++++++++++++++++++++++++
- gpg-interface.h |  4 +++
- 2 files changed, 78 insertions(+)
+ gpg-interface.c | 24 +++++++++++++++++++++++-
+ 1 file changed, 23 insertions(+), 1 deletion(-)
 
 diff --git a/gpg-interface.c b/gpg-interface.c
-index e7af82d123..15687ede43 100644
+index 15687ede43..182e579769 100644
 --- a/gpg-interface.c
 +++ b/gpg-interface.c
-@@ -153,6 +153,7 @@ void signature_check_clear(struct signature_check *sigc)
- 	FREE_AND_NULL(sigc->key);
- 	FREE_AND_NULL(sigc->fingerprint);
- 	FREE_AND_NULL(sigc->primary_key_fingerprint);
-+	FREE_AND_NULL(sigc->sig_algo);
+@@ -456,11 +456,27 @@ static int verify_gpg_signed_buffer(struct signature_check *sigc,
+ 	return ret;
  }
  
- /* An exclusive status -- only one of them can appear in output */
-@@ -221,6 +222,65 @@ static int parse_gpg_trust_level(const char *level,
- 	return 1;
- }
- 
-+/* See RFC 4880: OpenPGP Message Format, section 9.4. Hash Algorithms */
-+static struct sigcheck_gpg_hash_algo {
-+	const char *id;
-+	const char *name;
-+} sigcheck_gpg_hash_algo[] = {
-+	{ "1", "md5" },       /* deprecated */
-+	{ "2", "sha1" },      /* mandatory */
-+	{ "3", "ripemd160" },
-+	{ "8", "sha256" },
-+	{ "9", "sha384" },
-+	{ "10", "sha512" },
-+	{ "11", "sha224" },
-+};
-+
-+static const char *lookup_gpg_hash_algo(const char *algo_id)
++static char *extract_ssh_key_type(const char *type_start, const char *type_end)
 +{
-+	if (!algo_id)
++	if (!type_end || type_end <= type_start)
 +		return NULL;
 +
-+	for (size_t i = 0; i < ARRAY_SIZE(sigcheck_gpg_hash_algo); i++) {
-+		if (!strcmp(sigcheck_gpg_hash_algo[i].id, algo_id))
-+			return sigcheck_gpg_hash_algo[i].name;
-+	}
++	/* Back up over any spaces before " key " */
++	while (type_end > type_start && *(type_end - 1) == ' ')
++		type_end--;
 +
-+	return NULL;
++	if (type_end <= type_start)
++		return NULL;
++
++	return xmemdupz(type_start, type_end - type_start);
 +}
 +
-+static char *extract_gpg_hash_algo(const char *args_start,
-+				   const char *line_end,
-+				   int field_index)
-+{
-+	const char *p = args_start;
-+	int current_field = 0;
-+	char *result = NULL;
-+
-+	while (p < line_end && current_field < field_index) {
-+		/* Skip to the end of the current field */
-+		while (p < line_end && *p != ' ')
-+			p++;
-+		/* Skip spaces to get to the start of the next field */
-+		while (p < line_end && *p == ' ') {
-+			p++;
-+			current_field++;
-+		}
-+	}
-+
-+	if (p < line_end && current_field == field_index) {
-+		/* Found start of the target field */
-+		const char *algo_id_end = strchrnul(p, ' ');
-+		char *algo_id = xmemdupz(p, algo_id_end - p);
-+		const char *hash_algo = lookup_gpg_hash_algo(algo_id);
-+		if (hash_algo)
-+			result = xstrdup(hash_algo);
-+		free(algo_id);
-+	}
-+
-+	return result;
-+}
-+
- static void parse_gpg_output(struct signature_check *sigc)
+ static void parse_ssh_output(struct signature_check *sigc)
  {
- 	const char *buf = sigc->gpg_status;
-@@ -242,6 +302,18 @@ static void parse_gpg_output(struct signature_check *sigc)
- 		/* Iterate over all search strings */
- 		for (size_t i = 0; i < ARRAY_SIZE(sigcheck_gpg_status); i++) {
- 			if (skip_prefix(line, sigcheck_gpg_status[i].check, &line)) {
-+
-+				/* Do we have hash algorithm? */
-+				if (!sigc->sig_algo) {
-+					const char *line_end = strchrnul(line, '\n');
-+					if (!strcmp(sigcheck_gpg_status[i].check, "VALIDSIG "))
-+						/* Hash algorithm is the 8th field in VALIDSIG */
-+						sigc->sig_algo = extract_gpg_hash_algo(line, line_end, 7);
-+					else if (!strcmp(sigcheck_gpg_status[i].check, "ERRSIG "))
-+						/* Hash algorithm is the 3rd field in ERRSIG */
-+						sigc->sig_algo = extract_gpg_hash_algo(line, line_end, 2);
-+				}
-+
- 				/*
- 				 * GOODSIG, BADSIG etc. can occur only once for
- 				 * each signature.  Therefore, if we had more
-@@ -323,6 +395,7 @@ static void parse_gpg_output(struct signature_check *sigc)
- 			}
- 		}
+ 	const char *line, *principal, *search;
+ 	char *to_free;
+ 	char *key = NULL;
++	const char *after_last_with = NULL;
+ 
+ 	/*
+ 	 * ssh-keygen output should be:
+@@ -485,8 +501,10 @@ static void parse_ssh_output(struct signature_check *sigc)
+ 		principal = line;
+ 		do {
+ 			search = strstr(line, " with ");
+-			if (search)
++			if (search) {
+ 				line = search + 1;
++				after_last_with = search + 6;
++			}
+ 		} while (search != NULL);
+ 		if (line == principal)
+ 			goto cleanup;
+@@ -499,6 +517,7 @@ static void parse_ssh_output(struct signature_check *sigc)
+ 		/* Valid signature, but key unknown */
+ 		sigc->result = 'G';
+ 		sigc->trust_level = TRUST_UNDEFINED;
++		after_last_with = line;
+ 	} else {
+ 		goto cleanup;
  	}
+@@ -507,6 +526,9 @@ static void parse_ssh_output(struct signature_check *sigc)
+ 	if (key) {
+ 		sigc->fingerprint = xstrdup(key + 4);
+ 		sigc->key = xstrdup(sigc->fingerprint);
 +
- 	return;
- 
- error:
-@@ -332,6 +405,7 @@ static void parse_gpg_output(struct signature_check *sigc)
- 	FREE_AND_NULL(sigc->fingerprint);
- 	FREE_AND_NULL(sigc->signer);
- 	FREE_AND_NULL(sigc->key);
-+	FREE_AND_NULL(sigc->sig_algo);
- }
- 
- static int verify_gpg_signed_buffer(struct signature_check *sigc,
-diff --git a/gpg-interface.h b/gpg-interface.h
-index 9a32dd6ce8..2b7701ca2c 100644
---- a/gpg-interface.h
-+++ b/gpg-interface.h
-@@ -42,6 +42,10 @@ struct signature_check {
- 	char *key;
- 	char *fingerprint;
- 	char *primary_key_fingerprint;
-+
-+	/* hash algo for GPG/GPGSM, key type for SSH */
-+	char *sig_algo;
-+
- 	enum signature_trust_level trust_level;
- };
- 
++		if (after_last_with)
++			sigc->sig_algo = extract_ssh_key_type(after_last_with, key);
+ 	} else {
+ 		/*
+ 		 * Output did not match what we expected
 -- 
 2.49.0.609.g63c55177e5
 
