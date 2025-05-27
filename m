@@ -1,96 +1,91 @@
-Received: from fout-b6-smtp.messagingengine.com (fout-b6-smtp.messagingengine.com [202.12.124.149])
+Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A946D248880
-	for <git@vger.kernel.org>; Tue, 27 May 2025 15:52:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.149
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B76627AC45
+	for <git@vger.kernel.org>; Tue, 27 May 2025 16:04:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748361176; cv=none; b=lwUJAnyaKyXCw3xxI/lqF4Z/pgCHGl8Mwt85xi7d+Aw7XjMrWur2fzEOzZhz98Veuh5ncUG4GJUWYbiuDx/J3sUekm5l2DQB06pRUHaeKmOKsgjsk1mMyVL4j9wK+sRPtPvVZNg7aaI1sjhn0TzCOTN1QaaGzTqHAj2gOD5eB9g=
+	t=1748361901; cv=none; b=KEPsXwB+M44D6IfVyoZD3ROVMjbu7TAG1GyzkH/gpKUEODjGfbAAaUoJKLqgS52iJ3xMo+GlAKe5BLa4pvbx6jqFRyyRMCobYBMfWHaZ481cz68w5aZjNFRGZc83HP6X+tD4L1M5PSm67h/giHvYjotqGBcVdimFODmlCeAf3Ps=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748361176; c=relaxed/simple;
-	bh=E0AzNm3UJtBLRYZQFmZGp9Z3yXmZ+h4PfYMJCp8R36w=;
+	s=arc-20240116; t=1748361901; c=relaxed/simple;
+	bh=SXpXA7BVv3A/X9BaJbIWDQrDwAwnzN4aTdkjjHGgCIo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SZYdSJTFNbqUrq9i04Hv1vy3r3vWsIUDB3ITnNTVlEffBA433CVip4P1oA3UvF5vu4rwMWelCAeTqr9BV1xODwURokz5fNhc3Cyyy7K7Cv5y6CY04ChOjL1sjNiU6abaKtZ6o2ZyEzbdLeA6mh3mISloSErdo5r6OBfrtsD+Yuw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=KoJxnG8F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P49DHBwV; arc=none smtp.client-ip=202.12.124.149
+	 MIME-Version:Content-Type; b=oj3g3Z10K7qHEViZn8K+cLARrGuo4x/ZFQMX0XDIguzPHbBJJyslBjvSqHPhmvKHhvGISkIKfD7sPQeFDsQpDmuBDN3r0FRJDDR09YHtfVGRPqMvOzRg8JFNJ1HKlbh2ik+KKw02V5flJ+U+7ofY3+IZlVJzZZ2XuBIVxpc5VEs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=AGfO71lR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fddZnLiK; arc=none smtp.client-ip=202.12.124.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="KoJxnG8F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P49DHBwV"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.stl.internal (Postfix) with ESMTP id 848D011400F2;
-	Tue, 27 May 2025 11:52:53 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="AGfO71lR";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fddZnLiK"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 5CF832540106;
+	Tue, 27 May 2025 12:04:58 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-11.internal (MEProxy); Tue, 27 May 2025 11:52:53 -0400
+  by phl-compute-06.internal (MEProxy); Tue, 27 May 2025 12:04:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748361173; x=1748447573; bh=E0AzNm3UJt
-	BLRYZQFmZGp9Z3yXmZ+h4PfYMJCp8R36w=; b=KoJxnG8FRM5CdE+Ved3oH/IEaJ
-	ndBe4TXOV3mTcxgZhFHRUKxmnQa/JrySlmeA2i/3yNJzcVEPmg8K3rb95i08oIpZ
-	ttXI3wbhQb+8KZhRR3BBOqZ+jUhJvIu3Wfcko3qraaja1eAQ8TsTOixcIqxYaEE3
-	IVjXzthNkDaO3IhPXSXRl1k0j3nge48U5jtodd80ySzIBN1pbXlqlE9wJbUczAJM
-	XqCCEOUbdqdG/NBLotWr7vddMLEuT3kzJ6EpzLI6934EouayIG5F/OAWSFvt/m3y
-	WTV1FboEHTG2IQLpEOkw/q5nNWhRvLvgRVqdRWE6diKqm7LrFplCxmomsyhw==
+	:subject:to:to; s=fm3; t=1748361898; x=1748448298; bh=1NEKU4ZnJr
+	HYpLORkVqfLY8ZtYC2bv8WsjCAi0L9/gs=; b=AGfO71lRbwiKVLKgPpq6+k8Lkd
+	l9nCKMqzHkz57XICFQsDkd7OXDYPSxbqISkwZfBYXQu7Sc3Jo5YAVIohjpRcfhWu
+	rggbY9BxBo3KXZLYlpkdfjGE5e2PLFUYlty5QcoVOEKBFeIhSxm3J6CIYxZPS7XY
+	ji7Y+wkskc5cWNTZ7C63C2jty6G3iiufIIZhC7+XTs/2V2EJHfkXWQsd9yQemKeI
+	viBUXVjodUsyKrFOhm/c99yd61hHGjtjt9y8L5uBrVSO1Dic2dojXNcEqAjBan6i
+	UUbCoRbtBs9OVyZ4J/RTbkGRGg/vWTunuopwuG6MivQOtThM66i+r7OF0YHQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748361173; x=1748447573; bh=E0AzNm3UJtBLRYZQFmZGp9Z3yXmZ+h4PfYM
-	JCp8R36w=; b=P49DHBwVP9iHIcKgMCUinQVeufP/zhvyMOMzIJgnibo6Mkxowhg
-	uNRmZJU5RUcxH2Xg4mxPdtB0irT8+D+f11dp2rB9J/hNG1kgeHD2yOBGzNhO5UQk
-	+I+7kvWHzvANV6h4xHNOpcmuyfsV+kiRpaau8amxh2nddbB4GesxIRikXrtCDF/E
-	IEFopfqpCNFfRwssRFaFNO/jCjjHlsfHFzBE69+xV1ooUAFvkFWvBvkQ19m8hTj4
-	cLj0HaoTDeeoH63CDjyKoFnTvOWkF+zuhE/vTbhoW+UZzm+k1gkp0Fz+7veGXo5t
-	VaeHtKPLHdlOTZB7WDMS4yi4spHTCeOrRLw==
-X-ME-Sender: <xms:1d81aMUh5nf701wyInVbfu6-5X9PoiDL1VL_--jUD8gfy6Ob0TFk0g>
-    <xme:1d81aAl75Q56UKYMVx5QmRprDLsjE1XXukes8m9h09Azuk96LAkTmseynR_NKIaB-
-    JwrNU1f3zZwgnUH4w>
-X-ME-Received: <xmr:1d81aAbR67UOGTuUxH_lB1FYuYFt4_8jf-2zlU6bprNq-uK3AOI1a_sbva5jyVou5ANl7fNlHMcg4myoJfSEqW9LZUQR55_JgBTlnJo>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdejleculddtuddrgeefvddrtd
+	1748361898; x=1748448298; bh=1NEKU4ZnJrHYpLORkVqfLY8ZtYC2bv8WsjC
+	Ai0L9/gs=; b=fddZnLiK7llq+LNCx51Ib42VvH5C/8Vm8FBWOMT6/1xDrnenADv
+	l0JUSeeTmymRcyL5V5xBIzdegTfqpLhuh7I/7IMbUVnTscaqFGvY66gdua2r3T6r
+	twJlaVM7wTCX1Y/Hqy0IIxwz8aoVLfiDAGtA4CNXNe3L+64P8f7KClpUvPOGLA1J
+	dXevj0xRpnAWtcadJQHsXGbDPB7Xx1o3oac1xkT/PfYTzpXopYDGMmXj34XnQ4DP
+	TsZK3t4Mb4yTh/ze4nETd0jmfPv0yUp6vVyeVFXNpSb9daTI/tQwTkyzo69wHIvR
+	brcrJbPsjVP2I/jXf9zDFmheGD7ZJI3PdZQ==
+X-ME-Sender: <xms:qeI1aJN0V0_NLD5GCUPenM1wpkoKkV2XeUGUNKFt8D-CXKVhJCyN2Q>
+    <xme:qeI1aL_QcpSZcerCVG1vmCHwWR8Y03lSOTSCfu_AaRqn37p011YVwzx-317dK0UD5
+    k9c0Af_uJwlBdWvjw>
+X-ME-Received: <xmr:qeI1aITT4mVOAemnsGct5k7K5TRkOdU2ehX55nCkoIAdyIVN-Gdus34lJS6G7we5MsUX4_P_XisCaUnb3QJHFxsRXrc3P1KpdYB-42A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdekudculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
     kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehophhohhhorhgvlhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepmhhmohhg
-    ihhlvhhiodhgihhtseiiohhhohdrtghomhdprhgtphhtthhopehtmhiisehpohgsohigrd
-    gtohhmpdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihht
-    ghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
-    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtgho
-    mh
-X-ME-Proxy: <xmx:1d81aLXPnn3OefWaTQR3rs3rH39p6DlKZIR9oRXwWgEIBZbH5HVUhA>
-    <xmx:1d81aGnSWtiRCLjRZL9CUIeMQI05SeORsWF7bVLdOIr9rvgCbcnpjA>
-    <xmx:1d81aAeJaD-fw_hDUzHmKauyWoz5vVvENeh32ysMgIifV1ouCKqlsA>
-    <xmx:1d81aIEzsMFz-AKZp0S0jZhiyK5RawZuzxEgMzb9Qi-daJv-wkKL9g>
-    <xmx:1d81aDDAXVEOru2eF-1YKlycrZMRJp2WfaU4WoegRr56cWDG8YuAr3TX>
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeffieetueej
+    veefheduvdejudffieejgeefhfdtvdekfeejjeehtdegfefgieejtdenucffohhmrghinh
+    epghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehm
+    rghilhhfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtoh
+    ephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgt
+    phhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgtphhtthhopehrrg
+    hmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpoh
+    gsohigrdgtohhm
+X-ME-Proxy: <xmx:qeI1aFsTMObBWN1owbQklrCzQ3qXWXI-SvqFOIPneTkdA3BYOHo96w>
+    <xmx:qeI1aBfEAzJPiYsY77QRF8so7DUPBzxZr3HYEcIIApCQqfgAGwh2mA>
+    <xmx:qeI1aB3E4eU-2Rqz2L61oOzijcBAdfifqwlvwFVJDHkuUqAlqewQ_w>
+    <xmx:qeI1aN8frBpxQe_4J1zWT-mj-k3Egjb4y-aR8wGu3HwmvPsAhuN1Sg>
+    <xmx:quI1aIdKpjtT9AF6Vb9XKZ5a3ijWxLHcRM6-eYydahhqfp4mva5IdITf>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 11:52:52 -0400 (EDT)
+ 27 May 2025 12:04:57 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Ondrej Pohorelsky <opohorel@redhat.com>
-Cc: Matthew Ogilvie <mmogilvi+git@zoho.com>,  Todd Zullinger
- <tmz@pobox.com>,  Jeff King <peff@peff.net>,  =?utf-8?B?T25kxZllaiBQb2hv?=
- =?utf-8?B?xZllbHNrw70=?= via
- GitGitGadget <gitgitgadget@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH v2] cvsserver: avoid precedence problem between ! and %s
-In-Reply-To: <CA+B51BFJ9abjP5pDYwV1-mHpwg_n-jjz4_YX+nm9wOYF4nKuGQ@mail.gmail.com>
-	(Ondrej Pohorelsky's message of "Mon, 26 May 2025 15:56:13 +0200")
-References: <pull.1925.git.1747813502225.gitgitgadget@gmail.com>
-	<pull.1925.v2.git.1747822992457.gitgitgadget@gmail.com>
-	<xmqqh61ear4s.fsf@gitster.g> <xmqq1pshc2vs.fsf@gitster.g>
-	<CA+B51BGLK-3R9ev4a8EwkGHQEBi2QhgxvAd0CHMbphrxPM74eg@mail.gmail.com>
-	<xmqq7c287i7n.fsf@gitster.g>
-	<20250522170536.GB1613@coredump.intra.peff.net>
-	<aC9lM12GyntAp2tR@teonanacatl.net> <xmqqtt5c5viq.fsf@gitster.g>
-	<aC_90R3ohRRBVIV7@comcast.net> <xmqqwma7z5th.fsf@gitster.g>
-	<CA+B51BFJ9abjP5pDYwV1-mHpwg_n-jjz4_YX+nm9wOYF4nKuGQ@mail.gmail.com>
-Date: Tue, 27 May 2025 08:52:50 -0700
-Message-ID: <xmqq7c22qcdp.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: Eli Schwartz <eschwartz@gentoo.org>,  Ramsay Jones
+ <ramsay@ramsayjones.plus.com>,  git@vger.kernel.org
+Subject: Re: [PATCH 0/4] meson: parse TAP output generated by our tests
+In-Reply-To: <aDRzy37ZbH9_Qo5B@pks.im> (Patrick Steinhardt's message of "Mon,
+	26 May 2025 15:59:39 +0200")
+References: <aC2xp4Cdb0j6OX-G@pks.im> <xmqqcyc2aqy7.fsf@gitster.g>
+	<xmqqfrgx8xkw.fsf@gitster.g> <aDBH7G-oKKxAXWBp@pks.im>
+	<aDCNqRAoGygwnAbq@pks.im> <xmqqo6vjz5cn.fsf@gitster.g>
+	<57de5690-f683-4e8c-a05d-a91198b352ca@ramsayjones.plus.com>
+	<xmqqwma7w29o.fsf@gitster.g> <aDRiLdUCEVQHq26z@pks.im>
+	<4c06724e-f6dd-46b2-9955-57501f8a4e0c@gentoo.org>
+	<aDRzy37ZbH9_Qo5B@pks.im>
+Date: Tue, 27 May 2025 09:04:55 -0700
+Message-ID: <xmqq34cqqbtk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -100,18 +95,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Ondrej Pohorelsky <opohorel@redhat.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> I've just submitted v4, which removes the 'escapeRefName' function, so
-> we avoid the warnings and test failures when we build with new Perl
-> releases.
+>> > I don't think it's inherently a bad thing to fail on unexpected passes.
+>> > After all, it shows that our assumption that the test fails is broken,
+>> > and that we should have a look why that is. But I can see arguments both
+>> > ways.
+>> 
+>> As Phillip noted, treating them as ordinary passes undermines the reason
+>> for having them.
+>
+> Yup, and I tend to agree.
 
-Great, thanks.
+OK.  So perhaps Make-driven CI jobs also follow suit?  In the same
+run that osx-meson job failed, osx-gcc job notices a passed TODO and
+happily declares "All tests successful.".
 
-> I think the next step would be to remove whole git-cvsserver as was
-> said earlier. I'll take a look what it is going to take and submit a
-> patch with the removal later, if that's ok
 
-It probably needs to follow the pattern established for all the
-other recent topics that touched Documentation/BreakingChanges file.
+https://github.com/git/git/actions/runs/15221271947/job/42817168362#step:4:1933
+
+
+
 
