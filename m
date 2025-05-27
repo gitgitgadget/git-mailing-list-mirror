@@ -1,83 +1,92 @@
 Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9055126C02
-	for <git@vger.kernel.org>; Tue, 27 May 2025 15:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59EE92798F2
+	for <git@vger.kernel.org>; Tue, 27 May 2025 15:18:53 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748358260; cv=none; b=YZRUcRr80M8mn7GJxJwj4+tGA8KDnUlz81NVwTPUBFLq3JoE+DdzFITDq6NpMEWqKkIFVnT49cPJ8EpQEwrhhJz9bNBjDaFKvB5yODJn2yZGi5LPnrJgozc30XPFPFv5ngxaMNrr4t+DDzJr59ZzAOcqYbPT/Sx+LB17UhoTtYg=
+	t=1748359136; cv=none; b=BrKOWVWE+5X4ZhPvGKUSDQTqbB6SOShBZIVdrw6064FxfPtTdlHxCXkKTL90vdkPLfhZVv9PDfGtIvmdXYbkn/AQ4UR+r1x32z67gp2ajpaAx5RTPfNwYhT9HacM8zfeRchFMffqEH1PuFLMHM93GcK9lBB1xzlhY1/YbKkIU/w=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748358260; c=relaxed/simple;
-	bh=r1Z07ou4ptnVzkBtC51g6VH5hHE1wDrALQc+K9VQiTA=;
+	s=arc-20240116; t=1748359136; c=relaxed/simple;
+	bh=hkWbXpc+4UM3HqveDQzCGmgv8lOb8wlsi/jaY7akuHo=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=L8G9VaNgnoPIfjhggkh8EaOXNTBX3iwueSuY5aYmcjJbK07mIJAyysuzcXj/ZETvUQBPDZR+tt2IJKqVMSBsWtgJui56qJ4MXHLC5PWPdu8OO8u4DKiVRHxQ8mnT+19Vzn8d7/Sui7NLAaoDJBD7PU+9vYPiRBDEEEHL+dcZKYs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=bR60sq/H; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZuTiXjfU; arc=none smtp.client-ip=202.12.124.148
+	 MIME-Version:Content-Type; b=j1R6LTRsran68xCtuVuImcuZ+KEO7etPdXcOP3ESgG1r44+3MpV8dYzwdLvXWQ5axrJt9ENeB9yV4jS3+Tdz30ggamPaKU5gf14MV3pMACQ7ug4CWO0FGU9ubj5qv/+f7f3/Rdz1ihNAaqInPdpk9prElA9EV1HV0Ao8ZqdOOF0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YAvhf2vo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bj1aesld; arc=none smtp.client-ip=202.12.124.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="bR60sq/H";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZuTiXjfU"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id ED8F21140126;
-	Tue, 27 May 2025 11:04:16 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YAvhf2vo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bj1aesld"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.stl.internal (Postfix) with ESMTP id 333D311400B8;
+	Tue, 27 May 2025 11:18:52 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Tue, 27 May 2025 11:04:17 -0400
+  by phl-compute-02.internal (MEProxy); Tue, 27 May 2025 11:18:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748358256; x=1748444656; bh=rpZ8uJpcWP
-	7M1TSMot6X0d4TZvBCiKHT/f/fWHPepnM=; b=bR60sq/HX67IoP994alF1Zogl9
-	9a/vP4nG7PAzLZOJ1DncpPk5BfJiS2Tj5mfu+CWH9d7SoVT6yUmHbOrHIBVTlcn3
-	eWsQmoR9kueoZky2G9XK7I6I75PRmqPX13D5OmD0WjqChDZscxISIt9puzVVnzuK
-	KtrMZJwhwKvTWTSk1OQS5dyRR9x/A63wybfWrgKD2bdyPFBQYpeuJAOnMy+5W6ta
-	k/GIJwwgtE38A228gRH7sFyGgyLSU86LLg+mMYk3kH76r8dpEKEizc0Om0Denti6
-	/aKRPDgACc7+pGhi8yHEJfwCaLwTt9lwE/spZhXAlQ9k3H3OH2+QuNcdSzjA==
+	:subject:to:to; s=fm3; t=1748359132; x=1748445532; bh=hkWbXpc+4U
+	M3HqveDQzCGmgv8lOb8wlsi/jaY7akuHo=; b=YAvhf2voO3M0BgGSgo3yfys8Xh
+	tJ5WLjHof7dUIDT9y+OWkklWWzHRenXBKGXa0+u+2uo4Om6392XpltSlUfB4Zc05
+	bRcnmdQ8hUJsNogaiqbOKn7lQQ66R7/GCD66k66IUmQ5Lm4BxJ0CQcKKW2ERyBBM
+	AzV4n5NyO5TmSywTK5PtUAjm8QirlgCfoyVZyQY8pVl7PbQWzUScKLTjezZVFR48
+	tZ3MLzW7YilNO8HTi4OOtF24T1NH3NEYWmwsRzXnR/zSJOWGWnCbIgFYrYiiqZ1G
+	nsj2qjL1YVSuvUX/eU0SjqWWd8iu9UjP7vUeySmIpVYK2IT8MRySqZ0z8ArA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748358256; x=1748444656; bh=rpZ8uJpcWP7M1TSMot6X0d4TZvBCiKHT/f/
-	fWHPepnM=; b=ZuTiXjfUOFr4DBI8AY7aHg+iVGSwUQiIF3907RiTeEqiLwVo1/F
-	6XkiNjm4RuvBC2u6xFcXXiGItvKSK4YeynGI+bAu+GOoFEG05MpaHUu9lT9zsbVJ
-	VpdSZS/eafIX93CGcHPy0R/UunfQzfLJhtySrWB5RrJfTXWizzhwxdWPQkVY5qGL
-	7VpPbeu6IYbOhv+7uOc6scU87KZnoD/Us75nRH67i0XoooUV+yG+wPPCidqZrbmS
-	g205+IiklK06Ja6h9bUvIJrwuagzpyYKEhpa/Mh2+baMIZfgrLoTkJmWgBMZ3Qlw
-	XZQLVsl8eZGsPb8slRTc0WOYozBfsCa6Wow==
-X-ME-Sender: <xms:cNQ1aFFPqPtyVEFlfIzw7GCnFCXelxXi5fdPO4_Ss_EIjovriRFoLg>
-    <xme:cNQ1aKWnjgILjgVSH9aVfywKnobOa_GQ7CBWtXdrUXzhBqByDbt24dx9HNucIarO9
-    Iir0khce7jb2JX6uA>
-X-ME-Received: <xmr:cNQ1aHL319oK2RBI94TNJNjSPvsD15M_bEsQvVy3TwO_AMpM1nqdGUs_Z_tP_qUMcefmtlAjzTi7UNrcYfpySO1nlSFN7m8CV10xpcE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdeileculddtuddrgeefvddrtd
+	1748359132; x=1748445532; bh=hkWbXpc+4UM3HqveDQzCGmgv8lOb8wlsi/j
+	aY7akuHo=; b=bj1aesldibzZKYB8bkqdZce2ZTdkZUhYUlxi1BuzV1aYiUXlmmY
+	UmXw0Aa9zOMkD6sHQ5OxUgrq43ADjMPeUfybQpR6g0ciEfUIB5cof1FD7wkVv4o1
+	152G5DyNKNGao7ELyAHDXfVv8MZ0SK4eRpbMPUvq8DL9Us4y7YhxQDBnGpHCn5Il
+	n8IgNEhI0E85QtWG1C1IF2YmT9pKrQeCYix+gha7bP/lHP9sc5/lphGP+mtJ8jxM
+	xd/bSHwdSpt4fiYCrdzcgNvwwfgR/9vIp6Uuacm8/X0gLMqG0LoqBTwo3vz8EV7j
+	g9Foz/eG1jCpfq7cmoLyKcpE53Krrdr1+UA==
+X-ME-Sender: <xms:29c1aIm-mHAvN0_JDEZzFLN0XSEFOAh8-sGzW4x4ky2hZ58PJvMs1w>
+    <xme:29c1aH1SeujxltIxchlOnWzkRcqz02Hblpqpd4i9gqE8avc0S4oa7vxHEe7NrPzLy
+    R1RbUWSabqxr3vHOg>
+X-ME-Received: <xmr:29c1aGrFzUr0lidI1UJfuzR4qsgzdLLTOG067PzYcsc7xjVhXqkCYFAnN7BpryXgsh6fGocNOS4ri5XcB6AGZaWdP8VwthZutnpzy7g>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdejvdculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecunecujfgurhephffvvefujghffffkfgggtgesthdtredttdertdenucfhrhhomhep
-    lfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqne
-    cuggftrfgrthhtvghrnhepfeevteetjeehueegffelvdetieevffeufeejleeuffetiefg
-    gfeftdfhfeeigeeinecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepgedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepjheitheskhgusghgrdhorhhgpdhrtg
-    hpthhtoheprhhoughrihhgohhrshgutgesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:cNQ1aLEzQHRdVdENvikG-ZyWdcnj-Dis38t31-M-dJMiCYzxRhw7Dg>
-    <xmx:cNQ1aLXMNo_b7y2tDUkD5yKw76AhGCHFwuCrIH_bnXpyEgsv9qk2GA>
-    <xmx:cNQ1aGNjAmTci5OF4nirVy4tM2HyVHChFuk0voHI7qc4dWbzRuVaOQ>
-    <xmx:cNQ1aK3UMKZs1_yeIwjoxwkGjuvo_mIaN_e_134QbBXHMOawFSukIQ>
-    <xmx:cNQ1aLo6HBNlDTBqVsPibYu_Ew6a3YyiRGtPjZ-zGIAoEqwTY67z1kgN>
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefh
+    tedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopegthhhrihhsthhirghnrdgtohhuuggvrhesghhmrghilhdrtghomhdprhgtphht
+    thhopehnvgifrhgvnhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphhtthho
+    pehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepjhhohhgrnhhnvghsrdhstghhih
+    hnuggvlhhinhesghhmgidruggvpdhrtghpthhtoheptghhrhhishgtohholhesthhugihf
+    rghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:29c1aEm2ledDaaPZAHW1DGKZeSLwpYp3TBn3MbQjXopVjGgrBYH_AQ>
+    <xmx:29c1aG33E7KMgYKtAhbA8xBCzLhhO7_pjJER5ZEDNjuHdQY--OHUuw>
+    <xmx:29c1aLvjLuLrk1jPwCo6lfZJ_-dJKP_YbYthwURAbHSqE4I7IU7BHA>
+    <xmx:29c1aCWKkvuzLTU_Pe7BRrTXkxCj0FYWQgmapCH3IP7U5Ra0fvUG7A>
+    <xmx:3Nc1aESgcXBhkG4zoz5eAokqCEVnavUGd2yAOxDjzaAMtwsHtCyMqamE>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 11:04:16 -0400 (EDT)
+ 27 May 2025 11:18:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Johannes Sixt <j6t@kdbg.org>
-Cc: Rodrigo Carvalho <rodrigorsdc@gmail.com>,  git@vger.kernel.org
-Subject: Re: [PATCH 1/2] userdiff: add support for R programming language
-In-Reply-To: <385d7189-98fa-4863-8bcf-905c76eccbc8@kdbg.org> (Johannes Sixt's
-	message of "Mon, 26 May 2025 07:57:33 +0200")
-References: <20250525210236.116342-1-rodrigorsdc@gmail.com>
-	<385d7189-98fa-4863-8bcf-905c76eccbc8@kdbg.org>
-Date: Tue, 27 May 2025 08:04:14 -0700
-Message-ID: <xmqq4ix6rt75.fsf@gitster.g>
+To: Christian Couder <christian.couder@gmail.com>
+Cc: Elijah Newren <newren@gmail.com>,  git@vger.kernel.org,  Patrick
+ Steinhardt <ps@pks.im>,  Jeff King <peff@peff.net>,  Johannes Schindelin
+ <Johannes.Schindelin@gmx.de>,  Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH] fast-(import|export): improve on the signature
+ algorithm name
+In-Reply-To: <CAP8UFD0OdqnoFeYY+7y-No_x_DknapoLzvqvsy-+x_602sYQbg@mail.gmail.com>
+	(Christian Couder's message of "Mon, 26 May 2025 12:35:49 +0200")
+References: <20250424203904.909777-1-christian.couder@gmail.com>
+	<xmqqselxtfyf.fsf@gitster.g>
+	<CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
+	<xmqq1pthtbdg.fsf@gitster.g>
+	<CAP8UFD0OdqnoFeYY+7y-No_x_DknapoLzvqvsy-+x_602sYQbg@mail.gmail.com>
+Date: Tue, 27 May 2025 08:18:49 -0700
+Message-ID: <xmqqzfeyqdye.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -87,37 +96,18 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Johannes Sixt <j6t@kdbg.org> writes:
+Christian Couder <christian.couder@gmail.com> writes:
 
->> +	"^[ \t]*([a-zA-z][a-zA-Z0-9_.]*[ \t]*<-[ \t]*function.*)$",
+> I agree that we should have at least said in big letters that the
+> improved support for signed commits in fast-export/import is very
+> experimental and very likely to change in the future.
 >
-> I wonder how useful this is in practice. Unlike C or Java for example,
-> code can live outside of functions in R scripts. If you have a script
-> without any functions, there would not be any hunk headers. If you have
-> a script with a mix of functions and code outside of functions, the code
-> after a function would be attributed to the function. I'm not saying
-> that this is bad, but just asking if this is part of the plan.
+> We could still do so. This could give us a bit of time and flexibility
+> until we agree on and implement something better and backward
+> compatible. (Hopefully the v2 will help us move forward.)
 
-Isn't it the same as shell, perl, python, e-lisp and perhaps others?
-
-If we can reliably detect that we are outside of any function and
-set it to an empty string that would be great ;-).
-
->> +	/* -- */
->> +	"[a-zA-Z_][a-zA-Z0-9_.]*"),
->
-> This singles out identifiers. Every single other characters would be its
-> own word. I'd consider this a disimprovement. If you are not prepared to
-> provide worddiff patterns, I recommend to use "[^ \t]+", which roughly
-> amounts to the default behavior. It can be improved incrementally in
-> later patches.
-
-Good point.
-
-> Please squash the test cases into this patch. Don't forget to test an
-> indented function, and while at it, test a function definition *nested*
-> in a function definition: that documents what the expected outcome is.
-
-Again, good point.
+OK, as the next release is approaching, perhaps we do a bit of
+documentation update to address that "we are experimenting" and
+nothing else, and leave the v2 updates for the next cycle?
 
 Thanks.
