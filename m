@@ -1,169 +1,158 @@
-Received: from SY8PR01CU002.outbound.protection.outlook.com (mail-australiaeastazolkn19010017.outbound.protection.outlook.com [52.103.72.17])
+Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7BD827FD43
-	for <git@vger.kernel.org>; Tue, 27 May 2025 17:57:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.72.17
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748368661; cv=fail; b=UAdFF7tXioRQSzaDNz/Q23hSRE+wP0Guqw0CllJ34j6jMeprTteyhw6w5honLciPDsCdDdxBw9pudh33iPC2Qj1eTxVQ3qGx4BU/YdGCprKRP3/OD6uRHoDc185rEZBg68haKR20i8FXK34UMuzB2oUfQM6NoDAwZHCq0ldwPWE=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748368661; c=relaxed/simple;
-	bh=Gu2G/6AJH7JzIKpSO64tHHxOZHpFpZyLmZwpD7pbHGc=;
-	h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version; b=DbpXelO43XOTaSneaQZ4GNLEXR3XCtkIWoTwR/WcAwnrHk4hw7XPzjwxmU4yx+pJm6qoEJlb+mcgaTD1THJ/mBsiwokmz2wHuQSdDTD5Q37Znrz6kiIMrQQc1BHfkJ/fZuIXT5+UOkSVlhoejNO0nrRY56BQktJBUQRh4g/F7Do=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com; spf=pass smtp.mailfrom=outlook.com; dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b=DIVwiQFK; arc=fail smtp.client-ip=52.103.72.17
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=outlook.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=outlook.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91C4242938
+	for <git@vger.kernel.org>; Tue, 27 May 2025 18:15:45 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748369748; cv=none; b=OdrpNKwxqexxBWtCElWlwCjb9Rjp0pxYzU3YKyjesVgjOD2ltcHLrG6H/x/rQQmSYq38zP+hbAiwBL9aHaPXZyqAYO/9opLURM4OYnorB+et+UtWFMDaw5J1vEi+Hskh/8WeJqLbxPppdd26LonY2ss8HqvYvCzNfnMUevEInmc=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748369748; c=relaxed/simple;
+	bh=7JnxAK6AkZzOxNxxXJtUbfxV6o7L10WYZcTaPjzPdZk=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=CwdvHzkxHtKMn3YMwI1a3gVsT2iL2lyt1pKBQNAPcDMzODlLcktRtM6hQKlfdcrqTvzOdp9clCFkqFJoSCkYP7QTQ9CH9gr1rS9ziVOwRO+zt5heep59fVRYrJpPr1wAJ6d2aiMKslQcbWTBLLd1SgdH2qZxmEIaE2K6VXs25pI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b=YsMF/gZC; arc=none smtp.client-ip=212.227.17.22
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=outlook.com header.i=@outlook.com header.b="DIVwiQFK"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=NalYMRCvjEdevXZgxoFQ4VG+6ffahsPKmovNmS/gInR7g7rCiXbVcuclNyZf8wmR6Wzx1+l7A04rjeaHLXnXyt/IS5KiTFNK1SH2vM4rAR1/8SgPmMTwjvIi5tZo5+8LhOiH7czKBikPPUA8G/2D1aVZr3ORUE2nbXdesci/PANXGABIwDpZsbW7t8cM+UeFw0c17eiQTUJZS1AEVna9sxWqKvnVL83/EEZjAxMmVvvcLDWxIFafmKKvKVfEASDdsTA3e0+32DghfIkruKktOCH/apr0DRt7605ZOLKjEvrJjnsn1pNm5VGCD124jBohqP16kqfzVbFl8F3Niz469Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OEFN707ppmSw1eZmQQzGtc4y82c5IDc0hxFekSzrdUU=;
- b=jsKZWKQOdNzoH4a8RUiauJWOqLPk8SxZ2lYSfIPXiy1pXpl3wsLJvAX8MTBTkelEbr/nxQc/yFkE5j7gLuudM8HB4qVauUQIpBkEfKEM0Xx+Ly3AVw4J6I0GHDX/WESTw3bnNaR8rjjeWnoq6zoaxLWtyC7eSUqE0oxu+6SHJRa1YflhFR3fkST+vU+ui6/5Gusq2JevSHUbUlnUboAxd2IbXFPhwYapJOiMk/ce7ZiHiqE6Ci1Jf1gqJShCCgPLLVgT6q5L2jUPnVYLDeMW3Xe13fFdfBy5VqyxmVihhs1I1QtyOi26U3j34Vg8YryfDU3MYMS20st21ANtL/+DYg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outlook.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OEFN707ppmSw1eZmQQzGtc4y82c5IDc0hxFekSzrdUU=;
- b=DIVwiQFKm2sP0vaiSydCElEpcrylznHh/4gyMJdXViUeBl5jOICr0VrFfbti+vAFt+WtK4KIeNrA2itcCLt5219SieNttNxH/THiCI1L1GM2NBb1ah5F6uEBVDrOLQWYs1J4sgNJCLhtOfZQcRsyPGeMOUnd3dCggc/B4T3eST05cBYXQ1bwiLSEXnADjZ0vF+du/V13yKTwBttHLrggcMI6enCKnwHv7w2O9PasoRf5V8R0E6pzrTTes1HbrGdINAPpsxk0rl3wXkCchoqfoGzItj6MQLT6h3FmPueOb8moFC67bZfgoYOhpuslamRQMMxdsJBUbAfAhb0LHCbMxA==
-Received: from SY0P300MB0910.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:284::8) by
- SY8P300MB0151.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:261::14) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8769.27; Tue, 27 May 2025 17:57:36 +0000
-Received: from SY0P300MB0910.AUSP300.PROD.OUTLOOK.COM
- ([fe80::a2e2:675e:247a:cc33]) by SY0P300MB0910.AUSP300.PROD.OUTLOOK.COM
- ([fe80::a2e2:675e:247a:cc33%5]) with mapi id 15.20.8769.025; Tue, 27 May 2025
- 17:57:36 +0000
-From: RocketDev <ma2014119@outlook.com>
-To: git@vger.kernel.org
-Subject: Git hook for pre-tag?
-Date: Wed, 28 May 2025 01:57:19 +0800
-Message-ID:
- <SY0P300MB09101E749C9BFA924E8275B2EE64A@SY0P300MB0910.AUSP300.PROD.OUTLOOK.COM>
-Content-Type: multipart/signed; boundary="nextPart13785371.uLZWGnKmhe";
- micalg="pgp-sha512"; protocol="application/pgp-signature"
-X-ClientProxiedBy: SGXP274CA0002.SGPP274.PROD.OUTLOOK.COM (2603:1096:4:b8::14)
- To SY0P300MB0910.AUSP300.PROD.OUTLOOK.COM (2603:10c6:10:284::8)
-X-Microsoft-Original-Message-ID: <2240250.irdbgypaU6@archog>
+	dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b="YsMF/gZC"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
+	s=s31663417; t=1748369743; x=1748974543; i=hamlin.carlisle@gmx.com;
+	bh=7JnxAK6AkZzOxNxxXJtUbfxV6o7L10WYZcTaPjzPdZk=;
+	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
+	 References:From:In-Reply-To:Content-Type:cc:
+	 content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=YsMF/gZCF+YsqOpEiwXszdzfp5EdIxdYeafPZuRvTlk5BXoH1xpN3fwS0WPfbCXP
+	 VdoNQvi+ho9Gkr3FUfGP3Cl5/aLwIfwz0SB3zhIexdM5V+CRcAaYMsb/+qrlFWjv9
+	 lsYt2Dul6NLTM9YGZHexjw+Xw1ImmbHlw2PuaS0I1UdKW4QQ8Ogdo096ckqEd4ylC
+	 mO/Br43xi3I8JagYOmAAKW0IyQDncVaGi93iioNm/KAWXcnZLifH/rQcZ9yV6UGww
+	 q/+4Dzf8bb+uZLATmtzbNF/wYGSR+4RxYfxZWQ2FI78KpjfBU9XjM2pjbcbfFRLyQ
+	 vcu/x89DMCm/Gd8oAA==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from [192.168.1.65] ([69.62.178.28]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1MvbBu-1v9L8T1mCc-00zZY7; Tue, 27
+ May 2025 20:15:43 +0200
+Message-ID: <468cbd94-058b-41d3-81ab-e3c1fd2807c6@gmx.com>
+Date: Tue, 27 May 2025 11:15:41 -0700
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: SY0P300MB0910:EE_|SY8P300MB0151:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1f6a8a2a-c940-459f-f59f-08dd9d47f67a
-X-MS-Exchange-SLBlob-MailProps:
-	gMiuAN0LASIScjX/aS/OnauL17RJFM5JfjcjQVaWyP+UVkynY/KVqGI+T3coFngCMmhuTEKKzJLlMDNp09oCHYsKDe9ObVBOTIf/UFs2WAc2iJCEG3uEYWuVK8Zr2C9TTkiqFMrjw/RZG0y5DypYf8j5noYlJTp6CyoEuH2kcLwBIv/kDIK4S4p6MhFgDJAC+Wws3odrgxcxUUpB4523dgr9aoTFHxVG8JxejRg6+9Vcbgt41EysbIgIlZLP/aQRD7BZh23JtIcEBUreiEBjW7xaXapv8dIcQ8P85rLXoP/SpxSEtfvA9ym3zio75LsdobnODiywsOBat8t8I1osOOuAftf/KW3wP8/XqV7dOPL0omzp8HySJ55PG6LXHigzopGqnyuu1n6y3pBJb6yia0tAA3nwJN6SQ6SYi3N0SqJmOgq1XY+1NtJuh3gRMrFesockIxFmj9/q34RUGgQsCpQRdWXRFSHpTSTd7iqHEFUcCj3nYVWSbO53wMyCDN14n6IE8s4A1DczWVXkbNOYwkvKJPhj/g2aKX1+2CdPwOQqPly+UGKQGWbCOdmjbjQcvLfDV/zbDQFx8XbtbSYNn3chCz4K2g+HGBbdEIbN70e/qwXcUblm2NbVSWIGSzLec6c8zUhQ23riMywMNAAoMk84E+8R7BF1wtPMZpjO3AV5jJyZK4rwzwc3FpFXGuRLky43XyDFD63cHZg14HHf+Q==
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799009|7092599006|12121999007|15080799009|5072599009|19110799006|5062599005|461199028|3412199025|440099028|26104999006;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?RGtjYUY0d0FxN21xRE9OcnZzS0NCZzd1Vnc1dDdtNDZLTG9rU1RYQXBmUDVa?=
- =?utf-8?B?MlRmV1BDeTlmL3VFOExGV3dLQXBJUm9DRnpUSlk2MkVyUzVBZUVzSXlwSGxQ?=
- =?utf-8?B?c1RkRTRrOWN0djhnTUZoVFROTVZhUndrT0IvSThnL0V6a2cxSHdNcmk3TjBm?=
- =?utf-8?B?a3VQZmtUV29hSjRFNU80bjNUQS9iUWNuNHowa0tjY295M1JVSWtqanhaM2NO?=
- =?utf-8?B?ZjVVU2YzZmxvTWtkYTBnYTlBZjF1RmZkblBQb3BoZWg1dlhwM1gxWWRwaUJs?=
- =?utf-8?B?TFV4UGFtUEt4MUhNakRaSWZEMlhTS3Q3bHRVUHlwZnc5N25FaHZ3aE1rdVln?=
- =?utf-8?B?ejR5anlsMDBzVS85bXpSVkxvbEw5aHladmJTWVRGc0xieE1qcmhSWDBpZzMv?=
- =?utf-8?B?M1gwKzMyL3JOWFpGSjd3OGF2WitXZjVwMFcwMndLSFVScFhBUDEzdzhtZ011?=
- =?utf-8?B?ekRVMVVJRUFBb0EvZGFSYzdyQ0N6MzRtSUdoR0h0NmRtRzFCMUhkcVdJTzI3?=
- =?utf-8?B?ZFNZZlZkcWNQWVREak5meXV6VUZLcE4zb2lGRG5FTENCVGtDUGJiQzloSjlp?=
- =?utf-8?B?bFgyZWRhM0tXLzZrYjFRbHhpd2ZHclpLcGlhaUM4QnFnVnAzRGFxcjhGdGRW?=
- =?utf-8?B?R3RsNk5yaHdCY1Z1eExtTFVsd2ticnNoMFFrbWNoVnhYNklVWHZzc1FPQnM2?=
- =?utf-8?B?ck50Nm1TQTdZR2lIbGRjZVZrbHJ2WXNVbFd6Z0tDQUNDZlNDNkpoU2NrcmZm?=
- =?utf-8?B?NjF3dlhVUFdDWHpUT3ZrOENUK3NvMUo3cTFIMkEyWHRkcTQzN3g3NitBNkZL?=
- =?utf-8?B?OG9uSiswUjVCQkRpVHg5ZlJQaTlJYmZxTmJFSVZveCszZGhBN09OSjJNRWo2?=
- =?utf-8?B?dHpMU3dPWG03V3A5ZVFVcjlrYk1jQXRmMmFtNENOZys5TFIyWnY0YWdoNGRi?=
- =?utf-8?B?Q2RlcnR6amRSaFRHc2x6U3ZXckpvcXg4TllaYzhMK29rYlE4cmd4UkR4ZG1G?=
- =?utf-8?B?Z3ovcDV2VGlaN3k5YzVRWlhwQnZlRGtyVUFJelhoUWt5L1JhTnZrYVFNVys0?=
- =?utf-8?B?akhOK1hGNzZjT0V1NHB6WlVRUTJHSTd1MFBLNTJxc2FMMmcwM2pmU3dOVEFi?=
- =?utf-8?B?MDFSdFBtRUdFRVAyRmFJSTFzR0Y5L1lSMk8vdzNvYlliMTBSWjVMNkV6MVhz?=
- =?utf-8?B?RFpjVTFjemNqdDZUTlpsTS9LT01NcGpJM25vNFFxVEplNW9TYlJ1MXJDUW5U?=
- =?utf-8?B?cE5xUC9SeDVQR3VOMTdwS21wSWN3Zlk3RFBqVXZOd2lYMnp3ZkswcjJvU25S?=
- =?utf-8?B?N09VQko0eGRBMVdCVmhHYzVlOHg0UjhOcTBDZHhjbGtrNThHd2VxL3JjUVBH?=
- =?utf-8?B?UFVIc0tZcHhNeHZhMXhMWURNNDUyb0RqQTVtLzVFWjdaVzJoaE02SUNKQy9k?=
- =?utf-8?B?bElWNzM1K1F2MDBsSXVTWDBCY1d1Y1gvSTMvVkIwMWRpSVpYVjhjWmwySUJQ?=
- =?utf-8?B?YURSRlhPdVY2emc0cis3RFA3V3VXN3MxR2JnUVNlS21sczhMWk5NNW8vc3Rm?=
- =?utf-8?B?Smt4SlVKWHNQSmdaZ1pUc0NoRExoYlNHRWNqU2VWU2wxdnV5ZEUxMXI2VEV4?=
- =?utf-8?B?cnNUWHBpRmNMRHNxc0doNWtDTTg4dVE9PQ==?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?KzE4eUdCMDBVNG1jNW5XZ3FxVVNXYkNKN0FDVTEyQTFWR2U2Y1RNTGtGUFF6?=
- =?utf-8?B?NHhSVXBXdURNTGVlaHVYMUtseWQ5SkFvcndmTEVIdTJzNno1RTJXdWpucG1j?=
- =?utf-8?B?T3pHdmFYQk1FVFlPemhySExoWlg1cS9IbytWUkRPRlI0ZGt2WVdFMHJjTWxX?=
- =?utf-8?B?bHVvbWpETXZuTGVUUUlXTlEvVnlFSTl3YytFV3Q2Nzd0b1pZYlpoV2lzV3U2?=
- =?utf-8?B?cUYzZUdpSHRldmc1eVhROCtLMXNkUkxvVXNBWjkvSlAxbkxzQXFhcDF2aUEr?=
- =?utf-8?B?OXV3dnQ2NUxWYlJSb0hSMjRzMlI1WVBHVU1ITk9YZy85VzV0dk85QW82YmMy?=
- =?utf-8?B?UzlxYmsvczdpcTRKTmRFc3JYLzlkME5XWC93Mi9oRWRwcXRrVkRBQlBsUHg2?=
- =?utf-8?B?K05SbytIUis5VlhYbGlUV1dWbHFuWUR3M1BPcGRTZHlNdVlYTTBGWTN4eVZT?=
- =?utf-8?B?Z2pKWlU2UC9mZzB0ZklRdnhwWkRPMnJqUW5wUjZuSWxRb0VmNzhkUElMOVVU?=
- =?utf-8?B?cy9WTzI0QkI5eTdENFUxdXpndzc4aWFYdGRoUGUvVmtMdzNOQjM0YkpEdkh0?=
- =?utf-8?B?S0o1bGlWUUZ2V2JKQXFWbWtlNmIwZWhMdVZ5ZkwxbkRCc2RHdDVOWFp4OW5X?=
- =?utf-8?B?U29IMmJnWDRhN2FTalY3Qy82dElETFY5Z1lHRzdDNmNCZm0zQ0pYVDF3aFNl?=
- =?utf-8?B?MVN3WGZCL0duZnduajNyRzR4VDh5VGFZVmFVbXg0S1prR21yMFdMNnBnck04?=
- =?utf-8?B?YXc4UFU0b1hwUU1nV1dUMEtJbDdDVXR1L25BY0lVc092UG5pTnM1NzJGV1g1?=
- =?utf-8?B?YklPcmo0cTFsTDQydFVkbU8xSHYyRUJKUGVyaXlKWFhGMGxHY1NuNlk2TzNY?=
- =?utf-8?B?NEdiSVJidlF6QkI3eFZDMCtvcEdYMEN6NWpxS1JEL3RSZzlFL25XdHJvVWVi?=
- =?utf-8?B?Vkh4dFNSQ0gyME1XaVBPait4eVNSUW5wdjQ4K0t2WEdRNWlicWFzclF2eWth?=
- =?utf-8?B?TEpQcFJPOTlXcUozL3V6TnIwTGxYeVV3OHJxdk1JS2Q2Tm9XemJDY3B4V0FT?=
- =?utf-8?B?YkZkR3FZQUYvV0VLK1QvdnNUYTlnN1lJQjNReXNPRUJ4OWp2ekVjMk9NQm1v?=
- =?utf-8?B?UkUwTGR0RFJDaHppck9MQzgxRVVaUFV6L3NmRlV2M2ZocWFBNCtld0JRVCtW?=
- =?utf-8?B?UFRVdndLV2Z1MFFKVWN1U0pHeFlod3BSM1FlQk1nNU5WekdEVEVDTGw5Q1Zm?=
- =?utf-8?B?bUdVMCtqbm1pZW5ucE13S21CZjJzMlZCemhoWHVLRlllcXhQMEZCekk3L291?=
- =?utf-8?B?M3A3RUhWOExIeFpDUElVM3FpdktTbHgvNFFZYi9oaTErUTZtbHVuRE9xL28y?=
- =?utf-8?B?SldGV0JIWUZ3ZG1wMzRxM0xWSGZuNUg3YjN6OXBmaDcvc094dncxUjlCU0Vw?=
- =?utf-8?B?bmw1KzlnSXAxUlZwbXBTN01hQWFJZFYzWjRBMEdDR0NyS1p6dkNGNExOd0ZF?=
- =?utf-8?B?VDJ2aUJSbWJXMjVGdXR3czN2NjRNRlJvajBlNk8yZWNKUkNHczJCSDF3c3pY?=
- =?utf-8?B?aWNsMUE0dUFsSEVjaUVKRElvdUFnMFV1NEgzMlFKNmFmTXNwNDRSczQxSkYz?=
- =?utf-8?Q?DXvCsJ4EgXTuSzunIi6+BwtQevevJ8k2OdQN1nqAD9Y4=3D?=
-X-OriginatorOrg: outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1f6a8a2a-c940-459f-f59f-08dd9d47f67a
-X-MS-Exchange-CrossTenant-AuthSource: SY0P300MB0910.AUSP300.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 May 2025 17:57:36.4720
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SY8P300MB0151
+User-Agent: Mozilla Thunderbird
+Subject: Re: the
+To: Tengo kalandia <kalandiat@icloud.com>, git@vger.kernel.org
+References: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
+Content-Language: en-US
+From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
+Autocrypt: addr=hamlin.carlisle@gmx.com; keydata=
+ xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvTVU5fwUam
+ iewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3dwH9GetPPjCjJvnk
+ JOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWphJf7CwGsTfIfv7vsZ+fIwP39
+ rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNgSng9IldkMfcdBYlg3dWOpZNNcZrTGOyd
+ 6xvhvmMuojRRx8r54c0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29t
+ PsJjBBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrA
+ Bve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzsFNBEfL
+ B4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59jyb2jQYkiuUykupPom63I
+ UAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l/O9J0T4YDr0kRDGhEUJPHI27V2D2
+ NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91
+ j/vOsTEFIlfg57fbQpEknGsLRIbO1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozru
+ UjTQubdqPYOdgCnReTgcwo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF
+ 8NPuuGUUWgMmQ+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3Pxr
+ ljwVKs4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOym1DD
+ 9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUUyeqnlPHHmzSJ
+ va0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2oWPlR593d+pmHzZswK01Y
+ ozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQARAQABwkkEGBECAAkFAkfLB4oCGwwA
+ CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6EbFxyRtm3 kOwI
+In-Reply-To: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="------------cDDpzeWRy6coM0uQkiP1iUoa"
+X-Provags-ID: V03:K1:cPeN9KyfH1/4mNUwkJpTqrz+uMPTiygpBe1wqNtwPcXSh0DQD6P
+ iCxT2GtRfGHKko6TqwxSx6GkQg9qvDnB0MAgGpxdVA/ATyfu83ql9hzj0BUnLtsvBGyJK1l
+ 4EW2wvaFlOvepOQe57/cbO8aJywzHQSE1D66K78aHRfx0/H0ZSxToZSsuBwQcXz7J6dXu3a
+ 155VmTPDFKam82d0DxLRQ==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:AUZJ3Jz+bTU=;PFeM1bPEBWFT3pHufqcDKRU/8Wz
+ pID2x+vw5lGFkqL6lMz//BFUB6+4xkObIc6ygRqK2Q8ZutdzwpSDxqoGQ3M9BjPwf4WkInREj
+ w3bGdszbsECkaFsm33auyGLSXZ2EwIukvaJZUEnppR9Tkl6SU2bc9AJ+a0KkpYV3Q8AdpAjP1
+ dAbwDjYufs2j9NAvnEjYYBGhVlQ0aznBFYS58LqhkH243jcPhaXzMxw1AdWYmY+GoP1RDn1f0
+ Iw+8JsijiorZgb92rnZbUsa8TmiAg7JMeq3wxSreTaqBZwUKNbqd9sK0+8ByxaKqjOfTavmzq
+ zrVacQIKik+OiK7k6wr6r2tJvMAyEZb9/gxHo7RkSrref8BbztpXAP7+eQK74By+Pg3Ook1IR
+ 1W1XnhFTJXpqzKpbamienJxA5R7YjfJlug9niJcj9uSaVvgs/21HUCCsZgQ8mWV1yQLV4fsN0
+ K51fSYUBgK3KTrCM3f7tqhpiBcVZwDccKXcyTv03rGCO+eR2V5LPdzWeda9bhret3wd5D6+eY
+ TOIGuJmfiSQZMCR9NAWAR05xB6xfEIc0JI+QxJeIXouebW51Wnzhf5HLmGYdSgYjyv3SDwy4E
+ eVEdcVfxv5dP5nS7CeAtHg3C8UztToyyvt93juft/UVwQR0PGWr0mQPJ2Gx2/9I+7SBh8m73x
+ tu/tBElTZ2IANzyV4E3cetf5hk0UD8bys0Wr2R7rieCzKq24XEKakYuPfuq1tp0wF7JcVQ0pe
+ jyVq75eHvma3F7qe24+YKbdY1+dpSnP4P/bKz65lL3JeJQbuCgcJNfUa9y7mQBZOhFEMmfBAA
+ DCwbnShr60NyowNWG0dGXKO+B7us6NkUPaAJiSrVn7xXKzsFq5MtVZZ/I3Nlfi6RXvDx6i/Aq
+ A+btYysVFHGoNrsu2sa8BuFpplUuV+Dt6goou8wG4BiNOqaatESLSmROtQS0ftHOozz4On6FG
+ yMkCnVfeZHL+IuZpNm3IKHV2sfTj2O5XwliTnaUAcD79hS3tCGpiGXYw1lJMQfzh5v9N0Qpls
+ OY8B1kjY4IacEm3aAtS7vZPNePPPYR9RCZbZ7h256xaPBHt0ya4qPSV1NoPDu4oqJJVw+tdcU
+ 7BAtGfuT1hGeYfzyRKNioKJZhV7jaedX0lJFC65IKvGsa7LCRlSNfnjQjrAKL5O9KcOQp7fOi
+ yAQfXLETpJhh4ewqsZsVlC+mjhWHOVAJw907pdo7csIdl0b40PCM3aiOzMbFWp66FlTaG44Q1
+ MOC5rMBBowsAHZ238ptbhsoT2oWFVFFr98BxAmzxwXP12CrQEOqvqtAjd7ZG/YsjZjiiV3yum
+ E5a+c85jwuX0YdsH34TMtD2VqM/dXx6UzgNyjivleRxVCZXMuftQKHtuWbS9+DC15qp7hpaVK
+ cUP4NaKSEBBwt62qzLYIO4gBL2Z3gjI+BE9WAeFc0Qh+kUgYCtX/WRqSpKQvV6hleoGTg47zk
+ u9mosCyGZKCy6WeHan32UMyPoZYpjLXtfIuGSd5cxvfPS+Sol1B9+t2NjzlJ9FBlOF0HZ2VuW
+ t4sbAoFLh+tCUn5LI7WKaZIgSMk4pC+JkX3z5n6iG2DbAxWNhoAHZXvQWBekwXCx0A9mBYl7o
+ gl+rz9LphD15LTvFWNkEpbpIXav1Nmxf0M9eQzAHHGn6y0FrSpDCt0VcKkX1FjU+gRde90rpw
+ 6a7tCuWxrUpiakcXWkGNt7eZmBbfib28l19ufutPkwHStv6957MPiz1k6IcTy+FJhFraT+wVj
+ Mz5oI3z7mRYW2WeSpznNb25YxvTwJbksgDSt0uB32eZFwnXo32XzUHgSICx+wyDZkVMsekktZ
+ AK/B5Ig/YI3lX9/gu5mrJeaSXxuyJ3AxbYSOcxOV51L68r4TlVM3BvgfzBBr46F7MjIskSr6z
+ qiUWWcJ3eyEEGZm6QQrKASBjaiXTR8y+2b2LpHsSZ0rqvRcrchmbOfcs33C50P1P2gftiHIF6
+ 3+YICKjjl4Fx62nZmdf7z7Q1Io49tiiO6wab1Szu7lZhHxHKlj593NW/c4btT98fcRY0j+TMK
+ YEypKiVKJpVChpttYpYL3KU133PYO5lwTLqVtJSqPJ6dFtClYELRcDYuBR6jdF36S7vBIIskW
+ HR+ksWqDgXTG3x2/rKeHrMVODMWO49eJQwWXQoOry9816ZhE5hgwd0C9Ryak1cPZxYIf7dqlv
+ S585ouBBTxD0wWtXZvnD/15Oopg24zF2cK0TAOFK57HWamLFV1kV/uYWAJlGvH0+HpY+A5q4H
+ PuTZBEihwuNPT4rzcxSNdevFiOmFRvnjrwDTN1Jr1qSi717hCB3b/nYiL0pyOnVN6igGmUKAn
+ 9lsUlejrN4P4dVJ5FzeKGB48659uAiWpK1hTCc1wQpwbbdPlygSWsBhIGwqBOg+Z4mkCnUKWm
+ +fhkJtxpdFgSfqWca9KeE5CCvuFDS3F0jh1ZbQZL+J6oeaGUJGHABFtTGN/5awQc/K7KgOBjf
+ WM6Jf4eF9NhHzxjTZG55uFwAOlFdVtRD/8MLjIMX0qQXfT/Vrhbp8MNIq4OKrpKsw/HXWN4bY
+ 0Fr22Bf2JlXBdPs5FRCe5k7d6AlNWNyunXsP+K2Dph/YAixjOdNPNTQu1Xd06R2MdlhV14wp+
+ 9pR01WjSGnAoFcuLq9NnUbIFo7SnmM5SytiPT7I18NhBb+6Se717FjlvOG34RgI53H2hBIjgj
+ zqRf7oQXoC52RWDHDFM+r9kRKShVHYqK5RuNWoxqm43NWCZaZmr3g/rv68ni1hE1NQBbjig86
+ AzwqJ54GpYAklaLZ9c3eHSYM43gdWhg88LTWNFxLzE9vYyVID5UBXr4uNxKxW8i/vX1R6z0yF
+ J7BAbH6k/2SEqtutEOQEAiGHag4gOVyyJPuL8OoZw9Ikx2ZRcc7TF1F//XN2Gt9caGYID3Qjm
+ Xd0NwnffQqlDDt5BTrtBDzV1GlkoW9QCBh+wJcBN69A+/hexC0B6ikLK2982mpJvlW0SdtMwL
+ xd6tzqLR+q4ZtruaGTUc8bGoRtj2pO0UolWw6fqwjDAkrfU/I96fjBIoQMG8DOvXNQ+Fhgxqn
+ KWv7UFyEYqw+ULSF69Sd/Zd1swW8N3Tx6N8vT182V2k7kLhpDOamp+hidrhRvPvVU6ju0uY9N
+ VvtKXG3vuivdG2QKN1jz8BTioOes2lS31/1ZwjkbZDle/sHL17oK0dV73ZjOR+OYpW3pR/FM7
+ bV/c=
 
---nextPart13785371.uLZWGnKmhe
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="utf-8"; protected-headers="v1"
-From: RocketDev <ma2014119@outlook.com>
-To: git@vger.kernel.org
-Subject: Git hook for pre-tag?
-Date: Wed, 28 May 2025 01:57:19 +0800
-Message-ID: <2240250.irdbgypaU6@archog>
-MIME-Version: 1.0
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--------------cDDpzeWRy6coM0uQkiP1iUoa
+Content-Type: multipart/mixed; boundary="------------Foj7ffTlXNQs7lkKWWsOSu13";
+ protected-headers="v1"
+From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
+To: Tengo kalandia <kalandiat@icloud.com>, git@vger.kernel.org
+Message-ID: <468cbd94-058b-41d3-81ab-e3c1fd2807c6@gmx.com>
+Subject: Re: the
+References: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
+In-Reply-To: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
 
-Hi all,
+--------------Foj7ffTlXNQs7lkKWWsOSu13
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-I am maintaining a software repo and upgrading it by manually run git-tag. 
-However, it bothers me a lot that sometimes I upgraded tag, but forgot 
-updating the output of software `version` command. So I go for git-hooks, but 
-do not find such one.
+T24gNS8yNi8yNSAwNzo0MywgVGVuZ28ga2FsYW5kaWEgd3JvdGU6DQo+IA0KPiANCj4gU2Vu
+dCBmcm9tIG15IGlQaG9uZQ0KPiANCg0KV2UnbGwgZ2V0IHJpZ2h0IG9uIHRoaXMuIFNob3Vs
+ZCBiZSByZWFkeSBieSBuZXh0IFR1ZXNkYXkuDQo=
 
-I wonder if this case (no pre-tag/post-tag hook) is by purpose, or just nobody 
-implements it? Or maybe there are some other sorts of solutions?
+--------------Foj7ffTlXNQs7lkKWWsOSu13--
 
-Thanks in advance,
-RocketDev 
---nextPart13785371.uLZWGnKmhe
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part.
-Content-Transfer-Encoding: 7Bit
+--------------cDDpzeWRy6coM0uQkiP1iUoa
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYKAB0WIQSnrMw4bBXjxVTTSz6rCPmAkqRWuwUCaDX8/wAKCRCrCPmAkqRW
-u282AP90hS4kTSwtWxBN4i+KCtDoxonGSHl5mY1Hn5BvQJ880wEAgysC2mfo+/3e
-ue1GTwD7lhyeu1P+cKrT3LnWTA+aBA4=
-=Cd8r
+wmMEABEIACMWIQS03Plbjnx/WLb9533IubjJ2sAG9wUCaDYBTQUDAAAAAAAKCRDIubjJ2sAG96Uf
+AJ9IIOWJDX/5pTdzNis8KgepIN1oXQCeKCfs9wRzI8B7R+yw2r90AbhKLvE=
+=JDov
 -----END PGP SIGNATURE-----
 
---nextPart13785371.uLZWGnKmhe--
+--------------cDDpzeWRy6coM0uQkiP1iUoa--
