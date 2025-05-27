@@ -1,136 +1,171 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB6627814B
-	for <git@vger.kernel.org>; Tue, 27 May 2025 16:12:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37684248886
+	for <git@vger.kernel.org>; Tue, 27 May 2025 16:34:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748362335; cv=none; b=KNRmhPjuZ6JC1vdkj6iA/gMti1uO8clqlhVIknZX6/CGfhbqyUM1QYpfPFvEUIST3sX1K/15xXqHtcAqEThJTmf7uZ6eahMXjl1VCrWTqYbiRT3jQqZ7PPKtwIHhP7X1GxEzNaEobE46WjeMMXVhn+1HvJmGKj2mHLcN4Nq1MWE=
+	t=1748363646; cv=none; b=Y3AizpR9Wok5qJxlra2MRbbQceIOVfvQ1WvusQRg1CHFlsCOTB2vIh4Mk0v7kWBzqGSOt8wV9NJvGp1ICwFIZpCrDT6Yxuk8cYOt0OAcTywsdHC72KczSyHQ3UgqkCRN++ElXtPpjLyXQh4hdN4yoThdhphNBcLOqnZsFvrZxyo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748362335; c=relaxed/simple;
-	bh=k3eWpO0Zct33o/GZ7inO7UhAAqIUxOrBVi7JBWnAWXU=;
-	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=VEv2g1IEJKcm4KjuyW9aFPVUo/icWr1FczktBo8O/fAL0ni5mr3QyM8Ga0ulw6bmsBLHDEm6R97TPgosSRwRsBzrckcOmkp/rYkhBBQOK8BvYUsCcOZCjykTH0qLFmC/pvG3jN0kQmS2xMSRc5o0CzU1y1EJm7uSSt84m1XllZE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=UjZnllvy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=g88E6Bm+; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
+	s=arc-20240116; t=1748363646; c=relaxed/simple;
+	bh=tsp8BzkIz3mbhHOm59EWBssAHHSntK2Xcd/rJLUzsJI=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=hSo4Fen7LLNF5py1Mq0lOJ5vPDJ/bTNbpYVwBoowUHzn+gSPz5hHdjh14CrAJDSp1+xOijMATuoPt5Slus/Oo1+OMP8XLVBOBZESoALW2eTWNt5vdMQZ2ZpR6K7VD2eAAMCSpbJ2cjpoXcUX5hEMXphMoDO7ntW0e4Lay9E8fBg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D8CCsz93; arc=none smtp.client-ip=209.85.214.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="UjZnllvy";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="g88E6Bm+"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 4CBE125400FB;
-	Tue, 27 May 2025 12:12:12 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Tue, 27 May 2025 12:12:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
-	cc:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748362332;
-	 x=1748448732; bh=NhWCujaq0yD7L8ztBWAnbOpKTIwam3t+gpLR8yVLzdI=; b=
-	UjZnllvyLSisaRylT01fW1fvbfyla8PQCtDONW+YFfVQt06frLZ6Y7P41zBjrIOy
-	VD0gygnvvMZuoGcD1STHdVrniAHXLvWCXks3UDFQ1p11KF9MWg3Hiz+6dTdiTnGo
-	7j+5XIGiY32oV9TiS8kwq6ASjSPKtUcj6Uk51oLtkRX7aEs+Pnxx4mAmDqD1dP+g
-	oQQ8mZ/slldtoyIB05WZHRRpzudm7t5pTSZYWIpQ2RDsz9XRdpTtomfWO3phWvVn
-	DTAkfSq08IY/31XTAeGTDjaJcVxq0K9QNCx++dI7OVUb2TgGkoGiO9JteU81M/hw
-	Mr166d/B/oDAKIgcVjJnog==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:content-transfer-encoding:content-type
-	:content-type:date:date:feedback-id:feedback-id:from:from
-	:in-reply-to:in-reply-to:message-id:mime-version:references
-	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
-	:x-me-sender:x-sasl-enc; s=fm1; t=1748362332; x=1748448732; bh=N
-	hWCujaq0yD7L8ztBWAnbOpKTIwam3t+gpLR8yVLzdI=; b=g88E6Bm+xNP7ddODI
-	dZNNGQPmGCkdYVzxiF4p/aO4z+oPXGEVoEkk5h8GeSwXYwiIJwymGsI08beCJFPj
-	K+U0mifGZrwyavW0yDxGNGisbHMrzCh8zCWHIpkViTHQ3rmHRl8cZyuGoBRk05Dy
-	Vx4fHgY+1T4y/4OthjH0cCp2fGc4JIM3McSaDVyL+5Ur1EHCKk4hMZr7I7R/CrBF
-	f9WUwW/Auooiaa32xM7ke8dFb/P6g/APyLDjvH3G0fBFJvnu11fLhTACwGJ+UbMZ
-	FP/wn0kJn/ZBpTFNLnXwQmpCVuTOSUn3tAatcBpmkf74K2mvH2r9NGl0c5Rh4XU3
-	6KL6A==
-X-ME-Sender: <xms:W-Q1aFcG8imydDri-Wihd8R5g07SiwI98R3Xw9vARWYqXd3dUuZc_KM>
-    <xme:W-Q1aDP56N_sLu3_gWtTEWwFPYwwolZS02iz0tHPqWKkImTGPo4bFtDBHSimuENud
-    OU3LThZXNaAGBEVWA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdekfeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvkfgj
-    fhfutgfgsehtqhertdertdejnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghugh
-    hssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
-    lhdrtghomheqnecuggftrfgrthhtvghrnheptdfgffettedulefhfeekheetgfegfeejve
-    eikeeffeeikeekhfevieeltdekgfeunecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
-    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
-    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdp
-    rhgtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprh
-    gtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-X-ME-Proxy: <xmx:W-Q1aOhEepIoxU8WwCnZJWxSe_q9MXzJjPKt4awAZwEzjepCtpE9Tg>
-    <xmx:W-Q1aO8yuzLynkUvpXlXMjvNTpbPxhsuOXif8LMOjwF4Hol6l6pxMw>
-    <xmx:W-Q1aBsuDzzBDQumvQorUyze-d_t4oJ-ibu_TUGNROp2K3_WwUp66Q>
-    <xmx:W-Q1aNF_raFUvTTcbfad-Po0Qlfyx82qTK-EJP957qSQNqos60mQaQ>
-    <xmx:XOQ1aKuzjzohNv6Utiab4vpCtrqFXjx-aniSKLfua_K2to723MH9K_Ko>
-Feedback-ID: i8b11424c:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 3A2051EA005F; Tue, 27 May 2025 12:12:11 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D8CCsz93"
+Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-231ba6da557so581415ad.1
+        for <git@vger.kernel.org>; Tue, 27 May 2025 09:34:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20230601; t=1748363644; x=1748968444; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=tsp8BzkIz3mbhHOm59EWBssAHHSntK2Xcd/rJLUzsJI=;
+        b=D8CCsz93s7mqqATwpPzu9d0p8undT2d5F3tzbywmRo+uo4QbRIYHi2oR5WoWN9rcgX
+         oSrsJw0gthT+e8TGRJHf7LGQEMKglhQ55FY0GLprPrTdWtT8cxgR9khCtbmU3SviTR45
+         04BxfaNdFVrVd3Q7rPkuCfiZRb1RaeZn7eeNpqj3j9+cYFeeiaT/Pinx7d3MRgkMomF/
+         jxGMWH1tawRPBhhBO3bvyv9rqDcqSqEGwz4eCjUTuZe7e8GgHJyHB4am468V+OiGDL+B
+         fUZnClEwD8Yitc1k5vJ5ObiaNdpNuakDDT1Ky5hU6IOSPnUY1EmgZvLAk8yihO3qkTgW
+         o6IA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748363644; x=1748968444;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=tsp8BzkIz3mbhHOm59EWBssAHHSntK2Xcd/rJLUzsJI=;
+        b=P2Omaj1woAADJjDqgrpy3cJcl5iZWm14L5GPAUBZcN0O4r8hyYZetFrqhjdu5RqkzV
+         I+jtoNtbdrLGWLxVEzJKT4xeZ5sY+bqgfqrSIfYFJqNEi2LSr6ydJkoX4sruaJEuksC4
+         0QpXAwsq7hQPic2K4mayluv1VmC+ZWufqebDXML05MtFB9LJ7PYZ7/jMj6f8FZ5VwTcI
+         tk6PAAdQwjqMwy9m5+o1Rm0+qNogOYAU6eLIe1SbCaQHdK6Gh37zwNljkhBbXWaZy0b3
+         4Uk0hESWdfyIRwj/7LrILHd6+6szxovuaoTpMY2Py8ZVTQGELieDOqnsB++9PBN1V7qi
+         2Ryg==
+X-Forwarded-Encrypted: i=1; AJvYcCWhAw7Bpeupv/tI2Oxzo9dVP3wxjO0Rm8p9sn3sTXpBqLMCyX90pZn+7k3mxyxbaS/vUjw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzqjK9u+9oWx7nTyL6AASxFHWiPq560lYLWc8s+UedFBNv2RgtO
+	ZmuFh/HqXLe9NV8pcZANgPj341EtXYICrXo+ZlniiSgvdd/N0jc8L8tutAQz9LGD397K14YkXr0
+	3/BH6x/lUu7YdR/6lbUcKmT8T3Nb9CYhoOPykqcqmhpv0wa6CjVftYdMx
+X-Gm-Gg: ASbGnctpP2t+Ud3j457xgW1TaXXcY5uVGkRxbAYEkk8g+rTKTr8JZGYKYkZQi+n2LOi
+	dMqrhXeJUmajdFHRlOcrCfHjYyzhIpRRm4TMu0nLlDlZiw1/4F/kKdMfZhw2rEZzYqw/8G3/zet
+	NlRZvVxfx4UrP8Hcexo0yHH/SyQwKFCgr7n6fu4QB0oZHqUwyX+fQOTs4sI1OaYm1YnQDdAb7tx
+	g==
+X-Google-Smtp-Source: AGHT+IH86VzO4Jf0mzImeSLRrr2+Kd6Zs82w03s42RuvcGP2O48UMotzjEz0lSpaYaLXIE/yzSTcIhCcueLtrlON+1I=
+X-Received: by 2002:a17:903:46ce:b0:215:65f3:27ef with SMTP id
+ d9443c01a7336-2341808243amr8388965ad.12.1748363644017; Tue, 27 May 2025
+ 09:34:04 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: Taf9fec3ba48f0e1f
-Date: Tue, 27 May 2025 18:11:50 +0200
-From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-To: "Phillip Wood" <phillip.wood@dunelm.org.uk>,
- "Kristoffer Haugsbakk" <code@khaugsbakk.name>, git@vger.kernel.org
-Message-Id: <820b1255-c2e0-4383-aebc-46e49112fe2d@app.fastmail.com>
-In-Reply-To: <ab009472-d15d-4894-aa83-0ab8b0d2dfbd@gmail.com>
-References: 
- <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
- <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
- <10280d7d-af36-468d-82b8-e0e780c38ef1@app.fastmail.com>
- <ab009472-d15d-4894-aa83-0ab8b0d2dfbd@gmail.com>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-Content-Type: text/plain; charset=utf-8
+References: <CANi7bVAkNc+gY1NoXfJuDRjxjZLTgL8Lfn8_ZmWsvLAoiLPkNg@mail.gmail.com>
+ <aDRq6oIgkSfAepcP@pks.im>
+In-Reply-To: <aDRq6oIgkSfAepcP@pks.im>
+From: Emily Shaffer <nasamuffin@google.com>
+Date: Tue, 27 May 2025 09:33:50 -0700
+X-Gm-Features: AX0GCFu6aRtW2ZexagY5AHPyTC5wrshA31wVHZMNmp5xou0AyW6QjBZ_9RVEVqg
+Message-ID: <CAJoAoZ=OGOWVWQJNSk0YAVA0V_O68Y4ycXdw6d8bJ0=OhnNGeQ@mail.gmail.com>
+Subject: Re: HEAD.lock and git maintenance
+To: Patrick Steinhardt <ps@pks.im>
+Cc: david asraf <dasraf9@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 27, 2025, at 10:24, Phillip Wood wrote:
->> Do you mean doing the operation on the output buffer instead?:
->>
->> 	if (strbuf_read(&buf, show.out, 0) < 0)
->> 		die_errno(_("could not read 'show' output"));
->> 	/* strip trailing whitespace introduced by blank lines */
->> 	strbuf_stripspace(&buf, NULL);
->> 	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str=
-);
->> 	write_or_die(fd, cbuf.buf, cbuf.len);
->>
->> I think that=E2=80=99s cleaner.  But I don=E2=80=99t see how it makes=
- the code more
->> future-proof.
+On Mon, May 26, 2025 at 6:22=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
 >
-> Because it is now stripping buf and not cbuf. If in the future we deci=
-de
-> to build the message in a buffer rather than writing it piecemeal to
-> disk we would change signature of this function to take an strbuf
-> instead of a file descriptor and use the buffer provided by the caller
-> instead of cbuf. If we were to strip cbuf then a naive conversion would
-> end up stripping the buffer passed by caller, not just the output from
-> "git show". Various git notes subcommands have a --stripspace option a=
-nd
-> calling strbuf_stripspace() on the caller provided buffer would break =
-that.
-
-So stripping `buf` is what I should do?
-
->>> Should that be " \$"? What you've got seems to work with dash but I'm
->>> not sure if it is POSIX compliant or not.
->>
->> `$` is the anchor metacharacter in this context (end of string)
->> according to Posix.
+> Hi,
 >
-> Right but what does the shell do to that '$'? It is not escaped and
-> inside a double quoted string.
+> On Thu, May 22, 2025 at 07:53:58PM +0300, david asraf wrote:
+> > Thank you for filling out a Git bug report!
+> >
+> > Please answer the following questions to help us understand your issue.
+> >
+> > What did you do before the bug happened? (Steps to reproduce your issue=
+)
+> >
+> > We have a system that runs many git commands on a local repo connected
+> > to a remote repo on GitHub via HTTPS. Our system creates many commits
+> > and works with many un-staged files. Every once in a while, we run the
+> > following sequence of commands:
+> >
+> > git stash --all
+> >
+> > git checkout b1
+> >
+> > git remote -v
+> >
+> > git fetch
+> >
+> > git status --branch --porcelain=3Dv1 -u
+> >
+> > git checkout b2
+> >
+> > git stash pop
+> >
+> > We start this sequence from branch b1 and record the output for interna=
+l use.
+> >
+> > What did you expect to happen? (Expected behavior)
+> >
+> > We expected git checkout b2 to succeed consistently.
+> >
+> > What happened instead? (Actual behavior)
+> >
+> > git checkout b2 sometimes fails because the HEAD.lock file already exis=
+ts.
+> >
+> > What's different between what you expected and what actually happened?
+> >
+> > The git checkout b2 command, which previously succeeded consistently,
+> > now occasionally fails due to the presence of a HEAD.lock file. This
+> > issue started occurring after upgrading Git from version 2.39.5 to
+> > 2.47.2.
+> >
+> > Anything else you want to add:
+> >
+> > Using GIT_TRACE_PERFORMANCE, we noticed that a Git maintenance process
+> > (/usr/libexec/git-core/git maintenance run --auto --no-quiet --detach)
+> > sometimes starts after the git fetch command, occasionally in detached
+> > mode. We suspect this operation is causing the issue because we've
+> > verified that the git maintenance command requires HEAD.lock before it
+> > starts running. We are considering setting maintenance.autoDetach to
+> > false. We are unsure if this is a bug or if it is working as intended,
+> > and would appreciate your comments on this.
+>
+> thanks for your report! A couple months ago there was a similar
+> discussion with someone else, but I cannot find that thread anymore,
+> unfortunately.
 
-Oh right, it=E2=80=99s about the shell.  I=E2=80=99ll fix it.
+Google had a big problem with this behavior about a year ago, I'm not
+sure if we got far with a thread about it though. That may be what
+you're thinking of.
 
-Thanks for spotting.
+>
+> The root cause here is repository maintenance with `--auto --detach`
+> will detach before spawning git-gc(1). This command may decide to pack
+> your references and thus cause them to be locked. This then triggers a
+> race condition, where the next Git command that wants to modify refs may
+> not be able to lock "packed-refs" because we are still busy repacking
+> them.
+>
+> The actual timeout to lock the "packed-refs" file is configurable via
+> "core.packedRefsTimeout", so bumping this value may make the problem
+> less likely to happen. But it's only papering over the actual issue.
+>
+> I'll send a patch series soonish that fixes this issue. I think the
+> solution would be to make git-maintenance(1) learn about tasks that
+> should run previous and after daemonizing the process to avoid this race
+> condition. The effect would be that the caller of auto-maintenance will
+> not continue before refs have been packed, which is similar to what
+> git-gc(1) used to do in the past.
+
+We'll look forward to this series with interest, thanks.
+
+ - Emily
+
+>
+> Patrick
+>
