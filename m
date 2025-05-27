@@ -1,79 +1,82 @@
 Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0BB82749C3
-	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC1EF274FCB
+	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748354673; cv=none; b=E+19nKCQG3Kw6NdvUZ60Pi4ZYnEAOZtX9MVPwzBYKVOZAqaK/pldazIBO+ssJP33+UfjIpn9i3iZHuS0e6PAAsxBN2PVy/B2fByKn+1VMxUeuZW5GdykcxB//MmNkUHQibquBtZbMBouCtPN9fPS/UkIueBI7Am0WlL8+C9QzQQ=
+	t=1748354674; cv=none; b=PBqk55o6DE5THuDOamS4NwCb+WBuqpUs4DU1p0kvg9J2VorjH75yMp24iA/JJ4GgO01Mm2SU/tSqnSqbk9/Sr1DVi+t5sNg4fAsR4RNXS+Xrmo2bFlBzIbd932+9O+YMabJrSxj/nH3a6t5r5xbicdW7aIPtz/dNx6k5KkkR+B4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748354673; c=relaxed/simple;
-	bh=V7lfoLVtRVEZ92GmC7vcgqxZHnyR814xXK1rxaoPFpc=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:To:Cc; b=r6SWPQL5YeCW1a0uabjGi9CvQSkxZjd4yU5d159yQhMyfochzSzYjF7ZxNRWArVZc8dV9rGH25upTYUt106IP9rno4YXzwWkm6R/jp9UOu+eQmqK+6I4l+5V/Xn4d53KcySD/XYpzDbma9zYPhY2OnfvST9PH9dYJmI3EWk6iGQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=pen9ms8v; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NTw9sZbj; arc=none smtp.client-ip=103.168.172.153
+	s=arc-20240116; t=1748354674; c=relaxed/simple;
+	bh=gJ8ZMdRNaLln1zFiPgn0DLDYy9eZ+4i01jDXDkGjxDg=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=SYZLw8xoASaxy1x3KDngYI9retE+gz3D/fZGlRXq4h5hO0BgJo+AjP0mjV5+7WUNACd4rBsdCWHru60KbMKq75SOSN7MftMdmAB+Xc6c7/x1K7sYajXkltxj5tooocIjzjQl4b05hU2mIImC4J9SWv7oDUPlxNf89dj9nrolAYg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=jGj0Aun+; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cEN0DiPL; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="pen9ms8v";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NTw9sZbj"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id A2BE3114013C;
-	Tue, 27 May 2025 10:04:30 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="jGj0Aun+";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cEN0DiPL"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id BA17D1140167;
+	Tue, 27 May 2025 10:04:31 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Tue, 27 May 2025 10:04:30 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 27 May 2025 10:04:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to; s=fm1; t=1748354670; x=1748441070; bh=IvmW9CAFIF
-	gAqsR1sDB3M/Q+bYQdYlwQfBHI3bDaD7E=; b=pen9ms8vMt26wLURi0P7MSu7fK
-	O+HzXzlnHdfw+ku6cXiavMU8a6qfHuCu94kHFljnMWtJgo4GkWwtoXKCocb6IiUL
-	yFWmPYj41YJbPdBPjfAZ6bW5kmXyfTIJSJRGtfW6w7QAJUcJ3W6nENzo/gtAAYdn
-	G5oPoFCMpYskzwPIiYZ/BFw3KGiUBLRSwIF/nJXL8V0zfmSzmY8jp3xhOQip5QAX
-	952UG44hVXsSfi0G+b6BN2UqZJfJxtQu5VcAioiBSxWUXt53jBkyM4er19Ni9cb7
-	F7ItZ5GaMUtV/C6MmpPMaLMxQtNxr+E4qTIMluRD2oxdB0ksn8ZpdMo/xF9g==
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748354671;
+	 x=1748441071; bh=QwvSM7aBCuoULuG06LhnQGCfwtq4z9UYe63eqtK3N/s=; b=
+	jGj0Aun+gfhR9LSNMAZ+z4rZmZQJL3LLyFZy03Fc6eJuZ1db4p+pW53GVNMIBT8B
+	QNRxAw6CITaIjSLfrJZohjemsT1wXYfbGmZWXIkztiJ4j89X6kBvGURSpVRBAz1k
+	9DZd4uqpwSypmLU+QSZ+AR/yubUyzOUXz1IAuk9Vdlbgh1ZiLecEwEfvhJ+es+v8
+	cxSLWW4/c8v/HYJdSHljsEdWWopnXJp2i/WYVP8hdtA73BjfZC+2/qVBMVuxFthr
+	f7TRc7mCC8rPMYyigJyx4kjUbJEastLjfxr6XojUR4AGLbQd9cRVics/zWDeqLXS
+	HW4SPgjHpuRzzbCdasiEig==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1748354670; x=1748441070; bh=IvmW9CAFIFgAqsR1sDB3M/Q+bYQd
-	YlwQfBHI3bDaD7E=; b=NTw9sZbjwsqz5FZnTsWUpsPSs9ELZwSYGAr7C/3xHHAq
-	y+ArZVdyJTmYa0ixKcOpYfc+XNKq90g3ScUbCr+5fVHTJoeXqn+w0Uk+yvvhhGte
-	Ot82jprwa1TZ7QTyiLpBdCoRm2TWa2QKDbltwIK28eyxLaXjFrLF4MpPE24yIBeM
-	kClc/ooGe+edXRxbq++6IjlzaWDUZMja1UyKuLGvJsJa+XpuGJYHZRZOU1AfznST
-	X9yU0UYXK2iSBqKYmGu11scBcCHGmg6fZjnH2MPnf6f2hP68GwsN8qtHkg0UyajV
-	eDASMCoKy1KMSnMMExkjKxo+MCJVhV91Lw8hedZu4A==
-X-ME-Sender: <xms:bsY1aDxEKZO9MZ5_GA6IG1K1X6Kva6RSc1_BdWo5ZuTuKyG2fWIDng>
-    <xme:bsY1aLQRJvOAe3c3nOOPcaMf9VNfMQrBZMbDCaa3AhT1oQBDVtCQrA5nfNrHhxzSO
-    EV_jLLGh59LtWIVQw>
-X-ME-Received: <xmr:bsY1aNWZbRyQ3wpc33UkiDuc_Q46jcPoZU0NxAnewTNFFwhSUMZ1wff-9MZtW-EhJzY5Q_BTOe6SHGtYWPYGoIA1OsR9QUjkDvvl8hnassMj2A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehjeculddtuddrgeefvddrtd
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748354671; x=
+	1748441071; bh=QwvSM7aBCuoULuG06LhnQGCfwtq4z9UYe63eqtK3N/s=; b=c
+	EN0DiPLdH4MTi9DGnvVX9whtkkyaE8R/bHEVElAiSmE7blZa4sRzYxV7h1fQqQM8
+	riTIAm2p+F3dAOR/Vjrq6+p8d4GZ0Qs784cxUaLuZ/dZYWWudsIlWk0SrbclH+oo
+	SXGWJX/lZuCZB0xBikMAnXys+vRNdVmNUFlnpSu5yJPDYqmhjTdGN1qHUaIw+/3d
+	bEfC72kF6v7UgmR1M0DGXP9QsWsraaar2UbD7ThaJ9Xe1ulusS1L9si2KJCNxiCX
+	rfWY0kR3Y41SMzJGinNIkcA4s/pNWn/gukKtPhjvFwMOXFFOU2lo9hktNXjTCjWX
+	0RD7yd8up6W2BD1xAL+hg==
+X-ME-Sender: <xms:b8Y1aAZP0vYjqNDpHxvGwDcO1vmGB53SzbIQ-zu5yrZl5VqVAKOM9Q>
+    <xme:b8Y1aLYlCWA4C2rsTuo8GWg7mVbMYrCQkrDm1O2dXSCDAgrYLdwJ0TzHIVTJiuoU0
+    bEfPT7FUvIldaJHEQ>
+X-ME-Received: <xmr:b8Y1aK_q7qoNusH4AZW03IViA7zF1F3iVcFgyh1VKoY-drUnMvtE5ytw9z0Uw4DDOs0tgia1dK60gDZ-oU0OQVjggGlPPXSzzo9h3Jap66rpEw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehkeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfg
-    vfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrghrug
-    htuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepveeugeektdetieegjeeu
-    heeuudfgveelfeevheeuhefgteffffevhfeuhfeukeevnecuvehluhhsthgvrhfuihiivg
-    eptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghp
-    thhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrd
-    hkvghrnhgvlhdrohhrghdprhgtphhtthhopeihrhhothhhsehprghlohgrlhhtohhnvght
-    fihorhhkshdrtghomhdprhgtphhtthhopegurghsrhgrfhelsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:bsY1aNhJH14kI9sOKtWuqDPSYT-LQQcQWeU6dm6S9bhBBKFC0-UOAg>
-    <xmx:bsY1aFBFDs-2jGamm5cely1ug6zsMK1MVZcnKbFT--CONr5wIOOs9w>
-    <xmx:bsY1aGL__8E4VMEGghRRc0vbKH4Yx2Uyu-fgsaomNYcvndfKGj7z1w>
-    <xmx:bsY1aEBaZ3aU6RyQp03napzEwJXg5D9awym4-UTFzt3uDfMnU6BxFA>
-    <xmx:bsY1aC40tvriYwy7IuI7PXg19CTB29QH9QnPHZ7e3Lk6xzZ3FyO3v9bR>
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffk
+    fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
+    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
+    uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrshhrrghfle
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohephihrohhthhesphgrlhhorghlthhonhgvthifohhrkhhsrdgtoh
+    hm
+X-ME-Proxy: <xmx:b8Y1aKqSys4ygtm8lp1WBtGQGBbvTASO5S75BS2ox2GlRPAfi1n8RQ>
+    <xmx:b8Y1aLryAOlet7KpumBFYgBllD48haQ-24IOl9uy3pZlBVHOVkKy5A>
+    <xmx:b8Y1aIQR2Z_-l6-lEjbhf4GPeYacJovTPqr1hSx6VCqi-pXoPwPkyw>
+    <xmx:b8Y1aLqediVc8MPngI8NyfHGmEvqKkTUEQ7cE_FcXqJb3DYbXbSgOg>
+    <xmx:b8Y1aLnxR98kFFTAuzzIpqvs9KbZX9gmZcmpv1AIPA1vlDSWck4ZWKkN>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 10:04:29 -0400 (EDT)
+ 27 May 2025 10:04:30 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 46103d2d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 27 May 2025 14:04:28 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 8bca3ced (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 27 May 2025 14:04:29 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH 00/11] builtin/maintenance: fix ref lock races when
- detaching
-Date: Tue, 27 May 2025 16:04:26 +0200
-Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
+Date: Tue, 27 May 2025 16:04:27 +0200
+Subject: [PATCH 01/11] builtin/gc: use designated field initializers for
+ maintenance tasks
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -82,66 +85,105 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAGrGNWgC/x3NUQrCMBCE4auUfXYhCaaKVxEf1nSqS3VbkiJC6
- d1dfPz4YWajhqpodOk2qvho09kc8dBReYo9wDq4KYWUQ04nvh95mRq/RW2FiRVwxcivuUxcxRW
- jIA/9GaEfyWcWz/r9X1xv+/4D3Y8LaXIAAAA=
-X-Change-ID: 20250527-b4-pks-maintenance-ref-lock-race-11ae5d68e06f
+Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-1-e1ceb2dea66e@pks.im>
+References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
+In-Reply-To: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
 To: git@vger.kernel.org
 Cc: Yonatan Roth <yroth@paloaltonetworks.com>, 
  david asraf <dasraf9@gmail.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+Convert the array of maintenance tasks to use designated field
+initializers. This makes it easier to add more fields to the struct
+without having to modify all tasks.
 
-this patch series fixes races around locking the "packed-refs" file when
-auto-maintenance decides to repack it. This issue has been reported e.g.
-via [1] and [2].
-
-The root cause is that git-gc(1) used to know to detach _after_ having
-repacked references. As such, callers wouldn't continue with their thing
-until we have already packed refs, and thus the race does not exist
-there. git-maintenance(1) didn't have the same split though, so this
-patch series retrofits that logic.
-
-The series is structured as follows:
-
-  - Patches 1 and 2 do some light refactorings.
-
-  - Patches 3 to 5 refactor how we set up the list of tasks to not rely
-    on globals anymore. Instead, we now have a single source of truth
-    for which tasks exactly will be run.
-
-  - The remaining patches introduce the split of before/after-detach
-    tasks and wire them up for "pack-refs", "reflog-expire" and "gc"
-    tasks.
-
-Thanks!
-
-Patrick
-
-[1]: <CAJR-fbZ4X1+gN75m2dUvocR6NkowLOZ9F26cjBy8w1qd181OoQ@mail.gmail.com>
-[2]: <CANi7bVAkNc+gY1NoXfJuDRjxjZLTgL8Lfn8_ZmWsvLAoiLPkNg@mail.gmail.com>
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (11):
-      builtin/gc: use designated field initializers for maintenance tasks
-      builtin/gc: drop redundant local variable
-      builtin/maintenance: centralize configuration of explicit tasks
-      builtin/maintenance: mark "--task=" and "--schedule=" as incompatible
-      builtin/maintenance: stop modifying global array of tasks
-      builtin/maintenance: extract function to run tasks
-      builtin/maintenance: fix typedef for function pointers
-      builtin/maintenance: let tasks do maintenance before and after detach
-      builtin/maintenance: fix locking race when packing refs and reflogs
-      builtin/gc: avoid global state in `gc_before_repack()`
-      builtin/maintenance: fix locking race when handling "gc" task
+ builtin/gc.c | 54 +++++++++++++++++++++++++++---------------------------
+ 1 file changed, 27 insertions(+), 27 deletions(-)
 
- builtin/gc.c           | 386 +++++++++++++++++++++++++++----------------------
- t/t7900-maintenance.sh |  19 ++-
- 2 files changed, 229 insertions(+), 176 deletions(-)
+diff --git a/builtin/gc.c b/builtin/gc.c
+index e33ba946e43..54fc7f299a9 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -1550,49 +1550,49 @@ enum maintenance_task_label {
+ 
+ static struct maintenance_task tasks[] = {
+ 	[TASK_PREFETCH] = {
+-		"prefetch",
+-		maintenance_task_prefetch,
++		.name = "prefetch",
++		.fn = maintenance_task_prefetch,
+ 	},
+ 	[TASK_LOOSE_OBJECTS] = {
+-		"loose-objects",
+-		maintenance_task_loose_objects,
+-		loose_object_auto_condition,
++		.name = "loose-objects",
++		.fn = maintenance_task_loose_objects,
++		.auto_condition = loose_object_auto_condition,
+ 	},
+ 	[TASK_INCREMENTAL_REPACK] = {
+-		"incremental-repack",
+-		maintenance_task_incremental_repack,
+-		incremental_repack_auto_condition,
++		.name = "incremental-repack",
++		.fn = maintenance_task_incremental_repack,
++		.auto_condition = incremental_repack_auto_condition,
+ 	},
+ 	[TASK_GC] = {
+-		"gc",
+-		maintenance_task_gc,
+-		need_to_gc,
+-		1,
++		.name = "gc",
++		.fn = maintenance_task_gc,
++		.auto_condition = need_to_gc,
++		.enabled = 1,
+ 	},
+ 	[TASK_COMMIT_GRAPH] = {
+-		"commit-graph",
+-		maintenance_task_commit_graph,
+-		should_write_commit_graph,
++		.name = "commit-graph",
++		.fn = maintenance_task_commit_graph,
++		.auto_condition = should_write_commit_graph,
+ 	},
+ 	[TASK_PACK_REFS] = {
+-		"pack-refs",
+-		maintenance_task_pack_refs,
+-		pack_refs_condition,
++		.name = "pack-refs",
++		.fn = maintenance_task_pack_refs,
++		.auto_condition = pack_refs_condition,
+ 	},
+ 	[TASK_REFLOG_EXPIRE] = {
+-		"reflog-expire",
+-		maintenance_task_reflog_expire,
+-		reflog_expire_condition,
++		.name = "reflog-expire",
++		.fn = maintenance_task_reflog_expire,
++		.auto_condition = reflog_expire_condition,
+ 	},
+ 	[TASK_WORKTREE_PRUNE] = {
+-		"worktree-prune",
+-		maintenance_task_worktree_prune,
+-		worktree_prune_condition,
++		.name = "worktree-prune",
++		.fn = maintenance_task_worktree_prune,
++		.auto_condition = worktree_prune_condition,
+ 	},
+ 	[TASK_RERERE_GC] = {
+-		"rerere-gc",
+-		maintenance_task_rerere_gc,
+-		rerere_gc_condition,
++		.name = "rerere-gc",
++		.fn = maintenance_task_rerere_gc,
++		.auto_condition = rerere_gc_condition,
+ 	},
+ };
+ 
 
-
----
-base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
-change-id: 20250527-b4-pks-maintenance-ref-lock-race-11ae5d68e06f
+-- 
+2.49.0.1266.g31b7d2e469.dirty
 
