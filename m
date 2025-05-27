@@ -1,171 +1,112 @@
-Received: from mail-pl1-f180.google.com (mail-pl1-f180.google.com [209.85.214.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from iguana.tulip.relay.mailchannels.net (iguana.tulip.relay.mailchannels.net [23.83.218.253])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37684248886
-	for <git@vger.kernel.org>; Tue, 27 May 2025 16:34:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.180
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748363646; cv=none; b=Y3AizpR9Wok5qJxlra2MRbbQceIOVfvQ1WvusQRg1CHFlsCOTB2vIh4Mk0v7kWBzqGSOt8wV9NJvGp1ICwFIZpCrDT6Yxuk8cYOt0OAcTywsdHC72KczSyHQ3UgqkCRN++ElXtPpjLyXQh4hdN4yoThdhphNBcLOqnZsFvrZxyo=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748363646; c=relaxed/simple;
-	bh=tsp8BzkIz3mbhHOm59EWBssAHHSntK2Xcd/rJLUzsJI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=hSo4Fen7LLNF5py1Mq0lOJ5vPDJ/bTNbpYVwBoowUHzn+gSPz5hHdjh14CrAJDSp1+xOijMATuoPt5Slus/Oo1+OMP8XLVBOBZESoALW2eTWNt5vdMQZ2ZpR6K7VD2eAAMCSpbJ2cjpoXcUX5hEMXphMoDO7ntW0e4Lay9E8fBg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com; spf=pass smtp.mailfrom=google.com; dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b=D8CCsz93; arc=none smtp.client-ip=209.85.214.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=google.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=google.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8838027EC76
+	for <git@vger.kernel.org>; Tue, 27 May 2025 16:38:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=pass smtp.client-ip=23.83.218.253
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748363903; cv=pass; b=gRpyGzy2o99brjNPAZkrzBAGlNsPup5gnAy7mpci1IxIJyxEFGMWnsHRNz2h9Dt2jDKZf20yZP4orVdOQPOElfL8GAcj914X0fDv+2P/RF6KydafysI4rOBnW7v+2E8FcaBcyoMM89t+iw+6LdCeeaAr3zBrV+M4XuCIdMS3xUE=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748363903; c=relaxed/simple;
+	bh=CXn2n3A7ABE0yluH3LpsJz2rKypCc8be9lrdViG3Y/A=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=gBLJjKz4w1wWvK9MLNcexGF46WJRuZs+ddtZWMMNh9eyiugo/c1fJxxTDdzVpwoUwzuM9mIRY+GJq3LPMf6McvDLCcXCp1V74wwwM2R0BNK/IfVkbBRpKQi1cEgXG0Jjbh+PRTIWlnK4RwCTB8s45PCk4S2bPeDnDxnhw8kh2DA=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com; spf=pass smtp.mailfrom=cryptonector.com; dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b=SBqE6nNX; arc=pass smtp.client-ip=23.83.218.253
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=cryptonector.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=cryptonector.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=google.com header.i=@google.com header.b="D8CCsz93"
-Received: by mail-pl1-f180.google.com with SMTP id d9443c01a7336-231ba6da557so581415ad.1
-        for <git@vger.kernel.org>; Tue, 27 May 2025 09:34:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20230601; t=1748363644; x=1748968444; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=tsp8BzkIz3mbhHOm59EWBssAHHSntK2Xcd/rJLUzsJI=;
-        b=D8CCsz93s7mqqATwpPzu9d0p8undT2d5F3tzbywmRo+uo4QbRIYHi2oR5WoWN9rcgX
-         oSrsJw0gthT+e8TGRJHf7LGQEMKglhQ55FY0GLprPrTdWtT8cxgR9khCtbmU3SviTR45
-         04BxfaNdFVrVd3Q7rPkuCfiZRb1RaeZn7eeNpqj3j9+cYFeeiaT/Pinx7d3MRgkMomF/
-         jxGMWH1tawRPBhhBO3bvyv9rqDcqSqEGwz4eCjUTuZe7e8GgHJyHB4am468V+OiGDL+B
-         fUZnClEwD8Yitc1k5vJ5ObiaNdpNuakDDT1Ky5hU6IOSPnUY1EmgZvLAk8yihO3qkTgW
-         o6IA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748363644; x=1748968444;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=tsp8BzkIz3mbhHOm59EWBssAHHSntK2Xcd/rJLUzsJI=;
-        b=P2Omaj1woAADJjDqgrpy3cJcl5iZWm14L5GPAUBZcN0O4r8hyYZetFrqhjdu5RqkzV
-         I+jtoNtbdrLGWLxVEzJKT4xeZ5sY+bqgfqrSIfYFJqNEi2LSr6ydJkoX4sruaJEuksC4
-         0QpXAwsq7hQPic2K4mayluv1VmC+ZWufqebDXML05MtFB9LJ7PYZ7/jMj6f8FZ5VwTcI
-         tk6PAAdQwjqMwy9m5+o1Rm0+qNogOYAU6eLIe1SbCaQHdK6Gh37zwNljkhBbXWaZy0b3
-         4Uk0hESWdfyIRwj/7LrILHd6+6szxovuaoTpMY2Py8ZVTQGELieDOqnsB++9PBN1V7qi
-         2Ryg==
-X-Forwarded-Encrypted: i=1; AJvYcCWhAw7Bpeupv/tI2Oxzo9dVP3wxjO0Rm8p9sn3sTXpBqLMCyX90pZn+7k3mxyxbaS/vUjw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YzqjK9u+9oWx7nTyL6AASxFHWiPq560lYLWc8s+UedFBNv2RgtO
-	ZmuFh/HqXLe9NV8pcZANgPj341EtXYICrXo+ZlniiSgvdd/N0jc8L8tutAQz9LGD397K14YkXr0
-	3/BH6x/lUu7YdR/6lbUcKmT8T3Nb9CYhoOPykqcqmhpv0wa6CjVftYdMx
-X-Gm-Gg: ASbGnctpP2t+Ud3j457xgW1TaXXcY5uVGkRxbAYEkk8g+rTKTr8JZGYKYkZQi+n2LOi
-	dMqrhXeJUmajdFHRlOcrCfHjYyzhIpRRm4TMu0nLlDlZiw1/4F/kKdMfZhw2rEZzYqw/8G3/zet
-	NlRZvVxfx4UrP8Hcexo0yHH/SyQwKFCgr7n6fu4QB0oZHqUwyX+fQOTs4sI1OaYm1YnQDdAb7tx
-	g==
-X-Google-Smtp-Source: AGHT+IH86VzO4Jf0mzImeSLRrr2+Kd6Zs82w03s42RuvcGP2O48UMotzjEz0lSpaYaLXIE/yzSTcIhCcueLtrlON+1I=
-X-Received: by 2002:a17:903:46ce:b0:215:65f3:27ef with SMTP id
- d9443c01a7336-2341808243amr8388965ad.12.1748363644017; Tue, 27 May 2025
- 09:34:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=cryptonector.com header.i=@cryptonector.com header.b="SBqE6nNX"
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+Received: from relay.mailchannels.net (localhost [127.0.0.1])
+	by relay.mailchannels.net (Postfix) with ESMTP id 58AA28A3A1F;
+	Tue, 27 May 2025 16:31:15 +0000 (UTC)
+Received: from pdx1-sub0-mail-a280.dreamhost.com (trex-green-3.trex.outbound.svc.cluster.local [100.124.32.183])
+	(Authenticated sender: dreamhost)
+	by relay.mailchannels.net (Postfix) with ESMTPA id E4C148A3ECA;
+	Tue, 27 May 2025 16:31:14 +0000 (UTC)
+ARC-Seal: i=1; s=arc-2022; d=mailchannels.net; t=1748363474; a=rsa-sha256;
+	cv=none;
+	b=RtAWNPn91SepDl9z8FFI554qPPai99IGlaPirTh02WK6igRflub9Pu8dgJmev/CLdRzpkr
+	4CgHr8uyIKdhKTW8ipqMGq3zxJk4uA2ET+1Bs2d5vVsIqh+dRJH0w7x1khv+RRzjVpygqu
+	pRwy1CBohDFFmWJOYZXfQQvs3aKiyiGi4c0H6omy3BVwys7OFQ1T00HLR21QeehTmdtisA
+	U6KSDccfvcZj6UBSbgpqqWe7YnIKfy1tg+/RzDCKYjIJbDMApg6Xxz75muKL3ZY0M9uclz
+	rTe28uvaiRkZM3hKD9Gn+BBs1dRS9q9G/YQ7u1VeTU8CbRid8v9efdniafsAiQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=mailchannels.net;
+	s=arc-2022; t=1748363474;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+	 in-reply-to:in-reply-to:references:references:dkim-signature;
+	bh=HNTkVYdqMmzKRrKXMUMd6PErCi/LXWXPSIekrSKPyOk=;
+	b=Nj4Fidm+VDJ9CrvnDtVVxeUhg2SOwax9ukdHjbczB9Hej2DA+kkm95AGxqTKYPt21udnWx
+	hBfDST5zLTkw2nVcogzWKwYUXVIRs/EydgCdTOmlNQDvvZgzkh0V18lhZ1muxXTSyFyF3a
+	0jh65zB8ebs7dNkTn9c3i/B+HgdvuVhWAQK9+Zsa3o/OO6tPHOKj9Mq2YmC5t9Nq1UK3u/
+	9AXdJLtP/THojYricyt7p/1MqPuZh7IZTxKSnFNpIVffjYxf7lcX2uSnNFnIwJeH5v/7dk
+	TyYp1Y4cVyh8ghlpeieEtmDAhWJGIOAjvYtTz2lvKSdhmKPb0QyH9tCpIp+muA==
+ARC-Authentication-Results: i=1;
+	rspamd-766f9cfddb-tm5c8;
+	auth=pass smtp.auth=dreamhost smtp.mailfrom=nico@cryptonector.com
+X-Sender-Id: dreamhost|x-authsender|nico@cryptonector.com
+X-MC-Relay: Neutral
+X-MailChannels-SenderId: dreamhost|x-authsender|nico@cryptonector.com
+X-MailChannels-Auth-Id: dreamhost
+X-Blushing-Print: 63dcffbe7d277800_1748363475181_2628421044
+X-MC-Loop-Signature: 1748363475181:871439099
+X-MC-Ingress-Time: 1748363475181
+Received: from pdx1-sub0-mail-a280.dreamhost.com (pop.dreamhost.com
+ [64.90.62.162])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
+	by 100.124.32.183 (trex/7.0.3);
+	Tue, 27 May 2025 16:31:15 +0000
+Received: from ubby (syn-075-081-095-064.res.spectrum.com [75.81.95.64])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: nico@cryptonector.com)
+	by pdx1-sub0-mail-a280.dreamhost.com (Postfix) with ESMTPSA id 4b6J6V2d2fzJJ;
+	Tue, 27 May 2025 09:31:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cryptonector.com;
+	s=dreamhost; t=1748363474;
+	bh=HNTkVYdqMmzKRrKXMUMd6PErCi/LXWXPSIekrSKPyOk=;
+	h=Date:From:To:Cc:Subject:Content-Type;
+	b=SBqE6nNXQ8DWiaPivhayOlUjBVDVbIWqjvq/ABSR77hYdM43c/vKAkEo/O6uDzv1F
+	 /yDsjjot4bIWylHlV77crEa3nNBFKvg5CTzoOLKWgDDgPpuC7mZ85QEZpfgPp4NyA2
+	 US7JkC2z+QhxdGFktunZxRrnpQbJKuVIDzo493Fq49Br0eJXNgfa4ud6NjNo4m0WSq
+	 0HapcEcJvBVoGa5hwTgNmkteMqXhv4At9WIw5qTw3jUfnAMx3F7QL/e/eT9WwSavdQ
+	 jG2Oi6UbL/H7hxczPCRisw/s5O+2p7ZJExwWSxIBtZyArCpgNhF7ul/3gKkhOro6+K
+	 gfnWZ4x2ExXUw==
+Date: Tue, 27 May 2025 11:31:12 -0500
+From: Nico Williams <nico@cryptonector.com>
+To: Jon Forrest <nobozo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: "git commit -a" Doesn't Add New Files. Why?
+Message-ID: <aDXo0Enj4cQzKQkK@ubby>
+References: <1014npb$rbl$1@ciao.gmane.io>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <CANi7bVAkNc+gY1NoXfJuDRjxjZLTgL8Lfn8_ZmWsvLAoiLPkNg@mail.gmail.com>
- <aDRq6oIgkSfAepcP@pks.im>
-In-Reply-To: <aDRq6oIgkSfAepcP@pks.im>
-From: Emily Shaffer <nasamuffin@google.com>
-Date: Tue, 27 May 2025 09:33:50 -0700
-X-Gm-Features: AX0GCFu6aRtW2ZexagY5AHPyTC5wrshA31wVHZMNmp5xou0AyW6QjBZ_9RVEVqg
-Message-ID: <CAJoAoZ=OGOWVWQJNSk0YAVA0V_O68Y4ycXdw6d8bJ0=OhnNGeQ@mail.gmail.com>
-Subject: Re: HEAD.lock and git maintenance
-To: Patrick Steinhardt <ps@pks.im>
-Cc: david asraf <dasraf9@gmail.com>, git@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1014npb$rbl$1@ciao.gmane.io>
 
-On Mon, May 26, 2025 at 6:22=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
-e:
->
-> Hi,
->
-> On Thu, May 22, 2025 at 07:53:58PM +0300, david asraf wrote:
-> > Thank you for filling out a Git bug report!
-> >
-> > Please answer the following questions to help us understand your issue.
-> >
-> > What did you do before the bug happened? (Steps to reproduce your issue=
-)
-> >
-> > We have a system that runs many git commands on a local repo connected
-> > to a remote repo on GitHub via HTTPS. Our system creates many commits
-> > and works with many un-staged files. Every once in a while, we run the
-> > following sequence of commands:
-> >
-> > git stash --all
-> >
-> > git checkout b1
-> >
-> > git remote -v
-> >
-> > git fetch
-> >
-> > git status --branch --porcelain=3Dv1 -u
-> >
-> > git checkout b2
-> >
-> > git stash pop
-> >
-> > We start this sequence from branch b1 and record the output for interna=
-l use.
-> >
-> > What did you expect to happen? (Expected behavior)
-> >
-> > We expected git checkout b2 to succeed consistently.
-> >
-> > What happened instead? (Actual behavior)
-> >
-> > git checkout b2 sometimes fails because the HEAD.lock file already exis=
-ts.
-> >
-> > What's different between what you expected and what actually happened?
-> >
-> > The git checkout b2 command, which previously succeeded consistently,
-> > now occasionally fails due to the presence of a HEAD.lock file. This
-> > issue started occurring after upgrading Git from version 2.39.5 to
-> > 2.47.2.
-> >
-> > Anything else you want to add:
-> >
-> > Using GIT_TRACE_PERFORMANCE, we noticed that a Git maintenance process
-> > (/usr/libexec/git-core/git maintenance run --auto --no-quiet --detach)
-> > sometimes starts after the git fetch command, occasionally in detached
-> > mode. We suspect this operation is causing the issue because we've
-> > verified that the git maintenance command requires HEAD.lock before it
-> > starts running. We are considering setting maintenance.autoDetach to
-> > false. We are unsure if this is a bug or if it is working as intended,
-> > and would appreciate your comments on this.
->
-> thanks for your report! A couple months ago there was a similar
-> discussion with someone else, but I cannot find that thread anymore,
-> unfortunately.
+On Tue, May 27, 2025 at 09:03:55AM -0700, Jon Forrest wrote:
+> The documentation clearly says that running "git commit -a"
+> doesn't add new files to the index. I wonder why that choice
+> was made.
 
-Google had a big problem with this behavior about a year ago, I'm not
-sure if we got far with a thread about it though. That may be what
-you're thinking of.
+I use `git commit -a` all the time in workspaces that are dirty.  It
+would be exceedingly annoying if `git commit -a` were to act like `git
+add . && git commit`.
 
->
-> The root cause here is repository maintenance with `--auto --detach`
-> will detach before spawning git-gc(1). This command may decide to pack
-> your references and thus cause them to be locked. This then triggers a
-> race condition, where the next Git command that wants to modify refs may
-> not be able to lock "packed-refs" because we are still busy repacking
-> them.
->
-> The actual timeout to lock the "packed-refs" file is configurable via
-> "core.packedRefsTimeout", so bumping this value may make the problem
-> less likely to happen. But it's only papering over the actual issue.
->
-> I'll send a patch series soonish that fixes this issue. I think the
-> solution would be to make git-maintenance(1) learn about tasks that
-> should run previous and after daemonizing the process to avoid this race
-> condition. The effect would be that the caller of auto-maintenance will
-> not continue before refs have been packed, which is similar to what
-> git-gc(1) used to do in the past.
+> Would the addition of "git commit -A" (note the capital letter)
+> that works the same as "git commit -a", except that new files
+> are also added be something you'd consider?
 
-We'll look forward to this series with interest, thanks.
+[Not being part of the team I can't answer this.  But as a user I
+wouldn't mind, and I would almost never use it.]
 
- - Emily
-
->
-> Patrick
->
+Nico
+-- 
