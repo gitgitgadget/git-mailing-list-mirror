@@ -1,55 +1,55 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF936276057
-	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC733277813
+	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748354675; cv=none; b=FmDR/ut4K4Oa/jcsnVWJz5AkFLoRvYW1q6b2XtmvD+S7p8EfnZff8qfqzeHFPEdQxXpjX+PAdWbjJ7jXDQiE5tMW/WbC2mfbMp3Z4QtDBq0Y4JwrQFRqCFGWRr4ZWTNy9x6PA6Qb/+b6cqhsp+x22Ua8SiAY2cfy2HvCNKKqGSU=
+	t=1748354676; cv=none; b=Joq/d0yLUiF6XiUgVK2NSMLUGl6fXPvS6XMYa/j2Bf80vBtwQeZiPEhpDhoeLJMBOOUnWYtB/b8s7TiA0C8ReXNZa7jxUrhm84YvGiLlU6q6yVk3OljcC6HnocWxjcKA3RWiUn9RRz0f+NgYGlbUcEnR4VtT/K1MxqVz1adZT0I=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748354675; c=relaxed/simple;
-	bh=iMyFYGkbR/9RzZtziu+9Z4wzHoYNnfTqhJvHWjK94hc=;
+	s=arc-20240116; t=1748354676; c=relaxed/simple;
+	bh=uPTvnaLnOURkQX24iqW117qXqnFjG5OYIFg6+l7QSrY=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=kXdxgTjddLARjazKrpJ0SuP7jcM2wEFHjKPKGE9Voy8mXzVdCLb7s6HRkU5luVGl2E06l1PRX7XucQ6bpUb6fqRg2CjZ5FSgFRnL7jehvTKz8uzqmQ05lQ9hxt2Cus7dt1q9RaGRCXH3f4/82gstt7Fs/KzlNxs33DT6Dqxw4IM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=G1t5KJyh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XJp20Eow; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=CJNhffZ0B1fs0YqXZ2WWBIT1LUqiYYt84xNrmYxeHyqrd8ShOSIWiunrxYrnc65/W+DvQ9SicNLvn1Jh+WOIesJyfbY9E0ANJMwVkNaljjBC56tvAWOv1QxEJI7rVVK9qBR8iymtFB5koBivDub+IfFmn2J7oAQLTJA82utqA9Q=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=RupAX9Yz; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=UkWr88T1; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="G1t5KJyh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XJp20Eow"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id E350B1383AB0;
-	Tue, 27 May 2025 10:04:32 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="RupAX9Yz";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="UkWr88T1"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id F12A11383AB3;
+	Tue, 27 May 2025 10:04:33 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Tue, 27 May 2025 10:04:32 -0400
+  by phl-compute-11.internal (MEProxy); Tue, 27 May 2025 10:04:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748354672;
-	 x=1748441072; bh=WKmIczJLuab1VapDA27UQvuKwwXxdUWrSjTjZAEUn24=; b=
-	G1t5KJyhz1lPg3/95wzT8Wa1jPHN1h392Enw8SgkcVAKR7inydQoytEiUo8xjLMM
-	+Tlbw7aQ3mt+MNu2oIhxQi5f/EV6+oDRkbrni0EDys10hAAvu9ubXgJXF8FwHCpx
-	2AgtJmNEoTjUSek653JzSwJA+tWzgPkSVp7A1rjd5YvFz/zaGA5VkBMwH/ip0wer
-	DdYS9Vnbf2whwsumf5SKprJ02M1EE3sQi7pyt58MIvcDRpS/FabNadBy2KPMqBhz
-	2NTlj7IiosD4ccHNc0G+jq13EKsXn0HLCIcmhKPwr77T3wp6N+rgq09Y+VFuk1Q5
-	1huDLRBfJQfUeLdpodzDOw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748354673;
+	 x=1748441073; bh=TVWSbqCqRslDlz9mXQdMmUHRV1TXzS0lJW8hlkZJ3+8=; b=
+	RupAX9YzAJ9XrgiqMmTMTYreHieyIoPAAKAJlBpywpOh3BuGPiyPnvJz+wQVAVOZ
+	Swz9sB7Id3Uo/rfmfJIJZwxOgPPoISO5vTA5xyN7xxKdIrJ+TAFe65Xn5ZDeFSoD
+	6KBWKNiul3eE3Vb6aRsNaGNp00ReNzUr8WCHjQNgqxUKdT0S00r8dQk/rYXMsW6z
+	jLqfThBoJElnPjEStlyVW7aLPun8OOQB4sZuO7IZqF+TfJ8ZzMahUDK0tlaGARAF
+	7qfi2/96LAA+SfInNjFpGUc3fo86TGK7mwLr0beFRUq5ohyV/MLGjD1q62xzlJ8f
+	7MaB0DA34b/XJG7kRvF/gA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748354672; x=
-	1748441072; bh=WKmIczJLuab1VapDA27UQvuKwwXxdUWrSjTjZAEUn24=; b=X
-	Jp20EowR6D55SLJtALJt9pfC2IbTaxyNW7Rf1ABUqBpsBc/VENrwpRW0O8OviwCN
-	vH5XeroYBk34qaYtW5EdfiZazExm8IQqc8MAPmkqbBdNOBLBHKXrfUtdZZ+6A9ys
-	uN/dpWzTnlGYjw+32trJ2gNVN6nvt/G740ipIqAtsiCPXbeofU5tE9RuOePbH0PD
-	rsHIks3+LGGpNZ3r9SoDtEIMYVo8XzoMsQe/Cl05YdMpNzvN7XM79ot8Uq9zG5vU
-	TZ6czzyigaOLA0kqdPIXycm9fhlHN8TYqVmQc5J0Hosc5UVUTXz4JfDejKeUFDZJ
-	7mpxVofge/25tNqAtWbJA==
-X-ME-Sender: <xms:cMY1aNdeUt2A6oGxIAhyKsHCBNzJSBEjH90lUraywniTyh3rYVPgqA>
-    <xme:cMY1aLOncWV_3WTY33GWjkhIdf2Aw9Z7WzQ9_GV324S0vu7wA3j2uBBb9NFXJ2oKe
-    OOXsqRZhmMmqkV7Pg>
-X-ME-Received: <xmr:cMY1aGiRcxguMDKokqi4gWPqi09a_0DUeZGnE2RfRDaM3DnGI_9w9OrvJ4-y9Av6JzSZ7ymU913bSANQrVibTi-vTnQkMVr91i0EG7qGCsTWyA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748354673; x=
+	1748441073; bh=TVWSbqCqRslDlz9mXQdMmUHRV1TXzS0lJW8hlkZJ3+8=; b=U
+	kWr88T1nvBO5sKn0HIdafhljJCq+whQSjR1eh5QcleeqzW5TztyTrV+0MHorvsQ6
+	rgGETft5PQ19M4L8BJnNf2eHkTuxM8C9jTAlyXM0XMkTmZWxEAhayjDPQtHK/5q2
+	9V632otR7S/8K/gSUwL/qyqWYA7xbEKge43QBEkZz4W3BWW3HjuXSoo2Br8qyIOY
+	dzcwIg2JdR87ozp1P+2Vlwpb7sMqE9t8PUaFEf3g3K8++PMBkMQFTUDB8iEKT7c1
+	5E8hBvBiHnMxk+cbJLEjqV7pFedfPpTKIuDyWPBno1y+9XerYc6Gna/eX4Bt0N00
+	bkaSDtRem1Ua/c/bJxTow==
+X-ME-Sender: <xms:ccY1aPDAL-7WabEUj0fX8jW2WU5L0LOp86WtbD8VJwr9eQpMHiScSA>
+    <xme:ccY1aFji4pbTd34wN1wl3jmcxE7UBtdlhHXFB-v99GM1ErcZVUOSibpq9Nj-ar6Z-
+    D02CxrGsYD4RSB5zw>
+X-ME-Received: <xmr:ccY1aKnHdQZ-uNdYYQpiKEZM7Hph9W7lBoJ2W7FYFv4YhCv7u9eQsMX0Qlr_SXh1ZrHgInEGGi6vzMpj5Ci4F1HN1Tk2OGQcB8SrkPn4jeo74Q>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehkeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -58,24 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehkeculddtuddrge
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
     iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephihrohhthhesph
-    grlhhorghlthhonhgvthifohhrkhhsrdgtohhmpdhrtghpthhtohepuggrshhrrghflees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrshhrrghfle
+    esghhmrghilhdrtghomhdprhgtphhtthhopeihrhhothhhsehprghlohgrlhhtohhnvght
+    fihorhhkshdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
     hg
-X-ME-Proxy: <xmx:cMY1aG_Fm77-QoQAf8djRh49c1PUcPBg3of4D3Yl6TqE3sIq1afZng>
-    <xmx:cMY1aJuOTJz-YCokmOO9i_jinO5DZE4cnmZAnwTPLlRFPUvLEx2LLA>
-    <xmx:cMY1aFGWgrZUu5jjZwxUrhVrEfjdDLVff3WPihGLf5zgJDS7OK8D3g>
-    <xmx:cMY1aANY8EtDhgJ1USJ0St3-cbIHN3FDiSigJ_IQHL5ZHJ1pSpogkw>
-    <xmx:cMY1aMaYTVizENwO66zh_9UIr5BdwM1WibS4C2IEIeuQ4wgUvGBClreW>
+X-ME-Proxy: <xmx:ccY1aBxFN3RUJZbQILETjNJe_xbqPFVUrRmt7LQ7DdGjXDs_DPuFTA>
+    <xmx:ccY1aERZs12rp8or6YzFpK5ygsHl6KMyrPWsCardcUlWNBezp4cKDA>
+    <xmx:ccY1aEa2Jsv_BO-d_pbHnutlxnctPvJpZyvZYWF4EfvI6hDSLEuJaQ>
+    <xmx:ccY1aFQRZHaw2iaSaTi3VOQtTMXpq3EVBNYdIifskcLkymQ8OTGVdQ>
+    <xmx:ccY1aPtcSDQrruxP9qxyt1iBgkrj81lD1LJYcWnBbxcfYGYrIRWOq_Zp>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 10:04:31 -0400 (EDT)
+ 27 May 2025 10:04:33 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 7b23f6b2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 27 May 2025 14:04:30 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 9dd5f524 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 27 May 2025 14:04:31 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 May 2025 16:04:28 +0200
-Subject: [PATCH 02/11] builtin/gc: drop redundant local variable
+Date: Tue, 27 May 2025 16:04:29 +0200
+Subject: [PATCH 03/11] builtin/maintenance: centralize configuration of
+ explicit tasks
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -84,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-2-e1ceb2dea66e@pks.im>
+Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-3-e1ceb2dea66e@pks.im>
 References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
 In-Reply-To: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
 To: git@vger.kernel.org
@@ -92,80 +93,155 @@ Cc: Yonatan Roth <yroth@paloaltonetworks.com>,
  david asraf <dasraf9@gmail.com>
 X-Mailer: b4 0.14.2
 
-We have two different variables that track the quietness for git-gc(1):
+Users of git-maintenance(1) can explicitly ask it to run specific tasks
+by passing the `--task=` command line option. This option can be passed
+multiple times, which causes us to execute tasks in the same order as
+the tasks have been provided by the user.
 
-  - The local variable `quiet`, which we wire up.
+The order in which tasks are run is computed in `task_option_parse()`:
+every time we parse such a command line argument, we modify the global
+array of tasks by seting the selected index for that specific task.
+This has two downsides:
 
-  - The `quiet` field of `struct maintenance_run_opts`.
+  - We modify global state, which makes it hard to follow the logic.
 
-This leads to confusion which of these variables should be used and what
-the respective effect is.
+  - The configuration of tasks is split across multiple different
+    functions, so it is not easy to figure out the different factors
+    that play a role in selecting tasks.
 
-Simplify this logic by dropping the local variable in favor of the
-options field.
+Refactor the logic so that `task_option_parse()` does not modify global
+state anymore. Instead, this function now only collects the list of
+configured tasks. The logic to configure ordering of the respective
+tasks is then deferred to `initialize_task_config()`.
+
+This refactoring solves the second problem, that the configuration of
+tasks is spread across multiple different locations. The first problem,
+that we modify global state, will be fixed in a subsequent commit.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ builtin/gc.c | 47 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 24 insertions(+), 23 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 54fc7f299a9..7adda8d2d0d 100644
+index 7adda8d2d0d..c4af9b11287 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -818,7 +818,6 @@ int cmd_gc(int argc,
- 	   struct repository *repo UNUSED)
- {
- 	int aggressive = 0;
--	int quiet = 0;
- 	int force = 0;
- 	const char *name;
- 	pid_t pid;
-@@ -831,7 +830,7 @@ int cmd_gc(int argc,
- 	const char *prune_expire_arg = prune_expire_sentinel;
- 	int ret;
- 	struct option builtin_gc_options[] = {
--		OPT__QUIET(&quiet, N_("suppress progress reporting")),
-+		OPT__QUIET(&opts.quiet, N_("suppress progress reporting")),
- 		{
- 			.type = OPTION_STRING,
- 			.long_name = "prune",
-@@ -891,7 +890,7 @@ int cmd_gc(int argc,
- 		if (cfg.aggressive_window > 0)
- 			strvec_pushf(&repack, "--window=%d", cfg.aggressive_window);
+@@ -1690,15 +1690,22 @@ static void initialize_maintenance_strategy(void)
  	}
--	if (quiet)
-+	if (opts.quiet)
- 		strvec_push(&repack, "-q");
+ }
  
- 	if (opts.auto_flag) {
-@@ -906,7 +905,7 @@ int cmd_gc(int argc,
- 			goto out;
- 		}
+-static void initialize_task_config(int schedule)
++static void initialize_task_config(const struct string_list *selected_tasks,
++				   int schedule)
+ {
+-	int i;
+ 	struct strbuf config_name = STRBUF_INIT;
  
--		if (!quiet) {
-+		if (!opts.quiet) {
- 			if (opts.detach > 0)
- 				fprintf(stderr, _("Auto packing the repository in background for optimum performance.\n"));
- 			else
-@@ -991,7 +990,7 @@ int cmd_gc(int argc,
- 			strvec_pushl(&prune_cmd.args, "prune", "--expire", NULL);
- 			/* run `git prune` even if using cruft packs */
- 			strvec_push(&prune_cmd.args, cfg.prune_expire);
--			if (quiet)
-+			if (opts.quiet)
- 				strvec_push(&prune_cmd.args, "--no-progress");
- 			if (repo_has_promisor_remote(the_repository))
- 				strvec_push(&prune_cmd.args,
-@@ -1019,7 +1018,7 @@ int cmd_gc(int argc,
++	for (size_t i = 0; i < TASK__COUNT; i++)
++		tasks[i].selected_order = -1;
++	for (size_t i = 0; i < selected_tasks->nr; i++) {
++		struct maintenance_task *task = selected_tasks->items[i].util;
++		task->selected_order = i;
++	}
++
+ 	if (schedule)
+ 		initialize_maintenance_strategy();
  
- 	if (the_repository->settings.gc_write_commit_graph == 1)
- 		write_commit_graph_reachable(the_repository->objects->odb,
--					     !quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
-+					     !opts.quiet && !daemonized ? COMMIT_GRAPH_WRITE_PROGRESS : 0,
- 					     NULL);
+-	for (i = 0; i < TASK__COUNT; i++) {
++	for (size_t i = 0; i < TASK__COUNT; i++) {
+ 		int config_value;
+ 		char *config_str;
  
- 	if (opts.auto_flag && too_many_loose_objects(&cfg))
+@@ -1722,33 +1729,28 @@ static void initialize_task_config(int schedule)
+ 	strbuf_release(&config_name);
+ }
+ 
+-static int task_option_parse(const struct option *opt UNUSED,
++static int task_option_parse(const struct option *opt,
+ 			     const char *arg, int unset)
+ {
+-	int i, num_selected = 0;
+-	struct maintenance_task *task = NULL;
++	struct string_list *selected_tasks = opt->value;
++	size_t i;
+ 
+ 	BUG_ON_OPT_NEG(unset);
+ 
+-	for (i = 0; i < TASK__COUNT; i++) {
+-		if (tasks[i].selected_order >= 0)
+-			num_selected++;
+-		if (!strcasecmp(tasks[i].name, arg)) {
+-			task = &tasks[i];
+-		}
+-	}
+-
+-	if (!task) {
++	for (i = 0; i < TASK__COUNT; i++)
++		if (!strcasecmp(tasks[i].name, arg))
++			break;
++	if (i >= TASK__COUNT) {
+ 		error(_("'%s' is not a valid task"), arg);
+ 		return 1;
+ 	}
+ 
+-	if (task->selected_order >= 0) {
++	if (unsorted_string_list_has_string(selected_tasks, arg)) {
+ 		error(_("task '%s' cannot be selected multiple times"), arg);
+ 		return 1;
+ 	}
+ 
+-	task->selected_order = num_selected + 1;
++	string_list_append(selected_tasks, arg)->util = &tasks[i];
+ 
+ 	return 0;
+ }
+@@ -1756,8 +1758,8 @@ static int task_option_parse(const struct option *opt UNUSED,
+ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 			   struct repository *repo UNUSED)
+ {
+-	int i;
+ 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
++	struct string_list selected_tasks = STRING_LIST_INIT_DUP;
+ 	struct gc_config cfg = GC_CONFIG_INIT;
+ 	struct option builtin_maintenance_run_options[] = {
+ 		OPT_BOOL(0, "auto", &opts.auto_flag,
+@@ -1769,7 +1771,7 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 			     maintenance_opt_schedule),
+ 		OPT_BOOL(0, "quiet", &opts.quiet,
+ 			 N_("do not report progress or other information over stderr")),
+-		OPT_CALLBACK_F(0, "task", NULL, N_("task"),
++		OPT_CALLBACK_F(0, "task", &selected_tasks, N_("task"),
+ 			N_("run a specific task"),
+ 			PARSE_OPT_NONEG, task_option_parse),
+ 		OPT_END()
+@@ -1778,9 +1780,6 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 
+ 	opts.quiet = !isatty(2);
+ 
+-	for (i = 0; i < TASK__COUNT; i++)
+-		tasks[i].selected_order = -1;
+-
+ 	argc = parse_options(argc, argv, prefix,
+ 			     builtin_maintenance_run_options,
+ 			     builtin_maintenance_run_usage,
+@@ -1790,13 +1789,15 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 		die(_("use at most one of --auto and --schedule=<frequency>"));
+ 
+ 	gc_config(&cfg);
+-	initialize_task_config(opts.schedule);
++	initialize_task_config(&selected_tasks, opts.schedule);
+ 
+ 	if (argc != 0)
+ 		usage_with_options(builtin_maintenance_run_usage,
+ 				   builtin_maintenance_run_options);
+ 
+ 	ret = maintenance_run_tasks(&opts, &cfg);
++
++	string_list_clear(&selected_tasks, 0);
+ 	gc_config_release(&cfg);
+ 	return ret;
+ }
 
 -- 
 2.49.0.1266.g31b7d2e469.dirty
