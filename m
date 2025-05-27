@@ -1,145 +1,148 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0508F1C5F39
-	for <git@vger.kernel.org>; Tue, 27 May 2025 08:15:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FA47248F75
+	for <git@vger.kernel.org>; Tue, 27 May 2025 08:24:31 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748333722; cv=none; b=TgPwxMSunvHpFpgENEYoaqnX2rSeVrCcMYG1ravm1cBooH9jENunAO9ckD2fQzQJ6oNzt8gW8HtUA3GLdBzN9rcjIwhODyIb5fosLrq50S2KqYLdWNf7/OwCtpBx1ca3ERKrLgetx7wjcxFT/wmOen2VO+L4xx2eMoHxfoBsjgM=
+	t=1748334273; cv=none; b=KLw9gIF1Edg9mmOuqHNnKxfqPAg6c79Ez1m5lcJtaw4GAwovCUunhgJQrdH4zayzKdMYJPhD9ErbeSjSHj4dqVGPKZVoA5wQu+k7CKByrPemaz3pvceS6zxiG+dGWyiziUFCOQ+TWbrvkY9L1BhqLvl0XOWdSHhEYNPVg3wt/uU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748333722; c=relaxed/simple;
-	bh=HSx7C0GhNMjPjRdehgkad6MkGtAApYph/SypmcQf//E=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=pRwm8yxGlzM31/PcAS9c2eafVdS1xgWFLWf9buIuyEgHwuXGpkKmlkNoKgRYJ/OWfskUvTLyh3MxrhMw9oHBvnFffr4E4Cn4j5DqiLPnM8i9i+/cuq845Afkgefsy0IiOs2MJrTxtPfvPw6RjGCR80oNi1ispWHTqAUxQvv/z1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rpOdKar2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kSgacRz4; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748334273; c=relaxed/simple;
+	bh=2AdONCqzU9QCv2+2m5zJcmP5ka1bVpXP1fuDrjQ23CU=;
+	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
+	 In-Reply-To:Content-Type; b=ZXxiRxF1gyET5IQ1wcTXhnmh3+r2pFczQdJeaSBcRHCGiZXAhhxfZDqw17b4untwMq7c5SZWHTNkTF75ewRsNbakRaIUbYp8adbHtdOR/mBgdrRiossPnbL0XKd2dV3qAH922Os7uOeEHiKm5uNVcDMoiRBSbxn77UX+mKkEkGY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=VMefxBM2; arc=none smtp.client-ip=209.85.218.54
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rpOdKar2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kSgacRz4"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id DB00825400FC;
-	Tue, 27 May 2025 04:15:19 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Tue, 27 May 2025 04:15:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748333719; x=1748420119; bh=WbkOmRef0Z
-	e5Mn5HhghkPWMHygOzA2zaQ+U1lD2z88E=; b=rpOdKar2ZjRzWJYoVCr3Wbe7HD
-	4FY6TI1fD53jtJvFfswrWoioZOjpg2ahrl7QsQFiJlzdtWcZBOm0Pw2aS0bsa7UM
-	6UQdZGEZT8Z+AhYZVI16P75Ol5DUYBAemiji1JXvPIGNGVTJ/vveehoAql2eCBZH
-	yJqHb3TbaO4PfTYqGFA4Lx5lYShVNAZoeBvZOxwfnCr0VezAfBJ12V+o0Rz8Xbu/
-	uwzHP8X+M7Pe8RCduVMtwmEnpmJM+9MuYXh2jjJuIZYZx+jbbPy2DBZqbBJPcX7C
-	oBDpykUv0mvvrb6rdMem9gqb5XzwuHlhKAqALr1ztdCGy7lQmg43u7macUPw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748333719; x=1748420119; bh=WbkOmRef0Ze5Mn5HhghkPWMHygOzA2zaQ+U
-	1lD2z88E=; b=kSgacRz4ix+DlYD/o2diaIXfn/qjo6rSC3BV7x+L4z0EePLgTyU
-	E1kvjMRyxjegYdVYjo+wxfqCcQRyimqmGimpMw1hjxNmoLpZZZ4M+xac2Zq2KEeU
-	qUt+mM+TC1laLXPtTrDIGx6GefsoSJbxZQaAm6xxOoQfN7cb6QuuXKZGPIoL7NvN
-	xEJtIyTPj1yx1oWHHukKib1Q1/vEht8ScF0wLHeQh/DAaiJh+W6rVA9xgBYus0Mq
-	twIVYsTPZ5UrKbCGTgD196RQvClm1i8U5Dr/OpwPTpVq7NCkO0rzer4AqHsiN7eO
-	XkIuEYXfmOKkzY57O6/NUQorRIafUbDQe3A==
-X-ME-Sender: <xms:l3Q1aGeQi8lV4RP6ZN5wqPaZVisU25hC20lH8A5lUwsyPBZex3injA>
-    <xme:l3Q1aAMiE-2EE13Ry_VTaKP26t1L5UlWAf1WzfbrErvDY4JfID_cm6gYltnOPICTR
-    2mjDpi9airHLm5yag>
-X-ME-Received: <xmr:l3Q1aHiF2A0UGpBRPNGLq3rkmFsUjmoctMlzmqwhLf4C8LSo12O3yHH0nU7_0XCw2nUQ9cqeZI1d8xKjzbZJ1aRmN1L4ukB6PDcS5yHZtmttsQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduleekjeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
-    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
-    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeelveehjefhuedtffel
-    hffgfeeihfffhedutdeludefteduhffgieevveduvddtveenucffohhmrghinheptggtug
-    hhihhmrdhpshenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhr
-    ohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpoh
-    huthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohep
-    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehmvgesthhtrgihlh
-    horhhrrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:l3Q1aD8QnsyTGPvobIL7oVNYZIGhnG3ee5oeoNOQ2F9NTXyZuz8eaA>
-    <xmx:l3Q1aCtJPfoXlJTQNIuR1fWXIZtow0ptOGCSpnw7rO-5wGByCI5g_w>
-    <xmx:l3Q1aKFlX9qVXiaP1y4bGY_bBDf59XE8xnt8rg6UujwA0wP1qgf_nQ>
-    <xmx:l3Q1aBN99nCAsMEbJlnf4Tl0flObJqPgRaxHOEuT2wMyfBu5w56QVQ>
-    <xmx:l3Q1aEfnB1zwqJh-M66ryOB059j5jXgY4bq61HqKglAzliXRU4ja0a8n>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 04:15:18 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5689cb50 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 27 May 2025 08:15:17 +0000 (UTC)
-Date: Tue, 27 May 2025 10:15:11 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: git@vger.kernel.org, Justin Tobler <jltobler@gmail.com>,
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: What's cooking in git.git (May 2025, #07; Fri, 23)
-Message-ID: <aDV0jwaQ2DlcM0lZ@pks.im>
-References: <xmqqtt5au523.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="VMefxBM2"
+Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ad216a5a59cso381689666b.3
+        for <git@vger.kernel.org>; Tue, 27 May 2025 01:24:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748334270; x=1748939070; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=++c82Z3psgPcGk6vsUt3aT4ruFd4AUV+GwvigwpLejg=;
+        b=VMefxBM285+f54JYaCVoYTJTCIqyQWRObitcJS0Sw37nFTKa0JLIa1D/qbsrGyAPlM
+         Hw4xzG5fB8dWi17bifuRv4bCvi2tRZ3NE+nFWfyOAntcHN6RJgoW5IGbbOBiT+uGxedG
+         UjnVZgJVJuGkQdtGFWfuOz90s1pzDMhqk6V+CNQmDoamhrJNztxzCQ+dqkPy6AmS3XH0
+         vpsusrbk4ZK7sfjZjTKeozLQjysft1TxvcPTfudXk6Je29dEcPILpGgZbPRljkvAvmER
+         GCdYxwGygHLRLsFdWFEsHnAKdVR7PBzjJgcJPH9eoDUfAupb2MtjtGVdm3ERVriaZ9KI
+         Athg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748334270; x=1748939070;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:to:subject:reply-to:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=++c82Z3psgPcGk6vsUt3aT4ruFd4AUV+GwvigwpLejg=;
+        b=S40rlCI7heCxdy7H+2hcy/m7cUHD0AbdeVHGhpCcTW9cii8Ote03BIvmCmAjfFgEVs
+         JWDwI6Q3Kt0/vPvZt55ETWOpqJDMQV9+HQZtwi2+LNNfDji87tVu6a9EIpgECJr+jmh6
+         s5ODJCMAdthvSDbVe54uJ/AnDEvDw3QAPQAHZigDsGbTZaQx+bdH9WIE6FhJ7IJqr5KD
+         6nBdLowaip4LjHqz6Eqqeg0P126+paMCwcXHQc3EvUoJXMwFaTu2trhY1weqC0yIYVoQ
+         CiR/49LqFJu5G6Lb7nBcBTh0hRGKW1ZVN2IwFR2+6R0VGR1QPc8a1IglKB/2zxmv893b
+         0F8w==
+X-Forwarded-Encrypted: i=1; AJvYcCWbD+MW5dZAU4HIUbjWXJUuAARuVDyQD3hQ9kJ2yKAEaI0ZutL9xB3hTCB9GK41BkMQojY=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yzo3LS35EJZQh9LFDqGGoKU3sbRJ8zDcCnE6wYZnPkCDyJgj7GC
+	gD+M99MeEMvk49FrlRuSQwS2OzgkE8LP586Mv+JFKFr+uG+WgygS1xGa
+X-Gm-Gg: ASbGncvnHlu8fzcCUhwGjOeZ7K+5LvF7HarRU85+lJYdqAPw5xg7trP7vpNEOShSpPv
+	OhmnjhqDYBTbmplL+G3B/xAO0o2xlFHhKzr2/kkekyn+j5lOYiJvaqCthjLs4qHyyrHylfOaSk/
+	P40/NY0Q5aFlnu2gN+E+7J7a+I107epUmyHE+PnZqm+zVWZXD3iA5Ce9DdXEesPy/hPRpFkgToy
+	nNhTTDDvnTbfuY3Cm4Ee9U5qPw7nJJh0kmATSE7HjlMfiq48Lb+65qowD0yPlplu9N6goI0aowx
+	ADnDyGb8tehlT3HuLjLIDHA2k87PxjlXiWA4o6H1wI0GepuG451bpld9yMjyo2Kbx8SoU0vCiAE
+	9O/puZ/MvhePmdfHPT1V66d1rD+I=
+X-Google-Smtp-Source: AGHT+IG/zR5GzHo/UHUB1jlq3NDbWwU6v+HpBAdMICbosRn9OG0KCWw/OkD/7bT4dhBbRgLGUq/5fA==
+X-Received: by 2002:a17:906:3617:b0:ad8:5782:7f15 with SMTP id a640c23a62f3a-ad85b0d0de7mr915070566b.27.1748334270218;
+        Tue, 27 May 2025 01:24:30 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-ad8848c24d3sm174636866b.133.2025.05.27.01.24.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 May 2025 01:24:29 -0700 (PDT)
+Message-ID: <ab009472-d15d-4894-aa83-0ab8b0d2dfbd@gmail.com>
+Date: Tue, 27 May 2025 09:24:26 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtt5au523.fsf@gitster.g>
+User-Agent: Mozilla Thunderbird
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+To: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+ Phillip Wood <phillip.wood@dunelm.org.uk>,
+ Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>, git@vger.kernel.org
+References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+ <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com>
+ <10280d7d-af36-468d-82b8-e0e780c38ef1@app.fastmail.com>
+Content-Language: en-US
+From: Phillip Wood <phillip.wood123@gmail.com>
+In-Reply-To: <10280d7d-af36-468d-82b8-e0e780c38ef1@app.fastmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On Fri, May 23, 2025 at 07:16:04PM -0700, Junio C Hamano wrote:
-> * ps/midx-negative-packfile-cache (2025-05-20) 2 commits
->  - midx: stop repeatedly looking up nonexistent packfiles
->  - packfile: explain ordering of how we look up auxiliary pack files
+Hi Kristoffer
+
+On 26/05/2025 20:44, Kristoffer Haugsbakk wrote:
+> On Mon, May 26, 2025, at 16:01, Phillip Wood wrote:
+>>> diff --git a/builtin/notes.c b/builtin/notes.c
+>>> index a3f433ca4c0..ca4782eca19 100644
+>>> --- a/builtin/notes.c
+>>> +++ b/builtin/notes.c
+>>> @@ -180,6 +180,8 @@ static void write_commented_object(int fd, const struct object_id *object)
+>>>    	if (strbuf_read(&buf, show.out, 0) < 0)
+>>>    		die_errno(_("could not read 'show' output"));
+>>>    	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
+>>> +	/* strip trailing whitespace introduced by blank lines */
+>>> +	strbuf_stripspace(&cbuf, NULL);
+>>
+>> It doesn't make any difference at the moment but I'd be happier if we
+>> stripped the trailing space from the commit message before commenting it
+>> out. That way we know we are only stripping space from the indented
+>> lines produced by "git show". If in the future this function were to
+>> start appending the commented log message to a buffer passed in by the
+>> caller rather than a file passed by the caller we wont mess up the rest
+>> of the buffer content.
 > 
->  When a stale .midx file refers to .pack files that no longer exist,
->  we ended up checking for these non-existent files repeatedly, which
->  has been optimized by memoizing the non-existence.
+> Do you mean doing the operation on the output buffer instead?:
 > 
->  Will merge to 'next'?
->  source: <20250520-pks-pack-avoid-stats-on-missing-v2-0-333c5217fb05@pks.im>
-
-I wanted to send one more iteration of this where I hide the ugliness of
-`(void *)(intptr_t)-1` behind a macro, as suggested. But I saw that
-Taylor has built on top of these patches, so I don't want to make his
-life harder. Cc'd him.
-
-> * ps/object-store (2025-05-14) 18 commits
->  - odb: rename `read_object_with_reference()`
->  - odb: rename `pretend_object_file()`
->  - odb: rename `has_object()`
->  - odb: rename `repo_read_object_file()`
->  - odb: rename `oid_object_info()`
->  - odb: trivial refactorings to get rid of `the_repository`
->  - odb: get rid of `the_repository` when handling submodule alternates
->  - odb: get rid of `the_repository` when handling the primary alternate
->  - odb: get rid of `the_repository` in `for_each()` functions
->  - odb: get rid of `the_repository` when handling alternates
->  - odb: get rid of `the_repository` in `odb_mkstemp()`
->  - odb: get rid of `the_repository` in `assert_oid_type()`
->  - odb: get rid of `the_repository` in `find_odb()`
->  - odb: introduce parent pointers
->  - object-store: rename files to "odb.{c,h}"
->  - object-store: rename `object_directory` to `odb_alternate`
->  - object-store: rename `raw_object_store` to `object_database`
->  - Merge branch 'ps/object-store-cleanup' into ps/object-store
+> 	if (strbuf_read(&buf, show.out, 0) < 0)
+> 		die_errno(_("could not read 'show' output"));
+> 	/* strip trailing whitespace introduced by blank lines */
+> 	strbuf_stripspace(&buf, NULL);
+> 	strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_str);
+> 	write_or_die(fd, cbuf.buf, cbuf.len);
 > 
->  Code clean-up around object access API.
+> I think that’s cleaner.  But I don’t see how it makes the code more
+> future-proof.
+
+Because it is now stripping buf and not cbuf. If in the future we decide 
+to build the message in a buffer rather than writing it piecemeal to 
+disk we would change signature of this function to take an strbuf 
+instead of a file descriptor and use the buffer provided by the caller 
+instead of cbuf. If we were to strip cbuf then a naive conversion would 
+end up stripping the buffer passed by caller, not just the output from 
+"git show". Various git notes subcommands have a --stripspace option and 
+calling strbuf_stripspace() on the caller provided buffer would break that.
+
+>>>    	write_or_die(fd, cbuf.buf, cbuf.len);
+>>   > [...]> +test_expect_success 'git notes add has no trailing whitespace
+>> in the editor template' '
+>>> +	test_commit --signoff 23rd &&
+>>> +	GIT_EDITOR="cat >actual" git notes add &&
+>>> +	test_grep ! " $" actual
+>>
+>> Should that be " \$"? What you've got seems to work with dash but I'm
+>> not sure if it is POSIX compliant or not.
 > 
->  Comments?
->  source: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
+> `$` is the anchor metacharacter in this context (end of string)
+> according to Posix.
 
-I think the only outstanding discussion is whether to name things
-`odb_alternate` or `odb_source` [1]. In case others agree that
-`odb_source` is a better name I'm happy to revise, but if not I'd rather
-keep it as-is.
+Right but what does the shell do to that '$'? It is not escaped and 
+inside a double quoted string.
 
-Other than that I think the patch series is in a good shape.
+Best Wishes
 
-Thanks!
+Phillip
 
-Patrick
-
-[1]: <tjsbotrnrffykmi3letktpb3bly4nqw4wxzyrszgbln7pznem4@3kwiq4zvaebw>
