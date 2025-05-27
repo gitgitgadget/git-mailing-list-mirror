@@ -1,129 +1,111 @@
-Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B6C4211484
-	for <git@vger.kernel.org>; Tue, 27 May 2025 21:20:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0FC71ACEAC
+	for <git@vger.kernel.org>; Tue, 27 May 2025 21:21:34 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748380832; cv=none; b=fJHu9SbuljaCda3pwFb6qsX/MBDwZMQe3zHw/1G/7wbqiNWAh58kIcw3lN6/egkkO0anOTiD04lY/9F/9DUV9nV0jcSksBo7m+WuFqcfv3fLP5tsB6oHV3E+dGA8ctEw9sjDcy3JORQRj/IkLfZUgw5Sy4GqZ8Zmlv+mNgw75Jo=
+	t=1748380896; cv=none; b=Og6wEfBHv+yUCEHzuowt4B02su/URVmSrpKiDJej9cbKenvMeVfSa07YziMZpn17ueUVvWWpoRnOCgXx13gR/5Yvxs3ueloZAxsvsq9Us+VemAmrp1Dod4xqSxvqioCVa1XIzy8DLntTsmKmIftDKsk6U/cICXWhLZ3VFwbY5d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748380832; c=relaxed/simple;
-	bh=a7bKQHmhuTKw8T3H98sLkROGxG1tNdq0gpj1UEgZOLM=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=P3ERqyVzXqEq0hJP/Z+CpPGvalBlZt8FjuiSwjVGZ9PY5sCT6nA+I6pHj29qt+ASJytncHlWEw/SQi9boLTfMQJjN3uMzNLa07NbtkR8RcvbB+n+MjzoCfrq21mDs+Piw/W1N6Ggeyr805EOUg89LZgFCGESnn1xxwNnnlcDZZA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Tu2YQgIf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=G/FOJVxB; arc=none smtp.client-ip=202.12.124.144
+	s=arc-20240116; t=1748380896; c=relaxed/simple;
+	bh=nLr4lzNSmIEdTN77lUWBv1f/JiDOqU3jTJsfX5+mhs0=;
+	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=GwmqgTiHHdjN+0ryjaz14td5keZxn1WXAIYkbUSaNR0guS0bSrJc1i+X5sWVnFhO9Xp9TYyQUGWVT9x8bzliV69paU3MiL4o25Ybb6NOUbcO27c0LPRpGCAF/MduuSaxoRvaTov2rBvaPrBbpBkjn/3eZlvq/K+7dmPEIjq05JI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Nardggty; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=dGVMshdN; arc=none smtp.client-ip=202.12.124.159
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Tu2YQgIf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="G/FOJVxB"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.stl.internal (Postfix) with ESMTP id 5457A1140123;
-	Tue, 27 May 2025 17:20:29 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 27 May 2025 17:20:29 -0400
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Nardggty";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="dGVMshdN"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E8D002540141;
+	Tue, 27 May 2025 17:21:33 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 27 May 2025 17:21:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
 	cc:cc:content-transfer-encoding:content-type:content-type:date
 	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748380829;
-	 x=1748467229; bh=U1UFP0ZE532VoekvpqwiNDq0XI84WzQdEcgU12S3fC8=; b=
-	Tu2YQgIfv+w/LVjA2wPnVSl2IO4XRiSRaLz5WbXQxxsFUhAjIWW7TWJcltjMWVZC
-	4hjG5qnVu+s5Pxo5DXyHvEGLkC+TyTdvIcexN2owe4ES12SX+rfUfwPrCAWZ//17
-	o70BVtwsWgi6K3yiUBuvwmE9MNuNK0y3WZgU91tcx1Lo7Kp7veeUiY8MTSnrzkJF
-	wwdA29havVc6JvIgPTNvQ2W0yGD/w+VCV1wNnYQvKQbcT37yad78LeasR18MswRm
-	i05YpWMotMzQOM3XZy9RHeZsEoawP4dRscyhy50cfIXcup1zX7L7x370bLO7SJuw
-	mpWgEVMZ9wfz4sxBEetqKA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748380893;
+	 x=1748467293; bh=QJos5xfbdHrlE6qgATwjwqtfnp6Bm0e5/gQ7wGPBvGI=; b=
+	Nardggtydv6VupbpJHqItyJd3M28cQbrTm/P/ke+t4gppZBa0eaamctuTwAWwoMv
+	FeAUgWKpiYLGWna5B3/fHi7nMy/DOa7AK/MyKaB/MBVSW14MVsraVVa4eSxEyhTE
+	nl9jOOJAZl+p12Ph0jIBKlqN6Lt6ap+pf5aSEjC69+B/jAXvywk8grrAhuTCKR+K
+	kFVTDIeQhndjSCNqUUohSraUIxKUL5YNlppA2QBLV7wJAuY/ZHGXVl9c4CGhbJ8n
+	4nN8VX9jV2WGyN+N53b1YHM7A3zTnxkkl3r8f7x2aVKYLQf06n8ZTji9MAixvxFg
+	96Om7z0aYe1ejNjvqqcRzQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748380829; x=
-	1748467229; bh=U1UFP0ZE532VoekvpqwiNDq0XI84WzQdEcgU12S3fC8=; b=G
-	/FOJVxBS0GgfcNqOeVs/g4XY+D5PlyZC9qsjAOX/+YQc18iEe1VDwMvZRBCB8QHK
-	iU2G5/m+BZXBDrRnWJkN/UfnU/BxLSsGacjcyILkEH6KOFT/cuunce5DhDDEGbXF
-	/y/MmCGdr1GfWNobIyU9ZPsil7OpE889ZA0G9H/ouG6sj0IpfY5q8eCmvP7klqyh
-	jO7BJMi8OOVjkZ9vYv+YB/2NhRmgojqx34Rfv5YvixGkqQsnnG4SL9b0wv/xlMID
-	3Fcdf/iTRdXkixX6zSnthAie5U5pzDtJ0DK5mRJvyHF2oASm4RKU4csGyRyFhbtH
-	eWE+CjvC0a78CHADNYKnw==
-X-ME-Sender: <xms:nSw2aOgpOD4AFh83bO28rlVpgB2UdTr5ARyl7_Uly-M0LUQMef3AeFI>
-    <xme:nSw2aPBjZg1s6ZP9qxtGdQxBoPYcQeR8_oMDFK3ypjBZPIUF-e1QqRPd6qvib_QLt
-    RVT_QHGN02KYlZ6mA>
-X-ME-Received: <xmr:nSw2aGGFAuvqJ7YM3tSCliQzuTOssogRoPKLGQMEbwLMkRpkUecHbed_Monux2CzsxuKNwYLA0GzFXTu2LduErbytU5V3OCqrRLuOEDCm-YPMYOs8CjyOijXuA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvudegheculddtuddrgeefvddrtd
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748380893; x=
+	1748467293; bh=QJos5xfbdHrlE6qgATwjwqtfnp6Bm0e5/gQ7wGPBvGI=; b=d
+	GVMshdNmSlwpB7GWMA0kBAUF0cD58Pesp+wEQ0xtlFFy7a3YGGhEM2qlhVX3ehvp
+	1fqITXRiLJ3xNm055/HsxHwhSVXq4T2HmsBqN4Q4JyjcLFq3NS8G8a7kPkCEcDrc
+	6xMez9sDvcZ5qBVUpYNdIo8qheX9DRvVQoj2jHgLnLnDFUBvZsOAXSDjlHomS1cI
+	jt1ecc8AgnM10nRH5CXmTVHYtQAGESQv9hmVZLKTp3iYD49hnJbQnQK46xT9sc+6
+	vgBpJcPKjOmt3D/rsAKHFY/yVtSuuOqIrTuryLUKBBThiPwCSQ0CCEIaefpQDr1l
+	060HRsqa0Y4rIfSyuwJ2Q==
+X-ME-Sender: <xms:3Sw2aBruCw0fSIKegHYbY8ZhTKXKB7_DjBU1HY2z8GJkv3UBpSF_vVw>
+    <xme:3Sw2aDrZ7ZnpYHi-B1dPs_8JirMCjSlbUpSf182wtq0XiUWjPyI4zd_fuFXv4Z2vR
+    qfqHCBo7wyCkBssrw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvudeggeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffo
-    jghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
-    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhephffggeelhfej
-    kefgteelteejhfetieehgeeftdduudffgeejhfektedugefghfeknecuvehluhhsthgvrh
-    fuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgr
-    uhhgshgsrghkkhesfhgrshhtmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopeehpdhmoh
-    guvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
-    rhhgpdhrtghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpth
-    htohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopeguhihrohhnvghtvghnghes
-    ghhmrghilhdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilhdrtg
-    homh
-X-ME-Proxy: <xmx:nSw2aHRcN6xwvluCaUKRn4isRa24dWJWHgxuFbHkwAnGTy3rxy5VmA>
-    <xmx:nSw2aLxZ1h_oQdc0Rhkpzh9zs25DjKKl9rUfp7tIfz_6ldO2tL3DZg>
-    <xmx:nSw2aF65GWUvgHmiUPobbRu9wOXBO6UcMgvzAvt2ehP5pY4iLFSNow>
-    <xmx:nSw2aIzywwF0FHeXuuiXiwXQ8NX2KegE76wFZYvfHfQE33X2foNLTw>
-    <xmx:nSw2aHO-4U00oyU_Z7VugjkBa37P1t7ld-crSoMBDSkcF4UIXsV2E1XW>
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefk
+    jghfufgtgfesthhqredtredtjeenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruh
+    hgshgsrghkkhdfuceokhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrshhtmhgr
+    ihhlrdgtohhmqeenucggtffrrghtthgvrhhnpedtiefggeejgeejhfehuedvgeejkeelge
+    duudekleejkedtveejgfeigfefkedugfenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrg
+    hsthhmrghilhdrtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhht
+    pdhrtghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprh
+    gtphhtthhopegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehg
+    ihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuh
+    hnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
+    rdhorhhg
+X-ME-Proxy: <xmx:3Sw2aOPxR8CC8PkpU2zXmJACoYWdQdwmK1ISXupLu1fHcu5UX_sLeg>
+    <xmx:3Sw2aM5bG57XxsQ3sZqRMYJHb_WZnuXZKcUo6C47SdMAROxDO0kr2Q>
+    <xmx:3Sw2aA7vTGihCwW-yF2tTKbflUmkahenJKrD7QoJdBSUY6LnJaCXng>
+    <xmx:3Sw2aEj5Vo02FhT1gaf1QSMJQYsqmwpeWOkBYURewJYIHHHTT2IugQ>
+    <xmx:3Sw2aP-qjk2cx0mZXyZsLo2Tp_6EjzxyxorGqm96a0q7RdWYNmDccAD1>
 Feedback-ID: i8b11424c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 17:20:28 -0400 (EDT)
-From: kristofferhaugsbakk@fastmail.com
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Jeff King <peff@peff.net>,
-	Teng Long <dyroneteng@gmail.com>,
-	"D . Ben Knoble" <ben.knoble@gmail.com>
-Subject: [PATCH v3 9/9] doc: notes: use stuck form throughout
-Date: Tue, 27 May 2025 23:19:38 +0200
-Message-ID: <7751330daa4fe28f4c989e9d27e9701bb21bc0f2.1748380390.git.code@khaugsbakk.name>
-X-Mailer: git-send-email 2.49.0.780.g892193c3f50
-In-Reply-To: <cover.1748380390.git.code@khaugsbakk.name>
-References: <cover.1748028010.git.code@khaugsbakk.name> <cover.1748380390.git.code@khaugsbakk.name>
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 7F86F1EA005E; Tue, 27 May 2025 17:21:33 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+X-ThreadId: Taf9fec3ba48f0e1f
+Date: Tue, 27 May 2025 23:21:10 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Junio C Hamano" <gitster@pobox.com>,
+ "Phillip Wood" <phillip.wood123@gmail.com>
+Cc: git@vger.kernel.org, "Kristoffer Haugsbakk" <code@khaugsbakk.name>,
+ "Eric Sunshine" <sunshine@sunshineco.com>
+Message-Id: <59e4082a-6cbe-4a3f-b884-1d0cc7294548@app.fastmail.com>
+In-Reply-To: <xmqq5xhmvuol.fsf@gitster.g>
+References: 
+ <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+ <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g>
+Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 
-From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+On Tue, May 27, 2025, at 19:18, Junio C Hamano wrote:
+> Alternatively, if it bothers users of certain editing environments
+> too much, perhaps the indent code in the output phase of "git show"
+> should lose the indents for empty lines uniformly, shoudln't it?  It
+> probably should be a fairly isolated change, like the way how the
+> expand_tabs_in_log bit is handled in pretty.c; give another bit and
+> teach pp_handle_indent to return when that bit is set and the
+> payload it was asked to show with indentation is empty, or something
+> like that.
 
-gitcli(7) recommends the *stuck form*.  `--ref` is the only one which
-does not use it.
+That sounds scary. I=E2=80=99ll make do without.
 
-Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
----
-
-Notes (series):
-    v2:
-    • New
-    • I didn’t spot this in the first round.  Hopefully it’s fine to include
-      it as well while we are editing this file.  I would consider making a
-      separate thread if I wasn’t editing nearby hunks.
-
- Documentation/git-notes.adoc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/Documentation/git-notes.adoc b/Documentation/git-notes.adoc
-index 397f6caa92a..46a232ca718 100644
---- a/Documentation/git-notes.adoc
-+++ b/Documentation/git-notes.adoc
-@@ -200,7 +200,7 @@ order of similar options. For example, for `-C <object> -m<message>`,
- previous `-C`. This is a known limitation that may be fixed in the
- future.
- 
--`--ref <ref>`::
-+`--ref=<ref>`::
- 	Manipulate the notes tree in _<ref>_.  This overrides
- 	`GIT_NOTES_REF` and the `core.notesRef` configuration.  The ref
- 	specifies the full refname when it begins with `refs/notes/`; when it
--- 
-2.49.0.780.g892193c3f50
-
+--=20
+Kristoffer Haugsbakk
