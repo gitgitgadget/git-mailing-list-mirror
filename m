@@ -1,122 +1,235 @@
-Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358862DCBF0
-	for <git@vger.kernel.org>; Tue, 27 May 2025 19:50:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4421D1ACEAC
+	for <git@vger.kernel.org>; Tue, 27 May 2025 21:19:55 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748375432; cv=none; b=KwnrOWAuDODIH7fxpofKKD6dHVTYaO/uSh8wN2+j/GUDsgOF12p9AZqxI/mIc4J9RuNyMLHfK59hVvRa71FG6FKwzuOnOyyS+fA0EUhuZNBGcgPWPkG8JOlnIgU7itMb+lUH91L8ams60xhaQEM2oPEyMbHZiS6BQUBaaodW4zU=
+	t=1748380799; cv=none; b=EEbgR5vNog34JUIZfd6fQZLJDnz5MHlWTmTajVbTo7fdRhHi5dPjy8x2HX1wSvJDrqerHotKwzr0kEoEeh1EtJPcae7uMwAz72Ss0g878a4+R9xFmPdpTL9GGu74/hUchJT4FkQxVXxCCbaCDMSDJbnPvsQnpHsvnoCtmVxSRJU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748375432; c=relaxed/simple;
-	bh=3pHhqHjO2NKeY7tagHOE2BLm1FtxLiYntoVxDY83KIc=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=qyZFbsG8SbA7XgddaY/dTr34FQO+ZzU4bXGYyTkqXNRGk/MLcfdI0aHNyfBKkfZMD4nFL4OxCqtQvHRlJu1Xs3lML+nsMVlot8YcZZpocXsKqh6eiHv8JEdZD5pYPukkZPi5BKbsB4DGEFympsyKPhHtzHJ59SCRXVx16JiDhYY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vs5nI1id; arc=none smtp.client-ip=209.85.160.46
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748380799; c=relaxed/simple;
+	bh=PaefMCEByy7FN7PjwmL52puUagcL+0wSuFFFMm333YQ=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version:Content-Type; b=h7UHG5M2ub2XomreMh4mAWZ07PnBybKURbK+3kcI8K86GRhMnRoQUyLenGv06cXFj/9H2wMZKxGn3wuzcyuw2Jwsndwd/O1bZoz5WuG+xhrrYmVpLzEAy8VrhOFXe2KlwswB81WOWMWSFEc/r+KmtPbuSo1zH23QZT63z8Z/ZgY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=Yzikx1RG; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=LO4+ckuU; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vs5nI1id"
-Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-2d522f699bcso1424663fac.2
-        for <git@vger.kernel.org>; Tue, 27 May 2025 12:50:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748375430; x=1748980230; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=QFPgRFINe9PDmbys2c7xyZXBg5uEKJK2ToZ8qlDN2rc=;
-        b=Vs5nI1idOc4qmICPEuYIrsFen6qoZsobpA3AH41e+wDr9QIUj0U3X9xHvwTWJx8Gmd
-         7z2wHA/YH8qpAVMYQ4nhwqffJkdqehyXUH10xyaimtck/KqFLyddBygSqlaDXFV2JhE2
-         IqAjmbXj/XP3CGTyedcvvzsgHWBrqQJ6XUUQ2mViQuoXvr2hPHSHpJukveCbdN6nJl1C
-         OOe9RFCfjvBKU70GeD3xv5dprSJzEn80deQpOQrJh3qOm3/bWCGBhUlAioqVRJ44ECEs
-         kjlmTsaKx/jlKAR6t087JZhuIiO0fr8nhXs9xmfHex+Kfq4cssCHjRnPF3Xef3Y07KaR
-         49RQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748375430; x=1748980230;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=QFPgRFINe9PDmbys2c7xyZXBg5uEKJK2ToZ8qlDN2rc=;
-        b=cckdKiDOIzGrYbgDc/zGI1InwHiyTQDgjzc4XAqGMWnepYawBt0ykI0vwTrk3x7mPc
-         ggF1KIfwwwXmdn75Unf1unBFveKZ06NUZ4UY8dH9rhG4/eJDhPHZelimmxnc7un6c80t
-         W+UUDIhp0kBl7x2DNlAActUKGpAXxz/MfnP1fnRejcxCto1tf9AxKYfyNiObj7BorLqX
-         hxxHJ+t68Alu0NQ+5SQTSqN7VjjykIrtpfLHggErm/V6tJpZm0F2sjaz5qGfvx0GFEQG
-         9XFRFfE50mRdYbwc8dHc5pkP8sxFMSJCh4Dy18FaZs9adGwMufFiUAs9JOhpcq8wcN54
-         M0Zg==
-X-Forwarded-Encrypted: i=1; AJvYcCXkE6uGDbVhXNJ/JJi/JMxe68xDNYDaD7TUqH+m80S5WYB+Zx4MYdH04vqMG4KzPVQdQtw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YyxKrHDbOavlUTiGDjxguNwbQWgodbEnMPX8IEFZ3mWfRBRkQlk
-	Jhn196LiJpNV38Q0IRsiOiyVNKbCBcIK7mp7ZE9J8b+wiZjM/3N6Nsux
-X-Gm-Gg: ASbGncva4HiCFlmMfA9M2TU2J3mhzR7X5xAP8+6j95oF8JRLXGRAtgTyfFtOGBDapD2
-	8pi0JfPd5PXaOZ/EfkGgsF4UzErc2mgyR8Dm4CwNBDa0jpTAhgQDyxRmJ6dfjhyhqmAQqbJeVw5
-	HRIMSpS9CumfgmngVX88TyJYNMPv/B7Nc8Y0n06qkrDXXdV7HSS18+LAhdndKJOZum9hUkeM554
-	nwMlACks2qvfPWwB9LZW7g/uBHOxzbliZcBaQsDXSS9TFwUopYBvJWNXr6vwJD2kuCls810FchT
-	SSIiFnvVaSOATHfVTewYscgCrVseCzYrRIO28Q7gh2Ee
-X-Google-Smtp-Source: AGHT+IEYMBXY0jWAdDCTxkJkcw41kmMvHVZtO3nj4hbDCSd48xgRH6emfXA4fHhdtjI9KtfOF3HsOw==
-X-Received: by 2002:a05:6870:71cb:b0:296:b568:7901 with SMTP id 586e51a60fabf-2e861e36c4dmr6919091fac.16.1748375429950;
-        Tue, 27 May 2025 12:50:29 -0700 (PDT)
-Received: from localhost ([136.50.74.45])
-        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2e3c0aa6fdbsm5460711fac.37.2025.05.27.12.50.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 May 2025 12:50:29 -0700 (PDT)
-Date: Tue, 27 May 2025 14:45:43 -0500
-From: Justin Tobler <jltobler@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
-	Taylor Blau <me@ttaylorr.com>
-Subject: Re: What's cooking in git.git (May 2025, #07; Fri, 23)
-Message-ID: <shpx4piigp5sqgpbzx4vdgu4zdn7z3ykxhu2cdyjh5vpr6zbqb@rf2sxg6hukpd>
-References: <xmqqtt5au523.fsf@gitster.g>
- <aDV0jwaQ2DlcM0lZ@pks.im>
- <xmqqtt56ov4k.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="Yzikx1RG";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="LO4+ckuU"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 421661140112;
+	Tue, 27 May 2025 17:19:55 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Tue, 27 May 2025 17:19:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748380795;
+	 x=1748467195; bh=fgy9w13B0g+C8vEkF148LNj92GJ34OgYI8fe0V+MYgI=; b=
+	Yzikx1RGc1NK+J9/3UketLspfk421N0Tz8xbEuM74G7145gIeX8HA+NVxZSz34q8
+	s6/V32EUhZVkkCIRl7zlV8kt6BA+OLFCNxOVd5w92GtsALP02xEuf8Jxq91RBIsy
+	lM6YtenP2l0d08+2i4HK3CpoFYXVTv3WjumtQWoRE3r8hTLQ8CO5UvBzeojLT21p
+	GM9s/5YIRHl7bCuP4C5ufqOhDCK13uDbSNtlNcVJ2pOWRG8sOADxPbBf+NVjHTaI
+	KWE7X3jvPU+6pYVUtAjdoUktsoUbqwRQzxtcDjztW5cvb8CHn/IhYlDwV7sGTqLl
+	whgBkb8UZGjLIEoCBLs9pQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748380795; x=
+	1748467195; bh=fgy9w13B0g+C8vEkF148LNj92GJ34OgYI8fe0V+MYgI=; b=L
+	O4+ckuU09YyF9ws9RsVvuUhX9n7MjnuD1et9ijoT3q3RA5U6QVrAsPwXTeMSc1aT
+	gK2w55OZogkTG84VL4slpoGNFupylqrul6Z6DqfGrTbvI4onRLn7GaXQYrrO4kFy
+	C5+Oxi/XftALObzfMNgMMRQPlacSyhFaQqkxlkRo0er4EIETAIukBc5gfaYNJG3E
+	9N2DVtxVDxfNTBjtqyJ6nzQZ+sWeuMMsCsMGVWRNe/5XbxMtJFh/xhzL1gbgN77N
+	6FVQ59n0en+eSdDNs6vV4YsHWzSpwnGHjIRg9U765hBxkEVU5Vvtczc8rqM/E+Ms
+	texOKgeFoZLnc54i1oXOA==
+X-ME-Sender: <xms:eiw2aA12nyTjN1a14LneZBi5o_S1_aA8QHjoQtDVH_UJIMf75wQ7lcs>
+    <xme:eiw2aLEN5z0vtZQQQQjC9qmO6ZpKSf_MO65cR9FMLgB6mHJzoBdMgBkoTyk3wVqUe
+    CL3x2hEs0VFF7wv7g>
+X-ME-Received: <xmr:eiw2aI4yOgYfeTo_83qx4Nnwj1Tri3UhlbmOVYN04tuLi3lkToqF8k8qsu7i3-AWBB2ThNgUrnFpi_SHU7n4S4ZPGeID4Q4v3VK8Lw2mW6_qMQqdKVxA6zaAOQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvudeggeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffo
+    jghfgggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgsh
+    gsrghkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepudelgfeuieeu
+    teekleeifeegudefheetkefhjeffkedvueehtdevhfekieekhffgnecuffhomhgrihhnpe
+    hkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgr
+    ihhlfhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilh
+    drtghomhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthht
+    ohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskh
+    hhrghughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvght
+    pdhrtghpthhtohepugihrhhonhgvthgvnhhgsehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:eiw2aJ2G_vMFjFqElsWUX7tbDwejIhBKa5Pr3Yb9zKevPcNXUy36Mg>
+    <xmx:eiw2aDEjUAsK9cR_7Vl2IDTgh_akHlpD5H312da8WQ0yzMUYw42SXg>
+    <xmx:eiw2aC-ez0CNeDM_NeXaR2c4USgYDBrlV6h3M_IOhMsQBLhqIz08Hg>
+    <xmx:eiw2aIkldijM97sjLXj_HNfYa0gKXSvQH4FPrA-SAN8qSJc_eA9n-Q>
+    <xmx:eyw2aPz5hAg11WYPfR2VavrKCgbONmfBibEeHhDkBS8ZRyrfDPQ2gKgg>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 May 2025 17:19:53 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Jeff King <peff@peff.net>,
+	Teng Long <dyroneteng@gmail.com>,
+	"D . Ben Knoble" <ben.knoble@gmail.com>
+Subject: [PATCH v3 0/9] doc: --stdin on notes and core.commentChar mentions
+Date: Tue, 27 May 2025 23:19:29 +0200
+Message-ID: <cover.1748380390.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.49.0.780.g892193c3f50
+In-Reply-To: <cover.1748028010.git.code@khaugsbakk.name>
+References: <cover.1748028010.git.code@khaugsbakk.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqtt56ov4k.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On 25/05/27 09:50AM, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > I think the only outstanding discussion is whether to name things
-> > `odb_alternate` or `odb_source` [1]. In case others agree that
-> > `odb_source` is a better name I'm happy to revise, but if not I'd rather
-> > keep it as-is.
-> 
-> The model in which the term "alternates" was born is "A repository
-> has its own object directory, the primary one, and in addition it
-> can borrow from zero or more alternate object directories that are
-> used by other repositories".  The presence of the primary makes the
-> word "alternate" meaningful.
-> 
-> Is the model now "A repository has one object store, which consists
-> of one or more X, all of which are equals"?  If there is no primary
-> that is more special than others, then calling X an "alternate" may
-> indeed sound funny, although (1) I do not find it terribly confusing
-> and (2) I do not find "source" much better, either.
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-My understanding is that the object store still has a primary X and zero
-or more alternative X. The idea is that eventually, with pluggable ODBs,
-X can be a different backend/provider instead of just being "files". If
-this is the case, calling X an "alternate" would mean we have a primary
-"alternate" and potentially a set of "alternate" alternates.
+I wanted to fix `--stdin` in the git-notes(1) documentation.  Then I
+found some other things on that doc as well as things to do with
+`core.commentChar`.
 
-This sounds a bit odd and doesn't quite match what I would intuitively
-expect. But, I also don't find it super confusing either.
+§ Changes in v3
 
-> The names we use to call the collection and the underlying
-> implementations of the collection in the reference world
-> unfortunately does not quite help to guide us, as we do not take two
-> implementations and compose into one unified view, which is what we
-> are doing in the object store.  Hmmm...
+Suggestions on patches 6 and 8 were implemented.  See the patch notes
+and the interdiff.
 
-Similar to references, I still think of a pluggable ODB as a "backend".
-The main difference being that with references there is only a single
-backend active ("file" or "reftables") at a time, while for the object
-store there could be multiple.
+Kristoffer Haugsbakk (9):
+  doc: stripspace: mention where the default comes from
+  doc: config: mention core.commentChar on commit.cleanup
+  doc: notes: split out options with negated forms
+  doc: notes: rework --[no-]stripspace
+  doc: notes: remove stripspace discussion from other options
+  doc: notes: clearly state that --stripspace is the default
+  doc: notes: point out copy --stdin use with argv
+  doc: notes: treat --stdin equally between copy/remove
+  doc: notes: use stuck form throughout
 
--Justin
+ Documentation/config/commit.adoc  |  7 ++--
+ Documentation/git-notes.adoc      | 54 ++++++++++++++++++-------------
+ Documentation/git-stripspace.adoc |  3 +-
+ 3 files changed, 38 insertions(+), 26 deletions(-)
 
-> We call pathspec elements given on the command line collectively a
-> pathspec.  "Object store elements like loose object directories and
-> packfiles form the object store"?  That may be a mouthful.  I dunno.
+Interdiff against v2:
+diff --git a/Documentation/git-notes.adoc b/Documentation/git-notes.adoc
+index 43436daeccc..46a232ca718 100644
+--- a/Documentation/git-notes.adoc
++++ b/Documentation/git-notes.adoc
+@@ -197,7 +197,8 @@ OPTIONS
+ `-C`/`--reuse-message`. However, keep in mind that this depends on the
+ order of similar options. For example, for `-C <object> -m<message>`,
+ `--stripspace` will be used because the default for `-m` overrides the
+-previous `-C`.
++previous `-C`. This is a known limitation that may be fixed in the
++future.
+ 
+ `--ref=<ref>`::
+ 	Manipulate the notes tree in _<ref>_.  This overrides
+@@ -211,7 +212,7 @@ previous `-C`.
+ 	object that does not have notes attached to it.
+ 
+ `--stdin`::
+-	For `remove` and `copy`. See the respective subcommands.
++	Only valid for `remove` and `copy`. See the respective subcommands.
+ 
+ `-n`::
+ `--dry-run`::
+Range-diff against v2:
+ 1:  bf3ea7f23c0 =  1:  bf3ea7f23c0 doc: stripspace: mention where the default comes from
+ 2:  e9cf956a824 =  2:  e9cf956a824 doc: config: mention core.commentChar on commit.cleanup
+ 3:  14dc58120e3 =  3:  14dc58120e3 doc: notes: split out options with negated forms
+ 4:  c68a91f81ba =  4:  c68a91f81ba doc: notes: rework --[no-]stripspace
+ 5:  f4755040f38 =  5:  f4755040f38 doc: notes: remove stripspace discussion from other options
+ 6:  be89c3349d2 !  6:  184cf032abf doc: notes: clearly state that --stripspace is the default
+    @@ Commit message
+         Clearly state when which of the regular and negated form of the
+         option take effect.[1]
+     
+    +    Also mention the subtle behavior that occurs when you mix options like
+    +    `-m` and `-C`, including a note that it might be fixed in the future.
+    +    The topic was brought up on v8 of the `--separator` series.[2][3]
+    +
+         [1]: https://lore.kernel.org/git/xmqqcyct1mtq.fsf@gitster.g/
+    +    [2]: https://lore.kernel.org/git/xmqq4jp326oj.fsf@gitster.g/
+    +    † 3: v11 was the version that landed
+     
+    +    Helped-by: Junio C Hamano <gitster@pobox.com>
+         Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+     
+     
+      ## Notes (series) ##
+    +    v3:
+    +    • Mention that it is a bug (“known limitation”) which might be fixed.
+    +
+    +      Link: https://lore.kernel.org/git/xmqqiklrvwl4.fsf@gitster.g/
+    +    • Message: discuss this new “subtle behavior” part
+         v2:
+         • New
+         • The `--` are to prevent the new paragraph from becoming a continuation
+    @@ Documentation/git-notes.adoc: OPTIONS
+     +`-C`/`--reuse-message`. However, keep in mind that this depends on the
+     +order of similar options. For example, for `-C <object> -m<message>`,
+     +`--stripspace` will be used because the default for `-m` overrides the
+    -+previous `-C`.
+    ++previous `-C`. This is a known limitation that may be fixed in the
+    ++future.
+      
+      `--ref <ref>`::
+      	Manipulate the notes tree in _<ref>_.  This overrides
+ 7:  d8a22847a7d =  7:  e18472f735d doc: notes: point out copy --stdin use with argv
+ 8:  3e8ecf1b668 !  8:  530dd953170 doc: notes: treat --stdin equally between copy/remove
+    @@ Commit message
+     
+     
+      ## Notes (series) ##
+    +    v3:
+    +    • Rephrase to “Only valid for”
+    +
+    +      Link: https://lore.kernel.org/git/xmqqecwfvwdu.fsf@gitster.g/
+         v2:
+         • On --stdin: just refer to the respective subcommands and stop there.
+           As suggested.
+    @@ Documentation/git-notes.adoc: When done, the user can either finalize the merge
+      
+      `prune`::
+      	Remove all notes for non-existing/unreachable objects.
+    -@@ Documentation/git-notes.adoc: previous `-C`.
+    +@@ Documentation/git-notes.adoc: future.
+      	object that does not have notes attached to it.
+      
+      `--stdin`::
+     -	Also read the object names to remove notes from the standard
+     -	input (there is no reason you cannot combine this with object
+     -	names from the command line).
+    -+	For `remove` and `copy`. See the respective subcommands.
+    ++	Only valid for `remove` and `copy`. See the respective subcommands.
+      
+      `-n`::
+      `--dry-run`::
+ 9:  73bdcaecae5 !  9:  7751330daa4 doc: notes: use stuck form throughout
+    @@ Notes (series)
+     
+      ## Documentation/git-notes.adoc ##
+     @@ Documentation/git-notes.adoc: order of similar options. For example, for `-C <object> -m<message>`,
+    - `--stripspace` will be used because the default for `-m` overrides the
+    - previous `-C`.
+    + previous `-C`. This is a known limitation that may be fixed in the
+    + future.
+      
+     -`--ref <ref>`::
+     +`--ref=<ref>`::
+
+base-commit: cb96e1697ad6e54d11fc920c95f82977f8e438f8
+-- 
+2.49.0.780.g892193c3f50
+
