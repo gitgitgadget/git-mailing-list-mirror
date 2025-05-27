@@ -1,145 +1,122 @@
-Received: from mail-qt1-f176.google.com (mail-qt1-f176.google.com [209.85.160.176])
+Received: from mail-oa1-f46.google.com (mail-oa1-f46.google.com [209.85.160.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7709193402
-	for <git@vger.kernel.org>; Tue, 27 May 2025 19:47:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 358862DCBF0
+	for <git@vger.kernel.org>; Tue, 27 May 2025 19:50:30 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.160.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748375250; cv=none; b=R8fQPwqRX1yUsv9WY7JvQZQjR8/DjeyfGYzFYbPaMdoscxctJo+A5jcbPTebOQORAl2K2cyI9s8ZIo3/TTyA1mmoowXgwAEZFSZhz6TFk3qicNHUW15GMhO/ZguAgcPKnRgGcyl8i0nhdpd1ZlhTBGE52e/xX9kVpl41f1kWyTU=
+	t=1748375432; cv=none; b=KwnrOWAuDODIH7fxpofKKD6dHVTYaO/uSh8wN2+j/GUDsgOF12p9AZqxI/mIc4J9RuNyMLHfK59hVvRa71FG6FKwzuOnOyyS+fA0EUhuZNBGcgPWPkG8JOlnIgU7itMb+lUH91L8ams60xhaQEM2oPEyMbHZiS6BQUBaaodW4zU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748375250; c=relaxed/simple;
-	bh=G2rafT66fDhRiGysU5vT2eVo7paLxasmbgHFkFl26PE=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=MDjuyJJ42TrXUM3IosRSPbmHP5OAJmBScXvwH+qxt7tToYrbr7Qocv5w5Kqs7a7YPgsXTuxvzGUbnm0IGM3K6DB8Z1PHVy5BHDmu01AmbztHFfjbjO2Omfco6JwKMU91SD973gzBDZ0e0jWLPEkHTyO7KHeyloUQrark1FwIIUc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.160.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+	s=arc-20240116; t=1748375432; c=relaxed/simple;
+	bh=3pHhqHjO2NKeY7tagHOE2BLm1FtxLiYntoVxDY83KIc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=qyZFbsG8SbA7XgddaY/dTr34FQO+ZzU4bXGYyTkqXNRGk/MLcfdI0aHNyfBKkfZMD4nFL4OxCqtQvHRlJu1Xs3lML+nsMVlot8YcZZpocXsKqh6eiHv8JEdZD5pYPukkZPi5BKbsB4DGEFympsyKPhHtzHJ59SCRXVx16JiDhYY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Vs5nI1id; arc=none smtp.client-ip=209.85.160.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qt1-f176.google.com with SMTP id d75a77b69052e-49b3b0191f2so3812471cf.3
-        for <git@vger.kernel.org>; Tue, 27 May 2025 12:47:28 -0700 (PDT)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Vs5nI1id"
+Received: by mail-oa1-f46.google.com with SMTP id 586e51a60fabf-2d522f699bcso1424663fac.2
+        for <git@vger.kernel.org>; Tue, 27 May 2025 12:50:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748375430; x=1748980230; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=QFPgRFINe9PDmbys2c7xyZXBg5uEKJK2ToZ8qlDN2rc=;
+        b=Vs5nI1idOc4qmICPEuYIrsFen6qoZsobpA3AH41e+wDr9QIUj0U3X9xHvwTWJx8Gmd
+         7z2wHA/YH8qpAVMYQ4nhwqffJkdqehyXUH10xyaimtck/KqFLyddBygSqlaDXFV2JhE2
+         IqAjmbXj/XP3CGTyedcvvzsgHWBrqQJ6XUUQ2mViQuoXvr2hPHSHpJukveCbdN6nJl1C
+         OOe9RFCfjvBKU70GeD3xv5dprSJzEn80deQpOQrJh3qOm3/bWCGBhUlAioqVRJ44ECEs
+         kjlmTsaKx/jlKAR6t087JZhuIiO0fr8nhXs9xmfHex+Kfq4cssCHjRnPF3Xef3Y07KaR
+         49RQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748375247; x=1748980047;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=/P9x7jkR/cgmCMx1HCWf6bvEs42xkd1Mr516xw2pQas=;
-        b=VGyaVuB6HzqlyfTOK1wUDQSlF1HMHpwRQxLzq0CLFWtX2VTnT2Xzk70OS/JuaZWpxP
-         sqVkWJtcQ2xR2+iC8xePCqnmj6S6JGiWpvYpmZOCp+2a94jtvHcutqlpoUFSlly63XkC
-         JTUdKeOIM6w1wK9t1pFJgpJ1JEaj0JG4vCP5e2nvWwVxghvM0w0mnIsY7zMKlrueROjG
-         qM417asUuFESdGrX5zDOP2P5ZUUucj6YKnNTKjPVJoLpHe7OXs5eA2m7/ZJwU/OU41Xr
-         5FLt256un3upxaNHURN7yC7dgmX5HJvbKQjf+ACc3PR+atrA/MrAvay6zK6fVswk0BX1
-         B9Nw==
-X-Gm-Message-State: AOJu0YwL2kL62s9AmJuooQ4j0+57qVmwpepvDN79AoxRkKgDK8EDeZ66
-	S8+yCXdJu/S05Dw09uKVSctV/5bDFMKBlwlHuZd7pYl78n89ag5OK3oKp/9yYMOQC3w+uJTQqnz
-	NodaunPJXMmGyp6VX1gqCVbe6SHuRwWM=
-X-Gm-Gg: ASbGncsys40Qgm72Exfes2HvAflgQBcUXjHwwqXTqWj/ct+nCNjnbOK1/dimMBUddcR
-	FjPsJwxW3R2UtwoJ/UgrJQ5HOrMgKnMU7hXCnqnUmvPCmg2iqezPYtl/yT/Cr474gbF2GM3Z9jX
-	BISeneDIrbf5Y8o6gG0ka2/hhLeov8ubM=
-X-Google-Smtp-Source: AGHT+IHyGiVJlGWO1jBOy2k3aWgWfCr0CYR9/0RnZ6PbeHEsjqHR2D387Mv742hLZTlSCkUtbH8NfhUxJNgm62iBspc=
-X-Received: by 2002:a05:622a:13c6:b0:471:fef5:ee85 with SMTP id
- d75a77b69052e-49f484b5eb0mr97688511cf.15.1748375247627; Tue, 27 May 2025
- 12:47:27 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748375430; x=1748980230;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=QFPgRFINe9PDmbys2c7xyZXBg5uEKJK2ToZ8qlDN2rc=;
+        b=cckdKiDOIzGrYbgDc/zGI1InwHiyTQDgjzc4XAqGMWnepYawBt0ykI0vwTrk3x7mPc
+         ggF1KIfwwwXmdn75Unf1unBFveKZ06NUZ4UY8dH9rhG4/eJDhPHZelimmxnc7un6c80t
+         W+UUDIhp0kBl7x2DNlAActUKGpAXxz/MfnP1fnRejcxCto1tf9AxKYfyNiObj7BorLqX
+         hxxHJ+t68Alu0NQ+5SQTSqN7VjjykIrtpfLHggErm/V6tJpZm0F2sjaz5qGfvx0GFEQG
+         9XFRFfE50mRdYbwc8dHc5pkP8sxFMSJCh4Dy18FaZs9adGwMufFiUAs9JOhpcq8wcN54
+         M0Zg==
+X-Forwarded-Encrypted: i=1; AJvYcCXkE6uGDbVhXNJ/JJi/JMxe68xDNYDaD7TUqH+m80S5WYB+Zx4MYdH04vqMG4KzPVQdQtw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YyxKrHDbOavlUTiGDjxguNwbQWgodbEnMPX8IEFZ3mWfRBRkQlk
+	Jhn196LiJpNV38Q0IRsiOiyVNKbCBcIK7mp7ZE9J8b+wiZjM/3N6Nsux
+X-Gm-Gg: ASbGncva4HiCFlmMfA9M2TU2J3mhzR7X5xAP8+6j95oF8JRLXGRAtgTyfFtOGBDapD2
+	8pi0JfPd5PXaOZ/EfkGgsF4UzErc2mgyR8Dm4CwNBDa0jpTAhgQDyxRmJ6dfjhyhqmAQqbJeVw5
+	HRIMSpS9CumfgmngVX88TyJYNMPv/B7Nc8Y0n06qkrDXXdV7HSS18+LAhdndKJOZum9hUkeM554
+	nwMlACks2qvfPWwB9LZW7g/uBHOxzbliZcBaQsDXSS9TFwUopYBvJWNXr6vwJD2kuCls810FchT
+	SSIiFnvVaSOATHfVTewYscgCrVseCzYrRIO28Q7gh2Ee
+X-Google-Smtp-Source: AGHT+IEYMBXY0jWAdDCTxkJkcw41kmMvHVZtO3nj4hbDCSd48xgRH6emfXA4fHhdtjI9KtfOF3HsOw==
+X-Received: by 2002:a05:6870:71cb:b0:296:b568:7901 with SMTP id 586e51a60fabf-2e861e36c4dmr6919091fac.16.1748375429950;
+        Tue, 27 May 2025 12:50:29 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 586e51a60fabf-2e3c0aa6fdbsm5460711fac.37.2025.05.27.12.50.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 May 2025 12:50:29 -0700 (PDT)
+Date: Tue, 27 May 2025 14:45:43 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, 
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (May 2025, #07; Fri, 23)
+Message-ID: <shpx4piigp5sqgpbzx4vdgu4zdn7z3ykxhu2cdyjh5vpr6zbqb@rf2sxg6hukpd>
+References: <xmqqtt5au523.fsf@gitster.g>
+ <aDV0jwaQ2DlcM0lZ@pks.im>
+ <xmqqtt56ov4k.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250527-pks-meson-tap-v2-0-ae360f77786e@pks.im> <20250527-pks-meson-tap-v2-1-ae360f77786e@pks.im>
-In-Reply-To: <20250527-pks-meson-tap-v2-1-ae360f77786e@pks.im>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Tue, 27 May 2025 15:47:16 -0400
-X-Gm-Features: AX0GCFvc3MOzaOF8G2RY-S8kkgLzzoxfKpbZBKqH5QXzki9K0spCYkKWlbB-yjI
-Message-ID: <CAPig+cSYhY+LQ5pD+a1O16Rxwo_js45WqfcW8wtC2daYmNyMCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 1/6] t: fix cases where output breaks TAP format
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
-	Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
-	Ramsay Jones <ramsay@ramsayjones.plus.com>, Eli Schwartz <eschwartz@gentoo.org>, 
-	Todd Zullinger <tmz@pobox.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqqtt56ov4k.fsf@gitster.g>
 
-On Tue, May 27, 2025 at 10:03=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wro=
-te:
-> The TAP format does not allow arbitrary output outside of a specific
-> test case. If a test suite wants to print any such diagnostic output,
-> then this output has to be prefixed with "#" to mark it accordingly.
-> A bunch of our tests generate output outside of `test_expect_*`
-> testcases anyway without such a mark, which breaks strict TAP parsers.
->
-> Upon further inspection, all of the output generated by such tests is
-> rather uninteresting. Refactor them so that we don't break the TAP
-> format.
+On 25/05/27 09:50AM, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> > I think the only outstanding discussion is whether to name things
+> > `odb_alternate` or `odb_source` [1]. In case others agree that
+> > `odb_source` is a better name I'm happy to revise, but if not I'd rather
+> > keep it as-is.
+> 
+> The model in which the term "alternates" was born is "A repository
+> has its own object directory, the primary one, and in addition it
+> can borrow from zero or more alternate object directories that are
+> used by other repositories".  The presence of the primary makes the
+> word "alternate" meaningful.
+> 
+> Is the model now "A repository has one object store, which consists
+> of one or more X, all of which are equals"?  If there is no primary
+> that is more special than others, then calling X an "alternate" may
+> indeed sound funny, although (1) I do not find it terribly confusing
+> and (2) I do not find "source" much better, either.
 
-Nit: Can we avoid the word "refactor" for changes such as those made
-by this patch which clearly are not refactoring[*].
+My understanding is that the object store still has a primary X and zero
+or more alternative X. The idea is that eventually, with pluggable ODBs,
+X can be a different backend/provider instead of just being "files". If
+this is the case, calling X an "alternate" would mean we have a primary
+"alternate" and potentially a set of "alternate" alternates.
 
-[*]: From Wikipedia: "... code refactoring is the process of
-restructuring existing source code=E2=80=94changing the factoring=E2=80=94w=
-ithout
-changing its external behavior."
+This sounds a bit odd and doesn't quite match what I would intuitively
+expect. But, I also don't find it super confusing either.
 
-> Signed-off-by: Patrick Steinhardt <ps@pks.im>
-> ---
-> diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
-> @@ -30,7 +30,7 @@ setup_repo() {
->  test_repo=3Dtest
->  push_repo() {
-> -       test_create_repo $test_repo
-> +       test_create_repo $test_repo >/dev/null
->         cd $test_repo
->         setup_repo
+> The names we use to call the collection and the underlying
+> implementations of the collection in the reference world
+> unfortunately does not quite help to guide us, as we do not take two
+> implementations and compose into one unified view, which is what we
+> are doing in the object store.  Hmmm...
 
-Yuck, but certainly the simplest "fix" in this particular case
-considering that, ultimately, this entire script ought to be reworked
-since it cd's around outside of tests with abandon. It would be nice
-to see this script get overhauled eventually but such an undertaking
-doesn't need to be part of this patch series.
+Similar to references, I still think of a pluggable ODB as a "backend".
+The main difference being that with references there is only a single
+backend active ("file" or "reftables") at a time, while for the object
+store there could be multiple.
 
-> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-op=
-tion.sh
-> @@ -48,7 +48,7 @@ commit_file () {
-> -test_create_repo sm1 &&
-> +test_create_repo sm1 >/dev/null &&
->  add_file . foo >/dev/null
->
->  head1=3D$(add_file sm1 foo1 foo2)
+-Justin
 
-Unlike the case with t1007, in which the entire script needs an
-overhaul, it is much easier to fix the problems in this script without
-papering over them via ">/dev/null". In particular, it would be
-preferable to resolve the issue by wrapping test_expect_success around
-the code which currently resides outside of any test. So, for example,
-the above could become:
-
-    test_expect_success 'setup submodule 1' '
-        test_create_repo sm1 &&
-        add_file . foo &&
-        head1=3D$(add_file sm1 foo1 foo2) &&
-        fullhead1=3D$(cd sm1; git rev-parse --verify HEAD)
-    '
-
-Note that I also dropped the ">/dev/null" redirect from the add_file()
-invocation.
-
-The same comment applies to similar changes made by this patch to
-other scripts, such as t4060, t7401.
-
-> diff --git a/t/t9822-git-p4-path-encoding.sh b/t/t9822-git-p4-path-encodi=
-ng.sh
-> @@ -7,12 +7,17 @@ test_description=3D'Clone repositories with non ASCII p=
-aths'
-> -ISO8859=3D"$(printf "$ISO8859_ESCAPED")" &&
-> -echo content123 >"$ISO8859" &&
-> -rm "$ISO8859" || {
-> +test_lazy_prereq FS_ACCEPTS_ISO_8859_1 '
-> +       ISO8859=3D"$(printf "$ISO8859_ESCAPED")" &&
-> +       echo content123 >"$ISO8859" 2>/dev/null &&
-> +       rm "$ISO8859"
-> +'
-
-Was the problem here that the `echo content123 > "$..."` was
-potentially spitting out an error message to stderr, thus you had to
-redirect it to /dev/null to silence it? If so, did the file get
-created in the error case? What I'm wondering is whether you also
-should use `rm -f` when removing the file.
+> We call pathspec elements given on the command line collectively a
+> pathspec.  "Object store elements like loose object directories and
+> packfiles form the object store"?  That may be a mouthful.  I dunno.
