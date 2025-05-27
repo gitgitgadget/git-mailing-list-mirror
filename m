@@ -1,87 +1,89 @@
-Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+Received: from fout-b3-smtp.messagingengine.com (fout-b3-smtp.messagingengine.com [202.12.124.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE893142E67
-	for <git@vger.kernel.org>; Tue, 27 May 2025 10:39:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB2B02475E3
+	for <git@vger.kernel.org>; Tue, 27 May 2025 10:39:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748342400; cv=none; b=W9tY7Swy+b2FDnkIRhh9YBeJ+zwjHFIiQLhp75Av7Ju3BB36l+hZ7cRe41fErOmLdf9RQFjZlc7FbkY4Czro8RqFxJV2zpwZ0E+mtNTyA+9JEnWDrZ3meGwJP8VFydXE9bh/LneJBah/3YPor+iQFjOJEMvnVyDCZctZdnrUq1M=
+	t=1748342402; cv=none; b=rBK7vnLH3gDRdWlwceeCXeP7d/FQ2hToVe1/NDSph/iNem+iMr53duDziv4QAnueFNkhREL9mHHpw7WeKFH77sWmmpfdKWw/NCQI70mrcEoSXRNGj6GQGAi0U/AK3AuDg293jJjkb236K4mP0dOjJ68FyJMxvfKAJbr7VaDQijo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748342400; c=relaxed/simple;
-	bh=kenJH5TpEnES1l61J3qjEqLeH0Gg34nocMIjlONJnSg=;
+	s=arc-20240116; t=1748342402; c=relaxed/simple;
+	bh=s40A90ZgB5bhJlgK0Cw6LSVXEE8snH3QB2Pn4tlNGXM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dgss8w0jWg48McoYTdVTnh/tGUHNCWDO+npOyeNHa/1rUiVcaC0AnZhDCftUV2o41g/CBnINFniU7Rg4TcVT60eyg9tW2sAvPUf6vbIYePSTfBtNxKsf3uS4JsESnWa/gP6vJEL9gwPKuGbsadq79c6tJ0QvIHf1997WuGNjbAk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=LvSHSSZ2; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=lgzhzgHw; arc=none smtp.client-ip=202.12.124.152
+	 Content-Type:Content-Disposition:In-Reply-To; b=rdORkWyPGS3tSmCuYw0WHa0A0NUWuVUfOp2GfRIsNjXoqLgYORyxQ6wp9UkivekidQvvQ8MyaJJQaKRZ39PraMaiXZG1x9ZPbhrc5Ilx7Cwhy+JMtfDIhplZu3MnLePR5BuR/rzHlfwlaqLslj3DdVgLL3nIRzd2/CU9co1Q7Q0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=OeSMEO97; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=T8Gy6a6v; arc=none smtp.client-ip=202.12.124.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="LvSHSSZ2";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="lgzhzgHw"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 918312540115;
-	Tue, 27 May 2025 06:39:56 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="OeSMEO97";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="T8Gy6a6v"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.stl.internal (Postfix) with ESMTP id 8BE55114010A;
+	Tue, 27 May 2025 06:39:58 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-04.internal (MEProxy); Tue, 27 May 2025 06:39:56 -0400
+  by phl-compute-01.internal (MEProxy); Tue, 27 May 2025 06:39:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748342396; x=1748428796; bh=/FGjBPWdlA
-	m7WQgJAMwhZ4V92vxwb4e/fLvOAw3qvqc=; b=LvSHSSZ2cPXjI9KZ8Zc54DTJpg
-	UhC0CpW/TPW9P6CqmtMkvAtu1wX9V/83402ZBhoiDeuE7pFvU5L4CqRHlJnW2LDR
-	U+C2728DIxHvS288+e04gINp4FhHule0ov4+yidYbZ2qzfhGHORppaLQo7o7v+OR
-	SRRI/W0/pTMd6OE4eAsd8qk5d4mTPqGbTiLXT/iGuMv8ytXNrjrpWp8c8J884h+v
-	4oIq84AkAZJFJYCQTnac569szooDzih9alVBPtRw/Wi6lpVuKhDym28oBkhWhLRz
-	6rMHztcgFWr7OsnnI8YZYvcRvvQdixJGDgm7xF3ZkrVLqS6KpjJHA45KaAug==
+	:subject:to:to; s=fm1; t=1748342398; x=1748428798; bh=lEpX+lRC73
+	5QX0bBztQtSFC/mrWNn4g9aVHDRN0ecBI=; b=OeSMEO97oC03MzPE1/IbglXMvf
+	lHjh2lTFJ2edJq2nuR9ga5JaagvHKAHbnnH7Zl3sP75OTzC0P3eZS5wDenC/gU1p
+	zi9Bk5mHOQiOGek5COjO8dZu0XtWdCd9bbQUy4fMFIULpTJG/ghfjTt9ofvEGFbl
+	BWgvfNXec8PgVuHTBfoRyAUsHu+gmlskq4H5vveGn6J25fZQ1yGPkkS2274pI5l1
+	ytyXrdDYuMi4uDvCBOFmjJ/VDhovlg7tfYsgYNyltyZ0sH2tVsIEPe5KJsYkBGOw
+	32MAs28okC6541iIkGdE6oNrhWbj8c93pPZVlEecatqD7yOBkiwuvvZ+vIzg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748342396; x=1748428796; bh=/FGjBPWdlAm7WQgJAMwhZ4V92vxwb4e/fLv
-	OAw3qvqc=; b=lgzhzgHwblWWEwFg19td8efo9X3yvv7z57vHrZwzHbQvIOVCCcq
-	T8up2QDpAihxOJaxz/Vcx3VhUPGzgMcJFEUHPrNIRfkecQVxnTP7gAykWPbEC/O/
-	a5zhOFNM/oV0UATVC7DRp0HYUlE9Tz3sNWNZIJUoBP/5axXBen18gf6CTAfzV3qa
-	j2bt/dFs8YaSLZ9zMtIs+Y6f6XqSZP/329DSXfX+rhBMl2XyjDb2EbwbmNfjpPka
-	MPb+oANs8Iua33qG0dtTwOmq8xv1ledk30NF9VKeFVSYdvKzBjCP5KmRNysZo6mV
-	mLG6a2MPWgx5yvM/K0jpeyv0rc8q+vcDxxA==
-X-ME-Sender: <xms:e5Y1aD9CJsXgOCWyLjqNT_ujSE3sgGebP0A14u90XWfc53JTTmdWAg>
-    <xme:e5Y1aPvq2Ewc__blVP9ZbnDnbQMzvQKidoowBYrw3pK-tqmMWSqlfqbFgKOcfdxGo
-    Ufzn_W0tZmEC-MN3g>
-X-ME-Received: <xmr:e5Y1aBDnPdxMXTc2HqA0XV1DLDoopLO8AeAN-0wIqOA9TFOfRTMOCveT62xNaEj2QhXu-xfrAQdO62rBisKo4Zx3vn9xJ0hKAC_Cn5EJFqC6Vg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtddujeculddtuddrgeefvddrtd
+	1748342398; x=1748428798; bh=lEpX+lRC735QX0bBztQtSFC/mrWNn4g9aVH
+	DRN0ecBI=; b=T8Gy6a6volTFK6aLSTrwovCjpSwWj/ZzPXPvm69nlzemGeQVt6L
+	aeIUJuDBr2AHzz5zg3zPDtpRWNVEd3xCUog/ehlqgdV9wejuM5oIwH3cXGODfens
+	9zInXpJ3yoZx4xnKlPNX3NEieeE9NAdrsRTwboiHT48niAkCwfVekY5V0/6bFwYd
+	2PDtqIOwLSDzOuyPrk76M00yk/fdpuGLWgyg/Yz3nVq0kMF2LTQwEkb9TMElYIbO
+	tu8I232TBaYYSP9T33IbTP9GChGBkNNlqmtdsBb6N5VLSlVfZfdxjPXT9p1Ud2nE
+	TIFUW3tsdUoCyts7t0lDageW1uNRPSWEeDA==
+X-ME-Sender: <xms:fZY1aOSob1X-fqIa2MtsdL10y7f60CuaII4_jnqiRjPvglTj-k8PzA>
+    <xme:fZY1aDzdbWQYrm93MYKujpmokMkUid13LhALISOj1E_gAUL3UI-bwOXYwV5WQkXzD
+    zQUT6E900c4GJXEGA>
+X-ME-Received: <xmr:fZY1aL1yO2qIXtgp3t_Lz0yc7vrzRnRCxU4rW4oCsFp_KCfkuPnAZJ8xZXo9daXFxBFVPl5ZNdpa7uB2t9vSwLSJYbGSHR2hClRyID4GNlYOwg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdduieculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
     gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
-    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
-    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
-    phhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegrvhgrrhgrsgesgh
-    hmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
-    pdhrtghpthhtohepphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehsthholhgvvg
-    esghhmrghilhdrtghomhdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdprhgt
-    phhtthhopehmvgesthhtrgihlhhorhhrrdgtohhm
-X-ME-Proxy: <xmx:e5Y1aPctl4uudZf_gdFg5gw8AFwNP3K4Sk0Lgyd0LXF5g2hlAels2g>
-    <xmx:e5Y1aINAohDGaCv9Krg7JSNsaJf6hrsPA7YCsNQX1MDEiGYRintfvQ>
-    <xmx:e5Y1aBnGtW6GdBATqrs4DKSXuVkUONvQk-AHz2UsF4j779nnUL0r-w>
-    <xmx:e5Y1aCtgCTMn9WSNWZEzyf-BRfnQSQDgYvJgrRxqsDGYesoqfv7p9g>
-    <xmx:fJY1aHCZivE2C02gTJsmR7eolXGpb-m9VV_OT1B9ih9zDA6i0hT-VxBG>
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevlefggfekkefhtddv
+    leegtdefueethedtvdeujeeuheeluddvveegleehhfegfeenucffohhmrghinhepphgvnh
+    guihhnghdrnhhrnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhf
+    rhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepiedpmhhouggvpehsmhhtph
+    houhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphht
+    thhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtoheprghvrghrrggssehgmhgrih
+    hlrdgtohhmpdhrtghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohep
+    mhgvsehtthgrhihlohhrrhdrtghomhdprhgtphhtthhopehsthholhgvvgesghhmrghilh
+    drtghomh
+X-ME-Proxy: <xmx:fZY1aKAUhZVLeRsrmMZ7sblCNJiQUp2GITWwJpDuLVzthrzk69JMyQ>
+    <xmx:fZY1aHhM9Tm8ww84TsdWbO3EHHLZGGxemriwaoRcip4lbzlB7h5HsQ>
+    <xmx:fZY1aGr7qx-AqIBGAMu8MgLSDba76Fp9h_QNt4QZMXst5zJM7NMzyg>
+    <xmx:fZY1aKjZcCQeTAHfF9Ld-AdAvqUHmRgX09R9qVy6BqQBsnid5Be5ow>
+    <xmx:fpY1aLoE08ayG83lkj_WKk82VsU52oBSKeSptQ1sQgHbvhyMu8rlu-V6>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 06:39:54 -0400 (EDT)
+ 27 May 2025 06:39:56 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 483c99fd (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 27 May 2025 10:39:52 +0000 (UTC)
-Date: Tue, 27 May 2025 12:39:48 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 36ff425c (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 27 May 2025 10:39:56 +0000 (UTC)
+Date: Tue, 27 May 2025 12:39:55 +0200
 From: Patrick Steinhardt <ps@pks.im>
 To: Toon Claes <toon@iotcl.com>
 Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
 	Taylor Blau <me@ttaylorr.com>, Derrick Stolee <stolee@gmail.com>,
 	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-Subject: Re: [PATCH RFC v2 4/5] last-modified: implement faster algorithm
-Message-ID: <aDWWdGVW90LpxZhH@pks.im>
+Subject: Re: [PATCH RFC v2 1/5] last-modified: new subcommand to show when
+ files were last modified
+Message-ID: <aDWWe6qCQXorPESd@pks.im>
 References: <20250523-toon-new-blame-tree-v2-0-101e4ca4c1c9@iotcl.com>
- <20250523-toon-new-blame-tree-v2-4-101e4ca4c1c9@iotcl.com>
+ <20250523-toon-new-blame-tree-v2-1-101e4ca4c1c9@iotcl.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -90,166 +92,364 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250523-toon-new-blame-tree-v2-4-101e4ca4c1c9@iotcl.com>
+In-Reply-To: <20250523-toon-new-blame-tree-v2-1-101e4ca4c1c9@iotcl.com>
 
-On Fri, May 23, 2025 at 11:33:51AM +0200, Toon Claes wrote:
-> The current implementation of 'git last-modified' works by doing a
-> revision walk, and inspecting the diff at each level of that walk to
-> annotate the to-be-found entries to a path. In other words, if the diff
-> at some level touches a path which has not yet been associated with a
-> commit, then that commit becomes associated with the path.
+On Fri, May 23, 2025 at 11:33:48AM +0200, Toon Claes wrote:
+> diff --git a/Documentation/git-last-modified.adoc b/Documentation/git-last-modified.adoc
+> new file mode 100644
+> index 0000000000..1af38f402e
+> --- /dev/null
+> +++ b/Documentation/git-last-modified.adoc
+> @@ -0,0 +1,49 @@
+> +git-last-modified(1)
+> +====================
+> +
+> +NAME
+> +----
+> +git-last-modified - EXPERIMENTAL: Show when files were last modified
 
-It's a bit funny that we first introduce an algorithm, only to change it
-in a subsequent step again. I don't mind it much though: this variant
-here is quite a bit more complicated, and it's nice to first gain an
-understanding of how the simple algorithm works before going to the
-harder one.
+Nit: we don't have the EXPERIMENTAL label here for git-switch(1) or
+git-restore(1).
 
-It's also nice that the tests prove that this is indeed leads to the
-same result.
+> +
+> +
+> +SYNOPSIS
+> +--------
+> +[synopsis]
+> +git last-modified [-r] [<revision-range>] [[--] <path>...]
+> +
+> +DESCRIPTION
+> +-----------
+> +
+> +Shows which commit last modified each of the relevant files and subdirectories.
+> +
+> +THIS COMMAND IS EXPERIMENTAL. THE BEHAVIOR MAY CHANGE.
+> +
+> +OPTIONS
+> +-------
+> +
+> +-r::
+> +	Recurse into subtrees.
+> +
+> +-t::
+> +	Show tree entry itself as well as subtrees.  Implies `-r`.
 
-[snip]
-> More specifically, consider a priority queue of commits sorted by
-> generation number. First, enqueue the set of boundary commits with all
-> paths in the original spec marked as interesting.
-> 
-> Then, while the queue is not empty, do the following:
-> 
->   1. Pop an element, say, 'c', off of the queue, making sure that 'c'
->      isn't reachable by anything in the '--not' set.
-> 
->   2. For each parent 'p' (with index 'parent_i') of 'c', do the
->      following:
-> 
->      a. Compute the diff between 'c' and 'p'.
->      b. Pass any active paths that are TREESAME from 'c' to 'p'.
->      c. If 'p' has any active paths, push it onto the queue.
+These flags aren't yet supported in this version, are they?
 
-What if an active path is changed on both sides of a merge commit? Do we
-pass it to the first parent?
+> diff --git a/builtin/last-modified.c b/builtin/last-modified.c
+> new file mode 100644
+> index 0000000000..0d4733f666
+> --- /dev/null
+> +++ b/builtin/last-modified.c
+> @@ -0,0 +1,43 @@
+> +#include "git-compat-util.h"
+> +#include "last-modified.h"
+> +#include "hex.h"
+> +#include "quote.h"
+> +#include "config.h"
+> +#include "object-name.h"
+> +#include "parse-options.h"
+> +#include "builtin.h"
+> +
+> +static void show_entry(const char *path, const struct commit *commit, void *d)
+> +{
+> +	struct last_modified *lm = d;
+> +
+> +	if (commit->object.flags & BOUNDARY)
+> +		putchar('^');
+> +	printf("%s\t", oid_to_hex(&commit->object.oid));
+> +
+> +	if (lm->rev.diffopt.line_termination)
+> +		write_name_quoted(path, stdout, '\n');
+> +	else
+> +		printf("%s%c", path, '\0');
+> +
+> +	fflush(stdout);
+> +}
+> +
+> +int cmd_last_modified(int argc,
+> +		   const char **argv,
+> +		   const char *prefix,
+> +		   struct repository *repo)
+> +{
+> +	int ret = 0;
 
-[snip]
-> Now, some performance numbers. On github/git, our numbers look like the
-> following (all wall-clock times best-of-five, and with '--max-depth=0'
-> on the root):
-
-This option does not exist in this version of git-last-modified(1).
-
->                  github		ttaylorr/blame-tree-fast
->    with filters: 0.754s		0.271s (2.78x faster, 6.18x overall)
-> without filters: 1.676s		1.056s (1.58x faster)
-> 
-> and on torvalds/linux:
-> 
->                  github		ttaylorr/blame-tree-fast
->    with filters: 0.608		0.062 (9.81x faster, ~52x overall)
-> without filters: 3.251		0.676 (4.81x faster)
-> 
-> In short, the existing implementation is comparably fast *with* filters
-> as the new implementation is *without* filters. So, most repositories
-> should get a dramatic speed-up by just deploying this (even without
-> computing Bloom filters), and all repositories should get faster still
-> when computing Bloom filters.
-
-It would be nice to introduce "filters" as "Bloom filters". I was
-initially wondering what filters you talk about until you then mention
-it in the last sentence.
+`ret` is basically unused here, we only use it to return 0.
 
 > diff --git a/last-modified.c b/last-modified.c
-> index f628434929..0a0818cdf1 100644
-> --- a/last-modified.c
+> new file mode 100644
+> index 0000000000..9283f8fcae
+> --- /dev/null
 > +++ b/last-modified.c
-> @@ -3,18 +3,20 @@
->  #include "commit.h"
->  #include "diffcore.h"
->  #include "diff.h"
-> -#include "object.h"
->  #include "revision.h"
->  #include "repository.h"
->  #include "log-tree.h"
->  #include "dir.h"
->  #include "commit-graph.h"
->  #include "bloom.h"
-> +#include "prio-queue.h"
-> +#include "commit-slab.h"
-
-It would be nice if we could keep these lexicographically sorted right
-from the first commit.
-
-> @@ -116,6 +128,20 @@ void last_modified_release(struct last_modified *lm)
->  	}
->  	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
->  	release_revisions(&lm->rev);
-> +	free(lm->all_paths);
-> +}
+> @@ -0,0 +1,213 @@
+> +#include "git-compat-util.h"
+> +#include "last-modified.h"
+> +#include "commit.h"
+> +#include "diffcore.h"
+> +#include "diff.h"
+> +#include "object.h"
+> +#include "revision.h"
+> +#include "repository.h"
+> +#include "log-tree.h"
 > +
-> +struct commit_active_paths {
-> +	char *active;
-> +	int nr;
-
-Should this be a `size_t` as it is counting something?
-
+> +struct last_modified_entry {
+> +	struct hashmap_entry hashent;
+> +	struct object_id oid;
+> +	struct commit *commit;
+> +	const char path[FLEX_ARRAY];
 > +};
-
-Hm, a bit weird, as I don't kno what `nr` is supposed to stand for.
-Intuitively I would have expected that `active` is an array of strings,
-and that `nr` tracks how many there are. But that's not the case.
-
-Let's read on.
-
-> +define_commit_slab(active_paths, struct commit_active_paths);
-> +static struct active_paths active_paths;
 > +
-> +static void free_one_active_path(struct commit_active_paths *active)
-
-s/free_one_active_path/commit_active_paths_release/
-
-> @@ -197,7 +230,32 @@ static void last_modified_diff(struct diff_queue_struct *q,
->  	}
->  }
->  
-> -static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
-> +static char *scratch;
-
-Having a global variable like this in a library is not great. Can we
-instead pass around a context or something like this internally?
-
-> +
-> +static void pass_to_parent(struct commit_active_paths *c,
-> +			   struct commit_active_paths *p,
-> +			   int i)
+> +static void add_from_diff(struct diff_queue_struct *q,
+> +			  struct diff_options *opt UNUSED,
+> +			  void *data)
 > +{
-> +	c->active[i] = 0;
-> +	c->nr--;
-> +	p->active[i] = 1;
-> +	p->nr++;
+> +	struct last_modified *lm = data;
+> +
+> +	for (int i = 0; i < q->nr; i++) {
+> +		struct diff_filepair *p = q->queue[i];
+> +		struct last_modified_entry *ent;
+> +		const char *path = p->two->path;
+> +
+> +		FLEX_ALLOC_STR(ent, path, path);
+> +		oidcpy(&ent->oid, &p->two->oid);
+> +		hashmap_entry_init(&ent->hashent, strhash(ent->path));
+> +		hashmap_add(&lm->paths, &ent->hashent);
+> +	}
+> +}
+> 
+> +static int add_from_revs(struct last_modified *lm)
+> +{
+> +	size_t count = 0;
+> +	struct diff_options diffopt;
+> +
+> +	memcpy(&diffopt, &lm->rev.diffopt, sizeof(diffopt));
+> +	copy_pathspec(&diffopt.pathspec, &lm->rev.diffopt.pathspec);
+> +	diffopt.output_format = DIFF_FORMAT_CALLBACK;
+> +	diffopt.format_callback = add_from_diff;
+> +	diffopt.format_callback_data = lm;
 
-Okay, so `active` is a bitfield. It's a bit weird that we use a full
-byte for each bit though. It might not matter much in practice, but it
-feels quite wasteful to me. Doubly so because we allocate this bitfield
-for every commit we visit.
+As far as I understand we populate `paths` from the diff here, and
+`paths` later on acts as a filter of paths we're interested in? Might be
+nice to add a comment explaining the intent of this.
 
-Can we maybe instead use `struct bitmap` for this?
+> +	for (size_t i = 0; i < lm->rev.pending.nr; i++) {
+> +		struct object_array_entry *obj = lm->rev.pending.objects + i;
+> +
+> +		if (obj->item->flags & UNINTERESTING)
+> +			continue;
+> +
+> +		if (count++)
+> +			return error(_("can only get last-modified one tree at a time"));
+
+It's a bit funny that `count` is pretending to be a counter even though
+it ultimately is only a boolean flag whether we have already seen an
+interesting item.
+
+> +		diff_tree_oid(lm->rev.repo->hash_algo->empty_tree,
+> +			      &obj->item->oid, "", &diffopt);
+> +		diff_flush(&diffopt);
+> +	}
+> +	clear_pathspec(&diffopt.pathspec);
+
+Shouldn't we call `diff_free()` instead of `clear_pathspec` to clear the
+whole `struct diff_options`?
+
+> +
+> +	return 0;
+> +}
+> +
+> +static int last_modified_entry_hashcmp(const void *unused UNUSED,
+> +				    const struct hashmap_entry *hent1,
+> +				    const struct hashmap_entry *hent2,
+> +				    const void *path)
+> +{
+> +	const struct last_modified_entry *ent1 =
+> +		container_of(hent1, const struct last_modified_entry, hashent);
+> +	const struct last_modified_entry *ent2 =
+> +		container_of(hent2, const struct last_modified_entry, hashent);
+> +	return strcmp(ent1->path, path ? path : ent2->path);
+> +}
+> +
+> +void last_modified_init(struct last_modified *lm,
+> +		     struct repository *r,
+> +		     const char *prefix,
+> +		     int argc, const char **argv)
+> +{
+> +	memset(lm, 0, sizeof(*lm));
+> +	hashmap_init(&lm->paths, last_modified_entry_hashcmp, NULL, 0);
+> +
+> +	repo_init_revisions(r, &lm->rev, prefix);
+> +	lm->rev.def = "HEAD";
+> +	lm->rev.combine_merges = 1;
+> +	lm->rev.show_root_diff = 1;
+> +	lm->rev.boundary = 1;
+> +	lm->rev.no_commit_id = 1;
+> +	lm->rev.diff = 1;
+> +	if (setup_revisions(argc, argv, &lm->rev, NULL) > 1)
+> +		die(_("unknown last-modified argument: %s"), argv[1]);
+> +
+> +	if (add_from_revs(lm) < 0)
+> +		die(_("unable to setup last-modified"));
+
+Given that this is library code, do we rather want to have
+`last_modified_init()` return an error code and let the caller die?
 
 > +}
 > +
-> +#define PARENT1 (1u<<16) /* used instead of SEEN */
-> +#define PARENT2 (1u<<17) /* used instead of BOTTOM, BOUNDARY */
-
-These are the same definitions as in "commit-reach.c". Might be worth it
-to deduplicate those.
-
-> @@ -221,8 +281,88 @@ static int maybe_changed_path(struct last_modified *lm, struct commit *origin)
->  	return 0;
->  }
->  
-> +static int process_parent(struct last_modified *lm, struct prio_queue *queue,
-> +			  struct commit *c,
-> +			  struct commit_active_paths *active_c,
-> +			  struct commit *parent, int parent_i)
+> +void last_modified_release(struct last_modified *lm)
 > +{
-> +	int i, ret = 0; // TODO type & for loop var
+> +	hashmap_clear_and_free(&lm->paths, struct last_modified_entry, hashent);
+> +	release_revisions(&lm->rev);
+> +}
+> +
+> +struct last_modified_callback_data {
+> +	struct commit *commit;
+> +	struct hashmap *paths;
+> +
+> +	last_modified_callback callback;
+> +	void *callback_data;
+> +};
+> +
+> +static void mark_path(const char *path, const struct object_id *oid,
+> +		      struct last_modified_callback_data *data)
+> +{
+> +	struct last_modified_entry *ent;
+> +
+> +	/* Is it even a path that we are interested in? */
+> +	ent = hashmap_get_entry_from_hash(data->paths, strhash(path), path,
+> +					  struct last_modified_entry, hashent);
+> +	if (!ent)
+> +		return;
 
-This looks like a left-over comment that should be addressed.
+Yup, so this here is the filter to figure out whether we care for a
+path, which uses the `paths` map we have populated at the beginning.
 
-Patrick
+> +	/* Have we already found a commit? */
+> +	if (ent->commit)
+> +		return;
+
+Can this case even be hit? We remove the entry from the map once we have
+seen it, so I'd expect that we never hit the same commit map entry
+twice. If so, can this be converted to a `BUG()` or am I missing the
+obvious?
+
+> +	/*
+> +	 * Is it arriving at a version of interest, or is it from a side branch
+> +	 * which did not contribute to the final state?
+> +	 */
+> +	if (!oideq(oid, &ent->oid))
+> +		return;
+> +
+> +	ent->commit = data->commit;
+> +	if (data->callback)
+> +		data->callback(path, data->commit, data->callback_data);
+> +
+> +	hashmap_remove(data->paths, &ent->hashent, path);
+
+And we end up removing that entry from paths so that we don't revisit it
+in the future. After all, we're only interested in a single commit per
+path.
+
+> +	free(ent);
+> +}
+> +
+> +static void last_modified_diff(struct diff_queue_struct *q,
+> +		       struct diff_options *opt UNUSED, void *cbdata)
+> +{
+> +	struct last_modified_callback_data *data = cbdata;
+> +
+> +	for (int i = 0; i < q->nr; i++) {
+> +		struct diff_filepair *p = q->queue[i];
+> +		switch (p->status) {
+> +		case DIFF_STATUS_DELETED:
+> +			/*
+> +			 * There's no point in feeding a deletion, as it could
+> +			 * not have resulted in our current state, which
+> +			 * actually has the file.
+> +			 */
+> +			break;
+> +
+> +		default:
+> +			/*
+> +			 * Otherwise, we care only that we somehow arrived at
+> +			 * a final path/sha1 state. Note that this covers some
+> +			 * potentially controversial areas, including:
+> +			 *
+> +			 *  1. A rename or copy will be found, as it is the
+> +			 *     first time the content has arrived at the given
+> +			 *     path.
+> +			 *
+> +			 *  2. Even a non-content modification like a mode or
+> +			 *     type change will trigger it.
+
+Curious, but sensible. We're looking for the last time a specific tree
+entry was changed, and that of course includes modifications. I could
+totally see that we may eventually want to add a flag that ignores such
+mode changes and only presents content changes. But for now I agree that
+this is sensible.
+
+> +			 * We take the inclusive approach for now, and find
+> +			 * anything which impacts the path. Options to tweak
+> +			 * the behavior (e.g., to "--follow" the content across
+> +			 * renames) can come later.
+> +			 */
+> +			mark_path(p->two->path, &p->two->oid, data);
+> +			break;
+> +		}
+> +	}
+> +}
+> +
+> +int last_modified_run(struct last_modified *lm, last_modified_callback cb, void *cbdata)
+> +{
+> +	struct last_modified_callback_data data;
+> +
+> +	data.paths = &lm->paths;
+> +	data.callback = cb;
+> +	data.callback_data = cbdata;
+> +
+> +	lm->rev.diffopt.output_format = DIFF_FORMAT_CALLBACK;
+> +	lm->rev.diffopt.format_callback = last_modified_diff;
+> +	lm->rev.diffopt.format_callback_data = &data;
+> +
+> +	prepare_revision_walk(&lm->rev);
+> +
+> +	while (hashmap_get_size(&lm->paths)) {
+
+Okay, and this is the core of our logic: we continue walking the tree
+until there are no more paths that we care about.
+
+> diff --git a/last-modified.h b/last-modified.h
+> new file mode 100644
+> index 0000000000..42a819d979
+> --- /dev/null
+> +++ b/last-modified.h
+> @@ -0,0 +1,27 @@
+> +#ifndef LAST_MODIFIED_H
+> +#define LAST_MODIFIED_H
+> +
+> +#include "commit.h"
+> +#include "revision.h"
+> +#include "hashmap.h"
+> +
+> +struct last_modified {
+> +	struct hashmap paths;
+> +	struct rev_info rev;
+> +};
+> +
+> +void last_modified_init(struct last_modified *lm,
+> +		     struct repository *r,
+> +		     const char *prefix,
+> +		     int argc, const char **argv);
+> +
+> +void last_modified_release(struct last_modified *);
+> +
+> +typedef void (*last_modified_callback)(const char *path,
+> +				    const struct commit *commit,
+> +				    void *data);
+> +int last_modified_run(struct last_modified *lm,
+> +		   last_modified_callback cb,
+> +		   void *cbdata);
+> +#endif /* LAST_MODIFIED_H */
+
+It would be nice to have some documentation for each of these functions
+as well as a bit of a higher-level conceptual info.
