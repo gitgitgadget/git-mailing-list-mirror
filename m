@@ -1,55 +1,55 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0841B279782
-	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1F6A27876E
+	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:36 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748354681; cv=none; b=OC8nIIExoW47koGPxGKLIREXk6Hnz9XFN+5fMClt/B8i5u6M8DtPn2WDY8pzN3ATPm8/WiW+rQ9hz8IOmPp4jdSybj5k6s8DyAzT5enB5Ilcz2bS9ZSdbKh4CZoikeoIqfJK8zyKcmgd709nluofFfNAPjVhj0MFxrLLac/i8co=
+	t=1748354682; cv=none; b=CCoW40bgKHU2gN/wJNtC1XFBkdo4z9MOIcpZHSSDdpO8in8K1RM0uZT9Vm3q/1Ebs9Circ5ZUThkicIqLknK4hy21As61SZfTQSvSAid6ZwTHjuKEWCnoaNqQOUSIkSEvWtGXDGlxEWBsB36WXrvm30SCnHuK+7eC2T11wCkjCI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748354681; c=relaxed/simple;
-	bh=BAM+f9Xq2QxaOIljoCpPkbcy1VfDlmiSQc6kJUqhcSg=;
+	s=arc-20240116; t=1748354682; c=relaxed/simple;
+	bh=gyR2NztrU1rOzCiKmJ6ZlvtCg6MRag6KAwqDKsgCmQU=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Lb75ILt15RqMFKe4CfqERwnQtN2UyILYL9ORgWnSK2FjBDDWBpqpPQxlQoinDrLrzMRxc3PMfJy56QvKU7uFEXjIfnvISq8AZy/Ei6Z2oRXKdErSmDI3zyqzWXGT8wvf5a7XTnyDZTOEwi5T9CrakhuNkzBIqw38p7QQNRYn2hw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=VtiE/6ZH; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=W0oONZMg; arc=none smtp.client-ip=103.168.172.150
+	 In-Reply-To:To:Cc; b=jXXhaVGTH5v5m2B9d/TW4jO2v4aiW7RSSjFEpk0iZYcoo8gaYMs5H10e+BtxFYfOPpqfI/O2vLPNwl7FXGAmuF5vltQSzMsAdARLRnXGgJxr/D/gsUJfnfK/tVuaRS8A9HjH303GSipO7mv+vp/qrKr7+ouNttBfJuNUS1tinLo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=rfgio4GY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=F7DrqQYV; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="VtiE/6ZH";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="W0oONZMg"
-Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
-	by mailfout.phl.internal (Postfix) with ESMTP id 5EF8D1383AB3;
-	Tue, 27 May 2025 10:04:39 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="rfgio4GY";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="F7DrqQYV"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.phl.internal (Postfix) with ESMTP id 24984138046E;
+	Tue, 27 May 2025 10:04:36 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-04.internal (MEProxy); Tue, 27 May 2025 10:04:39 -0400
+  by phl-compute-05.internal (MEProxy); Tue, 27 May 2025 10:04:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748354679;
-	 x=1748441079; bh=1LuOKylJth/aSrM2VhRAP7p8JD74kEveV3hd1pXb0xE=; b=
-	VtiE/6ZHcPq9uDZM0W5Dt/PG/fCkvFDW2YJhGtsRQLQ33qX5eoeSxk5RAjZ+RYHU
-	bPUbajGRqb9lXuwcEdV4jIzYRk18P6QZWWAGvyafDG08nnrutGLMTxrEHF1nTP3g
-	l9qc/gFLviZNe3PKbceoNJwtvNWybm96QjhE3mxyV5TIgtbCTfXFvfAbKivgT7X8
-	A3JHdtOEzO3/7MnfYn26KvI4Bg2eqXpby54QvTyzo92wp3Va1gaOUzyEHyvylscE
-	gkGYzpc+lCxu5KfYPCLgz5OrZqwDQCnp2kzDVX8yqs921vVsQkorDLYu5RlzAGeL
-	m1yMf2yJeb1Si7OgULUoHw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748354676;
+	 x=1748441076; bh=eldUjm3RGgGQ0xSZQbY1eBwi51sQtgY38HjRsHMaVVQ=; b=
+	rfgio4GYkDgSihuKhPlStMvUFk0ZwKqaVmb8U/ZqZIi941GVCzj7KT/D3f9EzqEj
+	y8FhEb7LasiKH9cW2q7UsWHoBAOiuJemneX0A00yTmI6ZD2FlOC5Ar3lDZESP5Pu
+	cx2E1T7vAcyZy2dxF8SXOtAOQsHD1mMH0ncgd2wl1pFg5EsHkYpHIY8PlTM+9MrP
+	7RTKOgXfqpx8V3KFI7808ujTCT++iqs7akP3CQS/0G3I44C30zgFVtwAAvXbc6A8
+	5L4VcIYveS7DOIbx8RydVvDrpTule292ydOa4iX6kFaZlTPlBIb83oXH6QO7ksid
+	SMnraLAAQ0qXqDoXLXkUDQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748354679; x=
-	1748441079; bh=1LuOKylJth/aSrM2VhRAP7p8JD74kEveV3hd1pXb0xE=; b=W
-	0oONZMgBgxjjWF72HlffTrp2Sqv6xWINKtcK+kHK6cSURhaFD5nE1WU3GfeejHVB
-	jlRSO7jB0mMPaMnSTk1df+LAACdPhpizxEZ/aYwj+GyiiBBDjpdET3/CVTucgA0t
-	lKEEUWK22APghWxhZPE40RV+O3hekfa+k8IcucjhvkSN5adxuzv4bL5eAD6e7zie
-	HuJ5Ps5tEPGpWDkZZ97Bai8W+XoBKnRphfJjCEpTGheg/fqr6gR4Di+GRwx84CI2
-	As9keRfsiStjC6E3wx8LR+q9a0tCwrMjZaIbcvjAr1XkaXAgJ4LWPFkhkDAa/e2t
-	1l4u4O8B/bDZAZyzAWlrA==
-X-ME-Sender: <xms:d8Y1aAHsOxjfA7uALxlQL17ecXBEyVxK2TcE3s-UKf1YNRMuUDjweQ>
-    <xme:d8Y1aJV-bt5eGE_rnZCfzY0QG0wDpxY7VtobKGK0zS0eA_8ie7IKRJB2GhZGo-cpc
-    py4ft8oMLQfTzre6g>
-X-ME-Received: <xmr:d8Y1aKIbgtlF2g24xlkxpRvWN4qvocyabPgzhbBt2l5hWOy1Fyt21lFX_X5qF1l_8No-0NEoAQyMgFaeFh7WgIhKYECeUayJqiT3gtQHDus_vw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748354676; x=
+	1748441076; bh=eldUjm3RGgGQ0xSZQbY1eBwi51sQtgY38HjRsHMaVVQ=; b=F
+	7DrqQYVGH93ebtMvH97zokQopw0AuWqRptI8SfLtxMdc1rsoTze1gXIi0Ua1Jrid
+	ZBuMJR7zP0LY2LrFaiB6IwHrKmv0XvFpu/h/kI5dr/kLxn0cdnc9nDGru8RQdI8j
+	MeWHp/rToIE5EkPaagK+fHNJZze6n2Q1052mrEg3tdD7mmIXZMWMoYXCaSshHw9K
+	DSH5B9EprDmiFkPQ92ApIFsIj9dmSVLj4mfXiIT7FPUBgTlcHbQ1lMzxUAv6nOkX
+	EV9tsdSCp8Wt825NZGQHVZmd7snChxwZBHghhIh/SKGZCymjPB/Gg7qIhvKG7+5V
+	AUvW17e6pFMxw1HxRfQLA==
+X-ME-Sender: <xms:c8Y1aL-sxM42ZepRFXpcW13nmoQCu8zpdiZuNb-4zxZhPl12k_Sgrw>
+    <xme:c8Y1aHtD--bneQcPcjxOM-ZG0WkeaRDpVln5MCFKPtJAJIaDGf2DMf_F5DIz-uDLb
+    -dSUfZMpANqpyytnQ>
+X-ME-Received: <xmr:c8Y1aJCVYO7_tFSz9r1Fv1WzcLM_RCS48Tgww9KpiA2whml-27nb8YLQtv1mQpdhUT6LQZudninRYfxbdoHqA_rwUpIOiob0KpxccxIYsp88ww>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehkeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -58,25 +58,25 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehkeculddtuddrge
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
     iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephihrohhthhesph
-    grlhhorghlthhonhgvthifohhrkhhsrdgtohhmpdhrtghpthhtohepuggrshhrrghflees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:d8Y1aCG8dLs9C4gnFKN-EKQCaYYLblzK-0YayWy_LDhUhQPNU8o_Yw>
-    <xmx:d8Y1aGWEafpTEYCJGRt10nvP3lHmpMNjXVj4agyqiXd-4SGfHbZbfw>
-    <xmx:d8Y1aFO54o9DUWdmmG-OFFYSg2LiuEd9gWWHhn1jSk7Fpp0_v-05Iw>
-    <xmx:d8Y1aN0LKzveaaejU1ZsHqDuerdnqt3Bmz6LWjiyOVXnkpjGuzk-fA>
-    <xmx:d8Y1aEvwL4ZwghuWwiHU9b5W5wNP7gX3ZATnOp74Kr3MNZNNR9CWQx4f>
+    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrshhrrghfle
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohephihrohhthhesphgrlhhorghlthhonhgvthifohhrkhhsrdgtoh
+    hm
+X-ME-Proxy: <xmx:c8Y1aHd6Ikuuci2uveJ2qsxNi7uXIRp493dCVXMwtw0D_Igyjwr6Rg>
+    <xmx:dMY1aAPTrEv3QwN6IJavLP62R_bdhK4wMAPzNgCNR2HD1K9g5lGzug>
+    <xmx:dMY1aJkm1R_w9JvXdsnwwGnKv3Vje8zAGpGPjvIKb_n8n69Jj24NnA>
+    <xmx:dMY1aKt2GMTsHedSY2VksKwF54A_fDZPxrCbz2VVfksFCo3uWhCotQ>
+    <xmx:dMY1aFnk8xBj_WMhkxO932grXuNVqCYsk40mFAmdlzRwD-_t_AkqdHmR>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 10:04:38 -0400 (EDT)
+ 27 May 2025 10:04:35 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id afe9a6c2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 27 May 2025 14:04:36 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 3562f5e2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Tue, 27 May 2025 14:04:33 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 May 2025 16:04:34 +0200
-Subject: [PATCH 08/11] builtin/maintenance: let tasks do maintenance before
- and after detach
+Date: Tue, 27 May 2025 16:04:31 +0200
+Subject: [PATCH 05/11] builtin/maintenance: stop modifying global array of
+ tasks
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -85,7 +85,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-8-e1ceb2dea66e@pks.im>
+Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-5-e1ceb2dea66e@pks.im>
 References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
 In-Reply-To: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
 To: git@vger.kernel.org
@@ -93,156 +93,358 @@ Cc: Yonatan Roth <yroth@paloaltonetworks.com>,
  david asraf <dasraf9@gmail.com>
 X-Mailer: b4 0.14.2
 
-Both git-gc(1) and git-maintenance(1) have logic to daemonize so that
-the maintenance tasks are performed in the background. git-gc(1) has
-some special logic though to not perform _all_ housekeeping tasks in the
-background: both references and reflogs are still handled synchronously
-ni the foreground.
+When configuring maintenance tasks run by git-maintenance(1) we do so by
+modifying the global array of tasks directly. This is already quite bad
+on its own, as global state makes for logic that is hard to follow.
 
-This split exists because otherwise it may easily happen that git-gc(1)
-keeps for the "packed-refs" file locked for an extended amount of time,
-where the next Git command that wants to modify any reference could now
-fail. This was especially important in the past, where git-gc(1) was
-still executed directly as part of our automatic maintenance: git-gc(1)
-was invoked via `git gc --auto --detach`, so we knew to handle most of
-the maintenance tasks in the background while doing those parts that may
-cause locking issues in the foreground.
+Even more importantly though we use multiple different fields to track
+whether or not a task should be run:
 
-We have since moved to git-maintenance(1), which is a more flexible
-replacement for git-gc(1). By default this command runs git-gc(1), only,
-but it can be configured to run different tasks, as well. This command
-does not know about the split between maintenance tasks that should run
-before and after detach though, and this has led to several bug reports
-about spurious locking errors for the "packed-refs" file.
+  - "enabled" tracks the "maintenance.*.enabled" config key. This field
+    disables execution of a task, unless the user has explicitly asked
+    for the task.
 
-Prepare for a fix by introducing this split for maintenance tasks. Note
-that this commit does not yet change any of the tasks, so there should
-not (yet) be a change in behaviour.
+  - "selected_order" tracks the order in which jobs have been asked for
+    by the user via the "--task=" command line option. It overrides
+    everything else, but only has an effect if at least one job has been
+    selected.
+
+  - "schedule" tracks the schedule priority for a job, that is how often
+    it should run. This field only plays a role when the user has passed
+    the "--schedule=" command line option.
+
+All of this makes it non-trivial to figure out which job really should
+be running right now. The logic to configure these fields and the logic
+that interprets them is distributed across multiple functions, making it
+even harder to follow it.
+
+Refactor the logic so that we stop modifying global state. Instead, we
+now compute which jobs should be run in `initialize_task_config()`,
+represented as an array of jobs to run that is stored in the options
+structure. Like this, all logic becomes self-contained and any users of
+this array only need to iterate through the tasks and execute them one
+by one.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ builtin/gc.c | 206 ++++++++++++++++++++++++++++++++---------------------------
+ 1 file changed, 112 insertions(+), 94 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index 447e5800846..57f3bbf5344 100644
+index 57d7602596a..4d636237cac 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -1545,53 +1545,54 @@ typedef int (*maintenance_auto_fn)(struct gc_config *cfg);
+@@ -251,7 +251,24 @@ static enum schedule_priority parse_schedule(const char *value)
+ 	return SCHEDULE_NONE;
+ }
  
- struct maintenance_task {
++enum maintenance_task_label {
++	TASK_PREFETCH,
++	TASK_LOOSE_OBJECTS,
++	TASK_INCREMENTAL_REPACK,
++	TASK_GC,
++	TASK_COMMIT_GRAPH,
++	TASK_PACK_REFS,
++	TASK_REFLOG_EXPIRE,
++	TASK_WORKTREE_PRUNE,
++	TASK_RERERE_GC,
++
++	/* Leave as final value */
++	TASK__COUNT
++};
++
+ struct maintenance_run_opts {
++	enum maintenance_task_label *tasks;
++	size_t tasks_nr, tasks_alloc;
+ 	int auto_flag;
+ 	int detach;
+ 	int quiet;
+@@ -261,6 +278,11 @@ struct maintenance_run_opts {
+ 	.detach = -1, \
+ }
+ 
++static void maintenance_run_opts_release(struct maintenance_run_opts *opts)
++{
++	free(opts->tasks);
++}
++
+ static int pack_refs_condition(UNUSED struct gc_config *cfg)
+ {
+ 	/*
+@@ -1032,6 +1054,7 @@ int cmd_gc(int argc,
+ 	}
+ 
+ out:
++	maintenance_run_opts_release(&opts);
+ 	gc_config_release(&cfg);
+ 	return 0;
+ }
+@@ -1524,30 +1547,9 @@ struct maintenance_task {
  	const char *name;
--	maintenance_task_fn fn;
-+	maintenance_task_fn before_detach;
-+	maintenance_task_fn after_detach;
- 	maintenance_auto_fn auto_condition;
+ 	maintenance_task_fn *fn;
+ 	maintenance_auto_fn *auto_condition;
+-	unsigned enabled:1;
+-
+-	enum schedule_priority schedule;
+-
+-	/* -1 if not selected. */
+-	int selected_order;
+-};
+-
+-enum maintenance_task_label {
+-	TASK_PREFETCH,
+-	TASK_LOOSE_OBJECTS,
+-	TASK_INCREMENTAL_REPACK,
+-	TASK_GC,
+-	TASK_COMMIT_GRAPH,
+-	TASK_PACK_REFS,
+-	TASK_REFLOG_EXPIRE,
+-	TASK_WORKTREE_PRUNE,
+-	TASK_RERERE_GC,
+-
+-	/* Leave as final value */
+-	TASK__COUNT
  };
  
- static const struct maintenance_task tasks[] = {
+-static struct maintenance_task tasks[] = {
++static const struct maintenance_task tasks[] = {
  	[TASK_PREFETCH] = {
  		.name = "prefetch",
--		.fn = maintenance_task_prefetch,
-+		.after_detach = maintenance_task_prefetch,
- 	},
- 	[TASK_LOOSE_OBJECTS] = {
- 		.name = "loose-objects",
--		.fn = maintenance_task_loose_objects,
-+		.after_detach = maintenance_task_loose_objects,
- 		.auto_condition = loose_object_auto_condition,
- 	},
- 	[TASK_INCREMENTAL_REPACK] = {
- 		.name = "incremental-repack",
--		.fn = maintenance_task_incremental_repack,
-+		.after_detach = maintenance_task_incremental_repack,
- 		.auto_condition = incremental_repack_auto_condition,
- 	},
- 	[TASK_GC] = {
+ 		.fn = maintenance_task_prefetch,
+@@ -1566,7 +1568,6 @@ static struct maintenance_task tasks[] = {
  		.name = "gc",
--		.fn = maintenance_task_gc,
-+		.after_detach = maintenance_task_gc,
+ 		.fn = maintenance_task_gc,
  		.auto_condition = need_to_gc,
+-		.enabled = 1,
  	},
  	[TASK_COMMIT_GRAPH] = {
  		.name = "commit-graph",
--		.fn = maintenance_task_commit_graph,
-+		.after_detach = maintenance_task_commit_graph,
- 		.auto_condition = should_write_commit_graph,
- 	},
- 	[TASK_PACK_REFS] = {
- 		.name = "pack-refs",
--		.fn = maintenance_task_pack_refs,
-+		.after_detach = maintenance_task_pack_refs,
- 		.auto_condition = pack_refs_condition,
- 	},
- 	[TASK_REFLOG_EXPIRE] = {
- 		.name = "reflog-expire",
--		.fn = maintenance_task_reflog_expire,
-+		.after_detach = maintenance_task_reflog_expire,
- 		.auto_condition = reflog_expire_condition,
- 	},
- 	[TASK_WORKTREE_PRUNE] = {
- 		.name = "worktree-prune",
--		.fn = maintenance_task_worktree_prune,
-+		.after_detach = maintenance_task_worktree_prune,
- 		.auto_condition = worktree_prune_condition,
- 	},
- 	[TASK_RERERE_GC] = {
- 		.name = "rerere-gc",
--		.fn = maintenance_task_rerere_gc,
-+		.after_detach = maintenance_task_rerere_gc,
- 		.auto_condition = rerere_gc_condition,
+@@ -1595,18 +1596,9 @@ static struct maintenance_task tasks[] = {
  	},
  };
-@@ -1599,20 +1600,25 @@ static const struct maintenance_task tasks[] = {
- static int maybe_run_task(const struct maintenance_task *task,
- 			  struct repository *repo,
- 			  struct maintenance_run_opts *opts,
--			  struct gc_config *cfg)
-+			  struct gc_config *cfg,
-+			  int before)
+ 
+-static int compare_tasks_by_selection(const void *a_, const void *b_)
+-{
+-	const struct maintenance_task *a = a_;
+-	const struct maintenance_task *b = b_;
+-
+-	return b->selected_order - a->selected_order;
+-}
+-
+ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+ 				 struct gc_config *cfg)
  {
-+	maintenance_task_fn fn = before ? task->before_detach : task->after_detach;
-+	const char *region = before ? "maintenance before" : "maintenance";
- 	int ret = 0;
- 
-+	if (!fn)
-+		return 0;
- 	if (opts->auto_flag &&
- 	    (!task->auto_condition || !task->auto_condition(cfg)))
- 		return 0;
- 
--	trace2_region_enter("maintenance", task->name, repo);
--	if (task->fn(opts, cfg)) {
-+	trace2_region_enter(region, task->name, repo);
-+	if (fn(opts, cfg)) {
- 		error(_("task '%s' failed"), task->name);
- 		ret = 1;
- 	}
--	trace2_region_leave("maintenance", task->name, repo);
-+	trace2_region_leave(region, task->name, repo);
- 
- 	return ret;
- }
-@@ -1641,6 +1647,10 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
- 	}
- 	free(lock_path);
- 
-+	for (size_t i = 0; i < opts->tasks_nr; i++)
-+		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg, 1))
-+			result = 1;
-+
- 	/* Failure to daemonize is ok, we'll continue in foreground. */
- 	if (opts->detach > 0) {
- 		trace2_region_enter("maintenance", "detach", the_repository);
-@@ -1649,7 +1659,7 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+-	int i, found_selected = 0;
+ 	int result = 0;
+ 	struct lock_file lk;
+ 	struct repository *r = the_repository;
+@@ -1635,95 +1627,120 @@ static int maintenance_run_tasks(struct maintenance_run_opts *opts,
+ 		trace2_region_leave("maintenance", "detach", the_repository);
  	}
  
- 	for (size_t i = 0; i < opts->tasks_nr; i++)
--		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg))
-+		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg, 0))
+-	for (i = 0; !found_selected && i < TASK__COUNT; i++)
+-		found_selected = tasks[i].selected_order >= 0;
+-
+-	if (found_selected)
+-		QSORT(tasks, TASK__COUNT, compare_tasks_by_selection);
+-
+-	for (i = 0; i < TASK__COUNT; i++) {
+-		if (found_selected && tasks[i].selected_order < 0)
+-			continue;
+-
+-		if (!found_selected && !tasks[i].enabled)
+-			continue;
+-
++	for (size_t i = 0; i < opts->tasks_nr; i++) {
+ 		if (opts->auto_flag &&
+-		    (!tasks[i].auto_condition ||
+-		     !tasks[i].auto_condition(cfg)))
+-			continue;
+-
+-		if (opts->schedule && tasks[i].schedule < opts->schedule)
++		    (!tasks[opts->tasks[i]].auto_condition ||
++		     !tasks[opts->tasks[i]].auto_condition(cfg)))
+ 			continue;
+ 
+-		trace2_region_enter("maintenance", tasks[i].name, r);
+-		if (tasks[i].fn(opts, cfg)) {
+-			error(_("task '%s' failed"), tasks[i].name);
++		trace2_region_enter("maintenance", tasks[opts->tasks[i]].name, r);
++		if (tasks[opts->tasks[i]].fn(opts, cfg)) {
++			error(_("task '%s' failed"), tasks[opts->tasks[i]].name);
  			result = 1;
+ 		}
+-		trace2_region_leave("maintenance", tasks[i].name, r);
++		trace2_region_leave("maintenance", tasks[opts->tasks[i]].name, r);
+ 	}
  
  	rollback_lock_file(&lk);
+ 	return result;
+ }
+ 
+-static void initialize_maintenance_strategy(void)
++struct maintenance_strategy {
++	struct {
++		int enabled;
++		enum schedule_priority schedule;
++	} tasks[TASK__COUNT];
++};
++
++static const struct maintenance_strategy none_strategy = { 0 };
++static const struct maintenance_strategy default_strategy = {
++	.tasks = {
++		[TASK_GC].enabled = 1,
++	},
++};
++static const struct maintenance_strategy incremental_strategy = {
++	.tasks = {
++		[TASK_COMMIT_GRAPH].enabled = 1,
++		[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY,
++		[TASK_PREFETCH].enabled = 1,
++		[TASK_PREFETCH].schedule = SCHEDULE_HOURLY,
++		[TASK_INCREMENTAL_REPACK].enabled = 1,
++		[TASK_INCREMENTAL_REPACK].schedule = SCHEDULE_DAILY,
++		[TASK_LOOSE_OBJECTS].enabled = 1,
++		[TASK_LOOSE_OBJECTS].schedule = SCHEDULE_DAILY,
++		[TASK_PACK_REFS].enabled = 1,
++		[TASK_PACK_REFS].schedule = SCHEDULE_WEEKLY,
++	},
++};
++
++static void initialize_task_config(struct maintenance_run_opts *opts,
++				   const struct string_list *selected_tasks)
+ {
++	struct strbuf config_name = STRBUF_INIT;
++	struct maintenance_strategy strategy;
+ 	const char *config_str;
+ 
+-	if (git_config_get_string_tmp("maintenance.strategy", &config_str))
+-		return;
++	/*
++	 * In case the user has asked us to run tasks explicitly we only use
++	 * those specified tasks. Specifically, we do _not_ want to consult the
++	 * config or maintenance strategy.
++	 */
++	if (selected_tasks->nr) {
++		for (size_t i = 0; i < selected_tasks->nr; i++) {
++			enum maintenance_task_label label = (intptr_t)selected_tasks->items[i].util;;
++			ALLOC_GROW(opts->tasks, opts->tasks_nr + 1, opts->tasks_alloc);
++			opts->tasks[opts->tasks_nr++] = label;
++		}
+ 
+-	if (!strcasecmp(config_str, "incremental")) {
+-		tasks[TASK_GC].schedule = SCHEDULE_NONE;
+-		tasks[TASK_COMMIT_GRAPH].enabled = 1;
+-		tasks[TASK_COMMIT_GRAPH].schedule = SCHEDULE_HOURLY;
+-		tasks[TASK_PREFETCH].enabled = 1;
+-		tasks[TASK_PREFETCH].schedule = SCHEDULE_HOURLY;
+-		tasks[TASK_INCREMENTAL_REPACK].enabled = 1;
+-		tasks[TASK_INCREMENTAL_REPACK].schedule = SCHEDULE_DAILY;
+-		tasks[TASK_LOOSE_OBJECTS].enabled = 1;
+-		tasks[TASK_LOOSE_OBJECTS].schedule = SCHEDULE_DAILY;
+-		tasks[TASK_PACK_REFS].enabled = 1;
+-		tasks[TASK_PACK_REFS].schedule = SCHEDULE_WEEKLY;
++		return;
+ 	}
+-}
+ 
+-static void initialize_task_config(const struct string_list *selected_tasks,
+-				   int schedule)
+-{
+-	struct strbuf config_name = STRBUF_INIT;
++	/*
++	 * Otherwise, the strategy depends on whether we run as part of a
++	 * scheduled job or not:
++	 *
++	 *   - Scheduled maintenance does not perform any housekeeping by
++	 *     default, but requires the user to pick a maintenance strategy.
++	 *
++	 *   - Unscheduled maintenance uses our default strategy.
++	 *
++	 * Both of these are affected by the gitconfig though, which may
++	 * override specific aspects of our strategy.
++	 */
++	if (opts->schedule) {
++		strategy = none_strategy;
+ 
+-	for (size_t i = 0; i < TASK__COUNT; i++)
+-		tasks[i].selected_order = -1;
+-	for (size_t i = 0; i < selected_tasks->nr; i++) {
+-		struct maintenance_task *task = selected_tasks->items[i].util;
+-		task->selected_order = i;
++		if (!git_config_get_string_tmp("maintenance.strategy", &config_str)) {
++			if (!strcasecmp(config_str, "incremental"))
++				strategy = incremental_strategy;
++		}
++	} else {
++		strategy = default_strategy;
+ 	}
+ 
+-	if (schedule)
+-		initialize_maintenance_strategy();
+-
+ 	for (size_t i = 0; i < TASK__COUNT; i++) {
+ 		int config_value;
+-		char *config_str;
+ 
+ 		strbuf_reset(&config_name);
+ 		strbuf_addf(&config_name, "maintenance.%s.enabled",
+ 			    tasks[i].name);
+-
+ 		if (!git_config_get_bool(config_name.buf, &config_value))
+-			tasks[i].enabled = config_value;
+-
+-		strbuf_reset(&config_name);
+-		strbuf_addf(&config_name, "maintenance.%s.schedule",
+-			    tasks[i].name);
++			strategy.tasks[i].enabled = config_value;
++		if (!strategy.tasks[i].enabled)
++			continue;
+ 
+-		if (!git_config_get_string(config_name.buf, &config_str)) {
+-			tasks[i].schedule = parse_schedule(config_str);
+-			free(config_str);
++		if (opts->schedule) {
++			strbuf_reset(&config_name);
++			strbuf_addf(&config_name, "maintenance.%s.schedule",
++				    tasks[i].name);
++			if (!git_config_get_string_tmp(config_name.buf, &config_str))
++				strategy.tasks[i].schedule = parse_schedule(config_str);
++			if (strategy.tasks[i].schedule < opts->schedule)
++				continue;
+ 		}
++
++		ALLOC_GROW(opts->tasks, opts->tasks_nr + 1, opts->tasks_alloc);
++		opts->tasks[opts->tasks_nr++] = i;
+ 	}
+ 
+ 	strbuf_release(&config_name);
+@@ -1750,7 +1767,7 @@ static int task_option_parse(const struct option *opt,
+ 		return 1;
+ 	}
+ 
+-	string_list_append(selected_tasks, arg)->util = &tasks[i];
++	string_list_append(selected_tasks, arg)->util = (void *)(intptr_t)i;
+ 
+ 	return 0;
+ }
+@@ -1791,7 +1808,7 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 				  opts.schedule, "--schedule=");
+ 
+ 	gc_config(&cfg);
+-	initialize_task_config(&selected_tasks, opts.schedule);
++	initialize_task_config(&opts, &selected_tasks);
+ 
+ 	if (argc != 0)
+ 		usage_with_options(builtin_maintenance_run_usage,
+@@ -1800,6 +1817,7 @@ static int maintenance_run(int argc, const char **argv, const char *prefix,
+ 	ret = maintenance_run_tasks(&opts, &cfg);
+ 
+ 	string_list_clear(&selected_tasks, 0);
++	maintenance_run_opts_release(&opts);
+ 	gc_config_release(&cfg);
+ 	return ret;
+ }
 
 -- 
 2.49.0.1266.g31b7d2e469.dirty
