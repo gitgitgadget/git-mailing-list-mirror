@@ -1,193 +1,105 @@
-Received: from de-smtp-delivery-110.mimecast.com (de-smtp-delivery-110.mimecast.com [194.104.111.110])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A647172614
-	for <git@vger.kernel.org>; Tue, 27 May 2025 07:08:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=194.104.111.110
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5045F226CE8
+	for <git@vger.kernel.org>; Tue, 27 May 2025 07:27:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748329685; cv=none; b=iKh27SwNn7rNAkWOmmZe1cE2wkPp341bHnf3RMDDvC8B4p5hbvyqvCWFOIsp5r2Zf92j7xCRYUkbEj7dQnF4Fw1qwfLIor1uGIQHkDCabx+OqP0GzHfahKiM8g5iVKCdnzxa3nB8AouaGmsz6JZ+vOaApZbaYRFNFnUpUeP7kUU=
+	t=1748330879; cv=none; b=kmhi/cfoegwqMuQnfenpKZ/8VMjq43TDx/B4fdZlpvit1VE0YU/JFg5+0W1o3EoleEpO/H6tv4DgTssyn0tRPvsRqURO4vE30g4UwkJxy4ew6VA23z3NyD61DD9SrU49cgE+liJ6EmUWHebEup4dY+rOGP54fH3ewBWDPXfN/w0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748329685; c=relaxed/simple;
-	bh=NCE5ATuxJL5DfqAkdOfEdTyKAzUdye3R/R+y1Rng9S4=;
-	h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type; b=t5rGj7m7Kn79aeCI6lQUG15rUc8KsIWoURWBf1LByCLex7KvlMb+F10tiKy8wd8cOasgTNcCX/LzhF+ZGRW61F1gxbH7UtvFPuQ7Ft4W1vhErBgXoLywtGKvJsYyahTY0JFCwFPDZvodyWIncniHlppze0TPzLIuy6hAeNli0YI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kisters.de; spf=pass smtp.mailfrom=kisters.de; dkim=pass (2048-bit key) header.d=kisters.de header.i=@kisters.de header.b=iAOLrRGz; arc=none smtp.client-ip=194.104.111.110
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=kisters.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=kisters.de
+	s=arc-20240116; t=1748330879; c=relaxed/simple;
+	bh=14FxUU3soiGQtWMcU/6GuAcnu1NV7/ZF8HxspT3J7I8=;
+	h=MIME-Version:Date:From:To:Message-Id:In-Reply-To:References:
+	 Subject:Content-Type; b=hKubpbuEkkgSHnFLG4lbOx3OYqs4bXGLkrAblxWnTi7Py31tc5NrBmrUIqetLLDAaq3DXWkV2y3JfiRzwDtwiT5L5kql5S+4NeljsNrLwrHAWE54akSwNmziwtT+gwvlw69MAiYfcgUIrFS+XpJQkDRn+/8AZ9iPWImYzHojyas=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=cNVdGQMs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=CG+sxEOD; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kisters.de header.i=@kisters.de header.b="iAOLrRGz"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kisters.de;
-	s=mimecast20230419; t=1748329680;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=NCE5ATuxJL5DfqAkdOfEdTyKAzUdye3R/R+y1Rng9S4=;
-	b=iAOLrRGzIkkM1cSznbcSLsPfx7yM9YN5IVnDtfAP6XGC2wo80TbwgFYTaxJPvFlsAQ8OPB
-	eTjuvdYPG6pwH6oEd6rqY5/nL7OpS1ZqytPZMU1VMsLvSdicX4ovFfsJ5oZXBakP1EwqfW
-	ElFZqx1YeCi3RsgxzZrv0kcaXPx8qBVHkr/LKyn04v+Mp32/aidaqyrPj51GQ6D00pxgRr
-	esU7ud9YzIPL9AfjkcvBMlfyyt5X8Jmex95D4IEkmzilM1UzU3GCBMFu+fLKip6dDdr+wi
-	CcHIgxGhhtJHP2pUsH03DohCT2WHVgZ+9basmwddHNdKokwv3g/XFX8fLMMAPw==
-Received: from KIS-NSP-GW03 (51.116.141.177 [51.116.141.177]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- de-mta-63-lsvH7pE_Ph25p8asaMNBYw-1; Tue, 27 May 2025 09:00:46 +0200
-X-MC-Unique: lsvH7pE_Ph25p8asaMNBYw-1
-X-Mimecast-MFC-AGG-ID: lsvH7pE_Ph25p8asaMNBYw_1748329246
-Received: from 194.104.110.241 by KIS-NSP-GW03 (Tls12, Aes256, Sha384,
- DiffieHellmanEllipticKey384); Tue, 27 May 2025 07:00:46 GMT
-X-MC-Unique: EFKFGMpXNaeu1c4G4a1Obw-1
-X-Mimecast-MFC-AGG-ID: EFKFGMpXNaeu1c4G4a1Obw_1748329242
-From: Ulrich Wittenberg <ulrich.wittenberg@kisters.de>
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-Subject: Bug in git branch --show-current
-Thread-Topic: Bug in git branch --show-current
-Thread-Index: AdvO1LjeRgAv04nBQxGEZno694i9CA==
-Date: Tue, 27 May 2025 07:00:37 +0000
-Message-ID: <FR0P281MB28795FB4A108A6044273B39C9464A@FR0P281MB2879.DEUP281.PROD.OUTLOOK.COM>
-Accept-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: FR0P281MB2879:EE_|FRYP281MB2304:EE_
-x-ms-office365-filtering-correlation-id: e5fc2369-968a-4a49-21c8-08dd9cec2efa
-kis-sig: true
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;ARA:13230040|10070799003|376014|1800799024|366016|38070700018
-x-microsoft-antispam-message-info: =?utf-8?B?WWdRQlRoWE1uRk81czA1Z3pVcnFVRjR3eXQ2YVJxbWlLbG1ET3FQUy96c25s?=
- =?utf-8?B?NDMwaG16RWptZ1QwNzdZeWJkdWRUOGRpUlc1blV0UUg0MnJ2akVqbVZaSlNj?=
- =?utf-8?B?WTBycnl1ek5QV1lmcVFaMHlvQ1VPNmVMdkdQdSt1dUxKYWpwak9LaUtPVWdq?=
- =?utf-8?B?eUV5YzVaYTVncHExSnRpUFJFRFpvRUFRTlc1ZUExb2RTSW9xbkIxM0RaWW5W?=
- =?utf-8?B?TmlKa2FZWUJQTUZEeGFSZmtPWXRoVmJzYVR5QWVpZ3M2MG40VHdjcFN4R3dx?=
- =?utf-8?B?NzUxajNtMlFVZ1pRRjAzQlhVN25YSS9URmZEMENpT3R0RFlhMjQ3WGpMd284?=
- =?utf-8?B?eTg5S2Y5VzlCbmNmUFhGTit0cThuQVREMUZuTzBNRkQrazJxWGxTcTJBejdj?=
- =?utf-8?B?SzJ6WjFKVkc0UWlmaVFEU3A0QXFhUVpMNjdtV0U3SXBxSFRFaUEvMEpUNmFo?=
- =?utf-8?B?ZUJ4UmdoUTNGQ0hacWx3bURWS01tZk1Pa2ZINVpjdGphcldzeW16NG85dDJJ?=
- =?utf-8?B?TGx4Z2VHRGtpZWsyLzlObDRKakFTUGJ6WE16MFZ1UytpNkJKbU43NkRjZ1Y5?=
- =?utf-8?B?Q0xEL1k2dERUR25Wb1dneGNQZngrS3RaU0VMY2k4OVMveFJVbVZBd2daZ1o1?=
- =?utf-8?B?VFlSWVlvWDRGNEhkS3hJT3NPV2gxU1FkZXY3UkQ0M1Q4Q1k1RkYyeW9HM0E3?=
- =?utf-8?B?YUlHRmtreGlHQWtUN0ZFNnVOSzBBWmR1VmJWbHYxWmNpNEtiL3ZkQ24xVmlG?=
- =?utf-8?B?Qlg1REw2czhyRmloT1Z5SDAxVFR0QmsvOEtTV3FBeGlmNFR5Q0JxS0xXUUoy?=
- =?utf-8?B?dXdKUDNKOHUyTmFmTGtLVWFYZ3ZFWmF0c0k2dENtNE12OFY0RUdvZlU3YTJW?=
- =?utf-8?B?T05OTTFvMTNzeUNsaFdaaytSWkdLaXJPTnFqWDIxZ1pjZm4rZzRUTmJPQ0xx?=
- =?utf-8?B?MFR2OW5FZkRGV1I0SlhWWHNvRVVHczdUWlFLU0xMdktic3dFaGhHdDhVM01M?=
- =?utf-8?B?MW1GMGJ3cjBKRHIzMGJYRTFWSXEzMXNQdEgzVWtJZDZBWnJwTmRYbURiY1c0?=
- =?utf-8?B?RGJrL2ZyM0E2aFN3QWtyVVA0ckpxU2JRVzNDUXMxTkNwMHdidGdsNUYxbERR?=
- =?utf-8?B?WHFOT1IxMmFDbW1NdXpLSGFoclVQcnlUMGxoUkFxMzErS3VLY0JOZDU1WEw1?=
- =?utf-8?B?OWxUWThRUis1ZHlYdXZJbnF2bFpaQTIvOGFJTURQNVk3d09XZ1A1Mm9RMkhE?=
- =?utf-8?B?MzJUVHpsN3RHRHM0cWhMYkVZcm1aYkN0TE1qUDJla1NOL0w3NWFoT1ZoRk5i?=
- =?utf-8?B?WkdsdkIzSE11RDFZN3VxYytneTF3Y1Nwd1hBYlE2R3RwZ2w2RXFmUlF3OERz?=
- =?utf-8?B?SUFtNmx6ZmZiQXNDTzlyQmd0WlYvYTFScmFPR2NnUysxTjdhRlVHRnVvVXhw?=
- =?utf-8?B?S2R4S3dXdlRYcVhFdVBSRFZ3QTNGaTE2UlJ4NUxnQmxXM1hPOTAxTlNGMzhI?=
- =?utf-8?B?WUFEOGtRTHRPMlJ6NzNPNW5CSkh0ZjRXb0lRM1grNEhnbkxzOXErTzVZV2xa?=
- =?utf-8?B?Vjh0ZXBjTm5ianpkVU9YRktNRFJXNXlDU1dRQ2JvTkk3Mm9IQlRDQWJKSGxx?=
- =?utf-8?B?TElUeEZpS2xUN3d6cmtWODB6dGh0dGoxcXUrZVVNRGZaajdGcXRxOTh5cFFz?=
- =?utf-8?B?a1hud1FRR29jRnROekRVclVLSGZNNzZLbU9DWlBvZWxkTnhrOFQ5Zmk0Snp6?=
- =?utf-8?B?ZHQ0ZmsvbkUxZzY2djdOZXNLY2l5U0JlMFY2NThtYkpub2YvbXVIU3dhd2Nj?=
- =?utf-8?B?UmhlMnk3dUx4a0thdEozMjFIVkwwdjNYYlBTRU5iNnJnMmVvKzVBKzNpVSta?=
- =?utf-8?B?a0ZXUGJhY1dJbzJyc011OC9VTkZkTEdDZC9ydzRSNzNFdFBEZjRORXBTaEJ2?=
- =?utf-8?Q?3uO1pVN8kks=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:FR0P281MB2879.DEUP281.PROD.OUTLOOK.COM;PTR:;CAT:NONE;SFS:(13230040)(10070799003)(376014)(1800799024)(366016)(38070700018);DIR:OUT;SFP:1102
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?RFphclQwOVJZaDVwZ1Y2Zms1WVN5bXJzMkRGbmdyeWt2eXcxclZIYitoSGVU?=
- =?utf-8?B?UjN3aTVoL2d6RE9lRHhUV2Z4ZVY2UFl5QTIzVXF2ckpXT21CdzhPVmYzRFY2?=
- =?utf-8?B?TWJ4bHlvUWhRWW1wcnVzVXlaTVEwYlU1VGl4LzEvbWdLSUEyR0NzMW5WcDJu?=
- =?utf-8?B?S0puL0ltaXExUURkaHBFam9iMlhrOE1EM3oza1paVGY0eTIyczRKTjF1WjA2?=
- =?utf-8?B?NnVLUHd2T0dWQlZ2bWtVQVdrcFBlcmZXRmxOY0NhTmQ4ZjdzVS82SFpwK2Zj?=
- =?utf-8?B?bGpqcnZ5QTAyMjA4eVNRcVVaT0theUF0dDdicjRXb0U0V0cyOFUxa3NjTnVD?=
- =?utf-8?B?OTgwMm5rUndRVUJVRWFDRHMveldMVmRWT0xMemRuK0I4T2JKUSttM29LY004?=
- =?utf-8?B?YUF6VktmQ0FTMmROS0FnUyswcVo4dSt3Q0Mxd2NFcU9TaWs0UlovdDA5VEs3?=
- =?utf-8?B?SGZMeUQzNklBaUU1TGsvZ3hndy9sOXk4NkhURUgyaW8vbERsZmFKdXMydGY5?=
- =?utf-8?B?L1NHaUUxSWZuWURBbDdtL0tCa0NCb3I0cHkzanFrTkZTdnJhMWRIdkxYbnpx?=
- =?utf-8?B?emhKekJhSVNWWVhndXpJZXl1dUJnQkVLdldNL0JzK01rTkVmdkQzb2tOUGcx?=
- =?utf-8?B?cWQ0WmRmQTRYeXlGalNqczJNRDdBdXlWVUVQVEduS21BMWJBUDRKamV4Z2ZY?=
- =?utf-8?B?Wmc3a3h3K20yVjNvamk0c3VVeTllNVZnVFBDd1RpOTlycjE4MXVzTC9tQ2d2?=
- =?utf-8?B?TE1qLzZWMS9Vc1ducWhDaStmR2M2NTNxQW9JMVdza0hhSUJXaHlRK3pzYXRw?=
- =?utf-8?B?SDc0bHFJZW1wRDNwWjR3OHBIMWxHLzNZZnFZQ0VlQ1QzVVN1WDlGNThLMFNo?=
- =?utf-8?B?SXIzdDNIcXU0ZlJ2WjBlRWdPQlkzOUprcGZzSDJXa1BQZ3huY3hwYTRLSDBz?=
- =?utf-8?B?QldLOVNZdk1wMk1uTWxNazFuQjBUSVNHenNpWHkxZklMb2VRbTljS2craGhq?=
- =?utf-8?B?QW52VHFFczJnVFk1MTl2bm15SFUvRVJBUGJEd2tJSEk0QVZZSlFKMXhCMWlp?=
- =?utf-8?B?bythQ2xRdzZPTW0xQ1hVbktFTkI2V0x1Zk5PUTJKeHcrcDhkRkUwcjFKUzNi?=
- =?utf-8?B?RHdNaHF0bzBJYXcrRHErLy9LVGJYSDFNV1A1Ylc2L2JIV0czcVkwM0tRRFhq?=
- =?utf-8?B?cmhuekpnbnpTQ1pFbXA3bmNpcWg3S1cxZTZjYmR1aTNjbXlQc0t3OFNIM3lT?=
- =?utf-8?B?anpidlVmOUtTUEt1RUl6RjNMQWcvQzhlMmxRSjA3VGV3ZkJPR2JnV0RzTFRN?=
- =?utf-8?B?TWhiN1FQWXp0eG40d3o2Q29FR0ZMcVYwYW1ldmI5QzJCdytSZ1ZFRzFVaUQr?=
- =?utf-8?B?ZTl1WFkyOEh6Rm1odUo0eXZSc0RLV0wreWRhQjlZYUU4Y1RsVW1NcE54S3Iv?=
- =?utf-8?B?N2VpTnpPdjlTZE05ZUliVm93ZFhxLzY0bFdZVWpKVzhXYTlzZmRLRnc0eUZj?=
- =?utf-8?B?K2ZaYnF3YkRtRzRMMFlsdWRwQXRHdXlXL05PQzgzWTB6ZVVnUFlqZnpSNGo4?=
- =?utf-8?B?dFJnRkVCa2RwcFFpemk0ZVhmQXBMMGROVk94bzc5dGxWc0NLeVQzRFRmY2lj?=
- =?utf-8?B?Ujh3bFRqSTc2cUtYNTdVaW1uTVBuOFFZTEJQMG5WS2NFek5NUmVraUN1ak9O?=
- =?utf-8?B?a3NYQURuZEVJOWhHbUdhektYRXdJZWRPd01OU0k4cUFyQXFTb3dOSGlQNjlK?=
- =?utf-8?B?TmpHVWkwTHA0Q2YvTkFQeWVLQzFUSjliQlNCazFUSGE3bVdXNlRxb29FU0Fs?=
- =?utf-8?B?ZUQvUFhhbUdaUVdJZ2FKNzNoQjFHUy9PaUdSUG1NbHR3SnIrQTBKRkN6MlVz?=
- =?utf-8?B?Q1FsWXNWUjRRV0RXNVR5K0ZKM2UyQ3hrbXRIODFLb3Fxb1lNVmxYc1RyNHpH?=
- =?utf-8?B?cGJqUVFSc2k4NWduOUdXR2l6V3BoMWZhb2t2cFh5czRrQThCcG82SUhDSExx?=
- =?utf-8?B?cFVrdjJ1MDBqQWZRc3R5L1ZGcmZNTngxM0JockQyNUdlU0dTUy9YN0EvU3BQ?=
- =?utf-8?B?cTh0LzUyTjdad2lidDIvcVIwNGZTVVU3MnpVMUwxQmhyUVVvbHRvUC9tYzlS?=
- =?utf-8?B?UkJCakpVVDY3VndsUjB5NjQ0TFQvOWFXM2xtOUNEc205Sm8zNzBqQVlYOWht?=
- =?utf-8?Q?wF3bXVYG5WTr5HvU1QquG9KzxWGXwfbDzJ1RklpG5PmX?=
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="cNVdGQMs";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="CG+sxEOD"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id D3B1D25400CF;
+	Tue, 27 May 2025 03:27:55 -0400 (EDT)
+Received: from phl-imap-07 ([10.202.2.97])
+  by phl-compute-09.internal (MEProxy); Tue, 27 May 2025 03:27:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748330875;
+	 x=1748417275; bh=a1Ok0+a1Pn8Ua0L6r6IWNUrZwYl3isR/GE2GG9IpoV8=; b=
+	cNVdGQMslr4JwdtT/FmjEHh1THMcrYwWbQhnAz4hc6zMk6MSLjfmeF0lJAUE777t
+	iW3SasvHE3zlAjuF6RTFiLNLQG+l/KxpQ0Z+XdFqxjQ2fJfO3/Kjx73oi31ISQEP
+	w4lg6UewLIi0phoE6jg8ohVJ/poeCOwo0q/ro7oO+QJXiymtXg2FtQ40kmDwytk8
+	vexOVBGxBsJG/qceRfvyDS3gvcif1RaYExsgF7T1ms+0AfwGmsumzmgBJIoOC2bz
+	XMG0DNz1nX6zRyMCJ9GhYCddo6E2jDSfn6tRbiujZ8oht1N8xNYtl9KKa2CdSLnp
+	Sh0kqzg7oq2LwzSL9vxJVA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:content-transfer-encoding:content-type
+	:content-type:date:date:feedback-id:feedback-id:from:from
+	:in-reply-to:in-reply-to:message-id:mime-version:references
+	:reply-to:subject:subject:to:to:x-me-proxy:x-me-sender
+	:x-me-sender:x-sasl-enc; s=fm1; t=1748330875; x=1748417275; bh=a
+	1Ok0+a1Pn8Ua0L6r6IWNUrZwYl3isR/GE2GG9IpoV8=; b=CG+sxEODC+xmPm3+O
+	Xx7+hs6b8CAl18cgT0SXpMDdzg11kehSbRIt4ry/v9so9A6tLby0lTT1XcUlEKn1
+	GYx5zRMpGXppYUcM4FHDXVJmzTgPUoqTZJtnXNT43HvSCXlwgWbOrCilkBEe2Vdp
+	5Tw5pfbcviJuzZha33zI3J/8tCnv0Hh68ADv2frVIWyQfjvSVGD7EX/hqtKSmc1X
+	dYyQFu43+IxjpiRwnuTqJzYactZtU0qp6F4f1Vm6c6V0giU4rrT9cJjxHYSDl/93
+	COIrlDaZMU6LnRzrPmgcb2FXsWiDY4Dg6BUa1QLbhaks2icAgC4NZuL4wkhQkUpp
+	GAzTA==
+X-ME-Sender: <xms:e2k1aDX4GyQLmqJVl2QEBxTk4tvab1mah2y-tlIJ5fwPGOHTrnEJw84>
+    <xme:e2k1aLlouo_pCkz3g9lph3K6lW5xxNQWu_j2KN9puAQjCdpOg75_WV3A2I5XP17rp
+    7_8nMHzYcTvZVhaFQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdduleejkeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvkfgj
+    fhfutgfgsehtjeertdertddtnecuhfhrohhmpedfmfhrihhsthhofhhfvghrucfjrghugh
+    hssggrkhhkfdcuoehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghi
+    lhdrtghomheqnecuggftrfgrthhtvghrnhepvdeigedtgfetgefhffetteeludevheetfe
+    ekffehheefieehudekveelveffhfejnecuvehluhhsthgvrhfuihiivgeptdenucfrrghr
+    rghmpehmrghilhhfrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrghkkhesfhgrsh
+    htmhgrihhlrdgtohhmpdhnsggprhgtphhtthhopedvpdhmohguvgepshhmthhpohhuthdp
+    rhgtphhtthhopehulhhrihgthhdrfihithhtvghnsggvrhhgsehkihhsthgvrhhsrdguvg
+    dprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:e2k1aPYkYZzc_zw4NjyC47LURXMQhG9oOviiKD01he77Du0nEWDYxg>
+    <xmx:e2k1aOUsPYiemeDAGnmUpx_7AvvsUyfZj9pX1oGq-Z4RAq43ykYl1A>
+    <xmx:e2k1aNmfwS2AFzdwQ3Q-d189up1xAetPAoVZhtCIbzzSNHqIwayc0Q>
+    <xmx:e2k1aLehAHwTw_jeUdIvgQyhdz2FU2JAIxdI6XoC6FUCrcTShjIlRQ>
+    <xmx:e2k1aHsE7Zfl_2JDm9LB5gMi7wvF8_dBoK9O7sTfKKLgbh6WnENsQfA3>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mailuser.phl.internal (Postfix, from userid 501)
+	id 703741EA005F; Tue, 27 May 2025 03:27:55 -0400 (EDT)
+X-Mailer: MessagingEngine.com Webmail Interface
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: kisters.de
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: FR0P281MB2879.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-Network-Message-Id: e5fc2369-968a-4a49-21c8-08dd9cec2efa
-X-MS-Exchange-CrossTenant-originalarrivaltime: 27 May 2025 07:00:37.0682
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 6edce190-533b-4274-8213-bdd14c9bd42e
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: trmigi/btWIpf0ljdP2iKL0xqV6OnsUXn7ryqDZUQy1BJCeEpuIuPUd36j4SvtfOzIp7neo4KDVeJUAGVA0xADN09snVH1Qj6KjUtNxugDw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRYP281MB2304
-X-Mimecast-Spam-Score: 0
-X-Mimecast-MFC-PROC-ID: x13nSgj3Nz_Hcx-4IrAwC02xP0Y0ytHw5wYqL4LdMlo_1748329242
-X-Mimecast-Originator: kisters.de
-Content-Language: de-DE
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
+X-ThreadId: T02049728c729551c
+Date: Tue, 27 May 2025 09:24:58 +0200
+From: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
+To: "Ulrich Wittenberg" <ulrich.wittenberg@kisters.de>,
+ "git@vger.kernel.org" <git@vger.kernel.org>
+Message-Id: <24a091bf-daef-4c97-b233-1a0f5c329f25@app.fastmail.com>
+In-Reply-To: 
+ <FR0P281MB28795FB4A108A6044273B39C9464A@FR0P281MB2879.DEUP281.PROD.OUTLOOK.COM>
+References: 
+ <FR0P281MB28795FB4A108A6044273B39C9464A@FR0P281MB2879.DEUP281.PROD.OUTLOOK.COM>
+Subject: Re: Bug in git branch --show-current
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
 
-VGhhbmsgeW91IGZvciBmaWxsaW5nIG91dCBhIEdpdCBidWcgcmVwb3J0IQ0KUGxlYXNlIGFuc3dl
-ciB0aGUgZm9sbG93aW5nIHF1ZXN0aW9ucyB0byBoZWxwIHVzIHVuZGVyc3RhbmQgeW91ciBpc3N1
-ZS4NCg0KV2hhdCBkaWQgeW91IGRvIGJlZm9yZSB0aGUgYnVnIGhhcHBlbmVkPyAoU3RlcHMgdG8g
-cmVwcm9kdWNlIHlvdXIgaXNzdWUpDQpUaGlzIGlzIHBhcnQgb2YgYSBKZW5raW5zIGpvYiwgc28g
-Zm9yIHNvbWUgcmVhc29uIHdlIGFyZSB3b3JraW5nIG9uIGEgZGV0YWNoZWQgaGVhZA0KDQpXaGF0
-IGRpZCB5b3UgZXhwZWN0IHRvIGhhcHBlbj8gKEV4cGVjdGVkIGJlaGF2aW9yKQ0KSSBuZWVkIHRv
-IGZpbmQgb3V04paSd2hpY2ggYnJhbmNoIHRoZSBzY3JpcHQgaXMgd29ya2luZyBvbiwNCnNvIEkg
-dXNlZCAiZ2l0IGJyYW5jaCAtLXNob3ctY3VycmVudCIgdG8gZ2V0IHRoaXMgaW5mby4NCg0KV2hh
-dCBoYXBwZW5lZCBpbnN0ZWFkPyAoQWN0dWFsIGJlaGF2aW9yKQ0KVGhlIGNvbW1hbmQgcmV0dXJu
-cyBhYnNvbHV0ZWx5IG5vdGhpbmcuDQoNCldoYXQncyBkaWZmZXJlbnQgYmV0d2VlbiB3aGF0IHlv
-dSBleHBlY3RlZCBhbmQgd2hhdCBhY3R1YWxseSBoYXBwZW5lZD8NCldlbGwsIGV2ZXJ5dGhpbmch
-DQoNCkFueXRoaW5nIGVsc2UgeW91IHdhbnQgdG8gYWRkOg0KSSB0cmllZCBzb21lIG90aGVyIGdp
-dCBjb21tYW5kcyB0aGF0IHVzdWFsbHkgYWxzbyBzaG93IGluZm9ybWF0aW9uDQphYm91dCB0aGUg
-Y3VycmVudCBicmFuY2gsIGJ1dCAqbm9uZSogb2YgdGhlbSB3b3JrIG9yIGV2ZW4gc2hvdyBhIGZh
-dGFsIGVycm9yLg0KDQoNCltTeXN0ZW0gSW5mb10NCmdpdCB2ZXJzaW9uOg0KZ2l0IHZlcnNpb24g
-Mi4zOS41DQpjcHU6IHg4Nl82NA0Kbm8gY29tbWl0IGFzc29jaWF0ZWQgd2l0aCB0aGlzIGJ1aWxk
-DQpzaXplb2YtbG9uZzogOA0Kc2l6ZW9mLXNpemVfdDogOA0Kc2hlbGwtcGF0aDogL2Jpbi9zaA0K
-dW5hbWU6IExpbnV4IDYuMS4wLTM0LWFtZDY0ICMxIFNNUCBQUkVFTVBUX0RZTkFNSUMgRGViaWFu
-IDYuMS4xMzUtMSAoMjAyNS0wNC0yNSkgeDg2XzY0DQpjb21waWxlciBpbmZvOiBnbnVjOiAxMi4y
-DQpsaWJjIGluZm86IGdsaWJjOiAyLjM2DQokU0hFTEwgKHR5cGljYWxseSwgaW50ZXJhY3RpdmUg
-c2hlbGwpOiAvYmluL3pzaA0KDQoNCltFbmFibGVkIEhvb2tzXQ0KDQpVbHJpY2ggV2l0dGVuYmVy
-Zw0KU2VuaW9yIFNvZnR3YXJlIERldmVsb3BlciB8IEtJU1RFUlMgT2xkZW5idXJnDQpHZXJtYW55
-DQoNCnVscmljaC53aXR0ZW5iZXJnQGtpc3RlcnMuZGUNCnd3dy5raXN0ZXJzLmRlDQoNCg0KDQpf
-X19fX19fX19fX19fX19fX19fX19fX19fX19fX19fXw0KVWxyaWNoIFdpdHRlbmJlcmcgLSBFbmVy
-Z3kgLSBLSVNURVJTIEFHIC0gSGFzZWxyaWVnZSAxMyAtIDI2MTI1IE9sZGVuYnVyZyAtIERFIHwg
-KzQ5IDQ0MSA5MzYwMiAtMTU2IHwgdWxyaWNoLndpdHRlbmJlcmdAa2lzdGVycy5kZSB8IHd3dy5r
-aXN0ZXJzLmRlIHwgSGFuZGVsc3JlZ2lzdGVyIEFhY2hlbiwgSFJCLU5yLiA3ODM4IHwgVm9yc3Rh
-bmQ6IEtsYXVzIEtpc3RlcnMsIEhhbm5zIEtpc3RlcnMgfCBBdWZzaWNodHNyYXRzdm9yc2l0emVu
-ZGVyOiBEci4gVGhvbWFzIEtsZXZlcnMNClRoaXMgZS1tYWlsIG1heSBjb250YWluIGNvbmZpZGVu
-dGlhbCBhbmQvb3IgcHJpdmlsZWdlZCBpbmZvcm1hdGlvbi4gSWYgeW91IGFyZSBub3QgdGhlIGlu
-dGVuZGVkIHJlY2lwaWVudCAob3IgaGF2ZSByZWNlaXZlZCB0aGlzIGUtbWFpbCBpbiBlcnJvcikg
-cGxlYXNlIG5vdGlmeSB0aGUgc2VuZGVyIGltbWVkaWF0ZWx5IGFuZCBkZXN0cm95IHRoaXMgZS1t
-YWlsLiBBbnkgdW5hdXRob3Jpc2VkIGNvcHlpbmcsIGRpc2Nsb3N1cmUgb3IgZGlzdHJpYnV0aW9u
-IG9mIHRoZSBtYXRlcmlhbCBpbiB0aGlzIGUtbWFpbCBpcyBzdHJpY3RseSBmb3JiaWRkZW4uDQpE
-aWVzZSBFLU1haWwgZW50aMOkbHQgdmVydHJhdWxpY2hlIHVuZC9vZGVyIHJlY2h0bGljaCBnZXNj
-aMO8dHp0ZSBJbmZvcm1hdGlvbmVuLiBXZW5uIFNpZSBuaWNodCBkZXIgcmljaHRpZ2UgQWRyZXNz
-YXQgc2luZCBvZGVyIGRpZXNlIEUtTWFpbCBpcnJ0w7xtbGljaCBlcmhhbHRlbiBoYWJlbiwgaW5m
-b3JtaWVyZW4gU2llIGJpdHRlIHNvZm9ydCBkZW4gQWJzZW5kZXIgdW5kIHZlcm5pY2h0ZW4gU2ll
-IGRpZXNlIE1haWwuIERhcyB1bmVybGF1YnRlIEtvcGllcmVuIHNvd2llIGRpZSB1bmJlZnVndGUg
-V2VpdGVyZ2FiZSBkaWVzZXIgTWFpbCBpc3QgbmljaHQgZ2VzdGF0dGV0Lg0K
+On Tue, May 27, 2025, at 09:00, Ulrich Wittenberg wrote:
+> What happened instead? (Actual behavior)
+> The command returns absolutely nothing.
 
+This is the documented behavior for detached HEAD.
 
+It sounds like you want to know what branches point to the commit you
+are detached at?
+
+    git for-each-ref --format='%(refname:short)' --points-at=HEAD refs/heads/
+
+-- 
+Kristoffer Haugsbakk
