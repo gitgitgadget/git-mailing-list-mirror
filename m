@@ -1,164 +1,162 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-b5-smtp.messagingengine.com (fout-b5-smtp.messagingengine.com [202.12.124.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693E92798E6
-	for <git@vger.kernel.org>; Tue, 27 May 2025 14:04:42 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEE4F19005E
+	for <git@vger.kernel.org>; Tue, 27 May 2025 14:42:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748354684; cv=none; b=hUSoseMwYGLmn/BQj5mPnsTLSIqekH/X3mrVJg5KMoh9D98jqjcGByP8QdJcomXPBpvS7OFlfCCohOAQd6G4X0WaJFfz7hxbVThDq+pWfbKhfT049hwXi7rFtuLOWxqZFqKDl6v8xn2H3TOb4warWyjBoBetWdU7BwtraIoGj7U=
+	t=1748356970; cv=none; b=AYGCL6+ISSh/YsXUaZjxgLz/zLTt+GMVAiQzcrFBm3W0cW6z33mhYsiadfesNxxkdLlsnl8KZGdwWndyQlgWcvaP5yAaISphxCRb8nFmdZu7uNM4YPK5hsQdpL7i9dlimpkx5mK/02Ym63EHCHK1yYCkkMFyiibHFQMzaCshiiU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748354684; c=relaxed/simple;
-	bh=xYbkvvfKbIHGlPNm7tSWichzhFNTaz7UIc1Tcf/axMI=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=B4BzK7rke8cl7C8Fn061VT8hOwzeUQdX7J8B8u6lC3sgnQaQ+0yP4kv8a+wd7CY6kC/qpJDtTKxxzOmCiimgg+qU/rePIKimRvSal+oPfNgzJ+1I1nNQzxU9cpdyZmcSlimlrxciCKurygE1ODtWUS6638cADSIid9CmRVoVtsA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=aV+18pBT; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=IhZgNs6O; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748356970; c=relaxed/simple;
+	bh=Vto2of1UTc1RSQZ3jloakBhUiX3XVuQd9qyvf2s8/X4=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=rGiKGJyGJFsrEhnA8Fb+eyiMcgJrPRq7EtIsrLwREtliAwAGgQ1K4+2guUuykOKzBd4OrTiXU0fQ8F5x1dEx/kmGOPTjNWDvToTwbItNDDIXhNUGKPQrnOhgb6mJ9KxwbP5G+bRF6CyV+GjTu/wFdvqmsD89r/IYbGWqf714LuA=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=DoPCxeqi; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=S3wBqQ8d; arc=none smtp.client-ip=202.12.124.148
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="aV+18pBT";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="IhZgNs6O"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfout.phl.internal (Postfix) with ESMTP id 8EFF11383AB0;
-	Tue, 27 May 2025 10:04:41 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Tue, 27 May 2025 10:04:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748354681;
-	 x=1748441081; bh=BmypOMNZh4vTOgOrYxM3S230sOFwSvhBm6tOu4FEN8o=; b=
-	aV+18pBTpvYcoMnTSlK+hvv0obmhcpKWOOAo82xbxgyoLDlOe+SHZkrCanTqmxZn
-	fYQJPVLjfjZxr+WcfhSq5Ao7CmJiBUD80vrf42k8XFnt04O07mj6mNwmIkin1rOP
-	+7hSZsUFtAGZQLB8RvwWgW3tiOutep+TksDnD0BLwHY/njS7OEarn9RH4ZqTVzbz
-	SbVsXygotYhKWy5OrFuhUJ/cynRzy+Y2HqIxQ4Y3+e57UbXP5hzRqfuV2dBYIfth
-	m4+hABgb+zXjtoEqamB1FR7hDCptRdP3cCUv1yGcC964rbncprfaeeXqe29twvFB
-	zPMV6XpHTefmd6qcwCzj+A==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="DoPCxeqi";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="S3wBqQ8d"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.stl.internal (Postfix) with ESMTP id DF30111400B1;
+	Tue, 27 May 2025 10:42:46 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-06.internal (MEProxy); Tue, 27 May 2025 10:42:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm3; t=1748356966;
+	 x=1748443366; bh=512uxRJiJWBaOla4auM8hcVBZvzJOWjkEnr0h7pcgsU=; b=
+	DoPCxeqidkO28Bm2dC3kpDJ3w8E1P0nJZhJMyyn7Y+cwftqkIChAltPm/TrKWzxf
+	Len1Qcd2c/zuNg7VmQDZVJoRpbAStfJadHL3f/BagpfW16El32QmI+5jqhXnqPfM
+	FtHKI0ozfUuLord1LOYm7eFuu9NdhPajGWulwhoeYdyTEhjp32Q9rwY4H+t0Ny8x
+	g516BlM/+owGvmjkV88HQD22TrGg6dac/XdowAaD9llgokpVHGIImDLog9GuWKGC
+	f2vjxs/xs3n4N8ui2gICVCMIukqnMUUDtMpnLXdwufOA8DXumQ9EayCvx/BmbQi3
+	84IT4VadNp4Ko/rmBpFcqg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748354681; x=
-	1748441081; bh=BmypOMNZh4vTOgOrYxM3S230sOFwSvhBm6tOu4FEN8o=; b=I
-	hZgNs6OARrcPaUPrrzdzHSm+7Th2hGPPSwKoNwmWLa0nu/ZWnfMGTyLBIDq37bt2
-	ee006Hc3MxhpGbX0kYmKoBkYNgh57yG82W8znd8G2DfAYwO4LDqR87bIBHQLYz4I
-	IuDRnn3Uwc5BbX3GJHkU8CtuV1I6e7tuhLzxEIvKxbqd+Ue/qyE07tGudM9Gq8bm
-	CGx4OOwncYxOlY3Zg4QaDJwP9vxi+wdU9O1y5MaNbLUGUs6W8hjyw/5duRvpBERH
-	xgJollX+ZNDz9rwmBvOoOiVjpqwxPXkgkklqfTDlNQkjwz0lC8pdInV+AqtuASv9
-	EtU/LWQ6et8ZFwqmk6Yiw==
-X-ME-Sender: <xms:ecY1aMDxOn5xwXtCx0vD71HTx1nNUNpcpjJ7Blzk6o-KARfaE43qpA>
-    <xme:ecY1aOiKQVmJUR0kZyeVOJMxR_NB3hPdLwAyYo7x0D6UmerJ46X3VF3irw6zYvtHW
-    yTqbDBojWFaE5vvnA>
-X-ME-Received: <xmr:ecY1aPns9BhZRpKLRxLJV4L_D-T6lhYVmMLCuyD9jjcs_50qiRoGPor83Rh-EIu7QEsa3spal0J-w166E8ghndz6rKLndV8d49uhWK1OnrAm-Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdehkeculddtuddrgeefvddrtd
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748356966; x=
+	1748443366; bh=512uxRJiJWBaOla4auM8hcVBZvzJOWjkEnr0h7pcgsU=; b=S
+	3wBqQ8dvZ+HMRxQtbZpCjCGyf/1mFeSjpuaqo70qxYOojQXLQdScFpbABQcieUpt
+	ytnbEyhlDn2MVgUXF8xnV0/z1y1ZHgzn3E5pJVtlcQ+IMHAfGmzSF2ttbHIxUdWW
+	w6V5YkXSp+d4L4hOwYH2smkwIZjmupkvWDguo6npNxy96aglovsmFrMp07+ktBxy
+	e32KVMs3jub+Ax+qGdqrv00PpS6wjAFrvBgol++lKP8U6PckYfGwyEK2bVchxFL4
+	2ycJuroUCzFAv78Nj4z77U8zYz++zX8jrXcgSWVAscgBevWCkxVQiEobAbURVzzd
+	6mb4mXJg0tZLzU4RAngyA==
+X-ME-Sender: <xms:Zs81aI2iz9r1e0E9SdTEm_uJXRQm3oua7KoYHgPEnN0PmgerAKdc_w>
+    <xme:Zs81aDEAZR46a9zvqseUoTS3UXkZKY8f2d25gD9aMLwdJujJt5X8b9PmXtO2AKilV
+    4kYmyqL7gmJxvum8g>
+X-ME-Received: <xmr:Zs81aA5zuVF0KVKYE177SYQOPGMFjx4ohBtpKabXFPK5TNjbLAa2hITapkvPhkjwzh2PrxeIGandBhhg4Y_vnZtYN-OtG4O4x3oWWrw>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvtdeigeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffk
-    fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
-    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
-    uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephihrohhthhesph
-    grlhhorghlthhonhgvthifohhrkhhsrdgtohhmpdhrtghpthhtohepuggrshhrrghflees
-    ghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorh
-    hg
-X-ME-Proxy: <xmx:ecY1aCwIoFUw3Et3muCoRqt9qV5DzgQOAKWfh-KJkbct7v5tKKM9ZA>
-    <xmx:ecY1aBTHTikr3flAGi0uc_Bm2TWY-6e1xnDQb4Ct2Rg1RxT5B7pdLA>
-    <xmx:ecY1aNZXvbxlcElOvHV4sEdTxiBQSj5BQV1AHRRgHCKckSG2gz67tg>
-    <xmx:ecY1aKQ7bnk7i7GpJ97JJ4YKrBC1ZHV9YCVCiA04g6kJO2JpgimXMA>
-    <xmx:ecY1aIuSUswkIpUhWNXYUkd1TGexNRzOMabMoxR2M0_LGKO6wfBfZGJv>
-Feedback-ID: i197146af:Fastmail
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouc
+    eoghhithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnheptdffvdet
+    gedvtdekteefveeuveelgfekfeehiefgheevhedvkeehleevveeftdehnecuvehluhhsth
+    gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhithhsthgvrhesphho
+    sghogidrtghomhdpnhgspghrtghpthhtohepfedpmhhouggvpehsmhhtphhouhhtpdhrtg
+    hpthhtohepjhgrhigrthhhvggvrhhthhhkuhhlkhgrrhhnihdvtddtheesghhmrghilhdr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htohepghhithhsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:Zs81aB39H-PjwTbFmfU1En1uC6cbD37oC0abNOHYfbe0euYddD3z1A>
+    <xmx:Zs81aLGXBisYlvrSBGDgQvq_ywjuO3YSfD0jv0sDr8xMhNunY7fkJw>
+    <xmx:Zs81aK84KhT5UabzUsVV_aDz1_5ayooFxY4FPWGat8p8A61XN_i5kg>
+    <xmx:Zs81aAnu2PoxTIpeGznB2EciJPMWQ5brDqqppQcQmWRgVLCWQmz6ag>
+    <xmx:Zs81aCwzj8uFvW7Y-pYM0B-E5IJNA-25NHMDXExeY9uFX65R9D_JiPAm>
+Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 10:04:40 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 573eb364 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 27 May 2025 14:04:38 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Tue, 27 May 2025 16:04:36 +0200
-Subject: [PATCH 10/11] builtin/gc: avoid global state in
- `gc_before_repack()`
+ 27 May 2025 10:42:46 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: K Jayatheerth <jayatheerthkulkarni2005@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH v7 2/2] submodule: skip redundant active entries when
+ pattern covers path
+In-Reply-To: <20250524073628.58944-3-jayatheerthkulkarni2005@gmail.com>
+	(K. Jayatheerth's message of "Sat, 24 May 2025 13:06:28 +0530")
+References: <20250524073628.58944-1-jayatheerthkulkarni2005@gmail.com>
+	<20250524073628.58944-3-jayatheerthkulkarni2005@gmail.com>
+Date: Tue, 27 May 2025 07:42:44 -0700
+Message-ID: <xmqqcyburu6z.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250527-b4-pks-maintenance-ref-lock-race-v1-10-e1ceb2dea66e@pks.im>
-References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
-In-Reply-To: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
-To: git@vger.kernel.org
-Cc: Yonatan Roth <yroth@paloaltonetworks.com>, 
- david asraf <dasraf9@gmail.com>
-X-Mailer: b4 0.14.2
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
 
-The `gc_before_repack()` should only ever run once in git-gc(1), but we
-may end up calling it twice when the "--detach" flag is passed. The
-duplicated call is avoided though via a static flag in this function.
+K Jayatheerth <jayatheerthkulkarni2005@gmail.com> writes:
 
-This pattern is somewhat unintuitive though. Refactor it to drop the
-static flag and instead guard the second call of `gc_before_repack()`
-via `opts.detach`.
+> configure_added_submodule always writes an explicit submodule.<name>.active
+> entry, even when the new path is already matched by submodule.active
+> patterns. This leads to unnecessary and cluttered configuration.
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- builtin/gc.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+It might be less cluttered but is it a good thing?
 
-diff --git a/builtin/gc.c b/builtin/gc.c
-index e5d1114bd2d..174357b9c25 100644
---- a/builtin/gc.c
-+++ b/builtin/gc.c
-@@ -816,22 +816,14 @@ static int report_last_gc_error(void)
- 	return ret;
- }
- 
--static void gc_before_repack(struct maintenance_run_opts *opts,
--			     struct gc_config *cfg)
-+static int gc_before_repack(struct maintenance_run_opts *opts,
-+			    struct gc_config *cfg)
- {
--	/*
--	 * We may be called twice, as both the pre- and
--	 * post-daemonized phases will call us, but running these
--	 * commands more than once is pointless and wasteful.
--	 */
--	static int done = 0;
--	if (done++)
--		return;
--
- 	if (cfg->pack_refs && maintenance_task_pack_refs(opts, cfg))
--		die(FAILED_RUN, "pack-refs");
-+		return error(FAILED_RUN, "pack-refs");
- 	if (cfg->prune_reflogs && maintenance_task_reflog_expire(opts, cfg))
--		die(FAILED_RUN, "reflog");
-+		return error(FAILED_RUN, "reflog");
-+	return 0;
- }
- 
- int cmd_gc(int argc,
-@@ -965,7 +957,8 @@ int cmd_gc(int argc,
- 			goto out;
- 		}
- 
--		gc_before_repack(&opts, &cfg); /* dies on failure */
-+		if (gc_before_repack(&opts, &cfg) < 0)
-+			exit(127);
- 		delete_tempfile(&pidfile);
- 
- 		/*
-@@ -995,7 +988,8 @@ int cmd_gc(int argc,
- 		free(path);
- 	}
- 
--	gc_before_repack(&opts, &cfg);
-+	if (opts.detach <= 0)
-+		gc_before_repack(&opts, &cfg);
- 
- 	if (!repository_format_precious_objects) {
- 		struct child_process repack_cmd = CHILD_PROCESS_INIT;
+Earlier, if submodule.active were b* (as documented in the "git help
+submodules") and then you added submodule "baz", your "baz" would be
+kept active even after you reconfigured submodule.active to another
+pattern.  With this change, that is no longer true, which to existing
+users is a change in behaviour, and to some it may appear a regression.
 
--- 
-2.49.0.1266.g31b7d2e469.dirty
+According to that documentation, presense of submodule.<name>.url is
+also a signal that the submodule is activated.  If we are going to
+omit setting .active because its path matches submodule.active,
+shouldn't we also be checking if .url exists and omit setting
+.active as well?
 
+> Introduce a single helper to centralize wildmatch-based pattern lookup.
+> In configure_added_submodule, wrap the active-entry write in a conditional
+> that only fires when that helper reports no existing pattern covers the
+> submodule’s path.
+
+The new helper is a maintenance burden to keep in sync with
+submodule.c:is_tree_submodule_active(); if we really want to go this
+route, the patch should extract that "ah, submodule.active is set so
+let's turn it into pathspec and see if the path matches" part of the
+logic to make sure the logic is shared.  But I am wondering if we
+can do this without any new helper.
+
+> @@ -3370,17 +3390,7 @@ static void configure_added_submodule(struct add_data *add_data)
+>  	 * is_submodule_active(), since that function needs to find
+>  	 * out the value of "submodule.active" again anyway.
+>  	 */
+> -	if (!git_config_get("submodule.active")) {
+> -		/*
+> -		 * If the submodule being added isn't already covered by the
+> -		 * current configured pathspec, set the submodule's active flag
+> -		 */
+> -		if (!is_submodule_active(the_repository, add_data->sm_path)) {
+> -			key = xstrfmt("submodule.%s.active", add_data->sm_name);
+> -			git_config_set_gently(key, "true");
+> -			free(key);
+> -		}
+> -	} else {
+> +	if (!submodule_active_matches_path(add_data->sm_path)) {
+
+I.e.  Can we replace this if() condition with something like this?
+
+	/*
+	 * Explicitly set 'submodule.<name>.active' only if it is not
+	 * 'active' due to other reasons.
+	 */
+	if (!is_submodule_active(the_repository, add_data->sm_path)) {
+
+That is, we ask if the submodule is already active (we are before
+adding submodule.<name>.active for this thing---if may be active due
+to submodule.active or submodule.<name>.url) and enter the block
+only when it is not yet.
+
+That way, this codepath does not have to worry about the exact logic
+that determines if a submodule is 'active' even when its .active
+configuration variable is not set.
+
+>  		key = xstrfmt("submodule.%s.active", add_data->sm_name);
+>  		git_config_set_gently(key, "true");
+>  		free(key);
