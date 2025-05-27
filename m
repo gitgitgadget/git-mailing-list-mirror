@@ -1,158 +1,226 @@
-Received: from mout.gmx.net (mout.gmx.net [212.227.17.22])
+Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D91C4242938
-	for <git@vger.kernel.org>; Tue, 27 May 2025 18:15:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.22
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DC5513AD38
+	for <git@vger.kernel.org>; Tue, 27 May 2025 19:47:04 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748369748; cv=none; b=OdrpNKwxqexxBWtCElWlwCjb9Rjp0pxYzU3YKyjesVgjOD2ltcHLrG6H/x/rQQmSYq38zP+hbAiwBL9aHaPXZyqAYO/9opLURM4OYnorB+et+UtWFMDaw5J1vEi+Hskh/8WeJqLbxPppdd26LonY2ss8HqvYvCzNfnMUevEInmc=
+	t=1748375226; cv=none; b=Li1bv0JNE+Vvtrj+G1CSAHVXaTjihKeMxDANvB0OHi585QiJZQ0AhHs0ow1ktSY3EEAiWrXfnNlrxL96MH+S3bznoqoghmfDZv4C78P0VVbhFfsqQD5RHabMojEs2H9JbtDj9GSdAeRgA9OMdBVrZiLBMuXhf4wZDFj18cpsuR8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748369748; c=relaxed/simple;
-	bh=7JnxAK6AkZzOxNxxXJtUbfxV6o7L10WYZcTaPjzPdZk=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=CwdvHzkxHtKMn3YMwI1a3gVsT2iL2lyt1pKBQNAPcDMzODlLcktRtM6hQKlfdcrqTvzOdp9clCFkqFJoSCkYP7QTQ9CH9gr1rS9ziVOwRO+zt5heep59fVRYrJpPr1wAJ6d2aiMKslQcbWTBLLd1SgdH2qZxmEIaE2K6VXs25pI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com; spf=pass smtp.mailfrom=gmx.com; dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b=YsMF/gZC; arc=none smtp.client-ip=212.227.17.22
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=gmx.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmx.com
+	s=arc-20240116; t=1748375226; c=relaxed/simple;
+	bh=t5Vl8hYJBha4mlmzPQkOyKLxkO/Ri0/HYyzbdeLgE1o=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=qLbbeyr5Nq2sw3VOvHeNZUo0EOePfQrQzTkCr4Nbk4nQRGapEvAvQpWE+AcNWf8GpwW62UKz0b3tbj1awkggHV3iiOmNJhZByzIkhK4o11d6KUJ/xJHB4jESukBIYq1JLjTi2XhxkWmrhmkD60vKkZxY4L0pKzptKlualKmp/yY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=M8c6C/oq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BX0FAG1P; arc=none smtp.client-ip=103.168.172.156
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmx.com header.i=hamlin.carlisle@gmx.com header.b="YsMF/gZC"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.com;
-	s=s31663417; t=1748369743; x=1748974543; i=hamlin.carlisle@gmx.com;
-	bh=7JnxAK6AkZzOxNxxXJtUbfxV6o7L10WYZcTaPjzPdZk=;
-	h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:
-	 References:From:In-Reply-To:Content-Type:cc:
-	 content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=YsMF/gZCF+YsqOpEiwXszdzfp5EdIxdYeafPZuRvTlk5BXoH1xpN3fwS0WPfbCXP
-	 VdoNQvi+ho9Gkr3FUfGP3Cl5/aLwIfwz0SB3zhIexdM5V+CRcAaYMsb/+qrlFWjv9
-	 lsYt2Dul6NLTM9YGZHexjw+Xw1ImmbHlw2PuaS0I1UdKW4QQ8Ogdo096ckqEd4ylC
-	 mO/Br43xi3I8JagYOmAAKW0IyQDncVaGi93iioNm/KAWXcnZLifH/rQcZ9yV6UGww
-	 q/+4Dzf8bb+uZLATmtzbNF/wYGSR+4RxYfxZWQ2FI78KpjfBU9XjM2pjbcbfFRLyQ
-	 vcu/x89DMCm/Gd8oAA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from [192.168.1.65] ([69.62.178.28]) by mail.gmx.net (mrgmx104
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1MvbBu-1v9L8T1mCc-00zZY7; Tue, 27
- May 2025 20:15:43 +0200
-Message-ID: <468cbd94-058b-41d3-81ab-e3c1fd2807c6@gmx.com>
-Date: Tue, 27 May 2025 11:15:41 -0700
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="M8c6C/oq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BX0FAG1P"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 8980F1140152;
+	Tue, 27 May 2025 15:47:03 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 27 May 2025 15:47:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748375223; x=1748461623; bh=XCxCArr2zM
+	BoskIjYKhqgGwKni2wsLTXpF3hFwgDz14=; b=M8c6C/oqNX4RnEnF9zGsOvzlEI
+	lM+t/QNO1/7YvMY/KkHrqPnzRnQ/RvJs41vHEw9Ant3NvW5QOAz/pOmco+g3WyKT
+	abViTcYY2ZD9NUzw9WRyR1ZADgXu/B11xlQe0K0LIMISK2OrLb3/M2GzUl2LIs2n
+	Ctv93eUvhvwwzXgTvP6HHpxsNQQW3dWAzvi5s3vJqW0CljIz4+slt8oVQf5ulNXM
+	Z5jRp3vXnPeA5LcCVhF8/a89RAamn73DRBaCCk18InCqrOjsT18Ua1K5cMP/8yNP
+	e9MntYVdfnzjXrY/NBlRV9H/0LYJDzPW2CfsCfmKCEDeYcbSUo3GxfLrZtjw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748375223; x=1748461623; bh=XCxCArr2zMBoskIjYKhqgGwKni2wsLTXpF3
+	hFwgDz14=; b=BX0FAG1PrtomUHHRxzfV9UDU52n7s0bTD8xx0Wn/XFd4dt3XQQ+
+	UznD/yHby7nZXu0vlSmp1+961xYUbksl+3Acy0apq21RjVYTYATNuX9DP7OoDeNJ
+	ATO5oAbLJ81VVCFGIselkGVD1TeCBJ1b/1Iue9xBw8yMWjEeAP0Of5QuviW7GzOI
+	k5xf3hvNkFxLSggud3aky/JRDpQfehs+Pc0N3rzA0G3PMDr6KzxRP4nAb8KRBQsw
+	k3ZEbWGh8SFH9++IsyK3z8JQuyMcGf8JQHba9fHUYqg8l1N+HLSFCWCzD5601GmF
+	LkkG++pRTePiiBWXjydZ16x5eID7ONj2yoA==
+X-ME-Sender: <xms:thY2aIeQEQ2m1J-M-hggtyTmXA0ikiyHHYIsZYZ56irrsaz-WJIFgQ>
+    <xme:thY2aKPvve48ALFZXCyk-YEBQTaJadyJzbXt3qYA3Cv8NODoOtqDd6u0qGhTZgDpm
+    rh5lQjB_jG7Heru6w>
+X-ME-Received: <xmr:thY2aJjSz4c-Kp8IGSxg4xaOzUkFnqUjqJ24DmotRM-FPaDTVlCbciyjlPUjGRcSNNStpZEs4m3pSjhLnnn0Vh3VMIgoSg-sibFZ4Ds>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvuddvieculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
+    gtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgt
+    phhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtg
+    hpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtghpthhtohepthhm
+    iiesphhosghogidrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtoh
+    hm
+X-ME-Proxy: <xmx:thY2aN-mtMP_v7swKUnr0IWWRnCrJbx6Li8dn6PQnHS7U6_8sJWz2g>
+    <xmx:thY2aEsrrxW8WCDggyE-zXIXtzGsoM2uGGAOVXteJxDDjf_b7mP_ww>
+    <xmx:thY2aEFthRBgMt9QdSxbctQvJK0IGwrW5r2oTqKd4jWjocp6udTe4A>
+    <xmx:thY2aDN8gXFfgGn5KiTfACe_jVvrwO0pYg4InIucXq6WCgG65OvpwA>
+    <xmx:txY2aNnZdWG6OhjW7s2TMrE-ufhounHyaJPVDfS10ARawwua38zKHjt_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 May 2025 15:47:02 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Phillip Wood <phillip.wood123@gmail.com>,  Karthik
+ Nayak <karthik.188@gmail.com>,  Ramsay Jones
+ <ramsay@ramsayjones.plus.com>,  Eli Schwartz <eschwartz@gentoo.org>,  Todd
+ Zullinger <tmz@pobox.com>
+Subject: Re: [PATCH v2 2/6] t/test-lib: don't print shell traces to stdout
+In-Reply-To: <20250527-pks-meson-tap-v2-2-ae360f77786e@pks.im> (Patrick
+	Steinhardt's message of "Tue, 27 May 2025 16:02:50 +0200")
+References: <20250527-pks-meson-tap-v2-0-ae360f77786e@pks.im>
+	<20250527-pks-meson-tap-v2-2-ae360f77786e@pks.im>
+Date: Tue, 27 May 2025 12:47:00 -0700
+Message-ID: <xmqqh615vnt7.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: the
-To: Tengo kalandia <kalandiat@icloud.com>, git@vger.kernel.org
-References: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
-Content-Language: en-US
-From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
-Autocrypt: addr=hamlin.carlisle@gmx.com; keydata=
- xsAiBEfLBpcRAgD8qfOOlcAEezHtcm6xrrZbwjKLXlIfKXUf/YiTeuaLk7TkfnvTVU5fwUam
- iewb7AN+t3mzKxcgwxViDnFQ8spDAKDtjKSLxKSCTYDVT8WR5w0NwOI3dwH9GetPPjCjJvnk
- JOr7yJOcyF0+T0bwR/cEUJ6nuQfbh2eVSNyWSiixsr14dQWphJf7CwGsTfIfv7vsZ+fIwP39
- rgIA+g8d2waPxl76gDjIygL6TrF6hhTt7KUb2yNgSng9IldkMfcdBYlg3dWOpZNNcZrTGOyd
- 6xvhvmMuojRRx8r54c0oQ2FybCBULiBIYW1saW4gPGhhbWxpbi5jYXJsaXNsZUBnbXguY29t
- PsJjBBMRAgAjBQJYh9SnAhsDBwsJCAcDAgEGFQgCCQoLBBYCAwECHgECF4AACgkQyLm4ydrA
- Bve9TgCdGob4qLVTBIOjrTrY+/PmPPGby4AAn21LQfE5TXjJP298WdZNVCmAzXarzsFNBEfL
- B4oBEADbRPe1kVPw4r1YTMTRjRGKz1zF1juy+w7rgYmbwGE7g59jyb2jQYkiuUykupPom63I
- UAiHsTm7rt+GrHqJ2WjgBfDC7rUM0tWst5pKkt9Ma27l/O9J0T4YDr0kRDGhEUJPHI27V2D2
- NX52bDFgKiPl5WyRxtgAtTZC9KOdCPJ4t9c8waUIWlFn/YeWYerC2b15Sf3AB6bKVhP+2v91
- j/vOsTEFIlfg57fbQpEknGsLRIbO1V5Gx5FhFgycNh50zk86LiTz7pzZ19E6UnYuUEgaozru
- UjTQubdqPYOdgCnReTgcwo4ylon12sXjWHBScODgIYooPEUjAyn8H/m5i7jaSV5l2eZOUPvF
- 8NPuuGUUWgMmQ+pCah3DnO3ccdaOOjW2z02Skx1XGep7Zyyn4hzV3cZpIhnOP5udwE1D3Pxr
- ljwVKs4uroPo28Eeh1KiYf95kP5KfzYafOpVx3QyykkiqQ4MEd1k61Y1ZoQ4pz+XskOym1DD
- 9w6JdoAimsb7YGAqMQbSrtNSVpDMcYIDpXboDDussRmRD+Xoko/mhhQ2ZpUUyeqnlPHHmzSJ
- va0+hvBhw3QEv0QV7or3V1tN9r72o0KGp1un1n9IZv7JA4CKvs2oWPlR593d+pmHzZswK01Y
- ozFV+96kRXULHziVesdtlJCa+/341vc/p9teqKEJSQARAQABwkkEGBECAAkFAkfLB4oCGwwA
- CgkQyLm4ydrABvf1ogCfcujflHLQUSahVKgWtF/qDpK10+gAmwQ6EVxuZ3Z1GO6EbFxyRtm3 kOwI
-In-Reply-To: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------cDDpzeWRy6coM0uQkiP1iUoa"
-X-Provags-ID: V03:K1:cPeN9KyfH1/4mNUwkJpTqrz+uMPTiygpBe1wqNtwPcXSh0DQD6P
- iCxT2GtRfGHKko6TqwxSx6GkQg9qvDnB0MAgGpxdVA/ATyfu83ql9hzj0BUnLtsvBGyJK1l
- 4EW2wvaFlOvepOQe57/cbO8aJywzHQSE1D66K78aHRfx0/H0ZSxToZSsuBwQcXz7J6dXu3a
- 155VmTPDFKam82d0DxLRQ==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:AUZJ3Jz+bTU=;PFeM1bPEBWFT3pHufqcDKRU/8Wz
- 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
- bV/c=
+Content-Type: text/plain
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------cDDpzeWRy6coM0uQkiP1iUoa
-Content-Type: multipart/mixed; boundary="------------Foj7ffTlXNQs7lkKWWsOSu13";
- protected-headers="v1"
-From: "Carlisle T. Hamlin" <hamlin.carlisle@gmx.com>
-To: Tengo kalandia <kalandiat@icloud.com>, git@vger.kernel.org
-Message-ID: <468cbd94-058b-41d3-81ab-e3c1fd2807c6@gmx.com>
-Subject: Re: the
-References: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
-In-Reply-To: <7374F252-3540-40AF-9DF7-9B308A7626A1@icloud.com>
+Patrick Steinhardt <ps@pks.im> writes:
 
---------------Foj7ffTlXNQs7lkKWWsOSu13
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+> We have several flags like "--verbose", "--verbose-only" or "-x" that
+> cause us to generate shell traces. The generated tracing output is split
+> up in these cases so that the test's stdout is printed to file
+> descriptor 3 whereas its stderr is printed to file descriptor 4.
+> Depending on which options have been given, we then end up either:
+>
+>   - Redirecting both file descriptors to a file.
+>
+>   - Redirecting them to stdout and stderr, respectively.
+>
+>   - Closing them in case we're running in none-verbose mode.
+>
+> The second case causes problems though when passing output to a TAP
+> parser. We print the test's stdout to the console's stdout, and that
+> results in broken TAP output.
+>
+> Fix the issue by instead redirecting the test's stdout to the shell's
+> stderr. This makes it impossible to discern stdout from stderr, but
+> going by my own experience I never came across a usecase where I would
+> have needed this distinction.
 
-T24gNS8yNi8yNSAwNzo0MywgVGVuZ28ga2FsYW5kaWEgd3JvdGU6DQo+IA0KPiANCj4gU2Vu
-dCBmcm9tIG15IGlQaG9uZQ0KPiANCg0KV2UnbGwgZ2V0IHJpZ2h0IG9uIHRoaXMuIFNob3Vs
-ZCBiZSByZWFkeSBieSBuZXh0IFR1ZXNkYXkuDQo=
+OK, so both stdout and stderr go to stderr, mixing everything into a
+single stream.  Do we need to worry about funny buffering making the
+test output harder to verify?  I mean, we only have to care about
+the ordering of lines within the original standard output (or
+standard error) stream independently, but now if the test thinks it
+wrote A to its stderr, then B to its stdout, and then C to its
+stderr, would we get them in the single output stream as A followed
+by B followed by C, or can sometimes buffered output can give us A
+then C then finally B?
 
---------------Foj7ffTlXNQs7lkKWWsOSu13--
+Just an idle thought.  What makes me more confused is that the
+updated t0000 tests seem to say that we now check standard output
+and standard error separately.
 
---------------cDDpzeWRy6coM0uQkiP1iUoa
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-wmMEABEIACMWIQS03Plbjnx/WLb9533IubjJ2sAG9wUCaDYBTQUDAAAAAAAKCRDIubjJ2sAG96Uf
-AJ9IIOWJDX/5pTdzNis8KgepIN1oXQCeKCfs9wRzI8B7R+yw2r90AbhKLvE=
-=JDov
------END PGP SIGNATURE-----
-
---------------cDDpzeWRy6coM0uQkiP1iUoa--
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+>  t/t0000-basic.sh | 35 +++++++++++++++++++----------------
+>  t/test-lib.sh    |  4 ++--
+>  2 files changed, 21 insertions(+), 18 deletions(-)
+>
+> diff --git a/t/t0000-basic.sh b/t/t0000-basic.sh
+> index 35c5c2b4f9b..16b785f3b91 100755
+> --- a/t/t0000-basic.sh
+> +++ b/t/t0000-basic.sh
+> @@ -219,41 +219,44 @@ test_expect_success 'subtest: --verbose option' '
+>  	test_expect_success "failing test" false
+>  	test_done
+>  	EOF
+> -	mv t1234-verbose/out t1234-verbose/out+ &&
+> -	grep -v "^Initialized empty" t1234-verbose/out+ >t1234-verbose/out &&
+> -	check_sub_test_lib_test t1234-verbose <<-\EOF
+> -	> expecting success of 1234.1 '\''passing test'\'': true
+> +	mv t1234-verbose/err t1234-verbose/err+ &&
+> +	grep -v "^Initialized empty" t1234-verbose/err+ >t1234-verbose/err &&
+> +	check_sub_test_lib_test_err t1234-verbose \
+> +		<<-\EOF_OUT 3<<-\EOF_ERR
+>  	> ok 1 - passing test
+> +	> ok 2 - test with output
+> +	> not ok 3 - failing test
+> +	> #	false
+> +	> # failed 1 among 3 test(s)
+> +	> 1..3
+> +	EOF_OUT
+> +	> expecting success of 1234.1 '\''passing test'\'': true
+>  	> Z
+>  	> expecting success of 1234.2 '\''test with output'\'': echo foo
+>  	> foo
+> -	> ok 2 - test with output
+>  	> Z
+>  	> expecting success of 1234.3 '\''failing test'\'': false
+> -	> not ok 3 - failing test
+> -	> #	false
+>  	> Z
+> -	> # failed 1 among 3 test(s)
+> -	> 1..3
+> -	EOF
+> +	EOF_ERR
+>  '
+>  
+>  test_expect_success 'subtest: --verbose-only option' '
+>  	run_sub_test_lib_test_err \
+>  		t1234-verbose \
+>  		--verbose-only=2 &&
+> -	check_sub_test_lib_test t1234-verbose <<-\EOF
+> +	check_sub_test_lib_test_err t1234-verbose <<-\EOF_OUT 3<<-\EOF_ERR
+>  	> ok 1 - passing test
+> -	> Z
+> -	> expecting success of 1234.2 '\''test with output'\'': echo foo
+> -	> foo
+>  	> ok 2 - test with output
+> -	> Z
+>  	> not ok 3 - failing test
+>  	> #	false
+>  	> # failed 1 among 3 test(s)
+>  	> 1..3
+> -	EOF
+> +	EOF_OUT
+> +	> Z
+> +	> expecting success of 1234.2 '\''test with output'\'': echo foo
+> +	> foo
+> +	> Z
+> +	EOF_ERR
+>  '
+>  
+>  test_expect_success 'subtest: skip one with GIT_SKIP_TESTS' '
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index af722d383d9..6ce8570226c 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -707,7 +707,7 @@ then
+>  	exec 3>>"$GIT_TEST_TEE_OUTPUT_FILE" 4>&3
+>  elif test "$verbose" = "t"
+>  then
+> -	exec 4>&2 3>&1
+> +	exec 4>&2 3>&2
+>  else
+>  	exec 4>/dev/null 3>/dev/null
+>  fi
+> @@ -949,7 +949,7 @@ maybe_setup_verbose () {
+>  	test -z "$verbose_only" && return
+>  	if match_pattern_list $test_count "$verbose_only"
+>  	then
+> -		exec 4>&2 3>&1
+> +		exec 4>&2 3>&2
+>  		# Emit a delimiting blank line when going from
+>  		# non-verbose to verbose.  Within verbose mode the
+>  		# delimiter is printed by test_expect_*.  The choice
