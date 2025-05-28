@@ -1,1190 +1,537 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010014.outbound.protection.outlook.com [52.103.68.14])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 397FF28BA8E;
-	Wed, 28 May 2025 16:54:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
-ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748451250; cv=none; b=o/jHPFymNTnHxtGnND5dSSwzG49FU6w2MUjPj2mPDohcScCpbts/oQMkpjtgZxKVtZ+earhQ8t5lj+ucX5amz1sjzNl6VaI5BDEpB5ZS9laM/rbAXMKeoL6xubI/n2eUL/P6uZDbGEcmsG6vRbGuFeVY6QgT+V4jReudqHYpzGw=
-ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748451250; c=relaxed/simple;
-	bh=zzUjyhaDN+0LnV+L/slbTC0DYCzLFG0TIT+hCx+3CoQ=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=I1/RjXIqXbd5FIEfyorW1NXLGZTUrkr3wF9SZZIqF2+m5HEfyIGQgXI6mVkyyjDfpg66qhb6ZkK3dyYOmSHwfCd/PePFkwyQB66tvoJ65wdC/QQ4offW3Y6AvvrdB2wzj/H2ekAZRGYRblkqEb94Eiqj3VsoUyO6TmLHHhzEsBA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hjFBfHRf; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AfxfHlHp; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637D928C2A9
+	for <git@vger.kernel.org>; Wed, 28 May 2025 17:18:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.14
+ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748452709; cv=fail; b=Z/kbYooxvf7BUlcPvuJNgZ/gScLCQ+3eo0LfNZ3Rm1yAd/J5XUCZcTxSO2pLYrGGKZGqEQWghfOMaxyJtq2t9ZJGvhTlF4ZTOvKwZy9gxtuL3rnhGDVnAc3k6ofGu6utGqRfhWoXXaZd9aTLuzloHTPqzwKDWZnJK0e/7E8juec=
+ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748452709; c=relaxed/simple;
+	bh=vbScbAVy4P92yht1kfvSc2VUghUio357qE5P5wmNVgw=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=vBHfxr1mNTvrZNc13usS0PCr0N+BwWfX+leqtC8DSw9vSwjkiDsj9KJH0lBKE2PaLi6u+3sYtuu/5fcdedc8bRqNb9XpPUm/B3SkJLlELZkbviN7Q7e4LHJnWiwMRe5QABIuyGh8CObjfF7uB5Ioelm0WBH7cITG9S7YI4AWWWE=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=UL2g2Bdl; arc=fail smtp.client-ip=52.103.68.14
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hjFBfHRf";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AfxfHlHp"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 3C1B525400E1;
-	Wed, 28 May 2025 12:54:05 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-01.internal (MEProxy); Wed, 28 May 2025 12:54:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-transfer-encoding:content-type:content-type:date
-	:date:from:from:in-reply-to:message-id:mime-version:reply-to
-	:subject:subject:to:to; s=fm3; t=1748451245; x=1748537645; bh=i9
-	nC8B5ikV5R0DYgPGeAcVxTe96MbGzKQh8UuIpo4nk=; b=hjFBfHRfB3urvJvZ5u
-	HBFYqsncpPzzoWYi7HQT6JVSlbc9Pu2foeWS+si7402ArzKyrKBnu5Y4rW/2eivD
-	oKrFUXT/enxY9gCLg+gGrltAsw7cxKVY130x4PNss5os7t07Qe+tGDuPDSLR6GwS
-	7e2Gbu+6hDHTK9Sx4YO872AipnDy3r8stS+0+z01jQ/y5Iit0DwIjzql/mE3b5y4
-	OzmxjNJRidk7Ei4D8HIKEjxAQz0jQYXTAKSQ7XKILgpC6DLAB71vTT9gusdKU/ix
-	2cgfrDZdU+PFOpxYuxkBjsTSU6kB+T/ApiHcpSI2V94hzyqtIcSnPSzlZl8Gt7yF
-	fXeQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
-	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm1; t=1748451245; x=1748537645; bh=i9nC8B5ikV5R0DYgPGeAcVxTe96M
-	bGzKQh8UuIpo4nk=; b=AfxfHlHptc4EE8qA0OQ5eCHYKiMiGxiQoVrCEonPqsKG
-	SjYcFpRZtIjoGSnc5o9775zTAQTE5vrM1gtngpbQstubxZg6IDsEK90QnhwGB3sd
-	SNk0HkwmVvi0Cndt2z4DkMVupbZbsQJHDDAz9V6syzaOYoeQhNki93zvuliFgqjL
-	O/8nlASdu59/XxmzG2NjZTucDQHSW8pOS2N5UQQS3ddS//jQCEC37w/3cDZc64bW
-	N0My+RcKhOXJtGYMPMkd0Tp3kd0z8u95YX52NbKR6C7aQhcnWxsp65LicfvmZ6rU
-	ejexJpBjXFDqnlN1VA90xiCpUREEwqkzn7ZF9Pbc5w==
-X-ME-Sender: <xms:rD83aKGZOSa6oJAdeZMWsaGicBFKRzqpf0XjTCitkwiuK3OCiMbnpQ>
-    <xme:rD83aLUr74xt2MxYK7xaBX5j8eftKwnj_rPML6CwUxVj9a8uiokQUN0EGeoDUdB1g
-    aqzRKFPYR2IVgLVEg>
-X-ME-Received: <xmr:rD83aEKSVhvhI9Dwd6P51UXOBnRxFMrR8py0q7W3V5LhU7Ny3_JLmzKNKs7ryi9c85E9bEbdGvjyEi_klH4CkHazCXd23IJXiykLXBQ>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvfeejleculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkfgf
-    gggtgfesthekredttderjeenucfhrhhomheplfhunhhiohcuvecujfgrmhgrnhhouceogh
-    hithhsthgvrhesphhosghogidrtghomheqnecuggftrfgrthhtvghrnhepheeltdetheeg
-    heefieefkeeuudelheeujedukefhfedtvdeggefgleduteehgedvnecuffhomhgrihhnpe
-    hkvghrnhgvlhdrohhrghdpghhoohhglhgvshhouhhrtggvrdgtohhmpdhorhdrtgiipdhg
-    ihhthhhusgdrtghomhdpmhgrkhdruggvvhenucevlhhushhtvghrufhiiigvpedtnecurf
-    grrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggp
-    rhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehv
-    ghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithdqphgrtghkrghgvghrsh
-    esghhoohhglhgvghhrohhuphhsrdgtohhmpdhrtghpthhtoheplhifnheslhifnhdrnhgv
-    thdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:rD83aEH-_sDdu7u6op5VnOwBZY12mptNZh0Tvf9fG3RkPUS82wjvpw>
-    <xmx:rD83aAVsMEOHJpUEIzl_fiBsRDfM5sWGEHM8rwsMzd0czPO75aX9Lw>
-    <xmx:rD83aHMYLYhkozmR97UHOupPxJc1E42paD8zYtzUpygAn5F9YwX_bw>
-    <xmx:rD83aH1MzDX9B5E_VkO1Pa9tLJkn6AHW4wDGSWdo0HDQ4gy6Ion5KQ>
-    <xmx:rT83aO-r5aZku4su_0547QiSbuvmb3P_OXykGj9b8kryzIYpAnCkjnMo>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 May 2025 12:54:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-Cc: Linux Kernel <linux-kernel@vger.kernel.org>,
-    git-packagers@googlegroups.com
-Subject: [ANNOUNCE] Git v2.50.0-rc0
-Date: Wed, 28 May 2025 09:54:02 -0700
-Message-ID: <xmqqzfewsml1.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="UL2g2Bdl"
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lKTw2jPljY+vWJ0XXWcB95yQkEOCJDT+szYf9BEwzl6/SAkhB6i5F65qDbBAn9VqETiqLtMS6P3V8l/cep7cf1UkDRFQRYqK3hGFsB62bU+kkkqxJeOnrZAjz6vS/DP7WSKM4CzfN1k0+etOoqZ/A8Dblv7OCy6yah24NgxDSs+DNu7kfOxyxaztksutEL1Aga77W4m8R5DmlQBRJ2NLwmdjD9kj6fY2UnajF8f3mCI3tBTsWz2f/uwrFOGos/SpSrNhnwlYzB6g4mhexwyq9Wt5NN4Pc0rHGuy8KpdsiXcVI7ylEr9jLYCAhaf3wt8xzjniJ+tTaQ6T00b2Zrd+zQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=uL4Tan9JC5wDBxDcHyDZ8sDFO6DcIO+rjruX3i+Js0I=;
+ b=vDSFiLXOXp25Nv4og66krA2Rv7G+8zA88jusCZzN61a7piY43VMHkL+F5+pfEM9DB+CEU3U/hv9mW0OhrO6efNDYGw3Cp+WQPo98ARlWJnanNeL+OnqGpMcomchGtDvlxQyyP+R5lZR921EHEMkepWf+4zsF1YiHjTJaLAloMhZbXpUf84JIkRnCiELRmw6sEXQXAL3zkBJYpqiOtGusY4wfHxALJbZsxiTfn6vqs7WgH29I78sNYbXDB5yDRxomOySPxI74utaDlvCN9DVWYldLIJKXOX5ytiY7nGZKS3ap9kqP6dRDLNOCNAPru8fqnVlnNWIq6RvRuB5VPjHpMQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
+ dkim=none; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=uL4Tan9JC5wDBxDcHyDZ8sDFO6DcIO+rjruX3i+Js0I=;
+ b=UL2g2BdlDU8etOWcDzR1Ir8dEp7X4Aq9ZomZVnVqw9Hdo1g5gIkkeMhs17xJGBoUDnJuy02NqJvkEdyIYqFwOyvQSdS5VSzdn/eB1rsDVnjsNI3rdxs3BQwTteU/oieSfWTSnnAqbZqwclyGfMklzB5H0Q6jtnNQa+StfAH4Z9DYjn2swFFJtrGjDh4y/jDDUTs/daAoMshAj/egWEoisCrYwhm7kYMNFD7mysKFFX7QdNzma5jiN18CF/4D3HJITYFbB3WgYMTofymwxmFQMD2sHjsXeSCFcJyHlbjDLO11dXg7Io7UlYnYhtM9roIxQL3Us6iJ8sCQivJLGXgLfg==
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
+ by PN2PR01MB9864.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:153::13) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.29; Wed, 28 May
+ 2025 17:18:21 +0000
+Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.025; Wed, 28 May 2025
+ 17:18:21 +0000
+From: Aditya Garg <gargaditya08@live.com>
+To: Junio C Hamano <gitster@pobox.com>,
+	git@vger.kernel.org
+Cc: Eric Sunshine <sunshine@sunshineco.com>,
+	sandals@crustytoothpaste.net,
+	Zi Yao <ziyao@disroot.org>,
+	Jeff King <peff@peff.net>,
+	Ben Knoble <ben.knoble@gmail.com>
+Subject: [PATCH v7 0/9] imap-send: make it usable again and add OAuth2.0 support
+Date: Wed, 28 May 2025 22:47:46 +0530
+Message-ID:
+ <PN3PR01MB95979EAD9EEEB3385693EBE7B867A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+X-Mailer: git-send-email 2.49.0.638.g5db5b64a3b.dirty
+In-Reply-To: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: PN2PR01CA0208.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:e9::16) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:f7::14)
+X-Microsoft-Original-Message-ID:
+ <20250528171755.90367-1-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-
-An early preview release Git v2.50.0-rc0 is now available for
-testing at the usual places.  It is comprised of 541 non-merge
-commits since v2.49.0, contributed by 73 people, 25 of which are
-new faces [*].
-
-The tarballs are found at:
-
-    https://www.kernel.org/pub/software/scm/git/testing/
-
-The following public repositories all have a copy of the
-'v2.50.0-rc0' tag and the 'master' branch that the tag points at:
-
-  url = https://git.kernel.org/pub/scm/git/git
-  url = https://kernel.googlesource.com/pub/scm/git/git
-  url = git://repo.or.cz/alt-git.git
-  url = https://github.com/gitster/git
-
-New contributors whose contributions weren't in v2.49.0 are as follows.
-Welcome to the Git development community!
-
-  Abhijeetsingh Meena, Aditya Garg, Anthony Wang, Arnav Bhate,
-  Bruno De Fraine, Christian Fredrik Johnsen, Christian Reich,
-  Collin Funk, Dmitry Goncharov, Jason Cho, Jensen Huang,
-  kawarimidoll, K Jayatheerth, Lidong Yan, Mahendra Dani,
-  Matt Hunter, Moumita Dhar, Niels Glodny, Peter Seiderer,
-  piotrsiupa, R. Diez, Rodrigo Carvalho, SURA, Zheng Yuting,
-  and தமிழ் நேரம்.
-
-Returning contributors who helped this release are as follows.
-Thanks for your continued support.
-
-  Abhijeet Sonar, Adam Johnson, Ahelenia Ziemiańska, brian
-  m. carlson, Christian Couder, David Mandelberg, D. Ben Knoble,
-  Dennis Ameling, Derrick Stolee, Đoàn Trần Công Danh,
-  Elijah Newren, Eli Schwartz, Eric Sunshine, Fernando Ramos,
-  Han Jiang, Jean-Noël Avila, Jeff King, Johannes Schindelin,
-  Johannes Sixt, John Paul Adrian Glaubitz, Josh Heinrichs, Junio C
-  Hamano, Justin Tobler, Karthik Nayak, Koji Nakamaru, Kristoffer
-  Haugsbakk, Lucas Seiki Oshiro, Luke Shumaker, Mark Levedahl,
-  Meet Soni, Olaf Hering, Oswald Buddenhagen, Patrick Steinhardt,
-  Philippe Blain, Phillip Wood, Ramsay Jones, René Scharfe, Sam
-  James, Scott Chacon, Seyi Kuforiji, shejialuo, SZEDER Gábor,
-  Taylor Blau, Todd Zullinger, Toon Claes, Torsten Bögershausen,
-  Tuomas Ahola, and Usman Akinyemi.
-
-[*] We are counting not just the authorship contribution but issue
-    reporting, mentoring, helping and reviewing that are recorded in
-    the commit trailers.
-
-----------------------------------------------------------------
-
-Git v2.50 Release Notes (draft)
-===============================
-
-UI, Workflows & Features
-------------------------
-
- * A post-processing filter for "diff --raw" output has been
-   introduced.
-
- * "git repack" learned "--combine-cruft-below-size" option that
-   controls how cruft-packs are combined.
-
- * TCP keepalive behaviour on http transports can now be configured by
-   calling cURL library.
-
- * Incrementally updating multi-pack index files.
-
- * "git reflog" learns "drop" subcommand, that discards the entire
-   reflog data for a ref.
-
- * A new userdiff driver for ".ini" format configuration files has
-   been added.
-
- * The job to coalesce loose objects into packfiles in "git
-   maintenance" now has configurable batch size.
-
- * "git clone" still gave the message about the default branch name;
-   this message has been turned into an advice message that can be
-   turned off.
-
- * "git rev-list" learns machine-parsable output format that delimits
-   each field with NUL.
-
- * "git maintenance" learns a new task to expire reflog entries.
-
- * Auth-related (and unrelated) error handling in send-email has been
-   made more robust.
-
- * Updating multiple references have only been possible in all-or-none
-   fashion with transactions, but it can be more efficient to batch
-   multiple updates even when some of them are allowed to fail in a
-   best-effort manner.  A new "best effort batches of updates" mode
-   has been introduced.
-
- * "git help --build-options" reports SHA-1 and SHA-256 backends used
-   in the build.
-
- * "git cat-file --batch" and friends learned to allow "--filter=" to
-   omit certain objects, just like the transport layer does.
-
- * "git blame --porcelain" mode now talks about unblamable lines and
-   lines that are blamed to an ignored commit.
-
- * The build procedure installs bash (but not zsh) completion script.
-
- * send-email has been updated to work better with Outlook's smtp server.
-
- * "git diff --minimal" used to give non-minimal output when its
-   optimization kicked in, which has been disabled.
-
- * "git index-pack --fix-thin" used to abort to prevent a cycle in
-   delta chains from forming in a corner case even when there is no
-   such cycle.
-
- * Make repository clean-up tasks "gc" can do available to "git
-   maintenance" front-end.
-
- * Bundle-URI feature did not use refs recorded in the bundle other
-   than normal branches as anchoring points to optimize the follow-up
-   fetch during "git clone"; now it is told to utilize all.
-
- * The `send-email` documentation has been updated with OAuth2.0
-   related examples.
-
- * Two of the "scalar" subcommands that add a repository that hasn't
-   been under "scalar"'s control are taught an option not to enable the
-   scheduled maintenance on it.
-
- * The userdiff pattern for shell scripts has been updated to cope
-   with more bash-isms.
-
- * "git merge-tree" learned an option to see if it resolves cleanly
-   without actually creating a result.
-
- * The commit title in the "rebase -i" todo file are now prefixed with
-   '#', just like a merge commit being replayed.
-
- * "git receive-pack" optionally learns not to care about connectivity
-   check, which can be useful when the repository arranges to ensure
-   connectivity by some other means.
-
-
-Performance, Internal Implementation, Development Support etc.
---------------------------------------------------------------
-
- * A handful of built-in command implementations have been rewritten
-   to use the repository instance supplied by git.c:run_builtin(), its
-   caller.
-
- * "git fsck" becomes more careful when checking the refs.
-
- * "git fast-export | git fast-import" learns to deal with commit and
-   tag objects with embedded signatures a bit better.
-
- * The code paths to check whether a refname X is available (by seeing
-   if another ref X/Y exists, etc.) have been optimized.
-
- * First step of deprecating and removing merge-recursive.
-
- * In protocol v2 where the refs advertisement is constrained, we try
-   to tell the server side not to limit the advertisement when there
-   is no specific need to, which has been the source of confusion and
-   recent bugs.  Revamp the logic to simplify.
-
- * Update meson based build procedure for breaking changes support.
-
- * Enable -Wunreachable-code for developer builds.
-
- * Ensure what we write in assert() does not have side effects,
-   and introduce ASSERT() macro to mark those that cannot be
-   mechanically checked for lack of side effects.
-
- * Give more meaningful error return values from block writer layer of
-   the reftable ref-API backend.
-
- * Make the code in reftable library less reliant on the service
-   routines it used to borrow from Git proper, to make it easier to
-   use by external users of the library.
-
- * CI update.
-
- * The object layer has been updated to take an explicit repository
-   instance as a parameter in more code paths.
-
- * Some warnings from "-Wsign-compare" for builtin/rm.c have been
-   squelched.
-
- * A few traditional unit tests have been rewritten to use the clar
-   framework.
-
- * Some warnings from "-Wsign-compare" for pathspec.c have been
-   squelched.
-
- * "make test" used to have a hard dependency on (basic) Perl; tests
-   have been rewritten help environment with NO_PERL test the build as
-   much as possible.
-
- * Remove remnants of the recursive merge strategy backend, which was
-   superseded by the ort merge strategy.
-
- * Optimize the code to dedup references recorded in a bundle file.
-
- * Update parse-options API to catch mistakes to pass address of an
-   integral variable of a wrong type/size.
-
- * Since a call to repo_config() can be called with repo set to NULL
-   these days, a command that is marked as RUN_SETUP in the builtin
-   command table does not have to check repo with NULL before making
-   the call.
-
- * Overhaul of the reftable API.
-
- * Reduce requirement for Perl in our documentation build and a few
-   scripts.
-
- * The build procedure based on Meson learned to drive the
-   benchmarking tests.
-
- * Code clean-up for meson-based build infrastructure.
-
- * Add an equivalent to "make hdr-check" target to meson based builds.
-
- * Further code clean-up in the object-store layer.
-
- * Build performance fix.
-
- * Teach "git send-email" to also consult `hostname -f` for mail
-   domain to compute the identity given to SMTP servers.
-
- * The dependency on the_repository variable has been reduced from the
-   code paths in "git replay".
-
- * Support to create a loose object file with unknown object type has
-   been dropped.
-
- * The code path to access the "packed-refs" file while "fsck" is
-   taught to mmap the file, instead of reading the whole file in the
-   memory.
-
- * Assorted fixes for issues found with CodeQL.
-
- * Remove the leftover hints to the test framework to mark tests that
-   do not pass the leak checker tests, as they should no longer be
-   needed.
-
-
-Fixes since v2.49
------------------
-
- * The refname exclusion logic in the packed-ref backend has been
-   broken for some time, which confused upload-pack to advertise
-   different set of refs.  This has been corrected.
-   (merge 10e8a9352b tb/refs-exclude-fixes later to maint).
-
- * The merge-recursive and merge-ort machinery crashed in corner cases
-   when certain renames are involved.
-   (merge 3adba40858 en/merge-process-renames-crash-fix later to maint).
-
- * Certain "cruft" objects would have never been refreshed when there
-   are multiple cruft packs in the repository, which has been
-   corrected.
-   (merge 08f612ba70 tb/multi-cruft-pack-refresh-fix later to maint).
-
- * The xdiff code on 32-bit platform misbehaved when an insanely large
-   context size is given, which has been corrected.
-   (merge d39e28e68c rs/xdiff-context-length-fix later to maint).
-
- * GitHub Actions CI switched on a CI/CD variable that does not exist
-   when choosing what packages to install etc., which has been
-   corrected.
-   (merge ee89f7c79d kn/ci-meson-check-build-docs-fix later to maint).
-
- * Using "git name-rev --stdin" as an example, improve the framework to
-   prepare tests to pretend to be in the future where the breaking
-   changes have already happened.
-   (merge de3dec1187 jc/name-rev-stdin later to maint).
-
- * An earlier code refactoring of the hash machinery missed a few
-   required calls to init_fn.
-   (merge d39f04b638 jh/hash-init-fixes later to maint).
-
- * A documentation page was left out from formatting and installation,
-   which has been corrected.
-   (merge ae85116f18 pw/build-breaking-changes-doc later to maint).
-
- * The bash command line completion script (in contrib/) has been
-   updated to cope with remote repository nicknames with slashes in
-   them.
-   (merge 778d2f1760 dm/completion-remote-names-fix later to maint).
-
- * "Dubious ownership" checks on Windows has been tightened up.
-   (merge 5bb88e89ef js/mingw-admins-are-special later to maint).
-
- * Layout configuration in vimdiff backend didn't work as advertised,
-   which has been corrected.
-   (merge 93bab2d04b fr/vimdiff-layout-fixes later to maint).
-
- * Fix our use of zlib corner cases.
-   (merge 1cb2f293f5 jk/zlib-inflate-fixes later to maint).
-
- * Fix lockfile contention in reftable code on Windows.
-   (merge 0a3dceabf1 ps/mingw-creat-excl-fix later to maint).
-
- * "git-merge-file" documentation source, which has lines that look
-   like conflict markers, lacked custom conflict marker size defined,
-   which has been corrected..
-   (merge d3b5832381 pw/custom-conflict-marker-size-for-merge-related-docs later to maint).
-
- * Squelch false-positive from sparse.
-   (merge da87b58014 dd/sparse-glibc-workaround later to maint).
-
- * Adjust to the deprecation of use of Ubuntu 20.04 GitHub Actions CI.
-   (merge 832d9f6d0b js/ci-github-update-ubuntu later to maint).
-
- * Work around CI breakage due to fedora base image getting updated.
-   (merge 8a471a663b js/ci-fedora-gawk later to maint).
-
- * A ref transaction corner case fix.
-   (merge b9fadeead7 jt/ref-transaction-abort-fix later to maint).
-
- * Random build fixes.
-   (merge 85e1d6819f ps/misc-build-fixes later to maint).
-
- * "git fetch [<remote>]" with only the configured fetch refspec
-   should be the only thing to update refs/remotes/<remote>/HEAD,
-   but the code was overly eager to do so in other cases.
-
- * Incorrect sorting of refs with bytes with high-bit set on platforms
-   with signed char led to a BUG, which has been corrected.
-
- * "make perf" fixes.
-   (merge 1665f12fa0 pb/perf-test-fixes later to maint).
-
- * Doc mark-up updates.
-   (merge 5a5565ec44 ja/doc-reset-mv-rm-markup-updates later to maint).
-
- * Work around false positive from CodeQL checker.
-   (merge 0f558141ed js/range-check-codeql-workaround later to maint).
-
- * "git log --{left,right}-only A...B", when A and B does not share
-   any common ancestor, now behaves as expected.
-   (merge e7ef4be7c2 mh/left-right-limited later to maint).
-
- * Document the convention to disable hooks altogether by setting the
-   hooksPath configuration variable to /dev/nulll
-   (merge 1b2eee94f1 ds/doc-disable-hooks later to maint).
-
- * Make sure outage of third-party sites that supply P4, Git-LFS, and
-   JGit we use for testing would not prevent our CI jobs from running
-   at all.
-
- * Various build tweaks, including CSPRNG selection on some platforms.
-   (merge cdda67de03 rj/build-tweaks later to maint).
-
- * Developer support fix..
-   (merge 32b74b9809 js/git-perf-env-override later to maint).
-
- * Fix for scheduled maintenance tasks on platforms using launchctl.
-   (merge eb2d7beb0e jh/gc-launchctl-schedule-fix later to maint).
-
- * Update to arm64 Windows port.
-   (merge 436a42215e js/windows-arm64 later to maint).
- * hashmap API clean-up to ensure hashmap_clear() leaves a cleared map
-   in a reusable state.
-   (merge 9481877de3 en/hashmap-clear-fix later to maint).
-
- * "git mv a a/b dst" would ask to move the directory 'a' itself, as
-   well as its contents, in a single destination directory, which is
-   a contradicting request that is impossible to satisfy. This case is
-   now detected and the command errors out.
-   (merge 974f0d4664 ps/mv-contradiction-fix later to maint).
-
- * Further refinement on CI messages when an optional external
-   software is unavailable (e.g. due to third-party service outage).
-   (merge 956acbefbd jc/ci-skip-unavailable-external-software later to maint).
-
- * Test result aggregation did not work in Meson based CI jobs.
-   (merge bd38ed5be1 ps/ci-test-aggreg-fix-for-meson later to maint).
-
- * Code clean-up around stale CI elements and building with Visual Studio.
-   (merge a7b060f67f js/ci-buildsystems-cleanup later to maint).
-
- * "git add 'f?o'" did not add 'foo' if 'f?o', an unusual pathname,
-   also existed on the working tree, which has been corrected.
-   (merge ec727e189c kj/glob-path-with-special-char later to maint).
-
- * The fallback implementation of open_nofollow() depended on
-   open("symlink", O_NOFOLLOW) to set errno to ELOOP, but a few BSD
-   derived systems use different errno, which has been worked around.
-   (merge f47bcc3413 cf/wrapper-bsd-eloop later to maint).
-
- * Use-after-free fix in the sequencer.
-   (merge 5dbaec628d pw/sequencer-reflog-use-after-free later to maint).
-
- * win+Meson CI pipeline, unlike other pipelines for Windows,
-   used to build artifacts in develper mode, which has been changed to
-   build them in release mode for consistency.
-   (merge 184abdcf05 js/ci-build-win-in-release-mode later to maint).
-
- * CI settings at GitLab has been updated to run MSVC based Meson job
-   automatically (as opposed to be done only upon manual request).
-   (merge 6389579b2f ps/ci-gitlab-enable-msvc-meson-job later to maint).
-
- * "git apply" and "git add -i/-p" code paths no longer unnecessarily
-   expand sparse-index while working.
-   (merge ecf9ba20e3 ds/sparse-apply-add-p later to maint).
-
- * Other code cleanup, docfix, build fix, etc.
-   (merge 227c4f33a0 ja/doc-block-delimiter-markup-fix later to maint).
-   (merge 2bfd3b3685 ab/decorate-code-cleanup later to maint).
-   (merge 5337daddc7 am/dir-dedup-decl-of-repository later to maint).
-   (merge 554051d691 en/diff-rename-follow-fix later to maint).
-   (merge a18c18b470 en/random-cleanups later to maint).
-   (merge 5af21c9acb hj/doc-rev-list-ancestry-fix later to maint).
-   (merge 26d76ca284 aj/doc-restore-p-update later to maint).
-   (merge 2c0dcb9754 cc/lop-remote later to maint).
-   (merge 7b399322a2 ja/doc-branch-markup later to maint).
-   (merge ee434e1807 pw/doc-pack-refs-markup-fix later to maint).
-   (merge c000918eb7 tb/bitamp-typofix later to maint).
-   (merge fa8cd29676 js/imap-send-peer-cert-verify later to maint).
-   (merge 98b423bc1c rs/clear-commit-marks-simplify later to maint).
-   (merge 133d065dd6 ta/bulk-checkin-signed-compare-false-warning-fix later to maint).
-   (merge d2827dc31e es/meson-build-skip-coccinelle later to maint).
-   (merge ee8edb7156 dk/vimdiff-doc-fix later to maint).
-   (merge 107d889303 md/t1403-path-is-file later to maint).
-   (merge abd4192b07 js/comma-semicolon-confusion later to maint).
-   (merge 27b7264206 ab/environment-clean-header later to maint).
-   (merge ff4a749354 as/typofix-in-env-h-header later to maint).
-   (merge 86eef3541e az/tighten-string-array-constness later to maint).
-   (merge 25292c301d lo/remove-log-reencode-from-rev-info later to maint).
-   (merge 1aa50636fd jk/p5332-testfix later to maint).
-   (merge 42cf4ac552 ps/ci-resurrect-p4-on-github later to maint).
-   (merge 104add8368 js/diff-codeql-false-positive-workaround later to maint).
-   (merge f62977b93c en/get-tree-entry-doc later to maint).
-   (merge e5dd0a05ed ly/am-split-stgit-leakfix later to maint).
-   (merge bac220e154 rc/t1001-test-path-is-file later to maint).
-   (merge 91db6c735d ly/reftable-writer-leakfix later to maint).
-   (merge 20e4e9ad0b jc/doc-synopsis-option-markup later to maint).
-   (merge cddcee7f64 es/meson-configure-build-options-fix later to maint).
-
-----------------------------------------------------------------
-
-Changes since v2.49.0 are as follows:
-
-Abhijeet Sonar (1):
-      environment: fix typo: 'setup_git_directory_gently'
-
-Abhijeetsingh Meena (1):
-      dir.h: remove duplicate forward declaration of struct repository
-
-Adam Johnson (1):
-      doc: restore: remove note on --patch w/ pathspecs
-
-Aditya Garg (6):
-      send-email: retrieve Message-ID from outlook SMTP server
-      send-email: add --[no-]outlook-id-fix option
-      send-mail: improve checks for valid_fqdn
-      docs: improve send-email documentation
-      docs: add credential helper for outlook and gmail in OAuth list of helpers
-      send-email: try to get fqdn by running hostname -f on Linux and macOS
-
-Ahelenia Ziemiańska (1):
-      global: mark usage strings and string tables const
-
-Anthony Wang (1):
-      t9811: be more precise to check importing of tags
-
-Arnav Bhate (4):
-      decorate: fix sign comparison warnings
-      rm: fix sign comparison warnings
-      pathspec: fix sign comparison warnings
-      environment.h: remove unused variables
-
-Christian Couder (5):
-      fast-export: fix missing whitespace after switch
-      t5710: arrange to delete the client before cloning
-      promisor-remote: fix segfault when remote URL is missing
-      promisor-remote: fix possible issue when no URL is advertised
-      promisor-remote: compare remote names case sensitively
-
-Christian Fredrik Johnsen (1):
-      refs: fix duplicated word in comment
-
-Collin Funk (1):
-      wrapper: NetBSD gives EFTYPE and FreeBSD gives EMFILE where POSIX uses ELOOP
-
-D. Ben Knoble (1):
-      vimdiff: clarify the sigil used for marking the buffer to save
-
-David Mandelberg (2):
-      completion: add helper to count path components
-      completion: fix bugs with slashes in remote names
-
-Dennis Ameling (2):
-      bswap.h: add support for built-in bswap functions
-      config.mak.uname: add support for clangarm64
-
-Derrick Stolee (15):
-      maintenance: force progress/no-quiet to children
-      maintenance: add loose-objects.batchSize config
-      docs: document core.hooksPath=/dev/null
-      test-tool: add pack-deltas helper
-      t5309: create failing test for 'git index-pack'
-      index-pack: allow revisiting REF_DELTA chains
-      scalar: customize register_dir()'s behavior
-      scalar register: add --no-maintenance option
-      scalar clone: add --no-maintenance option
-      scalar reconfigure: add --maintenance=<mode> option
-      scalar reconfigure: improve --maintenance docs
-      apply: integrate with the sparse index
-      git add: make -p/-i aware of sparse index
-      reset: integrate sparse index with --patch
-      p2000: add performance test for patch-mode commands
-
-Dmitry Goncharov (1):
-      t6423: add a testcase causing a failed assertion in process_renames
-
-Eli Schwartz (9):
-      meson: fix perl detection when docs are enabled, but perl bindings aren't
-      meson: disable coccinelle configuration when building from a tarball
-      meson: simplify and parameterize various standard function checks
-      meson: check for getpagesize before using it
-      meson: do a full usage-based compile check for sysinfo
-      meson: add a couple missing networking dependencies
-      meson: fix typo in function check that prevented checking for hstrerror
-      meson: only check for missing networking syms on non-Windows; add compat impls
-      meson: reformat default options to workaround bug in `meson configure`
-
-Elijah Newren (29):
-      merge-ort: fix slightly overzealous assertion for rename-to-self
-      diffcore-rename: fix BUG when break detection and --follow used together
-      stash: remove merge-recursive.h include
-      t6423: fix a comment that accidentally reversed two commits
-      t7615: be more explicit about diff algorithm used
-      merge-ort: fix accidental strset<->strintmap
-      merge-ort: remove extraneous word in comment
-      merge-ort: add new merge_ort_generic() function
-      merge-ort: allow rename detection to be disabled
-      merge-ort: support having merge verbosity be set to 0
-      merge-ort: fix merge.directoryRenames=false
-      am: switch from merge_recursive_generic() to merge_ort_generic()
-      git-compat-util: introduce ASSERT() macro
-      ci: add build checking for side-effects in assert() calls
-      treewide: replace assert() with ASSERT() in special cases
-      checkout: replace merge_trees() with merge_ort_nonrecursive()
-      builtin/merge-recursive: switch to using merge_ort_generic()
-      merge-ort: enable diff-algorithms other than histogram
-      sequencer: switch non-recursive merges over to ort
-      merge, sequencer: switch recursive merges over to ort
-      merge-recursive.[ch]: thoroughly debug these
-      tests: remove GIT_TEST_MERGE_ALGORITHM and test_expect_merge_algorithm
-      builtin/{merge,rebase,revert}: remove GIT_TEST_MERGE_ALGORITHM
-      hashmap: ensure hashmaps are reusable after hashmap_clear()
-      tree-walk.h: fix incorrect API comment
-      replay: replace the_repository with repo parameter passed to cmd_replay ()
-      sequencer: make it clearer that commit descriptions are just comments
-      merge-ort: add a new mergeability_only option
-      merge-tree: add a new --quiet flag
-
-Fernando Ramos (2):
-      mergetools: vimdiff: fix layout where REMOTE is the target
-      mergetools: vimdiff: add tests for layout with REMOTE as the target
-
-Han Jiang (1):
-      doc: add missing commit C to the graph for --ancestry-path=H D..M
-
-Jean-Noël Avila (11):
-      doc: add a blank line around block delimiters
-      completion: take into account the formatting backticks for options
-      doc: apply new format to git-branch man page
-      doc: convert git-reset to new documentation format
-      doc: fix synopsis analysis logic
-      doc: convert git-rm to new documentation format
-      doc: move synopsis git-mv commands in the synopsis section
-      doc: convert git-mv to new documentation format
-      doc: fix asciidoctor synopsis processing of triple-dots
-      doc: add markup for characters in Guidelines
-      git-var doc: fix usage of $ENV_VAR vs ENV_VAR
-
-Jeff King (41):
-      loose_object_info(): BUG() on inflating content with unknown type
-      unpack_loose_header(): simplify next_out assignment
-      unpack_loose_header(): report headers without NUL as "bad"
-      unpack_loose_header(): fix infinite loop on broken zlib input
-      git_inflate(): skip zlib_post_call() sanity check on Z_NEED_DICT
-      unpack_loose_header(): avoid numeric comparison of zlib status
-      unpack_loose_rest(): avoid numeric comparison of zlib status
-      unpack_loose_rest(): never clean up zstream
-      unpack_loose_rest(): simplify error handling
-      unpack_loose_rest(): rewrite return handling for clarity
-      t5702: fix typo in test name
-      t5516: prefer "oid" to "sha1" in some test titles
-      t5516: drop NEEDSWORK about v2 reachability behavior
-      t5516: beef up exact-oid ref prefixes test
-      refspec_ref_prefixes(): clean up refspec_item logic
-      fetch: ask server to advertise HEAD for config-less fetch
-      fetch: stop protecting additions to ref-prefix list
-      fetch: avoid ls-refs only to ask for HEAD symref update
-      fetch: use ref prefix list to skip ls-refs
-      run-command: use errno to check for sigfillset() error
-      config.mak.dev: enable -Wunreachable-code
-      fetch: only respect followRemoteHEAD with configured refspecs
-      fetch: don't ask for remote HEAD if followRemoteHEAD is "never"
-      fetch: make set_head() call easier to read
-      p5332: drop "+" from --stdin-packs input
-      oidmap: rename oidmap_free() to oidmap_clear()
-      oidmap: add size function
-      raw_object_store: drop extra pointer to replace_map
-      object-file.h: fix typo in variable declaration
-      cat-file: make --allow-unknown-type a noop
-      object-file: drop OBJECT_INFO_ALLOW_UNKNOWN_TYPE flag
-      cat-file: use type enum instead of buffer for -t option
-      oid_object_info_convert(): stop using string for object type
-      fsck: stop using object_info->type_name strbuf
-      oid_object_info(): drop type_name strbuf
-      t/helper: add zlib test-tool
-      t: add lib-loose.sh
-      hash-object: stop allowing unknown types
-      hash-object: merge HASH_* and INDEX_* flags
-      hash-object: handle --literally with OPT_NEGBIT
-      object-file: drop support for writing objects with unknown types
-
-Jensen Huang (1):
-      index-pack, unpack-objects: restore missing ->init_fn
-
-Johannes Schindelin (38):
-      t3650: document bug when directory renames are turned off
-      mingw: special-case administrators even more
-      test-tool path-utils: support debugging "dubious ownership" issues
-      imap-send: explicitly verify the peer certificate
-      remote-curl: avoid using the comma operator unnecessarily
-      rebase: avoid using the comma operator unnecessarily
-      kwset: avoid using the comma operator unnecessarily
-      clar: avoid using the comma operator unnecessarily
-      xdiff: avoid using the comma operator unnecessarily
-      diff-delta: avoid using the comma operator
-      wildmatch: avoid using of the comma operator
-      compat/regex: explicitly mark intentional use of the comma operator
-      clang: warn when the comma operator is used
-      detect-compiler: detect clang even if it found CUDA
-      read-cache: check range before dereferencing an array element
-      ci: upgrade `sparse` to supported build agents
-      ci(pedantic): ensure that awk is installed
-      perf: do allow `GIT_PERF_*` to be overridden again
-      mingw: do not use nedmalloc on Windows/ARM64
-      msvc: do handle builds on Windows/ARM64
-      mingw(arm64): do move the `/etc/git*` location
-      max_tree_depth: lower it for clangarm64 on Windows
-      diff: check range before dereferencing an array element
-      ci(win+Meson): build in Release mode
-      ci: stop linking the `prove` cache
-      contrib/buildsystems: drop support for building . vcproj/.vcxproj files
-      config.mak.uname: drop the `vcxproj` target
-      commit: simplify code
-      fetch: carefully clear local variable's address after use
-      commit-graph: avoid malloc'ing a local variable
-      upload-pack: rename `enum` to reflect the operation
-      has_dir_name(): make code more obvious
-      fetch: avoid unnecessary work when there is no current branch
-      Avoid redundant conditions
-      trace2: avoid "futile conditional"
-      commit-graph: avoid using stale stack addresses
-      bundle-uri: avoid using undefined output of `sscanf()`
-      sequencer: stop pretending that an assignment is a condition
-
-Johannes Sixt (3):
-      git-gui: po/README: update repository location and maintainer
-      gitk: adjust indentation to match the style used in this script
-      git-gui: treat the message template file as a built file
-
-Josh Heinrichs (1):
-      maintenance: fix launchctl calendar intervals
-
-Junio C Hamano (35):
-      t: document test_lazy_prereq
-      t: extend test_lazy_prereq
-      t: introduce WITH_BREAKING_CHANGES prerequisite
-      t6120: avoid hiding "git" exit status
-      t6120: further modernize
-      name-rev: remove "--stdin" support
-      git-compat-util: add NOT_CONSTANT macro and use it in atfork_prepare()
-      Start 2.50 cycle (batch #1)
-      The second batch
-      The third batch
-      The fourth batch
-      The fifth batch
-      The sixth batch
-      The seventh batch
-      t9811: fix misconversion of tests
-      The eighth batch
-      ci: skip unavailable external software
-      CI updates
-      The ninth batch
-      ci: update the message for unavailble third-party software
-      ci: download JGit from maven, not eclipse.org
-      The tenth batch
-      The eleventh batch
-      t6011: fix misconversion from perl to sed
-      The twelfth batch
-      git-daemon doc: update mark-up of synopsis option descriptions
-      git-{var,write-tree} docs: update mark-up of synopsis option descriptions
-      git-verify-* doc: update mark-up of synopsis option descriptions
-      The thirteenth batch
-      The fourteenth batch
-      The fifteenth batch
-      The sixteenth batch
-      The seventeenth batch
-      The eighteenth batch
-      Git 2.50-rc0
-
-Justin Tobler (17):
-      diff: return diff_filepair from diff queue helpers
-      diff: add option to skip resolving diff statuses
-      builtin: introduce diff-pairs command
-      builtin/diff-pairs: allow explicit diff queue flush
-      rev-list: inline `show_object_with_name()` in `show_object()`
-      rev-list: refactor early option parsing
-      rev-list: support delimiting objects with NUL bytes
-      rev-list: support NUL-delimited --boundary option
-      rev-list: support NUL-delimited --missing option
-      builtin/fetch: avoid aborting closed reference transaction
-      remote: allow `guess_remote_head()` to suppress advice
-      builtin/clone: suppress unexpected default branch advice
-      advice: allow disabling default branch name advice
-      help: include SHA implementation in version info
-      help: include unsafe SHA-1 build info in version
-      t5410: test receive-pack connectivity check
-      builtin/receive-pack: add option to skip connectivity check
-
-K Jayatheerth (4):
-      dir.c: literal match with wildcard in pathspec should still glob
-      docs: remove unused mentoring mailing list reference
-      docs: clarify cmd_psuh signature and explain UNUSED macro
-      docs: replace git_config to repo_config
-
-Karthik Nayak (21):
-      reflog: improve error for when reflog is not found
-      reflog: implement subcommand to drop reflogs
-      ci/github: add missing 'CI_JOB_IMAGE' env variable
-      blame: print unblamable and ignored commits in porcelain mode
-      refs/files: remove redundant check in split_symref_update()
-      refs: move duplicate refname update check to generic layer
-      refs/files: remove duplicate duplicates check
-      refs/reftable: extract code from the transaction preparation
-      refs: introduce enum-based transaction error types
-      refs: implement batch reference update support
-      refs: support rejection in batch updates during F/D checks
-      update-ref: add --batch-updates flag for stdin mode
-      t6020: test for duplicate refnames in bundle creation
-      bundle: fix non-linear performance scaling with refs
-      ci/github: install git before checking out the repository
-      coccinelle: meson: rename variables to be more specific
-      meson: move headers definition from 'contrib/coccinelle'
-      meson: rename 'third_party_sources' to 'third_party_excludes'
-      meson: add support for 'hdr-check'
-      makefile/meson: add 'check-headers' as alias for 'hdr-check'
-      t: remove unexpected SANITIZE_LEAK variables
-
-Kristoffer Haugsbakk (2):
-      doc: reflog: fix `drop` subheading
-      doc: branch: fix inline-verbatim
-
-Lidong Yan (7):
-      reftable/writer: fix memory leak when `padded_write()` fails
-      reftable/writer: fix memory leak when `writer_index_hash()` fails
-      builtin/am: fix memory leak in `split_mail_stgit_series`
-      pack-bitmap: fix memory leak if `load_bitmap_entries_v1` failed
-      mailinfo: fix pointential memory leak if `decode_header` failed
-      sequencer: fix memory leak if `todo_list_rearrange_squash()` failed
-      commit-graph: fix memory leak when `fill_oids_from_packs()` fails
-
-Lucas Seiki Oshiro (4):
-      userdiff: add builtin driver for INI files
-      revision: remove log_reencode field from rev_info
-      json-writer: add docstrings to jw_* functions
-      json-writer: describe the usage of jw_* functions
-
-Luke Shumaker (5):
-      git-fast-import.adoc: add missing LF in the BNF
-      fast-export: rename --signed-tags='warn' to 'warn-verbatim'
-      git-fast-export.adoc: clarify why 'verbatim' may not be a good idea
-      fast-export: do not modify memory from get_commit_buffer
-      fast-export, fast-import: add support for signed-commits
-
-Mahendra Dani (1):
-      t1403: verify that path exists and is a file
-
-Mark Levedahl (3):
-      gitk: override $PATH search only on Windows
-      gitk: _search_exe is no longer needed
-      gitk: limit PATH search to bare executable names
-
-Matt Hunter (1):
-      revision: fix --left/right-only use with unrelated histories
-
-Meet Soni (3):
-      reftable: propagate specific error codes in block_writer_add()
-      reftable: adapt writer_add_record() to propagate block_writer_add() errors
-      reftable: adapt write_object_record() to propagate block_writer_add() errors
-
-Moumita Dhar (1):
-      userdiff: extend Bash pattern to cover more shell function forms
-
-Niels Glodny (1):
-      xdiff: disable cleanup_records heuristic with --minimal
-
-Oswald Buddenhagen (1):
-      git-gui: heed core.commentChar/commentString
-
-Patrick Steinhardt (160):
-      reftable/stack: stop using `read_in_full()`
-      reftable/stack: stop using `write_in_full()`
-      reftable/blocksource: stop using `xmmap()`
-      reftable/record: stop using `COPY_ARRAY()`
-      reftable/record: stop using `BUG()` in `reftable_record_init()`
-      reftable/record: don't `BUG()` in `reftable_record_cmp()`
-      reftable: stop using `BUG()` in trivial cases
-      reftable/basics: stop using `st_mult()` in array allocators
-      reftable/basics: provide wrappers for big endian conversion
-      reftable/reader: stop using `ARRAY_SIZE()` macro
-      reftable/system: introduce `reftable_rand()`
-      reftable/stack: stop using `sleep_millisec()`
-      reftable/basics: stop using `SWAP()` macro
-      reftable/basics: introduce `REFTABLE_UNUSED` annotation
-      compat/mingw: split out POSIX-related bits
-      git-compat-util.h: split out POSIX-emulating bits
-      reftable: decouple from Git codebase by pulling in "compat/posix.h"
-      Makefile: skip reftable library for Coccinelle
-      reftable: ignore file-in-use errors when unlink(3p) fails on Windows
-      csum-file: stop depending on `the_repository`
-      object: stop depending on `the_repository`
-      pack-write: stop depending on `the_repository` and `the_hash_algo`
-      environment: move access to "core.bigFileThreshold" into repo settings
-      pack-check: stop depending on `the_repository`
-      pack-revindex: stop depending on `the_repository`
-      pack-bitmap-write: stop depending on `the_repository`
-      object-file-convert: stop depending on `the_repository`
-      delta-islands: stop depending on `the_repository`
-      object-file: split out logic regarding hash algorithms
-      hash: fix "-Wsign-compare" warnings
-      hash: stop depending on `the_repository` in `null_oid()`
-      meson: define WITH_BREAKING_CHANGES when enabling breaking changes
-      meson: don't compile git-pack-redundant(1) with breaking changes
-      meson: don't install git-pack-redundant(1) docs with breaking changes
-      ci: perform build and smoke tests for Meson docs
-      object-name: introduce `repo_get_oid_with_flags()`
-      object-name: allow skipping ambiguity checks in `get_oid()` family
-      builtin/update-ref: skip ambiguity checks when parsing object IDs
-      refs: introduce function to batch refname availability checks
-      refs/reftable: batch refname availability checks
-      refs/files: batch refname availability checks for normal transactions
-      refs/files: batch refname availability checks for initial transactions
-      refs: stop re-verifying common prefixes for availability
-      refs/iterator: separate lifecycle from iteration
-      refs/iterator: provide infrastructure to re-seek iterators
-      refs/iterator: implement seeking for merged iterators
-      refs/iterator: implement seeking for reftable iterators
-      refs/iterator: implement seeking for ref-cache iterators
-      refs/iterator: implement seeking for packed-ref iterators
-      refs/iterator: implement seeking for files iterators
-      refs: reuse iterators when determining refname availability
-      meson: fix compat sources when compiling with MSVC
-      compat/mingw: fix EACCESS when opening files with `O_CREAT | O_EXCL`
-      meson: fix handling of '-Dcurl=auto'
-      gitweb: fix generation of "gitweb.js"
-      meson: respect 'tests' build option in contrib
-      meson: distinguish build and target host binaries
-      ci: use Visual Studio for win+meson job on GitHub Workflows
-      builtin/cat-file: rename variable that tracks usage
-      builtin/cat-file: introduce function to report object status
-      builtin/cat-file: wire up an option to filter objects
-      builtin/cat-file: support "blob:none" objects filter
-      builtin/cat-file: support "blob:limit=" objects filter
-      builtin/cat-file: support "object:type=" objects filter
-      pack-bitmap: allow passing payloads to `show_reachable_fn()`
-      pack-bitmap: add function to iterate over filtered bitmapped objects
-      pack-bitmap: introduce function to check whether a pack is bitmapped
-      builtin/cat-file: deduplicate logic to iterate over all objects
-      builtin/cat-file: use bitmaps to efficiently filter by object type
-      t: skip chain lint when PERL_PATH is unset
-      t: refactor environment sanitization to not use Perl
-      t: adapt character translation helpers to not use Perl
-      t: adapt `test_copy_bytes()` to not use Perl
-      t: adapt `test_readlink()` to not use Perl
-      t: introduce PERL_TEST_HELPERS prerequisite
-      t: adapt existing PERL prerequisites
-      meson: stop requiring Perl when tests are enabled
-      Makefile: stop requiring Perl when running tests
-      t: refactor tests depending on Perl transliteration operator
-      t: refactor tests depending on Perl substitution operator
-      t: refactor tests depending on Perl to print data
-      t: refactor tests depending on Perl for textconv scripts
-      t/lib-gpg: refactor `sanitize_pgp()` to not depend on Perl
-      t/lib-t6000: refactor `name_from_description()` to not depend on Perl
-      t/lib-httpd: refactor "one-time-perl" CGI script to not depend on Perl
-      t0021: refactor `generate_random_characters()` to not depend on Perl
-      t0210: refactor trace2 scrubbing to not use Perl
-      t5316: refactor `max_chain()` to not depend on Perl
-      t5703: refactor test to not depend on Perl
-      reftable: fix formatting of the license header
-      reftable/reader: rename data structure to "table"
-      reftable/blocksource: consolidate code into a single file
-      reftable/block: simplify how we track restart points
-      reftable/table: move reading block into block reader
-      reftable/block: rename `block` to `block_data`
-      reftable/block: rename `block_reader` to `reftable_block`
-      git-zlib: use `struct z_stream_s` instead of typedef
-      reftable/block: create public interface for reading blocks
-      reftable/block: store block pointer in the block iterator
-      reftable/block: make block iterators reseekable
-      reftable/block: expose a generic iterator over reftable records
-      reftable/table: add `reftable_table` to the public interface
-      reftable/table: introduce iterator for table blocks
-      reftable/constants: make block types part of the public interface
-      reftable/table: move printing logic into test helper
-      reflog: rename `cmd_reflog_expire_cb` to `reflog_expire_options`
-      builtin/reflog: stop storing default reflog expiry dates globally
-      builtin/reflog: stop storing per-reflog expiry dates globally
-      builtin/reflog: make functions regarding `reflog_expire_options` public
-      builtin/gc: split out function to expire reflog entries
-      builtin/maintenance: introduce "reflog-expire" task
-      refs/packed: fix BUG when seeking refs with UTF-8 characters
-      object-file: move `mkdir_in_gitdir()` into "path.c"
-      object-file: move `safe_create_leading_directories()` into "path.c"
-      object-file: move `git_open_cloexec()` to "compat/open.c"
-      object-file: move `xmmap()` into "wrapper.c"
-      object-file: split out functions relating to object store subsystem
-      object-file: split up concerns of `HASH_*` flags
-      object-file: drop `index_blob_stream()`
-      object: split out functions relating to object store subsystem
-      object-store: remove global array of cached objects
-      object-store: merge "object-store-ll.h" and "object-store.h"
-      filter-branch: stop depending on Perl
-      request-pull: stop depending on Perl
-      Documentation: stop depending on Perl to massage user manual
-      Documentation: stop depending on Perl to generate command list
-      parse: fix off-by-one for minimum signed values
-      global: use designated initializers for options
-      parse-options: support unit factors in `OPT_INTEGER()`
-      parse-options: rename `OPT_MAGNITUDE()` to `OPT_UNSIGNED()`
-      parse-options: introduce precision handling for `OPTION_INTEGER`
-      parse-options: introduce precision handling for `OPTION_UNSIGNED`
-      parse-options: detect mismatches in integer signedness
-      ci: fix p4d executable not being found on GitHub Actions
-      contrib/completion: install Bash completion
-      meson: report detected runtime executable paths
-      meson: prefer shell at "/bin/sh"
-      t/perf: fix benchmarks with alternate repo formats
-      t/perf: use configured PERL_PATH
-      t/perf: fix benchmarks with out-of-tree builds
-      meson: wire up benchmarks
-      meson: wire up benchmarking options
-      object-store: move `struct packed_git` into "packfile.h"
-      object-store: drop `loose_object_path()`
-      object-store: move and rename `odb_pack_keep()`
-      object-store: move function declarations to their respective subsystems
-      object-store: allow fetching objects via `has_object()`
-      treewide: convert users of `repo_has_object_file()` to `has_object()`
-      object-store: drop `repo_has_object_file()`
-      builtin/mv: bail out when trying to move child and its parent
-      builtin/mv: convert assert(3p) into `BUG()`
-      ci: fix aggregation of test results with Meson
-      builtin/gc: fix indentation of `cmd_gc()` parameters
-      builtin/gc: remove global variables where it is trivial to do
-      builtin/gc: move pruning of worktrees into a separate function
-      builtin/maintenance: introduce "worktree-prune" task
-      builtin/gc: move rerere garbage collection into separate function
-      builtin/maintenance: introduce "rerere-gc" task
-      reftable: fix perf regression when reading blocks of unwanted type
-      gitlab-ci: always run MSVC-based Meson job
-
-Philippe Blain (3):
-      p7821: fix test_perf invocation for prereqs
-      p9210: fix 'scalar clone' when running from a detached HEAD
-      p7821: fix instructions for testing with threads
-
-Phillip Wood (5):
-      pack-refs doc: fix indentation for --exclude
-      docs: add BreakingChanges to TECH_DOCS target
-      merge-file doc: set conflict-marker-size attribute
-      sequencer: move reflog message functions
-      sequencer: rework reflog message handling
-
-Ramsay Jones (18):
-      meson.build: remove -DCURL_DISABLE_TYPECHECK
-      Makefile: only set some BASIC_CFLAGS when RUNTIME_PREFIX is set
-      meson.build: only set build variables for non-default values
-      meson.build: set default help format to html on windows
-      Makefile: remove NEEDS_LIBRT build variable
-      config.mak.uname: add a note about NO_STRLCPY for Linux
-      config.mak.uname: only set NO_REGEX on cygwin for v1.7
-      config.mak.uname: add HAVE_GETDELIM to the cygwin section
-      config.mak.uname: add clock_gettime() to the cygwin build
-      builtin/gc.c: correct RAM calculation when using sysinfo
-      config.mak.uname: add sysinfo() configuration for cygwin
-      config.mak.uname: add arc4random to the cygwin build
-      config.mak.uname: set CSPRNG_METHOD to getrandom on Linux
-      meson.build: quote the GITWEBDIR build configuration
-      meson: correct install location of YAML.pm
-      meson: correct path to system config/attribute files
-      meson.build: correct setting of GIT_EXEC_PATH
-      configure.ac: upgrade to a compilation check for sysinfo
-
-René Scharfe (2):
-      xdiff: avoid arithmetic overflow in xdl_get_hunk()
-      commit: move clear_commit_marks_many() loop body to clear_commit_marks()
-
-Rodrigo Carvalho (1):
-      t1001: replace 'test -f' with 'test_path_is_file'
-
-Scott Chacon (2):
-      bundle-uri: copy all bundle references ino the refs/bundle space
-      bundle-uri: add test for bundle-uri clones with tags
-
-Seyi Kuforiji (2):
-      t/unit-tests: convert trailer test to use clar
-      t/unit-tests: convert urlmatch-normalization test to clar
-
-Taylor Blau (31):
-      refs.c: remove empty '--exclude' patterns
-      refs.c: stop matching non-directory prefixes in exclude patterns
-      builtin/pack-objects.c: freshen objects from existing cruft packs
-      http.c: remove unnecessary casts to long
-      http.c: introduce `set_long_from_env()` for convenience
-      http.c: inline `set_curl_keepalive()`
-      http.c: allow custom TCP keepalive behavior via config
-      refspec: treat 'fetch' as a Boolean value
-      refspec: replace `refspec_init()` with fetch/push variants
-      refspec: remove refspec_item_init_or_die()
-      refspec: replace `refspec_item_init()` with fetch/push variants
-      pseudo-merge.h: fix a typo
-      t/t5329-pack-objects-cruft.sh: evict 'repack'-related tests
-      t/t7704-repack-cruft.sh: clarify wording in --max-cruft-size tests
-      t/t7704-repack-cruft.sh: consolidate `write_blob()`
-      repack: avoid combining cruft packs with `--max-cruft-size`
-      repack: begin combining cruft packs with `--combine-cruft-below-size`
-      Documentation: remove a "future work" item from the MIDX docs
-      Documentation: describe incremental MIDX bitmaps
-      pack-revindex: prepare for incremental MIDX bitmaps
-      pack-bitmap.c: open and store incremental bitmap layers
-      pack-bitmap.c: teach `bitmap_for_commit()` about incremental MIDXs
-      pack-bitmap.c: teach `show_objects_for_type()` about incremental MIDXs
-      pack-bitmap.c: support bitmap pack-reuse with incremental MIDXs
-      pack-bitmap.c: teach `rev-list --test-bitmap` about incremental MIDXs
-      pack-bitmap.c: compute disk-usage with incremental MIDXs
-      pack-bitmap.c: apply pseudo-merge commits with incremental MIDXs
-      ewah: implement `struct ewah_or_iterator`
-      pack-bitmap.c: keep track of each layer's type bitmaps
-      pack-bitmap.c: use `ewah_or_iterator` for type bitmap iterators
-      midx: implement writing incremental MIDX bitmaps
-
-Torsten Bögershausen (1):
-      intialize false_but_the_compiler_does_not_know_it_
-
-Tuomas Ahola (1):
-      bulk-checkin: fix sign compare warnings
-
-Usman Akinyemi (11):
-      config: teach repo_config to allow `repo` to be NULL
-      builtin/verify-tag: stop using `the_repository`
-      builtin/verify-commit: stop using `the_repository`
-      builtin/send-pack: stop using `the_repository`
-      builtin/pack-refs: stop using `the_repository`
-      builtin/ls-files: stop using `the_repository`
-      builtin/for-each-ref: stop using `the_repository`
-      builtin/checkout-index: stop using `the_repository`
-      builtin/update-server-info: remove unnecessary if statement
-      builtin/add: remove unnecessary if statement
-      builtin/difftool: remove unnecessary if statement
-
-Zheng Yuting (2):
-      send-email: capture errors in an eval {} block
-      send-email: finer-grained SMTP error handling
-
-brian m. carlson (2):
-      t5605: fix test for cloning from a different user
-      Makefile: avoid constant rebuilds with compilation database
-
-shejialuo (12):
-      t0602: use subshell to ensure working directory unchanged
-      builtin/refs: get worktrees without reading head information
-      packed-backend: check whether the "packed-refs" is regular file
-      packed-backend: check if header starts with "# pack-refs with: "
-      packed-backend: add "packed-refs" header consistency check
-      packed-backend: check whether the refname contains NUL characters
-      packed-backend: add "packed-refs" entry consistency check
-      packed-backend: check whether the "packed-refs" is sorted
-      builtin/fsck: add `git refs verify` child process
-      packed-backend: fsck should warn when "packed-refs" file is empty
-      packed-backend: extract snapshot allocation in `load_contents`
-      packed-backend: mmap large "packed-refs" file during fsck
-
-Đoàn Trần Công Danh (2):
-      sparse: ignore warning from new glibc headers
-      meson: allow customize perl installation path
-
-தமிழ் நேரம் (1):
-      gitk: add Tamil translation
+X-MS-Exchange-MessageSentRepresentingType: 1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|PN2PR01MB9864:EE_
+X-MS-Office365-Filtering-Correlation-Id: 0cdaee5b-5b7a-4b23-f04e-08dd9e0ba4ed
+X-MS-Exchange-SLBlob-MailProps:
+	Mga27o8vReFQO+5d6ofa7WPjBVpSbrYurJFyfEXIzTOYhAWLLX8FqUc6QTxvsxxL/ThNGrupkynfYZWMYlBTgV4JIMv4WUkoXayrHcoj8Te7TVoWtptTJ3Sb1C7PUzJ7KAFWTOWK+mP4zFqVbYTDyBzr94ZwF8sb+1TGAnMw8ZG3NbajAZhz6ABhPYehm2SSqK6JiKj1h9HRwY2vr7vZyJ/0PBGzJU8y+J/7EZKvz/pAX+LbUADLXIKhScBi0WrZBZU/KgztqoA2X2N1ouselbOAIZ0ksTth6in6WqJjKu5/k6cbqVAdm6FZVIQMCHZdrpjH19e1lpg+RBsj5f2hE8DXttb+2W2vGj2e64nTV3+coGOzw6k8FTBszg5yRMIFrdmnh1+MwfYQ/lSugEgpG7LQgRDmNhFOyR6SaFRYTclkJ/eCtmB84l6kDd6osRwWCCewSkfbTPCYEaXxY2WCSdn4C4VT1gdueVSI00m6WcEec5MXwJsznO1im6FpA9Gcm1TlDRt3/lAzSgQmpZHFrNR6oMoge3pX+eOVExwfjNkuhD/VSPg890hwlKAqA8tZ0i3RMhhRkxX2OXp7ccc27kJJmZPJkTxIoA0yr8pQBmGwQiqXNPCiEeKYWOnfge89miZCnraHHw77uSmcu2gHuT5SafQZ6c8I7ruGg2SquuQcmWacm9Ks7YsLaLt8zOHS8RdGDma8YU83ObyjQ2lq6CbLc0WxoyJjj3GNCA+HeM97r95NQ5fZv3wjcbdm+QLyZsskUVdyQzFk6W4lYpbcoY92+Vkp2VP3DOkaejYU6Fl2nFZUB7ACxw==
+X-Microsoft-Antispam:
+	BCL:0;ARA:14566002|8060799009|7092599006|19110799006|15080799009|12121999007|41001999006|5072599009|461199028|3412199025|440099028|12091999003|19111999003|4302099013|10035399007|1602099012;
+X-Microsoft-Antispam-Message-Info:
+	=?us-ascii?Q?JQV+em/e59gak2bX5dMAUiBCyd/TWQ/Vfb2+xMXQR6QEnbn2q5OyUj1ch7n5?=
+ =?us-ascii?Q?AH4n6MYI04N/FKzJX1eG3YBbRVLOGk9RdlQKsaiieJkajhATRLvFmLiSefY3?=
+ =?us-ascii?Q?QOeQLjFylHRMiFYYwNJiUFcsrVCt+ajhs7PlaXVH6HxjxlpqQolcfbdx8NLm?=
+ =?us-ascii?Q?JiAtsigZdULO1X655S+52W24JeNHB7XYR7+rowgVikJDozKRg8w8jbiFNSnf?=
+ =?us-ascii?Q?NKoEe2aQeRqiw7amgXTY/gfcSojmAjdUcwpSwr6mXzl9cEIcoojG1UaLAwCe?=
+ =?us-ascii?Q?tP5ZaAzIXd2Ap8TWOnFtpnoZbeaxtzh+XxcX0nXEYYXTunNA848vcUBtzBCx?=
+ =?us-ascii?Q?H6+VacmfMGQKaAJE+t7Y8Qqq7XN2L69JHOJGWX/NOpxMoE0Q/+AhcU1vRwRI?=
+ =?us-ascii?Q?LdVt6XqDCmEqoazcD2VOdVsngfm2JWfF2A696lDjfP0219iu+ad94IK4Y8vf?=
+ =?us-ascii?Q?9Hl/90VMqbo0ptVLvmn8iomfl1Q+aPHQjYUb23KoHvHc99D6HNzHNovlN+SO?=
+ =?us-ascii?Q?GG27Iex8gKVCrX4I4r13/gm3kMDvipx62qZIPN8vWrpY7CClXpIlm337CSwg?=
+ =?us-ascii?Q?f/4xGMw1YzpT9i0dXEqDUw5r4xmMaoexj9gVbHuRqBSsklBNGujdNHPgMX8G?=
+ =?us-ascii?Q?xEF6i7lSA6eQMUOmLPX1TuR6qDXmiNpprN1+QwXWm5jeFjMk90MUWsgu6Q5S?=
+ =?us-ascii?Q?13Y4fldHe836hsUE68Oi9n7Tq00Aw2mrT92q2OaQmbUqlRLohcw6ndUj6rzT?=
+ =?us-ascii?Q?mRuoDLZhTkWdb1z1UM6ee/H9YJXBYPfASd7LTgksYTjqlUnyzJYCT4B9S8o9?=
+ =?us-ascii?Q?GESJgJiNxQAE0exxVwSFcEYgrpLqejbzy7/Dn/s2sn9vS6JSfC67/gMBGJ0q?=
+ =?us-ascii?Q?CdoGHvPy/lCMN9RmGJEosqQrnniSk24fLmdgUBRlY9EwvD+P40RCPxY2adCz?=
+ =?us-ascii?Q?/GiZahuWzIRJjRFZPSxmmb+pN6IM7G6CH5ySnxTT1WS+tTZsyW8gEubtQ3bT?=
+ =?us-ascii?Q?die6YjlP66h5JVA+FmgEWgPZL8GDC3omN7ekjvnHNTK/BtL2Cj9renBfHpG8?=
+ =?us-ascii?Q?RI/ptb7xrB45+rk07cGw49+Oy/V/RGT06o1bZ47C88WMh2UnG/rYDWGKWNRR?=
+ =?us-ascii?Q?mBEoqASCfEcm9jFDzIIz83H72tP3Z03rJKSRumn7DqKncKU94FqbZyaZVFjg?=
+ =?us-ascii?Q?S59PgS0SZNJYuO/nKoKWVv7mA6PRoNFM0E9f46XhaDzaoNGrCfCb7SydxYnN?=
+ =?us-ascii?Q?H5R7uawsLu7H2ErOMkOKZuM6CFwfp1rJiQdcbxb4FawszQ/9gQK3hmmXQLc4?=
+ =?us-ascii?Q?EGLa2MjNPw/7BITelfL2gBm5pZ563TL/aMJi2d2YnxyxWel4UIPwg2uJFaz3?=
+ =?us-ascii?Q?7LtgTvWgQyI2q9mSX91SmHw3E5stTbAatFthV8jpMOs1AZjjBQ=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?us-ascii?Q?lWbWcvqKX2xfMC0f3MUSVFoB0eqBMlHAQ5PfpONvwwtIDjRCrR0WfveFvmry?=
+ =?us-ascii?Q?20RwmfBF9N3Tv3282qyktn07Es30ayCQIRazLXcHZkXvMXwzm3Co9IqErHJp?=
+ =?us-ascii?Q?G3pumow1UFhN58W1YgBM7KNUq6G5fi4apxTA7mOznL8CuCceSdbegj44VdNc?=
+ =?us-ascii?Q?m7TqqzUDZxh5vfHS+SN8RhMFU2KnZyaMCHOCsbW3Innu+c6exe+rzQ5HSJ64?=
+ =?us-ascii?Q?1AFmD3DIsgfhqAEhb13dct+NAUzC4i32+UuM4TMCpr3x02kHZGSAXzvSpWAW?=
+ =?us-ascii?Q?Kh8SlUJy6t30JDs9jrj8u91aNr65iaWAGgVmfAuvCFZpeyq8sbZGtnkRqtEz?=
+ =?us-ascii?Q?D27Dq4BOMPEXCHM8R7P5w7yOJY+vzORTmhsO4z7O55Zdf/KWeB32L0uNOVfA?=
+ =?us-ascii?Q?0XAjnqsAaZ+HIf3qEh/dPO12Lvf+UlPETz3188PhDH0xrk7mbRhPoVIUlzwj?=
+ =?us-ascii?Q?cnAmzIO0dGmSOBbIxVFsqeUQOcSDkXikMBBmvTFXZ4YFudVZ5tsZRPxhL8Iy?=
+ =?us-ascii?Q?r/BrsXYXq1duTjEHSsWSULIzg135ovpc1xG786yNUpl9Pzh0gkjhnzTxxeIc?=
+ =?us-ascii?Q?V5jYloWIu9blZx1GPS4qNcv0zY00GFcyb3BA6k7i4ds3CRLoNCGO35cHfFHe?=
+ =?us-ascii?Q?uSoGCKO3lnpHeWG70/nAM6PjwSlPQwPWL6oKeLVl9DXzDyVH0zesUMzwFS2p?=
+ =?us-ascii?Q?QES0m+mSVRSAZZAwXi1Gr6yLOWY9ZOUJdYkhB+RUMd5f1L3dozx/1+mGHZSd?=
+ =?us-ascii?Q?pqH8lyb+k/c5JrsFIUz28JiSnLWj8n1gTPPKoOi79lm5pMLIJjmT5YHhp9jW?=
+ =?us-ascii?Q?bDjAbVZp4IkXPLDXMALfSlxXk95R2TKKppxvJ2W8w0QPBl+z5iYPkCouvkJQ?=
+ =?us-ascii?Q?v9UrZNf+E6s/nlCK8CDZMc/+0Vi2hpHznKMdhgaTyE8QkYY08riGI5G+0Az/?=
+ =?us-ascii?Q?zbEzTJ0RAjKUXtjUdPxKYkG+EhSa5Yunv8108xCccXEnI4snBph6e/nl798L?=
+ =?us-ascii?Q?LOsnoifUCtt87LaHWQvoHeni4GgFQlH+M0SGoyC1NrGIbIziSEWVTLz5na+H?=
+ =?us-ascii?Q?p0gCitbhGiSuH+2BaIX20O0cFJirstNy3sZdmYQ8I/rqTqWqLS3m8xdJA+gA?=
+ =?us-ascii?Q?IxNIAOPi3zpAv7WVr7cJzNnGBTen4xvu6Y3OQiup2UMnhFctoXbikFyPLBc8?=
+ =?us-ascii?Q?mlqPmMp75rodM/qVaXiKHEe6g0iq95phz4XTOp3ahGGZPD8Nptv290PYz3Sq?=
+ =?us-ascii?Q?dp44lyAs7RSQKPxfm397KwabODfb2EI44FDiw47mZvZ4HQ8XDMGgaPHmOxfl?=
+ =?us-ascii?Q?sFFNoqZH3Ff1b9zDekAwNx6t?=
+X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
+X-MS-Exchange-CrossTenant-Network-Message-Id: 0cdaee5b-5b7a-4b23-f04e-08dd9e0ba4ed
+X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 May 2025 17:18:21.0637
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
+X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
+	00000000-0000-0000-0000-000000000000
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB9864
+
+This patch series does the following things:
+Firstly it basically makes the imap-send command usable again since it
+was broken because of not being able to correctly parse the config file.
+
+Further it adds support for OAuth2.0 and PLAIN authentication to git
+imap-send.
+
+Last, it does some minor improvements including adding the ability to
+specify the folder using the command line and set a default between
+curl and openssl using the config.
+
+P.S.: I am surprised this thing even exists xD.
+
+v2: - Added support for OAuth2.0 with curl.
+    - Fixed the memory leak in case auth_cram_md5 fails.
+v3: - Improve wording in first patch
+    - Change misleading message if OAuth2.0 is used without OpenSSL
+v4: - Add PLAIN authentication mechanism for OpenSSL
+    - Improved wording in the first patch a bit more
+v5: - Add ability to specify destination folder using the command line
+    - Add ability to set a default between curl and openssl using the config
+v6: - Fix minor mistakes in --folder documentation
+v7: - Fix spelling and grammar mistakes in logs shown to the user when running imap-send
+    - Display port alongwith host when git credential is invoked and asks for a password
+    - Display the destination mailbox when sending a message
+
+Aditya Garg (9):
+  imap-send: fix bug causing cfg->folder being set to NULL
+  imap-send: add support for OAuth2.0 authentication
+  imap-send: add PLAIN authentication method to OpenSSL
+  imap-send: fix memory leak in case auth_cram_md5 fails
+  imap-send: enable specifying the folder using the command line
+  imap-send: enable user to choose between libcurl and openssl using the
+    config
+  imap-send: fix numerous spelling and grammar mistakes in logs
+  imap-send: display port alongwith host when git credential is invoked
+  imap-send: display the destination mailbox when sending a message
+
+ Documentation/config/imap.adoc   |  17 +-
+ Documentation/git-imap-send.adoc |  65 +++++-
+ imap-send.c                      | 327 +++++++++++++++++++++++++++----
+ 3 files changed, 358 insertions(+), 51 deletions(-)
+
+Range-diff:
+ -:  ---------- >  1:  4757d0305d imap-send: fix bug causing cfg->folder being set to NULL
+ 1:  f5ad01abc5 !  2:  c4e2a5659b imap-send: add support for OAuth2.0 authentication
+    @@ imap-send.c: static char *cram(const char *challenge_64 UNUSED,
+     +		  const char *access_token UNUSED)
+     +{
+     +	die("You are trying to use OAUTHBEARER authenticate method "
+    -+	    "with OpenSSL library, but it's support has not been compiled in.");
+    ++	    "with OpenSSL library, but its support has not been compiled in.");
+     +}
+     +
+     +static char *xoauth2_base64(const char *user UNUSED,
+     +		  const char *access_token UNUSED)
+     +{
+     +	die("You are trying to use XOAUTH2 authenticate method "
+    -+	    "with OpenSSL library, but it's support has not been compiled in.");
+    ++	    "with OpenSSL library, but its support has not been compiled in.");
+     +}
+     +
+      #endif
+ -:  ---------- >  3:  af9aa85cab imap-send: add PLAIN authentication method to OpenSSL
+ 3:  11f7ac1325 =  4:  2ca10774db imap-send: fix memory leak in case auth_cram_md5 fails
+ 4:  f6e7a5498e =  5:  190bed0bff imap-send: enable specifying the folder using the command line
+ 5:  4769924781 =  6:  469c05321b imap-send: enable user to choose between libcurl and openssl using the config
+ 2:  e3dc19dc49 !  7:  6a839e5f4d imap-send: add PLAIN authentication method to OpenSSL
+    @@ Metadata
+     Author: Aditya Garg <gargaditya08@live.com>
+     
+      ## Commit message ##
+    -    imap-send: add PLAIN authentication method to OpenSSL
+    +    imap-send: fix numerous spelling and grammar mistakes in logs
+     
+    -    The current implementation for PLAIN in imap-send works just fine
+    -    if using curl, but if attempted to use for OpenSSL, it is treated
+    -    as an invalid mechanism. The default implementation for OpenSSL is
+    -    IMAP LOGIN command rather than AUTH PLAIN. Since AUTH PLAIN is
+    -    still used today by many email providers in form of app passwords,
+    -    lets add an implementation that can use AUTH PLAIN if specified.
+    +    A lot of spelling and grammar mistakes were found in the logs shown to
+    +    the user while using imap-send. Most of them are lack of a full stop at
+    +    the end of a sentence and first word of a sentence not being capitalized.
+     
+         Signed-off-by: Aditya Garg <gargaditya08@live.com>
+     
+    - ## Documentation/config/imap.adoc ##
+    -@@ Documentation/config/imap.adoc: imap.authMethod::
+    - 	Specify the authentication method for authenticating with the IMAP server.
+    - 	If Git was built with the NO_CURL option, or if your curl version is older
+    - 	than 7.34.0, or if you're running git-imap-send with the `--no-curl`
+    --	option, the only supported methods are 'CRAM-MD5', 'OAUTHBEARER' and
+    --	'XOAUTH2'. If this is not set then `git imap-send` uses the basic IMAP
+    -+	option, the only supported methods are 'PLAIN', 'CRAM-MD5', 'OAUTHBEARER'
+    -+	and 'XOAUTH2'. If this is not set then `git imap-send` uses the basic IMAP
+    - 	plaintext LOGIN command.
+    -
+      ## imap-send.c ##
+    -@@ imap-send.c: enum CAPABILITY {
+    - 	LITERALPLUS,
+    - 	NAMESPACE,
+    - 	STARTTLS,
+    -+	AUTH_PLAIN,
+    - 	AUTH_CRAM_MD5,
+    - 	AUTH_OAUTHBEARER,
+    - 	AUTH_XOAUTH2
+    -@@ imap-send.c: static const char *cap_list[] = {
+    - 	"LITERAL+",
+    - 	"NAMESPACE",
+    - 	"STARTTLS",
+    -+	"AUTH=PLAIN",
+    - 	"AUTH=CRAM-MD5",
+    - 	"AUTH=OAUTHBEARER",
+    - 	"AUTH=XOAUTH2",
+    -@@ imap-send.c: static char hexchar(unsigned int b)
+    +@@ imap-send.c: static int ssl_socket_connect(struct imap_socket *sock UNUSED,
+    + 			      const struct imap_server_conf *cfg UNUSED,
+    + 			      int use_tls_only UNUSED)
+    + {
+    +-	fprintf(stderr, "SSL requested but SSL support not compiled in\n");
+    ++	fprintf(stderr, "SSL requested, but SSL support is not compiled in.\n");
+    + 	return -1;
+      }
+      
+    - #define ENCODED_SIZE(n) (4 * DIV_ROUND_UP((n), 3))
+    -+static char *plain_base64(const char *user, const char *pass)
+    -+{
+    -+	int user_len = strlen(user);
+    -+	int pass_len = strlen(pass);
+    -+	int raw_len = 1 + user_len + 1 + pass_len;
+    -+	int b64_len;
+    -+	char *raw, *b64;
+    -+
+    -+	/* Compose the PLAIN string
+    -+	 *
+    -+	 * The username and password are combined to one string and base64 encoded.
+    -+	 * "\0user\0pass"
+    -+	 *
+    -+	 * The method has been described in RFC4616.
+    -+	 *
+    -+	 * https://datatracker.ietf.org/doc/html/rfc4616
+    -+	 */
+    -+	raw = xmallocz(raw_len);
+    -+	raw[0] = '\0';
+    -+	memcpy(raw + 1, user, user_len);
+    -+	raw[1 + user_len] = '\0';
+    -+	memcpy(raw + 2 + user_len, pass, pass_len);
+    -+
+    -+	b64 = xmallocz(ENCODED_SIZE(raw_len));
+    -+	b64_len = EVP_EncodeBlock((unsigned char *)b64, (unsigned char *)raw, raw_len);
+    -+	free(raw);
+    -+
+    -+	if (b64_len < 0) {
+    -+		free(b64);
+    -+		return NULL;
+    -+	}
+    -+	return b64;
+    -+}
+    -+
+    - static char *cram(const char *challenge_64, const char *user, const char *pass)
+    - {
+    - 	int i, resp_len, encoded_len, decoded_len;
+    -@@ imap-send.c: static char *xoauth2_base64(const char *user, const char *access_token)
+    - 
+    - #else
+    - 
+    -+static char *plain_base64(const char *user UNUSED,
+    -+		  const char *access_token UNUSED)
+    -+{
+    -+	die("You are trying to use PLAIN authenticate method "
+    -+	    "with OpenSSL library, but it's support has not been compiled in.");
+    -+}
+    -+
+    - static char *cram(const char *challenge_64 UNUSED,
+    - 		  const char *user UNUSED,
+    - 		  const char *pass UNUSED)
+    -@@ imap-send.c: static char *xoauth2_base64(const char *user UNUSED,
+    +@@ imap-send.c: static int verify_hostname(X509 *cert, const char *hostname)
+    + 
+    + 	/* try the common name */
+    + 	if (!(subj = X509_get_subject_name(cert)))
+    +-		return error("cannot get certificate subject");
+    ++		return error("Cannot get certificate subject");
+    + 	if ((len = X509_NAME_get_text_by_NID(subj, NID_commonName, cname, sizeof(cname))) < 0)
+    +-		return error("cannot get certificate common name");
+    ++		return error("Cannot get certificate common name");
+    + 	if (strlen(cname) == (size_t)len && host_matches(hostname, cname))
+    + 		return 0;
+    + 	return error("certificate owner '%s' does not match hostname '%s'",
+    +@@ imap-send.c: static char *cram(const char *challenge_64, const char *user, const char *pass)
+    + 	decoded_len = EVP_DecodeBlock((unsigned char *)challenge,
+    + 				      (unsigned char *)challenge_64, encoded_len);
+    + 	if (decoded_len < 0)
+    +-		die("invalid challenge %s", challenge_64);
+    ++		die("Invalid challenge %s", challenge_64);
+    + 	if (!HMAC(EVP_md5(), pass, strlen(pass), (unsigned char *)challenge, decoded_len, hash, NULL))
+    + 		die("HMAC error");
+    + 
+    +@@ imap-send.c: static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
+    + 	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
+    + 	if (ret != strlen(response)) {
+    + 		free(response);
+    +-		return error("IMAP error: sending response failed");
+    ++		return error("IMAP error: sending CRAM-MD5 response failed");
+    + 	}
+    + 
+    + 	free(response);
+    +@@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+    + 		tunnel.in = -1;
+    + 		tunnel.out = -1;
+    + 		if (start_command(&tunnel))
+    +-			die("cannot start proxy %s", srvc->tunnel);
+    ++			die("Cannot start proxy %s", srvc->tunnel);
+      
+    + 		imap->buf.sock.fd[0] = tunnel.out;
+    + 		imap->buf.sock.fd[1] = tunnel.in;
+    + 
+    +-		imap_info("ok\n");
+    ++		imap_info("OK\n");
+    + 	} else {
+    + #ifndef NO_IPV6
+    + 		struct addrinfo hints, *ai0, *ai;
+    +@@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+    + 			fprintf(stderr, "getaddrinfo: %s\n", gai_strerror(gai));
+    + 			goto bail;
+    + 		}
+    +-		imap_info("ok\n");
+    ++		imap_info("OK\n");
+    + 
+    + 		for (ai0 = ai; ai; ai = ai->ai_next) {
+    + 			char addr[NI_MAXHOST];
+    +@@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+    + 			perror("gethostbyname");
+    + 			goto bail;
+    + 		}
+    +-		imap_info("ok\n");
+    ++		imap_info("OK\n");
+    + 
+    + 		addr.sin_addr.s_addr = *((int *) he->h_addr_list[0]);
+    + 
+    +@@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+    + 		}
+      #endif
+    + 		if (s < 0) {
+    +-			fputs("Error: unable to connect to server.\n", stderr);
+    ++			fputs("Error: unable to connect to server\n", stderr);
+    + 			goto bail;
+    + 		}
+      
+    -+static int auth_plain(struct imap_store *ctx, const char *prompt UNUSED)
+    -+{
+    -+	int ret;
+    -+	char *b64;
+    -+
+    -+	b64 = plain_base64(ctx->cfg->user, ctx->cfg->pass);
+    -+	if (!b64)
+    -+		return error("PLAIN: base64 encoding failed");
+    -+
+    -+	/* Send the base64-encoded response */
+    -+	ret = socket_write(&ctx->imap->buf.sock, b64, strlen(b64));
+    -+	if (ret != (int)strlen(b64)) {
+    -+		free(b64);
+    -+		return error("IMAP error: sending PLAIN response failed");
+    -+	}
+    -+
+    -+	free(b64);
+    -+	return 0;
+    -+}
+    -+
+    - static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
+    - {
+    - 	int ret;
+     @@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+    - 		if (srvc->auth_method) {
+    - 			struct imap_cmd_cb cb;
+    - 
+    --			if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
+    -+			if (!strcmp(srvc->auth_method, "PLAIN")) {
+    -+				if (!CAP(AUTH_PLAIN)) {
+    -+					fprintf(stderr, "You specified "
+    -+						"PLAIN as authentication method, "
+    -+						"but %s doesn't support it.\n", srvc->host);
+    -+					goto bail;
+    -+				}
+    -+				/* PLAIN */
+    -+
+    -+				memset(&cb, 0, sizeof(cb));
+    -+				cb.cont = auth_plain;
+    -+				if (imap_exec(ctx, &cb, "AUTHENTICATE PLAIN") != RESP_OK) {
+    -+					fprintf(stderr, "IMAP error: AUTHENTICATE PLAIN failed\n");
+    -+					goto bail;
+    -+				}
+    -+			} else if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
+    - 				if (!CAP(AUTH_CRAM_MD5)) {
+    - 					fprintf(stderr, "You specified "
+    - 						"CRAM-MD5 as authentication method, "
+    + 			close(s);
+    + 			goto bail;
+    + 		}
+    +-		imap_info("ok\n");
+    ++		imap_info("OK\n");
+    + 	}
+    + 
+    + 	/* read the greeting string */
+    +@@ imap-send.c: static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
+    + 			}
+    + 		} else {
+    + 			if (CAP(NOLOGIN)) {
+    +-				fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN\n",
+    ++				fprintf(stderr, "Skipping account %s@%s, server forbids LOGIN.\n",
+    + 					srvc->user, srvc->host);
+    + 				goto bail;
+    + 			}
+    + 			if (!imap->buf.sock.ssl)
+    + 				imap_warn("*** IMAP Warning *** Password is being "
+    +-					  "sent in the clear\n");
+    ++					  "sent in the clear.\n");
+    + 			if (imap_exec(ctx, NULL, "LOGIN \"%s\" \"%s\"", srvc->user, srvc->pass) != RESP_OK) {
+    + 				fprintf(stderr, "IMAP error: LOGIN failed\n");
+    + 				goto bail;
+    +@@ imap-send.c: static int append_msgs_to_imap(struct imap_server_conf *server,
+    + 
+    + 	ctx = imap_open_store(server, server->folder);
+    + 	if (!ctx) {
+    +-		fprintf(stderr, "failed to open store\n");
+    ++		fprintf(stderr, "Failed to open store.\n");
+    + 		return 1;
+    + 	}
+    + 	ctx->name = server->folder;
+    + 
+    +-	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
+    ++	fprintf(stderr, "Sending %d message%s\n", total, (total != 1) ? "s" : "");
+    + 	while (1) {
+    + 		unsigned percent = n * 100 / total;
+    + 
+    +@@ imap-send.c: static CURL *setup_curl(struct imap_server_conf *srvc, struct credential *cred)
+    + 
+    + 	uri_encoded_folder = curl_easy_escape(curl, srvc->folder, 0);
+    + 	if (!uri_encoded_folder)
+    +-		die("failed to encode server folder");
+    ++		die("Failed to encode server folder.");
+    + 	strbuf_addstr(&path, uri_encoded_folder);
+    + 	curl_free(uri_encoded_folder);
+    + 
+    +@@ imap-send.c: static int curl_append_msgs_to_imap(struct imap_server_conf *server,
+    + 	curl = setup_curl(server, &cred);
+    + 	curl_easy_setopt(curl, CURLOPT_READDATA, &msgbuf);
+    + 
+    +-	fprintf(stderr, "sending %d message%s\n", total, (total != 1) ? "s" : "");
+    ++	fprintf(stderr, "Sending %d message%s\n", total, (total != 1) ? "s" : "");
+    + 	while (1) {
+    + 		unsigned percent = n * 100 / total;
+    + 		int prev_len;
+    +@@ imap-send.c: int cmd_main(int argc, const char **argv)
+    + 		server.port = server.use_ssl ? 993 : 143;
+    + 
+    + 	if (!server.folder) {
+    +-		fprintf(stderr, "no imap store specified\n");
+    ++		fprintf(stderr, "No IMAP store specified.\n");
+    + 		ret = 1;
+    + 		goto out;
+    + 	}
+    + 	if (!server.host) {
+    + 		if (!server.tunnel) {
+    +-			fprintf(stderr, "no imap host specified\n");
+    ++			fprintf(stderr, "No IMAP host specified.\n");
+    + 			ret = 1;
+    + 			goto out;
+    + 		}
+    +@@ imap-send.c: int cmd_main(int argc, const char **argv)
+    + 
+    + 	/* read the messages */
+    + 	if (strbuf_read(&all_msgs, 0, 0) < 0) {
+    +-		error_errno(_("could not read from stdin"));
+    ++		error_errno(_("Could not read from stdin."));
+    + 		ret = 1;
+    + 		goto out;
+    + 	}
+    + 
+    + 	if (all_msgs.len == 0) {
+    +-		fprintf(stderr, "nothing to send\n");
+    ++		fprintf(stderr, "Nothing to send.\n");
+    + 		ret = 1;
+    + 		goto out;
+    + 	}
+    + 
+    + 	total = count_messages(&all_msgs);
+    + 	if (!total) {
+    +-		fprintf(stderr, "no messages to send\n");
+    ++		fprintf(stderr, "No messages found to send.\n");
+    + 		ret = 1;
+    + 		goto out;
+    + 	}
+ -:  ---------- >  8:  a60d8f458f imap-send: display port alongwith host when git credential is invoked
+ -:  ---------- >  9:  5db5b64a3b imap-send: display the destination mailbox when sending a message
+-- 
+2.49.0.638.g5db5b64a3b.dirty
 
