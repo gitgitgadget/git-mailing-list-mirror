@@ -1,43 +1,43 @@
 Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010008.outbound.protection.outlook.com [52.103.68.8])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6726F4A04
-	for <git@vger.kernel.org>; Wed, 28 May 2025 06:39:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C237D1F8691
+	for <git@vger.kernel.org>; Wed, 28 May 2025 06:39:40 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.8
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748414380; cv=fail; b=dvJM6FAWrqJX+cyzZYr8Wz2H+huzRg0JSjDlJiC4Ht/RWIKL1yC81JP4xs38T4poCudnJbTd1M5NBkC/Etpw3Qamj/KWof22g0Dl5qxwlhHxaCA+NeT1zlbsGumCmotGTbJPnAnUYSJKQFfLiuzprTwjFwgdVEN4IK1P1zOIaNE=
+	t=1748414382; cv=fail; b=ENhWZE38Bpb2lCWwZhIF6wFP/DGGErbFV6E0yCL6oaIzzFbeS2ahgeKmJoXVSy9HBUri+rBQrult9oL72HiDeN4MqSemDc3Jhssz6sBQBzJ1UC6jROKmUHeROyfnVn0miY1ZoiWKdjFJvHx9Si4mGaMU0DYSL5BubHNKbq4frYw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748414380; c=relaxed/simple;
-	bh=CzFljyFDhV5LEx4JOM1+1evG7tqc2l6Gu/7ef9B+KY0=;
+	s=arc-20240116; t=1748414382; c=relaxed/simple;
+	bh=CxpNTNYAuppLTf6FZHaSQF7MjP2i/2d3ib6SeMWS8Jc=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=DwvzaJjY+lk0JLXDAmDRPeyMGKlUE+kPAn4jLoOk3T32djDhQZjgDEsNwy+ILzVZYh/1y0lueOqRWoYJVSgeH/BHGGWrFRyc0sP50QS/NPhqzDBh23e5BTXWlOvpcP9s2Boax8eu6HYDZjqLER4LSpLghurs6TBtVVHxypqE200=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=tXdLC/Ny; arc=fail smtp.client-ip=52.103.68.8
+	 Content-Type:MIME-Version; b=UDlFO7q08vWG8qBcW1kz7WpXAFIVFQC/n2/v5/Rye83xY7PR7g5oc0fNc3tUjpFU2IVuWr/PNk35HtnJBmx23l3Iw/5lWkyKlEo1ikzRxFKjqmelQIh4h1WYnPkx6mlyiPpoiHqrhtW5tIRVY87XUdK8WEAC1bSKcB1fGsAOhvs=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=MaVz9yEl; arc=fail smtp.client-ip=52.103.68.8
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="tXdLC/Ny"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="MaVz9yEl"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=xX5QPYrc1mdNARNChbM8Bjukscwp+6eT4Ke/VvuFNRifu6k47vpc6N+crotz46CMHL2mh20gsMIkUNfj3OzsHvFA2doqVWlnREkWQ7z1dPdI8iRNsT9zTMk91pxSWB+468BxA7HbQkjMxPCQFRSm27xdhC5m62/3SWwLTCa+pWYFZqh4t7D9lr8Si+H9yJIDT1fvAFXsT6c2GURxG9deCLKqx1W3FWXJRnW7imnuU3JIMeVzeP/MIWhqbPVU8HDEgSETGWXtq4N+660qy6y4mRQasUkmU8nbFlTDxkcL5edp73kU3Jn4CYpuo9df4iTWGdAwO68FkdJOv57QVcg0og==
+ b=I1ovYkrQ/S/siSgg1OZyM93Q1959M+wYKjKnXDpBPVyAeGvvlim4jNO/VWiQWldgXekPf1UWQjtjJtkLHGY1apgJTSGbSs+AuHjGqWEreGwiGfmJPRF8YcdSPyF8zl5MZkGrW6ANEmjNZ5xVAqMxpeV/170v/P0R5TVwmY+RXhrlwCKuEs4nw5ZYAo2nUMZFTAbBB2htREilQ/Xcn9YKMZBRIebNioZdn4ySAaTbJAG1KRMFGqvjqiqzmTTE+pdiK1CHYAVar+TRhkrbfcQRDl3ife2pkOjDxQ7gkg47FSJTdDSFLxz5Gua/ELG4TEYA/FPOlksKS1DmpjynXen+jQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=hMc7jWi65qMNVrqRWmGgP17l9Ed4w6vHfcOenpf9uQk=;
- b=ISw+Zb7m0F4FynFO3km+YTF+Gq1NMFK0oGDkyo800CsTGbWxDltVdgm2hY3fEVVs3SWPH22oRyEbp0NBlVffDvB9tk0tFHrODABXwhr2s1vubca8oSg0EdZwM4fBBS7Ogmpak65o84pbKq0qmxX8TqB6GyJrqmrqeL+ERLaSxtgSprgRgTmZCAZ3f4m4/ueTjBERUccbiWXD5HX81jTMhQKpg1pUKoPObt+7f5cZv6F5yrIb4um1/JeDSu0ZBaaZ37DYgnIzqX0K6zTg8J13e/5ZIwYx61uKKB8Qd7OAkRURC2ZCN6PVowPuj7wsf4IOyx8N96y5VoYsZ8r2+SYeQw==
+ bh=u9bh+gfjeVPtsNUwj5pCPZY+DQ5Nnguif0NF3lcborE=;
+ b=BN6+C3/le2RxtxXDy6dTJo5StRj78YliCt27fEjTEH4qp1/PcuAsCZvs8NdiAO76Phh69ADswU9WxIZrlfa/OOCpJS9LyvMYPgrAD3zSA0wkohX9VhgSSE+viHZ7grSAVWbi47QerjLmnFEdQsNcsFCChCqgSSM16jSlnt/I+Rsr1K2Nyfgbh5+W/XhZ359LG7dvfNwJBUhXIO9ZhLMtqddTieucg2nyKANyCciy7QLeXsZjn1Tor7uzwKdcbj4FjIXDrLA99fMdGs0QDUohLqkOAZaF1YAKdaD6Lc40I+mcAUGYL+ZHsd44+HtHnaX2Xew/bFstgXSE+w4zuzq06Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=hMc7jWi65qMNVrqRWmGgP17l9Ed4w6vHfcOenpf9uQk=;
- b=tXdLC/Ny1bEO47uEvIeKF5blQKKv94hcqK078K9daqxCWi/BFI48CKvCbwASRhuVF91qR2/x7r6bYAmJSNeRWTPAmkt9TLaIJbsMEcWmAtymN5JluU1W3NvQCXMBCJChIPkyvnxKfIFAbqy87McTS/hgotWysdLRrYd0tRlniiiJWNn9YkLsK1VLuUNdDEwENVsobQjSw6ESvc6BMY8r4gKdHicEPPNCPk6zX/0Ka4g3K2W8/SqAugrSvZmYqmh4Q+yd+o9fSh/Lv8eAk5WKOGhUIFjWJ01Ca/1I8i6G/lJ9iXfmhS6J/24CfMk8r362fcqt+PdHT2fJ4SJMV4Usbg==
+ bh=u9bh+gfjeVPtsNUwj5pCPZY+DQ5Nnguif0NF3lcborE=;
+ b=MaVz9yElvSh0DPbVdf9bwgxso7rZ7U1h9EayHab850O4Nm36c0PLpw2vcwaay5+69KbObceAGVofzdMeJvkq8jtRfQIduOHGz4/NuRbbRNGHofQSxAqcsa3wJwg0IHnue0E0ctq2Ax66EAVY2dby+X5s3XDWBR1BJ8bF5JKo82C5/Y9WLZZfPir/exXeZ7PEAvgywhjm04vbSjJEGlW9ZnIm649Tq4a2EMvJq7+yab02o2PUhaCwDWGqoNKelkSPnNWJXKhTs9KGJ4fR9ZbT76NTl0bmshGsBxJmmMqE2bBYk6GWEBKl3z4YDX9jgOKk/xlb3ybSuDR4BP2zQlTcqg==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PN3PPFD2CE7FA6D.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c04:1::54) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.29; Wed, 28 May
- 2025 06:39:33 +0000
+ 2025 06:39:31 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.025; Wed, 28 May 2025
- 06:39:32 +0000
+ 06:39:31 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
 	<git@vger.kernel.org>
@@ -46,73 +46,72 @@ CC: Eric Sunshine <sunshine@sunshineco.com>, "sandals@crustytoothpaste.net"
 	Zi Yao <ziyao@disroot.org>, Jeff King <peff@peff.net>, Jacob Keller
 	<jacob.e.keller@intel.com>, Kristoffer Haugsbakk
 	<kristofferhaugsbakk@fastmail.com>
-Subject: [PATCH v5 1/2] send-email: fix bug resulting in increased message
- number if a message is edited
-Thread-Topic: [PATCH v5 1/2] send-email: fix bug resulting in increased
- message number if a message is edited
-Thread-Index: AQHbz5tFlm2GWun7JE6Mjo1GHoff5w==
-Date: Wed, 28 May 2025 06:39:32 +0000
-Message-ID:
- <5103ea4034cd4a8438865a2d3da19a92dda54013.1748414082.git.gargaditya08@live.com>
-References: <cover.1748414082.git.gargaditya08@live.com>
-In-Reply-To: <cover.1748414082.git.gargaditya08@live.com>
+Subject: [PATCH v5 0/2] send-email: fix threads breaking in case user edits
+ emails and improvements to outlook ID fix.
+Thread-Topic: [PATCH v5 0/2] send-email: fix threads breaking in case user
+ edits emails and improvements to outlook ID fix.
+Thread-Index: AQHbz5tErxppfv4OF0KbzulgzjcqtQ==
+Date: Wed, 28 May 2025 06:39:31 +0000
+Message-ID: <cover.1748414082.git.gargaditya08@live.com>
+References: <cover.1748274404.git.gargaditya08@live.com>
+In-Reply-To: <cover.1748274404.git.gargaditya08@live.com>
 Accept-Language: en-IN, en-US
 Content-Language: en-US
 X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PN3PPFD2CE7FA6D:EE_
-x-ms-office365-filtering-correlation-id: 945d99d8-0a01-4def-cb3c-08dd9db267e3
+x-ms-office365-filtering-correlation-id: 7db7cdcb-536d-4d38-a087-08dd9db266ce
 x-ms-exchange-slblob-mailprops:
- 02NmSoc12DcHu/Dr1OK6cqcYKvfIm6M5GEVG6AoN3A1z0KV+1Ls+mI7ZsEiDvjijdx+LNO55s9qtc7JsFC4kyhn+fM04CEh2n2T2utBWfaD4mqBbvcXa4tBJ3MdFiMD6bpVYjECMddQW6CtDyiblJpabSpPmcOL4nu8MvpLYAR/2+FZ9q9yA+fLu5ZC3jNzhFfgxoyZ201x+tw3kt3I1gcnStbvIXkO9EAbqnnC4s6RBdlR+nYSMnc4odgcEIjYdcgFr4XI63+PdmgkNuceqyE1HVtPATN2LgAqaSwL/vUPx+NaIzlJPYd8LR9+MwqSlnmOcHHdAhsPeEeEDbFT9OE51i5CNCiQEdpwlNaXqbiEmtrsSoBdsq+H09cL2QAw+F6Y4OwKlONgV2Go2lBLw3YkZhLd1gMlOSTH2oOOCLyglof/ZdAYfDfeC9RZ+Fm+yWtnfxgQWXODNiUIMPHMonclRsyJz2xWM3MVfgAIunE7lhfy8g3BuV/zGjeEklojqoz1KQINbvx9x17Uz8t2rZryhE4HDG3HTomN2IsnnMq3LKdz0Fsb40GQELOimzG1YU02Y3gvvAVvH5SgO0SWH2Tbam905+i5V9v3anUtBLaCIptFBYvWnMVqkZl+egTZi6MvX+3++VD2b1DSjWeP96vju2OtTumyEPauE7sDEgkFMExOWvlWm7FdIt8caie8G2/57rrDkzkWpjXSfy+JrmzRgFmxpmvwqellDqJJfNw0jssDFZkMTEfcAvs/c5ib8
+ 5fu/r660v9PcXSQ/czQan+5fCOfJxmE94kE4fNhOiQHKOK1G/j474IcHX4xFXwj2R63MNkEpKqbOFhhwpvyiuQ9TxSnqvQ+uDHF4WMYdBmovuqktWVJlLdoNilgDkq0sfdidaNMogstcbHi0q5YiOI/ayyR8c97h2WgLcq/KRIjkoywy8OMqvV6UR3EBi0qi5H1x3GXwcigL9beShjdOvI5l0oDxcRdWcGNTWQn5YZKaHvS0qy29cgWScsyS11tMCtX1lbiTBXcooQt+xwUxW0FPxre2bzhZ5J4oAUgF1Y8kNBBYdFHfn9Yrk/koI8kPWjEQ0PKMSFnQchSpcGg3Hmxg73vnjmU1ik5G4fPm9kII6Vu2Ib7qfs2x+6cpilYSnhvzG9/Af81VHSHHRyQt/dgp4IvAthW1fiNBEmB7WxnJEpHDCrTArKSk03O0vGRyaRWZ4D0REuUDi7/JeG2Rx08Vk7okE//xBrwPj8HV+SD9MuQ+aZT2cT0gCtyWN2Fp0+59Oxz1QaSsEExY4P1i9gJ/sdLLNNgcgu5ECuN8v2Yg9IQltI0y2TwQdQmyJ/zd2Ty2jeJTlq4dkgJ8H2hNwFdwTHQkSeyVItWwq3iq58PcT94FI9cM8DY0QmZoRzKUzZ78bxSh7kQla9B9OLOStq6/kxOu0SKYbIUHB5vD6dsNZ8QVci81j3BRBx4JV6qFt5gYbjUSLBEI4XeME68Ky6e2s9iv+2TUrXIg0KnvtuA=
 x-microsoft-antispam:
- BCL:0;ARA:14566002|38102599003|461199028|8062599006|15080799009|19110799006|7092599006|8060799009|41001999006|102099032|3412199025|440099028;
+ BCL:0;ARA:14566002|38102599003|461199028|8062599006|15080799009|19110799006|7092599006|8060799009|102099032|3412199025|440099028;
 x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?tBnoImlmyXtCDYPjUITcXuR0QRIrFKOk7nTagEGatAuBJTVvnfW6kItAmV?=
- =?iso-8859-1?Q?piM1wtVdqV9Tq18onZ+bpd8HvQCgnKLt6t4CeQCCA0WVz16SjuMNgTqIKA?=
- =?iso-8859-1?Q?Ji/swNVWtmCJ7DRK8XVfrj1O9M0CXGYcJ5qMzoT1b9m0jfQMT0XuB+M4Pa?=
- =?iso-8859-1?Q?jhErY6MheHcINyHYpFt/KNSEgqGc3KFz6qIEI5nr9zKP5TP31dizhrEYgp?=
- =?iso-8859-1?Q?mEhh8prlVMF3imQMQubeJesqUstk8zaY4ZqrQY8pNQb1853Eh5hvE7Ww17?=
- =?iso-8859-1?Q?CJ15gFoigLOOMK1M/NM+l4jiNibSQeA7E/EiusEYw4Z9YidUqIsre6J/QC?=
- =?iso-8859-1?Q?QulFftJ5oSRb2GxZiHt3FMjDlCv07mBMHzzrx2xUmDW9dHXdXVp5NDhzaR?=
- =?iso-8859-1?Q?pEFZXVBUvG46pFzxx32Mbe60hNGh5tpWSdlklM+yD9t1gBY4HGoP51xUND?=
- =?iso-8859-1?Q?mk4nBdUNBBmqSTEMlwHMXPyRaRlM8GRkfZo9JzNIcopMPDuoE9dO9uAP05?=
- =?iso-8859-1?Q?1nITAczO5QqAgKb2vDjbApM96zTGtXnsd/ZgLsUBg4EcLrYqRwCFI6jb1k?=
- =?iso-8859-1?Q?I27BeRyPUl2ArNLJuNiT0V3D0yI3v1r2cjr0cCrBhWD+2Z5MesTpq7gVKa?=
- =?iso-8859-1?Q?0R/JYSisMTvAduh+HijHKcHAykHWjSeT0+gHBzlo6KbBNGnYct70jnrGRX?=
- =?iso-8859-1?Q?tUe7jNCCdI791H9DiGs6hj7uTWaqpyiEWZjaQLA00KaLfbH9okfmzM7aAy?=
- =?iso-8859-1?Q?6CXiRAA10QDZbDvMuZwc0ZOrF4AnSsx9Zf9yq05K8GmKQ/s6g03vDc90gI?=
- =?iso-8859-1?Q?tDiVvSg15uA3eNNcwm3nmWIj3IUXymtXQ8ec+Fh4WeK9BP2MHhOlSu9FbF?=
- =?iso-8859-1?Q?ThBTUCupDfuZ2pPRiHcPuey2IW9nXgFkGbX8GPjt3FEgf5L4StjYemkWRW?=
- =?iso-8859-1?Q?+6yPKmflJDWarVsn3mjmUEFeKBF1foCCHdurUg0YUcFO1dgvqWgIVSCNDN?=
- =?iso-8859-1?Q?68XHepwvJmwWoi1VcNWKOXwRogKs1a9/w4B5CRljow8tkahrbv/d4s0cuA?=
- =?iso-8859-1?Q?2Bajr8PiFSygcWeYt6hlFHwcEWTzJDaRmoXxLzpkkZS+YZs4CTcyxafyr4?=
- =?iso-8859-1?Q?rN164dOmY4/sS7jDoiaZhosDXPqQEWCWJN9odwGVRMzBo+1ogmtLwadJhW?=
- =?iso-8859-1?Q?TzitiWxzyKP/7Sitl3Gd3/XLs4UfunH+CGM=3D?=
+ =?iso-8859-1?Q?EseOWnsn6fREkcwdHkVxGhtP/KOkLzPMgoNoeMqnKPx3kp6/U+B+jOTdFH?=
+ =?iso-8859-1?Q?EHrv3X/EqFs6FljfqR+ZnJ5Wl3b1zR+XHc1J5zrLQvnf7uQFgMANozoxvH?=
+ =?iso-8859-1?Q?VVcpsLnZT+mfmlHryGxtfx13Ri9k0CW8f7CMA+PbKKk1LORKVPFLYrkYe0?=
+ =?iso-8859-1?Q?vFeFC0UgnxKWeGmRqam59CXNysZ3d2HG/J0/qX4hBOFkRdddpzjQh47KHO?=
+ =?iso-8859-1?Q?Vjvm57X6poyOl39k7oLMIPX2nqT3NBIYx6KA2n6Eyv48h1A18wmiL3SACF?=
+ =?iso-8859-1?Q?ZdDacOFyC+zIhEgvrmqlLZKtM1L2jfG0mFw2UdoOOGpCBEjSxMvLhk6lI3?=
+ =?iso-8859-1?Q?BtLSadsFk1rbsOtpQckaimc8KPevY36X8FNK4HQakJrClIKLXit3dTzdwh?=
+ =?iso-8859-1?Q?qAb3IiBZ0dOsbSMtNKBewDtBVnBKb4ZJYcgTrjS+j5AkNQyjFGabFSfm/D?=
+ =?iso-8859-1?Q?Nh7g3LTSkGThXOUsBsTuSjycdlDceVu54Yy/8bcqUDpLW7lZcn/PrGPYti?=
+ =?iso-8859-1?Q?dXlEdEX6wnan+QxkkMYpHfmFgy/v5wnjbyTc5uTKY9OeBqJu21cX9Y7NBv?=
+ =?iso-8859-1?Q?7NvJOb9ZfMnQnufyFmDU7/TwHK8YGBcFrP/AFgWyRMy1pYnmmgklfl74gb?=
+ =?iso-8859-1?Q?wUKIFVJrB8CCWeHaEwrzhSBXWO7C5j9VszNcVDW09OMEchpJO84s3lQOWm?=
+ =?iso-8859-1?Q?zAfly2G6U/oqY2Mq2n4b15oZpE16H3e4SvRM+i8A077bJ2yl0cLOwTm71L?=
+ =?iso-8859-1?Q?Rhvdnmvl8aRiV+Xm55Lc9vN3O+W9btf0GyaMvSi/bkctGzjI1VnFangxt8?=
+ =?iso-8859-1?Q?0ZDJm9Bzl9dG0EBzxVXMT9iXeo1ggqss1U78pSHJ0+0dRStTnjUar5EI1E?=
+ =?iso-8859-1?Q?YpTkbNXM1uS03kVnHiJ6c11dbJQL3zt04687+u1tp1j3BgqoiJnaaD/8MS?=
+ =?iso-8859-1?Q?Sbj1lrp20uSkH7yPlDxkd3ALrMYTvgcPzFdk1Byg3RkIy0H9r/qJeK1bKS?=
+ =?iso-8859-1?Q?ZdglwASdKd+nZf1Gvb2yKkMbNEFgpPokhTMxC6XfjkE6p7AQU4sK8PHU+5?=
+ =?iso-8859-1?Q?ZrYj3/fVtFGqx4dJImxA5dkIv/i25xbjo8k936yjlUF9P4NeW/K79Dikpm?=
+ =?iso-8859-1?Q?ZznKObrXtDps7CevffMbbTJTjyyf3YjmKUyG3Sqm8zWSmjz9ZCoQhWRED7?=
+ =?iso-8859-1?Q?/DVErwGh/xhyHw=3D=3D?=
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?/OSDDfM6zXbumTDKRbFlkMdYFakSd3apA8EwvbcYTYVgKmiwiVTiJX8uPh?=
- =?iso-8859-1?Q?OFqIcEwc9njjpMS+rtsTGSGJtytgAWBpOZMRB4UrqTmek/g9XdH13GUsJq?=
- =?iso-8859-1?Q?HO9d8flZTKax9LbGg7C51jF1aHANLG+lQ+G2pJOgASE2xRe4gqHTg86zjl?=
- =?iso-8859-1?Q?1czrSrWe4rBbeJIo3OEc2vU7JQroWxWyDHi3oIWUwD3EsxbOdzgV/KZ442?=
- =?iso-8859-1?Q?5bvy/soQzBN3TesDxpw++kON88WTLMKdLucGqandGQPrIB8StwUAszU5NE?=
- =?iso-8859-1?Q?rFb7Nlrg5AbSPPVXyhTV7yLv4Nvz6gfKFTGCMr13EXOiR4peRWl97ZAFQ5?=
- =?iso-8859-1?Q?V7BkBONM4mUtbCBLm9XNu25NDOhb6Sb7ciUbHAt+MwbBiB02V8iMCfIP6L?=
- =?iso-8859-1?Q?wO9yBqYZAwfFF6TtnaoomsCodsCHJmo+SikkZf0SMmJkigKSU+sUJ+cuUE?=
- =?iso-8859-1?Q?NCBcES1Pza/otPzJT8vFZxzeEkoJJX88dFNieZcyePfJ2Wc4vNC7GoQMou?=
- =?iso-8859-1?Q?TOAiMGLVaw+DP3kjufijCtOeVDYrz3sL07i8bIQ8dtcO50MKlPv1XI/w+8?=
- =?iso-8859-1?Q?VWqlLgp2GT6iJJ/KEZk0WIO5+NeBkHf8cUkHjhOZtdmlisvrxz1y+v2ayl?=
- =?iso-8859-1?Q?81Vi8DO7mlqELj8aO61d72dTajJeHJ+OI8C+IXscWTyzVhsCgCyRESLZwc?=
- =?iso-8859-1?Q?QBND04xMgekm+CxNSzrDMPqeNGqjkKIgdxpt2TDlDcOpm2gxZuGwNjHjVr?=
- =?iso-8859-1?Q?jSg1A0Bp0rd/lZw+ZXxFx5/gCG9DcLSapkVUHq+RfoBbBztKjg36RzEizq?=
- =?iso-8859-1?Q?BCcjQn+0XJbBKMYFx4b/AF2RM5ft9ZKz2pdlMYHb0nEFgiDL8rHxb1sv38?=
- =?iso-8859-1?Q?qxdGqWw4exrkkF6z9xfT2gNmov9yXX3N5VhcVdU/1xAB+nlc3FnvjaCOZN?=
- =?iso-8859-1?Q?SQbIWEABZ7jqezegG5TQSxpeo1qyFCBUioTL18WJHMwdxrEKYBi8T1flrs?=
- =?iso-8859-1?Q?qH8GyuWRKAWX6SQ5V8d1SPCTawqMNhc/Zam0HFdCr7/BTJByJVaASfR5gL?=
- =?iso-8859-1?Q?KWmysAtGORG9XDQJTmrt6K7D8ufY/lrXS57JcwlbMcdJ22p+zGg4Xz9uy3?=
- =?iso-8859-1?Q?NvFrhwICRVEXeJnuQDJL52PuubpbOni1S93dhjYd1miVh3FALxwM33nKgp?=
- =?iso-8859-1?Q?Z1bSYxlVSqjob2rg24q/0EQtJFFRQA/BeAd0/8FNIx+K/JHKPfzfgaC8P8?=
- =?iso-8859-1?Q?3P6mgQqxfV7rs1uYQMJU4F8jieKdsvjt/p5HMtvJc=3D?=
+ =?iso-8859-1?Q?IhBxgWpSBx3sY3nds31EyXrW9trXylPkEifu1cpsf+pu9+hDFaulVCM3UJ?=
+ =?iso-8859-1?Q?ZfJBzkCo0F0/RcYa8Qsmsci9FT9rC6WizhYtUOTESPs1wjJI8UgiNwuyKJ?=
+ =?iso-8859-1?Q?LZhH3MHSqP71dmC9Kb2A4pYSFCnRgTOMLmQC+RR4R5VC+PpBkCUd0u19Tr?=
+ =?iso-8859-1?Q?hMUGpQG/IJpv5GA89Bz4pQzjwJ33X//62jueLlBrfP4E5piA15cCO8fkHq?=
+ =?iso-8859-1?Q?alq+qMwicGiqZshFwBLf5nCV8IcE01m8dPqhOhc99TSPryXDpzr2KR/kal?=
+ =?iso-8859-1?Q?e7Jiq2Obmy/IXOiULZxZGkr0zAy+aiPURV4fjZwnKw+8Ux3v5c4AfowyqW?=
+ =?iso-8859-1?Q?djN0mGGnnBnU0H6XF4oY4xf2KpfAFpHEtcL/0Qse1wYxszdC2qi4Y48wn7?=
+ =?iso-8859-1?Q?UXvTuihOdhHvdSsRsDSpcBPL/z78beIzOm4S9hMZsQopc89M4G3MhrOKaw?=
+ =?iso-8859-1?Q?I6yt4/JW3iHm0eBnQ5e4mvKUvNQDGdBobhfFInx3vwBwVm48Ec3u2a4S/E?=
+ =?iso-8859-1?Q?sslVy+xPsqxLDqOSLFUYOwj/mz7nu+Rc8FSBCI0Clja/ijF2qSSnp+ZQBp?=
+ =?iso-8859-1?Q?0mzkHA9bW4t7mjsFL2yKdtfjHG7JYVumRQ3taFnnnmq2QA0mwKFk9WbGcB?=
+ =?iso-8859-1?Q?fUX5lBj+ecLEm8x8lDC5CVsj1XBZ+SP3DH4zkE27J/STvqiEzs4zCyQ8ZR?=
+ =?iso-8859-1?Q?dNonIPywNRsJjw3fYO3TD78XwkqcWsdfzRz/Bkl3kkf0An9OAFaQnEk6ig?=
+ =?iso-8859-1?Q?ULxs3Ihakq/BoiM2HJK2rULSfEfYOOayI5W3fZW4yhPDjZKp/kOvVyOKSB?=
+ =?iso-8859-1?Q?zAZkGxocLFuHnvVttBLMg+w++AAvZ3NsXcD+kAUMXXu0NianODC2gI5G5T?=
+ =?iso-8859-1?Q?MGmjh4c3poIZG+FZj+K4NZY98IvcG0glNXcz4PrjWILcL9SHp8OZNhAOuP?=
+ =?iso-8859-1?Q?Q3Tjlq+nBIwYrEzvmEidMywUd7WIeJ/J9dMvT3bdJQ48N1wU/5QI1rIBhP?=
+ =?iso-8859-1?Q?ELKSBPkq3SC5s0B4UyWC2RQ5JlQy2yFuCdrrs+86XzhIoS2e8iadKRFB+H?=
+ =?iso-8859-1?Q?f341IjdHRnpn0hsh9yEK5FN0wEDUK2E8oRw8xjErXd4CQ+MvVhY2CEGPQA?=
+ =?iso-8859-1?Q?X+zxtgN5jMu2suqWcmEjwCWIFYqBAUX6+BhR8LrKN9GP6usQZJZMv6yUQs?=
+ =?iso-8859-1?Q?Vq/WtopoDnBKU0W+W6SFs8vr6Cuz8GlJH3OilXAv92mWarVu/tsx4sF/nv?=
+ =?iso-8859-1?Q?X2sIFCK8v4O1IUhKyzNqbRo0oNsnxH+MxrroimRpM=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -125,123 +124,172 @@ X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 945d99d8-0a01-4def-cb3c-08dd9db267e3
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2025 06:39:32.8878
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7db7cdcb-536d-4d38-a087-08dd9db266ce
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 May 2025 06:39:31.0896
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN3PPFD2CE7FA6D
 
-Whenever we send a thread of emails using send-email, a message number
-is internally assigned to each email. This number is used to track the
-order of the emails in the thread. Whenever a new message is processed
-in a thread, the current script logic increases the message number by
-one, which is intended.
+Hi all,
 
-But, if a message is edited and then resent, its message number again
-gets increased. This is because the script uses the same logic to
-process the edited message, which it uses to send the next message.
+This patch series fixes two minor issues with git-send-email.
 
-This minor bug is usually harmless, unless some special situations arise.
-One such situation is when the first message in a thread is edited
-and resent, and an `--in-reply-to` argument is also passed to send-email.
-In this case, if the user has chosen shallow threading, the threading
-does not work as expected, and all messages become replies to the
-Message-ID specified in the `--in-reply-to` argument.
+The first patch fixes a bug that caused the message number to increase
+when a user edits an email. As a result of this bug, threads would
+break when a user edits an email.
 
-The reason for this bug is hidden in the code for threading itself.
+The second patch improves the logging of the new message ID assigned by
+Outlook when a user edits an email.
 
-if ($thread) {
-	if ($message_was_sent &&
-	  ($chain_reply_to || !defined $in_reply_to || length($in_reply_to) =3D=3D=
- 0 ||
-	  $message_num =3D=3D 1)) {
-		$in_reply_to =3D $message_id;
-		if (length $references > 0) {
-			$references .=3D "\n $message_id";
-		} else {
-			$references =3D "$message_id";
-		}
-	}
-}
+v2 - Change the bugfix logic used to fix the threading bug.
+v3 - Add additional patch to improve the logging of the new
+     message ID assigned by Outlook.
+v4 - Completely rewrite the commit message of the first patch to
+     explain the bug in detail and how it is fixed. Also, add
+     example logs to explain the second patch.
+v5 - Fix numerous spelling and grammatical errors in the commit
+     message of the first patch.
 
-Here `$message_num` is the current message number, and `$in_reply_to` is
-the Message-ID of the message to which the current message is a reply.
-In case `--in-reply-to` is specified, the `$in_reply_to` variable
-is set to the value of the `--in-reply-to` argument.
+Aditya Garg (2):
+  send-email: fix bug resulting in increased message number if a message
+    is edited
+  send-email: show the new message id assigned by outlook in the logs
 
-Whenever this whole set of conditions is true, the script sets the
-`$in_reply_to` variable to the current message's ID. This is done to
-ensure that the next message in the thread is a reply to this message.
+ git-send-email.perl | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-In case we specify an `--in-reply-to` argument, and have shallow
-threading, the only condition that can make this true is
-`$message_num =3D=3D 1`, which is true for the first message in a thread.
-Thus, the `$in_reply_to` variable gets set to the first message's ID.
-For subsequent messages, the `$message_num` variable is always
-greater than 1, and the whole set of conditions is false. Therefore, the
-`$in_reply_to` variable remains as the first message's ID. This is what
-we expect in shallow threading. But if the user edits the first message
-and resends it, the `$message_num` variable gets increased by 1, and
-thus the condition `$message_num =3D=3D 1` becomes false. This means that
-the `$in_reply_to` variable is not set to the first message's ID. As a
-result the next message in the thread is not a reply to the first
-message, but to the `--in-reply-to` argument, effectively breaking the
-threading.
-
-In case the user does not specify an `--in-reply-to` argument, the
-`!defined $in_reply_to` condition is true, and thus the `$in_reply_to`
-variable is set to the first message's ID, and the threading works
-as expected, regardless of the message number.
-
-Just like the `$message_num` variable, the `$message_id_serial` variable
-also increases by 1 whenever a new message is sent. This variable
-displays the message number in the Message-ID of the email.
-
-To fix this bug, we need to ensure that the `$message_num` variable is
-not increased by 1 when a message is edited and resent. We do this by
-decreasing both the `$message_num` and `$message_id_serial` variables
-by 1 whenever the request to edit a message is received. This way, the
-next message in the thread will have the same message number as the
-edited message. Therefore the threading will work as expected.
-
-The same logic has also been applied in case the user drops a single
-message from the thread by choosing the "[n]o" option during
-confirmation. By doing this, the next message in the thread is assigned
-the message number of the dropped message, and thus the threading
-works as expected.
-
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
----
- git-send-email.perl | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
-
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 55b7e00d29..b09251c4fc 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -1639,8 +1639,20 @@ sub send_message {
- 		         default =3D> $ask_default);
- 		die __("Send this email reply required") unless defined $_;
- 		if (/^n/i) {
-+			# If we are skipping a message, we should make sure that
-+			# the next message is treated as the successor to the
-+			# previously sent message, and not the skipped message.
-+			$message_num--;
-+			$message_id_serial--;
- 			return 0;
- 		} elsif (/^e/i) {
-+			# Since the same message will be sent again, we need to
-+			# decrement the message number to the previous message.
-+			# Otherwise, the edited message will be treated as a
-+			# different message sent after the original non-edited
-+			# message.
-+			$message_num--;
-+			$message_id_serial--;
- 			return -1;
- 		} elsif (/^q/i) {
- 			cleanup_compose_files();
+Range-diff:
+1:  63addf9d9b ! 1:  5103ea4034 send-email: fix bug resulting in increased =
+message number if a message is edited
+    @@ Commit message
+    =20
+         But, if a message is edited and then resent, its message number ag=
+ain
+         gets increased. This is because the script uses the same logic to
+    -    process the edited message, which is uses the send the next messag=
+e.
+    +    process the edited message, which it uses to send the next message=
+.
+    =20
+    -    This minor bug is usually harmless unless some special situations =
+arise.
+    +    This minor bug is usually harmless, unless some special situations=
+ arise.
+         One such situation is when the first message in a thread is edited
+         and resent, and an `--in-reply-to` argument is also passed to send=
+-email.
+    -    In this case if the user has chosen shallow threading, the threadi=
+ng
+    -    does not work as expected, and all messaged become as replies to t=
+he
+    +    In this case, if the user has chosen shallow threading, the thread=
+ing
+    +    does not work as expected, and all messages become replies to the
+         Message-ID specified in the `--in-reply-to` argument.
+    =20
+         The reason for this bug is hidden in the code for threading itself=
+.
+    @@ Commit message
+                 }
+         }
+    =20
+    -    Here $message_num is the current message number, and $in_reply_to =
+is
+    +    Here `$message_num` is the current message number, and `$in_reply_=
+to` is
+         the Message-ID of the message to which the current message is a re=
+ply.
+         In case `--in-reply-to` is specified, the `$in_reply_to` variable
+         is set to the value of the `--in-reply-to` argument.
+    @@ Commit message
+         In case we specify an `--in-reply-to` argument, and have shallow
+         threading, the only condition that can make this true is
+         `$message_num =3D=3D 1`, which is true for the first message in a =
+thread.
+    -    Thus the $in_reply_to variable gets set to the first message's ID.
+    +    Thus, the `$in_reply_to` variable gets set to the first message's =
+ID.
+         For subsequent messages, the `$message_num` variable is always
+    -    greater than 1, and the whole set of conditions is false, and thus=
+ the
+    -    $in_reply_to variable remains as the first message's ID. This is w=
+hat
+    -    we expect in shallow threading. But, in case the user edits the fi=
+rst
+    -    message and resends it, the `$message_num` variable gets increased=
+ by 1,
+    -    and thus the condition `$message_num =3D=3D 1` becomes false. This=
+ means
+    -    that the `$in_reply_to` variable is not set to the first message's=
+ ID,
+    -    and thus the next message in the thread is not a reply to the firs=
+t
+    -    message, but to the `--in-reply-to` argument, effectively breaking
+    -    the threading.
+    +    greater than 1, and the whole set of conditions is false. Therefor=
+e, the
+    +    `$in_reply_to` variable remains as the first message's ID. This is=
+ what
+    +    we expect in shallow threading. But if the user edits the first me=
+ssage
+    +    and resends it, the `$message_num` variable gets increased by 1, a=
+nd
+    +    thus the condition `$message_num =3D=3D 1` becomes false. This mea=
+ns that
+    +    the `$in_reply_to` variable is not set to the first message's ID. =
+As a
+    +    result the next message in the thread is not a reply to the first
+    +    message, but to the `--in-reply-to` argument, effectively breaking=
+ the
+    +    threading.
+    =20
+         In case the user does not specify an `--in-reply-to` argument, the
+    -    !defined $in_reply_to condition is true, and thus the `$in_reply_t=
+o`
+    +    `!defined $in_reply_to` condition is true, and thus the `$in_reply=
+_to`
+         variable is set to the first message's ID, and the threading works
+    -    as expected, irrespective of what the message number is.
+    +    as expected, regardless of the message number.
+    =20
+    -    Just like $message_num, $message_id_serial variable also increases=
+ by 1
+    -    whenever a new message is sent. This variable displays the message
+    -    number is the Message-ID of the email.
+    +    Just like the `$message_num` variable, the `$message_id_serial` va=
+riable
+    +    also increases by 1 whenever a new message is sent. This variable
+    +    displays the message number in the Message-ID of the email.
+    =20
+    -    So, in order to fix this bug, we need to ensure that the $message_=
+num
+    -    variable is not increased by 1 when a message is edited and resent=
+.
+    -    We do this by decreasing the $message_num and $message_id_serial
+    -    variable by 1 whenever the request to edit a message is received. =
+This
+    -    way, the next message in the thread will have the same message num=
+ber as
+    -    the edited message, and thus the threading will work as expected.
+    +    To fix this bug, we need to ensure that the `$message_num` variabl=
+e is
+    +    not increased by 1 when a message is edited and resent. We do this=
+ by
+    +    decreasing both the `$message_num` and `$message_id_serial` variab=
+les
+    +    by 1 whenever the request to edit a message is received. This way,=
+ the
+    +    next message in the thread will have the same message number as th=
+e
+    +    edited message. Therefore the threading will work as expected.
+    =20
+         The same logic has also been applied in case the user drops a sing=
+le
+         message from the thread by choosing the "[n]o" option during
+2:  72b3cd1bfb =3D 2:  6f2668de07 send-email: show the new message id assig=
+ned by outlook in the logs
 --=20
 2.43.0
 
