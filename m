@@ -1,54 +1,54 @@
-Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6099D221DAD
-	for <git@vger.kernel.org>; Wed, 28 May 2025 22:16:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D9522127B
+	for <git@vger.kernel.org>; Wed, 28 May 2025 22:24:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748470601; cv=none; b=NOIFgXpebhNDVvPWt0XIgBJo8g+FKrquokVRxZOuAMMUpz1HcQCcjEGD3aJhb4hlDnCziE7xlEVowSb3bsQuHCKi1BhOWSWF7wRllW+BI8fFZ6UxFEGCnhuc+P7CfCjYIk5IOmjekG9WKVwdn4vXjO0VFGut02AK70V0qSq2rCE=
+	t=1748471047; cv=none; b=J5HlwQjQlvPx+SHTd7gat6vBiocgSOJDZ7beLui0RHEkPnnTXmjwKQk/6/37ARH++3hzrU6E2vPb3bAEYITskNlDY1G1Woyx/dcUDzgp8Ls7OvGUCeOqU0sD6YMMOapXVCBf6fe5lKipO0YXR9D3rlbifQTcahP9gmetAABODZs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748470601; c=relaxed/simple;
-	bh=a/dKEHrd9unGIgu0UZI046abibJ01zgdoEXz4EzYqlc=;
+	s=arc-20240116; t=1748471047; c=relaxed/simple;
+	bh=qr5xvmXRc+SSQ7uD/0BzSi+6OHBuu2zOETWygoilkzI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=a+6IjIw/R0BqIgkx3E5MnqHMfFHQbcgH1U9V/vwAD16X8+DfIQx1e3TLqrlSfGXcQ0f1iESQotPyQ1sm68zg1wtKS03ZElyeAWpwaAcm7YK2TZB/dHeOCLdiA0tys4c3jJD24NdTAdin4SPXylXq70x5aYgL3T6ihjLB0znWYds=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YiUgd96F; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Jb81TFXs; arc=none smtp.client-ip=202.12.124.151
+	 MIME-Version:Content-Type; b=AaCgUpCAs1sWDJNDOR5yuhrswPYOIsbNjZr2t85vTMEJOVO9y+ao9Uuknz7YMM6jodGL1OvppJq1Ur35oor3OLlZspLh7yoUzAmRG8jqzrqXL6pp+vajO9734ZC5eJ/qUmUBOfLrqGVa8ImJDJxyRyg6HlNkM68VejEsBtG5A1s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=uBW1GrZq; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iX3fsl17; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YiUgd96F";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Jb81TFXs"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.stl.internal (Postfix) with ESMTP id 624731140106;
-	Wed, 28 May 2025 18:16:38 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Wed, 28 May 2025 18:16:38 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="uBW1GrZq";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iX3fsl17"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id EBE662540100;
+	Wed, 28 May 2025 18:24:04 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-03.internal (MEProxy); Wed, 28 May 2025 18:24:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748470598; x=1748556998; bh=s6vz/oa6XK
-	CymN+dhrOFvF4Rn9BVI3SetBvWy55/20g=; b=YiUgd96FQTOdA7/ssnaANYYzOG
-	oG/uJyTx81I18ZckNLCf5JRLoEyfh30WsbuwYZcTDziaP1gq9WYwyU2zWIoG0CjC
-	d+R8rFkUTbi5SyCvTbbVu9PK5UWf5G9QeM7Y+uKvwFiUT0LbptzRFCZaVQTsy3Ru
-	5eOGfNZ2iUzh2/GiocECrd6O0HvsxmBLtN1w56iUnJmWK+oBuWV7BZ/eiIam8lg+
-	5vSbrk8U2z5LzS8hPz8Q3c6X3yM1wfwl5J6DQ8t6kwcATHrm6SGosORLFPubVFF4
-	h68UdX4pYQADd96PXVKx1CmMV4Btgq3I+/rVIA9xuW32eqJx+uD5ACaxN5nQ==
+	:subject:to:to; s=fm3; t=1748471044; x=1748557444; bh=Ij/5vm8NCK
+	NP1RLSDEsfo5Bgw1w0uox4pl5o4jJSvfw=; b=uBW1GrZql5m35ktFWmrT0oyIZX
+	yVOx2KgAepeTnIstpbiZJVOtoRRsB43YsFw19ZKyDn1dPUTXcFkqmhqPtFrOdVMj
+	KzX/mkzdfZmcx1yLs46X7y+U9DG8TxbajlfBgRqsM4OHOckj7wbLmF/MvO9aMZdt
+	/hon2xDoxHQSlDQxVaV0waWJ4faTUs67+NUo9WeyNnr+r9DUWxA9g3fOesKkAgSm
+	YAHWRnQgxAtpfjb36Q1i2OPaPhSIo3f5U5nvlk5PHzlS8vuOp1nT4ELU+fLBLFLr
+	y6dZKGc+ng5ye+kFBAflYGDHwSRsa2/8beDif7mp+f1FkPt3wOLMaY7rSOmg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748470598; x=1748556998; bh=s6vz/oa6XKCymN+dhrOFvF4Rn9BVI3SetBv
-	Wy55/20g=; b=Jb81TFXsSPw7wo9yQBwlwAgAqBkwRROgb0NlIZU5q0GWjhJZjuq
-	wJvM46lEE93lMs8uHOr3yYrKMSZQyyMCv1E5pXvwUI9KZUe22sCkkzWDB7yc5tv9
-	vDpwGwQ5HaTDvTCavLmn2/IDGlRIHJK7pQoBF59D4tZu6ZxhpWf/rklSWXCilatE
-	zgDUQUErdOEY3vcFv+8gR/JPSQiW2JYnG3C0ZNh4nl3uKdQ0d0+MlmyP6xkWmgcg
-	f4asLxT9ZdNytj1w7ZDs29wCYwgCv0rH2g6E3IIzPDZ5RKNGyh96e/bYfHbC+WDp
-	5E7NTsf+Ive3dr03iD3oGgNKmYnwDoetreQ==
-X-ME-Sender: <xms:RIs3aJvx1QAzI_c3eNp44lr2lDtT97t9g90_RJ286yck0omIgysXPA>
-    <xme:RIs3aCc9A__kk59YyaUR1Iy9SfzL8_O4A9esHmv__e6pxL7pIZ6Yv0W0TOjoEwc4E
-    MDGHl0AlhqFryfDbg>
-X-ME-Received: <xmr:RIs3aMxrpqacGJcryUSnUa0HZ0jLkcY6COb8PyEMblkNxsQToQZN_6hgC7z6hAtfkeREchlzaSGLwFVVwoFcxFHlerXV9XY87P8KnPg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvgeeggeculddtuddrgeefvddrtd
+	1748471044; x=1748557444; bh=Ij/5vm8NCKNP1RLSDEsfo5Bgw1w0uox4pl5
+	o4jJSvfw=; b=iX3fsl17lzuzGe0OVAdTFivgEhU6DSMuwBL6vjoxLsCIY6yxlvl
+	pPB8QjLVbc4aHKlNH4OTBOLr6+mrtCFi70V+qMk5D1hq+2aXWFUvm7ko1rpZ1GzX
+	k3C+L6FTHDkpJ6W/wKoWuTBCx61KJ2TiK7bFa5Lil9ZhJZ1ssxtRS1E+GW65/65B
+	MGKsbR4QTZTk6X8sKVGURTeTGVkKDJCK3fcnRKu04U3KwyrL0wkMEz+M3seQQQDO
+	uXXPz9GxRLT/neRogB7Ig5BcTALzFY1VPNZAh8KON/k9LDkB4VBy10+n3rYJyHab
+	/0YkzwHHk7EWDsagdBprP/AllU7PNBn5egQ==
+X-ME-Sender: <xms:BI03aALIPQBIdUtQSsiPUhnO9WdN7DEJULNY1yRo-8sRd4wog7HiHQ>
+    <xme:BI03aAIRzgGVI-XpaSYyHVsrrHlt3FLE0QPNMYpZNsBfKwRxFaIyqgX0zpx3S791O
+    3ZMEEntxyGzJeXu3Q>
+X-ME-Received: <xmr:BI03aAtiPUmUGIMssGFNEjJcdk8UE6aTM4aaApnDgLHXuTxhH0qxX73buTmvIzRMkCq_UvHgJ2MSyuxKa2d6z89LKTdS9iYAlkiOSf8>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvgeegheculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
@@ -56,34 +56,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvgeeggeculddtuddrge
     hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
     heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
     hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopeehtddvtddvgeeffedttdeh
-    ieesshhmrghilhdrnhhjuhdrvgguuhdrtghnpdhrtghpthhtohepghhithhsthgvrhesph
-    hosghogidrtghomh
-X-ME-Proxy: <xmx:RIs3aAOaqAav37ji4IoySG60Ogyv5zpunT7Jrau7mGOMcnwac_7E3g>
-    <xmx:RIs3aJ8JMCE77Lem1Rnj7iwKc-z_Sbae-Htp6jNT874f4lEGajbhsg>
-    <xmx:RIs3aAWPk4suyBy33AVg9w169QXUKMh4MHJxkbGuZtK_l7TAT6xcKw>
-    <xmx:RIs3aKf0i6F7qQ5VdqlU1WeiKx9rF9Xw7wZroI2_AwWBkIyc10UK1w>
-    <xmx:Ros3aN1AuxYsAgpTyHIqeJIV0S3BnZIi6yWYUMKAV3K-9_JcavRXXXhF>
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehnihgtohestghrhihpthhonhgvtghtohhrrdgtohhmpdhrtghpthhtohepnhho
+    sghoiihosehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnh
+    gvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:BI03aNYMQIYQ6juHK69wcq9-l4tF0-prMBUrMu9NWgAKIp0GY5o6Lw>
+    <xmx:BI03aHZ_WVqIGzurUT3Sn-BVwmB2MJvdwhcMa5MlzqP9of0B22QqgQ>
+    <xmx:BI03aJDlTTZmAOozYzl2HmDKyinJJ4ZY-qOEWwOhpG6GKbgQ0808Ew>
+    <xmx:BI03aNavxw7n9J07n33z_XOWXmzYZK6fkEbbCzD3adrKcf2ORIQZ_Q>
+    <xmx:BI03aKfERCr8p7BKrPOprGbfT5aq2ebLr4iEtbL8CnZTDuuR80CmEqfm>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 May 2025 18:16:36 -0400 (EDT)
+ 28 May 2025 18:24:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,
-  Phillip Wood <phillip.wood123@gmail.com>,
-  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v2] sequencer: replace error() with BUG() in
- update_squash_messages()
-In-Reply-To: <pull.1964.v2.git.git.1748168353204.gitgitgadget@gmail.com>
-	(Lidong Yan via GitGitGadget's message of "Sun, 25 May 2025 10:19:12
-	+0000")
-References: <pull.1964.git.git.1747226641249.gitgitgadget@gmail.com>
-	<pull.1964.v2.git.git.1748168353204.gitgitgadget@gmail.com>
-Date: Wed, 28 May 2025 15:16:34 -0700
-Message-ID: <xmqqr008peil.fsf@gitster.g>
+To: Nico Williams <nico@cryptonector.com>
+Cc: Jon Forrest <nobozo@gmail.com>,  git@vger.kernel.org
+Subject: Re: "git commit -a" Doesn't Add New Files. Why?
+In-Reply-To: <aDXo0Enj4cQzKQkK@ubby> (Nico Williams's message of "Tue, 27 May
+	2025 11:31:12 -0500")
+References: <1014npb$rbl$1@ciao.gmane.io> <aDXo0Enj4cQzKQkK@ubby>
+Date: Wed, 28 May 2025 15:24:02 -0700
+Message-ID: <xmqqjz60pe65.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -93,48 +86,25 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+Nico Williams <nico@cryptonector.com> writes:
 
-> From: Lidong Yan <502024330056@smail.nju.edu.cn>
+> On Tue, May 27, 2025 at 09:03:55AM -0700, Jon Forrest wrote:
+>> The documentation clearly says that running "git commit -a"
+>> doesn't add new files to the index. I wonder why that choice
+>> was made.
 >
-> In sequencer.c, caller only pass TODO_SQUASH or TODO_FIXUP to
-> update_squash_messages(), any other command passed in should be
-> considered as BUG. Thus I think `return error('unknown command')`
-> should be replaced as `BUG('unknown command')`.
+> I use `git commit -a` all the time in workspaces that are dirty.  It
+> would be exceedingly annoying if `git commit -a` were to act like `git
+> add . && git commit`.
 
-Yup.  The only caller has
+True, but not quite.  You would want your "git add ." to be safe in
+dirty working trees---at least some folks wanted so badly enough
+that "git add ." pays attention to the ".gitignore" mechanism.
 
-	else if (is_fixup(command)) {
-	     if (update_squash_messages(r, command, ...) {
+But `git commit -a` would not change, even if it won't add cruft
+with well curated .gitignore files.  That will be a terrible
+backward incompatible change for those who expect it only deals with
+the files it knows about (including the one that is not yet tracked
+but its presence is known via "git add -N").
 
-and is_fixup() is confusingly [*] defined to return true only when
-the command is one of these two values.
 
-[Footnote]
-
- * And a similarly named is_fixup_flag() only accepts TODO_FIXUP and
-   never TODO_SQUASH.  Both of these helpers probably need to be
-   renamed.
-
-> diff --git a/sequencer.c b/sequencer.c
-> index b5c4043757e..3cd0dd3434e 100644
-> --- a/sequencer.c
-> +++ b/sequencer.c
-> @@ -2139,7 +2139,7 @@ static int update_squash_messages(struct repository *r,
->  		strbuf_add_commented_lines(&buf, body, strlen(body),
->  					   comment_line_str);
->  	} else
-> -		return error(_("unknown command: %d"), command);
-> +		BUG(_("unknown command: %d"), command);
->  	repo_unuse_commit_buffer(r, commit, message);
-
-BUG() is not end-user facing but programmer facing, and we do not
-use _("...") in them.  I see a few existing violators that need to
-be corrected.
-
-OK.  Or
-
-	if (!is_fixup(command))
-		BUG("not a FIXUP or SQUASH %d", command);
-
-at the very beginning of the function?
