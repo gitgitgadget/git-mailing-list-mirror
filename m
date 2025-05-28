@@ -1,104 +1,172 @@
-Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qv1-f46.google.com (mail-qv1-f46.google.com [209.85.219.46])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E467B1D63E1
-	for <git@vger.kernel.org>; Wed, 28 May 2025 02:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1168C322B
+	for <git@vger.kernel.org>; Wed, 28 May 2025 02:37:39 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748399648; cv=none; b=jkROvZc3p4CqKaM6FSUBsQItUMBk8dDAF5gAZbEYwqvfqMsHhHpu4iPfOfHzyF3LSG3sDbA7IAVfu8zZI0LtmhEIF/Gql0A91YBXvMkroULqVqnqgPrhbI8etMdn2x+i4Y3t4/WihkyNEJt11/5oIVfLN3wfkOJ6aFj8Z+YyyBo=
+	t=1748399862; cv=none; b=BsAyE5y06iIX2EMp/XhFUIxKQ6BknuHePsi64TwMIzW7R6n3jUrUPalGz7Mt47t7doasYm2B1r1gFqXxFRZUYIQVeOYuHlgAZX+ffXd6XHcbgcs3agjlPkg8DefeM/9jZk9po3NMtBCGrEpHEN16t7/8Fm/FEHfzroJETG2ABzE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748399648; c=relaxed/simple;
-	bh=0HaYZRJQ2nqqZJsS7IflBZE4oMMBhmE/P84oH5KAMyA=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DSceGeNyrwWkMbJs9ik7lGu0yoWHnrcSxw2iAaH5ZX7RQsxA+erlcQrkEYJqbsK1VmRG6jaZuPs2JgO0hejD3zjy0tt9a+ysL9fydpqMwmeQaU004qDz0yVzfWCW6BYM6xgd2d3ced0galn6YmEN8CORZ7C6L84Vl5+uWLMvYQU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s8Ii17XV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MU7cSToc; arc=none smtp.client-ip=103.168.172.152
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748399862; c=relaxed/simple;
+	bh=d6SgpoKsWQhFdhBjWvSauqwUdHQRZHztZubUjqGMhpo=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=eUOXlOYQVCfjREUHAFunvWe2ftY0UAL3K1a1KJDQM8F6Ru8cNhkBMI40oO5i5F8/xCM95WSB4BzxmCBLUnUVjtcDr95v0nvnWnnmkbwqXUVba1XH9khARUJVTnhuqt8G+sw/vBWD8UdBBn+Lcm7uHcUFsAg6Y6jQ1BfKV8LaxxU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=AD9+J9bP; arc=none smtp.client-ip=209.85.219.46
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s8Ii17XV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MU7cSToc"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D033F1140145;
-	Tue, 27 May 2025 22:34:04 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-05.internal (MEProxy); Tue, 27 May 2025 22:34:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748399644; x=1748486044; bh=UdWGhkS+6v
-	kY6JoIy88jl9W6NxbRxO272WsSAhLN6rM=; b=s8Ii17XVz4hdJtsYvBgNqAxCWX
-	V1tIknAlZWB758bcoj5ubJk+NPHA4M0Gty7asolkhWu859zDefv7xSW0zcfasNN2
-	mpew5ELEizI4oRSnEkJdoeTc2wqGyiCtc3FCRWoVhk5f4gPIcN30AuWob2Z1hhBv
-	wszVLBw/121LANU9GMrRk8bKG25mlEzWaoYEL/96EuJBUs3cKIm3qGX0Rfd+d5c+
-	q3s8K1I4/W7h9jt4XPpmf2Yn5w0um56Zo3lNSKE0M+iFV0fe7xkNswXXO0DpjcWl
-	WhQVt2Ad+eiz3BcONnlDcXWNspSBrbySKLnRXKU58dbEXvO+P0vXiE00T42A==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748399644; x=1748486044; bh=UdWGhkS+6vkY6JoIy88jl9W6NxbRxO272Ws
-	SAhLN6rM=; b=MU7cSTocLpbfRAsJ6WWYauI6FdDB2jtA4bwIx0Ipzyy88Ce2npE
-	E2m4622G1OUvM7O+V2VJ3FtfHzzCcrGgb+SHrjhwNkRJCNI8P8czz6bDsdMPg3At
-	Z4rAR7zgWbp5ifRlfXk1H6LX68Zot60RfWfk9MXlgwsl1g4YWtP0xItM1m2hlSJn
-	vr2TttOD9X77kHISOEO9HHfHbm2h0RpALLqi7w1ELBvXF/uNL2/2E2uo/taqmIiW
-	sTSw3IksH9VvwF2maiNNXYIeH0wV4H0J8l0GYvj/q0jCIVIEG0hwfnZcVhju/pbY
-	i5wPlkScGWKHcRPFGtfWhxb/Kxl8/VBMm9Q==
-X-ME-Sender: <xms:HHY2aHQldvqIyNF3_dsj4wRxg3fc0qMLn7AX9HmZg9umrmemCDLSRA>
-    <xme:HHY2aIxG2jDTpnYW0l-DZpuaN6K07X82mnsPP43Ap3z2PXCiTzM5FsEyU0VhP3WqN
-    m-ZrRG3RdL_z2pRnQ>
-X-ME-Received: <xmr:HHY2aM0pwlCIOITcKRPlcCcY6HvPLe9yQV7_jbQHvHg7pP8tFrBfcvdFEBi5kzhlTr722pGpHnOw6qtOmo20vAZ3Ax59j3WI9X6EGYM>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvvddtjeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecunecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomhep
-    lfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqne
-    cuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfff
-    ffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
-    hfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedp
-    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhhosghoiihosehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
-    pehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:HHY2aHBmGWgClNyV0kOk4zscATKBfqY-hR0oUP1eAKnd9V8grHSoHg>
-    <xmx:HHY2aAgCXfBHmjtS-HrFWZxSnbnMgH8jVbdCPIW21WJc8Pehw7KvYw>
-    <xmx:HHY2aLqpszcMFzfHy3NEGMF322E61-n5Kjp48xHTksDfn1YSN5mmxA>
-    <xmx:HHY2aLjxEVg05V8oYtJfQho2A-rv250l20YoKQDKEly1N9yr38-MHA>
-    <xmx:HHY2aEfZvnUBx_GV8ooX8lQWaEYxgxb2WWhwOB4wYIYKwi_Ie311NKKs>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 27 May 2025 22:34:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Jon Forrest <nobozo@gmail.com>
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="AD9+J9bP"
+Received: by mail-qv1-f46.google.com with SMTP id 6a1803df08f44-6f8d663fa22so52407996d6.0
+        for <git@vger.kernel.org>; Tue, 27 May 2025 19:37:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1748399859; x=1749004659; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lJfRk55cepJJkPynBqhInHz+8Bod9ogJlBPEBP8wfY0=;
+        b=AD9+J9bPkzBhP2B/GPKthHM4RvxipP/7uRTZcs/NBHlE/LkpaTZC6lt5e9YAEAGQaF
+         08yy/odhK2DiFMCqpT8sXFM1uI7/lMtgnlXG3sSgqX/J+bkuTEXXWP5JeVA16lgMhO4w
+         En1C5SMc0Y7snck4ZQxM8iWY4h79JqI3VTfljPAH7xuf1oVvLWgQ6ZAFOLsIyb28qOuk
+         m5emcvk0jAf6cay1j+FGSCoptfDvs6ev02LU7ncvk9eq/L9h6Pv5Yj0su5HmlkaJrtNP
+         syihwQpaFptVCaiai4X1zTmEVoR8u5ZiD/JpsDpYYb2x3aXW+TXVRKYnF0X5DU3ExYZk
+         PVrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748399859; x=1749004659;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lJfRk55cepJJkPynBqhInHz+8Bod9ogJlBPEBP8wfY0=;
+        b=HA9R1C0rduiCTEAMQP4w7gB2/JubJe24wYUgLcgIYR1OqKs7w8zsvuwgip8NSNDZRg
+         OQmzysWSeothg4jRBAJFXLshGj9HBemREGCuohqq0K2HqRpUyrRX8lVEKRz3H4LXQO1L
+         w9DYL3UNZxMsoFTPLvaaQvYvuMnc7vMpEeqHDHW7K7ufvQOOkBhKeAMmCPgOktrK9Kwi
+         sE/HWBiZr9LcIsu/WwljmU2mwWrMISKcNpGgvXth84019gfGIWQADvp8muAe5ds6iP+0
+         m29wz4cewc9mgDJGL4TLSrwlkxWEkAYW/EHEnNdto/sgGTMgRUSc4Y0tcEKI+oLaZvbw
+         d23g==
+X-Gm-Message-State: AOJu0YzmXYQuMyl4c4s0Oc4KXgz63fUrd5FSf8ppBmZ+zA5luB5t9hVa
+	Ybd6NT+YNjpOFxcgIQq9dQB1tlWxhk6vV5wAdE5SjpNp/68T8QwH3aPKPYqS/AZOvQrAS5aU2jg
+	H9Hed
+X-Gm-Gg: ASbGncsp0SDA8wqGm6gXRhBDryAdrzQVUMabuHaanR7BOMk4jzSorbtq+OCD0ZJka4A
+	omHqntOfx/l18dOvUqRCVOHt7G97mjNQWesOkxB3dWFZiLgYppHAtBjbhlNHpYPYFHvOjWB1uRz
+	h8Wjvem5BpMof/TVQ2CbeuP4GtQYzyQmG208btEOdB2KST+xXZ+3WTo8ZR7T7fEP35FbnDQLnO8
+	X7s5cdDzkXCGCJVF6rcu4m8EQPZS8Eup4dmRW2L1Jm++wcpquRayys+pxxyY00+RsN3BGCLBl+g
+	hfUIU91zYaZbKSK7Ljg/I6KC5yI8wpOWykGnbWG//V1ZOK2ID+euL8mMjVmkF/z0Ntie2HAuBud
+	5rssyTuEWB2wVyuv/yIkVhE4D9UDHlzmL6g==
+X-Google-Smtp-Source: AGHT+IGjwokroYjGfEThzWZlBYY1jA1GW+aaNEHOk0Iw8trIs392iJRBMVKKUcM2eLxz3CVydgI5BQ==
+X-Received: by 2002:a05:6214:486:b0:6fa:c054:1628 with SMTP id 6a1803df08f44-6fac0542d7fmr8239266d6.23.1748399858734;
+        Tue, 27 May 2025 19:37:38 -0700 (PDT)
+Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
+        by smtp.gmail.com with UTF8SMTPSA id 6a1803df08f44-6fac0bc7c86sm1239286d6.99.2025.05.27.19.37.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 May 2025 19:37:38 -0700 (PDT)
+Date: Tue, 27 May 2025 22:37:36 -0400
+From: Taylor Blau <me@ttaylorr.com>
+To: Junio C Hamano <gitster@pobox.com>
 Cc: git@vger.kernel.org
-Subject: Re: Question About Sorting the Index
-In-Reply-To: <9befdb3e-ff6e-4416-8735-1eea99dbbf01@gmail.com> (Jon Forrest's
-	message of "Tue, 27 May 2025 09:38:59 -0700")
-References: <1008ijb$6j0$1@ciao.gmane.io> <xmqqfrh3qe2w.fsf@gitster.g>
-	<9befdb3e-ff6e-4416-8735-1eea99dbbf01@gmail.com>
-Date: Tue, 27 May 2025 19:34:02 -0700
-Message-ID: <xmqqbjrdtqed.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+Subject: Re: What's cooking in git.git (May 2025, #08; Tue, 27)
+Message-ID: <aDZ28C8bqnstJ68r@nand.local>
+References: <xmqqfrgptv10.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <xmqqfrgptv10.fsf@gitster.g>
 
-Jon Forrest <nobozo@gmail.com> writes:
-
-> On 5/17/25 11:36 AM, Junio C Hamano wrote:
+On Tue, May 27, 2025 at 05:54:03PM -0700, Junio C Hamano wrote:
+> * tb/prepare-midx-pack-cleanup (2025-05-27) 6 commits
+>  - midx: return a `packed_git` pointer from `prepare_midx_pack()`
+>  - midx-write.c: extract inner loop from fill_packs_from_midx()
+>  - midx-write.c: simplify fill_packs_from_midx()
+>  - midx-write.c: guard against incremental MIDXs in want_included_pack()
+>  - pack-bitmap.c: fix broken warning() when missing MIDX'd pack
+>  - Merge branch 'ps/midx-negative-packfile-cache' into tb/prepare-midx-pack-cleanup
+>  (this branch uses ps/midx-negative-packfile-cache.)
 >
->> For example, the fact that the index is first read into core, each
->> entry is represented as a cache_entry in-core structure, and the
->> code accesses them via an array active_cache[], and that array is
->> sorted per pathnames, haven't changed.  
+>  Improvement on Multi-pack-index API.
 >
-> I had a thought. What if the in-memory cache were stored in a hash,
-> where the pathname is the key? That way nothing would have to be
-> sorted in order to lookup a particular file.
+>  Comments?
+>  source: <cover.1748198489.git.me@ttaylorr.com>
 
-The index must be in sorted order in order to allow a set of tree
-objects written out of it.  Hash may be good for looking up, but it
-is not the best data structure for stable and efficient enumeration.
+I'm planning on sending out a new round of this tomorrow morning (CDT)
+based on some of Patrick's feedback. That should hopefully be in good
+enough shape to start merging down.
+
+> * ps/midx-negative-packfile-cache (2025-05-20) 2 commits
+>  - midx: stop repeatedly looking up nonexistent packfiles
+>  - packfile: explain ordering of how we look up auxiliary pack files
+>  (this branch is used by tb/prepare-midx-pack-cleanup.)
+>
+>  When a stale .midx file refers to .pack files that no longer exist,
+>  we ended up checking for these non-existent files repeatedly, which
+>  has been optimized by memoizing the non-existence.
+>
+>  Will merge to 'next'?
+>  source: <20250520-pks-pack-avoid-stats-on-missing-v2-0-333c5217fb05@pks.im>
+
+Yeah, this one looks good to me.
+
+> * tb/midx-avoid-cruft-packs (2025-04-15) 9 commits
+>  - repack: exclude cruft pack(s) from the MIDX where possible
+>  - pack-objects: introduce '--stdin-packs=follow'
+>  - pack-objects: swap 'show_{object,commit}_pack_hint'
+>  - pack-objects: fix typo in 'show_object_pack_hint()'
+>  - pack-objects: perform name-hash traversal for unpacked objects
+>  - pack-objects: declare 'rev_info' for '--stdin-packs' earlier
+>  - pack-objects: factor out handling '--stdin-packs'
+>  - pack-objects: limit scope in 'add_object_entry_from_pack()'
+>  - pack-objects: use standard option incompatibility functions
+>
+>  "pack-objects" has been taught to avoid pointing into objects in
+>  cruft packs from midx.
+>
+>  Expecting a (hopefully small and final) reroll?
+>  cf.<CABPp-BEukTWwsuC7MMR8D5_UAhyw-LgT=DsPKAWeR_ZmVVhjzQ@mail.gmail.com>
+>  source: <cover.1744757204.git.me@ttaylorr.com>
+
+I have a couple of minor tweaks that have been sitting in my queue for
+too long. I'll plan on sending those out tomorrow morning as well.
+
+> * tb/pack-bitmap-lookup-tables (2025-04-17) 4 commits
+>  - t/perf/lib-bitmap.sh: avoid test_perf during setup
+>  - t/perf: avoid testing bitmaps without lookup table
+>  - p5312: removed duplicate performance test script
+>  - pack-bitmap: write lookup table extension by default
+>
+>  Enable lookup tables extension in pack bitmap (and midx bitmap) by
+>  default.
+>
+>  Comments?
+>  source: <cover.1744924321.git.me@ttaylorr.com>
+
+Let's drop this one for now. There's enough left for this one that I
+would rather focus on polishing the release now that we are on the eve
+of -rc0.
+
+> * ds/path-walk-2 (2025-05-16) 13 commits
+>  - pack-objects: allow --shallow and --path-walk
+>  - path-walk: add new 'edge_aggressive' option
+>  - pack-objects: thread the path-based compression
+>  - pack-objects: refactor path-walk delta phase
+>  - scalar: enable path-walk during push via config
+>  - pack-objects: enable --path-walk via config
+>  - repack: add --path-walk option
+>  - t5538: add tests to confirm deltas in shallow pushes
+>  - pack-objects: introduce GIT_TEST_PACK_PATH_WALK
+>  - p5313: add performance tests for --path-walk
+>  - pack-objects: update usage to match docs
+>  - pack-objects: add --path-walk option
+>  - pack-objects: extract should_attempt_deltas()
+>
+>  "git pack-objects" learns to find delta bases from blobs at the
+>  same path, using the --path-walk API.
+>
+>  Comments?
+>  source: <pull.1819.v3.git.1747419124.gitgitgadget@gmail.com>
+
+I expect that this one should be ready to go, but I'd like to give it a
+read through with fresh(er) eyes tomorrow before declaring victory here.
+
+Thanks,
+Taylor
