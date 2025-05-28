@@ -1,69 +1,70 @@
-Received: from mail-yw1-f176.google.com (mail-yw1-f176.google.com [209.85.128.176])
+Received: from mail-yb1-f179.google.com (mail-yb1-f179.google.com [209.85.219.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98AF82222DB
-	for <git@vger.kernel.org>; Wed, 28 May 2025 23:20:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECF2F22370D
+	for <git@vger.kernel.org>; Wed, 28 May 2025 23:20:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.179
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748474436; cv=none; b=eCXPR0r6ZnLPYiDtaAMTbKRWlkH0H6XdVtenZ5LtqbljsFFrpd8GAarb/9Bx7HKNRivacg8ubKe2c1sEO1rtluEG/4Sq3Hv/kM2IvbGUXrt91bLrPKJp2ZXynO0L6MxVk978F3qyClQKBCMEl6GthJt9s2sAaRwDN/eFzWmuCa4=
+	t=1748474440; cv=none; b=g68ahz5YvUpJa0APb3kyRytGkHAFXHtc2/w9V+ssdgunxO/inhx1Z5qHdzUCzAwZAQ9WNUiZMvInhM0hCMWiIVQFjOn/VYUIw/hZ3iuW24RGsnq9pLDcJlFvxyiKu/dOr/Odz5KgcKk3pwf+oIgnRru+n4+sfKlBT1tpJiPvd7Q=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748474436; c=relaxed/simple;
-	bh=SnRUJuYbe1tHuI6xru6OyKWB24uuv0LDD8411p6u/Fc=;
+	s=arc-20240116; t=1748474440; c=relaxed/simple;
+	bh=5WGVoE7JxAoJH5je8Q6zjlmbvxBMPSnENSQgyjPXy9g=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tBxJHgkSdAylGZQKQVBWWOsgyzL9kXyUBGgm1Yt5kv9+Jmga8G4ZkrE/uxYM9In6ksf++ximFiBp0UL1X4zynQ5KFuCox85mefWQ1g9z5R++O3imypjW4074gUHbcLOlTRONM3Rhf3Qk03lC9RuMaRA5/Q+hFyhYJOnFkEFVqkU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=bNoPZlmr; arc=none smtp.client-ip=209.85.128.176
+	 Content-Type:Content-Disposition:In-Reply-To; b=HiEMy3FhFtSfhevXKBHEZUbkooWZFoTCwzvtcgs9wH/sCcVzJmX8ASyZDIMJGFv1qtWIPzf/F6iswIjJqGrMhI6GmZ6xERdTSQfpWFGK/mNJZF0CeG6sYWVXzdeKe77c0NuSlthA2PESSGR+UAAwQchEc0M8AzeskMObIYLmUhc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=aNm8I3U0; arc=none smtp.client-ip=209.85.219.179
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="bNoPZlmr"
-Received: by mail-yw1-f176.google.com with SMTP id 00721157ae682-70ccb7effb0so3309267b3.0
-        for <git@vger.kernel.org>; Wed, 28 May 2025 16:20:34 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="aNm8I3U0"
+Received: by mail-yb1-f179.google.com with SMTP id 3f1490d57ef6-e7dc83224d5so1352380276.1
+        for <git@vger.kernel.org>; Wed, 28 May 2025 16:20:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1748474433; x=1749079233; darn=vger.kernel.org;
+        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1748474437; x=1749079237; darn=vger.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=PaEpSuBR6F+nr0JelS17rLNiHDecWUSrF5+aGwp8hp8=;
-        b=bNoPZlmr+rKRobuAvHgJkr/t2Vg9vl28JSa0g0B1OaIyQq9IH26pY/eWzCBgJRGBEj
-         YjthhuAF5+abGZ6IqpCJEIXCQu0zDWl8khkd17mpRoykQdTBKLJaHfqQHr5pHGGL5Cc7
-         b32vOxpKVsWIFlaXwGBDXuLuLN7ocVf3hIJGp35p975KayKUwflqYLVL2c9LZEFtCgad
-         MplAqkEiKacAOvJbXIXkCGU2CS2gcWw313uYgGU9TmE+T8MMjVDRLHHcxzRW4PiV1kk2
-         Fw3ou/t2m2Fie/WANHqs7N4+617JuaOb4hkowSVFDPIdvEDY7W1OsduTtd3VUlKP7cDM
-         5+8w==
+        bh=K/yYvRDWQT/DPMrKYPuYRROjBwX8fRjY4cWfxbC/abM=;
+        b=aNm8I3U0n4i4R5jH842Zbz/gPDBRCpzELIBmAtu4w8DK6WAn6kfKvu0IsnlR1tj5Xz
+         V+lfFdgdN5SOqn3I7BQ7uy/o2WsagjS8/MQrHplK/DkztvotRPb79HBfKc8LzX9mhG0U
+         KTakdZs5bOwOR4kE7SCk6RLUe7BAwb/imgPyQSZGVxUJpcYHQc+LqQliQjAEatOF/vqv
+         TmIbectjD+aZkkoRdabRadAQ2IhKRqscmNOQRGdvuoTxhg59DBjVaf+TDWSwIHFtaHwv
+         7eK/hJFXFM1OybI19MZWu7fNVK6jWA26XMIKgJaCiVKRa0CNZCiGLwgG53Meo4edmDmY
+         7Uqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748474433; x=1749079233;
+        d=1e100.net; s=20230601; t=1748474437; x=1749079237;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=PaEpSuBR6F+nr0JelS17rLNiHDecWUSrF5+aGwp8hp8=;
-        b=mRn93aDz3tB6R1+c1pYz7noAubPErbVJ8BWmgwL6tmvFRlg25qSrfRR98Vtn5Djihu
-         K37NFemnP445XiWFKQAZ1CM1VVatp/dz4BzwJHpWrMo1YR/4UFE1kZCUQezGR/x2m1uf
-         2DzOhtBljS0wRCNgq7nRWt1kw9ECAisuXYVhu8RM8P3rpXdS9PEj5gPOaxCGKoXqDAtY
-         aMliaLOXe3C5pKTSPRuOTsBNRBz9h2/FUBOGaTpF+EpSl6Czw6KB25crDkAfqQFSmujY
-         vXE47XjXAczoXlaaV6hEzOPn4gtlMFE8ULxkyRd2KrMx2vj4l/hzh14ZE04+On4MrCBY
-         VzJA==
-X-Gm-Message-State: AOJu0YzSWmXPy5QRtpdFmLEDhTDbfsL57LeBGdB/quIOrndYcko7ahTO
-	CRNavLLNKb2iSV936XPtPEW3ScM7n2buG4uBROwyk6WTLukx/l2wbtG2vnP9Jhtso5X4Wrut6XE
-	Mn2/u
-X-Gm-Gg: ASbGncs4Q4bFEMHCnm1Y1r8naT2lVbCJTRtBi9vxEhEnyt6ifihj/T3WWgOfq3oIb7V
-	i+IcMHaA+ckOh2TTSSn5zcIyvR+cjqXN6R55/EGuQsJ928AHANWJnn8UzeF/744z9lWvq8elZHF
-	8b6pOR0xkLMD3YdT3bDE9GphTcOIArwzlSkp/Ux+Jh1xp8J3hZtWGUimBX4wtbXUDH3x7LNAP66
-	aINiRz8wNZEQce1di/CxdOqPvaJvnv0K9XQwFVwSNOUNoGcOrCxQCOW6yCv11gRUD+53rQ1kv26
-	cnj9tut4OZbDxm6ZHHWhDWtlbGNbz2waXB+ay1qucVSHQLTVhp2Aub7CWH8O8icrV5grFuKilPr
-	XSDAim31kddxfSX20amjNcVc=
-X-Google-Smtp-Source: AGHT+IGR9gqKTB213wEHomq9/ImT6sM3cpZFap0UQ7uR5tmNpYwBI1vbbk/gy4c+dZd0j2YHR2oqlA==
-X-Received: by 2002:a05:690c:3685:b0:70e:2246:1999 with SMTP id 00721157ae682-70e2da0eba5mr247440607b3.21.1748474433238;
-        Wed, 28 May 2025 16:20:33 -0700 (PDT)
+        bh=K/yYvRDWQT/DPMrKYPuYRROjBwX8fRjY4cWfxbC/abM=;
+        b=KscX9ysPjfij2nXZsSV6bUS5y461ItI/sOYl0HFjMUCzBfMCXqUIg/zWUSHZyEl19u
+         rTQi2WX70ZMoDRFmmNC2tj9mhSQiX04AQgDd/fVYB6ZOi+FpecUNMmOQfYAa3KuVel9P
+         GVutsMj2j36TUgxlcOlU3KH3gnkWp1EOP/h9hGc9LNA6iQne1fvXzurSuFEtx33C3ofE
+         WRThdCN2rU3ecM5Zi2gtNcDzTPNm+i5wQwgUDhVR7teDw3CkQ1BLAIpXMq8dQZZnI7df
+         OyU9fF+IrDJJvqp7sp/ebGxADEH/dHUqAseG0dX9VqqDPkJ9aCLCtAOvrYK+6mFPCWR9
+         1b3A==
+X-Gm-Message-State: AOJu0YycJ17mjqx6L07AR//icpzKccNk7Kvqr7jmKcyLxJSXH6D/F9D4
+	NCkZkdyRXxDlW5unxa4zoi9N6ydv33DxGjV4V+MXs05L6ZafmLx6XsjC2x/UB374y5E0M20yu9W
+	++TrV
+X-Gm-Gg: ASbGnctQrLcxHy6DKi6FWqaRcHE7jV5l5TcDSwYvMJOaRfcSeUkl3iNCK8687J2gO+f
+	ZIGeSUyxUFd3NYe1mniUnZn5FjQYUPB6/afAS91GfKnwuxb5U3K/jA9WqnM94qNoLJHeUCgk3j/
+	lRDxvzjL3ZZJgpg/56H6RnuPEmLPPd2D+uoFoEcEZElu34y9GB76n4rJ3AxVqeQdjgLmfYcv9ZT
+	9CmGXjeW2DUuKZTJsTDdWklin1/+krQXSuzt6TWJ1lmK0ZFQFFR9kdE+gMvJVKi4lUMPT8QkHu/
+	WktghaYT5RlPm0UZtlIkrF9QvhH2P/bmy+MI0TdeyaYunCdmIB4UNytInjnfZreKyVBVyP3c+jf
+	+2Pp1P7EKnCt5/CWX5YKX/sA=
+X-Google-Smtp-Source: AGHT+IF2zLH6m5Aa9jea2D6mIcWe/oYuwqu/Cob+Y8nTB3/wn/e0gBIF1xzjTwDzyuWAsZvRomovEg==
+X-Received: by 2002:a05:6902:10c3:b0:e7d:7963:941 with SMTP id 3f1490d57ef6-e7f6f250a1dmr2286814276.16.1748474436578;
+        Wed, 28 May 2025 16:20:36 -0700 (PDT)
 Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id 00721157ae682-70f8acfd4b0sm351317b3.97.2025.05.28.16.20.32
+        by smtp.gmail.com with UTF8SMTPSA id 3f1490d57ef6-e7f733cf0f8sm33002276.21.2025.05.28.16.20.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 May 2025 16:20:32 -0700 (PDT)
-Date: Wed, 28 May 2025 19:20:31 -0400
+        Wed, 28 May 2025 16:20:36 -0700 (PDT)
+Date: Wed, 28 May 2025 19:20:35 -0400
 From: Taylor Blau <me@ttaylorr.com>
 To: git@vger.kernel.org
 Cc: Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
 	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v4 8/9] pack-objects: introduce '--stdin-packs=follow'
-Message-ID: <3e3d929bd023a6909efef0cde47d873e4ef5c7dc.1748473890.git.me@ttaylorr.com>
+Subject: [PATCH v4 9/9] repack: exclude cruft pack(s) from the MIDX where
+ possible
+Message-ID: <52a069ef48f5a573c58a369b69827a40c7712247.1748473890.git.me@ttaylorr.com>
 References: <cover.1744413969.git.me@ttaylorr.com>
  <cover.1748473889.git.me@ttaylorr.com>
 Precedence: bulk
@@ -76,306 +77,432 @@ Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 In-Reply-To: <cover.1748473889.git.me@ttaylorr.com>
 
-When invoked with '--stdin-packs', pack-objects will generate a pack
-which contains the objects found in the "included" packs, less any
-objects from "excluded" packs.
+In ddee3703b3 (builtin/repack.c: add cruft packs to MIDX during
+geometric repack, 2022-05-20), repack began adding cruft pack(s) to the
+MIDX with '--write-midx' to ensure that the resulting MIDX was always
+closed under reachability in order to generate reachability bitmaps.
 
-Packs that exist in the repository but weren't specified as either
-included or excluded are in practice treated like the latter, at least
-in the sense that pack-objects won't include objects from those packs.
-This behavior forces us to include any cruft pack(s) in a repository's
-multi-pack index for the reasons described in ddee3703b3
-(builtin/repack.c: add cruft packs to MIDX during geometric repack,
-2022-05-20).
+While the previous patch added the '--stdin-packs=follow' option to
+pack-objects, it is not yet on by default. Given that, suppose you have
+a once-unreachable object packed in a cruft pack, which later becomes
+reachable from one or more objects in a geometrically repacked pack.
+That once-unreachable object *won't* appear in the new pack, since the
+cruft pack was not specified as included or excluded when the
+geometrically repacked pack was created with 'pack-objects
+--stdin-packs' (*not* '--stdin-packs=follow', which is not on). If that
+new pack is included in a MIDX without the cruft pack, then trying to
+generate bitmaps for that MIDX may fail. This happens when the bitmap
+selection process picks one or more commits which reach the
+once-unreachable objects.
 
-The full details are in ddee3703b3, but the gist is if you
-have a once-unreachable object in a cruft pack which later becomes
-reachable via one or more commits in a pack generated with
-'--stdin-packs', you *have* to include that object in the MIDX via the
-copy in the cruft pack, otherwise we cannot generate reachability
-bitmaps for any commits which reach that object.
+To mitigate this failure mode, commit ddee3703b3 ensures that the MIDX
+will be closed under reachability by including cruft pack(s). If cruft
+pack(s) were not included, we would fail to generate a MIDX bitmap. But
+ddee3703b3 alludes to the fact that this is sub-optimal by saying
 
-This prepares us for new repacking behavior which will "resurrect"
-objects found in cruft or otherwise unspecified packs when generating
-new packs. In the context of geometric repacking, this may be used to
-maintain a sequence of geometrically-repacked packs, the union of which
-is closed under reachability, even in the case described earlier.
+    [...] it's desirable to avoid including cruft packs in the MIDX
+    because it causes the MIDX to store a bunch of objects which are
+    likely to get thrown away.
+
+, which is true, but hides an even larger problem. If repositories
+rarely prune their unreachable objects and/or have many of them, the
+MIDX must keep track of a large number of objects which bloats the MIDX
+and slows down object lookup.
+
+This is doubly unfortunate because the vast majority of objects in cruft
+pack(s) are unlikely to be read. But any object lookups that go through
+the MIDX must binary search over them anyway, slowing down object
+lookups using the MIDX.
+
+This patch causes geometrically-repacked packs to contain a copy of any
+once-unreachable object(s) with 'git pack-objects --stdin-packs=follow',
+allowing us to avoid including any cruft packs in the MIDX. This is
+because a sequence of geometrically-repacked packs that were all
+generated with '--stdin-packs=follow' are guaranteed to have their union
+be closed under reachability.
+
+Note that you cannot guarantee that a collection of packs is closed
+under reachability if not all of them were generated with "following" as
+above. One tell-tale sign that not all geometrically-repacked packs in
+the MIDX were generated with "following" is to see if there is a pack in
+the existing MIDX that is not going to be somehow represented (either
+verbatim or as part of a geometric rollup) in the new MIDX.
+
+If there is, then starting to generate packs with "following" during
+geometric repacking won't work, since it's open to the same race as
+described above.
+
+But if you're starting from scratch (e.g., building the first MIDX after
+an all-into-one '--cruft' repack), then you can guarantee that the union
+of subsequently generated packs from geometric repacking *is* closed
+under reachability.
+
+Detect when this is the case and avoid including cruft packs in the MIDX
+where possible. The existing behavior remains the default, and the new
+behavior is available with the config 'repack.midxMustIncludeCruft' set
+to 'false'.
 
 Signed-off-by: Taylor Blau <me@ttaylorr.com>
 ---
- Documentation/git-pack-objects.adoc | 10 +++-
- builtin/pack-objects.c              | 83 +++++++++++++++++++++--------
- t/t5331-pack-objects-stdin.sh       | 82 ++++++++++++++++++++++++++++
- 3 files changed, 152 insertions(+), 23 deletions(-)
+ Documentation/config/repack.adoc |   7 ++
+ builtin/repack.c                 | 163 +++++++++++++++++++++++++++----
+ t/t7704-repack-cruft.sh          |  90 +++++++++++++++++
+ 3 files changed, 242 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/git-pack-objects.adoc b/Documentation/git-pack-objects.adoc
-index 7f69ae4855..8f0cecaec9 100644
---- a/Documentation/git-pack-objects.adoc
-+++ b/Documentation/git-pack-objects.adoc
-@@ -87,13 +87,21 @@ base-name::
- 	reference was included in the resulting packfile.  This
- 	can be useful to send new tags to native Git clients.
- 
----stdin-packs::
-+--stdin-packs[=<mode>]::
- 	Read the basenames of packfiles (e.g., `pack-1234abcd.pack`)
- 	from the standard input, instead of object names or revision
- 	arguments. The resulting pack contains all objects listed in the
- 	included packs (those not beginning with `^`), excluding any
- 	objects listed in the excluded packs (beginning with `^`).
- +
-+When `mode` is "follow", objects from packs not listed on stdin receive
-+special treatment. Objects within unlisted packs will be included if
-+those objects are (1) reachable from the included packs, and (2) not
-+found in any excluded packs. This mode is useful, for example, to
-+resurrect once-unreachable objects found in cruft packs to generate
-+packs which are closed under reachability up to the boundary set by the
-+excluded packs.
-++
- Incompatible with `--revs`, or options that imply `--revs` (such as
- `--all`), with the exception of `--unpacked`, which is compatible.
- 
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index d3dfe983c3..c6ec346369 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -272,6 +272,12 @@ static struct oidmap configured_exclusions;
- static struct oidset excluded_by_config;
- static int name_hash_version = -1;
- 
-+enum stdin_packs_mode {
-+	STDIN_PACKS_MODE_NONE,
-+	STDIN_PACKS_MODE_STANDARD,
-+	STDIN_PACKS_MODE_FOLLOW,
-+};
+diff --git a/Documentation/config/repack.adoc b/Documentation/config/repack.adoc
+index c79af6d7b8..e9e78dcb19 100644
+--- a/Documentation/config/repack.adoc
++++ b/Documentation/config/repack.adoc
+@@ -39,3 +39,10 @@ repack.cruftThreads::
+ 	a cruft pack and the respective parameters are not given over
+ 	the command line. See similarly named `pack.*` configuration
+ 	variables for defaults and meaning.
 +
- /**
-  * Check whether the name_hash_version chosen by user input is appropriate,
-  * and also validate whether it is compatible with other features.
-@@ -3514,31 +3520,44 @@ static int add_object_entry_from_pack(const struct object_id *oid,
- }
++repack.midxMustContainCruft::
++	When set to true, linkgit:git-repack[1] will unconditionally include
++	cruft pack(s), if any, in the multi-pack index when invoked with
++	`--write-midx`. When false, cruft packs are only included in the MIDX
++	when necessary (e.g., because they might be required to form a
++	reachability closure with MIDX bitmaps). Defaults to true.
+diff --git a/builtin/repack.c b/builtin/repack.c
+index f3330ade7b..c9e2e3d04d 100644
+--- a/builtin/repack.c
++++ b/builtin/repack.c
+@@ -39,6 +39,7 @@ static int write_bitmaps = -1;
+ static int use_delta_islands;
+ static int run_update_server_info = 1;
+ static char *packdir, *packtmp_name, *packtmp;
++static int midx_must_contain_cruft = 1;
  
- static void show_object_pack_hint(struct object *object, const char *name,
--				  void *data UNUSED)
-+				  void *data)
- {
--	struct object_entry *oe = packlist_find(&to_pack, &object->oid);
--	if (!oe)
--		return;
-+	enum stdin_packs_mode mode = *(enum stdin_packs_mode *)data;
-+	if (mode == STDIN_PACKS_MODE_FOLLOW) {
-+		add_object_entry(&object->oid, object->type, name, 0);
-+	} else {
-+		struct object_entry *oe = packlist_find(&to_pack, &object->oid);
-+		if (!oe)
-+			return;
- 
--	/*
--	 * Our 'to_pack' list was constructed by iterating all objects packed in
--	 * included packs, and so doesn't have a non-zero hash field that you
--	 * would typically pick up during a reachability traversal.
--	 *
--	 * Make a best-effort attempt to fill in the ->hash and ->no_try_delta
--	 * fields here in order to perhaps improve the delta selection
--	 * process.
--	 */
--	oe->hash = pack_name_hash_fn(name);
--	oe->no_try_delta = name && no_try_delta(name);
-+		/*
-+		 * Our 'to_pack' list was constructed by iterating all
-+		 * objects packed in included packs, and so doesn't have
-+		 * a non-zero hash field that you would typically pick
-+		 * up during a reachability traversal.
-+		 *
-+		 * Make a best-effort attempt to fill in the ->hash and
-+		 * ->no_try_delta fields here in order to perhaps
-+		 * improve the delta selection process.
-+		 */
-+		oe->hash = pack_name_hash_fn(name);
-+		oe->no_try_delta = name && no_try_delta(name);
- 
--	stdin_packs_hints_nr++;
-+		stdin_packs_hints_nr++;
+ static const char *const git_repack_usage[] = {
+ 	N_("git repack [-a] [-A] [-d] [-f] [-F] [-l] [-n] [-q] [-b] [-m]\n"
+@@ -107,6 +108,10 @@ static int repack_config(const char *var, const char *value,
+ 		free(cruft_po_args->threads);
+ 		return git_config_string(&cruft_po_args->threads, var, value);
+ 	}
++	if (!strcmp(var, "repack.midxmustcontaincruft")) {
++		midx_must_contain_cruft = git_config_bool(var, value);
++		return 0;
 +	}
+ 	return git_default_config(var, value, ctx, cb);
  }
  
--static void show_commit_pack_hint(struct commit *commit UNUSED,
--				  void *data UNUSED)
-+static void show_commit_pack_hint(struct commit *commit, void *data)
- {
-+	enum stdin_packs_mode mode = *(enum stdin_packs_mode *)data;
-+
-+	if (mode == STDIN_PACKS_MODE_FOLLOW) {
-+		show_object_pack_hint((struct object *)commit, "", data);
-+		return;
-+	}
-+
- 	/* nothing to do; commits don't have a namehash */
-+
+@@ -687,6 +692,77 @@ static void free_pack_geometry(struct pack_geometry *geometry)
+ 	free(geometry->pack);
  }
  
- static int pack_mtime_cmp(const void *_a, const void *_b)
-@@ -3646,7 +3665,7 @@ static void read_packs_list_from_stdin(struct rev_info *revs)
- 
- static void add_unreachable_loose_objects(struct rev_info *revs);
- 
--static void read_stdin_packs(int rev_list_unpacked)
-+static void read_stdin_packs(enum stdin_packs_mode mode, int rev_list_unpacked)
- {
- 	struct rev_info revs;
- 
-@@ -3678,7 +3697,7 @@ static void read_stdin_packs(int rev_list_unpacked)
- 	traverse_commit_list(&revs,
- 			     show_commit_pack_hint,
- 			     show_object_pack_hint,
--			     NULL);
-+			     &mode);
- 
- 	trace2_data_intmax("pack-objects", the_repository, "stdin_packs_found",
- 			   stdin_packs_found_nr);
-@@ -4469,6 +4488,23 @@ static int is_not_in_promisor_pack(struct commit *commit, void *data) {
- 	return is_not_in_promisor_pack_obj((struct object *) commit, data);
- }
- 
-+static int parse_stdin_packs_mode(const struct option *opt, const char *arg,
-+				  int unset)
++static int midx_has_unknown_packs(char **midx_pack_names,
++				  size_t midx_pack_names_nr,
++				  struct string_list *include,
++				  struct pack_geometry *geometry,
++				  struct existing_packs *existing)
 +{
-+	enum stdin_packs_mode *mode = opt->value;
++	size_t i;
 +
-+	if (unset)
-+		*mode = STDIN_PACKS_MODE_NONE;
-+	else if (!arg || !*arg)
-+		*mode = STDIN_PACKS_MODE_STANDARD;
-+	else if (!strcmp(arg, "follow"))
-+		*mode = STDIN_PACKS_MODE_FOLLOW;
-+	else
-+		die(_("invalid value for '%s': '%s'"), opt->long_name, arg);
++	string_list_sort(include);
++
++	for (i = 0; i < midx_pack_names_nr; i++) {
++		const char *pack_name = midx_pack_names[i];
++
++		/*
++		 * Determine whether or not each MIDX'd pack from the existing
++		 * MIDX (if any) is represented in the new MIDX. For each pack
++		 * in the MIDX, it must either be:
++		 *
++		 *  - In the "include" list of packs to be included in the new
++		 *    MIDX. Note this function is called before the include
++		 *    list is populated with any cruft pack(s).
++		 *
++		 *  - Below the geometric split line (if using pack geometry),
++		 *    indicating that the pack won't be included in the new
++		 *    MIDX, but its contents were rolled up as part of the
++		 *    geometric repack.
++		 *
++		 *  - In the existing non-kept packs list (if not using pack
++		 *    geometry), and marked as non-deleted.
++		 */
++		if (string_list_has_string(include, pack_name)) {
++			continue;
++		} else if (geometry) {
++			struct strbuf buf = STRBUF_INIT;
++			uint32_t j;
++
++			for (j = 0; j < geometry->split; j++) {
++				strbuf_reset(&buf);
++				strbuf_addstr(&buf, pack_basename(geometry->pack[j]));
++				strbuf_strip_suffix(&buf, ".pack");
++				strbuf_addstr(&buf, ".idx");
++
++				if (!strcmp(pack_name, buf.buf)) {
++					strbuf_release(&buf);
++					break;
++				}
++			}
++
++			strbuf_release(&buf);
++
++			if (j < geometry->split)
++				continue;
++		} else {
++			struct string_list_item *item;
++
++			item = string_list_lookup(&existing->non_kept_packs,
++						  pack_name);
++			if (item && !pack_is_marked_for_deletion(item))
++				continue;
++		}
++
++		/*
++		 * If we got to this point, the MIDX includes some pack that we
++		 * don't know about.
++		 */
++		return 1;
++	}
 +
 +	return 0;
 +}
 +
- int cmd_pack_objects(int argc,
- 		     const char **argv,
- 		     const char *prefix,
-@@ -4480,7 +4516,7 @@ int cmd_pack_objects(int argc,
- 	struct strvec rp = STRVEC_INIT;
- 	int rev_list_unpacked = 0, rev_list_all = 0, rev_list_reflog = 0;
- 	int rev_list_index = 0;
--	int stdin_packs = 0;
-+	enum stdin_packs_mode stdin_packs = STDIN_PACKS_MODE_NONE;
- 	struct string_list keep_pack_list = STRING_LIST_INIT_NODUP;
- 	struct list_objects_filter_options filter_options =
- 		LIST_OBJECTS_FILTER_INIT;
-@@ -4535,6 +4571,9 @@ int cmd_pack_objects(int argc,
- 		OPT_SET_INT_F(0, "indexed-objects", &rev_list_index,
- 			      N_("include objects referred to by the index"),
- 			      1, PARSE_OPT_NONEG),
-+		OPT_CALLBACK_F(0, "stdin-packs", &stdin_packs, N_("mode"),
-+			     N_("read packs from stdin"),
-+			     PARSE_OPT_OPTARG, parse_stdin_packs_mode),
- 		OPT_BOOL(0, "stdin-packs", &stdin_packs,
- 			 N_("read packs from stdin")),
- 		OPT_BOOL(0, "stdout", &pack_to_stdout,
-@@ -4791,7 +4830,7 @@ int cmd_pack_objects(int argc,
- 		progress_state = start_progress(the_repository,
- 						_("Enumerating objects"), 0);
- 	if (stdin_packs) {
--		read_stdin_packs(rev_list_unpacked);
-+		read_stdin_packs(stdin_packs, rev_list_unpacked);
- 	} else if (cruft) {
- 		read_cruft_objects();
- 	} else if (!use_internal_rev_list) {
-diff --git a/t/t5331-pack-objects-stdin.sh b/t/t5331-pack-objects-stdin.sh
-index 8fd07deb8d..60a2b4bc07 100755
---- a/t/t5331-pack-objects-stdin.sh
-+++ b/t/t5331-pack-objects-stdin.sh
-@@ -236,4 +236,86 @@ test_expect_success 'pack-objects --stdin with packfiles from main and alternate
- 	test_cmp expected-objects actual-objects
+ struct midx_snapshot_ref_data {
+ 	struct tempfile *f;
+ 	struct oidset seen;
+@@ -755,6 +831,8 @@ static void midx_snapshot_refs(struct tempfile *f)
+ 
+ static void midx_included_packs(struct string_list *include,
+ 				struct existing_packs *existing,
++				char **midx_pack_names,
++				size_t midx_pack_names_nr,
+ 				struct string_list *names,
+ 				struct pack_geometry *geometry)
+ {
+@@ -808,26 +886,56 @@ static void midx_included_packs(struct string_list *include,
+ 		}
+ 	}
+ 
+-	for_each_string_list_item(item, &existing->cruft_packs) {
++	if (midx_must_contain_cruft ||
++	    midx_has_unknown_packs(midx_pack_names, midx_pack_names_nr,
++				   include, geometry, existing)) {
+ 		/*
+-		 * When doing a --geometric repack, there is no need to check
+-		 * for deleted packs, since we're by definition not doing an
+-		 * ALL_INTO_ONE repack (hence no packs will be deleted).
+-		 * Otherwise we must check for and exclude any packs which are
+-		 * enqueued for deletion.
++		 * If there are one or more unknown pack(s) present (see
++		 * midx_has_unknown_packs() for what makes a pack
++		 * "unknown") in the MIDX before the repack, keep them
++		 * as they may be required to form a reachability
++		 * closure if the MIDX is bitmapped.
+ 		 *
+-		 * So we could omit the conditional below in the --geometric
+-		 * case, but doing so is unnecessary since no packs are marked
+-		 * as pending deletion (since we only call
+-		 * `mark_packs_for_deletion()` when doing an all-into-one
+-		 * repack).
++		 * For example, a cruft pack can be required to form a
++		 * reachability closure if the MIDX is bitmapped and one
++		 * or more of the bitmap's selected commits reaches a
++		 * once-cruft object that was later made reachable.
+ 		 */
+-		if (pack_is_marked_for_deletion(item))
+-			continue;
++		for_each_string_list_item(item, &existing->cruft_packs) {
++			/*
++			 * When doing a --geometric repack, there is no
++			 * need to check for deleted packs, since we're
++			 * by definition not doing an ALL_INTO_ONE
++			 * repack (hence no packs will be deleted).
++			 * Otherwise we must check for and exclude any
++			 * packs which are enqueued for deletion.
++			 *
++			 * So we could omit the conditional below in the
++			 * --geometric case, but doing so is unnecessary
++			 *  since no packs are marked as pending
++			 *  deletion (since we only call
++			 *  `mark_packs_for_deletion()` when doing an
++			 *  all-into-one repack).
++			 */
++			if (pack_is_marked_for_deletion(item))
++				continue;
+ 
+-		strbuf_reset(&buf);
+-		strbuf_addf(&buf, "%s.idx", item->string);
+-		string_list_insert(include, buf.buf);
++			strbuf_reset(&buf);
++			strbuf_addf(&buf, "%s.idx", item->string);
++			string_list_insert(include, buf.buf);
++		}
++	} else {
++		/*
++		 * Modern versions of Git (with the appropriate
++		 * configuration setting) will write new copies of
++		 * once-cruft objects when doing a --geometric repack.
++		 *
++		 * If the MIDX has no cruft pack, new packs written
++		 * during a --geometric repack will not rely on the
++		 * cruft pack to form a reachability closure, so we can
++		 * avoid including them in the MIDX in that case.
++		 */
++		;
+ 	}
+ 
+ 	strbuf_release(&buf);
+@@ -1142,6 +1250,8 @@ int cmd_repack(int argc,
+ 	struct tempfile *refs_snapshot = NULL;
+ 	int i, ext, ret;
+ 	int show_progress;
++	char **midx_pack_names = NULL;
++	size_t midx_pack_names_nr = 0;
+ 
+ 	/* variables to be filled by option parsing */
+ 	int delete_redundant = 0;
+@@ -1356,7 +1466,10 @@ int cmd_repack(int argc,
+ 		    !(pack_everything & PACK_CRUFT))
+ 			strvec_push(&cmd.args, "--pack-loose-unreachable");
+ 	} else if (geometry.split_factor) {
+-		strvec_push(&cmd.args, "--stdin-packs");
++		if (midx_must_contain_cruft)
++			strvec_push(&cmd.args, "--stdin-packs");
++		else
++			strvec_push(&cmd.args, "--stdin-packs=follow");
+ 		strvec_push(&cmd.args, "--unpacked");
+ 	} else {
+ 		strvec_push(&cmd.args, "--unpacked");
+@@ -1478,6 +1591,16 @@ int cmd_repack(int argc,
+ 
+ 	string_list_sort(&names);
+ 
++	if (get_local_multi_pack_index(the_repository)) {
++		uint32_t i;
++		struct multi_pack_index *m =
++			get_local_multi_pack_index(the_repository);
++
++		ALLOC_ARRAY(midx_pack_names, m->num_packs);
++		for (i = 0; i < m->num_packs; i++)
++			midx_pack_names[midx_pack_names_nr++] = xstrdup(m->pack_names[i]);
++	}
++
+ 	close_object_store(the_repository->objects);
+ 
+ 	/*
+@@ -1519,7 +1642,8 @@ int cmd_repack(int argc,
+ 
+ 	if (write_midx) {
+ 		struct string_list include = STRING_LIST_INIT_DUP;
+-		midx_included_packs(&include, &existing, &names, &geometry);
++		midx_included_packs(&include, &existing, midx_pack_names,
++				    midx_pack_names_nr, &names, &geometry);
+ 
+ 		ret = write_midx_included_packs(&include, &geometry, &names,
+ 						refs_snapshot ? get_tempfile_path(refs_snapshot) : NULL,
+@@ -1570,6 +1694,9 @@ int cmd_repack(int argc,
+ 	string_list_clear(&names, 1);
+ 	existing_packs_release(&existing);
+ 	free_pack_geometry(&geometry);
++	for (size_t i = 0; i < midx_pack_names_nr; i++)
++		free(midx_pack_names[i]);
++	free(midx_pack_names);
+ 	pack_objects_args_release(&po_args);
+ 	pack_objects_args_release(&cruft_po_args);
+ 
+diff --git a/t/t7704-repack-cruft.sh b/t/t7704-repack-cruft.sh
+index 8aebfb45f5..2b0a55f8fd 100755
+--- a/t/t7704-repack-cruft.sh
++++ b/t/t7704-repack-cruft.sh
+@@ -724,4 +724,94 @@ test_expect_success 'cruft repack respects --quiet' '
+ 	)
  '
  
-+packdir=.git/objects/pack
++setup_cruft_exclude_tests() {
++	git init "$1" &&
++	(
++		cd "$1" &&
 +
-+objects_in_packs () {
-+	for p in "$@"
-+	do
-+		git show-index <"$packdir/pack-$p.idx" || return 1
-+	done >objects.raw &&
++		git config repack.midxMustContainCruft false &&
 +
-+	cut -d' ' -f2 objects.raw | sort &&
-+	rm -f objects.raw
++		test_commit one &&
++
++		test_commit --no-tag two &&
++		two="$(git rev-parse HEAD)" &&
++		test_commit --no-tag three &&
++		three="$(git rev-parse HEAD)" &&
++		git reset --hard one &&
++		git reflog expire --all --expire=all &&
++
++		GIT_TEST_MULTI_PACK_INDEX=0 git repack --cruft -d &&
++
++		git merge $two &&
++		test_commit four
++	)
 +}
 +
-+test_expect_success '--stdin-packs=follow walks into unknown packs' '
-+	test_when_finished "rm -fr repo" &&
-+
-+	git init repo &&
++test_expect_success 'repack --write-midx excludes cruft where possible' '
++	setup_cruft_exclude_tests exclude-cruft-when-possible &&
 +	(
-+		cd repo &&
++		cd exclude-cruft-when-possible &&
 +
-+		for c in A B C D
-+		do
-+			test_commit "$c" || return 1
-+		done &&
++		GIT_TEST_MULTI_PACK_INDEX=0 \
++		git repack -d --geometric=2 --write-midx --write-bitmap-index &&
 +
-+		A="$(echo A | git pack-objects --revs $packdir/pack)" &&
-+		B="$(echo A..B | git pack-objects --revs $packdir/pack)" &&
-+		C="$(echo B..C | git pack-objects --revs $packdir/pack)" &&
-+		D="$(echo C..D | git pack-objects --revs $packdir/pack)" &&
-+		test_commit E &&
++		test-tool read-midx --show-objects $objdir >midx &&
++		cruft="$(ls $packdir/*.mtimes)" &&
++		test_grep ! "$(basename "$cruft" .mtimes).idx" midx &&
 +
-+		git prune-packed &&
++		git rev-list --all --objects --no-object-names >reachable.raw &&
++		sort reachable.raw >reachable.objects &&
++		awk "/\.pack$/ { print \$1 }" <midx | sort >midx.objects &&
 +
-+		cat >in <<-EOF &&
-+		pack-$B.pack
-+		^pack-$C.pack
-+		pack-$D.pack
-+		EOF
++		test_cmp reachable.objects midx.objects
++	)
++'
 +
-+		# With just --stdin-packs, pack "A" is unknown to us, so
-+		# only objects from packs "B" and "D" are included in
-+		# the output pack.
-+		P=$(git pack-objects --stdin-packs $packdir/pack <in) &&
-+		objects_in_packs $B $D >expect &&
-+		objects_in_packs $P >actual &&
-+		test_cmp expect actual &&
++test_expect_success 'repack --write-midx includes cruft when instructed' '
++	setup_cruft_exclude_tests exclude-cruft-when-instructed &&
++	(
++		cd exclude-cruft-when-instructed &&
 +
-+		# But with --stdin-packs=follow, objects from both
-+		# included packs reach objects from the unknown pack, so
-+		# objects from pack "A" is included in the output pack
-+		# in addition to the above.
-+		P=$(git pack-objects --stdin-packs=follow $packdir/pack <in) &&
-+		objects_in_packs $A $B $D >expect &&
-+		objects_in_packs $P >actual &&
-+		test_cmp expect actual &&
++		GIT_TEST_MULTI_PACK_INDEX=0 \
++		git -c repack.midxMustContainCruft=true repack \
++			-d --geometric=2 --write-midx --write-bitmap-index &&
 +
-+		# And with --unpacked, we will pick up objects from unknown
-+		# packs that are reachable from loose objects. Loose object E
-+		# reaches objects in pack A, but there are three excluded packs
-+		# in between.
-+		#
-+		# The resulting pack should include objects reachable from E
-+		# that are not present in packs B, C, or D, along with those
-+		# present in pack A.
-+		cat >in <<-EOF &&
-+		^pack-$B.pack
-+		^pack-$C.pack
-+		^pack-$D.pack
-+		EOF
++		test-tool read-midx --show-objects $objdir >midx &&
++		cruft="$(ls $packdir/*.mtimes)" &&
++		test_grep "$(basename "$cruft" .mtimes).idx" midx &&
 +
-+		P=$(git pack-objects --stdin-packs=follow --unpacked \
-+			$packdir/pack <in) &&
++		git cat-file --batch-check="%(objectname)" --batch-all-objects \
++			>all.objects &&
++		awk "/\.pack$/ { print \$1 }" <midx | sort >midx.objects &&
 +
-+		{
-+			objects_in_packs $A &&
-+			git rev-list --objects --no-object-names D..E
-+		}>expect.raw &&
-+		sort expect.raw >expect &&
-+		objects_in_packs $P >actual &&
-+		test_cmp expect actual
++		test_cmp all.objects midx.objects
++	)
++'
++
++test_expect_success 'repack --write-midx includes cruft when necessary' '
++	setup_cruft_exclude_tests exclude-cruft-when-necessary &&
++	(
++		cd exclude-cruft-when-necessary &&
++
++		test_path_is_file $(ls $packdir/pack-*.mtimes) &&
++		ls $packdir/pack-*.idx | sort >packs.all &&
++		grep -o "pack-.*\.idx$" packs.all >in &&
++
++		git multi-pack-index write --stdin-packs --bitmap <in &&
++
++		test_commit five &&
++		GIT_TEST_MULTI_PACK_INDEX=0 \
++		git repack -d --geometric=2 --write-midx --write-bitmap-index &&
++
++		test-tool read-midx --show-objects $objdir >midx &&
++		awk "/\.pack$/ { print \$1 }" <midx | sort >midx.objects &&
++		git cat-file --batch-all-objects --batch-check="%(objectname)" \
++			>expect.objects &&
++		test_cmp expect.objects midx.objects &&
++
++		grep "^pack-" midx >midx.packs &&
++		test_line_count = "$(($(wc -l <packs.all) + 1))" midx.packs
 +	)
 +'
 +
  test_done
 -- 
 2.49.0.640.ga4de40e6a8
-
