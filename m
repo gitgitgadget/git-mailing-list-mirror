@@ -1,136 +1,104 @@
-Received: from mail-qk1-f182.google.com (mail-qk1-f182.google.com [209.85.222.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-a1-smtp.messagingengine.com (fhigh-a1-smtp.messagingengine.com [103.168.172.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC92535942
-	for <git@vger.kernel.org>; Wed, 28 May 2025 02:18:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E467B1D63E1
+	for <git@vger.kernel.org>; Wed, 28 May 2025 02:34:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748398691; cv=none; b=rGe1HrijhpPDhSvXvi5L1G9sVycmooMQI2I8y0DsY5Jyv3bB1vwCFsqU9Sv23uQZ9vunWa2qlXnSWW3ft5ghAq2lhGSiajPcRkfJgOwzXSlYALM66VGBl5Z+qQgHxsBxmPxMuXlTnJEAJZGYcRuoNN+udWlAFSlmBABogVDvxB4=
+	t=1748399648; cv=none; b=jkROvZc3p4CqKaM6FSUBsQItUMBk8dDAF5gAZbEYwqvfqMsHhHpu4iPfOfHzyF3LSG3sDbA7IAVfu8zZI0LtmhEIF/Gql0A91YBXvMkroULqVqnqgPrhbI8etMdn2x+i4Y3t4/WihkyNEJt11/5oIVfLN3wfkOJ6aFj8Z+YyyBo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748398691; c=relaxed/simple;
-	bh=j2uwhtziwySaxhZz2re6SJNQnLt0a04Tri0MC0Kr94w=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ZV/RFIIcgZhLpyws68sw0uN7hvXkKRPM/0/93WKRblOfB8y9zq7nQ1V6YUpw9n/OUbxQq4E50cKGy52Cdh0+icbR/NRjrlyjrWXgRuwc+a87ww9fdXAqTZBpJl/M2njUgjB47FuKZlfsTS9tmFgSllfr46aFmleRXiUaL25d/yE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com; spf=pass smtp.mailfrom=ttaylorr.com; dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b=PaD64dk9; arc=none smtp.client-ip=209.85.222.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=ttaylorr.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=ttaylorr.com
+	s=arc-20240116; t=1748399648; c=relaxed/simple;
+	bh=0HaYZRJQ2nqqZJsS7IflBZE4oMMBhmE/P84oH5KAMyA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DSceGeNyrwWkMbJs9ik7lGu0yoWHnrcSxw2iAaH5ZX7RQsxA+erlcQrkEYJqbsK1VmRG6jaZuPs2JgO0hejD3zjy0tt9a+ysL9fydpqMwmeQaU004qDz0yVzfWCW6BYM6xgd2d3ced0galn6YmEN8CORZ7C6L84Vl5+uWLMvYQU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=s8Ii17XV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MU7cSToc; arc=none smtp.client-ip=103.168.172.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=ttaylorr-com.20230601.gappssmtp.com header.i=@ttaylorr-com.20230601.gappssmtp.com header.b="PaD64dk9"
-Received: by mail-qk1-f182.google.com with SMTP id af79cd13be357-7cd0a7b672bso247757785a.2
-        for <git@vger.kernel.org>; Tue, 27 May 2025 19:18:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ttaylorr-com.20230601.gappssmtp.com; s=20230601; t=1748398688; x=1749003488; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=eOquo2uxUHnAWLCeuqLs4Ux3omVCrcpjb4ZDNxq1yik=;
-        b=PaD64dk9sJrdGWZJPd1Ioo7csKqOo6YS1p6rVSL79HxD/a5UnzaS7Y3TWFPwcAXD7A
-         xQBp0NTU42NXadgosDnMSMNyF+7j9V0cIItMt+gmYHCj0f5JMcBkbjGabZUmjhNM7RXz
-         2dA+WD6epJ6jHU3ZhEcwJKOIwhp6HKh4sZYSaj95Stm8AMf5PCcZ+RffAQU5fdYB6PSV
-         o++LZuFfm55C3O4f/6He9ft5UQxu1v0QuH9hlGB0sc3ymULh4f0ngMazG61pgCCq4/WU
-         j8K/+QXY2+Q7+Gzi+i94K2TtAV1IwDt6pr9QVf1IjbVmEKEdkYqc4bMuG+4Wbs+0kE+Q
-         wfsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748398688; x=1749003488;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=eOquo2uxUHnAWLCeuqLs4Ux3omVCrcpjb4ZDNxq1yik=;
-        b=i12hFUTvQuUtCCBPParLNjrE6ao7eI+V6KKEj3BWHB15M7+nUqRPz++WjtY+iahXMt
-         PSCAbIARvRXOg2M3hSIbEXw2UdunDQ42yK6b8gwkAEs6XZLZPYTZlipeaejp0tuDJg7c
-         QNrnU5tOy/+s0FC3qe2LJ8iGcVptgLsds9rq0Cxx57ISNZOakIqLvKu1ARMoZovQuQHp
-         QzKeMyeI5ZZucsoE8EnCUNFRiwEdWA6qpmG3ahPPylo7GhLnp2in4zY8VizwoiytLUvH
-         vXf3fBeSp4N+Z3QPv9BJjlq4LgCDoe0YfyQbuz62GS63Fmy3MtKYmWQgfGVK4YUbe9AX
-         ke5A==
-X-Gm-Message-State: AOJu0Yx6FRfeqwcHG6Y7NfqRCDfFx6cUlokwNC+Tm6h2sFTmQPp/PXTy
-	Qw61wVZKzQ81PvmlAaj0X6giqKRMyb1QAJ5zyrjpcSOgPt6cN2prz75o9yOfG64JfJU=
-X-Gm-Gg: ASbGncuQcpP1zthxTuOOWbGpHTee64KHcN0h+8S3qzxfRtfsfku3on9R9jkzaR++q1r
-	oUSwg8gcURhxyBiIYhCuBQvJJG6e4E50xzLjnOLOdgRskzHTBpUh4gLiLhS2/SzzQZBjZR49ODU
-	Wn+y64Nk2K3WXztGgKAcQFLtBgGy7t3grRHuBDa7V6OyeYXKeaf9JhECxJLFQ/5wYThCBj6QQ/O
-	nrG6REnbpKH0QAd/Fz5za4wDoD2lkd/uhZKwdl8Kj78bGJZMQjizhrEVIiun9koDWGDgzniFc35
-	4yPCYzmqAM/4BIfkZnI+Nd4x1+B5c4qG8hUYEyPMagiiWMWRgGw0/HTX3owipgKCrkgBZSrrZ37
-	FaNCI82GJ4sMEFpMLe/RWz48Olg5+4MqErQ==
-X-Google-Smtp-Source: AGHT+IHhNYQFsZgHmmiMhs6N6K2UucTf4KIgdcl33lu2ZKQQ0C3bb+JpkJEkEqPocZ5VjIIlI/K08g==
-X-Received: by 2002:a05:620a:414b:b0:7c5:b909:fde1 with SMTP id af79cd13be357-7ceecb94895mr2428173385a.25.1748398688575;
-        Tue, 27 May 2025 19:18:08 -0700 (PDT)
-Received: from localhost (104-178-186-189.lightspeed.milwwi.sbcglobal.net. [104.178.186.189])
-        by smtp.gmail.com with UTF8SMTPSA id af79cd13be357-7cfb82102e8sm16859685a.28.2025.05.27.19.18.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 May 2025 19:18:08 -0700 (PDT)
-Date: Tue, 27 May 2025 22:18:06 -0400
-From: Taylor Blau <me@ttaylorr.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 5/5] midx: return a `packed_git` pointer from
- `prepare_midx_pack()`
-Message-ID: <aDZyXlPojqxxxjl6@nand.local>
-References: <aDC0bK+NOuuVvQtb@nand.local>
- <cover.1748198489.git.me@ttaylorr.com>
- <80699bb3ee35f8c4728e7efe8dc53d17134a5fe5.1748198489.git.me@ttaylorr.com>
- <aDQXEz-RtrcUAwic@pks.im>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="s8Ii17XV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MU7cSToc"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id D033F1140145;
+	Tue, 27 May 2025 22:34:04 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Tue, 27 May 2025 22:34:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748399644; x=1748486044; bh=UdWGhkS+6v
+	kY6JoIy88jl9W6NxbRxO272WsSAhLN6rM=; b=s8Ii17XVz4hdJtsYvBgNqAxCWX
+	V1tIknAlZWB758bcoj5ubJk+NPHA4M0Gty7asolkhWu859zDefv7xSW0zcfasNN2
+	mpew5ELEizI4oRSnEkJdoeTc2wqGyiCtc3FCRWoVhk5f4gPIcN30AuWob2Z1hhBv
+	wszVLBw/121LANU9GMrRk8bKG25mlEzWaoYEL/96EuJBUs3cKIm3qGX0Rfd+d5c+
+	q3s8K1I4/W7h9jt4XPpmf2Yn5w0um56Zo3lNSKE0M+iFV0fe7xkNswXXO0DpjcWl
+	WhQVt2Ad+eiz3BcONnlDcXWNspSBrbySKLnRXKU58dbEXvO+P0vXiE00T42A==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748399644; x=1748486044; bh=UdWGhkS+6vkY6JoIy88jl9W6NxbRxO272Ws
+	SAhLN6rM=; b=MU7cSTocLpbfRAsJ6WWYauI6FdDB2jtA4bwIx0Ipzyy88Ce2npE
+	E2m4622G1OUvM7O+V2VJ3FtfHzzCcrGgb+SHrjhwNkRJCNI8P8czz6bDsdMPg3At
+	Z4rAR7zgWbp5ifRlfXk1H6LX68Zot60RfWfk9MXlgwsl1g4YWtP0xItM1m2hlSJn
+	vr2TttOD9X77kHISOEO9HHfHbm2h0RpALLqi7w1ELBvXF/uNL2/2E2uo/taqmIiW
+	sTSw3IksH9VvwF2maiNNXYIeH0wV4H0J8l0GYvj/q0jCIVIEG0hwfnZcVhju/pbY
+	i5wPlkScGWKHcRPFGtfWhxb/Kxl8/VBMm9Q==
+X-ME-Sender: <xms:HHY2aHQldvqIyNF3_dsj4wRxg3fc0qMLn7AX9HmZg9umrmemCDLSRA>
+    <xme:HHY2aIxG2jDTpnYW0l-DZpuaN6K07X82mnsPP43Ap3z2PXCiTzM5FsEyU0VhP3WqN
+    m-ZrRG3RdL_z2pRnQ>
+X-ME-Received: <xmr:HHY2aM0pwlCIOITcKRPlcCcY6HvPLe9yQV7_jbQHvHg7pP8tFrBfcvdFEBi5kzhlTr722pGpHnOw6qtOmo20vAZ3Ax59j3WI9X6EGYM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvvddtjeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecunecujfgurhephffvvefujghffffkfgggtgesthdtofdttdertdenucfhrhhomhep
+    lfhunhhiohcuvecujfgrmhgrnhhouceoghhithhsthgvrhesphhosghogidrtghomheqne
+    cuggftrfgrthhtvghrnhepieekueefhfetvdfftdegfeekhfffgefgfeeivddugeffgfff
+    ffevvedvieelffdunecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilh
+    hfrhhomhepghhithhsthgvrhesphhosghogidrtghomhdpnhgspghrtghpthhtohepfedp
+    mhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepnhhosghoiihosehgmhgrihhlrdgtoh
+    hmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthho
+    pehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:HHY2aHBmGWgClNyV0kOk4zscATKBfqY-hR0oUP1eAKnd9V8grHSoHg>
+    <xmx:HHY2aAgCXfBHmjtS-HrFWZxSnbnMgH8jVbdCPIW21WJc8Pehw7KvYw>
+    <xmx:HHY2aLqpszcMFzfHy3NEGMF322E61-n5Kjp48xHTksDfn1YSN5mmxA>
+    <xmx:HHY2aLjxEVg05V8oYtJfQho2A-rv250l20YoKQDKEly1N9yr38-MHA>
+    <xmx:HHY2aEfZvnUBx_GV8ooX8lQWaEYxgxb2WWhwOB4wYIYKwi_Ie311NKKs>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 27 May 2025 22:34:04 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Jon Forrest <nobozo@gmail.com>
+Cc: git@vger.kernel.org
+Subject: Re: Question About Sorting the Index
+In-Reply-To: <9befdb3e-ff6e-4416-8735-1eea99dbbf01@gmail.com> (Jon Forrest's
+	message of "Tue, 27 May 2025 09:38:59 -0700")
+References: <1008ijb$6j0$1@ciao.gmane.io> <xmqqfrh3qe2w.fsf@gitster.g>
+	<9befdb3e-ff6e-4416-8735-1eea99dbbf01@gmail.com>
+Date: Tue, 27 May 2025 19:34:02 -0700
+Message-ID: <xmqqbjrdtqed.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <aDQXEz-RtrcUAwic@pks.im>
+Content-Type: text/plain
 
-On Mon, May 26, 2025 at 09:24:03AM +0200, Patrick Steinhardt wrote:
-> On Sun, May 25, 2025 at 02:42:03PM -0400, Taylor Blau wrote:
-> > diff --git a/midx.c b/midx.c
-> > index fbce88bd46..f7f509cf46 100644
-> > --- a/midx.c
-> > +++ b/midx.c
-> > @@ -449,50 +449,48 @@ static uint32_t midx_for_pack(struct multi_pack_index **_m,
-> >  	return pack_int_id - m->num_packs_in_base;
-> >  }
-> >
-> > -int prepare_midx_pack(struct repository *r, struct multi_pack_index *m,
-> > -		      uint32_t pack_int_id)
-> > +struct packed_git *prepare_midx_pack(struct repository *r,
-> > +				     struct multi_pack_index *m,
-> > +				     uint32_t pack_int_id)
-> >  {
-> > -	struct strbuf pack_name = STRBUF_INIT;
-> > -	struct strbuf key = STRBUF_INIT;
-> > -	struct packed_git *p;
-> > +	uint32_t pack_pos = midx_for_pack(&m, pack_int_id);
-> >
-> > -	pack_int_id = midx_for_pack(&m, pack_int_id);
-> > +	if (!m->packs[pack_pos]) {
-> > +		struct strbuf pack_name = STRBUF_INIT;
-> > +		struct strbuf key = STRBUF_INIT;
-> > +		struct packed_git *p;
-> >
-> > -	if (m->packs[pack_int_id] == (void *)(intptr_t)-1)
-> > -		return 1;
+Jon Forrest <nobozo@gmail.com> writes:
+
+> On 5/17/25 11:36 AM, Junio C Hamano wrote:
 >
-> Ah, so this series builds on top of my patch that introduces the
-> negative lookup cache? That wasn't quite clear to me and makes it a bit
-> hard to iterate on my patch now.
+>> For example, the fact that the index is first read into core, each
+>> entry is represented as a cache_entry in-core structure, and the
+>> code accesses them via an array active_cache[], and that array is
+>> sorted per pathnames, haven't changed.  
+>
+> I had a thought. What if the in-memory cache were stored in a hash,
+> where the pathname is the key? That way nothing would have to be
+> sorted in order to lookup a particular file.
 
-Eek, sorry for the confusion. I mentioned it in the beginning of my
-cover letter as well as the (less visible) "base-commit" identifier. Is
-there another spot where I could have highlighted the dependency more
-clearly?
-
-> Could I suggest that you maybe include that patch as part of this
-> series so that those can be iterated on in tandem?
-
-I could, however your branch is already tentatively marked for 'next',
-and Junio applied this topic to a branch based on yours as I had
-suggested. So we could change it, but I think it would be more of a
-hassle for Junio, so I'd rather avoid doing so.
-
-Are there changes that you want to make on top of your patch?
-
-> Overall I think that this change is quite sensible and hides away at
-> least some of the complexity. Thanks!
-
-Much appreciated :-).
-
-Thanks,
-Taylor
+The index must be in sorted order in order to allow a set of tree
+objects written out of it.  Hash may be good for looking up, but it
+is not the best data structure for stable and efficient enumeration.
