@@ -1,175 +1,137 @@
-Received: from mout.web.de (mout.web.de [212.227.17.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B807D221DA6
-	for <git@vger.kernel.org>; Wed, 28 May 2025 23:08:17 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.17.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B1F621ADA2
+	for <git@vger.kernel.org>; Wed, 28 May 2025 23:15:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.166.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748473701; cv=none; b=EZS0a3ZVj4SDHweq0QE2STfe63u4xD640xQ+ejlt5rk4FuHlzhKUtfchU/8svpV+FyDPCfE+XY1yb9svRuWoKyFEjYQETjeuqgQKmAOkjCjJLhC1X5XFwVoMYD+GQ2tixBhJBvTYO/deH+5TzDsVUh/q6oYOzlGanarbmKsYjJ4=
+	t=1748474158; cv=none; b=rRnCdQeT+BnU5mAjFDYHfZ2utisCuo2dutestrRAOvgFASmSf267TGT8BDvu2H9bTreqHYlnqodsX8zWwcb2QxorOEDZpg77R7wii4NLgXofapboFI6ohnrmkU5NHWH8/FEwMgIzDP13R6uLQ3RzskNpdiVKgAEisvaF+Lyqpig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748473701; c=relaxed/simple;
-	bh=dDLa2T0rqU+jZPgpmhaAZVLwBhbKKkGgpb4FCj4sTCE=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ViS5HKdpf3u/3nBR0uDbWqOB3HWvWJc/lbkAriKYLZPA/NPTwQMfYJsyw9JMfTPWIXetXUOkbdLYg2olHAX86iuTv8EEfrcsH0myuI8LZDbXch9gFQwAk7YjzYXnjPv3kETVuVGIrruCQly5zHkPpq7vLvxCtRJ9LUT3Re6oEgk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=IZ1AxiGq; arc=none smtp.client-ip=212.227.17.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
+	s=arc-20240116; t=1748474158; c=relaxed/simple;
+	bh=cniV6paYlSSENkW0xxgGQcwwFIRcEBp6exj7znK6XY8=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=RpYBsd2hCsCSQKSz8CKfJC+ajZWRcdbcLPI2G7KjL/HrRnLQAH8lBl+SmMWfsAn3j+ashXElTkwu8m4lIbyJDGqi8zasYGr1Gq49jsz76zUQFY36W3PHAfYiaWAvnEQRduNcttOeQt9GyagdzyMQycflOaTvuHQyb7021NR+c9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lfHrjMUz; arc=none smtp.client-ip=209.85.166.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="IZ1AxiGq"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
-	s=s29768273; t=1748473685; x=1749078485; i=tboegi@web.de;
-	bh=8mC3FkdvG1Y2Voa5+eTTJPKtTJPwGdGGngcRDKpW9DM=;
-	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:In-Reply-To:Content-Transfer-Encoding:
-	 cc:content-transfer-encoding:content-type:date:from:message-id:
-	 mime-version:reply-to:subject:to;
-	b=IZ1AxiGqg7kiBdZj2z2BVbaiErhKsV26XFTcS7XFcrXFpn8vrkous2AaskEhaGIe
-	 kBnkLcQBb+OqQFcx8x13yMDTSFwUXGfWqLc2R6gYtbw8vNUE2mI5OU9+nSSqx0hyC
-	 8Hig/vZWTWse0Oz+RIzbxk39sG2h9uVIR4V6qvcEJkl5UjNzOxKveYfNAe0WCNVU6
-	 oPVmc7Le1WtDonCvDBmE4pFczQmT3pbt2gFqb0kJHg47ECF0peM0t4DONqKMVQsSu
-	 9iTMpXAso/Oxxi/iWyRMd8lQ7GFJjLfxXPmUPplDD1GiFD/ONF9oNJhrMZX2VuYVR
-	 Hj9YsbpYQGnCAJXB1Q==
-X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
-Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb105
- [213.165.67.124]) with ESMTPSA (Nemesis) id 1N0qvH-1v5Lai0FVN-00x2ba; Thu, 29
- May 2025 01:08:05 +0200
-Date: Thu, 29 May 2025 01:08:04 +0200
-From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Mark Mentovai <mark@chromium.org>
-Cc: Git Development <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Eric Sunshine <sunshine@sunshineco.com>,
-	Derrick Stolee <stolee@gmail.com>
-Subject: Re: [PATCH v2] t: run tests from a normalized working directory
-Message-ID: <20250528230804.GA16856@tb-raspi4>
-References: <20250523193722.68344-1-mark@chromium.org>
- <20250528201737.55268-1-mark@chromium.org>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lfHrjMUz"
+Received: by mail-il1-f180.google.com with SMTP id e9e14a558f8ab-3dc926f21d0so1463715ab.0
+        for <git@vger.kernel.org>; Wed, 28 May 2025 16:15:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748474156; x=1749078956; darn=vger.kernel.org;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=WfSjZEtqF4moR8Al3m6EnqV4lz3ph5yUOKl4CDJJSW4=;
+        b=lfHrjMUzFLnu0In8ZuuUXCgZPqUbNejXAgDAXUc7eqVJnwfZDM9n//oFK+bdlUXkoD
+         Rbp3ILfeBV2XDOF8ZlBcDsohMige/iL8MGCrYwas8QtXRDU8Yv4HIsQw54zZXtHj4fhM
+         Ks6+YR82RwJqNsnZJokf8eSQ9Hs45Gs/GiN24BZWSTGkkSa3WnxHCK/s9CMc60KxP7aG
+         OJeltX/Q74xFpQ1rHpnGwE9wr0MLP/rflWfAAgxi/hWQz9sKD5UJoym2/akK/CPUgFhZ
+         78qkueEaZFaVz5uO180e0ZdVuVuOj8vqWBOYrGdrrASYJqZOnLnUuINRHVHQV35jSUIP
+         F7Cw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748474156; x=1749078956;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=WfSjZEtqF4moR8Al3m6EnqV4lz3ph5yUOKl4CDJJSW4=;
+        b=s7MS2Sso0wUaF4qxdnq0SzBX6+b5i8rxGxWxpSPRMtGJve00iekYypy2/k90OtEvSJ
+         U3gC7SVQykNCKMGbmjTjB29vodDup4B+5ktn/v7+kEGlHj8tlXNrIBqXWNmwVleYMoif
+         H6Z5kxIlK3X98LpylfKMEmtiZgm9L+OUoHrzjFSHje65oA69TLjdivCaSgbkHAZLn+pS
+         QWIhMsRAqFbeLC9GFg26cHy8vE80UuT4aluWWWYliDucSjDe+EgqGHSia8Ikm9mTeuFL
+         +lj1YisnrawFmj3tqAStvKyrzNCKJTDLDfYAJI9DhLqnPSYHdpWabF0AYr9m5XctbcxD
+         x65Q==
+X-Forwarded-Encrypted: i=1; AJvYcCVUb4H9VG7OpV+fk7LKxwz14785ioHSkMPaFsL5WUmmqfIMzYCB7HD7GAV+dZHUT/nqDH8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YzmGDrRx24FgY7lxZ0tPr0JwFgYPZJWTksVe4tV57FtT9/hYQHD
+	HoF04SoW/VU9dafe6WM35hxD1pmYWv90snZHvi7nHJQajWUwRvowU78ZycDW4ZTIQVr5ed6nCKZ
+	exw7rsl6Xy1haPygCR2MzsPcISTEKt8U=
+X-Gm-Gg: ASbGncvm3XqNMCe43e0yU+QGpNfJTgxqsMFEp5xVRHph5qy7pRShlkho5JEvI+A+K8H
+	qvlKZRVnTOTtoR+ns9xSaZjsKtqzVNOxKeaZS7h/X2ohIFOsmPhmYXeyKx5rmVIjapv0tXGFE0+
+	LxaocrZSSOUppIwWIOqk+KD1jpN8d+d3SNj4C0acvTxmVfs2Nrc0z7tpQE7zNEETnuuw==
+X-Google-Smtp-Source: AGHT+IHkZgUV3sV2biMg7Z9yji01FTSh3oIOvM0SM/Cs5bFv9YeJeX78JrMKkpwWc4MU2ZQHQJikOO/0hXWxjqirl/s=
+X-Received: by 2002:a05:6e02:2193:b0:3dc:8667:3425 with SMTP id
+ e9e14a558f8ab-3dc9b70f000mr171806415ab.11.1748474156389; Wed, 28 May 2025
+ 16:15:56 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250528201737.55268-1-mark@chromium.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
-X-Provags-ID: V03:K1:PT9EGInaF0JXxVnyQPs1zx6FSB6aDcODZgnClvE3ZVNTzNqIHGv
- Hjz3BryOLf2edgvNbRTjoVy7CzjiEbQroFS5Sno8ztEsVmfsLc0YSsH3mMYo0lOv5neuHtd
- 1nkn2oEs1gSXkOLFpmbBOuNKTUFGaH2AEanEimrpCmKcm2PhoGsGRCqSLKVT8comOthQswk
- ANgtfniqbS0+xsscYNcnw==
-X-Spam-Flag: NO
-UI-OutboundReport: notjunk:1;M01:P0:zDwcPL+r+OE=;mnVqAhUAHChyynAsP1NT2g441TQ
- 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
- +O6Ep+vU4rqs9fAl
+References: <20250424203904.909777-1-christian.couder@gmail.com>
+ <xmqqselxtfyf.fsf@gitster.g> <CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
+ <xmqq1pthtbdg.fsf@gitster.g> <CAP8UFD0OdqnoFeYY+7y-No_x_DknapoLzvqvsy-+x_602sYQbg@mail.gmail.com>
+ <xmqqzfeyqdye.fsf@gitster.g> <xmqq8qmgsky8.fsf@gitster.g> <CABPp-BGe6r-X7NOiBFEvLGZH+GQvLkOYWn+qf3ZzzgT4sGAyOg@mail.gmail.com>
+ <xmqq4ix4qtva.fsf@gitster.g>
+In-Reply-To: <xmqq4ix4qtva.fsf@gitster.g>
+From: Elijah Newren <newren@gmail.com>
+Date: Wed, 28 May 2025 16:15:45 -0700
+X-Gm-Features: AX0GCFt9MbYredgZ4k9ZI1V2eHqwShPhI8HUEhdVOjXipQ3C79uDeXOS8hBT2Cs
+Message-ID: <CABPp-BFRhSB0zTY1m+gYOpfvmuTvN5Pu3STawJwx9P-ayJw6bA@mail.gmail.com>
+Subject: Re: [PATCH] fast-(import|export): improve on the signature algorithm name
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Christian Couder <christian.couder@gmail.com>, Luke Shumaker <lukeshu@datawire.io>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Wed, May 28, 2025 at 04:17:37PM -0400, Mark Mentovai wrote:
+On Wed, May 28, 2025 at 2:59=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+>
+> Elijah Newren <newren@gmail.com> writes:
+>
+> > Often
+> > when we have deprecated or changed an option our process was to first
+> > produce an error and update documentation and wait a while, then go
+> > and change the default after a sufficiently long time.  Here, we had
+> > kind of stopped at just producing the error with no plans to take
+> > another step.  If that was the route we took in the past, what makes
+> > this considered a breakage and not the other changes we made?
+> >
+> > (Just curious, I'm not against this change.)
+>
+> What is wrong is the behaviour change in the original, which luckily
+> is not in any released versions (except for 2.50-rc0, which should
+> not count, as I think we should do this toning-down before -rc1).
+>
+> We used to silently ignore and strip commit signatures and that has
+> always been the behaviour the existing users have relied upon; we
+> started requiring these existing users to either explicitly pass
+> --signed-c=3Dstrip or set an environmtne variable.  A new feature
+> should be opt-in to make the transition smoother, but the topic did
+> not follow that pattern.
+>
+> I view this last-minute band-aid patch that flips the default back
+> to what it used to be as remedying that mistake in the original
+> series.
 
-The problem is well described, thanks for that.
-However, different words and terms are used for the same thing:
-  "normalized working directory" (which is easy to confuse
-    with normalized working tree where CRLF-LF conversion had been
-    done and clean filters applied.
-  "pathname canonicalization"
-  "canonical absolute path"
-  "normalized path"
-... and that is done in "strbuf_realpath()"
+An earlier version of the series did keep the stripping, but you were
+the one who objected
+(https://lore.kernel.org/git/xmqqfszbcazc.fsf@gitster.g/):
 
-May be the word normalized can be replaced here ?
-Starting with the head line, how about this:
-t: run tests from an absolute path
+"""
+Why deliberate inconsistency?  I am not sure "historically we did a
+wrong thing" is a good reason (if we view that silently stripping
+was a disservice to the users, aborting would be a bugfix).
+"""
 
-And later in the text:
-use "absolute path" instead of "normalized path" ?
+and later in the series
+(https://lore.kernel.org/git/xmqqim44fyjj.fsf@gitster.g/), you added:
 
-> Some tests make git perform actions that produce observable pathnames,
-> and have expectations on those paths. Tests run with $HOME set to a
-> $TRASH_DIRECTORY, and with their working directory the same
-> $TRASH_DIRECTORY, although these paths are logically identical, they do
-> not observe the same pathname canonicalization rules and thus might not
-> be represented by strings that compare equal. In particular, no pathname
-> normalization is applied to $TRASH_DIRECTORY or $HOME, while tests
-> change their working directory with `cd -P`, which normalizes the
-> working directory's path by fully resolving symbolic links.
->=20
-> t7900's macOS maintenance tests (which are not limited to running on
-> macOS) have an expectation on a path that `git maintenance` forms by
-> using abspath.c strbuf_realpath() to resolve a canonical absolute path
-> based on $HOME. When t7900 runs from a working directory that contains
-> symbolic links in its pathname, $HOME will also contain symbolic links,
-> which `git maintenance` resolves but the test's expectation does not,
-> causing a test failure.
->=20
-> Align $TRASH_DIRECTORY and $HOME with the normalized path as used for
-> the working directory by resetting them to match the working directory
-> after it's established by `cd -P`. With all paths in agreement and
-> symbolic links resolved, pathname expectations can be set and met based
-> on string comparison without regard to external environmental factors
-> such as the presence of symbolic links in a path.
->=20
-> Suggested-by: Junio C Hamano <gitster@pobox.com>
-> Signed-off-by: Mark Mentovai <mark@chromium.org>
-> ---
->  t/test-lib.sh | 2 ++
->  1 file changed, 2 insertions(+)
->=20
-> diff --git a/t/test-lib.sh b/t/test-lib.sh
-> index af722d383d9b..92d0db13d742 100644
-> --- a/t/test-lib.sh
-> +++ b/t/test-lib.sh
-> @@ -1577,6 +1577,8 @@ fi
->  # Use -P to resolve symlinks in our working directory so that the cwd
->  # in subprocesses like git equals our $PWD (for pathname comparisons).
->  cd -P "$TRASH_DIRECTORY" || BAIL_OUT "cannot cd -P to \"$TRASH_DIRECTOR=
-Y\""
-> +TRASH_DIRECTORY=3D$(pwd)
-> +HOME=3D"$TRASH_DIRECTORY"
-> =20
->  start_test_output "$0"
-> =20
->=20
+"""
+Thanks.  The "filter-repo already gets bug reports from the users"
+is a valuable input when deciding if it is reasonable to sell the
+behaviour change as a bugfix to our users.
+"""
+
+Personally, I kind of think abort makes more sense as the default --
+at some point.  So I'm curious if you've just changed your mind
+completely from before and are against changing the default at all,
+whether you think there's more steps that should be done before we
+change the default, or whether this new flag feeling incomplete and
+development related to it being slow moving means we should wait off
+until we have a better picture of where it'll end up and leave the
+defaults alone until we get there.  (I'm kind of leaning towards the
+3rd of those, but am curious if I'm misaligned with your vision.)
