@@ -1,157 +1,111 @@
-Received: from mail-vs1-f48.google.com (mail-vs1-f48.google.com [209.85.217.48])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74BB154F81
-	for <git@vger.kernel.org>; Thu, 29 May 2025 22:18:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5069021D3D3
+	for <git@vger.kernel.org>; Thu, 29 May 2025 23:13:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748557137; cv=none; b=a8bfNsuAVv8aU4ueg9fghtboUYy9B21PbRlVpYZgoQLfGCAUDNcmPTjTfwg66k52CWDrFK2TAd2oT+CHinufPzwKCpF5/nEmZT1jF5BpQsN6hZQon7PD4OfZWLZFTFmplFx77jQsA6Sw8EUqdrXC5hamOyGHFOgOlfExLBclyU4=
+	t=1748560392; cv=none; b=tv2ZVuMjy84izSF4iBUbIUR0YrYkbkeSBU5xcChQe4OZWSjU0Gh91w65I8RD8EphFlVx/ilyU6mt7ipKUPsiFpBv6jIulkjqukFvLGCgGxjyl3UM9kQW5k2X2oebi98uK9aF4BGcTVb2G+9N0hi/GFB02RNa0WzQN2btTTcDBdI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748557137; c=relaxed/simple;
-	bh=WzWmmVVkmpjQtD9oau0qu3mLe0qAINbbnvB4MOb1M5w=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=B4HfLNFpPUaWNrduXOgHDcJ9fk6b31jqwpy+o+r7psW/e550j90pc53xCdv8EHnWDcIrp97l89UdM5+HtdTJTD1M1MR7QTeFnOi88vw8pPWtD7sAM/hHOSJTp98KUSD7XwRiUPE8ri1AZ8sGpL0WlqUAs4UzuYaAtvSTfLT7D1s=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=cSGgRfS0; arc=none smtp.client-ip=209.85.217.48
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748560392; c=relaxed/simple;
+	bh=A2gmmPjnTQPc3xrbw8vKRsXEZQdrO5955vSLavZEdGc=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=rxEaJ0V1/1JTC9bL8fsSquaU30ME45VeUp3YMvGwhB288/ibjeNqwML6E8j03+gwq/NvJq11iE/QJFayFHZGE2RRtRokK0uJlL6eQL5yCpasZk/YZEb9bVQz9RQXF1r9eosXLB0WJoBEG/j2gVjhmQijFEF0OxxC1vMZ+OhUVm0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=l5eYQlRN; arc=none smtp.client-ip=172.105.7.114
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="cSGgRfS0"
-Received: by mail-vs1-f48.google.com with SMTP id ada2fe7eead31-4e45ebe7ac1so371396137.2
-        for <git@vger.kernel.org>; Thu, 29 May 2025 15:18:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748557132; x=1749161932; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=6R2WBJMim0d1QVHRyjjRScHcAenvsfs93Mo3b/0EUJU=;
-        b=cSGgRfS08py1Y81vITVhBZlHS/WpFf59c++jfHgwc462MYHPY8m89V5/SQTMcQU34Z
-         vasjkZUijSXZ9+dLQEizU9z6n8A5koGhc5DWmJGxzksLRICwfjvSfVxI4ppUEKO7PgmT
-         IV4ybVmQPwpLqFzc5Zn0pstPrIzCWeQKAjLFc98jGCf0fmTpxf7eIDcd/S/BIPdW+OYh
-         j3SP/d/xKPxLKa2h0Mv2oDDU8kFwRd0L5vS26WnlyRKBoI9xA+RkbMyq/VD+P0how8Hg
-         t9nfh607Z6hbplW/1bRaK/OxcfP3f65xr9VAt0spIMDyQ/dumtoFG7kqaqtav8oQZHyw
-         ymng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748557132; x=1749161932;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=6R2WBJMim0d1QVHRyjjRScHcAenvsfs93Mo3b/0EUJU=;
-        b=AvTntkcrLGlkVWQzG3ailxtcBnEvdPdUad81Xncp0yLNot2tvE2yS5gF+h6C/7gA/B
-         wSpLFJom4AdqszxeX9tuvfLJQ3aUDA2D4o4T3KXUEkBmrqYNmUkH/rFDRnxBD46BdFPH
-         CZv48IJwdq2KHIDoE0RLo1zRQPHo/c29WOJgloElU2pG7D5jFCm1WoEfrix5mffwm3Ix
-         5ybwaa3fjXh0C4krak4UmaMHbkcTiT5Ekb6Wo+UXUjMGM8jVap3rsuK5gsMXhLpg6T0E
-         OFA3wqMKHjNisHKPk0nx6/Lwr1pRLJWwHurIoH29TFszKtOcsVc4xYCsBPbqD8pP5C0q
-         xEPg==
-X-Gm-Message-State: AOJu0YzNMik4Bv0p9QWhFJzsCBifVFsw5NfUWsxVoiqYhbLFQl0AcjNH
-	cpWEx/4OOHAgzcWbnyZm6z0vvfq3O7uVxKsukqRFgJX5Rt+W1TqlLz1z1kXPXg==
-X-Gm-Gg: ASbGncvlCHLGwl8Dq+lUT5QMgrgmTU4Pa7kJFqFduR1/RTNexX8cCbzPHQjVbCC6i1C
-	aPAR0KUr443DDzCd/BAH5kxyajX7nUuKGi3ucyhHUiRNtnMQqHBYygkFN/EQX8foEuDvQDJqMOW
-	wFibCawGQXKhNz5N93ftiY9PI9MPzmW8vEZDnL1WW391ZIgK/RtkScKeIME/2cyWIcDxt1RTb8A
-	ViYTf10gNf4UbFpKl+exTykOzcXGPmssEDz4al+v2oucZ0YofDMtRV1l+xVEJBI6crkID0fAv6T
-	K0Glsv7GK3a2n7K0demRA+HC9Vv3yOqoi2dXlsjhcyP9/5Kvx81B1dSFA4wbPHzqozut0qE8
-X-Google-Smtp-Source: AGHT+IHc40+fDS/xaSy2hyHIYfOKIiK7f+qIgds//qJXg5/zw57eh9kuPen6vUI1BYI1R164J5ZLuA==
-X-Received: by 2002:a05:6102:c53:b0:4e2:ecd8:a27 with SMTP id ada2fe7eead31-4e6e40d8c1amr1586579137.4.1748557132615;
-        Thu, 29 May 2025 15:18:52 -0700 (PDT)
-Received: from rodrigo-pc.. ([179.99.7.58])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87e2a3b68acsm1792663241.33.2025.05.29.15.18.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 May 2025 15:18:52 -0700 (PDT)
-From: Rodrigo Carvalho <rodrigorsdc@gmail.com>
-To: git@vger.kernel.org
-Cc: Rodrigo Carvalho <rodrigorsdc@gmail.com>
-Subject: [PATCH v2] userdiff: add support for R programming language
-Date: Thu, 29 May 2025 19:16:41 -0300
-Message-ID: <20250529221805.97036-1-rodrigorsdc@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250525210236.116342-1-rodrigorsdc@gmail.com>
-References: <20250525210236.116342-1-rodrigorsdc@gmail.com>
+	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="l5eYQlRN"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
+	s=default; t=1748560381;
+	bh=A2gmmPjnTQPc3xrbw8vKRsXEZQdrO5955vSLavZEdGc=;
+	h=Date:From:To:Cc:Subject:References:Content-Type:
+	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
+	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
+	 Content-Type:Content-Disposition;
+	b=l5eYQlRNNjpPloqhmcoeLR8FzQ+3lO/yKqzdFlfCdm2oqlpDWlwsTK24Al6m0cNWI
+	 yW7ODNruSflX4oQwtw3T3uG0eaydRHlH+Qd8HnMMODES6GsMH2sUpri1eR2ZuWfOo6
+	 ookugixjHSiHp5Mv4IBb6gQF4Yx1hATGUU2XQI1n2CN1mEzpkLgEui6mO9KDDbTVYO
+	 LnbztSjWFDv3jNuL5Ka4XDujNtB9Ptg1mGWIG7Js9gL+jA+Mq5dy6kN2K5S5S2XBgu
+	 9J8v7yxyLVg6f1uvVoRhWN4DtGCVy7zWyqBgGtGJ2iOMhAZMokpT7iRbNlCGLDYJha
+	 JLar0ce8QitpaYxuas8zMAhTRWEeP/DpRonvhNiCu8Fkaj6xEUrI7GvmOPcwDtL2ZS
+	 Dn0HOL/q/FyYyexhxZLu5ZR/NI4iml8IloX/5LmMUN3Q3LjQvugrZ2KGUe4d+Ln8Vh
+	 3Pby1Wh3LkigKC+LE1b5zjYk0lTkiLyocFsRqkUCAhieQju1dH5
+Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:df25:78ac:1a43:dee8])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
+	(No client certificate requested)
+	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id C4EDC20038;
+	Thu, 29 May 2025 23:13:01 +0000 (UTC)
+Date: Thu, 29 May 2025 23:13:00 +0000
+From: "brian m. carlson" <sandals@crustytoothpaste.net>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	git@vger.kernel.org, ps@pks.im,
+	"Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] reftable: make REFTABLE_UNUSED C99 compatible
+Message-ID: <aDjp_IkgmITrl59-@tapette.crustytoothpaste.net>
+Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	git@vger.kernel.org, ps@pks.im,
+	"Randall S. Becker" <rsbecker@nexbridge.com>
+References: <046901dbd002$a0c245c0$e246d140$@nexbridge.com>
+ <20250529101136.16219-1-carenas@gmail.com>
+ <xmqqtt53l7cl.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="ySHDxNRkVy2NQe7B"
+Content-Disposition: inline
+In-Reply-To: <xmqqtt53l7cl.fsf@gitster.g>
+User-Agent: Mutt/2.2.13 (2024-03-09)
 
-The patch appends userdiff.c file in order to support R programming
-language function header. This will be useful for those who use Git
-for versioning .R files.
 
-Also, add three userdiff tests for R programming language
-files. These files define simple function and nested function,
-with and without indentation.
+--ySHDxNRkVy2NQe7B
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Rodrigo Carvalho <rodrigorsdc@gmail.com>
----
-Changes in v2:
-- Add support for function defined by '='
-- Replace word regex to '[^ \t']
-- Add new test that handles with nested function
+On 2025-05-29 at 16:17:14, Junio C Hamano wrote:
+> Corresponding definition we use in the main part of the project
+> defined in compat/posix.h looks like this:
+>=20
+>         #if GIT_GNUC_PREREQ(4, 5)
+>         #define UNUSED __attribute__((unused)) \
+>                 __attribute__((deprecated ("parameter declared as UNUSED"=
+)))
+>         #elif defined(__GNUC__)
+>         #define UNUSED __attribute__((unused)) \
+>                 __attribute__((deprecated))
+>         #else
+>         #define UNUSED
+>         #endif
+>=20
+> GCC 4.5 or older may no longer be relevant, in which case yours may
+> be good enough.
 
- t/t4018/r-indent        |  6 ++++++
- t/t4018/r-indent-nested | 10 ++++++++++
- t/t4018/r-noindent      |  6 ++++++
- userdiff.c              |  4 ++++
- 4 files changed, 26 insertions(+)
- create mode 100644 t/t4018/r-indent
- create mode 100644 t/t4018/r-indent-nested
- create mode 100644 t/t4018/r-noindent
+RHEL 7, which is now well past EOL, had GCC 4.8 and Debian 7, released
+in 2013 and also well past EOL, had GCC 4.7.  I think we can safely
+assume nobody within our support policy is using GCC before 4.5.
+--=20
+brian m. carlson (they/them)
+Toronto, Ontario, CA
 
-diff --git a/t/t4018/r-indent b/t/t4018/r-indent
-new file mode 100644
-index 0000000000..9df440f2a4
---- /dev/null
-+++ b/t/t4018/r-indent
-@@ -0,0 +1,6 @@
-+RIGHT <- function(a, b) {
-+    c = mean(a, b)
-+    d = c + 2
-+    ChangeMe()
-+    return (d)
-+}
-diff --git a/t/t4018/r-indent-nested b/t/t4018/r-indent-nested
-new file mode 100644
-index 0000000000..30412e6c79
---- /dev/null
-+++ b/t/t4018/r-indent-nested
-@@ -0,0 +1,10 @@
-+LEFT = function(a, b) {
-+    c = mean(a, b)
-+    RIGHT = function(d, e) {
-+        f = var(d, e)
-+        g = f + 1
-+        ChangeMe()
-+        return (g)
-+    }
-+    return (RIGHT(2, 3))
-+}
-diff --git a/t/t4018/r-noindent b/t/t4018/r-noindent
-new file mode 100644
-index 0000000000..6d9b01ffe3
---- /dev/null
-+++ b/t/t4018/r-noindent
-@@ -0,0 +1,6 @@
-+RIGHT <- function(a, b) {
-+c = mean(a, b)
-+d = c + 2
-+ChangeMe()
-+return (c)
-+}
-diff --git a/userdiff.c b/userdiff.c
-index da75625020..64e5005682 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -317,6 +317,10 @@ PATTERNS("python",
- 	 "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
- 	 /* -- */
-+PATTERNS("r",
-+	"^[ \t]*([a-zA-z][a-zA-Z0-9_.]*[ \t]*(<-|=)[ \t]*function.*)$",
-+	/* -- */
-+	"[^ \t]+"),
- PATTERNS("ruby",
- 	 "^[ \t]*((class|module|def)[ \t].*)$",
- 	 /* -- */
--- 
-2.43.0
+--ySHDxNRkVy2NQe7B
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
+
+wr0EABYKAG8Fgmg46fsJEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
+LnNlcXVvaWEtcGdwLm9yZ9hHeuOwYzEZFNNLd5euSoRIeISN4O7kaEo8cBFZjFiZ
+FiEECCzmip28ZfuD0cORfAxJYoiHooEAACElAQDEDfabqSJf996YnDFBOFnAsvEO
+zbXajKKXUBdxoD5HLgEAseTWEmI/O2YBWD/6nA25Js1s4tp+nqYg5hKNwHpxgQo=
+=KSOB
+-----END PGP SIGNATURE-----
+
+--ySHDxNRkVy2NQe7B--
