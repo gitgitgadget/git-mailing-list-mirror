@@ -1,113 +1,115 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5476121171D
-	for <git@vger.kernel.org>; Thu, 29 May 2025 10:12:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46ECB223709
+	for <git@vger.kernel.org>; Thu, 29 May 2025 13:39:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748513529; cv=none; b=EBiy7GyWunbj6n9uTnN+M6r4bBUMGTDuj0hmCVD7p3/jJc/j47aRqeOFUAcANjRrc7kNETddCIWUIMNc4LOGerlJNo4oampalisamUU6stITpcfsq8LCRMl/2cM+8KPDrPDg02x7VELzMAm8GqXgouht1tGtxj7PGIHw7kE86pU=
+	t=1748525992; cv=none; b=bZxi2+72X4N4TCl/Ib6hMlzmGn7WMw2V/FgsRG9WVn1OzhVkZAKVWyTM46VOZ19BUvAvyJGtvV6sCRH8Qjv36galjvRKO4C/kWjLQ1R9fJS8QkcV6QABH+gPboXH17pKHld2BenHuqk7bJTKAwljS/tbbXsaqyC7XAXgr3oVFKw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748513529; c=relaxed/simple;
-	bh=OH0JbiJAy8lG+5i2/Skf1Cc4qHPi1bq2UKrx3q1VIRI=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=VuAPn5X0IkjljzWK2sFsPVPNwi8KCP5ko9l9aLlJVvmrXsU405gPyfabEpfV+tiMXbxtCRHUsfHFIpAtuYr0x8FY0kyI29FSYleaHM4ehpYA+LyItel2kNCxessW+Jno7XLx9buTzRj2T0Wn1ezYs7xEsvQkggAgB32MdEWkkh4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=L8F5/qGn; arc=none smtp.client-ip=209.85.214.175
+	s=arc-20240116; t=1748525992; c=relaxed/simple;
+	bh=qjjJep1OqYQH0orlmTWYrVAz+xgz+2jKkAgoSYNUPF4=;
+	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
+	 In-Reply-To:Content-Type; b=gDAljVQ9Rm5Zzx6jd8TBB3kjL+XAk79PBWhflq+bwGSfCAziP6NXjTcgU9QbJsP3zIiXzw1GIXUahd+hvJWrrUSpvx2icj2LPlJWrfdUMynkiT7IrOAqf1ikUfmZSBCnUoIdiEZOZTBl12/Vs2dWU8m7h4QidcCetqPyIL5hNY4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Lul8nXoW; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="L8F5/qGn"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-232059c0b50so7048535ad.2
-        for <git@vger.kernel.org>; Thu, 29 May 2025 03:12:07 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Lul8nXoW"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a3798794d3so794741f8f.1
+        for <git@vger.kernel.org>; Thu, 29 May 2025 06:39:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748513527; x=1749118327; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=PWzR7KUSwJbDNCT3Kl9HCkQgr0ivUKWnwUbVVJf0wok=;
-        b=L8F5/qGnMhFoJg4QD3nfiYMMNPOHc/LReVyGnuzD6ZdPO8ZKpN2uQ6yqXRyfpJmuAk
-         p/ZnG9/ZYxuml2ULP155qN1LX67ubVAH5vXHOp0L4Vv1FnG8PAa7Y/6D44cYqTLbLJ2V
-         xMRJEAq8a3pvOopJ3+XR17avX/UhQOrfi559253w3oOHSsllq9tcOrlWgmKUOyQ9SQK3
-         q6CQJgXhsn3IFmQpu6i5VJEU42tH2gKpnKFwlJrK+3o7/lFTPXNbB/RZTrgrSpOh95Fc
-         v3pVuuBnDOIT49OVEoynjjM9pMcTIxhPtICQju/IIbO2SdXNXW2dgwMbb8+yZ9PoTsRY
-         di9A==
+        d=gmail.com; s=20230601; t=1748525988; x=1749130788; darn=vger.kernel.org;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=PR/Es5P3rxSlwqI+bg7peNcr1UTslIUAyj4F/fkRvug=;
+        b=Lul8nXoWoCOzTEfVyXyIAKJNjFufT6Q6vv7dmckrsRWrk0pL9acN5r4uDqjK9ghius
+         P8NyW5pAru2gcSEY8p/KpxyZP0eIaBHs9O8CDZCE/lsDUJHGWWHYQ6I5mo+69gbJm+yY
+         jlSdj6hhEX2/0xwpHM2T697wTqLwkTOFrOEnIgnDUtGl46kw511Yo9TkMkD1YtrZCxs4
+         LrOlGLWFCD3LZD/alcbha++Ja7dwEUhO38PQbDRMoMgps4CO0wugbRVzwt+zmbaMg100
+         teUZHLXUclkzRnIcVa1raXZVUq4draGN2l3J3C2Jfsr+ZKn6eeFfhXmmEUXOXAb5NyLS
+         mpqQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748513527; x=1749118327;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=PWzR7KUSwJbDNCT3Kl9HCkQgr0ivUKWnwUbVVJf0wok=;
-        b=d8hcFHbiK8V0CUyMa0hg6dMnHPi0FiZdA0qNvt2zz1ar16WzXHPfbT8cJzC2zAY8V4
-         jTk+vARuDt6Blvsjb3vMBciGoCrUNoJUq+k43C6zQIXcHd3TnpR9mfaejZSWofN+pn6H
-         kmIjjA4LvN6/O/dd8WJ5x0ukBWSskf2IMPwAEH/VRY1zke/apioDgkfHWIiNmVZhpuVk
-         bI9UACmx0DiUhIPgTqisiSg3kZ97IKcblEMj5R7XzIdt9WdWQpA650pIrzrcDG6bdDAp
-         c3A3mrmrFtFPL40UJCqYaJWTWDAyX251EPvNXPeQ3mrd0ZufGeJVjTNNFgGmsnsWoIuJ
-         i/6g==
-X-Gm-Message-State: AOJu0Yz6C8uZhegP2Cry1Fo6jl0Bt2Ar2xrdfoPskdEKppR0HG1aUhmU
-	lmfcL4TMW7SGSUWJ6Imqcd9F4MY3apKe0k6kQhJTySE4f6lRNUF7JIXSdquizg==
-X-Gm-Gg: ASbGncvxhaJi4dM9ZmQo7XCQqPoO5xe7bG1E+Q8HA01KFhdsaY2ZaNeRoCAOIah0e5x
-	d5RW/Yf9NNvAh1hzqZePTi8iKKg2+cuOoP+I8sS7XBUZiOHR79wKI3GYwPzybcWCBo1d4WomZ0X
-	fxeGOgAeHbJPmY2SyEwp8T8dNh1ypSz7TBcMVb+M5gsRDLfhltz77N7T0YxAg1Lr9EtPgLcwm7C
-	sYmt1Zz0VxjbcDyeQIAKczU/RUHTrWey+KN2pRJQw+SI8ktvZ92mrwmlqdJTb8/epibyif5pqt9
-	KCEaIJGB9XuAdQMy0BjtUDuL2KdQtXUAxY3+/84M9KIYETAVVHgPvOxkK77L2ehRnNcE+mBp9wo
-	2FqoNCYR/PfgSqG74
-X-Google-Smtp-Source: AGHT+IGU4Xvnv79MnCWuxZGbVCWrFpM1TKgz2jpE9DcFQZJuUgmH1tOo5Zz3Rskbl6tAFUTdcbaC6g==
-X-Received: by 2002:a17:902:e888:b0:235:1962:1c13 with SMTP id d9443c01a7336-23519621cefmr5801175ad.14.1748513526935;
-        Thu, 29 May 2025 03:12:06 -0700 (PDT)
-Received: from localhost.localdomain ([2601:640:8e80:3680:69ab:ad83:5133:4bd0])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506bca106sm9273645ad.32.2025.05.29.03.12.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 May 2025 03:12:06 -0700 (PDT)
-From: =?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	=?UTF-8?q?Carlo=20Marcelo=20Arenas=20Bel=C3=B3n?= <carenas@gmail.com>,
-	"Randall S. Becker" <rsbecker@nexbridge.com>
-Subject: [PATCH] reftable: make REFTABLE_UNUSED C99 compatible
-Date: Thu, 29 May 2025 03:11:36 -0700
-Message-Id: <20250529101136.16219-1-carenas@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <046901dbd002$a0c245c0$e246d140$@nexbridge.com>
-References: <046901dbd002$a0c245c0$e246d140$@nexbridge.com>
+        d=1e100.net; s=20230601; t=1748525988; x=1749130788;
+        h=content-transfer-encoding:in-reply-to:content-language:references
+         :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=PR/Es5P3rxSlwqI+bg7peNcr1UTslIUAyj4F/fkRvug=;
+        b=UgZSZMsqUXjFcji0m30k6SWderHjgtkm9nsJMOfschYsor0KoTW+DBlTWYdulT/eyg
+         F2mh0UXTPzCtuH+8dSGVjN0F6j389OWwLvz5imT+3bCCZlkghy0rQc3Fkb5v7G3eF2BW
+         jQFDuF5fsm0/FfAQ1T3Px1CO16ydE8BzjoLECwjYOE1TxdvbKaEGSruNkygVALGC6SBo
+         DVrvUfJXEHvv4DGXflyDXtjbXioF344v/PdP7yOapAxaber/o86LaVbRkRJrpnhACeed
+         /r0SNkC6YNiMFyEz6g7LGHXIiHvjxhpzsh3oXW0lv02yudzEuF/fwZJPNRXQYFZH9WZb
+         vqTg==
+X-Gm-Message-State: AOJu0Ywj/Ph9HNjGUaQi2EfhgK2w79R1kd1hLvfJbBKI3HX8PPjLUW70
+	SYAvfBW7IZC5/IO/CV2g27oyrDlgFKm2NmkM5lkIvQwVIJitPKqYH/a0
+X-Gm-Gg: ASbGncurciMHMlR1AmsoLxxw0hJV0mVxR4CE8ugu0mraj+W+iKF3EHkVrfAMXp4xTLn
+	Igr6itROgTJhMT+Jwo78EW0zU1QWRfzd8MUmWSfBraMTPLLrw81mVbTe75kNdjTb2dOMLp6K5ju
+	yf3je8au7oWlYiFP7dtp01vvqnU685l7W1H0u5iXAhnLXWeBpLtd4g+nzRK8fEuWK6Wc94jEjz1
+	Cl+eZa/OlXo9nBsQLKHI7sonS69x+nvXeHvZmcip0rFyOp2l0dT4EVqI7LcPvyXD9YodjQL5tSE
+	WDpI5STqHb9iUvtMcmBrtVB6VUtWh9MjZTH5xtN2lHh8hEyU/ywVE49M2sk9Vk2e2T9Zdgatjqw
+	EfLYbET9ap+eyOTdpEprlFDeWzoMNhoVGj4iwsw==
+X-Google-Smtp-Source: AGHT+IFLU6kPNikvE7+rPbqgICA5eEnHBsBw77zai1gKzX/MKUchzJ8LGa26esWxAXBjWTXY4Lx7Fw==
+X-Received: by 2002:a5d:64cd:0:b0:3a1:fcd6:1e6b with SMTP id ffacd0b85a97d-3a4cb4c622emr19127768f8f.57.1748525988276;
+        Thu, 29 May 2025 06:39:48 -0700 (PDT)
+Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f009f9d6sm2003600f8f.84.2025.05.29.06.39.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 May 2025 06:39:47 -0700 (PDT)
+Message-ID: <edd4d392-f124-4e97-b4a9-6cf3fde1e804@gmail.com>
+Date: Thu, 29 May 2025 14:39:46 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+User-Agent: Mozilla Thunderbird
+From: Phillip Wood <phillip.wood123@gmail.com>
+Reply-To: phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v2] sequencer: replace error() with BUG() in
+ update_squash_messages()
+To: Junio C Hamano <gitster@pobox.com>,
+ Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, Lidong Yan <502024330056@smail.nju.edu.cn>
+References: <pull.1964.git.git.1747226641249.gitgitgadget@gmail.com>
+ <pull.1964.v2.git.git.1748168353204.gitgitgadget@gmail.com>
+ <xmqqr008peil.fsf@gitster.g>
+Content-Language: en-US
+In-Reply-To: <xmqqr008peil.fsf@gitster.g>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Since f93b2a0424 (reftable/basics: introduce `REFTABLE_UNUSED`
-annotation, 2025-02-18), the reftable library was migrated to
-use an internal version of `UNUSED`, which unconditionally sets
-a GNU __attribute__ to avoid warnings function parameters that
-are not being used.
+On 28/05/2025 23:16, Junio C Hamano wrote:
+> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> 
+>> diff --git a/sequencer.c b/sequencer.c
+>> index b5c4043757e..3cd0dd3434e 100644
+>> --- a/sequencer.c
+>> +++ b/sequencer.c
+>> @@ -2139,7 +2139,7 @@ static int update_squash_messages(struct repository *r,
+>>   		strbuf_add_commented_lines(&buf, body, strlen(body),
+>>   					   comment_line_str);
+>>   	} else
+>> -		return error(_("unknown command: %d"), command);
+>> +		BUG(_("unknown command: %d"), command);
+>>   	repo_unuse_commit_buffer(r, commit, message);
+> 
+> BUG() is not end-user facing but programmer facing, and we do not
+> use _("...") in them.  I see a few existing violators that need to
+> be corrected.
+> 
+> OK.  Or
+> 
+> 	if (!is_fixup(command))
+> 		BUG("not a FIXUP or SQUASH %d", command);
+> 
+> at the very beginning of the function?
 
-Make the definition conditional to prevent breaking the build
-with non GNU compilers.
+Asserting the precondition at the start of the function sounds like a 
+good idea
 
-Reported-by: "Randall S. Becker" <rsbecker@nexbridge.com>
-Signed-off-by: Carlo Marcelo Arenas Belón <carenas@gmail.com>
----
- reftable/basics.h | 4 ++++
- 1 file changed, 4 insertions(+)
+Best Wishes
 
-diff --git a/reftable/basics.h b/reftable/basics.h
-index d8888c1262..7d22f96261 100644
---- a/reftable/basics.h
-+++ b/reftable/basics.h
-@@ -16,7 +16,11 @@
- #include "system.h"
- #include "reftable-basics.h"
- 
-+#ifdef __GNUC__
- #define REFTABLE_UNUSED __attribute__((__unused__))
-+#else
-+#define REFTABLE_UNUSED
-+#endif
- 
- /*
-  * Initialize the buffer such that it is ready for use. This is equivalent to
--- 
-2.50.0.rc0.1.gb4243b6ac8
-
+Phillip
