@@ -1,119 +1,173 @@
-Received: from fhigh-b8-smtp.messagingengine.com (fhigh-b8-smtp.messagingengine.com [202.12.124.159])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com [209.85.128.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2D94685
-	for <git@vger.kernel.org>; Wed, 28 May 2025 23:34:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3ACE2629C
+	for <git@vger.kernel.org>; Thu, 29 May 2025 00:00:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748475248; cv=none; b=MEMLBDJALE6j7f1SHaNDd20HQgnogRE1uB8Y+rBa6qOLoTRUGC2MipW6WVok4zlJ+SLSdpWHYfzO5MKeNFvLkSzrIPHv1FtjX4hnPGXSm6saUFB72opdDK7UBIbR7ZvQLlDJxH+WEOkzmLjXrlcR+BdER6iqzvp9376ySdnrdR4=
+	t=1748476840; cv=none; b=t9mzyPQd1HCCbpApZa21dlqmpk9+CcijmQUVNWMfkLbJG9DyRtPHYfAc7WeIRmxISX6HwYmlmWU+woaQ/ZC+Aysc5m6ahM5wE7/AjUF/KYcbNO92d54L60MFd/CugBQ1p7mRH+0qHbdX8zhgbYdaMSIz9ymgCg+aHz8z4Sq33mY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748475248; c=relaxed/simple;
-	bh=ttqZvkoBA9ifV4ic8f2J6Nv2mB2AwSPN1g5ol369Y+c=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=TAkpzyC33Bdj+UnMnPi0PX781AhJWRb+jQD2TdQdKoTGAGnPp1FQAZb38KJ6Tb2LfAbDj7KuCJDzuFi+XIN1QI68gUlOcXxnsggOtLE4epJ+QqZckAjmC73BRexvhJtWAcSeQ/GtsYTY2XjiW5htcO2BLyGJ9Wjo+pf3lkrwOBQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vmiGS7xs; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XoY93iN8; arc=none smtp.client-ip=202.12.124.159
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748476840; c=relaxed/simple;
+	bh=DBjWQxyHggQiEHrLq18E+4maYS52DJrpERCqFRJJAoo=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=elIe9dH/XBFjx/oMMks0xKzlWPNqZicFUZEMUqgJ/UyG4h2UY9XRI5wCvPBJoHenSthTccG14cp1B6zRqjCW7K4POUW8KTJ0d6Af4LD7VFzQQPKoVAQOSuCdlH3zuNDkIDqlaH9A8BegEnqRpF7RTeIp0mM80g2HUn9EGBbEFTM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=MgPDs1Ls; arc=none smtp.client-ip=209.85.128.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vmiGS7xs";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XoY93iN8"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 08D4E254011D;
-	Wed, 28 May 2025 19:34:05 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Wed, 28 May 2025 19:34:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748475244; x=1748561644; bh=0t3j4mHYz2
-	oN4MjEwfiN1Qchqs8Da5CIzDgkFrlfaIU=; b=vmiGS7xsY8tBRIoHac3p9K+TMi
-	0LaTHh91R4q4t9UsKFZ+sxD9951bxTUevuvizM5cF8HuIIN2haWZiyL7vaalhoR6
-	g2PBHPYckGS+Lw335MMqfPCtwYBrQ9SkLd6Y/r0wex3PEL+IsLxsF2uAB5QBfmJO
-	mjDUoC6IoozL5rOjKdoaPVrDIE6xn2MaTsuYkaIPbYyhGK1cZqXNvnIj5HOsKTN5
-	79XzVUCB3FwAduGGu3h/G1yVRvmrvXN1Kf0j2Rgnq3mqXBPgi2QxlYSQ9dt9oC4l
-	RrErdBRypWxcpIcTZde4DceQB3OldnJ/40knAhiChAmODbpyxmQZc9Q3XIhA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748475244; x=1748561644; bh=0t3j4mHYz2oN4MjEwfiN1Qchqs8Da5CIzDg
-	kFrlfaIU=; b=XoY93iN8WYEWQsKVYiLj7lDoYiQtiK5iyxnBnn9NkYXMUEN2y6g
-	ghYIvCJvcEGBnAwq9t9/91F+03iwSXy2GwQuyRPXI10i0nFgT54dAD9qLCvP8rsd
-	rDc4vnxvGiEIF9iN0/pr4hiRTpL++Elfcx+ohwoh3Q0ZYG2axNSLFecBJgROZyQ7
-	bCBIgsoXphPcgvj3Yv3hAsgC/YGzUgZ/K0uxGna8i0KL5GpQA7NgRJ4dlhuxXva2
-	g4+zr2iLQ5KytGRp3NZYIfBWEMIGDL+K+hkwmu6aPGteelbhfdC8QMpcexbnzAWh
-	Q/O3LSVSAZ/CVtWty/LhRshpgHgZBRHRmPg==
-X-ME-Sender: <xms:bJ03aGsofzrAPSxohQVznBJgz7ql-1yKraf1XY8xaSszTy5JEQxmcg>
-    <xme:bJ03aLdzDnuOzfXuTmWr2EBKdRf_2yVfeKENijRznJOpAjrUBDg0bw5WiOgDIdyn8
-    21u6XDKPMTL5E78nw>
-X-ME-Received: <xmr:bJ03aBwHMrdkbRUQ9k6p6J-W5bcmWBGh0cwLNBjzXl2_uVdDoYOL2QGjRw6KyGQIWaU2asirXVQVFrBpvcRH7UKb6MX8IqWOwI7BMg8>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvgeehleculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtgho
-    mhdprhgtphhtthhopehnohgsohiiohesghhmrghilhdrtghomhdprhgtphhtthhopehgih
-    htsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsthgvrhesphho
-    sghogidrtghomh
-X-ME-Proxy: <xmx:bJ03aBObYw2VbB7ZeN-FzSwJMJWo7rPpcCVjqAvzbbGf1jaH4VPgcQ>
-    <xmx:bJ03aG_dg9wCA49lIuJotbY5AprwHSloCVpZTOpAxs2dhv7681g14Q>
-    <xmx:bJ03aJWeUULMvY4eaGMBfgxiuGCl_pSAx9dmTbetJY-HCdBuVhEJkg>
-    <xmx:bJ03aPf0M2ukb-E7dcXFRL5qX7pDj5UXuN2weGw_ARxvubcFKTsZsA>
-    <xmx:bJ03aNrilk-rsqXQKcCuJkY-kG1dCxEPNpC9iiycdEuFDOkyzw9bCtjA>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 28 May 2025 19:34:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com>
-Cc: "Jon Forrest" <nobozo@gmail.com>,  git@vger.kernel.org
-Subject: Re: "git commit -a" Doesn't Add New Files. Why?
-In-Reply-To: <09518eac-948e-46be-9cd2-64304e78af81@app.fastmail.com>
-	(Kristoffer Haugsbakk's message of "Tue, 27 May 2025 18:43:10 +0200")
-References: <1014npb$rbl$1@ciao.gmane.io>
-	<09518eac-948e-46be-9cd2-64304e78af81@app.fastmail.com>
-Date: Wed, 28 May 2025 16:34:02 -0700
-Message-ID: <xmqq8qmgpaxh.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="MgPDs1Ls"
+Received: by mail-yw1-f180.google.com with SMTP id 00721157ae682-70e4043c5b7so4507457b3.1
+        for <git@vger.kernel.org>; Wed, 28 May 2025 17:00:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748476837; x=1749081637; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=ZFtNc3lLGJNKeiNkGEQvgEYHfGrQ3yTxPU2t1V4uwL0=;
+        b=MgPDs1Ls+fPxKuN+3eCgoFBRCt9DtP4JT2c+y2MRGLVbqyfALm4yRBukdO1YzVFKrW
+         kLdpmzHIZv+5y4HlbggW81O/xFZYwW4CNKchGltU7/89DTfj+OUxs+OotWJr6KhA50Z/
+         oV4MOiMRXmugS0nZGhF4DS1QvrtT2dlVJCrSGjvy07XF/V8U7G6tQpuac9Ut3R1F9gHH
+         FR7wcKWcgXJcRDppw+g8ttnwXEAY2goS/r624W2BbYIjcu4+gBStXSeGb7SiTzapyH/L
+         rkCeMwesmnmW70ODsQps+aiwa9LbS4xJl0qYEj8oXtmO+HbA2Q0smyctYchxSjMMHhxD
+         soww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748476837; x=1749081637;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ZFtNc3lLGJNKeiNkGEQvgEYHfGrQ3yTxPU2t1V4uwL0=;
+        b=itKRA9Dh59aWKf3qBaGjqlp1MMbVds5iI7gcEVdajUV4yjsAJ3xTVh4Umz4ic5H1Rk
+         F+wkBqbrVCqO3vlF5l9SdhqHIL/WpbCDf7uxLQsYGBHa3EFZYdTYhtwRJCc70ShtXeU1
+         rooz5HM5cEP9nWawsNc+y7GF+PpBKQ5Fs3RIAWmVOR84qBtGO4fsT7k9PgQExij+1rVv
+         YhF+5GGG6/tHGFtWP40ZxAS5wO1a8M8nmRjdKQLb9nr+3xQPgm1T6C8Y2xuONtK09B7L
+         wvAYQw2qdb4ilAvQSd1yDKUMwfos48uhQSktqDtswP8mo1CXlXY1FDklArEdTW9IzUJI
+         WNYQ==
+X-Gm-Message-State: AOJu0YwLpppOGLbb69aQ1dqkNhpg8vUzpIDvptGj03IXBUQ2PusAYHoq
+	rOWPoCUcENRQdlJ0RwYTkNKyFXv6/jStRxKeZ0GMk7h4zLbe3Aal/o8Uue4352luTFE=
+X-Gm-Gg: ASbGnctXLlHqwkQT4id9m1cnCgQHmA9KLTZSdYtq0YaQOSIU/y25YDf5Evry5WezX/1
+	+3xNCiP7nAaviMw3II4UmTwWujVlZZpGitztXAo2JXAQv+Wr39WNr1u6m6lSRn7PrvmlUJPS07y
+	aeyh/tFXxPPRcBY2HRY3tIN9F84PQe4tL6Uh9LtxIDg4CsVobzhdmfbJ14/hsyajDaGQojAPlt8
+	xSWNyfcznLCC7bt9uHaSodCjLpdta2MCrHlLHu97J1L5mYttGPC69rhqGpIhee5fkDIXVwyq48l
+	CZ8oBxXPzlBbOlV5xvPPocrX5QyColHnwNxGW4JqGMbg8Pj4RWZ7aI1lFIQLgNCQwS0hLq/9mgc
+	kH8VFpRxAe4QR3qLx6Hm8+ZcFMuY6YyUj6D1HgQ==
+X-Google-Smtp-Source: AGHT+IH73COZKtFd9Eo17lTJkUh/pofKQ1OrNwv7L+uyGBv2qwyYtCoOvrgH89p6ns+n/QeXSBfNUw==
+X-Received: by 2002:a05:690c:4886:b0:70c:b685:a6b7 with SMTP id 00721157ae682-70e2d9e1c8dmr261020217b3.21.1748476837407;
+        Wed, 28 May 2025 17:00:37 -0700 (PDT)
+Received: from jiangxin-bandwagon-2.localdomain (172.96.255.155.16clouds.com. [172.96.255.155])
+        by smtp.gmail.com with ESMTPSA id 00721157ae682-70f8ac0f447sm516427b3.62.2025.05.28.17.00.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 May 2025 17:00:36 -0700 (PDT)
+From: Jiang Xin <worldhello.net@gmail.com>
+To: Git List <git@vger.kernel.org>,
+	Git l10n discussion group <git-l10n@googlegroups.com>,
+	=?UTF-8?q?Aindri=C3=BA=20Mac=20Giolla=20Eoin?= <aindriu80@gmail.com>,
+	Alexander Shopov <ash@kambanaria.org>,
+	Mikel Forcada <mikel.forcada@gmail.com>,
+	Ralf Thielow <ralf.thielow@gmail.com>,
+	=?UTF-8?q?Jean-No=C3=ABl=20Avila?= <jn.avila@free.fr>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	Dimitriy Ryazantcev <DJm00n@mail.ru>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Emir SARI <bitigchi@me.com>,
+	Arkadii Yakovets <ark@cho.red>,
+	=?UTF-8?q?V=C5=A9=20Ti=E1=BA=BFn=20H=C6=B0ng?= <newcomerminecraft@gmail.com>,
+	Teng Long <dyroneteng@gmail.com>,
+	Yi-Jyun Pan <pan93412@gmail.com>
+Cc: Jiang Xin <worldhello.net@gmail.com>
+Subject: [L10N] Kickoff for Git 2.50.0
+Date: Wed, 28 May 2025 20:00:25 -0400
+Message-ID: <20250529000027.155496-1-worldhello.net@gmail.com>
+X-Mailer: git-send-email 2.43.5
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 
-"Kristoffer Haugsbakk" <kristofferhaugsbakk@fastmail.com> writes:
+Hi,
 
-> I have also not seen anyone really recommend using this option.
+Git 2.50.0-rc0 has been released, and it's time to start a new round of
+Git localization.  This time there are 51 updated messages that need to
+be translated since the last release. Please send your pull request
+to the l10n coordinator's repository below before this update window
+closes on Thu, 12 Jun 2025.
 
-You mean "git commit -a"?
+    https://github.com/git-l10n/git-po/
 
-I actually do to anybody who is the kind of person who concentrates
-on a single thing and completes that single thing well before moving
-to another task.  It is a perfect tool for the job for such a way of
-working.
-
-Like when doing "git merge" or "git pull".  There, the "single
-thing" that the person concentrates on is to complete the merge, and
-with a reasonably written pre-commit hook to make sure there is no
-leftover conflict markers [*], "git commit -a" to conclude a
-conflicted merge is fairly safe.
+The following description of our l10n workflow is from the "po/README.md"
+file.
 
 
-[Footnote]
+## The "po/git.pot" file is a generated file, no longer in the repository
 
- * There should actually be pre-add hook to make it even less
-   annoying.  After you see conflicts, "git add -u" happily adds the
-   contents of the files in the working tree, with conflict markers
-   still in them.  You can rely on the pre-commit hook that is
-   triggered when you run "git commit" next time, and then use "git
-   checkout -m" to recreate the conflicted higher-stage index
-   entries for these paths, but if we had pre-add hook, we shouldn't
-   have to know how to recover from such a mistake in the first
-   place.
+The l10n coordinator does not need to generate the "po/git.pot" file every
+time to start a new l10n workflow, and there is no "po/git.pot" file at all.
+
+Everyone can generate the "po/git.pot" file with the command below:
+
+    make po/git.pot
+
+But we can also forget about it. By updating our corresponding "po/XX.po"
+file, the "po/git.pot" file is automatically generated.
+
+
+## Update the "po/XX.po" file, and start to translate
+
+Before updating the "po/XX.po" file, l10n contributors should pull the latest
+commits from the master branch of "git.git". E.g.:
+
+    git pull --rebase git@github.com:git/git.git master
+
+Then update the corresponding "po/XX.po" file using the following command:
+
+    make po-update PO_FILE=po/XX.po
+
+Translate the uptodated "po/XX.po" file, and create a new commit.
+
+
+## Refine your commits, send pull requests
+
+In the "po/XX.po" file, there are location lines in comments like below:
+
+    #: add-interactive.c:535 add-interactive.c:836 reset.c:136 sequencer.c:3505
+    #: sequencer.c:3970 sequencer.c:4127 builtin/rebase.c:1261
+    #: builtin/rebase.c:1671
+
+These comments with file locations are useful for l10n contributors to locate
+the context easily during translation. But these file locations introduce a
+lot of noise and will consume a lot of repository storage. Therefore, we
+should remove these file locations from the "po/XX.po" file.
+
+To remove file locations in the "po/XX.po" file, you can use one of the
+following two ways, but don't switch back and forth.
+
+ * Keep the filenames, only remove locations (need gettext 0.19 and above):
+
+        msgcat --add-location=file po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+ * Remove both filenames and locations:
+
+        msgcat --no-location po/XX.po >po/XX.po.new
+        mv po/XX.po.new po/XX.po
+
+After squashing trivial commits and removing file locations in the "po/XX.po"
+file, send pull request to the l10n coordinator's repository below:
+
+    https://github.com/git-l10n/git-po/
+
+
+## Resolve errors found by the l10n CI pipeline for the pull request
+
+A helper program hosted on "https://github.com/git-l10n/git-po-helper" can
+help git l10n coordinator and git l10n contributors to check the conventions
+of git l10n contributions, and it is also used in GitHub actions as l10n CI
+pipeline to validate each pull request in the "git-l10n/git-po" repository.
+Please fix the issues found by the helper program.
+
+
+** Please note: The update window will close on Thu, 12 Jun 2025. **
+
+
+--
+Jiang Xin
