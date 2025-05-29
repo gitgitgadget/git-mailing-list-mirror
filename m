@@ -1,60 +1,60 @@
-Received: from fhigh-a8-smtp.messagingengine.com (fhigh-a8-smtp.messagingengine.com [103.168.172.159])
+Received: from fout-a5-smtp.messagingengine.com (fout-a5-smtp.messagingengine.com [103.168.172.148])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2389C21C9F5
-	for <git@vger.kernel.org>; Thu, 29 May 2025 15:33:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.159
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306F61362
+	for <git@vger.kernel.org>; Thu, 29 May 2025 15:45:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.148
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748532815; cv=none; b=NC1i7qpYhi7VbCIWmsObc0NvaYBt5hif76UpCPGmAKrdMLjASB/fK+jE+l226wFlHZUkLbxSG82infc3Idq5oUK08c0NFx04sGyCIxaCbK/XFCshxAUuM9G/Fw6O5HFFOKTnXQPKw4pYWSS1DPxE0p9QkMbkx+GO9ZvEke2+/0U=
+	t=1748533545; cv=none; b=msbCQszGzqmfAK76aUgAkWcourNoxrCS6Jzv+sqbgKDy6NU/Ld0hecWtz+RqHwfpOMmpgHsqz/ZrK5qjXpRkrLAncXEsHzR+DNDJDFYwaEqRSHXb54vpwE2lzJPDrCzXywfzwMZY8Vx7gJBRb1TrSQuMi0ePP2kCni4iCShG7kE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748532815; c=relaxed/simple;
-	bh=QZwa6yyNvyscu0MN/87bLBx7oIqDhXJEWV5vk41iUPU=;
+	s=arc-20240116; t=1748533545; c=relaxed/simple;
+	bh=ymZtr+rqosBlzSe7zFLrgIbkv+DP0ZL0byFnKqtz5kI=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AVlUMriEhiKUaLILLgGJPZDtTysCHknSvYIWkpdmcr5fTmeZzSzR/tzIB2cUSVjh1wu6+u5hahSaUJDyfPAJgwitxYAc3yNqiE+Dbqrh/GqFgRYN3tDEpp7y3jgJ3Zg+EJ70vC8UoQIbY62zBVrsoCCjCxg9XHvxXp0sAqP5dew=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=ymiDKDY3; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=FsRixiFP; arc=none smtp.client-ip=103.168.172.159
+	 MIME-Version:Content-Type; b=ke5ec4Lc31zt/WA1in9Ca9YH5FBKIO2AD/99btzpp3T9/kMnEHugNdWwbP9zqo+myOSUJyjEJQueqT4/7Q4W7rB4QOYADMCnXnq922sXg449o8nzy+Fv/iCkqYXhkV91qg60ybXlVnMaPAwS7UwccSfNwvO4BvkLJZ11bEPz60o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=1SChe/ET; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=cUmTKp0/; arc=none smtp.client-ip=103.168.172.148
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="ymiDKDY3";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="FsRixiFP"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1EA33114018A;
-	Thu, 29 May 2025 11:33:32 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Thu, 29 May 2025 11:33:32 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="1SChe/ET";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="cUmTKp0/"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4231C1380342;
+	Thu, 29 May 2025 11:45:42 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-01.internal (MEProxy); Thu, 29 May 2025 11:45:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748532812; x=1748619212; bh=QZwa6yyNvy
-	scu0MN/87bLBx7oIqDhXJEWV5vk41iUPU=; b=ymiDKDY34kydyDVYuXpMx7YJZd
-	2WmBdKew26IjerDWQuSjTD5RX61sIUWXgWrFTgp86rBQ3dL+A0Y/twBbTBsI+Pk8
-	h4FR3AJQQO4RkfVIK55Pf9UAGyKJGBnjBdbc/RkgmfJygKsUNY4j2I31T4FHyZ5l
-	5ZI1/4XZfPZr2erO2yxzS4VlFjaIkzfFDENarXLagl8lK7CimGvr4GgXqTqnQlBK
-	4uT27RtVRqfHe6iphShjFc8aPpX7oMn1dwacQuW81tRQrojlVz4AkqozJEeprLSi
-	cINyKaaYlfpiUzDt9AU/2K9yQ9MFvGeaKsmMUWsQzZI1++GzlAcu3XqAac0A==
+	:subject:to:to; s=fm3; t=1748533542; x=1748619942; bh=rU74qWoLAw
+	gRCIOTFWY6U9mMGUqscDrCcXhd0AjIyb0=; b=1SChe/ETECZ05RhRyfpNgLc/NQ
+	9eYpBxOm0SSNlR7btE8Y4/LceIFD4sTYShoNMt/1C3yUe6fxEV4q4Ofp33tMpLnn
+	N1Ap4a6DsQi2wvZqYqXUynde9L2zeiZmsjkInqeQVKGngi/UDwc9In9PJKOQr/8I
+	PNKYj69CFKNOXK4zHOi25zLCwzVBNX24yOfgwkHh2QsLr8xM1Op4o1m1HIsTQOLu
+	/Hu9uUeiX04tv3SRWHtrb6uQjYhazgueqhHwG8YTf+Dc4/C7t44ujpv9vFfGiZNw
+	KUJJZAJ5bzDhIXdp1F03TAtuOHCzHPSXZ8Rn2m7M318UrAnG5gcjcnCE5Sjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748532812; x=1748619212; bh=QZwa6yyNvyscu0MN/87bLBx7oIqDhXJEWV5
-	vk41iUPU=; b=FsRixiFP6OXW+dzJ/AuTZYrtme3pfWxOBWBBpHYkqYiPlUVPY5y
-	tFexWQ5Su2ApTnyyi6IBTcAi7HtonIkzGXVZ3A4XEuk6LN8US4piNOwe0EL+CHsc
-	wLGG3WtroFcK/72tHAH2/Z5AphHnebH0zIi0sNIKZN4muM1Wn1lnr+KE6MC7zwme
-	vfupF92c0z2AFSS65/APeC8PhKmAcyeXGbbF5Q1ujQ8v1JDluGBAGQKGqv6cV5E2
-	2obpsuS/tqbB/tw6J9GLdJ7Mk6LuFomSvDCPNbZnO+GdfxFv+5CSVYYGseeAfIm5
-	d7ZVsZuP8OpEUymBSyc9iTWae8wEjoWY/YQ==
-X-ME-Sender: <xms:Sn44aPkVAnYpbvGaJu_qiKEHQ9_FwrIge6IZZPDGpmGMa_JvxQ8XCg>
-    <xme:Sn44aC0tI5Y4uxXnrMdSskyKHXWbcbtrfJbKHGghz8VNoQ7nbwWskVrrWL4NVHukN
-    2HBB5z02s1q08wXbw>
-X-ME-Received: <xmr:Sn44aFoCbSqxPNTV_cl_MOl7TNneLFX0kEXE17CL_v6V_7MGD4_ANyh0hz-IN-25ycj5-Fjq5KQ298SV1gj9pshqilT8aihnCedj2v4>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvieehtdculddtuddrgeefvddrtd
+	1748533542; x=1748619942; bh=rU74qWoLAwgRCIOTFWY6U9mMGUqscDrCcXh
+	d0AjIyb0=; b=cUmTKp0/hCtpJipWr8+sLy41xPomeqNfDrnaxDDHiFPKgEHuOPN
+	V0CrVP356SHnq8nGrXdFFtfvSvAYcOygMJBRuRZA5Hu4MmqIv5wMcMHXwa9h8EK1
+	++Dh7nlxiakVV2+i/2pzVycjdUGDG8FjyiQ+5x7tRM5pP+aNwcwi38G82Kz6rxuJ
+	H1eMUQ7F1Ow06LCgrwnwTj4ewmoQvM1EAN6MSl64Fx6yc5xRBeWmnovKnDvfFLYB
+	/lMWzqqLVP2bVeLAAsm+NgMMl18pM9NnNylMy1+lAJgKXKe/enyp0iX34nxYlPdZ
+	8durn2hILv6ytbF4adjuG5kfIknbNsRRvFw==
+X-ME-Sender: <xms:JYE4aGhYKwRM3JHknlk4YWk9gyAGJYQ5OG8-g__Q4voyni0aHmOGGA>
+    <xme:JYE4aHAwuK-8PQB0mtfoWrvuQR0JK6hu41x6BWWua0VnizAVAg_0RYf1hW9C0RxJl
+    TASPKN2CRoQ51gXzQ>
+X-ME-Received: <xmr:JYE4aOGXkQsiE9PUms5WCT7qDgo1fRhInX6SWpt80rI6e4zTSUOnLAsH4QC60XH4Qd5_9NGr2Fark1chqGZeBkS6HtcbvX3zqQJ6j34>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvieehvdculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    kfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefh
+    tedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvg
     hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
     ohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtph
     htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
@@ -62,29 +62,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvieehtdculddtuddrge
     drnhgvthdprhgtphhtthhopehmvgesthhtrgihlhhorhhrrdgtohhmpdhrtghpthhtohep
     hedtvddtvdegfeeftddtheeisehsmhgrihhlrdhnjhhurdgvughurdgtnhdprhgtphhtth
     hopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:S344aHlIYnxKyPbjEWC4FzZZrF9P5U8h-DKgyC9le15cmJbNz-M5ZQ>
-    <xmx:S344aN1VxTwZSFFgs-9qt7D41t0Hv8fOC5JNBI1FPB57HDXiWBj0Xw>
-    <xmx:S344aGu5zHlnYfSgPcJTk-u_FATY7rOSpfFAtgcsEO3DuklCIvdW1A>
-    <xmx:S344aBWmAvbRI4S113X3fDQ_yx7EPLuKFcZrGhLX_usB4wfJJWJHLQ>
-    <xmx:TH44aK-u_cagq1h7aWMBlYeInLUAzS_G3BYrDesHMjPwZOmFnsVB_LB6>
+X-ME-Proxy: <xmx:JYE4aPQ8wSGK61a9i6mtmx99egfbViJYk8_jK_UKGNoZo5tkZ6Zeuw>
+    <xmx:JYE4aDzwPQFUt8-LcP7KQe3UR5EhZVgakUr0z7wisy5gVXa_1i4K8A>
+    <xmx:JYE4aN7Nay2M1DaFNs1-xQcwFxmRe7x__y0gYLGG0MK8P4ZyxstZkA>
+    <xmx:JYE4aAytIfErAV0mgzbmj3RrICYvpptOVfSFAxq9rkiNdQkfEwC2Zw>
+    <xmx:JoE4aN74CSkU7Nc8_9AuMmxFEV5W2z-TZO4iga3Qrs5tK_LqvEYM23qF>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 May 2025 11:33:30 -0400 (EDT)
+ 29 May 2025 11:45:41 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: "Taylor Blau via GitGitGadget" <gitgitgadget@gmail.com>
+To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
 Cc: git@vger.kernel.org,  Jeff King <peff@peff.net>,  Taylor Blau
- <me@ttaylorr.com>,
-  Lidong Yan <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v4 1/2] pack-bitmap: fix memory leak if load_bitmap()
- failed
-In-Reply-To: <b6b3a83a22486d0c104c494d1950fdaa2f2a658c.1748140983.git.gitgitgadget@gmail.com>
-	(Taylor Blau via GitGitGadget's message of "Sun, 25 May 2025 02:43:02
+ <me@ttaylorr.com>,  Lidong Yan <502024330056@smail.nju.edu.cn>
+Subject: Re: [PATCH v4 2/2] pack-bitmap: add load corrupt bitmap test
+In-Reply-To: <7876d9a9014ea6a0657f440f7fa1efd496a4a15a.1748140983.git.gitgitgadget@gmail.com>
+	(Lidong Yan via GitGitGadget's message of "Sun, 25 May 2025 02:43:03
 	+0000")
 References: <pull.1962.v3.git.git.1748138764.gitgitgadget@gmail.com>
 	<pull.1962.v4.git.git.1748140983.gitgitgadget@gmail.com>
-	<b6b3a83a22486d0c104c494d1950fdaa2f2a658c.1748140983.git.gitgitgadget@gmail.com>
-Date: Thu, 29 May 2025 08:33:29 -0700
-Message-ID: <xmqqjz5zmnxy.fsf@gitster.g>
+	<7876d9a9014ea6a0657f440f7fa1efd496a4a15a.1748140983.git.gitgitgadget@gmail.com>
+Date: Thu, 29 May 2025 08:45:40 -0700
+Message-ID: <xmqqbjrbmndn.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -94,19 +92,299 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-"Taylor Blau via GitGitGadget" <gitgitgadget@gmail.com> writes:
+"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
 
-> From: Taylor Blau <me@ttaylorr.com>
+> From: Lidong Yan <502024330056@smail.nju.edu.cn>
 >
-> After going through the "failed" label, load_bitmap() will return -1,
-> and its caller (either prepare_bitmap_walk() or prepare_bitmap_git())
-> will then call free_bitmap_index().
-> ...
-> The solution is to remove the error handling code in load_bitmap(), because
-> its caller will always call free_bitmap_index() in case of an error.
+> This patch add test_bitmap_list_commits_offset() in patch-bitmap.c,
+
+"pack-bitmap.c"?
+
+> a new test helper command `test-tool bitmap list-commits-offset`,
+> and a `load corrupt bitmap` test case in t5310.
 >
-> Signed-off-by: Taylor Blau <me@ttaylorr.com>
+> The `load corrupt bitmap` test case intentionally corrupt the
+> "xor_offset" field of the first entry. And the newly added helper
+> can help to find position of "xor_offset" in bitmap file.
+
+[the structure of a log message]
+
+The usual way to compose a log message of this project is to
+
+ - Give an observation on how the current system works in the
+   present tense (so no need to say "Currently X is Y", or
+   "Previously X was Y" to describe the state before your change;
+   just "X is Y" is enough), and discuss what you perceive as a
+   problem in it.
+
+ - Propose a solution (optional---often, problem description
+   trivially leads to an obvious solution in reader's minds).
+
+ - Give commands to somebody editing the codebase to "make it so".
+
+in this order.
+
+The proposed log message lacks the motivation and only talks about
+what the patch does.  We add a test-only code in a file, intermixed
+with production code.  Let's explain why it is the best arrangement.
+
+> Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
 > ---
+>  pack-bitmap.c           | 73 +++++++++++++++++++++++++++++++++++++----
+>  pack-bitmap.h           |  1 +
+>  t/helper/test-bitmap.c  |  8 +++++
+>  t/t5310-pack-bitmaps.sh | 27 +++++++++++++++
+>  4 files changed, 103 insertions(+), 6 deletions(-)
 
-As this is Lidong relaying <aCOFqYdnPp1Lne4Y@nand.local> that Taylor
-sent to the list, shouldn't Lidong's sign-off be after Taylor's?
+After the second round of the series, no review comments seem to
+have been sent to the list.  Is everybody happy with the latest
+iteration?
+
+Thanks.
+
+> diff --git a/pack-bitmap.c b/pack-bitmap.c
+> index fd19c2255163..39c1c1bc4ce1 100644
+> --- a/pack-bitmap.c
+> +++ b/pack-bitmap.c
+> @@ -34,6 +34,11 @@ struct stored_bitmap {
+>  	int flags;
+>  };
+>  
+> +struct stored_bitmap_tag_pos {
+> +	struct stored_bitmap stored;
+> +	size_t map_pos;
+> +};
+> +
+>  /*
+>   * The active bitmap index for a repository. By design, repositories only have
+>   * a single bitmap index available (the index for the biggest packfile in
+> @@ -148,6 +153,7 @@ static int existing_bitmaps_hits_nr;
+>  static int existing_bitmaps_misses_nr;
+>  static int roots_with_bitmaps_nr;
+>  static int roots_without_bitmaps_nr;
+> +static int tag_pos_on_bitmap;
+>  
+>  static struct ewah_bitmap *lookup_stored_bitmap(struct stored_bitmap *st)
+>  {
+> @@ -314,13 +320,18 @@ static struct stored_bitmap *store_bitmap(struct bitmap_index *index,
+>  					  struct ewah_bitmap *root,
+>  					  const struct object_id *oid,
+>  					  struct stored_bitmap *xor_with,
+> -					  int flags)
+> +					  int flags, size_t map_pos)
+>  {
+>  	struct stored_bitmap *stored;
+> +	struct stored_bitmap_tag_pos *tagged;
+>  	khiter_t hash_pos;
+>  	int ret;
+>  
+> -	stored = xmalloc(sizeof(struct stored_bitmap));
+> +	tagged = xmalloc(tag_pos_on_bitmap ? sizeof(struct stored_bitmap_tag_pos) :
+> +					     sizeof(struct stored_bitmap));
+> +	stored = &tagged->stored;
+> +	if (tag_pos_on_bitmap)
+> +		tagged->map_pos = map_pos;
+>  	stored->root = root;
+>  	stored->xor = xor_with;
+>  	stored->flags = flags;
+> @@ -376,10 +387,12 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+>  		struct stored_bitmap *xor_bitmap = NULL;
+>  		uint32_t commit_idx_pos;
+>  		struct object_id oid;
+> +		size_t entry_map_pos;
+>  
+>  		if (index->map_size - index->map_pos < 6)
+>  			return error(_("corrupt ewah bitmap: truncated header for entry %d"), i);
+>  
+> +		entry_map_pos = index->map_pos;
+>  		commit_idx_pos = read_be32(index->map, &index->map_pos);
+>  		xor_offset = read_u8(index->map, &index->map_pos);
+>  		flags = read_u8(index->map, &index->map_pos);
+> @@ -402,8 +415,9 @@ static int load_bitmap_entries_v1(struct bitmap_index *index)
+>  		if (!bitmap)
+>  			return -1;
+>  
+> -		recent_bitmaps[i % MAX_XOR_OFFSET] = store_bitmap(
+> -			index, bitmap, &oid, xor_bitmap, flags);
+> +		recent_bitmaps[i % MAX_XOR_OFFSET] =
+> +			store_bitmap(index, bitmap, &oid, xor_bitmap, flags,
+> +				     entry_map_pos);
+>  	}
+>  
+>  	return 0;
+> @@ -869,6 +883,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+>  	int xor_flags;
+>  	khiter_t hash_pos;
+>  	struct bitmap_lookup_table_xor_item *xor_item;
+> +	size_t entry_map_pos;
+>  
+>  	if (is_corrupt)
+>  		return NULL;
+> @@ -928,6 +943,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+>  			goto corrupt;
+>  		}
+>  
+> +		entry_map_pos = bitmap_git->map_pos;
+>  		bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
+>  		xor_flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
+>  		bitmap = read_bitmap_1(bitmap_git);
+> @@ -935,7 +951,8 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+>  		if (!bitmap)
+>  			goto corrupt;
+>  
+> -		xor_bitmap = store_bitmap(bitmap_git, bitmap, &xor_item->oid, xor_bitmap, xor_flags);
+> +		xor_bitmap = store_bitmap(bitmap_git, bitmap, &xor_item->oid,
+> +					  xor_bitmap, xor_flags, entry_map_pos);
+>  		xor_items_nr--;
+>  	}
+>  
+> @@ -969,6 +986,7 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+>  	 * Instead, we can skip ahead and immediately read the flags and
+>  	 * ewah bitmap.
+>  	 */
+> +	entry_map_pos = bitmap_git->map_pos;
+>  	bitmap_git->map_pos += sizeof(uint32_t) + sizeof(uint8_t);
+>  	flags = read_u8(bitmap_git->map, &bitmap_git->map_pos);
+>  	bitmap = read_bitmap_1(bitmap_git);
+> @@ -976,7 +994,8 @@ static struct stored_bitmap *lazy_bitmap_for_commit(struct bitmap_index *bitmap_
+>  	if (!bitmap)
+>  		goto corrupt;
+>  
+> -	return store_bitmap(bitmap_git, bitmap, oid, xor_bitmap, flags);
+> +	return store_bitmap(bitmap_git, bitmap, oid, xor_bitmap, flags,
+> +			    entry_map_pos);
+>  
+>  corrupt:
+>  	free(xor_items);
+> @@ -2856,6 +2875,48 @@ int test_bitmap_commits(struct repository *r)
+>  	return 0;
+>  }
+>  
+> +int test_bitmap_commits_offset(struct repository *r)
+> +{
+> +	struct object_id oid;
+> +	struct stored_bitmap_tag_pos *tagged;
+> +	struct bitmap_index *bitmap_git;
+> +	size_t commit_idx_pos_map_pos, xor_offset_map_pos, flag_map_pos,
+> +		ewah_bitmap_map_pos;
+> +
+> +	tag_pos_on_bitmap = 1;
+> +	bitmap_git = prepare_bitmap_git(r);
+> +	if (!bitmap_git)
+> +		die(_("failed to load bitmap indexes"));
+> +
+> +	/*
+> +	 * As this function is only used to print bitmap selected
+> +	 * commits, we don't have to read the commit table.
+> +	 */
+> +	if (bitmap_git->table_lookup) {
+> +		if (load_bitmap_entries_v1(bitmap_git) < 0)
+> +			die(_("failed to load bitmap indexes"));
+> +	}
+> +
+> +	kh_foreach (bitmap_git->bitmaps, oid, tagged, {
+> +		commit_idx_pos_map_pos = tagged->map_pos;
+> +		xor_offset_map_pos = tagged->map_pos + sizeof(uint32_t);
+> +		flag_map_pos = xor_offset_map_pos + sizeof(uint8_t);
+> +		ewah_bitmap_map_pos = flag_map_pos + sizeof(uint8_t);
+> +
+> +		printf_ln("%s %"PRIuMAX" %"PRIuMAX" %"PRIuMAX" %"PRIuMAX,
+> +			  oid_to_hex(&oid),
+> +			  (uintmax_t)commit_idx_pos_map_pos,
+> +			  (uintmax_t)xor_offset_map_pos,
+> +			  (uintmax_t)flag_map_pos,
+> +			  (uintmax_t)ewah_bitmap_map_pos);
+> +	})
+> +		;
+> +
+> +	free_bitmap_index(bitmap_git);
+> +
+> +	return 0;
+> +}
+> +
+>  int test_bitmap_hashes(struct repository *r)
+>  {
+>  	struct bitmap_index *bitmap_git = prepare_bitmap_git(r);
+> diff --git a/pack-bitmap.h b/pack-bitmap.h
+> index 382d39499af2..96880ba3d72d 100644
+> --- a/pack-bitmap.h
+> +++ b/pack-bitmap.h
+> @@ -81,6 +81,7 @@ void traverse_bitmap_commit_list(struct bitmap_index *,
+>  				 show_reachable_fn show_reachable);
+>  void test_bitmap_walk(struct rev_info *revs);
+>  int test_bitmap_commits(struct repository *r);
+> +int test_bitmap_commits_offset(struct repository *r);
+>  int test_bitmap_hashes(struct repository *r);
+>  int test_bitmap_pseudo_merges(struct repository *r);
+>  int test_bitmap_pseudo_merge_commits(struct repository *r, uint32_t n);
+> diff --git a/t/helper/test-bitmap.c b/t/helper/test-bitmap.c
+> index 3f23f2107268..65a1ab29192b 100644
+> --- a/t/helper/test-bitmap.c
+> +++ b/t/helper/test-bitmap.c
+> @@ -10,6 +10,11 @@ static int bitmap_list_commits(void)
+>  	return test_bitmap_commits(the_repository);
+>  }
+>  
+> +static int bitmap_list_commits_offset(void)
+> +{
+> +	return test_bitmap_commits_offset(the_repository);
+> +}
+> +
+>  static int bitmap_dump_hashes(void)
+>  {
+>  	return test_bitmap_hashes(the_repository);
+> @@ -36,6 +41,8 @@ int cmd__bitmap(int argc, const char **argv)
+>  
+>  	if (argc == 2 && !strcmp(argv[1], "list-commits"))
+>  		return bitmap_list_commits();
+> +	if (argc == 2 && !strcmp(argv[1], "list-commits-offset"))
+> +		return bitmap_list_commits_offset();
+>  	if (argc == 2 && !strcmp(argv[1], "dump-hashes"))
+>  		return bitmap_dump_hashes();
+>  	if (argc == 2 && !strcmp(argv[1], "dump-pseudo-merges"))
+> @@ -46,6 +53,7 @@ int cmd__bitmap(int argc, const char **argv)
+>  		return bitmap_dump_pseudo_merge_objects(atoi(argv[2]));
+>  
+>  	usage("\ttest-tool bitmap list-commits\n"
+> +	      "\ttest-tool bitmap list-commits-offset\n"
+>  	      "\ttest-tool bitmap dump-hashes\n"
+>  	      "\ttest-tool bitmap dump-pseudo-merges\n"
+>  	      "\ttest-tool bitmap dump-pseudo-merge-commits <n>\n"
+> diff --git a/t/t5310-pack-bitmaps.sh b/t/t5310-pack-bitmaps.sh
+> index a62b463eaf09..ef4c5fbaae83 100755
+> --- a/t/t5310-pack-bitmaps.sh
+> +++ b/t/t5310-pack-bitmaps.sh
+> @@ -486,6 +486,33 @@ test_bitmap_cases () {
+>  			grep "ignoring extra bitmap" trace2.txt
+>  		)
+>  	'
+> +
+> +	test_expect_success 'load corrupt bitmap' '
+> +		rm -fr repo &&
+> +		git init repo &&
+> +		test_when_finished "rm -fr repo" &&
+> +		(
+> +			cd repo &&
+> +			git config pack.writeBitmapLookupTable '"$writeLookupTable"' &&
+> +
+> +			test_commit base &&
+> +
+> +			git repack -adb &&
+> +			bitmap="$(ls .git/objects/pack/pack-*.bitmap)" &&
+> +			chmod +w $bitmap &&
+> +
+> +			read oid commit_off xor_off flag_off ewah_off <<-EOF &&
+> +				$(test-tool bitmap list-commits-offset | head -n 1)
+> +			EOF
+> +			printf '\161' |
+> +				dd of=$bitmap count=1 bs=1 conv=notrunc seek=$xor_off &&
+> +
+> +
+> +			git rev-list --count HEAD > expect &&
+> +			git rev-list --use-bitmap-index --count HEAD > actual &&
+> +			test_cmp expect actual
+> +		)
+> +	'
+>  }
+>  
+>  test_bitmap_cases
