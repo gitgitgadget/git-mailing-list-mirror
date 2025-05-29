@@ -1,54 +1,54 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601061386DA
-	for <git@vger.kernel.org>; Thu, 29 May 2025 20:47:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5172F4C92
+	for <git@vger.kernel.org>; Thu, 29 May 2025 20:51:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748551670; cv=none; b=ECXjTZ1X9NszImTJfjuQPQfFvxW196Rqrj0weDdKy7lCRZ1Eay9eUxuq+OgIhnOjIPJ6QaGnmsXJFz00lt547goxBntdwm6p4a6bNTvbEAiAFTtx6FUjbpRf2ZMX+LZ6qUAgY13W7ODJsC4aDvBCnkf+QXWpXVEjh6jmIknpDqs=
+	t=1748551868; cv=none; b=OmBgIDmIYbsesgPYrm5X0IRdFox43I1gw64LfeUurDEnokiIwGL8gbK9B6q0I5fKvJ7FYZzATe0gNSpywBX7VkfseFizBU2D5NuB5EmheJRJGGSQHY7/2I0IwIxNBE9i+PBQIJz2fGoicmQkPWA+C4PlNe32EFsr9n38a3zWUYU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748551670; c=relaxed/simple;
-	bh=4fd5hNcf75BpAbJ9xnJaP6EmEa+c0u9Bac6O/3Lr7Wo=;
+	s=arc-20240116; t=1748551868; c=relaxed/simple;
+	bh=jClExOt4+EWDyNOTs1suTlM0H3z32QJLSsA/MT9jwLY=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=BywBlAPTFHhardaAwu4k+YH5dJcR0Jn4iG0OkWgzAfwDE0Mr1Nyw3ylws5PVkEVyHHauoR2RtIhgEuF12LI0Jrh3VFP0XZ6KW1B60+CmYULopkklAvCqnGisFTrczDT0Lb24br03YnxAnguvAIIFly+jqszNC+sxlI+pQYodvDY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=WT8uQdnn; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HMg6zU/U; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=cukgzu0e0k3JCEU5KIAJ4/tro7wH1iFTJCiNIuyG9dAtq3J0ot0X2zXxK7Hxcdi4wscc0Icpjy3oZkVnS/WkTP62MRxaIfbdcWZA6AKi3oaATVWODIldAm+jhVQ46vQOdgg3RpfP5LkrrqTtrq4pZXtfjRemgTgsHFtCwrQ/0bc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=sHhvRcVv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bZXdgobs; arc=none smtp.client-ip=103.168.172.154
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="WT8uQdnn";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HMg6zU/U"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 600E3138035E;
-	Thu, 29 May 2025 16:47:46 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="sHhvRcVv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bZXdgobs"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4212A11401AF;
+	Thu, 29 May 2025 16:51:05 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Thu, 29 May 2025 16:47:46 -0400
+  by phl-compute-11.internal (MEProxy); Thu, 29 May 2025 16:51:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748551666; x=1748638066; bh=patpUOH1PT
-	tt4e6l525ybmCL16Hd7UJW0Czt+k2JlgQ=; b=WT8uQdnnbMQtQJuRAzNj4VroF8
-	1qQoTbmICbFD93yI2H8YKnUhhEvyn5K5V8Qgffcd6JJUhC2xHcjDiiDwBEjagERU
-	vOBe2qWSsaEoVA0JuDQI1R5fyeFYrf0ldALMWihbtYtDRYOoR3Q2usKiUEcouL/d
-	wODRBb9ajauwZgdQZPZl5SY/xZlg7siTcjGx6JhS1WNa1/vqaayHSnXh1+evkbaF
-	JKDoYQjrhoYDFkiQ+sI0V+Zwkil77qM6/6YMZVBQwIevTMMkyYb4WMmghTDNmMuQ
-	XD9Nyuf/FZX7uIJpQW0BQ2qfBKgOxxbK0vAWDZNv9abFBPiavoQkN6MOrDBg==
+	:subject:to:to; s=fm3; t=1748551865; x=1748638265; bh=5MYIaGlb5A
+	yXoKf5NfqXZCwVjae2vbwaP1Eyl2kePV4=; b=sHhvRcVvKBZvOmdghM7zN/5axS
+	uiOd2KLaj48rGZkVWpW3gGQ9hYRqtAgW5Vk1v6bKKNB3jpflM2PTobqw+DkUdzRD
+	5rkLCW/3tOaMRfzatyUSV1dc2LbG01k7zptWsR3L9KFkd6/htjaUZk/kLkVKYlEq
+	B9t8HyX6yMQLQA/PV3y66+5dB8Um7qBQ+CIw1QzxOxmlncncgmiRxiE9qm1x1Bha
+	gq1+1WB+XJaOXgoTDw6kLK+WaTL5k2ETVlVUcomzlO2a+r+q+kriTJUJdzB3lxmQ
+	5dG+3l/QIh6kwfnNcGMwZySv/Ur1eX2WfuvY38L0FI5dxjgo3sCburtcL4bA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748551666; x=1748638066; bh=patpUOH1PTtt4e6l525ybmCL16Hd7UJW0Cz
-	t+k2JlgQ=; b=HMg6zU/UizD+EXITd93rFkD+aI6O6udkkh5YtZCh2F7RPWV4r46
-	vhtMTRL7Ra2kJuaNS+f6MSA9ShazoMEJQBclm5XdDlPQ91JoJGzk3Y7MiBL0qRtZ
-	ug+qYLacpRx+9uJ05dUQkv0kKKAnfzNBA1B0jKz1AgG5rbPZNuTChgOdIMEdorXG
-	nu1Y8ETrP1PeI9fY/YYlnkDlpookGxK/nh84wm4M3ugqCe/Pb1G+5vS0SZCjmjz5
-	sokizCT7vkRLmvgeuLhsZnRbH3/9rDNlIZD14A2VVszPJl9qmGh2syfC3Gz1C+7Z
-	UiiImMgDSKf6uRmDMYKVUiQwPnONTY/Y5lg==
-X-ME-Sender: <xms:8sc4aNrAzlXtl6zRpTgAO7FGEopLvou38RguiLhhII8QzDl5Ca5Xrg>
-    <xme:8sc4aPoUOmcFru3XiZSWRuTybEdFOLS1l_93gPR_1h133pjpnZ-BqnQmhVgScjSNm
-    2aAtpVYkzjpeFuB6A>
-X-ME-Received: <xmr:8sc4aKPiazw7lOdLwPf7t7ifOe7ibqgDYvs0525tuEcqF8g5yjdRtdGqZqsSNBDZcoMIyY7aq8MbOzJuPOTwRq3y-wz6S42G_maRoJI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvjeduvdculddtuddrgeefvddrtd
+	1748551865; x=1748638265; bh=5MYIaGlb5AyXoKf5NfqXZCwVjae2vbwaP1E
+	yl2kePV4=; b=bZXdgobsKlZX5yfsNVjqXnD+UTSwwF/8KZPuFvEwfkz6tssNsrW
+	prE82AlxA5XuWxC4bWWEDuvnUrRdO7tWTJvCe/NZcJb1HBnKNYQZJlQdleH/JKPh
+	CGBVQXTKsQLKcCMxY2q+DJYiStXd9pbNwLCSfzcLoi6ENZjmb18aQp9OBIvtJeG4
+	/BZ85rBjdIzRXjgHqe5VfN79AZJoFmTHkSPZgRsYvOvrpMbRpY+G2yIh115RofUC
+	RNuTuhbkunCpJKnekXNjUgfnKy+UQTdijtbMAPvr71KLPYK5d3LM13ubpFCiE4xO
+	5bYWozL7Y2AS2BZmuVjGr8/EukzA4Ud948Q==
+X-ME-Sender: <xms:ucg4aH35vwyPB1CFbZBHU4SBL5YjGQEwW43CCDbLlhcMV5PCyhspyg>
+    <xme:ucg4aGGkFZUZ1FrLdoJC6Ov_BcmSoj1wOIHfZTi1N1uwv14Lb7YCTpRKt5Hzr0mCh
+    7f99WRiv3djpJNdmg>
+X-ME-Received: <xmr:ucg4aH57sorbEctaJq5rFUSnZ-KuxmjuCDx-6cx_gxAh6Ho7oJDdybUV33gGv0ZG-R60vs66fW2hveKSd3z0JjVx5nsIWW-_Iei1zII>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvjedugeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
@@ -61,14 +61,14 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvjeduvdculddtuddrge
     rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthhtoh
     epphgvfhhfsehpvghffhdrnhgvthdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
     rdgtohhm
-X-ME-Proxy: <xmx:8sc4aI5dtTQFxUoitDLq3QNpFAuCKuiCfZKFe7rIhsSA6GFkEfLpHw>
-    <xmx:8sc4aM4tcgJQYsophx_Syy9JfuncGZW4wCK4Y2Tenle-3x8iwfjpeA>
-    <xmx:8sc4aAgxk_6v75461UCYLAOaWAX_UykQOnjQ6qHavNiJCD8soJRK8g>
-    <xmx:8sc4aO6htji3_P9CZkTIAYgCMf9QBkQJio-ejy7x3gdap3SX_kZeqg>
-    <xmx:8sc4aNYHxalypMeZIPU13_zra9oDx7NPw43A4wh3jX3rim5hKl4LllTf>
+X-ME-Proxy: <xmx:ucg4aM00_cmH8BIr0Pgc5zPbH6O4SjDzeiNmcYfo8sww3EfEQRcH6w>
+    <xmx:ucg4aKFtfy1SVhEz1VDYvCbBMRxMJZmbq6LrPZ5H2bEWkz16H29P0w>
+    <xmx:ucg4aN_vEgs5glF8FYBV4hPCuu_oPCnDilLjoZ3pHMOVcd_pADxQlQ>
+    <xmx:ucg4aHkNxLBdWNBZNKBEsrrpj7v9pVNvxMYoWGobO3yEHGZ7HTTs3Q>
+    <xmx:ucg4aKQLWsdab0vzaxS5U2bcN2NvqbN0Etxj7CuNkOuKehn73z0EOQ8K>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 29 May 2025 16:47:45 -0400 (EDT)
+ 29 May 2025 16:51:04 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Taylor Blau <me@ttaylorr.com>
 Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Jeff King
@@ -80,8 +80,8 @@ In-Reply-To: <d3508d3cfbddb512dbca4c2177731fffb5827084.1748473122.git.me@ttaylor
 References: <cover.1748198489.git.me@ttaylorr.com>
 	<cover.1748473122.git.me@ttaylorr.com>
 	<d3508d3cfbddb512dbca4c2177731fffb5827084.1748473122.git.me@ttaylorr.com>
-Date: Thu, 29 May 2025 13:47:44 -0700
-Message-ID: <xmqqr007jg9b.fsf@gitster.g>
+Date: Thu, 29 May 2025 13:51:03 -0700
+Message-ID: <xmqqmsavjg3s.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -109,9 +109,11 @@ Taylor Blau <me@ttaylorr.com> writes:
 >  t/helper/test-read-midx.c | 7 ++++---
 >  4 files changed, 15 insertions(+), 5 deletions(-)
 
-Hmph, I am not sure if an accessor really makes it harder to make
-mistakes, but I'd expect it to be mechanical rewrite from a[n] to
-fn(a, n)?
+One thing I forgot to ask.  Should we expect that
+
+	$ git grep -E -e '(\.|->)pack_names\['
+
+to give hits only from the implementation of nth_midxed_pack_name()?
 
 > +const char *nth_midxed_pack_name(struct multi_pack_index *m,
 > +				 uint32_t pack_int_id)
@@ -119,87 +121,3 @@ fn(a, n)?
 > +	uint32_t local_pack_int_id = midx_for_pack(&m, pack_int_id);
 > +	return m->pack_names[local_pack_int_id];
 > +}
-
-OK, midx_for_pack() takes a pack_int_id, finds the midx that
-contains the pack (by updating the 'm' via its pointer arg), and
-turns pack_int_id into local offset into m->pack_names[] array,
-and returns that string.
-
-> diff --git a/pack-bitmap.c b/pack-bitmap.c
-> index b9f1d86604..8ddc150778 100644
-> --- a/pack-bitmap.c
-> +++ b/pack-bitmap.c
-> @@ -490,7 +490,7 @@ static int open_midx_bitmap_1(struct bitmap_index *bitmap_git,
->  	for (i = 0; i < bitmap_git->midx->num_packs + bitmap_git->midx->num_packs_in_base; i++) {
->  		if (prepare_midx_pack(bitmap_repo(bitmap_git), bitmap_git->midx, i)) {
->  			warning(_("could not open pack %s"),
-> -				bitmap_git->midx->pack_names[i]);
-> +				nth_midxed_pack_name(bitmap_git->midx, i));
-
-This loop runs from 0 to (num_packs + num_packs_in_base).  I
-understand if it runs from num_packs_in_base to (num_packs +
-num_packs_in_base), iterating only on this layer, but probably this
-just tries to open everything (i.e. in addition to num_packs we
-have, we know num_packs_in_base packs are there in our base layer(s),
-so we iterate from 0 to that number).
-
-The updated code converts the global 'i', which runs from 0 to
-"everything under us" num_packs + num_packs_in_base, to
-corresponding layer midx plus offset in it, so it looks good, but
-then, is the original reference to bitmap_git->midx->pack_names[i]
-even correct?  If we have a base, i can run larger than
-bitmap_git->midx->num_packs, which is the size of the array
-bitmap_git->midx->pack_names[].
-
-Or, unlike how the proposed log message portrayed this change as
-(i.e. code clean up), does this patch fix real bugs that manifest
-only when midx files are chained?
-
-> @@ -2469,7 +2469,7 @@ void reuse_partial_packfile_from_bitmap(struct bitmap_index *bitmap_git,
->  			struct bitmapped_pack pack;
->  			if (nth_bitmapped_pack(r, bitmap_git->midx, &pack, i) < 0) {
->  				warning(_("unable to load pack: '%s', disabling pack-reuse"),
-> -					bitmap_git->midx->pack_names[i]);
-> +					nth_midxed_pack_name(bitmap_git->midx, i));
->  				free(packs);
->  				return;
->  			}
-
-Similar to the above, this is also in a loop that runs from 0 to
-num_packs+num_packs_in_base.  Is the array access to find the name
-for the error message in the original even correct when midx are
-chained?
-
-> diff --git a/t/helper/test-read-midx.c b/t/helper/test-read-midx.c
-> index ac81390899..fbed0f6919 100644
-> --- a/t/helper/test-read-midx.c
-> +++ b/t/helper/test-read-midx.c
-> @@ -53,8 +53,9 @@ static int read_midx_file(const char *object_dir, const char *checksum,
->  	printf("\nnum_objects: %d\n", m->num_objects);
->  
->  	printf("packs:\n");
-> -	for (i = 0; i < m->num_packs; i++)
-> -		printf("%s\n", m->pack_names[i]);
-> +	for (i = m->num_packs_in_base; i < m->num_packs + m->num_packs_in_base;
-> +	     i++)
-> +		printf("%s\n", nth_midxed_pack_name(m, i));
-
-OK.  This used to iterate from 0 to num_packs using the local
-offset.  Now it iterates from num_packs_in_base to num_packs_in_base+num_packs,
-meaning we iterate over packs in the given midx.  No change in
-behaviour, as accesses to m->pack_names[i] using the local offset in
-the original was correct, and the updated code iterates using the
-global offset.  This is not a bugfix but is a code cleanup.
-
-> @@ -108,7 +109,7 @@ static int read_midx_preferred_pack(const char *object_dir)
->  		return 1;
->  	}
->  
-> -	printf("%s\n", midx->pack_names[preferred_pack]);
-> +	printf("%s\n", nth_midxed_pack_name(midx, preferred_pack));
-
-Again, is the original buggy when midx are chained?
-
->  	close_midx(midx);
->  	return 0;
->  }
