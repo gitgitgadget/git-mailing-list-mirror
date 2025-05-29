@@ -1,172 +1,222 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010015.outbound.protection.outlook.com [52.103.68.15])
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B249821ABA0
-	for <git@vger.kernel.org>; Thu, 29 May 2025 16:28:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.15
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748536108; cv=fail; b=bsHX1KTglCpinMZunIhhO6I2ZLpylGL2CZU5PFzjCzjiYfRLzLXbPEMgSRi0b4MxrYJEuoakExwEyYTUIsyr1VeVDwKhvGzJGrLlYIhn2rl2Z5RkD4YQPwYtX5HFazN5T9MV/giqVZsJ94571D7F5KkyXKCUdRnd+Y6GpcDY2j4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748536108; c=relaxed/simple;
-	bh=Vue8r8d+ovyHf+xs8n9IpJYLXGd7RgBpsPw0vxHe8HM=;
-	h=Message-ID:Date:Subject:To:Cc:References:From:In-Reply-To:
-	 Content-Type:MIME-Version; b=u2k0X/ckdqrROkCvvbP9krofgIGU1Sk8GCXZR+yeKnPyxaHikLMow7n4kzgNTROTf+loInEg449kCofT4MW1FZ8dTJHp1S+9hE/e8U1YNZzk5TCjEGwbKNrFc8q77uzUmf2SzlfVwbxWSpHG0QnmKYqGC8yYmVV9umWfHucbHhs=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=ZKwHOdMC; arc=fail smtp.client-ip=52.103.68.15
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 223651E531
+	for <git@vger.kernel.org>; Thu, 29 May 2025 18:16:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748542566; cv=none; b=ELg7muytsZVdGxfeqSea7t2pHsGa6EHydn3TuEWQT/MuKS1aw4cOZS1pQhKeRQRL8YW3fX8xSWp6kfU1+iDBic4lDM+OxxbYV/3qnvIZ9YMfgydSi/PwrlA2leEPOfOwfEES+3Ghb0fspJwjYOYkauWdxKODybWtv2Me2rfoX/c=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748542566; c=relaxed/simple;
+	bh=M5uXmYP/y4A/fvwlGs8ViKbf/ahjYjiz0iPG2D2kCdo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=s/h6Ull37WpBfqMC0dJN3F1Tn18xdBQ/cky6y+s++zps53UHUxfsVTyIeMS7SXWy+49Ob+uMtEJiHZmek4dHIwwMh90knvgimZB7HW+EnHEAnb57i9mBwMNNojUf7+2CsalufJtvRLb35oN4vyCuGFn6D3vV4fs2mSKruKtUI10=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=YBeWcU9m; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=kI2AuX6v; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="ZKwHOdMC"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Sf461WxhAeBNOmchqOwVY8ee89Q1gLdtgoF3sdoelOge0agBwUZOWoGtFNn4ZTn1+7ceat6je+/G2ofMfAWYbXBaIkaVjJSJ6i0RraQaSFfTfIiD8fZ6rMJugc1jMdbtVWctG0doaJpUj1klANC7vkMgCUA1c7o7ukoFB9cYq7CK3hBH6kk8rX9WhsRNGG4U/2BAvjrfo2Pihub/Y9AbtFoX3VT4+ICt91OAk/lXg0NIpI04RQlPkOEg7e42Tw0ZSgMnJzZ4731iq3fJ5WdihdPOYU2oa2Qf/0XUWeTeyHok8C/PmRPLjA+Qu5mkBk7zhU1t50+F7exKbULkf93/IQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=XRc3n6JRInumMBdjONHDeKX3PrsVjwmCMNlSC3gFGxQ=;
- b=iZekLOaDsN/pMvlfr2QqitaSWP6aqwQonjg21CtXCpWiFYL6QWCl8yE1vSXlhBjx6Zhm+7kHCfL24JkXRAIyx/4zN4rywxiFMd70uQidXdVWXsmAVYMzPsqUp4cVZ3CLFgSr7kDTpSGsbMkIfjFtZg9enIjmA0hk8rrdl5aXejUPqLh0BHSQE2gxxlJugw00UpyKGunaJC24vkHmk7t9VnnS26se6YcAT3h4f1agAk2PGzUXTJWcZ/6hNDGhpd2CfmxK9sxKW+KJa8e7RKW9Lpxs6nagb1G71x49eeIVQfyFQABQh7sJnktdUsusbLUFKgu0j4L8mRecowQLDcFqUw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=XRc3n6JRInumMBdjONHDeKX3PrsVjwmCMNlSC3gFGxQ=;
- b=ZKwHOdMCdZVJXCGDdO28+YK/6GYKdnibKAck34ZhG6U6rD4c+OrfBgobG6UO3Sm4PviWQdOMWPZ9Ln7FoiR4xvb0Vh3d9gDp7p0bcUqkcAR6sJAEnqASj324YLXT3KkR/Pz7ql5idtk8stghl6DEIHDzcpn2mJVWW59JvTour53Xd+4c1vhEwj7HzpftrWEmMPhv1+bEfiTHqtYS43izQdHd9+7AnHuUgugud8yyQdZpOZ9cbZHYsq4UIqvAUQzCPnuuhn7Taq7W70z75k7G3uf4JYFTevTsrrQoMW3xIIrqf2qvnVoUjnmepW41ehMN/TQrHJDVcFqe1gqKIREllw==
-Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:10c::9)
- by PN0PR01MB8811.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:124::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.30; Thu, 29 May
- 2025 16:28:19 +0000
-Received: from PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5b05:29d:5646:39aa]) by PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::5b05:29d:5646:39aa%7]) with mapi id 15.20.8769.029; Thu, 29 May 2025
- 16:28:19 +0000
-Message-ID:
- <PN0PR01MB9588797F057CCDCE8EFD51BAB866A@PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM>
-Date: Thu, 29 May 2025 21:58:06 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 6/9] imap-send: enable user to choose between libcurl
- and openssl using the config
-To: Junio C Hamano <gitster@pobox.com>,
- Phillip Wood <phillip.wood123@gmail.com>
-Cc: git@vger.kernel.org, Eric Sunshine <sunshine@sunshineco.com>,
- sandals@crustytoothpaste.net, Zi Yao <ziyao@disroot.org>,
- Jeff King <peff@peff.net>, Ben Knoble <ben.knoble@gmail.com>
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB95979EAD9EEEB3385693EBE7B867A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597B56233DA6815FC7CA96EB867A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <42e07f4d-9888-4a1e-826a-b53b7d84fef6@gmail.com> <xmqqldqfl6z3.fsf@gitster.g>
-Content-Language: en-US
-From: Aditya Garg <gargaditya08@live.com>
-In-Reply-To: <xmqqldqfl6z3.fsf@gitster.g>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN4PR01CA0089.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:2ae::7) To PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:10c::9)
-X-Microsoft-Original-Message-ID:
- <afd53e4e-ed56-44cc-a157-f9e5e089bf4a@live.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="YBeWcU9m";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="kI2AuX6v"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 208F71380337;
+	Thu, 29 May 2025 14:16:00 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Thu, 29 May 2025 14:16:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748542560; x=1748628960; bh=ZShQp0NCvC
+	PGqQbHXaVfSqaXjznyCWbKPzTdnBktbUg=; b=YBeWcU9mf03Dsul/0sdgIExguA
+	a5s67T05CutMRfaINChQOv5EkI1zQ+N6kdoBAGax3MSMbEnFimuQJ1DPBe1AlJ/h
+	IibFXlUdbvFfTIexP6Pwbpyhn0gxth/hND2Gpjlz9rIJWLyNF18YltiOO2jnYU2O
+	KUrjJRtTVD9EXqeg84gHQQiQFingZkA3OW84tjZ8s4xJ/74IhQONLUh6OuKXbmIz
+	XXHkYdWauudajnRQQKFOIA2xhyv3jphWWsd2yfjsIjWKFOR2D0qSHxBkrmGnVvkr
+	5laltUb1n1dD/7HqsZ4/GgtvYWRfPYeuWs08XLioEkgyqfiHH9Jja0BvC34w==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748542560; x=1748628960; bh=ZShQp0NCvCPGqQbHXaVfSqaXjznyCWbKPzT
+	dnBktbUg=; b=kI2AuX6vgkZfK9bpO6tghMCxdhbHAM1U8PRtHWnxxAn/HyPAWXi
+	phMvBIZ/Zq9xVhBzWhD+93iGOhvr63dRDSAW9PhJkcawcAxVCZFRT6295Kva+1xe
+	FL4WWAiHs1MaMXTVOOfBcBPjQ++aTBkhBZ2zaCSPI00B39+j9iES75Z5XyO/VVa6
+	spr0o58vSOZqiPK0wI8sF9haou59R4Cg+MosVEGZdKLUIN2jAKPTVNX2Lxd76/dK
+	3Ks73P5j90yytHvkSaT/RJhEywROlzVzgjVUreFyOmsvLoayLhpogIzVsOmlIJNS
+	PQBxsQAUEtz+c2r7hHSPS0CcGSrXdaKdKEw==
+X-ME-Sender: <xms:X6Q4aBS6N5iBqIz0FTjlqwoisHAar830heL6b9vXbXZPB_sIgU74Vg>
+    <xme:X6Q4aKxOTgu6FXxWCKdbmMLzqzVA5IB-FscrzJKnMTdfdW3Qe2OYnGBSBkPR-vcJ4
+    HTR6BFNuDWoYwbKvg>
+X-ME-Received: <xmr:X6Q4aG1f9tD5MMzUz5A5hMB_A7vKzbhZrSJcYneTSq0LNb3myyzxKHWVQ_xhGX6Jd5NMuIahSEgRQ4iGp1sohWJlt5aJIbfpn-VAHck>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvieekfeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeejuddvfeev
+    leeuteekhfevheelfeduffejleffgfelteeugeduuedtgeeigeelhfenucffohhmrghinh
+    epudeifedrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehgihhtshhtvghrsehpohgsohigrdgtohhmpdhnsggprhgtphhtthhopeelpd
+    hmohguvgepshhmthhpohhuthdprhgtphhtthhopehgrghrghgrughithihrgdtkeeslhhi
+    vhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprh
+    gtphhtthhopehjuhhlihgrnhesshifrghgvghmrghkvghrshdrohhrghdprhgtphhtthho
+    pehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepiihihi
+    grohesughishhrohhothdrohhrghdprhgtphhtthhopehkrhhishhtohhffhgvrhhhrghu
+    ghhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehsrghnuggrlhhsse
+    gtrhhushhthihtohhothhhphgrshhtvgdrnhgvthdprhgtphhtthhopehjohhhrghnnhgv
+    shdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:X6Q4aJD7ARYz0vibPVNf4iWv_PmGYDm2AltlZUzEJWFiK6vZqk39-g>
+    <xmx:X6Q4aKhA3ysKRvA5QY56IOS9xV27zOKdvSWp1XbJAUOgOyqrifkTFg>
+    <xmx:X6Q4aNoT7A32noXyYfjyiL10spG76RKYyJbG6xJaKSLr2xskEBXpFQ>
+    <xmx:X6Q4aFjh79KwyivRxqyznGItUO_dYLgzhe0G6U4r4S4Md4Mc1e2jmw>
+    <xmx:YKQ4aEnKryklUA87a1EOQvUB2q7SgFfMgLbzzdNlKuH1XIEToXzDSVzL>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 29 May 2025 14:15:59 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Julian Swagemakers
+ <julian@swagemakers.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Zi
+ Yao <ziyao@disroot.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "sandals@crustytoothpaste.net"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v5 2/4] docs: improve formatting in git-send-email
+ documentation
+In-Reply-To: <20250528070521.17379-3-gargaditya08@live.com> (Aditya Garg's
+	message of "Wed, 28 May 2025 07:05:34 +0000")
+References: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<20250528070521.17379-1-gargaditya08@live.com>
+	<20250528070521.17379-3-gargaditya08@live.com>
+Date: Thu, 29 May 2025 11:15:57 -0700
+Message-ID: <xmqqa56vl1uq.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-MS-Exchange-MessageSentRepresentingType: 1
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PN0PR01MB9588:EE_|PN0PR01MB8811:EE_
-X-MS-Office365-Filtering-Correlation-Id: e1fc0063-4bc8-4ba5-bba3-08dd9ecdd287
-X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|8060799009|7092599006|5072599009|19110799006|6090799003|15080799009|461199028|440099028|3412199025;
-X-Microsoft-Antispam-Message-Info:
-	=?utf-8?B?azRBeXNoS25oWVNBVGdHMVY1Z2ozM0ovcHlLekdPaHgrZTNJL2ZKSGw0cU0r?=
- =?utf-8?B?dkdwUEtwRlFWYnN4K0dyRzBleWFVOVFvOGJkTmxpZzNXN0dUT0YxdmN2ZUo4?=
- =?utf-8?B?ODNKbWh5Q2lBYWFoQU1rWnl5aFYxUUxJTHV1ZE9UWENOaE9BMWVhczRnUWlL?=
- =?utf-8?B?U3UxbDRZZG0rMDdmS0ZGbDJYbXdRYzFhSWRUVXZEYzRrVGxIak84Q250Q09V?=
- =?utf-8?B?ZERrQ3dCRUdwK2dramlRd3VCeDVVUzR1dzVadWNPQ0FMY01MQU8vQlkxY01K?=
- =?utf-8?B?dzdrcjNKL3NHMHY2eU1tdjdCQ0lydFE2RU5sR3dtYnlxV0YybmtsRnZRWmlM?=
- =?utf-8?B?Z08rTERraTBWdGttcVpCeU9GYlNndjA1cXZhQWFuaXpJdytpNlZSblhwbHIz?=
- =?utf-8?B?L2FXc3lYakp4ZzcwbDZUM3g2L3ZPVnZ6YTNLVmgwc1pGcnNnVU9rbE95TjJE?=
- =?utf-8?B?L0Mrcm52dFpXd2t5eld0U2hsb1N6VFpaRjRtSmRiZWFRYTZvbHhUckt3dzhu?=
- =?utf-8?B?bHV0VktkNGJEMkMvL3VDVnFCbTU5WWtCMDA1cG5BOFkyM2NNTDBsSDFoM2xC?=
- =?utf-8?B?cnlOTkhyWUM2WEV3S01aZmZ5MzNCNjBvR05Cd3kzTTBJaG5EZUoyVVMyaFRa?=
- =?utf-8?B?ZXRmY3dnL2szTlJVSTdISjJpcmNWVzQveFJMVFFueE5Qd0w1SVlmSXl3Z3NL?=
- =?utf-8?B?VCs4L2NiUGlsa20zaHJvNytMTTU2WXRsNCtRbVNwQ3JLUXQ5dUZqY1gxbWJi?=
- =?utf-8?B?M2d4eGZ3aDZ5bXFxTmoyNDFUR2dIM2ZGdFBGdzBDVjRjZmZZMFdScUF1dXNH?=
- =?utf-8?B?RVNlRnJ3SzdWR2VUZUFHdjNmajM0azM1aCtsSEQ2OUFIcDFYdGd2M29TMGlt?=
- =?utf-8?B?TElMQzVaYlZsMXFMTENJRG1rT0tFN2I5Uy82djF5d0V5eFVUdkdnOEkxbkhv?=
- =?utf-8?B?SnlHK0E5Snl6dU80dmpPR25rTzNRYzBBWm9jalZUT3piQ3ZTdUNqbHNmdjB6?=
- =?utf-8?B?NFozQndCOTh2bWZSZDZJenl6b0lJaDFCTVFQWFhTa1NJdFI3eUhML29RbTRH?=
- =?utf-8?B?azIwelJ2U2dBZWk4L2NZdWNUdDNpOXNVV3JQVEdJa3VEL2Jub3dBZzNZeWlP?=
- =?utf-8?B?aVhyY1BTR0lkczdxcDNuNE0wck4vY0E2d2swMjcwZGZraVpKWkF4cGxqNHkw?=
- =?utf-8?B?TEowZTRUcXREdXlmaHlDQWdqdFU1cmp3THlGcFJ4S2IySjRKenYvOGxxeUl4?=
- =?utf-8?B?YUdEZEFjUFNoVGhtN3ZJV3NYenBJaFRuUkhGYnZ1dE1ZS2xLL2c2SU9hUWs4?=
- =?utf-8?B?OUk3aHoyY3ZZZkdTS3JzdkM4YVY0RmZNTWVpWlFGNmppaW52cGZWdHoxU2VY?=
- =?utf-8?B?aXFIWWJ3MTc5dm9NVUpDTmJUNm5IWndSRThWM21JeTh3NFdKNmdHcGlOQ1g5?=
- =?utf-8?B?eUxISVZsTjIwZVBDSSt4MGxZd3o4UGVibXgrRnU4M2dxWXJPSUZreXArelVM?=
- =?utf-8?B?ZTBQOWgzQ01qbDY4RGZXQ1M5K0dETUtnYi83M0FzTlA0SUdyNjJIMktBazdH?=
- =?utf-8?B?cE5SQT09?=
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?ZUNNMy9HVjV6WTNjTFhrYzAreXN4K2pZdGJ2MEFxbnRuU1ljWEFyUjJiQ3dp?=
- =?utf-8?B?UTNTbERDZUprUkpmSXAraGZpVXBSTHU5WDc5UEVnVEcxNUM3bzdSblRHU3pF?=
- =?utf-8?B?OFMrb05wbFlaSms1b3ArZzNEa1hLaFB6RVNkNmZSL1RqMzlBWXloM0Yxc0tm?=
- =?utf-8?B?QkR5TnBMNi9vWHAyMFd2QU82NUFjQzYzNHhycWxvQ2Z5aUE1Ym04bmJ1Y01z?=
- =?utf-8?B?LzQ3ZWpMd1BRYk5CNzNPNE1pZHZSdWhFeGIzbm1nR3RtK1F2dWNtamZrbDZx?=
- =?utf-8?B?dkNsQlgzL1dySGpqM1N0cFVSQmJXQ2ZUWE5jT3hNU1NiUXRWdml0R3hIR0FU?=
- =?utf-8?B?SzRxUFhZaDJGcjFjdkpLYVhXbHRBV0w5MW9sYXVrOXRmRGpnUTNLR0VEaWpM?=
- =?utf-8?B?TWIxVnNKYjludk9Vd0lmY3JFOUZsQVZ6bU1pQ2FNSUw5QkJDaGx1ZmtBRDNN?=
- =?utf-8?B?K0hQQXVMU0ovcGFtZ1RFN2FiYzV0Y2xaRlRnSytma1hianJyT3BMdXo5ZGZp?=
- =?utf-8?B?UkZkNy9rTFg0cnZmYldUSjhkQXdDb3kyR2dMM0NyaVlHUEVPdGE5Y0V2MStJ?=
- =?utf-8?B?cVRIaElSaGgwUWVSRzhhVm9oa2w1NkQvN2ROQ1M1dlVBazdpb0M2cWthTS9x?=
- =?utf-8?B?Y0lMTkhBSlJSM2JlRFVHbmdkZnVXNEhhTTJUSmdGWnhzejFNNy8xVUxxdmo5?=
- =?utf-8?B?RWNIV0tmQTZ4RUJaZjBvMVJCVFYxbzNrQ1J6eUd1ZWZpejliM0NjMzNWd2ln?=
- =?utf-8?B?eGUzdzROc3ZKMmhvYlJtWkVUOGd4cGlqYjZQbmh3Y2oyakRVS3NWUkp0Ull3?=
- =?utf-8?B?YzcrbEk5a1F4YlhIYUpFaitWdmU4UzBXRnpDamQxN3U5OHZibVRPNityYzdY?=
- =?utf-8?B?bGhIdngvejhrWFFMMWg4OVZuRVlNcHpNdFBrbVR4UXlNU0NZak92djFrRkpV?=
- =?utf-8?B?M2tQMnN0d3p2dWI5Nk9oeWxXR0dwSGFiRGhEWkx6WjRidnRtSFgzczRPRkVG?=
- =?utf-8?B?SGZXQzFqRjlEbGxUcmIxa3pVS2QrM2dVbnJIdmlZcVJ5VzFEb1NLME9EbCtj?=
- =?utf-8?B?a1NZUmoxYnVGNUFoTm1sdVZUZU40N0dXamhmRlNIRnBlU3EwSEJiMm92WUxi?=
- =?utf-8?B?K01ieFZuZHkyRmFXSk1GSE1IZFg1RlNnczlrSk5CbnZZakhQeHhVWi95TDQv?=
- =?utf-8?B?cjZRT2lrTGRSNUFOUkE3Nm9HNkFNTEdOSUFZQS9ac2JaeHRWcWw4b0VEUENz?=
- =?utf-8?B?bjNjSTRqSjBUd05CWWpVQzlXTFJDZ3psY0tyVjRqT2JydzlVSEl0R09tVk00?=
- =?utf-8?B?MkZBSTdUS3IrZHA1RzVOUWhZYUR6MjhEWUFCaEpVYUxNd2J4aXpGdmdabTZt?=
- =?utf-8?B?ZXFKTzM5bGdhTnRLcVpBbjNRYnZOV2N6alBkYjJDYWo5RS91Q3pmMGpzUWw0?=
- =?utf-8?B?QllZZ0hqY3gxRjJjeXZVSko5U0l0WHhUcUtmSGdqWi81NktGREFCM3BPRWJo?=
- =?utf-8?B?OTVtY3d4cG03U3pONW81OEZrSlpvSi9HMnl0N2x0TjBrTXIyQXI2NWFheWNB?=
- =?utf-8?B?UXMzWnMvWmhRMm5WeFlIVjIyQW1IZU1kSHpOdTNQM1NMRDdnMUFsYzRRbnFI?=
- =?utf-8?B?K2I2eW1zZ0JmbWRlQ20yUVkwQXhkeWJlcXBGaFVsdUlMRnZuZUJHR1M0MGdv?=
- =?utf-8?B?cy9tTVNVdzZpbFpJN2dqa08wd2I5UTc1YjJDUUpvcWhVUDdpeDV1bUFHa09v?=
- =?utf-8?Q?1rkP7nlNS5LkeSTUxfxB5pPY9ZONUv/a94DfNLA?=
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: e1fc0063-4bc8-4ba5-bba3-08dd9ecdd287
-X-MS-Exchange-CrossTenant-AuthSource: PN0PR01MB9588.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 29 May 2025 16:28:19.7021
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
-	00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN0PR01MB8811
+Content-Type: text/plain
 
+Aditya Garg <gargaditya08@live.com> writes:
 
+> The current documentation for git-send-email had an inconsistent use of
+> "", ``, and '' for quoting. This commit improves the formatting by
+> using the same style throughout the documentation.
 
-On 29/05/25 9:55 pm, Junio C Hamano wrote:
-> Phillip Wood <phillip.wood123@gmail.com> writes:
-> 
->> I'm wondering why anyone would want to switch the backend at run-time?
->> There has been talk in the past about removing the openssl code [1]
->> and just relying on the curl backend. I think that is a worthwhile
->> goal as it simplifies the code and means we would avoid having to
->> worry about whether we're using openssl correctly [2].
-> 
-> Excellent point.  Is there a downside if we only do imap via cURL
-> library and lose the code that directly use OpenSSL?
+Nice.
 
-I think the only real down side is removing CRAM-MD5 support, which
-won't impact much, especially considering the fact that how little
-this is used.
+> Also, at some places, minor grammatical errors were fixed, and some
+> non existent links were removed.
+>
+> Finally, the cpan links of necessary perl modules have been added to
+> make their installation easier.
 
-Although, most code will still be needed is you are using the tunnel
-option, so in terms of code cleanup, not much will be lost.
+Hmmm.
 
-Anyways, in v8, I have removed this patch, and added another ability
-to list the available folders.
+>  sendemail.multiEdit::
+> -	If true (default), a single editor instance will be spawned to edit
+> +	If `true` (default), a single editor instance will be spawned to edit
+>  	files you have to edit (patches when `--annotate` is used, and the
+> -	summary when `--compose` is used). If false, files will be edited one
+> +	summary when `--compose` is used). If `false`, files will be edited one
+>  	after the other, spawning a new editor each time.
+
+Looks good.  "edit files you have to edit" reads somewhat funny, but
+the topic of this change is to correct mark-up, so it is the right
+thing to do to leave it as-is, at least in this step.
+
+>  sendemail.confirm::
+> @@ -101,7 +101,7 @@ sendemail.signedOffCc (deprecated)::
+>  
+>  sendemail.smtpBatchSize::
+>  	Number of messages to be sent per connection, after that a relogin
+> -	will happen.  If the value is 0 or undefined, send all messages in
+> +	will happen.  If the value is `0` or undefined, send all messages in
+
+Ditto.  "or undefined" will make readers wonder how they would
+specify such a value (i.e. 'undef' in Perl) in their configuration
+file, and may need rephrasing, but again not within the topic of
+this step.
+
+> -When `--compose` is used, git send-email will use the From, To, Cc, Bcc,
+> -Subject, Reply-To, and In-Reply-To headers specified in the message. If
+> -the body of the message (what you type after the headers and a blank
+> -line) only contains blank (or Git: prefixed) lines, the summary won't be
+> +When `--compose` is used, `git send-email` will use the 'From', 'To', 'Cc',
+> +'Bcc', 'Subject', 'Reply-To', and 'In-Reply-To' headers specified in the
+> +message. If the body of the message (what you type after the headers and a
+> +blank line) only contains blank (or Git: prefixed) lines, the summary won't be
+
+Shouldn't 'Git:' in "or Git: prefixed" be marked-up somehow as well?
+
+As these mail header names are all literal parts, shouldn't ehy be
+marked up like `To`, `Cc`, etc.?
+
+> -	by 'c_rehash', or a single file containing one or more PEM format
+> -	certificates concatenated together: see verify(1) -CAfile and
+> -	-CApath for more information on these). Set it to an empty string
+> +	by `c_rehash`, or a single file containing one or more PEM format
+> +	certificates concatenated together). Set it to an empty string
+
+What is this change about?  grammatical errors?  non existent links?
+cpan links?  It does not look any of these.
+
+> @@ -298,18 +297,18 @@ must be used for each option.
+>  	connection and authentication problems.
+>  
+>  --batch-size=<num>::
+> -	Some email servers (e.g. smtp.163.com) limit the number emails to be
+> +	Some email servers (e.g. 'smtp.163.com') limit the number of emails to be
+>  	sent per session (connection) and this will lead to a failure when
+>  	sending many messages.  With this option, send-email will disconnect after
+> -	sending $<num> messages and wait for a few seconds (see --relogin-delay)
+> -	and reconnect, to work around such a limit.  You may want to
+> -	use some form of credential helper to avoid having to retype
+> -	your password every time this happens.  Defaults to the
+> +	sending `$<num>` messages and wait for a few seconds
+> +	(see `--relogin-delay`) and reconnect, to work around such a limit.
+> +	You may want to use some form of credential helper to avoid having to
+> +	retype your password every time this happens.  Defaults to the
+>  	`sendemail.smtpBatchSize` configuration variable.
+>  
+>  --relogin-delay=<int>::
+> -	Waiting $<int> seconds before reconnecting to SMTP server. Used together
+> -	with --batch-size option.  Defaults to the `sendemail.smtpReloginDelay`
+> +	Waiting `$<int>` seconds before reconnecting to SMTP server. Used together
+> +	with `--batch-size` option.  Defaults to the `sendemail.smtpReloginDelay`
+>  	configuration variable.
+
+Together with the previous hunk, "$" before the placeholder looks
+incorrect, but it would be preferrable to leave it alone in order to
+keep the patch focused on mark-up fixes alone.
+
+As <num> and <int> are both placeholders, not something the users
+would literally give, neither `<num>` or `num` is appropriate
+mark-up for them, though.  Probably "_<num>_" (without double quotes
+around it), if you look at Documentation/CodingGuidelines, I guess.
+
+>  Automating
+> @@ -318,7 +317,7 @@ Automating
+>  --no-to::
+>  --no-cc::
+>  --no-bcc::
+> -	Clears any list of "To:", "Cc:", "Bcc:" addresses previously
+> +	Clears any list of 'To:', 'Cc:', 'Bcc:' addresses previously
+>  	set via config.
+
+The same comment about mail-headers being literal applies here.
+
+Even though the proposed log message talks about "minor grammatical
+errors" and "non existent links", I didn't spot any changes about
+them.  It is very possible that they are buried in the mark-up
+fixes---it would make the patch much better to separate out such
+changes and group the changes of the exact same kind into a single
+patch.
+
+I'll stop here for now; I may come back and continue from here
+later.
+
+Thanks.
