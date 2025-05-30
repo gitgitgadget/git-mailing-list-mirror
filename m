@@ -1,91 +1,90 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6D4201100
-	for <git@vger.kernel.org>; Fri, 30 May 2025 08:13:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5758F5E
+	for <git@vger.kernel.org>; Fri, 30 May 2025 08:47:49 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748592801; cv=none; b=V+OAdGUZidqAiTeXO3Z/Y+KA28CDW5u/WyxlBWmV/a7zLaaAP81R6YUw/mSOogrHlV/gWhCG2PqA+EuJFQbT8HY+8BXoqnLIZM8YFphO02Dd2CstRKh7GOQY6d3Q+sHi1uxBScfiVp7GwyekS45AUDw3LTIqIzt+wdjkRKTbkVo=
+	t=1748594871; cv=none; b=JVUppbAttxDUFBmSxTB9U8VvLqkUSINVeMA5CvIXHx03JB6rY2Sf7yLwf3DMvtyM0jNaa0P4oQaFJBPylQnQM+kLrw0hZV+DxCmr4Pje74agldC8qH/54DsO/tv9VybHjFcn5faeTtIQt3SwokFwXyKhpIp4qn47Uk8iqOZH3x8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748592801; c=relaxed/simple;
-	bh=jI44ZwvGLqPvXOA0A7GdxjfhAQmP+VHwqExgkSH9KqQ=;
+	s=arc-20240116; t=1748594871; c=relaxed/simple;
+	bh=PFRtCz5iCHnRYwSBRKER5QUeABZ4vdTg9THcIUnsKPc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=dJM0EonwH5oDDmBXeySL2+MP5D6E4ZHkTLwsGL4W1vKD3hKvqwwSCOOTR6l6l0dMYfedumTfrEqvHGisAMEVO/5pS6TmYl7d5kHfaslaobYReN4/Ive0FXF1aJ0VfxhrOuBbmxUQZWO6GYYke4AJMSnvApNa0iMb+kNC/xWeWI4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=bi13lTpR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NofxspKU; arc=none smtp.client-ip=103.168.172.150
+	 Content-Type:Content-Disposition:In-Reply-To; b=OKqQrul0COPacSWJR4mCTpx/00RidasTrMT9uPFVDzjHF/fPYkbL6XZjh19KhTmsHggbRwiz5LiUBVpEWdBwpqNIa6GrVwTVzYD8lprwpIyVMRa3r7AIa5hM8qIpdEiqURAdc8LqlFy5XEQbUwmjeIq1o2lwNhSvYxtv1iJHdoQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=L8q36VWv; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=OLsGw5kI; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="bi13lTpR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NofxspKU"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id E9E971380265;
-	Fri, 30 May 2025 04:13:17 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 30 May 2025 04:13:17 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="L8q36VWv";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="OLsGw5kI"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfout.phl.internal (Postfix) with ESMTP id 776E41380325;
+	Fri, 30 May 2025 04:47:48 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-12.internal (MEProxy); Fri, 30 May 2025 04:47:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748592797; x=1748679197; bh=069N2GvffY
-	QBA+a7cNd1DIIDmbwAnCQ4EhAp/nvbRIQ=; b=bi13lTpR/JwOEJmF0ZOP4B+V1e
-	WklOOn/vdlny8AxsS184cdk0967kwS2phxQBkhh6KIWvg/LNgJMA4xUSDY/h0JcF
-	r6f4TLGtB0k0Myj5fWKLm1sEkJuWde/EAcxsTIuxM5gJAAFNz5woycEwT/Mzw8IM
-	g3P3ZrF92gBjE11RQmWVGoeJUstczW4Ffk3VSpgLXyjz4JvLPQzUsWpcYxFIihL9
-	PPxA/bGojjRVIxWOzPXXWja/K3ylHC9jiAPbYwuVXhefrKsj8k1YVRh01xsMQJt4
-	h+ZyI77TtunsU+HtiSAVG0wlVQ3ubyTNfQfzo+lEWDLUzkitEqUTRkFt90Qw==
+	:subject:to:to; s=fm1; t=1748594868; x=1748681268; bh=VCWa/tALXZ
+	YQ0+TrrhDmxe4DDAKWHUsM4VVmbfE1RKM=; b=L8q36VWv81ai8Ffutdk++ZnWx9
+	+fbenqqgt1TPRjUtys5O6lSUyCCG9ScHoDDJjbhK4rxqoe/datvSDSVOU5HuCipB
+	rtwE+hWn11SenOHqjOc4i3pr/fPTaQ4FfAwVkmCJHj7dHiFzdtVp3zth/Gvjzku3
+	mfMOLDwT6vNHrXOFRn7jRMVczRk5eHwb0S1Y5js4USHOkkU+l2QbRz0Sz+e6pwsN
+	2TW/1Po1fwZDofs2xUUpdIikz6fehET522veZmeukfpp93yuEcEmi/JytYBt+JTp
+	JqMlEkYwK29hsOV2wDKtVU6uudy31ucRPJmCkbZJyWYFLAmO+Ziec5+clPew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748592797; x=1748679197; bh=069N2GvffYQBA+a7cNd1DIIDmbwAnCQ4EhA
-	p/nvbRIQ=; b=NofxspKUDtScutRwKV0kfPOGP8c/h9yq6iBzgov1nG2D7wzYS6Q
-	54iYz+GDLbhhxEfFD0juwg8rJoeXAPgjbdedUXS0qJlr2cx81nudYJL+ACU0z2ox
-	VE+Hasu2364kJXdQfYOmPKYAUskpV2SJLwe/FOl325oNih223IdEH5/T1YK2CRPq
-	gvYh4KAJIWvapj7N6KpMbv9g8w11HpvVyAOXHYLQ8qse8F4zRTjevGQPduej+mVw
-	r87S1+VwswKJa5ntGw2v8KHIuPTcyRqa9qNT9690jjzEJVolhVtJ/P1qsOqOQvEb
-	0pJOJJZ8fJ0NecbDelLfsDy7tX/lyIK/atw==
-X-ME-Sender: <xms:nWg5aPbaG3qQAk8QvTk7X1de17eRpqmlhAF8eYztZyPL0mPWbP4TdA>
-    <xme:nWg5aOZaU3uAx2Fcdhd6xrnF-MMXrl5lroCTh6ZST5wvEUROEFnNZH7u50a78ae-C
-    WhRLPUlPRl_WpEoyQ>
-X-ME-Received: <xmr:nWg5aB-wkJ1qsIgRpeB9apTgj7WtyldcohO_PqTE8qxYRXsFD_a8rV88DNaUbc8LKMTs3qCnx-OgYmq0N2b3qozRgqPA7BJxhwqVH7SrbA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvkeehtdculddtuddrgeefvddrtd
+	1748594868; x=1748681268; bh=VCWa/tALXZYQ0+TrrhDmxe4DDAKWHUsM4VV
+	mbfE1RKM=; b=OLsGw5kIP/cHrR0IOA0yLdixgahdA6SNnOcUG2WOQi9eWjKL7YO
+	ETNYrAHhL1av/za7gf87d3+48n7wRHQ6I3qCVXztPSYpN70Q0y5R/IJGGWBxGsyq
+	tGFWL49KfmJGh04lm/5Xtv2ALEPT0qo5DNrbbOqp+S+sRLjmoeGtytLxRnsVrHvz
+	yzAFrxnIYA4cOCra/Hv2NuqpnDSfBsHOSS6D1o5Pk/a6WM9JSFsnIcG3Kc7hxtng
+	+7mEJfgdEXFtGZmfhdX3g9fPNkMS/417PzEWWdHpsK4sQX9vdDrQxpMRd6RXTpfp
+	kew0Ya/OhsIFfS+0koE7EtbKin9EPv3IJnQ==
+X-ME-Sender: <xms:tHA5aAUQIUg5URK1Z06BLqtBoG-crZU68IOSotayIR-Q0kX4WJmTow>
+    <xme:tHA5aElsCs2CueIPLwhH5ZAL9Lj4IdWt_gLephIsro6mZL5NSIHGzwiuNGtQjPd0g
+    j43ilaZKSqul-XJmg>
+X-ME-Received: <xmr:tHA5aEYJZsNjPEaBIPN-nAa48E9Hxzx5eZ3v9vjk1-OgNt1QSJb9vyX9m3F7QuPFPXlod1bf4kqwsEVu095wnrLiZhsm6L1ZBmDCypgA4A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvkeehjeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecuogfuuhhsphgvtghtffhomhgrihhnucdlgeelmdenucfjughrpeffhffvvefukfhf
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
     gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
-    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpefgvdektdfgveevieff
-    leeuuedvhfdtkedvteeigfejveekgedvtdfgtdfgvdeiheenucffohhmrghinhepghhith
-    hhuhgsrdgtohhmpdhgihhthhhusgdrihhonecuvehluhhsthgvrhfuihiivgeptdenucfr
-    rghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtohepie
-    dpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopegthhhrihhstghoohhlsehtuhigfhgrmhhilhihrdhorh
-    hgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehp
-    vghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtoh
-    hmpdhrtghpthhtohepfhgvrhhnrghnugholhhimhgrsghushhinhgvshhssehgmhgrihhl
-    rdgtohhm
-X-ME-Proxy: <xmx:nWg5aFpDTpg_N_13YtniseRxeUuXKCU7lR0N2fCoy1bsy6bUeHsO_A>
-    <xmx:nWg5aKpNEYmnzrM1qDr_jJTf4kx1EEtKbAOPfMe_wMuXYoCo75YTFw>
-    <xmx:nWg5aLRpw209qOJJsIevmFyrT4I9CT_YwgyLXi_RRlg7I19J6Rl2IQ>
-    <xmx:nWg5aCpLuUm3InW9SmfqaA2HkagEM-suOvMO2RRRwR2sQVA8S1VjQw>
-    <xmx:nWg5aBDw1Mqs0ydiDDBFcLLR3lvISElyaCo105UjE_1gN1rgDPvLbeKA>
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
+    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopegtrghrvghnrghsse
+    hgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhr
+    ghdprhgtphhtthhopehrshgsvggtkhgvrhesnhgvgigsrhhiughgvgdrtghomhdprhgtph
+    htthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepphgvfhhfsehp
+    vghffhdrnhgvth
+X-ME-Proxy: <xmx:tHA5aPVCMmQ6OhFixL9bp0Yf-ZGSuqBT-ITXCwTkKU3DdT9EQ2QrJA>
+    <xmx:tHA5aKlkrj0jMzXVGw583Q2NNUcfQnz6rsZz5kpOl5yW-PBOc9HRjw>
+    <xmx:tHA5aEdOY8zwLJ-1Eq-ldprHuJ3DRlBxJCMaI-ZseCFkGI1y5Z0UnQ>
+    <xmx:tHA5aMGvrWxbcJzvtKmVxqOKrRZvz-T_0cAN7XOK2rpg8KO8TSS42A>
+    <xmx:tHA5aBHXjOwZ726qgas-Pi80n4023B4UFdp9pb434VMMd4BaOwQy26rv>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 04:13:16 -0400 (EDT)
+ 30 May 2025 04:47:47 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 270b05a6 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 30 May 2025 08:13:14 +0000 (UTC)
-Date: Fri, 30 May 2025 10:13:09 +0200
+	by mail (OpenSMTPD) with ESMTPSA id b407f6e4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 08:47:45 +0000 (UTC)
+Date: Fri, 30 May 2025 10:47:44 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Fernando Gouveia Lima <fernandolimabusiness@gmail.com>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	stolee@gmail.com, peff@peff.net
-Subject: Re: [Newcomer PATCH] log-tree.c: Supress Wsign-compare-warning
-Message-ID: <aDlolSPcYTSaFGV2@pks.im>
-References: <20250521202409.26879-1-fernandolimabusiness@gmail.com>
- <xmqqsekx8yef.fsf@gitster.g>
- <aDCQWr3MBX4L7sbA@pks.im>
- <xmqqy0unxo7d.fsf@gitster.g>
+To: Jeff King <peff@peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Carlo Marcelo Arenas =?utf-8?B?QmVsw7Nu?= <carenas@gmail.com>,
+	git@vger.kernel.org, "Randall S. Becker" <rsbecker@nexbridge.com>
+Subject: Re: [PATCH] reftable: make REFTABLE_UNUSED C99 compatible
+Message-ID: <aDlwsM_18nYB2MOr@pks.im>
+References: <046901dbd002$a0c245c0$e246d140$@nexbridge.com>
+ <20250529101136.16219-1-carenas@gmail.com>
+ <xmqqtt53l7cl.fsf@gitster.g>
+ <aDlDtbUcX5NA8wCK@pks.im>
+ <20250530062533.GA1321283@coredump.intra.peff.net>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -94,17 +93,19 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqqy0unxo7d.fsf@gitster.g>
+In-Reply-To: <20250530062533.GA1321283@coredump.intra.peff.net>
 
-On Fri, May 23, 2025 at 09:54:14AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> > I do agree though this not a good project for newcomers, as fixing those
-> > bugs is quite intricate overall. So we should definitely remove this
-> > project from the microprojects page.
+On Fri, May 30, 2025 at 02:25:33AM -0400, Jeff King wrote:
+> On Fri, May 30, 2025 at 07:35:49AM +0200, Patrick Steinhardt wrote:
 > 
-> Yeah, that is something I am quite certain about.
+> > What I don't understand though: we have a `MAYBE_UNUSED` macro that has
+> > the exact same definition in "git-compat-util.h". Why does the macro
+> > cause issues in the reftable library, but not over there?
+> 
+> We turn __attribute__() into a noop for some platforms earlier in
+> git-compat-util.h. So it doesn't need a separate #ifdef.
 
-I have created https://github.com/git/git.github.io/pull/779 to get rid
-of this microproject now.
+Ah, that's something I missed when introducing `REFTABLE_UNUSED`.
+With that added context the patch looks sensible to me. Thanks!
 
 Patrick
