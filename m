@@ -1,121 +1,107 @@
-Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f172.google.com (mail-qk1-f172.google.com [209.85.222.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB7717BD3
-	for <git@vger.kernel.org>; Fri, 30 May 2025 21:12:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95E791D7E42
+	for <git@vger.kernel.org>; Fri, 30 May 2025 21:16:16 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748639527; cv=none; b=szV6DN2uR6YYZIEXUqWG3/VXyYhbfZksXHUunB4uM8HCg0NCygN4TE70WFX4N4r5i5lvHhzqW9OC//tq0hy48FAx65tih0NgVJMOm3B3blijHBByw4AGZLfy2aSai0kDTSe2WgLgSagzp5xqetpMfQnSHd3jqxuFN4TIkv2OeYM=
+	t=1748639779; cv=none; b=NFAcKvWi+Owe859+YkJFvK8lxBnvGjZr8Nbv9NXkqIr/zUTx3VtBq39FxVvSBMoodoVnlM/75cxAVdHHn/f4yA8SbuWSL2NLRTnO5+DKJwmeeu1jJCZxICGuyhp7sTTMiq7mGW6CrIeWJte+st7SYLkx3uA5vd+XnsmSPtXMRtA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748639527; c=relaxed/simple;
-	bh=5LLKBEBYjgXd+aJ0Cc8uJrjKnc/3ttLnYl+O1xurCrE=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=ejZ+6wo8mIXE5Rhsw0mBwUcDqjppFQ+H7GWGWXUOY/4RVwXt8DT1VZIGbEsXL5XiQ5L7lSw6XlbH5IJylJJRyPuiJjOGexUnKoulLrnDL0yveuvAOokR47UTmNCeJUMhoedV0zF+9iw/EzP00TaNFhkt92Xq5CeXhyRb+Fb00zc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=hvF2XR4A; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JxIDqYNZ; arc=none smtp.client-ip=103.168.172.150
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="hvF2XR4A";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JxIDqYNZ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.phl.internal (Postfix) with ESMTP id D86B913802A3;
-	Fri, 30 May 2025 17:12:04 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-06.internal (MEProxy); Fri, 30 May 2025 17:12:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748639524; x=1748725924; bh=p2B1tHZOSj
-	lLRizYr9zjqEuIXslh1c4Ow4I/Xz0L2gU=; b=hvF2XR4A3vAVfpkAWJe0WVm4uX
-	odsqDxyjIrUzOHxI4dTdU+inmpCuzSdDvDmqz/fhltmgZWDnwupOIPj2tGfSxhJM
-	TTrIFRZ53jIEVmiQSKmbaE74Cu4Jw0NNIKnlZlX5eeBebnl9n5TnFJovtqJvzRJp
-	lFMW/3kN6uiI1mfxXGdvpvmG7GBncvaYJMSl7FgwQ3xvqIyW3v5yK8JORGPG92gt
-	1flAmgLofzMyII1GQblnlnGyxOYZxKpS6C913z+71JZVPz91kpAwWGa2bj9MwlR/
-	nm7d15OjzCQSUBl+pcSz73xp7MlnwdUKrLf+wOD7UbhhT1JALK9+qN6VZPRg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748639524; x=1748725924; bh=p2B1tHZOSjlLRizYr9zjqEuIXslh1c4Ow4I
-	/Xz0L2gU=; b=JxIDqYNZ4OO22Y4L67PToSLAWCQ1kixbZDhgE8dnLDQRww/GAx2
-	oy28zQUsFT7mJcyLVWBXSqm7Ds0ituKb/zyyufAUuV8y5YnPPokmz3Vq1gLN3zFk
-	bIxHGuo25EufuMCPFRtAYbiyjARJj/e112E6wWjhY6H3Yy5bEcsbv76hHq394NGI
-	lLObJfHFk7jxbIZqndRHvjaUgBgaHogVkYkSkRSts5A+FU59jtQcqI0f64kOzyHE
-	liq+cF+Gj/vWUgxvq+gD/oYh3ZWJWBihw6S9lu3X6bVLSQTiZ605PSTLqmFXD+lW
-	lZo+78vHz+IYFZNFhQ8mUNsyWnlYaPKf4+w==
-X-ME-Sender: <xms:JB86aPipFZ-eWaJJtNGht1OTuSLC8VTvifsGIPvJ6hLRKEsWuuI2SA>
-    <xme:JB86aMBKhDs_TJm9aEFWzW29uNtlnhokpWbRQPO8H-qnr5XfSgUIKQSKbmImjv__5
-    OKu9XvlEAWGl4GwGQ>
-X-ME-Received: <xmr:JB86aPGr3JIDY1AbavbXZQ50xJXLj0FTBkWkdwBQRBselIRl_TrI5Z2RdghRqzz-cNL6jZbqb9wPPqLI0OY8BN6Vlp3GlRQOqQQV8Bs>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeftddtheculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefh
-    tedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohep
-    ghgrrhhgrgguihhthigrtdeksehlihhvvgdrtghomhdprhgtphhtthhopehgihhtsehvgh
-    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepiihihigrohesughishhrohhothdr
-    ohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvg
-    drnhgvthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggv
-    nhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:JB86aMQnf4-siYDqSh2Z-GyYlmWxM0Wj4J0_JXUMytEaLHcS8S9UDQ>
-    <xmx:JB86aMzK0TOoYH5Qrh4pKsG6YhSILgjsygs0exDyOOPSDynuqRh-UQ>
-    <xmx:JB86aC49fenUA4TJ3uE--sdB0HSxNRL98upfqHaU4xtwbPWKEmFaEA>
-    <xmx:JB86aBzyT6xlvlS81_F7sMcnv3_lYDsDEo3H--UXIDzokpe0nSLgvA>
-    <xmx:JB86aLDEPmaOz2Nz7Tay12REhtBUWRzsGjg2seQIk0HIgS0YfCvoRQfM>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 17:12:04 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-Cc: Aditya Garg <gargaditya08@live.com>,  git@vger.kernel.org,  Zi Yao
- <ziyao@disroot.org>,  sandals@crustytoothpaste.net,  Jeff King
- <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v9 2/9] imap-send: add support for OAuth2.0 authentication
-In-Reply-To: <CAPig+cSFLF9de3i7RsG6j4wSGkRRhGgOGOovoFXm9U2+t=qC+g@mail.gmail.com>
-	(Eric Sunshine's message of "Fri, 30 May 2025 16:51:21 -0400")
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597B444D85F7A7D1B6546C3B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597BD09F7A450C6CA26B421B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<CAPig+cSFLF9de3i7RsG6j4wSGkRRhGgOGOovoFXm9U2+t=qC+g@mail.gmail.com>
-Date: Fri, 30 May 2025 14:12:02 -0700
-Message-ID: <xmqqfrglerbx.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1748639779; c=relaxed/simple;
+	bh=sF5LHt2lP8XjUUfk+VXZBvXUNsA7RJvmW54hZ90K9KM=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=GzuiyOhdfkGFh5KZWRW/03EJJznEQBH//Q9CvGO9rSfd7Z4ZEmfO622davpTwvAZVGpBUhfWelm6SnYR34Lr81KEylnBMjHz8nxKDcDTuhZ4T8M91tF4SfpZ6p259TE6i9MEFWemgwbhCOWm3GVTK+STW7EPkRalFiZzv6E8UVM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f172.google.com with SMTP id af79cd13be357-7cd34b6ba10so34714585a.1
+        for <git@vger.kernel.org>; Fri, 30 May 2025 14:16:16 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748639775; x=1749244575;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vpvW48HXylnq2a9aRwm+DXT5I/KzydaCsvxakXdUvaM=;
+        b=CNJ631ETonuu/FF+gGI58e+AO2Y+EB95ttdo+im9CEeEWKVy12IO4eWMv87gHYYP7u
+         6HSBgof+yoZh0cLEtaXZXzZPC2yAoN2BheYLobsIVv6MCe1VVMqZfm7i7F/qePCOBU3U
+         NmD5JA6jfYlEM5mwltfiwDtpaW8x74nKmd8ixc8s7NnE9whYYm6Zmyp670CtM5jjTknx
+         N1gRXmTFYEZGDKeWqR/niPrd2kln6zypaPluXvRHUWoK+GYKX7sNZlwlZtwSg+Gw7eYj
+         GkWWPbAw3WN2jhD4xdod/PpGMsSMj3QO3X6wMe/PpdSuBMLyynx0qdTyY5RDiOKr4HLz
+         AeWw==
+X-Gm-Message-State: AOJu0Yx6KVFfkwGw/9B+93v3acaO4MlHOS7IzWEALcTZGvVpuIodWg5/
+	oMxG3/t6ovfvLNkQv+2gKdYPT2jaT38eaOXl+c1S62eRs3pz9IMCwRFbKKAjkUziOvUKyoGT2AB
+	W0u9znr/61iaW0loKjH+iVh10inL67uD/Q+6b
+X-Gm-Gg: ASbGncuYYxWB9b+QSaQ3dpU4Q5EfQ+j11huW3/gopJuKIKJGHYs/j71Rzd+gA4+zACg
+	qDLcivndz3+4rTKozEwlo8FW9AjBhWbV6XHi+rKVkOEttr3Gnb8S+jc0Ek+kWi8QDgjKuKb14gR
+	ragMfARPfq1QMKnXtAZJ9bDl9PBJQzog0=
+X-Google-Smtp-Source: AGHT+IFg7z3ebf0dgbriaYyXyZ4cU9qB4XKx9L8psJR85uAVhuw8sCr0sZFK/pakT4D+E248yrjUjPVIHS44+r3dgr0=
+X-Received: by 2002:ad4:5dcd:0:b0:6f6:d4a8:1a6c with SMTP id
+ 6a1803df08f44-6fad06460f3mr26317586d6.1.1748639775629; Fri, 30 May 2025
+ 14:16:15 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20250530-pks-meson-tap-v3-0-676f5e41f2e4@pks.im> <20250530-pks-meson-tap-v3-2-676f5e41f2e4@pks.im>
+In-Reply-To: <20250530-pks-meson-tap-v3-2-676f5e41f2e4@pks.im>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 30 May 2025 17:16:04 -0400
+X-Gm-Features: AX0GCFs7KDn-Hj3W-MAu9FYZx0kOytFJ5oype7WCbWYmYYDVu_ue5_HLlqVT72o
+Message-ID: <CAPig+cT+pX2RF0+0E2FvA1TUjh_R8p==8ePFqg=zP+YxWPsCHQ@mail.gmail.com>
+Subject: Re: [PATCH v3 02/10] t: silence output from `test_create_repo()`
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, Phillip Wood <phillip.wood123@gmail.com>, 
+	Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	Todd Zullinger <tmz@pobox.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Eric Sunshine <sunshine@sunshineco.com> writes:
-
-> Not a proper review, just something I spotted several versions back
-> but assumed that someone else -- providing a proper review -- would
-> mention...
-
-I suspect that we weren't ready to prifvide "a proper review" yet on
-this series at the coding style level, while the design at a bit
-higher level, like "should choice of openssl/curl be runtime?", was
-discussed.
-
-> On this project, multi-line comments are formatted like this:
+On Fri, May 30, 2025 at 9:31=E2=80=AFAM Patrick Steinhardt <ps@pks.im> wrot=
+e:
+> There are a couple users of `test_create_repo()` that use this function
+> outside of any test case. This function is nowadays only a thin wrapper
+> around `git init`, which by default prints a message to stdout that the
+> repository has been initialized. The resulting output may thus confuse
+> TAP parsers.
 >
->     /*
->      * Line 1
->      * Line 2
->      * ...
->      */
+> Refactor these users to instead create the repository in a "setup" test
+> case so that we don't explicitly have to silence them. There's one
+> exception in t1007: we use `push_repo()` and its `pop_repo()` equivalent
+> multiple times, so to reduce the noise introduced by this patch we
+> instead silence this invocation.
 >
-> The same observation applies to other parts of this patch, as well.
+> While at it, convert callsites to use git-init(1) directly as the
+> `test_create_repo()` function has been deprecated in f0d4d398e28
+> (test-lib: split up and deprecate test_create_repo(), 2021-05-10).
+>
+> Signed-off-by: Patrick Steinhardt <ps@pks.im>
+> ---
+> diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-op=
+tion.sh
+> @@ -48,11 +48,12 @@ commit_file () {
+> +test_expect_success 'setup submodule' '
+> +       git init sm1 &&
+> +       add_file . foo &&
+> +       head1=3D$(add_file sm1 foo1 foo2) &&
+> +       fullhead1=3D$(cd sm1 && git rev-parse --verify HEAD)
+> +'
+> @@ -235,10 +236,13 @@ test_expect_success 'typechanged submodule(submodul=
+e->blob)' '
+> +test_expect_success 'setup submodule' '
+> +       rm -f sm1 &&
+> +       git init sm1 &&
+> +       head6=3D$(add_file sm1 foo6 foo7) &&
+> +       fullhead6=3D$(cd sm1 && git rev-parse --verify HEAD)
+> +'
 
-Thanks.
+Nit: We now have two tests with identical titles ("setup submodule")
+in this script. [1] and [2] suggested using distinct titles. Don't
+know if this is worth a reroll, though.
+
+[1]: https://lore.kernel.org/git/CAPig+cSYhY+LQ5pD+a1O16Rxwo_js45WqfcW8wtC2=
+daYmNyMCQ@mail.gmail.com/
+[2]: https://lore.kernel.org/git/CAPig+cR+eham=3DuSamUFmTuWDhZ6_r3dnMm1z+X2=
+5aw2K6maN7w@mail.gmail.com/
