@@ -1,86 +1,85 @@
 Received: from fout-a2-smtp.messagingengine.com (fout-a2-smtp.messagingengine.com [103.168.172.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E5E2905
-	for <git@vger.kernel.org>; Fri, 30 May 2025 13:31:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B091547C0
+	for <git@vger.kernel.org>; Fri, 30 May 2025 13:31:51 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748611913; cv=none; b=Fs6JWzFZ7ejJ15J+plbgi7AVGL6rOEZoM0sXimXQ+8Kuw2NSdV8odHIEv/oMV0LsOWoDDISuJF5wr+aDBj8Y7xCF8aJRsvQzqbd9O8l1YI/E1Jv2gWxuyv2FKdhjzfTmK8KneH6wRZooUBb7LKd59i+PJJTxlrQSR0JTPuWYDvw=
+	t=1748611914; cv=none; b=uLeVv3CTSpZaRm+KvEO6/+yUZ1LCUsQP3zsR3e9IuYayhEqknDuw6r4eDOPNhvVRKZUuowFC1Lks48hBpWdcKgunA24IKJsMoUlf/F+orf0tQr3TxLpL3czvX6viIbFLagXbkqjHznT1QcJcYQFmX2WP8i8JRuZ1Ky+WtOk1ZLo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748611913; c=relaxed/simple;
-	bh=fy7pEocMbfkInyKxIH8yDnaQALWHjLXs3i+vX8Yz18o=;
-	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
-	 In-Reply-To:References:To:Cc; b=Cz33lVDNUXm1Nqo1okZxphOT20liiRb+a5Mm3//dIiEQ+vE1VwSD0yCqdzLqsLHQJyWFUUdSHJ7o88NTuE4tmbbGpAwY1aYRoajuSG83yFKEukBKbiwKyvR/WvUux15FonOTmls2IyQa63lv/Qqdu33g32cwOJRSvBTeJp6fQsM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FdvXivkx; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=agXBXiMd; arc=none smtp.client-ip=103.168.172.145
+	s=arc-20240116; t=1748611914; c=relaxed/simple;
+	bh=8B/bP6w/heCZxNySXoUEJEiz/yx2macfdPzP7HRtvjw=;
+	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
+	 In-Reply-To:To:Cc; b=AkLug7zT6kGgCx/uhNgmAkrnUTRAF0fya+d+kFp3KtPgzEKesxfsy2E5NGrxG4mVXH+cmi4k3S5JiPcQ7g5ceadfkZH4JxwghMRNNywLHo2EPsVZqsLIuxrLeqUk81gpC1X8IbXBSSbzMq44qSyyzW93urzTNSGuaoPtw2GyMCc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=AYAUrLYt; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PBPPNjBS; arc=none smtp.client-ip=103.168.172.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FdvXivkx";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="agXBXiMd"
-Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
-	by mailfout.phl.internal (Postfix) with ESMTP id 25942138026B;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="AYAUrLYt";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PBPPNjBS"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfout.phl.internal (Postfix) with ESMTP id A22EC1380136;
 	Fri, 30 May 2025 09:31:50 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-05.internal (MEProxy); Fri, 30 May 2025 09:31:50 -0400
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-06.internal (MEProxy); Fri, 30 May 2025 09:31:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1748611910;
-	 x=1748698310; bh=bI8RFpFokjRoTHWe63MMRJh9XNT2iOqUnf8ESeZ+HTU=; b=
-	FdvXivkxGzHbDDbOv0Bo7V6xpbr44OIRCmhwEQEnaqvgNnqjT0XPDtGe8ljDm4xg
-	eqqoNxeoxPeVcmYn2MmLn0jnAxRv0K6ihYXYkAUhDcbr4L5EJ87K+8hLgO9VN3wv
-	DUpDJzTYBN+FuAbZchJcBFDF5CF7nOJz4xb4VnVmVZuT33oClXonyEc703cy/4F2
-	51eOY4cKRRHDebRPvuMgG4xFViVjMbnTRPY1rNZv7MVVBqdOSPEDtmXJ79U6RUkr
-	qEBjq4uVdkATTTQ/H9MpX7GT4t6eHJH8ACg11YiJbo8MhRC5oHWPtilU4b3CMxpb
-	tYUOhDMVxogLDMcT1xov/A==
+	 x=1748698310; bh=EbcXKlVdregEL/3rijd+MaE1doTpchNEx7WE8cww6io=; b=
+	AYAUrLYt20biRwtnd0ktFB3vYyn8KYuozmgazNgDTNuNiD0nFcc2Xnm4bAuTkCZN
+	8j21oTLsRdfGo/VKCIIZiPdlKKpOpEP+sNV5WmndqJ9UrVbk6g6JXLi7t8SjmFDM
+	smiID75aJXw3M/Sls0UVQP1rb3e2wtxdJD8IIRcYpZIIwjAH+UApX3JAIla1MiTl
+	p5mDYuFp+SLoARIVS8DXc7ueF2P4P0tdEnX2mpoKPWEGnMqThSWoA4GoTLV+70SD
+	M5hCuWTAw0En1CJKzfURsJ2Hss4yZhMU/b9K+IiiEp0rAX5315Dl+3CbkmD2irZA
+	/+ezOilxhUsmOyAOnXlNww==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748611910; x=
-	1748698310; bh=bI8RFpFokjRoTHWe63MMRJh9XNT2iOqUnf8ESeZ+HTU=; b=a
-	gXBXiMdB2Hp95Pkr67f8h6SLGEc9UeaWghd0BpkQzB9vBGYftnmzIVLPXFDOsGGg
-	v+mn9MS4LmjKvmEe5oeRaEDOYrapAnXWn268BUepdTjZM1+sCqTynUEsTvXBH9WS
-	eIlk98s+JH1vQUsG6rk/+EW7tYQFH5KuDTAtvoJhiWdtrAwuGkGsfM1vWPFjnloE
-	WlO7MiF61AysFH3mdjfQ8Yl0xMqzsZFpv1mZdtqh9hws39w/dIbxkQcHxa8b/0uC
-	TeYVLhNn683kJlKPTFyQHlMM8EDJne5tZp5mghaZJwFGzSwaBj1e6RcMILbvuRSh
-	SM/i2w3SpFZT4SOEUhPHw==
-X-ME-Sender: <xms:RbM5aO__OIYnrRYoaUqSB1ym6GFhJAkTKJKPXh5Jr77G5QQyT37JrQ>
-    <xme:RbM5aOvOf9YMe80F_Tb1ohOmrMkogOvxQfOIxVSbPyc2WuNOkHeST0zlx71QqgFof
-    MKdT-C-RbAq5FtJWQ>
-X-ME-Received: <xmr:RbM5aECUVqqesyALUDhwee0uU2rgbTsRVu-E2RdmdxJB6LHJgn6dKbOtaGE-E1MTi1Noix4PI7Q1771CQlUoE6zUt1kr8Rcn3vclPZ5L6Q>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvledugeculddtuddrgeefvddrtd
+	1748698310; bh=EbcXKlVdregEL/3rijd+MaE1doTpchNEx7WE8cww6io=; b=P
+	BPPNjBSPtJw/ApZcxd6sXNuDZOGowCtmAUqcIXc6cnE5blQ6PpsNtujmvNbRy6TM
+	j53GCFVA/bPbBEHTztKa4ozL0SYNlaYnNUzAJEZX26hQzSNeXLw7YFhbPDLszaOL
+	vbaogd+o0UUXQzffaFm5QMLP8RbnhjyDxkFTJA0cvr0mRTa9jhP69itnWpIpM+at
+	byQpt9JNHLB+eGcEWDtUSm0CCbTUJK37YGS9wQT0rS0lJ28b+HQjNRAf4QJDU1aY
+	I6y1BQ3DnUNnWF9Zo5XSdBG1aiQnuf66IypRqe7uLirZ4Lnm3KnxKXyxH3jRBe5z
+	SmpaodSK9dA3fxUwfRzWA==
+X-ME-Sender: <xms:RrM5aNGoxwXFcfCpj4QjzzGJEbHDXLbj0_4PlMjQhWY_kU2Ik745kw>
+    <xme:RrM5aCXDUP6FMXZ4PimVG1NMoZWz7S5lUoBmCNpEQLGfRLLR5udKBZj4xHf9BcXi8
+    cUqh7vtllVZFWJ3kQ>
+X-ME-Received: <xmr:RrM5aPKsMsvrKm4LYs_4wE6K3kEI8eu9UEoC_HHNcLim5WRnJmiJUPgThkY01ZPhY_zXRcIAf4o6OM8aKIO8kTTPzds3tdzJPGrxzjqoVQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvledufeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfg
-    jghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
-    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdeivdekjeekkeeu
-    ffdttdehudeutddtjeehffdvfedtleffgefftdejteegfefhnecuffhomhgrihhnpehkvg
-    hrnhgvlhdrohhrghdpghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivgeptden
-    ucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghrtghpthhtoh
-    epkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepvghstghhfigrrhhtiiesghgv
-    nhhtohhordhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrd
-    hplhhushdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtgho
-    rdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtmhiise
-    hpohgsohigrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:RbM5aGcL8r_v1BrKMEJnQnTGffC-ohZ5RC9W9QmT5dgo_ZhktMgipg>
-    <xmx:RbM5aDMphUGnWNRpQ1Yh1sO920VOIXoXNpfpZv0E4eQIoONS1wJgvA>
-    <xmx:RbM5aAn5oD7-RaP2j0DQcSzmMSRG6-5wyeYZ6qaNS27s9y1IUBESrw>
-    <xmx:RbM5aFuwMR99g4OdBor0jJQjKkll9cGl_YK9VlgdkM-jKc4r95yzTg>
-    <xmx:RrM5aAhMg3yQF8LmcUxz3rvsfPx0wWL-Qir9RPegbLGUPVZ7TdhoorMH>
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffk
+    fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
+    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
+    uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
+    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhmiiesphhosg
+    hogidrtghomhdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdp
+    rhgtphhtthhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtoh
+    epshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphhtthhopehrrghm
+    shgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepphhhih
+    hllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshht
+    vghrsehpohgsohigrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlh
+    drohhrgh
+X-ME-Proxy: <xmx:RrM5aDF78JtFdYKHi5GJJpPDUXGq2trSUjgrAuU9q2UXJ0r4TnsdAw>
+    <xmx:RrM5aDU-gr_Bf0Tu6HZQR6FMuCIV3oEWqGDaF3m9ia8jPvDUHiw9iQ>
+    <xmx:RrM5aOO2Gl64dIc29NXPZBCnSF6kowT5VMVtCs-KW1DxzQl1PIFwmw>
+    <xmx:RrM5aC1ikffU-6mPi_3ij-3RSU1xm0A_aiECPhDKnrbsaQ1gK0Lf_Q>
+    <xmx:RrM5aGp8AFBMiHkAsM-Lqea-04Vg1c1W6KdINMa2UxZKhT61jcFQo8Hn>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 09:31:47 -0400 (EDT)
+ 30 May 2025 09:31:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id d4437850 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 30 May 2025 13:31:45 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 26c65d15 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 13:31:46 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Subject: [PATCH v3 00/10] meson: parse TAP output generated by our tests
-Date: Fri, 30 May 2025 15:31:38 +0200
-Message-Id: <20250530-pks-meson-tap-v3-0-676f5e41f2e4@pks.im>
+Date: Fri, 30 May 2025 15:31:39 +0200
+Subject: [PATCH v3 01/10] t: stop announcing prereqs
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -89,13 +88,9 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIADuzOWgC/12MQQ6CMBBFr0K6tmYYSiuuvIdxMcIgjYGSljQaw
- t0tmBjD8v2f92YR2FsO4pzNwnO0wbohQXHIRN3R8GBpm8QCAUtQWMnxGWTPwQ1yolHmzI0GRYB
- UiOSMnlv72nrXW+LOhsn595aP+bp+SyXoXSnmEmRJRHesFJKqL+k/2l6smYh/Kpq9ikklLjS0x
- piT5p+6LMsH7ceZJuIAAAA=
-X-Change-ID: 20250429-pks-meson-tap-1eed604a02a3
-In-Reply-To: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
-References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im>
+Message-Id: <20250530-pks-meson-tap-v3-1-676f5e41f2e4@pks.im>
+References: <20250530-pks-meson-tap-v3-0-676f5e41f2e4@pks.im>
+In-Reply-To: <20250530-pks-meson-tap-v3-0-676f5e41f2e4@pks.im>
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>, 
  Junio C Hamano <gitster@pobox.com>, Karthik Nayak <karthik.188@gmail.com>, 
@@ -104,110 +99,168 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
  Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.2
 
-Hi,
+We have a couple of cases where our tests end up announcing that a
+certain prerequisite is or isn't fulfilled. While this is supposed to
+help the developer it has the downside that it breaks the TAP format.
 
-this patch series starts to parse TAP output generated by our tests when
-executing them via Meson. This has the benefit that Meson starts to
-understand skipped tests and reports how many subtests have been
-executed:
+We could convert these cases to just have a "#" prefix, but it feels
+rather unlikely that these are generally useful in the first place. We
+already do announce why a specific test is being skipped, so we should
+try to use this mechanism to the best extent possible.
 
-    ```
-    $ meson test t002*
-    ninja: Entering directory `/home/pks/Development/git/build'
-     1/10 t0024-crlf-archive                  OK              0.17s   2 subtests passed
-     2/10 t0022-crlf-rename                   OK              0.18s   2 subtests passed
-     3/10 t0029-core-unsetenvvars             SKIP            0.15s
-     4/10 t0023-crlf-am                       OK              0.18s   2 subtests passed
-     5/10 t0025-crlf-renormalize              OK              0.21s   3 subtests passed
-     6/10 t0026-eol-config                    OK              0.25s   5 subtests passed
-     7/10 t0020-crlf                          OK              0.81s   36 subtests passed
-     8/10 t0028-working-tree-encoding         OK              0.85s   22 subtests passed
-     9/10 t0021-conversion                    OK              3.45s   38 subtests passed
-    10/10 t0027-auto-crlf                     OK             26.35s   2600 subtests passed
-    
-    Ok:                9
-    Fail:              0
-    Skipped:           1
-    ```
+Stop announcing these prereqs to fix the TAP format. Where possible,
+convert the tests to rely on the prerequisites themselves to announce
+why a test ran or didn't ran.
 
-This new feature is only enabled with Meson 1.8 and newer, which
-contains a bugfix that we have upstreamed [1] to make the TAP parser
-work in `meson test --interactive` mode.
-
-Despite the changes to Meson itself, this patch series also contains a
-couple of fixes for our test suite that caused us to not generate proper
-TAP output.
-
-Changes in v2:
-  - Add a patch to fix an unexpectedly passing test on macOS.
-  - A couple more fixes for broken TAP output.
-  - Link to v1: https://lore.kernel.org/r/20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im
-
-Changes in v3:
-  - Split up the patch that silences output into multiple patches and
-    rework them a bit.
-  - Remove redirect that was retained by accident from an earlier
-    version.
-  - Slight rewording of a commit message.
-  - Treat unexpected passes as failure in prove(1) and when executing
-    the test directly.
-  - Link to v2: https://lore.kernel.org/r/20250527-pks-meson-tap-v2-0-ae360f77786e@pks.im
-
-Thanks!
-
-Patrick
-
-[1]: https://github.com/mesonbuild/meson/pull/13980
-
+Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
-Patrick Steinhardt (10):
-      t: stop announcing prereqs
-      t: silence output from `test_create_repo()`
-      t9822: use prereq to check for ISO-8859-1 support
-      t983*: use prereq to check for Python-specific git-b4(1) support
-      t/test-lib: don't print shell traces to stdout
-      t/test-lib: fix TAP format for BASH_XTRACEFD warning
-      t7815: fix unexpectedly passing test on macOS
-      test-lib: fail on unexpectedly passing tests
-      meson: introduce kwargs variable for tests
-      meson: parse TAP output generated by our tests
+ t/t0050-filesystem.sh                  | 30 ++++++------------------------
+ t/t3600-rm.sh                          |  5 -----
+ t/t4000-diff-format.sh                 |  2 +-
+ t/t9500-gitweb-standalone-no-errors.sh | 16 +++++++---------
+ t/t9903-bash-prompt.sh                 |  4 ----
+ 5 files changed, 14 insertions(+), 43 deletions(-)
 
- contrib/credential/netrc/meson.build         |  2 +-
- contrib/subtree/meson.build                  |  2 +-
- meson.build                                  | 12 +++++++++
- t/meson.build                                |  6 ++---
- t/t0000-basic.sh                             | 39 +++++++++++++++-------------
- t/t0050-filesystem.sh                        | 30 +++++----------------
- t/t1007-hash-object.sh                       |  2 +-
- t/t3600-rm.sh                                |  5 ----
- t/t4000-diff-format.sh                       |  2 +-
- t/t4041-diff-submodule-option.sh             | 22 +++++++++-------
- t/t4060-diff-submodule-option-diff-format.sh |  9 ++++---
- t/t7401-submodule-summary.sh                 | 18 ++++++++-----
- t/t7815-grep-binary.sh                       |  2 +-
- t/t9500-gitweb-standalone-no-errors.sh       | 16 +++++-------
- t/t9822-git-p4-path-encoding.sh              | 13 +++++++---
- t/t9835-git-p4-metadata-encoding-python2.sh  | 24 +++++++++--------
- t/t9836-git-p4-metadata-encoding-python3.sh  | 24 +++++++++--------
- t/t9903-bash-prompt.sh                       |  4 ---
- t/test-lib.sh                                | 18 ++++++++++---
- 19 files changed, 133 insertions(+), 117 deletions(-)
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index 5c9dc90d0b0..ca8568067d3 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -10,53 +10,35 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
+ auml=$(printf '\303\244')
+ aumlcdiar=$(printf '\141\314\210')
+ 
+-if test_have_prereq CASE_INSENSITIVE_FS
+-then
+-	say "will test on a case insensitive filesystem"
+-	test_case=test_expect_failure
+-else
+-	test_case=test_expect_success
+-fi
+-
+ if test_have_prereq UTF8_NFD_TO_NFC
+ then
+-	say "will test on a unicode corrupting filesystem"
+ 	test_unicode=test_expect_failure
+ else
+ 	test_unicode=test_expect_success
+ fi
+ 
+-test_have_prereq SYMLINKS ||
+-	say "will test on a filesystem lacking symbolic links"
+-
+-if test_have_prereq CASE_INSENSITIVE_FS
+-then
+-test_expect_success "detection of case insensitive filesystem during repo init" '
++test_expect_success CASE_INSENSITIVE_FS "detection of case insensitive filesystem during repo init" '
+ 	test $(git config --bool core.ignorecase) = true
+ '
+-else
+-test_expect_success "detection of case insensitive filesystem during repo init" '
++
++test_expect_success !CASE_INSENSITIVE_FS "detection of case insensitive filesystem during repo init" '
+ 	{
+ 		test_must_fail git config --bool core.ignorecase >/dev/null ||
+ 			test $(git config --bool core.ignorecase) = false
+ 	}
+ '
+-fi
+ 
+-if test_have_prereq SYMLINKS
+-then
+-test_expect_success "detection of filesystem w/o symlink support during repo init" '
++test_expect_success SYMLINKS "detection of filesystem w/o symlink support during repo init" '
+ 	{
+ 		test_must_fail git config --bool core.symlinks ||
+ 		test "$(git config --bool core.symlinks)" = true
+ 	}
+ '
+-else
+-test_expect_success "detection of filesystem w/o symlink support during repo init" '
++
++test_expect_success !SYMLINKS "detection of filesystem w/o symlink support during repo init" '
+ 	v=$(git config --bool core.symlinks) &&
+ 	test "$v" = false
+ '
+-fi
+ 
+ test_expect_success "setup case tests" '
+ 	git config core.ignorecase true &&
+diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
+index 98259e2adaa..1f16e6b5228 100755
+--- a/t/t3600-rm.sh
++++ b/t/t3600-rm.sh
+@@ -17,11 +17,6 @@ test_expect_success 'Initialize test directory' '
+ 	git commit -m "add normal files"
+ '
+ 
+-if test_have_prereq !FUNNYNAMES
+-then
+-	say 'Your filesystem does not allow tabs in filenames.'
+-fi
+-
+ test_expect_success FUNNYNAMES 'add files with funny names' '
+ 	touch -- "tab	embedded" "newline${LF}embedded" &&
+ 	git add -- "tab	embedded" "newline${LF}embedded" &&
+diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
+index a51f881b1c9..32b14e3a714 100755
+--- a/t/t4000-diff-format.sh
++++ b/t/t4000-diff-format.sh
+@@ -36,7 +36,7 @@ test_expect_success 'git diff-files -p after editing work tree.' '
+ # that's as far as it comes
+ if [ "$(git config --get core.filemode)" = false ]
+ then
+-	say 'filemode disabled on the filesystem'
++	skip_all='filemode disabled on the filesystem'
+ 	test_done
+ fi
+ 
+diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
+index 7679780fb87..578d6c8b329 100755
+--- a/t/t9500-gitweb-standalone-no-errors.sh
++++ b/t/t9500-gitweb-standalone-no-errors.sh
+@@ -700,19 +700,17 @@ test_expect_success \
+ # ----------------------------------------------------------------------
+ # syntax highlighting
+ 
++test_lazy_prereq HIGHLIGHT '
++	highlight_version=$(highlight --version </dev/null 2>/dev/null) &&
++	test -n "$highlight_version"
++'
+ 
+-highlight_version=$(highlight --version </dev/null 2>/dev/null)
+-if [ $? -eq 127 ]; then
+-	say "Skipping syntax highlighting tests: 'highlight' not found"
+-elif test -z "$highlight_version"; then
+-	say "Skipping syntax highlighting tests: incorrect 'highlight' found"
+-else
+-	test_set_prereq HIGHLIGHT
++test_expect_success HIGHLIGHT '
+ 	cat >>gitweb_config.perl <<-\EOF
+ 	our $highlight_bin = "highlight";
+-	$feature{'highlight'}{'override'} = 1;
++	$feature{"highlight"}{"override"} = 1;
+ 	EOF
+-fi
++'
+ 
+ test_expect_success HIGHLIGHT \
+ 	'syntax highlighting (no highlight, unknown syntax)' \
+diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
+index d667dda654e..637a6f13a6d 100755
+--- a/t/t9903-bash-prompt.sh
++++ b/t/t9903-bash-prompt.sh
+@@ -66,10 +66,6 @@ test_expect_success 'prompt - unborn branch' '
+ 	test_cmp expected "$actual"
+ '
+ 
+-if test_have_prereq !FUNNYNAMES; then
+-	say 'Your filesystem does not allow newlines in filenames.'
+-fi
+-
+ test_expect_success FUNNYNAMES 'prompt - with newline in path' '
+     repo_with_newline="repo
+ with
 
-Range-diff versus v2:
-
- 1:  b5ae3aba1ad <  -:  ----------- t: fix cases where output breaks TAP format
- -:  ----------- >  1:  15702b96125 t: stop announcing prereqs
- -:  ----------- >  2:  444a5e8a72f t: silence output from `test_create_repo()`
- -:  ----------- >  3:  dd24e16f93c t9822: use prereq to check for ISO-8859-1 support
- -:  ----------- >  4:  5ea96164181 t983*: use prereq to check for Python-specific git-b4(1) support
- 2:  69d4b420eb9 =  5:  783cf673a22 t/test-lib: don't print shell traces to stdout
- 3:  ec921bbb183 =  6:  726795c9a11 t/test-lib: fix TAP format for BASH_XTRACEFD warning
- 4:  e463fb29a8a =  7:  df1be586474 t7815: fix unexpectedly passing test on macOS
- -:  ----------- >  8:  e0b06f9ffcb test-lib: fail on unexpectedly passing tests
- 5:  58173827436 =  9:  0f34503b28b meson: introduce kwargs variable for tests
- 6:  1242bbf74f3 = 10:  d28b9306b46 meson: parse TAP output generated by our tests
-
----
-base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
-change-id: 20250429-pks-meson-tap-1eed604a02a3
+-- 
+2.50.0.rc0.604.gd4ff7b7c86.dirty
 
