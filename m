@@ -1,104 +1,79 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1440220F50
-	for <git@vger.kernel.org>; Fri, 30 May 2025 21:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E2C21CFE0
+	for <git@vger.kernel.org>; Fri, 30 May 2025 21:50:32 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748641352; cv=none; b=oMAhVqqIAqet4vKEyEabxCmj4mThOaVSqBk8zl8SfVIquOfjcImgEYDmZTxQ8UWOpKDhb5LFIpL0OtiMHXrvc2X81tOpLEzHlNVP69viGaDEFvHlGqSpIJNvFKgovcTyv4DFX4Pinh5JUKa0jcr3L0JDC+rxiAsdlqNFhzO1Ouw=
+	t=1748641834; cv=none; b=UUmFgYRN8UsqJAJ54qfFJOm3l8gLJ9oa9lRuNxabIucic3ElonDlUAv5rE0iF4990x5YE4XRDakU5JwSo3LalrOjDB2RJyzaFwpPWkZYjnJHuxxwThkp3zPDawEIUxxqTtTm3BmaejXY6XkgjSDJqRxLBb9xPshnDrSssSzK0TM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748641352; c=relaxed/simple;
-	bh=HF/y+FIw+ls6JCx3ySmXwgu0qydUKqmnWIf7AP29ExU=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=AlSVjUddxLjTQVYDheO4UnnzrwOG/+Ucq9CJP1JVvMr7w7QQYhx0MeZ2ZjEbOEk2fuxPM8KzES8AoyITNTL60TpuwlqGdVk5tWkIDaCZXEkMrVp+RH4edZVVEQRqtgfyKP1TwZ8m5LSJifIh8eX+DRtQDN5d5WyD1wzKoC+cb3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=LSSnI6Ef; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=pPstUHMq; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="LSSnI6Ef";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="pPstUHMq"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.phl.internal (Postfix) with ESMTP id 9C2F4138011E;
-	Fri, 30 May 2025 17:42:29 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-09.internal (MEProxy); Fri, 30 May 2025 17:42:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748641349; x=1748727749; bh=0wDy7tunWw
-	ppHbvr/3sKWdlODgm08UfQHtJEGJKwUzI=; b=LSSnI6EfNeuDxkiYuKM15B/7BP
-	yj7g1oLQP9HeU04HHDHz59pBjRPA++IRgpFwwoRZdBQu5DnJZ2G/n1o6j/mEtktX
-	Vh1UsySGMq61NIWOZyVYXRZpiw8qpdNI3aVIMZYEf7xVDFp8CUVUU3RaBlHqc6y0
-	/pwUPwIyXww6WQ95bkM8SQCA5k7kpYRHsqeiCYkbyV54P3ylYEJFF7OchC2mD/H/
-	LWp8/NI6wEaTMUHQoZa+TsoNPe7AL9lWmWYG1haPRmZIfUfcnTBfDnUB8dTPyja3
-	+UT20hhlT8VEJBjQGPTb3ob0AgpXoVUNN0jS1ueZf2BHI97/Yi88eiVWvxwg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748641349; x=1748727749; bh=0wDy7tunWwppHbvr/3sKWdlODgm08UfQHtJ
-	EGJKwUzI=; b=pPstUHMq1FzRw7Zrp/gt1o9YQDguBuxYO3/TAxJAfMsgpjz8GY7
-	cBLq4luNoIZUGhBFltJmd4/Tks5/0PaFeOK8AHA1fmheZbEYOJvd4w17D9S1EdJY
-	1Hnu50DLb6iRdaL6trxFMSg8RI03P8nnlJuH3JB5S2AeHYtVA//150nL1BQdBdrr
-	iwP+lmB8t/DZsv/FXrsZJqQafVsCjta+LEtfH44ZUFrVmYpwxJYbdBz6b3Gnwbux
-	QSNwGRQIDCsAzzSipZxNrmSyRh6cIUoeDhBQcSCVznS9+SG7ChdASFQfPpZP8+Od
-	+aAvOwgYAjmQzRwUNg2oAjIJ6xCmQPlUDXA==
-X-ME-Sender: <xms:RSY6aB0L0aGwW6NPng1eBPWJkLjLlA_j4IaQlVQrmRX4lpfUYSQ8TQ>
-    <xme:RSY6aIHlr2JfIAc93VsFTc-lh4SjHTqzLB4cwNMXghir3ISrVDmxjEBMcQlaKxHLO
-    pFoRGs0Gd8wX-VjeA>
-X-ME-Received: <xmr:RSY6aB72YnVNRO3j3hn9aFRdQ4j08jq_mk0FX19yfw_4aIYw0l7SnKVKtLKmucRXK4CIDzLMeVqY4GOcez4kSUCpoe6q3DqLGctJH78>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeftdduvdculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgihhtghhithhgrggughgvthesghhmrghilhdrtghomhdprhgtphhtthhopehg
-    ihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimh
-    dprhgtphhtthhopeehtddvtddvgeeffedttdehieesshhmrghilhdrnhhjuhdrvgguuhdr
-    tghnpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomh
-X-ME-Proxy: <xmx:RSY6aO0qzRDqXWki5VPHpeJYeoZQIrprLnCKgU5rHYbRf6aqHyjj-Q>
-    <xmx:RSY6aEH5q9C_dT_4b09fZ6n8ZDU0P3WVS4NObpBT98t2nEz0WfnkIA>
-    <xmx:RSY6aP8i_AHMmZfS59og1tgX8XXk7yH2S2LziCbWoHbDOMgG9SQlOA>
-    <xmx:RSY6aBmSfTdX5dR5c1igcIOBV_033j8V6fFq2X3DUtIUk4oBmK-8Lw>
-    <xmx:RSY6aCc-x_LpNUXX3sY8HIFV_CE6utkqtnMoNpWZNamlK7zoRTISw1jJ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 17:42:29 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Cc: git@vger.kernel.org,  Patrick Steinhardt <ps@pks.im>,  Lidong Yan
- <502024330056@smail.nju.edu.cn>
-Subject: Re: [PATCH v2 2/2] t5333: test memory leak when use pseudo-merge in
- boundary traversal
-In-Reply-To: <56b24d681cbcedaf5c03c89eee582d554a0894b7.1748628847.git.gitgitgadget@gmail.com>
-	(Lidong Yan via GitGitGadget's message of "Fri, 30 May 2025 18:14:06
-	+0000")
-References: <pull.1977.git.git.1748149783383.gitgitgadget@gmail.com>
-	<pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com>
-	<56b24d681cbcedaf5c03c89eee582d554a0894b7.1748628847.git.gitgitgadget@gmail.com>
-Date: Fri, 30 May 2025 14:42:27 -0700
-Message-ID: <xmqqa56tepx8.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1748641834; c=relaxed/simple;
+	bh=EdA/Xabm1CdErIRhjkk8hnCspp3mnSKsEKZir+NOlNo=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=gD1LnMrVzVDpYW1tjyBeP+2ixGIhA0sDw/qVk0bBDkNSk0urCMr2+sELWCxaOuetNtYUoTCwUxGX10yEb6tnoVLfTL3rBUmrF083WGCDJW69x0jOvK8+MJ1ytzmQgGDeAI9sulzfuSBVtXUOrBaHzvBm1/C8IF+EugrnFQ4IOOI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7c5a55bf777so42330785a.0
+        for <git@vger.kernel.org>; Fri, 30 May 2025 14:50:32 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748641832; x=1749246632;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=DmkjpWKZDmdOiDEZWAM8JOu+CNGZZCri/sSmC8CbUKU=;
+        b=bHeYvhMgMFUboN/Zz9AiS6PtsksizRvvSV57AjIeUY+AqGcqxbYBOBliLBiJ1EbJgb
+         o2YN0FknR14gfD41YCluKM6IrvoVr3DKSOBhGNAGFyZyEkcHWE/7D0uDaYXbEnJEemVq
+         9B2hWo9VndmyoWUFzmmM/FK/c8iVPc3KukxVcmL3NLY3OJMVnhFUPEYRQcB7Gvi8J3hC
+         I2T6nfZPEvD1K696vosx/Wf3H9dq3mZO05V+douncK66oocIxDZQlrcNxaUlD/6Kij/A
+         d+XJr5zbIiQOUNUezNchtVAdbPQMR+bwbA/x+mx9yNTymscUl4KDIW7Payg1a30CFZRq
+         /rFg==
+X-Forwarded-Encrypted: i=1; AJvYcCXCqRZ/Hv6mfPUok83SJ+Jg+elqW4XczGgInBQkiHE2MPB/s2CbAFpvxnWGI4ancGGpDNU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxvCUevo1ZmE8OUn26F7pCti2Fi6TTcNheYfxtgLfOtcyY1EjAq
+	R0olq6Fm7IIcXHhMxupc9gsUtCtvQqRojwmYnQSO+KE+/GUQ5RqtzEpB27CmP3/jkMcmP60QIKU
+	k7/PGTw6OJ3ImzWrvGKKo8B8rhi7gc2g=
+X-Gm-Gg: ASbGnctuEFC+RVINXlvm8J/uDaPrSm5b5no/EcFBwmYV4R+NTjIFbOM86Q+R2/Qgzj5
+	DGtOj9jmhaPxufy8Z76Jrd6AwCCvpmGRyoz10FjHW38QKXDqJgNVM3chDFryl4SIa42INi1au1a
+	Es0J7p9VWCcttQNpNVsaE2vrrVSiMoWnY=
+X-Google-Smtp-Source: AGHT+IEyv0SfopfSw/lRCIbAYXHhMhXIXELvp4tCw2GCdayo7C1Dl/qe0BA7OpuhVulbrX/0DRr63ITXAQAtbS/NWjY=
+X-Received: by 2002:ad4:5ca5:0:b0:6fa:be81:e18f with SMTP id
+ 6a1803df08f44-6fad059a7f8mr25024736d6.0.1748641831810; Fri, 30 May 2025
+ 14:50:31 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <pull.1977.git.git.1748149783383.gitgitgadget@gmail.com>
+ <pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com> <56b24d681cbcedaf5c03c89eee582d554a0894b7.1748628847.git.gitgitgadget@gmail.com>
+ <xmqqa56tepx8.fsf@gitster.g>
+In-Reply-To: <xmqqa56tepx8.fsf@gitster.g>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 30 May 2025 17:50:20 -0400
+X-Gm-Features: AX0GCFt_iIDhdQVK_eDXU8IgzW6nmIszN0QQNAfGlU4r3ztIQfAG6DA3ffpMzDM
+Message-ID: <CAPig+cSv8ADqERwZBZ_7OXnedGPR_iwRa0Z-NtEBHxS2Zc8EjQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] t5333: test memory leak when use pseudo-merge in
+ boundary traversal
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
+	Patrick Steinhardt <ps@pks.im>, Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-"Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+On Fri, May 30, 2025 at 5:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+wrote:
+> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
+> > +             export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=3D1 &&
+>
+> The test linter complains on this line for me, it seems.
 
-> +		export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=1 &&
+To provide a bit more context:
 
-The test linter complains on this line for me, it seems.
+    % (cd t && make test-lint-shell-syntax)
 
-I've ran out of time for today's integration cycle, so this topic
-will not be in what I'll push out later this afternoon.
+tells you that `export FOO=3Dbar` is not portable and that it should
+instead be written as:
 
-Thanks.
+    FOO=3Dbar &&
+    export FOO &&
