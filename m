@@ -1,67 +1,69 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
+Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 590DDC2FB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D60682BAF9
 	for <git@vger.kernel.org>; Fri, 30 May 2025 01:52:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.54
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748569961; cv=none; b=oHxvb8XSICJ+Ia3OtZtD7AYYp6ceJHaGxkgvHP6vQxtg64JhGMXBs6eJI0sa4uX0TGwZ7Jyw4JuqmuvD4FqFineS+JrqIoaji0+gfYwSlYLaOaI9jmCsUFAzMCu92HvM6htXL4rE+8TrzCVJU2QsMEzClEOphbFvoW+BIkGIStM=
+	t=1748569961; cv=none; b=Hte2DElnmzfgMdxYw/SLVJgrV/Zi5kyPXSuQvQjN/pGPmCYYn+BjYvo1OuLGafqzjVLDDVWmtQU+shYgucKRWF7cFxxQqctFc0Qv9CcGCHs2TrErQTFegd0vVACHP5FGjWn6mhexvpAtoz8o6NPa6/HuIxFzNK5rKMKSAxjWoyI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748569961; c=relaxed/simple;
-	bh=WI5KPsvfrBEc/pHP6SorKiU3XsHrJyd1zfQTTO43RJI=;
+	bh=e1MBAgpD28U8s/XBzjZMejFb3JvTzkSnAqOfOnSBm1U=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=ZzWQEGP12Qu22c2sA9ui1Rm1+/7tzYtFju39M96WglVI7C6RG9CCwAGPsR7MUjNbBaY7ldZybuCZEenfv6LNsu06Ura1rDlzD2XQcjnhIkuMA66ceoQjjhbXW4SU8Lajnhs18wIicYXzgWY0Vx1o7pfkF7tF0RHQroCJlPHNcyw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=UZ1mUsZY; arc=none smtp.client-ip=209.85.128.44
+	 MIME-Version:To:Cc; b=HW2cDt/D3xVfVGg8Bkp613OxQzZEgxDBaZ4cFRf/hBWvJe2Fc0DXJ7rOnQn4W0svDEDn6ccvuQcc68yVlSoQrbJj7I53fdBTH/RnE9EwsFXehhybQkRjHJbGbsZWIVTBanC52fD1Ogvb4v2nMXhs91Wa3eWXwqI6t9taTnfyTxw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=CB3efDSZ; arc=none smtp.client-ip=209.85.221.54
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="UZ1mUsZY"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-450cd6b511cso9124615e9.2
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="CB3efDSZ"
+Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-3a36e950e41so986291f8f.0
         for <git@vger.kernel.org>; Thu, 29 May 2025 18:52:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748569957; x=1749174757; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748569958; x=1749174758; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Z1cBDgi0vNS/awr62/Zsv6Hz+pRGKt66Q7F3sxhgcJ8=;
-        b=UZ1mUsZYqLnvch/2kWgcThPhbJ1H0gLm9DYriAjixneURUfWfoxqquwy6rr+j4zodZ
-         za3aTGMGh388R6tVsLjayhjIgrlC3VPMd1BBh/oMUFnqS8zVLntLP33C3vVXUFXYdPLI
-         4k5KRPFqlrea2+PKKGScOPEAEl4gfidizrye7qd81R7O0xC8nQqrhERmw/mn+rmk4RYo
-         iL9zorkOzbU/72VeWdTQZpyAGnI5FtwRyta6512evFUWbkM+J084bZb8P/6btp4F4ElY
-         sQRGOxJxbl1pamvcPgG0MX6Xg4T2ffwoCGdZikN7+eJua3bAimE6uhZ0zm2Q3Za35owh
-         6JWA==
+        bh=WUfuX7uFbJDNNNcXa0WzEGIK5p2KfH3F+nJWX4eEu7Y=;
+        b=CB3efDSZHkaKI66eLiYseqJD+ErNQrB/8UGjXjqTOusZw8e9Tr783by4cD9KP+faYO
+         xXU00m1Es1kfH1fWAfefBeOh6MMsHEg9T2EDFtV8dy5NamV3u1/W0oh1o4aAIiv81e30
+         fzkcJh24KkzgwRNocLQchH3RPbSWOfUTevoKnoW4jdV8LNnBUaiVyywKHCFGD3Dg083A
+         1XMhdDaHouERJ13p3jKugRmA02u89zJ4pQ4ElGNLeeXyr8HOMyeB7/zy9zUcPEarCNJO
+         GE2N3u7zqCWIVRgnQ29D0+7S/MMqP9o+3rUGZEFRw2crDu0Lu6SYRJ/CFj8g6+QetsTx
+         CbVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748569957; x=1749174757;
+        d=1e100.net; s=20230601; t=1748569958; x=1749174758;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Z1cBDgi0vNS/awr62/Zsv6Hz+pRGKt66Q7F3sxhgcJ8=;
-        b=OeqKd+P1oapEFAQ9csJqIDNFVw/prnTPIK4fmfbYrXz/q66PSd7wvBPfr9tbfHUdu2
-         IqNAlNl1x6zJzSXReg8LgGuOdwewzd2O+t1ipSxpJTgqgs1JnGxtxvtyrDyIWbmSj4tM
-         yLqo7Y1KEvnMLchQewRtyxrrRi80Nr6hoU7qXmvBhX7Q7Ideav3M01SzuK45D7ujyQus
-         KGaJuvP6xBfo1cUB7RThYCoZnGlE5CPX1fqhuzDm6UcCvovpNw1heZp9m4ZxnNLqzHFd
-         4WBLKDvS0cRun6G/ANY1IFIFj6XeqfdJevWql6OX1ZP/qBRiXZxXXQGUNa1DOVz8BOS6
-         Uk3Q==
-X-Gm-Message-State: AOJu0Yy/uYFox7flF4H10766QsZjr+HolC+xdvFNjJdO2dFEKyXoaCO9
-	CISZd7XRvGYf92mslsw56jLFhQrP2YI2GTLWty66zbtIPfJuTiztFiat3vbM9g==
-X-Gm-Gg: ASbGncvB5HU3XqezlfyoGLpkZLmx8tYWQlDR8X7xBsRkjfhK7APxMK3Fu+uFIQEXsic
-	NqbktLVEyq/iCAIM9LcfQaJTYbg+UXgnXHDb9P5g9yMd9r8VNdFQ/SuWsCnGnM/EcF7ZeKsrSlf
-	SRqr53plvsu2nFAdlTZyEIF/kpoU9k9KnMXY4OSktHo5zAqhNJ2c2Tdyt3hY0letEF3xXLNPNLS
-	iezK3KIv8YmLOSnQU9eZIWsHZqk4VUq5ft5jJI2X8JgxfEJndg2MnTPCiXUFFcwU534xh5phNoM
-	Pc4GUEIwPoWauxgyTAPQ/bLxBrt4O4FDxwDgWnM+fkCihR57MM6a
-X-Google-Smtp-Source: AGHT+IGQbx+P7hQKDCmFxKTuqN9qtiWs2p+9zVieycG4D8Y1wchQXfTEYzjDrtvmgH8Aw0s2FQbeIA==
-X-Received: by 2002:a05:6000:2083:b0:3a3:ec58:ea81 with SMTP id ffacd0b85a97d-3a4f7a6d2d3mr874275f8f.42.1748569957055;
+        bh=WUfuX7uFbJDNNNcXa0WzEGIK5p2KfH3F+nJWX4eEu7Y=;
+        b=pG/qTvTlNit1YwrWt9etwxjBQjtvlzHIeuHre/YrB0+d4VJp9Fk4ON0CARUm8FhpTI
+         fCjUKN+uIJTdvv2F0iDG4KJanL8cLwIOC6X/O+tXRlEHFHa6p7b4ak4ZxBjz5hcQAek/
+         KffyPg49wRhgjZ93AjSfEEhoga6qh+UAJhINfEnB6MoV5rEse/jCDCp7S0kooWwe0jht
+         PBsPe6MDvaGwM33StqIsK0fC41k5J4OeEN3mWRAw3oRM+0dEF4apfVRxYt2vKS59x4xT
+         HtLnXtQwd0psv1bB53P+4G8ai2PgYW2PE3gHMUKZrfHT/8Xq7ao/JyNMc+5PhkbuTgBN
+         YpEw==
+X-Gm-Message-State: AOJu0Yzm6mSxEIy+TeGjeTm1NLvTqdN/gt0JU3Zdam7+fL2Q9/5tCzmC
+	XR1AYpReupCa6zqs1ESDsz3Zp5VTFncUzL4T0Rpzan3n2Ra+WtBWmjDzr7v15Q==
+X-Gm-Gg: ASbGnculhc/Q20lqBm3guW3gDaB07T4a5RMFIgUwcIZkL2ZzPHe6MHwSr/QHMoCIe9R
+	tsoRxUfZcgMUAdwnO231ZQzPYhYmqZZc3BeeHaAy5lnp15TRYIWyoNwKEcHZZ16n9JTUxU37DOi
+	Qfa8oyKb0c87NZpEvtdsh5udNx6TMHkjmqnFshrAqgew68C4AtCd/fs97KaapBtoPiJWTqrP9pj
+	o2hBzXSx4d1GN+vvsJfigKQdtcGAcU+X821WqkE8TaOFBCwHPSAe4wZcNJo4r5H1fLf+kn2gPfr
+	Y03qMmGkxttZOyyH5Gredk1j4ra4d14hfs0O+maDdDN8OgBvxdy4
+X-Google-Smtp-Source: AGHT+IGUgwCNLAZz+tul1zvHPITI2EcT3w41+H0q76pHvqMrKIEWddc3Kwu4wiZbe0MS5p6/1MVPUQ==
+X-Received: by 2002:a05:6000:2313:b0:3a3:7593:818b with SMTP id ffacd0b85a97d-3a4f7a4d333mr893639f8f.21.1748569957670;
         Thu, 29 May 2025 18:52:37 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7f8edf9sm3890495e9.3.2025.05.29.18.52.36
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe74165sm3552696f8f.53.2025.05.29.18.52.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 May 2025 18:52:36 -0700 (PDT)
-Message-Id: <pull.1964.v3.git.git.1748569955.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1964.v2.git.git.1748168353204.gitgitgadget@gmail.com>
+        Thu, 29 May 2025 18:52:37 -0700 (PDT)
+Message-Id: <b812f973d18fbef104f2d30f4719fcc58c8578c0.1748569955.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1964.v3.git.git.1748569955.gitgitgadget@gmail.com>
 References: <pull.1964.v2.git.git.1748168353204.gitgitgadget@gmail.com>
+	<pull.1964.v3.git.git.1748569955.gitgitgadget@gmail.com>
 From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 30 May 2025 01:52:33 +0000
-Subject: [PATCH v3 0/2] sequencer: replace error() with BUG() in update_squash_messages()
+Date: Fri, 30 May 2025 01:52:34 +0000
+Subject: [PATCH v3 1/2] sequencer: replace error() with BUG() in
+ update_squash_messages()
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,53 +75,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: Phillip Wood <phillip.wood123@gmail.com>,
+    Lidong Yan <502024330056@smail.nju.edu.cn>,
     Lidong Yan <502024330056@smail.nju.edu.cn>
 
-Lidong Yan (2):
-  sequencer: replace error() with BUG() in update_squash_messages()
-  BUG(): remove leading underscore of the format string
+From: Lidong Yan <502024330056@smail.nju.edu.cn>
 
- builtin/mktag.c     | 2 +-
- builtin/worktree.c  | 2 +-
- pack-bitmap-write.c | 2 +-
- sequencer.c         | 6 ++++--
- 4 files changed, 7 insertions(+), 5 deletions(-)
+In sequencer.c, caller only pass TODO_SQUASH or TODO_FIXUP to
+update_squash_messages(), any other command passed in should be
+considered as BUG. Thus I think `return error('unknown command')`
+should be replaced as `BUG('unknown command')`.
 
+Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+---
+ sequencer.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-base-commit: fcfe60668e05ffde2610bfef9045797618c145ac
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-git-1964%2Fbrandb97%2Ffix-sequencer-leak-v3
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-git-1964/brandb97/fix-sequencer-leak-v3
-Pull-Request: https://github.com/git/git/pull/1964
-
-Range-diff vs v2:
-
- 1:  aa5ff030b37 ! 1:  b812f973d18 sequencer: replace error() with BUG() in update_squash_messages()
-     @@ Commit message
-      
-       ## sequencer.c ##
-      @@ sequencer.c: static int update_squash_messages(struct repository *r,
-     + 	const char *message, *body;
-     + 	const char *encoding = get_commit_output_encoding();
-     + 
-     ++	if (!is_fixup(command))
-     ++		BUG("unknown command: %d", command);
-     ++
-     + 	if (ctx->current_fixup_count > 0) {
-     + 		struct strbuf header = STRBUF_INIT;
-     + 		char *eol;
-     +@@ sequencer.c: static int update_squash_messages(struct repository *r,
-     + 		strbuf_addstr(&buf, "\n\n");
-       		strbuf_add_commented_lines(&buf, body, strlen(body),
-       					   comment_line_str);
-     - 	} else
-     +-	} else
-      -		return error(_("unknown command: %d"), command);
-     -+		BUG(_("unknown command: %d"), command);
-     ++	}
-       	repo_unuse_commit_buffer(r, commit, message);
-       
-       	if (!res)
- -:  ----------- > 2:  e1f84c111f6 BUG(): remove leading underscore of the format string
-
+diff --git a/sequencer.c b/sequencer.c
+index 1ee0abbd4514..93e1732504c1 100644
+--- a/sequencer.c
++++ b/sequencer.c
+@@ -2067,6 +2067,9 @@ static int update_squash_messages(struct repository *r,
+ 	const char *message, *body;
+ 	const char *encoding = get_commit_output_encoding();
+ 
++	if (!is_fixup(command))
++		BUG("unknown command: %d", command);
++
+ 	if (ctx->current_fixup_count > 0) {
+ 		struct strbuf header = STRBUF_INIT;
+ 		char *eol;
+@@ -2134,8 +2137,7 @@ static int update_squash_messages(struct repository *r,
+ 		strbuf_addstr(&buf, "\n\n");
+ 		strbuf_add_commented_lines(&buf, body, strlen(body),
+ 					   comment_line_str);
+-	} else
+-		return error(_("unknown command: %d"), command);
++	}
+ 	repo_unuse_commit_buffer(r, commit, message);
+ 
+ 	if (!res)
 -- 
 gitgitgadget
+
