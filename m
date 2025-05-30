@@ -1,184 +1,275 @@
-Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010008.outbound.protection.outlook.com [52.103.68.8])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C30323182E
-	for <git@vger.kernel.org>; Fri, 30 May 2025 14:51:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.8
-ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748616713; cv=fail; b=m7E/MK9VAhdT1TykCf43fnwohQB5ebn87qj6rUD4oiJFrrXGwiv4zaxVzz5H2HJuO/9ajZGjh2JICXB775f31H/9UsCbQgZukJTJhFww5aWauCD/ypHe000KYafpsh3rmzh47Nw4yxAkjK9lhPQoQsOw8EyjAzfQ2bv76dNe+C4=
-ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748616713; c=relaxed/simple;
-	bh=OJo6/kmiOhG2LObkVtySHiQb+IET++LcFCVaFDFeBdk=;
-	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=t9UPTae3Z5rd01OYr6otFsvtLmO3gOPlAIwDFm5BbYG2jQbTj+/u5+wMaKy1LEVxleTB7aIpPg2Dq2fywCIHYn6FaZXVFgxH6v1KE8AcohrV8rZ24mFkCxAkNtJb578xAeeRIh9qUHNqWDFJ4BnvJZoJmz5C7s0TYgmZCMoMLrE=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=EeTCOap+; arc=fail smtp.client-ip=52.103.68.8
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F09221CA0A
+	for <git@vger.kernel.org>; Fri, 30 May 2025 15:08:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
+	t=1748617724; cv=none; b=AyiAwi7LXBGsagBQeEVIatjkz4dam4hlIbYAkdHBJlcRvHHCBOPBuAnylYVOGuqGZ3bDRL38pjkEAb2ipmAWGpTdkLKrXKXjYpdhGS+4sbLLoxGRoM9C3M4pOOnAh63tgq7rcmDg8TXlNNXIFWYBzX6YcljnVA0Q8MDMwxNrF6M=
+ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
+	s=arc-20240116; t=1748617724; c=relaxed/simple;
+	bh=XxqdGbsj13Rmf6rVe+gRnXOSHhW+sC5a1dNRuyMa9oI=;
+	h=From:Subject:Date:Message-Id:MIME-Version:Content-Type:
+	 In-Reply-To:References:To:Cc; b=ZSBtpy+ZT7j/o6yqz4bgGp1LudtjK1XJL9NV4lYv73c240NMXwh57NiLTzGyfWKt+c1n7EIqJlxGLUL9JrgqX1YG5MoJeJCumthsjQH8C+A7rDklU9k5hHk4k0h4Sukj9Uxv+QhgF26ZX3kqR84y3uj/DncFqs8DC2C6kxaIWvY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=hAnQEKbh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=X+MQDw7X; arc=none smtp.client-ip=103.168.172.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="EeTCOap+"
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Iy2bHBWRk4diV1KEiduuoSfbgDYjhfEaY9ijP3dOqzCsLspuKdLemAAIcIevSbTVPSo25kPObPYqSvNLWUv4TA3Tsz2hVuQcAViphTZi6w6ZNIk6STXZZ7+Ca6YWQHt54VCp/DK7RBHr1Z8Lr1z15OoedlDuIxpdtERQaajBPFfi8I56hDUWF5tnWoGb6PTf7ap4Hif4MryOZv6kZC8OnW9NLDAAtAbNRbfoFKAJ1RzCrW2QwoZ3SjLd1ICyVIaUHXiaBbvR/8ZVNgFlBJ2XvcgMnavcgqjb3go2Q1fyTIw0ohEiy7xHdb/vzutWpc5LGObiKT0hkUQBq+Ywog0XPg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=OJo6/kmiOhG2LObkVtySHiQb+IET++LcFCVaFDFeBdk=;
- b=pn8wU5w7HiBcFjdB2CQDa4OPSJUtLBkEzKyYx+iA6zfIPkiOpK/BQzPEfPQBawsPW2VoN5HndVp/wNpj4OSkyxTxRPTJnmnR2ScDXfdN3lwL02ZMiTuIMO+UmGWcNzVb5bmQMX26prQBmHHlzKwcp1uClAi9Nv6oSjls0vP6DUMKUpM6Sw1yvjkGnuUTYBIYP56mxD6tc4IXSyBg6534CspVqMoHbHBfEtU17Hm/Y/mjNixGNAFf+nuYDA7DU1GMKsapSdFLtab7xWqINx65zL+vStzUAXh9/TWLWN6mqH1TCEUFdwl5hrPmXJ0Sa/+VSB301fy64CfbXtymSWwLlQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
- dkim=none; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=OJo6/kmiOhG2LObkVtySHiQb+IET++LcFCVaFDFeBdk=;
- b=EeTCOap+wrmeVDU1ZCezpkXoiHS15yX35ga9CfaTosmjvs/Vjnb4DVVSQmGkF1SoXjo9NykgyeA+td/z4w1ZpeAbuQnxVoiJIwaU6ZMmyWj5zgkCBr7upFhofIslAl7f6TsiqaHQOVkksKNu4qlgTPudgFdWyWxCNT81f37qAIASVVFCVWeEsJd7qESiJYzJFlslVGMlmlDcMKULq8XgM/qrhi2erlNApIpuJLusAsdT7EdCM3o6INs/au9ZMe7t64mEtcTvsL6HZy4D03VjmliF8p9F5g+V4CsGSlYoAubuC/jaU8yEKuoRXRtdC46rjYu0K+cbd5BJ4u75KvNejQ==
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
- by PN2PR01MB9539.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:fa::6) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.29; Fri, 30 May
- 2025 14:51:45 +0000
-Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
- ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.031; Fri, 30 May 2025
- 14:51:45 +0000
-From: Aditya Garg <gargaditya08@live.com>
-To: Ben Knoble <ben.knoble@gmail.com>
-CC: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
-	<git@vger.kernel.org>, Julian Swagemakers <julian@swagemakers.org>, Eric
- Sunshine <sunshine@sunshineco.com>, Zi Yao <ziyao@disroot.org>, Kristoffer
- Haugsbakk <kristofferhaugsbakk@fastmail.com>, "sandals@crustytoothpaste.net"
-	<sandals@crustytoothpaste.net>, Johannes Schindelin
-	<johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 2/4] docs: improve formatting in git-send-email
- documentation
-Thread-Topic: [PATCH v5 2/4] docs: improve formatting in git-send-email
- documentation
-Thread-Index: AQHbz57oJD/WCXZ7hECPdkjcTXR6SbPp7EDLgAANoD2AATRLa4AAFmUAgAAA6oI=
-Date: Fri, 30 May 2025 14:51:45 +0000
-Message-ID:
- <PN3PR01MB95971B9CDF3DA9BDD9C5A0BEB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-References: <877c1yb53w.fsf@gitster.g>
- <C1E8439B-7666-472F-9C23-C558BA9ED53E@gmail.com>
-In-Reply-To: <C1E8439B-7666-472F-9C23-C558BA9ED53E@gmail.com>
-Accept-Language: en-IN, en-US
-Content-Language: en-IN
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PN2PR01MB9539:EE_
-x-ms-office365-filtering-correlation-id: 37b2a56a-1f90-47a0-352a-08dd9f897f62
-x-ms-exchange-slblob-mailprops:
- 30ekHghIwFpWJZJ/S7H67WW7FVejyf+CuCreJHldClTqX8wGvhw9XbxNpfrI/Ro6bIYpIb0VxaRZ7p+lN4HDU1/tj/r1r9V1WPyrtOr7uy7AiWew6DWm0F21MYylgXxYM5S1uQkfaJaVotHhPTmwLbb29BbaFZC/iu2yL1Enfi4xBkFogmEWAgHNbzSESlEKI5AU6Vdii9SHlLMmPWiJ9rmHyZPLmggfC7bL8gfEmwA2a9QaH52Vrf4BSVo+IG6DpZGXQLfhmBwWsevPtgS7IUVA7fKnprgUM3d2cEASe3I8pNpToog7Xn2zevkdO38D0QCXIz5pMIQ1E8ftiRmziOILZkbw5aHS9UnR7m7/MmgiJBzySCT3T53E1LgVhHbAFHvnTIdtJUpTf8TbYBwKdWeEvCXjLanMFVBmoZtbYyGdoCdzTxFRrwR+lqZYH83UD0ZlUBt4t1RlyV0dh3qE4GECsZjxpnbT83Ww7H0GjcWuEjXWPMNcBPLEhe+QiT1hgMUVe2kEGLjSyessScFCSpeC+zoiLkHUiyT3Zn3MSNI8RQQF019xYSgStt6xENc3eswbSzmYGMqhkq1SyIL3mZNoTLUvHJ+JQjPyfHTUzbZ7Ozk+43Hc8KpGPOGm8vcu7H+Qerw59ax2e8jcUT7Xg5/GdmvpDON7QgsJTCG8KkHdIw9g7zdqZrlorAot1KlaT6EpHU8SxEkFtHPWCR8i/v4piOg5qkmOx3Ra3VoH3+kRXyJ0kpX4W3keJOv9uVEk
-x-microsoft-antispam:
- BCL:0;ARA:14566002|7092599006|8060799009|15080799009|19110799006|6072599003|8062599006|461199028|440099028|3412199025|102099032;
-x-microsoft-antispam-message-info:
- =?utf-8?B?UC9USG5tb0U2Y2V1MEFmcnRTVWdJTDN1R2ExTmp0MlRzZGtvclI3N3l5U1N5?=
- =?utf-8?B?dVVNZ2JJQTNjSUx1TFVqQXFlbXpZWVUvZmpKOHRxSUgzVDcvNXVWTjlaWnFq?=
- =?utf-8?B?SW5UVWl6MFRXR0JtM25vd3FYUG43aEF0NzE3OHZZTTRrbmk2SldoQ01hQVFy?=
- =?utf-8?B?cW9vZW43WXoxS2hRemdnTXdsa3VLQ1paUXBCYnpURFpRRTJGdnljb21CTjB5?=
- =?utf-8?B?S2JSRUtTSjdZZnBTNklRTnBYZ29XQTE4RkdZeFhzU2g5eUdPVzBGVTdCSnB0?=
- =?utf-8?B?Z1ZzRGUwV1kveGUyMkttY3JPR2d5OXM0YnJaVzduamM0bE0yTy84eTJEUVF2?=
- =?utf-8?B?NWd6NGxOaSs2S0JzcnBYMHVXVlcwOGttTFppV3FMNWQvcFlGa1gxOGt2ZCtY?=
- =?utf-8?B?cmhuRGJDZXdTTHh6SUJkSE92eGwzRkZBVXFVVkczMGdNUXpXd0c5UDl2MVRu?=
- =?utf-8?B?UXpNeENUSktFTTJ6ZjR1Y0plaFZlUzdXaVdka1Q4ZFAwckR4V21WTFdqMHV2?=
- =?utf-8?B?RUROMExNT3pqd1VDTzNTcDUxaUlNQ29CUWxlcUowN2ZrS2VTbDZ6TWt2QkNh?=
- =?utf-8?B?a211aDh2RTFFQnRHaHNMUFVudWpMTlBTa2RPN3lpR2Q3dlluNmY5aS84L0RO?=
- =?utf-8?B?dllJUVBSVkZHdFFWYTF3eElhcm1sREJUaUIxYkpSdHJxa0xSOXZJbWxOQ1Nm?=
- =?utf-8?B?OXQrY3E0ZERIQ0g2a2IvS1RmTFN5OHdVWWpwMHFZWGJNRGdBZ0ZIdFpWTlRv?=
- =?utf-8?B?S3lzVGpBdW5wZ2FtMTdUa3FXTFlsYmJTRTF2ZXltRnN6WWpOWEYxRUphS3VO?=
- =?utf-8?B?eHE2NmJQejZzYmFjbmRKYnR5R0J0UUJzdUl4S0ZWcTV2VmN0MkpDc1ZWdGwx?=
- =?utf-8?B?Y0U2SWcvYXc5c1YrcllEbEhLSU9EcWRnZEVFSEZta1ppV09XZUV4aERaUzdm?=
- =?utf-8?B?bzllUG9BZllLZUI5dnpkUlNLN20vV2Q4NGJHME1DZHpsUGVJclRLbUdmd2t4?=
- =?utf-8?B?alNLQ09acW1CUjh4eWgzeDFJNVlFc2pTRXByd0E2VitzRmhZVVlxOE9tSVBK?=
- =?utf-8?B?SmJobFNYMzFUYnJBOHVFV2c2WTZoejIreitGSWl6ejBna0NFaTcxZ0h3VnFt?=
- =?utf-8?B?bldYU2VJa1ZWWVdVM3hjeG83VXc5SFZuMGczN0hhQlY3cXpnQUJwRnJ2ODZt?=
- =?utf-8?B?cjNZN08xQUVXdUpkdU1TZktRQW1GSDRibUpBdXJDU2swMHJpRW0vdEU2M1I4?=
- =?utf-8?B?RDErUGFaRFNmL1FzRnhvbTlKRFJHYzFvMWU4WnM2d3UrbDN4aG9rMEU2QU90?=
- =?utf-8?B?Qys0VDBMKzBhR3N4bUt0YzdMTU10WktPU0EzVjYzclZHSU1TZjZDUjhUcGJD?=
- =?utf-8?B?L0ZtMy8yQWZjT09RbnNub29EQ3YxMTZQV05QSjNYZWJyR3pOYnd1bDRxMzBx?=
- =?utf-8?B?OUJOVmNsOFA4NWlUeklGVXJxWFZxVW8xYjNQbjdiemJaWithMkRoS1FrYnRi?=
- =?utf-8?B?bE9IVUd2dGdlZVpTRys1Y2ZKVG5tcHFGTUpJQm1IcjByRTlMOGVNNE5PTHNE?=
- =?utf-8?B?NkpYZz09?=
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?NzZmZ1h1aXkwVzlQSStUbkNBMTJQWDRjR1RkQnFmai9FVTI4MlNDU2VONmdY?=
- =?utf-8?B?ZUJxWStIR1JhRC8xZ0lBRTl6MWhDL1BiRmNTaDdISTY3aXlCNGV3V1dBTGRz?=
- =?utf-8?B?VkNadzc3bEVZamFFZlo5bGNsamhobkhWQkNwUWRkanpmVHRrWC81TUtQc2E5?=
- =?utf-8?B?M3NQUVJrVGhJc0tuTWdncW1ZWUVkc2F3akJobk14ZGtrOEUveGFMRk15U0p1?=
- =?utf-8?B?QXc3TVpzVGpVaTV3N0dxRTRyQU5NTXE5RFNmbFQ2U1BxaEtqQnkra3lPbDg4?=
- =?utf-8?B?YTJTS2NyQklYTnVNUUVQemRZVDZpeUttclFMTE9zaHVqbEVUVTFoVGdCVGZH?=
- =?utf-8?B?QlRGYlROVjMvR2txV0xIdGl5SHlvU2dVNXNDRXdjNi9RcDVFSDF5VlkvTkFN?=
- =?utf-8?B?VkFOUkVvKzlQZWVDdWs3VGEyYUQyWnE1Z3U2K04rdXhXVEJhYlNzUUFsNzR1?=
- =?utf-8?B?VzlaS3Q1cmpBaFZPdGFORVd0ZVdxVitrMU1Db3oxZy95ZWp2cnAxTForNjRO?=
- =?utf-8?B?dkJKNThqajBWbUJFT05tU1djMHRCcWJnQWhDQ1BuUi9zVjM5Sisxd25vV0ha?=
- =?utf-8?B?MkkrZU14WG9ydG9Jcnp2WUVCMUVMTEp6bnlkUkNINEVGWlFQRVFhK3hQR3hs?=
- =?utf-8?B?TVVPWGMyQlpIR0taL21BL0FXeDYwU0UzTG80bFl1U2RSR2FleWhtL2l1aGJ5?=
- =?utf-8?B?QjRLeVZaRkhXbmVBYXZDNUozLytscElGS0xBbFByczZ4eGY1L2dQUjh3eHRi?=
- =?utf-8?B?L1hYSGJuR0RsRkZtSHJhVFlBMzFVT214VFovUXU5TUI2SEpzVm1BWHFJMlZG?=
- =?utf-8?B?VngweVFCM2JsRk5EWTdDQmg5Uitaamd5Y3pUSnZiTkhlU05aeVRvdUtjVHlI?=
- =?utf-8?B?Zzk4RjY4WU1STW5ra3FPc2VKenpNSVVvakdmRzJPdHp0aVAzRkxBdTU5bmlx?=
- =?utf-8?B?aE1ZejVtNjNsa1lyVUJwdXEzMi9UVFRLSytaVGlDbzdMaDIrT3c2V3FZM3Y0?=
- =?utf-8?B?OXgyaEdXYkhhZVJPaWUyRWw0cnNyaXc5S2pWSnJERTk3b0ZJUVV6bUlzUWF0?=
- =?utf-8?B?Snd2b0tuODh6bzhOZXl1L3dJS3IwWEx5QWJCOHpTVDE4T1FEVmVJbzNWU0Jw?=
- =?utf-8?B?Y0lXRGNCdlpONnNKMmZhbS9GSEFSVUllU2tQeE56NEl0NXRhOW8yRFNFNGRm?=
- =?utf-8?B?WEhScTVWODNqcEJUMlFkSFJ6bmp0VGZ5NTRMOGg0SWJjK2Qyb0NVRklGNEhl?=
- =?utf-8?B?TGRxZFhaSjQzTDVhUDdOejNOSUl4a2JsV01yVDQxeHQ2dzBXTjlIZ1F0clRs?=
- =?utf-8?B?dWl2V0pMNzZ4Z1BnVXN5bkJwOWxMeVBFN2R6T1p0U2JIR2RuOFc0VFRqVGRr?=
- =?utf-8?B?YndlajVzY1d4M21TOWpWbm4vUXpvVkFtc2VsZW4rNHlheGZoQkxwY0dpZEVx?=
- =?utf-8?B?VWZyY1NIOXZMNEkvMW83ampnWXdiTmRQYzc5Q201MmIvKzlRVmJTSm1aNTcx?=
- =?utf-8?B?MUJmMGY4c2dmK3FlakliYzVOSG13dnQxUXZ0VGJoNWErRFlzaGJYeS9SL3BH?=
- =?utf-8?B?aC9LWnF4WHBIVGc4aURFUFV1OHN5UXFXQzNlSDlJT28wc1NGamFBWXIxYXh2?=
- =?utf-8?B?ajM4bjY4L2VqQmt5Nm5iL08zQmpKc1VSVWZoVitoTmhRREdBdm1KN2tvcUFa?=
- =?utf-8?B?QnAvTnZUWXhEaTdnY05OOWE2UTNBSCtPdUFSUzgrZGtVcHNwQ0xYVTlPenBG?=
- =?utf-8?Q?U9SWOVTxeNIc25EfRs=3D?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="hAnQEKbh";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="X+MQDw7X"
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 44CD11140118;
+	Fri, 30 May 2025 11:08:41 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-12.internal (MEProxy); Fri, 30 May 2025 11:08:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-transfer-encoding:content-type:content-type:date:date
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748617721;
+	 x=1748704121; bh=9Ie2vIEif4DXdlew+KnMgeJwHv0acVYThCe7m9P5KWc=; b=
+	hAnQEKbhi14kz25j2S3PbTLUocZGfhqOdwPwlGpanxJsMwC/w1zZHcIagicPngz5
+	XbGyQlIGw3XjSsSW91nzWpBDQDqU5cTDb8woCxNiV3WGy2hvm2QmUNnzSD6501SW
+	AUUFz1TM+ygvn/QE3qVqPSVVDhjfPTd8iMKwFpUx5MDrdYJnsR5jZx76LIODy1xt
+	mGW0qF63X9kyg0Lwlml1uINnM9bVn5Of13A94ESDhY2hOQX7czilS6El6Ua3DmbI
+	qy/IfP08k7PptvkG89mxBCbIXPniWXe8a2ihKSRcC3jxHDGrckZSZ/pnGvuaTaEL
+	B7KFB6DSNQJx9yYDH4Ting==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:in-reply-to:message-id:mime-version
+	:references:reply-to:subject:subject:to:to:x-me-proxy
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748617721; x=
+	1748704121; bh=9Ie2vIEif4DXdlew+KnMgeJwHv0acVYThCe7m9P5KWc=; b=X
+	+MQDw7XxuWxDLn6qbI/erk5jv6WzUDSw6SEpopuafTTICoEWVaWxlq3Z8dTMi2lR
+	PZZtdJKnHI23x4rUkJDD8O3MB45QiMjiTQQ9YOmSOTGB11EXpFOEvsQ1rcvBkhlR
+	0/OALN9ov4osIoiTMylEHd6BaGW2NPYl7tHeHbFgf9Kf0olbfoeujExaHC3ZNZBD
+	0blyM5GTQjfpehWav5k2IaZnAu/pcz8DAJ8H0gZxxMon9e/gDxenawG+S+rYIeGD
+	q8hkDlvRs0n6gxaLHPJdQ40dT14uGn7BsFD4ZDbTrJPqzSdmWBKtAxloEdTZ+pBy
+	mcpsXouz3ahtMYAMPuoyg==
+X-ME-Sender: <xms:-Mk5aMvXrvVYXr4kulwfUFXFbCfccpdl_lQqmP6EhDCCu3O3SxHbHg>
+    <xme:-Mk5aJdfbPLAgVj5w5okUiVVdtBP0-COjkwmhetlV_S2nveM-rX9elNnVysp2c2xH
+    be0-q5PNXJnKbasfg>
+X-ME-Received: <xmr:-Mk5aHy1mp5_1ot6YmH-iRwj9ful47MXEnCkycS8VXbmPU7XG5qP9YrMZ4ivHeAx7fYsGAEzqIGHv4-lDdTBnEak0suqLxvj2W0yD96PPg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvleefgeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhufffkfggtgfg
+    jghfvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
+    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepteeuueehhffhiedt
+    ueehtddtieekfedtudehtdehfefhgeffveeggedthfehuedvnecuffhomhgrihhnpehkvg
+    hrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhs
+    rdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtph
+    htthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepuggr
+    shhrrghfleesghhmrghilhdrtghomhdprhgtphhtthhopeihrhhothhhsehprghlohgrlh
+    htohhnvghtfihorhhkshdrtghomhdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhm
+    rghilhdrtghomh
+X-ME-Proxy: <xmx:-Mk5aPMZIKIHbP6Mvtuzf-G5EXq8JY6GV3KIgJcvUfpRisVGOxV8oA>
+    <xmx:-Mk5aM8iQ8HPtOkFSArTnNu8LuEoezmzyfX4-GQOln40vSx3DP2BKQ>
+    <xmx:-Mk5aHVolrT42P1ADRJvGQ7RBDw3_TYp0Jn4lljj3v2AUGdE84J3vg>
+    <xmx:-Mk5aFcpXToUZZUBUT1iy5H1M10mkw6q1mw6eouxMhBlt3_OrHpN2w>
+    <xmx:-ck5aFSz02kAiCbfiNzD4qlBrw8PCxCgVcuDuOAMAJZQ9nAQHLuk4HXB>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 May 2025 11:08:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 335828ed (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 15:08:37 +0000 (UTC)
+From: Patrick Steinhardt <ps@pks.im>
+Subject: [PATCH v2 00/12] builtin/maintenance: fix ref lock races when
+ detaching
+Date: Fri, 30 May 2025 17:08:26 +0200
+Message-Id: <20250530-b4-pks-maintenance-ref-lock-race-v2-0-d04e2f93e51f@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 37b2a56a-1f90-47a0-352a-08dd9f897f62
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2025 14:51:45.2773
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
-X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PN2PR01MB9539
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAOrJOWgC/5WNQQ6CMBBFr0Jm7Zi2sdW48h6ERSmDTJBCWkI0p
+ Hd35AYu3/8/7++QKTFluFc7JNo48xwFzKmCMPj4JOROGIwyVllzxfaCy5hx8hxXij4GwkQ9vuY
+ wYvJCWnuynbuRcj2IZpGa38dF3QgPnNc5fY7HTf/SP+SbRoWkA7WmI+8cPWR/5gmaUsoXsgh1N
+ s0AAAA=
+X-Change-ID: 20250527-b4-pks-maintenance-ref-lock-race-11ae5d68e06f
+In-Reply-To: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
+References: <20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im>
+To: git@vger.kernel.org
+Cc: Yonatan Roth <yroth@paloaltonetworks.com>, 
+ david asraf <dasraf9@gmail.com>, Emily Shaffer <nasamuffin@google.com>, 
+ Ramsay Jones <ramsay@ramsayjones.plus.com>, 
+ Ben Knoble <ben.knoble@gmail.com>
+X-Mailer: b4 0.14.2
 
-DQoNCj4gT24gMzAgTWF5IDIwMjUsIGF0IDg6MTjigK9QTSwgQmVuIEtub2JsZSA8YmVuLmtub2Js
-ZUBnbWFpbC5jb20+IHdyb3RlOg0KPiANCj4g77u/DQo+PiBMZSAzMCBtYWkgMjAyNSDDoCAwOToy
-OCwgSnVuaW8gQyBIYW1hbm8gPGdpdHN0ZXJAcG9ib3guY29tPiBhIMOpY3JpdCA6DQo+PiANCj4+
-IO+7v0FkaXR5YSBHYXJnIDxnYXJnYWRpdHlhMDhAbGl2ZS5jb20+IHdyaXRlczoNCj4+IA0KPj4+
-Pj4gLVdoZW4gYC0tY29tcG9zZWAgaXMgdXNlZCwgZ2l0IHNlbmQtZW1haWwgd2lsbCB1c2UgdGhl
-IEZyb20sIFRvLCBDYywgQmNjLA0KPj4+Pj4gLVN1YmplY3QsIFJlcGx5LVRvLCBhbmQgSW4tUmVw
-bHktVG8gaGVhZGVycyBzcGVjaWZpZWQgaW4gdGhlIG1lc3NhZ2UuIElmDQo+Pj4+PiAtdGhlIGJv
-ZHkgb2YgdGhlIG1lc3NhZ2UgKHdoYXQgeW91IHR5cGUgYWZ0ZXIgdGhlIGhlYWRlcnMgYW5kIGEg
-YmxhbmsNCj4+Pj4+IC1saW5lKSBvbmx5IGNvbnRhaW5zIGJsYW5rIChvciBHaXQ6IHByZWZpeGVk
-KSBsaW5lcywgdGhlIHN1bW1hcnkgd29uJ3QgYmUNCj4+Pj4+ICtXaGVuIGAtLWNvbXBvc2VgIGlz
-IHVzZWQsIGBnaXQgc2VuZC1lbWFpbGAgd2lsbCB1c2UgdGhlICdGcm9tJywgJ1RvJywgJ0NjJywN
-Cj4+Pj4+ICsnQmNjJywgJ1N1YmplY3QnLCAnUmVwbHktVG8nLCBhbmQgJ0luLVJlcGx5LVRvJyBo
-ZWFkZXJzIHNwZWNpZmllZCBpbiB0aGUNCj4+Pj4+ICttZXNzYWdlLiBJZiB0aGUgYm9keSBvZiB0
-aGUgbWVzc2FnZSAod2hhdCB5b3UgdHlwZSBhZnRlciB0aGUgaGVhZGVycyBhbmQgYQ0KPj4+Pj4g
-K2JsYW5rIGxpbmUpIG9ubHkgY29udGFpbnMgYmxhbmsgKG9yIEdpdDogcHJlZml4ZWQpIGxpbmVz
-LCB0aGUgc3VtbWFyeSB3b24ndCBiZQ0KPj4+PiANCj4+Pj4gU2hvdWxkbid0ICdHaXQ6JyBpbiAi
-b3IgR2l0OiBwcmVmaXhlZCIgYmUgbWFya2VkLXVwIHNvbWVob3cgYXMgd2VsbD8NCj4+Pj4gDQo+
-Pj4+IEFzIHRoZXNlIG1haWwgaGVhZGVyIG5hbWVzIGFyZSBhbGwgbGl0ZXJhbCBwYXJ0cywgc2hv
-dWxkbid0IGVoeSBiZQ0KPj4+PiBtYXJrZWQgdXAgbGlrZSBgVG9gLCBgQ2NgLCBldGMuPw0KPj4+
-IA0KPj4+IEkgdGhpbmsgaXRzIG9rIHRvIGxldCB0aGVzZSByZW1haW4gaW4gJycsIGFuZCBkZXZp
-YXRlIGZyb20gdGhlIHJ1bGVzIGEgYml0Lg0KPj4+IElmIGJhY2t0aWNrcyBhcmUgdXNlZCwgaXQg
-d2lsbCBiZSBhIG1lc3Mgd2hlbiByZW5kZXJlZCBvbiB0aGUgd2Vic2l0ZS4NCj4+IA0KPj4gSSBk
-byBub3QgdGhpbmsgSSBhZ3JlZTsgYmVuZGluZyB0aGUgcnVsZSBvbmx5IGJlY2F1c2UgdGhlIGRl
-bnNpdHkgb2YNCj4+IGxpdGVyYWxzIGluIGEgc2luZ2xlIHBhcmFncmFwaCBpcyB0b28gaGVhdnkg
-ZG9lcyBub3Qgc291bmQgbGlrZSBhDQo+PiBnb29kIGFwcGxpY2F0aW9uIG9mIGEgcnVsZS0tLWl0
-IGlzIGhhcmQgdG8ganVzdGlmeSBzdWNoIGFuDQo+PiBleGNlcHRpb24uDQo+IA0KPiBUbyBnbyBh
-IGJpdCBmdXJ0aGVyLCByZW5kZXJlZCBIVE1MIGlzIGFsc28gbm90IHRoZSBvbmx5IG91dHB1dCBm
-b3JtYXQsIHRob3VnaCBJIGRvbuKAmXQgdGhpbmsgdGhlIG1hcmt1cCBoZXJlIGFmZmVjdHMgbWFu
-dWFsIHBhZ2VzIHN1YnN0YW50aWFsbHk/IFNvIHVzaW5nIMKrIHRoZSB3ZWJzaXRlIMK7ICh3aGlj
-aD8gcHJlc3VtYWJseSBnaXQtc2NtLmNvbSkgYXMganVzdGlmaWNhdGlvbiBwcmlvcml0aXplcyB0
-aGUgbG9vayBvZiBvbmUgb3V0cHV0IGZvcm1hdCBvdmVyIG90aGVyIGNvbmNlcm5zLCBubz8NCj4g
-DQo+IEZvciBwbGFpbnRleHQgdmlld2luZywgY29uc2lzdGVuY3kgaXMgcHJvYmFibHkgaGVscGZ1
-bC4gIA0KDQpPayBJJ2xsIHNlbmQgYW5vdGhlciByZXZpc2lvbi4=
+Hi,
+
+this patch series fixes races around locking the "packed-refs" file when
+auto-maintenance decides to repack it. This issue has been reported e.g.
+via [1] and [2].
+
+The root cause is that git-gc(1) used to know to detach _after_ having
+repacked references. As such, callers wouldn't continue with their thing
+until we have already packed refs, and thus the race does not exist
+there. git-maintenance(1) didn't have the same split though, so this
+patch series retrofits that logic.
+
+The series is structured as follows:
+
+  - Patches 1 and 2 do some light refactorings.
+
+  - Patches 3 to 5 refactor how we set up the list of tasks to not rely
+    on globals anymore. Instead, we now have a single source of truth
+    for which tasks exactly will be run.
+
+  - The remaining patches introduce the split of before/after-detach
+    tasks and wire them up for "pack-refs", "reflog-expire" and "gc"
+    tasks.
+
+Changes in v2:
+  - A couple of commit message improvements.
+  - Introduce `die(NULL)` to die with the correct exit code but no error
+    message. This gets rid of some magic numbers.
+  - Introduce an enum to discern the phases before and after detach.
+  - Link to v1: https://lore.kernel.org/r/20250527-b4-pks-maintenance-ref-lock-race-v1-0-e1ceb2dea66e@pks.im
+
+Thanks!
+
+Patrick
+
+[1]: <CAJR-fbZ4X1+gN75m2dUvocR6NkowLOZ9F26cjBy8w1qd181OoQ@mail.gmail.com>
+[2]: <CANi7bVAkNc+gY1NoXfJuDRjxjZLTgL8Lfn8_ZmWsvLAoiLPkNg@mail.gmail.com>
+
+---
+Patrick Steinhardt (12):
+      builtin/gc: use designated field initializers for maintenance tasks
+      builtin/gc: drop redundant local variable
+      builtin/maintenance: centralize configuration of explicit tasks
+      builtin/maintenance: mark "--task=" and "--schedule=" as incompatible
+      builtin/maintenance: stop modifying global array of tasks
+      builtin/maintenance: extract function to run tasks
+      builtin/maintenance: fix typedef for function pointers
+      builtin/maintenance: let tasks do maintenance before and after detach
+      builtin/maintenance: fix locking race when packing refs and reflogs
+      usage: allow dying without writing an error message
+      builtin/gc: avoid global state in `gc_before_repack()`
+      builtin/maintenance: fix locking race when handling "gc" task
+
+ builtin/am.c                |   4 +-
+ builtin/checkout.c          |   4 +-
+ builtin/fetch.c             |   2 +-
+ builtin/gc.c                | 394 +++++++++++++++++++++++++-------------------
+ builtin/submodule--helper.c |  12 +-
+ t/t7900-maintenance.sh      |  19 ++-
+ usage.c                     |   2 +
+ 7 files changed, 250 insertions(+), 187 deletions(-)
+
+Range-diff versus v1:
+
+ 1:  74fcc4e2251 =  1:  87df070a9e7 builtin/gc: use designated field initializers for maintenance tasks
+ 2:  1cc513a7b0f =  2:  e2acea10f7e builtin/gc: drop redundant local variable
+ 3:  be8c8a98892 =  3:  48a5e25c8bc builtin/maintenance: centralize configuration of explicit tasks
+ 4:  b19fa152c81 !  4:  680b36e2fa6 builtin/maintenance: mark "--task=" and "--schedule=" as incompatible
+    @@ Commit message
+     
+         The "--task=" option explicitly allows the user to say which maintenance
+         tasks should be run, whereas "--schedule=" only respects the maintenance
+    -    strategy configured for a specific repository. As such, it is sensible
+    -    to accept both options at the same time.
+    +    strategy configured for a specific repository. As such, it is not
+    +    sensible to accept both options at the same time.
+     
+         Mark them as incompatible with one another. While at it, also convert
+         the existing logic that marks "--auto" and "--schedule=" as incompatible
+ 5:  8f692f30829 =  5:  9eaabb93edd builtin/maintenance: stop modifying global array of tasks
+ 6:  fc0ea110c01 =  6:  ffee3ca3c6c builtin/maintenance: extract function to run tasks
+ 7:  b5821ef6cfe =  7:  66e1bb2111b builtin/maintenance: fix typedef for function pointers
+ 8:  42a9210e445 !  8:  4eed6a8dc9c builtin/maintenance: let tasks do maintenance before and after detach
+    @@ Commit message
+         the maintenance tasks are performed in the background. git-gc(1) has
+         some special logic though to not perform _all_ housekeeping tasks in the
+         background: both references and reflogs are still handled synchronously
+    -    ni the foreground.
+    +    in the foreground.
+     
+         This split exists because otherwise it may easily happen that git-gc(1)
+    -    keeps for the "packed-refs" file locked for an extended amount of time,
+    +    keeps the "packed-refs" file locked for an extended amount of time,
+         where the next Git command that wants to modify any reference could now
+         fail. This was especially important in the past, where git-gc(1) was
+         still executed directly as part of our automatic maintenance: git-gc(1)
+    @@ builtin/gc.c: typedef int (*maintenance_auto_fn)(struct gc_config *cfg);
+      		.auto_condition = rerere_gc_condition,
+      	},
+      };
+    -@@ builtin/gc.c: static const struct maintenance_task tasks[] = {
+    + 
+    ++enum task_phase {
+    ++	TASK_PHASE_BEFORE_DETACH,
+    ++	TASK_PHASE_AFTER_DETACH,
+    ++};
+    ++
+      static int maybe_run_task(const struct maintenance_task *task,
+      			  struct repository *repo,
+      			  struct maintenance_run_opts *opts,
+     -			  struct gc_config *cfg)
+     +			  struct gc_config *cfg,
+    -+			  int before)
+    ++			  enum task_phase phase)
+      {
+    ++	int before = (phase == TASK_PHASE_BEFORE_DETACH);
+     +	maintenance_task_fn fn = before ? task->before_detach : task->after_detach;
+     +	const char *region = before ? "maintenance before" : "maintenance";
+      	int ret = 0;
+    @@ builtin/gc.c: static int maintenance_run_tasks(struct maintenance_run_opts *opts
+      	free(lock_path);
+      
+     +	for (size_t i = 0; i < opts->tasks_nr; i++)
+    -+		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg, 1))
+    ++		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg,
+    ++				   TASK_PHASE_BEFORE_DETACH))
+     +			result = 1;
+     +
+      	/* Failure to daemonize is ok, we'll continue in foreground. */
+    @@ builtin/gc.c: static int maintenance_run_tasks(struct maintenance_run_opts *opts
+      
+      	for (size_t i = 0; i < opts->tasks_nr; i++)
+     -		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg))
+    -+		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg, 0))
+    ++		if (maybe_run_task(&tasks[opts->tasks[i]], r, opts, cfg,
+    ++				   TASK_PHASE_AFTER_DETACH))
+      			result = 1;
+      
+      	rollback_lock_file(&lk);
+ 9:  7859d3b9b4f =  9:  41ae51294e6 builtin/maintenance: fix locking race when packing refs and reflogs
+ -:  ----------- > 10:  2e1b4deb668 usage: allow dying without writing an error message
+10:  18bce954787 ! 11:  7d9be688eb4 builtin/gc: avoid global state in `gc_before_repack()`
+    @@ builtin/gc.c: int cmd_gc(int argc,
+      
+     -		gc_before_repack(&opts, &cfg); /* dies on failure */
+     +		if (gc_before_repack(&opts, &cfg) < 0)
+    -+			exit(127);
+    ++			die(NULL);
+      		delete_tempfile(&pidfile);
+      
+      		/*
+11:  ff92709bf6c ! 12:  291498849b8 builtin/maintenance: fix locking race when handling "gc" task
+    @@ builtin/gc.c: int cmd_gc(int argc,
+     +			}
+      
+     -		if (gc_before_repack(&opts, &cfg) < 0)
+    --			exit(127);
+    +-			die(NULL);
+     -		delete_tempfile(&pidfile);
+     +			if (gc_before_detach(&opts, &cfg) < 0)
+    -+				exit(127);
+    ++				die(NULL);
+     +			delete_tempfile(&pidfile);
+     +		}
+      
+
+---
+base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
+change-id: 20250527-b4-pks-maintenance-ref-lock-race-11ae5d68e06f
+
