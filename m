@@ -1,61 +1,61 @@
-Received: from mail-qv1-f47.google.com (mail-qv1-f47.google.com [209.85.219.47])
+Received: from mail-oi1-f181.google.com (mail-oi1-f181.google.com [209.85.167.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F17915E97
-	for <git@vger.kernel.org>; Fri, 30 May 2025 13:36:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.219.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 341B02C18A
+	for <git@vger.kernel.org>; Fri, 30 May 2025 13:37:07 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.181
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748612217; cv=none; b=QaKrqXkh3WRs4gNzGJX5jXk69Ma0nJ75R5fnHUaiAvr5D4xVkoQDCx+0c+/yPUew+CWRAvWBXR9gNQZZIAbzyJX+jEUvRTwr0i4TDyW8NGsIRXRFhTECV4XnmXQehYhpgZUWuc2woz+wpqtBxD3rWQj03ZxcZPvokdgWxWmwgaA=
+	t=1748612229; cv=none; b=IbQrapiSJVkBkCLfnNCTh3MrvGUlhTgruDC79L5i4q9Xx/4TrgBWhhYrvhznrJ/pg0gfK2GMCiK6h5L77DweEP/EnsC6q54fBDll0MeCN5xzx8vCm8gm6Sku572QkgHQtxVonINrNyZbEu1oqBcjoOAjENNWXvMhJ6uNQxvQK/g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748612217; c=relaxed/simple;
-	bh=oDsxqPgEWuQhGGPdv9eBoOueHNcDHDYyHN1l6y3UTXY=;
-	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:To:Cc; b=iFjl8am+m7YvKq6oJiLkFCgnKab742MiMuRpoBMFMSPU5TqtCdkKZ2F8zlkKztv5ViTwM5wJ7k5J2H9oEYcvHXtjXN1costj3iot8IcUV9fndIlMnQXgVaQS8nfMQk1u+SP5zIMaAEgXoj5G8FPoTXv6Tgmk3ZW97rORDeaP3HM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ORGhF9XJ; arc=none smtp.client-ip=209.85.219.47
+	s=arc-20240116; t=1748612229; c=relaxed/simple;
+	bh=8CoZCS9Z3nR9fnMHmuzP4APUoq5pNNqkFdkCB9sPRHM=;
+	h=Content-Type:From:Mime-Version:Subject:Message-Id:Date:To:Cc; b=uwPXlR39xjz9uL3vXDo0joL+tk7Cij2IrzhOUqFPvTK4D7MSBM6+CGzEw8IBXKHNfqM9cG+BzOB6qS1lVWBxmrKdBsUthORi1t2xeWjlctoBFtUG+7Ddffe0EJrRG/KKzWqTY49Job1xN9aqHZU3aa14sf/L11Br88YCeTzooSM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=M9pzvYgW; arc=none smtp.client-ip=209.85.167.181
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ORGhF9XJ"
-Received: by mail-qv1-f47.google.com with SMTP id 6a1803df08f44-6facf4d8ea8so9948046d6.0
-        for <git@vger.kernel.org>; Fri, 30 May 2025 06:36:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="M9pzvYgW"
+Received: by mail-oi1-f181.google.com with SMTP id 5614622812f47-3fa6c54cdb2so1524769b6e.3
+        for <git@vger.kernel.org>; Fri, 30 May 2025 06:37:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748612214; x=1749217014; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748612227; x=1749217027; darn=vger.kernel.org;
         h=cc:to:date:message-id:subject:mime-version:from
          :content-transfer-encoding:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=hZT/p2PceK6+goU21uFbiozWg5ief72YUy9qdXQMYvg=;
-        b=ORGhF9XJZlnCzOMYjNixEIDPdSsCJOQX6Ub1kz/+WVxSt5qcn3MwE6+O6jD4hbIlB2
-         qgcnqQQCHRC3g/jM4y9/92zDtKD/ChSAultDF65f6KAtNfTshdwbNaET18l+SLmWrPlV
-         oYH3P86fjTYAP4AIiGqTV3yi3oXbxFt32Z+a4YvjBkLmRS3HfQ0lxZRTK51UpvUm2Ov/
-         Sl0v1HhV/CstIfoQcFVyAJEtyE2YfH2K5tIwOyQ2qI8ORztOCDTIQ+1OCprHrzrt4Wya
-         34MMxqh/cC+ztuDDmO/LdlSrdCkgeDm/yTqJYZi/U5zl0rtNZKgao6Sa4YhAFgznql3b
-         hgQQ==
+        bh=/Q753k2YmC3LD2gGE4rq3sBOaLRFryUXAxpQF5KNRuY=;
+        b=M9pzvYgWbPEMhEpCQSIR1HYgbDHkWR4Uf/tFIX+BuABGgBTeqT9mpsYT1pIsg6X0AB
+         kuHSe31yL6FWF/N8gBmGciLRc9zNL/KcySpEfffYTBQ8V6tPX0Ku0NvA8uz4ifpKdrSq
+         A768G8s6UABNLr6itSl/kTh/tOieP0jtWGW8bP+9ZJtYgLzzpbU+CPaa24ooV+ViP0qD
+         dLF+m/337G4tT7udyYlbuewnQOc5O5QQhsSLH0BeHz9k0RQIhei5Rl5FRjbdfIw8iCyA
+         5g6XZ/O6Kg8Cj1dN8MqX77ate0sGuPepKkbAnBseZyiQI7/b/DcCg4WdbquZRg+pUknu
+         PaMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748612214; x=1749217014;
+        d=1e100.net; s=20230601; t=1748612227; x=1749217027;
         h=cc:to:date:message-id:subject:mime-version:from
          :content-transfer-encoding:x-gm-message-state:from:to:cc:subject
          :date:message-id:reply-to;
-        bh=hZT/p2PceK6+goU21uFbiozWg5ief72YUy9qdXQMYvg=;
-        b=nRsdjOJa2DoMJ6zxlufwTmq0OxIsZ6x9EUeYE0kFkIBJdMuv1iAuHDKWXywJfGMddI
-         3iThACk3lmtQACkisJPRfRZ5o+oZZvYinfFL1dtYzwAv6FAs77mRkG8UsPlRI3iZjVXq
-         MYhDgRiE9QwS00cVOnpsmDDJxaB7LEEV20eInEC/qN8LzB41h75k8aL7Sgxnfr6liN8U
-         +WkGpJQAFfqPr/Q0BaOWYhzmhkaBFFG/wwnEPFXj0yHVqZOMrQGZmZzTOK8Gh34wtInW
-         nm2gkbNhKghboOPuYTckk8e4tCaEjHt6AHkhUzEaTlOYxeMinojudgxgsCU7XvRbz7lq
-         05ZQ==
-X-Gm-Message-State: AOJu0Yw7DX+fIODG2ShL03+UUtWqJ+8nDXpz+ILCTeE1OgKopbdsxT2B
-	2qYTUJ6xEKBchEkk9MRijTa6M9Tm/KjEaQhKFgcssZ3f2yONwRJ4ddVW
-X-Gm-Gg: ASbGncuxZ45k5faPZmxzAwxP/mfyqzVCTcW54K78bl+DavPGElZbYUxvr1lOl+K51aV
-	7IZR9BdYevBycy9K042niZWnJLMtBD2NN5dJr62OSOImgKuZwEGcgJWIEpYJm2g7i3lvvlbjtoC
-	vJmiBDsxty7JujD7+kaOMOVso9zEHDmnKCXjeQ9BOX/DR1o307hVFHc9JC4uQOAo5nTG7Fh6hJ8
-	phBfDDoTH1ZBroGL1ziiBxtFrXIcyDFAMjo19TkwMfKfXXPWYTwvmXMYefI/GqD2+uUfDHvObju
-	SptZ9CUY6VQB1X1y9WXrNWizsYako8k004H0Yope3nhdaNCuz9ljRH/NhDH0XsnmYxRkHvaJqr6
-	g7VoH
-X-Google-Smtp-Source: AGHT+IHiuakO8NZ9oI1gb/vccq2CgvvFqA70iFvVhQP5ZcFnD7OwKfwPJ/wAaFwkzxq0Iv3QiLc1lA==
-X-Received: by 2002:a05:6214:5292:b0:6f8:ae25:b717 with SMTP id 6a1803df08f44-6facebe8020mr65115946d6.34.1748612210847;
-        Fri, 30 May 2025 06:36:50 -0700 (PDT)
+        bh=/Q753k2YmC3LD2gGE4rq3sBOaLRFryUXAxpQF5KNRuY=;
+        b=VlnVv8A8wIibXJlpaTLI3X9BBYwRMag/6Yf2CTE/RZp5IVXxhqMzbvBHiRjwpiefMB
+         z52bGhOA3x7BWIgwlfwJbHqmy0BSTc5Fx2ACiiHjSdJtlLR8qpZkXeTYLYFHENZAJFSa
+         RbuAIfOymnMLwXC0Tibmr3KAClCsPjTLJSH02toc4jbrazrjX0NEhJe/8S0s0xJnVjXI
+         pY/jiR2yGOWL+zSoXOfiqwsMBEZy/xuMWaBH5uMtLFgFHdvubNIya6PyJ5QisZMutfhd
+         jtSCL909zYW0zqdE3ZqwYmASpba+D31QfHMNURfD+0YpQtqO5hiTcDjcT2Epa1EI0DcR
+         cKiA==
+X-Gm-Message-State: AOJu0YyqhwpALxNWDW0qOUixIsGl0+VqrF69edMSBhnwiUU4BthYEoQp
+	HBe92nExhaSjv/dORb8u14HtJAwnjBUeK68EzM9NxnIlfVDOMSBeM4SpsG4/uQ==
+X-Gm-Gg: ASbGncueqAdJNr294na6de3G84gyP4w/GjjfIJT1N2Lthvp0tynoBx8RUMl29o1nfg2
+	WhAHxlbFVjgxmSyEB/zjEZjcH9DXZZW45FCa6qRwgi8FUArC4eT1uac1jdig7rrHSCDYU71qoEs
+	gRvQ/4Ek8hhpZurXYS6m3siQ+YMWuHyCy4gVu6Dbu9bW4jg+730P2HnaHis0jrCzKPl/OeRNEt7
+	BIZbq4vchiRY8NUnOsWbTeWvFkaJRAjsi980KM/0dGSDo0LSTmaPaWPpMUdfGvkRsyMIqv2SnF2
+	EMBeD4mjYITdQzG5dMRXH71LweHyjJAQtl8eyFstNDi0MtGNtShUKeP6ijExf610K8Ivpm28OJl
+	F/hmaEocWbgLhG40=
+X-Google-Smtp-Source: AGHT+IG9o603P4MtsyMc6VhNeCfoGk3egmCOAVD4p9GsZvJuiXtl67oWa+1jJ1sGSLRiiQVRDvM5Qw==
+X-Received: by 2002:a05:620a:2682:b0:7d0:9a88:6e82 with SMTP id af79cd13be357-7d0a1fb04bcmr519818985a.10.1748612215498;
+        Fri, 30 May 2025 06:36:55 -0700 (PDT)
 Received: from smtpclient.apple ([2600:1003:b104:32c0:b484:4436:c503:cced])
-        by smtp.gmail.com with ESMTPSA id 6a1803df08f44-6fac6c03c58sm22884546d6.0.2025.05.30.06.36.50
+        by smtp.gmail.com with ESMTPSA id af79cd13be357-7d09a0e35e4sm231384985a.15.2025.05.30.06.36.54
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 May 2025 06:36:50 -0700 (PDT)
+        Fri, 30 May 2025 06:36:55 -0700 (PDT)
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 From: Ben Knoble <ben.knoble@gmail.com>
@@ -65,95 +65,196 @@ List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 Mime-Version: 1.0 (1.0)
-Subject: Re: [PATCH 10/11] builtin/gc: avoid global state in `gc_before_repack()`
-Message-Id: <6EE3E4F8-16DB-45AB-AD67-FADE12FBFBBD@gmail.com>
-Date: Fri, 30 May 2025 08:56:36 -0400
+Subject: Re: [PATCH 11/11] builtin/maintenance: fix locking race when handling "gc" task
+Message-Id: <819EFBF4-C435-4213-91C7-BF15B49B1B09@gmail.com>
+Date: Fri, 30 May 2025 08:55:49 -0400
 To: Patrick Steinhardt <ps@pks.im>
 Cc: git@vger.kernel.org, Yonatan Roth <yroth@paloaltonetworks.com>,
  david asraf <dasraf9@gmail.com>
 X-Mailer: iPhone Mail (21F90)
 
+=EF=BB=BF
 
-> Le 27 mai 2025 =C3=A0 10:05, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
+> Le 27 mai 2025 =C3=A0 11:29, Patrick Steinhardt <ps@pks.im> a =C3=A9crit :=
 
 >=20
-> =EF=BB=BFThe `gc_before_repack()` should only ever run once in git-gc(1), b=
-ut we
-> may end up calling it twice when the "--detach" flag is passed. The
-> duplicated call is avoided though via a static flag in this function.
+> =EF=BB=BFThe "gc" task has a similar locking race as the one that we have f=
+ixed
+> for the "pack-refs" and "reflog-expire" tasks in preceding commits. Fix
+> this by splitting up the logic of the "gc" task:
 >=20
-> This pattern is somewhat unintuitive though. Refactor it to drop the
-> static flag and instead guard the second call of `gc_before_repack()`
-> via `opts.detach`.
+> - Before detaching we execute `gc_before_repack()`, which contains the
+>   logic that git-gc(1) itself would execute before detaching.
+>=20
+> - After detaching we spawn git-gc(1), but with a new hidden flag that
+>   suppresses calling `gc_before_repack()`.
+>=20
+> Like this we have roughly the same logic as git-gc(1) itself and know to
+> repack refs and reflogs before detaching, thus fixing the race.
+>=20
+> Note that `gc_before_repack()` is renamed to `gc_before_detach()` to
+> better reflect what this function does.
 >=20
 > Signed-off-by: Patrick Steinhardt <ps@pks.im>
 > ---
-> builtin/gc.c | 24 +++++++++---------------
-> 1 file changed, 9 insertions(+), 15 deletions(-)
+> builtin/gc.c           | 39 ++++++++++++++++++++++++++-------------
+> t/t7900-maintenance.sh | 12 ++++++------
+> 2 files changed, 32 insertions(+), 19 deletions(-)
 >=20
 > diff --git a/builtin/gc.c b/builtin/gc.c
-> index e5d1114bd2d..174357b9c25 100644
+> index 174357b9c25..2cf61efcee9 100644
 > --- a/builtin/gc.c
 > +++ b/builtin/gc.c
-> @@ -816,22 +816,14 @@ static int report_last_gc_error(void)
->  return ret;
+> @@ -816,7 +816,7 @@ static int report_last_gc_error(void)
+>   return ret;
 > }
 >=20
-> -static void gc_before_repack(struct maintenance_run_opts *opts,
-> -                 struct gc_config *cfg)
-> +static int gc_before_repack(struct maintenance_run_opts *opts,
-> +                struct gc_config *cfg)
+> -static int gc_before_repack(struct maintenance_run_opts *opts,
+> +static int gc_before_detach(struct maintenance_run_opts *opts,
+>               struct gc_config *cfg)
 > {
-> -    /*
-> -     * We may be called twice, as both the pre- and
-> -     * post-daemonized phases will call us, but running these
-> -     * commands more than once is pointless and wasteful.
-> -     */
-> -    static int done =3D 0;
-> -    if (done++)
-> -        return;
-> -
->  if (cfg->pack_refs && maintenance_task_pack_refs(opts, cfg))
-> -        die(FAILED_RUN, "pack-refs");
-> +        return error(FAILED_RUN, "pack-refs");
->  if (cfg->prune_reflogs && maintenance_task_reflog_expire(opts, cfg))
-> -        die(FAILED_RUN, "reflog");
-> +        return error(FAILED_RUN, "reflog");
-> +    return 0;
+>   if (cfg->pack_refs && maintenance_task_pack_refs(opts, cfg))
+> @@ -837,6 +837,7 @@ int cmd_gc(int argc,
+>   pid_t pid;
+>   int daemonized =3D 0;
+>   int keep_largest_pack =3D -1;
+> +    int skip_maintenance_before_detach =3D 0;
+>   timestamp_t dummy;
+>   struct maintenance_run_opts opts =3D MAINTENANCE_RUN_OPTS_INIT;
+>   struct gc_config cfg =3D GC_CONFIG_INIT;
+> @@ -869,6 +870,8 @@ int cmd_gc(int argc,
+>            N_("repack all other packs except the largest pack")),
+>       OPT_STRING(0, "expire-to", &cfg.repack_expire_to, N_("dir"),
+>              N_("pack prefix to store a pack containing pruned objects")),=
+
+> +        OPT_HIDDEN_BOOL(0, "skip-maintenance-before-detach", &skip_mainte=
+nance_before_detach,
+> +               N_("skip maintenance steps typically done before detaching=
+")),
+>       OPT_END()
+>   };
+>=20
+> @@ -952,14 +955,16 @@ int cmd_gc(int argc,
+>           goto out;
+>       }
+>=20
+> -        if (lock_repo_for_gc(force, &pid)) {
+> -            ret =3D 0;
+> -            goto out;
+> -        }
+> +        if (!skip_maintenance_before_detach) {
+> +            if (lock_repo_for_gc(force, &pid)) {
+> +                ret =3D 0;
+> +                goto out;
+> +            }
+>=20
+> -        if (gc_before_repack(&opts, &cfg) < 0)
+> -            exit(127);
+> -        delete_tempfile(&pidfile);
+> +            if (gc_before_detach(&opts, &cfg) < 0)
+> +                exit(127);
+> +            delete_tempfile(&pidfile);
+> +        }
+>=20
+>       /*
+>        * failure to daemonize is ok, we'll continue
+> @@ -988,8 +993,8 @@ int cmd_gc(int argc,
+>       free(path);
+>   }
+>=20
+> -    if (opts.detach <=3D 0)
+> -        gc_before_repack(&opts, &cfg);
+> +    if (opts.detach <=3D 0 && !skip_maintenance_before_detach)
+> +        gc_before_detach(&opts, &cfg);
+>=20
+>   if (!repository_format_precious_objects) {
+>       struct child_process repack_cmd =3D CHILD_PROCESS_INIT;
+> @@ -1225,8 +1230,14 @@ static int maintenance_task_prefetch(struct mainten=
+ance_run_opts *opts,
+>   return 0;
 > }
 >=20
-> int cmd_gc(int argc,
-> @@ -965,7 +957,8 @@ int cmd_gc(int argc,
->          goto out;
->      }
+> -static int maintenance_task_gc(struct maintenance_run_opts *opts,
+> -                   struct gc_config *cfg UNUSED)
+> +static int maintenance_task_gc_before_detach(struct maintenance_run_opts *=
+opts,
+> +                         struct gc_config *cfg)
+> +{
+> +    return gc_before_detach(opts, cfg);
+> +}
+> +
+> +static int maintenance_task_gc_after_detach(struct maintenance_run_opts *=
+opts,
+> +                        struct gc_config *cfg UNUSED)
+> {
+>   struct child_process child =3D CHILD_PROCESS_INIT;
 >=20
-> -        gc_before_repack(&opts, &cfg); /* dies on failure */
-> +        if (gc_before_repack(&opts, &cfg) < 0)
-> +            exit(127);
+> @@ -1240,6 +1251,7 @@ static int maintenance_task_gc(struct maintenance_ru=
+n_opts *opts,
+>   else
+>       strvec_push(&child.args, "--no-quiet");
+>   strvec_push(&child.args, "--no-detach");
+> +    strvec_push(&child.args, "--skip-maintenance-before-detach");
 
-If I (a relative novice to this part of the code) am reading correctly, we t=
-rade an implicit die in a private helper for explicit exit in a =C2=AB main =C2=
-=BB function, which I find much easier to reason about. Nice!
+I suspect this would be more obvious to me if I had the manual available rig=
+ht now, but if we are not detaching (=C2=AB --no-detach =C2=BB) why do we ne=
+ed to skip something before detaching (that presumably won=E2=80=99t happen)=
+?
 
-What I don=E2=80=99t see (being away from the rest of the source at the mome=
-nt) is where 127 comes from. I don=E2=80=99t intend a crusade against magic n=
-umbers :) and I=E2=80=99ve certainly seen enough exit-codes of 127 to guess w=
-hat this means, but reading only the patch the number does appear out of thi=
-n air.
+>=20
+>   return run_command(&child);
+> }
+> @@ -1561,7 +1573,8 @@ static const struct maintenance_task tasks[] =3D {
+>   },
+>   [TASK_GC] =3D {
+>       .name =3D "gc",
+> -        .after_detach =3D maintenance_task_gc,
+> +        .before_detach =3D maintenance_task_gc_before_detach,
+> +        .after_detach =3D maintenance_task_gc_after_detach,
+>       .auto_condition =3D need_to_gc,
+>   },
+>   [TASK_COMMIT_GRAPH] =3D {
+> diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+> index 1ada5246606..e09a36ab021 100755
+> --- a/t/t7900-maintenance.sh
+> +++ b/t/t7900-maintenance.sh
+> @@ -49,9 +49,9 @@ test_expect_success 'run [--auto|--quiet]' '
+>       git maintenance run --auto 2>/dev/null &&
+>   GIT_TRACE2_EVENT=3D"$(pwd)/run-no-quiet.txt" \
+>       git maintenance run --no-quiet 2>/dev/null &&
+> -    test_subcommand git gc --quiet --no-detach <run-no-auto.txt &&
+> -    test_subcommand ! git gc --auto --quiet --no-detach <run-auto.txt &&
+> -    test_subcommand git gc --no-quiet --no-detach <run-no-quiet.txt
+> +    test_subcommand git gc --quiet --no-detach --skip-maintenance-before-=
+detach <run-no-auto.txt &&
+> +    test_subcommand ! git gc --auto --quiet --no-detach --skip-maintenanc=
+e-before-detach <run-auto.txt &&
+> +    test_subcommand git gc --no-quiet --no-detach --skip-maintenance-befo=
+re-detach <run-no-quiet.txt
+> '
+>=20
+> test_expect_success 'maintenance.auto config option' '
+> @@ -154,9 +154,9 @@ test_expect_success 'run --task=3D<task>' '
+>       git maintenance run --task=3Dcommit-graph 2>/dev/null &&
+>   GIT_TRACE2_EVENT=3D"$(pwd)/run-both.txt" \
+>       git maintenance run --task=3Dcommit-graph --task=3Dgc 2>/dev/null &&=
 
->      delete_tempfile(&pidfile);
->=20
->      /*
-> @@ -995,7 +988,8 @@ int cmd_gc(int argc,
->      free(path);
->  }
->=20
-> -    gc_before_repack(&opts, &cfg);
-> +    if (opts.detach <=3D 0)
-> +        gc_before_repack(&opts, &cfg);
->=20
->  if (!repository_format_precious_objects) {
->      struct child_process repack_cmd =3D CHILD_PROCESS_INIT;
+> -    test_subcommand ! git gc --quiet --no-detach <run-commit-graph.txt &&=
+
+> -    test_subcommand git gc --quiet --no-detach <run-gc.txt &&
+> -    test_subcommand git gc --quiet --no-detach <run-both.txt &&
+> +    test_subcommand ! git gc --quiet --no-detach --skip-maintenance-befor=
+e-detach <run-commit-graph.txt &&
+> +    test_subcommand git gc --quiet --no-detach --skip-maintenance-before-=
+detach <run-gc.txt &&
+> +    test_subcommand git gc --quiet --no-detach --skip-maintenance-before-=
+detach <run-both.txt &&
+>   test_subcommand git commit-graph write --split --reachable --no-progress=
+ <run-commit-graph.txt &&
+>   test_subcommand ! git commit-graph write --split --reachable --no-progre=
+ss <run-gc.txt &&
+>   test_subcommand git commit-graph write --split --reachable --no-progress=
+ <run-both.txt
 >=20
 > --
 > 2.49.0.1266.g31b7d2e469.dirty
