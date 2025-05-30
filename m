@@ -1,54 +1,54 @@
-Received: from fhigh-a3-smtp.messagingengine.com (fhigh-a3-smtp.messagingengine.com [103.168.172.154])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 141FF4A1D
-	for <git@vger.kernel.org>; Fri, 30 May 2025 09:39:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958F41DA5F
+	for <git@vger.kernel.org>; Fri, 30 May 2025 09:47:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748597956; cv=none; b=SpkkLZU3fG++pvnT1DylnKyg4naJeJ+ha+wOq9gQxsnz7u078ksRej0nZ13wSO+u0ZvIIUUamzhH7cR2OYNUrzQWxdspt8/c/C3rhp/IDcNynLd0tUVSDX+q1egzKv21NDrx79XcrdR5RrimSkllgEgfymk4pLcosj71K5XPeI4=
+	t=1748598480; cv=none; b=VeGWjynmXVWKraeWXvgzScffSUAoDH+fdyUgiWIno+x7fzbCCGJbXG8eflX1dK261ke353D1C3wk+cU8yHFKuUbpR7CLFLcWBce0XE3p/XQu8XJ0Bf9PNk9zzQQ2+UjkCynOXXCZz25GcUxdncHS0SkHFF3nvZYqgXiSjbQLgts=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748597956; c=relaxed/simple;
-	bh=IiCIuRVx83v/UlobhUV5eBi8AsPzgvhq8zyHyQGVfVM=;
+	s=arc-20240116; t=1748598480; c=relaxed/simple;
+	bh=JQL8L/EDqQzOAH/Qv4MjIVhjJwZPd8Ld0q9zh5hfOsM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=l3veEgZiZ5nvet+CgTPOsq5if3/SsA6Ia1WxgndY4g92xNDM2u/wxJmMLmfQZqUZRx+F/GENfmUWcO7UF3geu7j34XG+epNU6W+ljY8joS1z6Gbj0lkAbaNBVO5J0gsNwmr1Yb7EWyj/ElshuN5mUQyvYSiFRupv352Z4zxY+oc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=qjVC0QiR; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PDck1UWC; arc=none smtp.client-ip=103.168.172.154
+	 Content-Type:Content-Disposition:In-Reply-To; b=aOOptyBvQ6sEzZ1VUUUjMkOW+gYxEQPtTCSV5JIyoNHm4EUnisT0dNa3JxXCnmtp/z4Gf+JEs9GisTg6060NEEmYOxxQcIv1wG/qBQVfhCfQBt7qpbpahRFlGKc+IKcrQGPABfNeeZeQnNyE368V+PR7+sS3Fo/nRpEILPuF0a0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=GRojU4jy; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=GGv+OrXt; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="qjVC0QiR";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PDck1UWC"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id ED6DB11401A2;
-	Fri, 30 May 2025 05:39:12 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="GRojU4jy";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="GGv+OrXt"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id BE4341380315;
+	Fri, 30 May 2025 05:47:56 -0400 (EDT)
 Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-11.internal (MEProxy); Fri, 30 May 2025 05:39:12 -0400
+  by phl-compute-02.internal (MEProxy); Fri, 30 May 2025 05:47:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748597952; x=1748684352; bh=3yTRY6GcbO
-	I/boUUrYrkHhjPpVDTSsIiGQnpR4T/yt0=; b=qjVC0QiR5wXkMpMAiLKojTwEx2
-	LgTmJAtG5mwobMrEX9ghZOFbglgRvn8QP2T9IbLLHBbxHkK4ar+UMF7zFjI4VPKF
-	HNbZtQrW+hkFPx4aPhZLYW2Oiy2QR+10qGwipO1xHedDLHxL9YqPiPfg5lQWQrjj
-	9LgEiwNcQd+5GrW+tHOPCnrgeGeUo8JShTl2CPk6kFNfqgTrqdWRcr/glR/xbCo7
-	dbb0IJssP3c3Kn4W1TRYs9pCkFyVDfokxJGalXN4NPllnAt4yBqXh6x5vMtT9feI
-	SVT5azQBZwX8O1htA3kM6Y4c7kgPcsSmebuDHZICI+nZ7kktdIPAzIKF5RgA==
+	:subject:to:to; s=fm1; t=1748598476; x=1748684876; bh=XoK1fN9dL/
+	TSV16lg6aKmcZyEDPXnglMagRg61qv66M=; b=GRojU4jyRtk/dT39DEMaB3THDW
+	/mhebtnBsdRBtAbvr8WCNXKYx/9HNt8z0QQfCBBZUlOkeB2ai2YKj/rCUbkneQ3B
+	j5rJ02dV7jbewcQAxaSLZhCAimq2WJyWef8l6HEhHyv801fw9/TCmbn98F4EI6ab
+	qRdAkzwbVE8RCOZMawGePhSzNGxzIGqP6WpRMtUzL5TXUoXzMiQZ8TaYsu6TOU4P
+	2fdbJoCoeLj8k/8VBXxFOG2n4N18e37GJuWsPgw1yd1mJd4KllHJnvhWBneAMknk
+	rmAL4Kgo7qLr4sgTJnBRxroGS6LVD66kPjFbFccyyrJBCrsHUseAgZxrecsg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748597952; x=1748684352; bh=3yTRY6GcbOI/boUUrYrkHhjPpVDTSsIiGQn
-	pR4T/yt0=; b=PDck1UWC5vl4NpYcnmzIs5WPJtlSGfzqEJNChmjaGDHr3p5Q+UV
-	Z8kgNOksM4vI4DRbYc/TjKXa4i3OCuv1xljCnd5DVHgMWYb8yQ+W8O5aJI1A/TSu
-	9PVt0bltcw381JaFR962jBEX2Sy+stukMpAVo/EqV/mxclKv7UGuTeZkePq1Nyk4
-	oWiCn2DPonHrLGmdp369iBVveqYt3ncunwkkJcqJNadqyk8d015bVy1tPeIUpGy/
-	OE9N+12T0OUQE4IcUmnL9BnZocwtC3tjAN6Vz2C6bGiY2ANcs6LJIbiMi1LHVJBx
-	0tplPHhUVRyidvJz8+0witmsdTg3LEDB+qQ==
-X-ME-Sender: <xms:wHw5aGcV1yjR8zT5TFCnFckZJZck8vvncDcu8_0qMpE-rGWulj6apw>
-    <xme:wHw5aAPDuPXKM_8gnOuy4SPQuyJZmz4jHNjKl3I3ek6iXYA4409DNo05-UvdCtWhJ
-    oqOBqnAjenCduz3ZQ>
-X-ME-Received: <xmr:wHw5aHgSBPcZjCwgsnZ9hi60ysIsUJpGnab7vnt_bmb9pC9-9qEvs0ckE4dj2DHbVl2DSuiOxD96oCensEU78M5TO5LVivYKjsH8Ww6zNA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvkeeijeculddtuddrgeefvddrtd
+	1748598476; x=1748684876; bh=XoK1fN9dL/TSV16lg6aKmcZyEDPXnglMagR
+	g61qv66M=; b=GGv+OrXtz+t34Ndd/R2E3o43BEpU7Z/eYrDQFf1S3jWYOLuLCnZ
+	FIvUW6rSWHZvFr9hJX5TwmrIDi+g8rdShySB9HEfUu1lbrVtsUXzKJQe9FFkH7kM
+	W08hdFHrXro3m05mwgKXh9cJAbC8/XlpuSTUCC33fBB6iEXfibFpOzo893tfsNNl
+	bTmO3MQ/0Zxrm/84DNNxKadGwsvzyaRKcyoGnpOXxDVKCCcLYabbK0WFwA0hPagM
+	9sT/A3Hbpjujc2+eb92Va7fs833QPOhWDSXq91WFFj2RyC8TStvGS9+uF/ToZA6V
+	J0xadqmO7U17ejCy5kl5pnYr9Ytd5+Fcmwg==
+X-ME-Sender: <xms:zH45aN3J-I9WVoO3l_Csh4irorNf8oHNUFbX9P35fUH5qTV0tvn7ng>
+    <xme:zH45aEGd_NfNrQM9ZBtEDg7kVby-CcLTsTwLUaoLRR_p13UJAmgpauLHXeQW2s4MF
+    dhUkfIzGfHlaJak1g>
+X-ME-Received: <xmr:zH45aN6yIzl_RkSvOm1w-b7sK2Vh6RRzEiDgb2qKTA4ku9DAS0PMb6GN6SyAmA6dShFxwaX4Msr_wPmFXI7uHn10YJmG2sZnZamqIPOLpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvkeeikeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
@@ -56,37 +56,32 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvkeeijeculddtuddrge
     guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
     iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
     gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtshhtvghrse
-    hpohgsohigrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhr
-    tghpthhtohepthhoohhnsehiohhttghlrdgtohhmpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtohgslhgvrhesghhmrghilhdr
-    tghomh
-X-ME-Proxy: <xmx:wHw5aD8Z1zDKfUM5SfVxsxdY9LV0iYVIuLMDR8gcl7WrhRU2haLAwA>
-    <xmx:wHw5aCsenDDD9QJ6HIPR4x4u-N0by5ysUz3s7QMwD81fl_sFJsUJCQ>
-    <xmx:wHw5aKEWHpD7T6ciY3p6FaHpTl1NJsdken2vGrwgjlx52HZZFfAqRg>
-    <xmx:wHw5aBPaLVKQqeEtkvItZL1yBVs8_HxmgsTED7MsGs9arVYSOQHWXQ>
-    <xmx:wHw5aFnOIWQq2Lbi4rgnrpjlh4ufSKB4cr3Qx8XOmE3K8c-NFxHnknKf>
+    phhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehjlhhtohgslhgvrh
+    esghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdho
+    rhhgpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhope
+    hmvgesthhtrgihlhhorhhrrdgtohhm
+X-ME-Proxy: <xmx:zH45aK0IchTsQDnQPUr-elstz5VGpfops_EkWyKOLTg-9OJQlEW0LQ>
+    <xmx:zH45aAHkGGpkYAFnw7IAA0Q4H-keN2sFxXVh9sTgMZ_kxddbqk_gMQ>
+    <xmx:zH45aL-WRBkv6UzE2B_5Sx22BMuFWI-tlUOS5nzx8XPW169hltkD3g>
+    <xmx:zH45aNlaVW7XzvC6MoAnjontXAoi9IKXuAYJCv1j9AdKZpX8dwHzXw>
+    <xmx:zH45aO1RtpKtvBmHhgEymvEpVCgeQIsT-yspIu_I4Z3toG7WdmdIq7aG>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 05:39:11 -0400 (EDT)
+ 30 May 2025 05:47:55 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 21c0c709 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 30 May 2025 09:39:11 +0000 (UTC)
-Date: Fri, 30 May 2025 11:39:10 +0200
+	by mail (OpenSMTPD) with ESMTPSA id 5b6ddc34 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 09:47:54 +0000 (UTC)
+Date: Fri, 30 May 2025 11:47:53 +0200
 From: Patrick Steinhardt <ps@pks.im>
-To: Toon Claes <toon@iotcl.com>
-Cc: Justin Tobler <jltobler@gmail.com>, git@vger.kernel.org,
-	Derrick Stolee <stolee@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 02/17] object-store: rename `object_directory` to
- `odb_alternate`
-Message-ID: <aDl8vjzdCJKoKXY0@pks.im>
-References: <20250514-pks-object-store-wo-the-repository-v3-0-47df1d4ead22@pks.im>
- <20250514-pks-object-store-wo-the-repository-v3-2-47df1d4ead22@pks.im>
- <tjsbotrnrffykmi3letktpb3bly4nqw4wxzyrszgbln7pznem4@3kwiq4zvaebw>
- <aDP_-VX_Rz-MqiAS@pks.im>
- <euflgbipchqi7jvmz4yzwzx6ao5guen6xmupkdaubjbc5ksgkp@aheynye35bby>
- <87cybs3mch.fsf@iotcl.com>
+To: Justin Tobler <jltobler@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Taylor Blau <me@ttaylorr.com>
+Subject: Re: What's cooking in git.git (May 2025, #07; Fri, 23)
+Message-ID: <aDl-yd2fh4qVRB_V@pks.im>
+References: <xmqqtt5au523.fsf@gitster.g>
+ <aDV0jwaQ2DlcM0lZ@pks.im>
+ <xmqqtt56ov4k.fsf@gitster.g>
+ <shpx4piigp5sqgpbzx4vdgu4zdn7z3ykxhu2cdyjh5vpr6zbqb@rf2sxg6hukpd>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -95,40 +90,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87cybs3mch.fsf@iotcl.com>
+In-Reply-To: <shpx4piigp5sqgpbzx4vdgu4zdn7z3ykxhu2cdyjh5vpr6zbqb@rf2sxg6hukpd>
 
-On Wed, May 28, 2025 at 03:18:22PM +0200, Toon Claes wrote:
-> Justin Tobler <jltobler@gmail.com> writes:
+On Tue, May 27, 2025 at 02:45:43PM -0500, Justin Tobler wrote:
+> On 25/05/27 09:50AM, Junio C Hamano wrote:
+> > Patrick Steinhardt <ps@pks.im> writes:
+> > > I think the only outstanding discussion is whether to name things
+> > > `odb_alternate` or `odb_source` [1]. In case others agree that
+> > > `odb_source` is a better name I'm happy to revise, but if not I'd rather
+> > > keep it as-is.
+> > 
+> > The model in which the term "alternates" was born is "A repository
+> > has its own object directory, the primary one, and in addition it
+> > can borrow from zero or more alternate object directories that are
+> > used by other repositories".  The presence of the primary makes the
+> > word "alternate" meaningful.
+> > 
+> > Is the model now "A repository has one object store, which consists
+> > of one or more X, all of which are equals"?  If there is no primary
+> > that is more special than others, then calling X an "alternate" may
+> > indeed sound funny, although (1) I do not find it terribly confusing
+> > and (2) I do not find "source" much better, either.
 > 
-> > That's fair. Between `odb_backend` and `odb_alternate`, I would probably
-> > still prefer the former, but ultimately I'll acclimate to whatever is
-> > choosen. :)
-> >
-> > -Justin
+> My understanding is that the object store still has a primary X and zero
+> or more alternative X. The idea is that eventually, with pluggable ODBs,
+> X can be a different backend/provider instead of just being "files". If
+> this is the case, calling X an "alternate" would mean we have a primary
+> "alternate" and potentially a set of "alternate" alternates.
 > 
-> I feel you. But speaking as a non-native English-speaking person, I can
-> settle for "alternate" because I can still wire my brain to give it the
-> meaning we're using here.
-> 
-> But if you like another name, I want to steer away from "backend" as
-> well. As mentioned elsewhere, a "backend" sounds like an implementation
-> of an object database, not the instance of an odb. But I'm open to other
-> suggestions. I've been browsing thesaurus for a bit, unfortunately I
-> didn't find anything better.
+> This sounds a bit odd and doesn't quite match what I would intuitively
+> expect. But, I also don't find it super confusing either.
 
-This ultimately _will_ host the backend implementations -- every
-alternate is backed by one specific backend. The problem why we still
-wanted to steer away from "backend" is that `odb_backend` rather sounds
-as if the complete object database has one backend that can be switched.
-That's why we settled on "alternate" instead, to clarify that there is
-not a 1:1 relationship between the object database and the respective
-backends.
+Yeah, I understand that confusion indeed. I don't think that the other
+proposals we've got are a lot better, either:
 
-`odb_source` does not have the same problem as `odb_backend`, so I
-definitely think it's a way better name. But the reason why I think that
-"alternate" is the better name is that I think it will get quite
-confusing if we have both the terms "alternate" and "source". It would
-make some of the interfaces quite awkward because it wouldn't always be
-clear what exactly we are handling at any point in time.
+  - `odb_backend` was shot down because it may cause the association
+    that one object database has one backend. But backends are per
+    alternate, so there's a mismatch in expectations.
+
+  - `odb_source` is better, but we now have the problem that we use
+    "alternate" interchangably in most cases where we also use
+    `odb_source`. This will likely lead to somewhat awkward interfaces.
+
+The problem with `odb_source` might eventually go away once we clearly
+distinguish the "alternates" concept from the low-level mechanism to
+access objects. But I'm just not certain at all whether it won't cause
+more confusion when in most cases "alternates" and "sources" can be used
+somewhat interchangably.
+
+I dunno. The more I think about this the more I start to like the
+`odb_source` name.
+
+> > The names we use to call the collection and the underlying
+> > implementations of the collection in the reference world
+> > unfortunately does not quite help to guide us, as we do not take two
+> > implementations and compose into one unified view, which is what we
+> > are doing in the object store.  Hmmm...
+> 
+> Similar to references, I still think of a pluggable ODB as a "backend".
+> The main difference being that with references there is only a single
+> backend active ("file" or "reftables") at a time, while for the object
+> store there could be multiple.
+
+Yeah, that's basically the major source of confusion I want to avoid
+with the "backend" terminology. I really do want to make it explicit
+that there is not only one backend, but multiple ones.
 
 Patrick
