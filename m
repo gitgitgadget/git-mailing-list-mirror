@@ -1,85 +1,85 @@
 Received: from fhigh-a5-smtp.messagingengine.com (fhigh-a5-smtp.messagingengine.com [103.168.172.156])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5AE22CBF4
-	for <git@vger.kernel.org>; Fri, 30 May 2025 13:31:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F6F22D782
+	for <git@vger.kernel.org>; Fri, 30 May 2025 13:31:59 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.156
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748611919; cv=none; b=crRgzTmx8RcJa6J009cyQHYGBi1k0krDlKIYU4zw+OuJWsrr+IVMJxTdAI7CasuWcrsiwhfvKwIFDNP9Sn6PUaLSeTemYJBz06ZOTJGxQp4PUXMGxl9ITdUeH5YXiwGI/nMMQqITNgBMVnJ6AX9i3Di0fGrs/w6k0LtL29pBYYo=
+	t=1748611920; cv=none; b=CgWd8RSJSdt6jIouJmmx9otKGfganVqk64IlD1/YE2BGFKxdYXubFy6RTb3JFhS8dyWtXdRBZJgoz/iefKkkZoR0HXHHyXmGcpwcuVACvxH6maflH+nEUnJz9c/61ljGOYj/VEJY49RO8qKrjwR/jf1NItoatbbBuk2zcZmTGFM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748611919; c=relaxed/simple;
-	bh=ZZnC5qQ+gJs2WeOEM7butall9wTfdYO0pVecIso8uRQ=;
+	s=arc-20240116; t=1748611920; c=relaxed/simple;
+	bh=Wp+sD4vGNFHF4/t3MDU2TxvbK7XonR8wn2UuyHayKbw=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=WQ/VonwKMqu68dOLzIajx9OCMj4VLfNsAen3XiAHkMZFC2Y2h1xE/9PaIuxvCX5OmzmNP2daxE6camY0LzqAdeS7rbsEMWKt9LSsPlNwwNtssuWlbZE4iisXvA87wuQ9oqf7IGziJdFhiLPZKHOuFk8XF3Je3PRBVdHqUN6/R6c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=N25ZibKU; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=HvtE7nYr; arc=none smtp.client-ip=103.168.172.156
+	 In-Reply-To:To:Cc; b=HHj9RdgRnGj1rzWjTBGvWxZZ7RzXTZiIWdqVFgYICK52KLyjKv3sZlAEEM4d1JT2VyrhwTIHdXrhjVr4vGGHCusG+TUQ8IYvPO/3vVWaLxX1+MAFqpGAw/yssKj8NOYTMGYCNYfbwsvyeWAWdTIz3mv4RoUqOlRYc8Cob5P4ups=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Bsr91rpX; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=hnTBGWit; arc=none smtp.client-ip=103.168.172.156
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="N25ZibKU";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="HvtE7nYr"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 1A0671140172;
-	Fri, 30 May 2025 09:31:57 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Fri, 30 May 2025 09:31:57 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Bsr91rpX";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="hnTBGWit"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 68E0C11400F1;
+	Fri, 30 May 2025 09:31:58 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-05.internal (MEProxy); Fri, 30 May 2025 09:31:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748611917;
-	 x=1748698317; bh=EPUFfkrI0rI8xJ/ojsSd1viRgTb1tJ9WG1v7ZkqkQr4=; b=
-	N25ZibKUcTAV0sBNdISuL/7Z/0Qcby6NeGh8OAq1Qn/+e76+6LX4Qmm6A4IlyyZm
-	pFCpKtJ7m33n30fFH5KV7vRguBaMbhT+Xl+vnuI1wclxKkegXj8H8f3IPqRvPXJ+
-	v9t3Mh5lD0vqiKP4dmvBJyXG1ZyHc466RBrtxxpGxTT+TDBvOAmvYrf1Np82/hU9
-	XCERIe+jqK9xp3oq5xq4BHTqMgEKQNdkoss/73YWnOegqL0NT/YO9J/42scnQqFT
-	1W0dfYjq3RmkfOcOtaOPtjlLfz/4iFrNkRZw4NYNOzhY1PD1Jop5hnN8q720/qLY
-	OBsLg5Y56oee42EqLFp9AA==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748611918;
+	 x=1748698318; bh=fTHFGvQd+iAmd0T76khvECmZQf+97rbuC8mWSZU+HCI=; b=
+	Bsr91rpXjBRokgXqm0ZtDufO8LNugwe7VQrXFO0fFCZlqsPk4M4dKRbk+8pat89K
+	0RXdLO2ohdQHrt4vnowHiD1kZ+jQEhIFErByFiCjyl33gJYmISAT0wAjdUR4OH6F
+	C9dCSrnuEmcORh2O3ET0hx7YOB9AuOyPjE54zXA427XDOlKvoEol1beXm4mAIUXD
+	LQlpg0NwigXgYvZn5djT6XiwknJKk1YsJ6f9oTlG6jsj+qaCm2oG2bZAMjqVVnc6
+	SL91NnGeVxJmLK2vOHBE3UoTkNZJBr9ks2bzNquTZzvR7ob+MyBcQ6aepZ99qKSc
+	X0O+pgxGI5uAg/rKmMBDxA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748611917; x=
-	1748698317; bh=EPUFfkrI0rI8xJ/ojsSd1viRgTb1tJ9WG1v7ZkqkQr4=; b=H
-	vtE7nYrTt7vsgEDIDHtJmDEJeWiHmiXQVzd4lfEEVcVorLPtb3hOfD13qvbKmxv3
-	E3ieug2oMf63+sMV/uGYxUpiNJFQL80BHZCrVPF0TxOSB0FeQCFdR7FML3Mkyy1Q
-	Tk08zjbMMaZCH+ijENHDr7i7+omRtCuLhjOE7usA6ulMtvRQK56vvwaPQdn170ZK
-	bSE8iBsQXBeWpawzgd+ukE/ly70fK3tYisYkB8TMXZNajrn8QfkPwRP7Jh+GUwih
-	bUoy2Y2SSNQtuhiYkoGA/Ik9VEEenL4W1mocPfS4W3Nf7ACt5zvCqhHfPxvBUxvi
-	MHC0HLvRDZkrpEZkBNaoA==
-X-ME-Sender: <xms:TLM5aPhBANQLV-BYKqnxm-eoxab2VJ1PfCCQGEPc87WVMDvPAylEfw>
-    <xme:TLM5aMAC96fsm05WcaukKdFsU-TnnT0rNnLnQm8UstuRB82ZLzx36w2nDsOeWO_S3
-    enYR3KsTgqKMWPhTA>
-X-ME-Received: <xmr:TLM5aPEDBXFMojeZlRemqrsQhr3mBBI3L55FWEmDyzVTxtY6mb_F99WKylYuNEBZeCK3Zi4D2h-PPHnTx1Yo2A03QOOLryhL9nLjrk_B1w>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvledufeculddtuddrgeefvddrtd
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748611918; x=
+	1748698318; bh=fTHFGvQd+iAmd0T76khvECmZQf+97rbuC8mWSZU+HCI=; b=h
+	nTBGWitFLDUA0xNQx/bvmJdmPMNmqf+33vLuWrt7P6piyCWen/g8u2A8i0cxGO4h
+	qjKoqVlueMHROzef2blc7IilW8jPsnea8a8XRmM4S357PQ9Y0Yz44vlgt0RaJljo
+	9FLz6yvOp3n+yuNoe0vEXY4WqcoFDAS4VvKH1nIrpnobV4K11vniRsJhkmrM8qYs
+	IeapnGufGD6B05gNRk4FmPuvYRM9/uySvH+XcidoX0yr/r8Otqy1mp8XBBIQtlaz
+	zgRlvCksn+wXj6Y0AnofWdKySQJvW9qtZOYh0ylV5KC+HfkqTtkzZj2ckgBRJ+Jb
+	LpjNPk6cbO1RMsbD+/h+Q==
+X-ME-Sender: <xms:TrM5aKqWS_E6Ary210kzPqjNubRaNAM7mm2cqVTkDWNxmnlhGSmXww>
+    <xme:TrM5aIr-OT-jUwpMhWp_zrbMdUVs3DLcpt6ldWYcUvu3ZVwl3B1PG594Yl8CgEb6i
+    VjFy2TMNwY0RUR0pw>
+X-ME-Received: <xmr:TrM5aPO0-VDUOnPQfJkrWpdu4wPpu9Ofii8LNT0bj0H2me3q4Thdt0iZBPStggdRrZ-I-GoB5chZrvSeVqwjrnxaNeWntXS-TtCRCO_Lpg>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvledugeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffk
     fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
-    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
-    uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgepgeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhmiiesphhosg
-    hogidrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorhhgpdhrtg
-    hpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhh
-    ihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuh
-    hnshhhihhnvggtohdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghl
-    rdhorhhgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhush
-    drtghomh
-X-ME-Proxy: <xmx:TbM5aMSfvIXyvE6_pOcHXiLX4FHnyNaNqCV1s2QK7v2oYnWmkGkVtw>
-    <xmx:TbM5aMzizeWAHh_im-holRD-vVtL4S6w4pa0sOxFM0-GMXlkWz27Xw>
-    <xmx:TbM5aC51Y0-E6AWW_IcyjkNFHOMGFbLg7fHJGgY4SN7Soqt4m8Bmnw>
-    <xmx:TbM5aBzKpYWz9y5-9XFR2LZqz02RHPHG1sYlXuJKaV1RuQHIMgugnQ>
-    <xmx:TbM5aNFrj9Ye15l2ckoM6r_AQ38KD4otc8rgkv23a3xUG4OUNBVs457E>
+    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepfefgvedtvedufedu
+    tedugffhjefgleegheehffelgfegffehieegvdfgfeehuefgnecuffhomhgrihhnpehgih
+    hthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehpshesphhkshdrihhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmth
+    hpohhuthdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhoohdrohhrghdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthh
+    hikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhs
+    rgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepthhmiiesphhosghogidrtg
+    homhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhr
+    tghpthhtohepphhhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtph
+    htthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-ME-Proxy: <xmx:TrM5aJ7Jy6FeWISiWzEJK5AXFXZ43V8vawTye5NTHRT1JaGd70fghA>
+    <xmx:TrM5aJ6Q1BjIawcSeIjEDEYr8kqHFmVY7-MKnPMAByAEv-d5p54SJA>
+    <xmx:TrM5aJgj_mL5Tn9W9EZpAkp2J8__fR6f5hwrvHGNF1ynOMktfHYyxQ>
+    <xmx:TrM5aD5J7Yw0iFDUZUsOBb6TDhVM3Kjx2cZ8qJisMC4DOfBvOxFKvg>
+    <xmx:TrM5aANUrJQ6Qklwu4eQfGD7A3zy79slDshjLh2MKKAv6zDYXWn2qopH>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 09:31:55 -0400 (EDT)
+ 30 May 2025 09:31:56 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 9889f5c4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 30 May 2025 13:31:54 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id b1efeee9 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 13:31:55 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 30 May 2025 15:31:47 +0200
-Subject: [PATCH v3 09/10] meson: introduce kwargs variable for tests
+Date: Fri, 30 May 2025 15:31:48 +0200
+Subject: [PATCH v3 10/10] meson: parse TAP output generated by our tests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-pks-meson-tap-v3-9-676f5e41f2e4@pks.im>
+Message-Id: <20250530-pks-meson-tap-v3-10-676f5e41f2e4@pks.im>
 References: <20250530-pks-meson-tap-v3-0-676f5e41f2e4@pks.im>
 In-Reply-To: <20250530-pks-meson-tap-v3-0-676f5e41f2e4@pks.im>
 To: git@vger.kernel.org
@@ -99,94 +99,72 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
  Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.2
 
-Meson has the ability to create a kwargs dictionary that can then be
-passed to any function call with the `kwargs:` positional argument. This
-allows one to deduplicate common parameters that one wishes to pass to
-several different function invocations.
+By default, Meson only knows to pay respect to the exit code of tests to
+judge whether or not it ran successfully. This can be changed though by
+specifying the "protocol" parameter. Next to the default "exitcode"
+protocol, Meson also supports the "tap" output that our tests already
+know to generate.
 
-Our tests already have one common parameter that we use everywhere,
-"timeout", and we're about to add a second common parameter in the next
-commit. Let's prepare for this by introducing `test_kwargs` so that we
-can deduplicate these common arguments.
+Unfortunately, the "tap" protocol was incompatible with `meson test
+--interactive` and caused a hang. We have upstreamed a fix [1] though,
+so with the recent release of Meson 1.8 that fix is finally out and we
+can start using the "tap" protocol when running with a recent-enough
+version of this build tool.
+
+With this change in place, Meson now properly detects how many subtests
+ran and whether test suites have been skipped:
+
+    ```
+    $ meson test t002*
+    ninja: Entering directory `/home/pks/Development/git/build'
+     1/10 t0024-crlf-archive                  OK              0.17s   2 subtests passed
+     2/10 t0022-crlf-rename                   OK              0.18s   2 subtests passed
+     3/10 t0029-core-unsetenvvars             SKIP            0.15s
+     4/10 t0023-crlf-am                       OK              0.18s   2 subtests passed
+     5/10 t0025-crlf-renormalize              OK              0.21s   3 subtests passed
+     6/10 t0026-eol-config                    OK              0.25s   5 subtests passed
+     7/10 t0020-crlf                          OK              0.81s   36 subtests passed
+     8/10 t0028-working-tree-encoding         OK              0.85s   22 subtests passed
+     9/10 t0021-conversion                    OK              3.45s   38 subtests passed
+    10/10 t0027-auto-crlf                     OK             26.35s   2600 subtests passed
+
+    Ok:                9
+    Fail:              0
+    Skipped:           1
+    ```
+
+Note that when running `meson test --interactive` the test results will
+now be marked as "ignored". This is because in interactive mode the file
+descriptors will remain connected to the user's terminal, and it is
+expected that the user interacts with the tests (e.g., spawn a debugger
+or use `test_pause`). As such, the TAP output cannot be parsed reliably
+by Meson in that case, so the tests are marked as ignored accordingly.
+
+[1]: https://github.com/mesonbuild/meson/pull/13980
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- contrib/credential/netrc/meson.build | 2 +-
- contrib/subtree/meson.build          | 2 +-
- meson.build                          | 4 ++++
- t/meson.build                        | 6 +++---
- 4 files changed, 9 insertions(+), 5 deletions(-)
+ meson.build | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
-index 3d74547c8ae..16fa69e317e 100644
---- a/contrib/credential/netrc/meson.build
-+++ b/contrib/credential/netrc/meson.build
-@@ -17,6 +17,6 @@ if get_option('tests')
-     workdir: meson.current_source_dir(),
-     env: credential_netrc_testenv,
-     depends: test_dependencies + bin_wrappers + [credential_netrc],
--    timeout: 0,
-+    kwargs: test_kwargs,
-   )
- endif
-diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
-index 63714166a61..98dd8e0c8ea 100644
---- a/contrib/subtree/meson.build
-+++ b/contrib/subtree/meson.build
-@@ -21,7 +21,7 @@ if get_option('tests')
-     env: subtree_test_environment,
-     workdir: meson.current_source_dir() / 't',
-     depends: test_dependencies + bin_wrappers + [ git_subtree ],
--    timeout: 0,
-+    kwargs: test_kwargs,
-   )
- endif
- 
 diff --git a/meson.build b/meson.build
-index a1476e5b322..6fb898a21d1 100644
+index 6fb898a21d1..46c5d068e05 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -2036,6 +2036,10 @@ subdir('templates')
- # can properly set up test dependencies. The bin-wrappers themselves are set up
- # at configuration time, so these are fine.
- if get_option('tests')
-+  test_kwargs = {
-+    'timeout': 0,
-+  }
+@@ -2040,6 +2040,14 @@ if get_option('tests')
+     'timeout': 0,
+   }
+ 
++  # The TAP protocol was already understood by previous versions of Meson, but
++  # it was incompatible with the `meson test --interactive` flag.
++  if meson.version().version_compare('>=1.8.0')
++    test_kwargs += {
++      'protocol': 'tap',
++    }
++  endif
 +
    subdir('t')
  endif
- 
-diff --git a/t/meson.build b/t/meson.build
-index fcfc1c2c2ba..3fc8c6c2201 100644
---- a/t/meson.build
-+++ b/t/meson.build
-@@ -51,7 +51,7 @@ clar_unit_tests = executable('unit-tests',
-   sources: clar_sources + clar_test_suites,
-   dependencies: [libgit_commonmain],
- )
--test('unit-tests', clar_unit_tests)
-+test('unit-tests', clar_unit_tests, kwargs: test_kwargs)
- 
- unit_test_programs = [
-   'unit-tests/t-reftable-basics.c',
-@@ -76,7 +76,7 @@ foreach unit_test_program : unit_test_programs
-   )
-   test(unit_test_name, unit_test,
-     workdir: meson.current_source_dir(),
--    timeout: 0,
-+    kwargs: test_kwargs,
-   )
- endforeach
- 
-@@ -1212,7 +1212,7 @@ foreach integration_test : integration_tests
-     workdir: meson.current_source_dir(),
-     env: test_environment,
-     depends: test_dependencies + bin_wrappers,
--    timeout: 0,
-+    kwargs: test_kwargs,
-   )
- endforeach
  
 
 -- 
