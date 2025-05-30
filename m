@@ -1,112 +1,263 @@
-Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b2-smtp.messagingengine.com (fhigh-b2-smtp.messagingengine.com [202.12.124.153])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED4F523C4FA
-	for <git@vger.kernel.org>; Fri, 30 May 2025 18:14:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4311DBE5E
+	for <git@vger.kernel.org>; Fri, 30 May 2025 19:00:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748628854; cv=none; b=nf0z/6TLf7A+zw0O4e8O+HXvuNaKUejvmhQm3I4z5Kj/tKkNCT8YmCVK9FnLcvJ1VfjLWqLRfrXLG1qoFAfBvGHggENAw/GEuAlCRcPTKgjf2mkFU0aR4Eh2GIkNDo7UgKAahg8dzazHTTeNkWXhpJ0qEgKkpQKO+Z2wxz0VxoM=
+	t=1748631644; cv=none; b=KUu4/XJBZpknlU1z+suVZX7I2GEAdY+0EjmdhkXgBeh0mr5SqZXSiHGwrrbY3p0IDtVaobGihaxD/WAcic1HuDT0tilqOv04RVDU/VxJO9VtfEGZyeSvqmieKWkTEd0sjjFj6pYXEAlOGUR6EucPv+bf/c1q4ea7sRKuJeikmck=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748628854; c=relaxed/simple;
-	bh=1LWXJPpwVfQqO1Cza5WBCw7qJNIxHuCTBe+6CkH9duo=;
-	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=n+S7MYfK9tNJ+jo2nDBMASnNLkEAzC6RcZaFD1JClTiD+dMSTlqVw+e61zkKxoX6LXtDtCgMY8gl/+LvReRBiYxUhxbdRbj6x6wgCt8TTg06MIt/YoMWknx3hq2qNUZKoFIFUkFJ/reBU8yp4nuNhC+U1QhVl/Qb57nnlpJcOZc=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=eCf/dyGM; arc=none smtp.client-ip=209.85.128.44
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748631644; c=relaxed/simple;
+	bh=g5wylkF6cUATMGE8hBaLFt0sOhIslh8l5ZH7tIdxdFE=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=LhYuRtUkKL9b+fTjmTEVveCBKiimey6YxzgjJrwa6/TuKMS++euyWwDEfmJ953vauNK3t0R45T6DDTVvQkeKiD52e0mtKnt06eiBrzCq0yxOjNQfacFWbIvDL/7EL4l4koSY7HHKqmOlQZCkirTI5PFX9fy6Kqk5jKg1QwnPy18=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com; spf=pass smtp.mailfrom=fastmail.com; dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b=izJDGa2O; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=ZTOH3j3h; arc=none smtp.client-ip=202.12.124.153
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=fastmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=fastmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="eCf/dyGM"
-Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-441ab63a415so24957365e9.3
-        for <git@vger.kernel.org>; Fri, 30 May 2025 11:14:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748628849; x=1749233649; darn=vger.kernel.org;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=1FACvJeYzQcZfdCYKUE7wTebEhBakCQ63a9n2CGS/Uk=;
-        b=eCf/dyGM//iXseCMaqTzC5yJC4Hr7V+a8nH/JwDeACH4CLcs/tdhQC1HkpOst5YF/I
-         IupHEy+VpYn+nfkYMn20xfw+L+uZXdYjog54TvjfT8K/nFVuiq1cBy6i5TQ4zPYKmuq5
-         HJGL2CN4ANzoQIL0RlOUNTHCZPz/m7JkbHKsOJBDKncX13edNXNkv+IlUggsggh3344F
-         oplNqaw+yxqVQ4yF/MEKX/5eROZwUFppHw2c+ZWieh13zgg9x/N6ld2J4uJaEqqSj6x/
-         hIoRRwHUfwywvQXP6+TwZKQLmit+FLTN2FeuIzI9C16xXIgOMinE8BWRmZzdb5bnt9J6
-         /JNQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748628849; x=1749233649;
-        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=1FACvJeYzQcZfdCYKUE7wTebEhBakCQ63a9n2CGS/Uk=;
-        b=NTNBKVUbOeXzVAOVQLWwk01Zc4Wm+VZFN6F8KJhMH1f7rEJXgULYRIPyYXBBkXl1iO
-         CmYLDHfBd0Ngc+45rz+KoYIWYI1TpykFyi9sGd56PR7jrFzcGULWZJ8nkzcJWHF5p3oV
-         eOIn9Hb7NWSbVMl1JOLNtCXaX13AjgKjjF0eNbNlc0MC+4rIRdEIBv3VmcPWiO2xuNWU
-         BQ55s/bgdlkmfqDvXZYLFV8Vxyoi5Hdbg35/b1NKYiZfkDDeCbRLCfSa5QUyBBOaDAta
-         MaV2D8tTQN/BDV/QSuqU6/8In36k9Hx0uNQ612ZJDj4015HCcMbHEj8IiYMalERz7nVa
-         Yd5Q==
-X-Gm-Message-State: AOJu0YxPmDhLGKLdbDYhqPn9BEh9vaOVNVLJ83N89X7p6kBaH1XJ0Ccv
-	gxdOL3+n2avl2rwSMU+zCmZjHihcCVHrrxY/RFZ3URN1OTIs5zVmgUh3Aqgo4w==
-X-Gm-Gg: ASbGncvSaceAjSRHbrpHwbk9yaWDAYEtrhXupypkPW/JYMa+a29weQJ9DsIQUw59K1U
-	XeEGacXtJp+VbU75zr4zdZx3gsReAZWmX8Yk8pd+5m0mTyyrIAvW0pP88nw1v2fREBnlCeKc4MK
-	5kOuoYEDnMm44OclS2O3AXGI12Gvc/5NpNXrTRUmJSfTYschOgTNO06ajCG60pdKWpSWipAg4Jy
-	1KxaT8wWfvtv0vplplC79yNTQQ+3JvKG5JHbuAVcz00xfU2mM5eiGkYcx10V+SXroqxBCbjK4Ee
-	BocUozOKvG6YBErGaGGMB6oUPadQI93YDWzjAsQ9ZlwYYb2/neYYN15RRzePWm85a+Na+PLIcA=
-	=
-X-Google-Smtp-Source: AGHT+IGBlGKcHP31q+brcyZpAWsQKs9cTOLzzHJJTuTF2jR3jYQZacxvyk9C4QelufjK5HoiB5bnnA==
-X-Received: by 2002:a05:600c:6286:b0:442:f98e:f37 with SMTP id 5b1f17b1804b1-450d657fbf9mr38738295e9.21.1748628849112;
-        Fri, 30 May 2025 11:14:09 -0700 (PDT)
-Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fa249esm24619045e9.13.2025.05.30.11.14.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 May 2025 11:14:08 -0700 (PDT)
-Message-Id: <d7b7a0e29ec0dc92e491401bc0dacfa15d4af2ad.1748628847.git.gitgitgadget@gmail.com>
-In-Reply-To: <pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com>
-References: <pull.1977.git.git.1748149783383.gitgitgadget@gmail.com>
-	<pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com>
-From: "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Fri, 30 May 2025 18:14:05 +0000
-Subject: [PATCH v2 1/2] pack-bitmap: remove checks before bitmap_free
-Fcc: Sent
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+	dkim=pass (2048-bit key) header.d=fastmail.com header.i=@fastmail.com header.b="izJDGa2O";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="ZTOH3j3h"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 3CDB625400F6;
+	Fri, 30 May 2025 15:00:40 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 30 May 2025 15:00:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=fastmail.com; h=
+	cc:cc:content-transfer-encoding:content-type:content-type:date
+	:date:from:from:in-reply-to:message-id:mime-version:reply-to
+	:subject:subject:to:to; s=fm1; t=1748631640; x=1748718040; bh=m9
+	/PcJcu/cPSJfFS9QxWPOkLymeDpMYG5WKABfdyluo=; b=izJDGa2OhwCjuBN/op
+	5l5KlckzfRJ6ZQOzynDlAJJuExjmnkcyJt0M1LKO/xoek7yVqR18m691GI3g4Ysv
+	2R8Fs2XgiusW0cRaWQ1ZFB9NaXT2C5r/bCLvgT3Z5dniAfvevSls++3kJPXqnQQX
+	ZnK6en1MSD7piRi/BTa8t/qA7NzuZSV+IGFSQ1aW7sK/wFCanaWEu2cwe3T/YtG9
+	AUefxwyAVyMpb92yzAMbWEUKg3Qxq6zQXH5X8tWGQTQcYuE9STJ/q2y/JkwMm4C4
+	GaBnkSeP44gH34vCr2O7Lna6VyidGGWHTLY1nGaLBPU5uvBM8bH7jko/O3ceXYJ1
+	HwXQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-transfer-encoding
+	:content-type:content-type:date:date:feedback-id:feedback-id
+	:from:from:in-reply-to:message-id:mime-version:reply-to:subject
+	:subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm1; t=1748631640; x=1748718040; bh=m9/PcJcu/cPSJfFS9QxWPOkLymeD
+	pMYG5WKABfdyluo=; b=ZTOH3j3hyZo7IMn74zylS/4a7TNlvfDrAoBoF4RTiupj
+	8JYTYPUyp1PxLf/XkmHKOaWsEwMoVjwJGABkJy068FvxAa7WOMUu7KVT0rUgdNIk
+	TuT/MDCVq+8uKbAh7C3LSQyw0Mo6Na8D1L9fnSoWPv5KtDnJhvZuT2lgvo/Lgpny
+	6g+rCQ/5vZ6cENPaWyb69g84MqFrRJUaIKSelFnvwGnPplfiFNf/9T+AuTcs/IJO
+	M6i1z/XO+JnziQOWdV7KCUAnzstnPleoc2jDlt9tuQWWzD521ibjC3l4u3EwkXht
+	nNFky0cgKp/WUki38OHGOKW++dqM4f8cnv+kFFmfVg==
+X-ME-Sender: <xms:VwA6aB_z0RGPoxSk6t_X5sXsO6Z-BaOf0LpVpW8y3yhkTloEsgwEwAw>
+    <xme:VwA6aFt6XIHigvD0o0CGVkdAc9BmcyGzXEtsuUox0kQy4YvoAMQE1EIO3f23sv6m1
+    ctPy-D93GBnYq0l3A>
+X-ME-Received: <xmr:VwA6aPAyktdHPf9yKp-Zke_LSBpsn9gz85UumICan4sKa0KgiG6b5RalDw8j3NQDmisYZzShzDWtXuM_1l8SwJEXFUL-0azLYw6-VaM>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvleejleculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufffkffo
+    gggtgfesthekredtredtjeenucfhrhhomhepkhhrihhsthhofhhfvghrhhgruhhgshgsrg
+    hkkhesfhgrshhtmhgrihhlrdgtohhmnecuggftrfgrthhtvghrnhepfeejhefgveejueei
+    tddtheduleefhfdvffehheegteduvdekiefhgeeiffeuleelnecuffhomhgrihhnpehgih
+    hthhhusgdrtghomhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhl
+    fhhrohhmpehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtg
+    homhdpnhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
+    ghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegtohguvgeskhhhrg
+    hughhssggrkhhkrdhnrghmvgdprhgtphhtthhopehpshesphhkshdrihhmpdhrtghpthht
+    ohepkhgrrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehshhgvjh
+    hirghluhhosehgmhgrihhlrdgtohhm
+X-ME-Proxy: <xmx:VwA6aFe8Jn19nUg_9DvqAwU1AFMEZjOJeVC2V5gKJK9Ea6f0yJ7ISw>
+    <xmx:VwA6aGMfLGWadl0hswnBGcT9h0k9q9En6XGaSr6wJQ4YtgMMeE9_CQ>
+    <xmx:VwA6aHnrJgK6NdOAl-ZOefF9j_IpnFmZtlcMwaPfxfoeIzmcI5gSHQ>
+    <xmx:VwA6aAuKSlZ25RJRCAs0aWao9Vw4gi9gkdpMWbD-r-5nDCTnVKLbHA>
+    <xmx:WAA6aN9brNt1jp5ueJbXFgrWNO2Yw2qSaYRAbwq3G5rfiPBF5ndYT3dw>
+Feedback-ID: i8b11424c:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 May 2025 15:00:37 -0400 (EDT)
+From: kristofferhaugsbakk@fastmail.com
+To: git@vger.kernel.org
+Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	shejialuo <shejialuo@gmail.com>
+Subject: [BUG] refs: verify does not work if there are v2.43.0 or older worktrees w/o wt. refs
+Date: Fri, 30 May 2025 21:00:06 +0200
+Message-ID: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+X-Mailer: git-send-email 2.50.0.rc0
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-To: git@vger.kernel.org
-Cc: Patrick Steinhardt <ps@pks.im>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>,
-    Lidong Yan <502024330056@smail.nju.edu.cn>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-From: Lidong Yan <502024330056@smail.nju.edu.cn>
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
 
-In pack-bitmap.c:find_boundary_objects, we build a roots_bitmap and
-cascade it to cb.base. Only when cascade failed, roots_bitmap is
-freed otherwise it leaks. Since cascade_pseudo_merges_1() only use
-roots_bitmap as a mutable reference not takes roots_bitmap's ownership
-we'd better remove `if(cascade_pseudo_merges_1)` and frees roots_bitmap
-anyway.
+(regular git-bugreport(1) follows after this, then a demo patch)
 
-Signed-off-by: Lidong Yan <502024330056@smail.nju.edu.cn>
+git-refs-verify(1) checks worktree refs since v2.47.0-111-g7c78d819e6a
+(ref: support multiple worktrees check for refs, 2024-11-20).  This
+causes the command to always exit with code `255` and stderr output
+lines for each worktree created on v2.43.0 or older that does not have
+worktree refs:
+
+    error: cannot open directory .git/worktrees/<worktree name>/refs: No such file or directory
+
+This is apparently caused by worktrees created on Git v2.43.0 or older.
+Apparently these worktrees don’t have this directory unless there exist
+worktree refs:
+
+    .git/worktrees/<worktree name>/refs
+
+Again: any such worktrees work fine if you for example have bisect refs.
+But the command will always fail if you have one or more v2.43.0 or
+older worktrees with no worktree refs.
+
+git-fsck(1) also now prints the same warnings because of the default
+`--reference`.  But the operation of the command seems unaffected.
+
+So to reproduce (also see patch at the end)
+
+1. Make a worktree on v2.43.0 or just make a worktree and delete the
+   `refs/` directory for the worktree
+2. Run `git refs verify`
+   • On your regular git(1): not on v2.43.0
+3. Expected: succeeds without output
+4. Actual: exit code `255`, `cannot open directory` on stderr
+
+Or reproduce with this script (replace with clone with worktree if
+you prefer):
+
+    git config set --global safe.directory /tmp &&
+    cd /tmp &&
+    dir=$(mktemp -d)
+    cd $dir
+    git clone https://github.com/git/git git-older &&
+    cd git-older &&
+    git checkout v2.43.0 &&
+    make &&
+    # use Git v2.43.0
+    ./git worktree add --detach worktree1234 &&
+    # will fail
+    git refs verify
+    # Cleanup
+    git config unset --global safe.directory
+
+§ Testing on `seen` and `next`
+
+• seen: bfa90786bc5 (Merge branch 'jk/diff-no-index-with-pathspec' into
+  seen, 2025-05-29)
+• next: d4ff7b7c865 (Sync with 'master', 2025-05-29)
+
+§ Regular report
+
+> Thank you for filling out a Git bug report!
+> Please answer the following questions to help us understand your issue.
+>
+> What did you do before the bug happened? (Steps to reproduce your issue)
+
+Using a repository with worktrees that were apparently made on v2.43.0
+or older, based on testing.  Some of them have no worktree refs which is
+what triggers this behavior.
+
+> What did you expect to happen? (Expected behavior)
+
+`git refs verify` with exit code `0` and no output.
+
+> What happened instead? (Actual behavior)
+
+The same command exits with exit code `255` and output like
+
+    error: cannot open directory .git/worktrees/<worktree name>/refs: No such file or directory
+
+What's different between what you expected and what actually happened?
+
+See above.
+
+> Anything else you want to add:
+>
+> Please review the rest of the bug report below.
+> You can delete any lines you don't wish to share.
+
+[System Info]
+git version:
+git version 2.50.0.rc0
+cpu: x86_64
+built from commit: b32feae0f1b21faaf8e191e8d3314a32470a536b
+sizeof-long: 8
+sizeof-size_t: 8
+shell-path: /bin/sh
+libcurl: 7.81.0
+OpenSSL: OpenSSL 3.0.2 15 Mar 2022
+zlib: 1.2.11
+SHA-1: SHA1_DC
+SHA-256: SHA256_BLK
+uname: Linux 6.8.0-59-generic #61~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Apr 15 17:03:15 UTC 2 x86_64
+compiler info: gnuc: 11.4
+libc info: glibc: 2.35
+$SHELL (typically, interactive shell): /bin/bash
+
+[Enabled Hooks]
+post-rewrite
+sendemail-validate
+
+-- 8< --
+From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+Subject: [PATCH] t0602: demo v2.43.0 worktree problem
+
+Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
 ---
- pack-bitmap.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/pack-bitmap.c b/pack-bitmap.c
-index ac6d62b980c5..8727f316de92 100644
---- a/pack-bitmap.c
-+++ b/pack-bitmap.c
-@@ -1363,8 +1363,8 @@ static struct bitmap *find_boundary_objects(struct bitmap_index *bitmap_git,
- 			bitmap_set(roots_bitmap, pos);
- 		}
+ t/t0602-reffiles-fsck.sh | 43 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
+diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
+index f671ac4d3ab..90b68f6561e 100755
+--- a/t/t0602-reffiles-fsck.sh
++++ b/t/t0602-reffiles-fsck.sh
+@@ -886,4 +886,47 @@ test_expect_success '--[no-]references option should apply to fsck' '
+ 	)
+ '
  
--		if (!cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap))
--			bitmap_free(roots_bitmap);
-+		cascade_pseudo_merges_1(bitmap_git, cb.base, roots_bitmap);
-+		bitmap_free(roots_bitmap);
- 	}
- 
- 	/*
++# These worktrees will not have a refs/ directory unless there
++# actually exist worktree refs
++test_expect_failure 'works with worktrees from v2.43.0 or older without worktree refs' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		git checkout -b default-branch &&
++		git worktree add --detach ./worktree &&
++		# Simulate old directory layout
++		rmdir .git/worktrees/worktree/refs &&
++		git refs verify 2>err &&
++		test_must_be_empty err
++	)
++'
++
++test_expect_success 'works with worktrees from v2.43.0 or older with worktree refs' '
++	test_when_finished "rm -rf repo" &&
++	git init repo &&
++	(
++		cd repo &&
++		test_commit initial &&
++		test_commit second &&
++		git checkout -b default-branch &&
++		git worktree add --detach ./worktree &&
++		(
++			cd worktree &&
++			git bisect start &&
++			git bisect bad HEAD &&
++			git bisect good initial &&
++			# Simulate old directory layout: delete if empty
++			# But there should exist a refs/bisect/ directory now
++			if [ ! -e ../.git/worktrees/worktree/refs/bisect ]
++			then
++				rmdir ../.git/worktrees/worktree/refs
++			fi &&
++			git refs verify 2>err &&
++			test_must_be_empty err
++		)
++	)
++'
++
+ test_done
 -- 
-gitgitgadget
-
+Don’t cry because the bug is fixed. Smile because it happened.
