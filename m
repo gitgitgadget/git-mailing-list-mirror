@@ -1,43 +1,43 @@
 Received: from PNZPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19011039.outbound.protection.outlook.com [52.103.68.39])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9D81459F6
-	for <git@vger.kernel.org>; Fri, 30 May 2025 17:32:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1C1F237163
+	for <git@vger.kernel.org>; Fri, 30 May 2025 17:32:56 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.39
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748626376; cv=fail; b=lUYed4oDsyqMrfniYUSByfedMNOqAD6KZOWT3wocaZlDHqv9MNLmzI4LhgdOyV7aGJhNZmrSLsgg8mvv0TDftc6elNfEJYqQaZwREjyXmyKhWeC2nXw0AXcNdk+P7XiTsZxU8HpoBLFhddYAyh8ah/Pm/bCpurppAETEBlucdSk=
+	t=1748626378; cv=fail; b=HXFqgshJPXF2ZFigMQR5EDc21Jki1mo/0verAr6vQ5HlexyS2kobDUD9X0ZfQsRBiWFvAahbSKn6nnz2YCgKpWOi3CtC1TyJZzggKV4+BWp7U3/2/zL7vy9HUZQEYPDAot6JT7I1s/ECIYvBnve8ccT388p2bsI57IWQYLZw1Mw=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748626376; c=relaxed/simple;
-	bh=kq9oF/GXYDaPFdxs32gaItRw/l9X/UNOpi95KKoBiJU=;
+	s=arc-20240116; t=1748626378; c=relaxed/simple;
+	bh=AOjr5uWUioQ44bEeuCUQwlu3cW4erGJGUk4lWBvuPb0=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 Content-Type:MIME-Version; b=HIEXeEjxHUkdp3x8wR+xeZ7F68k77ZpYuErSXqlTzkrS5+2vcapg5XlQLy6t0/DcadxOTGCbSgaxoRoq/lMYF+v59D9FdrD6sbYZ85Qj+WRi+DXKkL8LbTWEz4zoaS41XjCZNQZMtG97PVZfLJt/4Va6JyzdsbKzdCejjPPfJfI=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=W8SgBQvO; arc=fail smtp.client-ip=52.103.68.39
+	 Content-Type:MIME-Version; b=WjjpXq8BCVatHgTCDM1rUI9oNBBUdnds0Jp1ZoKy/UU7UN20a7mA2lscg9lOZfZz1upEnhV/V+WWcq0/6I78rKNgDJrQstl6EtJbzx9I/GiXHSHTArYq2kBDyqLby7bzQzLfJqEXXBQKT7zy4iN9XOdUQJYZbWTTmEqUx6Xm2h4=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=YRalriYP; arc=fail smtp.client-ip=52.103.68.39
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="W8SgBQvO"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="YRalriYP"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=B5S5GBMhhYyaRFTpp2PSVRfrCEHxBCnwrhhhjr7P/xQ91Cv2cG0VR8jUkVW6hoay+/LaffGRrszfFJT9jZDgx9qEw2Igf8C+/LooiNx8xX0IWJZNBqbJZbdIrZ+oIn6o/1HnU5WcwCbf4QD8/LRDKT8ZuHAyyFHQ9albvfA5fYSzanTb81sISwzLzHDVizDlsD4dwWp8rsYweBFVt0W8pTMSVyDMaR0pdKMzZpGtMhUHIZfMtrB6BqseLNJD+UCl821X7idMYvo5W9vViAWmfCSKWNOSHbkEmhBX874Vz5ukyEz0/T8VFyLdj+sX2N3Pot0dzXRSNMZjaDBIj+m04g==
+ b=J+sP8OW8nFYwLhT/cX/7ZcG37z897MrnVgsPlQnL0eL+LRwbhGxP8HOUxqyXc5q9QgesOuquPxnFS4+/7sTcheOWrb4SY8tBT8ULEZGWahAMgT78RGDmwFFmHLIIu/W4BLdXAcfV5kNRkuKFKMUK4MewMTOK1dffbtq/v1jJx3HtNrDNARHJuOM/gQoy2qsYRyMjdiIdsD73RTonn8Qz/vzBlvyUasisiTdQjskov7dJIeD8ezGAjJH1wSnsWI5CPnzFZhk/a863JjyXgmdNbWhGMS0Mao4/tp6D56ARnUYLno4KjzfdyUspCfz/a2UKQWR4UB17xlZhEhg6iBBBcg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aGejdLtqqeqTS+LhzhVB/uCia4zr9wCcncoELhh5iE8=;
- b=OQxwUwSzTuGRsX9OwOA8iEqBGuKSNsGx58KxsPvpPTglXI4eWjPTbF9dd9V/VD+AuAmhYnO36rg1FYgzkFwnVLGl+aG4Adx4VXlkUQMlRWY35E+ctKikuS7JA9bxln/Co3G8Pf3Q55QM0fVOA8u2TXWGvTXlC6JIJ4ggBgTg2XwxBC2+dBUsofCelEEipJkkAKUUCNgJ4rJm1eQ+SqpfmbXo8JlA02VVjAs9DM6ZTsw1oi+Njj3jIqMYP2SkRxBMDGE4s1yfjUZ3R1PQF9m8asbVeozy8zYdsSy0ybhYFVOAdgqegaAfUyFanUlXRrDUuaxG8Zt01I/kiCSR+3uj6w==
+ bh=/r+59ob7WVf8SlKpXT2suovMK2nKO8PgyExxQ8P6Ink=;
+ b=i/ZsklqoW7OUgJJhc8qu7TlRSzrshOMK7lXRDmj5En7q/sq/OY3aZgCcRsvHFjlAjlixRNxuQRCaptvvTD60gGGakQHFBP0M2os/V2ZbbG1TeZxfwuFH8b2sX8gTN3fA2M289yNOTHaC8tWsgLuVUTj48o67jb6yHE8V20d+dl4u34L8HaiNoqEeJ9DiklSc0D05GwvhlC9PoVuNeTb5uvRzlT0mrd+kpOeeUguGD1qDk0rNCK8UAzJpCBrzPWKHhHsvlxB9TptTKFqy2GHjFmueG2gjcrANH43DMamRiYIrh1Zx9UtJCSl/1DX8+XDhIVBOnR6g8iZcYG5VpL1oPQ==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aGejdLtqqeqTS+LhzhVB/uCia4zr9wCcncoELhh5iE8=;
- b=W8SgBQvOQNX2xl09dCnxg3tcjrpNFAdAsNNU9e8kp6NbEMvpDLkWCSJnU3muMWka4jb4zUbOmsZQ3+lBGQJLg4OKNYjqegbl0NqPy3zvnGN1ZmvEy+OTl3fQ8rqa7ixQhz3I+5eI4jZkuHTQaT8n3m8a3KLp5MvAQnPtrE6+qPnmJFXUnSAXSM39KQWBbYS6Lgv4XFqdUBIe0reeo/a7+fT4QCmj0BnBTZNhRXCChyl67ZptYgD3RMZjr3sDgMY/uTJWuktf6UAwJeFZt9QgIU/4g49UrZgunprmhuh5nKYjvGRPyHURgq7pkUeDYbNsm6U3ztYz0mHK53mSvgU8Wg==
+ bh=/r+59ob7WVf8SlKpXT2suovMK2nKO8PgyExxQ8P6Ink=;
+ b=YRalriYPY/33qUzpKoNYjbeR0Wb4eJtrEV2lt2pGPI11RWXo7XsiMdcKKa9updIEuwgTqylbIaSYLrqEsTYepAVngduWSwQ5c7yB8UU/T5hms34sQY45DHynSTgW6vIUqJjTqa7ctBNkXIOMexZVLtTuMTZ+cldPZusoaGnMLttVH2C76Twt0cxgt6K4Ec0wfmhGn3RrNtm82XZWPzokOw8kxj+IdeCNco/LbrzwtIkuM/nUN/Zg8jmpm03uTHwBfkmRFqv0vDpZaplAk0/JW0fdLDm9Po+84Qs0XiAYJ93x6Rm5rH5B3d0wA6t/FU/51qcUM6eyKjUbw5egSPZyJg==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by MA0PR01MB5501.INDPRD01.PROD.OUTLOOK.COM (2603:1096:a01:4b::6) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.34; Fri, 30 May
- 2025 17:32:46 +0000
+ 2025 17:32:47 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.031; Fri, 30 May 2025
- 17:32:46 +0000
+ 17:32:47 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>,
 	git@vger.kernel.org
@@ -47,10 +47,10 @@ Cc: Eric Sunshine <sunshine@sunshineco.com>,
 	Jeff King <peff@peff.net>,
 	Ben Knoble <ben.knoble@gmail.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: [PATCH v9 4/9] imap-send: fix memory leak in case auth_cram_md5 fails
-Date: Fri, 30 May 2025 23:02:17 +0530
+Subject: [PATCH v9 5/9] imap-send: enable specifying the folder using the command line
+Date: Fri, 30 May 2025 23:02:18 +0530
 Message-ID:
- <PN3PR01MB9597A0C8761F3E0E6B6A8539B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+ <PN3PR01MB9597C14385FFA97ADF5ED3C9B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 X-Mailer: git-send-email 2.49.0.635.g6f2668de07
 In-Reply-To: <PN3PR01MB9597B444D85F7A7D1B6546C3B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
@@ -61,7 +61,7 @@ X-ClientProxiedBy: BMXPR01CA0083.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:b00:54::23) To PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  (2603:1096:c01:f7::14)
 X-Microsoft-Original-Message-ID:
- <20250530173222.20211-5-gargaditya08@live.com>
+ <20250530173222.20211-6-gargaditya08@live.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -71,60 +71,60 @@ MIME-Version: 1.0
 X-MS-Exchange-MessageSentRepresentingType: 1
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: PN3PR01MB9597:EE_|MA0PR01MB5501:EE_
-X-MS-Office365-Filtering-Correlation-Id: d6c52a6b-2bc1-4ef5-14bf-08dd9f9ffd66
+X-MS-Office365-Filtering-Correlation-Id: 42e8a362-8541-45e8-03c7-08dd9f9ffe04
 X-Microsoft-Antispam:
-	BCL:0;ARA:14566002|5072599009|461199028|7092599006|19110799006|15080799009|8060799009|41001999006|440099028|3412199025|12091999003;
+	BCL:0;ARA:14566002|5072599009|461199028|7092599006|19110799006|15080799009|8060799009|440099028|3412199025|12091999003;
 X-Microsoft-Antispam-Message-Info:
-	=?us-ascii?Q?sg4eHLtbeFzk6W/GU7kAX6aehJc4Tnno/UsfkWacDv5RrcQy+kO9VN0OeJ8N?=
- =?us-ascii?Q?OtMvijxY0sA7hJk6kXBWiz3ygyqR3g9SMcx8oEzmFR0zLa54iZGnuDOtKEIy?=
- =?us-ascii?Q?f3ZlV1bIXe6xyxLurqREl2meB5eyUBEwKzjY7QuDR06l45eNYx0haOLO5bE6?=
- =?us-ascii?Q?IEk0Bc7H9/fgwqZogUBY6xMnI+WMj7KIAB+YDXIRS/FzJhC3s3sORD9B4Ghh?=
- =?us-ascii?Q?CDj5uX+GD3HjMGwh+MPEtNacTO8Wekz+sg8kJ210+1pvBB4X2JOd5Fm/5awP?=
- =?us-ascii?Q?+fAtI4PJOCqeY86g4ATqFYvQSu+2ngty4+uK+Ka0yE2zuOs2xGuOdvyafsx8?=
- =?us-ascii?Q?Z6x0dGwdrrkJHIPwSq7AOTyx3lZl8V0BXmZ2Uvz25ZpCPCZDTG6WOzlnbfQp?=
- =?us-ascii?Q?9qb63jS7Ciz21YZ0a/pxfkO5IY0RLAz5c0PFjP7HJhPMAHGf/8Ab9wtuEXrV?=
- =?us-ascii?Q?+TXhbG3L682CUP8RtxJRFZhQhGukc/+27iZsPvVSuUErTairV16xQFwUBIyb?=
- =?us-ascii?Q?7/gsga8nR8AuKwStrOAcppuZDF3EHhyE2lXm9cYq7j3YDsY/BoUrFpTTYQ29?=
- =?us-ascii?Q?n3I4ZzpvNj9gNTpzkg/5KnAWH2WKWw2Gp594Cbk6kiZCCPxKx1JQVOYfpsBt?=
- =?us-ascii?Q?hbSSZWWF2ZjNQ2UOSImxJGuJzkTv/6isYZSdCJF1+qEDkvHeVhRcYnZf4scd?=
- =?us-ascii?Q?7JRA/qsKBnPLcnw5rKrd6oT1sUnZykMjuxLwBbvgGaGIcHdwWIxizhl41/Yw?=
- =?us-ascii?Q?QhJqQOQbtAkl8hSzCIu9Ob1KIBpp73PtUSM54AkmKc7JrDiPXSBjXa5CUdIp?=
- =?us-ascii?Q?YwgMwuy+LXvwuPOmMiz29pFElS2Ri9hc1kHo0iZTpDMi3laSXr8GsFMDb+p2?=
- =?us-ascii?Q?vkFtZ2uFNKqAuM4XGppSkjuoJR6WN+QG+1nQzpFW+WQU2+K6lOaTgLs/+W9q?=
- =?us-ascii?Q?tIswwXdy+iiYGopAzO8Hntr1qWj/HAzZIlORDGGbKbSt+guWvJTzU8LL3oEx?=
- =?us-ascii?Q?SwFuEpeiACFi+e5EiFkHJYP3K2caww2QKqtF96uFJWRfWFNeNrTZIpqnAUBu?=
- =?us-ascii?Q?zZCyG0m08h/keW8SIcpmIu20Kqd/wvCX1IKRNK/3Y+vDoBPjHY8L8dpiHtv9?=
- =?us-ascii?Q?lOEkrTVmkBLPdEUdwjcMs87omqKcEwz+zh1KYowRAc3t/r3SyGOcKXQ=3D?=
+	=?us-ascii?Q?ATDpDbA6MntAvnLGdUN1q6bXnrusB5F4yfBawv1dHKJQVDtimVS0LrSs0Ye3?=
+ =?us-ascii?Q?H36C5yknK14ISuh2cCpK9POZemXjtax8LBLz80d0eqxStrLKjwGVMmhBANkb?=
+ =?us-ascii?Q?sM1h33vqtrwueKQdrx58yq8AcIxymgtfhi5rei37kcVZyoG1w2TAx3o6+vmY?=
+ =?us-ascii?Q?65AbmokZwHyJSi7gWlCuV0s5I9mIhKMOjyWhHKtWRD784VVwGTta2kjjnLt9?=
+ =?us-ascii?Q?2tzkAMkWOJ+qlxlk3wDBT+oNoSnVez+s9G4l+uE8gG8GqImjGhz4G6F0R4VV?=
+ =?us-ascii?Q?gC8k17LFgv5KTapK7xNSFmNIkKX2GmHFQU0OBSLkMBAJ2VI+EDHJSIISqL/G?=
+ =?us-ascii?Q?NWa+GfvJcGRaQpCSBBpo0HS3FGj27pnMT3CMRVjBfW0jy/EHfzyXNaMTwUh4?=
+ =?us-ascii?Q?vfdCTHkKqSnjKjRRFHKN9/dS5Qb5ytRUKJCE7uwNFreo5y/taxVLs00oRlpo?=
+ =?us-ascii?Q?3kb3lhvPhsxxanEyy8ZLkPaR2XUFMoU63MPw0O1hRBgKiz3vCjKt67J/J8nw?=
+ =?us-ascii?Q?R3GcMDWBDEctsARCS/KvmfSwTXnogxnTRYSNdZH3rODK5Anq4Ewyz61QaTm/?=
+ =?us-ascii?Q?XzsxC7rMdjBBtarysUI/2OpujGplkbZssCOGNJ60rZiZxe3XUNQpBJF0Tnvs?=
+ =?us-ascii?Q?6IEEZafFi6KwkIweeo6bH9XyXkRdnfREKg2a5iHu4pV9+HSbT8hSUM3w2//Z?=
+ =?us-ascii?Q?QPKaBbtMtg+AJYPmixBlo5T6Uc7IE+ydOPoRcxT6xIclwjbeViBMrAWI/VPo?=
+ =?us-ascii?Q?BapFlqHL4yaQ9oh+Q5Njgt5eu15fGoBvI0OPKx7fUcYpHzSL9EMx90JQAW3x?=
+ =?us-ascii?Q?4U8uvRBBkt4nkxqMpsDqC+A/vLP6GybhXc2eXmkSxw8tTkCHE0nCMZEanhPO?=
+ =?us-ascii?Q?Yex638+6pfOR4nIRHTJrfBXaGCNPJnkxKnhBn5NgodT8aHBJ7vLYkXJ9BG4C?=
+ =?us-ascii?Q?NCnbIFGEIXXYLZ/M8aVmGw+6cNl6GYZwTIpG8wpGA9wUQSDbE8LR3d4Ni6LU?=
+ =?us-ascii?Q?iUYwizwfq12PcH/GkjWvKsjimiO4/ArU6k4dV55MYrxe0/Y8QlTgVmv/w/yZ?=
+ =?us-ascii?Q?+JmGCY5JYgfX2uhdO8iO0Ji43+vigL6V02U2rX5iphvgJ+PVJOwcO7bpTeLm?=
+ =?us-ascii?Q?vKCDr4jrHIbF/k1UHTRYuIMgzSF6MLZxOg=3D=3D?=
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
 X-MS-Exchange-AntiSpam-MessageData-0:
-	=?us-ascii?Q?aVRSKG+1t4eoEAauH804/ltpk2cvQtfi4zQ1nxsQTcETSi9RtXvgXFdUrTmb?=
- =?us-ascii?Q?nFmaNP2OsdZcXfUJ77NoUpLASFGX8rP/9uySCyP1LD9GlYrfMAOnORGvmL5H?=
- =?us-ascii?Q?DPxQXe8ZKhNY0NDB0HtGGk64fkweCV/iwuBJA/rB/yPFexAxrRCDN5KD5MPX?=
- =?us-ascii?Q?SkYXEk7eioY6uSCfy7lU5301zafZ8zu9WvxgXmRAbXta7BqmyavWmY+MQ/wu?=
- =?us-ascii?Q?VmjbunH6W8aYF1zFa8XJUvQx21FrxMXSwJk5ldySLQBRa86bdKgWyaC9pz0D?=
- =?us-ascii?Q?zddDXfyysGskoCuN0hhENwPJ7TK83BFbZamUrylGTsPXqkYNztmFSkfkvykG?=
- =?us-ascii?Q?GpvVsBfzfH0WXNm+cdHndy6o8yFw4tAcNCUSZ3y2QqbCWL3o3ERViPLx1uV5?=
- =?us-ascii?Q?IqVpR2h0mqdh7WdDR/suH/ixqkmhH4szRij0NC3+SCEmSoozehw9+JRO65eK?=
- =?us-ascii?Q?J1PxXocCCPO0QehqK+6G6ZPai4Q1RlmDSGpTUU4YYZTlOYh8AsYw9exaarx2?=
- =?us-ascii?Q?Y2OgMW7pz86n8Hu2HQmFThB/mZwW6VEVj1JsHSu4e4Pzbjc4vXRCYgK11G6z?=
- =?us-ascii?Q?NUBJCHKG13aX3YBBgR3JbR9z9Dw/1G+Ed7FSoNfzC3NttXmoY637drj3JYnc?=
- =?us-ascii?Q?zZ+T/H8nRQ1koXTye94WsSkPHfLrOGMC8reQKUq8oh0FEpPwgNqiAMsV+UCC?=
- =?us-ascii?Q?fK1PvF+PwWerf7OQJc1A1Eu3m/dwZUcUD9YUJs6tAtJPNwxiH1MM5/DKKHh6?=
- =?us-ascii?Q?thtd57Kl9mXYncRlo71PxzpcslXYuilohUEFrdUZxJHyJ7Rzmu3QYm7QLqao?=
- =?us-ascii?Q?c6glsTH0miJZAJqFzheaJdMQujPJwlmq8BIEf2xH+xGKEXxbsngDVu/yhayZ?=
- =?us-ascii?Q?YAFVPzxGOEjURTvnFC2RKBTZDosPQN7LLny2rCCN1YV76A2txYWpUg041KQ2?=
- =?us-ascii?Q?X7Lf2a+M3gn6cf32SLhp+nbX10kV0WFIsRhwBDtYkDJC018cnijZGkfObIBA?=
- =?us-ascii?Q?qPyL0X7Yz6dicSH7paI4JbT8NZZpKnGqD8BeaWrmlRupzIIT1G8v4EjioMc2?=
- =?us-ascii?Q?YSCF9IKCdpPG1CMVZAB+njzcsxohc5Bw/wjiCUFv1z2hWd7fSViWRicyayds?=
- =?us-ascii?Q?etpnOPue3xdh0mSqfSfHeuuY7dlNO5F+fRA6Ddj+E6+3KpzRfTEgHPwuYBeS?=
- =?us-ascii?Q?inPr1Iuxz5ldOSZcbVopWo9GybPagLAyRIePCC9XaKOD4kbUCIfyIyyfe91w?=
- =?us-ascii?Q?NI3w4iE0N5kuZiR8H3HtfH2kmTpc+g7mFu63YBpOvurz4tkXueCGS1sN3uW/?=
- =?us-ascii?Q?/SZMMcrlQxFZhshHZdYRt4eX?=
+	=?us-ascii?Q?WZqlIAVFwp/VWXOpcgJMUrT33WzMpKI5cakLTH0Akl2n5oBGnmxmK/0rwYVN?=
+ =?us-ascii?Q?D9j/MMsw/l7GQyGL7AKbdqn87b6kJAnU6Q2TKVS3waF9ojP1/SReqWQ9zWD/?=
+ =?us-ascii?Q?dabX9FGapV0uDXP3mdyO0042iajeK7oWYDIAdOgtWxoeQdgDJv55A0SHPElm?=
+ =?us-ascii?Q?FAsozzNlYO0NF5gDmRXwnDq3S5RRTrdPsRfjMr/SE5A5en5MeuGhvlAl/t2f?=
+ =?us-ascii?Q?e5cxaERQM9IiLZiJCpYNJp6l/ysr38uKxtftUl1S1/N9RSiv++HWuQVPN1ow?=
+ =?us-ascii?Q?WUGTG1+v+x5D2bJQ0uYDKoOtp6WKFjH0jDIsshG4PTdemdEiv0b5de9hDCJb?=
+ =?us-ascii?Q?ppjgLJg0h/xRFedEa6ZeUhnbgqU0gQxYchpk9U/GzfTaxF+Mk4tlB6AIpIWs?=
+ =?us-ascii?Q?UBfJ7uTT0FwbapGNYWP6eM7GWFIpVWRel2e5I5R95O328RN8uh9+IAwtJdUO?=
+ =?us-ascii?Q?sRjmknHIz1HAEgv4ZowhnCDQmF9Wmm6Ev+O/9QnB86ZG37hzU1rBW7ADuSf3?=
+ =?us-ascii?Q?uMTVnB2/tUFflBlXv7jgc3piWDyWMIL2vuOrMsSbu3cetgF8dpoVckXRwyWV?=
+ =?us-ascii?Q?f0zwWxR3yK4O+AqB9DAMaUzM8PcoLKDCZ+IRVfEOdOtdgDjyp/QW9W0TUVHh?=
+ =?us-ascii?Q?2aZL+HtaifU+j47AzYBfEU3rhXrHq4x28C98gi+IS6ZeXn3+3cCLdjsfGzxY?=
+ =?us-ascii?Q?ZIIqcSYRVuqv9shJHMx7df2JEVGnnTqtmvQtUs5ATYAi5c0zgT7s3lnjum/0?=
+ =?us-ascii?Q?OoETiAgK5mZkG9ayq8w742zlurOi/LBmdmjEk5JueMHFQqL1ffWYsoYynRAz?=
+ =?us-ascii?Q?AgQWKy5Cw1OHbi46MTEq1j1ocjkBKZox291TI90XbEZ+GxpGe1RHCzaoGH5m?=
+ =?us-ascii?Q?negNu0B7kY2UlqtmNUgtlAl/fHWYn59UyV00q05gdB54zGsFci2u27tQTofu?=
+ =?us-ascii?Q?EL3JMjHWtYBArfAigJzPkNfw3nGId1QV80ByoDJ5zlPmOArR65mhJTT/3E0t?=
+ =?us-ascii?Q?c55m4XOJFK8Vn9u4BaOQS1Gsjnj3139mgEEdh+PBlYnEHSswHzm1H3IPDVCd?=
+ =?us-ascii?Q?Sg9Sm7FY2EElvhKEhduPQoPy9xASYddKnGxNVEYYsb+sdYkdOiel4h29RAsT?=
+ =?us-ascii?Q?knDkIi39LUfQmtiHSvpXBdgIvOHG6JEa9pBD/h5x0LkkE4fSESTHFSOZI4Uo?=
+ =?us-ascii?Q?YLD4p/rOPrp5TR8Q4onuXOsxjoPN9Zt+rCJ8RkNJ+dj11mQupsolc9jkSVu8?=
+ =?us-ascii?Q?Frwp56CJc0irXwNUPQxlvOZnZJbAQhLJH5IC8g7C9ACMZC3thgiGrf2Jd0Ha?=
+ =?us-ascii?Q?piqs8ZfuBLCbCdZhE4yj2BG5?=
 X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6c52a6b-2bc1-4ef5-14bf-08dd9f9ffd66
+X-MS-Exchange-CrossTenant-Network-Message-Id: 42e8a362-8541-45e8-03c7-08dd9f9ffe04
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2025 17:32:45.9352
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2025 17:32:47.0189
  (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
@@ -132,29 +132,107 @@ X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg:
 	00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: MA0PR01MB5501
 
-This patch fixes a memory leak by running free(response) in case
-auth_cram_md5 fails.
+Some users may very often want to imap-send messages to a folder
+other than the default set in the config. Add a command line
+argument for the same.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- imap-send.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ Documentation/config/imap.adoc   |  5 +++--
+ Documentation/git-imap-send.adoc | 15 +++++++++++----
+ imap-send.c                      |  9 ++++++++-
+ 3 files changed, 22 insertions(+), 7 deletions(-)
 
+diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
+index 24e88228d0..829d9e0bac 100644
+--- a/Documentation/config/imap.adoc
++++ b/Documentation/config/imap.adoc
+@@ -1,7 +1,8 @@
+ imap.folder::
+ 	The folder to drop the mails into, which is typically the Drafts
+-	folder. For example: "INBOX.Drafts", "INBOX/Drafts" or
+-	"[Gmail]/Drafts". Required.
++	folder. For example: 'INBOX.Drafts', 'INBOX/Drafts' or
++	'[Gmail]/Drafts'. Required if `--folder` argument is not used. If
++	set and `--folder` is also used, `--folder` will be preferred.
+ 
+ imap.tunnel::
+ 	Command used to set up a tunnel to the IMAP server through which
+diff --git a/Documentation/git-imap-send.adoc b/Documentation/git-imap-send.adoc
+index 08ecb1e829..8f221240d0 100644
+--- a/Documentation/git-imap-send.adoc
++++ b/Documentation/git-imap-send.adoc
+@@ -9,21 +9,23 @@ git-imap-send - Send a collection of patches from stdin to an IMAP folder
+ SYNOPSIS
+ --------
+ [verse]
+-'git imap-send' [-v] [-q] [--[no-]curl]
++'git imap-send' [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>]
+ 
+ 
+ DESCRIPTION
+ -----------
+-This command uploads a mailbox generated with 'git format-patch'
++This command uploads a mailbox generated with `git format-patch`
+ into an IMAP drafts folder.  This allows patches to be sent as
+ other email is when using mail clients that cannot read mailbox
+ files directly. The command also works with any general mailbox
+-in which emails have the fields "From", "Date", and "Subject" in
++in which emails have the fields 'From', 'Date', and 'Subject' in
+ that order.
+ 
+ Typical usage is something like:
+ 
+-git format-patch --signoff --stdout --attach origin | git imap-send
++------
++$ git format-patch --signoff --stdout --attach origin | git imap-send
++------
+ 
+ 
+ OPTIONS
+@@ -37,6 +39,11 @@ OPTIONS
+ --quiet::
+ 	Be quiet.
+ 
++-f <folder>::
++--folder=<folder>::
++	Specify the folder in which the emails have to saved.
++	For example: `--folder=[Gmail]/Drafts` or `-f INBOX/Drafts`.
++
+ --curl::
+ 	Use libcurl to communicate with the IMAP server, unless tunneling
+ 	into it.  Ignored if Git was built without the USE_CURL_FOR_IMAP_SEND
 diff --git a/imap-send.c b/imap-send.c
-index c07ff98c3a..d0c7bac030 100644
+index d0c7bac030..337f1049ca 100644
 --- a/imap-send.c
 +++ b/imap-send.c
-@@ -1046,8 +1046,10 @@ static int auth_cram_md5(struct imap_store *ctx, const char *prompt)
- 	response = cram(prompt, ctx->cfg->user, ctx->cfg->pass);
+@@ -46,12 +46,14 @@
  
- 	ret = socket_write(&ctx->imap->buf.sock, response, strlen(response));
--	if (ret != strlen(response))
-+	if (ret != strlen(response)) {
-+		free(response);
- 		return error("IMAP error: sending response failed");
+ static int verbosity;
+ static int use_curl = USE_CURL_DEFAULT;
++static char *opt_folder = NULL;
+ 
+-static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] < <mbox>", NULL };
++static const char * const imap_send_usage[] = { "git imap-send [-v] [-q] [--[no-]curl] [(--folder|-f) <folder>] < <mbox>", NULL };
+ 
+ static struct option imap_send_options[] = {
+ 	OPT__VERBOSITY(&verbosity),
+ 	OPT_BOOL(0, "curl", &use_curl, "use libcurl to communicate with the IMAP server"),
++	OPT_STRING('f', "folder", &opt_folder, "folder", "specify the IMAP folder"),
+ 	OPT_END()
+ };
+ 
+@@ -1762,6 +1764,11 @@ int cmd_main(int argc, const char **argv)
+ 
+ 	argc = parse_options(argc, (const char **)argv, "", imap_send_options, imap_send_usage, 0);
+ 
++	if (opt_folder) {
++		free(server.folder);
++		server.folder = xstrdup(opt_folder);
 +	}
- 
- 	free(response);
++
+ 	if (argc)
+ 		usage_with_options(imap_send_usage, imap_send_options);
  
 -- 
 2.49.0.639.ge2dd5d9d81
