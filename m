@@ -1,115 +1,181 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCDD8F40
-	for <git@vger.kernel.org>; Fri, 30 May 2025 21:55:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0F01D5ACE
+	for <git@vger.kernel.org>; Fri, 30 May 2025 22:23:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748642124; cv=none; b=rB9g6HB8l3aY++hOXVV7V/b7oPqo+6RWDiYyu4bH3V0diDpWDKqbI791Cg7Wj6LurK1vjvxL7RXltpGAVcpET2vj9FSTLTUvX5rSc4iEPW68Oa7jFHa0ECxaVsqnElYO5/eZD9hW6eRAMpowyUxHjGdeM8kh4z32zBebWn+U8tM=
+	t=1748643819; cv=none; b=XnpA9yjVpPVLPP12DF6wbuCL950Xw+/aehIdyhKJVl4hqWiLmJTfy+TiFUze/fkc2ZW8+MUWWfVyKw4bgOim+QzdMLI/o72ER4Uwf8MXOP7uQLsNMUkpo2WhxkXqHi19xK1lmtjB+mdFMGunemHWRu8fgacj4IDVAgfXVT7UEdw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748642124; c=relaxed/simple;
-	bh=Us4Y2RIpOELuH5U+SdRTB4li2KK/UoaOKq/uH6xVqEo=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SirmfS7qW5aIeCIkEAnm6PrTlAdHE+HXBor4zDR+qiD5kv4pdC1hlF7GjWGdbujyxzfJPKZ+rW+Zxhso7yXSOhoRAwJ7LmpqAFUE+fugp2InOZ/Sa//sdbvDvR+hC6YXT4qMGz58SNW2SPKFU6/CiO4I6RikX9kKDHABESVpRac=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b4uYHv4q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P3ll9MRx; arc=none smtp.client-ip=103.168.172.151
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b4uYHv4q";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P3ll9MRx"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id B1DDF13802B4;
-	Fri, 30 May 2025 17:55:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-02.internal (MEProxy); Fri, 30 May 2025 17:55:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748642121; x=1748728521; bh=Q/hqYz6G4g
-	ixy4oB35hhF6xFBEU+eXddaHgwMzaYz3g=; b=b4uYHv4qCUDdR5da9lfTtGGzNm
-	hXBkZVE2kDTDVYjfAsdn5tT+gBxkwQw+ztPydqq2SSE9mWSNWzEf7+n4/E00p/50
-	YPQ/MMpr8691X+9SK2HHX5rxoBkgPxi09JtENWcs9hRJeKQMJJUTPkh7Qs6QIv4U
-	gOiyPO70rbpO00tiwNePq64gClocQITdG473M4j22VFQYcieJbyM+NGm5uvbHldy
-	jg99x7+Clr2kgvJiatorVz0eDFqvvoOFDhnj5n5aB6zPM0BzfMiMAiSjhlzL6YJE
-	VbxvDuiR73UXGCiFEnt8g6GkTwtOCZRzJVHUpjitUU3SEF1D2/z6wj4OyXhA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748642121; x=1748728521; bh=Q/hqYz6G4gixy4oB35hhF6xFBEU+eXddaHg
-	wMzaYz3g=; b=P3ll9MRxGQHfK7ms9NyQLoPnGBA0EpE1LBwD3kbJjeUydV60c41
-	Eeyw6S56t9LACxIB7xD4nsM6aNnHQBQgRs9jvddRlWDq9sTEMxVJq7Q1DMY576XX
-	Af1sEbsW2Gt7+KFLk0uiDvfZDpAiskacKADyacqq3xQiYj4R18b1ADUziIGBJC+Z
-	tI40/GkLyWzNp+9zVLtNB9kC0p0JJT3fDzehZKGR29bMLVMN/YYDk3lBVF9bNiGc
-	UAQSQtJTS2NH2GjmL6mYogKuhWmZBXlz3u8ZzvvjxVhgWUpgONku1M7GvZvXGizH
-	RszxorgexSNZ4YeBqZZHKMUEc14YHPrHqNQ==
-X-ME-Sender: <xms:SSk6aIBqsuFPIOF2-cp6veGrxrjvP_-O7w1b22PW66Ry1uZyYeH_bA>
-    <xme:SSk6aKh0nNqQj8FzNjzcELNmBzkEgQDEbUrFOTBYRasC17Mq9LQj1atTbmoRyROQ1
-    0prrdKos3e1S9gppQ>
-X-ME-Received: <xmr:SSk6aLnzrNedKRjpobF9Ab-XMfGcCpivwJdSBhA0OiZJmYIEK43zXUmnuecPAT_5q65CoefSrzWuwx7HaKlylQMFjwiJj2T6thsV0es>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeftddugeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrnhesshifrg
-    hgvghmrghkvghrshdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
-    nhgvtghordgtohhmpdhrtghpthhtohepiihihigrohesughishhrohhothdrohhrghdprh
-    gtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdr
-    tghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvg
-    drnhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
-    rdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:SSk6aOxnC5lDepjgLweU-R8sic8RO79L8WaBnUSVK_KUUiauDYSM0w>
-    <xmx:SSk6aNQLDRtcESaCYa_RzTvbN0QTjprBPXpF_2xKDNW9azWmK_p0Lg>
-    <xmx:SSk6aJYdhX1ycHgyv2nlKy8ZCptElAUjNU8zZCJWsQjz5kB-5xlESw>
-    <xmx:SSk6aGTuJ9cffCh0nky08Zp1ZhibDISVD99EU62w7UJ-UqGrFFMNsA>
-    <xmx:SSk6aKVQWkUS_K4wakjF5rJycJExG4Ss5msdo-q2kSfw_rOpWi19xknZ>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 17:55:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Julian Swagemakers
- <julian@swagemakers.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Zi
- Yao <ziyao@disroot.org>,  Kristoffer Haugsbakk
- <kristofferhaugsbakk@fastmail.com>,  "sandals@crustytoothpaste.net"
- <sandals@crustytoothpaste.net>,  Johannes Schindelin
- <johannes.schindelin@gmx.de>
-Subject: Re: [PATCH v5 2/4] docs: improve formatting in git-send-email
- documentation
-In-Reply-To: <PN3PR01MB95974BABA153882DE494D06EB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Fri, 30 May 2025 22:49:21 +0530")
-References: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<20250528070521.17379-1-gargaditya08@live.com>
-	<20250528070521.17379-3-gargaditya08@live.com>
-	<xmqqa56vl1uq.fsf@gitster.g>
-	<PN3PR01MB9597008B30AB91C9539E7C8CB866A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<877c1yb53w.fsf@gitster.g>
-	<PN3PR01MB9597DEE8C41CB1599B9A97CEB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<xmqqbjraf29c.fsf@gitster.g>
-	<PN3PR01MB95974BABA153882DE494D06EB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Fri, 30 May 2025 14:55:19 -0700
-Message-ID: <xmqq5xhhepbs.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	s=arc-20240116; t=1748643819; c=relaxed/simple;
+	bh=TuDS//9TgqrUu1aqIlgthRijwi6ODwqgFjeZ/cIrMbY=;
+	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=Ir7zQVjE62ocoKQUaf4yJdQDkpv/gQbGAG/FcZ5zUMGLaAfCf/w3scsdArmeP70ff/FtpJ2vqegSBzD3tqu6SuvSNz7ivzmjEYnZmRCiPtLRmqUvHDRzKqlgNHgqTLOKv8/10Gb8imxh+txk15wQXltcfwZt7cshUuru8AQzhTE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
+Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7c5f20d512fso44431185a.2
+        for <git@vger.kernel.org>; Fri, 30 May 2025 15:23:37 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748643816; x=1749248616;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=FTmBiXqI6VwZYlC/E8Tu3gAgdENvwYfbo3J1TtY+NRA=;
+        b=rRo1G4U/cvtP55wzAtiMi1qfM5es3idrPOrgJJSpF11jdFvw7t5Na9mDKBX6TAEQ80
+         Yhwo3FlgTDSFJNtU4vub4dY4Dw/nFuf+3RDhfATmeoJqql1J4LixpXpuAscQKYxuqP2G
+         ji/o/gPSvCUsn7EkT25R75EjCpdGtvE8g7+ZYUFmW+HgPRhqviWBpz2gI0vX5MafMYRX
+         uvck1Lae68vMfzAtX/83jfktWvchieGclGNun2mCu9mszaVpp9WcSH10fK9cA2fkvfAz
+         PNE6uEMSbp8bwmfmtyB17Rd7hVnmYM8UkJz4AcXGrwOVvhFomVVWU9pO0LPymH13mTFS
+         7kSA==
+X-Gm-Message-State: AOJu0Yx65brK+CVPto+UtvA64TZwZOboydPATi02ZJTJKkteAR/fJl9i
+	hnR5cJnBTzFuK9T3Kq5UpSZxvol6RM6N+fWg7xiDCDDEeUoe0Uew1pxF1XMwMhTplLsFqlY77Os
+	QoDOxEF8YICPjE1wzFdz+I9LRNHSwd8w=
+X-Gm-Gg: ASbGncsG2Ceu39gYjlYXZQh9aaKJrEnurkbNNCoYauNWUFmmmOdWcHQYzc/DeO64L7G
+	xbzTVIhbgo3zs+k10UvPbDwuMn0wL5y6EiHaIHl47/ZT8Pm5XMXICVJqywwzQEp0JseqrxNRN8D
+	xtq+ejjmp1yMlP+xZm6exN6MAb7ImnbRA=
+X-Google-Smtp-Source: AGHT+IF5rBcYkGDsaFtyN6dzSID+HN/gLax5nj4IbEIloUEOzGMLkR6+qqUPyjUNCdp0zgS9TCY0lZR5h+9DMQOD470=
+X-Received: by 2002:a05:620a:40cb:b0:7c0:b018:5941 with SMTP id
+ af79cd13be357-7d0a3d978d1mr218428785a.7.1748643816504; Fri, 30 May 2025
+ 15:23:36 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+In-Reply-To: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Date: Fri, 30 May 2025 18:23:25 -0400
+X-Gm-Features: AX0GCFsEyD6P1YL5w50GXoBJhRRQ412qpq0yE5FaiuyzaJu0h_agqYmWPhOQsbc
+Message-ID: <CAPig+cQiw03qfwwE9Md+LdKeS-6BGx0M1+0YYDUDXO9UPVo+wg@mail.gmail.com>
+Subject: Re: [BUG] refs: verify does not work if there are v2.43.0 or older
+ worktrees w/o wt. refs
+To: kristofferhaugsbakk@fastmail.com
+Cc: git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>, 
+	Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>, shejialuo <shejialuo@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Aditya Garg <gargaditya08@live.com> writes:
+On Fri, May 30, 2025 at 3:00=E2=80=AFPM <kristofferhaugsbakk@fastmail.com> =
+wrote:
+> git-refs-verify(1) checks worktree refs since v2.47.0-111-g7c78d819e6a
+> (ref: support multiple worktrees check for refs, 2024-11-20).  This
+> causes the command to always exit with code `255` and stderr output
+> lines for each worktree created on v2.43.0 or older that does not have
+> worktree refs:
+>
+>     error: cannot open directory .git/worktrees/<worktree name>/refs: No =
+such file or directory
 
-> Thats definitely much better. Although, not really in the scope
-> of this patch series ;)
+Interesting. I didn't follow the topic which introduced 7c78d819e6
+(ref: support multiple worktrees check for refs, 2024-11-20), but I
+can confirm that this is a problem.
 
-I agree.  As you decided not to touch this part with your series, it
-is perfectly fine to leave it as-is.  Your series is not making this
-part any worse that way.
+> This is apparently caused by worktrees created on Git v2.43.0 or older.
+> Apparently these worktrees don=E2=80=99t have this directory unless there=
+ exist
+> worktree refs:
+>
+>     .git/worktrees/<worktree name>/refs
+
+Indeed, the "refs" subdirectory was not present by default in older
+Git versions. Were you able to track down which commit is responsible
+for that directory getting created automatically when the worktree
+gets created?
+
+> -- 8< --
+> From: Kristoffer Haugsbakk <code@khaugsbakk.name>
+> Subject: [PATCH] t0602: demo v2.43.0 worktree problem
+>
+> Signed-off-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
+
+Even though this is a bug report and the patch you included doesn't
+provide a fix, you did craft a couple tests, presumably with the
+intention that they should be used by whomever fixes the problem. As
+such, I'll give them a bit of a critique...
+
+>  t/t0602-reffiles-fsck.sh | 43 ++++++++++++++++++++++++++++++++++++++++
+> @@ -886,4 +886,47 @@ test_expect_success '--[no-]references option should=
+ apply to fsck' '
+> +# These worktrees will not have a refs/ directory unless there
+> +# actually exist worktree refs
+> +test_expect_failure 'works with worktrees from v2.43.0 or older without =
+worktree refs' '
+> +       test_when_finished "rm -rf repo" &&
+> +       git init repo &&
+> +       (
+> +               cd repo &&
+> +               test_commit initial &&
+> +               git checkout -b default-branch &&
+
+This `git checkout -b` seems unnecessary. The expected test failure
+occurs without this step. As such, it's probably just noise which will
+confuse readers rather than help them. I suggest omitting it.
+
+> +               git worktree add --detach ./worktree &&
+> +               # Simulate old directory layout
+> +               rmdir .git/worktrees/worktree/refs &&
+> +               git refs verify 2>err &&
+> +               test_must_be_empty err
+> +       )
+> +'
+> +
+> +test_expect_success 'works with worktrees from v2.43.0 or older with wor=
+ktree refs' '
+> +       test_when_finished "rm -rf repo" &&
+> +       git init repo &&
+> +       (
+> +               cd repo &&
+> +               test_commit initial &&
+> +               test_commit second &&
+> +               git checkout -b default-branch &&
+
+Unnecessary branch creation?
+
+> +               git worktree add --detach ./worktree &&
+> +               (
+> +                       cd worktree &&
+> +                       git bisect start &&
+> +                       git bisect bad HEAD &&
+> +                       git bisect good initial &&
+> +                       # Simulate old directory layout: delete if empty
+> +                       # But there should exist a refs/bisect/ directory=
+ now
+> +                       if [ ! -e ../.git/worktrees/worktree/refs/bisect =
+]
+> +                       then
+> +                               rmdir ../.git/worktrees/worktree/refs
+> +                       fi &&
+
+A few comments...
+
+First, I'm having trouble understanding what the intention is here;
+the comment does not illuminate. Even with v2.43.0,
+.git/worktrees/worktree/refs/bisect exists after "git bisect bad
+HEAD", so it seems that the `if` condition can never fail, and the
+`rmdir` is dead code.
+
+Second, this project uses `test` rather than `[` in shell scripts.
+
+Finally, I see that other parts of the script are already (perhaps)
+too intimate with the structure of the .git/ directory, and you may
+have simply been following suit, but these days we often want to
+abstract away such familiarity. Hence, rather than hardcoding the path
+"../.git/worktrees/<worktree>/refs", you could do this:
+
+    refs=3D"$(git rev-parse --git-dir)/refs" &&
+    if test ! -e "$refs/bisect"
+    then
+        rmdir "$refs"
+    fi &&
+
+> +                       git refs verify 2>err &&
+> +                       test_must_be_empty err
+> +               )
+> +       )
+> +'
+
+Overall, although the first new test makes sense, it is not at all
+clear to me what the second test is checking or what its purpose is.
