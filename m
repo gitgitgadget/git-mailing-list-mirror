@@ -1,117 +1,104 @@
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com [209.85.222.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8935148850
-	for <git@vger.kernel.org>; Fri, 30 May 2025 20:51:33 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.171
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8C9218E81
+	for <git@vger.kernel.org>; Fri, 30 May 2025 20:55:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748638296; cv=none; b=Rm6RZOUTrPaFKFnYB8LG2cL6T5Mg5mKzR342VE12RCXJHKaJxATfw8g9Qrydv3CJ7qqCkfieyNowYhQRwFg691UMRAWReX+YFvfjf+VorrAUMrZg5GIVlJNIDP+Nyta3a9QJfgL+g2yl1ChLDVsljxRKwlXJEDWjc0deS08WPLc=
+	t=1748638524; cv=none; b=sCx13jHIFmLFwUHfBea+vGdizRprAiQGdEKDx6UjQ9f2LqCuMPYO6rrTM+glRE66DldxUWS9WTdCDC9fKsxZDOt7ubOk8+vhwR1LsSoCmWnseLdYwgynsedkGvDd+IpWenN0h/nZSAxMroGtEy/HEsfWc6Qhv8yandfQkfU+UG0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748638296; c=relaxed/simple;
-	bh=zLhv9/eYqNHN+zRD2NqWmf9GiTPdh0bP0kmf2LkOYXI=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=dqWY7CtiI13QKhetqFdaQagJC9KhGdI27KqVnXvvtw4doCUDeVLwmrYVaL3r0UojqAsCnZp5hR1iQXXKCCr9gTNPq8apRKPzL+zkQg+lH3k+KOzzpQKcUlFD3QLXABqDfRJOFE3B0rDF08zl2rdNEx97/OQjKR8Pjz7FnZd1jXk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.171
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f171.google.com with SMTP id af79cd13be357-7d09b0a504fso22136285a.0
-        for <git@vger.kernel.org>; Fri, 30 May 2025 13:51:33 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748638292; x=1749243092;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=fqw33rX65e8YlWbSav/mrNC552BRGQWjbA3AgEKnbBU=;
-        b=tMO3tF9Bbna0luqeJmqumhQJLOrhvriex4Bsw41drRpS2DlK4Sxrv4upX7nrDj/OaX
-         K5+7wERIQoajCWlRXY4qpgcoqKoMCty+B+q3agAA461PEBfAMA+78iQAFtCJXRN/S31e
-         wGg4ivwnoBaCISusdej4scSa07vIr6pju3+KB0E7sz/GGdwvSLFm5mw2Unw57B0XymF7
-         JiZzhNlbpmSXHIPO/HWA6gVgGQSi6OKMVHD5TPFqVjkW/3eNTZxnqvHR8v738RAxQtjU
-         GUj7Geuc0YiMkGzod4gMaTLpX51yn7YG1M0wWgb7by/cVLVW6Lb1GoK9NC9OzgU7xPiZ
-         Wq+g==
-X-Forwarded-Encrypted: i=1; AJvYcCXnYfIlzRhEDL58/BvAQpMdS2suND7D/ZpLJQ/JlbiMNgh1yW5hZ8ZL/5da5X46at4nigI=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yzj03jX9bH7UmxiVJ2upDRKxjpKNUHOGFnEFon0sF2G1f7eeRDV
-	PBQkkrReMgLbT4cWBg7yehjbv+9CTGUSF94UJleVXnhO4Y7YbGqYPiInRqIpRAoE07I6XLo1Dpv
-	vVhXROlyTH47wQeqvBNCe8GwMR0axgRw=
-X-Gm-Gg: ASbGncssXmjxaa5z/ounpT+v2ZdeS6C++dUfzI6ragR2LvhqSY1nQhM5iYNYZAwqWyz
-	hWqLQrMF5d7rvc3rqXjgM/QiIzMIF9PN5JrMyWJCdUM/hPiu+zWoz9eH1b0YyarfE3heniiFgu9
-	DI3+6uvjiX1C5ri/dmhS9SZQGAcp76Lgg=
-X-Google-Smtp-Source: AGHT+IGjYWX+1T/pXjCLyDyKG3cP5HdZl3wPFL/pCzG9dtEaaaC2Y/eXVQx1YHBckR3jIqSsJOpa/2YlqI3XkaAfIuw=
-X-Received: by 2002:a05:6214:2586:b0:6fa:ba95:e4c2 with SMTP id
- 6a1803df08f44-6fad076d130mr18896226d6.9.1748638292621; Fri, 30 May 2025
- 13:51:32 -0700 (PDT)
+	s=arc-20240116; t=1748638524; c=relaxed/simple;
+	bh=DmI0tP0s2TUuZgEnwmxd4N7cl3kI6PNeVkg4+Yyj3FQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DF82sJbdI1TXJNOMxxsTpWp9NZrSEpMVpQVZar/f16DsiMJfDbJfAmgPfAiq99Vw3Mazh8JCOO4zNO2f6wWxmRb/TAHmvFDmmGdaAXREFWDn/tq5tryOkwhlyQiRbL6vy0KYFba1AnKwEt2VV9oORV2aMdY6YiK3nLRbqiH6cZ8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Gelh0Xle; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MZtMVvfT; arc=none smtp.client-ip=103.168.172.150
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Gelh0Xle";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MZtMVvfT"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 34C4F138012B;
+	Fri, 30 May 2025 16:55:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Fri, 30 May 2025 16:55:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748638521; x=1748724921; bh=DmI0tP0s2T
+	UuZgEnwmxd4N7cl3kI6PNeVkg4+Yyj3FQ=; b=Gelh0Xlexd5twf3TnC9TY+OXDZ
+	TXFXH16TftQk04tNzLWy08TO3uDzmt1KeAhyA8h/4GpZOdwoWmcFdOhVjGtNOMc3
+	x2dd9laGLDeja8OLqTDBOejKTWhtzfELf4CAjAx80E8+5XG82WBB22kVKtwkuVL7
+	vRSqtLUYxHvBiclKAfcgBZltYTnn67mqV0oLBnaw4fUxYz/5d2cgOWXhnY+tVaVF
+	rh165AcqEgO4hdvWAfUK2ZUIpgJ3DQx1PFoSthnTCkgeFn/2rONV7Yb0KxRRwswz
+	/k7Od0ngIVoGLBgszYzIMqog2X9tHZCd0WiLgjUFYVXDrnpNbMt1MoH+0KKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748638521; x=1748724921; bh=DmI0tP0s2TUuZgEnwmxd4N7cl3kI6PNeVkg
+	4+Yyj3FQ=; b=MZtMVvfT9TaxZ8Qq7NDz4S4tguGTVDbTeqob7VKTylGl1agDh5h
+	/0OQYrytHvxrrX2XsaIVoc2WLbY0DvGhjBjiUYxa0kRcAB3DZ0JqF18EJp3iHvvJ
+	ZMFrFr2tX+HVYwbAtGztYFkVK2gdDY0Rz6Z3My1Sc7z7+/VaHwPlVkBvfalgFU1l
+	zpJO9AXTXxZQazc38KDJfm80qz0qQV/gQD0ATG6GtGY6RN8zHGdWUHtZ6FhKSLSb
+	W2Nyxib3R+KY6vUyhz8OBKbCbwKSZ/GGddLnVfsj5Pae8T9BYqD066WPu6fC9ax5
+	F8UtXCDKMqn8hLNs7C3BUB5L17GC6uND/Og==
+X-ME-Sender: <xms:OBs6aNThIOFtpOgGLQioPTZqqeJ7mAJNpYBtqkAFQcqW9hFdhclhEQ>
+    <xme:OBs6aGy7SrVLZmMi0EHJ-rhTDLxODQM2tZTHMuPIVy4jB4-1wWq3ocw3BBeZIqc-w
+    lgLnma6doYGvyv1Fw>
+X-ME-Received: <xmr:OBs6aC0tJbxFhm5jBDXLBYzPRSQpLUtGLMKN4oHMIF288wFYN-bj2J6Ei8D5TBrMxwrVxpRoGg-cS31TJFGVI5ECK4PcIMZbMF5XyoU>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeftddtfeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehprghtrhhikhdrfigvihhskhhirhgthhgvrhesnhhuthhrihgvnhhtrdhiohdp
+    rhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprg
+    hpvghnfigrrhhrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphho
+    sghogidrtghomh
+X-ME-Proxy: <xmx:OBs6aFAWynIdG7-ldXIYdXAAswsUfwvz64H-XZq-ejRaHuSyK-QkQg>
+    <xmx:ORs6aGgkG55y8nehpG5DLcP3EmliS3bROFUnrUOTQuhESS2yRBVeLg>
+    <xmx:ORs6aJqMCvVD4GK0eoq-o-DaXL8hcX_8q9ev23yWzDfQPPQ6Li5gbw>
+    <xmx:ORs6aBjLZWxyalNfCkzVDgUtzKBq4vL2P4ZwN_fITLLHk4hy32snBw>
+    <xmx:ORs6aDqCeubhD5EBmoHCMtfY60TT7kwU73KJAV0QoofSw6zyz1i1Z6GD>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 May 2025 16:55:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Patrik Weiskircher <patrik.weiskircher@nutrient.io>
+Cc: git@vger.kernel.org,  apenwarr@gmail.com
+Subject: Re: [PATCH 0/2] contrib/subtree: Add -S/--gpg-sign option
+In-Reply-To: <CANMzfzhhHX1J_vPH-DMD2kPmQ6G_6YUV=7aZ5JojGy-LU6guAQ@mail.gmail.com>
+	(Patrik Weiskircher's message of "Fri, 30 May 2025 10:33:23 -0400")
+References: <20250528130116.21534-1-patrik@pspdfkit.com>
+	<xmqqfrgnhuuw.fsf@gitster.g>
+	<CANMzfzhhHX1J_vPH-DMD2kPmQ6G_6YUV=7aZ5JojGy-LU6guAQ@mail.gmail.com>
+Date: Fri, 30 May 2025 13:55:19 -0700
+Message-ID: <xmqqo6v9es3s.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597B444D85F7A7D1B6546C3B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
- <PN3PR01MB9597BD09F7A450C6CA26B421B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-In-Reply-To: <PN3PR01MB9597BD09F7A450C6CA26B421B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 30 May 2025 16:51:21 -0400
-X-Gm-Features: AX0GCFswbvJVmkMxYFiV1W4i8vIw6vh1kRnBhFNSLbijNBZFvfNjR3cmoJ1Ig9s
-Message-ID: <CAPig+cSFLF9de3i7RsG6j4wSGkRRhGgOGOovoFXm9U2+t=qC+g@mail.gmail.com>
-Subject: Re: [PATCH v9 2/9] imap-send: add support for OAuth2.0 authentication
-To: Aditya Garg <gargaditya08@live.com>
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org, Zi Yao <ziyao@disroot.org>, 
-	sandals@crustytoothpaste.net, Jeff King <peff@peff.net>, 
-	Ben Knoble <ben.knoble@gmail.com>, Phillip Wood <phillip.wood123@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, May 30, 2025 at 1:32=E2=80=AFPM Aditya Garg <gargaditya08@live.com>=
- wrote:
-> OAuth2.0 is a new way of authentication supported by various email provid=
-ers
-> these days. OAUTHBEARER and XOAUTH2 are the two most common mechanisms us=
-ed
-> for OAuth2.0. OAUTHBEARER is described in RFC5801[1] and RFC7628[2], wher=
-eas
-> XOAUTH2 is Google's proprietary mechanism (See [3]).
->
-> [1]: https://datatracker.ietf.org/doc/html/rfc5801
-> [2]: https://datatracker.ietf.org/doc/html/rfc7628
-> [3]: https://developers.google.com/workspace/gmail/imap/xoauth2-protocol#=
-initial_client_response
->
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+Patrik Weiskircher <patrik.weiskircher@nutrient.io> writes:
 
-Not a proper review, just something I spotted several versions back
-but assumed that someone else -- providing a proper review -- would
-mention...
+> This means my options become:
+> 1. use --stuck-long or
+> 2. make -S not take any parameter or
+> 3. make -S require a parameter
 
-> diff --git a/imap-send.c b/imap-send.c
-> @@ -885,6 +889,66 @@ static char *cram(const char *challenge_64, const ch=
-ar *user, const char *pass)
-> +static char *oauthbearer_base64(const char *user, const char *access_tok=
-en)
-> +{
-> +       /* Compose the OAUTHBEARER string
-> +        *
-> +        * "n,a=3D" {User} ",^Ahost=3D" {Host} "^Aport=3D" {Port} "^Aauth=
-=3DBearer " {Access Token} "^A^A
-> +        *
-> +        * The first part `n,a=3D" {User} ",` is the gs2 header described=
- in RFC5801.
-> +        * * gs2-cb-flag `n` -> client does not support CB
-> +        * * gs2-authzid `a=3D" {User} "`
-> +        *
-> +        * The second part are key value pairs containing host, port and =
-auth as
-> +        * described in RFC7628.
-> +        *
-> +        * https://datatracker.ietf.org/doc/html/rfc5801
-> +        * https://datatracker.ietf.org/doc/html/rfc7628
-> +        */
+4. accept "-S[<key-id>]" in stuck form, and --gpg-sign[=<key-id>]
 
-On this project, multi-line comments are formatted like this:
+which is a variant of #1 may be an option?
 
-    /*
-     * Line 1
-     * Line 2
-     * ...
-     */
+Thanks.
 
-The same observation applies to other parts of this patch, as well.
