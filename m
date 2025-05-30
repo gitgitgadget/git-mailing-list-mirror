@@ -1,55 +1,55 @@
-Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
+Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438FD2367AB
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27AE92367AC
 	for <git@vger.kernel.org>; Fri, 30 May 2025 15:08:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748617732; cv=none; b=O7YeIaAF6C1XYGu+l7Xf+KFOVr3gxfJaTJCqC/InXjKQJ7Qyd9tSdEuJWZiS28Wd2PuVl9rfrxwY2uthe4Db3cyGpq94TUgfkhwa6ehUwX9KzLFzEaBsywGS9qa/dmlvTzOg1VPTQRCgAPisMMBFymuBTDme9Z2A9PqIcQ5ozew=
+	t=1748617733; cv=none; b=OkFfhmB/L3+aeEcTZYHOv51eK+tPhXdYKtAJZlB+nusE3mz8pvezYWTeyTTzzO/+6qCLN5vSzoRDTPz11SrbGNxPNGQzeo7edIe5xZfj6O38RjBdM2txIn8xHE5I+JIPdurSIqRprFhmAFnB5N0GTWaZ2jtGYs3Q0tGEhL12vmI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748617732; c=relaxed/simple;
-	bh=8zzBqnDAF18bFsqk9Ldp7FcXTkZoC1fdL+TssjmRkQo=;
+	s=arc-20240116; t=1748617733; c=relaxed/simple;
+	bh=Mk2E4ACYYcEN4iTqGHGvh8tNYtKDM5QNmYUsVUo37Es=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=U5xkROfnTV/UgnK91H0wPJIsQly9SiLdO9MEEqmSGkGeD3grgx3vckds4jgjq7UnPDUvryWjBWXdpVnsYq5fP2Ogy6bFK5aHP/kLKAQwfTPy4L0rdB1e99mjUS5uAxYtGPYDitThLUKdlqIENLGkCVcsXUeLvq5jT14aFxNVE/k=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fj72AfwZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J5WGumgU; arc=none smtp.client-ip=103.168.172.146
+	 In-Reply-To:To:Cc; b=cjup8NHRgabBGPtFrtmcYsRsbcJJHLGQSfuS5mrx9OVggM4iNwyCgO8cLKivBVFZSn2fORyhC55gwUMkLXBV8d5Aa4XZTSZXTNWJlZQAFck6LAki/3NwCVApxfUjv4scD1h7f2wU9SMNzaTAKizmCPRlZyk+g1UogtHMm7DjHo8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DIwxkDGW; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=RTP4iYDS; arc=none smtp.client-ip=103.168.172.157
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fj72AfwZ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J5WGumgU"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfout.phl.internal (Postfix) with ESMTP id 50F4A1380321;
-	Fri, 30 May 2025 11:08:50 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Fri, 30 May 2025 11:08:50 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DIwxkDGW";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="RTP4iYDS"
+Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 4C1791140111;
+	Fri, 30 May 2025 11:08:51 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-03.internal (MEProxy); Fri, 30 May 2025 11:08:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748617730;
-	 x=1748704130; bh=6oge/U/aglP31+wSztce+CpNg0ULJg/INTFXEme3qdY=; b=
-	fj72AfwZzDmTNsiMBsXJhv94Hbxlwni0ZI42dcdCVdqqMa3zyeTpgA8wXC0iMmg8
-	2ZZr61rS1XDj376lvGudY+4qBAQcY2kyxyHfGpLv7D2LpIfmLX457OOxTXSe1xoV
-	8Wh63rTsjR0dm9lvJ5E+sCvMMdcON5gPN8QCe7gIQvSOdmV9r7U5iCUiOtI7qwZY
-	HiBtmDyv0F9aV/+5+t51VjeOVWTgLJbl+zYaYGNmZPrtDoG0GRTOLP42aME6rlnq
-	jrK3EMmE6wocPM087bSnqDD+h70kKiI92aEBlst6ECtqlwuVL7ptk4bEOYvCdqVq
-	T5wLIZvLgG8VZUtpskdbew==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748617731;
+	 x=1748704131; bh=XjmGLFjlEjdqN8Pp/AE6iz4fco0M0AIEjEd4qSlCCbY=; b=
+	DIwxkDGWfwkf8du2C2qSiLgdbqH6b8dg01cLT5YMyXsLhi8PWXgBT+rASD9tS90/
+	cPJRq3KirfG0I9qGVLAYyInp719LOBzOcp357c7C6PWH3Ex0MjXfKdPMA+mpKc6K
+	KmO8EmyaZ9SxLh4aEvGU0q6I2/3nOGygXE/L2ryWsOlUL9sYlNrl6Zy8d3WBc9Uv
+	3ZIW6krwyxPNhpOSB6+xbPsWZ/FxBq5HYvdTPp9hoULkiUwd8h+vA1g7Xw3AtuHO
+	xRoLzfcRw21J7a2xm9UCXwv0NoNI3SwVg4o5j/j3svhsRiFpb5Z9w58Wv0QizLm2
+	1ymlHRdvM3En34tGGelJlg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748617730; x=
-	1748704130; bh=6oge/U/aglP31+wSztce+CpNg0ULJg/INTFXEme3qdY=; b=J
-	5WGumgUajttQN2pMHYu+MQh4oJqFdLU95qtuqxQnaOrEQ4eCqx4CxhVG/oF1p2bC
-	mzoX3TYxlxuZg8pDSWCWq7XS3CyqTZfsMOp9I+DZqewFYp3lC5l/Z/gUarrXFQ12
-	76ocVAjdQOSARGkclxEbCUnkCU39muebMJNvdLAuTlO7df3nA+p5qdQZWyO8UO4P
-	DYDY/0Tnc/T5RHsnt1rEBAnM0O+siV43ynanYWr2TyDqIS5gSqQugTa8p5usvF+3
-	6dQbYfM3KUCMQuK2TgOvIDEpMvrG3zEUi/O5VLmKpc6VVYs+NtT1pIytwpzbSMhs
-	PEfzhsGvOv1fk65PbgRAw==
-X-ME-Sender: <xms:Aso5aCiFmqqiwVQhd28jUNWdWb7xfgw19-lY1-feikofAiZRJDvrXg>
-    <xme:Aso5aDC-QjDI73nMxLgZ8xxPwyIMtOD_s6xlp4M_wZwosmbsN1yH2rdg02JHRfJoY
-    O_Q3Ag-pMFwXia3Nw>
-X-ME-Received: <xmr:Aso5aKFy6m7Z2Z1zCPIpRjfxyZDjARHi-JSin5SipRWcVX-cV0IMyIvDFgHWlPhvlSiHB4HRuZzGAQnanJGxET8caGGkYP2djV4-blcfTA>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748617731; x=
+	1748704131; bh=XjmGLFjlEjdqN8Pp/AE6iz4fco0M0AIEjEd4qSlCCbY=; b=R
+	TP4iYDSxczAcsp5UGrfdbnYw+xs2HZc6P0DMIIcyr6LkSnFXfA1X/Z+hfFI5aM43
+	sB2Ol42iiMTx9gUp66dncQjaGoangvFElSlKFG7kNPORj9V+mDoc/OgLYgDO65ys
+	WxSqyh7+yzjn/Yg34DOL23WtTqmw1b9WNkJAHjAsqutFob4aUbRn1Fr68XShZ4gP
+	Lo0HZW5Y6XlL2c1iq0AgJ0Z+EIc0I99b8IDwnKTstSaJ3Vq129uMP10QllkgEh9Q
+	Z8B9QSstDa890GZcDqyeGYmxFZ509Plk5ietcZmbPgU4X0l5atXxhgHTDfBopwCg
+	UJb5/h5NM753P8aS7B4nQ==
+X-ME-Sender: <xms:A8o5aFSq6B5mUY5Pj916P2STdXMUfrstO4D9T9BlVR6D1Yv7Ybirlw>
+    <xme:A8o5aOwZfldziPX8dPpPxSG-bkA38evmk_vQtAZXirbzpYrEV_UXy2GWaCIdUS0Kr
+    g2BPP2a4WiixGdnWg>
+X-ME-Received: <xmr:A8o5aK1p6xB0-3JMt8tEKowSXGCRZZ2OnAAmyGM5PsruRck0Bd1OrEt13uoEs7kH3UlUjwmUKc3dWTW0gnty8XzFAYeIGowgiE4VHWX8AQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvleeffeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -57,28 +57,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvleeffeculddtuddrge
     fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnoh
-    gslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
-    lhdrohhrghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluh
-    hsrdgtohhmpdhrtghpthhtohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdp
-    rhgtphhtthhopegurghsrhgrfhelsehgmhgrihhlrdgtohhmpdhrtghpthhtohephihroh
-    hthhesphgrlhhorghlthhonhgvthifohhrkhhsrdgtohhm
-X-ME-Proxy: <xmx:Aso5aLTgHmxxWQh9zzLhpgFFexSZQJi9ToP4wMXJiCxzBeAY3sMx2g>
-    <xmx:Aso5aPwoO0EUOOm3HndNIlwebl0O_7UeRh888VcbUB3H5v7nlTsYVg>
-    <xmx:Aso5aJ53Ob6Q7b-EuXgMqa5n7PKcAwQqE9_GhEI2YI5tydimKqleew>
-    <xmx:Aso5aMxzNVxGyLOjFtS7S-7zRRI3rUK0_42MNEoSyjl6E_SZTagRuw>
-    <xmx:Aso5aEnZ1b5vB8aSWksokEDvfcOaRhWHKxYb3dvhxnY_DxCkL6kjSpWg>
+    iivgepvdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepuggrshhrrghfle
+    esghhmrghilhdrtghomhdprhgtphhtthhopeihrhhothhhsehprghlohgrlhhtohhnvght
+    fihorhhkshdrtghomhdprhgtphhtthhopehnrghsrghmuhhffhhinhesghhoohhglhgvrd
+    gtohhmpdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghp
+    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehrrghmsh
+    grhiesrhgrmhhsrgihjhhonhgvshdrphhluhhsrdgtohhm
+X-ME-Proxy: <xmx:A8o5aNDYjGuJv_H5YYMZeLrnZkn8_yiSIeu27VpL8vSX9Ngm3in_yQ>
+    <xmx:A8o5aOj0xtHl1YTIIpw5NTrlbP-fbmaT5BC9u4RDrArIaM4RT-O3Hg>
+    <xmx:A8o5aBpThYjFBOtNQcHUjqp5amROYuwh1CA_D0KpDDeRFSgEmFthvg>
+    <xmx:A8o5aJhPA4RZoeGJ4cyaHCiPwoTbAbEXRvVkGUUeVwygptXKpXTnfw>
+    <xmx:A8o5aBU37qzZILQ6A45S9SxEAuh8LwCD2bHyIgdQuYLvaVRJo_hxvwTX>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
  30 May 2025 11:08:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id aeb53118 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 30 May 2025 15:08:47 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 607d8828 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 15:08:48 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 30 May 2025 17:08:37 +0200
-Subject: [PATCH v2 11/12] builtin/gc: avoid global state in
- `gc_before_repack()`
+Date: Fri, 30 May 2025 17:08:38 +0200
+Subject: [PATCH v2 12/12] builtin/maintenance: fix locking race when
+ handling "gc" task
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-b4-pks-maintenance-ref-lock-race-v2-11-d04e2f93e51f@pks.im>
+Message-Id: <20250530-b4-pks-maintenance-ref-lock-race-v2-12-d04e2f93e51f@pks.im>
 References: <20250530-b4-pks-maintenance-ref-lock-race-v2-0-d04e2f93e51f@pks.im>
 In-Reply-To: <20250530-b4-pks-maintenance-ref-lock-race-v2-0-d04e2f93e51f@pks.im>
 To: git@vger.kernel.org
@@ -97,71 +97,158 @@ Cc: Yonatan Roth <yroth@paloaltonetworks.com>,
  Ben Knoble <ben.knoble@gmail.com>
 X-Mailer: b4 0.14.2
 
-The `gc_before_repack()` should only ever run once in git-gc(1), but we
-may end up calling it twice when the "--detach" flag is passed. The
-duplicated call is avoided though via a static flag in this function.
+The "gc" task has a similar locking race as the one that we have fixed
+for the "pack-refs" and "reflog-expire" tasks in preceding commits. Fix
+this by splitting up the logic of the "gc" task:
 
-This pattern is somewhat unintuitive though. Refactor it to drop the
-static flag and instead guard the second call of `gc_before_repack()`
-via `opts.detach`.
+  - Before detaching we execute `gc_before_repack()`, which contains the
+    logic that git-gc(1) itself would execute before detaching.
+
+  - After detaching we spawn git-gc(1), but with a new hidden flag that
+    suppresses calling `gc_before_repack()`.
+
+Like this we have roughly the same logic as git-gc(1) itself and know to
+repack refs and reflogs before detaching, thus fixing the race.
+
+Note that `gc_before_repack()` is renamed to `gc_before_detach()` to
+better reflect what this function does.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/gc.c | 24 +++++++++---------------
- 1 file changed, 9 insertions(+), 15 deletions(-)
+ builtin/gc.c           | 39 ++++++++++++++++++++++++++-------------
+ t/t7900-maintenance.sh | 12 ++++++------
+ 2 files changed, 32 insertions(+), 19 deletions(-)
 
 diff --git a/builtin/gc.c b/builtin/gc.c
-index e92015887a7..e910a99e033 100644
+index e910a99e033..dfbf20491e3 100644
 --- a/builtin/gc.c
 +++ b/builtin/gc.c
-@@ -816,22 +816,14 @@ static int report_last_gc_error(void)
+@@ -816,7 +816,7 @@ static int report_last_gc_error(void)
  	return ret;
  }
  
--static void gc_before_repack(struct maintenance_run_opts *opts,
--			     struct gc_config *cfg)
-+static int gc_before_repack(struct maintenance_run_opts *opts,
-+			    struct gc_config *cfg)
+-static int gc_before_repack(struct maintenance_run_opts *opts,
++static int gc_before_detach(struct maintenance_run_opts *opts,
+ 			    struct gc_config *cfg)
  {
--	/*
--	 * We may be called twice, as both the pre- and
--	 * post-daemonized phases will call us, but running these
--	 * commands more than once is pointless and wasteful.
--	 */
--	static int done = 0;
--	if (done++)
--		return;
--
  	if (cfg->pack_refs && maintenance_task_pack_refs(opts, cfg))
--		die(FAILED_RUN, "pack-refs");
-+		return error(FAILED_RUN, "pack-refs");
- 	if (cfg->prune_reflogs && maintenance_task_reflog_expire(opts, cfg))
--		die(FAILED_RUN, "reflog");
-+		return error(FAILED_RUN, "reflog");
-+	return 0;
- }
+@@ -837,6 +837,7 @@ int cmd_gc(int argc,
+ 	pid_t pid;
+ 	int daemonized = 0;
+ 	int keep_largest_pack = -1;
++	int skip_maintenance_before_detach = 0;
+ 	timestamp_t dummy;
+ 	struct maintenance_run_opts opts = MAINTENANCE_RUN_OPTS_INIT;
+ 	struct gc_config cfg = GC_CONFIG_INIT;
+@@ -869,6 +870,8 @@ int cmd_gc(int argc,
+ 			 N_("repack all other packs except the largest pack")),
+ 		OPT_STRING(0, "expire-to", &cfg.repack_expire_to, N_("dir"),
+ 			   N_("pack prefix to store a pack containing pruned objects")),
++		OPT_HIDDEN_BOOL(0, "skip-maintenance-before-detach", &skip_maintenance_before_detach,
++			   N_("skip maintenance steps typically done before detaching")),
+ 		OPT_END()
+ 	};
  
- int cmd_gc(int argc,
-@@ -965,7 +957,8 @@ int cmd_gc(int argc,
+@@ -952,14 +955,16 @@ int cmd_gc(int argc,
  			goto out;
  		}
  
--		gc_before_repack(&opts, &cfg); /* dies on failure */
-+		if (gc_before_repack(&opts, &cfg) < 0)
-+			die(NULL);
- 		delete_tempfile(&pidfile);
+-		if (lock_repo_for_gc(force, &pid)) {
+-			ret = 0;
+-			goto out;
+-		}
++		if (!skip_maintenance_before_detach) {
++			if (lock_repo_for_gc(force, &pid)) {
++				ret = 0;
++				goto out;
++			}
+ 
+-		if (gc_before_repack(&opts, &cfg) < 0)
+-			die(NULL);
+-		delete_tempfile(&pidfile);
++			if (gc_before_detach(&opts, &cfg) < 0)
++				die(NULL);
++			delete_tempfile(&pidfile);
++		}
  
  		/*
-@@ -995,7 +988,8 @@ int cmd_gc(int argc,
+ 		 * failure to daemonize is ok, we'll continue
+@@ -988,8 +993,8 @@ int cmd_gc(int argc,
  		free(path);
  	}
  
--	gc_before_repack(&opts, &cfg);
-+	if (opts.detach <= 0)
-+		gc_before_repack(&opts, &cfg);
+-	if (opts.detach <= 0)
+-		gc_before_repack(&opts, &cfg);
++	if (opts.detach <= 0 && !skip_maintenance_before_detach)
++		gc_before_detach(&opts, &cfg);
  
  	if (!repository_format_precious_objects) {
  		struct child_process repack_cmd = CHILD_PROCESS_INIT;
+@@ -1225,8 +1230,14 @@ static int maintenance_task_prefetch(struct maintenance_run_opts *opts,
+ 	return 0;
+ }
+ 
+-static int maintenance_task_gc(struct maintenance_run_opts *opts,
+-			       struct gc_config *cfg UNUSED)
++static int maintenance_task_gc_before_detach(struct maintenance_run_opts *opts,
++					     struct gc_config *cfg)
++{
++	return gc_before_detach(opts, cfg);
++}
++
++static int maintenance_task_gc_after_detach(struct maintenance_run_opts *opts,
++					    struct gc_config *cfg UNUSED)
+ {
+ 	struct child_process child = CHILD_PROCESS_INIT;
+ 
+@@ -1240,6 +1251,7 @@ static int maintenance_task_gc(struct maintenance_run_opts *opts,
+ 	else
+ 		strvec_push(&child.args, "--no-quiet");
+ 	strvec_push(&child.args, "--no-detach");
++	strvec_push(&child.args, "--skip-maintenance-before-detach");
+ 
+ 	return run_command(&child);
+ }
+@@ -1561,7 +1573,8 @@ static const struct maintenance_task tasks[] = {
+ 	},
+ 	[TASK_GC] = {
+ 		.name = "gc",
+-		.after_detach = maintenance_task_gc,
++		.before_detach = maintenance_task_gc_before_detach,
++		.after_detach = maintenance_task_gc_after_detach,
+ 		.auto_condition = need_to_gc,
+ 	},
+ 	[TASK_COMMIT_GRAPH] = {
+diff --git a/t/t7900-maintenance.sh b/t/t7900-maintenance.sh
+index 1ada5246606..e09a36ab021 100755
+--- a/t/t7900-maintenance.sh
++++ b/t/t7900-maintenance.sh
+@@ -49,9 +49,9 @@ test_expect_success 'run [--auto|--quiet]' '
+ 		git maintenance run --auto 2>/dev/null &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-no-quiet.txt" \
+ 		git maintenance run --no-quiet 2>/dev/null &&
+-	test_subcommand git gc --quiet --no-detach <run-no-auto.txt &&
+-	test_subcommand ! git gc --auto --quiet --no-detach <run-auto.txt &&
+-	test_subcommand git gc --no-quiet --no-detach <run-no-quiet.txt
++	test_subcommand git gc --quiet --no-detach --skip-maintenance-before-detach <run-no-auto.txt &&
++	test_subcommand ! git gc --auto --quiet --no-detach --skip-maintenance-before-detach <run-auto.txt &&
++	test_subcommand git gc --no-quiet --no-detach --skip-maintenance-before-detach <run-no-quiet.txt
+ '
+ 
+ test_expect_success 'maintenance.auto config option' '
+@@ -154,9 +154,9 @@ test_expect_success 'run --task=<task>' '
+ 		git maintenance run --task=commit-graph 2>/dev/null &&
+ 	GIT_TRACE2_EVENT="$(pwd)/run-both.txt" \
+ 		git maintenance run --task=commit-graph --task=gc 2>/dev/null &&
+-	test_subcommand ! git gc --quiet --no-detach <run-commit-graph.txt &&
+-	test_subcommand git gc --quiet --no-detach <run-gc.txt &&
+-	test_subcommand git gc --quiet --no-detach <run-both.txt &&
++	test_subcommand ! git gc --quiet --no-detach --skip-maintenance-before-detach <run-commit-graph.txt &&
++	test_subcommand git gc --quiet --no-detach --skip-maintenance-before-detach <run-gc.txt &&
++	test_subcommand git gc --quiet --no-detach --skip-maintenance-before-detach <run-both.txt &&
+ 	test_subcommand git commit-graph write --split --reachable --no-progress <run-commit-graph.txt &&
+ 	test_subcommand ! git commit-graph write --split --reachable --no-progress <run-gc.txt &&
+ 	test_subcommand git commit-graph write --split --reachable --no-progress <run-both.txt
 
 -- 
 2.50.0.rc0.604.gd4ff7b7c86.dirty
