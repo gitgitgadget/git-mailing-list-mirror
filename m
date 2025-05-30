@@ -1,43 +1,43 @@
 Received: from PNYPR01CU001.outbound.protection.outlook.com (mail-centralindiaazolkn19010010.outbound.protection.outlook.com [52.103.68.10])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BACF22A7E6
-	for <git@vger.kernel.org>; Fri, 30 May 2025 11:37:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8E8D22A81D
+	for <git@vger.kernel.org>; Fri, 30 May 2025 11:37:22 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=fail smtp.client-ip=52.103.68.10
 ARC-Seal:i=2; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748605042; cv=fail; b=pxqhVAO3NJlp1RIkIF0dpjhkuvQQTVkyBX9Xhlnplnt96JdpPai3weEC3drib9NCshS97Pn7RusD47lBUjc0HCE/NVjxo8g4nujmsNsBEz0WGdi8zoQtRojJvr0rzSTlyoQgt8HAjJ6E1y8TgeaXI9FaGFMZN8lYi+jkph+iVuo=
+	t=1748605044; cv=fail; b=QiqtNKyjxe4f68hdGb2C9jNKQ+ln4IDs8UDV2Q2KFroVz0MOlqOeLd61RjyTAdksbUyeSL5QKGdhhpXHWARnyEmV/U5pUHUWV98Ch4Q12xaBNS+SJkEu5Qc9Fgen2pKreFDKwQZfkgy+SaCRoXvjy1aS5238Gby7/yXj9tKJ6f8=
 ARC-Message-Signature:i=2; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748605042; c=relaxed/simple;
-	bh=shO72rCxgSKZdy5kvDKTRT2J5dRidGAlhJN+EBMIJEM=;
+	s=arc-20240116; t=1748605044; c=relaxed/simple;
+	bh=+EMZd5SbGsE42Osuc2WIN6OZIxVJPQ48qTgnkc7Viqg=;
 	h=From:To:CC:Subject:Date:Message-ID:References:In-Reply-To:
-	 Content-Type:MIME-Version; b=SxQIcRnt4FxkweOyFQ1q3liiew2A/K9UpujrRImBO7x07j3NXtAeqk2oLbyUddFQEA+/Qr7e6/0Qpo33GGdbviFbJOLOZ7NiOCXDKx5keTV+eVtUOlfvilOccIRjcYrnQ8zPR38YS7jZzg9H6b0pweOt+egEMOiJw5cMb9zA1x8=
-ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=pKppI7G/; arc=fail smtp.client-ip=52.103.68.10
+	 Content-Type:MIME-Version; b=dd9uONRQAXdgTGHYLij8AhNd/jwGtEbfNiDo4olZYuHPer4qTH+FJah2S2Ne4w3fV9K6cfSFOlQleMApe51IsUaMNGwsfTmz1MN1Wx4mGFYKmhZDFwU+PzVtdE5f1E5fTaIMeLyhjQV44eiQyV78aAKUcz9os8+Q/jjRqxVQ8WQ=
+ARC-Authentication-Results:i=2; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com; spf=pass smtp.mailfrom=live.com; dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b=NUbKASvc; arc=fail smtp.client-ip=52.103.68.10
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=live.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=live.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="pKppI7G/"
+	dkim=pass (2048-bit key) header.d=live.com header.i=@live.com header.b="NUbKASvc"
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=vxhRT1rdmv9yjvhR09V8AvjNprKC899wCZ9dltvVNLJJfmFocalRq5qK2UMdslZ2XE8t9hvnMG13KHnOMQx1XWZWowLp7Pj61nLPHW+aYNu0Qw+nq5hmLQcZNE8EAudiQPq04PhIT6FomdFA/hrs3kDj9B+C+xULJso6f53tOTKdAWEVRdXcfM1Np4s3KnuB1G3ApPDDJBp/F/W1D5yq63mrKD1ySUFOOdZ132eHOGaZbrjOuNCV4QKIpM2ti1lCYocJir60F6pD3ksuAVW3hx8UI/umxKuNwyNgnKaFKbpK+PZPVD2uX63S95cn2xF9VvHVO47G1vpOm/b2anpchg==
+ b=NrLSSsr8V/XB1WN2LnfAvCYSvt8EVXZfhmnIL/kQJRGlNNebLwpR7bjciiGxdQa5gCFUYFyHZ0sIKyHsLVk898812Y1lImDmwU8wtGNx3fQPcymjcmtKvuScPEBzgTLCIIpfbWZDc0OribkHHU/Iq2/l3T5KdxATkGHazr3Cd8luTwyUOTk7D3oNDFSZfvf7nkiGAyybMPBRleJirbPGDKJKznsDPK3XsULfdIYpaF4KmUyMWJFTAUQ1EZzG6ME5jQBmrCemqK6M3PmX+fKUt8Bge0FwL3SSeckX2gOvvOgdTqAHyP2uDq8lMJXz8utrxUS5UEXbrYVcoNH0U717WA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=M7cH5qJeuzm6OcpbHB/+/+CrwzYNd+wXJeN03LxtG1I=;
- b=IfYO0CxOUFRApOaCkZtmnhs0D94R00OoKVXg5Z0+l8HTbzkV/WckGhvn69lQ9itzwlrsO5BSyboDRgKvNCfyROf6fZ7EPmU9mXgZcNmJT+9LnGN6mwlBtsviAC7hnOE0Xbm+LKgqa+2y0JJIXFIYIddPzEfS3Jm0eKtdKaivmXdrdeqhypAuq1fKwlExCcwRyo6JQVJxEtbEpn7bfpFnG3bXAmJ1opaDDQdRz2E5CD+LciSJNcxEPyYPlLDhTeRxYFbFM4Z3hyS+y/2MKyypeT8uUAm0HLbXbK51OaIGXGRERVyAhnAQ9OK1M9CiotO+K2GTW3KWOtxiGD8N5EOm5w==
+ bh=l9Qzkr135tP1MW1zuBSKGfPzvtjvUEMeiqv1Yq21NA4=;
+ b=k0HZ7sjFop3jacrrfrYquFBA/goc1Clh+ob4fpzsCE2T2aSHnbjcGHInrnjniLQGeUD0xy2s4JhXaRwfFA5lhcUniUsiI+nhMLVBQUe3k/Hz6O/lccO+816cbIIwbLAO8LLwdmnAm6G4K7XL6B7rHuGg3hcHB3MEVq0S63TdHgTzRTBRbEUM7D1DAyuyvwbhW/pmvN7nAhI8vo1pamLDXHTymVwb5KeOqyD9zePEGsagmVkdIddaFyABh/adgb49snZdZUgWPU5wnJUAFld+Oc99StCA0mUA7hu+qEVsrRXnQo45NJS7+IjDDpLRYK+ZlRB2NKaOarGeE56R3Bq+bA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=none; dmarc=none;
  dkim=none; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=live.com; s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=M7cH5qJeuzm6OcpbHB/+/+CrwzYNd+wXJeN03LxtG1I=;
- b=pKppI7G/YjmkMgIV1dLjUedlnz3dUFb+preB4NtfjkicFOm/hH/BIpLXWJXTr58+/PyW4/fTy+CtZOZT1NBOdH6t4hAP1Eue2PGAfZ7rtQrR9ws3Jd0lYZibXk9cHNmTxMQnaOYLbUYt8vJD+rgD5NVDrKcleswA8Fssjqh5b4RXs6J0yMBpce85b/fay+S65HM3aJf7lRicqUUUAtRW57spjcb9QGhElAVuxq7Q8uKHzwguETvrGqdRIUs60d0hUf9ols5/4X7LlxWPbGSVo9BqIWUx8kuaqbYp6Mhfwp3y3GbbPrbNvsHrpiEOgZ5WblD9IbiqiF9R6CwVlob/Cg==
+ bh=l9Qzkr135tP1MW1zuBSKGfPzvtjvUEMeiqv1Yq21NA4=;
+ b=NUbKASvchsKY9rCXncZTI6hHvmqV0XrIKVvVbA0UQvf8e0zzAvHKb6IT/5+PckIHx0zCRIGvfWESafAjr4Pqa75W/ZQBgALcadE/OCR6ug2G4FflzgV0fq+L+R5qyZzcdxi7/J01wh5SK2KWSEhQYrdslzYwOVipoTidZ0MOPaszgXDPPgCjyjRPdbRAlWWvTJxCbHZt4cAbpvVO7zQpPvcGti+NWHl0fKl9aacgddS0kTNPUJkPlj4fP5zJOBUL59AfRlxehF1oi092pOc8topjINMNU7W/cOgGobY82EyHMDC0aliC/miHQd0/RN+MCw+EvKw+eJQlGYJj14KFHQ==
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:f7::14)
  by PNZPR01MB4415.INDPRD01.PROD.OUTLOOK.COM (2603:1096:c01:1b::13) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.32; Fri, 30 May
- 2025 11:37:12 +0000
+ 2025 11:37:14 +0000
 Received: from PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77]) by PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
  ([fe80::324:c085:10c8:4e77%5]) with mapi id 15.20.8769.031; Fri, 30 May 2025
- 11:37:12 +0000
+ 11:37:14 +0000
 From: Aditya Garg <gargaditya08@live.com>
 To: Junio C Hamano <gitster@pobox.com>, "git@vger.kernel.org"
 	<git@vger.kernel.org>
@@ -46,13 +46,13 @@ CC: Julian Swagemakers <julian@swagemakers.org>, Eric Sunshine
 	<kristofferhaugsbakk@fastmail.com>, "sandals@crustytoothpaste.net"
 	<sandals@crustytoothpaste.net>, Johannes Schindelin
 	<johannes.schindelin@gmx.de>
-Subject: [PATCH v6 3/4] docs: remove credential helper links for emails from
- gitcredentials
-Thread-Topic: [PATCH v6 3/4] docs: remove credential helper links for emails
- from gitcredentials
-Thread-Index: AQHb0Vcvs1WMA0do00GF5E5Zv15W5Q==
-Date: Fri, 30 May 2025 11:37:12 +0000
-Message-ID: <20250530113627.8639-4-gargaditya08@live.com>
+Subject: [PATCH v6 4/4] docs: make the purpose of using app password for Gmail
+ more clear in send-email
+Thread-Topic: [PATCH v6 4/4] docs: make the purpose of using app password for
+ Gmail more clear in send-email
+Thread-Index: AQHb0VcwUfbJQI76pE+sTHZS6QGfsg==
+Date: Fri, 30 May 2025 11:37:14 +0000
+Message-ID: <20250530113627.8639-5-gargaditya08@live.com>
 References:
  <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
  <20250530113627.8639-1-gargaditya08@live.com>
@@ -63,59 +63,59 @@ X-MS-Has-Attach:
 X-MS-TNEF-Correlator:
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: PN3PR01MB9597:EE_|PNZPR01MB4415:EE_
-x-ms-office365-filtering-correlation-id: 07e0d19d-907d-42e7-b61e-08dd9f6e51f2
+x-ms-office365-filtering-correlation-id: 46516da7-3608-42c9-fb06-08dd9f6e52d2
 x-ms-exchange-slblob-mailprops:
- AlkLxVwsndlmbqnVVkeM2BobHaL9MaaalYSq1lQ4fPhkdJbBiP10uL5/cZ2H+1bDayqVijVywEbC8+UxaFWM96rXC7Em5yyypBMyyGj6SSBN6erFlEf0E8/rvIyTyvDaHDldBfPFsQCmnX18fUMVkwW0P7NnT4eD8x4/CZ3N5nJ+twAjQ8tud/oW0Y043+jkqG08yoggrPxdgUKDB/UbiBcGWD55YM1ddfJS4Dpc8j0qZE2JWCdP1hFEii8sHxgzvVu1PS4QjsAYckjEeLwLJCNmbDgbyi2O581o3nkHajXd836oqCdOTAfUn8QmT+5ePYyPjvvJgD/FiYH038tFgvqsCUG41nsx4CFAJ01Yvhy1tijnQr5cpa13IV1Wt/TX+Gt9wSI7fTXWMoKg/MEWdZhWv7epU3nVNfQGb9bOyr+nsb3Ab1R8c/dQEdF+fS/YFlJP+SW520RQsGPAu+3P3QDTomM+UxWqgjjLnTkG41yGZg5r7zHHJcduB1U4HonLiTdyxmpdf/yp0Fn6OaRs5V6dJ06UGqki+k5fbnAOCCaxY8Gn5qJydwA0xsfNFGi0GlYCu7gRYSNqhe/oaNUxBUd4mzL0gFco2W/ZDlePaknSNCvq/+hPhVxEy+SKAkhYXXYsC7zK3956ru5OPt6gBEdtAeKdbtOciBq+d7FlJP7QsA7Gh2SjRrQuX6y/+Yj65kdO9jFNFbCTwN8nyEsLI1vOi3Rv9OSLE7jIejTHTF5+6WmPnGu0bcPEvx+Ezj2Bua6bH0ZpLqe+JZS5BjPDsnj5e5+6UV89
+ P1EfU6pZOd+Ewy2R3Pu64sHUJuYJdjG840eMljYuaWGkQSlzYmUO+fwhl0Y5VWNG8fh/npTyE8jvxkhk0gNG09K+QfIX35R0V+4aEnj5i1Du0bkhO6hUjWom1+qrPksp0wmTf1rT7uofe/IA2X4lVPiOyIbX/+r5VViGXUsW8wLHjYOH0W57sTbxzaJxdDY98+6e420dQvJrU346vqNims8qGwcr7bLf++5NPikZm19JBjrDBMRTgT3wGF9ryFKQmDw82HTAKuKP2xbWqh/ZMM+LX1x/pSftOraDPb8oaUeyDwRmY/M9J7pnRtXyvbRVLWoKx+GxR/ZKBgcsObxqUsm1HXp+BeXE8QbgoPaq0JGT7yM7fb0bcGPPOz9SyDXtg2iyJIXlgMF1xC84Opwgqz68X6KH3dTlnYQ6uG0KXkdelZmCfjeDQzdmA/XxdTa6Rhq7ipg0+gQWlPYRe3Y5yAyBgB3cpNnQFZdLIqfafYC6sYaZgD0mWg1jmgikF9UR93cU0JIpIBgMsDHn1ysKPRpzTQiPm4xs8DReEx8krbqPAhHjkFGVSY+k6a13RqxV3gkMzk1jsNP1RBTdBApFojaz2dIy8je6DoixY36NMOxaIflVz4IFVxK4RCprkrYb5RQrmBAXiMSQ84pNURssSqGR0mZ8LN+DjlgrAorv8alyu4UF1J8X1qTMZAaM1Sud6oOVhWJ9bff1Bv1X4gB1AFYzj1605ETfZVPtRyt4H0vczz2qOa2ASxAY0nYGzyCyt1iOtAHNEBA+6M3Vh5/sdCT6pgNhX1JQ1N8MkF1fAqCJXCtb0NL5XQ==
 x-microsoft-antispam:
- BCL:0;ARA:14566002|7092599006|8060799009|461199028|38102599003|19110799006|8062599006|15080799009|1602099012|3412199025|4302099013|440099028|102099032|10035399007;
+ BCL:0;ARA:14566002|7092599006|8060799009|461199028|38102599003|19110799006|8062599006|21061999006|15080799009|12121999007|19061999003|3412199025|440099028|102099032|10035399007;
 x-microsoft-antispam-message-info:
- =?iso-8859-1?Q?yV4utGYtv2ECN9z81Ar2hnIaxPMJIAnSrA2vSYJ64lbmJ3K/jtSlgJpWT8?=
- =?iso-8859-1?Q?mZVqZOS3gyEq3vENl80r8fJbgbSYuDjNaDXEY2mfvMR2RddASBHtaG20ez?=
- =?iso-8859-1?Q?BbM1wdW4hZFX8VHg9MMcqzEtlHuO3hMfyC4r/kJPe42Sr4ARKkREePascw?=
- =?iso-8859-1?Q?d6lWVswZbfkA64YyO5NtP2Yg2y4C3WVi5kw/juu+z9M0AWZ7m/DkzSRNex?=
- =?iso-8859-1?Q?szm9pQZtC5OI+BBITEO43I+mrDYUaU2BVpyBr71uqHC6IK2LHKVA2YL3dv?=
- =?iso-8859-1?Q?WQok+aTbxJ7qdgbiVPfSbJ5t20iK5zWn1RWGg9MDevFrd7g0Cx7Y7GDd0S?=
- =?iso-8859-1?Q?X1oR/KTR3aMc3jyagB674p65aEYUb80Hiza9k8vNEjOwFgG9VzJNuDceAK?=
- =?iso-8859-1?Q?9G14zCTSNVWSufqpHRpsRhQXegRCsvKmWW0rT3YHYA8K9/qmsECne4w3lD?=
- =?iso-8859-1?Q?5L5wpd4qhUipgEHZ4w17pRn9qaCFGeyCPmVSwaKIdhRlOY/yLgo5CTVr7o?=
- =?iso-8859-1?Q?6j6rnDaXL14Ksm4cdmgYhonV4ZSj/m3ibnRJd9ZX2dvqtlo5n9X7JX59u6?=
- =?iso-8859-1?Q?V8QEIcrQFiVH4HRpme2cACVfQCHiyVgN89H7ywtacIS48lltq9gTVuWlBd?=
- =?iso-8859-1?Q?zWwRLyzXg67RxHpnDqisZBCbHOVsP+PYR60/uJDOY4syxDrB4d0JKwmKxn?=
- =?iso-8859-1?Q?pLxWa/geMu/0IpZ/VFZRuPv4ZbKoHbaIBAiZwcUQb++Twl0BCqYBspzQ/u?=
- =?iso-8859-1?Q?zzCvVj38Ejuabl7a/D+iiJ2CW0F0LwEp5EYekrTysIpMF5bcMq0Gvkw9Sp?=
- =?iso-8859-1?Q?CBwtr/jG8j21tK6qglTDKYJ58WV5Xluy9vrj8lQbRvASnXYrlZcC4VSqr/?=
- =?iso-8859-1?Q?lff4D2EqECiFGHzI/x9e9zzMioNa3bB6aQQX5Zv63SduTEX39vUhslyY69?=
- =?iso-8859-1?Q?749dp0CjtBpvqovbP+tpagoe5LHRmoGI4WU/TnAeYasdLRVsYeEn/ICu+K?=
- =?iso-8859-1?Q?70rlJoGjYMGIxGA1HcgSZWwAOYB/77Iq0lV5ibea24qXH6w5BI1dvVceQD?=
- =?iso-8859-1?Q?qQDi9iXlnRm8IxGJ9NHfAD3mdhR1Jl0EV0NGUj7f2gUMQfMSlxM+xruhGK?=
- =?iso-8859-1?Q?nfpoNssQjG67wMmYHdWe5AxlcJZsVJ2PPjSDEzk0gpI/TMOD5I1oWpFrsb?=
- =?iso-8859-1?Q?6KIdKlHPg5rW702vdsM6gckcg0PcJxH8easSwnVkYxpdY741hGmnCISwxW?=
- =?iso-8859-1?Q?LErnLwo3Jve7qBb8/AOEqHO5GwzmbNs9K4/vIRrMbCtcR9br26i3ksZK1d?=
- =?iso-8859-1?Q?S+Zfw7DnW1ks8BrKmJX6Sd+Pgg=3D=3D?=
+ =?iso-8859-1?Q?GfB+NU7CSFNVTUVYn2NVBCfMM52c9TNPNg2i6zqA0uokYuDTOGY8fMh/eP?=
+ =?iso-8859-1?Q?XOivCTv5sdrAK/PU7Dr9CqArnTY+8QXcJ3gO5jwnzuIYFwiaiUk8MdBuT/?=
+ =?iso-8859-1?Q?KuhAUI/tH69fOIX/mYzngy9X7Nk4JIfKP2dil/YHcObZM78m/RJbmrSTWd?=
+ =?iso-8859-1?Q?5/EH2UY8P2dpVllmkUARc8onWSCw0RMiBUXRNTkNWcz4xOKOLhxO0Z1naR?=
+ =?iso-8859-1?Q?Z2uEBgtwv5I9grFRWZOS5rGClCVevhj9hbHsJxebr9lmzA+8J8jRjmoj/7?=
+ =?iso-8859-1?Q?tmg3BsUiDmIeA6lTejg0jTwrmYCiH1w6fkBufcOett5sTXe3lMKjLMtrbv?=
+ =?iso-8859-1?Q?YAa8cTU9PLbCtVNWblKQqnIF9wjvytl5fiz5/MAK1tZPglNcDGhvNCKpg+?=
+ =?iso-8859-1?Q?/hojnMS9q+dI4/WL6pTdikOIR+ogB3jR8pW1OVl7+hgd5jqCoZ+P25OcXq?=
+ =?iso-8859-1?Q?JGTn/LKnBTaBjbfVr/Ub5xsVqCpPTMiW/BjqKdrvLIxHKb9nwmTVDqur+1?=
+ =?iso-8859-1?Q?ME3tnzNNM+vH6Nx7TKTzFV7FkDGziicbgdneW5duqQX9Y2zqhu1edpCjv+?=
+ =?iso-8859-1?Q?UM8Z26g78Cvtt3XnVg11mNxsESBypSheDxfSNhjWi8f5VZolYiU8h/2dhK?=
+ =?iso-8859-1?Q?Dbr7lRCYyIC72Q/MOPHNsUN8OYyO7JxehVgQwi/IzLkGc+163M6XizqpkT?=
+ =?iso-8859-1?Q?U1yvk1otneuuj1WKf/Yx5DwKPozjVlBmPsj/qTEHXpo5XaMGnLwDQXrtd+?=
+ =?iso-8859-1?Q?BwYqHSqErf6jJ0v+Gwqx+B8Gt8l7naEwXvB9EBHkL99RKfUHCmcpZNRR27?=
+ =?iso-8859-1?Q?jq61H3qWe5lcKBG0SpdpjxtVjDaroDkgy6NCeFSeygWjmeZo+74Ip6fEgk?=
+ =?iso-8859-1?Q?DbE0y6uacEgtzF/2H+RphuZfFXqWNw69HjgR95qPvUeJCwqBuuSq87HLDV?=
+ =?iso-8859-1?Q?6Hcd/b/ruX0SCJbGUhFaCt0j7SDoQb254bIzsJAvO2Tlys+z5hXXaepYeJ?=
+ =?iso-8859-1?Q?IBuWhf7NRNBgicNYLIBv5KCnpUvD9RbkTsMbCauIk5uXK2n8qNOgKJlT/N?=
+ =?iso-8859-1?Q?iRoli6Hau+rafIl5Ezr8Un9GaiYd/hUhbJ8NJDYY4GJUBv2nDm7XJoLJt+?=
+ =?iso-8859-1?Q?Ok8nLRNwbl/ifISU4dIYTKagYRe2ncspVzB8geNMlWDBxwgh3+mT12QFMq?=
+ =?iso-8859-1?Q?q4sWs3AOLF9OHMUP5c6MSd+Ff34kzh+GrT4AP8qar4nmMoUiVETU66BYPz?=
+ =?iso-8859-1?Q?9YrBRH+wEQveGiyH72+ekKb/3v6L3RLzgstrXAnM3J8R+wevJNngnTydje?=
+ =?iso-8859-1?Q?WiUKWhHe57Y6E1zeYr/uZG0jKcEhNZnXtPVdPRj18msAGKA=3D?=
 x-ms-exchange-antispam-messagedata-chunkcount: 1
 x-ms-exchange-antispam-messagedata-0:
- =?iso-8859-1?Q?oViBL3Pkz8hdSOjg8PcF7Sa/p5kHuy7ePuqi4XjwHR+X3e6CdHBPBXWFYP?=
- =?iso-8859-1?Q?6lv4PoVCu4DC+BFUl3JeJlsb7aEFLmKwq7GUJU/aOMv/L9i/sXxWknP61r?=
- =?iso-8859-1?Q?daZAEvzvJCdGMxfNVLTxPW150mOuYmhL7LCEhd9E6uWAJbb46K40MHyVGQ?=
- =?iso-8859-1?Q?K2AWWPUcMO9vnUlM+IJjwreJgnAB9CeYCgTIPiTXUn7NkuQDPj9LMWy5q8?=
- =?iso-8859-1?Q?FOfgCJchn7G49viSuqhRGhJBi3q8M9mRQYoDVfoJ3h0uPvdZflX4hkeUZ5?=
- =?iso-8859-1?Q?dMRetpL1HWV64CgQnzhKEf+iQWjtjgb1mbtIm6akvTvpOTN7azXwqNiQhd?=
- =?iso-8859-1?Q?Y2TmuUWwOIVXopxFFaRVfmSflxJvqUY05vgj57lEbjGKF36S1G5Q8E8Flb?=
- =?iso-8859-1?Q?llg8iRfdd32/AdHVdsnAkwvk6Sbjl3DLSMxqRlxnCoJD2K5e/KK7ycP+mn?=
- =?iso-8859-1?Q?Vfh/WKdkee6oVWZdEU++WRu2SHuhkNSJMwY0ypDlpJ/yZU7GZYmhj7Gazc?=
- =?iso-8859-1?Q?W4KNyzLtYpEGJfD4X4z2TO3uAh8Emyxefbuh+4sq7SIwAuayOHhZsBZzEk?=
- =?iso-8859-1?Q?RSufwQ3vXMCLva5MdwVr1UDC1ORW/1Xizo+9q5xCCzwcl1FRCzqA144Bau?=
- =?iso-8859-1?Q?s+NKgNFcAWx9XEheGCPKYdiUV7HTRcdMg1mSiJjVW0ulC0/skJXh+K65Hb?=
- =?iso-8859-1?Q?YVwgODNr8OQq651O76IeVAUFwEzrlyGo2dnKnnqnRbFWEaMwDRUXR2ozcA?=
- =?iso-8859-1?Q?1RcSvJek4TL/ehw47TF1cM8rrLdFB3sC/Vewi1HEJSc1fSQ8QDZJYcsNxC?=
- =?iso-8859-1?Q?hahGJtBKIdrA78W1d612QlC2lu0OYnag7DIvXNaJw+4N0oZuwBcEGgReVl?=
- =?iso-8859-1?Q?cwZvWwNpBmJckB38bfayq7R7yOHCfojoLYL0ucoF2aUaHY2+I0pQnp/52v?=
- =?iso-8859-1?Q?KHL5mHJLKpp1CbU+U/sRqKUIPbKaYEIiayrSA1RZgVUokz6HBcCfK3AJRJ?=
- =?iso-8859-1?Q?koiJ9FbW0z7odkQYiiIr+JDjVD+gO1lrR3sCiHosSYUalGQfLrjVWM9Ji8?=
- =?iso-8859-1?Q?z8RPkw8GJQxpGr03sRqNvSQUXGsdsJLCTE2YIwHWjbW/o9iixMbO9lmMtb?=
- =?iso-8859-1?Q?WmqoaSvxhkn2+jZMcZ2V5IcpQQFZfDs1Xc8srm+8MKAZG33fM5h3wEBUI8?=
- =?iso-8859-1?Q?1Dse+rJ6jLlgrSjKln+9ilsdGW/B1nRjBcOnrc92gtV9IEQlxnLStogpu7?=
- =?iso-8859-1?Q?II4SV9mqyGjZ+XJPnAzhgTDi+BHPyC4js3rvQXg+k=3D?=
+ =?iso-8859-1?Q?lxXdHHVOf7F7Vl3nAsnY4TN9I/l6p6RnG4hfMaU8N3KLfYk+GfBGUPjh+x?=
+ =?iso-8859-1?Q?+N6fJ759z9yO9Dt3bn4IM2O26J86Ej10cryY3W9RWo+tuqSDJTWIBxp/oU?=
+ =?iso-8859-1?Q?P0Oeghhdz9xXgdlAzKE99l9lTcTz8AjHQfGZYj47eIu0/bVy4UAW7cVpTt?=
+ =?iso-8859-1?Q?7UyClYLwXJpphFkjmS941mDYTEVG8k69HyUe7eAnlyj7/1LfBzk0t0U7vx?=
+ =?iso-8859-1?Q?vm34B0efHjEGusSWQ4mkY9Rcb+qdppcbjzMXoaXSct0oWteszHkAalgZeT?=
+ =?iso-8859-1?Q?XnduVzD7wyaTQPn+xmLTZsY9pF2hZTY8BuLiAJRtQktp2ycfZRgLN138FR?=
+ =?iso-8859-1?Q?ZCX5bh4RafBjEFsrobKA3mMDIgIPhjCG4GDOTuN0Cf6iDHVbO6sNBeVsI9?=
+ =?iso-8859-1?Q?/Kl/0eE6nK8cnOdqY0bx6KlKuqz4YOtc/hOPJy566+f2YH4U1TvbAVcwJH?=
+ =?iso-8859-1?Q?jNLrxNCA1LG+q26f7UhqX1vYvmMYpgc2Xqar4W63wZTOIEiB724bt4K2LY?=
+ =?iso-8859-1?Q?Zg8pDedkKWKPu+pASt4ESa8p5+P0aRS6HWzneKrzgMGK9z2UtWgJpAehqX?=
+ =?iso-8859-1?Q?qIvQ/HvdvTXmHa9S7RKbjpBQU7BECJvA7cKLR3hVPShtispIWKL0GBx77z?=
+ =?iso-8859-1?Q?lrAEUgFgn5xVlWYxqjZv5fIhQ7N7omylQKxu3AZzR0CkGz31+482JJ81UB?=
+ =?iso-8859-1?Q?bdaLVgUOsDl6+to8yF7i97oDO+GZQdI8wYpALmUe8plunveFVHIT1LuxKD?=
+ =?iso-8859-1?Q?hRX695u1o8JZsCtNZLrTizc6dhFPjYfnlc0A7fRx5QtiTU3uJ0bGc7/Nu/?=
+ =?iso-8859-1?Q?s9hfeUn3mGChSb8BVH7Opb+WaCPev0oTp7TcT76tn/rHxEvG3ladsoePMQ?=
+ =?iso-8859-1?Q?CzzRdvGzvj5smJOEU30DAvAM6BipThsyk15WlKiyRkSTEdfqBSDwSUQfKL?=
+ =?iso-8859-1?Q?q3/UpuE6Fh/BCB9+OfTSwmWNwldgcU5OOh/nrJFwlwmoujc0peW/VEjQOn?=
+ =?iso-8859-1?Q?w4gw9FYlzlpfgQPAmbiuvSzKGV/dT6f3Ow0Cd+rj2dMbfaCU6c3AzMpFh7?=
+ =?iso-8859-1?Q?h2bhFr4YFpy9ORknbquEYbOYHbW2qIUMBvf8tXK/zjoPpsqbu7/HNhds8B?=
+ =?iso-8859-1?Q?o7xFTGWULtDGcT4IV7Iap4A6oJFTg4PxyBXvnehy0EiDYILJah4+G+SST1?=
+ =?iso-8859-1?Q?Erx7slbUwNRX8zlLUyGizbcZmH3EhWE4AlgWSs8sS8VSMuWnffo+bcgZWE?=
+ =?iso-8859-1?Q?lZ5PjTkV2JmZ3vz1sZhjEgXe2WghCZZtaAydIQ39A=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
@@ -128,52 +128,88 @@ X-OriginatorOrg: sct-15-20-7719-20-msonline-outlook-18ccf.templateTenant
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM
 X-MS-Exchange-CrossTenant-RMS-PersistedConsumerOrg: 00000000-0000-0000-0000-000000000000
-X-MS-Exchange-CrossTenant-Network-Message-Id: 07e0d19d-907d-42e7-b61e-08dd9f6e51f2
-X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2025 11:37:12.6123
+X-MS-Exchange-CrossTenant-Network-Message-Id: 46516da7-3608-42c9-fb06-08dd9f6e52d2
+X-MS-Exchange-CrossTenant-originalarrivaltime: 30 May 2025 11:37:14.0696
  (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 84df9e7f-e9f6-40af-b435-aaaaaaaaaaaa
 X-MS-Exchange-CrossTenant-rms-persistedconsumerorg: 00000000-0000-0000-0000-000000000000
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PNZPR01MB4415
 
-In a recent attempt to add links of email helpers to git-scm.com [1], I
-came to a conclusion that the links in the gitcredentials page are meant
-for people needing credential helpers for cloning, fetching and pushing
-repositories to remote hosts, and not sending emails. gitcredentials
-docs don't even talk about send emails, thus confirming this view.
+The current example for Gmail suggests using app passwords for
+send-email if user has multi-factor authentication set up for their
+account. However, it does not clarify that the user cannot use their
+normal password in case they do not have multi-factor authentication
+enabled. Most likely the example was written in the days when Google
+allowed using normal passwords without multi-factor authentication.
 
-So, lets remove these links from the gitcredentials page. The links are
-still available in the git-send-email documentation, which is the right
-place for them.
+Clarify that regular passwords do not work for Gmail and app-passwords
+are the only way for basic authentication. Also encourage users to use
+OAuth2.0 as a more secure alternative.
 
-[1]: https://github.com/git/git-scm.com/pull/2005
+While at it, also prefer using the word "mechanism" over "method" for
+`OAUTHBEARER` and `XOAUTH2` since that is what official docs use.
 
 Signed-off-by: Aditya Garg <gargaditya08@live.com>
 ---
- Documentation/gitcredentials.adoc | 4 ----
- 1 file changed, 4 deletions(-)
+ Documentation/git-send-email.adoc | 17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
-diff --git a/Documentation/gitcredentials.adoc b/Documentation/gitcredentia=
-ls.adoc
-index b49923db02..3337bb475d 100644
---- a/Documentation/gitcredentials.adoc
-+++ b/Documentation/gitcredentials.adoc
-@@ -133,10 +133,6 @@ Popular helpers with OAuth support include:
+diff --git a/Documentation/git-send-email.adoc b/Documentation/git-send-ema=
+il.adoc
+index 04e1c459b4..9c008dabe3 100644
+--- a/Documentation/git-send-email.adoc
++++ b/Documentation/git-send-email.adoc
+@@ -525,15 +525,18 @@ edit `~/.gitconfig` to specify your account settings:
+ 	smtpServerPort =3D 587
+ ----
 =20
-     - https://github.com/hickford/git-credential-oauth[git-credential-oaut=
-h] (cross platform, included in many Linux distributions)
++Gmail does not allow using your regular password for `git send-email`.
+ If you have multi-factor authentication set up on your Gmail account, you =
+can
+ generate an app-specific password for use with `git send-email`. Visit
+ https://security.google.com/settings/security/apppasswords to create it.
 =20
--    - https://github.com/AdityaGarg8/git-credential-email[git-credential-g=
-mail] (cross platform, dedicated helper to authenticate Gmail accounts for =
-linkgit:git-send-email[1])
--
--    - https://github.com/AdityaGarg8/git-credential-email[git-credential-o=
-utlook] (cross platform, dedicated helper to authenticate Microsoft Outlook=
- accounts for linkgit:git-send-email[1])
--
- CREDENTIAL CONTEXTS
- -------------------
+-You can also use OAuth2.0 authentication with Gmail. `OAUTHBEARER` and
+-`XOAUTH2` are common methods used for this type of authentication. Gmail
+-supports both of them. As an example, if you want to use `OAUTHBEARER`, ed=
+it
+-your `~/.gitconfig` file and add `smtpAuth =3D OAUTHBEARER` to your accoun=
+t
+-settings:
++Alternatively, instead of using an app-specific password, you can use
++OAuth2.0 authentication with Gmail. OAuth2.0 is more secure than
++app-specific passwords, and works regardless of whether you have multi-fac=
+tor
++authentication set up. `OAUTHBEARER` and `XOAUTH2` are common mechanisms u=
+sed
++for this type of authentication. Gmail supports both of them. As an exampl=
+e,
++if you want to use `OAUTHBEARER`, edit your `~/.gitconfig` file and add
++`smtpAuth =3D OAUTHBEARER` to your account settings:
 =20
+ ----
+ [sendemail]
+@@ -544,7 +547,7 @@ settings:
+ 	smtpAuth =3D OAUTHBEARER
+ ----
+=20
+-Alternatively, you can use a tool developed by Google known as
++Another alternative is using a tool developed by Google known as
+ https://github.com/google/gmail-oauth2-tools/tree/master/go/sendgmail[send=
+gmail]
+ to send emails using `git send-email`.
+=20
+@@ -552,7 +555,7 @@ Use Microsoft Outlook as the SMTP Server
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ Unlike Gmail, Microsoft Outlook no longer supports app-specific passwords.
+ Therefore, OAuth2.0 authentication must be used for Outlook. Also, it only
+-supports `XOAUTH2` authentication method.
++supports `XOAUTH2` authentication mechanism.
+=20
+ Edit `~/.gitconfig` to specify your account settings for Outlook and use i=
+ts
+ SMTP server with `git send-email`:
 --=20
 2.49.0.638.g03d7d6a772
 
