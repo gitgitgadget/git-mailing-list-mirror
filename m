@@ -1,55 +1,55 @@
-Received: from fhigh-a6-smtp.messagingengine.com (fhigh-a6-smtp.messagingengine.com [103.168.172.157])
+Received: from fout-a3-smtp.messagingengine.com (fout-a3-smtp.messagingengine.com [103.168.172.146])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FF9A23645F
-	for <git@vger.kernel.org>; Fri, 30 May 2025 15:08:50 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.157
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438FD2367AB
+	for <git@vger.kernel.org>; Fri, 30 May 2025 15:08:51 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.146
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748617732; cv=none; b=HJYOBVrFlbzQlhAMw7NzG3nD0Cp1yosGlrZdgAqN4DF+gP4Xn4gRG76G4AAgGidYg/84f0ufwb3yIC4EQ6fiS0odF7dCC3MuM4+bKii1JB2PJu2DcnhIWEXqS5oEzKCGqJ09apLIUJLuLFNscKxdW6cXlnIYj5e4h9liBBSSKzg=
+	t=1748617732; cv=none; b=O7YeIaAF6C1XYGu+l7Xf+KFOVr3gxfJaTJCqC/InXjKQJ7Qyd9tSdEuJWZiS28Wd2PuVl9rfrxwY2uthe4Db3cyGpq94TUgfkhwa6ehUwX9KzLFzEaBsywGS9qa/dmlvTzOg1VPTQRCgAPisMMBFymuBTDme9Z2A9PqIcQ5ozew=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748617732; c=relaxed/simple;
-	bh=klIvlUozUNR4EKyfWBwcr71R+EAmJtfdpe6Y1THxnyM=;
+	bh=8zzBqnDAF18bFsqk9Ldp7FcXTkZoC1fdL+TssjmRkQo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=Yqa3GXHi9vBvTvIPVHtHRMmjBd4f7/w3aA6XGY6HHnCRH+8wZ4NXZrN4m0m7AfV6NBC5QCLD+0z+KPKvyV/yciIX4jPe/pCxA1aTwVQn8ow33JxGrjObaOqac552yfjRkpbbHHHQy/f1Tus69I1/4jQo2KjPROGZTqgGrQ2QYuA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=I7bS0TP9; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=bSK6FZPQ; arc=none smtp.client-ip=103.168.172.157
+	 In-Reply-To:To:Cc; b=U5xkROfnTV/UgnK91H0wPJIsQly9SiLdO9MEEqmSGkGeD3grgx3vckds4jgjq7UnPDUvryWjBWXdpVnsYq5fP2Ogy6bFK5aHP/kLKAQwfTPy4L0rdB1e99mjUS5uAxYtGPYDitThLUKdlqIENLGkCVcsXUeLvq5jT14aFxNVE/k=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=fj72AfwZ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=J5WGumgU; arc=none smtp.client-ip=103.168.172.146
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="I7bS0TP9";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="bSK6FZPQ"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id D29EB1140124;
-	Fri, 30 May 2025 11:08:49 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-06.internal (MEProxy); Fri, 30 May 2025 11:08:49 -0400
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="fj72AfwZ";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="J5WGumgU"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id 50F4A1380321;
+	Fri, 30 May 2025 11:08:50 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Fri, 30 May 2025 11:08:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748617729;
-	 x=1748704129; bh=Rd3Ifuitvexhes+1KD4PXkyaG3HgpNcmy+nDXqPW7L8=; b=
-	I7bS0TP9+z0s0/LYXup2fViZsPT3NHmE8w1KjxKAtR8Llnoh+uGJzr2mXQlQkr/a
-	EKOyokWhSW+l417+AscjvlMr1iab2UpNP2xNg9+n+WwepSEIAh1olJIVSYcfZimm
-	NuQIKboXmnpBxQueeofxcfBRuoKDpnq4VAdn4yLox7bOCev/39tFHxYCSPgHYuYx
-	4u/5yyvh7JjPsRKXOtguDAtWarvM9wx8PVtp7e7fneupE+/ki4lyFiVXNZmPX9t9
-	pxZbmpBcUNDIrqtQggMc5aq6IxUhDcaIoOGAOf1ok8J/nqibKTg5nkvWvQZ37AK2
-	kQqiseiwb3Cc3qLXBy6dZQ==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748617730;
+	 x=1748704130; bh=6oge/U/aglP31+wSztce+CpNg0ULJg/INTFXEme3qdY=; b=
+	fj72AfwZzDmTNsiMBsXJhv94Hbxlwni0ZI42dcdCVdqqMa3zyeTpgA8wXC0iMmg8
+	2ZZr61rS1XDj376lvGudY+4qBAQcY2kyxyHfGpLv7D2LpIfmLX457OOxTXSe1xoV
+	8Wh63rTsjR0dm9lvJ5E+sCvMMdcON5gPN8QCe7gIQvSOdmV9r7U5iCUiOtI7qwZY
+	HiBtmDyv0F9aV/+5+t51VjeOVWTgLJbl+zYaYGNmZPrtDoG0GRTOLP42aME6rlnq
+	jrK3EMmE6wocPM087bSnqDD+h70kKiI92aEBlst6ECtqlwuVL7ptk4bEOYvCdqVq
+	T5wLIZvLgG8VZUtpskdbew==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748617729; x=
-	1748704129; bh=Rd3Ifuitvexhes+1KD4PXkyaG3HgpNcmy+nDXqPW7L8=; b=b
-	SK6FZPQdUfG+6TdBHmv9gK7/k2SkiaOdSoo+fi89kb3Sa7zC990dbVpK518gwDVN
-	FUy34RqcSfK1nzOMdhYhBNZnc939vfXOkPzJFF/OE6GF+5n4GR9LMltVdpb1n3LI
-	Q+OE24+UZgodhwxANz/4cruTC9py6jq4O6Tmu8AjAi3AOOHw1B+lE9iPQzHQu/7J
-	v0oBW5ZbRjFd3z/17iAEIzd3o9YY9bwbbaZm2SgjOkqC4qSuijzZQgMesfTYye0f
-	Y87j58xuSo6t3NJWKOjCepU5CdkvrcBwWPKHAmarKJu+/7I6IQO7yH+ffd/I4+rq
-	2oCxm6hSGKp41WayeQAEA==
-X-ME-Sender: <xms:Aco5aGYCKzp2N_Dc4a4qyYdTbTY8jMqpCt8_LO4PT2w8kS2pljmWWw>
-    <xme:Aco5aJbFdVrvDSG5T3VPp1QU-FFpgehn11WbcyXgjSxo3QrYQJWrcA6Tmhmtr4Fgf
-    4vbd_IetFwnFLwMEQ>
-X-ME-Received: <xmr:Aco5aA89UoWzjIXIwE_XnaweUs5_GCW3PJ5qTh2O1oknda2nZ9c3V0i66RXsupcapClNmTNz1Dm-8Nxo13A-HvWpQXHNJwi2x2aA9-jtww>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748617730; x=
+	1748704130; bh=6oge/U/aglP31+wSztce+CpNg0ULJg/INTFXEme3qdY=; b=J
+	5WGumgUajttQN2pMHYu+MQh4oJqFdLU95qtuqxQnaOrEQ4eCqx4CxhVG/oF1p2bC
+	mzoX3TYxlxuZg8pDSWCWq7XS3CyqTZfsMOp9I+DZqewFYp3lC5l/Z/gUarrXFQ12
+	76ocVAjdQOSARGkclxEbCUnkCU39muebMJNvdLAuTlO7df3nA+p5qdQZWyO8UO4P
+	DYDY/0Tnc/T5RHsnt1rEBAnM0O+siV43ynanYWr2TyDqIS5gSqQugTa8p5usvF+3
+	6dQbYfM3KUCMQuK2TgOvIDEpMvrG3zEUi/O5VLmKpc6VVYs+NtT1pIytwpzbSMhs
+	PEfzhsGvOv1fk65PbgRAw==
+X-ME-Sender: <xms:Aso5aCiFmqqiwVQhd28jUNWdWb7xfgw19-lY1-feikofAiZRJDvrXg>
+    <xme:Aso5aDC-QjDI73nMxLgZ8xxPwyIMtOD_s6xlp4M_wZwosmbsN1yH2rdg02JHRfJoY
+    O_Q3Ag-pMFwXia3Nw>
+X-ME-Received: <xmr:Aso5aKFy6m7Z2Z1zCPIpRjfxyZDjARHi-JSin5SipRWcVX-cV0IMyIvDFgHWlPhvlSiHB4HRuZzGAQnanJGxET8caGGkYP2djV4-blcfTA>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvleeffeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -57,28 +57,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgddvleeffeculddtuddrge
     fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohephihrohhthhesph
-    grlhhorghlthhonhgvthifohhrkhhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegsvghnrdhknhhosghlvgesghhmrghilh
-    drtghomhdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluhhs
-    rdgtohhmpdhrtghpthhtohepuggrshhrrghfleesghhmrghilhdrtghomhdprhgtphhtth
-    hopehnrghsrghmuhhffhhinhesghhoohhglhgvrdgtohhm
-X-ME-Proxy: <xmx:Aco5aIrlljeJ6N5ljedPK-SGEJX6wKNBydZgbFrutAnWgNRX54U1_w>
-    <xmx:Aco5aBp89cCdzUxgA8NHf1bjOLCRFqGxwVlxljebV4mr97qZBhMXLA>
-    <xmx:Aco5aGTP4yqbk6JWlf5-yp23VXelD1ACD9ZIbvt5E6iPlxyl1o3sqQ>
-    <xmx:Aco5aBq3IEqrQ2-tKu4OLEgiTQpM8BXOGpzhXaRclzRjKZX5nbvG1g>
-    <xmx:Aco5aJfZMLdgfuPL0TFjzjQiFU7w9_OcUg7Ifp5BP5zu0TYvw1lYAzAZ>
+    iivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggvnhdrkhhnoh
+    gslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonhgvshdrphhluh
+    hsrdgtohhmpdhrtghpthhtohepnhgrshgrmhhufhhfihhnsehgohhoghhlvgdrtghomhdp
+    rhgtphhtthhopegurghsrhgrfhelsehgmhgrihhlrdgtohhmpdhrtghpthhtohephihroh
+    hthhesphgrlhhorghlthhonhgvthifohhrkhhsrdgtohhm
+X-ME-Proxy: <xmx:Aso5aLTgHmxxWQh9zzLhpgFFexSZQJi9ToP4wMXJiCxzBeAY3sMx2g>
+    <xmx:Aso5aPwoO0EUOOm3HndNIlwebl0O_7UeRh888VcbUB3H5v7nlTsYVg>
+    <xmx:Aso5aJ53Ob6Q7b-EuXgMqa5n7PKcAwQqE9_GhEI2YI5tydimKqleew>
+    <xmx:Aso5aMxzNVxGyLOjFtS7S-7zRRI3rUK0_42MNEoSyjl6E_SZTagRuw>
+    <xmx:Aso5aEnZ1b5vB8aSWksokEDvfcOaRhWHKxYb3dvhxnY_DxCkL6kjSpWg>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 11:08:48 -0400 (EDT)
+ 30 May 2025 11:08:49 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 609f52de (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Fri, 30 May 2025 15:08:46 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id aeb53118 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Fri, 30 May 2025 15:08:47 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Fri, 30 May 2025 17:08:36 +0200
-Subject: [PATCH v2 10/12] usage: allow dying without writing an error
- message
+Date: Fri, 30 May 2025 17:08:37 +0200
+Subject: [PATCH v2 11/12] builtin/gc: avoid global state in
+ `gc_before_repack()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -87,7 +87,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-b4-pks-maintenance-ref-lock-race-v2-10-d04e2f93e51f@pks.im>
+Message-Id: <20250530-b4-pks-maintenance-ref-lock-race-v2-11-d04e2f93e51f@pks.im>
 References: <20250530-b4-pks-maintenance-ref-lock-race-v2-0-d04e2f93e51f@pks.im>
 In-Reply-To: <20250530-b4-pks-maintenance-ref-lock-race-v2-0-d04e2f93e51f@pks.im>
 To: git@vger.kernel.org
@@ -97,156 +97,71 @@ Cc: Yonatan Roth <yroth@paloaltonetworks.com>,
  Ben Knoble <ben.knoble@gmail.com>
 X-Mailer: b4 0.14.2
 
-Sometimes code wants to die in a situation where it already has written
-an error message. To use the same error code as `die()` we have to open
-code the code with a call to `exit(128)` in such cases, which is easy to
-get wrong and leaves magical numbers all over our codebase.
+The `gc_before_repack()` should only ever run once in git-gc(1), but we
+may end up calling it twice when the "--detach" flag is passed. The
+duplicated call is avoided though via a static flag in this function.
 
-Teach `die_message_builtin()` to not print any error when passed a
-`NULL` pointer as error string. Like this, such users can now call
-`die(NULL)` to achieve the same result without any hardcoded error
-codes.
-
-Adapt a couple of builtins to use this new pattern to demonstrate that
-there is a need for such a helper.
+This pattern is somewhat unintuitive though. Refactor it to drop the
+static flag and instead guard the second call of `gc_before_repack()`
+via `opts.detach`.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- builtin/am.c                |  4 ++--
- builtin/checkout.c          |  4 ++--
- builtin/fetch.c             |  2 +-
- builtin/submodule--helper.c | 12 ++++++------
- usage.c                     |  2 ++
- 5 files changed, 13 insertions(+), 11 deletions(-)
+ builtin/gc.c | 24 +++++++++---------------
+ 1 file changed, 9 insertions(+), 15 deletions(-)
 
-diff --git a/builtin/am.c b/builtin/am.c
-index e32a3b4c973..a800003340f 100644
---- a/builtin/am.c
-+++ b/builtin/am.c
-@@ -1000,7 +1000,7 @@ static void am_setup(struct am_state *state, enum patch_format patch_format,
- 
- 	if (!patch_format) {
- 		fprintf_ln(stderr, _("Patch format detection failed."));
--		exit(128);
-+		die(NULL);
- 	}
- 
- 	if (mkdir(state->dir, 0777) < 0 && errno != EEXIST)
-@@ -1178,7 +1178,7 @@ static void NORETURN die_user_resolve(const struct am_state *state)
- 		strbuf_release(&sb);
- 	}
- 
--	exit(128);
-+	die(NULL);
+diff --git a/builtin/gc.c b/builtin/gc.c
+index e92015887a7..e910a99e033 100644
+--- a/builtin/gc.c
++++ b/builtin/gc.c
+@@ -816,22 +816,14 @@ static int report_last_gc_error(void)
+ 	return ret;
  }
  
- /**
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index d185982f3a6..536192d3456 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -838,7 +838,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 		init_tree_desc(&trees[0], &tree->object.oid,
- 			       tree->buffer, tree->size);
- 		if (parse_tree(new_tree) < 0)
--			exit(128);
-+			die(NULL);
- 		tree = new_tree;
- 		init_tree_desc(&trees[1], &tree->object.oid,
- 			       tree->buffer, tree->size);
-@@ -913,7 +913,7 @@ static int merge_working_tree(const struct checkout_opts *opts,
- 						     work,
- 						     old_tree);
- 			if (ret < 0)
--				exit(128);
-+				die(NULL);
- 			ret = reset_tree(new_tree,
- 					 opts, 0,
- 					 writeout_error, new_branch_info);
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index cda6eaf1fd6..b0800ea5829 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -992,7 +992,7 @@ static int update_local_ref(struct ref *ref,
- 		fast_forward = repo_in_merge_bases(the_repository, current,
- 						   updated);
- 		if (fast_forward < 0)
--			exit(128);
-+			die(NULL);
- 		forced_updates_ms += (getnanotime() - t_before) / 1000000;
- 	} else {
- 		fast_forward = 1;
-diff --git a/builtin/submodule--helper.c b/builtin/submodule--helper.c
-index 53da2116ddf..4255caca579 100644
---- a/builtin/submodule--helper.c
-+++ b/builtin/submodule--helper.c
-@@ -303,7 +303,7 @@ static void runcommand_in_submodule_cb(const struct cache_entry *list_item,
- 	char *displaypath;
- 
- 	if (validate_submodule_path(path) < 0)
--		exit(128);
-+		die(NULL);
- 
- 	displaypath = get_submodule_displaypath(path, info->prefix,
- 						info->super_prefix);
-@@ -643,7 +643,7 @@ static void status_submodule(const char *path, const struct object_id *ce_oid,
- 	};
- 
- 	if (validate_submodule_path(path) < 0)
--		exit(128);
-+		die(NULL);
- 
- 	if (!submodule_from_path(the_repository, null_oid(the_hash_algo), path))
- 		die(_("no submodule mapping found in .gitmodules for path '%s'"),
-@@ -1257,7 +1257,7 @@ static void sync_submodule(const char *path, const char *prefix,
- 		return;
- 
- 	if (validate_submodule_path(path) < 0)
--		exit(128);
-+		die(NULL);
- 
- 	sub = submodule_from_path(the_repository, null_oid(the_hash_algo), path);
- 
-@@ -1402,7 +1402,7 @@ static void deinit_submodule(const char *path, const char *prefix,
- 	char *sub_git_dir = xstrfmt("%s/.git", path);
- 
- 	if (validate_submodule_path(path) < 0)
--		exit(128);
-+		die(NULL);
- 
- 	sub = submodule_from_path(the_repository, null_oid(the_hash_algo), path);
- 
-@@ -1724,7 +1724,7 @@ static int clone_submodule(const struct module_clone_data *clone_data,
- 	char *to_free = NULL;
- 
- 	if (validate_submodule_path(clone_data_path) < 0)
--		exit(128);
-+		die(NULL);
- 
- 	if (!is_absolute_path(clone_data->path))
- 		clone_data_path = to_free = xstrfmt("%s/%s", repo_get_work_tree(the_repository),
-@@ -3524,7 +3524,7 @@ static int module_add(int argc, const char **argv, const char *prefix,
- 	strip_dir_trailing_slashes(add_data.sm_path);
- 
- 	if (validate_submodule_path(add_data.sm_path) < 0)
--		exit(128);
-+		die(NULL);
- 
- 	die_on_index_match(add_data.sm_path, force);
- 	die_on_repo_without_commits(add_data.sm_path);
-diff --git a/usage.c b/usage.c
-index 38b46bbbfe7..cd7b57d6446 100644
---- a/usage.c
-+++ b/usage.c
-@@ -67,6 +67,8 @@ static NORETURN void usage_builtin(const char *err, va_list params)
- 
- static void die_message_builtin(const char *err, va_list params)
+-static void gc_before_repack(struct maintenance_run_opts *opts,
+-			     struct gc_config *cfg)
++static int gc_before_repack(struct maintenance_run_opts *opts,
++			    struct gc_config *cfg)
  {
-+	if (!err)
-+		return;
- 	trace2_cmd_error_va(err, params);
- 	vreportf(_("fatal: "), err, params);
+-	/*
+-	 * We may be called twice, as both the pre- and
+-	 * post-daemonized phases will call us, but running these
+-	 * commands more than once is pointless and wasteful.
+-	 */
+-	static int done = 0;
+-	if (done++)
+-		return;
+-
+ 	if (cfg->pack_refs && maintenance_task_pack_refs(opts, cfg))
+-		die(FAILED_RUN, "pack-refs");
++		return error(FAILED_RUN, "pack-refs");
+ 	if (cfg->prune_reflogs && maintenance_task_reflog_expire(opts, cfg))
+-		die(FAILED_RUN, "reflog");
++		return error(FAILED_RUN, "reflog");
++	return 0;
  }
+ 
+ int cmd_gc(int argc,
+@@ -965,7 +957,8 @@ int cmd_gc(int argc,
+ 			goto out;
+ 		}
+ 
+-		gc_before_repack(&opts, &cfg); /* dies on failure */
++		if (gc_before_repack(&opts, &cfg) < 0)
++			die(NULL);
+ 		delete_tempfile(&pidfile);
+ 
+ 		/*
+@@ -995,7 +988,8 @@ int cmd_gc(int argc,
+ 		free(path);
+ 	}
+ 
+-	gc_before_repack(&opts, &cfg);
++	if (opts.detach <= 0)
++		gc_before_repack(&opts, &cfg);
+ 
+ 	if (!repository_format_precious_objects) {
+ 		struct child_process repack_cmd = CHILD_PROCESS_INIT;
 
 -- 
 2.50.0.rc0.604.gd4ff7b7c86.dirty
