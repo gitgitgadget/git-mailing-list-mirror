@@ -1,79 +1,115 @@
-Received: from mail-qk1-f180.google.com (mail-qk1-f180.google.com [209.85.222.180])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E2C21CFE0
-	for <git@vger.kernel.org>; Fri, 30 May 2025 21:50:32 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.180
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCDD8F40
+	for <git@vger.kernel.org>; Fri, 30 May 2025 21:55:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748641834; cv=none; b=UUmFgYRN8UsqJAJ54qfFJOm3l8gLJ9oa9lRuNxabIucic3ElonDlUAv5rE0iF4990x5YE4XRDakU5JwSo3LalrOjDB2RJyzaFwpPWkZYjnJHuxxwThkp3zPDawEIUxxqTtTm3BmaejXY6XkgjSDJqRxLBb9xPshnDrSssSzK0TM=
+	t=1748642124; cv=none; b=rB9g6HB8l3aY++hOXVV7V/b7oPqo+6RWDiYyu4bH3V0diDpWDKqbI791Cg7Wj6LurK1vjvxL7RXltpGAVcpET2vj9FSTLTUvX5rSc4iEPW68Oa7jFHa0ECxaVsqnElYO5/eZD9hW6eRAMpowyUxHjGdeM8kh4z32zBebWn+U8tM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748641834; c=relaxed/simple;
-	bh=EdA/Xabm1CdErIRhjkk8hnCspp3mnSKsEKZir+NOlNo=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=gD1LnMrVzVDpYW1tjyBeP+2ixGIhA0sDw/qVk0bBDkNSk0urCMr2+sELWCxaOuetNtYUoTCwUxGX10yEb6tnoVLfTL3rBUmrF083WGCDJW69x0jOvK8+MJ1ytzmQgGDeAI9sulzfuSBVtXUOrBaHzvBm1/C8IF+EugrnFQ4IOOI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com; spf=pass smtp.mailfrom=gmail.com; arc=none smtp.client-ip=209.85.222.180
-Authentication-Results: smtp.subspace.kernel.org; dmarc=fail (p=none dis=none) header.from=sunshineco.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
-Received: by mail-qk1-f180.google.com with SMTP id af79cd13be357-7c5a55bf777so42330785a.0
-        for <git@vger.kernel.org>; Fri, 30 May 2025 14:50:32 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748641832; x=1749246632;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=DmkjpWKZDmdOiDEZWAM8JOu+CNGZZCri/sSmC8CbUKU=;
-        b=bHeYvhMgMFUboN/Zz9AiS6PtsksizRvvSV57AjIeUY+AqGcqxbYBOBliLBiJ1EbJgb
-         o2YN0FknR14gfD41YCluKM6IrvoVr3DKSOBhGNAGFyZyEkcHWE/7D0uDaYXbEnJEemVq
-         9B2hWo9VndmyoWUFzmmM/FK/c8iVPc3KukxVcmL3NLY3OJMVnhFUPEYRQcB7Gvi8J3hC
-         I2T6nfZPEvD1K696vosx/Wf3H9dq3mZO05V+douncK66oocIxDZQlrcNxaUlD/6Kij/A
-         d+XJr5zbIiQOUNUezNchtVAdbPQMR+bwbA/x+mx9yNTymscUl4KDIW7Payg1a30CFZRq
-         /rFg==
-X-Forwarded-Encrypted: i=1; AJvYcCXCqRZ/Hv6mfPUok83SJ+Jg+elqW4XczGgInBQkiHE2MPB/s2CbAFpvxnWGI4ancGGpDNU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxvCUevo1ZmE8OUn26F7pCti2Fi6TTcNheYfxtgLfOtcyY1EjAq
-	R0olq6Fm7IIcXHhMxupc9gsUtCtvQqRojwmYnQSO+KE+/GUQ5RqtzEpB27CmP3/jkMcmP60QIKU
-	k7/PGTw6OJ3ImzWrvGKKo8B8rhi7gc2g=
-X-Gm-Gg: ASbGnctuEFC+RVINXlvm8J/uDaPrSm5b5no/EcFBwmYV4R+NTjIFbOM86Q+R2/Qgzj5
-	DGtOj9jmhaPxufy8Z76Jrd6AwCCvpmGRyoz10FjHW38QKXDqJgNVM3chDFryl4SIa42INi1au1a
-	Es0J7p9VWCcttQNpNVsaE2vrrVSiMoWnY=
-X-Google-Smtp-Source: AGHT+IEyv0SfopfSw/lRCIbAYXHhMhXIXELvp4tCw2GCdayo7C1Dl/qe0BA7OpuhVulbrX/0DRr63ITXAQAtbS/NWjY=
-X-Received: by 2002:ad4:5ca5:0:b0:6fa:be81:e18f with SMTP id
- 6a1803df08f44-6fad059a7f8mr25024736d6.0.1748641831810; Fri, 30 May 2025
- 14:50:31 -0700 (PDT)
+	s=arc-20240116; t=1748642124; c=relaxed/simple;
+	bh=Us4Y2RIpOELuH5U+SdRTB4li2KK/UoaOKq/uH6xVqEo=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=SirmfS7qW5aIeCIkEAnm6PrTlAdHE+HXBor4zDR+qiD5kv4pdC1hlF7GjWGdbujyxzfJPKZ+rW+Zxhso7yXSOhoRAwJ7LmpqAFUE+fugp2InOZ/Sa//sdbvDvR+hC6YXT4qMGz58SNW2SPKFU6/CiO4I6RikX9kKDHABESVpRac=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=b4uYHv4q; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=P3ll9MRx; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="b4uYHv4q";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="P3ll9MRx"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id B1DDF13802B4;
+	Fri, 30 May 2025 17:55:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-02.internal (MEProxy); Fri, 30 May 2025 17:55:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748642121; x=1748728521; bh=Q/hqYz6G4g
+	ixy4oB35hhF6xFBEU+eXddaHgwMzaYz3g=; b=b4uYHv4qCUDdR5da9lfTtGGzNm
+	hXBkZVE2kDTDVYjfAsdn5tT+gBxkwQw+ztPydqq2SSE9mWSNWzEf7+n4/E00p/50
+	YPQ/MMpr8691X+9SK2HHX5rxoBkgPxi09JtENWcs9hRJeKQMJJUTPkh7Qs6QIv4U
+	gOiyPO70rbpO00tiwNePq64gClocQITdG473M4j22VFQYcieJbyM+NGm5uvbHldy
+	jg99x7+Clr2kgvJiatorVz0eDFqvvoOFDhnj5n5aB6zPM0BzfMiMAiSjhlzL6YJE
+	VbxvDuiR73UXGCiFEnt8g6GkTwtOCZRzJVHUpjitUU3SEF1D2/z6wj4OyXhA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748642121; x=1748728521; bh=Q/hqYz6G4gixy4oB35hhF6xFBEU+eXddaHg
+	wMzaYz3g=; b=P3ll9MRxGQHfK7ms9NyQLoPnGBA0EpE1LBwD3kbJjeUydV60c41
+	Eeyw6S56t9LACxIB7xD4nsM6aNnHQBQgRs9jvddRlWDq9sTEMxVJq7Q1DMY576XX
+	Af1sEbsW2Gt7+KFLk0uiDvfZDpAiskacKADyacqq3xQiYj4R18b1ADUziIGBJC+Z
+	tI40/GkLyWzNp+9zVLtNB9kC0p0JJT3fDzehZKGR29bMLVMN/YYDk3lBVF9bNiGc
+	UAQSQtJTS2NH2GjmL6mYogKuhWmZBXlz3u8ZzvvjxVhgWUpgONku1M7GvZvXGizH
+	RszxorgexSNZ4YeBqZZHKMUEc14YHPrHqNQ==
+X-ME-Sender: <xms:SSk6aIBqsuFPIOF2-cp6veGrxrjvP_-O7w1b22PW66Ry1uZyYeH_bA>
+    <xme:SSk6aKh0nNqQj8FzNjzcELNmBzkEgQDEbUrFOTBYRasC17Mq9LQj1atTbmoRyROQ1
+    0prrdKos3e1S9gppQ>
+X-ME-Received: <xmr:SSk6aLnzrNedKRjpobF9Ab-XMfGcCpivwJdSBhA0OiZJmYIEK43zXUmnuecPAT_5q65CoefSrzWuwx7HaKlylQMFjwiJj2T6thsV0es>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeftddugeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhi
+    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjuhhlihgrnhesshifrg
+    hgvghmrghkvghrshdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
+    nhgvtghordgtohhmpdhrtghpthhtohepiihihigrohesughishhrohhothdrohhrghdprh
+    gtphhtthhopehkrhhishhtohhffhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdr
+    tghomhdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvg
+    drnhgvthdprhgtphhtthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhig
+    rdguvgdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:SSk6aOxnC5lDepjgLweU-R8sic8RO79L8WaBnUSVK_KUUiauDYSM0w>
+    <xmx:SSk6aNQLDRtcESaCYa_RzTvbN0QTjprBPXpF_2xKDNW9azWmK_p0Lg>
+    <xmx:SSk6aJYdhX1ycHgyv2nlKy8ZCptElAUjNU8zZCJWsQjz5kB-5xlESw>
+    <xmx:SSk6aGTuJ9cffCh0nky08Zp1ZhibDISVD99EU62w7UJ-UqGrFFMNsA>
+    <xmx:SSk6aKVQWkUS_K4wakjF5rJycJExG4Ss5msdo-q2kSfw_rOpWi19xknZ>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 30 May 2025 17:55:20 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Aditya Garg <gargaditya08@live.com>
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Julian Swagemakers
+ <julian@swagemakers.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Zi
+ Yao <ziyao@disroot.org>,  Kristoffer Haugsbakk
+ <kristofferhaugsbakk@fastmail.com>,  "sandals@crustytoothpaste.net"
+ <sandals@crustytoothpaste.net>,  Johannes Schindelin
+ <johannes.schindelin@gmx.de>
+Subject: Re: [PATCH v5 2/4] docs: improve formatting in git-send-email
+ documentation
+In-Reply-To: <PN3PR01MB95974BABA153882DE494D06EB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	(Aditya Garg's message of "Fri, 30 May 2025 22:49:21 +0530")
+References: <PN3PR01MB95971131BD3CD89771F19E5DB896A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<20250528070521.17379-1-gargaditya08@live.com>
+	<20250528070521.17379-3-gargaditya08@live.com>
+	<xmqqa56vl1uq.fsf@gitster.g>
+	<PN3PR01MB9597008B30AB91C9539E7C8CB866A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<877c1yb53w.fsf@gitster.g>
+	<PN3PR01MB9597DEE8C41CB1599B9A97CEB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+	<xmqqbjraf29c.fsf@gitster.g>
+	<PN3PR01MB95974BABA153882DE494D06EB861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
+Date: Fri, 30 May 2025 14:55:19 -0700
+Message-ID: <xmqq5xhhepbs.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <pull.1977.git.git.1748149783383.gitgitgadget@gmail.com>
- <pull.1977.v2.git.git.1748628846.gitgitgadget@gmail.com> <56b24d681cbcedaf5c03c89eee582d554a0894b7.1748628847.git.gitgitgadget@gmail.com>
- <xmqqa56tepx8.fsf@gitster.g>
-In-Reply-To: <xmqqa56tepx8.fsf@gitster.g>
-From: Eric Sunshine <sunshine@sunshineco.com>
-Date: Fri, 30 May 2025 17:50:20 -0400
-X-Gm-Features: AX0GCFt_iIDhdQVK_eDXU8IgzW6nmIszN0QQNAfGlU4r3ztIQfAG6DA3ffpMzDM
-Message-ID: <CAPig+cSv8ADqERwZBZ_7OXnedGPR_iwRa0Z-NtEBHxS2Zc8EjQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] t5333: test memory leak when use pseudo-merge in
- boundary traversal
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Lidong Yan via GitGitGadget <gitgitgadget@gmail.com>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Lidong Yan <502024330056@smail.nju.edu.cn>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
 
-On Fri, May 30, 2025 at 5:42=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
-> "Lidong Yan via GitGitGadget" <gitgitgadget@gmail.com> writes:
-> > +             export GIT_TEST_PACK_USE_BITMAP_BOUNDARY_TRAVERSAL=3D1 &&
->
-> The test linter complains on this line for me, it seems.
+Aditya Garg <gargaditya08@live.com> writes:
 
-To provide a bit more context:
+> Thats definitely much better. Although, not really in the scope
+> of this patch series ;)
 
-    % (cd t && make test-lint-shell-syntax)
-
-tells you that `export FOO=3Dbar` is not portable and that it should
-instead be written as:
-
-    FOO=3Dbar &&
-    export FOO &&
+I agree.  As you decided not to touch this part with your series, it
+is perfectly fine to leave it as-is.  Your series is not making this
+part any worse that way.
