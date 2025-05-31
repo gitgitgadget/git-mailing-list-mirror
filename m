@@ -1,142 +1,184 @@
-Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mout.web.de (mout.web.de [212.227.15.3])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 811101AAC9
-	for <git@vger.kernel.org>; Sat, 31 May 2025 03:39:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.176
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CBB64086A
+	for <git@vger.kernel.org>; Sat, 31 May 2025 05:46:29 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.227.15.3
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748662751; cv=none; b=T2OeL4eKaDav765I2e+eNpf2i/U20MXdOElMG5pZp8ZKjB1YVG5hRuQ3mDxZzAzNM0cxwWK4NQF4HmoJr1UeHSC7vc9Zo4FUPZjvvbOGkfU1sbi/Fc2Ud9q26qwrwvc432bK0V8u765XSq1pprKmsBMOzbli7B7dL2juMMtONcQ=
+	t=1748670392; cv=none; b=rS+OTQXktBh9/O4zl9Z+187VqUnoTwXWdK5WNejWMOTQpevYrqJFERCg4+xCE8M0WGgFDDdpHYAuyxh98YgC194wJQf/GuSCxl8nhldyhFVU8o0+ktNuOLJ3gsiiQmIjiesVAGq6+w4UHclNOjcApiOR00DlvzeDFgHAZkBE87U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748662751; c=relaxed/simple;
-	bh=fq88++vUHX60EN4DE47pmJGC0fW7CwjdsuBo/hotSvs=;
+	s=arc-20240116; t=1748670392; c=relaxed/simple;
+	bh=64FA0F1zHzkh4eaWiCXBQ02EtLl4RibXzanSZH6HZLA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=HTZgL2/DAuajIACPsJpotKrCAcOQx16//Zy1iAh7Xa1A2+cTrhfnemiSooiEOPoH4o59c7CfgJBC+bPEBVX7t0kwIGIk3EaFFLimzvRBQ+zogsiUzxvR0MWS9eV7ChbgFeJ4svGDiX5y4m1GkLlZXNe7kTuVvwVj0Bx3a0Jz9do=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lUi5gLcn; arc=none smtp.client-ip=209.85.214.176
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=H8aSKgh7VnC4x3eIuRRcdDA4tAQZwYfUA78XiHF9uMAX5yjhLAe58pGvH1ub1jF3bythaTaRF4okIw402ij71lf6o1FAgADg+ZyCHLSyhwFAN3GxuUny20buFKzp9bq4HY4R2A5CoC8uK6XsSY53/5Qa1RSSGPZFGjetblBDZr8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de; spf=pass smtp.mailfrom=web.de; dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b=gyRhkc+X; arc=none smtp.client-ip=212.227.15.3
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=web.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=web.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lUi5gLcn"
-Received: by mail-pl1-f176.google.com with SMTP id d9443c01a7336-2353a2bc210so11667145ad.2
-        for <git@vger.kernel.org>; Fri, 30 May 2025 20:39:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748662749; x=1749267549; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UzVm11JW7ufVL8dlcBD9S0JHzP34L5wnOaqyg1PAIRw=;
-        b=lUi5gLcnFHktkrd+ILbDDweOfnK8AEg0Yq+pk/KBlciH49Viftt/7bhOQKlRv0iTis
-         kMc7lzeEVEvpQi5Qgp8c74Ni0aLcR2IFjHa1IjJURJND8FtM5FIspurBJt3Vd8O9TAm0
-         05fVq6INXoSLNbF2IpnkinGB4ErD9r9D8/G5Z3NV04Fj0tg8oyiAYcnu3bf8gyrSyKIT
-         4Ql5/5addS8fNhXkoJZTZIuHFIAnuAcJtzrXeM2BMRsqFQA0+seXTPcesIGKGKxLvPRC
-         jtqyB/vBiTN3nkfow+h+3aObfTES+IQ0dcvO3oXG3x75i0y26JyJdT7+OU0S69enJQYk
-         iyDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748662749; x=1749267549;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UzVm11JW7ufVL8dlcBD9S0JHzP34L5wnOaqyg1PAIRw=;
-        b=xDHNcj/RqNLhUMD8BLDsGaF0Ef6z2OrZpoEMGx2338oYzhhYkPZduDAr9EFqrX6WyW
-         z14E8/ddFTs+E8O8yti71/9rMD3wELMRe0WA/SKiQd4BT4Ei45uzYwf30WLjGq0+SQH/
-         2zu+4bKrIGx3LyhXZLerOTq34OpT4k8cIDjimkFKIMSU3ZUGxNFp3ZY3wW0ZwSGTjzL3
-         8NFBJF0ghvoj/6ni5dTWw2NcoOJTJl1Igec/rpPjlf7AfJjzW3rLv7/ZOioMpbTERQhO
-         p8S8WOe2v67Hf0NakAciHP9qcj/CgMOKLFirolU45zdJ1gd3icpouQNo10AX0K6vubHV
-         XxPQ==
-X-Gm-Message-State: AOJu0YwoxPxYh7wZOjoUhed1NZVG5X63vYWdzFpLUpW5csvv+RefMEW+
-	RbTSvV507kwM3okIdXCkaM4lvIwFevcNwfbZm2/0bWU8jDDxZ/OoRadA3Yjtm4eC
-X-Gm-Gg: ASbGncvUwEox4OJ/ifVM9aXuSigPdpCEunmwuKVBgizOt8GicC6c2LLv09lZOHlQJq/
-	uTvRxJ6I8gkaMrGKcvT/BzOpfxzxoH1corTheAj/z3b7O7+vtiXx1OQ5ETAKN5Gyf9Dx5WVKFyD
-	fyLs1r65MbznDBIn6e8XPhUhQfxW1f2a4r+S/Sk9/elwsnUWNJUpxOv5O7sBEa7q4t0Zz+9JU7g
-	sa1vCbUqFJP8XcMuEQEkwbNKhvo+cuUcvwBRk0JqG9URtGhU35lTAV8WaNHCx0frvJrkquDHcdf
-	cSZ0S7xDWeEIPomQEiKsJQwu0dG1Cc9QbCYsbESnYvCt4UffPZSMa9Slew==
-X-Google-Smtp-Source: AGHT+IGdu+xwol/DlCJiNmIZWJxEJmgWCPjtfDJWl70EK14iMScjyFjE7/9Twj6dpJTAvpe9RFWp2Q==
-X-Received: by 2002:a17:903:32c8:b0:234:d292:be8c with SMTP id d9443c01a7336-23539564775mr66059825ad.16.1748662749283;
-        Fri, 30 May 2025 20:39:09 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23506cf39e1sm35088255ad.160.2025.05.30.20.39.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 May 2025 20:39:08 -0700 (PDT)
-Date: Sat, 31 May 2025 11:39:18 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: [PATCH] fsck: ignore missing "refs" directory for linked worktrees
-Message-ID: <aDp55upE6AhYunz7@ArchLinux>
-References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+	dkim=pass (2048-bit key) header.d=web.de header.i=tboegi@web.de header.b="gyRhkc+X"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+	s=s29768273; t=1748670379; x=1749275179; i=tboegi@web.de;
+	bh=ShcWBiukKf/t4YpoQQ9cRRxJfginFOyWeOBJmBwwPis=;
+	h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:References:
+	 MIME-Version:Content-Type:Content-Transfer-Encoding:In-Reply-To:
+	 cc:content-transfer-encoding:content-type:date:from:message-id:
+	 mime-version:reply-to:subject:to;
+	b=gyRhkc+XhPNTRmzAyRPHZGzJU5RBISYl0UTEsm8l15/ZWp8HiqITyEWE27VLMck5
+	 2lM261/gJjS5pALgGryjbFbUMfpvq1fjk8MjNwS40N0P2k5IDnTCnqj77HE0BRgwb
+	 U27tmMP71iO8STXqvKVA4CsdcR1P/eZwmuLxE2XHB6xRLh/hBLkJC0S2osDJuxPxI
+	 ING8RqQGHAyF1li0giPBfI1UUvQp8BrXlZ+D3Mf41nVzqaPhpfKKB0YPXbqOuWAZt
+	 35IhQL7RzWkqo/N9Dbx4x1yECvu165RXreuFFlBahXB+3uW9yrC+l9RWarqScwsJP
+	 CFiH8wzn8vs4NtVR7A==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from localhost ([81.231.143.213]) by smtp.web.de (mrweb005
+ [213.165.67.108]) with ESMTPSA (Nemesis) id 1MCGSU-1uBvNA3YqQ-00H3Na; Sat, 31
+ May 2025 07:46:18 +0200
+Date: Sat, 31 May 2025 07:46:18 +0200
+From: Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Mark Mentovai <mark@chromium.org>,
+	Git Development <git@vger.kernel.org>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Derrick Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] t: run tests from a normalized working directory
+Message-ID: <20250531054618.GA30443@tb-raspi4>
+References: <20250523193722.68344-1-mark@chromium.org>
+ <20250528201737.55268-1-mark@chromium.org>
+ <20250528230804.GA16856@tb-raspi4>
+ <xmqqfrgmhep3.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <xmqqfrgmhep3.fsf@gitster.g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-Provags-ID: V03:K1:hE5yU4cGz9zyESz0t1lcPYm8w9mPZutAqju7g/D1qxPRS1UPbsn
+ FUdxdH5josCzMGLyCPtehmbIC5IP4WQYXiGITRDyWbhdmnlrp3VHOWfc3ByaUETyOPctce7
+ 8ZRM3SJcE62eap9q6UXenZC2AZTUwl2CSBBmYBtBGdN2RHUyVRjEa+THvNYI5ZoK3VyyE/U
+ tg7m3nUp3hPe2Spc1ehUA==
+X-Spam-Flag: NO
+UI-OutboundReport: notjunk:1;M01:P0:abC1evJ4U0Q=;Qx8P+fZNn9k/sMZ8RDZqOvpFATi
+ 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
 
-It is reported that "git refs verify" would fail when encountering
-worktrees created on Git v2.43.0 or older versions. These versions
-don't automatically create the "refs" directory, causing the error:
+On Thu, May 29, 2025 at 10:04:24PM -0700, Junio C Hamano wrote:
+> Torsten B=F6gershausen <tboegi@web.de> writes:
+>=20
+> > On Wed, May 28, 2025 at 04:17:37PM -0400, Mark Mentovai wrote:
+> >
+> > The problem is well described, thanks for that.
+> > However, different words and terms are used for the same thing:
+> >   "normalized working directory" (which is easy to confuse
+> >     with normalized working tree where CRLF-LF conversion had been
+> >     done and clean filters applied.
+> >   "pathname canonicalization"
+> >   "canonical absolute path"
+> >   "normalized path"
+> > ... and that is done in "strbuf_realpath()"
+> >
+> > May be the word normalized can be replaced here ?
+> > Starting with the head line, how about this:
+> > t: run tests from an absolute path
+> >
+> > And later in the text:
+> > use "absolute path" instead of "normalized path" ?
+>=20
+> Thanks for a careful reading.  When I read the log message for the
+> first time, it did not bother me too much that it said canonicalize
+> and normalize interchangeably, and the two verbs still do not bother
+> me terribly.  I agree with you that clearly describing what the
+> canonicalization rules do (i.e. fully resolving symbolic links to
+> make the path absolute) very good idea, but I think the last
+> sentence of the first paragraph does a good job at it already.
+>=20
+> Can you offer a rewrite along the lines you suggest so that we can
+> compare?  I personally felt that what Mark gave us, albeit a bit on
+> the more verbose and repetitive side, were written clearly enough.
+>=20
+> Thanks.
 
-    error: cannot open directory .git/worktrees/<worktree name>/refs:
-    No such file or directory
+Here is an attempt to do so.
+The word canonical has been removed.
+After reading the help for
+'pwd -P' and 'cd -P'
+"absolute" is replaced by "physical".
+A matter of taste.
+If absolute is more used here in Git, I am fine with any.
 
-Since 8f4c00de95 (builtin/worktree: create refdb via ref backend,
-2024-01-08), we automatically create the "refs" directory for new
-worktrees. However, the fsck code incorrectly assumes all linked
-worktrees have this directory, thus introducing compatibility issue.
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+t: run 7900 tests from the physical working directory
 
-Check for ENOENT errno before reporting directory access errors for
-linked worktrees to maintain backward compatibility.
+Some tests make git perform actions that produce observable pathnames,
+and have expectations on those paths. Tests run with $HOME set to a
+$TRASH_DIRECTORY, and with their working directory the same
+$TRASH_DIRECTORY, although these paths are physical identical, they do
+not observe the same pathname normalization rules and thus might not
+be represented by strings that compare equal. In particular, no pathname
+normalization is applied to $TRASH_DIRECTORY or $HOME, while tests
+change their working directory with `cd -P` which resolves symbolic links
+returning the physical path.
 
-Reported-by: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Signed-off-by: shejialuo <shejialuo@gmail.com>
----
- refs/files-backend.c     |  3 +++
- t/t0602-reffiles-fsck.sh | 15 +++++++++++++++
- 2 files changed, 18 insertions(+)
+t7900's macOS maintenance tests (which are not limited to running on
+macOS) have an expectation on a path that `git maintenance` forms by
+using abspath.c strbuf_realpath() to resolve the physical path
+based on $HOME. When t7900 runs from a working directory that contains
+symbolic links in its pathname, $HOME will also contain symbolic links,
+which `git maintenance` resolves but the test's expectation does not,
+causing a test failure.
 
-diff --git a/refs/files-backend.c b/refs/files-backend.c
-index 4d1f65a57a..bf6f89b1d1 100644
---- a/refs/files-backend.c
-+++ b/refs/files-backend.c
-@@ -3762,6 +3762,9 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
- 
- 	iter = dir_iterator_begin(sb.buf, 0);
- 	if (!iter) {
-+		if (errno == ENOENT && !is_main_worktree(wt))
-+			goto out;
-+
- 		ret = error_errno(_("cannot open directory %s"), sb.buf);
- 		goto out;
- 	}
-diff --git a/t/t0602-reffiles-fsck.sh b/t/t0602-reffiles-fsck.sh
-index f671ac4d3a..615b7c0683 100755
---- a/t/t0602-reffiles-fsck.sh
-+++ b/t/t0602-reffiles-fsck.sh
-@@ -110,6 +110,21 @@ test_expect_success 'ref name check should be adapted into fsck messages' '
- 	)
- '
- 
-+test_expect_success 'no refs directory of worktree should not cause problems' '
-+	test_when_finished "rm -rf repo" &&
-+	git init repo &&
-+	(
-+		cd repo &&
-+		test_commit initial &&
-+
-+		git worktree add --detach ./worktree &&
-+		# Simulate old directory layout
-+		rm -rf ./git/worktrees/worktree/refs &&
-+		git refs verify 2>err &&
-+		test_must_be_empty err
-+	)
-+'
-+
- test_expect_success 'ref name check should work for multiple worktrees' '
- 	test_when_finished "rm -rf repo" &&
- 	git init repo &&
--- 
-2.49.0
-
+Align $TRASH_DIRECTORY and $HOME with the physical path as used for
+the working directory by resetting them to match the working directory
+after it's established by `cd -P`. With all paths in agreement and
+symbolic links resolved, pathname expectations can be set and met based
+on string comparison without regard to external environmental factors
+such as the presence of symbolic links in a path.
