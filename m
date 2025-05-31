@@ -1,113 +1,115 @@
-Received: from fhigh-a4-smtp.messagingengine.com (fhigh-a4-smtp.messagingengine.com [103.168.172.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DCC84A08
-	for <git@vger.kernel.org>; Sat, 31 May 2025 00:45:22 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B42F4C92
+	for <git@vger.kernel.org>; Sat, 31 May 2025 01:03:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748652324; cv=none; b=TTz1d99qZxMjLJRupcjvYM5MkScBUYEN6anxYrHIQtOQl2or1cOmuExHjuuy0KtMWTXQxKEDbxnzOKPlGa3O+h9RXb34ZQCNCvqnMUuJkjX6xCz+afBL6CIBumrpjaZ0YjFV4pjbuvDSOGlfL1BuKxQKEwhwtihsQU6506BuNdo=
+	t=1748653424; cv=none; b=niBLMgK/o2xR9rQETT1ZW/xr04UdGg5Cel72AqtZ4IpJOzTaS6H1madrIZ2M9x+O8RPCaOe4b66ZawaudskMFcOTnjs5nNnZhyJubH+ZnpTOiaLCsq2RCpDFipu9t6YxTnhdXUXDHsXj+KrOpar5JvS76bECOwHkOay3zzJT2Nk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748652324; c=relaxed/simple;
-	bh=h4Q8mEDkzZH64ikxCUcWzgwABcvmOrrWTY0x1Kkg0T4=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=gV4CI4R72ExfxRiwb6s9chxHyBuOkrciHjC3sTfcBKiXrrNKtFZnp4hBRAr6C/T1YtU650KMLjHjZyi6qIDoIRpmLz83i/Ku7OldfJ0WQAFAYaKwUqsZQc9i53cPAjZ/95q2qZOH1vZfPGmE5VlF0OYsDQrtWvmIfRkkl4VaSS8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=U5DiyWOY; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TvgESrku; arc=none smtp.client-ip=103.168.172.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
+	s=arc-20240116; t=1748653424; c=relaxed/simple;
+	bh=WW4BYXxYL2Tvzg+jHd3yknyKINSXUe2+YrFwU00SMB0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=ERlwkop2oPA14rbqrOXuIlhdfhHuEPlvRYGAT6GqvaMmjt30WVFmW7clJ/HjV+HoPIBfoQezUZfVIOUk0yAmMyBXGfCotuctoJgu6/e8FvbFrJGjFS2E1TJB39aYCD9I3/V7rh2CN4B2Kbr0RB7hMWiQrFh79vw0kuzn8Tsd8ls=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=E7mFpI2W; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="U5DiyWOY";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TvgESrku"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 5D36411400C5;
-	Fri, 30 May 2025 20:45:21 -0400 (EDT)
-Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Fri, 30 May 2025 20:45:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748652321; x=1748738721; bh=Pf6cBdZuV0
-	19BLFYuPUNNqEv5CN2bGO/R+DJTo4Uryk=; b=U5DiyWOYcXRmyhTKKXQV4F/EPg
-	Hfrxl6jK/zD48UF4ChC2RZHAekHA3ahEzOoQE4CJmY1tX+EwY1UCj9Q8N25WxxiP
-	TVxL1KRsiARRs2RRaJJoTw3wFvR2D1RAdSJWjoT/WDrKeifYSvvLWBMaBn7C08a/
-	8aI02n0ejHq8ypV3WV1ebFXCoql4km/PB5Oum0CK6qC9aAFYVDIHX9ZGyCJWN5a+
-	R852CnmRg751eCbPk5EBsc8I3TUv8Xp6ooiim2UAx3oZxTSB7+Ff3VLpSCX32N7x
-	aZkhIWFSu7jqOU69TNW5XZdasla7yPyEl2FxQT4yLXoXkHecjzdiMQ8LCXLg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748652321; x=1748738721; bh=Pf6cBdZuV019BLFYuPUNNqEv5CN2bGO/R+D
-	JTo4Uryk=; b=TvgESrkupmnSG4ATxlDFkICzC4DJLe4w2Bt6bpKCjOW3gh9jDFg
-	yWUAoM7wg/P1dYOovV4K0g26OsjVfOdgYos1wXzh71qdZRVEQoXCbGFvZabbDh8g
-	c2FMVwCzS7fOoHhebqoTWvsPBcm/8Yow4dDwZ2EgxIkGXiYiePiGWYaLRlZJj6Da
-	QzXKECPuld5k/k3UmUB8ZK4mUTPdhOKAlsQG4IA+BkiHbFhwecNRyeEUxbK2ewEk
-	dzlDyMUhqwaKqC3atWYYG/eay3OHa7R1+fJSedthwpnlrZrNaMj3oE8XbAS1qdSI
-	+u/2XlKhePeYNsCyC8w6UAxme7UbtZrpmZA==
-X-ME-Sender: <xms:IFE6aByxuEl1fZJRJWVrwXouleuybWy1irIK_lWvmybPp5LhR7M78A>
-    <xme:IFE6aBStiCjAygUg5XJGyL1KlySLb-nXIWNEkY2vboJRUri0qdihYRvu5BgA4asrN
-    5FlL7h4a6otSuJTAA>
-X-ME-Received: <xmr:IFE6aLUBgus-EMbfrccNF0wcr0hBMi0G2H45W5Sy9zLcJwBWs9WH_K_Utqw2G8LXC4PkgXF5SZRipdLODJ1ZM8W7hr5dnc_9xdfd7kA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdeftdegkeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
-    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
-    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhi
-    thesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgessh
-    hunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepiihihigrohesughishhrohhothdr
-    ohhrghdprhgtphhtthhopehsrghnuggrlhhssegtrhhushhthihtohhothhhphgrshhtvg
-    drnhgvthdprhgtphhtthhopehpvghffhesphgvfhhfrdhnvghtpdhrtghpthhtohepsggv
-    nhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
-    hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
-    ohigrdgtohhm
-X-ME-Proxy: <xmx:IFE6aDjEouF1S4KSaBVPWwx9y55gs_NnJzOBgy8tZBEM7xt-C86PzA>
-    <xmx:IFE6aDCge_4M5Y-nsjO_HBrUOXl94sQ7Mi_YLQa9ACMhR4CNSShb2A>
-    <xmx:IFE6aMLwtDnKFPWQs9baggpnrhfNSMgtvx1b0vtu0kPf1UuQqZIDvA>
-    <xmx:IFE6aCBgzsPEPBxNNUFsB6AKd-BW1V_UeF1vmk-KvmRikKDf8ENvdA>
-    <xmx:IVE6aGXb3nrGqtNv-WpYneSAlzX5DwQnAi2WxIz7gzbDz-N5NhpVh4cG>
-Feedback-ID: if26b431b:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 30 May 2025 20:45:20 -0400 (EDT)
-From: Junio C Hamano <gitster@pobox.com>
-To: Aditya Garg <gargaditya08@live.com>
-Cc: git@vger.kernel.org,  Eric Sunshine <sunshine@sunshineco.com>,  Zi Yao
- <ziyao@disroot.org>,  sandals@crustytoothpaste.net,  Jeff King
- <peff@peff.net>,  Ben Knoble <ben.knoble@gmail.com>,  Phillip Wood
- <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v9 5/9] imap-send: enable specifying the folder using
- the command line
-In-Reply-To: <PN3PR01MB9597C14385FFA97ADF5ED3C9B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	(Aditya Garg's message of "Fri, 30 May 2025 23:02:18 +0530")
-References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597B444D85F7A7D1B6546C3B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-	<PN3PR01MB9597C14385FFA97ADF5ED3C9B861A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
-Date: Fri, 30 May 2025 17:45:19 -0700
-Message-ID: <xmqqecw5d2w0.fsf@gitster.g>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="E7mFpI2W"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-73c17c770a7so2930073b3a.2
+        for <git@vger.kernel.org>; Fri, 30 May 2025 18:03:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748653422; x=1749258222; darn=vger.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Y2c7nSi+vNDxN1iPw3dg8RkG/9s+UkDIP3E+U0VT/yI=;
+        b=E7mFpI2WrqjhRk02IYvL0g4aV0JvgL1rEQxXN0JElYDFws6JRK8t1e/8/Ukqt0RRVK
+         AQbfzWz8PctM2UcmHSzTBAMC7S0vB6sJxQiJ2Y5PREDZ7Hsjl0neqTaYlr2kchaEUXrh
+         3DmCdq9S2AXnW/Ms3AFAPcQomuj6tI46UtDB6mwgxsnd5M6ZDqRQBQVMs4PdOmJy7SJ0
+         //N0Qur1G90WYtGNWTvL26IaaL0A8LbW5Ijr4nR2R+FbHs5CZ4hBb5xaiIR+Gb20GjPz
+         +KoSNNDGDOBuCuzP0Pw7va/3+ePChW23feXEYXdEduPaP9Kbc7i2EjuhtuS8q1GCzYWl
+         +N9g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748653422; x=1749258222;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Y2c7nSi+vNDxN1iPw3dg8RkG/9s+UkDIP3E+U0VT/yI=;
+        b=ZMewpLN1IKF7yuVlqJOA8ouZ1KznRj2j41O7yaOsR8mMBm3PepTPSR4WP2SWV+0XbP
+         j25ReOm9VPdYdW59gwtzd6lxDiGpQDVSFplTWMlG1alyVKubHhTvZu0XoNfjsXAZDIFD
+         u4y57HFl7bCsrphSul5AB+Tbgv4WIlV/XfLtxqY2yvZ+W1AcN5QVl2PtJ3ktdyoBYapy
+         4YAo6+YLKUVSyyfw0gshP6s5E+yTVHSUfrXLLKmdHjLmnvR3P90ebVMZ+5Aw+Cek5Eme
+         Go620pz0kThMQJS3uRcJ16rMY215ZwBD3PDAnsOwzQys554F/yP6yGZ4rIRoG6jRh04n
+         fLAA==
+X-Forwarded-Encrypted: i=1; AJvYcCUL0eNJy0iTNVSRVdFuPRPab9Ztz2QBUHm1RG2E30oKnoz+FMC/jzNohA1a2cL0bXb9Gy4=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxgKL/fA6SsNVW9TW3Cp7UGEZkBz2Xc73Lqt5CHKdT4fF30Ws/+
+	YKPpDH8Z1tSCr5CpMLjWY4sx3ejYcpOO/SCNbHxP8Cv3BLuSzZJX0kJz
+X-Gm-Gg: ASbGncsS8pmsWjsJ+R1ElkYD9D74gx9X3IVBHXsghfrYChswzdoigbZVhB+G9mTiWLE
+	w5YbcS0YtmqhGuUHhg+lgIEqlM6Q7bsAL5PZR5ovNnqI+6J3hBEeNyEtPvpiaVEDS0VlpvgcR+4
+	FXgLoNzguX6n3ZqJReaiYQPp/BGVXVAzTAlchZEFhTCR+UCGz3URNvIu1A9S1wiR5uJM3WKd8AK
+	dk9M0lQh0jVNK+4ut1Qh/+FAuCrkz6qC1rcKkOtMwAPidFc9cH0eRkEOlnxGp4SXOY5CHfCiyQG
+	GRamW9A7djY1IMHH9ZevxBXTh3zjMMV00MOsgXb5oMkmhh0=
+X-Google-Smtp-Source: AGHT+IHWI2Eadt/JVim3LdDDXUgXbQs/RYgPaSU+KZTQFAxl9MhzE0yyKjXcPgwtL0Recex/LORoEQ==
+X-Received: by 2002:a05:6a00:14c2:b0:737:678d:fb66 with SMTP id d2e1a72fcca58-747d18210f0mr665477b3a.5.1748653422405;
+        Fri, 30 May 2025 18:03:42 -0700 (PDT)
+Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
+        by smtp.gmail.com with UTF8SMTPSA id d2e1a72fcca58-747afed34fdsm3627911b3a.75.2025.05.30.18.03.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 May 2025 18:03:41 -0700 (PDT)
+Date: Sat, 31 May 2025 09:03:51 +0800
+From: shejialuo <shejialuo@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Patrick Steinhardt <ps@pks.im>,
+	Karthik Nayak <karthik.188@gmail.com>
+Subject: Re: [BUG] refs: verify does not work if there are v2.43.0 or older
+ worktrees w/o wt. refs
+Message-ID: <aDpVd8J-TfhvTyA3@ArchLinux>
+References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+ <CAPig+cQiw03qfwwE9Md+LdKeS-6BGx0M1+0YYDUDXO9UPVo+wg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAPig+cQiw03qfwwE9Md+LdKeS-6BGx0M1+0YYDUDXO9UPVo+wg@mail.gmail.com>
 
-Aditya Garg <gargaditya08@live.com> writes:
+On Fri, May 30, 2025 at 06:23:25PM -0400, Eric Sunshine wrote:
+> On Fri, May 30, 2025 at 3:00 PM <kristofferhaugsbakk@fastmail.com> wrote:
+> > git-refs-verify(1) checks worktree refs since v2.47.0-111-g7c78d819e6a
+> > (ref: support multiple worktrees check for refs, 2024-11-20).  This
+> > causes the command to always exit with code `255` and stderr output
+> > lines for each worktree created on v2.43.0 or older that does not have
+> > worktree refs:
+> >
+> >     error: cannot open directory .git/worktrees/<worktree name>/refs: No such file or directory
+> 
+> Interesting. I didn't follow the topic which introduced 7c78d819e6
+> (ref: support multiple worktrees check for refs, 2024-11-20), but I
+> can confirm that this is a problem.
+> 
 
-> Some users may very often want to imap-send messages to a folder
-> other than the default set in the config. Add a command line
-> argument for the same.
->
-> Signed-off-by: Aditya Garg <gargaditya08@live.com>
-> ---
->  Documentation/config/imap.adoc   |  5 +++--
->  Documentation/git-imap-send.adoc | 15 +++++++++++----
->  imap-send.c                      |  9 ++++++++-
->  3 files changed, 22 insertions(+), 7 deletions(-)
+Yes, I didn't realize about this. Thank Kristoffer for reporting this
+issue and you for confirming this. I would write a patch today to fix
+this issue. And hope that this fix would land in this release.
 
-Did you forget to adjust tests that expect the traditional messages?
+> > This is apparently caused by worktrees created on Git v2.43.0 or older.
+> > Apparently these worktrees don’t have this directory unless there exist
+> > worktree refs:
+> >
+> >     .git/worktrees/<worktree name>/refs
+> 
+> Indeed, the "refs" subdirectory was not present by default in older
+> Git versions. Were you able to track down which commit is responsible
+> for that directory getting created automatically when the worktree
+> gets created?
+> 
+
+I find out that; in 8f4c00de95 (builtin/worktree: create refdb via ref
+backend, 2024-01-08)
