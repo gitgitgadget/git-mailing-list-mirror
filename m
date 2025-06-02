@@ -1,148 +1,102 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3732C22257E
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:02:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D87AA226D19
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:04:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748876568; cv=none; b=bZ8dP+bbEOUWb0/YSnFP3fzkl3Wb2ckXSGxRhg+uVkqwGqv8W4Woi+x8rcYNn1cVUhTOTvSQ48F9dvD0ua04ZYmC7V84pQZhSsOeDScCzpJAKcAGfMcJY0E6qmwU9FArZ14R1ARzpiECGE3ig85wxXpxcEBbkMJbQACW6wqcwPE=
+	t=1748876665; cv=none; b=KxnJRRccIrdjrgZJCaiYoklpC3oaIztYqD8uPuRiXjV9JZMvHRJn9vRfG6XI7DyzIIAnIvpEr8KHwR9YwZpSXydvwZe/O1r59hEVX2zORAPWV8GHVq2Q5UeUaUZLSspvctWCpuEvStUodMMeErAwpgIU/rUftHM9hCtK5KZ7F+M=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748876568; c=relaxed/simple;
-	bh=kxpU94e0j4eKZTCH9LYM5XOPJjeE2AQ5rb8SfAthJHs=;
-	h=MIME-Version:Date:From:To:Cc:Message-Id:In-Reply-To:References:
-	 Subject:Content-Type; b=SDHPhuGgp6I8NcYthgCeIBBXTi7sv6w014o1QsMNXHe3nPABOyRXwUqFNAc2BYOVAvXskvu29aSZdMMsXiCLC8Uqz8Qe1P9pc5W0FGnckxFlAxrXe1U2GnjfFQGSTtZIbf+WjTwsGHyO4fln/I4cJUMYbBcD+U1k3aZ686FMelw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name; spf=pass smtp.mailfrom=khaugsbakk.name; dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b=TvP21IfQ; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=NsNe5+BE; arc=none smtp.client-ip=103.168.172.153
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=khaugsbakk.name
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=khaugsbakk.name
+	s=arc-20240116; t=1748876665; c=relaxed/simple;
+	bh=dWHt2W3qj+ACEUFJ9t12ObCOBOa03IOL3nZvH/y6wlM=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=juSQXedWziJtt+5jkuegJde7xJ3EX+LYw0+7vvAWRCQuPU4FWbWk+tzDoVF+XqjD7Tt9ECAH5yo2xXr5/WAbaKT1Atj7hkhdu1iMpKvwneKwsMPaYBG2uaLAt6cHoRWCDV4YUPhwFwi9CIC9fH7lPbrKiYORWlqHbKc8PJQgV3s=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=BRuARABr; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JEVLglEG; arc=none smtp.client-ip=103.168.172.151
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=khaugsbakk.name header.i=@khaugsbakk.name header.b="TvP21IfQ";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="NsNe5+BE"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 0C5C1114012B;
-	Mon,  2 Jun 2025 11:02:45 -0400 (EDT)
-Received: from phl-imap-07 ([10.202.2.97])
-  by phl-compute-09.internal (MEProxy); Mon, 02 Jun 2025 11:02:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=khaugsbakk.name;
-	 h=cc:cc:content-transfer-encoding:content-type:content-type
-	:date:date:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:subject:subject:to:to; s=fm3;
-	 t=1748876565; x=1748962965; bh=ivhGKsZpXUOD3l15Wb2hJYAupWzBBHmY
-	Ty6MdNDirvQ=; b=TvP21IfQ1U2JjKpjlTdlyHYX1VHhbHiV/JZFHfl+i4Jiwn/p
-	H+ZkJpK01wGr6MzIsaCBjOsUEAb0RAu3+Vzr4yJxfocFtWO9MHYauHw4GrTe++cM
-	Or/DhkYIvtfGVT/9QXhjC3NtCh8vkzAIO3Ie+Em6zLDQM9n3LiaVKNL6xeOoE5NH
-	bHRXVnCrnd1GcogdGRnz8Nyugh6nsxrUeKESlgLZ3Qu11VxywYkGBJJyy7+WLrfw
-	BWTib+Ash5egwivQ9jfeTqhXgr1L4SiN1pSCAY3vb4l6epLUgREnjbwTo+RjiXVI
-	8fr+HIDsF5rT8gWUEV1efo8yP72NJ+rS4Onk1A==
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="BRuARABr";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JEVLglEG"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfout.phl.internal (Postfix) with ESMTP id CE2FB138032D;
+	Mon,  2 Jun 2025 11:04:21 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-01.internal (MEProxy); Mon, 02 Jun 2025 11:04:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748876661; x=1748963061; bh=21TjMnjvf1
+	AE5qa0Lfw/JVtTZlm247cM9Do3KzBhXDQ=; b=BRuARABr+sp9I5mSxIqF59J+c8
+	inUlIABV4eFSzbPz+JCotkMhzHgXJqFeC3NUXRwZ5AwYp742F2S5s/0CA1coSx6g
+	bQW38M+VOAPqVetVzRek/FRTxnNwyM7mnG90nelUBK2Mhl+d6HTet65NcQ0t730i
+	3e1bkSnWJoBFxeA5AlX9fXEjYlFrI/CyOJyOSZT9nN0UlEBgze47aSWkafaejh0T
+	SnYphsk8R+nZqbSPHosOYfrlfsbKPFeTOFWiRneWJn+7eTxU/zrITHrNlGjdQrI8
+	YGXNQIb2kdRX2TjUFhTV/eDJWnv8te2mD4kB6bHszxMOpVKp1NCJRdV8UMjg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748876565; x=
-	1748962965; bh=ivhGKsZpXUOD3l15Wb2hJYAupWzBBHmYTy6MdNDirvQ=; b=N
-	sNe5+BESIMzm13Pq1kYDAEgNripTAQMWLdX2AzALhYTzSE40AZbvC0o8KAjYSfnb
-	j71iY2Hf9Ycr8aBF079a5aPbliPSkWwmIWjbmjyvx9+RSc4T7dLYF3YBOErOTFen
-	v3+6MS9IRx4CT1aGCaB0OBRAq83YuSIuDZO6XNlmXCUUs9l9DcieozVFRZwSa7XR
-	U0wsotk/hhZEao5xau03nFnOrLPpIWJMTIPtxSowuFwlG2500DQk6UCBRhR+5uMs
-	1+dxKvrvAtXjcFA+bxQHRCfc8q9saBje/XAasdiXDsReZMV4HzXGviM/6TiksgUk
-	AoADW+v4durEh0DRMKd0g==
-X-ME-Sender: <xms:FL09aPWA-nw0UV8Du3an_KqstljqnqeF8iUyJ6uqWq6c3KmnsbGjeqo>
-    <xme:FL09aHkiV-ZHPz-L7u-DZSwrlOWBVdRROaTQmoy-LIIARA_y-ACDgStloTh3ryUCR
-    fKtxE125aWpOXr9Fw>
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748876661; x=1748963061; bh=21TjMnjvf1AE5qa0Lfw/JVtTZlm247cM9Do
+	3KzBhXDQ=; b=JEVLglEGw2d6AoZ+3XfmVtBSxGARRLF1k0wrBjBsKuOpLjaWFlo
+	EMqm0rtPqCua/s9tsiJ+AtsGObasxwMi3RQ7g7EAkq2ToQtlhXDTTJQtfQhq8X3d
+	DIBUbtjA+p7QT4CAgPrUcMIZ9SX1MAJJy3m8G5thRU9Efxgc/kDBhTzd4CHDYoFu
+	C9ueVXOI/Gda9hh5E2BeoViNBjj7lGqHCaoEnZqcEboPo6STo1q941sQMV+zw/jj
+	VsEj98vSWgbJnGCUZyA8MZr0VORkP6mujGBFy1sC2vQPqcgXEGFj+mMTWcdCfdm8
+	cibUqdyae9v/PWW7X6OyirOPgyUbuCKW0bA==
+X-ME-Sender: <xms:db09aM1T8WyWDKbWHSf7koHiSJxCzxYa0Zb4dvzpdWGKapFUUtR5-A>
+    <xme:db09aHH4_IIbrVHNZE8FNHkbTnGFIMilEMbhmOjPjqLsqKhink5u8k_32vRBoixXL
+    mhWwe0haRMWdy9QPA>
+X-ME-Received: <xmr:db09aE6mdwqOaJd3ftQvEswpF2LRFLXUUdmPRu2NGh5eBMgGIK2m_H0338DXBRY9LFwsFpEy-7hnT1Qu79mIWa5ysQg0pbYDwZcB>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefjeelkeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefoggffhffvvefk
-    jghfufgtgfesthejredtredttdenucfhrhhomhepfdfmrhhishhtohhffhgvrhcujfgruh
-    hgshgsrghkkhdfuceotghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvqeenucggtffr
-    rghtthgvrhhnpeetkeefudehhfelfefgueeivdelledvjeegudejgfehjedttdevlefgle
-    ekieevveenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhm
-    pegtohguvgeskhhhrghughhssggrkhhkrdhnrghmvgdpnhgspghrtghpthhtohepjedpmh
-    houggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghi
-    lhdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrd
-    gtohhmpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdrtghomhdprhgtphht
-    thhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtg
-    homhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhr
-    tghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:FL09aLa7_gj9c-g0aWTYM-JaXcJkiscAQszNyRw3IA_uvgPkmM7dvQ>
-    <xmx:FL09aKXcxtWCxz-QtxWghBCiBfBY43mHvwtqZ4hT4x5PoqIkJZZNnA>
-    <xmx:FL09aJn0R2qXpnb__FT2qeFN6dnXpcdWcIyw6lTO9h42K2NED2038A>
-    <xmx:FL09aHc3V5I5PUZnnzWfE_O8bWWrveF4r1gXoPOnOXrIJTb3a4EJNQ>
-    <xmx:Fb09aJJ-amwmRBm0TYD8750xBxFQ9aZodV1JkrVVGPkcc80JHiiCCX1S>
-Feedback-ID: i2671468f:Fastmail
-Received: by mailuser.phl.internal (Postfix, from userid 501)
-	id 40FF61EA0062; Mon,  2 Jun 2025 11:02:44 -0400 (EDT)
-X-Mailer: MessagingEngine.com Webmail Interface
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeefpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
+    thhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhithhsth
+    gvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:db09aF1PJy07_m2cuNkLFjs_8lyCySs4FgCetWPbiHo7BAduMQlJ6Q>
+    <xmx:db09aPEcCpcZB7LBdpH6X3lN2cLtP9rGRUE2BLKL-TWkbNOFi4oaWQ>
+    <xmx:db09aO90YZJz1ye2x1EjRthFqcNN6m5OQ5lemlc2S4dZOsQ1qP3GNA>
+    <xmx:db09aEkVf2P3ONErRxqwNEUxX63WVQaSKljBu6-s2xB6q1opla5pGQ>
+    <xmx:db09aN6Gn-8KQnaVfAY2JPtE9LNITlESMjQMqfUtpviqljN2ligwC5r_>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Jun 2025 11:04:21 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH 2/3] contrib/buildsystems: drop support for building
+ .vcproj/.vcxproj files
+In-Reply-To: <c3273a46-aab4-8dda-1634-9de233290f55@gmx.de> (Johannes
+	Schindelin's message of "Mon, 2 Jun 2025 10:38:27 +0200 (CEST)")
+References: <pull.1916.git.1746430790.gitgitgadget@gmail.com>
+	<1ec2a4bb1d58ea8cfa6abb2a0e625ef3e0db2a1f.1746430790.git.gitgitgadget@gmail.com>
+	<c3273a46-aab4-8dda-1634-9de233290f55@gmx.de>
+Date: Mon, 02 Jun 2025 08:04:19 -0700
+Message-ID: <xmqqh60yuqvg.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-X-ThreadId: T9e54919956c4dcd1
-Date: Mon, 02 Jun 2025 17:01:44 +0200
-From: "Kristoffer Haugsbakk" <code@khaugsbakk.name>
-To: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org
-Cc: "Patrick Steinhardt" <ps@pks.im>, "Karthik Nayak" <karthik.188@gmail.com>,
- "Eric Sunshine" <sunshine@sunshineco.com>,
- "Junio C Hamano" <gitster@pobox.com>,
- "Phillip Wood" <phillip.wood123@gmail.com>
-Message-Id: <d7265bca-ac47-4610-834d-da91042ccdf0@app.fastmail.com>
-In-Reply-To: <aD23w6-szFjKQGSj@ArchLinux>
-References: <aD2mhOlwl1LSYnpe@ArchLinux> <aD23w6-szFjKQGSj@ArchLinux>
-Subject: Re: [PATCH v3 0/1] [BUG] refs: verify does not work if there are v2.43.0 or
- older worktrees w/o wt. refs
 Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
 
-On Mon, Jun 2, 2025, at 16:40, shejialuo wrote:
-> [snip]
->
-> Range-diff against v2:
-> 1:  d949a8a646 ! 1:  e4c32971da fsck: ignore missing "refs" directory
-> for linked worktrees
->     @@ t/t0602-reffiles-fsck.sh: test_expect_success 'ref name check
-> should be adapted
->      +		test_commit initial &&
->      +		git worktree add --detach ./worktree &&
->      +
->     -+		cd worktree &&
->     -+		worktree_refdir="$(git rev-parse --git-dir)/refs" &&
->     -+		# Simulate old directory layout
->     -+		rmdir "$worktree_refdir" &&
->     -+		git refs verify 2>err &&
->     -+		test_must_be_empty err
->     ++		(
->     ++			cd worktree &&
->     ++			worktree_refdir="$(git rev-parse --git-dir)/refs" &&
->     ++			# Simulate old directory layout
->     ++			rmdir "$worktree_refdir" &&
->     ++			git refs verify 2>err &&
->     ++			test_must_be_empty err
->     ++		)
->      +	)
->      +'
->      +
-> --
-> 2.49.0
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-This version works as well.  Thanks!
+> I just noticed that you applied this patch as dc5e178f608f
+> (contrib/buildsystems: drop support for building . vcproj/.vcxproj files,
+> 2025-05-05). Notice the incorrect space between "." and "vcproj". Any idea
+> where that came from?
 
-    $ git range-diff --no-color --no-notes --inter-hunk-context=1 --ignore-all-space <range>
-    1:  ddbf0f8cf4c ! 1:  ce802ef6698 fsck: ignore missing "refs" directory for linked worktrees
-        @@ t/t0602-reffiles-fsck.sh: test_expect_success 'ref name check should be adapted
-         +          test_commit initial &&
-         +          git worktree add --detach ./worktree &&
-         +
-        ++          (
-         +                  cd worktree &&
-         +                  worktree_refdir="$(git rev-parse --git-dir)/refs" &&
-         +                  # Simulate old directory layout
-         +                  rmdir "$worktree_refdir" &&
-         +                  git refs verify 2>err &&
-         +                  test_must_be_empty err
-         +          )
-        ++  )
-         +'
-         +
-          test_expect_success 'ref name check should work for multiple worktrees' '
+It was almost a month ago.  
+
+I have no idea and I only have one reflog entry on that topic branch
+(meaning it is unlikely that it came from a manual editing).
