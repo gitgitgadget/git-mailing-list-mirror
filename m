@@ -1,128 +1,132 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7354223323
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 14:11:27 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F06AE2147E7
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 14:40:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748873490; cv=none; b=X2Mdn8T/pH9OtS03aGDHfv90l2V/jlvubkUwGriin9dr/rPyZ+lAlM8ax/n8wpR6ebQaVyI84U5mSreTKLYtN+UEzHljZdip51qSlGojnwKsB1aaROetlrjQKxvOMtIpZkfG8Czce2p5JTMwOmic8lpiIg0qjsmGCnt8JPK/UDw=
+	t=1748875208; cv=none; b=gtA3yX2tPkd2y/5P7R+3dbkw7W/CoywE/8w4JnyoG+CLSaeHbHfhX3bRozZ4VxKADGWHlV2P4OzWGrJLHuqhsn9/npk3gB4FhWc1hu9BpNBeJ03zj92z+EqPsw0KAHI/EfM9QpFGYHSawrhDvXYgBX7TOq/5gaifQtehcJQ4O78=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748873490; c=relaxed/simple;
-	bh=0Ltwxrik6mSFLL4yqTe1AJpy2phBNlfe+HE6SvnGdIY=;
+	s=arc-20240116; t=1748875208; c=relaxed/simple;
+	bh=Sv9udurUOOEgkYR9aZPU/lQzsPCtR3yNPNe4FHPq1G8=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ld3HdadR9RU+kPSHCRqlkmm1YOc5HcLF6zkFlmDVcNsiT55DtYhqsCm5qIIKODQr+F4PIISDLZmNTgK750oGUVUNvjSzyGwd+BzuW06jBx7n0agM8jWdRzfPi8sWfUXBqAJhImB4AzFv/dXX6x4m2AyPLul2z7hbhaI25Xl0Dzs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=PwQ3ru0C; arc=none smtp.client-ip=209.85.214.175
+	 Content-Type:Content-Disposition:In-Reply-To; b=FgQ2izZytos88lCJSXwA7NPvh3iNDgSSc3cj3xMAOD1KrjEqORl80xVGRtA1Wruoo3Xc77gzfrpBOsYWbAAtOlfg5/2l76M+wjahN3flkJnTG/DlOtgqYeKPsTqRvRL3TRamjXyBMsk3ajVHcG+tdwlyTgwSCaX0VwI6OTqCrak=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=KBDQUQ3g; arc=none smtp.client-ip=209.85.214.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="PwQ3ru0C"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-23228b9d684so47155745ad.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 07:11:27 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="KBDQUQ3g"
+Received: by mail-pl1-f177.google.com with SMTP id d9443c01a7336-234c5b57557so38978755ad.3
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 07:40:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748873487; x=1749478287; darn=vger.kernel.org;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=YNMQHKpxLtgZwfn24ymfaTrFCLo/KBx+iNPYyQ4eYGs=;
-        b=PwQ3ru0CukNQn4iX+1jrZ4p/B7ww2X85jw2WoSF9PTVQo8W7mjZ0kSN+A3t4+4YUdS
-         Kg/NCcsLwfmlbWCRaMdtK3sdKUFA2kbONMfzYAXPQLACvKWRjBxrqTzMg9hNlSYgZLQV
-         g9pZOir653jCowZCi+mG+mEfE2TbJrpcInuxRrTCG3RpfaODd0i/LFtwwJKOzbsrgjvZ
-         6MM6ACx0OziloggUjbyRE3jCrnIKuoRmM8JwWyoUNIcP3/jTz/sXLaQVcek2+O5lMQOy
-         3OOKxpM+5ElZh9JjvRQb9FdH3Kj7SetvkYdrFp2U/j8hIS+r1DNdpR/4RMn0KcTaHOYF
-         qbxw==
+        d=gmail.com; s=20230601; t=1748875206; x=1749480006; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=NHMmuj04oa6ZMgBkAV0gvoMfYctCCeJUDMfDvrV2Cuw=;
+        b=KBDQUQ3gTEdydLf7MSrnE69KNGU6oizl/yRv7otCN8ANciR3qMnc51xSMgR4H/gNI5
+         EVKrcHWm8ICC+3+/gV4izOKjq9ElkcqRLIJoTn0mffxRH6XADgYn2lSjth5xUAXbvgQX
+         CmrYn1xsUAHMxxnaDXuoZWtTbFKxqpzVaF+Ply/w9HtfwH4oFLZwoeL3+O6YpyXrki6f
+         yOD/D4hVmkH/Z6d0sL4f29Ig888zdN4RU6o2VWdA/LUgvqjW0446B2B3PlPdxCUoFZ35
+         tezgZqr92LDQcbQ28vqBdqPC1Ufz7Zm27fm0uZyht2iaJlvffHWTUdCAjVV/hWcUJcWc
+         NIfg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748873487; x=1749478287;
-        h=in-reply-to:content-transfer-encoding:content-disposition
-         :mime-version:references:message-id:subject:cc:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=YNMQHKpxLtgZwfn24ymfaTrFCLo/KBx+iNPYyQ4eYGs=;
-        b=uXJUKgTe4cVA/YiWHwK01jpDW/uU5XRiNyNRLSwcH+YHeG6aRlDtmWstIydEi4LX4J
-         0hpi6uhwSg1GhOxAkp0BCbbuRu5K1zDDlDH35/I09Nkr2sZ+9MpJmdNxYB7DciNb3qVh
-         H6G7Od1ugtHvF8vjaMjTXkMyQ2ShxnDIwt2H/Frj638PJcK+RobO6c4hxzAOb+ZZ6F42
-         YtjS9EcFM+xYOgByjv3Wogc51C5XbZgG3JgA4EX3zecOi9kTWKZW0po0nd/1mFN5IyeL
-         Cl9z8NEJ4mCnn83ju/T+1BWbi08jORtrgKlZJzeJemO4DAvn0iD5PQyOB4yw4MfeJiFK
-         Nocw==
-X-Gm-Message-State: AOJu0YyblXA6qnscX6kg8q7IT6rfJ5AW3EtzIgzazj2bEvxG1HHABcWl
-	50i2MMwn77amAcI9o+kKe0jekCYj4lHPCMy2kwX4L5G94tF36A3sRacB
-X-Gm-Gg: ASbGnctMNsXCRvwltg1m4HN31Hv3MnKG2qwAGrcHT6JxhD3SyrVt3oci7x7UCHTIRbK
-	mYzEupRtwtMJCNzbIGdq8LOI4uJ6In6A60XDt/ZtLUElY4qF5WFX+Wry/Rkh+3olvWO3unBiGTJ
-	emuJ2VopM3Wqv9dsNAnj+vTMe3f65ZW/u8VG/P4fMVVyvuq8cSsEMDp2WlVNNAkv5Y0my1uFqte
-	VSwxGQCOy7ONy4GByjIjmeSywzKByXDwyEmSrxd2qCv5om/Saq7qL+r57K/JOnIOwcCR+8rwl7b
-	AA8D7v0zU/CoESTsmU9sQAJc/X1UuhggVV5gFmJWiHrfpcA=
-X-Google-Smtp-Source: AGHT+IFHQy9LgWZn2x3uUdMDjOWXNN++4DlUx0qLcc3NLQIbW3LNsz798wtHgqfszDfitvowrIN1iw==
-X-Received: by 2002:a17:902:f70e:b0:235:be0:db53 with SMTP id d9443c01a7336-2353965b008mr147741325ad.51.1748873486809;
-        Mon, 02 Jun 2025 07:11:26 -0700 (PDT)
+        d=1e100.net; s=20230601; t=1748875206; x=1749480006;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=NHMmuj04oa6ZMgBkAV0gvoMfYctCCeJUDMfDvrV2Cuw=;
+        b=WGCufqPSOlAmh49oGBQveZ1HrnT31GlHPfGQ62+fI/IGRUimavIUfGvf4HKQCtgcHz
+         RBuj/IZcv5u7lqntfveothLqRIQNb2Et4ka49ZznOaTFc/rSzJbavdik63n6YTM9qe1y
+         EQVOreLzW/NKJX3W5ijOkCbmq0BXRDCIao3ZVHU+i5Inr9FHXga0whnBJ3eTBmF8Kgaa
+         pOzDr1edHmtnE3T/d4JTWRTMuJfLFsVFU1EMnpJYEbMnMLW4QRblFEpKPQkuF25ghqBC
+         L1kzmcgfmrxSUe6YxH5ci5zF/DBkFocEmVMCeckifYmEd0dMYLuOjsbWfRNToEJa5woE
+         bvOA==
+X-Gm-Message-State: AOJu0YyOxCO5CNKGYWWlUTdo7tBgL7kvnp3ZQSodHSyNpiCS595PnlTF
+	dsMk5ufAwCYJYddwOK+BpY4hWLF0zuugircgKWt/3rCs1A4xR4Kb1kDYt79f3Mv3
+X-Gm-Gg: ASbGnct209lejxe+SIItXOYzXUf1IgedGhi08Jsn66/VmzRxKvw3dYrPZfwUetrDqvP
+	Md+/swlorFLu91EtTINo8929d59ps6qkjoy/tbhbN9F0Kzur05uiaGHeQzeWbFdXe3fUcsc6iaM
+	Jz5SpDga8dQYkLIEUSCyD/c5kNBa/Xw5g3T75jtMKuLt/CFbT5JZ0nt2xlqzA3CwzoGK50AQ47E
+	bhhEzYCtgj4dk4Un9zgW861blO+++i25NMzT7cZtfQmaUkfsv6q6oZjhm0PfJmdbcSSIMTgfeIw
+	C12YNCI8lY7fiwAJ89WMOBIyFKG6ZQIOvr1pJc5rb5L/D5o=
+X-Google-Smtp-Source: AGHT+IGNo+CCmWHMKXQlpTtMqmxOfHso3hyHVi4wAY+EXJHI16siNarw8AigdabsEkVFRAisGLKLAw==
+X-Received: by 2002:a17:903:3baf:b0:234:c8f6:1b05 with SMTP id d9443c01a7336-23539820556mr152383985ad.52.1748875205691;
+        Mon, 02 Jun 2025 07:40:05 -0700 (PDT)
 Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23506cd342dsm71086135ad.148.2025.06.02.07.11.25
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23506cd7618sm71081345ad.152.2025.06.02.07.40.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 07:11:25 -0700 (PDT)
-Date: Mon, 2 Jun 2025 22:11:23 +0800
+        Mon, 02 Jun 2025 07:40:04 -0700 (PDT)
+Date: Mon, 2 Jun 2025 22:40:03 +0800
 From: shejialuo <shejialuo@gmail.com>
-To: Kristoffer Haugsbakk <code@khaugsbakk.name>
-Cc: git@vger.kernel.org, Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
+To: git@vger.kernel.org
+Cc: Patrick Steinhardt <ps@pks.im>, Karthik Nayak <karthik.188@gmail.com>,
 	Eric Sunshine <sunshine@sunshineco.com>,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>,
 	Junio C Hamano <gitster@pobox.com>,
 	Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v2 1/1] fsck: ignore missing "refs" directory for linked
- worktrees
-Message-ID: <aD2xC0YBDm4TASHG@ArchLinux>
+Subject: [PATCH v3 0/1] [BUG] refs: verify does not work if there are v2.43.0
+ or older worktrees w/o wt. refs
+Message-ID: <aD23w6-szFjKQGSj@ArchLinux>
 References: <aD2mhOlwl1LSYnpe@ArchLinux>
- <aD2nPXIXugVXfIpg@ArchLinux>
- <21461585-273f-46a9-a750-6ae7b414fcdc@app.fastmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <21461585-273f-46a9-a750-6ae7b414fcdc@app.fastmail.com>
+In-Reply-To: <aD2mhOlwl1LSYnpe@ArchLinux>
 
-On Mon, Jun 02, 2025 at 03:59:01PM +0200, Kristoffer Haugsbakk wrote:
-> > +test_expect_success 'no refs directory of worktree should not cause problems' '
-> > +	test_when_finished "rm -rf repo" &&
-> > +	git init repo &&
-> > +	(
-> > +		cd repo &&
-> > +		test_commit initial &&
-> > +		git worktree add --detach ./worktree &&
-> > +
-> > +		cd worktree &&
-> 
-> Now in this version you change-directory into `worktree`.  You would
-> need a new subshell for that (test style).  But I don’t see the need to
-> chdir in the first place?
-> 
 
-We should change directory into the `worktree`. This is because now in
-the test, we use "git rev-parse --git-dir" to get the git directory. We
-need to find `gitdir` of the linked worktree but not the `gitdir` of the
-main worktree. If we do not cd into the directory, we would get the
-`gitdir` of the main worktree.
+Hi All:
 
-And I agree with you that we need to spawn a subshell. Let me update the
-code. Thanks for reminding me, I forgot about that.
+Changes in v2:
 
-> > +		worktree_refdir="$(git rev-parse --git-dir)/refs" &&
-> > +		# Simulate old directory layout
-> > +		rmdir "$worktree_refdir" &&
-> > +		git refs verify 2>err &&
-> > +		test_must_be_empty err
-> > +	)
-> > +'
-> > +
-> >  test_expect_success 'ref name check should work for multiple worktrees' '
-> >  	test_when_finished "rm -rf repo" &&
-> >  	git init repo &&
-> > --
-> > 2.49.0
-> 
-> The test passes for me.  Also when applying only the test (and not the
-> fix) the test fails as expected.  Good.
+1. Update the commit message to incorporate the commit message that
+introduces the BUG to better explain.
+2. Update the shell script to avoid hardcode gitdir path.
+3. Change "rm -rf" to be "rmdir", which would be safer because we should
+delete an empty directory, which has a better semantics.
 
-Thanks for the feedback.
+---
 
+Changes in v3:
+
+1. Use subshell for test style.
+
+Thanks,
 Jialuo
+
+shejialuo (1):
+  fsck: ignore missing "refs" directory for linked worktrees
+
+ refs/files-backend.c     |  3 +++
+ t/t0602-reffiles-fsck.sh | 19 +++++++++++++++++++
+ 2 files changed, 22 insertions(+)
+
+Range-diff against v2:
+1:  d949a8a646 ! 1:  e4c32971da fsck: ignore missing "refs" directory for linked worktrees
+    @@ t/t0602-reffiles-fsck.sh: test_expect_success 'ref name check should be adapted
+     +		test_commit initial &&
+     +		git worktree add --detach ./worktree &&
+     +
+    -+		cd worktree &&
+    -+		worktree_refdir="$(git rev-parse --git-dir)/refs" &&
+    -+		# Simulate old directory layout
+    -+		rmdir "$worktree_refdir" &&
+    -+		git refs verify 2>err &&
+    -+		test_must_be_empty err
+    ++		(
+    ++			cd worktree &&
+    ++			worktree_refdir="$(git rev-parse --git-dir)/refs" &&
+    ++			# Simulate old directory layout
+    ++			rmdir "$worktree_refdir" &&
+    ++			git refs verify 2>err &&
+    ++			test_must_be_empty err
+    ++		)
+     +	)
+     +'
+     +
+-- 
+2.49.0
+
