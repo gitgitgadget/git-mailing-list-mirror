@@ -1,104 +1,183 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C3C198845
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 12:41:51 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.170
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C40638DD1
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 12:46:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748868112; cv=none; b=ZmnRn8g8kmTiyv3zINE3tXbSMifxi1gVkEN5Qhljku58ES5HgVX00HwRtQw/jStuuOZRA9H+Xcm4a5otcKBHteWT7Y32Znc87bI2fKKTNkWf5olWhbQtqBTU9hMdQqdi2zQ9OQLpC9vVV3wxyLLE7skRrFJwcnn1UGabEZPVo6o=
+	t=1748868377; cv=none; b=Xkz2X7Qhltt0pkBOoxbv1T7KoHWlyxabIrEGGtDrT8qNy4NRKuAU6wo8y/7E0tlR+68ITPSqedKwBrGPtwUP9nGjbuXoB/EWtuzUmoRJQN2aEbIclJr4BpwPUxBa9Ohaji3bGb2RtsXDZc90IA/8r1hdOEX9XOVZgmQvpoFQbFA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748868112; c=relaxed/simple;
-	bh=8lIoVKG5XqpDgCU0xMxU0JWXVpOUnI6nm4Rl/DJ61JY=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=SDHmJFgHMmi7nk7YhIqmKczdFnjPAu/60eM9OqACAWcR9ZYvrWNBwWA83AZSeC7QmAQrHwhsFY8xZ0XFBFrQA5ruTqNSoovjIEn+zZ5kxC0EsFMR9aiUne5oH4WezwH0jJainvyEQFmzHknSCzkqdfvx1PrR6GNtBwNTPED3IeI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=kmzckWfb; arc=none smtp.client-ip=209.85.214.170
+	s=arc-20240116; t=1748868377; c=relaxed/simple;
+	bh=6cLzA8NlcPc9huSzQtEqb4WiUhyuhS5CV8PvewRinmY=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=VKpjSArH0bAlc+GSqAn/9H7Ir3HSuWJwH/YM1uOCr0RiET90QWazUJNeForqAOo6N9+FWVwCDugWKyC3cP6aeb9Zh9dZLGs4+QWxWQ0NlmvjgsF390EC09RPZnLgClqw2JJvM6dGm8esI9pxGTnBKh9WM+iOIVNuA1zWSUG3OWs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ASaQVjzI; arc=none smtp.client-ip=209.85.221.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="kmzckWfb"
-Received: by mail-pl1-f170.google.com with SMTP id d9443c01a7336-23526264386so28931515ad.2
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 05:41:51 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ASaQVjzI"
+Received: by mail-vk1-f177.google.com with SMTP id 71dfb90a1353d-53082f1ac34so979977e0c.3
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 05:46:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748868110; x=1749472910; darn=vger.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=kYNynGY6vi6FvKjYnNJ8LJgtP9106wM+4x+ai0PtWxM=;
-        b=kmzckWfb76hotT1wRHncsIvyi1aWdXVaWdz8yTZJu2YcluoO0F4lY69QkeaX8L55bE
-         Zp84lzSyBJR33nWjc3LW35+KGCRtQgS35Q493MtKS+Dv9NyubUtc9BAcQV4f+eBIQC2J
-         xnEE1B2IM4TBA0+ENuuv86bk5kWD9Q2uAJ5YfxLSEM0pAbUo/EGc+h6HMq4V4J/oViWI
-         YXwPwCvzJT4pc5L4sSVQJ0GjQJjtNk5Ko3aKiWboHs2XwB5udgFCm7WMLWFgPfJB5Ndc
-         PDIaLMog7Wy889KQhH17a3idTytsCKdbihq10r4bfkuKUb45ACA5r5xb8/PzNbqgT+m8
-         IduQ==
+        d=gmail.com; s=20230601; t=1748868374; x=1749473174; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3yh06rFuYJ7CCM+FNSayBVkJZKoMTytyJASLK51mkYA=;
+        b=ASaQVjzI14pRWDRr7YNBIQh5O0eTmoy/kPPQhcTVy7hkE/EFphlmR4kkmXmO19LW6Z
+         RkT3tQWrWiYJP7OU9SoyGa/zRZ8bAKXcwuUpGjIesFr2+URsOXINGbFMdIC/l4QUhmHk
+         EOxuPIg3BYtL7sU+i7ejDpXBHtUu2ZcDZAqoPjAI9T0UUmBWbshiRQ1kW7ggkk9qHdOU
+         ex5e/te2VzlTUa/Fr3u5kK68YeCS+I74+glWmX3lkvmpdBKoyvWHb8Z+ogdGgi7uAUBc
+         2Dj/+CPZsbNlERtDgRBA7M3LQb+jv3aenf6VyZxb67yjGnnS15g2vxRXz7PgnI+vE4QT
+         KpCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748868110; x=1749472910;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=kYNynGY6vi6FvKjYnNJ8LJgtP9106wM+4x+ai0PtWxM=;
-        b=h19HK5K/yizLH2ES7gy3sVrYPK/ojfdMpFw+XwheHfO8c6pjIs5THbwfCfpzkiyYBO
-         sQarUd1c1emCmevw6r7GQrRg3vWwlcc7ozKiul0Xj9r4TF7yv5/jb1Rgn3jgeJUljcKb
-         e9H0KdZMnEP3OB2Eb0CZs5D7WMx1iCPnJtyyA8hChgoP/uiCsLwOk/Tqflex3Lb0wH+f
-         C8auuwJ5c7oYSqaTVj2P3d0HAPFCSYzizEMAKVKIIJROk/6yza1ejXw/sS+eXmB95wjr
-         gSSo6bjn4kvySjHMv9EkFmDlMs2Nsy9fy2T8llYQAlo59aWc1JaIq+T19fSAQc/e6voN
-         F32A==
-X-Gm-Message-State: AOJu0YzF6REACxomm/01fXk/Da0YvQvHEbxFTAxq5Q2QzJrc3/13t6qE
-	RGawlJNNxZXhwMvHlD7wc932oUYTH92v51Dmsjc3MNt43PxuHmULPJEyDY2mvj+/
-X-Gm-Gg: ASbGncvNOicDY+n291y0pivK13H1/kNW0NXV695K5FVEZ3ZrrgEvfzIrrCOvaRe8qFC
-	hMcmZZAV7RmAFY2jsfIOyYl+JVlc+tzhmdpTM0f5ZkDewKhiz/SiJPw8ypTmwBJ+pko8x++IFtc
-	JlPTkkC0LNDPpprhQW2Gwu8xjHPUzA6yir14d+xc2ZGcRsh/CBWjZJrOp2LacKObxmaf7Tf/DKz
-	uOkUT7uxRZoligTc0YlCxTd5CuJznNlrJphFf0BgRf5TjFXEPqpuJVYajHPPJ94mvqWI+IjJBiO
-	QiLVR6I3bT36nwZJ4riA5D+leo1aatCYKDkcTpIviC4nX91A4dJwv9LvCA==
-X-Google-Smtp-Source: AGHT+IF/4Z8MT/jCue3XkD4JpdmZMh7fVU7bt7ziqnFwKnFCnkdU+xVcCO+vWWBLsTM23Kmny7adfw==
-X-Received: by 2002:a17:902:fc48:b0:234:b422:7120 with SMTP id d9443c01a7336-2355f765533mr104037135ad.9.1748868110131;
-        Mon, 02 Jun 2025 05:41:50 -0700 (PDT)
-Received: from localhost ([2605:52c0:1:4cf:6c5a:92ff:fe25:ceff])
-        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-23506bd939asm69987645ad.70.2025.06.02.05.41.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 05:41:49 -0700 (PDT)
-Date: Mon, 2 Jun 2025 20:41:47 +0800
-From: shejialuo <shejialuo@gmail.com>
-To: git@vger.kernel.org
-Cc: Kristoffer Haugsbakk <code@khaugsbakk.name>,
-	Patrick Steinhardt <ps@pks.im>,
-	Karthik Nayak <karthik.188@gmail.com>,
-	Eric Sunshine <sunshine@sunshineco.com>
-Subject: Re: [PATCH] fsck: ignore missing "refs" directory for linked
- worktrees
-Message-ID: <aD2cCzBlyW8y9b7e@ArchLinux>
-References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
- <aDp55upE6AhYunz7@ArchLinux>
+        d=1e100.net; s=20230601; t=1748868374; x=1749473174;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=3yh06rFuYJ7CCM+FNSayBVkJZKoMTytyJASLK51mkYA=;
+        b=fIB9gfqSzesS0FFI3vg5bt4a3r1fmVt0wdlBjdRI4mUbcesf1L5dw2d2HXsTgwYTTf
+         TgckZI0sAlezxohyQ3R1bcMn74fDRnahKRds5rqq6iRK+lGqX3S4qmSusob1EXpnICFh
+         x7hBtrKvRezyCstnqpUc/xyo57SbMUtIKAh9P6MYlfBw5RBxyHY3bIYHFXkUVXqDq6sN
+         Hd93Z9EYFSPdS/p5+wbNNKeRb8lXljWCcXnm80pFXmtue9TGrewlwmoXQec/2Fmv2Riu
+         W5Hg3Pryc/b38kbtT8PHt3gNyNY352Lfy6i5PG3AaYIiHJ5w/CJej5tEAUoHYzH/AIl6
+         2aew==
+X-Gm-Message-State: AOJu0Yz1jvp3sJChoKq3c008yfIFxQFnJyYNavCIWCTbgFnMGxnm7I/G
+	pAXvJu/8OIv+kVnKDSJVg5eFGt+Wd2EHULDcOHYaiTJJin0LwksS4ECGBSjVHXUxlxizTeZlfvv
+	aoKsSDaA6hSMJfEhVrpoVte4ISkS328ofqUON
+X-Gm-Gg: ASbGncsnlwGHSUHLKZMm+Ud+dozxCfM8/Cl/m+HEOaVwyw8cwfNV4vA5sQrcvqDZMTy
+	PaC6D60nbuTRfumD3S8NeYB9/P2U4Jq9FxqFkvqWOVF2rBO0yXUTkMl5HWifwzgkphvcuq0O8VZ
+	nvB4PMMmkxiAx246nw8FZ/eWWSmBYfcrClI+qerRjdXA21eOu/Buvdcl94XtHaBZFBwQWMiNdG6
+	5tpy0LnXT/fjf3E
+X-Google-Smtp-Source: AGHT+IH49xNUP/ziriwJPU4A5+xPP8oG1CbLSWYjGmmd21kBKi1y6tB1M/px+W8MyFxQ3+w9SB7AVz8rNXGC/lb/AKI=
+X-Received: by 2002:a05:6122:181a:b0:530:65f0:7fc4 with SMTP id
+ 71dfb90a1353d-53084b9d9cfmr7274644e0c.1.1748868374099; Mon, 02 Jun 2025
+ 05:46:14 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Jun 2025 05:46:12 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Jun 2025 05:46:12 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <aD2SRmlSKZm8g8kn@pks.im>
+References: <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-0-903d1db3f10e@gmail.com>
+ <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-1-903d1db3f10e@gmail.com>
+ <aD2SRmlSKZm8g8kn@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aDp55upE6AhYunz7@ArchLinux>
+Date: Mon, 2 Jun 2025 05:46:12 -0700
+X-Gm-Features: AX0GCFvtNRuA4ijTT6b68LCpH65DbJOoImbWHWFOXj7nkYivn3VJYe5uNuJZE84
+Message-ID: <CAOLa=ZQQCFA=jdOGDONGcsO_VDUAxfHjn_Wk5r+8weHMFXDQ3w@mail.gmail.com>
+Subject: Re: [PATCH 1/3] refs/files: skip updates with errors in batched updates
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org, jltobler@gmail.com, 
+	Christian Couder <chriscool@tuxfamily.org>
+Content-Type: multipart/mixed; boundary="0000000000003298900636962612"
 
-On Sat, May 31, 2025 at 11:39:18AM +0800, shejialuo wrote:
-> +test_expect_success 'no refs directory of worktree should not cause problems' '
-> +	test_when_finished "rm -rf repo" &&
-> +	git init repo &&
-> +	(
-> +		cd repo &&
-> +		test_commit initial &&
-> +
-> +		git worktree add --detach ./worktree &&
-> +		# Simulate old directory layout
-> +		rm -rf ./git/worktrees/worktree/refs &&
+--0000000000003298900636962612
+Content-Type: text/plain; charset="UTF-8"
 
-FYI. I made a mistake here, it should be ".git/worktrees" but not "./git".
+Patrick Steinhardt <ps@pks.im> writes:
 
-> +		git refs verify 2>err &&
-> +		test_must_be_empty err
-> +	)
-> +'
-> +
->  test_expect_success 'ref name check should work for multiple worktrees' '
->  	test_when_finished "rm -rf repo" &&
->  	git init repo &&
-> -- 
-> 2.49.0
-> 
+> On Mon, Jun 02, 2025 at 11:57:24AM +0200, Karthik Nayak wrote:
+>> The commit 23fc8e4f61 (refs: implement batch reference update support,
+>> 2025-04-08) introduced support for batched reference updates. This
+>> allows users to batch updates together, while allowing some of the
+>> updates to fail.
+>>
+>> Under the hood, batched updates use the reference transaction mechanism.
+>> Each update which fails is marked as such. Any failed updates must be
+>> skipped over in the rest of the code, as they wouldn't apply any more.
+>> In two of the loops within 'files_transaction_finish()' of the files
+>> backend, the failed updates aren't skipped over. This can cause a
+>> SEGFAULT otherwise. Add the missing skips and a test to validate the
+>> same.
+>
+> Curious -- we do have tests, so why don't any of them hit this issue?
+>
+
+We don't hit this edge case in any of our tests I presume. This
+basically requires a deletion request with an expected old OID, however
+the reference should be non-existent.
+
+>> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
+>> ---
+>>  refs/files-backend.c  |  7 +++++++
+>>  t/t1400-update-ref.sh | 14 ++++++++++++++
+>>  2 files changed, 21 insertions(+)
+>>
+>> diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> index 4d1f65a57a..c4a0f29072 100644
+>> --- a/refs/files-backend.c
+>> +++ b/refs/files-backend.c
+>> @@ -3208,6 +3208,10 @@ static int files_transaction_finish(struct ref_store *ref_store,
+>>  	 */
+>>  	for (i = 0; i < transaction->nr; i++) {
+>>  		struct ref_update *update = transaction->updates[i];
+>> +
+>> +		if (update->rejection_err)
+>> +			continue;
+>> +
+>>  		if (update->flags & REF_DELETING &&
+>>  		    !(update->flags & REF_LOG_ONLY) &&
+>>  		    !(update->flags & REF_IS_PRUNING)) {
+>
+> Ok. And the reftable backend doesn't need the same treatment? Probably
+> doesn't because we queue all updates via `queue_transaction_update()`,
+> which knows to not add them to the list of updates in case any error has
+> happened. And in `_finish()` we iterate through that list of queued
+> updates instead of the global list of updates.
+>
+
+Exactly, all writes in the reftable backend are propagated finally via
+'write_transaction_table()', which checks for rejections. The single
+point of entry acts as a good gatekeeper.
+
+>> diff --git a/t/t1400-update-ref.sh b/t/t1400-update-ref.sh
+>> index d29d23cb89..e9a605d0ba 100755
+>> --- a/t/t1400-update-ref.sh
+>> +++ b/t/t1400-update-ref.sh
+>> @@ -2299,6 +2299,20 @@ do
+>>  			test_grep -q "refname conflict" stdout
+>>  		)
+>>  	'
+>> +
+>> +	test_expect_success "stdin $type batch-updates delete non-existent ref" '
+>> +		git init repo &&
+>> +		test_when_finished "rm -fr repo" &&
+>> +		(
+>> +			cd repo &&
+>> +			test_commit commit &&
+>> +			head=$(git rev-parse HEAD) &&
+>> +
+>> +			format_command $type "delete refs/heads/non-existent" "$head" >stdin &&
+>> +			git update-ref $type --stdin --batch-updates <stdin >stdout &&
+>> +			test_grep -q "reference does not exist" stdout
+>
+> We typically don't silence the output of `test_grep`.
+>
+> Patrick
+
+Will change, Thanks!
+
+--0000000000003298900636962612
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 84337f58cf1278ec_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nOW5SSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMnkwREFDTVZNQ3B6eDRQbFJkMzFvK0N5cnNRb0NJUwo3eHY0KzJkQW1Z
+TGJSbnhWYjlwNnp2WDJnRHQzcVQwZmh3Z0NzT2ZZYVBPR2E4UjRUUzExK0FqYWFYWWFmZHk0Ci9S
+QXJkeXZYVndBd1l5VVBKOU1IM1IwVkM1cTQyeDhCWlhlVFFjbEJ6NkRmcjJKK3JlZklKMEdRR1Fr
+Rk5POHAKdXJDTEszRVJqTUZ2cWxNdDAzakpkanNrT1lFa2pZMlFQSVNNQ1BmV0ZiZ1RRRnFxZVVi
+M2xWRU9pbk9qS1lsZQo3UnVKZXJaYXBYWlFKK2VicFlYUXVKV1Z0ZER2ZndBNW91alJTVDZtVytL
+ZWczWlNTUFJQcGVjYUMxakZMUE1SCnFCMW8vNmNUaStORktSZzdkNG1wSXN1d0JGTFg2QzdJbnNu
+NWtXUTJRTlM0MWZacjBQRVhBZnIwRVJ5cVBpN2cKTmEvdDMrdkpFcW84N29INjdiYzUzdkoxZUd6
+cDc5aVhTZ2ZDZjA5RVpuTW1nUUJoNEs2cHNYbUhoK0U1aFE5dApEQ3lLS3lDVjRhMFFFeGs5bmlj
+VTdJVkJwUWFaTUZIOXE5ZUJreEVRaEtDSk1xOGFrLzhjUWk0eUdBSHJxOWFjCkkxbDlrZjMzRDll
+MGFMRFRmMi9ESGlYdVlHbDlYczhvbXVjcXZRUT0KPWN6dUwKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003298900636962612--
