@@ -1,130 +1,73 @@
-Received: from smtpfb1-g21.free.fr (smtpfb1-g21.free.fr [212.27.42.9])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id 114B02628D
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 19:07:01 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=212.27.42.9
+Received: from cc-smtpout3.netcologne.de (cc-smtpout3.netcologne.de [89.1.8.213])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7C42C324E
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 19:10:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=89.1.8.213
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748891226; cv=none; b=AFvQdAy+Ps2auHaLtPbT1qBxgG8alvbQqFByZkuEgwBZik0FPizBUJoouZh5nchFMn8qDkPFlMiq7l5FZEo9VTLDFhZYEsbvZsK6YehTdrmNl6Cixe10DJf7Y15xO0iBJqe4sx6BPX6fMIzAjRYQOxlXBhayxgUjdcBBwW+NAZU=
+	t=1748891446; cv=none; b=NOcg+AqElQuxaD9nT68H5csElFNwYZLQmtS5JOQfOELPNNT3DNKWS3+smCtRqt2ezC4YOYp24ovydPCradCuBMcbT5hLSd9p5Nkm4MfDwbrzBYP3TzRXuOqXwN0q8aTRvV89hmMSiLAVzm+dItWG65m7BCFulmXAtmr/tJRwiuc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748891226; c=relaxed/simple;
-	bh=YyY7ju+sYeql/0UWgfSokfankicZfyjA0wNCv3arxhk=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version:Content-Type; b=lQSD0O/nZXL8dwU369qeQVHZMcCPI9BQKYkTjyHbwt2hdoawOMJgvJeuyqGWt8psn9qRbwCOBpsRESbAG2CH3QNbEqYVMvMqnhF413dIfMu6HKrpMsWgP1jWggMqirQrltS8RJWaHp/fhiVG4wHPA3ctil/W9GRCCJc4aOpzX3U=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr; spf=pass smtp.mailfrom=free.fr; dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b=Y8n7bddS; arc=none smtp.client-ip=212.27.42.9
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=free.fr
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=free.fr
+	s=arc-20240116; t=1748891446; c=relaxed/simple;
+	bh=zgYSeLP+zq+q8c9ePU6kEo+Xg4TF1uQVhHcF3OhjpGE=;
+	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
+	 Content-Type:MIME-Version; b=kkPRdygWsw4zHlSJO5NK012gHRFs9QmON344WYAo224LScZcxWGxC/GnLzhbcEet06uoKSF6X6niD1BfWtB1bKi9nQscedUtpeNrJlmeimZCw32Y5kl0bIOK2sJSWeqiO8mSDYhaUvqa23Q6OXTKxnjPsdXQ10JST6sFi0INcS8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=netcologne.de; spf=pass smtp.mailfrom=netcologne.de; dkim=pass (2048-bit key) header.d=netcologne.de header.i=@netcologne.de header.b=lLMpZxYU; arc=none smtp.client-ip=89.1.8.213
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=netcologne.de
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=netcologne.de
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=free.fr header.i=@free.fr header.b="Y8n7bddS"
-Received: from smtp4-g21.free.fr (smtp4-g21.free.fr [212.27.42.4])
-	by smtpfb1-g21.free.fr (Postfix) with ESMTP id 7150E851F4E
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 21:06:53 +0200 (CEST)
-Received: from cayenne.localnet (unknown [IPv6:2a01:e0a:d1:f360:aaed:2dc9:951d:7f37])
-	(Authenticated sender: jn.avila@free.fr)
-	by smtp4-g21.free.fr (Postfix) with ESMTPSA id 3FC3F19F57B;
-	Mon,  2 Jun 2025 21:06:41 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=free.fr;
-	s=smtp-20201208; t=1748891206;
-	bh=YyY7ju+sYeql/0UWgfSokfankicZfyjA0wNCv3arxhk=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y8n7bddS3lXEWqOgqOp9nTCHZ0uiDy5rzTvA9CugcoSfo96zajc+dSKpvzXLNwvSV
-	 N3lQPcbbXjhwstExjcTdYBDA38ciT4Z7r6qhrrSOtjRAtFUMIWtiAnnhBlUFot6qEB
-	 829JJFOtdIBuH+kWflLZqgXXaxd9RaaBChZ+53I9zRwTSH9Iwe6U7/ZGoERzt3k1kG
-	 qEHl5ApO6s9B7flO8yWZxQczKwHTxrk/V5hsecO3PNQCLyF/CZErW9BAP5/fdALEhu
-	 KaiZSe3XGVqZr28i/+IxBupQzXTEoIyp11pv0dDPAaMIApRnqbONNKI13jm4khSSOY
-	 /QCaCpvVQQUeg==
-From: =?UTF-8?B?SmVhbi1Ob8OrbA==?= AVILA <jn.avila@free.fr>
-To: git@vger.kernel.org, Collin Funk <collin.funk1@gmail.com>
-Cc: Collin Funk <collin.funk1@gmail.com>, Patrick Steinhardt <ps@pks.im>,
- Junio C Hamano <gitster@pobox.com>, vital.had@gmail.com
-Subject:
- Re: [PATCH] completion: Make sed command that generates config-list.h
- portable.
-Date: Mon, 02 Jun 2025 21:05:56 +0200
-Message-ID: <4986157.GXAFRqVoOG@cayenne>
-In-Reply-To:
- <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
-References:
- <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
+	dkim=pass (2048-bit key) header.d=netcologne.de header.i=@netcologne.de header.b="lLMpZxYU"
+Received: from cc-smtpin2.netcologne.de (cc-smtpin2.netcologne.de [89.1.8.202])
+	by cc-smtpout3.netcologne.de (Postfix) with ESMTP id AA79F1236C;
+	Mon,  2 Jun 2025 21:01:11 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=netcologne.de;
+	s=nc1116a; t=1748890871;
+	bh=zgYSeLP+zq+q8c9ePU6kEo+Xg4TF1uQVhHcF3OhjpGE=;
+	h=Message-ID:Subject:From:Reply-To:To:Cc:Date:In-Reply-To:
+	 References:From;
+	b=lLMpZxYU/CdIAkBg+CUtqkO11J8uQj4rLH9OoDWWuDL2jTJKt5Llw2C27IJdTK7DI
+	 C4/P7c7wKOu3ydmbLeYHZYDy1GNVY05SaWxh/RkprkFn7Rfn37ZKAEIy+HjKeGAUDi
+	 bWvfKKd5YC0lah40gyOsKsNN8nU003hj23PacSUqnMZ3GBjD6fvLAM7sKw2j1MbVC+
+	 fwW/X35/xAHoNSpwPbJaFaO50sS4R/6xtcTx7UoQMHDqfnGFzCF52QqspUfY2qRZGk
+	 Y0IRvEK5Vzt2NfCot2vkJRag/w6ohueWdhZbTjx55vp0//Qi2L0wNu00HhFm3zuSGU
+	 OmiIt4l+UAVhg==
+Received: from montjoie3.internal.jansen-preisler.de (static-87-79-78-107.netcologne.de [87.79.78.107])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	by cc-smtpin2.netcologne.de (Postfix) with ESMTPSA id B238211D69;
+	Mon,  2 Jun 2025 21:00:56 +0200 (CEST)
+Message-ID: <1ff4251c81e40f7527c35b13b00f770863719b67.camel@netcologne.de>
+Subject: Re: Draft of Git Rev News edition 123
+From: Markus Jansen und Julia-Anna Preisler <jansen-preisler@netcologne.de>
+Reply-To: jansen-preisler@netcologne.de
+To: Christian Couder <christian.couder@gmail.com>, git <git@vger.kernel.org>
+Cc: mja@jansen-preisler.de, Junio C Hamano <gitster@pobox.com>, Jakub
+ Narebski	 <jnareb@gmail.com>, Kaartic Sivaraam
+ <kaartic.sivaraam@gmail.com>,  =?UTF-8?Q?=C5=A0t=C4=9Bp=C3=A1n_N=C4=9Bmec?=
+	 <stepnem@gmail.com>, Taylor Blau <me@ttaylorr.com>, Johannes Schindelin	
+ <Johannes.Schindelin@gmx.de>, =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?=
+ Bjarmason	 <avarab@gmail.com>, "brian m. carlson"
+ <sandals@crustytoothpaste.net>, "D. Ben Knoble" <ben.knoble@gmail.com>,
+ Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>, Phillip Wood	
+ <phillip.wood@dunelm.org.uk>, Derrick Stolee <stolee@gmail.com>
+Date: Mon, 02 Jun 2025 21:00:56 +0200
+In-Reply-To: <CAP8UFD2w0UaLW+psacZp6FfJumXS1DmR9dRsJ=JP9M5Abx+jXA@mail.gmail.com>
+References: 
+	<CAP8UFD2w0UaLW+psacZp6FfJumXS1DmR9dRsJ=JP9M5Abx+jXA@mail.gmail.com>
+Organization: Jansen + Preisler
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset="utf-8"
+X-NetCologne-Spam: L
+X-Rspamd-Queue-Id: B238211D69
+X-Spamd-Bar: /
+X-Rspamd-Action: no action
 
-On Monday, 2 June 2025 20:41:48 CEST Collin Funk wrote:
-> The OpenBSD 'sed' command does not support '\n' to represent newlines in
-> sed expressions. This leads to the follow compiler error:
->=20
->     In file included from builtin/help.c:15:
->     ./config-list.h:282:18: error: use of undeclared identifier 'n'
->             "gitcvs.dbUser",n       "gitcvs.dbPass",
->                             ^
->     1 error generated.
->     gmake: *** [Makefile:2821: builtin/help.o] Error 1
->=20
-> We can use a variable that expands to a newline to do this portably.
->=20
-> This portably issue was introduced in e1b81f54da (completion: take into
-> account the formatting backticks for options, 2025-03-19)
->=20
-> Signed-off-by: Collin Funk <collin.funk1@gmail.com>
-> ---
->  generate-configlist.sh | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->=20
-> diff --git a/generate-configlist.sh b/generate-configlist.sh
-> index b06da53c89..48ec8d9812 100755
-> --- a/generate-configlist.sh
-> +++ b/generate-configlist.sh
-> @@ -1,5 +1,8 @@
->  #!/bin/sh
->=20
-> +nl=3D'
-> +'
-> +
->  SOURCE_DIR=3D"$1"
->  OUTPUT=3D"$2"
->=20
-> @@ -19,7 +22,7 @@ EOF
->  	s/::$//;
->  	s/`//g;
->  	s/^.*$/	"&",/;
-> -	s/,  */",\n	"/g;
-> +	s/,  */",''"$nl"''	"/g;
->  	p;};
->  d' \
->  	    "$SOURCE_DIR"/Documentation/*config.adoc \
-
-Hello,
-
-I was on this issue here:=20
-https://github.com/git/git/commit/e1b81f54da80267edee2cb8fd0d0f75f03023019
-
-Your proposed fix is interesting in that it does not spawn an additional=20
-process, but it does not work for me (debian sh =3D dash).
-
-=E1=90=85 diff config-list.h config-list.h.new
-281d280
-<       "gitcvs.dbPass",
-283c282
-<       "gitcvs.dbUser",
-=2D--
->       "gitcvs.dbUser","$nl"   "gitcvs.dbPass",
-350,351c349
-<       "http.lowSpeedLimit",
-<       "http.lowSpeedTime",
-=2D--
->       "http.lowSpeedLimit","$nl"      "http.lowSpeedTime",
-
-If you'd like to test your patch on different systems and happen to have a=
-=20
-github account, you can open a PR to gitgitgadget/git . This will trigger=20
-builds on several targets.
-
-Thanks,
-
-JN
-
-
+Supplied part 2 of tiny corrections and rephrasings with 4ae9989.=C2=A0
+Sorry for being a bit late - feel free to scrutinize as usual.
