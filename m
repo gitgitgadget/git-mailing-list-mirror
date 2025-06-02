@@ -1,54 +1,54 @@
-Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
+Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1D82C325E
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:31:52 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96D121C245C
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:38:14 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748878315; cv=none; b=GJdvxgBySEQzU37GDiUNqmac3pdafS+NhTFp0D7Vrgw0LjQy2sDP/1fckEt+1m3BJqkub0ZuXDNtKCzSwk5G8I7ZGKUTP9qi/x4w1FEvWuGD3X2kn49yiJlPxlhtH0UvX39tEzw8Z1kkdyvrFCBJM7bp7OQiygtOnan6GkcfNTU=
+	t=1748878696; cv=none; b=H+E5XLw1bG6gP/Di6B9CBrTV0Y8J/4Kpo24BiCPJLRF0HM0cFiNcUBhdW00OYUKri/3zpjzN/fbiXKs51SFsGKsiGDtB/nvYqbXQDEjdQsVH0MQk9CMogiruwxa8tWNZng0FtmlyEx9NrNRRL5ACkI1mEXctk4BdcLhFvWPstrM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748878315; c=relaxed/simple;
-	bh=Ml3tjwouy1ejxa9O3hPlCwqhZM4GYU2qC2W9ikoh4Os=;
+	s=arc-20240116; t=1748878696; c=relaxed/simple;
+	bh=5sDDofFbq0FHj81njL1YCMca1vYYNIuT2xkdDTtW1P4=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=SNpSKRYDOyEBwIte+Wd06LGsZ2xWP5GKv5bYNk/0xa6TK0CH9ntc4jREZ2X236tOis3d+gr4EkZCYd78Km9So99IZ78oqU42LlhF0NT7uRr6DKyhw/h4B8VuWbFN/ILQ7hJNrIM0ip6isOvEZB7Ci/vKOsPmyh1Mji3mmX2naVs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vT5UGfhF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nmfSCGTk; arc=none smtp.client-ip=103.168.172.153
+	 MIME-Version:Content-Type; b=UrBUjrsNnIph9h/3VNvyVtNEWCSNTklcmrWJKES2OihJckm1PUDctaKGXIQd/S9OLs1e6M6APPsalLuAsnZVnuUkU3IL2wQrVzLfSHTcN5kEmFc+sTTaXDLL7ViumgAqfhDXYrtoXHzJFlhzKVyelw2i4wkvTxVsZWlQ4Fok2Dw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=fYyV7GLD; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=iCFQ/Ibk; arc=none smtp.client-ip=103.168.172.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vT5UGfhF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nmfSCGTk"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.phl.internal (Postfix) with ESMTP id 34443114016D;
-	Mon,  2 Jun 2025 11:31:52 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="fYyV7GLD";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="iCFQ/Ibk"
+Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
+	by mailfout.phl.internal (Postfix) with ESMTP id 947181380140;
+	Mon,  2 Jun 2025 11:38:13 -0400 (EDT)
 Received: from phl-frontend-01 ([10.202.2.160])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Jun 2025 11:31:52 -0400
+  by phl-compute-02.internal (MEProxy); Mon, 02 Jun 2025 11:38:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748878312; x=1748964712; bh=OHVuyBXKRa
-	zGd4tGgGfdaZO5U4021LiyltsiAIWH2mo=; b=vT5UGfhFXujXH0jLnKWbFxxjjz
-	MHAjzjTvu5n4vIhwS2AGZWJ0FC0cnnNa9ierLvf9ZKeed6z9lsLONwLM7AxioWm2
-	rU7cmanQClerPOCqW8mT0nGwoKtNI1dtkv4ns+dzX6KKIgdFZitQgtP3kxVOX/zv
-	YjPuTD+Ku7lmY2NLz3MpyooeEZcOs29Bt8Oe0y/tOgNAi82qfy8daa//ZbfunMwh
-	R63gK8N5VThrMfeDojhL0T7Lzs9Adl1o5oENhP6bOPQzTH6p3gQKlqgECWLOiHom
-	x07T9a/hbUhvgicLLlTpvMYkU8Qzgi1oNk5i8etWADPZ/xTPOK/BVMP6z9fw==
+	:subject:to:to; s=fm3; t=1748878693; x=1748965093; bh=rfq8jfTpkL
+	0EQ00cg/TWVVQ8mzmUR95eMUhUf3nViOo=; b=fYyV7GLDZWyJQOvVRwyXMSsVHo
+	ZMjMtlxznQ/tWL6kxohOKCASswxQBFrAA0ogGqoPVI2d2liimc4CpKL5ZcBIEMB6
+	mw9Gdkr4+fOACGtP0RRWAj9GjD+LYlHiHwNhnIf9bjTtFv2AFPooFSlpqp4tFm43
+	+m74u2fBdFgXlBZUEP1iusTtDcydaBMC3xfv5RUIaZPMXNQjxdQVIW6FL3Z/tajZ
+	4ljd0kJVYP+MrwI7BAnW7bwhVqso0jczW8JMkwQt4ACbh7VEXEQ0F6PRy0NPUIj1
+	boLpomi0hUcZy2mun/qRvhELaocGpevY4nsMAxpafKhzLydZPOeJqo3W7sUQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748878312; x=1748964712; bh=OHVuyBXKRazGd4tGgGfdaZO5U4021Liylts
-	iAIWH2mo=; b=nmfSCGTkj+AechmWByF+GIWBgyh8f07AMlQJ9pdx6JcvzJW5i+L
-	8w/CiH0VGEwP9P2KuA/RB1J6IqKJXhGyVE+oEemUs7xxPxmBGcv5bF2sC4R42fE+
-	gVeC8xkzpLn+gGndfOYQdxVfU0fGi6u2/wvCXzqTj/H5mOw2yi9mSGGEYEefW47D
-	GePhwtKXkCV9/Z77EXJcgBJ593vOXfxuhq0Ym+sTImTLZfGjYFthG3yAGJCYS3Xd
-	ucJSyh5er417FU8rHraUtVcYBs5PpB+MV9YjqBxRfTh1yRu6jTXDku/ewjMdZoGy
-	fAvi9fTl1BvB2oeoTdt/+pTTbA3YDTjpcsA==
-X-ME-Sender: <xms:6MM9aPtvK5yK0AlAjnIzO7W_zUzwe6Fcb-wJAa0312MsxouFP5m6nQ>
-    <xme:6MM9aAdMdLJCM3usJiSaDxmpjob7UCaN8aeyEGih0O7QEGuMwPgPYcAnHSuhxl6_k
-    akFhzqcds7PG7MOEQ>
-X-ME-Received: <xmr:6MM9aCwBp5fHq9gCqupBDsGhRlROuMIKU-c4JtaYQ5yz2JG7b0FbJVP8yHDsxQNp55Vls9zX13Q2OxjQJgnVAGgc72r5W-X1W6yl>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtfeculddtuddrgeefvddrtd
+	1748878693; x=1748965093; bh=rfq8jfTpkL0EQ00cg/TWVVQ8mzmUR95eMUh
+	Uf3nViOo=; b=iCFQ/Ibkv/Iq6i6zcX1WRcT0G44spCeUUjXcsnPgHtOv3HY23t2
+	pmBfjYwIilnepS3X//w2YIOL0FOO5Y9oAm/jyUYqnflzsRqU4FuNLVZLZfQLiehp
+	h8hcle7ljno+NZ6dXb3KC5+ilEoa/hh8NobfwgucjON7ERYF0u3WXGg528Qal2U9
+	dN/QuVqE1mbgyjbvMWSBgHrX1A6ptv3D6ylOj2UTImfxoDuPNV4EV3Xy2JrLgHmn
+	aSUU6ls+34G+E9pJ9wT+BwE49Ds2oDrMMhAdPWRsSJKJfi4skXjgJmB+3z9QmyAc
+	Ol0HOt2p9zdpCaG3UYiYRlPuOGppukPVfqg==
+X-ME-Sender: <xms:ZcU9aJcLbIyGFOxALZBUcNXVPTxUbVcEfWvr6-i0oiS4mfAV5LzdBw>
+    <xme:ZcU9aHO1lMXCnvnr9GTmX_OAcAilaPUVKaaETTfvKPdHpAwycaLxfoE1P9Kfw6QRS
+    BPvmGR1OKfN7iEkBg>
+X-ME-Received: <xmr:ZcU9aCjsurIYuCi5wVhC9FMA7gXEdde2H3VEdBLc-t1LpPY08MK0qCVWS-P_0sGLpdeF3jnw7UJIU1bG4AbwHgh4uLFizMUppAG5>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtieculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
@@ -56,30 +56,31 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtfeculddtuddrge
     hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
     heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
     hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
-    ohepphhiohhtrhhsihhuphgrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
-    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
-    rdgtohhm
-X-ME-Proxy: <xmx:6MM9aONznB6qEuXYN8IMxiiY2WVtmhhXdQoeOHueU3mTNH_nZiFt-w>
-    <xmx:6MM9aP8NQ4TkjHb8ZsUkGpWqw15EAT2j0gY2Um5qAA_gnDMDyaJlcQ>
-    <xmx:6MM9aOWrGhmL4GqRh0zXuYvSxbaEg4G84wF6ULZjzHqvtzTvtImWyA>
-    <xmx:6MM9aAeAhCYfcPz7Z6_kIrLiupmyi5W_5r1PS713fsehcDabX15nFw>
-    <xmx:6MM9aOoQMxKaUEAdXraY-lH5BfyyNtSbUC2r8XKiyu0xUNBliQOEc2Fu>
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgv
+    lhdrohhrghdprhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtth
+    hopehtohhonhesihhothgtlhdrtghomhdprhgtphhtthhopehjlhhtohgslhgvrhesghhm
+    rghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:ZcU9aC_phbMz5Q-e7GNUOll3iTwa3fZapZ-1P6oehZmPufBaNHyNDw>
+    <xmx:ZcU9aFtHHLWZkCij6itpvMBeAVfmP6EllDS53cSzZlEcaEpbI2ajqg>
+    <xmx:ZcU9aBHA8LfoIJndeN9fIR0C8TcsJ7fPhfa3uABA2MJCgz8l94b7WQ>
+    <xmx:ZcU9aMOeWt7ilAt11k6DkeC1mvXyyItU7uGC6PVf-sOjeuROsAU6CQ>
+    <xmx:ZcU9aDR0KeSUvgeDbE6vdNQJo4xe2fD3Bs5XOKGdYIwiIxpKEgV79jnl>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 11:31:51 -0400 (EDT)
+ 2 Jun 2025 11:38:12 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Phillip Wood <phillip.wood123@gmail.com>
-Cc: Piotr Siupa <piotrsiupa@gmail.com>,  git@vger.kernel.org
-Subject: Re: [BUG]: Non-matching exclude pathspec causes an error in empty
- repository when the flag "--update" is present
-In-Reply-To: <e790367c-6777-4b4b-97f1-3b3a2cbdb177@gmail.com> (Phillip Wood's
-	message of "Mon, 2 Jun 2025 11:07:17 +0100")
-References: <CAPM0=yCcOAGsUE8tX-o8ioihr+oWrORD6Tz=WH1OnmhpO+uqrA@mail.gmail.com>
-	<e790367c-6777-4b4b-97f1-3b3a2cbdb177@gmail.com>
-Date: Mon, 02 Jun 2025 08:31:50 -0700
-Message-ID: <xmqq34ciupll.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: git@vger.kernel.org,  Derrick Stolee <stolee@gmail.com>,  Toon Claes
+ <toon@iotcl.com>,  Justin Tobler <jltobler@gmail.com>
+Subject: Re: [PATCH v4 00/17] object-store: carve out the object database
+ subsystem
+In-Reply-To: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
+	(Patrick Steinhardt's message of "Mon, 02 Jun 2025 12:27:01 +0200")
+References: <20250506-pks-object-store-wo-the-repository-v1-0-c05b82e7b126@pks.im>
+	<20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
+Date: Mon, 02 Jun 2025 08:38:11 -0700
+Message-ID: <xmqqy0uataqk.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,43 +90,23 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Phillip Wood <phillip.wood123@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
->> git add --update -- ':(exclude)foo'
->> This results in:
->> error: pathspec ':(exclude)foo' did not match any file(s) known to git
->> error: pathspec '.' did not match any file(s) known to git
+> This series is built on top of 6f84262c44a (The eleventh batch,
+> 2025-05-05) with ps/object-store-cleanup at 8a9e27be821 (object-store:
+> drop `repo_has_object_file()`, 2025-04-29) merged into it. There are a
+> couple of trivial conflicts when merged with "seen", I have appended the
+> merge conflict resolution as a patch at the end of this mail.
 > ...
-> git add -u builtin ':(exclude)*.[ch]'
->
-> which will never add any files (the builtin directory only contains
-> '.c' and '.h' files). So I think maybe the bug is that we don't print
-> an error when there are tracked files and an exclude pattern matches
-> everything
+> Changes in v4:
+>   - Rebased the patch series on top of 7014b55638d (A bit more topics
+>     for -rc1, 2025-05-30). This fixes a couple of merge conflicts, most
+>     importantly with jk/no-funny-object-types.
 
-I have to disagree here.  The "did not match" error is telling you
-this:
+Ah, the original cover letter material that was more prominent is
+still left before the changes per iteration lissted here, so I was
+scratching my head wondering why the series fails to apply at 02/17.
 
-    You tried to tell me that you wanted to add something, but you
-    didn't enumerate what to add in concrete terms.  You instead
-    gave me pathspec, so I tried to see if there are paths that
-    match these patterns.  This pattern did not produce any match
-    so out of this pattern came no additions (even though other
-    patterns may have contributed to other additions).
-
-I think the "'.' did not match any file(s)" in the first example
-makes perfect sense, but complaining about negative patterns that
-did not match does not make much sense to me.  If I said
-
-	git add -- \*.c ':!auto-generated.c'
-
-and there is no auto-generated.c file (yet) in this working tree,
-that is a happy outcome.  I didn't want to add it, even if it
-existed, and it turned out to be missing.  It would become annoying
-pretty quickly if we started complaining a pattern in .gitignore
-that did not match anything, and complaining against "you gave me an
-exclude pathspec pattern that matched nothing" feels pretty similar
-to me.
+Will try to read it through before queuing.
 
 Thanks.
-
