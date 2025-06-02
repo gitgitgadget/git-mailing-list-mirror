@@ -1,69 +1,70 @@
-Received: from mail-wr1-f51.google.com (mail-wr1-f51.google.com [209.85.221.51])
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1D1212D8A
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 12:27:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AAAC219A70
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 12:27:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748867265; cv=none; b=CjEST8/XelePsrQy6QnuVZ0Y4gw6c+wbUk25ZJe/5zMiXyh//Ps+C5jyx2j+tyXXvM2Tr/+nundbXZBP4bktLfh1ZqLDxyUi11bH82YL0hO2O8V0MpxkyxGC87837N72DbcTM2F9NMqT3gMGFy9suz76CeaiDsRniLCMR9cN61o=
+	t=1748867269; cv=none; b=a5699Dt8wPa0WJCQQmZUhB7fzQ11Ca99EH8wl7zfHFbYQy1kdmIK46Q9EC0ig2dFwLn9PkZjcqOkn1/101wqREoLbKdUK1wJDitwhlCdL7Sg8TSGbGPmc54Ua4n9rn6R1ll8mLPhJvWbt+bGmu+wGE7O3XDh57FI6xNaIfdSAm0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748867265; c=relaxed/simple;
-	bh=zIKg7zQqv1k2Bf0y9m2YOEEbQ+tZDNTpH/9keBG2qbw=;
+	s=arc-20240116; t=1748867269; c=relaxed/simple;
+	bh=aXvGpYwr0VPJuwDX9y4CXkKLTcuXC9bftDC1j+qyxSU=;
 	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JUKQuMzXY+mehexhKumQOEcAyUR/K61a7gN53D9cly32p7U1l/ZAPTbf6XQ115lOuG9pghVdp5B3HCOtRacx02E3KOJW8MYLUw5YTBOIH+Boq0r1CFbP2AnpeXmb4LtRvWSYZG6dQGkvjNrbF2jRd5vgmsQz+yu5WIVKkOJzDIU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=V7ZaluMH; arc=none smtp.client-ip=209.85.221.51
+	 MIME-Version; b=sY/7YGuwiEUK824jTg0zQkmqs8R3iO0nqZFjYuOHmTvFVuFObeRSXWBxeSaiM6Q+WTL6BSznv1NOcpr+f/VpgF8/0qWUyPfP2bP0iP95kSE481NiKvPxm3FG046EqHxn5bHqWSfn45KRYe8dd9uwkHNFiw5iIR3IWRldfXL4aEE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=jyD1Gjfs; arc=none smtp.client-ip=209.85.128.43
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="V7ZaluMH"
-Received: by mail-wr1-f51.google.com with SMTP id ffacd0b85a97d-3a4f71831abso3017605f8f.3
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 05:27:41 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="jyD1Gjfs"
+Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so46510885e9.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 05:27:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748867260; x=1749472060; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748867265; x=1749472065; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=Y/c3QKVhzZ3X6gHAYy9i05eRUD3v5Pvm6B1KpYn3M6Q=;
-        b=V7ZaluMHddQliSBikHjoJ0PIUIWrfU0k7G3j2GH3hmnR+bI7pW1Uwztja9J/0+yAf3
-         DlyBlOlBsDNiQcASf2rqegbQDTkt2NoE2/zLvE3NDFZY6SB0yBNjqcLQ9Ay6KR+FsMSy
-         OS5ud2TaZKDiqMFERGbjBcB+ibNz6QytexZioaryx7wwGLp1FKUgWGD8s4Rq5rjX/1Ls
-         Ox3rAOw2ggiTm0A7M7pTLYN4yQeXfyU5+zdqE7QCzgPnQF68PCHMIVsQK4tzO0YvKHNq
-         G7C94QTltkYWAg2TPAdLSFho2A20aHb40QmrTQoasz+CHvXeWqBn3opR+p6Ot24WuikI
-         uAFQ==
+        bh=66hZWb7Nl04NenJfGSR0mqoXuLUXaCZYrYNbGTV/3tY=;
+        b=jyD1GjfsxjfaWjW0WdxN46G6VVw0Ajg92LdH6SAHytgygiG/mosUfprlPKiADyOGr4
+         3b5USR5aw+eQCJcCQ7vimQemu3zCFEzGgA0TY6dSxR5p5uxMdUay/8P1IN4Clz9uwyV8
+         QjAGNmhkPRyn4CyRu9rB/R070fq50UlOTLATlnEPbbAVVOwrpophKjuW9RN8pM8+hv+S
+         ha5bjWDKDIZRqSFV2alCiW+OzXhY153ZJPYNvGSvdIX3uVovtjj6mbXhTnFV11WhhbUE
+         K+kxJefopLYYrlfFWa9DSAzcr5Pd0q3PtHHwU/atH0ZNhXpQP/j+qNwIEX8MNE/y7RjX
+         1OQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748867260; x=1749472060;
+        d=1e100.net; s=20230601; t=1748867265; x=1749472065;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=Y/c3QKVhzZ3X6gHAYy9i05eRUD3v5Pvm6B1KpYn3M6Q=;
-        b=D7SxC1SA1404k3BsbAIcWBtFyX6V1LTULeLvS2b1iEcsR9ztRnjFutLnW0S5Pggkky
-         RWAXNHWRo/5SjUOgrY2qCtYmyEsju/f0GmrHoE8cm3cP3w08vIHWMMTBrTpt1S153CIO
-         oBuw7Njec08n0PIUd1n7YO0Fe5RlLM377wdDMTUQJ0CN19kfFMEG9TobfOzKX9NY/cqv
-         Ali2Zq8glswMpi/r7DFUmOXg+N86H0SNTyYUY08VcVFslp4Vtww10CJvv6QvY7SPuslw
-         54JkwOphQo64jce/P7TAGIgme4ljhlMsDirG8qnD6I9nBe9IzR5JqkWbFr7vie5HDmsx
-         yj+Q==
-X-Gm-Message-State: AOJu0Yxq1ndPzH9EYs1B6d0TN8omVNyxK4Xxuy+jvO+hXJjbPGQYP6Nc
-	gfNyGB3aIE5Z9qfQf8mfcveFRaMZaX5y+Ze2fOhwSx5KURRpmOgkIc3JC3CXGatOBTA=
-X-Gm-Gg: ASbGncvVgO/7eaPf7hLWqbaz/V/HBO9W2e70jvxzRNDR3lJvfFRR63rSyxPiKd4ZOZ2
-	WD06FdhDFqkRl7MC+6eOkVn6aMNnOp1KqL11NMRXJLo7Ou307WDfQYJu/Us64XJw/qigQIk01Qi
-	aJla3r/r+gt8NksdqSsDwDaOmLD8IucjtEfRxnuXVxwwqsnsmHB3YB3jd4aIVkNmyQBSy6WHwhC
-	2LVE+nrvSd3OX3wRHILTXqwP7IiONomfJcySSyZf0CQGYPpY6tEbSLvPnqIMgzISz2PYy11ob95
-	BNF89eDCVQf/JfJBFvTJBERinBkScwAQaFIscZS+ifStnZjCkXg7RCM+7Vg2cWGvAQ==
-X-Google-Smtp-Source: AGHT+IG7Ccj4J/b8Q2g8+JYw2isRVh7guW3Nfjg+FY0WJaTNXAhjsPbcRNy7K86Zfb5IE/EWCgXLaQ==
-X-Received: by 2002:a05:6000:18ae:b0:3a4:fbaf:3f99 with SMTP id ffacd0b85a97d-3a4fbaf4070mr7952953f8f.13.1748867259929;
-        Mon, 02 Jun 2025 05:27:39 -0700 (PDT)
+        bh=66hZWb7Nl04NenJfGSR0mqoXuLUXaCZYrYNbGTV/3tY=;
+        b=CI5yLWGuWmxzxwdfCdCX4AhRe/JfLxgh68g6U6F9GJJSYFqDe24w97qOHYKL8rVn5l
+         VHb7xMQ6T9xlyRWuppcNneaod2r1W1brNOssX3stmzj863yxki0HGmZh9OwO/4ql8iju
+         1Uzs7X9RTOeYzI7PfY5GBPt6MmRs1TwyAbYtEooeLquo3qbb9p17rWJBFOhNTJAk2mWJ
+         CTo6qesvL8pJCSXVQyH3LSx1Rm9pwCqgDLAMwzFvEUolgB4Oj/JUUYz38yBqiNIWaHWU
+         VCill4JTwZISllSSgQVH7j0B7de2yzlD4suadWgm8oEMLGp+ImUrojKhZ4Fwv2C9IooF
+         KoMw==
+X-Gm-Message-State: AOJu0Yzau3EWjBIFu/2SbRVpo4g5Qo9VcqNxbpsoc6yhGbzEE7gyLxdS
+	JQkR9ZAz5gwvvTadfQrpWJPhzmsBgEVKIpS3ZWnnT1m/2rWGVaGP4ja0kJ20DbEBkK0=
+X-Gm-Gg: ASbGncuqfRQvmaaZgNzWpWXSGc7CEvS41Ma28Qz24PFsdWfCn5Pl7uvJA7gE4sQYC3P
+	KnLeINQArV2pI53YZfFoQFHb84LavcNESeAG/G41ukm/LqpzbuvrTBoPKAGil3T/p5NjhR7irpN
+	LgF2bbQjF8dr4W+00ptRbj5oc/qBu4hb+1Xo6Z25O3Lps93onpLRvDHiCSB7DiFJKkE0jEpAzi4
+	v+6aYIqp1VOu4DIwlYMfLedrF/5dSgd3LPo6ymALh9TyLh6sdUyquwZJ+8vZEdWx/CNQ+O0MLcW
+	JisOLRZGr/mdYchqlzNUF2gf98i358RXR7efIhTJ1Uj+zE8+kcCKmV9qfNbaorH2O7Wu+I/9TMQ
+	E
+X-Google-Smtp-Source: AGHT+IGvKsysc7UyRwgXs2PjuQxXPn9WiEPUm9p+p+oQ9Eg6fh24IUhRrNrA0yjDAGQvhnCjV8o3nw==
+X-Received: by 2002:a05:600c:8509:b0:442:d9f2:c74e with SMTP id 5b1f17b1804b1-450d6580594mr109547295e9.23.1748867265162;
+        Mon, 02 Jun 2025 05:27:45 -0700 (PDT)
 Received: from localhost.localdomain ([105.113.90.168])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-451d30a227csm51034145e9.0.2025.06.02.05.27.37
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-451d30a227csm51034145e9.0.2025.06.02.05.27.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 05:27:39 -0700 (PDT)
+        Mon, 02 Jun 2025 05:27:44 -0700 (PDT)
 From: Seyi Kuforiji <kuforiji98@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	phillip.wood@dunelm.org.uk,
 	Seyi Kuforiji <kuforiji98@gmail.com>
-Subject: [PATCH v3 09/10] t/unit-tests: convert reftable stack test to use clar
-Date: Mon,  2 Jun 2025 13:25:57 +0100
-Message-ID: <20250602122559.208780-10-kuforiji98@gmail.com>
+Subject: [PATCH v3 10/10] t/unit-tests: finalize migration of reftable-related tests
+Date: Mon,  2 Jun 2025 13:25:58 +0100
+Message-ID: <20250602122559.208780-11-kuforiji98@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250602122559.208780-1-kuforiji98@gmail.com>
 References: <20250602122559.208780-1-kuforiji98@gmail.com>
@@ -75,1553 +76,479 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Adapt reftable stack test file to use clar by using clar assertions
-where necessary.
+The old `lib-reftable.{c,h}` implemented helper functions for our
+homegrown unit-testing framework. As part of migrating reftable-related
+tests to the Clar framework, Clar-specific versions of these functions
+in `lib-reftable-clar.{c,h}` were introduced.
 
-This marks the end of all unit tests migrated away from the
-`unit-tests/t-*.c` pattern, there are no longer any files matching that
-glob. Remove the sanity check for `t-*.c` files to prevent Meson
-configuration errors during CI and local builds.
+Now that all test files using these helpers have been converted to Clar, we
+can safely remove the original `lib-reftable.{c,h}` and rename the Clar-
+specific versions back to `lib-reftable.{c,h}`. This restores a clean and
+consistent naming scheme for shared test utilities.
+
+Finally, update our build system to reflect the changes made and remove
+redundant code related to the reftable tests and our old homegrown
+unit-testing setup.
 
 Signed-off-by: Seyi Kuforiji <kuforiji98@gmail.com>
 ---
- Makefile                                      |   2 +-
- t/meson.build                                 |   5 +-
- ...{t-reftable-stack.c => u-reftable-stack.c} | 726 +++++++-----------
- 3 files changed, 282 insertions(+), 451 deletions(-)
- rename t/unit-tests/{t-reftable-stack.c => u-reftable-stack.c} (59%)
+ Makefile                            |   6 +-
+ t/Makefile                          |   1 -
+ t/meson.build                       |  21 +-----
+ t/unit-tests/lib-reftable-clar.c    | 101 ----------------------------
+ t/unit-tests/lib-reftable-clar.h    |  20 ------
+ t/unit-tests/lib-reftable.c         |  35 +++++-----
+ t/unit-tests/lib-reftable.h         |  15 ++---
+ t/unit-tests/u-reftable-basics.c    |   2 +-
+ t/unit-tests/u-reftable-block.c     |   2 +-
+ t/unit-tests/u-reftable-merged.c    |   2 +-
+ t/unit-tests/u-reftable-pq.c        |   2 +-
+ t/unit-tests/u-reftable-readwrite.c |   2 +-
+ t/unit-tests/u-reftable-record.c    |   2 +-
+ t/unit-tests/u-reftable-stack.c     |   4 +-
+ t/unit-tests/u-reftable-table.c     |   2 +-
+ 15 files changed, 38 insertions(+), 179 deletions(-)
+ delete mode 100644 t/unit-tests/lib-reftable-clar.c
+ delete mode 100644 t/unit-tests/lib-reftable-clar.h
 
 diff --git a/Makefile b/Makefile
-index 3b41342ddb..8ed8f234f4 100644
+index 8ed8f234f4..8d8f2d574d 100644
 --- a/Makefile
 +++ b/Makefile
-@@ -1369,6 +1369,7 @@ CLAR_TEST_SUITES += u-reftable-block
- CLAR_TEST_SUITES += u-reftable-merged
- CLAR_TEST_SUITES += u-reftable-pq
- CLAR_TEST_SUITES += u-reftable-readwrite
-+CLAR_TEST_SUITES += u-reftable-stack
- CLAR_TEST_SUITES += u-reftable-table
- CLAR_TEST_SUITES += u-reftable-tree
- CLAR_TEST_SUITES += u-strbuf
-@@ -1383,7 +1384,6 @@ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
+@@ -1380,13 +1380,11 @@ CLAR_TEST_SUITES += u-urlmatch-normalization
+ CLAR_TEST_PROG = $(UNIT_TEST_BIN)/unit-tests$(X)
+ CLAR_TEST_OBJS = $(patsubst %,$(UNIT_TEST_DIR)/%.o,$(CLAR_TEST_SUITES))
+ CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/clar/clar.o
+-CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-oid.o
- CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable-clar.o
+-CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable-clar.o
++CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
++CLAR_TEST_OBJS += $(UNIT_TEST_DIR)/unit-test.o
  
--UNIT_TEST_PROGRAMS += t-reftable-stack
- UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
+-UNIT_TEST_PROGS = $(patsubst %,$(UNIT_TEST_BIN)/%$X,$(UNIT_TEST_PROGRAMS))
  UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/test-lib.o
- UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+-UNIT_TEST_OBJS += $(UNIT_TEST_DIR)/lib-reftable.o
+ 
+ # xdiff and reftable libs may in turn depend on what is in libgit.a
+ GITLIBS = common-main.o $(LIB_FILE) $(XDIFF_LIB) $(REFTABLE_LIB) $(LIB_FILE)
+diff --git a/t/Makefile b/t/Makefile
+index 791e0a0978..757674e727 100644
+--- a/t/Makefile
++++ b/t/Makefile
+@@ -125,7 +125,6 @@ check-meson:
+ 	@mkdir -p mesontmp && \
+ 	printf "%s\n" \
+ 		"integration_tests t[0-9][0-9][0-9][0-9]-*.sh" \
+-		"unit_test_programs unit-tests/t-*.c" \
+ 		"clar_test_suites unit-tests/u-*.c" | \
+ 	while read -r variable pattern; do \
+ 		awk "/^$$variable = \[\$$/ {flag=1 ; next } /^]$$/ { flag=0 } flag { gsub(/^  \047/, \"\"); gsub(/\047,\$$/, \"\"); print }" meson.build >mesontmp/meson.txt && \
 diff --git a/t/meson.build b/t/meson.build
-index 297937f307..fcbb659263 100644
+index fcbb659263..be96a9639f 100644
 --- a/t/meson.build
 +++ b/t/meson.build
-@@ -13,6 +13,8 @@ clar_test_suites = [
-   'unit-tests/u-reftable-merged.c',
-   'unit-tests/u-reftable-pq.c',
-   'unit-tests/u-reftable-readwrite.c',
-+  'unit-tests/u-reftable-record.c',
-+  'unit-tests/u-reftable-stack.c',
-   'unit-tests/u-reftable-table.c',
-   'unit-tests/u-reftable-tree.c',
-   'unit-tests/u-strbuf.c',
-@@ -61,7 +63,6 @@ clar_unit_tests = executable('unit-tests',
- test('unit-tests', clar_unit_tests)
- 
- unit_test_programs = [
--  'unit-tests/t-reftable-stack.c',
+@@ -28,7 +28,7 @@ clar_sources = [
+   'unit-tests/clar/clar.c',
+   'unit-tests/unit-test.c',
+   'unit-tests/lib-oid.c',
+-  'unit-tests/lib-reftable-clar.c'
++  'unit-tests/lib-reftable.c'
  ]
  
- foreach unit_test_program : unit_test_programs
-@@ -1163,8 +1164,6 @@ benchmarks = [
- # sufficient to catch missing test suites in our CI though.
- foreach glob, tests : {
-   't[0-9][0-9][0-9][0-9]-*.sh': integration_tests,
--  'perf/p[0-9][0-9][0-9][0-9]-*.sh': benchmarks,
--  'unit-tests/t-*.c': unit_test_programs,
-   'unit-tests/u-*.c': clar_test_suites,
- }
-   actual_tests = run_command(shell, '-c', 'ls ' + glob,
-diff --git a/t/unit-tests/t-reftable-stack.c b/t/unit-tests/u-reftable-stack.c
-similarity index 59%
-rename from t/unit-tests/t-reftable-stack.c
-rename to t/unit-tests/u-reftable-stack.c
-index 2f49c97519..8d6cfba22c 100644
---- a/t/unit-tests/t-reftable-stack.c
-+++ b/t/unit-tests/u-reftable-stack.c
-@@ -8,9 +8,9 @@ license that can be found in the LICENSE file or at
+ clar_decls_h = custom_target(
+@@ -62,25 +62,6 @@ clar_unit_tests = executable('unit-tests',
+ )
+ test('unit-tests', clar_unit_tests)
  
- #define DISABLE_SIGN_COMPARE_WARNINGS
+-unit_test_programs = [
+-]
+-
+-foreach unit_test_program : unit_test_programs
+-  unit_test_name = fs.stem(unit_test_program)
+-  unit_test = executable(unit_test_name,
+-    sources: [
+-      'unit-tests/test-lib.c',
+-      'unit-tests/lib-reftable.c',
+-      unit_test_program,
+-    ],
+-    dependencies: [libgit_commonmain],
+-  )
+-  test(unit_test_name, unit_test,
+-    workdir: meson.current_source_dir(),
+-    timeout: 0,
+-  )
+-endforeach
+-
+ subdir('helper')
  
--#include "test-lib.h"
--#include "lib-reftable.h"
+ integration_tests = [
+diff --git a/t/unit-tests/lib-reftable-clar.c b/t/unit-tests/lib-reftable-clar.c
+deleted file mode 100644
+index 64e40a106e..0000000000
+--- a/t/unit-tests/lib-reftable-clar.c
++++ /dev/null
+@@ -1,101 +0,0 @@
+-#include "unit-test.h"
+-#include "lib-reftable-clar.h"
+-#include "hex.h"
+-#include "parse-options.h"
+-#include "reftable/constants.h"
+-#include "reftable/writer.h"
+-#include "strbuf.h"
+-#include "string-list.h"
+-#include "strvec.h"
+-
+-void cl_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id)
+-{
+-	memset(p, (uint8_t)i, hash_size(id));
+-}
+-
+-static ssize_t strbuf_writer_write(void *b, const void *data, size_t sz)
+-{
+-	strbuf_add(b, data, sz);
+-	return sz;
+-}
+-
+-static int strbuf_writer_flush(void *arg UNUSED)
+-{
+-	return 0;
+-}
+-
+-struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
+-						 struct reftable_write_options *opts)
+-{
+-	struct reftable_writer *writer;
+-	int ret = reftable_writer_new(&writer, &strbuf_writer_write, &strbuf_writer_flush,
+-				      buf, opts);
+-	cl_assert(!ret);
+-	return writer;
+-}
+-
+-void cl_reftable_write_to_buf(struct reftable_buf *buf,
+-			     struct reftable_ref_record *refs,
+-			     size_t nrefs,
+-			     struct reftable_log_record *logs,
+-			     size_t nlogs,
+-			     struct reftable_write_options *_opts)
+-{
+-	struct reftable_write_options opts = { 0 };
+-	const struct reftable_stats *stats;
+-	struct reftable_writer *writer;
+-	uint64_t min = 0xffffffff;
+-	uint64_t max = 0;
+-	int ret;
+-
+-	if (_opts)
+-		opts = *_opts;
+-
+-	for (size_t i = 0; i < nrefs; i++) {
+-		uint64_t ui = refs[i].update_index;
+-		if (ui > max)
+-			max = ui;
+-		if (ui < min)
+-			min = ui;
+-	}
+-	for (size_t i = 0; i < nlogs; i++) {
+-		uint64_t ui = logs[i].update_index;
+-		if (ui > max)
+-			max = ui;
+-		if (ui < min)
+-			min = ui;
+-	}
+-
+-	writer = cl_reftable_strbuf_writer(buf, &opts);
+-	ret = reftable_writer_set_limits(writer, min, max);
+-	cl_assert_equal_i(ret, 0);
+-
+-	if (nrefs) {
+-		ret = reftable_writer_add_refs(writer, refs, nrefs);
+-		cl_assert_equal_i(ret, 0);
+-	}
+-
+-	if (nlogs) {
+-		ret = reftable_writer_add_logs(writer, logs, nlogs);
+-		cl_assert_equal_i(ret, 0);
+-	}
+-
+-	ret = reftable_writer_close(writer);
+-	cl_assert_equal_i(ret, 0);
+-
+-	stats = reftable_writer_stats(writer);
+-	for (size_t i = 0; i < (size_t)stats->ref_stats.blocks; i++) {
+-		size_t off = i * (opts.block_size ? opts.block_size
+-						  : DEFAULT_BLOCK_SIZE);
+-		if (!off)
+-			off = header_size(opts.hash_id == REFTABLE_HASH_SHA256 ? 2 : 1);
+-		cl_assert(buf->buf[off] == 'r');
+-	}
+-
+-	if (nrefs)
+-		cl_assert(stats->ref_stats.blocks > 0);
+-	if (nlogs)
+-		cl_assert(stats->log_stats.blocks > 0);
+-
+-	reftable_writer_free(writer);
+-}
+diff --git a/t/unit-tests/lib-reftable-clar.h b/t/unit-tests/lib-reftable-clar.h
+deleted file mode 100644
+index b562648973..0000000000
+--- a/t/unit-tests/lib-reftable-clar.h
++++ /dev/null
+@@ -1,20 +0,0 @@
+-#include "git-compat-util.h"
+-#include "clar/clar.h"
+-#include "clar-decls.h"
+-#include "git-compat-util.h"
+-#include "reftable/reftable-writer.h"
+-#include "strbuf.h"
+-
+-struct reftable_buf;
+-
+-void cl_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id);
+-
+-struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
+-						  struct reftable_write_options *opts);
+-
+-void cl_reftable_write_to_buf(struct reftable_buf *buf,
+-			     struct reftable_ref_record *refs,
+-			     size_t nrecords,
+-			     struct reftable_log_record *logs,
+-			     size_t nlogs,
+-			     struct reftable_write_options *opts);
+diff --git a/t/unit-tests/lib-reftable.c b/t/unit-tests/lib-reftable.c
+index 8a69612266..fdb5b11a20 100644
+--- a/t/unit-tests/lib-reftable.c
++++ b/t/unit-tests/lib-reftable.c
+@@ -1,12 +1,14 @@
+-#define DISABLE_SIGN_COMPARE_WARNINGS
+-
 +#include "unit-test.h"
- #include "dir.h"
-+#include "lib-reftable-clar.h"
- #include "reftable/merged.h"
- #include "reftable/reftable-error.h"
- #include "reftable/stack.h"
-@@ -70,11 +70,11 @@ static char *get_tmp_template(int linenumber)
- static char *get_tmp_dir(int linenumber)
+ #include "lib-reftable.h"
+-#include "test-lib.h"
++#include "hex.h"
++#include "parse-options.h"
+ #include "reftable/constants.h"
+ #include "reftable/writer.h"
+ #include "strbuf.h"
++#include "string-list.h"
++#include "strvec.h"
+ 
+-void t_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id)
++void cl_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id)
  {
- 	char *dir = get_tmp_template(linenumber);
--	check(mkdtemp(dir) != NULL);
-+	cl_assert(mkdtemp(dir) != NULL);
- 	return dir;
+ 	memset(p, (uint8_t)i, hash_size(id));
  }
- 
--static void t_read_file(void)
-+void test_reftable_stack__read_file(void)
- {
- 	char *fn = get_tmp_template(__LINE__);
- 	struct tempfile *tmp = mks_tempfile(fn);
-@@ -84,17 +84,17 @@ static void t_read_file(void)
- 	char **names = NULL;
- 	const char *want[] = { "line1", "line2", "line3" };
- 
--	check_int(fd, >, 0);
-+	cl_assert(fd > 0);
- 	n = write_in_full(fd, out, strlen(out));
--	check_int(n, ==, strlen(out));
-+	cl_assert_equal_i(n, strlen(out));
- 	err = close(fd);
--	check_int(err, >=, 0);
-+	cl_assert(err >= 0);
- 
- 	err = read_lines(fn, &names);
--	check(!err);
-+	cl_assert(err == 0);
- 
- 	for (size_t i = 0; names[i]; i++)
--		check_str(want[i], names[i]);
-+		cl_assert_equal_s(want[i], names[i]);
- 	free_names(names);
- 	(void) remove(fn);
- 	delete_tempfile(&tmp);
-@@ -103,8 +103,8 @@ static void t_read_file(void)
- static int write_test_ref(struct reftable_writer *wr, void *arg)
- {
- 	struct reftable_ref_record *ref = arg;
--	check(!reftable_writer_set_limits(wr, ref->update_index,
--					  ref->update_index));
-+	cl_assert(reftable_writer_set_limits(wr, ref->update_index,
-+										 ref->update_index) == 0);
- 	return reftable_writer_add_ref(wr, ref);
- }
- 
-@@ -112,7 +112,6 @@ static void write_n_ref_tables(struct reftable_stack *st,
- 			       size_t n)
- {
- 	int disable_auto_compact;
--	int err;
- 
- 	disable_auto_compact = st->opts.disable_auto_compact;
- 	st->opts.disable_auto_compact = 1;
-@@ -126,10 +125,9 @@ static void write_n_ref_tables(struct reftable_stack *st,
- 
- 		snprintf(buf, sizeof(buf), "refs/heads/branch-%04"PRIuMAX, (uintmax_t)i);
- 		ref.refname = buf;
--		t_reftable_set_hash(ref.value.val1, i, REFTABLE_HASH_SHA1);
-+		cl_reftable_set_hash(ref.value.val1, i, REFTABLE_HASH_SHA1);
- 
--		err = reftable_stack_add(st, &write_test_ref, &ref);
--		check(!err);
-+		cl_assert(reftable_stack_add(st, &write_test_ref, &ref) == 0);
- 	}
- 
- 	st->opts.disable_auto_compact = disable_auto_compact;
-@@ -144,12 +142,12 @@ static int write_test_log(struct reftable_writer *wr, void *arg)
- {
- 	struct write_log_arg *wla = arg;
- 
--	check(!reftable_writer_set_limits(wr, wla->update_index,
--					  wla->update_index));
-+	cl_assert(reftable_writer_set_limits(wr, wla->update_index,
-+										 wla->update_index) == 0);
- 	return reftable_writer_add_log(wr, wla->log);
- }
- 
--static void t_reftable_stack_add_one(void)
-+void test_reftable_stack__add_one(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_buf scratch = REFTABLE_BUF_INIT;
-@@ -158,7 +156,6 @@ static void t_reftable_stack_add_one(void)
- 		.default_permissions = 0660,
- 	};
- 	struct reftable_stack *st = NULL;
--	int err;
- 	struct reftable_ref_record ref = {
- 		.refname = (char *) "HEAD",
- 		.update_index = 1,
-@@ -167,32 +164,35 @@ static void t_reftable_stack_add_one(void)
- 	};
- 	struct reftable_ref_record dest = { 0 };
- 	struct stat stat_result = { 0 };
-+	int err;
-+
- 	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(!err);
- 
- 	err = reftable_stack_add(st, write_test_ref, &ref);
--	check(!err);
-+	cl_assert(!err);
- 
- 	err = reftable_stack_read_ref(st, ref.refname, &dest);
--	check(!err);
--	check(reftable_ref_record_equal(&ref, &dest, REFTABLE_HASH_SIZE_SHA1));
--	check_int(st->tables_len, >, 0);
-+	cl_assert(!err);
-+	cl_assert(reftable_ref_record_equal(&ref, &dest,
-+					    REFTABLE_HASH_SIZE_SHA1));
-+	cl_assert(st->tables_len > 0);
- 
- #ifndef GIT_WINDOWS_NATIVE
--	check(!reftable_buf_addstr(&scratch, dir));
--	check(!reftable_buf_addstr(&scratch, "/tables.list"));
--	err = stat(scratch.buf, &stat_result);
--	check(!err);
--	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
-+	cl_assert(reftable_buf_addstr(&scratch, dir) == 0);
-+	cl_assert(reftable_buf_addstr(&scratch, "/tables.list") == 0);
-+	cl_assert(stat(scratch.buf, &stat_result) == 0);
-+	cl_assert_equal_i((stat_result.st_mode & 0777), opts.default_permissions);
- 
- 	reftable_buf_reset(&scratch);
--	check(!reftable_buf_addstr(&scratch, dir));
--	check(!reftable_buf_addstr(&scratch, "/"));
-+	cl_assert(reftable_buf_addstr(&scratch, dir) == 0);
-+	cl_assert(reftable_buf_addstr(&scratch, "/") == 0);
- 	/* do not try at home; not an external API for reftable. */
--	check(!reftable_buf_addstr(&scratch, st->tables[0]->name));
-+	cl_assert(!reftable_buf_addstr(&scratch, st->tables[0]->name));
- 	err = stat(scratch.buf, &stat_result);
--	check(!err);
--	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
-+	cl_assert(!err);
-+	cl_assert_equal_i((stat_result.st_mode & 0777),
-+			   opts.default_permissions);
- #else
- 	(void) stat_result;
- #endif
-@@ -204,14 +204,13 @@ static void t_reftable_stack_add_one(void)
- 	umask(mask);
- }
- 
--static void t_reftable_stack_uptodate(void)
-+void test_reftable_stack__uptodate(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st1 = NULL;
- 	struct reftable_stack *st2 = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
- 
--	int err;
- 	struct reftable_ref_record ref1 = {
- 		.refname = (char *) "HEAD",
- 		.update_index = 1,
-@@ -229,34 +228,23 @@ static void t_reftable_stack_uptodate(void)
- 	/* simulate multi-process access to the same stack
- 	   by creating two stacks for the same directory.
- 	 */
--	err = reftable_new_stack(&st1, dir, &opts);
--	check(!err);
--
--	err = reftable_new_stack(&st2, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_add(st1, write_test_ref, &ref1);
--	check(!err);
--
--	err = reftable_stack_add(st2, write_test_ref, &ref2);
--	check_int(err, ==, REFTABLE_OUTDATED_ERROR);
--
--	err = reftable_stack_reload(st2);
--	check(!err);
--
--	err = reftable_stack_add(st2, write_test_ref, &ref2);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st1, dir, &opts) == 0);
-+	cl_assert(reftable_new_stack(&st2, dir, &opts) == 0);
-+	cl_assert(reftable_stack_add(st1, write_test_ref, &ref1) == 0);
-+	cl_assert_equal_i(reftable_stack_add(st2, write_test_ref, &ref2),
-+					  REFTABLE_OUTDATED_ERROR);
-+	cl_assert(reftable_stack_reload(st2) == 0);
-+	cl_assert(reftable_stack_add(st2, write_test_ref, &ref2) == 0);
- 	reftable_stack_destroy(st1);
- 	reftable_stack_destroy(st2);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_transaction_api(void)
-+void test_reftable_stack__transaction_api(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
--	int err;
- 	struct reftable_addition *add = NULL;
- 
- 	struct reftable_ref_record ref = {
-@@ -267,37 +255,29 @@ static void t_reftable_stack_transaction_api(void)
- 	};
- 	struct reftable_ref_record dest = { 0 };
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	reftable_addition_destroy(add);
- 
--	err = reftable_stack_new_addition(&add, st, 0);
--	check(!err);
--
--	err = reftable_addition_add(add, write_test_ref, &ref);
--	check(!err);
--
--	err = reftable_addition_commit(add);
--	check(!err);
-+	cl_assert(reftable_stack_new_addition(&add, st, 0) == 0);
-+	cl_assert(reftable_addition_add(add, write_test_ref, &ref) == 0);
-+	cl_assert(reftable_addition_commit(add) == 0);
- 
- 	reftable_addition_destroy(add);
- 
--	err = reftable_stack_read_ref(st, ref.refname, &dest);
--	check(!err);
--	check_int(REFTABLE_REF_SYMREF, ==, dest.value_type);
--	check(reftable_ref_record_equal(&ref, &dest, REFTABLE_HASH_SIZE_SHA1));
-+	cl_assert(reftable_stack_read_ref(st, ref.refname, &dest) == 0);
-+	cl_assert_equal_i(REFTABLE_REF_SYMREF, dest.value_type);
-+	cl_assert(reftable_ref_record_equal(&ref, &dest, REFTABLE_HASH_SIZE_SHA1) != 0);
- 
- 	reftable_ref_record_release(&dest);
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_transaction_with_reload(void)
-+void test_reftable_stack__transaction_with_reload(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_stack *st1 = NULL, *st2 = NULL;
--	int err;
- 	struct reftable_addition *add = NULL;
- 	struct reftable_ref_record refs[2] = {
- 		{
-@@ -315,17 +295,11 @@ static void t_reftable_stack_transaction_with_reload(void)
- 	};
- 	struct reftable_ref_record ref = { 0 };
- 
--	err = reftable_new_stack(&st1, dir, NULL);
--	check(!err);
--	err = reftable_new_stack(&st2, dir, NULL);
--	check(!err);
--
--	err = reftable_stack_new_addition(&add, st1, 0);
--	check(!err);
--	err = reftable_addition_add(add, write_test_ref, &refs[0]);
--	check(!err);
--	err = reftable_addition_commit(add);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st1, dir, NULL) == 0);
-+	cl_assert(reftable_new_stack(&st2, dir, NULL) == 0);
-+	cl_assert(reftable_stack_new_addition(&add, st1, 0) == 0);
-+	cl_assert(reftable_addition_add(add, write_test_ref, &refs[0]) == 0);
-+	cl_assert(reftable_addition_commit(add) == 0);
- 	reftable_addition_destroy(add);
- 
- 	/*
-@@ -333,20 +307,18 @@ static void t_reftable_stack_transaction_with_reload(void)
- 	 * create the addition and lock the stack by default, but allow the
- 	 * reload to happen when REFTABLE_STACK_NEW_ADDITION_RELOAD is set.
- 	 */
--	err = reftable_stack_new_addition(&add, st2, 0);
--	check_int(err, ==, REFTABLE_OUTDATED_ERROR);
--	err = reftable_stack_new_addition(&add, st2, REFTABLE_STACK_NEW_ADDITION_RELOAD);
--	check(!err);
--	err = reftable_addition_add(add, write_test_ref, &refs[1]);
--	check(!err);
--	err = reftable_addition_commit(add);
--	check(!err);
-+	cl_assert_equal_i(reftable_stack_new_addition(&add, st2, 0),
-+					  REFTABLE_OUTDATED_ERROR);
-+	cl_assert(reftable_stack_new_addition(&add, st2,
-+										  REFTABLE_STACK_NEW_ADDITION_RELOAD) == 0);
-+	cl_assert(reftable_addition_add(add, write_test_ref, &refs[1]) == 0);
-+	cl_assert(reftable_addition_commit(add) == 0);
- 	reftable_addition_destroy(add);
- 
- 	for (size_t i = 0; i < ARRAY_SIZE(refs); i++) {
--		err = reftable_stack_read_ref(st2, refs[i].refname, &ref);
--		check(!err);
--		check(reftable_ref_record_equal(&refs[i], &ref, REFTABLE_HASH_SIZE_SHA1));
-+		cl_assert(reftable_stack_read_ref(st2, refs[i].refname, &ref) == 0);
-+		cl_assert(reftable_ref_record_equal(&refs[i], &ref,
-+											REFTABLE_HASH_SIZE_SHA1) != 0);
- 	}
- 
- 	reftable_ref_record_release(&ref);
-@@ -355,17 +327,15 @@ static void t_reftable_stack_transaction_with_reload(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_transaction_api_performs_auto_compaction(void)
-+void test_reftable_stack__transaction_api_performs_auto_compaction(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = {0};
- 	struct reftable_addition *add = NULL;
- 	struct reftable_stack *st = NULL;
- 	size_t n = 20;
--	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	for (size_t i = 0; i <= n; i++) {
- 		struct reftable_ref_record ref = {
-@@ -385,14 +355,9 @@ static void t_reftable_stack_transaction_api_performs_auto_compaction(void)
- 		 */
- 		st->opts.disable_auto_compact = i != n;
- 
--		err = reftable_stack_new_addition(&add, st, 0);
--		check(!err);
--
--		err = reftable_addition_add(add, write_test_ref, &ref);
--		check(!err);
--
--		err = reftable_addition_commit(add);
--		check(!err);
-+		cl_assert(reftable_stack_new_addition(&add, st, 0) == 0);
-+		cl_assert(reftable_addition_add(add, write_test_ref, &ref) == 0);
-+		cl_assert(reftable_addition_commit(add) == 0);
- 
- 		reftable_addition_destroy(add);
- 
-@@ -402,16 +367,16 @@ static void t_reftable_stack_transaction_api_performs_auto_compaction(void)
- 		 * all tables in the stack.
- 		 */
- 		if (i != n)
--			check_int(st->merged->tables_len, ==, i + 1);
-+			cl_assert_equal_i(st->merged->tables_len, i + 1);
- 		else
--			check_int(st->merged->tables_len, ==, 1);
-+			cl_assert_equal_i(st->merged->tables_len, 1);
- 	}
- 
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_auto_compaction_fails_gracefully(void)
-+void test_reftable_stack__auto_compaction_fails_gracefully(void)
- {
- 	struct reftable_ref_record ref = {
- 		.refname = (char *) "refs/heads/master",
-@@ -425,32 +390,30 @@ static void t_reftable_stack_auto_compaction_fails_gracefully(void)
- 	char *dir = get_tmp_dir(__LINE__);
- 	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_add(st, write_test_ref, &ref);
--	check(!err);
--	check_int(st->merged->tables_len, ==, 1);
--	check_int(st->stats.attempts, ==, 0);
--	check_int(st->stats.failures, ==, 0);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
-+	cl_assert(reftable_stack_add(st, write_test_ref, &ref) == 0);
-+	cl_assert_equal_i(st->merged->tables_len, 1);
-+	cl_assert_equal_i(st->stats.attempts, 0);
-+	cl_assert_equal_i(st->stats.failures, 0);
- 
- 	/*
- 	 * Lock the newly written table such that it cannot be compacted.
- 	 * Adding a new table to the stack should not be impacted by this, even
- 	 * though auto-compaction will now fail.
- 	 */
--	check(!reftable_buf_addstr(&table_path, dir));
--	check(!reftable_buf_addstr(&table_path, "/"));
--	check(!reftable_buf_addstr(&table_path, st->tables[0]->name));
--	check(!reftable_buf_addstr(&table_path, ".lock"));
-+	cl_assert(!reftable_buf_addstr(&table_path, dir));
-+	cl_assert(!reftable_buf_addstr(&table_path, "/"));
-+	cl_assert(!reftable_buf_addstr(&table_path,
-+				       st->tables[0]->name));
-+	cl_assert(!reftable_buf_addstr(&table_path, ".lock"));
- 	write_file_buf(table_path.buf, "", 0);
- 
- 	ref.update_index = 2;
- 	err = reftable_stack_add(st, write_test_ref, &ref);
--	check(!err);
--	check_int(st->merged->tables_len, ==, 2);
--	check_int(st->stats.attempts, ==, 1);
--	check_int(st->stats.failures, ==, 1);
-+	cl_assert(!err);
-+	cl_assert_equal_i(st->merged->tables_len, 2);
-+	cl_assert_equal_i(st->stats.attempts, 1);
-+	cl_assert_equal_i(st->stats.failures, 1);
- 
- 	reftable_stack_destroy(st);
- 	reftable_buf_release(&table_path);
-@@ -462,12 +425,11 @@ static int write_error(struct reftable_writer *wr UNUSED, void *arg)
- 	return *((int *)arg);
- }
- 
--static void t_reftable_stack_update_index_check(void)
-+void test_reftable_stack__update_index_check(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
--	int err;
- 	struct reftable_ref_record ref1 = {
- 		.refname = (char *) "name1",
- 		.update_index = 1,
-@@ -481,39 +443,31 @@ static void t_reftable_stack_update_index_check(void)
- 		.value.symref = (char *) "master",
- 	};
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_add(st, write_test_ref, &ref1);
--	check(!err);
--
--	err = reftable_stack_add(st, write_test_ref, &ref2);
--	check_int(err, ==, REFTABLE_API_ERROR);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
-+	cl_assert(reftable_stack_add(st, write_test_ref, &ref1) == 0);
-+	cl_assert_equal_i(reftable_stack_add(st, write_test_ref,
-+										 &ref2), REFTABLE_API_ERROR);
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_lock_failure(void)
-+void test_reftable_stack__lock_failure(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
--	int err, i;
-+	int i;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
--	for (i = -1; i != REFTABLE_EMPTY_TABLE_ERROR; i--) {
--		err = reftable_stack_add(st, write_error, &i);
--		check_int(err, ==, i);
--	}
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
-+	for (i = -1; i != REFTABLE_EMPTY_TABLE_ERROR; i--)
-+		cl_assert_equal_i(reftable_stack_add(st, write_error, &i), i);
- 
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_add(void)
-+void test_reftable_stack__add(void)
- {
--	int err = 0;
- 	struct reftable_write_options opts = {
- 		.exact_log_message = 1,
- 		.default_permissions = 0660,
-@@ -526,9 +480,10 @@ static void t_reftable_stack_add(void)
- 	struct reftable_buf path = REFTABLE_BUF_INIT;
- 	struct stat stat_result;
- 	size_t i, N = ARRAY_SIZE(refs);
-+	int err;
- 
- 	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(!err);
- 
- 	for (i = 0; i < N; i++) {
- 		char buf[256];
-@@ -536,66 +491,59 @@ static void t_reftable_stack_add(void)
- 		refs[i].refname = xstrdup(buf);
- 		refs[i].update_index = i + 1;
- 		refs[i].value_type = REFTABLE_REF_VAL1;
--		t_reftable_set_hash(refs[i].value.val1, i, REFTABLE_HASH_SHA1);
-+		cl_reftable_set_hash(refs[i].value.val1, i, REFTABLE_HASH_SHA1);
- 
- 		logs[i].refname = xstrdup(buf);
- 		logs[i].update_index = N + i + 1;
- 		logs[i].value_type = REFTABLE_LOG_UPDATE;
- 		logs[i].value.update.email = xstrdup("identity@invalid");
--		t_reftable_set_hash(logs[i].value.update.new_hash, i, REFTABLE_HASH_SHA1);
-+		cl_reftable_set_hash(logs[i].value.update.new_hash, i, REFTABLE_HASH_SHA1);
- 	}
- 
--	for (i = 0; i < N; i++) {
--		int err = reftable_stack_add(st, write_test_ref, &refs[i]);
--		check(!err);
--	}
-+	for (i = 0; i < N; i++)
-+		cl_assert(reftable_stack_add(st, write_test_ref, &refs[i]) == 0);
- 
- 	for (i = 0; i < N; i++) {
- 		struct write_log_arg arg = {
- 			.log = &logs[i],
- 			.update_index = reftable_stack_next_update_index(st),
- 		};
--		int err = reftable_stack_add(st, write_test_log, &arg);
--		check(!err);
-+		cl_assert(reftable_stack_add(st, write_test_log, &arg) == 0);
- 	}
- 
--	err = reftable_stack_compact_all(st, NULL);
--	check(!err);
-+	cl_assert(reftable_stack_compact_all(st, NULL) == 0);
- 
- 	for (i = 0; i < N; i++) {
- 		struct reftable_ref_record dest = { 0 };
- 
--		int err = reftable_stack_read_ref(st, refs[i].refname, &dest);
--		check(!err);
--		check(reftable_ref_record_equal(&dest, refs + i,
--						 REFTABLE_HASH_SIZE_SHA1));
-+		cl_assert(reftable_stack_read_ref(st, refs[i].refname, &dest) == 0);
-+		cl_assert(reftable_ref_record_equal(&dest, refs + i,
-+											REFTABLE_HASH_SIZE_SHA1) != 0);
- 		reftable_ref_record_release(&dest);
- 	}
- 
- 	for (i = 0; i < N; i++) {
- 		struct reftable_log_record dest = { 0 };
--		int err = reftable_stack_read_log(st, refs[i].refname, &dest);
--		check(!err);
--		check(reftable_log_record_equal(&dest, logs + i,
--						 REFTABLE_HASH_SIZE_SHA1));
-+		cl_assert(reftable_stack_read_log(st, refs[i].refname, &dest) == 0);
-+		cl_assert(reftable_log_record_equal(&dest, logs + i,
-+											REFTABLE_HASH_SIZE_SHA1) != 0);
- 		reftable_log_record_release(&dest);
- 	}
- 
- #ifndef GIT_WINDOWS_NATIVE
--	check(!reftable_buf_addstr(&path, dir));
--	check(!reftable_buf_addstr(&path, "/tables.list"));
--	err = stat(path.buf, &stat_result);
--	check(!err);
--	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
-+	cl_assert(reftable_buf_addstr(&path, dir) == 0);
-+	cl_assert(reftable_buf_addstr(&path, "/tables.list") == 0);
-+	cl_assert(stat(path.buf, &stat_result) == 0);
-+	cl_assert_equal_i((stat_result.st_mode & 0777), opts.default_permissions);
- 
- 	reftable_buf_reset(&path);
--	check(!reftable_buf_addstr(&path, dir));
--	check(!reftable_buf_addstr(&path, "/"));
-+	cl_assert(reftable_buf_addstr(&path, dir) == 0);
-+	cl_assert(reftable_buf_addstr(&path, "/") == 0);
- 	/* do not try at home; not an external API for reftable. */
--	check(!reftable_buf_addstr(&path, st->tables[0]->name));
-+	cl_assert(!reftable_buf_addstr(&path, st->tables[0]->name));
- 	err = stat(path.buf, &stat_result);
--	check(!err);
--	check_int((stat_result.st_mode & 0777), ==, opts.default_permissions);
-+	cl_assert(!err);
-+	cl_assert_equal_i((stat_result.st_mode & 0777), opts.default_permissions);
- #else
- 	(void) stat_result;
- #endif
-@@ -610,7 +558,7 @@ static void t_reftable_stack_add(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_iterator(void)
-+void test_reftable_stack__iterator(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
-@@ -621,27 +569,24 @@ static void t_reftable_stack_iterator(void)
- 	size_t N = ARRAY_SIZE(refs), i;
- 	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	for (i = 0; i < N; i++) {
- 		refs[i].refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
- 		refs[i].update_index = i + 1;
- 		refs[i].value_type = REFTABLE_REF_VAL1;
--		t_reftable_set_hash(refs[i].value.val1, i, REFTABLE_HASH_SHA1);
-+		cl_reftable_set_hash(refs[i].value.val1, i, REFTABLE_HASH_SHA1);
- 
- 		logs[i].refname = xstrfmt("branch%02"PRIuMAX, (uintmax_t)i);
- 		logs[i].update_index = i + 1;
- 		logs[i].value_type = REFTABLE_LOG_UPDATE;
- 		logs[i].value.update.email = xstrdup("johndoe@invalid");
- 		logs[i].value.update.message = xstrdup("commit\n");
--		t_reftable_set_hash(logs[i].value.update.new_hash, i, REFTABLE_HASH_SHA1);
-+		cl_reftable_set_hash(logs[i].value.update.new_hash, i, REFTABLE_HASH_SHA1);
- 	}
- 
--	for (i = 0; i < N; i++) {
--		err = reftable_stack_add(st, write_test_ref, &refs[i]);
--		check(!err);
--	}
-+	for (i = 0; i < N; i++)
-+		cl_assert(reftable_stack_add(st, write_test_ref, &refs[i]) == 0);
- 
- 	for (i = 0; i < N; i++) {
- 		struct write_log_arg arg = {
-@@ -649,8 +594,7 @@ static void t_reftable_stack_iterator(void)
- 			.update_index = reftable_stack_next_update_index(st),
- 		};
- 
--		err = reftable_stack_add(st, write_test_log, &arg);
--		check(!err);
-+		cl_assert(reftable_stack_add(st, write_test_log, &arg) == 0);
- 	}
- 
- 	reftable_stack_init_ref_iterator(st, &it);
-@@ -661,16 +605,16 @@ static void t_reftable_stack_iterator(void)
- 		err = reftable_iterator_next_ref(&it, &ref);
- 		if (err > 0)
- 			break;
--		check(!err);
--		check(reftable_ref_record_equal(&ref, &refs[i], REFTABLE_HASH_SIZE_SHA1));
-+		cl_assert(err == 0);
-+		cl_assert(reftable_ref_record_equal(&ref, &refs[i],
-+											REFTABLE_HASH_SIZE_SHA1) != 0);
- 		reftable_ref_record_release(&ref);
- 	}
--	check_int(i, ==, N);
-+	cl_assert_equal_i(i, N);
- 
- 	reftable_iterator_destroy(&it);
- 
--	err = reftable_stack_init_log_iterator(st, &it);
--	check(!err);
-+	cl_assert(reftable_stack_init_log_iterator(st, &it) == 0);
- 
- 	reftable_iterator_seek_log(&it, logs[0].refname);
- 	for (i = 0; ; i++) {
-@@ -679,11 +623,12 @@ static void t_reftable_stack_iterator(void)
- 		err = reftable_iterator_next_log(&it, &log);
- 		if (err > 0)
- 			break;
--		check(!err);
--		check(reftable_log_record_equal(&log, &logs[i], REFTABLE_HASH_SIZE_SHA1));
-+		cl_assert(err == 0);
-+		cl_assert(reftable_log_record_equal(&log, &logs[i],
-+											REFTABLE_HASH_SIZE_SHA1) != 0);
- 		reftable_log_record_release(&log);
- 	}
--	check_int(i, ==, N);
-+	cl_assert_equal_i(i, N);
- 
- 	reftable_stack_destroy(st);
- 	reftable_iterator_destroy(&it);
-@@ -694,9 +639,8 @@ static void t_reftable_stack_iterator(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_log_normalize(void)
-+void test_reftable_stack__log_normalize(void)
- {
--	int err = 0;
- 	struct reftable_write_options opts = {
- 		0,
- 	};
-@@ -721,28 +665,22 @@ static void t_reftable_stack_log_normalize(void)
- 		.update_index = 1,
- 	};
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	input.value.update.message = (char *) "one\ntwo";
--	err = reftable_stack_add(st, write_test_log, &arg);
--	check_int(err, ==, REFTABLE_API_ERROR);
-+	cl_assert_equal_i(reftable_stack_add(st, write_test_log,
-+										 &arg), REFTABLE_API_ERROR);
- 
- 	input.value.update.message = (char *) "one";
--	err = reftable_stack_add(st, write_test_log, &arg);
--	check(!err);
--
--	err = reftable_stack_read_log(st, input.refname, &dest);
--	check(!err);
--	check_str(dest.value.update.message, "one\n");
-+	cl_assert(reftable_stack_add(st, write_test_log, &arg) == 0);
-+	cl_assert(reftable_stack_read_log(st, input.refname, &dest) == 0);
-+	cl_assert_equal_s(dest.value.update.message, "one\n");
- 
- 	input.value.update.message = (char *) "two\n";
- 	arg.update_index = 2;
--	err = reftable_stack_add(st, write_test_log, &arg);
--	check(!err);
--	err = reftable_stack_read_log(st, input.refname, &dest);
--	check(!err);
--	check_str(dest.value.update.message, "two\n");
-+	cl_assert(reftable_stack_add(st, write_test_log, &arg) == 0);
-+	cl_assert(reftable_stack_read_log(st, input.refname, &dest) == 0);
-+	cl_assert_equal_s(dest.value.update.message, "two\n");
- 
- 	/* cleanup */
- 	reftable_stack_destroy(st);
-@@ -750,20 +688,18 @@ static void t_reftable_stack_log_normalize(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_tombstone(void)
-+void test_reftable_stack__tombstone(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
--	int err;
- 	struct reftable_ref_record refs[2] = { 0 };
- 	struct reftable_log_record logs[2] = { 0 };
- 	size_t i, N = ARRAY_SIZE(refs);
- 	struct reftable_ref_record dest = { 0 };
- 	struct reftable_log_record log_dest = { 0 };
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	/* even entries add the refs, odd entries delete them. */
- 	for (i = 0; i < N; i++) {
-@@ -772,7 +708,7 @@ static void t_reftable_stack_tombstone(void)
- 		refs[i].update_index = i + 1;
- 		if (i % 2 == 0) {
- 			refs[i].value_type = REFTABLE_REF_VAL1;
--			t_reftable_set_hash(refs[i].value.val1, i,
-+			cl_reftable_set_hash(refs[i].value.val1, i,
- 					    REFTABLE_HASH_SHA1);
- 		}
- 
-@@ -785,42 +721,32 @@ static void t_reftable_stack_tombstone(void)
- 		logs[i].update_index = 1;
- 		if (i % 2 == 0) {
- 			logs[i].value_type = REFTABLE_LOG_UPDATE;
--			t_reftable_set_hash(logs[i].value.update.new_hash, i,
-+			cl_reftable_set_hash(logs[i].value.update.new_hash, i,
- 					    REFTABLE_HASH_SHA1);
- 			logs[i].value.update.email =
- 				xstrdup("identity@invalid");
- 		}
- 	}
--	for (i = 0; i < N; i++) {
--		int err = reftable_stack_add(st, write_test_ref, &refs[i]);
--		check(!err);
--	}
-+	for (i = 0; i < N; i++)
-+		cl_assert(reftable_stack_add(st, write_test_ref, &refs[i]) == 0);
- 
- 	for (i = 0; i < N; i++) {
- 		struct write_log_arg arg = {
- 			.log = &logs[i],
- 			.update_index = reftable_stack_next_update_index(st),
- 		};
--		int err = reftable_stack_add(st, write_test_log, &arg);
--		check(!err);
-+		cl_assert(reftable_stack_add(st, write_test_log, &arg) == 0);
- 	}
- 
--	err = reftable_stack_read_ref(st, "branch", &dest);
--	check_int(err, ==, 1);
-+	cl_assert_equal_i(reftable_stack_read_ref(st, "branch", &dest), 1);
- 	reftable_ref_record_release(&dest);
- 
--	err = reftable_stack_read_log(st, "branch", &log_dest);
--	check_int(err, ==, 1);
-+	cl_assert_equal_i(reftable_stack_read_log(st, "branch", &log_dest), 1);
- 	reftable_log_record_release(&log_dest);
- 
--	err = reftable_stack_compact_all(st, NULL);
--	check(!err);
--
--	err = reftable_stack_read_ref(st, "branch", &dest);
--	check_int(err, ==, 1);
--
--	err = reftable_stack_read_log(st, "branch", &log_dest);
--	check_int(err, ==, 1);
-+	cl_assert(reftable_stack_compact_all(st, NULL) == 0);
-+	cl_assert_equal_i(reftable_stack_read_ref(st, "branch", &dest), 1);
-+	cl_assert_equal_i(reftable_stack_read_log(st, "branch", &log_dest), 1);
- 	reftable_ref_record_release(&dest);
- 	reftable_log_record_release(&log_dest);
- 
-@@ -833,12 +759,11 @@ static void t_reftable_stack_tombstone(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_hash_id(void)
-+void test_reftable_stack__hash_id(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
--	int err;
- 
- 	struct reftable_ref_record ref = {
- 		.refname = (char *) "master",
-@@ -852,62 +777,52 @@ static void t_reftable_stack_hash_id(void)
- 	struct reftable_stack *st_default = NULL;
- 	struct reftable_ref_record dest = { 0 };
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_add(st, write_test_ref, &ref);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
-+	cl_assert(reftable_stack_add(st, write_test_ref, &ref) == 0);
- 
- 	/* can't read it with the wrong hash ID. */
--	err = reftable_new_stack(&st32, dir, &opts32);
--	check_int(err, ==, REFTABLE_FORMAT_ERROR);
-+	cl_assert_equal_i(reftable_new_stack(&st32, dir, &opts32), REFTABLE_FORMAT_ERROR);
- 
- 	/* check that we can read it back with default opts too. */
--	err = reftable_new_stack(&st_default, dir, &opts_default);
--	check(!err);
--
--	err = reftable_stack_read_ref(st_default, "master", &dest);
--	check(!err);
--
--	check(reftable_ref_record_equal(&ref, &dest, REFTABLE_HASH_SIZE_SHA1));
-+	cl_assert(reftable_new_stack(&st_default, dir, &opts_default) == 0);
-+	cl_assert(reftable_stack_read_ref(st_default, "master", &dest) == 0);
-+	cl_assert(reftable_ref_record_equal(&ref, &dest, REFTABLE_HASH_SIZE_SHA1) != 0);
- 	reftable_ref_record_release(&dest);
- 	reftable_stack_destroy(st);
- 	reftable_stack_destroy(st_default);
- 	clear_dir(dir);
- }
- 
--static void t_suggest_compaction_segment(void)
-+void test_reftable_stack__suggest_compaction_segment(void)
- {
- 	uint64_t sizes[] = { 512, 64, 17, 16, 9, 9, 9, 16, 2, 16 };
- 	struct segment min =
- 		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes), 2);
--	check_int(min.start, ==, 1);
--	check_int(min.end, ==, 10);
-+	cl_assert_equal_i(min.start, 1);
-+	cl_assert_equal_i(min.end, 10);
- }
- 
--static void t_suggest_compaction_segment_nothing(void)
-+void test_reftable_stack__suggest_compaction_segment_nothing(void)
- {
- 	uint64_t sizes[] = { 64, 32, 16, 8, 4, 2 };
- 	struct segment result =
- 		suggest_compaction_segment(sizes, ARRAY_SIZE(sizes), 2);
--	check_int(result.start, ==, result.end);
-+	cl_assert_equal_i(result.start, result.end);
- }
- 
--static void t_reflog_expire(void)
-+void test_reftable_stack__reflog_expire(void)
- {
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
- 	struct reftable_log_record logs[20] = { 0 };
- 	size_t i, N = ARRAY_SIZE(logs) - 1;
--	int err;
- 	struct reftable_log_expiry_config expiry = {
- 		.time = 10,
- 	};
- 	struct reftable_log_record log = { 0 };
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	for (i = 1; i <= N; i++) {
- 		char buf[256];
-@@ -918,7 +833,7 @@ static void t_reflog_expire(void)
- 		logs[i].value_type = REFTABLE_LOG_UPDATE;
- 		logs[i].value.update.time = i;
- 		logs[i].value.update.email = xstrdup("identity@invalid");
--		t_reftable_set_hash(logs[i].value.update.new_hash, i,
-+		cl_reftable_set_hash(logs[i].value.update.new_hash, i,
- 				    REFTABLE_HASH_SHA1);
- 	}
- 
-@@ -927,31 +842,18 @@ static void t_reflog_expire(void)
- 			.log = &logs[i],
- 			.update_index = reftable_stack_next_update_index(st),
- 		};
--		int err = reftable_stack_add(st, write_test_log, &arg);
--		check(!err);
-+		cl_assert(reftable_stack_add(st, write_test_log, &arg) == 0);
- 	}
- 
--	err = reftable_stack_compact_all(st, NULL);
--	check(!err);
--
--	err = reftable_stack_compact_all(st, &expiry);
--	check(!err);
--
--	err = reftable_stack_read_log(st, logs[9].refname, &log);
--	check_int(err, ==, 1);
--
--	err = reftable_stack_read_log(st, logs[11].refname, &log);
--	check(!err);
-+	cl_assert(reftable_stack_compact_all(st, NULL) == 0);
-+	cl_assert(reftable_stack_compact_all(st, &expiry) == 0);
-+	cl_assert_equal_i(reftable_stack_read_log(st, logs[9].refname, &log), 1);
-+	cl_assert(reftable_stack_read_log(st, logs[11].refname, &log) == 0);
- 
- 	expiry.min_update_index = 15;
--	err = reftable_stack_compact_all(st, &expiry);
--	check(!err);
--
--	err = reftable_stack_read_log(st, logs[14].refname, &log);
--	check_int(err, ==, 1);
--
--	err = reftable_stack_read_log(st, logs[16].refname, &log);
--	check(!err);
-+	cl_assert(reftable_stack_compact_all(st, &expiry) == 0);
-+	cl_assert_equal_i(reftable_stack_read_log(st, logs[14].refname, &log), 1);
-+	cl_assert(reftable_stack_read_log(st, logs[16].refname, &log) == 0);
- 
- 	/* cleanup */
- 	reftable_stack_destroy(st);
-@@ -963,26 +865,20 @@ static void t_reflog_expire(void)
- 
- static int write_nothing(struct reftable_writer *wr, void *arg UNUSED)
- {
--	check(!reftable_writer_set_limits(wr, 1, 1));
-+	cl_assert(reftable_writer_set_limits(wr, 1, 1) == 0);
+@@ -22,17 +24,17 @@ static int strbuf_writer_flush(void *arg UNUSED)
  	return 0;
  }
  
--static void t_empty_add(void)
-+void test_reftable_stack__empty_add(void)
+-struct reftable_writer *t_reftable_strbuf_writer(struct reftable_buf *buf,
++struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
+ 						 struct reftable_write_options *opts)
  {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
--	int err;
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_stack *st2 = NULL;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_add(st, write_nothing, NULL);
--	check(!err);
--
--	err = reftable_new_stack(&st2, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
-+	cl_assert(reftable_stack_add(st, write_nothing, NULL) == 0);
-+	cl_assert(reftable_new_stack(&st2, dir, &opts) == 0);
- 	clear_dir(dir);
- 	reftable_stack_destroy(st);
- 	reftable_stack_destroy(st2);
-@@ -998,18 +894,17 @@ static int fastlogN(uint64_t sz, uint64_t N)
- 	return l - 1;
+ 	struct reftable_writer *writer;
+ 	int ret = reftable_writer_new(&writer, &strbuf_writer_write, &strbuf_writer_flush,
+ 				      buf, opts);
+-	check(!ret);
++	cl_assert(!ret);
+ 	return writer;
  }
  
--static void t_reftable_stack_auto_compaction(void)
-+void test_reftable_stack__auto_compaction(void)
- {
- 	struct reftable_write_options opts = {
- 		.disable_auto_compact = 1,
- 	};
- 	struct reftable_stack *st = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
--	int err;
- 	size_t i, N = 100;
-+	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	for (i = 0; i < N; i++) {
- 		char name[100];
-@@ -1022,32 +917,31 @@ static void t_reftable_stack_auto_compaction(void)
- 		snprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
- 
- 		err = reftable_stack_add(st, write_test_ref, &ref);
--		check(!err);
-+		cl_assert(!err);
- 
- 		err = reftable_stack_auto_compact(st);
--		check(!err);
--		check(i < 2 || st->merged->tables_len < 2 * fastlogN(i, 2));
-+		cl_assert(!err);
-+		cl_assert(i < 2 || st->merged->tables_len < 2 * fastlogN(i, 2));
+-void t_reftable_write_to_buf(struct reftable_buf *buf,
++void cl_reftable_write_to_buf(struct reftable_buf *buf,
+ 			     struct reftable_ref_record *refs,
+ 			     size_t nrefs,
+ 			     struct reftable_log_record *logs,
+@@ -64,35 +66,36 @@ void t_reftable_write_to_buf(struct reftable_buf *buf,
+ 			min = ui;
  	}
  
--	check_int(reftable_stack_compaction_stats(st)->entries_written, <,
--	       (uint64_t)(N * fastlogN(N, 2)));
-+	cl_assert(reftable_stack_compaction_stats(st)->entries_written <
-+			  (uint64_t)(N * fastlogN(N, 2)));
+-	writer = t_reftable_strbuf_writer(buf, &opts);
+-	reftable_writer_set_limits(writer, min, max);
++	writer = cl_reftable_strbuf_writer(buf, &opts);
++	ret = reftable_writer_set_limits(writer, min, max);
++	cl_assert(!ret);
  
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_auto_compaction_factor(void)
-+void test_reftable_stack__auto_compaction_factor(void)
- {
- 	struct reftable_write_options opts = {
- 		.auto_compaction_factor = 5,
- 	};
- 	struct reftable_stack *st = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
--	int err;
- 	size_t N = 100;
-+	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	for (size_t i = 0; i < N; i++) {
- 		char name[20];
-@@ -1059,16 +953,16 @@ static void t_reftable_stack_auto_compaction_factor(void)
- 		xsnprintf(name, sizeof(name), "branch%04"PRIuMAX, (uintmax_t)i);
- 
- 		err = reftable_stack_add(st, &write_test_ref, &ref);
--		check(!err);
-+		cl_assert(!err);
- 
--		check(i < 5 || st->merged->tables_len < 5 * fastlogN(i, 5));
-+		cl_assert(i < 5 || st->merged->tables_len < 5 * fastlogN(i, 5));
+ 	if (nrefs) {
+ 		ret = reftable_writer_add_refs(writer, refs, nrefs);
+-		check_int(ret, ==, 0);
++		cl_assert_equal_i(ret, 0);
  	}
  
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_auto_compaction_with_locked_tables(void)
-+void test_reftable_stack__auto_compaction_with_locked_tables(void)
- {
- 	struct reftable_write_options opts = {
- 		.disable_auto_compact = 1,
-@@ -1078,21 +972,20 @@ static void t_reftable_stack_auto_compaction_with_locked_tables(void)
- 	char *dir = get_tmp_dir(__LINE__);
- 	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	write_n_ref_tables(st, 5);
--	check_int(st->merged->tables_len, ==, 5);
-+	cl_assert_equal_i(st->merged->tables_len, 5);
- 
- 	/*
- 	 * Given that all tables we have written should be roughly the same
- 	 * size, we expect that auto-compaction will want to compact all of the
- 	 * tables. Locking any of the tables will keep it from doing so.
- 	 */
--	check(!reftable_buf_addstr(&buf, dir));
--	check(!reftable_buf_addstr(&buf, "/"));
--	check(!reftable_buf_addstr(&buf, st->tables[2]->name));
--	check(!reftable_buf_addstr(&buf, ".lock"));
-+	cl_assert(!reftable_buf_addstr(&buf, dir));
-+	cl_assert(!reftable_buf_addstr(&buf, "/"));
-+	cl_assert(!reftable_buf_addstr(&buf, st->tables[2]->name));
-+	cl_assert(!reftable_buf_addstr(&buf, ".lock"));
- 	write_file_buf(buf.buf, "", 0);
- 
- 	/*
-@@ -1102,25 +995,23 @@ static void t_reftable_stack_auto_compaction_with_locked_tables(void)
- 	 * only compact the newest two tables.
- 	 */
- 	err = reftable_stack_auto_compact(st);
--	check(!err);
--	check_int(st->stats.failures, ==, 0);
--	check_int(st->merged->tables_len, ==, 4);
-+	cl_assert(!err);
-+	cl_assert_equal_i(st->stats.failures, 0);
-+	cl_assert_equal_i(st->merged->tables_len, 4);
- 
- 	reftable_stack_destroy(st);
- 	reftable_buf_release(&buf);
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_add_performs_auto_compaction(void)
-+void test_reftable_stack__add_performs_auto_compaction(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
--	int err;
- 	size_t i, n = 20;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	for (i = 0; i <= n; i++) {
- 		struct reftable_ref_record ref = {
-@@ -1140,8 +1031,7 @@ static void t_reftable_stack_add_performs_auto_compaction(void)
- 		snprintf(buf, sizeof(buf), "branch-%04"PRIuMAX, (uintmax_t)i);
- 		ref.refname = buf;
- 
--		err = reftable_stack_add(st, write_test_ref, &ref);
--		check(!err);
-+		cl_assert(reftable_stack_add(st, write_test_ref, &ref) == 0);
- 
- 		/*
- 		 * The stack length should grow continuously for all runs where
-@@ -1149,16 +1039,16 @@ static void t_reftable_stack_add_performs_auto_compaction(void)
- 		 * all tables in the stack.
- 		 */
- 		if (i != n)
--			check_int(st->merged->tables_len, ==, i + 1);
-+			cl_assert_equal_i(st->merged->tables_len, i + 1);
- 		else
--			check_int(st->merged->tables_len, ==, 1);
-+			cl_assert_equal_i(st->merged->tables_len, 1);
+ 	if (nlogs) {
+ 		ret = reftable_writer_add_logs(writer, logs, nlogs);
+-		check_int(ret, ==, 0);
++		cl_assert_equal_i(ret, 0);
  	}
  
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
+ 	ret = reftable_writer_close(writer);
+-	check_int(ret, ==, 0);
++	cl_assert_equal_i(ret, 0);
+ 
+ 	stats = reftable_writer_stats(writer);
+-	for (size_t i = 0; i < stats->ref_stats.blocks; i++) {
++	for (size_t i = 0; i < (size_t)stats->ref_stats.blocks; i++) {
+ 		size_t off = i * (opts.block_size ? opts.block_size
+ 						  : DEFAULT_BLOCK_SIZE);
+ 		if (!off)
+ 			off = header_size(opts.hash_id == REFTABLE_HASH_SHA256 ? 2 : 1);
+-		check_char(buf->buf[off], ==, 'r');
++		cl_assert(buf->buf[off] == 'r');
+ 	}
+ 
+ 	if (nrefs)
+-		check_int(stats->ref_stats.blocks, >, 0);
++		cl_assert(stats->ref_stats.blocks > 0);
+ 	if (nlogs)
+-		check_int(stats->log_stats.blocks, >, 0);
++		cl_assert(stats->log_stats.blocks > 0);
+ 
+ 	reftable_writer_free(writer);
  }
+diff --git a/t/unit-tests/lib-reftable.h b/t/unit-tests/lib-reftable.h
+index e4c360fa7e..d7e6d3136f 100644
+--- a/t/unit-tests/lib-reftable.h
++++ b/t/unit-tests/lib-reftable.h
+@@ -1,21 +1,20 @@
+-#ifndef LIB_REFTABLE_H
+-#define LIB_REFTABLE_H
+-
++#include "git-compat-util.h"
++#include "clar/clar.h"
++#include "clar-decls.h"
+ #include "git-compat-util.h"
+ #include "reftable/reftable-writer.h"
++#include "strbuf.h"
  
--static void t_reftable_stack_compaction_with_locked_tables(void)
-+void test_reftable_stack__compaction_with_locked_tables(void)
- {
- 	struct reftable_write_options opts = {
- 		.disable_auto_compact = 1,
-@@ -1168,17 +1058,16 @@ static void t_reftable_stack_compaction_with_locked_tables(void)
- 	char *dir = get_tmp_dir(__LINE__);
- 	int err;
+ struct reftable_buf;
  
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
+-void t_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id);
++void cl_reftable_set_hash(uint8_t *p, int i, enum reftable_hash id);
  
- 	write_n_ref_tables(st, 3);
--	check_int(st->merged->tables_len, ==, 3);
-+	cl_assert_equal_i(st->merged->tables_len, 3);
+-struct reftable_writer *t_reftable_strbuf_writer(struct reftable_buf *buf,
++struct reftable_writer *cl_reftable_strbuf_writer(struct reftable_buf *buf,
+ 						 struct reftable_write_options *opts);
  
- 	/* Lock one of the tables that we're about to compact. */
--	check(!reftable_buf_addstr(&buf, dir));
--	check(!reftable_buf_addstr(&buf, "/"));
--	check(!reftable_buf_addstr(&buf, st->tables[1]->name));
--	check(!reftable_buf_addstr(&buf, ".lock"));
-+	cl_assert(!reftable_buf_addstr(&buf, dir));
-+	cl_assert(!reftable_buf_addstr(&buf, "/"));
-+	cl_assert(!reftable_buf_addstr(&buf, st->tables[1]->name));
-+	cl_assert(!reftable_buf_addstr(&buf, ".lock"));
- 	write_file_buf(buf.buf, "", 0);
+-void t_reftable_write_to_buf(struct reftable_buf *buf,
++void cl_reftable_write_to_buf(struct reftable_buf *buf,
+ 			     struct reftable_ref_record *refs,
+ 			     size_t nrecords,
+ 			     struct reftable_log_record *logs,
+ 			     size_t nlogs,
+ 			     struct reftable_write_options *opts);
+-
+-#endif
+diff --git a/t/unit-tests/u-reftable-basics.c b/t/unit-tests/u-reftable-basics.c
+index f105c22d15..a0471083e7 100644
+--- a/t/unit-tests/u-reftable-basics.c
++++ b/t/unit-tests/u-reftable-basics.c
+@@ -7,7 +7,7 @@ license that can be found in the LICENSE file or at
+ */
  
- 	/*
-@@ -1186,36 +1075,31 @@ static void t_reftable_stack_compaction_with_locked_tables(void)
- 	 * compact all tables.
- 	 */
- 	err = reftable_stack_compact_all(st, NULL);
--	check_int(err, ==, REFTABLE_LOCK_ERROR);
--	check_int(st->stats.failures, ==, 1);
--	check_int(st->merged->tables_len, ==, 3);
-+	cl_assert_equal_i(err, REFTABLE_LOCK_ERROR);
-+	cl_assert_equal_i(st->stats.failures, 1);
-+	cl_assert_equal_i(st->merged->tables_len, 3);
+ #include "unit-test.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/basics.h"
  
- 	reftable_stack_destroy(st);
- 	reftable_buf_release(&buf);
- 	clear_dir(dir);
- }
+ struct integer_needle_lesseq_args {
+diff --git a/t/unit-tests/u-reftable-block.c b/t/unit-tests/u-reftable-block.c
+index 5d1419b801..bb0603464c 100644
+--- a/t/unit-tests/u-reftable-block.c
++++ b/t/unit-tests/u-reftable-block.c
+@@ -7,7 +7,7 @@ license that can be found in the LICENSE file or at
+ */
  
--static void t_reftable_stack_compaction_concurrent(void)
-+void test_reftable_stack__compaction_concurrent(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st1 = NULL, *st2 = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
+ #include "unit-test.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/block.h"
+ #include "reftable/blocksource.h"
+ #include "reftable/constants.h"
+diff --git a/t/unit-tests/u-reftable-merged.c b/t/unit-tests/u-reftable-merged.c
+index e5b9dda4f4..656de01d6e 100644
+--- a/t/unit-tests/u-reftable-merged.c
++++ b/t/unit-tests/u-reftable-merged.c
+@@ -7,7 +7,7 @@ license that can be found in the LICENSE file or at
+ */
+ 
+ #include "unit-test.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/blocksource.h"
+ #include "reftable/constants.h"
+ #include "reftable/merged.h"
+diff --git a/t/unit-tests/u-reftable-pq.c b/t/unit-tests/u-reftable-pq.c
+index b3d64f55de..5526c55739 100644
+--- a/t/unit-tests/u-reftable-pq.c
++++ b/t/unit-tests/u-reftable-pq.c
+@@ -7,7 +7,7 @@ license that can be found in the LICENSE file or at
+ */
+ 
+ #include "unit-test.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/constants.h"
+ #include "reftable/pq.h"
+ #include "strbuf.h"
+diff --git a/t/unit-tests/u-reftable-readwrite.c b/t/unit-tests/u-reftable-readwrite.c
+index f1c6a04429..d72b049a18 100644
+--- a/t/unit-tests/u-reftable-readwrite.c
++++ b/t/unit-tests/u-reftable-readwrite.c
+@@ -9,7 +9,7 @@ license that can be found in the LICENSE file or at
+ #define DISABLE_SIGN_COMPARE_WARNINGS
+ 
+ #include "unit-test.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/basics.h"
+ #include "reftable/blocksource.h"
+ #include "reftable/reftable-error.h"
+diff --git a/t/unit-tests/u-reftable-record.c b/t/unit-tests/u-reftable-record.c
+index 137a7ab815..e00e6e1881 100644
+--- a/t/unit-tests/u-reftable-record.c
++++ b/t/unit-tests/u-reftable-record.c
+@@ -7,7 +7,7 @@
+ */
+ 
+ #include "unit-test.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/basics.h"
+ #include "reftable/constants.h"
+ #include "reftable/record.h"
+diff --git a/t/unit-tests/u-reftable-stack.c b/t/unit-tests/u-reftable-stack.c
+index 8d6cfba22c..60ceecbc72 100644
+--- a/t/unit-tests/u-reftable-stack.c
++++ b/t/unit-tests/u-reftable-stack.c
+@@ -10,7 +10,7 @@ license that can be found in the LICENSE file or at
+ 
+ #include "unit-test.h"
+ #include "dir.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/merged.h"
+ #include "reftable/reftable-error.h"
+ #include "reftable/stack.h"
+@@ -480,7 +480,7 @@ void test_reftable_stack__add(void)
+ 	struct reftable_buf path = REFTABLE_BUF_INIT;
+ 	struct stat stat_result;
+ 	size_t i, N = ARRAY_SIZE(refs);
 -	int err;
++	int err = 0;
  
--	err = reftable_new_stack(&st1, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st1, dir, &opts) == 0);
- 	write_n_ref_tables(st1, 3);
- 
--	err = reftable_new_stack(&st2, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_compact_all(st1, NULL);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st2, dir, &opts) == 0);
-+	cl_assert(reftable_stack_compact_all(st1, NULL) == 0);
- 
- 	reftable_stack_destroy(st1);
- 	reftable_stack_destroy(st2);
- 
--	check_int(count_dir_entries(dir), ==, 2);
-+	cl_assert_equal_i(count_dir_entries(dir), 2);
- 	clear_dir(dir);
- }
- 
-@@ -1228,32 +1112,24 @@ static void unclean_stack_close(struct reftable_stack *st)
- 	REFTABLE_FREE_AND_NULL(st->tables);
- }
- 
--static void t_reftable_stack_compaction_concurrent_clean(void)
-+void test_reftable_stack__compaction_concurrent_clean(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st1 = NULL, *st2 = NULL, *st3 = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
--	int err;
- 
--	err = reftable_new_stack(&st1, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st1, dir, &opts) == 0);
- 	write_n_ref_tables(st1, 3);
- 
--	err = reftable_new_stack(&st2, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_compact_all(st1, NULL);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st2, dir, &opts) == 0);
-+	cl_assert(reftable_stack_compact_all(st1, NULL) == 0);
- 
- 	unclean_stack_close(st1);
- 	unclean_stack_close(st2);
- 
--	err = reftable_new_stack(&st3, dir, &opts);
--	check(!err);
--
--	err = reftable_stack_clean(st3);
--	check(!err);
--	check_int(count_dir_entries(dir), ==, 2);
-+	cl_assert(reftable_new_stack(&st3, dir, &opts) == 0);
-+	cl_assert(reftable_stack_clean(st3) == 0);
-+	cl_assert_equal_i(count_dir_entries(dir), 2);
- 
- 	reftable_stack_destroy(st1);
- 	reftable_stack_destroy(st2);
-@@ -1262,7 +1138,7 @@ static void t_reftable_stack_compaction_concurrent_clean(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_read_across_reload(void)
-+void test_reftable_stack__read_across_reload(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st1 = NULL, *st2 = NULL;
-@@ -1272,37 +1148,35 @@ static void t_reftable_stack_read_across_reload(void)
- 	int err;
- 
- 	/* Create a first stack and set up an iterator for it. */
--	err = reftable_new_stack(&st1, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st1, dir, &opts) == 0);
- 	write_n_ref_tables(st1, 2);
--	check_int(st1->merged->tables_len, ==, 2);
-+	cl_assert_equal_i(st1->merged->tables_len, 2);
- 	reftable_stack_init_ref_iterator(st1, &it);
--	err = reftable_iterator_seek_ref(&it, "");
--	check(!err);
-+	cl_assert(reftable_iterator_seek_ref(&it, "") == 0);
- 
- 	/* Set up a second stack for the same directory and compact it. */
- 	err = reftable_new_stack(&st2, dir, &opts);
--	check(!err);
--	check_int(st2->merged->tables_len, ==, 2);
-+	cl_assert(!err);
-+	cl_assert_equal_i(st2->merged->tables_len, 2);
- 	err = reftable_stack_compact_all(st2, NULL);
--	check(!err);
--	check_int(st2->merged->tables_len, ==, 1);
-+	cl_assert(!err);
-+	cl_assert_equal_i(st2->merged->tables_len, 1);
- 
- 	/*
- 	 * Verify that we can continue to use the old iterator even after we
- 	 * have reloaded its stack.
- 	 */
- 	err = reftable_stack_reload(st1);
--	check(!err);
--	check_int(st1->merged->tables_len, ==, 1);
-+	cl_assert(!err);
-+	cl_assert_equal_i(st1->merged->tables_len, 1);
- 	err = reftable_iterator_next_ref(&it, &rec);
--	check(!err);
--	check_str(rec.refname, "refs/heads/branch-0000");
-+	cl_assert(!err);
-+	cl_assert_equal_s(rec.refname, "refs/heads/branch-0000");
- 	err = reftable_iterator_next_ref(&it, &rec);
--	check(!err);
--	check_str(rec.refname, "refs/heads/branch-0001");
-+	cl_assert(!err);
-+	cl_assert_equal_s(rec.refname, "refs/heads/branch-0001");
- 	err = reftable_iterator_next_ref(&it, &rec);
--	check_int(err, >, 0);
-+	cl_assert(err > 0);
- 
- 	reftable_ref_record_release(&rec);
- 	reftable_iterator_destroy(&it);
-@@ -1311,7 +1185,7 @@ static void t_reftable_stack_read_across_reload(void)
- 	clear_dir(dir);
- }
- 
--static void t_reftable_stack_reload_with_missing_table(void)
-+void test_reftable_stack__reload_with_missing_table(void)
- {
- 	struct reftable_write_options opts = { 0 };
- 	struct reftable_stack *st = NULL;
-@@ -1322,46 +1196,40 @@ static void t_reftable_stack_reload_with_missing_table(void)
- 	int err;
- 
- 	/* Create a first stack and set up an iterator for it. */
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 	write_n_ref_tables(st, 2);
--	check_int(st->merged->tables_len, ==, 2);
-+	cl_assert_equal_i(st->merged->tables_len, 2);
- 	reftable_stack_init_ref_iterator(st, &it);
--	err = reftable_iterator_seek_ref(&it, "");
--	check(!err);
-+	cl_assert(reftable_iterator_seek_ref(&it, "") == 0);
- 
- 	/*
- 	 * Update the tables.list file with some garbage data, while reusing
- 	 * our old tables. This should trigger a partial reload of the stack,
- 	 * where we try to reuse our old tables.
- 	*/
--	check(!reftable_buf_addstr(&content, st->tables[0]->name));
--	check(!reftable_buf_addstr(&content, "\n"));
--	check(!reftable_buf_addstr(&content, st->tables[1]->name));
--	check(!reftable_buf_addstr(&content, "\n"));
--	check(!reftable_buf_addstr(&content, "garbage\n"));
--	check(!reftable_buf_addstr(&table_path, st->list_file));
--	check(!reftable_buf_addstr(&table_path, ".lock"));
-+	cl_assert(!reftable_buf_addstr(&content, st->tables[0]->name));
-+	cl_assert(!reftable_buf_addstr(&content, "\n"));
-+	cl_assert(!reftable_buf_addstr(&content, st->tables[1]->name));
-+	cl_assert(!reftable_buf_addstr(&content, "\n"));
-+	cl_assert(!reftable_buf_addstr(&content, "garbage\n"));
-+	cl_assert(!reftable_buf_addstr(&table_path, st->list_file));
-+	cl_assert(!reftable_buf_addstr(&table_path, ".lock"));
- 	write_file_buf(table_path.buf, content.buf, content.len);
--	err = rename(table_path.buf, st->list_file);
--	check(!err);
-+	cl_assert(rename(table_path.buf, st->list_file) == 0);
- 
- 	err = reftable_stack_reload(st);
--	check_int(err, ==, -4);
--	check_int(st->merged->tables_len, ==, 2);
-+	cl_assert_equal_i(err, -4);
-+	cl_assert_equal_i(st->merged->tables_len, 2);
- 
- 	/*
- 	 * Even though the reload has failed, we should be able to continue
- 	 * using the iterator.
- 	*/
--	err = reftable_iterator_next_ref(&it, &rec);
--	check(!err);
--	check_str(rec.refname, "refs/heads/branch-0000");
--	err = reftable_iterator_next_ref(&it, &rec);
--	check(!err);
--	check_str(rec.refname, "refs/heads/branch-0001");
--	err = reftable_iterator_next_ref(&it, &rec);
--	check_int(err, >, 0);
-+	cl_assert(reftable_iterator_next_ref(&it, &rec) == 0);
-+	cl_assert_equal_s(rec.refname, "refs/heads/branch-0000");
-+	cl_assert(reftable_iterator_next_ref(&it, &rec) == 0);
-+	cl_assert_equal_s(rec.refname, "refs/heads/branch-0001");
-+	cl_assert(reftable_iterator_next_ref(&it, &rec) > 0);
- 
- 	reftable_ref_record_release(&rec);
- 	reftable_iterator_destroy(&it);
-@@ -1374,12 +1242,13 @@ static void t_reftable_stack_reload_with_missing_table(void)
- static int write_limits_after_ref(struct reftable_writer *wr, void *arg)
- {
- 	struct reftable_ref_record *ref = arg;
--	check(!reftable_writer_set_limits(wr, ref->update_index, ref->update_index));
--	check(!reftable_writer_add_ref(wr, ref));
-+	cl_assert(reftable_writer_set_limits(wr, ref->update_index,
-+										 ref->update_index) == 0);
-+	cl_assert(reftable_writer_add_ref(wr, ref) == 0);
- 	return reftable_writer_set_limits(wr, ref->update_index, ref->update_index);
- }
- 
--static void t_reftable_invalid_limit_updates(void)
-+void test_reftable_stack__invalid_limit_updates(void)
- {
- 	struct reftable_ref_record ref = {
- 		.refname = (char *) "HEAD",
-@@ -1393,59 +1262,22 @@ static void t_reftable_invalid_limit_updates(void)
- 	struct reftable_addition *add = NULL;
- 	char *dir = get_tmp_dir(__LINE__);
- 	struct reftable_stack *st = NULL;
--	int err;
- 
--	err = reftable_new_stack(&st, dir, &opts);
--	check(!err);
-+	cl_assert(reftable_new_stack(&st, dir, &opts) == 0);
- 
- 	reftable_addition_destroy(add);
- 
--	err = reftable_stack_new_addition(&add, st, 0);
--	check(!err);
-+	cl_assert(reftable_stack_new_addition(&add, st, 0) == 0);
- 
- 	/*
- 	 * write_limits_after_ref also updates the update indexes after adding
- 	 * the record. This should cause an err to be returned, since the limits
- 	 * must be set at the start.
- 	 */
--	err = reftable_addition_add(add, write_limits_after_ref, &ref);
--	check_int(err, ==, REFTABLE_API_ERROR);
-+	cl_assert_equal_i(reftable_addition_add(add, write_limits_after_ref, &ref),
-+					  REFTABLE_API_ERROR);
- 
- 	reftable_addition_destroy(add);
- 	reftable_stack_destroy(st);
- 	clear_dir(dir);
- }
--
--int cmd_main(int argc UNUSED, const char *argv[] UNUSED)
--{
--	TEST(t_empty_add(), "empty addition to stack");
--	TEST(t_read_file(), "read_lines works");
--	TEST(t_reflog_expire(), "expire reflog entries");
--	TEST(t_reftable_invalid_limit_updates(), "prevent limit updates after adding records");
--	TEST(t_reftable_stack_add(), "add multiple refs and logs to stack");
--	TEST(t_reftable_stack_add_one(), "add a single ref record to stack");
--	TEST(t_reftable_stack_add_performs_auto_compaction(), "addition to stack triggers auto-compaction");
--	TEST(t_reftable_stack_auto_compaction(), "stack must form geometric sequence after compaction");
--	TEST(t_reftable_stack_auto_compaction_factor(), "auto-compaction with non-default geometric factor");
--	TEST(t_reftable_stack_auto_compaction_fails_gracefully(), "failure on auto-compaction");
--	TEST(t_reftable_stack_auto_compaction_with_locked_tables(), "auto compaction with locked tables");
--	TEST(t_reftable_stack_compaction_concurrent(), "compaction with concurrent stack");
--	TEST(t_reftable_stack_compaction_concurrent_clean(), "compaction with unclean stack shutdown");
--	TEST(t_reftable_stack_compaction_with_locked_tables(), "compaction with locked tables");
--	TEST(t_reftable_stack_hash_id(), "read stack with wrong hash ID");
--	TEST(t_reftable_stack_iterator(), "log and ref iterator for reftable stack");
--	TEST(t_reftable_stack_lock_failure(), "stack addition with lockfile failure");
--	TEST(t_reftable_stack_log_normalize(), "log messages should be normalized");
--	TEST(t_reftable_stack_read_across_reload(), "stack iterators work across reloads");
--	TEST(t_reftable_stack_reload_with_missing_table(), "stack iteration with garbage tables");
--	TEST(t_reftable_stack_tombstone(), "'tombstone' refs in stack");
--	TEST(t_reftable_stack_transaction_api(), "update transaction to stack");
--	TEST(t_reftable_stack_transaction_with_reload(), "transaction with reload");
--	TEST(t_reftable_stack_transaction_api_performs_auto_compaction(), "update transaction triggers auto-compaction");
--	TEST(t_reftable_stack_update_index_check(), "update transactions with equal update indices");
--	TEST(t_reftable_stack_uptodate(), "stack must be reloaded before ref update");
--	TEST(t_suggest_compaction_segment(), "suggest_compaction_segment with basic input");
--	TEST(t_suggest_compaction_segment_nothing(), "suggest_compaction_segment with pre-compacted input");
--
--	return test_done();
--}
+ 	err = reftable_new_stack(&st, dir, &opts);
+ 	cl_assert(!err);
+diff --git a/t/unit-tests/u-reftable-table.c b/t/unit-tests/u-reftable-table.c
+index 25ea672e6a..5a00b4826e 100644
+--- a/t/unit-tests/u-reftable-table.c
++++ b/t/unit-tests/u-reftable-table.c
+@@ -1,5 +1,5 @@
+ #include "test-lib.h"
+-#include "lib-reftable-clar.h"
++#include "lib-reftable.h"
+ #include "reftable/blocksource.h"
+ #include "reftable/constants.h"
+ #include "reftable/iter.h"
 -- 
 2.43.0
 
