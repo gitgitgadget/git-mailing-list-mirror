@@ -1,55 +1,55 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53F2C1991CB
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 06:44:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AD0C1A00ED
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 06:44:54 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748846694; cv=none; b=TqkHaKdfHC4S6UWxqkIK3Vqks3E64IJr789JS2W8H36fn8gdAiTc4ZuXYXugby/pEOx5XVvtn2b1VH0RXcO4piyTL9S4rP3MFNWMxbG7qganMWcA9PAuRCFABKikluYzsrkwvhRaJ/D71rthroZyJ46PYKAMquYxBhBG6DmLqNU=
+	t=1748846696; cv=none; b=pLOAW4xEkxh0VNzHCJiXbxpChQXSlgXerTwEZw0kynC6yDj9Jr9b73Sy3sKnqX6thhnXyFi3ZfpC7dPTu1HtDBkygJblpAdu+f2Gp+9QczSq6rMkw8d0Zbs+mctMuMJg2NWNlwIi3VhQks73urLF7flyHPYkHhz7EdGSpzYYQ+8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748846694; c=relaxed/simple;
-	bh=qlhDurhU1skCxgOOv+aiecK0Gx8NKBrdw/oFW80XL44=;
+	s=arc-20240116; t=1748846696; c=relaxed/simple;
+	bh=Wh5MMoz8ykj1K1MwDr4XmJs0Uwrb8t3CaUuLrSwYYSo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=IkAWfgZ4Tpt3VJysjC3OXL1ReyQCeaw7WH/dzexyyrrsmCUmqHn4XBMBFN3dHRKN88eNLHgL+e6RDu5PtyW3Tte8v0PNwK0Hm7rY+BFI0e83G5SiWGcqt0ATM7vtxbGRJ0szx0LJx1owIG0WhADp1YwvwPmxqDu3KtfPk7TLYm0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Zz6GGLC0; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=PPZaIuh6; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=YkuNBDjdAA7Y3l9tY1uqfG082HT+X3RUQ/1qTL6BAA72JH7ezW7Mdg5906XC6/OypqyXoqXaH/TEKQmE5s6VrwxAal6EtwMrAf74oF7WOrAd62+NmSCHG6kKhl0jnxUA1+eRxbJWs/Nzn9CKdETYIt2/maFAhPlhIRd+CBuGJJs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=DqSMy+92; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Cdv47x7S; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Zz6GGLC0";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="PPZaIuh6"
-Received: from phl-compute-12.internal (phl-compute-12.phl.internal [10.202.2.52])
-	by mailfout.stl.internal (Postfix) with ESMTP id 208091140142;
-	Mon,  2 Jun 2025 02:44:51 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="DqSMy+92";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Cdv47x7S"
+Received: from phl-compute-08.internal (phl-compute-08.phl.internal [10.202.2.48])
+	by mailfout.stl.internal (Postfix) with ESMTP id 5F8BF114014B;
+	Mon,  2 Jun 2025 02:44:53 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-12.internal (MEProxy); Mon, 02 Jun 2025 02:44:51 -0400
+  by phl-compute-08.internal (MEProxy); Mon, 02 Jun 2025 02:44:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748846690;
-	 x=1748933090; bh=Gdx3xYiV9aVysmbbAduxL9YKdPqDpTFf5EumWvsL2ww=; b=
-	Zz6GGLC0Z1ZHMVO1L79yKDWsBqr2YVNLXx13pqc7PB+W9niJOzopz6K+hSonuLYV
-	KeBPe2wKiIdGWic1PSqJ6PfMxzdEimu+pbhRJibwOh+3EsFLgpKa0JoH37jkaP1L
-	jGIBCOKZ4zqorMJUUvGC6EHq8TuYNcf3RMdoYqYAx0HTVCHqol9NUWGzEWJednOg
-	Rqdca/3vg70fsOrzkWU3kIRcBjc5H+T6z4XDsLhttERG1Zs12+B0jMXpKP5ps9mC
-	ZGn7F/fpeqB1OKUxfuXPkolr0ovvl7i9vknZZK3fz0QYAFwkusbHohbnaIhGWeCE
-	1ajtetcwoV3Eqb50/1j82Q==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748846693;
+	 x=1748933093; bh=QNwXxBnc7tmAbR/YV3oWug9Dq4FGym616bUBtH2kp9I=; b=
+	DqSMy+92V+9bfhLhYS8JBbSEfQ6NPaHQ0aOAfgc/mAnItudjDaEIjY6Grnv4LplY
+	B6fGhvLwGevLZR+Re8woUyom9ey5zA+NE/zFwGXiKGTyPTMHJMibv8hscu/0JeBQ
+	dd0Yljmn6vY5bNNBR0+d66MwvIbccEDVlokarsPOrVq6r3bW9ZpJSw0tB16eyMte
+	pYL6G7HVMnI+QjvnEDnNy8fibp1/CDFE5lVmILKEYR2rI1bB+IceshJKTGYaK+0P
+	sJ07jAvt5pj3IHAQNGIJTtBSiekv2U49Nzoo8P2CIEIlb1Gtr9986S3cIGvi1veI
+	6J5CmZTAtpcjp9fVwXRVCQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748846690; x=
-	1748933090; bh=Gdx3xYiV9aVysmbbAduxL9YKdPqDpTFf5EumWvsL2ww=; b=P
-	PZaIuh6PqQwRWE+CSquqmXK91tykEdbUlDILw3n54wxfcn3oZmmFxQTi51rrlxGC
-	J0CC9cOvPrz09FUu7bOIeQsUmd9JfmQikIP8af+XkzO4HBIndZ7zSoWsEihQFO2T
-	7z0kcIElFwTKaz26PShpELaG3D+xc+dWnxiAZRGPQ4R1CtP+gYEVmyp1NaDjpg8Z
-	hxGkYd6BkK2NqIohKd/mxUluUKvU+zuikeVy9dz9osOFqLN5883D63EX0HGh/JAe
-	6DMIqwi3Gek1J8l8ZDNW4Az1VfLTwxgisbb5qsSXOdp+hAEpLUxATZZ2rBPr7Iy0
-	ItSGGcY+Or/exr0eXAnmg==
-X-ME-Sender: <xms:Ykg9aNUoeAA9jXV7OcNedVC3oiAmv410pJwDGzhjxgK1T6yOeoRKUw>
-    <xme:Ykg9aNncKsrk_hCIminj8Jg7oY29eA1IBf3qkibKq3I--yYaqA82fyQ4uHPUx2-7r
-    rtgWcHTmRmzfhWV7w>
-X-ME-Received: <xmr:Ykg9aJZWF1ScB9Ygmiu80YSjddE3kwZFslFnyRy3L9PP2P__GvDSRGcQU7I-zIiN25faCy7LSjLAhWW_wxDoS8Ip51jcUiXqPQmTAknvyimbQQ>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748846693; x=
+	1748933093; bh=QNwXxBnc7tmAbR/YV3oWug9Dq4FGym616bUBtH2kp9I=; b=C
+	dv47x7SqQHOxbYYr2UgpnMKpWY5ljFhx826h3iuaOOyugvmvfTnIHFFC32q0zV34
+	CL861HLOLa1y4LY5XULz9bmrsHZQQM2Tv7ZjR8K9RkxHPhIwv80va37+Al1xHl4t
+	r1AUeKTL0UtwJW4woUvpeZI8CS/69w3AbBRoykS+2xDEW4O+VgPB3CBGw6U8A/1m
+	wO7gJDbDxZdDKdTeHSgJ6tfXXXDI6lfW9KUcGWyOLrCaoFfFcXKCeNAPynGaSO8y
+	DDs4Cgkm7zm89KT2T3dyYxvEthX820fXuTgF4J84CC8bp7DcBJVUt1QBBYxRdL0K
+	EuQltUr+MZIKjLVhZKhyA==
+X-ME-Sender: <xms:ZEg9aF8ro3jDBFONpXFefY-YXOhv-iTgzgy7gLYAcGSgnUuwBpNVYA>
+    <xme:ZEg9aJvt-pukM5BIRki5QjDaRSiShtcDB_gjLC6Hx5oYT8Q6ISCTEjEuc5ANHvUS6
+    sUUDicpi3VHSdhwiA>
+X-ME-Received: <xmr:ZEg9aDDFlEeBLa83OfzHEjU9xiOtLfSOPhNi1x6udloEy-4p33nttBYIuRItJzitVyBScSZfOy6G8GDBC4y644bsgAXWOIW1OkJLTxIxwmkuww>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefieelleculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -58,28 +58,28 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefieelleculddtuddrge
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
     iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
-    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehtmhiisehpohgsohig
-    rdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgtphhtth
-    hopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepkhgr
-    rhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehrrghmshgrhiesrh
-    grmhhsrgihjhhonhgvshdrphhluhhsrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegvshgthhifrghrthiisehgvghnthhooh
-    drohhrgh
-X-ME-Proxy: <xmx:Ykg9aAUO5vBY-qku25xI25ylPlNRLQbI-ZyHX0azw2zCuAW_NoAgLg>
-    <xmx:Ykg9aHk6bMGIIxtP_cFj8rJ9cidC_2ejjyiyEpdUbfk4GyGYETdcWQ>
-    <xmx:Ykg9aNc3EO5eanOWNek4KzGi2_teiiy9CpCtgClmLyOL3suW4v1wnA>
-    <xmx:Ykg9aBGC5E2kTcPLky5ziE6r7KvIUWDQGKe5kLXgvLinblAylPXxfw>
-    <xmx:Ykg9aG57muuoyaDNvUFIndjNN9K7nRANd7o1Zb9g62jw-qWasZxy7OP2>
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
+    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhi
+    nhgvtghordgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiiesghgvnhhtohhordhorh
+    hgpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhushdrtgho
+    mhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepph
+    hhihhllhhiphdrfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehtmhii
+    sehpohgsohigrdgtohhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhmrghilh
+    drtghomh
+X-ME-Proxy: <xmx:ZEg9aJeBpNDojV9uQ2hza5JwMHT4Y6HXwyaGSTlzoPaoRQFh8lgfAQ>
+    <xmx:ZEg9aKOb8EewOzfSiO_O8WLgf0BwDKWKx0beum1uNrzmjDQccM9BQQ>
+    <xmx:ZEg9aLlScSJxgO7Es-O_r_WvZC5GGaFaQakz4Grm3mMc0yt5hkEKmw>
+    <xmx:ZEg9aEsAvJ3q--W_pj2oAnn8rjxfjytZc6KELqaGE1rKdnHZtBT5pw>
+    <xmx:ZUg9aHibjOd3jb1gy-6u3UK3I5xZQ_EwghWPtK3JlnCBPuyCsCzTTBum>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 02:44:49 -0400 (EDT)
+ 2 Jun 2025 02:44:51 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id bc1a0882 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 2 Jun 2025 06:44:46 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 7e08daa4 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 2 Jun 2025 06:44:47 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Jun 2025 08:44:41 +0200
-Subject: [PATCH v4 01/10] t: stop announcing prereqs
+Date: Mon, 02 Jun 2025 08:44:42 +0200
+Subject: [PATCH v4 02/10] t: silence output from `test_create_repo()`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250602-pks-meson-tap-v4-1-052dfde0818a@pks.im>
+Message-Id: <20250602-pks-meson-tap-v4-2-052dfde0818a@pks.im>
 References: <20250602-pks-meson-tap-v4-0-052dfde0818a@pks.im>
 In-Reply-To: <20250602-pks-meson-tap-v4-0-052dfde0818a@pks.im>
 To: git@vger.kernel.org
@@ -99,167 +99,139 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
  Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.2
 
-We have a couple of cases where our tests end up announcing that a
-certain prerequisite is or isn't fulfilled. While this is supposed to
-help the developer it has the downside that it breaks the TAP format.
+There are a couple users of `test_create_repo()` that use this function
+outside of any test case. This function is nowadays only a thin wrapper
+around `git init`, which by default prints a message to stdout that the
+repository has been initialized. The resulting output may thus confuse
+TAP parsers.
 
-We could convert these cases to just have a "#" prefix, but it feels
-rather unlikely that these are generally useful in the first place. We
-already do announce why a specific test is being skipped, so we should
-try to use this mechanism to the best extent possible.
+Refactor these users to instead create the repository in a "setup" test
+case so that we don't explicitly have to silence them. There's one
+exception in t1007: we use `push_repo()` and its `pop_repo()` equivalent
+multiple times, so to reduce the noise introduced by this patch we
+instead silence this invocation.
 
-Stop announcing these prereqs to fix the TAP format. Where possible,
-convert the tests to rely on the prerequisites themselves to announce
-why a test ran or didn't ran.
+While at it, convert callsites to use git-init(1) directly as the
+`test_create_repo()` function has been deprecated in f0d4d398e28
+(test-lib: split up and deprecate test_create_repo(), 2021-05-10).
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t0050-filesystem.sh                  | 30 ++++++------------------------
- t/t3600-rm.sh                          |  5 -----
- t/t4000-diff-format.sh                 |  2 +-
- t/t9500-gitweb-standalone-no-errors.sh | 16 +++++++---------
- t/t9903-bash-prompt.sh                 |  4 ----
- 5 files changed, 14 insertions(+), 43 deletions(-)
+ t/t1007-hash-object.sh                       |  2 +-
+ t/t4041-diff-submodule-option.sh             | 22 +++++++++++++---------
+ t/t4060-diff-submodule-option-diff-format.sh |  9 ++++++---
+ t/t7401-submodule-summary.sh                 | 18 +++++++++++-------
+ 4 files changed, 31 insertions(+), 20 deletions(-)
 
-diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
-index 5c9dc90d0b0..ca8568067d3 100755
---- a/t/t0050-filesystem.sh
-+++ b/t/t0050-filesystem.sh
-@@ -10,53 +10,35 @@ export GIT_TEST_DEFAULT_INITIAL_BRANCH_NAME
- auml=$(printf '\303\244')
- aumlcdiar=$(printf '\141\314\210')
+diff --git a/t/t1007-hash-object.sh b/t/t1007-hash-object.sh
+index b3cf53ff8c9..2cd0be7ba76 100755
+--- a/t/t1007-hash-object.sh
++++ b/t/t1007-hash-object.sh
+@@ -30,7 +30,7 @@ setup_repo() {
  
--if test_have_prereq CASE_INSENSITIVE_FS
--then
--	say "will test on a case insensitive filesystem"
--	test_case=test_expect_failure
--else
--	test_case=test_expect_success
--fi
+ test_repo=test
+ push_repo() {
+-	test_create_repo $test_repo
++	git init --quiet $test_repo
+ 	cd $test_repo
+ 
+ 	setup_repo
+diff --git a/t/t4041-diff-submodule-option.sh b/t/t4041-diff-submodule-option.sh
+index 28f9d83d4c1..4d4aa1650fe 100755
+--- a/t/t4041-diff-submodule-option.sh
++++ b/t/t4041-diff-submodule-option.sh
+@@ -48,11 +48,12 @@ commit_file () {
+ 	git commit "$@" -m "Commit $*" >/dev/null
+ }
+ 
+-test_create_repo sm1 &&
+-add_file . foo >/dev/null
 -
- if test_have_prereq UTF8_NFD_TO_NFC
- then
--	say "will test on a unicode corrupting filesystem"
- 	test_unicode=test_expect_failure
- else
- 	test_unicode=test_expect_success
- fi
- 
--test_have_prereq SYMLINKS ||
--	say "will test on a filesystem lacking symbolic links"
--
--if test_have_prereq CASE_INSENSITIVE_FS
--then
--test_expect_success "detection of case insensitive filesystem during repo init" '
-+test_expect_success CASE_INSENSITIVE_FS "detection of case insensitive filesystem during repo init" '
- 	test $(git config --bool core.ignorecase) = true
- '
--else
--test_expect_success "detection of case insensitive filesystem during repo init" '
-+
-+test_expect_success !CASE_INSENSITIVE_FS "detection of case insensitive filesystem during repo init" '
- 	{
- 		test_must_fail git config --bool core.ignorecase >/dev/null ||
- 			test $(git config --bool core.ignorecase) = false
- 	}
- '
--fi
- 
--if test_have_prereq SYMLINKS
--then
--test_expect_success "detection of filesystem w/o symlink support during repo init" '
-+test_expect_success SYMLINKS "detection of filesystem w/o symlink support during repo init" '
- 	{
- 		test_must_fail git config --bool core.symlinks ||
- 		test "$(git config --bool core.symlinks)" = true
- 	}
- '
--else
--test_expect_success "detection of filesystem w/o symlink support during repo init" '
-+
-+test_expect_success !SYMLINKS "detection of filesystem w/o symlink support during repo init" '
- 	v=$(git config --bool core.symlinks) &&
- 	test "$v" = false
- '
--fi
- 
- test_expect_success "setup case tests" '
- 	git config core.ignorecase true &&
-diff --git a/t/t3600-rm.sh b/t/t3600-rm.sh
-index 98259e2adaa..1f16e6b5228 100755
---- a/t/t3600-rm.sh
-+++ b/t/t3600-rm.sh
-@@ -17,11 +17,6 @@ test_expect_success 'Initialize test directory' '
- 	git commit -m "add normal files"
- '
- 
--if test_have_prereq !FUNNYNAMES
--then
--	say 'Your filesystem does not allow tabs in filenames.'
--fi
--
- test_expect_success FUNNYNAMES 'add files with funny names' '
- 	touch -- "tab	embedded" "newline${LF}embedded" &&
- 	git add -- "tab	embedded" "newline${LF}embedded" &&
-diff --git a/t/t4000-diff-format.sh b/t/t4000-diff-format.sh
-index a51f881b1c9..32b14e3a714 100755
---- a/t/t4000-diff-format.sh
-+++ b/t/t4000-diff-format.sh
-@@ -36,7 +36,7 @@ test_expect_success 'git diff-files -p after editing work tree.' '
- # that's as far as it comes
- if [ "$(git config --get core.filemode)" = false ]
- then
--	say 'filemode disabled on the filesystem'
-+	skip_all='filemode disabled on the filesystem'
- 	test_done
- fi
- 
-diff --git a/t/t9500-gitweb-standalone-no-errors.sh b/t/t9500-gitweb-standalone-no-errors.sh
-index 7679780fb87..578d6c8b329 100755
---- a/t/t9500-gitweb-standalone-no-errors.sh
-+++ b/t/t9500-gitweb-standalone-no-errors.sh
-@@ -700,19 +700,17 @@ test_expect_success \
- # ----------------------------------------------------------------------
- # syntax highlighting
- 
-+test_lazy_prereq HIGHLIGHT '
-+	highlight_version=$(highlight --version </dev/null 2>/dev/null) &&
-+	test -n "$highlight_version"
+-head1=$(add_file sm1 foo1 foo2)
+-fullhead1=$(cd sm1; git rev-parse --verify HEAD)
++test_expect_success 'setup submodule' '
++	git init sm1 &&
++	add_file . foo &&
++	head1=$(add_file sm1 foo1 foo2) &&
++	fullhead1=$(cd sm1 && git rev-parse --verify HEAD)
 +'
  
--highlight_version=$(highlight --version </dev/null 2>/dev/null)
--if [ $? -eq 127 ]; then
--	say "Skipping syntax highlighting tests: 'highlight' not found"
--elif test -z "$highlight_version"; then
--	say "Skipping syntax highlighting tests: incorrect 'highlight' found"
--else
--	test_set_prereq HIGHLIGHT
-+test_expect_success HIGHLIGHT '
- 	cat >>gitweb_config.perl <<-\EOF
- 	our $highlight_bin = "highlight";
--	$feature{'highlight'}{'override'} = 1;
-+	$feature{"highlight"}{"override"} = 1;
- 	EOF
--fi
-+'
- 
- test_expect_success HIGHLIGHT \
- 	'syntax highlighting (no highlight, unknown syntax)' \
-diff --git a/t/t9903-bash-prompt.sh b/t/t9903-bash-prompt.sh
-index d667dda654e..637a6f13a6d 100755
---- a/t/t9903-bash-prompt.sh
-+++ b/t/t9903-bash-prompt.sh
-@@ -66,10 +66,6 @@ test_expect_success 'prompt - unborn branch' '
- 	test_cmp expected "$actual"
+ test_expect_success 'added submodule' '
+ 	git add sm1 &&
+@@ -235,10 +236,13 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+ 	test_cmp expected actual
  '
  
--if test_have_prereq !FUNNYNAMES; then
--	say 'Your filesystem does not allow newlines in filenames.'
--fi
+-rm -f sm1 &&
+-test_create_repo sm1 &&
+-head6=$(add_file sm1 foo6 foo7)
+-fullhead6=$(cd sm1; git rev-parse --verify HEAD)
++test_expect_success 'setup submodule anew' '
++	rm -f sm1 &&
++	git init sm1 &&
++	head6=$(add_file sm1 foo6 foo7) &&
++	fullhead6=$(cd sm1 && git rev-parse --verify HEAD)
++'
++
+ test_expect_success 'nonexistent commit' '
+ 	git diff-index -p --submodule=log HEAD >actual &&
+ 	cat >expected <<-EOF &&
+diff --git a/t/t4060-diff-submodule-option-diff-format.sh b/t/t4060-diff-submodule-option-diff-format.sh
+index 76b83101d3b..dbfeb7470bc 100755
+--- a/t/t4060-diff-submodule-option-diff-format.sh
++++ b/t/t4060-diff-submodule-option-diff-format.sh
+@@ -363,9 +363,12 @@ test_expect_success 'typechanged submodule(submodule->blob)' '
+ 	diff_cmp expected actual
+ '
+ 
+-rm -f sm1 &&
+-test_create_repo sm1 &&
+-head6=$(add_file sm1 foo6 foo7)
++test_expect_success 'setup' '
++	rm -f sm1 &&
++	git init sm1 &&
++	head6=$(add_file sm1 foo6 foo7)
++'
++
+ test_expect_success 'nonexistent commit' '
+ 	git diff-index -p --submodule=diff HEAD >actual &&
+ 	cat >expected <<-EOF &&
+diff --git a/t/t7401-submodule-summary.sh b/t/t7401-submodule-summary.sh
+index 9c3cc4cf404..66c3ec2da22 100755
+--- a/t/t7401-submodule-summary.sh
++++ b/t/t7401-submodule-summary.sh
+@@ -38,10 +38,11 @@ commit_file () {
+ 	git commit "$@" -m "Commit $*" >/dev/null
+ }
+ 
+-test_create_repo sm1 &&
+-add_file . foo >/dev/null
 -
- test_expect_success FUNNYNAMES 'prompt - with newline in path' '
-     repo_with_newline="repo
- with
+-head1=$(add_file sm1 foo1 foo2)
++test_expect_success 'setup submodule' '
++	git init sm1 &&
++	add_file . foo &&
++	head1=$(add_file sm1 foo1 foo2)
++'
+ 
+ test_expect_success 'added submodule' "
+ 	git add sm1 &&
+@@ -214,9 +215,12 @@ test_expect_success 'typechanged submodule(submodule->blob)' "
+ 	test_cmp expected actual
+ "
+ 
+-rm -f sm1 &&
+-test_create_repo sm1 &&
+-head6=$(add_file sm1 foo6 foo7)
++test_expect_success 'setup submodule' '
++	rm -f sm1 &&
++	git init sm1 &&
++	head6=$(add_file sm1 foo6 foo7)
++'
++
+ test_expect_success 'nonexistent commit' "
+ 	git submodule summary >actual &&
+ 	cat >expected <<-EOF &&
 
 -- 
 2.50.0.rc0.629.g846fc57c9e.dirty
