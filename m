@@ -1,54 +1,54 @@
 Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7301514E4
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 19:33:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A70C86344
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 19:49:17 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748892825; cv=none; b=BFZ43GSVNUlpBkl1VvJDpmxoFLgXQpHLp8hK9KFhxP0Ovlz2CkpycUPkvsRmk7b7OoAQEUDWt+/l/626xtyoon2prueFe0gGR/5nBBX1BuiAKosktir3uBUUIBg9dWKLuir2ZdIiT63rvMUNDMQLbQldEHI8vvq0YGnXojpbbXI=
+	t=1748893759; cv=none; b=NO40LwatJz/liRkWKs7KWwnR8fhk2Hmk7N7f/g7LYXPHEwO3NxwtRWxuaJFGRjjpqHkgH9ZhmZBK3RC/XXrUC9TymmkThAwak/aUyuZ63ixQl5YHC28oMKU7Qw5y+aO4A0yg8EwxMtGm5GlDCN8RKan47YnKnMqnJYkZCYdHFTA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748892825; c=relaxed/simple;
-	bh=Ers0io6haJ/DS1zCjDDysA+oe16KHq6WP1ZXTp4KzKw=;
+	s=arc-20240116; t=1748893759; c=relaxed/simple;
+	bh=7uMf3tk5Bjbi9w9GNNWcdG2dqiyeBs8iUFnOelPq2xM=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=DuIEepBYWD03nIIunw5oVdZ5DSIg51vrXtjnIFIwAEmgv+wyNRDnDTD0IsDLoDBL9Vg77bavTrFoRe45OLv95lxmAGnMLF4pQMY398rhggETI+dEDnnexknGkj7z1+YGPfgn9vrq8f7Ha2Qi1LSG0JK056+mZDjCJL5t8XkQCNU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aLNNnL7o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kv92aU5T; arc=none smtp.client-ip=202.12.124.158
+	 MIME-Version:Content-Type; b=Qbq3S+pZDXkMYSnPj9dp54qf95f0mlF3a3yJwcs5MKsbmq9YP00kgs0fMNldRthT6t6C34yt8aLvY+Vb8lKmjSEhcOfzUp3SiRPt1YaXeFlYhmlgASemn4/zrA8xTV6I87Jpni8NsvMgUqPdW0j0C0O+VPBAisAdCOpcIBwtvKE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=Vylv7Tbo; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=TZp490xd; arc=none smtp.client-ip=202.12.124.158
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aLNNnL7o";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kv92aU5T"
-Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C47D254019B;
-	Mon,  2 Jun 2025 15:33:40 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="Vylv7Tbo";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="TZp490xd"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 40A4C25400FC;
+	Mon,  2 Jun 2025 15:49:16 -0400 (EDT)
 Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-11.internal (MEProxy); Mon, 02 Jun 2025 15:33:40 -0400
+  by phl-compute-01.internal (MEProxy); Mon, 02 Jun 2025 15:49:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748892820; x=1748979220; bh=1rf2DzN4wS
-	LaK/WyN7tek9T0FSCowDwNhIEQqGS9F60=; b=aLNNnL7oX9uv3KLsR9ZHPpBw/D
-	LJgACIFYAKMdcM7Bz0xl2OcMGMPREGt/E942JFjMXEphOfnpNO0eJILX30ZXXqSI
-	Q1XJyW0QzlqLX9tWVmQq1Umm3BH6pRa8wzaGNX9wkbCol6iGrwiVraPzOTH/oeYK
-	jCODq4H/RmAFDaRsMn9722rr3qJSf+LH2JQ5lj/qKO83umcZ2wThJWURmZA32fTy
-	EUozr1rZWeGxaqjTT6855DrPs5TS36iyCobRyfp/C/cVgw3/jmGbHQfJhBIjvp/D
-	sM6HgaU282tN2sU/FwwYYX91RiUDFRSXoOGVLaehwN1jsNyUKaeLgv/0Ygxw==
+	:subject:to:to; s=fm3; t=1748893756; x=1748980156; bh=1BkblP5QXk
+	i9yGHfI7x2U1Wl3wtdHLmLUbhlugU/WUA=; b=Vylv7TboZ8WjkgmTNn+uGqKJVW
+	RjY6JxaVNM9tJ7cNKbnTYWBfg+gxAlT+g3pmcxK02MnCnV3Nj1QY5VkLzWD/leDz
+	ESd+UjZOVq2hDma2KGchlaoUycn/xiheUb008ICaBam6ko4GD4DBQlM5C+s8Ze11
+	GdFtWDW1rHA/ehDwQ7BNrbiFsyz72Ft12+MiZ+iKuM4D6EmxK7f/ruQxbp34Df6h
+	0JfxQ/ESe/XmVHhmkPzcKrpsksruJaiXqWFZKubOC0BysyUtwZCiVzQKvfMqfId1
+	X9djAUN1Qrg71MZ/xeXejoFqrsfkhJ8SzNIdm/kohIz1Nr9UVnhueWSM7wrA==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748892820; x=1748979220; bh=1rf2DzN4wSLaK/WyN7tek9T0FSCowDwNhIE
-	QqGS9F60=; b=Kv92aU5TZy0PwTpvZQVzVZr9tVWeRBPRTgAuQEqqhKPKTQSUNq1
-	/Inr2haG8Bt/5DxAHhWHuBes6a45TtBuVrilV6dqYxj1XMjXMgljNplF52vgTPTF
-	5CCh6gcwePhDW0rvn56Wd+NHNRfzCRQ1jWgIKh8J6hQQZf3ilsBG9x4gjmi6EJkF
-	Tz14McnU1naYJkYG8WzL5Vc+X+bhCQzpfehbW6Z7rfc4kJVr/wCFW6jYGq1PP2j/
-	mPNQt9qfe/oNFo9BQFOJDoKbEP1wGDQY2H88cBPtGSIxHafH86SYp2vMB1Yj0oNT
-	Uu2dU7TiDIDNc9lPJxJ66sp3y6GgdojSgDg==
-X-ME-Sender: <xms:k_w9aEnf7nN5F5zcmX6TBhqFXa0-9v1WqtTVfNcrjhMd9zfi0uc0_Q>
-    <xme:k_w9aD3EkmZs5JjShDWhJEi5jF250qe9tCLxN0IuT6I9OoRJ0DRSOdRaB_W1_C6h8
-    jVG-aZNs4HqQzmURQ>
-X-ME-Received: <xmr:k_w9aCq0aE6BMamTz0GDNrpgYavcOI4Imws9K8pWy_7xX_Ykt_P3HX_gCbYeIlyyPFBEJLNye-4LyeX-AJ5Ri0hRPtdw9S72gR6o>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkeehvdculddtuddrgeefvddrtd
+	1748893756; x=1748980156; bh=1BkblP5QXki9yGHfI7x2U1Wl3wtdHLmLUbh
+	lugU/WUA=; b=TZp490xdrGhlFN105VOxS7gvVq4rA2RUrQDfayMv8gtA6LN15X+
+	zDOq9++NEB8RcazxAT2gMa57j0fYRc3DDlhZgAUqX9XpEOvnT3Viej8y6HqOHhzb
+	kBu+KuWH12z/jEu6541msNQclTKfr45Gagrx9QQqZWGN1ggPYRBSoa+M3GpUx4yu
+	RUp99pUPaXNF3iuSwDzH3147uJKu7RmwxG6XfozMCX3JnUFf7gocmAqwF94PHdAf
+	lPc01ZSfE9RF8x35gOKj91P9JHnboJt9p3EsyrBZFSJenICbC3G1SXhd3D55QHuy
+	xMiQXUstF2UzMqAEOKIFsiU+5kOg2wqmR5g==
+X-ME-Sender: <xms:OgA-aEquw2aR72E6b6Sq5JuJ2sxzF1dtXCiznzDmSfZnJTwM3rQMVw>
+    <xme:OgA-aKrNFbChPO_c9R_IFV30YvRumMXbmLoLLq0Kx5qeJzISyXGFQcHwLy31KmxGC
+    CMwjQKF6hn3CX7WwQ>
+X-ME-Received: <xmr:OgA-aJOlJ4wUc-mERB9pV01Jp6WrNSKVcTw62vx7wzdSJh90D6Z8vbEcvV-2aiYa-l2EUsUhCMKBFYdv_RxZLLYXZGoRK96cf9kD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkeehheculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
@@ -56,30 +56,37 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkeehvdculddtuddrge
     hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
     heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
     hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
-    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
-    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
-    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:k_w9aAneDTwatO3aPB-9NG-qkwXO08cTWRnh_okSt_QSWiAjuG3ITQ>
-    <xmx:k_w9aC1k88GiVFLWsHuAZ4doML60oenNzY0FZbanuzfH9zsxyxVQeA>
-    <xmx:k_w9aHuxBCH0AKGTq1ynK5rkMF2lc0ICqjfg_Y8I3YHxpBP_k8qeLw>
-    <xmx:k_w9aOWkdQC11SSBXkBE-ZD-RqARGgtK3reIOl-70eVzPrNwMhZbVw>
-    <xmx:lPw9aB_jmSr81EDYzubJMbVzhcoFsvocg2WlEc4uZDcTTZqWY7iMKk6v>
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepphhhihhllhhiphdrfihoohgusegu
+    uhhnvghlmhdrohhrghdruhhkpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilh
+    drtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghp
+    thhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepkhgrrh
+    hthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehsuhhnshhhihhnvges
+    shhunhhshhhinhgvtghordgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogi
+    drtghomh
+X-ME-Proxy: <xmx:OgA-aL79Cq5MDFA6gXEgp5j6-PsHoP7YLtrdQJ6zzpbOT9VGwy_8jQ>
+    <xmx:OgA-aD6CEuZxn0vT3H72ugT2j60UHKa9_01GiqGbzz2dxMBJ0WB8Kw>
+    <xmx:OgA-aLjE8-xqBqThOsZRF66jM8BmWfwDJphvn9A42iiZHiGNmmXS5Q>
+    <xmx:OgA-aN6jxULuSKaJ8GxYWwgedZEPXC5s6nDzbA-zlVUTJp-F57ZmLw>
+    <xmx:PAA-aJzM_hdD_g_VBiCHOnO1C-47WRaFWSK63lY-9CyysiLxbWEYWcPu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 15:33:38 -0400 (EDT)
+ 2 Jun 2025 15:49:14 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Seyi Kuforiji <kuforiji98@gmail.com>
-Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH v3 06/10] t/unit-tests: convert reftable table test to
- use clar
-In-Reply-To: <20250602122559.208780-7-kuforiji98@gmail.com> (Seyi Kuforiji's
-	message of "Mon, 2 Jun 2025 13:25:54 +0100")
-References: <20250602122559.208780-1-kuforiji98@gmail.com>
-	<20250602122559.208780-7-kuforiji98@gmail.com>
-Date: Mon, 02 Jun 2025 12:33:37 -0700
-Message-ID: <xmqq7c1uszu6.fsf@gitster.g>
+To: Patrick Steinhardt <ps@pks.im>
+Cc: phillip.wood@dunelm.org.uk,  shejialuo <shejialuo@gmail.com>,
+  git@vger.kernel.org,  Kristoffer Haugsbakk <code@khaugsbakk.name>,
+  Karthik Nayak <karthik.188@gmail.com>,  Eric Sunshine
+ <sunshine@sunshineco.com>
+Subject: Re: [PATCH] fsck: ignore missing "refs" directory for linked worktrees
+In-Reply-To: <aD176UYWKEbmhiaw@pks.im> (Patrick Steinhardt's message of "Mon,
+	2 Jun 2025 12:24:41 +0200")
+References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+	<aDp55upE6AhYunz7@ArchLinux>
+	<b92b5d93-7f7f-4370-ac79-7d9767bb0db5@gmail.com>
+	<aD176UYWKEbmhiaw@pks.im>
+Date: Mon, 02 Jun 2025 12:49:13 -0700
+Message-ID: <xmqq34chudom.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -89,27 +96,45 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Seyi Kuforiji <kuforiji98@gmail.com> writes:
+Patrick Steinhardt <ps@pks.im> writes:
 
-> diff --git a/Makefile b/Makefile
-> index 3cccc73073..0227fdb3e1 100644
-> --- a/Makefile
-> +++ b/Makefile
-> ...
-> @@ -3972,4 +3972,4 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
->  	$(OBJCOPY) --localize-hidden $^ $@
->  
->  contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
-> -	$(AR) $(ARFLAGS) $@ $^
-> +	$(AR) $(ARFLAGS) $@ $^
-> \ No newline at end of file
+> On Mon, Jun 02, 2025 at 10:53:50AM +0100, Phillip Wood wrote:
+>> Hi Shejialuo
+>> 
+>> On 31/05/2025 04:39, shejialuo wrote:
+>> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+>> > index 4d1f65a57a..bf6f89b1d1 100644
+>> > --- a/refs/files-backend.c
+>> > +++ b/refs/files-backend.c
+>> > @@ -3762,6 +3762,9 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+>> >   	iter = dir_iterator_begin(sb.buf, 0);
+>> >   	if (!iter) {
+>> > +		if (errno == ENOENT && !is_main_worktree(wt))
+>> > +			goto out;
+>> > +
+>> >   		ret = error_errno(_("cannot open directory %s"), sb.buf);
+>> >   		goto out;
+>> >   	}
+>> 
+>> I think it would be clearer to write this as
+>> 
+>> 	if (is_main_worktree(wt) || errno != ENOENT)
+>> 		ret = error_errno(_("cannot open directory %s"), sb.buf);
+>> 	goto out;
+>> 
+>> so that the condition that triggers the error message is explicit rather
+>> than having to mentally invert the condition to figure out when we return an
+>> error
+>
+> The downside though is that this mandates that `is_main_worktree()` must
+> never set `errno` itself. So while it may be clearer, the original
+> version feels safer to me.
 
-I'll fix this up before pushing this morning's integration result
-out, but here is an occasion for a quick quiz.
-
-Can anybody tell, without running "make <something>", what this
-accidental and unintended change breaks?  It may be rather
-surprising ;-)
-
+FWIW, I found that the logic flow of the original more natural than
+the proposed rewrite.  "dir_iterator_begin() appears to have failed
+by not returning a usable iterator, so we may need to complain, but
+as a special case, we can tolerate missing refs/ hierarchy if we are
+not in the primary working tree." was how I read these three
+additional lines.
 
 
