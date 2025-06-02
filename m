@@ -1,176 +1,123 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fout-b1-smtp.messagingengine.com (fout-b1-smtp.messagingengine.com [202.12.124.144])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E19D2C325A
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 20:50:47 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3BFD13FEE
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 21:32:38 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.144
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748897449; cv=none; b=LKv3v95uCJ8jvsW+u3Ms4ePa+n9J7ZlKwcuN6Eb43JsABX/HGExBLoWz75PLmaeJiMExy5KHwLXha0r/1XZns0s7RFLSgczvh8bF3n9U0b6VBrOF8EPzPSvW6QUv724SnG2FmuCFpDbkMHNy1Hh5X9T8MMa38c4c3IqmRpAmaBI=
+	t=1748899961; cv=none; b=cPrcuwzKbbiq8g1Dyoa+3FIYFTNkvFJKTt/IqngdwiDT2EULQu7KeMv9Ppac+iNOwVuFI/oXwnoTFQIhqpC/WAbQQXMFCEgDktks+FcuBFJKHLAKXOQ78HTxZfu4ZBs2lnDOt6BQz9AtX3/ILzgw07a/K3AdgR0/PXcfvhoHtAc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748897449; c=relaxed/simple;
-	bh=kuVSFSgYsyFrzwntYiq5MjM8BXCeTRyyKXMLCJ5C9cw=;
-	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=BtEHgtY4oUyo7j9R3PMSLlMhDfxm+sgghcg/9fc4OWg9dL/EB4V51j6S0eOKxuLq3YYVMQdMvPoZPEbWHZEdDIi0th+3UVh4BdXwdDZFaeW04t/81BDoeYsZ2Oz1Jp4tNFRPOJtnxKHiV9dAll6Lwsmr3CGR9ARmKoBoNkRzJ1E=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WX9RynUy; arc=none smtp.client-ip=209.85.217.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748899961; c=relaxed/simple;
+	bh=jS24QqxAoHssVhu0ZmXsBUnMVSkTn8dn9LQIW6ojCak=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=Ne/aTqIpuVQiY1prIf/nktcXpKYftyjAOF/RcUgsxIybuZX0+36xqOplK0YfEOvTNdilmDqaF4Ksb7smALfub9YpJAl52sHb4A7jD0aTRkq9u2udRo0VAVLPwPIeLR5amKKsZoxOdxgJ/2DO9+7LMg8Bv6ntIS8/K0CKXWg04g0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=EjZv9Zjg; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=MKcMI26C; arc=none smtp.client-ip=202.12.124.144
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WX9RynUy"
-Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4e45dae6c8cso3545762137.2
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 13:50:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748897446; x=1749502246; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HVV/737LLZCvBMfg45KqvH/rKA4gLDW5kXNinUs5Y+c=;
-        b=WX9RynUyt/AN2o6MYJGByYA3ecBXQBkgOJVhYqkX2jzbJVIDHBSLRxLslRN1Vxllw8
-         gLvnzXSAi175r5hrqUPnEUf5QTSL73WCCxdvecYUZDSr0VYUUs1HFWzjjfziZHAKEfwG
-         qfSKXjKCqsNRLxfv9tUpmkuBbXbJQMOqBVOrKWHdpbDT7uNh7w3Uw2VnTC42hJ5rSR6c
-         KVqNeHFT0MHezz4eo6M4LcyY7Jpl5kKwiIfiC1595AQ0Ll0gNWvg5mT6+xZo/JdGiRXo
-         K7oobB1SpLuMyDQjxc/pKspysLbgb9sLQtMkYZaADdMMb2AnzNWJqL2gMjlUSovW9gFf
-         /rCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748897446; x=1749502246;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HVV/737LLZCvBMfg45KqvH/rKA4gLDW5kXNinUs5Y+c=;
-        b=D/a2wsqQ9s3NU0S8z1HnmM6mJcD0nksPWK7HraPm01J9QQDGHXF/g1MaHpW1k74tSM
-         1V//9K1M0kcyG7pzGAYN9wu7aIiX4EDEOM0TZDa4lEE0J1rjugrkR6IGVWoRitmu+hWR
-         0NfHmKNWqXbk2x4SCfaoogegR6Dk6JMA7JhqKZ7Sn9Z+pzw9oN4DNJGtEAYt2tbau3q3
-         GsWV/dkrPqicqZSpCr41aDVG5oTWWSN0RrjowAbePK2Y7QKdczHqVm+yiJ/ssSMLG1t9
-         vwEoBzNVlOe5cL7Bv44y+TAukTA3lEQqyGwTkrQ32lNG9DnrfoljoHLIXIM2VmQfCgRK
-         VM9w==
-X-Gm-Message-State: AOJu0YyHOhzWqoCsblCOk4U0qp91R6Tu9QuUyiYdzPftFjjWRVirPP+r
-	JaAIw0c0DOxgqNDu+HRyz6oViitWDqMd/bpz2l+vUMt/ljJo1crHX+DkjiPwbg==
-X-Gm-Gg: ASbGnctVQ2GqeiVo5t6qec2aiIK4Cc8g0F3/ws0pZyNqEipud6ARCTVWlDi+DUwe24K
-	/66+2Kob0xDdr91DXHJeu8JXM/Dy6NHSilaVZdeikE0HI6pXkCXDykmvsWI/ZaYyddz67mCbRSa
-	YojJgfUVNYKMR0dblfi+hCaRPOQoRt4K28pHEPlFCx4fzr4raJPyB423At5OtI5CquHFdxk+YYV
-	xdIDV/SaxAeogN/SHr/VSlZgn14haLKBh06HNu2aWUUu0Bpe+dfJio4oq8uzft4PlJAPWFXi3SX
-	d8Fkc0eLcIZl9SbqIZu6icpaKMjelJSJ4wWBYIEz5dmQLRTUUpn8DGhpglcCd9ZjKMPqkEsZm3D
-	3N4tgPjrS+12RtNuBEUKz
-X-Google-Smtp-Source: AGHT+IHv6mQmwM5y9sAzw5tbwa0d/flauNy5szBZlpqEQ4ro+8/TDUIYEn/SNClUpXfdX5/IMyHOOQ==
-X-Received: by 2002:a05:6102:358d:b0:4c1:9526:a636 with SMTP id ada2fe7eead31-4e701adfc86mr7974088137.15.1748897435795;
-        Mon, 02 Jun 2025 13:50:35 -0700 (PDT)
-Received: from localhost.localdomain ([2804:7f0:b77d:58:c47c:a673:bf76:10ce])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87e2a2a1622sm6746409241.10.2025.06.02.13.50.33
-        (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 02 Jun 2025 13:50:35 -0700 (PDT)
-From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-To: git@vger.kernel.org
-Cc: ps@pks.im,
-	karthik.188@gmail.com,
-	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v2 1/2] MyFirstContribution: use struct repository in examples
-Date: Mon,  2 Jun 2025 17:50:20 -0300
-Message-Id: <20250602205021.4223-2-lucasseikioshiro@gmail.com>
-X-Mailer: git-send-email 2.39.5 (Apple Git-154)
-In-Reply-To: <20250602205021.4223-1-lucasseikioshiro@gmail.com>
-References: <20250529192036.75408-1-lucasseikioshiro@gmail.com>
- <20250602205021.4223-1-lucasseikioshiro@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="EjZv9Zjg";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="MKcMI26C"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id 660561140187;
+	Mon,  2 Jun 2025 17:32:37 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-05.internal (MEProxy); Mon, 02 Jun 2025 17:32:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748899957; x=1748986357; bh=McAWdmGzkW
+	l86Zbv7VuXBDbeCoEDbq0AEDjQT11dHbY=; b=EjZv9ZjgWkuWLsjaYmHx+zY0N7
+	j0tkpo2Ea6KRoVZ0lwxChtOIedOmQrDErfQ5K4H9gcjHx6oZYy9FhVOgkoM3QOc6
+	kWSjAJaTkj3J219NgkQxiG9UNEDQ0V83U+IA0sh9Vs08PLSBhH1XcfYEfYrsoxcZ
+	HCxDWcZca+Q2IDb1ScreaNvSQZlI96gcUBSFRB1XFY0S2rZUOJrEk0mCd475Xue9
+	qB90iKqWm+A8JdtDcE5wA1mzzlF75Sr8cHLRzB3N90kmYmlJrOJfjsjyc/ntzPmV
+	x5+MTTb7Pe4gybRBgai6OVJXsoDZnzJIZTZL7b3dYmEAcqhi70cBhPg1f7wg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748899957; x=1748986357; bh=McAWdmGzkWl86Zbv7VuXBDbeCoEDbq0AEDj
+	QT11dHbY=; b=MKcMI26ChO4TrN0pzcS3iJ5tSSg1VKX1OtmETiSjOADzzRpG78+
+	AbgT+gmRbIx8OeqDKbhK2Pg6WCc8dvs28HPpSeFgh/GuKL005k3YMY6jHfU5jyTM
+	S9yXan12ckZmkD5jgOItG3EdcNuEZETEZm20xKh3mOd27iVqczdhy6syymg3F42j
+	hbI1csTnLes3TU1JXvDaln0zKzPPD6yrwUY/HvxaFFe03NHDC/pqXkngHQIc4JoV
+	o3Q0f5CH2zJJJImNR/cdoPvx0vE7XpiotAYGMDelIvw269UaPAKzOV70Uk8fB6D6
+	ipKkXX/053ljbX1MfS0atZOW5yXiaKqYVmQ==
+X-ME-Sender: <xms:dRg-aE5wVo9p-N6J_H0HTXjSNtGxk2pROg2CQJeS0H2rveqQH6mqfw>
+    <xme:dRg-aF4BkiSoRMawWFG4NrBZTUjtCbe4jS_f1n7S8oeA3m7IvXuWFQxWRAs_VsIc6
+    kCXFA2JMFyHC1tTWA>
+X-ME-Received: <xmr:dRg-aDdhbX2QcHQd95N-RlJSRdnfjF_BQY_vG4BJDwexmm3dT665ZXL-mBDRdVMXqCnNOIRDNbvlrtrAA56tQwO63d0k-FRe6IZo>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkeejieculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehmrghrkhestghhrhhomhhiuhhmrdhorhhgpdhrtghpthhtohepthgsohgvghhi
+    seifvggsrdguvgdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
+    hrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtohdrtghomhdprhgtphht
+    thhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrse
+    hpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:dRg-aJI6gUIWlIQe8lRUAe3DFpnGAZeCP6SW4CZQPsCZO9BSMVpnoQ>
+    <xmx:dRg-aILggEKegMoliuKyOklHAIR_IPkMks_jgfbVh--a7MRjzlO7Wg>
+    <xmx:dRg-aKz_Uk95LNj-fCn9l6yWTsl5QGeZut-kbrVKLIs3uscX1ZukyA>
+    <xmx:dRg-aML1OKXBXpNvWPIvFzDxDbkcea2q0E6TdV5akWRVk0y7u1iuuQ>
+    <xmx:dRg-aPiodMd-TSq8Em-9VUDMYNYK9zrKZqX54SGZu2Lck9SI6s-u7YkT>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Jun 2025 17:32:36 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Mark Mentovai <mark@chromium.org>
+Cc: Torsten =?utf-8?Q?B=C3=B6gershausen?= <tboegi@web.de>,  Git Development
+ <git@vger.kernel.org>,  Eric Sunshine <sunshine@sunshineco.com>,  Derrick
+ Stolee <stolee@gmail.com>
+Subject: Re: [PATCH v2] t: run tests from a normalized working directory
+In-Reply-To: <f0d4c85a-b833-c52d-b54f-77ab81f22451@chromium.org> (Mark
+	Mentovai's message of "Mon, 2 Jun 2025 12:08:05 -0400 (EDT)")
+References: <20250523193722.68344-1-mark@chromium.org>
+	<20250528201737.55268-1-mark@chromium.org>
+	<20250528230804.GA16856@tb-raspi4> <xmqqfrgmhep3.fsf@gitster.g>
+	<20250531054618.GA30443@tb-raspi4> <xmqqcybnxvr2.fsf@gitster.g>
+	<f0d4c85a-b833-c52d-b54f-77ab81f22451@chromium.org>
+Date: Mon, 02 Jun 2025 14:32:35 -0700
+Message-ID: <xmqqy0u9subw.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-Add the parameter `struct repository *repo` to the cmd_walken function.
+Mark Mentovai <mark@chromium.org> writes:
 
-Since commit 9b1cb5070f (builtin: add a repository parameter for
-builtin functions, 2024-09-13), all the cmd_* have the `repo` parameter
-and new commands must follow this convention, so the documentation
-should also be changed.
+> `realpath` is a library interface that transforms paths to those
+> having the semantics at issue, but it's somewhat obscure, and easily
+> confused with "real path" whose meaning would be entirely
+> ambiguous. realpath(3) documentation from POSIX[4] explains the
+> semantics fully; glibc[5], and Linux man-pages[6] provide full
+> explanation while also using the term "canonicalize".
+>
+> "Canonicalize" alone is too generic, because there are several axes of
 
-Change the `git_config` calls to `repo_config`, also passing the `repo`
-parameter, as since 036876a106 (config: hide functions using
-`the_repository` by default, 2024-08-13) the non-repo config functions
-are no longer recommended as they use the global `repository` variable.
+Yes.  You need to specify what you are canonicalizing to, and once
+you are going to do so, there is no need for that heavy verb, i.e.
+you do not need to say "canonicalize it to realpath"---you say "turn
+it into realpath" and you convey what you want to say just fine.
 
-Helped-by: Karthik Nayak <karthik.188@gmail.com>
-Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
----
- Documentation/MyFirstObjectWalk.adoc | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+> All of this illustrates the difficulty in choosing a single term to
+> unambiguously convey the meaning. I chose to write a commit message
+> that favored technical precision, even if it meant tending toward what
+> Junio called "the more verbose and repetitive side". I believed that
+> to be necessary to fully explain the background, the problem, and the
+> solution.
 
-diff --git a/Documentation/MyFirstObjectWalk.adoc b/Documentation/MyFirstObjectWalk.adoc
-index f03753dfc0..a4ba6e21ec 100644
---- a/Documentation/MyFirstObjectWalk.adoc
-+++ b/Documentation/MyFirstObjectWalk.adoc
-@@ -43,7 +43,7 @@ Open up a new file `builtin/walken.c` and set up the command handler:
- #include "builtin.h"
- #include "trace.h"
- 
--int cmd_walken(int argc, const char **argv, const char *prefix)
-+int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
- {
- 	trace_printf(_("cmd_walken incoming...\n"));
- 	return 0;
-@@ -86,7 +86,7 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
- Also add the relevant line in `builtin.h` near `cmd_version()`:
- 
- ----
--int cmd_walken(int argc, const char **argv, const char *prefix);
-+int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo);
- ----
- 
- Include the command in `git.c` in `commands[]` near the entry for `version`,
-@@ -193,7 +193,7 @@ initialization functions.
- 
- Next, we should have a look at any relevant configuration settings (i.e.,
- settings readable and settable from `git config`). This is done by providing a
--callback to `git_config()`; within that callback, you can also invoke methods
-+callback to `repo_config()`; within that callback, you can also invoke methods
- from other components you may need that need to intercept these options. Your
- callback will be invoked once per each configuration value which Git knows about
- (global, local, worktree, etc.).
-@@ -221,14 +221,14 @@ static int git_walken_config(const char *var, const char *value,
- }
- ----
- 
--Make sure to invoke `git_config()` with it in your `cmd_walken()`:
-+Make sure to invoke `repo_config()` with it in your `cmd_walken()`:
- 
- ----
--int cmd_walken(int argc, const char **argv, const char *prefix)
-+int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
- {
- 	...
- 
--	git_config(git_walken_config, NULL);
-+	repo_config(repo, git_walken_config, NULL);
- 
- 	...
- }
-@@ -250,14 +250,14 @@ We'll also need to include the `revision.h` header:
- 
- ...
- 
--int cmd_walken(int argc, const char **argv, const char *prefix)
-+int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
- {
- 	/* This can go wherever you like in your declarations.*/
- 	struct rev_info rev;
- 	...
- 
--	/* This should go after the git_config() call. */
--	repo_init_revisions(the_repository, &rev, prefix);
-+	/* This should go after the repo_config() call. */
-+	repo_init_revisions(repo, &rev, prefix);
- 
- 	...
- }
-@@ -305,7 +305,7 @@ Then let's invoke `final_rev_info_setup()` after the call to
- `repo_init_revisions()`:
- 
- ----
--int cmd_walken(int argc, const char **argv, const char *prefix)
-+int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
- {
- 	...
- 
--- 
-2.39.5 (Apple Git-154)
+Yup, that is why I said I thought your original was clear enough.
 
+I am tempted to say that we take what we have from you and merge it
+down.
