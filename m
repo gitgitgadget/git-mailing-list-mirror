@@ -1,119 +1,134 @@
-Received: from mail-pl1-f174.google.com (mail-pl1-f174.google.com [209.85.214.174])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 005CDDDAB
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:42:08 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273B115AF6
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:55:58 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748889730; cv=none; b=JCsevDRLAO/L9/ptgaFQr+h6muvqqjsqLpDibukOEwgtRjLjkdWulXMXPWsJmDkYcQujU/pzdMci1bSt+15b1K+wCSNcfWohB36XWBgVmMcpvHJEEkfos7NbM48nQebc9JqXhGwES6UXUMjEmwc9VdwHIy8BasWKCH16GQn6TPI=
+	t=1748890560; cv=none; b=oBDou5a+ieTQ0fUYpMNPVHP9bjNYK3Stzeiyrs10ZxLXviB+qdR27E4vIN43+P/wvNuyK/poZ/ob8wyfpZcGxuhFj+JF6kpBRYl71HUOImjijsxoaCDfgv1wvgY23Z+oUf5z59lnyzPsk6/7/fbwGljjnaysciWETZZZE5Mlz5Y=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748889730; c=relaxed/simple;
-	bh=CtF/170vBJOL20xCMxDPNgVC3TvF95GbISRDY6zCXSI=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=GuvPEXrUTy43LBBEDZZGhsQ9VJ9lfcv99jvp6vK6cJ5JXwfJ3zXzXd6AL89V2eQdSXAOSRmmOH6bmX40eqIUJaXQ0FJwrIj6HtT+5cQ+HDra4uQIxGt3DyTom/kiKfpBvT0VDWarpwod0WisH3W9yqseaNXXeo9qNI2M7xayf3Y=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=c7t9DYbn; arc=none smtp.client-ip=209.85.214.174
+	s=arc-20240116; t=1748890560; c=relaxed/simple;
+	bh=YHlkPzbw1bqcJZTYaYxxvRT3cE9SFsD0GAR4HK6dNXA=;
+	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=K14ToS8DjFr+rN4WtSojs/gGwNCzG8m0yfCeuTpUfZG+6r609Ulodxxc6Hs8rqKOyQD1i8Q5OD/2YGSYsxSl0ZX2SGLIeUxPSjHGykHXzp7KQ0MEg6aG4H+9y08axTLu+xHXsDaycWg9gKItMMrHbHnTS7j7p+uF/eahAdfpxBs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gg5SLSU/; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="c7t9DYbn"
-Received: by mail-pl1-f174.google.com with SMTP id d9443c01a7336-2349f096605so59006045ad.3
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:42:08 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gg5SLSU/"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-451d54214adso15499785e9.3
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:55:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748889728; x=1749494528; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4QdNLti6YxqjR9js5yp6Llnrw9y84hNFxlQavjCC8ds=;
-        b=c7t9DYbnvi9w+N7xrq5qqeLXJHuP1gYduxqoFV2FMy9tto5eweJD6LxT5uW+Szsbmo
-         fxdq9/0OUyUuNI74Bam+yRNjae0cp9qpnA5WoH/8YH2zUX4Id9Aetp4CclqnEwRGJtJQ
-         TuzwbiS5UFUATeeCOvpn80dh7o56ML2etJVjSCBnkOV3vXtTPY1TYsxneaxOJ4PUI0+a
-         naKdm1vbhnJrM1DYz2/mhgnrxJ4/NtQRHuJG6PXtR7f92cDc89Sa0igGUz/nQ/smY0oq
-         zOOJPhF9hhUtpmLURKP+NEKWXaBbic/FlrRtACEyO1nc+llKIQLyjGGaoBzLVCdOi6xA
-         EP6g==
+        d=gmail.com; s=20230601; t=1748890557; x=1749495357; darn=vger.kernel.org;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=hBDpVfD6UqqxKOFFfF1BysL34P9ifDo3lWcSrIz8eh4=;
+        b=gg5SLSU/4TeNGktWsfdxcGhvxE/l6jn9fNj7WKLVKY/P54x/iOS1VLzuGDG4pvxwKN
+         XK5L6TTGFnzbIVB964x61JQW/wyuRrK7PodfBAy6EhT4QlsAwvh2z3pV5+irVyFCpxzB
+         k3Ld56JyRifebtJ1jbFNwbBMvQf7YmeZcEDDnqxUXyQSV5Bx7zeJAnOCgtWsPU3U26aa
+         RR0bIEgcKwRn+rULpKJJ75ifiJ5w4hVME+6vF3zV5cUx9J1zBmd0fHoy/OxnmP3OTUn7
+         2ZA4OTReNNgP8/py5Vty0UlPPCgRV65wOn/xVBTd9aWnBL6heiIxo3r2pVOUM0y0eBO/
+         3wIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748889728; x=1749494528;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+        d=1e100.net; s=20230601; t=1748890557; x=1749495357;
+        h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=4QdNLti6YxqjR9js5yp6Llnrw9y84hNFxlQavjCC8ds=;
-        b=Ifwalvl9t5wYyd1BVTyGNPyKudDJOB5WicVFSbqoov4+9OpiPsQBrX/gwSJ1El6Phs
-         CAabG7+sCm/GZ603PIY/9m86mCpL8G8g2A36aF8me7Me2rUTNkAI0VlQddklebNeCQ9k
-         C6DQFbdahjmzR9fneGojL3yGyQ6LHr3n8uRVjB67w3Jp5YOed1SiDATlFmkAPyBJvvLZ
-         +aUqMtEjgumqj25MxUFoHrT8CH221EJtOnjNiIZXT+kq61yNrC5hn4GqBQQYWXiOOicY
-         Zb1/MASCuWZLTC3mZjoXOH2n7TsntK1fTbnLCvTpL86bbYMHieTAV6woQk21/KV9f9J5
-         DTBA==
-X-Gm-Message-State: AOJu0YzGPS6fs4sZnZATAQKTTUJryyHk7KiOMmIVNJmoVXjcs6qQ53WA
-	XXU9KW9dDur9vseEPxhyVTADIk4CPJCyH4LF9zIokl1xmxfLlPrfrfG+edxE6g==
-X-Gm-Gg: ASbGncu2uD9MKD3Fk57Ru/In3+A4zpYtdSyF7KCEruY6FpOIOALLGeFqRbP5vw7wsb0
-	L1pFralN9xVu12FY58S663gEsJNInbbLYcVdE9w0AIEMx0SV5OyInLe4d6dfjoanbzJiHTRL7hU
-	iiJdgxRMW0iBUFMjoQKnaCoyTqhpvK73EoPJ3NJu4cMPlpSVlSchV5efkOdL7ATaADIzvqHAX4b
-	mIcICkJBOGCB2vBXWgMqip9hDyLiMNNHPi7LeExsSvjSbnonSPHrJUTIw6dC8z/hFw/cW9qYpUJ
-	FKjtx+Y7z04cqKje7jFSoqlfLyrPHe2ZBzjQHkbDTiIK
-X-Google-Smtp-Source: AGHT+IEaFO1pNyq2ojfCHq5hZ2w6NfJVQOmTcV6yQt32z2PGLIfrVlBHChCYS4Qzv317MVQsVJYY9w==
-X-Received: by 2002:a17:903:22c4:b0:234:f580:a15 with SMTP id d9443c01a7336-2355f782eb5mr160202365ad.14.1748889727959;
-        Mon, 02 Jun 2025 11:42:07 -0700 (PDT)
-Received: from fedora.. ([2601:646:8081:3770::9eb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506bc8483sm73850505ad.1.2025.06.02.11.42.07
+        bh=hBDpVfD6UqqxKOFFfF1BysL34P9ifDo3lWcSrIz8eh4=;
+        b=f6vaPwDYuMU8GnJXf6DFSQRNECDF5QltbAayePrRBMxdyrx+/38UD/alNizRAlwEun
+         qvCNhXmMDQQ2ZKfrWakf6hxWtp40VY0bW1TeLVcDIc2a5mqZLja7odG0/9YcoK3wKxgq
+         4L6EUeJzzVKPHS/rA0V9nBbBaOYCY/swUWiMSnQCwM7IX9s2ts7Kn6/PXvzSb7mBffPW
+         +Vy0zLfCS7LwUcv6MMEuxaucCidbyHkFHb0rK5kL9Sa0srnPTw07WNTF6EWgXdYN0J2G
+         u2B42DOn2ri5cD0hbd1sV3o+T4fVd3hhBjvbcMsKHoArZ9yTdt74fx3c1za9LBWVmCxP
+         ozKg==
+X-Gm-Message-State: AOJu0YwxPocesSSbnbZohPx6bxQvBBVWryifT1ROi5PVyGRCI3DBVi5Y
+	oLCRjqfJzKGOG/EqNbkp6rP4nJ2glFNJ0niMl3whejtgxzovRcgzYKYE7deGKQ==
+X-Gm-Gg: ASbGncszpZSQYZEBX94TOKDEbl5sfWpReKPHAJFuyTDcK7IqJdUgDvDB8jARhELmlxo
+	n96V/uqWhcLtJwsE8OHv9dLjISkpCISB0Dh7Cja2FoX8Ae3ACthjNJkCZyqi7dxDMcA4sTV9UHS
+	2vrtXvbkDy3l6U3MptMcjMfxLB7vVcPAVJZljdzBcAqtuomYmdY1WbaMW0qxtjq47hJHt/vH1P3
+	4P2yT7j+/BbvZvnRVBCRZOh4cojlTmbWGfdvBWGz3MTmNKp01W0KD2xMz87mOCwJO7S2Gan70b7
+	ghUYuuTfoJf2B4SjAbFL4L43umC6RsOChElbQHVB9SM2MTAtF8UG
+X-Google-Smtp-Source: AGHT+IHHpqf6XGRKcEh7KWF4UYVwQ6wWR92nsjBchsb7Onl5z+DQt71Tc7Dve/1f/IZjbrJdnn36vQ==
+X-Received: by 2002:a05:600c:4688:b0:44a:ac77:26d5 with SMTP id 5b1f17b1804b1-450d64fedb2mr139498095e9.14.1748890556789;
+        Mon, 02 Jun 2025 11:55:56 -0700 (PDT)
+Received: from [127.0.0.1] ([13.74.141.28])
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f00a00d4sm16004209f8f.92.2025.06.02.11.55.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 11:42:07 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: jn.avila@free.fr,
-	Collin Funk <collin.funk1@gmail.com>,
-	Patrick Steinhardt <ps@pks.im>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] completion: Make sed command that generates config-list.h portable.
-Date: Mon,  2 Jun 2025 11:41:48 -0700
-Message-ID: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.49.0
+        Mon, 02 Jun 2025 11:55:56 -0700 (PDT)
+Message-Id: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
+From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
+Date: Mon, 02 Jun 2025 18:55:52 +0000
+Subject: [PATCH 0/3] cat-file: add %(objectmode) and submodule message to batch commands
+Fcc: Sent
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+To: git@vger.kernel.org
+Cc: peff@peff.net,
+    gitster@pobox.com,
+    Victoria Dye <vdye@github.com>
 
-The OpenBSD 'sed' command does not support '\n' to represent newlines in
-sed expressions. This leads to the follow compiler error:
+This series re-attempts the changes proposed last year [1] for extending the
+information about tree entries available from the 'cat-file' batch format
+commands. It also (hopefully) addresses the initial round of feedback that
+series received.
 
-    In file included from builtin/help.c:15:
-    ./config-list.h:282:18: error: use of undeclared identifier 'n'
-            "gitcvs.dbUser",n       "gitcvs.dbPass",
-                            ^
-    1 error generated.
-    gmake: *** [Makefile:2821: builtin/help.o] Error 1
+The first patch updates 't1006-cat-file.sh' to test non-OID object
+specifications. In response to the feedback in [2], I added more careful
+quoting and a couple tests using paths with spaces. This change revealed a
+(likely known) limitation of the '%(rest)' atom when processing object names
+with spaces. To make that limitation explicit, I marked the relevant test as
+expected to fail.
 
-We can use a variable that expands to a newline to do this portably.
+The second patch adds "mode" support. This is essentially unchanged from its
+initial submission, save for some conflict resolution in the test script.
 
-This portably issue was introduced in e1b81f54da (completion: take into
-account the formatting backticks for options, 2025-03-19)
+The final patch takes a different approach to submodule resolution than the
+initial submission; rather than treat the entry as a "regular" commit object
+with empty content, we now print an error message similar to the "missing",
+"ambiguous", etc. cases, but with the tree entry's OID rather than the input
+object name.
 
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- generate-configlist.sh | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+As for the motivation behind the change (re: [3]), the goal of this series
+is to be able to get more of the information available internally about an
+object in 'cat-file --batch[*]' -- in the case of a tree entry, the main
+things missing were the file mode and the presence (and OID) of submodule
+pointers. As Junio mentioned in [4], using a single long-running process to
+resolve objects is far more performant than spawning multiple processes to
+resolve tree entries with something like 'ls-tree', especially when
+resolving entries across multiple trees or resolving a mix of tree entries
+and OIDs, refnames, etc. The object resolution logic in 'cat-file' meant
+that the mode & submodule OID information were already (mostly) available,
+but we didn't have a way to output it.
 
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index b06da53c89..48ec8d9812 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -1,5 +1,8 @@
- #!/bin/sh
- 
-+nl='
-+'
-+
- SOURCE_DIR="$1"
- OUTPUT="$2"
- 
-@@ -19,7 +22,7 @@ EOF
- 	s/::$//;
- 	s/`//g;
- 	s/^.*$/	"&",/;
--	s/,  */",\n	"/g;
-+	s/,  */",''"$nl"''	"/g;
- 	p;};
- d' \
- 	    "$SOURCE_DIR"/Documentation/*config.adoc \
+The intent of this series is to make the new format options/outputs to get
+those fields as unobtrusive as possible, but I'm happy to do something more
+like the previous series if that would be preferable.
+
+[1]
+https://lore.kernel.org/git/pull.1689.git.1710183362.gitgitgadget@gmail.com/
+[2] https://lore.kernel.org/git/xmqqle6oo2ns.fsf@gitster.g/ [3]
+https://lore.kernel.org/git/20240312221758.GA109417@coredump.intra.peff.net/
+[4] https://lore.kernel.org/git/xmqq1q8fl05r.fsf@gitster.g/
+
+Victoria Dye (3):
+  t1006: update 'run_tests' to test generic object specifiers
+  cat-file: add %(objectmode) atom
+  cat-file.c: add batch handling for submodules
+
+ Documentation/git-cat-file.adoc |  13 ++++
+ builtin/cat-file.c              |  14 +++-
+ t/t1006-cat-file.sh             | 111 +++++++++++++++++++++++---------
+ 3 files changed, 103 insertions(+), 35 deletions(-)
+
+
+base-commit: 7014b55638da979331baf8dc31c4e1d697cf2d67
+Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1929%2Fvdye%2Fvdye%2Fcat-file-mode-submodule-v1
+Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1929/vdye/vdye/cat-file-mode-submodule-v1
+Pull-Request: https://github.com/gitgitgadget/git/pull/1929
 -- 
-2.49.0
-
+gitgitgadget
