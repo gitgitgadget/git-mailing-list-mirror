@@ -1,179 +1,117 @@
-Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 931B321147B
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 10:27:34 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AE11DB125
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 10:35:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748860057; cv=none; b=D7aXkfOgnwIrzUbPGIapgYtIOu2n9SBRiZ4Xn/lPgHKs40nCwLYCeQ8LpoCegyUT2OLN1WgMeMd4xSyunnH1tHH+YDnwDdi7rXGomevxACM+01k0iRipHSx3FtvieU1MIF9CeIdx/5I46gjPPc3Q4Vuu7PAX3A5G/5v57g+etoQ=
+	t=1748860542; cv=none; b=nZb06XRVVNdbW0dZR6FiePROwmR7nbw5uJ0X/x5D4sp3mzHR+aWqmOvMuwrntRR/gjBOA9Nt3jo8LVbWaqFY1VTemBn1bY/E3jZNP0BLBhs3+IbtlU/x3jV4CWgrOesgvupkKhGEw6zlkpx3dxOZDChW1mr1o8aW3t7Ew8x0SCs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748860057; c=relaxed/simple;
-	bh=HOL8awrclugrhV/K/xSlfRR/oHErfTWxtYtnpYE+C8A=;
-	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=XPhYmC69fxZUjnzr5RxQwNf/LEFhs0xlF+2ExqOMbikjtaOA2tWLG3VwkSgYM+W5LaMLBOrTqOXFs+97D3ZJUVNDRFT8DuKeEVOV8ED4QN/IYz/QnzKzTlpr5vDRGIgMEiqHMTF750eAWEiT5Rb985D7ojtqA0quv/z1Ed9qFQY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=XfTCqGO5; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=V41aNFyM; arc=none smtp.client-ip=202.12.124.145
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	s=arc-20240116; t=1748860542; c=relaxed/simple;
+	bh=Xu/HtFgnqtZO+2nRhT/3kdBFJSZEjkQy6XPeW15HrL4=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=QdQfHxjwSjyuDmighxaVeXeP6lfla5vI1g8rfUJ5ga0e3Gk0do36MmEAByxQ3TCeV9nNhvEoTu1jxDvgaQo9rRF7oksgYxU0xZK2B0nalWuBa3VeTO61oKbmE100GEW7ow7dNsSwd0z8nkWg6QaJ+nXqKzO8GFm0zY5LFUl927w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZIwov3NJ; arc=none smtp.client-ip=209.85.217.52
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="XfTCqGO5";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="V41aNFyM"
-Received: from phl-compute-03.internal (phl-compute-03.phl.internal [10.202.2.43])
-	by mailfout.stl.internal (Postfix) with ESMTP id DD8B41140151;
-	Mon,  2 Jun 2025 06:27:33 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
-  by phl-compute-03.internal (MEProxy); Mon, 02 Jun 2025 06:27:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748860053;
-	 x=1748946453; bh=EAyIepFJgFgFM2GMxxO/oyc9AyeeMI386bZnp9YkH8E=; b=
-	XfTCqGO5KaFmHtc3goO2tMKYTC4j4BOJ2v6cD47r4GdzLTkUI6b5sG6uo5PyEEJ2
-	oo4AXY0FhEr4fcXv8KBorziShX3/Ref0EJSHjBRX0Rlc/55hjzrNX/TbrZ5R+OoJ
-	ACMzRDzX0eG7ThxIiRSZI2DWrJVuKPp6ibymciVC+GJS1hlaCxXRO3sOTMB/i0T7
-	8REgH5mL7lXU+17P8pV+9mp/HeCZosBJFa7ZbEs+H1S8zW/kZw8wDUfCaWMCqMw7
-	+1sdAmS3TqZE0K2KeE+p+vs8ZklSZaQf83E5qsymqi7x/DkvpNnmqRLeZtwkHeZe
-	Leg+awOMnC0inaMb0fPkdQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748860053; x=
-	1748946453; bh=EAyIepFJgFgFM2GMxxO/oyc9AyeeMI386bZnp9YkH8E=; b=V
-	41aNFyMM8a/BUKX3Og9iJCjTD5avxMp/llSGf/asfqRCDhPmMoUGg0wd0+J9B6x4
-	x4i62hKKXzTc2OnNBLFAVLl/tZua2E8tcLQIvfpLTdoLlGxNNx8XhWoCvb5fDm7k
-	vdZzOCsUSSFjQLMGifdL/Kg9FIUGziYM9NoXWWrJH7EDae6FxyO8sCLpZotSP98F
-	fkM3N+TjbjBrRXhKIt6TIKF80FIVavstF90R0uqdsXYuJu8X2exz6zXzy16z2wnt
-	nS2UqYM2hI3hpkMQOd4cMsUHazJVzsxiCZ07h5aBG0xRKwiiuIzVE0Bz48acz37W
-	TsuAI4IsTQ5TKIgpSiW+A==
-X-ME-Sender: <xms:lXw9aHmcpBg9ZGpmh705v39_lb5FL8BS9_UEdACt2mvYFVeuezcRlg>
-    <xme:lXw9aK1xLdi1AaarK7HEgwWjAcGDYIzr2XmfogLE9xIG9F2hDV_cPX8tT413chkcf
-    UXO70A3DaZ3R9ogwQ>
-X-ME-Received: <xmr:lXw9aNosV6jf9LBoCWGPJuAY0Mr6oWAoDZhxJguf8MEvELBgCE2begkrepoNuiJpMIVhq4k_-5gzAomeF0Y50qmyO9F6eo1kp82Us4t7RhQRUA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefjeegvdculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhfffugggtgffk
-    fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
-    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
-    uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepghhithesvhhgvg
-    hrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehtohhonhesihhothgtlhdrtghomhdp
-    rhgtphhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsh
-    htvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhl
-    rdgtohhm
-X-ME-Proxy: <xmx:lXw9aPlgRamMrXlNyr2LU6w1MPYLFEXdAOfrss3Jrq-wHpJ67KM3JA>
-    <xmx:lXw9aF3EefdKMM74G7lWUuAX4vsJMWNRZHp2Un1jYrGk18yZ9IUzYQ>
-    <xmx:lXw9aOvF5vER9h86c-Ztm6FiVKaWLJmMxmXLICBQvxTO5mjhRdH_eA>
-    <xmx:lXw9aJX4VAYF24DNxXX_hQnoCMl-FGgegkxSNoD5oPFNFis2aCHxTQ>
-    <xmx:lXw9aHMtfL9fDux6eGJjyxJ7TFMM3Cr2I4F2SgWvfyJ_2g1YiiEashfB>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 06:27:32 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 5003999d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 2 Jun 2025 10:27:31 +0000 (UTC)
-From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Jun 2025 12:27:17 +0200
-Subject: [PATCH v4 16/17] odb: rename `pretend_object_file()`
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZIwov3NJ"
+Received: by mail-vs1-f52.google.com with SMTP id ada2fe7eead31-4e45cfc3a26so3103384137.0
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 03:35:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748860539; x=1749465339; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xu/HtFgnqtZO+2nRhT/3kdBFJSZEjkQy6XPeW15HrL4=;
+        b=ZIwov3NJO+CCtluHXIhFXh7OVK4D7ItGw08sodxrrfCOXPEvHEhpw9TWEjj20woWPN
+         4DcAneyBa/rdQoC/+BoTef04sxVtQt40/WdUtdJXY1RwST7CgXMFsAiUmyoMRdlmRF5c
+         5hvedaMIW1yTNZ95eY2m39DPEaqcoKAr/4Io8CvbkCev5whUm/boLplUGrVJTJUhaK7S
+         mA4E886mq44nBgEVy4DGZNKT7J8laW+gUYgcUJyL3+ovcv9JweupwLYdTGo0UWm5NLZG
+         mZjZKxdqfrHjdujC/uzOY3Yl6fLkPuWXZpWRKJPKakBmNGoz6pud3Su5FtpSUru8VjK+
+         vsiA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748860539; x=1749465339;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Xu/HtFgnqtZO+2nRhT/3kdBFJSZEjkQy6XPeW15HrL4=;
+        b=iJgAt9nIV5TUKoo2uaS7mtN638sLHHUU9g4aLPVYjx3vTKFqe/XN+9M0nV1YU+1W+L
+         tyS3h8NFU5wzTtZzr/jByw4J39OzxVtmY1ZFJtMFYfyTWgQF9HZ9ZDFR8OF8Y+X6Cm8S
+         8uK7VH0fmvASzh9IhhLcfb59zsvyjlIfw7zdEkMVBE3n7hkyyRBb6p+wfOPwspZ9/3Id
+         gLGJ8rG2734XbsGCk51DEuvnCcZNC+7R8z1RctjhJ8WTkvdj2o5IThpFAQujpUVh6p8F
+         W0kkDE3oEG7cdGEuWXwjWYEv8ncjIbIKbK6BxmVozGxHapf3ALH54VYtHjYf003cfZ2J
+         Nx9Q==
+X-Forwarded-Encrypted: i=1; AJvYcCWYPdgZ7nPpIVaIKgmsrbhTWlprhK6SZ291bTzHEbVOWLBdKz/cVuVdiawXl2CLuJycbUE=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz21dwy1eNpIYaD/tI1mGifcyVYMUqkw8f8ss03typ9YIQAY+xA
+	TZzYDfRlSlMD7cBAxsULDkH8NgiET6Amt/8nU9mBOuJWudBBDpVLeJUtqz8u4UQJP74jZV4ifcv
+	SuejR+UKi8haE+2jAehIc38gJoqLllxGo2Du6
+X-Gm-Gg: ASbGncv9xQK7Cv9UOKhnSC1Gx86BAHgxSVETvJxA7hGSxNu/daiWr6P0Mv/sKNyFACA
+	Wzn53RKR3JK20KylTzCkSwyHeTHAZbs255eeSVC4ixIH35zdzCksIxhhtLiEV4mXEuv7Z8Yfr4c
+	eF7nQLSr7v7HicZALJO/Cr8tmxX/5O1kqC/py823bH/kbkItwJ9UZPbsSDNqut+baipkM=
+X-Google-Smtp-Source: AGHT+IE0uygYy8362TdLKoomt91hJSt5mkfEfvtst6WkOH3Mdde7pi0CNJfa3IQML3mSLH3N2ZhoHYFf/nNE3uj+Bjg=
+X-Received: by 2002:a05:6102:b12:b0:4e2:a235:24d1 with SMTP id
+ ada2fe7eead31-4e6e4acb476mr8801807137.4.1748860539365; Mon, 02 Jun 2025
+ 03:35:39 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Jun 2025 05:35:38 -0500
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Jun 2025 05:35:38 -0500
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250602-b4-pks-maintenance-ref-lock-race-v3-1-587d44252dcb@pks.im>
+References: <20250602-b4-pks-maintenance-ref-lock-race-v3-0-587d44252dcb@pks.im>
+ <20250602-b4-pks-maintenance-ref-lock-race-v3-1-587d44252dcb@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20250602-pks-object-store-wo-the-repository-v4-16-e986804a7c62@pks.im>
-References: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
-In-Reply-To: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
-To: git@vger.kernel.org
-Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
- Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
-X-Mailer: b4 0.14.2
+Date: Mon, 2 Jun 2025 05:35:38 -0500
+X-Gm-Features: AX0GCFsMUIY6DOi3a7insQeBwv1lSUuiS0tZYw400M2KKTetkaCRkV9dy16uld4
+Message-ID: <CAOLa=ZSy5XoKJ2OaKv3DukY9ko-pkpa2zHLQneLwq=9+wJnYWg@mail.gmail.com>
+Subject: Re: [PATCH v3 01/12] builtin/gc: use designated field initializers
+ for maintenance tasks
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Yonatan Roth <yroth@paloaltonetworks.com>, david asraf <dasraf9@gmail.com>, 
+	Emily Shaffer <nasamuffin@google.com>, Ramsay Jones <ramsay@ramsayjones.plus.com>, 
+	Ben Knoble <ben.knoble@gmail.com>
+Content-Type: multipart/mixed; boundary="0000000000003605cd0636945385"
 
-Rename `pretend_object_file()` to `odb_pretend_object()` to match other
-functions related to the object database and our modern coding
-guidelines.
+--0000000000003605cd0636945385
+Content-Type: text/plain; charset="UTF-8"
 
-No compatibility wrapper is introduces as the function is not used a lot
-throughout our codebase.
+Patrick Steinhardt <ps@pks.im> writes:
 
-Signed-off-by: Patrick Steinhardt <ps@pks.im>
----
- blame.c |  3 ++-
- odb.c   | 18 +++++++++---------
- odb.h   |  6 +++---
- 3 files changed, 14 insertions(+), 13 deletions(-)
+> Convert the array of maintenance tasks to use designated field
+> initializers. This makes it easier to add more fields to the struct
+> without having to modify all tasks.
+>
 
-diff --git a/blame.c b/blame.c
-index 858d2d74df9..dce5c8d855c 100644
---- a/blame.c
-+++ b/blame.c
-@@ -277,7 +277,8 @@ static struct commit *fake_working_tree_commit(struct repository *r,
- 	convert_to_git(r->index, path, buf.buf, buf.len, &buf, 0);
- 	origin->file.ptr = buf.buf;
- 	origin->file.size = buf.len;
--	pretend_object_file(the_repository, buf.buf, buf.len, OBJ_BLOB, &origin->blob_oid);
-+	odb_pretend_object(the_repository->objects, buf.buf, buf.len,
-+			   OBJ_BLOB, &origin->blob_oid);
- 
- 	/*
- 	 * Read the current index, replace the path entry with
-diff --git a/odb.c b/odb.c
-index ad2a621698c..dd6b37eaa92 100644
---- a/odb.c
-+++ b/odb.c
-@@ -863,21 +863,21 @@ int odb_read_object_info(struct object_database *odb,
- 	return type;
- }
- 
--int pretend_object_file(struct repository *repo,
--			void *buf, unsigned long len, enum object_type type,
--			struct object_id *oid)
-+int odb_pretend_object(struct object_database *odb,
-+		       void *buf, unsigned long len, enum object_type type,
-+		       struct object_id *oid)
- {
- 	struct cached_object_entry *co;
- 	char *co_buf;
- 
--	hash_object_file(repo->hash_algo, buf, len, type, oid);
--	if (odb_has_object(repo->objects, oid, 0) ||
--	    find_cached_object(repo->objects, oid))
-+	hash_object_file(odb->repo->hash_algo, buf, len, type, oid);
-+	if (odb_has_object(odb, oid, 0) ||
-+	    find_cached_object(odb, oid))
- 		return 0;
- 
--	ALLOC_GROW(repo->objects->cached_objects,
--		   repo->objects->cached_object_nr + 1, repo->objects->cached_object_alloc);
--	co = &repo->objects->cached_objects[repo->objects->cached_object_nr++];
-+	ALLOC_GROW(odb->cached_objects,
-+		   odb->cached_object_nr + 1, odb->cached_object_alloc);
-+	co = &odb->cached_objects[odb->cached_object_nr++];
- 	co->value.size = len;
- 	co->value.type = type;
- 	co_buf = xmalloc(len);
-diff --git a/odb.h b/odb.h
-index 09cfd9e01f9..8eaa4ba7ba9 100644
---- a/odb.h
-+++ b/odb.h
-@@ -281,9 +281,9 @@ void *odb_read_object(struct object_database *odb,
-  * object in persistent storage before writing any other new objects
-  * that reference it.
-  */
--int pretend_object_file(struct repository *repo,
--			void *buf, unsigned long len, enum object_type type,
--			struct object_id *oid);
-+int odb_pretend_object(struct object_database *odb,
-+		       void *buf, unsigned long len, enum object_type type,
-+		       struct object_id *oid);
- 
- struct object_info {
- 	/* Request */
+I was wondering why we don't catch missing field initializers when not
+using designators. Seems like we explicitly set
+'-Wno-missing-field-initializers'. Perhaps something to slowly tackle
+over time.
 
--- 
-2.50.0.rc0.629.g846fc57c9e.dirty
+The patch looks good.
 
+[snip]
+
+--0000000000003605cd0636945385
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 1d65ce7a62a18f61_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nOWZuZ1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMXJOQy85U0pKRXNPNFF3RG84Wi9NRUpWSmY4bldaLwoyOWJLcjk0Rk9z
+UFZiM3Bwbkg5RlJ1aGRRUGpyRnRtdVpRNVk4OStxNE1FSmtkcHIzMWZLV1NidnNRSkF0OFlSClpN
+Z3ozYzM1enN6VHdUOW1yeEZpOGZrQjdGVDlOWlBPVERhV2V1ZmRPNlVFN1FLeGkxOFBDWENPSWRR
+eGxGUisKZlpnVW1JQ1Q3dUFEcTR2Rnp2QnJ1V05pZnZRdnl3SzR6dlQ5QXZwQzl3YWpmeEJVZkFB
+QzZrcDJnQk1GalE2OApvc1FRMzJsZm5sZUhnZmlJakxVWVVrTzJYS2NOUXc4M1FrMUxrOHBMUzdQ
+aktPQ1I4WnhmZjFFVU16MEFZUUk0CmY4SEk4UHFKUlh4VHUxSDVVSmwrc2hHWVJLd0J0NmhjMG5p
+eEd5ek1XNWp2NDF4S2s5MFZDdDc3ZnBSeGxwOHIKaHBwK0daM0RsSlprOWVOcGtSdkd0WERCNnU5
+eG05MVZzL0pJY3BhTnRWNWE3Mk9ERlBQZGJVWDdjQ1g0emIvMwpaMlZHdnkySVVFSExPanBIUjRV
+dlIreWVKa1N6OVVSeEFKWnl6c2hvckVTbTZKUElNU0o5SHRGRnRUNDVldmJjCkZUek5uVkdDb3dK
+Z0xGdk8xS2tHUEppckFlZWJZNzFjdkQ2SHRyMD0KPThsOEYKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000003605cd0636945385--
