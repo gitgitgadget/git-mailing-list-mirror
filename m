@@ -1,65 +1,65 @@
-Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
+Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84886221DA2
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 13:50:05 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.46
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A270B221578
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 13:52:40 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748872208; cv=none; b=DaCG9tSxekWr7UOU3+IsWkfixaGbtwp1CZM/X6uqHYPRn0BP7i1awGo52bWvbmfoklasOgFSyCj1yMcPtMJD6MurSiQYtmY2LZwI+cJrNKBqIw27erhIcjbatriq2jDJMYsEupu9VwW8hDjXhL9tXsAbKBH4MbWOUJ+EgXsnOgY=
+	t=1748872362; cv=none; b=aZ4wWV6DglNMhPlMg/h9bA+lCZVM7nc0+Ui4gz3QwBVTBKcgJS0HMWllt34aQPaNzUHEe6mtfXJBLXAd8lnFcF6KdfmJYGpbmjQKwBr2DOtMnnn7Ja6NZMKArat8BTvTYT4cy9UZYNFWbSQ2005ssvHNkeo575aCA1Qe53HFGOs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748872208; c=relaxed/simple;
-	bh=fnVMaF3YynS2Z/dZcKERsXTr56/gxXK97DX9cG/JwQE=;
+	s=arc-20240116; t=1748872362; c=relaxed/simple;
+	bh=i/urKSLO1zRBXGqabpNy2J6MjPcdJOw41ZPnIi/EO8k=;
 	h=Message-ID:Date:MIME-Version:From:Subject:To:Cc:References:
-	 In-Reply-To:Content-Type; b=PSX4SdrGydB+xWLX/vTf4QHyXU+VcjSboW1CZHZcAdgA1+1ZoCRyXWecnbvYhpxy1xIMcJWxFko/RwiKiMNqusFFVMS+fa9mPDpvYCLQ06DqVwdARyspzadfmYfyBFkDeYlRV6/9vF5U63Xd5CQeOr2J9SX0B9jq8RaVLfZFDZs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=HnnHdOzD; arc=none smtp.client-ip=209.85.128.46
+	 In-Reply-To:Content-Type; b=UTxwiDacsoNFiMYlwLwtXETUI9yR+LbY7kmC3hHZMWKWT5dXaucKfqOmZfWp3lEBfQyvVogsEZiFIRWA2Q0EE5xI0S0FAH0ovTn7IOtIkazhDvR212Mu8qeu8NFM+HXVIddXvQg4jnxQ7EvfxAT38oM3jkXNC5QmDrw9kyfhEx4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Fr18datg; arc=none smtp.client-ip=209.85.128.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="HnnHdOzD"
-Received: by mail-wm1-f46.google.com with SMTP id 5b1f17b1804b1-43ede096d73so32057705e9.2
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 06:50:05 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Fr18datg"
+Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-442f4a3a4d6so25543345e9.0
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 06:52:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748872204; x=1749477004; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748872359; x=1749477159; darn=vger.kernel.org;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=ysQPhpxzKALXLIIvjpQOA6docjlbjvZTrUSMMTqd/aA=;
-        b=HnnHdOzDAHMspbhW2otDkMmJv3v7myU5XltgZygz6fI3BHMzKXLDp+XN8iy1N6PHw/
-         DsqPYI1t8hcbguVKftE4msRoP3MWGW8bajL02uSYYlqnBBSu+T4a82rJ5GkkgIutJa9q
-         iDNYsZvUtHsRCdpLSZLzfwb/BPVtBZKeRQ8znuntU+vPnpcNek0wKDhNPA8n80Ci7d+s
-         hYFnCswyhvy70xB7u+NDQCPkPbaj3f1rqvlCyU6amgVPKB845pl5UpQrhgIyf6j3g1R/
-         mVXzmwXGsxna25Ps0LWY/xkAcn9Cv8lugWlAX99ZhZebWf0i69wbLqiUze95LJnHtyYY
-         h9+Q==
+        bh=CLnijCf2nZtKbJhBr0xl/0eg2jneCxd90ylHYNpL1H8=;
+        b=Fr18datg0NtaXA1IJiyilgukzXrdbnuYsS39u92l35XkE3PtziKmKr1RMe4i6l5goO
+         EIYl8LxBSFafRMx9XIQfzHhj6j1afOYhwUSLocFBjHQy+D0g+3wkQx47a2XI1XB5pNqc
+         z587J8vP38cuTQKQbSKWuU0fYVW7TnDaFujXiUsPAP06GDrPvLZu+U21yO3FGpFQ9Oqk
+         typ7fC3K5vGnzW4wbiHF1t6xSLxeEYN2cwQqT6FD6c8lbfIfSrJu/eQIA5cwWmzkDTcV
+         KuyRwmenLCKu5ARNLXF233R+v64ucXGd/aS3Rhzg8A2XT8bCxgjfi57NJn/v5OmJgZD0
+         57wQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748872204; x=1749477004;
+        d=1e100.net; s=20230601; t=1748872359; x=1749477159;
         h=content-transfer-encoding:in-reply-to:content-language:references
          :cc:to:subject:reply-to:from:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=ysQPhpxzKALXLIIvjpQOA6docjlbjvZTrUSMMTqd/aA=;
-        b=TJgqX2wPEMWhHrxtIkA09JuN4x5aHTwsydatpEvWRQIyDynkFopuIfhR9XaGPuhUn8
-         FF6I0GnPZEKk5wD1RcvPdzhg/3PPAjaHdTYkFD7egISTt9CSk52bEW8TllG2ie37e3ps
-         gk9UCTnKyP/xg4RbJqGCPKiaiExdLPYIYnyG6ZUhDAKI33UFY5nEz+q0vWhwo09TjJuw
-         dqNsae6Nz3iUn9Lrww1/l2LEJLIwYgNYRg60pO7MXUJcTR7YykiBa85XLoW0ncP4Ffsh
-         MSkOBmV7q/neI5X5niFMpi2OweNHxNsxE9oPAIyC+rM0benuZJmF/EgNRn+IOIT4d1CC
-         ydyg==
-X-Forwarded-Encrypted: i=1; AJvYcCXwBW/aljNjSt1WVF6fkDL9AN7OOYZVHqEUZx2DFnnCk5Uz8H14wo2CDz1YeSREKmSACw8=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yyeigdxf4oXRlE2tICPsCh9jx0FX6yKTMLn89gzuaQQbzyPwSXL
-	eFPkSMsoHU4o6xA1sRpm0a2fb4FVFP7EyrTZ1idPodRC8FM6L7+11sof
-X-Gm-Gg: ASbGncus9c7JR9sKQSC5eYB2KlWmOf7bd23QaGZfslQCpQMN+lGzb3C71Mc2UsUS5bI
-	XasAb2K+cp0TQVIGMU0p7YSrWDj+LpNz/cePaOXV+haYFFkgoqwSn/J6e759ns4pNhSDtBakthS
-	4DM9z4b7Gul+FkpZFSVyPNLy9piZUWjBzW74UgC9CeyeksWtCuntkOxvRTxEObQdyoIrHHsJKGn
-	bw+F0HqPKAjTW6WoCUImZb6b5is2i6TSenS+5X9oApTINyBDdOwrun3LIrvrV6qdKg4hD67Psfo
-	gektpnjtvSuKBiGy3om7QQTJ9kR97OJMow+qBuEN9gUqUKhyihXHSZqLZIegf4JfSu/7Q8l9JXF
-	3zfAz+5nrhXVcjxveSFHouFj6GuE=
-X-Google-Smtp-Source: AGHT+IHeVaYnW0xEKycmD/aLsHJEFRwq4u371FdbicoXhT/bhpKnZOrmam6+Emh51IsBT3aXqXII8A==
-X-Received: by 2002:a05:600c:3b08:b0:450:d568:909b with SMTP id 5b1f17b1804b1-4511ec9f86emr71959145e9.14.1748872203445;
-        Mon, 02 Jun 2025 06:50:03 -0700 (PDT)
+        bh=CLnijCf2nZtKbJhBr0xl/0eg2jneCxd90ylHYNpL1H8=;
+        b=dy0j2PLVWYwRLUuTKQFgKI6P/dU7tDp7iPJR0R8Sq70PhfkbRSQgj8fgK+1mPE2FmZ
+         VeuHtMIv9IztfpyvHDooR9mlLeX9OBGv1z2RDV5hCSKKCqxd9kr95GGHOf6Nj49Ky/yP
+         OwKpFw1U/+zjNPTNR8eUzEC9ptH8tFz3FiBh6g1USdPxCih8ekJqnnwN8VZv/eO/3M+1
+         swz4mTQK2XEl7dnvg/MZwHtpo6UYtj90eQ43mQSKGlIgCiZmv/mZIq48e98lEBP0CR1q
+         tXrA/lniisxWnQtRAPo742dg3Nm1xU464X4Uy/6fbYJvKjE//xE9NL0zGglPMgWBnUVO
+         4Ehw==
+X-Forwarded-Encrypted: i=1; AJvYcCV9ErgJLhOerLakHhb16uWQr0EXD19P8UjhC90old7V/9v9EGTV7YHpObfXIv9Yp9ex2P8=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxRPYw8tbmRgCK3z1ChQzflHSfUUlxy82YRQKSssvZNC8ByBpuz
+	MkG70eLvMvHP3/UH22or/MjvsuEP9ng6pO4x64yGKh6MJBZWNnQOTq2/meQv0g==
+X-Gm-Gg: ASbGncvDMXDPuEAcl4EmxGMXQaGZMbPOgHgQbkmxaPiCGt0tXLiWLaAzc/OPoozaj+e
+	BaBDtLjzJYEHRsK48Qp73IntlIAJXtNwPtR+0JS0DoMtOd+TFVXhlSh2UAwDysCEsGsZyAAZXJb
+	WjDNqoOrU2e8A3+K5Hx5eJa86WNklZFGoY+Oxj/wQSskMRyXj/bwpREvFT/I97N4UqeOc2mS70h
+	Wv3a/WnpZpTVAkcZVsF7Yo5i7l1M/aI2ru0fwmDPcVr0N69tXeDWNEPB5WaIb+Khd93GCPTYnY7
+	oDZaf4VH6kpWl+GlZ/pXUg/d2Cg7EZIRkH38c2JsvuXQh024t61qeE+su5gHI5X3/5R5Udz9OaH
+	bC+VIF6bBv5WiszPKmOz5HIBTNgQ=
+X-Google-Smtp-Source: AGHT+IGOWAvvKWKdKGKWGHfw0a0M3sIM3XdIa/tnIn+gvMuI9uOeUCpKRh+6guasLU6KpuaPeuxbWw==
+X-Received: by 2002:a05:600c:4649:b0:43c:ec72:3daf with SMTP id 5b1f17b1804b1-450ce88aa5dmr110570775e9.14.1748872358582;
+        Mon, 02 Jun 2025 06:52:38 -0700 (PDT)
 Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fc1a84sm125585325e9.35.2025.06.02.06.50.02
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d8000d45sm123436075e9.25.2025.06.02.06.52.37
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jun 2025 06:50:02 -0700 (PDT)
-Message-ID: <f5c517b6-955c-49d8-9f05-d47c24925eb8@gmail.com>
-Date: Mon, 2 Jun 2025 14:50:01 +0100
+        Mon, 02 Jun 2025 06:52:38 -0700 (PDT)
+Message-ID: <21a5cbc3-3d0b-410b-80d0-94e6444f8080@gmail.com>
+Date: Mon, 2 Jun 2025 14:52:37 +0100
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -67,61 +67,41 @@ List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-From: phillip.wood123@gmail.com
+From: Phillip Wood <phillip.wood123@gmail.com>
 Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [PATCH] fsck: ignore missing "refs" directory for linked
- worktrees
-To: Patrick Steinhardt <ps@pks.im>, phillip.wood@dunelm.org.uk
-Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org,
- Kristoffer Haugsbakk <code@khaugsbakk.name>,
- Karthik Nayak <karthik.188@gmail.com>,
- Eric Sunshine <sunshine@sunshineco.com>, Junio C Hamano <gitster@pobox.com>
-References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
- <aDp55upE6AhYunz7@ArchLinux> <b92b5d93-7f7f-4370-ac79-7d9767bb0db5@gmail.com>
- <aD176UYWKEbmhiaw@pks.im>
+Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
+To: Junio C Hamano <gitster@pobox.com>
+Cc: kristofferhaugsbakk@fastmail.com, git@vger.kernel.org,
+ Kristoffer Haugsbakk <code@khaugsbakk.name>
+References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
+ <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g>
 Content-Language: en-US
-In-Reply-To: <aD176UYWKEbmhiaw@pks.im>
+In-Reply-To: <xmqq5xhmvuol.fsf@gitster.g>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 02/06/2025 11:24, Patrick Steinhardt wrote:
-> On Mon, Jun 02, 2025 at 10:53:50AM +0100, Phillip Wood wrote:
->> Hi Shejialuo
->>
->> On 31/05/2025 04:39, shejialuo wrote:
->>> diff --git a/refs/files-backend.c b/refs/files-backend.c
->>> index 4d1f65a57a..bf6f89b1d1 100644
->>> --- a/refs/files-backend.c
->>> +++ b/refs/files-backend.c
->>> @@ -3762,6 +3762,9 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
->>>    	iter = dir_iterator_begin(sb.buf, 0);
->>>    	if (!iter) {
->>> +		if (errno == ENOENT && !is_main_worktree(wt))
->>> +			goto out;
->>> +
->>>    		ret = error_errno(_("cannot open directory %s"), sb.buf);
->>>    		goto out;
->>>    	}
->>
->> I think it would be clearer to write this as
->>
->> 	if (is_main_worktree(wt) || errno != ENOENT)
->> 		ret = error_errno(_("cannot open directory %s"), sb.buf);
->> 	goto out;
->>
->> so that the condition that triggers the error message is explicit rather
->> than having to mentally invert the condition to figure out when we return an
->> error
+Hi Junio
+
+On 27/05/2025 18:18, Junio C Hamano wrote:
+> Phillip Wood <phillip.wood123@gmail.com> writes:
 > 
-> The downside though is that this mandates that `is_main_worktree()` must
-> never set `errno` itself. So while it may be clearer, the original
-> version feels safer to me.
+>> Should that be " \$"? What you've got seems to work with dash but I'm
+>> not sure if it is POSIX compliant or not.
+> 
+> "2.6 Word Expansions" ends with this sentence:
+> 
+>      If a '$' that is neither within single-quotes nor escaped by a
+>      <backslash> is immediately followed by a <space>, <tab>, or a
+>      <newline>, or is not followed by any character, the '$' shall be
+>      treated as a literal character.
+> 
+> Taken together with "2.2.3 Double-Quotes", I'd read it as blessing a
+> lone '$' at the end of double-quoted string as a literal dollar sign.
 
-Oh good point. We could save errno and then check the saved version but 
-it maybe it is not worth changing it.
+Thanks for finding that - TIL. I agree with your interpretation that the 
+original is in fact safe.
 
-Best Wishes
+Thanks
 
-Phillip>
-> Patrick
+Phillip
 
