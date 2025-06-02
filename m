@@ -1,68 +1,67 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
+Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D551DF985
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:55:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9520E026
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:56:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748890561; cv=none; b=RdGGQ8otE+UhIPFufO0n11R1j1MGDDlwQehWWb7A8ayjKSlLuBbPVB1e3CG5hxuycaea/hW4cr7eEkKVPauKhEGG/qnF40lVHoakezDYiOhv+EPePFy1k/T3MtsWQfEIR9+DeMkTkt5rgoz1fpc1mLxkiZ29MtxsGFC/QCOLMso=
+	t=1748890562; cv=none; b=BQi0+aHGNmCt/GR9aZOIHCaTM7BLwj8sSstYuBtotCWFFGLhcXjOX+VjIfydKaujVI0gCqc7ZcdCPT4abgd0THHU0l82VYgjkrqI9EqbpwbVy4+1C3Di3n6op4SwRePOyE34A7fYtCylPrnaxKbOd9FwVaBcdXtby0whBQ4d5rM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748890561; c=relaxed/simple;
-	bh=hj6wYHz2+h3Obi2afptyUslYN38YypwrdEXX7hzBXDc=;
+	s=arc-20240116; t=1748890562; c=relaxed/simple;
+	bh=yY9Lw8Oq5Tl9B5Z9Ebqv9fgfZmFpQEZS4EvFchJRoh8=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=JJHlLuIvrqMuzQeB8SALydUqaaFHkrvNYFVRSsFCe0OgEc6PtY0CO4oFC/Gez0cFQXc2xC9Wx6P6A2qeogJGeUEjCMlihu9tCv69HEbCldBgg2+8m+SrTdHY3EMc8bQwlrpmcjo1CQAIAvHAnVCmG0VwaG3c4zrDRulS7/0Qm+8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTmpAmJj; arc=none smtp.client-ip=209.85.221.52
+	 MIME-Version:To:Cc; b=gR+xhzEvX8UwXUjucJX9vgyfZ5+KbKCSmls4/NPSemjFJxJdOTsgbcck86XU+TzoMVAhNt0YjdvT40/pppqgk3CuccgwR1b9VpgEOh9yP6qzlC6w4u/pLL8FzKuGDUBFYWmkedols037QuAmfROnrkJrTSCHzV2G85F4CrbxfkQ=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lIezGcfv; arc=none smtp.client-ip=209.85.221.47
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTmpAmJj"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a361b8a664so4625260f8f.3
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:55:59 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIezGcfv"
+Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a375e72473so2769475f8f.0
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:56:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20230601; t=1748890558; x=1749495358; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=3DT7V7ylko8TlQTE3Y4kkY4DPqAWqqG6ut19C2EhP8E=;
-        b=BTmpAmJjGzNi/20cNNkh7R3FqDCRImeQKrzSi5Zgfsq4wwhcgILWIu0v9urE5PC+7m
-         Bv5Wm/8vpkA0KKpuyEkwBenxLvaRK7nXhaJPf9Vv2vZL/u4hfJR8rXS/QToOcrgazKS2
-         vyxGc5kGKSJZVlkGdfb0rj1ecjIKFxWbWH8HD0sDcwyxSX749yzy+sUDk4pr9Z42E00o
-         sPsGb0L6OWNsrLKfLN2USdjosk0D6XGPtLss/la5jXJJMjt+84ccMRBwQ84KXamauCFD
-         WCLivhz859AatlwwtD0M93VDk0sV/6Pk25gSZue9N/J6FbG0soaYtvuiF2aolNCM2vHw
-         Kt3A==
+        bh=hDxEhixIwaT5kIny1V8tYoE5T5FJZm1FyDgIvnsMzgE=;
+        b=lIezGcfvoi/8gou9pmOu+5wIf4MAHwdCCI5k0SuRa7p+RLKCDAbC7eEWUt8j9jvOF/
+         eA1isxlPDL8X8fN6qf2aDpUZU3vNrE/bRemMAF1NgRR5bs39fLtk2QbcCN6Xe61z/bD9
+         pTuj6T2qJW/kpKQ8ToQbIGbRKjuBn98WcWz49H1A2sOf5USF5JJg2tJ5Vv0hfiLOOkT1
+         wQIcsBC9p0ys0UlBH2brjFyGc6R9uxSJvDGcQOFPigLICI3AtxCDaygw4uwf3/XZ4b0D
+         unyg5JZhDIiLZef1Hw7NcNf6G1tiXYrvlk9LiG4ux+VcqYBHoRu5kRHr1UmLB2EqEUBD
+         aU3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20230601; t=1748890558; x=1749495358;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=3DT7V7ylko8TlQTE3Y4kkY4DPqAWqqG6ut19C2EhP8E=;
-        b=Bcw+d4tgXne1V1xIYcEwajK3SCOY4/sVri5XCFjNztK7WaorNmc6xq9Xri3oxDzhNY
-         j3Lgl5fbHnXGRROBdQyN3Zc6KnAhRR1jpLupoUruHPmUc//5G94HQr0Jhviymo+aWOzX
-         o3oy/OcIqatr4Adf4x3TkWqCM0VcQfx2jE2okUTVDKkCbgH7o55IS1hOkVboqoibGTmV
-         qaUN4TpMWvrMe2+kta0yk22ZB05XE5Ex1RWaA0F82mUGJodGyoA+p4ZdEMo2Y/UXDkXa
-         fPQeBUc0SVljwboAGtSCfuq9e3n1kqD92rA0VUHskWqa+b23y2O1Nz8/K2fAHMSMZqp8
-         ykRQ==
-X-Gm-Message-State: AOJu0Yw7hJoOYhujU/2i0U+b4389xu0NrsdoJRVWIBA+OhDweHM7r9km
-	AtySP7KLT5Pp0KP7Qddg6US7zmx25ZFmZl+R6tte3vQD7dORPZ0hU2sgC2y2OQ==
-X-Gm-Gg: ASbGncuWrxBARo6rn+dtQfXplKY/PsnMlTVZSH6rg/Ieeg8ISeVCccjUfgKuWICOOPx
-	A/k2+0qR6Jyw16nzIFCw6267jVScaaT21Ii23ZQVk9t3Knigqpb3pxR25bmjDYYbSoWUtKqbOkA
-	XvOWWHwuvjsKYGnFzYimauCh3MfTD9n0rhczEotpOdY3uqL/IaOdL8UWE79X1bf/ZInYAMfcgoa
-	qzF78wz/qIds8fw1C6K9iJtZOkt8T7DG/3F0i2YfZGkp7WjhDcgqexhS9c1JEm3OusIng4R8p5K
-	mCaPE0NXttSkpg5zUvuWQQQVlVxkvqVvfSI1wfvBdwwNmV+m+Nqc
-X-Google-Smtp-Source: AGHT+IFrs4Six5jl+Z94UHtFArDnK+QWB0lGqjWKvXon8nQlmQuuLPm8Odk7alTldAgOJ07ZSGVtcA==
-X-Received: by 2002:a05:6000:18ab:b0:3a4:fb33:85ce with SMTP id ffacd0b85a97d-3a4fb3388bbmr10135344f8f.46.1748890557535;
-        Mon, 02 Jun 2025 11:55:57 -0700 (PDT)
+        bh=hDxEhixIwaT5kIny1V8tYoE5T5FJZm1FyDgIvnsMzgE=;
+        b=qqBV9GzquR/UTfhrGrDnQ7C5hR1ZCmPsO2ymGl4pvJ0mPToLlpSMuRbUX2sXNvPwep
+         s+Vq5fRxgRA/N0UMsZRNxFz0hTao9/U9QKMu9CUKG4hnOu1bfxuxQJvRLtS6VvHYI5hC
+         3rnFCPVE2kQhy79LP9vkDZr/6R4Dr2DRP0GPahrUZTyNDilNsB1GU8BGOliZe1ZAfHlX
+         V2fM2hr7fEibJuIImN1wNVlnEQMiNTrBtjuVEKL9aJf1ahCtPXZgRbBSHiozB36ooAsp
+         SG9uAyJkslf9sIGJ/RzkgTsyMQV/r3ZCatfRw+RIOEcU1JNkuDtYZat+hWtJMydst/3e
+         zvqA==
+X-Gm-Message-State: AOJu0YwwmJd80SUp9lBOMQN2rtV2clc5FfJYZJTfyVI38FSzKunD2Lfg
+	VcZ7deH4icPB/EULwagDMmozPztwA3hkXLgpkjehl164ThSEa93m4jw2EfWA4Q==
+X-Gm-Gg: ASbGncuApNC52G8t0UA8O18XOdkub1sr4cvE7DFIqssDYwikTkgNUP7XAf/gO7VqGxS
+	QczlJ1oklGig1siYV9tBvlStdqOZWSHQ5VpsOPIz66TtoLLjIPQ5OVVbipaoY2E3xW4ezPMegw5
+	Tqs2zhSyM6KBDIA77j6lbtC2v2HY3MZ38CkliRjMeL4PjD5mMNWuj/DDoXBUZ3n+aSf3GxGAX0k
+	D9XjciKikNTli0QWd5NChUa2InF+EEVIEOdq2EDL3oAC9ddq/IRwxg6aKEYf6Or6AspWQdZLKyy
+	N5JhdDY1t5RW7eaS4/K7DOJRGnjbKd7ssazSY8GeOYmH9anuqVl0
+X-Google-Smtp-Source: AGHT+IGKkw9rL43A4AWqIHU8ENO9si9uxcKSxm4gR6i6ZNUGqbkeyySUNKUJk9fHEOAfMTvRFfesnA==
+X-Received: by 2002:a05:6000:25c4:b0:3a3:67bb:8f3f with SMTP id ffacd0b85a97d-3a4f7a7d0c4mr12378062f8f.53.1748890558211;
+        Mon, 02 Jun 2025 11:55:58 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe5b892sm16071894f8f.17.2025.06.02.11.55.57
+        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fb80f6sm131853305e9.28.2025.06.02.11.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Mon, 02 Jun 2025 11:55:57 -0700 (PDT)
-Message-Id: <e05c5bea7143d54a5cdb2d9cbfe944409c891797.1748890555.git.gitgitgadget@gmail.com>
+Message-Id: <1ff39aa3c6e613137edde9e05321a7df5c165e99.1748890555.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
 References: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Jun 2025 18:55:53 +0000
-Subject: [PATCH 1/3] t1006: update 'run_tests' to test generic object
- specifiers
+Date: Mon, 02 Jun 2025 18:55:54 +0000
+Subject: [PATCH 2/3] cat-file: add %(objectmode) atom
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -80,187 +79,175 @@ Cc: peff@peff.net,
 
 From: Victoria Dye <vdye@github.com>
 
-Update the 'run_tests' test wrapper so that the first argument may refer to
-any specifier that uniquely identifies an object (e.g. a ref name,
-'<OID>:<path>', '<OID>^{<type>}', etc.), rather than only a full object ID.
-
-Also add tests that use non-OID identifiers, ensuring appropriate parsing in
-'cat-file'. The identifiers used in some of the added tests include a space,
-which is incompatible with the '%(rest)' atom. To accommodate that without
-removing the test case, use 'test_expect_failure' when 'object_name'
-includes a space.
+Add a formatting atom, used with the --batch-check/--batch-command options,
+that prints the octal representation of the object mode if a given revision
+includes that information, e.g. one that follows the format
+<tree-ish>:<path>. If the mode information does not exist, an empty string
+is printed instead.
 
 Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- t/t1006-cat-file.sh | 56 +++++++++++++++++++++++++++++----------------
- 1 file changed, 36 insertions(+), 20 deletions(-)
+ Documentation/git-cat-file.adoc |  5 +++++
+ builtin/cat-file.c              |  9 ++++++--
+ t/t1006-cat-file.sh             | 38 +++++++++++++++++++--------------
+ 3 files changed, 34 insertions(+), 18 deletions(-)
 
+diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
+index cde79ad242bb..5c002c0499e4 100644
+--- a/Documentation/git-cat-file.adoc
++++ b/Documentation/git-cat-file.adoc
+@@ -307,6 +307,11 @@ newline. The available atoms are:
+ `objecttype`::
+ 	The type of the object (the same as `cat-file -t` reports).
+ 
++`objectmode`::
++	If the specified object has mode information (such as a tree or
++	index entry), the mode expressed as an octal integer. Otherwise,
++	empty string.
++
+ `objectsize`::
+ 	The size, in bytes, of the object (the same as `cat-file -s`
+ 	reports).
+diff --git a/builtin/cat-file.c b/builtin/cat-file.c
+index 67a5ff2b9ebd..b11576756bcc 100644
+--- a/builtin/cat-file.c
++++ b/builtin/cat-file.c
+@@ -275,6 +275,7 @@ struct expand_data {
+ 	struct object_id oid;
+ 	enum object_type type;
+ 	unsigned long size;
++	unsigned short mode;
+ 	off_t disk_size;
+ 	const char *rest;
+ 	struct object_id delta_base_oid;
+@@ -306,6 +307,7 @@ struct expand_data {
+ 	 */
+ 	unsigned skip_object_info : 1;
+ };
++#define EXPAND_DATA_INIT  { .mode = S_IFINVALID }
+ 
+ static int is_atom(const char *atom, const char *s, int slen)
+ {
+@@ -345,6 +347,9 @@ static int expand_atom(struct strbuf *sb, const char *atom, int len,
+ 		else
+ 			strbuf_addstr(sb,
+ 				      oid_to_hex(&data->delta_base_oid));
++	} else if (is_atom("objectmode", atom, len)) {
++		if (!data->mark_query && !(S_IFINVALID == data->mode))
++			strbuf_addf(sb, "%06o", data->mode);
+ 	} else
+ 		return 0;
+ 	return 1;
+@@ -613,6 +618,7 @@ static void batch_one_object(const char *obj_name,
+ 		goto out;
+ 	}
+ 
++	data->mode = ctx.mode;
+ 	batch_object_write(obj_name, scratch, opt, data, NULL, 0);
+ 
+ out:
+@@ -866,7 +872,7 @@ static int batch_objects(struct batch_options *opt)
+ {
+ 	struct strbuf input = STRBUF_INIT;
+ 	struct strbuf output = STRBUF_INIT;
+-	struct expand_data data;
++	struct expand_data data = EXPAND_DATA_INIT;
+ 	int save_warning;
+ 	int retval = 0;
+ 
+@@ -875,7 +881,6 @@ static int batch_objects(struct batch_options *opt)
+ 	 * object_info to be handed to oid_object_info_extended for each
+ 	 * object.
+ 	 */
+-	memset(&data, 0, sizeof(data));
+ 	data.mark_query = 1;
+ 	expand_format(&output,
+ 		      opt->format ? opt->format : DEFAULT_FORMAT,
 diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 317da6869c88..7c9512a6b439 100755
+index 7c9512a6b439..97052b3f31f1 100755
 --- a/t/t1006-cat-file.sh
 +++ b/t/t1006-cat-file.sh
-@@ -113,53 +113,54 @@ strlen () {
- 
+@@ -114,10 +114,11 @@ strlen () {
  run_tests () {
      type=$1
--    oid=$2
-+    object_name="$2"
-     size=$3
-     content=$4
-     pretty_content=$5
-+    oid=${6:-"$object_name"}
+     object_name="$2"
+-    size=$3
+-    content=$4
+-    pretty_content=$5
+-    oid=${6:-"$object_name"}
++    mode=$3
++    size=$4
++    content=$5
++    pretty_content=$6
++    oid=${7:-"$object_name"}
  
      batch_output="$oid $type $size
  $content"
- 
-     test_expect_success "$type exists" '
--	git cat-file -e $oid
-+	git cat-file -e "$object_name"
-     '
- 
-     test_expect_success "Type of $type is correct" '
- 	echo $type >expect &&
--	git cat-file -t $oid >actual &&
-+	git cat-file -t "$object_name" >actual &&
+@@ -209,6 +210,12 @@ $content"
  	test_cmp expect actual
      '
  
-     test_expect_success "Size of $type is correct" '
- 	echo $size >expect &&
--	git cat-file -s $oid >actual &&
-+	git cat-file -s "$object_name" >actual &&
- 	test_cmp expect actual
-     '
- 
-     test -z "$content" ||
-     test_expect_success "Content of $type is correct" '
- 	echo_without_newline "$content" >expect &&
--	git cat-file $type $oid >actual &&
-+	git cat-file $type "$object_name" >actual &&
- 	test_cmp expect actual
-     '
- 
-     test_expect_success "Pretty content of $type is correct" '
- 	echo_without_newline "$pretty_content" >expect &&
--	git cat-file -p $oid >actual &&
-+	git cat-file -p "$object_name" >actual &&
- 	test_cmp expect actual
-     '
- 
-     test -z "$content" ||
-     test_expect_success "--batch output of $type is correct" '
- 	echo "$batch_output" >expect &&
--	echo $oid | git cat-file --batch >actual &&
-+	echo "$object_name" | git cat-file --batch >actual &&
- 	test_cmp expect actual
-     '
- 
-     test_expect_success "--batch-check output of $type is correct" '
- 	echo "$oid $type $size" >expect &&
--	echo_without_newline $oid | git cat-file --batch-check >actual &&
-+	echo_without_newline "$object_name" | git cat-file --batch-check >actual &&
- 	test_cmp expect actual
-     '
- 
-@@ -168,13 +169,13 @@ $content"
- 	test -z "$content" ||
- 		test_expect_success "--batch-command $opt output of $type content is correct" '
- 		echo "$batch_output" >expect &&
--		test_write_lines "contents $oid" | git cat-file --batch-command $opt >actual &&
-+		test_write_lines "contents $object_name" | git cat-file --batch-command $opt >actual &&
- 		test_cmp expect actual
- 	'
- 
- 	test_expect_success "--batch-command $opt output of $type info is correct" '
- 		echo "$oid $type $size" >expect &&
--		test_write_lines "info $oid" |
-+		test_write_lines "info $object_name" |
- 		git cat-file --batch-command $opt >actual &&
- 		test_cmp expect actual
- 	'
-@@ -182,19 +183,28 @@ $content"
- 
-     test_expect_success "custom --batch-check format" '
- 	echo "$type $oid" >expect &&
--	echo $oid | git cat-file --batch-check="%(objecttype) %(objectname)" >actual &&
-+	echo "$object_name" | git cat-file --batch-check="%(objecttype) %(objectname)" >actual &&
- 	test_cmp expect actual
-     '
- 
-     test_expect_success "custom --batch-command format" '
- 	echo "$type $oid" >expect &&
--	echo "info $oid" | git cat-file --batch-command="%(objecttype) %(objectname)" >actual &&
-+	echo "info $object_name" | git cat-file --batch-command="%(objecttype) %(objectname)" >actual &&
- 	test_cmp expect actual
-     '
- 
--    test_expect_success '--batch-check with %(rest)' '
-+    # FIXME: %(rest) is incompatible with object names that include whitespace,
-+    # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
-+    # test this instead of the raw object name.
-+    if echo "$object_name" | grep " "; then
-+	test_rest=test_expect_failure
-+    else
-+	test_rest=test_expect_success
-+    fi
++    test_expect_success '--batch-check with %(objectmode)' '
++	echo "$mode $oid" >expect &&
++	echo $object_name | git cat-file --batch-check="%(objectmode) %(objectname)" >actual &&
++	test_cmp expect actual
++    '
 +
-+    $test_rest '--batch-check with %(rest)' '
- 	echo "$type this is some extra content" >expect &&
--	echo "$oid    this is some extra content" |
-+	echo "$object_name    this is some extra content" |
- 		git cat-file --batch-check="%(objecttype) %(rest)" >actual &&
- 	test_cmp expect actual
-     '
-@@ -205,7 +215,7 @@ $content"
- 		echo "$size" &&
- 		echo "$content"
- 	} >expect &&
--	echo $oid | git cat-file --batch="%(objectsize)" >actual &&
-+	echo "$object_name" | git cat-file --batch="%(objectsize)" >actual &&
- 	test_cmp expect actual
-     '
+     test -z "$content" ||
+     test_expect_success "--batch without type ($type)" '
+ 	{
+@@ -247,8 +254,7 @@ test_expect_success "setup" '
  
-@@ -215,7 +225,7 @@ $content"
- 		echo "$type" &&
- 		echo "$content"
- 	} >expect &&
--	echo $oid | git cat-file --batch="%(objecttype)" >actual &&
-+	echo "$object_name" | git cat-file --batch="%(objecttype)" >actual &&
- 	test_cmp expect actual
-     '
- }
-@@ -230,6 +240,8 @@ test_expect_success "setup" '
- 	git config extensions.compatobjectformat $test_compat_hash_algo &&
- 	echo_without_newline "$hello_content" > hello &&
- 	git update-index --add hello &&
-+	echo_without_newline "$hello_content" > "path with spaces" &&
-+	git update-index --add --chmod=+x "path with spaces" &&
- 	git commit -m "add hello file"
- '
+ run_blob_tests () {
+     oid=$1
+-
+-    run_tests 'blob' $oid $hello_size "$hello_content" "$hello_content"
++    run_tests 'blob' $oid "" $hello_size "$hello_content" "$hello_content"
  
-@@ -269,13 +281,17 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+     test_expect_success '--batch-command --buffer with flush for blob info' '
+ 	echo "$oid blob $hello_size" >expect &&
+@@ -286,12 +292,12 @@ tree_compat_size=$((2 * $(test_oid --hash=compat rawsz) + 13 + 24))
+ tree_pretty_content="100644 blob $hello_oid	hello${LF}100755 blob $hello_oid	path with spaces${LF}"
+ tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}100755 blob $hello_compat_oid	path with spaces${LF}"
  
- tree_oid=$(git write-tree)
- tree_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tree_oid)
--tree_size=$(($(test_oid rawsz) + 13))
--tree_compat_size=$(($(test_oid --hash=compat rawsz) + 13))
--tree_pretty_content="100644 blob $hello_oid	hello${LF}"
--tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}"
-+tree_size=$((2 * $(test_oid rawsz) + 13 + 24))
-+tree_compat_size=$((2 * $(test_oid --hash=compat rawsz) + 13 + 24))
-+tree_pretty_content="100644 blob $hello_oid	hello${LF}100755 blob $hello_oid	path with spaces${LF}"
-+tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}100755 blob $hello_compat_oid	path with spaces${LF}"
- 
- run_tests 'tree' $tree_oid $tree_size "" "$tree_pretty_content"
- run_tests 'tree' $tree_compat_oid $tree_compat_size "" "$tree_compat_pretty_content"
-+run_tests 'blob' "$tree_oid:hello" $hello_size "" "$hello_content" $hello_oid
-+run_tests 'blob' "$tree_compat_oid:hello" $hello_size "" "$hello_content" $hello_compat_oid
-+run_tests 'blob' "$tree_oid:path with spaces" $hello_size "" "$hello_content" $hello_oid
-+run_tests 'blob' "$tree_compat_oid:path with spaces" $hello_size "" "$hello_content" $hello_compat_oid
+-run_tests 'tree' $tree_oid $tree_size "" "$tree_pretty_content"
+-run_tests 'tree' $tree_compat_oid $tree_compat_size "" "$tree_compat_pretty_content"
+-run_tests 'blob' "$tree_oid:hello" $hello_size "" "$hello_content" $hello_oid
+-run_tests 'blob' "$tree_compat_oid:hello" $hello_size "" "$hello_content" $hello_compat_oid
+-run_tests 'blob' "$tree_oid:path with spaces" $hello_size "" "$hello_content" $hello_oid
+-run_tests 'blob' "$tree_compat_oid:path with spaces" $hello_size "" "$hello_content" $hello_compat_oid
++run_tests 'tree' $tree_oid "" $tree_size "" "$tree_pretty_content"
++run_tests 'tree' $tree_compat_oid "" $tree_compat_size "" "$tree_compat_pretty_content"
++run_tests 'blob' "$tree_oid:hello" "100644" $hello_size "" "$hello_content" $hello_oid
++run_tests 'blob' "$tree_compat_oid:hello" "100644" $hello_size "" "$hello_content" $hello_compat_oid
++run_tests 'blob' "$tree_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_oid
++run_tests 'blob' "$tree_compat_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_compat_oid
  
  commit_message="Initial commit"
  commit_oid=$(echo_without_newline "$commit_message" | git commit-tree $tree_oid)
+@@ -310,8 +316,8 @@ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ 
+ $commit_message"
+ 
+-run_tests 'commit' $commit_oid $commit_size "$commit_content" "$commit_content"
+-run_tests 'commit' $commit_compat_oid $commit_compat_size "$commit_compat_content" "$commit_compat_content"
++run_tests 'commit' $commit_oid "" $commit_size "$commit_content" "$commit_content"
++run_tests 'commit' $commit_compat_oid "" $commit_compat_size "$commit_compat_content" "$commit_compat_content"
+ 
+ tag_header_without_oid="type blob
+ tag hellotag
+@@ -334,8 +340,8 @@ tag_size=$(strlen "$tag_content")
+ tag_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tag_oid)
+ tag_compat_size=$(strlen "$tag_compat_content")
+ 
+-run_tests 'tag' $tag_oid $tag_size "$tag_content" "$tag_content"
+-run_tests 'tag' $tag_compat_oid $tag_compat_size "$tag_compat_content" "$tag_compat_content"
++run_tests 'tag' $tag_oid "" $tag_size "$tag_content" "$tag_content"
++run_tests 'tag' $tag_compat_oid "" $tag_compat_size "$tag_compat_content" "$tag_compat_content"
+ 
+ test_expect_success "Reach a blob from a tag pointing to it" '
+ 	echo_without_newline "$hello_content" >expect &&
 -- 
 gitgitgadget
 
