@@ -1,117 +1,107 @@
-Received: from mail-qk1-f175.google.com (mail-qk1-f175.google.com [209.85.222.175])
+Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A39C3EAF9
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 17:13:54 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBE82040B6
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:06:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748884436; cv=none; b=kcHljIiPPWjY20JI2S7Hz4V/VR8JB65zllEpU7zkBmJqYbeZxQiKOhuqA4oSi4aXJnRzzUhyKLQzxW2t8TwEvsERQwk8n/oKoI/7SkQcte3xbOXLvZhuSdzAHqgrXsXuv/ygbgZdzoI/HLbDYHpAZ5WA4W7ycalzKjtWrYCDXFc=
+	t=1748887619; cv=none; b=FD16SSuI5nw+H2sACtPF7xJXrhfjaxxvbqoAJmRNwRBXAyMEVbW0YqNSXnuAOh0DvpAwSuIpbuR4mNHI+Op1P3swEqqAEMiKq/DhQTRcY2YpN+gteL5EgcuqU06gQRS7213VoIgME0crr7oYXl+z9wUiI5Le6joNhWmKmBH1FSg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748884436; c=relaxed/simple;
-	bh=4j198l0kDfbYNWwt2Cl8tvR/DgE6ehIg39cthavVrPs=;
-	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=OVzfYtKOPSUatNLXja3vqE+B1m2DaA8noh9n5zx6IEU6/bFL34EE9Fmfpt2lAIpMisG/omaY2J6eNM2WtuzadZ9/3QDFbSRSQH3vm0d55DYYWfC4k9mmWNF39YTITjXdBgu3zovA1MkH6Sp+lh/vO9Mp0n7vxEMX26rJLI9Ah7M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=Gerjj0wk; arc=none smtp.client-ip=209.85.222.175
+	s=arc-20240116; t=1748887619; c=relaxed/simple;
+	bh=5jpQciou0heZoK5NU3lHNbvyHMrsV/DuNPCvrW/H484=;
+	h=From:To:Subject:In-Reply-To:Date:Message-ID:MIME-Version:
+	 Content-Type; b=KqE1lbD0MP5ENj90I0QRsaZQChE/G9lmRwU0ZHffF9Y6U9fXqI6MknHDAPZxibSgoBC7FFmxkAmqfkbyUHc6uu3EOkK8PPtDHj3tQpJRPixqRGcGg1h0Y4xM4UazCGeo9YCciXi83w/rG1JjfKgY1hWYlDmib7WD3prIHvwlwgM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETDxrWbm; arc=none smtp.client-ip=209.85.214.175
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="Gerjj0wk"
-Received: by mail-qk1-f175.google.com with SMTP id af79cd13be357-7d09a17d2f7so389229185a.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 10:13:54 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETDxrWbm"
+Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2320d06b728so41247955ad.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:06:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748884433; x=1749489233; darn=vger.kernel.org;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:from:to:cc:subject:date:message-id:reply-to;
-        bh=4j198l0kDfbYNWwt2Cl8tvR/DgE6ehIg39cthavVrPs=;
-        b=Gerjj0wkTvxg80tpxdo3lMG942C/XyAlWpUmgGK/d+izxyEPJYVu+C3kinDj609PVC
-         VkErz6dJURIqsMuS10uhkoC5Dj3GmCUM0mVsJy4QGLIH1D3V6pbPum8yTtgsdRDK/Ms3
-         lYxz//Fo8tR+nrw8joaMym3wIueAIDUlPiECuWiH19YXRKHkbdrp75pr03fepwhyJmg8
-         zUnBtpzcqKeqcY2Vl13M7v+0uxDoz0ZpdMC9mGvqCMdEMNNiuX9CzmbOh3K9mLzo5jht
-         aTlxc78pdVS8avu5ZcBlnJknjl/PA2ZaHMX7Vl+R9jOxtnFJXxxJGbizTWvxr1Ho1uRK
-         oLcA==
+        d=gmail.com; s=20230601; t=1748887617; x=1749492417; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:in-reply-to:subject:to:from
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=wpbE8fEWUbUw/CjtAtjyq6n79bh+XvOXEFZ+SU+qIvw=;
+        b=ETDxrWbmNyurCs1THCMujU//fFuAaiNe3uxslT54+vGvPVlLkocdIbivKChNr+K08A
+         SQWxP+axs7s8vUHqYgQa9znGa0XNXO7K7sYz0KaCpJAHRU63ca3ndmMKiuM0lOihiyvm
+         Us4CB3OJySXhbkYTs1iGGpK9KmfP8SZmZdVjp+/EHArnACR7yXNpNqmqbzHr2W0t5bZe
+         Y8ycqrBvrL/uIILjCQka+kOIUGWdEfUgVeIbfCMSnRq5m7O390896muWhHgTWdZnq+jT
+         SPgw60hMN+ZuO2+lJsnH9HCV83cy+yhQ34cNs1vTqNvqBvcgpyXXUrtKaQ7o6UoQbdJL
+         tPAA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748884433; x=1749489233;
-        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
-         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4j198l0kDfbYNWwt2Cl8tvR/DgE6ehIg39cthavVrPs=;
-        b=ucH661VOwl30/uhYZlNkpIba4PoznIpaTYeBvRMxdCks/23W6RC4JY0Ycw6DxWU44K
-         0R93meM8xKRw/PxU7osjvFLY35Swjl740ZE6lfV/PT9JR41FrEzPlr+R13kmaYyZy8cn
-         C7Gjqg4LQ6JaqwRwCzXFc6AwpVRWuBgEy9cyZwM8qRlBT9bLc06sCnnJ1ZKzif306/xL
-         Vx4D+LlDAbQhgfSg3zVCnjzZrEE0l0OpPcyybMKjT7HmUZ35uQdkRrcAuDblnWwAgkbP
-         71ATaGVDU/rY+y9UqW4nPfWLgNitKJN6hyrOe2U9gSePw7znykMaMjkLn6zm6wCiRD80
-         w1Kw==
-X-Forwarded-Encrypted: i=1; AJvYcCU601frUq3PlsIJL+6OdQ4/lSkAhk1OO1MrzXAyz4ZgZSoBkoEMuv+NgF0ZvHvWoiwss9w=@vger.kernel.org
-X-Gm-Message-State: AOJu0YwCZ/ZnDVD8HwkkPQJOXYyUWAulEdEtpxq/pY+T+EqtaaahGIaa
-	BeWLlgRCu1ZSeTjMbqT/ZvhMWj9JIortGviE4QsjyYrzw+xcQ1COXle2XJK+0T3n3fQA8YF1qdC
-	QptKntPfp6vmuixqBKRa+3d5sevfUWXM=
-X-Gm-Gg: ASbGnctvxW3wkh092W/6zSkI6DCaMOcQadY4DbsL5v0Iu0awI7A4+aARUezhcvP0Ips
-	Rbieijwjc8Y8wENuTnP7JGmJe/FWyg9mbJMIAl4QgPCuL03BXQeOO0eXDvK15JWAi02gh7Kgs1a
-	aYkzY4N4gfqVKmhZslBPMMikfgKi/l0mKaUvXCMc3FFiCUJW9PyfRFwfwNvSRpJuyuOqg=
-X-Google-Smtp-Source: AGHT+IHLQeUS1FWA4RtaP1FVe5WB10RObMgajy4Qhb/zUjUj9Oo12PpU2aLbEEd7TXnBFkdgHuyz/brYHC2QAYo5wsg=
-X-Received: by 2002:a05:620a:4012:b0:7ca:c9cb:ac1 with SMTP id
- af79cd13be357-7d0eac3f065mr1272875785a.4.1748884430436; Mon, 02 Jun 2025
- 10:13:50 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 2 Jun 2025 10:13:49 -0700
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 2 Jun 2025 10:13:49 -0700
-From: Karthik Nayak <karthik.188@gmail.com>
-In-Reply-To: <xmqqcybmuqrj.fsf@gitster.g>
-References: <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-0-903d1db3f10e@gmail.com>
- <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-1-903d1db3f10e@gmail.com>
- <aD2SRmlSKZm8g8kn@pks.im> <CAOLa=ZQQCFA=jdOGDONGcsO_VDUAxfHjn_Wk5r+8weHMFXDQ3w@mail.gmail.com>
- <xmqqcybmuqrj.fsf@gitster.g>
+        d=1e100.net; s=20230601; t=1748887617; x=1749492417;
+        h=mime-version:user-agent:message-id:date:in-reply-to:subject:to:from
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=wpbE8fEWUbUw/CjtAtjyq6n79bh+XvOXEFZ+SU+qIvw=;
+        b=p2+ANPaCIMjV89BFn3q+Jjq1DtDZr/U7yDPj/H4MzGGK9KVPuz0tV/wae4GEfY0ZVy
+         mVukI6z2PlsPdRZwhGlZeMT3hineWX0TSkDqNNhOe18AzZVqrgQ/aE3a/j8LcOVhGOBv
+         ly/QqHXshYsdRm7HD/mEK+Kp4ToDqHi7tKJqKICTGxXmafs7kXQZPugrl8GX+Fv+aN4U
+         bcrDjbHp3IQxkBwFqlZHFdXB3AaP0cD0aChSkdQ/gPtRjwOB1/lil1SJPcCBNTV3BLTU
+         yk4/KVqqxApB5oGCDJoS5LxHb+3kc9xZPoz1d64hGDEJebfbiNgN5YDhTXLvwOMTQyOt
+         TRHQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWcOJ8i3VBkn6M4TCZTUUvxCoyr6E4R53Lve9Bs6m5RnGastNKgjZQMXMIbAc+5+y0ZFp0=@vger.kernel.org
+X-Gm-Message-State: AOJu0Yz5WmMELgLffBemEVBwLs5MjFJ24GqkrNml/xS+C58OmHTxcDHi
+	iKZgeEQ0CKvDGmW1o3UNJRKmeM6hBmH+TQGpQYBZ6Bjg56lUrEkPUv8vPEGBXQ==
+X-Gm-Gg: ASbGncuXsf5qd18/gRILlbay4rzgFmiXmTxDmgvPfERB/qgD4FwaFgnKzI42dkIWFMm
+	9hkjmPBGnqSBdhqjRT1fwl4cosoAkJMzsJfpQZkambeAWvAgnXxEOr0+iipcd5FuII6BSx1R+xl
+	2egO2e36v16gi+z4R8xUJUX8UYTP3gxQ+ZFfg4LloNsvq66d6VVbsJi6aPHgPd35XchDJOGbAt7
+	cr6zD+nE6IzGdLmBsX94sYuanfrP4R68jkqKkg9fdKeYQRN+Jtt9mDZHTDrdKiZoDiELpbLk/nk
+	Nf3v7VQvk32dF3OC+vC9QQytbuwp0rY=
+X-Google-Smtp-Source: AGHT+IEo6zYCroXNzGeMoJ6DXjN4iuorhuYEUd6HR45OceTmwWjNdh8564Gy5gLCqfRJCvBipuKfwg==
+X-Received: by 2002:a17:902:da90:b0:223:5c77:7ef1 with SMTP id d9443c01a7336-235293f44e7mr243117055ad.21.1748887617042;
+        Mon, 02 Jun 2025 11:06:57 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::9eb])
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506bc8669sm73800275ad.13.2025.06.02.11.06.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jun 2025 11:06:56 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: Brad Smith <brad@comstyle.com>, git@vger.kernel.org
+Subject: Re: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
+In-Reply-To: <aD1SvlRypkhczxRS@humpty.home.comstyle.com>
+Date: Mon, 02 Jun 2025 11:06:55 -0700
+Message-ID: <87wm9ut3uo.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Date: Mon, 2 Jun 2025 10:13:49 -0700
-X-Gm-Features: AX0GCFto8AyMM38i5YhzabBBbmBWECsACNZVcueH9UcYkzi_Fi2oBVLz-_VyyxI
-Message-ID: <CAOLa=ZTP0i5q9Qw4g_ei+kSLyaRAMEoHf=PnPFbr7pRqgnyXAw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] refs/files: skip updates with errors in batched updates
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org, jltobler@gmail.com, 
-	Christian Couder <chriscool@tuxfamily.org>
-Content-Type: multipart/mixed; boundary="0000000000003b2273063699e358"
+Content-Type: text/plain
 
---0000000000003b2273063699e358
-Content-Type: text/plain; charset="UTF-8"
+Hi Brad,
 
-Junio C Hamano <gitster@pobox.com> writes:
+You wrote:
 
-> Karthik Nayak <karthik.188@gmail.com> writes:
->
->>> Curious -- we do have tests, so why don't any of them hit this issue?
->>>
->>
->> We don't hit this edge case in any of our tests I presume. This
->> basically requires a deletion request with an expected old OID, however
->> the reference should be non-existent.
->
-> I read Patrick's remart not as a question but as a rhetoric
-> suggestion to make sure we have test coverage ;-)
+> Handle OpenBSD and NetBSD as FreeBSD / DragonFly are. OpenBSD would
+> need _XOPEN_SOURCE to be set to 700. Its simpler to just not set
+> _XOPEN_SOURCE.
+> 
+>     CC strbuf.o
+> strbuf.c:645:6: warning: call to undeclared function 'getdelim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+>         r = getdelim(&sb->buf, &sb->alloc, term, fp);
+>             ^
+> 1 warning generated.
+> 
+> Signed-off-by: Brad Smith <brad@comstyle.com>
+> ---
+>  compat/posix.h | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 
-Ah! Okay, all is good then, since my patch does add a test for this now.
+I noticed this as well when testing your other fixes.
 
---0000000000003b2273063699e358
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Disposition: attachment; filename="signature.asc"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: 8d5f537d57ce5817_0.1
+Just one question about this chunk:
 
-LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
-L0xaY1lHUHRXZkpJNUdqSDhGQW1nOTI4c1dIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
-QUtDUkErMVo4a2prYU1mMDlpQy85eEdCL2pPYlliUmYwM1gwMDZaUHZMVVZraQpUaUsrUUhHVjdw
-cFVRNzh5YTFiN2NiWGRaaTdBNHZYQXdRUWoxY3prb28vaDk3ZFpVRDFtVXhZK1cwemZGLzIzClc5
-K3NIeU1FTmVRZUFoeTNxRnQva1o4ejFCWmIrYlJYU0s2SVN6S0hlcEdsUjdvVEdEVUhYeE9lUzJF
-OGlRUzEKUkFsMEc4MFJscy9WeUp3ZUtwS2paQ2pIdUgzRzlmd1VzYVJkbTBKc01CcjNyYkpJelN1
-S3RHdW1PQWlMb292Ygo0Q21tUDhaWlBDbUZLTUQ1dkt0WG44LzNhTnVZbGtpcGZVenpvTUY5aWR6
-VEIvcEZYU0ZZYitpWERXazZrdWhnCkFZV3lnOUFWS3F0RzhJWnRxVm5FdUVpeU9DTG12N3RjcmtM
-Z1daTDN2eHdCd0hKZkUzWFlWa1NFV2dzdDRxdDMKeGN1eGM4ZUJhY3FzVk56SmFPMTNrN0FXYzdZ
-WFVrcjZ2MHVzMXZGRVA0V1lwWkd4Mjh5QmFEc25oSlk3UHdQMQpIdmFQbGE4R25SK2dOcDNFWUU1
-NDlRR2VDbUxGYlNTdWdNMVNwRTY3by94TGhjQ2JETnJ2dmgvQnNacjJnTGxhCjFLV09hQ2NVMG5I
-eHpOVTdrN0lTbHI2VUdWcFdWYXo0WXNkS1Jqaz0KPXp2SmQKLS0tLS1FTkQgUEdQIFNJR05BVFVS
-RS0tLS0t
---0000000000003b2273063699e358--
+>  #define _DEFAULT_SOURCE 1
+> -#define _NETBSD_SOURCE 1
+
+Why remove this definition? I think it might be useful on some older
+systems and seems harmless otherwise.
+
+Other than that, I tested on OpenBSD 7.6 and NetBSD 10.0 and this patch
+fixes the missing declarations. So:
+
+Reviewed-by: Collin Funk <collin.funk1@gmail.com>
+
+Collin
