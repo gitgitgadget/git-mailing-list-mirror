@@ -1,63 +1,67 @@
-Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D4D32C3258
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 16:40:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92837223708
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 16:40:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.51
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748882447; cv=none; b=HxTKPEOiPTDv3A5XFhO60AlcVkj4hTdRe52zZ9DvRFExAvQWGRAM6kzwPaJjUzxliKAnO2Civwaf+xGK895TqFdbFFnnnGAFrdPP9pxPAwd0Sx7S6Ba26/+FUgbjK7f92j8XF449mVg71vqOvJvPd06K3EAW8yi/4b8gqEJaZNg=
+	t=1748882448; cv=none; b=svApOx3hBex3nhcR3belHGa37vQs5+Lv7DHqFk+z2vSBOOxMpKO8fSfgi+q8cQjpU69qC6lnczNUHSMa8IJxG5O/JyEbz1t5O0BXOlFSXn0ClBz0yeJ/Li9WdX/HvdOdlIhmGRkFYGv7YpSyO7ERxkxWpZW9oq20SXb5yiFpoig=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748882447; c=relaxed/simple;
-	bh=Ai+WSedLxQ9HSxqnQ0qGZCeSS0XfybI2r8TenwT6Ux8=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=G8BjMOxmCRhL9FpAnyIIXAinNk32/M/cIF2uf7i/Qgfjwv0DoSo8Qv75A9XAh0Y8uIizOMbraeTjzD37XjNdvGh4BG6YTkGVYhpX+BQHnlQUOHFH2wob4VhWZRe1Rb8QiBPYV6Ys7SMcYTm+69bK/8WkbZN5sbfxTWWsmHWH3n4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=mMk61WLy; arc=none smtp.client-ip=209.85.128.41
+	s=arc-20240116; t=1748882448; c=relaxed/simple;
+	bh=W+ZCvSh0BgOdlnMe/EjaZ4mcpbuAANA3rngqIPVqH+w=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=AGMhG0P12TnWdM6sfKmrBOI2fTfjxaFCn0jtj+S8REcMng3OWAgH8MZLAB2tYBjIt8RvniOaS9sUYu4QACjoIu3VPCc+GPIUTiyGYyD08dOWv93V2wsdNKh+P7HlwpyBZvfbexOZuxElDFpPLGz9i4vNYo9KtvOESE3l2uskgxE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=OEkvz/VS; arc=none smtp.client-ip=209.85.128.51
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="mMk61WLy"
-Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-450dd065828so20231825e9.2
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 09:40:45 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="OEkvz/VS"
+Received: by mail-wm1-f51.google.com with SMTP id 5b1f17b1804b1-43cfe63c592so53799745e9.2
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 09:40:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748882443; x=1749487243; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748882444; x=1749487244; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=xjdBIdjzGvEiXX5cTK0jeCtz37ZAYW6SYcqWTlsYPZw=;
-        b=mMk61WLySJXhfCktREiYt9VdRXNs4kDcY4/zNQB2F66jTXZ0Ms89GW4T9gtOAUdu4a
-         nSafjhStwMgBwwKODHq1+q8M6hbYNjr1HBZf9+Pf5qxRIJlH5bA1asIk4QoEO9PMwg3c
-         6ZI2qSGeht8PqsmjlWADtW9w1+9J+u8etXhQtk3lSUk5OJ83x/QC4qSO/BFpzblIpW1+
-         wpWYb+LhpSE14l1Ueh4zxd+riWeE77WQ0gZiWNeB8yQtKKayx7Q0NF1koewgDPDFD9ry
-         3h3Z6mmXBxCPBLcF9ao+dZEIvdKen7ZRPrl3WcTMansOIAFM19N9jaNcdgDPBVIzhy0e
-         dlfw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rvdNvOX9Znr6oRqS+J9wBZR93N8R4067cZ7N1qREAtA=;
+        b=OEkvz/VSqr02Oydt3Jtg5eH3PCFpOZX4BEYtRqXYM2gBiqyH3sFcfzjjXwAifQBrrN
+         o7nLob3zZSb/wnOtb0nVUwZ0I+kAuK2T2GwfLtMXxGPg2gKttcvpbTNorKfWVpy/n5S8
+         r6r0wC/jbxdA/g9Ou7xU8HpTGO6rp4TiMuQHBYlzFWGvKf/KJJAJ6jMo7r9hmnmEbkIn
+         ZpenrQMinBEL/XHuhcJLPKAW2Y6BNLZqdxCDhBA0rAh9adwCx5eEo4xIt6QqcasCeuiB
+         4xfA6UghoFIuVqHyaSggMtzYlNibAXrvGQ+ch6JYVwzj15rhx4o9BxCdPIU+dWTXrI47
+         GUUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748882443; x=1749487243;
+        d=1e100.net; s=20230601; t=1748882444; x=1749487244;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=xjdBIdjzGvEiXX5cTK0jeCtz37ZAYW6SYcqWTlsYPZw=;
-        b=EsLc+tXyFJqWX9d6ZXuZUuUbpeFre4+3Qvm9gF7EgyzGQVxWnRXgf40n0MU+h7ul3F
-         FO4TSlLRrap9vsjMJ8WqEmdp/JkHuDASJVXi1EanVCfU99mOFOvubuBxY8lGmsLE+eeZ
-         wiKTCAOyFi+7SfBtdgWicMsPhN1O96mBjXYO2+q2qP6RH1ACzd5FS/3uAOzBReKmMFAi
-         qw1kPIFJaQR1eTyO9NfCQTNYh3dTMCgaXEKmqeskK2khBtW+OpmAQVFvQayuFgfjjbxb
-         NVp5q+6QTDGvZ6hYpLUui7x0jsd9EcEYIloFspKQMrmarQ2bD8z4WCysZ9/v1rsgK3Uv
-         zMcQ==
-X-Gm-Message-State: AOJu0YyLoMF/HW95GJb6RXn0qgtZgxJBVNa74E1W85jLq0EP48l9yRbT
-	c1LWPHGXBAyuo6RLRVZskfDiHsvFqbzP2mU0LX+WpnrFMIhw9Az+31Lz+HUB0Q==
-X-Gm-Gg: ASbGncvKPzeDmMUQpfwwi/80vtMr3BvSVrDAQq9IYGqCCt16zEzWgAcn6eSZ0mZQNps
-	OK013A0/BneGQyjRtoLzKUOKLMHWYGUYOyFdQyG6HporUWcQH36EyWZaQxBoAYtPs5kDDvxG4lf
-	tEA+zh26rSCfbWTk27GJarGg/5alAkNkuQxXVkcQOBQl9Buhttukkgu9Z4jQdAdKUjrTBys3wJN
-	+6y6YUbew0MtjsaS4rmvQQXz7VONFGodGBLRIV39HLWnu6Oo7R5MVJRdPqLyFU7hZdjUDR1nzVo
-	K3NGMMWBKptmArSyy217QQdpbbq4yvZK1hfWcAqbYKqaFksT/xKR
-X-Google-Smtp-Source: AGHT+IFAr7EVQXSpw9+UKR3or1RE8wS2UccIBsbpqV6Frf2rpJ78XUI0+hr4uSgu6AcGv0832KiFfw==
-X-Received: by 2002:a05:600c:4f50:b0:43c:efed:732c with SMTP id 5b1f17b1804b1-450d8876ce6mr85248615e9.28.1748882443185;
-        Mon, 02 Jun 2025 09:40:43 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=rvdNvOX9Znr6oRqS+J9wBZR93N8R4067cZ7N1qREAtA=;
+        b=rfkFCw2GPnAAq45b1raqovcPxN5obqv9dDCxcp6VOgBJBE0ektVaLuy6oDqFEGojkz
+         3EHN8I7MOvpPwCAkof5MZCbDDu67KaTijdGY04j9E4QZ0mj34Y327BiajAK7TsRffeju
+         QyHZFOJqXFtIk5WXxfrjOizeATYGmWaYZoS075jTILz2iAjSe1J9eIuVLUYEW86IWiez
+         uW6E66UrurYi00cUTFJEzzzTLT2s3OPcTgWfUx1sVp6+AOqhs6rJwCVLKCD4ag4/TJ4p
+         stFuR+4cN83aSTZy5uYoQcHWqysbc8I6+HYJNqaoQMyn185M/KZgosNm1UI1ivBT0LUX
+         xzHQ==
+X-Gm-Message-State: AOJu0YwPkcWeLEszVpXIRJYQ7bp8VKHroVL6/M8cbVoM+D91r614GmBx
+	n4Ui2Y5P0mWZG4iqSbaOD/BzRPn4p2I8KcyAJXPAxv9utzsFh25b+Pg6syh2oQ==
+X-Gm-Gg: ASbGncsBkFY9btyfioYhHUSD+4xAqwz9fAHHHObkYSpQ9pny6YE3uLLji4fE9xjYNpr
+	5dKOF1FF3wxvSzkwdDskeYtta3HiElViI9bLOG8Ed2VadQew5wKo/6pVAb7Aw4b4KsZLANGLqMV
+	+pmgG2eR92tZN4aSEy+0Zma+zZ9koWR0wNbNC5c95mWqKcYgbESt59RsNidDmIGB4eiST+/hayI
+	x7NQJULhpVsvaO5zWEAUF+PQ8sppHR0lhOJcGfL1ccFay4prn/swElBKFek0qH85BQic2Bzy0/+
+	rplAUaQAQOjVaMew7gPN3MBiOQASpooij8yOORhTybZC/XEAGS+O
+X-Google-Smtp-Source: AGHT+IFp0JO785NAY1DpI+EOvSw3cExhR+1Pym6O4MEzXQ/WjoTy5IdKOBH+E+//RoinzlReLLANdQ==
+X-Received: by 2002:a05:600c:6488:b0:442:f4a3:9338 with SMTP id 5b1f17b1804b1-4511ee1215emr72749235e9.21.1748882444465;
+        Mon, 02 Jun 2025 09:40:44 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fa249esm133399595e9.13.2025.06.02.09.40.41
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe6c82csm15526907f8f.30.2025.06.02.09.40.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 09:40:42 -0700 (PDT)
-Message-Id: <pull.1928.git.1748882439.gitgitgadget@gmail.com>
+        Mon, 02 Jun 2025 09:40:44 -0700 (PDT)
+Message-Id: <45ae2c31bc03bc00f4eff6b217c7e29c509be9a1.1748882439.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1928.git.1748882439.gitgitgadget@gmail.com>
+References: <pull.1928.git.1748882439.gitgitgadget@gmail.com>
 From: "Patrik Weiskircher via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Jun 2025 16:40:37 +0000
-Subject: [PATCH 0/2] contrib/subtree: Add -S/-gpg-sign
+Date: Mon, 02 Jun 2025 16:40:39 +0000
+Subject: [PATCH 2/2] contrib/subtree: add -S/--gpg-sign
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,39 +74,294 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: apenwarr@gmail.com,
     Junio C Hamano <gitster@pobox.com>,
+    Patrik Weiskircher <patrik@pspdfkit.com>,
     Patrik Weiskircher <patrik@pspdfkit.com>
 
-This patch adds support for the -S/--gpg-sign option to the git subtree
-command.
+From: Patrik Weiskircher <patrik@pspdfkit.com>
 
-Currently, git subtree creates squash and merge commits without applying GPG
-signatures, even when commit signing is configured via commit.gpgSign. This
-causes issues in repositories that require signed commits for policy
-reasons.
+Allows optionally signing the commits that git subtree creates. This can
+be necessary when working in a repository that requires gpg signed
+commits.
 
-The implementation ensures that -S/--gpg-sign behaves consistently with
-other Git commands, passing the flag through to git commit-tree and git
-merge where appropriate.
-
-This change improves compatibility with workflows and repositories that
-enforce signed commits.
-
-Changes have been made to this patch according to a discussion with Junio C
-Hamano gitster@pobox.com on my previous patch attempt.
-
-Patrik Weiskircher (2):
-  contrib/subtree: parse using --stuck-long
-  contrib/subtree: add -S/--gpg-sign
-
+Signed-off-by: Patrik Weiskircher <patrik@pspdfkit.com>
+---
  contrib/subtree/git-subtree.adoc   |  19 +++--
- contrib/subtree/git-subtree.sh     |  66 ++++++++---------
+ contrib/subtree/git-subtree.sh     |  32 ++++----
  contrib/subtree/t/t7900-subtree.sh | 113 +++++++++++++++++++++++++++++
- 3 files changed, 158 insertions(+), 40 deletions(-)
+ 3 files changed, 145 insertions(+), 19 deletions(-)
 
-
-base-commit: 7014b55638da979331baf8dc31c4e1d697cf2d67
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1928%2Fpweiskircher%2Fsubtree-sign-the-second-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1928/pweiskircher/subtree-sign-the-second-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1928
+diff --git a/contrib/subtree/git-subtree.adoc b/contrib/subtree/git-subtree.adoc
+index 004abf415b8e..b2bcbcad0d05 100644
+--- a/contrib/subtree/git-subtree.adoc
++++ b/contrib/subtree/git-subtree.adoc
+@@ -9,14 +9,14 @@ git-subtree - Merge subtrees together and split repository into subtrees
+ SYNOPSIS
+ --------
+ [verse]
+-'git subtree' [<options>] -P <prefix> add <local-commit>
+-'git subtree' [<options>] -P <prefix> add <repository> <remote-ref>
+-'git subtree' [<options>] -P <prefix> merge <local-commit> [<repository>]
+-'git subtree' [<options>] -P <prefix> split [<local-commit>]
++'git subtree' [<options>] -P <prefix> [-S[<keyid>]] add <local-commit>
++'git subtree' [<options>] -P <prefix> [-S[<keyid>]] add <repository> <remote-ref>
++'git subtree' [<options>] -P <prefix> [-S[<keyid>]] merge <local-commit> [<repository>]
++'git subtree' [<options>] -P <prefix> [-S[<keyid>]] split [<local-commit>]
+ 
+ [verse]
+-'git subtree' [<options>] -P <prefix> pull <repository> <remote-ref>
+-'git subtree' [<options>] -P <prefix> push <repository> <refspec>
++'git subtree' [<options>] -P <prefix> [-S[<keyid>]] pull <repository> <remote-ref>
++'git subtree' [<options>] -P <prefix> [-S[<keyid>]] push <repository> <refspec>
+ 
+ DESCRIPTION
+ -----------
+@@ -149,6 +149,13 @@ OPTIONS FOR ALL COMMANDS
+ 	want to manipulate.  This option is mandatory
+ 	for all commands.
+ 
++-S[<keyid>]::
++--gpg-sign[=<keyid>]::
++--no-gpg-sign::
++	GPG-sign commits. The `keyid` argument is optional and
++	defaults to the committer identity; `--no-gpg-sign` is useful to
++	countermand a `--gpg-sign` option given earlier on the command line.
++
+ OPTIONS FOR 'add' AND 'merge' (ALSO: 'pull', 'split --rejoin', AND 'push --rejoin')
+ -----------------------------------------------------------------------------------
+ These options for 'add' and 'merge' may also be given to 'pull' (which
+diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree.sh
+index 60b2431b8bba..3fddba797cb9 100755
+--- a/contrib/subtree/git-subtree.sh
++++ b/contrib/subtree/git-subtree.sh
+@@ -26,12 +26,12 @@ then
+ fi
+ 
+ OPTS_SPEC="\
+-git subtree add   --prefix=<prefix> <commit>
+-git subtree add   --prefix=<prefix> <repository> <ref>
+-git subtree merge --prefix=<prefix> <commit>
+-git subtree split --prefix=<prefix> [<commit>]
+-git subtree pull  --prefix=<prefix> <repository> <ref>
+-git subtree push  --prefix=<prefix> <repository> <refspec>
++git subtree add   --prefix=<prefix> [-S[=<key-id>]] <commit>
++git subtree add   --prefix=<prefix> [-S[=<key-id>]] <repository> <ref>
++git subtree merge --prefix=<prefix> [-S[=<key-id>]] <commit>
++git subtree split --prefix=<prefix> [-S[=<key-id>]] [<commit>]
++git subtree pull  --prefix=<prefix> [-S[=<key-id>]] <repository> <ref>
++git subtree push  --prefix=<prefix> [-S[=<key-id>]] <repository> <refspec>
+ --
+ h,help!       show the help
+ q,quiet!      quiet
+@@ -46,6 +46,7 @@ rejoin        merge the new branch back into HEAD
+  options for 'add' and 'merge' (also: 'pull', 'split --rejoin', and 'push --rejoin')
+ squash        merge subtree changes as a single commit
+ m,message!=   use the given message as the commit message for the merge commit
++S,gpg-sign?key-id   GPG-sign commits. The keyid argument is optional and defaults to the committer identity
+ "
+ 
+ indent=0
+@@ -168,6 +169,7 @@ main () {
+ 	arg_split_annotate=
+ 	arg_addmerge_squash=
+ 	arg_addmerge_message=
++    arg_gpg_sign=
+ 	while test $# -gt 0
+ 	do
+ 		opt="$1"
+@@ -232,6 +234,9 @@ main () {
+ 			test -n "$allow_addmerge" || die_incompatible_opt "$opt" "$arg_command"
+ 			arg_addmerge_squash=
+ 			;;
++	--gpg-sign=* | --gpg-sign | --no-gpg-sign)
++	    arg_gpg_sign="$opt"
++	    ;;
+ 		--)
+ 			break
+ 			;;
+@@ -264,6 +269,7 @@ main () {
+ 	debug "quiet: {$arg_quiet}"
+ 	debug "dir: {$dir}"
+ 	debug "opts: {$*}"
++    debug "gpg-sign: {$arg_gpg_sign}"
+ 	debug
+ 
+ 	"cmd_$arg_command" "$@"
+@@ -529,7 +535,7 @@ copy_commit () {
+ 			printf "%s" "$arg_split_annotate"
+ 			cat
+ 		) |
+-		git commit-tree "$2" $3  # reads the rest of stdin
++		git commit-tree $arg_gpg_sign "$2" $3  # reads the rest of stdin
+ 	) || die "fatal: can't copy commit $1"
+ }
+ 
+@@ -675,10 +681,10 @@ new_squash_commit () {
+ 	if test -n "$old"
+ 	then
+ 		squash_msg "$dir" "$oldsub" "$newsub" |
+-		git commit-tree "$tree" -p "$old" || exit $?
++		git commit-tree $arg_gpg_sign "$tree" -p "$old" || exit $?
+ 	else
+ 		squash_msg "$dir" "" "$newsub" |
+-		git commit-tree "$tree" || exit $?
++		git commit-tree $arg_gpg_sign "$tree" || exit $?
+ 	fi
+ }
+ 
+@@ -917,11 +923,11 @@ cmd_add_commit () {
+ 	then
+ 		rev=$(new_squash_commit "" "" "$rev") || exit $?
+ 		commit=$(add_squashed_msg "$rev" "$dir" |
+-			git commit-tree "$tree" $headp -p "$rev") || exit $?
++			git commit-tree $arg_gpg_sign "$tree" $headp -p "$rev") || exit $?
+ 	else
+ 		revp=$(peel_committish "$rev") || exit $?
+ 		commit=$(add_msg "$dir" $headrev "$rev" |
+-			git commit-tree "$tree" $headp -p "$revp") || exit $?
++			git commit-tree $arg_gpg_sign "$tree" $headp -p "$revp") || exit $?
+ 	fi
+ 	git reset "$commit" || exit $?
+ 
+@@ -1072,9 +1078,9 @@ cmd_merge () {
+ 	if test -n "$arg_addmerge_message"
+ 	then
+ 		git merge --no-ff -Xsubtree="$arg_prefix" \
+-			--message="$arg_addmerge_message" "$rev"
++			--message="$arg_addmerge_message" $arg_gpg_sign "$rev"
+ 	else
+-		git merge --no-ff -Xsubtree="$arg_prefix" $rev
++		git merge --no-ff -Xsubtree="$arg_prefix" $arg_gpg_sign $rev
+ 	fi
+ }
+ 
+diff --git a/contrib/subtree/t/t7900-subtree.sh b/contrib/subtree/t/t7900-subtree.sh
+index 3c6103f6d270..3edbb33af469 100755
+--- a/contrib/subtree/t/t7900-subtree.sh
++++ b/contrib/subtree/t/t7900-subtree.sh
+@@ -11,6 +11,7 @@ and push subcommands of git subtree.
+ 
+ TEST_DIRECTORY=$(pwd)/../../../t
+ . "$TEST_DIRECTORY"/test-lib.sh
++. "$TEST_DIRECTORY"/lib-gpg.sh
+ 
+ # Use our own wrapper around test-lib.sh's test_create_repo, in order
+ # to set log.date=relative.  `git subtree` parses the output of `git
+@@ -1563,4 +1564,116 @@ test_expect_success 'subtree descendant check' '
+ 	)
+ '
+ 
++test_expect_success GPG 'add subproj with GPG signing using -S flag' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" -S FETCH_HEAD &&
++		git verify-commit HEAD &&
++		test "$(last_commit_subject)" = "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
++	)
++'
++
++test_expect_success GPG 'add subproj with GPG signing using --gpg-sign flag' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" --gpg-sign FETCH_HEAD &&
++		git verify-commit HEAD &&
++		test "$(last_commit_subject)" = "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
++	)
++'
++
++test_expect_success GPG 'add subproj with GPG signing using specific key ID' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" -S"$GIT_COMMITTER_EMAIL" FETCH_HEAD &&
++		git verify-commit HEAD &&
++		test "$(last_commit_subject)" = "Add '\''sub dir/'\'' from commit '\''$(git rev-parse FETCH_HEAD)'\''"
++	)
++'
++
++test_expect_success GPG 'merge with GPG signing' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree merge --prefix="sub dir" -S FETCH_HEAD &&
++		git verify-commit HEAD
++	)
++'
++
++test_expect_success GPG 'split with GPG signing and --rejoin' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" FETCH_HEAD
++	) &&
++	test_create_commit "$test_count" "sub dir/main-sub1" &&
++	(
++		cd "$test_count" &&
++		git subtree split --prefix="sub dir" --rejoin -S &&
++		git verify-commit HEAD
++	)
++'
++
++test_expect_success GPG 'add with --squash and GPG signing' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git fetch ./"sub proj" HEAD &&
++		git subtree add --prefix="sub dir" --squash -S FETCH_HEAD &&
++		git verify-commit HEAD &&
++		# With --squash, the commit subject should reference the squash commit (first parent of merge)
++		squash_commit=$(git rev-parse HEAD^2) &&
++		test "$(last_commit_subject)" = "Merge commit '\''$squash_commit'\'' as '\''sub dir'\''"
++	)
++'
++
++test_expect_success GPG 'pull with GPG signing' '
++	subtree_test_create_repo "$test_count" &&
++	subtree_test_create_repo "$test_count/sub proj" &&
++	test_create_commit "$test_count" main1 &&
++	test_create_commit "$test_count/sub proj" sub1 &&
++	(
++		cd "$test_count" &&
++		git subtree add --prefix="sub dir" ./"sub proj" HEAD
++	) &&
++	test_create_commit "$test_count/sub proj" sub2 &&
++	(
++		cd "$test_count" &&
++		git subtree pull --prefix="sub dir" -S ./"sub proj" HEAD &&
++		git verify-commit HEAD
++	)
++'
++
+ test_done
 -- 
 gitgitgadget
