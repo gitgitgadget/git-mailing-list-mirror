@@ -1,99 +1,187 @@
-Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
+Received: from mail-vk1-f172.google.com (mail-vk1-f172.google.com [209.85.221.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5BBC2C325A
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 07:29:06 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F319E6ADD
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 07:40:22 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.172
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748849348; cv=none; b=eomuQGDsqNgIzRmkM6CwM0KssFqxprl5wqW8XQWpi2iFN76qdr9+cRJ58Cl9joLR9CF6BGeAdiolzkaR09zDkOaUcfoUnVWyg9jFPNEO0B70s47u9VAfw3xLKZ2s/QySkTV6Oep18dEgl/wirKqr5hsIUfQ290VLJ1iu0NnxA2Y=
+	t=1748850024; cv=none; b=elNZ4CbX6vOn57D2NMpZ6EPt1NMajh7PN2XQxYcrYQoPk05/VhHASVZSWYZvf+nqdvZXm78mCAW5hRltIBYti86uUwEslgKBuByBMvu3VNrTFmDKX2ASP7uaFMZjYXlc8aS6SkVVZ2mDs/P/KoWFDLqTP2e8IR0COqvN4ed2wAg=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748849348; c=relaxed/simple;
-	bh=Cj7hVboydZVOHK9vCEhTFBfucWWQi5Vac0fvHYqK+O0=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=aM1eNAqik0oZ3HxshONf6Ag8OKVwItTdfw/Yk1UUffKO/t5axMjwEJZCa/jIlpMO+GSOioG9Ia9gCYUEe23Cxxxe9TfNd3emxlwgQAAXsDkLJqEsQa+d7eT1ULw5NV+ZPUpQKy3sL1iti2u9IF4JnjgVVwsZP7V3/FGc3uscbj4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=jIeSq1c+; arc=none smtp.client-ip=206.51.28.2
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
+	s=arc-20240116; t=1748850024; c=relaxed/simple;
+	bh=+jYg4u8MibH/3TYSj/YJFXQjvTdcOGvax2yCz7SN1TU=;
+	h=From:In-Reply-To:References:MIME-Version:Date:Message-ID:Subject:
+	 To:Cc:Content-Type; b=dcd+HB6eEuJ7VLOaK0tdiRVI8z+Ya5QhnkOPCHUm32hRHV73CU4u1f4rnXOsy5QDNCaioq9IwSiK3BhmQZbFsvl+hCQ/JLB80srVPU8YB20P7Y9/LAgqUKAFN9G3DihjPcpHPGej5oicF4FPj0QGJasfxf7qS8XLOzrzfxkJ7fw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RU7mrsuk; arc=none smtp.client-ip=209.85.221.172
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="jIeSq1c+"
-Received: from mail.comstyle.com (localhost [127.0.0.1])
-	by mail.comstyle.com (Postfix) with ESMTP id 4b9lp92d0Hz8PbP
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 03:29:05 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
-	:from:to:subject:message-id:mime-version:content-type; s=
-	default; bh=Cj7hVboydZVOHK9vCEhTFBfucWWQi5Vac0fvHYqK+O0=; b=jIeS
-	q1c+9Qu+D1QdWkslpq5WaFwhZTw1TdJUxDXAyeDtnOvZmdH4qdNooxA5/ccT9apK
-	qvHL6oxHLpJd76ST8OMxMNd+m2DvJoDYX4J+vHXhRDdAM2Gd1XJg0iPIaQzl9vSl
-	VkXLHa4OBNt/E2AIF2+GrE4ePOSerbw/dtxPrtU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
-	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
-	b1nFSnYF3w4XJxuOUPq2dYJ6Mrb9BV4V43N575jNPoJv1Z5agmfOyJbZUDtfuJB+
-	lscSYsY0aQkFf30ay0Afsv6pyG6bj3f0UmbWgexDbnLLL4eFCkUHygTiRrGTEj6d
-	EDtlsvP7U1fEQX+1Mu08xYYK1Th0AYSMw+Fx6/psXcQ=
-Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:b29c:6e05:bafd:127d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
-	(No client certificate requested)
-	(Authenticated sender: brad)
-	by mail.comstyle.com (Postfix) with ESMTPSA id 4b9lp90YGqz8PbN
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 03:29:05 -0400 (EDT)
-Date: Mon, 2 Jun 2025 03:29:02 -0400
-From: Brad Smith <brad@comstyle.com>
-To: git@vger.kernel.org
-Subject: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
-Message-ID: <aD1SvlRypkhczxRS@humpty.home.comstyle.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RU7mrsuk"
+Received: by mail-vk1-f172.google.com with SMTP id 71dfb90a1353d-52413efd0d3so1320677e0c.2
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 00:40:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748850022; x=1749454822; darn=vger.kernel.org;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:from:to:cc:subject:date:message-id:reply-to;
+        bh=D5msL2S6p7cTlP8HjuUj1vu4Yr8KLMryn4g8bLk2fMk=;
+        b=RU7mrsukylZtt1oIu5z6mhj4313paLmOrxtRAS2rGjtWals9oftyTlZLnNu7LYPL7g
+         G3CqTgPyUKCaFNBnhhlssXvwMdONTW++qfqttzfrcM8BRUPwYnDw4rg5wK5XQzQbYQNF
+         MeeL1+JNd1E2TGDR7mtiYJYLO90Hxo9kbTY2i1hhgKg/CLz1NawXcAKszuHEojlhAzg6
+         859v2f6ROffS9U+v/G4rdUqJVWDsXK2Lv2Q71z3p9WqNJHWtNwwOjOp+vAiWVpGaf+oG
+         vKOLFrDGndd2c7/+rfOwox4u/3DFlmwCY6U7zcNFVtQJiuihLeHCh2mpqTNsTHHWdt70
+         YA6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748850022; x=1749454822;
+        h=cc:to:subject:message-id:date:mime-version:references:in-reply-to
+         :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=D5msL2S6p7cTlP8HjuUj1vu4Yr8KLMryn4g8bLk2fMk=;
+        b=dn/cei5ejC9sK2/PSn2TUgWkmxQxYY+kk0J40aIAASH0mCyqX06fhUA4ioJdXe9A1z
+         4PA+NUAgvU9+08s/gHhTaSCNjCX7MGojim6hfFViCWjTnn6MLNySMV5XDPVctcAvI1uD
+         RMf8pO1u6TbpHTGFTDC6CAfFingpx/nQhQ/G6EwENfhaFmJA03rtbeu8T3t5NF+JDnoe
+         ilkypAt4UUUhiWW00+ddzH3hDUfU7ywe7849PePY9a0uXhMFcfUy4LIHsaYKNsuIgwLK
+         mkJObNWRJCLdZLFc/NK1Blh7gcwrg/pAiCHWCDWxT51l4cMLYTHgH4712BSznHsNSN4R
+         ZfEQ==
+X-Forwarded-Encrypted: i=1; AJvYcCWMd5B1sYFIAP1mT9U4KPJMkkf6K1B9GRnXTLfAadLcUPbhiTehBl/i7ZVgl/XeLCIJHr0=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBCxjnX5doHOfKsMG5ur7sW35l9lilej2iRvqXxaYfM9XYfZic
+	MKJqyrYR8gnejBOVARu3m86aLCAqVBP3sdHLmvi5tiKtehbXxCEuVhOm1sMeE0V/evVQ4830ZSr
+	rIrN/tNW4Cnlba+32SL+VorTdlIVaMeew0C6o
+X-Gm-Gg: ASbGnctCcSQ3kTTq73cOopvIaGnFzyYEQAXiFsGs37uq5IBuT0GXHQanRLrzDrzNg7+
+	OziYwKkx2tXO+OJSNDsx8j7rH1y+md4afo/zuAossfgZi4D4LTee1Hf14+1obdpx3HOLV+4vRmJ
+	GNXgYcija6UH3Rwa8lPWTsB8EjzOPndEqX9maetp4BNM8jrkGP9uNr6uWfHFBlvZXBRQ0=
+X-Google-Smtp-Source: AGHT+IFSnVQZD3XrX9H7UxIXrKcxPl3vpx4oZg5PSLnRnAr6bgc2fLHFHKPV9my/sXZZrTGO6XOfHMnTvosqyo/G+AQ=
+X-Received: by 2002:a05:6122:3bc1:b0:520:6773:e5ea with SMTP id
+ 71dfb90a1353d-53084c639abmr7961800e0c.7.1748850021651; Mon, 02 Jun 2025
+ 00:40:21 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Jun 2025 00:40:20 -0700
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 2 Jun 2025 00:40:20 -0700
+From: Karthik Nayak <karthik.188@gmail.com>
+In-Reply-To: <20250602-pks-meson-tap-v4-0-052dfde0818a@pks.im>
+References: <20250506-pks-meson-tap-v1-0-5aaab2942a4c@pks.im> <20250602-pks-meson-tap-v4-0-052dfde0818a@pks.im>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Date: Mon, 2 Jun 2025 00:40:20 -0700
+X-Gm-Features: AX0GCFsCQAT6ALMrL_qZO1Ap7PRp2O8bPoRkwV7oL8hqUQtdoC890c-hFTze90c
+Message-ID: <CAOLa=ZRTPfov728fae4v28-JdXmVqKRX4cC9v9NytTboo8Ax6g@mail.gmail.com>
+Subject: Re: [PATCH v4 00/10] meson: parse TAP output generated by our tests
+To: Patrick Steinhardt <ps@pks.im>, git@vger.kernel.org
+Cc: Phillip Wood <phillip.wood123@gmail.com>, Junio C Hamano <gitster@pobox.com>, 
+	Ramsay Jones <ramsay@ramsayjones.plus.com>, Eli Schwartz <eschwartz@gentoo.org>, 
+	Todd Zullinger <tmz@pobox.com>, Eric Sunshine <sunshine@sunshineco.com>
+Content-Type: multipart/mixed; boundary="0000000000004e72f2063691e070"
 
-Handle OpenBSD and NetBSD as FreeBSD / DragonFly are. OpenBSD would
-need _XOPEN_SOURCE to be set to 700. Its simpler to just not set
-_XOPEN_SOURCE.
+--0000000000004e72f2063691e070
+Content-Type: text/plain; charset="UTF-8"
 
-    CC strbuf.o
-strbuf.c:645:6: warning: call to undeclared function 'getdelim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
-        r = getdelim(&sb->buf, &sb->alloc, term, fp);
-            ^
-1 warning generated.
+Hello
 
-Signed-off-by: Brad Smith <brad@comstyle.com>
----
- compat/posix.h | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+> Range-diff versus v3:
+>
+>  1:  0e9aac3c63f =  1:  05d16d9d7ac t: stop announcing prereqs
+>  2:  2c3bd12eb5d !  2:  ed6a8b205f0 t: silence output from `test_create_repo()`
+>     @@ t/t4041-diff-submodule-option.sh: test_expect_success 'typechanged submodule(sub
+>      -test_create_repo sm1 &&
+>      -head6=$(add_file sm1 foo6 foo7)
+>      -fullhead6=$(cd sm1; git rev-parse --verify HEAD)
+>     -+test_expect_success 'setup submodule' '
+>     ++test_expect_success 'setup submodule anew' '
+>      +	rm -f sm1 &&
+>      +	git init sm1 &&
+>      +	head6=$(add_file sm1 foo6 foo7) &&
+>  3:  c659a0ce551 =  3:  cf05118aeae t9822: use prereq to check for ISO-8859-1 support
+>  4:  e7141b15b56 !  4:  4d41989afe6 t983*: use prereq to check for Python-specific git-b4(1) support
+>     @@ Metadata
+>      Author: Patrick Steinhardt <ps@pks.im>
+>
+>       ## Commit message ##
+>     -    t983*: use prereq to check for Python-specific git-b4(1) support
+>     +    t983*: use prereq to check for Python-specific git-p4(1) support
+>
+>     -    The tests in t9835 and t9836 verify that git-b4(1) works with both
+>     +    The tests in t9835 and t9836 verify that git-p4(1) works with both
+>          Python 2 and 3, respectively. To determine whether we have those Python
+>          versions in the first place we create a wrapper script that directly
+>     -    executes the git-b4(1) script with `python2` or `python3` binaries. We
+>     +    executes the git-p4(1) script with `python2` or `python3` binaries. We
+>          then condition the execution of tests on whether that wrapper script can
+>          be executed successfully.
+>
+>  5:  71b76db40e4 =  5:  b3f5f4e0d4d t/test-lib: don't print shell traces to stdout
+>  6:  b60daf5ac69 !  6:  78ab5b1d331 t/test-lib: fix TAP format for BASH_XTRACEFD warning
+>     @@ Commit message
+>          t/test-lib: fix TAP format for BASH_XTRACEFD warning
+>
+>          When the Bash version is too old to support BASH_XTRACEFD we print a
+>     -    warning to stderr. This warning breaks the TAP format because it is not
+>     -    prefixed with a "#". Fix this.
+>     +    warning to stderr. This warning is not prefixed with "#", which causes
+>     +    TAP parsers to (wrongly) interpret the warning as part of the protocol.
+>     +
+>     +    Fix this issue by prefixing the warning with a "#" so that it is treated
+>     +    as comment.
+>
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+>  7:  ce55bee9a12 !  7:  61b8b7640b7 t7815: fix unexpectedly passing test on macOS
+>     @@ Commit message
+>
+>          The test passes if '.' matches a NUL byte, which we expect to only
+>          happen on Cygwin. The upcoming changes to support parsing TAP output in
+>     -    Meson surface that this test is also unexpectedly passing on macOS
+>     -    though.
+>     +    Meson surface that this test, surprisingly, passes on macOS as well.
+>
+>          It is unclear how long the test has been passing on macOS already.
+>          064eed36c7f (config.mak.uname: only set NO_REGEX on cygwin for v1.7,
+>     -    2025-04-17) mentions that the test started to pass for Cygwin once it
+>     -    has imported a newer implementation of regcomp(3p) et all, which was
+>     +    2025-04-17) mentions that the test started to pass for Cygwin. This was
+>     +    attributed to a new implementation of regcomp(3p) and friends, which was
+>          inherited from FreeBSD. Given the BSD lineage of macOS it is feasible
+>          that it also inherited similar code eventually that made the test pass
+>          now.
+>     @@ Commit message
+>          same in this edge case and mark the new behaviour as expected.
+>
+>          This change is outside of the scope of this patch series, which only
+>     -    introduce support for TAP. So instead of fixing the bigger issue, ignore
+>     -    the test on Darwin like we already do for Cygwin.
+>     +    introduces support for TAP. So instead of fixing the bigger issue,
+>     +    ignore the test on Darwin like we already do for Cygwin.
+>
+>          Signed-off-by: Patrick Steinhardt <ps@pks.im>
+>
+>  8:  80dcf1d5979 =  8:  02011b7017c test-lib: fail on unexpectedly passing tests
+>  9:  dca5730ab18 =  9:  540741acc80 meson: introduce kwargs variable for tests
+> 10:  60393aa4af9 = 10:  8417d0ed94c meson: parse TAP output generated by our tests
+>
+> ---
+> base-commit: 845c48a16a7f7b2c44d8cb137b16a4a1f0140229
+> change-id: 20250429-pks-meson-tap-1eed604a02a3
 
-diff --git a/compat/posix.h b/compat/posix.h
-index f4c71f9427..61fb08b64c 100644
---- a/compat/posix.h
-+++ b/compat/posix.h
-@@ -60,18 +60,17 @@
- # else
- # define _XOPEN_SOURCE 500
- # endif
--#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) && \
--      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
--      !defined(__TANDEM) && !defined(__QNX__) && !defined(__MirBSD__) && \
--      !defined(__CYGWIN__)
--#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
-+#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && \
-+      !defined(__OpenBSD__) && !defined(__DragonFly__) && !defined(__MirBSD__) && \
-+      !defined(__USLC__) && !defined(_M_UNIX) && !defined(__sgi) && \
-+      !defined(__TANDEM) && !defined(__QNX__) && !defined(__CYGWIN__)
-+#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500 */
- #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
- #endif
- #define _ALL_SOURCE 1
- #define _GNU_SOURCE 1
- #define _BSD_SOURCE 1
- #define _DEFAULT_SOURCE 1
--#define _NETBSD_SOURCE 1
- #define _SGI_SOURCE 1
- 
- #if defined(WIN32) && !defined(__CYGWIN__) /* Both MinGW and MSVC */
--- 
-2.49.0
+The range-diff looks great. Thanks!
 
+--0000000000004e72f2063691e070
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Disposition: attachment; filename="signature.asc"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: 59d016420dd39b15_0.1
+
+LS0tLS1CRUdJTiBQR1AgU0lHTkFUVVJFLS0tLS0KCmlRSEtCQUVCQ2dBMEZpRUVWODVNZjJOMWNR
+L0xaY1lHUHRXZkpJNUdqSDhGQW1nOVZXSVdIR3RoY25Sb2FXc3UKTVRnNFFHZHRZV2xzTG1OdmJR
+QUtDUkErMVo4a2prYU1mMXlRQy8wYTZyQ2RvZ2tqZzN4VGFOUnJRSlBMRlVpQwo3akgySnp5R3Vt
+MlhxajVVYkdwb0NmektiZldsTUw3Z3Evb3VSVHMySm9yeEcxSXhUT2hCYnN0QmNrbWVlWkVDCmZw
+Z1hsd1liUU50ZGc5NndJdjY5ZDV0YnBxU1BhcHJZWE9XekROczNmekpFc0l5QTgvNld6T05zZUxK
+U3cwVWUKMjRPUG9yZENtOWhyRW93VWRVZmZVRzA5cXNERkV1cE5oWVUxb1NsRXVwd0dRQkpRTk9q
+UHA2KysybWNKNm9JcgoyRSt0cjRtNHpmcnRkMlh2NStrVTByUEFEclpCcXNQb1ZmZ1IwNkRBek9S
+d1RSZ2IwaGR2ZHhtT3FHU3Y0WElmCmNybG9CVWZkamlWUlJ1NmtoR1VwWUpMV1htVU5Gb1FpQnFF
+YnhrNUxkaDdjdlI3bnBYTm9GSjZtNDFoK09jUEUKQllyeit1ZDk4dE15ajdkMzQvY3NVaGdLMFpY
+UFFEYW16NjdGRDVqV0hGbXpBSlRmVjRSY3RaWDdrQmxGTTlUUQovZXRyUWFoZjJyWHRmbkV3blFr
+NWRSTW5yOVlDcHNpSlhJMFVRSG1uVmFoYU9wdS9yY3VwZDQrNnp4R0RzTEZoCjdBRmRQTjdTd3or
+bWNsay9laU9OUjU1REVtTGxBM1JaSWxTS2xSRT0KPUROUzUKLS0tLS1FTkQgUEdQIFNJR05BVFVS
+RS0tLS0t
+--0000000000004e72f2063691e070--
