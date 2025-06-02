@@ -1,88 +1,71 @@
-Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oi1-f175.google.com (mail-oi1-f175.google.com [209.85.167.175])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36085221739
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:56:41 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3348149C41
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 16:04:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.167.175
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748879805; cv=none; b=s6OjvGrDDyUS7Qee8Szbt5o6eKdDL3ezfZh0YemxTbY2TRbZVezfp7TP2+NtinXMinDobKA8yHpIHlFzWUiL6KDnj9rfI7+q/ilBdjWaGwOq8SGpYD48k/FGCWzWYF8TZLV8u+6GeMf6oFLgjomOib0XwkqwRGHi5o/sSuj/ZKo=
+	t=1748880289; cv=none; b=bGM52dFLuk0ZyTxfJUE8cduen/Sncquk/6Md+rbBnqetl5g1Vo1edqWkZNosvicGSN+k4jFOFeMsNHfxcdsbFhH3LXieoJa7COQCQrtrxlGYclx1KLyT1yeTuYAsHJNqZHWXwAbg9If5ocMwkJDwzZdRvSaI9NmcK6ULCt4IJC0=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748879805; c=relaxed/simple;
-	bh=q0baTZI18Rbzwbjfm/JckjJPoPE3NsfzsrWe6cVIrCU=;
+	s=arc-20240116; t=1748880289; c=relaxed/simple;
+	bh=tGZMtwTEytNS7np6TS1CTtuVWI1J5Kf96mBeI6K9KxA=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=k7vWMJ1VRwRwBKsEAInycSEvfWkeSZDI5fjsHrFYtgP7EifAnJ8BmXiRwk38rHsah5F+zsEjuuH636cgflHK2PFY3Vzvj/29vgsNzvfsXSpAxsPn33Tsl/fay7XRV6PHuuoUdD4pvXykbidT3XHZF59FwQaRtlO1pUmkQhqhnKY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ql31NkoV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JrammniO; arc=none smtp.client-ip=202.12.124.155
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=XjgJJiiEJUWvb0HMprCBeHYGXqkbwVRAuVwuAmZOGl2ieSzJkVi99HWoEdSSBEmYshyyxMWgJ8j4MMT/ca5ElvyvPgYxkxr1leb7RAxh8kIl0YIESndk8rma+oNPclHLYlljvYqlMfSuOUK+uXEqDOuUvNi4V74tXlXgPtI44a8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5fqtcVc; arc=none smtp.client-ip=209.85.167.175
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ql31NkoV";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JrammniO"
-Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id E191625400BA;
-	Mon,  2 Jun 2025 11:56:40 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-01.internal (MEProxy); Mon, 02 Jun 2025 11:56:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm1; t=1748879800; x=1748966200; bh=QS49cF9HAD
-	HTArVit2p1qG8bMeMNYsmWZR2qC8LKsFE=; b=ql31NkoVQRLK/PhiTw1IgFTk3X
-	WvhONQxXvkiXwEQd/tv0mjeEFd3k7KvaUcA1apRL0uUQz5tX43dx1PHxljRw5/gg
-	Lh8YSt6A/Rqwq/MWj8Rxc1VDVkw6foDwlfnB+4T44pRjD/KG3B0/NbsFWMQLep6T
-	ZdH8pT5J8Vh7+bBNeRaJYIb4RCDUvl0nnkq0fPhxa4natSmnrSqHP9oWrPF7ugrt
-	CTFUPtJ2B9eqISbp8qyslDgjoWpmkVjN2l/CHXZY8cb35IkAXqqudzEEY4BnZljg
-	uZIYxG4chdkkKSG0p1Hr+ZMcCOth3kT7w/nTzI5ERcdjmUXxjL1CEHon0laQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:subject:subject:to
-	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748879800; x=1748966200; bh=QS49cF9HADHTArVit2p1qG8bMeMNYsmWZR2
-	qC8LKsFE=; b=JrammniOhsjQQvtL1KdQCyaJeNQ49nQMnBuGFaPri508S+Ze4QZ
-	yRGcg/8PBNkiM+jJJ5AsJePHfYVG95CneCFKLSqsg8uwOM3c/MO9UftD2UqHiInn
-	msH2q1MIrO7FByCerdqCyLnaifInLDY7RfjR28Zkdhb/g9Ar/hhAzE9+lTyskrVl
-	lD5F3hCwbFVlP+PJ7VTeOkifm03+fFROaOwkW+O6Ait5VLblwIfxHGv/4InVmErh
-	G1LxNaJw8AMcZQRtL87vdqMS22OclksJzzm8GIj9ZDGQo5/eyS4IzrEUA2xq+kYR
-	23+DmRoUtONDBDtL3Q3u2XJsK6U9I+f5ngw==
-X-ME-Sender: <xms:uMk9aBwx4cjFfTZexWmG2O6vPI2_7_-E3gdMmoeRHMa1f-vADupCNQ>
-    <xme:uMk9aBQtx68J68zPJSh1qMPijnC_l8r4JR8pYuY5_A0plRgmEIqqnKRYgQWNf2LGo
-    OffaOHUORCgozXS1w>
-X-ME-Received: <xmr:uMk9aLWBHqjl6r0TyTZklC_k6KhiosXDRaLQVjEiGvag8fi_2MSRDTmvwc8-nxUGhBsU2ReNpQYyS9jrHLEUYijFogT7c31JV9cS4bj5b_UT5A>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtleculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
-    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
-    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
-    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
-    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
-    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
-    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
-    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
-    htoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehj
-    lhhtohgslhgvrhesghhmrghilhdrtghomh
-X-ME-Proxy: <xmx:uMk9aDhERcsDRzkVOylGHqMC_eGeDvNiXQ08MKLt-FUOhX5hjcOwYA>
-    <xmx:uMk9aDAgrHe1HkEmS-C6prEwRbS42H4Cj29rfCaWV14wxy2UOsa4PA>
-    <xmx:uMk9aMJwW2bOMFkWVQa0VXSy6i1cOQQ0urRSxTBmcxgReABLfjP-Tg>
-    <xmx:uMk9aCDgsl16c1Y2ReKW5vKONVQFUGycoZ6f_0R5vCAwi8MCtpb0CQ>
-    <xmx:uMk9aEKlvifcb5jZDNP89GzubbulET9ApXoGOnQhLtXJ9V3pWLJA6cvq>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 11:56:39 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 72d75fd2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 2 Jun 2025 15:56:38 +0000 (UTC)
-Date: Mon, 2 Jun 2025 17:56:33 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
-	jltobler@gmail.com, Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] receive-pack: handle reference deletions separately
-Message-ID: <aD3JsdlRPVi4wjuz@pks.im>
-References: <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-0-903d1db3f10e@gmail.com>
- <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-3-903d1db3f10e@gmail.com>
- <aD2SPsro694yr60Z@pks.im>
- <xmqq7c1uuq52.fsf@gitster.g>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5fqtcVc"
+Received: by mail-oi1-f175.google.com with SMTP id 5614622812f47-408d14c7e92so1178645b6e.3
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 09:04:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748880287; x=1749485087; darn=vger.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=vY7ZBZ2QaNDglRvQ00hNQuhqQ+pG2Sr5gDWLfMb50ZU=;
+        b=e5fqtcVcNZsCg2+E+GgqqhC42ET+WpchVdXxbMkrHKIDdxI4AYS79gLginZdxvDK36
+         pRUxBVjP9R6Qu4gTht6EinpvOvp22QecDjHuKY//P3lb4MPcwicbNt/9URXH4KBileUx
+         2v5CoDho54tGrxc4fQDh88V1wBQ6rL8CkswdIMHWsoi4SDo89nth61mSeH++WU8MyExa
+         4Sh/t+p45tGkxponZo5V9UMqtawMEcItFfee8BhiZl69TwaUqI+Ve2pcxH/lYhnsBcb5
+         v9zY9kVSBc6J543wOd8IHZuFzxacn3bO6g1rnWkBmtvDjFDq4pyUyW3e3Avu5DgW4Pnz
+         vXWw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748880287; x=1749485087;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=vY7ZBZ2QaNDglRvQ00hNQuhqQ+pG2Sr5gDWLfMb50ZU=;
+        b=xCermAlxOjD0yGip44Vuif4JqQctuQoPSOWS4Rjp6LCK8ku2L5sIKwc7rdAuWlmrEY
+         JSI7t5FL8n1SPbHT24DDGsNi5J1aO18hNfW8+w5NBVwtFlk+O5LrYiRi1D7U+mAHNP/N
+         lT7mHAmNxENky34JKWO4vRC1CRvTj6sXzIgaKhyZdq1VmVRgjFn89xE6yICWOkMRtyud
+         oVbRYKRiCXhyqidr4nX6lJva5VbkuWg76BNmignsgR/PKJLsklYX2U+58e0he06LT4P9
+         +NEWna4wEOqPV95evKUT7v3UcMRDxHkN3lXtUn9wKcpvjBtJmemzRMo1O3Rg0TvgMPZq
+         bPzA==
+X-Gm-Message-State: AOJu0YxDs/mweCF6tjMyHfODzOok1nxr9NDwNiPHrjaH8gBFsfWQdUJO
+	/1X4WsF20o4oFPhcl4Z4uicxKSXkRJVvaKF656mrl5xxFX8lbOemzWIG
+X-Gm-Gg: ASbGnctReGMjMJUwZvSsV97UYjNDM1dlmmd/PzRo1fuRRj8uMieir7zQCsUYtWnJvvG
+	RQwMHc+6I0a1diRGZOsP+GEr5ymjw+y/mX2w+WKJ4OMZnSS1u4om/iHgLxij/60DA8mTmTy7bHa
+	7zeR5ubB8IxF0POoRgPWQ0WvZm/9mAclzCCXv7VOHBhPzFeJIM6OxF9Sj5TWMQOTw82otjSSJ/x
+	EKVFuSl4u23i0BKaGKzDXM9UkeH71GMJndXsonHckYy6WgLVjf6HWPXn/ppxBBjpcbxy5zR8RCg
+	VrRrqWwNne4Oz91K+4UEtL/YBYokExF18B2CHRnkP92fntng+Lb4LbI=
+X-Google-Smtp-Source: AGHT+IHKwd1jFxuasHzjSaRENPR08c5ETQwxQzmg6iE8CkJHVr4ID2HY18Xhivdp+k8WZXRWTAZwSQ==
+X-Received: by 2002:a05:6808:3c4e:b0:3fe:ab15:5ed6 with SMTP id 5614622812f47-407a6564f39mr5349865b6e.12.1748880286475;
+        Mon, 02 Jun 2025 09:04:46 -0700 (PDT)
+Received: from localhost ([136.50.74.45])
+        by smtp.gmail.com with UTF8SMTPSA id 5614622812f47-40678ce8498sm1472617b6e.35.2025.06.02.09.04.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jun 2025 09:04:45 -0700 (PDT)
+Date: Mon, 2 Jun 2025 10:59:53 -0500
+From: Justin Tobler <jltobler@gmail.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, ps@pks.im, karthik.188@gmail.com
+Subject: Re: [PATCH v2 2/2] builtin/receive-pack: add option to skip
+ connectivity check
+Message-ID: <gw6j5enpzcit2zquafoaiujreoa4kbv3n6feq6yeqylcfynqim@s53ctnlg7tmm>
+References: <20250520014920.201736-1-jltobler@gmail.com>
+ <20250520163218.263921-1-jltobler@gmail.com>
+ <20250520163218.263921-3-jltobler@gmail.com>
+ <74668a00-5b90-2450-52c5-d9f00dcb42b9@gmx.de>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -91,93 +74,70 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <xmqq7c1uuq52.fsf@gitster.g>
+In-Reply-To: <74668a00-5b90-2450-52c5-d9f00dcb42b9@gmx.de>
 
-On Mon, Jun 02, 2025 at 08:20:09AM -0700, Junio C Hamano wrote:
-> Patrick Steinhardt <ps@pks.im> writes:
-> >> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
-> >> index 9e3cfb85cf..7157ced2a6 100644
-> >> --- a/builtin/receive-pack.c
-> >> +++ b/builtin/receive-pack.c
-> >> @@ -1879,6 +1880,8 @@ static void execute_commands_non_atomic(struct command *commands,
-> >>  	for (cmd = commands; cmd; cmd = cmd->next) {
-> >>  		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
-> >>  			continue;
-> >> +		if (only_deletions ^ is_null_oid(&cmd->new_oid))
-> >> +			continue;
-> >>  
-> >>  		cmd->error_string = update(cmd, si);
-> >>  	}
-> >
-> > Fancy.
+On 25/06/02 05:01PM, Johannes Schindelin wrote:
+> Hi Justin,
 > 
-> Is that a new synonym for "not worth being overly clever to
-> sacrifice readability"?
+> On Tue, 20 May 2025, Justin Tobler wrote:
+> 
+> > diff --git a/t/t5410-receive-pack.sh b/t/t5410-receive-pack.sh
+> > index 9afea54a26..f76a22943e 100755
+> > --- a/t/t5410-receive-pack.sh
+> > +++ b/t/t5410-receive-pack.sh
+> > @@ -62,4 +62,26 @@ test_expect_success 'receive-pack missing objects fails connectivity check' '
+> >  	test_must_fail git -C remote.git cat-file -e $(git -C repo rev-parse HEAD)
+> >  '
+> >  
+> > +test_expect_success 'receive-pack missing objects bypasses connectivity check' '
+> > +	test_when_finished rm -rf repo remote.git setup.git &&
+> > +
+> > +	git init repo &&
+> > +	git -C repo commit --allow-empty -m 1 &&
+> > +	git clone --bare repo setup.git &&
+> > +	git -C repo commit --allow-empty -m 2 &&
+> > +
+> > +	# Capture git-send-pack(1) output sent to git-receive-pack(1).
+> > +	git -C repo send-pack ../setup.git --all \
+> > +		--receive-pack="tee ${SQ}$(pwd)/out${SQ} | git-receive-pack" &&
+> > +
+> > +	# Replay captured git-send-pack(1) output on new empty repository.
+> > +	git init --bare remote.git &&
+> > +	git receive-pack --skip-connectivity-check remote.git <out >actual 2>err &&
+> > +
+> > +	test_grep ! "missing necessary objects" actual &&
+> > +	test_must_be_empty err &&
+> > +	git -C remote.git cat-file -e $(git -C repo rev-parse HEAD) &&
+> > +	test_must_fail git -C remote.git rev-list $(git -C repo rev-parse HEAD)
+> > +'
+> > +
+> >  test_done
+> 
+> This test case seems to hang occasionally in the "win+Meson test" jobs on
+> GitHub (I tried to find the same failure at
+> https://gitlab.com/gitlab-org/git/-/pipelines but couldn't find any). See
+> for example
+> https://github.com/gitgitgadget/git/actions/runs/15383915635/job/43279134837#step:6:627
+> 
+> Note that this problem afflicts only the "win+Meson test" jobs; The
+> corresponding "win test" job seems not to hang.
+> 
+> Even in the Git for Windows project, where the `win+VS test` jobs are run,
+> the t5410 test passes within a dozen seconds or so, see e.g.
+> https://github.com/git-for-windows/git/actions/runs/15383945895/job/43279689086#step:5:143
+> (confusingly, the subset of tests run in the matrix jobs differs between
+> the `win+Meson test` jobs and the `win+VS test` jobs, but if you click
+> through all of the `win+Meson test` jobs, expand the `test` step,
+> patiently wait a few seconds for the log to be lazy loaded "enough" for
+> the search to work, you will notice that t5410 is not mentioned in any of
+> them, and the only one that times out after 4h37m11s is
+> https://github.com/git-for-windows/git/actions/runs/15383945895/job/43279753911,
+> likely while running 5410, too).
+> 
+> Do you have any idea why this particular test case, in conjunction with
+> Windows and Meson (and only on GitHub) acts up like this?
 
-Yeah. I wasn't quite sure whether I like it or not as it felt a bit too
-clever to me indeed. But I didn't feel strongly about it either, so it
-turned into the above somewhat unhelpful remark.
+Thanks Johannes for the report. I'm not quite sure yet what is going on
+here, but I'll dig into this a bit and see what I can figure out. :)
 
-> This may be a comment for [2/3], but a two-call sequence
-> 
-> 	doit(only_deletions = yes);
-> 	doit(only_deletions = no);
-> 
-> looked somewhat iffy for a first reader, as it hints that the second
-> call would do both non-deletions (i.e. creation and modification)
-> and deletions, which makes readers wonder "so we delete twice and
-> rely on that it is not an error to delete something that does not
-> exist?"
-
-I also wondered whether it wouldn't be nicer to have the loop in
-`doit()` itself. It would require a bit of reindenting though, which is
-why I didn't propose that variant.
-
-> >> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
-> >> index 029ef92d58..34eb3a5a07 100755
-> >> --- a/t/t5516-fetch-push.sh
-> >> +++ b/t/t5516-fetch-push.sh
-> >> @@ -744,8 +744,8 @@ test_expect_success 'pushing valid refs triggers post-receive and post-update ho
-> >>  		EOF
-> >>  
-> >>  		cat >update.expect <<-EOF &&
-> >> -		refs/heads/main $orgmain $newmain
-> >>  		refs/heads/next $orgnext $newnext
-> >> +		refs/heads/main $orgmain $newmain
-> >>  		EOF
-> >>  
-> >>  		cat >post-receive.expect <<-EOF &&
-> >
-> > Hm, so the ordering does change now as all deletes will now be listed
-> > before the updates. We don't make any guarantees about how these are
-> > sorted, but it makes me a bit uneasy to see this change. Can we avoid
-> > this change in behaviour somehow?
-> 
-> Good eyes.
-> 
-> I was wondering about the "git push -v" reporting and was happy that
-> the order there follows the order the pushing side listed refs and
-> the reordering on the receiving end would not have any effect.  The
-> hooks on the receiving end can indeed observe this change.
-> 
-> They can observe, but can they notice?  If the pusher listed refspec
-> elements for deletions first before creations and modifications on
-> their command line, that would be what the hooks see.  They do not
-> know what the original "push" said so they have nothing to compare
-> and complain.
-> 
-> Ahhh, but humans that control the both ends may notice and complain.
-> 
-> OK, I think I agree with you that it is worth to at least spend some
-> brain cycles thinking about avoiding the behaviour change.
-
-Hm. The thing I didn't realize is that the changed output order is for
-the "update" hook. I thought it was for the "post-receive" hook, where I
-do expect that ordering may matter as you see the whole picture of all
-refs that have been updated. But for the "update" hook I think it is
-sensible to change the ordering -- after all, the order of updates does
-change a bit now. Furthermore, the "update" hook itself doesn't have the
-complete picture anyway, so it's way less likely that anybody relies on
-the ordering.
-
-Patrick
+-Justin
