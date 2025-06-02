@@ -1,144 +1,100 @@
-Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+Received: from mail-pf1-f177.google.com (mail-pf1-f177.google.com [209.85.210.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E927AF9EC
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 22:32:13 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1963A182D0
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 22:35:15 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748903535; cv=none; b=E0VzARZU292RZbcRCKLixwLHQl4hjZ36DZ2ZJbgFomM1FduHZza4Gk5/547d4DkMFgZ6/tPjsVD+sVPdG5xO2dIFoslNQiPOHubhLbkvWabL/wI+9q5SMDGxh+viSNQunaSY3F5Nu/ZKRcqgrl8UlM3yZwc8vQiH5eSStarR0bI=
+	t=1748903717; cv=none; b=DZif1LIJHBTB16Q+twr5uN4HJRgE6VCmpBI39S9ha3WXQ2LHOFZeYJwPe994MlG+5Xn8YS3zTCf1Em3hs7Esxkj+QeHnNAySMJcTVZcSI65a/k8PEmTCqxb0aCHdAmt1bDbYOpfylaBJ3oJ0qw4XsxdZW73uyMBAHc6Fh1fPjbs=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748903535; c=relaxed/simple;
-	bh=TVNrNa8e8GmdnYPz00KJH0Tu6jYI6MrcpkehdDHMRC0=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=g3zl9EfrGXCb0lx2IckhlpktsuYr2bmDw+vJbXzP6/SJ9bl0yxrOG0m/6Mdn0n7uwZ4i1sJESXD1bvBaYC1+qU5mKmaxM2NlCBBj9RGnwHnmRfOiQvB3BKWfU9I3puqlLMfeNHWs1SbXcp6XsMyL3pgvIWFcV36B84SUvycWalo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9For3YH; arc=none smtp.client-ip=209.85.210.174
+	s=arc-20240116; t=1748903717; c=relaxed/simple;
+	bh=aze6hIjWmoslk50yhdrn6x0Gn/zGqZBXVeUGHnliszg=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=WQO/TNNL6q48KFcs937Wxzrdf37XH+W929MJnjHRI7lV1SW76GXIcFQo1bCgO2NM/lSbMcm8ex5TfxQeRVkijGUQJWhn1r3fpv2MMjlcuU+PbiaBSvdBXgW8GnWaa3ljIghmYrTUjGVG1+jlWEg+qJFX6FUHdZvlb7c5+c1r1gU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=e5J08q8h; arc=none smtp.client-ip=209.85.210.177
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9For3YH"
-Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-742c035f2afso3201231b3a.2
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 15:32:13 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="e5J08q8h"
+Received: by mail-pf1-f177.google.com with SMTP id d2e1a72fcca58-739b3fe7ce8so3674258b3a.0
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 15:35:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748903533; x=1749508333; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4VfSP751XlHG+9sPpRFBsM/Xn8a5fO7vRRl9imEyvvo=;
-        b=X9For3YHOYdDddnC4KX6biZ9No8FewdcDFILMzHYJaQAGNcRT8FaCys09KKCdtSqy2
-         M678wL7pI2cKzjyTCb3GBt7zqkqIwYDNa96+FBJ/qoLVl1z4ammLsIAENf5xdN9ndEhv
-         yxoxj0ve6sGiCZso8DHKCWbC+cGpWLEl09Ly/5DQlPG9q80EA9xg7HThin8DaOrx7pFa
-         gbGCmrzTtFdm+u9c5DdJuHyKDfDW4wrP9MAdixFRrx3Umt005MrTTXEMBf6iTbHjPv86
-         yQ7vAL+zECVKOOffDWd7cnYwinlP492I04M4tJ1SdBSQez7vB54HlVd7qULHYVuCc0Hb
-         +ydQ==
+        d=gmail.com; s=20230601; t=1748903715; x=1749508515; darn=vger.kernel.org;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=HoRz/fueRcSJNpN061IbEN9eKTldZhMJMW1Te/NO5p8=;
+        b=e5J08q8h9hMI+kSNROAUeYwvQIffHs5z61rtMvXlx6F/TxID6cRxuEM2wSjWiTD/Jo
+         0V0DYgq6YUljLNDIHfsV9ENMYcjjKyIQv0AOmhOp8jQjkpor8hZsC9u13SSM1Le6NoNq
+         ZbJPkAA5VmsKy0KZBGGKjA1BYlpHdUScS1qKM28fBlEk8uhgGkoXQf53m2BSEWrJSqk7
+         DPiP8uUB8pYymA1UhBuizH+0l8JFVH9XDbI92h+fwl5GUgjTQsvS62fMPRye1Uh7S+g0
+         UiWO9AiSPbQmyDCpb4/nZU2WJECfon031ZlI7voN44fxXC40cei7r/k8xDcaUPXqMYxZ
+         4+0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748903533; x=1749508333;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=4VfSP751XlHG+9sPpRFBsM/Xn8a5fO7vRRl9imEyvvo=;
-        b=QOFTC1AgImzJTR7J9B8iaOxvBydu6bXB21LMzrJUJiVSQ9x9hcchC0nKSFWUJTub5G
-         HMG6kfKZn4OTAzu1d8oLzrPqGqGDO8pkgUOAHk15PfcDJzATr0A8mRkhjQvN72owqnTQ
-         iJIOLtySMyn6uDCRgTVomOSDZP6KRU1JSoRHMlBmRWdgw5QZK19g8rcwh9hsYKAYDNDx
-         l2+6fQVW6xfT80rrbhzJz1ZKGK5B6SdSNwypvex+DXaxqu9XpStwin11/1mWLYoLXQZM
-         ndSuuWMJW7KZJvPdeIyCFk0umxq/tdP4wrICiUAtycIi4xuBc5NoDK3MHugWBuKspEeY
-         kMyA==
-X-Gm-Message-State: AOJu0YxD1q15/bUBKr+qwlkryfIcglCm9Xv3F9mY19yjCeqNYiB6dyuM
-	VioHpObODQ3c6tDemr16dOj9pYYC/kCyoP6wpHoOC5uA9NMWACEK8PTpgGV0Rg==
-X-Gm-Gg: ASbGnctTshdjtjI0aKFlHTkq4g3d4wkiCFMlPBPnKRekvxdTcmTFE3qIr8QyAXUSSz/
-	sqAWv6RCv1P+DFDtFaFh6ws9OXSmj75ytYeA00NEGFJR0VRfbRC5HhEYPUVXYePK7YqsjvU0L7a
-	2OVCQhlKVuJIRh4FQjYrguz4JtsNiNEfSfi5r7Ch+GYIlneuARZb/l8Wt7LvWS+seVDeo1GHFJe
-	WrplFgNWtyF6F6gZji4NctOQjm+OwCH6npr+HriJ5fMW598cYOIaMy1CcsenloqogASD/1xLuvM
-	qvUbTuo6h/H+i/DoM5YU4HcZjVeu/GhBtQ==
-X-Google-Smtp-Source: AGHT+IHMJeoa1PooU6AJWv2u9mG3TF2yIRFgmTt9/UC18uy9Lz9mW2V77BEh5lFEOstfxKQ4DuYzEA==
-X-Received: by 2002:a05:6a00:180a:b0:740:a85b:7554 with SMTP id d2e1a72fcca58-747bd95c4eemr20124830b3a.2.1748903532859;
-        Mon, 02 Jun 2025 15:32:12 -0700 (PDT)
-Received: from fedora.. ([2601:646:8081:3770::9eb])
-        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2eceb02662sm6082759a12.5.2025.06.02.15.32.11
+        d=1e100.net; s=20230601; t=1748903715; x=1749508515;
+        h=mime-version:user-agent:message-id:date:references:in-reply-to
+         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=HoRz/fueRcSJNpN061IbEN9eKTldZhMJMW1Te/NO5p8=;
+        b=br+r5C9X8UyghSS4j2VigomJ1U5TmdXQ96fBrUyC4uyhxbhuteg7IOzBqDen7jQkGN
+         Zk2v/gVL87lIUnctBUJulI35XP9E7dBxYltyCw6zMYqOZjuixggfSnbdi3kxPYIz8NKo
+         xkCcjfjDwJUY3msWHwhSi7uORKosKhIwngZjKAn00FCRP9YrSiFAbHxhprJirAawAs/3
+         SM7WwcivY/p0wbDwNGW4pLBTZPDLIgZpkRixAJcjcPyIB5IBTTGA7PVkye8vps5GnPPz
+         pyznzsxi/6EtwAZ9ju9A4mK79SDdninF5/mcKIu5MHjH0d9GET1JlP8SOsjR5fsHOUpt
+         byLA==
+X-Forwarded-Encrypted: i=1; AJvYcCW1QEQvcqBIGkY9FqA2rn0Af6aDeP0ZaD810iO/zG+Q2Jv4zVSfC67S83E9XNKuevkkNHU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxH2t5iS/NK4jJrbNwqO9HEFNA1t6OSIHSBZ0KGFakhV4bEQjl+
+	xfNmeoAa5tZeMKlbSF3RW0qfz6BbaKy/nxFuhwNEytgqLAAanOKAsBBOXjwwAA==
+X-Gm-Gg: ASbGncvX24FRlNXH0le9iqybJJXFCNI6bAFFGUkJjpNQ1PB3lNjIUEhNIBApZJLXjIs
+	bCjUFQJw5OmziHTCfgSEr+SpV/dNOTXvzahKWvxWCFMgAdDOp6QtnA56iQB9ASIrXkZUyIhDyNg
+	W2vZxbo6oh0GXqWaA7a+sSdrI679wiSDfr8xk7U/ocuLq8hFsshO5YPE7OIJsa+YCh+ZkMNoryM
+	bvLiuB99xKdbiBk+B3AkSxiQ0F64t+Nqt3HHq7uD8eUtxmr1QqlVpS4313WuCjbY+mdmQZ7Ha3k
+	j6RfmqFVRu+6NTy7PSSfH0FyI9xxTyQ=
+X-Google-Smtp-Source: AGHT+IEFHnO/BKv+8rm5p9qeNuP88blZHM9dmxZy8VDSzixeEvSdaDh8CagIp3UIjPG+wxugSw0gcg==
+X-Received: by 2002:a05:6a20:e609:b0:21c:fea4:60e2 with SMTP id adf61e73a8af0-21cfea46126mr5976477637.3.1748903715244;
+        Mon, 02 Jun 2025 15:35:15 -0700 (PDT)
+Received: from fedora ([2601:646:8081:3770::9eb])
+        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747afe96474sm8171954b3a.22.2025.06.02.15.35.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 15:32:12 -0700 (PDT)
+        Mon, 02 Jun 2025 15:35:14 -0700 (PDT)
 From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: jn.avila@free.fr,
-	jacob.e.keller@intel.com,
-	Collin Funk <collin.funk1@gmail.com>,
-	Corentin Garcia <corenting@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v3] completion: make sed command that generates config-list.h portable.
-Date: Mon,  2 Jun 2025 15:31:32 -0700
-Message-ID: <59b2a12a3f43cf078fbeaf0271b5a7cfffc9eb8f.1748903426.git.collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
+To: Jacob Keller <jacob.e.keller@intel.com>
+Cc: =?utf-8?Q?Jean-No=C3=ABl?= AVILA <jn.avila@free.fr>,
+  <git@vger.kernel.org>,  Junio C
+ Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] completion: Make sed command that generates
+ config-list.h portable.
+In-Reply-To: <e6a4b604-c5b7-450a-b4f5-3863441e0c6e@intel.com>
 References: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
+	<1ff542bb1090cc5185644d6032addac5cd0df402.1748892261.git.collin.funk1@gmail.com>
+	<3631972.iIbC2pHGDl@cayenne> <875xhducs7.fsf@gmail.com>
+	<e6a4b604-c5b7-450a-b4f5-3863441e0c6e@intel.com>
+Date: Mon, 02 Jun 2025 15:35:13 -0700
+Message-ID: <87msapsrfi.fsf@gmail.com>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The OpenBSD 'sed' command does not support '\n' to represent newlines in
-sed expressions. This leads to the follow compiler error:
+Hi Jacob,
 
-    In file included from builtin/help.c:15:
-    ./config-list.h:282:18: error: use of undeclared identifier 'n'
-            "gitcvs.dbUser",n       "gitcvs.dbPass",
-                            ^
-    1 error generated.
-    gmake: *** [Makefile:2821: builtin/help.o] Error 1
+Jacob Keller <jacob.e.keller@intel.com> writes:
 
-We can fix this by documenting related configuration variables
-one-per-line instead of listing them separated by commas. This allows us
-to remove the unportable part of the sed expression in
-generate-configlist.sh.
+>> Then go back to the simpler sed expression before your most recent
+>> commit. I will wait for others thoughts before posting v3.
+>> 
+>
+> I like this approach.
 
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- Documentation/config/gitcvs.adoc | 3 ++-
- Documentation/config/http.adoc   | 3 ++-
- generate-configlist.sh           | 1 -
- 3 files changed, 4 insertions(+), 3 deletions(-)
+Thanks for checking.
 
-diff --git a/Documentation/config/gitcvs.adoc b/Documentation/config/gitcvs.adoc
-index 02da427fd9..31d7be3992 100644
---- a/Documentation/config/gitcvs.adoc
-+++ b/Documentation/config/gitcvs.adoc
-@@ -47,7 +47,8 @@ gitcvs.dbDriver::
- 	May not contain double colons (`:`). Default: 'SQLite'.
- 	See linkgit:git-cvsserver[1].
- 
--gitcvs.dbUser, gitcvs.dbPass::
-+gitcvs.dbUser::
-+gitcvs.dbPass::
- 	Database user and password. Only useful if setting `gitcvs.dbDriver`,
- 	since SQLite has no concept of database users and/or passwords.
- 	'gitcvs.dbUser' supports variable substitution (see
-diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
-index 67393282fa..9da5c298cc 100644
---- a/Documentation/config/http.adoc
-+++ b/Documentation/config/http.adoc
-@@ -289,7 +289,8 @@ for most push problems, but can increase memory consumption
- significantly since the entire buffer is allocated even for small
- pushes.
- 
--http.lowSpeedLimit, http.lowSpeedTime::
-+http.lowSpeedLimit::
-+http.lowSpeedTime::
- 	If the HTTP transfer speed, in bytes per second, is less than
- 	'http.lowSpeedLimit' for longer than 'http.lowSpeedTime' seconds,
- 	the transfer is aborted.
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index b06da53c89..9d2ad6165d 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -19,7 +19,6 @@ EOF
- 	s/::$//;
- 	s/`//g;
- 	s/^.*$/	"&",/;
--	s/,  */",\n	"/g;
- 	p;};
- d' \
- 	    "$SOURCE_DIR"/Documentation/*config.adoc \
--- 
-2.49.0
+Although, I now realize my explination was slightly incorrect. Some of
+the referenced commit is still needed for formatting, but we can remove
+part of the expression that causes the problem.
 
+I posted V3 so others can check.
+
+Collin
