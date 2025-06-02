@@ -1,54 +1,54 @@
-Received: from fout-a8-smtp.messagingengine.com (fout-a8-smtp.messagingengine.com [103.168.172.151])
+Received: from fhigh-a2-smtp.messagingengine.com (fhigh-a2-smtp.messagingengine.com [103.168.172.153])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2048C2C3267
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:20:11 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.151
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1D82C325E
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:31:52 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.153
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748877614; cv=none; b=VvC4YrTnk9tkdqGpdjzpJOehlZR6FGafcdDGsyyuCjoEle3NWpv4sfSoaH0r1j7FYT4DYBxfc7UUUiExa3IYcZ7Cw6igFEY5HLBc1f1gGt43cY9qvx0fxkoQJBGOJunQ6I3ZvH58QLnDf3/k+rG9VH1nbxy5/ld3crFyVrY8osw=
+	t=1748878315; cv=none; b=GJdvxgBySEQzU37GDiUNqmac3pdafS+NhTFp0D7Vrgw0LjQy2sDP/1fckEt+1m3BJqkub0ZuXDNtKCzSwk5G8I7ZGKUTP9qi/x4w1FEvWuGD3X2kn49yiJlPxlhtH0UvX39tEzw8Z1kkdyvrFCBJM7bp7OQiygtOnan6GkcfNTU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748877614; c=relaxed/simple;
-	bh=mLlT87+fqGpYnYAkzSwJ5FK7LDcwv0rVF7kZccd7MBo=;
+	s=arc-20240116; t=1748878315; c=relaxed/simple;
+	bh=Ml3tjwouy1ejxa9O3hPlCwqhZM4GYU2qC2W9ikoh4Os=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=pxbBfVylfY03aYYhbnuWmuQXonAQga9sTRSrRLlrGGj3wLCKM4LSPz4N/CcrbppHI1yDI11yLx/Q+1KNSeNMjEPqUll6l6Jpce1kACl3Rcvy+baFCE42ZY9pLjnyGPWREQ/s7svWfOhH+asGC/amDVHimXCK8sc4B8K+aZNP6lE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=cEUpw+9/; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Z9kC3u/o; arc=none smtp.client-ip=103.168.172.151
+	 MIME-Version:Content-Type; b=SNpSKRYDOyEBwIte+Wd06LGsZ2xWP5GKv5bYNk/0xa6TK0CH9ntc4jREZ2X236tOis3d+gr4EkZCYd78Km9So99IZ78oqU42LlhF0NT7uRr6DKyhw/h4B8VuWbFN/ILQ7hJNrIM0ip6isOvEZB7Ci/vKOsPmyh1Mji3mmX2naVs=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=vT5UGfhF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=nmfSCGTk; arc=none smtp.client-ip=103.168.172.153
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="cEUpw+9/";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Z9kC3u/o"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id 1E5D2138034B;
-	Mon,  2 Jun 2025 11:20:11 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Mon, 02 Jun 2025 11:20:11 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="vT5UGfhF";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="nmfSCGTk"
+Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
+	by mailfhigh.phl.internal (Postfix) with ESMTP id 34443114016D;
+	Mon,  2 Jun 2025 11:31:52 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-06.internal (MEProxy); Mon, 02 Jun 2025 11:31:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748877611; x=1748964011; bh=S9++h/fah0
-	q0mu/aD/ukIqphSzAyF4eV5GYCn7veMSo=; b=cEUpw+9/nITtzEPP8EuV8JZCy+
-	xaoO3h/U3B7y0Di80jjqrvfBPu60oaFkj9TlO9o4lQmeZ+86vvurk5nq0YjNnh45
-	ZD6lWlTV5yrmBDLAEkQ8uP0uhsAURMbgy7V4cRUMDRYGOatSOT0yQaNh2Xnv/xoa
-	sqKhPogOSSkmfwJuG72ITfOmjaIt5sECTzgOnHQJpDAK+Otluerb+EwXqfwaRZdu
-	PdhphvIRJv4IX0F260DWA4PjW+OdQBrJeoRaIHoRMijzCEtewKWMJpF/nie8mjha
-	lBZx+k4f+/IzW/Bx3NwnZUbkDPIhKXg2ouTX8/t9U2avL2NNpgoYiuCN31YQ==
+	:subject:to:to; s=fm3; t=1748878312; x=1748964712; bh=OHVuyBXKRa
+	zGd4tGgGfdaZO5U4021LiyltsiAIWH2mo=; b=vT5UGfhFXujXH0jLnKWbFxxjjz
+	MHAjzjTvu5n4vIhwS2AGZWJ0FC0cnnNa9ierLvf9ZKeed6z9lsLONwLM7AxioWm2
+	rU7cmanQClerPOCqW8mT0nGwoKtNI1dtkv4ns+dzX6KKIgdFZitQgtP3kxVOX/zv
+	YjPuTD+Ku7lmY2NLz3MpyooeEZcOs29Bt8Oe0y/tOgNAi82qfy8daa//ZbfunMwh
+	R63gK8N5VThrMfeDojhL0T7Lzs9Adl1o5oENhP6bOPQzTH6p3gQKlqgECWLOiHom
+	x07T9a/hbUhvgicLLlTpvMYkU8Qzgi1oNk5i8etWADPZ/xTPOK/BVMP6z9fw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748877611; x=1748964011; bh=S9++h/fah0q0mu/aD/ukIqphSzAyF4eV5GY
-	Cn7veMSo=; b=Z9kC3u/oESpYTYIh/7v/NRiVxDigFNyrenyHADmL0SH56tJSR20
-	fAvKYzre7HHr4cetVO4n89Ic/B4Zen2mWar4uiO2Y52kIN4O69NSP+IXK96uGb3S
-	EChVKrEixGCOu9WJLPqdk6F/ExFXqq8mw/EkU2Vzyse+IBaTgUVOMHGrEfkrzBz2
-	4U3K0KozbaUwMwPV0661cYi63txlzkswJRexFzwt+T9lztdB38kWVPza4AazN72h
-	xzh9tfSIZgEHwUa/PuRxCrczZ/mabzP3bkO0UKZUy/pRT57HUS0meyc7++agIT5F
-	mGw73OePt9KXzcn3iqE99toCz6+1QModKQA==
-X-ME-Sender: <xms:KsE9aEVI0LRRCGcL9z98vA3QcbW2iRtUpb8PjZikFsVx22GSyEoQEA>
-    <xme:KsE9aInfLtsk_rOl6Rx_2QSPj18EaEF4bosJNFFzIXDLZd23V2TWXtiCw60SvLEyF
-    TO4ClPthBygfJdbwg>
-X-ME-Received: <xmr:KsE9aIabdkfdd4LnBw3Iv5MfGU3QAFkfPik0imO0lAWxZ7wp1RPhpD77ghFK9jLiAY7pgebTjEgd-L1gHNKnHfcFAcjhCNy_qKIb>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtudculddtuddrgeefvddrtd
+	1748878312; x=1748964712; bh=OHVuyBXKRazGd4tGgGfdaZO5U4021Liylts
+	iAIWH2mo=; b=nmfSCGTkj+AechmWByF+GIWBgyh8f07AMlQJ9pdx6JcvzJW5i+L
+	8w/CiH0VGEwP9P2KuA/RB1J6IqKJXhGyVE+oEemUs7xxPxmBGcv5bF2sC4R42fE+
+	gVeC8xkzpLn+gGndfOYQdxVfU0fGi6u2/wvCXzqTj/H5mOw2yi9mSGGEYEefW47D
+	GePhwtKXkCV9/Z77EXJcgBJ593vOXfxuhq0Ym+sTImTLZfGjYFthG3yAGJCYS3Xd
+	ucJSyh5er417FU8rHraUtVcYBs5PpB+MV9YjqBxRfTh1yRu6jTXDku/ewjMdZoGy
+	fAvi9fTl1BvB2oeoTdt/+pTTbA3YDTjpcsA==
+X-ME-Sender: <xms:6MM9aPtvK5yK0AlAjnIzO7W_zUzwe6Fcb-wJAa0312MsxouFP5m6nQ>
+    <xme:6MM9aAdMdLJCM3usJiSaDxmpjob7UCaN8aeyEGih0O7QEGuMwPgPYcAnHSuhxl6_k
+    akFhzqcds7PG7MOEQ>
+X-ME-Received: <xmr:6MM9aCwBp5fHq9gCqupBDsGhRlROuMIKU-c4JtaYQ5yz2JG7b0FbJVP8yHDsxQNp55Vls9zX13Q2OxjQJgnVAGgc72r5W-X1W6yl>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtfeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
@@ -56,32 +56,30 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtudculddtuddrge
     hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
     heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
     hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
-    ohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtph
-    htthhopehpshesphhkshdrihhmpdhrtghpthhtohepkhgrrhhthhhikhdrudekkeesghhm
-    rghilhdrtghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpd
-    hrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhlrdgtohhmpdhrtghpthhtoheptghh
-    rhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehgihhtshhtvg
-    hrsehpohgsohigrdgtohhm
-X-ME-Proxy: <xmx:KsE9aDUIptUZ1O7EeNRhiqGSIz4d2ay5rqzs_UWaL26iKbxf7csVHw>
-    <xmx:KsE9aOngMOad6Qdzg6y3yGSgTln5E5lzL2IBDuj1T8cBlC2dgw3PaA>
-    <xmx:KsE9aIe1k9IvagKZRMAGl5_BvjKd_Z2Mh8Y0gkcbnZPD7DrJIhhgjg>
-    <xmx:KsE9aAEmDTu8Sh6NNNX-3RcHsgbYf6H_TEKZZpmjoG9B_vIBWDSA-Q>
-    <xmx:K8E9aOL9DYy60nXT1agjALlazaRhlCDcn6sAHgL3NGDLkatP0CV3gBCR>
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhlrdgtohhmpdhrtghpthht
+    ohepphhiohhtrhhsihhuphgrsehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithesvh
+    hgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    rdgtohhm
+X-ME-Proxy: <xmx:6MM9aONznB6qEuXYN8IMxiiY2WVtmhhXdQoeOHueU3mTNH_nZiFt-w>
+    <xmx:6MM9aP8NQ4TkjHb8ZsUkGpWqw15EAT2j0gY2Um5qAA_gnDMDyaJlcQ>
+    <xmx:6MM9aOWrGhmL4GqRh0zXuYvSxbaEg4G84wF6ULZjzHqvtzTvtImWyA>
+    <xmx:6MM9aAeAhCYfcPz7Z6_kIrLiupmyi5W_5r1PS713fsehcDabX15nFw>
+    <xmx:6MM9aOoQMxKaUEAdXraY-lH5BfyyNtSbUC2r8XKiyu0xUNBliQOEc2Fu>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 11:20:10 -0400 (EDT)
+ 2 Jun 2025 11:31:51 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
-To: Patrick Steinhardt <ps@pks.im>
-Cc: Karthik Nayak <karthik.188@gmail.com>,  git@vger.kernel.org,
-  jltobler@gmail.com,  Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: [PATCH 3/3] receive-pack: handle reference deletions separately
-In-Reply-To: <aD2SPsro694yr60Z@pks.im> (Patrick Steinhardt's message of "Mon,
-	2 Jun 2025 13:59:58 +0200")
-References: <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-0-903d1db3f10e@gmail.com>
-	<20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-3-903d1db3f10e@gmail.com>
-	<aD2SPsro694yr60Z@pks.im>
-Date: Mon, 02 Jun 2025 08:20:09 -0700
-Message-ID: <xmqq7c1uuq52.fsf@gitster.g>
+To: Phillip Wood <phillip.wood123@gmail.com>
+Cc: Piotr Siupa <piotrsiupa@gmail.com>,  git@vger.kernel.org
+Subject: Re: [BUG]: Non-matching exclude pathspec causes an error in empty
+ repository when the flag "--update" is present
+In-Reply-To: <e790367c-6777-4b4b-97f1-3b3a2cbdb177@gmail.com> (Phillip Wood's
+	message of "Mon, 2 Jun 2025 11:07:17 +0100")
+References: <CAPM0=yCcOAGsUE8tX-o8ioihr+oWrORD6Tz=WH1OnmhpO+uqrA@mail.gmail.com>
+	<e790367c-6777-4b4b-97f1-3b3a2cbdb177@gmail.com>
+Date: Mon, 02 Jun 2025 08:31:50 -0700
+Message-ID: <xmqq34ciupll.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -91,92 +89,43 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Patrick Steinhardt <ps@pks.im> writes:
+Phillip Wood <phillip.wood123@gmail.com> writes:
 
-> Okay. All of this is unfortunate as ideally the reference transaction
-> itself would know to resolve such conflicts.
-
-100% agreed.
-
-> But we're no worse off than
-> before because we at most perform exactly two transactions now, whereas
-> before we would have performed _at least_ two transactions in this
-> conflicting case.
+>> git add --update -- ':(exclude)foo'
+>> This results in:
+>> error: pathspec ':(exclude)foo' did not match any file(s) known to git
+>> error: pathspec '.' did not match any file(s) known to git
+> ...
+> git add -u builtin ':(exclude)*.[ch]'
 >
->> Signed-off-by: Karthik Nayak <karthik.188@gmail.com>
->> ---
->>  builtin/receive-pack.c           | 23 +++++++++++++++++++----
->>  t/t1416-ref-transaction-hooks.sh |  2 ++
->>  t/t5516-fetch-push.sh            | 17 +++++++++++++----
->>  3 files changed, 34 insertions(+), 8 deletions(-)
->> 
->> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
->> index 9e3cfb85cf..7157ced2a6 100644
->> --- a/builtin/receive-pack.c
->> +++ b/builtin/receive-pack.c
->> @@ -1879,6 +1880,8 @@ static void execute_commands_non_atomic(struct command *commands,
->>  	for (cmd = commands; cmd; cmd = cmd->next) {
->>  		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
->>  			continue;
->> +		if (only_deletions ^ is_null_oid(&cmd->new_oid))
->> +			continue;
->>  
->>  		cmd->error_string = update(cmd, si);
->>  	}
->
-> Fancy.
+> which will never add any files (the builtin directory only contains
+> '.c' and '.h' files). So I think maybe the bug is that we don't print
+> an error when there are tracked files and an exclude pattern matches
+> everything
 
-Is that a new synonym for "not worth being overly clever to
-sacrifice readability"?
+I have to disagree here.  The "did not match" error is telling you
+this:
 
-This may be a comment for [2/3], but a two-call sequence
+    You tried to tell me that you wanted to add something, but you
+    didn't enumerate what to add in concrete terms.  You instead
+    gave me pathspec, so I tried to see if there are paths that
+    match these patterns.  This pattern did not produce any match
+    so out of this pattern came no additions (even though other
+    patterns may have contributed to other additions).
 
-	doit(only_deletions = yes);
-	doit(only_deletions = no);
+I think the "'.' did not match any file(s)" in the first example
+makes perfect sense, but complaining about negative patterns that
+did not match does not make much sense to me.  If I said
 
-looked somewhat iffy for a first reader, as it hints that the second
-call would do both non-deletions (i.e. creation and modification)
-and deletions, which makes readers wonder "so we delete twice and
-rely on that it is not an error to delete something that does not
-exist?"
+	git add -- \*.c ':!auto-generated.c'
 
-
->> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
->> index 029ef92d58..34eb3a5a07 100755
->> --- a/t/t5516-fetch-push.sh
->> +++ b/t/t5516-fetch-push.sh
->> @@ -744,8 +744,8 @@ test_expect_success 'pushing valid refs triggers post-receive and post-update ho
->>  		EOF
->>  
->>  		cat >update.expect <<-EOF &&
->> -		refs/heads/main $orgmain $newmain
->>  		refs/heads/next $orgnext $newnext
->> +		refs/heads/main $orgmain $newmain
->>  		EOF
->>  
->>  		cat >post-receive.expect <<-EOF &&
->
-> Hm, so the ordering does change now as all deletes will now be listed
-> before the updates. We don't make any guarantees about how these are
-> sorted, but it makes me a bit uneasy to see this change. Can we avoid
-> this change in behaviour somehow?
-
-Good eyes.
-
-I was wondering about the "git push -v" reporting and was happy that
-the order there follows the order the pushing side listed refs and
-the reordering on the receiving end would not have any effect.  The
-hooks on the receiving end can indeed observe this change.
-
-They can observe, but can they notice?  If the pusher listed refspec
-elements for deletions first before creations and modifications on
-their command line, that would be what the hooks see.  They do not
-know what the original "push" said so they have nothing to compare
-and complain.
-
-Ahhh, but humans that control the both ends may notice and complain.
-
-OK, I think I agree with you that it is worth to at least spend some
-brain cycles thinking about avoiding the behaviour change.
+and there is no auto-generated.c file (yet) in this working tree,
+that is a happy outcome.  I didn't want to add it, even if it
+existed, and it turned out to be missing.  It would become annoying
+pretty quickly if we started complaining a pattern in .gitignore
+that did not match anything, and complaining against "you gave me an
+exclude pathspec pattern that matched nothing" feels pretty similar
+to me.
 
 Thanks.
+
