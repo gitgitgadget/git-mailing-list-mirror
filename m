@@ -1,63 +1,68 @@
-Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
+Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273B115AF6
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:55:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D551DF985
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:55:59 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748890560; cv=none; b=oBDou5a+ieTQ0fUYpMNPVHP9bjNYK3Stzeiyrs10ZxLXviB+qdR27E4vIN43+P/wvNuyK/poZ/ob8wyfpZcGxuhFj+JF6kpBRYl71HUOImjijsxoaCDfgv1wvgY23Z+oUf5z59lnyzPsk6/7/fbwGljjnaysciWETZZZE5Mlz5Y=
+	t=1748890561; cv=none; b=RdGGQ8otE+UhIPFufO0n11R1j1MGDDlwQehWWb7A8ayjKSlLuBbPVB1e3CG5hxuycaea/hW4cr7eEkKVPauKhEGG/qnF40lVHoakezDYiOhv+EPePFy1k/T3MtsWQfEIR9+DeMkTkt5rgoz1fpc1mLxkiZ29MtxsGFC/QCOLMso=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748890560; c=relaxed/simple;
-	bh=YHlkPzbw1bqcJZTYaYxxvRT3cE9SFsD0GAR4HK6dNXA=;
-	h=Message-Id:From:Date:Subject:Content-Type:MIME-Version:To:Cc; b=K14ToS8DjFr+rN4WtSojs/gGwNCzG8m0yfCeuTpUfZG+6r609Ulodxxc6Hs8rqKOyQD1i8Q5OD/2YGSYsxSl0ZX2SGLIeUxPSjHGykHXzp7KQ0MEg6aG4H+9y08axTLu+xHXsDaycWg9gKItMMrHbHnTS7j7p+uF/eahAdfpxBs=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=gg5SLSU/; arc=none smtp.client-ip=209.85.128.53
+	s=arc-20240116; t=1748890561; c=relaxed/simple;
+	bh=hj6wYHz2+h3Obi2afptyUslYN38YypwrdEXX7hzBXDc=;
+	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
+	 MIME-Version:To:Cc; b=JJHlLuIvrqMuzQeB8SALydUqaaFHkrvNYFVRSsFCe0OgEc6PtY0CO4oFC/Gez0cFQXc2xC9Wx6P6A2qeogJGeUEjCMlihu9tCv69HEbCldBgg2+8m+SrTdHY3EMc8bQwlrpmcjo1CQAIAvHAnVCmG0VwaG3c4zrDRulS7/0Qm+8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BTmpAmJj; arc=none smtp.client-ip=209.85.221.52
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="gg5SLSU/"
-Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-451d54214adso15499785e9.3
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:55:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BTmpAmJj"
+Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-3a361b8a664so4625260f8f.3
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:55:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748890557; x=1749495357; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748890558; x=1749495358; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=hBDpVfD6UqqxKOFFfF1BysL34P9ifDo3lWcSrIz8eh4=;
-        b=gg5SLSU/4TeNGktWsfdxcGhvxE/l6jn9fNj7WKLVKY/P54x/iOS1VLzuGDG4pvxwKN
-         XK5L6TTGFnzbIVB964x61JQW/wyuRrK7PodfBAy6EhT4QlsAwvh2z3pV5+irVyFCpxzB
-         k3Ld56JyRifebtJ1jbFNwbBMvQf7YmeZcEDDnqxUXyQSV5Bx7zeJAnOCgtWsPU3U26aa
-         RR0bIEgcKwRn+rULpKJJ75ifiJ5w4hVME+6vF3zV5cUx9J1zBmd0fHoy/OxnmP3OTUn7
-         2ZA4OTReNNgP8/py5Vty0UlPPCgRV65wOn/xVBTd9aWnBL6heiIxo3r2pVOUM0y0eBO/
-         3wIw==
+         :references:in-reply-to:message-id:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3DT7V7ylko8TlQTE3Y4kkY4DPqAWqqG6ut19C2EhP8E=;
+        b=BTmpAmJjGzNi/20cNNkh7R3FqDCRImeQKrzSi5Zgfsq4wwhcgILWIu0v9urE5PC+7m
+         Bv5Wm/8vpkA0KKpuyEkwBenxLvaRK7nXhaJPf9Vv2vZL/u4hfJR8rXS/QToOcrgazKS2
+         vyxGc5kGKSJZVlkGdfb0rj1ecjIKFxWbWH8HD0sDcwyxSX749yzy+sUDk4pr9Z42E00o
+         sPsGb0L6OWNsrLKfLN2USdjosk0D6XGPtLss/la5jXJJMjt+84ccMRBwQ84KXamauCFD
+         WCLivhz859AatlwwtD0M93VDk0sV/6Pk25gSZue9N/J6FbG0soaYtvuiF2aolNCM2vHw
+         Kt3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748890557; x=1749495357;
+        d=1e100.net; s=20230601; t=1748890558; x=1749495358;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=hBDpVfD6UqqxKOFFfF1BysL34P9ifDo3lWcSrIz8eh4=;
-        b=f6vaPwDYuMU8GnJXf6DFSQRNECDF5QltbAayePrRBMxdyrx+/38UD/alNizRAlwEun
-         qvCNhXmMDQQ2ZKfrWakf6hxWtp40VY0bW1TeLVcDIc2a5mqZLja7odG0/9YcoK3wKxgq
-         4L6EUeJzzVKPHS/rA0V9nBbBaOYCY/swUWiMSnQCwM7IX9s2ts7Kn6/PXvzSb7mBffPW
-         +Vy0zLfCS7LwUcv6MMEuxaucCidbyHkFHb0rK5kL9Sa0srnPTw07WNTF6EWgXdYN0J2G
-         u2B42DOn2ri5cD0hbd1sV3o+T4fVd3hhBjvbcMsKHoArZ9yTdt74fx3c1za9LBWVmCxP
-         ozKg==
-X-Gm-Message-State: AOJu0YwxPocesSSbnbZohPx6bxQvBBVWryifT1ROi5PVyGRCI3DBVi5Y
-	oLCRjqfJzKGOG/EqNbkp6rP4nJ2glFNJ0niMl3whejtgxzovRcgzYKYE7deGKQ==
-X-Gm-Gg: ASbGncszpZSQYZEBX94TOKDEbl5sfWpReKPHAJFuyTDcK7IqJdUgDvDB8jARhELmlxo
-	n96V/uqWhcLtJwsE8OHv9dLjISkpCISB0Dh7Cja2FoX8Ae3ACthjNJkCZyqi7dxDMcA4sTV9UHS
-	2vrtXvbkDy3l6U3MptMcjMfxLB7vVcPAVJZljdzBcAqtuomYmdY1WbaMW0qxtjq47hJHt/vH1P3
-	4P2yT7j+/BbvZvnRVBCRZOh4cojlTmbWGfdvBWGz3MTmNKp01W0KD2xMz87mOCwJO7S2Gan70b7
-	ghUYuuTfoJf2B4SjAbFL4L43umC6RsOChElbQHVB9SM2MTAtF8UG
-X-Google-Smtp-Source: AGHT+IHHpqf6XGRKcEh7KWF4UYVwQ6wWR92nsjBchsb7Onl5z+DQt71Tc7Dve/1f/IZjbrJdnn36vQ==
-X-Received: by 2002:a05:600c:4688:b0:44a:ac77:26d5 with SMTP id 5b1f17b1804b1-450d64fedb2mr139498095e9.14.1748890556789;
-        Mon, 02 Jun 2025 11:55:56 -0700 (PDT)
+         :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=3DT7V7ylko8TlQTE3Y4kkY4DPqAWqqG6ut19C2EhP8E=;
+        b=Bcw+d4tgXne1V1xIYcEwajK3SCOY4/sVri5XCFjNztK7WaorNmc6xq9Xri3oxDzhNY
+         j3Lgl5fbHnXGRROBdQyN3Zc6KnAhRR1jpLupoUruHPmUc//5G94HQr0Jhviymo+aWOzX
+         o3oy/OcIqatr4Adf4x3TkWqCM0VcQfx2jE2okUTVDKkCbgH7o55IS1hOkVboqoibGTmV
+         qaUN4TpMWvrMe2+kta0yk22ZB05XE5Ex1RWaA0F82mUGJodGyoA+p4ZdEMo2Y/UXDkXa
+         fPQeBUc0SVljwboAGtSCfuq9e3n1kqD92rA0VUHskWqa+b23y2O1Nz8/K2fAHMSMZqp8
+         ykRQ==
+X-Gm-Message-State: AOJu0Yw7hJoOYhujU/2i0U+b4389xu0NrsdoJRVWIBA+OhDweHM7r9km
+	AtySP7KLT5Pp0KP7Qddg6US7zmx25ZFmZl+R6tte3vQD7dORPZ0hU2sgC2y2OQ==
+X-Gm-Gg: ASbGncuWrxBARo6rn+dtQfXplKY/PsnMlTVZSH6rg/Ieeg8ISeVCccjUfgKuWICOOPx
+	A/k2+0qR6Jyw16nzIFCw6267jVScaaT21Ii23ZQVk9t3Knigqpb3pxR25bmjDYYbSoWUtKqbOkA
+	XvOWWHwuvjsKYGnFzYimauCh3MfTD9n0rhczEotpOdY3uqL/IaOdL8UWE79X1bf/ZInYAMfcgoa
+	qzF78wz/qIds8fw1C6K9iJtZOkt8T7DG/3F0i2YfZGkp7WjhDcgqexhS9c1JEm3OusIng4R8p5K
+	mCaPE0NXttSkpg5zUvuWQQQVlVxkvqVvfSI1wfvBdwwNmV+m+Nqc
+X-Google-Smtp-Source: AGHT+IFrs4Six5jl+Z94UHtFArDnK+QWB0lGqjWKvXon8nQlmQuuLPm8Odk7alTldAgOJ07ZSGVtcA==
+X-Received: by 2002:a05:6000:18ab:b0:3a4:fb33:85ce with SMTP id ffacd0b85a97d-3a4fb3388bbmr10135344f8f.46.1748890557535;
+        Mon, 02 Jun 2025 11:55:57 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4f00a00d4sm16004209f8f.92.2025.06.02.11.55.56
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe5b892sm16071894f8f.17.2025.06.02.11.55.57
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 11:55:56 -0700 (PDT)
-Message-Id: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
+        Mon, 02 Jun 2025 11:55:57 -0700 (PDT)
+Message-Id: <e05c5bea7143d54a5cdb2d9cbfe944409c891797.1748890555.git.gitgitgadget@gmail.com>
+In-Reply-To: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
+References: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Jun 2025 18:55:52 +0000
-Subject: [PATCH 0/3] cat-file: add %(objectmode) and submodule message to batch commands
+Date: Mon, 02 Jun 2025 18:55:53 +0000
+Subject: [PATCH 1/3] t1006: update 'run_tests' to test generic object
+ specifiers
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -70,65 +75,192 @@ MIME-Version: 1.0
 To: git@vger.kernel.org
 Cc: peff@peff.net,
     gitster@pobox.com,
+    Victoria Dye <vdye@github.com>,
     Victoria Dye <vdye@github.com>
 
-This series re-attempts the changes proposed last year [1] for extending the
-information about tree entries available from the 'cat-file' batch format
-commands. It also (hopefully) addresses the initial round of feedback that
-series received.
+From: Victoria Dye <vdye@github.com>
 
-The first patch updates 't1006-cat-file.sh' to test non-OID object
-specifications. In response to the feedback in [2], I added more careful
-quoting and a couple tests using paths with spaces. This change revealed a
-(likely known) limitation of the '%(rest)' atom when processing object names
-with spaces. To make that limitation explicit, I marked the relevant test as
-expected to fail.
+Update the 'run_tests' test wrapper so that the first argument may refer to
+any specifier that uniquely identifies an object (e.g. a ref name,
+'<OID>:<path>', '<OID>^{<type>}', etc.), rather than only a full object ID.
 
-The second patch adds "mode" support. This is essentially unchanged from its
-initial submission, save for some conflict resolution in the test script.
+Also add tests that use non-OID identifiers, ensuring appropriate parsing in
+'cat-file'. The identifiers used in some of the added tests include a space,
+which is incompatible with the '%(rest)' atom. To accommodate that without
+removing the test case, use 'test_expect_failure' when 'object_name'
+includes a space.
 
-The final patch takes a different approach to submodule resolution than the
-initial submission; rather than treat the entry as a "regular" commit object
-with empty content, we now print an error message similar to the "missing",
-"ambiguous", etc. cases, but with the tree entry's OID rather than the input
-object name.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Victoria Dye <vdye@github.com>
+---
+ t/t1006-cat-file.sh | 56 +++++++++++++++++++++++++++++----------------
+ 1 file changed, 36 insertions(+), 20 deletions(-)
 
-As for the motivation behind the change (re: [3]), the goal of this series
-is to be able to get more of the information available internally about an
-object in 'cat-file --batch[*]' -- in the case of a tree entry, the main
-things missing were the file mode and the presence (and OID) of submodule
-pointers. As Junio mentioned in [4], using a single long-running process to
-resolve objects is far more performant than spawning multiple processes to
-resolve tree entries with something like 'ls-tree', especially when
-resolving entries across multiple trees or resolving a mix of tree entries
-and OIDs, refnames, etc. The object resolution logic in 'cat-file' meant
-that the mode & submodule OID information were already (mostly) available,
-but we didn't have a way to output it.
-
-The intent of this series is to make the new format options/outputs to get
-those fields as unobtrusive as possible, but I'm happy to do something more
-like the previous series if that would be preferable.
-
-[1]
-https://lore.kernel.org/git/pull.1689.git.1710183362.gitgitgadget@gmail.com/
-[2] https://lore.kernel.org/git/xmqqle6oo2ns.fsf@gitster.g/ [3]
-https://lore.kernel.org/git/20240312221758.GA109417@coredump.intra.peff.net/
-[4] https://lore.kernel.org/git/xmqq1q8fl05r.fsf@gitster.g/
-
-Victoria Dye (3):
-  t1006: update 'run_tests' to test generic object specifiers
-  cat-file: add %(objectmode) atom
-  cat-file.c: add batch handling for submodules
-
- Documentation/git-cat-file.adoc |  13 ++++
- builtin/cat-file.c              |  14 +++-
- t/t1006-cat-file.sh             | 111 +++++++++++++++++++++++---------
- 3 files changed, 103 insertions(+), 35 deletions(-)
-
-
-base-commit: 7014b55638da979331baf8dc31c4e1d697cf2d67
-Published-As: https://github.com/gitgitgadget/git/releases/tag/pr-1929%2Fvdye%2Fvdye%2Fcat-file-mode-submodule-v1
-Fetch-It-Via: git fetch https://github.com/gitgitgadget/git pr-1929/vdye/vdye/cat-file-mode-submodule-v1
-Pull-Request: https://github.com/gitgitgadget/git/pull/1929
+diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
+index 317da6869c88..7c9512a6b439 100755
+--- a/t/t1006-cat-file.sh
++++ b/t/t1006-cat-file.sh
+@@ -113,53 +113,54 @@ strlen () {
+ 
+ run_tests () {
+     type=$1
+-    oid=$2
++    object_name="$2"
+     size=$3
+     content=$4
+     pretty_content=$5
++    oid=${6:-"$object_name"}
+ 
+     batch_output="$oid $type $size
+ $content"
+ 
+     test_expect_success "$type exists" '
+-	git cat-file -e $oid
++	git cat-file -e "$object_name"
+     '
+ 
+     test_expect_success "Type of $type is correct" '
+ 	echo $type >expect &&
+-	git cat-file -t $oid >actual &&
++	git cat-file -t "$object_name" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+     test_expect_success "Size of $type is correct" '
+ 	echo $size >expect &&
+-	git cat-file -s $oid >actual &&
++	git cat-file -s "$object_name" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+     test -z "$content" ||
+     test_expect_success "Content of $type is correct" '
+ 	echo_without_newline "$content" >expect &&
+-	git cat-file $type $oid >actual &&
++	git cat-file $type "$object_name" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+     test_expect_success "Pretty content of $type is correct" '
+ 	echo_without_newline "$pretty_content" >expect &&
+-	git cat-file -p $oid >actual &&
++	git cat-file -p "$object_name" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+     test -z "$content" ||
+     test_expect_success "--batch output of $type is correct" '
+ 	echo "$batch_output" >expect &&
+-	echo $oid | git cat-file --batch >actual &&
++	echo "$object_name" | git cat-file --batch >actual &&
+ 	test_cmp expect actual
+     '
+ 
+     test_expect_success "--batch-check output of $type is correct" '
+ 	echo "$oid $type $size" >expect &&
+-	echo_without_newline $oid | git cat-file --batch-check >actual &&
++	echo_without_newline "$object_name" | git cat-file --batch-check >actual &&
+ 	test_cmp expect actual
+     '
+ 
+@@ -168,13 +169,13 @@ $content"
+ 	test -z "$content" ||
+ 		test_expect_success "--batch-command $opt output of $type content is correct" '
+ 		echo "$batch_output" >expect &&
+-		test_write_lines "contents $oid" | git cat-file --batch-command $opt >actual &&
++		test_write_lines "contents $object_name" | git cat-file --batch-command $opt >actual &&
+ 		test_cmp expect actual
+ 	'
+ 
+ 	test_expect_success "--batch-command $opt output of $type info is correct" '
+ 		echo "$oid $type $size" >expect &&
+-		test_write_lines "info $oid" |
++		test_write_lines "info $object_name" |
+ 		git cat-file --batch-command $opt >actual &&
+ 		test_cmp expect actual
+ 	'
+@@ -182,19 +183,28 @@ $content"
+ 
+     test_expect_success "custom --batch-check format" '
+ 	echo "$type $oid" >expect &&
+-	echo $oid | git cat-file --batch-check="%(objecttype) %(objectname)" >actual &&
++	echo "$object_name" | git cat-file --batch-check="%(objecttype) %(objectname)" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+     test_expect_success "custom --batch-command format" '
+ 	echo "$type $oid" >expect &&
+-	echo "info $oid" | git cat-file --batch-command="%(objecttype) %(objectname)" >actual &&
++	echo "info $object_name" | git cat-file --batch-command="%(objecttype) %(objectname)" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+-    test_expect_success '--batch-check with %(rest)' '
++    # FIXME: %(rest) is incompatible with object names that include whitespace,
++    # e.g. HEAD:path/to/a/file with spaces. Use the resolved OID as input to
++    # test this instead of the raw object name.
++    if echo "$object_name" | grep " "; then
++	test_rest=test_expect_failure
++    else
++	test_rest=test_expect_success
++    fi
++
++    $test_rest '--batch-check with %(rest)' '
+ 	echo "$type this is some extra content" >expect &&
+-	echo "$oid    this is some extra content" |
++	echo "$object_name    this is some extra content" |
+ 		git cat-file --batch-check="%(objecttype) %(rest)" >actual &&
+ 	test_cmp expect actual
+     '
+@@ -205,7 +215,7 @@ $content"
+ 		echo "$size" &&
+ 		echo "$content"
+ 	} >expect &&
+-	echo $oid | git cat-file --batch="%(objectsize)" >actual &&
++	echo "$object_name" | git cat-file --batch="%(objectsize)" >actual &&
+ 	test_cmp expect actual
+     '
+ 
+@@ -215,7 +225,7 @@ $content"
+ 		echo "$type" &&
+ 		echo "$content"
+ 	} >expect &&
+-	echo $oid | git cat-file --batch="%(objecttype)" >actual &&
++	echo "$object_name" | git cat-file --batch="%(objecttype)" >actual &&
+ 	test_cmp expect actual
+     '
+ }
+@@ -230,6 +240,8 @@ test_expect_success "setup" '
+ 	git config extensions.compatobjectformat $test_compat_hash_algo &&
+ 	echo_without_newline "$hello_content" > hello &&
+ 	git update-index --add hello &&
++	echo_without_newline "$hello_content" > "path with spaces" &&
++	git update-index --add --chmod=+x "path with spaces" &&
+ 	git commit -m "add hello file"
+ '
+ 
+@@ -269,13 +281,17 @@ test_expect_success '--batch-check without %(rest) considers whole line' '
+ 
+ tree_oid=$(git write-tree)
+ tree_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tree_oid)
+-tree_size=$(($(test_oid rawsz) + 13))
+-tree_compat_size=$(($(test_oid --hash=compat rawsz) + 13))
+-tree_pretty_content="100644 blob $hello_oid	hello${LF}"
+-tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}"
++tree_size=$((2 * $(test_oid rawsz) + 13 + 24))
++tree_compat_size=$((2 * $(test_oid --hash=compat rawsz) + 13 + 24))
++tree_pretty_content="100644 blob $hello_oid	hello${LF}100755 blob $hello_oid	path with spaces${LF}"
++tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}100755 blob $hello_compat_oid	path with spaces${LF}"
+ 
+ run_tests 'tree' $tree_oid $tree_size "" "$tree_pretty_content"
+ run_tests 'tree' $tree_compat_oid $tree_compat_size "" "$tree_compat_pretty_content"
++run_tests 'blob' "$tree_oid:hello" $hello_size "" "$hello_content" $hello_oid
++run_tests 'blob' "$tree_compat_oid:hello" $hello_size "" "$hello_content" $hello_compat_oid
++run_tests 'blob' "$tree_oid:path with spaces" $hello_size "" "$hello_content" $hello_oid
++run_tests 'blob' "$tree_compat_oid:path with spaces" $hello_size "" "$hello_content" $hello_compat_oid
+ 
+ commit_message="Initial commit"
+ commit_oid=$(echo_without_newline "$commit_message" | git commit-tree $tree_oid)
 -- 
 gitgitgadget
+
