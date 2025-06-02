@@ -1,60 +1,60 @@
 Received: from fout-a7-smtp.messagingengine.com (fout-a7-smtp.messagingengine.com [103.168.172.150])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6BE7801
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 00:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C6B19341F
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 00:39:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=103.168.172.150
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748824054; cv=none; b=a0aul3W07AfvXH+Ziz4JgSwnN0hyw6iBqkyZNLwdOqrplKHUT8E95sSWTqrapc7pBmM0y2B27T8NgxuOixMDO4sEqAlSzThBX42mAh9S6IncOja6LG7iDKhEEiZ5ULhdkX1+7X298PtxKdK3bLRiPGmDOzMNcJjbagtGbBgVhAM=
+	t=1748824797; cv=none; b=tUxmI4FAEzNrvnPG25qgfascgXsyB20T6D51y1Xn1G5sKNBzz/+FgREN4Fk2wn5wJST8PdQXoyw+/s9I6xpkdexnytQH0L3YFpWJTOWRlcbID7XJylae/MmMTV8cgUeDT6yUKtpFG8hsnd/d/Ba4QZf36RcdVGGjAEbrGF6UpZE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748824054; c=relaxed/simple;
-	bh=0PvTJVtNRiVF4w2lGm+OrR+OXXtHVWglJA/RcRbBvXU=;
+	s=arc-20240116; t=1748824797; c=relaxed/simple;
+	bh=JmXu1ZtAis5Fjz2kfElGIq4wz0QJbgDqSnNL5CX292E=;
 	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=aY/BUi5fuvf+d/Zge9zQUUWtAHsdru23kuHF114J5HPIs1fE+rITjp8RpDlRV0J0Z/7vAg35Wgp6/8qhpIG6rlR7vPk1Vd53vWAJQdloglsCNPqSr5SbfCoQx3fMIpNYJo2cJMXy9cDXzRE3Vf/kHap4LIng2hMrQMwy7Sq/xmE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=f1jWCP6K; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=isMsjCqy; arc=none smtp.client-ip=103.168.172.150
+	 MIME-Version:Content-Type; b=LAsMxmJB2kj//Esgif59EnwgD+g0/issK0Dab4rsnGMNoqrMhldDMO94Xr/d7NYDTNcOYO541UQpgprKaFAo89oKtlNpXPqFfG+MJqjKtXbs6AyC6DNgAwh0p2gupU0le/bmOCAXgjmWEmGnKj7jWeo7OrACyQYqkf0j5PE5qdY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=h8ua25un; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=KXAX8Eq1; arc=none smtp.client-ip=103.168.172.150
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="f1jWCP6K";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="isMsjCqy"
-Received: from phl-compute-02.internal (phl-compute-02.phl.internal [10.202.2.42])
-	by mailfout.phl.internal (Postfix) with ESMTP id E4CDD13802A8;
-	Sun,  1 Jun 2025 20:27:31 -0400 (EDT)
-Received: from phl-frontend-02 ([10.202.2.161])
-  by phl-compute-02.internal (MEProxy); Sun, 01 Jun 2025 20:27:31 -0400
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="h8ua25un";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="KXAX8Eq1"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfout.phl.internal (Postfix) with ESMTP id 4B895138029E;
+	Sun,  1 Jun 2025 20:39:54 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-11.internal (MEProxy); Sun, 01 Jun 2025 20:39:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
 	:cc:content-type:content-type:date:date:from:from:in-reply-to
 	:in-reply-to:message-id:mime-version:references:reply-to:subject
-	:subject:to:to; s=fm3; t=1748824051; x=1748910451; bh=6AxmnLej7y
-	4bCf07pvnM2XOJeHw8RsW/n31doGTNTXw=; b=f1jWCP6KRhC+VAnHGl8fV4xuNo
-	O9+Sp0k0nA1UaI8RN6OTgRLy8/VN7tsEDE+K93c5hZR0XbSwO60Z034J5L3RF5mE
-	fPXxhxFvAY5VUJ8kXS7OKGy1ttKSDnISALsjfPGHjywjtuUkhBR5w9nrSzyzGueb
-	maj206e2EsLLz2jz7qKfPylBcVi8Qd/gpbvzQDIRs36n7FH9a7ghpolge2wiARyC
-	SM+La+pfvvu6A0Lt4W4WwWk4/YSIZdxrMw6epv/6kYLt5JIfJYit7WKF2/Yzyviq
-	d410rfnjWk+Wsvux5MUPn6KbZQ5YyP3C6WJfSYUWZGdCwwqha0T9UXrt0l/A==
+	:subject:to:to; s=fm3; t=1748824794; x=1748911194; bh=7HXYeEDCRj
+	eLBY+41mhYdJwONFnDHxVebGgWKL9qJ4g=; b=h8ua25unG2E51XVRd/lYJft2gb
+	pvDJ7GsuGdB+sfh1b26I5Uc8EP9p5b2rHq6FDv3tk0Wur+AgnQx5Ya5++1+rozUN
+	cuRFD9FuUzGBQPixYtpdM56tLgJGL2QJuKhOZ3Ti/5pTRSh8SuW8mofsJD/njEjg
+	jNQTq8bS6c16hedLd8SOtqPCDs7zL9+SggTism7RxjH2/7Tpo7oRS2Cu7597fYdp
+	0zZJaZm4/G3aOdj0MooiK+IbvcdycuAjK1kbrm1Si2WODDC1NdtDO9JqMNdbJLLT
+	WcXVOGuKCOqIgnJCGt/+nmMQq+Zdqk5eP4hM2HfapM/0+I/oLIlgzus7pbvw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-type:content-type:date:date
 	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
 	:message-id:mime-version:references:reply-to:subject:subject:to
 	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
-	1748824051; x=1748910451; bh=6AxmnLej7y4bCf07pvnM2XOJeHw8RsW/n31
-	doGTNTXw=; b=isMsjCqybtunSmJZYVTbEEvtWmPaXsjifN+BOEGG3cS3s9cU7dO
-	+cRT/H+jhIh4BDz7VX01z9e7eMzMrrhBDoFyFk0cZ+aKkbJLQid0WL5fPCBRVyNW
-	zwcFourIlI3+mlGfFakD/t66kv/JG+JxlEXRvt+kcL6KDJW6Ubv6NDSxrRUbibZS
-	6ejBATR0hipzL1gNWwZFFYxI/4X3EY7PbD+vmzIAsSy1xeq0M3PXZsB4+tiMQ5t3
-	+ZIo0OZHrQLXnebAN57YuOVyzgsUPBa051d7oe6wANMpIT+YNwb1/UWa4b06x6lQ
-	LMCnmKnS4ap/fWklr8Sf/VGmGPl9DaUpnpw==
-X-ME-Sender: <xms:8-88aJ3Pl4RGL3kNQaJbLnxmiQ10NreJxwUqIgKO0BjuqMVujPdS6Q>
-    <xme:8-88aAGQ3KupfLLlogK56Afb3P2Zu8pWh3W8fgYxd6sKYfS_rcgtmh-MH9upt9Xjv
-    H3j_o88snuE7PnYKQ>
-X-ME-Received: <xmr:8-88aJ6Oluyn2VyAMKffMHvP8rw_pdijWfqlHHzLHijvInhiFZC2KhsR4qlQFyTIUcUwZsk4oFLjA-83sVJ3hjsMcAD-_C1--Spu>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefiedvvdculddtuddrgeefvddrtd
+	1748824794; x=1748911194; bh=7HXYeEDCRjeLBY+41mhYdJwONFnDHxVebGg
+	WKL9qJ4g=; b=KXAX8Eq1DgwLXBh1eKh2+4t/onzMOnN+j1rsEXnErQ0V88LOGfj
+	NQi+tTDhelOZQenh8vu6q9ctQObRd076dWl0lTd2HlvqSbNkggdT2P6tuEBtl0sd
+	0ldMNDBKqGoFtyaJpsbw+LGkrCHOzwu/66WJXjOUmb58HBmu5mzmSJxRs5Z0ZM+x
+	NtpSiHnU5ZvQiS5ATF8qJWpZnZ9rjRbU5SsZQWBioE/kvhIX3c+78Hgitpip+dLA
+	DETakkccpL6+Yo0Me8bPh/eNOdW6YQsZECXI/5SRCLSVTbNTjNts7diI3Gyn285P
+	MB8/JkfW98oItboUl6GMxJItt0ivhbe4nAQ==
+X-ME-Sender: <xms:2fI8aGPoGw3m4w9ZANbuKnuNYdib7aHFY6m7Qpyxs1IqBDmn3yqcZg>
+    <xme:2fI8aE8A5QRpTm8e6t-vs3M8OiQ1PbaSSp4UZ3o3uYoUg03aauaPBYdyH-J6if7kb
+    IqvilHHcbiEBCOxjA>
+X-ME-Received: <xmr:2fI8aNRz_JVY6Jmn8DJ06qGEXkEWn4Hmhr1xsrUoO9ePujtkn7CPNUav0JD4mz54-iDOYWtXIr8brOHz3nEVvloxoJcvN7rB_FbC>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefiedvieculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
     dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
-    kfgfgggtsehttdfotddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
-    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeeikeeufefh
-    tedvffdtgeefkefhffeggfefiedvudegfffgffffveevvdeileffudenucevlhhushhtvg
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
     hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
     ohigrdgtohhmpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhpohhuthdprhgtph
     htthhopehgrghrghgrughithihrgdtkeeslhhivhgvrdgtohhmpdhrtghpthhtohepghhi
@@ -65,29 +65,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefiedvvdculddtuddrge
     nhdrkhhnohgslhgvsehgmhgrihhlrdgtohhmpdhrtghpthhtohepphhhihhllhhiphdrfi
     hoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgs
     ohigrdgtohhm
-X-ME-Proxy: <xmx:8-88aG0ZyMIdC-sDaJkoK9FyPdNgFk7vyPK_R4xOdElwXePNNeih0g>
-    <xmx:8-88aMGFyujJHWqHM-JUGDNgsZ9KBj4TsTF6_P00ENt16geoay6n_w>
-    <xmx:8-88aH_1OD-biBvADt-LuOZ0h5lJ5WUv52u8yImUA8Ht-vEe-9MVtQ>
-    <xmx:8-88aJkygv3d-fSG33OwyERE5qnMD1OITVP7lOHpoTxxDiS0CB7wiw>
-    <xmx:8-88aABR2R5r__LSFTybbsBFC0Jm3p3cP2ZM2H_IfasCIzDcklrt8GcC>
+X-ME-Proxy: <xmx:2fI8aGs14ZBdY83WoGyyBSPTtsiizj7yhgOcXzLZm4DU90atIkG9tA>
+    <xmx:2fI8aOekyUrWHEHG3gUEZcwkO7ukmlkXp3-HZ8oCEGKqoXGRpDPz1g>
+    <xmx:2fI8aK1c3dmQjm35WUfiuvAZ9dUDCOYEfeJc4n_7HEBnb_fGJf208Q>
+    <xmx:2fI8aC91nYyn1Dt00TsRoNlpHqkNic9CKeh1G8jk4_8eBcIOzGSHwg>
+    <xmx:2vI8aB5l3tdlk6dH-rbvRc0sdVnQBH6NZSZzocHiX070a7QP9VzW1t1g>
 Feedback-ID: if26b431b:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 1 Jun 2025 20:27:31 -0400 (EDT)
+ 1 Jun 2025 20:39:53 -0400 (EDT)
 From: Junio C Hamano <gitster@pobox.com>
 To: Aditya Garg <gargaditya08@live.com>
 Cc: "git@vger.kernel.org" <git@vger.kernel.org>,  Eric Sunshine
  <sunshine@sunshineco.com>,  Zi Yao <ziyao@disroot.org>,  "brian m .
  carlson" <sandals@crustytoothpaste.net>,  Jeff King <peff@peff.net>,  Ben
  Knoble <ben.knoble@gmail.com>,  Phillip Wood <phillip.wood123@gmail.com>
-Subject: Re: [PATCH v11 3/9] imap-send: add PLAIN authentication method to
- OpenSSL
-In-Reply-To: <20250601083821.2440110-4-gargaditya08@live.com> (Aditya Garg's
-	message of "Sun, 1 Jun 2025 08:38:52 +0000")
+Subject: Re: [PATCH v11 5/9] imap-send: enable specifying the folder using
+ the command line
+In-Reply-To: <20250601083821.2440110-6-gargaditya08@live.com> (Aditya Garg's
+	message of "Sun, 1 Jun 2025 08:38:54 +0000")
 References: <PN3PR01MB9597C5BC8528C0E068DDDA18B899A@PN3PR01MB9597.INDPRD01.PROD.OUTLOOK.COM>
 	<20250601083821.2440110-1-gargaditya08@live.com>
-	<20250601083821.2440110-4-gargaditya08@live.com>
-Date: Sun, 01 Jun 2025 17:27:29 -0700
-Message-ID: <xmqqldqbvvgu.fsf@gitster.g>
+	<20250601083821.2440110-6-gargaditya08@live.com>
+Date: Sun, 01 Jun 2025 17:39:51 -0700
+Message-ID: <xmqqfrgjvuw8.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -99,78 +99,83 @@ Content-Type: text/plain
 
 Aditya Garg <gargaditya08@live.com> writes:
 
->  #else
+> Some users may very often want to imap-send messages to a folder
+> other than the default set in the config. Add a command line
+> argument for the same.
+>
+> Signed-off-by: Aditya Garg <gargaditya08@live.com>
+> ---
+>  Documentation/config/imap.adoc   |  5 +++--
+>  Documentation/git-imap-send.adoc | 15 +++++++++++----
+>  imap-send.c                      |  9 ++++++++-
+>  3 files changed, 22 insertions(+), 7 deletions(-)
+>
+> diff --git a/Documentation/config/imap.adoc b/Documentation/config/imap.adoc
+> index 24e88228d0..829d9e0bac 100644
+> --- a/Documentation/config/imap.adoc
+> +++ b/Documentation/config/imap.adoc
+> @@ -1,7 +1,8 @@
+>  imap.folder::
+>  	The folder to drop the mails into, which is typically the Drafts
+> -	folder. For example: "INBOX.Drafts", "INBOX/Drafts" or
+> -	"[Gmail]/Drafts". Required.
+> +	folder. For example: 'INBOX.Drafts', 'INBOX/Drafts' or
+> +	'[Gmail]/Drafts'. Required if `--folder` argument is not used. If
+> +	set and `--folder` is also used, `--folder` will be preferred.
+
+Shouldn't these literals be `typeset like this` with backquotes?
+
+More importantly, when we mention that the command line option
+trumps the corresponding configuration variable, the more common
+verb we use than "prefer" is "override".  Because it is a general
+rule that the configuration variable is used as a back-up in case
+there is no command line option is given, it is less confusing if
+you omitted the last sentence.  Perhaps rewrite the last two
+sentence with something like this?
+
+	The IMAP folder to interact with MUST be specified; the
+	value of this configuration variable is used as the fallback
+	default value when the `--folder` option is not given.
+
+I dunno.
+
+> @@ -37,6 +39,11 @@ OPTIONS
+>  --quiet::
+>  	Be quiet.
 >  
-> +static char *plain_base64(const char *user UNUSED,
-> +		  const char *access_token UNUSED)
-> +{
-> +	die("You are trying to use PLAIN authenticate method "
-> +	    "with OpenSSL library, but its support has not been compiled in.");
-> +}
-
-This comment may apply also to the earlier OAuth related two stub
-functions, but this is the "#else" side of "#ifndef NO_OPENSSL";
-double negation always makes all our spin, but in short, this is
-"You are not building with OpenSSL".  We cannot quite look at the
-post context of this hunk for sanity check, but inside the cram()
-stub function ...
-
->  static char *cram(const char *challenge_64 UNUSED,
->  		  const char *user UNUSED,
->  		  const char *pass UNUSED)
-
-	die("If you want to use CRAM-MD5 authenticate method, "
-	    "you have to build git-imap-send with OpenSSL library.");
-
-... is the message it dies with.  So, shouldn't the error from the
-new stub function also say "If you want to use PLAIN, you have to
-build with OpenSSL"?
-
-> +static int auth_plain(struct imap_store *ctx, const char *prompt UNUSED)
-> +{
-> +	int ret;
-> +	char *b64;
+> +-f <folder>::
+> +--folder=<folder>::
+> +	Specify the folder in which the emails have to saved.
+> +	For example: `--folder=[Gmail]/Drafts` or `-f INBOX/Drafts`.
 > +
-> +	b64 = plain_base64(ctx->cfg->user, ctx->cfg->pass);
-> +	if (!b64)
-> +		return error("PLAIN: base64 encoding failed");
-> +
-> +	/* Send the base64-encoded response */
-> +	ret = socket_write(&ctx->imap->buf.sock, b64, strlen(b64));
-> +	if (ret != (int)strlen(b64)) {
-> +		free(b64);
-> +		return error("IMAP error: sending PLAIN response failed");
-> +	}
-> +
-> +	free(b64);
-> +	return 0;
-> +}
+>  --curl::
+>  	Use libcurl to communicate with the IMAP server, unless tunneling
+>  	into it.  Ignored if Git was built without the USE_CURL_FOR_IMAP_SEND
 
-And the same comment about not gracefully failing when our side lack
-support, even though we gracefully fail when the other side lacks
-support, given to an earlier step also applies here.
+There are four existing options and this adds another.  I am
+debating myself if this deserves a preliminary clean-up patch so
+that the enumerated options are more like
 
-> @@ -1209,7 +1273,22 @@ static struct imap_store *imap_open_store(struct imap_server_conf *srvc, const c
->  		if (srvc->auth_method) {
->  			struct imap_cmd_cb cb;
->  
-> -			if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
-> +			if (!strcmp(srvc->auth_method, "PLAIN")) {
-> +				if (!CAP(AUTH_PLAIN)) {
-> +					fprintf(stderr, "You specified "
-> +						"PLAIN as authentication method, "
-> +						"but %s doesn't support it.\n", srvc->host);
-> +					goto bail;
-> +				}
-> +				/* PLAIN */
-> +
-> +				memset(&cb, 0, sizeof(cb));
-> +				cb.cont = auth_plain;
-> +				if (imap_exec(ctx, &cb, "AUTHENTICATE PLAIN") != RESP_OK) {
-> +					fprintf(stderr, "IMAP error: AUTHENTICATE PLAIN failed\n");
-> +					goto bail;
-> +				}
-> +			} else if (!strcmp(srvc->auth_method, "CRAM-MD5")) {
->  				if (!CAP(AUTH_CRAM_MD5)) {
->  					fprintf(stderr, "You specified "
->  						"CRAM-MD5 as authentication method, "
+	`-v`::
+	`--verbose`::
+		Be verbose.
+
+If we did so, this patch can add
+
+	`-f` _<folder>_::
+	`--folder=<folder>`::
+		Specify the folder to save the e-mails in.
+		Required.  Defaults to the value of the `imap.folder`
+		configuration variable
+
+without worrying about it not following the prevailing (and stale)
+style.
+
+If we are not doing a preliminary clean-up patch, what you sent is
+more in line.  We'll leave the clean-up to somebody else and adding
+one new option in a stale style to 4 existing ones may not be too
+bad.  At least such an intermediate state is locally consistent.
+
+Thanks.
+
+
