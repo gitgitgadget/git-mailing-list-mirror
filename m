@@ -1,114 +1,115 @@
-Received: from mail-pf1-f182.google.com (mail-pf1-f182.google.com [209.85.210.182])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b7-smtp.messagingengine.com (fhigh-b7-smtp.messagingengine.com [202.12.124.158])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65F55223DED
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 19:27:24 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.182
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE7301514E4
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 19:33:42 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.158
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748892445; cv=none; b=iU55Ob8ccBU3IJwLyQFGQg6SDnVnTN/gqUmWfwIACmcZy+u7G/PTEbcIynj4IHvMVUQHJu9cwzM/q11Ai4kEJXIBBBKf+WvpZjy90wW7x+7zUyM55PoerclCOsfHBMR3CjgJ2Rx9HCEn5VwZnBxUjdPgPMCR3smYA6ocX0bmDYU=
+	t=1748892825; cv=none; b=BFZ43GSVNUlpBkl1VvJDpmxoFLgXQpHLp8hK9KFhxP0Ovlz2CkpycUPkvsRmk7b7OoAQEUDWt+/l/626xtyoon2prueFe0gGR/5nBBX1BuiAKosktir3uBUUIBg9dWKLuir2ZdIiT63rvMUNDMQLbQldEHI8vvq0YGnXojpbbXI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748892445; c=relaxed/simple;
-	bh=IOGfjoTI4vlDyihWBFUcdKHQp0oqzKlj5irZJuYQAd4=;
-	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=JdFDSoU7h6DkXt0la+nwJlSgp+4csrhfK7+0dV+M9JvbP8EMeUZmcPRfyxZBvcyjU7sLBg5X1qwQO53uU4Nc5W6pAUq+81Rw/zyRad0MsY6jbP/ysbvfqxVDHYd6wY1Q69jPKYOEnc9+ZaJhdhsBTJzW0KfRZ+qm+Rgf3WZBkNk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=I2xi6SM+; arc=none smtp.client-ip=209.85.210.182
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748892825; c=relaxed/simple;
+	bh=Ers0io6haJ/DS1zCjDDysA+oe16KHq6WP1ZXTp4KzKw=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=DuIEepBYWD03nIIunw5oVdZ5DSIg51vrXtjnIFIwAEmgv+wyNRDnDTD0IsDLoDBL9Vg77bavTrFoRe45OLv95lxmAGnMLF4pQMY398rhggETI+dEDnnexknGkj7z1+YGPfgn9vrq8f7Ha2Qi1LSG0JK056+mZDjCJL5t8XkQCNU=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=aLNNnL7o; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=Kv92aU5T; arc=none smtp.client-ip=202.12.124.158
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="I2xi6SM+"
-Received: by mail-pf1-f182.google.com with SMTP id d2e1a72fcca58-747d59045a0so1355594b3a.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 12:27:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748892443; x=1749497243; darn=vger.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=L1KD92crQ4HXPVB7HH8CljLDTe/ySRyrhsUMDqSkaEQ=;
-        b=I2xi6SM+SrT1+tiDDC8PN73v7Zfv3+2AcFqLieFZRLz+vc3JGLqNs8QJmCLVsF90O1
-         xRSwQ/6CfCIPDkby4Cu//tr+IQZh/H6e+2rOhx51JKJTiBqkrLwu8nXSwO/gQ7mEx2BK
-         zEV0mKaMGIb7DYIqQ8J0+y6eXefn6wi/ETFSOIoviml/CXypbSvCOdfgXNkbw9GEZUkw
-         JF7bYWr5lIYaucl+cKMeBiZEiWTryWhBS/YQzatwPQh2qOFAbm0ct5Uw+nho6Ezws3vc
-         RAUBrdJ9SBGm/dG5evg/RcC1TaRTgMPr/yGZNaJK4l43mAD0EUSJmmACsKmHF8OUiBwi
-         bHQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748892443; x=1749497243;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=L1KD92crQ4HXPVB7HH8CljLDTe/ySRyrhsUMDqSkaEQ=;
-        b=pEYXeskJLUtY8DYsueMQaRTaJnvkLQVaUD6lCQMo7QBswGk75D92qYefQg3lyoQTpk
-         dDt/TUNkCpnMOFbVXez7+yiBNF20FGFOHgieH02DPdQQkjfO4R5clsGpcxmp0w8N6Xm3
-         cHZ4xLfFm67lCPij/jmNvkrz+YicU1h4M1wwwgX+9uFyiNNFUwQ3g0hc0m+i1n1j9nCL
-         9C/beboFgafoRd2VnDIYjet+ErAZk52orRD6SuK7d+Vw359tvYEiIFDXCR/mx/n9+jTQ
-         VK4fbfkf69YiPXkwmJVQauhVzCQHDPzc9wRfBrSiWlEIpGiMTcYhi/8dQ8chNZNPCFYv
-         ShNQ==
-X-Gm-Message-State: AOJu0YzfsboA4jO+XjAdEH8DQ0bQ4dRZM05m4Hgy01hm+M+9IHqRN9QH
-	T2sg6Ba06M8TF0KnJ5Xw9IqYrylaFOIdDFnOYADCEzOOuvPi1UjF9ClfWnxZSA==
-X-Gm-Gg: ASbGnct5alPnm8UDbgis35Rb+Lto8G317oiGgJd/dusyu9zvAH1Qi0eZ9RnPdpR0XR3
-	xusw2jEC8Nb3Dd9rR2ly/txMEli8C4vZbllN/Sod2lSxUeCHWppPyxE2pWgC4HHRm+ohggVKfa8
-	MBuV8BisTeGwyUC5ZyrRE5q2aW9BS5Dfka3qVslHAl6p8vVbpQ+rMhBaX6XSPvEPr1BfSXAqdCx
-	gKbFd+gTU1ibrVRo43pbnL0RytXHZTjV0K6XcTsYk9sg98drBftRgWBbj/XXvItQDvb2epOi8ZQ
-	rWCeEV9LEidIZ5lrzrG1GNpjZux6KZas4w==
-X-Google-Smtp-Source: AGHT+IEoLziB1WcV3XT4YcEZqnjLgH6qvRrv4tsiC23mvXKxdAs+2ModVDvMaImcmVsEMT2mmUNy2w==
-X-Received: by 2002:a05:6a00:189b:b0:736:8c0f:7758 with SMTP id d2e1a72fcca58-747c1a7f839mr17484300b3a.10.1748892443364;
-        Mon, 02 Jun 2025 12:27:23 -0700 (PDT)
-Received: from fedora.. ([2601:646:8081:3770::9eb])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-747afeabad9sm8283031b3a.51.2025.06.02.12.27.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 12:27:23 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: git@vger.kernel.org
-Cc: jn.avila@free.fr,
-	Collin Funk <collin.funk1@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH v2] completion: Make sed command that generates config-list.h portable.
-Date: Mon,  2 Jun 2025 12:26:47 -0700
-Message-ID: <1ff542bb1090cc5185644d6032addac5cd0df402.1748892261.git.collin.funk1@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
-References: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="aLNNnL7o";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="Kv92aU5T"
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal [10.202.2.51])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 7C47D254019B;
+	Mon,  2 Jun 2025 15:33:40 -0400 (EDT)
+Received: from phl-frontend-02 ([10.202.2.161])
+  by phl-compute-11.internal (MEProxy); Mon, 02 Jun 2025 15:33:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748892820; x=1748979220; bh=1rf2DzN4wS
+	LaK/WyN7tek9T0FSCowDwNhIEQqGS9F60=; b=aLNNnL7oX9uv3KLsR9ZHPpBw/D
+	LJgACIFYAKMdcM7Bz0xl2OcMGMPREGt/E942JFjMXEphOfnpNO0eJILX30ZXXqSI
+	Q1XJyW0QzlqLX9tWVmQq1Umm3BH6pRa8wzaGNX9wkbCol6iGrwiVraPzOTH/oeYK
+	jCODq4H/RmAFDaRsMn9722rr3qJSf+LH2JQ5lj/qKO83umcZ2wThJWURmZA32fTy
+	EUozr1rZWeGxaqjTT6855DrPs5TS36iyCobRyfp/C/cVgw3/jmGbHQfJhBIjvp/D
+	sM6HgaU282tN2sU/FwwYYX91RiUDFRSXoOGVLaehwN1jsNyUKaeLgv/0Ygxw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748892820; x=1748979220; bh=1rf2DzN4wSLaK/WyN7tek9T0FSCowDwNhIE
+	QqGS9F60=; b=Kv92aU5TZy0PwTpvZQVzVZr9tVWeRBPRTgAuQEqqhKPKTQSUNq1
+	/Inr2haG8Bt/5DxAHhWHuBes6a45TtBuVrilV6dqYxj1XMjXMgljNplF52vgTPTF
+	5CCh6gcwePhDW0rvn56Wd+NHNRfzCRQ1jWgIKh8J6hQQZf3ilsBG9x4gjmi6EJkF
+	Tz14McnU1naYJkYG8WzL5Vc+X+bhCQzpfehbW6Z7rfc4kJVr/wCFW6jYGq1PP2j/
+	mPNQt9qfe/oNFo9BQFOJDoKbEP1wGDQY2H88cBPtGSIxHafH86SYp2vMB1Yj0oNT
+	Uu2dU7TiDIDNc9lPJxJ66sp3y6GgdojSgDg==
+X-ME-Sender: <xms:k_w9aEnf7nN5F5zcmX6TBhqFXa0-9v1WqtTVfNcrjhMd9zfi0uc0_Q>
+    <xme:k_w9aD3EkmZs5JjShDWhJEi5jF250qe9tCLxN0IuT6I9OoRJ0DRSOdRaB_W1_C6h8
+    jVG-aZNs4HqQzmURQ>
+X-ME-Received: <xmr:k_w9aCq0aE6BMamTz0GDNrpgYavcOI4Imws9K8pWy_7xX_Ykt_P3HX_gCbYeIlyyPFBEJLNye-4LyeX-AJ5Ri0hRPtdw9S72gR6o>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkeehvdculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehkuhhfohhrihhjihelkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihht
+    sehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprh
+    gtphhtthhopehphhhilhhlihhprdifohhougesughunhgvlhhmrdhorhhgrdhukhdprhgt
+    phhtthhopehgihhtshhtvghrsehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:k_w9aAneDTwatO3aPB-9NG-qkwXO08cTWRnh_okSt_QSWiAjuG3ITQ>
+    <xmx:k_w9aC1k88GiVFLWsHuAZ4doML60oenNzY0FZbanuzfH9zsxyxVQeA>
+    <xmx:k_w9aHuxBCH0AKGTq1ynK5rkMF2lc0ICqjfg_Y8I3YHxpBP_k8qeLw>
+    <xmx:k_w9aOWkdQC11SSBXkBE-ZD-RqARGgtK3reIOl-70eVzPrNwMhZbVw>
+    <xmx:lPw9aB_jmSr81EDYzubJMbVzhcoFsvocg2WlEc4uZDcTTZqWY7iMKk6v>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Jun 2025 15:33:38 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Seyi Kuforiji <kuforiji98@gmail.com>
+Cc: git@vger.kernel.org,  ps@pks.im,  phillip.wood@dunelm.org.uk
+Subject: Re: [PATCH v3 06/10] t/unit-tests: convert reftable table test to
+ use clar
+In-Reply-To: <20250602122559.208780-7-kuforiji98@gmail.com> (Seyi Kuforiji's
+	message of "Mon, 2 Jun 2025 13:25:54 +0100")
+References: <20250602122559.208780-1-kuforiji98@gmail.com>
+	<20250602122559.208780-7-kuforiji98@gmail.com>
+Date: Mon, 02 Jun 2025 12:33:37 -0700
+Message-ID: <xmqq7c1uszu6.fsf@gitster.g>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 
-The OpenBSD 'sed' command does not support '\n' to represent newlines in
-sed expressions. This leads to the follow compiler error:
+Seyi Kuforiji <kuforiji98@gmail.com> writes:
 
-    In file included from builtin/help.c:15:
-    ./config-list.h:282:18: error: use of undeclared identifier 'n'
-            "gitcvs.dbUser",n       "gitcvs.dbPass",
-                            ^
-    1 error generated.
-    gmake: *** [Makefile:2821: builtin/help.o] Error 1
+> diff --git a/Makefile b/Makefile
+> index 3cccc73073..0227fdb3e1 100644
+> --- a/Makefile
+> +++ b/Makefile
+> ...
+> @@ -3972,4 +3972,4 @@ $(LIBGIT_HIDDEN_EXPORT): $(LIBGIT_PARTIAL_EXPORT)
+>  	$(OBJCOPY) --localize-hidden $^ $@
+>  
+>  contrib/libgit-sys/libgitpub.a: $(LIBGIT_HIDDEN_EXPORT)
+> -	$(AR) $(ARFLAGS) $@ $^
+> +	$(AR) $(ARFLAGS) $@ $^
+> \ No newline at end of file
 
-We can use a backslash followed by a newline to fix this.
+I'll fix this up before pushing this morning's integration result
+out, but here is an occasion for a quick quiz.
 
-This portably issue was introduced in e1b81f54da (completion: take into
-account the formatting backticks for options, 2025-03-19)
+Can anybody tell, without running "make <something>", what this
+accidental and unintended change breaks?  It may be rather
+surprising ;-)
 
-Signed-off-by: Collin Funk <collin.funk1@gmail.com>
----
- generate-configlist.sh | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/generate-configlist.sh b/generate-configlist.sh
-index b06da53c89..e1f9e99488 100755
---- a/generate-configlist.sh
-+++ b/generate-configlist.sh
-@@ -19,7 +19,8 @@ EOF
- 	s/::$//;
- 	s/`//g;
- 	s/^.*$/	"&",/;
--	s/,  */",\n	"/g;
-+	s/,  */",\
-+	"/g;
- 	p;};
- d' \
- 	    "$SOURCE_DIR"/Documentation/*config.adoc \
--- 
-2.49.0
 
