@@ -1,55 +1,55 @@
 Received: from fout-b8-smtp.messagingengine.com (fout-b8-smtp.messagingengine.com [202.12.124.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F38D1A00FA
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99F851A9B40
 	for <git@vger.kernel.org>; Mon,  2 Jun 2025 06:45:02 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.151
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748846704; cv=none; b=IJce+6my6JkXKRHofotlJaHXGalmpgxvCYj1Wk8PlJhDx9sEDjewFBLpAltXpM4VDBUq7oSRX7U1MvSZ3I2+yqrjhnFP3Tnm0MSiWpnWvz/pb7SENmo4QglcwncVfor0D1gi39LNIu8HFxdMYn1kUTSZ82h2/UcLKP/KDmqeoJQ=
+	t=1748846704; cv=none; b=DKc7mwLSC/qvEI/Axrid9A+eST1gGLTqukyO8RMgHUWfbF+YRCCAAuSiulEOKwmSxMpo8/ktNVDN3yjMjSDf+Xw2B5zL3OdnKxFZ5spYSOcR7LctCuPRsxVd9I4O3oRA+sbsM6Zje/fDok9srDkd82bmCZ5XpqMD008VDvajPks=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
 	s=arc-20240116; t=1748846704; c=relaxed/simple;
-	bh=mJ5o9NroEREMNun62xMMSGSfjEjDcEBpv9hqmau1aPo=;
+	bh=m1UgWJQcypFY2C+R5YnF2W/FHkCEJYKvjoOXqDQ/huo=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=T28DzpZZCRizJRYOHsXS3NuGorI2VbdEwjmV42YoYDV1yoPx10AIZIrrMHCJ2K5ONH/N1DTHkmBIErYVla0mRuoWz0zLg5ZyUelnOUD+CvEpsjIF23r/+DxLmztCyp46mTGTQrmRT9fSKZndm9o242JPMuwO2ENqXb1HhLVM1SA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=SVahdSoF; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=fBfB51B1; arc=none smtp.client-ip=202.12.124.151
+	 In-Reply-To:To:Cc; b=ZkDoLH1ncYWhVQq+8zJNJfI+tyXSeM2xLX3UeBcoaAZxkiRk3VXvyY3t4vNniV8zZ6pxJwPw1kuhV3ZtjtKx23FohHQIWbRfbH3dOVXHKtBG1EuiCyX9FrixTI8D3nsLlNJ2oBZhgSZlwqPlNsWda5XRlgfDwdEikrUq0Uo0QrY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=Rz4u5MS4; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=AKrfvcya; arc=none smtp.client-ip=202.12.124.151
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="SVahdSoF";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="fBfB51B1"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfout.stl.internal (Postfix) with ESMTP id 68C94114014F;
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="Rz4u5MS4";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="AKrfvcya"
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal [10.202.2.44])
+	by mailfout.stl.internal (Postfix) with ESMTP id A859F1140152;
 	Mon,  2 Jun 2025 02:45:01 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Mon, 02 Jun 2025 02:45:01 -0400
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+  by phl-compute-04.internal (MEProxy); Mon, 02 Jun 2025 02:45:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to; s=fm1; t=1748846701;
-	 x=1748933101; bh=d7VYdJ4hG1GOef+SLnr7lAqxsiVTn2hOl4nKfIU7t9U=; b=
-	SVahdSoFMPxulmkgqt+7xCbnN8WzEEuNuzXktM0CUeMC2CTTp4O2+tlykOePZ64V
-	v0lpB6xz64Qslc0i8aT/tVaJkZkJxYsfj9MhkJ1MOb/4VfvrKhXa0JWDMVHsEJIP
-	JFvknGwj3/FacSu6nyH9lV8IHzLExH1GEITk+SPYCY3nSPaZYSJ5w6lb0prArdJz
-	S4QLUy/F+zMOkPEclTAty7UkTPGYhGv1SRkGCL/8OmB9T0mFPXUb++SCa9+8CfCB
-	sib6DAmGMkvsbmmjkljcE67zVegaCn3FDh0GSqCG6Wu9vPrquVhAUexi2VeDCocX
-	LH9mcV5iRGJvt4BMaAptug==
+	 x=1748933101; bh=BU5ca1RBhzznm64U5umX179WrnueQxuUs0FtQDpMg4k=; b=
+	Rz4u5MS4M9+z38nz8Befq8aPTe4s+mFuHUVxoweS+kvqCdikNcd0efKZsQhkE7LK
+	BdU1P0VwREVYDYusBXqDgKQUTRrUxTfbo/Hh0UiklkixzoXFqomCql1B994SLyqn
+	EVh7CsqHn8OYuz8H+VrYNQ0qfFukcVXd0KH1k0mNUrMyfatsfS6MyhtfGdciQM29
+	meip9HoPQR6n1ZSjVIDCl1VaT2uIkoFoaekZUYkc//Uxi3jp8SniultFdPs6liQD
+	8L3jkrwgCu5NG1V8wqC7rwWbkWCPf3rSx26kBXo5r6dQG7Pl6vvLf63QSdM3RUAc
+	fLGGLDQqMbMv30GnbCGzyw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
 	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748846701; x=
-	1748933101; bh=d7VYdJ4hG1GOef+SLnr7lAqxsiVTn2hOl4nKfIU7t9U=; b=f
-	BfB51B1sASrHGNcE9UwGBiNwmWZKB02UoWh1fMQIgGDw1RY/RMXiZ+cYmtRvIGFN
-	n/lUAuJ6b9QMseyAQWCfIrUpkOz8Wh14kzaUJGw7SOBhwIQL9oUZtb9S9wN4SngC
-	69911oIMnrmvkKsKJVK8i2O/oiXtQTae24ox382NwGu34Nz0bBeGcOhuU74lr+Dz
-	JOW1Or/t4/L2aY37BqzEMm9MNta0IpwNO/n9V+MWax4MFinp2NsQxHXZZt9G+1T8
-	p8Ywdz6q6MBNqH0AfdsSbE3rbjMk1q4WMtfdBC7QhfRUqIVC1QJu8IzaHyB7IuvW
-	4/8C04Jax9sNx+NFSzXww==
-X-ME-Sender: <xms:bUg9aNLMdgx2EtHVdK9vDC4XO9ilwqD2ufjKH2xb_LnCA6-ul5QfhQ>
-    <xme:bUg9aJL9J0BI3moEE0Dr2zpg-4hgfTwvgdIrbHIWKJxMXdf1ODn1cKUC0WgHHqd-p
-    6ix8pEMWxT9uq2n3Q>
-X-ME-Received: <xmr:bUg9aFt70JSKO5bE7D1zKmk5bLOIZ5cpSI_A4PXH5f5fhQr6TAso_eP49wVLDCc7DLOswvp7cdUfGlqNj0Q0OuwysxltJOJvMXYYs2dsBwZxWw>
+	1748933101; bh=BU5ca1RBhzznm64U5umX179WrnueQxuUs0FtQDpMg4k=; b=A
+	Krfvcyaa1vfshGCmMqj/HDum2lBwtSvhlLqxwgrV3+uC8Dh3JRAeQ+W4rbCANg73
+	9Tm7xWPeZRBeZkbmlDQkwwvuV0yAnEtgejkOd7IoySBtmF74g3ZPN1EasCg8OiAm
+	wCk8j6OP88mtkp1u0TWEHSC7RMW14MjyADNax4yqyPyTYO4kSyApdHe3hRHZBqt6
+	EU6CPwcvD+391MnciisyFXTAqEv+B6S+tSUkUrvU3lGxvr+Law4MDRwnVeqFFLsZ
+	Lx3McX7HD15bEEHWCg8fVLYTLDpviNPPt60TowpXeC7N/CIoTpCyMqEhxvj6GzHJ
+	QJUlYqdSVwEsZiPY8fdZA==
+X-ME-Sender: <xms:bUg9aL63JFhYPhdgrE8CnWhwsjkQB90qAUvf2IIagULEe_oSU_6xmQ>
+    <xme:bUg9aA4M1fOEdXr6m3WK3MRveCmtcgHqej4a0S6YwI5-RX-R249VvAvCLgIVMu6-I
+    jfgEaG43XX0iniwtQ>
+X-ME-Received: <xmr:bUg9aCcO03Jx5IXbboAC4LWpa33FKddEGqsQ5lwvHMc8SpiioJu-vMj6mxRLmzTx4bjOWq1acEb1upCxDvCU0hfdKGgVIjeNptCAS-R6wBuEyQ>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefieelleculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -57,29 +57,29 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefieelleculddtuddrge
     fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhgrrhhthhhikh
-    drudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehtmhiisehpohgsohigrdgtohhm
-    pdhrtghpthhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhope
-    hgihhtshhtvghrsehpohgsohigrdgtohhmpdhrtghpthhtohepvghstghhfigrrhhtiies
-    ghgvnhhtohhordhorhhgpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvg
-    gtohdrtghomhdprhgtphhtthhopehphhhilhhlihhprdifohhougduvdefsehgmhgrihhl
-    rdgtohhmpdhrtghpthhtoheprhgrmhhsrgihsehrrghmshgrhihjohhnvghsrdhplhhush
+    iivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    tghpthhtohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhihhllhhiph
+    drfihoohguuddvfeesghhmrghilhdrtghomhdprhgtphhtthhopegvshgthhifrghrthii
+    sehgvghnthhoohdrohhrghdprhgtphhtthhopehrrghmshgrhiesrhgrmhhsrgihjhhonh
+    gvshdrphhluhhsrdgtohhmpdhrtghpthhtohepthhmiiesphhosghogidrtghomhdprhgt
+    phhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomhdprhgtphhtthhopehkrghrthhhihhkrddukeeksehg
+    mhgrihhlrdgtohhmpdhrtghpthhtohepshhunhhshhhinhgvsehsuhhnshhhihhnvggtoh
     drtghomh
-X-ME-Proxy: <xmx:bUg9aOazX5LRS5usa7fiXpV3sagoK50JDpDjOZVv2rSLRhcjiXKiSg>
-    <xmx:bUg9aEYBrNa62nf606Xz__0WYTAQ4vPi9QqcjddQam-8fj8HJs9yqA>
-    <xmx:bUg9aCAL0FGJrshuGVyxeU150K1Y0W62LMJc0XuNuzD6xiGrwt4Xzw>
-    <xmx:bUg9aCYOsTNdpXb_viMsjpiu0OBKwNKuj96vHBOcpMbvL3pS-Agq3w>
-    <xmx:bUg9aCsAqSfmlEoXHdVo51Is3mNPfEJGYudGaL07rsYuZSL8I3WmXvbx>
+X-ME-Proxy: <xmx:bUg9aMJ8a6UtBTFFCH7__V3Cuey4CEpT8vVSwAVZqw8fbgSbNjvPKQ>
+    <xmx:bUg9aPIu9nsuuRP0DKnIoR8zVPPMYgixxKyiwo3dcBEqNYgk3Yh21w>
+    <xmx:bUg9aFwF_pnfhdJlEtRe6oMMgjn8xF_g71QFTGPwe4Dq2B_MCzma3w>
+    <xmx:bUg9aLKBZvXI1e6UelHFoVRhcsZ70jfGu9t1hXvqiLMvbgcYUWLAAA>
+    <xmx:bUg9aBewzMREiQA3O3OVEc5sH75MyV1mcBn3BfQ6XGnC3V6_mLPKDU7e>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
  2 Jun 2025 02:44:59 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id dc8d7c5d (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 2 Jun 2025 06:44:52 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id 37d5ce46 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 2 Jun 2025 06:44:54 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Jun 2025 08:44:47 +0200
-Subject: [PATCH v4 07/10] t7815: fix unexpectedly passing test on macOS
+Date: Mon, 02 Jun 2025 08:44:49 +0200
+Subject: [PATCH v4 09/10] meson: introduce kwargs variable for tests
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -88,7 +88,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250602-pks-meson-tap-v4-7-052dfde0818a@pks.im>
+Message-Id: <20250602-pks-meson-tap-v4-9-052dfde0818a@pks.im>
 References: <20250602-pks-meson-tap-v4-0-052dfde0818a@pks.im>
 In-Reply-To: <20250602-pks-meson-tap-v4-0-052dfde0818a@pks.im>
 To: git@vger.kernel.org
@@ -99,68 +99,95 @@ Cc: Phillip Wood <phillip.wood123@gmail.com>,
  Eric Sunshine <sunshine@sunshineco.com>
 X-Mailer: b4 0.14.2
 
-In t7815, we have the following test:
+Meson has the ability to create a kwargs dictionary that can then be
+passed to any function call with the `kwargs:` positional argument. This
+allows one to deduplicate common parameters that one wishes to pass to
+several different function invocations.
 
-    test_expect_failure !CYGWIN 'git grep .fi a' '
-        git grep .fi a
-    '
-
-The test passes if '.' matches a NUL byte, which we expect to only
-happen on Cygwin. The upcoming changes to support parsing TAP output in
-Meson surface that this test, surprisingly, passes on macOS as well.
-
-It is unclear how long the test has been passing on macOS already.
-064eed36c7f (config.mak.uname: only set NO_REGEX on cygwin for v1.7,
-2025-04-17) mentions that the test started to pass for Cygwin. This was
-attributed to a new implementation of regcomp(3p) and friends, which was
-inherited from FreeBSD. Given the BSD lineage of macOS it is feasible
-that it also inherited similar code eventually that made the test pass
-now.
-
-It is somewhat dubious what the test actually brings to the table given
-that it is quite platform specific. Ideally, we would fix this mess by
-having a configure-time check whether regcomp(3p) works as expected,
-including NUL bytes, and use our bundled version of the regex library in
-case it doesn't. Like this, we could ensure that all platforms work the
-same in this edge case and mark the new behaviour as expected.
-
-This change is outside of the scope of this patch series, which only
-introduces support for TAP. So instead of fixing the bigger issue,
-ignore the test on Darwin like we already do for Cygwin.
+Our tests already have one common parameter that we use everywhere,
+"timeout", and we're about to add a second common parameter in the next
+commit. Let's prepare for this by introducing `test_kwargs` so that we
+can deduplicate these common arguments.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- t/t7815-grep-binary.sh | 2 +-
- t/test-lib.sh          | 3 +++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ contrib/credential/netrc/meson.build | 2 +-
+ contrib/subtree/meson.build          | 2 +-
+ meson.build                          | 4 ++++
+ t/meson.build                        | 6 +++---
+ 4 files changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/t/t7815-grep-binary.sh b/t/t7815-grep-binary.sh
-index b7d83f9a5de..55d5e6de17c 100755
---- a/t/t7815-grep-binary.sh
-+++ b/t/t7815-grep-binary.sh
-@@ -63,7 +63,7 @@ test_expect_success 'git grep ile a' '
- 	git grep ile a
- '
+diff --git a/contrib/credential/netrc/meson.build b/contrib/credential/netrc/meson.build
+index 3d74547c8ae..16fa69e317e 100644
+--- a/contrib/credential/netrc/meson.build
++++ b/contrib/credential/netrc/meson.build
+@@ -17,6 +17,6 @@ if get_option('tests')
+     workdir: meson.current_source_dir(),
+     env: credential_netrc_testenv,
+     depends: test_dependencies + bin_wrappers + [credential_netrc],
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endif
+diff --git a/contrib/subtree/meson.build b/contrib/subtree/meson.build
+index 63714166a61..98dd8e0c8ea 100644
+--- a/contrib/subtree/meson.build
++++ b/contrib/subtree/meson.build
+@@ -21,7 +21,7 @@ if get_option('tests')
+     env: subtree_test_environment,
+     workdir: meson.current_source_dir() / 't',
+     depends: test_dependencies + bin_wrappers + [ git_subtree ],
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endif
  
--test_expect_failure !CYGWIN 'git grep .fi a' '
-+test_expect_failure !CYGWIN,!MACOS 'git grep .fi a' '
- 	git grep .fi a
- '
+diff --git a/meson.build b/meson.build
+index a1476e5b322..6fb898a21d1 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2036,6 +2036,10 @@ subdir('templates')
+ # can properly set up test dependencies. The bin-wrappers themselves are set up
+ # at configuration time, so these are fine.
+ if get_option('tests')
++  test_kwargs = {
++    'timeout': 0,
++  }
++
+   subdir('t')
+ endif
  
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 8c0d76ea5f0..0a124ffad38 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -1636,6 +1636,9 @@ fi
- # Fix some commands on Windows, and other OS-specific things
- uname_s=$(uname -s)
- case $uname_s in
-+Darwin)
-+	test_set_prereq MACOS
-+	;;
- *MINGW*)
- 	# Windows has its own (incompatible) sort and find
- 	sort () {
+diff --git a/t/meson.build b/t/meson.build
+index fcfc1c2c2ba..3fc8c6c2201 100644
+--- a/t/meson.build
++++ b/t/meson.build
+@@ -51,7 +51,7 @@ clar_unit_tests = executable('unit-tests',
+   sources: clar_sources + clar_test_suites,
+   dependencies: [libgit_commonmain],
+ )
+-test('unit-tests', clar_unit_tests)
++test('unit-tests', clar_unit_tests, kwargs: test_kwargs)
+ 
+ unit_test_programs = [
+   'unit-tests/t-reftable-basics.c',
+@@ -76,7 +76,7 @@ foreach unit_test_program : unit_test_programs
+   )
+   test(unit_test_name, unit_test,
+     workdir: meson.current_source_dir(),
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endforeach
+ 
+@@ -1212,7 +1212,7 @@ foreach integration_test : integration_tests
+     workdir: meson.current_source_dir(),
+     env: test_environment,
+     depends: test_dependencies + bin_wrappers,
+-    timeout: 0,
++    kwargs: test_kwargs,
+   )
+ endforeach
+ 
 
 -- 
 2.50.0.rc0.629.g846fc57c9e.dirty
