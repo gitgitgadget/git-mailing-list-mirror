@@ -1,70 +1,70 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
+Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709042C325A
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 20:50:39 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.222.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E19D2C325A
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 20:50:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.217.50
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748897441; cv=none; b=Dm3JLy5t7o8QxvdZFuKe54ggMUq6mm7077sD9HVqgCBmcddwCQXmZE2T18z7+1f5KB692J8zvCdoibbXZmkhwxQN5gJp2oY+5KWU9cns4ezS8+5DiaQ9zBH6DadDjYgZrcMFBMqhGlmDTFam4/8AywMItok00Pt0vxhtqqAedA4=
+	t=1748897449; cv=none; b=LKv3v95uCJ8jvsW+u3Ms4ePa+n9J7ZlKwcuN6Eb43JsABX/HGExBLoWz75PLmaeJiMExy5KHwLXha0r/1XZns0s7RFLSgczvh8bF3n9U0b6VBrOF8EPzPSvW6QUv724SnG2FmuCFpDbkMHNy1Hh5X9T8MMa38c4c3IqmRpAmaBI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748897441; c=relaxed/simple;
-	bh=SPsTUZ4ZBevZT0DlVUWDPypFKNVbCJG+jMpkO42/psM=;
+	s=arc-20240116; t=1748897449; c=relaxed/simple;
+	bh=kuVSFSgYsyFrzwntYiq5MjM8BXCeTRyyKXMLCJ5C9cw=;
 	h=From:To:Cc:Subject:Date:Message-Id:In-Reply-To:References:
-	 MIME-Version; b=KcbDdDfsXQJNjKBGO1lVoMssWn9lm1VIJID93UmHdIS9DcM3xgmM9HAeJuQLMhyEGSFUCWpngTTb0ZBpZszZxrkKpx1Hy3lamzJNGc42KNeGekmqZg82uLgH9I0p9KtmwOiBY06DmZlVZA3SzEhezZFE9IHwACcegq0vcTUzOHE=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=RhTEfz7l; arc=none smtp.client-ip=209.85.222.47
+	 MIME-Version; b=BtEHgtY4oUyo7j9R3PMSLlMhDfxm+sgghcg/9fc4OWg9dL/EB4V51j6S0eOKxuLq3YYVMQdMvPoZPEbWHZEdDIi0th+3UVh4BdXwdDZFaeW04t/81BDoeYsZ2Oz1Jp4tNFRPOJtnxKHiV9dAll6Lwsmr3CGR9ARmKoBoNkRzJ1E=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=WX9RynUy; arc=none smtp.client-ip=209.85.217.50
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="RhTEfz7l"
-Received: by mail-ua1-f47.google.com with SMTP id a1e0cc1a2514c-86f9c719d63so916373241.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 13:50:39 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="WX9RynUy"
+Received: by mail-vs1-f50.google.com with SMTP id ada2fe7eead31-4e45dae6c8cso3545762137.2
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 13:50:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748897438; x=1749502238; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748897446; x=1749502246; darn=vger.kernel.org;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=gb0DzIQt8gdXoJBqPler848XL7oag0xgHVO1ZYEzNKg=;
-        b=RhTEfz7lJD6l5nWJ1DLCQumJnLkzvfwbuQ50MWoWeOSF+e4jMGPavGUZk/Yuu9vWtA
-         S1hfeUyQDkrp2SDuRRjrIZ39BmFshmnKXA3slOCNWnJE5NzJQXw+o5kEN2wBqwLwvcXs
-         aVTh3uM7UfS8Gsr1WachFgG4qHFx/8LpUwByepiRFrCcMdF9g1AULUGvSxaK+sTMBnwf
-         9p/v7W7hUSzODkexVuTA5MKneYf+gFIgZWufB6Lvmb71YEsEjFcNkO8lBob0LEzaUmL/
-         TBR2RDkxrB9aCxeFmJZdHKNWMKk9rKF+DAxIMaHqUPJ1O5Rn4ijROJrstMUfVoBqCNCq
-         JEvw==
+        bh=HVV/737LLZCvBMfg45KqvH/rKA4gLDW5kXNinUs5Y+c=;
+        b=WX9RynUyt/AN2o6MYJGByYA3ecBXQBkgOJVhYqkX2jzbJVIDHBSLRxLslRN1Vxllw8
+         gLvnzXSAi175r5hrqUPnEUf5QTSL73WCCxdvecYUZDSr0VYUUs1HFWzjjfziZHAKEfwG
+         qfSKXjKCqsNRLxfv9tUpmkuBbXbJQMOqBVOrKWHdpbDT7uNh7w3Uw2VnTC42hJ5rSR6c
+         KVqNeHFT0MHezz4eo6M4LcyY7Jpl5kKwiIfiC1595AQ0Ll0gNWvg5mT6+xZo/JdGiRXo
+         K7oobB1SpLuMyDQjxc/pKspysLbgb9sLQtMkYZaADdMMb2AnzNWJqL2gMjlUSovW9gFf
+         /rCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748897438; x=1749502238;
+        d=1e100.net; s=20230601; t=1748897446; x=1749502246;
         h=content-transfer-encoding:mime-version:references:in-reply-to
          :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=gb0DzIQt8gdXoJBqPler848XL7oag0xgHVO1ZYEzNKg=;
-        b=KNAWQTP5Fm7F0AQCw8gtJRCB9/tePvOb3rSH02SnBzERqTonh6gXhj/RGvkD7xoO5T
-         vGHy8VzIx+YBMe4ilALnM00qi88jLhQ4dzTlxxtd9TUWzuD62+77KKNtgEJUPHaG+rZ0
-         rg1XRePjr2eQ1pvzsx+uYtj9/yxfmZ+oK5upmLbuQgMfq3Sm+lCEnbmgd658IoaMV4cA
-         3y6ZoEHWtbXxqsmbI2UznlFOBDVWK0K7LwDwqZu/IuMXuwSYS9oqsBhP6JY2KFosY0Z3
-         NQ8pQM56+UYYzkfBqxX4naUYDyqdlyAX818RgY1L3tabyhnL+BAUBDKb6U2a82CQ/xWZ
-         DLmQ==
-X-Gm-Message-State: AOJu0YyNBbTJAZ1qQBYc0Bo8G70wLmBfNGwOWbse0KOM9x1NDy1oUlVG
-	IoVYWmoQF0mpdBKSy+fYIPX0OITU+54bqLPlwy2fOl3sDjCdNgfCSl43ClIZfg==
-X-Gm-Gg: ASbGncv8mqA5HURa6H9TQb95pXm0ys5lZLaTcQ0dB9VjLd71tL/S/zIccVndOInjWWn
-	1z2OTjuOoUugOYghPP8cLWY1j9wfzBsWIh9MfyqU1Uji1u4iaPT+4Wyq28o+FQ3LYg+YdM6V+j1
-	h3gLMiLIAzvxUM4i0/dQ7wR0pfvvnn2csXzIeptlqaFIiC60kIAOcLtKSzFMXLgkpWlQCMUMx3q
-	omSGx9P8S66Ye/VgNrIQaL2eXo4tUhDJwSd7bNok/igH82+EpZBiXSq+RYIoBr0Ki7w9bPH6bnI
-	mJ/bfJsVDEu55SzsPqnalisih+/clHCWgj3iW6I3DZ+0rVhU1yh7VFdlxA2DUO8vmHJ8UlaHc8X
-	heIUttrcFQyCvujCJJQ7W
-X-Google-Smtp-Source: AGHT+IHC6JqjpACWsQBRenDr3YnQEqem5t9BK6Rj5Wf/4yHEf5zqDV+S4Agmy4HcATPiq2jjtOUL5w==
-X-Received: by 2002:a05:6102:1621:b0:4df:8f03:12ca with SMTP id ada2fe7eead31-4e701cb1808mr7024958137.21.1748897437855;
-        Mon, 02 Jun 2025 13:50:37 -0700 (PDT)
+        bh=HVV/737LLZCvBMfg45KqvH/rKA4gLDW5kXNinUs5Y+c=;
+        b=D/a2wsqQ9s3NU0S8z1HnmM6mJcD0nksPWK7HraPm01J9QQDGHXF/g1MaHpW1k74tSM
+         1V//9K1M0kcyG7pzGAYN9wu7aIiX4EDEOM0TZDa4lEE0J1rjugrkR6IGVWoRitmu+hWR
+         0NfHmKNWqXbk2x4SCfaoogegR6Dk6JMA7JhqKZ7Sn9Z+pzw9oN4DNJGtEAYt2tbau3q3
+         GsWV/dkrPqicqZSpCr41aDVG5oTWWSN0RrjowAbePK2Y7QKdczHqVm+yiJ/ssSMLG1t9
+         vwEoBzNVlOe5cL7Bv44y+TAukTA3lEQqyGwTkrQ32lNG9DnrfoljoHLIXIM2VmQfCgRK
+         VM9w==
+X-Gm-Message-State: AOJu0YyHOhzWqoCsblCOk4U0qp91R6Tu9QuUyiYdzPftFjjWRVirPP+r
+	JaAIw0c0DOxgqNDu+HRyz6oViitWDqMd/bpz2l+vUMt/ljJo1crHX+DkjiPwbg==
+X-Gm-Gg: ASbGnctVQ2GqeiVo5t6qec2aiIK4Cc8g0F3/ws0pZyNqEipud6ARCTVWlDi+DUwe24K
+	/66+2Kob0xDdr91DXHJeu8JXM/Dy6NHSilaVZdeikE0HI6pXkCXDykmvsWI/ZaYyddz67mCbRSa
+	YojJgfUVNYKMR0dblfi+hCaRPOQoRt4K28pHEPlFCx4fzr4raJPyB423At5OtI5CquHFdxk+YYV
+	xdIDV/SaxAeogN/SHr/VSlZgn14haLKBh06HNu2aWUUu0Bpe+dfJio4oq8uzft4PlJAPWFXi3SX
+	d8Fkc0eLcIZl9SbqIZu6icpaKMjelJSJ4wWBYIEz5dmQLRTUUpn8DGhpglcCd9ZjKMPqkEsZm3D
+	3N4tgPjrS+12RtNuBEUKz
+X-Google-Smtp-Source: AGHT+IHv6mQmwM5y9sAzw5tbwa0d/flauNy5szBZlpqEQ4ro+8/TDUIYEn/SNClUpXfdX5/IMyHOOQ==
+X-Received: by 2002:a05:6102:358d:b0:4c1:9526:a636 with SMTP id ada2fe7eead31-4e701adfc86mr7974088137.15.1748897435795;
+        Mon, 02 Jun 2025 13:50:35 -0700 (PDT)
 Received: from localhost.localdomain ([2804:7f0:b77d:58:c47c:a673:bf76:10ce])
-        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87e2a2a1622sm6746409241.10.2025.06.02.13.50.36
+        by smtp.gmail.com with ESMTPSA id a1e0cc1a2514c-87e2a2a1622sm6746409241.10.2025.06.02.13.50.33
         (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
-        Mon, 02 Jun 2025 13:50:37 -0700 (PDT)
+        Mon, 02 Jun 2025 13:50:35 -0700 (PDT)
 From: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 To: git@vger.kernel.org
 Cc: ps@pks.im,
 	karthik.188@gmail.com,
 	Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
-Subject: [GSoC PATCH v2 2/2] MyFirstContribution: add walken.c to meson.build
-Date: Mon,  2 Jun 2025 17:50:21 -0300
-Message-Id: <20250602205021.4223-3-lucasseikioshiro@gmail.com>
+Subject: [GSoC PATCH v2 1/2] MyFirstContribution: use struct repository in examples
+Date: Mon,  2 Jun 2025 17:50:20 -0300
+Message-Id: <20250602205021.4223-2-lucasseikioshiro@gmail.com>
 X-Mailer: git-send-email 2.39.5 (Apple Git-154)
 In-Reply-To: <20250602205021.4223-1-lucasseikioshiro@gmail.com>
 References: <20250529192036.75408-1-lucasseikioshiro@gmail.com>
@@ -77,45 +77,100 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Instruct in the documentation to also add an entry in meson.build for
-builtin/walken.c, as currently both Meson and Make are supported.
+Add the parameter `struct repository *repo` to the cmd_walken function.
+
+Since commit 9b1cb5070f (builtin: add a repository parameter for
+builtin functions, 2024-09-13), all the cmd_* have the `repo` parameter
+and new commands must follow this convention, so the documentation
+should also be changed.
+
+Change the `git_config` calls to `repo_config`, also passing the `repo`
+parameter, as since 036876a106 (config: hide functions using
+`the_repository` by default, 2024-08-13) the non-repo config functions
+are no longer recommended as they use the global `repository` variable.
 
 Helped-by: Karthik Nayak <karthik.188@gmail.com>
-Helped-by: Patrick Steinhardt <ps@pks.im>
 Signed-off-by: Lucas Seiki Oshiro <lucasseikioshiro@gmail.com>
 ---
- Documentation/MyFirstObjectWalk.adoc | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ Documentation/MyFirstObjectWalk.adoc | 20 ++++++++++----------
+ 1 file changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/Documentation/MyFirstObjectWalk.adoc b/Documentation/MyFirstObjectWalk.adoc
-index a4ba6e21ec..413a9fdb05 100644
+index f03753dfc0..a4ba6e21ec 100644
 --- a/Documentation/MyFirstObjectWalk.adoc
 +++ b/Documentation/MyFirstObjectWalk.adoc
-@@ -96,10 +96,23 @@ maintaining alphabetical ordering:
- { "walken", cmd_walken, RUN_SETUP },
+@@ -43,7 +43,7 @@ Open up a new file `builtin/walken.c` and set up the command handler:
+ #include "builtin.h"
+ #include "trace.h"
+ 
+-int cmd_walken(int argc, const char **argv, const char *prefix)
++int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
+ {
+ 	trace_printf(_("cmd_walken incoming...\n"));
+ 	return 0;
+@@ -86,7 +86,7 @@ int cmd_walken(int argc, const char **argv, const char *prefix)
+ Also add the relevant line in `builtin.h` near `cmd_version()`:
+ 
+ ----
+-int cmd_walken(int argc, const char **argv, const char *prefix);
++int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo);
  ----
  
--Add it to the `Makefile` near the line for `builtin/worktree.o`:
-+Add an entry for the new command in the both the Make and Meson build system,
-+before the entry for `worktree`:
+ Include the command in `git.c` in `commands[]` near the entry for `version`,
+@@ -193,7 +193,7 @@ initialization functions.
  
-+- In the `Makefile`:
- ----
-+...
- BUILTIN_OBJS += builtin/walken.o
-+...
-+----
-+
-+- In the `meson.build` file:
-+----
-+builtin_sources = [
-+   ...
-+  'builtin/walken.c',
-+   ...
-+]
+ Next, we should have a look at any relevant configuration settings (i.e.,
+ settings readable and settable from `git config`). This is done by providing a
+-callback to `git_config()`; within that callback, you can also invoke methods
++callback to `repo_config()`; within that callback, you can also invoke methods
+ from other components you may need that need to intercept these options. Your
+ callback will be invoked once per each configuration value which Git knows about
+ (global, local, worktree, etc.).
+@@ -221,14 +221,14 @@ static int git_walken_config(const char *var, const char *value,
+ }
  ----
  
- Build and test out your command, without forgetting to ensure the `DEVELOPER`
+-Make sure to invoke `git_config()` with it in your `cmd_walken()`:
++Make sure to invoke `repo_config()` with it in your `cmd_walken()`:
+ 
+ ----
+-int cmd_walken(int argc, const char **argv, const char *prefix)
++int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
+ {
+ 	...
+ 
+-	git_config(git_walken_config, NULL);
++	repo_config(repo, git_walken_config, NULL);
+ 
+ 	...
+ }
+@@ -250,14 +250,14 @@ We'll also need to include the `revision.h` header:
+ 
+ ...
+ 
+-int cmd_walken(int argc, const char **argv, const char *prefix)
++int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
+ {
+ 	/* This can go wherever you like in your declarations.*/
+ 	struct rev_info rev;
+ 	...
+ 
+-	/* This should go after the git_config() call. */
+-	repo_init_revisions(the_repository, &rev, prefix);
++	/* This should go after the repo_config() call. */
++	repo_init_revisions(repo, &rev, prefix);
+ 
+ 	...
+ }
+@@ -305,7 +305,7 @@ Then let's invoke `final_rev_info_setup()` after the call to
+ `repo_init_revisions()`:
+ 
+ ----
+-int cmd_walken(int argc, const char **argv, const char *prefix)
++int cmd_walken(int argc, const char **argv, const char *prefix, struct repository *repo)
+ {
+ 	...
+ 
 -- 
 2.39.5 (Apple Git-154)
 
