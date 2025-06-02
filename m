@@ -1,58 +1,58 @@
-Received: from mail-ej1-f54.google.com (mail-ej1-f54.google.com [209.85.218.54])
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F3C722258C
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:56:23 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.54
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBBC223327
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:56:28 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748879786; cv=none; b=E3vYY3zB3HF0EvD0AWoZJvue8XkKmV5LttqUwoRIfkPbx3G2Bye6GVI/XqexCYOJfTcsg5OLg1ZVxRxY630qbL4oUhAU8BYx1COqdJj4AOzVdbE/a1ATl7mFMOiB+2oZxztgdxDkV5BbBbtDdRmFa3LpzsqW1q18zwt6kFkhkL8=
+	t=1748879790; cv=none; b=oKMUL+DPpmi1T8B750FSOuqHQTUjJl0VSPl+Hoj/3H66od2/YQ3SQEy1cNcqUl8GIDKO14l4J/pb6oMVyiJOXExf9O1499qzPikBoN/M64PQst5mW/xc6Ypg6/vCfZlz59aeeYtMa2rbFpsZCps82u/JqLk8MdxytVdvkn9ERvU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748879786; c=relaxed/simple;
-	bh=9/lGApchKkUJr9rNOj0es5xGtnTyXAluAAJE81nluQg=;
+	s=arc-20240116; t=1748879790; c=relaxed/simple;
+	bh=62UjpkhkS32nuHuCyH5sX8xwPoDVIeM2Q+ilgqHmIjA=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=j9mTedu0Tsy/VUEbSLxXP5PqnzxUJvNrTnx7hcFW6FgPzq8tCzGw7o6iJQe18BWq7c0aMvW4uoKp8fyj0vkkwb50v7e9xVtC2OxDczdPz1onFPzihihbIGyqP/TOJ78NfS/lZzd3bB1hqxIhpddyKnfSz/+xt/Oqm6f1jKKdinI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=evq7l4QC; arc=none smtp.client-ip=209.85.218.54
+	 To:Cc:Content-Type; b=a0Dv8OtZjjnZIUZnu9sQzw4G5s+kIdTJoNGSKYI7euXJUYpQa+AwCQXSMSgklkZXAz9OW+NASEJEKsfVpy+dR5KcTmsSxFJWW9sqTKOm53TDpMD3l1QzlHkPXDGahxM9nnjBZHREQS70AAg2aDY9aAjbXdI7tpdoFe9NBhYguFk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgMsQA22; arc=none smtp.client-ip=209.85.218.45
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="evq7l4QC"
-Received: by mail-ej1-f54.google.com with SMTP id a640c23a62f3a-ad1d1f57a01so23143566b.2
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 08:56:23 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgMsQA22"
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-addcea380eeso204745266b.0
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 08:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748879782; x=1749484582; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748879787; x=1749484587; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=mSEMliLx4gvyAJuSRRIGvxoc3Kex60iuPSTffBIJ4DU=;
-        b=evq7l4QCymbJu4sASlMtQ7uPYFppjSuUTKMZvvh00zTxBk07+kQnfFDm3ItIhrXAHO
-         5kNrG2gGn4WFGS1u6W5mu1a0yXvD6rotwLmrpNSDC1ASMFWiUCbkTmq40MjXdYnTIvvB
-         D0IhpuXUiOeUmGXTMkYfuwSdu1iHBW2WrQEHN+w8yBuDMhPVPji2uHbbbLxBwQ+fm1bW
-         hBeq+ue+C7SexwqFJRU/gxtkxhMdBGieDe7KAS89aDGZWVx6jxaHZMrtcMErykoMTPbg
-         QsXJl9EoIl4ozdEdwedBA60F9i9YCaxKZoMlKXNRrlX46sfYP92J33m8fwCUtqsT3lZm
-         JVYg==
+        bh=djuc4Z6gRgemB2j00z96z5F3YqHmSQk0ldL9NfywfrY=;
+        b=NgMsQA22BkbZQUTTKp20P1yrIenPFcozhHvwk3JtnaBi8D6UggW2+aT/poZQ5TYZ32
+         10BHcCE1GFseYhRCq/zsHNz/KNjdfpp7SOAWyaKASLChE2nRQbhersQNq1lP7vgC9xkb
+         cnmgvZruIB6wYWz1Hfe780f7Ga5v8FYewp5VxcXAP0pz769Zwsb6SQ+ioBuJKFogbNZr
+         J16R4DBPWSoIaVh+oLFj1yuMonkPlbFzf8ZOOzO6ueYY+kayjAMTH0CULMo3yNQsT2NJ
+         yQYFeWfIxDv93CSIUzOG1lnYSQyf1/90/QU848J/kDZ+1rZyIHmYivCXj8eoylbcjzUi
+         OBsg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748879782; x=1749484582;
+        d=1e100.net; s=20230601; t=1748879787; x=1749484587;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=mSEMliLx4gvyAJuSRRIGvxoc3Kex60iuPSTffBIJ4DU=;
-        b=kiLLSGDrt7JVr+tWVMIVm/+SPansd6UykJ3vDfC58fU4u53Bj8UZlzzLwxauvcqxAn
-         rg3lMR7/GNqv5HEaOAERRmKvEYKeT/F6SdB+Soro0eDGMCmjamAFDPUJSt8LYiXl3/UA
-         ZM4Eyruy4lGZiMOEcQwzFpDOr6E5uHeV+FJhyDs1tgyKLdK6Ejnm/f6JG6jemhD2mScZ
-         SJE9evrJvp8kZZdAVi9FY3QWyJYkxeNQaFSbEcA1tht0uDam+sfotskKMniuZj+z+ps7
-         1gORAyU8u3F4rLqt5DpinNQFggpiyWrNhkDqjUXWQum3gAxYQ8l0tkA4uaJTYIGV5F58
-         kq1w==
-X-Forwarded-Encrypted: i=1; AJvYcCW8g1z9CUuYKhJes9/Xmzos4oGHjBQmpNDs7T9UqbH4jwidfyKZmcX2ITQlHbPHmVsxkHw=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxXLuZAW4pM1nNZVIaRUWkNUIn6/7HbT29CLdMHgTmHXDgvUQlP
-	W+GPJg2Um4iWL0lRaoqmlaBB12b96YY3zubsfeN3ZHvYic62k9YCIxfo7OnJUSWLNoqRsmmf9FY
-	Enp9FjyLgbEZkLDSVTYFE9Yu/pNuG3o4=
-X-Gm-Gg: ASbGnctcsYVWuU6UNkOx63RRv97cq+bj9zgSd4j0sLmxugVH/zV5jGIXKQSKitvJo+v
-	R/aexyI/fukd+Dl3c24r2sMowVudyqnzXtXS+P3CGcx5FO+8lj6ZqI8gv/wrOuKFp3P3CmdGqAm
-	lZD/5GBeXMVvyWcXxSH4Dc5yVsr2g/lMhTZQk=
-X-Google-Smtp-Source: AGHT+IHJCzJGChldwfyFcqmch6WjugXxCah2Ii9ANUd1L/ZVZr9mPTQ5Mj1fL77QT5Mzx+OZHOMsA0A4ioPPZ3y17Qs=
-X-Received: by 2002:a17:907:6ea6:b0:ad5:7732:675b with SMTP id
- a640c23a62f3a-adb3243181bmr1217991266b.40.1748879782094; Mon, 02 Jun 2025
- 08:56:22 -0700 (PDT)
+        bh=djuc4Z6gRgemB2j00z96z5F3YqHmSQk0ldL9NfywfrY=;
+        b=Gt0M/1/KSM0Rlo7SvUv8YGoqqxCgGhGd7FYbAWzYwnQCFgtHB//ypY1NjuFPfcdZnz
+         4DoJKOR/xp/7P/lLxJEVNjnGDbKCJ4oV7Ddst4UCRUck2SGMh6qrapiiNjr0EqkzAtRT
+         5BOvILBNAgOaIztq1P18+6rR+mVffKWpvA8FAEGnzhL2PCQSnli/gwCw6YP1JBjB1MxV
+         09XFcZxzn1Bb1QEZL+ybPSubQDWzkuVRE/CD9NGFdGASt1fn8uNG7y8kiqf/x8nr8Dkh
+         MX++TDO21oHRBlLEIyYxBQ9OSxWQovWl4L9rXQK18RjlZUzjJTDEvhyRbhyTQ8J12Xa6
+         2VwQ==
+X-Forwarded-Encrypted: i=1; AJvYcCVagyr2MFwixsc3UR3telm+cNoM5ULFms+IDSE7Q781Czc5Ot7Yse1rLDhla7n+zBf8WNU=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxBWk2sYjE63a97+fyuvSXpO5+/nT0KihGqpPmqyHAtfAh6XzuQ
+	rUHwS2pEqxSu2VULI4xPkZu8vi66wyUx2lOu6n4RKhkm/zo6daWgw3+tq1xQGviSPjOK4883k8i
+	XbcmAvCofYWhB6LP8KOZh+hz1SSlzJswEw9Sp
+X-Gm-Gg: ASbGnctdy6HEUrm3zygprSfnmCXZqyB9L7gWMqLsQF3Bjg8bdz5WryXaK75o/2o1uRA
+	lboQb3kAgFLaNTuftDxbRQCnvsq77Fd+EAVB0M143zDNhZQ6XPUNXNNW5UQzj65j45nNWIHC6Yj
+	i0rObDAbzeBy5QaEDRcJqYPy3nPFQKh0mqF6g=
+X-Google-Smtp-Source: AGHT+IGqQTgo9lJPG0wfNF1MZRL106inw0JRDdA8VS4tRfQJgNQNxIpv1uYE6PgwFR9/jn8xUk2zZHHTZi/O+rY9Pxs=
+X-Received: by 2002:a17:907:968c:b0:ad1:e7f0:d8e5 with SMTP id
+ a640c23a62f3a-adb493c9d18mr959785366b.16.1748879786627; Mon, 02 Jun 2025
+ 08:56:26 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -62,204 +62,55 @@ MIME-Version: 1.0
 References: <20250424203904.909777-1-christian.couder@gmail.com>
  <xmqqselxtfyf.fsf@gitster.g> <CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
  <xmqq1pthtbdg.fsf@gitster.g> <CAP8UFD0OdqnoFeYY+7y-No_x_DknapoLzvqvsy-+x_602sYQbg@mail.gmail.com>
- <xmqqzfeyqdye.fsf@gitster.g> <xmqq8qmgsky8.fsf@gitster.g>
-In-Reply-To: <xmqq8qmgsky8.fsf@gitster.g>
+ <xmqqzfeyqdye.fsf@gitster.g> <xmqq8qmgsky8.fsf@gitster.g> <CABPp-BGe6r-X7NOiBFEvLGZH+GQvLkOYWn+qf3ZzzgT4sGAyOg@mail.gmail.com>
+ <xmqq4ix4qtva.fsf@gitster.g> <CABPp-BFRhSB0zTY1m+gYOpfvmuTvN5Pu3STawJwx9P-ayJw6bA@mail.gmail.com>
+ <xmqqwma0nm6c.fsf@gitster.g>
+In-Reply-To: <xmqqwma0nm6c.fsf@gitster.g>
 From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 2 Jun 2025 17:56:10 +0200
-X-Gm-Features: AX0GCFsq9A2Em4r9d7Mumy4-Cuq6xM-_sq92xu1W1aAKz7DfoDO3ZAxQGU6ySoM
-Message-ID: <CAP8UFD2i-ayL7vs=Y46DpYkv64ROBj0YHNHEbbaG76mLTncyEQ@mail.gmail.com>
+Date: Mon, 2 Jun 2025 17:56:13 +0200
+X-Gm-Features: AX0GCFttPL2u1HXCqyX6S4a9tyoLlwmUNiVDzGL3JQ7tJE3iKgBrOQvXtxlNboI
+Message-ID: <CAP8UFD3c3QCqyt5OS_mXRgye47LircGUhyrM1gYR=bRbN64i8A@mail.gmail.com>
 Subject: Re: [PATCH] fast-(import|export): improve on the signature algorithm name
 To: Junio C Hamano <gitster@pobox.com>
-Cc: Luke Shumaker <lukeshu@datawire.io>, Elijah Newren <newren@gmail.com>, git@vger.kernel.org, 
+Cc: Elijah Newren <newren@gmail.com>, Luke Shumaker <lukeshu@datawire.io>, git@vger.kernel.org, 
 	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-(Sorry for the late answer to this.)
-
-On Wed, May 28, 2025 at 7:29=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
+On Thu, May 29, 2025 at 5:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
 wrote:
 >
-> Junio C Hamano <gitster@pobox.com> writes:
+> Elijah Newren <newren@gmail.com> writes:
 >
-> > Christian Couder <christian.couder@gmail.com> writes:
-> >
-> >> I agree that we should have at least said in big letters that the
-> >> improved support for signed commits in fast-export/import is very
-> >> experimental and very likely to change in the future.
-> >>
-> >> We could still do so. This could give us a bit of time and flexibility
-> >> until we agree on and implement something better and backward
-> >> compatible. (Hopefully the v2 will help us move forward.)
-> >
-> > OK, as the next release is approaching, perhaps we do a bit of
-> > documentation update to address that "we are experimenting" and
-> > nothing else, and leave the v2 updates for the next cycle?
+> > Personally, I kind of think abort makes more sense as the default --
+> > at some point.
+>
+> Oh, of course.
+>
+> > So I'm curious if you've just changed your mind
+> > completely from before and are against changing the default at all,
+>
+> Yes, after seeing that the representation of the signature algorithm
+> and encapsulation format was not as well thought out as I thought it
+> would already be and its design still being discussed, I realized
+> that the new feature was way premature to have in the release.  At
+> some point, when things mature and we are reasonably sure we will
+> not have to make incompatible changes in the data stream, we might
+> need to switch, and the best default might turn out to be to refuse
+> to work unless the end-user makes an explicit choice, but as the
+> design of the feature stands now, I have a feeling that it is a bit
+> premature.  Certainly not ready for general consumption.
 
-Thanks for this. I agree that it's the best approach.
+Discouraging the use of the feature and saying it's highly
+experimental should hint that the default might change in the future,
+but maybe we should explicitly say so?
 
-> ---- >8 ----
-> Subject: [PATCH] fast-export: --signed-commits is experimental
->
-> As the design of signature handling is still being discussed, it is
-> likely that the data stream produced by the code in Git 2.50 would
-> have to be changed in such a way that is not backward compatible.
->
-> Mark the feature as experimental and discourge its use for now.
+> Of course, I could have just reverted the merge of the original
+> topic and give it a chance for a fresh restart the next cycle, but a
+> new feature clearly marked "highly experimental" would hopefully set
+> the end-user expectation straight, as long as the default is "do not
+> do anything different from before", which is the safest choice for a
+> feature whose design is still wobbly.
 
-Yeah, right.
-
-> Also flip the default on the generation side to "strip"; users of
-> existing versions would not have passed --signed-commits=3Dstrip and
-> will be broken by this change if the default is made to abort, and
-> will be encouraged by the error message to produce data stream with
-> future breakage guarantees by passing --signed-commits option.
->
-> As we tone down the default behaviour, we no longer need the
-> FAST_EXPORT_SIGNED_COMMITS_NOABORT environment variable, which was
-> not discoverable enough.
->
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-> ---
->  Documentation/RelNotes/2.50.0.adoc |  4 +++-
->  Documentation/git-fast-export.adoc | 12 +++++-------
->  Documentation/git-fast-import.adoc |  3 +++
->  builtin/fast-export.c              |  7 +------
->  t/t9350-fast-export.sh             | 20 ++++----------------
->  5 files changed, 16 insertions(+), 30 deletions(-)
->
-> diff --git a/Documentation/RelNotes/2.50.0.adoc b/Documentation/RelNotes/=
-2.50.0.adoc
-> index c6c34d1a1d..9a1cdf0dc0 100644
-> --- a/Documentation/RelNotes/2.50.0.adoc
-> +++ b/Documentation/RelNotes/2.50.0.adoc
-> @@ -100,7 +100,9 @@ Performance, Internal Implementation, Development Sup=
-port etc.
->   * "git fsck" becomes more careful when checking the refs.
->
->   * "git fast-export | git fast-import" learns to deal with commit and
-> -   tag objects with embedded signatures a bit better.
-> +   tag objects with embedded signatures a bit better.  This is highly
-> +   experimental and the format of the data stream may change in the
-> +   future without compatibility guarantees.
->
->   * The code paths to check whether a refname X is available (by seeing
->     if another ref X/Y exists, etc.) have been optimized.
-> diff --git a/Documentation/git-fast-export.adoc b/Documentation/git-fast-=
-export.adoc
-> index 413a527496..43bbb4f63c 100644
-> --- a/Documentation/git-fast-export.adoc
-> +++ b/Documentation/git-fast-export.adoc
-> @@ -46,14 +46,12 @@ resulting tag will have an invalid signature.
->
->  --signed-commits=3D(verbatim|warn-verbatim|warn-strip|strip|abort)::
->         Specify how to handle signed commits.  Behaves exactly as
-> -       '--signed-tags', but for commits.  Default is 'abort'.
-> +       '--signed-tags', but for commits.  Default is 'strip', which
-> +       is the same as how earlier versions of this command without
-> +       this option behaved.
->  +
-> -Earlier versions this command that did not have '--signed-commits'
-> -behaved as if '--signed-commits=3Dstrip'.  As an escape hatch for users
-> -of tools that call 'git fast-export' but do not yet support
-> -'--signed-commits', you may set the environment variable
-> -'FAST_EXPORT_SIGNED_COMMITS_NOABORT=3D1' in order to change the default
-> -from 'abort' to 'warn-strip'.
-> +NOTE: This is highly experimental and the format of the data stream may
-> +change in the future without compatibility guarantees.
-
-I wonder if it should say that the default is likely to change too?
-
->  --tag-of-filtered-object=3D(abort|drop|rewrite)::
->         Specify how to handle tags whose tagged object is filtered out.
-> diff --git a/Documentation/git-fast-import.adoc b/Documentation/git-fast-=
-import.adoc
-> index 7b107f5e8e..250d866652 100644
-> --- a/Documentation/git-fast-import.adoc
-> +++ b/Documentation/git-fast-import.adoc
-> @@ -523,6 +523,9 @@ that signs the commit data.
->  Here <alg> specifies which hashing algorithm is used for this
->  signature, either `sha1` or `sha256`.
->
-> +NOTE: This is highly experimental and the format of the data stream may
-> +change in the future without compatibility guarantees.
-> +
->  `encoding`
->  ^^^^^^^^^^
->  The optional `encoding` command indicates the encoding of the commit
-> diff --git a/builtin/fast-export.c b/builtin/fast-export.c
-> index 37c01d6c6f..fcf6b00d5f 100644
-> --- a/builtin/fast-export.c
-> +++ b/builtin/fast-export.c
-> @@ -39,7 +39,7 @@ enum sign_mode { SIGN_ABORT, SIGN_VERBATIM, SIGN_STRIP,=
- SIGN_WARN_VERBATIM, SIGN
->
->  static int progress;
->  static enum sign_mode signed_tag_mode =3D SIGN_ABORT;
-> -static enum sign_mode signed_commit_mode =3D SIGN_ABORT;
-> +static enum sign_mode signed_commit_mode =3D SIGN_STRIP;
->  static enum tag_of_filtered_mode { TAG_FILTERING_ABORT, DROP, REWRITE } =
-tag_of_filtered_mode =3D TAG_FILTERING_ABORT;
->  static enum reencode_mode { REENCODE_ABORT, REENCODE_YES, REENCODE_NO } =
-reencode_mode =3D REENCODE_ABORT;
->  static int fake_missing_tagger;
-> @@ -1269,7 +1269,6 @@ int cmd_fast_export(int argc,
->                     const char *prefix,
->                     struct repository *repo UNUSED)
->  {
-> -       const char *env_signed_commits_noabort;
->         struct rev_info revs;
->         struct commit *commit;
->         char *export_filename =3D NULL,
-> @@ -1327,10 +1326,6 @@ int cmd_fast_export(int argc,
->         if (argc =3D=3D 1)
->                 usage_with_options (fast_export_usage, options);
->
-> -       env_signed_commits_noabort =3D getenv("FAST_EXPORT_SIGNED_COMMITS=
-_NOABORT");
-> -       if (env_signed_commits_noabort && *env_signed_commits_noabort)
-> -               signed_commit_mode =3D SIGN_WARN_STRIP;
-> -
->         /* we handle encodings */
->         git_config(git_default_config, NULL);
->
-> diff --git a/t/t9350-fast-export.sh b/t/t9350-fast-export.sh
-> index dda9e7c3e7..76619765fc 100755
-> --- a/t/t9350-fast-export.sh
-> +++ b/t/t9350-fast-export.sh
-> @@ -299,22 +299,10 @@ test_expect_success GPG 'set up signed commit' '
->
->  '
->
-> -test_expect_success GPG 'signed-commits default' '
-> -
-> -       sane_unset FAST_EXPORT_SIGNED_COMMITS_NOABORT &&
-> -       test_must_fail git fast-export --reencode=3Dno commit-signing &&
-> -
-> -       FAST_EXPORT_SIGNED_COMMITS_NOABORT=3D1 git fast-export --reencode=
-=3Dno commit-signing >output 2>err &&
-> -       ! grep ^gpgsig output &&
-> -       grep "^encoding ISO-8859-1" output &&
-> -       test -s err &&
-> -       sed "s/commit-signing/commit-strip-signing/" output | (
-> -               cd new &&
-> -               git fast-import &&
-> -               STRIPPED=3D$(git rev-parse --verify refs/heads/commit-str=
-ip-signing) &&
-> -               test $COMMIT_SIGNING !=3D $STRIPPED
-> -       )
-> -
-> +test_expect_success GPG 'signed-commits default is same as strip' '
-
-Here also maybe we should say that the default could change in case
-advanced users look at test cases to get hints at what is cast in
-stone?
-
-> +       git fast-export --reencode=3Dno commit-signing >out1 2>err &&
-> +       git fast-export --reencode=3Dno --signed-commits=3Dstrip commit-s=
-igning >out2 &&
-> +       test_cmp out1 out2
->  '
-
-Otherwise the patch looks good to me.
+Yeah, I agree with this approach in general.
