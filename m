@@ -1,55 +1,55 @@
 Received: from fout-b2-smtp.messagingengine.com (fout-b2-smtp.messagingengine.com [202.12.124.145])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 094ED207DFD
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 10:27:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A585F20C489
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 10:27:31 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.145
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748860051; cv=none; b=o6cvPglckqpjOJ3Xm9OshYdwdhBJI5EnPgqUKXzkfpuL6riXcWqDJ12k8XbR5pPYLYzrtSKhzMm3MNvV1N2GNuRgSZCN/3X/It30F33wryXg2yPkLJGYX/MjK+Nxf78CblR3Ph3Z1pvU+3YPFvmgq8ZSUrWmJutB/7pS8DgY+cI=
+	t=1748860053; cv=none; b=ufiUaZ3rFOHbb+cs+d35W7vhZCYRUuRlkKcTlK/YaxZtpbEqliNU9K4NUb42o8To0FI8MLCbau1EUVGXp0kLZUGTdhxCLCTK3DQjKFXLyXxpaOA0fd3LS8Veb6txIo3Y5LSb+cw+AFprPzjih7jG8hczI/dLAlHrfVN5U1rRUIE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748860051; c=relaxed/simple;
-	bh=q8HotewZE5zD9Ol2N+yN3CISwthvpajtf5OjacjCsP0=;
+	s=arc-20240116; t=1748860053; c=relaxed/simple;
+	bh=mcXi0QyUBURiMLPnJ7Z5soTcE+htsbOpt6S7huXTiVI=;
 	h=From:Date:Subject:MIME-Version:Content-Type:Message-Id:References:
-	 In-Reply-To:To:Cc; b=py+Ls9bYOfesGG8I3sqgd0KJdKdy5A3cFAKuacnTxiKwIa1Birt9AumLr1M6OYfIA2Owb1kNVXMyqNjyrQJtpEsLQmv5CxYDUQfWAy4R5l8MZ+vHElJgAcvf39JaBjKvoxE42Bj+OnJuGgjlzymFgBJGNeK/4curPYnOm4td5nQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=i42YQ0ug; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=o4Q+cnvX; arc=none smtp.client-ip=202.12.124.145
+	 In-Reply-To:To:Cc; b=UolVoNE5hwPCHqufEkT59xngM5IUJOo6I3Bnyn+yGQmAe8rzB/fTMFddt5GXInKWfz0CcWJOK63dem8w/iiYxjCoeA48wS0tBEu2uRyB9hk4SMF7oigRsxf8tUSyDcxJNgu5bUnd2dWZA9h8eMBgU8XYV/nudEunEgHy5Avb5FI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ZQNnxYwb; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=XoZAEWoM; arc=none smtp.client-ip=202.12.124.145
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="i42YQ0ug";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="o4Q+cnvX"
-Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
-	by mailfout.stl.internal (Postfix) with ESMTP id 24F53114014F;
-	Mon,  2 Jun 2025 06:27:29 -0400 (EDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ZQNnxYwb";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="XoZAEWoM"
+Received: from phl-compute-05.internal (phl-compute-05.phl.internal [10.202.2.45])
+	by mailfout.stl.internal (Postfix) with ESMTP id B08C51140157;
+	Mon,  2 Jun 2025 06:27:30 -0400 (EDT)
 Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-09.internal (MEProxy); Mon, 02 Jun 2025 06:27:29 -0400
+  by phl-compute-05.internal (MEProxy); Mon, 02 Jun 2025 06:27:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
 	:content-transfer-encoding:content-type:content-type:date:date
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748860048;
-	 x=1748946448; bh=U2W4MzvB72hgcEQWiln3ql2MwFIsfi3tja0UG4iwvnY=; b=
-	i42YQ0ughjLE9RsiPkfc6y5JDduJa2qF6791wV2G0ndlVy1duZBrGtzErNHGGc/9
-	n/tIdvVreNGcNbbJHknyDtdxECRW5lZg2KiYp1Y/qNNQiT2+jRr9LvLAnBXgaF31
-	3XKs3DCC39gL/q0I6qvvJUv6Mhbbr9whDfe+keWNnqgLTgKH/zY+O0gooyXTXm7S
-	pL77mao0p8KxOG9QFcXAQxOnbcauL5Fz++Loh0Kb3Z3xvipCKkKYGFWkmbEP8KSP
-	qgUJCzG1OfcxE64HNd3S2vfPhTVPq38ucilKfAgNV+eaDvyjtH6Fso5dhksjIgdK
-	SV576bGDvoh1WJYT9a05Bw==
+	:references:reply-to:subject:subject:to:to; s=fm1; t=1748860050;
+	 x=1748946450; bh=cBhUK+AH+HwMn4l8dsF5clkVTjHttT2XlHVIntXsUro=; b=
+	ZQNnxYwbzWiURwv6kk0IEK1xAvIaiFzyegfNMxOWxV11urO9BzpioyaIY/2PpDgz
+	a+Kl8QJmf+jOV746LJq/7h1NSYuhzY4n355X3PYv89IinBsExwUSY3qZbrVXQc2Y
+	Sy6oT+RIoKvqJZqDQDHtF4DbXOAXYe6Gnt9G+xWBl+Lf/pdbnmgayzLijfsyWkCZ
+	vAb/tqtvOop/DKfIQtBeUWskcXesYsSzglP3Rt6jqjG4NFVjx45O4HMmfPadig+6
+	o1VuZ2SncV6OUrS/s3revTLQpN2Vro7aNwB8snP9lMKdJV3Aandp6WRyoKaTeKL0
+	Ehfm4pLivLl5lBF84o0rmQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
 	messagingengine.com; h=cc:cc:content-transfer-encoding
 	:content-type:content-type:date:date:feedback-id:feedback-id
 	:from:from:in-reply-to:in-reply-to:message-id:mime-version
 	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748860048; x=
-	1748946448; bh=U2W4MzvB72hgcEQWiln3ql2MwFIsfi3tja0UG4iwvnY=; b=o
-	4Q+cnvXbeZdSRFY37Q2iivqAh/FUFkiEn4zPu+/gKEXWLcIzINXY3bvrQ6GKR7CG
-	P09ONjE8/xWrLSjRAJ+zpk5yOgGjIgKizTDwGyYfnqO/ZmCyt2hHJ5CGl1oDtHRZ
-	cB2kGMWZcSumO6qhXf+pFfvhS9fJKlr4Q/dAd3Z7vtQJf7vKp4pn7Elkm7dSeVjo
-	YgduGGLDUwWBktF7WD2f0/1VmDRjQXf6vCZVmGoUhutp8ut6SJ5hbCetgvPB7QMh
-	o7k36IK2O9s1FJRXBkNcuUpFHqVZ3T8Bn7pRHLvbSFzoEbSOjbN0mcXvUikY+AhZ
-	MFIwn7PKXpSaONkF70/Sw==
-X-ME-Sender: <xms:kHw9aKI-qH6mEhzHKp7xx56Ozmfot1B97EqKc38cGL0ndFN_sktGww>
-    <xme:kHw9aCJTNpePPEgxYxuvVTKaHz-K28MtncNufKoqPctzG_bGAUdjIZ7EKnaGOL6XW
-    p2edkNGiADWr855NQ>
-X-ME-Received: <xmr:kHw9aKtJikfXxtt9VCkoOa9z8kqPgIt4FVXBB9jq9U_9uZcHr302q8KgsDwqSUu2F5fa5Ys7BpWVPdb3NdZ3Nr4AFzHu6Cv8m5SUCgifcEtmrw>
+	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748860050; x=
+	1748946450; bh=cBhUK+AH+HwMn4l8dsF5clkVTjHttT2XlHVIntXsUro=; b=X
+	oZAEWoMVtBD/hWU7yZmMpI58ISYzbUgLtcjLsoHe0p4e4sO1y/XqcmoQdx+d+5cq
+	nUR3iYLDib2RpN9sT9MgsBn87/JyRYq1TnQNd6h1Skzcc69cQPaRiWgmSXc3IXJ2
+	PuaRwKfMHtK+NeNepwu2IIaWCWJ5fbhLqxdwDVaYDx6WVBw1gJweajd4OBTprpN6
+	ji2bf4WB0l9Ud+hzCKyXZ0uKOCWAW0kUjL9AnB+Rzt0R08dM/3bQTVM2e2FOGBgx
+	XbRB90ryvZMOvmcb/hJsU2LxfglOLkG1OdDClpS3/bYQkAt2p/CYgafOp2hN8NSb
+	iT/in+AYqrG+vBpXmdZkA==
+X-ME-Sender: <xms:knw9aPBp9wOSMeFbDUTLZCSSNmW1sY7sgjvw22uz8viYjQZxtNxFRQ>
+    <xme:knw9aFjXuwqkG9NZssgDr3mYh3fE9rPmmf0tbi3a2Abv_BVogJ3E2nhMJmWB5f64l
+    vEFwLdRHWMlf1m93Q>
+X-ME-Received: <xmr:knw9aKkY9CF5vwwinurhJUsSE2RRC8ncy6BdwndIgz92YH5iORVhCyXw9wJodzImqHaiAZyZqYxAZJutQCAJbDsz6VTW0bgsFC88LVB_z7emRw>
 X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefjeegfeculddtuddrgeefvddrtd
     dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
     fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
@@ -57,27 +57,27 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefjeegfeculddtuddrge
     fhgjvfevofesthejredtredtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
     hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepffeuiedujedvkeeh
     uedvkeefffeivdeuleetkeduheejteekgedvudfgtdfgieelnecuvehluhhsthgvrhfuih
-    iivgepudenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
+    iivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
     tghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepthhoohhnsehioh
-    httghlrdgtohhmpdhrtghpthhtohepshhtohhlvggvsehgmhgrihhlrdgtohhmpdhrtghp
-    thhtohepghhithesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehjlhhtoh
-    gslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghrsehpohgsohig
+    httghlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidrtghomhdprhgt
+    phhtthhopehsthholhgvvgesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepjhhlthhosghlvghrsehgmhgrihhl
     rdgtohhm
-X-ME-Proxy: <xmx:kHw9aPZrmCxqLCsI9pePbAqnmNCehsk4DzLNokq1F9dCwGOjnqKcYQ>
-    <xmx:kHw9aBbA8AR1sJBn4BjeV-qjy_27Sw2EFlGPxWpKOMQa3h2YmG0a_g>
-    <xmx:kHw9aLApRBAB29JgpaXQhdQetpU3ln7ZEqJOnkgbKgRyPxR-LPthng>
-    <xmx:kHw9aHZxV6sBq4xnTMGOZpc1G9eW09kH8mu4dThoGEi3GxnbUw1CIw>
-    <xmx:kHw9aCBCLtK7ZNJ5NlYf93EIpXrzBd87yFXk8IbWF2mOqHZNY3niE6hj>
+X-ME-Proxy: <xmx:knw9aBzCxVEhcX8oso_TKWnTy503pgmxINVlHccM66Zcr-PMtn2wFA>
+    <xmx:knw9aESSrPPMysIYeBDq3gZWMwZLPxrjZcpaOWMs-1s9dgmyAWUbtw>
+    <xmx:knw9aEb7eRsr303DMj4FfFFZ5iBYn_eWrev0lrcSh1j-_D7vsl8zpw>
+    <xmx:knw9aFRy1hXzdQ-b4Y6MwQnIGK3qiLfukE4PIaxDLeaLR2psvp4OfA>
+    <xmx:knw9aOayQ60UPVPQ1b4AKj7LufLwLuqo-t32maTXneW1Y3BECFBu2xTd>
 Feedback-ID: i197146af:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 2 Jun 2025 06:27:27 -0400 (EDT)
+ 2 Jun 2025 06:27:29 -0400 (EDT)
 Received: 
-	by mail (OpenSMTPD) with ESMTPSA id 062708ff (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Mon, 2 Jun 2025 10:27:25 +0000 (UTC)
+	by mail (OpenSMTPD) with ESMTPSA id c757c3aa (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 2 Jun 2025 10:27:27 +0000 (UTC)
 From: Patrick Steinhardt <ps@pks.im>
-Date: Mon, 02 Jun 2025 12:27:11 +0200
-Subject: [PATCH v4 10/17] odb: get rid of `the_repository` when handling
- the primary source
+Date: Mon, 02 Jun 2025 12:27:13 +0200
+Subject: [PATCH v4 12/17] odb: trivial refactorings to get rid of
+ `the_repository`
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
@@ -86,7 +86,7 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250602-pks-object-store-wo-the-repository-v4-10-e986804a7c62@pks.im>
+Message-Id: <20250602-pks-object-store-wo-the-repository-v4-12-e986804a7c62@pks.im>
 References: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
 In-Reply-To: <20250602-pks-object-store-wo-the-repository-v4-0-e986804a7c62@pks.im>
 To: git@vger.kernel.org
@@ -94,176 +94,136 @@ Cc: Derrick Stolee <stolee@gmail.com>, Junio C Hamano <gitster@pobox.com>,
  Toon Claes <toon@iotcl.com>, Justin Tobler <jltobler@gmail.com>
 X-Mailer: b4 0.14.2
 
-The functions `set_temporary_primary_odb()` and `restore_primary_odb()`
-are responsible for managing a temporary primary source for the
-database. Both of these functions implicitly rely on `the_repository`.
+All of the external functions provided by the object database subsystem
+don't depend on `the_repository` anymore, but some internal functions
+still do. Refactor those cases by plumbing through the repository that
+owns the object database.
 
-Refactor them to instead take an explicit object database parameter as
-argument and adjust callers. Rename the functions accordingly.
+This change allows us to get rid of the `USE_THE_REPOSITORY_VARIABLE`
+preprocessor define.
 
 Signed-off-by: Patrick Steinhardt <ps@pks.im>
 ---
- odb.c        | 27 +++++++++++++++------------
- odb.h        | 25 ++++++++++++++-----------
- tmp-objdir.c | 10 ++++++----
- 3 files changed, 35 insertions(+), 27 deletions(-)
+ odb.c | 32 ++++++++++++++++----------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
 
 diff --git a/odb.c b/odb.c
-index d83f7416e9e..b154e91953d 100644
+index 793903cb046..a13b9ecbbc9 100644
 --- a/odb.c
 +++ b/odb.c
-@@ -329,7 +329,8 @@ void odb_add_to_alternates_memory(struct object_database *odb,
- 			     '\n', NULL, 0);
- }
- 
--struct odb_source *set_temporary_primary_odb(const char *dir, int will_destroy)
-+struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
-+						    const char *dir, int will_destroy)
- {
- 	struct odb_source *source;
- 
-@@ -337,14 +338,14 @@ struct odb_source *set_temporary_primary_odb(const char *dir, int will_destroy)
- 	 * Make sure alternates are initialized, or else our entry may be
- 	 * overwritten when they are.
- 	 */
--	odb_prepare_alternates(the_repository->objects);
-+	odb_prepare_alternates(odb);
- 
- 	/*
- 	 * Make a new primary odb and link the old primary ODB in as an
- 	 * alternate
- 	 */
- 	source = xcalloc(1, sizeof(*source));
--	source->odb = the_repository->objects;
-+	source->odb = odb;
- 	source->path = xstrdup(dir);
- 
- 	/*
-@@ -353,8 +354,8 @@ struct odb_source *set_temporary_primary_odb(const char *dir, int will_destroy)
- 	 */
- 	source->disable_ref_updates = 1;
- 	source->will_destroy = will_destroy;
--	source->next = the_repository->objects->sources;
--	the_repository->objects->sources = source;
-+	source->next = odb->sources;
-+	odb->sources = source;
- 	return source->next;
- }
- 
-@@ -366,19 +367,21 @@ static void free_object_directory(struct odb_source *source)
- 	free(source);
- }
- 
--void restore_primary_odb(struct odb_source *restore_alt, const char *old_path)
-+void odb_restore_primary_source(struct object_database *odb,
-+				struct odb_source *restore_source,
-+				const char *old_path)
- {
--	struct odb_source *cur_alt = the_repository->objects->sources;
-+	struct odb_source *cur_source = odb->sources;
- 
--	if (strcmp(old_path, cur_alt->path))
-+	if (strcmp(old_path, cur_source->path))
- 		BUG("expected %s as primary object store; found %s",
--		    old_path, cur_alt->path);
-+		    old_path, cur_source->path);
- 
--	if (cur_alt->next != restore_alt)
-+	if (cur_source->next != restore_source)
- 		BUG("we expect the old primary object store to be the first alternate");
- 
--	the_repository->objects->sources = restore_alt;
--	free_object_directory(cur_alt);
-+	odb->sources = restore_source;
-+	free_object_directory(cur_source);
- }
- 
- char *compute_alternate_path(const char *path, struct strbuf *err)
-diff --git a/odb.h b/odb.h
-index 82ddbb71e46..5acfda88fa7 100644
---- a/odb.h
-+++ b/odb.h
-@@ -73,17 +73,6 @@ struct odb_source {
- 	char *path;
- };
- 
--/*
-- * Replace the current writable object directory with the specified temporary
-- * object directory; returns the former primary object directory.
-- */
--struct odb_source *set_temporary_primary_odb(const char *dir, int will_destroy);
+@@ -1,5 +1,3 @@
+-#define USE_THE_REPOSITORY_VARIABLE
 -
--/*
-- * Restore a previous ODB replaced by set_temporary_main_odb.
-- */
--void restore_primary_odb(struct odb_source *restore_alternate, const char *old_path);
--
- struct packed_git;
- struct multi_pack_index;
- struct cached_object_entry;
-@@ -187,6 +176,20 @@ void odb_clear(struct object_database *o);
-  */
- struct odb_source *odb_find_source(struct object_database *odb, const char *obj_dir);
+ #include "git-compat-util.h"
+ #include "abspath.h"
+ #include "commit-graph.h"
+@@ -476,12 +474,13 @@ void odb_add_submodule_source_by_path(struct object_database *odb,
+ 	string_list_insert(&odb->submodule_source_paths, path);
+ }
  
-+/*
-+ * Replace the current writable object directory with the specified temporary
-+ * object directory; returns the former primary source.
-+ */
-+struct odb_source *odb_set_temporary_primary_source(struct object_database *odb,
-+						    const char *dir, int will_destroy);
-+
-+/*
-+ * Restore a previous backend replaced by `odb_set_temporary_primary_source()`.
-+ */
-+void odb_restore_primary_source(struct object_database *odb,
-+				struct odb_source *restore_source,
-+				const char *old_path);
-+
- /*
-  * Iterate through all alternates of the database and execute the provided
-  * callback function for each of them. Stop iterating once the callback
-diff --git a/tmp-objdir.c b/tmp-objdir.c
-index 4120badf5ce..ae01eae9c41 100644
---- a/tmp-objdir.c
-+++ b/tmp-objdir.c
-@@ -47,7 +47,7 @@ int tmp_objdir_destroy(struct tmp_objdir *t)
- 		the_tmp_objdir = NULL;
+-static void fill_alternate_refs_command(struct child_process *cmd,
++static void fill_alternate_refs_command(struct repository *repo,
++					struct child_process *cmd,
+ 					const char *repo_path)
+ {
+ 	const char *value;
  
- 	if (t->prev_source)
--		restore_primary_odb(t->prev_source, t->path.buf);
-+		odb_restore_primary_source(t->repo->objects, t->prev_source, t->path.buf);
+-	if (!git_config_get_value("core.alternateRefsCommand", &value)) {
++	if (!repo_config_get_value(repo, "core.alternateRefsCommand", &value)) {
+ 		cmd->use_shell = 1;
  
- 	err = remove_dir_recursively(&t->path, 0);
+ 		strvec_push(&cmd->args, value);
+@@ -493,7 +492,7 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+ 		strvec_push(&cmd->args, "for-each-ref");
+ 		strvec_push(&cmd->args, "--format=%(objectname)");
  
-@@ -279,7 +279,7 @@ int tmp_objdir_migrate(struct tmp_objdir *t)
- 	if (t->prev_source) {
- 		if (t->repo->objects->sources->will_destroy)
- 			BUG("migrating an ODB that was marked for destruction");
--		restore_primary_odb(t->prev_source, t->path.buf);
-+		odb_restore_primary_source(t->repo->objects, t->prev_source, t->path.buf);
- 		t->prev_source = NULL;
+-		if (!git_config_get_value("core.alternateRefsPrefixes", &value)) {
++		if (!repo_config_get_value(repo, "core.alternateRefsPrefixes", &value)) {
+ 			strvec_push(&cmd->args, "--");
+ 			strvec_split(&cmd->args, value);
+ 		}
+@@ -503,7 +502,8 @@ static void fill_alternate_refs_command(struct child_process *cmd,
+ 	cmd->out = -1;
+ }
+ 
+-static void read_alternate_refs(const char *path,
++static void read_alternate_refs(struct repository *repo,
++				const char *path,
+ 				odb_for_each_alternate_ref_fn *cb,
+ 				void *payload)
+ {
+@@ -511,7 +511,7 @@ static void read_alternate_refs(const char *path,
+ 	struct strbuf line = STRBUF_INIT;
+ 	FILE *fh;
+ 
+-	fill_alternate_refs_command(&cmd, path);
++	fill_alternate_refs_command(repo, &cmd, path);
+ 
+ 	if (start_command(&cmd))
+ 		return;
+@@ -521,7 +521,7 @@ static void read_alternate_refs(const char *path,
+ 		struct object_id oid;
+ 		const char *p;
+ 
+-		if (parse_oid_hex(line.buf, &oid, &p) || *p) {
++		if (parse_oid_hex_algop(line.buf, &oid, &p, repo->hash_algo) || *p) {
+ 			warning(_("invalid line while parsing alternate refs: %s"),
+ 				line.buf);
+ 			break;
+@@ -559,7 +559,7 @@ static int refs_from_alternate_cb(struct odb_source *alternate,
+ 		goto out;
+ 	strbuf_setlen(&path, base_len);
+ 
+-	read_alternate_refs(path.buf, cb->fn, cb->payload);
++	read_alternate_refs(alternate->odb->repo, path.buf, cb->fn, cb->payload);
+ 
+ out:
+ 	strbuf_release(&path);
+@@ -677,7 +677,7 @@ static int do_oid_object_info_extended(struct repository *r,
+ 		if (oi->disk_sizep)
+ 			*(oi->disk_sizep) = 0;
+ 		if (oi->delta_base_oid)
+-			oidclr(oi->delta_base_oid, the_repository->hash_algo);
++			oidclr(oi->delta_base_oid, r->hash_algo);
+ 		if (oi->contentp)
+ 			*oi->contentp = xmemdupz(co->buf, co->size);
+ 		oi->whence = OI_CACHED;
+@@ -763,10 +763,10 @@ static int oid_object_info_convert(struct repository *r,
+ 	void *content;
+ 	int ret;
+ 
+-	if (repo_oid_to_algop(r, input_oid, the_hash_algo, &oid)) {
++	if (repo_oid_to_algop(r, input_oid, r->hash_algo, &oid)) {
+ 		if (do_die)
+ 			die(_("missing mapping of %s to %s"),
+-			    oid_to_hex(input_oid), the_hash_algo->name);
++			    oid_to_hex(input_oid), r->hash_algo->name);
+ 		return -1;
  	}
  
-@@ -311,7 +311,8 @@ void tmp_objdir_replace_primary_odb(struct tmp_objdir *t, int will_destroy)
- {
- 	if (t->prev_source)
- 		BUG("the primary object database is already replaced");
--	t->prev_source = set_temporary_primary_odb(t->path.buf, will_destroy);
-+	t->prev_source = odb_set_temporary_primary_source(t->repo->objects,
-+							  t->path.buf, will_destroy);
- 	t->will_destroy = will_destroy;
- }
+@@ -797,8 +797,8 @@ static int oid_object_info_convert(struct repository *r,
+ 		struct strbuf outbuf = STRBUF_INIT;
  
-@@ -320,7 +321,8 @@ struct tmp_objdir *tmp_objdir_unapply_primary_odb(void)
- 	if (!the_tmp_objdir || !the_tmp_objdir->prev_source)
- 		return NULL;
+ 		if (type != OBJ_BLOB) {
+-			ret = convert_object_file(the_repository, &outbuf,
+-						  the_hash_algo, input_algo,
++			ret = convert_object_file(r, &outbuf,
++						  r->hash_algo, input_algo,
+ 						  content, size, type, !do_die);
+ 			free(content);
+ 			if (ret == -1)
+@@ -944,9 +944,9 @@ void *read_object_with_reference(struct repository *r,
+ 		}
+ 		ref_length = strlen(ref_type);
  
--	restore_primary_odb(the_tmp_objdir->prev_source, the_tmp_objdir->path.buf);
-+	odb_restore_primary_source(the_tmp_objdir->repo->objects,
-+				   the_tmp_objdir->prev_source, the_tmp_objdir->path.buf);
- 	the_tmp_objdir->prev_source = NULL;
- 	return the_tmp_objdir;
- }
+-		if (ref_length + the_hash_algo->hexsz > isize ||
++		if (ref_length + r->hash_algo->hexsz > isize ||
+ 		    memcmp(buffer, ref_type, ref_length) ||
+-		    get_oid_hex((char *) buffer + ref_length, &actual_oid)) {
++		    get_oid_hex_algop((char *) buffer + ref_length, &actual_oid, r->hash_algo)) {
+ 			free(buffer);
+ 			return NULL;
+ 		}
 
 -- 
 2.50.0.rc0.629.g846fc57c9e.dirty
