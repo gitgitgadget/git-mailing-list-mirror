@@ -1,126 +1,133 @@
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b1-smtp.messagingengine.com (fhigh-b1-smtp.messagingengine.com [202.12.124.152])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADB1B19CC1C
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 10:07:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E06E1474DA
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 10:24:47 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.152
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748858842; cv=none; b=QkWocxU9zwRNiFuTx9oTU7s5kJJt7XJFOgGsfuWAYIsSnWFhAxeg5ueIgogmNhWPPdBywa7HlcAhh/1WPoJD+dsAqLbmrvy2eLqyDC+jI2gX5xZLeCt2afVa2mB1yA3LsHQoBkrBxz/uT4KAhi/xHRkEa5ORyT+gvTyRoqj1Wcc=
+	t=1748859890; cv=none; b=lXAlOznSkX8aahsYhqtsiKIFDgs3cwtfGJJ4xCdmtOBA22RyDm7DbZaMLyCm7Ie7owAQe3KHmvjH5nQb8ccBpk0EMMJrJO+lCz/aI0wXyjGlkWqSobS1M+HmM+A6CL0WKaWsFQdy4tm77Q76chzA1HUI7nl13Z3PHlpA15CpHgQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748858842; c=relaxed/simple;
-	bh=pKlfmlyYtYa15YrXGY/NnP2fxhA21jbTpqxV3FaowZ0=;
-	h=Message-ID:Date:MIME-Version:Subject:To:References:From:
-	 In-Reply-To:Content-Type; b=ePok6BI+M0zyER1Ho4ejABWrUp9hj3eM8DJMxeeWcLwwCJ44IVQsNcelG8na/JTTAFrSP4wqYSdDdLS9VwO4f3TmZOPENSGOkeDwXxhByC1jr5CcNgqAXW7javzXteonELrNgpntE2TNjQt8jCX+yrK7rJ/BPT5G5cSsLTV4lWA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=TbY/HgTW; arc=none smtp.client-ip=209.85.128.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748859890; c=relaxed/simple;
+	bh=V4eXyDYsTREeQIW/IzxYEnQdi0GVNrVT0TfFMbseldQ=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=Tqbbnt/UXpDcy+WQ2bGdbVvVOcX3Qiuv01oa3OB5pj6aMcyWzk89IZ8MgjGYh7NEVTlQ++D2hMVei9HdE4HKtOmzHf1AyZgZJuTWKxNqe7ydBSTFH81whE2ev8A+YqxR64u/6yv1Ug9TGbJWS8UbQwLtVdv5xmKjWUu3QJgHd/A=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=FLWFo3dO; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=BkQoogT3; arc=none smtp.client-ip=202.12.124.152
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="TbY/HgTW"
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-43ea40a6e98so44924795e9.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 03:07:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748858839; x=1749463639; darn=vger.kernel.org;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=EbaZrjDcEhS3v5Hk/wEohymcO9uVBaGIalAlAoI1rMo=;
-        b=TbY/HgTWEbdY2z8DuVeDe+x7dwftV0h6caUMCjR5aeKfBRXujsJFLdu418DxTcNrK0
-         z2zSTY8EZzqLOzYUKYFRG8WvzD5Q1tCvpWTwJb/jfaRLeavGm11jIKkpFkGlat3LxhAL
-         7lYlyAf4KZlma2mW8TWJpA7YG57Maaz/N5J3H3z+HVQY4ZbKZxediiOH9IwdMK/yDpgt
-         cNa0txhUSMkQFVpvr1+Oxcg/2t6IiL9flYIXD1gfguJA9G0jeDq/B+Mr25cOdCWkOkTs
-         F5CtogctDgZU+cYsBAwoWeMOmthkpPmC2wtaow1RFDBf+/t6EdOueZgxFaS0UpgymIIM
-         whRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748858839; x=1749463639;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:to:subject:reply-to:user-agent:mime-version:date
-         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EbaZrjDcEhS3v5Hk/wEohymcO9uVBaGIalAlAoI1rMo=;
-        b=Y92vzPonrTrOFcTeUNabGLYuVe4iPqWCsyEe486SorPcq1WVxXs7JYtkPtbljvCMLs
-         F3G72LcpPSVpva5d504ar/qlZ8w29OeEOcyldtiJNdOTCP7gK+p96uHs9j7uUYBH8NOt
-         uebz+E04NqcrOOppgG/11ZZ8C7jriSlJhAO0unrRfZbabtFRoQPqdlAGqVFOUtlwPcRm
-         0Bxj3Y7actY5B6It6/6BYtNpJvBngrpbrz5SL7Obm7oVFesCtiYtmaahvxQc8caUw7y4
-         dHd0JJ0ZdgNwcDYTu1cTXTzbcSAFmJY7xob3LNwiwFLPh0VWvL4nS/T1bDoQpv4T3KNF
-         kkrw==
-X-Forwarded-Encrypted: i=1; AJvYcCXuqPkb37OOllxrUuFO5TjJ0c40hCINCd1Dip+/rA9Y/zQMxC+BCIWR/8maoba4fh23dKY=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yw6VPevdSsOFwspa+qZ6tKQj8H8gasjWKQOfoHiw1uotG8CBk8X
-	rCN4LTRG05dra3eujkP7P4ijs3s3mcl/+Wv9rSHhZFT2B9nWHln01J7Zftkoyg==
-X-Gm-Gg: ASbGncshChyhSIYZB2tPBufqkN6t6u1jAEiR1D+Hd/XcwQ5foXVKPUo1It2TGsGOJL6
-	rdjchoAZyjFi0aSp7wRpuooo1pX1T76D/abk+g7obHfqmkY9rZw0nEWM9i0y3oDzgHRBZSAafso
-	dydRa6v7ah/AJ24TuFyaXDzTuNVMO8sPYXiCw7DEgzvEtEmye26PZCjO0ciG/gvOFRkXrd0Rv3n
-	JbeZ4Nk7goDCmF9WVoCPW+i0uAw0xSsqxpS3+6nRO+m43GerMRVozk+qdv/BXFmuFeiLuIr1Tdx
-	t1554jLU05GDMRWpX2Y24GGCfJcdvupXSKkiOQdl6AiMTyWeBka8TPDvCrQg4qaSXo+aCH4ftW/
-	i0MVW54BF50qwa+szchPz0kEIH3k=
-X-Google-Smtp-Source: AGHT+IF9/wccnoE/DIv8CoZoGOxshgyF5TyZOdGIiZCanwu4NLy04u4JhPAUq6WD+kSIzsvb5gL1/A==
-X-Received: by 2002:a05:600c:35d2:b0:43c:e7a7:aea0 with SMTP id 5b1f17b1804b1-450d6585955mr98291805e9.26.1748858838627;
-        Mon, 02 Jun 2025 03:07:18 -0700 (PDT)
-Received: from ?IPV6:2a0a:ef40:700:a501:20c3:eb2d:481:4a64? ([2a0a:ef40:700:a501:20c3:eb2d:481:4a64])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fa270csm117465735e9.16.2025.06.02.03.07.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Jun 2025 03:07:18 -0700 (PDT)
-Message-ID: <e790367c-6777-4b4b-97f1-3b3a2cbdb177@gmail.com>
-Date: Mon, 2 Jun 2025 11:07:17 +0100
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="FLWFo3dO";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="BkQoogT3"
+Received: from phl-compute-10.internal (phl-compute-10.phl.internal [10.202.2.50])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 73A3A254011D;
+	Mon,  2 Jun 2025 06:24:46 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-10.internal (MEProxy); Mon, 02 Jun 2025 06:24:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1748859886; x=1748946286; bh=ijimltzaHC
+	a0XyCo1T6SDsLRbSvhLInaWc4gnxjhwK8=; b=FLWFo3dO24O9srZ8AaeJwEEUzO
+	J4+oBJShRhJukA7ieM4VvviYsSxkJ/PX9KSijGG7b7NI1T0/w9WXzx4vukSLJPw5
+	jDrrtj/wwfPTy/svTXJ9tc462OCrcFnQpdhpahNtNZtN/Q9AEPi5jYTr1olGKxH2
+	N93QHEgq7thFesjpc9cGD3plDcp6vpFkwGPtr/2hDNyeuREwgdY41u+la4N6X3X7
+	hHKaV9zRcNiUShmXb3u6jNJjSwEGFeqBijSk/GjlYoXKVulEj0Z7o6y/SBQsMdBG
+	PCRiyUFdIxOHwTpsuiJakEB4YjFsuEKFhvcroipqPclkpXZCECqtfcKURz5g==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748859886; x=1748946286; bh=ijimltzaHCa0XyCo1T6SDsLRbSvhLInaWc4
+	gnxjhwK8=; b=BkQoogT3YzDcUuPIB84hV5iQ6rE2jwN9kRP58vaVy7pV3uENilo
+	phTIxDfapgGLf8EMY1uqH3QFbdlhyhWvT+HlioGoY98nIz3kgPDHe+Pwa/lIS8ic
+	4VRFxZE1IwlSuWQWjHMbDPDFo73LHM9bwUlyGuzXl5R4vQCk/3qbvqAycouce454
+	zd74QBQAlu+u7qYx+8JthCRPt2v+KDzO7q1IJpiZsl/tmqiXyZ9OX/VV7CIDcp+X
+	6HoLJqtw54I4eUVJlAp4FJ6Ii4TCUXzg3le6Z6RAKXQmMZ9/rAv3F+fFWy5XNOy3
+	7FFF8NAf5XDMrkZmar9pRxSmNKidfILNB3Q==
+X-ME-Sender: <xms:7Xs9aHdQtYaoy_LTeoR0kG5DX24aDLEfhyL6hI6UB1_nguxFpgz-xA>
+    <xme:7Xs9aNNIKOmgx7EVncX0fffMdbY1GsPHwR4iQA6-psSMunAmIq9gAgZgbe8-qJERa
+    tssQ8Ba3MxeLA0o6Q>
+X-ME-Received: <xmr:7Xs9aAjseIvJbO-_FuqABxPb8SoNb4bXJEOT1-5sRCtS0ROsEkndck7_JSMJ925Dd-s2CO4NPJ4QzvSWnfI6I3wT--Ar4eAMEI7a2soCS2WL8Q>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefjeegfeculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
+    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
+    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
+    phhtthhopeejpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehgihhtsehvghgvrh
+    drkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepshhhvghjihgrlhhuohesghhmrghilhdr
+    tghomhdprhgtphhtthhopehsuhhnshhhihhnvgesshhunhhshhhinhgvtghordgtohhmpd
+    hrtghpthhtohepphhhihhllhhiphdrfihoohguseguuhhnvghlmhdrohhrghdruhhkpdhr
+    tghpthhtoheptghouggvsehkhhgruhhgshgsrghkkhdrnhgrmhgvpdhrtghpthhtohepkh
+    grrhhthhhikhdrudekkeesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtshhtvghr
+    sehpohgsohigrdgtohhm
+X-ME-Proxy: <xmx:7Xs9aI8bz9Ki1iY-MP0Onu2ANpHZ8NGVWTi80oguvXSBk52_jv_S2g>
+    <xmx:7Xs9aDv6CHtDxiGCBJcaHkKgT8OjTGpSwLY1kxPQhBSNYOYb5ERlyg>
+    <xmx:7Xs9aHEp7syER0ouOBjs5NTIcDK7mWoMzIGEu7NpZ6og2reZi5tELw>
+    <xmx:7Xs9aKO8bN_6H1_Q1ICKIsGfTTZKENEsXrIy_FP6PmW44RiFdLFwHg>
+    <xmx:7ns9aCGU83mw5RjC5WcpaSSasOzeNrTWPoFkpgkdv135jApMb4mA9W9s>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Jun 2025 06:24:44 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 5a1ff737 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 2 Jun 2025 10:24:42 +0000 (UTC)
+Date: Mon, 2 Jun 2025 12:24:41 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: phillip.wood@dunelm.org.uk
+Cc: shejialuo <shejialuo@gmail.com>, git@vger.kernel.org,
+	Kristoffer Haugsbakk <code@khaugsbakk.name>,
+	Karthik Nayak <karthik.188@gmail.com>,
+	Eric Sunshine <sunshine@sunshineco.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fsck: ignore missing "refs" directory for linked
+ worktrees
+Message-ID: <aD176UYWKEbmhiaw@pks.im>
+References: <1d8f471b6dcb7e952afea834490be195189492a7.1748629208.git.code@khaugsbakk.name>
+ <aDp55upE6AhYunz7@ArchLinux>
+ <b92b5d93-7f7f-4370-ac79-7d9767bb0db5@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Reply-To: phillip.wood@dunelm.org.uk
-Subject: Re: [BUG]: Non-matching exclude pathspec causes an error in empty
- repository when the flag "--update" is present
-To: Piotr Siupa <piotrsiupa@gmail.com>, git@vger.kernel.org
-References: <CAPM0=yCcOAGsUE8tX-o8ioihr+oWrORD6Tz=WH1OnmhpO+uqrA@mail.gmail.com>
-Content-Language: en-US
-From: Phillip Wood <phillip.wood123@gmail.com>
-In-Reply-To: <CAPM0=yCcOAGsUE8tX-o8ioihr+oWrORD6Tz=WH1OnmhpO+uqrA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b92b5d93-7f7f-4370-ac79-7d9767bb0db5@gmail.com>
 
-Hi Piotr
-
-On 27/05/2025 09:14, Piotr Siupa wrote:
-> I found a regression in version 2.45.0. (It's still present in the
-> current next - 2.49.0.1266.g31b7d2e469; earlier versions work fine.)
-
-So it 2.44.0 there is no error message?
-
-> When you run "git add --update" with an exclude pathspec on an empty
-> repository, the command fails, showing an error about not being able
-> to find the specified files.
-> This happens only if the repository contains no files. Adding any
-> files (even with "git add -N") or making a non-empty commit fixes the
-> issue, regardless of whether the added files match the exclude
-> pathspec or not.
+On Mon, Jun 02, 2025 at 10:53:50AM +0100, Phillip Wood wrote:
+> Hi Shejialuo
 > 
-> Way to reproduce:
-> git init
-> git add --update -- ':(exclude)foo'
+> On 31/05/2025 04:39, shejialuo wrote:
+> > diff --git a/refs/files-backend.c b/refs/files-backend.c
+> > index 4d1f65a57a..bf6f89b1d1 100644
+> > --- a/refs/files-backend.c
+> > +++ b/refs/files-backend.c
+> > @@ -3762,6 +3762,9 @@ static int files_fsck_refs_dir(struct ref_store *ref_store,
+> >   	iter = dir_iterator_begin(sb.buf, 0);
+> >   	if (!iter) {
+> > +		if (errno == ENOENT && !is_main_worktree(wt))
+> > +			goto out;
+> > +
+> >   		ret = error_errno(_("cannot open directory %s"), sb.buf);
+> >   		goto out;
+> >   	}
 > 
-> This results in:
-> error: pathspec ':(exclude)foo' did not match any file(s) known to git
-> error: pathspec '.' did not match any file(s) known to git
+> I think it would be clearer to write this as
+> 
+> 	if (is_main_worktree(wt) || errno != ENOENT)
+> 		ret = error_errno(_("cannot open directory %s"), sb.buf);
+> 	goto out;
+> 
+> so that the condition that triggers the error message is explicit rather
+> than having to mentally invert the condition to figure out when we return an
+> error
 
-I agree this is inconsistent with what happens if there are tracked 
-files but I wonder if it is actually better to print an error message 
-when an exclude pattern excludes all the files. We do print an error for
+The downside though is that this mandates that `is_main_worktree()` must
+never set `errno` itself. So while it may be clearer, the original
+version feels safer to me.
 
-git add -u does-not-exist
-
-because it does not match any file but not with
-
-git add -u ':(exclude)*'
-
-or
-
-git add -u builtin ':(exclude)*.[ch]'
-
-which will never add any files (the builtin directory only contains '.c' 
-and '.h' files). So I think maybe the bug is that we don't print an 
-error when there are tracked files and an exclude pattern matches everything
-
-Best Wishes
-
-Phillip
+Patrick
