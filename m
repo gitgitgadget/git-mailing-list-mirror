@@ -1,66 +1,91 @@
-Received: from mail-pl1-f175.google.com (mail-pl1-f175.google.com [209.85.214.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b6-smtp.messagingengine.com (fhigh-b6-smtp.messagingengine.com [202.12.124.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EBE82040B6
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:06:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.175
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B4AF19067C
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:16:35 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.157
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748887619; cv=none; b=FD16SSuI5nw+H2sACtPF7xJXrhfjaxxvbqoAJmRNwRBXAyMEVbW0YqNSXnuAOh0DvpAwSuIpbuR4mNHI+Op1P3swEqqAEMiKq/DhQTRcY2YpN+gteL5EgcuqU06gQRS7213VoIgME0crr7oYXl+z9wUiI5Le6joNhWmKmBH1FSg=
+	t=1748888198; cv=none; b=n6qmcjAmjRMitODSR+Xgskws/twsZL7Zvqxj1kpGywgZ+bDxkZFZoqw+BEQB0H+3L4RfPXWPKkEObv/cgNKxX7lDEzNZCEiito7ty/gIN6OKX802HaRoIULUISWENtRkcWOmbbfhbupEhN7P3QZbtEuGAN2zCFGrlGQjV1eVpuQ=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748887619; c=relaxed/simple;
-	bh=5jpQciou0heZoK5NU3lHNbvyHMrsV/DuNPCvrW/H484=;
-	h=From:To:Subject:In-Reply-To:Date:Message-ID:MIME-Version:
-	 Content-Type; b=KqE1lbD0MP5ENj90I0QRsaZQChE/G9lmRwU0ZHffF9Y6U9fXqI6MknHDAPZxibSgoBC7FFmxkAmqfkbyUHc6uu3EOkK8PPtDHj3tQpJRPixqRGcGg1h0Y4xM4UazCGeo9YCciXi83w/rG1JjfKgY1hWYlDmib7WD3prIHvwlwgM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ETDxrWbm; arc=none smtp.client-ip=209.85.214.175
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748888198; c=relaxed/simple;
+	bh=tAXXs2EQsSEtamlSNWBCAOa6QfYV/qAqdnG9Ti/1DVA=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type; b=RMEyEI/XpXqTz00TKXGkC2+H6HAcjfoXQAXZEDeLRReeW9i7r8BaA+Qxdj02I0Ke/GSf5dt12K4vSUpX75CHPU9OlA4ZL27NZq7lDtbvZ8Fp9cFgfwB698kgShpaj09PgA2CMpxW9eRKkG6Ob37c5M9B/kIdcxfaolxtTaTT6Fg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com; spf=pass smtp.mailfrom=pobox.com; dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b=gZiUTcr7; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=QXCjqarQ; arc=none smtp.client-ip=202.12.124.157
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=pobox.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pobox.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ETDxrWbm"
-Received: by mail-pl1-f175.google.com with SMTP id d9443c01a7336-2320d06b728so41247955ad.1
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:06:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748887617; x=1749492417; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:in-reply-to:subject:to:from
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=wpbE8fEWUbUw/CjtAtjyq6n79bh+XvOXEFZ+SU+qIvw=;
-        b=ETDxrWbmNyurCs1THCMujU//fFuAaiNe3uxslT54+vGvPVlLkocdIbivKChNr+K08A
-         SQWxP+axs7s8vUHqYgQa9znGa0XNXO7K7sYz0KaCpJAHRU63ca3ndmMKiuM0lOihiyvm
-         Us4CB3OJySXhbkYTs1iGGpK9KmfP8SZmZdVjp+/EHArnACR7yXNpNqmqbzHr2W0t5bZe
-         Y8ycqrBvrL/uIILjCQka+kOIUGWdEfUgVeIbfCMSnRq5m7O390896muWhHgTWdZnq+jT
-         SPgw60hMN+ZuO2+lJsnH9HCV83cy+yhQ34cNs1vTqNvqBvcgpyXXUrtKaQ7o6UoQbdJL
-         tPAA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748887617; x=1749492417;
-        h=mime-version:user-agent:message-id:date:in-reply-to:subject:to:from
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=wpbE8fEWUbUw/CjtAtjyq6n79bh+XvOXEFZ+SU+qIvw=;
-        b=p2+ANPaCIMjV89BFn3q+Jjq1DtDZr/U7yDPj/H4MzGGK9KVPuz0tV/wae4GEfY0ZVy
-         mVukI6z2PlsPdRZwhGlZeMT3hineWX0TSkDqNNhOe18AzZVqrgQ/aE3a/j8LcOVhGOBv
-         ly/QqHXshYsdRm7HD/mEK+Kp4ToDqHi7tKJqKICTGxXmafs7kXQZPugrl8GX+Fv+aN4U
-         bcrDjbHp3IQxkBwFqlZHFdXB3AaP0cD0aChSkdQ/gPtRjwOB1/lil1SJPcCBNTV3BLTU
-         yk4/KVqqxApB5oGCDJoS5LxHb+3kc9xZPoz1d64hGDEJebfbiNgN5YDhTXLvwOMTQyOt
-         TRHQ==
-X-Forwarded-Encrypted: i=1; AJvYcCWcOJ8i3VBkn6M4TCZTUUvxCoyr6E4R53Lve9Bs6m5RnGastNKgjZQMXMIbAc+5+y0ZFp0=@vger.kernel.org
-X-Gm-Message-State: AOJu0Yz5WmMELgLffBemEVBwLs5MjFJ24GqkrNml/xS+C58OmHTxcDHi
-	iKZgeEQ0CKvDGmW1o3UNJRKmeM6hBmH+TQGpQYBZ6Bjg56lUrEkPUv8vPEGBXQ==
-X-Gm-Gg: ASbGncuXsf5qd18/gRILlbay4rzgFmiXmTxDmgvPfERB/qgD4FwaFgnKzI42dkIWFMm
-	9hkjmPBGnqSBdhqjRT1fwl4cosoAkJMzsJfpQZkambeAWvAgnXxEOr0+iipcd5FuII6BSx1R+xl
-	2egO2e36v16gi+z4R8xUJUX8UYTP3gxQ+ZFfg4LloNsvq66d6VVbsJi6aPHgPd35XchDJOGbAt7
-	cr6zD+nE6IzGdLmBsX94sYuanfrP4R68jkqKkg9fdKeYQRN+Jtt9mDZHTDrdKiZoDiELpbLk/nk
-	Nf3v7VQvk32dF3OC+vC9QQytbuwp0rY=
-X-Google-Smtp-Source: AGHT+IEo6zYCroXNzGeMoJ6DXjN4iuorhuYEUd6HR45OceTmwWjNdh8564Gy5gLCqfRJCvBipuKfwg==
-X-Received: by 2002:a17:902:da90:b0:223:5c77:7ef1 with SMTP id d9443c01a7336-235293f44e7mr243117055ad.21.1748887617042;
-        Mon, 02 Jun 2025 11:06:57 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::9eb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506bc8669sm73800275ad.13.2025.06.02.11.06.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 11:06:56 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Brad Smith <brad@comstyle.com>, git@vger.kernel.org
-Subject: Re: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
-In-Reply-To: <aD1SvlRypkhczxRS@humpty.home.comstyle.com>
-Date: Mon, 02 Jun 2025 11:06:55 -0700
-Message-ID: <87wm9ut3uo.fsf@gmail.com>
+	dkim=pass (2048-bit key) header.d=pobox.com header.i=@pobox.com header.b="gZiUTcr7";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="QXCjqarQ"
+Received: from phl-compute-09.internal (phl-compute-09.phl.internal [10.202.2.49])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id 37F7425401BB;
+	Mon,  2 Jun 2025 14:16:34 -0400 (EDT)
+Received: from phl-frontend-01 ([10.202.2.160])
+  by phl-compute-09.internal (MEProxy); Mon, 02 Jun 2025 14:16:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pobox.com; h=cc
+	:cc:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm3; t=1748888194; x=1748974594; bh=P9Wn6BxnUs
+	flzt/HsLzXcXpfxZPViiGdiCDwl6OBAsI=; b=gZiUTcr7AJqbthxFia2k+v4SjP
+	jsA1ur4fScx+JqkyeCb/MsDd5uhdFn/N+I7V1G82q/wpcDczBdrev5cTOvBQqASr
+	kWCEIg58O3iEs7fswjKoxGUYSg8Ylx3UhFPmMEBY+hbiTNEpuOYhISbbj86g7nkS
+	la1ANV1Wn6l6RE8ReTlIFZdqijGp0S8PDVyl1FyGPXKnCKMrrYTPC+74TiLCRC7o
+	BAwIkVRiZuNgf8P7mcmVxxDKgJzWUVLTX+I3e6K+xQiDFWAB24dZUUaoVDAggasW
+	Jwd3p36c9zphfwxCILTOcftw7WMf7+5lhiKHJhsdjfzGecx2Sda3+CYt8vGA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748888194; x=1748974594; bh=P9Wn6BxnUsflzt/HsLzXcXpfxZPViiGdiCD
+	wl6OBAsI=; b=QXCjqarQChyHCWc7ByERAXZQ20ciVeNYlrfAK6gOUeNAmS5dwM2
+	N9W7JVD5ddHcf1aDKYZY33j/YWDmHOrX89y8Lpox/LfwQY1o4oM9zazqGIT5BQoC
+	K0iJtsSdNt6AB2XeaciyrpMcMJ+3sgLIr+Eq7ujyZMNNWMFjJlO5+7lZ1mNhNkG+
+	PU+P4VgufbYDFSyNm9vTo9nypci8ZT/9G6bpxMN1BImrQ83c14O3AOpFWggq80mW
+	dj+MEU0Ng052Xa/dGdrGYXC7PgRVd4nT3jh0GbMyZTjM5jvc4OhnnOqzS060uFRX
+	kYKyAdRkxVjb8o7cLpjflv5AiPXeGt/+ChQ==
+X-ME-Sender: <xms:geo9aHafU-UmkiuBEYJH50pUieoDIuhWNZYxb5aqPY4velISEAZJtQ>
+    <xme:geo9aGYFnWIOfd33ErzIM6tw6PlqLxndnsM0tiHNTnWW5BpCrKa6AT4sDF6m7i2t1
+    FwVUE8BPFQDSHjUKQ>
+X-ME-Received: <xmr:geo9aJ9IHXUX18hIdcu-URloJ0I1RNJWZATtYk6f9fRINN6e_7xFnuLKUAroTKB1vT7r-BdVQDwHmzguKPkt6Eu46ms4YJydFRfZ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkeefieculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhff
+    kfgfgggtsehttdertddtredtnecuhfhrohhmpefluhhnihhoucevucfjrghmrghnohcuoe
+    hgihhtshhtvghrsehpohgsohigrdgtohhmqeenucggtffrrghtthgvrhhnpeefveetteej
+    heeugeffledvteeiveffueefjeelueffteeigffgfedthfefieegieenucevlhhushhtvg
+    hrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgihhtshhtvghrsehpohgs
+    ohigrdgtohhmpdhnsggprhgtphhtthhopeeipdhmohguvgepshhmthhpohhuthdprhgtph
+    htthhopehjohhhrghnnhgvshdrshgthhhinhguvghlihhnsehgmhigrdguvgdprhgtphht
+    thhopehjlhhtohgslhgvrhesghhmrghilhdrtghomhdprhgtphhtthhopehgihhtsehvgh
+    gvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphhssehpkhhsrdhimhdprhgtphht
+    thhopehkrghrthhhihhkrddukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhith
+    hsthgvrhesphhosghogidrtghomh
+X-ME-Proxy: <xmx:geo9aNoxLkZ-zv9EQf1kmtuPYAc-7ix0-hLY4j2n33WV92M5usBjtA>
+    <xmx:geo9aCrasJ-9PFU7lKvcnw2neJxAsXccRRuh9k-gdhaViKm1WjjtMw>
+    <xmx:geo9aDQ87e3Eht1koMD8spUXAGKyJT5aLIGad9BL5scI5-CXWSftYg>
+    <xmx:geo9aKrrpnx-hAcjg9veWgOWjiNhrKYgsC5bAdka_edKCzWf0jPGSg>
+    <xmx:guo9aDhb7qwN7dYcjMQMK8P5jLbhEsxwUuOEkMA4y7Fm9vPN7wjjTT79>
+Feedback-ID: if26b431b:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Jun 2025 14:16:33 -0400 (EDT)
+From: Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: Justin Tobler <jltobler@gmail.com>,  git@vger.kernel.org,  ps@pks.im,
+  karthik.188@gmail.com
+Subject: Re: [PATCH v2 2/2] builtin/receive-pack: add option to skip
+ connectivity check
+In-Reply-To: <2e17bd1a-aa4e-70c5-3bea-eb4d95e66756@gmx.de> (Johannes
+	Schindelin's message of "Mon, 2 Jun 2025 18:06:40 +0200 (CEST)")
+References: <20250520014920.201736-1-jltobler@gmail.com>
+	<20250520163218.263921-1-jltobler@gmail.com>
+	<20250520163218.263921-3-jltobler@gmail.com>
+	<74668a00-5b90-2450-52c5-d9f00dcb42b9@gmx.de>
+	<gw6j5enpzcit2zquafoaiujreoa4kbv3n6feq6yeqylcfynqim@s53ctnlg7tmm>
+	<2e17bd1a-aa4e-70c5-3bea-eb4d95e66756@gmx.de>
+Date: Mon, 02 Jun 2025 11:16:32 -0700
+Message-ID: <xmqqiklet3en.fsf@gitster.g>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
@@ -70,38 +95,15 @@ List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 
-Hi Brad,
+Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
 
-You wrote:
+>> > Do you have any idea why this particular test case, in conjunction with
+>> > Windows and Meson (and only on GitHub) acts up like this?
+>> 
+>> Thanks Johannes for the report. I'm not quite sure yet what is going on
+>> here, but I'll dig into this a bit and see what I can figure out. :)
+>
+> Thank you so much!
 
-> Handle OpenBSD and NetBSD as FreeBSD / DragonFly are. OpenBSD would
-> need _XOPEN_SOURCE to be set to 700. Its simpler to just not set
-> _XOPEN_SOURCE.
-> 
->     CC strbuf.o
-> strbuf.c:645:6: warning: call to undeclared function 'getdelim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
->         r = getdelim(&sb->buf, &sb->alloc, term, fp);
->             ^
-> 1 warning generated.
-> 
-> Signed-off-by: Brad Smith <brad@comstyle.com>
-> ---
->  compat/posix.h | 11 +++++------
->  1 file changed, 5 insertions(+), 6 deletions(-)
+Thanks for working well together.
 
-I noticed this as well when testing your other fixes.
-
-Just one question about this chunk:
-
->  #define _DEFAULT_SOURCE 1
-> -#define _NETBSD_SOURCE 1
-
-Why remove this definition? I think it might be useful on some older
-systems and seems harmless otherwise.
-
-Other than that, I tested on OpenBSD 7.6 and NetBSD 10.0 and this patch
-fixes the missing declarations. So:
-
-Reviewed-by: Collin Funk <collin.funk1@gmail.com>
-
-Collin
