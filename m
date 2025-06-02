@@ -1,67 +1,67 @@
-Received: from mail-wr1-f47.google.com (mail-wr1-f47.google.com [209.85.221.47])
+Received: from mail-wm1-f41.google.com (mail-wm1-f41.google.com [209.85.128.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7F9520E026
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:56:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.47
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C5A0225768
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 18:56:01 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.41
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748890562; cv=none; b=BQi0+aHGNmCt/GR9aZOIHCaTM7BLwj8sSstYuBtotCWFFGLhcXjOX+VjIfydKaujVI0gCqc7ZcdCPT4abgd0THHU0l82VYgjkrqI9EqbpwbVy4+1C3Di3n6op4SwRePOyE34A7fYtCylPrnaxKbOd9FwVaBcdXtby0whBQ4d5rM=
+	t=1748890563; cv=none; b=HbkPGdL2wnmZxZzKq/1k4IMLowvvAR3sLPma0AMfaPAX8ZRRV5X99Q0Jgui/h7Hj0+j02eF3r9PNchfdhl3yLS5BhflkNqaL2mq8qW8xamVEaiAU7O58aKUBAxZK5ghp7QJlTrXMvQRWSmWTR/Gz+QSEWYOS9I4E/qoI2J2XZXw=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748890562; c=relaxed/simple;
-	bh=yY9Lw8Oq5Tl9B5Z9Ebqv9fgfZmFpQEZS4EvFchJRoh8=;
+	s=arc-20240116; t=1748890563; c=relaxed/simple;
+	bh=gI+98YUuukIVltXYPCUOqNLnfdKZwFxJ12aXa364/Z4=;
 	h=Message-Id:In-Reply-To:References:From:Date:Subject:Content-Type:
-	 MIME-Version:To:Cc; b=gR+xhzEvX8UwXUjucJX9vgyfZ5+KbKCSmls4/NPSemjFJxJdOTsgbcck86XU+TzoMVAhNt0YjdvT40/pppqgk3CuccgwR1b9VpgEOh9yP6qzlC6w4u/pLL8FzKuGDUBFYWmkedols037QuAmfROnrkJrTSCHzV2G85F4CrbxfkQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=lIezGcfv; arc=none smtp.client-ip=209.85.221.47
+	 MIME-Version:To:Cc; b=cfrAWqntXrzNs/YIAeRRFZwLsP6ff3rRN8ycWQsfsYQjO9iNaHbPGW0zfNB4chz4hV7ym+95jtPlZsfrW1m5naI0BqicNpd0AIAGoBfdsHPc6R0/hjP/eBYDxD1a0wJ8y+hbV23WhiWUlz3bxuEv33uxdP1yWMN6eRbsNHKx8CY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=i43PMgIJ; arc=none smtp.client-ip=209.85.128.41
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="lIezGcfv"
-Received: by mail-wr1-f47.google.com with SMTP id ffacd0b85a97d-3a375e72473so2769475f8f.0
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:56:00 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="i43PMgIJ"
+Received: by mail-wm1-f41.google.com with SMTP id 5b1f17b1804b1-451e2f0d9c2so2898045e9.1
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 11:56:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748890558; x=1749495358; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748890559; x=1749495359; darn=vger.kernel.org;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=hDxEhixIwaT5kIny1V8tYoE5T5FJZm1FyDgIvnsMzgE=;
-        b=lIezGcfvoi/8gou9pmOu+5wIf4MAHwdCCI5k0SuRa7p+RLKCDAbC7eEWUt8j9jvOF/
-         eA1isxlPDL8X8fN6qf2aDpUZU3vNrE/bRemMAF1NgRR5bs39fLtk2QbcCN6Xe61z/bD9
-         pTuj6T2qJW/kpKQ8ToQbIGbRKjuBn98WcWz49H1A2sOf5USF5JJg2tJ5Vv0hfiLOOkT1
-         wQIcsBC9p0ys0UlBH2brjFyGc6R9uxSJvDGcQOFPigLICI3AtxCDaygw4uwf3/XZ4b0D
-         unyg5JZhDIiLZef1Hw7NcNf6G1tiXYrvlk9LiG4ux+VcqYBHoRu5kRHr1UmLB2EqEUBD
-         aU3A==
+        bh=Y0qtGfYX9eINUBeuxPoRGVJ3WzzBIUVYLCSB5jMbW+Q=;
+        b=i43PMgIJF2kf6u32zdkN2hEkFEqJHsqVtvw4gFoUp/P1t+1qTHy8cnL6MFVzDf/90l
+         j2NR/E8M4+J/GHMgn3rlEPkZ1HWduta6vX1YvRs5djqYDSJ1soOPKk1+Y7tvlg2qXQ42
+         wrXrB5V5AMWZoK9Wsz75GK7/Uexsn6+h/cSD82Rv9SwDqT8pm6NWZr5zxJk1EKIKK4LE
+         fyF20iXPPfkB1eSj98LNFuI+RKmALQ1a1TntqFV7psqqSXpcay9MUonBPjBI+jm/HLld
+         afSX/LE9VWVl30m745fIorKbD2vq8Kb38zQB6q8/RNO6XipwTH1Pqh1DepBbxzFvccON
+         Mm/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748890558; x=1749495358;
+        d=1e100.net; s=20230601; t=1748890559; x=1749495359;
         h=cc:to:mime-version:content-transfer-encoding:fcc:subject:date:from
          :references:in-reply-to:message-id:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=hDxEhixIwaT5kIny1V8tYoE5T5FJZm1FyDgIvnsMzgE=;
-        b=qqBV9GzquR/UTfhrGrDnQ7C5hR1ZCmPsO2ymGl4pvJ0mPToLlpSMuRbUX2sXNvPwep
-         s+Vq5fRxgRA/N0UMsZRNxFz0hTao9/U9QKMu9CUKG4hnOu1bfxuxQJvRLtS6VvHYI5hC
-         3rnFCPVE2kQhy79LP9vkDZr/6R4Dr2DRP0GPahrUZTyNDilNsB1GU8BGOliZe1ZAfHlX
-         V2fM2hr7fEibJuIImN1wNVlnEQMiNTrBtjuVEKL9aJf1ahCtPXZgRbBSHiozB36ooAsp
-         SG9uAyJkslf9sIGJ/RzkgTsyMQV/r3ZCatfRw+RIOEcU1JNkuDtYZat+hWtJMydst/3e
-         zvqA==
-X-Gm-Message-State: AOJu0YwwmJd80SUp9lBOMQN2rtV2clc5FfJYZJTfyVI38FSzKunD2Lfg
-	VcZ7deH4icPB/EULwagDMmozPztwA3hkXLgpkjehl164ThSEa93m4jw2EfWA4Q==
-X-Gm-Gg: ASbGncuApNC52G8t0UA8O18XOdkub1sr4cvE7DFIqssDYwikTkgNUP7XAf/gO7VqGxS
-	QczlJ1oklGig1siYV9tBvlStdqOZWSHQ5VpsOPIz66TtoLLjIPQ5OVVbipaoY2E3xW4ezPMegw5
-	Tqs2zhSyM6KBDIA77j6lbtC2v2HY3MZ38CkliRjMeL4PjD5mMNWuj/DDoXBUZ3n+aSf3GxGAX0k
-	D9XjciKikNTli0QWd5NChUa2InF+EEVIEOdq2EDL3oAC9ddq/IRwxg6aKEYf6Or6AspWQdZLKyy
-	N5JhdDY1t5RW7eaS4/K7DOJRGnjbKd7ssazSY8GeOYmH9anuqVl0
-X-Google-Smtp-Source: AGHT+IGKkw9rL43A4AWqIHU8ENO9si9uxcKSxm4gR6i6ZNUGqbkeyySUNKUJk9fHEOAfMTvRFfesnA==
-X-Received: by 2002:a05:6000:25c4:b0:3a3:67bb:8f3f with SMTP id ffacd0b85a97d-3a4f7a7d0c4mr12378062f8f.53.1748890558211;
-        Mon, 02 Jun 2025 11:55:58 -0700 (PDT)
+        bh=Y0qtGfYX9eINUBeuxPoRGVJ3WzzBIUVYLCSB5jMbW+Q=;
+        b=NXk05FMf/CtGY+XVyyzPpggCL3SlW+Rg2/HeP2bHdBKCvPyVxMH7/BqLer6zeVnkds
+         WCEauvyqVzbaFHMsUTX2mf9IdyctQ2hpf0kGWjXjGtn+LMylFYs7KWhC9td1J9D+ypPp
+         +iNewcBztkUdf/h4xbJQ0z8hM9q3Rs/exahiFHV7/hBvdfFvKb54ehwzMNRqAewAZDDY
+         1P1WVdYSrzQsayej8v3kiY7P1lOxvV3MIziMNU3bY3nkO67EsOPVln5SXGb1u/HTYNH7
+         Yqta6QkqlJ0nB93UmfHk4LP0RALjg7lhqeJswGYpRWwRi9KTwIcHFW0JET3vDOn7b7Py
+         NTEQ==
+X-Gm-Message-State: AOJu0Yw9YBg2AuHn51pV7l6RKfnjNhSpud16f/MCuzZoKvz9vIIexeE6
+	XefSw74NQgzMActuesjR2K8xjs2pQp5QtIHeLk5ehFaiwnXnd9tgqZAoiMYVwQ==
+X-Gm-Gg: ASbGncsdO8BZAWTs4PIaN8M8KJRupRpaoE03qQ7iIK9eOQQ7hn9tpMkGbQSFZKBG1PA
+	6JoySeTCMvknGnHNU40Vl9o0oA6fI9qR+r6Kkyjy8IF2dn8LZTYhhRO6eKK5Zbldf9xbOP83aGs
+	Th+EfcA+gm8jOGNfVzo6zDZTTnBkKCbbEaXSHzJ1yAvby4O9wEqFnoLVermFbJQ36kD5fof8yDB
+	/StyoFqiRdr2kcS0xafkigUYs5DqF34DHkK5A3wv5DicSoss1ST4EOe0tqxqwFbKOulHOTimJxI
+	12oW09A/Zmp/EeEw7lphAE/gKTtJvBYG1fZy9/p5FxM8uMf9e09u
+X-Google-Smtp-Source: AGHT+IHUQHsJzFY2+WxBs3PTT7ze5azEm9iWFBycUzVVvdWyoEenHFFep3zxU322JaYZsSX1rGUS8w==
+X-Received: by 2002:a05:600c:8b0d:b0:442:f4a3:a2c0 with SMTP id 5b1f17b1804b1-451e397d9bcmr4968995e9.13.1748890559066;
+        Mon, 02 Jun 2025 11:55:59 -0700 (PDT)
 Received: from [127.0.0.1] ([13.74.141.28])
-        by smtp.gmail.com with ESMTPSA id 5b1f17b1804b1-450d7fb80f6sm131853305e9.28.2025.06.02.11.55.57
+        by smtp.gmail.com with ESMTPSA id ffacd0b85a97d-3a4efe73ee0sm15697552f8f.46.2025.06.02.11.55.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 11:55:57 -0700 (PDT)
-Message-Id: <1ff39aa3c6e613137edde9e05321a7df5c165e99.1748890555.git.gitgitgadget@gmail.com>
+        Mon, 02 Jun 2025 11:55:58 -0700 (PDT)
+Message-Id: <980ab7f7ef56944df78530dcc9c79b54d1450806.1748890555.git.gitgitgadget@gmail.com>
 In-Reply-To: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
 References: <pull.1929.git.1748890555.gitgitgadget@gmail.com>
 From: "Victoria Dye via GitGitGadget" <gitgitgadget@gmail.com>
-Date: Mon, 02 Jun 2025 18:55:54 +0000
-Subject: [PATCH 2/3] cat-file: add %(objectmode) atom
+Date: Mon, 02 Jun 2025 18:55:55 +0000
+Subject: [PATCH 3/3] cat-file.c: add batch handling for submodules
 Fcc: Sent
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -79,175 +79,101 @@ Cc: peff@peff.net,
 
 From: Victoria Dye <vdye@github.com>
 
-Add a formatting atom, used with the --batch-check/--batch-command options,
-that prints the octal representation of the object mode if a given revision
-includes that information, e.g. one that follows the format
-<tree-ish>:<path>. If the mode information does not exist, an empty string
-is printed instead.
+When an object specification is passed to 'cat-file --batch[-check]'
+referring to a submodule (e.g. 'HEAD:path/to/my/submodule'), the current
+behavior of the command is to print the "missing" error message. However, it
+is often valuable for callers to distinguish between paths that are actually
+missing and "the submodule tree entry exists, but the object does not exist
+in the repository".
 
-Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+To disambiguate without needing to invoke a separate Git process (e.g.
+'ls-tree'), print the message "<oid> submodule" for such objects instead of
+"<object> missing". In addition to the change from "missing" to "submodule",
+the new message differs from the old in that it always prints the resolved
+tree entry's OID, rather than the input object specification.
+
+Note that this implementation maintains a distinction between submodules
+where the commit OID is not present in the repo, and submodules where the
+commit OID *is* present; the former will now print "<object> submodule", but
+the latter will still print the full object content.
+
 Signed-off-by: Victoria Dye <vdye@github.com>
 ---
- Documentation/git-cat-file.adoc |  5 +++++
- builtin/cat-file.c              |  9 ++++++--
- t/t1006-cat-file.sh             | 38 +++++++++++++++++++--------------
- 3 files changed, 34 insertions(+), 18 deletions(-)
+ Documentation/git-cat-file.adoc |  8 ++++++++
+ builtin/cat-file.c              |  5 ++++-
+ t/t1006-cat-file.sh             | 25 +++++++++++++++++++++++++
+ 3 files changed, 37 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/git-cat-file.adoc b/Documentation/git-cat-file.adoc
-index cde79ad242bb..5c002c0499e4 100644
+index 5c002c0499e4..180d1ad363fd 100644
 --- a/Documentation/git-cat-file.adoc
 +++ b/Documentation/git-cat-file.adoc
-@@ -307,6 +307,11 @@ newline. The available atoms are:
- `objecttype`::
- 	The type of the object (the same as `cat-file -t` reports).
+@@ -373,6 +373,14 @@ If a name is specified that might refer to more than one object (an ambiguous sh
+ <object> SP ambiguous LF
+ ------------
  
-+`objectmode`::
-+	If the specified object has mode information (such as a tree or
-+	index entry), the mode expressed as an octal integer. Otherwise,
-+	empty string.
++If a name is specified that refers to a submodule entry in a tree and the
++target object does not exist in the repository, then `cat-file` will ignore
++any custom format and print (with the object ID of the submodule):
 +
- `objectsize`::
- 	The size, in bytes, of the object (the same as `cat-file -s`
- 	reports).
++------------
++<oid> SP submodule LF
++------------
++
+ If `--follow-symlinks` is used, and a symlink in the repository points
+ outside the repository, then `cat-file` will ignore any custom format
+ and print:
 diff --git a/builtin/cat-file.c b/builtin/cat-file.c
-index 67a5ff2b9ebd..b11576756bcc 100644
+index b11576756bcc..4b23fcecbd8e 100644
 --- a/builtin/cat-file.c
 +++ b/builtin/cat-file.c
-@@ -275,6 +275,7 @@ struct expand_data {
- 	struct object_id oid;
- 	enum object_type type;
- 	unsigned long size;
-+	unsigned short mode;
- 	off_t disk_size;
- 	const char *rest;
- 	struct object_id delta_base_oid;
-@@ -306,6 +307,7 @@ struct expand_data {
- 	 */
- 	unsigned skip_object_info : 1;
- };
-+#define EXPAND_DATA_INIT  { .mode = S_IFINVALID }
+@@ -496,7 +496,10 @@ static void batch_object_write(const char *obj_name,
+ 						       &data->oid, &data->info,
+ 						       OBJECT_INFO_LOOKUP_REPLACE);
+ 		if (ret < 0) {
+-			report_object_status(opt, obj_name, &data->oid, "missing");
++			if (data->mode == S_IFGITLINK)
++				report_object_status(opt, oid_to_hex(&data->oid), &data->oid, "submodule");
++			else
++				report_object_status(opt, obj_name, &data->oid, "missing");
+ 			return;
+ 		}
  
- static int is_atom(const char *atom, const char *s, int slen)
- {
-@@ -345,6 +347,9 @@ static int expand_atom(struct strbuf *sb, const char *atom, int len,
- 		else
- 			strbuf_addstr(sb,
- 				      oid_to_hex(&data->delta_base_oid));
-+	} else if (is_atom("objectmode", atom, len)) {
-+		if (!data->mark_query && !(S_IFINVALID == data->mode))
-+			strbuf_addf(sb, "%06o", data->mode);
- 	} else
- 		return 0;
- 	return 1;
-@@ -613,6 +618,7 @@ static void batch_one_object(const char *obj_name,
- 		goto out;
- 	}
- 
-+	data->mode = ctx.mode;
- 	batch_object_write(obj_name, scratch, opt, data, NULL, 0);
- 
- out:
-@@ -866,7 +872,7 @@ static int batch_objects(struct batch_options *opt)
- {
- 	struct strbuf input = STRBUF_INIT;
- 	struct strbuf output = STRBUF_INIT;
--	struct expand_data data;
-+	struct expand_data data = EXPAND_DATA_INIT;
- 	int save_warning;
- 	int retval = 0;
- 
-@@ -875,7 +881,6 @@ static int batch_objects(struct batch_options *opt)
- 	 * object_info to be handed to oid_object_info_extended for each
- 	 * object.
- 	 */
--	memset(&data, 0, sizeof(data));
- 	data.mark_query = 1;
- 	expand_format(&output,
- 		      opt->format ? opt->format : DEFAULT_FORMAT,
 diff --git a/t/t1006-cat-file.sh b/t/t1006-cat-file.sh
-index 7c9512a6b439..97052b3f31f1 100755
+index 97052b3f31f1..f123ef1e360a 100755
 --- a/t/t1006-cat-file.sh
 +++ b/t/t1006-cat-file.sh
-@@ -114,10 +114,11 @@ strlen () {
- run_tests () {
-     type=$1
-     object_name="$2"
--    size=$3
--    content=$4
--    pretty_content=$5
--    oid=${6:-"$object_name"}
-+    mode=$3
-+    size=$4
-+    content=$5
-+    pretty_content=$6
-+    oid=${7:-"$object_name"}
- 
-     batch_output="$oid $type $size
- $content"
-@@ -209,6 +210,12 @@ $content"
+@@ -1220,6 +1220,31 @@ test_expect_success 'cat-file --batch-check respects replace objects' '
  	test_cmp expect actual
-     '
+ '
  
-+    test_expect_success '--batch-check with %(objectmode)' '
-+	echo "$mode $oid" >expect &&
-+	echo $object_name | git cat-file --batch-check="%(objectmode) %(objectname)" >actual &&
-+	test_cmp expect actual
-+    '
++test_expect_success 'batch-check with a submodule' '
++	# FIXME: this call to mktree is incompatible with compatObjectFormat
++	# because the submodule OID cannot be mapped to the compat hash algo.
++	test_unconfig extensions.compatobjectformat &&
++	printf "160000 commit $(test_oid deadbeef)\tsub\n" >tree-with-sub &&
++	tree=$(git mktree <tree-with-sub) &&
++	test_config extensions.compatobjectformat $test_compat_hash_algo &&
 +
-     test -z "$content" ||
-     test_expect_success "--batch without type ($type)" '
- 	{
-@@ -247,8 +254,7 @@ test_expect_success "setup" '
- 
- run_blob_tests () {
-     oid=$1
--
--    run_tests 'blob' $oid $hello_size "$hello_content" "$hello_content"
-+    run_tests 'blob' $oid "" $hello_size "$hello_content" "$hello_content"
- 
-     test_expect_success '--batch-command --buffer with flush for blob info' '
- 	echo "$oid blob $hello_size" >expect &&
-@@ -286,12 +292,12 @@ tree_compat_size=$((2 * $(test_oid --hash=compat rawsz) + 13 + 24))
- tree_pretty_content="100644 blob $hello_oid	hello${LF}100755 blob $hello_oid	path with spaces${LF}"
- tree_compat_pretty_content="100644 blob $hello_compat_oid	hello${LF}100755 blob $hello_compat_oid	path with spaces${LF}"
- 
--run_tests 'tree' $tree_oid $tree_size "" "$tree_pretty_content"
--run_tests 'tree' $tree_compat_oid $tree_compat_size "" "$tree_compat_pretty_content"
--run_tests 'blob' "$tree_oid:hello" $hello_size "" "$hello_content" $hello_oid
--run_tests 'blob' "$tree_compat_oid:hello" $hello_size "" "$hello_content" $hello_compat_oid
--run_tests 'blob' "$tree_oid:path with spaces" $hello_size "" "$hello_content" $hello_oid
--run_tests 'blob' "$tree_compat_oid:path with spaces" $hello_size "" "$hello_content" $hello_compat_oid
-+run_tests 'tree' $tree_oid "" $tree_size "" "$tree_pretty_content"
-+run_tests 'tree' $tree_compat_oid "" $tree_compat_size "" "$tree_compat_pretty_content"
-+run_tests 'blob' "$tree_oid:hello" "100644" $hello_size "" "$hello_content" $hello_oid
-+run_tests 'blob' "$tree_compat_oid:hello" "100644" $hello_size "" "$hello_content" $hello_compat_oid
-+run_tests 'blob' "$tree_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_oid
-+run_tests 'blob' "$tree_compat_oid:path with spaces" "100755" $hello_size "" "$hello_content" $hello_compat_oid
- 
- commit_message="Initial commit"
- commit_oid=$(echo_without_newline "$commit_message" | git commit-tree $tree_oid)
-@@ -310,8 +316,8 @@ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
- 
- $commit_message"
- 
--run_tests 'commit' $commit_oid $commit_size "$commit_content" "$commit_content"
--run_tests 'commit' $commit_compat_oid $commit_compat_size "$commit_compat_content" "$commit_compat_content"
-+run_tests 'commit' $commit_oid "" $commit_size "$commit_content" "$commit_content"
-+run_tests 'commit' $commit_compat_oid "" $commit_compat_size "$commit_compat_content" "$commit_compat_content"
- 
- tag_header_without_oid="type blob
- tag hellotag
-@@ -334,8 +340,8 @@ tag_size=$(strlen "$tag_content")
- tag_compat_oid=$(git rev-parse --output-object-format=$test_compat_hash_algo $tag_oid)
- tag_compat_size=$(strlen "$tag_compat_content")
- 
--run_tests 'tag' $tag_oid $tag_size "$tag_content" "$tag_content"
--run_tests 'tag' $tag_compat_oid $tag_compat_size "$tag_compat_content" "$tag_compat_content"
-+run_tests 'tag' $tag_oid "" $tag_size "$tag_content" "$tag_content"
-+run_tests 'tag' $tag_compat_oid "" $tag_compat_size "$tag_compat_content" "$tag_compat_content"
- 
- test_expect_success "Reach a blob from a tag pointing to it" '
- 	echo_without_newline "$hello_content" >expect &&
++	git cat-file --batch-check >actual <<-EOF &&
++	$tree:sub
++	EOF
++	printf "$(test_oid deadbeef) submodule\n" >expect &&
++	test_cmp expect actual
++'
++
++test_expect_success 'batch-check with a submodule, object exists' '
++	printf "160000 commit $commit_oid\tsub\n" >tree-with-sub &&
++	tree=$(git mktree <tree-with-sub) &&
++	git cat-file --batch-check >actual <<-EOF &&
++	$tree:sub
++	EOF
++	printf "$commit_oid commit $commit_size\n" >expect &&
++	test_cmp expect actual
++'
++
+ # Pull the entry for object with oid "$1" out of the output of
+ # "cat-file --batch", including its object content (which requires
+ # parsing and reading a set amount of bytes, hence perl).
 -- 
 gitgitgadget
-
