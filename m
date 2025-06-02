@@ -1,121 +1,144 @@
-Received: from complex.crustytoothpaste.net (complex.crustytoothpaste.net [172.105.7.114])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f174.google.com (mail-pf1-f174.google.com [209.85.210.174])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EA22C3254
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 22:17:20 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=172.105.7.114
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E927AF9EC
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 22:32:13 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.174
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748902643; cv=none; b=EUtRLVqDzPbjrLtyNVeDt5p/nNRMcAcHYtmxpiaFJaSMzZ5o5Tr/yvRpllnjfk387YudvCBXWrDbCQqMTORJogHgIczbDvoFgmdW3icMHs17R1pQ6Ev7lDcnDZyhCGdpxAszD5X4xAfUNcty+GLDJmMl+q5RHqGXVdQEAUEu6Y4=
+	t=1748903535; cv=none; b=E0VzARZU292RZbcRCKLixwLHQl4hjZ36DZ2ZJbgFomM1FduHZza4Gk5/547d4DkMFgZ6/tPjsVD+sVPdG5xO2dIFoslNQiPOHubhLbkvWabL/wI+9q5SMDGxh+viSNQunaSY3F5Nu/ZKRcqgrl8UlM3yZwc8vQiH5eSStarR0bI=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748902643; c=relaxed/simple;
-	bh=JkN242yqoExViUrWKQvPZRTpiRBo5A7w0EA2K+O0Qjw=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=saTOfND2pnxIeWLqko+VDdjGdpzjGTT8L0M3FFXLmRnCJFCJXbqKE1iPNSbDWUkHjgwx4REaN34q3vjZ8hD57FawdJDfANS0Dk7aAAG8JXCqYacuM3NWGyP4ktY7+vho2vaN4wkJL8t4t9BZOZEgEb65b8e92OMDGbrz+yxLXvI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net; spf=pass smtp.mailfrom=crustytoothpaste.net; dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b=nw3Xh/ZF; arc=none smtp.client-ip=172.105.7.114
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=crustytoothpaste.net
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=crustytoothpaste.net
+	s=arc-20240116; t=1748903535; c=relaxed/simple;
+	bh=TVNrNa8e8GmdnYPz00KJH0Tu6jYI6MrcpkehdDHMRC0=;
+	h=From:To:Cc:Subject:Date:Message-ID:In-Reply-To:References:
+	 MIME-Version; b=g3zl9EfrGXCb0lx2IckhlpktsuYr2bmDw+vJbXzP6/SJ9bl0yxrOG0m/6Mdn0n7uwZ4i1sJESXD1bvBaYC1+qU5mKmaxM2NlCBBj9RGnwHnmRfOiQvB3BKWfU9I3puqlLMfeNHWs1SbXcp6XsMyL3pgvIWFcV36B84SUvycWalo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=X9For3YH; arc=none smtp.client-ip=209.85.210.174
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (3072-bit key) header.d=crustytoothpaste.net header.i=@crustytoothpaste.net header.b="nw3Xh/ZF"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=crustytoothpaste.net;
-	s=default; t=1748902639;
-	bh=JkN242yqoExViUrWKQvPZRTpiRBo5A7w0EA2K+O0Qjw=;
-	h=Date:From:To:Cc:Subject:References:Content-Type:
-	 Content-Disposition:In-Reply-To:From:Reply-To:Subject:Date:To:CC:
-	 Resent-Date:Resent-From:Resent-To:Resent-Cc:In-Reply-To:References:
-	 Content-Type:Content-Disposition;
-	b=nw3Xh/ZFfS5BMZtuwKXQLFjfMtnQUvns8uwvTMq1lou6hSIZHdj/IPdQfWRf+bjot
-	 uV0cas/PE5pYx6jhNZzcvW0SYpksQ7fjbDe4jIuYQN2iDx7Sg26OBVrdFXZ7AHRsvH
-	 /IpTBreMXxLAGyGHcFGBOIFsKJ9SFgoQ6X5PPGTYgbgYlXwmITwa+D7kxQTyAEXDHI
-	 v4tCiHs90TRYScmW1QX8/PzKhJpQDnocqA/86Rji3tdvhhLr4usXVu2is2OhuLkN6g
-	 iNhnlgiQxjdjjmXbsMrQIUgD6XzJT4mHzQSFAyOHm9RC/FQI0jKalb7QIBbZcVe3+S
-	 zt/DdfgUqFy89RIJ02r1A9rDDYMOJTJeJgi9wVG38Gxcnt/Z9vU4onOOr4vcih+Ccg
-	 sbQgLcWqKcXpBqzJQifSR04tFfgq2F3La9BfuI7gCAAFpyxCGQslbwMdqJdsEdsIeb
-	 8W4hjHPbOd0x5EWXLpdPihhop7Rc24x7Fvq4Fj0Q+45INRaf0I+
-Received: from tapette.crustytoothpaste.net (unknown [IPv6:2607:f2c0:f00f:f901:9ec0:b846:49f:a41d])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange ECDHE (prime256v1) server-signature ECDSA (prime256v1) server-digest SHA256)
-	(No client certificate requested)
-	by complex.crustytoothpaste.net (Postfix) with ESMTPSA id 2BEA220037;
-	Mon,  2 Jun 2025 22:17:19 +0000 (UTC)
-Date: Mon, 2 Jun 2025 22:17:17 +0000
-From: "brian m. carlson" <sandals@crustytoothpaste.net>
-To: Christian Couder <christian.couder@gmail.com>
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Patrick Steinhardt <ps@pks.im>, Elijah Newren <newren@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v2 0/6] extract algo information from signatures
-Message-ID: <aD4i7YhUnT5Kgew-@tapette.crustytoothpaste.net>
-Mail-Followup-To: "brian m. carlson" <sandals@crustytoothpaste.net>,
-	Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>, Patrick Steinhardt <ps@pks.im>,
-	Elijah Newren <newren@gmail.com>, Jeff King <peff@peff.net>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-References: <20250424203904.909777-1-christian.couder@gmail.com>
- <20250526103314.1542316-1-christian.couder@gmail.com>
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="X9For3YH"
+Received: by mail-pf1-f174.google.com with SMTP id d2e1a72fcca58-742c035f2afso3201231b3a.2
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 15:32:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748903533; x=1749508333; darn=vger.kernel.org;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=4VfSP751XlHG+9sPpRFBsM/Xn8a5fO7vRRl9imEyvvo=;
+        b=X9For3YHOYdDddnC4KX6biZ9No8FewdcDFILMzHYJaQAGNcRT8FaCys09KKCdtSqy2
+         M678wL7pI2cKzjyTCb3GBt7zqkqIwYDNa96+FBJ/qoLVl1z4ammLsIAENf5xdN9ndEhv
+         yxoxj0ve6sGiCZso8DHKCWbC+cGpWLEl09Ly/5DQlPG9q80EA9xg7HThin8DaOrx7pFa
+         gbGCmrzTtFdm+u9c5DdJuHyKDfDW4wrP9MAdixFRrx3Umt005MrTTXEMBf6iTbHjPv86
+         yQ7vAL+zECVKOOffDWd7cnYwinlP492I04M4tJ1SdBSQez7vB54HlVd7qULHYVuCc0Hb
+         +ydQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748903533; x=1749508333;
+        h=content-transfer-encoding:mime-version:references:in-reply-to
+         :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=4VfSP751XlHG+9sPpRFBsM/Xn8a5fO7vRRl9imEyvvo=;
+        b=QOFTC1AgImzJTR7J9B8iaOxvBydu6bXB21LMzrJUJiVSQ9x9hcchC0nKSFWUJTub5G
+         HMG6kfKZn4OTAzu1d8oLzrPqGqGDO8pkgUOAHk15PfcDJzATr0A8mRkhjQvN72owqnTQ
+         iJIOLtySMyn6uDCRgTVomOSDZP6KRU1JSoRHMlBmRWdgw5QZK19g8rcwh9hsYKAYDNDx
+         l2+6fQVW6xfT80rrbhzJz1ZKGK5B6SdSNwypvex+DXaxqu9XpStwin11/1mWLYoLXQZM
+         ndSuuWMJW7KZJvPdeIyCFk0umxq/tdP4wrICiUAtycIi4xuBc5NoDK3MHugWBuKspEeY
+         kMyA==
+X-Gm-Message-State: AOJu0YxD1q15/bUBKr+qwlkryfIcglCm9Xv3F9mY19yjCeqNYiB6dyuM
+	VioHpObODQ3c6tDemr16dOj9pYYC/kCyoP6wpHoOC5uA9NMWACEK8PTpgGV0Rg==
+X-Gm-Gg: ASbGnctTshdjtjI0aKFlHTkq4g3d4wkiCFMlPBPnKRekvxdTcmTFE3qIr8QyAXUSSz/
+	sqAWv6RCv1P+DFDtFaFh6ws9OXSmj75ytYeA00NEGFJR0VRfbRC5HhEYPUVXYePK7YqsjvU0L7a
+	2OVCQhlKVuJIRh4FQjYrguz4JtsNiNEfSfi5r7Ch+GYIlneuARZb/l8Wt7LvWS+seVDeo1GHFJe
+	WrplFgNWtyF6F6gZji4NctOQjm+OwCH6npr+HriJ5fMW598cYOIaMy1CcsenloqogASD/1xLuvM
+	qvUbTuo6h/H+i/DoM5YU4HcZjVeu/GhBtQ==
+X-Google-Smtp-Source: AGHT+IHMJeoa1PooU6AJWv2u9mG3TF2yIRFgmTt9/UC18uy9Lz9mW2V77BEh5lFEOstfxKQ4DuYzEA==
+X-Received: by 2002:a05:6a00:180a:b0:740:a85b:7554 with SMTP id d2e1a72fcca58-747bd95c4eemr20124830b3a.2.1748903532859;
+        Mon, 02 Jun 2025 15:32:12 -0700 (PDT)
+Received: from fedora.. ([2601:646:8081:3770::9eb])
+        by smtp.gmail.com with ESMTPSA id 41be03b00d2f7-b2eceb02662sm6082759a12.5.2025.06.02.15.32.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jun 2025 15:32:12 -0700 (PDT)
+From: Collin Funk <collin.funk1@gmail.com>
+To: git@vger.kernel.org
+Cc: jn.avila@free.fr,
+	jacob.e.keller@intel.com,
+	Collin Funk <collin.funk1@gmail.com>,
+	Corentin Garcia <corenting@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH v3] completion: make sed command that generates config-list.h portable.
+Date: Mon,  2 Jun 2025 15:31:32 -0700
+Message-ID: <59b2a12a3f43cf078fbeaf0271b5a7cfffc9eb8f.1748903426.git.collin.funk1@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
+References: <0ab924839df48d869682bea1b0cb400f378ca6dc.1748889654.git.collin.funk1@gmail.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="c+Nw9So5Fq4vDAgQ"
-Content-Disposition: inline
-In-Reply-To: <20250526103314.1542316-1-christian.couder@gmail.com>
-User-Agent: Mutt/2.2.13 (2024-03-09)
+Content-Transfer-Encoding: 8bit
 
+The OpenBSD 'sed' command does not support '\n' to represent newlines in
+sed expressions. This leads to the follow compiler error:
 
---c+Nw9So5Fq4vDAgQ
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+    In file included from builtin/help.c:15:
+    ./config-list.h:282:18: error: use of undeclared identifier 'n'
+            "gitcvs.dbUser",n       "gitcvs.dbPass",
+                            ^
+    1 error generated.
+    gmake: *** [Makefile:2821: builtin/help.o] Error 1
 
-On 2025-05-26 at 10:33:08, Christian Couder wrote:
-> Around one month ago, I sent a patch that tried to improve on how `git
-> fast-export` handled SSH and X.509 commit signatures:
->=20
-> https://lore.kernel.org/git/20250424203904.909777-1-christian.couder@gmai=
-l.com/
->=20
-> This patch was showing a single string for the hash algorithm with the
-> following possible values:
->=20
-> * "openpgp" for SHA-1 OpenPGP signatures,
->=20
-> * "sha256" for SHA-256 OpenPGP signatures,
->=20
-> * "x509" for X.509 (GPGSM) signatures,
->=20
-> * "ssh", for SSH signatures,
->=20
-> * "unknown" for signatures that can't be identified (a warning is
->   emitted).
->=20
-> brian m. carlson however replied that it would be better to show two
-> pieces of information instead of one: one for the hash algorithm and
-> one for the protocol.
+We can fix this by documenting related configuration variables
+one-per-line instead of listing them separated by commas. This allows us
+to remove the unportable part of the sed expression in
+generate-configlist.sh.
 
-Actually, what I was saying is that we should have one for the hash
-algorithm that is used in the Git object.  I don't care about the hash
-algorithm used in OpenPGP, X.509, or OpenSSH (that is, whether it's
-signed with SHA-512 or SHA-256), but we can have multiple signatures in
-a single commit such that there's both a SHA-1 signature and a SHA-256
-signature.
---=20
-brian m. carlson (they/them)
-Toronto, Ontario, CA
+Signed-off-by: Collin Funk <collin.funk1@gmail.com>
+---
+ Documentation/config/gitcvs.adoc | 3 ++-
+ Documentation/config/http.adoc   | 3 ++-
+ generate-configlist.sh           | 1 -
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
---c+Nw9So5Fq4vDAgQ
-Content-Type: application/pgp-signature; name="signature.asc"
+diff --git a/Documentation/config/gitcvs.adoc b/Documentation/config/gitcvs.adoc
+index 02da427fd9..31d7be3992 100644
+--- a/Documentation/config/gitcvs.adoc
++++ b/Documentation/config/gitcvs.adoc
+@@ -47,7 +47,8 @@ gitcvs.dbDriver::
+ 	May not contain double colons (`:`). Default: 'SQLite'.
+ 	See linkgit:git-cvsserver[1].
+ 
+-gitcvs.dbUser, gitcvs.dbPass::
++gitcvs.dbUser::
++gitcvs.dbPass::
+ 	Database user and password. Only useful if setting `gitcvs.dbDriver`,
+ 	since SQLite has no concept of database users and/or passwords.
+ 	'gitcvs.dbUser' supports variable substitution (see
+diff --git a/Documentation/config/http.adoc b/Documentation/config/http.adoc
+index 67393282fa..9da5c298cc 100644
+--- a/Documentation/config/http.adoc
++++ b/Documentation/config/http.adoc
+@@ -289,7 +289,8 @@ for most push problems, but can increase memory consumption
+ significantly since the entire buffer is allocated even for small
+ pushes.
+ 
+-http.lowSpeedLimit, http.lowSpeedTime::
++http.lowSpeedLimit::
++http.lowSpeedTime::
+ 	If the HTTP transfer speed, in bytes per second, is less than
+ 	'http.lowSpeedLimit' for longer than 'http.lowSpeedTime' seconds,
+ 	the transfer is aborted.
+diff --git a/generate-configlist.sh b/generate-configlist.sh
+index b06da53c89..9d2ad6165d 100755
+--- a/generate-configlist.sh
++++ b/generate-configlist.sh
+@@ -19,7 +19,6 @@ EOF
+ 	s/::$//;
+ 	s/`//g;
+ 	s/^.*$/	"&",/;
+-	s/,  */",\n	"/g;
+ 	p;};
+ d' \
+ 	    "$SOURCE_DIR"/Documentation/*config.adoc \
+-- 
+2.49.0
 
------BEGIN PGP SIGNATURE-----
-
-wr0EABYKAG8Fgmg+Iu0JEHwMSWKIh6KBRxQAAAAAAB4AIHNhbHRAbm90YXRpb25z
-LnNlcXVvaWEtcGdwLm9yZyWSYYdZHhflLGhHfvLEKBh7vkRIAHO3L13mTG5lT75I
-FiEECCzmip28ZfuD0cORfAxJYoiHooEAAJkDAQCk3WQTlzMRHj39lX8JBEmYbMse
-Mf12+de7rNPj8dIggAEAoaO+LNZo0sx8JAh/Kz0CDeteKbqTI61y9I1n9HYPFAQ=
-=3mCg
------END PGP SIGNATURE-----
-
---c+Nw9So5Fq4vDAgQ--
