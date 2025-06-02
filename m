@@ -1,116 +1,183 @@
-Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from fhigh-b4-smtp.messagingengine.com (fhigh-b4-smtp.messagingengine.com [202.12.124.155])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EBBC223327
-	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:56:28 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.45
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36085221739
+	for <git@vger.kernel.org>; Mon,  2 Jun 2025 15:56:41 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.155
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748879790; cv=none; b=oKMUL+DPpmi1T8B750FSOuqHQTUjJl0VSPl+Hoj/3H66od2/YQ3SQEy1cNcqUl8GIDKO14l4J/pb6oMVyiJOXExf9O1499qzPikBoN/M64PQst5mW/xc6Ypg6/vCfZlz59aeeYtMa2rbFpsZCps82u/JqLk8MdxytVdvkn9ERvU=
+	t=1748879805; cv=none; b=s6OjvGrDDyUS7Qee8Szbt5o6eKdDL3ezfZh0YemxTbY2TRbZVezfp7TP2+NtinXMinDobKA8yHpIHlFzWUiL6KDnj9rfI7+q/ilBdjWaGwOq8SGpYD48k/FGCWzWYF8TZLV8u+6GeMf6oFLgjomOib0XwkqwRGHi5o/sSuj/ZKo=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748879790; c=relaxed/simple;
-	bh=62UjpkhkS32nuHuCyH5sX8xwPoDVIeM2Q+ilgqHmIjA=;
-	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=a0Dv8OtZjjnZIUZnu9sQzw4G5s+kIdTJoNGSKYI7euXJUYpQa+AwCQXSMSgklkZXAz9OW+NASEJEKsfVpy+dR5KcTmsSxFJWW9sqTKOm53TDpMD3l1QzlHkPXDGahxM9nnjBZHREQS70AAg2aDY9aAjbXdI7tpdoFe9NBhYguFk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=NgMsQA22; arc=none smtp.client-ip=209.85.218.45
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748879805; c=relaxed/simple;
+	bh=q0baTZI18Rbzwbjfm/JckjJPoPE3NsfzsrWe6cVIrCU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=k7vWMJ1VRwRwBKsEAInycSEvfWkeSZDI5fjsHrFYtgP7EifAnJ8BmXiRwk38rHsah5F+zsEjuuH636cgflHK2PFY3Vzvj/29vgsNzvfsXSpAxsPn33Tsl/fay7XRV6PHuuoUdD4pvXykbidT3XHZF59FwQaRtlO1pUmkQhqhnKY=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=ql31NkoV; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=JrammniO; arc=none smtp.client-ip=202.12.124.155
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="NgMsQA22"
-Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-addcea380eeso204745266b.0
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 08:56:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748879787; x=1749484587; darn=vger.kernel.org;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=djuc4Z6gRgemB2j00z96z5F3YqHmSQk0ldL9NfywfrY=;
-        b=NgMsQA22BkbZQUTTKp20P1yrIenPFcozhHvwk3JtnaBi8D6UggW2+aT/poZQ5TYZ32
-         10BHcCE1GFseYhRCq/zsHNz/KNjdfpp7SOAWyaKASLChE2nRQbhersQNq1lP7vgC9xkb
-         cnmgvZruIB6wYWz1Hfe780f7Ga5v8FYewp5VxcXAP0pz769Zwsb6SQ+ioBuJKFogbNZr
-         J16R4DBPWSoIaVh+oLFj1yuMonkPlbFzf8ZOOzO6ueYY+kayjAMTH0CULMo3yNQsT2NJ
-         yQYFeWfIxDv93CSIUzOG1lnYSQyf1/90/QU848J/kDZ+1rZyIHmYivCXj8eoylbcjzUi
-         OBsg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748879787; x=1749484587;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=djuc4Z6gRgemB2j00z96z5F3YqHmSQk0ldL9NfywfrY=;
-        b=Gt0M/1/KSM0Rlo7SvUv8YGoqqxCgGhGd7FYbAWzYwnQCFgtHB//ypY1NjuFPfcdZnz
-         4DoJKOR/xp/7P/lLxJEVNjnGDbKCJ4oV7Ddst4UCRUck2SGMh6qrapiiNjr0EqkzAtRT
-         5BOvILBNAgOaIztq1P18+6rR+mVffKWpvA8FAEGnzhL2PCQSnli/gwCw6YP1JBjB1MxV
-         09XFcZxzn1Bb1QEZL+ybPSubQDWzkuVRE/CD9NGFdGASt1fn8uNG7y8kiqf/x8nr8Dkh
-         MX++TDO21oHRBlLEIyYxBQ9OSxWQovWl4L9rXQK18RjlZUzjJTDEvhyRbhyTQ8J12Xa6
-         2VwQ==
-X-Forwarded-Encrypted: i=1; AJvYcCVagyr2MFwixsc3UR3telm+cNoM5ULFms+IDSE7Q781Czc5Ot7Yse1rLDhla7n+zBf8WNU=@vger.kernel.org
-X-Gm-Message-State: AOJu0YxBWk2sYjE63a97+fyuvSXpO5+/nT0KihGqpPmqyHAtfAh6XzuQ
-	rUHwS2pEqxSu2VULI4xPkZu8vi66wyUx2lOu6n4RKhkm/zo6daWgw3+tq1xQGviSPjOK4883k8i
-	XbcmAvCofYWhB6LP8KOZh+hz1SSlzJswEw9Sp
-X-Gm-Gg: ASbGnctdy6HEUrm3zygprSfnmCXZqyB9L7gWMqLsQF3Bjg8bdz5WryXaK75o/2o1uRA
-	lboQb3kAgFLaNTuftDxbRQCnvsq77Fd+EAVB0M143zDNhZQ6XPUNXNNW5UQzj65j45nNWIHC6Yj
-	i0rObDAbzeBy5QaEDRcJqYPy3nPFQKh0mqF6g=
-X-Google-Smtp-Source: AGHT+IGqQTgo9lJPG0wfNF1MZRL106inw0JRDdA8VS4tRfQJgNQNxIpv1uYE6PgwFR9/jn8xUk2zZHHTZi/O+rY9Pxs=
-X-Received: by 2002:a17:907:968c:b0:ad1:e7f0:d8e5 with SMTP id
- a640c23a62f3a-adb493c9d18mr959785366b.16.1748879786627; Mon, 02 Jun 2025
- 08:56:26 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="ql31NkoV";
+	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="JrammniO"
+Received: from phl-compute-01.internal (phl-compute-01.phl.internal [10.202.2.41])
+	by mailfhigh.stl.internal (Postfix) with ESMTP id E191625400BA;
+	Mon,  2 Jun 2025 11:56:40 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+  by phl-compute-01.internal (MEProxy); Mon, 02 Jun 2025 11:56:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
+	:content-type:content-type:date:date:from:from:in-reply-to
+	:in-reply-to:message-id:mime-version:references:reply-to:subject
+	:subject:to:to; s=fm1; t=1748879800; x=1748966200; bh=QS49cF9HAD
+	HTArVit2p1qG8bMeMNYsmWZR2qC8LKsFE=; b=ql31NkoVQRLK/PhiTw1IgFTk3X
+	WvhONQxXvkiXwEQd/tv0mjeEFd3k7KvaUcA1apRL0uUQz5tX43dx1PHxljRw5/gg
+	Lh8YSt6A/Rqwq/MWj8Rxc1VDVkw6foDwlfnB+4T44pRjD/KG3B0/NbsFWMQLep6T
+	ZdH8pT5J8Vh7+bBNeRaJYIb4RCDUvl0nnkq0fPhxa4natSmnrSqHP9oWrPF7ugrt
+	CTFUPtJ2B9eqISbp8qyslDgjoWpmkVjN2l/CHXZY8cb35IkAXqqudzEEY4BnZljg
+	uZIYxG4chdkkKSG0p1Hr+ZMcCOth3kT7w/nTzI5ERcdjmUXxjL1CEHon0laQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:content-type:date:date
+	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:subject:subject:to
+	:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+	1748879800; x=1748966200; bh=QS49cF9HADHTArVit2p1qG8bMeMNYsmWZR2
+	qC8LKsFE=; b=JrammniOhsjQQvtL1KdQCyaJeNQ49nQMnBuGFaPri508S+Ze4QZ
+	yRGcg/8PBNkiM+jJJ5AsJePHfYVG95CneCFKLSqsg8uwOM3c/MO9UftD2UqHiInn
+	msH2q1MIrO7FByCerdqCyLnaifInLDY7RfjR28Zkdhb/g9Ar/hhAzE9+lTyskrVl
+	lD5F3hCwbFVlP+PJ7VTeOkifm03+fFROaOwkW+O6Ait5VLblwIfxHGv/4InVmErh
+	G1LxNaJw8AMcZQRtL87vdqMS22OclksJzzm8GIj9ZDGQo5/eyS4IzrEUA2xq+kYR
+	23+DmRoUtONDBDtL3Q3u2XJsK6U9I+f5ngw==
+X-ME-Sender: <xms:uMk9aBwx4cjFfTZexWmG2O6vPI2_7_-E3gdMmoeRHMa1f-vADupCNQ>
+    <xme:uMk9aBQtx68J68zPJSh1qMPijnC_l8r4JR8pYuY5_A0plRgmEIqqnKRYgQWNf2LGo
+    OffaOHUORCgozXS1w>
+X-ME-Received: <xmr:uMk9aLWBHqjl6r0TyTZklC_k6KhiosXDRaLQVjEiGvag8fi_2MSRDTmvwc8-nxUGhBsU2ReNpQYyS9jrHLEUYijFogT7c31JV9cS4bj5b_UT5A>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefkedtleculddtuddrgeefvddrtd
+    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
+    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
+    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
+    gggtuggjsehttdertddttddvnecuhfhrohhmpefrrghtrhhitghkucfuthgvihhnhhgrrh
+    guthcuoehpshesphhkshdrihhmqeenucggtffrrghtthgvrhhnpeevkeekfffhiedtledu
+    iefgjedttedvledvudehgfeugedugffhueekhfejvdektdenucevlhhushhtvghrufhiii
+    gvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehpshesphhkshdrihhmpdhnsggprhgt
+    phhtthhopeehpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkrghrthhhihhkrd
+    dukeeksehgmhgrihhlrdgtohhmpdhrtghpthhtohepghhithhsthgvrhesphhosghogidr
+    tghomhdprhgtphhtthhopehgihhtsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpth
+    htoheptghhrhhishgtohholhesthhugihfrghmihhlhidrohhrghdprhgtphhtthhopehj
+    lhhtohgslhgvrhesghhmrghilhdrtghomh
+X-ME-Proxy: <xmx:uMk9aDhERcsDRzkVOylGHqMC_eGeDvNiXQ08MKLt-FUOhX5hjcOwYA>
+    <xmx:uMk9aDAgrHe1HkEmS-C6prEwRbS42H4Cj29rfCaWV14wxy2UOsa4PA>
+    <xmx:uMk9aMJwW2bOMFkWVQa0VXSy6i1cOQQ0urRSxTBmcxgReABLfjP-Tg>
+    <xmx:uMk9aCDgsl16c1Y2ReKW5vKONVQFUGycoZ6f_0R5vCAwi8MCtpb0CQ>
+    <xmx:uMk9aEKlvifcb5jZDNP89GzubbulET9ApXoGOnQhLtXJ9V3pWLJA6cvq>
+Feedback-ID: i197146af:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
+ 2 Jun 2025 11:56:39 -0400 (EDT)
+Received: 
+	by mail (OpenSMTPD) with ESMTPSA id 72d75fd2 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
+	Mon, 2 Jun 2025 15:56:38 +0000 (UTC)
+Date: Mon, 2 Jun 2025 17:56:33 +0200
+From: Patrick Steinhardt <ps@pks.im>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: Karthik Nayak <karthik.188@gmail.com>, git@vger.kernel.org,
+	jltobler@gmail.com, Christian Couder <chriscool@tuxfamily.org>
+Subject: Re: [PATCH 3/3] receive-pack: handle reference deletions separately
+Message-ID: <aD3JsdlRPVi4wjuz@pks.im>
+References: <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-0-903d1db3f10e@gmail.com>
+ <20250602-6769-address-test-failures-in-the-next-branch-caused-by-batched-reference-updates-v1-3-903d1db3f10e@gmail.com>
+ <aD2SPsro694yr60Z@pks.im>
+ <xmqq7c1uuq52.fsf@gitster.g>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <20250424203904.909777-1-christian.couder@gmail.com>
- <xmqqselxtfyf.fsf@gitster.g> <CABPp-BHudzADoYdBvoBZ1yDRj7Ra_V-or6ddAOV6nmXeMMpMaw@mail.gmail.com>
- <xmqq1pthtbdg.fsf@gitster.g> <CAP8UFD0OdqnoFeYY+7y-No_x_DknapoLzvqvsy-+x_602sYQbg@mail.gmail.com>
- <xmqqzfeyqdye.fsf@gitster.g> <xmqq8qmgsky8.fsf@gitster.g> <CABPp-BGe6r-X7NOiBFEvLGZH+GQvLkOYWn+qf3ZzzgT4sGAyOg@mail.gmail.com>
- <xmqq4ix4qtva.fsf@gitster.g> <CABPp-BFRhSB0zTY1m+gYOpfvmuTvN5Pu3STawJwx9P-ayJw6bA@mail.gmail.com>
- <xmqqwma0nm6c.fsf@gitster.g>
-In-Reply-To: <xmqqwma0nm6c.fsf@gitster.g>
-From: Christian Couder <christian.couder@gmail.com>
-Date: Mon, 2 Jun 2025 17:56:13 +0200
-X-Gm-Features: AX0GCFttPL2u1HXCqyX6S4a9tyoLlwmUNiVDzGL3JQ7tJE3iKgBrOQvXtxlNboI
-Message-ID: <CAP8UFD3c3QCqyt5OS_mXRgye47LircGUhyrM1gYR=bRbN64i8A@mail.gmail.com>
-Subject: Re: [PATCH] fast-(import|export): improve on the signature algorithm name
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Elijah Newren <newren@gmail.com>, Luke Shumaker <lukeshu@datawire.io>, git@vger.kernel.org, 
-	Patrick Steinhardt <ps@pks.im>, Jeff King <peff@peff.net>, 
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>, Christian Couder <chriscool@tuxfamily.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <xmqq7c1uuq52.fsf@gitster.g>
 
-On Thu, May 29, 2025 at 5:14=E2=80=AFAM Junio C Hamano <gitster@pobox.com> =
-wrote:
->
-> Elijah Newren <newren@gmail.com> writes:
->
-> > Personally, I kind of think abort makes more sense as the default --
-> > at some point.
->
-> Oh, of course.
->
-> > So I'm curious if you've just changed your mind
-> > completely from before and are against changing the default at all,
->
-> Yes, after seeing that the representation of the signature algorithm
-> and encapsulation format was not as well thought out as I thought it
-> would already be and its design still being discussed, I realized
-> that the new feature was way premature to have in the release.  At
-> some point, when things mature and we are reasonably sure we will
-> not have to make incompatible changes in the data stream, we might
-> need to switch, and the best default might turn out to be to refuse
-> to work unless the end-user makes an explicit choice, but as the
-> design of the feature stands now, I have a feeling that it is a bit
-> premature.  Certainly not ready for general consumption.
+On Mon, Jun 02, 2025 at 08:20:09AM -0700, Junio C Hamano wrote:
+> Patrick Steinhardt <ps@pks.im> writes:
+> >> diff --git a/builtin/receive-pack.c b/builtin/receive-pack.c
+> >> index 9e3cfb85cf..7157ced2a6 100644
+> >> --- a/builtin/receive-pack.c
+> >> +++ b/builtin/receive-pack.c
+> >> @@ -1879,6 +1880,8 @@ static void execute_commands_non_atomic(struct command *commands,
+> >>  	for (cmd = commands; cmd; cmd = cmd->next) {
+> >>  		if (!should_process_cmd(cmd) || cmd->run_proc_receive)
+> >>  			continue;
+> >> +		if (only_deletions ^ is_null_oid(&cmd->new_oid))
+> >> +			continue;
+> >>  
+> >>  		cmd->error_string = update(cmd, si);
+> >>  	}
+> >
+> > Fancy.
+> 
+> Is that a new synonym for "not worth being overly clever to
+> sacrifice readability"?
 
-Discouraging the use of the feature and saying it's highly
-experimental should hint that the default might change in the future,
-but maybe we should explicitly say so?
+Yeah. I wasn't quite sure whether I like it or not as it felt a bit too
+clever to me indeed. But I didn't feel strongly about it either, so it
+turned into the above somewhat unhelpful remark.
 
-> Of course, I could have just reverted the merge of the original
-> topic and give it a chance for a fresh restart the next cycle, but a
-> new feature clearly marked "highly experimental" would hopefully set
-> the end-user expectation straight, as long as the default is "do not
-> do anything different from before", which is the safest choice for a
-> feature whose design is still wobbly.
+> This may be a comment for [2/3], but a two-call sequence
+> 
+> 	doit(only_deletions = yes);
+> 	doit(only_deletions = no);
+> 
+> looked somewhat iffy for a first reader, as it hints that the second
+> call would do both non-deletions (i.e. creation and modification)
+> and deletions, which makes readers wonder "so we delete twice and
+> rely on that it is not an error to delete something that does not
+> exist?"
 
-Yeah, I agree with this approach in general.
+I also wondered whether it wouldn't be nicer to have the loop in
+`doit()` itself. It would require a bit of reindenting though, which is
+why I didn't propose that variant.
+
+> >> diff --git a/t/t5516-fetch-push.sh b/t/t5516-fetch-push.sh
+> >> index 029ef92d58..34eb3a5a07 100755
+> >> --- a/t/t5516-fetch-push.sh
+> >> +++ b/t/t5516-fetch-push.sh
+> >> @@ -744,8 +744,8 @@ test_expect_success 'pushing valid refs triggers post-receive and post-update ho
+> >>  		EOF
+> >>  
+> >>  		cat >update.expect <<-EOF &&
+> >> -		refs/heads/main $orgmain $newmain
+> >>  		refs/heads/next $orgnext $newnext
+> >> +		refs/heads/main $orgmain $newmain
+> >>  		EOF
+> >>  
+> >>  		cat >post-receive.expect <<-EOF &&
+> >
+> > Hm, so the ordering does change now as all deletes will now be listed
+> > before the updates. We don't make any guarantees about how these are
+> > sorted, but it makes me a bit uneasy to see this change. Can we avoid
+> > this change in behaviour somehow?
+> 
+> Good eyes.
+> 
+> I was wondering about the "git push -v" reporting and was happy that
+> the order there follows the order the pushing side listed refs and
+> the reordering on the receiving end would not have any effect.  The
+> hooks on the receiving end can indeed observe this change.
+> 
+> They can observe, but can they notice?  If the pusher listed refspec
+> elements for deletions first before creations and modifications on
+> their command line, that would be what the hooks see.  They do not
+> know what the original "push" said so they have nothing to compare
+> and complain.
+> 
+> Ahhh, but humans that control the both ends may notice and complain.
+> 
+> OK, I think I agree with you that it is worth to at least spend some
+> brain cycles thinking about avoiding the behaviour change.
+
+Hm. The thing I didn't realize is that the changed output order is for
+the "update" hook. I thought it was for the "post-receive" hook, where I
+do expect that ordering may matter as you see the whole picture of all
+refs that have been updated. But for the "update" hook I think it is
+sensible to change the ordering -- after all, the order of updates does
+change a bit now. Furthermore, the "update" hook itself doesn't have the
+complete picture anyway, so it's way less likely that anybody relies on
+the ordering.
+
+Patrick
