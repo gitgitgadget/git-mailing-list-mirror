@@ -1,119 +1,101 @@
-Received: from fhigh-b5-smtp.messagingengine.com (fhigh-b5-smtp.messagingengine.com [202.12.124.156])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f178.google.com (mail-pl1-f178.google.com [209.85.214.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A01FB4A1E
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 06:34:57 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=202.12.124.156
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 949EC2EB1D
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 06:54:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.178
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748932499; cv=none; b=OS5wJAEJkZr9a2w6kXowaSU0L9l4DhQrLC9BwsQuhVvlNqVUcIU2O1/pYw6D54FDpJeifMi2oOFJmfx02jeZQ4ZrgqjPnWrcnrjtMvK4WDfJYU8x5+GQNl75hAbPyqJt52eCnBP5a2kvb7RkBfvviW3g4kgZ7Kg2HUQwXBHbqp4=
+	t=1748933675; cv=none; b=fA0Vw0mB4zp4qmvTXefO0WBAtWlVZVQ/3bABdKCxhcS7Fwm1g9FyUh2XikgGsztkctEy6l/mz1yy+3z6AEFbL9e2R3dCodVW28Gv0N/RoJYPFxUT7UNWbrqA9gHRj/xrApWFc+S7K2gYE7M/v4q3WpAq00GzR9mNecRmnk4mT1U=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748932499; c=relaxed/simple;
-	bh=jjtp13TPHDWH1ueQ234Hog2trasoGLnIM7Ut7XNwzMw=;
+	s=arc-20240116; t=1748933675; c=relaxed/simple;
+	bh=A1sixIF9wGCntNVBQqhFaiBS70mN3AniZaYJj6xGi0I=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=WDFSlz4ntLFoqLVtYkciO6+6B0tvE6+0B8Do9nCeHxWX5syovZB7vju65eb7pm8I9dzqCBcfT1oKcjs6ooj8vdLJ4LInuvis4w6+sQINdfGJNQW+Wf56SN6Sp3jYQ+zLWY03M4QJMDrKxVsRdrcdyDkr2Hh4XNFKwgl3GKSbr4M=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im; spf=pass smtp.mailfrom=pks.im; dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b=c1s9CBTh; dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b=DZU8GEte; arc=none smtp.client-ip=202.12.124.156
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=pks.im
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pks.im
+	 Content-Type:Content-Disposition:In-Reply-To; b=Q9F0B5/N6CmWP7TcC7hEJ6mcb/mR8q/hurb7hMRKik1m4V0fmuJR5BdYv/s05sv8SGyhK3KfriAxinnaal0YFaPB0hvhQEn08ZEc31im20mXZmRabuQCpqHyhALgW/I5vKXM7AzaT/NW9bCfJ/c8u7TTKK+AzG5YZCsq8Z8PdwE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name; spf=pass smtp.mailfrom=chrisdown.name; dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.b=cE7cpxyt; arc=none smtp.client-ip=209.85.214.178
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=chrisdown.name
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=chrisdown.name
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pks.im header.i=@pks.im header.b="c1s9CBTh";
-	dkim=pass (2048-bit key) header.d=messagingengine.com header.i=@messagingengine.com header.b="DZU8GEte"
-Received: from phl-compute-06.internal (phl-compute-06.phl.internal [10.202.2.46])
-	by mailfhigh.stl.internal (Postfix) with ESMTP id 6541E254018B;
-	Tue,  3 Jun 2025 02:34:56 -0400 (EDT)
-Received: from phl-mailfrontend-01 ([10.202.2.162])
-  by phl-compute-06.internal (MEProxy); Tue, 03 Jun 2025 02:34:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=pks.im; h=cc:cc
-	:content-transfer-encoding:content-type:content-type:date:date
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to; s=fm1; t=1748932496;
-	 x=1749018896; bh=3IMkMeFRLdifasYv3j9q7YkL5w1e+zkSMRXkNF2ch98=; b=
-	c1s9CBTh8JCedeeTPDh+P8eS/wi1+mZdegQCjA+hJMOKKFNBOnkzWlS8E8FUWk8T
-	Xm8b6QjDNqlmnQjR7mYqYc+8opf1wqKCWIKcpRzi0/cLUJtCsx0sq3/4R+U9MOvq
-	DE4x5g5N7Bpa8HujIH6NRFxGyqjkmAXGNEVsWtOzFHlSMhcKXauxfuUPMgP30eu8
-	XClIPqtzFyqD0SFmMXptEuXFShh+IK9yI3N+VL28O2KUufg5R2WEHsE5+tGDqWBd
-	Tn1vlZ9l/H0q6O5OoA+6fTRTPH5Kfsj2N63z7HxmW08s8ejW6kSokX/3A9rZfKlc
-	ZgWxV+QCeKHEecIz6ZGnqA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-transfer-encoding
-	:content-type:content-type:date:date:feedback-id:feedback-id
-	:from:from:in-reply-to:in-reply-to:message-id:mime-version
-	:references:reply-to:subject:subject:to:to:x-me-proxy
-	:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1748932496; x=
-	1749018896; bh=3IMkMeFRLdifasYv3j9q7YkL5w1e+zkSMRXkNF2ch98=; b=D
-	ZU8GEteCCn+wXOM7Q4jH/W8J0l8TUTa+3wSJgVE5FhyGcYJY44tQ9zbOjciuehuQ
-	ox2gATWnTGaLDqNaBT3A/YaBjmPyHaDTc+R2HLVXwkcBuo06DD0sXPheaH+yXndz
-	udUTzHAKjiOcQm1iwLj0o/u7nG6yfqcaib7VfFch1zsIVyFlq477ZL8RU/HEPyEh
-	mmRtec6+Aa0fOiUQTIm4p7b7VGtHcfPowfIq1aWrz6B6us6l9WoBJS5pVAYMI9BK
-	VoiTQ/yx3Bpexp8iILLNvSVdX7hNOmA7mRkndiTgi2PfIjSGFBTa4tF254zW1rIe
-	05DlBf85JAiLIKEFLmKKQ==
-X-ME-Sender: <xms:j5c-aBfEZH3Tqd7nQ_etXJFK7FYJDLKaKRhbIP8kqk-7rASXDkMUkg>
-    <xme:j5c-aPNDPutOask9873Lm2dmWKIMBtPr696QbTh9onzMpG8-mkILrCK6dCbszq-0q
-    4qW6ozJH-wXhnNK2g>
-X-ME-Received: <xmr:j5c-aKiY82-V4Wc-BfNkxcmVP6f89oqySmOHlHgvVYmsptYS7CltoL7XqKFeEv-XN8iFzEtu_FBHWv6iLRN7u6Q5HUagZsz9WgOqUZVgJg>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddtgdefleekgeculddtuddrgeefvddrtd
-    dtmdcutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggft
-    fghnshhusghstghrihgsvgdpuffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftd
-    dtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpeffhffvvefukfhf
-    gggtugfgjgesthekredttddtjeenucfhrhhomheprfgrthhrihgtkhcuufhtvghinhhhrg
-    hrughtuceophhssehpkhhsrdhimheqnecuggftrfgrthhtvghrnhepvdefjeeitdetleeh
-    ieetkeevfedtfedvheekvdevteffvdevveejjeelgeetvdfgnecuvehluhhsthgvrhfuih
-    iivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepphhssehpkhhsrdhimhdpnhgspghr
-    tghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtoheprhgrmhhsrgihse
-    hrrghmshgrhihjohhnvghsrdhplhhushdrtghomhdprhgtphhtthhopehkrhhishhtohhf
-    fhgvrhhhrghughhssggrkhhksehfrghsthhmrghilhdrtghomhdprhgtphhtthhopehnrg
-    hsrghmuhhffhhinhesghhoohhglhgvrdgtohhmpdhrtghpthhtohepghhithesvhhgvghr
-    rdhkvghrnhgvlhdrohhrghdprhgtphhtthhopeihrhhothhhsehprghlohgrlhhtohhnvg
-    htfihorhhkshdrtghomhdprhgtphhtthhopegurghsrhgrfhelsehgmhgrihhlrdgtohhm
-    pdhrtghpthhtohepsggvnhdrkhhnohgslhgvsehgmhgrihhlrdgtohhm
-X-ME-Proxy: <xmx:j5c-aK9bojUgSQNR7A5LgL2LMeYg81kTBEhxc_TZepfR-c68Bva1mw>
-    <xmx:j5c-aNsHGDiQ582CUvnBhs4dyYxN1GraXly2aJyUqKrLKPbrJsJD-g>
-    <xmx:j5c-aJG2FCKjrmXQGiL9WsqWMwH7jO_gbYWN-1ZPxg7yNCXVJvRjdg>
-    <xmx:j5c-aEOTIZ3fIvDueNuUX-4F_kR7D6CDo-rxr4MTC_sE9hZiuwCYpg>
-    <xmx:kJc-aNNM9EIsoHQYCgjUFk7zuHfs-ED8zfU-WloVviM3El5K3YCSm1Mo>
-Feedback-ID: i197146af:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 3 Jun 2025 02:34:54 -0400 (EDT)
-Received: 
-	by mail (OpenSMTPD) with ESMTPSA id b61d4859 (TLSv1.3:TLS_CHACHA20_POLY1305_SHA256:256:NO);
-	Tue, 3 Jun 2025 06:34:52 +0000 (UTC)
-Date: Tue, 3 Jun 2025 08:34:47 +0200
-From: Patrick Steinhardt <ps@pks.im>
-To: Kristoffer Haugsbakk <kristofferhaugsbakk@fastmail.com>
-Cc: git@vger.kernel.org, Yonatan Roth <yroth@paloaltonetworks.com>,
-	david asraf <dasraf9@gmail.com>,
-	Emily Shaffer <nasamuffin@google.com>,
-	Ramsay Jones <ramsay@ramsayjones.plus.com>,
-	"D. Ben Knoble" <ben.knoble@gmail.com>
-Subject: Re: [PATCH v3 09/12] builtin/maintenance: fix locking race when
- packing refs and reflogs
-Message-ID: <aD6Xh8kKUu0Y7sr-@pks.im>
-References: <20250602-b4-pks-maintenance-ref-lock-race-v3-0-587d44252dcb@pks.im>
- <20250602-b4-pks-maintenance-ref-lock-race-v3-9-587d44252dcb@pks.im>
- <cab8e175-e977-41b1-b53d-6b9170c9e416@app.fastmail.com>
+	dkim=pass (1024-bit key) header.d=chrisdown.name header.i=@chrisdown.name header.b="cE7cpxyt"
+Received: by mail-pl1-f178.google.com with SMTP id d9443c01a7336-2347012f81fso65181765ad.2
+        for <git@vger.kernel.org>; Mon, 02 Jun 2025 23:54:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chrisdown.name; s=google; t=1748933673; x=1749538473; darn=vger.kernel.org;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=OB7iczxD9rYDkixlFc98svOD7GVpj/Zns1oP9YZkpHs=;
+        b=cE7cpxyt/lFPlQ9OFciFK1sPD9h3eatSgDQBFkhglQhz9HGctx3e36hRqemy6BnbSl
+         XGJG24KHs7MqcwyMzUqM2xvO0h+gqTSTep8gF5U1OZLm64m64vyDO2GqNA1DMUo7ojWE
+         NZiGttUpodIilTXMA3wUoGlcS4GUKuNZf9Ck8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748933673; x=1749538473;
+        h=user-agent:in-reply-to:content-disposition:mime-version:references
+         :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=OB7iczxD9rYDkixlFc98svOD7GVpj/Zns1oP9YZkpHs=;
+        b=kt5jEtIjd0kh4Y56Kk40fvcfkacoflwAeXX9N4wDpFDlizfzC5Lt2CafBNK7bRkcea
+         Z0G8nONLcAlIyLwkqxtkLp22jFeZpkWFnVB21BEDMQllQhziBhSfQ/FxfeOiu6JfTUCj
+         0ytBs4uFpqMCDYeFwXBHOiRtIx7Og84WWVgGJa+lJSBJN8EUFyJ3H6SLpyaWiyKZVGby
+         kZ2lpJGppmMQ/wL99u5IwKfuApDdaIA3zwbx3RdVxoXcdHU4Z2arvUqd2tFDuy1OVINw
+         FW79kYBT55/ldLRlxLdRobP3TAbY4aQql631DfRhoD79S2M90su7cjY5pVDd8dKl2ulP
+         Gxjw==
+X-Forwarded-Encrypted: i=1; AJvYcCUvN8PxboawGdW7KQjOzrP5h6BN6UkZg8bRLP7IUYaFZJ9Bz/9bq+ptHGt0Aqugch17mtw=@vger.kernel.org
+X-Gm-Message-State: AOJu0YxVzkP4u+5GBB6RUsAN0H0xP4Ooy/TPE1GfUYR69r+AmUbL6BNg
+	MtHL7vca7t29WzpRzuQgjQoC/EhofGzFKnnqI3JnTRdDJd1eDTBKWgV++tQ6Tgi307U=
+X-Gm-Gg: ASbGnct2sFDDHNHVgTq+F7EeW0kfio+h0VENFR4YCxiYE0zMWcu0QwQFj83DLSh2aEJ
+	PCdS9Jlx7ttzculrdH1Dm1DLwe4uThAz4N14xoNfkUsB7C8lGhVuZjXsPgASowJ9Eh9sR4aYC9J
+	eXLxXlsSY/dwCgI+0rhW4Ggdh2v0SLgAzVyTNSV81AoKcxrdsfMyTKA2Af48V7jOag3oWj5sOVv
+	GFgwgBhKqgMkf0Jf6/NUaSLJ3fmYWgTzgmU/0Sv9IyMpMrLmk5Wa/b7wzdeBb7ZjdLYQamZAbCS
+	79uqOw7UFOnZUMkf2TCBkA5rXrv3uUi46Unz77NUbrsKOs6yFPsHKOpN
+X-Google-Smtp-Source: AGHT+IHQXk4A7DnSy0HoTXZfhkfIwhwQ2M7GiZu2ei1jPvj7sLKS8HbwYyeJ35HCeTx+Lp3txdnKtQ==
+X-Received: by 2002:a17:902:fd0f:b0:235:ca87:37ae with SMTP id d9443c01a7336-235ca873a5fmr17575775ad.41.1748933672723;
+        Mon, 02 Jun 2025 23:54:32 -0700 (PDT)
+Received: from localhost ([63.214.5.91])
+        by smtp.gmail.com with UTF8SMTPSA id d9443c01a7336-2354fd632d7sm52363825ad.130.2025.06.02.23.54.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 02 Jun 2025 23:54:32 -0700 (PDT)
+Date: Mon, 2 Jun 2025 23:54:31 -0700
+From: Chris Down <chris@chrisdown.name>
+To: Junio C Hamano <gitster@pobox.com>
+Cc: "D. Ben Knoble" <ben.knoble@gmail.com>, git@vger.kernel.org,
+	kernel-team@fb.com
+Subject: Re: [PATCH] commit: Add commit.signoff configuration option
+Message-ID: <aD6cJxFXdGfN2XGc@chrisdown.name>
+References: <aCM5JY25NVPgyYRP@chrisdown.name>
+ <CALnO6CBdhYFsDN=HPo9HbKeoZH7bb=xVVXUCK7nUdadLg-U_Pw@mail.gmail.com>
+ <aCTI7VjK5QMht3ws@chrisdown.name>
+ <xmqqy0uy4thk.fsf@gitster.g>
+ <aCXqqj6gKc7-fjoF@chrisdown.name>
+ <xmqqldqwya5p.fsf@gitster.g>
+ <aCdT-UQtaaTQ8gyD@chrisdown.name>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii; format=flowed
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cab8e175-e977-41b1-b53d-6b9170c9e416@app.fastmail.com>
+In-Reply-To: <aCdT-UQtaaTQ8gyD@chrisdown.name>
+User-Agent: Mutt/2.2.14 (516568dc) (2025-02-20)
 
-On Mon, Jun 02, 2025 at 12:03:21PM +0200, Kristoffer Haugsbakk wrote:
-> On Mon, Jun 2, 2025, at 09:17, Patrick Steinhardt wrote:
-> > As explained in the preceding commit, git-gc(1) knows to detach only
-> > after it has already packed references and reflogs. This is done to
-> 
-> I’m a naïve reader.  When I read this I immediately thought that reflogs
-> can be packed now.  But going by the last paragraph it is packed
-> references and expired reflogs?
+Hi Junio,
 
-Yeah, I see how this is misleading. But indeed, it is packing refs and
-expiring reflogs. I've rephrased this locally, but if that's okay with
-you I'll hold off sending a new version for just this change.
+I wanted to follow up on the point around repository specificity, since that 
+seems pretty key to the discussion here.
 
-Thanks!
+Looking at public dotfiles, many users already work around this with global 
+shell aliases for "commit --signoff". This creates the exact problem (I 
+believe?) you're concerned about: casual, low intent signoffs without 
+deliberate per-repository intent to certify anything.
 
-Patrick
+A repository specific commit.signoff would be more precise than the current 
+workarounds, since it would require explicit configuration per repository 
+rather than blanket global behavior or muscle memory.
+
+Would only allowing using this flag in a repository context (and not the global 
+git config) allay your concerns?
+
+Thanks,
+
+Chris
