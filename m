@@ -1,81 +1,93 @@
-Received: from vuizook.err.no (vuizook.err.no [178.255.151.162])
+Received: from secure.elehost.com (secure.elehost.com [185.209.179.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B694221DBD
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:38:02 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=178.255.151.162
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027912C3253
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 22:45:33 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.209.179.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748990285; cv=none; b=sFcFE54dZ4EdGZc0KXXRnL4p0rbqmnYPIgUjCxjmRqwcoEJqjXlT9uF4wi7mUsZl2sNyC/T1qVfZsyfJIqmjyF89wdGBYztj3p+58UEnpVvg/xMHhmnEp9J86bDF2988Z+yzGJSsMpcJaWp59nJFygytG9teydG1Kq9r3jjcg2g=
+	t=1748990736; cv=none; b=OObfUHSdS0FHOWyDW1udbI8N8Seu8bkdUBz9ge4oD170LlsXketMNrcujR4D8vZ3MypnTO13o/ck9+MsmiRM5/mOA0oMODkn0qO/FZrSoeacb44lQ2dO+PDKfrzyg06SphqGDI1bO2tlW2OrXe5wopO/Dp7hzgJJ8eiZjNPZW6E=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748990285; c=relaxed/simple;
-	bh=oGaqd9fv6H6q+0b1i7hab3FCFHs5O2PYvYMKfcgwdCU=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=tC+c83PO8oPi+1F2WNRbl0pPc8/QkidkjDR19wGDPYISk21gzzi2Z/cDglRWtvcCfSnQmW3nN+ww58bxiWwo5l3gdCUkOEUSs2sfpATtSdUX/0u7u6SVSTFSz+5TMelYS8vt4w1fa+/3rmUt/200Cx+Gp0cscLBXYnweIGHA04Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org; spf=pass smtp.mailfrom=glandium.org; arc=none smtp.client-ip=178.255.151.162
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=glandium.org
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=glandium.org
-Received: from p3522184-ipxg00e01tokaisakaetozai.aichi.ocn.ne.jp ([122.27.91.184] helo=glandium.org)
-	by vuizook.err.no with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1uMaGa-001D9F-2F;
-	Tue, 03 Jun 2025 22:37:56 +0000
-Received: from glandium by goemon.lan with local (Exim 4.96)
-	(envelope-from <mh@glandium.org>)
-	id 1uMaGU-009ceN-1c;
-	Wed, 04 Jun 2025 07:37:50 +0900
-Date: Wed, 4 Jun 2025 07:37:50 +0900
-From: Mike Hommey <mh@glandium.org>
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Jeff King <peff@peff.net>, Karthik Nayak <karthik.188@gmail.com>,
-	git@vger.kernel.org, ps@pks.im, jltobler@gmail.com,
-	phillip.wood123@gmail.com
-Subject: Re: [PATCH] config.mak.dev: enable -Wunreachable-code
-Message-ID: <20250603223750.sjp5rw56ajehaaqe@glandium.org>
-X-GPG-Fingerprint: 182E 161D 1130 B9FC CD7D  B167 E42A A04F A6AA 8C72
-References: <20250305-245-partially-atomic-ref-updates-v3-0-0c64e3052354@gmail.com>
- <20250305-245-partially-atomic-ref-updates-v3-6-0c64e3052354@gmail.com>
- <20250307195057.GA3675279@coredump.intra.peff.net>
- <xmqq34foefh8.fsf@gitster.g>
- <20250307225444.GA42758@coredump.intra.peff.net>
- <20250308032309.GA584028@coredump.intra.peff.net>
- <20250603212934.uojo22zjcuf6yfic@glandium.org>
- <xmqqh60wh42f.fsf@gitster.g>
+	s=arc-20240116; t=1748990736; c=relaxed/simple;
+	bh=4L8u9zcMr0Fd+/mp6TYRcTzg5UG6I4zjCPV4fTjQm4E=;
+	h=From:To:References:In-Reply-To:Subject:Date:Message-ID:
+	 MIME-Version:Content-Type; b=GnsVikYYV65sMSAEWrEPUGeOdf+AgOuqBG/u1eFumuEqHJoH1a9mHecU/5r+lPEYH9wgpKfenFPiaQeMuUUc/W7z3/jGSEY3zUB+Xvqa3Sehq4j0VPfrS3NSBGCfPyG8rWDbwg73NUoWlIGhCG3SmdMUcQ9k6SarewSzUdY6GYE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com; spf=pass smtp.mailfrom=nexbridge.com; arc=none smtp.client-ip=185.209.179.11
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=nexbridge.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=nexbridge.com
+X-Virus-Scanned: Debian amavisd-new at secure.elehost.com
+Received: from Mazikeen ([185.122.133.20])
+	(authenticated bits=0)
+	by secure.elehost.com (8.15.2/8.15.2/Debian-22ubuntu3) with ESMTPSA id 553MjTC2250258
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+	Tue, 3 Jun 2025 22:45:30 GMT
+Reply-To: <rsbecker@nexbridge.com>
+From: <rsbecker@nexbridge.com>
+To: <rsbecker@nexbridge.com>, "'Junio C Hamano'" <gitster@pobox.com>,
+        <git@vger.kernel.org>
+References: <xmqqsekgn4gk.fsf@gitster.g> <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
+In-Reply-To: <007a01dbd4d7$89ebf100$9dc3d300$@nexbridge.com>
+Subject: RE: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed 
+Date: Tue, 3 Jun 2025 18:45:24 -0400
+Organization: Nexbridge Inc.
+Message-ID: <007d01dbd4d9$356ded70$a049c850$@nexbridge.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <xmqqh60wh42f.fsf@gitster.g>
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQE/8OENAHtdeNmfXNuu5L7gSMXaAQGPhlBYtR1UKiA=
+Content-Language: en-ca
+X-Antivirus: Norton (VPS 250603-6, 6/3/2025), Outbound message
+X-Antivirus-Status: Clean
 
-On Tue, Jun 03, 2025 at 03:07:36PM -0700, Junio C Hamano wrote:
-> Mike Hommey <mh@glandium.org> writes:
-> 
-> > There is a similar problem with this code in refs/files-backend.c:
-> >
-> > 			if (!create_ref_symlink(lock, update->new_target))
-> > 				continue;
-> >
-> > Where create_ref_symlink is defined as such:
-> >
-> > #ifdef NO_SYMLINK_HEAD
-> > #define create_ref_symlink(a, b) (-1)
-> > #else
-> > static int create_ref_symlink(struct ref_lock *lock, const char *target)
-> > {
-> > ...
-> > #endif
-> >
-> > And NO_SYMLINK_HEAD is defined on Windows.
-> 
-> Would the NOT_CONSTANT() trick we ended up using for the original
-> "sigfillset" thing solve your issue as well?
+On June 3, 2025 6:33 PM, I wrote:
+>To: 'Junio C Hamano' <gitster@pobox.com>; git@vger.kernel.org
+>Subject: RE: [ANNOUNCE] Git v2.50.0-rc1 - Test Failed
+>
+>On June 3, 2025 1:03 PM, Junio C Hamano wrote:
+>>A release candidate Git v2.50.0-rc1 is now available for testing at =
+the
+>>usual places.  It is comprised of 592 non-merge commits since v2.49.0,
+>>contributed by 84 people, 33 of which are new faces [*].
+>>
+>>The tarballs are found at:
+>>
+>>    https://www.kernel.org/pub/software/scm/git/testing/
+>>
+>>The following public repositories all have a copy of the 'v2.50.0-rc1'
+>>tag and the 'master' branch that the tag points at:
+>>
+>>  url =3D https://git.kernel.org/pub/scm/git/git
+>>  url =3D https://kernel.googlesource.com/pub/scm/git/git
+>>  url =3D git://repo.or.cz/alt-git.git
+>>  url =3D https://github.com/gitster/git
+>
+>I hit a new issue during the test phase.
+>
+>Makefile:200: recipe for target 'lib/tclIndex' failed
+>
+>Is there any way to suppress this? I don't think we need TCL - don't =
+have it anyway
+>on NonStop.
 
-   if (NOT_CONSTANT(!create_ref_symlink(lock, update->new_target)))
+More info:
 
-indeed works around it.
+The actual more complete error is:
 
-Mike
+/usr/coreutils/bin/bash generate-git-gui.sh "git-gui.sh" "git-gui" =
+./GIT-GUI-BUILD-OPTIONS ./GIT-VERSION-FILE
+/usr/coreutils/bin/bash generate-tclindex.sh . ./GIT-GUI-BUILD-OPTIONS=20
+usage: generate-tclindex.sh <BUILD_DIR> <BUILD_OPTIONS> <LIBFILE> =
+[<LIBFILE>...]
+Makefile:200: recipe for target 'lib/tclIndex' failed
+
+This seems like a legit problem to be fixed rather than ignored.
+
+Regards,
+Randall
+
