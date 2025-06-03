@@ -1,148 +1,191 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ej1-f46.google.com (mail-ej1-f46.google.com [209.85.218.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD8A1A0B08
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 20:37:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C28417C224
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 20:42:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.46
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748983066; cv=none; b=b20qma/7HTZ+4SHcvV9R6rasOalAg1JAym36kYpK8bN6Wso4kOmeEiZrLOJfoRfEk5SFeeMsvVDJCDepF86jzDoxwQrlxuUBqDda2qBbxjs/uLBq7bAb6ij9eQbHys+b+k2Kbazbmt5A8nJr47hB2VONxARIdXlYyLARsDpF/1M=
+	t=1748983368; cv=none; b=RuDIs6v3YV521jDjyvEDaNtNwcUJJx/VmAfKgb1k735qDRj6C0Aa4rsZGQbBFQc5aSfHeDG1r+EhgPtCaSjR2ACzvAItoVJrpmCQUQJFa5ljKj1qHfXQ7yzt+p/NoEQa/fnKkmxAUbbRCko8Hd/JCSdGZTYnBC8+WuD4kzpJQAU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748983066; c=relaxed/simple;
-	bh=GnBsDnp1k3UiG4hxRb3vfgHH9uUylRV4+1KBhLGq7E8=;
+	s=arc-20240116; t=1748983368; c=relaxed/simple;
+	bh=SthS5Wny+XJff8aDLI6vNUQ2WE6cf2cvU6aDXXIaIZM=;
 	h=MIME-Version:References:In-Reply-To:From:Date:Message-ID:Subject:
-	 To:Cc:Content-Type; b=iag+51GhAzhMy5GbNpLEm4aAjUXMB1y3rIq5xJ1C3uPHcVqItynkXXhtEFdpo0L2DlowmABLGlNTTgrWpClslgqUUeYcYQbEnNZw86JAEDQpvEyNxI/jenytXCmWf9o9oIohrxQgzquw/n9TDYaLo2PSdd0wncdc+ZXEQC0JkZQ=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=BJpUiteg; arc=none smtp.client-ip=209.85.218.48
+	 To:Cc:Content-Type; b=gncR87826g+uWDdLbzIFwP9IK/MGFHg1nYwEkPT48YjRGC1Nw0iavg0XsHvyGdG9kgU726IKGCJBosyLTu0pAw4K/2hstruODK30KhNoyh+nu+k99Xp960MY8kHwPGQpie74AHC8SeZjE93mA3EeoV/6rn7zv1oZ6fW8sHbkPCw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=ZbLAeSVS; arc=none smtp.client-ip=209.85.218.46
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="BJpUiteg"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-addda47ebeaso446175766b.1
-        for <git@vger.kernel.org>; Tue, 03 Jun 2025 13:37:44 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="ZbLAeSVS"
+Received: by mail-ej1-f46.google.com with SMTP id a640c23a62f3a-ad56cbc7b07so938746466b.0
+        for <git@vger.kernel.org>; Tue, 03 Jun 2025 13:42:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748983063; x=1749587863; darn=vger.kernel.org;
+        d=gmail.com; s=20230601; t=1748983365; x=1749588165; darn=vger.kernel.org;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=EYWr+un1sGVXNw+yuwbohxWiMzzmDJtyw0pteGh/EhY=;
-        b=BJpUitegjByrwiNsiJ1/UKhUZRebADO2Eb0cXShqfV5ffVJFxf3vueVPI834/6bVTJ
-         +i+7FMbJOfdobrboawPMDAsTr8TwOvBDh1RwSB1pzGUEldvmBo1TPfKXFxe8kAsQ40Xt
-         ZDlEMf78dcPY8BCxZboVA/27cKJhBNkDaOarqJnofapCmzgtuGzh/50PrErw23reM8fc
-         lGWTEvJ+e2p2v2mQRNR5CWfO8pfWT3fDGv679w4OviO1PIQWZT9SLIat49HNeLuWwfCl
-         9ntY2qpCO+jmb9LOps5vEJHRE1rUAsf8puPQZhKeTXQjIdeG3a6Ggpl3yFAk9Tv1HEXx
-         WipQ==
+        bh=cO6aoYEE7Quf0oDSm0nRVV5di+kasb2hFP3fkQ5r6es=;
+        b=ZbLAeSVSs9rNW12R4PUb7/9J3q/UC/IWjs2AezahTuVve8IA1wvp9UrusI3CAvYedk
+         Lx1TUr9xYzhOflEY9QrUj4yUqcVsmM3nRwx88M88LU19+TMv6wHYsLLW6S85l3Z3fuLg
+         a9Y0IisTSgrYc+Je2Esx7tyXYUVZ3eZpgmW+3xptrZjwF7HkAXsnBxQ/elhh8dg71Lu6
+         bD3b0JNS00mk60rTQtYs4EZgEKB9PJmsm/MTN0oPl6/bUWItXc1FGZ1eBnLYWyCuE7nl
+         y/twyM7W9+TwriK3qOMYQkLKJeD4HNvvS0c5MzjJlPsL7p8SQ1o1LWhU9pY4nYrkrY1o
+         1LkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748983063; x=1749587863;
+        d=1e100.net; s=20230601; t=1748983365; x=1749588165;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=EYWr+un1sGVXNw+yuwbohxWiMzzmDJtyw0pteGh/EhY=;
-        b=qCdmYs+rqYqbirlBrbkUthRUZjDMdSwGHwGkWXy6UmPleJzso/qSZK5YL+xYECa7Fo
-         dzN8J3R2mR/ESPa41/8XT6YeMvH/unXwnF9RzSpfxjo7O10EiZPtuiR6KmxwBm/G672Q
-         ijKzOs6Y6eQbYCADf6s0/AmcPGWyGVFKLank3tSofdkZcVw/JSFlUdhh/DIoPIe5kpva
-         4HhddHoSmsFGidIsQAKmXt0PU8adXmdf9fYC8frnZBJoJBIgCKgympxMGWwbrrtR4tMA
-         DE3L/+jpp6Xnp0Mmnk/FaNo4XCiX1xYslpwUiq6niDP35vA4PPtqXPlMi2ulkXpJTF2p
-         UbmQ==
-X-Forwarded-Encrypted: i=1; AJvYcCW54llVer1nFXaSYrtb4iS4Zmt8WgP5V3wpqmAiJGZEugjLXLpO5geI//0ofCrfEalp/Ps=@vger.kernel.org
-X-Gm-Message-State: AOJu0Ywo9/joz2zZwd/lbR/2L76r+PNlandrFNegIYU3LeADYsoAkmdB
-	oHEuXYP96xi8ZNa7IZBlOL738Gk8hqAdPkFQ7reCy8BrqdeFPkYd3MVaB6i9cwWusOsvN238DqR
-	HgdmVvvih7ZSCCv2NtuGELlJZgoBXhrI=
-X-Gm-Gg: ASbGnctbR8apuyIcFArwj0SGDq5Nvfaw4IKo9YjpPnsh/OTmGzgvySjlWwCSuLA9hn4
-	f94HTLoKz1QtdSIoOyHdbIiobQ4bq7qhd90hAa8UmYIZi1WOTTx1kWgwNMp+75ODohdsPYDvkRO
-	idJjjvflpslCzh2o7QlN62uKE8HAmSA+vkz2C82oXRXkrkLGj5o6X8aO7dhS19iBCOmA==
-X-Google-Smtp-Source: AGHT+IFxHjAeM+ubAwzMSYGANrvKK9/tMQM5ZBxITd1nmyVMSbQSUp8C2SKnuJEkcL+ixzw/3JPO1x89tqyccKFne5k=
-X-Received: by 2002:a17:907:7f8a:b0:ad8:9e80:6ba3 with SMTP id
- a640c23a62f3a-addf8cca365mr807866b.7.1748983062813; Tue, 03 Jun 2025 13:37:42
- -0700 (PDT)
+        bh=cO6aoYEE7Quf0oDSm0nRVV5di+kasb2hFP3fkQ5r6es=;
+        b=mRo1puXxIKQ1QqVnBTCNbprq+rRyXG8ucsiIfbBRt0g5LDBbi/SvXn7/OihoqhxBkH
+         KraRC0UXC5IzTp+uL9NdsUyvCjo44cg7nf52BtIZLE6jJiECElezgEdsI/uqrw4eoTas
+         wmZ3dIi3KtXDUJNL/XDxLhVi0T4vsI/w97T4VMoYgipTyoXLQ7c9XS/fwrlKrXErixUY
+         mbrbuGBrHrBZCFJantp8gW3ulS4cUSaecBlOhC7u40X8veWaprlG/B2CUQi6J28ymwZS
+         ZaDFPeABqW8EKCUyZy6dL/a+WP0ulzZ/E7/iCEOllcJ2ztMTDGI52c7JqVRmfK3q4Kwu
+         gX2g==
+X-Gm-Message-State: AOJu0YxamFupqijnE3KH7o+e/K4Tg7Gr+1Ap5U7zpg9w19coOnov8LcE
+	399JYUnmWc9U14KNwkW/IXLLR38HvJ2V6ySqOaEyN3qhPxVLYDSX2AonfA7HQQKsxpYf7zsgNxB
+	ZsCTo9vJ6k5zeVZPa9qwi6kBeBVzWQgYXJYRLvfg=
+X-Gm-Gg: ASbGnctcsSBM+joQEokIDJX7hkOiSPp11O4TCRqIIeP1T8MOWE4rsATd+eM7bDn9DcS
+	KX0wJBq05v+bZ/Icks2y2hUTwyT1cnMz14Adwpof68gVDGd1QgCtsLH6iwG0knuCqd/LgY7H1aQ
+	jrseHVI60/hr0IP40LSLCh+8L8M5W5w/W9EXRFkF+vUte6wVQfY5zW+/dH4yMo8+x12KKWZAP6g
+	PxWQWPiO9lJk2s=
+X-Google-Smtp-Source: AGHT+IGU6EhXSh01ve9qWsziUytvDznNvpHeC+4v5tyJ4tOR0Z90gOth2/6D/XDwEGxZtS6oD0TukPEBmQ4dIRnSsiI=
+X-Received: by 2002:a17:907:6ea6:b0:ad8:9645:7965 with SMTP id
+ a640c23a62f3a-adb49510b75mr1124781466b.42.1748983365097; Tue, 03 Jun 2025
+ 13:42:45 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-References: <c59ae2c0c7c8420ec1c5bedb87f28c7f5b573a60.1748122397.git.code@khaugsbakk.name>
- <66e92d69-8372-47cf-a350-95365f72ca1c@gmail.com> <xmqq5xhmvuol.fsf@gitster.g>
-In-Reply-To: <xmqq5xhmvuol.fsf@gitster.g>
+References: <pull.1928.git.1748882439.gitgitgadget@gmail.com> <fe7e918ba1831fffead46791441da350223998f7.1748882439.git.gitgitgadget@gmail.com>
+In-Reply-To: <fe7e918ba1831fffead46791441da350223998f7.1748882439.git.gitgitgadget@gmail.com>
 From: "D. Ben Knoble" <ben.knoble@gmail.com>
-Date: Tue, 3 Jun 2025 16:37:31 -0400
-X-Gm-Features: AX0GCFv8eE3bduhtVU7iY8ILAAaQfvgRmQl0uklgydR_DIMl2WvCJ-gD41zerGY
-Message-ID: <CALnO6CDgcQCuhxcJLH-XwxB85mxqokxsf04CU4yseTy-=XUWLQ@mail.gmail.com>
-Subject: Re: [PATCH] notes: remove trailing whitespace from editor template
-To: Junio C Hamano <gitster@pobox.com>
-Cc: Phillip Wood <phillip.wood123@gmail.com>, kristofferhaugsbakk@fastmail.com, 
-	git@vger.kernel.org, Kristoffer Haugsbakk <code@khaugsbakk.name>
+Date: Tue, 3 Jun 2025 16:42:34 -0400
+X-Gm-Features: AX0GCFuwwNSOH7ub_Pm9NwyNOdnWOD7xTmwqLacli3bwf_9NvqbrHo1SBMEd4M0
+Message-ID: <CALnO6CDk4cP1Mef07F6Z8Sm-1MxwWWd-rYEfL-e5_Nnq50B4ng@mail.gmail.com>
+Subject: Re: [PATCH 1/2] contrib/subtree: parse using --stuck-long
+To: Patrik Weiskircher via GitGitGadget <gitgitgadget@gmail.com>
+Cc: git@vger.kernel.org, apenwarr@gmail.com, 
+	Junio C Hamano <gitster@pobox.com>, Patrik Weiskircher <patrik@pspdfkit.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, May 27, 2025 at 1:31=E2=80=AFPM Junio C Hamano <gitster@pobox.com> =
-wrote:
+On Mon, Jun 2, 2025 at 12:41=E2=80=AFPM Patrik Weiskircher via GitGitGadget
+<gitgitgadget@gmail.com> wrote:
 >
-> Phillip Wood <phillip.wood123@gmail.com> writes:
+> From: Patrik Weiskircher <patrik@pspdfkit.com>
 >
-> > Hi Kristoffer
-> >
-> > On 24/05/2025 22:35, kristofferhaugsbakk@fastmail.com wrote:
-> >> diff --git a/builtin/notes.c b/builtin/notes.c
-> >> index a3f433ca4c0..ca4782eca19 100644
-> >> --- a/builtin/notes.c
-> >> +++ b/builtin/notes.c
-> >> @@ -180,6 +180,8 @@ static void write_commented_object(int fd, const s=
-truct object_id *object)
-> >>      if (strbuf_read(&buf, show.out, 0) < 0)
-> >>              die_errno(_("could not read 'show' output"));
-> >>      strbuf_add_commented_lines(&cbuf, buf.buf, buf.len, comment_line_=
-str);
-> >> +    /* strip trailing whitespace introduced by blank lines */
-> >> +    strbuf_stripspace(&cbuf, NULL);
-> >
-> > It doesn't make any difference at the moment but I'd be happier if we
-> > stripped the trailing space from the commit message before commenting
-> > it out.
->
-> Yes.  I had the same thought.  If Kristof does not like the fact
-> that one automated source of information consistently indents its
-> output lines, even an empty one, and if users may have legitimate
-> reason to place in the final output a trailing whitespace in the
-> comment, it is better for the patch not to close the door to the
-> others.
->
-> In this case I am not all that sympathetic to the idea of the patch.
-> The consistently indented lines makes it more clear from which line
-> to which line came from a commit log message; running stripspace
-> would break them into paragraph pieces.  These editors that complain
-> probaly can be fixed?
+> -S/--gpg-sign requires an optional parameter. Optional parameter
+> handling only works unambiguous with git rev-parse --parseopt when using
+> the --stuck-long option.
 
-My editor doesn't complain, but it does highlight trailing whitespace
-at my behest, and it tends to be an eyesore (on purpose: that way I
-clean it up). Perhaps Kistoffer is coming from a similar place?
+Here we mention "-S", but that flag isn't implemented yet, right?
+
+Perhaps something like:
+
+    Optional parameter handling only works unambiguous with git rev-parse
+    --parseopt when using the --stuck-long option. To prepare for future co=
+mmits
+    which add flags with optional parameters, parse with --stuck-long.
 
 >
-> Alternatively, if it bothers users of certain editing environments
-> too much, perhaps the indent code in the output phase of "git show"
-> should lose the indents for empty lines uniformly, shoudln't it?  It
-> probably should be a fairly isolated change, like the way how the
-> expand_tabs_in_log bit is handled in pretty.c; give another bit and
-> teach pp_handle_indent to return when that bit is set and the
-> payload it was asked to show with indentation is empty, or something
-> like that.
-
-I think this suggestion would also help folks who "git commit -v,"
-which IIRC is also indented in the template.
-
+> Signed-off-by: Patrik Weiskircher <patrik@pspdfkit.com>
+> ---
+>  contrib/subtree/git-subtree.sh | 34 +++++++++++++---------------------
+>  1 file changed, 13 insertions(+), 21 deletions(-)
 >
-> > Should that be " \$"? What you've got seems to work with dash but I'm
-> > not sure if it is POSIX compliant or not.
+> diff --git a/contrib/subtree/git-subtree.sh b/contrib/subtree/git-subtree=
+.sh
+> index 15ae86db1b27..60b2431b8bba 100755
+> --- a/contrib/subtree/git-subtree.sh
+> +++ b/contrib/subtree/git-subtree.sh
+> @@ -115,7 +115,7 @@ main () {
+>         then
+>                 set -- -h
+>         fi
+> -       set_args=3D"$(echo "$OPTS_SPEC" | git rev-parse --parseopt -- "$@=
+" || echo exit $?)"
+> +       set_args=3D"$(echo "$OPTS_SPEC" | git rev-parse --parseopt --stuc=
+k-long -- "$@" || echo exit $?)"
+>         eval "$set_args"
+>         . git-sh-setup
+>         require_work_tree
+> @@ -131,9 +131,6 @@ main () {
+>                 opt=3D"$1"
+>                 shift
+>                 case "$opt" in
+> -                       --annotate|-b|-P|-m|--onto)
+> -                               shift
+> -                               ;;
+>                         --rejoin)
+>                                 arg_split_rejoin=3D1
+>                                 ;;
+> @@ -177,42 +174,37 @@ main () {
+>                 shift
 >
-> "2.6 Word Expansions" ends with this sentence:
+>                 case "$opt" in
+> -               -q)
+> +               --quiet)
+>                         arg_quiet=3D1
+>                         ;;
+> -               -d)
+> +               --debug)
+>                         arg_debug=3D1
+>                         ;;
+> -               --annotate)
+> +               --annotate=3D*)
+>                         test -n "$allow_split" || die_incompatible_opt "$=
+opt" "$arg_command"
+> -                       arg_split_annotate=3D"$1"
+> -                       shift
+> +                       arg_split_annotate=3D"${opt#*=3D}"
+>                         ;;
+>                 --no-annotate)
+>                         test -n "$allow_split" || die_incompatible_opt "$=
+opt" "$arg_command"
+>                         arg_split_annotate=3D
+>                         ;;
+> -               -b)
+> +               --branch=3D*)
+>                         test -n "$allow_split" || die_incompatible_opt "$=
+opt" "$arg_command"
+> -                       arg_split_branch=3D"$1"
+> -                       shift
+> +                       arg_split_branch=3D"${opt#*=3D}"
+>                         ;;
+> -               -P)
+> -                       arg_prefix=3D"${1%/}"
+> -                       shift
+> +               --prefix=3D*)
+> +                       arg_prefix=3D"${opt#*=3D}"
+>                         ;;
+> -               -m)
+> +               --message=3D*)
+>                         test -n "$allow_addmerge" || die_incompatible_opt=
+ "$opt" "$arg_command"
+> -                       arg_addmerge_message=3D"$1"
+> -                       shift
+> +                       arg_addmerge_message=3D"${opt#*=3D}"
+>                         ;;
+>                 --no-prefix)
+>                         arg_prefix=3D
+>                         ;;
+> -               --onto)
+> +               --onto=3D*)
+>                         test -n "$allow_split" || die_incompatible_opt "$=
+opt" "$arg_command"
+> -                       arg_split_onto=3D"$1"
+> -                       shift
+> +                       arg_split_onto=3D"${opt#*=3D}"
+>                         ;;
+>                 --no-onto)
+>                         test -n "$allow_split" || die_incompatible_opt "$=
+opt" "$arg_command"
+> --
+> gitgitgadget
 >
->     If a '$' that is neither within single-quotes nor escaped by a
->     <backslash> is immediately followed by a <space>, <tab>, or a
->     <newline>, or is not followed by any character, the '$' shall be
->     treated as a literal character.
->
-> Taken together with "2.2.3 Double-Quotes", I'd read it as blessing a
-> lone '$' at the end of double-quoted string as a literal dollar sign.
->
-> Thanks.
 >
 
 
