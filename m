@@ -1,102 +1,92 @@
-Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
+Received: from mail.comstyle.com (speedy.comstyle.com [206.51.28.2])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16E1078C91
-	for <git@vger.kernel.org>; Tue,  3 Jun 2025 04:05:45 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87D381A5B95
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 04:12:56 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=206.51.28.2
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1748923547; cv=none; b=uD3Mp6giu5I1RHylRe6N5Oz8JEUSJZ+QuYYZD5saOKBnArHuLbG2C3oxP6lwrCYR0HnWqkvQuJfdnLkTUYudtYtKbZiW9ptalajvKt6DPy4z7Ih6jKz1hwpI8rCiOEIfbRtWL+W9Xw8zQlopJP+txwtMvnnYWcqhWDGnRxkZqQo=
+	t=1748923978; cv=none; b=N6syqbipwYwl8a/Z81blve538IAXygcnIHAAyvYS1gOBE0hsY7i324OGoqLKk0ES8DuxXFnD86njuaa/yMyb1jbmo7+O5LLzJpgw7Ey+UQhzqhkX4IGyxazj+oxEI7FVWED/2kYZ1OGVnKeg59p12JMhibhq/KHBI9B8mIdBnSE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1748923547; c=relaxed/simple;
-	bh=EUp0TgCmyCiPnmokQnvDeGVdTGi0ySxXNRlMAOxMX70=;
-	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
-	 MIME-Version:Content-Type; b=i9o6JvY5dbvEx9H1yvoRZZuIaqBVPovKbXQj5DsDF1zCUqwTMREj2LxDdD8xlplSn2eBx8aSazApCMdMJNSwsmMkm1ZdB0XkquTNk56i1PdBVoTEVBC5xBqHa5ds/3diNPWnWhdZlXoh09oGOYWkuXXVQT8gpVj89tjKE56IhVw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com; spf=pass smtp.mailfrom=gmail.com; dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b=S59qI+gh; arc=none smtp.client-ip=209.85.214.173
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
+	s=arc-20240116; t=1748923978; c=relaxed/simple;
+	bh=VNLuSN1AMZmNXVCXsbDZJIoh8rfr6wy2s0Ajo4HDl6E=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=CIm47hHZeLGk7vlzX5ow60sC4InaUcLR+VgqahixTFEZUVYmsvcUXpSyi4/R2J9oEG2HQN15d4++cWeJCWo1CUy9cHeQV9/68RCkqQd8OFRGgFopq2ZN5fQ0IuP7EUTge4ovy9+qg046HMMfgleOBMUdBV+muyfRcCPAxhCwGF4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com; spf=pass smtp.mailfrom=comstyle.com; dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b=MtRWGghW; arc=none smtp.client-ip=206.51.28.2
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=comstyle.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=comstyle.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=gmail.com header.i=@gmail.com header.b="S59qI+gh"
-Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-22e16234307so42417335ad.0
-        for <git@vger.kernel.org>; Mon, 02 Jun 2025 21:05:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20230601; t=1748923545; x=1749528345; darn=vger.kernel.org;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=8PLpbKtadhE7bTEgCnE98uyoURO8ksMTVnFAKjEhI9M=;
-        b=S59qI+ghAsYvuYazA8xYR8tnanpZ7RNGE96NlYDf3LcU53pdy6G6DxGOfyzs72Kj1c
-         CU1GG9Lm5qab+WuDuebYU2bQ2eaF/mb7ecWqiEA156N146lL9zG9nyCmNvvUMEiJJwW/
-         cJ1N+CnQZtI2ITv6R4Yabj62e2mVN2XTBnPI0ufCA2VZib1ZBRGy1xqsnBBkbQ97DlZD
-         bGheAa+rvTadug6T9AN0WJhWTBS/NbFaSBzgX8yg/54pwusjgfQVbgrTASVG1c2zkizw
-         PTRWohlrk6mDjr5GSuQJsnigiZGeEGxSaHM+SiZryD2ogcXUTDJumINxPkMzw7E4B+SD
-         NyBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1748923545; x=1749528345;
-        h=mime-version:user-agent:message-id:date:references:in-reply-to
-         :subject:cc:to:from:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=8PLpbKtadhE7bTEgCnE98uyoURO8ksMTVnFAKjEhI9M=;
-        b=cbZIzvI2ZMBLSyQNqVgCuHgbEaxkby+G4zqRKHZnMLHh12uqy/MiidfllaEoQe/nrM
-         ebLh+4XXjnCMLc4fLKWOFHN/x5QK2RPIF5+kYJQnGrzLPRJHzqO3T+KykF+awDEWTGNu
-         giC1GBvd7UqtpL8eGaFDzHr/y3x8d1VFKfyjMN1nox9y9cs7yR9jKTwsxLw+GHjuVlZ8
-         3fOrK/pgQNxgn5egVDd0SBN5rlNYpTHTyu01EOGmsw4as6wlz4oDPh57+sB0nNz/CHjX
-         if8y1ulfE971WJhRPWp/rpwrQl1lnkNXEp72rE27xXxSrj8SbHe69i4HFYdoqga+QrHz
-         PyFg==
-X-Gm-Message-State: AOJu0YyyiKhfjn4Ylw3EogxaHgoQMqV3yZkDeR+N2Wg4HBhliNfyHE3L
-	ZPLo7b76rOzqexKquQbFVuEIuEcDYiTNSftCtBXaiH7GTGEdC+xepVifyjdfSA==
-X-Gm-Gg: ASbGncs9okSgLYHUSUwPOndHDZgsDXf4zE6po5y8+1CzjUoT0UPh0bJYDyTOnsFvk/1
-	iHoiHSXmsp7Lbr3G+SR9ce6TyKIptvsRXj4liOkarrYeXT/qyoCP8ZW3t1KNW5g/H8OPhfeHHlu
-	p+k40BswOmsnhygEHTUAXvG9sOAZevAwLvDlGPEs4SLW80YZOwwPlOJ6g7nBmzF6tZcTjeOfMbS
-	nFjnUR3o3Cwjh4H12JPp3jO98w0iWH9SPh3oNH82ytSA27u2WIwKiIqfyxgq4jeahHuo0fciZNU
-	s1LBGUCTxEChM5u7ew4+/1XsvviRvqfrdqWtz5gkGQ==
-X-Google-Smtp-Source: AGHT+IH88kjGQ3xCmPZLrKXfj1s4tkreRqOu9OrciBuUaD29B0YvLHHN/bsYtd5RabYfV1rDU/x3oA==
-X-Received: by 2002:a17:903:19cc:b0:215:b1e3:c051 with SMTP id d9443c01a7336-235c9d95d68mr14199495ad.11.1748923544961;
-        Mon, 02 Jun 2025 21:05:44 -0700 (PDT)
-Received: from fedora ([2601:646:8081:3770::9eb])
-        by smtp.gmail.com with ESMTPSA id d9443c01a7336-23506bdb4besm78476365ad.64.2025.06.02.21.05.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Jun 2025 21:05:44 -0700 (PDT)
-From: Collin Funk <collin.funk1@gmail.com>
-To: Brad Smith <brad@comstyle.com>
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] compat: fixes for header handling with OpenBSD / NetBSD
-In-Reply-To: <47c58a78-d38b-4170-87fc-c9332618d0da@comstyle.com>
-References: <87wm9ut3uo.fsf@gmail.com>
-	<47c58a78-d38b-4170-87fc-c9332618d0da@comstyle.com>
-Date: Mon, 02 Jun 2025 21:05:43 -0700
-Message-ID: <87y0u9qxk8.fsf@gmail.com>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+	dkim=pass (1024-bit key) header.d=comstyle.com header.i=@comstyle.com header.b="MtRWGghW"
+Received: from mail.comstyle.com (localhost [127.0.0.1])
+	by mail.comstyle.com (Postfix) with ESMTP id 4bBHPM29h8z8PbP
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 00:12:55 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed; d=comstyle.com; h=date
+	:from:to:subject:message-id:mime-version:content-type; s=
+	default; bh=VNLuSN1AMZmNXVCXsbDZJIoh8rfr6wy2s0Ajo4HDl6E=; b=MtRW
+	GghW9q9IBmUa3uYc5ENWxkIQ+Quu8GV9vf5YxPMzcgwQx6j3N8/XEuqobjzHzxH4
+	N3UzrF7MsqvqNcHzw1e3Ifdmnd8j/cTdYJqu77S4cnqDbQTkdysbIco6ebPfVY3e
+	FdIY5CnM61XjjzHjx1mdMDUMogK6XBKESmlMVNU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=comstyle.com; h=date:from:to
+	:subject:message-id:mime-version:content-type; q=dns; s=default; b=
+	pFxp7d3w6+/BuzGWWnqJgbU0UxOCoe1Wt39abZhEoFiunFbDPlzpGWNsD1C9pJtT
+	d8NpSzf5otxll82JqdyiVmGaJmI9k+JOx1FI8zufAgpgIdU9FuJEdIFcmfJXXAYe
+	5+pjOOAkzvMXuXETcbQY+jSGHAqUt93ixuQ6J2c8fv0=
+Received: from humpty.home.comstyle.com (unknown [IPv6:2001:470:b050:3:3fc7:625b:78a:6fdc])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA512)
+	(No client certificate requested)
+	(Authenticated sender: brad)
+	by mail.comstyle.com (Postfix) with ESMTPSA id 4bBHPL6GSbz8PbN
+	for <git@vger.kernel.org>; Tue,  3 Jun 2025 00:12:54 -0400 (EDT)
+Date: Tue, 3 Jun 2025 00:12:53 -0400
+From: Brad Smith <brad@comstyle.com>
+To: git@vger.kernel.org
+Subject: [PATCH v2] compat: fixes for header handling with OpenBSD / NetBSD
+Message-ID: <aD52RXZVAsXpimBG@humpty.home.comstyle.com>
 Precedence: bulk
 X-Mailing-List: git@vger.kernel.org
 List-Id: <git.vger.kernel.org>
 List-Subscribe: <mailto:git+subscribe@vger.kernel.org>
 List-Unsubscribe: <mailto:git+unsubscribe@vger.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Brad Smith <brad@comstyle.com> writes:
+Handle OpenBSD and NetBSD as FreeBSD / DragonFly are. OpenBSD would
+need _XOPEN_SOURCE to be set to 700. Its simpler to just not set
+_XOPEN_SOURCE.
 
->> Why remove this definition? I think it might be useful on some older
->> systems and seems harmless otherwise.
->
-> _XOPEN_SOURCE restricts the build environment. _NETBSD_SOURCE is added
-> to counteract
-> _XOPEN_SOURCE. Not setting it in the first place provides everything
-> by default.
->
-> I was removing it as it should no longer be necessary.
->
-> But as said, it is harmless. I can leave it in if desired.
+    CC strbuf.o
+strbuf.c:645:6: warning: call to undeclared function 'getdelim'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+        r = getdelim(&sb->buf, &sb->alloc, term, fp);
+            ^
+1 warning generated.
 
-In Autoconf's AC_USE_SYSTEM_EXTENSIONS it is defined with the comment:
+Signed-off-by: Brad Smith <brad@comstyle.com>
+---
+ compat/posix.h | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-    /* Enable general extensions on NetBSD.
-       Enable NetBSD compatibility extensions on Minix.  */
+diff --git a/compat/posix.h b/compat/posix.h
+index f4c71f9427..067a00f33b 100644
+--- a/compat/posix.h
++++ b/compat/posix.h
+@@ -60,11 +60,11 @@
+ # else
+ # define _XOPEN_SOURCE 500
+ # endif
+-#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__USLC__) && \
+-      !defined(_M_UNIX) && !defined(__sgi) && !defined(__DragonFly__) && \
+-      !defined(__TANDEM) && !defined(__QNX__) && !defined(__MirBSD__) && \
+-      !defined(__CYGWIN__)
+-#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500, OpenBSD needs 600 for S_ISLNK() */
++#elif !defined(__APPLE__) && !defined(__FreeBSD__) && !defined(__NetBSD__) && \
++      !defined(__OpenBSD__) && !defined(__DragonFly__) && !defined(__MirBSD__) && \
++      !defined(__USLC__) && !defined(_M_UNIX) && !defined(__sgi) && \
++      !defined(__TANDEM) && !defined(__QNX__) && !defined(__CYGWIN__)
++#define _XOPEN_SOURCE 600 /* glibc2 and AIX 5.3L need 500 */
+ #define _XOPEN_SOURCE_EXTENDED 1 /* AIX 5.3L needs this */
+ #endif
+ #define _ALL_SOURCE 1
+-- 
+2.49.0
 
-I would prefer just leaving it for any old system that may need it. Or
-in case git uses features from a recent standard that might still be
-hidden as a NetBSD extension.
-
-For example, POSIX.1-2024 has been released, but most functions added
-there are still under _GNU_SOURCE in current glibc.
-
-Collin
